@@ -22,8 +22,8 @@
 
 #include <tqstring.h>
 
-class QString;
-class QImage;
+class TQString;
+class TQImage;
 /**
  * This is the baseclass for "thumbnail-plugins" in KDE. Using the class
  * KIO::PreviewJob allows you to generate small images (thumbnails)

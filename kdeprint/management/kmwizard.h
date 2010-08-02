@@ -26,9 +26,9 @@
 
 #include <kdelibs_export.h>
 
-class QWidgetStack;
-class QLabel;
-class QPushButton;
+class TQWidgetStack;
+class TQLabel;
+class TQPushButton;
 class KMWizardPage;
 class KMPrinter;
 class KMWBackend;

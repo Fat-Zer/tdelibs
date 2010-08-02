@@ -30,12 +30,12 @@
 #include <tqbutton.h>
 #include <kdialogbase.h>
 
-class QComboBox;
-class QCheckBox;
-class QFont;
-class QGroupBox;
-class QLabel;
-class QStringList;
+class TQComboBox;
+class TQCheckBox;
+class TQFont;
+class TQGroupBox;
+class TQLabel;
+class TQStringList;
 class KListBox;
 class KIntNumInput;
 /**

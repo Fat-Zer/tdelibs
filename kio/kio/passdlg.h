@@ -22,7 +22,7 @@
 
 #include <kdialogbase.h>
 
-class QGridLayout;
+class TQGridLayout;
 
 namespace KIO {
 

@@ -24,8 +24,8 @@
 
 class KListView;
 class KURLRequester;
-class QPushButton;
-class QCheckBox;
+class TQPushButton;
+class TQCheckBox;
 
 class KMConfigFonts : public KMConfigPage
 {

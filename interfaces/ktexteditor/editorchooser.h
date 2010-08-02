@@ -7,7 +7,7 @@
 #include <tqwidget.h>
 
 class KConfig;
-class QString;
+class TQString;
 
 namespace KTextEditor
 {

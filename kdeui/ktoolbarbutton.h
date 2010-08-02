@@ -32,9 +32,9 @@
 class KToolBar;
 class KToolBarButtonPrivate;
 class KInstance;
-class QEvent;
-class QPopupMenu;
-class QPainter;
+class TQEvent;
+class TQPopupMenu;
+class TQPainter;
 
 /**
  * A toolbar button. This is used internally by KToolBar, use the

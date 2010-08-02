@@ -23,8 +23,8 @@
 #include <tqobject.h>
 #include <kshortcut.h>
 
-class QPopupMenu;
-class QWidget;
+class TQPopupMenu;
+class TQWidget;
 class KAccelAction;
 class KAccelActions;
 class KConfigBase;

@@ -26,7 +26,7 @@
 #include <tqwidget.h>
 #include <kdelibs_export.h>
 
-class QColor;
+class TQColor;
 /**
  * @short An LED widget.
  *

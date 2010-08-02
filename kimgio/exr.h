@@ -11,7 +11,7 @@
 #ifndef KIMG_EXR_H
 #define KIMG_EXR_H
 
-class QImageIO;
+class TQImageIO;
 
 extern "C" {
   void kimgio_exr_read (TQImageIO *io);

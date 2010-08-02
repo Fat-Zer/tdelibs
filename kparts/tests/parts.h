@@ -4,7 +4,7 @@
 
 #include <kparts/part.h>
 
-class QMultiLineEdit;
+class TQMultiLineEdit;
 namespace KParts {
 class GUIActivateEvent;
 };

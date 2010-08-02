@@ -49,7 +49,7 @@ class KAction;
 class KRecentFilesAction;
 class KSelectAction;
 
-class QGridLayout;
+class TQGridLayout;
 
 //
 // Kate KTextEditor::View class ;)

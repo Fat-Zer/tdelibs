@@ -33,8 +33,8 @@ class KLineEdit;
 class KURLCompletion;
 class KURLDragPushButton;
 
-class QString;
-class QTimer;
+class TQString;
+class TQTimer;
 
 /**
  * This class is a widget showing a lineedit and a button, which invokes a

@@ -33,8 +33,8 @@
 #include "kcookiejar.h"
 
 class KLineEdit;
-class QPushButton;
-class QVButtonGroup;
+class TQPushButton;
+class TQVButtonGroup;
 class KURLLabel;
 
 class KCookieDetail : public QGroupBox

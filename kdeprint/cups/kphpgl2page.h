@@ -23,7 +23,7 @@
 #include "kprintdialogpage.h"
 
 class KIntNumInput;
-class QCheckBox;
+class TQCheckBox;
 
 class KPHpgl2Page : public KPrintDialogPage
 {

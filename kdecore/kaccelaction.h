@@ -29,7 +29,7 @@
 
 class KAccelBase;
 
-class QObject;
+class TQObject;
 class KConfig;
 class KConfigBase;
 

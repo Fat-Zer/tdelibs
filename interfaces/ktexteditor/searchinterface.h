@@ -22,9 +22,9 @@
 
 #include <kdelibs_export.h>
 
-class QRegExp;
-class QString;
-class QCString;
+class TQRegExp;
+class TQString;
+class TQCString;
 
 namespace KTextEditor
 {

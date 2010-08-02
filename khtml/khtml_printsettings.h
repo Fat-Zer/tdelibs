@@ -22,7 +22,7 @@
 
 #include <kdeprint/kprintdialogpage.h>
 
-class QCheckBox;
+class TQCheckBox;
 
 class KHTMLPrintSettings : public KPrintDialogPage
 {

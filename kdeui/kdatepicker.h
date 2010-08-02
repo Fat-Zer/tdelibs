@@ -23,8 +23,8 @@
 #include <tqframe.h>
 #include <kdelibs_export.h>
 
-class QLineEdit;
-class QToolButton;
+class TQLineEdit;
+class TQToolButton;
 class KDateValidator;
 class KDateTable;
 

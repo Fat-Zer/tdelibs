@@ -35,9 +35,9 @@
 ////////////////////////
 // Forward declarations
 struct sockaddr;
-class QString;
-class QCString;
-class QStrList;
+class TQString;
+class TQCString;
+class TQStrList;
 
 //////////////////
 // Our definitions

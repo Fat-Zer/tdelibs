@@ -27,8 +27,8 @@
 
 class MarginValueWidget;
 class MarginPreview;
-class QCheckBox;
-class QComboBox;
+class TQCheckBox;
+class TQComboBox;
 
 class KDEPRINT_EXPORT MarginWidget : public QWidget
 {

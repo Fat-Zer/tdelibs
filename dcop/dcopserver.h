@@ -50,15 +50,15 @@ class DCOPConnection;
 class DCOPListener;
 class DCOPSignalConnectionList;
 class DCOPSignals;
-class QTimer;
+class TQTimer;
 
 // If you enable the following define DCOP will create
 // $HOME/.dcop.log file which will list all signals passing
 // through it.
 //#define DCOP_LOG
 #ifdef DCOP_LOG
-class QTextStream;
-class QFile;
+class TQTextStream;
+class TQFile;
 #endif
 
 typedef TQValueList<TQCString> QCStringList;

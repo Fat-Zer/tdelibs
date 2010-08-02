@@ -27,7 +27,7 @@
 #include "kplayobject.h"
 
 class KURL;
-class QString;
+class TQString;
 
 class KAudioConverter : public QObject
 {

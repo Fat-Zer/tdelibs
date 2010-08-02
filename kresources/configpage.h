@@ -32,8 +32,8 @@
 class KComboBox;
 class KListView;
 
-class QListViewItem;
-class QPushButton;
+class TQListViewItem;
+class TQPushButton;
 
 namespace KRES {
 

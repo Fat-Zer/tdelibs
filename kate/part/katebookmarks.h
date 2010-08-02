@@ -32,8 +32,8 @@ namespace Kate { class View; }
 class KAction;
 class KToggleAction;
 class KActionCollection;
-class QPopupMenu;
-class QMenuData;
+class TQPopupMenu;
+class TQMenuData;
 
 class KateBookmarks : public QObject
 {

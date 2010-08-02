@@ -24,11 +24,11 @@
 #include <tqstringlist.h>
 #include <kdialog.h>
 
-class QWidget;
-class QCheckBox;
-class QRadioButton;
-class QListView;
-class QPushButton;
+class TQWidget;
+class TQCheckBox;
+class TQRadioButton;
+class TQListView;
+class TQPushButton;
 
 /**
  * KDE X.509 Certificate Dialog

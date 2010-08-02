@@ -26,15 +26,15 @@
 #include <kdialogbase.h>
 
 class KListView;
-class QListViewItem;
-class QLineEdit;
-class QComboBox;
-class QWidgetStack;
-class QToolButton;
+class TQListViewItem;
+class TQLineEdit;
+class TQComboBox;
+class TQWidgetStack;
+class TQToolButton;
 class KListBox;
-class QListBoxItem;
-class QTextEdit;
-class QCheckBox;
+class TQListBoxItem;
+class TQTextEdit;
+class TQCheckBox;
 
 class DrGroup;
 class DrBase;

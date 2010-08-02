@@ -23,12 +23,12 @@
 
 #include <kdialogbase.h>
 class KHistoryCombo;
-class QPushButton;
-class QPopupMenu;
-class QGridLayout;
-class QLabel;
-class QGroupBox;
-class QCheckBox;
+class TQPushButton;
+class TQPopupMenu;
+class TQGridLayout;
+class TQLabel;
+class TQGroupBox;
+class TQCheckBox;
 
 /**
  * @ingroup main

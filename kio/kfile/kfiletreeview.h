@@ -33,7 +33,7 @@
 #include <kfiletreeviewitem.h>
 #include <kfiletreebranch.h>
 
-class QTimer;
+class TQTimer;
 
 
 

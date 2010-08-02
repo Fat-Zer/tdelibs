@@ -25,7 +25,7 @@
 #include <tqptrlist.h>
 #include <kdelibs_export.h>
 
-class QDragObject;
+class TQDragObject;
 class KConfig;
 class KLineEdit;
 /**

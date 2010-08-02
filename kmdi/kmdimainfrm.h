@@ -49,12 +49,12 @@
 #include "kmdinulliterator.h"
 #include "kmditoolviewaccessor.h"
 
-class QTimer;
-class QPopupMenu;
-class QMenuBar;
+class TQTimer;
+class TQPopupMenu;
+class TQMenuBar;
 
 
-class QToolButton;
+class TQToolButton;
 
 namespace KMDIPrivate
 {

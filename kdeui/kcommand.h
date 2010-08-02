@@ -28,7 +28,7 @@
 
 class KAction;
 class KActionCollection;
-class QPopupMenu;
+class TQPopupMenu;
 
 /**
  * The abstract base class for all Commands. Commands are used to

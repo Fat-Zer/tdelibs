@@ -26,7 +26,7 @@
 
 #include "knotifywidgetbase.h"
 
-class QShowEvent;
+class TQShowEvent;
 
 namespace KNotify
 {

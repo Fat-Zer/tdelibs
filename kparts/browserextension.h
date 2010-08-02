@@ -34,7 +34,7 @@
 
 class KFileItem;
 typedef TQPtrList<KFileItem> KFileItemList;
-class QString;
+class TQString;
 
 namespace KParts {
 

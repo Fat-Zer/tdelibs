@@ -21,10 +21,10 @@
 
 #include "progressbase.h"
 
-class QWidgetStack;
-class QBoxLayout;
-class QPushButton;
-class QLabel;
+class TQWidgetStack;
+class TQBoxLayout;
+class TQPushButton;
+class TQLabel;
 class KProgress;
 
 namespace KIO {

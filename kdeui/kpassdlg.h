@@ -25,9 +25,9 @@
 #include <tqlineedit.h>
 #include <kdialogbase.h>
 
-class QLabel;
-class QGridLayout;
-class QWidget;
+class TQLabel;
+class TQGridLayout;
+class TQWidget;
 
 /**
  * @short A safe password input widget.

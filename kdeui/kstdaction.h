@@ -19,8 +19,8 @@
 #ifndef KSTDACTION_H
 #define KSTDACTION_H
 
-class QObject;
-class QWidget;
+class TQObject;
+class TQWidget;
 class KAction;
 class KActionCollection;
 class KRecentFilesAction;

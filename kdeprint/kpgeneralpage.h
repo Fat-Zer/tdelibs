@@ -23,10 +23,10 @@
 
 #include "kprintdialogpage.h"
 
-class QComboBox;
-class QButtonGroup;
-class QGroupBox;
-class QLabel;
+class TQComboBox;
+class TQButtonGroup;
+class TQGroupBox;
+class TQLabel;
 
 class KDEPRINT_EXPORT KPGeneralPage : public KPrintDialogPage
 {

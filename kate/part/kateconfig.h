@@ -34,8 +34,8 @@ class KateFontMetrics;
 
 class KConfig;
 
-class QFont;
-class QTextCodec;
+class TQFont;
+class TQTextCodec;
 
 /**
  * Base Class for the Kate Config Classes

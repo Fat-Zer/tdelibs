@@ -16,12 +16,12 @@
 #include <tqurl.h>
 #include <tqpixmap.h>
 
-class QMultiLineEdit;
-class QTextView;
-class QToolButton;
-class QSpinBox;
-class QShowEvent;
-class QPopupMenu;
+class TQMultiLineEdit;
+class TQTextView;
+class TQToolButton;
+class TQSpinBox;
+class TQShowEvent;
+class TQPopupMenu;
 
 class DirectoryView;
 class CustomFileDialog;

@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kconfig.h>
 
 class KConfig;
-class QPopupMenu;
+class TQPopupMenu;
 
 /**
  * @short %KDE Panel Applet class

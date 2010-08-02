@@ -33,15 +33,15 @@ class KMPrinterView;
 class KMPrinter;
 class KMPages;
 class KActionCollection;
-class QPopupMenu;
-class QTimer;
-class QSplitter;
+class TQPopupMenu;
+class TQTimer;
+class TQSplitter;
 class KToolBar;
 class KAction;
 class PluginComboBox;
-class QBoxLayout;
+class TQBoxLayout;
 class MessageWindow;
-class QMenuBar;
+class TQMenuBar;
 
 /**
  * @internal

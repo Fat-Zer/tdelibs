@@ -21,9 +21,9 @@
 
 #include <kdialogbase.h>
 
-class QComboBox;
+class TQComboBox;
 class KLineEdit;
-class QLabel;
+class TQLabel;
 
 namespace KIO {
 

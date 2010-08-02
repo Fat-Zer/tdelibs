@@ -24,9 +24,9 @@
 #include <kurl.h>
 #include <kpreviewwidgetbase.h>
 
-class QCheckBox;
-class QPushButton;
-class QLabel;
+class TQCheckBox;
+class TQPushButton;
+class TQLabel;
 
 class KFileDialog;
 class KFileItem;

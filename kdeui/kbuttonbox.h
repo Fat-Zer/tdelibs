@@ -23,7 +23,7 @@
 #include <kdelibs_export.h>
 
 #include <tqwidget.h>
-class QPushButton;
+class TQPushButton;
 class KGuiItem;
 
 class KButtonBoxPrivate;

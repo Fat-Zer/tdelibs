@@ -20,8 +20,8 @@
 #ifndef KDELIBS_TERMINAL_INTERFACE_H
 #define KDELIBS_TERMINAL_INTERFACE_H
 
-class QString;
-class QStrList;
+class TQString;
+class TQStrList;
 
 #include <kdemacros.h>
 

@@ -24,7 +24,7 @@
 
 class QDirLineEdit;
 class SizeWidget;
-class QComboBox;
+class TQComboBox;
 
 class CupsdLogPage : public CupsdPage
 {

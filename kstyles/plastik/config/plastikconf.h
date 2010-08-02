@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef PLASTIK_CONF_H
 #define PLASTIK_CONF_H
 
-class QCheckBox;
+class TQCheckBox;
 
 class PlastikStyleConfig: public QWidget
 {

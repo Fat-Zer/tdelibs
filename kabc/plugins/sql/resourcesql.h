@@ -26,7 +26,7 @@
 #include "addressbook.h"
 #include "resource.h"
 
-class QSqlDatabase;
+class TQSqlDatabase;
 
 namespace KABC {
 

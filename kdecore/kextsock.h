@@ -37,7 +37,7 @@
 struct addrinfo;
 struct kde_addrinfo;
 class KAddressInfo;		/* our abstraction of it */
-class QSocketNotifier;
+class TQSocketNotifier;
 
 /*
  * This is extending QIODevice's error codes

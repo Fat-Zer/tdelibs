@@ -19,7 +19,7 @@
 #include <kdockwidget_p.h>
 #include <tqtabwidget.h>
 #include <tqlabel.h>
-class QPushButton;
+class TQPushButton;
 
 class DockApplication : public KDockMainWindow
 {Q_OBJECT

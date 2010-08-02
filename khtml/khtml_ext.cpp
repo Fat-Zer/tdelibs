@@ -978,7 +978,7 @@ void KHTMLZoomFactorAction::init(KHTMLPart *part, bool direction)
     m_direction = direction;
     m_part = part;
 
-    m_popup = new QPopupMenu;
+    m_popup = new TQPopupMenu;
     // xgettext: no-c-format
     m_popup->insertItem( i18n( "Default Font Size (100%)" ) );
 

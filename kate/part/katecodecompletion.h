@@ -41,8 +41,8 @@ class KateView;
 class KateArgHint;
 class KateCCListBox;
 
-class QLayout;
-class QVBox;
+class TQLayout;
+class TQVBox;
 
 class KateCodeCompletionCommentLabel : public QLabel
 {

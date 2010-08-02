@@ -22,13 +22,13 @@
 
 #include "kprintdialogpage.h"
 
-class QComboBox;
-class QCheckBox;
-class QLabel;
+class TQComboBox;
+class TQCheckBox;
+class TQLabel;
 class PosterPreview;
 class KIntNumInput;
-class QPushButton;
-class QLineEdit;
+class TQPushButton;
+class TQLineEdit;
 
 class KPPosterPage : public KPrintDialogPage
 {

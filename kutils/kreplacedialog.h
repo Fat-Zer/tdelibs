@@ -24,12 +24,12 @@
 #include "kfinddialog.h"
 
 class KHistoryCombo;
-class QCheckBox;
-class QGroupBox;
-class QLabel;
-class QPopupMenu;
-class QPushButton;
-class QRect;
+class TQCheckBox;
+class TQGroupBox;
+class TQLabel;
+class TQPopupMenu;
+class TQPushButton;
+class TQRect;
 
 /**
  * @ingroup main

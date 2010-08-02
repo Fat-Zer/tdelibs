@@ -37,7 +37,7 @@
 #include <kio/global.h>
 
 class Observer;
-class QTimer;
+class TQTimer;
 
 namespace KIO {
 

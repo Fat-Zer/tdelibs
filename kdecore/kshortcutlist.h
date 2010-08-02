@@ -24,7 +24,7 @@
 #include <tqstring.h>
 #include "kdelibs_export.h"
 
-class QVariant;
+class TQVariant;
 class KConfigBase;
 class KInstance;
 class KKeySequence;

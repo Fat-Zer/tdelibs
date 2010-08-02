@@ -661,8 +661,8 @@ TQStringList KBuildSycoca::existingResourceDirs()
    static TQStringList* dirs = NULL;
    if( dirs != NULL )
        return *dirs;
-   dirs = new QStringList;
-   g_allResourceDirs = new QStringList;
+   dirs = new TQStringList;
+   g_allResourceDirs = new TQStringList;
    // these are all resources cached by ksycoca
    TQStringList resources;
    resources += KBuildServiceTypeFactory::resourceTypes();
@@ -819,7 +819,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
      }
    }
 
-   g_changeList = new QStringList;
+   g_changeList = new TQStringList;
 
    bool checkstamps = incremental && args->isSet("checkstamps") && checkfiles;
    Q_UINT32 filestamp = 0;

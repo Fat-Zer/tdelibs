@@ -24,9 +24,9 @@
 
 #include <tqstringlist.h>
 
-class QLineEdit;
+class TQLineEdit;
 class KListView;
-class QListViewItem;
+class TQListViewItem;
 
 class KMWLocal : public KMWizardPage
 {

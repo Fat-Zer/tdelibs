@@ -22,7 +22,7 @@
 #ifndef KERAMIK_COLORUTIL_H
 #define KERAMIK_COLORUTIL_H
 
-class QPainter;
+class TQPainter;
 
 
 namespace Keramik

@@ -29,7 +29,7 @@
  */
 class KateDocument;
 class KateView;
-class QString;
+class TQString;
 class KateJSDocument;
 class KateJSView;
 class KateJSIndenter;

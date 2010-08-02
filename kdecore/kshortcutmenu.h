@@ -25,7 +25,7 @@
 
 #include "kshortcut.h"
 
-class QLabel;
+class TQLabel;
 
 class KAccelActions;
 

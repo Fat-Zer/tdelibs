@@ -25,8 +25,8 @@
 
 #include "kpreloadobject.h"
 
-class QComboBox;
-class QLabel;
+class TQComboBox;
+class TQLabel;
 
 class KDEPRINT_EXPORT PluginComboBox : public TQWidget, public KPReloadObject
 {

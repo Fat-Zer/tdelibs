@@ -29,7 +29,7 @@
 
 #define KIPCDomainsChanged 2014
 
-class QStringList;
+class TQStringList;
 namespace DNSSD
 {
 class DomainBrowserPrivate;

@@ -25,7 +25,7 @@
 #include <kguiitem.h>
 #include <kstdguiitem.h> 
 
-class QDragObject;
+class TQDragObject;
 /**
  * This is nothing but a TQPushButton with drag-support and KGuiItem support. You have to call
  * setDragEnabled( true ) and override the virtual method

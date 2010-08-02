@@ -22,9 +22,9 @@
 
 #include <kdelibs_export.h>
 
-class QStringList;
-class QPainter;
-class QMouseEvent;
+class TQStringList;
+class TQPainter;
+class TQMouseEvent;
 
 class KAnimWidgetPrivate;
 /**

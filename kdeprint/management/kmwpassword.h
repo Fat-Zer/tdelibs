@@ -22,8 +22,8 @@
 
 #include "kmwizardpage.h"
 
-class QLineEdit;
-class QButtonGroup;
+class TQLineEdit;
+class TQButtonGroup;
 
 class KMWPassword : public KMWizardPage
 {

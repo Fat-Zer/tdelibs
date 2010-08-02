@@ -21,8 +21,8 @@
 #define KCMENUMNGR_H
 
 
-class QWidget;
-class QPopupMenu;
+class TQWidget;
+class TQPopupMenu;
 class KContextMenuManagerPrivate;
 #include <tqobject.h>
 #include <tqptrdict.h>

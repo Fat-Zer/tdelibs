@@ -23,7 +23,7 @@
 #include "cupsdpage.h"
 
 class KIntNumInput;
-class QCheckBox;
+class TQCheckBox;
 
 class CupsdJobsPage : public CupsdPage
 {

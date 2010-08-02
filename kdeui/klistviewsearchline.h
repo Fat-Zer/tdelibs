@@ -23,8 +23,8 @@
 #include <tqhbox.h>
 
 class KListView;
-class QListViewItem;
-class QToolButton;
+class TQListViewItem;
+class TQToolButton;
 
 /**
  * This class makes it easy to add a search line for filtering the items in a

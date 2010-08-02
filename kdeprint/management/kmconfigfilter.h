@@ -23,8 +23,8 @@
 #include "kmconfigpage.h"
 
 class KListBox;
-class QToolButton;
-class QLineEdit;
+class TQToolButton;
+class TQLineEdit;
 
 class KMConfigFilter : public KMConfigPage
 {

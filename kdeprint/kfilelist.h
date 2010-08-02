@@ -25,8 +25,8 @@
 #include <kurl.h>
 
 class KListView;
-class QToolButton;
-class QListViewItem;
+class TQToolButton;
+class TQListViewItem;
 
 class KFileList : public QWidget
 {

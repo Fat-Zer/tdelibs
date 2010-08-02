@@ -16,10 +16,10 @@
 #include <kurl.h>
 #include <kpreviewwidgetbase.h>
 
-class QCheckBox;
-class QPushButton;
-class QLabel;
-class QTimer;
+class TQCheckBox;
+class TQPushButton;
+class TQLabel;
+class TQTimer;
 
 class KFileDialog;
 class KFileItem;

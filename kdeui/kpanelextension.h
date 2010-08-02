@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqframe.h>
 #include <kdelibs_export.h>
 
-class QPopupMenu;
+class TQPopupMenu;
 class KConfig;
 class KPanelExtensionPrivate;
 

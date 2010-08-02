@@ -27,10 +27,10 @@
 #include <tqstring.h>
 #include <kio/global.h>
 
-class QStringList;
-class QWidget;
+class TQStringList;
+class TQWidget;
 class KURL;
-template<typename T, typename K> class QMap;
+template<typename T, typename K> class TQMap;
 
 namespace KIO {
 

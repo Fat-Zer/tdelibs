@@ -28,8 +28,8 @@
 #include "kresolver.h"
 
 // forward declarations
-class QString;
-template <class T> class QValueList;
+class TQString;
+template <class T> class TQValueList;
 
 namespace KNetwork {
 

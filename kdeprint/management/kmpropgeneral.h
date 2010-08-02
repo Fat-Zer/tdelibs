@@ -22,7 +22,7 @@
 
 #include "kmpropwidget.h"
 
-class QLabel;
+class TQLabel;
 
 class KMPropGeneral : public KMPropWidget
 {

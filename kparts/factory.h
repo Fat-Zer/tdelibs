@@ -22,7 +22,7 @@
 
 #include <klibloader.h>
 
-class QWidget;
+class TQWidget;
 
 namespace KParts
 {

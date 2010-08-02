@@ -25,9 +25,9 @@
 #include <tqobject.h>
 #include <tqptrdict.h>
 
-class QPoint;
-class QTimer;
-class QWidget;
+class TQPoint;
+class TQTimer;
+class TQWidget;
 
 /**
  * I don't want the eventFilter to be in KCursor, so we have another class

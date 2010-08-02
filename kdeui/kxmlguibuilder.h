@@ -26,7 +26,7 @@
 #include <kdelibs_export.h>
 
 class KXMLGUIBuilderPrivate;
-class QWidget;
+class TQWidget;
 class KInstance;
 class KXMLGUIClient;
 

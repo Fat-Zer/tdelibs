@@ -23,13 +23,13 @@
 #include <kdialogbase.h>
 #include "printcapentry.h"
 
-class QLineEdit;
-class QCheckBox;
-class QSpinBox;
-class QComboBox;
-class QListView;
+class TQLineEdit;
+class TQCheckBox;
+class TQSpinBox;
+class TQComboBox;
+class TQListView;
 class QListviewItem;
-class QWidgetStack;
+class TQWidgetStack;
 
 class EditEntryDialog : public KDialogBase
 {

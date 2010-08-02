@@ -67,7 +67,7 @@ class KatePartPluginInfo;
 
 class KTempFile;
 
-class QTimer;
+class TQTimer;
 
 class KateKeyInterceptorFunctor;
 

@@ -26,9 +26,9 @@
 
 #include <kservice.h>
 
-class QPixmap;
-class QString;
-class QStringList;
+class TQPixmap;
+class TQString;
+class TQStringList;
 
 /**
  * @ingroup kcmodule

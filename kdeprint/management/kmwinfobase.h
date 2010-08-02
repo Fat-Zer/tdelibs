@@ -23,8 +23,8 @@
 #include "kmwizardpage.h"
 #include <tqptrlist.h>
 
-class QLabel;
-class QLineEdit;
+class TQLabel;
+class TQLineEdit;
 
 class KDEPRINT_EXPORT KMWInfoBase : public KMWizardPage
 {

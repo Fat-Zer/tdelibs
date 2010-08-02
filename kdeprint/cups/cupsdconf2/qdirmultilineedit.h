@@ -23,8 +23,8 @@
 #include <tqwidget.h>
 
 class KListView;
-class QListViewItem;
-class QPushButton;
+class TQListViewItem;
+class TQPushButton;
 
 class QDirMultiLineEdit : public QWidget
 {

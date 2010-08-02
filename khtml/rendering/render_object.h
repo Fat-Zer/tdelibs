@@ -40,8 +40,8 @@
 #include "misc/helper.h"
 #include "rendering/render_style.h"
 
-class QPainter;
-class QTextStream;
+class TQPainter;
+class TQTextStream;
 class CSSStyle;
 class KHTMLView;
 

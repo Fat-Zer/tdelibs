@@ -35,9 +35,9 @@
 
 #include <kdelibs_export.h>
 
-class QPixmap;
-class QPainter;
-class QFrame;
+class TQPixmap;
+class TQPainter;
+class TQFrame;
 
 class KMultiTabBarPrivate;
 class KMultiTabBarTabPrivate;

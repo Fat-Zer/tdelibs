@@ -53,7 +53,7 @@ class GradientSet
 };
 
 
-class QPopupMenu;
+class TQPopupMenu;
 
 class HighColorStyle : public KStyle
 {

@@ -83,7 +83,7 @@ protected:
 
    virtual TQDataStream& read( TQDataStream &s, TQPtrCollection::Item &item)
    {
-      TQCString *str = new QCString;
+      TQCString *str = new TQCString;
       s >> (*str);
       item = (void *)str;
       return s;

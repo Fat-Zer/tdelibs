@@ -22,7 +22,7 @@
 #include <kbookmarkmanager.h>
 #include <kbookmarkmenu.h>
 
-class QTextStream;
+class TQTextStream;
 class KPopupMenu;
 
 

@@ -36,7 +36,7 @@
 class KateDocument;
 class KateView;
 class RegressionTest;
-class QTimer;
+class TQTimer;
 
 namespace KParts {
   class URLArgs;

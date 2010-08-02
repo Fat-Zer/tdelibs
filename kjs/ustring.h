@@ -34,8 +34,8 @@ namespace DOM {
   class DOMString;
 }
 class KJScript;
-class QString;
-class QConstString;
+class TQString;
+class TQConstString;
 
 namespace KJS {
 

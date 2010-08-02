@@ -31,7 +31,7 @@
 #include "kjs_binding.h"
 #include "kjs_views.h"
 
-class QTimer;
+class TQTimer;
 class KHTMLView;
 class KHTMLPart;
 

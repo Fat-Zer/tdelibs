@@ -23,9 +23,9 @@
 #include <kdialogbase.h>
 
 class KMPrinter;
-class QLineEdit;
-class QCheckBox;
-class QComboBox;
+class TQLineEdit;
+class TQCheckBox;
+class TQComboBox;
 class KIconButton;
 class KXmlCommandSelector;
 

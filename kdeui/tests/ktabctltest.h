@@ -7,8 +7,8 @@
 
 #include <tqwidget.h>
 class KTabCtl;
-class QPushButton;
-class QMultiLineEdit;
+class TQPushButton;
+class TQMultiLineEdit;
 
 class TopLevel : public QWidget
 {

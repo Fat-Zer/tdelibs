@@ -2,7 +2,7 @@
 #ifndef XVIEW_H
 #define XVIEW_H
 
-class QImageIO;
+class TQImageIO;
 
 extern "C" {   
 void kimgio_xv_read( TQImageIO * );

@@ -49,7 +49,7 @@ setAutoSaveSettings();
     menuBar = new KMenuBar (this);
 
     // First popup... 
-    fileMenu = new QPopupMenu;
+    fileMenu = new TQPopupMenu;
     // We insert this popup in menubar with caption "File".
     // Prefix "&" means that "F" will be underlined
     menuBar->insertItem ("&File", fileMenu);
@@ -59,12 +59,12 @@ setAutoSaveSettings();
                           TQT_SLOT( quit() ), ALT + Key_Q );
 
     // Another popup...
-    toolBarMenu = new QPopupMenu;
+    toolBarMenu = new TQPopupMenu;
     menuBar->insertItem ("&Toolbars", toolBarMenu);
     toolBarMenu->insertItem ("(Un)Hide tollbar 1", this, TQT_SLOT(slotHide1()));
     toolBarMenu->insertItem ("(Un)Hide tollbar 2", this, TQT_SLOT(slotHide2()));
 
-    itemsMenu = new QPopupMenu;
+    itemsMenu = new TQPopupMenu;
     menuBar->insertItem ("&Items", itemsMenu);
 
     exitB = true;   // exit button is shown
@@ -232,7 +232,7 @@ setAutoSaveSettings();
 
     // This is not strictly related to toolbars, menubars or KMainWindow.
     // Setup popup for completions
-    completions = new QPopupMenu;
+    completions = new TQPopupMenu;
   
     completions->insertItem("/");
     completions->insertItem("/usr/");

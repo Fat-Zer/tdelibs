@@ -24,7 +24,7 @@
 #include "resourceconfigwidget.h"
 
 class KLineEdit;
-class QSpinBox;
+class TQSpinBox;
 
 namespace KABC {
 

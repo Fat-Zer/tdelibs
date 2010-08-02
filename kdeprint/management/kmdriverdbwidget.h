@@ -23,9 +23,9 @@
 #include <tqwidget.h>
 #include "kmdbentry.h"
 
-class QListBox;
-class QCheckBox;
-class QPushButton;
+class TQListBox;
+class TQCheckBox;
+class TQPushButton;
 
 class KMDriverDbWidget : public QWidget
 {

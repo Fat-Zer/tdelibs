@@ -24,9 +24,9 @@
 #include <tqmap.h>
 #include <kdelibs_export.h>
 
-class QCString;
-class QSignal;
-class QStrList;
+class TQCString;
+class TQSignal;
+class TQStrList;
 template<class T> class KStaticDeleter;
 class KInstance;
 class KConfig;

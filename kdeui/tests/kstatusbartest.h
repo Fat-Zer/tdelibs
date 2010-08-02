@@ -6,7 +6,7 @@
 #include <kstatusbar.h>
 #include <kmainwindow.h>
 
-class QMultiLineEdit;
+class TQMultiLineEdit;
 
 class testWindow  : public KMainWindow
 {

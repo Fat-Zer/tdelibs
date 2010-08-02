@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kdatastream.h> // needed for proper bool marshalling
 #include "kdelibs_export.h"
 
-class QDataStream;
+class TQDataStream;
 class DCOPObject;
 class DCOPClient;
 

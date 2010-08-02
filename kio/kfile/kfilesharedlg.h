@@ -21,9 +21,9 @@
 #define kfilesharedlg_h
 
 #include <kpropertiesdialog.h>
-class QVBoxLayout;
-class QRadioButton;
-class QPushButton;
+class TQVBoxLayout;
+class TQRadioButton;
+class TQPushButton;
 
 /**
  * This plugin provides a page to KPropsDlg, showing the "file sharing" options

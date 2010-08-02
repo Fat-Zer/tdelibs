@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef HIGHCONTRAST_CONF_H
 #define HIGHCONTRAST_CONF_H
 
-class QCheckBox;
+class TQCheckBox;
 
 class HighContrastStyleConfig: public QWidget
 {

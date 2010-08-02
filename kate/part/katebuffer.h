@@ -37,7 +37,7 @@ class KateBufBlockList;
 class KateBuffer;
 class KateFileLoader;
 
-class QTextCodec;
+class TQTextCodec;
 
 /**
  * The KateBufBlock class contains an amount of data representing

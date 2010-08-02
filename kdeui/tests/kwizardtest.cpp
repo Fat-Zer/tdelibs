@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 		   &a, TQT_SLOT(quit()));
   for(int i = 1; i < 11; i++)
   {
-    TQWidget *p = new QWidget;
+    TQWidget *p = new TQWidget;
     TQString msg = TQString("This is page %1 out of 10").arg(i);
     TQLabel *label = new TQLabel(msg, p);
     TQHBoxLayout *layout = new TQHBoxLayout(p, 5);

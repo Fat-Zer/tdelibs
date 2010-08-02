@@ -24,9 +24,9 @@
 
 #include <kdelibs_export.h>
 
-class QButtonGroup;
-class QComboBox;
-class QLabel;
+class TQButtonGroup;
+class TQComboBox;
+class TQLabel;
 class DrMain;
 
 class KDEPRINT_EXPORT KPQtPage : public KPrintDialogPage

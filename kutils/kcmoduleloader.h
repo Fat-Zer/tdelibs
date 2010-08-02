@@ -24,7 +24,7 @@
 #include <kcmodule.h>
 #include <kcmoduleinfo.h>
 
-class QWidget;
+class TQWidget;
 class KLibLoader;
 
 /**

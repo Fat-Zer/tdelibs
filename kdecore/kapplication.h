@@ -40,8 +40,8 @@ typedef void Display;
 #include <kinstance.h>
 
 struct _IceConn;
-class QPopupMenu;
-class QStrList;
+class TQPopupMenu;
+class TQStrList;
 class KSessionManaged;
 class KStyle;
 class KURL;

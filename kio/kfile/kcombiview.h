@@ -29,8 +29,8 @@
 #include <kfileview.h>
 
 class KFileIconView;
-class QEvent;
-class QIconViewItem;
+class TQEvent;
+class TQIconViewItem;
 
 /**
  * This view is designed to combine two KFileViews into one widget, to show

@@ -22,7 +22,7 @@
 
 #include "kmpropwidget.h"
 
-class QTextView;
+class TQTextView;
 
 class KMPropUsers : public KMPropWidget
 {

@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <kdelibs_export.h>
 
-class QTextCodec;
+class TQTextCodec;
 class KProcIO;
 class KProcess;
 class KSpellDlg;

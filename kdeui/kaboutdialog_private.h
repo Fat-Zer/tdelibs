@@ -24,9 +24,9 @@
 #define _KABOUTDIALOG_PRIVATE_H_
 
 #include <tqlabel.h>
-class QFrame;
-class QTabWidget;
-class QVBoxLayout;
+class TQFrame;
+class TQTabWidget;
+class TQVBoxLayout;
 
 /**
  * Used internally by KAboutContainerBase

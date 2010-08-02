@@ -35,7 +35,7 @@
 #ifndef	_ICO_H_
 #define _ICO_H_
 
-class QImageIO;
+class TQImageIO;
 
 extern "C"
 {

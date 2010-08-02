@@ -29,10 +29,10 @@
 class KApplicationTree;
 class KURLRequester;
 
-class QWidget;
-class QCheckBox;
-class QPushButton;
-class QLabel;
+class TQWidget;
+class TQCheckBox;
+class TQPushButton;
+class TQLabel;
 
 class KOpenWithDlgPrivate;
 

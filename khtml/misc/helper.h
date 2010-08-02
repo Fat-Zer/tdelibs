@@ -23,7 +23,7 @@
 #define html_helper_h
 
 #include <tqcolor.h>
-class QPainter;
+class TQPainter;
 #include <tqfontmetrics.h>
 #include <tqfont.h>
 

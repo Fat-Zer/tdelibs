@@ -27,9 +27,9 @@
 #include <kcmodule.h>
 #include <kcmoduleloader.h>
 
-class QTabWidget;
-class QWidget;
-class QVBoxLayout;
+class TQTabWidget;
+class TQWidget;
+class TQVBoxLayout;
 
 class KCModuleProxy;
 

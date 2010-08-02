@@ -24,7 +24,7 @@
 #include <kinstance.h>
 #include <klibloader.h>
 
-class QImage;
+class TQImage;
 
 /**
  * This is a base class for scanning dialogs. You can derive from this class

@@ -25,8 +25,8 @@
 #include <tqdatetime.h>
 #include <kprocess.h>
 
-class QWidget;
-class QProgressDialog;
+class TQWidget;
+class TQProgressDialog;
 
 class KMDBCreator : public QObject
 {

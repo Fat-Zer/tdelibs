@@ -22,11 +22,11 @@
 
 #include <kdialogbase.h>
 
-class QLineEdit;
-class QSpinBox;
+class TQLineEdit;
+class TQSpinBox;
 class KURLRequester;
-class QTextEdit;
-class QComboBox;
+class TQTextEdit;
+class TQComboBox;
 
 namespace KNS {
 

@@ -22,7 +22,7 @@
 
 #include "kmmanager.h"
 
-class QDomElement;
+class TQDomElement;
 class KMPrinter;
 
 class KMFoomaticManager : public KMManager

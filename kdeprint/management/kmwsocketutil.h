@@ -31,9 +31,9 @@ struct SocketInfo
 	int	Port;
 };
 
-class QProgressBar;
-class QLineEdit;
-class QComboBox;
+class TQProgressBar;
+class TQLineEdit;
+class TQComboBox;
 class KMWSocketUtil;
 
 class SocketConfig : public KDialogBase

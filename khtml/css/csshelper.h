@@ -27,7 +27,7 @@
 
 #include "dom/dom_string.h"
 
-class QPaintDeviceMetrics;
+class TQPaintDeviceMetrics;
 class KHTMLSettings;
 
 namespace DOM

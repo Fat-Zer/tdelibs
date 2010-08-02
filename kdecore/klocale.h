@@ -25,11 +25,11 @@
 #include <tqstring.h>
 #include <kdelibs_export.h>
 
-class QStringList;
-class QTextCodec;
-class QDate;
-class QTime;
-class QDateTime;
+class TQStringList;
+class TQTextCodec;
+class TQDate;
+class TQTime;
+class TQDateTime;
 
 class KGlobal;
 class KConfig;

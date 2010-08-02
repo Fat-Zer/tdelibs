@@ -30,8 +30,8 @@
 #include "rendering/render_style.h"
 #include "html/html_formimpl.h"
 
-class QWidget;
-class QLineEdit;
+class TQWidget;
+class TQLineEdit;
 class QListboxItem;
 
 #include <ktextedit.h>

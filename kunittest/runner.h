@@ -44,7 +44,7 @@ using namespace std;
 
 #include "tester.h"
 
-class QSocketNotifier;
+class TQSocketNotifier;
 
 namespace KUnitTest
 {

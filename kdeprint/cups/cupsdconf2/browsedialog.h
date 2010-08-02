@@ -22,8 +22,8 @@
 
 #include <kdialogbase.h>
 
-class QLineEdit;
-class QComboBox;
+class TQLineEdit;
+class TQComboBox;
 struct CupsdConf;
 
 class BrowseDialog : public KDialogBase

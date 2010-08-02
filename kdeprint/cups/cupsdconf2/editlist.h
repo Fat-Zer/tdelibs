@@ -24,7 +24,7 @@
 #include <tqpixmap.h>
 
 class KListBox;
-class QPushButton;
+class TQPushButton;
 
 class EditList : public QWidget
 {

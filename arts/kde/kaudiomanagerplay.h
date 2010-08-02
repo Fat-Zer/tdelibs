@@ -25,7 +25,7 @@
 #include <kdelibs_export.h>
 
 class KArtsServer;
-class QString;
+class TQString;
 
 /**
  * KDE Wrapper for Arts::Synth_AMAN_PLAY. Use this class to create an entry in

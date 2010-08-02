@@ -28,8 +28,8 @@
 #include <kservice.h>
 
 class KDataTool;
-class QPixmap;
-class QStringList;
+class TQPixmap;
+class TQStringList;
 class KInstance;
 
 // If you're only looking at implementing a data-tool, skip directly to the last

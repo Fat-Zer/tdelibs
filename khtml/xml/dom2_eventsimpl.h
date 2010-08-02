@@ -29,7 +29,7 @@
 #include "xml/dom2_viewsimpl.h"
 
 class KHTMLPart;
-class QMouseEvent;
+class TQMouseEvent;
 
 namespace DOM {
 

@@ -73,17 +73,17 @@ class KDockWidgetPrivate;
 class KDockWidgetHeaderPrivate;
 class KDockArea;
 
-class QObjectList;
-class QPopupMenu;
-class QVBoxLayout;
-class QHBoxLayout;
-class QPixmap;
+class TQObjectList;
+class TQPopupMenu;
+class TQVBoxLayout;
+class TQHBoxLayout;
+class TQPixmap;
 
 #ifndef NO_KDE2
 class KToolBar;
 class KConfig;
 #else
-class QToolBar;
+class TQToolBar;
 #endif
 
 class KDockContainer;

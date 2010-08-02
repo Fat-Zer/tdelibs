@@ -25,7 +25,7 @@
 
 #include <kdelibs_export.h>
 
-class QLabel;
+class TQLabel;
 
 class KDEPRINT_EXPORT MessageWindow : public QWidget
 {

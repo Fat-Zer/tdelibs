@@ -1074,7 +1074,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   //
   // add a layout for the right side
   //
-  d->l_right = new QVBoxLayout;
+  d->l_right = new TQVBoxLayout;
   tl_layout->addLayout(d->l_right, 0, 2);
 
   //

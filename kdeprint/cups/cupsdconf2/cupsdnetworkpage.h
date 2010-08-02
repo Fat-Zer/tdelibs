@@ -23,8 +23,8 @@
 #include "cupsdpage.h"
 
 class KIntNumInput;
-class QCheckBox;
-class QComboBox;
+class TQCheckBox;
+class TQComboBox;
 class EditList;
 class SizeWidget;
 

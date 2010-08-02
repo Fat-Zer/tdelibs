@@ -35,12 +35,12 @@
 #include <kstdaction.h>
 #include <kicontheme.h>
 
-class QMenuBar;
-class QPopupMenu;
-class QComboBox;
-class QPoint;
-class QIconSet;
-class QString;
+class TQMenuBar;
+class TQPopupMenu;
+class TQComboBox;
+class TQPoint;
+class TQIconSet;
+class TQString;
 class KToolBar;
 
 class KAccel;
@@ -144,7 +144,7 @@ class KMainWindow;
  * is invoked, it will use the fileNew() slot to execute it.
  *
  * \code
- * TQPopupMenu *file = new QPopupMenu;
+ * TQPopupMenu *file = new TQPopupMenu;
  * newAct->plug(file);
  * \endcode
  * That just inserted the action into the File menu.  The point is, it's not

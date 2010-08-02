@@ -50,8 +50,8 @@
 
 #include "render_object.h"
 
-class QScrollBar;
-template <class T> class QPtrVector;
+class TQScrollBar;
+template <class T> class TQPtrVector;
 
 namespace khtml {
     class RenderStyle;

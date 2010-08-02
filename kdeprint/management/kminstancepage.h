@@ -26,7 +26,7 @@
 
 class KListBox;
 class KMPrinter;
-class QButton;
+class TQButton;
 
 class KMInstancePage : public TQWidget, public KMPrinterPage
 {

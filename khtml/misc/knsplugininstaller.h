@@ -40,7 +40,7 @@
 #include <tqvbox.h>
 #include <tqwidget.h>
 
-class QStringList;
+class TQStringList;
 
 /*
  * This class contains all the infos needed to install a given plugin

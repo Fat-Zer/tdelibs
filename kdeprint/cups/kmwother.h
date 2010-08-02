@@ -22,9 +22,9 @@
 
 #include "kmwizardpage.h"
 
-class QLineEdit;
+class TQLineEdit;
 class KListView;
-class QListViewItem;
+class TQListViewItem;
 
 class KMWOther : public KMWizardPage
 {

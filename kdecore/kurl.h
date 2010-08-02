@@ -24,9 +24,9 @@
 #include <tqvaluelist.h>
 #include "kdelibs_export.h"
 
-class QUrl;
-class QStringList;
-template <typename K, typename V> class QMap;
+class TQUrl;
+class TQStringList;
+template <typename K, typename V> class TQMap;
 
 class KURLPrivate;
 

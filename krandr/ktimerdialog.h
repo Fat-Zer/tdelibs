@@ -23,10 +23,10 @@
 
 #include <kdialogbase.h>
 
-class QTimer;
-class QHBox;
-class QProgressBar;
-class QLabel;
+class TQTimer;
+class TQHBox;
+class TQProgressBar;
+class TQLabel;
 
 /**
  * Provides a dialog that is only available for a specified amount

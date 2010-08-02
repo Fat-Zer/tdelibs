@@ -25,9 +25,9 @@
 
 #include <kdialogbase.h>
 
-class QListView;
-class QComboBox;
-class QButtonGroup;
+class TQListView;
+class TQComboBox;
+class TQButtonGroup;
 
 namespace KABC {
 

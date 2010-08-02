@@ -24,8 +24,8 @@
 #include <kprocess.h>
 #include <kurl.h>
 
-class QLabel;
-class QCheckBox;
+class TQLabel;
+class TQCheckBox;
 
 class EscpWidget : public QWidget
 {

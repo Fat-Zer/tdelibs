@@ -22,8 +22,8 @@
 #include <tqstring.h>
 #include <tqmemarray.h>
 #include <kurl.h>
-class QWidget;
-class QMimeSource;
+class TQWidget;
+class TQMimeSource;
 
 // KDE4 TODO pass a parent widget to all methods that will display a message box
 

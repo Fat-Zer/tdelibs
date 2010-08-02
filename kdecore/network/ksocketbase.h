@@ -75,7 +75,7 @@
 #define IO_SocketCreateError	(IO_UnspecifiedError+4)
 #define IO_BindError		(IO_UnspecifiedError+5)
 
-class QMutex;
+class TQMutex;
 
 namespace KNetwork {
 

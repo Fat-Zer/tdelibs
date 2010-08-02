@@ -22,7 +22,7 @@
 
 #include "kmwizardpage.h"
 
-class QTextView;
+class TQTextView;
 
 class KMWEnd : public KMWizardPage
 {

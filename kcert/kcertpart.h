@@ -30,18 +30,18 @@
 #include <klistview.h>
 
 class KSSLCertBox;
-class QFrame;
-class QLabel;
+class TQFrame;
+class TQLabel;
 class KCertPartPrivate;
 class KComboBox;
-class QButton;
+class TQButton;
 class KSSLSigners;
 class KSSLPKCS12;
 class KSSLCertificate;
-class QTabWidget;
-class QMultiLineEdit;
+class TQTabWidget;
+class TQMultiLineEdit;
 class KAboutData;
-class QGridLayout;
+class TQGridLayout;
 
 
 class KX509Item : public KListViewItem {

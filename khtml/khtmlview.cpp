@@ -2760,7 +2760,7 @@ void KHTMLView::print(bool quick)
         printer->setCreator(TQString("KDE %1.%2.%3 HTML Library").arg(KDE_VERSION_MAJOR).arg(KDE_VERSION_MINOR).arg(KDE_VERSION_RELEASE));
         printer->setDocName(docname);
 
-        TQPainter *p = new QPainter;
+        TQPainter *p = new TQPainter;
         p->begin( printer );
         khtml::setPrintPainter( p );
 

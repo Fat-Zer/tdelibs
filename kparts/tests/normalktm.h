@@ -6,7 +6,7 @@
 #include <kmainwindow.h>
 
 class KAction;
-class QWidget;
+class TQWidget;
 
 class Shell : public KMainWindow
 {

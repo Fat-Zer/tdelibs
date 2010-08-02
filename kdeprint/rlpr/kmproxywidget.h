@@ -23,8 +23,8 @@
 #include <tqgroupbox.h>
 
 class KConfig;
-class QLineEdit;
-class QCheckBox;
+class TQLineEdit;
+class TQCheckBox;
 
 class KMProxyWidget : public QGroupBox
 {

@@ -25,11 +25,11 @@
 
 class KURLRequester;
 
-class QWidget;
-class QCheckBox;
-class QPushButton;
-class QLabel;
-class QStringList;
+class TQWidget;
+class TQCheckBox;
+class TQPushButton;
+class TQLabel;
+class TQStringList;
 
 
 /* ------------------------------------------------------------------------- */

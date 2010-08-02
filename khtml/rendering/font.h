@@ -30,8 +30,8 @@
 #include <tqmap.h>
 #include <tqpainter.h>
 
-class QFontDatabase;
-class QPaintDeviceMetrics;
+class TQFontDatabase;
+class TQPaintDeviceMetrics;
 
 namespace khtml
 {

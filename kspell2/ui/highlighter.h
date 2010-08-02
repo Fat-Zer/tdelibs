@@ -25,7 +25,7 @@
 
 #include <tqsyntaxhighlighter.h>
 
-class QTextEdit;
+class TQTextEdit;
 
 namespace KSpell2
 {

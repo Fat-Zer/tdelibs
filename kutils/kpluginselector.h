@@ -27,7 +27,7 @@
 
 class KInstance;
 class KPluginInfo;
-class QWidgetStack;
+class TQWidgetStack;
 class KConfig;
 class KConfigGroup;
 

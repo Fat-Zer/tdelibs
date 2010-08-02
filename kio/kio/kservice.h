@@ -27,11 +27,11 @@
 
 #include "ksycocaentry.h"
 
-class QDataStream;
+class TQDataStream;
 class KDesktopFile;
 class KService;
 class KBuildSycoca;
-class QWidget;
+class TQWidget;
 
 /**
  * Represent a service, i.e. an application bound to one or several mimetypes

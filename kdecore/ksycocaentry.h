@@ -23,7 +23,7 @@
 
 #include <tqstringlist.h>
 #include <ksharedptr.h>
-class QDataStream;
+class TQDataStream;
 
 /**
  * Base class for all Sycoca entries.

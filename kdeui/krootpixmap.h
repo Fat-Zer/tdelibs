@@ -17,9 +17,9 @@
 
 #ifndef Q_WS_QWS //FIXME
 
-class QRect;
-class QWidget;
-class QTimer;
+class TQRect;
+class TQWidget;
+class TQTimer;
 class KSharedPixmap;
 class KRootPixmapData;
 

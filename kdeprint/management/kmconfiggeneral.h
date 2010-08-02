@@ -24,8 +24,8 @@
 
 class KIntNumInput;
 class KURLRequester;
-class QCheckBox;
-class QPushButton;
+class TQCheckBox;
+class TQPushButton;
 class KMConfigGeneral : public KMConfigPage
 {
 	Q_OBJECT

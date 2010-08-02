@@ -10,7 +10,7 @@
 #ifndef KIMG_TGA_H
 #define KIMG_TGA_H
 
-class QImageIO;
+class TQImageIO;
 
 extern "C" {
 void kimgio_tga_read( TQImageIO * );

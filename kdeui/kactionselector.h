@@ -23,11 +23,11 @@
 
 #include <kdelibs_export.h>
 
-class QListBox;
-class QListBoxItem;
-class QKeyEvent;
-class QEvent;
-class QIconSet;
+class TQListBox;
+class TQListBoxItem;
+class TQKeyEvent;
+class TQEvent;
+class TQIconSet;
 
 class KActionSelectorPrivate;
 

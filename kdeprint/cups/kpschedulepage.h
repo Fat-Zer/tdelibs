@@ -22,9 +22,9 @@
 
 #include <kprintdialogpage.h>
 
-class QComboBox;
+class TQComboBox;
 class QTimeEdit;
-class QLineEdit;
+class TQLineEdit;
 class KIntNumInput;
 
 class KPSchedulePage : public KPrintDialogPage

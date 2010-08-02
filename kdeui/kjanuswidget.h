@@ -30,14 +30,14 @@
 
 class KListView;
 
-class QGrid;
-class QHBox;
-class QLabel;
-class QTabWidget;
-class QVBox;
-class QWidgetStack;
+class TQGrid;
+class TQHBox;
+class TQLabel;
+class TQTabWidget;
+class TQVBox;
+class TQWidgetStack;
 class KSeparator;
-class QListViewItem;
+class TQListViewItem;
 class KGuiItem;
 
 /**

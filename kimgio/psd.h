@@ -12,7 +12,7 @@
 
 #include <kdemacros.h>
 
-class QImageIO;
+class TQImageIO;
 
 extern "C" {
 KDE_EXPORT void kimgio_psd_read( TQImageIO * );

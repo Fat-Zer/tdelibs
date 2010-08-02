@@ -44,9 +44,9 @@
 
 #include <kurl.h>
 
-class QPaintDevice;
-class QTextCodec;
-class QPaintDeviceMetrics;
+class TQPaintDevice;
+class TQTextCodec;
+class TQPaintDeviceMetrics;
 class KHTMLView;
 
 namespace khtml {

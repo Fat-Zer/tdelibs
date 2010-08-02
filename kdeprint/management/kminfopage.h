@@ -23,7 +23,7 @@
 #include "kmprinterpage.h"
 #include <tqwidget.h>
 
-class QLabel;
+class TQLabel;
 
 class KMInfoPage : public TQWidget, public KMPrinterPage
 {

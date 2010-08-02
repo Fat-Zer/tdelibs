@@ -41,8 +41,8 @@
 
 #include "dom/dom_misc.h"
 
-class QListBox;
-class QComboBox;
+class TQListBox;
+class TQComboBox;
 class KActionCollection;
 class KAction;
 

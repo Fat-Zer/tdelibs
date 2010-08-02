@@ -19,7 +19,7 @@
 #include <tqrect.h>
 #include "kdelibs_export.h"
 
-class QWidget;
+class TQWidget;
 
 class KIconEffectPrivate;
 

@@ -15,10 +15,10 @@
 
 #include <kdelibs_export.h>
 
-class QBoxLayout;
-class QTimer;
-class QLabel;
-class QVBox;
+class TQBoxLayout;
+class TQTimer;
+class TQLabel;
+class TQVBox;
 
 /**
  * @short A dialog-like popup that displays messages without interupting the user.

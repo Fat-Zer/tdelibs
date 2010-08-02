@@ -23,9 +23,9 @@
 #include "cupsdpage.h"
 
 class KIntNumInput;
-class QCheckBox;
+class TQCheckBox;
 class EditList;
-class QComboBox;
+class TQComboBox;
 
 class CupsdBrowsingPage : public CupsdPage
 {

@@ -25,7 +25,7 @@
 #include <kdelibs_export.h>
 
 class KURL;
-class QStrIList;
+class TQStrIList;
 
 /**
  * This library can create responses for SASL authentication for a given

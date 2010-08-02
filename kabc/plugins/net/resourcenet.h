@@ -27,8 +27,8 @@
 
 #include <kabc/resource.h>
 
-class QFile;
-class QTimer;
+class TQFile;
+class TQTimer;
 class KTempFile;
 
 namespace KIO {

@@ -26,16 +26,16 @@ using namespace std;
 #include <tqcstring.h>
 #include <tqstrlist.h>
 
-class QTimer;
-class QDate;
-class QString;
-class QDateTime;
+class TQTimer;
+class TQDate;
+class TQString;
+class TQDateTime;
 
 extern "C" {
 #include <unistd.h>
 }
 
-class QTextStream;
+class TQTextStream;
 
 /**
  * This is some STL interna, a function object for use with STL

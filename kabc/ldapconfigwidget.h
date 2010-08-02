@@ -29,11 +29,11 @@
 #include <kabc/ldif.h>
 #include <kio/job.h>
 
-class QGridLayout;
-class QSpinBox;
-class QPushButton;
-class QCheckBox;
-class QRadioButton;
+class TQGridLayout;
+class TQSpinBox;
+class TQPushButton;
+class TQCheckBox;
+class TQRadioButton;
 class KComboBox;
 class KLineEdit;
 class KProgressDialog;

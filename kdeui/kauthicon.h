@@ -25,8 +25,8 @@
 
 #include <kdelibs_export.h>
 
-class QHBoxLayout;
-class QLabel;
+class TQHBoxLayout;
+class TQLabel;
 class KAuthIconPrivate;
 
 /**

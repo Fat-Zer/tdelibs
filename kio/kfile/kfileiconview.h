@@ -22,8 +22,8 @@
 #define KFILEICONVIEW_H
 
 class KFileItem;
-class QWidget;
-class QLabel;
+class TQWidget;
+class TQLabel;
 
 #include <kiconview.h>
 #include <kiconloader.h>

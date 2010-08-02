@@ -5,7 +5,7 @@
 
 #include <tqwidget.h>
 
-class QLabel;
+class TQLabel;
 
 /** test: a small test program for KLocale
     */

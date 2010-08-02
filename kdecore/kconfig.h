@@ -22,7 +22,7 @@
 #ifndef _KCONFIG_H
 #define _KCONFIG_H
 
-class QTimer;
+class TQTimer;
 
 #include <tqvaluelist.h>
 

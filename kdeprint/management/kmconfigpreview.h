@@ -22,7 +22,7 @@
 
 #include "kmconfigpage.h"
 
-class QCheckBox;
+class TQCheckBox;
 class KURLRequester;
 
 class KMConfigPreview : public KMConfigPage

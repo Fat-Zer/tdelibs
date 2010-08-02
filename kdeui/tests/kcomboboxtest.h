@@ -3,9 +3,9 @@
 
 #include <tqwidget.h>
 
-class QTimer;
-class QComboBox;
-class QPushButton;
+class TQTimer;
+class TQComboBox;
+class TQPushButton;
 
 class KComboBox;
 

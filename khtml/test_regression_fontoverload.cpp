@@ -268,7 +268,7 @@ KDE_EXPORT bool  TQFontDatabase::isSmoothlyScalable( const TQString &,
 const TQString &KHTMLSettings::availableFamilies()
 {
     if ( !avFamilies ) {
-        avFamilies = new QString;
+        avFamilies = new TQString;
         *avFamilies = ",Adobe Courier,Arial,Comic Sans MS,Courier,Helvetica,Times,Times New Roman,Utopia,Fixed,Ahem,";
     }
 

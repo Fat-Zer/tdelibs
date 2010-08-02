@@ -30,9 +30,9 @@
 
 #include <kdelibs_export.h>
 
-class QPainter;
-class QRect;
-template< typename T > class QValueVector;
+class TQPainter;
+class TQRect;
+template< typename T > class TQValueVector;
 
 namespace DOM {
     class HTMLDocumentImpl;

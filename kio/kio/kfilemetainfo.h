@@ -32,7 +32,7 @@
 
 #undef m_unit
 
-class QValidator;
+class TQValidator;
 class KFilePlugin;
 class KFileMetaInfoGroup;
 

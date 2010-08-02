@@ -41,8 +41,8 @@
 
 class KMdiChildArea;
 class KMdiChildView;
-class QPopupMenu;
-class QToolButton;
+class TQPopupMenu;
+class TQToolButton;
 
 //==============================================================================
 /**

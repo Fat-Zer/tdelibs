@@ -19,8 +19,8 @@
 #ifndef __ktexteditor_documentinfointerface_h__
 #define __ktexteditor_documentinfointerface_h__
 
-class QString;
-class QCString;
+class TQString;
+class TQCString;
 
 #include <kdelibs_export.h>
 

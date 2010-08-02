@@ -30,7 +30,7 @@ class KStandardDirs;
 class KStaticDeleterBase;
 class KStaticDeleterList;
 class KStringDict;
-class QString;
+class TQString;
 
 /**
  * Access to the KDE global objects.

@@ -25,7 +25,7 @@
 #include <errno.h>
 #include "kdelibs_export.h"
 
-class QDir;
+class TQDir;
 class KTempDirPrivate;
 
 /**

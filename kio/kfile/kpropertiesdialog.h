@@ -36,15 +36,15 @@
 #include <kfileitem.h>
 #include <kdialogbase.h>
 
-class QLineEdit;
-class QCheckBox;
-class QPushButton;
+class TQLineEdit;
+class TQCheckBox;
+class TQPushButton;
 class KLineEdit;
 class KURLRequester;
-class QButton;
+class TQButton;
 class KIconButton;
 class KPropsDlgPlugin;
-class QComboBox;
+class TQComboBox;
 
 #define KPropsPage KPropsDlgPlugin
 

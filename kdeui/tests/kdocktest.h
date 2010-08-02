@@ -3,7 +3,7 @@
 
 #include <kdockwidget.h>
 
-class QWidget;
+class TQWidget;
 class DockTest : public KDockArea
 {
   Q_OBJECT

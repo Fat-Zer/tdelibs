@@ -14,7 +14,7 @@
 
 #include <tqsize.h>
 class KPixmap;
-class QColor;
+class TQColor;
 
 /**
  * This class includes various pixmap-based graphical effects.

@@ -29,8 +29,8 @@ namespace KIO
 }
 
 class KListView;
-class QTextBrowser;
-class QFrame;
+class TQTextBrowser;
+class TQFrame;
 class KNewStuffGeneric;
 
 namespace KNS

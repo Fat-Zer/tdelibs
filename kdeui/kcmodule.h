@@ -27,7 +27,7 @@
 
 #include <kdelibs_export.h>
 
-class QStringList;
+class TQStringList;
 
 class KAboutData;
 class KConfigDialogManager;

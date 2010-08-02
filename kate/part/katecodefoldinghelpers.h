@@ -30,7 +30,7 @@ class KateCodeFoldingTree;
 class KateTextCursor;
 class KateBuffer;
 
-class QString;
+class TQString;
 //END
 
 class KateHiddenLineBlock

@@ -23,7 +23,7 @@
 #include <tqstringlist.h>
 #include <tqdict.h>
 
-class QFile;
+class TQFile;
 
 class Comment
 {

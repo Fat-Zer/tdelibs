@@ -40,7 +40,7 @@ Copyright (C) 1998, 1999, 2000 KDE Team
 #include "kstyledirs.h"
 #include <tqmap.h>
 
-class QImage;
+class TQImage;
 
 
 

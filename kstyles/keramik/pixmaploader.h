@@ -26,8 +26,8 @@
 #include <tqdict.h>
 #include <tqimage.h>
 
-class QPixmap;
-class QImage;
+class TQPixmap;
+class TQImage;
 
 #include "keramikrc.h"
 

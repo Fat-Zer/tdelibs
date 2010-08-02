@@ -25,7 +25,7 @@
 #include <kdelibs_export.h>
 
 class KConfigGroup;
-class QListViewItem;
+class TQListViewItem;
 class KPluginInfo;
 class KCModuleInfo;
 

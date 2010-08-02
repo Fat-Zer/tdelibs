@@ -22,7 +22,7 @@
 
 #include <kdialogbase.h>
 
-class QString;
+class TQString;
 class KPluginInfo;
 
 namespace KSettings

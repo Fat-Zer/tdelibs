@@ -21,7 +21,7 @@
 #include "kdelibs_export.h"
 
 class KRandomSequencePrivate;
-class QGList;
+class TQGList;
 /**
  * A class to create a pseudo-random sequence
  *

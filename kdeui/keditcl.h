@@ -25,14 +25,14 @@
 #include <tqstring.h>
 #include <kdialogbase.h>
 
-class QDropEvent;
-class QPushButton;
-class QCheckBox;
-class QRadioButton;
-class QTextStream;
+class TQDropEvent;
+class TQPushButton;
+class TQCheckBox;
+class TQRadioButton;
+class TQTextStream;
 class KHistoryCombo;
 class KIntNumInput;
-class QVButtonGroup;
+class TQVButtonGroup;
 
 class KDEUI_EXPORT KEdGotoLine : public KDialogBase
 {

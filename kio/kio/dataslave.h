@@ -25,7 +25,7 @@
 #include <kio/global.h>
 #include <kio/slave.h>
 
-class QTimer;
+class TQTimer;
 
 // don't forget to sync DISPATCH_IMPL in dataslave.h
 #define DISPATCH_DECL(type) \

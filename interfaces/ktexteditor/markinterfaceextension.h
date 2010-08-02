@@ -25,7 +25,7 @@
 #include <tqstring.h>
 #include "markinterface.h"
 
-class QCString;
+class TQCString;
 
 namespace KTextEditor
 {

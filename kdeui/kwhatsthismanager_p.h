@@ -24,10 +24,10 @@
 
 #include <kdialogbase.h>
 
-class QToolButton;
-class QPopupMenu;
-class QStyleSheet;
-class QTextEdit;
+class TQToolButton;
+class TQPopupMenu;
+class TQStyleSheet;
+class TQTextEdit;
 
 /**
  * This class is used automatically by KMainWindow and KDialog to attach a

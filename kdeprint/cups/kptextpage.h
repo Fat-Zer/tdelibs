@@ -24,8 +24,8 @@
 
 class DrMain;
 class KIntNumInput;
-class QButtonGroup;
-class QLabel;
+class TQButtonGroup;
+class TQLabel;
 class MarginWidget;
 
 class KPTextPage : public KPrintDialogPage

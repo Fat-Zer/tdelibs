@@ -27,7 +27,7 @@
 
 class KLineEdit;
 class KComboBox;
-class QPushButton;
+class TQPushButton;
 
 class KEditListBoxPrivate;
 /**

@@ -22,7 +22,7 @@
 
 #include "kmconfigpage.h"
 
-class QComboBox;
+class TQComboBox;
 
 class KMConfigLpr : public KMConfigPage
 {

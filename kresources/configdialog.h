@@ -25,7 +25,7 @@
 #include <kdialogbase.h>
 
 class KLineEdit;
-class QCheckBox;
+class TQCheckBox;
 class KButtonBox;
 
 namespace KRES {

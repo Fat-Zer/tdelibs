@@ -63,7 +63,7 @@ AddresseeDialog::AddresseeDialog( TQWidget *parent, bool multiple ) :
   TQWidget *topWidget = plainPage();
 
   TQBoxLayout *topLayout = new TQHBoxLayout( topWidget );
-  TQBoxLayout *listLayout = new QVBoxLayout;
+  TQBoxLayout *listLayout = new TQVBoxLayout;
   topLayout->addLayout( listLayout );
 
   mAddresseeList = new KListView( topWidget );
@@ -88,7 +88,7 @@ AddresseeDialog::AddresseeDialog( TQWidget *parent, bool multiple ) :
   setInitialSize( TQSize( 450, 300 ) );
 
   if ( mMultiple ) {
-    TQBoxLayout *selectedLayout = new QVBoxLayout;
+    TQBoxLayout *selectedLayout = new TQVBoxLayout;
     topLayout->addLayout( selectedLayout );
     topLayout->setSpacing( spacingHint() );
 

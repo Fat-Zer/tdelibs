@@ -34,8 +34,8 @@
 #include <openssl/x509.h>
 #undef crypt
 #endif
-class QString;
-class QDateTime;
+class TQString;
+class TQDateTime;
 
 
 #ifdef KSSL_HAVE_SSL

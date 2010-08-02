@@ -30,7 +30,7 @@
 
 #include <kdelibs_export.h>
 
-class QRegExp;
+class TQRegExp;
 class KFileItem;
 
 /**

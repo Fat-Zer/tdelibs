@@ -27,7 +27,7 @@
 #include <kfileitem.h>
 #include <kio/job.h>
 
-class QPixmap;
+class TQPixmap;
 
 namespace KIO {
     /*!

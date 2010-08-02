@@ -14,9 +14,9 @@
 #include <tqstring.h>
 #include <kmdichildview.h>
 
-class QWidget;
-class QMouseEvent;
-class QPaintEvent;
+class TQWidget;
+class TQMouseEvent;
+class TQPaintEvent;
 
 class Hello : public KMdiChildView
 {

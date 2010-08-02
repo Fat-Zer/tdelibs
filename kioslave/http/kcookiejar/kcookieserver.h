@@ -31,7 +31,7 @@
 class KHttpCookieList;
 class KCookieJar;
 class KHttpCookie;
-class QTimer;
+class TQTimer;
 class RequestList;
 class DCOPClient;
 class KConfig;

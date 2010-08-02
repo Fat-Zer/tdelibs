@@ -51,7 +51,7 @@ void KTimeout::addTimer(int id, int timeout) {
 		return;
 	}
 
-	TQTimer *t = new QTimer;
+	TQTimer *t = new TQTimer;
 	connect(t, TQT_SIGNAL(timeout()), this, TQT_SLOT(timeout()));
 	t->start(timeout);
 	_timers.insert(id, t);

@@ -26,7 +26,7 @@
 class KMIconView;
 class KMListView;
 class KMPrinter;
-class QIconViewItem;
+class TQIconViewItem;
 
 class KMPrinterView : public QWidgetStack
 {

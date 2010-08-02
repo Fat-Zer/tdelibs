@@ -24,7 +24,7 @@
 
 #include "kprocess.h"
 
-class QSocketNotifier;
+class TQSocketNotifier;
 
 /**
  * @short Used internally by KProcess

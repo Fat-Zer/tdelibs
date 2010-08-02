@@ -33,10 +33,10 @@
 #include <kdialogbase.h>
 #include <tqstring.h>
 
-class QFrame;
-class QLabel;
-class QVBoxLayout;
-class QTabWidget;
+class TQFrame;
+class TQLabel;
+class TQVBoxLayout;
+class TQTabWidget;
 class KURLLabel;
 class KAboutContainer;
 class KAboutContainerBase;

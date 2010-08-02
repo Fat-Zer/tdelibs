@@ -23,8 +23,8 @@
 #include <kdialogbase.h>
 #include <kurl.h>
 
-class QPopupMenu;
-class QVBoxLayout;
+class TQPopupMenu;
+class TQVBoxLayout;
 class KConfig;
 class KFileTreeBranch;
 class KFileTreeView;

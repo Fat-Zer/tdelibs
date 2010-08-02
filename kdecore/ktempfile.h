@@ -25,9 +25,9 @@
 #include <errno.h>
 #include "kdelibs_export.h"
 
-class QFile;
-class QTextStream;
-class QDataStream;
+class TQFile;
+class TQTextStream;
+class TQDataStream;
 class KSaveFile;
 class KTempFilePrivate;
 

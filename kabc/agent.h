@@ -21,7 +21,7 @@
 #ifndef KABC_AGENT_H
 #define KABC_AGENT_H
 
-class QDataStream;
+class TQDataStream;
 
 #include <tqstring.h>
 

@@ -25,12 +25,12 @@
 #include <kprocess.h>
 #include <kdialog.h>
 
-class QProgressBar;
+class TQProgressBar;
 class SidePixmap;
-class QPushButton;
-class QLabel;
+class TQPushButton;
+class TQLabel;
 class KActiveLabel;
-class QLineEdit;
+class TQLineEdit;
 
 class CupsAddSmb : public KDialog
 {

@@ -22,8 +22,8 @@
 #define __K_ACCELMANAGER_H__
 
 
-class QWidget;
-class QString;
+class TQWidget;
+class TQString;
 
 #include <kdelibs_export.h>
 

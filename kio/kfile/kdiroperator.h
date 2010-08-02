@@ -31,15 +31,15 @@
 #include <kfileitem.h>
 #include <kfile.h>
 
-class QPopupMenu;
-class QTimer;
+class TQPopupMenu;
+class TQTimer;
 
 class KAction;
 class KDirLister;
 class KToggleAction;
 class KActionSeparator;
 class KActionMenu;
-class QWidgetStack;
+class TQWidgetStack;
 class KProgress;
 namespace KIO {
   class CopyJob;

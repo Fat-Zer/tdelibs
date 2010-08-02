@@ -25,11 +25,11 @@
 #include "ksharedptr.h"
 
 class KUserGroup;
-class QString;
-class QStringList;
+class TQString;
+class TQStringList;
 class KUserPrivate;
 struct passwd;
-template <class T> class QValueList;
+template <class T> class TQValueList;
 
 /**
  * @short Represents a user on your system

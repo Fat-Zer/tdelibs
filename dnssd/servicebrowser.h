@@ -26,7 +26,7 @@
 #include <dnssd/remoteservice.h>
 
 
-class QStringList;
+class TQStringList;
 namespace DNSSD
 {
 class DomainBrowser;

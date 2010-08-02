@@ -2,7 +2,7 @@
 #ifndef KIMG_JP2_H
 #define KIMG_JP2_H
 
-class QImageIO;
+class TQImageIO;
 
 extern "C" {
 	void kimgio_jp2_read( TQImageIO* io );

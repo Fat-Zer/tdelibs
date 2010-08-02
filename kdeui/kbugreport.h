@@ -21,9 +21,9 @@
 
 #include <kdialogbase.h>
 
-class QMultiLineEdit;
-class QLineEdit;
-class QHButtonGroup;
+class TQMultiLineEdit;
+class TQLineEdit;
+class TQHButtonGroup;
 class KProcess;
 class KAboutData;
 class KBugReportPrivate;

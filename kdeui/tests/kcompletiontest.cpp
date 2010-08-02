@@ -46,11 +46,11 @@ Form1::Form1( TQWidget* parent,  const char* name )
     GroupBox1Layout->setSpacing( 6 );
     GroupBox1Layout->setMargin( 11 );
 
-    Layout9 = new QVBoxLayout;
+    Layout9 = new TQVBoxLayout;
     Layout9->setSpacing( 6 );
     Layout9->setMargin( 0 );
 
-    Layout1 = new QHBoxLayout;
+    Layout1 = new TQHBoxLayout;
     Layout1->setSpacing( 6 );
     Layout1->setMargin( 0 );
 
@@ -66,7 +66,7 @@ Form1::Form1( TQWidget* parent,  const char* name )
     edit->setFocus();
     TQToolTip::add( edit, "right-click to change completion mode" );
 
-    Layout2 = new QHBoxLayout;
+    Layout2 = new TQHBoxLayout;
     Layout2->setSpacing( 6 );
     Layout2->setMargin( 0 );
 
@@ -88,7 +88,7 @@ Form1::Form1( TQWidget* parent,  const char* name )
     Layout2->addWidget( PushButton1 );
     Layout9->addLayout( Layout2 );
 
-    Layout3 = new QHBoxLayout;
+    Layout3 = new TQHBoxLayout;
     Layout3->setSpacing( 6 );
     Layout3->setMargin( 0 );
     TQSpacerItem* spacer = new TQSpacerItem( 20, 20, TQSizePolicy::Expanding, TQSizePolicy::Minimum );
@@ -100,7 +100,7 @@ Form1::Form1( TQWidget* parent,  const char* name )
     Layout3->addWidget( PushButton1_4 );
     Layout9->addLayout( Layout3 );
 
-    Layout8 = new QHBoxLayout;
+    Layout8 = new TQHBoxLayout;
     Layout8->setSpacing( 6 );
     Layout8->setMargin( 0 );
 
@@ -110,7 +110,7 @@ Form1::Form1( TQWidget* parent,  const char* name )
 	     TQT_SLOT( slotHighlighted( const TQString& )));
     TQToolTip::add( ListBox1, "Contains the contents of the completion object.\n:x is the weighting, i.e. how often an item has been inserted");
 
-    Layout7 = new QVBoxLayout;
+    Layout7 = new TQVBoxLayout;
     Layout7->setSpacing( 6 );
     Layout7->setMargin( 0 );
 

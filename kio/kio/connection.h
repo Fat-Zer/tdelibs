@@ -31,7 +31,7 @@
 #include <tqobject.h>
 
 class KSocket;
-class QSocketNotifier;
+class TQSocketNotifier;
 
 namespace KIO {
 

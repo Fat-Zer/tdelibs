@@ -23,7 +23,7 @@
 #include <tqwidget.h>
 
 class KMPropWidget;
-class QPushButton;
+class TQPushButton;
 class KMPrinter;
 
 class KMPropContainer : public QWidget

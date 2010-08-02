@@ -24,7 +24,7 @@
 #include <kdelibs_export.h>
 
 class KURL;
-class QString;
+class TQString;
 
 class KIO_EXPORT KSSLCSessionCache {
  public:

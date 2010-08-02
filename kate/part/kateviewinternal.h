@@ -38,9 +38,9 @@ class KateView;
 class KateIconBorder;
 class KateScrollBar;
 
-class QHBoxLayout;
-class QVBoxLayout;
-class QScrollBar;
+class TQHBoxLayout;
+class TQVBoxLayout;
+class TQScrollBar;
 
 enum Bias
 {

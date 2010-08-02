@@ -31,11 +31,11 @@
 #include <tqspinbox.h>
 #include <kdelibs_export.h>
 
-class QLabel;
-class QSlider;
-class QLineEdit;
-class QLayout;
-class QValidator;
+class TQLabel;
+class TQSlider;
+class TQLineEdit;
+class TQLayout;
+class TQValidator;
 
 class KIntSpinBox;
 

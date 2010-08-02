@@ -53,8 +53,8 @@
 
 #include <kmdi/global.h>
 
-class QPopupMenu;
-class QMenuBar;
+class TQPopupMenu;
+class TQMenuBar;
 
 #include <kmdi/toolviewaccessor.h>
 

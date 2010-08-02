@@ -36,7 +36,7 @@
 #include <tqstring.h>
 #include <kdelibs_export.h>
 
-class QRect;
+class TQRect;
 
 namespace KJS {
     class HTMLDocument;

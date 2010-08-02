@@ -27,7 +27,7 @@
 #include <tqvaluelist.h>
 #include <tqobject.h>
 
-class QWidgetStack;
+class TQWidgetStack;
 
 /**
  * A string class handling accelerators.
@@ -119,7 +119,7 @@ public:
 };
 
 
-class QPopupMenu;
+class TQPopupMenu;
 
 
 /**

@@ -30,7 +30,7 @@
 #include <tqobject.h>
 #include <tqguardedptr.h>
 
-class QLabel;
+class TQLabel;
 
 class ISearchPlugin : public KTextEditor::Plugin, public KTextEditor::PluginViewInterface
 {

@@ -22,8 +22,8 @@
 #include <kdelibs_export.h>
 #include <kdialog.h>
 
-class QPushButton;
-class QWidget;
+class TQPushButton;
+class TQWidget;
 
 namespace KIO {
 

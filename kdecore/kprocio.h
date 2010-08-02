@@ -24,7 +24,7 @@
 #include "kdelibs_export.h"
 
 class KProcIOPrivate;
-class QTextCodec;
+class TQTextCodec;
 
 /**
  * KProcIO

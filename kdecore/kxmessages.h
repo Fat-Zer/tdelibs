@@ -32,7 +32,7 @@ DEALINGS IN THE SOFTWARE.
 #ifdef Q_WS_X11
 #include <X11/X.h>
 
-class QString;
+class TQString;
 
 class KXMessagesPrivate;
 /**

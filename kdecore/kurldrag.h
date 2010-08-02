@@ -24,7 +24,7 @@
 #include <tqdragobject.h>
 #include <kurl.h>
 #include "kdelibs_export.h"
-class QMimeSource;
+class TQMimeSource;
 
 class KURLDragPrivate;
 /**

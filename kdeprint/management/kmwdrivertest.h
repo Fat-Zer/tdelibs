@@ -22,8 +22,8 @@
 
 #include "kmwizardpage.h"
 
-class QLabel;
-class QPushButton;
+class TQLabel;
+class TQPushButton;
 class DrMain;
 
 class KMWDriverTest : public KMWizardPage

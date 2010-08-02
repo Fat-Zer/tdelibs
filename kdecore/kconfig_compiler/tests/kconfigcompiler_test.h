@@ -18,7 +18,7 @@
 
 #include <kunittest/tester.h>
 
-class QString;
+class TQString;
 
 // change to SlotTester when it works
 class KConfigCompiler_Test : public KUnitTest::Tester

@@ -44,7 +44,7 @@
 #include <kstyle.h>
 
 
-class QPopupMenu;
+class TQPopupMenu;
 
 class HighContrastStyle : public KStyle
 {

@@ -29,7 +29,7 @@
 #include <tqobject.h>
 #include "kdelibs_export.h"
 
-class QSocketNotifier;
+class TQSocketNotifier;
 class KProcessPrivate;
 class KPty;
 

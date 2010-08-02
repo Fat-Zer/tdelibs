@@ -24,8 +24,8 @@
 
 #include <kdemacros.h>
 
-class QObject;
-class QWidget;
+class TQObject;
+class TQWidget;
 class KAction;
 class KActionCollection;
 

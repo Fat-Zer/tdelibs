@@ -6,8 +6,8 @@
 class KIconView;
 class KListView;
 class KListBox;
-class QButtonGroup;
-class QLabel;
+class TQButtonGroup;
+class TQLabel;
 
 class TopLevel : public QWidget
 {

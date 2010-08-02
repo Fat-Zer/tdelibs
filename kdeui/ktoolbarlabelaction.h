@@ -20,7 +20,7 @@
 
 #include <kactionclasses.h>
 
-class QLabel;
+class TQLabel;
 
 /**
  * @short Class to display a label in a toolbar.

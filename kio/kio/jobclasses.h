@@ -35,7 +35,7 @@
 #include <kio/global.h>
 
 class Observer;
-class QTimer;
+class TQTimer;
 
 #define KIO_COPYJOB_HAS_SETINTERACTIVE // new in 3.4. Used by kio_trash.
 

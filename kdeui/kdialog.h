@@ -24,7 +24,7 @@
 #include <tqdialog.h>
 #include <kdelibs_export.h>
 
-class QLayoutItem;
+class TQLayoutItem;
 
 /**
  * Dialog with extended non-modal support and methods for %KDE standard

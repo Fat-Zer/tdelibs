@@ -1614,7 +1614,7 @@ static bool isRunning(const TQCString &fName, bool printNetworkId = false)
     if (::access(fName.data(), R_OK) == 0) {
 	TQFile f(fName);
 	f.open(IO_ReadOnly);
-	int size = QMIN( 1024, f.size() ); // protection against a huge file
+	int size = QMIN( (qint64)1024, f.size() ); // protection against a huge file
 	TQCString contents( size+1 );
 	bool ok = f.readBlock( contents.data(), size ) == size;
 	contents[size] = '\0';

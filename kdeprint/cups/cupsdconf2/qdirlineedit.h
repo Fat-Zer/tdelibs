@@ -23,8 +23,8 @@
 #include <tqwidget.h>
 #include <tqstring.h>
 
-class QLineEdit;
-class QPushButton;
+class TQLineEdit;
+class TQPushButton;
 
 class QDirLineEdit : public QWidget
 {

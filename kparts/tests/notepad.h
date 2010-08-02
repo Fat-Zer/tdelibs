@@ -6,7 +6,7 @@
 #include <kparts/part.h>
 
 class KAboutData;
-class QMultiLineEdit;
+class TQMultiLineEdit;
 
 /**
  * Who said writing a part should be complex ? :-)

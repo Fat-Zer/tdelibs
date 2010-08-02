@@ -962,7 +962,7 @@ TQImage RegressionTest::renderToImage()
 
     for ( int py = 0; py < eh; py += 128 ) {
         for ( int px = 0; px < ew; px += 512 ) {
-            TQPainter* tp = new QPainter;
+            TQPainter* tp = new TQPainter;
             tp->begin( m_paintBuffer );
             tp->translate( -px, -py );
             tp->fillRect(px, py, 512, 128, Qt::magenta);

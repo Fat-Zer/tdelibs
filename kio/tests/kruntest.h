@@ -39,7 +39,7 @@ public:
 };
 
 
-class QPushButton;
+class TQPushButton;
 class Receiver : public QWidget
 {
   Q_OBJECT

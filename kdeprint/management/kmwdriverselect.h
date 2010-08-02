@@ -24,7 +24,7 @@
 #include "kmdbentry.h"
 
 class KListBox;
-class QPushButton;
+class TQPushButton;
 
 class KMWDriverSelect : public KMWizardPage
 {

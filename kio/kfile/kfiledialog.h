@@ -33,12 +33,12 @@
 #include <kmimetype.h>
 #include <kio/jobclasses.h>
 
-class QCheckBox;
-class QHBoxLayout;
-class QGridLayout;
-class QLabel;
-class QPopupMenu;
-class QVBoxLayout;
+class TQCheckBox;
+class TQHBoxLayout;
+class TQGridLayout;
+class TQLabel;
+class TQPopupMenu;
+class TQVBoxLayout;
 
 class KActionCollection;
 class KDirOperator;

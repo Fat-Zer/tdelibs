@@ -34,14 +34,14 @@
 // The namespace used for XHTML elements
 #define XHTML_NAMESPACE "http://www.w3.org/1999/xhtml"
 
-class QPainter;
-template <class type> class QPtrList;
-template <class type> class QValueList;
+class TQPainter;
+template <class type> class TQPtrList;
+template <class type> class TQValueList;
 class KHTMLView;
-class QRect;
-class QMouseEvent;
-class QKeyEvent;
-class QTextStream;
+class TQRect;
+class TQMouseEvent;
+class TQKeyEvent;
+class TQTextStream;
 
 namespace khtml {
     class RenderStyle;

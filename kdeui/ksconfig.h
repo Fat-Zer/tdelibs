@@ -24,9 +24,9 @@
 
 #include <kdelibs_export.h>
 
-class QCheckBox;
-class QComboBox;
-class QLabel;
+class TQCheckBox;
+class TQComboBox;
+class TQLabel;
 
 class KConfig;
 class KSpellConfigPrivate;

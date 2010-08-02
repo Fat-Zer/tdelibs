@@ -39,8 +39,8 @@
 #include "kio/http.h"
 
 class DCOPClient;
-class QDomElement;
-class QDomNodeList;
+class TQDomElement;
+class TQDomNodeList;
 
 namespace KIO {
     class AuthInfo;

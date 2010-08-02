@@ -54,7 +54,7 @@
 #include <khtml_settings.h>
 #include <dom/dom_string.h>
 
-class QMovie;
+class TQMovie;
 class KHTMLPart;
 
 namespace KIO {

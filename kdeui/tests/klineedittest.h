@@ -4,8 +4,8 @@
 #include <tqwidget.h>
 #include <tqguardedptr.h>
 
-class QString;
-class QPushButton;
+class TQString;
+class TQPushButton;
 
 class KLineEdit;
 

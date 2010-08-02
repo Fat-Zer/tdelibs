@@ -876,7 +876,7 @@ TQString KHTMLSettings::settingsToCSS() const
 const TQString &KHTMLSettings::availableFamilies()
 {
     if ( !avFamilies ) {
-        avFamilies = new QString;
+        avFamilies = new TQString;
         TQFontDatabase db;
         TQStringList families = db.families();
         TQStringList s;

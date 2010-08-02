@@ -23,8 +23,8 @@
 #ifndef ENUMERATE_H
 #define ENUMERATE_H
 
-class QChar;
-class QString;
+class TQChar;
+class TQString;
 
 namespace khtml {
 

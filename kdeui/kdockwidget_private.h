@@ -31,7 +31,7 @@
 #include <netwm_def.h>
 #endif
 
-class QFrame;
+class TQFrame;
 class KDockContainer;
 
 

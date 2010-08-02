@@ -34,7 +34,7 @@
 class KMDBEntry;
 class DrMain;
 class KPrinter;
-class QWidget;
+class TQWidget;
 
 /**
  * @internal

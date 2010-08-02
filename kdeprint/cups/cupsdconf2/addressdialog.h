@@ -22,8 +22,8 @@
 
 #include <kdialogbase.h>
 
-class QComboBox;
-class QLineEdit;
+class TQComboBox;
+class TQLineEdit;
 
 class AddressDialog : public KDialogBase
 {

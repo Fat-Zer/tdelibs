@@ -22,10 +22,10 @@
 #include <kdialogbase.h>
 #include <kiconview.h>
 
-class QComboBox;
-class QTimer;
-class QKeyEvent;
-class QRadioButton;
+class TQComboBox;
+class TQTimer;
+class TQKeyEvent;
+class TQRadioButton;
 class KProgress;
 class KIconLoader;
 

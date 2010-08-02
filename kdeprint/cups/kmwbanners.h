@@ -23,7 +23,7 @@
 #include "kmwizardpage.h"
 #include <tqstringlist.h>
 
-class QComboBox;
+class TQComboBox;
 
 class KMWBanners : public KMWizardPage
 {

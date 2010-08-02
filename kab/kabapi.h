@@ -20,8 +20,8 @@
 #include "addressbook.h"
 #include <kdialogbase.h>
 
-class QPushButton;
-class QFrame;
+class TQPushButton;
+class TQFrame;
 class KListBox;
 
 /**

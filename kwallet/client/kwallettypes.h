@@ -23,7 +23,7 @@
 
 #include <tqmap.h>
 
-class QString;
+class TQString;
 
 inline const char* dcopTypeName(const TQByteArray&) { return "TQByteArray"; }
 inline const char* dcopTypeName(const TQMap<TQString,TQString>&) { return "TQMap<TQString,TQString>"; }

@@ -23,8 +23,8 @@
 #include "cupsdpage.h"
 
 class SizeWidget;
-class QLineEdit;
-class QComboBox;
+class TQLineEdit;
+class TQComboBox;
 class KIntNumInput;
 
 class CupsdFilterPage : public CupsdPage

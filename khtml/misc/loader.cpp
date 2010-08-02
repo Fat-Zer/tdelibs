@@ -747,7 +747,7 @@ void CachedImage::movieStatus(int status)
             // faster to draw, so this is worth the hack
             if (p && monochrome && p->depth() > 1)
             {
-                TQPixmap* pix = new QPixmap;
+                TQPixmap* pix = new TQPixmap;
                 pix->convertFromImage( p->convertToImage().convertDepth( 1 ), MonoOnly|AvoidDither );
                 if ( p->mask() )
                     pix->setMask( *p->mask() );
@@ -871,7 +871,7 @@ void CachedImage::data ( TQBuffer &_buffer, bool eof )
 #ifdef CACHE_DEBUG
             kdDebug(6060) << "CachedImage::data(): reloading as pixmap:" << endl;
 #endif
-            p = new QPixmap;
+            p = new TQPixmap;
             {
             	TQBuffer buffer(_buffer.buffer());
             	buffer.open(IO_ReadOnly);
@@ -1353,7 +1353,7 @@ void Cache::init()
         docloader = new TQPtrList<DocLoader>;
 
     if ( !nullPixmap )
-        nullPixmap = new QPixmap;
+        nullPixmap = new TQPixmap;
 
     if ( !brokenPixmap )
         brokenPixmap = new TQPixmap(KHTMLFactory::instance()->iconLoader()->loadIcon("file_broken", KIcon::Desktop, 16, KIcon::DisabledState));

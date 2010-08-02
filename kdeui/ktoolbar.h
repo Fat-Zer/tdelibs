@@ -35,13 +35,13 @@
 
 #include <kglobal.h>
 
-class QDomElement;
-class QSize;
-class QPixmap;
-class QPopupMenu;
-class QStringList;
-class QDomDocument;
-class QTimer;
+class TQDomElement;
+class TQSize;
+class TQPixmap;
+class TQPopupMenu;
+class TQStringList;
+class TQDomDocument;
+class TQTimer;
 
 class KLineEdit;
 class KToolBar;

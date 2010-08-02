@@ -22,8 +22,8 @@
 
 #include <tqwidget.h>
 
-class QSpinBox;
-class QComboBox;
+class TQSpinBox;
+class TQComboBox;
 
 class SizeWidget : public QWidget
 {

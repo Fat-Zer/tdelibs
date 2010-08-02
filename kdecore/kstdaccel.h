@@ -24,7 +24,7 @@
 #include <kshortcut.h>
 #include "kdelibs_export.h"
 
-class QKeyEvent;
+class TQKeyEvent;
 class KAccelActions;
 
 /**

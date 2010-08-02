@@ -21,8 +21,8 @@
 
 #include <kdelibs_export.h>
 
-class QCString;
-class QPopupMenu;
+class TQCString;
+class TQPopupMenu;
 
 namespace KTextEditor
 {

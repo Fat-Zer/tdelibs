@@ -17,8 +17,8 @@
 #include <tqmap.h>
 #include <tqdir.h>
 
-class QComboBox;
-class QPopupMenu;
+class TQComboBox;
+class TQPopupMenu;
 
 class HelpWindow : public KMainWindow
 {

@@ -30,7 +30,7 @@
 #include <tqmap.h>
 
 class KHTMLView;
-class QString;
+class TQString;
 
 namespace DOM {
 

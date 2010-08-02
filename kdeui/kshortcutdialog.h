@@ -23,7 +23,7 @@
 #include "kdialogbase.h"
 #include "kshortcut.h"
 
-class QVBox;
+class TQVBox;
 class KPushButton;
 class KShortcutDialogSimple;
 class KShortcutDialogAdvanced;

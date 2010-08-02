@@ -28,7 +28,7 @@
 #undef ERROR //avoid conflicts
 #endif
 
-class QIODevice;
+class TQIODevice;
 
 /**
  * This is the base class for compression filters

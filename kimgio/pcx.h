@@ -14,7 +14,7 @@
 #include <tqdatastream.h>
 #include <tqcolor.h>
 
-class QImageIO;
+class TQImageIO;
 
 extern "C"
 {

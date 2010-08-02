@@ -23,12 +23,12 @@
 #include "kprintdialogpage.h"
 #include <kdeprint/kpreloadobject.h>
 
-class QRadioButton;
-class QLineEdit;
-class QComboBox;
-class QCheckBox;
-class QSpinBox;
-class QLabel;
+class TQRadioButton;
+class TQLineEdit;
+class TQComboBox;
+class TQCheckBox;
+class TQSpinBox;
+class TQLabel;
 class KPrinter;
 
 class KDEPRINT_EXPORT KPCopiesPage : public KPrintDialogPage, public KPReloadObject

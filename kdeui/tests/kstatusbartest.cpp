@@ -20,7 +20,7 @@ testWindow::testWindow (TQWidget *, const char *name)
  {
     // Setup Menus
     menuBar = new KMenuBar (this);
-    fileMenu = new QPopupMenu;
+    fileMenu = new TQPopupMenu;
     menuBar->insertItem ("&File", fileMenu);
     fileMenu->insertItem ("&Exit", KApplication::kApplication(),
                           TQT_SLOT( quit() ), ALT + Key_Q );
@@ -43,7 +43,7 @@ testWindow::testWindow (TQWidget *, const char *name)
 
     setCaption( KApplication::kApplication()->caption() );
 
-    smenu = new QPopupMenu;
+    smenu = new TQPopupMenu;
   
     smenu->insertItem("50%");
     smenu->insertItem("75%");

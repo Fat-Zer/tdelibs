@@ -29,7 +29,7 @@
 
 #include <tqpushbutton.h>
 
-class QWidgetStack;
+class TQWidgetStack;
 class KMultiTabBar;
 class KDockButton_Private;
 

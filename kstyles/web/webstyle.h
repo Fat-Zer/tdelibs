@@ -23,10 +23,10 @@
 #include <kstyle.h>
 #include <tqpalette.h>
 
-class QPainter;
-class QScrollBar;
-class QPushButton;
-class QWidget;
+class TQPainter;
+class TQScrollBar;
+class TQPushButton;
+class TQWidget;
 
 class WebStyle : public KStyle
 {

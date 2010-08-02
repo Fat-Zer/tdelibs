@@ -25,22 +25,22 @@
 #include <tqstring.h>
 #include "kdelibs_export.h"
 
-class QWidget;
-class QDateTime;
-class QDate;
-class QTime;
-class QPoint;
-class QSize;
-class QRect;
-class QRegion;
+class TQWidget;
+class TQDateTime;
+class TQDate;
+class TQTime;
+class TQPoint;
+class TQSize;
+class TQRect;
+class TQRegion;
 class KURL;
-class QStringList;
-class QColor;
-class QPen;
-class QBrush;
-class QVariant;
+class TQStringList;
+class TQColor;
+class TQPen;
+class TQBrush;
+class TQVariant;
 template <class T>
-class QValueList;
+class TQValueList;
 
 class kdbgstream;
 class kndbgstream;

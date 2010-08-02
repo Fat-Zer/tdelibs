@@ -25,8 +25,8 @@
 #include <kstdaccel.h>
 #include "kdelibs_export.h"
 
-class QPopupMenu; // for obsolete insertItem() methods below
-class QWidget;
+class TQPopupMenu; // for obsolete insertItem() methods below
+class TQWidget;
 class KAccelAction;
 class KAccelActions;
 class KConfigBase;

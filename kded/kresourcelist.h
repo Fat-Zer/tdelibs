@@ -22,7 +22,7 @@
 #include <tqstring.h>
 #include <tqregexp.h>
 
-class QDataStream;
+class TQDataStream;
 class KSycocaEntry;
 
 struct KSycocaResource

@@ -28,7 +28,7 @@
 class KMPrinter;
 class KPrintDialogPage;
 class DrMain;
-class QTabWidget;
+class TQTabWidget;
 
 class KDEPRINT_EXPORT KPrinterPropertyDialog : public KDialogBase
 {

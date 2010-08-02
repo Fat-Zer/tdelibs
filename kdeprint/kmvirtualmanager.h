@@ -30,7 +30,7 @@
 
 class KMPrinter;
 class KMManager;
-class QWidget;
+class TQWidget;
 
 class KDEPRINT_EXPORT KMVirtualManager : public TQObject, public KPReloadObject
 {

@@ -23,7 +23,7 @@
 #include "cupsdpage.h"
 #include <tqptrlist.h>
 
-class QLineEdit;
+class TQLineEdit;
 class EditList;
 class QDirLineEdit;
 struct CupsLocation;

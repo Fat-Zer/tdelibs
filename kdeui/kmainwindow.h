@@ -33,7 +33,7 @@ class KXMLGUIFactory;
 class KConfig;
 class KHelpMenu;
 class KStatusBar;
-class QStatusBar;
+class TQStatusBar;
 class KMenuBar;
 class KMWSessionManaged;
 class KMainWindowPrivate;

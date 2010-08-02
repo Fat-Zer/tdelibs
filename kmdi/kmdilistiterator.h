@@ -30,9 +30,9 @@
 #include <kmdiiterator.h>
 
 template <class I>
-class QPtrList;
+class TQPtrList;
 template <class I>
-class QPtrListIterator;
+class TQPtrListIterator;
 
 template <class Item>
 class KMdiListIterator : public KMdiIterator<Item*>

@@ -28,8 +28,8 @@
 
 #include <kdelibs_export.h>
 
-class QWidget;
-class QString;
+class TQWidget;
+class TQString;
 
 /**
  * TQValidator for integers.

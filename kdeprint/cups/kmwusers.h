@@ -23,7 +23,7 @@
 #include <kmwizardpage.h>
 
 class KEditListBox;
-class QComboBox;
+class TQComboBox;
 
 class KMWUsers : public KMWizardPage
 {

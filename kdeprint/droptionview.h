@@ -24,14 +24,14 @@
 #include <tqgroupbox.h>
 #include <tqstringlist.h>
 
-class QLineEdit;
-class QSlider;
-class QLabel;
+class TQLineEdit;
+class TQSlider;
+class TQLabel;
 class KListBox;
-class QListBoxItem;
-class QVButtonGroup;
-class QWidgetStack;
-class QListViewItem;
+class TQListBoxItem;
+class TQVButtonGroup;
+class TQWidgetStack;
+class TQListViewItem;
 class DrBase;
 class DriverItem;
 

@@ -36,10 +36,10 @@
 #include "kbookmark.h"
 #include "kbookmarkmanager.h"
 
-class QString;
-class QPopupMenu;
-class QPushButton;
-class QListView;
+class TQString;
+class TQPopupMenu;
+class TQPushButton;
+class TQListView;
 class KLineEdit;
 class KBookmark;
 class KBookmarkGroup;

@@ -653,7 +653,7 @@ KThemeBase::~KThemeBase()
 
 TQImage* KThemeBase::loadImage( const TQString &name )
 {
-    TQImage * image = new QImage;
+    TQImage * image = new TQImage;
     TQString path = KStyleDirs::dirs()->findResource( "themepixmap",name );
     image->load( path );
     if ( !image->isNull() )
@@ -1672,7 +1672,7 @@ KThemePixmap::KThemePixmap( bool timer )
 {
     if ( timer )
     {
-        t = new QTime;
+        t = new TQTime;
         t->start();
     }
     else
@@ -1687,7 +1687,7 @@ KThemePixmap::KThemePixmap( const KThemePixmap &p )
 {
     if ( p.t )
     {
-        t = new QTime;
+        t = new TQTime;
         t->start();
     }
     else
@@ -1705,7 +1705,7 @@ KThemePixmap::KThemePixmap( const KThemePixmap &p, const TQPixmap &p2 )
 {
     if ( p.t )
     {
-        t = new QTime;
+        t = new TQTime;
         t->start();
     }
     else

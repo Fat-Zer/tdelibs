@@ -20,7 +20,7 @@
 #define __scriptclientinterface_h__
 #include <tqvariant.h>
 
-class QString;
+class TQString;
 
 //namespace KScriptInterface
 //{

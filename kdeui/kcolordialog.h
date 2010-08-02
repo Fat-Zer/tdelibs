@@ -37,8 +37,8 @@
 
 #include "kselect.h"
 
-class QComboBox;
-class QLineEdit;
+class TQComboBox;
+class TQLineEdit;
 class KListBox;
 class KPalette;
 class KColorCells;

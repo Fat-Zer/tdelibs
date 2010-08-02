@@ -24,7 +24,7 @@
 
 #include <kdelibs_export.h>
 
-class QWidget;
+class TQWidget;
 
 namespace KParts
 {

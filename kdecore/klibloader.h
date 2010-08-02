@@ -28,7 +28,7 @@
 #include <stdlib.h> // For backwards compatibility
 
 class KInstance;
-class QTimer;
+class TQTimer;
 class KLibrary;
 class KLibFactory;
 class KLibFactoryPrivate;

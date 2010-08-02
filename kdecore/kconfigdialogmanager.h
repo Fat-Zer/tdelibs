@@ -27,8 +27,8 @@
 
 class KConfigSkeleton;
 class KConfigSkeletonItem;
-class QWidget;
-class QSqlPropertyMap;
+class TQWidget;
+class TQSqlPropertyMap;
 
 /**
  * @short Provides a means of automatically retrieving,

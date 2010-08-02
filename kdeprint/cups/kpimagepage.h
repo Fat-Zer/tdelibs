@@ -23,8 +23,8 @@
 #include "kprintdialogpage.h"
 
 class KIntNumInput;
-class QComboBox;
-class QButtonGroup;
+class TQComboBox;
+class TQButtonGroup;
 class ImagePreview;
 class ImagePosition;
 

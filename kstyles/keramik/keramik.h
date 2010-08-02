@@ -37,7 +37,7 @@
 
 #include "pixmaploader.h"
 
-class QProgressBar;
+class TQProgressBar;
 
 class KeramikStyle : public KStyle
 {

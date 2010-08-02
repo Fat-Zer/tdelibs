@@ -12,11 +12,11 @@
 #include <knuminput.h>
 
 class KRuler;
-class QWidget;
-class QFrame;
-class QGridLayout;
-class QCheckBox;
-class QGroupBox;
+class TQWidget;
+class TQFrame;
+class TQGridLayout;
+class TQCheckBox;
+class TQGroupBox;
 
 
 class MouseWidget : public QFrame

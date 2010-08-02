@@ -23,7 +23,7 @@ class KAboutData;
 class KConfig;
 class KIconLoader;
 class KCharsets;
-class QFont;
+class TQFont;
 class KInstancePrivate;
 class KMimeSourceFactory;
 class KSharedConfig;

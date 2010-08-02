@@ -23,7 +23,7 @@
 #ifndef KCOMPLETIONBOX_H
 #define KCOMPLETIONBOX_H
 
-class QEvent;
+class TQEvent;
 #include <tqstringlist.h>
 #include <klistbox.h>
 

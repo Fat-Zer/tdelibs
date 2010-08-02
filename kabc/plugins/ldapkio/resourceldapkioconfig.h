@@ -32,10 +32,10 @@
 #include <kabc/ldapconfigwidget.h>
 
 
-class QCheckBox;
-class QPushButton;
-class QSpinBox;
-class QString;
+class TQCheckBox;
+class TQPushButton;
+class TQSpinBox;
+class TQString;
 
 class KComboBox;
 class KLineEdit;

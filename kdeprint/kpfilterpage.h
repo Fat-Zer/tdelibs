@@ -27,9 +27,9 @@
 
 class KListView;
 class KXmlCommand;
-class QListViewItem;
-class QToolButton;
-class QTextBrowser;
+class TQListViewItem;
+class TQToolButton;
+class TQTextBrowser;
 
 class KPFilterPage : public KPrintDialogPage
 {

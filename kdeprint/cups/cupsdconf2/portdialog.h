@@ -22,9 +22,9 @@
 
 #include <kdialogbase.h>
 
-class QLineEdit;
-class QSpinBox;
-class QCheckBox;
+class TQLineEdit;
+class TQSpinBox;
+class TQCheckBox;
 struct CupsdConf;
 
 class PortDialog : public KDialogBase

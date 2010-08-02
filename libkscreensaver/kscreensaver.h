@@ -25,7 +25,7 @@
 
 #include <kdelibs_export.h>
 
-class QTimer;
+class TQTimer;
 class KScreenSaverPrivate;
 class KBlankEffectPrivate;
 

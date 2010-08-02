@@ -21,7 +21,7 @@
 #define __klineeditdlg_h__
 
 class KLineEdit;
-class QValidator;
+class TQValidator;
 
 #include <kdialogbase.h>
 

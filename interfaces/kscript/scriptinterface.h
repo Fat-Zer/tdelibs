@@ -32,8 +32,8 @@
 #include <kdemacros.h>
 
 //#include <scripclientinterface.h>
-class QString;
-class QObject;
+class TQString;
+class TQObject;
 class KScriptClientInterface;
 
 

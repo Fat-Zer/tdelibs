@@ -3,8 +3,8 @@
 
 #include <kprintdialogpage.h>
 
-class QSpinBox;
-class QComboBox;
+class TQSpinBox;
+class TQComboBox;
 
 class RichPage : public KPrintDialogPage
 {

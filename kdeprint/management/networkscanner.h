@@ -72,8 +72,8 @@ private:
 	NetworkScannerPrivate *d;
 };
 
-class QLineEdit;
-class QComboBox;
+class TQLineEdit;
+class TQComboBox;
 
 class NetworkScannerConfig : public KDialogBase
 {

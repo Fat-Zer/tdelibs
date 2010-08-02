@@ -63,7 +63,7 @@ bool NetAccess::download(const KURL& u, TQString & target, TQWidget* window)
     if(!accessible)
     {
         if(!lastErrorMsg)
-            lastErrorMsg = new QString;
+            lastErrorMsg = new TQString;
         *lastErrorMsg = i18n("File '%1' is not readable").arg(target);
         lastErrorCode = ERR_COULD_NOT_READ;
     }
@@ -75,7 +75,7 @@ bool NetAccess::download(const KURL& u, TQString & target, TQWidget* window)
       KTempFile tmpFile;
       target = tmpFile.name();
       if (!tmpfiles)
-          tmpfiles = new QStringList;
+          tmpfiles = new TQStringList;
       tmpfiles->append(target);
   }
 
@@ -506,7 +506,7 @@ void NetAccess::slotResult( KIO::Job * job )
   if ( !bJobOK )
   {
     if ( !lastErrorMsg )
-      lastErrorMsg = new QString;
+      lastErrorMsg = new TQString;
     *lastErrorMsg = job->errorString();
   }
   if ( job->isA("KIO::StatJob") )

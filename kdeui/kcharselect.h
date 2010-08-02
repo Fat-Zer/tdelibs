@@ -31,10 +31,10 @@
 
 #include <kdelibs_export.h>
 
-class QFont;
-class QFontDatabase;
-class QMouseEvent;
-class QSpinBox;
+class TQFont;
+class TQFontDatabase;
+class TQMouseEvent;
+class TQSpinBox;
 class KCharSelectTablePrivate;
 class KCharSelectPrivate;
 

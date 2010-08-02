@@ -28,7 +28,7 @@
 class KGlobal;
 class KCharsetsPrivate;
 
-class QTextCodec;
+class TQTextCodec;
 
 /**
  * Charset font and encoder/decoder handling.

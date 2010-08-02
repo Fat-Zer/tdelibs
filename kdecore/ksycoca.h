@@ -25,7 +25,7 @@
 #include "ksycocatype.h"
 #include <kdelibs_export.h>
 
-class QDataStream;
+class TQDataStream;
 class KSycocaPrivate;
 class KSycocaFactory;
 class KSycocaFactoryList;

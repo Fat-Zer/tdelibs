@@ -25,11 +25,11 @@
 
 #include <kdelibs_export.h>
 
-class QComboBox;
-class QLineEdit;
-class QCheckBox;
-class QLabel;
-class QPushButton;
+class TQComboBox;
+class TQLineEdit;
+class TQCheckBox;
+class TQLabel;
+class TQPushButton;
 class KDialogBase;
 
 class KDEPRINT_EXPORT KXmlCommandSelector : public QWidget

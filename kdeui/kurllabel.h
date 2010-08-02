@@ -25,9 +25,9 @@
 
 #include <kdelibs_export.h>
 
-class QColor;
-class QCursor;
-class QPixmap;
+class TQColor;
+class TQCursor;
+class TQPixmap;
 
 /**
  * @short A drop-in replacement for TQLabel that displays hyperlinks.

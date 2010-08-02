@@ -23,8 +23,8 @@
 #define KHTMLDECODER_H
 
 #include <tqstring.h>
-class QTextCodec;
-class QTextDecoder;
+class TQTextCodec;
+class TQTextDecoder;
 
 namespace khtml {
 

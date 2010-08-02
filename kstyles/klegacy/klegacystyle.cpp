@@ -1726,7 +1726,7 @@ bool KLegacyStylePrivate::parseStyle() {
 	    parameter = parameter.mid(1, parameter.length() - 2);
 
 	    if (! styledata->fn) {
-		styledata->fn = new QFont;
+		styledata->fn = new TQFont;
 	    }
 
 	    styledata->fn->setRawName(parameter);

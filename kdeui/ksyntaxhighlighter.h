@@ -31,8 +31,8 @@
 
 #include <kdelibs_export.h>
 
-class QAccel;
-class QTimer;
+class TQAccel;
+class TQTimer;
 class KSpell;
 class KSpellConfig;
 

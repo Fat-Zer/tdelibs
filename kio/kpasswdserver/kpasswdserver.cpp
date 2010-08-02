@@ -673,7 +673,7 @@ KPasswdServer::updateAuthExpire(const TQString &key, const AuthInfo *auth, long 
       TQStringList *keysChanged = mWindowIdList.find(windowId);
       if (!keysChanged)
       {
-         keysChanged = new QStringList;
+         keysChanged = new TQStringList;
          mWindowIdList.insert(windowId, keysChanged);
       }
       if (!keysChanged->contains(key))

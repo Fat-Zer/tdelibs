@@ -32,12 +32,12 @@ class KMJobManager;
 class KMJob;
 class KListView;
 class JobItem;
-class QPopupMenu;
-class QListViewItem;
+class TQPopupMenu;
+class TQListViewItem;
 class KMPrinter;
-class QTimer;
-class QLineEdit;
-class QCheckBox;
+class TQTimer;
+class TQLineEdit;
+class TQCheckBox;
 
 /**
  * @internal

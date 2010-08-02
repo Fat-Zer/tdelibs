@@ -26,7 +26,7 @@
 #include <tqthread.h>
 #include <tqmutex.h>
 
-class QObject;
+class TQObject;
 
 namespace KSpell2
 {

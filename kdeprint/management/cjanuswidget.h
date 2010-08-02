@@ -24,9 +24,9 @@
 #include <tqpixmap.h>
 #include <tqptrlist.h>
 
-class QWidgetStack;
-class QLabel;
-class QListBoxItem;
+class TQWidgetStack;
+class TQLabel;
+class TQListBoxItem;
 
 class CJanusWidget : public QWidget
 {

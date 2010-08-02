@@ -23,7 +23,7 @@
 
 #include "broker.h"
 
-class QCustomEvent;
+class TQCustomEvent;
 
 namespace KSpell2
 {

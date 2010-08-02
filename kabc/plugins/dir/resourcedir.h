@@ -28,7 +28,7 @@
 
 #include <kabc/resource.h>
 
-class QTimer;
+class TQTimer;
 
 namespace KABC {
 

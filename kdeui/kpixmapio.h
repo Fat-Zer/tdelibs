@@ -13,10 +13,10 @@
 
 #include <kdelibs_export.h>
 
-class QPixmap;
-class QImage;
-class QPoint;
-class QRect;
+class TQPixmap;
+class TQImage;
+class TQPoint;
+class TQRect;
 struct KPixmapIOPrivate;
 /**
  * @short Fast TQImage to/from TQPixmap conversion.

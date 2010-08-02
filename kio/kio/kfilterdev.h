@@ -22,7 +22,7 @@
 #include <tqstring.h>
 #include <kdelibs_export.h>
 
-class QFile;
+class TQFile;
 class KFilterBase;
 
 /**

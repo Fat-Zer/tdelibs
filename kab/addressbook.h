@@ -22,7 +22,7 @@ class KeyValueMap;
 class QConfigDB; 
 class Section;
 class StringKabKeyMap; /* The type of the mirror map. */
-class QStringList;
+class TQStringList;
 /* Used to implement field lookup accoording to
    keys. */
 class KeyNameMap; 

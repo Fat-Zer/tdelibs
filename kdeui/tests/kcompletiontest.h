@@ -12,14 +12,14 @@
 #include <tqstringlist.h>
 #include <tqvariant.h>
 #include <tqwidget.h>
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
-class QGroupBox;
-class QLabel;
-class QListBox;
-class QListBoxItem;
-class QPushButton;
+class TQVBoxLayout;
+class TQHBoxLayout;
+class TQGridLayout;
+class TQGroupBox;
+class TQLabel;
+class TQListBox;
+class TQListBoxItem;
+class TQPushButton;
 
 class KHistoryCombo;
 class KLineEdit;

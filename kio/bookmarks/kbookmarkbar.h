@@ -32,7 +32,7 @@ class KBookmarkMenu;
 class KBookmarkOwner;
 class KActionCollection;
 class KAction;
-class QPopupMenu;
+class TQPopupMenu;
 
 /**
  * This class provides a bookmark toolbar.  Using this class is nearly

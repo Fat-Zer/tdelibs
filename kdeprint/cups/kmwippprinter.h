@@ -23,10 +23,10 @@
 #include "kmwizardpage.h"
 
 class KListView;
-class QListViewItem;
-class QLineEdit;
-class QTextView;
-class QPushButton;
+class TQListViewItem;
+class TQLineEdit;
+class TQTextView;
+class TQPushButton;
 class NetworkScanner;
 
 class KMWIppPrinter : public KMWizardPage

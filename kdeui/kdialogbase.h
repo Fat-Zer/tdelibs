@@ -29,11 +29,11 @@
 #include <kstdguiitem.h>
 #include <tqptrlist.h>
 
-class QPushButton;
+class TQPushButton;
 class KSeparator;
 class KURLLabel;
-class QBoxLayout;
-class QPixmap;
+class TQBoxLayout;
+class TQPixmap;
 class KGuiItem;
 /**
  * Used internally by KDialogBase.

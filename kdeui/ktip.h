@@ -30,7 +30,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kdialog.h>
 
-class QCheckBox;
+class TQCheckBox;
 
 class KTextBrowser;
 

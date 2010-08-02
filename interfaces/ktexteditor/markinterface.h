@@ -24,7 +24,7 @@
 
 #include <kdelibs_export.h>
 
-class QCString;
+class TQCString;
 
 namespace KTextEditor
 {

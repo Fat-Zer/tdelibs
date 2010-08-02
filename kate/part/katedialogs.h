@@ -63,19 +63,19 @@ class KPushButton;
 class KRegExpDialog;
 class KIntNumInput;
 
-class QButtonGroup;
-class QCheckBox;
-class QHBoxLayout;
-class QLabel;
-class QLineEdit;
-class QPushButton;
-class QRadioButton;
-class QSpinBox;
-class QListBoxItem;
-class QWidgetStack;
-class QVBox;
-class QListViewItem;
-class QCheckBox;
+class TQButtonGroup;
+class TQCheckBox;
+class TQHBoxLayout;
+class TQLabel;
+class TQLineEdit;
+class TQPushButton;
+class TQRadioButton;
+class TQSpinBox;
+class TQListBoxItem;
+class TQWidgetStack;
+class TQVBox;
+class TQListViewItem;
+class TQCheckBox;
 
 class KateConfigPage : public Kate::ConfigPage
 {
@@ -279,7 +279,7 @@ class KatePartPluginListView : public KListView
     void stateChanged(KatePartPluginListItem *, bool);
 };
 
-class QListViewItem;
+class TQListViewItem;
 class KatePartPluginConfigPage : public KateConfigPage
 {
   Q_OBJECT

@@ -29,7 +29,7 @@
 #include "kssl.h"
 #include <tqscrollview.h>
 
-class QWidget;
+class TQWidget;
 class KSSLCertBox;
 class KSSLCertChain;
 

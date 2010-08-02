@@ -22,8 +22,8 @@
 
 #include <kmwizardpage.h>
 
-class QSpinBox;
-class QComboBox;
+class TQSpinBox;
+class TQComboBox;
 
 class KMWQuota : public KMWizardPage
 {

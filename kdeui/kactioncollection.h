@@ -36,12 +36,12 @@
 #include <kstdaction.h>
 #include <kicontheme.h>
 
-class QMenuBar;
-class QPopupMenu;
-class QComboBox;
-class QPoint;
-class QIconSet;
-class QString;
+class TQMenuBar;
+class TQPopupMenu;
+class TQComboBox;
+class TQPoint;
+class TQIconSet;
+class TQString;
 class KToolBar;
 
 class KAccel;

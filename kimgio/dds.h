@@ -10,7 +10,7 @@
 #ifndef KIMG_DDS_H
 #define KIMG_DDS_H
 
-class QImageIO;
+class TQImageIO;
 
 extern "C" {
 void kimgio_dds_read( TQImageIO * );

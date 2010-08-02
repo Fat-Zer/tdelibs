@@ -9,7 +9,7 @@
 #include <ktoolbar.h>
 #include <kmainwindow.h>
 
-class QMultiLineEdit;
+class TQMultiLineEdit;
 class KToolBarRadioGroup;
 class KHelpMenu;
 

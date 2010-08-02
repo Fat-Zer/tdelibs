@@ -24,8 +24,8 @@
 #include <tqmap.h>
 #include <ksharedptr.h>
 
-class QString;
-class QDataStream;
+class TQString;
+class TQDataStream;
 namespace DNSSD
 {
 class ServiceBasePrivate;

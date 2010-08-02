@@ -29,7 +29,7 @@
 
 class KActionCollection;
 class KPopupMenu;
-class QWidget;
+class TQWidget;
 
 class KAboutData;
 class KAboutKDE;

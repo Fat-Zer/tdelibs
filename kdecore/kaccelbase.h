@@ -29,8 +29,8 @@
 #include "kaccelaction.h"
 #include "kkeyserver.h"
 
-class QPopupMenu;
-class QWidget;
+class TQPopupMenu;
+class TQWidget;
 
 //----------------------------------------------------
 

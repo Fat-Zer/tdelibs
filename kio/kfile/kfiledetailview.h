@@ -22,8 +22,8 @@
 #define KFILEDETAILVIEW_H
 
 class KFileItem;
-class QWidget;
-class QKeyEvent;
+class TQWidget;
+class TQKeyEvent;
 
 #include <klistview.h>
 #include <kmimetyperesolver.h>

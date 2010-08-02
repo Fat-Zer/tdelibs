@@ -34,11 +34,11 @@
 #include <tqcombobox.h>
 
 class KACLListViewItem;
-class QPushButton;
-class QVButtonGroup;
+class TQPushButton;
+class TQVButtonGroup;
 class KACLListView;
-class QWidgetStack;
-class QCheckBox;
+class TQWidgetStack;
+class TQCheckBox;
 
 /**
 @author Sean Harmer

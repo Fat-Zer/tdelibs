@@ -28,7 +28,7 @@
 
 #include <kparts/part.h>
 
-class QString;
+class TQString;
 
 namespace KParts
 {

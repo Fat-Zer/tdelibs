@@ -34,7 +34,7 @@ class DrMain;
 class KMDBEntry;
 class KMVirtualManager;
 class KMSpecialManager;
-class QWidget;
+class TQWidget;
 class KActionCollection;
 class PrinterFilter;
 

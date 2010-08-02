@@ -61,7 +61,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqsocketnotifier.h>
 #include <tqregexp.h>
 
-#include <private/qucomextra_p.h>
+#include <tqucomextra_p.h>
 
 #include <dcopglobal.h>
 #include <dcopclient.h>
@@ -780,7 +780,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
                 emit attachFailed(TQString::fromLatin1( "Could not read network connection list.\n" )+TQFile::decodeName(fName));
                 return false;
             }
-            int size = QMIN( 1024, f.size() ); // protection against a huge file
+            int size = QMIN( (qint64)1024, f.size() ); // protection against a huge file
             TQCString contents( size+1 );
             if ( f.readBlock( contents.data(), size ) != size )
             {
@@ -1339,7 +1339,7 @@ static void fillQtObjects( QCStringList& l, TQObject* o, TQCString path )
              if ( n == "unnamed" || n.isEmpty() )
              {
                  n.sprintf("%p", (void *) obj);
-                 n = TQString("unnamed%1(%2, %3)").arg(++unnamed).arg(obj->className()).arg(n).latin1();
+                 n = TQString("unnamed%1(%2, %3)").arg(++unnamed).arg(obj->className()).arg(TQString(n)).latin1();
              }
              TQCString fn = path + n;
              l.append( fn );
@@ -1376,7 +1376,7 @@ static void fillQtObjectsEx( TQValueList<O>& l, TQObject* o, TQCString path )
             if ( n == "unnamed" || n.isEmpty() )
              {
                  n.sprintf("%p", (void *) obj);
-                 n = TQString("unnamed%1(%2, %3)").arg(++unnamed).arg(obj->className()).arg(n).latin1();
+                 n = TQString("unnamed%1(%2, %3)").arg(++unnamed).arg(obj->className()).arg(TQString(n)).latin1();
              }
             TQCString fn = path + n;
             l.append( O( fn, obj ) );
@@ -1785,8 +1785,8 @@ int DCOPClient::callAsync(const TQCString &remApp, const TQCString &remObjId,
     TQByteArray replyData;
 
     ReplyStruct *replyStruct = new ReplyStruct;
-    replyStruct->replyType = new QCString;
-    replyStruct->replyData = new QByteArray;
+    replyStruct->replyType = new TQCString;
+    replyStruct->replyData = new TQByteArray;
     replyStruct->replyObject = callBackObj;
     replyStruct->replySlot = callBackSlot;
     replyStruct->replyId = ++d->transactionId;

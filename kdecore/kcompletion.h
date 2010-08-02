@@ -37,7 +37,7 @@ class KCompletionPrivate;
 class KCompletionBasePrivate;
 class KCompletionMatchesWrapper;
 class KCompletionMatches;
-class QPopupMenu;
+class TQPopupMenu;
 
 /**
  * @short A generic class for completing QStrings

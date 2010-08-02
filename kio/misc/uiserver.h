@@ -192,11 +192,11 @@ protected:
   TQString m_fullLengthAddress;
 };
 
-class QResizeEvent;
-class QHideEvent;
-class QShowEvent;
+class TQResizeEvent;
+class TQHideEvent;
+class TQShowEvent;
 class ProgressConfigDialog;
-class QPopupMenu;
+class TQPopupMenu;
 class UIServerSystemTray;
 
 /**

@@ -30,7 +30,7 @@
 
 class KSharedConfig;
 template <typename T>
-class QPtrDict;
+class TQPtrDict;
 
 namespace KSpell2
 {

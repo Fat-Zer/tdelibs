@@ -10,7 +10,7 @@
 #ifndef KIMG_TIFFR_H
 #define KIMG_TIFFR_H
 
-class QImageIO;
+class TQImageIO;
 
 extern "C" {
 void kimgio_tiff_read( TQImageIO *io );

@@ -23,7 +23,7 @@
 #include <tqobject.h>
 #include <kservice.h>
 
-template<class T> class QValueList;
+template<class T> class TQValueList;
 class KPluginInfo;
 class KCMultiDialog;
 class KCModuleInfo;

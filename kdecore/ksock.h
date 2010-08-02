@@ -40,7 +40,7 @@
 #include <sys/un.h>
 
 #include <netinet/in.h>
-class QSocketNotifier;
+class TQSocketNotifier;
 
 #ifdef KSOCK_NO_BROKEN
 // This is here for compatibility with old applications still using the constants

@@ -1525,7 +1525,7 @@ void KApplication::parseCommandLine( )
     {
        const char *tmp = args->getOption("miniicon");
        if (!aIconPixmap.pm.miniIcon) {
-         aIconPixmap.pm.miniIcon = new QPixmap;
+         aIconPixmap.pm.miniIcon = new TQPixmap;
        }
        *aIconPixmap.pm.miniIcon = SmallIcon(tmp);
        aMiniIconName = tmp;
@@ -1535,12 +1535,12 @@ void KApplication::parseCommandLine( )
     {
        const char *tmp = args->getOption("icon");
        if (!aIconPixmap.pm.icon) {
-          aIconPixmap.pm.icon = new QPixmap;
+          aIconPixmap.pm.icon = new TQPixmap;
        }
        *aIconPixmap.pm.icon = DesktopIcon( tmp );
        aIconName = tmp;
        if (!aIconPixmap.pm.miniIcon) {
-         aIconPixmap.pm.miniIcon = new QPixmap;
+         aIconPixmap.pm.miniIcon = new TQPixmap;
        }
        if (aIconPixmap.pm.miniIcon->isNull())
        {
@@ -1601,7 +1601,7 @@ TQString KApplication::geometryArgument() const
 TQPixmap KApplication::icon() const
 {
   if( !aIconPixmap.pm.icon) {
-      aIconPixmap.pm.icon = new QPixmap;
+      aIconPixmap.pm.icon = new TQPixmap;
   }
   if( aIconPixmap.pm.icon->isNull()) {
       *aIconPixmap.pm.icon = DesktopIcon( instanceName() );
@@ -1617,7 +1617,7 @@ TQString KApplication::iconName() const
 TQPixmap KApplication::miniIcon() const
 {
   if (!aIconPixmap.pm.miniIcon) {
-      aIconPixmap.pm.miniIcon = new QPixmap;
+      aIconPixmap.pm.miniIcon = new TQPixmap;
   }
   if (aIconPixmap.pm.miniIcon->isNull()) {
       *aIconPixmap.pm.miniIcon = SmallIcon( instanceName() );
@@ -2181,7 +2181,7 @@ void KApplication::installKDEPropertyMap()
      * Thanks.
      */
     // TQSqlPropertyMap takes ownership of the new default map.
-    TQSqlPropertyMap *kdeMap = new QSqlPropertyMap;
+    TQSqlPropertyMap *kdeMap = new TQSqlPropertyMap;
     kdeMap->insert( "KColorButton", "color" );
     kdeMap->insert( "KComboBox", "currentItem" );
     kdeMap->insert( "KDatePicker", "date" );

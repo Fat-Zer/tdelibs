@@ -32,7 +32,7 @@
 #include <kdirwatch.h>
 #include <dcopclient.h>
 
-class QTimer;
+class TQTimer;
 class KDirLister;
 namespace KIO { class Job; class ListJob; }
 

@@ -23,8 +23,8 @@
 #include "kmwizardpage.h"
 
 class SmbView;
-class QLineEdit;
-class QLabel;
+class TQLineEdit;
+class TQLabel;
 
 class KMWSmb : public KMWizardPage
 {

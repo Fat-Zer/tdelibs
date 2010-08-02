@@ -26,7 +26,7 @@
 #include <tqcursor.h>
 #include <kdelibs_export.h>
 
-class QWidget;
+class TQWidget;
 
 /**
  * @short A TQCursor wrapper allowing "themed" cursors and auto-hiding cursors.

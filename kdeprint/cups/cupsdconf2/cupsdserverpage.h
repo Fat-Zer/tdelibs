@@ -22,9 +22,9 @@
 
 #include "cupsdpage.h"
 
-class QLineEdit;
-class QCheckBox;
-class QComboBox;
+class TQLineEdit;
+class TQCheckBox;
+class TQComboBox;
 
 class CupsdServerPage : public CupsdPage
 {

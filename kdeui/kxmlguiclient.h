@@ -26,7 +26,7 @@
 
 #include <kdelibs_export.h>
 
-class QWidget;
+class TQWidget;
 class KAction;
 class KActionCollection;
 class KInstance;

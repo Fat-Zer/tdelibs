@@ -28,10 +28,10 @@
 #include <kxmlguiclient.h>
 
 class KInstance;
-class QWidget;
+class TQWidget;
 class KAction;
 class KActionCollection;
-class QEvent;
+class TQEvent;
 struct QUnknownInterface;
 
 namespace KIO {

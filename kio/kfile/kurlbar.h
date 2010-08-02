@@ -479,7 +479,7 @@ private:
 ///////////////////////////////////////////////////////////////////
 
 
-class QDragObject;
+class TQDragObject;
 class KURLBarToolTip;
 
 /**
@@ -552,7 +552,7 @@ private:
 ///////////////////////////////////////////////////////////////////
 
 
-class QCheckBox;
+class TQCheckBox;
 class KIconButton;
 class KLineEdit;
 class KURLRequester;

@@ -24,8 +24,8 @@
 #include <kdelibs_export.h>
 #include <tqmap.h>
 
-class QButtonGroup;
-class QVBoxLayout;
+class TQButtonGroup;
+class TQVBoxLayout;
 
 class KDEPRINT_EXPORT KMWBackend : public KMWizardPage
 {

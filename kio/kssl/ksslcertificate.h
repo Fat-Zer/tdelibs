@@ -38,12 +38,12 @@
 #include <tqcstring.h>
 #include <tqvaluelist.h>
 
-class QString;
-class QStringList;
-class QCString;
+class TQString;
+class TQStringList;
+class TQCString;
 class KSSL;
 class KSSLCertificatePrivate;
-class QDateTime;
+class TQDateTime;
 class KSSLCertChain;
 class KSSLX509V3;
 

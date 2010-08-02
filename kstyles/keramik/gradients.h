@@ -22,7 +22,7 @@
 #ifndef KERAMIK_GRADIENTS_H
 #define KERAMIK_GRADIENTS_H
 
-class QPainter;
+class TQPainter;
 
 
 namespace Keramik

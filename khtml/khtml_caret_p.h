@@ -27,7 +27,7 @@
 
 #define DEBUG_CARETMODE 0
 
-class QFontMetrics;
+class TQFontMetrics;
 
 namespace DOM {
   class NodeImpl;

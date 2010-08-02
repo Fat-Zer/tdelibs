@@ -25,8 +25,8 @@
 #include <tqdict.h>
 #include <tqptrlist.h>
 class KSycoca;
-class QStringList;
-class QString;
+class TQStringList;
+class TQString;
 class KSycocaDict;
 class KSycocaResourceList;
 

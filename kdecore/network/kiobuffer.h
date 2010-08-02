@@ -29,7 +29,7 @@
 
 #include <kdelibs_export.h>
 
-class QIODevice;
+class TQIODevice;
 
 /**
  * @class KIOBufferBase kiobuffer.h kiobuffer.h

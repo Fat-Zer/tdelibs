@@ -6,7 +6,7 @@
 #include <kparts/mainwindow.h>
 
 class KAction;
-class QWidget;
+class TQWidget;
 
 class Shell : public KParts::MainWindow
 {

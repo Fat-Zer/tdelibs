@@ -10,7 +10,7 @@
 #ifndef KIMG_G3R_H
 #define KIMG_G3R_H
 
-class QImageIO;
+class TQImageIO;
 
 extern "C" {
   void kimgio_g3_read( TQImageIO *io );

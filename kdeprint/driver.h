@@ -35,7 +35,7 @@
 #include <kdelibs_export.h>
 
 class DriverItem;
-class QListView;
+class TQListView;
 
 /***********************
  * Forward definitions *

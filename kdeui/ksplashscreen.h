@@ -24,7 +24,7 @@
 
 #include <kdelibs_export.h>
 
-class QPixmap;
+class TQPixmap;
 
 /**
  *  @short %KDE splash screen

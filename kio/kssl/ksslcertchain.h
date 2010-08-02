@@ -25,11 +25,11 @@
 #include <tqptrlist.h>
 #include <kdemacros.h>
 
-class QString;
-class QCString;
+class TQString;
+class TQCString;
 class KSSL;
 class KSSLCertChainPrivate;
-class QStringList;
+class TQStringList;
 
 #include <ksslcertificate.h>
 

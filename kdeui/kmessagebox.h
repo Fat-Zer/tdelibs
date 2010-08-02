@@ -25,8 +25,8 @@
 #include <kguiitem.h>
 #include <kstdguiitem.h>
 
-class QWidget;
-class QStringList;
+class TQWidget;
+class TQStringList;
 class KConfig;
 class KDialogBase;
 

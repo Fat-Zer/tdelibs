@@ -28,8 +28,8 @@
 #include <tqstring.h>
 #include <tqtimer.h>
 
-class QMenuData;
-class QTextView;
+class TQMenuData;
+class TQTextView;
 
 #include "kdelibs_export.h"
 

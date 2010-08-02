@@ -25,12 +25,12 @@
 #include <kdialogbase.h>
 #include <klistview.h>
 
-class QButtonGroup;
-class QCheckBox;
-class QGroupBox;
-class QLabel;
-class QLineEdit;
-class QRadioButton;
+class TQButtonGroup;
+class TQCheckBox;
+class TQGroupBox;
+class TQLabel;
+class TQLineEdit;
+class TQRadioButton;
 class KAccel;
 class KAccelActions;
 class KActionCollection;

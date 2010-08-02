@@ -27,9 +27,9 @@
 
 #include <kcompletion.h>
 
-class QListBoxItem;
-class QPopupMenu;
-class QLineEdit;
+class TQListBoxItem;
+class TQPopupMenu;
+class TQLineEdit;
 
 class KCompletionBox;
 class KURL;

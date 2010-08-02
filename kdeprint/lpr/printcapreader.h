@@ -23,7 +23,7 @@
 #include <tqstring.h>
 #include <tqtextstream.h>
 
-class QFile;
+class TQFile;
 class PrintcapEntry;
 
 class PrintcapReader

@@ -33,11 +33,11 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <kdelibs_export.h>
 
-class QImage;
-class QSize;
-class QColor;
-class QPoint;
-class QRect;
+class TQImage;
+class TQSize;
+class TQColor;
+class TQPoint;
+class TQRect;
 
 /**
  * This class includes various TQImage based graphical effects.

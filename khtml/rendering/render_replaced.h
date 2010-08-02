@@ -27,7 +27,7 @@
 #include <tqscrollview.h>
 
 class KHTMLView;
-class QWidget;
+class TQWidget;
 
 namespace DOM
 {

@@ -28,7 +28,7 @@
 #include "kresolver.h"
 #include "kresolverworkerbase.h"
 
-class QCustomEvent;
+class TQCustomEvent;
 
 namespace KNetwork
 {

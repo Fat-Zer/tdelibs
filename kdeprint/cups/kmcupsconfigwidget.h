@@ -22,8 +22,8 @@
 
 #include <tqwidget.h>
 
-class QLineEdit;
-class QCheckBox;
+class TQLineEdit;
+class TQCheckBox;
 class KConfig;
 
 class KMCupsConfigWidget : public QWidget

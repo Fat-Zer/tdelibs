@@ -35,7 +35,7 @@
 #include <tqmemarray.h>
 
 class KHTMLView;
-class QTextCodec;
+class TQTextCodec;
 
 namespace khtml
 {

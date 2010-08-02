@@ -10,7 +10,7 @@
 #ifndef KIMG_HDR_H
 #define KIMG_HDR_H
 
-class QImageIO;
+class TQImageIO;
 
 extern "C" {
 void kimgio_hdr_read( TQImageIO * );

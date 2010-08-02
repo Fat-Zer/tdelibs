@@ -31,7 +31,7 @@
 #include <kjs/interpreter.h>
 
 class RegressionTest;
-class QTimer;
+class TQTimer;
 
 /**
  * @internal

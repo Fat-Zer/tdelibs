@@ -35,8 +35,8 @@
 
 #include "kjavaappletwidget.h"
 
-class QTable;
-class QLabel;
+class TQTable;
+class TQLabel;
 class KJavaProcess;
 class KJavaAppletViewer;
 class KAboutData;

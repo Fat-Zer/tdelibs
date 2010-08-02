@@ -25,10 +25,10 @@
 
 class KProcess;
 class KActionCollection;
-class QComboBox;
-class QToolButton;
+class TQComboBox;
+class TQToolButton;
 class KListView;
-class QListViewItem;
+class TQListViewItem;
 
 class KEditToolbarWidget;
 class KEditToolbarPrivate;

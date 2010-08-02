@@ -24,7 +24,7 @@
 #include <tqobject.h>
 #include <dnssd/servicebase.h>
 
-class QDataStream;
+class TQDataStream;
 class KURL;
 namespace DNSSD
 {

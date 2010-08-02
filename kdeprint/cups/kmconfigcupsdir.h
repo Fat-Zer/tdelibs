@@ -23,7 +23,7 @@
 #include "kmconfigpage.h"
 
 class KURLRequester;
-class QCheckBox;
+class TQCheckBox;
 
 class KMConfigCupsDir : public KMConfigPage
 {

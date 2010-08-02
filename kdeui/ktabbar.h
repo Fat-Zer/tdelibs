@@ -25,8 +25,8 @@
 
 #include <kdelibs_export.h>
 
-class QTimer;
-class QPushButton;
+class TQTimer;
+class TQPushButton;
 class KTabBarPrivate;
 
 /**

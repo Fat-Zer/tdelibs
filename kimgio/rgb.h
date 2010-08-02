@@ -15,8 +15,8 @@
 #include <tqptrvector.h>
 
 
-class QImage;
-class QImageIO;
+class TQImage;
+class TQImageIO;
 
 extern "C" {
 void kimgio_rgb_read(TQImageIO *);

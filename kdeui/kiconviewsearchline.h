@@ -23,8 +23,8 @@
 #include <klineedit.h>
 #include <tqvaluelist.h>
 
-class QIconView;
-class QIconViewItem;
+class TQIconView;
+class TQIconViewItem;
 
 /**
  * This class makes it easy to add a search line for filtering the items in a

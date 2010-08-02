@@ -22,10 +22,10 @@
 
 #include <kdialogbase.h>
 
-class QStringList;
-class QLabel;
-class QListViewItem;
-class QPushButton;
+class TQStringList;
+class TQLabel;
+class TQListViewItem;
+class TQPushButton;
 class KListBox;
 class KLineEdit;
 class KProgress;

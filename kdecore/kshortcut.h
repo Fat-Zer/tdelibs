@@ -24,7 +24,7 @@
 #include <tqstring.h>
 #include "kdelibs_export.h"
 
-class QKeyEvent;
+class TQKeyEvent;
 class KKeyNative;
 
 /**

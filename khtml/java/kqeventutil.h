@@ -24,7 +24,7 @@
 #define KQEVENTUTIL_H
 
 #include <tqstring.h>
-class QEvent;
+class TQEvent;
 
 class KQEventUtil {
     public:

@@ -20,7 +20,7 @@
 #ifndef KINPUTDIALOG_H
 #define KINPUTDIALOG_H
 
-class QValidator;
+class TQValidator;
 
 class KLineEdit;
 class KIntSpinBox;

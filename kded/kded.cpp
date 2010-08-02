@@ -660,7 +660,7 @@ static void sighandler(int /*sig*/)
 KUpdateD::KUpdateD()
 {
     m_pDirWatch = new KDirWatch;
-    m_pTimer = new QTimer;
+    m_pTimer = new TQTimer;
     connect(m_pTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(runKonfUpdate()));
     TQObject::connect( m_pDirWatch, TQT_SIGNAL(dirty(const TQString&)),
            this, TQT_SLOT(slotNewUpdateFile()));

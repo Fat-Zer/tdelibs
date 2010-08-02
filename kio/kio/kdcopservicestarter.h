@@ -23,7 +23,7 @@
 #include <kstaticdeleter.h>
 
 class KDCOPServiceStarter;
-class QCString;
+class TQCString;
 
 /**
  * A generic DCOP service starter, using KTrader.

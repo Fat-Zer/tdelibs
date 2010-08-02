@@ -24,7 +24,7 @@
 #include "addressee.h"
 #include "vcardparser.h"
 
-class QDateTime;
+class TQDateTime;
 
 namespace KABC {
 

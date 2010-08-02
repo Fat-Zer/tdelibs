@@ -27,12 +27,12 @@ class KateDocument;
 
 class KColorButton;
 class KPrinter;
-class QCheckBox;
-class QComboBox;
-class QGroupBox;
-class QLabel;
-class QLineEdit;
-class QSpinBox;
+class TQCheckBox;
+class TQComboBox;
+class TQGroupBox;
+class TQLabel;
+class TQLineEdit;
+class TQSpinBox;
 
 class KatePrinter
 {

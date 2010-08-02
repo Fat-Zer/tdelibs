@@ -22,7 +22,7 @@
 
 #include <kprintdialogpage.h>
 
-class QTable;
+class TQTable;
 
 class KPTagsPage : public KPrintDialogPage
 {

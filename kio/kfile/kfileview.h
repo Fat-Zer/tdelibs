@@ -22,7 +22,7 @@
 #ifndef KFILEVIEW_H
 #define KFILEVIEW_H
 
-class QPoint;
+class TQPoint;
 class KActionCollection;
 
 #include <tqwidget.h>
