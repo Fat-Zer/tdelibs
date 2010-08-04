@@ -1329,7 +1329,7 @@ static void fillQtObjects( QCStringList& l, TQObject* o, TQCString path )
         path += '/';
 
     int unnamed = 0;
-    const TQObjectList *list = o ? o->children() : TQObject::objectTrees();
+    const TQObjectList *list = o ? o->tqchildren() : TQObject::objectTrees();
     if ( list ) {
         TQObjectListIt it( *list );
         TQObject *obj;
@@ -1343,7 +1343,7 @@ static void fillQtObjects( QCStringList& l, TQObject* o, TQCString path )
              }
              TQCString fn = path + n;
              l.append( fn );
-             if ( obj->children() )
+             if ( obj->tqchildren() )
                  fillQtObjects( l, obj, fn );
         }
     }
@@ -1366,7 +1366,7 @@ static void fillQtObjectsEx( TQValueList<O>& l, TQObject* o, TQCString path )
         path += '/';
 
     int unnamed = 0;
-    const TQObjectList *list = o ? o->children() : TQObject::objectTrees();
+    const TQObjectList *list = o ? o->tqchildren() : TQObject::objectTrees();
     if ( list ) {
         TQObjectListIt it( *list );
         TQObject *obj;
@@ -1380,7 +1380,7 @@ static void fillQtObjectsEx( TQValueList<O>& l, TQObject* o, TQCString path )
              }
             TQCString fn = path + n;
             l.append( O( fn, obj ) );
-            if ( obj->children() )
+            if ( obj->tqchildren() )
                 fillQtObjectsEx( l, obj, fn );
         }
     }
@@ -1471,7 +1471,7 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             TQStrList lst = o->metaObject()->slotNames( true );
             int i = 0;
             for ( TQPtrListIterator<char> it( lst ); it.current(); ++it ) {
-                if ( o->metaObject()->slot( i++, true )->access != QMetaData::Public )
+                if ( o->metaObject()->slot( i++, true )->tqaccess != QMetaData::Public )
                     continue;
                 TQCString slot = it.current();
                 if ( slot.contains( "()" ) ) {

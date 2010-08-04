@@ -664,7 +664,7 @@ TQImage& KImageEffect::intensity(TQImage &image, float percent)
     int pixels = image.depth() > 8 ? image.width()*image.height() :
                  image.numColors();
     unsigned int *data = image.depth() > 8 ? (unsigned int *)image.bits() :
-                         (unsigned int *)image.colorTable();
+                         (unsigned int *)image.tqcolorTable();
 
     bool brighten = (percent >= 0);
     if(percent < 0)
@@ -858,7 +858,7 @@ TQImage& KImageEffect::channelIntensity(TQImage &image, float percent,
     int pixels = image.depth() > 8 ? image.width()*image.height() :
         image.numColors();
     unsigned int *data = image.depth() > 8 ? (unsigned int *)image.bits() :
-        (unsigned int *)image.colorTable();
+        (unsigned int *)image.tqcolorTable();
     bool brighten = (percent >= 0);
     if(percent < 0)
         percent = -percent;
@@ -958,7 +958,7 @@ TQImage& KImageEffect::modulate(TQImage &image, TQImage &modImage, bool reverse,
     if (modImage.depth()<8) modImage = modImage.convertDepth(8);
 
     unsigned int *colorTable2 = (modImage.depth()==8) ?
-				 modImage.colorTable():0;
+				 modImage.tqcolorTable():0;
     unsigned int *data1, *data2;
     unsigned char *data2b;
     unsigned int color1, color2;
@@ -1788,7 +1788,7 @@ TQImage& KImageEffect::blend(TQImage &image1, TQImage &image2,
     if (blendImage.depth()<8) blendImage = blendImage.convertDepth(8);
 
     unsigned int *colorTable3 = (blendImage.depth()==8) ?
-				 blendImage.colorTable():0;
+				 blendImage.tqcolorTable():0;
 
     unsigned int *data1 =  (unsigned int *)image1.bits();
     unsigned int *data2 =  (unsigned int *)image2.bits();
@@ -2162,7 +2162,7 @@ TQImage& KImageEffect::toGray(TQImage &img, bool fast)
         int pixels = img.depth() > 8 ? img.width()*img.height() :
             img.numColors();
         unsigned int *data = img.depth() > 8 ? (unsigned int *)img.bits() :
-            (unsigned int *)img.colorTable();
+            (unsigned int *)img.tqcolorTable();
         int val, i;
         for(i=0; i < pixels; ++i){
             val = qGray(data[i]);
@@ -2183,7 +2183,7 @@ TQImage& KImageEffect::desaturate(TQImage &img, float desat)
     int pixels = img.depth() > 8 ? img.width()*img.height() :
         img.numColors();
     unsigned int *data = img.depth() > 8 ? (unsigned int *)img.bits() :
-        (unsigned int *)img.colorTable();
+        (unsigned int *)img.tqcolorTable();
     int h, s, v, i;
     TQColor clr; // keep constructor out of loop (mosfet)
     for(i=0; i < pixels; ++i){
@@ -2208,7 +2208,7 @@ TQImage& KImageEffect::contrast(TQImage &img, int c)
     int pixels = img.depth() > 8 ? img.width()*img.height() :
         img.numColors();
     unsigned int *data = img.depth() > 8 ? (unsigned int *)img.bits() :
-        (unsigned int *)img.colorTable();
+        (unsigned int *)img.tqcolorTable();
     int i, r, g, b;
     for(i=0; i < pixels; ++i){
         r = qRed(data[i]);
@@ -2779,7 +2779,7 @@ TQImage KImageEffect::sample(TQImage &src, int w, int h)
     }
     else if(depth == 1) {
         int r = src.bitOrder() == TQImage::LittleEndian;
-        memcpy(dest.colorTable(), src.colorTable(), src.numColors()*sizeof(QRgb));
+        memcpy(dest.tqcolorTable(), src.tqcolorTable(), src.numColors()*sizeof(QRgb));
         for(int y=0; y < h; ++y){
             unsigned char *destData = dest.scanLine(y);
             unsigned char *srcData = src.scanLine(y_offset[y]);
@@ -2794,7 +2794,7 @@ TQImage KImageEffect::sample(TQImage &src, int w, int h)
         }
     }
     else{ // PseudoClass source image
-        memcpy(dest.colorTable(), src.colorTable(), src.numColors()*sizeof(QRgb));
+        memcpy(dest.tqcolorTable(), src.tqcolorTable(), src.numColors()*sizeof(QRgb));
         for(int y=0; y < h; ++y){
             unsigned char *destData = dest.scanLine(y);
             unsigned char *srcData = src.scanLine(y_offset[y]);
@@ -2817,10 +2817,10 @@ void KImageEffect::threshold(TQImage &img, unsigned int threshold)
     }
     else{ // PsudeoClass
         count = img.numColors();
-        data = (unsigned int *)img.colorTable();
+        data = (unsigned int *)img.tqcolorTable();
     }
     for(i=0; i < count; ++i)
-        data[i] = intensityValue(data[i]) < threshold ? Qt::black.rgb() : Qt::white.rgb();
+        data[i] = intensityValue(data[i]) < threshold ? QColor(tqblack).rgb() : QColor(tqwhite).rgb();
 }
 
 void KImageEffect::hull(const int x_offset, const int y_offset,
@@ -2951,7 +2951,7 @@ TQImage KImageEffect::despeckle(TQImage &src)
     }
     else{ // PsudeoClass source image
         unsigned char *srcData;
-        unsigned int *cTable = src.colorTable();
+        unsigned int *cTable = src.tqcolorTable();
         unsigned int pixel;
         for(y=0; y < src.height(); ++y){
             srcData = (unsigned char *)src.scanLine(y);
@@ -3130,7 +3130,7 @@ TQImage KImageEffect::addNoise(TQImage &src, NoiseType noise_type)
     }
     else{ // PsudeoClass source image
         unsigned char *srcData;
-        unsigned int *cTable = src.colorTable();
+        unsigned int *cTable = src.tqcolorTable();
         unsigned int pixel;
         for(y=0; y < src.height(); ++y){
             srcData = (unsigned char *)src.scanLine(y);
@@ -3192,7 +3192,7 @@ unsigned int KImageEffect::interpolateColor(TQImage *image, double x_offset,
         }
     }
     else{
-        unsigned int *colorTable = (unsigned int *)image->colorTable();
+        unsigned int *colorTable = (unsigned int *)image->tqcolorTable();
         if((x >= 0) && (y >= 0) && (x < (image->width()-1)) && (y < (image->height()-1)))    {
             unsigned char *t;
             t = (unsigned char *)image->scanLine(y);
@@ -3292,7 +3292,7 @@ TQImage KImageEffect::implode(TQImage &src, double factor,
     else{ // PsudeoClass source image
         unsigned char *srcData;
         unsigned char idx;
-        unsigned int *cTable = src.colorTable();
+        unsigned int *cTable = src.tqcolorTable();
         for(y=0; y < src.height(); ++y){
             srcData = (unsigned char *)src.scanLine(y);
             destData = (unsigned int *)dest.scanLine(y);
@@ -3368,8 +3368,8 @@ TQImage KImageEffect::rotate(TQImage &img, RotateDirection r)
         case Rotate90:
             dest.create(img.height(), img.width(), img.depth());
             dest.setNumColors(img.numColors());
-            srcTable = (unsigned int *)img.colorTable();
-            destTable = (unsigned int *)dest.colorTable();
+            srcTable = (unsigned int *)img.tqcolorTable();
+            destTable = (unsigned int *)dest.tqcolorTable();
             for(x=0; x < img.numColors(); ++x)
                 destTable[x] = srcTable[x];
             for(y=0; y < img.height(); ++y){
@@ -3383,8 +3383,8 @@ TQImage KImageEffect::rotate(TQImage &img, RotateDirection r)
         case Rotate180:
             dest.create(img.width(), img.height(), img.depth());
             dest.setNumColors(img.numColors());
-            srcTable = (unsigned int *)img.colorTable();
-            destTable = (unsigned int *)dest.colorTable();
+            srcTable = (unsigned int *)img.tqcolorTable();
+            destTable = (unsigned int *)dest.tqcolorTable();
             for(x=0; x < img.numColors(); ++x)
                 destTable[x] = srcTable[x];
             for(y=0; y < img.height(); ++y){
@@ -3397,8 +3397,8 @@ TQImage KImageEffect::rotate(TQImage &img, RotateDirection r)
         case Rotate270:
             dest.create(img.height(), img.width(), img.depth());
             dest.setNumColors(img.numColors());
-            srcTable = (unsigned int *)img.colorTable();
-            destTable = (unsigned int *)dest.colorTable();
+            srcTable = (unsigned int *)img.tqcolorTable();
+            destTable = (unsigned int *)dest.tqcolorTable();
             for(x=0; x < img.numColors(); ++x)
                 destTable[x] = srcTable[x];
             for(y=0; y < img.height(); ++y){
@@ -3426,7 +3426,7 @@ void KImageEffect::solarize(TQImage &img, double factor)
 
     threshold = (int)(factor*(MaxRGB+1)/100.0);
     if(img.depth() < 32){
-        data = (unsigned int *)img.colorTable();
+        data = (unsigned int *)img.tqcolorTable();
         count = img.numColors();
     }
     else{
@@ -3541,7 +3541,7 @@ TQImage KImageEffect::swirl(TQImage &src, double degrees,
     }
     else{ // PsudeoClass source image
         unsigned char *p;
-        unsigned int *cTable = (unsigned int *)src.colorTable();
+        unsigned int *cTable = (unsigned int *)src.tqcolorTable();
         for(y=0; y < src.height(); y++){
             p = (unsigned char *)src.scanLine(y);
             q = (unsigned int *)dest.scanLine(y);
@@ -4550,7 +4550,7 @@ TQImage KImageEffect::shade(TQImage &src, bool color_shading, double azimuth,
     else{ // PsudeoClass source image
         unsigned char *p, *s0, *s1, *s2;
         int scanLineIdx;
-        unsigned int *cTable = (unsigned int *)src.colorTable();
+        unsigned int *cTable = (unsigned int *)src.tqcolorTable();
         for(y=0; y < src.height(); ++y){
             scanLineIdx = QMIN(QMAX(y-1,0),src.height()-3);
             p = (unsigned char *)src.scanLine(scanLineIdx);
@@ -4628,7 +4628,7 @@ void KImageEffect::contrastHSV(TQImage &img, bool sharpen)
     }
     else{
         count = img.numColors();
-        data = (unsigned int *)img.colorTable();
+        data = (unsigned int *)img.tqcolorTable();
     }
     for(i=0; i < count; ++i){
         c.setRgb(data[i]);

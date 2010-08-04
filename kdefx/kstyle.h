@@ -251,7 +251,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
 
 		enum KStylePixelMetric {
@@ -279,7 +279,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
 		void drawControl( ControlElement element,
 					TQPainter* p,
@@ -287,7 +287,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
 		void drawComplexControl( ComplexControl control,
 					TQPainter *p,
@@ -297,17 +297,17 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					SFlags flags = Style_Default,
 					SCFlags controls = SC_All,
 					SCFlags active = SC_None,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
 		SubControl querySubControl( ComplexControl control,
 					const TQWidget* widget,
 					const TQPoint &pos,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
 		TQRect querySubControlMetrics( ComplexControl control,
 					const TQWidget* widget,
 					SubControl sc,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
 		int pixelMetric( PixelMetric m, 
 					const TQWidget* widget = 0 ) const;
@@ -317,11 +317,11 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 
 		TQPixmap stylePixmap( StylePixmap stylepixmap,
 					const TQWidget* widget = 0,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
 		int styleHint( StyleHint sh, 
 					const TQWidget* w = 0,
-					const TQStyleOption &opt = TQStyleOption::Default,
+					const TQStyleOption &opt = TQStyleOption::TQSO_Default,
 					QStyleHintReturn* shr = 0 ) const;
 
 	protected:

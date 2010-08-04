@@ -250,7 +250,7 @@ void KStyle::polish( TQWidget* widget )
 {
 	if ( d->useFilledFrameWorkaround )
 	{
-		if ( TQFrame *frame = ::qt_cast< TQFrame* >( widget ) ) {
+		if ( TQFrame *frame = tqqt_cast< TQFrame* >( widget ) ) {
 			TQFrame::Shape shape = frame->frameShape();
 			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
 				widget->installEventFilter(this);
@@ -263,7 +263,7 @@ void KStyle::unPolish( TQWidget* widget )
 {
 	if ( d->useFilledFrameWorkaround )
 	{
-		if ( TQFrame *frame = ::qt_cast< TQFrame* >( widget ) ) {
+		if ( TQFrame *frame = tqqt_cast< TQFrame* >( widget ) ) {
 			TQFrame::Shape shape = frame->frameShape();
 			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
 				widget->removeEventFilter(this);
@@ -355,7 +355,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 			p2.fillRect(pix.rect(), cg.brush(TQColorGroup::Highlight));
 			p2.setPen(cg.highlightedText());
 			p2.setFont(fnt);
-			p2.drawText(pix.rect(), AlignCenter, title);
+			p2.drawText(pix.rect(), TQAlignCenter, title);
 			p2.end();
 
 			// Draw a sunken bevel
@@ -419,7 +419,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 				int i;
 				for( i=0; i < 64; i++ )
 					a.setPoint( i, 0, i*2+1 );
-				p2.setPen( color1 );
+				p2.setPen( tqcolor1 );
 				p2.drawPoints( a );
 				p2.end();
 				TQApplication::flushX();
@@ -428,7 +428,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 				p2.begin( d->horizontalLine );
 				for( i=0; i < 64; i++ )
 					a.setPoint( i, i*2+1, 0 );
-				p2.setPen( color1 );
+				p2.setPen( tqcolor1 );
 				p2.drawPoints( a );
 				p2.end();
 				TQApplication::flushX();
@@ -597,7 +597,7 @@ void KStyle::drawPrimitive( PrimitiveElement pe,
 			p->save();
 			p->setRasterOp( Qt::CopyROP );
 			p->setPen( TQPen( cg.highlight().dark( 160 ), 1 ) );
-			p->setBrush( NoBrush );
+			p->setBrush( TQNoBrush );
 			p->drawRect(
 					rect.x() + point.x(),
 					rect.y() + point.y(),
@@ -730,7 +730,7 @@ void KStyle::drawControl( ControlElement element,
 					p->setPen  (selected ? cg.background() : cg.mid());
 					p->setBrush(selected ? cg.background() : cg.mid());
 					p->drawPolygon(a);
-					p->setBrush(NoBrush);
+					p->setBrush(TQNoBrush);
 					if (!selected) {
 						p->translate(0,-1);
 						p->setPen(cg.light());
@@ -773,7 +773,7 @@ void KStyle::drawControl( ControlElement element,
 					p->setPen  (selected ? cg.background() : cg.mid());
 					p->setBrush(selected ? cg.background() : cg.mid());
 					p->drawPolygon(a);
-					p->setBrush(NoBrush);
+					p->setBrush(TQNoBrush);
 					if (!selected) {
 						p->translate(0,1);
 						p->setPen(cg.dark());
@@ -800,7 +800,7 @@ void KStyle::drawControl( ControlElement element,
 		// ------------------------------------------------------------------------
 		case CE_ProgressBarGroove: {
 			TQRect fr = subRect(SR_ProgressBarGroove, widget);
-			drawPrimitive(PE_Panel, p, fr, cg, Style_Sunken, TQStyleOption::Default);
+			drawPrimitive(PE_Panel, p, fr, cg, Style_Sunken, TQStyleOption::TQSO_Default);
 			break;
 		}
 
@@ -895,15 +895,15 @@ void KStyle::drawControl( ControlElement element,
 					
 				p->save();
 				p->setPen(pb->isEnabled() ? (reverse ? cg.text() : cg.highlightedText()) : cg.text());
-				p->drawText(r, AlignCenter, pb->progressString());
+				p->drawText(r, TQAlignCenter, pb->progressString());
 				p->setClipRect(crect);
 				p->setPen(reverse ? cg.highlightedText() : cg.text());
-				p->drawText(r, AlignCenter, pb->progressString());
+				p->drawText(r, TQAlignCenter, pb->progressString());
 				p->restore();
 
 			} else {
 				p->setPen(cg.text());
-				p->drawText(r, AlignCenter, pb->progressString());
+				p->drawText(r, TQAlignCenter, pb->progressString());
 			}
 
 			break;
@@ -1860,14 +1860,14 @@ bool KStyle::eventFilter( TQObject* object, TQEvent* event )
 		// -- Karol.
 		TQFrame *frame = 0;
 		if ( event->type() == TQEvent::Paint
-				&& (frame = ::qt_cast<TQFrame*>(object)) )
+				&& (frame = tqqt_cast<TQFrame*>(object)) )
 		{
 			if (frame->frameShape() != TQFrame::ToolBarPanel && frame->frameShape() != TQFrame::MenuBarPanel)
 				return false;
 				
 			bool horizontal = true;
 			TQPaintEvent* pe = (TQPaintEvent*)event;
-			TQToolBar *toolbar = ::qt_cast< TQToolBar *>( frame );
+			TQToolBar *toolbar = tqqt_cast< TQToolBar *>( frame );
 			TQRect r = pe->rect();
 
 			if (toolbar && toolbar->orientation() == Qt::Vertical)
