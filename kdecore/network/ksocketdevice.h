@@ -198,7 +198,12 @@ public:
   /**
    * Returns the number of bytes available for reading without blocking.
    */
+#ifdef USE_QT3
   virtual Q_LONG bytesAvailable() const;
+#endif
+#ifdef USE_QT4
+  virtual qint64 bytesAvailable() const;
+#endif
 
   /**
    * Waits up to @p msecs for more data to be available on this socket.

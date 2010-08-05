@@ -3,6 +3,7 @@
 
 #include <tqdatastream.h>
 
+#ifdef USE_QT3
 inline TQDataStream & operator << (TQDataStream & str, bool b)
 {
   str << Q_INT8(b);
@@ -16,6 +17,7 @@ inline TQDataStream & operator >> (TQDataStream & str, bool & b)
   b = bool(l);
   return str;
 }
+#endif // USE_QT3
 
 #if QT_VERSION < 0x030200 && !defined(Q_WS_WIN) && !defined(Q_WS_MAC)
 inline TQDataStream & operator << (TQDataStream & str, long long int ll)

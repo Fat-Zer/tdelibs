@@ -364,7 +364,12 @@ bool KSocketDevice::disconnect()
   return true;			// all is well
 }
 
+#ifdef USE_QT3
 Q_LONG KSocketDevice::bytesAvailable() const
+#endif
+#ifdef USE_QT4
+qint64 KSocketDevice::bytesAvailable() const
+#endif
 {
   if (m_sockfd == -1)
     return -1;			// there's nothing to read in a closed socket

@@ -98,7 +98,12 @@ public:
   /**
    * Make use of the buffers.
    */
+#ifdef USE_QT3
   virtual Q_LONG bytesAvailable() const;
+#endif
+#ifdef USE_QT4
+  virtual qint64 bytesAvailable() const;
+#endif
 
   /**
    * Make use of buffers.
@@ -177,7 +182,12 @@ public:
   /**
    * Returns the length of the output buffer.
    */
+#ifdef USE_QT3
   virtual Q_ULONG bytesToWrite() const;
+#endif
+#ifdef USE_QT4
+  virtual qint64 bytesToWrite() const;
+#endif
 
   /**
    * Closes the socket and discards any output data that had been buffered
@@ -244,7 +254,12 @@ public:
    * which required a call to reset() in order to be able to connect again
    * using the same device. This is not necessary in KBufferedSocket any more.
    */
+#ifdef USE_QT3
   inline void reset()
+#endif
+#ifdef USE_QT4
+  inline bool reset()
+#endif
   { closeNow(); }
 };
 

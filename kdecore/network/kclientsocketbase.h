@@ -292,7 +292,12 @@ public:
    * Returns the number of bytes available on this socket.
    * Reimplemented from KSocketBase.
    */
+#ifdef USE_QT3
   virtual Q_LONG bytesAvailable() const;
+#endif
+#ifdef USE_QT4
+  virtual qint64 bytesAvailable() const;
+#endif
 
   /**
    * Waits for more data. Reimplemented from KSocketBase.

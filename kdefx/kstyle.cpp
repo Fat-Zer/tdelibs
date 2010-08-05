@@ -516,6 +516,25 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) c
 	return value;
 }
 
+// -----------------------------------------------------------------------------
+
+#ifdef USE_QT4
+
+void KStyle::drawPrimitive( ControlElement pe,
+							TQPainter* p,
+							const TQRect &r,
+							const TQColorGroup &cg,
+							SFlags flags,
+							const TQStyleOption& opt ) const
+{
+	// FIXME:
+	// What should "widget" be in actuality?  How should I get it?  From where?
+	// Almost certainly it should not be null!
+	TQWidget *widget = 0;
+	drawControl(pe, p, widget, r, cg, flags, opt);
+}
+
+#endif // USE_QT4
 
 // -----------------------------------------------------------------------------
 
@@ -999,7 +1018,7 @@ int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 		case PM_SliderControlThickness: {
 			const TQSlider* slider   = (const TQSlider*)widget;
 			TQSlider::TickSetting ts = slider->tickmarks();
-			int thickness = (slider->orientation() == Horizontal) ?
+			int thickness = (slider->orientation() == TQ_Horizontal) ?
 							 slider->height() : slider->width();
 			switch (ts) {
 				case TQSlider::NoMarks:				// Use total area.

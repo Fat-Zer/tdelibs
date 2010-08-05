@@ -410,11 +410,11 @@ TQStringList dcopSessionList( const TQString &user, const TQString &home )
     d.setFilter( TQDir::Files | TQDir::Hidden | TQDir::NoSymLinks );
     d.setNameFilter( ".DCOPserver*" );
 
-    const QFileInfoList *list = d.entryInfoList();
+    const TQFileInfoList *list = d.entryInfoList();
     if( !list )
 	return result;
 
-    QFileInfoListIterator it( *list );
+    TQFileInfoListIterator it( *list );
     TQFileInfo *fi;
 
     while ( ( fi = it.current() ) != 0 )

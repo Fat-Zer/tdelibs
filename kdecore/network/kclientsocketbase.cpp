@@ -278,7 +278,12 @@ void KClientSocketBase::close()
 }
 
 // This function is unlike all the others because it is const
+#ifdef USE_QT3
 Q_LONG KClientSocketBase::bytesAvailable() const
+#endif
+#ifdef USE_QT4
+qint64 KClientSocketBase::bytesAvailable() const
+#endif
 {
   return socketDevice()->bytesAvailable();
 }

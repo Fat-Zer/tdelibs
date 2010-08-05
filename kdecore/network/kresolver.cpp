@@ -72,7 +72,7 @@ using namespace KNetwork::Internal;
 /////////////////////////////////////////////
 // class KResolverEntry
 
-class KNetwork::KResolverEntryPrivate: public QShared
+class KNetwork::KResolverEntryPrivate: public TQShared
 {
 public:
   KSocketAddress addr;

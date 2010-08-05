@@ -281,6 +281,17 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
+#ifdef USE_QT4
+
+		void drawPrimitive( ControlElement pe,
+					TQPainter* p,
+					const TQRect &r,
+					const TQColorGroup &cg,
+					SFlags flags = Style_Default,
+					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
+
+#endif // USE_QT4
+
 		void drawControl( ControlElement element,
 					TQPainter* p,
 					const TQWidget* widget,

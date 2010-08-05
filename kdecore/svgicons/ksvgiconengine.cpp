@@ -441,7 +441,7 @@ public:
 			{
 				// Scale, if needed
 				if(image.width() != (int) w || image.height() != (int) h)
-					image = image.smoothScale((int) w, (int) h, TQImage::ScaleFree);
+					image = image.smoothScale((int) w, (int) h, TQImage_ScaleFree);
 
 				m_engine->painter()->drawImage(x, y, image);
 			}

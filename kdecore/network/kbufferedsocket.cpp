@@ -93,7 +93,12 @@ void KBufferedSocket::close()
     }
 }
 
+#ifdef USE_QT3
 Q_LONG KBufferedSocket::bytesAvailable() const
+#endif
+#ifdef USE_QT4
+qint64 KBufferedSocket::bytesAvailable() const
+#endif
 {
   if (!d->input)
     return KStreamSocket::bytesAvailable();
@@ -279,7 +284,12 @@ KIOBufferBase* KBufferedSocket::outputBuffer()
   return d->output;
 }
 
+#ifdef USE_QT3
 Q_ULONG KBufferedSocket::bytesToWrite() const
+#endif
+#ifdef USE_QT4
+qint64 KBufferedSocket::bytesToWrite() const
+#endif
 {
   if (!d->output)
     return 0;
