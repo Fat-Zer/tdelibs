@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdlib.h>
 #include <ctype.h>
 
-class QString;
+class TQString;
 
 #ifndef KDE_USE_FINAL
 #include "yacc.cc.h"
@@ -168,10 +168,10 @@ Kidl_Identifier		[_a-zA-Z][a-zA-Z0-9_]*
                           exit( 1 );
                         }
 "#include"[ \t]*[<\"][^>"]*[>\"]\s*\n {
-			  QString s( yytext );
-                          int i = s.find(QRegExp("[\"<]"))+1;
-                          int j = s.find(QRegExp("[\">]"), i);
-			  yylval._str = new QString( s.mid( i, j - i ) );
+			  TQString s( yytext );
+                          int i = s.find(TQRegExp("[\"<]"))+1;
+                          int j = s.find(TQRegExp("[\">]"), i);
+			  yylval._str = new TQString( s.mid( i, j - i ) );
                           idl_line_no++;
                           return T_INCLUDE;
                         }
@@ -241,7 +241,7 @@ Q_OBJECT		;
 "extern \"C\""			return T_EXTERN_C;
 
 {Kidl_Identifier}	{
-			  yylval._str = new QString( yytext );
+			  yylval._str = new TQString( yytext );
 			  return T_IDENTIFIER;
 			}
 
@@ -266,14 +266,14 @@ Q_OBJECT		;
 			  return T_INTEGER_LITERAL;
 			}
 {Char_Literal}		{
-                          QCString s( yytext );
+                          TQCString s( yytext );
 	                  s = s.mid( 1, s.length() - 2 );
 			  yylval._char = translate_char( s );
 			  return T_CHARACTER_LITERAL;
 			}
 {String_Literal}	{
-                          QString s( yytext );
-                          yylval._str = new QString( s.mid( 1, s.length() - 2 ) );
+                          TQString s( yytext );
+                          yylval._str = new TQString( s.mid( 1, s.length() - 2 ) );
 			  return T_STRING_LITERAL;
 			}
 .			{

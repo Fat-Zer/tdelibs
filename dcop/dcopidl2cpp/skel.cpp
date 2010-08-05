@@ -277,7 +277,7 @@ void generateSkel( const TQString& idl, const TQString& filename, TQDomElement d
 		    str << '\t'<< *ittypes << " " << *args_count << ";" <<  endl;
 		    ++ittypes;
 		}
-		str << "\tQDataStream arg( data, IO_ReadOnly );" << endl;
+		str << "\tTQDataStream arg( data, IO_ReadOnly );" << endl;
 		for( args_count = args.begin(); args_count != args.end(); ++args_count ){
 		    str << "\tif (arg.atEnd()) return false;" << endl; // Basic error checking
 		    str << "\targ >> " << *args_count << ";" << endl;
@@ -288,7 +288,7 @@ void generateSkel( const TQString& idl, const TQString& filename, TQDomElement d
 	    if ( funcType == "void" ) {
 		str << '\t' << plainFuncName << '(';
 	    } else {
-		str << "\tQDataStream _replyStream( replyData, IO_WriteOnly );"  << endl;
+		str << "\tTQDataStream _replyStream( replyData, IO_WriteOnly );"  << endl;
 		str << "\t_replyStream << " << plainFuncName << '(';
 	    }
 
@@ -360,7 +360,7 @@ void generateSkel( const TQString& idl, const TQString& filename, TQDomElement d
 	    str << "\tif (" << className << "_ftable_hiddens[i])" << endl;
 	    str << "\t    continue;" << endl;
         }
-	str << "\tQCString func = " << className << "_ftable[i][0];" << endl;
+	str << "\tTQCString func = " << className << "_ftable[i][0];" << endl;
 	str << "\tfunc += ' ';" << endl;
 	str << "\tfunc += " << className << "_ftable[i][2];" << endl;
 	str << "\tfuncs << func;" << endl;

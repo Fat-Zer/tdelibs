@@ -29,12 +29,12 @@
 
 static int fromHex( TQChar c )
 {
-    if (c >= '0' && c <= '9')
-        return c - '0';
-    else if (c >= 'A' && c <= 'F')
-        return c - 'A' + 10;
-    else if (c >= 'a' && c <= 'f')
-        return c - 'a' + 10;
+    if (c >= (QChar)'0' && c <= (QChar)'9')
+        return c - (QChar)'0';
+    else if (c >= (QChar)'A' && c <= (QChar)'F')
+        return c - (QChar)'A' + 10;
+    else if (c >= (QChar)'a' && c <= (QChar)'f')
+        return c - (QChar)'a' + 10;
     return -1;
 }
 
@@ -48,7 +48,7 @@ inline static bool isQuoteMeta( uint c )
     
     return (c < sizeof(iqm) * 8) && (iqm[c / 8] & (1 << (c & 7)));
 #else
-    return c == '\\' || c == '\'' || c == '"' || c == '$';
+    return c == (int)'\\' || c == (int)'\'' || c == (int)'"' || c == (int)'$';
 #endif
 }
 
@@ -75,17 +75,17 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
             c = args.unicode()[pos++];
         } while (c.isSpace());
         TQString cret;
-        if ((flags & TildeExpand) && c == '~') {
+        if ((flags & TildeExpand) && c == (QChar)'~') {
             uint opos = pos;
             for (; ; pos++) {
                 if (pos >= args.length())
                     break;
                 c = args.unicode()[pos];
-                if (c == '/' || c.isSpace())
+                if (c == (QChar)'/' || c.isSpace())
                     break;
                 if (isQuoteMeta( c )) {
                     pos = opos;
-                    c = '~';
+                    c = (QChar)'~';
                     goto notilde;
                 }
                 if ((flags & AbortOnMeta) && isMeta( c ))
@@ -94,7 +94,7 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
             TQString ccret = homeDir( TQConstString( args.unicode() + opos, pos - opos ).string() );
             if (ccret.isEmpty()) {
                 pos = opos;
-                c = '~';
+                c = (QChar)'~';
                 goto notilde;
             }
             if (pos >= args.length()) {
@@ -111,67 +111,67 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
         }
         // before the notilde label, as a tilde does not match anyway
         if (firstword) {
-            if (c == '_' || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+            if (c == (QChar)'_' || (c >= (QChar)'A' && c <= (QChar)'Z') || (c >= (QChar)'a' && c <= (QChar)'z')) {
                 uint pos2 = pos;
                 TQChar cc;
                 do
                   cc = args[pos2++];
-                while (cc == '_' || (cc >= 'A' && cc <= 'Z') ||
-                       (cc >= 'a' && cc <= 'z') || (cc >= '0' && cc <= '9'));
-                if (cc == '=')
+                while (cc == (QChar)'_' || (cc >= (QChar)'A' && cc <= (QChar)'Z') ||
+                       (cc >= (QChar)'a' && cc <= (QChar)'z') || (cc >= (QChar)'0' && cc <= (QChar)'9'));
+                if (cc == (QChar)'=')
                     goto metaerr;
             }
         }
       notilde:
         do {
-            if (c == '\'') {
+            if (c == (QChar)'\'') {
                 uint spos = pos;
                 do {
                     if (pos >= args.length())
                         goto quoteerr;
                     c = args.unicode()[pos++];
-                } while (c != '\'');
+                } while (c != (QChar)'\'');
                 cret += TQConstString( args.unicode() + spos, pos - spos - 1 ).string();
-            } else if (c == '"') {
+            } else if (c == (QChar)'"') {
                 for (;;) {
                     if (pos >= args.length())
                         goto quoteerr;
                     c = args.unicode()[pos++];
-                    if (c == '"')
+                    if (c == (QChar)'"')
                         break;
-                    if (c == '\\') {
+                    if (c == (QChar)'\\') {
                         if (pos >= args.length())
                             goto quoteerr;
                         c = args.unicode()[pos++];
-                        if (c != '"' && c != '\\' &&
-                            !((flags & AbortOnMeta) && (c == '$' || c == '`')))
-                            cret += '\\';
-                    } else if ((flags & AbortOnMeta) && (c == '$' || c == '`'))
+                        if (c != (QChar)'"' && c != (QChar)'\\' &&
+                            !((flags & AbortOnMeta) && (c == (QChar)'$' || c == (QChar)'`')))
+                            cret += (QChar)'\\';
+                    } else if ((flags & AbortOnMeta) && (c == (QChar)'$' || c == (QChar)'`'))
                         goto metaerr;
                     cret += c;
                 }
-            } else if (c == '$' && args[pos] == '\'') {
+            } else if (c == (QChar)'$' && args[pos] == (QChar)'\'') {
                 pos++;
                 for (;;) {
                     if (pos >= args.length())
                         goto quoteerr;
                     c = args.unicode()[pos++];
-                    if (c == '\'')
+                    if (c == (QChar)'\'')
                         break;
-                    if (c == '\\') {
+                    if (c == (QChar)'\\') {
                         if (pos >= args.length())
                             goto quoteerr;
                         c = args.unicode()[pos++];
                         switch (c) {
-                        case 'a': cret += '\a'; break;
-                        case 'b': cret += '\b'; break;
-                        case 'e': cret += '\033'; break;
-                        case 'f': cret += '\f'; break;
-                        case 'n': cret += '\n'; break;
-                        case 'r': cret += '\r'; break;
-                        case 't': cret += '\t'; break;
-                        case '\\': cret += '\\'; break;
-                        case '\'': cret += '\''; break;
+                        case 'a': cret += (QChar)'\a'; break;
+                        case 'b': cret += (QChar)'\b'; break;
+                        case 'e': cret += (QChar)'\033'; break;
+                        case 'f': cret += (QChar)'\f'; break;
+                        case 'n': cret += (QChar)'\n'; break;
+                        case 'r': cret += (QChar)'\r'; break;
+                        case 't': cret += (QChar)'\t'; break;
+                        case '\\': cret += (QChar)'\\'; break;
+                        case '\'': cret += (QChar)'\''; break;
                         case 'c': cret += args[pos++] & 31; break;
                         case 'x':
                           {
@@ -189,11 +189,11 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
                             break;
                           }
                         default:
-                            if (c >= '0' && c <= '7') {
+                            if (c >= (QChar)'0' && c <= (QChar)'7') {
                                 int hv = c - '0';
                                 for (int i = 0; i < 2; i++) {
                                     c = args[pos];
-                                    if (c < '0' || c > '7')
+                                    if (c < (QChar)'0' || c > (QChar)'7')
                                         break;
                                     hv = hv * 8 + (c - '0');
                                     pos++;
@@ -209,7 +209,7 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
                         cret += c;
                 }
             } else {
-                if (c == '\\') {
+                if (c == (QChar)'\\') {
                     if (pos >= args.length())
                         goto quoteerr;
                     c = args.unicode()[pos++];
@@ -354,7 +354,7 @@ TQString KShell::joinArgsDQ( const TQStringList &args )
 
 TQString KShell::tildeExpand( const TQString &fname )
 {
-    if (fname[0] == '~') {
+    if (fname[0] == (QChar)'~') {
         int pos = fname.find( '/' );
         if (pos < 0)
             return homeDir( TQConstString( fname.unicode() + 1, fname.length() - 1 ).string() );

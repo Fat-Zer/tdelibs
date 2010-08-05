@@ -160,20 +160,20 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
             continue;
       nohit:
         if (state.current == singlequote) {
-            if (cc == '\'')
+            if (cc == (QChar)'\'')
                 state = sstack.pop();
-        } else if (cc == '\\') {
+        } else if (cc == (QChar)'\\') {
             // always swallow the char -> prevent anomalies due to expansion
             pos += 2;
             continue;
         } else if (state.current == dollarquote) {
-            if (cc == '\'')
+            if (cc == (QChar)'\'')
                 state = sstack.pop();
-        } else if (cc == '$') {
+        } else if (cc == (QChar)'$') {
             cc = str[++pos];
-            if (cc == '(') {
+            if (cc == (QChar)'(') {
                 sstack.push( state );
-                if (str[pos + 1] == '(') {
+                if (str[pos + 1] == (QChar)'(') {
                     Save sav = { str, pos + 2 };
                     ostack.push( sav );
                     state.current = math;
@@ -183,21 +183,21 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
                     state.current = paren;
                     state.dquote = false;
                 }
-            } else if (cc == '{') {
+            } else if (cc == (QChar)'{') {
                 sstack.push( state );
                 state.current = subst;
             } else if (!state.dquote) {
-                if (cc == '\'') {
+                if (cc == (QChar)'\'') {
                     sstack.push( state );
                     state.current = dollarquote;
-                } else if (cc == '"') {
+                } else if (cc == (QChar)'"') {
                     sstack.push( state );
                     state.current = doublequote;
                     state.dquote = true;
                 }
             }
             // always swallow the char -> prevent anomalies due to expansion
-        } else if (cc == '`') {
+        } else if (cc == (QChar)'`') {
             str.replace( pos, 1, "$( " ); // add space -> avoid creating $((
             pos2 = pos += 3;
             for (;;) {
@@ -206,12 +206,12 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
                     return false;
                 }
                 cc = str.unicode()[pos2];
-                if (cc == '`')
+                if (cc == (QChar)'`')
                     break;
-                if (cc == '\\') {
+                if (cc == (QChar)'\\') {
                     cc = str[++pos2];
-                    if (cc == '$' || cc == '`' || cc == '\\' ||
-                        (cc == '"' && state.dquote))
+                    if (cc == (QChar)'$' || cc == (QChar)'`' || cc == (QChar)'\\' ||
+                        (cc == (QChar)'"' && state.dquote))
                     {
                         str.remove( pos2 - 1, 1 );
                         continue;
@@ -225,25 +225,25 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
             state.dquote = false;
             continue;
         } else if (state.current == doublequote) {
-            if (cc == '"')
+            if (cc == (QChar)'"')
                 state = sstack.pop();
-        } else if (cc == '\'') {
+        } else if (cc == (QChar)'\'') {
             if (!state.dquote) {
                 sstack.push( state );
                 state.current = singlequote;
             }
-        } else if (cc == '"') {
+        } else if (cc == (QChar)'"') {
             if (!state.dquote) {
                 sstack.push( state );
                 state.current = doublequote;
                 state.dquote = true;
             }
         } else if (state.current == subst) {
-            if (cc == '}')
+            if (cc == (QChar)'}')
                 state = sstack.pop();
-        } else if (cc == ')') {
+        } else if (cc == (QChar)')') {
             if (state.current == math) {
-                if (str[pos + 1] == ')') {
+                if (str[pos + 1] == (QChar)')') {
                     state = sstack.pop();
                     pos += 2;
                 } else {
@@ -261,15 +261,15 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
                 state = sstack.pop();
             else
                 break;
-        } else if (cc == '}') {
+        } else if (cc == (QChar)'}') {
             if (state.current == KMacroExpander::group)
                 state = sstack.pop();
             else
                 break;
-        } else if (cc == '(') {
+        } else if (cc == (QChar)'(') {
             sstack.push( state );
             state.current = paren;
-        } else if (cc == '{') {
+        } else if (cc == (QChar)'{') {
             sstack.push( state );
             state.current = KMacroExpander::group;
         }
@@ -315,7 +315,7 @@ static TQStringList &operator+=( TQStringList &s, const TQString &n) { s << n; r
 static bool
 isIdentifier( uint c )
 {
-    return c == '_' || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9');
+    return c == (QChar)'_' || (c >= (QChar)'A' && c <= (QChar)'Z') || (c >= (QChar)'a' && c <= (QChar)'z') || (c >= (QChar)'0' && c <= (QChar)'9');
 }
 
 ////////
@@ -407,9 +407,9 @@ KMacroMapExpander<TQString,VT>::expandEscapedMacro( const TQString &str, uint po
         return 2;
     }
     uint sl, rsl, rpos;
-    if (str[pos + 1] == '{') {
+    if (str[pos + 1] == (QChar)'{') {
         rpos = pos + 2;
-        for (sl = 0; str[rpos + sl] != '}'; sl++)
+        for (sl = 0; str[rpos + sl] != (QChar)'}'; sl++)
             if (rpos + sl >= str.length())
                 return 0;
         rsl = sl + 3;
@@ -473,9 +473,9 @@ KWordMacroExpander::expandEscapedMacro( const TQString &str, uint pos, TQStringL
         return 2;
     }
     uint sl, rsl, rpos;
-    if (str[pos + 1] == '{') {
+    if (str[pos + 1] == (QChar)'{') {
         rpos = pos + 2;
-        for (sl = 0; str[rpos + sl] != '}'; sl++)
+        for (sl = 0; str[rpos + sl] != (QChar)'}'; sl++)
             if (rpos + sl >= str.length())
                 return 0;
         rsl = sl + 3;
