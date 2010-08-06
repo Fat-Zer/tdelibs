@@ -282,7 +282,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
           break;
       }
       TQFile aOutputFile( kDebug_data->config->readPathEntry(aKey, "kdebug.dbg") );
-      aOutputFile.open( IO_WriteOnly | IO_Append | IO_Raw );
+      aOutputFile.open( (QIODevice::OpenModeFlag)((int)IO_WriteOnly | (int)IO_Append | (int)IO_Raw) );
       aOutputFile.writeBlock( buf, strlen( buf ) );
       aOutputFile.close();
       break;
@@ -292,7 +292,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
       // Since we are in kdecore here, we cannot use KMsgBox and use
       // TQMessageBox instead
       if ( !kDebug_data->aAreaName.isEmpty() )
-          aCaption += TQString("(%1)").arg( kDebug_data->aAreaName );
+          aCaption += TQString("(%1)").arg( QString(kDebug_data->aAreaName) );
       TQMessageBox::warning( 0L, aCaption, data, i18n("&OK") );
       break;
   }
@@ -376,7 +376,7 @@ kdbgstream& kdbgstream::operator << (TQChar ch)
     output += "\\x" + TQString::number( ch.unicode(), 16 ).rightJustify(2, '0');
   else {
     output += ch;
-    if (ch == '\n') flush();
+    if (ch == (QChar)'\n') flush();
   }
   return *this;
 }
@@ -415,7 +415,7 @@ kdbgstream& kdbgstream::operator << (const TQWidget* widget)
       return *this;
     }
   output += string;
-  if (output.at(output.length() -1 ) == '\n')
+  if (output.at(output.length() -1 ) == (QChar)'\n')
     {
       flush();
     }

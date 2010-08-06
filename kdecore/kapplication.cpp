@@ -457,7 +457,7 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
     if ((t == TQEvent::AccelOverride) || (t == TQEvent::KeyPress))
     {
        static const KShortcut& _selectAll = KStdAccel::selectAll();
-       TQLineEdit *edit = ::qt_cast<TQLineEdit *>(receiver);
+       TQLineEdit *edit = tqqt_cast<TQLineEdit *>(receiver);
        if (edit)
        {
           // We have a keypress for a lineedit...
@@ -495,7 +495,7 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
 
           }
        }
-       TQTextEdit *medit = ::qt_cast<TQTextEdit *>(receiver);
+       TQTextEdit *medit = tqqt_cast<TQTextEdit *>(receiver);
        if (medit)
        {
           // We have a keypress for a multilineedit...
@@ -2009,13 +2009,13 @@ TQPalette KApplication::createApplicationPalette( KConfig *config, int contrast_
     TQColor kde34VisitedLink( 82, 24, 139 );
 
     TQColor background = config->readColorEntry( "background", &kde34Background );
-    TQColor foreground = config->readColorEntry( "foreground", &black );
+    TQColor foreground = config->readColorEntry( "foreground", tqblackptr );
     TQColor button = config->readColorEntry( "buttonBackground", &kde34Button );
-    TQColor buttonText = config->readColorEntry( "buttonForeground", &black );
+    TQColor buttonText = config->readColorEntry( "buttonForeground", tqblackptr );
     TQColor highlight = config->readColorEntry( "selectBackground", &kde34Blue );
-    TQColor highlightedText = config->readColorEntry( "selectForeground", &white );
-    TQColor base = config->readColorEntry( "windowBackground", &white );
-    TQColor baseText = config->readColorEntry( "windowForeground", &black );
+    TQColor highlightedText = config->readColorEntry( "selectForeground", tqwhiteptr );
+    TQColor base = config->readColorEntry( "windowBackground", tqwhiteptr );
+    TQColor baseText = config->readColorEntry( "windowForeground", tqblackptr );
     TQColor link = config->readColorEntry( "linkColor", &kde34Link );
     TQColor visitedLink = config->readColorEntry( "visitedLinkColor", &kde34VisitedLink );
 
@@ -2447,14 +2447,14 @@ void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const 
        // put the whole address lists into RFC2047 encoded blobs; technically
        // this isn't correct, but KMail understands it nonetheless
        to = TQString( "=?utf8?b?%1?=" )
-            .arg( KCodecs::base64Encode( _to.utf8(), false ) );
+            .arg( QString(KCodecs::base64Encode( _to.utf8(), false )) );
      }
      if ( !_cc.isEmpty() )
        cc = TQString( "=?utf8?b?%1?=" )
-            .arg( KCodecs::base64Encode( _cc.utf8(), false ) );
+            .arg( QString(KCodecs::base64Encode( _cc.utf8(), false )) );
      if ( !_bcc.isEmpty() )
        bcc = TQString( "=?utf8?b?%1?=" )
-             .arg( KCodecs::base64Encode( _bcc.utf8(), false ) );
+             .arg( QString(KCodecs::base64Encode( _bcc.utf8(), false )) );
    } else {
      to = _to;
      cc = _cc;
@@ -2608,7 +2608,7 @@ void KApplication::broadcastKeyCode(unsigned int keyCode)
   emit coreFakeKeyPress(keyCode);
 }
 
-QCString
+TQCString
 KApplication::launcher()
 {
    return "klauncher";

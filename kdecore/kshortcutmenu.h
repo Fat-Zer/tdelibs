@@ -32,7 +32,7 @@ class KAccelActions;
 /**
  * @internal
  */
-class KDECORE_EXPORT KShortcutMenu : public QPopupMenu
+class KDECORE_EXPORT KShortcutMenu : public TQPopupMenu
 {
 	Q_OBJECT
  public:

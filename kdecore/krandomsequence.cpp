@@ -217,7 +217,7 @@ KRandomSequence::getBool()
   return (((unsigned long) m_lngShufflePos) & 1);  
 }
 
-class KRandomSequenceList : public QGList
+class KRandomSequenceList : public TQGList
 {
   friend class KRandomSequence;
 public:

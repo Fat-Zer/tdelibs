@@ -55,7 +55,7 @@ void KMacroExpanderBase::expandMacros( TQString &str )
     TQString rsts;
 
     for (pos = 0; pos < str.length(); ) {
-        if (ec != (char)0) {
+        if (ec != (QChar)0) {
             if (str.unicode()[pos] != ec)
                 goto nohit;
             if (!(len = expandEscapedMacro( str, pos, rst )))
@@ -110,7 +110,7 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
 
     while (pos < str.length()) {
         TQChar cc( str.unicode()[pos] );
-        if (ec != (char)0) {
+        if (ec != (QChar)0) {
             if (cc != ec)
                 goto nohit;
             if (!(len = expandEscapedMacro( str, pos, rst )))
@@ -315,7 +315,7 @@ static TQStringList &operator+=( TQStringList &s, const TQString &n) { s << n; r
 static bool
 isIdentifier( uint c )
 {
-    return c == (QChar)'_' || (c >= (QChar)'A' && c <= (QChar)'Z') || (c >= (QChar)'a' && c <= (QChar)'z') || (c >= (QChar)'0' && c <= (QChar)'9');
+    return c == '_' || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9');
 }
 
 ////////

@@ -51,7 +51,7 @@ class KMultipleDragPrivate;
  *
  * @author David Faure <faure@kde.org>
  */
-class KDECORE_EXPORT KMultipleDrag : public QDragObject
+class KDECORE_EXPORT KMultipleDrag : public TQDragObject
 {
     Q_OBJECT
 

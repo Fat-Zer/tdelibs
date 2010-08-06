@@ -1212,34 +1212,34 @@ static void _inc_by_one(TQString &str, int position)
       switch(last_char)
 	{
 	case '0':
-	  str[i] = '1';
+	  str[i] = (QChar)'1';
 	  break;
 	case '1':
-	  str[i] = '2';
+	  str[i] = (QChar)'2';
 	  break;
 	case '2':
-	  str[i] = '3';
+	  str[i] = (QChar)'3';
 	  break;
 	case '3':
-	  str[i] = '4';
+	  str[i] = (QChar)'4';
 	  break;
 	case '4':
-	  str[i] = '5';
+	  str[i] = (QChar)'5';
 	  break;
 	case '5':
-	  str[i] = '6';
+	  str[i] = (QChar)'6';
 	  break;
 	case '6':
-	  str[i] = '7';
+	  str[i] = (QChar)'7';
 	  break;
 	case '7':
-	  str[i] = '8';
+	  str[i] = (QChar)'8';
 	  break;
 	case '8':
-	  str[i] = '9';
+	  str[i] = (QChar)'9';
 	  break;
 	case '9':
-	  str[i] = '0';
+	  str[i] = (QChar)'0';
 	  if (i == 0) str.prepend('1');
 	  continue;
 	case '.':
@@ -1304,8 +1304,8 @@ TQString KLocale::formatNumber(const TQString &numStr, bool round,
 
   
   // Skip the sign (for now)
-  bool neg = (tmpString[0] == '-');
-  if (neg  ||  tmpString[0] == '+') tmpString.remove(0, 1);
+  bool neg = (tmpString[0] == (QChar)'-');
+  if (neg  ||  tmpString[0] == (QChar)'+') tmpString.remove(0, 1);
 
   // Split off exponential part (including 'e'-symbol)
   TQString mantString = tmpString.section('e', 0, 0,
@@ -1345,7 +1345,7 @@ TQString KLocale::formatDate(const TQDate &pDate, bool shortFormat) const
     {
       if ( !escape )
 	{
-	  if ( rst.at( format_index ).unicode() == '%' )
+	  if ( (QChar)(rst.at( format_index ).unicode()) == (QChar)'%' )
 	    escape = true;
 	  else
 	    buffer.append(rst.at(format_index));
@@ -1466,7 +1466,7 @@ double KLocale::readNumber(const TQString &_str, bool * ok) const
   }
 
   TQString tot;
-  if (neg) tot = '-';
+  if (neg) tot = (QChar)'-';
 
   tot += major + '.' + minor + exponentialPart;
 
@@ -1496,7 +1496,7 @@ double KLocale::readMoney(const TQString &_str, bool * ok) const
   // (with a special case for parenthesis)
   if (negativeMonetarySignPosition() == ParensAround)
     {
-      if (str[0] == '(' && str[str.length()-1] == ')')
+      if (str[0] == (QChar)'(' && str[str.length()-1] == (QChar)')')
         {
 	  neg = true;
 	  str.remove(str.length()-1,1);
@@ -1563,7 +1563,7 @@ double KLocale::readMoney(const TQString &_str, bool * ok) const
   }
 
   TQString tot;
-  if (neg) tot = '-';
+  if (neg) tot = (QChar)'-';
   tot += major + '.' + minior;
   return tot.toDouble(ok);
 }
@@ -1620,7 +1620,7 @@ TQDate KLocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) 
 
     TQChar c = fmt.at(fmtpos++);
 
-    if (c != '%') {
+    if (c != (QChar)'%') {
       if (c.isSpace() && str.at(strpos).isSpace())
         strpos++;
       else if (c != str.at(strpos++))
@@ -1642,7 +1642,7 @@ TQDate KLocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) 
           error = true;
 	  j = 1;
 	  while (error && (j < 8)) {
-	    TQString s = calendar()->weekDayName(j, c == 'a').lower();
+	    TQString s = calendar()->weekDayName(j, c == (QChar)'a').lower();
 	    int len = s.length();
 	    if (str.mid(strpos, len) == s)
             {
@@ -1659,7 +1659,7 @@ TQDate KLocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) 
 	  if (d->nounDeclension && d->dateMonthNamePossessive) {
 	    j = 1;
 	    while (error && (j < 13)) {
-	      TQString s = calendar()->monthNamePossessive(j, year, c == 'b').lower();
+	      TQString s = calendar()->monthNamePossessive(j, year, c == (QChar)'b').lower();
 	      int len = s.length();
 	      if (str.mid(strpos, len) == s) {
 	        month = j;
@@ -1671,7 +1671,7 @@ TQDate KLocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) 
 	  }
 	  j = 1;
 	  while (error && (j < 13)) {
-	    TQString s = calendar()->monthName(j, year, c == 'b').lower();
+	    TQString s = calendar()->monthName(j, year, c == (QChar)'b').lower();
 	    int len = s.length();
 	    if (str.mid(strpos, len) == s) {
 	      month = j;
@@ -1760,7 +1760,7 @@ TQTime KLocale::readTime(const TQString &intstr, ReadTimeFlags flags, bool *ok) 
 
       TQChar c = Format.at(Formatpos++);
 
-      if (c != '%')
+      if (c != (QChar)'%')
 	{
 	  if (c.isSpace())
 	    strpos++;
@@ -1869,7 +1869,7 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
     {
       if ( !escape )
 	{
-	  if ( rst.at( format_index ).unicode() == '%' )
+	  if ( (QChar)(rst.at( format_index ).unicode()) == (QChar)'%' )
 	    escape = true;
 	  else
 	    buffer[index++] = rst.at( format_index );
@@ -1879,7 +1879,7 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
 	  switch ( rst.at( format_index ).unicode() )
 	    {
 	    case '%':
-	      buffer[index++] = '%';
+	      buffer[index++] = (QChar)'%';
 	      break;
 	    case 'H':
 	      put_it_in( buffer, index, pTime.hour() );
@@ -1908,7 +1908,7 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
 	      number = pTime.hour();
 	    case 'l':
 	      // to share the code
-	      if ( rst.at( format_index ).unicode() == 'l' )
+	      if ( (QChar)(rst.at( format_index ).unicode()) == (QChar)'l' )
 		number = isDuration ? pTime.hour() : (pTime.hour() + 11) % 12 + 1;
 	      if ( number / 10 )
 		buffer[index++] = number / 10 + '0';

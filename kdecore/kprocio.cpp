@@ -104,7 +104,7 @@ bool KProcIO::start (RunMode runmode, bool includeStderr)
 
 bool KProcIO::writeStdin (const TQString &line, bool appendnewline)
 {
-  return writeStdin(codec->fromUnicode(line), appendnewline);
+  return writeStdin(TQCString(codec->fromUnicode(line)), appendnewline);
 }
 
 bool KProcIO::writeStdin (const TQCString &line, bool appendnewline)

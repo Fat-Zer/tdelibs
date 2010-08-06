@@ -1140,9 +1140,9 @@ TQString KStartupInfoData::to_text() const
         ret += TQString::fromLatin1( " DESKTOP=%1" )
             .arg( d->desktop == NET::OnAllDesktops ? NET::OnAllDesktops : d->desktop - 1 ); // spec counts from 0
     if( !d->wmclass.isEmpty())
-        ret += TQString::fromLatin1( " WMCLASS=\"%1\"" ).arg( d->wmclass );
+        ret += TQString::fromLatin1( " WMCLASS=\"%1\"" ).arg( QString(d->wmclass) );
     if( !d->hostname.isEmpty())
-        ret += TQString::fromLatin1( " HOSTNAME=%1" ).arg( d->hostname );
+        ret += TQString::fromLatin1( " HOSTNAME=%1" ).arg( QString(d->hostname) );
     for( TQValueList< pid_t >::ConstIterator it = d->pids.begin();
          it != d->pids.end();
          ++it )
@@ -1466,7 +1466,7 @@ static
 TQString get_str( const TQString& item_P )
     {
     unsigned int pos = item_P.find( '=' );
-    if( item_P.length() > pos + 2 && item_P[ pos + 1 ] == '\"' )
+    if( item_P.length() > pos + 2 && item_P[ pos + 1 ] == (QChar)'\"' )
         {
         int pos2 = item_P.left( pos + 2 ).find( '\"' );
         if( pos2 < 0 )
@@ -1522,8 +1522,8 @@ static TQString escape_str( const TQString& str_P )
 	 pos < str_P.length();
 	 ++pos )
 	{
-	if( str_P[ pos ] == '\\'
-	    || str_P[ pos ] == '"' )
+	if( str_P[ pos ] == (QChar)'\\'
+	    || str_P[ pos ] == (QChar)'"' )
 	    ret += '\\';
 	ret += str_P[ pos ];
 	}

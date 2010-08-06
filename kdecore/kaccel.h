@@ -90,7 +90,7 @@ class KAccelPrivate;
  * @see KKeyDialog
  */
 
-class KDECORE_EXPORT KAccel : public QAccel
+class KDECORE_EXPORT KAccel : public TQAccel
 {
 	Q_OBJECT
  public:

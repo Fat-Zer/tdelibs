@@ -91,7 +91,7 @@ protected:
 
 };
 
-class KCmdLineParsedArgs : public QStrList
+class KCmdLineParsedArgs : public TQStrList
 {
 public:
    KCmdLineParsedArgs()
@@ -483,7 +483,7 @@ KCmdLineArgs::findOption(const char *_opt, TQCString opt, int &i, bool _enabled,
             {
                argument = _opt+p;
             }
-            args->setOption(singleCharOption, argument);
+            args->setOption(singleCharOption, (const char*)argument);
             return;
          }
          break; // Unknown argument
@@ -525,7 +525,7 @@ KCmdLineArgs::findOption(const char *_opt, TQCString opt, int &i, bool _enabled,
          }
          argument = argv[i];
       }
-      args->setOption(opt, argument);
+      args->setOption(opt, (const char*)argument);
    }
    else
    {
@@ -924,7 +924,7 @@ KCmdLineArgs::usage(const char *id)
             name = name.mid(1);
             if ((name[0] == '[') && (name[name.length()-1] == ']'))
          name = name.mid(1, name.length()-2);
-            printQ(optionFormatString.arg(name, -25)
+            printQ(optionFormatString.arg(QString(name), -25)
      .arg(description));
          }
          else
@@ -948,12 +948,12 @@ KCmdLineArgs::usage(const char *id)
                opt = opt + name;
                if (!option->def)
                {
-                  printQ(optionFormatString.arg(opt, -25)
+                  printQ(optionFormatString.arg(QString(opt), -25)
                          .arg(description));
                }
                else
                {
-                  printQ(optionFormatStringDef.arg(opt, -25)
+                  printQ(optionFormatStringDef.arg(QString(opt), -25)
                          .arg(description).arg(option->def));
                }
                opt = "";
@@ -1113,7 +1113,7 @@ KCmdLineArgs::setOption(const TQCString &opt, const char *value)
    parsedOptionList->insert( opt, new TQCString(value) );
 }
 
-QCString
+TQCString
 KCmdLineArgs::getOption(const char *_opt) const
 {
    TQCString *value = 0;

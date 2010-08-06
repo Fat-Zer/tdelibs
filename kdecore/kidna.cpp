@@ -41,7 +41,7 @@ TQCString KIDNA::toAsciiCString(const TQString &idna)
 
 TQString KIDNA::toAscii(const TQString &idna)
 {
-  if (idna.length() && (idna[0] == "."))
+  if (idna.length() && (idna[0] == (QChar)'.'))
   {
      TQString host = TQString::fromLatin1(toAsciiCString(idna.mid(1)));
      if (host.isEmpty())
@@ -54,7 +54,7 @@ TQString KIDNA::toAscii(const TQString &idna)
 TQString KIDNA::toUnicode(const TQString &idna)
 {
 #ifndef Q_WS_WIN //TODO kresolver not ported
-  if (idna.length() && (idna[0] == "."))
+  if (idna.length() && (idna[0] == (QChar)'.'))
      return idna[0] + KResolver::domainToUnicode(idna.mid(1));
   return KResolver::domainToUnicode(idna);
 #else

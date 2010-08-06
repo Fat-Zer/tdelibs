@@ -419,8 +419,8 @@ bool KStringHandler::matchFileName( const TQString& filename, const TQString& pa
       return false;
 
    // Patterns like "Makefile*"
-   if ( pattern[ pattern_len - 1 ] == '*' && len + 1 >= pattern_len ) {
-      if ( pattern[ 0 ] == '*' )
+   if ( pattern[ pattern_len - 1 ] == (QChar)'*' && len + 1 >= pattern_len ) {
+      if ( pattern[ 0 ] == (QChar)'*' )
       {
          return filename.find(pattern.mid(1, pattern_len - 2)) != -1;
       }
@@ -434,7 +434,7 @@ bool KStringHandler::matchFileName( const TQString& filename, const TQString& pa
    }
 
    // Patterns like "*~", "*.extension"
-   if ( pattern[ 0 ] == '*' && len + 1 >= pattern_len )
+   if ( pattern[ 0 ] == (QChar)'*' && len + 1 >= pattern_len )
    {
      const TQChar *c1 = pattern.unicode() + pattern_len - 1;
      const TQChar *c2 = filename.unicode() + len - 1;

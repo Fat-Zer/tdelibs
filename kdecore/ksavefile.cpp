@@ -171,7 +171,7 @@ bool KSaveFile::backupFile( const TQString& qFilename, const TQString& backupDir
        else
 	   nameOnly = cFilename.mid(slash + 1);
        cBackup = TQFile::encodeName(backupDir);
-       if ( backupDir[backupDir.length()-1] != '/' )
+       if ( backupDir[backupDir.length()-1] != (QChar)'/' )
            cBackup += '/';
        cBackup += nameOnly;
    }

@@ -372,13 +372,13 @@ TQChar KCharsets::fromEntity(const TQString &str)
     TQChar res = TQChar::null;
 
     int pos = 0;
-    if(str[pos] == '&') pos++;
+    if(str[pos] == (QChar)'&') pos++;
 
     // Check for '&#000' or '&#x0000' sequence
-    if (str[pos] == '#' && str.length()-pos > 1) {
+    if (str[pos] == (QChar)'#' && str.length()-pos > 1) {
         bool ok;
         pos++;
-        if (str[pos] == 'x' || str[pos] == 'X') {
+        if (str[pos] == (QChar)'x' || str[pos] == (QChar)'X') {
             pos++;
             // '&#x0000', hexadeciaml character reference
             TQString tmp(str.unicode()+pos, str.length()-pos);
@@ -412,7 +412,7 @@ TQChar KCharsets::fromEntity(const TQString &str, int &len)
     {
         TQString tmp = str.left(len);
         TQChar res = fromEntity(tmp);
-        if( res != TQChar::null ) return res;
+        if( res != (QChar)TQChar::null ) return res;
         len--;
     }
     return TQChar::null;
@@ -437,13 +437,13 @@ TQString KCharsets::resolveEntities( const TQString &input )
     for ( ; p < end; ++p ) {
         const TQChar ch = *p;
 
-        if ( ch == '&' ) {
+        if ( ch == (QChar)'&' ) {
             ampersand = p;
             scanForSemicolon = true;
             continue;
         }
 
-        if ( ch != ';' || scanForSemicolon == false )
+        if ( ch != (QChar)';' || scanForSemicolon == false )
             continue;
 
         assert( ampersand );

@@ -422,7 +422,7 @@ KLibrary* KLibLoader::library( const char *name )
 #ifndef NDEBUG
         kdDebug(150) << "library=" << name << ": No file named " << libname << " found in paths." << endl;
 #endif
-        d->errorMessage = i18n("Library files for \"%1\" not found in paths.").arg(libname);
+        d->errorMessage = i18n("Library files for \"%1\" not found in paths.").arg(TQString(libname));
         return 0;
       }
 

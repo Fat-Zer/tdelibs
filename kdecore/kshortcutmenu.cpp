@@ -84,14 +84,14 @@ void KShortcutMenu::keyPressEvent( TQKeyEvent* pEvent )
 	KKey key( pEvent );
 	
 	switch( pEvent->key() ) {
-	 case Key_Shift:
-	 case Key_Control:
-	 case Key_Alt:
-	 case Key_Meta:
-	 case Key_Super_L:
-	 case Key_Super_R:
-	 case Key_Hyper_L:
-	 case Key_Hyper_R:
+	 case TQ_Key_Shift:
+	 case TQ_Key_Control:
+	 case TQ_Key_Alt:
+	 case TQ_Key_Meta:
+	 case TQ_Key_Super_L:
+	 case TQ_Key_Super_R:
+	 case TQ_Key_Hyper_L:
+	 case TQ_Key_Hyper_R:
 		break;
 	 default:
 		int iItem = searchForKey( key );

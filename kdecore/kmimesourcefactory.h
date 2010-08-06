@@ -37,7 +37,7 @@ class KInstance;
  *
  * @author Peter Putzer <putzer@kde.org>
  */
-class KDECORE_EXPORT KMimeSourceFactory : public QMimeSourceFactory
+class KDECORE_EXPORT KMimeSourceFactory : public TQMimeSourceFactory
 {
 public:
 

@@ -189,7 +189,7 @@ void KStandardDirs::addPrefix( const TQString& _dir, bool priority )
 	return;
 
     TQString dir = _dir;
-    if (dir.at(dir.length() - 1) != '/')
+    if (dir.at(dir.length() - 1) != (QChar)'/')
 	dir += '/';
 
     if (!prefixes.contains(dir)) {
@@ -209,7 +209,7 @@ void KStandardDirs::addXdgConfigPrefix( const TQString& _dir, bool priority )
 	return;
 
     TQString dir = _dir;
-    if (dir.at(dir.length() - 1) != '/')
+    if (dir.at(dir.length() - 1) != (QChar)'/')
 	dir += '/';
 
     if (!d->xdgconf_prefixes.contains(dir)) {
@@ -229,7 +229,7 @@ void KStandardDirs::addXdgDataPrefix( const TQString& _dir, bool priority )
 	return;
 
     TQString dir = _dir;
-    if (dir.at(dir.length() - 1) != '/')
+    if (dir.at(dir.length() - 1) != (QChar)'/')
 	dir += '/';
 
     if (!d->xdgdata_prefixes.contains(dir)) {
@@ -271,7 +271,7 @@ bool KStandardDirs::addResourceType( const char *type,
 	relatives.insert(type, rels);
     }
     TQString copy = relativename;
-    if (copy.at(copy.length() - 1) != '/')
+    if (copy.at(copy.length() - 1) != (QChar)'/')
 	copy += '/';
     if (!rels->contains(copy)) {
         if (priority)
@@ -301,7 +301,7 @@ bool KStandardDirs::addResourceDir( const char *type,
 	absolutes.insert(type, paths);
     }
     TQString copy = absdir;
-    if (copy.at(copy.length() - 1) != '/')
+    if (copy.at(copy.length() - 1) != (QChar)'/')
       copy += '/';
 
     if (!paths->contains(copy)) {
@@ -452,7 +452,7 @@ bool KStandardDirs::exists(const TQString &fullPath)
 {
     KDE_struct_stat buff;
     if (access(TQFile::encodeName(fullPath), R_OK) == 0 && KDE_stat( TQFile::encodeName(fullPath), &buff ) == 0)
-	if (fullPath.at(fullPath.length() - 1) != '/') {
+	if (fullPath.at(fullPath.length() - 1) != (QChar)'/') {
 	    if (S_ISREG( buff.st_mode ))
 		return true;
 	} else
@@ -478,9 +478,9 @@ static void lookupDirectory(const TQString& path, const TQString &relPart,
       return;
 
 #ifdef Q_WS_WIN
-    assert(path.at(path.length() - 1) == '/' || path.at(path.length() - 1) == '\\');
+    assert(path.at(path.length() - 1) == (QChar)'/' || path.at(path.length() - 1) == (QChar)'\\');
 #else
-    assert(path.at(path.length() - 1) == '/');
+    assert(path.at(path.length() - 1) == (QChar)'/');
 #endif
 
     struct dirent *ep;
@@ -492,7 +492,7 @@ static void lookupDirectory(const TQString& path, const TQString &relPart,
     while( ( ep = readdir( dp ) ) != 0L )
     {
       TQString fn( TQFile::decodeName(ep->d_name));
-      if (fn == _dot || fn == _dotdot || fn.at(fn.length() - 1).latin1() == '~')
+      if (fn == _dot || fn == _dotdot || (TQCString)(fn.at(fn.length() - 1).latin1()) == (QChar)'~')
 	continue;
 
       if (!recursive && !regexp.exactMatch(fn))
@@ -569,9 +569,9 @@ static void lookupPrefix(const TQString& prefix, const TQString& relpath,
     if (prefix.isEmpty()) //for sanity
       return;
 #ifdef Q_WS_WIN
-    assert(prefix.at(prefix.length() - 1) == '/' || prefix.at(prefix.length() - 1) == '\\');
+    assert(prefix.at(prefix.length() - 1) == (QChar)'/' || prefix.at(prefix.length() - 1) == (QChar)'\\');
 #else
-    assert(prefix.at(prefix.length() - 1) == '/');
+    assert(prefix.at(prefix.length() - 1) == (QChar)'/');
 #endif
     KDE_struct_stat buff;
 
@@ -591,7 +591,7 @@ static void lookupPrefix(const TQString& prefix, const TQString& relpath,
 	while( ( ep = readdir( dp ) ) != 0L )
 	    {
 		TQString fn( TQFile::decodeName(ep->d_name));
-		if (fn == _dot || fn == _dotdot || fn.at(fn.length() - 1) == '~')
+		if (fn == _dot || fn == _dotdot || fn.at(fn.length() - 1) == (QChar)'~')
 		    continue;
 
 		if ( !pathExp.exactMatch(fn) )
@@ -692,7 +692,7 @@ KStandardDirs::realPath(const TQString &dirname)
     if (realpath( TQFile::encodeName(dirname).data(), realpath_buffer) != 0) {
         // success, use result from realpath
         int len = strlen(realpath_buffer);
-        realpath_buffer[len] = '/';
+        realpath_buffer[len] = (QChar)'/';
         realpath_buffer[len+1] = 0;
         return TQFile::decodeName(realpath_buffer);
     }
@@ -771,7 +771,7 @@ void KStandardDirs::createSpecialResource(const char *type)
    if (result > 0)
    {
       link[result] = 0;
-      if (link[0] == '/')
+      if (link[0] == (int)'/')
          dir = TQFile::decodeName(link);
       else
          dir = TQDir::cleanDirPath(dir+TQFile::decodeName(link));
@@ -892,7 +892,7 @@ TQStringList KStandardDirs::systemPaths( const TQString& pstr )
     {
 	p = tokens[ i ];
 
-        if ( p[ 0 ] == '~' )
+        if ( p[ 0 ] == (QChar)'~' )
         {
             int len = p.find( '/' );
             if ( len == -1 )
@@ -1167,7 +1167,7 @@ bool KStandardDirs::makeDir(const TQString& dir, int mode)
     uint len = target.length();
 
     // append trailing slash if missing
-    if (dir.at(len - 1) != '/')
+    if (dir.at(len - 1) != (QChar)'/')
         target += '/';
 
     TQString base("");
@@ -1220,7 +1220,7 @@ static TQString executablePrefix()
    if (length == -1)
       return TQString::null;
 
-   path_buffer[length] = '\0';
+   path_buffer[length] = (QChar)'\0';
 
    TQString path = TQFile::decodeName(path_buffer);
 
@@ -1314,7 +1314,7 @@ void KStandardDirs::addKDEDefaults()
     TQString localKdeDir = readEnvPath(getuid() ? "KDEHOME" : "KDEROOTHOME");
     if (!localKdeDir.isEmpty())
     {
-       if (localKdeDir[localKdeDir.length()-1] != '/')
+       if (localKdeDir[localKdeDir.length()-1] != (QChar)'/')
           localKdeDir += '/';
     }
     else
@@ -1358,7 +1358,7 @@ void KStandardDirs::addKDEDefaults()
     TQString localXdgDir = readEnvPath("XDG_CONFIG_HOME");
     if (!localXdgDir.isEmpty())
     {
-       if (localXdgDir[localXdgDir.length()-1] != '/')
+       if (localXdgDir[localXdgDir.length()-1] != (QChar)'/')
           localXdgDir += '/';
     }
     else
@@ -1390,7 +1390,7 @@ void KStandardDirs::addKDEDefaults()
            it != kdedirList.end(); ++it)
         {
            TQString dir = *it;
-           if (dir[dir.length()-1] != '/')
+           if (dir[dir.length()-1] != (QChar)'/')
              dir += '/';
            xdgdirList.append(dir+"share/");
         }
@@ -1402,7 +1402,7 @@ void KStandardDirs::addKDEDefaults()
     localXdgDir = readEnvPath("XDG_DATA_HOME");
     if (!localXdgDir.isEmpty())
     {
-       if (localXdgDir[localXdgDir.length()-1] != '/')
+       if (localXdgDir[localXdgDir.length()-1] != (QChar)'/')
           localXdgDir += '/';
     }
     else
