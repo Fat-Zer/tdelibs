@@ -30,7 +30,7 @@
 #include <tqregexp.h>
 #include <tqwidget.h>
 #include <tqmetaobject.h>
-#include <private/qucomextra_p.h>
+#include <tqucomextra_p.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kkeynative.h>

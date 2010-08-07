@@ -312,7 +312,7 @@ void KWin::setMainWindow( TQWidget* subwindow, WId mainwindow )
         /*
          Grmbl. See TQDialog::show(). That should get fixed in Qt somehow.
         */
-        if( qt_cast< TQDialog* >( subwindow ) != NULL
+        if( tqqt_cast< TQDialog* >( subwindow ) != NULL
             && subwindow->parentWidget() == NULL
             && kapp->mainWidget() != NULL )
         {

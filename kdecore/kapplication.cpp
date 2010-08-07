@@ -758,15 +758,15 @@ void KApplication::iceIOErrorHandler( _IceConn *conn )
     exit( 1 );
 }
 
-class KDETranslator : public QTranslator
+class KDETranslator : public TQTranslator
 {
 public:
-  KDETranslator(TQObject *parent) : QTranslator(parent, "kdetranslator") {}
-  virtual QTranslatorMessage findMessage(const char* context,
+  KDETranslator(TQObject *parent) : TQTranslator(parent, "kdetranslator") {}
+  virtual TQTranslatorMessage findMessage(const char* context,
 					 const char *sourceText,
 					 const char* message) const
   {
-    QTranslatorMessage res;
+    TQTranslatorMessage res;
     res.setTranslation(KGlobal::locale()->translateQt(context, sourceText, message));
     return res;
   }
@@ -1344,7 +1344,7 @@ void KApplication::saveState( QSessionManager& sm )
         discard  << "rm" << locateLocal("config", sessionConfigName());
         sm.setDiscardCommand( discard );
     } else {
-	sm.setDiscardCommand( "" );
+	sm.setDiscardCommand( QStringList("") );
     }
 
     if ( canceled )
@@ -2030,7 +2030,7 @@ TQPalette KApplication::createApplicationPalette( KConfig *config, int contrast_
     if (v > 128)
 	// dark bg, light fg - need a darker disabled fg
 	disfg = disfg.dark(lowlightVal);
-    else if (disfg != black)
+    else if (disfg != Qt::black)
 	// light bg, dark fg - need a lighter disabled fg - but only if !black
 	disfg = disfg.light(highlightVal);
     else
@@ -2068,7 +2068,7 @@ TQPalette KApplication::createApplicationPalette( KConfig *config, int contrast_
     if (v > 128)
 	// dark button, light buttonText - need a darker disabled buttonText
 	disbtntext = disbtntext.dark(lowlightVal);
-    else if (disbtntext != black)
+    else if (disbtntext != Qt::black)
 	// light buttonText, dark button - need a lighter disabled buttonText - but only if !black
 	disbtntext = disbtntext.light(highlightVal);
     else
@@ -3191,7 +3191,7 @@ uint KApplication::mouseState()
     return mousestate & 0xff00;
 }
 
-Qt::ButtonState KApplication::keyboardMouseState()
+TQ_ButtonState KApplication::keyboardMouseState()
 {
     int ret = 0;
 #ifdef Q_WS_X11
@@ -3203,35 +3203,35 @@ Qt::ButtonState KApplication::keyboardMouseState()
                    &root_x, &root_y, &win_x, &win_y, &state );
     // transform the same way like Qt's qt_x11_translateButtonState()
     if( state & Button1Mask )
-        ret |= LeftButton;
+        ret |= TQ_LeftButton;
     if( state & Button2Mask )
-        ret |= MidButton;
+        ret |= TQ_MidButton;
     if( state & Button3Mask )
-        ret |= RightButton;
+        ret |= TQ_RightButton;
     if( state & ShiftMask )
-        ret |= ShiftButton;
+        ret |= TQ_ShiftButton;
     if( state & ControlMask )
-        ret |= ControlButton;
+        ret |= TQ_ControlButton;
     if( state & KKeyNative::modX( KKey::ALT ))
-        ret |= AltButton;
+        ret |= TQ_AltButton;
     if( state & KKeyNative::modX( KKey::WIN ))
-        ret |= MetaButton;
+        ret |= TQ_MetaButton;
 #elif defined(Q_WS_WIN)
     const bool mousebtn_swapped = GetSystemMetrics(SM_SWAPBUTTON);
     if (GetAsyncKeyState(VK_LBUTTON))
         ret |= (mousebtn_swapped ? RightButton : LeftButton);
     if (GetAsyncKeyState(VK_MBUTTON))
-        ret |= MidButton;
+        ret |= TQ_MidButton;
     if (GetAsyncKeyState(VK_RBUTTON))
-        ret |= (mousebtn_swapped ? LeftButton : RightButton);
+        ret |= (mousebtn_swapped ? TQ_LeftButton : TQ_RightButton);
     if (GetAsyncKeyState(VK_SHIFT))
-        ret |= ShiftButton;
+        ret |= TQ_ShiftButton;
     if (GetAsyncKeyState(VK_CONTROL))
-        ret |= ControlButton;
+        ret |= TQ_ControlButton;
     if (GetAsyncKeyState(VK_MENU))
-        ret |= AltButton;
+        ret |= TQ_AltButton;
     if (GetAsyncKeyState(VK_LWIN) || GetAsyncKeyState(VK_RWIN))
-        ret |= MetaButton;
+        ret |= TQ_MetaButton;
 #else
     //TODO: other platforms
 #endif
