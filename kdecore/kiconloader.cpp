@@ -1143,7 +1143,7 @@ TQIconSet KIconLoader::loadIconSet(const TQString& name, KIcon::Group group, int
 /*** class for delayed icon loading for TQIconSet ***/
 
 class KIconFactory
-    : public QIconFactory
+    : public TQIconFactory
     {
     public:
         KIconFactory( const TQString& iconName_P, KIcon::Group group_P,

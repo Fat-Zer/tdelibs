@@ -117,7 +117,12 @@ public:
    * Returns the number of bytes available for reading in the read buffer
    * @return the number of bytes available for reading
    */
+#ifdef USE_QT3
   virtual int bytesAvailable() const;
+#endif // USE_QT3
+#ifdef USE_QT4
+  virtual qint64 bytesAvailable() const;
+#endif // USE_QT4
 
   /**
    * Waits for more data to be available and returns the amount of available data then.
@@ -131,7 +136,12 @@ public:
    * Returns the number of bytes yet to write, still in the write buffer
    * @return the number of unwritten bytes in the write buffer
    */
+#ifdef USE_QT3
   virtual int bytesToWrite() const;
+#endif // USE_QT3
+#ifdef USE_QT4
+  virtual qint64 bytesToWrite() const;
+#endif // USE_QT4
 
   /**
    * Checks whether there is enough data in the buffer to read a line

@@ -206,7 +206,12 @@ public:
    * freeing any related resources still being kept.
    * @since 3.1
    */
+#ifdef USE_QT3
   void reset();
+#endif // USE_QT3
+#ifdef USE_QT4
+  bool reset();
+#endif // USE_QT4
 
   /*
    * --- status, flags and internal variables --- *
@@ -675,7 +680,12 @@ public:
    * Returns length of this socket. This call is not supported on sockets.
    * @return the length of this socket, or 0 if unsupported
    */
+#ifdef USE_QT3
   virtual inline Q_ULONG size() const
+#endif // USE_QT3
+#ifdef USE_QT4
+  virtual inline qint64 size() const
+#endif // USE_QT4
   { return 0; }
 
   /**
@@ -790,7 +800,12 @@ public:
    * @return The number of available bytes, or -1 on error or -2 if this call is invalid
    * in the current state.
    */
+#ifdef USE_QT3
   virtual int bytesAvailable() const;
+#endif // USE_QT3
+#ifdef USE_QT4
+  virtual qint64 bytesAvailable() const;
+#endif // USE_QT4
 
   /**
    * Waits @p msec milliseconds for more data to be available (use 0 to

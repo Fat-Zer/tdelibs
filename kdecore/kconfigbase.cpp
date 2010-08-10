@@ -421,10 +421,34 @@ TQVariant KConfigBase::readPropertyEntry( const char *pKey,
       case TQVariant::Cursor:
       case TQVariant::SizePolicy:
       case TQVariant::Time:
+#ifdef USE_QT3
       case TQVariant::ByteArray:
+#endif // USE_QT3
       case TQVariant::BitArray:
       case TQVariant::KeySequence:
       case TQVariant::Pen:
+#ifdef USE_QT4
+      case TQVariant::Char:
+      case TQVariant::Url:
+      case TQVariant::Locale:
+      case TQVariant::RectF:
+      case TQVariant::SizeF:
+      case TQVariant::Line:
+      case TQVariant::LineF:
+      case TQVariant::PointF:
+      case TQVariant::RegExp:
+      case TQVariant::Hash:
+      case TQVariant::TextLength:
+      case TQVariant::TextFormat:
+      case TQVariant::Matrix:
+      case TQVariant::Transform:
+      case TQVariant::Matrix4x4:
+      case TQVariant::Vector2D:
+      case TQVariant::Vector3D:
+      case TQVariant::Vector4D:
+      case TQVariant::Quaternion:
+      case TQVariant::UserType:
+#endif // USE_QT4
           break;
   }
 
@@ -1313,10 +1337,34 @@ void KConfigBase::writeEntry ( const char *pKey, const TQVariant &prop,
     case TQVariant::Cursor:
     case TQVariant::SizePolicy:
     case TQVariant::Time:
+#ifdef USE_QT3
     case TQVariant::ByteArray:
+#endif // USE_QT3
     case TQVariant::BitArray:
     case TQVariant::KeySequence:
     case TQVariant::Pen:
+#ifdef USE_QT4
+    case TQVariant::Char:
+    case TQVariant::Url:
+    case TQVariant::Locale:
+    case TQVariant::RectF:
+    case TQVariant::SizeF:
+    case TQVariant::Line:
+    case TQVariant::LineF:
+    case TQVariant::PointF:
+    case TQVariant::RegExp:
+    case TQVariant::Hash:
+    case TQVariant::TextLength:
+    case TQVariant::TextFormat:
+    case TQVariant::Matrix:
+    case TQVariant::Transform:
+    case TQVariant::Matrix4x4:
+    case TQVariant::Vector2D:
+    case TQVariant::Vector3D:
+    case TQVariant::Vector4D:
+    case TQVariant::Quaternion:
+    case TQVariant::UserType:
+#endif // USE_QT4
         break;
     }
 
