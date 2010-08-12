@@ -282,7 +282,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
           break;
       }
       TQFile aOutputFile( kDebug_data->config->readPathEntry(aKey, "kdebug.dbg") );
-      aOutputFile.open( (QIODevice::OpenModeFlag)((int)IO_WriteOnly | (int)IO_Append | (int)IO_Raw) );
+      aOutputFile.open( (TQIODevice_OpenModeFlag)((int)IO_WriteOnly | (int)IO_Append | (int)IO_Raw) );
       aOutputFile.writeBlock( buf, strlen( buf ) );
       aOutputFile.close();
       break;
