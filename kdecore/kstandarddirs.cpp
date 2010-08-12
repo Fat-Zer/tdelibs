@@ -492,7 +492,7 @@ static void lookupDirectory(const TQString& path, const TQString &relPart,
     while( ( ep = readdir( dp ) ) != 0L )
     {
       TQString fn( TQFile::decodeName(ep->d_name));
-      if (fn == _dot || fn == _dotdot || (TQCString)(fn.at(fn.length() - 1).latin1()) == (QChar)'~')
+      if (fn == _dot || fn == _dotdot || (TQCString)(fn.at(fn.length() - 1).latin1()) == '~')
 	continue;
 
       if (!recursive && !regexp.exactMatch(fn))
