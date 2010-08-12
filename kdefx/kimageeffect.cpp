@@ -2820,7 +2820,7 @@ void KImageEffect::threshold(TQImage &img, unsigned int threshold)
         data = (unsigned int *)img.tqcolorTable();
     }
     for(i=0; i < count; ++i)
-        data[i] = intensityValue(data[i]) < threshold ? QColor(tqblack).rgb() : QColor(tqwhite).rgb();
+        data[i] = intensityValue(data[i]) < threshold ? QColor(Qt::black).rgb() : QColor(Qt::white).rgb();
 }
 
 void KImageEffect::hull(const int x_offset, const int y_offset,
