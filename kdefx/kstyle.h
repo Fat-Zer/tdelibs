@@ -281,7 +281,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
-#ifdef USE_QT4
+// #ifdef USE_QT4 // kdebindings / smoke needs this function declaration available at all times.  Furthermore I don't think it would hurt to have the declaration available at all times...so leave these commented out for now
 
 		void drawPrimitive( ControlElement pe,
 					TQPainter* p,
@@ -290,7 +290,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
-#endif // USE_QT4
+// #endif // USE_QT4
 
 		void drawControl( ControlElement element,
 					TQPainter* p,
