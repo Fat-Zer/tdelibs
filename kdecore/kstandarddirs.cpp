@@ -492,7 +492,7 @@ static void lookupDirectory(const TQString& path, const TQString &relPart,
     while( ( ep = readdir( dp ) ) != 0L )
     {
       TQString fn( TQFile::decodeName(ep->d_name));
-      if (fn == _dot || fn == _dotdot || fn.at(fn.length() - 1).latin1() == (QChar)QChar('~'))
+      if (fn == _dot || fn == _dotdot || fn.at(fn.length() - 1).latin1() == QChar('~').latin1())
 	continue;
 
       if (!recursive && !regexp.exactMatch(fn))
@@ -771,7 +771,7 @@ void KStandardDirs::createSpecialResource(const char *type)
    if (result > 0)
    {
       link[result] = 0;
-      if (link[0] == (QChar)QChar('/'))
+      if (link[0] == QChar('/').latin1())
          dir = TQFile::decodeName(link);
       else
          dir = TQDir::cleanDirPath(dir+TQFile::decodeName(link));
