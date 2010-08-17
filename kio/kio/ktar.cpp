@@ -510,9 +510,10 @@ bool KTar::KTarPrivate::writeBackTempFile( const TQString & filename ) {
 
     bool forced = false;
     if( "application/x-gzip" == mimetype
-        || "application/x-bzip2" == mimetype)
-        forced = true;
-
+        || "application/x-bzip2" == mimetype
+        || "application/x-lzma" == mimetype
+        || "application/x-xz" == mimetype)
+            forced = true;
 
     TQIODevice *dev = KFilterDev::deviceForFile( filename, mimetype, forced );
     if( dev ) {
