@@ -101,6 +101,14 @@ KTar::KTar( const TQString& filename, const TQString & _mimetype )
                     if ( fourthByte == 4 )
                         mimetype = "application/x-zip";
                 }
+		else if ( firstByte == '\xFD' && secondByte == '7' && thirdByte == 'z' )
+		{
+			unsigned char fourthByte = file.getch();
+			unsigned char fifthByte = file.getch();
+			unsigned char sixthByte = file.getch();
+			if ( fourthByte == 'X' && fifthByte == 'Z' && sixthByte == 0x00 )
+				mimetype = "application/x-xz";
+		}
             }
             file.close();
         }
@@ -285,8 +293,10 @@ bool KTar::KTarPrivate::fillTempFile( const TQString & filename) {
 
     bool forced = false;
     if( "application/x-gzip" == mimetype
-    || "application/x-bzip2" == mimetype)
-        forced = true;
+        || "application/x-bzip2" == mimetype
+        || "application/x-lzma" == mimetype
+        || "application/x-xz" == mimetype)
+            forced = true;
 
     TQIODevice *filterDev = KFilterDev::deviceForFile( filename, mimetype, forced );
 
