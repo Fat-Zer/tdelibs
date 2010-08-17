@@ -54,10 +54,10 @@ void KGlobalAccel::clear()
 	{ d->clearActions(); }
 */
 KAccelActions& KGlobalAccel::actions()
-	{ return d->actions(); }
+	{ return d->KAccelBase::actions(); }
 
 const KAccelActions& KGlobalAccel::actions() const
-	{ return d->actions(); }
+	{ return d->KAccelBase::actions(); }
 
 bool KGlobalAccel::isEnabled()
 	{ return ((KAccelBase*)d)->isEnabled(); }
@@ -95,7 +95,7 @@ bool KGlobalAccel::remove( const TQString& sAction )
 
 const KShortcut& KGlobalAccel::shortcut( const TQString& sAction ) const
 {
-	const KAccelAction* pAction = d->actions().actionPtr( sAction );
+	const KAccelAction* pAction = d->KAccelBase::actions().actionPtr( sAction );
 	return (pAction) ? pAction->shortcut() : KShortcut::null();
 }
 
@@ -105,7 +105,7 @@ bool KGlobalAccel::setSlot( const TQString& sAction, const TQObject* pObjSlot, c
 	{ return d->setActionSlot( sAction, pObjSlot, psMethodSlot ); }
 TQString KGlobalAccel::label( const TQString& sAction ) const
 {
-	const KAccelAction* pAction = d->actions().actionPtr( sAction );
+	const KAccelAction* pAction = d->KAccelBase::actions().actionPtr( sAction );
 	return (pAction) ? pAction->label() : TQString();
 }
 bool KGlobalAccel::setActionEnabled( const TQString& sAction, bool bEnable )

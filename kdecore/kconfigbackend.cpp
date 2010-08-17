@@ -1178,7 +1178,7 @@ bool KConfigBackEnd::checkConfigFilesWritable(bool warnUser)
     if (!cmdToExec.isEmpty() && app)
     {
       KProcess lprocess;
-      lprocess << cmdToExec << "--title" << app->instanceName() << "--msgbox" << errorMsg.local8Bit();
+      lprocess << cmdToExec << "--title" << app->instanceName() << "--msgbox" << TQCString(errorMsg.local8Bit());
       lprocess.start( KProcess::Block );
     }
   }

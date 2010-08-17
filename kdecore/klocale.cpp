@@ -2077,12 +2077,22 @@ void KLocale::initFileNameEncoding(KConfig *)
   // which, on Unix platforms, use the locale's codec.
 }
 
+#ifdef USE_QT3
 TQCString KLocale::encodeFileNameUTF8( const TQString & fileName )
+#endif // USE_QT3
+#ifdef USE_QT4
+TQByteArray KLocale::encodeFileNameUTF8( const TQString & fileName )
+#endif // USE_QT4
 {
   return fileName.utf8();
 }
 
+#ifdef USE_QT3
 TQString KLocale::decodeFileNameUTF8( const TQCString & localFileName )
+#endif // USE_QT3
+#ifdef USE_QT4
+TQString KLocale::decodeFileNameUTF8( const TQByteArray & localFileName )
+#endif // USE_QT4
 {
   return TQString::fromUtf8(localFileName);
 }

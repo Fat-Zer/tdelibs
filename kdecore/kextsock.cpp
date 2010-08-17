@@ -222,7 +222,12 @@ KExtendedSocket::~KExtendedSocket()
   delete d;
 }
 
+#ifdef USE_QT3
 void KExtendedSocket::reset()
+#endif // USE_QT3
+#ifdef USE_QT4
+bool KExtendedSocket::reset()
+#endif // USE_QT4
 {
   closeNow();
   release();
@@ -1552,7 +1557,12 @@ int KExtendedSocket::unreadBlock(const char *, uint)
   return -1;
 }
 
+#ifdef USE_QT3
 int KExtendedSocket::bytesAvailable() const
+#endif // USE_QT3
+#ifdef USE_QT4
+qint64 KExtendedSocket::bytesAvailable() const
+#endif // USE_QT4
 {
   if (d->status < connected || d->flags & passiveSocket)
     return -2;

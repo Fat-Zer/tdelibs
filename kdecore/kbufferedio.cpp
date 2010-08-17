@@ -111,12 +111,22 @@ bool KBufferedIO::setBufferSize(int rsize, int wsize /* = -2 */)
   return true;
 }
 
+#ifdef USE_QT3
 int KBufferedIO::bytesAvailable() const
+#endif // USE_QT3
+#ifdef USE_QT4
+qint64 KBufferedIO::bytesAvailable() const
+#endif // USE_QT4
 {
   return readBufferSize();
 }
 
+#ifdef USE_QT3
 int KBufferedIO::bytesToWrite() const
+#endif // USE_QT3
+#ifdef USE_QT4
+qint64 KBufferedIO::bytesToWrite() const
+#endif // USE_QT4
 {
   return writeBufferSize();
 }

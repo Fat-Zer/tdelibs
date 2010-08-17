@@ -1221,12 +1221,22 @@ private:
   /**
    * @internal A TQFile filename encoding function (TQFile::encodeFn).
    */
+#ifdef USE_QT3
   static TQCString encodeFileNameUTF8( const TQString & fileName );
+#endif // USE_QT3
+#ifdef USE_QT4
+  static TQByteArray encodeFileNameUTF8( const TQString & fileName );
+#endif // USE_QT4
 
   /**
    * @internal TQFile filename decoding function (TQFile::decodeFn).
    */
+#ifdef USE_QT3
   static TQString decodeFileNameUTF8( const TQCString & localFileName );
+#endif // USE_QT3
+#ifdef USE_QT4
+  static TQString decodeFileNameUTF8( const TQByteArray & localFileName );
+#endif // USE_QT4
 
   /**
    * @internal Changes the file name of the catalog to the correct

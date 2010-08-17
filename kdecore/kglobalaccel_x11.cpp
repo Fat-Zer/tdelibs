@@ -431,7 +431,7 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
 
 void KGlobalAccelPrivate::slotActivated( int iAction )
 {
-	KAccelAction* pAction = actions().actionPtr( iAction );
+	KAccelAction* pAction = KAccelBase::actions().actionPtr( iAction );
 	if( pAction )
 		activate( pAction, KKeySequence() );
 }
