@@ -85,7 +85,11 @@ mimetypeapplicationdata_DATA = x-dvi.desktop x-gzdvi.desktop x-bz2dvi.desktop \
 	vnd.ms-powerpoint.addin.macroEnabled.12.desktop \
 	vnd.ms-powerpoint.presentation.macroEnabled.12.desktop \
 	vnd.ms-powerpoint.template.macroEnabled.12.desktop \
-	vnd.ms-powerpoint.slideshow.macroEnabled.12.desktop
+	vnd.ms-powerpoint.slideshow.macroEnabled.12.desktop \
+	x-lzma.desktop \
+	x-tlz.desktop \
+	x-txz.desktop \
+	x-xz.desktop
 
 mimetypeapplicationdatadir = $(kde_mimedir)/application
 
