@@ -65,10 +65,10 @@ KPalette::KPalette(const TQString &name)
 
   // Read first line
   // Expected "GIMP Palette"
-  if (paletteFile.readLine(const_cast<char *>(line.ascii()), maxLength) == -1) return;
+  if (paletteFile.readLine(line, maxLength) == -1) return;
   if (line.find(" Palette") == -1) return;
 
-  while( paletteFile.readLine(const_cast<char *>(line.ascii()), maxLength) != -1)
+  while( paletteFile.readLine(line, maxLength) != -1)
   {
      if (line[0] == '#') 
      {
