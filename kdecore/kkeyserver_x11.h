@@ -414,7 +414,7 @@ namespace KKeyServer
 	/**
 	 * Converts the Qt-compatible button state to x11 modifier. 
 	 */
-	KDECORE_EXPORT int qtButtonStateToMod( Qt::ButtonState s );
+	KDECORE_EXPORT int qtButtonStateToMod( TQ_ButtonState s );
 
 	/**
 	 * Converts the mask of ORed X11 modifiers to
