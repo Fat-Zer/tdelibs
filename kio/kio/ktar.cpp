@@ -101,13 +101,19 @@ KTar::KTar( const TQString& filename, const TQString & _mimetype )
                     if ( fourthByte == 4 )
                         mimetype = "application/x-zip";
                 }
-		else if ( firstByte == '\xFD' && secondByte == '7' && thirdByte == 'z' )
+		else if ( firstByte == 0xfd && secondByte == '7' && thirdByte == 'z' )
 		{
 			unsigned char fourthByte = file.getch();
 			unsigned char fifthByte = file.getch();
 			unsigned char sixthByte = file.getch();
 			if ( fourthByte == 'X' && fifthByte == 'Z' && sixthByte == 0x00 )
 				mimetype = "application/x-xz";
+		}
+		else if ( firstByte == 0x5d && secondByte == 0x00 && thirdByte == 0x00 )
+		{
+			unsigned char fourthByte = file.getch();
+			if ( fourthByte == 0x80 )
+				mimetype = "application/x-lzma";
 		}
             }
             file.close();
