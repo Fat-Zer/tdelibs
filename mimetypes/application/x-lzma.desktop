@@ -85,4 +85,4 @@ Comment[zh_TW]=LZMA 檔案
 Comment[zu]=Ifayela le-LZMA
 Icon=tgz
 Type=MimeType
-Patterns=*.lzma;
+Patterns=*.lzma;*.lz

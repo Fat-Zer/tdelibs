@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/x-tlz
 Icon=tgz
-Patterns=*.tar.lzma;
+Patterns=*.tar.lzma;*.tlz;*.tar.lz
 Comment=LZMA Tar Archive
 Comment[af]=LZMA gekompakteerde Tar Argief
 Comment[ar]=أرشيف TAR عن طريق LZMA
