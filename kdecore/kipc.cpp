@@ -27,12 +27,13 @@
  */
 #include "config.h"
 
+#include <tqevent.h>
 #include <tqwindowdefs.h>
 
 #if defined Q_WS_X11
-#include <X11/X.h> 
-#include <X11/Xlib.h> 
-#include <kxerrorhandler.h> 
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <kxerrorhandler.h>
 #endif
 
 #include <kipc.h>
