@@ -158,7 +158,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
     return valueChanged;
 
   TQObject *object;
-  for( TQPtrListIterator<TQObject> it( *listOfChildren );
+  for( TQObjectListIterator it( *listOfChildren );
        (object = it.current()); ++it )
   {
     if(!object->isWidgetType())

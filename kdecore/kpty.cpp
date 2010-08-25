@@ -442,7 +442,9 @@ void KPty::login(const char *user, const char *remotehost)
 #ifdef HAVE_UTEMPTER
     KProcess_Utmp utmp;
     utmp.cmdFd = d->masterFd;
-    utmp << "/usr/sbin/utempter" << "-a" << d->ttyName << "";
+    utmp << "/usr/lib/utempter/utempter" << "add";
+    if (remotehost)
+      utmp << remotehost;
     utmp.start(KProcess::Block);
     Q_UNUSED(user);
     Q_UNUSED(remotehost);
@@ -485,7 +487,7 @@ void KPty::logout()
 #ifdef HAVE_UTEMPTER
     KProcess_Utmp utmp;
     utmp.cmdFd = d->masterFd;
-    utmp << "/usr/sbin/utempter" << "-d" << d->ttyName;
+    utmp << "/usr/lib/utempter/utempter" << "del";
     utmp.start(KProcess::Block);
 #elif defined(USE_LOGIN)
     const char *str_ptr = d->ttyName.data();
