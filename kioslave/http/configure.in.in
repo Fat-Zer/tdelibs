@@ -57,7 +57,7 @@ if test "x$with_gssapi" = "xCHECK" ; then
             GSSAPI_LIBS="-L$gssapi_libdir "
             test "$USE_RPATH" = yes && GSSAPI_RPATH="-R $gssapi_libdir"
           fi
-          GSSAPI_LIBS="${GSSAPI_LIBS}-lgssapi -lkrb5 -lasn1 -lcrypto -lroken -lcrypt ${LIBRESOLV}"
+          GSSAPI_LIBS="${GSSAPI_LIBS} -lgssapi -lkrb5 -lasn1 -lcrypto -lroken -lcrypt ${LIBRESOLV}"
           with_gssapi=FOUND
           gssapi_flavor=HEIMDAL
           break

@@ -55,6 +55,7 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
+#include <kprocess.h>
 
 #undef m_manager
 #define	m_manager	KMFactory::self()->manager()
