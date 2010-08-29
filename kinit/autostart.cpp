@@ -27,6 +27,8 @@
 #include <kglobal.h>
 #include <kstandarddirs.h>
 
+#include <stdlib.h>
+
 class AutoStartItem
 {
 public:
