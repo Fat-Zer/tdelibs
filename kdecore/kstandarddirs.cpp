@@ -616,7 +616,7 @@ static void lookupPrefix(const TQString& prefix, const TQString& relpath,
     }
 }
 
-QStringList
+TQStringList
 KStandardDirs::findAllResources( const char *type,
 			         const TQString& filter,
 				 bool recursive,
@@ -672,7 +672,7 @@ KStandardDirs::findAllResources( const char *type,
     return list;
 }
 
-QStringList
+TQStringList
 KStandardDirs::findAllResources( const char *type,
 			         const TQString& filter,
 				 bool recursive,

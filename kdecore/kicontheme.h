@@ -16,6 +16,7 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 #include <tqptrlist.h>
+#include <tqvaluelist.h>
 #include "kdelibs_export.h"
 
 class KConfig;

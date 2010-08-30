@@ -316,7 +316,7 @@ KDesktopFile::fileName() const { return backEnd->fileName(); }
 QString
 KDesktopFile::resource() const { return backEnd->resource(); }
 
-QStringList
+TQStringList
 KDesktopFile::sortOrder() const
 {
   return readListEntry("SortOrder");

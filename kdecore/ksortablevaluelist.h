@@ -25,11 +25,11 @@
 #include "kdelibs_export.h"
 
 /**
- * KSortableItem is a QPair that provides several operators
+ * KSortableItem is a TQPair that provides several operators
  * for sorting.
  * @see KSortableValueList
  */
-template<class T, class Key = int> class KSortableItem : public QPair<Key,T>
+template<class T, class Key = int> class KSortableItem : public TQPair<Key,T>
 {
 public:
     /**
@@ -37,13 +37,13 @@ public:
      * @param i the first value
      * @param t the second value
      */
-    KSortableItem( Key i, const T& t ) : QPair<Key, T>( i, t ) {}
+    KSortableItem( Key i, const T& t ) : TQPair<Key, T>( i, t ) {}
     /**
      * Creates a new KSortableItem that copies another one.
      * @param rhs the other item to copy
      */
     KSortableItem( const KSortableItem<T, Key> &rhs )
-        : QPair<Key,T>( rhs.first, rhs.second ) {}
+        : TQPair<Key,T>( rhs.first, rhs.second ) {}
 
     /**
      * Creates a new KSortableItem with uninitialized values.

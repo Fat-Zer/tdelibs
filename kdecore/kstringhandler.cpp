@@ -448,7 +448,7 @@ bool KStringHandler::matchFileName( const TQString& filename, const TQString& pa
    return ( filename == pattern );
 }
 
-  QStringList
+  TQStringList
 KStringHandler::perlSplit(const TQString & sep, const TQString & s, uint max)
 {
   bool ignoreMax = 0 == max;
@@ -474,7 +474,7 @@ KStringHandler::perlSplit(const TQString & sep, const TQString & s, uint max)
   return l;
 }
 
-  QStringList
+  TQStringList
 KStringHandler::perlSplit(const TQChar & sep, const TQString & s, uint max)
 {
   bool ignoreMax = 0 == max;
@@ -500,7 +500,7 @@ KStringHandler::perlSplit(const TQChar & sep, const TQString & s, uint max)
   return l;
 }
 
-  QStringList
+  TQStringList
 KStringHandler::perlSplit(const TQRegExp & sep, const TQString & s, uint max)
 {
   bool ignoreMax = 0 == max;

@@ -1214,7 +1214,7 @@ void KApplication::commitData( QSessionManager& sm )
 
     if ( sm.allowsInteraction() ) {
         TQWidgetList done;
-        TQWidgetList *list = TQApplication::topLevelWidgets();
+        TQWidgetList *list = TQWidgetList(TQApplication::topLevelWidgets());
         bool canceled = false;
         TQWidget* w = list->first();
         while ( !canceled && w ) {
@@ -1225,7 +1225,7 @@ void KApplication::commitData( QSessionManager& sm )
                 if ( !canceled )
                     done.append( w );
                 delete list; // one never knows...
-                list = TQApplication::topLevelWidgets();
+                list = TQWidgetList(TQApplication::topLevelWidgets());
                 w = list->first();
             } else {
                 w = list->next();

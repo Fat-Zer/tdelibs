@@ -31,7 +31,12 @@
 
 class TQSocketNotifier;
 class KProcessPrivate;
+
+#ifdef Q_OS_UNIX
+#include <kpty.h>
+#else
 class KPty;
+#endif
 
 /**
  * Child process invocation, monitoring and control.

@@ -30,7 +30,7 @@
 
 template class TQPtrList<KPalette::kolor>;
 
-QStringList
+TQStringList
 KPalette::getPaletteList()
 {
   TQStringList paletteList;
