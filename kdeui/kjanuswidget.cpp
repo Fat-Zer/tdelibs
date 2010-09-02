@@ -1069,13 +1069,17 @@ int KJanusWidget::IconListItem::expandMinimumWidth( int width )
 
 
 void KJanusWidget::IconListItem::highlight( bool erase )
-{   
+{
+   // FIXME: Add configuration option to disable highlighting
+   // For now, always disable highlighting
+   erase = true;
+
    TQRect r = listBox()->itemRect( this );
-   r.addCoords( 1, 1, -1, -1 );  
-   
+   r.addCoords( 1, 1, -1, -1 );
+
    TQPainter p( listBox()->viewport() );
    p.setClipRegion( r );
-   
+
    const TQColorGroup &cg = listBox()->colorGroup();
    if ( erase )
    {
@@ -1089,9 +1093,9 @@ void KJanusWidget::IconListItem::highlight( bool erase )
       p.drawRect( r );
 
       p.setPen( cg.highlight().dark( 140 ) );
-      p.drawRect( r ); 
+      p.drawRect( r );
    }
-      
+
    p.setPen( cg.foreground() );
    p.translate( r.x() - 1, r.y() - 1 );
    paintContents( &p );
