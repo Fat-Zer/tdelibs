@@ -244,8 +244,10 @@ namespace KIO
     ERR_UPGRADE_REQUIRED = 64, // A transport upgrade is required to access this
                                // object.  For instance, TLS is demanded by
                                // the server in order to continue.
-    ERR_POST_DENIED = 65    // Issued when trying to POST data to a certain Ports
+    ERR_POST_DENIED = 65,      // Issued when trying to POST data to a certain Ports
                                // see job.cpp
+    ERR_OFFLINE_MODE = 66      // Used when an app is in offline mode and a 
+                               // requested document is unavailable.
   };
 
   /**

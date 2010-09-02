@@ -408,6 +408,9 @@ KIO_EXPORT TQString KIO::buildErrorString(int errorCode, const TQString &errorTe
     case KIO::ERR_POST_DENIED:
       result = i18n( "Access to restricted port in POST denied.");
       break;
+    case KIO::ERR_OFFLINE_MODE:
+      result = i18n( "Could not access %1.\nOffline mode active.").arg( errorText ); 
+      break;
     default:
       result = i18n( "Unknown error code %1\n%2\nPlease send a full bug report at http://bugs.kde.org." ).arg( errorCode ).arg( errorText );
       break;

@@ -1804,9 +1804,11 @@ bool HTTPProtocol::isOffline(const KURL &url)
   TQByteArray reply;
 
   TQDataStream stream(params, IO_WriteOnly);
-  stream << url.url();
 
-  if ( dcopClient()->call( "kded", "networkstatus", "status(TQString)",
+  if ( url.host() == TQString::fromLatin1("localhost") || url.host() == TQString::fromLatin1("127.0.0.1") || url.host() == TQString::fromLatin1("::") ) {
+      return false;
+  }
+  if ( dcopClient()->call( "kded", "networkstatus", "status()",
                            params, replyType, reply ) && (replyType == "int") )
   {
      int result;
@@ -2210,6 +2212,11 @@ bool HTTPProtocol::httpOpen()
         // Conditional cache hit. (Validate)
      }
 
+     if (bCacheOnly && bOffline)
+     {
+        error( ERR_OFFLINE_MODE, m_request.url.url() );
+        return false;
+     }
      if (bCacheOnly)
      {
         error( ERR_DOES_NOT_EXIST, m_request.url.url() );
@@ -2217,7 +2224,7 @@ bool HTTPProtocol::httpOpen()
      }
      if (bOffline)
      {
-        error( ERR_COULD_NOT_CONNECT, m_request.url.url() );
+        error( ERR_OFFLINE_MODE, m_request.url.url() );
         return false;
      }
   }
