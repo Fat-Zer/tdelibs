@@ -314,8 +314,8 @@ bool QXEmbedAppFilter::eventFilter( TQObject *o, TQEvent * e)
         if ( qApp->focusWidget() == o &&
              ((QPublicWidget*)qApp->focusWidget()->topLevelWidget())->topData()->embedded ) {
             TQFocusEvent* fe = (TQFocusEvent*) e;
-            if ( obeyFocus || fe->reason() == TQFocusEvent::Mouse ||
-                 fe->reason() == TQFocusEvent::Shortcut ) {
+            if ( obeyFocus || fe->reason() != TQFocusEvent::ActiveWindow /*|| fe->reason() == TQFocusEvent::Mouse ||
+                 fe->reason() == TQFocusEvent::Shortcut*/ ) {
                 // L0614: A widget in the embedded client was just given the Qt focus.
                 //        Variable `obeyFocus' suggests that this is the result of mouse
                 //        activity in the client.  The XEMBED_REQUEST_FOCUS message causes
@@ -478,8 +478,11 @@ static int qxembed_x11_event_filter( XEvent* e)
                     switch ( detail ) {
                     case XEMBED_FOCUS_CURRENT:
                         // L0683: Set focus on saved focus widget
-                        if ( focusCurrent )
+                        if ( focusCurrent ) {
                             focusCurrent->setFocus();
+                            if( QXEmbed* emb = dynamic_cast< QXEmbed* >( focusCurrent ))
+                                emb->updateEmbeddedFocus( true );
+                        }
                         else if ( !w->topLevelWidget()->focusWidget() )
                             w->topLevelWidget()->setFocus();
                         break;
@@ -511,6 +514,8 @@ static int qxembed_x11_event_filter( XEvent* e)
                 //        We first record what the focus widget was
                 //        and clear the Qt focus.
                 if ( w->topLevelWidget()->focusWidget() ) {
+                    if( QXEmbed* emb = dynamic_cast< QXEmbed* >( w->topLevelWidget()->focusWidget()))
+                        emb->updateEmbeddedFocus( false );
                     focusMap->insert( w->topLevelWidget(),
                         new TQGuardedPtr<TQWidget>(w->topLevelWidget()->focusWidget() ) );
                     w->topLevelWidget()->focusWidget()->clearFocus();
@@ -919,6 +924,17 @@ void QXEmbed::focusOutEvent( TQFocusEvent * ){
 }
 
 
+// When QXEmbed has TQt focus and gets/loses X focus, make sure the client knows
+// about the state of the focus.
+void QXEmbed::updateEmbeddedFocus( bool hasfocus ){
+    if (!window || d->xplain)
+        return;
+    if( hasfocus )
+        sendXEmbedMessage( window, XEMBED_FOCUS_IN, XEMBED_FOCUS_CURRENT);
+    else
+        sendXEmbedMessage( window, XEMBED_FOCUS_OUT);
+}
+
 // L1600: Helper for QXEmbed::embed()
 //        Check whether a window is in withdrawn state.
 static bool wstate_withdrawn( WId winid )
@@ -1161,6 +1177,8 @@ bool QXEmbed::x11Event( XEvent* e)
                 // L2085: The client asks for the focus.
             case XEMBED_REQUEST_FOCUS:
                 if( ((QPublicWidget*)topLevelWidget())->topData()->embedded ) {
+                    focusMap->remove( topLevelWidget() );
+                    focusMap->insert( topLevelWidget(), new TQGuardedPtr<TQWidget>( this ));
                     WId window = ((QPublicWidget*)topLevelWidget())->topData()->parentWinId;
                     sendXEmbedMessage( window, XEMBED_REQUEST_FOCUS );
                 } else {

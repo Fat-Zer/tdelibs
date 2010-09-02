@@ -350,6 +350,11 @@ private:
   /**
    * Set the current working directory, but only if not yet current
    */
+  bool ftpFileExists(const TQString& path);
+
+  /**
+   * Set the current working directory, but only if not yet current
+   */
   bool ftpFolder(const TQString& path, bool bReportError);
 
   /**

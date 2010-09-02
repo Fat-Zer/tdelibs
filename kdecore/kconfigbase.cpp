@@ -131,6 +131,24 @@ bool KConfigBase::hasKey(const char *pKey) const
   return !entry.mValue.isNull();
 }
 
+bool KConfigBase::hasTranslatedKey(const char* pKey) const
+{
+  KEntryKey aEntryKey(mGroup, 0);
+  aEntryKey.c_key = pKey;
+  aEntryKey.bDefault = readDefaults();
+
+  if (!locale().isNull()) {
+    // try the localized key first
+    aEntryKey.bLocal = true;
+    KEntry entry = lookupData(aEntryKey);
+    if (!entry.mValue.isNull())
+       return true;
+    aEntryKey.bLocal = false;
+  }
+
+  return false;
+}
+
 bool KConfigBase::hasGroup(const TQString &group) const
 {
   return internalHasGroup( group.utf8());

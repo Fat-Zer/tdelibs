@@ -24,6 +24,7 @@
 #include <tqradiobutton.h>
 #include <tqbuttongroup.h>
 #include <tqlayout.h>
+#include <tqlineedit.h>
 #include <kprocess.h>
 #include <kprocio.h>
 #include <klocale.h>
@@ -47,6 +48,7 @@ public:
     KProcess *m_configProc;
     bool m_bAllShared;
     bool m_bAllUnshared;
+    bool m_bAllReadOnly;
 };
 
 KFileSharePropsPlugin::KFileSharePropsPlugin( KPropertiesDialog *_props )
@@ -98,8 +100,10 @@ void KFileSharePropsPlugin::init()
     delete m_widget;
     m_rbShare = 0L;
     m_rbUnShare = 0L;
+    m_rbSharerw = 0L;
     m_widget = new TQWidget( d->m_vBox );
     TQVBoxLayout * vbox = new TQVBoxLayout( m_widget );
+    //TQHBoxLayout * hbox = new TQHBoxLayout( vbox );
 
     switch ( KFileShare::authorization() ) {
     case KFileShare::Authorized:
@@ -110,18 +114,29 @@ void KFileSharePropsPlugin::init()
             home += '/';
         bool ok = true;
         KFileItemList items = properties->items();
-        // We have 3 possibilities: all shared, all unshared, or mixed.
+        // We have 3 possibilities: all shared, all unshared (ro,rw), or mixed.
         d->m_bAllShared = true;
         d->m_bAllUnshared = true;
+        d->m_bAllReadOnly = true;
         KFileItemListIterator it( items );
         for ( ; it.current() && ok; ++it ) {
             TQString path = (*it)->url().path();
+            // 0 => not shared
+            // 1 => shared read only
+            // 3 => shared writeable
+            int dirStatus = KFileShare::isDirectoryShared( path );
             if ( !path.startsWith( home ) )
                 ok = false;
-            if ( KFileShare::isDirectoryShared( path ) )
+            if ( dirStatus == 1 ) {
                 d->m_bAllUnshared = false;
-            else
-                d->m_bAllShared = false;
+            }
+            else if ( dirStatus == 3 ) {
+                d->m_bAllUnshared = false;
+                d->m_bAllReadOnly = false;
+            }
+            else {
+                d->m_bAllReadOnly = false;
+            }
         }
         if ( !ok )
         {
@@ -141,16 +156,31 @@ void KFileSharePropsPlugin::init()
             vbox->addWidget( m_rbUnShare, 0 );
             rbGroup->insert( m_rbUnShare );
 
-            m_rbShare = new TQRadioButton( i18n("Shared"), m_widget );
+            m_rbShare = new TQRadioButton( i18n("Shared - read only for others"), m_widget );
             connect( m_rbShare, TQT_SIGNAL( toggled(bool) ), TQT_SIGNAL( changed() ) );
             vbox->addWidget( m_rbShare, 0 );
             rbGroup->insert( m_rbShare );
 
+            m_rbSharerw = new TQRadioButton( i18n("Shared - writeable for others"), m_widget );
+            connect( m_rbSharerw, TQT_SIGNAL( toggled(bool) ), TQT_SIGNAL( changed() ) );
+            vbox->addWidget( m_rbSharerw, 0 );
+            rbGroup->insert( m_rbSharerw );
+
+            //TQLabel *testlabel1 = new TQLabel(i18n("Enter Samba Share Name here"),m_widget);
+            //m_leSmbShareName = new TQLineEdit(m_widget);
+            //m_leSmbShareName->setMaxLength(12);
+
+            //hbox->addWidget( testlabel1, 0 );
+            //hbox->addWidget( m_leSmbShareName );
+            //vbox->addLayout( hbox );
+
             // Activate depending on status
             if ( d->m_bAllShared )
-                m_rbShare->setChecked(true);
+                m_rbSharerw->setChecked(true);
             if ( d->m_bAllUnshared )
                 m_rbUnShare->setChecked(true);
+            if ( d->m_bAllReadOnly )
+                m_rbShare->setChecked(true);
 
             // Some help text
             TQLabel *label = new TQLabel( i18n("Sharing this folder makes it available under Linux/UNIX (NFS) and Windows (Samba).") , m_widget );
@@ -167,6 +197,9 @@ void KFileSharePropsPlugin::init()
 	    vbox->addWidget( m_pbConfig, 0, Qt::AlignHCenter );
 
             vbox->addStretch( 10 );
+            
+            if( !KFileShare::sambaActive() && !KFileShare::nfsActive())
+                m_widget->setEnabled( false );
         }
     }
     break;
@@ -228,7 +261,7 @@ void KFileSharePropsPlugin::slotConfigureFileSharingDone()
 void KFileSharePropsPlugin::applyChanges()
 {
     kdDebug() << "KFileSharePropsPlugin::applyChanges" << endl;
-    if ( m_rbShare && m_rbUnShare )
+    if ( m_rbShare && m_rbUnShare && m_rbSharerw )
     {
         bool share = m_rbShare->isChecked();
 
@@ -242,7 +275,7 @@ void KFileSharePropsPlugin::applyChanges()
         bool ok = true;
         for ( ; it.current() && ok; ++it ) {
              TQString path = (*it)->url().path();
-             ok = setShared( path, share );
+             ok = SuSEsetShared( path, share, m_rbSharerw->isChecked() );
              if (!ok) {
                 if (share)
                   KMessageBox::detailedError(properties,
@@ -269,8 +302,14 @@ void KFileSharePropsPlugin::applyChanges()
 
 bool KFileSharePropsPlugin::setShared( const TQString& path, bool shared )
 {
-    kdDebug() << "KFileSharePropsPlugin::setShared " << path << "," << shared << endl;
-    return KFileShare::setShared( path, shared );
+   return SuSEsetShared( path, shared, true );
+}
+
+bool KFileSharePropsPlugin::SuSEsetShared( const TQString& path, bool shared, bool readonly )
+{
+    kdDebug() << "KFileSharePropsPlugin::setShared " << path << ","
+              << shared << readonly << endl;
+    return KFileShare::SuSEsetShared( path, shared, readonly );
 }
 
 TQWidget* KFileSharePropsPlugin::page() const

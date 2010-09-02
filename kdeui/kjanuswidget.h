@@ -71,6 +71,8 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
   private:
     class IconListBox : public KListBox
     {
+      friend class KJanusWidget;
+
       public:
         IconListBox( TQWidget *parent=0, const char *name=0, WFlags f=0 );
 	void updateMinimumHeight();
@@ -79,10 +81,15 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
 	void invalidateWidth();
 	void setShowAll( bool showAll );
 
+      protected:
+    	void slotOnItem( TQListBoxItem *item );
+	virtual void leaveEvent( TQEvent * );
+    
       private:
 	bool mShowAll;
 	bool mHeightValid;
 	bool mWidthValid;
+	TQListBoxItem *mOldItem;	
     };
 
   public:
@@ -558,6 +565,8 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
   private slots:
     bool slotShowPage();
     void slotFontChanged();
+
+    void slotOnItem(TQListBoxItem *item);
     void slotItemClicked(TQListViewItem *it);
     void pageGone(TQObject *obj); // signal from the added page's "destroyed" signal
     void slotReopen(TQListViewItem *item);

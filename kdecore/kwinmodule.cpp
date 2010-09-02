@@ -436,7 +436,9 @@ TQRect KWinModule::workArea( const TQValueList<WId>& exclude, int desktop ) cons
 	if ( strut.bottom > 0  )
 	    r.setBottom( r.bottom() - (int) strut.bottom );
 
-	a = a.intersect(r);
+        TQRect tmp;
+	tmp = a.intersect(r);
+        a = tmp;
     }
     return a;
 }

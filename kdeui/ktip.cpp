@@ -367,24 +367,47 @@ void KTipDialog::showMultiTip(TQWidget *parent, const TQStringList &tipFiles, bo
       mInstance->raise();
   }
 
+static TQString fixTip(TQString tip)
+{
+    TQRegExp iconRegExp("<img src=\"(.*)\">");
+    iconRegExp.setMinimal(true);
+    if (iconRegExp.search(tip)>-1) {
+      TQString iconName = iconRegExp.cap(1);
+      if (!iconName.isEmpty())
+         if (KGlobal::dirs()->findResource("icon", iconName).isEmpty())
+           tip.replace("crystalsvg","hicolor");
+    }
+
+    return tip;
+}
+
   void KTipDialog::prevTip()
   {
       mDatabase->prevTip();
-      mTipText->setText(TQString::fromLatin1(
+      TQString currentTip = TQString::fromLatin1(
      "<qt text=\"%1\" bgcolor=\"%2\">%3</qt>")
      .arg(mTextColor.name())
      .arg(mBaseColor.name())
-     .arg(i18n(mDatabase->tip().utf8())));
+     .arg(i18n(mDatabase->tip().utf8()));
+
+
+      currentTip = fixTip(currentTip);
+      mTipText->setText(currentTip);
       mTipText->setContentsPos(0, 0);
   }
 
   void KTipDialog::nextTip()
   {
       mDatabase->nextTip();
-      mTipText->setText(TQString::fromLatin1("<qt text=\"%1\" bgcolor=\"%2\">%3</qt>")
+      TQString currentTip = TQString::fromLatin1(
+        "<qt text=\"%1\" bgcolor=\"%2\">%3</qt>")
         .arg(mTextColor.name())
         .arg(mBaseColor.name())
-        .arg(i18n(mDatabase->tip().utf8())));
+        .arg(i18n(mDatabase->tip().utf8()));
+
+
+      currentTip = fixTip(currentTip);
+      mTipText->setText(currentTip);
       mTipText->setContentsPos(0, 0);
   }
 

@@ -27,6 +27,9 @@
 #include "kactionclasses.h"
 
 #include <assert.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include <fontconfig/fontconfig.h>
 
 #include <tqcursor.h>
 #include <tqclipboard.h>
@@ -35,6 +38,7 @@
 #include <tqwhatsthis.h>
 #include <tqtimer.h>
 #include <tqfile.h>
+#include <tqregexp.h>
 
 #include <dcopclient.h>
 #include <dcopref.h>
@@ -1498,7 +1502,24 @@ void KFontAction::setFont( const TQString &family )
           return;
        }
     }
-    kdDebug(129) << "Font not found " << family.lower() << endl;
+
+    // nothing matched yet, try a fontconfig reverse lookup and
+    // check again to solve an alias
+    FcPattern *pattern = NULL;
+    FcConfig *config = NULL;
+    TQString realFamily;
+    TQRegExp regExp("[-:]");
+    pattern = FcNameParse( (unsigned char*) family.ascii() );
+    FcDefaultSubstitute(pattern);
+    FcConfigSubstitute (config, pattern, FcMatchPattern);
+    pattern = FcFontMatch(NULL, pattern, NULL);
+    realFamily = (char*)FcNameUnparse(pattern);
+    realFamily.remove(realFamily.find(regExp), realFamily.length());
+
+    if ( !realFamily.isEmpty() && realFamily != family )
+       setFont( realFamily );
+    else
+       kdDebug(129) << "Font not found " << family.lower() << endl;
 }
 
 int KFontAction::plug( TQWidget *w, int index )

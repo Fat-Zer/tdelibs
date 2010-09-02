@@ -1,0 +1,27 @@
+Factory
+- get a list of available backends
+- be able to choose the one you want to use, overriding the KTrader information
+- test on the fly switching
+
+Audio
+- function to retrieve the PCM data that currently is played (could be done in
+  the Channel as well as in the Player)
+
+Video
+- either a new interface or somehow integrate into the player
+  If it's a new interface we have to copy most of the Player class, which I
+  wouldn't like to see.
+
+two wrapper APIs:
+- for notifications
+  play file and don't care
+  automatically use the notification channel if present
+- for simple players
+  open file and provide seek and volume
+
+Mixer abstraction
+- provide access to the hardware mixer and/or the mixer of the backend
+- provide access to software volume controls (like the Channels)
+
+Record Interface
+- simple PCM recording API

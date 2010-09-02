@@ -20,6 +20,7 @@
 #include <tqfontdatabase.h>
 #include <tqlistbox.h>
 #include <tqpainter.h>
+#include <tqregexp.h>
 
 #include <kcharsets.h>
 #include <kconfig.h>
@@ -28,6 +29,18 @@
 
 #include "kfontcombo.h"
 #include "kfontcombo.moc"
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include <fontconfig/fontconfig.h>
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/Intrinsic.h>
+#include <X11/StringDefs.h>
+#include <X11/Shell.h>
+
+#include <X11/Xft/Xft.h>
+
 
 struct KFontComboPrivate
 {
@@ -227,6 +240,22 @@ void KFontCombo::setCurrentFont(const TQString &family)
           return;
        }
     }
+
+    // nothing matched yet, try a fontconfig reverse lookup and
+    // check again to solve an alias
+    FcPattern *pattern = NULL;
+    FcConfig *config = NULL;
+    TQString realFamily;
+    TQRegExp regExp("[-:]");
+    pattern = FcNameParse( (unsigned char*) family.ascii() );
+    FcDefaultSubstitute(pattern);
+    FcConfigSubstitute (config, pattern, FcMatchPattern);
+    pattern = FcFontMatch(NULL, pattern, NULL);
+    realFamily = (char*)FcNameUnparse(pattern);
+    realFamily.remove(realFamily.find(regExp), realFamily.length());
+
+    if ( !realFamily.isEmpty() && realFamily != family )
+       setCurrentFont( realFamily );
 }
 
 void KFontCombo::slotModified( int )

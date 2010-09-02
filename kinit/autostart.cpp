@@ -114,7 +114,9 @@ static bool startCondition(const TQString &condition)
 void
 AutoStart::loadAutoStartList()
 {
-   TQStringList files = KGlobal::dirs()->findAllResources("autostart", "*.desktop", false, true);
+   TQStringList files = KGlobal::dirs()->findAllResources("xdgconf-autostart", "*.desktop", false, true);
+   TQStringList kdefiles = KGlobal::dirs()->findAllResources("autostart", "*.desktop", false, true);
+   files += kdefiles;
    
    for(TQStringList::ConstIterator it = files.begin();
        it != files.end();
@@ -139,6 +141,17 @@ AutoStart::loadAutoStartList()
                continue;
        }
        
+       if (config.hasKey("OnlyShowIn"))
+       {
+          if (!config.readListEntry("OnlyShowIn", ';').contains("KDE"))
+              continue;
+       }
+       if (config.hasKey("NotShowIn"))
+       {
+           if (config.readListEntry("NotShowIn", ';').contains("KDE"))
+               continue;
+       }
+
        AutoStartItem *item = new AutoStartItem;
        item->name = extractName(*it);
        item->service = *it;

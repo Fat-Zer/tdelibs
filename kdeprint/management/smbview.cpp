@@ -184,16 +184,26 @@ void SmbView::setOpen(TQListViewItem *item, bool on)
 		}
 		else if (item->depth() == 1)
 		{ // opening server
+			char *krb5ccname = getenv ("KRB5CCNAME");
 			m_current = item;
-			*m_proc << "smbclient -N -L ";
-                        *m_proc << KProcess::quote(item->text(0));
-                        *m_proc << " -W ";
-                        *m_proc << KProcess::quote(item->parent()->text(0));
-                        if (m_login != TQString::null)
-                        {
+			if (krb5ccname)
+			{
+				*m_proc << "smbclient -k -N -L ";
+			}
+			else
+			{
+				*m_proc << "smbclient -N -L ";
+			}
+			*m_proc << KProcess::quote (item->text (0));
+			*m_proc << " -W ";
+			*m_proc << KProcess::quote (item->parent ()->
+							text (0));
+			if (!krb5ccname)
+			{
 				*m_proc << " -A ";
-                        	*m_proc << KProcess::quote(m_passwdFile->name());
-                        }
+				*m_proc << KProcess::
+					quote (m_passwdFile->name ());
+			}
 			startProcess(ShareListing);
 		}
 	}

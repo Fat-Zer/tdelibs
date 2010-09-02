@@ -66,7 +66,11 @@ KCatalogue::KCatalogue(const TQString & name, const TQString & language )
     .arg( d->language )
     .arg( d->name );
 
-  setFileName( locate( "locale", path ) );
+  TQString fileName = locate( "locale", path );
+  if (fileName.isEmpty())
+    fileName = locate( "locale-bundle", path );
+
+  setFileName( fileName );
     
 }
 

@@ -272,10 +272,12 @@ private slots:
     void spellCheckerMisspelling( const TQString &text, const TQStringList &, unsigned int pos);
     void spellCheckerCorrected( const TQString &, const TQString &, unsigned int );
     void spellCheckerFinished();
+    void slotRemoveFromHistory( const TQString & );
 
 private:
     enum LineEditMenuID {
-        ClearHistory
+        ClearHistory,
+        EditHistory
     };
     DOM::HTMLInputElementImpl* m_input;
     KHTMLView* m_view;

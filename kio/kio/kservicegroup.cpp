@@ -64,13 +64,11 @@ KServiceGroup::KServiceGroup( const TQString &configFile, const TQString & _relp
 
   d->directoryEntryPath = cfg;
 
-  KConfig config( cfg, true, false, "apps" );
+  KDesktopFile config( cfg, true, "apps" );
 
-  config.setDesktopGroup();
-
-  m_strCaption = config.readEntry( "Name" );
-  m_strIcon = config.readEntry( "Icon" );
-  m_strComment = config.readEntry( "Comment" );
+  m_strCaption = config.readName();
+  m_strIcon = config.readIcon();
+  m_strComment = config.readComment();
   m_bDeleted = config.readBoolEntry( "Hidden", false );
   d->m_bNoDisplay = config.readBoolEntry( "NoDisplay", false );
   TQStringList tmpList;

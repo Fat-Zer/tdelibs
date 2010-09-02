@@ -181,6 +181,11 @@ signals:
     void hideAccessKeys();
     void repaintAccessKeys();
     void findAheadActive( bool );
+//#define NO_SMOOTH_SCROLL_HACK
+#ifndef NO_SMOOTH_SCROLL_HACK
+public slots:
+    void scrollBy(int dx, int dy);
+#endif
 
 protected:
     void clear();
@@ -211,9 +216,23 @@ protected:
     void contentsContextMenuEvent ( TQContextMenuEvent *_ce );
     void doAutoScroll();
     void timerEvent ( TQTimerEvent * );
+
+#ifndef NO_SMOOTH_SCROLL_HACK
+    void startScrolling();
+    void stopScrolling();
+#ifndef QT_NO_WHEELEVENT
+    void scrollViewWheelEvent( TQWheelEvent* e );
+#endif
+#endif
+
 protected slots:
     void slotPaletteChanged();
     void slotScrollBarMoved();
+#ifndef NO_SMOOTH_SCROLL_HACK
+    void scrollTick();
+#else
+    void scrollTick() {}; // moc cannot handle #if
+#endif
 
 private slots:
     void tripleClickTimeout();
@@ -295,6 +314,7 @@ private:
     TQStringList formCompletionItems(const TQString &name) const;
     void clearCompletionHistory(const TQString& name);
     void addFormCompletionItem(const TQString &name, const TQString &value);
+    void removeFormCompletionItem(const TQString &name, const TQString &value);
 
     void addNonPasswordStorableSite( const TQString& host );
     bool nonPasswordStorableSite( const TQString& host ) const;

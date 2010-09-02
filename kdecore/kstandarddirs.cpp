@@ -94,13 +94,13 @@ KStandardDirsSingleton* KStandardDirsSingleton::self() {
     return s_self;
 }
 
-static const char* const types[] = {"html", "icon", "apps", "sound",
-			      "data", "locale", "services", "mime",
+static const char* const types[] = {"html", "html-bundle", "icon", "apps", "sound",
+			      "data", "locale", "locale-bundle", "services", "mime",
 			      "servicetypes", "config", "exe",
 			      "wallpaper", "lib", "pixmap", "templates",
 			      "module", "qtplugins",
 			      "xdgdata-apps", "xdgdata-dirs", "xdgconf-menu",
-			      "xdgdata-icon", "xdgdata-pixmap",
+			      "xdgdata-icon", "xdgdata-pixmap", "xdgconf-autostart",
 			      "kcfg", "emoticons", 0 };
 
 static int tokenize( TQStringList& token, const TQString& str,
@@ -719,7 +719,10 @@ void KStandardDirs::createSpecialResource(const char *type)
 {
    char hostname[256];
    hostname[0] = 0;
-   gethostname(hostname, 255);
+   if( getenv("XAUTHLOCALHOSTNAME"))
+       strlcpy(hostname, getenv("XAUTHLOCALHOSTNAME"), 255 );
+   else
+       gethostname(hostname, 255);
    TQString dir = TQString("%1%2-%3").arg(localkdedir()).arg(type).arg(hostname);
    char link[1024];
    link[1023] = 0;
@@ -1024,6 +1027,8 @@ static int tokenize( TQStringList& tokens, const TQString& str,
 TQString KStandardDirs::kde_default(const char *type) {
     if (!strcmp(type, "data"))
 	return "share/apps/";
+    if (!strcmp(type, "html-bundle"))
+	return "share/doc-bundle/HTML/";
     if (!strcmp(type, "html"))
 	return "share/doc/kde/HTML/";
     if (!strcmp(type, "icon"))
@@ -1036,6 +1041,8 @@ TQString KStandardDirs::kde_default(const char *type) {
 	return "share/applnk/";
     if (!strcmp(type, "sound"))
 	return "share/sounds/";
+    if (!strcmp(type, "locale-bundle"))
+	return "share/locale-bundle/";
     if (!strcmp(type, "locale"))
 	return "share/locale/";
     if (!strcmp(type, "services"))
@@ -1068,6 +1075,8 @@ TQString KStandardDirs::kde_default(const char *type) {
         return "desktop-directories/";
     if (!strcmp(type, "xdgconf-menu"))
         return "menus/";
+    if (!strcmp(type, "xdgconf-autostart"))
+        return "autostart/";
     if (!strcmp(type, "kcfg"))
 	return "share/config.kcfg";
     if (!strcmp(type, "emoticons"))

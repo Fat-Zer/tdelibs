@@ -408,7 +408,11 @@ TQString KLocale::catalogueFileName(const TQString & language,
     .arg( language )
     .arg( catalog.name() );
 
-  return locate( "locale", path );
+  TQString fileName = locate( "locale", path );
+  if (fileName.isEmpty())
+    fileName = locate( "locale-bundle", path );
+
+  return fileName;
 }
 
 bool KLocale::setLanguage(const TQString & language)
@@ -507,6 +511,9 @@ bool KLocale::isApplicationTranslatedInto( const TQString & language)
   // kdDebug() << "isApplicationTranslatedInto: filename " << sFileName << endl;
 
   TQString sAbsFileName = locate( "locale", sFileName );
+  if (sAbsFileName.isEmpty())
+    sAbsFileName = locate( "locale-bundle", sFileName );
+
   // kdDebug() << "isApplicationTranslatedInto: absname " << sAbsFileName << endl;
   return ! sAbsFileName.isEmpty();
 }

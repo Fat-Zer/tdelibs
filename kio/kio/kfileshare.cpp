@@ -20,6 +20,7 @@
 #include "kfileshare.h"
 #include <tqdir.h>
 #include <tqfile.h>
+#include <tqregexp.h>
 #include <kprocess.h>
 #include <kprocio.h>
 #include <klocale.h>
@@ -35,8 +36,10 @@
 #include <kuser.h>
 
 KFileShare::Authorization KFileShare::s_authorization = NotInitialized;
-TQStringList* KFileShare::s_shareList = 0L;
-static KStaticDeleter<TQStringList> sdShareList;
+//TQStringList* KFileShare::s_shareList = 0L;
+//static KStaticDeleter<TQStringList> sdShareList;
+TQMap<TQString,TQString>* KFileShare::s_shareMap = 0L;
+static KStaticDeleter<TQMap<TQString,TQString> > sdShareMap;
 
 KFileShare::ShareMode KFileShare::s_shareMode;
 bool KFileShare::s_sambaEnabled;
@@ -165,10 +168,10 @@ bool KFileShare::nfsEnabled() {
 void KFileShare::readShareList() 
 {
     KFileSharePrivate::self();
-    if ( !s_shareList )
-        sdShareList.setObject( s_shareList, new TQStringList );
+    if ( !s_shareMap )
+	sdShareMap.setObject( s_shareMap, new TQMap<TQString,TQString> );
     else
-        s_shareList->clear();
+	s_shareMap->clear();
 
     // /usr/sbin on Mandrake, $PATH allows flexibility for other distributions
     TQString exe = findExe( "filesharelist" );
@@ -186,29 +189,45 @@ void KFileShare::readShareList()
 
     // Reading code shamelessly stolen from khostname.cpp ;)
     TQString line;
+    TQString options;
+    TQString path;
     int length;
+    TQRegExp rx_line("([^\\s]+)\\s+(.*)");
     do {
         length = proc.readln(line, true);
 	if ( length > 0 )
 	{
             if ( line[length-1] != '/' )
                 line += '/';
-            s_shareList->append(line);
+            if( rx_line.search( line ) != -1 ) {
+                options = rx_line.cap(1);
+                path    = rx_line.cap(2);
+                (*s_shareMap)[path] = options;
+            }
             kdDebug(7000) << "Shared dir:" << line << endl;
         }
     } while (length > -1);
 }
 
 
-bool KFileShare::isDirectoryShared( const TQString& _path )
+int KFileShare::isDirectoryShared( const TQString& _path )
 {
-    if ( ! s_shareList )
+    int ret(0);
+
+    if ( ! s_shareMap )
         readShareList();
 
     TQString path( _path );
     if ( path[path.length()-1] != '/' )
         path += '/';
-    return s_shareList && s_shareList->contains( path );
+    //return s_shareList && s_shareList->contains( path );
+    if( (*s_shareMap).contains(path) && !((*s_shareMap)[path].isEmpty()) ) {
+        ret+=1;
+        if( (*s_shareMap)[path].find("readwrite") != -1 )
+            ret+=2;
+    }
+    
+    return ret;
 }
 
 KFileShare::Authorization KFileShare::authorization()
@@ -231,17 +250,30 @@ TQString KFileShare::findExe( const char* exeName )
 
 bool KFileShare::setShared( const TQString& path, bool shared )
 {
+   return SuSEsetShared( path, shared, false );
+}
+
+bool KFileShare::SuSEsetShared( const TQString& path, bool shared, bool rw )
+{
     if (! KFileShare::sharingEnabled() ||
           KFileShare::shareMode() == Advanced)
        return false;
 
-    kdDebug(7000) << "KFileShare::setShared " << path << "," << shared << endl;
     TQString exe = KFileShare::findExe( "fileshareset" );
     if (exe.isEmpty())
         return false;
-        
+
+    // we want to share, so we kick it first - just to be sure
     KProcess proc;
     proc << exe;
+    proc << "--remove";
+    proc << path;
+    proc.start( KProcess::Block );
+    proc.clearArguments();
+        
+    proc << exe;
+     if( rw )
+         proc << "--rw";
     if ( shared )
         proc << "--add";
     else
@@ -289,6 +321,26 @@ bool KFileShare::setShared( const TQString& path, bool shared )
     } 
     
     return ok;
+}
+
+bool KFileShare::sambaActive()
+{
+    // rcsmb is not executable by users, try ourselves
+    int status = system( "/sbin/checkproc -p /var/run/samba/smbd.pid /usr/sbin/smbd" );
+    return status != -1 && WIFEXITED( status ) && WEXITSTATUS( status ) == 0;
+}
+
+bool KFileShare::nfsActive()
+{
+    // rcnfsserver is not executable by users, try ourselves
+    int status = system( "/sbin/checkproc /usr/sbin/rpc.mountd" );
+    if( status != -1 && WIFEXITED( status ) && WEXITSTATUS( status ) == 0 )
+    {
+        status = system( "/sbin/checkproc -n nfsd" );
+        if( status != -1 && WIFEXITED( status ) && WEXITSTATUS( status ) == 0 )
+            return true;
+    }
+    return false;
 }
 
 #include "kfileshare.moc"

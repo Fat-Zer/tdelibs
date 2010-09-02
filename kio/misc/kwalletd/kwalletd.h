@@ -26,6 +26,7 @@
 #include <tqintdict.h>
 #include <tqstring.h>
 #include <tqwidget.h>
+#include <tqtimer.h>
 #include <tqguardedptr.h>
 #include "kwalletbackend.h"
 
@@ -51,8 +52,10 @@ class KWalletD : public KDEDModule {
 
 		// Open and unlock the wallet
 		virtual int open(const TQString& wallet, uint wId);
-
+		// Open and unlock the wallet
+		virtual int tryOpen(const TQString& wallet, const TQCString& passwd);
 		// Open and unlock the wallet with this path
+
 		virtual int openPath(const TQString& path, uint wId);
 
 		// Asynchronous open - must give the object to return the handle
@@ -186,6 +189,7 @@ class KWalletD : public KDEDModule {
 		int _idleTime;
 		TQMap<TQString,TQStringList> _implicitAllowMap, _implicitDenyMap;
 		KTimeout *_timeouts;
+		TQTimer _tryOpenBlocked;
 
 		TQPtrList<KWalletTransaction> _transactions;
 		TQGuardedPtr< TQWidget > activeDialog;

@@ -551,7 +551,7 @@ TQString KDictSpellingHighlighter::spellKey()
     key += '/';
     key += TQString::number( config->readNumEntry( "KSpell_DictFromList", false ));
     key += '/';
-    key += TQString::number( config->readNumEntry( "KSpell_Encoding", KS_E_ASCII ));
+    key += TQString::number( config->readNumEntry( "KSpell_Encoding", KS_E_UTF8 ));
     key += '/';
     key += TQString::number( config->readNumEntry( "KSpell_Client", KS_CLIENT_ISPELL ));
     return key;

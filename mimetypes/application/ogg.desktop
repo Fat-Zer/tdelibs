@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=MimeType
 MimeType=application/ogg
-Icon=multimedia
+Icon=sound
 Patterns=*.ogg;*.OGG;
 # Previous name of this mimetype
 X-KDE-IsAlso=application/x-ogg

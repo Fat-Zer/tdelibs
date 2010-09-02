@@ -1275,6 +1275,16 @@ bool Ftp::ftpRename( const TQString & src, const TQString & dst, bool overwrite 
         return false;
     }
 
+  // Must check if dst already exists, RNFR+RNTO overwrites by default (#127793).
+  if (ftpFileExists(dst)) {
+      error(ERR_FILE_ALREADY_EXIST, dst);
+      return false;
+  }
+  if (ftpFolder(dst, false)) {
+      error(ERR_DIR_ALREADY_EXIST, dst);
+      return false;
+  }
+
   int pos = src.findRev("/");
   if( !ftpFolder(src.left(pos+1), false) )
       return false;
@@ -2404,6 +2414,19 @@ bool Ftp::ftpSize( const TQString & path, char mode )
   m_size = charToLongLong(psz);
   if (!m_size) m_size = UnknownSize;
   return true;
+}
+
+bool Ftp::ftpFileExists(const TQString& path)
+{
+  TQCString buf;
+  buf = "SIZE ";
+  buf += remoteEncoding()->encode(path);
+  if( !ftpSendCmd( buf ) || (m_iRespType != 2) )
+  return false;
+
+  // skip leading "213 " (response code)
+  const char* psz = ftpResponse(4);
+  return psz != 0;
 }
 
 // Today the differences between ASCII and BINARY are limited to

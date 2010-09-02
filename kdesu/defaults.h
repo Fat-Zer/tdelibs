@@ -13,8 +13,9 @@
 #ifndef __Defaults_h_included__
 #define __Defaults_h_included__
 
+/*const int defTimeout = 120*60;*/
 const int defTimeout = 120*60;
 const int defEchoMode = 0;
-const int defKeep = false;
+const int defKeep = true;
 
 #endif

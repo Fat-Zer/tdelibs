@@ -236,6 +236,8 @@ private:
 
 private:
 
+  TQString translatedEntry(const char*) const;
+
   // copy-construction and assignment are not allowed
   KDesktopFile( const KDesktopFile& );
   KDesktopFile& operator= ( const KDesktopFile& );

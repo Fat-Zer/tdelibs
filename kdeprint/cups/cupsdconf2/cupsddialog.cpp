@@ -45,6 +45,7 @@
 #include <kguiitem.h>
 #include <kprocess.h>
 
+#include <stdlib.h>
 #include <signal.h>
 #include <cups/cups.h>
 

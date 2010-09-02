@@ -337,7 +337,7 @@ bool NetAccess::statInternal( const KURL & url, int details, bool source,
                               TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
-  KIO::StatJob * job = KIO::stat( url, !url.isLocalFile() );
+  KIO::StatJob * job = KIO::stat( url, !url.isLocalFile() && !url.url().startsWith("beagle:?") );
   job->setWindow (window);
   job->setDetails( details );
   job->setSide( source );

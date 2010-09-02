@@ -385,7 +385,9 @@ TQPopupMenu *LineEditWidget::createPopupMenu()
 
     if (m_input->autoComplete()) {
         popup->insertSeparator();
-        int id = popup->insertItem( SmallIconSet("history_clear"), i18n("Clear &History"), ClearHistory );
+        int id = popup->insertItem( SmallIconSet("edit"), i18n("&Edit History..."), EditHistory );
+        popup->setItemEnabled( id, (compObj() && !compObj()->isEmpty()) );
+        id = popup->insertItem( SmallIconSet("history_clear"), i18n("Clear &History"), ClearHistory );
         popup->setItemEnabled( id, (compObj() && !compObj()->isEmpty()) );
     }
 
@@ -409,10 +411,24 @@ void LineEditWidget::extendedMenuActivated( int id)
         m_view->clearCompletionHistory(m_input->name().string());
         if (compObj())
           compObj()->clear();
+    case EditHistory:
+      {
+        KHistoryComboEditor dlg( compObj() ? compObj()->items() : TQStringList(), this );
+        connect( &dlg, TQT_SIGNAL( removeFromHistory(const TQString&) ), TQT_SLOT( slotRemoveFromHistory(const TQString&)) );
+        dlg.exec();
+      }
     default:
         break;
     }
 }
+
+void LineEditWidget::slotRemoveFromHistory(const TQString &entry)
+{
+    m_view->removeFormCompletionItem(m_input->name().string(), entry);
+    if (compObj())
+       compObj()->removeItem(entry);
+}
+
 
 bool LineEditWidget::event( TQEvent *e )
 {

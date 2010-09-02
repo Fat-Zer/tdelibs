@@ -1165,6 +1165,12 @@ void KFileDialog::urlEntered(const KURL& url)
         d->pathCombo->setURL( url );
     }
 
+    if (url.protocol()=="beagle" && url.path()=="/") {
+       d->pathCombo->setEditText("beagle:/<"+i18n("search term")+">");
+       d->pathCombo->lineEdit()->setSelection(8,255);
+       d->pathCombo->setFocus();
+    }
+
     locationEdit->blockSignals( true );
     locationEdit->setCurrentItem( 0 );
     if ( d->keepLocation )

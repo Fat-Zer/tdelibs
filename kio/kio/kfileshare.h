@@ -67,7 +67,7 @@ public:
     /**
      * Call this to know if a directory is currently shared
      */
-    static bool isDirectoryShared( const TQString& path );
+    static int isDirectoryShared( const TQString& path );
 
     enum Authorization { NotInitialized, ErrorNotFound, Authorized, UserNotAllowed };
     /**
@@ -85,7 +85,12 @@ public:
      * @returns whether the perl script was successful
      */
     static bool setShared( const TQString& path, bool shared );
-    
+
+    /* 
+     * SuSE only enhancement for now
+     */
+    static bool SuSEsetShared( const TQString& path, bool shared, bool ro );
+
     /**
      * The used share mode.
      * Simple means that the simple sharing dialog is used and
@@ -131,10 +136,23 @@ public:
      * Returns whether NFS is enabled
      */
     static bool nfsEnabled();
+    
+    /**
+     * Returns whether Samba is active (service is running)
+     * @internal
+     */
+    static bool sambaActive();
+
+    /**
+     * Returns whether NFS is active (service is running)
+     * @internal
+     */
+    static bool nfsActive();
 
 private:
     static Authorization s_authorization;
-    static TQStringList* s_shareList;
+//    static TQStringList* s_shareList;
+    static TQMap<TQString,TQString>* s_shareMap;
     static ShareMode s_shareMode;
     static bool s_sambaEnabled;
     static bool s_nfsEnabled;

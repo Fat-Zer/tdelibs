@@ -191,6 +191,11 @@ public:
     void enterWhatsThisMode(); // temporary, fix in Qt (Matthias, Mon Jul 17 15:20:55 CEST 2000  )
     virtual void reparent( TQWidget * parent, WFlags f, const TQPoint & p, bool showIt = false );
 
+    /**
+     * @internal
+     */
+    void updateEmbeddedFocus( bool hasfocus );
+
 signals:
     /**
      * This signal is emitted when the embedded window has been lost (destroyed or reparented away)

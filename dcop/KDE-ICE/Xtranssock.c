@@ -1444,12 +1444,17 @@ UnixHostReallyLocal (char *host)
 
 {
     char hostnamebuf[256];
+    char* xauthlocalname = getenv("XAUTHLOCALHOSTNAME");
 
     TRANS(GetHostname) (hostnamebuf, sizeof (hostnamebuf));
 
     if (strcmp (hostnamebuf, host) == 0)
     {
 	return (1);
+    }
+    else if(xauthlocalname && strcmp (xauthlocalname, host) == 0)
+    {
+       return (1);
     }
     else
     {

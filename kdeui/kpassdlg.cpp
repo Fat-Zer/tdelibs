@@ -49,6 +49,8 @@
 
 #include "kpassdlg.h"
 
+#include "../kdesu/defaults.h"
+
 /*
  * Password line editor.
  */
@@ -337,7 +339,8 @@ void KPasswordDialog::init()
 
     KConfig* const cfg = KGlobal::config();
     const KConfigGroupSaver saver(cfg, "Passwords");
-    if (m_Keep && cfg->readBoolEntry("Keep", false))
+    bool def = ( qstrcmp( qAppName(), "kdesu" ) == 0 ? defKeep : false );
+    if (m_Keep && cfg->readBoolEntry("Keep", def))
 	++m_Keep;
 
     m_pMain = new TQWidget(this);

@@ -111,7 +111,8 @@ static QCStringList split(const TQCString &str)
 
 void KHostName::changeX()
 {
-   TQString cmd = "xauth list";
+   const char* xauthlocalhostname = getenv("XAUTHLOCALHOSTNAME");
+   TQString cmd = "xauth -n list";
    FILE *xFile = popen(TQFile::encodeName(cmd), "r");
    if (!xFile)
    {
@@ -123,6 +124,7 @@ void KHostName::changeX()
       char buf[1024+1];
       while (!feof(xFile))
       {
+         buf[1024]='\0';
          TQCString line = fgets(buf, 1024, xFile);
          if (line.length())
             line.truncate(line.length()-1); // Strip LF.
@@ -157,12 +159,17 @@ void KHostName::changeX()
       TQCString newNetId = newName+netId.mid(i);
       TQCString oldNetId = netId.left(i);
 
-      if(oldNetId != oldName)
-         continue;
+      if(oldNetId != oldName
+        && (!xauthlocalhostname || strcmp(xauthlocalhostname, oldNetId.data()) != 0))
+        continue;
 
-      cmd = "xauth remove "+KProcess::quote(netId);
-      system(TQFile::encodeName(cmd));
-      cmd = "xauth add ";
+      // don't nuke the xauth when XAUTHLOCALHOSTNAME points to it
+      if (!xauthlocalhostname || oldNetId != xauthlocalhostname)
+      {
+        cmd = "xauth -n remove "+KProcess::quote(netId);
+        system(TQFile::encodeName(cmd));
+      }
+      cmd = "xauth -n add ";
       cmd += KProcess::quote(newNetId);
       cmd += " ";
       cmd += KProcess::quote(authName);
@@ -276,7 +283,10 @@ void KHostName::changeDcop()
       }
    }
 
-   // Remove old entries
+   // Remove old entries, but only if XAUTHLOCALHOSTNAME doesn't point
+   // to it
+   char* xauthlocalhostname = getenv("XAUTHLOCALHOSTNAME");
+   if (!xauthlocalhostname || !oldNetId.contains(xauthlocalhostname))
    {
       TQString cmd = "iceauth remove "+KProcess::quote("netid="+oldNetId);
       system(TQFile::encodeName(cmd));
@@ -368,9 +378,7 @@ int main(int argc, char **argv)
 
    KHostName hn;
 
-   if(!getenv("XAUTHLOCALHOSTNAME"))
-       hn.changeX();
-
+   hn.changeX();
    hn.changeDcop();
    hn.changeStdDirs("socket");
    hn.changeStdDirs("tmp");

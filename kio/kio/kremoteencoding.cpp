@@ -53,7 +53,7 @@ TQCString KRemoteEncoding::encode(const TQString& name) const
   TQCString result = codec->fromUnicode(name);
   if (codec->toUnicode(result) != name)
     return name.latin1();
- 
+
   return result;
 }
 
@@ -80,11 +80,13 @@ void KRemoteEncoding::setEncoding(const char *name)
 
   if (name)
     codec = TQTextCodec::codecForName(name);
+  else
+    codec = TQTextCodec::codecForMib( 106 ); // fallback to UTF-8
 
   if (codec == 0L)
     codec = TQTextCodec::codecForMib(1);
 
-  kdDebug() << k_funcinfo << "setting encoding " << codec->name() 
+  kdDebug() << k_funcinfo << "setting encoding " << codec->name()
 	    << " for name=" << name << endl;
 }
 

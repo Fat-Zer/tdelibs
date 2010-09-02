@@ -29,6 +29,7 @@
 #include <kcursor.h>
 #include <kiconloader.h>
 #include <kicontheme.h>
+#include <klistviewsearchline.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <knotifyclient.h>
@@ -343,10 +344,22 @@ void KComboBox::lineEditDeleted()
 // *********************************************************************
 // *********************************************************************
 
+class KHistoryCombo::KHistoryComboPrivate
+{
+public:
+    KHistoryComboPrivate() : bHistoryEditorEnabled(false)
+    {
+    }
+    ~KHistoryComboPrivate()
+    {
+    }
+
+    bool bHistoryEditorEnabled;
+};
 
 // we are always read-write
 KHistoryCombo::KHistoryCombo( TQWidget *parent, const char *name )
-    : KComboBox( true, parent, name ), d(0)
+    : KComboBox( true, parent, name ), d(new KHistoryComboPrivate)
 {
     init( true ); // using completion
 }
@@ -354,7 +367,7 @@ KHistoryCombo::KHistoryCombo( TQWidget *parent, const char *name )
 // we are always read-write
 KHistoryCombo::KHistoryCombo( bool useCompletion,
                               TQWidget *parent, const char *name )
-    : KComboBox( true, parent, name ), d(0)
+    : KComboBox( true, parent, name ), d(new KHistoryComboPrivate)
 {
     init( useCompletion );
 }
@@ -441,6 +454,10 @@ void KHistoryCombo::addContextMenuItems( TQPopupMenu* menu )
     if ( menu )
     {
         menu->insertSeparator();
+        if (d->bHistoryEditorEnabled) {
+           int idedit = menu->insertItem( SmallIconSet("edit"), i18n("&Edit History..."), this, TQT_SLOT( slotEdit()) );
+           menu->setItemEnabled(idedit, count());
+        }
         int id = menu->insertItem( SmallIconSet("history_clear"), i18n("Clear &History"), this, TQT_SLOT( slotClear()));
         if (!count())
            menu->setItemEnabled(id, false);
@@ -677,10 +694,104 @@ void KHistoryCombo::slotClear()
     emit cleared();
 }
 
+void KHistoryCombo::slotEdit()
+{
+    KHistoryComboEditor dlg( historyItems(), this );
+    connect( &dlg, TQT_SIGNAL( removeFromHistory(const TQString&) ), TQT_SLOT( slotRemoveFromHistory(const TQString&)) );
+    dlg.exec();
+}
+
+void KHistoryCombo::slotRemoveFromHistory(const TQString &entry)
+{
+    removeFromHistory(entry);
+    emit removed(entry);
+}
+
+void KHistoryCombo::setHistoryEditorEnabled( bool enable )
+{
+    d->bHistoryEditorEnabled = enable;
+}
+
+bool KHistoryCombo::isHistoryEditorEnabled() const
+{
+    return d->bHistoryEditorEnabled;
+}
+
 void KComboBox::virtual_hook( int id, void* data )
 { KCompletionBase::virtual_hook( id, data ); }
 
 void KHistoryCombo::virtual_hook( int id, void* data )
 { KComboBox::virtual_hook( id, data ); }
+
+void KHistoryComboEditor::virtual_hook( int id, void* data )
+{ KDialogBase::virtual_hook( id, data ); }
+
+KHistoryComboEditor::KHistoryComboEditor( const TQStringList& entries, TQWidget *parent )
+: KDialogBase( parent, "khistorycomboeditor", true, i18n( "History Editor" ),
+    KDialogBase::Close | KDialogBase::User1, KDialogBase::User1, true,
+    KGuiItem( i18n( "&Delete Entry" ), "editdelete") ), d(0)
+{
+    TQVBox* box = new TQVBox( this );
+    box->setSpacing( KDialog::spacingHint() );
+    setMainWidget( box );
+
+    new TQLabel( i18n( "This dialog allows you to delete unwanted history items." ), box );
+
+    // Add searchline
+    TQHBox* searchbox = new TQHBox( box );
+    searchbox->setSpacing( KDialog::spacingHint() );
+
+    TQToolButton *clearSearch = new TQToolButton(searchbox);
+    clearSearch->setTextLabel(i18n("Clear Search"), true);
+    clearSearch->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
+    TQLabel* slbl = new TQLabel(i18n("&Search:"), searchbox);
+    KListViewSearchLine* listViewSearch = new KListViewSearchLine(searchbox);
+    slbl->setBuddy(listViewSearch);
+    connect(clearSearch, TQT_SIGNAL(pressed()), listViewSearch, TQT_SLOT(clear()));
+
+    // Add ListView
+    m_pListView = new KListView( box );
+    listViewSearch->setListView(m_pListView);
+    m_pListView->setAllColumnsShowFocus(true);
+    m_pListView->header()->hide();
+    m_pListView->addColumn("");
+    m_pListView->setRenameable( 0 );
+
+    box->setStretchFactor( m_pListView, 1 );
+
+    TQStringList newlist = entries;
+    for ( TQStringList::Iterator it = newlist.begin(); it != newlist.end(); ++it ) {
+        new TQListViewItem( m_pListView, *it );
+    }
+
+    m_pListView->setMinimumSize( m_pListView->sizeHint() );
+
+    connect( m_pListView, TQT_SIGNAL( selectionChanged( TQListViewItem * ) ),
+             this, TQT_SLOT( slotSelectionChanged( TQListViewItem * ) ) );
+
+    enableButton( KDialogBase::User1, false );
+
+    resize( sizeHint() );
+}
+
+KHistoryComboEditor::~KHistoryComboEditor()
+{
+}
+
+void KHistoryComboEditor::slotUser1() // Delete button
+{
+    TQListViewItem *item = m_pListView->selectedItem();
+
+    if ( item ) {
+       emit removeFromHistory( item->text(0) );
+       m_pListView->takeItem( item );
+       enableButton( KDialogBase::User1, false );
+    }
+}
+
+void KHistoryComboEditor::slotSelectionChanged( TQListViewItem * item )
+{
+    enableButton( KDialogBase::User1, item );
+}
 
 #include "kcombobox.moc"

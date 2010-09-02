@@ -1985,6 +1985,7 @@ public:
 
 protected:
   TQCString readEntryUtf8( const char *pKey) const;
+  bool hasTranslatedKey( const char *pKey ) const;
 
   /**
    * The currently selected group. */

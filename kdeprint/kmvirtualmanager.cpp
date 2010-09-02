@@ -179,7 +179,7 @@ void KMVirtualManager::setAsDefault(KMPrinter *p, const TQString& name, TQWidget
 
 void KMVirtualManager::refresh()
 {
-	QFileInfo	fi(TQDir::homeDirPath() + TQFile::decodeName("/.lpoptions"));
+	QFileInfo	fi(TQDir::homeDirPath() + TQFile::decodeName("/.cups/.lpoptions"));
 	QFileInfo	fi2(TQFile::decodeName("/etc/cups/lpoptions"));
 
 	// if root, then only use global file: trick -> use twice the same file
@@ -301,7 +301,13 @@ void KMVirtualManager::triggerSave()
 			filename = TQFile::decodeName("/etc/cups/lpoptions");
 	}
 	else
-		filename = TQDir::homeDirPath() + TQFile::decodeName("/.lpoptions");
+	{
+		TQDir cupsDir(TQDir::home().absPath()+"/.cups");
+		if (!cupsDir.exists())
+			cupsDir.mkdir(TQDir::home().absPath()+"/.cups");
+		filename = TQDir::homeDirPath() + TQFile::decodeName("/.cups/lpoptions");
+	}
+
 	if (!filename.isEmpty())
 	{
 		saveFile(filename);

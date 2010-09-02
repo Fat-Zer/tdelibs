@@ -34,6 +34,8 @@
 #include "kapplication.h"
 #include "kstandarddirs.h"
 #include "kmountpoint.h"
+#include "kcatalogue.h"
+#include "klocale.h"
 
 #include "kdesktopfile.h"
 #include "kdesktopfile.moc"
@@ -145,6 +147,27 @@ bool KDesktopFile::isAuthorizedDesktopFile(const TQString& path)
   return false;
 }
 
+TQString KDesktopFile::translatedEntry(const char* key) const
+{
+  if (hasTranslatedKey(key))
+    return readEntry(key);
+
+  if (hasKey(key)) {
+    TQString value = readEntryUntranslated(key);
+    TQString fName = fileName();
+    fName = fName.mid(fName.findRev('/')+1);
+    TQString po_lookup_key = TQString::fromLatin1(key) + "(" + fName + "): " + value;
+    TQString po_value = KGlobal::locale()->translate(po_lookup_key.utf8().data());
+
+    if (po_value == po_lookup_key)
+      return value;
+
+    return po_value;
+  }
+
+  return TQString::null;
+} 
+
 TQString KDesktopFile::readType() const
 {
   return readEntry("Type");
@@ -157,17 +180,17 @@ TQString KDesktopFile::readIcon() const
 
 TQString KDesktopFile::readName() const
 {
-  return readEntry("Name");
+  return translatedEntry("Name");
 }
 
 TQString KDesktopFile::readComment() const
 {
-  return readEntry("Comment");
+  return translatedEntry("Comment");
 }
 
 TQString KDesktopFile::readGenericName() const
 {
-  return readEntry("GenericName");
+  return translatedEntry("GenericName");
 }
 
 TQString KDesktopFile::readPath() const
@@ -342,5 +365,3 @@ KDesktopFile* KDesktopFile::copyTo(const TQString &file) const
   config->setDesktopGroup();
   return config;
 }
-
-

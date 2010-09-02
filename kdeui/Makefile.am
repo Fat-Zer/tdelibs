@@ -20,7 +20,7 @@
 
 SUBDIRS = . tests about kdetrayproxy
 
-INCLUDES= -I$(top_srcdir)/kdefx -I$(top_srcdir)/interfaces $(all_includes)
+INCLUDES= -I/usr/include/freetype2/ -I$(top_srcdir)/kdefx -I$(top_srcdir)/interfaces $(all_includes)
 
 # For the future: examine if condensing the tons of *_LDFLAGS variables
 # into $(all_libraries) isn't better

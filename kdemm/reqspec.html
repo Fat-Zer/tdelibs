@@ -1,0 +1,533 @@
+<HTML><HEAD><TITLE>Requirements & Specification</TITLE></HEAD><BODY BGColor="#FFFFFF" LINK="#0000FF" VLINK="#0000FF">
+<H2><CENTER>Requirements & Specification</CENTER></H2>
+
+<A NAME="Problem Statement" />
+<H3>1. Problem Statement</H3>
+
+<P>KDE needs to integrate better into existing Multimedia solutions for Linux.</P>
+
+<P>Currently many KDE apps use aRts as media framework and soundserver, while other apps use mplayer, xine and/or gstreamer to do what they need. Sometimes this results in mutually exclusive usage of the soundcard and generally it's an unneeded overhead.</P>
+
+<P>KDE Developers should be able to "natively" use multimedia functions in the KDE API. The KDE Mulitmedia API (short kdemm) should provide an easy to use and Qt/KDE API like aproach to multimedia functionality.</P>
+
+<P>Nowadays when a KDE developer wants to add multimedia functionality to his program he can either choose one framework to do it, write all the media code himself (nobody does this, and probably nobody should) or use an abstraction to be able to use more than one framework. Most of the time the development models (object model, programming language) are not the same as a KDE developer is used to. And very often the API of the framework used is more complicated than the task he wants to accomplish. The kdemm API should be useable without any knowledge about media frameworks and how these things work internally.</P>
+
+<P>The API does not aim to be a general Linux solution to multimedia. It aims to be the solution for all KDE developers.</P>
+
+<P>KDE should ease the use of pro audio tools on Linux and provide the necessary configuration and integration so that for pro audio tools the DE of choice is KDE.</P>
+
+<A NAME="Requirements" />
+<H3>2. Requirements</H3>
+
+<A NAME="Actors" />
+<H4>2.1. Actors</H4>
+
+<A NAME="Actor: Admin" />
+<H4>Actor: Admin</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">Administrates a KDE installation. Most users are their own admins...</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiated User Tasks</I></TD><TD COLSPAN="1" VALIGN="top">configure Multimedia sytems</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiated Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">Configure kdemm</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Actor: KDE Developer" />
+<H4>Actor: KDE Developer</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">The average KDE Developer who might need some multimedia functionality, like playing a media object, for his program.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiated User Tasks</I></TD><TD COLSPAN="1" VALIGN="top">add media playback to his program</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiated Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">add media playback functionality to a program, initialize kdemm</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Actor: KDE Multimedia Developer" />
+<H4>Actor: KDE Multimedia Developer</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">KDE Developer writing a media application like a jukebox or full-featured media player.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiated User Tasks</I></TD><TD COLSPAN="1" VALIGN="top">Develop Media Player</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiated Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">media playback, manage video window, modify audio path, play media object, load media object, create reusable audio path, crossfading</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Actor: KDE User" />
+<H4>Actor: KDE User</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">User of the K Desktop Environment.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiated User Tasks</I></TD><TD COLSPAN="1" VALIGN="top">change audio output volume</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiated Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">change audio volume</TD></TR>
+
+</TABLE></P>
+
+<A NAME="User Tasks" />
+<H4>2.2. User Tasks</H4>
+
+<P>Actor Admin initilizes the following user tasks</P>
+
+<A NAME="User Task: configure Multimedia sytems" />
+<H4>User Task: configure Multimedia sytems</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">His aim is to make all multimedia applications work happily side by side.<BR><BR>He has several options to select, like the audio driver backend to use OSS or ALSA, whether he wants to have a soundserver running and what application uses what audio output. He can set the video output method, like e.g. xv or SDL or plain X.<BR><BR>This has to be done so that applications don't block each other and sometimes to make them interact with one another (like you can do with soundservers).<BR><BR>It is important to have it correctly configured else the user will have problems whenever he uses multimedia programs.<BR><BR>This configuration has to be done once until a new program is installed that is incompatible with the setup. Ideally this task has to be done once and never again.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Realized in Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">Configure kdemm</TD></TR>
+
+</TABLE></P>
+<BR>
+<BR>
+
+<P>Actor KDE Developer initilizes the following user tasks</P>
+
+<A NAME="User Task: add media playback to his program" />
+<H4>User Task: add media playback to his program</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">The average KDE Developer might want to add media playback functionality to his program, meaning that his program will be able to play a sound file or even video file.<BR><BR>He can select from a lot of choices how to achieve his goal.<BR>- write the relevant audio/video code himself<BR>- select and use a media framework like gstreamer or aRts<BR>- use existing code from kdelibs (might not be enough for what he's trying to do)<BR><BR>A lot of programs nowadays need to have multimedia functionality.<BR><BR>It's important that KDE developers can add multimedia functionality to their programs.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Realized in Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">add media playback functionality to a program</TD></TR>
+
+</TABLE></P>
+<BR>
+<BR>
+
+<P>Actor KDE Multimedia Developer initilizes the following user tasks</P>
+
+<A NAME="User Task: Develop Media Player" />
+<H4>User Task: Develop Media Player</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">Aim: The developers aim is to write a full featured media player like mplayer, xine, all the frontends for the former, windoze media player :-P, realplayer, you name it.<BR><BR>Options: He can choose from a variety of available code, like NMM, gstreamer, aRts to a certain extend, mplayer or (lib)xine to provide for his multimedia needs. He can choose how to output the audio and video as far as the former choice gives him options. There are constraints on what media formats he can play or what he can do with the data depending on his choice of media backend/framework.<BR><BR>Reason: A modern desktop environment needs to have a modern media player with all the latest bells and whistles.<BR><BR>Priority: It is important that KDE has "native" media players.<BR><BR>Info-In:<BR>- knowledge about what other media players can do<BR>- features asked for by users (e.g. EQ is a must have for some users)</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Realized in Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">media playback, manage video window, modify audio path, play media object, load media object, create reusable audio path, crossfading</TD></TR>
+
+</TABLE></P>
+<BR>
+<BR>
+
+<P>Actor KDE User initilizes the following user tasks</P>
+
+<A NAME="User Task: change audio output volume" />
+<H4>User Task: change audio output volume</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">The user wants to change the volume of some program because it is too loud compared to the sound of another program.<BR><BR>This is a tricky task for the user if the program itself doesn't allow to attenuate its sound. If it does he can use the volume control of the program. If it doesn't he has to use a soundserver that allows him to use a volume control for this one specific program only.<BR><BR>It is rather important to have this functionality as it can become pretty anoying if you e.g. want to get notifications when people are chatting with you while you're listening to classical music. The notifications really need attenuation.<BR><BR>It might happen a few times a day that a user needs this functionality.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Realized in Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">change audio volume</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Domain Data" />
+<H4>2.3. Domain Data</H4>
+
+<P>When I say "sent" in the diagram below I'm actually talking about the data flow in the underlying media framework. kdemm only creates connections so that the data flow is done by the framework.</P>
+<IMG SRC="0.png" />
+
+
+<A NAME="Domain Constraints" />
+<H4>2.4. Domain Constraints</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%"><B>Network transparency</B></TD><TD >It must be possible to run the desktop over the network, not only the GUI, but also audio output. If it is possible, the system should try to play the audio on the computer where the GUI is shown by default.</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Quality Constraints" />
+<H4>2.5. Quality Constraints</H4>
+
+<A NAME="Interaction Data" />
+<H4>2.6. Interaction Data</H4>
+
+<A NAME="Specification" />
+<H3>3. Specification</H3>
+
+<P>When reading the use cases keep in mind that the user often is the Application Developer. So the actor steps are steps the application written by the developer does.</P>
+
+<A NAME="Use Cases" />
+<H4>3.1. Use Cases</H4>
+
+<A NAME="Use Case: add media playback functionality to a program" />
+<H4>Use Case: add media playback functionality to a program</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE Developer</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >the kdemm API has been initialized without errors (see use case "initialize kdemm")</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Tell kdemm what media object you want to play back.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Check whether the media object is one of the known types that the backend can decode. If it cannot be decoded error out.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Prepare for being asked to play back the media object, to seek in it or other operations.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >a) Ask for meta information of the current media object. (e.g. length, bitrate, etc.) --> go on with step 5<BR><BR>or<BR><BR>b) asking kdemm to play the media object --> go on with step 7</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">read out meta information, either using the media backend if it supports this function, or using other external libs</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >display meta information on the GUI while asking kdemm to play the media object</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Tell media backend to start playing.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Wait for notification that the media object has finished playing. Remove display of meta info and clean up all used datastructures.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: change audio volume" />
+<H4>Use Case: change audio volume</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE User</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >a kdemm using program (let's call it A) is running with its volume being x</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >open KDE Mixer Window</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">look for all available volume controls and show them (with informative description what control does what) to the user</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >locate the control for A and move the fader down</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">decrease the output volume of A</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Postconditions</I></TD><TD >A is running with output volume y < x</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: Configure kdemm" />
+<H4>Use Case: Configure kdemm</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >Admin</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >KDE is installed and the backends the Admin wants to use are installed.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >open kdemm admin tool</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">kdemm looks for available options (media frameworks and their output options) and presents these options in a view (see glossary). One framework is already selected as KDE default and kdemm does a good guess (based on audio driver) on what should be the default audio output option.<BR>For the selected media framework there might be more options that need to be shown.<BR>Also if the audio output choice has configuration options they get shown. (e.g. jackd has a lot of options that are more or less important to the admin)</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >select another media framework</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Change audio output options according to what the framework supports.<BR><BR>Provide access to the configuration options of the just selected media framework.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >take a look at media framework config options</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">show media framework config options (e.g. NMM might show some network related options here)</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >tweak a few settings</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">write config out so that programs using kdemm behave like configured</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >change default audio output</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Set the media framework to use the specified audio output.<BR><BR>Provide access to the configuration options of the newly selected audio output.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >save settings and close admin tool</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">write out all configuration and tell all kdemm programs to use the new configuration</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: create reusable audio path" />
+<H4>Use Case: create reusable audio path</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE Multimedia Developer</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >the kdemm API has been initialized without errors (see use case "initialize kdemm")</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Ask kdemm for an "audio path"</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Create a representation for the flow graph audio normally takes from the media object to the output and return an interface to it.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Ask for a list of effects that can be inserted into the audio path.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Look what effects the media framework supports and return a list that describes those effects (1. information for the end-user, 2. info that a computer program can recognize and identify, 3. unique identifier for the effect)</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Create list of effects and let the user decide what effects he wants. Tell kdemm to insert effects into the audio path.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Prepare an audio path with the selected effects for later use.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >optional steps:<BR>The user decides to configure the parameters of one effect.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Return a Widget showing the parameters the effect has so that the user can configure the effects.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Ask kdemm to save the state of the current audio path to a configuration object.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Look at current audio path, the contained effects and the parameters of the effects. Write those values in the configuration object.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >load media</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Tell kdemm to use the above audio path  for the media object.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Change flow graph of media framework to use the selected audio path.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >play</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: crossfading" />
+<H4>Use Case: crossfading</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE Multimedia Developer</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >the kdemm API has been initialized without errors (see use case "initialize kdemm")</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Ask kdemm to send a notification 3 seconds before a media object finishes playing.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">tell "notification system" from the media framework if it has one, else start a timer that checks for the end of playback to send the notification</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >take from playlist</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Insert a "Fader" effect into the audio path of the media object</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Change flow graph of the media framework to include the "Fader" effect.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >play</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >take from playlist</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Insert a "Fader" effect into the audio path of the media object</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Change flow graph of the media framework to include the "Fader" effect.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >When notification arrives tell the Fader of media object 1 to fade out in 3 seconds. Tell the Fader of media object 2 to fade in in 3 seconds and start playing media object 2.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: initialize kdemm" />
+<H4>Use Case: initialize kdemm</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE Developer</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >KDE and all its libraries are installed correctly.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >ask kdemm to initialize</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Look at config set by the admin tool and accordingly load the media framework code and initialize an audio output that is at this point already available for the kdemm mixer API.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Postconditions</I></TD><TD >kdemm is initialized and ready for action</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: load media object" />
+<H4>Use Case: load media object</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE Multimedia Developer</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >the kdemm API has been initialized without errors (see use case "initialize kdemm")</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Tell kdemm to load a media object.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Prepare media framework for working with the media object (play, seek, etc.).</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Postconditions</I></TD><TD >Media object is ready for use.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: manage video window" />
+<H4>Use Case: manage video window</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE Multimedia Developer</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >the kdemm API has been initialized without errors (see use case "initialize kdemm")</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Ask kdemm for a dedicated video widget.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Create widget and keep reference to it for so that all video output at some later point can be displayed in this widget.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >optional step - can be inserted at any point from here on:</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Resize video widget (might also be fullscreen display).</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Adjust for new video output size: video needs to be scaled to fit into the widget.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Ask for available video ratio options.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Ask media framework for available video ratio options. If the media framework doesn't provide any options <BR> Mark the currently used option.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Select one of the ratio options.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Change video ratio.</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: media playback" />
+<H4>Use Case: media playback</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE Multimedia Developer</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >the kdemm API has been initialized without errors (see use case "initialize kdemm")</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Tell kdemm to send a notification whenever a media object is about to finish playing.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">tell "notification system" from the media framework if it has one, else start a timer that checks for the end of playback to send the notification</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Take first media object from the playlist</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >play</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >When notified that the playback is about to end</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >When notified that the playback has finished</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: modify audio path" />
+<H4>Use Case: modify audio path</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE Multimedia Developer</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >the kdemm API has been initialized without errors (see use case "initialize kdemm")</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >load</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Ask for "audio path" of the media object.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Prepare for changing the flow graph of the audio going from the media object to the default output. Return a reference to an object that can be used to modify the path the audio takes.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Ask for a list of effects that can be inserted into the audio path.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Look what effects the media framework supports and return a list that describes those effects (1. information for the end-user, 2. info that a computer program can recognize and identify, 3. unique identifier for the effect)</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Select an effect and tell kdemm to insert it into the audio path (the position can also be specified)</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Change audio flow graph of the media framework to include the selected effect at the specified position.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >play with effect</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+</TABLE></P>
+
+<A NAME="Use Case: play media object" />
+<H4>Use Case: play media object</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Initiating Actor</I></TD><TD >KDE Multimedia Developer</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Preconditions</I></TD><TD >a media object has been loaded (include use case "load media object")</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>FlowSteps</I></TD><TD >Actor</TD><TD COLSPAN="1" VALIGN="top">System</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD >Ask kdemm to play the media.</TD><TD COLSPAN="1" VALIGN="top"></TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I></I></TD><TD ></TD><TD COLSPAN="1" VALIGN="top">Instruct the media framework to play.</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Features" />
+<H4>3.2. Features</H4>
+
+<A NAME="Feature: create media object" />
+<H4>Feature: create media object</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">Check whether the media data can be accessed and decoded. If not return an error indicating the problem.<BR>Use the underlying media framework to create a flow graph for reading and decoding the media data. (If the media framework does not support reading data from a remote location an extension has to be created that can use KIO to read the data.)<BR>Create an object to represent the media data.</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Inputs</I></TD><TD COLSPAN="1" VALIGN="top">URL to the media data</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Outputs</I></TD><TD COLSPAN="1" VALIGN="top">media object</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Used in Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">load media object</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Feature: init notifications" />
+<H4>Feature: init notifications</H4>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Description</I></TD><TD COLSPAN="1" VALIGN="top">two cases:<BR>if( The media framework can produce the notification in question ) {<BR>Initialize notifications from media framework and prepare to forward them.<BR>} else {<BR>Use timer to send ticks and check for end of media playback.<BR>}</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Inputs</I></TD><TD COLSPAN="1" VALIGN="top">- time before media playback ends<BR>- time between ticks<BR>- what notifications to enable/disable (choices are: ticks, aboutToEnd, end)</TD></TR>
+
+<TR ><TD WIDTH="20%" VALIGN="top"><I>Used in Use Cases</I></TD><TD COLSPAN="1" VALIGN="top">media playback, crossfading</TD></TR>
+
+</TABLE></P>
+
+<A NAME="Global Functional Constraints" />
+<H4>3.3. Global Functional Constraints</H4>
+
+<A NAME="Quality Constraints on Use Cases" />
+<H4>3.4. Quality Constraints on Use Cases</H4>
+
+<A NAME="Quality Constraints on Features" />
+<H4>3.5. Quality Constraints on Features</H4>
+
+<A NAME="Architectural Constraints" />
+<H4>3.6. Architectural Constraints</H4>
+
+<A NAME="User Interface Constraints" />
+<H4>3.7. User Interface Constraints</H4>
+
+<A NAME="Examples" />
+<H3>4. Examples</H3>
+
+<A NAME="Actor Instances" />
+<H4>4.1. Actor Instances</H4>
+
+<A NAME="Scenarios" />
+<H4>4.2. Scenarios</H4>
+
+<A NAME="Glossary" />
+<H3>5. Glossary</H3>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+<TR ><TD>&nbsp;</TD><TD ><DT>admin options view</DT><DD>The kdemm admin tool shows a selection for the media framework and the audio output. Both define an order in which the kdemm applications try to use the framework/audio output.
+Further options can be reached in another view for the media framework and the audio output.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>ALSA</DT><DD>Advanced Linux Sound Architecture: new audio interface for Linux</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>API</DT><DD>Application Programmer Interface: The interface that the Application Programmer uses to interact with the kdemm framework.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>aRts</DT><DD>analog Realtime Synthesizer: the current soundserver and "media framework" of KDE</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>BC</DT><DD>binary compatibility: If the ABI (application binary interface) is changed in an incompatible way (http://developer.kde.org/documentation/other/binarycompatibility.html) the programs using the library will crash.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>DE</DT><DD>Desktop Environment</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>desktop</DT><DD>The GUIs of today all work with the metaphor of a "desktop" on your screen. The elements on screen are the objects that you can handle and work with.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>EQ</DT><DD>equalizer: audio filter to boost and attenuate selected frequencies of the signal</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>flow graph</DT><DD>In media frameworks the flow of media data is modeled as a flow graph. There are nodes representing data sources, data processors and data sinks.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>gstreamer</DT><DD>GStreamer is a library that allows the construction of graphs of media-handling components, ranging from simple Ogg/Vorbis playback to complex audio (mixing) and video (non-linear editing) processing.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>GUI</DT><DD>Graphical User Interface</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>kdemm</DT><DD>short for KDE Multimedia - it's the name of the library/framework the API discussed in here is going to have.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>media object</DT><DD>A media object is a representation for the media data. This could be an audio or video file or stream.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>mplayer</DT><DD>media player that is often used as backend for other media player GUIs</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>NMM</DT><DD>NETWORK-INTEGRATED MULTIMEDIA MIDDLEWARE: a network-integrated multimedia infrastructure for Linux (as well as other operating systems)</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>OSS</DT><DD>Open Sound System: audio interface for UNIX systems</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>SDL</DT><DD>Simple DirectMedia Layer: multimedia library designed to provide low level access to audio, keyboard, mouse, joystick, 3D hardware via OpenGL, and 2D video framebuffer</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>tick</DT><DD>While playing a media file a common task is to show the current position in the file. A tick is a signal every second or so to notify about the progress.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>URL</DT><DD>Uniform Resource Locator (http://en.wikipedia.org/wiki/Uniform_Resource_Locator)</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>user</DT><DD>As long as I talk about API usage the user equals the AP in API.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>X</DT><DD>X Window system: The client server architecture used for most UNIX GUI programs.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>xine</DT><DD>xine is a free multimedia player. It plays back CDs, DVDs, and VCDs. It also decodes multimedia files like AVI, MOV, WMV, and MP3 from local disk drives, and displays multimedia streamed over the Internet. It interprets many of the most common multimedia formats available - and some of the most uncommon formats, too.</DD></TD></TR>
+
+<TR ><TD>&nbsp;</TD><TD ><DT>xv</DT><DD>X Video: extension to X for hardware accelerated video display</DD></TD></TR>
+
+</TABLE></P>
+</BODY></HTML>

@@ -1003,17 +1003,31 @@ return qba;
 TQByteArray KSSLCertificate::toNetscape() {
 TQByteArray qba;
 #ifdef KSSL_HAVE_SSL
-ASN1_HEADER ah;
-ASN1_OCTET_STRING os;
-KTempFile ktf;
+#if OPENSSL_VERSION_NUMBER >= 0x10000000L
+	NETSCAPE_X509 nx;
+	ASN1_OCTET_STRING hdr;
+#else
+   ASN1_HEADER ah;
+   ASN1_OCTET_STRING os;
+#endif
+	KTempFile ktf;
 
-	os.data = (unsigned char *)NETSCAPE_CERT_HDR;
-	os.length = strlen(NETSCAPE_CERT_HDR);
-	ah.header = &os;
-	ah.data = (char *)getCert();
-	ah.meth = d->kossl->X509_asn1_meth();
+#if OPENSSL_VERSION_NUMBER >= 0x10000000L
+	hdr.data = (unsigned char *)NETSCAPE_CERT_HDR;
+	hdr.length = strlen(NETSCAPE_CERT_HDR);
+	nx.header = &hdr;
+	nx.cert = getCert();
 
-	d->kossl->ASN1_i2d_fp(ktf.fstream(),(unsigned char *)&ah);
+	d->kossl->ASN1_i2d_fp(ktf.fstream(),(unsigned char *)&nx);
+#else
+   os.data = (unsigned char *)NETSCAPE_CERT_HDR;
+   os.length = strlen(NETSCAPE_CERT_HDR);
+   ah.header = &os;
+   ah.data = (char *)getCert();
+   ah.meth = d->kossl->X509_asn1_meth();
+
+   d->kossl->ASN1_i2d_fp(ktf.fstream(),(unsigned char *)&ah);
+#endif
 
 	ktf.close();
 

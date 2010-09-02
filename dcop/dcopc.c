@@ -684,7 +684,9 @@ dcop_connect()
     }
 
     hostName[0] = '\0';
-    if (gethostname(hostName, sizeof(hostName)))
+    if (getenv("XAUTHLOCALHOSTNAME"))
+            strlcpy(hostName, getenv("XAUTHLOCALHOSTNAME"),sizeof(hostName)-1);
+    else if (gethostname(hostName, sizeof(hostName)))
 	    strcpy(hostName, "localhost");
     else
 	    hostName[sizeof(hostName)-1] = '\0';

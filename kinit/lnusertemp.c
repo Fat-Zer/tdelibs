@@ -39,7 +39,7 @@
 
 int check_tmp_dir(const char *tmp_dir);
 int create_link(const char *file, const char *tmp_dir);
-int build_link(const char *tmp_prefix, const char *kde_prefix);
+int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname);
 
 int check_tmp_dir(const char *tmp_dir)
 {
@@ -92,7 +92,7 @@ int create_link(const char *file, const char *tmp_dir)
 #ifndef PATH_MAX
 #define PATH_MAX 4096
 #endif
-int build_link(const char *tmp_prefix, const char *kde_prefix)
+int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
 {
   struct passwd *pw_ent;
   char kde_tmp_dir[PATH_MAX+1];
@@ -160,10 +160,21 @@ int build_link(const char *tmp_prefix, const char *kde_prefix)
   }  
 
   strncat(kde_tmp_dir, kde_prefix, PATH_MAX - strlen(kde_tmp_dir));
-  if (gethostname(kde_tmp_dir+strlen(kde_tmp_dir), PATH_MAX - strlen(kde_tmp_dir) - 1) != 0)
+
+  if( kdehostname )
   {
-     perror("Aborting. Could not determine hostname: ");
-     exit(255);
+      if( getenv("XAUTHLOCALHOSTNAME"))
+          strncat(kde_tmp_dir+strlen(kde_tmp_dir), getenv("XAUTHLOCALHOSTNAME"), PATH_MAX - strlen(kde_tmp_dir) - 1);
+      else
+          return 0;
+  }
+  else
+  {
+     if (gethostname(kde_tmp_dir+strlen(kde_tmp_dir), PATH_MAX - strlen(kde_tmp_dir) - 1) != 0)
+     {
+        perror("Could not determine hostname: ");
+        return 1;
+     }
   }
   kde_tmp_dir[sizeof(kde_tmp_dir)-1] = '\0';
 
@@ -269,7 +280,9 @@ int main(int argc, char **argv)
     kde_prefix = "/cache-"; 
   }
 
-  res = build_link(tmp_prefix, kde_prefix); 
+  res = build_link(tmp_prefix, kde_prefix, 1); 
+  if( build_link(tmp_prefix, kde_prefix, 0))
+    res = 1;
     
   free(tmp_prefix);
 

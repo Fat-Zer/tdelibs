@@ -13,7 +13,7 @@
 #include <kmimetype.h>
 #include <kparts/componentfactory.h>
 
-#include <kplayobjectfactory.h>
+#include <kdemm/factory.h>
 
 #include <config-kfile.h>
 
@@ -58,7 +58,7 @@ KFileAudioPreview::KFileAudioPreview( TQWidget *parent, const char *name )
 {
     KGlobal::locale()->insertCatalogue("kfileaudiopreview");    
 
-    TQStringList formats = KDE::PlayObjectFactory::mimeTypes();
+    TQStringList formats = KDE::Multimedia::Factory::self()->playableMimeTypes();
     // ###
     TQStringList::ConstIterator it = formats.begin();
     for ( ; it != formats.end(); ++it )

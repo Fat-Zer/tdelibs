@@ -95,7 +95,9 @@ static void getDCOPFile(char *dcop_file, char *dcop_file_old, int max_length)
   strncat(dcop_file, "/.DCOPserver_", n);
   n -= strlen("/.DCOPserver_");
 
-  if (gethostname(dcop_file+strlen(dcop_file), n) != 0)
+  if (getenv("XAUTHLOCALHOSTNAME"))
+     strncat(dcop_file+strlen(dcop_file), getenv("XAUTHLOCALHOSTNAME"), n);
+  else if (gethostname(dcop_file+strlen(dcop_file), n) != 0)
   {
      perror("Error. Could not determine hostname: ");
      dcop_file[0] = '\0';

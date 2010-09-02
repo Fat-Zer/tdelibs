@@ -42,7 +42,7 @@ TQString HelpProtocol::langLookup(const TQString& fname)
     TQStringList search;
 
     // assemble the local search paths
-    const TQStringList localDoc = KGlobal::dirs()->resourceDirs("html");
+    const TQStringList localDoc = KGlobal::dirs()->resourceDirs("html") + KGlobal::dirs()->resourceDirs("html-bundle");
 
     TQStringList langs = KGlobal::locale()->languageList();
     langs.append( "en" );

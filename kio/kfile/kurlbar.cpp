@@ -605,8 +605,19 @@ void KURLBar::readItem( int i, KConfig *config, bool applicationLocal )
     if ( !url.isValid() || !KProtocolInfo::isKnownProtocol( url ))
         return; // nothing we could do.
 
+    TQString description = config->readEntry( TQString("Description_") + number ); 
+
+    if (description.isEmpty() && url.protocol()=="beagle") {
+        KIO::UDSEntry uds;
+        const KURL kurl("beagle:?beagled-status");
+        if (!KIO::NetAccess::stat(kurl, uds))
+            return;
+
+        description = i18n("Desktop Search");
+    }
+
     insertItem( url,
-                config->readEntry( TQString("Description_") + number ),
+                description,
                 applicationLocal,
                 config->readEntry( TQString("Icon_") + number ),
                 static_cast<KIcon::Group>(

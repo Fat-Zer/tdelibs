@@ -42,6 +42,17 @@
 #include <ktoolbar.h>
 #include <ktoolbarbutton.h>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include <X11/Xdefs.h>
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/Intrinsic.h>
+#include <X11/StringDefs.h>
+#include <X11/Shell.h>
+
+#include <X11/Xft/Xft.h>
+
 /**
 * How it works.
 * KActionCollection is an organizing container for KActions.

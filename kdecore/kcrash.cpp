@@ -466,7 +466,9 @@ static int openSocket()
      sock_file[strlen(sock_file)-1] = 0;
   
   strncat(sock_file, "/socket-", MAX_SOCK_FILE - strlen(sock_file));
-  if (gethostname(sock_file+strlen(sock_file), MAX_SOCK_FILE - strlen(sock_file) - 1) != 0)
+  if( getenv("XAUTHLOCALHOSTNAME"))
+      strncat(sock_file, getenv("XAUTHLOCALHOSTNAME"), MAX_SOCK_FILE - strlen(sock_file) - 1);
+  else if (gethostname(sock_file+strlen(sock_file), MAX_SOCK_FILE - strlen(sock_file) - 1) != 0)
   {
      perror("Warning: Could not determine hostname: ");
      return -1;

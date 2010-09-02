@@ -204,7 +204,7 @@ KIMProxy::KIMProxy( DCOPClient* dc ) : DCOPObject( "KIMProxyIface" ), TQObject()
 	
 	// FIXME: make this work when the sender object id is set to KIMIFace
 	if ( !connectDCOPSignal( 0, 0, method, method, false ) )
-		KMessageBox::information( 0, TQString( "Couldn't connect DCOP signal.\nWon't receive any status notifications!" ) );
+		kdWarning() << "Couldn't connect DCOP signal. Won't receive any status notifications!" << endl;
 }
 
 KIMProxy::~KIMProxy( )

@@ -31,6 +31,7 @@
 
 #include <tqapplication.h>
 #include <tqbitmap.h>
+#include <tqmetaobject.h>
 #include <tqcleanuphandler.h>
 #include <tqmap.h>
 #include <tqimage.h>
@@ -79,7 +80,7 @@ namespace
 		TQWidget* w1;
 		TQWidget* w2;
 	};
-	typedef TQMap<const TQPopupMenu*,ShadowElements> ShadowMap;
+	typedef TQMap<const TQWidget*,ShadowElements> ShadowMap;
         static ShadowMap *_shadowMap = 0;
         TQSingleCleanupHandler<ShadowMap> cleanupShadowMap;
         ShadowMap &shadowMap() {
@@ -113,8 +114,13 @@ namespace
 
 	const double shadow_strip[4] =
 		{ 0.565, 0.675, 0.835, 0.945 };
-}
 
+	static bool useDropShadow(TQWidget* w)
+	{
+		return w && w->metaObject() && 
+			w->metaObject()->findProperty("KStyleMenuDropShadow") != -1;
+	}
+}
 
 namespace
 {
@@ -128,12 +134,12 @@ class TransparencyHandler : public QObject
 
 	protected:
 		void blendToColor(const TQColor &col);
-		void blendToPixmap(const TQColorGroup &cg, const TQPopupMenu* p);
+		void blendToPixmap(const TQColorGroup &cg, const TQWidget* p);
 #ifdef HAVE_XRENDER
-		void XRenderBlendToPixmap(const TQPopupMenu* p);
+		void XRenderBlendToPixmap(const TQWidget* p);
 #endif
-		void createShadowWindows(const TQPopupMenu* p);
-		void removeShadowWindows(const TQPopupMenu* p);
+		void createShadowWindows(const TQWidget* p);
+		void removeShadowWindows(const TQWidget* p);
 		void rightShadow(TQImage& dst);
 		void bottomShadow(TQImage& dst);
 	private:
@@ -256,8 +262,16 @@ void KStyle::polish( TQWidget* widget )
 				widget->installEventFilter(this);
 		} 
 	}
-}
+	if (widget->isTopLevel())
+	{
+		if (!d->menuHandler && useDropShadow(widget))
+			d->menuHandler = new TransparencyHandler(this, Disabled, 1.0, false);
 
+		if (d->menuHandler && useDropShadow(widget))
+			widget->installEventFilter(d->menuHandler);
+	}
+}
+
 
 void KStyle::unPolish( TQWidget* widget )
 {
@@ -267,8 +281,10 @@ void KStyle::unPolish( TQWidget* widget )
 			TQFrame::Shape shape = frame->frameShape();
 			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
 				widget->removeEventFilter(this);
-		} 
+		}
 	}
+	if (widget->isTopLevel() && d->menuHandler && useDropShadow(widget))
+		widget->removeEventFilter(d->menuHandler);
 }
 
 
@@ -2016,7 +2032,7 @@ void TransparencyHandler::bottomShadow(TQImage& dst)
 }
 
 // Create a shadow of thickness 4.
-void TransparencyHandler::createShadowWindows(const TQPopupMenu* p)
+void TransparencyHandler::createShadowWindows(const TQWidget* p)
 {
 #ifdef Q_WS_X11
 	int x2 = p->x()+p->width();
@@ -2063,7 +2079,7 @@ void TransparencyHandler::createShadowWindows(const TQPopupMenu* p)
 #endif
 }
 
-void TransparencyHandler::removeShadowWindows(const TQPopupMenu* p)
+void TransparencyHandler::removeShadowWindows(const TQWidget* p)
 {
 #ifdef Q_WS_X11
 	ShadowMap::iterator it = shadowMap().find(p);
@@ -2089,7 +2105,7 @@ bool TransparencyHandler::eventFilter( TQObject* object, TQEvent* event )
 	// Copyright (C) 2000 Daniel M. Duley <mosfet@kde.org>
 
 	// Added 'fake' menu shadows <04-Jul-2002> -- Karol
-	TQPopupMenu* p = (TQPopupMenu*)object;
+	TQWidget* p = (TQWidget*)object;
 	TQEvent::Type et = event->type();
 
 	if (et == TQEvent::Show)
@@ -2128,13 +2144,23 @@ bool TransparencyHandler::eventFilter( TQObject* object, TQEvent* event )
 		// * shadows after duplicate show events.
 		// * TODO : determine real cause for duplicate events
 		// * till 20021005
-		if (dropShadow && p->width() > 16 && p->height() > 16 && !shadowMap().contains( p ))
+		if ((dropShadow  || useDropShadow(p))
+		    && p->width() > 16 && p->height() > 16 && !shadowMap().contains( p ))
 			createShadowWindows(p);
 	}
+        else if (et == TQEvent::Resize && p->isShown() && p->isTopLevel())
+        {
+		// Handle drop shadow
+		if (dropShadow || useDropShadow(p))
+		{
+			removeShadowWindows(p);
+			createShadowWindows(p);
+		}
+        }
 	else if (et == TQEvent::Hide)
 	{
 		// Handle drop shadow
-		if (dropShadow)
+		if (dropShadow || useDropShadow(p))
 			removeShadowWindows(p);
 
 		// Handle translucency
@@ -2159,7 +2185,7 @@ void TransparencyHandler::blendToColor(const TQColor &col)
 }
 
 
-void TransparencyHandler::blendToPixmap(const TQColorGroup &cg, const TQPopupMenu* p)
+void TransparencyHandler::blendToPixmap(const TQColorGroup &cg, const TQWidget* p)
 {
 	if (opacity < 0.0 || opacity > 1.0)
 		return;
@@ -2172,7 +2198,10 @@ void TransparencyHandler::blendToPixmap(const TQColorGroup &cg, const TQPopupMen
 		return;
 
 	// Allow styles to define the blend pixmap - allows for some interesting effects.
-	kstyle->renderMenuBlendPixmap( blendPix, cg, p );
+	if (::qt_cast<TQPopupMenu*>(p))
+		kstyle->renderMenuBlendPixmap( blendPix, cg, ::qt_cast<TQPopupMenu*>(p) );
+	else
+		blendPix.fill(cg.button());	// Just tint as the default behavior
 
 	TQImage blendImg = blendPix.convertToImage();
 	TQImage backImg  = pix.convertToImage();
@@ -2185,13 +2214,17 @@ void TransparencyHandler::blendToPixmap(const TQColorGroup &cg, const TQPopupMen
 // Here we go, use XRender in all its glory.
 // NOTE: This is actually a bit slower than the above routines
 // on non-accelerated displays. -- Karol.
-void TransparencyHandler::XRenderBlendToPixmap(const TQPopupMenu* p)
+void TransparencyHandler::XRenderBlendToPixmap(const TQWidget* p)
 {
 	KPixmap renderPix;
 	renderPix.resize( pix.width(), pix.height() );
 
 	// Allow styles to define the blend pixmap - allows for some interesting effects.
-	kstyle->renderMenuBlendPixmap( renderPix, p->colorGroup(), p );
+	if (::qt_cast<TQPopupMenu*>(p))
+	   kstyle->renderMenuBlendPixmap( renderPix, p->colorGroup(),
+			   ::qt_cast<TQPopupMenu*>(p) );
+	else
+		renderPix.fill(p->colorGroup().button());	// Just tint as the default behavior
 
 	Display* dpy = qt_xdisplay();
 	Pixmap   alphaPixmap;
@@ -2228,6 +2261,14 @@ void TransparencyHandler::XRenderBlendToPixmap(const TQPopupMenu* p)
 
 void KStyle::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
+
+// HACK for gtk-qt-engine
+
+KDE_EXPORT extern "C"
+void kde_kstyle_set_scrollbar_type_windows( void* style )
+{
+    ((KStyle*)style)->setScrollBarType( KStyle::WindowsStyleScrollBar );
+}
 
 // vim: set noet ts=4 sw=4:
 // kate: indent-width 4; replace-tabs off; tab-width 4; space-indent off;

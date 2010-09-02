@@ -24,8 +24,15 @@
 
 #include <tqlineedit.h>
 #include <tqcombobox.h>
+#include <tqvbox.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqtoolbutton.h>
+#include <tqheader.h>
 
 #include <kcompletion.h>
+#include <kdialogbase.h>
+#include <klistview.h>
 
 class TQListBoxItem;
 class TQPopupMenu;
@@ -669,6 +676,12 @@ public:
      */
     void reset() { slotReset(); }
 
+    /**
+     * When enabling it you have to connect to "removed" signal and save changes
+    */
+    void setHistoryEditorEnabled( bool enable );
+    bool isHistoryEditorEnabled() const;
+
 public slots:
     /**
      * Adds an item to the end of the history list and to the completion list.
@@ -701,6 +714,8 @@ signals:
      * Emitted when the history was cleared by the entry in the popup menu.
      */
     void cleared();
+
+    void removed( const TQString& item );
 
 protected:
     /**
@@ -741,9 +756,16 @@ private slots:
     void slotClear();
 
     /**
+     * Called from the popupmenu,
+     */
+    void slotEdit();
+
+    /**
      * Appends our own context menu entry.
      */
     void addContextMenuItems( TQPopupMenu* );
+
+    void slotRemoveFromHistory( const TQString & );
 
 private:
     void init( bool useCompletion );
@@ -774,6 +796,30 @@ private:
     KHistoryComboPrivate* const d;
 };
 
+class KDEUI_EXPORT KHistoryComboEditor : public KDialogBase
+{
+    Q_OBJECT
+
+public:
+    KHistoryComboEditor( const TQStringList& entries, TQWidget *parent = 0L );
+    ~KHistoryComboEditor();
+
+signals:
+    void removeFromHistory( const TQString& );
+
+protected slots:
+    virtual void slotUser1(); // User1 is "Delete Entry" button
+    void slotSelectionChanged( TQListViewItem * item );
+
+protected:
+    virtual void virtual_hook( int id, void* data );
+
+private:
+    KListView *m_pListView;
+
+    class KHistoryComboEditorPrivate;
+    KHistoryComboEditorPrivate* const d;
+};
 
 #endif
 

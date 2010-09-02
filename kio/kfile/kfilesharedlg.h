@@ -55,10 +55,13 @@ protected slots:
 private:
     void init();
     bool setShared( const TQString&path, bool shared );
+    bool SuSEsetShared( const TQString&path, bool shared, bool readonly );
 
     TQWidget *m_widget;
     TQRadioButton *m_rbShare;
+    TQRadioButton *m_rbSharerw;
     TQRadioButton *m_rbUnShare;
+    //TQLineEdit    *m_leSmbShareName;
     TQPushButton *m_pbConfig;
     class Private;
     Private *d;

@@ -355,6 +355,44 @@ int KWalletD::doTransactionOpen(const TQCString& appid, const TQString& wallet, 
 	return rc;
 }
 
+int KWalletD::tryOpen(const TQString& wallet, const TQCString& password)
+{
+    if (isOpen(wallet))
+        return 0;
+
+    if (_tryOpenBlocked.isActive()) {
+        kdDebug() << "tryOpen is active.." << endl;
+        return -1;
+    }
+
+    if (!KWallet::Backend::exists(wallet))
+        return -2;
+
+    KWallet::Backend *b = new KWallet::Backend(wallet, false /*isPath*/);
+    int rc = b->open(TQByteArray().duplicate(password, strlen(password)));
+    if (rc == 0) {
+        _wallets.insert(rc = generateHandle(), b);
+        _passwords[wallet] = password;
+        b->ref();
+        _tryOpenBlocked.stop();
+        TQByteArray data;
+        TQDataStream ds(data, IO_WriteOnly);
+        ds << wallet;
+        emitDCOPSignal("walletOpened(TQString)", data);
+    }
+    else {
+        delete b;
+        // make sure that we're not bombed with a dictionary attack
+        _tryOpenBlocked.start (30 * 1000, true /*single shot*/);
+        if (++_failed > 5) {
+            _failed = 0;
+            TQTimer::singleShot(0, this, TQT_SLOT(notifyFailures()));
+        }
+
+        rc = -1;
+    }
+    return rc;
+}
 
 int KWalletD::internalOpen(const TQCString& appid, const TQString& wallet, bool isPath, WId w, bool modal) {
 	int rc = -1;

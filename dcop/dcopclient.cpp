@@ -277,7 +277,9 @@ static TQCString dcopServerFile(const TQCString &hostname, bool old)
     {
         char hostName[256];
         hostName[0] = '\0';
-        if (gethostname(hostName, sizeof(hostName)))
+        if (getenv("XAUTHLOCALHOSTNAME"))
+            fName += getenv("XAUTHLOCALHOSTNAME");
+        else if (gethostname(hostName, sizeof(hostName)))
         {
             fName += "localhost";
         }

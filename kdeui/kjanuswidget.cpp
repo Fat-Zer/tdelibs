@@ -49,16 +49,19 @@ class KJanusWidget::IconListItem : public QListBoxItem
 {
   public:
     IconListItem( TQListBox *listbox, const TQPixmap &pixmap,
-		   const TQString &text );
+                  const TQString &text );
     virtual int height( const TQListBox *lb ) const;
     virtual int width( const TQListBox *lb ) const;
     int expandMinimumWidth( int width );
+    void highlight( bool erase );        
 
   protected:
     const TQPixmap &defaultPixmap();
     void paint( TQPainter *painter );
-
+    
   private:
+    void paintContents( TQPainter *painter );  
+  
     TQPixmap mPixmap;
     int mMinimumWidth;
 };
@@ -141,6 +144,8 @@ KJanusWidget::KJanusWidget( TQWidget *parent, const char *name, int face )
 
       mIconList->verticalScrollBar()->installEventFilter( this );
       connect( mIconList, TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotShowPage()));
+      connect( mIconList, TQT_SIGNAL(onItem(TQListBoxItem *)), TQT_SLOT(slotOnItem(TQListBoxItem *)));
+
       hbox->addSpacing( KDialog::marginHint() );
       page = new TQFrame( this );
       hbox->addWidget( page, 10 );
@@ -259,7 +264,7 @@ void KJanusWidget::slotReopen( TQListViewItem * item )
 }
 
 TQFrame *KJanusWidget::addPage( const TQString &itemName, const TQString &header,
-			       const TQPixmap &pixmap )
+          const TQPixmap &pixmap )
 {
   TQStringList items;
   items << itemName;
@@ -269,8 +274,8 @@ TQFrame *KJanusWidget::addPage( const TQString &itemName, const TQString &header
 
 
 TQVBox *KJanusWidget::addVBoxPage( const TQStringList &items,
-				  const TQString &header,
-				  const TQPixmap &pixmap )
+          const TQString &header,
+          const TQPixmap &pixmap )
 {
   if( !mValid )
   {
@@ -721,6 +726,12 @@ void KJanusWidget::slotItemClicked(TQListViewItem *it)
     it->setOpen(!it->isOpen());
 }
 
+// hack because qt does not support Q_OBJECT in nested classes
+void KJanusWidget::slotOnItem(TQListBoxItem *qitem)
+{
+  mIconList->slotOnItem( qitem );
+}  
+
 void KJanusWidget::setFocus()
 {
   if( !mValid ) { return; }
@@ -929,10 +940,10 @@ bool KJanusWidget::eventFilter( TQObject *o, TQEvent *e )
 KJanusWidget::IconListBox::IconListBox( TQWidget *parent, const char *name,
 					WFlags f )
   :KListBox( parent, name, f ), mShowAll(false), mHeightValid(false),
-   mWidthValid(false)
+   mWidthValid(false),
+   mOldItem(0) 
 {
 }
-
 
 void KJanusWidget::IconListBox::updateMinimumHeight()
 {
@@ -995,6 +1006,45 @@ void KJanusWidget::IconListBox::setShowAll( bool showAll )
 }
 
 
+void KJanusWidget::IconListBox::leaveEvent( TQEvent *ev )
+{
+  KListBox::leaveEvent( ev ); 
+
+  if ( mOldItem && !mOldItem->isSelected() )
+  {
+    ((KJanusWidget::IconListItem *) mOldItem)->highlight( true );
+    mOldItem = 0;
+  }
+} 
+
+// hack because qt does not support Q_OBJECT in nested classes
+void KJanusWidget::IconListBox::slotOnItem(TQListBoxItem *qitem)
+{
+  KListBox::slotOnItem( qitem );
+
+  if ( qitem == mOldItem )
+  {
+    return;
+  }
+ 
+  if ( mOldItem && !mOldItem->isSelected() )
+  {
+    ((KJanusWidget::IconListItem *) mOldItem)->highlight( true );
+  }
+
+  KJanusWidget::IconListItem *item = dynamic_cast< KJanusWidget::IconListItem * >( qitem );
+  if ( item && !item->isSelected() )
+  {      
+    item->highlight( false );
+    mOldItem = item;
+  }
+  else
+  {
+    mOldItem = 0;
+  }
+}  
+
+
 
 KJanusWidget::IconListItem::IconListItem( TQListBox *listbox, const TQPixmap &pixmap,
                                           const TQString &text )
@@ -1006,6 +1056,7 @@ KJanusWidget::IconListItem::IconListItem( TQListBox *listbox, const TQPixmap &pi
     mPixmap = defaultPixmap();
   }
   setText( text );
+  setCustomHighlighting( true );
   mMinimumWidth = 0;
 }
 
@@ -1014,6 +1065,36 @@ int KJanusWidget::IconListItem::expandMinimumWidth( int width )
 {
   mMinimumWidth = QMAX( mMinimumWidth, width );
   return mMinimumWidth;
+}
+
+
+void KJanusWidget::IconListItem::highlight( bool erase )
+{   
+   TQRect r = listBox()->itemRect( this );
+   r.addCoords( 1, 1, -1, -1 );  
+   
+   TQPainter p( listBox()->viewport() );
+   p.setClipRegion( r );
+   
+   const TQColorGroup &cg = listBox()->colorGroup();
+   if ( erase )
+   {
+      p.setPen( cg.base() );
+      p.setBrush( cg.base() );
+      p.drawRect( r );
+   }
+   else
+   {
+      p.setBrush( cg.highlight().light( 120 ) );
+      p.drawRect( r );
+
+      p.setPen( cg.highlight().dark( 140 ) );
+      p.drawRect( r ); 
+   }
+      
+   p.setPen( cg.foreground() );
+   p.translate( r.x() - 1, r.y() - 1 );
+   paintContents( &p );
 }
 
 
@@ -1044,15 +1125,34 @@ const TQPixmap &KJanusWidget::IconListItem::defaultPixmap()
 
 void KJanusWidget::IconListItem::paint( TQPainter *painter )
 {
+  TQRect itemPaintRegion( listBox()->itemRect( this ) );
+  TQRect r( 1, 1, itemPaintRegion.width() - 2, itemPaintRegion.height() - 2);
+
+  if ( isSelected() )
+  {
+    painter->eraseRect( r );
+
+    painter->save();
+    painter->setPen( listBox()->colorGroup().highlight().dark( 160 ) );
+    painter->drawRect( r );
+    painter->restore();
+  }
+
+  paintContents( painter );
+}
+
+
+void KJanusWidget::IconListItem::paintContents( TQPainter *painter )
+{
   TQFontMetrics fm = painter->fontMetrics();
   int ht = fm.boundingRect( 0, 0, 0, 0, Qt::AlignCenter, text() ).height();
   int wp = mPixmap.width();
   int hp = mPixmap.height();
+  painter->drawPixmap( (mMinimumWidth - wp) / 2, 5, mPixmap );
 
-  painter->drawPixmap( (mMinimumWidth-wp)/2, 5, mPixmap );
   if( !text().isEmpty() )
   {
-    painter->drawText( 0, hp+7, mMinimumWidth, ht, Qt::AlignCenter, text() );
+    painter->drawText( 1, hp + 7, mMinimumWidth - 2, ht, Qt::AlignCenter, text() );
   }
 }
 
@@ -1081,6 +1181,7 @@ int KJanusWidget::IconListItem::width( const TQListBox *lb ) const
 
 void KJanusWidget::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
+
 
 // TODO: In TreeList, if the last child of a node is removed, and there is no corrsponding widget for that node, allow the caller to
 // delete the node.
@@ -1129,6 +1230,7 @@ void KJanusWidget::removePage( TQWidget *page )
   }
 }
 
+
 TQString KJanusWidget::pageTitle(int index) const
 {
   if (!d || !d->mIntToTitle.contains(index))
@@ -1136,6 +1238,7 @@ TQString KJanusWidget::pageTitle(int index) const
   else
     return d->mIntToTitle[index];
 }
+
 
 TQWidget *KJanusWidget::pageWidget(int index) const
 {

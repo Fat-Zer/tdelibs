@@ -1,6 +1,6 @@
 [Desktop Entry]
 Exec=kcmshell kresources
-Icon=date
+Icon=about_kde
 Type=Application
 Terminal=false
 

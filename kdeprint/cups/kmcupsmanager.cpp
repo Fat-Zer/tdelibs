@@ -85,7 +85,7 @@ static int trials = 5;
 	// change LANG variable so that CUPS is always using
 	// english language: translation may only come from the PPD
 	// itself, or from KDE.
-	setenv("LANG", "en", 1);
+	setenv("LANG", "en_US.UTF-8", 1);
 }
 
 KMCupsManager::~KMCupsManager()

@@ -41,6 +41,7 @@
 #include <tqtooltip.h>
 #include <tqstylefactory.h>
 #include <tqmetaobject.h>
+#include <tqimage.h>
 #ifndef QT_NO_SQL
 #include <tqsqlpropertymap.h>
 #endif
@@ -87,6 +88,8 @@
 #include <sys/stat.h>
 #endif
 #include <sys/wait.h>
+#include <grp.h>
+#include <sys/types.h>
 
 #ifndef Q_WS_WIN
 #include "kwin.h"
@@ -776,10 +779,15 @@ void KApplication::init(bool GUIenabled)
 {
   d->guiEnabled = GUIenabled;
   if ((getuid() != geteuid()) ||
-      (getgid() != getegid()))
+      (getgid() != getegid()) )
   {
-     fprintf(stderr, "The KDE libraries are not designed to run with suid privileges.\n");
-     ::exit(127);
+     // man permissions are not exploitable and better than 
+     // world writable directories
+     struct group *man = getgrnam("man");
+     if ( !man || man->gr_gid != getegid() ){
+       fprintf(stderr, "The KDE libraries are not designed to run with suid privileges.\n");
+       ::exit(127);
+     }
   }
 
   KProcessController::ref();
@@ -2136,6 +2144,12 @@ void KApplication::propagateSettings(SettingsCategory arg)
 {
     KConfigBase* config = KGlobal::config();
     KConfigGroupSaver saver( config, "KDE" );
+
+#ifdef QT_HAVE_MAX_IMAGE_SIZE
+    TQSize maxImageSize(4096, 4096);
+    maxImageSize = config->readSizeEntry("MaxImageSize", &maxImageSize);
+    TQImage::setMaxImageSize(maxImageSize);
+#endif
 
     int num = config->readNumEntry("CursorBlinkRate", TQApplication::cursorFlashTime());
     if ((num != 0) && (num < 200))

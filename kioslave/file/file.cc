@@ -69,6 +69,7 @@
 #include <tqvaluelist.h>
 #include <tqregexp.h>
 
+#include <dcopref.h>
 #include <kshred.h>
 #include <kdebug.h>
 #include <kurl.h>
@@ -1617,6 +1618,31 @@ void FileProtocol::unmount( const TQString& _point )
 #endif /* HAVE_VOLMGT */
 
     err = testLogFile( tmp );
+
+    if (err.contains("fstab") || err.contains("root")) {
+       TQString olderr;
+       err = TQString::null;
+
+       DCOPRef d("kded", "mediamanager");
+       d.setDCOPClient ( dcopClient() );
+       DCOPReply reply = d.call("properties", _point);
+       TQString udi;
+
+       if ( reply.isValid() ) {
+           TQStringList list = reply;
+           if (list.size())
+               udi = list[0];
+       }
+
+       if (!udi.isEmpty())
+           reply = d.call("unmount", udi);
+       
+       if (udi.isEmpty() || !reply.isValid())
+         err = olderr;
+       else if (reply.isValid())
+         reply.get(err);
+    }
+
     if ( err.isEmpty() )
 	finished();
     else

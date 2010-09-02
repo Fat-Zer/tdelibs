@@ -36,11 +36,15 @@ kbuildsycoca_la_SOURCES = kbuildsycoca.cpp kbuildservicetypefactory.cpp \
 				kctimefactory.cpp \
 				vfolder_menu.cpp
 
-bin_PROGRAMS = kdontchangethehostname kde-menu
+bin_PROGRAMS = kdontchangethehostname kde-menu kmimelist
 
 kdontchangethehostname_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kdontchangethehostname_LDADD = $(LIB_KDECORE) 
 kdontchangethehostname_SOURCES = khostname.cpp
+
+kmimelist_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kmimelist_LDADD = ../kio/libkio.la
+kmimelist_SOURCES = kmimelist.cpp
 
 kde_menu_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kde_menu_LDADD = $(LIB_KIO)

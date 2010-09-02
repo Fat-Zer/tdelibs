@@ -677,9 +677,8 @@ TQString KFolderType::comment( const KURL& _url, bool _is_local ) const
   KURL u( _url );
   u.addPath( ".directory" );
 
-  KSimpleConfig cfg( u.path(), true );
-  cfg.setDesktopGroup();
-  TQString comment = cfg.readEntry( "Comment" );
+  KDesktopFile cfg( u.path(), true );
+  TQString comment = cfg.readComment();
   if ( comment.isEmpty() )
     return KMimeType::comment( _url, _is_local );
 
@@ -772,9 +771,8 @@ TQString KDEDesktopMimeType::comment( const KURL& _url, bool _is_local ) const
   if ( !_is_local )
     return KMimeType::comment( _url, _is_local );
 
-  KSimpleConfig cfg( _url.path(), true );
-  cfg.setDesktopGroup();
-  TQString comment = cfg.readEntry( "Comment" );
+  KDesktopFile cfg( _url.path(), true );
+  TQString comment = cfg.readComment();
   if ( comment.isEmpty() )
     return KMimeType::comment( _url, _is_local );
 

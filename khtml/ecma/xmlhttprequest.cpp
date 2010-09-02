@@ -342,16 +342,16 @@ void XMLHttpRequest::send(const TQString& _body)
 {
   aborted = false;
 
-  if (method == "post") {
-    TQString protocol = url.protocol().lower();
+  const TQString protocol = url.protocol().lower();
+  // Abandon the request when the protocol is other than "http",
+  // instead of blindly doing a KIO::get on other protocols like file:/.
+  if (!protocol.startsWith("http") && !protocol.startsWith("webdav"))
+  {
+    abort();
+    return;
+  }
 
-    // Abondon the request when the protocol is other than "http",
-    // instead of blindly changing it to a "get" request.
-    if (!protocol.startsWith("http") && !protocol.startsWith("webdav"))
-    {
-      abort();
-      return;
-    }
+  if (method == "post") {
 
     // FIXME: determine post encoding correctly by looking in headers
     // for charset.
@@ -763,11 +763,11 @@ Value XMLHttpRequestProtoFunc::tryCall(ExecState *exec, Object &thisObj, const L
         if (obj.isValid() && obj.inherits(&DOMDocument::info)) {
           DOM::Node docNode = static_cast<KJS::DOMDocument *>(obj.imp())->toNode();
           DOM::DocumentImpl *doc = static_cast<DOM::DocumentImpl *>(docNode.handle());
-          
+
           try {
             body = doc->toString().string();
             // FIXME: also need to set content type, including encoding!
-  
+
           } catch(DOM::DOMException& e) {
             Object err = Error::create(exec, GeneralError, "Exception serializing document");
             exec->setException(err);

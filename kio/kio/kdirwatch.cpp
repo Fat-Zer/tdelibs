@@ -725,7 +725,8 @@ bool KDirWatchPrivate::useINotify( Entry* e )
 
 bool KDirWatchPrivate::useStat(Entry* e)
 {
-  if (KIO::probably_slow_mounted(e->path))
+  if ( e->path.startsWith("/media/") || (e->path == "/media")
+       || (KIO::probably_slow_mounted(e->path)) )
     useFreq(e, m_nfsPollInterval);
   else
     useFreq(e, m_PollInterval);

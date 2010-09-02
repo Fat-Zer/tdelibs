@@ -115,7 +115,7 @@ KService::init( KDesktopFile *config )
     return;
   }
 
-  m_strName = config->readEntry( "Name" );
+  m_strName = config->readName();
   entryMap.remove("Name");
   if ( m_strName.isEmpty() )
   {
@@ -135,7 +135,7 @@ KService::init( KDesktopFile *config )
        m_strName = m_strName.left(i);
   }
 
-  m_strType = config->readEntry( "Type" );
+  m_strType = config->readType();
   entryMap.remove("Type");
   if ( m_strType.isEmpty() )
   {
@@ -224,11 +224,11 @@ KService::init( KDesktopFile *config )
   entryMap.remove("Terminal");
   m_strTerminalOptions = config->readEntry( "TerminalOptions" ); // should be a property IMHO
   entryMap.remove("TerminalOptions");
-  m_strPath = config->readPathEntry( "Path" );
+  m_strPath = config->readPath();
   entryMap.remove("Path");
-  m_strComment = config->readEntry( "Comment" );
+  m_strComment = config->readComment();
   entryMap.remove("Comment");
-  m_strGenName = config->readEntry( "GenericName" );
+  m_strGenName = config->readGenericName();
   if (kde4application) {
     m_strGenName += " [KDE4]";
   }
@@ -275,7 +275,10 @@ KService::init( KDesktopFile *config )
   m_bAllowAsDefault = config->readBoolEntry( "AllowDefault", true );
   entryMap.remove("AllowDefault");
 
-  m_initialPreference = config->readNumEntry( "InitialPreference", 1 );
+  m_initialPreference = config->readNumEntry( "X-KDE-InitialPreference", 1 );
+  entryMap.remove("X-KDE-InitialPreference");
+  if ( m_initialPreference == 1 )
+     m_initialPreference = config->readNumEntry( "InitialPreference", 1 );
   entryMap.remove("InitialPreference");
 
   // Store all additional entries in the property map.
