@@ -757,6 +757,20 @@ TQString KService::untranslatedGenericName() const {
   return v.isValid() ? v.toString() : TQString::null;
 }
 
+bool KService::SuSEunimportant() const {
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( "X-SuSE-Unimportant" );
+  if ( (it == m_mapProps.end()) || (!it.data().isValid()))
+  {
+     return false;
+  }
+
+  TQString aValue = it.data().toString();
+  if (aValue == "true" || aValue == "on" || aValue == "yes")
+     return true;
+  else
+     return false;
+}
+
 TQString KService::parentApp() const {
   TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( "X-KDE-ParentApp" );
   if ( (it == m_mapProps.end()) || (!it.data().isValid()))

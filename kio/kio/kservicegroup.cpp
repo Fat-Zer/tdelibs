@@ -31,8 +31,10 @@
 class KServiceGroup::Private
 {
 public:
-    Private() { m_bNoDisplay = false; m_bShowEmptyMenu = false;m_bShowInlineHeader=false;m_bInlineAlias=false; m_bAllowInline = false;m_inlineValue = 4;}
+    Private() { m_bNoDisplay = false; m_bShowEmptyMenu = false;m_bShowInlineHeader=false;m_bInlineAlias=false; m_bAllowInline = false; m_inlineValue = 4; m_bShortMenu = false; m_bGeneralDescription = false;}
   bool m_bNoDisplay;
+    bool m_bShortMenu;
+    bool m_bGeneralDescription;
     bool m_bShowEmptyMenu;
     bool m_bShowInlineHeader;
     bool m_bInlineAlias;
@@ -71,6 +73,11 @@ KServiceGroup::KServiceGroup( const TQString &configFile, const TQString & _relp
   m_strComment = config.readComment();
   m_bDeleted = config.readBoolEntry( "Hidden", false );
   d->m_bNoDisplay = config.readBoolEntry( "NoDisplay", false );
+  if (d->directoryEntryPath.startsWith(TQDir::homeDirPath()))
+    d->m_bShortMenu = false;
+  else
+    d->m_bShortMenu = config.readBoolEntry( "X-SuSE-AutoShortMenu", false );
+  d->m_bGeneralDescription = config.readBoolEntry( "X-SuSE-GeneralDescription", false );
   TQStringList tmpList;
   if (config.hasKey("OnlyShowIn"))
   {
@@ -118,6 +125,10 @@ int KServiceGroup::childCount()
 {
   if (m_childCount == -1)
   {
+     KConfig global("kdeglobals");
+     global.setGroup("KDE");
+     bool showUnimportant = global.readBoolEntry("showUnimportant", true);
+
      m_childCount = 0;
 
      for( List::ConstIterator it = m_serviceList.begin();
@@ -128,7 +139,8 @@ int KServiceGroup::childCount()
         {
            KService *service = static_cast<KService *>(p);
            if (!service->noDisplay())
-              m_childCount++;
+             if ( showUnimportant || !service->SuSEunimportant() )
+               m_childCount++;
         }
         else if (p->isType(KST_KServiceGroup))
         {
@@ -201,6 +213,16 @@ TQStringList KServiceGroup::suppressGenericNames() const
   return d->suppressGenericNames;
 }
 
+bool KServiceGroup::SuSEgeneralDescription() const
+{
+    return d->m_bGeneralDescription;
+}
+
+bool KServiceGroup::SuSEshortMenu() const
+{
+    return d->m_bShortMenu;
+}
+
 void KServiceGroup::load( TQDataStream& s )
 {
   TQStringList groupList;
@@ -212,7 +234,8 @@ void KServiceGroup::load( TQDataStream& s )
   s >> m_strCaption >> m_strIcon >>
       m_strComment >> groupList >> m_strBaseGroupName >> m_childCount >>
       noDisplay >> d->suppressGenericNames >> d->directoryEntryPath >>
-      d->sortOrder >> _showEmptyMenu >> inlineHeader >> _inlineAlias >> _allowInline;
+      d->sortOrder >> _showEmptyMenu >> inlineHeader >> _inlineAlias >>
+      _allowInline >> d->m_bShortMenu >> d->m_bGeneralDescription;
 
   d->m_bNoDisplay = (noDisplay != 0);
   d->m_bShowEmptyMenu = ( _showEmptyMenu != 0 );
@@ -284,7 +307,8 @@ void KServiceGroup::save( TQDataStream& s )
   s << m_strCaption << m_strIcon <<
       m_strComment << groupList << m_strBaseGroupName << m_childCount <<
       noDisplay << d->suppressGenericNames << d->directoryEntryPath <<
-      d->sortOrder <<_showEmptyMenu <<inlineHeader<<_inlineAlias<<_allowInline;
+      d->sortOrder <<_showEmptyMenu <<inlineHeader<<_inlineAlias<<_allowInline << 
+      d->m_bShortMenu << d->m_bGeneralDescription;
 }
 
 KServiceGroup::List
@@ -309,6 +333,12 @@ static void addItem(KServiceGroup::List &sorted, const KSycocaEntry::Ptr &p, boo
 
 KServiceGroup::List
 KServiceGroup::entries(bool sort, bool excludeNoDisplay, bool allowSeparators, bool sortByGenericName)
+{
+   return SuSEentries(sort, excludeNoDisplay, allowSeparators, sortByGenericName);
+}
+
+KServiceGroup::List
+KServiceGroup::SuSEentries(bool sort, bool excludeNoDisplay, bool allowSeparators, bool sortByGenericName, bool excludeSuSEunimportant)
 {
     KServiceGroup *group = this;
 
@@ -336,11 +366,18 @@ KServiceGroup::entries(bool sort, bool excludeNoDisplay, bool allowSeparators, b
     for (List::ConstIterator it(group->m_serviceList.begin()); it != group->m_serviceList.end(); ++it)
     {
         KSycocaEntry *p = (*it);
+//        if( !p->isType(KST_KServiceGroup) && !p->isType(KST_KService))
+//            continue;
 	bool noDisplay = p->isType(KST_KServiceGroup) ?
                                    static_cast<KServiceGroup *>(p)->noDisplay() :
                                    static_cast<KService *>(p)->noDisplay();
         if (excludeNoDisplay && noDisplay)
            continue;
+	bool SuSEunimportant = p->isType(KST_KService) &&
+                                   static_cast<KService *>(p)->SuSEunimportant();
+        if (excludeSuSEunimportant && SuSEunimportant)
+           continue;
+
         // Choose the right list
         KSortableValueList<SPtr,TQCString> & list = p->isType(KST_KServiceGroup) ? glist : slist;
         TQString name;
@@ -372,6 +409,15 @@ KServiceGroup::entries(bool sort, bool excludeNoDisplay, bool allowSeparators, b
         }
         list.insert(key,SPtr(*it));
     }
+
+    return group->SuSEsortEntries( slist, glist, excludeNoDisplay, allowSeparators );
+}
+
+KServiceGroup::List
+KServiceGroup::SuSEsortEntries( KSortableValueList<SPtr,TQCString> slist, KSortableValueList<SPtr,TQCString> glist, bool excludeNoDisplay, bool allowSeparators )
+{
+    KServiceGroup *group = this;
+
     // Now sort
     slist.sort();
     glist.sort();
@@ -413,6 +459,8 @@ KServiceGroup::entries(bool sort, bool excludeNoDisplay, bool allowSeparators, b
            // TODO: This prevents duplicates
           for(KSortableValueList<SPtr,TQCString>::Iterator it2 = slist.begin(); it2 != slist.end(); ++it2)
           {
+            if (!(*it2).value()->isType(KST_KService))
+                continue;
              KService *service = (KService *)((KSycocaEntry *)((*it2).value()));
              if (service->menuId() == item)
              {

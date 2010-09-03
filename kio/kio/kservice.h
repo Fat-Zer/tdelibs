@@ -327,6 +327,10 @@ public:
    * @return true to suppress this service
    */
   bool noDisplay() const;
+  /**
+   * check if the application entry is important
+   */
+  bool SuSEunimportant() const;
 
   /**
    * Name of the application this service belongs to.

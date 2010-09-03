@@ -26,6 +26,7 @@
 #include <tqvariant.h>
 
 #include <kdesktopfile.h>
+#include <ksortablevaluelist.h>
 
 #include "ksycocaentry.h"
 #include "ksycocatype.h"
@@ -201,6 +202,12 @@ public:
   void setLayoutInfo(const TQStringList &layout);
 
   /**
+   * Original API and feature kindly provided by SuSE
+   */
+  bool SuSEshortMenu() const;
+  bool SuSEgeneralDescription() const;
+
+  /**
    * @internal
    * Returns information related to the layout of services in this group.
    */
@@ -237,6 +244,12 @@ public:
    * @return the list of entried
    */
   virtual List entries(bool sorted = false);
+
+  /*
+   * Original API and feature kindly provided by SuSE
+   */
+  virtual List SuSEentries(bool sort, bool excludeNoDisplay, bool allowSeparators, bool sortByGenericName, bool excludeSuSEunimportant = false);
+  virtual List SuSEsortEntries( KSortableValueList<SPtr,TQCString> slist, KSortableValueList<SPtr,TQCString> glist, bool excludeNoDisplay, bool allowSeparators );
 
   /**
    * Returns a non-empty string if the group is a special base group.
