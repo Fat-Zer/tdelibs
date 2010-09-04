@@ -19,35 +19,24 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "networkstatuscommon.h"
-#include <kdebug.h>
+#ifndef NETWORKSTATUS_PROVIDERIFACE_H
+#define NETWORKSTATUS_PROVIDERIFACE_H
 
-TQDataStream & operator<< ( TQDataStream & s, const NetworkStatus::Properties p )
+#include <dcopobject.h>
+class ProviderIface : virtual public DCOPObject
 {
-	kdDebug() << k_funcinfo << "status is: " << (int)p.status << endl;
-	s << (int)p.status;
-	s << (int)p.onDemandPolicy;
-	s << p.service;
-	s << ( p.internet ? 1 : 0 );
-	s << p.netmasks;
-	return s;
-}
+K_DCOP
+k_dcop:
+	/** @return NetworkStatus::EnumOnlineStatus */
+	virtual int status( const TQString & network ) = 0;
+	/** @return NetworkStatus::EnumRequestResult */
+	virtual int establish( const TQString & network ) = 0;
+	/** @return NetworkStatus::EnumRequestResult */
+	virtual int shutdown( const TQString & network ) = 0;
+	/** fake a failure - go directly to failed */
+	virtual void simulateFailure() = 0;
+	/** fake a network disconnect - go directly to offlinedisconnected */
+	virtual void simulateDisconnect() = 0;
+};
 
-TQDataStream & operator>> ( TQDataStream & s, NetworkStatus::Properties &p )
-{
-	int status, onDemandPolicy, internet;
-	s >> status;
-	kdDebug() << k_funcinfo << "status is: " << status << endl;
-	p.status = ( NetworkStatus::EnumStatus )status;
-	s >> onDemandPolicy;
-	p.onDemandPolicy = ( NetworkStatus::EnumOnDemandPolicy )onDemandPolicy;
-	s >> p.service;
-	s >> internet;
-	if ( internet )
-		p.internet = true;
-	else
-		p.internet = false;
-	s >> p.netmasks;
-	kdDebug() << k_funcinfo << "enum converted status is: " << p.status << endl;
-	return s;
-}
+#endif

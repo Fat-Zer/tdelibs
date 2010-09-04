@@ -1,9 +1,12 @@
-/*  This file is part of kdepim
-    Copyright (C) 2005,2007 Will Stephenson <wstephenson@kde.org>
+/*
+    This file is part of kdepim.
+
+    Copyright (c) 2005 Will Stephenson <lists@stevello.free-online.co.uk>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
-    License version 2 as published by the Free Software Foundation.
+    License as published by the Free Software Foundation; either
+    version 2 of the License, or (at your option) any later version.
 
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -11,13 +14,9 @@
     Library General Public License for more details.
 
     You should have received a copy of the GNU Library General Public License
-    along with this library.  If not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    along with this library; see the file COPYING.LIB.  If not, write to
+    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
-
-    As a special exception, permission is given to link this library
-    with any edition of TQt, and distribute the resulting executable,
-    without including the source code for TQt in the source distribution.
 */
 
 #ifndef NETWORKSTATUS_COMMON_H
@@ -27,23 +26,26 @@
 
 namespace NetworkStatus
 {
-    enum Status { NoNetworks = 1, Unreachable, OfflineDisconnected,  OfflineFailed, ShuttingDown, Offline, Establishing, Online };
-    enum RequestResult { RequestAccepted = 1, Connected, UserRefused, Unavailable };
-    enum UnusedDemandPolicy { All, User, None, Permanent };
-
-    // BINARY COMPATIBILITY ALERT BEGIN !!!!
-    struct Properties
-    {
-        TQString name;
-        Status status;
-        UnusedDemandPolicy unused1;
-        TQCString           service;
-        bool               unused3;
-        TQStringList        unused4;
-    };
-    // BINARY COMPATIBILITY ALERT END !!!!
-
-    TQString toString( Status st );
+	enum EnumStatus { NoNetworks = 1, Unreachable, OfflineDisconnected,  OfflineFailed, ShuttingDown, Offline, Establishing, Online };
+	enum EnumRequestResult { RequestAccepted = 1, Connected, UserRefused, Unavailable };
+	enum EnumOnDemandPolicy { All, User, None, Permanent };
+	struct Properties
+	{
+		TQString name;
+		// status of the network
+		EnumStatus status;
+		// policy for on-demand usage as defined by the service
+		EnumOnDemandPolicy onDemandPolicy;
+		// identifier for the service
+		TQCString service;
+		// indicate that the connection is to 'the internet' - similar to default gateway in routing
+		bool internet;
+		// list of netmasks that the network connects to - overridden by above internet
+		TQStringList netmasks;
+		// for future expansion consider
+		// EnumChargingModel - FlatRate, TimeCharge, VolumeCharged
+		// EnumLinkStatus - for WLANs - VPOOR, POOR, AVERAGE, GOOD, EXCELLENT
+	};
 }
 
 TQDataStream & operator>> ( TQDataStream & s, NetworkStatus::Properties &p );

@@ -7,7 +7,7 @@
     <projectmanagement>KDevKDEAutoProject</projectmanagement>
     <primarylanguage>C++</primarylanguage>
     <keywords>
-      <keyword>TQt</keyword>
+      <keyword>Qt</keyword>
       <keyword>KDE</keyword>
     </keywords>
   </general>

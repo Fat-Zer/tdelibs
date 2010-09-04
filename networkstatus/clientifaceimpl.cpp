@@ -19,35 +19,33 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "networkstatuscommon.h"
-#include <kdebug.h>
+#include "clientifaceimpl.h"
 
-TQDataStream & operator<< ( TQDataStream & s, const NetworkStatus::Properties p )
+ClientIfaceImpl::ClientIfaceImpl( NetworkStatusModule * module ) : m_module ( module )
 {
-	kdDebug() << k_funcinfo << "status is: " << (int)p.status << endl;
-	s << (int)p.status;
-	s << (int)p.onDemandPolicy;
-	s << p.service;
-	s << ( p.internet ? 1 : 0 );
-	s << p.netmasks;
-	return s;
 }
 
-TQDataStream & operator>> ( TQDataStream & s, NetworkStatus::Properties &p )
+int ClientIfaceImpl::status( TQString host )
 {
-	int status, onDemandPolicy, internet;
-	s >> status;
-	kdDebug() << k_funcinfo << "status is: " << status << endl;
-	p.status = ( NetworkStatus::EnumStatus )status;
-	s >> onDemandPolicy;
-	p.onDemandPolicy = ( NetworkStatus::EnumOnDemandPolicy )onDemandPolicy;
-	s >> p.service;
-	s >> internet;
-	if ( internet )
-		p.internet = true;
-	else
-		p.internet = false;
-	s >> p.netmasks;
-	kdDebug() << k_funcinfo << "enum converted status is: " << p.status << endl;
-	return s;
+	return m_module->status( host );
 }
+
+int ClientIfaceImpl::request( TQString host, bool userInitiated )
+{
+	return m_module->request( host, userInitiated );
+}
+
+void ClientIfaceImpl::relinquish( TQString host )
+{
+	m_module->relinquish( host );
+}
+
+bool ClientIfaceImpl::reportFailure( TQString host )
+{
+	return m_module->reportFailure( host );
+}
+
+// TQString ClientIfaceImpl::statusAsString()
+// {
+// 	
+// }

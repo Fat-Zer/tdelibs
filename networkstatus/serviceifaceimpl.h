@@ -19,35 +19,25 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "networkstatuscommon.h"
-#include <kdebug.h>
+#ifndef NETWORKSTATUS_SERVICEIFACEIMPL_H
+#define NETWORKSTATUS_SERVICEIFACEIMPL_H
 
-TQDataStream & operator<< ( TQDataStream & s, const NetworkStatus::Properties p )
-{
-	kdDebug() << k_funcinfo << "status is: " << (int)p.status << endl;
-	s << (int)p.status;
-	s << (int)p.onDemandPolicy;
-	s << p.service;
-	s << ( p.internet ? 1 : 0 );
-	s << p.netmasks;
-	return s;
-}
+#include "networkstatus.h"
+#include "serviceiface.h"
 
-TQDataStream & operator>> ( TQDataStream & s, NetworkStatus::Properties &p )
+/**
+ * Glue class linking DCOP skeleton to daemon
+ */
+class ServiceIfaceImpl : virtual public ServiceIface
 {
-	int status, onDemandPolicy, internet;
-	s >> status;
-	kdDebug() << k_funcinfo << "status is: " << status << endl;
-	p.status = ( NetworkStatus::EnumStatus )status;
-	s >> onDemandPolicy;
-	p.onDemandPolicy = ( NetworkStatus::EnumOnDemandPolicy )onDemandPolicy;
-	s >> p.service;
-	s >> internet;
-	if ( internet )
-		p.internet = true;
-	else
-		p.internet = false;
-	s >> p.netmasks;
-	kdDebug() << k_funcinfo << "enum converted status is: " << p.status << endl;
-	return s;
-}
+public:
+	ServiceIfaceImpl( NetworkStatusModule * module );
+	void setStatus( TQString networkName, int status );
+	void registerNetwork( TQString networkName, NetworkStatus::Properties properties );
+	void unregisterNetwork( TQString networkName );
+	void requestShutdown( TQString networkName );
+private:
+	NetworkStatusModule * m_module;
+};
+
+#endif

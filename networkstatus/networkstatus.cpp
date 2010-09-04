@@ -1,9 +1,12 @@
-/*  This file is part of kdepim
-    Copyright (C) 2005,2007 Will Stephenson <wstephenson@kde.org>
+/*
+    This file is part of kdepim.
+
+    Copyright (c) 2005 Will Stephenson <lists@stevello.free-online.co.uk>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
-    License version 2 as published by the Free Software Foundation.
+    License as published by the Free Software Foundation; either
+    version 2 of the License, or (at your option) any later version.
 
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -11,153 +14,294 @@
     Library General Public License for more details.
 
     You should have received a copy of the GNU Library General Public License
-    along with this library.  If not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    along with this library; see the file COPYING.LIB.  If not, write to
+    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
-
-    As a special exception, permission is given to link this library
-    with any edition of TQt, and distribute the resulting executable,
-    without including the source code for TQt in the source distribution.
 */
 
 #include "networkstatus.h"
 
-#include <tqmap.h>
+#include <tqdict.h>
+#include <tqtimer.h>
+#include <tqvaluelist.h>
 
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kdebug.h>
 
+#include "clientifaceimpl.h"
+#include "serviceifaceimpl.h"
 #include "network.h"
-#include <kdemacros.h>
+#include <kdepimmacros.h>
 
 extern "C" {
-    KDE_EXPORT KDEDModule* create_networkstatus( const TQCString& obj )
-    {
-        return new NetworkStatusModule( obj );
-    }
+	KDE_EXPORT KDEDModule* create_networkstatus( const TQCString& obj )
+	{
+		return new NetworkStatusModule( obj );
+	}
 }
 
 // INTERNALLY USED STRUCTS AND TYPEDEFS
 
-typedef TQMap< TQString, Network * > NetworkMap;
+//typedef TQDict< Network > NetworkList;
+typedef TQValueList< Network * > NetworkList;
 
 class NetworkStatusModule::Private
 {
 public:
-    NetworkMap networks;
-    NetworkStatus::Status status;
+	NetworkList networks;
+/*	ClientIface * clientIface;
+	ServiceIface * serviceIface;*/
 };
 
 // CTORS/DTORS
 
-NetworkStatusModule::NetworkStatusModule( const TQCString & obj ) : KDEDModule( obj ), d( new Private )
+NetworkStatusModule::NetworkStatusModule( const TQCString & obj ) : KDEDModule( obj )
 {
-    d->status = NetworkStatus::NoNetworks;
-    connect( kapp->dcopClient(), TQT_SIGNAL( applicationRemoved( const TQCString& ) ) , this, TQT_SLOT( unregisteredFromDCOP( const TQCString& ) ) );
-    //	connect( kapp->dcopClient(), TQT_SIGNAL( applicationRegistered( const TQCString& ) ) , this, TQT_SLOT( registeredToDCOP( const TQCString& ) ) );
+	d = new Private;
+/*	d->clientIface = new ClientIfaceImpl( this );
+	d->serviceIface = new ServiceIfaceImpl( this );*/
+	connect( kapp->dcopClient(), TQT_SIGNAL( applicationRemoved( const TQCString& ) ) , this, TQT_SLOT( unregisteredFromDCOP( const TQCString& ) ) );
+	connect( kapp->dcopClient(), TQT_SIGNAL( applicationRegistered( const TQCString& ) ) , this, TQT_SLOT( registeredToDCOP( const TQCString& ) ) );
 }
 
 NetworkStatusModule::~NetworkStatusModule()
 {
-    NetworkMap::ConstIterator it;
-    const NetworkMap::ConstIterator end = d->networks.end();
-
-    for ( it = d->networks.begin(); it != end; ++it ) {
-        delete ( *it );
-    }
-
-    delete d;
+/*	delete d->clientIface;
+	delete d->serviceIface;*/
+	delete d;
 }
 
 // CLIENT INTERFACE
 
 TQStringList NetworkStatusModule::networks()
 {
-    kdDebug() << k_funcinfo << " contains " << d->networks.count() << " networks" << endl;
-    return d->networks.keys();
+	kdDebug() << k_funcinfo << " contains " << d->networks.count() << " networks" << endl;
+	TQStringList networks;
+	NetworkList::iterator end = d->networks.end();
+	NetworkList::iterator it = d->networks.begin();
+	for ( ; it != end; ++it )
+		networks.append( (*it)->name() );
+	return networks;
 }
 
-int NetworkStatusModule::status()
+int NetworkStatusModule::status( const TQString & host )
 {
-    kdDebug() << k_funcinfo << " status: " << (int)d->status << endl;
-    return (int)d->status;
+	if ( host == "127.0.0.1" || host == "localhost" )
+		return NetworkStatus::Online;
+	Network * p = networkForHost( host );
+	if ( !p )
+	{
+		//kdDebug() << k_funcinfo << " no networks have status for host '" << host << "'" << endl;
+		return (int)NetworkStatus::NoNetworks;
+	}
+	else
+	{	
+		kdDebug() << k_funcinfo << " got status for host '" << host << "' : " << (int)(p->status()) << endl;
+		return (int)(p->status());
+	}
 }
 
-//protected:
-
-void NetworkStatusModule::updateStatus()
+int NetworkStatusModule::request( const TQString & host, bool userInitiated )
 {
-    NetworkStatus::Status bestStatus = NetworkStatus::NoNetworks;
-    const NetworkStatus::Status oldStatus = d->status;
+	// identify most suitable network for host
+	Network * p = networkForHost( host );
+	if ( !p )
+		return NetworkStatus::Unavailable;
+	
+	NetworkStatus::EnumStatus status = p->status();
+	TQCString appId = kapp->dcopClient()->senderId();
+	if ( status == NetworkStatus::Online )
+	{
+		p->registerUsage( appId, host );
+		return NetworkStatus::Connected;
+	}
+	// if online
+	//   register usage
+	//   return Available
+	else if ( status == NetworkStatus::Establishing )
+	{
+		p->registerUsage( appId, host );
+		return NetworkStatus::RequestAccepted;
+	}
+	// if establishing
+	//   register usage
+	//   return Accepted
+	else if ( status == NetworkStatus::Offline || status == NetworkStatus::ShuttingDown )
+	{
+		// TODO: check on demand policy
+		
+		p->registerUsage( appId, host );
+		return NetworkStatus::RequestAccepted;
+	}
+	// if offline or ShuttingDown
+	//   check ODP::
+	//   always or Permanent: register, return accepted
+	//   user: check userInitiated, register, return Accepted or UserRefused
+	//   never: return UserRefused
+	else if ( status == NetworkStatus::OfflineFailed )
+	{
+		// TODO: check user's preference for dealing with failed networks
+		p->registerUsage( appId, host );
+		return NetworkStatus::RequestAccepted;
+	}
+	// if OfflineFailed
+	//   check user's preference
+	else if ( status == NetworkStatus::OfflineDisconnected )
+	{
+		return NetworkStatus::Unavailable;
+	}
+	else
+		return NetworkStatus::Unavailable;
+	// if OfflineDisconnected or NoNetworks
+	//   return Unavailable
+}
 
-    NetworkMap::ConstIterator it;
-    const NetworkMap::ConstIterator end = d->networks.end();
-    for ( it = d->networks.begin(); it != end; ++it ) {
-        if ( ( *it )->status() > bestStatus )
-            bestStatus = ( *it )->status();
-    }
-    d->status = bestStatus;
+void NetworkStatusModule::relinquish( const TQString & host )
+{
+	TQCString appId = kapp->dcopClient()->senderId();
+	// find network currently used by app for host...
+	NetworkList::iterator end = d->networks.end();
+	NetworkList::iterator it = d->networks.begin();
+	for ( ; it != end; ++it )
+	{
+		Network * net = *it;
+		NetworkUsageList usage = net->usage();
+		NetworkUsageList::iterator end2 = usage.end();
+		for ( NetworkUsageList::iterator usageIt = usage.begin(); usageIt != end2; ++usageIt )
+		{
+			if ( (*usageIt).appId == appId && (*usageIt).host == host )
+			{
+				// remove host usage record
+				usage.remove( usageIt );
+				// if requested shutdown flagged for network
+				//  check if all hosts have relinquished
+				//   call confirmShutDown on Service
+				//checkShutdownOk();
+			}
+		}
+	}
+}
 
-    if ( oldStatus != d->status ) {
-        statusChange( (int)d->status );
-    }
+bool NetworkStatusModule::reportFailure( const TQString & host )
+{
+	// find network for host
+	// check IP record.  remove IP usage record.  if other IP exists, return true.
+	Q_UNUSED( host );
+	kdDebug() << k_funcinfo << "NOT IMPLEMENTED" << endl;
+	return false;
+}
+
+// PROTECTED UTILITY FUNCTIONS
+/*
+ * Determine the network to use for the supplied host
+ */
+Network * NetworkStatusModule::networkForHost( const TQString & host ) const
+{
+	// return a null pointer if no networks are registered
+	if ( d->networks.isEmpty() )
+		return 0;
+	
+	NetworkList::const_iterator it = d->networks.begin();
+	Network * bestNetwork = *(it++);
+	NetworkList::const_iterator end = d->networks.end();
+ 	for ( ; it != end; ++it )
+	{
+		if ( (*it)->reachabilityFor( host ) > bestNetwork->reachabilityFor( host ) )
+		{
+			bestNetwork = (*it);
+		}
+	}
+	return bestNetwork;
+}
+
+
+void NetworkStatusModule::registeredToDCOP( const TQCString & appId )
+{
 }
 
 void NetworkStatusModule::unregisteredFromDCOP( const TQCString & appId )
 {
-    // unregister and delete any networks owned by a service that has just unregistered
-    NetworkMap::Iterator it = d->networks.begin();
-    const NetworkMap::Iterator end = d->networks.end();
-	while (it != d->networks.end())
-    {
-        if ( ( *it )->service() == TQString( appId ) )
-        {
-            NetworkMap::Iterator toRemove = it++;
-			delete *toRemove;
-            d->networks.remove( toRemove );
-            updateStatus();
-			continue;
-        }
-		++it;
-    }
+	// unregister any networks owned by a service that has just unregistered
+	NetworkList::iterator it = d->networks.begin();
+	NetworkList::iterator end = d->networks.end();
+	for ( ; it != end; ++it )
+	{
+		if ( (*it)->service() == appId)
+		{
+			kdDebug() << k_funcinfo << "removing '" << (*it)->name() << "', registered by " << appId << endl;
+			d->networks.remove( it );
+			break;
+		}
+	}
 }
 
 // SERVICE INTERFACE //
 void NetworkStatusModule::setNetworkStatus( const TQString & networkName, int st )
 {
-    kdDebug() << k_funcinfo << networkName << ", " << st << endl;
-    NetworkStatus::Status changedStatus = (NetworkStatus::Status)st;
-    Network * net = 0;
-    NetworkMap::Iterator it = d->networks.find( networkName );
-    if ( it != d->networks.end() ) {
-        net = (*it);
-        net->setStatus( changedStatus );
-        updateStatus();
-    }
-    else
-        kdDebug() << "  No network named '" << networkName << "' found." << endl;
+	kdDebug() << k_funcinfo << endl;
+	NetworkStatus::EnumStatus status = (NetworkStatus::EnumStatus)st;
+	Network * net = 0;
+	NetworkList::iterator it = d->networks.begin();
+	NetworkList::iterator end = d->networks.end();
+	for ( ; it != end; ++it )
+	{
+		if ( (*it)->name() == networkName )
+		{
+			net = (*it);
+			break;
+		}
+	}
+	if ( net )
+	{
+		if ( net->status() == status )
+			return;
+
+		// update the status of the network
+		net->setStatus( status );
+
+		// notify for each host in use on that network
+		NetworkUsageList usage = net->usage();
+		NetworkUsageList::iterator end = usage.end();
+		TQStringList notified;
+		for ( NetworkUsageList::iterator it = usage.begin(); it != end; ++it )
+		{
+			// only notify once per host
+			if ( !notified.contains( (*it).host ) )
+			{
+				kdDebug() << "notifying statusChange of " << networkName << " to " << (int)status << 
+						" because " << (*it).appId << " is using " << (*it).host << endl;
+				/*d->clientIface->*/statusChange( (*it).host, (int)status );
+				notified.append( (*it).host );
+			}
+		}
+
+		// if we are now anything but Establishing or Online, reset the usage records for that network
+		if ( !( net->status() == NetworkStatus::Establishing || net->status() == NetworkStatus::Establishing ) )
+			net->removeAllUsage();
+	}
+	else
+		kdDebug() << k_funcinfo << "No network found by this name" << endl;
 }
 
-void NetworkStatusModule::registerNetwork( const NetworkStatus::Properties properties )
+void NetworkStatusModule::registerNetwork( const TQString & networkName, const NetworkStatus::Properties properties )
 {
-    kdDebug() << k_funcinfo << properties.name << ", with status " << properties.status << endl;
-
-    d->networks.insert( properties.name, new Network( properties ) );
-    updateStatus();
+	kdDebug() << k_funcinfo << "registering '" << networkName << "', with status " << properties.status << endl;
+	// TODO: check for re-registration, checking appid matches
+	
+	d->networks.append( new Network( networkName, properties ) );
 }
 
 void NetworkStatusModule::unregisterNetwork( const TQString & networkName )
 {
-    kdDebug() << k_funcinfo << networkName << endl;
+	// TODO: check appid
+	//d->networks.remove( networkName );
+}
 
-    NetworkMap::Iterator it = d->networks.find( networkName );
-    if ( it != d->networks.end() ) {
-        delete *it;
-        d->networks.remove( it );
-    }
-    updateStatus();
+void NetworkStatusModule::requestShutdown( const TQString & networkName )
+{
+	Q_UNUSED( networkName );
+	kdDebug() << k_funcinfo << "NOT IMPLEMENTED" << endl;
 }
 
 #include "networkstatus.moc"
-// vim: set noet sw=4 ts=4:

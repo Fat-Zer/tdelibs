@@ -19,35 +19,28 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "networkstatuscommon.h"
-#include <kdebug.h>
+#include "serviceifaceimpl.h"
 
-TQDataStream & operator<< ( TQDataStream & s, const NetworkStatus::Properties p )
+ServiceIfaceImpl::ServiceIfaceImpl( NetworkStatusModule * module ) : m_module ( module )
 {
-	kdDebug() << k_funcinfo << "status is: " << (int)p.status << endl;
-	s << (int)p.status;
-	s << (int)p.onDemandPolicy;
-	s << p.service;
-	s << ( p.internet ? 1 : 0 );
-	s << p.netmasks;
-	return s;
 }
 
-TQDataStream & operator>> ( TQDataStream & s, NetworkStatus::Properties &p )
+void ServiceIfaceImpl::setStatus( TQString networkName, int status )
 {
-	int status, onDemandPolicy, internet;
-	s >> status;
-	kdDebug() << k_funcinfo << "status is: " << status << endl;
-	p.status = ( NetworkStatus::EnumStatus )status;
-	s >> onDemandPolicy;
-	p.onDemandPolicy = ( NetworkStatus::EnumOnDemandPolicy )onDemandPolicy;
-	s >> p.service;
-	s >> internet;
-	if ( internet )
-		p.internet = true;
-	else
-		p.internet = false;
-	s >> p.netmasks;
-	kdDebug() << k_funcinfo << "enum converted status is: " << p.status << endl;
-	return s;
+	m_module->setStatus( networkName, (NetworkStatus::EnumStatus)status );
+}
+
+void ServiceIfaceImpl::registerNetwork( TQString networkName, NetworkStatus::Properties properties )
+{
+	m_module->registerNetwork( networkName, properties );
+}
+
+void ServiceIfaceImpl::unregisterNetwork( TQString networkName )
+{
+	m_module->unregisterNetwork( networkName );
+}
+
+void ServiceIfaceImpl::requestShutdown( TQString networkName )
+{
+	m_module->requestShutdown( networkName );
 }
