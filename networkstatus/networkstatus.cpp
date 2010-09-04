@@ -32,7 +32,19 @@
 #include "clientifaceimpl.h"
 #include "serviceifaceimpl.h"
 #include "network.h"
-#include <kdepimmacros.h>
+
+#include <kdeversion.h>
+#include <kdemacros.h>
+
+#if KDE_IS_VERSION( 3,3,90 )
+/* life is great */
+#else
+/* workaround typo that breaks compilation with newer gcc */
+#undef KDE_EXPORT
+#define KDE_EXPORT
+#undef KDE_NO_EXPORT
+#define KDE_NO_EXPORT
+#endif
 
 extern "C" {
 	KDE_EXPORT KDEDModule* create_networkstatus( const TQCString& obj )

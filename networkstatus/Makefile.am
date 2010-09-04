@@ -2,6 +2,8 @@
 
 METASOURCES = AUTO
 
+INCLUDES = -I$(top_srcdir)/kded -I$(top_srcdir) $(all_includes)
+
 kde_module_LTLIBRARIES = kded_networkstatus.la 
 lib_LTLIBRARIES = libnetworkstatus.la libconnectionmanager.la
 
