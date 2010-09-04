@@ -15,8 +15,6 @@ libconnectionmanager_la_LIBADD = $(LIB_KDECORE)
 libconnectionmanager_la_LDFLAGS = $(all_libraries)
 libconnectionmanager_la_SOURCES = connectionmanager.cpp connectionmanager.skel clientiface.stub
 
-INCLUDES = $(all_includes)
-
 kded_networkstatus_la_SOURCES = networkstatus.cpp networkstatus.skel \
 	clientiface.skel serviceiface.skel network.cpp
 #kclientiface.skel serviceiface.skel
