@@ -2850,6 +2850,7 @@ try_again:
     m_responseHeader << TQString::fromLatin1(buf);
 
     if ((strncasecmp(buf, "HTTP", 4) == 0) ||
+    if ((strncasecmp(buf, "HTTP/", 5) == 0) ||
         (strncasecmp(buf, "ICY ", 4) == 0)) // Shoutcast support
     {
       if (strncasecmp(buf, "ICY ", 4) == 0)

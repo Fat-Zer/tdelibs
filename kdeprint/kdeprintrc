@@ -1,4 +1,5 @@
 [General]
+PrintSystem=cups
 Orientation=1
 ViewType=1
 ViewToolBar=false
