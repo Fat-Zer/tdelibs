@@ -45,6 +45,7 @@
 #include <kurldrag.h>
 #include <kurlrequester.h>
 #include <kio/global.h>
+#include <kio/netaccess.h>
 
 #include "kurlbar.h"
 
