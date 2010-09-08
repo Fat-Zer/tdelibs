@@ -16,12 +16,15 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
+#include <tqdir.h>
+
 #include <kiconloader.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <ksortablevaluelist.h>
+
 #include "kservicefactory.h"
 #include "kservicegroupfactory.h"
 #include "kservicegroup.h"

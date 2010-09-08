@@ -44,6 +44,7 @@
 #include <kstringhandler.h>
 #include <kurldrag.h>
 #include <kurlrequester.h>
+#include <kio/global.h>
 
 #include "kurlbar.h"
 
