@@ -31,7 +31,6 @@
 #include "kfontcombo.moc"
 
 #include <ft2build.h>
-#include FT_FREETYPE_H
 #include <fontconfig/fontconfig.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
