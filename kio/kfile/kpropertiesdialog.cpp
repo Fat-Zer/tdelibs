@@ -638,7 +638,13 @@ bool KPropsDlgPlugin::isDesktopFile( KFileItem * _item )
   fclose(f);
 
   // return true if desktop file
-  return ( _item->mimetype() == "application/x-desktop" );
+  return ( (_item->mimetype() == "application/x-desktop")
+      || (_item->mimetype() == "media/builtin-mydocuments")
+      || (_item->mimetype() == "media/builtin-mycomputer")
+      || (_item->mimetype() == "media/builtin-mynetworkplaces")
+      || (_item->mimetype() == "media/builtin-printers")
+      || (_item->mimetype() == "media/builtin-trash")
+      || (_item->mimetype() == "media/builtin-webbrowser") );
 }
 
 void KPropsDlgPlugin::setDirty( bool b )
@@ -1881,11 +1887,11 @@ static bool fileSystemSupportsACL( const TQCString& pathCString )
     fileSystemSupportsACLs = ( statfs( pathCString.data(), &buf ) == 0 ) && ( buf.f_flags & MNT_ACLS );
 #else
     fileSystemSupportsACLs =
-      getxattr( pathCString.data(), "system.posix_acl_access", NULL, 0 ) >= 0 
-#ifdef ENODATA      
+      getxattr( pathCString.data(), "system.posix_acl_access", NULL, 0 ) >= 0
+#ifdef ENODATA
 			|| (errno == ENODATA)
 #endif
-#ifdef ENOATTR      
+#ifdef ENOATTR
 			|| (errno == ENOATTR)
 #endif
 			;

@@ -86,7 +86,13 @@ void KBookmarkImporter::scanIntern( TQDomElement & parentElem, const TQString & 
                     groupElem.setAttribute("toolbar","yes");
                 scanIntern( groupElem, file.path() );
             }
-            else if ( res->name() == "application/x-desktop" )
+            else if ( (res->name() == "application/x-desktop")
+                      || (res->name() == "media/builtin-mydocuments")
+                      || (res->name() == "media/builtin-mycomputer")
+                      || (res->name() == "media/builtin-mynetworkplaces")
+                      || (res->name() == "media/builtin-printers")
+                      || (res->name() == "media/builtin-trash")
+                      || (res->name() == "media/builtin-webbrowser") )
             {
                 KSimpleConfig cfg( file.path(), true );
                 cfg.setDesktopGroup();

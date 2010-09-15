@@ -499,6 +499,12 @@ void BrowserRun::slotCopyToTempFileResult(KIO::Job *job)
 bool BrowserRun::isTextExecutable( const TQString &serviceType )
 {
     return ( serviceType == "application/x-desktop" ||
+             serviceType == "media/builtin-mydocuments" ||
+             serviceType == "media/builtin-mycomputer" ||
+             serviceType == "media/builtin-mynetworkplaces" ||
+             serviceType == "media/builtin-printers" ||
+             serviceType == "media/builtin-trash" ||
+             serviceType == "media/builtin-webbrowser" ||
              serviceType == "application/x-shellscript" );
 }
 

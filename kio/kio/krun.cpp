@@ -127,7 +127,13 @@ pid_t KRun::runURL( const KURL& u, const TQString& _mimetype, TQWidget* window, 
             i18n("<qt>Unable to enter <b>%1</b>.\nYou do not have access rights to this location.</qt>").arg(u.htmlURL()) );
     return 0;
   }
-  else if ( _mimetype == "application/x-desktop" )
+  else if ( (_mimetype == "application/x-desktop") ||
+            (_mimetype == "media/builtin-mydocuments") ||
+            (_mimetype == "media/builtin-mycomputer") ||
+            (_mimetype == "media/builtin-mynetworkplaces") ||
+            (_mimetype == "media/builtin-printers") ||
+            (_mimetype == "media/builtin-trash") ||
+            (_mimetype == "media/builtin-webbrowser") )
   {
     if ( u.isLocalFile() && runExecutables )
       return KDEDesktopMimeType::run( u, true );
@@ -794,7 +800,7 @@ pid_t KRun::run( const KService& _service, const KURL::List& _urls, TQWidget* wi
 
   TQString error;
   int pid = 0;
-  
+
   TQCString myasn = asn;
   // startServiceByDesktopPath() doesn't take TQWidget*, add it to the startup info now
   if( window != NULL )
@@ -810,7 +816,7 @@ pid_t KRun::run( const KService& _service, const KURL::List& _urls, TQWidget* wi
         KStartupInfo::sendChange( id, data );
     }
   }
-  
+
   int i = KApplication::startServiceByDesktopPath(
         _service.desktopEntryPath(), urls.toStringList(), &error, 0L, &pid, myasn
         );
@@ -1300,7 +1306,13 @@ void KRun::foundMimeType( const TQString& type )
   }
 
   // Resolve .desktop files from media:/, remote:/, applications:/ etc.
-  if ( type == "application/x-desktop" /* or inheriting? */ && !d->m_localPath.isEmpty() )
+  if ( ((type == "application/x-desktop") ||
+      (type == "media/builtin-mydocuments") ||
+      (type == "media/builtin-mycomputer") ||
+      (type == "media/builtin-mynetworkplaces") ||
+      (type == "media/builtin-printers") ||
+      (type == "media/builtin-trash") ||
+      (type == "media/builtin-webbrowser")) /* or inheriting? */ && (!d->m_localPath.isEmpty()) )
   {
     m_strURL = KURL();
     m_strURL.setPath( d->m_localPath );
@@ -1370,6 +1382,12 @@ void KRun::setSuggestedFileName( const TQString& fileName )
 bool KRun::isExecutable( const TQString& serviceType )
 {
     return ( serviceType == "application/x-desktop" ||
+             serviceType == "media/builtin-mydocuments" ||
+             serviceType == "media/builtin-mycomputer" ||
+             serviceType == "media/builtin-mynetworkplaces" ||
+             serviceType == "media/builtin-printers" ||
+             serviceType == "media/builtin-trash" ||
+             serviceType == "media/builtin-webbrowser" ||
              serviceType == "application/x-executable" ||
              serviceType == "application/x-msdos-program" ||
              serviceType == "application/x-shellscript" );

@@ -723,7 +723,13 @@ bool KFileItem::acceptsDrops()
   if ( !m_bIsLocalURL )
     return false;
 
-  if ( mimetype() == "application/x-desktop")
+  if (( mimetype() == "application/x-desktop") ||
+      ( mimetype() == "media/builtin-mydocuments") ||
+      ( mimetype() == "media/builtin-mycomputer") ||
+      ( mimetype() == "media/builtin-mynetworkplaces") ||
+      ( mimetype() == "media/builtin-printers") ||
+      ( mimetype() == "media/builtin-trash") ||
+      ( mimetype() == "media/builtin-webbrowser"))
     return true;
 
   // Executable, shell script ... ?

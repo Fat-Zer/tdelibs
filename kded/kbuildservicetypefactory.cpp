@@ -98,7 +98,13 @@ KBuildServiceTypeFactory::createEntry(const TQString &file, const char *resource
   KServiceType* e;
   if ( mime == "inode/directory" )
     e = new KFolderType( &desktopFile );
-  else if ( mime == "application/x-desktop" )
+  else if ( (mime == "application/x-desktop")
+         || (mime == "media/builtin-mydocuments")
+         || (mime == "media/builtin-mycomputer")
+         || (mime == "media/builtin-mynetworkplaces")
+         || (mime == "media/builtin-printers")
+         || (mime == "media/builtin-trash")
+         || (mime == "media/builtin-webbrowser") )
     e = new KDEDesktopMimeType( &desktopFile );
   else if ( mime == "application/x-executable" || mime == "application/x-shellscript" )
     e = new KExecMimeType( &desktopFile );
@@ -250,7 +256,7 @@ KBuildServiceTypeFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
      // Already exists
      if (serviceType->desktopEntryPath().endsWith("kdelnk"))
         return; // Skip
-     
+
      // Replace
      KSycocaFactory::removeEntry(newEntry);
    }

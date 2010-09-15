@@ -177,7 +177,14 @@ void PreviewJob::startPreview()
         PreviewItem item;
         item.item = it.current();
         TQMap<TQString, KService::Ptr>::ConstIterator plugin = mimeMap.find(it.current()->mimetype());
-        if (plugin == mimeMap.end() && it.current()->mimetype() != "application/x-desktop")
+        if (plugin == mimeMap.end()
+            && (it.current()->mimetype() != "application/x-desktop")
+            && (it.current()->mimetype() != "media/builtin-mydocuments")
+            && (it.current()->mimetype() != "media/builtin-mycomputer")
+            && (it.current()->mimetype() != "media/builtin-mynetworkplaces")
+            && (it.current()->mimetype() != "media/builtin-printers")
+            && (it.current()->mimetype() != "media/builtin-trash")
+            && (it.current()->mimetype() != "media/builtin-webbrowser"))
         {
             TQString mimeType = it.current()->mimetype();
             plugin = mimeMap.find(mimeType.replace(TQRegExp("/.*"), "/*"));
@@ -393,10 +400,10 @@ bool PreviewJob::statResultThumbnail()
     // way (file:/path/to/file)
 #ifdef KURL_TRIPLE_SLASH_FILE_PROT
     d->origName = url.url();
-#else    
+#else
     if (url.protocol() == "file") d->origName = "file://" + url.path();
     else d->origName = url.url();
-#endif    
+#endif
 
     KMD5 md5( TQFile::encodeName( d->origName ) );
     d->thumbName = TQFile::encodeName( md5.hexDigest() ) + ".png";
@@ -508,7 +515,7 @@ void PreviewJob::slotThumbData(KIO::Job *, const TQByteArray &data)
         thumb.setText("Thumb::Mimetype", 0, d->currentItem.item->mimetype());
         thumb.setText("Software", 0, "KDE Thumbnail Generator");
         KTempFile temp(d->thumbPath + "kde-tmp-", ".png");
-        if (temp.status() == 0) //Only try to write out the thumbnail if we 
+        if (temp.status() == 0) //Only try to write out the thumbnail if we
         {                       //actually created the temp file.
             thumb.save(temp.name(), "PNG");
             rename(TQFile::encodeName(temp.name()), TQFile::encodeName(d->thumbPath + d->thumbName));
