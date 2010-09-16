@@ -1320,7 +1320,15 @@ void KStandardDirs::addKDEDefaults()
 
     // We treat root differently to prevent a "su" shell messing up the
     // file permissions in the user's home directory.
-    TQString localKdeDir = readEnvPath(getuid() ? "KDEHOME" : "KDEROOTHOME");
+    TQString localKdeDir;
+    if (getuid() == 0) {
+      localKdeDir = readEnvPath("KDEROOTHOME");
+      if (localKdeDir.isEmpty() == true)
+        localKdeDir = readEnvPath("KDEHOME");
+    }
+    else {
+      localKdeDir = readEnvPath("KDEHOME");
+    }
     if (!localKdeDir.isEmpty())
     {
        if (localKdeDir[localKdeDir.length()-1] != QChar('/'))
