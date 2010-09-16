@@ -515,10 +515,20 @@ void KGlobalSettings::initStatic() // should be called initPaths(). Don't put an
 	// Read desktop and documents path using XDG_USER_DIRS
 	readXdgUserDirs(s_desktopPath, s_documentPath);
 	
+    if (s_desktopPath->isEmpty() == true) {
+      *s_desktopPath = QDir::homeDirPath() + "/Desktop/";
+    }
     *s_desktopPath = TQDir::cleanDirPath( *s_desktopPath );
     if ( !s_desktopPath->endsWith("/") )
       s_desktopPath->append('/');
 
+    if (s_documentPath->isEmpty() == true) {
+#ifdef Q_WS_WIN
+      *s_documentPath = getWin32ShellFoldersPath("Personal");
+#else
+      *s_documentPath = QDir::homeDirPath() + "/Documents/";
+#endif
+    }
     *s_documentPath = TQDir::cleanDirPath( *s_documentPath );
     if ( !s_documentPath->endsWith("/"))
       s_documentPath->append('/');
