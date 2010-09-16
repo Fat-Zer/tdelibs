@@ -980,7 +980,8 @@ void KRun::init()
 
     bool ok = false;
     KURL::List urls;
-    urls.append( m_strURL );
+    if (!((m_strURL.protocol().startsWith("http")) && (m_strURL.url() == "http://default.browser")))
+        urls.append( m_strURL );
     if (exec.isEmpty())
     {
        exec = KProtocolInfo::exec( m_strURL.protocol() );
