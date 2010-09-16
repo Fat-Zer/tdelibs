@@ -38,8 +38,8 @@ StatusBarNetworkStatusIndicator::StatusBarNetworkStatusIndicator(
   label->setPixmap( SmallIcon("connect_no") );
   TQToolTip::add( label, i18n( "The desktop is offline" ) );
 
-  connect( ConnectionManager::self(), TQT_SIGNAL( statusChanged( NetworkStatus::EnumStatus ) ),
-      TQT_SLOT( networkStatusChanged( NetworkStatus::EnumStatus) ) );
+  connect( ConnectionManager::self(), TQT_SIGNAL( statusChanged( TQString, NetworkStatus::EnumStatus ) ),
+      TQT_SLOT( networkStatusChanged( TQString, NetworkStatus::EnumStatus) ) );
 
 }
 
@@ -50,6 +50,11 @@ void StatusBarNetworkStatusIndicator::init()
 
 StatusBarNetworkStatusIndicator::~StatusBarNetworkStatusIndicator()
 {
+}
+
+void StatusBarNetworkStatusIndicator::networkStatusChanged( TQString host, NetworkStatus::EnumStatus status )
+{
+  networkStatusChanged(status);
 }
 
 void StatusBarNetworkStatusIndicator::networkStatusChanged( NetworkStatus::EnumStatus status )

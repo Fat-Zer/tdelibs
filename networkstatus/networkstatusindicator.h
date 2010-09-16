@@ -35,6 +35,7 @@ public:
   virtual ~StatusBarNetworkStatusIndicator();
   void init();
 protected slots:
+  void networkStatusChanged( TQString host, NetworkStatus::EnumStatus status );
   void networkStatusChanged( NetworkStatus::EnumStatus status );
 };
 
