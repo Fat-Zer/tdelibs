@@ -1,22 +1,22 @@
 /**
-	* @mainpage The KDE API Reference
+	* @mainpage The Trinity API Reference
 	*
-	* This section contains the KDE online class reference for the current
-	* development version of KDE. You can also 
+	* This section contains the Trinity online class reference for the current
+	* development version of Trinity. You can also 
 	* download the complete API documentation from
-        * <a href="http://api.kde.org/">api.kde.org</a>.  Additionally, you 
+        * <a href="http://trinity.pearsoncomputing.net/">trinity.pearsoncomputing.net</a>.  Additionally, you 
         * can subscribe or read the mailing lists for any additions and/or 
         * modifications to the API.
 	*
 	* - <a href="kdecore/html/index.html"><b>kdecore</b></a>
         *   (<a href="kdecore/html/classes.html">classes</a>)\n
-	*   <i>Core KDE classes that are not related to the user interface.</i>
+	*   <i>Core Trinity classes that are not related to the user interface.</i>
 	* - <a href="kdeui/html/index.html"><b>kdeui</b></a>
         *   (<a href="kdeui/html/classes.html">classes</a>)\n
-	*   <i>KDE User interface classes such as widgets.</i>
+	*   <i>Trinity User interface classes such as widgets.</i>
 	* - <a href="khtml/html/index.html"><b>khtml</b></a>
         *   (<a href="khtml/html/classes.html">classes</a>)\n
-	*   <i>The KDE HTML component.</i>
+	*   <i>The Trinity HTML component.</i>
 	* - <a href="kjs/html/index.html"><b>kjs</b></a>
         *   (<a href="kjs/html/classes.html">classes</a>)\n
 	*   <i>Javascript (aka. ECMAScript and JScript) support.</i>
@@ -48,16 +48,16 @@
 	*   can be dropped in.</i>
 	* - <a href="kabc/html/index.html"><b>kabc</b></a>
         *   (<a href="kabc/html/classes.html">classes</a>)\n
-	*   <i>Access to the KDE address book.</i>
+	*   <i>Access to the Trinity address book.</i>
 	* - <a href="kresources/html/index.html"><b>kresources</b></a>
         *   (<a href="kresources/html/classes.html">classes</a>)\n
-	*   <i>The KDE resources system.</i>
+	*   <i>The Trinity resources system.</i>
 	* - <a href="kutils/html/index.html"><b>kutils</b></a>
         *   (<a href="kutils/html/classes.html">classes</a>)\n
 	*   <i>High-level utils, like search/replace support.</i>
 	* - <a href="arts/html/index.html"><b>arts</b></a>
         *   (<a href="arts/html/classes.html">classes</a>)\n
-	*   <i>KDE bindings for arts including knotify.</i>
+	*   <i>Trinity bindings for arts including knotify.</i>
 	* - <a href="knewstuff/html/index.html"><b>knewstuff</b></a>
         *   (<a href="knewstuff/html/classes.html">classes</a>)\n
 	*   <i>Upload and download of application data.</i>
@@ -66,12 +66,12 @@
 	*   <i>Network sevices publishing and discovery.</i>
 	* - <a href="kunittest/html/index.html"><b>kunittest</b></a>
         *   (<a href="kunittest/html/classes.html">classes</a>)\n
-	*   <i>Unit testing framework in KDE.</i>
+	*   <i>Unit testing framework in Trinity.</i>
 
 	*
-	* More information about the KDE architecture in form of tutorials, HOWTOs,
+	* More information about the Trinity architecture in form of tutorials, HOWTOs,
 	* and FAQs can be found at
-	* the <a href="http://developer.kde.org">KDE Developer's corner</a>.
+	* the <a href="http://trinity.pearsoncomputing.net">the Trinity project</a>.
 	*/
 
 /**
