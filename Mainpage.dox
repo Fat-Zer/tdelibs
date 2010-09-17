@@ -42,6 +42,9 @@
 	* - <a href="kdeprint/html/index.html"><b>kdeprint</b></a>
         *   (<a href="kdeprint/html/classes.html">classes</a>)\n
 	*   <i>High level  printer control functionality.</i>
+	* - <a href="krandr/html/index.html"><b>krandr</b></a>
+        *   (<a href="krandr/html/classes.html">classes</a>)\n
+	*   <i>High level Xorg configuration via XRandr.</i>
 	* - <a href="interfaces/html/index.html"><b>interfaces</b></a>
         *   (<a href="interfaces/html/classes.html">classes</a>)\n
 	*   <i>Defines interfaces for common components so that new implementations
@@ -77,7 +80,7 @@
 /**
 	* @page search Search the API documentation
 	*
-	* <br>Under construction.
+	* <br><form<FORM action="../search/omega" method="get"><INPUT type="text" name="P"><INPUT type="hidden" name="DEFAULTOP" value="or"><INPUT type="hidden" name="DB" value="trinity_api"><INPUT type="hidden" name="FMT" value="trinity_api"><INPUT type="hidden" name="xDB" value="default"><INPUT type="submit" value="Search"></FORM>
 	*
 	*/
 
