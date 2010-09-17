@@ -1019,6 +1019,15 @@ void KRun::init()
     }
   }
 
+  if ((m_strURL.protocol().startsWith("http")) && (m_strURL.url() == "http://default.browser")) {
+    KURL::List urls;
+    run( "kfmclient openProfile webbrowsing", urls );
+    m_bFinished = true;
+    // will emit the error and autodelete this
+    m_timer.start( 0, true );
+    return;
+  }
+
   // Did we already get the information that it is a directory ?
   if ( S_ISDIR( m_mode ) )
   {
