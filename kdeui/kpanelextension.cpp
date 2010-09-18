@@ -32,9 +32,9 @@ class KPanelExtensionPrivate
 {
 public:
     KPanelExtensionPrivate() 
-      : _size(KPanelExtension::SizeNormal), 
+      : _size(KPanelExtension::SizeSmall), 
         _customMenu(0),
-        _customSize(58),
+        _customSize(30),
         _reserveStrut(true)
     {}
 
