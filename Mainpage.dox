@@ -80,7 +80,9 @@
 /**
 	* @page search Search the API documentation
 	*
+	* \htmlonly
 	* <br><form<FORM action="../search/omega" method="get"><INPUT type="text" name="P"><INPUT type="hidden" name="DEFAULTOP" value="or"><INPUT type="hidden" name="DB" value="trinity_api"><INPUT type="hidden" name="FMT" value="trinity_api"><INPUT type="hidden" name="xDB" value="default"><INPUT type="submit" value="Search"></FORM>
+	* \endhtmlonly
 	*
 	*/
 
