@@ -1,6 +1,6 @@
-/** @mainpage Framework for KDE Graphical Components
+/** @mainpage Framework for Trinity Graphical Components
 
-This library implements the framework for KDE parts, which are
+This library implements the framework for Trinity parts, which are
 elaborate widgets with a user-interface defined in terms of actions
 (menu items, toolbar icons). See KParts::Part.
 

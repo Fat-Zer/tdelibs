@@ -1,11 +1,11 @@
-/** @mainpage The KDE Daemon
+/** @mainpage The Trinity Daemon
 
-KDED runs in the background and performs a number of small tasks.  Some
+TrinityD runs in the background and performs a number of small tasks.  Some
 of these tasks are built in, others are started on demand.
 <p>
 The chances are you are looking here because you want to write a
-KDED module.  For that, see KDEDModule in kdecore and the
-<a href="http://websvn.kde.org/trunk/KDE/kdelibs/kded/README.kded?view=markup">KDED
+TrinityD module.  For that, see TrinityDModule in kdecore and the
+<a href="http://websvn.kde.org/trunk/Trinity/kdelibs/kded/README.kded?view=markup">TrinityD
 README</a>.
 
 
@@ -22,5 +22,5 @@ Waldo Bastian \<bastian@kde.org\>
 */
 
 // DOXYGEN_REFERENCES = kdecore kdeui kio
-// DOXYGEN_SET_PROJECT_NAME = KDED
+// DOXYGEN_SET_PROJECT_NAME = TrinityD
 // vim:ts=4:sw=4:expandtab:filetype=doxygen

@@ -6,10 +6,10 @@
 */
 
 /**
-* @mainpage The KDE User Interface library
+* @mainpage The Trinity User Interface library
 *
 * This library provides standard user interface elements for use in
-* KDE applications. If your KDE application has a GUI, you will almost
+* Trinity applications. If your Trinity application has a GUI, you will almost
 * certainly link to libkdeui.
 *
 * Most applications with single or multiple toplevel widgets

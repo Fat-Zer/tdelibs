@@ -1,4 +1,4 @@
-/** @mainpage KDE Initialization Routines
+/** @mainpage Trinity Initialization Routines
 
 kdeinit is a process launcher somewhat similar to the
 famous init used for booting UNIX.
@@ -6,7 +6,7 @@ famous init used for booting UNIX.
 It launches processes by forking and then loading a
 dynamic library which should contain a 'main(...)'
 function.  This both increases the startup speed and
-reduces the memory consumption of KDE applications.
+reduces the memory consumption of Trinity applications.
 
 kdeinit_wrapper, kshell and kwrapper provide methods
 of starting programs via kdeinit.

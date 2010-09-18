@@ -2,17 +2,17 @@
  * \mainpage A network-enabled file management system in a library
  *
  * This library implements almost all the file management functions you
- * will ever need. In fact, the %KDE file manager, Konqueror also uses
+ * will ever need. In fact, the %Trinity file manager, Konqueror also uses
  * this to provide its network-enabled file management.
  *
- * The easiest way to use this library from a %KDE application is via the
+ * The easiest way to use this library from a %Trinity application is via the
  * KIO::NetAccess class (for easy synchronous access) or via the
  * KIO::Job class (for more complex asynchronous jobs).
  *
  * This library also implements the System Configuration Cache (KSycoca).
  *
  * KMimeType:
- * The notion of a file type, already existing in KDE-1.x
+ * The notion of a file type, already existing in Trinity-1.x
  *
  * KService:
  * To a mimetype are bound one or more applications, now called services.
@@ -33,9 +33,9 @@
  * Has its own language, in order to allow complex queries.
  *
  *
- * \section KDE Filedialog widget and associated classes.
+ * \section Trinity Filedialog widget and associated classes.
  *
- * This library also provides the KDE file selector widget,
+ * This library also provides the Trinity file selector widget,
  * its building blocks and some other widgets, making use of the file dialog.
  *
  * The file dialog provides different views; there is a vertically scrolling

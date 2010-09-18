@@ -1,6 +1,6 @@
 /** \mainpage XRandr Interface for Trinity Applications
 
-The \b KRandr library adds the ability for %KDE applications to easily configure an Xorg display via XRandr.
+The \b KRandr library adds the ability for %Trinity applications to easily configure an Xorg display via XRandr.
 
 @authors
 Timothy Pearson \<kb9vqf@pearsoncomputing.net\>

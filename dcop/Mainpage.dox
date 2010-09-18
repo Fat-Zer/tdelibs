@@ -11,7 +11,7 @@ Either unix domain sockets or TCP/IP sockets are supported. DCOP is
 built on top of the Inter Client Exchange (ICE) protocol, which comes
 standard as a part of X11R6 and later. It also depends on Qt, but
 beyond that it does not require any other libraries. Because of this,
-it is extremely lightweight, enabling it to be linked into all KDE
+it is extremely lightweight, enabling it to be linked into all Trinity
 applications with low overhead.
 
 \section model Model:
@@ -270,7 +270,7 @@ class MyInterface : virtual public DCOPObject
 As you can see, you're essentially declaring an abstract base class, which
 virtually inherits from DCOPObject.
 
-If you're using the standard KDE build scripts, then you can simply
+If you're using the standard Trinity build scripts, then you can simply
 add this file (which you would call MyInterface.h) to your sources
 directory. Then you edit your Makefile.am, adding 'MyInterface.skel'
 to your SOURCES list and MyInterface.h to include_HEADERS.
@@ -551,7 +551,7 @@ stream << pid;
 kapp->dcopClient()->emitDCOPSignal("clientDied(pid_t)", params);
 \endcode
 
-The task manager of the KDE panel connects to this signal. It uses an 
+The task manager of the Trinity panel connects to this signal. It uses an 
 anonymous connection (it doesn't require that the signal is being emitted
 by KLauncher) that is non-volatile:
 
@@ -570,7 +570,7 @@ a clientDied(void) DCOP function.
 \section conclusion Conclusion:
 
 Hopefully this document will get you well on your way into the world of
-inter-process communication with KDE!  Please direct all comments and/or
-suggestions to the KDE Core Developers List \<kde-core-devel@kde.org\>.
+inter-process communication with Trinity!  Please direct all comments and/or
+suggestions to the Trinity Core Developers List \<kde-core-devel@kde.org\>.
 
 */

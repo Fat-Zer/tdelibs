@@ -1,7 +1,7 @@
-/** @mainpage KDE Documentation Tools
+/** @mainpage Trinity Documentation Tools
 
 Provides a KIO slave for accessing application documentation for
-KDE and GNOME applications.
+Trinity and GNOME applications.
 
 @authors
 Eric Bischoff

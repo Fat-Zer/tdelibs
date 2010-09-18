@@ -1,10 +1,10 @@
 /**
- * \mainpage The KDEfx Library
+ * \mainpage The Trinity special effects [fx] Library
  *
  * This library provides various classes related to image and pixmap
  * manipulation, a class that provides information about CPU support
  * for architecture specific features, as well as the base class for
- * the %KDE widget styles.
+ * the %Trinity widget styles.
  *
  * The two graphical effects classes, KImageEffect and KPixmapEffect,
  * provide static methods for applying graphical effects to images and
@@ -23,7 +23,7 @@
  * architecture extensions that are useful when processing images,
  * such as MMX, SSE, 3DNow! and AltiVec.
  *
- * KStyle is the base class for the %KDE widget styles. It simplifies
+ * KStyle is the base class for the %Trinity widget styles. It simplifies
  * and extends the QStyle API in order to make style coding easier.
  * It also provides an internal menu transparency and drop shadow
  * engine, which means that all styles inheriting this class will
