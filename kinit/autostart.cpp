@@ -130,45 +130,45 @@ AutoStart::loadAutoStartList()
        if (config.readBoolEntry("Hidden", false))
           continue;
 
-#if 0
        // Check to see if the most important ( usually ~/.config/autostart or ~/.kde3/Autostart) XDG directory
        // has overridden the Hidden directive and honor it if set to True
        bool autostartOverriddenAndDisabled = false;
-       for(TQStringList::ConstIterator localit = kdefiles.begin();
-           localit != kdefiles.end();
+       for(TQStringList::ConstIterator localit = files.begin();
+           localit != files.end();
            ++localit)
        {
-           // Same local file name?
-           TQString localOuter;
-           TQString localInner;
-           int slashPos = (*it).findRev( '/', -1, TRUE );
-           if (slashPos == -1) {
-               localOuter = (*it);
-           }
-           else {
-               localOuter = (*it).mid(slashPos+1);
-           }
-           slashPos = (*localit).findRev( '/', -1, TRUE );
-           if (slashPos == -1) {
-               localInner = (*localit);
-           }
-           else {
-               localInner = (*localit).mid(slashPos+1);
-           }
-           if (localOuter == localInner) {
-               // Overridden!
-               // But is Hidden == True?
-               KDesktopFile innerConfig(*it, true);
-               if (innerConfig.readBoolEntry("Hidden", false)) {
-                   // Override confirmed; exit speedily without autostarting
-                   autostartOverriddenAndDisabled = true;
+           if (((*localit).startsWith(KGlobal::dirs()->localxdgconfdir()) == true) || ((*localit).startsWith(KGlobal::dirs()->localkdedir()) == true)) {
+               // Same local file name?
+               TQString localOuter;
+               TQString localInner;
+               int slashPos = (*it).findRev( '/', -1, TRUE );
+               if (slashPos == -1) {
+                   localOuter = (*it);
+               }
+               else {
+                   localOuter = (*it).mid(slashPos+1);
+               }
+               slashPos = (*localit).findRev( '/', -1, TRUE );
+               if (slashPos == -1) {
+                   localInner = (*localit);
+               }
+               else {
+                   localInner = (*localit).mid(slashPos+1);
+               }
+               if (localOuter == localInner) {
+                   // Overridden!
+                   // But is Hidden == True?
+                   KDesktopFile innerConfig(*localit, true);
+                   if (innerConfig.readBoolEntry("Hidden", false)) {
+                       // Override confirmed; exit speedily without autostarting
+                       autostartOverriddenAndDisabled = true;
+                   }
                }
            }
        }
 
        if (autostartOverriddenAndDisabled == true)
            continue;
-#endif
 
        if (config.hasKey("OnlyShowIn"))
        {
