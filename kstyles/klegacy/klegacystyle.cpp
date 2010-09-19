@@ -1898,23 +1898,23 @@ void KLegacyStyle::polish(TQWidget *widget) {
     bool immediateRender = false;
     bool bgPixmap = false;
 
-    if (widget->inherits("TQButton")) {
+    if (widget->inherits("QButton")) {
 	metaobject = TQButton::staticMetaObject();
 	eventFilter = true;
     }
 
-    if (widget->inherits("TQComboBox")) {
+    if (widget->inherits("QComboBox")) {
 	metaobject = TQComboBox::staticMetaObject();
 	eventFilter = true;
     }
 
-    if (widget->inherits("TQScrollBar")) {
+    if (widget->inherits("QScrollBar")) {
 	metaobject = TQScrollBar::staticMetaObject();
 	eventFilter = true;
 	mouseTrack = true;
     }
 
-    if (widget->inherits("TQMenuBar")) {
+    if (widget->inherits("QMenuBar")) {
 	eventFilter = true;
 	immediateRender = true;
 
@@ -1930,7 +1930,7 @@ void KLegacyStyle::polish(TQWidget *widget) {
 	widget->setBackgroundMode(TQWidget::PaletteBackground);
     }
 
-    if (widget->inherits("TQToolBar")) {
+    if (widget->inherits("QToolBar")) {
 	metaobject = TQToolBar::staticMetaObject();
 
 	eventFilter = true;
@@ -1944,7 +1944,7 @@ void KLegacyStyle::polish(TQWidget *widget) {
 	widget->setBackgroundMode(TQWidget::PaletteBackground);
     }
 
-    if (widget->inherits("TQLineEdit")) {
+    if (widget->inherits("QLineEdit")) {
 	metaobject = TQLineEdit::staticMetaObject();
 
 	eventFilter = true;
@@ -1968,7 +1968,7 @@ void KLegacyStyle::polish(TQWidget *widget) {
 	detail = "base";
     }
 
-    if (widget->inherits("TQPopupMenu")) {
+    if (widget->inherits("QPopupMenu")) {
 	qDebug("polishing popup '%s'", widget->className());
 	metaobject = TQPopupMenu::staticMetaObject();
 	widget->setBackgroundMode(TQWidget::PaletteBackground);
@@ -2544,7 +2544,7 @@ void KLegacyStyle::drawComboButton(TQPainter *p, int x, int y, int w, int h,
     key.data.state = KLegacy::Normal;
     key.data.shadow = KLegacy::Out;
 
-    if (priv->lastWidget && priv->lastWidget->inherits("TQComboBox"))
+    if (priv->lastWidget && priv->lastWidget->inherits("QComboBox"))
 	key.data.state = KLegacy::Prelight;
 
     TQPixmap *pix = gobj->draw(key, w, h, "optionmenu");
@@ -3081,7 +3081,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	{
 	    TQWidget *w = (TQWidget *) obj;
 
-	    if (w->inherits("TQPopupMenu") && w->width() < 700) {
+	    if (w->inherits("QPopupMenu") && w->width() < 700) {
 		GtkObject *gobj = priv->gtkDict.find(TQPopupMenu::staticMetaObject());
 
 		if (gobj) {
@@ -3151,7 +3151,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		    if (p && (! p->isNull()))
 			w->setBackgroundPixmap(*p);
 		}
-	    } else if (w->inherits("TQLineEdit")) {
+	    } else if (w->inherits("QLineEdit")) {
 		GtkObject *gobj = priv->gtkDict.find(TQLineEdit::staticMetaObject());
 
 		if (gobj) {
@@ -3191,8 +3191,8 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 			w->setPalette(pal);
 		    }
 		}
-	    } else if (w->inherits("TQMenuBar") ||
-		       w->inherits("TQToolBar")) {
+	    } else if (w->inherits("QMenuBar") ||
+		       w->inherits("QToolBar")) {
 		GtkObject *gobj = priv->gtkDict.find(TQMenuBar::staticMetaObject());
 
 		if (gobj) {
@@ -3256,13 +3256,13 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 
     case TQEvent::Enter:
 	{
-	    if (obj->inherits("TQPushButton") ||
-		obj->inherits("TQComboBox") ||
-		obj->inherits("TQSlider") ||
+	    if (obj->inherits("QPushButton") ||
+		obj->inherits("QComboBox") ||
+		obj->inherits("QSlider") ||
 		obj->inherits("QScrollbar")) {
 		priv->lastWidget = (TQWidget *) obj;
 		priv->lastWidget->repaint(false);
-	    } else if (obj->inherits("TQRadioButton")) {
+	    } else if (obj->inherits("QRadioButton")) {
 		TQWidget *w = (TQWidget *) obj;
 
 		if (! w->isTopLevel() && w->isEnabled()) {
@@ -3290,7 +3290,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 			}
 		    }
 		}
-	    } else if (obj->inherits("TQCheckBox")) {
+	    } else if (obj->inherits("QCheckBox")) {
 		TQWidget *w = (TQWidget *) obj;
 
 		if (! w->isTopLevel() && w->isEnabled()) {
@@ -3328,8 +3328,8 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	    if (obj == priv->lastWidget) {
 		priv->lastWidget = 0;
 		((TQWidget *) obj)->repaint(false);
-	    } else if (obj->inherits("TQRadioButton") ||
-		       obj->inherits("TQCheckBox")) {
+	    } else if (obj->inherits("QRadioButton") ||
+		       obj->inherits("QCheckBox")) {
 		TQWidget *w = (TQWidget *) obj;
 
 		if (! w->isTopLevel()) {
@@ -3346,7 +3346,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	{
 	    TQMouseEvent *me = (TQMouseEvent *) e;
 	    priv->mousePos = me->pos();
-	    if (obj->inherits("TQScrollBar") &&
+	    if (obj->inherits("QScrollBar") &&
 		(! (me->state() & (LeftButton | MidButton | RightButton)))) {
 		priv->hovering = true;
 		((TQWidget *) obj)->repaint(false);
