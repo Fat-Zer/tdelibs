@@ -1317,7 +1317,7 @@ void KFilePropsPlugin::applyChanges()
 
   kdDebug(250) << "KFilePropsPlugin::applyChanges" << endl;
 
-  if (nameArea->inherits("TQLineEdit"))
+  if (nameArea->inherits("QLineEdit"))
   {
     TQString n = ((TQLineEdit *) nameArea)->text();
     // Remove trailing spaces (#4345)

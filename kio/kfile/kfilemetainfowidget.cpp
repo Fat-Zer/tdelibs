@@ -196,7 +196,7 @@ TQWidget* KFileMetaInfoWidget::makeIntWidget()
 
     if (m_validator)
     {
-        if (m_validator->inherits("TQIntValidator"))
+        if (m_validator->inherits("QIntValidator"))
         {
             sb->setMinValue(static_cast<TQIntValidator*>(m_validator)->bottom());
             sb->setMaxValue(static_cast<TQIntValidator*>(m_validator)->top());
@@ -221,7 +221,7 @@ TQWidget* KFileMetaInfoWidget::makeDoubleWidget()
 
     if (m_validator)
     {
-        if (m_validator->inherits("TQDoubleValidator"))
+        if (m_validator->inherits("QDoubleValidator"))
         {
             dni->setMinValue(static_cast<TQDoubleValidator*>(m_validator)->bottom());
             dni->setMaxValue(static_cast<TQDoubleValidator*>(m_validator)->top());
@@ -301,7 +301,7 @@ void KFileMetaInfoWidget::reparentValidator( TQWidget *widget,
 
 void KFileMetaInfoWidget::slotChanged(bool value)
 {
-    Q_ASSERT(m_widget->inherits("TQComboBox"));
+    Q_ASSERT(m_widget->inherits("QComboBox"));
     m_value = TQVariant(value);
     emit valueChanged(m_value);
     m_dirty = true;
@@ -309,7 +309,7 @@ void KFileMetaInfoWidget::slotChanged(bool value)
 
 void KFileMetaInfoWidget::slotChanged(int value)
 {
-    Q_ASSERT(m_widget->inherits("TQSpinBox"));
+    Q_ASSERT(m_widget->inherits("QSpinBox"));
     m_value = TQVariant(value);
     emit valueChanged(m_value);
     m_dirty = true;
@@ -342,7 +342,7 @@ void KFileMetaInfoWidget::slotLineEditChanged(const TQString& value)
 // that may be a little expensive for long texts, but what can we do?
 void KFileMetaInfoWidget::slotMultiLineEditChanged()
 {
-    Q_ASSERT(m_widget->inherits("TQTextEdit"));
+    Q_ASSERT(m_widget->inherits("QTextEdit"));
     m_value = TQVariant( static_cast<const TQTextEdit*>( sender() )->text() );
     emit valueChanged(m_value);
     m_dirty = true;
