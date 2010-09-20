@@ -247,7 +247,7 @@ void KIconView::emitExecute( TQIconViewItem *item, const TQPoint &pos )
 
   m_pAutoSelect->stop();
 
-  //Don´t emit executed if in SC mode and Shift or Ctrl are pressed
+  //Donï¿½t emit executed if in SC mode and Shift or Ctrl are pressed
   if( !( m_bUseSingle && ((keybstate & ShiftButton) || (keybstate & ControlButton)) ) ) {
     setSelected( item, false );
     viewport()->unsetCursor();
@@ -467,6 +467,8 @@ KIconViewItem::~KIconViewItem()
 
 void KIconViewItem::calcRect( const TQString& text_ )
 {
+    bool drawRoundedRect = KGlobalSettings::iconUseRoundedRect();
+
     Q_ASSERT( iconView() );
     if ( !iconView() )
         return;
@@ -548,7 +550,10 @@ void KIconViewItem::calcRect( const TQString& text_ )
     r = m_wordWrap->boundingRect();
 
     int realWidth = QMAX( QMIN( r.width() + 4, tw ), fm->width( "X" ) );
-    itemTextRect.setWidth( realWidth + 2);
+    if (drawRoundedRect == true)
+      itemTextRect.setWidth( realWidth + 2);
+    else
+      itemTextRect.setWidth( realWidth );
     itemTextRect.setHeight( r.height() );
 
     int w = 0;    int h = 0;    int y = 0;
@@ -699,13 +704,23 @@ void KIconViewItem::paintPixmap( TQPainter *p, const TQColorGroup &cg )
 
 void KIconViewItem::paintText( TQPainter *p, const TQColorGroup &cg )
 {
-    int textX = textRect( false ).x() + 4;
+    bool drawRoundedRect = KGlobalSettings::iconUseRoundedRect();
+    int textX;
+    if (drawRoundedRect == true)
+      textX = textRect( false ).x() + 4;
+    else
+      textX = textRect( false ).x() + 2;
     int textY = textRect( false ).y();
 
     if ( isSelected() ) {
+      if (drawRoundedRect == true) {
 	p->setBrush(TQBrush(cg.highlight()));
 	p->setPen(TQPen(cg.highlight()));
-	p->drawRoundRect( textRect( false ) ,1000/textRect(false).width(),1000/textRect(false).height() );		
+	p->drawRoundRect( textRect( false ) ,1000/textRect(false).width(),1000/textRect(false).height() );
+      }
+      else {
+        p->fillRect( textRect( false ), cg.highlight() );
+      }
         p->setPen( TQPen( cg.highlightedText() ) );
     } else {
         if ( iconView()->itemTextBackground() != NoBrush )

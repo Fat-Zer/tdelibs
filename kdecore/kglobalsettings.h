@@ -24,6 +24,7 @@
 #include "kdelibs_export.h"
 
 #define KDE_DEFAULT_SINGLECLICK false
+#define KDE_DEFAULT_ICONTEXTROUNDED true
 #define KDE_DEFAULT_INSERTTEAROFFHANDLES 0
 #define KDE_DEFAULT_AUTOSELECTDELAY -1
 #define KDE_DEFAULT_CHANGECURSOR true
@@ -99,6 +100,12 @@ class KDECORE_EXPORT KGlobalSettings
      * @return true if single click mode, or false if double click mode.
      **/
     static bool singleClick();
+
+    /**
+     * Returns whether icon text is drawn in a rounded style
+     * @return true if rounded, or false if rectangular.
+     **/
+    static bool iconUseRoundedRect();
 
     /**
      * This enum describes the return type for insertTearOffHandle() whether to insert
