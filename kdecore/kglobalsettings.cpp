@@ -121,7 +121,7 @@ bool KGlobalSettings::singleClick()
 bool KGlobalSettings::iconUseRoundedRect()
 {
     KConfigGroup g( KGlobal::config(), "KDE" );
-    return g.readBoolEntry("IconUseRoundedRect", KDE_DEFAULT_SINGLECLICK);
+    return g.readBoolEntry("IconUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED);
 }
 
 KGlobalSettings::TearOffHandle KGlobalSettings::insertTearOffHandle()
