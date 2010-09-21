@@ -532,7 +532,7 @@ void KGlobalSettings::initStatic() // should be called initPaths(). Don't put an
 #ifdef Q_WS_WIN
       *s_documentPath = getWin32ShellFoldersPath("Personal");
 #else
-      *s_documentPath = QDir::homeDirPath() + "/Documents/";
+      *s_documentPath = TQDir::homeDirPath() + "/Documents/";
 #endif
     }
     *s_documentPath = TQDir::cleanDirPath( *s_documentPath );
