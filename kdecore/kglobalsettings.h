@@ -36,6 +36,7 @@
 #define KDE_DEFAULT_OPAQUE_RESIZE true
 #define KDE_DEFAULT_BUTTON_LAYOUT 0
 #define KDE_DEFAULT_SHADE_SORT_COLUMN true
+#define KDE_DEFAULT_KONQ_ACTIVATION_EFFECT true
 
 class KURL;
 
@@ -502,6 +503,16 @@ class KDECORE_EXPORT KGlobalSettings
      * @since 3.2
      */
     static bool showFilePreview(const KURL &);
+
+    /**
+     * This function determines if the user wishes to see icon
+     * activation effects in Konqueror or KDesktop
+     *
+     * @return Returns true if user wants to show activation effects.
+     *
+     * @since 3.5.12
+     */
+    static bool showKonqIconActivationEffect();
 
     /**
      * Whether the user wishes to use opaque resizing. Primarily

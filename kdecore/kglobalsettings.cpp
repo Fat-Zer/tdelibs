@@ -752,6 +752,13 @@ bool KGlobalSettings::showFilePreview(const KURL &url)
     return g.readBoolEntry(protocol, defaultSetting );
 }
 
+bool KGlobalSettings::showKonqIconActivationEffect()
+{
+    KConfigGroup g( KGlobal::config(), "KDE" );
+    return g.readBoolEntry("ShowKonqIconActivationEffect",
+        KDE_DEFAULT_KONQ_ACTIVATION_EFFECT);
+}
+
 bool KGlobalSettings::opaqueResize()
 {
     KConfigGroup g( KGlobal::config(), "KDE" );
