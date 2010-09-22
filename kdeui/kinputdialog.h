@@ -20,6 +20,10 @@
 #ifndef KINPUTDIALOG_H
 #define KINPUTDIALOG_H
 
+#include <tqt.h>
+
+#include <kdialogbase.h>
+
 class TQValidator;
 
 class KLineEdit;
@@ -28,8 +32,6 @@ class KDoubleSpinBox;
 class KComboBox;
 class KTextEdit;
 class KInputDialogPrivate;
-
-#include <kdialogbase.h>
 
 /**
  * The KInputDialog class provides a simple dialog to get a single value
