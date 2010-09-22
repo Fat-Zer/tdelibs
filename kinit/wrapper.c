@@ -530,8 +530,6 @@ int main(int argc, char **argv)
       }
       read_socket(sock, buffer, header.arg_length);
       pid = *((long *) buffer);
-//      if( !kwrapper ) /* kwrapper shouldn't print any output */
-//          printf("[trinity kinit] Launched process with pid = %ld\n", pid);
       if ( !(!kwrapper) )
           kwrapper_run( pid );
    }
