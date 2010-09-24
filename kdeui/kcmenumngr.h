@@ -24,6 +24,9 @@
 class TQWidget;
 class TQPopupMenu;
 class KContextMenuManagerPrivate;
+
+#include <tqt.h>
+
 #include <tqobject.h>
 #include <tqptrdict.h>
 #include <tqkeysequence.h>

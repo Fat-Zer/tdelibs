@@ -20,10 +20,12 @@
 #ifndef __klineeditdlg_h__
 #define __klineeditdlg_h__
 
-class KLineEdit;
-class TQValidator;
+#include <tqt.h>
 
 #include <kdialogbase.h>
+
+class KLineEdit;
+class TQValidator;
 
 /**
  * @deprecated
