@@ -920,6 +920,9 @@ void KRun::init ( const KURL& url, TQWidget* window, const TQCString& asn, mode_
 void KRun::init()
 {
   kdDebug(7010) << "INIT called" << endl;
+
+  bool bypassErrorMessage = false;
+
   if (m_strURL.url().startsWith("$(")) {
       // check for environment variables and make necessary translations
       TQString aValue = m_strURL.url();
@@ -982,13 +985,16 @@ void KRun::init()
         nDollarPos = aValue.find( '$', nDollarPos );
       }
       m_strURL = KURL(aValue);
+      bypassErrorMessage = true;
   }
 
   if ( !m_strURL.isValid() )
   {
-    d->m_showingError = true;
-    KMessageBoxWrapper::error( d->m_window, i18n( "Malformed URL\n%1" ).arg( m_strURL.url() ) );
-    d->m_showingError = false;
+    if (bypassErrorMessage == false) {
+      d->m_showingError = true;
+      KMessageBoxWrapper::error( d->m_window, i18n( "Malformed URL\n%1" ).arg( m_strURL.url() ) );
+      d->m_showingError = false;
+    }
     m_bFault = true;
     m_bFinished = true;
     m_timer.start( 0, true );
