@@ -59,6 +59,7 @@
 #include <kmacroexpander.h>
 #include <kshell.h>
 #include <kde_file.h>
+#include <kstringhandler.h>
 
 #ifdef Q_WS_X11
 #include <kwin.h>
