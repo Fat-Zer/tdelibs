@@ -21,15 +21,17 @@
 #ifndef KFILEICONVIEW_H
 #define KFILEICONVIEW_H
 
-class KFileItem;
-class TQWidget;
-class TQLabel;
+#include <tqt.h>
 
 #include <kiconview.h>
 #include <kiconloader.h>
 #include <kfileview.h>
 #include <kmimetyperesolver.h>
 #include <kfile.h>
+
+class KFileItem;
+class TQWidget;
+class TQLabel;
 
 /**
  * An item for the iconview, that has a reference to its corresponding

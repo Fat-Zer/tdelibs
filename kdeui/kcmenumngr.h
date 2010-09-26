@@ -20,11 +20,6 @@
 #ifndef KCMENUMNGR_H
 #define KCMENUMNGR_H
 
-
-class TQWidget;
-class TQPopupMenu;
-class KContextMenuManagerPrivate;
-
 #include <tqt.h>
 
 #include <tqobject.h>
@@ -32,6 +27,10 @@ class KContextMenuManagerPrivate;
 #include <tqkeysequence.h>
 
 #include <kdelibs_export.h>
+
+class TQWidget;
+class TQPopupMenu;
+class KContextMenuManagerPrivate;
 
 /**
 @short Convenience class to mangage context menus
