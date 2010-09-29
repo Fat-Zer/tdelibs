@@ -195,7 +195,6 @@ void KHTMLParser::reset()
 
     form = 0;
     map = 0;
-    head = 0;
     end = false;
     isindex = 0;
 
@@ -612,8 +611,7 @@ bool KHTMLParser::insertNode(NodeImpl *n, bool flat)
             case ID_BASE:
                 if(!head) {
                     head = new HTMLHeadElementImpl(document);
-                    e = head;
-                    insertNode(e);
+                    insertNode(head.get());
                     handled = true;
                 }
                 break;
@@ -835,7 +833,7 @@ NodeImpl *KHTMLParser::getElement(Token* t)
     case ID_HEAD:
         if(!head && current->id() == ID_HTML) {
             head = new HTMLHeadElementImpl(document);
-            n = head;
+             n = head.get();
         }
         break;
     case ID_BODY:
@@ -1684,12 +1682,12 @@ void KHTMLParser::createHead()
     head = new HTMLHeadElementImpl(document);
     HTMLElementImpl *body = doc()->body();
     int exceptioncode = 0;
-    doc()->firstChild()->insertBefore(head, body, exceptioncode);
+    doc()->firstChild()->insertBefore(head.get(), body, exceptioncode);
     if ( exceptioncode ) {
 #ifdef PARSER_DEBUG
         kdDebug( 6035 ) << "creation of head failed!!!!" << endl;
 #endif
-        delete head;
+        delete head.get();
         head = 0;
     }
 }

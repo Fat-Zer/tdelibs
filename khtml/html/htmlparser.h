@@ -42,6 +42,7 @@
 #include "dom/dom_string.h"
 #include "xml/dom_nodeimpl.h"
 #include "html/html_documentimpl.h"
+#include "html/RefPtr.h"
 
 class KHTMLView;
 class HTMLStackElem;
@@ -148,7 +149,7 @@ private:
     /*
      * the head element. Needed for crappy html which defines <base> after </head>
      */
-    DOM::HTMLHeadElementImpl *head;
+    RefPtr<DOM::HTMLHeadElementImpl> head;
 
     /*
      * a possible <isindex> element in the head. Compatibility hack for

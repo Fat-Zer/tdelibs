@@ -1113,7 +1113,9 @@ TQStringList KSSLCertificate::subjAltNames() const {
 		}
 
 		TQString s = (const char *)d->kossl->ASN1_STRING_data(val->d.ia5);
-		if (!s.isEmpty()) {
+		if (!s.isEmpty()  &&
+				/* skip subjectAltNames with embedded NULs */
+				s.length() == d->kossl->ASN1_STRING_length(val->d.ia5)) {
 			rc += s;
 		}
 	}
