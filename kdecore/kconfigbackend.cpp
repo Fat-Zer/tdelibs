@@ -461,7 +461,7 @@ void KConfigINIBackEnd::parseSingleConfigFile(TQFile &rFile,
 
    TQCString aCurrentGroup("<default>");
 
-   static unsigned int ll = localeString.length();
+   unsigned int ll = localeString.length();
 
 #ifdef HAVE_MMAP
    static volatile const char *map;
