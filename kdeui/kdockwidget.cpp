@@ -3105,7 +3105,7 @@ void KDockArea::resizeEvent(TQResizeEvent *rsize)
 #ifndef NO_KDE2
 //    kdDebug(282)<<"KDockArea::resize"<<endl;
 #endif
-    TQObjectList *list=queryList("TQWidget",0,false);
+    TQObjectList *list=queryList("QWidget",0,false);
 
     TQObjectListIt it( *list ); // iterate over the buttons
     TQObject *obj;
