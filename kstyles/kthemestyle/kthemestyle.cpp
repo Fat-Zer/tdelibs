@@ -15,7 +15,7 @@ Port version 0.9.7
 
  KDE3 HighColor Style
 	Copyright (C) 2001 Karol Szwed       <gallium@kde.org>
-	(C) 2001 Fredrik Höglund   <fredrik@kde.org>
+	(C) 2001 Fredrik Hï¿½glund   <fredrik@kde.org>
 
 	Drawing routines adapted from the KDE2 HCStyle,
 		Copyright (C) 2000 Daniel M. Duley   <mosfet@kde.org>
@@ -488,7 +488,7 @@ bool KThemeStyle::eventFilter( TQObject* object, TQEvent* event )
             w->setPalette(pal);
         }
     }
-    if (!qstrcmp(object->name(), "kde toolbar widget") && object->inherits("TQLabel"))
+    if (!qstrcmp(object->name(), "kde toolbar widget") && object->inherits("QLabel"))
     {
         TQWidget* lb = static_cast<TQWidget*>(object);
         if (lb->backgroundMode() == Qt::PaletteButton)

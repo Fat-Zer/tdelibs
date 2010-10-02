@@ -3,7 +3,7 @@
  *
  * KDE3 HighColor Style (version 1.0)
  * Copyright (C) 2001-2002 Karol Szwed      <gallium@kde.org>
- *           (C) 2001-2002 Fredrik Höglund  <fredrik@kde.org> 
+ *           (C) 2001-2002 Fredrik Hï¿½glund  <fredrik@kde.org> 
  *
  * Drawing routines adapted from the KDE2 HCStyle,
  * Copyright (C) 2000 Daniel M. Duley       <mosfet@kde.org>
@@ -189,9 +189,9 @@ HighColorStyle::~HighColorStyle()
 void HighColorStyle::polish(TQWidget* widget)
 {
 	// Put in order of highest occurrence to maximise hit rate
-	if (widget->inherits("TQPushButton")) {
+	if (widget->inherits("QPushButton")) {
 		widget->installEventFilter(this);
-	} else if (widget->inherits("TQMenuBar") || widget->inherits("TQPopupMenu")) {
+	} else if (widget->inherits("QMenuBar") || widget->inherits("QPopupMenu")) {
 		widget->setBackgroundMode(TQWidget::NoBackground);
 	} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
 		widget->installEventFilter(this);
@@ -210,10 +210,10 @@ void HighColorStyle::polish(TQWidget* widget)
 
 void HighColorStyle::unPolish(TQWidget* widget)
 {
-	if (widget->inherits("TQPushButton")) {
+	if (widget->inherits("QPushButton")) {
 		widget->removeEventFilter(this);
 	}
-	else if (widget->inherits("TQMenuBar") || widget->inherits("TQPopupMenu")) {
+	else if (widget->inherits("QMenuBar") || widget->inherits("QPopupMenu")) {
 		widget->setBackgroundMode(TQWidget::PaletteBackground);
 	} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
 		widget->removeEventFilter(this);
@@ -1648,7 +1648,7 @@ void HighColorStyle::drawComplexControl( ComplexControl control,
 				}
 				else if (widget->parent())
 				{
-					if (widget->parent()->inherits("TQToolBar"))
+					if (widget->parent()->inherits("QToolBar"))
 					{
 						TQToolBar* parent = (TQToolBar*)widget->parent();
 						TQRect pr = parent->rect();

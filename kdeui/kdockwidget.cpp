@@ -1699,7 +1699,7 @@ void KDockManager::activate()
         obj->show();
     }
   }
-  if ( !main->inherits("TQDialog") ) main->show();
+  if ( !main->inherits("QDialog") ) main->show();
 }
 
 bool KDockManager::eventFilter( TQObject *obj, TQEvent *event )

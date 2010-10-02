@@ -343,7 +343,7 @@ TQRect KCompletionBox::calculateGeometry() const
     // to adjust it. Do that here as well, for consistency
     const TQObject* combo;
     if ( d->m_parent && (combo = d->m_parent->parent() ) &&
-        combo->inherits("TQComboBox") )
+        combo->inherits("QComboBox") )
     {
         const TQComboBox* cb = static_cast<const TQComboBox*>(combo);
 

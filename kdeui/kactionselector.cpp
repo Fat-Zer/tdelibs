@@ -392,7 +392,7 @@ bool KActionSelector::eventFilter( TQObject *o, TQEvent *e )
       }
       return true;
     }
-    else if ( o->inherits( "TQListBox" ) )
+    else if ( o->inherits( "QListBox" ) )
     {
       switch ( ((TQKeyEvent*)e)->key() )
       {

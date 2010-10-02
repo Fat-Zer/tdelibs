@@ -250,10 +250,10 @@ WebStyle::unPolish(TQApplication *)
   void
 WebStyle::polish(TQWidget * w)
 {
-  if (w->inherits("TQPushButton"))
+  if (w->inherits("QPushButton"))
     w->installEventFilter(this);
 
-  else if (w->inherits("TQGroupBox") || w->inherits("TQFrame"))
+  else if (w->inherits("QGroupBox") || w->inherits("QFrame"))
   {
     TQFrame * f(static_cast<TQFrame *>(w));
 
@@ -282,7 +282,7 @@ WebStyle::polish(TQWidget * w)
   void
 WebStyle::unPolish(TQWidget * w)
 {
-  if (w->inherits("TQPushButton"))
+  if (w->inherits("QPushButton"))
     w->removeEventFilter(this);
 
   else if (w == _currentFrame)
@@ -1046,7 +1046,7 @@ WebStyle::drawKToolBarButton
 {
   bool toggleAndOn = false;
 
-  if (button->inherits("TQButton"))
+  if (button->inherits("QButton"))
   {
     TQButton * b = static_cast<TQButton *>(button);
     toggleAndOn = b->isToggleButton() && b->isOn();

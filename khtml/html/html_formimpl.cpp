@@ -964,7 +964,7 @@ class FocusHandleWidget : public QWidget
 {
 public:
     void focusNextPrev(bool n) {
-        if (!focusNextPrevChild(n) && inherits("TQTextEdit"))
+        if (!focusNextPrevChild(n) && inherits("QTextEdit"))
             TQWidget::focusNextPrevChild(n);
     }
 };
