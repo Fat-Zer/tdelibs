@@ -1,0 +1,69 @@
+#################################################
+#
+#  (C) 2010 Serghei Amelian
+#  serghei (DOT) amelian (AT) gmail.com
+#
+#  Improvements and feedback are welcome
+#
+#  This file is released under GPL >= 2
+#
+#################################################
+
+add_subdirectory( ksettings )
+
+add_definitions(
+  ${TQT_CFLAGS_OTHER}
+)
+
+include_directories(
+   ${TQT_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_SOURCE_DIR}
+  ${CMAKE_SOURCE_DIR}/dcop
+  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/kio/kio
+  ${CMAKE_SOURCE_DIR}/kutils
+  ${CMAKE_SOURCE_DIR}/interfaces/kregexpeditor
+)
+
+link_directories(
+  ${TQT_LIBRARY_DIRS}
+)
+
+
+##### headers ###################################
+
+install( FILES
+    kfind.h kfinddialog.h kreplace.h kreplacedialog.h
+    kcmoduleinfo.h kcmoduleloader.h kcmultidialog.h
+    kmultitabbar.h kplugininfo.h kcmoduleproxy.h
+    kpluginselector.h kcmodulecontainer.h
+  DESTINATION ${INCLUDE_INSTALL_DIR} )
+
+
+##### other data ################################
+
+install( FILES kplugininfo.desktop DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+
+
+#### kutils #####################################
+
+set( target kutils )
+
+set( ${target}_SRCS
+  kfind.cpp kfinddialog.cpp kreplace.cpp
+  kreplacedialog.cpp kcmoduleinfo.cpp kcmoduleloader.cpp
+  kcmultidialog.cpp kmultitabbar.cpp kplugininfo.cpp
+  kcmoduleproxy.cpp kpluginselector.cpp kcmodulecontainer.cpp
+  kcmoduleproxyIface.skel kcmoduleproxyIfaceImpl.cpp
+)
+
+tde_add_library( ${target} SHARED AUTOMOC
+  SOURCES ${${target}_SRCS}
+  VERSION 1.2.0
+  LINK ksettings-static kparts-shared
+  DESTINATION ${LIB_INSTALL_DIR}
+  DEPENDENCIES dcopidl
+)
