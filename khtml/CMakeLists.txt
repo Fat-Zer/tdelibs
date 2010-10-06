@@ -9,7 +9,7 @@
 #
 #################################################
 
-set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${WOVERLOADED_VIRTUAL} )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${WOVERLOADED_VIRTUAL}" )
 
 add_subdirectory( misc )
 add_subdirectory( dom )
