@@ -163,7 +163,7 @@ tde_add_library( ${target} SHARED AUTOMOC
 
 set( target kspell )
 
-configure_file( dummy.cpp.cmake dummy.cpp COPYONLY )
+configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy.cpp COPYONLY )
 
 tde_add_library( ${target} SHARED
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/dummy.cpp
