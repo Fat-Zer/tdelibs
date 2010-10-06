@@ -15,4 +15,5 @@ include_directories(
 
 tde_add_library( ltdlc STATIC_PIC
   SOURCES ltdl.c
+  LINK ${DL_LIBRARIES}
 )
