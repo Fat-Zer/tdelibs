@@ -44,19 +44,19 @@ OPTION( WITH_HSPELL "Enable hspell support" OFF )
 ##### paths setup ###############################
 
 if( NOT BIN_INSTALL_DIR )
-  set( BIN_INSTALL_DIR bin )
+  set( BIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin )
 endif ( NOT BIN_INSTALL_DIR )
 
 if( NOT LIB_INSTALL_DIR )
-  set( LIB_INSTALL_DIR lib )
+  set( LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib )
 endif( NOT LIB_INSTALL_DIR )
 
 if( NOT INCLUDE_INSTALL_DIR )
-  set( INCLUDE_INSTALL_DIR include )
+  set( INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include )
 endif( NOT INCLUDE_INSTALL_DIR )
 
 if( NOT SHARE_INSTALL_DIR )
-  set( SHARE_INSTALL_DIR share )
+  set( SHARE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share )
 endif( NOT SHARE_INSTALL_DIR )
 
 if( NOT ICONS_INSTALL_DIR )
@@ -72,11 +72,11 @@ if( NOT PLUGIN_INSTALL_DIR )
 endif( NOT PLUGIN_INSTALL_DIR )
 
 if( NOT SERVICES_INSTALL_DIR )
-  set( SERVICES_INSTALL_DIR share/services )
+  set( SERVICES_INSTALL_DIR ${SHARE_INSTALL_DIR}/services )
 endif( NOT SERVICES_INSTALL_DIR )
 
 if( NOT DATA_INSTALL_DIR )
-  set( DATA_INSTALL_DIR share/apps )
+  set( DATA_INSTALL_DIR ${SHARE_INSTALL_DIR}/apps )
 endif( NOT DATA_INSTALL_DIR )
 
 if( NOT HTML_INSTALL_DIR )
@@ -88,15 +88,15 @@ if( NOT CONFIG_INSTALL_DIR )
 endif( NOT CONFIG_INSTALL_DIR )
 
 if( NOT LOCALE_INSTALL_DIR )
-  set( LOCALE_INSTALL_DIR share/locale )
+  set( LOCALE_INSTALL_DIR ${SHARE_INSTALL_DIR}/locale )
 endif( NOT LOCALE_INSTALL_DIR )
 
 if( NOT PKGCONFIG_INSTALL_DIR )
-  set( PKGCONFIG_INSTALL_DIR lib/pkgconfig )
+  set( PKGCONFIG_INSTALL_DIR ${LIB_INSTALL_DIR}/pkgconfig )
 endif( NOT PKGCONFIG_INSTALL_DIR )
 
 if( NOT DCOP_PATH )
-  set( DCOP_PATH ${CMAKE_INSTALL_PREFIX}/${BIN_INSTALL_DIR} )
+  set( DCOP_PATH ${BIN_INSTALL_DIR} )
 endif( NOT DCOP_PATH )
 
 if( NOT KDEDIR )
@@ -114,6 +114,12 @@ endif( NOT SYSCONFDIR )
 if( NOT XDG_MENUDIR )
   set( XDG_MENUDIR ${SYSCONFDIR}/xdg/menus )
 endif( NOT XDG_MENUDIR )
+
+
+##### set PKG_CONFIG_PATH #######################
+
+set( ENV{PKG_CONFIG_PATH} "${PKG_CONFIG_PATH}:${PKGCONFIG_INSTALL_DIR}:${LIB_INSTALL_DIR}/pkgconfig:$ENV{PKG_CONFIG_PATH}" )
+message( STATUS $ENV{PKG_CONFIG_PATH} )
 
 
 ##### include our cmake modules #################
