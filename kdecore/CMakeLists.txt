@@ -35,10 +35,12 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/kdeui
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${LIBART_INCLUDE_DIRS}
+  ${LIBIDN_INCLUDE_DIRS}
 )
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
+  ${LIBIDN_LIBRARY_DIRS}
 )
 
 
@@ -130,7 +132,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
-  LINK ltdlc-static kdecorenetwork-static DCOP-shared kdefx-shared ${KDESVGICONS} ${ZLIB_LIBRARIES}
+  LINK ltdlc-static kdecorenetwork-static DCOP-shared kdefx-shared ${KDESVGICONS} ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES}
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )
