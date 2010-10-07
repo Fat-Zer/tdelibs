@@ -119,7 +119,6 @@ endif( NOT XDG_MENUDIR )
 ##### set PKG_CONFIG_PATH #######################
 
 set( ENV{PKG_CONFIG_PATH} "${PKG_CONFIG_PATH}:${PKGCONFIG_INSTALL_DIR}:${LIB_INSTALL_DIR}/pkgconfig:$ENV{PKG_CONFIG_PATH}" )
-message( STATUS $ENV{PKG_CONFIG_PATH} )
 
 
 ##### include our cmake modules #################
