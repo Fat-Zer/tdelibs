@@ -132,7 +132,8 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
-  LINK ltdlc-static kdecorenetwork-static DCOP-shared kdefx-shared ${KDESVGICONS} ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES}
+  EMBED kdecorenetwork-static
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared kdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES}
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )
@@ -185,10 +186,16 @@ tde_add_library( ${target} SHARED
 # FIXME need a little research about these parameters
 set( prefix ${CMAKE_INSTALL_PREFIX} )
 set( exec_prefix "\${prefix}" )
-set( libdir ${prefix}/${LIB_INSTALL_DIR} )
-set( incdir ${prefix}/${INCLUDE_INSTALL_DIR} )
-set( datadir ${prefix}/${DATA_INSTALL_DIR} )
+set( libdir ${LIB_INSTALL_DIR} )
+set( incdir ${INCLUDE_INSTALL_DIR} )
+set( datadir ${SHARE_INSTALL_DIR} )
+set( sysconfdir ${SYSCONFDIR} )
+
+string( REGEX REPLACE "^${SHARE_INSTALL_DIR}" "\${datadir}" kde_datadir ${DATA_INSTALL_DIR} )
+string( REGEX REPLACE "^${prefix}" "\${prefix}" includedir ${INCLUDE_INSTALL_DIR} )
+
 configure_file( kde-config.cpp.in kde-config.cpp @ONLY )
+
 
 tde_add_executable( kde-config
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/kde-config.cpp

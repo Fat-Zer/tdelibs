@@ -63,7 +63,8 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.2.0
-  LINK ksettings-static kparts-shared
+  EMBED ksettings-static
+  LINK kparts-shared
   DESTINATION ${LIB_INSTALL_DIR}
   DEPENDENCIES dcopidl
 )
