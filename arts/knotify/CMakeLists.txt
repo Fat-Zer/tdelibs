@@ -46,6 +46,8 @@ set( ${target}_SRCS
 
 if( ARTS_FOUND )
   set( LIBS artskde-shared )
+else( ARTS_FOUND )
+  set( LIBS kdeui-shared )
 endif( ARTS_FOUND )
 
 tde_add_kpart( ${target} AUTOMOC
