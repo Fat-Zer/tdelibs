@@ -765,10 +765,7 @@ add_subdirectory( kded )
 # add_subdirectory( kded_post )
 
 add_subdirectory( kdoctools )
-
-# FIXME is not very important, I will back there later
-# add_subdirectory( doc )
-
+add_subdirectory( doc )
 add_subdirectory( kparts )
 add_subdirectory( kutils )
 add_subdirectory( kspell2 )
