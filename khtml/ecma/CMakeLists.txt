@@ -58,7 +58,6 @@ set( ${target}_LUTS
 )
 
 tde_add_luts( ${${target}_LUTS} )
-kde3_automoc( ${${target}_SRCS} )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
