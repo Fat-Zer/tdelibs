@@ -11,14 +11,39 @@
 
 cmake_minimum_required( VERSION 2.6 )
 
-# FIXME KDE3_MODULE_DIR is not set; this is cmake bug?
-set( KDE3_MODULE_DIR "/usr/share/cmake/Modules" )
 
-# directory to our cmake modules
+##### general package setup #####################
+
+project( kdebase )
+
+set( PACKAGE kdelibs )
+set( VERSION "3.5.13" )
+
+
+##### include essential cmake modules ###########
+
+include( FindPkgConfig )
+include( CheckIncludeFile )
+include( CheckSymbolExists )
+include( CheckFunctionExists )
+include( CheckCSourceCompiles )
+include( CheckTypeSize )
+include( CheckCSourceRuns )
+
+
+##### include our cmake modules #################
+
 set( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" )
+include( TDEMacros )
+include( TDESetupPaths )
 
-project( kdelibs )
-set( VERSION "3.5.12" )
+
+##### setup and find essential stuff ############
+
+tde_setup_paths( )
+find_package( Qt )
+find_package( TQt )
+
 
 ##### user requested options ####################
 
@@ -41,89 +66,9 @@ OPTION( WITH_ASPELL "Enable aspell support" OFF )
 OPTION( WITH_HSPELL "Enable hspell support" OFF )
 
 
-##### paths setup ###############################
-
-if( NOT BIN_INSTALL_DIR )
-  set( BIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/bin )
-endif ( NOT BIN_INSTALL_DIR )
-
-if( NOT LIB_INSTALL_DIR )
-  set( LIB_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/lib )
-endif( NOT LIB_INSTALL_DIR )
-
-if( NOT INCLUDE_INSTALL_DIR )
-  set( INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/include )
-endif( NOT INCLUDE_INSTALL_DIR )
-
-if( NOT SHARE_INSTALL_DIR )
-  set( SHARE_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share )
-endif( NOT SHARE_INSTALL_DIR )
-
-if( NOT ICONS_INSTALL_DIR )
-  set( ICONS_INSTALL_DIR ${SHARE_INSTALL_DIR}/icons )
-endif( NOT ICONS_INSTALL_DIR )
-
-if( NOT MIME_INSTALL_DIR )
-  set( MIME_INSTALL_DIR ${SHARE_INSTALL_DIR}/mimelnk )
-endif( NOT MIME_INSTALL_DIR )
-
-if( NOT PLUGIN_INSTALL_DIR )
-  set( PLUGIN_INSTALL_DIR ${LIB_INSTALL_DIR}/kde3 )
-endif( NOT PLUGIN_INSTALL_DIR )
-
-if( NOT SERVICES_INSTALL_DIR )
-  set( SERVICES_INSTALL_DIR ${SHARE_INSTALL_DIR}/services )
-endif( NOT SERVICES_INSTALL_DIR )
-
-if( NOT DATA_INSTALL_DIR )
-  set( DATA_INSTALL_DIR ${SHARE_INSTALL_DIR}/apps )
-endif( NOT DATA_INSTALL_DIR )
-
-if( NOT HTML_INSTALL_DIR )
-  set( HTML_INSTALL_DIR ${SHARE_INSTALL_DIR}/doc/HTML )
-endif( NOT HTML_INSTALL_DIR )
-
-if( NOT CONFIG_INSTALL_DIR )
-  set( CONFIG_INSTALL_DIR ${SHARE_INSTALL_DIR}/config )
-endif( NOT CONFIG_INSTALL_DIR )
-
-if( NOT LOCALE_INSTALL_DIR )
-  set( LOCALE_INSTALL_DIR ${SHARE_INSTALL_DIR}/locale )
-endif( NOT LOCALE_INSTALL_DIR )
-
-if( NOT PKGCONFIG_INSTALL_DIR )
-  set( PKGCONFIG_INSTALL_DIR ${LIB_INSTALL_DIR}/pkgconfig )
-endif( NOT PKGCONFIG_INSTALL_DIR )
-
-if( NOT DCOP_PATH )
-  set( DCOP_PATH ${BIN_INSTALL_DIR} )
-endif( NOT DCOP_PATH )
-
-if( NOT KDEDIR )
-  set( KDEDIR ${CMAKE_INSTALL_PREFIX} )
-endif( NOT KDEDIR )
-
-
-#################################################
-
-
-if( NOT SYSCONFDIR )
-  set( SYSCONFDIR ${CMAKE_INSTALL_PREFIX}/etc )
-endif( NOT SYSCONFDIR )
-
-if( NOT XDG_MENUDIR )
-  set( XDG_MENUDIR ${SYSCONFDIR}/xdg/menus )
-endif( NOT XDG_MENUDIR )
-
-
 ##### set PKG_CONFIG_PATH #######################
 
 set( ENV{PKG_CONFIG_PATH} "${PKG_CONFIG_PATH}:${PKGCONFIG_INSTALL_DIR}:${LIB_INSTALL_DIR}/pkgconfig:$ENV{PKG_CONFIG_PATH}" )
-
-
-##### include our cmake modules #################
-
-include( TDEMacros )
 
 
 ##### check for CPU architecture ################
@@ -164,13 +109,7 @@ endif( NO_BUILTIN )
 
 ##### system checks #############################
 
-include( CheckIncludeFile )
-include( CheckSymbolExists )
-include( CheckFunctionExists )
-include( FindPkgConfig )
-include( CheckCSourceCompiles )
-include( CheckTypeSize )
-include( CheckCSourceRuns )
+
 
 check_include_file( "alloca.h" HAVE_ALLOCA_H )
 check_include_file( "arpa/nameser8_compat.h" HAVE_ARPA_NAMESER8_COMPAT_H )
@@ -549,27 +488,27 @@ endif( NOT LIBXSLT_FOUND )
 
 ##### check for Qt3 #############################
 
-find_package( Qt3 )
-if( NOT QT_FOUND )
-    message(FATAL_ERROR "\nQt3 are required, but not found on your system" )
-endif( NOT QT_FOUND )
+# find_package( Qt3 )
+# if( NOT QT_FOUND )
+#     message(FATAL_ERROR "\nQt3 are required, but not found on your system" )
+# endif( NOT QT_FOUND )
 
 
 ##### check for TQt #############################
 
-pkg_search_module( TQT TQt )
-if( NOT TQT_FOUND )
-    message(FATAL_ERROR "\nTQt are required, but not found on your system" )
-endif( NOT TQT_FOUND )
-
-set( QT_MOC_EXECUTABLE "tmoc" )
-
-# check if Qt is linked against Xft
-set( bak_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} )
-set( CMAKE_REQUIRED_LIBRARIES ${TQT_LDFLAGS} )
-check_function_exists( XftInit KDEINIT_USE_XFT )
-set( CMAKE_REQUIRED_LIBRARIES ${bak_CMAKE_REQUIRED_LIBRARIES} )
-unset( bak_CMAKE_REQUIRED_LIBRARIES )
+# pkg_search_module( TQT TQt )
+# if( NOT TQT_FOUND )
+#     message(FATAL_ERROR "\nTQt are required, but not found on your system" )
+# endif( NOT TQT_FOUND )
+#
+# set( QT_MOC_EXECUTABLE "tmoc" )
+#
+# # check if Qt is linked against Xft
+# set( bak_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} )
+# set( CMAKE_REQUIRED_LIBRARIES ${TQT_LDFLAGS} )
+# check_function_exists( XftInit KDEINIT_USE_XFT )
+# set( CMAKE_REQUIRED_LIBRARIES ${bak_CMAKE_REQUIRED_LIBRARIES} )
+# unset( bak_CMAKE_REQUIRED_LIBRARIES )
 
 
 ##### check for ALSA ############################

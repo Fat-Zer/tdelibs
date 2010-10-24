@@ -32,7 +32,7 @@ link_directories(
 ##### other data ################################
 
 install( FILES kcookiejar.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kded )
-install( FILES kcookiescfg.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+install( FILES kcookiescfg.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 install( FILES domain_info DESTINATION ${DATA_INSTALL_DIR}/khtml )
 
 

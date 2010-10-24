@@ -42,10 +42,10 @@ install( FILES
 
 ##### other data ################################
 
-install( FILES kresources_plugin.desktop kresources_manager.desktop DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+install( FILES kresources_plugin.desktop kresources_manager.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 # FIXME what is xdg_apps_DATA = kresources.desktop
-install( FILES kresources.desktop DESTINATION ${SHARE_INSTALL_DIR}/applications/kde )
+install( FILES kresources.desktop DESTINATION ${XDG_APPS_INSTALL_DIR} )
 
 
 ##### kresources ################################

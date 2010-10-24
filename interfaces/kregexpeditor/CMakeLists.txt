@@ -17,4 +17,4 @@ install( FILES
 
 ##### other data ################################
 
-install( FILES kregexpeditor.desktop DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+install( FILES kregexpeditor.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )

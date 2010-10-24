@@ -44,7 +44,7 @@ install( FILES
 
 ##### other data ################################
 
-install( FILES kspellclient.desktop DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+install( FILES kspellclient.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 
 #### kspell2base ################################

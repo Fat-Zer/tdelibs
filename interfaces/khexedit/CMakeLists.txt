@@ -19,4 +19,4 @@ install( FILES
 
 ##### other data ################################
 
-install( FILES kbytesedit.desktop DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+install( FILES kbytesedit.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )

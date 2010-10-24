@@ -45,7 +45,7 @@ install( FILES
 
 install( FILES
     kmediaplayerengine.desktop kmediaplayer.desktop
-  DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+  DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 
 ##### kmediaplayer ##############################

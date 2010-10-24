@@ -38,11 +38,11 @@ install( FILES
     application.desktop kurifilterplugin.desktop
     kcomprfilter.desktop kscan.desktop kdatatool.desktop
     kfileplugin.desktop kcmodule.desktop
-  DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+  DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
-install( FILES kioslave.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
-install( PROGRAMS useragent.pl proxytype.pl DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
-install( FILES renamedlgplugin.desktop DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+install( FILES kioslave.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
+install( PROGRAMS useragent.pl proxytype.pl DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
+install( FILES renamedlgplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 install( FILES kpasswdserver.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kded )
 install( FILES data.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 

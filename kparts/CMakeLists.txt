@@ -17,7 +17,6 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  #${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}/kdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
@@ -47,7 +46,7 @@ install( FILES
 
 install( FILES
     kpart.desktop krop.desktop krwp.desktop browserview.desktop
-  DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+  DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 
 #### kparts #####################################

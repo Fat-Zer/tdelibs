@@ -35,8 +35,8 @@ link_directories(
 ##### other data ################################
 
 install( PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/checkXML DESTINATION ${BIN_INSTALL_DIR} )
-install( PROGRAMS move_kio_help_cache.sh DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
-install( FILES kio_help.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+install( PROGRAMS move_kio_help_cache.sh DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
+install( FILES kio_help.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 install( FILES help.protocol ghelp.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 # FIXME why automake version is so complicated?

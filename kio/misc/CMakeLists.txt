@@ -99,7 +99,4 @@ tde_add_executable( ${target}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
-# FIXME need a review
-# create symlink to fileshare
-file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/make_filesharelist_symlink.cmake "exec_program(${CMAKE_COMMAND} ARGS -E create_symlink fileshareset \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${BIN_INSTALL_DIR}/filesharelist\")\n")
-set_target_properties( ktelnetservice PROPERTIES POST_INSTALL_SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/make_filesharelist_symlink.cmake )
+tde_install_symlink( ${target} ${BIN_INSTALL_DIR}/filesharelist )

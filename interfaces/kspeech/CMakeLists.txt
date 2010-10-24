@@ -18,4 +18,4 @@ install( FILES
 
 ##### other data ################################
 
-install( FILES dcoptexttospeech.desktop DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+install( FILES dcoptexttospeech.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )

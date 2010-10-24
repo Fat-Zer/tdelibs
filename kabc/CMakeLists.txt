@@ -63,7 +63,7 @@ install( FILES
 
 ##### other data ################################
 
-install( FILES kab2kabc.desktop DESTINATION ${SHARE_INSTALL_DIR}/autostart )
+install( FILES kab2kabc.desktop DESTINATION ${AUTOSTART_INSTALL_DIR} )
 install( FILES kabc_manager.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kresources )
 install( FILES countrytransl.map DESTINATION ${DATA_INSTALL_DIR}/kabc )
 

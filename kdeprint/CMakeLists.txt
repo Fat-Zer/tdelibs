@@ -67,7 +67,7 @@ install( FILES kprintpreviewui.rc DESTINATION ${CONFIG_INSTALL_DIR}/ui )
 install( FILES testprint.ps specials.desktop DESTINATION ${DATA_INSTALL_DIR}/kdeprint )
 install( FILES kdeprintd.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kded )
 install( FILES kdeprintrc DESTINATION ${CONFIG_INSTALL_DIR} )
-install( FILES kdeprintrc.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+install( FILES kdeprintrc.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 
 
 ##### driverparse ###############################

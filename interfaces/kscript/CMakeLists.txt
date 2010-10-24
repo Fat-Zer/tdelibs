@@ -42,7 +42,7 @@ install( FILES
 
 ##### other data ################################
 
-install( FILES scriptinterface.desktop DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+install( FILES scriptinterface.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 
 ##### kscript ###################################

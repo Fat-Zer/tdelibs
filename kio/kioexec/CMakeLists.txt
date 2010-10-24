@@ -43,7 +43,4 @@ tde_add_executable( ${target} AUTOMOC
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
-# FIXME need a review
-# create symlink to kfmexec
-file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/make_kfmexec_symlink.cmake "exec_program(${CMAKE_COMMAND} ARGS -E create_symlink ${target} \"\$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/${BIN_INSTALL_DIR}/kfmexec\")\n")
-set_target_properties( ${target} PROPERTIES POST_INSTALL_SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/make_kfmexec_symlink.cmake)
+tde_install_symlink( ${target} ${BIN_INSTALL_DIR}/kfmexec )

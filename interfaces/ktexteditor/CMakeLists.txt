@@ -59,7 +59,7 @@ install( FILES
 install( FILES
     ktexteditor.desktop ktexteditoreditor.desktop
     ktexteditorplugin.desktop
-  DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+  DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 install( FILES
     kcm_ktexteditor.desktop

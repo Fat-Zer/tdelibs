@@ -11,5 +11,5 @@
 
 # FIXME generating png icons are not implemented
 
-install( FILES index.theme DESTINATION ${ICONS_INSTALL_DIR}/crystalsvg )
+install( FILES index.theme DESTINATION ${ICON_INSTALL_DIR}/crystalsvg )
 tde_install_icons( )

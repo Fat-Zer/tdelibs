@@ -36,7 +36,7 @@ link_directories(
 install( FILES iso.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 install( FILES isoservice.desktop DESTINATION ${DATA_INSTALL_DIR}/konqueror/servicemenus )
 install( FILES kio_isorc DESTINATION ${CONFIG_INSTALL_DIR} )
-install( FILES kio_iso.desktop DESTINATION ${SHARE_INSTALL_DIR}/applnk )
+install( FILES kio_iso.desktop DESTINATION ${APPS_INSTALL_DIR} )
 
 
 ##### kio_iso ###################################

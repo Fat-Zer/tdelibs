@@ -77,7 +77,7 @@ install( FILES
 
 ##### other data ################################
 
-tde_install_empty_directory( ${SHARE_INSTALL_DIR}/locale/all_languages )
+tde_install_empty_directory( ${LOCALE_INSTALL_DIR}/all_languages )
 
 install( FILES 40.colors Web.colors Royal.colors Rainbow.colors
   DESTINATION ${CONFIG_INSTALL_DIR}/colors )
@@ -183,18 +183,8 @@ tde_add_library( ${target} SHARED
 
 ##### kde-config ################################
 
-# FIXME need a little research about these parameters
-set( prefix ${CMAKE_INSTALL_PREFIX} )
-set( exec_prefix "\${prefix}" )
-set( libdir ${LIB_INSTALL_DIR} )
-set( incdir ${INCLUDE_INSTALL_DIR} )
-set( datadir ${SHARE_INSTALL_DIR} )
-set( sysconfdir ${SYSCONFDIR} )
-
-string( REGEX REPLACE "^${SHARE_INSTALL_DIR}" "\${datadir}" kde_datadir ${DATA_INSTALL_DIR} )
-string( REGEX REPLACE "^${prefix}" "\${prefix}" includedir ${INCLUDE_INSTALL_DIR} )
-
-configure_file( kde-config.cpp.in kde-config.cpp @ONLY )
+# FIXME still need some research and improvements
+configure_file( kde-config.cpp.cmake kde-config.cpp @ONLY )
 
 
 tde_add_executable( kde-config

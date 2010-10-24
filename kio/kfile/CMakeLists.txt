@@ -51,7 +51,7 @@ install( FILES
 
 install( FILES
     kpropsdlgplugin.desktop
- DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
+ DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 
 ##### kfile #####################################

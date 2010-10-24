@@ -9,4 +9,4 @@
 #
 #################################################
 
-install( FILES index.theme DESTINATION ${ICONS_INSTALL_DIR}/hicolor )
+install( FILES index.theme DESTINATION ${ICON_INSTALL_DIR}/hicolor )

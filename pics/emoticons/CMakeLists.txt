@@ -21,4 +21,4 @@ install( FILES
     teeth.png thumbs_down.png thumbs_up.png tongue.png
     unhappy.png unlove.png wilted_rose.png wink.png
     foot_in_mouth.png innocent.png undecided.png
-  DESTINATION ${SHARE_INSTALL_DIR}/emoticons/Default )
+  DESTINATION ${SHARE_INSTALL_PREFIX}/emoticons/Default )

@@ -38,9 +38,9 @@ install( FILES kdedmodule.h DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 ##### other data ################################
 
-install( FILES kdedmodule.desktop DESTINATION ${SHARE_INSTALL_DIR}/servicetypes )
-install( FILES applications.menu DESTINATION ${XDG_MENUDIR} )
-install( FILES kded.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update )
+install( FILES kdedmodule.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR} )
+install( FILES applications.menu DESTINATION ${XDG_MENU_INSTALL_DIR} )
+install( FILES kded.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 
 
 #### kded #######################################
