@@ -70,7 +70,7 @@ set( ${target}_SRCS
 
 tde_add_kdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK DCOP-shared
+  LINK kICE-static DCOP-shared
 )
 
 

@@ -14,7 +14,7 @@ cmake_minimum_required( VERSION 2.6 )
 
 ##### general package setup #####################
 
-project( kdebase )
+project( kdelibs )
 
 set( PACKAGE kdelibs )
 set( VERSION "3.5.13" )
@@ -736,3 +736,8 @@ add_subdirectory( licenses )
 add_subdirectory( dnssd )
 add_subdirectory( pics )
 add_subdirectory( mimetypes )
+
+
+##### install import cmake modules ###############
+
+install( EXPORT ${CMAKE_PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_DIR} )
