@@ -187,6 +187,7 @@ int main(int argc, char **argv)
             "xdgdata-apps", I18N_NOOP("XDG Application menu (.desktop files)"),
             "xdgdata-dirs", I18N_NOOP("XDG Menu descriptions (.directory files)"),
             "xdgconf-menu", I18N_NOOP("XDG Menu layout (.menu files)"),
+            "cmake", I18N_NOOP("CMake import modules (.cmake files)"),
             "tmp", I18N_NOOP("Temporary files (specific for both current host and current user)"),
             "socket", I18N_NOOP("UNIX Sockets (specific for both current host and current user)"),
             0, 0
@@ -254,6 +255,7 @@ int main(int argc, char **argv)
             "xdgdata-apps", "@XDG_APPS_INSTALL_DIR@",
             "xdgdata-dirs", "@XDG_DIRECTORY_INSTALL_DIR@",
             "include", "@INCLUDE_INSTALL_DIR@",
+            "cmake", "@CMAKE_INSTALL_DIR@",
             0, 0
         };
         int index = 0;
