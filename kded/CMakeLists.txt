@@ -51,7 +51,9 @@ set( ${target}_SRCS
   kded.cpp kdedmodule.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+# we must to export kdeinit_kded-shared because various
+# modules need this library
+tde_add_kdeinit_executable( ${target} AUTOMOC EXPORT
   SOURCES ${${target}_SRCS}
   LINK kio-shared
 )
