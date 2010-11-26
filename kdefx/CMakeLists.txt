@@ -47,6 +47,6 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
-  LINK ${TQT_LIBRARIES}
+  LINK ${TQT_LIBRARIES} ${XRENDER_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

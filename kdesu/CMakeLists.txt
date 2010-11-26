@@ -46,7 +46,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
-  LINK kdecore-shared
+  LINK kdecore-shared ${LIB_UTIL}
   DESTINATION ${LIB_INSTALL_DIR}
 )
 

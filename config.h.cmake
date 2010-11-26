@@ -33,7 +33,7 @@
 #undef GSSAPI_MIT
 
 /* Define to 1 if you have `alloca', as a function or macro. */
-#undef HAVE_ALLOCA
+#cmakedefine HAVE_ALLOCA 1
 
 /* Define to 1 if you have the <alloca.h> header file. */
 #cmakedefine HAVE_ALLOCA_H 1
@@ -51,7 +51,7 @@
 #undef HAVE_BACKTRACE
 
 /* Define to 1 if you have the `bcopy' function. */
-#undef HAVE_BCOPY
+#cmakedefine HAVE_BCOPY 1
 
 /* You _must_ have bool */
 #undef HAVE_BOOL
@@ -72,7 +72,7 @@
 #cmakedefine HAVE_CRT_EXTERNS_H 1
 
 /* Defines if your system has the crypt function */
-#undef HAVE_CRYPT
+#cmakedefine HAVE_CRYPT 1
 
 /* Define to 1 if you have the <ctype.h> header file. */
 #cmakedefine HAVE_CTYPE_H 1
@@ -96,7 +96,7 @@
 #cmakedefine HAVE_DLD_H 1
 
 /* Define to 1 if you have the `dlerror' function. */
-#undef HAVE_DLERROR
+#cmakedefine HAVE_DLERROR 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #cmakedefine HAVE_DLFCN_H 1
@@ -144,10 +144,10 @@
 #cmakedefine HAVE_GETADDRINFO 1
 
 /* Define to 1 if you have the `getcwd' function. */
-#undef HAVE_GETCWD
+#cmakedefine HAVE_GETCWD 1
 
 /* Define to 1 if you have the `getgroups' function. */
-#undef HAVE_GETGROUPS
+#cmakedefine HAVE_GETGROUPS 1
 
 /* Define to 1 if you have the `gethostbyname2' function. */
 #cmakedefine HAVE_GETHOSTBYNAME2 1
@@ -297,13 +297,13 @@
 #cmakedefine HAVE_MACHINE_SOUNDCARD_H 1
 
 /* Define to 1 if you have the `madvise' function. */
-#undef HAVE_MADVISE
+#cmakedefine HAVE_MADVISE 1
 
 /* Define to 1 if you have the <malloc.h> header file. */
 #cmakedefine HAVE_MALLOC_H 1
 
 /* Define to 1 if you have the `memcpy' function. */
-#undef HAVE_MEMCPY
+#cmakedefine HAVE_MEMCPY 1
 
 /* Define to 1 if you have the <memory.h> header file. */
 #cmakedefine HAVE_MEMORY_H 1
@@ -321,22 +321,22 @@
 #cmakedefine HAVE_MKSTEMP 1
 
 /* Define if you have mkstemps */
-#cmakedefine HAVE_MKSTEMPS
+#cmakedefine HAVE_MKSTEMPS 1
 
 /* Define if you have the mkstemps prototype */
-#cmakedefine HAVE_MKSTEMPS_PROTO
+#cmakedefine HAVE_MKSTEMPS_PROTO 1
 
 /* Define if you have the mkstemp prototype */
-#cmakedefine HAVE_MKSTEMP_PROTO
+#cmakedefine HAVE_MKSTEMP_PROTO 1
 
 /* Define to 1 if you have a working `mmap' system call. */
-#undef HAVE_MMAP
+#cmakedefine HAVE_MMAP 1
 
 /* Define to 1 if you have the <mntent.h> header file. */
 #cmakedefine HAVE_MNTENT_H 1
 
 /* Define to 1 if you have the `munmap' function. */
-#undef HAVE_MUNMAP
+#cmakedefine HAVE_MUNMAP 1
 
 /* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
 #cmakedefine HAVE_NDIR_H 1
@@ -360,7 +360,7 @@
 #undef HAVE_OLD_SSL_API
 
 /* Define to 1 if you have the `openpty' function. */
-#undef HAVE_OPENPTY
+#cmakedefine HAVE_OPENPTY 1
 
 /* Define to 1 if you have the <paths.h> header file. */
 #cmakedefine HAVE_PATHS_H 1
@@ -369,7 +369,7 @@
 #undef HAVE_PCREPOSIX
 
 /* Define to 1 if you have the `poll' function. */
-#undef HAVE_POLL
+#cmakedefine HAVE_POLL 1
 
 /* Define to 1 if the assembler supports AltiVec instructions. */
 #undef HAVE_PPC_ALTIVEC
@@ -378,7 +378,7 @@
 #undef HAVE_PRELOADED_SYMBOLS
 
 /* Define to 1 if you have the `ptsname' function. */
-#undef HAVE_PTSNAME
+#cmakedefine HAVE_PTSNAME 1
 
 /* Define to 1 if you have the <pty.h> header file. */
 #cmakedefine HAVE_PTY_H 1
@@ -387,7 +387,7 @@
 #cmakedefine HAVE_PUNYCODE_H 1
 
 /* Define to 1 if you have the `putenv' function. */
-#undef HAVE_PUTENV
+#cmakedefine HAVE_PUTENV 1
 
 /* Define if you have random */
 #cmakedefine HAVE_RANDOM 1
@@ -396,7 +396,7 @@
 #cmakedefine HAVE_RANDOM_PROTO 1
 
 /* Define to 1 if you have the `readdir_r' function. */
-#undef HAVE_READDIR_R
+#cmakedefine HAVE_READDIR_R 1
 
 /* Define if you have res_init */
 #cmakedefine HAVE_RES_INIT 1
@@ -408,13 +408,13 @@
 #cmakedefine HAVE_REVOKE 1
 
 /* Define to 1 if you have the `rindex' function. */
-#undef HAVE_RINDEX
+#cmakedefine HAVE_RINDEX 1
 
 /* Define if you want sendfile() support */
-#undef HAVE_SENDFILE
+#cmakedefine HAVE_SENDFILE 1
 
 /* Define to 1 if you have the `setegid' function. */
-#undef HAVE_SETEGID
+#cmakedefine HAVE_SETEGID 1
 
 /* Define if you have setenv */
 #cmakedefine HAVE_SETENV 1
@@ -456,7 +456,7 @@
 #cmakedefine HAVE_SNPRINTF 1
 
 /* Define to 1 if you have the `socket' function. */
-#undef HAVE_SOCKET
+#cmakedefine HAVE_SOCKET 1
 
 /* Define if you have srandom */
 #cmakedefine HAVE_SRANDOM 1
@@ -465,7 +465,7 @@
 #cmakedefine HAVE_SRANDOM_PROTO 1
 
 /* If we are going to use OpenSSL */
-#undef HAVE_SSL
+#cmakedefine HAVE_SSL 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #cmakedefine HAVE_STDINT_H 1
@@ -477,19 +477,19 @@
 #cmakedefine HAVE_STDLIB_H 1
 
 /* Define to 1 if you have the `stpcpy' function. */
-#undef HAVE_STPCPY
+#cmakedefine HAVE_STPCPY 1
 
 /* Define to 1 if you have the `strcasecmp' function. */
-#undef HAVE_STRCASECMP
+#cmakedefine HAVE_STRCASECMP 1
 
 /* Define to 1 if you have the `strchr' function. */
-#undef HAVE_STRCHR
+#cmakedefine HAVE_STRCHR 1
 
 /* Define to 1 if you have the `strcmp' function. */
-#undef HAVE_STRCMP
+#cmakedefine HAVE_STRCMP 1
 
 /* Define to 1 if you have the `strfmon' function. */
-#undef HAVE_STRFMON
+#cmakedefine HAVE_STRFMON 1
 
 /* Define to 1 if you have the <stringprep.h> header file. */
 #cmakedefine HAVE_STRINGPREP_H 1
@@ -501,22 +501,22 @@
 #cmakedefine HAVE_STRING_H 1
 
 /* Define if you have strlcat */
-#undef HAVE_STRLCAT
+#cmakedefine HAVE_STRLCAT 1
 
 /* Define if you have the strlcat prototype */
-#undef HAVE_STRLCAT_PROTO
+#cmakedefine HAVE_STRLCAT_PROTO 1
 
 /* Define if you have strlcpy */
-#cmakedefine HAVE_STRLCPY
+#cmakedefine HAVE_STRLCPY 1
 
 /* Define if you have the strlcpy prototype */
-#undef HAVE_STRLCPY_PROTO
+#cmakedefine HAVE_STRLCPY_PROTO 1
 
 /* Define to 1 if you have the `strrchr' function. */
-#undef HAVE_STRRCHR
+#cmakedefine HAVE_STRRCHR 1
 
 /* Define to 1 if you have the `strtoll' function. */
-#undef HAVE_STRTOLL
+#cmakedefine HAVE_STRTOLL 1
 
 /* Define to 1 if the system has the type `struct addrinfo'. */
 #cmakedefine HAVE_STRUCT_ADDRINFO 1
@@ -600,10 +600,10 @@
 #cmakedefine HAVE_S_ISSOCK 1
 
 /* Define to 1 if you have the `tcgetattr' function. */
-#undef HAVE_TCGETATTR
+#cmakedefine HAVE_TCGETATTR 1
 
 /* Define to 1 if you have the `tcsetattr' function. */
-#undef HAVE_TCSETATTR
+#cmakedefine HAVE_TCSETATTR 1
 
 /* Define to 1 if you have the <termios.h> header file. */
 #cmakedefine HAVE_TERMIOS_H 1
@@ -615,7 +615,7 @@
 #cmakedefine HAVE_UNISTD_H 1
 
 /* Define to 1 if you have the `unlockpt' function. */
-#undef HAVE_UNLOCKPT
+#cmakedefine HAVE_UNLOCKPT 1
 
 /* Define if you have unsetenv */
 #cmakedefine HAVE_UNSETENV 1
@@ -630,7 +630,7 @@
 #cmakedefine HAVE_USLEEP_PROTO 1
 
 /* Define if you have the utempter helper for utmp managment */
-#undef HAVE_UTEMPTER
+#cmakedefine HAVE_UTEMPTER 1
 
 /* Define to 1 if you have the <util.h> header file. */
 #cmakedefine HAVE_UTIL_H 1
@@ -672,10 +672,10 @@
 #undef HAVE_X86_SSE2
 
 /* Defined if your system has XRender support */
-#undef HAVE_XRENDER
+#cmakedefine HAVE_XRENDER 1
 
 /* Define to 1 if you have the `_getpty' function. */
-#undef HAVE__GETPTY
+#cmakedefine HAVE__GETPTY 1
 
 /* Define to 1 if you have the `_IceTransNoListen' function. */
 #undef HAVE__ICETRANSNOLISTEN
@@ -687,13 +687,13 @@
 #cmakedefine HAVE__USR_SRC_SYS_I386_ISA_SOUND_AWE_VOICE_H 1
 
 /* Define to 1 if you have the `__argz_count' function. */
-#undef HAVE___ARGZ_COUNT
+#cmakedefine HAVE___ARGZ_COUNT 1
 
 /* Define to 1 if you have the `__argz_next' function. */
-#undef HAVE___ARGZ_NEXT
+#cmakedefine HAVE___ARGZ_NEXT 1
 
 /* Define to 1 if you have the `__argz_stringify' function. */
-#undef HAVE___ARGZ_STRINGIFY
+#cmakedefine HAVE___ARGZ_STRINGIFY 1
 
 /* The prefix to use as fallback */
 #define KDEDIR "@KDEDIR@"

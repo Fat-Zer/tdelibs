@@ -29,6 +29,7 @@ include( CheckFunctionExists )
 include( CheckCSourceCompiles )
 include( CheckTypeSize )
 include( CheckCSourceRuns )
+include( CheckLibraryExists )
 
 
 ##### include our cmake modules #################
@@ -61,6 +62,7 @@ OPTION( WITH_LUA "Enable LUA support" OFF )
 OPTION( WITH_TIFF "Enable tiff support" OFF )
 OPTION( WITH_JASPER "Enable jasper (jpeg2k) support" OFF )
 OPTION( WITH_OPENEXR "Enable openexr support" OFF )
+OPTION( WITH_UTEMPTER "Use utempter for utmp management" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" OFF )
 OPTION( WITH_HSPELL "Enable hspell support" OFF )
@@ -165,6 +167,7 @@ check_include_file( "termios.h" HAVE_TERMIOS_H )
 check_include_file( "termio.h" HAVE_TERMIO_H )
 check_include_file( "unistd.h" HAVE_UNISTD_H )
 check_include_file( "util.h" HAVE_UTIL_H )
+check_include_file( "values.h" HAVE_VALUES_H )
 
 # FIXME I'm not sure if test TIME_WITH_SYS_TIME are correct
 check_include_file( "sys/time.h" HAVE_SYS_TIME_H )
@@ -189,6 +192,7 @@ check_function_exists( srandom HAVE_SRANDOM )
 check_symbol_exists( srandom "stdlib.h" HAVE_SRANDOM_PROTO )
 
 check_function_exists( seteuid HAVE_SETEUID )
+check_function_exists( setegid HAVE_SETEGID )
 
 check_function_exists( gethostname HAVE_GETHOSTNAME )
 check_symbol_exists( gethostname "unistd.h" HAVE_GETHOSTNAME_PROTO )
@@ -213,6 +217,12 @@ check_symbol_exists( mkstemps "stdlib.h" HAVE_MKSTEMPS_PROTO )
 
 check_function_exists( initgroups HAVE_INITGROUPS )
 check_symbol_exists( initgroups "grp.h" HAVE_INITGROUPS_PROTO )
+
+check_function_exists( strlcat HAVE_STRLCAT )
+check_symbol_exists( strlcat "string.h" HAVE_STRLCAT_PROTO )
+
+check_function_exists( strlcpy HAVE_STRLCPY )
+check_symbol_exists( strlcpy "string.h" HAVE_STRLCPY_PROTO )
 
 check_symbol_exists( S_ISSOCK "sys/stat.h" HAVE_S_ISSOCK )
 
@@ -252,6 +262,37 @@ check_function_exists( _finite HAVE_FUNC__FINITE )
 check_function_exists( finite HAVE_FUNC_FINITE )
 check_function_exists( isinf HAVE_FUNC_ISINF )
 check_function_exists( freeaddrinfo HAVE_FREEADDRINFO )
+check_function_exists( strtoll HAVE_STRTOLL )
+check_function_exists( socket HAVE_SOCKET )
+check_function_exists( strfmon HAVE_STRFMON )
+check_function_exists( stpcpy HAVE_STPCPY )
+check_function_exists( readdir_r HAVE_READDIR_R )
+check_function_exists( tcgetattr HAVE_TCGETATTR )
+check_function_exists( tcsetattr HAVE_TCSETATTR )
+check_function_exists( strcasecmp HAVE_STRCASECMP )
+check_function_exists( strchr HAVE_STRCHR )
+check_function_exists( strcmp HAVE_STRCMP )
+check_function_exists( strrchr HAVE_STRRCHR )
+check_function_exists( ptsname HAVE_PTSNAME )
+check_function_exists( unlockpt HAVE_UNLOCKPT )
+check_function_exists( _getpty HAVE__GETPTY )
+check_function_exists( __argz_count HAVE___ARGZ_COUNT )
+check_function_exists( __argz_next HAVE___ARGZ_NEXT )
+check_function_exists( __argz_stringify HAVE___ARGZ_STRINGIFY )
+check_function_exists( sendfile HAVE_SENDFILE )
+check_function_exists( rindex HAVE_RINDEX )
+check_function_exists( putenv HAVE_PUTENV )
+check_function_exists( poll HAVE_POLL )
+check_function_exists( memcpy HAVE_MEMCPY )
+check_function_exists( madvise HAVE_MADVISE )
+check_function_exists( getgroups HAVE_GETGROUPS )
+check_function_exists( getcwd HAVE_GETCWD )
+check_function_exists( dlerror HAVE_DLERROR )
+check_function_exists( crypt HAVE_CRYPT )
+check_function_exists( bcopy HAVE_BCOPY )
+check_function_exists( alloca HAVE_ALLOCA )
+check_function_exists( mmap HAVE_MMAP )
+check_function_exists( munmap HAVE_MUNMAP )
 
 check_type_size( "char*" SIZEOF_CHAR_P )
 check_type_size( "int" SIZEOF_INT )
@@ -322,6 +363,21 @@ if( HAVE_RES_INIT )
   set( RESOLV_LIBRARIES resolv )
 endif( HAVE_RES_INIT)
 
+set( CMAKE_REQUIRED_LIBRARIES util )
+check_c_source_runs("
+    #include <pty.h>
+    int main(int argc, char* argv) {
+      int master_fd, slave_fd;
+      int result;
+      result = openpty(&master_fd, &slave_fd, 0, 0, 0);
+      return 0;
+  }"
+  HAVE_OPENPTY
+)
+if( HAVE_OPENPTY )
+  set( LIB_UTIL util )
+endif( )
+
 # restore CMAKE_REQUIRED_LIBRARIES
 set( CMAKE_REQUIRED_LIBRARIES ${bak_CMAKE_REQUIRED_LIBRARIES} )
 unset( bak_CMAKE_REQUIRED_LIBRARIES )
@@ -362,6 +418,20 @@ find_library( HAVE_LIBDL dl )
 if( NOT HAVE_LIBDL-NOTFOUND )
   set( DL_LIBRARIES dl )
 endif( NOT HAVE_LIBDL-NOTFOUND )
+
+
+##### check for utempter ########################
+
+if( WITH_UTEMPTER )
+  check_include_file( utempter.h HAVE_UTEMPTER_H )
+  check_library_exists( utempter addToUtmp "" HAVE_ADDTOUTEMP )
+  if( HAVE_UTEMPTER_H AND HAVE_ADDTOUTEMP )
+    set( HAVE_UTEMPTER 1 )
+    set( UTEMPTER_LIBRARY utempter )
+  else( )
+    message(FATAL_ERROR "\nutempter are requested, but not found on your system" )
+  endif( )
+endif( )
 
 
 ##### check for zlib ############################
@@ -468,6 +538,14 @@ pkg_search_module( XRANDR xrandr )
 if( XRANDR_FOUND )
   set( XRANDR_SUPPORT 1 )
 endif( XRANDR_FOUND )
+
+
+##### check for xrender #########################
+
+pkg_search_module( XRENDER xrender )
+if( XRENDER_FOUND )
+  set( HAVE_XRENDER 1 )
+endif( XRENDER_FOUND )
 
 
 ##### check for libxml-2.0 ######################
@@ -586,6 +664,7 @@ if( WITH_SSL )
     message(FATAL_ERROR "\nSSL support are requested, but openssl is not found on your system" )
   endif( NOT SSL_FOUND )
   set( KSSL_HAVE_SSL 1 )
+  set( HAVE_SSL 1 )
 endif( WITH_SSL )
 
 
