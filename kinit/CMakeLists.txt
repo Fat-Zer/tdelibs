@@ -144,8 +144,7 @@ tde_add_executable( ${target} ${_setuid}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
-# FIXME will be a problem when BIN_INSTALL_DIR will be absolute path
-set_target_properties( ${target} PROPERTIES COMPILE_FLAGS -DEXECUTE=\\"${CMAKE_INSTALL_PREFIX}/${BIN_INSTALL_DIR}/kdeinit\\" )
+set_target_properties( ${target} PROPERTIES COMPILE_FLAGS -DEXECUTE=\\"${BIN_INSTALL_DIR}/kdeinit\\" )
 
 
 #### start_kdeinit_wrapper ######################
