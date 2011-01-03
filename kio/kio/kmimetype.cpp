@@ -717,7 +717,7 @@ TQString KDEDesktopMimeType::icon( const KURL& _url, bool _is_local ) const
     TQString dev = cfg.readEntry( "Dev" );
     if ( !icon.isEmpty() && !unmount_icon.isEmpty() && !dev.isEmpty() )
     {
-      TQString mp = KIO::tqfindDeviceMountPoint( dev );
+      TQString mp = KIO::findDeviceMountPoint( dev );
       // Is the device not mounted ?
       if ( mp.isNull() )
         return unmount_icon;
@@ -831,7 +831,7 @@ pid_t KDEDesktopMimeType::runFSDevice( const KURL& _url, const KSimpleConfig &cf
     return retval;
   }
 
-  TQString mp = KIO::tqfindDeviceMountPoint( dev );
+  TQString mp = KIO::findDeviceMountPoint( dev );
   // Is the device already mounted ?
   if ( !mp.isNull() )
   {
@@ -933,7 +933,7 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::builtinServices( co
     }
     else
     {
-      TQString mp = KIO::tqfindDeviceMountPoint( dev );
+      TQString mp = KIO::findDeviceMountPoint( dev );
       // not mounted ?
       if ( mp.isEmpty() )
       {
@@ -1114,7 +1114,7 @@ void KDEDesktopMimeType::executeService( const KURL::List& urls, KDEDesktopMimeT
       KMessageBoxWrapper::error( 0, tmp );
       return;
     }
-    TQString mp = KIO::tqfindDeviceMountPoint( dev );
+    TQString mp = KIO::findDeviceMountPoint( dev );
 
     if ( _service.m_type == ST_MOUNT )
     {

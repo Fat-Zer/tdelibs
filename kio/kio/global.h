@@ -416,7 +416,7 @@ namespace KIO
    * right now. This means, it has to be mounted, not just
    * defined in fstab.
    */
-  KIO_EXPORT TQString tqfindDeviceMountPoint( const TQString& device );
+  KIO_EXPORT TQString findDeviceMountPoint( const TQString& device );
 
   /**
    * Returns the mount point on which resides @p filename.

@@ -1472,7 +1472,7 @@ void FileProtocol::mount( bool _ro, const char *_fstype, const TQString& _dev, c
         else
         {
             // Didn't work - or maybe we just got a warning
-            TQString mp = KIO::tqfindDeviceMountPoint( _dev );
+            TQString mp = KIO::findDeviceMountPoint( _dev );
             // Is the device mounted ?
             if ( !mp.isEmpty() && mount_ret == 0)
             {

@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 
     kdDebug() << url.url() << " is probably " << (KIO::probably_slow_mounted(url.path()) ? "slow" : "normal") << " mounted\n";
     kdDebug() << url.url() << " is " << (KIO::manually_mounted(url.path()) ? "manually" : "system") << " mounted\n";
-    TQString mp = KIO::tqfindDeviceMountPoint(url.path());
+    TQString mp = KIO::findDeviceMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for device " << url.url() << " found\n";
     } else

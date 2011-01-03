@@ -1368,7 +1368,7 @@ extern "C" void endvfsent( );
 
 #endif /* HAVE_GETMNTINFO */
 
-TQString KIO::tqfindDeviceMountPoint( const TQString& filename )
+TQString KIO::findDeviceMountPoint( const TQString& filename )
 {
     TQString result;
 
@@ -1383,13 +1383,13 @@ TQString KIO::tqfindDeviceMountPoint( const TQString& filename )
 	TQCString devname;
 
 	if( (volpath = volmgt_root()) == NULL ) {
-		kdDebug( 7007 ) << "tqfindDeviceMountPoint: "
+		kdDebug( 7007 ) << "findDeviceMountPoint: "
 			<< "VOLMGT: can't tqfind volmgt root dir" << endl;
 		return TQString::null;
 	}
 
 	if( (mnttab = fopen( MNTTAB, "r" )) == NULL ) {
-		kdDebug( 7007 ) << "tqfindDeviceMountPoint: "
+		kdDebug( 7007 ) << "findDeviceMountPoint: "
 			<< "VOLMGT: can't open mnttab" << endl;
 		return TQString::null;
 	}
@@ -1398,7 +1398,7 @@ TQString KIO::tqfindDeviceMountPoint( const TQString& filename )
 	devname += TQFile::encodeName( filename );
 	devname += '/';
 	len = devname.length();
-//	kdDebug( 7007 ) << "tqfindDeviceMountPoint: "
+//	kdDebug( 7007 ) << "findDeviceMountPoint: "
 //		<< "VOLMGT: searching mountpoint for \"" << devname << "\""
 //		<< endl;
 
@@ -1437,7 +1437,7 @@ TQString KIO::tqfindDeviceMountPoint( const TQString& filename )
       // succes, use result from realpath
       realname = realpath_buffer;
 
-    //kdDebug(7007) << "tqfindDeviceMountPoint realname=" << realname << endl;
+    //kdDebug(7007) << "findDeviceMountPoint realname=" << realname << endl;
 
 #ifdef HAVE_GETMNTINFO
 
@@ -1909,7 +1909,7 @@ static TQString get_mount_info(const TQString& filename,
 
 #else //!Q_OS_UNIX
 //dummy
-TQString KIO::tqfindDeviceMountPoint( const TQString& filename )
+TQString KIO::findDeviceMountPoint( const TQString& filename )
 {
 	return TQString::null;
 }
