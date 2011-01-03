@@ -98,7 +98,7 @@ TQString convertKFileDialogFilterToQFileDialogFilter(const TQString& filter)
 	// escaped '/' characters.
 
 	TQString copy (kde_filters);
-	for (pos = 0; (pos = copy.find("\\/", pos)) != -1; ++pos)
+	for (pos = 0; (pos = copy.tqfind("\\/", pos)) != -1; ++pos)
 		copy.remove(pos, 1);
 
 	//<js>
@@ -112,7 +112,7 @@ TQString convertKFileDialogFilterToQFileDialogFilter(const TQString& filter)
 		current = *it;
 		TQString new_f;//filter part
 		TQString new_name;//filter name part
-		int p = (*it).find('|');
+		int p = (*it).tqfind('|');
 		if (p!=-1) {
 			new_f = current.left(p);
 			new_name = current.mid(p+1);
@@ -122,8 +122,8 @@ TQString convertKFileDialogFilterToQFileDialogFilter(const TQString& filter)
 			new_name = current; //nothing better
 		}
 		//remove (.....) from name
-		p=new_name.find('(');
-		int p2 = new_name.findRev(')');
+		p=new_name.tqfind('(');
+		int p2 = new_name.tqfindRev(')');
 		TQString new_name1, new_name2;
 		if (p!=-1)
 			new_name1 = new_name.left(p);
@@ -131,8 +131,8 @@ TQString convertKFileDialogFilterToQFileDialogFilter(const TQString& filter)
 			new_name2 = new_name.mid(p2+1);
 		if (!new_name1.isEmpty() || !new_name2.isEmpty())
 			new_name = new_name1.stripWhiteSpace() + " " + new_name2.stripWhiteSpace();
-		new_name.replace('(',"");
-		new_name.replace(')',"");
+		new_name.tqreplace('(',"");
+		new_name.tqreplace(')',"");
 		new_name = new_name.stripWhiteSpace();
 
 		// make filters unique: remove uppercase extensions (case doesn't matter on win32, BTW)

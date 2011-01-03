@@ -125,7 +125,7 @@ void ResourceLDAPKIO::enter_loop()
   TQWidget dummy(0,0,WType_Dialog | WShowModal);
   dummy.setFocusPolicy( TQWidget::NoFocus );
   qt_enter_modal(&dummy);
-  qApp->enter_loop();
+  tqApp->enter_loop();
   qt_leave_modal(&dummy);
 }
 
@@ -139,7 +139,7 @@ void ResourceLDAPKIO::entries( KIO::Job*, const KIO::UDSEntryList & list )
       if ( (*it2).m_uds == KIO::UDS_URL ) {
         KURL tmpurl( (*it2).m_str );
         d->mResultDn = tmpurl.path();
-        kdDebug(7125) << "findUid(): " << d->mResultDn << endl;
+        kdDebug(7125) << "tqfindUid(): " << d->mResultDn << endl;
         if ( d->mResultDn.startsWith("/") ) d->mResultDn.remove(0,1);
         return;
       }
@@ -154,10 +154,10 @@ void ResourceLDAPKIO::listResult( KIO::Job *job)
     mErrorMsg = job->errorString();
   else 
     mErrorMsg = "";
-  qApp->exit_loop();
+  tqApp->exit_loop();
 }
 
-TQString ResourceLDAPKIO::findUid( const TQString &uid ) 
+TQString ResourceLDAPKIO::tqfindUid( const TQString &uid ) 
 {
   LDAPUrl url( d->mLDAPUrl );
   KIO::UDSEntry entry;
@@ -168,7 +168,7 @@ TQString ResourceLDAPKIO::findUid( const TQString &uid )
   url.setFilter( "(" + mAttributes[ "uid" ] + "=" + uid + ")" + mFilter );
   url.setExtension( "x-dir", "one" );
 
-  kdDebug(7125) << "ResourceLDAPKIO::findUid() uid: " << uid << " url " << 
+  kdDebug(7125) << "ResourceLDAPKIO::tqfindUid() uid: " << uid << " url " << 
     url.prettyURL() << endl;
   
   KIO::ListJob * listJob = KIO::listDir( url, false /* no GUI */ );
@@ -186,7 +186,7 @@ TQCString ResourceLDAPKIO::addEntry( const TQString &attr, const TQString &value
 {
   TQCString tmp;
   if ( !attr.isEmpty() ) {
-    if ( mod ) tmp += LDIF::assembleLine( "replace", attr ) + "\n";
+    if ( mod ) tmp += LDIF::assembleLine( "tqreplace", attr ) + "\n";
     tmp += LDIF::assembleLine( attr, value ) + "\n";
     if ( mod ) tmp += "-\n"; 
   }
@@ -278,7 +278,7 @@ bool ResourceLDAPKIO::AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr,
   
   if ( !mAttributes[ "mail" ].isEmpty() ) {
     if ( mod ) tmp += 
-      LDIF::assembleLine( "replace", mAttributes[ "mail" ] ) + "\n";
+      LDIF::assembleLine( "tqreplace", mAttributes[ "mail" ] ) + "\n";
     if ( mailIt != emails.end() ) {
       tmp += LDIF::assembleLine( mAttributes[ "mail" ], *mailIt ) + "\n";
       mailIt ++;
@@ -288,7 +288,7 @@ bool ResourceLDAPKIO::AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr,
     
   if ( !mAttributes[ "mailAlias" ].isEmpty() ) {
     if ( mod && mAttributes[ "mail" ] != mAttributes[ "mailAlias" ] ) tmp += 
-      LDIF::assembleLine( "replace", mAttributes[ "mailAlias" ] ) + "\n";
+      LDIF::assembleLine( "tqreplace", mAttributes[ "mailAlias" ] ) + "\n";
     for ( ; mailIt != emails.end(); ++mailIt ) {
       tmp += LDIF::assembleLine( mAttributes[ "mailAlias" ], *mailIt ) + "\n" ;
     }
@@ -302,7 +302,7 @@ bool ResourceLDAPKIO::AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr,
     addr.photo().data().save( &buffer, "JPEG" );
     
     if ( mod ) tmp += 
-      LDIF::assembleLine( "replace", mAttributes[ "jpegPhoto" ] ) + "\n";
+      LDIF::assembleLine( "tqreplace", mAttributes[ "jpegPhoto" ] ) + "\n";
     tmp += LDIF::assembleLine( mAttributes[ "jpegPhoto" ], pic, 76 ) + "\n";
     if ( mod ) tmp += "-\n";
   }
@@ -330,49 +330,49 @@ void ResourceLDAPKIO::init()
     handle them in the load() method below.
     These are the default values
    */
-  if ( !mAttributes.contains("objectClass") )
+  if ( !mAttributes.tqcontains("objectClass") )
     mAttributes.insert( "objectClass", "inetOrgPerson" );
-  if ( !mAttributes.contains("commonName") )
+  if ( !mAttributes.tqcontains("commonName") )
     mAttributes.insert( "commonName", "cn" );
-  if ( !mAttributes.contains("formattedName") )
+  if ( !mAttributes.tqcontains("formattedName") )
     mAttributes.insert( "formattedName", "displayName" );
-  if ( !mAttributes.contains("familyName") )
+  if ( !mAttributes.tqcontains("familyName") )
     mAttributes.insert( "familyName", "sn" );
-  if ( !mAttributes.contains("givenName") )
+  if ( !mAttributes.tqcontains("givenName") )
     mAttributes.insert( "givenName", "givenName" );
-  if ( !mAttributes.contains("mail") )
+  if ( !mAttributes.tqcontains("mail") )
     mAttributes.insert( "mail", "mail" );
-  if ( !mAttributes.contains("mailAlias") )
+  if ( !mAttributes.tqcontains("mailAlias") )
     mAttributes.insert( "mailAlias", "" );
-  if ( !mAttributes.contains("phoneNumber") )
+  if ( !mAttributes.tqcontains("phoneNumber") )
     mAttributes.insert( "phoneNumber", "homePhone" );
-  if ( !mAttributes.contains("telephoneNumber") )
+  if ( !mAttributes.tqcontains("telephoneNumber") )
     mAttributes.insert( "telephoneNumber", "telephoneNumber" );
-  if ( !mAttributes.contains("facsimileTelephoneNumber") )
+  if ( !mAttributes.tqcontains("facsimileTelephoneNumber") )
     mAttributes.insert( "facsimileTelephoneNumber", "facsimileTelephoneNumber" );
-  if ( !mAttributes.contains("mobile") )
+  if ( !mAttributes.tqcontains("mobile") )
     mAttributes.insert( "mobile", "mobile" );
-  if ( !mAttributes.contains("pager") )
+  if ( !mAttributes.tqcontains("pager") )
     mAttributes.insert( "pager", "pager" );
-  if ( !mAttributes.contains("description") )
+  if ( !mAttributes.tqcontains("description") )
     mAttributes.insert( "description", "description" );
 
-  if ( !mAttributes.contains("title") )
+  if ( !mAttributes.tqcontains("title") )
     mAttributes.insert( "title", "title" );
-  if ( !mAttributes.contains("street") )
+  if ( !mAttributes.tqcontains("street") )
     mAttributes.insert( "street", "street" );
-  if ( !mAttributes.contains("state") )
+  if ( !mAttributes.tqcontains("state") )
     mAttributes.insert( "state", "st" );
-  if ( !mAttributes.contains("city") )
+  if ( !mAttributes.tqcontains("city") )
     mAttributes.insert( "city", "l" );
-  if ( !mAttributes.contains("organization") )
+  if ( !mAttributes.tqcontains("organization") )
     mAttributes.insert( "organization", "o" );
-  if ( !mAttributes.contains("postalcode") )
+  if ( !mAttributes.tqcontains("postalcode") )
     mAttributes.insert( "postalcode", "postalCode" );
 
-  if ( !mAttributes.contains("uid") )
+  if ( !mAttributes.tqcontains("uid") )
     mAttributes.insert( "uid", "uid" );
-  if ( !mAttributes.contains("jpegPhoto") )
+  if ( !mAttributes.tqcontains("jpegPhoto") )
     mAttributes.insert( "jpegPhoto", "jpegPhoto" );
 
   d->mLDAPUrl = KURL();
@@ -766,7 +766,7 @@ void ResourceLDAPKIO::syncLoadSaveResult( KIO::Job *job )
     mErrorMsg = "";
   activateCache();
   
-  qApp->exit_loop();
+  tqApp->exit_loop();
 }
 
 void ResourceLDAPKIO::saveResult( KIO::Job *job )
@@ -791,7 +791,7 @@ void ResourceLDAPKIO::saveData( KIO::Job*, TQByteArray& data )
   
   kdDebug(7125) << "ResourceLDAPKIO saveData: " << (*d->mSaveIt).assembledName() << endl;
   
-  AddresseeToLDIF( data, *d->mSaveIt, findUid( (*d->mSaveIt).uid() ) );  
+  AddresseeToLDIF( data, *d->mSaveIt, tqfindUid( (*d->mSaveIt).uid() ) );  
 //  kdDebug(7125) << "ResourceLDAPKIO save LDIF: " << TQString::fromUtf8(data) << endl;
   // mark as unchanged
   (*d->mSaveIt).setChanged( false );
@@ -801,7 +801,7 @@ void ResourceLDAPKIO::saveData( KIO::Job*, TQByteArray& data )
 
 void ResourceLDAPKIO::removeAddressee( const Addressee& addr )
 {
-  TQString dn = findUid( addr.uid() );
+  TQString dn = tqfindUid( addr.uid() );
   
   kdDebug(7125) << "ResourceLDAPKIO: removeAddressee: " << dn << endl;
 

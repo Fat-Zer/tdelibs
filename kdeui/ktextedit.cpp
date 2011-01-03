@@ -75,44 +75,44 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
 {
     KKey key( e );
 
-    if ( KStdAccel::copy().contains( key ) ) {
+    if ( KStdAccel::copy().tqcontains( key ) ) {
         copy();
         e->accept();
         return;
     }
-    else if ( KStdAccel::paste().contains( key ) ) {
+    else if ( KStdAccel::paste().tqcontains( key ) ) {
         paste();
         e->accept();
         return;
     }
-    else if ( KStdAccel::cut().contains( key ) ) {
+    else if ( KStdAccel::cut().tqcontains( key ) ) {
         cut();
         e->accept();
         return;
     }
-    else if ( KStdAccel::undo().contains( key ) ) {
+    else if ( KStdAccel::undo().tqcontains( key ) ) {
         undo();
         e->accept();
         return;
     }
-    else if ( KStdAccel::redo().contains( key ) ) {
+    else if ( KStdAccel::redo().tqcontains( key ) ) {
         redo();
         e->accept();
         return;
     }
-    else if ( KStdAccel::deleteWordBack().contains( key ) )
+    else if ( KStdAccel::deleteWordBack().tqcontains( key ) )
     {
         deleteWordBack();
         e->accept();
         return;
     }
-    else if ( KStdAccel::deleteWordForward().contains( key ) )
+    else if ( KStdAccel::deleteWordForward().tqcontains( key ) )
     {
         deleteWordForward();
         e->accept();
         return;
     }
-    else if ( KStdAccel::backwardWord().contains( key ) )
+    else if ( KStdAccel::backwardWord().tqcontains( key ) )
     {
       CursorAction action = MoveWordBackward;
       int para, index;
@@ -123,7 +123,7 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
       e->accept();
       return;
     }
-    else if ( KStdAccel::forwardWord().contains( key ) )
+    else if ( KStdAccel::forwardWord().tqcontains( key ) )
     {
       CursorAction action = MoveWordForward;
       int para, index;
@@ -134,43 +134,43 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
       e->accept();
       return;
     }
-    else if ( KStdAccel::next().contains( key ) )
+    else if ( KStdAccel::next().tqcontains( key ) )
     {
       moveCursor( MovePgDown, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::prior().contains( key ) )
+    else if ( KStdAccel::prior().tqcontains( key ) )
     {
       moveCursor( MovePgUp, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::home().contains( key ) )
+    else if ( KStdAccel::home().tqcontains( key ) )
     {
       moveCursor( MoveHome, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::end().contains( key ) )
+    else if ( KStdAccel::end().tqcontains( key ) )
     {
       moveCursor( MoveEnd, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::beginningOfLine().contains( key ) )
+    else if ( KStdAccel::beginningOfLine().tqcontains( key ) )
     {
       moveCursor( MoveLineStart, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::endOfLine().contains( key ) )
+    else if ( KStdAccel::endOfLine().tqcontains( key ) )
     {
       moveCursor(MoveLineEnd, false);
       e->accept();
       return;
     }
-    else if ( KStdAccel::pasteSelection().contains( key ) )
+    else if ( KStdAccel::pasteSelection().tqcontains( key ) )
     {
         TQString text = TQApplication::clipboard()->text( QClipboard::Selection);
         if ( !text.isEmpty() )
@@ -182,7 +182,7 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
     // ignore Ctrl-Return so that KDialogs can close the dialog
     else if ( e->state() == ControlButton &&
               (e->key() == Key_Return || e->key() == Key_Enter) &&
-              topLevelWidget()->inherits( "KDialog" ) )
+              tqtopLevelWidget()->inherits( "KDialog" ) )
     {
         e->ignore();
         return;
@@ -262,7 +262,7 @@ void KTextEdit::setPalette( const TQPalette& palette )
 {
     TQTextEdit::setPalette( palette );
     // unsetPalette() is not virtual and calls setPalette() as well
-    // so we can use ownPalette() to find out about unsetting
+    // so we can use ownPalette() to tqfind out about unsetting
     d->customPalette = ownPalette();
 }
 

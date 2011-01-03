@@ -604,8 +604,8 @@
 			<item> CompilationMXBean </item>
 			<item> Compiler </item>
 			<item> CompletionService </item>
-			<item> CompletionStatus </item>
-			<item> CompletionStatusHelper </item>
+			<item> CompletiontqStatus </item>
+			<item> CompletiontqStatusHelper </item>
 			<item> Component </item>
 			<item> ComponentAdapter </item>
 			<item> ComponentColorModel </item>
@@ -2542,7 +2542,7 @@
 			<item> RoleList </item>
 			<item> RoleNotFoundException </item>
 			<item> RoleResult </item>
-			<item> RoleStatus </item>
+			<item> RoletqStatus </item>
 			<item> RoleUnresolved </item>
 			<item> RoleUnresolvedList </item>
 			<item> RootPaneContainer </item>
@@ -2594,8 +2594,8 @@
 			<item> SSLContextSpi </item>
 			<item> SSLEngine </item>
 			<item> SSLEngineResult </item>
-			<item> SSLEngineResult.HandshakeStatus </item>
-			<item> SSLEngineResult.Status </item>
+			<item> SSLEngineResult.HandshaketqStatus </item>
+			<item> SSLEngineResult.tqStatus </item>
 			<item> SSLException </item>
 			<item> SSLHandshakeException </item>
 			<item> SSLKeyException </item>
@@ -3174,7 +3174,7 @@
 			<item> VirtualMachineError </item>
 			<item> Visibility </item>
 			<item> VisibilityHelper </item>
-			<item> VoiceStatus </item>
+			<item> VoicetqStatus </item>
 			<item> Void </item>
 			<item> VolatileImage </item>
 			<item> WCharSeqHelper </item>
@@ -3303,7 +3303,7 @@
 			<item> C14NMethodParameterSpec </item>
 			<item> CanonicalizationMethod </item>
 			<item> Characters </item>
-			<item> ClientInfoStatus </item>
+			<item> ClientInfotqStatus </item>
 			<item> CollapsedStringAdapter </item>
 			<item> CollatorProvider </item>
 			<item> CommandInfo </item>

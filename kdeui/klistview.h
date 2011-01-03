@@ -348,7 +348,7 @@ public:
   const TQColor &alternateBackground() const;
 
   /**
-   * Saves the list view's layout (column widtsh, column order, sort column)
+   * Saves the list view's tqlayout (column widtsh, column order, sort column)
    * to a KConfig group
    *
    * @param config the KConfig object to write to
@@ -356,7 +356,7 @@ public:
    */
   void saveLayout(KConfig *config, const TQString &group) const;
   /**
-   * Reads the list view's layout from a KConfig group as stored with
+   * Reads the list view's tqlayout from a KConfig group as stored with
    * saveLayout
    *
    * @param config the KConfig object to read from
@@ -684,7 +684,7 @@ protected:
    */
   inline bool below (TQListViewItem* i, const TQPoint& p)
   {
-	return below (itemRect(i), contentsToViewport(p));
+	return below (tqitemRect(i), contentsToViewport(p));
   }
 
   /**
@@ -1002,7 +1002,7 @@ private:
 
 /**
  * A listview item with support for alternate background colors. It is
- * a drop-in replacement for QListViewItem
+ * a drop-in tqreplacement for QListViewItem
  *
  * @short listview item with alternate background color support
  */
@@ -1069,7 +1069,7 @@ public:
   TQColor backgroundColor(int column);
 
   virtual void paintCell(TQPainter *p, const TQColorGroup &cg,
-    int column, int width, int alignment);
+    int column, int width, int tqalignment);
 
 private:
   void init();

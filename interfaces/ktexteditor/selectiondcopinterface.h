@@ -24,7 +24,7 @@ namespace KTextEditor
 		Construct a new interface object for the text editor.
 		@param Parent the parent SelectionInterface object
 		that will provide us with the functions for the interface.
-		@param name the QObject's name
+		@param name the TQObject's name
 		*/
 		SelectionDCOPInterface( SelectionInterface *Parent, const char *name );
 		/**

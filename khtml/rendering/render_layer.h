@@ -35,7 +35,7 @@
  * version of this file only under the terms of one of those two
  * licenses (the MPL or the GPL) and not to allow others to use your
  * version of this file under the LGPL, indicate your decision by
- * deletingthe provisions above and replace them with the notice and
+ * deletingthe provisions above and tqreplace them with the notice and
  * other provisions required by the MPL or the GPL, as the case may be.
  * If you do not delete the provisions above, a recipient may use your
  * version of this file under any of the LGPL, the MPL or the GPL.
@@ -63,7 +63,7 @@ namespace khtml {
     class RenderObject;
     class RenderScrollMediator;
 
-class RenderScrollMediator: public QObject
+class RenderScrollMediator: public TQObject
 {
     Q_OBJECT
 public:
@@ -78,7 +78,7 @@ private:
 };
 
 // This class handles the auto-scrolling of layers with overflow: marquee.
-class Marquee: public QObject
+class Marquee: public TQObject
 {
     Q_OBJECT
 
@@ -190,7 +190,7 @@ public:
     void checkInlineRelOffset(const RenderObject* o, int& x, int& y);
     short scrollXOffset() { return m_scrollX; }
     int scrollYOffset() { return m_scrollY; }
-    void scrollToOffset(int x, int y, bool updateScrollbars = true, bool repaint = true);
+    void scrollToOffset(int x, int y, bool updateScrollbars = true, bool tqrepaint = true);
     void scrollToXOffset(int x) { scrollToOffset(x, m_scrollY); }
     void scrollToYOffset(int y) { scrollToOffset(m_scrollX, y); }
     void showScrollbar(Qt::Orientation, bool);
@@ -202,7 +202,7 @@ public:
     void paintScrollbars(RenderObject::PaintInfo& pI);
     void checkScrollbarsAfterLayout();
     void slotValueChanged(int);
-    void repaint(Priority p=NormalPriority, bool markForRepaint = false);
+    void tqrepaint(Priority p=NormalPriority, bool markForRepaint = false);
     void updateScrollPositionFromScrollbars();
 
     void updateLayerPosition();
@@ -253,7 +253,7 @@ public:
                             TQRect& posClipRect, TQRect& fixedClipRect);
 
     bool intersectsDamageRect(const TQRect& layerBounds, const TQRect& damageRect) const;
-    bool containsPoint(int x, int y, const TQRect& damageRect) const;
+    bool tqcontainsPoint(int x, int y, const TQRect& damageRect) const;
 
     void updateHoverActiveState(RenderObject::NodeInfo& info);
 
@@ -322,7 +322,7 @@ protected:
     TQPtrVector<RenderLayer>* m_posZOrderList;
     TQPtrVector<RenderLayer>* m_negZOrderList;
     
-    // This list contains our overflow child layers.
+    // This list tqcontains our overflow child layers.
     TQValueList<RenderLayer*>* m_overflowList;
    
     bool m_zOrderListsDirty: 1;

@@ -66,10 +66,10 @@
     </list>
     <list name="basefunc">
       <item> string.byte </item>  <item> string.char </item>
-      <item> string.find </item>  <item> string.len </item>
+      <item> string.tqfind </item>  <item> string.len </item>
       <item> string.lower </item> <item> string.rep </item>
       <item> string.sub </item>   <item> string.upper </item>
-      <item> string.format </item><item> string.gfind </item>
+      <item> string.format </item><item> string.gtqfind </item>
       <item> string.gsub </item>  <item> table.concat </item>
       <item> table.getn </item>   <item> table.sort </item>
       <item> table.insert </item> <item> table.remove </item>
@@ -148,7 +148,7 @@
       <item> strupper </item>    <item> strchar </item>
       <item> strrep </item>      <item> ascii </item>
       <item> strbyte </item>     <item> format </item>
-      <item> strfind </item>     <item> gsub </item>
+      <item> strtqfind </item>     <item> gsub </item>
       <item> openfile </item>    <item> closefile </item>
       <item> date </item>        <item> clock </item>
 

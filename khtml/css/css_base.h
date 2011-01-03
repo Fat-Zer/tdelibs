@@ -176,7 +176,7 @@ namespace DOM {
         mutable DOM::DOMString value;
 	CSSSelector *tagHistory;
         CSSSelector* simpleSelector; // Used by :not
-        DOM::DOMString string_arg; // Used by :contains, :lang and :nth-*
+        DOM::DOMString string_arg; // Used by :tqcontains, :lang and :nth-*
         DOM::NodeImpl::Id attr;
         DOM::NodeImpl::Id tag;
 

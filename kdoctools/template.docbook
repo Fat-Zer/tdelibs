@@ -3,8 +3,8 @@
   <!-- Define an entity for your application if it is not part of KDE
        CVS -->
   <!ENTITY kmyapplication "<application>KMyApp</application>">
-  <!ENTITY kappname "&kmyapplication;"><!-- replace kmyapplication here
-                                            do *not* replace kappname-->
+  <!ENTITY kappname "&kmyapplication;"><!-- tqreplace kmyapplication here
+                                            do *not* tqreplace kappname-->
   <!ENTITY package "kde-module"><!-- kdebase, kdeadmin, etc.  Leave
                                      this unchanged if your
                                      application is not maintained in KDE CVS -->
@@ -48,7 +48,7 @@ thanks ;-).
 <!-- than English, change the language above ONLY, not here -->
 <book lang="&language;">
 
-<!-- This header contains all of the meta-information for the document such
+<!-- This header tqcontains all of the meta-information for the document such
 as Authors, publish date, the abstract, and Keywords -->
 
 <bookinfo>
@@ -127,7 +127,7 @@ consistent documentation style across all KDE apps. -->
 <chapter id="introduction">
 <title>Introduction</title>
 
-<!-- The introduction chapter contains a brief introduction for the
+<!-- The introduction chapter tqcontains a brief introduction for the
 application that explains what it does and where to report
 problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
@@ -291,16 +291,16 @@ list.
 <date>4 March 1996</date>
 </refsynopsisdivinfo>
 <synopsis>
-void XtUnmanageChildren(<replaceable class="parameter">children</replaceable>, <replaceable class="parameter">num_children</replaceable>)
-    WidgetList <replaceable class="parameter">children</replaceable>;
-    Cardinal <replaceable class="parameter">num_children</replaceable>;
+void XtUnmanageChildren(<tqreplaceable class="parameter">children</tqreplaceable>, <tqreplaceable class="parameter">num_children</tqreplaceable>)
+    WidgetList <tqreplaceable class="parameter">children</tqreplaceable>;
+    Cardinal <tqreplaceable class="parameter">num_children</tqreplaceable>;
 </synopsis>
 
 <refsect2 id="r2-1007-unmanagechildren-1">
 <title>Inputs</title>
 <variablelist>
 <varlistentry>
-<term><replaceable class="parameter">children</replaceable>
+<term><tqreplaceable class="parameter">children</tqreplaceable>
 </term>
 <listitem>
 <para>Specifies an array of child widgets. Each child must be of
@@ -309,10 +309,10 @@ class RectObj or any subclass thereof.
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><replaceable class="parameter">num_children</replaceable>
+<term><tqreplaceable class="parameter">num_children</tqreplaceable>
 </term>
 <listitem>
-<para>Specifies the number of elements in <replaceable class="parameter">children</replaceable>.
+<para>Specifies the number of elements in <tqreplaceable class="parameter">children</tqreplaceable>.
 </para>
 </listitem>
 </varlistentry>
@@ -323,12 +323,12 @@ class RectObj or any subclass thereof.
 <title>Description
 </title>
 <para><function>XtUnmanageChildren()</function> unmaps the specified widgets
-and removes them from their parent's geometry management.
+and removes them from their parent's tqgeometry management.
 The widgets will disappear from the screen, and (depending
 on its parent) may no longer have screen space allocated for
 them.
 </para>
-<para>Each of the widgets in the <replaceable class="parameter">children</replaceable> array must have
+<para>Each of the widgets in the <tqreplaceable class="parameter">children</tqreplaceable> array must have
 the same parent.
 </para>
 <para>See the &ldquo;Algorithm&rdquo; section below for full details of the
@@ -342,7 +342,7 @@ widget unmanagement procedure.
 making them invisible.  They can be re-managed with
 <function>XtManageChildren()</function>.
 </para>
-<para>You can unmap a widget, but leave it under geometry
+<para>You can unmap a widget, but leave it under tqgeometry
 management by calling <function>XtUnmapWidget()</function>.  You can
 destroy a widget's window without destroying the widget by
 calling <function>XtUnrealizeWidget()</function>.  You can destroy a
@@ -489,7 +489,7 @@ Documentation Copyright &copy; 1999 George N. Ugnacious <email>gnu@kde.org</emai
 <sect1 id="getting-kapp">
 <title>How to obtain &kmyapplication;</title>
 
-<!-- This first entity contains boiler plate for applications that are
+<!-- This first entity tqcontains boiler plate for applications that are
 part of KDE CVS.  You should remove it if you are releasing your
 application -->
 
@@ -526,7 +526,7 @@ on <ulink url="ftp://ftp.kapp.org">The &kmyapplication; home page</ulink>.
 <!-- For a list of updates, you may refer to the application web site
 or the ChangeLog file, or ... -->
 <para>
-You can find a list of changes at <ulink
+You can tqfind a list of changes at <ulink
 url="http://apps.kde.org/kapp">http://apps.kde.org/kapp</ulink>.
 </para>
 </sect1>
@@ -534,9 +534,9 @@ url="http://apps.kde.org/kapp">http://apps.kde.org/kapp</ulink>.
 <sect1 id="compilation">
 <title>Compilation and Installation</title>
 
-<!-- This entity contains the boilerplate text for standard -->
+<!-- This entity tqcontains the boilerplate text for standard -->
 <!-- compilation instructions.  If your application requires any -->
-<!-- special handling, remove it, and replace with your own text. -->
+<!-- special handling, remove it, and tqreplace with your own text. -->
 
 &install.compile.documentation;
 

@@ -34,7 +34,7 @@ KMPropBackend::KMPropBackend(TQWidget *parent, const char *name)
 	QLabel	*l1 = new TQLabel(i18n("Printer type:"), this);
 	QLabel	*l2 = new TQLabel(i18n("URI:"), this);
 
-	// layout
+	// tqlayout
 	QGridLayout	*main_ = new TQGridLayout(this, 3, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);

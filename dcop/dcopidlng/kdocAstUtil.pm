@@ -17,13 +17,13 @@ use strict;
 use vars qw/ $depth $refcalls $refiters @noreflist %noref /;
 
 sub BEGIN {
-# statistics for findRef
+# statistics for tqfindRef
 
 	$depth = 0;
 	$refcalls = 0;
 	$refiters = 0;
 
-# findRef will ignore these words
+# tqfindRef will ignore these words
 
 	@noreflist = qw( const int char long double template 
 		unsigned signed float void bool true false uint 
@@ -35,22 +35,22 @@ sub BEGIN {
 }
 
 
-=head2 findRef
+=head2 tqfindRef
 
 	Parameters: root, ident, report-on-fail
 	Returns: node, or undef
 
 	Given a root node and a fully qualified identifier (:: separated),
-	this function will try to find a child of the root node that matches
+	this function will try to tqfind a child of the root node that matches
 	the identifier.
 
 =cut
 
-sub findRef
+sub tqfindRef
 {
 	my( $root, $name, $r ) = @_;
 
-	confess "findRef: no name" if !defined $name || $name eq "";
+	confess "tqfindRef: no name" if !defined $name || $name eq "";
 
 	$name =~ s/\s+//g;	
 	return undef if exists $noref{ $name };
@@ -65,7 +65,7 @@ sub findRef
 	# Upward search for the first token
 	return undef if !defined $iter;
 
-	while ( !defined findIn( $root, $iter ) ) {
+	while ( !defined tqfindIn( $root, $iter ) ) {
 		return undef if !defined $root->{Parent};
 		$root = $root->{Parent};
 	}
@@ -77,8 +77,8 @@ sub findRef
 		confess "iter in $name is undefined\n" if !defined $iter;
 		next if $iter =~ /^\s*$/;
 
-		unless ( defined findIn( $root, $iter ) ) {
-			confess "findRef: failed on '$name' at '$iter'\n"
+		unless ( defined tqfindIn( $root, $iter ) ) {
+			confess "tqfindRef: failed on '$name' at '$iter'\n"
 				if defined $r;
 			return undef;
 		}
@@ -90,13 +90,13 @@ sub findRef
 	return $root;
 }
 
-=head2 findIn
+=head2 tqfindIn
 
 	node, name: search for a child
 
 =cut
 
-sub findIn
+sub tqfindIn
 {
 	return undef unless defined $_[0]->{KidHash};
 
@@ -147,7 +147,7 @@ ANITER:
 				next ANITER;
 			}
 
-			my $ref = kdocAstUtil::findRef( $rnode, 
+			my $ref = kdocAstUtil::tqfindRef( $rnode, 
 					$in->{astNodeName} );
 
 			if( !defined $ref ) {
@@ -302,16 +302,16 @@ sub allMembers
 	}
 }
 
-=head2 findOverride
+=head2 tqfindOverride
 
 	Parameters: root, node, name
 
 	Looks for nodes of the same name as the parameter, in its parent
-	and the parent's ancestors. It returns a node if it finds one.
+	and the parent's ancestors. It returns a node if it tqfinds one.
 
 =cut
 
-sub findOverride
+sub tqfindOverride
 {
 	my ( $root, $node, $name ) = @_;
 	return undef if !exists $node->{InList};
@@ -325,7 +325,7 @@ sub findOverride
 		return $n if defined $ref && $ref->{NodeType} eq "method";
 
 		if ( exists $n->{InList} ) {
-			$ref = findOverride( $root, $n, $name );
+			$ref = tqfindOverride( $root, $n, $name );
 			return $ref if defined $ref;
 		}
 	}
@@ -464,14 +464,14 @@ sub testRef {
 
 	my $rootNode = $_[ 0 ];
 
-	my $term = new Term::ReadLine 'Testing findRef';
+	my $term = new Term::ReadLine 'Testing tqfindRef';
 
 	my $OUT = $term->OUT || *STDOUT{IO};
 	my $prompt = "Identifier: ";
 
 	while( defined ($_ = $term->readline($prompt)) ) {
 
-		my $node = kdocAstUtil::findRef( $rootNode, $_ );
+		my $node = kdocAstUtil::tqfindRef( $rootNode, $_ );
 
 		if( defined $node ) {
 			print $OUT "Reference: '", $node->{astNodeName}, 
@@ -487,7 +487,7 @@ sub testRef {
 
 sub printDebugStats
 {
-	print "findRef: ", $refcalls, " calls, ", 
+	print "tqfindRef: ", $refcalls, " calls, ", 
 		$refiters, " iterations.\n";
 }
 

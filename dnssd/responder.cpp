@@ -72,7 +72,7 @@ Responder& Responder::self()
 
 void Responder::process()
 {
-    qApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
+    tqApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
 }
 
 #ifdef HAVE_DNSSD

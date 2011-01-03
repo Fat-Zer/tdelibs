@@ -102,16 +102,16 @@ public:
 	 *
 	 * Color/Mono preference
 	 *
-	 * @li WebColor -  If the image has depth 1 and contains
+	 * @li WebColor -  If the image has depth 1 and tqcontains
 	 * only black and white pixels then the pixmap becomes monochrome. If
 	 * the pixmap has a depth of 8 bits per pixel then the Netscape
 	 * palette is used for the pixmap color table.
-	 * @li LowColor - If the image has depth 1 and contains only black and
+	 * @li LowColor - If the image has depth 1 and tqcontains only black and
 	 * white pixels then the pixmap becomes monochrome. If the pixmap has a
 	 * depth of 8 bits per pixel and the image does not posess a color table
 	 * that matches the Icon palette a 3x3x3 color cube is used for the
 	 * pixmap color table.
-	 * @li AutoColor (default) - If the image has depth 1 and contains
+	 * @li AutoColor (default) - If the image has depth 1 and tqcontains
 	 * only black and white pixels, then the pixmap becomes
 	 * monochrome.
 	 * @li ColorOnly - The pixmap is dithered/converted to the native
@@ -145,7 +145,7 @@ public:
 	 * options.
 	 *
 	 * @param img the image to convert
-	 * @param conversion_flags bitmask, described above
+	 * @param conversion_flags bittqmask, described above
 	 * @return @p true if successful.
 	 **/
 	bool convertFromImage( const TQImage &img, int conversion_flags );
@@ -173,7 +173,7 @@ public:
 	 *
 	 * @param fileName the name of the file to load the image from
 	 * @param format the format for the image
-	 * @param conversion_flags a bitmask, as described in 
+	 * @param conversion_flags a bittqmask, as described in 
 	 *        convertFromImage()
 	 * @return @p true if successful, or false if the pixmap
 	 *         could not be loaded.

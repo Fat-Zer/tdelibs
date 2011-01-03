@@ -38,7 +38,7 @@ AddresseeHelper *AddresseeHelper::self()
 }
 
 AddresseeHelper::AddresseeHelper()
-  : TQObject( qApp ),
+  : TQObject( tqApp ),
     DCOPObject( "KABC::AddresseeHelper" )
 {
   initSettings();
@@ -90,19 +90,19 @@ void AddresseeHelper::initSettings()
   mTradeAsFamilyName = config.readBoolEntry( "TradeAsFamilyName", true );
 }
 
-bool AddresseeHelper::containsTitle( const TQString& title ) const
+bool AddresseeHelper::tqcontainsTitle( const TQString& title ) const
 {
-  return mTitles.find( title ) != mTitles.end();
+  return mTitles.tqfind( title ) != mTitles.end();
 }
 
-bool AddresseeHelper::containsPrefix( const TQString& prefix ) const
+bool AddresseeHelper::tqcontainsPrefix( const TQString& prefix ) const
 {
-  return mPrefixes.find( prefix ) != mPrefixes.end();
+  return mPrefixes.tqfind( prefix ) != mPrefixes.end();
 }
 
-bool AddresseeHelper::containsSuffix( const TQString& suffix ) const
+bool AddresseeHelper::tqcontainsSuffix( const TQString& suffix ) const
 {
-  return mSuffixes.find( suffix ) != mSuffixes.end();
+  return mSuffixes.tqfind( suffix ) != mSuffixes.end();
 }
 
 bool AddresseeHelper::tradeAsFamilyName() const

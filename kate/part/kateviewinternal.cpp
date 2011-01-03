@@ -89,7 +89,7 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   // cursor
   cursor.setMoveOnInsert (true);
 
-  // invalidate selStartCached, or keyb selection is screwed initially
+  // tqinvalidate selStartCached, or keyb selection is screwed initially
   selStartCached.setLine( -1 );
   //
   // scrollbar for lines
@@ -284,7 +284,7 @@ KateTextCursor KateViewInternal::endPos() const
   }
 
   Q_ASSERT(false);
-  kdDebug(13030) << "WARNING: could not find a lineRange at all" << endl;
+  kdDebug(13030) << "WARNING: could not tqfind a lineRange at all" << endl;
   return KateTextCursor(-1, -1);
 }
 
@@ -765,7 +765,7 @@ void KateViewInternal::makeVisible (const KateTextCursor& c, uint endCol, bool f
 {
   //kdDebug() << "MakeVisible start [" << startPos().line << "," << startPos().col << "] end [" << endPos().line << "," << endPos().col << "] -> request: [" << c.line << "," << c.col << "]" <<endl;// , new start [" << scroll.line << "," << scroll.col << "] lines " << (linesDisplayed() - 1) << " height " << height() << endl;
     // if the line is in a folded region, unfold all the way up
-    //if ( m_doc->foldingTree()->findNodeForLine( c.line )->visible )
+    //if ( m_doc->foldingTree()->tqfindNodeForLine( c.line )->visible )
     //  kdDebug()<<"line ("<<c.line<<") should be visible"<<endl;
 
   if ( force )
@@ -871,7 +871,7 @@ void KateViewInternal::updateMicroFocusHint()
 {
     int line = displayViewLine(displayCursor, true);
     /* Check for hasFocus() to avoid crashes in QXIMInputContext as in bug #131266.
-    This is only a workaround until somebody can find the real reason of the crash
+    This is only a workaround until somebody can tqfind the real reason of the crash
     (probably it's in Qt). */
     if (line == -1 || !hasFocus())
         return;
@@ -1825,7 +1825,7 @@ void KateViewInternal::cursorToMatchingBracket( bool sel )
 {
   KateTextCursor start( cursor ), end;
 
-  if( !m_doc->findMatchingBracket( start, end ) )
+  if( !m_doc->tqfindMatchingBracket( start, end ) )
     return;
 
   // The cursor is now placed just to the left of the matching bracket.
@@ -2486,7 +2486,7 @@ bool KateViewInternal::eventFilter( TQObject *obj, TQEvent *e )
                           width() - scrollMargin * 2,
                           height() - scrollMargin * 2 );
 
-      if ( !doNotScrollRegion.contains( currentPoint ) )
+      if ( !doNotScrollRegion.tqcontains( currentPoint ) )
       {
           startDragScroll();
           // Keep sending move events
@@ -2759,7 +2759,7 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
         }
         else
         {
-          selStartCached.setLine( -1 ); // invalidate
+          selStartCached.setLine( -1 ); // tqinvalidate
         }
 
         if( !( e->state() & Qt::ShiftButton ) && isTargetSelected( e->pos() ) )
@@ -3074,7 +3074,7 @@ void KateViewInternal::resizeEvent(TQResizeEvent* e)
     bool dirtied = false;
 
     for (uint i = 0; i < lineRanges.count(); i++) {
-      // find the first dirty line
+      // tqfind the first dirty line
       // the word wrap updateView algorithm is forced to check all lines after a dirty one
       if (lineRanges[i].wrap ||
          (!expandedHorizontally && (lineRanges[i].endX - lineRanges[i].startX) > width())) {
@@ -3493,4 +3493,4 @@ void KateViewInternal::imEndEvent( TQIMEvent *e )
 }
 //END IM INPUT STUFF
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

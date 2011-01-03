@@ -72,8 +72,8 @@ void KX509Item::setup(KSSLCertificate *x) {
 		TQString CN = "CN";
 		OU = xm.getValue(OU);
 		CN = xm.getValue(CN);
-		OU.replace(TQRegExp("\n.*"), "");
-		CN.replace(TQRegExp("\n.*"), "");
+		OU.tqreplace(TQRegExp("\n.*"), "");
+		CN.tqreplace(TQRegExp("\n.*"), "");
 
 		if (OU.length() > 0) {
 			_prettyName = OU;
@@ -106,7 +106,7 @@ KPKCS12Item::KPKCS12Item(KListViewItem *parent, KSSLPKCS12 *x) :
 		KSSLX509Map xm(x->getCertificate()->getSubject());
 		TQString CN = "CN";
 		CN = xm.getValue(CN);
-		CN.replace(TQRegExp("\n.*"), "");
+		CN.tqreplace(TQRegExp("\n.*"), "");
 		_prettyName = CN;
 		setText(0, _prettyName);
 	} else {
@@ -127,7 +127,7 @@ class KCertPartPrivate {
 };
 
 
-KCertPart::KCertPart(TQWidget *parentWidget, const char *widgetName,
+KCertPart::KCertPart(TQWidget *tqparentWidget, const char *widgetName,
                      TQObject *parent, const char *name,
 		     const TQStringList & /*args*/ ) 
           : KParts::ReadWritePart(parent, name) {
@@ -149,7 +149,7 @@ _silentImport = false;
 d = new KCertPartPrivate;
 d->browserExtension = new KParts::BrowserExtension(this);
 
-_frame = new TQFrame(parentWidget, widgetName);
+_frame = new TQFrame(tqparentWidget, widgetName);
 setWidget(_frame);
 
 _baseGrid = new TQGridLayout(_frame, 15, 9, KDialog::marginHint(),
@@ -464,13 +464,13 @@ if (TQFileInfo(m_file).size() == 0) {
 TQString whatType = d->browserExtension->urlArgs().serviceType;
 //whatType = KMimeType::findByURL(m_url,0,true)->name();
 if (whatType.isEmpty())
-	whatType = KServiceTypeFactory::self()->findFromPattern(m_file)->name();
+	whatType = KServiceTypeFactory::self()->tqfindFromPattern(m_file)->name();
 
 /*
    TQString blah = "file: " + m_file
    + "\nurl: " + m_url.url()
    + "\nserviceType: " + d->browserExtension->urlArgs().serviceType
-   + "\nfactory: " + KServiceTypeFactory::self()->findFromPattern(m_file)->name()
+   + "\nfactory: " + KServiceTypeFactory::self()->tqfindFromPattern(m_file)->name()
    + "\nmimeType: " + KMimeType::findByURL(m_url)->name();
    KMessageBox::information(_frame, blah, "ssl");
  */
@@ -524,7 +524,7 @@ if (whatType == "application/x-pkcs12") {
 
 		const char *signature = "-----BEGIN CERTIFICATE-----";
 		theFile[(uint)(qf.size()-1)] = 0;
-		isPEM = (TQCString(theFile.data()).find(signature) >= 0);
+		isPEM = (TQCString(theFile.data()).tqfind(signature) >= 0);
 	}
 
 	fp = fopen(m_file.local8Bit(), "r");
@@ -636,7 +636,7 @@ void KCertPart::displayCACert(KSSLCertificate *c) {
 
 	// Set the valid period
 	TQPalette cspl = _ca_validFrom->palette();
-	if (TQDateTime::currentDateTime() < c->getQDTNotBefore()) {
+	if (TQDateTime::tqcurrentDateTime() < c->getQDTNotBefore()) {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
 	} else {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -645,7 +645,7 @@ void KCertPart::displayCACert(KSSLCertificate *c) {
 	_ca_validFrom->setText(c->getNotBefore());
 
 	cspl = _ca_validUntil->palette();
-	if (TQDateTime::currentDateTime() > c->getQDTNotAfter()) {
+	if (TQDateTime::tqcurrentDateTime() > c->getQDTNotAfter()) {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
 	} else {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -677,7 +677,7 @@ void KCertPart::displayPKCS12Cert(KSSLCertificate *c) {
 
 	// Set the valid period
 	TQPalette cspl = _p12_validFrom->palette();
-	if (TQDateTime::currentDateTime() < c->getQDTNotBefore()) {
+	if (TQDateTime::tqcurrentDateTime() < c->getQDTNotBefore()) {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
 	} else {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -686,7 +686,7 @@ void KCertPart::displayPKCS12Cert(KSSLCertificate *c) {
 	_p12_validFrom->setText(c->getNotBefore());
 
 	cspl = _p12_validUntil->palette();
-	if (TQDateTime::currentDateTime() > c->getQDTNotAfter()) {
+	if (TQDateTime::tqcurrentDateTime() > c->getQDTNotAfter()) {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
 	} else {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -726,7 +726,7 @@ void KCertPart::slotImport() {
 		KSimpleConfig cfg("ksslcertificates", false);
 
 		if (cfg.hasGroup(_p12->getCertificate()->getSubject())) {
-			TQString msg = _curName + "\n" + i18n("A certificate with that name already exists. Are you sure that you wish to replace it?");
+			TQString msg = _curName + "\n" + i18n("A certificate with that name already exists. Are you sure that you wish to tqreplace it?");
 			int rc= KMessageBox::warningContinueCancel(_frame, msg, i18n("Certificate Import"),i18n("Replace"));
 			if (rc == KMessageBox::Cancel) {
 				return;
@@ -742,7 +742,7 @@ void KCertPart::slotImport() {
 	} else if (_ca) {
 		KConfig cfg("ksslcalist", true, false);
 		if (cfg.hasGroup(_ca->getSubject())) {
-			TQString msg = _curName + "\n" + i18n("A certificate with that name already exists. Are you sure that you wish to replace it?");
+			TQString msg = _curName + "\n" + i18n("A certificate with that name already exists. Are you sure that you wish to tqreplace it?");
 			int rc= KMessageBox::warningContinueCancel(_frame, msg, i18n("Certificate Import"),i18n("Replace"));
 			if (rc == KMessageBox::Cancel) {
 				return;

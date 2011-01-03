@@ -43,7 +43,7 @@
 class TQStringList;
 
 /*
- * This class contains all the infos needed to install a given plugin
+ * This class tqcontains all the infos needed to install a given plugin
  * Takes and parse a TQDomNode in its constructor
  */
 class KNSPluginInfo 
@@ -87,7 +87,7 @@ private:
  * This class contain all the the methods used to perform a plugin installation
  *
  */
-class KNSPluginInstallEngine : public QObject
+class KNSPluginInstallEngine : public TQObject
 {
     Q_OBJECT
 public:
@@ -129,7 +129,7 @@ private:
     /*
      * parse the xml configuration file
      */
-    bool findPlugin();
+    bool tqfindPlugin();
     
 
     TQMap<TQString, TQString> m_archMap;

@@ -58,7 +58,7 @@ DCOPObject::DCOPObject(TQObject *obj)
     while (currentObj != 0L) {
         ident.prepend( currentObj->name() );
         ident.prepend("/");
-        currentObj = currentObj->parent();
+        currentObj = currentObj->tqparent();
     }
     if ( ident[0] == '/' )
         ident = ident.mid(1);
@@ -97,7 +97,7 @@ void DCOPObject::setCallingDcopClient(DCOPClient *client)
 
 bool DCOPObject::setObjId(const TQCString &objId)
 {
-  if (objMap()->find(objId)!=objMap()->end()) return false;
+  if (objMap()->tqfind(objId)!=objMap()->end()) return false;
 
   DCOPClient *client = DCOPClient::mainClient();
     if ( d->m_signalConnections > 0 && client )
@@ -116,16 +116,16 @@ TQCString DCOPObject::objId() const
 
 bool DCOPObject::hasObject(const TQCString &_objId)
 {
-  if (objMap()->contains(_objId))
+  if (objMap()->tqcontains(_objId))
     return true;
   else
     return false;
 }
 
-DCOPObject *DCOPObject::find(const TQCString &_objId)
+DCOPObject *DCOPObject::tqfind(const TQCString &_objId)
 {
   TQMap<TQCString, DCOPObject *>::ConstIterator it;
-  it = objMap()->find(_objId);
+  it = objMap()->tqfind(_objId);
   if (it != objMap()->end())
     return *it;
   else
@@ -155,7 +155,7 @@ TQCString DCOPObject::objectName( TQObject* obj )
     {
 	identity.prepend( currentObj->name() );
 	identity.prepend("/");
-	currentObj = currentObj->parent();
+	currentObj = currentObj->tqparent();
     }
     if ( identity[0] == '/' )
 	identity = identity.mid(1);

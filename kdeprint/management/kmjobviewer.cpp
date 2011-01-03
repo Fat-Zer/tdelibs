@@ -149,7 +149,7 @@ void KMJobViewer::updateCaption()
 	if (!m_prname.isEmpty())
 	{
 		setCaption(i18n("Print Jobs for %1").arg(m_prname));
-		KMPrinter	*prt = KMManager::self()->findPrinter(m_prname);
+		KMPrinter	*prt = KMManager::self()->tqfindPrinter(m_prname);
 		if (prt)
 			pixname = prt->pixmap();
 	}
@@ -183,7 +183,7 @@ void KMJobViewer::addToManager()
 	}
 	else if (!m_prname.isEmpty())
 	{
-		KMPrinter *prt = KMManager::self()->findPrinter( m_prname );
+		KMPrinter *prt = KMManager::self()->tqfindPrinter( m_prname );
 		bool isSpecial = ( prt ? prt->isSpecial() : false );
 		m_manager->addPrinter(m_prname, (KMJobManager::JobType)m_type, isSpecial);
 	}
@@ -235,7 +235,7 @@ void KMJobViewer::init()
 		m_view->addColumn(i18n("Job ID"));
 		m_view->addColumn(i18n("Owner"));
 		m_view->addColumn(i18n("Name"), 150);
-		m_view->addColumn(i18n("Status", "State"));
+		m_view->addColumn(i18n("tqStatus", "State"));
 		m_view->addColumn(i18n("Size (KB)"));
 		m_view->addColumn(i18n("Page(s)"));
 		m_view->setColumnAlignment(5,Qt::AlignRight|Qt::AlignVCenter);
@@ -280,7 +280,7 @@ void KMJobViewer::initActions()
 	connect(m_userfield, TQT_SIGNAL(returnPressed()), TQT_SLOT(slotUserChanged()));
 	connect(uact, TQT_SIGNAL(toggled(bool)), m_userfield, TQT_SLOT(setEnabled(bool)));
 	m_userfield->setEnabled(false);
-	m_userfield->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+	m_userfield->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
 	KWidgetAction	*ufact = new KWidgetAction(m_userfield, i18n("User Name"), 0, 0, 0, actionCollection(), "view_username");
 
 	if (!m_pop)
@@ -387,7 +387,7 @@ void KMJobViewer::updateJobs()
 	for (;it.current();++it)
 	{
 		KMJob	*j(it.current());
-		JobItem	*item = findItem(j->uri());
+		JobItem	*item = tqfindItem(j->uri());
 		if (item)
 		{
 			item->setDiscarded(false);
@@ -407,7 +407,7 @@ void KMJobViewer::updateJobs()
 	slotSelectionChanged();
 }
 
-JobItem* KMJobViewer::findItem(const TQString& uri)
+JobItem* KMJobViewer::tqfindItem(const TQString& uri)
 {
 	TQPtrListIterator<JobItem>	it(m_items);
 	for (;it.current();++it)
@@ -586,7 +586,7 @@ void KMJobViewer::loadPluginActions()
 		KAction	*act = actionCollection()->action("job_restart");
 		for (int i=0;i<act->containerCount();i++)
 		{
-			if (menuBar()->findItem(act->itemId(i), &menu))
+			if (menuBar()->tqfindItem(act->itemId(i), &menu))
 			{
 				menuindex = mpopindex = menu->indexOf(act->itemId(i))+1;
 				break;

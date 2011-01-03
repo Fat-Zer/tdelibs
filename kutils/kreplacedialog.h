@@ -33,20 +33,20 @@ class TQRect;
 
 /**
  * @ingroup main
- * @ingroup findreplace
- * @short A generic "replace" dialog.
+ * @ingroup tqfindtqreplace
+ * @short A generic "tqreplace" dialog.
  *
  * @author S.R.Haque <srhaque@iee.org>
  *
  * \b Detail:
  *
  * This widget inherits from KFindDialog and implements
- * the following additional functionalities:  a replacement string
+ * the following additional functionalities:  a tqreplacement string
  * object and an area for a user-defined widget to extend the dialog.
  *
  * \b Example:
  *
- * To use the basic replace dialog:
+ * To use the basic tqreplace dialog:
  *
  * \code
  * \endcode
@@ -68,25 +68,25 @@ public:
      */
     enum Options
     {
-        PromptOnReplace = 256,  ///< Should the user be prompted before the replace operation?
+        PromptOnReplace = 256,  ///< Should the user be prompted before the tqreplace operation?
         BackReference = 512
     };
 
     /**
-     * Construct a replace dialog.read-only or rather select-only combo box with a
+     * Construct a tqreplace dialog.read-only or rather select-only combo box with a
      * parent object and a name.
      *
      * @param parent The parent object of this widget
      * @param name The name of this widget
      * @param options A bitfield of the Options to be enabled.
-     * @param findStrings A TQStringList to insert in the combo box of text to find
-     * @param replaceStrings A TQStringList to insert in the combo box of text to
-     *        replace with
+     * @param tqfindStrings A TQStringList to insert in the combo box of text to tqfind
+     * @param tqreplaceStrings A TQStringList to insert in the combo box of text to
+     *        tqreplace with
      * @param hasSelection Whether a selection exists
      */
     KReplaceDialog( TQWidget *parent = 0, const char *name = 0, long options = 0,
-		    const TQStringList &findStrings = TQStringList(),
-		    const TQStringList &replaceStrings = TQStringList(),
+		    const TQStringList &tqfindStrings = TQStringList(),
+		    const TQStringList &tqreplaceStrings = TQStringList(),
 		    bool hasSelection = true );
 
     /**
@@ -96,21 +96,21 @@ public:
 
     /**
      * Provide the list of @p strings to be displayed as the history
-     * of replacement strings. @p strings might get truncated if it is
+     * of tqreplacement strings. @p strings might get truncated if it is
      * too long.
      *
-     * @param history The replacement history.
-     * @see replacementHistory
+     * @param history The tqreplacement history.
+     * @see tqreplacementHistory
      */
     void setReplacementHistory( const TQStringList &history );
 
     /**
      * Returns the list of history items.
      *
-     * @return The replacement history.
+     * @return The tqreplacement history.
      * @see setReplacementHistory
      */
-    TQStringList replacementHistory() const;
+    TQStringList tqreplacementHistory() const;
 
     /**
      * Set the options which are enabled.
@@ -130,19 +130,19 @@ public:
     long options() const;
 
     /**
-     * Returns the replacement string.
-     * @return The replacement string.
+     * Returns the tqreplacement string.
+     * @return The tqreplacement string.
      */
-    TQString replacement() const;
+    TQString tqreplacement() const;
 
     /**
      * Returns an empty widget which the user may fill with additional UI
      * elements as required. The widget occupies the width of the dialog,
      * and is positioned immediately the regular expression support widgets
-     * for the replacement string.
+     * for the tqreplacement string.
      * @return An extensible TQWidget.
      */
-    TQWidget *replaceExtension();
+    TQWidget *tqreplaceExtension();
 
 protected slots:
 

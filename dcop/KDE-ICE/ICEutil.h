@@ -119,7 +119,7 @@ extern void IceFreeAuthFileEntry (
 
 #define IceWriteAuthFileEntry KDE_IceWriteAuthFileEntry
 
-extern Status KDE_IceWriteAuthFileEntry (
+extern tqStatus KDE_IceWriteAuthFileEntry (
 #if NeedFunctionPrototypes
     FILE *		/* auth_file */,
     IceAuthFileEntry *	/* auth */

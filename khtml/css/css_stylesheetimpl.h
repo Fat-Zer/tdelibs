@@ -101,8 +101,8 @@ public:
     void deleteRule ( unsigned long index, int &exceptioncode );
 
     void addNamespace(CSSParser* p, const DOM::DOMString& prefix, const DOM::DOMString& uri);
-    void determineNamespace(Q_UINT32& id, const DOM::DOMString& prefix);
-    Q_UINT32 defaultNamespace() { return m_defaultNamespace; };
+    void determineNamespace(TQ_UINT32& id, const DOM::DOMString& prefix);
+    TQ_UINT32 defaultNamespace() { return m_defaultNamespace; };
 
     void setCharset(const DOMString &charset) { m_charset = charset; }
     const DOMString& charset() const { return m_charset; }
@@ -123,7 +123,7 @@ public:
 protected:
     DocumentImpl *m_doc;
     bool m_implicit;
-    Q_UINT32 m_defaultNamespace;
+    TQ_UINT32 m_defaultNamespace;
     CSSNamespace* m_namespaces;
     DOMString m_charset;
 };
@@ -172,14 +172,14 @@ public:
     void setMediaText(const DOM::DOMString &value);
 
     /**
-     * Check if the list contains either the requested medium, or the
+     * Check if the list tqcontains either the requested medium, or the
      * catch-all "all" media type. Returns true when found, false otherwise.
      * Since not specifying media types should be treated as "all" according
      * to DOM specs, an empty list always returns true.
      *
      * _NOT_ part of the DOM!
      */
-    bool contains( const DOM::DOMString &medium ) const;
+    bool tqcontains( const DOM::DOMString &medium ) const;
 
 protected:
     TQValueList<DOM::DOMString> m_lstMedia;

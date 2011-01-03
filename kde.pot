@@ -656,7 +656,7 @@ msgid "Show &Toolbar"
 msgstr ""
 
 #: common_texts.cpp:189
-msgid "Show &Statusbar"
+msgid "Show &tqStatusbar"
 msgstr ""
 
 #: common_texts.cpp:190

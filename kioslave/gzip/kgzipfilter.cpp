@@ -133,7 +133,7 @@ bool KGzipFilter::readHeader()
 #endif
     // Assume not compressed until we successfully decode the header
     d->bCompressed = false;
-    // Assume the first block of data contains the whole header.
+    // Assume the first block of data tqcontains the whole header.
     // The right way is to build this as a big state machine which
     // is a pain in the ass.
     // With 8K-blocks, we don't risk much anyway.

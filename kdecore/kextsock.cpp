@@ -236,12 +236,12 @@ bool KExtendedSocket::reset()
   d->syserror = 0;
 }
 
-int KExtendedSocket::socketStatus() const
+int KExtendedSocket::sockettqStatus() const
 {
   return d->status;
 }
 
-void KExtendedSocket::setSocketStatus(int newstatus)
+void KExtendedSocket::setSockettqStatus(int newstatus)
 {
   d->status = newstatus;
 }
@@ -716,7 +716,7 @@ bool KExtendedSocket::setBufferSize(int rsize, int wsize)
 /*
  * Finds the local address for this socket
  * if we have done this already, we return it. Otherwise, we'll have
- * to find the socket name
+ * to tqfind the socket name
  */
 const ::KSocketAddress *KExtendedSocket::localAddress()
 {
@@ -1436,7 +1436,7 @@ void KExtendedSocket::flush()
 }
 
 
-Q_LONG KExtendedSocket::readBlock(char *data, Q_ULONG maxlen)
+TQ_LONG KExtendedSocket::readBlock(char *data, TQ_ULONG maxlen)
 {
   cleanError();
   if (d->status < connected || d->flags & passiveSocket)
@@ -1481,7 +1481,7 @@ Q_LONG KExtendedSocket::readBlock(char *data, Q_ULONG maxlen)
   return retval;
 }
 
-Q_LONG KExtendedSocket::writeBlock(const char *data, Q_ULONG len)
+TQ_LONG KExtendedSocket::writeBlock(const char *data, TQ_ULONG len)
 {
   cleanError();
   if (d->status < connected || d->status >= closing || d->flags & passiveSocket)
@@ -1808,7 +1808,7 @@ void KExtendedSocket::connectionEvent()
   if (sockfd != -1)
     {
       // our socket has activity
-      // find out what it was
+      // tqfind out what it was
       int retval;
       socklen_t len = sizeof(errcode);
       retval = getsockopt(sockfd, SOL_SOCKET, SO_ERROR, (char*)&errcode, &len);
@@ -2075,7 +2075,7 @@ TQPtrList<KAddressInfo> KExtendedSocket::lookup(const TQString& host, const TQSt
   struct sockaddr static_sa, *sa = &static_sa;
   ksocklen_t len = sizeof(static_sa);
 
-  /* find out the socket length, in advance
+  /* tqfind out the socket length, in advance
    * we use a sockaddr allocated on the heap just not to pass down
    * a NULL pointer to the first call. Some systems are reported to
    * set len to 0 if we pass NULL as the sockaddr */
@@ -2123,7 +2123,7 @@ TQPtrList<KAddressInfo> KExtendedSocket::lookup(const TQString& host, const TQSt
   struct sockaddr static_sa, *sa = &static_sa;
   ksocklen_t len = sizeof(static_sa);
 
-  /* find out the socket length, in advance
+  /* tqfind out the socket length, in advance
    * we use a sockaddr allocated on the heap just not to pass down
    * a NULL pointer to the first call. Some systems are reported to
    * set len to 0 if we pass NULL as the sockaddr */

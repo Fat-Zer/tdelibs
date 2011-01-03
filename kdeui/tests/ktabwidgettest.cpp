@@ -39,51 +39,51 @@ Test::Test( TQWidget* parent, const char *name )
   mWidget->setTabReorderingEnabled( true );
 
   TQWidget * grid = new TQWidget(this);
-  TQGridLayout * gridlayout = new TQGridLayout( grid, 5, 2 );
+  TQGridLayout * gridtqlayout = new TQGridLayout( grid, 5, 2 );
 
   TQPushButton * addTab = new TQPushButton( "Add Tab", grid );
-  gridlayout->addWidget( addTab, 0, 0 );
+  gridtqlayout->addWidget( addTab, 0, 0 );
   connect( addTab, TQT_SIGNAL( clicked() ), TQT_SLOT( addTab() ) );
 
   TQPushButton * removeTab = new TQPushButton( "Remove Current Tab", grid );
-  gridlayout->addWidget( removeTab, 0, 1 );
+  gridtqlayout->addWidget( removeTab, 0, 1 );
   connect( removeTab, TQT_SIGNAL( clicked() ), TQT_SLOT( removeCurrentTab() ) );
 
   mLeftButton = new TQCheckBox( "Show left button", grid );
-  gridlayout->addWidget( mLeftButton, 1, 0 );
+  gridtqlayout->addWidget( mLeftButton, 1, 0 );
   connect( mLeftButton, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleLeftButton(bool) ) );
   mLeftButton->setChecked(true);
 
   TQCheckBox * leftPopup = new TQCheckBox( "Enable left popup", grid );
-  gridlayout->addWidget( leftPopup, 2, 0 );
+  gridtqlayout->addWidget( leftPopup, 2, 0 );
   connect( leftPopup, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleLeftPopup(bool) ) );
   leftPopup->setChecked(true);
 
   mRightButton = new TQCheckBox( "Show right button", grid );
-  gridlayout->addWidget( mRightButton, 1, 1 );
+  gridtqlayout->addWidget( mRightButton, 1, 1 );
   connect( mRightButton, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleRightButton(bool) ) );
   mRightButton->setChecked(true);
 
   TQCheckBox * rightPopup = new TQCheckBox( "Enable right popup", grid );
-  gridlayout->addWidget( rightPopup, 2, 1 );
+  gridtqlayout->addWidget( rightPopup, 2, 1 );
   connect( rightPopup, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleRightPopup(bool) ) );
   rightPopup->setChecked(true);
 
   mTabsBottom = new TQCheckBox( "Show tabs at bottom", grid );
-  gridlayout->addWidget( mTabsBottom, 3, 0 );
+  gridtqlayout->addWidget( mTabsBottom, 3, 0 );
   connect( mTabsBottom, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleTabPosition(bool) ) );
 
-  TQCheckBox * tabshape = new TQCheckBox( "Triangular tab shape", grid );
-  gridlayout->addWidget( tabshape, 3, 1 );
-  connect( tabshape, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleTabShape(bool) ) );
+  TQCheckBox * tabtqshape = new TQCheckBox( "Triangular tab tqshape", grid );
+  gridtqlayout->addWidget( tabtqshape, 3, 1 );
+  connect( tabtqshape, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleTabShape(bool) ) );
 
   TQCheckBox *tabClose = new TQCheckBox( "Close button on icon hover", grid );
-  gridlayout->addWidget( tabClose, 4, 0 );
+  gridtqlayout->addWidget( tabClose, 4, 0 );
   connect( tabClose, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleCloseButtons(bool) ) );
   tabClose->setChecked(true);
 
   TQCheckBox * showlabels = new TQCheckBox( "Show labels", grid );
-  gridlayout->addWidget( showlabels, 4, 1 );
+  gridtqlayout->addWidget( showlabels, 4, 1 );
   connect( showlabels, TQT_SIGNAL( toggled(bool) ), this, TQT_SLOT( toggleLabels(bool) ) );
 }
 

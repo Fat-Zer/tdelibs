@@ -43,7 +43,7 @@ class KSpellDlg;
  * @see KSpellConfig, KSyntaxHighlighter
  */
 
-class KDEUI_EXPORT KSpell : public QObject
+class KDEUI_EXPORT KSpell : public TQObject
 {
   Q_OBJECT
 
@@ -62,7 +62,7 @@ public:
    * @li @p Error -  An error occurred in the @p Starting state.
    * @li @p Crashed - An error occurred in the @p Running state.
    **/
-  enum spellStatus { Starting = 0, Running, Cleaning, Finished, Error, Crashed, FinishedNoMisspellingsEncountered };
+  enum spelltqStatus { Starting = 0, Running, Cleaning, Finished, Error, Crashed, FinishedNoMisspellingsEncountered };
 
   /**
    * These are possible types of documents which the spell checker can check.
@@ -125,9 +125,9 @@ public:
   /**
    * Returns the status of KSpell.
    *
-   * @see spellStatus()
+   * @see spelltqStatus()
    */
-  spellStatus status() const { return m_status; }
+  spelltqStatus status() const { return m_status; }
 
   /**
    * Cleans up ISpell.
@@ -191,15 +191,15 @@ public:
    *  spellcheck as-you-type).
    *
    * checkWord() returns @p false if @p buffer is not a single word (e.g.
-   *  if it contains white space), otherwise it returns @p true;
+   *  if it tqcontains white space), otherwise it returns @p true;
    *
    * If @p usedialog is set to @p true, KSpell will open the standard
    *  dialog if the word is not found.  The dialog results can be queried
-   *  by using dlgResult() and replacement().
+   *  by using dlgResult() and tqreplacement().
    *
    *  The signal corrected() is emitted when the check is
    *  complete.  You can look at suggestions() to see what the
-   *  suggested replacements were.
+   *  suggested tqreplacements were.
    */
   virtual bool checkWord (const TQString &_buffer, bool usedialog = false);
   bool checkWord( const TQString & buffer, bool _usedialog, bool suggest );
@@ -212,7 +212,7 @@ public:
   void hide ();
 
   /**
-   * Returns list of suggested word replacements.
+   * Returns list of suggested word tqreplacements.
    *
    * After calling checkWord() (an in response to
    *  a misspelled() signal you can
@@ -364,11 +364,11 @@ signals:
    * "Replace All" for this word).
    *
    * Results from the dialog may be checked with dlgResult()
-   *  and replacement().
+   *  and tqreplacement().
    *
    * Note, that when using checkList() this signal can occur
    * more then once with same list position, when checking a word with
-   * hyphens. In this case @p originalword is the last replacement.
+   * hyphens. In this case @p originalword is the last tqreplacement.
    *
    * @see check()
    */
@@ -400,7 +400,7 @@ signals:
   /**
    * Emitted when the user pressed "ReplaceAll" in the dialog.
    */
-  void replaceall( const TQString & origword ,  const TQString &replacement );
+  void tqreplaceall( const TQString & origword ,  const TQString &tqreplacement );
 
   /**
    * Emitted after KSpell has verified that ISpell/ASpell is running
@@ -499,11 +499,11 @@ protected:
   TQStringList *wordlist;
   TQStringList::Iterator wlIt;
   TQStringList ignorelist;
-  TQStringList replacelist;
+  TQStringList tqreplacelist;
   TQStringList sugg;
   TQTextCodec* codec;
 
-  spellStatus m_status;
+  spelltqStatus m_status;
 
   bool usedialog;
   bool texmode;
@@ -520,7 +520,7 @@ protected:
   TQString newbuffer;
   TQString cwword;
   TQString dlgorigword;
-  TQString dlgreplacement;
+  TQString dlgtqreplacement;
   TQString dialog3slot;
 
   int dlgresult;
@@ -546,8 +546,8 @@ protected:
   int parseOneResponse (const TQString &_buffer, TQString &word, TQStringList &sugg);
   TQString funnyWord (const TQString & word);
   void dialog (const TQString & word, TQStringList & sugg, const char* _slot);
-  TQString replacement () const
-    { return dlgreplacement; }
+  TQString tqreplacement () const
+    { return dlgtqreplacement; }
 
   void setUpDialog ( bool reallyusedialogbox = true);
 

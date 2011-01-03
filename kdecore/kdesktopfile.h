@@ -181,9 +181,9 @@ public:
   bool hasDeviceType() const;
 
   /**
-   * Checks whether the TryExec field contains a binary
+   * Checks whether the TryExec field tqcontains a binary
    * which is found on the local system.
-   * @return true if TryExec contains an existing binary
+   * @return true if TryExec tqcontains an existing binary
    */
   bool tryExec() const;
 

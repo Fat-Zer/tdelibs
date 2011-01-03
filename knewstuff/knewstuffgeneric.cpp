@@ -70,7 +70,7 @@ bool KNewStuffGeneric::install( const TQString &fileName )
     kdDebug() << "InstallationCommand: " << cmd << endl;
     list = TQStringList::split( " ", cmd );
     for ( TQStringList::iterator it = list.begin(); it != list.end(); ++it ) {
-        list2 << (*it).replace("%f", fileName);
+        list2 << (*it).tqreplace("%f", fileName);
     }
     KProcess proc;
     proc << list2;
@@ -135,7 +135,7 @@ TQString KNewStuffGeneric::downloadDestination( KNS::Entry *entry )
   TQString file = destinationPath(entry);
 
   if ( KStandardDirs::exists( file ) ) {
-    int result = KMessageBox::warningContinueCancel( parentWidget(),
+    int result = KMessageBox::warningContinueCancel( tqparentWidget(),
         i18n("The file '%1' already exists. Do you want to overwrite it?")
         .arg( file ),
         TQString::null, i18n("Overwrite") );

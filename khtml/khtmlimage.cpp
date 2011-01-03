@@ -48,24 +48,24 @@ KHTMLImageFactory::~KHTMLImageFactory()
     delete s_instance;
 }
 
-KParts::Part *KHTMLImageFactory::createPartObject( TQWidget *parentWidget, const char *widgetName,
+KParts::Part *KHTMLImageFactory::createPartObject( TQWidget *tqparentWidget, const char *widgetName,
                                                    TQObject *parent, const char *name,
                                                    const char *className, const TQStringList & )
 {
   KHTMLPart::GUIProfile prof = KHTMLPart::DefaultGUI;
   if ( strcmp( className, "Browser/View" ) == 0 )
     prof = KHTMLPart::BrowserViewGUI;
-  return new KHTMLImage( parentWidget, widgetName, parent, name, prof );
+  return new KHTMLImage( tqparentWidget, widgetName, parent, name, prof );
 }
 
-KHTMLImage::KHTMLImage( TQWidget *parentWidget, const char *widgetName,
+KHTMLImage::KHTMLImage( TQWidget *tqparentWidget, const char *widgetName,
                         TQObject *parent, const char *name, KHTMLPart::GUIProfile prof )
     : KParts::ReadOnlyPart( parent, name ), m_image( 0 )
 {
     KHTMLPart* parentPart = ::qt_cast<KHTMLPart *>( parent );
     setInstance( KHTMLImageFactory::instance(), prof == KHTMLPart::BrowserViewGUI && !parentPart );
 
-    TQVBox *box = new TQVBox( parentWidget, widgetName );
+    TQVBox *box = new TQVBox( tqparentWidget, widgetName );
 
     m_khtml = new KHTMLPart( box, widgetName, this, "htmlimagepart", prof );
     m_khtml->setAutoloadImages( true );
@@ -302,7 +302,7 @@ bool KHTMLImage::eventFilter(TQObject *, TQEvent *e) {
       case TQEvent::DragMove:
       case TQEvent::DragLeave:
       case TQEvent::Drop: {
-        // find out if this part is embedded in a frame, and send the
+        // tqfind out if this part is embedded in a frame, and send the
 	// event to its outside widget
 	KHTMLPart *p = ::qt_cast<KHTMLPart *>(parent());
 	if (p)

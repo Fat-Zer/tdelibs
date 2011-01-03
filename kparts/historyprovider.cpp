@@ -61,15 +61,15 @@ HistoryProvider::~HistoryProvider()
 	s_self = 0;
 }
 
-bool HistoryProvider::contains( const TQString& item ) const
+bool HistoryProvider::tqcontains( const TQString& item ) const
 {
-    return (bool) d->dict.find( item );
+    return (bool) d->dict.tqfind( item );
 }
 
 void HistoryProvider::insert( const TQString& item )
 {
     // no need to allocate memory, we only want to have fast lookup, no mapping
-    d->dict.replace( item, (void*) 1 );
+    d->dict.tqreplace( item, (void*) 1 );
     emit inserted( item );
 }
 

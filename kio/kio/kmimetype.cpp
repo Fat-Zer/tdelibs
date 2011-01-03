@@ -68,9 +68,9 @@ bool KMimeType::s_bChecked = false;
 void KMimeType::buildDefaultType()
 {
   assert ( !s_pDefaultType );
-  // Try to find the default type
+  // Try to tqfind the default type
   KServiceType * mime = KServiceTypeFactory::self()->
-        findServiceTypeByName( defaultMimeType() );
+        tqfindServiceTypeByName( defaultMimeType() );
 
   if (mime && mime->isType( KST_KMimeType ))
   {
@@ -133,18 +133,18 @@ void KMimeType::checkEssentialMimeTypes()
 
 void KMimeType::errorMissingMimeType( const TQString& _type )
 {
-  TQString tmp = i18n( "Could not find mime type\n%1" ).arg( _type );
+  TQString tmp = i18n( "Could not tqfind mime type\n%1" ).arg( _type );
 
   KMessageBoxWrapper::sorry( 0, tmp );
 }
 
 KMimeType::Ptr KMimeType::mimeType( const TQString& _name )
 {
-  KServiceType * mime = KServiceTypeFactory::self()->findServiceTypeByName( _name );
+  KServiceType * mime = KServiceTypeFactory::self()->tqfindServiceTypeByName( _name );
 
   if ( !mime || !mime->isType( KST_KMimeType ) )
   {
-    // When building ksycoca, findServiceTypeByName doesn't create an object
+    // When building ksycoca, tqfindServiceTypeByName doesn't create an object
     // but returns one from a dict.
     if ( !KSycoca::self()->isBuilding() )
         delete mime;
@@ -207,8 +207,8 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
   static const TQString& slash = KGlobal::staticQString("/");
   if ( ! fileName.isNull() && !path.endsWith( slash ) )
   {
-      // Try to find it out by looking at the filename
-      KMimeType::Ptr mime = KServiceTypeFactory::self()->findFromPattern( fileName );
+      // Try to tqfind it out by looking at the filename
+      KMimeType::Ptr mime = KServiceTypeFactory::self()->tqfindFromPattern( fileName );
       if ( mime )
       {
         // Found something - can we trust it ? (e.g. don't trust *.pl over HTTP, could be anything)
@@ -219,7 +219,7 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
                 if ( mime->patternsAccuracy()<100 )
                 {
                     KMimeMagicResult* result =
-                            KMimeMagic::self()->findFileType( path );
+                            KMimeMagic::self()->tqfindFileType( path );
 
                     if ( result && result->isValid() && result->accuracy() > 0 )
                         return mimeType( result->mimeType() );
@@ -265,7 +265,7 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
       {
           // Assume inode/directory, if the protocol supports listing.
           if ( KProtocolInfo::supportsListing( _url ) )
-              return mimeType( TQString::fromLatin1("inode/directory") );
+              return mimeType( TQString::tqfromLatin1("inode/directory") );
           else
               return defaultMimeTypePtr(); // == 'no idea', e.g. for "data:,foo/"
       }
@@ -276,10 +276,10 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
   }
 
   // Do some magic for local files
-  //kdDebug(7009) << TQString("Mime Type finding for '%1'").arg(path) << endl;
-  KMimeMagicResult* result = KMimeMagic::self()->findFileType( path );
+  //kdDebug(7009) << TQString("Mime Type tqfinding for '%1'").arg(path) << endl;
+  KMimeMagicResult* result = KMimeMagic::self()->tqfindFileType( path );
 
-  // If we still did not find it, we must assume the default mime type
+  // If we still did not tqfind it, we must assume the default mime type
   if ( !result || !result->isValid() )
     return defaultMimeTypePtr();
 
@@ -298,27 +298,27 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
 
 KMimeType::Ptr KMimeType::diagnoseFileName(const TQString &fileName, TQString &pattern)
 {
-  return KServiceTypeFactory::self()->findFromPattern( fileName, &pattern );
+  return KServiceTypeFactory::self()->tqfindFromPattern( fileName, &pattern );
 }
 
-KMimeType::Ptr KMimeType::findByPath( const TQString& path, mode_t mode, bool fast_mode )
+KMimeType::Ptr KMimeType::tqfindByPath( const TQString& path, mode_t mode, bool fast_mode )
 {
     KURL u;
     u.setPath(path);
     return findByURL( u, mode, true, fast_mode );
 }
 
-KMimeType::Ptr KMimeType::findByContent( const TQByteArray &data, int *accuracy )
+KMimeType::Ptr KMimeType::tqfindByContent( const TQByteArray &data, int *accuracy )
 {
-  KMimeMagicResult *result = KMimeMagic::self()->findBufferType(data);
+  KMimeMagicResult *result = KMimeMagic::self()->tqfindBufferType(data);
   if (accuracy)
       *accuracy = result->accuracy();
   return mimeType( result->mimeType() );
 }
 
-KMimeType::Ptr KMimeType::findByFileContent( const TQString &fileName, int *accuracy )
+KMimeType::Ptr KMimeType::tqfindByFileContent( const TQString &fileName, int *accuracy )
 {
-  KMimeMagicResult *result = KMimeMagic::self()->findFileType(fileName);
+  KMimeMagicResult *result = KMimeMagic::self()->tqfindFileType(fileName);
   if (accuracy)
       *accuracy = result->accuracy();
   return mimeType( result->mimeType() );
@@ -327,11 +327,11 @@ KMimeType::Ptr KMimeType::findByFileContent( const TQString &fileName, int *accu
 #define GZIP_MAGIC1	0x1f
 #define GZIP_MAGIC2	0x8b
 
-KMimeType::Format KMimeType::findFormatByFileContent( const TQString &fileName )
+KMimeType::Format KMimeType::tqfindFormatByFileContent( const TQString &fileName )
 {
   KMimeType::Format result;
   result.compression = Format::NoCompression;
-  KMimeType::Ptr mime = findByPath(fileName);
+  KMimeType::Ptr mime = tqfindByPath(fileName);
 
   result.text = mime->name().startsWith("text/");
   TQVariant v = mime->property("X-KDE-text");
@@ -382,15 +382,15 @@ void KMimeType::init( KDesktopFile * config )
   m_lstPatterns = config->readListEntry( "Patterns", ';' );
 
   // Read the X-KDE-AutoEmbed setting and store it in the properties map
-  TQString XKDEAutoEmbed = TQString::fromLatin1("X-KDE-AutoEmbed");
+  TQString XKDEAutoEmbed = TQString::tqfromLatin1("X-KDE-AutoEmbed");
   if ( config->hasKey( XKDEAutoEmbed ) )
     m_mapProps.insert( XKDEAutoEmbed, TQVariant( config->readBoolEntry( XKDEAutoEmbed ), 0 ) );
 
-  TQString XKDEText = TQString::fromLatin1("X-KDE-text");
+  TQString XKDEText = TQString::tqfromLatin1("X-KDE-text");
   if ( config->hasKey( XKDEText ) )
     m_mapProps.insert( XKDEText, config->readBoolEntry( XKDEText ) );
 
-  TQString XKDEIsAlso = TQString::fromLatin1("X-KDE-IsAlso");
+  TQString XKDEIsAlso = TQString::tqfromLatin1("X-KDE-IsAlso");
   if ( config->hasKey( XKDEIsAlso ) ) {
     TQString inherits = config->readEntry( XKDEIsAlso );
     if ( inherits != name() )
@@ -399,7 +399,7 @@ void KMimeType::init( KDesktopFile * config )
         kdWarning(7009) << "Error: " << inherits << " inherits from itself!!!!" << endl;
   }
 
-  TQString XKDEPatternsAccuracy = TQString::fromLatin1("X-KDE-PatternsAccuracy");
+  TQString XKDEPatternsAccuracy = TQString::tqfromLatin1("X-KDE-PatternsAccuracy");
   if ( config->hasKey( XKDEPatternsAccuracy ) )
     m_mapProps.insert( XKDEPatternsAccuracy, config->readEntry( XKDEPatternsAccuracy ) );
 
@@ -508,7 +508,7 @@ TQString KMimeType::iconForURL( const KURL & _url, mode_t _mode )
     const TQString mimeTypeIcon = mt->icon( _url, _url.isLocalFile() );
     TQString i = mimeTypeIcon;
 
-    // if we don't find an icon, maybe we can use the one for the protocol
+    // if we don't tqfind an icon, maybe we can use the one for the protocol
     if ( i == unknown || i.isEmpty() || mt == defaultMimeTypePtr()
         // and for the root of the protocol (e.g. trash:/) the protocol icon has priority over the mimetype icon
         || _url.path().length() <= 1 )
@@ -632,9 +632,9 @@ TQString KFolderType::icon( const KURL& _url, bool _is_local ) const
           entries.append( ep->d_name );
           if ( readdir( dp ) == 0 ) { // only three
             // check if we got "." ".." and ".directory"
-            isempty = entries.find( "." ) != entries.end() &&
-                      entries.find( ".." ) != entries.end() &&
-                      entries.find( ".directory" ) != entries.end();
+            isempty = entries.tqfind( "." ) != entries.end() &&
+                      entries.tqfind( ".." ) != entries.end() &&
+                      entries.tqfind( ".directory" ) != entries.end();
           }
         }
         if (!isempty && !strcmp(ep->d_name, ".directory"))
@@ -717,7 +717,7 @@ TQString KDEDesktopMimeType::icon( const KURL& _url, bool _is_local ) const
     TQString dev = cfg.readEntry( "Dev" );
     if ( !icon.isEmpty() && !unmount_icon.isEmpty() && !dev.isEmpty() )
     {
-      TQString mp = KIO::findDeviceMountPoint( dev );
+      TQString mp = KIO::tqfindDeviceMountPoint( dev );
       // Is the device not mounted ?
       if ( mp.isNull() )
         return unmount_icon;
@@ -728,10 +728,10 @@ TQString KDEDesktopMimeType::icon( const KURL& _url, bool _is_local ) const
           const TQString u = cfg.readPathEntry( "URL" );
           const KURL url( u );
           if ( url.protocol() == "trash" ) {
-              // We need to find if the trash is empty, preferrably without using a KIO job.
+              // We need to tqfind if the trash is empty, preferrably without using a KIO job.
               // So instead kio_trash leaves an entry in its config file for us.
               KSimpleConfig trashConfig( "trashrc", true );
-              trashConfig.setGroup( "Status" );
+              trashConfig.setGroup( "tqStatus" );
               if ( trashConfig.readBoolEntry( "Empty", true ) ) {
                   return emptyIcon;
               }
@@ -831,14 +831,14 @@ pid_t KDEDesktopMimeType::runFSDevice( const KURL& _url, const KSimpleConfig &cf
     return retval;
   }
 
-  TQString mp = KIO::findDeviceMountPoint( dev );
+  TQString mp = KIO::tqfindDeviceMountPoint( dev );
   // Is the device already mounted ?
   if ( !mp.isNull() )
   {
     KURL mpURL;
     mpURL.setPath( mp );
     // Open a new window
-    retval = KRun::runURL( mpURL, TQString::fromLatin1("inode/directory") );
+    retval = KRun::runURL( mpURL, TQString::tqfromLatin1("inode/directory") );
   }
   else
   {
@@ -933,7 +933,7 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::builtinServices( co
     }
     else
     {
-      TQString mp = KIO::findDeviceMountPoint( dev );
+      TQString mp = KIO::tqfindDeviceMountPoint( dev );
       // not mounted ?
       if ( mp.isEmpty() )
       {
@@ -1005,7 +1005,7 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices
     TQCString object =    dcopcall.section(' ', 1,-2).utf8();
     TQString function =  dcopcall.section(' ', -1);
     if(!function.endsWith("(KURL::List)")) {
-      kdWarning() << "Desktop file " << path << " contains an invalid X-KDE-ShowIfDcopCall - the function must take the exact parameter (KURL::List) and must be specified." << endl;
+      kdWarning() << "Desktop file " << path << " tqcontains an invalid X-KDE-ShowIfDcopCall - the function must take the exact parameter (KURL::List) and must be specified." << endl;
     } else {
       if(kapp->dcopClient()->call( app, object,
                    function.utf8(),
@@ -1051,7 +1051,7 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices
       else
       {
         TQString exec = cfg.readPathEntry( "Exec" );
-        if ( bLocalFiles || exec.contains("%U") || exec.contains("%u") )
+        if ( bLocalFiles || exec.tqcontains("%U") || exec.tqcontains("%u") )
         {
           Service s;
           s.m_strName = cfg.readEntry( "Name" );
@@ -1114,7 +1114,7 @@ void KDEDesktopMimeType::executeService( const KURL::List& urls, KDEDesktopMimeT
       KMessageBoxWrapper::error( 0, tmp );
       return;
     }
-    TQString mp = KIO::findDeviceMountPoint( dev );
+    TQString mp = KIO::tqfindDeviceMountPoint( dev );
 
     if ( _service.m_type == ST_MOUNT )
     {

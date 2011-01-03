@@ -68,7 +68,7 @@ TQString Plugin::xmlFile() const
     if ( !d->m_parentInstance || ( path.length() > 0 && path[ 0 ] == '/' ) )
         return path;
 
-    TQString absPath = locate( "data", TQString::fromLatin1( d->m_parentInstance->instanceName() ) + '/' + path );
+    TQString absPath = locate( "data", TQString::tqfromLatin1( d->m_parentInstance->instanceName() ) + '/' + path );
     assert( !absPath.isEmpty() );
     return absPath;
 }
@@ -80,7 +80,7 @@ TQString Plugin::localXMLFile() const
     if ( !d->m_parentInstance || ( path.length() > 0 && path[ 0 ] == '/' ) )
         return path;
 
-    TQString absPath = locateLocal( "data", TQString::fromLatin1( d->m_parentInstance->instanceName() ) + '/' + path );
+    TQString absPath = locateLocal( "data", TQString::tqfromLatin1( d->m_parentInstance->instanceName() ) + '/' + path );
     assert( !absPath.isEmpty() );
     return absPath;
 }
@@ -104,10 +104,10 @@ TQValueList<Plugin::PluginInfo> Plugin::pluginInfos( const KInstance * instance 
   for (; pIt != pEnd; ++pIt )
   {
       TQFileInfo fInfo( *pIt );
-      if ( fInfo.extension() == TQString::fromLatin1( "desktop" ) )
+      if ( fInfo.extension() == TQString::tqfromLatin1( "desktop" ) )
           continue;
 
-      TQMap<TQString,TQStringList>::Iterator mapIt = sortedPlugins.find( fInfo.fileName() );
+      TQMap<TQString,TQStringList>::Iterator mapIt = sortedPlugins.tqfind( fInfo.fileName() );
       if ( mapIt == sortedPlugins.end() )
           mapIt = sortedPlugins.insert( fInfo.fileName(), TQStringList() );
 
@@ -249,7 +249,7 @@ void Plugin::loadPlugins( TQObject *parent, KXMLGUIClient* parentGUIClient, KIns
         else
         { // no user-setting, load plugin default setting
             TQString relPath = TQString( instance->instanceName() ) + "/" + (*pIt).m_relXMLFileName;
-            relPath.truncate( relPath.findRev( '.' ) ); // remove extension
+            relPath.truncate( relPath.tqfindRev( '.' ) ); // remove extension
             relPath += ".desktop";
             //kdDebug(1000) << "looking for " << relPath << endl;
             const TQString desktopfile = instance->dirs()->findResource( "data", relPath );

@@ -85,16 +85,16 @@ struct ScreenInfo* internal_read_screen_info (Display *);
 int internal_set_screen_size (struct ScreenInfo *screen_info);
 void internal_output_auto (struct ScreenInfo *screen_info, struct OutputInfo *output_info);
 void internal_output_off (struct ScreenInfo *screen_info, struct OutputInfo *output);
-struct CrtcInfo* internal_auto_find_crtc (struct ScreenInfo *screen_info, struct OutputInfo *output_info);
+struct CrtcInfo* internal_auto_tqfind_crtc (struct ScreenInfo *screen_info, struct OutputInfo *output_info);
 
-XRRModeInfo *internal_find_mode_by_xid (struct ScreenInfo *screen_info, RRMode mode_id);
+XRRModeInfo *internal_tqfind_mode_by_xid (struct ScreenInfo *screen_info, RRMode mode_id);
 int internal_mode_height (XRRModeInfo *mode_info, Rotation rotation);
 int internal_mode_width (XRRModeInfo *mode_info, Rotation rotation);
 int internal_get_width_by_output_id (struct ScreenInfo *screen_info, RROutput output_id);
 int internal_get_height_by_output_id (struct ScreenInfo *screen_info, RROutput output_id);
 char *internal_get_output_name (struct ScreenInfo *screen_info, RROutput id);
-Status internal_crtc_apply (struct CrtcInfo *crtc_info);
-Status internal_crtc_disable (struct CrtcInfo *crtc);
+tqStatus internal_crtc_apply (struct CrtcInfo *crtc_info);
+tqStatus internal_crtc_disable (struct CrtcInfo *crtc);
 int internal_main_low_apply (struct ScreenInfo *screen_info);
 
 #ifdef __cplusplus

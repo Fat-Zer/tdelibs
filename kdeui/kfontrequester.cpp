@@ -32,7 +32,7 @@ KFontRequester::KFontRequester( TQWidget *parent, const char *name,
     bool onlyFixed ) : TQWidget( parent, name ),
     m_onlyFixed( onlyFixed )
 {
-  TQHBoxLayout *layout = new TQHBoxLayout( this, 0, KDialog::spacingHint() );
+  TQHBoxLayout *tqlayout = new TQHBoxLayout( this, 0, KDialog::spacingHint() );
 
   m_sampleLabel = new TQLabel( this, "m_sampleLabel" );
   m_button = new TQPushButton( i18n( "Choose..." ), this, "m_button" );
@@ -40,8 +40,8 @@ KFontRequester::KFontRequester( TQWidget *parent, const char *name,
   m_sampleLabel->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken );
   setFocusProxy( m_button );
 
-  layout->addWidget( m_sampleLabel, 1 );
-  layout->addWidget( m_button );
+  tqlayout->addWidget( m_sampleLabel, 1 );
+  tqlayout->addWidget( m_button );
 
   connect( m_button, TQT_SIGNAL( clicked() ), TQT_SLOT( buttonClicked() ) );
 
@@ -72,7 +72,7 @@ void KFontRequester::setTitle( const TQString &title )
 
 void KFontRequester::buttonClicked()
 {
-  int result = KFontDialog::getFont( m_selFont, m_onlyFixed, parentWidget() );
+  int result = KFontDialog::getFont( m_selFont, m_onlyFixed, tqparentWidget() );
 
   if ( result == KDialog::Accepted )
   {

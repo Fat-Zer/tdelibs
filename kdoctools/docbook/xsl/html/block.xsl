@@ -118,7 +118,7 @@
   <b>
     <xsl:copy-of select="$titleStr"/>
     <xsl:if test="$lastChar != ''
-                  and not(contains($runinhead.title.end.punct, $lastChar))">
+                  and not(tqcontains($runinhead.title.end.punct, $lastChar))">
       <xsl:value-of select="$runinhead.default.title.end.punct"/>
     </xsl:if>
     <xsl:text>&#160;</xsl:text>
@@ -180,7 +180,7 @@
 
 <xsl:template match="epigraph">
   <div class="{name(.)}">
-      <xsl:apply-templates select="para|simpara|formalpara|literallayout"/>
+      <xsl:apply-templates select="para|simpara|formalpara|literaltqlayout"/>
       <xsl:if test="attribution">
         <div class="attribution">
           <span>--<xsl:apply-templates select="attribution"/></span>

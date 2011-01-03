@@ -126,7 +126,7 @@ void KateFileTypeManager::save (TQPtrList<KateFileType> *v)
 
   for (uint z=0; z < g.count(); z++)
   {
-    if (newg.findIndex (g[z]) == -1)
+    if (newg.tqfindIndex (g[z]) == -1)
       config.deleteGroup (g[z]);
   }
 
@@ -187,7 +187,7 @@ int KateFileTypeManager::fileType (KateDocument *doc)
 
   for (uint z=0; z < m_types.count(); z++)
   {
-    if (m_types.at(z)->mimetypes.findIndex (mt->name()) > -1)
+    if (m_types.at(z)->mimetypes.tqfindIndex (mt->name()) > -1)
       types.append (m_types.at(z));
   }
 
@@ -264,11 +264,11 @@ KateFileTypeConfigTab::KateFileTypeConfigTab( TQWidget *parent )
   m_types.setAutoDelete (true);
   m_lastType = 0;
 
-  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
+  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
 
   // hl chooser
   TQHBox *hbHl = new TQHBox( this );
-  layout->add (hbHl);
+  tqlayout->add (hbHl);
   hbHl->setSpacing( KDialog::spacingHint() );
   TQLabel *lHl = new TQLabel( i18n("&Filetype:"), hbHl );
   typeCombo = new TQComboBox( false, hbHl );
@@ -283,7 +283,7 @@ KateFileTypeConfigTab::KateFileTypeConfigTab( TQWidget *parent )
   connect( btndel, TQT_SIGNAL(clicked()), this, TQT_SLOT(deleteType()) );
 
   gbProps = new TQGroupBox( 2, Qt::Horizontal, i18n("Properties"), this );
-  layout->add (gbProps);
+  tqlayout->add (gbProps);
 
   // file & mime types
   TQLabel *lname = new TQLabel( i18n("N&ame:"), gbProps );
@@ -318,7 +318,7 @@ KateFileTypeConfigTab::KateFileTypeConfigTab( TQWidget *parent )
   priority = new KIntNumInput( gbProps );
   lprio->setBuddy( priority );
 
-  layout->addStretch();
+  tqlayout->addStretch();
 
   reload();
 
@@ -341,12 +341,12 @@ KateFileTypeConfigTab::KateFileTypeConfigTab( TQWidget *parent )
       "configuration option, such as highlight, indent-mode, encoding, etc.</p>"
       "<p>For a full list of known variables, see the manual.</p>") );
   TQWhatsThis::add( wildcards, i18n(
-      "The wildcards mask allows you to select files by filename. A typical "
-      "mask uses an asterisk and the file extension, for example "
+      "The wildcards tqmask allows you to select files by filename. A typical "
+      "tqmask uses an asterisk and the file extension, for example "
       "<code>*.txt; *.text</code>. The string is a semicolon-separated list "
-      "of masks.") );
+      "of tqmasks.") );
   TQWhatsThis::add( mimetypes, i18n(
-      "The mime type mask allows you to select files by mimetype. The string is "
+      "The mime type tqmask allows you to select files by mimetype. The string is "
       "a semicolon-separated list of mimetypes, for example "
       "<code>text/plain; text/english</code>.") );
   TQWhatsThis::add( btnMTW, i18n(
@@ -539,9 +539,9 @@ void KateViewFileTypeAction::slotAboutToShow()
     TQString hlName = KateFactory::self()->fileTypeManager()->list()->at(z)->name;
     TQString hlSection = KateFactory::self()->fileTypeManager()->list()->at(z)->section;
 
-    if ( !hlSection.isEmpty() && (names.contains(hlName) < 1) )
+    if ( !hlSection.isEmpty() && (names.tqcontains(hlName) < 1) )
     {
-      if (subMenusName.contains(hlSection) < 1)
+      if (subMenusName.tqcontains(hlSection) < 1)
       {
         subMenusName << hlSection;
         TQPopupMenu *menu = new TQPopupMenu ();
@@ -549,11 +549,11 @@ void KateViewFileTypeAction::slotAboutToShow()
         popupMenu()->insertItem (hlSection, menu);
       }
 
-      int m = subMenusName.findIndex (hlSection);
+      int m = subMenusName.tqfindIndex (hlSection);
       names << hlName;
       subMenus.at(m)->insertItem ( hlName, this, TQT_SLOT(setType(int)), 0,  z+1);
     }
-    else if (names.contains(hlName) < 1)
+    else if (names.tqcontains(hlName) < 1)
     {
       names << hlName;
       popupMenu()->insertItem ( hlName, this, TQT_SLOT(setType(int)), 0,  z+1);
@@ -576,7 +576,7 @@ void KateViewFileTypeAction::slotAboutToShow()
     const KateFileType *t = 0;
     if ((t = KateFactory::self()->fileTypeManager()->fileType (doc->fileType())))
     {
-      int i = subMenusName.findIndex (t->section);
+      int i = subMenusName.tqfindIndex (t->section);
       if (i >= 0 && subMenus.at(i))
         subMenus.at(i)->setItemChecked (doc->fileType()+1, true);
       else
@@ -593,4 +593,4 @@ void KateViewFileTypeAction::setType (int mode)
     doc->updateFileType(mode-1, true);
 }
 //END KateViewFileTypeAction
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

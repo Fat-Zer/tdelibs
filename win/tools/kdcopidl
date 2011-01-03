@@ -9,7 +9,7 @@ else
  dir="."
 fi
 
-find $dir -maxdepth 1 -name \*.h | while read ; do 
+tqfind $dir -maxdepth 1 -name \*.h | while read ; do 
 	grep K_DCOP $REPLY > /dev/null || continue
 	name=`echo $REPLY | sed -e "s/\\.h//"`
 	if [ $name".kidl" -ot $REPLY -o ! -f $name".kidl" -o ! -f $name"_skel.cpp" -o ! -f $name"_stub.cpp" ] ; then

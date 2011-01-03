@@ -5,6 +5,6 @@ TARGET		= dotnet$$KDEBUG
 SOURCES = \
 dotnet.cpp
 
-system( moc dotnet.h -o moc/dotnet.moc )
+system( tqmoc dotnet.h -o tqmoc/dotnet.moc )
 
 

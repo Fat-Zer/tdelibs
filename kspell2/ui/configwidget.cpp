@@ -56,7 +56,7 @@ void ConfigWidget::init( Broker *broker )
     d = new Private;
     d->broker = broker;
 
-    TQVBoxLayout *layout = new TQVBoxLayout( this, 0, 0, "KSpell2ConfigUILayout");
+    TQVBoxLayout *tqlayout = new TQVBoxLayout( this, 0, 0, "KSpell2ConfigUILayout");
     d->ui = new KSpell2ConfigUI( this );
 
     TQStringList langs = d->broker->languages();
@@ -73,7 +73,7 @@ void ConfigWidget::init( Broker *broker )
     d->ui->m_bgSpellCB->hide();//hidden by default
     connect( d->ui->m_ignoreListBox, TQT_SIGNAL(changed()), TQT_SLOT(slotChanged()) );
 
-    layout->addWidget( d->ui );
+    tqlayout->addWidget( d->ui );
 }
 
 void KSpell2::ConfigWidget::save()

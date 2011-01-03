@@ -47,7 +47,7 @@ using KIO::NetAccess;
 
 #define BANNED_HTTP_HEADERS "authorization,proxy-authorization,"\
                             "content-length,host,connect,copy,move,"\
-                            "delete,head,trace,put,propfind,proppatch,"\
+                            "delete,head,trace,put,proptqfind,proppatch,"\
                             "mkcol,lock,unlock,options,via,"\
                             "accept-charset,accept-encoding,expect,date,"\
                             "keep-alive,te,trailer,"\
@@ -125,8 +125,8 @@ const ClassInfo XMLHttpRequest::info = { "XMLHttpRequest", 0, &XMLHttpRequestTab
   readyState		XMLHttpRequest::ReadyState		DontDelete|ReadOnly
   responseText		XMLHttpRequest::ResponseText		DontDelete|ReadOnly
   responseXML		XMLHttpRequest::ResponseXML		DontDelete|ReadOnly
-  status		XMLHttpRequest::Status			DontDelete|ReadOnly
-  statusText		XMLHttpRequest::StatusText		DontDelete|ReadOnly
+  status		XMLHttpRequest::tqStatus			DontDelete|ReadOnly
+  statusText		XMLHttpRequest::tqStatusText		DontDelete|ReadOnly
   onreadystatechange	XMLHttpRequest::Onreadystatechange	DontDelete
   onload		XMLHttpRequest::Onload			DontDelete
 @end
@@ -182,10 +182,10 @@ Value XMLHttpRequest::getValueProperty(ExecState *exec, int token) const
     }
 
     return getDOMNode(exec,responseXML);
-  case Status:
-    return getStatus();
-  case StatusText:
-    return getStatusText();
+  case tqStatus:
+    return gettqStatus();
+  case tqStatusText:
+    return gettqStatusText();
   case Onreadystatechange:
    if (onReadyStateChangeListener && onReadyStateChangeListener->listenerObjImp()) {
      return onReadyStateChangeListener->listenerObj();
@@ -394,8 +394,8 @@ void XMLHttpRequest::send(const TQString& _body)
   // Set the default referrer if one is not already supplied
   // through setRequestHeader. NOTE: the user can still disable
   // this feature at the protocol level (kio_http).
-  // ### does find() ever succeed? the headers are stored in lower case!
-  if (requestHeaders.find("Referer") == requestHeaders.end()) {
+  // ### does tqfind() ever succeed? the headers are stored in lower case!
+  if (requestHeaders.tqfind("Referer") == requestHeaders.end()) {
     KURL documentURL(doc->URL());
     documentURL.setPass(TQString::null);
     documentURL.setUser(TQString::null);
@@ -487,9 +487,9 @@ void XMLHttpRequest::setRequestHeader(const TQString& _name, const TQString &val
   // Reject all banned headers. See BANNED_HTTP_HEADERS above.
   // kdDebug() << "Banned HTTP Headers: " << BANNED_HTTP_HEADERS << endl;
   TQStringList bannedHeaders = TQStringList::split(',',
-                                  TQString::fromLatin1(BANNED_HTTP_HEADERS));
+                                  TQString::tqfromLatin1(BANNED_HTTP_HEADERS));
 
-  if (bannedHeaders.contains(name))
+  if (bannedHeaders.tqcontains(name))
     return;   // Denied
 
   requestHeaders[name] = value.stripWhiteSpace();
@@ -501,7 +501,7 @@ Value XMLHttpRequest::getAllResponseHeaders() const
     return Undefined();
   }
 
-  int endOfLine = responseHeaders.find("\n");
+  int endOfLine = responseHeaders.tqfind("\n");
 
   if (endOfLine == -1) {
     return Undefined();
@@ -535,27 +535,27 @@ Value XMLHttpRequest::getResponseHeader(const TQString& name) const
     return Undefined();
   }
 
-  int endOfLine = responseHeaders.find("\n", headerLinePos + matchLength);
+  int endOfLine = responseHeaders.tqfind("\n", headerLinePos + matchLength);
 
   return String(responseHeaders.mid(headerLinePos + matchLength, endOfLine - (headerLinePos + matchLength)).stripWhiteSpace());
 }
 
-static Value httpStatus(const TQString& response, bool textStatus = false)
+static Value httptqStatus(const TQString& response, bool texttqStatus = false)
 {
   if (response.isEmpty()) {
     return Undefined();
   }
 
-  int endOfLine = response.find("\n");
+  int endOfLine = response.tqfind("\n");
   TQString firstLine = (endOfLine == -1) ? response : response.left(endOfLine);
-  int codeStart = firstLine.find(" ");
-  int codeEnd = firstLine.find(" ", codeStart + 1);
+  int codeStart = firstLine.tqfind(" ");
+  int codeEnd = firstLine.tqfind(" ", codeStart + 1);
 
   if (codeStart == -1 || codeEnd == -1) {
     return Undefined();
   }
 
-  if (textStatus) {
+  if (texttqStatus) {
     TQString statusText = firstLine.mid(codeEnd + 1, endOfLine - (codeEnd + 1)).stripWhiteSpace();
     return String(statusText);
   }
@@ -571,14 +571,14 @@ static Value httpStatus(const TQString& response, bool textStatus = false)
   return Number(code);
 }
 
-Value XMLHttpRequest::getStatus() const
+Value XMLHttpRequest::gettqStatus() const
 {
-  return httpStatus(responseHeaders);
+  return httptqStatus(responseHeaders);
 }
 
-Value XMLHttpRequest::getStatusText() const
+Value XMLHttpRequest::gettqStatusText() const
 {
-  return httpStatus(responseHeaders, true);
+  return httptqStatus(responseHeaders, true);
 }
 
 void XMLHttpRequest::processSyncLoadResults(const TQByteArray &data, const KURL &finalURL, const TQString &headers)
@@ -643,11 +643,11 @@ void XMLHttpRequest::slotData(KIO::Job*, const TQByteArray &_data)
 
     // NOTE: Replace a 304 response with a 200! Both IE and Mozilla do this.
     // Problem first reported through bug# 110272.
-    int codeStart = responseHeaders.find("304");
+    int codeStart = responseHeaders.tqfind("304");
     if ( codeStart != -1) {
-      int codeEnd = responseHeaders.find("\n", codeStart+3);
+      int codeEnd = responseHeaders.tqfind("\n", codeStart+3);
       if (codeEnd != -1)
-        responseHeaders.replace(codeStart, (codeEnd-codeStart), "200 OK");
+        responseHeaders.tqreplace(codeStart, (codeEnd-codeStart), "200 OK");
     }
 
     changeState(Loaded);
@@ -659,13 +659,13 @@ void XMLHttpRequest::slotData(KIO::Job*, const TQByteArray &_data)
 #endif
 
   if ( decoder == NULL ) {
-    int pos = responseHeaders.find("content-type:", 0, false);
+    int pos = responseHeaders.tqfind("content-type:", 0, false);
 
     if ( pos > -1 ) {
       pos += 13;
-      int index = responseHeaders.find('\n', pos);
+      int index = responseHeaders.tqfind('\n', pos);
       TQString type = responseHeaders.mid(pos, (index-pos));
-      index = type.find (';');
+      index = type.tqfind (';');
       if (index > -1)
         encoding = type.mid( index+1 ).remove(TQRegExp("charset[ ]*=[ ]*", false)).stripWhiteSpace();
     }

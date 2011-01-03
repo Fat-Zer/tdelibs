@@ -47,7 +47,7 @@ ConfigDialog::ConfigDialog( TQWidget *parent, const TQString& resourceFamily,
   TQVBoxLayout *mainLayout = new TQVBoxLayout( main, 0, spacingHint() );
 
   TQGroupBox *generalGroupBox = new TQGroupBox( 2, Qt::Horizontal, main );
-  generalGroupBox->layout()->setSpacing( spacingHint() );
+  generalGroupBox->tqlayout()->setSpacing( spacingHint() );
   generalGroupBox->setTitle( i18n( "General Settings" ) );
 
   new TQLabel( i18n( "Name:" ), generalGroupBox );
@@ -62,7 +62,7 @@ ConfigDialog::ConfigDialog( TQWidget *parent, const TQString& resourceFamily,
   mainLayout->addWidget( generalGroupBox );
 
   TQGroupBox *resourceGroupBox = new TQGroupBox( 2, Qt::Horizontal,  main );
-  resourceGroupBox->layout()->setSpacing( spacingHint() );
+  resourceGroupBox->tqlayout()->setSpacing( spacingHint() );
   resourceGroupBox->setTitle( i18n( "%1 Resource Settings" )
                               .arg( factory->typeName( resource->type() ) ) );
   mainLayout->addWidget( resourceGroupBox );
@@ -82,7 +82,7 @@ ConfigDialog::ConfigDialog( TQWidget *parent, const TQString& resourceFamily,
       TQT_SLOT( slotNameChanged(const TQString &)));
 
   slotNameChanged( mName->text() );
-  setMinimumSize( sizeHint() );
+  setMinimumSize( tqsizeHint() );
 }
 
 void ConfigDialog::setInEditMode( bool value )

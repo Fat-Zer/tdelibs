@@ -36,7 +36,7 @@ class Kded;
  * libraries that are loaded on-demand into kded at runtime.
  *
  * To write a config module, you have to create a library
- * that contains at least one factory function like this:
+ * that tqcontains at least one factory function like this:
  *
  * \code
  *   extern "C" {
@@ -96,7 +96,7 @@ public:
   /**
    * Lookup object indexed with @p app and @p key
    */
-  KShared *find(const TQCString &app, const TQCString &key);
+  KShared *tqfind(const TQCString &app, const TQCString &key);
   
   /**
    * remove object indexed with @p app and @p key.

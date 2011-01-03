@@ -106,7 +106,7 @@ public:
     void addAppDir(const TQString& appname);
 
     /**
-     * Loads an icon. It will try very hard to find an icon which is
+     * Loads an icon. It will try very hard to tqfind an icon which is
      * suitable. If no exact match is found, a close match is searched.
      * If neither an exact nor a close match is found, a null pixmap or
      * the "unknown" pixmap is returned, depending on the value of the
@@ -372,10 +372,10 @@ public:
 
     /**
      * @internal
-     * tries to find an icon with the name. It tries some extension and
+     * tries to tqfind an icon with the name. It tries some extension and
      * match strategies
      */
-    KIcon findMatchingIcon(const TQString& name, int size) const;
+    KIcon tqfindMatchingIcon(const TQString& name, int size) const;
 
     /**
      * @internal
@@ -424,7 +424,7 @@ public:
      * Same as removeIconExtension except it prints a debug message
      * if an extension is removed to help catch programming errors.
      *
-     * @see findMatchingIcon()
+     * @see tqfindMatchingIcon()
      * @see iconPath()
      *
      * TODO: KDE 4 make static

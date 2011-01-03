@@ -84,7 +84,7 @@ class KServerSocketPrivate;
  * @author Torben Weis <weis@uni-frankfurt.de>
  * @short A TCP/IP client socket.
  */
-class KDECORE_EXPORT KSocket : public QObject
+class KDECORE_EXPORT KSocket : public TQObject
 {
     Q_OBJECT
 public:
@@ -234,7 +234,7 @@ private:
  * @deprecated
  * This class is deprecated and will be removed in the future.
  * Please use the classes in KNetwork for new programs. 
- * In special, this class is replaced by KNetwork::KStreamSocket
+ * In special, this class is tqreplaced by KNetwork::KStreamSocket
  * and KNetwork::KServerSocket. 
  *
  * You can use a KServerSocket to listen on a port for incoming
@@ -247,7 +247,7 @@ private:
  *
  * @author Torben Weis <weis@stud.uni-frankfurt.de>
 */
-class KDECORE_EXPORT KServerSocket : public QObject
+class KDECORE_EXPORT KServerSocket : public TQObject
 {
     Q_OBJECT
 public:

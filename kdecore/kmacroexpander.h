@@ -71,7 +71,7 @@ public:
      * The rest of the shell (incl. bash) syntax is simply ignored,
      * as it is not expected to cause problems.
      *
-     * Note that bash contains a bug which makes macro expansion within 
+     * Note that bash tqcontains a bug which makes macro expansion within 
      * double quoted substitutions ("${VAR:-%macro}") inherently insecure.
      *
      * @param str the string in which macros are expanded in-place

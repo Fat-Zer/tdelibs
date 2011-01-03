@@ -145,7 +145,7 @@ int StubProcess::ConverseStub(int check)
 		 it != env.end();
 		 ++it )
 	    {
-		if( (*it).find( "DESKTOP_STARTUP_ID=" ) == 0 )
+		if( (*it).tqfind( "DESKTOP_STARTUP_ID=" ) == 0 )
 		    tmp = (*it).mid( strlen( "DESKTOP_STARTUP_ID=" ));
 	    }
 	    if( tmp.isEmpty())

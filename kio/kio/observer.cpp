@@ -101,7 +101,7 @@ void Observer::killJob( int progressId )
     KIO::Job * job = m_dctJobs[ progressId ];
     if (!job)
     {
-        kdWarning() << "Can't find job to kill ! There is no job with progressId=" << progressId << " in this process" << endl;
+        kdWarning() << "Can't tqfind job to kill ! There is no job with progressId=" << progressId << " in this process" << endl;
         return;
     }
     job->kill( false /* not quietly */ );

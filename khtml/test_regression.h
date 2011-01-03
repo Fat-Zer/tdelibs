@@ -36,7 +36,7 @@ class TQTimer;
 /**
  * @internal
  */
-class PartMonitor : public QObject
+class PartMonitor : public TQObject
 {
   Q_OBJECT
 public:
@@ -122,7 +122,7 @@ class ScriptInterpreter;
 /**
  * @internal
  */
-class RegressionTest : public QObject
+class RegressionTest : public TQObject
 {
   Q_OBJECT
 public:

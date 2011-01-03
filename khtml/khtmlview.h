@@ -162,7 +162,7 @@ public:
     /**
      * ensure the display is up to date
      */
-    void layout(); // KDE 4.0: make private
+    void tqlayout(); // KDE 4.0: make private
     /**
      * Display all accesskeys in small tooltips
      */
@@ -172,15 +172,15 @@ public:
 
 signals:
     /**
-     * This signal is used for internal layouting. Don't use it to check if rendering finished.
+     * This signal is used for internal tqlayouting. Don't use it to check if rendering finished.
      * Use @ref KHTMLPart completed() signal instead.
      */
     void finishedLayout();
     void cleared();
     void zoomView( int );
     void hideAccessKeys();
-    void repaintAccessKeys();
-    void findAheadActive( bool );
+    void tqrepaintAccessKeys();
+    void tqfindAheadActive( bool );
 //#define NO_SMOOTH_SCROLL_HACK
 #ifndef NO_SMOOTH_SCROLL_HACK
 public slots:
@@ -231,12 +231,12 @@ protected slots:
 #ifndef NO_SMOOTH_SCROLL_HACK
     void scrollTick();
 #else
-    void scrollTick() {}; // moc cannot handle #if
+    void scrollTick() {}; // tqmoc cannot handle #if
 #endif
 
 private slots:
     void tripleClickTimeout();
-    void findTimeout();
+    void tqfindTimeout();
     void accessKeysTimeout();
 
     /**
@@ -248,8 +248,8 @@ private slots:
 
 private:
 
-    void scheduleRelayout(khtml::RenderObject* clippedObj=0);
-    void unscheduleRelayout();
+    void scheduleRetqlayout(khtml::RenderObject* clippedObj=0);
+    void unscheduleRetqlayout();
 
     void scheduleRepaint(int x, int y, int w, int h, bool asap=false);
     void unscheduleRepaint();
@@ -329,7 +329,7 @@ private:
     void complete( bool pendingAction );
 
 #ifndef KHTML_NO_TYPE_AHEAD_FIND
-    void findAhead(bool increase);
+    void tqfindAhead(bool increase);
     void updateFindAheadTimeout();
     void startFindAhead( bool linksOnly );
 #endif // KHTML_NO_TYPE_AHEAD_FIND
@@ -384,8 +384,8 @@ private:
      *
      * These operations are executed unconditionally, regardless of the
      * focus, and the caret display policy.
-     * @param forceRepaint @p true to force an immediate repaint, otherwise
-     *		do a scheduled repaint
+     * @param forceRepaint @p true to force an immediate tqrepaint, otherwise
+     *		do a scheduled tqrepaint
      */
     void showCaret(bool forceRepaint = false);
     /** makes the caret invisible, but does not influence the frequency timer.

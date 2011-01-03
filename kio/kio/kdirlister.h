@@ -52,7 +52,7 @@ namespace KIO { class Job; class ListJob; }
  * @short Helper class for the kiojob used to list and update a directory.
  * @author Michael Brade <brade@kde.org>
  */
-class KIO_EXPORT KDirLister : public QObject
+class KIO_EXPORT KDirLister : public TQObject
 {
   class KDirListerPrivate;
   friend class KDirListerPrivate;
@@ -251,7 +251,7 @@ public:
    */
   virtual KFileItem *findByURL( const KURL& _url ) const;
 #ifndef KDE_NO_COMPAT
-  KFileItem *find( const KURL& _url ) const;
+  KFileItem *tqfind( const KURL& _url ) const;
 #endif
 
   /**
@@ -259,7 +259,7 @@ public:
    * @param name the item name
    * @return the pointer to the KFileItem
    */
-  virtual KFileItem *findByName( const TQString& name ) const;
+  virtual KFileItem *tqfindByName( const TQString& name ) const;
 
   /**
    * Set a name filter to only list items matching this name, e.g. "*.cpp".
@@ -334,7 +334,7 @@ public:
 
   /**
    * Checks whether @p mime matches a filter in the list of mime types
-   * @param mime the mimetype to find in the filter list.
+   * @param mime the mimetype to tqfind in the filter list.
    * @return true if @p name matches a filter in the list,
    * otherwise false.
    * @see setMimeFilter.

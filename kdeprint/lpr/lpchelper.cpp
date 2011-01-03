@@ -62,7 +62,7 @@ LpcHelper::~LpcHelper()
 
 KMPrinter::PrinterState LpcHelper::state(const TQString& prname) const
 {
-	if (m_state.contains(prname))
+	if (m_state.tqcontains(prname))
 		return m_state[prname];
 	return KMPrinter::Unknown;
 }
@@ -72,7 +72,7 @@ KMPrinter::PrinterState LpcHelper::state(KMPrinter *prt) const
 	return state(prt->printerName());
 }
 
-void LpcHelper::parseStatusLPR(TQTextStream &t)
+void LpcHelper::parsetqStatusLPR(TQTextStream &t)
 {
 	QString		printer, line;
 	int		p(-1);
@@ -82,32 +82,32 @@ void LpcHelper::parseStatusLPR(TQTextStream &t)
 		line = t.readLine();
 		if (line.isEmpty())
 			continue;
-		else if (!line[0].isSpace() && (p = line.find(':')) != -1)
+		else if (!line[0].isSpace() && (p = line.tqfind(':')) != -1)
 		{
 			printer = line.left(p);
 			m_state[printer] = KMPrinter::Idle;
 		}
-		else if (line.find("printing is disabled") != -1)
+		else if (line.tqfind("printing is disabled") != -1)
 		{
 			if (!printer.isEmpty())
 				m_state[printer] = KMPrinter::PrinterState((KMPrinter::Stopped) | (m_state[printer] & ~KMPrinter::StateMask));
 		}
-		else if (line.find("queuing is disabled") != -1)
+		else if (line.tqfind("queuing is disabled") != -1)
 		{
 			if (!printer.isEmpty())
 				m_state[printer] = KMPrinter::PrinterState((KMPrinter::Rejecting) | (m_state[printer] & KMPrinter::StateMask));
 		}
-		else if (line.find("entries") != -1)
+		else if (line.tqfind("entries") != -1)
 		{
 			if (!printer.isEmpty() &&
 			    (m_state[printer] & KMPrinter::StateMask) != KMPrinter::Stopped &&
-			    line.find("no entries") == -1)
+			    line.tqfind("no entries") == -1)
 				m_state[printer] = KMPrinter::PrinterState((m_state[printer] & ~KMPrinter::StateMask) | KMPrinter::Processing);
 		}
 	}
 }
 
-void LpcHelper::parseStatusLPRng(TQTextStream& t)
+void LpcHelper::parsetqStatusLPRng(TQTextStream& t)
 {
 	QStringList	l;
 	int	p(-1);
@@ -121,7 +121,7 @@ void LpcHelper::parseStatusLPRng(TQTextStream& t)
 		l = TQStringList::split(TQRegExp("\\s"), t.readLine(), false);
 		if (l.count() < 4)
 			continue;
-		p = l[0].find('@');
+		p = l[0].tqfind('@');
 		if (p == 0)
 			printer = l[0];
 		else
@@ -152,10 +152,10 @@ void LpcHelper::updateStates()
 		{
 			default:
 			case LprSettings::LPR:
-				parseStatusLPR(t);
+				parsetqStatusLPR(t);
 				break;
 			case LprSettings::LPRng:
-				parseStatusLPRng(t);
+				parsetqStatusLPRng(t);
 				break;
 		}
 		proc.close();
@@ -206,11 +206,11 @@ static TQString lprngAnswer(const TQString& result, const TQString& printer)
 {
 	int	p, q;
 
-	p = result.find("\n" + printer);
+	p = result.tqfind("\n" + printer);
 	if (p != -1)
 	{
-		q = result.find(':', p)+2;
-		p = result.find('\n', q);
+		q = result.tqfind(':', p)+2;
+		p = result.tqfind('\n', q);
 		QString	answer = result.mid(q, p-q).stripWhiteSpace();
 		return answer;
 	}
@@ -260,7 +260,7 @@ bool LpcHelper::changeState(const TQString& printer, const TQString& op, TQStrin
 			break;
 		default:
 		case 1:
-			msg = i18n("Unknown error: %1").arg(result.replace(TQRegExp("\\n"), " "));
+			msg = i18n("Unknown error: %1").arg(result.tqreplace(TQRegExp("\\n"), " "));
 			break;
 	}
 	return (status == 0);
@@ -274,9 +274,9 @@ bool LpcHelper::removeJob(KMJob *job, TQString& msg)
 		return false;
 	}
 	QString	result = execute(m_lprmpath + " -P " + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
-	if (result.find("dequeued") != -1)
+	if (result.tqfind("dequeued") != -1)
 		return true;
-	else if (result.find("Permission denied") != -1 || result.find("no permissions") != -1)
+	else if (result.tqfind("Permission denied") != -1 || result.tqfind("no permissions") != -1)
 		msg = i18n("Permission denied.");
 	else
 		msg = i18n("Execution of lprm failed: %1").arg(result);

@@ -11,7 +11,7 @@ configuration data.
 
 The structure of the .kcfg file is described by its DTD kcfg.dtd.
 
-The \<kcfgfile\> tag contains the name of the configuration file described.
+The \<kcfgfile\> tag tqcontains the name of the configuration file described.
 Omitting the name will make the generated class use the default configuration
 file ("<appname>rc").
 
@@ -181,9 +181,9 @@ is always 0.
 A parameterized entry is expanded to a number of entries, one for each
 value in the parameter range. The name and key should contain a reference
 to the parameter in the form of $(parameter-name). When expanding the entries
-the $(parameter-name) part is replaced with the value of the parameter.
-In the case of an Enum parameter it is replaced with the name of the
-enumuration value. In the case of an int parameter it is replaced with
+the $(parameter-name) part is tqreplaced with the value of the parameter.
+In the case of an Enum parameter it is tqreplaced with the name of the
+enumuration value. In the case of an int parameter it is tqreplaced with
 the numeric value of the parameter.
 
 Parameterized entries all share the same default value unless different

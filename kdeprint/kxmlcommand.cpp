@@ -161,7 +161,7 @@ void KXmlCommand::setMimeType(const TQString& s)
 bool KXmlCommand::acceptMimeType(const TQString& s)
 {
 	check();
-	return (d->m_inputMime.find(s) != d->m_inputMime.end());
+	return (d->m_inputMime.tqfind(s) != d->m_inputMime.end());
 }
 
 TQStringList KXmlCommand::inputMimeTypes()
@@ -378,31 +378,31 @@ TQString KXmlCommand::buildCommand(const TQMap<TQString,TQString>& opts, bool pi
 		d->m_driver->getOptions(fopts, false);
 		for (TQMap<TQString,TQString>::ConstIterator it=fopts.begin(); it!=fopts.end(); ++it)
 		{
-			DrBase	*dopt = d->m_driver->findOption(it.key());
+			DrBase	*dopt = d->m_driver->tqfindOption(it.key());
 			if (dopt)
 			{
 				QString	format = dopt->get("format");
 				TQString value = dopt->valueText();
-				if ( format.find( quotedRe ) != -1 )
+				if ( format.tqfind( quotedRe ) != -1 )
 				{
 					if ( ( value.right( 1 ) == "'" && value.left( 1 ) == "'" )  ||
 					     ( value.right( 1 ) == "\"" && value.left( 1 ) == "\"" ) )
-						format.replace( quotedRe, value );
+						format.tqreplace( quotedRe, value );
 					else
-						format.replace( re, value );
+						format.tqreplace( re, value );
 				}
 				else
 				{
-					format.replace( re, KProcess::quote( dopt->valueText() ) );
+					format.tqreplace( re, KProcess::quote( dopt->valueText() ) );
 				}
 				str.append(format).append(" ");
 			}
 		}
-		cmd.replace("%filterargs", str);
+		cmd.tqreplace("%filterargs", str);
 	}
 
-	cmd.replace("%filterinput", d->m_io[0].m_format[(pipein?1:0)]);
-	cmd.replace("%filteroutput", d->m_io[1].m_format[(pipeout?1:0)]);
+	cmd.tqreplace("%filterinput", d->m_io[0].m_format[(pipein?1:0)]);
+	cmd.tqreplace("%filteroutput", d->m_io[1].m_format[(pipeout?1:0)]);
 
 	return cmd;
 }
@@ -463,7 +463,7 @@ void KXmlCommand::saveXml()
 TQDomElement KXmlCommand::createIO(TQDomDocument& doc, int n, const TQString& tag)
 {
 	QDomElement	elem = doc.createElement(tag);
-	if (d->m_command.find("%"+tag) != -1)
+	if (d->m_command.tqfind("%"+tag) != -1)
 	{
 		for (int i=0; i<2; i++)
 		{
@@ -499,7 +499,7 @@ TQDomElement KXmlCommand::createElement(TQDomDocument& doc, DrBase *opt)
 	QDomElement	elem = doc.createElement("filterarg");
 	QString	elemName = opt->name();
 	if (elemName.startsWith("_kde-"))
-		elemName.replace(0, name().length()+6, "");
+		elemName.tqreplace(0, name().length()+6, "");
 	elem.setAttribute("name", elemName);
 	elem.setAttribute("format", opt->get("format"));
 	elem.setAttribute("description", opt->get("text"));
@@ -632,7 +632,7 @@ TQStringList KXmlCommandManager::commandList()
 			for (TQStringList::ConstIterator it2=list.begin(); it2!=list.end(); ++it2)
 			{
 				QString	cmdName = (*it2).left((*it2).length()-8);
-				if (d->m_cmdlist.find(cmdName) == d->m_cmdlist.end())
+				if (d->m_cmdlist.tqfind(cmdName) == d->m_cmdlist.end())
 					d->m_cmdlist.append(cmdName);
 			}
 		}
@@ -666,7 +666,7 @@ TQString KXmlCommandManager::selectCommand(TQWidget *parent)
 		TQString ( *func )( TQWidget* ) = ( TQString( * )( TQWidget* ) )lib->symbol( "select_command" );
 		if ( !func )
 		{
-			KMessageBox::error( parent, i18n( "Unable to find wizard object in management library." ) );
+			KMessageBox::error( parent, i18n( "Unable to tqfind wizard object in management library." ) );
 			return TQString::null;
 		}
 		else
@@ -676,7 +676,7 @@ TQString KXmlCommandManager::selectCommand(TQWidget *parent)
 
 KXmlCommand* KXmlCommandManager::command(const TQString& xmlId) const
 {
-	return (d->m_cmdmap.contains(xmlId) ? d->m_cmdmap[xmlId] : 0);
+	return (d->m_cmdmap.tqcontains(xmlId) ? d->m_cmdmap[xmlId] : 0);
 }
 
 int KXmlCommandManager::insertCommand(TQStringList& list, const TQString& filtername, bool defaultToStart)
@@ -728,7 +728,7 @@ TQStringList KXmlCommandManager::autoConvert(const TQString& mimesrc, const TQSt
 
 	preload();
 
-	if (d->m_mimemap.contains(mimesrc))
+	if (d->m_mimemap.tqcontains(mimesrc))
 	{
 		const TQValueList<KXmlCommand*>	l = d->m_mimemap[mimesrc];
 		for (TQValueList<KXmlCommand*>::ConstIterator it=l.begin(); it!=l.end(); ++it)
@@ -743,16 +743,16 @@ TQStringList KXmlCommandManager::autoConvert(const TQString& mimesrc, const TQSt
 				chain = TQStringList((*it)->name());
 				break;
 			}
-			// non direct filter: find the shortest way between
+			// non direct filter: tqfind the shortest way between
 			// its output and mimedest (do not consider cyling filters)
 			else if ((*it)->mimeType() != mimesrc)
 			{
 				QStringList	subchain = autoConvert((*it)->mimeType(), mimedest);
 				// If chain length is 0, then there's no possible filter between those 2
-				// mime types. Just discard it. If the subchain contains also the current
+				// mime types. Just discard it. If the subchain tqcontains also the current
 				// considered filter, then discard it: it denotes of a cycle in filter
 				// chain.
-				if (subchain.count() > 0 && subchain.findIndex((*it)->name()) == -1)
+				if (subchain.count() > 0 && subchain.tqfindIndex((*it)->name()) == -1)
 				{
 					subchain.prepend((*it)->name());
 					if (subchain.count() < score || score == 0)
@@ -791,12 +791,12 @@ bool KXmlCommandManager::checkCommand(const TQString& xmlId, int inputCheck, int
 	QString	cmd = (xmlCmd ? xmlCmd->command() : xmlId);
 	if (status && !cmd.isEmpty() && (inputCheck > None || outputCheck > None))
 	{
-		if (inputCheck > None && (cmd.find("%in") == -1 || inputCheck == Advanced) && cmd.find("%filterinput") == -1)
+		if (inputCheck > None && (cmd.tqfind("%in") == -1 || inputCheck == Advanced) && cmd.tqfind("%filterinput") == -1)
 		{
 			status = false;
 			errmsg = i18n("The command does not contain the required tag %1.").arg(inputCheck == Advanced ? "%filterinput" : "{%in,%filterinput}");
 		}
-		if (status && outputCheck > None && (cmd.find("%out") == -1 || outputCheck == Advanced) && cmd.find("filteroutput") == -1)
+		if (status && outputCheck > None && (cmd.tqfind("%out") == -1 || outputCheck == Advanced) && cmd.tqfind("filteroutput") == -1)
 		{
 			status = false;
 			errmsg = i18n("The command does not contain the required tag %1.").arg(outputCheck == Advanced ? "%filteroutput" : "{%out,%filteroutput}");

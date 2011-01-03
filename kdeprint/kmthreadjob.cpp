@@ -104,18 +104,18 @@ bool KMThreadJob::checkJob(int ID)
 	return (kill((pid_t)ID,0) == 0 || errno == EPERM);
 }
 
-KMJob* KMThreadJob::findJob(int ID)
+KMJob* KMThreadJob::tqfindJob(int ID)
 {
-	return m_jobs.find(ID);
+	return m_jobs.tqfind(ID);
 }
 
-KMJob* KMThreadJob::findJob(const TQString& uri)
+KMJob* KMThreadJob::tqfindJob(const TQString& uri)
 {
 	if (uri.startsWith("proc:/"))
 	{
 		int	pid = uri.mid(6).toInt();
 		if (pid > 0)
-			return m_jobs.find(pid);
+			return m_jobs.tqfind(pid);
 	}
 	return NULL;
 }
@@ -150,7 +150,7 @@ void KMThreadJob::createJob(KMJob *job)
 	if (job->id() > 0)
 	{
 		loadJobs();
-		if (!m_jobs.find(job->id()))
+		if (!m_jobs.tqfind(job->id()))
 		{
 			m_jobs.insert(job->id(),job);
 			saveJobs();

@@ -81,17 +81,17 @@ KFileSpeedBar::KFileSpeedBar( TQWidget *parent, const char *name )
 			while (!line.isNull())
 			{
 				if (line.startsWith("XDG_DOWNLOAD_DIR="))
-					download = line.remove("XDG_DOWNLOAD_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+					download = line.remove("XDG_DOWNLOAD_DIR=").remove("\"").tqreplace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_MUSIC_DIR="))
-					music = line.remove("XDG_MUSIC_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+					music = line.remove("XDG_MUSIC_DIR=").remove("\"").tqreplace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_PICTURES_DIR="))
-					pictures = line.remove("XDG_PICTURES_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+					pictures = line.remove("XDG_PICTURES_DIR=").remove("\"").tqreplace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_VIDEOS_DIR="))
-					videos = line.remove("XDG_VIDEOS_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+					videos = line.remove("XDG_VIDEOS_DIR=").remove("\"").tqreplace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_TEMPLATES_DIR="))
-					templates = line.remove("XDG_TEMPLATES_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+					templates = line.remove("XDG_TEMPLATES_DIR=").remove("\"").tqreplace("$HOME", TQDir::homeDirPath());
 				else if (line.startsWith("XDG_PUBLICSHARES_DIR="))
-					publicShares = line.remove("XDG_PUBLICSHARES_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
+					publicShares = line.remove("XDG_PUBLICSHARES_DIR=").remove("\"").tqreplace("$HOME", TQDir::homeDirPath());
 
 				line = s.readLine();
 			}
@@ -133,15 +133,15 @@ void KFileSpeedBar::save( KConfig *config )
     writeConfig( config, "KFileDialog Speedbar" );
 }
 
-TQSize KFileSpeedBar::sizeHint() const
+TQSize KFileSpeedBar::tqsizeHint() const
 {
-    TQSize sizeHint = KURLBar::sizeHint();
+    TQSize tqsizeHint = KURLBar::tqsizeHint();
     int ems = fontMetrics().width("mmmmmmmmmmmm");
-    if (sizeHint.width() < ems)
+    if (tqsizeHint.width() < ems)
     {
-        sizeHint.setWidth(ems);
+        tqsizeHint.setWidth(ems);
     }
-    return sizeHint;
+    return tqsizeHint;
 }
 
 #include "kfilespeedbar.moc"

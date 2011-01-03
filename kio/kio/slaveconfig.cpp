@@ -79,7 +79,7 @@ void SlaveConfigPrivate::readGlobalConfig()
 
 SlaveConfigProtocol* SlaveConfigPrivate::readProtocolConfig(const TQString &_protocol)
 {
-   SlaveConfigProtocol *scp = protocol.find(_protocol);
+   SlaveConfigProtocol *scp = protocol.tqfind(_protocol);
    if (!scp)
    {
       TQString filename = KProtocolInfo::config(_protocol);
@@ -94,7 +94,7 @@ SlaveConfigProtocol* SlaveConfigPrivate::readProtocolConfig(const TQString &_pro
 
 SlaveConfigProtocol* SlaveConfigPrivate::findProtocolConfig(const TQString &_protocol)
 {
-   SlaveConfigProtocol *scp = protocol.find(_protocol);
+   SlaveConfigProtocol *scp = protocol.tqfind(_protocol);
    if (!scp)
       scp = readProtocolConfig(_protocol);
    return scp;
@@ -103,13 +103,13 @@ SlaveConfigProtocol* SlaveConfigPrivate::findProtocolConfig(const TQString &_pro
 void SlaveConfigPrivate::readConfigProtocolHost(const TQString &, SlaveConfigProtocol *scp, const TQString &host)
 {
    MetaData *metaData = new MetaData;
-   scp->host.replace(host, metaData);
+   scp->host.tqreplace(host, metaData);
 
    // Read stuff
    // Break host into domains
    TQString domain = host;
 
-   if (!domain.contains('.'))
+   if (!domain.tqcontains('.'))
    {
       // Host without domain.
       if (scp->configFile->hasGroup("<local>"))
@@ -119,7 +119,7 @@ void SlaveConfigPrivate::readConfigProtocolHost(const TQString &, SlaveConfigPro
    int pos = 0;
    do
    {
-      pos = host.findRev('.', pos-1);
+      pos = host.tqfindRev('.', pos-1);
 
       if (pos < 0)
         domain = host;
@@ -178,11 +178,11 @@ void SlaveConfig::setConfigData(const TQString &protocol, const TQString &host, 
       }
       else
       {
-         MetaData *hostConfig = scp->host.find(host);
+         MetaData *hostConfig = scp->host.tqfind(host);
          if (!hostConfig)
          {
             d->readConfigProtocolHost(protocol, scp, host);
-            hostConfig = scp->host.find(host);
+            hostConfig = scp->host.tqfind(host);
             assert(hostConfig);
          }
          *hostConfig += config;
@@ -197,12 +197,12 @@ MetaData SlaveConfig::configData(const TQString &protocol, const TQString &host)
    config += scp->global;
    if (host.isEmpty())
       return config;
-   MetaData *hostConfig = scp->host.find(host);
+   MetaData *hostConfig = scp->host.tqfind(host);
    if (!hostConfig)
    {
       d->readConfigProtocolHost(protocol, scp, host);
       emit configNeeded(protocol, host);
-      hostConfig = scp->host.find(host);
+      hostConfig = scp->host.tqfind(host);
       assert(hostConfig);
    }
    config += *hostConfig;

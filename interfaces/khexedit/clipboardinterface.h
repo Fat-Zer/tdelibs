@@ -52,14 +52,14 @@ class ClipboardInterface
     virtual void cut() = 0;
     /** tries to paste. 
       * If there is nothing to paste or paste is not possible this call is a noop.
-      * Use BytesEditInterface::isReadOnly() to find out if you can paste at all.
+      * Use BytesEditInterface::isReadOnly() to tqfind out if you can paste at all.
       */
     virtual void paste() = 0;
 
   public: // signals
     /** signal: tells whether copy is possible or not.
       * Remember to use the created object, not the interface for connecting
-      * Use BytesEditInterface::isReadOnly() to find out if you can also cut
+      * Use BytesEditInterface::isReadOnly() to tqfind out if you can also cut
       * As this function symbol serves as a signal, this is a noop. Don't use it
       * for anything else.
       */

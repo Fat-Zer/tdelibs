@@ -38,7 +38,7 @@
    <item> orchid </item>
    <item> black </item>
   </list>
-  <list name="shapes">
+  <list name="tqshapes">
    <item> box </item>
    <item> triangle </item>
    <item> circle </item>
@@ -139,7 +139,7 @@
     <RegExpr attribute="Value" context="lineid" String="(foldedge.|edge.|)linestyle *:"/>
     <RegExpr attribute="Value" context="lineid" String="(foldnode.|node.|)borderstyle *:"/>
     <RegExpr attribute="Value" context="fishid" String="view *:"/>
-    <RegExpr attribute="Value" context="shapeid" String="(foldnode.|node.|)shape"/>
+    <RegExpr attribute="Value" context="tqshapeid" String="(foldnode.|node.|)tqshape"/>
     <RegExpr attribute="Value" context="lquote" String="(source|target)(name|)"/>
     <RegExpr attribute="Value" context="lquote" String="title *:"/>
     <RegExpr attribute="Value" context="lquote" String="(foldnode.|node.|foldedge.|edge.|)label *:"/>
@@ -150,7 +150,7 @@
     <RegExpr attribute="Value" context="nodelevel" String="(foldnode.|node.|)(level|vertical_?order) *:"/>
     <RegExpr attribute="Value" context="intval" String="(foldnode.|node.|foldedge.|edge.|)horizontal_?order *:"/>
     <RegExpr attribute="Value" context="stateid" String="stat(e|us) *:"/>
-    <RegExpr attribute="Value" context="algid" String="layout_?algorithm *:"/>
+    <RegExpr attribute="Value" context="algid" String="tqlayout_?algorithm *:"/>
     <RegExpr attribute="Value" context="boolean" String="crossing_?optimization *:"/>
     <RegExpr attribute="Value" context="boolean" String="crossing_?phase2 *:"/>
     <RegExpr attribute="Value" context="boolean" String="(dirty_edge_|display_edge_|displayedge|late_edge_|subgraph_?)labels *:"/>
@@ -158,7 +158,7 @@
     <RegExpr attribute="Value" context="boolean" String="(nodes|near_?edges|edges|splines) *:"/>
     <RegExpr attribute="Value" context="classname" String="classname"/>
     <RegExpr attribute="Value" context="orient" String="orientation *:"/>
-    <RegExpr attribute="Value" context="nodealign" String="node_alignment *:"/>
+    <RegExpr attribute="Value" context="nodealign" String="node_tqalignment *:"/>
     <RegExpr attribute="Value" context="textmode" String="(foldnode.|node.|)textmode *:"/>
     <RegExpr attribute="Value" context="boolean" String="equal_y_dist *:"/>
     <RegExpr attribute="Value" context="boolean" String="equal_?ydist *:"/>
@@ -175,7 +175,7 @@
     <RegExpr attribute="Value" context="intval" String="iconcolors *:"/>
     <RegExpr attribute="Value" context="intval" String="hidden *:"/>
     <RegExpr attribute="Value" context="boolean" String="energetic *:"/>
-    <RegExpr attribute="Value" context="intval" String="layout_(up|down|near|spline)factor *:"/>
+    <RegExpr attribute="Value" context="intval" String="tqlayout_(up|down|near|spline)factor *:"/>
     <RegExpr attribute="Value" context="intval" String="border +(x|y) *:"/>
     <RegExpr attribute="Value" context="intval" String="splinefactor *:"/>
     <RegExpr attribute="Value" context="floatval" String="(gravity|tempfactor|treefactor) *:"/>
@@ -210,8 +210,8 @@
     <keyword attribute="Datatype" context="default" String="colors"/>
     <RegExpr attribute="Datatype" context="default" String="[0-9][0-9]?"/>
    </context>
-   <context name="shapeid" attribute="Normal" lineEndContext="#stay">
-    <keyword attribute="Datatype" context="default" String="shapes"/>
+   <context name="tqshapeid" attribute="Normal" lineEndContext="#stay">
+    <keyword attribute="Datatype" context="default" String="tqshapes"/>
    </context>
    <context name="lquote" attribute="Normal" lineEndContext="#stay">
     <DetectChar attribute="String" context="string" char="&quot;"/>

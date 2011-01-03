@@ -191,7 +191,7 @@ StdAccel findStdAccel( const KKeySequence& seq )
 			if( id != AccelNone ) {
 				if( !g_infoStdAccel[i].bInitialized )
 					initialize( id );
-				if( g_infoStdAccel[i].cut.contains( seq ) )
+				if( g_infoStdAccel[i].cut.tqcontains( seq ) )
 					return id;
 			}
 		}
@@ -281,10 +281,10 @@ const KShortcut& deleteWordBack()        { return shortcut( DeleteWordBack ); }
 const KShortcut& deleteWordForward()     { return shortcut( DeleteWordForward ); }
 const KShortcut& undo()                  { return shortcut( Undo ); }
 const KShortcut& redo()                  { return shortcut( Redo ); }
-const KShortcut& find()                  { return shortcut( Find ); }
-const KShortcut& findNext()              { return shortcut( FindNext ); }
-const KShortcut& findPrev()              { return shortcut( FindPrev ); }
-const KShortcut& replace()               { return shortcut( Replace ); }
+const KShortcut& tqfind()                  { return shortcut( Find ); }
+const KShortcut& tqfindNext()              { return shortcut( FindNext ); }
+const KShortcut& tqfindPrev()              { return shortcut( FindPrev ); }
+const KShortcut& tqreplace()               { return shortcut( Replace ); }
 const KShortcut& home()                  { return shortcut( Home ); }
 const KShortcut& end()                   { return shortcut( End ); }
 const KShortcut& beginningOfLine()       { return shortcut( BeginningOfLine ); }

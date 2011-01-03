@@ -29,7 +29,7 @@
 
 #include <klocale.h>
 
-int findComboItem(TQComboBox *cb, const TQString& str)
+int tqfindComboItem(TQComboBox *cb, const TQString& str)
 {
 	for (int i=0; i<cb->count(); i++)
 		if (cb->text(i) == str)
@@ -133,7 +133,7 @@ bool CupsdServerPage::loadConfig(CupsdConf *conf, TQString&)
 		classoverride_->setChecked(conf_->classoverride_);
 	if (conf->classification_ == CLASS_OTHER)
 		otherclassname_->setText(conf_->otherclassname_);
-	int index = findComboItem(charset_, conf_->charset_.upper());
+	int index = tqfindComboItem(charset_, conf_->charset_.upper());
 	if (index != -1)
 		charset_->setCurrentItem(index);
 	language_->setText(conf_->language_);

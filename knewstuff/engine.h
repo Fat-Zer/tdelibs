@@ -48,7 +48,7 @@ class ProviderDialog;
  * \par Maintainer:
  * Josef Spillner (spillner@kde.org)
  */
-class KDE_EXPORT Engine : public QObject
+class KDE_EXPORT Engine : public TQObject
 {
     Q_OBJECT
     struct Private;
@@ -58,18 +58,18 @@ class KDE_EXPORT Engine : public QObject
 
       @param newStuff a KNewStuff object
       @param type the Hotstuff data type such as "korganizer/calendar"
-      @param parentWidget the parent window
+      @param tqparentWidget the parent window
     */
-    Engine( KNewStuff *newStuff, const TQString &type, TQWidget *parentWidget = 0 );
+    Engine( KNewStuff *newStuff, const TQString &type, TQWidget *tqparentWidget = 0 );
     /**
       Constructor.
 
       @param newStuff a KNewStuff object
       @param type the Hotstuff data type such as "korganizer/calendar"
       @param providerList the URL of the provider list
-      @param parentWidget the parent window
+      @param tqparentWidget the parent window
     */
-    Engine( KNewStuff *newStuff, const TQString &type, const TQString &providerList, TQWidget *parentWidget = 0 );
+    Engine( KNewStuff *newStuff, const TQString &type, const TQString &providerList, TQWidget *tqparentWidget = 0 );
 
     /**
       Destructor.
@@ -88,7 +88,7 @@ class KDE_EXPORT Engine : public QObject
 
       @return parent widget
     */
-    TQWidget *parentWidget() const { return mParentWidget; }
+    TQWidget *tqparentWidget() const { return mParentWidget; }
 
     /**
       Initiates the download process, retrieving provider lists and invoking

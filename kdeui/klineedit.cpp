@@ -441,17 +441,17 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
 {
     KKey key( e );
 
-    if ( KStdAccel::copy().contains( key ) )
+    if ( KStdAccel::copy().tqcontains( key ) )
     {
         copy();
         return;
     }
-    else if ( KStdAccel::paste().contains( key ) )
+    else if ( KStdAccel::paste().tqcontains( key ) )
     {
         paste();
         return;
     }
-    else if ( KStdAccel::pasteSelection().contains( key ) )
+    else if ( KStdAccel::pasteSelection().tqcontains( key ) )
     {
         TQString text = TQApplication::clipboard()->text( QClipboard::Selection);
         insert( text );
@@ -459,22 +459,22 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         return;
     }
 
-    else if ( KStdAccel::cut().contains( key ) )
+    else if ( KStdAccel::cut().tqcontains( key ) )
     {
         cut();
         return;
     }
-    else if ( KStdAccel::undo().contains( key ) )
+    else if ( KStdAccel::undo().tqcontains( key ) )
     {
         undo();
         return;
     }
-    else if ( KStdAccel::redo().contains( key ) )
+    else if ( KStdAccel::redo().tqcontains( key ) )
     {
         redo();
         return;
     }
-    else if ( KStdAccel::deleteWordBack().contains( key ) )
+    else if ( KStdAccel::deleteWordBack().tqcontains( key ) )
     {
         cursorWordBackward(true);
         if ( hasSelectedText() )
@@ -483,7 +483,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         e->accept();
         return;
     }
-    else if ( KStdAccel::deleteWordForward().contains( key ) )
+    else if ( KStdAccel::deleteWordForward().tqcontains( key ) )
     {
         // Workaround for QT bug where
         cursorWordForward(true);
@@ -493,25 +493,25 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         e->accept();
         return;
     }
-    else if ( KStdAccel::backwardWord().contains( key ) )
+    else if ( KStdAccel::backwardWord().tqcontains( key ) )
     {
       cursorWordBackward(false);
       e->accept();
       return;
     }
-    else if ( KStdAccel::forwardWord().contains( key ) )
+    else if ( KStdAccel::forwardWord().tqcontains( key ) )
     {
       cursorWordForward(false);
       e->accept();
       return;
     }
-    else if ( KStdAccel::beginningOfLine().contains( key ) )
+    else if ( KStdAccel::beginningOfLine().tqcontains( key ) )
     {
       home(false);
       e->accept();
       return;
     }
-    else if ( KStdAccel::endOfLine().contains( key ) )
+    else if ( KStdAccel::endOfLine().tqcontains( key ) )
     {
       end(false);
       e->accept();
@@ -575,7 +575,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
               mode == KGlobalSettings::CompletionMan) && noModifier )
         {
             TQString keycode = e->text();
-            if ( !keycode.isEmpty() && (keycode.unicode()->isPrint() ||
+            if ( !keycode.isEmpty() && (keycode.tqunicode()->isPrint() ||
                 e->key() == Key_Backspace || e->key() == Key_Delete ) )
             {
                 bool hasUserSelection=d->userSelection;
@@ -658,7 +658,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             // as if there was no selection. After processing the key event, we
             // can set the new autocompletion again.
             if (hadSelection && !hasUserSelection && start>cPos &&
-               ( (!keycode.isEmpty() && keycode.unicode()->isPrint()) ||
+               ( (!keycode.isEmpty() && keycode.tqunicode()->isPrint()) ||
                  e->key() == Key_Backspace || e->key() == Key_Delete ) )
             {
                 del();
@@ -679,7 +679,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             int len = txt.length();
 
             if ( txt != old_txt && len/* && ( cursorPosition() == len || force )*/ &&
-                 ( (!keycode.isEmpty() && keycode.unicode()->isPrint()) ||
+                 ( (!keycode.isEmpty() && keycode.tqunicode()->isPrint()) ||
                    e->key() == Key_Backspace || e->key() == Key_Delete) )
             {
                 if ( e->key() == Key_Backspace )
@@ -729,7 +729,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             else
                 cut = keys[TextCompletion];
 
-            if ( cut.contains( key ) )
+            if ( cut.tqcontains( key ) )
             {
                 // Emit completion if the completion mode is CompletionShell
                 // and the cursor is at the end of the string.
@@ -758,7 +758,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             else
                 cut = keys[PrevCompletionMatch];
 
-            if ( cut.contains( key ) )
+            if ( cut.tqcontains( key ) )
             {
                 if ( emitSignals() )
                     emit textRotation( KCompletionBase::PrevCompletionMatch );
@@ -773,7 +773,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             else
                 cut = keys[NextCompletionMatch];
 
-            if ( cut.contains( key ) )
+            if ( cut.tqcontains( key ) )
             {
                 if ( emitSignals() )
                     emit textRotation( KCompletionBase::NextCompletionMatch );
@@ -792,7 +792,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             else
                 cut = keys[SubstringCompletion];
 
-            if ( cut.contains( key ) )
+            if ( cut.tqcontains( key ) )
             {
                 if ( emitSignals() )
                     emit substringCompletion( text() );
@@ -1134,7 +1134,7 @@ bool KLineEdit::overrideAccel (const TQKeyEvent* e)
     else
         scKey = keys[TextCompletion];
 
-    if (scKey.contains( key ))
+    if (scKey.tqcontains( key ))
         return true;
 
     if (keys[NextCompletionMatch].isNull())
@@ -1142,7 +1142,7 @@ bool KLineEdit::overrideAccel (const TQKeyEvent* e)
     else
         scKey = keys[NextCompletionMatch];
 
-    if (scKey.contains( key ))
+    if (scKey.tqcontains( key ))
         return true;
 
     if (keys[PrevCompletionMatch].isNull())
@@ -1150,31 +1150,31 @@ bool KLineEdit::overrideAccel (const TQKeyEvent* e)
     else
         scKey = keys[PrevCompletionMatch];
 
-    if (scKey.contains( key ))
+    if (scKey.tqcontains( key ))
         return true;
 
     // Override all the text manupilation accelerators...
-    if ( KStdAccel::copy().contains( key ) )
+    if ( KStdAccel::copy().tqcontains( key ) )
         return true;
-    else if ( KStdAccel::paste().contains( key ) )
+    else if ( KStdAccel::paste().tqcontains( key ) )
         return true;
-    else if ( KStdAccel::cut().contains( key ) )
+    else if ( KStdAccel::cut().tqcontains( key ) )
         return true;
-    else if ( KStdAccel::undo().contains( key ) )
+    else if ( KStdAccel::undo().tqcontains( key ) )
         return true;
-    else if ( KStdAccel::redo().contains( key ) )
+    else if ( KStdAccel::redo().tqcontains( key ) )
         return true;
-    else if (KStdAccel::deleteWordBack().contains( key ))
+    else if (KStdAccel::deleteWordBack().tqcontains( key ))
         return true;
-    else if (KStdAccel::deleteWordForward().contains( key ))
+    else if (KStdAccel::deleteWordForward().tqcontains( key ))
         return true;
-    else if (KStdAccel::forwardWord().contains( key ))
+    else if (KStdAccel::forwardWord().tqcontains( key ))
         return true;
-    else if (KStdAccel::backwardWord().contains( key ))
+    else if (KStdAccel::backwardWord().tqcontains( key ))
         return true;
-    else if (KStdAccel::beginningOfLine().contains( key ))
+    else if (KStdAccel::beginningOfLine().tqcontains( key ))
         return true;
-    else if (KStdAccel::endOfLine().contains( key ))
+    else if (KStdAccel::endOfLine().tqcontains( key ))
         return true;
 
     if (d->completionBox && d->completionBox->isVisible ())
@@ -1219,7 +1219,7 @@ void KLineEdit::setCompletedItems( const TQStringList& items, bool autoSuggest )
             bool wasSelected = d->completionBox->isSelected( d->completionBox->currentItem() );
             const TQString currentSelection = d->completionBox->currentText();
             d->completionBox->setItems( items );
-            TQListBoxItem* item = d->completionBox->findItem( currentSelection, Qt::ExactMatch );
+            TQListBoxItem* item = d->completionBox->tqfindItem( currentSelection, Qt::ExactMatch );
             // If no item is selected, that means the listbox hasn't been manipulated by the user yet,
             // because it's not possible otherwise to have no selected item. In such case make
             // always the first item current and unselected, so that the current item doesn't jump.
@@ -1246,7 +1246,7 @@ void KLineEdit::setCompletedItems( const TQStringList& items, bool autoSuggest )
 
         if ( d->autoSuggest && autoSuggest )
         {
-            int index = items.first().find( txt );
+            int index = items.first().tqfind( txt );
             TQString newText = items.first().mid( index );
             setUserSelection(false);
             setCompletedText(newText,true);

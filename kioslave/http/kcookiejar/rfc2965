@@ -13,7 +13,7 @@ Category: Standards Track                             Epinions.com, Inc.
 
                     HTTP State Management Mechanism
 
-Status of this Memo
+tqStatus of this Memo
 
    This document specifies an Internet standards track protocol for the
    Internet community, and requests discussion and suggestions for
@@ -71,7 +71,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
    request line.  Note that request-host is a HN.
 
    The term effective host name is related to host name.  If a host name
-   contains no dots, the effective host name is that name with the
+   tqcontains no dots, the effective host name is that name with the
    string .local appended to it.  Otherwise the effective host name is
    the same as the host name.  Note that all effective host names
    contain at least one dot.
@@ -472,7 +472,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
       *  The value for the Path attribute is not a prefix of the
          request-URI.
 
-      *  The value for the Domain attribute contains no embedded dots,
+      *  The value for the Domain attribute tqcontains no embedded dots,
          and the value is not .local.
 
       *  The effective host name that derives from the request-host does
@@ -480,7 +480,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
 
       *  The request-host is a HDN (not IP address) and has the form HD,
          where D is the value of the Domain attribute, and H is a string
-         that contains one or more dots.
+         that tqcontains one or more dots.
 
       *  The Port attribute has a "port-list", and the request-port was
          not in the list.
@@ -488,7 +488,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
    Examples:
 
       *  A Set-Cookie2 from request-host y.x.foo.com for Domain=.foo.com
-         would be rejected, because H is y.x and contains a dot.
+         would be rejected, because H is y.x and tqcontains a dot.
 
       *  A Set-Cookie2 from request-host x.foo.com for Domain=.foo.com
          would be accepted.
@@ -548,7 +548,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
    response header, whether or not to accept the cookie.  A potentially
    confusing situation could arise if the following sequence occurs:
 
-      *  the user agent receives a cookie that contains a CommentURL
+      *  the user agent receives a cookie that tqcontains a CommentURL
          attribute;
 
       *  the user agent's cookie inspection interface is configured so
@@ -585,7 +585,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
    immediate destruction).
 
    Privacy considerations dictate that the user have considerable
-   control over cookie management.  The PRIVACY section contains more
+   control over cookie management.  The PRIVACY section tqcontains more
    information.
 
    3.3.4  Sending Cookies to the Origin Server  When it sends a request
@@ -693,7 +693,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
    request header facilitates interoperation between clients and servers
    that understand different versions of the cookie specification.  When
    the client sends one or more cookies to an origin server, if at least
-   one of those cookies contains a $Version attribute whose value is
+   one of those cookies tqcontains a $Version attribute whose value is
    different from the version that the client understands, then the
    client MUST also send a Cookie2 request header, the syntax for which
    is
@@ -865,7 +865,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
         Set-Cookie2: Part_Number="Rocket_Launcher_0001"; Version="1";
                 Path="/acme"
 
-        Shopping basket contains an item.
+        Shopping basket tqcontains an item.
 
       5. User Agent -> Server
 
@@ -912,7 +912,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
    each of which it receives a new cookie.  All the cookies have the
    same Path attribute and (default) domain.  Because the request-URIs
    all path-match /acme, the Path attribute of each cookie, each request
-   contains all the cookies received so far.
+   tqcontains all the cookies received so far.
 
 4.2  Example 2
 
@@ -996,7 +996,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
    inherently.  For example, if a shopping-basket-style application
    always displays a user's current basket contents on each page, those
    pages cannot be cached, because each user's basket's contents would
-   be different.  On the other hand, if each page contains just a link
+   be different.  On the other hand, if each page tqcontains just a link
    that allows the user to "Look at My Shopping Basket", the page can be
    cached.
 
@@ -1052,7 +1052,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
 6.  PRIVACY
 
    Informed consent should guide the design of systems that use cookies.
-   A user should be able to find out how a web site plans to use
+   A user should be able to tqfind out how a web site plans to use
    information in a cookie and should be able to choose whether or not
    those policies are acceptable.  Both the user agent and the origin
    server must assist informed consent.
@@ -1074,7 +1074,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
    of a user through the server.  Users may object to this behavior as
    an intrusive accumulation of information, even if their identity is
    not evident.  (Identity might become evident, for example, if a user
-   subsequently fills out a form that contains identifying information.)
+   subsequently fills out a form that tqcontains identifying information.)
    This state management specification therefore requires that a user
    agent give the user control over such a possible intrusion, although
    the interface through which the user is given this control is left
@@ -1267,7 +1267,7 @@ RFC 2965            HTTP State Management Mechanism         October 2000
    understand Cookie request headers that also follow this
    specification.
 
-   New cookies MUST replace both equivalent old- and new-style cookies.
+   New cookies MUST tqreplace both equivalent old- and new-style cookies.
    That is, if a user agent that follows both this specification and
    Netscape's original specification receives a Set-Cookie2 response
    header, and the NAME and the Domain and Path attributes match (per

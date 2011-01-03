@@ -110,7 +110,7 @@ QRgb RgbaToQrgba(struct Rgba imagePixel)
 //     the display's maximum intensity).
 //
 //  7) Clamp the values to [0, 255].
-	return qRgba( char (Imath::clamp ( r * 84.66f, 0.f, 255.f ) ),
+	return tqRgba( char (Imath::clamp ( r * 84.66f, 0.f, 255.f ) ),
 				  char (Imath::clamp ( g * 84.66f, 0.f, 255.f ) ),
 				  char (Imath::clamp ( b * 84.66f, 0.f, 255.f ) ),
 				  char (Imath::clamp ( a * 84.66f, 0.f, 255.f ) ) );

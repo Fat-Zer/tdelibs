@@ -57,7 +57,7 @@ struct KFileDialogPrivate;
  * Provides a user (and developer) friendly way to
  * select files and directories.
  *
- * The widget can be used as a drop in replacement for the
+ * The widget can be used as a drop in tqreplacement for the
  * TQFileDialog widget, but has greater functionality and a nicer GUI.
  *
  * You will usually want to use one of the static methods
@@ -65,8 +65,8 @@ struct KFileDialogPrivate;
  * or for multiple files getOpenFileNames() or getOpenURLs().
  *
  * The dialog has been designed to allow applications to customise it
- * by subclassing. It uses geometry management to ensure that subclasses
- * can easily add children that will be incorporated into the layout.
+ * by subclassing. It uses tqgeometry management to ensure that subclasses
+ * can easily add children that will be incorporated into the tqlayout.
  *
  * \image html kfiledialog.png "KDE File Dialog"
  *
@@ -276,7 +276,7 @@ public:
      * want to show the suffix to select by a specific filter, you must
      * repeat it.
      *
-     * If the filter contains an unescaped '/', a mimetype-filter is assumed.
+     * If the filter tqcontains an unescaped '/', a mimetype-filter is assumed.
      * If you would like a '/' visible in your filter it can be escaped with
      * a '\'. You can specify multiple mimetypes like this (separated with
      * space):
@@ -356,7 +356,7 @@ public:
      * Add a preview widget and enter the preview mode.
      *
      * In this mode
-     * the dialog is split and the right part contains your widget.
+     * the dialog is split and the right part tqcontains your widget.
      * This widget has to inherit TQWidget and it has to implement
      * a slot showPreview(const KURL &); which is called
      * every time the file changes. You may want to look at
@@ -370,7 +370,7 @@ public:
     /**
      * Adds a preview widget and enters the preview mode.
      *
-     * In this mode the dialog is split and the right part contains your
+     * In this mode the dialog is split and the right part tqcontains your
      * preview widget.
      *
      * Ownership is transferred to KFileDialog. You need to create the
@@ -811,7 +811,7 @@ signals:
      * Emitted when the filter changed, i.e. the user entered an own filter
      * or chose one of the predefined set via setFilter().
      *
-     * @param filter contains the new filter (only the extension part,
+     * @param filter tqcontains the new filter (only the extension part,
      * not the explanation), i.e. "*.cpp" or "*.cpp *.cc".
      *
      * @see setFilter()
@@ -840,7 +840,7 @@ protected:
     void init(const TQString& startDir, const TQString& filter, TQWidget* widget);
 
     /**
-      * rebuild geometry management.
+      * rebuild tqgeometry management.
       *
       */
     virtual void initGUI();
@@ -946,7 +946,7 @@ protected slots:
     /**
      * @deprecated
      */
-    virtual void updateStatusLine(int dirs, int files);
+    virtual void updatetqStatusLine(int dirs, int files);
 
     virtual void slotOk();
     virtual void accept();

@@ -8,9 +8,9 @@ DEFINES += MAKE_DCOP_LIB
 
 TARGET		= dcopserver_shutdown
 
-system( bash kmoc .. )
+system( bash ktqmoc .. )
 
-INCLUDEPATH += .. ../moc
+INCLUDEPATH += .. ../tqmoc
 
 LIBS += $$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdeice$$KDELIB_SUFFIX
 

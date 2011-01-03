@@ -45,7 +45,7 @@
 
 //BEGIN KateSearch
 TQStringList KateSearch::s_searchList  = TQStringList();
-TQStringList KateSearch::s_replaceList = TQStringList();
+TQStringList KateSearch::s_tqreplaceList = TQStringList();
 TQString KateSearch::s_pattern = TQString();
 static const bool arbitraryHLExample = false;
 
@@ -53,12 +53,12 @@ KateSearch::KateSearch( KateView* view )
   : TQObject( view, "kate search" )
   , m_view( view )
   , m_doc( view->doc() )
-  , replacePrompt( new KateReplacePrompt( view ) )
+  , tqreplacePrompt( new KateReplacePrompt( view ) )
 {
   m_arbitraryHLList = new KateSuperRangeList();
   if (arbitraryHLExample) m_doc->arbitraryHL()->addHighlightToView(m_arbitraryHLList, m_view);
 
-  connect(replacePrompt,TQT_SIGNAL(clicked()),this,TQT_SLOT(replaceSlot()));
+  connect(tqreplacePrompt,TQT_SIGNAL(clicked()),this,TQT_SLOT(tqreplaceSlot()));
 }
 
 KateSearch::~KateSearch()
@@ -68,20 +68,20 @@ KateSearch::~KateSearch()
 
 void KateSearch::createActions( KActionCollection* ac )
 {
-  KStdAction::find( this, TQT_SLOT(find()), ac )->setWhatsThis(
+  KStdAction::tqfind( this, TQT_SLOT(tqfind()), ac )->setWhatsThis(
     i18n("Look up the first occurrence of a piece of text or regular expression."));
-  KStdAction::findNext( this, TQT_SLOT(slotFindNext()), ac )->setWhatsThis(
+  KStdAction::tqfindNext( this, TQT_SLOT(slotFindNext()), ac )->setWhatsThis(
     i18n("Look up the next occurrence of the search phrase."));
-  KStdAction::findPrev( this, TQT_SLOT(slotFindPrev()), ac, "edit_find_prev" )->setWhatsThis(
+  KStdAction::tqfindPrev( this, TQT_SLOT(slotFindPrev()), ac, "edit_tqfind_prev" )->setWhatsThis(
     i18n("Look up the previous occurrence of the search phrase."));
-  KStdAction::replace( this, TQT_SLOT(replace()), ac )->setWhatsThis(
-    i18n("Look up a piece of text or regular expression and replace the result with some given text."));
+  KStdAction::tqreplace( this, TQT_SLOT(tqreplace()), ac )->setWhatsThis(
+    i18n("Look up a piece of text or regular expression and tqreplace the result with some given text."));
 }
 
 void KateSearch::addToList( TQStringList& list, const TQString& s )
 {
   if( list.count() > 0 ) {
-    TQStringList::Iterator it = list.find( s );
+    TQStringList::Iterator it = list.tqfind( s );
     if( *it != 0L )
       list.remove( it );
     if( list.count() >= 16 )
@@ -90,30 +90,30 @@ void KateSearch::addToList( TQStringList& list, const TQString& s )
   list.prepend( s );
 }
 
-void KateSearch::find()
+void KateSearch::tqfind()
 {
   // if multiline selection around, search in it
   long searchf = KateViewConfig::global()->searchFlags();
   if (m_view->hasSelection() && m_view->selStartLine() != m_view->selEndLine())
     searchf |= KFindDialog::SelectedText;
 
-  KFindDialog *findDialog = new KFindDialog (  m_view, "", searchf,
+  KFindDialog *tqfindDialog = new KFindDialog (  m_view, "", searchf,
                                                s_searchList, m_view->hasSelection() );
 
-  findDialog->setPattern (getSearchText());
+  tqfindDialog->setPattern (getSearchText());
 
 
-  if( findDialog->exec() == TQDialog::Accepted ) {
-    s_searchList =  findDialog->findHistory () ;
+  if( tqfindDialog->exec() == TQDialog::Accepted ) {
+    s_searchList =  tqfindDialog->tqfindHistory () ;
     // Do *not* remove the TQString() wrapping, it fixes a nasty crash
-    find( TQString(s_searchList.first()), findDialog->options(), true, true );
+    tqfind( TQString(s_searchList.first()), tqfindDialog->options(), true, true );
   }
 
-  delete findDialog;
-  m_view->repaintText ();
+  delete tqfindDialog;
+  m_view->tqrepaintText ();
 }
 
-void KateSearch::find( const TQString &pattern, long flags, bool add, bool shownotfound )
+void KateSearch::tqfind( const TQString &pattern, long flags, bool add, bool shownotfound )
 {
   KateViewConfig::global()->setSearchFlags( flags );
   if( add )
@@ -130,7 +130,7 @@ void KateSearch::find( const TQString &pattern, long flags, bool add, bool shown
   searchFlags.backward = KateViewConfig::global()->searchFlags() & KFindDialog::FindBackwards;
   searchFlags.selected = KateViewConfig::global()->searchFlags() & KFindDialog::SelectedText;
   searchFlags.prompt = false;
-  searchFlags.replace = false;
+  searchFlags.tqreplace = false;
   searchFlags.finished = false;
   searchFlags.regExp = KateViewConfig::global()->searchFlags() & KFindDialog::RegularExpression;
   searchFlags.useBackRefs = KateViewConfig::global()->searchFlags() & KReplaceDialog::BackReference;
@@ -151,7 +151,7 @@ void KateSearch::find( const TQString &pattern, long flags, bool add, bool shown
   search( searchFlags );
 }
 
-void KateSearch::replace()
+void KateSearch::tqreplace()
 {
   if (!doc()->isReadWrite()) return;
 
@@ -160,33 +160,33 @@ void KateSearch::replace()
   if (m_view->hasSelection() && m_view->selStartLine() != m_view->selEndLine())
     searchf |= KFindDialog::SelectedText;
 
-  KReplaceDialog *replaceDialog = new KReplaceDialog (  m_view, "", searchf,
-                                               s_searchList, s_replaceList, m_view->hasSelection() );
+  KReplaceDialog *tqreplaceDialog = new KReplaceDialog (  m_view, "", searchf,
+                                               s_searchList, s_tqreplaceList, m_view->hasSelection() );
 
-  replaceDialog->setPattern (getSearchText());
+  tqreplaceDialog->setPattern (getSearchText());
 
-  if( replaceDialog->exec() == TQDialog::Accepted ) {
-    long opts = replaceDialog->options();
-    m_replacement = replaceDialog->replacement();
-    s_searchList = replaceDialog->findHistory () ;
-    s_replaceList = replaceDialog->replacementHistory () ;
+  if( tqreplaceDialog->exec() == TQDialog::Accepted ) {
+    long opts = tqreplaceDialog->options();
+    m_tqreplacement = tqreplaceDialog->tqreplacement();
+    s_searchList = tqreplaceDialog->tqfindHistory () ;
+    s_tqreplaceList = tqreplaceDialog->tqreplacementHistory () ;
 
     // Do *not* remove the TQString() wrapping, it fixes a nasty crash
-    replace( TQString(s_searchList.first()), m_replacement, opts );
+    tqreplace( TQString(s_searchList.first()), m_tqreplacement, opts );
   }
 
-  delete replaceDialog;
+  delete tqreplaceDialog;
   m_view->update ();
 }
 
-void KateSearch::replace( const TQString& pattern, const TQString &replacement, long flags )
+void KateSearch::tqreplace( const TQString& pattern, const TQString &tqreplacement, long flags )
 {
   if (!doc()->isReadWrite()) return;
 
   addToList( s_searchList, pattern );
    s_pattern = pattern;
-  addToList( s_replaceList, replacement );
-  m_replacement = replacement;
+  addToList( s_tqreplaceList, tqreplacement );
+  m_tqreplacement = tqreplacement;
   KateViewConfig::global()->setSearchFlags( flags );
 
   SearchFlags searchFlags;
@@ -197,7 +197,7 @@ void KateSearch::replace( const TQString& pattern, const TQString &replacement, 
   searchFlags.backward = KateViewConfig::global()->searchFlags() & KFindDialog::FindBackwards;
   searchFlags.selected = KateViewConfig::global()->searchFlags() & KFindDialog::SelectedText;
   searchFlags.prompt = KateViewConfig::global()->searchFlags() & KReplaceDialog::PromptOnReplace;
-  searchFlags.replace = true;
+  searchFlags.tqreplace = true;
   searchFlags.finished = false;
   searchFlags.regExp = KateViewConfig::global()->searchFlags() & KFindDialog::RegularExpression;
   searchFlags.useBackRefs = KateViewConfig::global()->searchFlags() & KReplaceDialog::BackReference;
@@ -216,7 +216,7 @@ void KateSearch::replace( const TQString& pattern, const TQString &replacement, 
   search( searchFlags );
 }
 
-void KateSearch::findAgain( bool reverseDirection )
+void KateSearch::tqfindAgain( bool reverseDirection )
 {
   SearchFlags searchFlags;
   searchFlags.caseSensitive = KateViewConfig::global()->searchFlags() & KFindDialog::CaseSensitive;
@@ -226,7 +226,7 @@ void KateSearch::findAgain( bool reverseDirection )
   searchFlags.backward = KateViewConfig::global()->searchFlags() & KFindDialog::FindBackwards;
   searchFlags.selected = KateViewConfig::global()->searchFlags() & KFindDialog::SelectedText;
   searchFlags.prompt = KateViewConfig::global()->searchFlags() & KReplaceDialog::PromptOnReplace;
-  searchFlags.replace = false;
+  searchFlags.tqreplace = false;
   searchFlags.finished = false;
   searchFlags.regExp = KateViewConfig::global()->searchFlags() & KFindDialog::RegularExpression;
   searchFlags.useBackRefs = KateViewConfig::global()->searchFlags() & KReplaceDialog::BackReference;
@@ -263,14 +263,14 @@ void KateSearch::search( SearchFlags flags )
     s.flags.finished = true;
   }
 
-  if( s.flags.replace ) {
-    replaces = 0;
+  if( s.flags.tqreplace ) {
+    tqreplaces = 0;
     if( s.flags.prompt )
       promptReplace();
     else
-      replaceAll();
+      tqreplaceAll();
   } else {
-    findAgain();
+    tqfindAgain();
   }
 }
 
@@ -301,17 +301,17 @@ void KateSearch::wrapSearch()
   }
 
   // oh, we wrapped around one time allready now !
-  // only check that on replace
-  s.wrapped = s.flags.replace;
+  // only check that on tqreplace
+  s.wrapped = s.flags.tqreplace;
 
-  replaces = 0;
+  tqreplaces = 0;
   s.flags.finished = true;
 }
 
-void KateSearch::findAgain()
+void KateSearch::tqfindAgain()
 {
   if(  s_pattern.isEmpty() ) {
-    find();
+    tqfind();
     return;
   }
 
@@ -320,7 +320,7 @@ void KateSearch::findAgain()
   } else if( !s.flags.finished ) {
     if( askContinue() ) {
       wrapSearch();
-      findAgain();
+      tqfindAgain();
     } else {
       if (arbitraryHLExample) m_arbitraryHLList->clear();
     }
@@ -334,23 +334,23 @@ void KateSearch::findAgain()
   }
 }
 
-void KateSearch::replaceAll()
+void KateSearch::tqreplaceAll()
 {
   doc()->editStart ();
 
   while( doSearch(  s_pattern ) )
-    replaceOne();
+    tqreplaceOne();
 
   doc()->editEnd ();
 
   if( !s.flags.finished ) {
     if( askContinue() ) {
       wrapSearch();
-      replaceAll();
+      tqreplaceAll();
     }
   } else {
     KMessageBox::information( view(),
-        i18n("%n replacement made.","%n replacements made.",replaces),
+        i18n("%n tqreplacement made.","%n tqreplacements made.",tqreplaces),
         i18n("Replace") );
   }
 }
@@ -359,30 +359,30 @@ void KateSearch::promptReplace()
 {
   if ( doSearch(  s_pattern ) ) {
     exposeFound( s.cursor, s.matchedLength );
-    replacePrompt->show();
-    replacePrompt->setFocus ();
+    tqreplacePrompt->show();
+    tqreplacePrompt->setFocus ();
   } else if( !s.flags.finished && askContinue() ) {
     wrapSearch();
     promptReplace();
   } else {
     if (arbitraryHLExample) m_arbitraryHLList->clear();
-    replacePrompt->hide();
+    tqreplacePrompt->hide();
     KMessageBox::information( view(),
-        i18n("%n replacement made.","%n replacements made.",replaces),
+        i18n("%n tqreplacement made.","%n tqreplacements made.",tqreplaces),
         i18n("Replace") );
   }
 }
 
-void KateSearch::replaceOne()
+void KateSearch::tqreplaceOne()
 {
-  TQString replaceWith = m_replacement;
+  TQString tqreplaceWith = m_tqreplacement;
   if ( s.flags.regExp && s.flags.useBackRefs ) {
     // Replace each "\0"..."\9" with the corresponding capture,
     // "\n" and "\t" with newline and tab,
     // "\\" with "\",
     // and remove the "\" for any other sequence.
     TQRegExp br("\\\\(.)");
-    int pos = br.search( replaceWith );
+    int pos = br.search( tqreplaceWith );
     int ncaps = m_re.numCaptures();
     while ( pos >= 0 ) {
       TQString substitute;
@@ -393,7 +393,7 @@ void KateSearch::replaceOne()
         if (ccap <= ncaps ) {
           substitute = m_re.cap( ccap );
         } else {
-          kdDebug()<<"KateSearch::replaceOne(): you don't have "<<ccap<<" backreferences in regexp '"<<m_re.pattern()<<"'"<<endl;
+          kdDebug()<<"KateSearch::tqreplaceOne(): you don't have "<<ccap<<" backreferences in regexp '"<<m_re.pattern()<<"'"<<endl;
           break;
         }
       } else if ( argument == 'n' ) {
@@ -404,27 +404,27 @@ void KateSearch::replaceOne()
         // handle a validly escaped backslash, or an invalid escape.
         substitute = argument;
       }
-      replaceWith.replace( pos, br.matchedLength(), substitute );
-      pos = br.search( replaceWith, pos + substitute.length() );
+      tqreplaceWith.tqreplace( pos, br.matchedLength(), substitute );
+      pos = br.search( tqreplaceWith, pos + substitute.length() );
     }
   }
 
   doc()->editStart();
   doc()->removeText( s.cursor.line(), s.cursor.col(),
       s.cursor.line(), s.cursor.col() + s.matchedLength );
-  doc()->insertText( s.cursor.line(), s.cursor.col(), replaceWith );
+  doc()->insertText( s.cursor.line(), s.cursor.col(), tqreplaceWith );
   doc()->editEnd(),
 
-  replaces++;
+  tqreplaces++;
 
   // if we inserted newlines, we better adjust.
-  uint newlines = replaceWith.contains('\n');
+  uint newlines = tqreplaceWith.tqcontains('\n');
   if ( newlines )
   {
     if ( ! s.flags.backward )
     {
       s.cursor.setLine( s.cursor.line() + newlines );
-      s.cursor.setCol( replaceWith.length() - replaceWith.findRev('\n') );
+      s.cursor.setCol( tqreplaceWith.length() - tqreplaceWith.tqfindRev('\n') );
     }
     // selection?
     if ( s.flags.selected )
@@ -435,17 +435,17 @@ void KateSearch::replaceOne()
   // adjust selection endcursor if needed
   if( s.flags.selected && s.cursor.line() == s.selEnd.line() )
   {
-    s.selEnd.setCol(s.selEnd.col() + replaceWith.length() - s.matchedLength );
+    s.selEnd.setCol(s.selEnd.col() + tqreplaceWith.length() - s.matchedLength );
   }
 
   // adjust wrap cursor if needed
   if( s.cursor.line() == s.wrappedEnd.line() && s.cursor.col() <= s.wrappedEnd.col())
   {
-    s.wrappedEnd.setCol(s.wrappedEnd.col() + replaceWith.length() - s.matchedLength );
+    s.wrappedEnd.setCol(s.wrappedEnd.col() + tqreplaceWith.length() - s.matchedLength );
   }
 
   if( !s.flags.backward ) {
-    s.cursor.setCol(s.cursor.col() + replaceWith.length());
+    s.cursor.setCol(s.cursor.col() + tqreplaceWith.length());
   } else if( s.cursor.col() > 0 ) {
     s.cursor.setCol(s.cursor.col() - 1);
   } else {
@@ -470,12 +470,12 @@ void KateSearch::skipOne()
   }
 }
 
-void KateSearch::replaceSlot() {
-  switch( (Dialog_results)replacePrompt->result() ) {
-  case srCancel: replacePrompt->hide();                break;
-  case srAll:    replacePrompt->hide(); replaceAll();  break;
-  case srYes:    replaceOne(); promptReplace();        break;
-  case srLast:   replacePrompt->hide(), replaceOne();  break;
+void KateSearch::tqreplaceSlot() {
+  switch( (Dialog_results)tqreplacePrompt->result() ) {
+  case srCancel: tqreplacePrompt->hide();                break;
+  case srAll:    tqreplacePrompt->hide(); tqreplaceAll();  break;
+  case srYes:    tqreplaceOne(); promptReplace();        break;
+  case srLast:   tqreplacePrompt->hide(), tqreplaceOne();  break;
   case srNo:     skipOne();    promptReplace();        break;
   }
 }
@@ -483,9 +483,9 @@ void KateSearch::replaceSlot() {
 bool KateSearch::askContinue()
 {
   TQString made =
-     i18n( "%n replacement made.",
-           "%n replacements made.",
-           replaces );
+     i18n( "%n tqreplacement made.",
+           "%n tqreplacements made.",
+           tqreplaces );
 
   TQString reached = !s.flags.backward ?
      i18n( "End of document reached." ) :
@@ -502,12 +502,12 @@ bool KateSearch::askContinue()
      i18n( "Continue from the beginning?" ) :
      i18n( "Continue from the end?" );
 
-  TQString text = s.flags.replace ?
+  TQString text = s.flags.tqreplace ?
      made + "\n" + reached + "\n" + question :
      reached + "\n" + question;
 
   return KMessageBox::Yes == KMessageBox::questionYesNo(
-     view(), text, s.flags.replace ? i18n("Replace") : i18n("Find"),
+     view(), text, s.flags.tqreplace ? i18n("Replace") : i18n("Find"),
      KStdGuiItem::cont(), i18n("&Stop") );
 }
 
@@ -553,8 +553,8 @@ TQString KateSearch::getSearchText()
     break;
   }
 
-  str.replace( TQRegExp("^\\n"), "" );
-  str.replace( TQRegExp("\\n.*"), "" );
+  str.tqreplace( TQRegExp("^\\n"), "" );
+  str.tqreplace( TQRegExp("\\n.*"), "" );
 
   return str;
 }
@@ -609,12 +609,12 @@ bool KateSearch::doSearch( const TQString& text )
   {
     KateDocCursor docCursor(line, col, doc());
 
-    // If we're at the top of the document, we're not gonna find anything, so bail.
+    // If we're at the top of the document, we're not gonna tqfind anything, so bail.
     if (docCursor.line() == 0 && docCursor.col() == 0)
       return false;
 
-    // Move one step backward before searching, if this is a "find again", we don't
-    // want to find the same match.
+    // Move one step backward before searching, if this is a "tqfind again", we don't
+    // want to tqfind the same match.
     docCursor.moveBackward(1);
     line = docCursor.line();
     col = docCursor.col();
@@ -816,42 +816,42 @@ void KateReplacePrompt::done (int result)
 //BEGIN SearchCommand
 bool SearchCommand::exec(class Kate::View *view, const TQString &cmd, TQString &msg)
 {
-  TQString flags, pattern, replacement;
-  if ( cmd.startsWith( "find" ) )
+  TQString flags, pattern, tqreplacement;
+  if ( cmd.startsWith( "tqfind" ) )
   {
 
-    static TQRegExp re_find("find(?::([bcersw]*))?\\s+(.+)");
-    if ( re_find.search( cmd ) < 0 )
+    static TQRegExp re_tqfind("tqfind(?::([bcersw]*))?\\s+(.+)");
+    if ( re_tqfind.search( cmd ) < 0 )
     {
-      msg = i18n("Usage: find[:[bcersw]] PATTERN");
+      msg = i18n("Usage: tqfind[:[bcersw]] PATTERN");
       return false;
     }
-    flags = re_find.cap( 1 );
-    pattern = re_find.cap( 2 );
+    flags = re_tqfind.cap( 1 );
+    pattern = re_tqfind.cap( 2 );
   }
 
-  else if ( cmd.startsWith( "ifind" ) )
+  else if ( cmd.startsWith( "itqfind" ) )
   {
-    static TQRegExp re_ifind("ifind(?::([bcrs]*))?\\s+(.*)");
-    if ( re_ifind.search( cmd ) < 0 )
+    static TQRegExp re_itqfind("itqfind(?::([bcrs]*))?\\s+(.*)");
+    if ( re_itqfind.search( cmd ) < 0 )
     {
-      msg = i18n("Usage: ifind[:[bcrs]] PATTERN");
+      msg = i18n("Usage: itqfind[:[bcrs]] PATTERN");
       return false;
     }
-    ifindClear();
+    itqfindClear();
     return true;
   }
 
-  else if ( cmd.startsWith( "replace" ) )
+  else if ( cmd.startsWith( "tqreplace" ) )
   {
-    // Try if the pattern and replacement is quoted, using a quote character ["']
-    static TQRegExp re_rep("replace(?::([bceprsw]*))?\\s+([\"'])((?:[^\\\\\\\\2]|\\\\.)*)\\2\\s+\\2((?:[^\\\\\\\\2]|\\\\.)*)\\2\\s*$");
+    // Try if the pattern and tqreplacement is quoted, using a quote character ["']
+    static TQRegExp re_rep("tqreplace(?::([bceprsw]*))?\\s+([\"'])((?:[^\\\\\\\\2]|\\\\.)*)\\2\\s+\\2((?:[^\\\\\\\\2]|\\\\.)*)\\2\\s*$");
     // Or one quoted argument
-    TQRegExp re_rep1("replace(?::([bceprsw]*))?\\s+([\"'])((?:[^\\\\\\\\2]|\\\\.)*)\\2\\s*$");
+    TQRegExp re_rep1("tqreplace(?::([bceprsw]*))?\\s+([\"'])((?:[^\\\\\\\\2]|\\\\.)*)\\2\\s*$");
     // Else, it's just one or two (space separated) words
-    TQRegExp re_rep2("replace(?::([bceprsw]*))?\\s+(\\S+)(.*)");
+    TQRegExp re_rep2("tqreplace(?::([bceprsw]*))?\\s+(\\S+)(.*)");
 #define unbackslash(s) p=0;\
-while ( (p = pattern.find( '\\' + delim, p )) > -1 )\
+while ( (p = pattern.tqfind( '\\' + delim, p )) > -1 )\
 {\
   if ( !p || pattern[p-1] != '\\' )\
     pattern.remove( p, 1 );\
@@ -862,15 +862,15 @@ while ( (p = pattern.find( '\\' + delim, p )) > -1 )\
     {
       flags = re_rep.cap(1);
       pattern = re_rep.cap( 3 );
-      replacement = re_rep.cap( 4 );
+      tqreplacement = re_rep.cap( 4 );
 
       int p(0);
       // unbackslash backslashed delimiter strings
       // in pattern ..
       TQString delim = re_rep.cap( 2 );
       unbackslash(pattern);
-      // .. and in replacement
-      unbackslash(replacement);
+      // .. and in tqreplacement
+      unbackslash(tqreplacement);
     }
     else if ( re_rep1.search( cmd ) >= 0 )
     {
@@ -885,35 +885,35 @@ while ( (p = pattern.find( '\\' + delim, p )) > -1 )\
     {
       flags = re_rep2.cap( 1 );
       pattern = re_rep2.cap( 2 );
-      replacement = re_rep2.cap( 3 ).stripWhiteSpace();
+      tqreplacement = re_rep2.cap( 3 ).stripWhiteSpace();
     }
     else
     {
-      msg = i18n("Usage: replace[:[bceprsw]] PATTERN [REPLACEMENT]");
+      msg = i18n("Usage: tqreplace[:[bceprsw]] PATTERN [REPLACEMENT]");
       return false;
     }
-    kdDebug()<<"replace '"<<pattern<<"' with '"<<replacement<<"'"<<endl;
+    kdDebug()<<"tqreplace '"<<pattern<<"' with '"<<tqreplacement<<"'"<<endl;
 #undef unbackslash
   }
 
   long f = 0;
-  if ( flags.contains( 'b' ) ) f |= KFindDialog::FindBackwards;
-  if ( flags.contains( 'c' ) ) f |= KFindDialog::FromCursor;
-  if ( flags.contains( 'e' ) ) f |= KFindDialog::SelectedText;
-  if ( flags.contains( 'r' ) ) f |= KFindDialog::RegularExpression;
-  if ( flags.contains( 'p' ) ) f |= KReplaceDialog::PromptOnReplace;
-  if ( flags.contains( 's' ) ) f |= KFindDialog::CaseSensitive;
-  if ( flags.contains( 'w' ) ) f |= KFindDialog::WholeWordsOnly;
+  if ( flags.tqcontains( 'b' ) ) f |= KFindDialog::FindBackwards;
+  if ( flags.tqcontains( 'c' ) ) f |= KFindDialog::FromCursor;
+  if ( flags.tqcontains( 'e' ) ) f |= KFindDialog::SelectedText;
+  if ( flags.tqcontains( 'r' ) ) f |= KFindDialog::RegularExpression;
+  if ( flags.tqcontains( 'p' ) ) f |= KReplaceDialog::PromptOnReplace;
+  if ( flags.tqcontains( 's' ) ) f |= KFindDialog::CaseSensitive;
+  if ( flags.tqcontains( 'w' ) ) f |= KFindDialog::WholeWordsOnly;
 
-  if ( cmd.startsWith( "find" ) )
+  if ( cmd.startsWith( "tqfind" ) )
   {
-    ((KateView*)view)->find( pattern, f );
+    ((KateView*)view)->tqfind( pattern, f );
     return true;
   }
-  else if ( cmd.startsWith( "replace" ) )
+  else if ( cmd.startsWith( "tqreplace" ) )
   {
     f |= KReplaceDialog::BackReference; // mandatory here?
-    ((KateView*)view)->replace( pattern, replacement, f );
+    ((KateView*)view)->tqreplace( pattern, tqreplacement, f );
     return true;
   }
 
@@ -922,15 +922,15 @@ while ( (p = pattern.find( '\\' + delim, p )) > -1 )\
 
 bool SearchCommand::help(class Kate::View *, const TQString &cmd, TQString &msg)
 {
-  if ( cmd == "find" )
-    msg = i18n("<p>Usage: <code>find[:bcersw] PATTERN</code></p>");
+  if ( cmd == "tqfind" )
+    msg = i18n("<p>Usage: <code>tqfind[:bcersw] PATTERN</code></p>");
 
-  else if ( cmd == "ifind" )
-    msg = i18n("<p>Usage: <code>ifind:[:bcrs] PATTERN</code>"
-        "<br>ifind does incremental or 'as-you-type' search</p>");
+  else if ( cmd == "itqfind" )
+    msg = i18n("<p>Usage: <code>itqfind:[:bcrs] PATTERN</code>"
+        "<br>itqfind does incremental or 'as-you-type' search</p>");
 
   else
-    msg = i18n("<p>Usage: <code>replace[:bceprsw] PATTERN REPLACEMENT</code></p>");
+    msg = i18n("<p>Usage: <code>tqreplace[:bceprsw] PATTERN REPLACEMENT</code></p>");
 
   msg += i18n(
       "<h4><caption>Options</h4><p>"
@@ -940,15 +940,15 @@ bool SearchCommand::help(class Kate::View *, const TQString &cmd, TQString &msg)
       "<br><b>s</b> - Case sensitive search"
              );
 
-  if ( cmd == "find" )
+  if ( cmd == "tqfind" )
     msg += i18n(
         "<br><b>e</b> - Search in selected text only"
         "<br><b>w</b> - Search whole words only"
                );
 
-  if ( cmd == "replace" )
+  if ( cmd == "tqreplace" )
     msg += i18n(
-        "<br><b>p</b> - Prompt for replace</p>"
+        "<br><b>p</b> - Prompt for tqreplace</p>"
         "<p>If REPLACEMENT is not present, an empty string is used.</p>"
         "<p>If you want to have whitespace in your PATTERN, you need to "
         "quote both PATTERN and REPLACEMENT with either single or double "
@@ -962,30 +962,30 @@ bool SearchCommand::help(class Kate::View *, const TQString &cmd, TQString &msg)
 TQStringList SearchCommand::cmds()
 {
   TQStringList l;
-  l << "find" << "replace" << "ifind";
+  l << "tqfind" << "tqreplace" << "itqfind";
   return l;
 }
 
 bool SearchCommand::wantsToProcessText( const TQString &cmdname )
 {
-  return  cmdname == "ifind";
+  return  cmdname == "itqfind";
 }
 
 void SearchCommand::processText( Kate::View *view, const TQString &cmd )
 {
-  static TQRegExp re_ifind("ifind(?::([bcrs]*))?\\s(.*)");
-  if ( re_ifind.search( cmd ) > -1 )
+  static TQRegExp re_itqfind("itqfind(?::([bcrs]*))?\\s(.*)");
+  if ( re_itqfind.search( cmd ) > -1 )
   {
-    TQString flags = re_ifind.cap( 1 );
-    TQString pattern = re_ifind.cap( 2 );
+    TQString flags = re_itqfind.cap( 1 );
+    TQString pattern = re_itqfind.cap( 2 );
 
 
     // if there is no setup, or the text length is 0, set up the properties
-    if ( ! m_ifindFlags || pattern.isEmpty() )
-      ifindInit( flags );
+    if ( ! m_itqfindFlags || pattern.isEmpty() )
+      itqfindInit( flags );
     // if there is no fromCursor, add it if this is not the first character
-    else if ( ! ( m_ifindFlags & KFindDialog::FromCursor ) && ! pattern.isEmpty() )
-      m_ifindFlags |= KFindDialog::FromCursor;
+    else if ( ! ( m_itqfindFlags & KFindDialog::FromCursor ) && ! pattern.isEmpty() )
+      m_itqfindFlags |= KFindDialog::FromCursor;
 
     // search..
     if ( ! pattern.isEmpty() )
@@ -1000,25 +1000,25 @@ void SearchCommand::processText( Kate::View *view, const TQString &cmd )
            v->selection().length() + 1 == pattern.length() )
         v->setCursorPositionInternal( v->selStartLine(), v->selStartCol() );
 
-      v->find( pattern, m_ifindFlags, false );
+      v->tqfind( pattern, m_itqfindFlags, false );
     }
   }
 }
 
-void SearchCommand::ifindInit( const TQString &flags )
+void SearchCommand::itqfindInit( const TQString &flags )
 {
   long f = 0;
-  if ( flags.contains( 'b' ) ) f |= KFindDialog::FindBackwards;
-  if ( flags.contains( 'c' ) ) f |= KFindDialog::FromCursor;
-  if ( flags.contains( 'r' ) ) f |= KFindDialog::RegularExpression;
-  if ( flags.contains( 's' ) ) f |= KFindDialog::CaseSensitive;
-  m_ifindFlags = f;
+  if ( flags.tqcontains( 'b' ) ) f |= KFindDialog::FindBackwards;
+  if ( flags.tqcontains( 'c' ) ) f |= KFindDialog::FromCursor;
+  if ( flags.tqcontains( 'r' ) ) f |= KFindDialog::RegularExpression;
+  if ( flags.tqcontains( 's' ) ) f |= KFindDialog::CaseSensitive;
+  m_itqfindFlags = f;
 }
 
-void SearchCommand::ifindClear()
+void SearchCommand::itqfindClear()
 {
-  m_ifindFlags = 0;
+  m_itqfindFlags = 0;
 }
 //END SearchCommand
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

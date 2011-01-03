@@ -101,11 +101,11 @@ int main(int argc, char **argv) {
     if (!fromaddr.isEmpty()) {
         TQString name = emailConfig.getSetting(KEMailSettings::RealName);
         if (!name.isEmpty())
-            fromaddr = name + TQString::fromLatin1(" <") + fromaddr + TQString::fromLatin1(">");
+            fromaddr = name + TQString::tqfromLatin1(" <") + fromaddr + TQString::tqfromLatin1(">");
     } else {
         struct passwd *p;
         p = getpwuid(getuid());
-        fromaddr = TQString::fromLatin1(p->pw_name);
+        fromaddr = TQString::tqfromLatin1(p->pw_name);
         fromaddr += "@";
         char buffer[256];
 	buffer[0] = '\0';
@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
 
     TQString  server = emailConfig.getSetting(KEMailSettings::OutServer);
     if (server.isEmpty())
-        server=TQString::fromLatin1("bugs.kde.org");
+        server=TQString::tqfromLatin1("bugs.kde.org");
 
     SMTP *sm = new SMTP;
     BugMailer bm(sm);
@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
     sm->setSenderAddress(fromaddr);
     sm->setRecipientAddress(recipient);
     sm->setMessageSubject(subject);
-    sm->setMessageHeader(TQString::fromLatin1("From: %1\r\nTo: %2\r\n").arg(fromaddr).arg(recipient));
+    sm->setMessageHeader(TQString::tqfromLatin1("From: %1\r\nTo: %2\r\n").arg(fromaddr).arg(recipient));
     sm->setMessageBody(text);
     sm->sendMessage();
 

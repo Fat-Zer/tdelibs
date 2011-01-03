@@ -49,7 +49,7 @@ TQCursor KCursor::handCursor()
                 KConfig *config = KGlobal::config();
                 KConfigGroupSaver saver( config, "General" );
 
-#ifndef Q_WS_WIN // this mask doesn't work too well on win32
+#ifndef Q_WS_WIN // this tqmask doesn't work too well on win32
                 if ( config->readEntry("handCursorStyle", "Windows") == "Windows" )
                 {
                         static const unsigned char HAND_BITS[] = {
@@ -67,8 +67,8 @@ TQCursor KCursor::handCursor()
                                 0x07, 0xf8, 0xff, 0x07, 0xf0, 0xff, 0x07, 0xf0, 0xff, 0x07, 0xe0,
                                 0xff, 0x03, 0xc0, 0xff, 0x03, 0xc0, 0xff, 0x01, 0xc0, 0xff, 0x01};
                         TQBitmap hand_bitmap(22, 22, HAND_BITS, true);
-                        TQBitmap hand_mask(22, 22, HAND_MASK_BITS, true);
-                        hand_cursor = new TQCursor(hand_bitmap, hand_mask, 7, 0);
+                        TQBitmap hand_tqmask(22, 22, HAND_MASK_BITS, true);
+                        hand_cursor = new TQCursor(hand_bitmap, hand_tqmask, 7, 0);
                         // Hack to force TQCursor to call XCreatePixmapCursor() immediately
                         // so the bitmaps don't get pushed out of the Xcursor LRU cache.
                         hand_cursor->handle();
@@ -294,7 +294,7 @@ void KCursorPrivateAutoHideEventFilter::unhideCursor()
 
     TQWidget* w = actualWidget();
 
-    if ( w->cursor().shape() != Qt::BlankCursor ) // someone messed with the cursor already
+    if ( w->cursor().tqshape() != Qt::BlankCursor ) // someone messed with the cursor already
 	return;
 
     if ( m_isOwnCursor )
@@ -370,9 +370,9 @@ KCursorPrivate::KCursorPrivate()
     hideCursorDelay = 5000; // 5s default value
 
     KConfig *kc = KGlobal::config();
-    KConfigGroupSaver ks( kc, TQString::fromLatin1("KDE") );
+    KConfigGroupSaver ks( kc, TQString::tqfromLatin1("KDE") );
     enabled = kc->readBoolEntry(
-		  TQString::fromLatin1("Autohiding cursor enabled"), true );
+		  TQString::tqfromLatin1("Autohiding cursor enabled"), true );
 }
 
 KCursorPrivate::~KCursorPrivate()
@@ -386,7 +386,7 @@ void KCursorPrivate::setAutoHideCursor( TQWidget *w, bool enable, bool customEve
 
     if ( enable )
     {
-        if ( m_eventFilters.find( w ) != NULL )
+        if ( m_eventFilters.tqfind( w ) != NULL )
             return;
         KCursorPrivateAutoHideEventFilter* filter = new KCursorPrivateAutoHideEventFilter( w );
         m_eventFilters.insert( w, filter );
@@ -412,7 +412,7 @@ bool KCursorPrivate::eventFilter( TQObject *o, TQEvent *e )
     if ( !enabled )
         return false;
 
-    KCursorPrivateAutoHideEventFilter* filter = m_eventFilters.find( o );
+    KCursorPrivateAutoHideEventFilter* filter = m_eventFilters.tqfind( o );
 
     Q_ASSERT( filter != NULL );
     if ( filter == NULL )

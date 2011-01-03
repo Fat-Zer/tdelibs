@@ -155,7 +155,7 @@ void CharacterDataImpl::deleteData( const unsigned long offset, const unsigned l
     oldStr->deref();
 }
 
-void CharacterDataImpl::replaceData( const unsigned long offset, const unsigned long count, const DOMString &arg, int &exceptioncode )
+void CharacterDataImpl::tqreplaceData( const unsigned long offset, const unsigned long count, const DOMString &arg, int &exceptioncode )
 {
     exceptioncode = 0;
     if ((long)count < 0)
@@ -189,9 +189,9 @@ DOMString CharacterDataImpl::nodeValue() const
     return str;
 }
 
-bool CharacterDataImpl::containsOnlyWhitespace() const
+bool CharacterDataImpl::tqcontainsOnlyWhitespace() const
 {
-    return str->containsOnlyWhitespace();
+    return str->tqcontainsOnlyWhitespace();
 }
 
 void CharacterDataImpl::setNodeValue( const DOMString &_nodeValue, int &exceptioncode )
@@ -372,7 +372,7 @@ bool TextImpl::rendererIsNeeded(RenderStyle *style)
     if (!CharacterDataImpl::rendererIsNeeded(style)) {
         return false;
     }
-    bool onlyWS = containsOnlyWhitespace();
+    bool onlyWS = tqcontainsOnlyWhitespace();
     if (!onlyWS) {
         return true;
     }

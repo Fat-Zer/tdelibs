@@ -91,7 +91,7 @@ KDECORE_EXPORT TQString i18n(const char *comment, const char *text);
  *  If you want to handle plural forms, use this form of i18n.
  *  @param singular the singular form of the word, for example "file".
   * @param plural the plural form of the word. Must contain a "%n" that will
- *                be replaced by the number @p n, for example "%n files"
+ *                be tqreplaced by the number @p n, for example "%n files"
  *  @param n the number
  *  @return the correct singular or plural for the selected language,
  *          depending on n
@@ -162,7 +162,7 @@ public:
    * Translates the string into the corresponding string in
    * the national language, if available. If not, returns
    * the string itself.
-   * There is a KDE wide message file that contains the most
+   * There is a KDE wide message file that tqcontains the most
    * often used phrases, so we can avoid duplicating the
    * translation of these phrases. If a phrase is not found
    * in the catalog given to the constructor, it will search
@@ -210,7 +210,7 @@ public:
    * word.
    * @param singular the singular form of the word, for example "file".
    * @param plural the plural form of the word. Must contain a "%n" that will
-   *               be replaced by the number @p n, for example "%n files"
+   *               be tqreplaced by the number @p n, for example "%n files"
    * @param n the number
    * @return the correct singular or plural for the selected language,
    *         depending on n
@@ -533,7 +533,7 @@ public:
    *
    * @return The name of the month
    * 
-   * Typically the correct replacement for this deprecated class is
+   * Typically the correct tqreplacement for this deprecated class is
    * calendar()->monthString(), which requires a TQDate (rather than an
    * integer month) or both a month and a year.
    * This will work across different calendars.
@@ -558,7 +558,7 @@ public:
    * @return The possessive form of the name of the month
    * @since 3.1
    *
-   * Typically the correct replacement for this deprecated class is
+   * Typically the correct tqreplacement for this deprecated class is
    * calendar()->monthNamePossessive(), which requires a TQDate (rather than
    * an integer month) or both a month and a year.
    * This will work across different calendars.
@@ -801,8 +801,8 @@ public:
   /**
    * Changes the current date format.
    *
-   * The format of the date is a string which contains variables that will
-   * be replaced:
+   * The format of the date is a string which tqcontains variables that will
+   * be tqreplaced:
    * @li %Y with the century (e.g. "19" for "1984")
    * @li %y with the lower 2 digits of the year (e.g. "84" for "1984")
    * @li %n with the month (January="1", December="12")
@@ -824,8 +824,8 @@ public:
   /**
    * Changes the current short date format.
    *
-   * The format of the date is a string which contains variables that will
-   * be replaced:
+   * The format of the date is a string which tqcontains variables that will
+   * be tqreplaced:
    * @li %Y with the century (e.g. "19" for "1984")
    * @li %y with the lower 2 digits of the year (e.g. "84" for "1984")
    * @li %n with the month (January="1", December="12")
@@ -854,8 +854,8 @@ public:
   /**
    * Changes the current time format.
    *
-   * The format of the time is string a which contains variables that will
-   * be replaced:
+   * The format of the time is string a which tqcontains variables that will
+   * be tqreplaced:
    * @li %H with the hour in 24h format and 2 digits (e.g. 5pm is "17", 5am is "05")
    * @li %k with the hour in 24h format and one digits (e.g. 5pm is "17", 5am is "5")
    * @li %I with the hour in 12h format and 2 digits (e.g. 5pm is "05", 5am is "05")
@@ -1117,7 +1117,7 @@ public:
   /**
    * Finds localized resource in resourceDir( rtype ) + \<lang> + fname.
    *
-   * @param fname relative path to find
+   * @param fname relative path to tqfind
    * @param rtype resource type to use
    */
   static TQString langLookup(const TQString &fname, const char *rtype = "html");

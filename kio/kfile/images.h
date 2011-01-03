@@ -48,7 +48,7 @@ static const QRgb group_data[] = {
     0x0,0x0,0x0,0x0
 };
 
-static const QRgb mask_data[] = {
+static const QRgb tqmask_data[] = {
     0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x11c84a00,0x1000000,0x0,0x0,0x0,0x0,0x0,
     0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x68d14e00,0xffda6400,0x72bf4700,0x3000000,0x0,0x0,
     0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x14d04d00,0xefda6400,0xfffec300,0xf2d86300,0x24742b00,
@@ -234,7 +234,7 @@ static struct EmbedImage {
 } embed_image_vec[] = {
     { 16, 16, 32, (const unsigned char*)group_grey_data, 0, 0, TRUE, "group-grey" },
     { 16, 16, 32, (const unsigned char*)group_data, 0, 0, TRUE, "group" },
-    { 16, 16, 32, (const unsigned char*)mask_data, 0, 0, TRUE, "mask" },
+    { 16, 16, 32, (const unsigned char*)tqmask_data, 0, 0, TRUE, "tqmask" },
     { 16, 16, 32, (const unsigned char*)others_grey_data, 0, 0, TRUE, "others-grey" },
     { 16, 16, 32, (const unsigned char*)others_data, 0, 0, TRUE, "others" },
     { 16, 16, 32, (const unsigned char*)user_green_data, 0, 0, TRUE, "user-green" },
@@ -245,10 +245,10 @@ static struct EmbedImage {
     { 0, 0, 0, 0, 0, 0, 0, 0 }
 };
 
-static const TQImage& qembed_findImage( const TQString& name )
+static const TQImage& qembed_tqfindImage( const TQString& name )
 {
     static TQDict<TQImage> dict;
-    TQImage* img = dict.find( name );
+    TQImage* img = dict.tqfind( name );
     if ( !img ) {
 	for ( int i = 0; embed_image_vec[i].data; i++ ) {
 	    if ( strcmp(embed_image_vec[i].name, name.latin1()) == 0 ) {

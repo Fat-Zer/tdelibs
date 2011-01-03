@@ -48,7 +48,7 @@ KScreenSaver::KScreenSaver( WId id ) : TQWidget()
     unsigned int h = 0;
 
     d = new KScreenSaverPrivate;
-    d->owner = find( id );
+    d->owner = tqfind( id );
     if ( d->owner )
 	installEventFilter( this );
 

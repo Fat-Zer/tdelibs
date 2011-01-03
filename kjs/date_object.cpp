@@ -844,7 +844,7 @@ double KJS::makeTime(struct tm *t, double ms, bool utc)
 }
 
 // returns 0-11 (Jan-Dec); -1 on failure
-static int findMonth(const char *monthStr)
+static int tqfindMonth(const char *monthStr)
 {
   assert(monthStr);
   static const char haystack[37] = "janfebmaraprmayjunjulaugsepoctnovdec";
@@ -911,7 +911,7 @@ double KJS::KRFCDate_parseDate(const UString &_date)
      {
         if (isSpaceLike(*dateString) && dateString - wordStart >= 3)
         {
-          month = findMonth(wordStart);
+          month = tqfindMonth(wordStart);
           while(*dateString && isSpaceLike(*dateString))
              dateString++;
           wordStart = dateString;
@@ -921,7 +921,7 @@ double KJS::KRFCDate_parseDate(const UString &_date)
      }
      // missing delimiter between month and day (like "January29")?
      if (month == -1 && dateString && wordStart != dateString) {
-       month = findMonth(wordStart);
+       month = tqfindMonth(wordStart);
        // TODO: emit warning about dubious format found
      }
 
@@ -991,7 +991,7 @@ double KJS::KRFCDate_parseDate(const UString &_date)
 
        if ( month == -1 ) // not found yet
        {
-         month = findMonth(dateString);
+         month = tqfindMonth(dateString);
          if (month == -1)
            return invalidDate;
 

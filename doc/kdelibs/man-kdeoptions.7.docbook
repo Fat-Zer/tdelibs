@@ -23,7 +23,7 @@
 
 <refsynopsisdiv>
 <cmdsynopsis>
-<command><replaceable>KDE application</replaceable></command>
+<command><tqreplaceable>KDE application</tqreplaceable></command>
 <arg choice="opt">KDE Generic Options</arg>
 </cmdsynopsis>
 </refsynopsisdiv>
@@ -67,8 +67,8 @@ titlebar.</para></listitem>
 <listitem><para>Sets the appliction &GUI; style.</para></listitem>
 </varlistentry>
 <varlistentry>
-<term><option>--geometry</option> <parameter>geometry</parameter></term>
-<listitem><para>Sets the client geometry of the main widget.</para></listitem>
+<term><option>--tqgeometry</option> <parameter>tqgeometry</parameter></term>
+<listitem><para>Sets the client tqgeometry of the main widget.</para></listitem>
 </varlistentry>
 </variablelist>
 

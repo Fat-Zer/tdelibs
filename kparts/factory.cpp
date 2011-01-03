@@ -39,9 +39,9 @@ Factory::~Factory()
 {
 }
 
-Part *Factory::createPart( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname, const TQStringList &args )
+Part *Factory::createPart( TQWidget *tqparentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname, const TQStringList &args )
 {
-    Part* part = createPartObject( parentWidget, widgetName, parent, name, classname, args );
+    Part* part = createPartObject( tqparentWidget, widgetName, parent, name, classname, args );
     if ( part )
 	emit objectCreated( part );
     return part;

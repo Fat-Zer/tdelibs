@@ -85,7 +85,7 @@ class KSocksTable {
    KSocksTable();
   virtual ~KSocksTable();
 
-   // The name of each symbol and it's SOCKS replacement
+   // The name of each symbol and it's SOCKS tqreplacement
    TQMap<SymbolKeys,TQString>  symbols;
    // The name of this library
    TQString                   myname;

@@ -9,13 +9,13 @@ LIBS+=$(KDELIBS)/win/resources/kbuildsycoca.res
 
 INCLUDEPATH += $(KDELIBS)/kded
 
-system( bash kmoc )
+system( bash ktqmoc )
 
-!contains(CONFIG,GUI) {
-	!contains(KW_CONFIG,release) {
+!tqcontains(CONFIG,GUI) {
+	!tqcontains(KW_CONFIG,release) {
 		TARGET = kbuildsycoca_d
 	}
-	contains(KW_CONFIG,release) {
+	tqcontains(KW_CONFIG,release) {
 		TARGET = kbuildsycoca
 	}
 }

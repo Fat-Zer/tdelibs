@@ -279,8 +279,8 @@ void KApplicationTree::slotSelectionChanged(TQListViewItem* i)
 
 void KApplicationTree::resizeEvent( TQResizeEvent * e)
 {
-    setColumnWidth(0, width()-TQApplication::style().pixelMetric(TQStyle::PM_ScrollBarExtent)
-                         -2*TQApplication::style().pixelMetric(TQStyle::PM_DefaultFrameWidth));
+    setColumnWidth(0, width()-TQApplication::style().tqpixelMetric(TQStyle::PM_ScrollBarExtent)
+                         -2*TQApplication::style().tqpixelMetric(TQStyle::PM_DefaultFrameWidth));
     KListView::resizeEvent(e);
 }
 
@@ -340,7 +340,7 @@ KOpenWithDlg::KOpenWithDlg( const KURL::List& _urls, const TQString&_text,
 {
   TQString caption = KStringHandler::csqueeze( _urls.first().prettyURL() );
   if (_urls.count() > 1)
-      caption += TQString::fromLatin1("...");
+      caption += TQString::tqfromLatin1("...");
   setCaption(caption);
   setServiceType( _urls );
   init( _text, _value );
@@ -376,7 +376,7 @@ void KOpenWithDlg::setServiceType( const KURL::List& _urls )
   if ( _urls.count() == 1 )
   {
     qServiceType = KMimeType::findByURL( _urls.first())->name();
-    if (qServiceType == TQString::fromLatin1("application/octet-stream"))
+    if (qServiceType == TQString::tqfromLatin1("application/octet-stream"))
       qServiceType = TQString::null;
   }
   else
@@ -401,7 +401,7 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
 
   TQToolButton *clearButton = new TQToolButton( this );
   clearButton->setIconSet( BarIcon( "locationbar_erase" ) );
-  clearButton->setFixedSize( clearButton->sizeHint() );
+  clearButton->setFixedSize( clearButton->tqsizeHint() );
   connect( clearButton, TQT_SIGNAL( clicked() ), TQT_SLOT( slotClear() ) );
   TQToolTip::add( clearButton, i18n( "Clear input field" ) );
 
@@ -413,13 +413,13 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
     KHistoryCombo *combo = new KHistoryCombo();
     combo->setDuplicatesEnabled( false );
     KConfig *kc = KGlobal::config();
-    KConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
-    int max = kc->readNumEntry( TQString::fromLatin1("Maximum history"), 15 );
+    KConfigGroupSaver ks( kc, TQString::tqfromLatin1("Open-with settings") );
+    int max = kc->readNumEntry( TQString::tqfromLatin1("Maximum history"), 15 );
     combo->setMaxCount( max );
-    int mode = kc->readNumEntry(TQString::fromLatin1("CompletionMode"),
+    int mode = kc->readNumEntry(TQString::tqfromLatin1("CompletionMode"),
 				KGlobalSettings::completionMode());
     combo->setCompletionMode((KGlobalSettings::Completion)mode);
-    TQStringList list = kc->readListEntry( TQString::fromLatin1("History") );
+    TQStringList list = kc->readListEntry( TQString::tqfromLatin1("History") );
     combo->setHistoryItems( list, true );
     edit = new KURLRequester( combo, this );
   }
@@ -433,7 +433,7 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
 
   edit->setURL( _value );
   TQWhatsThis::add(edit,i18n(
-    "Following the command, you can have several place holders which will be replaced "
+    "Following the command, you can have several place holders which will be tqreplaced "
     "with the actual values when the actual program is run:\n"
     "%f - a single file name\n"
     "%F - a list of files; use for applications that can open several local files at once\n"
@@ -483,8 +483,8 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
 
   // check to see if we use konsole if not disable the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
-  TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
+  KConfigGroup confGroup( KGlobal::config(), TQString::tqfromLatin1("General") );
+  TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::tqfromLatin1("konsole"));
 
   if (bReadOnly || preferredTerminal != "konsole")
      nocloseonexit->hide();
@@ -512,13 +512,13 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
   TQPushButton* cancel = b->addButton(  KStdGuiItem::cancel() );
   connect(  cancel, TQT_SIGNAL( clicked() ), TQT_SLOT( reject() ) );
 
-  b->layout();
+  b->tqlayout();
   topLayout->addWidget( b );
 
   //edit->setText( _value );
   // This is what caused "can't click on items before clicking on Name header".
   // Probably due to the resizeEvent handler using width().
-  //resize( minimumWidth(), sizeHint().height() );
+  //resize( minimumWidth(), tqsizeHint().height() );
   edit->setFocus();
   slotTextChanged();
 }
@@ -564,7 +564,7 @@ void KOpenWithDlg::slotHighlighted( const TQString& _name, const TQString& )
         // ### indicate that default value was restored
         terminal->setChecked(d->curService->terminal());
         TQString terminalOptions = d->curService->terminalOptions();
-        nocloseonexit->setChecked( (terminalOptions.contains( "--noclose" ) > 0) );
+        nocloseonexit->setChecked( (terminalOptions.tqcontains( "--noclose" ) > 0) );
         m_terminaldirty = false; // slotTerminalToggled changed it
     }
 }
@@ -629,17 +629,17 @@ void KOpenWithDlg::slotOK()
         kdDebug(250) << "looking for service " << serviceName << endl;
         KService::Ptr serv = KService::serviceByDesktopName( serviceName );
         ok = !serv; // ok if no such service yet
-        // also ok if we find the exact same service (well, "kwrite" == "kwrite %U"
+        // also ok if we tqfind the exact same service (well, "kwrite" == "kwrite %U"
         if ( serv && serv->type() == "Application")
         {
             TQString exec = serv->exec();
             fullExec = exec;
-            exec.replace("%u", "", false);
-            exec.replace("%f", "", false);
-            exec.replace("-caption %c", "");
-            exec.replace("-caption \"%c\"", "");
-            exec.replace("%i", "");
-            exec.replace("%m", "");
+            exec.tqreplace("%u", "", false);
+            exec.tqreplace("%f", "", false);
+            exec.tqreplace("-caption %c", "");
+            exec.tqreplace("-caption \"%c\"", "");
+            exec.tqreplace("%i", "");
+            exec.tqreplace("%m", "");
             exec = exec.simplifyWhiteSpace();
             if (exec == typedExec)
             {
@@ -666,13 +666,13 @@ void KOpenWithDlg::slotOK()
 
   if (terminal->isChecked())
   {
-    KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
-    preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
+    KConfigGroup confGroup( KGlobal::config(), TQString::tqfromLatin1("General") );
+    preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::tqfromLatin1("konsole"));
     m_command = preferredTerminal;
     // only add --noclose when we are sure it is konsole we're using
     if (preferredTerminal == "konsole" && nocloseonexit->isChecked())
-      m_command += TQString::fromLatin1(" --noclose");
-    m_command += TQString::fromLatin1(" -e ");
+      m_command += TQString::tqfromLatin1(" --noclose");
+    m_command += TQString::tqfromLatin1(" -e ");
     m_command += edit->url();
     kdDebug(250) << "Setting m_command to " << m_command << endl;
   }
@@ -702,7 +702,7 @@ void KOpenWithDlg::slotOK()
     return;
   }
 
-  // if we got here, we can't seem to find a service for what they
+  // if we got here, we can't seem to tqfind a service for what they
   // wanted.  The other possibility is that they have asked for the
   // association to be remembered.  Create/update service.
 
@@ -740,7 +740,7 @@ void KOpenWithDlg::slotOK()
   {
      desktop = new KDesktopFile(newPath);
   }
-  desktop->writeEntry("Type", TQString::fromLatin1("Application"));
+  desktop->writeEntry("Type", TQString::tqfromLatin1("Application"));
   desktop->writeEntry("Name", initialServiceName);
   desktop->writePathEntry("Exec", fullExec);
   if (terminal->isChecked())
@@ -760,7 +760,7 @@ void KOpenWithDlg::slotOK()
   if (bRemember || d->saveNewApps)
   {
     TQStringList mimeList = desktop->readListEntry("MimeType", ';');
-    if (!qServiceType.isEmpty() && !mimeList.contains(qServiceType))
+    if (!qServiceType.isEmpty() && !mimeList.tqcontains(qServiceType))
       mimeList.append(qServiceType);
     desktop->writeEntry("MimeType", mimeList, ';');
 
@@ -814,11 +814,11 @@ void KOpenWithDlg::accept()
         combo->addToHistory( edit->url() );
 
         KConfig *kc = KGlobal::config();
-        KConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
-        kc->writeEntry( TQString::fromLatin1("History"), combo->historyItems() );
-	kc->writeEntry(TQString::fromLatin1("CompletionMode"),
+        KConfigGroupSaver ks( kc, TQString::tqfromLatin1("Open-with settings") );
+        kc->writeEntry( TQString::tqfromLatin1("History"), combo->historyItems() );
+	kc->writeEntry(TQString::tqfromLatin1("CompletionMode"),
 		       combo->completionMode());
-        // don't store the completion-list, as it contains all of KURLCompletion's
+        // don't store the completion-list, as it tqcontains all of KURLCompletion's
         // executables
         kc->sync();
     }

@@ -51,11 +51,11 @@ class KResolverEntryPrivate;
  *  @brief One resolution entry.
  *
  * This class is one element in the resolution results list.
- * It contains the socket address for connecting, as well as
+ * It tqcontains the socket address for connecting, as well as
  * a bit more of information: the socket type, address family
  * and protocol numbers.
  *
- * This class contains all the information required for creating,
+ * This class tqcontains all the information required for creating,
  * binding and connecting a socket.
  *
  * KResolverEntry objects implicitly share data, so copying them
@@ -101,7 +101,7 @@ public:
    * @param canonName	the canonical name of the resolved hostname
    * @param encodedName	the ASCII-compatible encoding of the hostname
    */
-  KResolverEntry(const struct sockaddr *sa, Q_UINT16 salen, int socktype,
+  KResolverEntry(const struct sockaddr *sa, TQ_UINT16 salen, int socktype,
 		int protocol, const TQString& canonName = TQString::null,
 		const TQCString& encodedName = TQCString());
 
@@ -128,7 +128,7 @@ public:
   /**
    * Retrieves the length of the socket address structure.
    */
-  Q_UINT16 length() const;
+  TQ_UINT16 length() const;
 
   /**
    * Retrieves the family associated with this socket address.
@@ -180,7 +180,7 @@ class KResolverResultsPrivate;
  * @class KResolverResults kresolver.h kresolver.h
  * @brief Name and service resolution results.
  *
- * This object contains the results of a name and service resolution, as
+ * This object tqcontains the results of a name and service resolution, as
  * those performed by @ref KResolver. It is also a descendant of TQValueList, so
  * you may use all its member functions here to access the elements.
  *
@@ -292,7 +292,7 @@ class KResolverPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KResolver: public QObject
+class KDECORE_EXPORT KResolver: public TQObject
 {
   Q_OBJECT
 
@@ -398,7 +398,7 @@ public:
     };
 
   /**
-   * Status codes.
+   * tqStatus codes.
    *
    * These are the possible status for a Resolver object. A value
    * greater than zero indicates normal behaviour, while negative
@@ -417,7 +417,7 @@ public:
    * Note 2: the status Queued and InProgress might not be distinguishable.
    * Some implementations might not differentiate one from the other.
    */
-  enum StatusCodes
+  enum tqStatusCodes
     {
       Idle = 0,
       Queued = 1,
@@ -462,7 +462,7 @@ public:
   /**
    * Retrieve the current status of this object.
    *
-   * @see StatusCodes for the possible status codes.
+   * @see tqStatusCodes for the possible status codes.
    */
   int status() const;
 
@@ -470,8 +470,8 @@ public:
    * Retrieve the error code in this object.
    *
    * This function will return NoError if we are not in
-   * an error condition. See @ref status and @ref StatusCodes to
-   * find out what the current status is.
+   * an error condition. See @ref status and @ref tqStatusCodes to
+   * tqfind out what the current status is.
    *
    * @see errorString for getting a textual representation of
    * this error
@@ -668,7 +668,7 @@ public:
    * an empty object.
    *
    * @return the resolved data
-   * @see status for information on finding out if the resolution was successful
+   * @see status for information on tqfinding out if the resolution was successful
    */
   KResolverResults results() const;
 
@@ -795,11 +795,11 @@ public:
    * Note that the encoding is illegible and, thus, should not be presented
    * to the user, except if requested.
    *
-   * @param unicodeDomain	the domain name to be encoded
+   * @param tqunicodeDomain	the domain name to be encoded
    * @return the ACE-encoded suitable for DNS queries if successful, a null
    *	     TQCString if failure.
    */
-  static TQCString domainToAscii(const TQString& unicodeDomain);
+  static TQCString domainToAscii(const TQString& tqunicodeDomain);
 
   /**
    * Does the inverse of @ref domainToAscii and return an Unicode domain

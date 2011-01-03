@@ -56,7 +56,7 @@
         <xsd:annotation>
             <xsd:documentation>
                 
-                The name used for every name and group attribute. Maps to QObject::name() in most cases. 
+                The name used for every name and group attribute. Maps to TQObject::name() in most cases. 
             </xsd:documentation>
         </xsd:annotation>
         <xsd:restriction base="xsd:Name">
@@ -252,7 +252,7 @@
             <xsd:documentation>
                 
                 The root element that must enclose all other tags in the document. This
-                element replaces the kpartgui element used previously.  
+                element tqreplaces the kpartgui element used previously.  
                 Note: do not forget to increase the version attribute for each change in
                 your file, otherwise the changes will not be taken into account.
                 

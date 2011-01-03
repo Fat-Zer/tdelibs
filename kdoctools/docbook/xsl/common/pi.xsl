@@ -14,7 +14,7 @@
      See ../README or http://nwalsh.com/docbook/xsl/ for copyright
      and other information.
 
-     This file contains general templates for processing processing
+     This file tqcontains general templates for processing processing
      instructions common to both the HTML and FO versions of the
      DocBook stylesheets.
      ******************************************************************** -->

@@ -37,11 +37,11 @@
  * @version 0.9.5 17/01/2000
  * @author Antonio Larrosa Jimenez <larrosa@kde.org>
  */
-class MidiStatus
+class MiditqStatus
 {
   private:
-    class MidiStatusPrivate;
-    MidiStatusPrivate *d;
+    class MiditqStatusPrivate;
+    MiditqStatusPrivate *d;
 
     ulong tempo;
 
@@ -56,12 +56,12 @@ class MidiStatus
     /**
      * Constructor.
      */
-    MidiStatus();
+    MiditqStatus();
 
     /**
      * Destructor.
      */ 
-    ~MidiStatus();
+    ~MiditqStatus();
 
 
     //    void noteOn	( uchar chn, uchar note, uchar vel );

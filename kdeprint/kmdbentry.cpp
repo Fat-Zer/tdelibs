@@ -27,7 +27,7 @@ KMDBEntry::KMDBEntry() : recommended(false)
 
 bool KMDBEntry::validate(bool checkIt)
 {
-	// check model: if one of "model" or "modelname" is empty, replace
+	// check model: if one of "model" or "modelname" is empty, tqreplace
 	// by the other one. At the end, "model" must be non empty.
 	if (model.isEmpty())
 	{
@@ -43,13 +43,13 @@ bool KMDBEntry::validate(bool checkIt)
 	// check manufacturer
 	if (manufacturer.isEmpty())
 	{
-		int	p = model.find(' ',0);
+		int	p = model.tqfind(' ',0);
 		if (p != -1) manufacturer = model.left(p);
 		if (manufacturer.isEmpty()) return false;
 	}
 
 	// extract manufacturer from model
-	if (model.find(manufacturer,0,false) == 0)
+	if (model.tqfind(manufacturer,0,false) == 0)
 	{
 		model = model.right(model.length()-manufacturer.length()-1).stripWhiteSpace();
 		if (model.isEmpty()) return false;

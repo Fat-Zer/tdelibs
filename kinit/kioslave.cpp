@@ -82,7 +82,7 @@ int main(int argc, char **argv)
         if (!sym )
         {
            const char * ltdlError = lt_dlerror();
-           fprintf(stderr, "Could not find main: %s\n", ltdlError != 0 ? ltdlError : "(null)" );
+           fprintf(stderr, "Could not tqfind main: %s\n", ltdlError != 0 ? ltdlError : "(null)" );
            exit(1);
         }
      }

@@ -1473,7 +1473,7 @@
 			<item> GapInputPcGroup </item>
 			<item> GapInputSCTable </item>
 			<item> GasmanLimits </item>
-			<item> GasmanMessageStatus </item>
+			<item> GasmanMessagetqStatus </item>
 			<item> GasmanStatistics </item>
 			<item> GaussianIntegers </item>
 			<item> GaussianRationals </item>
@@ -5393,7 +5393,7 @@
 			<item> PrintCounters </item>
 			<item> PrintFactorsInt </item>
 			<item> PrintFormattedString </item>
-			<item> PrintFormattingStatus </item>
+			<item> PrintFormattingtqStatus </item>
 			<item> PrintGAPDocElementTemplates </item>
 			<item> PrintHashWithNames </item>
 			<item> PrintObj </item>
@@ -6167,7 +6167,7 @@
 			<item> SetGapDocHTMLOptions </item>
 			<item> SetGapDocLaTeXOptions </item>
 			<item> SetGapDocTxtOptions </item>
-			<item> SetGasmanMessageStatus </item>
+			<item> SetGasmanMessagetqStatus </item>
 			<item> SetGeneralizedPcgs </item>
 			<item> SetGeneratingPairsOfLeftMagmaCongruence </item>
 			<item> SetGeneratingPairsOfMagmaCongruence </item>
@@ -6806,7 +6806,7 @@
 			<item> SetPrimitiveElement </item>
 			<item> SetPrimitiveIdentification </item>
 			<item> SetPrimitiveRoot </item>
-			<item> SetPrintFormattingStatus </item>
+			<item> SetPrintFormattingtqStatus </item>
 			<item> SetProjectiveOrder </item>
 			<item> SetPseudoRandomSeed </item>
 			<item> SetPthPowerImages </item>
@@ -7179,7 +7179,7 @@
 			<item> StandardizeTableC </item>
 			<item> StarCyc </item>
 			<item> StateRandom </item>
-			<item> StatusRandom </item>
+			<item> tqStatusRandom </item>
 			<item> StepModGauss </item>
 			<item> StopNumConsecSiftToOne </item>
 			<item> StopNumSift </item>
@@ -7571,7 +7571,7 @@
 			<item> TzPrintPairs </item>
 			<item> TzPrintPresentation </item>
 			<item> TzPrintRelators </item>
-			<item> TzPrintStatus </item>
+			<item> TzPrinttqStatus </item>
 			<item> TzRelator </item>
 			<item> TzRemoveGenerators </item>
 			<item> TzRenumberGens </item>

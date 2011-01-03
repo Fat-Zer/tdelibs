@@ -70,7 +70,7 @@ class KDEUI_EXPORT KSeparator : public QFrame
   /**
    * The recommended height (width) for a horizontal (vertical) separator.
    **/
-  virtual TQSize sizeHint() const;
+  virtual TQSize tqsizeHint() const;
 
 protected:
   /**

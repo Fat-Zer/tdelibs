@@ -75,11 +75,11 @@ void KMdiChildArea::manageChild( KMdiChildFrm* child, bool show, bool cascade )
 	KMdiChildFrm* top = topChild();
 	
 	//remove old references. There can be more than one so we remove them all
-	if ( m_pZ->findRef( child ) != -1 )
+	if ( m_pZ->tqfindRef( child ) != -1 )
 	{
-		//TQPtrList::find* moves current() to the found item
+		//TQPtrList::tqfind* moves current() to the found item
 		m_pZ->take(); 
-		while ( m_pZ->findNextRef( child ) != -1 )
+		while ( m_pZ->tqfindNextRef( child ) != -1 )
 			m_pZ->take();
 	}
 
@@ -240,7 +240,7 @@ void KMdiChildArea::resizeEvent( TQResizeEvent* e )
 		               height() + child->m_pCaption->heightHint() + KMDI_CHILDFRM_SEPARATOR + KMDI_CHILDFRM_DOUBLE_BORDER );
 
 	}
-	layoutMinimizedChildren();
+	tqlayoutMinimizedChildren();
 	TQWidget::resizeEvent( e );
 }
 
@@ -318,8 +318,8 @@ TQPoint KMdiChildArea::getCascadePoint( int indexOfWindow )
 
 void KMdiChildArea::childMinimized( KMdiChildFrm *minimizedChild, bool wasMaximized )
 {
-	//can't find the child in our list, so we don't care.
-	if ( m_pZ->findRef( minimizedChild ) == -1 )
+	//can't tqfind the child in our list, so we don't care.
+	if ( m_pZ->tqfindRef( minimizedChild ) == -1 )
 	{
 		kdDebug( 760 ) << k_funcinfo << "child was minimized but wasn't in our list!" << endl;
 		return;
@@ -420,10 +420,10 @@ void KMdiChildArea::cascadeMaximized()
 			childFrm->move( pnt );
 			TQSize curSize( width() - pnt.x(), height() - pnt.y() );
 			
-			if ( ( childFrm->minimumSize().width() > curSize.width() ) ||
-			     ( childFrm->minimumSize().height() > curSize.height() ) )
+			if ( ( childFrm->tqminimumSize().width() > curSize.width() ) ||
+			     ( childFrm->tqminimumSize().height() > curSize.height() ) )
 			{
-				childFrm->resize( childFrm->minimumSize() );
+				childFrm->resize( childFrm->tqminimumSize() );
 			}
 			else
 				childFrm->resize( curSize );
@@ -607,7 +607,7 @@ void KMdiChildArea::tileAnodine()
 		return ;
 	
 	int numCols = int( sqrt( ( double ) numVisible ) ); // set columns to square root of visible count
-	// create an array to form grid layout
+	// create an array to form grid tqlayout
 	int *numRows = new int[ numCols ];
 	int numCurCol = 0;
 	
@@ -720,7 +720,7 @@ void KMdiChildArea::tileVertically()
 }
 
 
-void KMdiChildArea::layoutMinimizedChildren()
+void KMdiChildArea::tqlayoutMinimizedChildren()
 {
 	int posX = 0;
 	int posY = height();
@@ -738,7 +738,7 @@ void KMdiChildArea::layoutMinimizedChildren()
 			}
 			
 			child->move( posX, posY - child->height() );
-			posX = child->geometry().right();
+			posX = child->tqgeometry().right();
 		}
 	}
 }
@@ -786,4 +786,4 @@ void KMdiChildArea::getCaptionColors( const TQPalette& /*pal*/, TQColor& activeB
 	inactiveFG = KGlobalSettings::inactiveTextColor();
 }
 
-// kate: space-indent off; replace-tabs off; tab-width 4; indent-mode csands;
+// kate: space-indent off; tqreplace-tabs off; tab-width 4; indent-mode csands;

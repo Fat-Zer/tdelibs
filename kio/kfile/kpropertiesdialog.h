@@ -434,7 +434,7 @@ private:
  * You can also include X-KDE-Protocol=file if you want that plugin
  * to be loaded only for local files, for instance.
  */
-class KIO_EXPORT KPropsDlgPlugin : public QObject
+class KIO_EXPORT KPropsDlgPlugin : public TQObject
 {
   Q_OBJECT
 public:
@@ -819,7 +819,7 @@ private:
  *
  * Such files are used to represent a program in kicker and konqueror.
  * @internal
- * @deprecated replaced with KDesktopPropsPlugin
+ * @deprecated tqreplaced with KDesktopPropsPlugin
  */
  /// Remove in KDE4
 class KIO_EXPORT_DEPRECATED KExecPropsPlugin : public KPropsDlgPlugin
@@ -875,7 +875,7 @@ private:
  *
  * Such files are used to represent a program in kicker and konqueror.
  * @internal
- * @deprecated replaced with KDesktopPropsPlugin
+ * @deprecated tqreplaced with KDesktopPropsPlugin
  */
  /// Remove in KDE4
 class KIO_EXPORT_DEPRECATED KApplicationPropsPlugin : public KPropsDlgPlugin

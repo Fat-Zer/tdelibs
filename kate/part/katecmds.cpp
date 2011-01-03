@@ -74,14 +74,14 @@ TQStringList KateCommands::CoreCommands::cmds()
   TQStringList l;
   l << "indent" << "unindent" << "cleanindent"
     << "comment" << "uncomment" << "goto" << "kill-line"
-    << "set-tab-width" << "set-replace-tabs" << "set-show-tabs"
+    << "set-tab-width" << "set-tqreplace-tabs" << "set-show-tabs"
     << "set-remove-trailing-space"
     << "set-indent-spaces" << "set-indent-width" << "set-mixed-indent"
     << "set-indent-mode" << "set-auto-indent"
     << "set-line-numbers" << "set-folding-markers" << "set-icon-border"
     << "set-wrap-cursor"
     << "set-word-wrap" << "set-word-wrap-column"
-    << "set-replace-tabs-save" << "set-remove-trailing-space-save"
+    << "set-tqreplace-tabs-save" << "set-remove-trailing-space-save"
     << "set-highlight" << "run-myself" << "set-show-indent";
   return l;
 }
@@ -175,7 +175,7 @@ bool KateCommands::CoreCommands::exec(Kate::View *view,
             cmd == "set-word-wrap-column" ||
             cmd == "goto" )
   {
-    // find a integer value > 0
+    // tqfind a integer value > 0
     if ( ! args.count() )
       KCC_ERR( i18n("Missing argument. Usage: %1 <value>").arg( cmd ) );
     bool ok;
@@ -217,14 +217,14 @@ bool KateCommands::CoreCommands::exec(Kate::View *view,
   else if ( cmd == "set-icon-border" ||
             cmd == "set-folding-markers" ||
             cmd == "set-line-numbers" ||
-            cmd == "set-replace-tabs" ||
+            cmd == "set-tqreplace-tabs" ||
             cmd == "set-remove-trailing-space" ||
             cmd == "set-show-tabs" ||
             cmd == "set-indent-spaces" ||
             cmd == "set-mixed-indent" ||
             cmd == "set-word-wrap" ||
             cmd == "set-wrap-cursor" ||
-            cmd == "set-replace-tabs-save" ||
+            cmd == "set-tqreplace-tabs-save" ||
             cmd == "set-remove-trailing-space-save" ||
             cmd == "set-show-indent" )
   {
@@ -241,7 +241,7 @@ bool KateCommands::CoreCommands::exec(Kate::View *view,
         v->setLineNumbersOn( enable );
       else if ( cmd == "set-show-indent" )
         v->renderer()->setShowIndentLines( enable );
-      else if ( cmd == "set-replace-tabs" )
+      else if ( cmd == "set-tqreplace-tabs" )
         setDocFlag( KateDocumentConfig::cfReplaceTabsDyn, enable, v->doc() );
       else if ( cmd == "set-remove-trailing-space" )
         setDocFlag( KateDocumentConfig::cfRemoveTrailingDyn, enable, v->doc() );
@@ -298,14 +298,14 @@ KCompletion *KateCommands::CoreCommands::completionObject( const TQString &cmd, 
 //END CoreCommands
 
 //BEGIN SedReplace
-static void replace(TQString &s, const TQString &needle, const TQString &with)
+static void tqreplace(TQString &s, const TQString &needle, const TQString &with)
 {
   int pos=0;
   while (1)
   {
-    pos=s.find(needle, pos);
+    pos=s.tqfind(needle, pos);
     if (pos==-1) break;
-    s.replace(pos, needle.length(), with);
+    s.tqreplace(pos, needle.length(), with);
     pos+=with.length();
   }
 
@@ -341,16 +341,16 @@ static int backslashString(const TQString &haystack, const TQString &needle, int
 // exchange "\t" for the actual tab character, for example
 static void exchangeAbbrevs(TQString &str)
 {
-  // the format is (findreplace)*[nullzero]
+  // the format is (tqfindtqreplace)*[nullzero]
   const char *magic="a\x07t\tn\n";
 
   while (*magic)
   {
     int index=0;
-    char replace=magic[1];
+    char tqreplace=magic[1];
     while ((index=backslashString(str, TQChar(*magic), index))!=-1)
     {
-      str.replace(index, 2, TQChar(replace));
+      str.tqreplace(index, 2, TQChar(tqreplace));
       index++;
     }
     magic++;
@@ -359,7 +359,7 @@ static void exchangeAbbrevs(TQString &str)
 }
 
 int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
-                                        const TQString &find, const TQString &repOld, const TQString &delim,
+                                        const TQString &tqfind, const TQString &repOld, const TQString &delim,
                                         bool noCase, bool repeat,
                                         uint startcol, int endcol )
 {
@@ -369,14 +369,14 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
   // HANDLING "\n"s in PATTERN
   // * Create a list of patterns, splitting PATTERN on (unescaped) "\n"
   // * insert $s and ^s to match line ends/beginnings
-  // * When matching patterhs after the first one, replace \N with the captured
+  // * When matching patterhs after the first one, tqreplace \N with the captured
   //   text.
   // * If all patterns in the list match sequentiel lines, there is a match, so
   // * remove line/start to line + patterns.count()-1/patterns.last.length
   // * handle capatures by putting them in one list.
   // * the existing insertion is fine, including the line calculation.
 
-  TQStringList patterns = TQStringList::split( TQRegExp("(^\\\\n|(?![^\\\\])\\\\n)"), find, true );
+  TQStringList patterns = TQStringList::split( TQRegExp("(^\\\\n|(?![^\\\\])\\\\n)"), tqfind, true );
 
   if ( patterns.count() > 1 )
   {
@@ -407,7 +407,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
 
     TQString rep=repOld;
 
-    // now set the backreferences in the replacement
+    // now set the backreferences in the tqreplacement
     TQStringList backrefs=matcher.capturedTexts();
     int refnum=1;
 
@@ -425,7 +425,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
         index=backslashString(rep, number, index);
         if (index>=0)
         {
-          rep.replace(index, 2, *i);
+          rep.tqreplace(index, 2, *i);
           index+=(*i).length();
         }
       }
@@ -433,16 +433,16 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
       refnum++;
     }
 
-    replace(rep, "\\\\", "\\");
-    replace(rep, "\\" + delim, delim);
+    tqreplace(rep, "\\\\", "\\");
+    tqreplace(rep, "\\" + delim, delim);
 
     doc->removeText( line, startcol, line, startcol + len );
     doc->insertText( line, startcol, rep );
 
-    // TODO if replace contains \n,
+    // TODO if tqreplace tqcontains \n,
     // change the line number and
     // check for text that needs be searched behind the last inserted newline.
-    int lns = rep.contains('\n');
+    int lns = rep.tqcontains('\n');
     if ( lns )
     {
       line += lns;
@@ -451,8 +451,8 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
       {
       //  if ( endcol  >= startcol + len )
           endcol -= (startcol + len);
-          uint sc = rep.length() - rep.findRev('\n') - 1;
-        matches += sedMagic( doc, line, find, repOld, delim, noCase, repeat, sc, endcol );
+          uint sc = rep.length() - rep.tqfindRev('\n') - 1;
+        matches += sedMagic( doc, line, tqfind, repOld, delim, noCase, repeat, sc, endcol );
       }
     }
 
@@ -486,16 +486,16 @@ bool KateCommands::SedReplace::exec (Kate::View *view, const TQString &cmd, TQSt
   TQRegExp splitter( TQString("^[$%]?s\\s*")  + d + "((?:[^\\\\\\" + d + "]|\\\\.)*)\\" + d +"((?:[^\\\\\\" + d + "]|\\\\.)*)\\" + d + "[ig]{0,2}$" );
   if (splitter.search(cmd)<0) return false;
 
-  TQString find=splitter.cap(1);
-   kdDebug(13025)<< "SedReplace: find=" << find.latin1() <<endl;
+  TQString tqfind=splitter.cap(1);
+   kdDebug(13025)<< "SedReplace: tqfind=" << tqfind.latin1() <<endl;
 
-  TQString replace=splitter.cap(2);
-  exchangeAbbrevs(replace);
-   kdDebug(13025)<< "SedReplace: replace=" << replace.latin1() <<endl;
+  TQString tqreplace=splitter.cap(2);
+  exchangeAbbrevs(tqreplace);
+   kdDebug(13025)<< "SedReplace: tqreplace=" << tqreplace.latin1() <<endl;
 
-   if ( find.contains("\\n") )
+   if ( tqfind.tqcontains("\\n") )
    {
-     msg = i18n("Sorry, but Kate is not able to replace newlines, yet");
+     msg = i18n("Sorry, but Kate is not able to tqreplace newlines, yet");
      return false;
    }
 
@@ -511,7 +511,7 @@ bool KateCommands::SedReplace::exec (Kate::View *view, const TQString &cmd, TQSt
     uint numLines=doc->numLines();
     for (int line=0; (uint)line < numLines; line++)
     {
-      res += sedMagic( doc, line, find, replace, d, !noCase, repeat );
+      res += sedMagic( doc, line, tqfind, tqreplace, d, !noCase, repeat );
       if ( ! repeat && res ) break;
     }
   }
@@ -524,7 +524,7 @@ bool KateCommands::SedReplace::exec (Kate::View *view, const TQString &cmd, TQSt
       if ( startline == doc->selEndLine() )
         endcol = doc->selEndCol();
 
-      res += sedMagic( doc, startline, find, replace, d, !noCase, repeat, startcol, endcol );
+      res += sedMagic( doc, startline, tqfind, tqreplace, d, !noCase, repeat, startcol, endcol );
 
       /*if ( startcol )*/ startcol = 0;
 
@@ -534,10 +534,10 @@ bool KateCommands::SedReplace::exec (Kate::View *view, const TQString &cmd, TQSt
   else // just this line
   {
     int line=view->cursorLine();
-    res += sedMagic(doc, line, find, replace, d, !noCase, repeat);
+    res += sedMagic(doc, line, tqfind, tqreplace, d, !noCase, repeat);
   }
 
-  msg = i18n("1 replacement done", "%n replacements done",res );
+  msg = i18n("1 tqreplacement done", "%n tqreplacements done",res );
 
   doc->editEnd();
 
@@ -562,7 +562,7 @@ bool KateCommands::Character::exec (Kate::View *view, const TQString &_cmd, TQSt
   int base=10;
   if (cmd[0]=='x' || cmd.left(2)=="0x")
   {
-    cmd.replace(TQRegExp("^0?x"), "");
+    cmd.tqreplace(TQRegExp("^0?x"), "");
     base=16;
   }
   else if (cmd[0]=='0')
@@ -578,7 +578,7 @@ bool KateCommands::Character::exec (Kate::View *view, const TQString &_cmd, TQSt
     view->insertText(TQString(buf));
   }
   else
-  { // do the unicode thing
+  { // do the tqunicode thing
     TQChar c(number);
     view->insertText(TQString(&c, 1));
   }
@@ -593,13 +593,13 @@ bool KateCommands::Date::exec (Kate::View *view, const TQString &cmd, TQString &
   if (cmd.left(4) != "date")
     return false;
 
-  if (TQDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)).length() > 0)
-    view->insertText(TQDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)));
+  if (TQDateTime::tqcurrentDateTime().toString(cmd.mid(5, cmd.length()-5)).length() > 0)
+    view->insertText(TQDateTime::tqcurrentDateTime().toString(cmd.mid(5, cmd.length()-5)));
   else
-    view->insertText(TQDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    view->insertText(TQDateTime::tqcurrentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
 
   return true;
 }
 //END Date
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

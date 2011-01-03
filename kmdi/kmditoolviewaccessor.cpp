@@ -219,12 +219,12 @@ void KMdiToolViewAccessor::place( KDockWidget::DockPosition pos, TQWidget* pTarg
 		if ( !DockToOurself )
 			if ( pTargetWnd != 0L )
 			{
-				pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd );
+				pTargetDock = mdiMainFrm->dockManager->tqfindWidgetParentDock( pTargetWnd );
 				if ( !pTargetDock )
 				{
-					if ( pTargetWnd->parentWidget() )
+					if ( pTargetWnd->tqparentWidget() )
 					{
-						pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd->parentWidget() );
+						pTargetDock = mdiMainFrm->dockManager->tqfindWidgetParentDock( pTargetWnd->tqparentWidget() );
 					}
 				}
 			}
@@ -232,7 +232,7 @@ void KMdiToolViewAccessor::place( KDockWidget::DockPosition pos, TQWidget* pTarg
 		{
 			if ( mdiMainFrm->m_managedDockPositionMode && ( mdiMainFrm->m_pMdi || mdiMainFrm->m_documentTabWidget ) )
 			{
-				KDockWidget * dw1 = pTargetDock->findNearestDockWidget( pos );
+				KDockWidget * dw1 = pTargetDock->tqfindNearestDockWidget( pos );
 				if ( dw1 )
 					pCover->manualDock( dw1, KDockWidget::DockCenter, percent );
 				else
@@ -262,8 +262,8 @@ void KMdiToolViewAccessor::show()
 }
 
 
-#ifndef NO_INCLUDE_MOCFILES
+#ifndef NO_INCLUDE_TQMOCFILES
 #include "kmditoolviewaccessor.moc"
 #endif 
-// kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
+// kate: space-indent off; tab-width 4; tqreplace-tabs off; indent-mode csands;
 

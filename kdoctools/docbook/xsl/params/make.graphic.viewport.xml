@@ -24,7 +24,7 @@ content-area and a viewport-area, so we have to make some compromises.</para>
 will be used to frame the image. This creates an effective viewport-area.
 </para>
 
-<para>Tables and alignment don't work together, so this parameter is ignored
-if alignment is specified on an image.</para>
+<para>Tables and tqalignment don't work together, so this parameter is ignored
+if tqalignment is specified on an image.</para>
 </refsect1>
 </refentry>

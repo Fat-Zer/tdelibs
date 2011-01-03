@@ -51,7 +51,7 @@ public:
 	if ( ! basestyle )
 	    basestyle = TQStyleFactory::create( TQStyleFactory::keys().first() );
 	if ( ! basestyle )
-	    qFatal( "LightStyle: couldn't find a basestyle!" );
+	    qFatal( "LightStyle: couldn't tqfind a basestyle!" );
     }
 
     ~LightStyleV2Private()
@@ -294,7 +294,7 @@ void LightStyleV2::drawPrimitive( PrimitiveElement pe,
 	    bool drawTitle = false;
 	    if ( p && p->device()->devType() == TQInternal::Widget ) {
 		TQWidget *w = (TQWidget *) p->device();
-		TQWidget *p = w->parentWidget();
+		TQWidget *p = w->tqparentWidget();
 		if (p->inherits("QDockWindow") && ! p->inherits("QToolBar")) {
 		    drawTitle = true;
 		    title = p->caption();
@@ -405,7 +405,7 @@ void LightStyleV2::drawPrimitive( PrimitiveElement pe,
     case PE_WindowFrame:
 	{
 	    int lw = data.isDefault() ?
-		     pixelMetric(PM_DefaultFrameWidth) : data.lineWidth();
+		     tqpixelMetric(PM_DefaultFrameWidth) : data.lineWidth();
 
 	    if ( ! ( flags & Style_Sunken ) )
 		flags |= Style_Raised;
@@ -419,7 +419,7 @@ void LightStyleV2::drawPrimitive( PrimitiveElement pe,
     case PE_PanelDockWindow:
 	{
 	    int lw = data.isDefault() ?
-		     pixelMetric(PM_DockWindowFrameWidth) : data.lineWidth();
+		     tqpixelMetric(PM_DockWindowFrameWidth) : data.lineWidth();
 
 	    if (lw == 2)
 		drawLightBevel(p, r, cg, flags | Style_Raised,
@@ -432,7 +432,7 @@ void LightStyleV2::drawPrimitive( PrimitiveElement pe,
     case PE_PanelMenuBar:
 	{
 	    int lw = data.isDefault() ?
-		     pixelMetric(PM_MenuBarFrameWidth) : data.lineWidth();
+		     tqpixelMetric(PM_MenuBarFrameWidth) : data.lineWidth();
 
 	    if (lw == 2)
 		drawLightBevel(p, r, cg, flags, &cg.brush(TQColorGroup::Button));
@@ -612,7 +612,7 @@ void LightStyleV2::drawPrimitive( PrimitiveElement pe,
     }
 }
 
-void LightStyleV2::drawControl( ControlElement control,
+void LightStyleV2::tqdrawControl( ControlElement control,
 			      TQPainter *p,
 			      const TQWidget *widget,
 			      const TQRect &r,
@@ -631,7 +631,7 @@ void LightStyleV2::drawControl( ControlElement control,
 	    tr.addCoords(0, 0,  0, -1);
 	    fr.addCoords(2, 2, -2, -2);
 	    
-	    if ( tb->shape() == TQTabBar::RoundedBelow || tb->shape() == TQTabBar::TriangularBelow) {
+	    if ( tb->tqshape() == TQTabBar::RoundedBelow || tb->tqshape() == TQTabBar::TriangularBelow) {
 		tr = r; tr.addCoords(0, 1, 0, 0);
 		fr = r; fr.addCoords(2, 2,-2, -4);
 		below = true;
@@ -822,10 +822,10 @@ void LightStyleV2::drawControl( ControlElement control,
 
 	    bool reverse = TQApplication::reverseLayout();
 	    if ( reverse ) {
-		cr = visualRect( cr, r );
-		sr = visualRect( sr, r );
-		tr = visualRect( tr, r );
-		ir = visualRect( ir, r );
+		cr = tqvisualRect( cr, r );
+		sr = tqvisualRect( sr, r );
+		tr = tqvisualRect( tr, r );
+		ir = tqvisualRect( ir, r );
 	    }
 
 	    if (mi->isChecked() &&
@@ -887,7 +887,7 @@ void LightStyleV2::drawControl( ControlElement control,
 
 	    TQString text = mi->text();
 	    if (! text.isNull()) {
-		int t = text.find('\t');
+		int t = text.tqfind('\t');
 
 		// draw accelerator/tab-text
 		if (t >= 0) {
@@ -965,12 +965,12 @@ void LightStyleV2::drawControl( ControlElement control,
 	break;
 
     default:
-	TQCommonStyle::drawControl(control, p, widget, r, cg, flags, data);
+	TQCommonStyle::tqdrawControl(control, p, widget, r, cg, flags, data);
 	break;
     }
 }
 
-void LightStyleV2::drawControlMask( ControlElement control,
+void LightStyleV2::tqdrawControlMask( ControlElement control,
 				  TQPainter *p,
 				  const TQWidget *widget,
 				  const TQRect &r,
@@ -982,7 +982,7 @@ void LightStyleV2::drawControlMask( ControlElement control,
 	break;
 
     default:
-	TQCommonStyle::drawControlMask(control, p, widget, r, data);
+	TQCommonStyle::tqdrawControlMask(control, p, widget, r, data);
 	break;
     }
 }
@@ -997,7 +997,7 @@ TQRect LightStyleV2::subRect(SubRect subrect, const TQWidget *widget) const
  	    const TQPushButton *button = (const TQPushButton *) widget;
  	    int dbw1 = 0, dbw2 = 0;
  	    if (button->isDefault() || button->autoDefault()) {
- 		dbw1 = pixelMetric(PM_ButtonDefaultIndicator, widget);
+ 		dbw1 = tqpixelMetric(PM_ButtonDefaultIndicator, widget);
  		dbw2 = dbw1 * 2;
  	    }
 
@@ -1015,7 +1015,7 @@ TQRect LightStyleV2::subRect(SubRect subrect, const TQWidget *widget) const
     return rect;
 }
 
-void LightStyleV2::drawComplexControl( ComplexControl control,
+void LightStyleV2::tqdrawComplexControl( ComplexControl control,
 				     TQPainter* p,
 				     const TQWidget* widget,
 				     const TQRect& r,
@@ -1031,15 +1031,15 @@ void LightStyleV2::drawComplexControl( ComplexControl control,
 	    const TQComboBox *combobox = (const TQComboBox *) widget;
 	    TQRect frame, arrow, field;
 	    frame =
-		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, widget,
+		TQStyle::tqvisualRect(querySubControlMetrics(CC_ComboBox, widget,
 							  SC_ComboBoxFrame, data),
 				   widget);
 	    arrow =
-		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, widget,
+		TQStyle::tqvisualRect(querySubControlMetrics(CC_ComboBox, widget,
 							  SC_ComboBoxArrow, data),
 				   widget);
 	    field =
-		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, widget,
+		TQStyle::tqvisualRect(querySubControlMetrics(CC_ComboBox, widget,
 							  SC_ComboBoxEditField, data),
 				   widget);
 
@@ -1067,7 +1067,7 @@ void LightStyleV2::drawComplexControl( ComplexControl control,
 		    if (! combobox->editable()) {
 			p->fillRect( field, cg.brush( TQColorGroup::Highlight ) );
 			TQRect fr =
-			    TQStyle::visualRect( subRect( SR_ComboBoxFocusRect, widget ),
+			    TQStyle::tqvisualRect( subRect( SR_ComboBoxFocusRect, widget ),
 						widget );
 			drawPrimitive( PE_FocusRect, p, fr, cg,
 				       flags | Style_FocusAtBorder,
@@ -1281,19 +1281,19 @@ void LightStyleV2::drawComplexControl( ComplexControl control,
 	    }
 
 	    if (controls & SC_SliderTickmarks)
-		TQCommonStyle::drawComplexControl(control, p, widget, r, cg, flags,
+		TQCommonStyle::tqdrawComplexControl(control, p, widget, r, cg, flags,
 						 SC_SliderTickmarks, active, data );
 	    break;
 	}
 
     case CC_ListView:
 	// use the base style for CC_ListView
-	singleton->basestyle->drawComplexControl(control, p, widget, r, cg, flags,
+	singleton->basestyle->tqdrawComplexControl(control, p, widget, r, cg, flags,
 						 controls, active, data);
 	break;
 
     default:
-	TQCommonStyle::drawComplexControl(control, p, widget, r, cg, flags,
+	TQCommonStyle::tqdrawComplexControl(control, p, widget, r, cg, flags,
 					 controls, active, data);
 	break;
     }
@@ -1311,7 +1311,7 @@ TQRect LightStyleV2::querySubControlMetrics( ComplexControl control,
 	{
 	    const TQScrollBar *scrollbar = (const TQScrollBar *) widget;
 	    int sliderstart = scrollbar->sliderStart();
-	    int sbextent = pixelMetric(PM_ScrollBarExtent, widget);
+	    int sbextent = tqpixelMetric(PM_ScrollBarExtent, widget);
 	    int maxlen = ((scrollbar->orientation() == Qt::Horizontal) ?
 			  scrollbar->width() : scrollbar->height()) - (sbextent * 3);
 	    int sliderlen;
@@ -1322,7 +1322,7 @@ TQRect LightStyleV2::querySubControlMetrics( ComplexControl control,
 		sliderlen = (scrollbar->pageStep() * maxlen) /
 			    (range + scrollbar->pageStep());
 
-		int slidermin = pixelMetric( PM_ScrollBarSliderMin, widget );
+		int slidermin = tqpixelMetric( PM_ScrollBarSliderMin, widget );
 		if ( sliderlen < slidermin || range > INT_MAX / 2 )
 		    sliderlen = slidermin;
 		if ( sliderlen > maxlen )
@@ -1409,7 +1409,7 @@ TQStyle::SubControl LightStyleV2::querySubControl( ComplexControl control,
     return ret;
 }
 
-int LightStyleV2::pixelMetric( PixelMetric metric,
+int LightStyleV2::tqpixelMetric( PixelMetric metric,
 			     const TQWidget *widget ) const
 {
     int ret;
@@ -1464,7 +1464,7 @@ int LightStyleV2::pixelMetric( PixelMetric metric,
 
     case PM_SliderLength:
     case PM_SliderControlThickness:
-	ret = singleton->basestyle->pixelMetric( metric, widget );
+	ret = singleton->basestyle->tqpixelMetric( metric, widget );
 	break;
 
     case PM_MaximumDragDistance:
@@ -1472,7 +1472,7 @@ int LightStyleV2::pixelMetric( PixelMetric metric,
 	break;
 
     default:
-	ret = TQCommonStyle::pixelMetric(metric, widget);
+	ret = TQCommonStyle::tqpixelMetric(metric, widget);
 	break;
     }
 
@@ -1525,8 +1525,8 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 	    int w = contentsSize.width(), h = contentsSize.height();
 
 	    if (mi->custom()) {
-		w = mi->custom()->sizeHint().width();
-		h = mi->custom()->sizeHint().height();
+		w = mi->custom()->tqsizeHint().width();
+		h = mi->custom()->tqsizeHint().height();
 		if (! mi->custom()->fullSpan() && h < 22)
 		    h = 22;
 	    } else if(mi->widget()) {
@@ -1553,7 +1553,7 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 	    maxpmw = QMAX(maxpmw, 16);
 	    w += (maxpmw * 2) + 8;
 
-	    if (! mi->text().isNull() && mi->text().find('\t') >= 0)
+	    if (! mi->text().isNull() && mi->text().tqfind('\t') >= 0)
 		w += 8;
 
 	    ret = TQSize(w, h);
@@ -1586,7 +1586,7 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
     return ret;
 }
 
-int LightStyleV2::styleHint( StyleHint stylehint,
+int LightStyleV2::tqstyleHint( StyleHint stylehint,
 			   const TQWidget *widget,
 			   const TQStyleOption &option,
 			   QStyleHintReturn* returnData ) const
@@ -1611,7 +1611,7 @@ int LightStyleV2::styleHint( StyleHint stylehint,
 	break;
 
     default:
-	ret = TQCommonStyle::styleHint(stylehint, widget, option, returnData);
+	ret = TQCommonStyle::tqstyleHint(stylehint, widget, option, returnData);
 	break;
     }
 

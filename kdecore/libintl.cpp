@@ -8,7 +8,7 @@ of glibc. The master sources can be found in
       dcgettext.c
       dgettext.c
       explodename.c
-      finddomain.c
+      tqfinddomain.c
       gettext.c
       gettext.h
       gettextP.h
@@ -77,7 +77,7 @@ Boston, MA 02110-1301, USA.  */
 # define W(flag, data) ((flag) ? SWAP (data) : (data))
 #endif
 
-typedef Q_UINT32 nls_uint32;
+typedef TQ_UINT32 nls_uint32;
 
 struct loaded_domain
 {
@@ -157,11 +157,11 @@ struct string_desc
 };
 
 /* Prototypes for local functions.  */
-char *k_nl_find_msg  (struct kde_loaded_l10nfile *domain_file,
+char *k_nl_tqfind_msg  (struct kde_loaded_l10nfile *domain_file,
 			const char *msgid);
 
 char *
-k_nl_find_msg (struct kde_loaded_l10nfile *domain_file, const char *msgid)
+k_nl_tqfind_msg (struct kde_loaded_l10nfile *domain_file, const char *msgid)
 {
   size_t top, act, bottom;
   struct loaded_domain *domain;

@@ -71,7 +71,7 @@ public:
 
 	const TQString& get(const TQString& key) const 		{ return m_map[key]; }
 	void set(const TQString& key, const TQString& val)	{ m_map[key] = val; }
-	bool has(const TQString& key) const 			{ return m_map.contains(key); }
+	bool has(const TQString& key) const 			{ return m_map.tqcontains(key); }
 	const TQString& name() const				{ return m_name; }
 	void setName(const TQString& s)				{ m_name = s; }
 	bool conflict() const 					{ return m_conflict; }
@@ -118,8 +118,8 @@ public:
 	bool isEmpty();
 
 	virtual DriverItem* createItem(DriverItem *parent, DriverItem *after = 0);
-	DrBase* findOption(const TQString& name, DrGroup **parentGroup = 0);
-	DrGroup* findGroup(DrGroup *grp, DrGroup **parentGroup = 0);
+	DrBase* tqfindOption(const TQString& name, DrGroup **parentGroup = 0);
+	DrGroup* tqfindGroup(DrGroup *grp, DrGroup **parentGroup = 0);
 	void setOptions(const TQMap<TQString,TQString>& opts);
 	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 	DrBase* clone();
@@ -159,7 +159,7 @@ public:
 	DriverItem* createTreeView(TQListView *parent);
 	void addConstraint(DrConstraint *c)		{ m_constraints.append(c); }
 	int checkConstraints();
-	DrPageSize* findPageSize(const TQString& name)	{ return m_pagesizes.find(name); }
+	DrPageSize* tqfindPageSize(const TQString& name)	{ return m_pagesizes.tqfind(name); }
 	void addPageSize(DrPageSize *sz);
 	void removeOptionGlobally(const TQString& name);
 	void removeGroupGlobally(DrGroup *grp);
@@ -285,7 +285,7 @@ public:
 	void addChoice(DrBase *ch)	{ m_choices.append(ch); }
 	TQPtrList<DrBase>* choices()	{ return &m_choices; }
 	DrBase* currentChoice() const 	{ return m_current; }
-	DrBase* findChoice(const TQString& txt);
+	DrBase* tqfindChoice(const TQString& txt);
 	void setChoice(int choicenum);
 
 	virtual TQString valueText();

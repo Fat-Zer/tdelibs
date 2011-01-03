@@ -5,7 +5,7 @@
 </refmeta>
 <refnamediv>
 <refname>use.id.function</refname>
-<refpurpose>Use the XPath id() function to find link targets?</refpurpose>
+<refpurpose>Use the XPath id() function to tqfind link targets?</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
@@ -15,7 +15,7 @@
 <refsect1><title>Description</title>
 
 <para>If 1, the stylesheets use the <function>id()</function> function
-to find the targets of cross reference elements. This is more
+to tqfind the targets of cross reference elements. This is more
 efficient, but only works if your XSLT processor implements the
 <function>id()</function> function, naturally.</para>
 <para>THIS PARAMETER IS NOT SUPPORTED. IT IS ALWAYS ASSUMED TO BE 1.

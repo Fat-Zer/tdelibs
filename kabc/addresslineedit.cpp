@@ -156,12 +156,12 @@ void AddressLineEdit::keyPressEvent(TQKeyEvent *e)
 {
     bool accept = false;
 
-    if (KStdAccel::shortcut(KStdAccel::SubstringCompletion).contains(KKey(e)))
+    if (KStdAccel::shortcut(KStdAccel::SubstringCompletion).tqcontains(KKey(e)))
     {
         doCompletion(true);
         accept = true;
     }
-    else if (KStdAccel::shortcut(KStdAccel::TextCompletion).contains(KKey(e)))
+    else if (KStdAccel::shortcut(KStdAccel::TextCompletion).tqcontains(KKey(e)))
     {
         int len = text().length();
         
@@ -213,21 +213,21 @@ void AddressLineEdit::insert(const TQString &t)
 
     // remove newlines in the to-be-pasted string as well as an eventual
     // mailto: protocol
-    newText.replace( TQRegExp("\r?\n"), ", " );
+    newText.tqreplace( TQRegExp("\r?\n"), ", " );
     if ( newText.startsWith( "mailto:" ) )
     {
       KURL u(newText);
       newText = u.path();
     }
-    else if (newText.find(" at ") != -1)
+    else if (newText.tqfind(" at ") != -1)
     {
        // Anti-spam stuff
-       newText.replace( " at ", "@" );
-       newText.replace( " dot ", "." );
+       newText.tqreplace( " at ", "@" );
+       newText.tqreplace( " dot ", "." );
     }
-    else if (newText.find("(at)") != -1)
+    else if (newText.tqfind("(at)") != -1)
     {
-      newText.replace( TQRegExp("\\s*\\(at\\)\\s*"), "@" );
+      newText.tqreplace( TQRegExp("\\s*\\(at\\)\\s*"), "@" );
     }
 
     TQString contents = text();
@@ -293,7 +293,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
     TQString prevAddr;    
     
     TQString s(text());    
-    int n = s.findRev(',');
+    int n = s.tqfindRev(',');
         
     if (n >= 0)
     {
@@ -343,7 +343,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
             items += s_completion->substringCompletion( '<' + s );
             uint beforeDollarCompletionCount = items.count();
 
-            if( s.find( ' ' ) == -1 ) // one word, possibly given name
+            if( s.tqfind( ' ' ) == -1 ) // one word, possibly given name
                 items += s_completion->allMatches( "$$" + s );
 
             if ( !items.isEmpty() )
@@ -355,7 +355,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
                          it != items.end();
                          ++it )
                     { 
-                        int pos = (*it).find( '$', 2 );
+                        int pos = (*it).tqfind( '$', 2 );
                         if( pos < 0 ) // ???
                             continue;
                         (*it)=(*it).mid( pos + 1 );
@@ -373,7 +373,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
                 
                 if (!autoSuggest)
                 {
-                    int index = items.first().find( s );
+                    int index = items.first().tqfind( s );
                     TQString newText = prevAddr + items.first().mid( index );
                     //kdDebug() << "OLD TEXT: " << text() << endl;
                     //kdDebug() << "NEW TEXT: " << newText << endl;
@@ -437,11 +437,11 @@ void AddressLineEdit::loadAddresses()
 void AddressLineEdit::addAddress( const TQString& adr )
 {
     s_completion->addItem( adr );
-    int pos = adr.find( '<' );
+    int pos = adr.tqfind( '<' );
     if( pos >= 0 )
     {
         ++pos;
-        int pos2 = adr.find( pos, '>' );
+        int pos2 = adr.tqfind( pos, '>' );
         if( pos2 >= 0 )
             s_completion->addItem( adr.mid( pos, pos2 - pos ));
     }
@@ -465,7 +465,7 @@ void AddressLineEdit::startLoadingLDAPEntries()
     TQString s( *s_LDAPText );
     // TODO cache last?
     TQString prevAddr;
-    int n = s.findRev(',');
+    int n = s.tqfindRev(',');
     if (n>= 0)
     {
         prevAddr = s.left(n+1) + ' ';
@@ -484,8 +484,8 @@ void AddressLineEdit::slotLDAPSearchData( const TQStringList& adrs )
         return;
     for( TQStringList::ConstIterator it = adrs.begin(); it != adrs.end(); ++it ) {
         TQString name(*it);
-        int pos = name.find( " <" );
-        int pos_comma = name.find( ',' );
+        int pos = name.tqfind( " <" );
+        int pos_comma = name.tqfind( ',' );
         // put name in quotes, if we have a comma in the name
         if (pos>0 && pos_comma>0 && pos_comma<pos) {
           name.insert(pos, '\"');
@@ -577,18 +577,18 @@ TQStringList AddressLineEdit::addresses()
     for ( mit = emails.begin(); mit != emails.end(); ++mit ) {
       email = *mit;
       if (!email.isEmpty()) {
-        if (n.isEmpty() || (email.find( '<' ) != -1))
+        if (n.isEmpty() || (email.tqfind( '<' ) != -1))
           addr = TQString::null;
         else { /* do we really need quotes around this name ? */
-                if (n.find(needQuotes) != -1)
+                if (n.tqfind(needQuotes) != -1)
             addr = '"' + n + endQuote;
           else
             addr = n + space;
         }
 
-        if (!addr.isEmpty() && (email.find( '<' ) == -1)
-            && (email.find( '>' ) == -1)
-            && (email.find( ',' ) == -1))
+        if (!addr.isEmpty() && (email.tqfind( '<' ) == -1)
+            && (email.tqfind( '>' ) == -1)
+            && (email.tqfind( ',' ) == -1))
           addr += '<' + email + '>';
         else
           addr += email;

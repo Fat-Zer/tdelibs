@@ -61,11 +61,11 @@
       <item> export </item>
       <item> export_library_dependencies </item>
       <item> file </item>
-      <item> find_file </item>
-      <item> find_library </item>
-      <item> find_package </item>
-      <item> find_path </item>
-      <item> find_program </item>
+      <item> tqfind_file </item>
+      <item> tqfind_library </item>
+      <item> tqfind_package </item>
+      <item> tqfind_path </item>
+      <item> tqfind_program </item>
       <item> fltk_wrap_ui </item>
       <item> foreach </item>
       <item> function </item>

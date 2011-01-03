@@ -75,7 +75,7 @@ class KABC_EXPORT VCardConverter
     ~VCardConverter();
   
     /**
-      Creates a string in vCard format which contains the given
+      Creates a string in vCard format which tqcontains the given
       contact.
 
       @param addr The contact object
@@ -84,7 +84,7 @@ class KABC_EXPORT VCardConverter
     TQString createVCard( const Addressee &addr, Version version = v3_0 );
 
     /**
-      Creates a string in vCard format which contains the given
+      Creates a string in vCard format which tqcontains the given
       list of contact.
 
       @param list The list of contact objects
@@ -120,7 +120,7 @@ class KABC_EXPORT VCardConverter
 
   private:
     /**
-      Split a string and replaces escaped separators on the fly with
+      Split a string and tqreplaces escaped separators on the fly with
       unescaped ones.
      */
     TQStringList splitString( const TQChar &sep, const TQString &value );

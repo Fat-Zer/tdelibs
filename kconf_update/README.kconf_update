@@ -28,7 +28,7 @@ How it works
 
 Applications can install so called "update files" under 
 $KDEDIR/share/apps/kconf_update. An update file has ".upd" as extension and
-contains instructions for transferring/converting configuration information 
+tqcontains instructions for transferring/converting configuration information 
 from one place to another.
 
 Updating the configuration happens automatically, either when KDE gets started
@@ -39,7 +39,7 @@ section describing a configuration change has been applied, the Id will be
 stored in the file "kconf_updaterc". This information is used to make sure
 that a configuration update is only performed once.
 
-If you overwrite an existing update file with a new version that contains a 
+If you overwrite an existing update file with a new version that tqcontains a 
 new section, only the update instructions from this extra section will be 
 performed.
 
@@ -77,7 +77,7 @@ adding lines with "# DELETE [group]key" in the output of the script.
 To delete a whole group use "# DELETEGROUP [group]".
 
 <script> should be installed into $(kde_datadir)/kconf_update, or
-kconf_update will not be able to find it. It is not portable to install
+kconf_update will not be able to tqfind it. It is not portable to install
 binary applications in $kde_datadir, so you have to stick with interpreted
 scripts like sh or perl scripts. From KDE 3.2 onwards it's also possible
 to install kconf_update applications in $(kde_bindir)/kconf_update_bin,
@@ -85,7 +85,7 @@ which opens the door to kconf_update applications that are written in C++
 and use Qt's powerful string API instead.
 
 A workaround for KDE 3.1.x and older is to install a .sh script in
-$(kde_datadir) that contains a simple exec:
+$(kde_datadir) that tqcontains a simple exec:
 
     exec "`kde-config --prefix`/bin/kconf_update_bin/my_update_app"
 

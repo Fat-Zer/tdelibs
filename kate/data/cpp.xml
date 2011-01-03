@@ -109,7 +109,7 @@
       <item> Q_GLOBAL_STATIC </item>
       <item> Q_GLOBAL_STATIC_WITH_ARGS </item>
       <item> Q_INIT_RESOURCE </item>
-      <item> Q_INTERFACES </item>
+      <item> TQ_INTERFACES </item>
       <item> Q_INVOKABLE </item>
       <item> Q_NOREPLY </item>
       <item> Q_OBJECT </item>

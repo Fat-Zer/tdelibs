@@ -11,7 +11,7 @@ KBlendWidget::KBlendWidget(TQWidget *parent, const char *name)
   :TQWidget(parent, name)
 {
 
-    bgnd = qRgb(255, 255, 255);
+    bgnd = tqRgb(255, 255, 255);
 
     image = TQImage("testimage.png");
 

@@ -94,7 +94,7 @@ TQString KOperaBookmarkImporter::operaBookmarksFile()
    static KOperaBookmarkImporterImpl *p = 0;
    if (!p) 
        p = new KOperaBookmarkImporterImpl; 
-   return p->findDefaultLocation();
+   return p->tqfindDefaultLocation();
 }
 
 void KOperaBookmarkImporterImpl::parse() {
@@ -103,7 +103,7 @@ void KOperaBookmarkImporterImpl::parse() {
    importer.parseOperaBookmarks();
 }
 
-TQString KOperaBookmarkImporterImpl::findDefaultLocation(bool saving) const
+TQString KOperaBookmarkImporterImpl::tqfindDefaultLocation(bool saving) const
 {
    return saving ? KFileDialog::getSaveFileName( 
                        TQDir::homeDirPath() + "/.opera", 

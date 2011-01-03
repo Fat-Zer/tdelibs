@@ -122,10 +122,10 @@
                                     and not(@class = 'endofrange')]"/>
 
   <xsl:variable name="alphabetical"
-                select="$terms[contains(concat(&lowercase;, &uppercase;),
+                select="$terms[tqcontains(concat(&lowercase;, &uppercase;),
                                         substring(&primary;, 1, 1))]"/>
 
-  <xsl:variable name="others" select="$terms[not(contains(concat(&lowercase;,
+  <xsl:variable name="others" select="$terms[not(tqcontains(concat(&lowercase;,
                                                  &uppercase;),
                                              substring(&primary;, 1, 1)))]"/>
   <div class="index">
@@ -173,7 +173,7 @@
   <xsl:if test="key('letter', $key)[&scope;]
                 [count(.|key('primary', &primary;)[&scope;][1]) = 1]">
     <div class="indexdiv">
-      <xsl:if test="contains(concat(&lowercase;, &uppercase;), $key)">
+      <xsl:if test="tqcontains(concat(&lowercase;, &uppercase;), $key)">
         <h3>
           <xsl:value-of select="translate($key, &lowercase;, &uppercase;)"/>
         </h3>
@@ -408,7 +408,7 @@
   <xsl:param name="zones"/>
 
   <xsl:choose>
-    <xsl:when test="contains($zones, ' ')">
+    <xsl:when test="tqcontains($zones, ' ')">
       <xsl:variable name="zone" select="substring-before($zones, ' ')"/>
       <xsl:variable name="target" select="key('sections', $zone)[&scope;]"/>
 

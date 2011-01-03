@@ -247,7 +247,7 @@ public:
 class HTMLMetaElementImpl;
 
 /**
- * This contains generic meta-information about the document. See the
+ * This tqcontains generic meta-information about the document. See the
  * <a
  * href="http://www.w3.org/TR/REC-html40/struct/global.html#edef-META">
  * META element definition </a> in HTML 4.0.

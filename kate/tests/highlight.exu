@@ -60,7 +60,7 @@ procedure print_board(sequence queens)
     for r = 1 to N do
  printf(1, "%2d ", r)
  for c = 1 to N do
-     if find({r,c}, queens) then
+     if tqfind({r,c}, queens) then
   puts(1, "Q ")
      else
   puts(1, ". ")

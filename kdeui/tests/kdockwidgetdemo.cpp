@@ -82,7 +82,7 @@ SFileDialog::SFileDialog( TQString initially, const TQStringList& filter, const 
 :TQDialog(0L,name,true)
 {
   KConfig* config = kapp->config();
-  config->setGroup( TQString::fromLatin1("SFileDialogData:") + name );
+  config->setGroup( TQString::tqfromLatin1("SFileDialogData:") + name );
   if ( initially.isNull() ){
     initially = config->readPathEntry( "InitiallyDir", TQDir::currentDirPath() );
   }
@@ -242,7 +242,7 @@ void PixmapView::setPixmap( const TQPixmap &pix )
 {
     pixmap = pix;
     resizeContents( pixmap.size().width(), pixmap.size().height() );
-    viewport()->repaint( true );
+    viewport()->tqrepaint( true );
 }
 
 void PixmapView::drawContents( TQPainter *p, int, int, int, int )
@@ -280,7 +280,7 @@ void Preview::showPreview( const TQString &str )
 		    TQTextStream ts( &f );
 		    TQString text = ts.read();
 		    f.close();
-		    if ( fi.extension().lower().contains( "htm" ) ) {
+		    if ( fi.extension().lower().tqcontains( "htm" ) ) {
 			TQString url = html->mimeSourceFactory()->makeAbsolute( path, html->context() );
 			html->setText( text, url ); 	
 			raiseWidget( html );
@@ -777,13 +777,13 @@ int main(int argc, char* argv[]) {
 #endif
 
 #if 0
-  qDebug ( SFileDialog::getOpenFileName( TQString::null, TQString::fromLatin1("All (*)"),
-                                         TQString::fromLatin1("DockWidget Demo"), "dialog1" ) );
+  qDebug ( SFileDialog::getOpenFileName( TQString::null, TQString::tqfromLatin1("All (*)"),
+                                         TQString::tqfromLatin1("DockWidget Demo"), "dialog1" ) );
 #endif
 
 #if 1
-  TQStringList s = SFileDialog::getOpenFileNames( TQString::null, TQString::fromLatin1("All (*)"),
-                                                TQString::fromLatin1("DockWidget Demo"), "dialog1" );
+  TQStringList s = SFileDialog::getOpenFileNames( TQString::null, TQString::tqfromLatin1("All (*)"),
+                                                TQString::tqfromLatin1("DockWidget Demo"), "dialog1" );
   TQStringList::Iterator it = s.begin();
   for ( ; it != s.end(); ++it ){
     qDebug( "%s", (*it).local8Bit().data() );

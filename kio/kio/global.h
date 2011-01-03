@@ -416,16 +416,16 @@ namespace KIO
    * right now. This means, it has to be mounted, not just
    * defined in fstab.
    */
-  KIO_EXPORT TQString findDeviceMountPoint( const TQString& device );
+  KIO_EXPORT TQString tqfindDeviceMountPoint( const TQString& device );
 
   /**
    * Returns the mount point on which resides @p filename.
-   * For instance if /home is a separate partition, findPathMountPoint("/home/user/blah")
+   * For instance if /home is a separate partition, tqfindPathMountPoint("/home/user/blah")
    * will return /home
    * @param filename the file name to check
    * @return the mount point of the given @p filename
    */
-  KIO_EXPORT TQString findPathMountPoint( const TQString & filename );
+  KIO_EXPORT TQString tqfindPathMountPoint( const TQString & filename );
 
   /**
    * Checks if the path belongs to a filesystem that is probably
@@ -475,12 +475,12 @@ namespace KIO
  *
  * Any file or URL can be represented by the UDSEntry type below
  * A UDSEntry is a list of atoms
- * Each atom contains a specific bit of information for the file
+ * Each atom tqcontains a specific bit of information for the file
  *
  * The following UDS constants represent the different possible values
  * for m_uds in the UDS atom structure below
  *
- * Each atom contains a specific bit of information for the file
+ * Each atom tqcontains a specific bit of information for the file
  */
 class KIO_EXPORT UDSAtom
 {
@@ -536,7 +536,7 @@ public:
            it !=  metaData.end();
            ++it)
       {
-         replace(it.key(), it.data());
+         tqreplace(it.key(), it.data());
       }
       return *this;
    }

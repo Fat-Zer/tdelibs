@@ -73,7 +73,7 @@ static void tokenize(list<TQCString>& res, const TQCString& text, char tr, bool 
   while(zwei!=-1)
     {
       teil="";
-      zwei=text.find(tr, eins);
+      zwei=text.tqfind(tr, eins);
       if(zwei!=-1)
 	{
 	  teil=text.mid(eins, zwei-eins);
@@ -472,7 +472,7 @@ KeyValueMap::getRaw(const TQCString& key, TQCString& value) const
   // ###########################################################################
   kdDebug(GUARD, KAB_KDEBUG_AREA) <<
       "KeyValueMap::getRaw: trying to get raw value for key \"" << key << "\" ...\n";
-  StringStringMap::iterator pos=data->find(key);
+  StringStringMap::iterator pos=data->tqfind(key);
   // -----
   if(pos==data->end())
     {
@@ -503,7 +503,7 @@ KeyValueMap::insertRaw(const TQCString& key, const TQCString& value, bool force)
       kdDebug() << "KeyValueMap::insertRaw: tried to insert empty key." << endl;
       return false;
     }
-  if(force) // entry will be replaced
+  if(force) // entry will be tqreplaced
     {
       n=data->erase(key);
     }
@@ -573,7 +573,7 @@ KeyValueMap::insertLine(TQCString line, bool force, bool relax, bool encode)
       return false;
     }
   // -----
-  index=line.find('=');
+  index=line.tqfind('=');
   if(index==-1)  // not found
       {
 	  kdDebug() << "KeyValueMap::insertLine: no \"=\" found in \""<<line<<"\".\n";
@@ -680,7 +680,7 @@ KeyValueMap::get(const TQCString& key, TQString& value) const
 					<< key << " not in KeyValueMap.\n";
 	return false;
     }
-  // ----- find its state:
+  // ----- tqfind its state:
   value=TQString::fromUtf8(v); // is there a better way?
   kdDebug(GUARD, KAB_KDEBUG_AREA) <<  "KeyValueMap::get[QString]: success, value"
 	     " (in UTF8) is " << v << endl;
@@ -721,7 +721,7 @@ KeyValueMap::get(const TQCString& key, bool& value) const
 					<< key << " not in KeyValueMap.";
       return false;
     }
-  // ----- find its state:
+  // ----- tqfind its state:
   v=v.stripWhiteSpace();
   if(v=="true")
     {
@@ -1011,11 +1011,11 @@ KeyValueMap::get(const TQCString& key, list<TQCString>& values) const
     }
   // -----
   for(;;)
-    { // ----- parten the string down into a list, find special characters:
+    { // ----- parten the string down into a list, tqfind special characters:
       second=first;
       for(;;)
 	{
-	  second=raw.find('\\', second);
+	  second=raw.tqfind('\\', second);
 	  // ----- this may never be the last and also not the second last
 	  //       character in a complex string:
 	  if(second!=-1)
@@ -1120,11 +1120,11 @@ KeyValueMap::get(const TQCString& key, TQStrList& values) const
     }
   // -----
   for(;;)
-    { // ----- parten the string down into a list, find special characters:
+    { // ----- parten the string down into a list, tqfind special characters:
       second=first;
       for(;;)
 	{
-	  second=raw.find('\\', second);
+	  second=raw.tqfind('\\', second);
 	  // ----- this may never be the last and also not the second last
 	  //       character in a complex string:
 	  if(second!=-1)
@@ -1471,15 +1471,15 @@ Section::add(const TQCString& name, Section* section)
 }
 
 bool
-Section::find(const TQCString& name, StringSectionMap::iterator& result)
+Section::tqfind(const TQCString& name, StringSectionMap::iterator& result)
 {
   register bool GUARD; GUARD=false;
   // ###########################################################################
-  kdDebug(GUARD, KAB_KDEBUG_AREA) <<  "Section::find: trying to get section "
+  kdDebug(GUARD, KAB_KDEBUG_AREA) <<  "Section::tqfind: trying to get section "
       "\""<<name<<"\" ... \n";
   StringSectionMap::iterator pos;
   // -----
-  pos=sections.find(name);
+  pos=sections.tqfind(name);
   if(pos==sections.end())
     {
       kdDebug(GUARD, KAB_KDEBUG_AREA) <<  "failed, no such section." << endl;
@@ -1498,7 +1498,7 @@ Section::remove(const TQCString& name)
   // ###########################################################################
   StringSectionMap::iterator pos;
   // -----
-  if(!find(name, pos))
+  if(!tqfind(name, pos))
     {
       return false; // no such section
     } else {
@@ -1509,12 +1509,12 @@ Section::remove(const TQCString& name)
 }
 
 bool
-Section::find(const TQCString& name, Section*& section)
+Section::tqfind(const TQCString& name, Section*& section)
 {
   // ###########################################################################
   StringSectionMap::iterator pos;
   // -----
-  if(!find(name, pos))
+  if(!tqfind(name, pos))
     {
       return false;
     } else {
@@ -1637,7 +1637,7 @@ Section::readSection(TQTextStream& file, bool finish)
 	{
 	  name=nameOfSection(line);
 	  add(name);
-	  find(name, temp);
+	  tqfind(name, temp);
 	  if(!temp->readSection(file))
 	    {
 		kdDebug() << "Section::readSection: unable to read "
@@ -1675,7 +1675,7 @@ Section::isBeginOfSection(TQCString line)
       return false;
     }
   // -----
-  if(line.contains("END"))
+  if(line.tqcontains("END"))
     {
       return false;
     } else {
@@ -1708,8 +1708,8 @@ Section::isEndOfSection(TQCString line)
 		 "Section::isBeginOfSection: does not match." << endl;
       return false;
     }
-  // ----- find the word inside the brackets:
-  for(first=1; line[first]==' '; ++first); // find first non-whitespace character
+  // ----- tqfind the word inside the brackets:
+  for(first=1; line[first]==' '; ++first); // tqfind first non-whitespace character
   for(second=first; line[second]!=' ' && line[second]!=']'; ++second);
   temp=line.mid(first, second-first);
   if(temp=="END")
@@ -1744,8 +1744,8 @@ Section::nameOfSection(const TQCString& line)
     {
       return "";
     }
-  // ----- find the word inside the brackets:
-  for(first=1; temp[first]==' '; ++first); // find first non-whitespace character
+  // ----- tqfind the word inside the brackets:
+  for(first=1; temp[first]==' '; ++first); // tqfind first non-whitespace character
   for(second=first; temp[second]!=' ' && temp[second]!=']'; ++second);
   temp=temp.mid(first, second-first);
   if(temp=="END")
@@ -1864,7 +1864,7 @@ QConfigDB::get(const list<TQCString>& key, KeyValueMap*& map)
     }
   for(pos=key.begin(); pos!=key.end(); ++pos)
     {
-      if(!section->find(*pos, section))
+      if(!section->tqfind(*pos, section))
 	{
 	  kdDebug(GUARD, KAB_KDEBUG_AREA) <<
 		     "failed,\n               at least the element \""
@@ -1902,7 +1902,7 @@ QConfigDB::createSection(const list<TQCString>& key)
   pos=key.begin();
   for(index=0; index<key.size()-1; index++)
     {
-      if(!section->find(*pos, section))
+      if(!section->tqfind(*pos, section))
 	{ // this section is not declared
 	  Section* temp=new Section; // WORK_TO_DO: memory hole?
 	  if(section->add(*pos, temp))
@@ -1975,7 +1975,7 @@ QConfigDB::stringToKeylist(const TQCString& desc)
     }
   for(;;)
     {
-      second=desc.find('/', first);
+      second=desc.tqfind('/', first);
       if(second==-1)
 	{
 	  if((unsigned)first<desc.length()+1)
@@ -2020,7 +2020,7 @@ QConfigDB::get(const list<TQCString>& key, Section*& section)
   // -----
   for(pos=key.begin(); pos!=key.end(); ++pos)
     {
-      if(!temp->find(*pos, temp))
+      if(!temp->tqfind(*pos, temp))
 	{
 	  kdDebug(GUARD, KAB_KDEBUG_AREA) <<  "failure, no such section.";
 	  return false;

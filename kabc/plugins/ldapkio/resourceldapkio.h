@@ -158,7 +158,7 @@ protected slots:
     void activateCache();
     void enter_loop();
     TQCString addEntry( const TQString &attr, const TQString &value, bool mod );
-    TQString findUid( const TQString &uid );
+    TQString tqfindUid( const TQString &uid );
     bool AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr, 
       const TQString &olddn );
     

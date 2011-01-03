@@ -108,7 +108,7 @@ class PageNode
 					if( **i < **j )
 					{
 						finished = false;
-						qSwap( *i, *j );
+						tqSwap( *i, *j );
 						lastswapped = j;
 					}
 					--i;
@@ -484,12 +484,12 @@ bool Dialog::isPluginForKCMEnabled( KCModuleInfo * moduleinfo ) const
 			pcit != parentComponents.end(); ++pcit )
 	{
 		// if the parentComponent is not registered ignore it
-		if( d->registeredComponents.find( *pcit ) ==
+		if( d->registeredComponents.tqfind( *pcit ) ==
 				d->registeredComponents.end() )
 			continue;
 
 		// we check if the parent component is a plugin
-		if( ! d->plugininfomap.contains( *pcit ) )
+		if( ! d->plugininfomap.tqcontains( *pcit ) )
 		{
 			// if not the KCModule must be enabled
 			enabled = true;

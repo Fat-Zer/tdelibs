@@ -91,7 +91,7 @@ void KComboBox::init()
 }
 
 
-bool KComboBox::contains( const TQString& _text ) const
+bool KComboBox::tqcontains( const TQString& _text ) const
 {
     if ( _text.isEmpty() )
         return false;
@@ -163,7 +163,7 @@ void KComboBox::makeCompletion( const TQString& text )
         if( text.isNull() || !listBox() )
             return;
 
-        const int index = listBox()->index( listBox()->findItem( text ) );
+        const int index = listBox()->index( listBox()->tqfindItem( text ) );
         if( index >= 0 )
             setCurrentItem( index );
     }
@@ -508,7 +508,7 @@ void KHistoryCombo::addToHistory( const TQString& item )
         // anymore available at all in the combobox.
         const TQString rmItem = text( rmIndex );
         removeItem( rmIndex );
-        if ( useComp && !contains( rmItem ) )
+        if ( useComp && !tqcontains( rmItem ) )
             completionObject()->removeItem( rmItem );
     }
 
@@ -616,12 +616,12 @@ void KHistoryCombo::keyPressEvent( TQKeyEvent *e )
     KKey event_key( e );
 
     // going up in the history, rotating when reaching TQListBox::count()
-    if ( KStdAccel::rotateUp().contains(event_key) )
+    if ( KStdAccel::rotateUp().tqcontains(event_key) )
         rotateUp();
 
     // going down in the history, no rotation possible. Last item will be
     // the text that was in the lineedit before Up was called.
-    else if ( KStdAccel::rotateDown().contains(event_key) )
+    else if ( KStdAccel::rotateDown().tqcontains(event_key) )
         rotateDown();
     else
         KComboBox::keyPressEvent( e );
@@ -764,14 +764,14 @@ KHistoryComboEditor::KHistoryComboEditor( const TQStringList& entries, TQWidget 
         new TQListViewItem( m_pListView, *it );
     }
 
-    m_pListView->setMinimumSize( m_pListView->sizeHint() );
+    m_pListView->setMinimumSize( m_pListView->tqsizeHint() );
 
     connect( m_pListView, TQT_SIGNAL( selectionChanged( TQListViewItem * ) ),
              this, TQT_SLOT( slotSelectionChanged( TQListViewItem * ) ) );
 
     enableButton( KDialogBase::User1, false );
 
-    resize( sizeHint() );
+    resize( tqsizeHint() );
 }
 
 KHistoryComboEditor::~KHistoryComboEditor()

@@ -108,7 +108,7 @@ static void kwin_net_create_atoms() {
 #ifdef Q_WS_X11
 static void sendClientMessageToRoot(Window w, Atom a, long x, long y = 0, long z = 0 ){
   XEvent ev;
-  long mask;
+  long tqmask;
 
   memset(&ev, 0, sizeof(ev));
   ev.xclient.type = ClientMessage;
@@ -118,8 +118,8 @@ static void sendClientMessageToRoot(Window w, Atom a, long x, long y = 0, long z
   ev.xclient.data.l[0] = x;
   ev.xclient.data.l[1] = y;
   ev.xclient.data.l[2] = z;
-  mask = SubstructureRedirectMask;
-  XSendEvent(qt_xdisplay(), qt_xrootwin(), False, mask, &ev);
+  tqmask = SubstructureRedirectMask;
+  XSendEvent(qt_xdisplay(), qt_xrootwin(), False, tqmask, &ev);
 }
 #endif
 
@@ -129,7 +129,7 @@ static void sendClientMessageToRoot(Window w, Atom a, long x, long y = 0, long z
 #ifdef Q_WS_X11
 static void sendClientMessage(Window w, Atom a, long x){
   XEvent ev;
-  long mask;
+  long tqmask;
 
   memset(&ev, 0, sizeof(ev));
   ev.xclient.type = ClientMessage;
@@ -138,10 +138,10 @@ static void sendClientMessage(Window w, Atom a, long x){
   ev.xclient.format = 32;
   ev.xclient.data.l[0] = x;
   ev.xclient.data.l[1] = CurrentTime;
-  mask = 0L;
+  tqmask = 0L;
   if (w == qt_xrootwin())
-    mask = SubstructureRedirectMask;        /* magic! */
-  XSendEvent(qt_xdisplay(), w, False, mask, &ev);
+    tqmask = SubstructureRedirectMask;        /* magic! */
+  XSendEvent(qt_xdisplay(), w, False, tqmask, &ev);
 }
 #endif
 
@@ -179,7 +179,7 @@ ContextWidget::ContextWidget()
 			      LeaveWindowMask ),
 		      GrabModeAsync, GrabModeAsync,
 		      None, c.handle(), CurrentTime );
-	qApp->enter_loop();
+	tqApp->enter_loop();
     }
 
 
@@ -205,7 +205,7 @@ bool ContextWidget::x11Event( XEvent * ev)
 	    e.xbutton.x = lx;
 	    e.xbutton.y = ly;
 	    XSendEvent( qt_xdisplay(), w, true, ButtonPressMask, &e );
-	    qApp->exit_loop();
+	    tqApp->exit_loop();
 	    return true;
 	}
 	return false;
@@ -313,7 +313,7 @@ void KWin::setMainWindow( TQWidget* subwindow, WId mainwindow )
          Grmbl. See TQDialog::show(). That should get fixed in Qt somehow.
         */
         if( tqqt_cast< TQDialog* >( subwindow ) != NULL
-            && subwindow->parentWidget() == NULL
+            && subwindow->tqparentWidget() == NULL
             && kapp->mainWidget() != NULL )
         {
             kdWarning() << "KWin::setMainWindow(): There either mustn't be kapp->mainWidget(),"
@@ -386,7 +386,7 @@ KWin::Info KWin::info( WId win )
     w.pid = inf.pid();
     NETRect frame, geom;
     inf.kdeGeometry( frame, geom );
-    w.geometry.setRect( geom.pos.x, geom.pos.y, geom.size.width, geom.size.height );
+    w.tqgeometry.setRect( geom.pos.x, geom.pos.y, geom.size.width, geom.size.height );
     w.frameGeometry.setRect( frame.pos.x, frame.pos.y, frame.size.width, frame.size.height );
 #endif
     return w;
@@ -421,14 +421,14 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
 
     if( flags & WMHints ) {
         Pixmap p = None;
-        Pixmap p_mask = None;
+        Pixmap p_tqmask = None;
 
         XWMHints *hints = XGetWMHints(qt_xdisplay(), win );
         if (hints && (hints->flags & IconPixmapHint)){
     	    p = hints->icon_pixmap;
         }
         if (hints && (hints->flags & IconMaskHint)){
-	    p_mask = hints->icon_mask;
+	    p_tqmask = hints->icon_mask;
         }
         if (hints)
 	    XFree((char*)hints);
@@ -448,9 +448,9 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
 	        XCopyArea(qt_xdisplay(), p, pm.handle(),
 		          qt_xget_temp_gc(qt_xscreen(), depth==1),
 		          0, 0, w, h, 0, 0);
-	        if (p_mask != None){
+	        if (p_tqmask != None){
 	    	    TQBitmap bm(w, h);
-		    XCopyArea(qt_xdisplay(), p_mask, bm.handle(),
+		    XCopyArea(qt_xdisplay(), p_tqmask, bm.handle(),
 			      qt_xget_temp_gc(qt_xscreen(), true),
 			      0, 0, w, h, 0, 0);
 		    pm.setMask(bm);
@@ -752,8 +752,8 @@ class KWin::WindowInfoPrivate
 	WId win_;
 	TQString name_;
         TQString iconic_name_;
-	TQRect geometry_;
-        TQRect frame_geometry_;
+	TQRect tqgeometry_;
+        TQRect frame_tqgeometry_;
 	int ref;
         bool valid;
     private:
@@ -806,8 +806,8 @@ KWin::WindowInfo::WindowInfo( WId win, unsigned long properties, unsigned long p
     if( properties & ( NET::WMGeometry | NET::WMKDEFrameStrut )) {
         NETRect frame, geom;
         d->info->kdeGeometry( frame, geom );
-        d->geometry_.setRect( geom.pos.x, geom.pos.y, geom.size.width, geom.size.height );
-        d->frame_geometry_.setRect( frame.pos.x, frame.pos.y, frame.size.width, frame.size.height );
+        d->tqgeometry_.setRect( geom.pos.x, geom.pos.y, geom.size.width, geom.size.height );
+        d->frame_tqgeometry_.setRect( frame.pos.x, frame.pos.y, frame.size.width, frame.size.height );
     }
     d->valid = !handler.error( false ); // no sync - NETWinInfo did roundtrips
 #endif
@@ -1068,12 +1068,12 @@ int KWin::WindowInfo::desktop() const
 #endif
 }
 
-TQRect KWin::WindowInfo::geometry() const
+TQRect KWin::WindowInfo::tqgeometry() const
 {
 #ifdef Q_WS_X11
     kdWarning(( d->info->passedProperties()[ NETWinInfo::PROTOCOLS ] & NET::WMGeometry ) == 0, 176 )
         << "Pass NET::WMGeometry to KWin::windowInfo()" << endl;
-    return d->geometry_;
+    return d->tqgeometry_;
 #else
     return TQRect( 100, 100, 200, 200 );
 #endif
@@ -1084,7 +1084,7 @@ TQRect KWin::WindowInfo::frameGeometry() const
 #ifdef Q_WS_X11
     kdWarning(( d->info->passedProperties()[ NETWinInfo::PROTOCOLS ] & NET::WMKDEFrameStrut ) == 0, 176 )
         << "Pass NET::WMKDEFrameStrut to KWin::windowInfo()" << endl;
-    return d->frame_geometry_;
+    return d->frame_tqgeometry_;
 #else
     return TQRect();
 #endif

@@ -80,7 +80,7 @@ public:
      */
     void setDefaultColor( const TQColor &c );
 
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
 
 signals:
     /**

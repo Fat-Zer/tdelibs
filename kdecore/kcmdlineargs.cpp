@@ -63,7 +63,7 @@ public:
      : TQAsciiDict<TQCString>( 7 ) { }
 
    // WABA: Huh?
-   // The compiler doesn't find KCmdLineParsedOptions::write(s) by itself ???
+   // The compiler doesn't tqfind KCmdLineParsedOptions::write(s) by itself ???
    // WABA: No, because there is another write function that hides the
    // write function in the base class even though this function has a
    // different signature. (obscure C++ feature)
@@ -352,7 +352,7 @@ void KCmdLineArgs::removeArgs(const char *id)
  *  +4 - no more options follow         // !fork
  */
 static int
-findOption(const KCmdLineOptions *options, TQCString &opt,
+tqfindOption(const KCmdLineOptions *options, TQCString &opt,
            const char *&opt_name, const char *&def, bool &enabled)
 {
    int result;
@@ -393,7 +393,7 @@ findOption(const KCmdLineOptions *options, TQCString &opt,
                if (!options->name)
                   return result+0;
                TQCString nextOption = options->name;
-               int p = nextOption.find(' ');
+               int p = nextOption.tqfind(' ');
                if (p > 0)
                   nextOption = nextOption.left(p);
                if (nextOption[0] == '!')
@@ -403,7 +403,7 @@ findOption(const KCmdLineOptions *options, TQCString &opt,
                   nextOption = nextOption.mid(2);
                   enabled = !enabled;
                }
-               result = findOption(options, nextOption, opt_name, def, enabled);
+               result = tqfindOption(options, nextOption, opt_name, def, enabled);
                assert(result);
                opt = nextOption;
                return result;
@@ -426,13 +426,13 @@ findOption(const KCmdLineOptions *options, TQCString &opt,
 
 
 void
-KCmdLineArgs::findOption(const char *_opt, TQCString opt, int &i, bool _enabled, bool &moreOptions)
+KCmdLineArgs::tqfindOption(const char *_opt, TQCString opt, int &i, bool _enabled, bool &moreOptions)
 {
    KCmdLineArgs *args = argsList->first();
    const char *opt_name;
    const char *def;
    TQCString argument;
-   int j = opt.find('=');
+   int j = opt.tqfind('=');
    if (j != -1)
    {
       argument = opt.mid(j+1);
@@ -444,7 +444,7 @@ KCmdLineArgs::findOption(const char *_opt, TQCString opt, int &i, bool _enabled,
    while (args)
    {
       enabled = _enabled;
-      result = ::findOption(args->options, opt, opt_name, def, enabled);
+      result = ::tqfindOption(args->options, opt, opt_name, def, enabled);
       if (result) break;
       args = argsList->next();
    }
@@ -461,7 +461,7 @@ KCmdLineArgs::findOption(const char *_opt, TQCString opt, int &i, bool _enabled,
          while (args)
          {
             enabled = _enabled;
-            result = ::findOption(args->options, singleCharOption, opt_name, def, enabled);
+            result = ::tqfindOption(args->options, singleCharOption, opt_name, def, enabled);
             if (result) break;
             args = argsList->next();
          }
@@ -646,7 +646,7 @@ KCmdLineArgs::parseAllArgs()
               option += 2;
               enabled = false;
            }
-           findOption(orig, option, i, enabled, inOptions);
+           tqfindOption(orig, option, i, enabled, inOptions);
          }
       }
       else
@@ -858,7 +858,7 @@ KCmdLineArgs::usage(const char *id)
      bool hasOptions = false;
      TQString optionsHeader;
      if (args->name)
-        optionsHeader = optionHeaderString.arg(i18n("%1 options").arg(TQString::fromLatin1(args->name)));
+        optionsHeader = optionHeaderString.arg(i18n("%1 options").arg(TQString::tqfromLatin1(args->name)));
      else
         optionsHeader = i18n("\nOptions:\n");
 
@@ -1081,9 +1081,9 @@ KCmdLineArgs::setOption(const TQCString &opt, bool enabled)
    }
 
    if (enabled)
-      parsedOptionList->replace( opt, new TQCString("t") );
+      parsedOptionList->tqreplace( opt, new TQCString("t") );
    else
-      parsedOptionList->replace( opt, new TQCString("f") );
+      parsedOptionList->tqreplace( opt, new TQCString("f") );
 }
 
 void
@@ -1119,7 +1119,7 @@ KCmdLineArgs::getOption(const char *_opt) const
    TQCString *value = 0;
    if (parsedOptionList)
    {
-      value = parsedOptionList->find(_opt);
+      value = parsedOptionList->tqfind(_opt);
    }
 
    if (value)
@@ -1130,7 +1130,7 @@ KCmdLineArgs::getOption(const char *_opt) const
    const char *def;
    bool dummy = true;
    TQCString opt = _opt;
-   int result = ::findOption( options, opt, opt_name, def, dummy) & ~4;
+   int result = ::tqfindOption( options, opt, opt_name, def, dummy) & ~4;
 
    if (result != 3)
    {
@@ -1183,7 +1183,7 @@ KCmdLineArgs::isSet(const char *_opt) const
    const char *def;
    bool dummy = true;
    TQCString opt = _opt;
-   int result = ::findOption( options, opt, opt_name, def, dummy) & ~4;
+   int result = ::tqfindOption( options, opt, opt_name, def, dummy) & ~4;
 
    if (result == 0)
    {
@@ -1199,7 +1199,7 @@ KCmdLineArgs::isSet(const char *_opt) const
    TQCString *value = 0;
    if (parsedOptionList)
    {
-      value = parsedOptionList->find(opt);
+      value = parsedOptionList->tqfind(opt);
    }
 
    if (value)

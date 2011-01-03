@@ -17,7 +17,7 @@ LIBS += $$KDELIBDESTDIR/katepartinterfaces$$KDELIB_SUFFIX \
 INCLUDEPATH += $(KDELIBS)/interfaces $(KDELIBS)/interfaces/kregexpeditor \
 	$(KDELIBS)/kutils $(KDELIBS)/kdeprint
 
-system( bash kmoc )
+system( bash ktqmoc )
 system( bash kdcopidl )
 
 SOURCES = \

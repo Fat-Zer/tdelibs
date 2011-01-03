@@ -86,7 +86,7 @@ public:
 
     virtual void updateFromElement();
 
-    virtual void layout();
+    virtual void tqlayout();
     virtual short baselinePosition( bool ) const;
 
     DOM::HTMLGenericFormElementImpl *element() const
@@ -293,14 +293,14 @@ public:
     RenderFieldset(DOM::HTMLGenericFormElementImpl *element);
 
     virtual const char *renderName() const { return "RenderFieldSet"; }
-    virtual RenderObject* layoutLegend(bool relayoutChildren);
+    virtual RenderObject* tqlayoutLegend(bool retqlayoutChildren);
     virtual void setStyle(RenderStyle* _style);
 
 protected:
     virtual void paintBoxDecorations(PaintInfo& pI, int _tx, int _ty);
     void paintBorderMinusLegend(TQPainter *p, int _tx, int _ty, int w,
                                   int h, const RenderStyle *style, int lx, int lw);
-    RenderObject* findLegend();
+    RenderObject* tqfindLegend();
 };
 
 // -------------------------------------------------------------------------
@@ -385,7 +385,7 @@ public:
     virtual const char *renderName() const { return "RenderSelect"; }
 
     virtual void calcMinMaxWidth();
-    virtual void layout();
+    virtual void tqlayout();
 
     void setOptionsChanged(bool _optionsChanged);
 
@@ -436,14 +436,14 @@ private slots:
     void slotReplaceText(const TQString&, int, int, int);
     void slotFindHighlight(const TQString&, int, int);
 private:
-    KFindDialog *m_findDlg;
-    KFind *m_find;
+    KFindDialog *m_tqfindDlg;
+    KFind *m_tqfind;
     KReplaceDialog *m_repDlg;
-    KReplace *m_replace;
-    KAction *m_findAction;
-    KAction *m_findNextAction;
-    KAction *m_replaceAction;
-    int m_findIndex, m_findPara;
+    KReplace *m_tqreplace;
+    KAction *m_tqfindAction;
+    KAction *m_tqfindNextAction;
+    KAction *m_tqreplaceAction;
+    int m_tqfindIndex, m_tqfindPara;
     int m_repIndex, m_repPara;
 };
 
@@ -459,7 +459,7 @@ public:
 
     virtual const char *renderName() const { return "RenderTextArea"; }
     virtual void calcMinMaxWidth();
-    virtual void layout();
+    virtual void tqlayout();
     virtual void setStyle(RenderStyle *style);
 
     virtual void close ( );

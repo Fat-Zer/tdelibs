@@ -380,8 +380,8 @@ private slots:
 
 signals:
   /**
-   * This signal is emitted when this object finds an error.
-   * The @p code parameter contains the error code that can
+   * This signal is emitted when this object tqfinds an error.
+   * The @p code parameter tqcontains the error code that can
    * also be found by calling @ref error.
    */
   void gotError(int code);

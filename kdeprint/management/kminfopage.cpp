@@ -32,7 +32,7 @@ KMInfoPage::KMInfoPage(TQWidget *parent, const char *name)
 {
 	m_title = new TQLabel(this);
 	m_titlepixmap = new TQLabel(this);
-	m_titlepixmap->setAlignment(Qt::AlignCenter);
+	m_titlepixmap->tqsetAlignment(Qt::AlignCenter);
         KSeparator* sep = new KSeparator( KSeparator::HLine, this);
 	m_type = new TQLabel(this);
 	m_description = new TQLabel(this);
@@ -42,19 +42,19 @@ KMInfoPage::KMInfoPage(TQWidget *parent, const char *name)
 	m_uri = new TQLabel(this);
 	m_device = new TQLabel(this);
 	QLabel	*m_loclabel = new TQLabel(i18n("Physical Location", "Location:"), this);
-	m_loclabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_loclabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	QLabel	*m_desclabel = new TQLabel(i18n("Description:"), this);
-	m_desclabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_desclabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	QLabel	*m_typelabel = new TQLabel(i18n("Type:"), this);
-	m_typelabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
-	QLabel	*m_statelabel = new TQLabel(i18n("Status", "State:"), this);
-	m_statelabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_typelabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	QLabel	*m_statelabel = new TQLabel(i18n("tqStatus", "State:"), this);
+	m_statelabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	QLabel	*m_urilabel = new TQLabel(i18n("URI:"), this);
-	m_urilabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_urilabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	m_devlabel = new TQLabel(i18n("Device:"), this);
-	m_devlabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_devlabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	QLabel	*m_modellabel = new TQLabel(i18n("Model:"), this);
-	m_modellabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_modellabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
 
 	QGridLayout	*lay0 = new TQGridLayout(this, 11, 2, 0, 5);
 	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 10);
@@ -107,7 +107,7 @@ void KMInfoPage::setPrinter(KMPrinter *p)
 	}
 	else
 	{
-		m_title->setText(TQString::fromLatin1("<b>%1</b>").arg(p->name()));
+		m_title->setText(TQString::tqfromLatin1("<b>%1</b>").arg(p->name()));
 		m_titlepixmap->setPixmap(SmallIcon(p->pixmap()));
 		if (p->isImplicit()) m_type->setText(i18n("Implicit class"));
 		else if (p->isClass(false))
@@ -133,7 +133,7 @@ void KMInfoPage::setPrinter(KMPrinter *p)
 		}
 		else
 		{
-			// double decoding in case printer name contains
+			// double decoding in case printer name tqcontains
 			// annoying chars like '#'
                         KURL dev(p->device());
 			m_device->setText(KURL::decode_string(dev.prettyURL()));

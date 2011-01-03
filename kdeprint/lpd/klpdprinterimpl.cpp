@@ -46,6 +46,6 @@ bool KLpdPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 		printer->setErrorMessage(i18n("The <b>%1</b> executable could not be found in your path. Check your installation.").arg("lpr"));
 		return false;
 	}
-	cmd = TQString::fromLatin1("%1 -P %2 '-#%3'").arg(exestr).arg(quote(printer->printerName())).arg(printer->numCopies());
+	cmd = TQString::tqfromLatin1("%1 -P %2 '-#%3'").arg(exestr).arg(quote(printer->printerName())).arg(printer->numCopies());
 	return true;
 }

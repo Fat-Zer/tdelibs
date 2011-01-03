@@ -66,9 +66,9 @@ KTar::KTar( const TQString& filename, const TQString & _mimetype )
     if ( mimetype.isEmpty() ) // Find out mimetype manually
     {
         if ( TQFile::exists( filename ) )
-            mimetype = KMimeType::findByFileContent( filename )->name();
+            mimetype = KMimeType::tqfindByFileContent( filename )->name();
         else
-            mimetype = KMimeType::findByPath( filename, 0, true )->name();
+            mimetype = KMimeType::tqfindByPath( filename, 0, true )->name();
         kdDebug(7041) << "KTar::KTar mimetype = " << mimetype << endl;
 
         // Don't move to prepareDevice - the other constructor theoretically allows ANY filter
@@ -137,7 +137,7 @@ void KTar::prepareDevice( const TQString & filename,
     // the file is completly extracted instead,
     // and we work on the extracted tar file.
     // This improves the extraction speed by the tar ioslave dramatically,
-    // if the archive file contains many files.
+    // if the archive file tqcontains many files.
     // This is because the tar ioslave extracts one file after the other and normally
     // has to walk through the decompression filter each time.
     // Which is in fact nearly as slow as a complete decompression for each file.
@@ -185,9 +185,9 @@ void KTar::setOrigFileName( const TQCString & fileName )
     d->origFileName = fileName;
 }
 
-Q_LONG KTar::readRawHeader(char *buffer) {
+TQ_LONG KTar::readRawHeader(char *buffer) {
   // Read header
-  Q_LONG n = device()->readBlock( buffer, 0x200 );
+  TQ_LONG n = device()->readBlock( buffer, 0x200 );
   if ( n == 0x200 && buffer[0] != 0 ) {
     // Make sure this is actually a tar header
     if (strncmp(buffer + 257, "ustar", 5)) {
@@ -223,7 +223,7 @@ Q_LONG KTar::readRawHeader(char *buffer) {
 }
 
 bool KTar::readLonglink(char *buffer,TQCString &longlink) {
-  Q_LONG n = 0;
+  TQ_LONG n = 0;
   TQIODevice *dev = device();
   // read size of longlink from size field in header
   // size is in bytes including the trailing null (which we ignore)
@@ -252,11 +252,11 @@ bool KTar::readLonglink(char *buffer,TQCString &longlink) {
   return true;
 }
 
-Q_LONG KTar::readHeader(char *buffer,TQString &name,TQString &symlink) {
+TQ_LONG KTar::readHeader(char *buffer,TQString &name,TQString &symlink) {
   name.truncate(0);
   symlink.truncate(0);
   while (true) {
-    Q_LONG n = readRawHeader(buffer);
+    TQ_LONG n = readRawHeader(buffer);
     if (n != 0x200) return n;
 
     // is it a longlink?
@@ -320,7 +320,7 @@ bool KTar::KTarPrivate::fillTempFile( const TQString & filename) {
             delete filterDev;
             return false;
         }
-        Q_LONG len = -1;
+        TQ_LONG len = -1;
         while ( !filterDev->atEnd() && len != 0) {
             len = filterDev->readBlock(buffer.data(),buffer.size());
             if ( len < 0 ) { // corrupted archive
@@ -353,7 +353,7 @@ bool KTar::openArchive( int mode )
         return false;
 
     // We'll use the permission and user/group of d->rootDir
-    // for any directory we emulate (see findOrCreate)
+    // for any directory we emulate (see tqfindOrCreate)
     //struct stat buf;
     //stat( m_filename, &buf );
 
@@ -372,7 +372,7 @@ bool KTar::openArchive( int mode )
         TQString symlink;
 
         // Read header
-        Q_LONG n = readHeader(buffer,name,symlink);
+        TQ_LONG n = readHeader(buffer,name,symlink);
         if (n < 0) return false;
         if (n == 0x200)
         {
@@ -385,7 +385,7 @@ bool KTar::openArchive( int mode )
                 name = name.left( name.length() - 1 );
             }
 
-            int pos = name.findRev( '/' );
+            int pos = name.tqfindRev( '/' );
             if ( pos == -1 )
                 nm = name;
             else
@@ -485,10 +485,10 @@ bool KTar::openArchive( int mode )
             }
             else
             {
-                // In some tar files we can find dir/./file => call cleanDirPath
+                // In some tar files we can tqfind dir/./file => call cleanDirPath
                 TQString path = TQDir::cleanDirPath( name.left( pos ) );
                 // Ensure container directory exists, create otherwise
-                KArchiveDirectory * d = findOrCreate( path );
+                KArchiveDirectory * d = tqfindOrCreate( path );
                 d->addEntry( e );
             }
         }
@@ -534,7 +534,7 @@ bool KTar::KTarPrivate::writeBackTempFile( const TQString & filename ) {
         if ( forced )
             static_cast<KFilterDev *>(dev)->setOrigFileName( origFileName );
         TQByteArray buffer(8*1024);
-        Q_LONG len;
+        TQ_LONG len;
         while ( ! file->atEnd()) {
             len = file->readBlock(buffer.data(),buffer.size());
             dev->writeBlock(buffer.data(),len);
@@ -579,14 +579,14 @@ bool KTar::writeDir( const TQString& name, const TQString& user, const TQString&
         return false;
     }
 
-    // In some tar files we can find dir/./ => call cleanDirPath
+    // In some tar files we can tqfind dir/./ => call cleanDirPath
     TQString dirName ( TQDir::cleanDirPath( name ) );
 
     // Need trailing '/'
     if ( dirName.right(1) != "/" )
         dirName += "/";
 
-    if ( d->dirList.contains( dirName ) )
+    if ( d->dirList.tqcontains( dirName ) )
         return true; // already there
 
     char buffer[ 0x201 ];
@@ -618,7 +618,7 @@ bool KTar::writeDir( const TQString& name, const TQString& user, const TQString&
     device()->writeBlock( buffer, 0x200 );
     if ( mode() & IO_ReadWrite )  d->tarEnd = device()->at();
 
-    d->dirList.append( dirName ); // contains trailing slash
+    d->dirList.append( dirName ); // tqcontains trailing slash
     return true; // TODO if wanted, better error control
 #endif
 }
@@ -633,7 +633,7 @@ bool KTar::prepareWriting( const TQString& name, const TQString& user, const TQS
 
 bool KTar::doneWriting( uint size )
 {
-    // Write alignment
+    // Write tqalignment
     int rest = size % 0x200;
     if ( mode() & IO_ReadWrite )
         d->tarEnd = device()->at() + (rest ? 0x200 - rest : 0); // Record our new end of archive
@@ -642,7 +642,7 @@ bool KTar::doneWriting( uint size )
         char buffer[ 0x201 ];
         for( uint i = 0; i < 0x200; ++i )
             buffer[i] = 0;
-        Q_LONG nwritten = device()->writeBlock( buffer, 0x200 - rest );
+        TQ_LONG nwritten = device()->writeBlock( buffer, 0x200 - rest );
         return nwritten == 0x200 - rest;
     }
     return true;
@@ -699,7 +699,7 @@ void KTar::fillBuffer( char * buffer,
   strcpy( buffer + 0x88, s.data() );
   buffer[ 0x93 ] = ' '; // space-terminate (no null after)
 
-  // spaces, replaced by the check sum later
+  // spaces, tqreplaced by the check sum later
   buffer[ 0x94 ] = 0x20;
   buffer[ 0x95 ] = 0x20;
   buffer[ 0x96 ] = 0x20;
@@ -775,21 +775,21 @@ bool KTar::prepareWriting_impl(const TQString &name, const TQString &user,
         return false;
     }
 
-    // In some tar files we can find dir/./file => call cleanDirPath
+    // In some tar files we can tqfind dir/./file => call cleanDirPath
     TQString fileName ( TQDir::cleanDirPath( name ) );
 
     /*
       // Create toplevel dirs
       // Commented out by David since it's not necessary, and if anybody thinks it is,
-      // he needs to implement a findOrCreate equivalent in writeDir.
+      // he needs to implement a tqfindOrCreate equivalent in writeDir.
       // But as KTar and the "tar" program both handle tar files without
       // dir entries, there's really no need for that
       TQString tmp ( fileName );
-      int i = tmp.findRev( '/' );
+      int i = tmp.tqfindRev( '/' );
       if ( i != -1 )
       {
-      TQString d = tmp.left( i + 1 ); // contains trailing slash
-      if ( !m_dirList.contains( d ) )
+      TQString d = tmp.left( i + 1 ); // tqcontains trailing slash
+      if ( !m_dirList.tqcontains( d ) )
       {
       tmp = tmp.mid( i + 1 );
       writeDir( d, user, group ); // WARNING : this one doesn't create its toplevel dirs
@@ -846,14 +846,14 @@ bool KTar::writeDir_impl(const TQString &name, const TQString &user,
         return false;
     }
 
-    // In some tar files we can find dir/./ => call cleanDirPath
+    // In some tar files we can tqfind dir/./ => call cleanDirPath
     TQString dirName ( TQDir::cleanDirPath( name ) );
 
     // Need trailing '/'
     if ( dirName.right(1) != "/" )
         dirName += "/";
 
-    if ( d->dirList.contains( dirName ) )
+    if ( d->dirList.tqcontains( dirName ) )
         return true; // already there
 
     char buffer[ 0x201 ];
@@ -884,7 +884,7 @@ bool KTar::writeDir_impl(const TQString &name, const TQString &user,
     device()->writeBlock( buffer, 0x200 );
     if ( mode() & IO_ReadWrite )  d->tarEnd = device()->at();
 
-    d->dirList.append( dirName ); // contains trailing slash
+    d->dirList.append( dirName ); // tqcontains trailing slash
     return true; // TODO if wanted, better error control
 }
 
@@ -911,7 +911,7 @@ bool KTar::writeSymLink_impl(const TQString &name, const TQString &target,
 
     device()->flush();
 
-    // In some tar files we can find dir/./file => call cleanDirPath
+    // In some tar files we can tqfind dir/./file => call cleanDirPath
     TQString fileName ( TQDir::cleanDirPath( name ) );
 
     char buffer[ 0x201 ];

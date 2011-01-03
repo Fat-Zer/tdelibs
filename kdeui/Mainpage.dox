@@ -35,7 +35,7 @@
 * KSpell usually works asynchronously. If you do not need that, you should
 * simply use KSpell::modalCheck(). It won't return until the
 * passed string is processed or the spell checking canceled.
-* During modal spell checking your GUI is still repainted, but the user may
+* During modal spell checking your GUI is still tqrepainted, but the user may
 * only interact with the KSpell dialog.
 *
 * @see KSpell, KSpellConfig

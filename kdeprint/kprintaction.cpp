@@ -31,33 +31,33 @@ public:
 	KPrintActionPrivate()
 	{
 		type = All;
-		parentWidget = 0;
+		tqparentWidget = 0;
 	}
 
 	PrinterType	type;
 	QStringList	printers;
-	TQWidget *parentWidget;
+	TQWidget *tqparentWidget;
 };
 
-KPrintAction::KPrintAction(const TQString& text, PrinterType type, TQWidget *parentWidget, TQObject *parent, const char *name)
+KPrintAction::KPrintAction(const TQString& text, PrinterType type, TQWidget *tqparentWidget, TQObject *parent, const char *name)
 : KActionMenu(text, parent, name)
 {
 	d = new KPrintActionPrivate();
-	initialize(type, parentWidget);
+	initialize(type, tqparentWidget);
 }
 
-KPrintAction::KPrintAction(const TQString& text, const TQIconSet& icon, PrinterType type, TQWidget *parentWidget, TQObject *parent, const char *name)
+KPrintAction::KPrintAction(const TQString& text, const TQIconSet& icon, PrinterType type, TQWidget *tqparentWidget, TQObject *parent, const char *name)
 : KActionMenu(text, icon, parent, name)
 {
 	d = new KPrintActionPrivate();
-	initialize(type, parentWidget);
+	initialize(type, tqparentWidget);
 }
 
-KPrintAction::KPrintAction(const TQString& text, const TQString& icon, PrinterType type, TQWidget *parentWidget, TQObject *parent, const char *name)
+KPrintAction::KPrintAction(const TQString& text, const TQString& icon, PrinterType type, TQWidget *tqparentWidget, TQObject *parent, const char *name)
 : KActionMenu(text, icon, parent, name)
 {
 	d = new KPrintActionPrivate();
-	initialize(type, parentWidget);
+	initialize(type, tqparentWidget);
 }
 
 KPrintAction::~KPrintAction()
@@ -65,13 +65,13 @@ KPrintAction::~KPrintAction()
 	delete d;
 }
 
-void KPrintAction::initialize(PrinterType type, TQWidget *parentWidget)
+void KPrintAction::initialize(PrinterType type, TQWidget *tqparentWidget)
 {
 	connect(popupMenu(), TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
 	connect(popupMenu(), TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
 
 	d->type = type;
-	d->parentWidget = parentWidget;
+	d->tqparentWidget = tqparentWidget;
 }
 
 void KPrintAction::slotAboutToShow()
@@ -104,27 +104,27 @@ void KPrintAction::slotAboutToShow()
 void KPrintAction::slotActivated(int ID)
 {
 	KPrinter	printer(false);
-	KMPrinter	*mprt = KMManager::self()->findPrinter(d->printers[ID]);
-	if (mprt && mprt->autoConfigure(&printer, d->parentWidget))
+	KMPrinter	*mprt = KMManager::self()->tqfindPrinter(d->printers[ID]);
+	if (mprt && mprt->autoConfigure(&printer, d->tqparentWidget))
 	{
 		// emit the signal
 		emit print(&printer);
 	}
 }
 
-KPrintAction* KPrintAction::exportAll(TQWidget *parentWidget, TQObject *parent, const char *name)
+KPrintAction* KPrintAction::exportAll(TQWidget *tqparentWidget, TQObject *parent, const char *name)
 {
-	return new KPrintAction(i18n("&Export..."), All, parentWidget, parent, (name ? name : "export_all"));
+	return new KPrintAction(i18n("&Export..."), All, tqparentWidget, parent, (name ? name : "export_all"));
 }
 
-KPrintAction* KPrintAction::exportRegular(TQWidget *parentWidget, TQObject *parent, const char *name)
+KPrintAction* KPrintAction::exportRegular(TQWidget *tqparentWidget, TQObject *parent, const char *name)
 {
-	return new KPrintAction(i18n("&Export..."), Regular, parentWidget, parent, (name ? name : "export_regular"));
+	return new KPrintAction(i18n("&Export..."), Regular, tqparentWidget, parent, (name ? name : "export_regular"));
 }
 
-KPrintAction* KPrintAction::exportSpecial(TQWidget *parentWidget, TQObject *parent, const char *name)
+KPrintAction* KPrintAction::exportSpecial(TQWidget *tqparentWidget, TQObject *parent, const char *name)
 {
-	return new KPrintAction(i18n("&Export..."), Specials, parentWidget, parent, (name ? name : "export_special"));
+	return new KPrintAction(i18n("&Export..."), Specials, tqparentWidget, parent, (name ? name : "export_special"));
 }
 
 #include "kprintaction.moc"

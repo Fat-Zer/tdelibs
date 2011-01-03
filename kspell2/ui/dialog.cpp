@@ -53,7 +53,7 @@ public:
     BackgroundChecker *checker;
 
     Word   currentWord;
-    TQMap<TQString, TQString> replaceAllMap;
+    TQMap<TQString, TQString> tqreplaceAllMap;
 };
 
 Dialog::Dialog( BackgroundChecker *checker,
@@ -81,9 +81,9 @@ void Dialog::initConnections()
 {
     connect( d->ui->m_addBtn, TQT_SIGNAL(clicked()),
              TQT_SLOT(slotAddWord()) );
-    connect( d->ui->m_replaceBtn, TQT_SIGNAL(clicked()),
+    connect( d->ui->m_tqreplaceBtn, TQT_SIGNAL(clicked()),
              TQT_SLOT(slotReplaceWord()) );
-    connect( d->ui->m_replaceAllBtn, TQT_SIGNAL(clicked()),
+    connect( d->ui->m_tqreplaceAllBtn, TQT_SIGNAL(clicked()),
              TQT_SLOT(slotReplaceAll()) );
     connect( d->ui->m_skipBtn, TQT_SIGNAL(clicked()),
              TQT_SLOT(slotSkip()) );
@@ -105,7 +105,7 @@ void Dialog::initConnections()
              TQT_SLOT( slotReplaceWord() ) );
     connect( this, TQT_SIGNAL(user1Clicked()), this, TQT_SLOT(slotFinished()) );
     connect( this, TQT_SIGNAL(cancelClicked()),this, TQT_SLOT(slotCancel()) );
-    connect( d->ui->m_replacement, TQT_SIGNAL(returnPressed()), this, TQT_SLOT(slotReplaceWord()) );
+    connect( d->ui->m_tqreplacement, TQT_SIGNAL(returnPressed()), this, TQT_SLOT(slotReplaceWord()) );
     connect( d->ui->m_autoCorrect, TQT_SIGNAL(clicked()),
              TQT_SLOT(slotAutocorrect()) );
     // button use by kword/kpresenter
@@ -139,7 +139,7 @@ void Dialog::activeAutoCorrect( bool _active )
 void Dialog::slotAutocorrect()
 {
     kdDebug()<<"void Dialog::slotAutocorrect()\n";
-    emit autoCorrect(d->currentWord.word, d->ui->m_replacement->text() );
+    emit autoCorrect(d->currentWord.word, d->ui->m_tqreplacement->text() );
     slotReplaceWord();
 }
 
@@ -185,7 +185,7 @@ void Dialog::updateDialog( const TQString& word )
     d->ui->m_unknownWord->setText( word );
     d->ui->m_contextLabel->setText( d->checker->filter()->context() );
     TQStringList suggs = d->checker->suggest( word );
-    d->ui->m_replacement->setText( suggs.first() );
+    d->ui->m_tqreplacement->setText( suggs.first() );
     fillSuggestions( suggs );
 }
 
@@ -206,16 +206,16 @@ void Dialog::slotAddWord()
 
 void Dialog::slotReplaceWord()
 {
-    emit replace( d->currentWord.word, d->currentWord.start,
-                  d->ui->m_replacement->text() );
-    d->checker->filter()->replace( d->currentWord, d->ui->m_replacement->text() );
+    emit tqreplace( d->currentWord.word, d->currentWord.start,
+                  d->ui->m_tqreplacement->text() );
+    d->checker->filter()->tqreplace( d->currentWord, d->ui->m_tqreplacement->text() );
     d->checker->continueChecking();
 }
 
 void Dialog::slotReplaceAll()
 {
-    d->replaceAllMap.insert( d->currentWord.word,
-                             d->ui->m_replacement->text() );
+    d->tqreplaceAllMap.insert( d->currentWord.word,
+                             d->ui->m_tqreplacement->text() );
     slotReplaceWord();
 }
 
@@ -227,13 +227,13 @@ void Dialog::slotSkip()
 void Dialog::slotSkipAll()
 {
     //### do we want that or should we have a d->ignoreAll list?
-    d->checker->broker()->settings()->addWordToIgnore( d->ui->m_replacement->text() );
+    d->checker->broker()->settings()->addWordToIgnore( d->ui->m_tqreplacement->text() );
     d->checker->continueChecking();
 }
 
 void Dialog::slotSuggest()
 {
-    TQStringList suggs = d->checker->suggest( d->ui->m_replacement->text() );
+    TQStringList suggs = d->checker->suggest( d->ui->m_tqreplacement->text() );
     fillSuggestions( suggs );
 }
 
@@ -245,7 +245,7 @@ void Dialog::slotChangeLanguage( const TQString& lang )
 
 void Dialog::slotSelectionChanged( TQListViewItem *item )
 {
-    d->ui->m_replacement->setText( item->text( 0 ) );
+    d->ui->m_tqreplacement->setText( item->text( 0 ) );
 }
 
 void Dialog::fillSuggestions( const TQStringList& suggs )
@@ -261,8 +261,8 @@ void Dialog::slotMisspelling(const TQString& word, int start )
 {
     kdDebug()<<"Dialog misspelling!!"<<endl;
     d->currentWord = Word( word, start );
-    if ( d->replaceAllMap.contains( word ) ) {
-        d->ui->m_replacement->setText( d->replaceAllMap[ word ] );
+    if ( d->tqreplaceAllMap.tqcontains( word ) ) {
+        d->ui->m_tqreplacement->setText( d->tqreplaceAllMap[ word ] );
         slotReplaceWord();
     } else {
         updateDialog( word );

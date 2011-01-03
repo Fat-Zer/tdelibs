@@ -61,7 +61,7 @@ public:
 
   /**
    * Initialize the splitter. If @p c0 or @p c1 is 0L the child will not
-   * be replaced. So if you want to change @p c1 and not change c0, you'd
+   * be tqreplaced. So if you want to change @p c1 and not change c0, you'd
    * call @p activate(0L,new_widget);
    *
    * @param c0 the widget on top/left
@@ -270,7 +270,7 @@ private:
 /**
  * additional KDockWidget stuff (private)
 */
-class KDockWidgetPrivate : public QObject
+class KDockWidgetPrivate : public TQObject
 {
   Q_OBJECT
 public:
@@ -311,7 +311,7 @@ public:
 };
 
 class KDockWidgetHeaderPrivate
-   : public QObject
+   : public TQObject
 {
 public:
   KDockWidgetHeaderPrivate( TQObject* parent )

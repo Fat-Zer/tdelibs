@@ -136,7 +136,7 @@
       <item> relation </item>
       <item> release </item>
       <item> rename </item>
-      <item> replace </item>
+      <item> tqreplace </item>
       <item> report </item>
       <item> rest </item>
       <item> restore </item>

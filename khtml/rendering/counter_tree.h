@@ -29,7 +29,7 @@ namespace khtml {
 
 class CounterReset;
 
-// This file implements a counter-tree that is used for finding all parents in counters() lookup,
+// This file implements a counter-tree that is used for tqfinding all parents in counters() lookup,
 // and for propagating count-changes when nodes are added or removed.
 // Please note that only counter-reset and root can be parents here, and that render-tree parents
 // are just counter-tree siblings

@@ -29,8 +29,8 @@
 
 #include "networkstatusindicator.h"
 
-StatusBarNetworkStatusIndicator::StatusBarNetworkStatusIndicator(
-    TQWidget * parent, const char * name ) : TQHBox( parent, name )/*, d( new StatusBarNetworkStatusIndicatorPrivate )*/
+StatusBarNetworktqStatusIndicator::StatusBarNetworktqStatusIndicator(
+    TQWidget * parent, const char * name ) : TQHBox( parent, name )/*, d( new StatusBarNetworktqStatusIndicatorPrivate )*/
 {
   setMargin( 2 );
   setSpacing( 1 );
@@ -38,28 +38,28 @@ StatusBarNetworkStatusIndicator::StatusBarNetworkStatusIndicator(
   label->setPixmap( SmallIcon("connect_no") );
   TQToolTip::add( label, i18n( "The desktop is offline" ) );
 
-  connect( ConnectionManager::self(), TQT_SIGNAL( statusChanged( const TQString &, NetworkStatus::EnumStatus ) ),
-      TQT_SLOT( networkStatusChanged( const TQString &, NetworkStatus::EnumStatus) ) );
+  connect( ConnectionManager::self(), TQT_SIGNAL( statusChanged( const TQString &, NetworktqStatus::EnumtqStatus ) ),
+      TQT_SLOT( networktqStatusChanged( const TQString &, NetworktqStatus::EnumtqStatus) ) );
 
 }
 
-void StatusBarNetworkStatusIndicator::init()
+void StatusBarNetworktqStatusIndicator::init()
 {
-  networkStatusChanged( ConnectionManager::self()->status(TQString("")));
+  networktqStatusChanged( ConnectionManager::self()->status(TQString("")));
 }
 
-StatusBarNetworkStatusIndicator::~StatusBarNetworkStatusIndicator()
+StatusBarNetworktqStatusIndicator::~StatusBarNetworktqStatusIndicator()
 {
 }
 
-void StatusBarNetworkStatusIndicator::networkStatusChanged( const TQString & host, NetworkStatus::EnumStatus status )
+void StatusBarNetworktqStatusIndicator::networktqStatusChanged( const TQString & host, NetworktqStatus::EnumtqStatus status )
 {
-  networkStatusChanged(status);
+  networktqStatusChanged(status);
 }
 
-void StatusBarNetworkStatusIndicator::networkStatusChanged( NetworkStatus::EnumStatus status )
+void StatusBarNetworktqStatusIndicator::networktqStatusChanged( NetworktqStatus::EnumtqStatus status )
 {
-  if ( status == NetworkStatus::Online || status == NetworkStatus::NoNetworks ) {
+  if ( status == NetworktqStatus::Online || status == NetworktqStatus::NoNetworks ) {
     hide();
   } else {
     show();

@@ -31,7 +31,7 @@
       <option>-e, --error</option><option>-w,
       --warning</option><option>-i,--info</option>
       </group>
-      <arg><replaceable>message</replaceable></arg>
+      <arg><tqreplaceable>message</tqreplaceable></arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 

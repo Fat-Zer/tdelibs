@@ -11,7 +11,7 @@ mkdir -p $dest
 
 cd "$KDELIBS"
 
-for pro in `find . -name \*.pro | grep -v "\/\.\|^\.\/win/"` kded/makeall.sh kded/makeall_rel.sh ; do
+for pro in `tqfind . -name \*.pro | grep -v "\/\.\|^\.\/win/"` kded/makeall.sh kded/makeall_rel.sh ; do
 	dir=`dirname "$pro"`
 	mkdir -p "$dest/$dir"
 	if [ "$pro" -nt "$dest/$pro" ] ; then

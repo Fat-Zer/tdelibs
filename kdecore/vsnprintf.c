@@ -120,7 +120,7 @@ vsnprintf(str, n, fmt, ap)
 
 	memset(&nsa, 0, sizeof nsa);
 	nsa.sa_handler = mcatch;
-	sigemptyset(&nsa.sa_mask);
+	sigemptyset(&nsa.sa_tqmask);
 
 	p = msetup(str, n);
 	if (p == NULL) {

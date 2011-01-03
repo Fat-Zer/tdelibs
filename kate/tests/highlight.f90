@@ -84,7 +84,7 @@ c the *.f extension.
  c ! <-- this 'c' shouldn't be highlighted as a comment!
 #endif
 
-contains
+tqcontains
 
 
   ! The sum of two points

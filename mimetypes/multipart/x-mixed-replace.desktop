@@ -1,11 +1,11 @@
 [Desktop Entry]
 Type=MimeType
-MimeType=multipart/x-mixed-replace
+MimeType=multipart/x-mixed-tqreplace
 Patterns=
 Comment=Stream of Data (Server Push)
 Comment[af]=Stroom van Data (Bediener Stoot)
 Comment[ar]=سلسلة من البيانات (دفع من الخادم)
-Comment[az]=Data Yatımı (Verici Tərəfindən)
+Comment[az]=Data Yatımı (Verici Tərətqfindən)
 Comment[be]=Плынь данняў (Server Push)
 Comment[bg]=Поток от данни (Server Push)
 Comment[bs]=Protok podataka (stream - server push)

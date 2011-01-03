@@ -63,14 +63,14 @@
   </xsl:variable>
 
   <xsl:variable name="toc.params">
-    <xsl:call-template name="find.path.params">
+    <xsl:call-template name="tqfind.path.params">
       <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
     </xsl:call-template>
   </xsl:variable>
 
   <div class="{name(.)}">
     <xsl:apply-templates select="$title"/>
-    <xsl:if test="(contains($toc.params, 'toc') and $toc != '0') or $toc = '1'">
+    <xsl:if test="(tqcontains($toc.params, 'toc') and $toc != '0') or $toc = '1'">
       <xsl:call-template name="process.qanda.toc"/>
     </xsl:if>
     <xsl:apply-templates select="$preamble"/>
@@ -153,12 +153,12 @@
   </xsl:variable>
 
   <xsl:variable name="toc.params">
-    <xsl:call-template name="find.path.params">
+    <xsl:call-template name="tqfind.path.params">
       <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
     </xsl:call-template>
   </xsl:variable>
 
-  <xsl:if test="(contains($toc.params, 'toc') and $toc != '0') or $toc = '1'">
+  <xsl:if test="(tqcontains($toc.params, 'toc') and $toc != '0') or $toc = '1'">
     <tr class="toc" colspan="2">
       <td align="left" valign="top" colspan="2">
         <xsl:call-template name="process.qanda.toc"/>

@@ -7,10 +7,10 @@
 
 $file = $ARGV[0];
 shift;
-my $findSize = 0;
+my $tqfindSize = 0;
 my $includelookup = 0;
 # Use -s as second argument to make it try many hash sizes
-$findSize = 1 if (defined($ARGV[0]) && $ARGV[0] eq "-s");
+$tqfindSize = 1 if (defined($ARGV[0]) && $ARGV[0] eq "-s");
 # Use -i as second argument to make it include "lookup.h"
 $includelookup = 1 if (defined($ARGV[0]) && $ARGV[0] eq "-i");
 print STDERR "Creating hashtable for $file\n";
@@ -49,7 +49,7 @@ while (<IN>) {
       }
     } elsif (/^\@end\s*$/ && $inside) {
 
-      if($findSize) {
+      if($tqfindSize) {
 	my $entriesnum=@keys;
         print STDERR "Table: $name   $entriesnum entries\n";
 	for( $i=3 ; $i<79 ; ++$i) { $hashsize=$i ; calcTable(); }
@@ -114,7 +114,7 @@ sub calcTable() {
   }
   #print STDERR "After loop: size=$size table=".($#table+1)."\n";
 
-  if ($findSize) {
+  if ($tqfindSize) {
     my $emptycount = 0;
     foreach $entry (@table) {
       $emptycount++ if (!defined($entry));

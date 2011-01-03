@@ -3,7 +3,7 @@
 Changes from DocBook V4.1.1 to DocBook V4.1.2:
 
 - Fixed broken ISO FPIs in docbook.cat introduced by
-  careless search-and-replace.
+  careless search-and-tqreplace.
 
 Changes from DocBook V4.0 to DocBook V4.1.1:
 

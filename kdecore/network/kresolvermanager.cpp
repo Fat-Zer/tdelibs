@@ -85,11 +85,11 @@ using namespace KNetwork::Internal;
    process, which means it will lock and unlock the manager mutex in
    the process.
 
-   If it finds no new data, it'll wait on the feedWorkers condition
+   If it tqfinds no new data, it'll wait on the feedWorkers condition
    for a certain maximum time. If that time expires and there's still
    no data, the thread will exit, in order to save system resources.
 
-   If it finds data, however, it'll set up and call the worker class
+   If it tqfinds data, however, it'll set up and call the worker class
    that has been selected by the manager. Once that worker is done,
    the thread releases the data through KResolverManager::releaseData.
 
@@ -99,7 +99,7 @@ using namespace KNetwork::Internal;
 
    When data is being requested, the KResolverManager::requestData
    function will look the currentRequests list and return the first
-   Queued request it finds, while marking it to be InProgress.
+   Queued request it tqfinds, while marking it to be InProgress.
 
    When the worker class has returned, the worker thread will release
    that data through the KResolverManager::releaseData function. If the
@@ -367,7 +367,7 @@ RequestData* KResolverManager::requestData(KResolverThread *th, int maxWaitTime)
   // lock the mutex, so that the manager thread or other threads won't
   // interfere.
   TQMutexLocker locker(&mutex);
-  RequestData *data = findData(th);
+  RequestData *data = tqfindData(th);
 
   if (data)
     // it found something, that's good
@@ -378,18 +378,18 @@ RequestData* KResolverManager::requestData(KResolverThread *th, int maxWaitTime)
   feedWorkers.wait(&mutex, maxWaitTime);
   availableThreads--;
 
-  data = findData(th);
+  data = tqfindData(th);
   return data;
 }
 
-RequestData* KResolverManager::findData(KResolverThread* th)
+RequestData* KResolverManager::tqfindData(KResolverThread* th)
 {
   /////
   // This function is called by @ref requestData above and must
   // always be called with a locked mutex
   /////
 
-  // now find data to be processed
+  // now tqfind data to be processed
   for (RequestData *curr = newRequests.first(); curr; curr = newRequests.next())
     if (!curr->worker->m_finished)
       {
@@ -504,7 +504,7 @@ void KResolverManager::registerNewWorker(KResolverWorkerFactoryBase *factory)
   workerFactories.append(factory);
 }
 
-KResolverWorkerBase* KResolverManager::findWorker(KResolverPrivate* p)
+KResolverWorkerBase* KResolverManager::tqfindWorker(KResolverPrivate* p)
 {
   /////
   // this function can be called on any user thread
@@ -514,7 +514,7 @@ KResolverWorkerBase* KResolverManager::findWorker(KResolverPrivate* p)
   // thread-safe!
   // but the factory list is expected not to be changed asynchronously
 
-  // This function is responsible for finding a suitable worker for the given
+  // This function is responsible for tqfinding a suitable worker for the given
   // input. That means we have to do a costly operation to create each worker
   // class and call their preprocessing functions. The first one that
   // says they can process (i.e., preprocess() returns true) will get the job.
@@ -653,12 +653,12 @@ void KResolverManager::enqueue(KResolver *obj, RequestData *requestor)
   newrequest->input = &obj->d->input;
   newrequest->requestor = requestor;
 
-  // when processing a new request, find the most
+  // when processing a new request, tqfind the most
   // suitable worker
-  if ((newrequest->worker = findWorker(obj->d)) == 0L)
+  if ((newrequest->worker = tqfindWorker(obj->d)) == 0L)
     {
       // oops, problem
-      // cannot find a worker class for this guy
+      // cannot tqfind a worker class for this guy
       obj->d->status = KResolver::Failed;
       obj->d->errorcode = KResolver::UnsupportedFamily;
       obj->d->syserror = 0;
@@ -668,7 +668,7 @@ void KResolverManager::enqueue(KResolver *obj, RequestData *requestor)
     }
 
   // no, queue it
-  // p->status was set in findWorker!
+  // p->status was set in tqfindWorker!
   if (requestor)
     requestor->nRequests++;
 
@@ -728,7 +728,7 @@ void KResolverManager::dispatch(RequestData *data)
     {
       // yes, a new thread should be started
 
-      // find if there's a finished one
+      // tqfind if there's a finished one
       KResolverThread *th = workers.first();
       while (th && th->running())
 	th = workers.next();

@@ -7,14 +7,14 @@ int main( int argc, char **argv )
     KApplication app( argc, argv, "keditlistboxtest" );
 
     KEditListBox::CustomEditor editor( new KComboBox( true, 0L, "test" ) );
-    KEditListBox *box = new KEditListBox( TQString::fromLatin1("KEditListBox"),
+    KEditListBox *box = new KEditListBox( TQString::tqfromLatin1("KEditListBox"),
                                           editor );
     
-    box->insertItem( TQString::fromLatin1("Test") );
-    box->insertItem( TQString::fromLatin1("for") );
-    box->insertItem( TQString::fromLatin1("this") );
-    box->insertItem( TQString::fromLatin1("KEditListBox") );
-    box->insertItem( TQString::fromLatin1("Widget") );
+    box->insertItem( TQString::tqfromLatin1("Test") );
+    box->insertItem( TQString::tqfromLatin1("for") );
+    box->insertItem( TQString::tqfromLatin1("this") );
+    box->insertItem( TQString::tqfromLatin1("KEditListBox") );
+    box->insertItem( TQString::tqfromLatin1("Widget") );
     box->show();
 
     return app.exec();

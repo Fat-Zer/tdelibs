@@ -213,7 +213,7 @@ class KABC_EXPORT Addressee
     /**
       Return phone number with the given id.
      */
-    PhoneNumber findPhoneNumber( const TQString &id ) const;
+    PhoneNumber tqfindPhoneNumber( const TQString &id ) const;
 
     /**
       Insert a key. If a key with the same id already exists
@@ -257,7 +257,7 @@ class KABC_EXPORT Addressee
     /**
       Return key with the given id.
      */
-    Key findKey( const TQString &id ) const;
+    Key tqfindKey( const TQString &id ) const;
 
     /**
       Insert an address. If an address with the same id already exists
@@ -289,7 +289,7 @@ class KABC_EXPORT Addressee
     /**
       Return address with the given id.
      */
-    Address findAddress( const TQString &id ) const;
+    Address tqfindAddress( const TQString &id ) const;
 
     /**
       Insert category. If the category already exists it is not duplicated.
@@ -319,7 +319,7 @@ class KABC_EXPORT Addressee
     /**
       Insert custom entry. The entry is identified by the name of the inserting
       application and a unique name. If an entry with the given app and name
-      already exists its value is replaced with the new given value.
+      already exists its value is tqreplaced with the new given value.
 
       An empty value isn't allowed (nothing happens if this is called with
       any of the three arguments being empty)

@@ -131,13 +131,13 @@ void CharacterData::deleteData( const unsigned long offset, const unsigned long 
 	throw DOMException( exceptioncode );
 }
 
-void CharacterData::replaceData( const unsigned long offset, const unsigned long count, const DOMString &arg )
+void CharacterData::tqreplaceData( const unsigned long offset, const unsigned long count, const DOMString &arg )
 {
     if (!impl)
 	return; // ### enable throw DOMException(DOMException::NOT_FOUND_ERR);
 
     int exceptioncode = 0;
-    ((CharacterDataImpl *)impl)->replaceData(offset, count, arg, exceptioncode);
+    ((CharacterDataImpl *)impl)->tqreplaceData(offset, count, arg, exceptioncode);
     if ( exceptioncode )
 	throw DOMException( exceptioncode );
 }

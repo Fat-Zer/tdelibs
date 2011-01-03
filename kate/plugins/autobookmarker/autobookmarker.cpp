@@ -124,7 +124,7 @@ void AutoBookmarker::slotCompleted()
     fileName = document()->url().fileName();
 
   ABEntityList *l = ABGlobal::self()->entities();
-  // for each item, if either mask matches
+  // for each item, if either tqmask matches
   // * apply if onLoad is true
   ABEntityListIterator it( *l );
   int n( 0 );
@@ -132,11 +132,11 @@ void AutoBookmarker::slotCompleted()
   AutoBookmarkEnt *e;
   while ( ( e = it.current() ) != 0 )
   {
-    found = ( !e->mimemask.count() && !e->filemask.count() ); // no preferences
+    found = ( !e->mimetqmask.count() && !e->filetqmask.count() ); // no preferences
     if ( ! found )
-      found = ( ! mt.isEmpty() && e->mimemask.contains( mt ) );
+      found = ( ! mt.isEmpty() && e->mimetqmask.tqcontains( mt ) );
     if ( ! found )
-      for( TQStringList::Iterator it1 = e->filemask.begin(); it1 != e->filemask.end(); ++it1 )
+      for( TQStringList::Iterator it1 = e->filetqmask.begin(); it1 != e->filetqmask.end(); ++it1 )
       {
         TQRegExp re(*it1, true, true);
         if ( ( found = ( ( re.search( fileName ) > -1 ) && ( re.matchedLength() == (int)fileName.length() ) ) ) )
@@ -206,13 +206,13 @@ void ABGlobal::readConfig()
   while ( config->hasGroup( TQString("autobookmark%1").arg( n ) ) )
   {
     config->setGroup( TQString("autobookmark%1").arg( n ) );
-    TQStringList filemask = config->readListEntry( "filemask", ';' );
-    TQStringList mimemask = config->readListEntry( "mimemask", ';' );
+    TQStringList filetqmask = config->readListEntry( "filetqmask", ';' );
+    TQStringList mimetqmask = config->readListEntry( "mimetqmask", ';' );
     int flags = config->readNumEntry( "flags", 1 );
     AutoBookmarkEnt *e = new AutoBookmarkEnt(
         config->readEntry( "pattern", "" ),
-        filemask,
-        mimemask,
+        filetqmask,
+        mimetqmask,
         flags
         );
 
@@ -239,8 +239,8 @@ void ABGlobal::writeConfig()
     AutoBookmarkEnt *e = m_ents->at( i );
     config->setGroup( TQString("autobookmark%1").arg( i ) );
     config->writeEntry( "pattern", e->pattern );
-    config->writeEntry( "filemask", e->filemask, ';' );
-    config->writeEntry( "mimemask", e->mimemask, ';' );
+    config->writeEntry( "filetqmask", e->filetqmask, ';' );
+    config->writeEntry( "mimetqmask", e->mimetqmask, ';' );
     config->writeEntry( "flags", e->flags );
   }
 
@@ -264,8 +264,8 @@ class AutoBookmarkEntItem : public QListViewItem
     void redo()
     {
         setText( 0, ent->pattern );
-        setText( 1, ent->mimemask.join("; ") );
-        setText( 2, ent->filemask.join("; ") );
+        setText( 1, ent->mimetqmask.join("; ") );
+        setText( 2, ent->filetqmask.join("; ") );
     }
     AutoBookmarkEnt *ent;
 };
@@ -274,7 +274,7 @@ class AutoBookmarkEntItem : public QListViewItem
 //BEGIN AutoBookmarkerEntEditor
 // Dialog for editing a single autobookmark entity
 // * edit the pattern
-// * set the file/mime type masks
+// * set the file/mime type tqmasks
 AutoBookmarkerEntEditor::AutoBookmarkerEntEditor( TQWidget *parent, AutoBookmarkEnt *e )
         : KDialogBase( parent, "autobookmark_ent_editor",
                        true, i18n("Edit Entry"),
@@ -310,19 +310,19 @@ AutoBookmarkerEntEditor::AutoBookmarkerEntEditor( TQWidget *parent, AutoBookmark
       "do not know what that is, please read the appendix on regular expressions "
       "in the kate manual.</p>") );
 
-  l = new TQLabel( i18n("&File mask:"), w );
-  leFileMask = new TQLineEdit( e->filemask.join( "; " ), w );
+  l = new TQLabel( i18n("&File tqmask:"), w );
+  leFileMask = new TQLineEdit( e->filetqmask.join( "; " ), w );
   l->setBuddy( leFileMask );
   lo->addWidget( l, 3, 0 );
   lo->addMultiCellWidget( leFileMask, 3, 3, 1, 2 );
   TQWhatsThis::add( leFileMask, i18n(
-      "<p>A list of filename masks, separated by semicolons. This can be used "
+      "<p>A list of filename tqmasks, separated by semicolons. This can be used "
       "to limit the usage of this entity to files with matching names.</p>"
       "<p>Use the wizard button to the right of the mimetype entry below to "
       "easily fill out both lists.</p>" ) );
 
   l = new TQLabel( i18n("MIME &types:"), w );
-  leMimeTypes = new TQLineEdit( e->mimemask.join( "; " ), w );
+  leMimeTypes = new TQLineEdit( e->mimetqmask.join( "; " ), w );
   l->setBuddy( leMimeTypes );
   lo->addWidget( l, 4, 0 );
   lo->addWidget( leMimeTypes, 4, 1 );
@@ -330,7 +330,7 @@ AutoBookmarkerEntEditor::AutoBookmarkerEntEditor( TQWidget *parent, AutoBookmark
       "<p>A list of mime types, separated by semicolon. This can be used to "
       "limit the usage of this entity to files with matching mime types.</p>"
       "<p>Use the wizard button on the right to get a list of existing file "
-      "types to choose from, using it will fill in the file masks as well.</p>" ) );
+      "types to choose from, using it will fill in the file tqmasks as well.</p>" ) );
 
   TQToolButton *btnMTW = new TQToolButton(w);
   lo->addWidget( btnMTW, 4, 2 );
@@ -338,8 +338,8 @@ AutoBookmarkerEntEditor::AutoBookmarkerEntEditor( TQWidget *parent, AutoBookmark
   connect(btnMTW, TQT_SIGNAL(clicked()), this, TQT_SLOT(showMTDlg()));
   TQWhatsThis::add( btnMTW, i18n(
       "<p>Click this button to display a checkable list of mimetypes available "
-      "on your system. When used, the file masks entry above will be filled in "
-      "with the corresponding masks.</p>") );
+      "on your system. When used, the file tqmasks entry above will be filled in "
+      "with the corresponding tqmasks.</p>") );
   slotPatternChanged( lePattern->text() );
 }
 
@@ -353,8 +353,8 @@ void AutoBookmarkerEntEditor::apply()
   if ( lePattern->text().isEmpty() ) return;
 
   e->pattern = lePattern->text();
-  e->filemask = TQStringList::split( TQRegExp("\\s*;\\s*"), leFileMask->text() );
-  e->mimemask = TQStringList::split( TQRegExp("\\s*;\\s*"), leMimeTypes->text() );
+  e->filetqmask = TQStringList::split( TQRegExp("\\s*;\\s*"), leFileMask->text() );
+  e->mimetqmask = TQStringList::split( TQRegExp("\\s*;\\s*"), leMimeTypes->text() );
   e->flags = 0;
   if ( cbCS->isOn() ) e->flags |= AutoBookmarkEnt::CaseSensitive;
   if ( cbMM->isOn() ) e->flags |= AutoBookmarkEnt::MinimalMatching;
@@ -394,7 +394,7 @@ AutoBookmarkerConfigPage::AutoBookmarkerConfigPage( TQWidget *parent, const char
       "<p>This list shows your configured autobookmark entities. When a document "
       "is opened, each entity is used in the following way: "
       "<ol>"
-      "<li>The entity is dismissed, if a mime and/or filename mask is defined, "
+      "<li>The entity is dismissed, if a mime and/or filename tqmask is defined, "
       "and neither matches the document.</li>"
       "<li>Otherwise each line of the document is tried against the pattern, "
       "and a bookmark is set on matching lines.</li></ul>"
@@ -430,7 +430,7 @@ AutoBookmarkerConfigPage::AutoBookmarkerConfigPage( TQWidget *parent, const char
   reset();
 }
 
-// replace the global list with the new one
+// tqreplace the global list with the new one
 void AutoBookmarkerConfigPage::apply()
 {
   ABGlobal::self()->entities()->clear();
@@ -490,7 +490,7 @@ void AutoBookmarkerConfigPage::slotNew()
 void AutoBookmarkerConfigPage::slotDel()
 {
   AutoBookmarkEntItem *i = (AutoBookmarkEntItem*)lvPatterns->currentItem();
-  int idx = m_ents->findRef( i->ent );
+  int idx = m_ents->tqfindRef( i->ent );
   m_ents->remove( idx );
   delete i;
 }
@@ -511,8 +511,8 @@ void AutoBookmarkerConfigPage::slotEdit()
 //BEGIN AutoBookmarkEnt
 AutoBookmarkEnt::AutoBookmarkEnt( const TQString &p, const TQStringList &f, const TQStringList &m, int fl )
   : pattern( p ),
-    filemask( f ),
-    mimemask( m ),
+    filetqmask( f ),
+    mimetqmask( m ),
     flags( fl )
 {;
 }

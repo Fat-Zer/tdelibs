@@ -35,7 +35,7 @@ class KActionCollection;
 class TQPopupMenu;
 class TQMenuData;
 
-class KateBookmarks : public QObject
+class KateBookmarks : public TQObject
 {
   Q_OBJECT
 
@@ -82,5 +82,5 @@ class KateBookmarks : public QObject
 
 #endif
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;
 // vim: noet ts=2

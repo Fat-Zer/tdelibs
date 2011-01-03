@@ -24,7 +24,7 @@
 #include "../ldapclient.h"
 typedef KABC::LdapClient LdapClient;
 
-class TestLDAPClient : public QObject
+class TestLDAPClient : public TQObject
 {
     Q_OBJECT
 

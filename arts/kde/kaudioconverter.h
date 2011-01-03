@@ -29,7 +29,7 @@
 class KURL;
 class TQString;
 
-class KAudioConverter : public QObject
+class KAudioConverter : public TQObject
 {
 Q_OBJECT
 public:

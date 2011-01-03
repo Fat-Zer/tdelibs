@@ -133,7 +133,7 @@ void KCommandHistory::addCommand(KCommand *command, bool execute) {
         return;
 
     int index;
-    if(d->m_present && (index=m_commands.findRef(d->m_present))!=-1) {
+    if(d->m_present && (index=m_commands.tqfindRef(d->m_present))!=-1) {
         if (m_first)
             --index;
         m_commands.insert(index+1, command);
@@ -192,7 +192,7 @@ void KCommandHistory::undo() {
         m_redo->setText(i18n("&Redo: %1").arg(d->m_present->name()));
     }
     int index;
-    if((index=m_commands.findRef(d->m_present))!=-1 && m_commands.prev()) {
+    if((index=m_commands.tqfindRef(d->m_present))!=-1 && m_commands.prev()) {
         d->m_present=m_commands.current();
         if (m_undo) {
             m_undo->setEnabled(true);
@@ -226,7 +226,7 @@ void KCommandHistory::redo() {
         if(!d->m_savedAt)
             emit documentRestored();
     }
-    else if((index=m_commands.findRef(d->m_present))!=-1 && m_commands.next()) {
+    else if((index=m_commands.tqfindRef(d->m_present))!=-1 && m_commands.next()) {
         d->m_present=m_commands.current();
         d->m_present->execute();
         emit commandExecuted();
@@ -257,7 +257,7 @@ void KCommandHistory::redo() {
 
 void KCommandHistory::documentSaved() {
     if(d->m_present && !m_first)
-        d->m_savedAt=m_commands.findRef(d->m_present);
+        d->m_savedAt=m_commands.tqfindRef(d->m_present);
     else if(!d->m_present && !m_first)
         d->m_savedAt=-42;  // this value signals that the document has
                         // been saved with an empty history.
@@ -287,7 +287,7 @@ void KCommandHistory::clipCommands() {
     if(count<=m_undoLimit && count<=m_redoLimit)
         return;
 
-    int index=m_commands.findRef(d->m_present);
+    int index=m_commands.tqfindRef(d->m_present);
     if(index>=m_undoLimit) {
         for(int i=0; i<=(index-m_undoLimit); ++i) {
             m_commands.removeFirst();
@@ -295,7 +295,7 @@ void KCommandHistory::clipCommands() {
             if(d->m_savedAt==-1)
                 d->m_savedAt=-42;
         }
-        index=m_commands.findRef(d->m_present); // calculate the new
+        index=m_commands.tqfindRef(d->m_present); // calculate the new
         count=m_commands.count();            // values (for the redo-branch :)
         // make it easier for us... d->m_savedAt==-1 -> invalid
         if(d->m_savedAt!=-42 && d->m_savedAt<-1)
@@ -316,7 +316,7 @@ void KCommandHistory::slotUndoAboutToShow()
 {
     m_undoPopup->clear();
     int i = 0;
-    if (m_commands.findRef(d->m_present)!=-1)
+    if (m_commands.tqfindRef(d->m_present)!=-1)
         while ( m_commands.current() && i<10 ) // TODO make number of items configurable ?
         {
             m_undoPopup->insertItem( i18n("Undo: %1").arg(m_commands.current()->name()), i++ );
@@ -340,7 +340,7 @@ void KCommandHistory::slotRedoAboutToShow()
         d->m_present = m_commands.first();
         m_redoPopup->insertItem( i18n("Redo: %1").arg(d->m_present->name()), i++ );
     }
-    if (m_commands.findRef(d->m_present)!=-1 && m_commands.next())
+    if (m_commands.tqfindRef(d->m_present)!=-1 && m_commands.next())
         while ( m_commands.current() && i<10 ) // TODO make number of items configurable ?
         {
             m_redoPopup->insertItem( i18n("Redo: %1").arg(m_commands.current()->name()), i++ );
@@ -360,7 +360,7 @@ void KCommandHistory::updateActions()
     if ( m_undo && m_redo )
     {
         m_undo->setEnabled( !m_first && ( d->m_present ) );
-        m_redo->setEnabled(m_first || (m_commands.findRef(d->m_present)!=-1 && m_commands.next()));
+        m_redo->setEnabled(m_first || (m_commands.tqfindRef(d->m_present)!=-1 && m_commands.next()));
     }
 }
 

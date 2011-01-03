@@ -266,11 +266,11 @@ Node Node::insertBefore( const Node &newChild, const Node &refChild )
     return r;
 }
 
-Node Node::replaceChild( const Node &newChild, const Node &oldChild )
+Node Node::tqreplaceChild( const Node &newChild, const Node &oldChild )
 {
     if (!impl) throw DOMException(DOMException::NOT_FOUND_ERR);
     int exceptioncode = 0;
-    impl->replaceChild( newChild.impl, oldChild.impl, exceptioncode );
+    impl->tqreplaceChild( newChild.impl, oldChild.impl, exceptioncode );
     if (exceptioncode)
 	throw DOMException(exceptioncode);
     if (newChild.impl && !newChild.impl->closed()) newChild.impl->close();

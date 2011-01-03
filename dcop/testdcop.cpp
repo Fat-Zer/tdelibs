@@ -248,23 +248,23 @@ int main(int argc, char **argv)
 
   // Find a object called "object1" in any application that
   // meets the criteria "canLaunchRockets()"
-//  bool boolResult = client->findObject( "", "object1", "canLaunchRockets()", data, foundApp, foundObj);
-//  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+//  bool boolResult = client->tqfindObject( "", "object1", "canLaunchRockets()", data, foundApp, foundObj);
+//  qDebug("tqfindObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 //	foundApp.data(), foundObj.data());
 
   // Find an application that matches with "konqueror*"
-  bool boolResult = client->findObject( "konqueror*", "", "", data, foundApp, foundObj);
-  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+  bool boolResult = client->tqfindObject( "konqueror*", "", "", data, foundApp, foundObj);
+  qDebug("tqfindObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 
   // Find an object called "object1" in any application.
-  boolResult = client->findObject( "", "ksycoca", "", data, foundApp, foundObj);
-  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+  boolResult = client->tqfindObject( "", "ksycoca", "", data, foundApp, foundObj);
+  qDebug("tqfindObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 
   // Find ourselves in any application.
-  boolResult = client->findObject( "testdcop", "ksycoca", "", data, foundApp, foundObj);
-  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+  boolResult = client->tqfindObject( "testdcop", "ksycoca", "", data, foundApp, foundObj);
+  qDebug("tqfindObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 
   DCOPClient *client2 = new DCOPClient();
@@ -287,8 +287,8 @@ qDebug("Calling countDown() in object1");
       qDebug("return type was '%s'", replyType.data() ); 
 
   // Find ourselves in any application.
-  boolResult = client2->findObject( "testdcop", "object1", "", data, foundApp, foundObj);
-  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+  boolResult = client2->tqfindObject( "testdcop", "object1", "", data, foundApp, foundObj);
+  qDebug("tqfindObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 
   client->detach();

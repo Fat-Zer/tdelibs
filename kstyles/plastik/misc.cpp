@@ -30,9 +30,9 @@ TQColor alphaBlendColors(const TQColor &bgColor, const TQColor &fgColor, const i
     if(alpha<0) alpha = 0;
     int inv_alpha = 255 - alpha;
 
-    TQColor result  = TQColor( qRgb(qRed(rgb_b)*inv_alpha/255 + qRed(rgb)*alpha/255,
-                                  qGreen(rgb_b)*inv_alpha/255 + qGreen(rgb)*alpha/255,
-                                  qBlue(rgb_b)*inv_alpha/255 + qBlue(rgb)*alpha/255) );
+    TQColor result  = TQColor( tqRgb(tqRed(rgb_b)*inv_alpha/255 + tqRed(rgb)*alpha/255,
+                                  tqGreen(rgb_b)*inv_alpha/255 + tqGreen(rgb)*alpha/255,
+                                  tqBlue(rgb_b)*inv_alpha/255 + tqBlue(rgb)*alpha/255) );
 
     return result;
 }

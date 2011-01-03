@@ -92,7 +92,7 @@
 #include <kparts/browserextension.h>
 
 #include "khtmlview.h"
-#include "rendering/render_replaced.h"
+#include "rendering/render_tqreplaced.h"
 #include "xml/dom_docimpl.h"
 #include "html/html_baseimpl.h"
 #include "dom/dom_doc.h"
@@ -215,9 +215,9 @@ Value RegTestFunction::call(ExecState *exec, Object &/*thisObj*/, const List &ar
     switch (id) {
 	case Print: {
 	    UString str = args[0].toString(exec);
-            if ( str.qstring().lower().find( "failed!" ) >= 0 )
+            if ( str.qstring().lower().tqfind( "failed!" ) >= 0 )
                 m_regTest->saw_failure = true;
-            TQString res = str.qstring().replace('\007', "");
+            TQString res = str.qstring().tqreplace('\007', "");
             m_regTest->m_currentOutput += res + "\n";
 	    break;
 	}
@@ -236,7 +236,7 @@ Value RegTestFunction::call(ExecState *exec, Object &/*thisObj*/, const List &ar
             if ( docimpl && docimpl->view() && docimpl->renderer() )
             {
                 docimpl->updateRendering();
-                docimpl->view()->layout();
+                docimpl->view()->tqlayout();
             }
             TQString filename = args[0].toString(exec).qstring();
             filename = RegressionTest::curr->m_currentCategory+"/"+filename;
@@ -676,7 +676,7 @@ RegressionTest::RegressionTest(KHTMLPart *part, const TQString &baseDir, const T
 {
     m_part = part;
     m_baseDir = baseDir;
-    m_baseDir = m_baseDir.replace( "//", "/" );
+    m_baseDir = m_baseDir.tqreplace( "//", "/" );
     if ( m_baseDir.endsWith( "/" ) )
         m_baseDir = m_baseDir.left( m_baseDir.length() - 1 );
     if (outputDir.isEmpty())
@@ -770,16 +770,16 @@ bool RegressionTest::runTests(TQString relPath, bool mustExist, int known_failur
 	    TQString filename = sourceDir[fileno];
 	    TQString relFilename = relPath.isEmpty() ? filename : relPath+"/"+filename;
 
-	    if (filename == "." || filename == ".." ||  ignoreFiles.contains(filename) )
+	    if (filename == "." || filename == ".." ||  ignoreFiles.tqcontains(filename) )
                 continue;
             int failure_type = NoFailure;
-            if ( failureFiles.contains( filename ) )
+            if ( failureFiles.tqcontains( filename ) )
                 failure_type |= AllFailure;
-            if ( failureFiles.contains ( filename + "-render" ) )
+            if ( failureFiles.tqcontains ( filename + "-render" ) )
                 failure_type |= RenderFailure;
-            if ( failureFiles.contains ( filename + "-dump.png" ) )
+            if ( failureFiles.tqcontains ( filename + "-dump.png" ) )
                 failure_type |= PaintFailure;
-            if ( failureFiles.contains ( filename + "-dom" ) )
+            if ( failureFiles.tqcontains ( filename + "-dom" ) )
                 failure_type |= DomFailure;
             runTests(relFilename, false, failure_type );
 	}
@@ -849,7 +849,7 @@ void RegressionTest::getPartDOMOutput( TQTextStream &outputStream, KHTMLPart* pa
 		if ( node.handle()->id() == ID_FRAME ) {
 			outputStream << endl;
 			TQString frameName = static_cast<DOM::HTMLFrameElementImpl *>( node.handle() )->name.string();
-			KHTMLPart* frame = part->findFrame( frameName );
+			KHTMLPart* frame = part->tqfindFrame( frameName );
 			Q_ASSERT( frame );
 			if ( frame )
 			    getPartDOMOutput( outputStream, frame, indent );
@@ -923,7 +923,7 @@ void RegressionTest::dumpRenderTree( TQTextStream &outputStream, KHTMLPart* part
     names.sort();
     for ( TQStringList::iterator it = names.begin(); it != names.end(); ++it ) {
         outputStream << "FRAME: " << (*it) << "\n";
-	KHTMLPart* frame = part->findFrame( (*it) );
+	KHTMLPart* frame = part->tqfindFrame( (*it) );
 	Q_ASSERT( frame );
 	if ( frame )
             dumpRenderTree( outputStream, frame );
@@ -943,7 +943,7 @@ TQString RegressionTest::getPartOutput( OutputType type)
         getPartDOMOutput( outputStream, m_part, 0 );
     }
 
-    dump.replace( m_baseDir + "/tests", TQString::fromLatin1( "REGRESSION_SRCDIR" ) );
+    dump.tqreplace( m_baseDir + "/tests", TQString::tqfromLatin1( "REGRESSION_SRCDIR" ) );
     return dump;
 }
 
@@ -1000,9 +1000,9 @@ bool RegressionTest::imageEqual( const TQImage &lhsi, const TQImage &rhsi )
             for ( int x = 0; x < w; ++x ) {
                 QRgb l = ls[x];
                 QRgb r = rs[x];
-                if ( ( abs( qRed( l ) - qRed(r ) ) < 20 ) &&
-                     ( abs( qGreen( l ) - qGreen(r ) ) < 20 ) &&
-                     ( abs( qBlue( l ) - qBlue(r ) ) < 20 ) )
+                if ( ( abs( tqRed( l ) - tqRed(r ) ) < 20 ) &&
+                     ( abs( tqGreen( l ) - tqGreen(r ) ) < 20 ) &&
+                     ( abs( tqBlue( l ) - tqBlue(r ) ) < 20 ) )
                     continue;
                  kdDebug() << "pixel (" << x << ", " << y << ") is different " << TQColor(  lhsi.pixel (  x, y ) ) << " " << TQColor(  rhsi.pixel (  x, y ) ) << endl;
                 return false;
@@ -1045,15 +1045,15 @@ void RegressionTest::doJavascriptReport( const TQString &test )
     cl = TQString( "<html><head><title>%1</title>" ).arg( test );
     cl += "<body><tt>";
     TQString text = "\n" + m_currentOutput;
-    text.replace( '<', "&lt;" );
-    text.replace( '>', "&gt;" );
-    text.replace( TQRegExp( "\nFAILED" ), "\n<span style='color: red'>FAILED</span>" );
-    text.replace( TQRegExp( "\nFAIL" ), "\n<span style='color: red'>FAIL</span>" );
-    text.replace( TQRegExp( "\nPASSED" ), "\n<span style='color: green'>PASSED</span>" );
-    text.replace( TQRegExp( "\nPASS" ), "\n<span style='color: green'>PASS</span>" );
+    text.tqreplace( '<', "&lt;" );
+    text.tqreplace( '>', "&gt;" );
+    text.tqreplace( TQRegExp( "\nFAILED" ), "\n<span style='color: red'>FAILED</span>" );
+    text.tqreplace( TQRegExp( "\nFAIL" ), "\n<span style='color: red'>FAIL</span>" );
+    text.tqreplace( TQRegExp( "\nPASSED" ), "\n<span style='color: green'>PASSED</span>" );
+    text.tqreplace( TQRegExp( "\nPASS" ), "\n<span style='color: green'>PASS</span>" );
     if ( text.at( 0 ) == '\n' )
         text = text.mid( 1, text.length() );
-    text.replace( '\n', "<br>\n" );
+    text.tqreplace( '\n', "<br>\n" );
     cl += text;
     cl += "</tt></body></html>";
     compare.writeBlock( cl.latin1(), cl.length() );
@@ -1063,7 +1063,7 @@ void RegressionTest::doJavascriptReport( const TQString &test )
 /** returns the path in a way that is relatively reachable from base.
  * @param base base directory (must not include trailing slash)
  * @param path directory/file to be relatively reached by base
- * @return path with all elements replaced by .. and concerning path elements
+ * @return path with all elements tqreplaced by .. and concerning path elements
  *	to be relatively reachable from base.
  */
 static TQString makeRelativePath(const TQString &base, const TQString &path)
@@ -1077,10 +1077,10 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
     int pos = 0;
     do {
         pos++;
-        int newpos = absBase.find('/', pos);
+        int newpos = absBase.tqfind('/', pos);
         if (newpos == -1) newpos = absBase.length();
-        TQConstString cmpPathComp(absPath.unicode() + pos, newpos - pos);
-        TQConstString cmpBaseComp(absBase.unicode() + pos, newpos - pos);
+        TQConstString cmpPathComp(absPath.tqunicode() + pos, newpos - pos);
+        TQConstString cmpBaseComp(absBase.tqunicode() + pos, newpos - pos);
 //         kdDebug() << "cmpPathComp: \"" << cmpPathComp.string() << "\"" << endl;
 //         kdDebug() << "cmpBaseComp: \"" << cmpBaseComp.string() << "\"" << endl;
 //         kdDebug() << "pos: " << pos << " newpos: " << newpos << endl;
@@ -1094,11 +1094,11 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
 
     TQString rel;
     {
-        TQConstString relBase(absBase.unicode() + basepos, absBase.length() - basepos);
-        TQConstString relPath(absPath.unicode() + pathpos, absPath.length() - pathpos);
+        TQConstString relBase(absBase.tqunicode() + basepos, absBase.length() - basepos);
+        TQConstString relPath(absPath.tqunicode() + pathpos, absPath.length() - pathpos);
         // generate as many .. as there are path elements in relBase
         if (relBase.string().length() > 0) {
-            for (int i = relBase.string().contains('/'); i > 0; --i)
+            for (int i = relBase.string().tqcontains('/'); i > 0; --i)
                 rel += "../";
             rel += "..";
             if (relPath.string().length() > 0) rel += "/";
@@ -1138,13 +1138,13 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & RenderFailure ) {
         renderDiff += "<pre>";
-        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-render %3/%2-render" )
+        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-render %3/%2-render" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {
             TQString line = is->readLine();
-            line = line.replace( '<', "&lt;" );
-            line = line.replace( '>', "&gt;" );
+            line = line.tqreplace( '<', "&lt;" );
+            line = line.tqreplace( '>', "&gt;" );
             renderDiff += line + "\n";
         }
         delete is;
@@ -1154,13 +1154,13 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & DomFailure ) {
         domDiff += "<pre>";
-        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-dom %3/%2-dom" )
+        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-dom %3/%2-dom" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {
             TQString line = is->readLine();
-            line = line.replace( '<', "&lt;" );
-            line = line.replace( '>', "&gt;" );
+            line = line.tqreplace( '<', "&lt;" );
+            line = line.tqreplace( '>', "&gt;" );
             domDiff += line  + "\n";
         }
         delete is;
@@ -1254,7 +1254,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
 void RegressionTest::testStaticFile(const TQString & filename)
 {
-    qApp->mainWidget()->resize( 800, 600); // restore size
+    tqApp->mainWidget()->resize( 800, 600); // restore size
 
     // Set arguments
     KParts::URLArgs args;
@@ -1400,11 +1400,11 @@ public:
 
 void RegressionTest::testJSFile(const TQString & filename )
 {
-    qApp->mainWidget()->resize( 800, 600); // restore size
+    tqApp->mainWidget()->resize( 800, 600); // restore size
 
     // create interpreter
     // note: this is different from the interpreter used by the part,
-    // it contains regression test-specific objects & functions
+    // it tqcontains regression test-specific objects & functions
     Object global(new GlobalImp());
     khtml::ChildFrame frame;
     frame.m_part = m_part;
@@ -1571,7 +1571,7 @@ void RegressionTest::printDescription(const TQString& description)
 
     if (!description.isEmpty()) {
         TQString desc = description;
-        desc.replace( '\n', ' ' );
+        desc.tqreplace( '\n', ' ' );
 	printf(" [%s]", desc.latin1());
     }
 
@@ -1591,7 +1591,7 @@ void RegressionTest::createMissingDirs(const TQString & filename)
     pathComponents.prepend(parentDir.absFilePath());
     while (!parentDir.exists()) {
 	TQString parentPath = parentDir.absFilePath();
-	int slashPos = parentPath.findRev('/');
+	int slashPos = parentPath.tqfindRev('/');
 	if (slashPos < 0)
 	    break;
 	parentPath = parentPath.left(slashPos);
@@ -1636,7 +1636,7 @@ bool RegressionTest::svnIgnored( const TQString &filename )
 
 void RegressionTest::resizeTopLevelWidget( int w, int h )
 {
-    qApp->mainWidget()->resize( w, h );
+    tqApp->mainWidget()->resize( w, h );
     // Since we're not visible, this doesn't have an immediate effect, TQWidget posts the event
     TQApplication::sendPostedEvents( 0, TQEvent::Resize );
 }

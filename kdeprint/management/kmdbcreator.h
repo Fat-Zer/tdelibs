@@ -28,7 +28,7 @@
 class TQWidget;
 class TQProgressDialog;
 
-class KMDBCreator : public QObject
+class KMDBCreator : public TQObject
 {
 	Q_OBJECT
 public:

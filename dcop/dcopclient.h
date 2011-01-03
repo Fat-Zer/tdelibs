@@ -42,7 +42,7 @@ typedef TQValueList<TQCString> QCStringList;
  *
  * This class provides IPC and RPC for KDE applications.  Usually you
  * will not have to instantiate one yourself because KApplication
- * contains a method to return a pointer to a DCOPClient object which
+ * tqcontains a method to return a pointer to a DCOPClient object which
  * can be used for your whole application.
  *
  * Before being able to send or receive any DCOP messages, you will have
@@ -65,9 +65,10 @@ typedef TQValueList<TQCString> QCStringList;
  * @see KApplication::dcopClient()
  * @author Preston Brown <pbrown@kde.org>, Matthias Ettrich <ettrich@kde.org>
  */
-class DCOP_EXPORT DCOPClient : public QObject
+class DCOP_EXPORT DCOPClient : public TQObject
 {
   Q_OBJECT
+  TQ_OBJECT
 
  public:
   /**
@@ -83,7 +84,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * Sets the address of a server to use upon attaching.
    *
    * If no server address is ever specified, attach will try its best to
-   * find the server anyway.
+   * tqfind the server anyway.
    * @param addr the new address of the server
    */
   static void setServerAddress(const TQCString &addr);
@@ -345,7 +346,7 @@ class DCOP_EXPORT DCOPClient : public QObject
   /**
    * Searches for an object which matches a criteria.
    *
-   * findObject calls @p remFun in the applications and objects identified
+   * tqfindObject calls @p remFun in the applications and objects identified
    * by @p remApp and @p remObj until @p remFun returns true. The name of
    * the application and object that returned true are returned in
    * @p foundApp and @p foundObj respectively.
@@ -353,7 +354,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * If @p remFun is empty a default function is called in the object
    * which always returns @p true.
    *
-   * A findObject blocks the application until the process receives the
+   * A tqfindObject blocks the application until the process receives the
    * answer.
    *
    * If @p useEventLoop is true, a local event loop will be started after
@@ -378,7 +379,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    *
    * @see send()
    */
-  bool findObject(const TQCString &remApp, const TQCString &remObj,
+  bool tqfindObject(const TQCString &remApp, const TQCString &remObj,
 	    const TQCString &remFun, const TQByteArray &data,
 	    TQCString &foundApp, TQCString &foundObj,
 	    bool useEventLoop/*=false*/, int timeout/*=-1*/);
@@ -387,7 +388,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @deprecated
    */
   // KDE4 merge with above
-  bool findObject(const TQCString &remApp, const TQCString &remObj,
+  bool tqfindObject(const TQCString &remApp, const TQCString &remObj,
 	    const TQCString &remFun, const TQByteArray &data,
 	    TQCString &foundApp, TQCString &foundObj,
 	    bool useEventLoop=false);
@@ -511,7 +512,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @see process()
    * @see beginTransaction()
    */
-  Q_INT32 transactionId() const;
+  TQ_INT32 transactionId() const;
 
   /**
    * Checks whether @p remApp is registered with the DCOP server.
@@ -589,7 +590,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @param replyType write the reply type in this string
    * @param replyData write the reply data in this array
    */
-  bool find(const TQCString &app, const TQCString &obj,
+  bool tqfind(const TQCString &app, const TQCString &obj,
 	    const TQCString &fun, const TQByteArray& data,
 	    TQCString& replyType, TQByteArray &replyData);
 
@@ -693,7 +694,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * to check whether a given client (by name) is running in the same
    * process or in another one.
    */
-  static DCOPClient* findLocalClient( const TQCString &_appId );
+  static DCOPClient* tqfindLocalClient( const TQCString &_appId );
 
   /**
     * @internal Do not use.
@@ -715,7 +716,7 @@ class DCOP_EXPORT DCOPClient : public QObject
     * File with information how to reach the dcopserver.
     * @param hostname Hostname to use, if empty current hostname of
     * the system is used.
-    * @return Filename that contains information how to contact the
+    * @return Filename that tqcontains information how to contact the
     * DCOPserver.
     */
   static TQCString dcopServerFile(const TQCString &hostname=0);
@@ -758,7 +759,7 @@ signals:
    *
    *  Usually attached to a dialog box or some other visual
    * aid.
-   * @param msg the message tha contains further information
+   * @param msg the message tha tqcontains further information
    */
   void attachFailed(const TQString &msg);
 
@@ -816,7 +817,7 @@ public:
 
 private:
 
-  bool isLocalTransactionFinished(Q_INT32 id, TQCString &replyType, TQByteArray &replyData);
+  bool isLocalTransactionFinished(TQ_INT32 id, TQCString &replyType, TQByteArray &replyData);
 
   bool attachInternal( bool registerAsAnonymous = true );
 

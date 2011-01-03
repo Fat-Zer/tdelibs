@@ -35,9 +35,9 @@ K_EXPORT_COMPONENT_FACTORY( kcm_kresources, ResourcesFactory( "kcmkresources" ) 
 KCMKResources::KCMKResources( TQWidget *parent, const char *name, const TQStringList& )
   : KCModule( ResourcesFactory::instance(), parent, name )
 {
-  TQVBoxLayout *layout = new TQVBoxLayout( this );
+  TQVBoxLayout *tqlayout = new TQVBoxLayout( this );
   mConfigPage = new KRES::ConfigPage( this );
-  layout->addWidget( mConfigPage );
+  tqlayout->addWidget( mConfigPage );
   connect( mConfigPage, TQT_SIGNAL( changed( bool ) ), TQT_SIGNAL( changed( bool ) ) );
   setButtons( Help | Apply );
   KAboutData *about =

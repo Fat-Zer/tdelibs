@@ -129,39 +129,39 @@ KioslaveTest::KioslaveTest( TQString src, TQString dest, uint op, uint pr )
   progressButtons->insert( rbProgressDefault, ProgressDefault );
   hbLayout->addWidget( rbProgressDefault, 5 );
 
-  rbProgressStatus = new TQRadioButton( "Status", progressButtons );
-  progressButtons->insert( rbProgressStatus, ProgressStatus );
-  hbLayout->addWidget( rbProgressStatus, 5 );
+  rbProgresstqStatus = new TQRadioButton( "tqStatus", progressButtons );
+  progressButtons->insert( rbProgresstqStatus, ProgresstqStatus );
+  hbLayout->addWidget( rbProgresstqStatus, 5 );
 
   progressButtons->setButton( pr );
   changeProgressMode( pr );
 
   // statusbar progress widget
-  statusProgress = new StatusbarProgress( statusBar() );
+  statusProgress = new tqStatusbarProgress( statusBar() );
   statusBar()->addWidget( statusProgress, 0, true );
 
   // run & stop butons
   hbLayout = new TQHBoxLayout( topLayout, 15 );
 
   pbStart = new TQPushButton( "&Start", main_widget );
-  pbStart->setFixedSize( pbStart->sizeHint() );
+  pbStart->setFixedSize( pbStart->tqsizeHint() );
   connect( pbStart, TQT_SIGNAL(clicked()), TQT_SLOT(startJob()) );
   hbLayout->addWidget( pbStart, 5 );
 
   pbStop = new TQPushButton( "Sto&p", main_widget );
-  pbStop->setFixedSize( pbStop->sizeHint() );
+  pbStop->setFixedSize( pbStop->tqsizeHint() );
   pbStop->setEnabled( false );
   connect( pbStop, TQT_SIGNAL(clicked()), TQT_SLOT(stopJob()) );
   hbLayout->addWidget( pbStop, 5 );
 
   // close button
   close = new TQPushButton( "&Close", main_widget );
-  close->setFixedSize( close->sizeHint() );
+  close->setFixedSize( close->tqsizeHint() );
   connect(close, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotQuit()));
 
   topLayout->addWidget( close, 5 );
 
-  main_widget->setMinimumSize( main_widget->sizeHint() );
+  main_widget->setMinimumSize( main_widget->tqsizeHint() );
   setCentralWidget( main_widget );
 
   slave = 0;
@@ -201,7 +201,7 @@ void KioslaveTest::changeOperation( int id ) {
 void KioslaveTest::changeProgressMode( int id ) {
   progressMode = id;
 
-  if ( progressMode == ProgressStatus ) {
+  if ( progressMode == ProgresstqStatus ) {
     statusBar()->show();
   } else {
     statusBar()->hide();
@@ -306,7 +306,7 @@ void KioslaveTest::startJob() {
   connect( job, TQT_SIGNAL( canceled( KIO::Job * ) ),
            TQT_SLOT( slotResult( KIO::Job * ) ) );
 
-  if (progressMode == ProgressStatus) {
+  if (progressMode == ProgresstqStatus) {
     statusProgress->setJob( job );
   }
 
@@ -537,15 +537,15 @@ int main(int argc, char **argv) {
   } else if ( tmps == "default") {
     pr = KioslaveTest::ProgressDefault;
   } else if ( tmps == "status") {
-    pr = KioslaveTest::ProgressStatus;
+    pr = KioslaveTest::ProgresstqStatus;
   } else KCmdLineArgs::usage("unknown progress mode");
 
   args->clear(); // Free up memory
 
   KioslaveTest test( src, dest, op, pr );
   test.show();
-  // Bug in KTMW / Qt / layouts ?
-  test.resize( test.sizeHint() );
+  // Bug in KTMW / Qt / tqlayouts ?
+  test.resize( test.tqsizeHint() );
 
   app.setMainWidget(&test);
   app.exec();

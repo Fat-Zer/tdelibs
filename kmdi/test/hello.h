@@ -22,7 +22,7 @@ class Hello : public KMdiChildView
 {
     Q_OBJECT
 public:
-    Hello( const char *title, const char *text, TQWidget* parentWidget = 0 );
+    Hello( const char *title, const char *text, TQWidget* tqparentWidget = 0 );
 signals:
     void clicked();
 protected:

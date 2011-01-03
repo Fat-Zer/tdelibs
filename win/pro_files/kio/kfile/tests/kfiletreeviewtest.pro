@@ -17,9 +17,9 @@ LIBS +=  $$KDELIBDESTDIR/kdefx$$KDELIB_SUFFIX \
   $$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/kio$$KDELIB_SUFFIX
 
 # icon
-LIBS+=$(KDELIBS)/win/resources/kfind.res
+LIBS+=$(KDELIBS)/win/resources/ktqfind.res
 
-system( bash kmoc )
+system( bash ktqmoc )
 
 SOURCES = \
 kfiletreeviewtest.cpp

@@ -44,7 +44,7 @@
 #define SIOCGIFFLAGS    _IOW('s', 101, struct ifreq) /* Get if flags */
 #define SIOCGIFADDR     _IOW('s', 102, struct ifreq) /* Get if addr */
 #define SIOCGIFBRDADDR  _IOW('s', 103, struct ifreq) /* Get if broadcastaddr */
-#define SIOCGIFNETMASK  _IOW('s', 104, struct ifreq) /* Get if netmask */
+#define SIOCGIFNETMASK  _IOW('s', 104, struct ifreq) /* Get if nettqmask */
 #define SIOCGIFHWADDR   _IOW('s', 105, struct ifreq) /* Get hw addr */
 #define SIOCGIFMETRIC   _IOW('s', 106, struct ifreq) /* get metric */
 #define SIOCGIFMTU      _IOW('s', 107, struct ifreq) /* get MTU size */

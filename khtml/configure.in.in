@@ -41,7 +41,7 @@ if test "$ac_libthai" != "no"; then
 
   LIBTHAI=""
   if test "$kde_link_libthai" = "no"; then
-     AC_MSG_ERROR([Can't find libthai.])
+     AC_MSG_ERROR([Can't tqfind libthai.])
   else
      AC_DEFINE(HAVE_LIBTHAI, 1,
      [Defined if you have libthai and want to have it compiled in])

@@ -5,7 +5,7 @@ if test "x$have_ssl" != xyes; then
   echo "You're missing openSSL, or your version is too old (before 0.9.5a)."
   echo "KDE won't be able to access secure websites without it, so you should"
   echo "consider installing or upgrading it."
-  echo "Have a look at http://www.openssl.org, or find a binary package for"
+  echo "Have a look at http://www.openssl.org, or tqfind a binary package for"
   echo "your platform."
   echo ""
   all_tests=bad
@@ -17,7 +17,7 @@ if test -z "$LIBART_CONFIG"; then
   echo "KDE won't be able to render SVG icons without it, so you should"
   echo "consider installing or upgrading it."
   echo "Have a look at http://www.levien.com (official site) or"
-  echo "http://svg.kde.org/download.html for sources, or find a binary"
+  echo "http://svg.kde.org/download.html for sources, or tqfind a binary"
   echo "package for your platform."
   echo ""
   all_tests=bad
@@ -29,7 +29,7 @@ if test -z "$LIBPCRE"; then
   echo "Some web pages (using regular expressions in Javascript code) will not "
   echo "work correctly, the regexp support being limited without libpcre. "
   echo "If you plan to use Konqueror as a Web Browser, download libpcre from "
-  echo "http://www.pcre.org or find a binary package for your platform."
+  echo "http://www.pcre.org or tqfind a binary package for your platform."
   echo ""
   all_tests=bad
 fi
@@ -40,7 +40,7 @@ if test -z "$LIBBZ2"; then
   echo "KDE won't be able to provide a help ioslave (help://) without it,"
   echo "so if you want helpfiles you should consider installing it."
   echo "Have a look at http://sources.redhat.com/bzip2/ for sources, "
-  echo "or find a binary package for your platform."
+  echo "or tqfind a binary package for your platform."
   echo ""
   all_tests=bad
 fi
@@ -50,9 +50,9 @@ if test -z "$LIBXML_CFLAGS"; then
   echo "You're missing libxml2 2.4.8 or later."
   echo "KDE won't be able to provide a help ioslave (help://) without it,"
   echo "so if you want helpfiles you should consider installing it."
-  echo "Have a look at ftp://xmlsoft.org/ for sources, or find a binary"
+  echo "Have a look at ftp://xmlsoft.org/ for sources, or tqfind a binary"
   echo "package for your platform."
-  echo "You can find a copy of libxml2 in the kdesupport module if you're using CVS."
+  echo "You can tqfind a copy of libxml2 in the kdesupport module if you're using CVS."
   echo ""
   all_tests=bad
 fi
@@ -62,9 +62,9 @@ if test -z "$LIBXSLT_CFLAGS"; then
   echo "You're missing libxslt 1.0.7 or later."
   echo "KDE won't be able to provide a help ioslave (help://) without it,"
   echo "so if you want helpfiles you should consider installing it."
-  echo "Have a look at ftp://xmlsoft.org/ for sources, or find a binary"
+  echo "Have a look at ftp://xmlsoft.org/ for sources, or tqfind a binary"
   echo "package for your platform."
-  echo "You can find a copy of libxslt in the kdesupport module if you're using CVS."
+  echo "You can tqfind a copy of libxslt in the kdesupport module if you're using CVS."
   echo ""
   all_tests=bad
 fi

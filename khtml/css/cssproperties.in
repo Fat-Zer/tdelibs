@@ -102,7 +102,7 @@ position
 quotes
 right
 size
-table-layout
+table-tqlayout
 text-align
 text-decoration
 text-indent
@@ -110,7 +110,7 @@ text-overflow
 text-shadow
 text-transform
 top
-unicode-bidi
+tqunicode-bidi
 vertical-align
 visibility
 white-space

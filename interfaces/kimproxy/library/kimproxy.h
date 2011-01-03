@@ -43,8 +43,8 @@ class KURL;
 class ContactPresenceListCurrent;
 
 /** FIXME: remove for KDE4, binary compability again. */
-typedef TQMap<TQCString, int> AppPresence; 		// appId->presence; contains all applications' ideas of a user's presence
-typedef TQDict<AppPresence> PresenceMap;			// uid->AppPresence; contains a AppPresences for all users
+typedef TQMap<TQCString, int> AppPresence; 		// appId->presence; tqcontains all applications' ideas of a user's presence
+typedef TQDict<AppPresence> PresenceMap;			// uid->AppPresence; tqcontains a AppPresences for all users
 /** FIXME: remove presenceMap and call this presenceMap in KDE4.  This hack is for binary compatibility */
 typedef TQMap<TQString, ContactPresenceListCurrent> PresenceStringMap;
 
@@ -301,7 +301,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see isPresent()
 		 * @see presenceString()
 		 * @see presenceIcon()
-		 * @see KIMIface::presenceStatus()
+		 * @see KIMIface::presencetqStatus()
 		 * @see KABC::Addressee::uid()
 		 */
 		int presenceNumeric( const TQString& uid );

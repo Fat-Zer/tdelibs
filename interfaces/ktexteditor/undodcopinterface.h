@@ -24,7 +24,7 @@ namespace KTextEditor
 		Construct a new interface object for the text editor.
 		@param Parent the parent UndoInterface object
 		that will provide us with the functions for the interface.
-		@param name the QObject's name
+		@param name the TQObject's name
 		*/
 		UndoDCOPInterface( UndoInterface *Parent, const char *name );
 		/**

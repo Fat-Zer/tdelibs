@@ -627,8 +627,8 @@ void KSelectAction::updateItems( int id )
       TQStringList::ConstIterator it = lst.begin();
       for( ; it != lst.end(); ++it )
         cb->insertItem( *it );
-      // qt caches and never recalculates the sizeHint()
-      // qcombobox.cpp recommends calling setFont to invalidate the sizeHint
+      // qt caches and never recalculates the tqsizeHint()
+      // qcombobox.cpp recommends calling setFont to tqinvalidate the tqsizeHint
       // setFont sets own_font = True, so we're a bit mean and calll
       // unsetFont which calls setFont and then overwrites the own_font
       cb->unsetFont();
@@ -678,7 +678,7 @@ int KSelectAction::plug( TQWidget *widget, int index )
     if ( cb )
     {
       if (!isEditable()) cb->setFocusPolicy(TQWidget::NoFocus);
-      cb->setMinimumWidth( cb->sizeHint().width() );
+      cb->setMinimumWidth( cb->tqsizeHint().width() );
       if ( d->m_comboWidth > 0 )
       {
         cb->setMinimumWidth( d->m_comboWidth );
@@ -730,7 +730,7 @@ TQStringList KSelectAction::comboItems() const
     for( ; it != d->m_list.end(); ++it )
     {
       TQString item = *it;
-      int i = item.find( '&' );
+      int i = item.tqfind( '&' );
       if ( i > -1 )
         item = item.remove( i, 1 );
       lst.append( item );
@@ -779,18 +779,18 @@ void KSelectAction::slotActivated( const TQString &text )
   if ( isEditable() )
   {
     TQStringList lst = d->m_list;
-    if(!lst.contains(text))
+    if(!lst.tqcontains(text))
     {
       lst.append( text );
       setItems( lst );
     }
   }
 
-  int i = d->m_list.findIndex( text );
+  int i = d->m_list.tqfindIndex( text );
   if ( i > -1 )
       setCurrentItem( i );
   else
-      setCurrentItem( comboItems().findIndex( text ) );
+      setCurrentItem( comboItems().tqfindIndex( text ) );
   // Delay this. Especially useful when the slot connected to activated() will re-create
   // the menu, e.g. in the recent files action. This prevents a crash.
   TQTimer::singleShot( 0, this, TQT_SLOT( slotActivated() ) );
@@ -1476,7 +1476,7 @@ void KFontAction::setFont( const TQString &family )
           return;
        }
     }
-    i = lowerName.find(" [");
+    i = lowerName.tqfind(" [");
     if (i>-1)
     {
        lowerName = lowerName.left(i);
@@ -1513,7 +1513,7 @@ void KFontAction::setFont( const TQString &family )
     FcConfigSubstitute (config, pattern, FcMatchPattern);
     pattern = FcFontMatch(NULL, pattern, NULL);
     realFamily = (char*)FcNameUnparse(pattern);
-    realFamily.remove(realFamily.find(regExp), realFamily.length());
+    realFamily.remove(realFamily.tqfind(regExp), realFamily.length());
 
     if ( !realFamily.isEmpty() && realFamily != family )
        setFont( realFamily );
@@ -1534,7 +1534,7 @@ int KFontAction::plug( TQWidget *w, int index )
              TQT_SLOT( slotActivated( const TQString & ) ) );
     cb->setEnabled( isEnabled() );
     bar->insertWidget( id_, comboWidth(), cb, index );
-    cb->setMinimumWidth( cb->sizeHint().width() );
+    cb->setMinimumWidth( cb->tqsizeHint().width() );
 
     addContainer( bar, id_ );
 
@@ -1637,7 +1637,7 @@ void KFontSizeAction::init()
 void KFontSizeAction::setFontSize( int size )
 {
     if ( size == fontSize() ) {
-        setCurrentItem( items().findIndex( TQString::number( size ) ) );
+        setCurrentItem( items().tqfindIndex( TQString::number( size ) ) );
         return;
     }
 
@@ -1646,7 +1646,7 @@ void KFontSizeAction::setFontSize( int size )
         return;
     }
 
-    int index = items().findIndex( TQString::number( size ) );
+    int index = items().tqfindIndex( TQString::number( size ) );
     if ( index == -1 ) {
         // Insert at the correct position in the list (to keep sorting)
         TQValueList<int> lst;
@@ -1664,7 +1664,7 @@ void KFontSizeAction::setFontSize( int size )
             strLst.append( TQString::number(*it) );
         KSelectAction::setItems( strLst );
         // Find new current item
-        index = lst.findIndex( size );
+        index = lst.tqfindIndex( size );
         setCurrentItem( index );
     }
     else
@@ -2021,10 +2021,10 @@ int KToggleToolBarAction::plug( TQWidget* w, int index )
       return -1;
 
   if ( !m_toolBar ) {
-    // Note: topLevelWidget() stops too early, we can't use it.
+    // Note: tqtopLevelWidget() stops too early, we can't use it.
     TQWidget * tl = w;
     TQWidget * n;
-    while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
+    while ( !tl->isDialog() && ( n = tl->tqparentWidget() ) ) // lookup parent and store
       tl = n;
 
     KMainWindow * mw = dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow
@@ -2139,7 +2139,7 @@ void KWidgetAction::setAutoSized( bool autoSized )
     return;
 
   KToolBar* toolBar = (KToolBar*)m_widget->parent();
-  int i = findContainer( toolBar );
+  int i = tqfindContainer( toolBar );
   if ( i == -1 )
     return;
   int id = itemId( i );
@@ -2326,14 +2326,14 @@ void KPasteTextAction::menuAboutToShow()
       if (reply.isValid())
         list = reply;
     }
-    TQString clipboardText = qApp->clipboard()->text(QClipboard::Clipboard);
+    TQString clipboardText = tqApp->clipboard()->text(QClipboard::Clipboard);
     if (list.isEmpty())
         list << clipboardText;
     bool found = false;
     for ( TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it )
     {
       TQString text = KStringHandler::cEmSqueeze((*it).simplifyWhiteSpace(), m_popup->fontMetrics(), 20);
-      text.replace("&", "&&");
+      text.tqreplace("&", "&&");
       int id = m_popup->insertItem(text);
       if (!found && *it == clipboardText)
       {
@@ -2354,7 +2354,7 @@ void KPasteTextAction::menuItemActivated( int id)
       TQString clipboardText = reply;
       reply = klipper.call("setClipboardContents(TQString)", clipboardText);
       if (reply.isValid())
-        kdDebug(129) << "Clipboard: " << qApp->clipboard()->text(QClipboard::Clipboard) << endl;
+        kdDebug(129) << "Clipboard: " << tqApp->clipboard()->text(QClipboard::Clipboard) << endl;
     }
     TQTimer::singleShot(20, this, TQT_SLOT(slotActivated()));
 }
@@ -2362,7 +2362,7 @@ void KPasteTextAction::menuItemActivated( int id)
 void KPasteTextAction::slotActivated()
 {
   if (!m_mixedMode) {
-    TQWidget *w = qApp->widgetAt(TQCursor::pos(), true);
+    TQWidget *w = tqApp->widgetAt(TQCursor::pos(), true);
     TQMimeSource *data = TQApplication::clipboard()->data();
     if (!data->provides("text/plain") && w) {
       m_popup->popup(w->mapToGlobal(TQPoint(0, w->height())));

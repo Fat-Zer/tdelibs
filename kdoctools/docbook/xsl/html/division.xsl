@@ -27,7 +27,7 @@
 
     <xsl:call-template name="make.lots">
       <xsl:with-param name="toc.params">
-        <xsl:call-template name="find.path.params">
+        <xsl:call-template name="tqfind.path.params">
           <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
         </xsl:call-template>
       </xsl:with-param>
@@ -62,7 +62,7 @@
 
     <xsl:call-template name="make.lots">
       <xsl:with-param name="toc.params">
-        <xsl:call-template name="find.path.params">
+        <xsl:call-template name="tqfind.path.params">
           <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
         </xsl:call-template>
       </xsl:with-param>
@@ -94,11 +94,11 @@
     <xsl:call-template name="part.titlepage"/>
 
     <xsl:variable name="toc.params">
-      <xsl:call-template name="find.path.params">
+      <xsl:call-template name="tqfind.path.params">
         <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:if test="not(partintro) and contains($toc.params, 'toc')">
+    <xsl:if test="not(partintro) and tqcontains($toc.params, 'toc')">
       <xsl:call-template name="division.toc"/>
     </xsl:if>
     <xsl:apply-templates/>
@@ -132,12 +132,12 @@
     <xsl:apply-templates/>
 
     <xsl:variable name="toc.params">
-      <xsl:call-template name="find.path.params">
+      <xsl:call-template name="tqfind.path.params">
         <xsl:with-param name="node" select="parent::*"/>
         <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:if test="contains($toc.params, 'toc')">
+    <xsl:if test="tqcontains($toc.params, 'toc')">
       <!-- not ancestor::part because partintro appears in reference -->
       <xsl:apply-templates select="parent::*" mode="make.part.toc"/>
     </xsl:if>

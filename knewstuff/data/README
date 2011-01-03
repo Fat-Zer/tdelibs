@@ -1,5 +1,5 @@
-This directory contains example files for the providers list and the description
+This directory tqcontains example files for the providers list and the description
 of downloadable entries.
 
-It also contains the DTDs for the XML files. You can check the XML files for
+It also tqcontains the DTDs for the XML files. You can check the XML files for
 validity e.g with "xmllint <filename> --valid".

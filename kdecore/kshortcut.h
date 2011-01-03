@@ -74,7 +74,7 @@ class KDECORE_EXPORT KKey
 
 	/**
 	 * Creates a new key from the first key code of the given key sequence.
-	 * @param keySeq the key sequence that contains the key
+	 * @param keySeq the key sequence that tqcontains the key
 	 */
 	KKey( const TQKeySequence& keySeq );
 
@@ -121,7 +121,7 @@ class KDECORE_EXPORT KKey
 
 	/**
 	 * Initializes the key with the first key code of the given key sequence.
-	 * @param keySeq the key sequence that contains the key
+	 * @param keySeq the key sequence that tqcontains the key
 	 * @return true if successful, false otherwise
 	 */
 	bool init( const TQKeySequence& keySeq );
@@ -306,13 +306,13 @@ class KDECORE_EXPORT KKeySequence
 	KKeySequence( const TQKeySequence& keySeq );
 
 	/**
-	 * Create a new key sequence that only contains the given key.
+	 * Create a new key sequence that only tqcontains the given key.
 	 * @param key the key to add
 	 */
 	KKeySequence( const KKey& key );
 
 	/**
-	 * Create a new key sequence that only contains the given key.
+	 * Create a new key sequence that only tqcontains the given key.
 	 * @param key the key to add
 	 */
 	KKeySequence( const KKeyNative& key );
@@ -324,7 +324,7 @@ class KDECORE_EXPORT KKeySequence
 	KKeySequence( const KKeySequence& keySeq );
 
 	/**
-	 * Creates a new key sequence that contains the given key sequence.
+	 * Creates a new key sequence that tqcontains the given key sequence.
 	 * The description consists of comma-separated keys as
 	 * required by KKey::KKey(const TQString&).
 	 * @param keySeq the description of the key
@@ -440,7 +440,7 @@ class KDECORE_EXPORT KKeySequence
 	 * number if the given KKeySequence is larger, 0 if they are equal and
 	 * a positive number this KKeySequence is larger. Key sequences are
 	 * compared by comparing the individual keys, starting from the beginning
-	 * until an unequal key has been found. If a sequence contains more
+	 * until an unequal key has been found. If a sequence tqcontains more
 	 * keys, it is considered larger.
 	 * @param keySeq the key sequence to compare to
 	 * @return a negative number if the given KKeySequence is larger, 0 if
@@ -566,21 +566,21 @@ class KDECORE_EXPORT KShortcut
 	KShortcut( int keyQt );
 
 	/**
-	 * Creates a new shortcut that contains only the given qt key
+	 * Creates a new shortcut that tqcontains only the given qt key
 	 * sequence.
 	 * @param keySeq the qt key sequence to add
 	 */
 	KShortcut( const TQKeySequence& keySeq );
 
 	/**
-	 * Creates a new shortcut that contains only the given key
+	 * Creates a new shortcut that tqcontains only the given key
 	 * in its only sequence.
 	 * @param key the key to add
 	 */
 	KShortcut( const KKey& key );
 
 	/**
-	 * Creates a new shortcut that contains only the given key
+	 * Creates a new shortcut that tqcontains only the given key
 	 * sequence.
 	 * @param keySeq the key sequence to add
 	 */
@@ -593,7 +593,7 @@ class KDECORE_EXPORT KShortcut
 	KShortcut( const KShortcut& shortcut );
 
 	/**
-	 * Creates a new key sequence that contains the given key sequence.
+	 * Creates a new key sequence that tqcontains the given key sequence.
 	 * The description consists of semicolon-separated keys as
 	 * used in KKeySequence::KKeySequence(const TQString&).
 	 * @param shortcut the description of the key
@@ -602,7 +602,7 @@ class KDECORE_EXPORT KShortcut
 	KShortcut( const char* shortcut );
 
 	/**
-	 * Creates a new key sequence that contains the given key sequence.
+	 * Creates a new key sequence that tqcontains the given key sequence.
 	 * The description consists of semicolon-separated keys as
 	 * used in KKeySequence::KKeySequence(const TQString&).
 	 * @param shortcut the description of the key
@@ -706,7 +706,7 @@ class KDECORE_EXPORT KShortcut
 	 * a positive number this shortcut is larger. Shortcuts are
 	 * compared by comparing the individual key sequences, starting from the
 	 * beginning until an unequal key sequences has been found. If a shortcut
-	 * contains more key sequences, it is considered larger.
+	 * tqcontains more key sequences, it is considered larger.
 	 * @param shortcut the shortcut to compare to
 	 * @return a negative number if the given KShortcut is larger, 0 if
 	 * they are equal and a positive number this KShortcut is larger
@@ -737,27 +737,27 @@ class KDECORE_EXPORT KShortcut
 		{ return compare( cut ) < 0; }
 
 	/**
-	 * Checks whether this shortcut contains a sequence that starts
+	 * Checks whether this shortcut tqcontains a sequence that starts
 	 * with the given key.
 	 * @param key the key to check
 	 * @return true if a key sequence starts with the key
 	 */
-	bool contains( const KKey& key ) const;
+	bool tqcontains( const KKey& key ) const;
 
 	/**
-	 * Checks whether this shortcut contains a sequence that starts
+	 * Checks whether this shortcut tqcontains a sequence that starts
 	 * with the given key.
 	 * @param key the key to check
 	 * @return true if a key sequence starts with the key
 	 */
-	bool contains( const KKeyNative& key ) const;
+	bool tqcontains( const KKeyNative& key ) const;
 
 	/**
-	 * Checks whether this shortcut contains the given sequence.
+	 * Checks whether this shortcut tqcontains the given sequence.
 	 * @param keySeq the key sequence to check
 	 * @return true if the shortcut has the given key sequence
 	 */
-	bool contains( const KKeySequence& keySeq ) const;
+	bool tqcontains( const KKeySequence& keySeq ) const;
 
 	/**
 	 * Sets the @p i 'th key sequence of the shortcut. You can not introduce

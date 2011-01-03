@@ -66,7 +66,7 @@ protected:
 	void initHandlers();
 	void insertHandler(LprHandler*);
 	PrintcapEntry* findEntry(KMPrinter*);
-	LprHandler* findHandler(KMPrinter*);
+	LprHandler* tqfindHandler(KMPrinter*);
 	void checkPrinterState(KMPrinter*);
 	bool savePrintcapFile();
 

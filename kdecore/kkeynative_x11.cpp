@@ -96,7 +96,7 @@ bool KKeyNative::init( const KKey& key )
 	m_mod = key.m_mod;
 #elif !defined(Q_WS_WIN) && !defined(Q_WS_MACX)
 	// Get any extra mods required by the sym.
-	//  E.g., XK_Plus requires SHIFT on the en layout.
+	//  E.g., XK_Plus requires SHIFT on the en tqlayout.
 	m_sym = key.sym();
 	uint modExtra = KKeyServer::Sym(m_sym).getModsRequired();
 	// Get the X modifier equivalent.
@@ -108,7 +108,7 @@ bool KKeyNative::init( const KKey& key )
 
 	// XKeysymToKeycode returns the wrong keycode for XK_Print and XK_Break.
 	// Specifically, it returns the code for SysReq instead of Print
-	// Only do this for the default Xorg layout, other keycode mappings
+	// Only do this for the default Xorg tqlayout, other keycode mappings
 	// (e.g. evdev) don't need or want it.
 	if( m_sym == XK_Print && !(m_mod & Mod1Mask) &&
                 XKeycodeToKeysym( qt_xdisplay(), 111, 0 ) == XK_Print )
@@ -122,7 +122,7 @@ bool KKeyNative::init( const KKey& key )
 	if( !m_code && m_sym )
 		kdDebug(125) << "Couldn't get code for sym" << endl;
 	// Now get the true sym formed by the modifiers
-	//  E.g., Shift+Equal => Plus on the en layout.
+	//  E.g., Shift+Equal => Plus on the en tqlayout.
 	if( key.modFlags() && ( ( m_sym < XK_Home || m_sym > XK_Begin ) && 
 				  m_sym != XK_Insert && m_sym != XK_Delete ))
 		KKeyServer::codeXToSym( m_code, m_mod, m_sym );

@@ -27,7 +27,7 @@ Author: Ralph Mor, X Consortium
 #include "KDE-ICE/ICElibint.h"
 #include "KDE-ICE/globals.h"
 
-Status
+tqStatus
 IceAddConnectionWatch (watchProc, clientData)
 
 IceWatchProc	watchProc;

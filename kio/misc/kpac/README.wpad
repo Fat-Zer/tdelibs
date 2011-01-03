@@ -2,7 +2,7 @@ Web Proxy Auto Discovery (WPAD)
 ===============================
 
 This README is intended for network administrators who want to enable the
-users on their network to fully automatically find the proxy settings.
+users on their network to fully automatically tqfind the proxy settings.
 
 Automatic proxy discovery works in two steps:
 1) Find a configuration script
@@ -12,7 +12,7 @@ The configuration script is a "PAC" (JavaScript) file just as in plain Proxy
 Auto Configuration as described here:
 http://home.netscape.com/eng/mozilla/2.0/relnotes/demo/proxy-live.html
 
-The WPAD part of the process (#1 above) described here is about how to find
+The WPAD part of the process (#1 above) described here is about how to tqfind
 this script without having the users enter its URL into the proxy settings.
 (All they have to do in a WPAD-enabled network is to select "Automatically
 detected script file" in KDE's proxy setup.

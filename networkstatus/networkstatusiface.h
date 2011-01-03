@@ -28,7 +28,7 @@
 
 #include "networkstatuscommon.h"
 
-class NetworkStatusIface : virtual public DCOPObject
+class NetworktqStatusIface : virtual public DCOPObject
 {
 K_DCOP
 k_dcop:
@@ -36,8 +36,8 @@ k_dcop:
 	virtual TQStringList networks() = 0;
 	virtual int status() = 0;
 	// Service interface
-	virtual void setNetworkStatus( const TQString & networkName, int status ) = 0;
-	virtual void registerNetwork( NetworkStatus::Properties properties ) = 0;
+	virtual void setNetworktqStatus( const TQString & networkName, int status ) = 0;
+	virtual void registerNetwork( NetworktqStatus::Properties properties ) = 0;
 	virtual void unregisterNetwork( const TQString & networkName ) = 0 ;
 k_dcop_signals:
 	/**

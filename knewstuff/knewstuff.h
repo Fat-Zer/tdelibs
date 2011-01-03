@@ -74,10 +74,10 @@ class KDE_EXPORT KNewStuff
 
       @param type type of data to be handled, should be something like
                   korganizer/calendar, kword/template, kdesktop/wallpaper
-      @param parentWidget parent widget of dialogs opened by the KNewStuff
+      @param tqparentWidget parent widget of dialogs opened by the KNewStuff
                           engine
     */
-    KNewStuff( const TQString &type, TQWidget *parentWidget = 0 );
+    KNewStuff( const TQString &type, TQWidget *tqparentWidget = 0 );
     
     /**
       Constructor.
@@ -85,10 +85,10 @@ class KDE_EXPORT KNewStuff
       @param type type of data to be handled, should be something like
                   korganizer/calendar, kword/template, kdesktop/wallpaper
       @param providerList the URL of the provider list
-      @param parentWidget parent widget of dialogs opened by the KNewStuff
+      @param tqparentWidget parent widget of dialogs opened by the KNewStuff
                           engine
     */
-    KNewStuff( const TQString &type, const TQString &providerList, TQWidget *parentWidget = 0 );
+    KNewStuff( const TQString &type, const TQString &providerList, TQWidget *tqparentWidget = 0 );
     virtual ~KNewStuff();
 
     /**
@@ -99,7 +99,7 @@ class KDE_EXPORT KNewStuff
     /**
       Return parent widget.
     */
-    TQWidget *parentWidget() const;
+    TQWidget *tqparentWidget() const;
 
     /**
       Start download process.

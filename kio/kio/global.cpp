@@ -97,7 +97,7 @@ KIO_EXPORT TQString KIO::number( KIO::filesize_t size )
 {
     char charbuf[256];
     sprintf(charbuf, "%lld", size);
-    return TQString::fromLatin1(charbuf);
+    return TQString::tqfromLatin1(charbuf);
 }
 
 KIO_EXPORT unsigned int KIO::calculateRemainingSeconds( KIO::filesize_t totalSize,
@@ -167,13 +167,13 @@ KIO_EXPORT TQString KIO::encodeFileName( const TQString & _str )
   TQString str( _str );
 
   int i = 0;
-  while ( ( i = str.find( "%", i ) ) != -1 )
+  while ( ( i = str.tqfind( "%", i ) ) != -1 )
   {
-    str.replace( i, 1, "%%");
+    str.tqreplace( i, 1, "%%");
     i += 2;
   }
-  while ( ( i = str.find( "/" ) ) != -1 )
-      str.replace( i, 1, "%2f");
+  while ( ( i = str.tqfind( "/" ) ) != -1 )
+      str.tqreplace( i, 1, "%2f");
   return str;
 }
 
@@ -284,7 +284,7 @@ KIO_EXPORT TQString KIO::buildErrorString(int errorCode, const TQString &errorTe
       result = i18n( "Could not create socket for accessing %1." ).arg( errorText );
       break;
     case  KIO::ERR_COULD_NOT_CONNECT:
-      result = i18n( "Could not connect to host %1." ).arg( errorText.isEmpty() ? TQString::fromLatin1("localhost") : errorText );
+      result = i18n( "Could not connect to host %1." ).arg( errorText.isEmpty() ? TQString::tqfromLatin1("localhost") : errorText );
       break;
     case  KIO::ERR_CONNECTION_BROKEN:
       result = i18n( "Connection to host %1 is broken." ).arg( errorText );
@@ -477,16 +477,16 @@ KIO_EXPORT TQStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0
     url = i18n( "(unknown)" );
   }
 
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = KGlobal::locale()->formatDateTime( TQDateTime::tqcurrentDateTime(),
                                                 false );
 
   ret << errorName;
-  ret << TQString::fromLatin1( "<qt><p><b>" ) + errorName +
-         TQString::fromLatin1( "</b></p><p>" ) + description +
-         TQString::fromLatin1( "</p>" );
-  ret2 = TQString::fromLatin1( "<qt><p>" );
+  ret << TQString::tqfromLatin1( "<qt><p><b>" ) + errorName +
+         TQString::tqfromLatin1( "</b></p><p>" ) + description +
+         TQString::tqfromLatin1( "</p>" );
+  ret2 = TQString::tqfromLatin1( "<qt><p>" );
   if ( !techName.isEmpty() )
-    ret2 += i18n( "<b>Technical reason</b>: " ) + techName + TQString::fromLatin1( "</p>" );
+    ret2 += i18n( "<b>Technical reason</b>: " ) + techName + TQString::tqfromLatin1( "</p>" );
   ret2 += i18n( "</p><p><b>Details of the request</b>:" );
   ret2 += i18n( "</p><ul><li>URL: %1</li>" ).arg( url );
   if ( !protocol.isEmpty() ) {
@@ -497,12 +497,12 @@ KIO_EXPORT TQStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0
   if ( !causes.isEmpty() ) {
     ret2 += i18n( "<p><b>Possible causes</b>:</p><ul><li>" );
     ret2 += causes.join( "</li><li>" );
-    ret2 += TQString::fromLatin1( "</li></ul>" );
+    ret2 += TQString::tqfromLatin1( "</li></ul>" );
   }
   if ( !solutions.isEmpty() ) {
     ret2 += i18n( "<p><b>Possible solutions</b>:</p><ul><li>" );
     ret2 += solutions.join( "</li><li>" );
-    ret2 += TQString::fromLatin1( "</li></ul>" );
+    ret2 += TQString::tqfromLatin1( "</li></ul>" );
   }
   ret << ret2;
   return ret;
@@ -559,7 +559,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
     protocol = i18n( "(unknown)" );
   }
 
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = KGlobal::locale()->formatDateTime( TQDateTime::tqcurrentDateTime(),
                                                 false );
 
   TQString errorName, techName, description;
@@ -700,7 +700,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       causes << i18n( "This error is very much dependent on the KDE program. The "
         "additional information should give you more information than is available "
         "to the KDE input/output architecture." );
-      solutions << i18n( "Attempt to find another way to accomplish the same "
+      solutions << i18n( "Attempt to tqfind another way to accomplish the same "
         "outcome." );
       break;
 
@@ -988,7 +988,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       break;
 
     case  KIO::ERR_COULD_NOT_STAT:
-      errorName = i18n( "Could Not Determine Resource Status" );
+      errorName = i18n( "Could Not Determine Resource tqStatus" );
       techName = i18n( "Could Not Stat Resource" );
       description = i18n( "An attempt to determine information about the status "
         "of the resource <strong>%1</strong>, such as the resource name, type, "
@@ -1291,7 +1291,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
 #include <sys/vmount.h>
 #include <sys/vfs.h>
 
-/* AIX does not prototype mntctl anywhere that I can find */
+/* AIX does not prototype mntctl anywhere that I can tqfind */
 #ifndef mntctl
 extern "C" {
 int mntctl(int command, int size, void* buffer);
@@ -1368,7 +1368,7 @@ extern "C" void endvfsent( );
 
 #endif /* HAVE_GETMNTINFO */
 
-TQString KIO::findDeviceMountPoint( const TQString& filename )
+TQString KIO::tqfindDeviceMountPoint( const TQString& filename )
 {
     TQString result;
 
@@ -1383,13 +1383,13 @@ TQString KIO::findDeviceMountPoint( const TQString& filename )
 	TQCString devname;
 
 	if( (volpath = volmgt_root()) == NULL ) {
-		kdDebug( 7007 ) << "findDeviceMountPoint: "
-			<< "VOLMGT: can't find volmgt root dir" << endl;
+		kdDebug( 7007 ) << "tqfindDeviceMountPoint: "
+			<< "VOLMGT: can't tqfind volmgt root dir" << endl;
 		return TQString::null;
 	}
 
 	if( (mnttab = fopen( MNTTAB, "r" )) == NULL ) {
-		kdDebug( 7007 ) << "findDeviceMountPoint: "
+		kdDebug( 7007 ) << "tqfindDeviceMountPoint: "
 			<< "VOLMGT: can't open mnttab" << endl;
 		return TQString::null;
 	}
@@ -1398,12 +1398,12 @@ TQString KIO::findDeviceMountPoint( const TQString& filename )
 	devname += TQFile::encodeName( filename );
 	devname += '/';
 	len = devname.length();
-//	kdDebug( 7007 ) << "findDeviceMountPoint: "
+//	kdDebug( 7007 ) << "tqfindDeviceMountPoint: "
 //		<< "VOLMGT: searching mountpoint for \"" << devname << "\""
 //		<< endl;
 
 	/*
-	 *  find the mountpoint
+	 *  tqfind the mountpoint
 	 *  floppies:
 	 *	/dev/disketteN    => <volpath>/dev/disketteN
 	 *  CDROM, ZIP, and other media:
@@ -1432,12 +1432,12 @@ TQString KIO::findDeviceMountPoint( const TQString& filename )
     TQCString realname;
 
     realname = TQFile::encodeName(filename);
-    /* If the path contains symlinks, get the real name */
+    /* If the path tqcontains symlinks, get the real name */
     if (realpath(realname, realpath_buffer) != 0)
       // succes, use result from realpath
       realname = realpath_buffer;
 
-    //kdDebug(7007) << "findDeviceMountPoint realname=" << realname << endl;
+    //kdDebug(7007) << "tqfindDeviceMountPoint realname=" << realname << endl;
 
 #ifdef HAVE_GETMNTINFO
 
@@ -1453,7 +1453,7 @@ TQString KIO::findDeviceMountPoint( const TQString& filename )
 
         TQCString device_name = mounted[i].f_mntfromname;
 
-        // If the path contains symlinks, get
+        // If the path tqcontains symlinks, get
         // the real name
         if (realpath(device_name, realpath_buffer) != 0)
             // succes, use result from realpath
@@ -1546,7 +1546,7 @@ TQString KIO::findDeviceMountPoint( const TQString& filename )
         return TQString::null;
     }
 
-    /* Loop over all file systems and see if we can find our
+    /* Loop over all file systems and see if we can tqfind our
      * mount point.
      * Note that this is the mount point with the longest match.
      * XXX: Fails if me->mnt_dir is not a realpath but goes
@@ -1561,14 +1561,14 @@ TQString KIO::findDeviceMountPoint( const TQString& filename )
     while (GETMNTENT(mtab, me))
     {
       // There may be symbolic links into the /etc/mnttab
-      // So we have to find the real device name here as well!
+      // So we have to tqfind the real device name here as well!
       TQCString device_name = FSNAME(me);
       if (device_name.isEmpty() || (device_name == "none"))
          continue;
 
       //kdDebug( 7007 ) << "device_name=" << device_name << endl;
 
-      // If the path contains symlinks, get
+      // If the path tqcontains symlinks, get
       // the real name
       if (realpath(device_name, realpath_buffer) != 0)
           // succes, use result from realpath
@@ -1690,7 +1690,7 @@ static TQString get_mount_info(const TQString& filename,
 
     memset(realname, 0, MAXPATHLEN);
 
-    /* If the path contains symlinks, get the real name */
+    /* If the path tqcontains symlinks, get the real name */
     if (realpath(TQFile::encodeName(filename), realname) == 0) {
         if( strlcpy(realname, TQFile::encodeName(filename), MAXPATHLEN)>=MAXPATHLEN)
             return TQString::null;
@@ -1699,7 +1699,7 @@ static TQString get_mount_info(const TQString& filename,
     int max = 0;
     TQString mountPoint;
 
-    /* Loop over all file systems and see if we can find our
+    /* Loop over all file systems and see if we can tqfind our
      * mount point.
      * Note that this is the mount point with the longest match.
      * XXX: Fails if me->mnt_dir is not a realpath but goes
@@ -1725,7 +1725,7 @@ static TQString get_mount_info(const TQString& filename,
 
         TQCString device_name = mounted[i].f_mntfromname;
 
-        // If the path contains symlinks, get
+        // If the path tqcontains symlinks, get
         // the real name
         if (realpath(device_name, realpath_buffer) != 0)
             // succes, use result from realpath
@@ -1738,7 +1738,7 @@ static TQString get_mount_info(const TQString& filename,
         if ( is_my_mountpoint( mounted[i].f_mntonname, realname, max ) )
         {
             mountPoint = TQFile::decodeName(mounted[i].f_mntonname);
-            fstype = TQString::fromLatin1(mounttype);
+            fstype = TQString::tqfromLatin1(mounttype);
             check_mount_point( mounttype, mounted[i].f_mntfromname,
                                isautofs, isslow );
             // keep going, looking for a potentially better one
@@ -1805,12 +1805,12 @@ static TQString get_mount_info(const TQString& filename,
             if ( is_my_mountpoint( mountedto, realname, max ) )
             {
                 mountPoint = TQFile::decodeName(mountedto);
-                fstype = TQString::fromLatin1(ent->vfsent_name);
+                fstype = TQString::tqfromLatin1(ent->vfsent_name);
                 check_mount_point(ent->vfsent_name, device_name, isautofs, isslow);
 
                 if (ismanual == Unseen)
                 {
-                    // TODO: add check for ismanual, I couldn't find any way
+                    // TODO: add check for ismanual, I couldn't tqfind any way
                     // how to get the mount attribute from /etc/filesystems
                     ismanual == Wrong;
                 }
@@ -1909,13 +1909,13 @@ static TQString get_mount_info(const TQString& filename,
 
 #else //!Q_OS_UNIX
 //dummy
-TQString KIO::findDeviceMountPoint( const TQString& filename )
+TQString KIO::tqfindDeviceMountPoint( const TQString& filename )
 {
 	return TQString::null;
 }
 #endif
 
-TQString KIO::findPathMountPoint(const TQString& filename)
+TQString KIO::tqfindPathMountPoint(const TQString& filename)
 {
 #ifdef Q_OS_UNIX
   MountState isautofs = Unseen, isslow = Unseen, ismanual = Wrong;

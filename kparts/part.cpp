@@ -114,7 +114,7 @@ void PartBase::setInstance( KInstance *inst, bool bLoadPlugins )
   // install 'instancename'data resource type
   KGlobal::dirs()->addResourceType( inst->instanceName() + "data",
                                     KStandardDirs::kde_default( "data" )
-                                    + TQString::fromLatin1( inst->instanceName() ) + '/' );
+                                    + TQString::tqfromLatin1( inst->instanceName() ) + '/' );
   if ( bLoadPlugins )
     loadPlugins( m_obj, this, instance() );
 }
@@ -162,10 +162,10 @@ Part::~Part()
   delete d;
 }
 
-void Part::embed( TQWidget * parentWidget )
+void Part::embed( TQWidget * tqparentWidget )
 {
   if ( widget() )
-    widget()->reparent( parentWidget, 0, TQPoint( 0, 0 ), true );
+    widget()->reparent( tqparentWidget, 0, TQPoint( 0, 0 ), true );
 }
 
 TQWidget *Part::widget()
@@ -365,7 +365,7 @@ bool ReadOnlyPart::openURL( const KURL &url )
     KURL destURL;
     destURL.setPath( m_file );
     d->m_job = KIO::file_copy( m_url, destURL, 0600, true, false, d->m_showProgressInfo );
-    d->m_job->setWindow( widget() ? widget()->topLevelWidget() : 0 );
+    d->m_job->setWindow( widget() ? widget()->tqtopLevelWidget() : 0 );
     emit started( d->m_job );
     connect( d->m_job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotJobFinished ( KIO::Job * ) ) );
     return true;
@@ -638,7 +638,7 @@ bool ReadWritePart::saveToURL()
        return false;
     }
     d->m_uploadJob = KIO::file_move( uploadUrl, m_url, -1, true /*overwrite*/ );
-    d->m_uploadJob->setWindow( widget() ? widget()->topLevelWidget() : 0 );
+    d->m_uploadJob->setWindow( widget() ? widget()->tqtopLevelWidget() : 0 );
     connect( d->m_uploadJob, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotUploadFinished (KIO::Job *) ) );
     return true;
   }
@@ -674,7 +674,7 @@ void ReadWritePart::slotUploadFinished( KIO::Job * )
   d->m_originalFilePath = TQString::null;
   if (d->m_waitForSave)
   {
-     qApp->exit_loop();
+     tqApp->exit_loop();
   }
 }
 
@@ -692,7 +692,7 @@ bool ReadWritePart::waitSaveComplete()
   TQWidget dummy(0,0,WType_Dialog | WShowModal);
   dummy.setFocusPolicy( TQWidget::NoFocus );
   qt_enter_modal(&dummy);
-  qApp->enter_loop();
+  tqApp->enter_loop();
   qt_leave_modal(&dummy);
 
   d->m_waitForSave = false;

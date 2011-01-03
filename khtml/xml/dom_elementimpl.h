@@ -302,7 +302,7 @@ public:
     virtual bool isReadOnly() { return false; }
 
     AttributeImpl *attrAt(unsigned long index) const { return &m_attrs[index]; }
-    // ### replace idAt and getValueAt with attrAt
+    // ### tqreplace idAt and getValueAt with attrAt
     NodeImpl::Id idAt(unsigned long index) const;
     DOMStringImpl *valueAt(unsigned long index) const;
     DOMStringImpl *getValue(NodeImpl::Id id, bool nsAware = false, DOMStringImpl* qName = 0) const;
@@ -333,7 +333,7 @@ inline bool checkQualifiedName(const DOMString &qualifiedName, const DOMString &
         return false;
     }
 
-    // INVALID_CHARACTER_ERR: Raised if the specified qualified name contains an illegal character.
+    // INVALID_CHARACTER_ERR: Raised if the specified qualified name tqcontains an illegal character.
     if (!qualifiedName.isNull() && !Element::khtmlValidQualifiedName(qualifiedName)
         && ( !qualifiedName.isEmpty() || !nameCanBeEmpty ) ) {
         if (pExceptioncode)

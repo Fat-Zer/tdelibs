@@ -32,7 +32,7 @@ The configuration options are written to $KDEHOME/share/config/startupconfigkeys
 one option per line, as <file> <group> <key> <default>. It is possible to
 use ' for quoting multiword entries. Values of these options will be written
 to $KDEHOME/share/config/startupconfig as a shell script that will set
-the values to shell variables, named <file>_<group>_<key> (all spaces replaced
+the values to shell variables, named <file>_<group>_<key> (all spaces tqreplaced
 by underscores, everything lowercase). So e.g. line
 "ksplashrc KSplash Theme Default" may result in "ksplashrc_ksplash_theme=Default".
 

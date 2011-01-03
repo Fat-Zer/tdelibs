@@ -12,7 +12,7 @@ exists( custom_defs.pro ) {
 }
 
 # common version info for all libs:
-!contains( CONFIG, kde3lib ) {
+!tqcontains( CONFIG, kde3lib ) {
 	VER_MAJ = $(KDE_VER_MAJ)
 	VER_MIN = $(KDE_VER_MIN)
 	VER_PAT = $(KDE_VER_PAT)
@@ -27,19 +27,19 @@ isEmpty( KW_CONFIG ) {
 }
 
 # release switch has priority over debug
-contains(KW_CONFIG,release) {
+tqcontains(KW_CONFIG,release) {
   CONFIG -= debug
   CONFIG += release
 }
-contains(KW_CONFIG,debug) {
+tqcontains(KW_CONFIG,debug) {
   CONFIG += debug
   CONFIG -= release
 }
-contains(KW_CONFIG,windows) {
+tqcontains(KW_CONFIG,windows) {
   CONFIG += windows
   CONFIG -= console
 }
-contains(KW_CONFIG,console) {
+tqcontains(KW_CONFIG,console) {
   CONFIG -= windows
   CONFIG += console
 }
@@ -55,17 +55,17 @@ KDELIBDESTDIR = $$KDEBINDESTDIR\bin #shared with all binaries
 
 # dlls suffixes for given target
 isEmpty( KDEBUG ) {
-  contains(CONFIG,debug) {
+  tqcontains(CONFIG,debug) {
 		KDEBUG=_d
 		KDELIBDEBUG=_d
 		KDELIBDEBUGLIB=_d.lib
   }
-  !contains(CONFIG,debug) {
+  !tqcontains(CONFIG,debug) {
 		KDEBUG=_
-		contains(CONFIG,kde3lib) {
+		tqcontains(CONFIG,kde3lib) {
 			KDELIBDEBUG=
 		}
-		!contains(CONFIG,kde3lib) {
+		!tqcontains(CONFIG,kde3lib) {
 			KDELIBDEBUG=_
 		}
 		KDELIBDEBUGLIB=.lib
@@ -73,21 +73,21 @@ isEmpty( KDEBUG ) {
 }
 KDELIB_SUFFIX=$$KDEBUG$(KDE_VER).lib
 
-contains( TEMPLATE, app ) {
+tqcontains( TEMPLATE, app ) {
   # default dest dir for "app"
-#  contains(CONFIG,debug) {
+#  tqcontains(CONFIG,debug) {
     DESTDIR = $$KDEBINDESTDIR\bin
 #  }
-#  !contains(CONFIG,debug) {
+#  !tqcontains(CONFIG,debug) {
 #    DESTDIR = $$KDEBINDESTDIR\release-bin
 #  }
-	!contains(CONFIG,nokdecore) {
+	!tqcontains(CONFIG,nokdecore) {
 			LIBS += $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX
 	}
-	!contains(CONFIG,nokdeui) {
+	!tqcontains(CONFIG,nokdeui) {
 			LIBS += $$KDELIBDESTDIR/kdeui$$KDELIB_SUFFIX
 	}
-	!contains(CONFIG,nokdefx) {
+	!tqcontains(CONFIG,nokdefx) {
 			LIBS += $$KDELIBDESTDIR/kdefx$$KDELIB_SUFFIX
 	}
 }
@@ -95,25 +95,25 @@ contains( TEMPLATE, app ) {
 isEmpty( TEMPLATE ) {
   TEMPLATE = lib
 }
-contains( TEMPLATE, lib ) {
+tqcontains( TEMPLATE, lib ) {
 	CONFIG	+= dll
 
 	# indicate that we building a library
 	QMAKE_CXXFLAGS += -DKDE_MAKE_LIB=1
 
 	# lib/kde3 dest dir (for modules)
-	contains( CONFIG, kde3lib ) {
+	tqcontains( CONFIG, kde3lib ) {
 	  DESTDIR = $$KDEBINDESTDIR/lib/kde3
 	  TARGET_EXT = .dll #- no ver. in filename
 	}
-	!contains( CONFIG, kde3lib ) {
+	!tqcontains( CONFIG, kde3lib ) {
 	  DESTDIR = $$KDELIBDESTDIR
 	}
-	contains( CONFIG, kstyle ) {
+	tqcontains( CONFIG, kstyle ) {
 	  DESTDIR = $$KDEBINDESTDIR/lib/kde3/plugins/styles
 	  CONFIG += plugin
 	}
-#  !contains(CONFIG,debug) {
+#  !tqcontains(CONFIG,debug) {
 #    DESTDIR = $$KDEBINDESTDIR\release-lib
 #  }
 
@@ -124,19 +124,19 @@ contains( TEMPLATE, lib ) {
 }
 
 # win32 dependent lib
-!contains( DEFINES, MAKE_KDEWIN32_LIB ) {
+!tqcontains( DEFINES, MAKE_KDEWIN32_LIB ) {
   LIBS += $$KDELIBDESTDIR/kdewin32$$KDELIB_SUFFIX
 }
 
 # libltdl:
-!contains( DEFINES, MAKE_LTDL_LIB ) {
-  !contains( DEFINES, MAKE_KDEWIN32_LIB ) {
+!tqcontains( DEFINES, MAKE_LTDL_LIB ) {
+  !tqcontains( DEFINES, MAKE_KDEWIN32_LIB ) {
     LIBS += $$KDELIBDESTDIR/ltdl$$KDELIB_SUFFIX
     DEFINES += LIBLTDL_DLL_IMPORT
   }
 }
 
-!contains( DEFINES, QT_DLL) {
+!tqcontains( DEFINES, QT_DLL) {
   DEFINES += QT_DLL
 }
 
@@ -161,13 +161,13 @@ QMAKE_CXXFLAGS += $$QMAKE_CFLAGS_EXCEPTIONS_ON # /GX for msvc
 
 # catch Release-Build Errors in Debug Build
 #DISABLED for msvc.net
-#contains( CONFIG, debug ) {
-#	contains( KW_CONFIG, debug ) {
+#tqcontains( CONFIG, debug ) {
+#	tqcontains( KW_CONFIG, debug ) {
 #		QMAKE_CXXFLAGS += /GZ
 #	}
 #}
 
-# create an output file whether or not LINK finds an undefined symbol
+# create an output file whether or not LINK tqfinds an undefined symbol
 # (warning 4006 will be raised instead of error):
 QMAKE_LFLAGS += /FORCE:MULTIPLE
 
@@ -175,24 +175,24 @@ QMAKE_LFLAGS += /FORCE:MULTIPLE
 # a .cpp or .cxx extension, thus .cc files are compiled properly with msvc
 QMAKE_CXXFLAGS += /TP
 
-INCLUDEPATH	+= moc $(KDELIBS)/win $(KDELIBS)
+INCLUDEPATH	+= tqmoc $(KDELIBS)/win $(KDELIBS)
 
-contains(KW_CONFIG,release) {
+tqcontains(KW_CONFIG,release) {
 OBJECTS_DIR = obj_rel
 }
-!contains(KW_CONFIG,release) {
+!tqcontains(KW_CONFIG,release) {
 OBJECTS_DIR = obj
 }
 
-MOC_DIR = moc
+TQMOC_DIR = tqmoc
 
 # enable this to temporary add debug info!
 # CONFIG += debug
 # CONFIG -= release
 
-!contains(CONFIG,debug) {
+!tqcontains(CONFIG,debug) {
 QMAKE_LFLAGS += /NODEFAULTLIB:MSVCRTD /NODEFAULTLIB:MSVCR71D /NODEFAULTLIB:MSVCP71D
 }
-contains(CONFIG,debug) {
+tqcontains(CONFIG,debug) {
 QMAKE_LFLAGS += /NODEFAULTLIB:MSVCRT /NODEFAULTLIB:MSVCR71 /NODEFAULTLIB:MSVCP71 /NODEFAULTLIB:libc
 }

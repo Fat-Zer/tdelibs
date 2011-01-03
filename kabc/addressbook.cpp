@@ -522,12 +522,12 @@ void AddressBook::insertAddressee( const Addressee &a )
     resource = standardResource();
 
   Resource::Iterator it;
-  Addressee fAddr = resource->findByUid( a.uid() );
+  Addressee fAddr = resource->tqfindByUid( a.uid() );
 
   Addressee addr( a );
   if ( !fAddr.isEmpty() ) {
     if ( fAddr != a )
-      addr.setRevision( TQDateTime::currentDateTime() );
+      addr.setRevision( TQDateTime::tqcurrentDateTime() );
     else {
       if ( fAddr.resource() == 0 ) {
         fAddr.setResource( resource );
@@ -555,7 +555,7 @@ void AddressBook::removeAddressee( const Iterator &it )
     (*it).resource()->removeAddressee( *it );
 }
 
-AddressBook::Iterator AddressBook::find( const Addressee &a )
+AddressBook::Iterator AddressBook::tqfind( const Addressee &a )
 {
   Iterator it;
   for ( it = begin(); it != end(); ++it ) {
@@ -566,11 +566,11 @@ AddressBook::Iterator AddressBook::find( const Addressee &a )
   return end();
 }
 
-Addressee AddressBook::findByUid( const TQString &uid )
+Addressee AddressBook::tqfindByUid( const TQString &uid )
 {
   KRES::Manager<Resource>::ActiveIterator it;
   for ( it = d->mManager->activeBegin(); it != d->mManager->activeEnd(); ++it ) {
-    Addressee addr = (*it)->findByUid( uid );
+    Addressee addr = (*it)->tqfindByUid( uid );
     if ( !addr.isEmpty() )
       return addr;
   }
@@ -589,35 +589,35 @@ Addressee::List AddressBook::allAddressees()
   return list;
 }
 
-Addressee::List AddressBook::findByName( const TQString &name )
+Addressee::List AddressBook::tqfindByName( const TQString &name )
 {
   Addressee::List results;
 
   KRES::Manager<Resource>::ActiveIterator it;
   for ( it = d->mManager->activeBegin(); it != d->mManager->activeEnd(); ++it )
-    results += (*it)->findByName( name );
+    results += (*it)->tqfindByName( name );
 
   return results;
 }
 
-Addressee::List AddressBook::findByEmail( const TQString &email )
+Addressee::List AddressBook::tqfindByEmail( const TQString &email )
 {
   Addressee::List results;
 
   KRES::Manager<Resource>::ActiveIterator it;
   for ( it = d->mManager->activeBegin(); it != d->mManager->activeEnd(); ++it )
-    results += (*it)->findByEmail( email );
+    results += (*it)->tqfindByEmail( email );
 
   return results;
 }
 
-Addressee::List AddressBook::findByCategory( const TQString &category )
+Addressee::List AddressBook::tqfindByCategory( const TQString &category )
 {
   Addressee::List results;
 
   KRES::Manager<Resource>::ActiveIterator it;
   for ( it = d->mManager->activeBegin(); it != d->mManager->activeEnd(); ++it )
-    results += (*it)->findByCategory( category );
+    results += (*it)->tqfindByCategory( category );
 
   return results;
 }

@@ -36,7 +36,7 @@
 #include <kconfig.h>
 
 //
-// KConfigTestView contains lots of Qt widgets.
+// KConfigTestView tqcontains lots of Qt widgets.
 //
 
 class KConfigTestView : public QDialog

@@ -5,7 +5,7 @@
     <property name="name">
         <cstring>KJSErrorDlg</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -63,7 +63,7 @@
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>311</width>
                     <height>21</height>
@@ -125,8 +125,8 @@
     <slot>setURL( const QString &amp; url )</slot>
     <slot>clear()</slot>
 </slots>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
+<tqlayoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>kactivelabel.h</includehint>
 </includehints>

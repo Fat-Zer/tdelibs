@@ -47,7 +47,7 @@ KMPrinterView::KMPrinterView(TQWidget *parent, const char *name)
 	connect(m_listview,TQT_SIGNAL(printerSelected(const TQString&)),TQT_SLOT(slotPrinterSelected(const TQString&)));
 
 	setViewType(m_type);
-	setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+	tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 }
 
 KMPrinterView::~KMPrinterView()
@@ -105,9 +105,9 @@ void KMPrinterView::slotPrinterSelected(const TQString& p)
 	m_current = p;
 }
 
-TQSize KMPrinterView::minimumSizeHint() const
+TQSize KMPrinterView::tqminimumSizeHint() const
 {
-	return TQWidgetStack::minimumSizeHint();
+	return TQWidgetStack::tqminimumSizeHint();
 }
 
 #include "kmprinterview.moc"

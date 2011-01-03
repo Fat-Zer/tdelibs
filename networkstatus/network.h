@@ -37,30 +37,30 @@ typedef TQValueList< NetworkUsageStruct > NetworkUsageList;
 class Network
 {
 public:
-	Network( const TQString name, NetworkStatus::Properties properties );
+	Network( const TQString name, NetworktqStatus::Properties properties );
 	Network( const Network & other );
-	NetworkStatus::EnumStatus reachabilityFor( const TQString & host );
+	NetworktqStatus::EnumtqStatus reachabilityFor( const TQString & host );
 	void registerUsage( const TQCString appId, const TQString host );
 	void unregisterUsage( const TQCString appId, const TQString host );
-	void setStatus( NetworkStatus::EnumStatus status );
+	void setStatus( NetworktqStatus::EnumtqStatus status );
 
 	void removeAllUsage();
 
-	NetworkStatus::EnumStatus status() { return m_status; }
+	NetworktqStatus::EnumtqStatus status() { return m_status; }
 	TQString name() { return m_name; }
 	bool internet() { return m_internet; }
-	TQStringList netmasks() { return m_netmasks; }
+	TQStringList nettqmasks() { return m_nettqmasks; }
 	TQCString service() { return m_service; }
-	NetworkStatus::EnumOnDemandPolicy onDemandPolicy() { return m_onDemandPolicy; }
+	NetworktqStatus::EnumOnDemandPolicy onDemandPolicy() { return m_onDemandPolicy; }
 	NetworkUsageList usage() { return m_usage; }
 	
 private:
-	NetworkStatus::EnumStatus m_status;
+	NetworktqStatus::EnumtqStatus m_status;
 	TQString m_name;
 	bool m_internet;
-	TQStringList m_netmasks;
+	TQStringList m_nettqmasks;
 	TQCString m_service;
-	NetworkStatus::EnumOnDemandPolicy m_onDemandPolicy;
+	NetworktqStatus::EnumOnDemandPolicy m_onDemandPolicy;
 	NetworkUsageList m_usage;
 };
 

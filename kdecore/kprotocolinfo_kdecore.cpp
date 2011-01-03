@@ -151,8 +151,8 @@ KProtocolInfo::load( TQDataStream& _str)
 {
    // You may add new fields at the end. Make sure to update the version
    // number in ksycoca.h
-   Q_INT32 i_inputType, i_outputType;
-   Q_INT8 i_isSourceProtocol, i_isHelperProtocol,
+   TQ_INT32 i_inputType, i_outputType;
+   TQ_INT8 i_isSourceProtocol, i_isHelperProtocol,
           i_supportsListing, i_supportsReading,
           i_supportsWriting, i_supportsMakeDir,
           i_supportsDeleting, i_supportsLinking,
@@ -206,8 +206,8 @@ KProtocolInfo::save( TQDataStream& _str)
 
    // You may add new fields at the end. Make sure to update the version
    // number in ksycoca.h
-   Q_INT32 i_inputType, i_outputType;
-   Q_INT8 i_isSourceProtocol, i_isHelperProtocol,
+   TQ_INT32 i_inputType, i_outputType;
+   TQ_INT8 i_isSourceProtocol, i_isHelperProtocol,
           i_supportsListing, i_supportsReading,
           i_supportsWriting, i_supportsMakeDir,
           i_supportsDeleting, i_supportsLinking,
@@ -216,8 +216,8 @@ KProtocolInfo::save( TQDataStream& _str)
           i_uriMode, i_canRenameFromFile, i_canRenameToFile,
           i_canDeleteRecursive, i_fileNameUsedForCopying;
 
-   i_inputType = (Q_INT32) m_inputType;
-   i_outputType = (Q_INT32) m_outputType;
+   i_inputType = (TQ_INT32) m_inputType;
+   i_outputType = (TQ_INT32) m_outputType;
    i_isSourceProtocol = m_isSourceProtocol ? 1 : 0;
    i_isHelperProtocol = m_isHelperProtocol ? 1 : 0;
    i_supportsListing = m_supportsListing ? 1 : 0;
@@ -392,7 +392,7 @@ TQString KProtocolInfo::icon( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return TQString::fromLatin1("unknown");
+    return TQString::tqfromLatin1("unknown");
 
   return prot->m_icon;
 }

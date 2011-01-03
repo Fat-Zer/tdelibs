@@ -101,14 +101,14 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     void output_off(ScreenInfo *screen_info, OutputInfo *output);
 
     /**
-     * Automatically finds the CRTC structure.
+     * Automatically tqfinds the CRTC structure.
      */
-    CrtcInfo* auto_find_crtc (ScreenInfo *screen_info, OutputInfo *output_info);
+    CrtcInfo* auto_tqfind_crtc (ScreenInfo *screen_info, OutputInfo *output_info);
 
     /**
      * Finds a mode by XID.
      */
-    XRRModeInfo *find_mode_by_xid (ScreenInfo *screen_info, RRMode mode_id);
+    XRRModeInfo *tqfind_mode_by_xid (ScreenInfo *screen_info, RRMode mode_id);
 
     /**
      * Returns specified mode height in pixels.
@@ -138,12 +138,12 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     /**
      * Applies specified CRTC.
      */
-    Status crtc_apply (CrtcInfo *crtc_info);
+    tqStatus crtc_apply (CrtcInfo *crtc_info);
 
     /**
      * Disables specificed CRTC
      */
-    Status crtc_disable (CrtcInfo *crtc);
+    tqStatus crtc_disable (CrtcInfo *crtc);
 
     /**
      * Applies all previously configured settings to the specified screen.
@@ -183,15 +183,15 @@ extern "C" {
 // KRANDR_EXPORT int         set_screen_size (ScreenInfo *screen_info);
 // KRANDR_EXPORT void        output_auto (ScreenInfo *screen_info, OutputInfo *output_info);
 // KRANDR_EXPORT void        output_off(ScreenInfo *screen_info, OutputInfo *output);
-// KRANDR_EXPORT CrtcInfo*   auto_find_crtc (ScreenInfo *screen_info, OutputInfo *output_info);
-// KRANDR_EXPORT XRRModeInfo *find_mode_by_xid (ScreenInfo *screen_info, RRMode mode_id);
+// KRANDR_EXPORT CrtcInfo*   auto_tqfind_crtc (ScreenInfo *screen_info, OutputInfo *output_info);
+// KRANDR_EXPORT XRRModeInfo *tqfind_mode_by_xid (ScreenInfo *screen_info, RRMode mode_id);
 // KRANDR_EXPORT int         mode_height (XRRModeInfo *mode_info, Rotation rotation);
 // KRANDR_EXPORT int         mode_width (XRRModeInfo *mode_info, Rotation rotation);
 // KRANDR_EXPORT int         get_width_by_output_id (ScreenInfo *screen_info, RROutput output_id);
 // KRANDR_EXPORT int         get_height_by_output_id (ScreenInfo *screen_info, RROutput output_id);
 // KRANDR_EXPORT char        *get_output_name (ScreenInfo *screen_info, RROutput id);
-// KRANDR_EXPORT Status      crtc_apply (CrtcInfo *crtc_info);
-// KRANDR_EXPORT Status      crtc_disable (CrtcInfo *crtc);
+// KRANDR_EXPORT tqStatus      crtc_apply (CrtcInfo *crtc_info);
+// KRANDR_EXPORT tqStatus      crtc_disable (CrtcInfo *crtc);
 // KRANDR_EXPORT int         main_low_apply (ScreenInfo *screen_info);
 // KRANDR_EXPORT bool        kRandrHasRandr();
 

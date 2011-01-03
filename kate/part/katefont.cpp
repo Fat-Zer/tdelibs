@@ -124,4 +124,4 @@ void KateFontStruct::setFont (const TQFont & font)
   updateFontData ();
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

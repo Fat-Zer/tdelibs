@@ -137,7 +137,7 @@ void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
     }
     berrorPic = o->isErrorImage();
 
-    bool needlayout = false;
+    bool needtqlayout = false;
 
     // Image dimensions have been changed, see what needs to be done
     if( o->pixmap_size().width() != intrinsicWidth() ||
@@ -152,7 +152,7 @@ void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
             setIntrinsicHeight( o->pixmap_size().height() );
         }
 
-         // lets see if we need to relayout at all..
+         // lets see if we need to retqlayout at all..
          int oldwidth = m_width;
          int oldheight = m_height;
          int oldminwidth = m_minWidth;
@@ -164,7 +164,7 @@ void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
          }
 
          if(iwchanged || m_width != oldwidth || m_height != oldheight)
-             needlayout = true;
+             needtqlayout = true;
 
          m_minWidth = oldminwidth;
          m_width = oldwidth;
@@ -175,7 +175,7 @@ void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
     if ( !parent() )
         return;
 
-    if(needlayout)
+    if(needtqlayout)
     {
         if (!selfNeedsLayout())
             setNeedsLayout(true);
@@ -196,10 +196,10 @@ void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
         resizeCache = TQPixmap(); // for resized animations
 
         if(completeRepaint)
-            repaintRectangle(borderLeft()+paddingLeft(), borderTop()+paddingTop(), contentWidth(), contentHeight());
+            tqrepaintRectangle(borderLeft()+paddingLeft(), borderTop()+paddingTop(), contentWidth(), contentHeight());
         else
         {
-            repaintRectangle(r.x() + borderLeft() + paddingLeft(), r.y() + borderTop() + paddingTop(),
+            tqrepaintRectangle(r.x() + borderLeft() + paddingLeft(), r.y() + borderTop() + paddingTop(),
                              r.width(), r.height());
         }
     }
@@ -213,7 +213,7 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
     if (paintInfo.phase != PaintActionForeground && paintInfo.phase != PaintActionSelection)
         return;
 
-    // not visible or not even once layouted?
+    // not visible or not even once tqlayouted?
     if (style()->visibility() != VISIBLE || m_y <=  -500000)  return;
 
     _tx += m_x;
@@ -376,7 +376,7 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
     }
 }
 
-void RenderImage::layout()
+void RenderImage::tqlayout()
 {
     KHTMLAssert( needsLayout());
     KHTMLAssert( minMaxKnown() );
@@ -416,7 +416,7 @@ void RenderImage::notifyFinished(CachedObject *finishedObj)
     if ( ( m_cachedImage == finishedObj || m_oldImage == finishedObj ) && m_oldImage ) {
         m_oldImage->deref( this );
         m_oldImage = 0;
-        repaint();
+        tqrepaint();
     }
 
     RenderReplaced::notifyFinished(finishedObj);

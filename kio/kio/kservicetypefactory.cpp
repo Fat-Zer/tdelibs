@@ -39,7 +39,7 @@ KServiceTypeFactory::KServiceTypeFactory()
    if (m_str)
    {
       // Read Header
-      Q_INT32 i,n;
+      TQ_INT32 i,n;
       (*m_str) >> i;
       m_fastPatternOffset = i;
       (*m_str) >> i;
@@ -77,7 +77,7 @@ KServiceTypeFactory * KServiceTypeFactory::self()
   return _self;
 }
 
-KServiceType * KServiceTypeFactory::findServiceTypeByName(const TQString &_name)
+KServiceType * KServiceTypeFactory::tqfindServiceTypeByName(const TQString &_name)
 {
    if (!m_sycocaDict) return 0L; // Error!
    assert (!KSycoca::self()->isBuilding());
@@ -95,14 +95,14 @@ KServiceType * KServiceTypeFactory::findServiceTypeByName(const TQString &_name)
    return newServiceType;
 }
 
-TQVariant::Type KServiceTypeFactory::findPropertyTypeByName(const TQString &_name)
+TQVariant::Type KServiceTypeFactory::tqfindPropertyTypeByName(const TQString &_name)
 {
    if (!m_sycocaDict)
       return TQVariant::Invalid; // Error!
 
    assert (!KSycoca::self()->isBuilding());
 
-   TQMapConstIterator<TQString,int> it = m_propertyTypeDict.find(_name);
+   TQMapConstIterator<TQString,int> it = m_propertyTypeDict.tqfind(_name);
    if (it != m_propertyTypeDict.end()) {
      return (TQVariant::Type)it.data();
    }
@@ -110,7 +110,7 @@ TQVariant::Type KServiceTypeFactory::findPropertyTypeByName(const TQString &_nam
    return TQVariant::Invalid;
 }
 
-KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQString *match)
+KMimeType * KServiceTypeFactory::tqfindFromPattern(const TQString &_filename, TQString *match)
 {
    // Assume we're NOT building a database
    if (!m_str) return 0;
@@ -120,21 +120,21 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
 
    str->device()->at( m_fastPatternOffset );
 
-   Q_INT32 nrOfEntries;
+   TQ_INT32 nrOfEntries;
    (*str) >> nrOfEntries;
-   Q_INT32 entrySize;
+   TQ_INT32 entrySize;
    (*str) >> entrySize;
 
-   Q_INT32 fastOffset =  str->device()->at( );
+   TQ_INT32 fastOffset =  str->device()->at( );
 
-   Q_INT32 matchingOffset = 0;
+   TQ_INT32 matchingOffset = 0;
 
    // Let's go for a binary search in the "fast" pattern index
-   Q_INT32 left = 0;
-   Q_INT32 right = nrOfEntries - 1;
-   Q_INT32 middle;
+   TQ_INT32 left = 0;
+   TQ_INT32 right = nrOfEntries - 1;
+   TQ_INT32 middle;
    // Extract extension
-   int lastDot = _filename.findRev('.');
+   int lastDot = _filename.tqfindRev('.');
    int ext_len = _filename.length() - lastDot - 1;
    if (lastDot != -1 && ext_len <= 4) // if no '.', skip the extension lookup
    {
@@ -169,7 +169,7 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
       str->device()->at( m_otherPatternOffset );
 
       TQString pattern;
-      Q_INT32 mimetypeOffset;
+      TQ_INT32 mimetypeOffset;
 
       while (true)
       {
@@ -186,7 +186,7 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
 
    TQStringList::const_iterator it = m_patterns.begin();
    TQStringList::const_iterator end = m_patterns.end();
-   TQValueVector<Q_INT32>::const_iterator it_offset = m_pattern_offsets.begin();
+   TQValueVector<TQ_INT32>::const_iterator it_offset = m_pattern_offsets.begin();
 
   for ( ; it != end; ++it, ++it_offset )
    {

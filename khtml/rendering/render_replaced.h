@@ -19,8 +19,8 @@
  * Boston, MA 02110-1301, USA.
  *
  */
-#ifndef render_replaced_h
-#define render_replaced_h
+#ifndef render_tqreplaced_h
+#define render_tqreplaced_h
 
 #include "rendering/render_block.h"
 #include <tqobject.h>
@@ -56,7 +56,7 @@ public:
 
     virtual void position(InlineBox*, int, int, bool);
 
-    // Return before, after (offset set to max), or inside the replaced element,
+    // Return before, after (offset set to max), or inside the tqreplaced element,
     // at @p offset
     virtual FindSelectionResult checkSelectionPoint( int _x, int _y, int _tx, int _ty,
                                                      DOM::NodeImpl*& node, int & offset,
@@ -95,7 +95,7 @@ public:
     virtual bool isFrame() const { return false; }
 
     virtual void detach( );
-    virtual void layout( );
+    virtual void tqlayout( );
 
     virtual void updateFromElement();
 

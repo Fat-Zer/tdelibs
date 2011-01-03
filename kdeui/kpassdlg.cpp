@@ -69,10 +69,10 @@ static int * ourMaxLength( const KPasswordEdit* const e ) {
 		d_ptr->setAutoDelete(true);
 		qAddPostRoutine( cleanup_d_ptr );
 	}
-	int* ret = d_ptr->find( (void*) e );
+	int* ret = d_ptr->tqfind( (void*) e );
 	if ( ! ret ) {
 		ret = new int;
-		d_ptr->replace( (void*) e, ret );
+		d_ptr->tqreplace( (void*) e, ret );
 	}
 	return ret;
 }
@@ -339,7 +339,7 @@ void KPasswordDialog::init()
 
     KConfig* const cfg = KGlobal::config();
     const KConfigGroupSaver saver(cfg, "Passwords");
-    bool def = ( qstrcmp( qAppName(), "kdesu" ) == 0 ? defKeep : false );
+    bool def = ( qstrcmp( tqAppName(), "kdesu" ) == 0 ? defKeep : false );
     if (m_Keep && cfg->readBoolEntry("Keep", def))
 	++m_Keep;
 
@@ -354,13 +354,13 @@ void KPasswordDialog::init()
     if (!pix.isNull()) {
 	lbl = new TQLabel(m_pMain);
 	lbl->setPixmap(pix);
-	lbl->setAlignment(AlignHCenter|AlignVCenter);
-	lbl->setFixedSize(lbl->sizeHint());
+	lbl->tqsetAlignment(AlignHCenter|AlignVCenter);
+	lbl->setFixedSize(lbl->tqsizeHint());
 	m_pGrid->addWidget(lbl, 0, 0, AlignCenter);
     }
 
     m_pHelpLbl = new TQLabel(m_pMain);
-    m_pHelpLbl->setAlignment(AlignLeft|AlignVCenter|WordBreak);
+    m_pHelpLbl->tqsetAlignment(AlignLeft|AlignVCenter|WordBreak);
     m_pGrid->addWidget(m_pHelpLbl, 0, 2, AlignLeft);
     m_pGrid->addRowSpacing(1, 10);
     m_pGrid->setRowStretch(1, 12);
@@ -371,9 +371,9 @@ void KPasswordDialog::init()
 
     // Row 3: Password editor #1
     lbl = new TQLabel(m_pMain);
-    lbl->setAlignment(AlignLeft|AlignVCenter);
+    lbl->tqsetAlignment(AlignLeft|AlignVCenter);
     lbl->setText(i18n("&Password:"));
-    lbl->setFixedSize(lbl->sizeHint());
+    lbl->setFixedSize(lbl->tqsizeHint());
     m_pGrid->addWidget(lbl, 7, 0, AlignLeft);
 
     TQHBoxLayout *h_lay = new TQHBoxLayout();
@@ -381,7 +381,7 @@ void KPasswordDialog::init()
     m_pEdit = new KPasswordEdit(m_pMain);
     m_pEdit2 = 0;
     lbl->setBuddy(m_pEdit);
-    TQSize size = m_pEdit->sizeHint();
+    TQSize size = m_pEdit->tqsizeHint();
     m_pEdit->setFixedHeight(size.height());
     m_pEdit->setMinimumWidth(size.width());
     h_lay->addWidget(m_pEdit);
@@ -392,7 +392,7 @@ void KPasswordDialog::init()
 	m_pGrid->addRowSpacing(8, 10);
 	m_pGrid->setRowStretch(8, 12);
 	TQCheckBox* const cb = new TQCheckBox(i18n("&Keep password"), m_pMain);
-	cb->setFixedSize(cb->sizeHint());
+	cb->setFixedSize(cb->tqsizeHint());
 	if (m_Keep > 1)
 	    cb->setChecked(true);
 	else
@@ -402,16 +402,16 @@ void KPasswordDialog::init()
     } else if (m_Type == NewPassword) {
 	m_pGrid->addRowSpacing(8, 10);
 	lbl = new TQLabel(m_pMain);
-	lbl->setAlignment(AlignLeft|AlignVCenter);
+	lbl->tqsetAlignment(AlignLeft|AlignVCenter);
 	lbl->setText(i18n("&Verify:"));
-	lbl->setFixedSize(lbl->sizeHint());
+	lbl->setFixedSize(lbl->tqsizeHint());
 	m_pGrid->addWidget(lbl, 9, 0, AlignLeft);
 
 	h_lay = new TQHBoxLayout();
 	m_pGrid->addLayout(h_lay, 9, 2);
 	m_pEdit2 = new KPasswordEdit(m_pMain);
 	lbl->setBuddy(m_pEdit2);
-	size = m_pEdit2->sizeHint();
+	size = m_pEdit2->tqsizeHint();
 	m_pEdit2->setFixedHeight(size.height());
 	m_pEdit2->setMinimumWidth(size.width());
 	h_lay->addWidget(m_pEdit2);
@@ -424,7 +424,7 @@ void KPasswordDialog::init()
         strengthBox->setSpacing(10);
         m_pGrid->addMultiCellWidget(strengthBox, 11, 11, 0, 2);
         TQLabel* const passStrengthLabel = new TQLabel(strengthBox);
-        passStrengthLabel->setAlignment(AlignLeft|AlignVCenter);
+        passStrengthLabel->tqsetAlignment(AlignLeft|AlignVCenter);
         passStrengthLabel->setText(i18n("Password strength meter:"));
         d->m_strengthBar = new KProgress(100, strengthBox, "PasswordStrengthMeter");
         d->m_strengthBar->setPercentageVisible(false);
@@ -443,7 +443,7 @@ void KPasswordDialog::init()
         m_pGrid->setRowStretch(12, 12);
 
         d->m_MatchLabel = new TQLabel(m_pMain);
-        d->m_MatchLabel->setAlignment(AlignLeft|AlignVCenter|WordBreak);
+        d->m_MatchLabel->tqsetAlignment(AlignLeft|AlignVCenter|WordBreak);
         m_pGrid->addMultiCellWidget(d->m_MatchLabel, 13, 13, 0, 2);
         d->m_MatchLabel->setText(i18n("Passwords do not match"));
 
@@ -490,12 +490,12 @@ void KPasswordDialog::addLine(TQString key, TQString value)
 	return;
 
     TQLabel *lbl = new TQLabel(key, m_pMain);
-    lbl->setAlignment(AlignLeft|AlignTop);
-    lbl->setFixedSize(lbl->sizeHint());
+    lbl->tqsetAlignment(AlignLeft|AlignTop);
+    lbl->setFixedSize(lbl->tqsizeHint());
     m_pGrid->addWidget(lbl, m_Row+2, 0, AlignLeft);
 
     lbl = new TQLabel(value, m_pMain);
-    lbl->setAlignment(AlignTop|WordBreak);
+    lbl->tqsetAlignment(AlignTop|WordBreak);
     lbl->setFixedSize(275, lbl->heightForWidth(275));
     m_pGrid->addWidget(lbl, m_Row+2, 2, AlignLeft);
     ++m_Row;
@@ -634,15 +634,15 @@ void KPasswordDialog::enableOkBtn()
       if (pwlength > 5) pwlength = 5;
 
       const TQRegExp numRxp("[0-9]", true, false);
-      int numeric = (int) (pass.contains(numRxp) / lengthFactor);
+      int numeric = (int) (pass.tqcontains(numRxp) / lengthFactor);
       if (numeric > 3) numeric = 3;
 
       const TQRegExp symbRxp("\\W", false, false);
-      int numsymbols = (int) (pass.contains(symbRxp) / lengthFactor);
+      int numsymbols = (int) (pass.tqcontains(symbRxp) / lengthFactor);
       if (numsymbols > 3) numsymbols = 3;
 
       const TQRegExp upperRxp("[A-Z]", true, false);
-      int upper = (int) (pass.contains(upperRxp) / lengthFactor);
+      int upper = (int) (pass.tqcontains(upperRxp) / lengthFactor);
       if (upper > 3) upper = 3;
 
       int pwstrength=((pwlength*10)-20) + (numeric*10) + (numsymbols*15) + (upper*10);

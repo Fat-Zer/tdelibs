@@ -132,7 +132,7 @@ public:
     }
 
     /**
-     * replaces ~user or $FOO, if necessary
+     * tqreplaces ~user or $FOO, if necessary
      */
     TQString url() {
         TQString txt = combo ? combo->currentText() : edit->text();
@@ -143,7 +143,7 @@ public:
             comp = dynamic_cast<KURLCompletion*>(edit->completionObject());
 
         if ( comp )
-            return comp->replacedPath( txt );
+            return comp->tqreplacedPath( txt );
         else
             return txt;
     }
@@ -206,7 +206,7 @@ void KURLRequester::init()
 	d->edit = new KLineEdit( this, "line edit" );
 
     myButton = new KURLDragPushButton( this, "kfile button");
-    TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("fileopen"));
+    TQIconSet iconSet = SmallIconSet(TQString::tqfromLatin1("fileopen"));
     TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
     myButton->setIconSet( iconSet );
     myButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
@@ -340,7 +340,7 @@ TQString KURLRequester::filter( ) const
 KFileDialog * KURLRequester::fileDialog() const
 {
     if ( !myFileDialog ) {
-        TQWidget *p = parentWidget();
+        TQWidget *p = tqparentWidget();
         myFileDialog = new KFileDialog( TQString::null, d->fileDialogFilter, p,
                                         "file dialog", true );
 
@@ -402,7 +402,7 @@ KPushButton * KURLRequester::button() const
 
 KEditListBox::CustomEditor KURLRequester::customEditor()
 {
-    setSizePolicy(TQSizePolicy( TQSizePolicy::Preferred,
+    tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Preferred,
                                TQSizePolicy::Fixed));
 
     KLineEdit *edit = d->edit;

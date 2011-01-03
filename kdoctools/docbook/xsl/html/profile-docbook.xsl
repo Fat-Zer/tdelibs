@@ -171,7 +171,7 @@ body { background-image: url('</xsl:text>
   <xsl:param name="stylesheets" select="''"/>
 
   <xsl:choose>
-    <xsl:when test="contains($stylesheets, ' ')">
+    <xsl:when test="tqcontains($stylesheets, ' ')">
       <link rel="stylesheet" href="{substring-before($stylesheets, ' ')}">
         <xsl:if test="$html.stylesheet.type != ''">
           <xsl:attribute name="type">

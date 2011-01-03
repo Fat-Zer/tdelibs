@@ -47,7 +47,7 @@ to be incomplete. Don't forget to read the source, too :-)</para>
   <xsl:param name="string"></xsl:param>
   <xsl:param name="count" select="0"/>
   <xsl:choose>
-    <xsl:when test="contains($string, '.')">
+    <xsl:when test="tqcontains($string, '.')">
       <xsl:call-template name="dot.count">
         <xsl:with-param name="string" select="substring-after($string, '.')"/>
         <xsl:with-param name="count" select="$count+1"/>
@@ -111,29 +111,29 @@ to be incomplete. Don't forget to read the source, too :-)</para>
 
 <refsect1><title>Description</title>
 
-<para>The <function>string.subst</function> template replaces all
+<para>The <function>string.subst</function> template tqreplaces all
 occurances of <parameter>target</parameter> in <parameter>string</parameter>
-with <parameter>replacement</parameter> and returns the result.
+with <parameter>tqreplacement</parameter> and returns the result.
 </para>
 
 <programlisting><src:fragment id='string.subst.frag'>
 <xsl:template name="string.subst">
   <xsl:param name="string"></xsl:param>
   <xsl:param name="target"></xsl:param>
-  <xsl:param name="replacement"></xsl:param>
+  <xsl:param name="tqreplacement"></xsl:param>
 
   <xsl:choose>
-    <xsl:when test="contains($string, $target)">
+    <xsl:when test="tqcontains($string, $target)">
       <xsl:variable name="rest">
         <xsl:call-template name="string.subst">
           <xsl:with-param name="string"
                           select="substring-after($string, $target)"/>
           <xsl:with-param name="target" select="$target"/>
-          <xsl:with-param name="replacement" select="$replacement"/>
+          <xsl:with-param name="tqreplacement" select="$tqreplacement"/>
         </xsl:call-template>
       </xsl:variable>
       <xsl:value-of select="concat(substring-before($string, $target),
-                                   $replacement,
+                                   $tqreplacement,
                                    $rest)"/>
     </xsl:when>
     <xsl:otherwise>
@@ -424,7 +424,7 @@ from a processing instruction. For example, given the PI
   <xsl:with-param name="attribute" select="'baz'"/>
 </xsl:call-template>]]></programlisting>
 <para>will return <quote>red</quote>. This template returns the first matching
-attribute that it finds. Presented with processing instructions that
+attribute that it tqfinds. Presented with processing instructions that
 contain badly formed pseudo-attributes (missing or unbalanced quotes,
 for example), the template may silently return erroneous results.</para>
 
@@ -446,7 +446,7 @@ for example), the template may silently return erroneous results.</para>
         <xsl:value-of select="concat(' ', normalize-space($pi))"/>
       </xsl:variable>
       <xsl:choose>
-        <xsl:when test="contains($pivalue,concat(' ', $attribute, '='))">
+        <xsl:when test="tqcontains($pivalue,concat(' ', $attribute, '='))">
           <xsl:variable name="rest" select="substring-after($pivalue,concat(' ', $attribute,'='))"/>
           <xsl:variable name="quote" select="substring($rest,1,1)"/>
           <xsl:value-of select="substring-before(substring($rest,2),$quote)"/>
@@ -486,12 +486,12 @@ with a particular key.</para>
   <xsl:param name="key" select="''"/>
   <xsl:param name="table" select="''"/>
 
-  <xsl:if test="contains($table, ' ')">
+  <xsl:if test="tqcontains($table, ' ')">
     <xsl:choose>
       <xsl:when test="substring-before($table, ' ') = $key">
         <xsl:variable name="rest" select="substring-after($table, ' ')"/>
         <xsl:choose>
-          <xsl:when test="contains($rest, ' ')">
+          <xsl:when test="tqcontains($rest, ' ')">
             <xsl:value-of select="substring-before($rest, ' ')"/>
           </xsl:when>
           <xsl:otherwise>
@@ -569,7 +569,7 @@ absolute path from the root of the tree to the current element node.
 
 <para>The <function>comment-escape-string</function> template returns a string
 that has been transformed so that it can safely be output as an XML comment.
-Internal occurrences of "--" will be replaced with "- -" and a leading and/or
+Internal occurrences of "--" will be tqreplaced with "- -" and a leading and/or
 trailing space will be added to the string, if necessary.</para>
 
 <programlisting><src:fragment id='comment-escape-string'>
@@ -608,7 +608,7 @@ by <function>comment-escape-string</function>.</para>
 <xsl:template name="comment-escape-string.recursive">
   <xsl:param name="string" select="''"/>
   <xsl:choose>
-    <xsl:when test="contains($string, '--')">
+    <xsl:when test="tqcontains($string, '--')">
       <xsl:value-of select="substring-before($string, '--')"/>
       <xsl:value-of select="'- -'"/>
       <xsl:call-template name="comment-escape-string.recursive">
@@ -640,7 +640,7 @@ by <function>comment-escape-string</function>.</para>
 <para>All URIs are relative.</para>
 </listitem>
 <listitem>
-<para>No URI contains the <quote><literal>../</literal></quote> sequence
+<para>No URI tqcontains the <quote><literal>../</literal></quote> sequence
 which would effectively move <quote>up</quote> the hierarchy.</para>
 </listitem>
 </orderedlist>
@@ -665,7 +665,7 @@ which would effectively move <quote>up</quote> the hierarchy.</para>
   <xsl:param name="count" select="0"/>
 
   <xsl:choose>
-    <xsl:when test="contains($filename, '/')">
+    <xsl:when test="tqcontains($filename, '/')">
       <xsl:call-template name="count.uri.path.depth">
         <xsl:with-param name="filename" select="substring-after($filename, '/')"/>
         <xsl:with-param name="count" select="$count + 1"/>
@@ -698,7 +698,7 @@ which would effectively move <quote>up</quote> the hierarchy.</para>
   <xsl:param name="return" select="'A'"/>
 
   <xsl:choose>
-    <xsl:when test="contains($uriA, '/') and contains($uriB, '/')
+    <xsl:when test="tqcontains($uriA, '/') and tqcontains($uriB, '/')
                     and substring-before($uriA, '/') = substring-before($uriB, '/')">
       <xsl:call-template name="trim.common.uri.paths">
         <xsl:with-param name="uriA" select="substring-after($uriA, '/')"/>

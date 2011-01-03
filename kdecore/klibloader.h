@@ -47,7 +47,7 @@ class KLibraryPrivate;
  * @see KLibLoader
  * @author Torben Weis <weis@kde.org>
  */
-class KDECORE_EXPORT KLibrary : public QObject
+class KDECORE_EXPORT KLibrary : public TQObject
 {
     friend class KLibLoader;
     friend class TQAsciiDict<KLibrary>;
@@ -139,7 +139,7 @@ class KLibWrapPrivate;
  * @see KLibrary
  * @author Torben Weis <weis@kde.org>
  */
-class KDECORE_EXPORT KLibLoader : public QObject
+class KDECORE_EXPORT KLibLoader : public TQObject
 {
     friend class KLibrary;
 
@@ -312,7 +312,7 @@ private:
  *     s_global = new KInstance( "kspread" );
  * \endcode
  * This KInstance is comparable to KGlobal used by normal applications.
- * It allows you to find resource files (images, XML, sound etc.) belonging
+ * It allows you to tqfind resource files (images, XML, sound etc.) belonging
  * to the library.
  *
  * If you want to load a library, use KLibLoader. You can query KLibLoader
@@ -322,7 +322,7 @@ private:
  * The KLibFactory is used to create the components, the library has to offer.
  * The factory of KSpread for example will create instances of KSpreadDoc,
  * while the Konqueror factory will create KonqView widgets.
- * All objects created by the factory must be derived from TQObject, since QObject
+ * All objects created by the factory must be derived from TQObject, since TQObject
  * offers type safe casting.
  *
  * KLibFactory is an abstract class. Reimplement the
@@ -330,7 +330,7 @@ private:
  *
  * @author Torben Weis <weis@kde.org>
  */
-class KDECORE_EXPORT KLibFactory : public QObject
+class KDECORE_EXPORT KLibFactory : public TQObject
 {
     Q_OBJECT
 public:

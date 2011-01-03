@@ -21,22 +21,22 @@ public:
 ExampleWidget::ExampleWidget( TQWidget *parent, const char *name )
     : TQLabel(parent, name )
 {
-    // Make the top-level layout; a vertical box to contain all widgets
-    // and sub-layouts.
+    // Make the top-level tqlayout; a vertical box to contain all widgets
+    // and sub-tqlayouts.
     TQSize sh;
     setText("<p>Hello.</p>");
-    sh = sizeHint();
+    sh = tqsizeHint();
     qWarning("SizeHint = %d x %d", sh.width(), sh.height());
     setText("Hello.");
-    sh = sizeHint();
+    sh = tqsizeHint();
     qWarning("SizeHint = %d x %d", sh.width(), sh.height());
     setText("<p>Hello<br>World</p>");
-    sh = sizeHint();
+    sh = tqsizeHint();
     qWarning("SizeHint = %d x %d", sh.width(), sh.height());
 //    setText("Hello\nWorld");
-    sh = sizeHint();
+    sh = tqsizeHint();
     qWarning("SizeHint = %d x %d", sh.width(), sh.height());
-    setMinimumSize(sizeHint());
+    setMinimumSize(tqsizeHint());
 }
 
 
@@ -79,11 +79,11 @@ case 1:
   i = KMessageBox::warningContinueCancel(w, 
                 "You are about to <Print>.\n"
 		"Are you sure?",
-                "Print", TQString::fromLatin1("&Print"), "dontask", false);
+                "Print", TQString::tqfromLatin1("&Print"), "dontask", false);
   i = KMessageBox::warningContinueCancel(0, 
                 "You are about to <Print>.\n"
 		"Are you sure?",
-                "Print", TQString::fromLatin1("&Print"), "dontask", KMessageBox::AllowLink);
+                "Print", TQString::tqfromLatin1("&Print"), "dontask", KMessageBox::AllowLink);
   i = KMessageBox::questionYesNo(0, "<p>Do you have a printer? thisisaverylongdkldhklghklghklashgkllasghkdlsghkldfghklsabla bla bbla bla. It also has <a href=http://www.kde.org>this URL</a>.</p>",
   	TQString("Bla"), TQString("Yes"), TQString("No"), "bla", KMessageBox::AllowLink);
   break;
@@ -96,7 +96,7 @@ case 2:
 case 3:
   i = KMessageBox::questionYesNo(0,
                 "Does your printer support color or only black and white?",
-                "Printer setup", TQString::fromLatin1("&Color"), TQString::fromLatin1("&Black & White"));
+                "Printer setup", TQString::tqfromLatin1("&Color"), TQString::tqfromLatin1("&Black & White"));
   break;
 
 case 4:
@@ -123,33 +123,33 @@ case 6:
   i = KMessageBox::warningContinueCancel(0, 
                 "You are about to print.\n"
 		"Are you sure?",
-                "Print", TQString::fromLatin1("&Print"));
+                "Print", TQString::tqfromLatin1("&Print"));
   break;
 case 7:
   i = KMessageBox::warningContinueCancel(0, 
                 "You are about to <Print>.\n"
 		"Are you sure?",
-                "Print", TQString::fromLatin1("&Print"), "dontask", false);
+                "Print", TQString::tqfromLatin1("&Print"), "dontask", false);
   break;
 
 case 8:
   i = KMessageBox::warningYesNoCancel(0,
-                "Your document contains unsaved changes.\n"
+                "Your document tqcontains unsaved changes.\n"
                 "Do you want to save your changes?\n");
   break;
 
 case 9:
   i = KMessageBox::warningYesNoCancel(0,
-                "Your document contains unsaved changes.\n"
+                "Your document tqcontains unsaved changes.\n"
                 "Do you want to save your changes?\n",
-                TQString::fromLatin1("Close"));
+                TQString::tqfromLatin1("Close"));
   break;
 
 case 10:
   i = KMessageBox::warningYesNoCancel(0,
-                "Your document contains unsaved changes.\n"
+                "Your document tqcontains unsaved changes.\n"
                 "Do you want to save or discard your changes?\n",
-                "Close", TQString::fromLatin1("&Save"), TQString::fromLatin1("&Discard") );
+                "Close", TQString::tqfromLatin1("&Save"), TQString::tqfromLatin1("&Discard") );
   break;
 
 case 11:

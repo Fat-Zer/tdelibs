@@ -128,7 +128,7 @@ KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, c
 	if ( domDocument().documentElement().isNull() )
 	{
 
-		TQString completeDescription = TQString::fromLatin1( guiDescription )
+		TQString completeDescription = TQString::tqfromLatin1( guiDescription )
 		                              .arg( actionListName );
 
 		setXML( completeDescription, false /*merge*/ );
@@ -317,4 +317,4 @@ void KMDIGUIClient::mdiModeHasBeenChangedTo( KMdi::MdiMode mode )
 }
 
 
-// kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
+// kate: space-indent off; tab-width 4; tqreplace-tabs off; indent-mode csands;

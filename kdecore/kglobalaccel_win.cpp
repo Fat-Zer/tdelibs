@@ -116,7 +116,7 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 		return false;
 	}
 
-	// Make sure that grab masks have been initialized.
+	// Make sure that grab tqmasks have been initialized.
 	if( g_keyModMaskXOnOrOff == 0 )
 		calculateGrabMasks();
 
@@ -136,7 +136,7 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 
 	// We'll have to grab 8 key modifier combinations in order to cover all
 	//  combinations of CapsLock, NumLock, ScrollLock.
-	// Does anyone with more X-savvy know how to set a mask on qt_xrootwin so that
+	// Does anyone with more X-savvy know how to set a tqmask on qt_xrootwin so that
 	//  the irrelevant bits are always ignored and we can just make one XGrabKey
 	//  call per accelerator? -- ellis
 #ifndef NDEBUG
@@ -265,7 +265,7 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 			.arg( codemod.code, 0, 16 ).arg( pEvent->xkey.state, 0, 16 ).arg( codemod.mod, 0, 16 ) << endl;
 
 	// Search for which accelerator activated this event:
-	if( !m_rgCodeModToAction.contains( codemod ) ) {
+	if( !m_rgCodeModToAction.tqcontains( codemod ) ) {
 #ifndef NDEBUG
 		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
 			KAccelAction* pAction = *it;
@@ -311,14 +311,14 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
 	if( rexPassIndex.search( pAction->methodSlotPtr() ) >= 0 && rexIndex.search( pAction->name() ) >= 0 ) {
 		int n = rexIndex.cap(1).toInt();
 		kdDebug(125) << "Calling " << pAction->methodSlotPtr() << " int = " << n << endl;
-                int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
+                int slot_id = pAction->objSlotPtr()->tqmetaObject()->tqfindSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 ) {
                     QUObject o[2];
                     static_QUType_int.set(o+1,n);
                     const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
                 }
 	} else if( rexPassInfo.search( pAction->methodSlotPtr() ) ) {
-                int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
+                int slot_id = pAction->objSlotPtr()->tqmetaObject()->tqfindSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 ) {
                     QUObject o[4];
                     static_QUType_QString.set(o+1,pAction->name());
@@ -327,7 +327,7 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
                     const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
                 }
 	} else {
-                int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
+                int slot_id = pAction->objSlotPtr()->tqmetaObject()->tqfindSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 )
                     const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, 0 );
 	}

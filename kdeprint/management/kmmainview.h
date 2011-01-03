@@ -122,7 +122,7 @@ private:
 	int		m_pactionsindex;
 	QStringList	m_toollist;
 	bool		m_first;
-	QBoxLayout	*m_boxlayout;
+	QBoxLayout	*m_boxtqlayout;
 	class KMainWindowPrivate;
 	KMainWindowPrivate *d;
 	KToolBar *m_menubar;

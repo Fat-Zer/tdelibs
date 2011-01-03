@@ -64,7 +64,7 @@ public:
 			oldOffset = newOffset;
 			TQString temp = element.attribute("offset");
 
-			if(temp.contains("%"))
+			if(temp.tqcontains("%"))
 			{
 				temp = temp.left(temp.length() - 1);
 				newOffset = temp.toFloat() / 100.0;
@@ -127,12 +127,12 @@ public:
 			TQColor qStopColor = m_engine->painter()->parseColor(parseColor);
 
 			// Convert in a libart suitable form
-			Q_UINT32 stopColor = m_engine->painter()->toArtColor(qStopColor);
+			TQ_UINT32 stopColor = m_engine->painter()->toArtColor(qStopColor);
 
 			int opacity = m_engine->painter()->parseOpacity(parseOpacity);
 
-			Q_UINT32 rgba = (stopColor << 8) | opacity;
-			Q_UINT32 r, g, b, a;
+			TQ_UINT32 rgba = (stopColor << 8) | opacity;
+			TQ_UINT32 r, g, b, a;
 
 			// Convert from separated to premultiplied alpha
 			a = rgba & 0xff;
@@ -170,12 +170,12 @@ public:
 
 		points = points.simplifyWhiteSpace();
 
-		if(points.contains(",,") || points.contains(", ,"))
+		if(points.tqcontains(",,") || points.tqcontains(", ,"))
 			return TQPointArray();
 
-		points.replace(',', ' ');
-		points.replace('\r', TQString::null);
-		points.replace('\n', TQString::null);
+		points.tqreplace(',', ' ');
+		points.tqreplace('\r', TQString::null);
+		points.tqreplace('\n', TQString::null);
 
 		points = points.simplifyWhiteSpace();
 
@@ -201,7 +201,7 @@ public:
 		// Combine new and old matrix
 		TQWMatrix matrix = m_engine->painter()->parseTransform(transform);
 
-		TQWMatrix *current = m_engine->painter()->worldMatrix();
+		TQWMatrix *current = m_engine->painter()->tqworldMatrix();
 		*current = matrix * *current;
 	}
 
@@ -221,9 +221,9 @@ public:
 		TQPtrList<TQDomNamedNodeMap> applyList;
 		applyList.setAutoDelete(true);
 
-		TQDomNode shape = node.parentNode();
-		for(; !shape.isNull() ; shape = shape.parentNode())
-			applyList.prepend(new TQDomNamedNodeMap(shape.attributes()));
+		TQDomNode tqshape = node.parentNode();
+		for(; !tqshape.isNull() ; tqshape = tqshape.parentNode())
+			applyList.prepend(new TQDomNamedNodeMap(tqshape.attributes()));
 
 		// Apply parent attributes
 		for(TQDomNamedNodeMap *map = applyList.first(); map != 0; map = applyList.next())
@@ -403,10 +403,10 @@ public:
 		{
 			bool filled = true;
 
-			if(element.hasAttribute("fill") && element.attribute("fill").contains("none"))
+			if(element.hasAttribute("fill") && element.attribute("fill").tqcontains("none"))
 				filled = false;
 
-			if(element.attribute("style").contains("fill") && element.attribute("style").stripWhiteSpace().contains("fill:none"))
+			if(element.attribute("style").tqcontains("fill") && element.attribute("style").stripWhiteSpace().tqcontains("fill:none"))
 				filled = false;
 
 			m_engine->painter()->drawPath(element.attribute("d"), filled);
@@ -622,7 +622,7 @@ bool KSVGIconEngine::load(int width, int height, const TQString &path)
 		d->width = w;
 		d->height = h;
 
-		d->painter->worldMatrix()->scale(vratiow, vratioh);
+		d->painter->tqworldMatrix()->scale(vratiow, vratioh);
 	}
 	else
 	{
@@ -631,10 +631,10 @@ bool KSVGIconEngine::load(int width, int height, const TQString &path)
 		double ratiow = width / d->width;
 		double ratioh = height / d->height;
 
-		d->painter->worldMatrix()->scale(ratiow, ratioh);
+		d->painter->tqworldMatrix()->scale(ratiow, ratioh);
 	}
 
-	TQWMatrix initialMatrix = *d->painter->worldMatrix();
+	TQWMatrix initialMatrix = *d->painter->tqworldMatrix();
 	d->helper->m_initialMatrix = initialMatrix;
 
 	// Apply transform

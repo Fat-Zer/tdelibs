@@ -128,7 +128,7 @@ KPHpgl2Page::KPHpgl2Page(TQWidget *parent, const char *name)
 	l0->addWidget(box);
 	l0->addStretch(1);
 
-	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), 10);
+	QVBoxLayout	*l1 = new TQVBoxLayout(box->tqlayout(), 10);
 	l1->addWidget(m_blackplot);
 	l1->addWidget(m_fitplot);
 	l1->addWidget(m_penwidth);
@@ -142,9 +142,9 @@ KPHpgl2Page::~KPHpgl2Page()
 void KPHpgl2Page::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	QString	value;
-	if (opts.contains("blackplot") && ((value=opts["blackplot"]).isEmpty() || value == "true"))
+	if (opts.tqcontains("blackplot") && ((value=opts["blackplot"]).isEmpty() || value == "true"))
 		m_blackplot->setChecked(true);
-	if (opts.contains("fitplot") && ((value=opts["fitplot"]).isEmpty() || value == "true"))
+	if (opts.tqcontains("fitplot") && ((value=opts["fitplot"]).isEmpty() || value == "true"))
 		m_fitplot->setChecked(true);
 	if (!(value=opts["penwidth"]).isEmpty())
 		m_penwidth->setValue(value.toInt());

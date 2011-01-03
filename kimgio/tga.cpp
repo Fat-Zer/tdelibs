@@ -27,9 +27,9 @@
 
 #include <kdebug.h>
 
-typedef Q_UINT32 uint;
-typedef Q_UINT16 ushort;
-typedef Q_UINT8 uchar;
+typedef TQ_UINT32 uint;
+typedef TQ_UINT16 ushort;
+typedef TQ_UINT8 uchar;
 
 namespace {	// Private.
 
@@ -268,13 +268,13 @@ namespace {	// Private.
 				// Paletted.
 				for( int x = 0; x < tga.width; x++ ) {
 					uchar idx = *src++;
-					scanline[x] = qRgb( palette[3*idx+2], palette[3*idx+1], palette[3*idx+0] );
+					scanline[x] = tqRgb( palette[3*idx+2], palette[3*idx+1], palette[3*idx+0] );
 				}
 			}
 			else if( info.grey ) {
 				// Greyscale.
 				for( int x = 0; x < tga.width; x++ ) {
-					scanline[x] = qRgb( *src, *src, *src );
+					scanline[x] = tqRgb( *src, *src, *src );
 					src++;
 				}
 			}
@@ -283,13 +283,13 @@ namespace {	// Private.
 				if( tga.pixel_size == 16 ) {
 					for( int x = 0; x < tga.width; x++ ) {
 						Color555 c = *reinterpret_cast<Color555 *>(src);
-						scanline[x] = qRgb( (c.r << 3) | (c.r >> 2), (c.g << 3) | (c.g >> 2), (c.b << 3) | (c.b >> 2) );
+						scanline[x] = tqRgb( (c.r << 3) | (c.r >> 2), (c.g << 3) | (c.g >> 2), (c.b << 3) | (c.b >> 2) );
 						src += 2;
 					}
 				}
 				else if( tga.pixel_size == 24 ) {
 					for( int x = 0; x < tga.width; x++ ) {
-						scanline[x] = qRgb( src[2], src[1], src[0] );
+						scanline[x] = tqRgb( src[2], src[1], src[0] );
 						src += 3;
 					}
 				}
@@ -297,7 +297,7 @@ namespace {	// Private.
 					for( int x = 0; x < tga.width; x++ ) {
                                                 // ### TODO: verify with images having really some alpha data
                                                 const uchar alpha = ( src[3] << ( 8 - numAlphaBits ) );
-						scanline[x] = qRgba( src[2], src[1], src[0], alpha );
+						scanline[x] = tqRgba( src[2], src[1], src[0], alpha );
 						src += 4;
 					}
 				}
@@ -370,19 +370,19 @@ KDE_EXPORT void kimgio_tga_write( TQImageIO *io )
         s << targaMagic[i];
 
     // write header
-    s << Q_UINT16( img.width() ); // width
-    s << Q_UINT16( img.height() ); // height
-    s << Q_UINT8( hasAlpha ? 32 : 24 ); // depth (24 bit RGB + 8 bit alpha)
-    s << Q_UINT8( hasAlpha ? 0x24 : 0x20 ); // top left image (0x20) + 8 bit alpha (0x4)
+    s << TQ_UINT16( img.width() ); // width
+    s << TQ_UINT16( img.height() ); // height
+    s << TQ_UINT8( hasAlpha ? 32 : 24 ); // depth (24 bit RGB + 8 bit alpha)
+    s << TQ_UINT8( hasAlpha ? 0x24 : 0x20 ); // top left image (0x20) + 8 bit alpha (0x4)
 
     for( int y = 0; y < img.height(); y++ )
         for( int x = 0; x < img.width(); x++ ) {
             const QRgb color = img.pixel( x, y );
-            s << Q_UINT8( qBlue( color ) );
-            s << Q_UINT8( qGreen( color ) );
-            s << Q_UINT8( qRed( color ) );
+            s << TQ_UINT8( tqBlue( color ) );
+            s << TQ_UINT8( tqGreen( color ) );
+            s << TQ_UINT8( tqRed( color ) );
             if( hasAlpha )
-                s << Q_UINT8( qAlpha( color ) );
+                s << TQ_UINT8( tqAlpha( color ) );
         }
 
     io->setStatus( 0 );

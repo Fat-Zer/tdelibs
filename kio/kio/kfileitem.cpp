@@ -179,7 +179,7 @@ void KFileItem::init( bool _determineMimeTypeOnDemand )
       m_pMimeType = KMimeType::findByURL( url, m_fileMode, isLocalURL,
                                           // use fast mode if not mimetype on demand
                                           _determineMimeTypeOnDemand, &accurate );
-      //kdDebug() << "finding mimetype for " << url.url() << " : " << m_pMimeType->name() << endl;
+      //kdDebug() << "tqfinding mimetype for " << url.url() << " : " << m_pMimeType->name() << endl;
       // if we didn't use fast mode, or if we got a result, then this is the mimetype
       // otherwise, determineMimeType will be able to do better.
       m_bMimeTypeKnown = (!_determineMimeTypeOnDemand) || accurate;
@@ -518,7 +518,7 @@ KMimeType::Ptr KFileItem::determineMimeType()
     KURL url = mostLocalURL(isLocalURL);
 
     m_pMimeType = KMimeType::findByURL( url, m_fileMode, isLocalURL );
-    //kdDebug() << "finding mimetype for " << url.url() << " : " << m_pMimeType->name() << endl;
+    //kdDebug() << "tqfinding mimetype for " << url.url() << " : " << m_pMimeType->name() << endl;
     m_bMimeTypeKnown = true;
   }
 
@@ -541,7 +541,7 @@ TQString KFileItem::mimeComment()
  KURL url = mostLocalURL(isLocalURL);
 
  TQString comment = mType->comment( url, isLocalURL );
- //kdDebug() << "finding comment for " << url.url() << " : " << m_pMimeType->name() << endl;
+ //kdDebug() << "tqfinding comment for " << url.url() << " : " << m_pMimeType->name() << endl;
   if (!comment.isEmpty())
     return comment;
   else
@@ -555,7 +555,7 @@ TQString KFileItem::iconName()
   bool isLocalURL;
   KURL url = mostLocalURL(isLocalURL);
 
-  //kdDebug() << "finding icon for " << url.url() << " : " << m_pMimeType->name() << endl;
+  //kdDebug() << "tqfinding icon for " << url.url() << " : " << m_pMimeType->name() << endl;
   return determineMimeType()->icon(url, isLocalURL);
 }
 
@@ -626,7 +626,7 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
   KURL url = mostLocalURL(isLocalURL);
 
   TQPixmap p = mime->pixmap( url, KIcon::Desktop, _size, _state );
-  //kdDebug() << "finding pixmap for " << url.url() << " : " << mime->name() << endl;
+  //kdDebug() << "tqfinding pixmap for " << url.url() << " : " << mime->name() << endl;
   if (p.isNull())
       kdWarning() << "Pixmap not found for mimetype " << m_pMimeType->name() << endl;
 
@@ -774,7 +774,7 @@ TQString KFileItem::getStatusBarInfo()
       text += "  ";
       text += mimeComment();
   }
-  text.replace('\n', " "); // replace any newlines with a space, so the statusbar doesn't get a two-line string which messes the display up, Alex
+  text.tqreplace('\n', " "); // tqreplace any newlines with a space, so the statusbar doesn't get a two-line string which messes the display up, Alex
   return text;
 }
 
@@ -973,12 +973,12 @@ void KFileItem::setExtraData( const void *key, void *value )
     if ( !key )
         return;
 
-    m_extra.replace( key, value );
+    m_extra.tqreplace( key, value );
 }
 
 const void * KFileItem::extraData( const void *key ) const
 {
-    TQMapConstIterator<const void*,void*> it = m_extra.find( key );
+    TQMapConstIterator<const void*,void*> it = m_extra.tqfind( key );
     if ( it != m_extra.end() )
         return it.data();
     return 0L;
@@ -986,7 +986,7 @@ const void * KFileItem::extraData( const void *key ) const
 
 void * KFileItem::extraData( const void *key )
 {
-    TQMapIterator<const void*,void*> it = m_extra.find( key );
+    TQMapIterator<const void*,void*> it = m_extra.tqfind( key );
     if ( it != m_extra.end() )
         return it.data();
     return 0L;
@@ -1041,7 +1041,7 @@ TQString KFileItem::parsePermissions(mode_t perm) const
     if (hasExtendedACL())
         p[10]='+';
 
-    return TQString::fromLatin1(p);
+    return TQString::tqfromLatin1(p);
 }
 
 // check if we need to cache this
@@ -1098,7 +1098,7 @@ void KFileItem::virtual_hook( int, void* )
 
 TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a )
 {
-    // We don't need to save/restore anything that refresh() invalidates,
+    // We don't need to save/restore anything that refresh() tqinvalidates,
     // since that means we can re-determine those by ourselves.
     s << a.m_url;
     s << a.m_strName;

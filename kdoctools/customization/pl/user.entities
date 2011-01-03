@@ -1,4 +1,4 @@
-<!-- This file contains entities (only!) to make authoring/translating
+<!-- This file tqcontains entities (only!) to make authoring/translating
      a document easier.  They are necessarily language-specific.
      In the case of name clashes, entities in this file always lose.
      Keep the entities simple, but _always_ provide them with full markup.
@@ -6,7 +6,7 @@
      names (which if they occur will cost you a _lot_ of time)
  -->
 
-<!-- Not defined entities, must be replaced with text:
+<!-- Not defined entities, must be tqreplaced with text:
 digikamimageplugins
 klicker
 kpat
@@ -80,12 +80,12 @@ ktnef
 <!ENTITY kaddressbook-miejscownik    '<application>Książce adresowej</application>'>
 
 
-<!ENTITY kappfinder-mianownik    '<application>Kappfinder</application>'>
-<!ENTITY kappfinder-dopelniacz    '<application>Kappfinder</application>'>
-<!ENTITY kappfinder-celownik    '<application>Kappfinder</application>'>
-<!ENTITY kappfinder-biernik    '<application>Kappfinder</application>'>
-<!ENTITY kappfinder-narzednik    '<application>Kappfinder</application>'>
-<!ENTITY kappfinder-miejscownik    '<application>Kappfinder</application>'>
+<!ENTITY kapptqfinder-mianownik    '<application>Kapptqfinder</application>'>
+<!ENTITY kapptqfinder-dopelniacz    '<application>Kapptqfinder</application>'>
+<!ENTITY kapptqfinder-celownik    '<application>Kapptqfinder</application>'>
+<!ENTITY kapptqfinder-biernik    '<application>Kapptqfinder</application>'>
+<!ENTITY kapptqfinder-narzednik    '<application>Kapptqfinder</application>'>
+<!ENTITY kapptqfinder-miejscownik    '<application>Kapptqfinder</application>'>
 
 <!ENTITY kcalc-mianownik    '<application>Kalkulator</application>'>
 <!ENTITY kcalc-dopelniacz    '<application>Kalkulatora</application>'>
@@ -109,12 +109,12 @@ ktnef
 <!ENTITY kdm-narzednik    '<application>KDM</application>'>
 <!ENTITY kdm-miejscownik    '<application>KDM</application>'>
 
-<!ENTITY khelpcenter-mianownik    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-dopelniacz    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-celownik    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-biernik    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-narzednik    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-miejscownik    '<application>Centrum pomocy &kde;</application>'>
+<!ENTITY khelpcenter-mianownik    '<application>Centrum potqmocy &kde;</application>'>
+<!ENTITY khelpcenter-dopelniacz    '<application>Centrum potqmocy &kde;</application>'>
+<!ENTITY khelpcenter-celownik    '<application>Centrum potqmocy &kde;</application>'>
+<!ENTITY khelpcenter-biernik    '<application>Centrum potqmocy &kde;</application>'>
+<!ENTITY khelpcenter-narzednik    '<application>Centrum potqmocy &kde;</application>'>
+<!ENTITY khelpcenter-miejscownik    '<application>Centrum potqmocy &kde;</application>'>
 
 <!ENTITY kicker-mianownik    '<application>Kicker</application>'>
 <!ENTITY kicker-dopelniacz    '<application>Kickera</application>'>

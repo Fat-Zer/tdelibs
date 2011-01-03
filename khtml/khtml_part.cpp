@@ -170,7 +170,7 @@ void khtml::ChildFrame::liveConnectEvent(const unsigned long, const TQString & e
             script += ",";
         if ((*i).first == KParts::LiveConnectExtension::TypeString) {
             script += "\"";
-            script += TQString((*i).second).replace('\\', "\\\\").replace('"', "\\\"");
+            script += TQString((*i).second).tqreplace('\\', "\\\\").tqreplace('"', "\\\"");
             script += "\"";
         } else
             script += (*i).second;
@@ -191,7 +191,7 @@ void khtml::ChildFrame::liveConnectEvent(const unsigned long, const TQString & e
         part->executeScript(m_frame->element(), script);
 }
 
-KHTMLFrameList::Iterator KHTMLFrameList::find( const TQString &name )
+KHTMLFrameList::Iterator KHTMLFrameList::tqfind( const TQString &name )
 {
     Iterator it = begin();
     const Iterator e = end();
@@ -203,7 +203,7 @@ KHTMLFrameList::Iterator KHTMLFrameList::find( const TQString &name )
     return it;
 }
 
-KHTMLPart::KHTMLPart( TQWidget *parentWidget, const char *widgetname, TQObject *parent, const char *name, GUIProfile prof )
+KHTMLPart::KHTMLPart( TQWidget *tqparentWidget, const char *widgetname, TQObject *parent, const char *name, GUIProfile prof )
 : KParts::ReadOnlyPart( parent, name )
 {
     d = 0;
@@ -211,7 +211,7 @@ KHTMLPart::KHTMLPart( TQWidget *parentWidget, const char *widgetname, TQObject *
     setInstance(  KHTMLFactory::instance(), prof == BrowserViewGUI && !parentPart() );
     // TODO KDE4 - don't load plugins yet
     //setInstance( KHTMLFactory::instance(), false );
-    init( new KHTMLView( this, parentWidget, widgetname ), prof );
+    init( new KHTMLView( this, tqparentWidget, widgetname ), prof );
 }
 
 KHTMLPart::KHTMLPart( KHTMLView *view, TQObject *parent, const char *name, GUIProfile prof )
@@ -371,24 +371,24 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
                             "Click and hold down the mouse button for a menu with all available font sizes." ) );
   }
 
-  d->m_paFind = KStdAction::find( this, TQT_SLOT( slotFind() ), actionCollection(), "find" );
+  d->m_paFind = KStdAction::tqfind( this, TQT_SLOT( slotFind() ), actionCollection(), "tqfind" );
   d->m_paFind->setWhatsThis( i18n( "Find text<p>"
-				   "Shows a dialog that allows you to find text on the displayed page." ) );
+				   "Shows a dialog that allows you to tqfind text on the displayed page." ) );
 
-  d->m_paFindNext = KStdAction::findNext( this, TQT_SLOT( slotFindNext() ), actionCollection(), "findNext" );
+  d->m_paFindNext = KStdAction::tqfindNext( this, TQT_SLOT( slotFindNext() ), actionCollection(), "tqfindNext" );
   d->m_paFindNext->setWhatsThis( i18n( "Find next<p>"
 				       "Find the next occurrence of the text that you "
 				       "have found using the <b>Find Text</b> function" ) );
 
-  d->m_paFindPrev = KStdAction::findPrev( this, TQT_SLOT( slotFindPrev() ), actionCollection(), "findPrevious" );
+  d->m_paFindPrev = KStdAction::tqfindPrev( this, TQT_SLOT( slotFindPrev() ), actionCollection(), "tqfindPrevious" );
   d->m_paFindPrev->setWhatsThis( i18n( "Find previous<p>"
 				       "Find the previous occurrence of the text that you "
 				       "have found using the <b>Find Text</b> function" ) );
 
   d->m_paFindAheadText = new KAction( i18n("Find Text as You Type"), KShortcut( '/' ), this, TQT_SLOT( slotFindAheadText()),
-      actionCollection(), "findAheadText");
+      actionCollection(), "tqfindAheadText");
   d->m_paFindAheadLinks = new KAction( i18n("Find Links as You Type"), KShortcut( '\'' ), this, TQT_SLOT( slotFindAheadLink()),
-      actionCollection(), "findAheadLink");
+      actionCollection(), "tqfindAheadLink");
   d->m_paFindAheadText->setEnabled( false );
   d->m_paFindAheadLinks->setEnabled( false );
 
@@ -448,7 +448,7 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
 
   connect ( &d->m_progressUpdateTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( slotProgressUpdate() ) );
 
-  findTextBegin(); //reset find variables
+  tqfindTextBegin(); //reset tqfind variables
 
   connect( &d->m_redirectionTimer, TQT_SIGNAL( timeout() ),
            this, TQT_SLOT( slotRedirect() ) );
@@ -482,7 +482,7 @@ KHTMLPart::~KHTMLPart()
     delete d->m_statusBarPopupLabel;
   }
 
-  d->m_find = 0; // deleted by its parent, the view.
+  d->m_tqfind = 0; // deleted by its parent, the view.
 
   if ( d->m_manager )
   {
@@ -608,7 +608,7 @@ bool KHTMLPart::openURL( const KURL &url )
       if (!d->m_statusBarUALabel) {
         d->m_statusBarUALabel = new KURLLabel(d->m_statusBarExtension->statusBar());
         d->m_statusBarUALabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
-        d->m_statusBarUALabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+        d->m_statusBarUALabel->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
         d->m_statusBarUALabel->setUseCursor(false);
         d->m_statusBarExtension->addStatusBarItem(d->m_statusBarUALabel, 0, false);
         d->m_statusBarUALabel->setPixmap(SmallIcon("agent", instance()));
@@ -717,7 +717,7 @@ bool KHTMLPart::openURL( const KURL &url )
   }
 
   if (widget())
-     d->m_job->setWindow(widget()->topLevelWidget());
+     d->m_job->setWindow(widget()->tqtopLevelWidget());
   d->m_job->addMetaData(args.metaData());
 
   connect( d->m_job, TQT_SIGNAL( result( KIO::Job* ) ),
@@ -959,7 +959,7 @@ bool KHTMLPart::metaRefreshEnabled() const
 // Define this to disable dlopening kjs_html, when directly linking to it.
 // You need to edit khtml/Makefile.am to add ./ecma/libkjs_html.la to LIBADD
 // and to edit khtml/ecma/Makefile.am to s/kjs_html/libkjs_html/, remove libkhtml from LIBADD,
-//        remove LDFLAGS line, and replace kde_module with either lib (shared) or noinst (static)
+//        remove LDFLAGS line, and tqreplace kde_module with either lib (shared) or noinst (static)
 //        Also, change the order of "ecma" and "." in khtml's SUBDIRS line.
 // OK - that's the default now, use the opposite of the above instructions to go back
 // to "dlopening it" - but it breaks exception catching in kjs_binding.cpp
@@ -1043,7 +1043,7 @@ TQVariant KHTMLPart::crossFrameExecuteScript(const TQString& target,  const TQSt
     // we always allow these
   }
   else {
-    destpart = findFrame(target);
+    destpart = tqfindFrame(target);
     if (!destpart)
        destpart = this;
   }
@@ -1075,10 +1075,10 @@ KJSErrorDlg *KHTMLPart::jsErrorExtension() {
   if (!d->m_statusBarJSErrorLabel) {
     d->m_statusBarJSErrorLabel = new KURLLabel(d->m_statusBarExtension->statusBar());
     d->m_statusBarJSErrorLabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
-    d->m_statusBarJSErrorLabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+    d->m_statusBarJSErrorLabel->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
     d->m_statusBarJSErrorLabel->setUseCursor(false);
     d->m_statusBarExtension->addStatusBarItem(d->m_statusBarJSErrorLabel, 0, false);
-    TQToolTip::add(d->m_statusBarJSErrorLabel, i18n("This web page contains coding errors."));
+    TQToolTip::add(d->m_statusBarJSErrorLabel, i18n("This web page tqcontains coding errors."));
     d->m_statusBarJSErrorLabel->setPixmap(SmallIcon("bug", instance()));
     connect(d->m_statusBarJSErrorLabel, TQT_SIGNAL(leftClickedURL()), TQT_SLOT(launchJSErrorDialog()));
     connect(d->m_statusBarJSErrorLabel, TQT_SIGNAL(rightClickedURL()), TQT_SLOT(jsErrorDialogContextMenu()));
@@ -1397,7 +1397,7 @@ void KHTMLPart::clear()
   }
 
 
-  findTextBegin(); // resets d->m_findNode and d->m_findPos
+  tqfindTextBegin(); // resets d->m_tqfindNode and d->m_tqfindPos
   d->m_mousePressNode = DOM::Node();
 
 
@@ -1525,7 +1525,7 @@ void KHTMLPart::setPageSecurity( PageSecurity sec )
   if ( sec != NotCrypted && !d->m_statusBarIconLabel && !parentPart() ) {
     d->m_statusBarIconLabel = new KURLLabel( d->m_statusBarExtension->statusBar() );
     d->m_statusBarIconLabel->setFixedHeight( instance()->iconLoader()->currentSize(KIcon::Small) );
-    d->m_statusBarIconLabel->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+    d->m_statusBarIconLabel->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
     d->m_statusBarIconLabel->setUseCursor( false );
     d->m_statusBarExtension->addStatusBarItem( d->m_statusBarIconLabel, 0, false );
     connect( d->m_statusBarIconLabel, TQT_SIGNAL( leftClickedURL() ), TQT_SLOT( slotSecurity() ) );
@@ -1722,14 +1722,14 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   d->m_bJScriptForce = false;
   d->m_bJScriptOverride = true;
   begin();
-  TQString errText = TQString::fromLatin1( "<HTML dir=%1><HEAD><TITLE>" )
+  TQString errText = TQString::tqfromLatin1( "<HTML dir=%1><HEAD><TITLE>" )
                            .arg(TQApplication::reverseLayout() ? "rtl" : "ltr");
   errText += i18n( "Error while loading %1" ).arg( reqUrl.htmlURL() );
-  errText += TQString::fromLatin1( "</TITLE></HEAD><BODY><P>" );
+  errText += TQString::tqfromLatin1( "</TITLE></HEAD><BODY><P>" );
   errText += i18n( "An error occurred while loading <B>%1</B>:" ).arg( reqUrl.htmlURL() );
-  errText += TQString::fromLatin1( "</P>" );
+  errText += TQString::tqfromLatin1( "</P>" );
   errText += TQStyleSheet::convertFromPlainText( KIO::buildErrorString( errorCode, text ) );
-  errText += TQString::fromLatin1( "</BODY></HTML>" );
+  errText += TQString::tqfromLatin1( "</BODY></HTML>" );
   write(errText);
   end();
 
@@ -1757,56 +1757,56 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   TQString url, protocol, datetime;
   url = reqUrl.prettyURL();
   protocol = reqUrl.protocol();
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = KGlobal::locale()->formatDateTime( TQDateTime::tqcurrentDateTime(),
                                                 false );
 
-  TQString doc = TQString::fromLatin1( "<html><head><title>" );
+  TQString doc = TQString::tqfromLatin1( "<html><head><title>" );
   doc += i18n( "Error: " );
   doc += errorName;
-  doc += TQString::fromLatin1( " - %1</title></head><body><h1>" ).arg( url );
+  doc += TQString::tqfromLatin1( " - %1</title></head><body><h1>" ).arg( url );
   doc += i18n( "The requested operation could not be completed" );
-  doc += TQString::fromLatin1( "</h1><h2>" );
+  doc += TQString::tqfromLatin1( "</h1><h2>" );
   doc += errorName;
-  doc += TQString::fromLatin1( "</h2>" );
+  doc += TQString::tqfromLatin1( "</h2>" );
   if ( !techName.isNull() ) {
-    doc += TQString::fromLatin1( "<h2>" );
+    doc += TQString::tqfromLatin1( "<h2>" );
     doc += i18n( "Technical Reason: " );
     doc += techName;
-    doc += TQString::fromLatin1( "</h2>" );
+    doc += TQString::tqfromLatin1( "</h2>" );
   }
-  doc += TQString::fromLatin1( "<h3>" );
+  doc += TQString::tqfromLatin1( "<h3>" );
   doc += i18n( "Details of the Request:" );
-  doc += TQString::fromLatin1( "</h3><ul><li>" );
+  doc += TQString::tqfromLatin1( "</h3><ul><li>" );
   doc += i18n( "URL: %1" ).arg( url );
-  doc += TQString::fromLatin1( "</li><li>" );
+  doc += TQString::tqfromLatin1( "</li><li>" );
   if ( !protocol.isNull() ) {
     // uncomment for 3.1... i18n change
     // doc += i18n( "Protocol: %1" ).arg( protocol ).arg( protocol );
-    doc += TQString::fromLatin1( "</li><li>" );
+    doc += TQString::tqfromLatin1( "</li><li>" );
   }
   doc += i18n( "Date and Time: %1" ).arg( datetime );
-  doc += TQString::fromLatin1( "</li><li>" );
+  doc += TQString::tqfromLatin1( "</li><li>" );
   doc += i18n( "Additional Information: %1" ).arg( text );
-  doc += TQString::fromLatin1( "</li></ul><h3>" );
+  doc += TQString::tqfromLatin1( "</li></ul><h3>" );
   doc += i18n( "Description:" );
-  doc += TQString::fromLatin1( "</h3><p>" );
+  doc += TQString::tqfromLatin1( "</h3><p>" );
   doc += description;
-  doc += TQString::fromLatin1( "</p>" );
+  doc += TQString::tqfromLatin1( "</p>" );
   if ( causes.count() ) {
-    doc += TQString::fromLatin1( "<h3>" );
+    doc += TQString::tqfromLatin1( "<h3>" );
     doc += i18n( "Possible Causes:" );
-    doc += TQString::fromLatin1( "</h3><ul><li>" );
+    doc += TQString::tqfromLatin1( "</h3><ul><li>" );
     doc += causes.join( "</li><li>" );
-    doc += TQString::fromLatin1( "</li></ul>" );
+    doc += TQString::tqfromLatin1( "</li></ul>" );
   }
   if ( solutions.count() ) {
-    doc += TQString::fromLatin1( "<h3>" );
+    doc += TQString::tqfromLatin1( "<h3>" );
     doc += i18n( "Possible Solutions:" );
-    doc += TQString::fromLatin1( "</h3><ul><li>" );
+    doc += TQString::tqfromLatin1( "</h3><ul><li>" );
     doc += solutions.join( "</li><li>" );
-    doc += TQString::fromLatin1( "</li></ul>" );
+    doc += TQString::tqfromLatin1( "</li></ul>" );
   }
-  doc += TQString::fromLatin1( "</body></html>" );
+  doc += TQString::tqfromLatin1( "</body></html>" );
 
   write( doc );
   end();
@@ -2286,12 +2286,12 @@ void KHTMLPart::checkCompleted()
   }
 
   // the view will emit completed on our behalf,
-  // either now or at next repaint if one is pending
+  // either now or at next tqrepaint if one is pending
 
   //kdDebug(6050) << this << " asks the view to emit completed. pendingAction=" << pendingAction << endl;
   d->m_view->complete( pendingAction );
 
-  // find the alternate stylesheets
+  // tqfind the alternate stylesheets
   TQStringList sheets;
   if (d->m_doc)
      sheets = d->m_doc->availableStyleSheets();
@@ -2301,7 +2301,7 @@ void KHTMLPart::checkCompleted()
   d->m_paUseStylesheet->setEnabled( sheets.count() > 2);
   if (sheets.count() > 2)
   {
-    d->m_paUseStylesheet->setCurrentItem(kMax(sheets.findIndex(d->m_sheetUsed), 0));
+    d->m_paUseStylesheet->setCurrentItem(kMax(sheets.tqfindIndex(d->m_sheetUsed), 0));
     slotUseStylesheet();
   }
 
@@ -2402,7 +2402,7 @@ void KHTMLPart::slotRedirect()
   d->m_redirectURL = TQString::null;
 
   // SYNC check with ecma/kjs_window.cpp::goURL !
-  if ( u.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( u.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     TQString script = KURL::decode_string( u.right( u.length() - 11 ) );
     kdDebug( 6050 ) << "KHTMLPart::slotRedirect script=" << script << endl;
@@ -2731,17 +2731,17 @@ void KHTMLPart::setCaretVisible(bool show)
 #endif // KHTML_NO_CARET
 }
 
-void KHTMLPart::findTextBegin()
+void KHTMLPart::tqfindTextBegin()
 {
-  d->m_findPos = -1;
-  d->m_findNode = 0;
-  d->m_findPosEnd = -1;
-  d->m_findNodeEnd= 0;
-  d->m_findPosStart = -1;
-  d->m_findNodeStart = 0;
-  d->m_findNodePrevious = 0;
-  delete d->m_find;
-  d->m_find = 0L;
+  d->m_tqfindPos = -1;
+  d->m_tqfindNode = 0;
+  d->m_tqfindPosEnd = -1;
+  d->m_tqfindNodeEnd= 0;
+  d->m_tqfindPosStart = -1;
+  d->m_tqfindNodeStart = 0;
+  d->m_tqfindNodePrevious = 0;
+  delete d->m_tqfind;
+  d->m_tqfind = 0L;
 }
 
 bool KHTMLPart::initFindNode( bool selection, bool reverse, bool fromCursor )
@@ -2771,35 +2771,35 @@ bool KHTMLPart::initFindNode( bool selection, bool reverse, bool fromCursor )
       //kdDebug(6050) << k_funcinfo << "using selection" << endl;
       if ( !fromCursor )
       {
-        d->m_findNode = reverse ? d->m_selectionEnd.handle() : d->m_selectionStart.handle();
-        d->m_findPos = reverse ? d->m_endOffset : d->m_startOffset;
+        d->m_tqfindNode = reverse ? d->m_selectionEnd.handle() : d->m_selectionStart.handle();
+        d->m_tqfindPos = reverse ? d->m_endOffset : d->m_startOffset;
       }
-      d->m_findNodeEnd = reverse ? d->m_selectionStart.handle() : d->m_selectionEnd.handle();
-      d->m_findPosEnd = reverse ? d->m_startOffset : d->m_endOffset;
-      d->m_findNodeStart = !reverse ? d->m_selectionStart.handle() : d->m_selectionEnd.handle();
-      d->m_findPosStart = !reverse ? d->m_startOffset : d->m_endOffset;
-      d->m_findNodePrevious = d->m_findNodeStart;
+      d->m_tqfindNodeEnd = reverse ? d->m_selectionStart.handle() : d->m_selectionEnd.handle();
+      d->m_tqfindPosEnd = reverse ? d->m_startOffset : d->m_endOffset;
+      d->m_tqfindNodeStart = !reverse ? d->m_selectionStart.handle() : d->m_selectionEnd.handle();
+      d->m_tqfindPosStart = !reverse ? d->m_startOffset : d->m_endOffset;
+      d->m_tqfindNodePrevious = d->m_tqfindNodeStart;
     }
     else // whole document
     {
       //kdDebug(6050) << k_funcinfo << "whole doc" << endl;
       if ( !fromCursor )
       {
-        d->m_findNode = firstNode;
-        d->m_findPos = reverse ? -1 : 0;
+        d->m_tqfindNode = firstNode;
+        d->m_tqfindPos = reverse ? -1 : 0;
       }
-      d->m_findNodeEnd = reverse ? firstNode : 0;
-      d->m_findPosEnd = reverse ? 0 : -1;
-      d->m_findNodeStart = !reverse ? firstNode : 0;
-      d->m_findPosStart = !reverse ? 0 : -1;
-      d->m_findNodePrevious = d->m_findNodeStart;
+      d->m_tqfindNodeEnd = reverse ? firstNode : 0;
+      d->m_tqfindPosEnd = reverse ? 0 : -1;
+      d->m_tqfindNodeStart = !reverse ? firstNode : 0;
+      d->m_tqfindPosStart = !reverse ? 0 : -1;
+      d->m_tqfindNodePrevious = d->m_tqfindNodeStart;
       if ( reverse )
       {
-        // Need to find out the really last object, to start from it
-        khtml::RenderObject* obj = d->m_findNode ? d->m_findNode->renderer() : 0;
+        // Need to tqfind out the really last object, to start from it
+        khtml::RenderObject* obj = d->m_tqfindNode ? d->m_tqfindNode->renderer() : 0;
         if ( obj )
         {
-          // find the last object in the render tree
+          // tqfind the last object in the render tree
           while ( obj->lastChild() )
           {
               obj = obj->lastChild();
@@ -2809,7 +2809,7 @@ bool KHTMLPart::initFindNode( bool selection, bool reverse, bool fromCursor )
           {
              obj = obj->objectAbove();
           }
-          d->m_findNode = obj->element();
+          d->m_tqfindNode = obj->element();
         }
       }
     }
@@ -2817,15 +2817,15 @@ bool KHTMLPart::initFindNode( bool selection, bool reverse, bool fromCursor )
 }
 
 // Old method (its API limits the available features - remove in KDE-4)
-bool KHTMLPart::findTextNext( const TQString &str, bool forward, bool caseSensitive, bool isRegExp )
+bool KHTMLPart::tqfindTextNext( const TQString &str, bool forward, bool caseSensitive, bool isRegExp )
 {
-    if ( !initFindNode( false, !forward, d->m_findNode ) )
+    if ( !initFindNode( false, !forward, d->m_tqfindNode ) )
       return false;
     while(1)
     {
-        if( (d->m_findNode->nodeType() == Node::TEXT_NODE || d->m_findNode->nodeType() == Node::CDATA_SECTION_NODE) && d->m_findNode->renderer() )
+        if( (d->m_tqfindNode->nodeType() == Node::TEXT_NODE || d->m_tqfindNode->nodeType() == Node::CDATA_SECTION_NODE) && d->m_tqfindNode->renderer() )
         {
-            DOMString nodeText = d->m_findNode->nodeValue();
+            DOMString nodeText = d->m_tqfindNode->nodeValue();
             DOMStringImpl *t = nodeText.implementation();
             TQConstString s(t->s, t->l);
 
@@ -2833,26 +2833,26 @@ bool KHTMLPart::findTextNext( const TQString &str, bool forward, bool caseSensit
             if ( isRegExp ) {
               TQRegExp matcher( str );
               matcher.setCaseSensitive( caseSensitive );
-              d->m_findPos = matcher.search(s.string(), d->m_findPos+1);
-              if ( d->m_findPos != -1 )
+              d->m_tqfindPos = matcher.search(s.string(), d->m_tqfindPos+1);
+              if ( d->m_tqfindPos != -1 )
                 matchLen = matcher.matchedLength();
             }
             else {
-              d->m_findPos = s.string().find(str, d->m_findPos+1, caseSensitive);
+              d->m_tqfindPos = s.string().tqfind(str, d->m_tqfindPos+1, caseSensitive);
               matchLen = str.length();
             }
 
-            if(d->m_findPos != -1)
+            if(d->m_tqfindPos != -1)
             {
                 int x = 0, y = 0;
-                if(static_cast<khtml::RenderText *>(d->m_findNode->renderer())
-                  ->posOfChar(d->m_findPos, x, y))
+                if(static_cast<khtml::RenderText *>(d->m_tqfindNode->renderer())
+                  ->posOfChar(d->m_tqfindPos, x, y))
                     d->m_view->setContentsPos(x-50, y-50);
 
-                d->m_selectionStart = d->m_findNode;
-                d->m_startOffset = d->m_findPos;
-                d->m_selectionEnd = d->m_findNode;
-                d->m_endOffset = d->m_findPos + matchLen;
+                d->m_selectionStart = d->m_tqfindNode;
+                d->m_startOffset = d->m_tqfindPos;
+                d->m_selectionEnd = d->m_tqfindNode;
+                d->m_endOffset = d->m_tqfindPos + matchLen;
                 d->m_startBeforeEnd = true;
 
                 d->m_doc->setSelection( d->m_selectionStart.handle(), d->m_startOffset,
@@ -2861,39 +2861,39 @@ bool KHTMLPart::findTextNext( const TQString &str, bool forward, bool caseSensit
                 return true;
             }
         }
-        d->m_findPos = -1;
+        d->m_tqfindPos = -1;
 
         NodeImpl *next;
 
         if ( forward )
         {
-          next = d->m_findNode->firstChild();
+          next = d->m_tqfindNode->firstChild();
 
-          if(!next) next = d->m_findNode->nextSibling();
-          while(d->m_findNode && !next) {
-              d->m_findNode = d->m_findNode->parentNode();
-              if( d->m_findNode ) {
-                  next = d->m_findNode->nextSibling();
+          if(!next) next = d->m_tqfindNode->nextSibling();
+          while(d->m_tqfindNode && !next) {
+              d->m_tqfindNode = d->m_tqfindNode->parentNode();
+              if( d->m_tqfindNode ) {
+                  next = d->m_tqfindNode->nextSibling();
               }
           }
         }
         else
         {
-          next = d->m_findNode->lastChild();
+          next = d->m_tqfindNode->lastChild();
 
-          if (!next ) next = d->m_findNode->previousSibling();
-          while ( d->m_findNode && !next )
+          if (!next ) next = d->m_tqfindNode->previousSibling();
+          while ( d->m_tqfindNode && !next )
           {
-            d->m_findNode = d->m_findNode->parentNode();
-            if( d->m_findNode )
+            d->m_tqfindNode = d->m_tqfindNode->parentNode();
+            if( d->m_tqfindNode )
             {
-              next = d->m_findNode->previousSibling();
+              next = d->m_tqfindNode->previousSibling();
             }
           }
         }
 
-        d->m_findNode = next;
-        if(!d->m_findNode) return false;
+        d->m_tqfindNode = next;
+        if(!d->m_tqfindNode) return false;
     }
 }
 
@@ -2908,7 +2908,7 @@ void KHTMLPart::slotFind()
       kdError(6000) << "slotFind: part is a " << part->className() << ", can't do a search into it" << endl;
       return;
   }
-  static_cast<KHTMLPart *>( part )->findText();
+  static_cast<KHTMLPart *>( part )->tqfindText();
 }
 
 void KHTMLPart::slotFindNext()
@@ -2921,7 +2921,7 @@ void KHTMLPart::slotFindNext()
       kdError(6000) << "slotFindNext: part is a " << part->className() << ", can't do a search into it" << endl;
       return;
   }
-  static_cast<KHTMLPart *>( part )->findTextNext();
+  static_cast<KHTMLPart *>( part )->tqfindTextNext();
 }
 
 void KHTMLPart::slotFindPrev()
@@ -2934,7 +2934,7 @@ void KHTMLPart::slotFindPrev()
       kdError(6000) << "slotFindNext: part is a " << part->className() << ", can't do a search into it" << endl;
       return;
   }
-  static_cast<KHTMLPart *>( part )->findTextNext( true ); // reverse
+  static_cast<KHTMLPart *>( part )->tqfindTextNext( true ); // reverse
 }
 
 void KHTMLPart::slotFindDone()
@@ -2984,22 +2984,22 @@ void KHTMLPart::enableFindAheadActions( bool enable )
 
 void KHTMLPart::slotFindDialogDestroyed()
 {
-  d->m_lastFindState.options = d->m_findDialog->options();
-  d->m_lastFindState.history = d->m_findDialog->findHistory();
-  d->m_findDialog->deleteLater();
-  d->m_findDialog = 0L;
+  d->m_lastFindState.options = d->m_tqfindDialog->options();
+  d->m_lastFindState.history = d->m_tqfindDialog->tqfindHistory();
+  d->m_tqfindDialog->deleteLater();
+  d->m_tqfindDialog = 0L;
 }
 
-void KHTMLPart::findText()
+void KHTMLPart::tqfindText()
 {
   // First do some init to make sure we can search in this frame
   if ( !d->m_doc )
     return;
 
   // Raise if already opened
-  if ( d->m_findDialog )
+  if ( d->m_tqfindDialog )
   {
-    KWin::activateWindow( d->m_findDialog->winId() );
+    KWin::activateWindow( d->m_tqfindDialog->winId() );
     return;
   }
 
@@ -3009,27 +3009,27 @@ void KHTMLPart::findText()
 #endif
 
   // Now show the dialog in which the user can choose options.
-  d->m_findDialog = new KFindDialog( false /*non-modal*/, widget(), "khtmlfind" );
-  d->m_findDialog->setHasSelection( hasSelection() );
-  d->m_findDialog->setHasCursor( d->m_findNode != 0 );
-  if ( d->m_findNode ) // has a cursor -> default to 'FromCursor'
+  d->m_tqfindDialog = new KFindDialog( false /*non-modal*/, widget(), "khtmltqfind" );
+  d->m_tqfindDialog->setHasSelection( hasSelection() );
+  d->m_tqfindDialog->setHasCursor( d->m_tqfindNode != 0 );
+  if ( d->m_tqfindNode ) // has a cursor -> default to 'FromCursor'
     d->m_lastFindState.options |= KFindDialog::FromCursor;
 
   // TODO? optionsDialog.setPattern( d->m_lastFindState.text );
-  d->m_findDialog->setFindHistory( d->m_lastFindState.history );
-  d->m_findDialog->setOptions( d->m_lastFindState.options );
+  d->m_tqfindDialog->setFindHistory( d->m_lastFindState.history );
+  d->m_tqfindDialog->setOptions( d->m_lastFindState.options );
 
-  d->m_lastFindState.options = -1; // force update in findTextNext
+  d->m_lastFindState.options = -1; // force update in tqfindTextNext
   d->m_lastFindState.last_dir = -1;
 
-  d->m_findDialog->show();
-  connect( d->m_findDialog, TQT_SIGNAL(okClicked()), this, TQT_SLOT(slotFindNext()) );
-  connect( d->m_findDialog, TQT_SIGNAL(finished()), this, TQT_SLOT(slotFindDialogDestroyed()) );
+  d->m_tqfindDialog->show();
+  connect( d->m_tqfindDialog, TQT_SIGNAL(okClicked()), this, TQT_SLOT(slotFindNext()) );
+  connect( d->m_tqfindDialog, TQT_SIGNAL(finished()), this, TQT_SLOT(slotFindDialogDestroyed()) );
 
-  findText( d->m_findDialog->pattern(), 0 /*options*/, widget(), d->m_findDialog );
+  tqfindText( d->m_tqfindDialog->pattern(), 0 /*options*/, widget(), d->m_tqfindDialog );
 }
 
-void KHTMLPart::findText( const TQString &str, long options, TQWidget *parent, KFindDialog *findDialog )
+void KHTMLPart::tqfindText( const TQString &str, long options, TQWidget *parent, KFindDialog *tqfindDialog )
 {
   // First do some init to make sure we can search in this frame
   if ( !d->m_doc )
@@ -3040,15 +3040,15 @@ void KHTMLPart::findText( const TQString &str, long options, TQWidget *parent, K
 #endif
 
   // Create the KFind object
-  delete d->m_find;
-  d->m_find = new KFind( str, options, parent, findDialog );
-  d->m_find->closeFindNextDialog(); // we use KFindDialog non-modal, so we don't want other dlg popping up
-  connect( d->m_find, TQT_SIGNAL( highlight( const TQString &, int, int ) ),
+  delete d->m_tqfind;
+  d->m_tqfind = new KFind( str, options, parent, tqfindDialog );
+  d->m_tqfind->closeFindNextDialog(); // we use KFindDialog non-modal, so we don't want other dlg popping up
+  connect( d->m_tqfind, TQT_SIGNAL( highlight( const TQString &, int, int ) ),
            this, TQT_SLOT( slotHighlight( const TQString &, int, int ) ) );
-  //connect(d->m_find, TQT_SIGNAL( findNext() ),
+  //connect(d->m_tqfind, TQT_SIGNAL( tqfindNext() ),
   //        this, TQT_SLOT( slotFindNext() ) );
 
-  if ( !findDialog )
+  if ( !tqfindDialog )
   {
     d->m_lastFindState.options = options;
     initFindNode( options & KFindDialog::SelectedText,
@@ -3057,33 +3057,33 @@ void KHTMLPart::findText( const TQString &str, long options, TQWidget *parent, K
   }
 }
 
-bool KHTMLPart::findTextNext()
+bool KHTMLPart::tqfindTextNext()
 {
-  return findTextNext( false );
+  return tqfindTextNext( false );
 }
 
 // New method
-bool KHTMLPart::findTextNext( bool reverse )
+bool KHTMLPart::tqfindTextNext( bool reverse )
 {
-  if (!d->m_find)
+  if (!d->m_tqfind)
   {
-    // We didn't show the find dialog yet, let's do it then (#49442)
-    findText();
+    // We didn't show the tqfind dialog yet, let's do it then (#49442)
+    tqfindText();
     return false;
   }
 
   view()->updateFindAheadTimeout();
   long options = 0;
-  if ( d->m_findDialog ) // 0 when we close the dialog
+  if ( d->m_tqfindDialog ) // 0 when we close the dialog
   {
-    if ( d->m_find->pattern() != d->m_findDialog->pattern() ) {
-      d->m_find->setPattern( d->m_findDialog->pattern() );
-      d->m_find->resetCounts();
+    if ( d->m_tqfind->pattern() != d->m_tqfindDialog->pattern() ) {
+      d->m_tqfind->setPattern( d->m_tqfindDialog->pattern() );
+      d->m_tqfind->resetCounts();
     }
-    options = d->m_findDialog->options();
+    options = d->m_tqfindDialog->options();
     if ( d->m_lastFindState.options != options )
     {
-      d->m_find->setOptions( options );
+      d->m_tqfind->setOptions( options );
 
       if ( options & KFindDialog::SelectedText )
         Q_ASSERT( hasSelection() );
@@ -3102,21 +3102,21 @@ bool KHTMLPart::findTextNext( bool reverse )
     options = d->m_lastFindState.options;
   if( reverse )
     options = options ^ KFindDialog::FindBackwards;
-  if( d->m_find->options() != options )
-    d->m_find->setOptions( options );
+  if( d->m_tqfind->options() != options )
+    d->m_tqfind->setOptions( options );
 
-  // Changing find direction. Start and end nodes must be switched.
-  // Additionally since d->m_findNode points after the last node
+  // Changing tqfind direction. Start and end nodes must be switched.
+  // Additionally since d->m_tqfindNode points after the last node
   // that was searched, it needs to be "after" it in the opposite direction.
   if( d->m_lastFindState.last_dir != -1
       && bool( d->m_lastFindState.last_dir ) != bool( options & KFindDialog::FindBackwards ))
   {
-    qSwap( d->m_findNodeEnd, d->m_findNodeStart );
-    qSwap( d->m_findPosEnd, d->m_findPosStart );
-    qSwap( d->m_findNode, d->m_findNodePrevious );
-    // d->m_findNode now point at the end of the last searched line - advance one node
-    khtml::RenderObject* obj = d->m_findNode ? d->m_findNode->renderer() : 0;
-    khtml::RenderObject* end = d->m_findNodeEnd ? d->m_findNodeEnd->renderer() : 0;
+    tqSwap( d->m_tqfindNodeEnd, d->m_tqfindNodeStart );
+    tqSwap( d->m_tqfindPosEnd, d->m_tqfindPosStart );
+    tqSwap( d->m_tqfindNode, d->m_tqfindNodePrevious );
+    // d->m_tqfindNode now point at the end of the last searched line - advance one node
+    khtml::RenderObject* obj = d->m_tqfindNode ? d->m_tqfindNode->renderer() : 0;
+    khtml::RenderObject* end = d->m_tqfindNodeEnd ? d->m_tqfindNodeEnd->renderer() : 0;
     if ( obj == end )
       obj = 0L;
     else if ( obj )
@@ -3126,20 +3126,20 @@ bool KHTMLPart::findTextNext( bool reverse )
       } while ( obj && ( !obj->element() || obj->isInlineContinuation() ) );
     }
     if ( obj )
-      d->m_findNode = obj->element();
+      d->m_tqfindNode = obj->element();
     else
-      d->m_findNode = 0;
+      d->m_tqfindNode = 0;
   }
   d->m_lastFindState.last_dir = ( options & KFindDialog::FindBackwards ) ? 1 : 0;
 
   KFind::Result res = KFind::NoMatch;
-  khtml::RenderObject* obj = d->m_findNode ? d->m_findNode->renderer() : 0;
-  khtml::RenderObject* end = d->m_findNodeEnd ? d->m_findNodeEnd->renderer() : 0;
+  khtml::RenderObject* obj = d->m_tqfindNode ? d->m_tqfindNode->renderer() : 0;
+  khtml::RenderObject* end = d->m_tqfindNodeEnd ? d->m_tqfindNodeEnd->renderer() : 0;
   khtml::RenderTextArea *tmpTextArea=0L;
   //kdDebug(6050) << k_funcinfo << "obj=" << obj << " end=" << end << endl;
   while( res == KFind::NoMatch )
   {
-    if ( d->m_find->needData() )
+    if ( d->m_tqfind->needData() )
     {
       if ( !obj ) {
         //kdDebug(6050) << k_funcinfo << "obj=0 -> done" << endl;
@@ -3153,7 +3153,7 @@ bool KHTMLPart::findTextNext( bool reverse )
       d->m_stringPortions.clear();
       bool newLine = false;
       TQString str;
-      DOM::NodeImpl* lastNode = d->m_findNode;
+      DOM::NodeImpl* lastNode = d->m_tqfindNode;
       while ( obj && !newLine )
       {
         // Grab text from render object
@@ -3164,7 +3164,7 @@ bool KHTMLPart::findTextNext( bool reverse )
         {
           khtml::RenderTextArea *parent= static_cast<khtml::RenderTextArea *>(obj->parent());
           s = parent->text();
-          s = s.replace(0xa0, ' ');
+          s = s.tqreplace(0xa0, ' ');
           tmpTextArea = parent;
         }
         else if ( renderLineText )
@@ -3172,7 +3172,7 @@ bool KHTMLPart::findTextNext( bool reverse )
           khtml::RenderLineEdit *parentLine= static_cast<khtml::RenderLineEdit *>(obj);
           if (parentLine->widget()->echoMode() == TQLineEdit::Normal)
             s = parentLine->widget()->text();
-          s = s.replace(0xa0, ' ');
+          s = s.tqreplace(0xa0, ' ');
         }
         else if ( obj->isText() )
         {
@@ -3200,7 +3200,7 @@ bool KHTMLPart::findTextNext( bool reverse )
           if ( isLink && obj->parent()!=tmpTextArea )
           {
             s = static_cast<khtml::RenderText *>(obj)->data().string();
-            s = s.replace(0xa0, ' ');
+            s = s.tqreplace(0xa0, ' ');
           }
         }
         else if ( obj->isBR() )
@@ -3208,11 +3208,11 @@ bool KHTMLPart::findTextNext( bool reverse )
         else if ( !obj->isInline() && !str.isEmpty() )
           s = '\n';
 
-        if ( lastNode == d->m_findNodeEnd )
-          s.truncate( d->m_findPosEnd );
+        if ( lastNode == d->m_tqfindNodeEnd )
+          s.truncate( d->m_tqfindPosEnd );
         if ( !s.isEmpty() )
         {
-          newLine = s.find( '\n' ) != -1; // did we just get a newline?
+          newLine = s.tqfind( '\n' ) != -1; // did we just get a newline?
           if( !( options & KFindDialog::FindBackwards ))
           {
             //kdDebug(6050) << "StringPortion: " << index << "-" << index+s.length()-1 << " -> " << lastNode << endl;
@@ -3251,37 +3251,37 @@ bool KHTMLPart::findTextNext( bool reverse )
       //kdDebug()<<" str : "<<str<<endl;
       if ( !str.isEmpty() )
       {
-        d->m_find->setData( str, d->m_findPos );
+        d->m_tqfind->setData( str, d->m_tqfindPos );
       }
 
-      d->m_findPos = -1; // not used during the findnext loops. Only during init.
-      d->m_findNodePrevious = d->m_findNode;
-      d->m_findNode = lastNode;
+      d->m_tqfindPos = -1; // not used during the tqfindnext loops. Only during init.
+      d->m_tqfindNodePrevious = d->m_tqfindNode;
+      d->m_tqfindNode = lastNode;
     }
-    if ( !d->m_find->needData() ) // happens if str was empty
+    if ( !d->m_tqfind->needData() ) // happens if str was empty
     {
       // Let KFind inspect the text fragment, and emit highlighted if a match is found
-      res = d->m_find->find();
+      res = d->m_tqfind->tqfind();
     }
   } // end while
 
   if ( res == KFind::NoMatch ) // i.e. we're done
   {
     kdDebug() << "No more matches." << endl;
-    if ( !(options & FindNoPopups) && d->m_find->shouldRestart() )
+    if ( !(options & FindNoPopups) && d->m_tqfind->shouldRestart() )
     {
       //kdDebug(6050) << "Restarting" << endl;
       initFindNode( false, options & KFindDialog::FindBackwards, false );
-      d->m_find->resetCounts();
-      findTextNext( reverse );
+      d->m_tqfind->resetCounts();
+      tqfindTextNext( reverse );
     }
     else // really done
     {
       //kdDebug(6050) << "Finishing" << endl;
-      //delete d->m_find;
-      //d->m_find = 0L;
+      //delete d->m_tqfind;
+      //d->m_tqfind = 0L;
       initFindNode( false, options & KFindDialog::FindBackwards, false );
-      d->m_find->resetCounts();
+      d->m_tqfind->resetCounts();
       slotClearSelection();
     }
     kdDebug() << "Dialog closed." << endl;
@@ -3422,12 +3422,12 @@ void KHTMLPart::slotHighlight( const TQString& /*text*/, int index, int length )
   }
   emitSelectionChanged();
 
-  // make the finddialog move away from the selected area
-  if ( d->m_findDialog && !highlightedRect.isNull() )
+  // make the tqfinddialog move away from the selected area
+  if ( d->m_tqfindDialog && !highlightedRect.isNull() )
   {
     highlightedRect.moveBy( -d->m_view->contentsX(), -d->m_view->contentsY() );
     //kdDebug(6050) << "avoiding " << highlightedRect << endl;
-    KDialog::avoidArea( d->m_findDialog, highlightedRect );
+    KDialog::avoidArea( d->m_tqfindDialog, highlightedRect );
   }
 }
 
@@ -3731,8 +3731,8 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
     return;
   }
 
-  if (url.find( TQString::fromLatin1( "javascript:" ),0, false ) == 0 ) {
-    TQString jscode = KURL::decode_string( url.mid( url.find( "javascript:", 0, false ) ) );
+  if (url.tqfind( TQString::tqfromLatin1( "javascript:" ),0, false ) == 0 ) {
+    TQString jscode = KURL::decode_string( url.mid( url.tqfind( "javascript:", 0, false ) ) );
     jscode = KStringHandler::rsqueeze( jscode, 80 ); // truncate if too long
     if (url.startsWith("javascript:window.open"))
       jscode += i18n(" (In new window)");
@@ -3796,7 +3796,7 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
     else if ( ok && S_ISREG( buff.st_mode ) )
     {
       if (buff.st_size < 1024)
-        text = i18n("%2 (%1 bytes)").arg((long) buff.st_size).arg(text2); // always put the URL last, in case it contains '%'
+        text = i18n("%2 (%1 bytes)").arg((long) buff.st_size).arg(text2); // always put the URL last, in case it tqcontains '%'
       else
       {
         float d = (float) buff.st_size/1024.0;
@@ -3838,29 +3838,29 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
         extra = i18n(" (In other frame)");
     }
 
-    if (u.protocol() == TQString::fromLatin1("mailto")) {
-      TQString mailtoMsg /* = TQString::fromLatin1("<img src=%1>").arg(locate("icon", TQString::fromLatin1("locolor/16x16/actions/mail_send.png")))*/;
+    if (u.protocol() == TQString::tqfromLatin1("mailto")) {
+      TQString mailtoMsg /* = TQString::tqfromLatin1("<img src=%1>").arg(locate("icon", TQString::tqfromLatin1("locolor/16x16/actions/mail_send.png")))*/;
       mailtoMsg += i18n("Email to: ") + KURL::decode_string(u.path());
       TQStringList queries = TQStringList::split('&', u.query().mid(1));
       TQStringList::Iterator it = queries.begin();
       const TQStringList::Iterator itEnd = queries.end();
       for (; it != itEnd; ++it)
-        if ((*it).startsWith(TQString::fromLatin1("subject=")))
+        if ((*it).startsWith(TQString::tqfromLatin1("subject=")))
           mailtoMsg += i18n(" - Subject: ") + KURL::decode_string((*it).mid(8));
-        else if ((*it).startsWith(TQString::fromLatin1("cc=")))
+        else if ((*it).startsWith(TQString::tqfromLatin1("cc=")))
           mailtoMsg += i18n(" - CC: ") + KURL::decode_string((*it).mid(3));
-        else if ((*it).startsWith(TQString::fromLatin1("bcc=")))
+        else if ((*it).startsWith(TQString::tqfromLatin1("bcc=")))
           mailtoMsg += i18n(" - BCC: ") + KURL::decode_string((*it).mid(4));
       mailtoMsg = TQStyleSheet::escape(mailtoMsg);
-      mailtoMsg.replace(TQRegExp("([\n\r\t]|[ ]{10})"), TQString::null);
+      mailtoMsg.tqreplace(TQRegExp("([\n\r\t]|[ ]{10})"), TQString::null);
       setStatusBarText("<qt>"+mailtoMsg, BarHoverText);
       return;
     }
    // Is this check necessary at all? (Frerich)
 #if 0
-    else if (u.protocol() == TQString::fromLatin1("http")) {
+    else if (u.protocol() == TQString::tqfromLatin1("http")) {
         DOM::Node hrefNode = nodeUnderMouse().parentNode();
-        while (hrefNode.nodeName().string() != TQString::fromLatin1("A") && !hrefNode.isNull())
+        while (hrefNode.nodeName().string() != TQString::tqfromLatin1("A") && !hrefNode.isNull())
           hrefNode = hrefNode.parentNode();
 
         if (!hrefNode.isNull()) {
@@ -3868,12 +3868,12 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
           if (!hreflangNode.isNull()) {
             TQString countryCode = hreflangNode.nodeValue().string().lower();
             // Map the language code to an appropriate country code.
-            if (countryCode == TQString::fromLatin1("en"))
-              countryCode = TQString::fromLatin1("gb");
-            TQString flagImg = TQString::fromLatin1("<img src=%1>").arg(
-                locate("locale", TQString::fromLatin1("l10n/")
+            if (countryCode == TQString::tqfromLatin1("en"))
+              countryCode = TQString::tqfromLatin1("gb");
+            TQString flagImg = TQString::tqfromLatin1("<img src=%1>").arg(
+                locate("locale", TQString::tqfromLatin1("l10n/")
                 + countryCode
-                + TQString::fromLatin1("/flag.png")));
+                + TQString::tqfromLatin1("/flag.png")));
             emit setStatusBarText(flagImg + u.prettyURL() + extra);
           }
         }
@@ -3906,7 +3906,7 @@ bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, c
   if ( !target.isEmpty() )
       hasTarget = true;
 
-  if ( url.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( url.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     crossFrameExecuteScript( target, KURL::decode_string( url.mid( 11 ) ) );
     return false;
@@ -3965,7 +3965,7 @@ bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, c
     }
   }
 
-  if (!d->m_referrer.isEmpty() && !args.metaData().contains("referrer"))
+  if (!d->m_referrer.isEmpty() && !args.metaData().tqcontains("referrer"))
     args.metaData()["referrer"] = d->m_referrer;
 
 
@@ -4027,7 +4027,7 @@ void KHTMLPart::slotViewDocumentSource()
      }
   }
 
-  (void) KRun::runURL( url, TQString::fromLatin1("text/plain"), isTempFile );
+  (void) KRun::runURL( url, TQString::tqfromLatin1("text/plain"), isTempFile );
 }
 
 void KHTMLPart::slotViewPageInfo()
@@ -4108,7 +4108,7 @@ void KHTMLPart::slotViewFrameSource()
      }
   }
 
-  (void) KRun::runURL( url, TQString::fromLatin1("text/plain"), isTempFile );
+  (void) KRun::runURL( url, TQString::tqfromLatin1("text/plain"), isTempFile );
 }
 
 KURL KHTMLPart::backgroundURL() const
@@ -4276,7 +4276,7 @@ void KHTMLPart::updateActions()
   {
     TQObject *ext = KParts::BrowserExtension::childObject( frame );
     if ( ext )
-      enablePrintFrame = ext->metaObject()->slotNames().contains( "print()" );
+      enablePrintFrame = ext->tqmetaObject()->slotNames().tqcontains( "print()" );
   }
 
   d->m_paPrintFrame->setEnabled( enablePrintFrame );
@@ -4305,7 +4305,7 @@ bool KHTMLPart::requestFrame( khtml::RenderPart *frame, const TQString &url, con
                               const TQStringList &params, bool isIFrame )
 {
   //kdDebug( 6050 ) << this << " requestFrame( ..., " << url << ", " << frameName << " )" << endl;
-  FrameIt it = d->m_frames.find( frameName );
+  FrameIt it = d->m_frames.tqfind( frameName );
   if ( it == d->m_frames.end() )
   {
     khtml::ChildFrame * child = new khtml::ChildFrame;
@@ -4319,12 +4319,12 @@ bool KHTMLPart::requestFrame( khtml::RenderPart *frame, const TQString &url, con
   (*it)->m_params = params;
 
   // Support for <frame src="javascript:string">
-  if ( url.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( url.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     if ( processObjectRequest(*it, KURL("about:blank"), TQString("text/html") ) ) {
       KHTMLPart* p = static_cast<KHTMLPart*>(static_cast<KParts::ReadOnlyPart *>((*it)->m_part));
 
-      // See if we want to replace content with javascript: output..
+      // See if we want to tqreplace content with javascript: output..
       TQVariant res = p->executeScript( DOM::Node(), KURL::decode_string( url.right( url.length() - 11) ) );
       if ( res.type() == TQVariant::String ) {
         p->begin();
@@ -4341,7 +4341,7 @@ bool KHTMLPart::requestFrame( khtml::RenderPart *frame, const TQString &url, con
 
 TQString KHTMLPart::requestFrameName()
 {
-   return TQString::fromLatin1("<!--frame %1-->").arg(d->m_frameNameId++);
+   return TQString::tqfromLatin1("<!--frame %1-->").arg(d->m_frameNameId++);
 }
 
 bool KHTMLPart::requestObject( khtml::RenderPart *frame, const TQString &url, const TQString &serviceType,
@@ -4393,7 +4393,7 @@ bool KHTMLPart::requestObject( khtml::ChildFrame *child, const KURL &url, const 
   child->m_args = args;
   child->m_args.reload = (d->m_cachePolicy == KIO::CC_Reload);
   child->m_serviceName = TQString::null;
-  if (!d->m_referrer.isEmpty() && !child->m_args.metaData().contains( "referrer" ))
+  if (!d->m_referrer.isEmpty() && !child->m_args.metaData().tqcontains( "referrer" ))
     child->m_args.metaData()["referrer"] = d->m_referrer;
 
   child->m_args.metaData().insert("PropagateHttpHeader", "true");
@@ -4408,7 +4408,7 @@ bool KHTMLPart::requestObject( khtml::ChildFrame *child, const KURL &url, const 
 
   // We want a KHTMLPart if the HTML says <frame src=""> or <frame src="about:blank">
   if ((url.isEmpty() || url.url() == "about:blank") && args.serviceType.isEmpty())
-    args.serviceType = TQString::fromLatin1( "text/html" );
+    args.serviceType = TQString::tqfromLatin1( "text/html" );
 
   if ( args.serviceType.isEmpty() ) {
     kdDebug(6050) << "Running new KHTMLRun for " << this << " and child=" << child << endl;
@@ -4596,10 +4596,10 @@ bool KHTMLPart::processObjectRequest( khtml::ChildFrame *child, const KURL &_url
 
   child->m_args.reload = (d->m_cachePolicy == KIO::CC_Reload);
 
-  // make sure the part has a way to find out about the mimetype.
+  // make sure the part has a way to tqfind out about the mimetype.
   // we actually set it in child->m_args in requestObject already,
   // but it's useless if we had to use a KHTMLRun instance, as the
-  // point the run object is to find out exactly the mimetype.
+  // point the run object is to tqfind out exactly the mimetype.
   child->m_args.serviceType = mimetype;
 
   // if not a frame set child as completed
@@ -4643,19 +4643,19 @@ bool KHTMLPart::processObjectRequest( khtml::ChildFrame *child, const KURL &_url
   }
 }
 
-KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char *widgetName,
+KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *tqparentWidget, const char *widgetName,
                                              TQObject *parent, const char *name, const TQString &mimetype,
                                              TQString &serviceName, TQStringList &serviceTypes,
                                              const TQStringList &params )
 {
   TQString constr;
   if ( !serviceName.isEmpty() )
-    constr.append( TQString::fromLatin1( "Name == '%1'" ).arg( serviceName ) );
+    constr.append( TQString::tqfromLatin1( "Name == '%1'" ).arg( serviceName ) );
 
   KTrader::OfferList offers = KTrader::self()->query( mimetype, "KParts/ReadOnlyPart", constr, TQString::null );
 
   if ( offers.isEmpty() ) {
-    int pos = mimetype.find( "-plugin" );
+    int pos = mimetype.tqfind( "-plugin" );
     if (pos < 0)
         return 0L;
     TQString stripped_mime = mimetype.left( pos );
@@ -4675,13 +4675,13 @@ KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char 
       KParts::ReadOnlyPart *res = 0L;
 
       const char *className = "KParts::ReadOnlyPart";
-      if ( service->serviceTypes().contains( "Browser/View" ) )
+      if ( service->serviceTypes().tqcontains( "Browser/View" ) )
         className = "Browser/View";
 
       if ( factory->inherits( "KParts::Factory" ) )
-        res = static_cast<KParts::ReadOnlyPart *>(static_cast<KParts::Factory *>( factory )->createPart( parentWidget, widgetName, parent, name, className, params ));
+        res = static_cast<KParts::ReadOnlyPart *>(static_cast<KParts::Factory *>( factory )->createPart( tqparentWidget, widgetName, parent, name, className, params ));
       else
-        res = static_cast<KParts::ReadOnlyPart *>(factory->create( parentWidget, widgetName, className ));
+        res = static_cast<KParts::ReadOnlyPart *>(factory->create( tqparentWidget, widgetName, className ));
 
       if ( res ) {
         serviceTypes = service->serviceTypes();
@@ -4701,7 +4701,7 @@ KParts::PartManager *KHTMLPart::partManager()
 {
   if ( !d->m_manager && d->m_view )
   {
-    d->m_manager = new KParts::PartManager( d->m_view->topLevelWidget(), this, "khtml part manager" );
+    d->m_manager = new KParts::PartManager( d->m_view->tqtopLevelWidget(), this, "khtml part manager" );
     d->m_manager->setAllowNestedParts( true );
     connect( d->m_manager, TQT_SIGNAL( activePartChanged( KParts::Part * ) ),
              this, TQT_SLOT( slotActiveFrameChanged( KParts::Part * ) ) );
@@ -4777,7 +4777,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
                                                       "WarnOnUnencryptedForm");
           // Move this setting into KSSL instead
           KConfig *config = kapp->config();
-          TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
+          TQString grpNotifMsgs = TQString::tqfromLatin1("Notification Messages");
           KConfigGroupSaver saver( config, grpNotifMsgs );
 
           if (!config->readBoolEntry("WarnOnUnencryptedForm", true)) {
@@ -4811,7 +4811,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
 
   TQString urlstring = u.url();
 
-  if ( urlstring.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 ) {
+  if ( urlstring.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
     urlstring = KURL::decode_string(urlstring);
     crossFrameExecuteScript( _target, urlstring.right( urlstring.length() - 11) );
     return;
@@ -4873,18 +4873,18 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
       TQString bodyEnc;
       if (contentType.lower() == "multipart/form-data") {
          // FIXME: is this correct?  I suspect not
-         bodyEnc = KURL::encode_string(TQString::fromLatin1(formData.data(),
+         bodyEnc = KURL::encode_string(TQString::tqfromLatin1(formData.data(),
                                                            formData.size()));
       } else if (contentType.lower() == "text/plain") {
          // Convention seems to be to decode, and s/&/\n/
-         TQString tmpbody = TQString::fromLatin1(formData.data(),
+         TQString tmpbody = TQString::tqfromLatin1(formData.data(),
                                                formData.size());
-         tmpbody.replace(TQRegExp("[&]"), "\n");
-         tmpbody.replace(TQRegExp("[+]"), " ");
+         tmpbody.tqreplace(TQRegExp("[&]"), "\n");
+         tmpbody.tqreplace(TQRegExp("[+]"), " ");
          tmpbody = KURL::decode_string(tmpbody);  // Decode the rest of it
          bodyEnc = KURL::encode_string(tmpbody);  // Recode for the URL
       } else {
-         bodyEnc = KURL::encode_string(TQString::fromLatin1(formData.data(),
+         bodyEnc = KURL::encode_string(TQString::tqfromLatin1(formData.data(),
                                                            formData.size()));
       }
 
@@ -4895,7 +4895,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
 
   if ( strcmp( action, "get" ) == 0 ) {
     if (u.protocol() != "mailto")
-       u.setQuery( TQString::fromLatin1( formData.data(), formData.size() ) );
+       u.setQuery( TQString::tqfromLatin1( formData.data(), formData.size() ) );
     args.setDoPost( false );
   }
   else {
@@ -4975,7 +4975,7 @@ void KHTMLPart::popupMenu( const TQString &linkUrl )
   KHTMLPopupGUIClient* client = new KHTMLPopupGUIClient( this, d->m_popupMenuXML, linkKURL );
   TQGuardedPtr<TQObject> guard( client );
 
-  TQString mimetype = TQString::fromLatin1( "text/html" );
+  TQString mimetype = TQString::tqfromLatin1( "text/html" );
   args.metaData()["referrer"] = referrer;
 
   if (!linkUrl.isEmpty())				// over a link
@@ -4989,7 +4989,7 @@ void KHTMLPart::popupMenu( const TQString &linkUrl )
       const TQString fname(popupURL.fileName(false));
       if (!fname.isEmpty() && !popupURL.hasRef() && popupURL.query().isEmpty())
       {
-        KMimeType::Ptr pmt = KMimeType::findByPath(fname,0,true);
+        KMimeType::Ptr pmt = KMimeType::tqfindByPath(fname,0,true);
 
         // Further check for mime types guessed from the extension which,
         // on a web page, are more likely to be a script delivering content
@@ -5095,7 +5095,7 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
 
   // TODO: handle child target correctly! currently the script are always executed fur the parent
   TQString urlStr = url.url();
-  if ( urlStr.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 ) {
+  if ( urlStr.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
       TQString script = KURL::decode_string( urlStr.right( urlStr.length() - 11 ) );
       executeScript( DOM::Node(), script );
       return;
@@ -5103,17 +5103,17 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
 
   TQString frameName = args.frameName.lower();
   if ( !frameName.isEmpty() ) {
-    if ( frameName == TQString::fromLatin1( "_top" ) )
+    if ( frameName == TQString::tqfromLatin1( "_top" ) )
     {
       emit d->m_extension->openURLRequest( url, args );
       return;
     }
-    else if ( frameName == TQString::fromLatin1( "_blank" ) )
+    else if ( frameName == TQString::tqfromLatin1( "_blank" ) )
     {
       emit d->m_extension->createNewWindow( url, args );
       return;
     }
-    else if ( frameName == TQString::fromLatin1( "_parent" ) )
+    else if ( frameName == TQString::tqfromLatin1( "_parent" ) )
     {
       KParts::URLArgs newArgs( args );
       newArgs.frameName = TQString::null;
@@ -5121,7 +5121,7 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
       emit d->m_extension->openURLRequest( url, newArgs );
       return;
     }
-    else if ( frameName != TQString::fromLatin1( "_self" ) )
+    else if ( frameName != TQString::tqfromLatin1( "_self" ) )
     {
       khtml::ChildFrame *_frame = recursiveFrameRequest( callingHtmlPart, url, args );
 
@@ -5139,7 +5139,7 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
       // Inform someone that we are about to show something else.
       child->m_bNotify = true;
       requestObject( child, url, args );
-  }  else if ( frameName== "_self" ) // this is for embedded objects (via <object>) which want to replace the current document
+  }  else if ( frameName== "_self" ) // this is for embedded objects (via <object>) which want to tqreplace the current document
   {
       KParts::URLArgs newArgs( args );
       newArgs.frameName = TQString::null;
@@ -5209,10 +5209,10 @@ bool KHTMLPart::checkFrameAccess(KHTMLPart *callingHtmlPart)
 }
 
 KHTMLPart *
-KHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f, khtml::ChildFrame **childFrame )
+KHTMLPart::tqfindFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f, khtml::ChildFrame **childFrame )
 {
 #ifdef DEBUG_FINDFRAME
-  kdDebug(6050) << "KHTMLPart::findFrameParent: this = " << this << " URL = " << m_url << " name = " << name() << " findFrameParent( " << f << " )" << endl;
+  kdDebug(6050) << "KHTMLPart::tqfindFrameParent: this = " << this << " URL = " << m_url << " name = " << name() << " tqfindFrameParent( " << f << " )" << endl;
 #endif
   // Check access
   KHTMLPart* const callingHtmlPart = dynamic_cast<KHTMLPart *>(callingPart);
@@ -5224,12 +5224,12 @@ KHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f
   if (!childFrame && !parentPart() && (TQString::fromLocal8Bit(name()) == f))
      return this;
 
-  FrameIt it = d->m_frames.find( f );
+  FrameIt it = d->m_frames.tqfind( f );
   const FrameIt end = d->m_frames.end();
   if ( it != end )
   {
 #ifdef DEBUG_FINDFRAME
-     kdDebug(6050) << "KHTMLPart::findFrameParent: FOUND!" << endl;
+     kdDebug(6050) << "KHTMLPart::tqfindFrameParent: FOUND!" << endl;
 #endif
      if (childFrame)
         *childFrame = *it;
@@ -5242,7 +5242,7 @@ KHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f
     KParts::ReadOnlyPart* const p = (*it)->m_part;
     if ( p && p->inherits( "KHTMLPart" ))
     {
-      KHTMLPart* const frameParent = static_cast<KHTMLPart*>(p)->findFrameParent(callingPart, f, childFrame);
+      KHTMLPart* const frameParent = static_cast<KHTMLPart*>(p)->tqfindFrameParent(callingPart, f, childFrame);
       if (frameParent)
          return frameParent;
     }
@@ -5251,10 +5251,10 @@ KHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f
 }
 
 
-KHTMLPart *KHTMLPart::findFrame( const TQString &f )
+KHTMLPart *KHTMLPart::tqfindFrame( const TQString &f )
 {
   khtml::ChildFrame *childFrame;
-  KHTMLPart *parentFrame = findFrameParent(this, f, &childFrame);
+  KHTMLPart *parentFrame = tqfindFrameParent(this, f, &childFrame);
   if (parentFrame)
   {
      KParts::ReadOnlyPart *p = childFrame->m_part;
@@ -5264,10 +5264,10 @@ KHTMLPart *KHTMLPart::findFrame( const TQString &f )
   return 0;
 }
 
-KParts::ReadOnlyPart *KHTMLPart::findFramePart(const TQString &f)
+KParts::ReadOnlyPart *KHTMLPart::tqfindFramePart(const TQString &f)
 {
   khtml::ChildFrame *childFrame;
-  return findFrameParent(this, f, &childFrame) ? static_cast<KParts::ReadOnlyPart *>(childFrame->m_part) : 0L;
+  return tqfindFrameParent(this, f, &childFrame) ? static_cast<KParts::ReadOnlyPart *>(childFrame->m_part) : 0L;
 }
 
 KParts::ReadOnlyPart *KHTMLPart::currentFrame() const
@@ -5287,12 +5287,12 @@ KParts::ReadOnlyPart *KHTMLPart::currentFrame() const
 
 bool KHTMLPart::frameExists( const TQString &frameName )
 {
-  ConstFrameIt it = d->m_frames.find( frameName );
+  ConstFrameIt it = d->m_frames.tqfind( frameName );
   if ( it == d->m_frames.end() )
     return false;
 
   // WABA: We only return true if the child actually has a frame
-  // set. Otherwise we might find our preloaded-selve.
+  // set. Otherwise we might tqfind our preloaded-selve.
   // This happens when we restore the frameset.
   return (!(*it)->m_frame.isNull());
 }
@@ -5327,7 +5327,7 @@ khtml::ChildFrame *KHTMLPart::recursiveFrameRequest( KHTMLPart *callingHtmlPart,
   kdDebug( 6050 ) << "KHTMLPart::recursiveFrameRequest this = " << this << ", frame = " << args.frameName << ", url = " << url << endl;
 #endif
   khtml::ChildFrame *childFrame;
-  KHTMLPart *childPart = findFrameParent(callingHtmlPart, args.frameName, &childFrame);
+  KHTMLPart *childPart = tqfindFrameParent(callingHtmlPart, args.frameName, &childFrame);
   if (childPart)
   {
      if (childPart == this)
@@ -5360,8 +5360,8 @@ void KHTMLPart::saveState( TQDataStream &stream )
   kdDebug( 6050 ) << indent << "saveState this=" << this << " '" << name() << "' saving URL " << m_url.url() << endl;
 #endif
 
-  stream << m_url << (Q_INT32)d->m_view->contentsX() << (Q_INT32)d->m_view->contentsY()
-         << (Q_INT32) d->m_view->contentsWidth() << (Q_INT32) d->m_view->contentsHeight() << (Q_INT32) d->m_view->marginWidth() << (Q_INT32) d->m_view->marginHeight();
+  stream << m_url << (TQ_INT32)d->m_view->contentsX() << (TQ_INT32)d->m_view->contentsY()
+         << (TQ_INT32) d->m_view->contentsWidth() << (TQ_INT32) d->m_view->contentsHeight() << (TQ_INT32) d->m_view->marginWidth() << (TQ_INT32) d->m_view->marginHeight();
 
   // save link cursor position
   int focusNodeNumber;
@@ -5431,7 +5431,7 @@ void KHTMLPart::saveState( TQDataStream &stream )
   }
 
   // Save frame data
-  stream << (Q_UINT32) frameNameLst.count();
+  stream << (TQ_UINT32) frameNameLst.count();
   stream << frameNameLst << frameServiceTypeLst << frameServiceNameLst << frameURLLst << frameStateBufferLst;
 #ifndef NDEBUG
   s_saveStateIndentLevel = indentLevel;
@@ -5441,8 +5441,8 @@ void KHTMLPart::saveState( TQDataStream &stream )
 void KHTMLPart::restoreState( TQDataStream &stream )
 {
   KURL u;
-  Q_INT32 xOffset, yOffset, wContents, hContents, mWidth, mHeight;
-  Q_UINT32 frameCount;
+  TQ_INT32 xOffset, yOffset, wContents, hContents, mWidth, mHeight;
+  TQ_UINT32 frameCount;
   TQStringList frameNames, frameServiceTypes, docState, frameServiceNames;
   KURL::List frameURLs;
   TQValueList<TQByteArray> frameStateBuffers;
@@ -5649,8 +5649,8 @@ DOM::Node KHTMLPart::nonSharedNodeUnderMouse() const
 void KHTMLPart::emitSelectionChanged()
 {
   emit d->m_extension->enableAction( "copy", hasSelection() );
-  if ( d->m_findDialog )
-       d->m_findDialog->setHasSelection( hasSelection() );
+  if ( d->m_tqfindDialog )
+       d->m_tqfindDialog->setHasSelection( hasSelection() );
 
   emit d->m_extension->selectionInfo( selectedText() );
   emit selectionChanged();
@@ -5696,7 +5696,7 @@ void KHTMLPart::zoomIn(const int stepping[], int count)
   int zoomFactor = d->m_zoomFactor;
 
   if (zoomFactor < maxZoom) {
-    // find the entry nearest to the given zoomsizes
+    // tqfind the entry nearest to the given zoomsizes
     for (int i = 0; i < count; ++i)
       if (stepping[i] > zoomFactor) {
         zoomFactor = stepping[i];
@@ -5710,7 +5710,7 @@ void KHTMLPart::zoomOut(const int stepping[], int count)
 {
     int zoomFactor = d->m_zoomFactor;
     if (zoomFactor > minZoom) {
-      // find the entry nearest to the given zoomsizes
+      // tqfind the entry nearest to the given zoomsizes
       for (int i = count-1; i >= 0; --i)
         if (stepping[i] < zoomFactor) {
           zoomFactor = stepping[i];
@@ -5912,7 +5912,7 @@ TQPtrList<KParts::ReadOnlyPart> KHTMLPart::frames() const
 bool KHTMLPart::openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs )
 {
     kdDebug( 6050 ) << this << "KHTMLPart::openURLInFrame " << url << endl;
-  FrameIt it = d->m_frames.find( urlArgs.frameName );
+  FrameIt it = d->m_frames.tqfind( urlArgs.frameName );
 
   if ( it == d->m_frames.end() )
     return false;
@@ -6192,7 +6192,7 @@ void KHTMLPart::extendSelection( DOM::NodeImpl* node, long offset, DOM::Node& se
   if (obj->isText() && selectLines) {
     int pos;
     khtml::RenderText *renderer = static_cast<khtml::RenderText *>(obj);
-    khtml::InlineTextBox *run = renderer->findInlineTextBox( offset, pos );
+    khtml::InlineTextBox *run = renderer->tqfindInlineTextBox( offset, pos );
     DOMString t = node->nodeValue();
     DOM::NodeImpl* selNode = 0;
     long selOfs = 0;
@@ -6609,7 +6609,7 @@ void KHTMLPart::khtmlMouseReleaseEvent( khtml::MouseReleaseEvent *event )
     // get selected text and paste to the clipboard
 #ifndef QT_NO_CLIPBOARD
     TQString text = selectedText();
-    text.replace(TQChar(0xa0), ' ');
+    text.tqreplace(TQChar(0xa0), ' ');
     disconnect( kapp->clipboard(), TQT_SIGNAL( selectionChanged()), this, TQT_SLOT( slotClearSelection()));
     kapp->clipboard()->setText(text,QClipboard::Selection);
     connect( kapp->clipboard(), TQT_SIGNAL( selectionChanged()), TQT_SLOT( slotClearSelection()));
@@ -6658,9 +6658,9 @@ void KHTMLPart::slotPrintFrame()
   if ( !ext )
     return;
 
-  TQMetaObject *mo = ext->metaObject();
+  TQMetaObject *mo = ext->tqmetaObject();
 
-  int idx = mo->findSlot( "print()", true );
+  int idx = mo->tqfindSlot( "print()", true );
   if ( idx >= 0 ) {
     QUObject o[ 1 ];
     ext->qt_invoke( idx, o );
@@ -6753,7 +6753,7 @@ void KHTMLPart::selectAll()
   NodeImpl *next;
 
   // Look for first text/cdata node that has a renderer,
-  // or first childless replaced element
+  // or first childless tqreplaced element
   while ( first && !(first->renderer()
   	&& ((first->nodeType() == Node::TEXT_NODE || first->nodeType() == Node::CDATA_SECTION_NODE)
 		|| (first->renderer()->isReplaced() && !first->renderer()->firstChild()))))
@@ -6775,8 +6775,8 @@ void KHTMLPart::selectAll()
   else
     last = d->m_doc;
   // Look for last text/cdata node that has a renderer,
-  // or last childless replaced element
-  // ### Instead of changing this loop, use findLastSelectableNode
+  // or last childless tqreplaced element
+  // ### Instead of changing this loop, use tqfindLastSelectableNode
   // in render_table.cpp (LS)
   while ( last && !(last->renderer()
   	&& ((last->nodeType() == Node::TEXT_NODE || last->nodeType() == Node::CDATA_SECTION_NODE)
@@ -6854,7 +6854,7 @@ void KHTMLPart::slotPartRemoved( KParts::Part *part )
             if (factory()) {
                 factory()->removeClient( part );
             }
-            if (childClients()->containsRef(part)) {
+            if (childClients()->tqcontainsRef(part)) {
                 removeChildClient( part );
             }
         }
@@ -6877,7 +6877,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         if (frame->frameStyle() != TQFrame::NoFrame)
         {
            frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken);
-           frame->repaint();
+           frame->tqrepaint();
         }
     }
 
@@ -6905,7 +6905,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         if (frame->frameStyle() != TQFrame::NoFrame)
         {
            frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Plain);
-           frame->repaint();
+           frame->tqrepaint();
         }
         kdDebug(6050) << "new active frame " << d->m_activeFrame << endl;
     }
@@ -6999,7 +6999,7 @@ bool KHTMLPart::pluginPageQuestionAsked(const TQString& mimetype) const
   if ( parent )
     return parent->pluginPageQuestionAsked(mimetype);
 
-  return d->m_pluginPageQuestionAsked.contains(mimetype);
+  return d->m_pluginPageQuestionAsked.tqcontains(mimetype);
 }
 
 void KHTMLPart::setPluginPageQuestionAsked(const TQString& mimetype)
@@ -7157,7 +7157,7 @@ void KHTMLPart::openWallet(DOM::HTMLFormElementImpl *form)
   }
 
   if (!d->m_wq) {
-    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
+    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->tqtopLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
     d->m_wq = new KHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));
@@ -7199,7 +7199,7 @@ void KHTMLPart::saveToWallet(const TQString& key, const TQMap<TQString,TQString>
   }
 
   if (!d->m_wq) {
-    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
+    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->tqtopLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
     d->m_wq = new KHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));
@@ -7249,7 +7249,7 @@ void KHTMLPart::walletOpened(KWallet::Wallet *wallet) {
   if (!d->m_statusBarWalletLabel) {
     d->m_statusBarWalletLabel = new KURLLabel(d->m_statusBarExtension->statusBar());
     d->m_statusBarWalletLabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
-    d->m_statusBarWalletLabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+    d->m_statusBarWalletLabel->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
     d->m_statusBarWalletLabel->setUseCursor(false);
     d->m_statusBarExtension->addStatusBarItem(d->m_statusBarWalletLabel, 0, false);
     d->m_statusBarWalletLabel->setPixmap(SmallIcon("wallet_open", instance()));
@@ -7379,14 +7379,14 @@ void KHTMLPart::setSuppressedPopupIndicator( bool enable, KHTMLPart *originPart 
 
     if ( enable && originPart ) {
         d->m_openableSuppressedPopups++;
-        if ( d->m_suppressedPopupOriginParts.findIndex( originPart ) == -1 )
+        if ( d->m_suppressedPopupOriginParts.tqfindIndex( originPart ) == -1 )
             d->m_suppressedPopupOriginParts.append( originPart );
     }
 
     if ( enable && !d->m_statusBarPopupLabel ) {
         d->m_statusBarPopupLabel = new KURLLabel( d->m_statusBarExtension->statusBar() );
         d->m_statusBarPopupLabel->setFixedHeight( instance()->iconLoader()->currentSize( KIcon::Small) );
-        d->m_statusBarPopupLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+        d->m_statusBarPopupLabel->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
         d->m_statusBarPopupLabel->setUseCursor( false );
         d->m_statusBarExtension->addStatusBarItem( d->m_statusBarPopupLabel, 0, false );
         d->m_statusBarPopupLabel->setPixmap( SmallIcon( "window_suppressed", instance() ) );

@@ -94,7 +94,7 @@ void KMWClass::initPrinter(KMPrinter *p)
 	{
 		TQPtrListIterator<KMPrinter>	it(*list);
 		for (;it.current();++it)
-			if (it.current()->instanceName().isEmpty() && !it.current()->isClass(true) && !it.current()->isSpecial() && !members.contains(it.current()->name()))
+			if (it.current()->instanceName().isEmpty() && !it.current()->isClass(true) && !it.current()->isSpecial() && !members.tqcontains(it.current()->name()))
 				m_list1->insertItem(SmallIcon(it.current()->pixmap()), it.current()->name());
 		m_list1->sort();
 	}
@@ -103,7 +103,7 @@ void KMWClass::initPrinter(KMPrinter *p)
 	m_list2->clear();
 	for (TQStringList::ConstIterator it=members.begin(); it!=members.end(); ++it)
 	{
-		KMPrinter	*pr = mgr->findPrinter(*it);
+		KMPrinter	*pr = mgr->tqfindPrinter(*it);
 		if (pr) m_list2->insertItem(SmallIcon(pr->pixmap()), *it);
 	}
 	m_list2->sort();

@@ -24,7 +24,7 @@ namespace KTextEditor
 		Construct a new interface object for the text editor.
 		@param Parent the parent SearchInterface object
 		that will provide us with the functions for the interface.
-		@param name the QObject's name
+		@param name the TQObject's name
 		*/
 		SearchDCOPInterface( SearchInterface *Parent, const char *name );
 		/**
@@ -33,17 +33,17 @@ namespace KTextEditor
 		**/
 		virtual ~SearchDCOPInterface();
 	k_dcop:
-		bool findFirstString(TQString text, bool caseSensitive);
-		bool findNextString(TQString text, bool caseSensitive);
-		bool findPreviousString( TQString text, bool caseSensitive);
-		bool findLastString(TQString text, bool caseSensitive);
-		bool findStringAt( uint  row, uint  col, TQString text, bool caseSensitive);
+		bool tqfindFirstString(TQString text, bool caseSensitive);
+		bool tqfindNextString(TQString text, bool caseSensitive);
+		bool tqfindPreviousString( TQString text, bool caseSensitive);
+		bool tqfindLastString(TQString text, bool caseSensitive);
+		bool tqfindStringAt( uint  row, uint  col, TQString text, bool caseSensitive);
 
-		bool findFirstRegExp( TQString regexp);
-		bool findNextRegExp( TQString regexp);
-		bool findPreviousRegExp( TQString regexp);
-		bool findLastRegExp( TQString regexp);
-		bool findRegExpAt( uint  row, uint  col, TQString regexp);
+		bool tqfindFirstRegExp( TQString regexp);
+		bool tqfindNextRegExp( TQString regexp);
+		bool tqfindPreviousRegExp( TQString regexp);
+		bool tqfindLastRegExp( TQString regexp);
+		bool tqfindRegExpAt( uint  row, uint  col, TQString regexp);
 
 		uint currentMatchLine();
 		uint currentMatchCol();

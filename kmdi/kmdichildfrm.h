@@ -124,7 +124,7 @@ class KMdiChildFrmPrivate;
 //==============================================================================
 /**
   * @short Internal class.
-  * It's an MDI child frame widget. It contains a view widget and a frame caption. Usually you derive from its view.
+  * It's an MDI child frame widget. It tqcontains a view widget and a frame caption. Usually you derive from its view.
   */ 
 //------------------------------------------------------------------------------
 class KMDI_EXPORT KMdiChildFrm : public QFrame
@@ -245,12 +245,12 @@ public:
 	TQRect mdiAreaContentsRect() const;
 	
 	/**
-	 * Returns the geometry that will be restored by calling restore().
+	 * Returns the tqgeometry that will be restored by calling restore().
 	 */
 	TQRect restoreGeometry() const;
 	
 	/**
-	 * Sets the geometry that will be restored by calling restore().
+	 * Sets the tqgeometry that will be restored by calling restore().
 	 */
 	void setRestoreGeometry( const TQRect& newRestGeo );
 	
@@ -306,7 +306,7 @@ protected:
 	
 	/**
 	 * Reimplemented from the base class.
-	 * Resizes the captionbar, relayouts the position of the system buttons,
+	 * Resizes the captionbar, retqlayouts the position of the system buttons,
 	 * and calls resize for its embedded KMdiChildView with the proper size
 	 */
 	virtual void resizeEvent( TQResizeEvent * );
@@ -352,7 +352,7 @@ protected:
 	virtual bool eventFilter( TQObject*, TQEvent* ); 
 	
 	/**
-	 * Calculates the new geometry from the new mouse position given as parameters
+	 * Calculates the new tqgeometry from the new mouse position given as parameters
 	 * and calls KMdiChildFrm::setGeometry
 	 */
 	void resizeWindow( int resizeCorner, int x, int y );
@@ -443,4 +443,4 @@ private:
 
 #endif //_KMDICHILDFRM_H_
 
-// kate: space-indent off; replace-tabs off; tab-width 4; indent-mode csands;
+// kate: space-indent off; tqreplace-tabs off; tab-width 4; indent-mode csands;

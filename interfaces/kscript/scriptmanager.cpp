@@ -126,7 +126,7 @@ void KScriptManager::runScript( const TQString &scriptName, TQObject *context, c
 		}
 	}
 	else
-	  KMessageBox::sorry(0, i18n("Unable find script \"%1\".").arg(scriptName), i18n("KScript Error"));
+	  KMessageBox::sorry(0, i18n("Unable tqfind script \"%1\".").arg(scriptName), i18n("KScript Error"));
 }
 #include "scriptmanager.moc"
 #include "scriptinterface.moc"

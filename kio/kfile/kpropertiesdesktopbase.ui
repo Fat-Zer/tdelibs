@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>KPropertiesDesktopBase</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -29,7 +29,7 @@
             <property name="sizeType">
                 <enum>Minimum</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
@@ -174,7 +174,7 @@
             <property name="whatsThis" stdset="0">
                 <string>Type the command to start this application here.
 
-Following the command, you can have several place holders which will be replaced with the actual values when the actual program is run:
+Following the command, you can have several place holders which will be tqreplaced with the actual values when the actual program is run:
 %f - a single file name
 %F - a list of files; use for applications that can open several local files at once
 %u - a single URL
@@ -193,7 +193,7 @@ Following the command, you can have several place holders which will be replaced
             <property name="whatsThis" stdset="0">
                 <string>Type the command to start this application here.
 
-Following the command, you can have several place holders which will be replaced with the actual values when the actual program is run:
+Following the command, you can have several place holders which will be tqreplaced with the actual values when the actual program is run:
 %f - a single file name
 %F - a list of files; use for applications that can open several local files at once
 %u - a single URL
@@ -213,7 +213,7 @@ Following the command, you can have several place holders which will be replaced
                 <string>&amp;Browse...</string>
             </property>
             <property name="whatsThis" stdset="0">
-                <string>Click here to browse your file system in order to find the desired executable.</string>
+                <string>Click here to browse your file system in order to tqfind the desired executable.</string>
             </property>
         </widget>
         <widget class="QLabel" row="4" column="0" rowspan="1" colspan="2">
@@ -259,7 +259,7 @@ Following the command, you can have several place holders which will be replaced
             <property name="sizeType">
                 <enum>MinimumExpanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>53</width>
                     <height>20</height>
@@ -287,7 +287,7 @@ Following the command, you can have several place holders which will be replaced
             <property name="sizeType">
                 <enum>MinimumExpanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>53</width>
                     <height>20</height>
@@ -312,5 +312,5 @@ Following the command, you can have several place holders which will be replaced
     <include location="global" impldecl="in implementation">kurlrequester.h</include>
     <include location="global" impldecl="in implementation">klistview.h</include>
 </includes>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 </UI>

@@ -49,9 +49,9 @@ public:
 	class CListBoxItem;
 
 private:
-	CPage* findPage(TQWidget *w);
-	CPage* findPage(TQListBoxItem *i);
-	TQListBoxItem* findPrevItem(CPage*);
+	CPage* tqfindPage(TQWidget *w);
+	CPage* tqfindPage(TQListBoxItem *i);
+	TQListBoxItem* tqfindPrevItem(CPage*);
 
 private:
 	TQPtrList<CPage>		m_pages;

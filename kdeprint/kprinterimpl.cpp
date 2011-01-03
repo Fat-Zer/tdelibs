@@ -69,11 +69,11 @@ KPrinterImpl::~KPrinterImpl()
 
 void KPrinterImpl::preparePrinting(KPrinter *printer)
 {
-	// page size -> try to find page size and margins from driver file
-	// use "PageSize" as option name to find the wanted page size. It's
+	// page size -> try to tqfind page size and margins from driver file
+	// use "PageSize" as option name to tqfind the wanted page size. It's
 	// up to the driver loader to use that option name.
 	KMManager	*mgr = KMFactory::self()->manager();
-	DrMain	*driver = mgr->loadPrinterDriver(mgr->findPrinter(printer->printerName()), false);
+	DrMain	*driver = mgr->loadPrinterDriver(mgr->tqfindPrinter(printer->printerName()), false);
 	if (driver)
 	{
 		// Find the page size:
@@ -82,13 +82,13 @@ void KPrinterImpl::preparePrinting(KPrinter *printer)
 		QString	psname = printer->option("PageSize");
 		if (psname.isEmpty())
 		{
-			DrListOption	*opt = (DrListOption*)driver->findOption("PageSize");
+			DrListOption	*opt = (DrListOption*)driver->tqfindOption("PageSize");
 			if (opt) psname = opt->get("default");
 		}
 		if (!psname.isEmpty())
 		{
 			printer->setOption("kde-pagesize",TQString::number((int)pageNameToPageSize(psname)));
-			DrPageSize	*ps = driver->findPageSize(psname);
+			DrPageSize	*ps = driver->tqfindPageSize(psname);
 			if (ps)
 			{
 				printer->setRealPageSize( ps );
@@ -104,7 +104,7 @@ void KPrinterImpl::preparePrinting(KPrinter *printer)
 		TQString res = printer->option( "Resolution" );
 		if ( res.isEmpty() )
 		{
-			DrBase *opt = driver->findOption( "Resolution" );
+			DrBase *opt = driver->tqfindOption( "Resolution" );
 			if ( opt )
 				res = opt->get( "default" );
 			if ( res.isEmpty() )
@@ -225,7 +225,7 @@ void KPrinterImpl::statusMessage(const TQString& msg, KPrinter *printer)
 	kdDebug(500) << "kdeprint: status message: " << msg << endl;
 	KConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
-	if (!conf->readBoolEntry("ShowStatusMsg", true))
+	if (!conf->readBoolEntry("ShowtqStatusMsg", true))
 		return;
 
 	QString	message(msg);
@@ -252,7 +252,7 @@ bool KPrinterImpl::startPrinting(const TQString& cmd, KPrinter *printer, const T
 
 	QString	command(cmd), filestr;
 	QStringList	printfiles;
-	if (command.find("%in") == -1) command.append(" %in");
+	if (command.tqfind("%in") == -1) command.append(" %in");
 
 	for (TQStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
 		if (TQFile::exists(*it))
@@ -266,7 +266,7 @@ bool KPrinterImpl::startPrinting(const TQString& cmd, KPrinter *printer, const T
 
 	if (printfiles.count() > 0)
 	{
-		command.replace("%in",filestr);
+		command.tqreplace("%in",filestr);
 		int pid = dcopPrint(command,files,flag);
 		if (pid > 0)
 		{
@@ -317,7 +317,7 @@ int KPrinterImpl::filterFiles(KPrinter *printer, TQStringList& files, bool flag)
 	     !printer->option("kde-range").isEmpty() ||
 	     printer->pageSet() != KPrinter::AllPages))
 	{
-		if (flist.findIndex("psselect") == -1)
+		if (flist.tqfindIndex("psselect") == -1)
 		{
 			int	index = KXmlCommandManager::self()->insertCommand(flist, "psselect", false);
 			if (index == -1 || !KXmlCommandManager::self()->checkCommand("psselect"))
@@ -378,8 +378,8 @@ int KPrinterImpl::doFilterFiles(KPrinter *printer, TQStringList& files, const TQ
 	QString	ps = pageSizeToPageName( printer->option( "kde-printsize" ).isEmpty() ? printer->pageSize() : ( KPrinter::PageSize )printer->option( "kde-printsize" ).toInt() );
 	for (TQStringList::Iterator it=files.begin(); it!=files.end(); ++it)
 	{
-		QString	mime = KMimeMagic::self()->findFileType(*it)->mimeType();
-		if (inputMimeTypes.find(mime) == inputMimeTypes.end())
+		QString	mime = KMimeMagic::self()->tqfindFileType(*it)->mimeType();
+		if (inputMimeTypes.tqfind(mime) == inputMimeTypes.end())
 		{
 			if (KMessageBox::warningContinueCancel(0,
 				"<p>" + i18n("The MIME type %1 is not supported as input of the filter chain "
@@ -434,10 +434,10 @@ int KPrinterImpl::doFilterFiles(KPrinter *printer, TQStringList& files, const TQ
 
 		QString	tmpfile = tempFile();
 		QString	cmd(filtercmd);
-		cmd.replace(rout,quote(tmpfile));
-		cmd.replace(rpsl,ps.lower());
-		cmd.replace(rpsu,ps);
-		cmd.replace(rin,quote(*it)); // Replace as last, filename could contain "%psl"
+		cmd.tqreplace(rout,quote(tmpfile));
+		cmd.tqreplace(rpsl,ps.lower());
+		cmd.tqreplace(rpsu,ps);
+		cmd.tqreplace(rin,quote(*it)); // Replace as last, filename could contain "%psl"
 		statusMessage(i18n("Filtering print data"), printer);
 		int status = system(TQFile::encodeName(cmd));
 		if (status < 0 || WEXITSTATUS(status) == 127)
@@ -479,7 +479,7 @@ int KPrinterImpl::autoConvertFiles(KPrinter *printer, TQStringList& files, bool 
 	int		status(0), result;
 	for (TQStringList::Iterator it=files.begin(); it!=files.end(); )
 	{
-		QString	mime = KMimeMagic::self()->findFileType(*it)->mimeType();
+		QString	mime = KMimeMagic::self()->tqfindFileType(*it)->mimeType();
 		if ( mime == "application/x-zerosize" )
 		{
 			// special case of empty file
@@ -491,7 +491,7 @@ int KPrinterImpl::autoConvertFiles(KPrinter *printer, TQStringList& files, bool 
 			it = files.remove( it );
 			continue;
 		}
-		else if (mimeTypes.findIndex(mime) == -1)
+		else if (mimeTypes.tqfindIndex(mime) == -1)
 		{
 			if ((result=KMessageBox::warningYesNoCancel(NULL,
 					       i18n("<qt>The file format <em> %1 </em> is not directly supported by the current print system. You "
@@ -508,9 +508,9 @@ int KPrinterImpl::autoConvertFiles(KPrinter *printer, TQStringList& files, bool 
 					       TQString::null,
 					       i18n("Convert"),
 					       i18n("Keep"),
-					       TQString::fromLatin1("kdeprintAutoConvert"))) == KMessageBox::Yes)
+					       TQString::tqfromLatin1("kdeprintAutoConvert"))) == KMessageBox::Yes)
 			{
-				// find the filter chain
+				// tqfind the filter chain
 				QStringList	flist = KXmlCommandManager::self()->autoConvert(mime, primaryMimeType);
 				if (flist.count() == 0)
 				{
@@ -565,9 +565,9 @@ bool KPrinterImpl::setupSpecialCommand(TQString& cmd, KPrinter *p, const TQStrin
 	s = KMFactory::self()->specialManager()->setupCommand(s, p->options());
 
 	QString	ps = pageSizeToPageName( p->option( "kde-printsize" ).isEmpty() ? p->pageSize() : ( KPrinter::PageSize )p->option( "kde-printsize" ).toInt() );
-	s.replace("%psl", ps.lower());
-	s.replace("%psu", ps);
-	s.replace("%out", "$out{" + p->outputFileName() + "}"); // Replace as last
+	s.tqreplace("%psl", ps.lower());
+	s.tqreplace("%psu", ps);
+	s.tqreplace("%out", "$out{" + p->outputFileName() + "}"); // Replace as last
 	cmd = s;
 	return true;
 }

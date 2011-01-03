@@ -81,7 +81,7 @@ void RenderFormElement::updateFromElement()
     RenderWidget::updateFromElement();
 }
 
-void RenderFormElement::layout()
+void RenderFormElement::tqlayout()
 {
     KHTMLAssert( needsLayout() );
     KHTMLAssert( minMaxKnown() );
@@ -155,8 +155,8 @@ void RenderCheckBox::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQCheckBox *cb = static_cast<TQCheckBox *>( m_widget );
-    TQSize s( cb->style().pixelMetric( TQStyle::PM_IndicatorWidth ),
-             cb->style().pixelMetric( TQStyle::PM_IndicatorHeight ) );
+    TQSize s( cb->style().tqpixelMetric( TQStyle::PM_IndicatorWidth ),
+             cb->style().tqpixelMetric( TQStyle::PM_IndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -207,8 +207,8 @@ void RenderRadioButton::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQRadioButton *rb = static_cast<TQRadioButton *>( m_widget );
-    TQSize s( rb->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
-             rb->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
+    TQSize s( rb->style().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
+             rb->style().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -260,17 +260,17 @@ void RenderSubmitButton::calcMinMaxWidth()
 
     bool empty = raw.isEmpty();
     if ( empty )
-        raw = TQString::fromLatin1("X");
+        raw = TQString::tqfromLatin1("X");
     TQFontMetrics fm = pb->fontMetrics();
     TQSize ts = fm.size( ShowPrefix, raw);
     TQSize s(pb->style().sizeFromContents( TQStyle::CT_PushButton, pb, ts )
             .expandedTo(TQApplication::globalStrut()));
-    int margin = pb->style().pixelMetric( TQStyle::PM_ButtonMargin, pb) +
-		 pb->style().pixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
+    int margin = pb->style().tqpixelMetric( TQStyle::PM_ButtonMargin, pb) +
+		 pb->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
     int w = ts.width() + margin;
     int h = s.height();
     if (pb->isDefault() || pb->autoDefault()) {
-	int dbw = pb->style().pixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
+	int dbw = pb->style().tqpixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
 	w += dbw;
     }
 
@@ -491,7 +491,7 @@ void RenderLineEdit::setStyle(RenderStyle* _style)
 {
     RenderFormElement::setStyle( _style );
 
-    widget()->setAlignment(textAlignment());
+    widget()->tqsetAlignment(textAlignment());
 }
 
 void RenderLineEdit::highLightWord( unsigned int length, unsigned int pos )
@@ -642,13 +642,13 @@ RenderFieldset::RenderFieldset(HTMLGenericFormElementImpl *element)
 {
 }
 
-RenderObject* RenderFieldset::layoutLegend(bool relayoutChildren)
+RenderObject* RenderFieldset::tqlayoutLegend(bool retqlayoutChildren)
 {
-    RenderObject* legend = findLegend();
+    RenderObject* legend = tqfindLegend();
     if (legend) {
-        if (relayoutChildren)
+        if (retqlayoutChildren)
             legend->setNeedsLayout(true);
-        legend->layoutIfNeeded();
+        legend->tqlayoutIfNeeded();
 
         int xPos = borderLeft() + paddingLeft() + legend->marginLeft();
         if (style()->direction() == RTL)
@@ -661,7 +661,7 @@ RenderObject* RenderFieldset::layoutLegend(bool relayoutChildren)
     return legend;
 }
 
-RenderObject* RenderFieldset::findLegend()
+RenderObject* RenderFieldset::tqfindLegend()
 {
     for (RenderObject* legend = firstChild(); legend; legend = legend->nextSibling()) {
       if (!legend->isFloatingOrPositioned() && legend->element() &&
@@ -675,7 +675,7 @@ void RenderFieldset::paintBoxDecorations(PaintInfo& pI, int _tx, int _ty)
 {
     //kdDebug( 6040 ) << renderName() << "::paintDecorations()" << endl;
 
-    RenderObject* legend = findLegend();
+    RenderObject* legend = tqfindLegend();
     if (!legend)
         return RenderBlock::paintBoxDecorations(pI, _tx, _ty);
 
@@ -768,8 +768,8 @@ void RenderFieldset::setStyle(RenderStyle* _style)
     RenderBlock::setStyle(_style);
 
     // WinIE renders fieldsets with display:inline like they're inline-blocks.  For us,
-    // an inline-block is just a block element with replaced set to true and inline set
-    // to true.  Ensure that if we ended up being inline that we set our replaced flag
+    // an inline-block is just a block element with tqreplaced set to true and inline set
+    // to true.  Ensure that if we ended up being inline that we set our tqreplaced flag
     // so that we're treated like an inline-block.
     if (isInline())
         setReplaced(true);
@@ -809,7 +809,7 @@ void RenderFileButton::calcMinMaxWidth()
                                              edit,
           TQSize(w + 2 + 2*edit->frameWidth(), kMax(h, 14) + 2 + 2*edit->frameWidth()))
         .expandedTo(TQApplication::globalStrut());
-    TQSize bs = static_cast<KURLRequester*>( m_widget )->minimumSizeHint() - edit->minimumSizeHint();
+    TQSize bs = static_cast<KURLRequester*>( m_widget )->tqminimumSizeHint() - edit->tqminimumSizeHint();
 
     setIntrinsicWidth( s.width() + bs.width() );
     setIntrinsicHeight( kMax(s.height(), bs.height()) );
@@ -1018,7 +1018,7 @@ void RenderSelect::updateFromElement()
                     DOMString label = optElem->getAttribute(ATTR_LABEL);
                     if (!label.isEmpty())
                         text = label.string();
-                    text = TQString::fromLatin1("    ")+text;
+                    text = TQString::tqfromLatin1("    ")+text;
                 }
 
                 if(m_useListBox) {
@@ -1065,14 +1065,14 @@ void RenderSelect::calcMinMaxWidth()
 
     // ### ugly HACK FIXME!!!
     setMinMaxKnown();
-    layoutIfNeeded();
+    tqlayoutIfNeeded();
     setNeedsLayoutAndMinMaxRecalc();
     // ### end FIXME
 
     RenderFormElement::calcMinMaxWidth();
 }
 
-void RenderSelect::layout( )
+void RenderSelect::tqlayout( )
 {
     KHTMLAssert(needsLayout());
     KHTMLAssert(minMaxKnown());
@@ -1107,21 +1107,21 @@ void RenderSelect::layout( )
         if(size < 1)
             size = kMin(static_cast<KListBox*>(m_widget)->count(), 10u);
 
-        width += 2*w->frameWidth() + w->verticalScrollBar()->sizeHint().width();
+        width += 2*w->frameWidth() + w->verticalScrollBar()->tqsizeHint().width();
         height = size*height + 2*w->frameWidth();
 
         setIntrinsicWidth( width );
         setIntrinsicHeight( height );
     }
     else {
-        TQSize s(m_widget->sizeHint());
+        TQSize s(m_widget->tqsizeHint());
         setIntrinsicWidth( s.width() );
         setIntrinsicHeight( s.height() );
     }
 
     /// uuh, ignore the following line..
     setNeedsLayout(true);
-    RenderFormElement::layout();
+    RenderFormElement::tqlayout();
 
     // and now disable the widget in case there is no <option> given
     TQMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
@@ -1145,7 +1145,7 @@ void RenderSelect::slotSelected(int index) // emitted by the combobox only
         bool found = ( listItems[index]->id() == ID_OPTION );
 
         if ( !found ) {
-            // this one is not selectable,  we need to find an option element
+            // this one is not selectable,  we need to tqfind an option element
             while ( ( unsigned ) index < listItems.size() ) {
                 if ( listItems[index]->id() == ID_OPTION ) {
                     found = true;
@@ -1277,7 +1277,7 @@ void RenderSelect::updateSelection()
 // -------------------------------------------------------------------------
 
 TextAreaWidget::TextAreaWidget(int wrap, TQWidget* parent)
-    : KTextEdit(parent, "__khtml"), m_findDlg(0), m_find(0), m_repDlg(0), m_replace(0)
+    : KTextEdit(parent, "__khtml"), m_tqfindDlg(0), m_tqfind(0), m_repDlg(0), m_tqreplace(0)
 {
     if(wrap != DOM::HTMLTextAreaElementImpl::ta_NoWrap) {
         setWordWrap(TQTextEdit::WidgetWidth);
@@ -1295,22 +1295,22 @@ TextAreaWidget::TextAreaWidget(int wrap, TQWidget* parent)
     setMouseTracking(true);
 
     KActionCollection *ac = new KActionCollection(this);
-    m_findAction = KStdAction::find( this, TQT_SLOT( slotFind() ), ac );
-    m_findNextAction = KStdAction::findNext( this, TQT_SLOT( slotFindNext() ), ac );
-    m_replaceAction = KStdAction::replace( this, TQT_SLOT( slotReplace() ), ac );
+    m_tqfindAction = KStdAction::tqfind( this, TQT_SLOT( slotFind() ), ac );
+    m_tqfindNextAction = KStdAction::tqfindNext( this, TQT_SLOT( slotFindNext() ), ac );
+    m_tqreplaceAction = KStdAction::tqreplace( this, TQT_SLOT( slotReplace() ), ac );
 }
 
 
 TextAreaWidget::~TextAreaWidget()
 {
-    delete m_replace;
-    m_replace = 0L;
-    delete m_find;
-    m_find = 0L;
+    delete m_tqreplace;
+    m_tqreplace = 0L;
+    delete m_tqfind;
+    m_tqfind = 0L;
     delete m_repDlg;
     m_repDlg = 0L;
-    delete m_findDlg;
-    m_findDlg = 0L;
+    delete m_tqfindDlg;
+    m_tqfindDlg = 0L;
 }
 
 
@@ -1325,14 +1325,14 @@ TQPopupMenu *TextAreaWidget::createPopupMenu(const TQPoint& pos)
     if (!isReadOnly()) {
         popup->insertSeparator();
 
-        m_findAction->plug(popup);
-        m_findAction->setEnabled( !text().isEmpty() );
+        m_tqfindAction->plug(popup);
+        m_tqfindAction->setEnabled( !text().isEmpty() );
 
-        m_findNextAction->plug(popup);
-        m_findNextAction->setEnabled( m_find != 0 );
+        m_tqfindNextAction->plug(popup);
+        m_tqfindNextAction->setEnabled( m_tqfind != 0 );
 
-        m_replaceAction->plug(popup);
-        m_replaceAction->setEnabled( !text().isEmpty() );
+        m_tqreplaceAction->plug(popup);
+        m_tqreplaceAction->setEnabled( !text().isEmpty() );
     }
 
     return popup;
@@ -1343,24 +1343,24 @@ void TextAreaWidget::slotFindHighlight(const TQString& text, int matchingIndex, 
 {
     Q_UNUSED(text)
     //kdDebug() << "Highlight: [" << text << "] mi:" << matchingIndex << " ml:" << matchingLength << endl;
-    if (sender() == m_replace) {
+    if (sender() == m_tqreplace) {
         setSelection(m_repPara, matchingIndex, m_repPara, matchingIndex + matchingLength);
         setCursorPosition(m_repPara, matchingIndex);
     } else {
-        setSelection(m_findPara, matchingIndex, m_findPara, matchingIndex + matchingLength);
-        setCursorPosition(m_findPara, matchingIndex);
+        setSelection(m_tqfindPara, matchingIndex, m_tqfindPara, matchingIndex + matchingLength);
+        setCursorPosition(m_tqfindPara, matchingIndex);
     }
     ensureCursorVisible();
 }
 
 
-void TextAreaWidget::slotReplaceText(const TQString &text, int replacementIndex, int /*replacedLength*/, int matchedLength) {
+void TextAreaWidget::slotReplaceText(const TQString &text, int tqreplacementIndex, int /*tqreplacedLength*/, int matchedLength) {
     Q_UNUSED(text)
-    //kdDebug() << "Replace: [" << text << "] ri:" << replacementIndex << " rl:" << replacedLength << " ml:" << matchedLength << endl;
-    setSelection(m_repPara, replacementIndex, m_repPara, replacementIndex + matchedLength);
+    //kdDebug() << "Replace: [" << text << "] ri:" << tqreplacementIndex << " rl:" << tqreplacedLength << " ml:" << matchedLength << endl;
+    setSelection(m_repPara, tqreplacementIndex, m_repPara, tqreplacementIndex + matchedLength);
     removeSelectedText();
-    insertAt(m_repDlg->replacement(), m_repPara, replacementIndex);
-    if (m_replace->options() & KReplaceDialog::PromptOnReplace) {
+    insertAt(m_repDlg->tqreplacement(), m_repPara, tqreplacementIndex);
+    if (m_tqreplace->options() & KReplaceDialog::PromptOnReplace) {
         ensureCursorVisible();
     }
 }
@@ -1373,11 +1373,11 @@ void TextAreaWidget::slotDoReplace()
         return;
     }
 
-    delete m_replace;
-    m_replace = new KReplace(m_repDlg->pattern(), m_repDlg->replacement(), m_repDlg->options(), this);
-    if (m_replace->options() & KFindDialog::FromCursor) {
+    delete m_tqreplace;
+    m_tqreplace = new KReplace(m_repDlg->pattern(), m_repDlg->tqreplacement(), m_repDlg->options(), this);
+    if (m_tqreplace->options() & KFindDialog::FromCursor) {
         getCursorPosition(&m_repPara, &m_repIndex);
-    } else if (m_replace->options() & KFindDialog::FindBackwards) {
+    } else if (m_tqreplace->options() & KFindDialog::FindBackwards) {
         m_repPara = paragraphs() - 1;
         m_repIndex = paragraphLength(m_repPara) - 1;
     } else {
@@ -1387,10 +1387,10 @@ void TextAreaWidget::slotDoReplace()
 
     // Connect highlight signal to code which handles highlighting
     // of found text.
-    connect(m_replace, TQT_SIGNAL(highlight(const TQString &, int, int)),
+    connect(m_tqreplace, TQT_SIGNAL(highlight(const TQString &, int, int)),
             this, TQT_SLOT(slotFindHighlight(const TQString &, int, int)));
-    connect(m_replace, TQT_SIGNAL(findNext()), this, TQT_SLOT(slotReplaceNext()));
-    connect(m_replace, TQT_SIGNAL(replace(const TQString &, int, int, int)),
+    connect(m_tqreplace, TQT_SIGNAL(tqfindNext()), this, TQT_SLOT(slotReplaceNext()));
+    connect(m_tqreplace, TQT_SIGNAL(tqreplace(const TQString &, int, int, int)),
             this, TQT_SLOT(slotReplaceText(const TQString &, int, int, int)));
 
     m_repDlg->close();
@@ -1400,19 +1400,19 @@ void TextAreaWidget::slotDoReplace()
 
 void TextAreaWidget::slotReplaceNext()
 {
-    if (!m_replace) {
+    if (!m_tqreplace) {
         // assert?
         return;
     }
 
-    if (!(m_replace->options() & KReplaceDialog::PromptOnReplace)) {
+    if (!(m_tqreplace->options() & KReplaceDialog::PromptOnReplace)) {
         viewport()->setUpdatesEnabled(false);
     }
 
     KFind::Result res = KFind::NoMatch;
     while (res == KFind::NoMatch) {
         // If we're done.....
-        if (m_replace->options() & KFindDialog::FindBackwards) {
+        if (m_tqreplace->options() & KFindDialog::FindBackwards) {
             if (m_repIndex == 0 && m_repPara == 0) {
                 break;
             }
@@ -1423,14 +1423,14 @@ void TextAreaWidget::slotReplaceNext()
             }
         }
 
-        if (m_replace->needData()) {
-            m_replace->setData(text(m_repPara), m_repIndex);
+        if (m_tqreplace->needData()) {
+            m_tqreplace->setData(text(m_repPara), m_repIndex);
         }
 
-        res = m_replace->replace();
+        res = m_tqreplace->tqreplace();
 
         if (res == KFind::NoMatch) {
-            if (m_replace->options() & KFindDialog::FindBackwards) {
+            if (m_tqreplace->options() & KFindDialog::FindBackwards) {
                 if (m_repPara == 0) {
                     m_repIndex = 0;
                 } else {
@@ -1448,57 +1448,57 @@ void TextAreaWidget::slotReplaceNext()
         }
     }
 
-    if (!(m_replace->options() & KReplaceDialog::PromptOnReplace)) {
+    if (!(m_tqreplace->options() & KReplaceDialog::PromptOnReplace)) {
         viewport()->setUpdatesEnabled(true);
-        repaintChanged();
+        tqrepaintChanged();
     }
 
     if (res == KFind::NoMatch) { // at end
-        m_replace->displayFinalDialog();
-        delete m_replace;
-        m_replace = 0;
+        m_tqreplace->displayFinalDialog();
+        delete m_tqreplace;
+        m_tqreplace = 0;
         ensureCursorVisible();
-        //or           if ( m_replace->shouldRestart() ) { reinit (w/o FromCursor) and call slotReplaceNext(); }
+        //or           if ( m_tqreplace->shouldRestart() ) { reinit (w/o FromCursor) and call slotReplaceNext(); }
     } else {
-        //m_replace->closeReplaceNextDialog();
+        //m_tqreplace->closeReplaceNextDialog();
     }
 }
 
 
 void TextAreaWidget::slotDoFind()
 {
-    if (!m_findDlg) {
+    if (!m_tqfindDlg) {
         // Should really assert()
         return;
     }
 
-    delete m_find;
-    m_find = new KFind(m_findDlg->pattern(), m_findDlg->options(), this);
-    if (m_find->options() & KFindDialog::FromCursor) {
-        getCursorPosition(&m_findPara, &m_findIndex);
-    } else if (m_find->options() & KFindDialog::FindBackwards) {
-        m_findPara = paragraphs() - 1;
-        m_findIndex = paragraphLength(m_findPara) - 1;
+    delete m_tqfind;
+    m_tqfind = new KFind(m_tqfindDlg->pattern(), m_tqfindDlg->options(), this);
+    if (m_tqfind->options() & KFindDialog::FromCursor) {
+        getCursorPosition(&m_tqfindPara, &m_tqfindIndex);
+    } else if (m_tqfind->options() & KFindDialog::FindBackwards) {
+        m_tqfindPara = paragraphs() - 1;
+        m_tqfindIndex = paragraphLength(m_tqfindPara) - 1;
     } else {
-        m_findPara = 0;
-        m_findIndex = 0;
+        m_tqfindPara = 0;
+        m_tqfindIndex = 0;
     }
 
     // Connect highlight signal to code which handles highlighting
     // of found text.
-    connect(m_find, TQT_SIGNAL(highlight(const TQString &, int, int)),
+    connect(m_tqfind, TQT_SIGNAL(highlight(const TQString &, int, int)),
             this, TQT_SLOT(slotFindHighlight(const TQString &, int, int)));
-    connect(m_find, TQT_SIGNAL(findNext()), this, TQT_SLOT(slotFindNext()));
+    connect(m_tqfind, TQT_SIGNAL(tqfindNext()), this, TQT_SLOT(slotFindNext()));
 
-    m_findDlg->close();
-    m_find->closeFindNextDialog();
+    m_tqfindDlg->close();
+    m_tqfind->closeFindNextDialog();
     slotFindNext();
 }
 
 
 void TextAreaWidget::slotFindNext()
 {
-    if (!m_find) {
+    if (!m_tqfind) {
         // assert?
         return;
     }
@@ -1506,49 +1506,49 @@ void TextAreaWidget::slotFindNext()
     KFind::Result res = KFind::NoMatch;
     while (res == KFind::NoMatch) {
         // If we're done.....
-        if (m_find->options() & KFindDialog::FindBackwards) {
-            if (m_findIndex == 0 && m_findPara == 0) {
+        if (m_tqfind->options() & KFindDialog::FindBackwards) {
+            if (m_tqfindIndex == 0 && m_tqfindPara == 0) {
                 break;
             }
         } else {
-            if (m_findPara == paragraphs() - 1 &&
-                m_findIndex == paragraphLength(m_findPara) - 1) {
+            if (m_tqfindPara == paragraphs() - 1 &&
+                m_tqfindIndex == paragraphLength(m_tqfindPara) - 1) {
                 break;
             }
         }
 
-        if (m_find->needData()) {
-            m_find->setData(text(m_findPara), m_findIndex);
+        if (m_tqfind->needData()) {
+            m_tqfind->setData(text(m_tqfindPara), m_tqfindIndex);
         }
 
-        res = m_find->find();
+        res = m_tqfind->tqfind();
 
         if (res == KFind::NoMatch) {
-            if (m_find->options() & KFindDialog::FindBackwards) {
-                if (m_findPara == 0) {
-                    m_findIndex = 0;
+            if (m_tqfind->options() & KFindDialog::FindBackwards) {
+                if (m_tqfindPara == 0) {
+                    m_tqfindIndex = 0;
                 } else {
-                    m_findPara--;
-                    m_findIndex = paragraphLength(m_findPara) - 1;
+                    m_tqfindPara--;
+                    m_tqfindIndex = paragraphLength(m_tqfindPara) - 1;
                 }
             } else {
-                if (m_findPara == paragraphs() - 1) {
-                    m_findIndex = paragraphLength(m_findPara) - 1;
+                if (m_tqfindPara == paragraphs() - 1) {
+                    m_tqfindIndex = paragraphLength(m_tqfindPara) - 1;
                 } else {
-                    m_findPara++;
-                    m_findIndex = 0;
+                    m_tqfindPara++;
+                    m_tqfindIndex = 0;
                 }
             }
         }
     }
 
     if (res == KFind::NoMatch) { // at end
-        m_find->displayFinalDialog();
-        delete m_find;
-        m_find = 0;
-        //or           if ( m_find->shouldRestart() ) { reinit (w/o FromCursor) and call slotFindNext(); }
+        m_tqfind->displayFinalDialog();
+        delete m_tqfind;
+        m_tqfind = 0;
+        //or           if ( m_tqfind->shouldRestart() ) { reinit (w/o FromCursor) and call slotFindNext(); }
     } else {
-        //m_find->closeFindNextDialog();
+        //m_tqfind->closeFindNextDialog();
     }
 }
 
@@ -1558,13 +1558,13 @@ void TextAreaWidget::slotFind()
     if( text().isEmpty() )  // saves having to track the text changes
         return;
 
-    if ( m_findDlg ) {
-      KWin::activateWindow( m_findDlg->winId() );
+    if ( m_tqfindDlg ) {
+      KWin::activateWindow( m_tqfindDlg->winId() );
     } else {
-      m_findDlg = new KFindDialog(false, this, "KHTML Text Area Find Dialog");
-      connect( m_findDlg, TQT_SIGNAL(okClicked()), this, TQT_SLOT(slotDoFind()) );
+      m_tqfindDlg = new KFindDialog(false, this, "KHTML Text Area Find Dialog");
+      connect( m_tqfindDlg, TQT_SIGNAL(okClicked()), this, TQT_SLOT(slotDoFind()) );
     }
-    m_findDlg->show();
+    m_tqfindDlg->show();
 }
 
 
@@ -1651,10 +1651,10 @@ void RenderTextArea::calcMinMaxWidth()
     const TQFontMetrics &m = style()->fontMetrics();
     w->setTabStopWidth(8 * m.width(" "));
     TQSize size( kMax(element()->cols(), 1L)*m.width('x') + w->frameWidth() +
-                w->verticalScrollBar()->sizeHint().width(),
+                w->verticalScrollBar()->tqsizeHint().width(),
                 kMax(element()->rows(), 1L)*m.lineSpacing() + w->frameWidth()*4 +
                 (w->wordWrap() == TQTextEdit::NoWrap ?
-                 w->horizontalScrollBar()->sizeHint().height() : 0)
+                 w->horizontalScrollBar()->tqsizeHint().height() : 0)
         );
 
     setIntrinsicWidth( size.width() );
@@ -1670,7 +1670,7 @@ void RenderTextArea::setStyle(RenderStyle* _style)
     RenderFormElement::setStyle(_style);
 
     widget()->blockSignals(true);
-    widget()->setAlignment(textAlignment());
+    widget()->tqsetAlignment(textAlignment());
     widget()->blockSignals(false);
 
     scrollbarsStyled = false;
@@ -1678,11 +1678,11 @@ void RenderTextArea::setStyle(RenderStyle* _style)
     element()->m_unsubmittedFormChange = unsubmittedFormChange;
 }
 
-void RenderTextArea::layout()
+void RenderTextArea::tqlayout()
 {
     KHTMLAssert( needsLayout() );
 
-    RenderFormElement::layout();
+    RenderFormElement::tqlayout();
 
     TextAreaWidget* w = static_cast<TextAreaWidget*>(m_widget);
 
@@ -1738,13 +1738,13 @@ TQString RenderTextArea::text()
             paragraphText = paragraphText.left(pl); //Snip invented space.
             for (int l = 0; l < pl; ++l) {
                 if (lindex != w->lineOfChar(p, l)) {
-                    paragraphText.insert(l+ll++, TQString::fromLatin1("\n"));
+                    paragraphText.insert(l+ll++, TQString::tqfromLatin1("\n"));
                     lindex = w->lineOfChar(p, l);
                 }
             }
             txt += paragraphText;
             if (p < w->paragraphs() - 1)
-                txt += TQString::fromLatin1("\n");
+                txt += TQString::tqfromLatin1("\n");
         }
     }
     else
@@ -1817,7 +1817,7 @@ void RenderTextArea::computeParagraphAndIndex(long offset, int* para, int* index
         return;
     }
 
-    //Find the paragraph that contains us..
+    //Find the paragraph that tqcontains us..
     int containingPar = 0;
     long endPos       = 0;
     long startPos     = 0;
@@ -1833,7 +1833,7 @@ void RenderTextArea::computeParagraphAndIndex(long offset, int* para, int* index
 
     *para = containingPar;
 
-    //Now, scan within the paragraph to find the position..
+    //Now, scan within the paragraph to tqfind the position..
     long localOffset = offset - startPos;
 
     *index = queryParagraphInfo(containingPar, ParaPortionOffset, localOffset);

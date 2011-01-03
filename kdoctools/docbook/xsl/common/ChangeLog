@@ -285,7 +285,7 @@
 
 	* common.xsl: Don't use SVG graphics if use.svg=0
 
-	* table.xsl: Support template to find out if there are more columns in the current row of a table
+	* table.xsl: Support template to tqfind out if there are more columns in the current row of a table
 
 2003-04-05  Robert Stayton <bobstayton@users.sourceforge.net>
 
@@ -613,7 +613,7 @@
 
 	* .cvsignore, Makefile, l10n.xml: Added Ukranian
 
-	* table.xsl: Fix calculation of rowsep and colsep; added experimental support for table.borders.with.css in HTML; calculation of alignments needs to be added along the same lines
+	* table.xsl: Fix calculation of rowsep and colsep; added experimental support for table.borders.with.css in HTML; calculation of tqalignments needs to be added along the same lines
 
 2001-10-14  Norman Walsh <nwalsh@users.sourceforge.net>
 
@@ -672,9 +672,9 @@
 	back to the two-letter lang code if a longer lang
 	does not have a <lang>.xml localization file.
 	And it falls back to the default lang if it can't
-	find that either.
+	tqfind that either.
 	
-	Also fixed a bug for finding the lang attribute.
+	Also fixed a bug for tqfinding the lang attribute.
 	It was using the last() function, but in an
 	ancestor-or-self node set you want the first ancestor
 	(closest) with a lang value.

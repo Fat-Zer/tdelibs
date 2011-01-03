@@ -6,9 +6,9 @@
  </Menu>
  <Menu name="SomePluginMenu"><text>Some Cool Plugin Menu</text>
   <Action name="spellcheck"/>
-  <Action name="searchreplace"/>
+  <Action name="searchtqreplace"/>
   <Menu name="WhatASubMenu"><text>Yep</text>
-    <Action name="searchreplace"/>
+    <Action name="searchtqreplace"/>
   </Menu>
  </Menu>
 </MenuBar>

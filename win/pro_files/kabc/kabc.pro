@@ -11,7 +11,7 @@ LIBS += $$KDELIBDESTDIR\kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdeui$$KDELIB_SUF
 INCLUDEPATH += $(KDELIBS)/kabc/vcard/include $(KDELIBS)/kabc/vcard/include/generated \
 	$(KDELIBS)/kabc/vcardparser
 
-system( bash kmoc )
+system( bash ktqmoc )
 system( bash kdcopidl )
 system( cd scripts && perl.exe makeaddressee )
 

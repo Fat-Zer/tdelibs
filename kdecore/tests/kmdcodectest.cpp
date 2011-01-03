@@ -96,7 +96,7 @@ void testCodec (const char* msg, Codec type, bool isFile)
 
         if (!f.exists())
         {
-          kdError() << "Could not find: " << f.name () << endl;
+          kdError() << "Could not tqfind: " << f.name () << endl;
           return;
         }
 
@@ -192,15 +192,15 @@ void MD5_timeTrial ()
     time_t endTime;
     time_t startTime;
 
-    Q_UINT8 block[TEST_BLOCK_LEN];
-    Q_UINT32 i;
+    TQ_UINT8 block[TEST_BLOCK_LEN];
+    TQ_UINT32 i;
 
     cout << "Timing test. Digesting " << TEST_BLOCK_COUNT << " blocks of "
          << TEST_BLOCK_LEN << "-byte..." << endl;
 
     // Initialize block
     for (i = 0; i < TEST_BLOCK_LEN; i++)
-        block[i] = (Q_UINT8)(i & 0xff);
+        block[i] = (TQ_UINT8)(i & 0xff);
 
     // Start timer
     time (&startTime);
@@ -308,7 +308,7 @@ void MD5_string (const char *input, const char* expected, bool rawOutput )
   if ( expected )
   {
     cout << "Expected: " << expected << endl;
-    cout << "Status: " << context.verify (expected) << endl;
+    cout << "tqStatus: " << context.verify (expected) << endl;
   }
 }
 

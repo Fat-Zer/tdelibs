@@ -14,7 +14,7 @@ INCLUDEPATH += $(KDELIBS)/interfaces $(KDELIBS)/interfaces/ktexteditor \
 
 TARGET		= ktexteditor$$KDEBUG
 
-system( bash kmoc )
+system( bash ktqmoc )
 system( bash kdcopidl )
 
 SOURCES = \

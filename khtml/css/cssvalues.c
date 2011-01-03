@@ -1,5 +1,5 @@
 /* ANSI-C code produced by gperf version 3.0.2 */
-/* Command-line: gperf -L ANSI-C -E -c -C -n -o -t -k '*' -NfindValue -Hhash_val -Wwordlist_value -D cssvalues.gperf  */
+/* Command-line: gperf -L ANSI-C -E -c -C -n -o -t -k '*' -NtqfindValue -Hhash_val -Wwordlist_value -D cssvalues.gperf  */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
       && ('%' == 37) && ('&' == 38) && ('\'' == 39) && ('(' == 40) \
@@ -39,7 +39,7 @@ struct css_value {
     int id;
 };
 
-static const css_value* findValue (register const char *str, register unsigned int len);
+static const css_value* tqfindValue (register const char *str, register unsigned int len);
 /* maximum key range = 2876, duplicates = 0 */
 
 #ifdef __GNUC__
@@ -177,7 +177,7 @@ hash_val (register const char *str, register unsigned int len)
 __inline
 #endif
 const struct css_value *
-findValue (register const char *str, register unsigned int len)
+tqfindValue (register const char *str, register unsigned int len)
 {
   enum
     {

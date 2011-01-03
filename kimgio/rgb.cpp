@@ -121,7 +121,7 @@ bool SGIImage::getRow(uchar *dest)
 bool SGIImage::readData(TQImage& img)
 {
 	QRgb *c;
-	Q_UINT32 *start = m_starttab;
+	TQ_UINT32 *start = m_starttab;
 	TQByteArray lguard(m_xsize);
 	uchar *line = (uchar *)lguard.data();
 	unsigned x, y;
@@ -136,7 +136,7 @@ bool SGIImage::readData(TQImage& img)
 			return false;
 		c = (QRgb *)img.scanLine(m_ysize - y - 1);
 		for (x = 0; x < m_xsize; x++, c++)
-			*c = qRgb(line[x], line[x], line[x]);
+			*c = tqRgb(line[x], line[x], line[x]);
 	}
 
 	if (m_zsize == 1)
@@ -150,7 +150,7 @@ bool SGIImage::readData(TQImage& img)
 				return false;
 			c = (QRgb *)img.scanLine(m_ysize - y - 1);
 			for (x = 0; x < m_xsize; x++, c++)
-				*c = qRgb(qRed(*c), line[x], line[x]);
+				*c = tqRgb(tqRed(*c), line[x], line[x]);
 		}
 
 		for (y = 0; y < m_ysize; y++) {
@@ -160,7 +160,7 @@ bool SGIImage::readData(TQImage& img)
 				return false;
 			c = (QRgb *)img.scanLine(m_ysize - y - 1);
 			for (x = 0; x < m_xsize; x++, c++)
-				*c = qRgb(qRed(*c), qGreen(*c), line[x]);
+				*c = tqRgb(tqRed(*c), tqGreen(*c), line[x]);
 		}
 
 		if (m_zsize == 3)
@@ -174,7 +174,7 @@ bool SGIImage::readData(TQImage& img)
 			return false;
 		c = (QRgb *)img.scanLine(m_ysize - y - 1);
 		for (x = 0; x < m_xsize; x++, c++)
-			*c = qRgba(qRed(*c), qGreen(*c), qBlue(*c), line[x]);
+			*c = tqRgba(tqRed(*c), tqGreen(*c), tqBlue(*c), line[x]);
 	}
 
 	return true;
@@ -183,9 +183,9 @@ bool SGIImage::readData(TQImage& img)
 
 bool SGIImage::readImage(TQImage& img)
 {
-	Q_INT8 u8;
-	Q_INT16 u16;
-	Q_INT32 u32;
+	TQ_INT8 u8;
+	TQ_INT16 u16;
+	TQ_INT32 u32;
 
 	kdDebug(399) << "reading '" << m_io->fileName() << '\'' << endl;
 
@@ -256,13 +256,13 @@ bool SGIImage::readImage(TQImage& img)
 
 	if (m_rle) {
 		uint l;
-		m_starttab = new Q_UINT32[m_numrows];
+		m_starttab = new TQ_UINT32[m_numrows];
 		for (l = 0; !m_stream.atEnd() && l < m_numrows; l++) {
 			m_stream >> m_starttab[l];
-			m_starttab[l] -= 512 + m_numrows * 2 * sizeof(Q_UINT32);
+			m_starttab[l] -= 512 + m_numrows * 2 * sizeof(TQ_UINT32);
 		}
 
-		m_lengthtab = new Q_UINT32[m_numrows];
+		m_lengthtab = new TQ_UINT32[m_numrows];
 		for (l = 0; l < m_numrows; l++)
 			m_stream >> m_lengthtab[l];
 	}
@@ -323,7 +323,7 @@ bool RLEData::operator<(const RLEData& b) const
 uint RLEMap::insert(const uchar *d, uint l)
 {
 	RLEData data = RLEData(d, l, m_offset);
-	Iterator it = find(data);
+	Iterator it = tqfind(data);
 	if (it != end())
 		return it.data();
 
@@ -389,7 +389,7 @@ uint SGIImage::compact(uchar *d, uchar *s)
 
 bool SGIImage::scanData(const TQImage& img)
 {
-	Q_UINT32 *start = m_starttab;
+	TQ_UINT32 *start = m_starttab;
 	TQCString lineguard(m_xsize * 2);
 	TQCString bufguard(m_xsize);
 	uchar *line = (uchar *)lineguard.data();
@@ -401,7 +401,7 @@ bool SGIImage::scanData(const TQImage& img)
 	for (y = 0; y < m_ysize; y++) {
 		c = reinterpret_cast<QRgb *>(img.scanLine(m_ysize - y - 1));
 		for (x = 0; x < m_xsize; x++)
-			buf[x] = intensity(qRed(*c++));
+			buf[x] = intensity(tqRed(*c++));
 		len = compact(line, buf);
 		*start++ = m_rlemap.insert(line, len);
 	}
@@ -413,7 +413,7 @@ bool SGIImage::scanData(const TQImage& img)
 		for (y = 0; y < m_ysize; y++) {
 			c = reinterpret_cast<QRgb *>(img.scanLine(m_ysize - y - 1));
 			for (x = 0; x < m_xsize; x++)
-				buf[x] = intensity(qGreen(*c++));
+				buf[x] = intensity(tqGreen(*c++));
 			len = compact(line, buf);
 			*start++ = m_rlemap.insert(line, len);
 		}
@@ -421,7 +421,7 @@ bool SGIImage::scanData(const TQImage& img)
 		for (y = 0; y < m_ysize; y++) {
 			c = reinterpret_cast<QRgb *>(img.scanLine(m_ysize - y - 1));
 			for (x = 0; x < m_xsize; x++)
-				buf[x] = intensity(qBlue(*c++));
+				buf[x] = intensity(tqBlue(*c++));
 			len = compact(line, buf);
 			*start++ = m_rlemap.insert(line, len);
 		}
@@ -433,7 +433,7 @@ bool SGIImage::scanData(const TQImage& img)
 	for (y = 0; y < m_ysize; y++) {
 		c = reinterpret_cast<QRgb *>(img.scanLine(m_ysize - y - 1));
 		for (x = 0; x < m_xsize; x++)
-			buf[x] = intensity(qAlpha(*c++));
+			buf[x] = intensity(tqAlpha(*c++));
 		len = compact(line, buf);
 		*start++ = m_rlemap.insert(line, len);
 	}
@@ -444,11 +444,11 @@ bool SGIImage::scanData(const TQImage& img)
 
 void SGIImage::writeHeader()
 {
-	m_stream << Q_UINT16(0x01da);
+	m_stream << TQ_UINT16(0x01da);
 	m_stream << m_rle << m_bpc << m_dim;
 	m_stream << m_xsize << m_ysize << m_zsize;
 	m_stream << m_pixmin << m_pixmax;
-	m_stream << Q_UINT32(0);
+	m_stream << TQ_UINT32(0);
 
 	uint i;
 	TQString desc = m_io->description();
@@ -463,7 +463,7 @@ void SGIImage::writeHeader()
 
 	m_stream << m_colormap;
 	for (i = 0; i < 404; i++)
-		m_stream << Q_UINT8(0);
+		m_stream << TQ_UINT8(0);
 }
 
 
@@ -476,11 +476,11 @@ void SGIImage::writeRle()
 
 	// write start table
 	for (i = 0; i < m_numrows; i++)
-		m_stream << Q_UINT32(m_rlevector[m_starttab[i]]->offset());
+		m_stream << TQ_UINT32(m_rlevector[m_starttab[i]]->offset());
 
 	// write length table
 	for (i = 0; i < m_numrows; i++)
-		m_stream << Q_UINT32(m_rlevector[m_starttab[i]]->size());
+		m_stream << TQ_UINT32(m_rlevector[m_starttab[i]]->size());
 
 	// write data
 	for (i = 0; i < m_rlevector.size(); i++)
@@ -500,7 +500,7 @@ void SGIImage::writeVerbatim(const TQImage& img)
 	for (y = 0; y < m_ysize; y++) {
 		c = reinterpret_cast<QRgb *>(img.scanLine(m_ysize - y - 1));
 		for (x = 0; x < m_xsize; x++)
-			m_stream << Q_UINT8(qRed(*c++));
+			m_stream << TQ_UINT8(tqRed(*c++));
 	}
 
 	if (m_zsize == 1)
@@ -510,13 +510,13 @@ void SGIImage::writeVerbatim(const TQImage& img)
 		for (y = 0; y < m_ysize; y++) {
 			c = reinterpret_cast<QRgb *>(img.scanLine(m_ysize - y - 1));
 			for (x = 0; x < m_xsize; x++)
-				m_stream << Q_UINT8(qGreen(*c++));
+				m_stream << TQ_UINT8(tqGreen(*c++));
 		}
 
 		for (y = 0; y < m_ysize; y++) {
 			c = reinterpret_cast<QRgb *>(img.scanLine(m_ysize - y - 1));
 			for (x = 0; x < m_xsize; x++)
-				m_stream << Q_UINT8(qBlue(*c++));
+				m_stream << TQ_UINT8(tqBlue(*c++));
 		}
 
 		if (m_zsize == 3)
@@ -526,7 +526,7 @@ void SGIImage::writeVerbatim(const TQImage& img)
 	for (y = 0; y < m_ysize; y++) {
 		c = reinterpret_cast<QRgb *>(img.scanLine(m_ysize - y - 1));
 		for (x = 0; x < m_xsize; x++)
-			m_stream << Q_UINT8(qAlpha(*c++));
+			m_stream << TQ_UINT8(tqAlpha(*c++));
 	}
 }
 
@@ -558,8 +558,8 @@ bool SGIImage::writeImage(TQImage& img)
 
 	m_numrows = m_ysize * m_zsize;
 
-	m_starttab = new Q_UINT32[m_numrows];
-	m_rlemap.setBaseOffset(512 + m_numrows * 2 * sizeof(Q_UINT32));
+	m_starttab = new TQ_UINT32[m_numrows];
+	m_rlemap.setBaseOffset(512 + m_numrows * 2 * sizeof(TQ_UINT32));
 
 	if (!scanData(img)) {
 		kdDebug(399) << "this can't happen" << endl;
@@ -569,7 +569,7 @@ bool SGIImage::writeImage(TQImage& img)
 	m_rlevector = m_rlemap.vector();
 
 	long verbatim_size = m_numrows * m_xsize;
-	long rle_size = m_numrows * 2 * sizeof(Q_UINT32);
+	long rle_size = m_numrows * 2 * sizeof(TQ_UINT32);
 	for (uint i = 0; i < m_rlevector.size(); i++)
 		rle_size += m_rlevector[i]->size();
 

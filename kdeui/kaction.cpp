@@ -277,18 +277,18 @@ bool KAction::isPlugged() const
 
 bool KAction::isPlugged( const TQWidget *container ) const
 {
-  return findContainer( container ) > -1;
+  return tqfindContainer( container ) > -1;
 }
 
 bool KAction::isPlugged( const TQWidget *container, int id ) const
 {
-  int i = findContainer( container );
+  int i = tqfindContainer( container );
   return ( i > -1 && itemId( i ) == id );
 }
 
 bool KAction::isPlugged( const TQWidget *container, const TQWidget *_representative ) const
 {
-  int i = findContainer( container );
+  int i = tqfindContainer( container );
   return ( i > -1 && representative( i ) == _representative );
 }
 
@@ -309,7 +309,7 @@ We have two KoView objects which both point to the same KoDoc object
 Undo and Redo should be available in both KoView objects, and
 	calling the undo->setEnabled() should affect both KoViews
 
-When addClient is called, it needs to be able to find the undo and redo actions
+When addClient is called, it needs to be able to tqfind the undo and redo actions
 When it calls plug() on them, they need to be inserted into the KAccel object of the appropriate KoView
 
 In this case, the actionCollection belongs to KoDoc and we need to let it know that its shortcuts
@@ -482,7 +482,7 @@ void KAction::insertKAccel( KAccel* kaccel )
     }
   }
   else
-    kdWarning(129) << "KAction::insertKAccel( kaccel = " << kaccel << " ): KAccel object already contains an action name \"" << name() << "\"" << endl; // -- ellis
+    kdWarning(129) << "KAction::insertKAccel( kaccel = " << kaccel << " ): KAccel object already tqcontains an action name \"" << name() << "\"" << endl; // -- ellis
 }
 
 void KAction::removeKAccel( KAccel* kaccel )
@@ -530,9 +530,9 @@ void KAction::updateShortcut( TQPopupMenu* menu, int id )
   //  show the string representation of its shortcut.
   if ( d->m_kaccel || d->m_kaccelList.count() ) {
     TQString s = menu->text( id );
-    int i = s.find( '\t' );
+    int i = s.tqfind( '\t' );
     if ( i >= 0 )
-      s.replace( i+1, s.length()-i, d->m_cut.seq(0).toString() );
+      s.tqreplace( i+1, s.length()-i, d->m_cut.seq(0).toString() );
     else
       s += "\t" + d->m_cut.seq(0).toString();
 
@@ -744,7 +744,7 @@ int KAction::plug( TQWidget *w, int index )
 
 void KAction::unplug( TQWidget *w )
 {
-  int i = findContainer( w );
+  int i = tqfindContainer( w );
   if ( i == -1 )
     return;
   int id = itemId( i );
@@ -795,7 +795,7 @@ void KAction::plugAccel(KAccel *kacc, bool configurable)
     //connect(d->m_kaccel, TQT_SIGNAL(keycodeChanged()), this, TQT_SLOT(slotKeycodeChanged()));
   }
   else
-    kdWarning(129) << "KAction::plugAccel( kacc = " << kacc << " ): KAccel object already contains an action name \"" << name() << "\"" << endl; // -- ellis
+    kdWarning(129) << "KAction::plugAccel( kacc = " << kacc << " ): KAccel object already tqcontains an action name \"" << name() << "\"" << endl; // -- ellis
 }
 
 void KAction::unplugAccel()
@@ -810,10 +810,10 @@ void KAction::unplugAccel()
 
 void KAction::plugMainWindowAccel( TQWidget *w )
 {
-  // Note: topLevelWidget() stops too early, we can't use it.
+  // Note: tqtopLevelWidget() stops too early, we can't use it.
   TQWidget * tl = w;
   TQWidget * n;
-  while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
+  while ( !tl->isDialog() && ( n = tl->tqparentWidget() ) ) // lookup parent and store
     tl = n;
 
   KMainWindow * mw = dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow
@@ -1039,7 +1039,7 @@ TQString KAction::whatsThisWithIcon() const
 {
     TQString text = whatsThis();
     if (!d->iconName().isEmpty())
-      return TQString::fromLatin1("<img source=\"small|%1\"> %2").arg(d->iconName() ).arg(text);
+      return TQString::tqfromLatin1("<img source=\"small|%1\"> %2").arg(d->iconName() ).arg(text);
     return text;
 }
 
@@ -1121,7 +1121,7 @@ void KAction::slotPopupActivated()
   if( ::qt_cast<TQSignal *>(sender()))
   {
     int id = dynamic_cast<const TQSignal *>(sender())->value().toInt();
-    int pos = findContainer(id);
+    int pos = tqfindContainer(id);
     if(pos != -1)
     {
       TQPopupMenu* qpm = dynamic_cast<TQPopupMenu *>( container(pos) );
@@ -1187,13 +1187,13 @@ void KAction::slotDestroyed()
   int i;
   do
   {
-    i = findContainer( static_cast<const TQWidget*>( o ) );
+    i = tqfindContainer( static_cast<const TQWidget*>( o ) );
     if ( i != -1 )
       removeContainer( i );
   } while ( i != -1 );
 }
 
-int KAction::findContainer( const TQWidget* widget ) const
+int KAction::tqfindContainer( const TQWidget* widget ) const
 {
   int pos = 0;
 
@@ -1213,7 +1213,7 @@ int KAction::findContainer( const TQWidget* widget ) const
   return -1;
 }
 
-int KAction::findContainer( const int id ) const
+int KAction::tqfindContainer( const int id ) const
 {
   int pos = 0;
 

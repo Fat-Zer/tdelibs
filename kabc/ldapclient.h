@@ -82,7 +82,7 @@ class KABC_EXPORT LdapObject
   * We mean it!
   *
   */
-class KABC_EXPORT LdapClient : public QObject
+class KABC_EXPORT LdapClient : public TQObject
 {
   Q_OBJECT
 
@@ -204,7 +204,7 @@ typedef TQValueList<LdapResult> LdapResultList;
   * We mean it!
   *
   */
-class KABC_EXPORT LdapSearch : public QObject
+class KABC_EXPORT LdapSearch : public TQObject
 {
   Q_OBJECT
 

@@ -124,7 +124,7 @@ public:
 
   /**
    * Returns the set of capabilities this socket class implements.
-   * The set of capabilities is defined as an OR-ed mask of 
+   * The set of capabilities is defined as an OR-ed tqmask of 
    * @ref Capabilities bits.
    *
    * The default implementation is guaranteed to always return 0. That
@@ -199,7 +199,7 @@ public:
    * Returns the number of bytes available for reading without blocking.
    */
 #ifdef USE_QT3
-  virtual Q_LONG bytesAvailable() const;
+  virtual TQ_LONG bytesAvailable() const;
 #endif
 #ifdef USE_QT4
   virtual qint64 bytesAvailable() const;
@@ -211,37 +211,37 @@ public:
    * This function is a wrapper against @ref poll. This function will wait
    * for any read events.
    */
-  virtual Q_LONG waitForMore(int msecs, bool *timeout = 0L);
+  virtual TQ_LONG waitForMore(int msecs, bool *timeout = 0L);
 
   /**
    * Reads data from this socket.
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen);
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen);
 
   /**
    * Reads data and the source address from this socket.
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen, KSocketAddress& from);
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
 
   /**
    * Peeks data in the socket.
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen);
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen);
 
   /**
    * Peeks the data in the socket and the source address.
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen, KSocketAddress& from);
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
 
   /**
    * Writes data to the socket.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len);
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len);
 
   /**
    * Writes the given data to the given destination address.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len, const KSocketAddress& to);
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
 
   /**
    * Returns this socket's local address.

@@ -34,7 +34,7 @@
  * and KActionMenu uses it to create actions directly.
  * @since 3.2
  */
-class KIO_EXPORT KBookmarkImporterBase : public QObject
+class KIO_EXPORT KBookmarkImporterBase : public TQObject
 {
     Q_OBJECT
 public:
@@ -44,7 +44,7 @@ public:
     void setFilename(const TQString &filename) { m_fileName = filename; }
 
     virtual void parse() = 0;
-    virtual TQString findDefaultLocation(bool forSaving = false) const = 0;
+    virtual TQString tqfindDefaultLocation(bool forSaving = false) const = 0;
 
     // TODO - make this static?
     void setupSignalForwards(TQObject *src, TQObject *dst);
@@ -90,7 +90,7 @@ class KIO_EXPORT KXBELBookmarkImporterImpl : public KBookmarkImporterBase, prote
 public:
     KXBELBookmarkImporterImpl() {}
     virtual void parse();
-    virtual TQString findDefaultLocation(bool = false) const { return TQString::null; }
+    virtual TQString tqfindDefaultLocation(bool = false) const { return TQString::null; }
 protected:
     virtual void visit(const KBookmark &);
     virtual void visitEnter(const KBookmarkGroup &);

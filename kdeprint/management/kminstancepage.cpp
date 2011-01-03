@@ -121,9 +121,9 @@ void KMInstancePage::setPrinter(KMPrinter *p)
 
 	//iif (!oldText.isEmpty())
 	//{
-		QListBoxItem	*item = m_view->findItem(oldText);
+		QListBoxItem	*item = m_view->tqfindItem(oldText);
 		if (!item)
-			item = m_view->findItem(i18n("(Default)"));
+			item = m_view->tqfindItem(i18n("(Default)"));
 		if (item)
 			m_view->setSelected(item,true);
 	//}
@@ -138,7 +138,7 @@ void KMInstancePage::slotNew()
 			                     i18n("(Default)"),&ok,this);
 	if (ok)
 	{
-		if (name.find(TQRegExp("[/\\s]")) != -1)
+		if (name.tqfind(TQRegExp("[/\\s]")) != -1)
 			KMessageBox::error(this, i18n("Instance name must not contain any spaces or slashes."));
 		else
 		{
@@ -183,7 +183,7 @@ void KMInstancePage::slotCopy()
 				                     i18n("(Default)"),&ok,this);
 		if (ok)
 		{
-			if (name.find(TQRegExp("[/\\s]")) != -1)
+			if (name.tqfind(TQRegExp("[/\\s]")) != -1)
 				KMessageBox::error(this, i18n("Instance name must not contain any spaces or slashes."));
 			else
 			{
@@ -208,9 +208,9 @@ void KMInstancePage::slotSettings()
 	if (!src.isEmpty())
 	{
 		if (src == i18n("(Default)")) src = TQString::null;
-		KMPrinter	*pr = KMFactory::self()->virtualManager()->findInstance(m_printer,src);
+		KMPrinter	*pr = KMFactory::self()->virtualManager()->tqfindInstance(m_printer,src);
 		if ( !pr )
-			KMessageBox::error( this, i18n( "Unable to find instance %1." ).arg( m_view->currentText() ) );
+			KMessageBox::error( this, i18n( "Unable to tqfind instance %1." ).arg( m_view->currentText() ) );
 		else if ( !pr->isSpecial() && !KMFactory::self()->manager()->completePrinterShort( pr ) )
 			KMessageBox::error( this, i18n( "Unable to retrieve printer information. Message from printing system: %1." ).arg( KMFactory::self()->manager()->errorMsg() ) );
 		else
@@ -259,7 +259,7 @@ void KMInstancePage::slotTest()
 	{
 		if (src == i18n("(Default)"))
 			src = TQString::null;
-		KMPrinter	*mpr = KMFactory::self()->virtualManager()->findInstance(m_printer,src);
+		KMPrinter	*mpr = KMFactory::self()->virtualManager()->tqfindInstance(m_printer,src);
 		if (!mpr)
 			KMessageBox::error(this,i18n("Internal error: printer not found."));
 		else if (KMessageBox::warningContinueCancel(this, i18n("You are about to print a test page on %1. Do you want to continue?").arg(mpr->printerName()), TQString::null, i18n("Print Test Page"), "printTestPage") == KMessageBox::Continue)

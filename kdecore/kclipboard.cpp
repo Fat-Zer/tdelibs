@@ -56,7 +56,7 @@ public:
             while ( (format = src->format( i++ )) )
             {
                 byteArray = new TQByteArray();
-                *byteArray = src->encodedData( format ).copy();
+                *byteArray = src->tqencodedData( format ).copy();
                 m_data.append( byteArray );
                 m_formats.append( format );
             }
@@ -72,11 +72,11 @@ public:
             return 0L;
     }
     virtual bool provides( const char *mimeType ) const {
-        return ( m_formats.find( mimeType ) > -1 );
+        return ( m_formats.tqfind( mimeType ) > -1 );
     }
-    virtual TQByteArray encodedData( const char *format ) const
+    virtual TQByteArray tqencodedData( const char *format ) const
     {
-        int index = m_formats.find( format );
+        int index = m_formats.tqfind( format );
         if ( index > -1 )
             return *(m_data.at( index ));
 
@@ -97,7 +97,7 @@ bool KClipboardSynchronizer::s_blocked = false;
 KClipboardSynchronizer * KClipboardSynchronizer::self()
 {
     if ( !s_self )
-        s_self = new KClipboardSynchronizer( kapp, "KDE Clipboard" );
+        s_self = new KClipboardSynchronizer( TQT_TQOBJECT(kapp), "KDE Clipboard" );
 
     return s_self;
 }

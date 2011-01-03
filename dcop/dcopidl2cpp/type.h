@@ -10,7 +10,7 @@ static TQString writeType( TQTextStream& str, const TQDomElement& r )
   if ( r.hasAttribute( "qleft" ) )
     str << r.attribute("qleft") << " ";
   TQString t = r.firstChild().toText().data();
-  t = t.replace( ">>", "> >" );
+  t = t.tqreplace( ">>", "> >" );
   str << t;
   if ( r.hasAttribute( "qright" ) )
     str << r.attribute("qright") << " ";

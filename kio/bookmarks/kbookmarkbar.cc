@@ -192,7 +192,7 @@ void KBookmarkBar::fillBookmarkBar(KBookmarkGroup & parent)
     for (KBookmark bm = parent.first(); !bm.isNull(); bm = parent.next(bm))
     {
         TQString text = bm.text();
-        text.replace( '&', "&&" );
+        text.tqreplace( '&', "&&" );
         if (!bm.isGroup())
         {
             if ( bm.isSeparator() )
@@ -282,7 +282,7 @@ static void removeTempSep(KBookmarkBarPrivate* p)
     }
 }
 
-static KAction* findPluggedAction(TQPtrList<KAction> actions, KToolBar *tb, int id)
+static KAction* tqfindPluggedAction(TQPtrList<KAction> actions, KToolBar *tb, int id)
 {
     TQPtrListIterator<KAction> it( actions );
     for (; (*it); ++it )
@@ -313,7 +313,7 @@ static TQString handleToolbarDragMoveEvent(
     int index = 0;
     KToolBarButton* b;
 
-    b = dynamic_cast<KToolBarButton*>(tb->childAt(pos));
+    b = dynamic_cast<KToolBarButton*>(tb->tqchildAt(pos));
     KAction *a = 0;
     TQString address;
     atFirst = false;
@@ -321,7 +321,7 @@ static TQString handleToolbarDragMoveEvent(
     if (b)
     {
         index = tb->itemIndex(b->id());
-        TQRect r = b->geometry();
+        TQRect r = b->tqgeometry();
         if (pos.x() < ((r.left() + r.right())/2))
         {
             // if in first half of button then
@@ -350,28 +350,28 @@ static TQString handleToolbarDragMoveEvent(
     {
         index = actions.count() - 1;
         b = tb->getButton(tb->idAt(index));
-        // if !b and not past last button, we didn't find button
-        if (pos.x() <= b->geometry().left())
+        // if !b and not past last button, we didn't tqfind button
+        if (pos.x() <= b->tqgeometry().left())
             goto skipact; // TODO - rename
     }
 
     if ( !b )
         return TQString::null; // TODO Make it works for that case
 
-    a = findPluggedAction(actions, tb, b->id());
+    a = tqfindPluggedAction(actions, tb, b->id());
     Q_ASSERT(a);
     address = a->property("address").toString();
     p->m_sepIndex = index + (atFirst ? 0 : 1);
 
 #if 0
     { // ugly workaround to fix the goto scoping problems...
-        KBookmark bk = mgr->findByAddress( address );
+        KBookmark bk = mgr->tqfindByAddress( address );
         if (bk.isGroup()) // TODO - fix this ****!!!, manhatten distance should be used!!!
         {
             kdDebug() << "kbookmarkbar:: popping up " << bk.text() << endl;
             KBookmarkActionMenu *menu = dynamic_cast<KBookmarkActionMenu*>(a);
             Q_ASSERT(menu);
-            menu->popup(tb->mapToGlobal(b->geometry().center()));
+            menu->popup(tb->mapToGlobal(b->tqgeometry().center()));
         }
     }
 #endif
@@ -394,12 +394,12 @@ static KAction* handleToolbarMouseButton(TQPoint pos, TQPtrList<KAction> actions
     Q_ASSERT(tb);
 
     KToolBarButton *b;
-    b = dynamic_cast<KToolBarButton*>(tb->childAt(pos));
+    b = dynamic_cast<KToolBarButton*>(tb->tqchildAt(pos));
     if (!b)
         return 0;
 
     KAction *a = 0;
-    a = findPluggedAction(actions, tb, b->id());
+    a = tqfindPluggedAction(actions, tb, b->id());
     Q_ASSERT(a);
     pt = tb->mapToGlobal(pos);
 
@@ -461,7 +461,7 @@ bool KBookmarkBar::eventFilter( TQObject *o, TQEvent *e )
         if (_a && mev->button() == Qt::RightButton)
         {
             dptr()->m_highlightedAddress = _a->property("address").toString();
-            KBookmark bookmark = m_pManager->findByAddress( dptr()->m_highlightedAddress );
+            KBookmark bookmark = m_pManager->tqfindByAddress( dptr()->m_highlightedAddress );
             RMB::begin_rmb_action(this);
             KPopupMenu *pm = new KPopupMenu;
             rmbSelf(this)->fillContextMenu( pm, dptr()->m_highlightedAddress, 0 );
@@ -471,7 +471,7 @@ bool KBookmarkBar::eventFilter( TQObject *o, TQEvent *e )
             mev->accept();
         }
 
-        return !!_a; // ignore the event if we didn't find the button
+        return !!_a; // ignore the event if we didn't tqfind the button
     }
     else if ( e->type() == TQEvent::DragLeave )
     {
@@ -489,7 +489,7 @@ bool KBookmarkBar::eventFilter( TQObject *o, TQEvent *e )
             kdWarning(7043) << "Sorry, currently you can only drop one address "
                 "onto the bookmark bar!" << endl;
         KBookmark toInsert = list.first();
-        KBookmark bookmark = m_pManager->findByAddress( dptr()->m_dropAddress );
+        KBookmark bookmark = m_pManager->tqfindByAddress( dptr()->m_dropAddress );
         Q_ASSERT(!bookmark.isNull());
         kdDebug(7043) << "inserting "
             << TQString(dptr()->m_atFirst ? "before" : "after")

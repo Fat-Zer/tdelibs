@@ -31,7 +31,7 @@ class KURLComboBox::KURLComboBoxPrivate
 {
 public:
     KURLComboBoxPrivate() {
-	dirpix = SmallIcon(TQString::fromLatin1("folder"));
+	dirpix = SmallIcon(TQString::tqfromLatin1("folder"));
     }
 
     TQPixmap dirpix;
@@ -70,9 +70,9 @@ void KURLComboBox::init( Mode mode )
     defaultList.setAutoDelete( true );
     setInsertionPolicy( NoInsertion );
     setTrapReturnKey( true );
-    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
 
-    opendirPix = SmallIcon(TQString::fromLatin1("folder_open"));
+    opendirPix = SmallIcon(TQString::tqfromLatin1("folder_open"));
 
     connect( this, TQT_SIGNAL( activated( int )), TQT_SLOT( slotActivated( int )));
 }
@@ -152,7 +152,7 @@ void KURLComboBox::setURLs( TQStringList urls, OverLoadResolving remove )
     // kill duplicates
     TQString text;
     while ( it != urls.end() ) {
-        while ( urls.contains( *it ) > 1 ) {
+        while ( urls.tqcontains( *it ) > 1 ) {
             it = urls.remove( it );
             continue;
         }

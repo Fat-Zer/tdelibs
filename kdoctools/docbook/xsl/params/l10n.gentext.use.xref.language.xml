@@ -19,7 +19,7 @@
 <para>If non-zero, the language of the target will be used when
 generating cross reference text. Usually, the <quote>current</quote>
 language is used when generating text (that is, the language of the
-element that contains the cross-reference element). But setting this parameter
+element that tqcontains the cross-reference element). But setting this parameter
 allows the language of the element <emphasis>pointed to</emphasis> to control
 the generated text.</para>
 

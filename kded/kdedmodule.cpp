@@ -69,24 +69,24 @@ void KDEDModule::insert(const TQCString &app, const TQCString &key, KShared *obj
 
    // appKey acts as a placeholder
    KEntryKey appKey(app, 0);
-   d->objMap->replace(appKey, 0);
+   d->objMap->tqreplace(appKey, 0);
 
    KEntryKey indexKey(app, key);
 
    // Prevent deletion in case the same object is inserted again.
    KSharedPtr<KShared> _obj = obj; 
 
-   d->objMap->replace(indexKey, _obj);
+   d->objMap->tqreplace(indexKey, _obj);
    resetIdle();
 }
 
-KShared * KDEDModule::find(const TQCString &app, const TQCString &key)
+KShared * KDEDModule::tqfind(const TQCString &app, const TQCString &key)
 {
    if (!d->objMap)
       return 0;
    KEntryKey indexKey(app, key);
 
-   KDEDObjectMap::Iterator it = d->objMap->find(indexKey);
+   KDEDObjectMap::Iterator it = d->objMap->tqfind(indexKey);
    if (it == d->objMap->end())
       return 0;
 
@@ -111,7 +111,7 @@ void KDEDModule::removeAll(const TQCString &app)
    KEntryKey indexKey(app, 0);
    // Search for placeholder.
 
-   KDEDObjectMap::Iterator it = d->objMap->find(indexKey);
+   KDEDObjectMap::Iterator it = d->objMap->tqfind(indexKey);
    while (it != d->objMap->end())
    {
       KDEDObjectMap::Iterator it2 = it++;

@@ -1,6 +1,6 @@
 include( ../../common.pro )
 
-system( bash kmoc )
+system( bash ktqmoc )
 system( qmake genembed.pro -o Makefile.genembed )
 system( nmake /f Makefile.genembed clean )
 system( nmake /f Makefile.genembed )

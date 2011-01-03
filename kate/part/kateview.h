@@ -56,7 +56,7 @@ class TQGridLayout;
 //
 class KateView : public Kate::View,
                  public KTextEditor::SessionConfigInterface,
-                 public KTextEditor::ViewStatusMsgInterface,
+                 public KTextEditor::ViewtqStatusMsgInterface,
                  public KTextEditor::TextHintInterface,
                  public KTextEditor::SelectionInterface,
                  public KTextEditor::SelectionInterfaceExt,
@@ -270,7 +270,7 @@ class KateView : public Kate::View,
 
     void clear ();
 
-    void repaintText (bool paintOnlyDirty = false);
+    void tqrepaintText (bool paintOnlyDirty = false);
 
     void updateView (bool changed = false);
   //END
@@ -376,14 +376,14 @@ class KateView : public Kate::View,
   public slots:
     int getEol();
     void setEol( int eol );
-    void find();
-    void find( const TQString&, long, bool add=true ); ///< proxy for KateSearch
-    void replace();
-    void replace( const TQString&, const TQString &, long ); ///< proxy for KateSearch
-    /** Highly confusing but KateSearch::findAgain() is backwards too. */
-    void findAgain( bool back );
-    void findAgain()              { findAgain( false );          }
-    void findPrev()               { findAgain( true );           }
+    void tqfind();
+    void tqfind( const TQString&, long, bool add=true ); ///< proxy for KateSearch
+    void tqreplace();
+    void tqreplace( const TQString&, const TQString &, long ); ///< proxy for KateSearch
+    /** Highly confusing but KateSearch::tqfindAgain() is backwards too. */
+    void tqfindAgain( bool back );
+    void tqfindAgain()              { tqfindAgain( false );          }
+    void tqfindPrev()               { tqfindAgain( true );           }
 
     void setFoldingMarkersOn( bool enable ); // Not in Kate::View, but should be
     void setIconBorder( bool enable );
@@ -420,7 +420,7 @@ class KateView : public Kate::View,
   signals:
     void gotFocus( Kate::View* );
     void lostFocus( Kate::View* );
-    void newStatus(); // Not in Kate::View, but should be (Kate app connects to it)
+    void newtqStatus(); // Not in Kate::View, but should be (Kate app connects to it)
 
   //
   // Extras
@@ -443,7 +443,7 @@ class KateView : public Kate::View,
 
   signals:
     void dropEventPass(TQDropEvent*);
-    void viewStatusMsg (const TQString &msg);
+    void viewtqStatusMsg (const TQString &msg);
 
   public:
     bool setCursorPositionInternal( uint line, uint col, uint tabwidth = 1, bool calledExternally = false );
@@ -459,7 +459,7 @@ class KateView : public Kate::View,
     void slotGotFocus();
     void slotLostFocus();
     void slotDropEventPass( TQDropEvent* ev );
-    void slotStatusMsg();
+    void slottqStatusMsg();
     void slotSaveCanceled( const TQString& error );
     void slotExpandToplevel();
     void slotCollapseLocal();

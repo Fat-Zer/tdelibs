@@ -13,7 +13,7 @@ Author:   Rolanf Nagy <R.Nagy@pknc.com>
 Date:     18th May, 2004
 Version:  1.0
 
-This file contains the XML syntax highlighting description for the AVR
+This file tqcontains the XML syntax highlighting description for the AVR
 Assembler, for KATE, the KDE Advanced Editor.  Keywords have been taken
 directly from the AVR Assembler source code.
 

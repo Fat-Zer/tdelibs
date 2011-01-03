@@ -33,8 +33,8 @@
 
 using namespace KNS;
 
-KNewStuffSecure::KNewStuffSecure(const TQString &type,  TQWidget *parentWidget)
- : KNewStuff(type, parentWidget)
+KNewStuffSecure::KNewStuffSecure(const TQString &type,  TQWidget *tqparentWidget)
+ : KNewStuff(type, tqparentWidget)
 {
   m_tempDir = 0L;
   connect(engine(), TQT_SIGNAL(uploadFinished(bool)), TQT_SLOT(slotUploadFinished(bool)));
@@ -80,7 +80,7 @@ bool KNewStuffSecure::install(const TQString &fileName)
   } else
       ok = false;
   if (!ok)
-    KMessageBox::error(parentWidget(), i18n("There was an error with the downloaded resource tarball file. Possible causes are damaged archive or invalid directory structure in the archive."), i18n("Resource Installation Error"));
+    KMessageBox::error(tqparentWidget(), i18n("There was an error with the downloaded resource tarball file. Possible causes are damaged archive or invalid directory structure in the archive."), i18n("Resource Installation Error"));
   return ok;
 }
 
@@ -134,10 +134,10 @@ void KNewStuffSecure::slotValidated(int result)
   if (!valid)
   {
       signatureStr.prepend( "<br>");
-      if (KMessageBox::warningContinueCancel(parentWidget(), i18n("<qt>There is a problem with the resource file you have downloaded. The errors are :<b>%1</b><br>%2<br><br>Installation of the resource is <b>not recommended</b>.<br><br>Do you want to proceed with the installation?</qt>").arg(errorString).arg(signatureStr), i18n("Problematic Resource File")) == KMessageBox::Continue)
+      if (KMessageBox::warningContinueCancel(tqparentWidget(), i18n("<qt>There is a problem with the resource file you have downloaded. The errors are :<b>%1</b><br>%2<br><br>Installation of the resource is <b>not recommended</b>.<br><br>Do you want to proceed with the installation?</qt>").arg(errorString).arg(signatureStr), i18n("Problematic Resource File")) == KMessageBox::Continue)
           valid = true;
   } else
-    KMessageBox::information(parentWidget(), i18n("<qt>%1<br><br>Press OK to install it.</qt>").arg(signatureStr), i18n("Valid Resource"), "Show Valid Signature Information");
+    KMessageBox::information(tqparentWidget(), i18n("<qt>%1<br><br>Press OK to install it.</qt>").arg(signatureStr), i18n("Valid Resource"), "Show Valid Signature Information");
   if (valid)
   {
      installResource();
@@ -145,8 +145,8 @@ void KNewStuffSecure::slotValidated(int result)
   } else
   {
     KConfig *cfg = KGlobal::config();
-    cfg->deleteGroup("KNewStuffStatus");
-    cfg->setGroup("KNewStuffStatus");
+    cfg->deleteGroup("KNewStufftqStatus");
+    cfg->setGroup("KNewStufftqStatus");
     for (TQMap<TQString, TQString>::ConstIterator it = m_installedResources.constBegin(); it != m_installedResources.constEnd(); ++it)
     {
       cfg->writeEntry(it.key(), it.data());
@@ -160,7 +160,7 @@ void KNewStuffSecure::slotValidated(int result)
 void KNewStuffSecure::downloadResource()
 {
   KConfig *cfg = KGlobal::config();
-  m_installedResources = cfg->entryMap("KNewStuffStatus");
+  m_installedResources = cfg->entryMap("KNewStufftqStatus");
   engine()->ignoreInstallResult(true);
   KNewStuff::download();
 }
@@ -187,12 +187,12 @@ void KNewStuffSecure::slotFileSigned(int result)
 {
   if (result == 0)
   {
-    KMessageBox::error(parentWidget(), i18n("The signing failed for unknown reason."));    
+    KMessageBox::error(tqparentWidget(), i18n("The signing failed for unknown reason."));    
   } else
   {
     if (result & Security::BAD_PASSPHRASE)
     {
-      if (KMessageBox::warningContinueCancel(parentWidget(), i18n("There are no keys usable for signing or you did not entered the correct passphrase.\nProceed without signing the resource?")) == KMessageBox::Cancel)
+      if (KMessageBox::warningContinueCancel(tqparentWidget(), i18n("There are no keys usable for signing or you did not entered the correct passphrase.\nProceed without signing the resource?")) == KMessageBox::Cancel)
       {
         disconnect(Security::ref(), TQT_SIGNAL(fileSigned(int)), this, TQT_SLOT(slotFileSigned(int)));
         removeTempDirectory();
@@ -231,7 +231,7 @@ void KNewStuffSecure::removeTempDirectory()
 {
   if (m_tempDir)
   {
-    KIO::NetAccess::del(KURL().fromPathOrURL(m_tempDir->name()), parentWidget());
+    KIO::NetAccess::del(KURL().fromPathOrURL(m_tempDir->name()), tqparentWidget());
     delete m_tempDir;
     m_tempDir = 0L;
   }

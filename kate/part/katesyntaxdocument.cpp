@@ -275,7 +275,7 @@ KateSyntaxContextData* KateSyntaxDocument::getGroupInfo(const TQString& mainGrou
 /**
  * Returns a list with all the keywords inside the list type
  */
-TQStringList& KateSyntaxDocument::finddata(const TQString& mainGroup, const TQString& type, bool clearList)
+TQStringList& KateSyntaxDocument::tqfinddata(const TQString& mainGroup, const TQString& type, bool clearList)
 {
   kdDebug(13010)<<"Create a list of keywords \""<<type<<"\" from \""<<mainGroup<<"\"."<<endl;
   if (clearList)
@@ -472,4 +472,4 @@ void KateSyntaxDocument::setupModeList (bool force)
   config.sync();
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

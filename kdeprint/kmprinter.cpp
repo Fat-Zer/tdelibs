@@ -165,7 +165,7 @@ bool KMPrinter::autoConfigure(KPrinter *printer, TQWidget *parent)
 				fName = ( printer->docName() + "." + ext );
 			else
 			{
-				int p = fName.findRev( '.' );
+				int p = fName.tqfindRev( '.' );
 				if ( p == -1 )
 					fName.append( "." ).append( ext );
 				else
@@ -216,7 +216,7 @@ bool KMPrinter::autoConfigure(KPrinter *printer, TQWidget *parent)
 
 TQString KMPrinter::deviceProtocol() const
 {
-	int p = m_device.find( ':' );
+	int p = m_device.tqfind( ':' );
 	if ( p != -1 )
 		return m_device.left( p );
 	else

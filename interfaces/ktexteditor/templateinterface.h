@@ -43,7 +43,7 @@ class KTEXTEDITOR_EXPORT TemplateInterface //should be named AbstractTemplateInt
     virtual ~TemplateInterface();
 
     /**
-     * Parses @p templateString for macros in the form [$%]{NAME} and finds
+     * Parses @p templateString for macros in the form [$%]{NAME} and tqfinds
      * the value corresponding to NAME if any. The NAME string may contain
      * any non-whitespace character execpt '}'
      * @param initialValues a map with the keys for the macros to expand. 
@@ -101,7 +101,7 @@ class KTEXTEDITOR_EXPORT TemplateInterface //should be named AbstractTemplateInt
      * differing from the macro name is found.
      *
      * If the editor supports some kind of smart indentation, the inserted code
-     * should be layouted by the indenter.
+     * should be tqlayouted by the indenter.
      */
     bool insertTemplateText ( uint line, uint column, const TQString &templateString, const TQMap<TQString,TQString> &initialValues, TQWidget *parentWindow=0);
 

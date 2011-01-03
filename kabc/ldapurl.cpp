@@ -58,14 +58,14 @@ void LDAPUrl::setDn( const TQString &dn)
 
 bool LDAPUrl::hasExtension( const TQString &key ) const
 {
-  return m_extensions.contains( key );
+  return m_extensions.tqcontains( key );
 }
 
 LDAPUrl::Extension LDAPUrl::extension( const TQString &key ) const
 {
   TQMap<TQString, Extension>::const_iterator it;
 
-  it = m_extensions.find( key );
+  it = m_extensions.tqfind( key );
   if ( it != m_extensions.constEnd() )
     return (*it);
   else {
@@ -195,7 +195,7 @@ void LDAPUrl::parseQuery()
       name.remove(0, 1);
     }
     kdDebug(5700) << "LDAPUrl extensions name= " << name << " value: " << value << endl;
-    ext.value = value.replace( "%2", "," );
+    ext.value = value.tqreplace( "%2", "," );
     setExtension( name, ext );
   }
 }

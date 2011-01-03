@@ -76,7 +76,7 @@ close out;
 print header "\n#endif\n";
 close header;
 
-my $result = system("/bin/sh", "-c", "gperf -a -L 'ANSI-C' -P -D -E -C -l -o -t -k '*' -NfindTag -Hhash_tag -Wwordlist_tag -Qspool_Tag htmltags.gperf > htmltags.c");
+my $result = system("/bin/sh", "-c", "gperf -a -L 'ANSI-C' -P -D -E -C -l -o -t -k '*' -NtqfindTag -Hhash_tag -Wwordlist_tag -Qspool_Tag htmltags.gperf > htmltags.c");
 if ($result) {
   unlink "htmltags.c";
   exit $result;

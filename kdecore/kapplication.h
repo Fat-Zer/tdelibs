@@ -160,7 +160,7 @@ public:
    *
    * @param argv command line argument value(s)
    *
-   * @param rAppName application name. Will be used for finding the
+   * @param rAppName application name. Will be used for tqfinding the
    * associated message files and icon files, and as the default
    * registration name for DCOP. This is a mandatory parameter.
    *
@@ -186,7 +186,7 @@ public:
    *
    * @param argv command line argument value(s)
    *
-   * @param rAppName application name. Will be used for finding the
+   * @param rAppName application name. Will be used for tqfinding the
    * associated message files and icon files, and as the default
    * registration name for DCOP. This is a mandatory parameter.
    *
@@ -214,7 +214,7 @@ public:
   /**
    * Returns the current application object.
    *
-   * This is similar to the global TQApplication pointer qApp. It
+   * This is similar to the global TQApplication pointer tqApp. It
    * allows access to the single global KApplication object, since
    * more than one cannot be created in the same application. It
    * saves you the trouble of having to pass the pointer explicitly
@@ -237,7 +237,7 @@ public:
    *
    * @return If true, this application was restored by the session manager.
    *    Note that this may mean the config object returned by
-   * sessionConfig() contains data saved by a session closedown.
+   * sessionConfig() tqcontains data saved by a session closedown.
    * @see sessionConfig()
    */
   bool isRestored() const { return TQApplication::isSessionRestored(); }
@@ -625,10 +625,10 @@ public:
    *
    * @param _name the name of the service
    * @param URL if not empty this URL is passed to the service
-   * @param error On failure, @p error contains a description of the error
+   * @param error On failure, @p error tqcontains a description of the error
    *         that occurred. If the pointer is 0, the argument will be
    *         ignored
-   * @param dcopService On success, @p dcopService contains the DCOP name
+   * @param dcopService On success, @p dcopService tqcontains the DCOP name
    *         under which this service is available. If empty, the service does
    *         not provide DCOP services. If the pointer is 0 the argument
    *         will be ignored
@@ -648,10 +648,10 @@ public:
    *
    * @param _name the name of the service
    * @param URLs if not empty these URLs will be passed to the service
-   * @param error On failure, @p error contains a description of the error
+   * @param error On failure, @p error tqcontains a description of the error
    *         that occurred. If the pointer is 0, the argument will be
    *         ignored
-   * @param dcopService On success, @p dcopService contains the DCOP name
+   * @param dcopService On success, @p dcopService tqcontains the DCOP name
    *         under which this service is available. If empty, the service does
    *         not provide DCOP services. If the pointer is 0 the argument
    *         will be ignored
@@ -671,10 +671,10 @@ public:
    *
    * @param _name the path of the desktop file
    * @param URL if not empty this URL is passed to the service
-   * @param error On failure, @p error contains a description of the error
+   * @param error On failure, @p error tqcontains a description of the error
    *         that occurred. If the pointer is 0, the argument will be
    *         ignored
-   * @param dcopService On success, @p dcopService contains the DCOP name
+   * @param dcopService On success, @p dcopService tqcontains the DCOP name
    *         under which this service is available. If empty, the service does
    *         not provide DCOP services. If the pointer is 0 the argument
    *         will be ignored
@@ -694,10 +694,10 @@ public:
    *
    * @param _name the path of the desktop file
    * @param URLs if not empty these URLs will be passed to the service
-   * @param error On failure, @p error contains a description of the error
+   * @param error On failure, @p error tqcontains a description of the error
    *         that occurred. If the pointer is 0, the argument will be
    *         ignored
-   * @param dcopService On success, @p dcopService contains the DCOP name
+   * @param dcopService On success, @p dcopService tqcontains the DCOP name
    *         under which this service is available. If empty, the service does
    *         not provide DCOP services. If the pointer is 0 the argument
    *         will be ignored
@@ -717,10 +717,10 @@ public:
    *
    * @param _name the desktop name of the service
    * @param URL if not empty this URL is passed to the service
-   * @param error On failure, @p error contains a description of the error
+   * @param error On failure, @p error tqcontains a description of the error
    *         that occurred. If the pointer is 0, the argument will be
    *         ignored
-   * @param dcopService On success, @p dcopService contains the DCOP name
+   * @param dcopService On success, @p dcopService tqcontains the DCOP name
    *         under which this service is available. If empty, the service does
    *         not provide DCOP services. If the pointer is 0 the argument
    *         will be ignored
@@ -740,10 +740,10 @@ public:
    *
    * @param _name the desktop name of the service
    * @param URLs if not empty these URLs will be passed to the service
-   * @param error On failure, @p error contains a description of the error
+   * @param error On failure, @p error tqcontains a description of the error
    *         that occurred. If the pointer is 0, the argument will be
    *         ignored
-   * @param dcopService On success, @p dcopService contains the DCOP name
+   * @param dcopService On success, @p dcopService tqcontains the DCOP name
    *         under which this service is available. If empty, the service does
    *         not provide DCOP services. If the pointer is 0 the argument
    *         will be ignored
@@ -765,7 +765,7 @@ public:
    *
    * @param name Name of the program to start
    * @param args Arguments to pass to the program
-   * @param error On failure, @p error contains a description of the error
+   * @param error On failure, @p error tqcontains a description of the error
    *         that occurred. If the pointer is 0, the argument will be
    *         ignored
    * @param pid On success, the process id of the new service will be written
@@ -788,7 +788,7 @@ public:
    *
    * @param name Name of the program to start
    * @param args Arguments to pass to the program
-   * @param error On failure, @p error contains a description of the error
+   * @param error On failure, @p error tqcontains a description of the error
    *         that occurred. If the pointer is 0, the argument will be
    *         ignored
    * @param pid On success, the process id of the new service will be written
@@ -819,8 +819,8 @@ public:
   KDE_DEPRECATED KStyle* kstyle() const { return 0; }
 
   /**
-   * Builds a caption that contains the application name along with the
-   * userCaption using a standard layout.
+   * Builds a caption that tqcontains the application name along with the
+   * userCaption using a standard tqlayout.
    *
    * To make a compliant caption
    * for your window, simply do: @p setCaption(kapp->makeStdCaption(yourCaption));
@@ -832,7 +832,7 @@ public:
    * compliant if you set this to @p false.
    * @param modified If true, a 'modified' sign will be included in the
    * returned string. This is useful when indicating that a file is
-   * modified, i.e., it contains data that has not been saved.
+   * modified, i.e., it tqcontains data that has not been saved.
    * @return the created caption
    */
   TQString makeStdCaption( const TQString &userCaption,
@@ -915,8 +915,8 @@ public:
   static TQString randomString(int length);
 
   /**
-   * Adds a message type to the KIPC event mask. You can only add "system
-   * messages" to the event mask. These are the messages with id < 32.
+   * Adds a message type to the KIPC event tqmask. You can only add "system
+   * messages" to the event tqmask. These are the messages with id < 32.
    * Messages with id >= 32 are user messages.
    * @param id The message id. See KIPC::Message.
    * @see KIPC
@@ -926,7 +926,7 @@ public:
   void addKipcEventMask(int id);
 
   /**
-   * Removes a message type from the KIPC event mask. This message will
+   * Removes a message type from the KIPC event tqmask. This message will
    * not be handled anymore.
    * @param id The message id.
    * @see KIPC
@@ -977,9 +977,9 @@ public:
   void updateRemoteUserTimestamp( const TQCString& dcopId, unsigned long time = 0 );
   
     /**
-    * Returns the argument to --geometry if any, so the geometry can be set
+    * Returns the argument to --tqgeometry if any, so the tqgeometry can be set
     * wherever necessary
-    * @return the geometry argument, or TQString::null if there is none
+    * @return the tqgeometry argument, or TQString::null if there is none
     */
   TQString geometryArgument() const;
 

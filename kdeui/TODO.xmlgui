@@ -41,7 +41,7 @@ So ui_standards.rc needs to be turned into <MergeAction>s and <MergeGroup>s only
 like separators and tearoffhandle etc.) in a container, in which case it should
 not appear in the GUI. For that, ContainerNode must be improved so that it supports
 having no real GUI container attached to it.
-Big problem here. This means not building a container until we find that it
+Big problem here. This means not building a container until we tqfind that it
 really has an action (and the other way round: deleting a container when
 removing its last action, as we do, but still keeping a ContainerNode around...)
 (A ContainerNode is destroyed when its owner guiclient is removed from the factory,

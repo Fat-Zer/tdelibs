@@ -41,21 +41,21 @@ class TQListViewItem;
 class KGuiItem;
 
 /**
- * @short Easy to use widget with many layouts
+ * @short Easy to use widget with many tqlayouts
  *
- * Provides a number of ready to use layouts (faces). It is used
+ * Provides a number of ready to use tqlayouts (faces). It is used
  * as an internal widget in KDialogBase, but can also used as a
  * widget of its own.
  *
  * This class provides KJanusWidget::TreeList, KJanusWidget::IconList,
- * KJanusWidget::Tabbed, KJanusWidget::Plain and KJanusWidget::Swallow layouts.
+ * KJanusWidget::Tabbed, KJanusWidget::Plain and KJanusWidget::Swallow tqlayouts.
  *
- * For all modes it is important that you specify the TQWidget::minimumSize()
+ * For all modes it is important that you specify the TQWidget::tqminimumSize()
  * on the page, plain widget or the swallowed widget. If you use a QLayout
  * on the page, plain widget or the swallowed widget this will be taken care
  * of automatically. The size is used when the KJanusWidget determines its
  * own minimum size. You get the minimum size by using the
- * minimumSizeHint() or sizeHint() methods.
+ * tqminimumSizeHint() or tqsizeHint() methods.
  *
  * Pages that have been added in TreeList, IconList or Tabbed mode can be
  * removed by simply deleting the page. However, it would be preferable to use
@@ -77,8 +77,8 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
         IconListBox( TQWidget *parent=0, const char *name=0, WFlags f=0 );
 	void updateMinimumHeight();
 	void updateWidth();
-	void invalidateHeight();
-	void invalidateWidth();
+	void tqinvalidateHeight();
+	void tqinvalidateWidth();
 	void setShowAll( bool showAll );
 
       protected:
@@ -98,7 +98,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
       /**
        * The TreeList face provides a list in the left area and pages in the
        * right. The area are separated by a movable splitter. The style is somewhat
-       * similar to the layout in the Control Center. A page is raised by
+       * similar to the tqlayout in the Control Center. A page is raised by
        * selecting the corresponding tree list item.
        */
       TreeList = 0,
@@ -106,7 +106,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
        * page is similar for creating a TreeList. This has the advantage that if
        * your widget contain too many pages it is trivial to convert it into a
        * TreeList. Just change the face in the KJanusWidget constructor to
-       * KJanusWidget::TreeList and you have a tree list layout instead.
+       * KJanusWidget::TreeList and you have a tree list tqlayout instead.
        */
       Tabbed,
       /**
@@ -126,7 +126,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
       /**
        * The IconList face provides an icon list in the left area and pages in the
        * right. For each entry the Icon is on top with the text below. The style
-       * is somewhat similar to the layout of the Eudora configuation dialog box.
+       * is somewhat similar to the tqlayout of the Eudora configuation dialog box.
        * A page is raised by selecting the corresponding icon list item. The
        * preferred icon size is 32x32 pixels.
        */
@@ -186,7 +186,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *
      * @return The minimum size.
      */
-    virtual TQSize minimumSizeHint() const;
+    virtual TQSize tqminimumSizeHint() const;
 
     /**
      * Returns the recommended size for the widget in order to be displayed
@@ -194,7 +194,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *
      * @return The recommended size.
      */
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 
     /**
      * Returns the empty widget that is available in Plain mode.
@@ -206,7 +206,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
     /**
      * Add a new page when the class is used in TreeList, IconList or Tabbed
      * mode. The returned widget is empty and you must add your widgets
-     * as children to this widget. In most cases you must create a layout
+     * as children to this widget. In most cases you must create a tqlayout
      * manager and associate it with this widget as well.
 	 *
 	 * Deleting the returned frame will cause the listitem or tab to be
@@ -246,7 +246,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * Add a new page when the class is used in TreeList, IconList or Tabbed
      * mode. The returned widget is empty and you must add your widgets
      * as children to this widget. The returned widget is a QVBox
-     * so it contains a TQVBoxLayout layout that lines up the child widgets
+     * so it tqcontains a TQVBoxLayout tqlayout that lines up the child widgets
      * are vertically.
      *
 	 * Deleting the returned frame will cause the listitem or tab to be
@@ -285,7 +285,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * Add a new page when the class is used in TreeList, IconList or Tabbed
      * mode. The returned widget is empty and you must add your widgets
      * as children to this widget. The returned widget is a QHBox
-     * so it contains a TQHBoxLayout layout that lines up the child widgets
+     * so it tqcontains a TQHBoxLayout tqlayout that lines up the child widgets
      * are horizontally.
      *
      * Deleting the returned frame will cause the listitem or tab to be
@@ -325,7 +325,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      * Add a new page when the class is used in either TreeList or Tabbed
      * mode. The returned widget is empty and you must add your widgets
      * as children to this widget. The returned widget is a QGrid
-     * so it contains a TQGridLayout layout that places up the child widgets
+     * so it tqcontains a TQGridLayout tqlayout that places up the child widgets
      * in a grid.
      *
      * Deleting the returned frame will cause the listitem or tab to be

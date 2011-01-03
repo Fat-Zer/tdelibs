@@ -52,7 +52,7 @@ extern int kjsyyparse();
 using namespace KJS;
 
 namespace KJS {
-  /* work around some strict alignment requirements
+  /* work around some strict tqalignment requirements
      for double variables on some architectures (e.g. PA-RISC) */
   typedef union { unsigned char b[8]; double d; } kjs_double_t;
 
@@ -320,7 +320,7 @@ LabelStack &LabelStack::operator=(const LabelStack &other)
 
 bool LabelStack::push(const Identifier &id)
 {
-  if (id.isEmpty() || contains(id))
+  if (id.isEmpty() || tqcontains(id))
     return false;
 
   StackElem *newtos = new StackElem;
@@ -330,7 +330,7 @@ bool LabelStack::push(const Identifier &id)
   return true;
 }
 
-bool LabelStack::contains(const Identifier &id) const
+bool LabelStack::tqcontains(const Identifier &id) const
 {
   if (id.isEmpty())
     return true;

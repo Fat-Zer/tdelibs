@@ -44,7 +44,7 @@ PluginComboBox::PluginComboBox(TQWidget *parent, const char *name)
         TQWhatsThis::add(m_combo, whatsThisCurrentPrintsystem);
 	QLabel	*m_label = new TQLabel(i18n("Print s&ystem currently used:"), this);
         TQWhatsThis::add(m_label, whatsThisCurrentPrintsystem);
-	m_label->setAlignment(AlignVCenter|AlignRight);
+	m_label->tqsetAlignment(AlignVCenter|AlignRight);
 	m_label->setBuddy(m_combo);
 	m_plugininfo = new TQLabel("Plugin information", this);
 	QGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 5);
@@ -81,7 +81,7 @@ void PluginComboBox::reload()
 {
 	QString	syst = KMFactory::self()->printSystem();
 	int	index(-1);
-	if ((index=m_pluginlist.findIndex(syst)) != -1)
+	if ((index=m_pluginlist.tqfindIndex(syst)) != -1)
 		m_combo->setCurrentItem(index);
 	configChanged();
 }

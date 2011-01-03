@@ -62,9 +62,9 @@ DCOPReply DCOPRef::callInternal( const TQCString& fun, const TQCString& args, co
 	return reply;
     }
     TQCString sig = fun;
-    if ( fun.find('(') == -1 ) {
+    if ( fun.tqfind('(') == -1 ) {
 	sig += args;
-	if( args.find( "<unknown" ) != -1 )
+	if( args.tqfind( "<unknown" ) != -1 )
 	    qWarning("DCOPRef: unknown type error "
 		     "<\"%s\",\"%s\">::call(\"%s\",%s",
 		     STR(m_app), STR(m_obj), STR(fun), args.data()+1 );
@@ -87,9 +87,9 @@ bool DCOPRef::sendInternal( const TQCString& fun, const TQCString& args, const T
     }
     Q_UNUSED( data );
     TQCString sig = fun;
-    if ( fun.find('(') == -1 ) {
+    if ( fun.tqfind('(') == -1 ) {
 	sig += args;
-	if( args.find( "<unknown" ) != -1 )
+	if( args.tqfind( "<unknown" ) != -1 )
 	    qWarning("DCOPRef: unknown type error "
 		     "<\"%s\",\"%s\">::send(\"%s\",%s",
 		     STR(m_app), STR(m_obj), STR(fun), args.data()+1 );

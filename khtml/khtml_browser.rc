@@ -11,11 +11,11 @@
  <Menu name="edit"><text>&amp;Edit</text>
   <Action name="selectAll" />
   <Separator />
-  <Action name="find" />
-  <Action name="findNext" />
-  <Action name="findPrevious" />
-  <Action name="findAheadText" />
-  <Action name="findAheadLink" />
+  <Action name="tqfind" />
+  <Action name="tqfindNext" />
+  <Action name="tqfindPrevious" />
+  <Action name="tqfindAheadText" />
+  <Action name="tqfindAheadLink" />
  </Menu>
  <Menu name="view"><text>&amp;View</text>
   <Action name="incFontSizes" />
@@ -35,7 +35,7 @@
  </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
- <Action name="find" />
+ <Action name="tqfind" />
  <Separator />
  <Action name="incFontSizes" />
  <Action name="decFontSizes" />

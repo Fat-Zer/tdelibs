@@ -44,7 +44,7 @@ namespace Evolution {
         DBIterator begin();
         DBIterator end();
 
-        bool find( const TQString& key, TQString& value );
+        bool tqfind( const TQString& key, TQString& value );
         bool add( const TQString& key,  const TQString& val );
         bool remove( const TQString& key );
     private:

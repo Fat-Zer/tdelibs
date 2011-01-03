@@ -225,7 +225,7 @@ NodeImpl *HTMLCollectionImpl::item ( unsigned long index ) const
     HTMLTableSectionElementImpl*  section;
 
     NodeImpl* found = 0;
-    if (table->findRowSection(index, section, sectionIndex)) {
+    if (table->tqfindRowSection(index, section, sectionIndex)) {
         HTMLCollectionImpl rows(section, TSECTION_ROWS);
         found = rows.item(sectionIndex);
     }
@@ -290,7 +290,7 @@ TQValueList<NodeImpl*> HTMLCollectionImpl::namedItems( const DOMString &name ) c
     //remember stuff about elements we were asked for.
     m_cache->updateNodeListInfo(m_refNode->getDocument());
     CollectionCache* cache = static_cast<CollectionCache*>(m_cache);
-    if (TQValueList<NodeImpl*>* info = cache->nameCache.find(key)) {
+    if (TQValueList<NodeImpl*>* info = cache->nameCache.tqfind(key)) {
         return *info;
     }
     else {
@@ -366,7 +366,7 @@ NodeImpl *HTMLFormCollectionImpl::nextNamedItem( const DOMString &name ) const
 {
     TQPtrList<HTMLGenericFormElementImpl>& l = static_cast<HTMLFormElementImpl*>( m_refNode )->formElements;
 
-    //Go through the list, trying to find the appropriate named form element.
+    //Go through the list, trying to tqfind the appropriate named form element.
     for ( ; currentNamePos < l.count(); ++currentNamePos )
     {
         HTMLGenericFormElementImpl* el = l.at(currentNamePos);

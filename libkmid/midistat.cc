@@ -1,6 +1,6 @@
 /**************************************************************************
 
-    midistat.cc	- class MidiStatus, change it internally and then send it. 
+    midistat.cc	- class MiditqStatus, change it internally and then send it. 
     This file is part of LibKMid 0.9.5
     Copyright (C) 1997,98,99,2000  Antonio Larrosa Jimenez
     LibKMid's homepage : http://www.arrakis.es/~rlarrosa/libkmid.html            
@@ -33,7 +33,7 @@
 
 extern int MT32toGM[128];
 
-MidiStatus::MidiStatus()
+MiditqStatus::MiditqStatus()
 {
   int i;
   tempo=1000000;
@@ -51,29 +51,29 @@ MidiStatus::MidiStatus()
   }
 }
 
-MidiStatus::~MidiStatus()
+MiditqStatus::~MiditqStatus()
 {
 }
 
 //    void noteOn	( uchar chn, uchar note, uchar vel );
 //    void noteOff	( uchar chn, uchar note, uchar vel );
 
-void MidiStatus::chnPatchChange	( uchar chn, uchar patch )
+void MiditqStatus::chnPatchChange	( uchar chn, uchar patch )
 {
   chn_patch[chn]=patch;
 }
 
-void MidiStatus::chnPressure	( uchar chn, uchar vel )
+void MiditqStatus::chnPressure	( uchar chn, uchar vel )
 {
   chn_pressure[chn]=vel;
 }
 
-void MidiStatus::chnPitchBender	( uchar chn, uchar lsb,  uchar msb )
+void MiditqStatus::chnPitchBender	( uchar chn, uchar lsb,  uchar msb )
 {
   chn_bender[chn]=((int)msb<<8|lsb);
 }
 
-void MidiStatus::chnController	( uchar chn, uchar ctl , uchar v )
+void MiditqStatus::chnController	( uchar chn, uchar ctl , uchar v )
 {
   if (ctl==7) chn_lastisvolumeev[chn]=1;
   else if (ctl==11) chn_lastisvolumeev[chn]=0;
@@ -81,12 +81,12 @@ void MidiStatus::chnController	( uchar chn, uchar ctl , uchar v )
   chn_controller[chn][ctl]=v;
 }
 
-void MidiStatus::tmrSetTempo(int v)
+void MiditqStatus::tmrSetTempo(int v)
 {
   tempo=v;
 }
 
-void MidiStatus::sendData(DeviceManager *midi,int gm)
+void MiditqStatus::sendData(DeviceManager *midi,int gm)
 {
   for (int chn=0;chn<16;chn++)
   {

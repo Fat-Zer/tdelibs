@@ -95,7 +95,7 @@ void InlineBox::operator delete(void* ptr, size_t sz)
 {
     assert(inInlineBoxDetach);
 
-    // Stash size where detach can find it.
+    // Stash size where detach can tqfind it.
     *(size_t *)ptr = sz;
 }
 
@@ -119,7 +119,7 @@ void InlineBox::paint(RenderObject::PaintInfo& i, int tx, int ty)
     if ( i.phase == PaintActionOutline && !needsOutlinePhaseRepaint(object(), i, tx, ty) )
         return;
 
-    // Paint all phases of replaced elements atomically, as though the replaced element established its
+    // Paint all phases of tqreplaced elements atomically, as though the tqreplaced element established its
     // own stacking context.  (See Appendix E.2, section 6.4 on inline block/table elements in the CSS2.1
     // specification.)
     bool paintSelectionOnly = i.phase == PaintActionSelection;
@@ -139,7 +139,7 @@ void InlineBox::paint(RenderObject::PaintInfo& i, int tx, int ty)
 
 bool InlineBox::nodeAtPoint(RenderObject::NodeInfo& i, int x, int y, int tx, int ty)
 {
-    // Hit test all phases of replaced elements atomically, as though the replaced element established its
+    // Hit test all phases of tqreplaced elements atomically, as though the tqreplaced element established its
     // own stacking context.  (See Appendix E.2, section 6.4 on inline block/table elements in the CSS2.1
     // specification.)
     bool inside = false;
@@ -180,7 +180,7 @@ void InlineFlowBox::removeFromLine(InlineBox *child)
 
 bool InlineBox::canAccommodateEllipsisBox(bool ltr, int blockEdge, int ellipsisWidth)
 {
-    // Non-replaced elements can always accommodate an ellipsis.
+    // Non-tqreplaced elements can always accommodate an ellipsis.
     if (!m_object || !m_object->isReplaced())
         return true;
 
@@ -636,7 +636,7 @@ bool InlineFlowBox::nodeAtPoint(RenderObject::NodeInfo& i, int x, int y, int tx,
 
     // Now check ourselves.
     TQRect rect(tx + m_x, ty + m_y, m_width, m_height);
-    if (object()->style()->visibility() == VISIBLE && rect.contains(x, y)) {
+    if (object()->style()->visibility() == VISIBLE && rect.tqcontains(x, y)) {
         object()->setInnerNode(i);
         return true;
     }
@@ -770,7 +770,7 @@ static bool shouldDrawDecoration(RenderObject* obj)
             break;
         }
         else if (curr->isText() && !curr->isBR() && (curr->style()->preserveWS() ||
-                 !curr->element() || !curr->element()->containsOnlyWhitespace())) {
+                 !curr->element() || !curr->element()->tqcontainsOnlyWhitespace())) {
             shouldDraw = true;
             break;
         }
@@ -902,7 +902,7 @@ bool EllipsisBox::nodeAtPoint(RenderObject::NodeInfo& info, int _x, int _y, int 
     }
 
     TQRect rect(_tx + m_x, _ty + m_y, m_width, m_height);
-    if (object()->style()->visibility() == VISIBLE && rect.contains(_x, _y)) {
+    if (object()->style()->visibility() == VISIBLE && rect.tqcontains(_x, _y)) {
         object()->setInnerNode(info);
         return true;
     }
@@ -938,7 +938,7 @@ bool RootInlineBox::canAccommodateEllipsis(bool ltr, int blockEdge, int lineBoxE
     if (width() - delta < ellipsisWidth)
         return false;
 
-    // Next iterate over all the line boxes on the line.  If we find a replaced element that intersects
+    // Next iterate over all the line boxes on the line.  If we tqfind a tqreplaced element that intersects
     // then we refuse to accommodate the ellipsis.  Otherwise we're ok.
     return InlineFlowBox::canAccommodateEllipsisBox(ltr, blockEdge, ellipsisWidth);
 }
@@ -956,7 +956,7 @@ void RootInlineBox::placeEllipsis(const DOMString& ellipsisStr,  bool ltr, int b
         return;
     }
 
-    // Now attempt to find the nearest glyph horizontally and place just to the right (or left in RTL)
+    // Now attempt to tqfind the nearest glyph horizontally and place just to the right (or left in RTL)
     // of that glyph.  Mark all of the objects that intersect the ellipsis box as not painting (as being
     // truncated).
     bool foundBox = false;

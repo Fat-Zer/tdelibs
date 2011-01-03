@@ -27,7 +27,7 @@
 
 class KMJob;
 
-class LpcHelper : public QObject
+class LpcHelper : public TQObject
 {
 public:
 	LpcHelper(TQObject *parent = 0, const char *name = 0);
@@ -46,8 +46,8 @@ public:
 
 protected:
 	bool changeState(const TQString&, const TQString&, TQString&);
-	void parseStatusLPR(TQTextStream&);
-	void parseStatusLPRng(TQTextStream&);
+	void parsetqStatusLPR(TQTextStream&);
+	void parsetqStatusLPRng(TQTextStream&);
 	int parseStateChangeLPR(const TQString&, const TQString&);
 	int parseStateChangeLPRng(const TQString&, const TQString&);
 

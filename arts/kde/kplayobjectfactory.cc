@@ -155,7 +155,7 @@ KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, cons
 	}
 
 	// decide if it's a local file. mpeglib provides cdda reading and decoding, so we prefer that over kio_audiocd
-	if ( url.isLocalFile() || !d->allowStreaming || (url.protocol() == "audiocd" && mimetype == "application/x-cda" && mimeTypes().contains( "application/x-cda" ) ) )
+	if ( url.isLocalFile() || !d->allowStreaming || (url.protocol() == "audiocd" && mimetype == "application/x-cda" && mimeTypes().tqcontains( "application/x-cda" ) ) )
 	{
 		// we rely on the delivered mimetype if it's a local file
 		d->playObj = new KDE::PlayObject( d->server.createPlayObjectForURL( string( TQFile::encodeName( url.path() ) ), string( mimetype.latin1() ), createBUS ), false );

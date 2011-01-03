@@ -27,7 +27,7 @@
 #include "kprotocolmanager.h"
 
 // Most of this class is implemented in kdecore/kprotocolinfo_kdecore.cpp
-// This file only contains a few static class-functions that depend on
+// This file only tqcontains a few static class-functions that depend on
 // KProtocolManager
 
 KProtocolInfo* KProtocolInfo::findProtocol(const KURL &url)

@@ -310,7 +310,7 @@
 <!ELEMENT DIV - - (%flow;)*            -- generic language/style container -->
 <!ATTLIST DIV
   %attrs;                              -- %coreattrs, %i18n, %events --
-  %align;                              -- align, text alignment --
+  %align;                              -- align, text tqalignment --
   %reserved;                           -- reserved for possible future use --
   >
 
@@ -336,7 +336,7 @@
   rel         %LinkTypes;    #IMPLIED  -- forward link types --
   rev         %LinkTypes;    #IMPLIED  -- reverse link types --
   accesskey   %Character;    #IMPLIED  -- accessibility key character --
-  shape       %Shape;        rect      -- for use with client-side image maps --
+  tqshape       %Shape;        rect      -- for use with client-side image maps --
   coords      %Coords;       #IMPLIED  -- for use with client-side image maps --
   tabindex    NUMBER         #IMPLIED  -- position in tabbing order --
   onfocus     %Script;       #IMPLIED  -- the element got the focus --
@@ -357,7 +357,7 @@
 <!ELEMENT AREA - O EMPTY               -- client-side image map area -->
 <!ATTLIST AREA
   %attrs;                              -- %coreattrs, %i18n, %events --
-  shape       %Shape;        rect      -- controls interpretation of coords --
+  tqshape       %Shape;        rect      -- controls interpretation of coords --
   coords      %Coords;       #IMPLIED  -- comma separated list of lengths --
   href        %URI;          #IMPLIED  -- URI for linked resource --
   target      %FrameTarget;  #IMPLIED  -- render in this frame --
@@ -425,7 +425,7 @@
   width       %Length;       #IMPLIED  -- override width --
   usemap      %URI;          #IMPLIED  -- use client-side image map --
   ismap       (ismap)        #IMPLIED  -- use server-side image map --
-  align       %IAlign;       #IMPLIED  -- vertical or horizontal alignment --
+  align       %IAlign;       #IMPLIED  -- vertical or horizontal tqalignment --
   border      %Length;       #IMPLIED  -- link border width --
   hspace      %Pixels;       #IMPLIED  -- horizontal gutter --
   vspace      %Pixels;       #IMPLIED  -- vertical gutter --
@@ -458,7 +458,7 @@
   usemap      %URI;          #IMPLIED  -- use client-side image map --
   name        CDATA          #IMPLIED  -- submit as part of form --
   tabindex    NUMBER         #IMPLIED  -- position in tabbing order --
-  align       %IAlign;       #IMPLIED  -- vertical or horizontal alignment --
+  align       %IAlign;       #IMPLIED  -- vertical or horizontal tqalignment --
   border      %Length;       #IMPLIED  -- link border width --
   hspace      %Pixels;       #IMPLIED  -- horizontal gutter --
   vspace      %Pixels;       #IMPLIED  -- vertical gutter --
@@ -488,10 +488,10 @@
   code        CDATA          #IMPLIED  -- applet class file --
   object      CDATA          #IMPLIED  -- serialized applet file --
   alt         %Text;         #IMPLIED  -- short description --
-  name        CDATA          #IMPLIED  -- allows applets to find each other --
+  name        CDATA          #IMPLIED  -- allows applets to tqfind each other --
   width       %Length;       #REQUIRED -- initial width --
   height      %Length;       #REQUIRED -- initial height --
-  align       %IAlign;       #IMPLIED  -- vertical or horizontal alignment --
+  align       %IAlign;       #IMPLIED  -- vertical or horizontal tqalignment --
   hspace      %Pixels;       #IMPLIED  -- horizontal gutter --
   vspace      %Pixels;       #IMPLIED  -- vertical gutter --
   >
@@ -513,7 +513,7 @@
 <!ELEMENT P - O (%inline;)*            -- paragraph -->
 <!ATTLIST P
   %attrs;                              -- %coreattrs, %i18n, %events --
-  %align;                              -- align, text alignment --
+  %align;                              -- align, text tqalignment --
   >
 
 <!--=================== Headings =========================================-->
@@ -526,7 +526,7 @@
 <!ELEMENT (%heading;)  - - (%inline;)* -- heading -->
 <!ATTLIST (%heading;)
   %attrs;                              -- %coreattrs, %i18n, %events --
-  %align;                              -- align, text alignment --
+  %align;                              -- align, text tqalignment --
   >
 
 <!--=================== Preformatted Text ================================-->
@@ -687,7 +687,7 @@
   onselect    %Script;       #IMPLIED  -- some text was selected --
   onchange    %Script;       #IMPLIED  -- the element value was changed --
   accept      %ContentTypes; #IMPLIED  -- list of MIME types for file upload --
-  align       %IAlign;       #IMPLIED  -- vertical or horizontal alignment --
+  align       %IAlign;       #IMPLIED  -- vertical or horizontal tqalignment --
   %reserved;                           -- reserved for possible future use --
   >
 
@@ -804,14 +804,14 @@
 <!-- horizontal placement of table relative to document -->
 <!ENTITY % TAlign "(left|center|right)">
 
-<!-- horizontal alignment attributes for cell contents -->
+<!-- horizontal tqalignment attributes for cell contents -->
 <!ENTITY % cellhalign
   "align      (left|center|right|justify|char) #IMPLIED
-   char       %Character;    #IMPLIED  -- alignment char, e.g. char=':' --
-   charoff    %Length;       #IMPLIED  -- offset for alignment char --"
+   char       %Character;    #IMPLIED  -- tqalignment char, e.g. char=':' --
+   charoff    %Length;       #IMPLIED  -- offset for tqalignment char --"
   >
 
-<!-- vertical alignment attributes for cell contents -->
+<!-- vertical tqalignment attributes for cell contents -->
 <!ENTITY % cellvalign
   "valign     (top|middle|bottom|baseline) #IMPLIED"
   >
@@ -857,12 +857,12 @@ several semantically related columns together.
   %attrs;                              -- %coreattrs, %i18n, %events --
   span        NUMBER         1         -- default number of columns in group --
   width       %MultiLength;  #IMPLIED  -- default width for enclosed COLs --
-  %cellhalign;                         -- horizontal alignment in cells --
-  %cellvalign;                         -- vertical alignment in cells --
+  %cellhalign;                         -- horizontal tqalignment in cells --
+  %cellvalign;                         -- vertical tqalignment in cells --
   >
 
 <!--
- COL elements define the alignment properties for cells in
+ COL elements define the tqalignment properties for cells in
  one or more columns.
 
  The WIDTH attribute specifies the width of the columns, e.g.
@@ -877,8 +877,8 @@ several semantically related columns together.
   %attrs;                              -- %coreattrs, %i18n, %events --
   span        NUMBER         1         -- COL attributes affect N columns --
   width       %MultiLength;  #IMPLIED  -- column width specification --
-  %cellhalign;                         -- horizontal alignment in cells --
-  %cellvalign;                         -- vertical alignment in cells --
+  %cellhalign;                         -- horizontal tqalignment in cells --
+  %cellvalign;                         -- vertical tqalignment in cells --
   >
 
 <!--
@@ -895,14 +895,14 @@ several semantically related columns together.
 -->
 <!ATTLIST (THEAD|TBODY|TFOOT)          -- table section --
   %attrs;                              -- %coreattrs, %i18n, %events --
-  %cellhalign;                         -- horizontal alignment in cells --
-  %cellvalign;                         -- vertical alignment in cells --
+  %cellhalign;                         -- horizontal tqalignment in cells --
+  %cellvalign;                         -- vertical tqalignment in cells --
   >
 
 <!ATTLIST TR                           -- table row --
   %attrs;                              -- %coreattrs, %i18n, %events --
-  %cellhalign;                         -- horizontal alignment in cells --
-  %cellvalign;                         -- vertical alignment in cells --
+  %cellhalign;                         -- horizontal tqalignment in cells --
+  %cellvalign;                         -- vertical tqalignment in cells --
   bgcolor     %Color;        #IMPLIED  -- background color for row --
   >
 
@@ -919,8 +919,8 @@ several semantically related columns together.
   scope       %Scope;        #IMPLIED  -- scope covered by header cells --
   rowspan     NUMBER         1         -- number of rows spanned by cell --
   colspan     NUMBER         1         -- number of cols spanned by cell --
-  %cellhalign;                         -- horizontal alignment in cells --
-  %cellvalign;                         -- vertical alignment in cells --
+  %cellhalign;                         -- horizontal tqalignment in cells --
+  %cellvalign;                         -- vertical tqalignment in cells --
   nowrap      (nowrap)       #IMPLIED  -- suppress word wrap --
   bgcolor     %Color;        #IMPLIED  -- cell background color --
   width       %Pixels;       #IMPLIED  -- width for cell --
@@ -973,7 +973,7 @@ several semantically related columns together.
   marginwidth %Pixels;       #IMPLIED  -- margin widths in pixels --
   marginheight %Pixels;      #IMPLIED  -- margin height in pixels --
   scrolling   (yes|no|auto)  auto      -- scrollbar or none --
-  align       %IAlign;       #IMPLIED  -- vertical or horizontal alignment --
+  align       %IAlign;       #IMPLIED  -- vertical or horizontal tqalignment --
   height      %Length;       #IMPLIED  -- frame height --
   width       %Length;       #IMPLIED  -- frame width --
   >

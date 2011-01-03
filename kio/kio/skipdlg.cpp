@@ -67,41 +67,41 @@ SkipDlg::SkipDlg(TQWidget *parent, bool _multi, const TQString& _error_text, boo
     connect(b2, TQT_SIGNAL(clicked()), this, TQT_SLOT(b2Pressed()));
   }
 
-  TQVBoxLayout *vlayout = new TQVBoxLayout( this, 10, 0 );
-  // vlayout->addStrut( 360 );	makes dlg at least that wide
+  TQVBoxLayout *vtqlayout = new TQVBoxLayout( this, 10, 0 );
+  // vtqlayout->addStrut( 360 );	makes dlg at least that wide
 
   TQLabel * lb = new TQLabel( _error_text, this );
-  lb->setFixedHeight( lb->sizeHint().height() );
-  lb->setMinimumWidth( lb->sizeHint().width() );
-  vlayout->addWidget( lb );
+  lb->setFixedHeight( lb->tqsizeHint().height() );
+  lb->setMinimumWidth( lb->tqsizeHint().width() );
+  vtqlayout->addWidget( lb );
 
-  vlayout->addSpacing( 10 );
+  vtqlayout->addSpacing( 10 );
 
-  TQHBoxLayout* layout = new TQHBoxLayout();
-  vlayout->addLayout( layout );
+  TQHBoxLayout* tqlayout = new TQHBoxLayout();
+  vtqlayout->addLayout( tqlayout );
   if ( b0 )
   {
     b0->setDefault( true );
-    b0->setFixedSize( b0->sizeHint() );
-    layout->addWidget( b0 );
-    layout->addSpacing( 5 );
+    b0->setFixedSize( b0->tqsizeHint() );
+    tqlayout->addWidget( b0 );
+    tqlayout->addSpacing( 5 );
   }
   if ( b1 )
   {
-    b1->setFixedSize( b1->sizeHint() );
-    layout->addWidget( b1 );
-    layout->addSpacing( 5 );
+    b1->setFixedSize( b1->tqsizeHint() );
+    tqlayout->addWidget( b1 );
+    tqlayout->addSpacing( 5 );
   }
   if ( b2 )
   {
-    b2->setFixedSize( b2->sizeHint() );
-    layout->addWidget( b2 );
-    layout->addSpacing( 5 );
+    b2->setFixedSize( b2->tqsizeHint() );
+    tqlayout->addWidget( b2 );
+    tqlayout->addSpacing( 5 );
   }
 
-  vlayout->addStretch( 10 );
-  vlayout->activate();
-  resize( sizeHint() );
+  vtqlayout->addStretch( 10 );
+  vtqlayout->activate();
+  resize( tqsizeHint() );
 }
 
 SkipDlg::~SkipDlg()

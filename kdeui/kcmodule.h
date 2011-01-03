@@ -49,7 +49,7 @@ class KInstance;
  * the module author.
  *
  * To write a config module, you have to create a library
- * that contains at one factory function like this:
+ * that tqcontains at one factory function like this:
  *
  * \code
  * #include <kgenericfactory.h>
@@ -312,7 +312,7 @@ protected:
    * Sets the RootOnly message.
    *
    * This message will be shown at the top of the module of the
-   * corresponding desktop file contains the line X-KDE-RootOnly=true.
+   * corresponding desktop file tqcontains the line X-KDE-RootOnly=true.
    * If no message is set, a default one will be used.
    *
    * @see KCModule::rootOnlyMsg

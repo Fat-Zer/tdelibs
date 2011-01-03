@@ -83,7 +83,7 @@ void KSeparator::drawFrame(TQPainter *p)
 {
    QPoint	p1, p2;
    QRect	r     = frameRect();
-   const TQColorGroup & g = colorGroup();
+   const TQColorGroup & g = tqcolorGroup();
 
    if ( frameStyle() & HLine ) {
       p1 = TQPoint( r.x(), r.height()/2 );
@@ -100,7 +100,7 @@ void KSeparator::drawFrame(TQPainter *p)
 }
 
 
-TQSize KSeparator::sizeHint() const
+TQSize KSeparator::tqsizeHint() const
 {
    if ( frameStyle() & VLine )
       return TQSize(2, 0);

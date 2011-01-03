@@ -135,7 +135,7 @@ KStatusBar * StatusBarExtension::statusBar() const
 {
   if ( !m_statusBar )  {
     TQWidget* w = static_cast<KParts::ReadOnlyPart*>(parent())->widget();
-    KMainWindow* mw = dynamic_cast<KMainWindow *>( w->topLevelWidget() );
+    KMainWindow* mw = dynamic_cast<KMainWindow *>( w->tqtopLevelWidget() );
     if ( mw )
       m_statusBar = mw->statusBar();
   }

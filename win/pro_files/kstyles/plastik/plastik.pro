@@ -2,7 +2,7 @@ include( ../common.pro )
 
 TARGET = plastik$$KDEBUG
 
-system( bash kmoc )
+system( bash ktqmoc )
 
 SOURCES = \
 plastik.cpp \

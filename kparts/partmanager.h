@@ -47,7 +47,7 @@ class PartManagerPrivate;
  * Parts know about the part manager to add nested parts to it.
  * See also KParts::Part::manager() and KParts::Part::setManager().
  */
-class KPARTS_EXPORT PartManager : public QObject
+class KPARTS_EXPORT PartManager : public TQObject
 {
   Q_OBJECT
   Q_ENUMS( SelectionPolicy )
@@ -165,7 +165,7 @@ public:
    * @p setActive is true.
    * This is an optimised version of removePart + addPart
    */
-  virtual void replacePart( Part * oldPart, Part * newPart, bool setActive = true );
+  virtual void tqreplacePart( Part * oldPart, Part * newPart, bool setActive = true );
 
   /**
    * Sets the active part.
@@ -274,8 +274,8 @@ protected slots:
    */
   void slotManagedTopLevelWidgetDestroyed();
 private:
-  Part * findPartFromWidget( TQWidget * widget, const TQPoint &pos );
-  Part * findPartFromWidget( TQWidget * widget );
+  Part * tqfindPartFromWidget( TQWidget * widget, const TQPoint &pos );
+  Part * tqfindPartFromWidget( TQWidget * widget );
 
 protected:
   virtual void virtual_hook( int id, void* data );

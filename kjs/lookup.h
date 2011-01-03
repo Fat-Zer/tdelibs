@@ -104,8 +104,8 @@ namespace KJS {
     /**
      * Find an entry in the table, and return its value (i.e. the value field of HashEntry)
      */
-    static int find(const struct HashTable *table, const Identifier &s);
-    static int find(const struct HashTable *table,
+    static int tqfind(const struct HashTable *table, const Identifier &s);
+    static int tqfind(const struct HashTable *table,
 		    const UChar *c, unsigned int len);
 
     /**

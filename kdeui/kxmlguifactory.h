@@ -52,14 +52,14 @@ class BuildHelper;
  * and merging the GUI from an unlimited number of clients.
  *
  * Each client provides XML through a TQDomDocument and actions through a
- * KActionCollection . The XML document contains the rules for how to merge the
+ * KActionCollection . The XML document tqcontains the rules for how to merge the
  * GUI.
  *
  * KXMLGUIFactory processes the DOM tree provided by a client and plugs in the client's actions,
  * according to the XML and the merging rules of previously inserted clients. Container widgets
  * are built via a KXMLGUIBuilder , which has to be provided with the KXMLGUIFactory constructor.
  */
-class KDEUI_EXPORT KXMLGUIFactory : public QObject
+class KDEUI_EXPORT KXMLGUIFactory : public TQObject
 {
   friend class KXMLGUI::BuildHelper;
   Q_OBJECT
@@ -103,7 +103,7 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
    * Find or create the element for a given action, by name.
    * Used when saving custom action properties
    */
-  static TQDomElement findActionByName( TQDomElement& elem, const TQString& sName, bool create );
+  static TQDomElement tqfindActionByName( TQDomElement& elem, const TQString& sName, bool create );
 
   /**
    * Creates the GUI described by the TQDomDocument of the client,
@@ -201,9 +201,9 @@ class KDEUI_EXPORT KXMLGUIFactory : public QObject
 
  private:
 
-  TQWidget *findRecursive( KXMLGUI::ContainerNode *node, bool tag );
+  TQWidget *tqfindRecursive( KXMLGUI::ContainerNode *node, bool tag );
 
-  TQPtrList<TQWidget> findRecursive( KXMLGUI::ContainerNode *node, const TQString &tagName );
+  TQPtrList<TQWidget> tqfindRecursive( KXMLGUI::ContainerNode *node, const TQString &tagName );
 
   void applyActionProperties( const TQDomElement &element );
   void configureAction( KAction *action, const TQDomNamedNodeMap &attributes );

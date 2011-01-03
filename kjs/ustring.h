@@ -79,7 +79,7 @@ namespace KJS {
     /**
      * @return the 16 bit Unicode value of the character
      */
-    unsigned short unicode() const { return uc; }
+    unsigned short tqunicode() const { return uc; }
   public:
     /**
      * @return The character converted to lower case.
@@ -132,7 +132,7 @@ namespace KJS {
     /**
      * @return Unicode value.
      */
-    unsigned short unicode() const { return ref().uc; }
+    unsigned short tqunicode() const { return ref().uc; }
     /**
      * @return Lower byte.
      */
@@ -158,7 +158,7 @@ namespace KJS {
     int offset;
   };
 
-  inline UChar::UChar(const UCharReference &c) : uc(c.unicode()) { }
+  inline UChar::UChar(const UCharReference &c) : uc(c.tqunicode()) { }
 
   /**
    * @short 8 bit char based string class
@@ -410,15 +410,15 @@ namespace KJS {
      * @return Position of first occurrence of f starting at position pos.
      * -1 if the search was not successful.
      */
-    int find(const UString &f, int pos = 0) const;
-    int find(UChar, int pos = 0) const;
+    int tqfind(const UString &f, int pos = 0) const;
+    int tqfind(UChar, int pos = 0) const;
     /**
      * @return Position of first occurrence of f searching backwards from
      * position pos.
      * -1 if the search was not successful.
      */
-    int rfind(const UString &f, int pos) const;
-    int rfind(UChar, int pos) const;
+    int rtqfind(const UString &f, int pos) const;
+    int rtqfind(UChar, int pos) const;
     /**
      * @return The sub string starting at position pos and length len.
      */

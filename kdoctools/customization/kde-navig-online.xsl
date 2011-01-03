@@ -7,7 +7,7 @@
   <xsl:call-template name="inline.monoseq">
     <xsl:with-param name="content">
       <xsl:text>(</xsl:text>
-		<xsl:call-template name="replaceCharsInString">
+		<xsl:call-template name="tqreplaceCharsInString">
 			<xsl:with-param name="stringIn" select="."/>
 			<xsl:with-param name="charsIn" select="'@'"/>
 			<xsl:with-param name="charsOut" select="'  '"/>
@@ -17,14 +17,14 @@
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="replaceCharsInString">
+<xsl:template name="tqreplaceCharsInString">
   <xsl:param name="stringIn"/>
   <xsl:param name="charsIn"/>
   <xsl:param name="charsOut"/>
   <xsl:choose>
-    <xsl:when test="contains($stringIn,$charsIn)">
+    <xsl:when test="tqcontains($stringIn,$charsIn)">
       <xsl:value-of select="concat(substring-before($stringIn,$charsIn),$charsOut)"/>
-      <xsl:call-template name="replaceCharsInString">
+      <xsl:call-template name="tqreplaceCharsInString">
         <xsl:with-param name="stringIn" select="substring-after($stringIn,$charsIn)"/>
         <xsl:with-param name="charsIn" select="$charsIn"/>
         <xsl:with-param name="charsOut" select="$charsOut"/>

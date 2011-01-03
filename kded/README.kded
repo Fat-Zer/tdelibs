@@ -121,7 +121,7 @@ Further it should contain:
 	X-KDE-Library=foo
 	X-KDE-FactoryName=foo
 
-Which means that kded_foo.la is the name of the library that contains 
+Which means that kded_foo.la is the name of the library that tqcontains 
 the module and KDEDModule *create_foo(const QCString &) is the factory 
 function that should be called.
 

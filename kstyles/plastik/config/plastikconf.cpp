@@ -49,7 +49,7 @@ extern "C"
 PlastikStyleConfig::PlastikStyleConfig(TQWidget* parent): TQWidget(parent)
 {
 	//Should have no margins here, the dialog provides them
-	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
+	TQVBoxLayout* tqlayout = new TQVBoxLayout(this, 0, 0);
 	KGlobal::locale()->insertCatalogue("kstyle_plastik_config");
 
 // 	scrollBarLines = new TQCheckBox(i18n("Scrollbar handle lines"), this);
@@ -62,33 +62,33 @@ PlastikStyleConfig::PlastikStyleConfig(TQWidget* parent): TQWidget(parent)
 
     customFocusHighlightColor = new TQCheckBox(i18n("Custom text input highlight color:"), this);
     TQHBox *hbox1 = new TQHBox(this);
-    hbox1->layout()->addItem(new TQSpacerItem(20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum) );
+    hbox1->tqlayout()->addItem(new TQSpacerItem(20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum) );
     focusHighlightColor = new KColorButton(hbox1);
 
     customOverHighlightColor = new TQCheckBox(i18n("Custom mouseover highlight color:"), this);
     TQHBox *hbox2 = new TQHBox(this);
-    hbox2->layout()->addItem(new TQSpacerItem(20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum) );
+    hbox2->tqlayout()->addItem(new TQSpacerItem(20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum) );
     overHighlightColor = new KColorButton(hbox2);
 
     customCheckMarkColor = new TQCheckBox(i18n("Custom checkmark color:"), this);
     TQHBox *hbox3 = new TQHBox(this);
-    hbox3->layout()->addItem(new TQSpacerItem(20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum) );
+    hbox3->tqlayout()->addItem(new TQSpacerItem(20, 0, TQSizePolicy::Fixed, TQSizePolicy::Minimum) );
     checkMarkColor = new KColorButton(hbox3);
 
-// 	layout->add(scrollBarLines);
-	layout->add(animateProgressBar);
-	layout->add(drawToolBarSeparator);
-	layout->add(drawToolBarItemSeparator);
-// 	layout->add(drawFocusRect);
-	layout->add(drawTriangularExpander);
-	layout->add(inputFocusHighlight);
-    layout->add(customFocusHighlightColor);
-	layout->add(hbox1);
-    layout->add(customOverHighlightColor);
-    layout->add(hbox2);
-	layout->add(customCheckMarkColor);
-	layout->add(hbox3);
-	layout->addStretch(1);
+// 	tqlayout->add(scrollBarLines);
+	tqlayout->add(animateProgressBar);
+	tqlayout->add(drawToolBarSeparator);
+	tqlayout->add(drawToolBarItemSeparator);
+// 	tqlayout->add(drawFocusRect);
+	tqlayout->add(drawTriangularExpander);
+	tqlayout->add(inputFocusHighlight);
+    tqlayout->add(customFocusHighlightColor);
+	tqlayout->add(hbox1);
+    tqlayout->add(customOverHighlightColor);
+    tqlayout->add(hbox2);
+	tqlayout->add(customCheckMarkColor);
+	tqlayout->add(hbox3);
+	tqlayout->addStretch(1);
 
 	TQSettings s;
 // 	origScrollBarLines = s.readBoolEntry("/plastikstyle/Settings/scrollBarLines", false);

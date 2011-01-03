@@ -78,7 +78,7 @@ DOMString khtml::parseURL(const DOMString &url)
 
     int nl = 0;
     for(int k = o; k < o+l; k++)
-        if(i->s[k].unicode() > '\r')
+        if(i->s[k].tqunicode() > '\r')
             j->s[nl++] = i->s[k];
 
     j->l = nl;

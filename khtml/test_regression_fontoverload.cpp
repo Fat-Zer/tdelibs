@@ -98,7 +98,7 @@ QFakeFontEngine::QFakeFontEngine( XFontStruct *fs, const char *name, int size )
     : QFontEngineXLFD( fs,  name,  0)
 {
     pixS = size;
-    ahem = TQString::fromLatin1(name).contains("ahem");
+    ahem = TQString::tqfromLatin1(name).tqcontains("ahem");
 }
 
 QFakeFontEngine::~QFakeFontEngine()
@@ -152,7 +152,7 @@ int QFakeFontEngine::leading() const
     // the original uses double and creates quite random results depending
     // on the compiler flags
     int l = ( _size * 15 + 50) / 100;
-    // only valid on i386 without -O2 assert(l == int(qRound(_size * 0.15)));
+    // only valid on i386 without -O2 assert(l == int(tqRound(_size * 0.15)));
     return (l > 0) ? l : 1;
 }
 
@@ -207,7 +207,7 @@ static TQString helv_pickxlfd( int pixelsize, bool italic, bool bold )
 }
 
 KDE_EXPORT QFontEngine *
-TQFontDatabase::findFont( TQFont::Script script, const QFontPrivate *fp,
+TQFontDatabase::tqfindFont( TQFont::Script script, const QFontPrivate *fp,
 			 const QFontDef &request, int )
 {
     TQString xlfd;
@@ -361,7 +361,7 @@ void KApplication::dcopFailure( const TQString & )
 
 #include <kparts/historyprovider.h>
 
-bool KParts::HistoryProvider::contains( const TQString& t ) const
+bool KParts::HistoryProvider::tqcontains( const TQString& t ) const
 {
     return ( t == "http://www.kde.org/" || t == "http://www.google.com/");
 }

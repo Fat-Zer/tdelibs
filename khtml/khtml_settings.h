@@ -65,11 +65,11 @@ public:
     };
 
     /**
-     * This enum specifies the policy for window.status and .defaultStatus
+     * This enum specifies the policy for window.status and .defaulttqStatus
      */
-    enum KJSWindowStatusPolicy {
-    	KJSWindowStatusAllow=0,
-    	KJSWindowStatusIgnore
+    enum KJSWindowtqStatusPolicy {
+    	KJSWindowtqStatusAllow=0,
+    	KJSWindowtqStatusIgnore
     };
 
     /**
@@ -182,7 +182,7 @@ public:
     KJSWindowOpenPolicy windowOpenPolicy( const TQString& hostname = TQString::null ) const;
     KJSWindowMovePolicy windowMovePolicy( const TQString& hostname = TQString::null ) const;
     KJSWindowResizePolicy windowResizePolicy( const TQString& hostname = TQString::null ) const;
-    KJSWindowStatusPolicy windowStatusPolicy( const TQString& hostname = TQString::null ) const;
+    KJSWindowtqStatusPolicy windowtqStatusPolicy( const TQString& hostname = TQString::null ) const;
     KJSWindowFocusPolicy windowFocusPolicy( const TQString& hostname = TQString::null ) const;
 
     // helpers for parsing domain-specific configuration, used in KControl module as well

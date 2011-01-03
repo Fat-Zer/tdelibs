@@ -7,7 +7,7 @@
   
   Author: Diggory Hardy <diggory.hardy@gmail.com>
   
-  This contains highlighting for Ddoc, the D language embedded documentation comments. Implemented
+  This tqcontains highlighting for Ddoc, the D language embedded documentation comments. Implemented
   for d.xml version 1.46.
   
   Macros are highlighted but the macro name and macro contents/parameters are not highlighted

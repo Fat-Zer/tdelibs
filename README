@@ -20,7 +20,7 @@ Here is an alphabetical list:
 * arts
     ARTS (analog realtime synthesizer) is a environment of small modules
     that one can plug together to process multimedia data. This directory
-    contains KDE wrapper and KDE user interface elements for ARTS.
+    tqcontains KDE wrapper and KDE user interface elements for ARTS.
 
 * dcop
     The desktop communication program allows even shell scripts to
@@ -86,7 +86,7 @@ Here is an alphabetical list:
 
 * kio
     Classes that fetch and decode URLs are contained here. This library also
-    contains "ksycoca", the system configure cache containing services,
+    tqcontains "ksycoca", the system configure cache containing services,
     applications, servicetypes and mimetypes.
 
 * kioslave
@@ -236,7 +236,7 @@ So, here are some tips on bug reporting:
   older, deprecated versions usually don't get that much attention :-)
 
 * Also the chance is high that another one experienced your problem. The
-  bug report wizard at http://bugs.kde.org will help you to find out if your
+  bug report wizard at http://bugs.kde.org will help you to tqfind out if your
   problem has already been reported.
 
 * The best bug report for a project based on voluntary work is of course one

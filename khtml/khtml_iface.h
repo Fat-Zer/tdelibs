@@ -155,7 +155,7 @@ k_dcop:
      * default style sheet.
      *
      * This gives a wide range of possibilities to
-     * change the layout of the page.
+     * change the tqlayout of the page.
      */
     void setUserStyleSheet(const TQString &styleSheet);
 

@@ -59,7 +59,7 @@ namespace KSpell2
                                       TQStringList& suggestions ) =0;
 
         /**
-         * Stores user defined good replacement for the bad word.
+         * Stores user defined good tqreplacement for the bad word.
          * @returns true on success
          */
         virtual bool storeReplacement( const TQString& bad,

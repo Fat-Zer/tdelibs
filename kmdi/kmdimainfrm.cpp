@@ -136,8 +136,8 @@ public:
 };
 
 //============ constructor ============//
-KMdiMainFrm::KMdiMainFrm( TQWidget* parentWidget, const char* name, KMdi::MdiMode mdiMode, WFlags flags )
-		: KParts::DockMainWindow( parentWidget, name, flags )
+KMdiMainFrm::KMdiMainFrm( TQWidget* tqparentWidget, const char* name, KMdi::MdiMode mdiMode, WFlags flags )
+		: KParts::DockMainWindow( tqparentWidget, name, flags )
 		, m_mdiMode( KMdi::UndefinedMode )
 		, m_pMdi( 0L )
 		, m_pTaskBar( 0L )
@@ -294,7 +294,7 @@ void KMdiMainFrm::setStandardMDIMenuEnabled( bool showModeMenu )
 //============ ~KMdiMainFrm ============//
 KMdiMainFrm::~KMdiMainFrm()
 {
-	//save the children first to a list, as removing invalidates our iterator
+	//save the children first to a list, as removing tqinvalidates our iterator
 	TQValueList<KMdiChildView*> children;
 	for ( KMdiChildView * w = m_pDocumentViews->first();w;w = m_pDocumentViews->next() )
 		children.append( w );
@@ -303,7 +303,7 @@ KMdiMainFrm::~KMdiMainFrm()
 	TQValueListIterator<KMdiChildView*> childIt;
 	for ( childIt = children.begin(); childIt != children.end(); ++childIt )
 	{
-		closeWindow( *childIt, false ); // without re-layout taskbar!
+		closeWindow( *childIt, false ); // without re-tqlayout taskbar!
 	}
 
 	emit lastChildViewClosed();
@@ -391,7 +391,7 @@ void KMdiMainFrm::slot_toggleTaskBar()
 
 void KMdiMainFrm::resizeEvent( TQResizeEvent *e )
 {
-	if ( ( m_mdiMode == KMdi::ToplevelMode ) && !parentWidget() )
+	if ( ( m_mdiMode == KMdi::ToplevelMode ) && !tqparentWidget() )
 	{
 		if ( e->oldSize().height() != e->size().height() )
 			return ;
@@ -406,7 +406,7 @@ void KMdiMainFrm::resizeEvent( TQResizeEvent *e )
 
 void KMdiMainFrm::setMinimumSize( int minw, int minh )
 {
-	if ( ( m_mdiMode == KMdi::ToplevelMode ) && !parentWidget() )
+	if ( ( m_mdiMode == KMdi::ToplevelMode ) && !tqparentWidget() )
 		return ;
 	DockMainWindow::setMinimumSize( minw, minh );
 }
@@ -419,7 +419,7 @@ KMdiChildView* KMdiMainFrm::createWrapper( TQWidget *view, const TQString& name,
 
 	KMdiChildView* pMDICover = new KMdiChildView( name /*caption*/, 0L /*parent*/,
 	                                              name.latin1() );
-	TQBoxLayout* pLayout = new TQHBoxLayout( pMDICover, 0, -1, "layout" );
+	TQBoxLayout* pLayout = new TQHBoxLayout( pMDICover, 0, -1, "tqlayout" );
 	view->reparent( pMDICover, TQPoint( 0, 0 ) );
 	pLayout->addWidget( view );
 	//  pMDICover->setName(name);
@@ -553,7 +553,7 @@ KMdiToolViewAccessor *KMdiMainFrm::createToolWindow()
 
 void KMdiMainFrm::deleteToolWindow( TQWidget* pWnd )
 {
-	if ( m_pToolViews->contains( pWnd ) )
+	if ( m_pToolViews->tqcontains( pWnd ) )
 		deleteToolWindow( ( *m_pToolViews ) [ pWnd ] );
 }
 
@@ -582,7 +582,7 @@ KMdiToolViewAccessor *KMdiMainFrm::addToolWindow( TQWidget* pWnd, KDockWidget::D
 		pWnd = pDW;
 	}
 
-	TQRect r = pWnd->geometry();
+	TQRect r = pWnd->tqgeometry();
 
 	KMdiToolViewAccessor *mtva = new KMdiToolViewAccessor( this, pWnd, tabToolTip, ( tabCaption == 0 ) ? pWnd->caption() : tabCaption );
 	m_pToolViews->insert( tvta, mtva );
@@ -610,7 +610,7 @@ void KMdiMainFrm::attachWindow( KMdiChildView *pWnd, bool bShow, bool bAutomatic
 	TQRect frameGeo = pWnd->frameGeometry();
 	TQPoint topLeftScreen = pWnd->mapToGlobal( TQPoint( 0, 0 ) );
 	TQPoint topLeftMdiChildArea = m_pMdi->mapFromGlobal( topLeftScreen );
-	TQRect childAreaGeo = m_pMdi->geometry();
+	TQRect childAreaGeo = m_pMdi->tqgeometry();
 	if ( topLeftMdiChildArea.x() < 0 || topLeftMdiChildArea.y() < 0 ||
 	     ( topLeftMdiChildArea.x() + frameGeo.width() > childAreaGeo.width() ) ||
 	     ( topLeftMdiChildArea.y() + frameGeo.height() > childAreaGeo.height() ) )
@@ -627,7 +627,7 @@ void KMdiMainFrm::attachWindow( KMdiChildView *pWnd, bool bShow, bool bAutomatic
 	lpC->setClient( pWnd, bAutomaticResize );
 	lpC->setFocus();
 	pWnd->youAreAttached( lpC );
-	if ( ( m_mdiMode == KMdi::ToplevelMode ) && !parentWidget() )
+	if ( ( m_mdiMode == KMdi::ToplevelMode ) && !tqparentWidget() )
 	{
 		setMinimumHeight( m_oldMainFrmMinHeight );
 		setMaximumHeight( m_oldMainFrmMaxHeight );
@@ -639,7 +639,7 @@ void KMdiMainFrm::attachWindow( KMdiChildView *pWnd, bool bShow, bool bAutomatic
 	m_pMdi->manageChild( lpC, false, bCascade );
 	if ( m_pMdi->topChild() && m_pMdi->topChild() ->isMaximized() )
 	{
-		TQRect r = lpC->geometry();
+		TQRect r = lpC->tqgeometry();
 		lpC->setGeometry( -lpC->m_pClient->x(), -lpC->m_pClient->y(),
 		                  m_pMdi->width() + KMDI_CHILDFRM_DOUBLE_BORDER,
 		                  m_pMdi->height() + lpC->captionHeight() + KMDI_CHILDFRM_SEPARATOR + KMDI_CHILDFRM_DOUBLE_BORDER );
@@ -701,7 +701,7 @@ void KMdiMainFrm::detachWindow( KMdiChildView *pWnd, bool bShow )
 #ifdef Q_WS_X11
 		if ( mdiMode() == KMdi::ToplevelMode )
 		{
-			XSetTransientForHint( qt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
+			XSetTransientForHint( qt_xdisplay(), pWnd->winId(), tqtopLevelWidget() ->winId() );
 		}
 #endif
 
@@ -711,7 +711,7 @@ void KMdiMainFrm::detachWindow( KMdiChildView *pWnd, bool bShow )
 #ifdef Q_WS_X11
 	if ( mdiMode() == KMdi::ToplevelMode )
 	{
-		XSetTransientForHint( qt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
+		XSetTransientForHint( qt_xdisplay(), pWnd->winId(), tqtopLevelWidget() ->winId() );
 	}
 #endif
 
@@ -772,12 +772,12 @@ void KMdiMainFrm::removeWindowFromMdi( KMdiChildView *pWnd )
 			m_pDockbaseOfTabPage = m_pDockbaseAreaOfDocumentViews;
 			m_pClose->hide();
 		}
-		KDockWidget* pDockW = ( KDockWidget* ) pWnd->parentWidget();
+		KDockWidget* pDockW = ( KDockWidget* ) pWnd->tqparentWidget();
 		pWnd->reparent( 0L, TQPoint( 0, 0 ) );
 		pDockW->setWidget( 0L );
 		if ( pDockW == m_pDockbaseOfTabPage )
 		{
-			TQTabWidget * pTab = ( TQTabWidget* ) pDockW->parentWidget() ->parentWidget();
+			TQTabWidget * pTab = ( TQTabWidget* ) pDockW->tqparentWidget() ->tqparentWidget();
 			int cnt = pTab->count();
 			m_pDockbaseOfTabPage = ( KDockWidget* ) pTab->page( cnt - 2 );
 			if ( pDockW == m_pDockbaseOfTabPage )
@@ -825,7 +825,7 @@ void KMdiMainFrm::removeWindowFromMdi( KMdiChildView *pWnd )
 }
 
 //============== closeWindow ==============//
-void KMdiMainFrm::closeWindow( KMdiChildView *pWnd, bool layoutTaskBar )
+void KMdiMainFrm::closeWindow( KMdiChildView *pWnd, bool tqlayoutTaskBar )
 {
 	if ( !pWnd )
 		return ;
@@ -836,7 +836,7 @@ void KMdiMainFrm::closeWindow( KMdiChildView *pWnd, bool layoutTaskBar )
 
 	if ( m_pTaskBar )
 	{
-		m_pTaskBar->removeWinButton( pWnd, layoutTaskBar );
+		m_pTaskBar->removeWinButton( pWnd, tqlayoutTaskBar );
 	}
 
 	if ( ( m_mdiMode == KMdi::TabPageMode ) || ( m_mdiMode == KMdi::IDEAlMode ) )
@@ -874,12 +874,12 @@ void KMdiMainFrm::closeWindow( KMdiChildView *pWnd, bool layoutTaskBar )
 			m_pClose->hide();
 		}
 #if 0
-		KDockWidget* pDockW = ( KDockWidget* ) pWnd->parentWidget();
+		KDockWidget* pDockW = ( KDockWidget* ) pWnd->tqparentWidget();
 		pWnd->reparent( 0L, TQPoint( 0, 0 ) );
 		pDockW->setWidget( 0L );
 		if ( pDockW == m_pDockbaseOfTabPage )
 		{
-			TQTabWidget * pTab = ( TQTabWidget* ) pDockW->parentWidget() ->parentWidget();
+			TQTabWidget * pTab = ( TQTabWidget* ) pDockW->tqparentWidget() ->tqparentWidget();
 			int cnt = pTab->count();
 			m_pDockbaseOfTabPage = ( KDockWidget* ) pTab->page( cnt - 2 );
 			if ( pDockW == m_pDockbaseOfTabPage )
@@ -936,8 +936,8 @@ void KMdiMainFrm::closeWindow( KMdiChildView *pWnd, bool layoutTaskBar )
 	}
 }
 
-//================== findWindow =================//
-KMdiChildView* KMdiMainFrm::findWindow( const TQString& caption )
+//================== tqfindWindow =================//
+KMdiChildView* KMdiMainFrm::tqfindWindow( const TQString& caption )
 {
 	TQPtrListIterator<KMdiChildView> it( *m_pDocumentViews );
 	for ( ; ( *it ); ++it )
@@ -959,13 +959,13 @@ bool KMdiMainFrm::windowExists( KMdiChildView *pWnd, ExistsAs as )
 {
 	if ( ( as == ToolView ) || ( as == AnyView ) )
 	{
-		if ( m_pToolViews->contains( pWnd ) )
+		if ( m_pToolViews->tqcontains( pWnd ) )
 			return true;
 		if ( as == ToolView )
 			return false;
 	}
 	
-	if ( m_pDocumentViews->findRef( pWnd ) != -1  )
+	if ( m_pDocumentViews->tqfindRef( pWnd ) != -1  )
 		return true;
 
 	return false;
@@ -1234,7 +1234,7 @@ bool KMdiMainFrm::eventFilter( TQObject * /*obj*/, TQEvent *e )
  */
 void KMdiMainFrm::closeAllViews()
 {
-	//save the children first to a list, as removing invalidates our iterator
+	//save the children first to a list, as removing tqinvalidates our iterator
 	TQValueList<KMdiChildView*> children;
 	for ( KMdiChildView * w = m_pDocumentViews->first();w;w = m_pDocumentViews->next() )
 	{
@@ -1269,8 +1269,8 @@ void KMdiMainFrm::closeActiveView()
 		m_pCurrentWindow->close();
 }
 
-/** find the root dockwidgets and store their geometry */
-void KMdiMainFrm::findRootDockWidgets( TQPtrList<KDockWidget>* rootDockWidgetList, TQValueList<TQRect>* positionList )
+/** tqfind the root dockwidgets and store their tqgeometry */
+void KMdiMainFrm::tqfindRootDockWidgets( TQPtrList<KDockWidget>* rootDockWidgetList, TQValueList<TQRect>* positionList )
 {
 	//nothing is valid
 	if ( !rootDockWidgetList && !positionList )
@@ -1293,7 +1293,7 @@ void KMdiMainFrm::findRootDockWidgets( TQPtrList<KDockWidget>* rootDockWidgetLis
 		KDockWidget* undockCandidate = 0L; /* pUndockCandidate */
 		TQWidget* pW = static_cast<TQWidget*>( ( *it ) );
 		
-		// find the oldest ancestor of the current dockwidget that can be undocked
+		// tqfind the oldest ancestor of the current dockwidget that can be undocked
 		while ( !pW->isTopLevel() )
 		{
 			if ( ::qt_cast<KDockWidget*>( pW ) ||  pW->inherits( "KDockWidget_Compat::KDockWidget" ) )
@@ -1302,7 +1302,7 @@ void KMdiMainFrm::findRootDockWidgets( TQPtrList<KDockWidget>* rootDockWidgetLis
 				if ( undockCandidate->enableDocking() != KDockWidget::DockNone )
 					rootDockWindow = undockCandidate;
 			}
-			pW = pW->parentWidget();
+			pW = pW->tqparentWidget();
 		}
 		
 		if ( rootDockWindow )
@@ -1353,7 +1353,7 @@ void KMdiMainFrm::switchToToplevelMode()
 	const int frameBorderWidth = 7;  // @todo: Can we / do we need to ask the window manager?
 	setUndockPositioningOffset( TQPoint( 0, ( m_pTaskBar ? m_pTaskBar->height() : 0 ) + frameBorderWidth ) );
 
-	// 1.) select the dockwidgets to be undocked and store their geometry
+	// 1.) select the dockwidgets to be undocked and store their tqgeometry
 	TQPtrList<KDockWidget> rootDockWidgetList;
 	TQValueList<TQRect> positionList;
 
@@ -1368,7 +1368,7 @@ void KMdiMainFrm::switchToToplevelMode()
 		break;
 	case KMdi::IDEAlMode:
 		finishIDEAlMode();
-		findRootDockWidgets( &rootDockWidgetList, &positionList );
+		tqfindRootDockWidgets( &rootDockWidgetList, &positionList );
 		break;
 	default:
 		break; //do nothing
@@ -1395,7 +1395,7 @@ void KMdiMainFrm::switchToToplevelMode()
 		setMainDockWidget( m_pDockbaseAreaOfDocumentViews );
 	}
 	//	TQApplication::sendPostedEvents(); //why do we need to empty the event queue?
-	if ( !parentWidget() )
+	if ( !tqparentWidget() )
 	{
 		//if we don't have a parent widget ( which i expect we wouldn't )
 		//make sure we take into account the size of the docks provided by
@@ -1466,8 +1466,8 @@ void KMdiMainFrm::switchToChildframeMode()
 	if ( m_mdiMode == KMdi::TabPageMode )
 	{
 		kdDebug(760) << k_funcinfo << "finishing tab page mode" << endl;
-		// select the dockwidgets to be undocked and store their geometry
-		findRootDockWidgets( &rootDockWidgetList, &positionList );
+		// select the dockwidgets to be undocked and store their tqgeometry
+		tqfindRootDockWidgets( &rootDockWidgetList, &positionList );
 		kdDebug(760) << k_funcinfo << "Found " << rootDockWidgetList.count() << " widgets to undock" << endl;
 		
 		// undock all these found oldest ancestors (being KDockWidgets)
@@ -1486,8 +1486,8 @@ void KMdiMainFrm::switchToChildframeMode()
 		kdDebug(760) << k_funcinfo << "finishing ideal mode" << endl;
 		finishIDEAlMode( false );
 
-		// select the dockwidgets to be undocked and store their geometry
-		findRootDockWidgets( &rootDockWidgetList, &positionList );
+		// select the dockwidgets to be undocked and store their tqgeometry
+		tqfindRootDockWidgets( &rootDockWidgetList, &positionList );
 		kdDebug(760) << k_funcinfo << "Found " << rootDockWidgetList.count() << " widgets to undock" << endl;
 		
 		// undock all these found oldest ancestors (being KDockWidgets)
@@ -1556,7 +1556,7 @@ void KMdiMainFrm::switchToChildframeMode()
 		if ( !pView->isToolView() )
 			pView->show();
 	}
-	if ( ( oldMdiMode == KMdi::ToplevelMode ) && !parentWidget() )
+	if ( ( oldMdiMode == KMdi::ToplevelMode ) && !tqparentWidget() )
 	{
 		setMinimumHeight( m_oldMainFrmMinHeight );
 		setMaximumHeight( m_oldMainFrmMaxHeight );
@@ -1659,10 +1659,10 @@ void KMdiMainFrm::finishTabPageMode()
 			if ( pView->isToolView() )
 				continue;
 			kdDebug(760) << "KMdiMainFrm::finishTabPageMode: in loop" << endl;
-			TQSize mins = pView->minimumSize();
-			TQSize maxs = pView->maximumSize();
+			TQSize mins = pView->tqminimumSize();
+			TQSize maxs = pView->tqmaximumSize();
 			TQSize sz = pView->size();
-			TQWidget* pParent = pView->parentWidget();
+			TQWidget* pParent = pView->tqparentWidget();
 			TQPoint p( pParent->mapToGlobal( pParent->pos() ) - pParent->pos() + m_undockPositioningOffset );
 			m_documentTabWidget->removePage( pView );
 			pView->reparent( 0, 0, p );
@@ -1688,7 +1688,7 @@ void KMdiMainFrm::finishTabPageMode()
 void KMdiMainFrm::setupTabbedDocumentViewSpace()
 {
 	// resize to childframe mode size of the mainwindow if we were in toplevel mode
-	if ( ( m_mdiMode == KMdi::ToplevelMode ) && !parentWidget() )
+	if ( ( m_mdiMode == KMdi::ToplevelMode ) && !tqparentWidget() )
 	{
 		setMinimumHeight( m_oldMainFrmMinHeight );
 		setMaximumHeight( m_oldMainFrmMaxHeight );
@@ -1881,7 +1881,7 @@ void KMdiMainFrm::dockToolViewsIntoContainers( TQPtrList<KDockWidget>& widgetsTo
 	}
 }
 
-void KMdiMainFrm::findToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDockWidget::DockPosition dprtmw )
+void KMdiMainFrm::tqfindToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDockWidget::DockPosition dprtmw )
 {
 	KDockWidget* mainDock = getMainDockWidget();
 	if ( mainDock->parentDockTabGroup() )
@@ -1896,7 +1896,7 @@ void KMdiMainFrm::findToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDock
 		return;
 	}
 	
-	KDockWidget* widget = mainDock->findNearestDockWidget( dprtmw );
+	KDockWidget* widget = mainDock->tqfindNearestDockWidget( dprtmw );
 	if ( widget && widget->parentDockTabGroup() )
 	{
 		widget = static_cast<KDockWidget*>( widget->parentDockTabGroup() ->parent() );
@@ -1933,18 +1933,18 @@ void KMdiMainFrm::setupToolViewsForIDEALMode()
 	if ( mainDock->parentDockTabGroup() )
 		w = static_cast<KDockWidget*>( mainDock->parentDockTabGroup()->parent() );
 
-	TQPtrList<KDockWidget> leftReparentWidgets;
-	TQPtrList<KDockWidget> rightReparentWidgets;
-	TQPtrList<KDockWidget> bottomReparentWidgets;
-	TQPtrList<KDockWidget> topReparentWidgets;
+	TQPtrList<KDockWidget> leftRetqparentWidgets;
+	TQPtrList<KDockWidget> rightRetqparentWidgets;
+	TQPtrList<KDockWidget> bottomRetqparentWidgets;
+	TQPtrList<KDockWidget> topRetqparentWidgets;
 
 	if ( mainDock->parentDockTabGroup() )
 		mainDock = static_cast<KDockWidget*>( mainDock->parentDockTabGroup() ->parent() );
 
-	findToolViewsDockedToMain( &leftReparentWidgets, KDockWidget::DockLeft );
-	findToolViewsDockedToMain( &rightReparentWidgets, KDockWidget::DockRight );
-	findToolViewsDockedToMain( &bottomReparentWidgets, KDockWidget::DockBottom );
-	findToolViewsDockedToMain( &topReparentWidgets, KDockWidget::DockTop );
+	tqfindToolViewsDockedToMain( &leftRetqparentWidgets, KDockWidget::DockLeft );
+	tqfindToolViewsDockedToMain( &rightRetqparentWidgets, KDockWidget::DockRight );
+	tqfindToolViewsDockedToMain( &bottomRetqparentWidgets, KDockWidget::DockBottom );
+	tqfindToolViewsDockedToMain( &topRetqparentWidgets, KDockWidget::DockTop );
 
 	mainDock->setEnableDocking( KDockWidget::DockNone ); //::DockCorner);
 	mainDock->setDockSite( KDockWidget::DockCorner );
@@ -1996,10 +1996,10 @@ void KMdiMainFrm::setupToolViewsForIDEALMode()
 	m_topContainer->setDockSite( KDockWidget::DockCenter );
 	m_bottomContainer->setDockSite( KDockWidget::DockCenter );
 
-	dockToolViewsIntoContainers( leftReparentWidgets, m_leftContainer );
-	dockToolViewsIntoContainers( rightReparentWidgets, m_rightContainer );
-	dockToolViewsIntoContainers( bottomReparentWidgets, m_bottomContainer );
-	dockToolViewsIntoContainers( topReparentWidgets, m_topContainer );
+	dockToolViewsIntoContainers( leftRetqparentWidgets, m_leftContainer );
+	dockToolViewsIntoContainers( rightRetqparentWidgets, m_rightContainer );
+	dockToolViewsIntoContainers( bottomRetqparentWidgets, m_bottomContainer );
+	dockToolViewsIntoContainers( topRetqparentWidgets, m_topContainer );
 
 
 	dockManager->setSpecialLeftDockContainer( m_leftContainer );
@@ -2075,10 +2075,10 @@ void KMdiMainFrm::finishIDEAlMode( bool full )
 			KMdiChildView* pView = it.current();
 			if ( pView->isToolView() )
 				continue;
-			TQSize mins = pView->minimumSize();
-			TQSize maxs = pView->maximumSize();
+			TQSize mins = pView->tqminimumSize();
+			TQSize maxs = pView->tqmaximumSize();
 			TQSize sz = pView->size();
-			TQWidget* pParent = pView->parentWidget();
+			TQWidget* pParent = pView->tqparentWidget();
 			TQPoint p( pParent->mapToGlobal( pParent->pos() ) - pParent->pos() + m_undockPositioningOffset );
 			pView->reparent( 0, 0, p );
 			pView->reparent( 0, 0, p );
@@ -2086,7 +2086,7 @@ void KMdiMainFrm::finishIDEAlMode( bool full )
 			pView->setMinimumSize( mins.width(), mins.height() );
 			pView->setMaximumSize( maxs.width(), maxs.height() );
 			KDockWidget* pDockW = 0L;
-			// find the oldest ancestor of the current dockwidget that can be undocked
+			// tqfind the oldest ancestor of the current dockwidget that can be undocked
 			do
 			{
 				if ( pParent->inherits( "KDockWidget" ) || pParent->inherits( "KDockWidget_Compat::KDockWidget" ) )
@@ -2101,7 +2101,7 @@ void KMdiMainFrm::finishIDEAlMode( bool full )
 				}
 				else
 				{
-					pParent = pParent->parentWidget();
+					pParent = pParent->tqparentWidget();
 				}
 			}
 			while ( pParent && !pDockW );
@@ -2262,10 +2262,10 @@ void KMdiMainFrm::setSysButtonsAtMenuPosition()
 {
 	if ( m_pMainMenuBar == 0L )
 		return ;
-	if ( m_pMainMenuBar->parentWidget() == 0L )
+	if ( m_pMainMenuBar->tqparentWidget() == 0L )
 		return ;
 
-	int menuW = m_pMainMenuBar->parentWidget() ->width();
+	int menuW = m_pMainMenuBar->tqparentWidget() ->width();
 	int h;
 	int y;
 	if ( frameDecorOfAttachedViews() == KMdi::Win95Look )
@@ -2357,7 +2357,7 @@ void KMdiMainFrm::activateFirstWin()
 		return ;
 
 	TQDateTime current = activeWindow() ->getTimeStamp();
-	TQMap<TQDateTime, KMdiChildView*>::iterator pos( m.find( current ) );
+	TQMap<TQDateTime, KMdiChildView*>::iterator pos( m.tqfind( current ) );
 	TQMap<TQDateTime, KMdiChildView*>::iterator newPos = pos;
 	if ( pos != m.end() )
 	{
@@ -2390,7 +2390,7 @@ void KMdiMainFrm::activateLastWin()
 		return ;
 
 	TQDateTime current = activeWindow() ->getTimeStamp();
-	TQMap<TQDateTime, KMdiChildView*>::iterator pos( m.find( current ) );
+	TQMap<TQDateTime, KMdiChildView*>::iterator pos( m.tqfind( current ) );
 	if ( pos != m.begin() )
 	{
 		--pos;
@@ -2934,4 +2934,4 @@ KTabWidget * KMdiMainFrm::tabWidget() const
 #include "kmdimainfrm.moc"
 
 // vim: ts=2 sw=2 et
-// kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
+// kate: space-indent off; tab-width 4; tqreplace-tabs off; indent-mode csands;

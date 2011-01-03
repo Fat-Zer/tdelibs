@@ -125,7 +125,7 @@ KateView::KateView( KateDocument *doc, TQWidget *parent, const char * name )
   setPopupMenuInterfaceDCOPSuffix (viewDCOPSuffix());
   setSessionConfigInterfaceDCOPSuffix (viewDCOPSuffix());
   setViewCursorInterfaceDCOPSuffix (viewDCOPSuffix());
-  setViewStatusMsgInterfaceDCOPSuffix (viewDCOPSuffix());
+  setViewtqStatusMsgInterfaceDCOPSuffix (viewDCOPSuffix());
 
   setInstance( KateFactory::self()->instance() );
   doc->addView( this );
@@ -194,9 +194,9 @@ void KateView::setupConnections()
            this, TQT_SLOT(slotSaveCanceled(const TQString&)) );
   connect( m_viewInternal, TQT_SIGNAL(dropEventPass(TQDropEvent*)),
            this,           TQT_SIGNAL(dropEventPass(TQDropEvent*)) );
-  connect(this,TQT_SIGNAL(cursorPositionChanged()),this,TQT_SLOT(slotStatusMsg()));
-  connect(this,TQT_SIGNAL(newStatus()),this,TQT_SLOT(slotStatusMsg()));
-  connect(m_doc, TQT_SIGNAL(undoChanged()), this, TQT_SLOT(slotStatusMsg()));
+  connect(this,TQT_SIGNAL(cursorPositionChanged()),this,TQT_SLOT(slottqStatusMsg()));
+  connect(this,TQT_SIGNAL(newtqStatus()),this,TQT_SLOT(slottqStatusMsg()));
+  connect(m_doc, TQT_SIGNAL(undoChanged()), this, TQT_SLOT(slottqStatusMsg()));
 
   if ( m_doc->browserView() )
   {
@@ -243,13 +243,13 @@ void KateView::setupActions()
     // setup Tools menu
     a=new KAction(i18n("&Indent"), "indent", Qt::CTRL+Qt::Key_I, this, TQT_SLOT(indent()), ac, "tools_indent");
     a->setWhatsThis(i18n("Use this to indent a selected block of text.<br><br>"
-        "You can configure whether tabs should be honored and used or replaced with spaces, in the configuration dialog."));
+        "You can configure whether tabs should be honored and used or tqreplaced with spaces, in the configuration dialog."));
     a=new KAction(i18n("&Unindent"), "unindent", Qt::CTRL+Qt::SHIFT+Qt::Key_I, this, TQT_SLOT(unIndent()), ac, "tools_unindent");
     a->setWhatsThis(i18n("Use this to unindent a selected block of text."));
 
     a=new KAction(i18n("&Clean Indentation"), 0, this, TQT_SLOT(cleanIndent()), ac, "tools_cleanIndent");
     a->setWhatsThis(i18n("Use this to clean the indentation of a selected block of text (only tabs/only spaces)<br><br>"
-        "You can configure whether tabs should be honored and used or replaced with spaces, in the configuration dialog."));
+        "You can configure whether tabs should be honored and used or tqreplaced with spaces, in the configuration dialog."));
 
     a=new KAction(i18n("&Align"), 0, this, TQT_SLOT(align()), ac, "tools_align");
     a->setWhatsThis(i18n("Use this to align the current line or block of text to its proper indent level."));
@@ -680,7 +680,7 @@ void KateView::slotGotFocus()
 {
   m_editActions->accel()->setEnabled( true );
 
-  slotStatusMsg ();
+  slottqStatusMsg ();
 }
 
 void KateView::slotLostFocus()
@@ -693,7 +693,7 @@ void KateView::setDynWrapIndicators(int mode)
   config()->setDynWordWrapIndicators (mode);
 }
 
-void KateView::slotStatusMsg ()
+void KateView::slottqStatusMsg ()
 {
   TQString ovrstr;
   if (m_doc->isReadWrite())
@@ -715,14 +715,14 @@ void KateView::slotStatusMsg ()
   TQString modstr = m_doc->isModified() ? TQString (" * ") : TQString ("   ");
   TQString blockstr = blockSelectionMode() ? i18n(" BLK ") : i18n(" NORM ");
 
-  emit viewStatusMsg (s1 + s2 + " " + ovrstr + blockstr + modstr);
+  emit viewtqStatusMsg (s1 + s2 + " " + ovrstr + blockstr + modstr);
 }
 
 void KateView::slotSelectionTypeChanged()
 {
   m_toggleBlockSelection->setChecked( blockSelectionMode() );
 
-  emit newStatus();
+  emit newtqStatus();
 }
 
 bool KateView::isOverwriteMode() const
@@ -733,12 +733,12 @@ bool KateView::isOverwriteMode() const
 void KateView::reloadFile()
 {
   m_doc->reloadFile();
-  emit newStatus();
+  emit newtqStatus();
 }
 
 void KateView::slotUpdate()
 {
-  emit newStatus();
+  emit newtqStatus();
 
   slotNewUndo();
 }
@@ -753,7 +753,7 @@ void KateView::slotReadWriteChanged ()
 
   TQStringList l;
 
-  l << "edit_replace" << "set_insert" << "tools_spelling" << "tools_indent"
+  l << "edit_tqreplace" << "set_insert" << "tools_spelling" << "tools_indent"
       << "tools_unindent" << "tools_cleanIndent" << "tools_align"  << "tools_comment"
       << "tools_uncomment" << "tools_uppercase" << "tools_lowercase"
       << "tools_capitalize" << "tools_join_lines" << "tools_apply_wordwrap"
@@ -793,7 +793,7 @@ void KateView::contextMenuEvent( TQContextMenuEvent *ev )
   if ( !m_doc || !m_doc->browserExtension()  )
     return;
   emit m_doc->browserExtension()->popupMenu( /*this, */ev->globalPos(), m_doc->url(),
-                                        TQString::fromLatin1( "text/plain" ) );
+                                        TQString::tqfromLatin1( "text/plain" ) );
   ev->accept();
 }
 
@@ -832,7 +832,7 @@ void KateView::toggleInsert()
   m_doc->setConfigFlags(m_doc->config()->configFlags() ^ KateDocument::cfOvr);
   m_toggleInsert->setChecked (isOverwriteMode ());
 
-  emit newStatus();
+  emit newtqStatus();
 }
 
 bool KateView::canDiscard()
@@ -1089,29 +1089,29 @@ void KateView::slotNeedTextHint(int line, int col, TQString &text)
   text=TQString("test %1 %2").arg(line).arg(col);
 }
 
-void KateView::find()
+void KateView::tqfind()
 {
-  m_search->find();
+  m_search->tqfind();
 }
 
-void KateView::find( const TQString& pattern, long flags, bool add )
+void KateView::tqfind( const TQString& pattern, long flags, bool add )
 {
-  m_search->find( pattern, flags, add );
+  m_search->tqfind( pattern, flags, add );
 }
 
-void KateView::replace()
+void KateView::tqreplace()
 {
-  m_search->replace();
+  m_search->tqreplace();
 }
 
-void KateView::replace( const TQString &pattern, const TQString &replacement, long flags )
+void KateView::tqreplace( const TQString &pattern, const TQString &tqreplacement, long flags )
 {
-  m_search->replace( pattern, replacement, flags );
+  m_search->tqreplace( pattern, tqreplacement, flags );
 }
 
-void KateView::findAgain( bool back )
+void KateView::tqfindAgain( bool back )
 {
-  m_search->findAgain( back );
+  m_search->tqfindAgain( back );
 }
 
 void KateView::slotSelectionChanged ()
@@ -1233,11 +1233,11 @@ void KateView::updateRendererConfig()
 
   // update the text area
   m_viewInternal->updateView (true);
-  m_viewInternal->repaint ();
+  m_viewInternal->tqrepaint ();
 
   // update the left border right, for example linenumbers
   m_viewInternal->leftBorder->updateFont();
-  m_viewInternal->leftBorder->repaint ();
+  m_viewInternal->leftBorder->tqrepaint ();
 
 // @@ showIndentLines is not cached anymore.
 //  m_renderer->setShowIndentLines (m_renderer->config()->showIndentationLines());
@@ -1305,7 +1305,7 @@ void KateView::clear ()
   m_viewInternal->clear ();
 }
 
-void KateView::repaintText (bool paintOnlyDirty)
+void KateView::tqrepaintText (bool paintOnlyDirty)
 {
   m_viewInternal->paintText(0,0,m_viewInternal->width(),m_viewInternal->height(), paintOnlyDirty);
 }
@@ -1360,7 +1360,7 @@ bool KateView::setSelection( const KateTextCursor& start, const KateTextCursor& 
 
   tagSelection(oldSelectStart, oldSelectEnd);
 
-  repaintText(true);
+  tqrepaintText(true);
 
   emit selectionChanged ();
   emit m_doc->selectionChanged ();
@@ -1405,7 +1405,7 @@ bool KateView::clearSelection(bool redraw, bool finishedChangingSelection)
   oldSelectEnd = selectEnd;
 
   if (redraw)
-    repaintText(true);
+    tqrepaintText(true);
 
   if (finishedChangingSelection)
   {
@@ -1596,7 +1596,7 @@ void KateView::paste()
 {
   m_doc->paste( this );
   emit selectionChanged();
-  m_viewInternal->repaint();
+  m_viewInternal->tqrepaint();
 }
 
 void KateView::cut()
@@ -1736,7 +1736,7 @@ void KateView::lineAsHTML (KateTextLine::Ptr line, uint startCol, uint length, T
   for (uint curPos=startCol;curPos<(length+startCol);curPos++)
   {
     if ( curPos == 0 || line->attribute( curPos ) != line->attribute( curPos - 1 ) &&
-         // Since many highlight files contains itemdatas that have the exact
+         // Since many highlight files tqcontains itemdatas that have the exact
          // same styles, join those to keep the HTML text size down
          KateAttribute(*charAttributes) != KateAttribute(*m_renderer->attribute(line->attribute(curPos))) )
     {
@@ -1748,7 +1748,7 @@ void KateView::lineAsHTML (KateTextLine::Ptr line, uint startCol, uint length, T
 
       charAttributes = m_renderer->attribute(line->attribute(curPos));
 
-      if ( ! stylecache.contains( line->attribute(curPos) ) )
+      if ( ! stylecache.tqcontains( line->attribute(curPos) ) )
       {
         TQString textdecoration;
         TQString style;
@@ -1917,4 +1917,4 @@ void KateView::getIMSelectionValue( uint *imStartLine, uint *imStart, uint *imEn
 }
 //END IM INPUT STUFF
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

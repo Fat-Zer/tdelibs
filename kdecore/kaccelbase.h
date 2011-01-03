@@ -42,7 +42,7 @@ class TQWidget;
  * key bindings through application configuration files or through the
  * KKeyChooser GUI.
  *
- * A KAccel contains a list of accelerator items. Each accelerator item
+ * A KAccel tqcontains a list of accelerator items. Each accelerator item
  * consists of an action name and a keyboard code combined with modifiers
  * (Shift, Ctrl and Alt.)
  *
@@ -101,7 +101,7 @@ class TQWidget;
  *   id = popup->insertItem(i18n("Print &Document"),this, TQT_SLOT(printDoc()));
  * it might be a good idea to insert the standard action before as
  *          a->insertStdItem( KStdAccel::Print, i18n("Print Document") )
- * as well, so that the user can easily find the corresponding function.
+ * as well, so that the user can easily tqfind the corresponding function.
  *
  * This technique works for other actions as well.  Your "scroll up" function
  * in a menu could be done with

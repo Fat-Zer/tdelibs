@@ -32,7 +32,7 @@ class KSimpleConfigPrivate;
  * only one configuration file and no default system.
  * A difference with KConfig is that when the data in memory is written back
  * it is not merged with what is on disk.
- * Whatever is in memory simply replaces what is on disk entirely.
+ * Whatever is in memory simply tqreplaces what is on disk entirely.
  *
  * @author Kalle Dalheimer <kalle@kde.org>, Preston Brown <pbrown@kde.org>
  * @see KConfigBase KConfig

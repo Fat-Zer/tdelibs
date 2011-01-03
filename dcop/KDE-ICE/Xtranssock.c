@@ -176,7 +176,7 @@ static int IBMsockInit = 0;
 /*
  * This is the Socket implementation of the X Transport service layer
  *
- * This file contains the implementation for both the UNIX and INET domains,
+ * This file tqcontains the implementation for both the UNIX and INET domains,
  * and can be built for either one, or both.
  *
  */
@@ -910,7 +910,7 @@ TRANS(SocketUNIXCreateListener) (XtransConnInfo ciptr, char *port)
 {
     struct sockaddr_un	sockname;
     int			namelen;
-    int			oldUmask;
+    int			oldUtqmask;
     int			status;
     unsigned int	mode;
 
@@ -919,7 +919,7 @@ TRANS(SocketUNIXCreateListener) (XtransConnInfo ciptr, char *port)
 
     /* Make sure the directory is created */
 
-    oldUmask = umask (0);
+    oldUtqmask = umask (0);
 
 #ifdef UNIX_DIR
 #ifdef HAS_STICKY_DIR_BIT
@@ -930,7 +930,7 @@ TRANS(SocketUNIXCreateListener) (XtransConnInfo ciptr, char *port)
     if (trans_mkdir((char*)UNIX_DIR, mode) == -1) {
 	PRMSG (1, "SocketUNIXCreateListener: mkdir(%s) failed, errno = %d\n",
 	       UNIX_DIR, errno, 0);
-	(void) umask (oldUmask);
+	(void) umask (oldUtqmask);
 	return TRANS_CREATE_LISTENER_FAILED;
     }
 #endif
@@ -952,7 +952,7 @@ TRANS(SocketUNIXCreateListener) (XtransConnInfo ciptr, char *port)
 #endif
 
     unlink (sockname.sun_path);
-    (void) umask (oldUmask);
+    (void) umask (oldUtqmask);
 
     if ((status = TRANS(SocketCreateListener) (ciptr,
 	(struct sockaddr *) &sockname, namelen)) < 0)
@@ -1011,7 +1011,7 @@ TRANS(SocketUNIXResetListener) (XtransConnInfo ciptr)
 			S_IFSOCK))
 #endif
     {
-	int oldUmask = umask (0);
+	int oldUtqmask = umask (0);
 
 #ifdef UNIX_DIR
 #ifdef HAS_STICKY_DIR_BIT
@@ -1022,7 +1022,7 @@ TRANS(SocketUNIXResetListener) (XtransConnInfo ciptr)
         if (trans_mkdir((char*)UNIX_DIR, mode) == -1) {
             PRMSG (1, "SocketUNIXResetListener: mkdir(%s) failed, errno = %d\n",
 	    UNIX_DIR, errno, 0);
-	    (void) umask (oldUmask);
+	    (void) umask (oldUtqmask);
 	    return TRANS_RESET_FAILURE;
         }
 #endif
@@ -1033,7 +1033,7 @@ TRANS(SocketUNIXResetListener) (XtransConnInfo ciptr)
 	if ((ciptr->fd = socket (AF_UNIX, SOCK_STREAM, 0)) < 0)
 	{
 	    TRANS(FreeConnInfo) (ciptr);
-	    (void) umask (oldUmask);
+	    (void) umask (oldUtqmask);
 	    return TRANS_RESET_FAILURE;
 	}
 
@@ -1048,11 +1048,11 @@ TRANS(SocketUNIXResetListener) (XtransConnInfo ciptr)
 	{
 	    close (ciptr->fd);
 	    TRANS(FreeConnInfo) (ciptr);
-	    (void) umask (oldUmask);
+	    (void) umask (oldUtqmask);
 	    return TRANS_RESET_FAILURE;
 	}
 
-	umask (oldUmask);
+	umask (oldUtqmask);
 
 	status = TRANS_RESET_NEW_FD;
     }

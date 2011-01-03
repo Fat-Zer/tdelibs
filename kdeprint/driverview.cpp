@@ -46,7 +46,7 @@ DriverView::DriverView(TQWidget *parent, const char *name)
 	//WhatsThis strings.... (added by pfeifle@kde.org)
 	TQString whatsThisPPDOptionsDriverPage = i18n( " <qt> "
 			" <b>List of Driver Options (from PPD)</b>. "
-			" <p>The upper pane of this dialog page contains all printjob options as laid "
+			" <p>The upper pane of this dialog page tqcontains all printjob options as laid "
 			" down in the printer's description file (PostScript Printer Description == 'PPD') </p>"
 			" <p>Click on any item in the list and watch the lower pane of this dialog page "
 			" display the available values. </p> "
@@ -70,7 +70,7 @@ DriverView::DriverView(TQWidget *parent, const char *name)
 
 	TQString whatsThisOptionSettingsDriverPage = i18n( " <qt> "
 			" <b>List of Possible Values for given Option (from PPD)</b>. "
-			" <p>The lower pane of this dialog page contains all possible values of the printoption "
+			" <p>The lower pane of this dialog page tqcontains all possible values of the printoption "
 			" highlighted above, as laid "
 			" down in the printer's description file (PostScript Printer Description == 'PPD') </p>"
 			" <p>Select the value you want and proceed. </p> "

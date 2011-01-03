@@ -37,7 +37,7 @@ public:
 	KNotify( bool useArts );
 	~KNotify();
 
-    enum PlayingFinishedStatus
+    enum PlayingFinishedtqStatus
     {
         PlayedOK = 0,        // success, all following mean failure
         NoSoundFile,
@@ -86,7 +86,7 @@ private:
 	
 	bool isPlaying( const TQString& soundFile ) const;
 
-    void soundFinished( int eventId, PlayingFinishedStatus reason );
+    void soundFinished( int eventId, PlayingFinishedtqStatus reason );
     void abortFirstPlayObject();
 	
         WId checkWinId( const TQString& appName, WId senderWinId );

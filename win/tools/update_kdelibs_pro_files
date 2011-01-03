@@ -12,7 +12,7 @@ dest=../..
 
 cd "$KDELIBS/$src"
 
-for pro in `find . -name \*.pro -o -name \*.sh` ; do
+for pro in `tqfind . -name \*.pro -o -name \*.sh` ; do
 	dir=`dirname "$pro"`
 	if [ ! -d "$KDELIBS/$dir" ] ; then
 		echo "no \$KDELIBS/$dir directory: creating it"

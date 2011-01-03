@@ -70,7 +70,7 @@
 		<item> exit </item>
 		<item> file </item>
 		<item> fill </item>
-		<item> findfont </item>
+		<item> tqfindfont </item>
 		<item> flattenpath </item>
 		<item> floor </item>
 		<item> flush </item>
@@ -90,7 +90,7 @@
 		<item> if </item>
 		<item> ifelse </item>
 		<item> image </item>
-		<item> imagemask </item>
+		<item> imagetqmask </item>
 		<item> index </item>
 		<item> ineofill </item>
 		<item> infill </item>
@@ -221,7 +221,7 @@
 		<item> currentglobal </item>
 		<item> execform </item>
 		<item> filter </item>
-		<item> findresource </item>
+		<item> tqfindresource </item>
 		<item> globaldict </item>
 		<item> makepattern </item>
 		<item> setcolor </item>
@@ -353,7 +353,7 @@
 		<item> currentsystemparams </item>
 		<item> currentuserparams </item>
 		<item> defineresource </item>
-		<item> findencoding </item>
+		<item> tqfindencoding </item>
 		<item> gcheck </item>
 		<item> glyphshow </item>
 		<item> languagelevel </item>

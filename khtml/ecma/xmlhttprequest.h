@@ -60,7 +60,7 @@ namespace KJS {
     virtual bool toBoolean(ExecState *) const { return true; }
     virtual const ClassInfo* classInfo() const { return &info; }
     static const ClassInfo info;
-    enum { Onload, Onreadystatechange, ReadyState, ResponseText, ResponseXML, Status, StatusText, Abort,
+    enum { Onload, Onreadystatechange, ReadyState, ResponseText, ResponseXML, tqStatus, tqStatusText, Abort,
            GetAllResponseHeaders, GetResponseHeader, Open, Send, SetRequestHeader,
            OverrideMIMEType };
 
@@ -68,8 +68,8 @@ namespace KJS {
     friend class XMLHttpRequestProtoFunc;
     friend class XMLHttpRequestQObject;
 
-    Value getStatusText() const;
-    Value getStatus() const;
+    Value gettqStatusText() const;
+    Value gettqStatus() const;
     bool urlMatchesDocumentDomain(const KURL&) const;
 
     XMLHttpRequestQObject *qObject;

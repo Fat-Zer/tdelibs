@@ -36,14 +36,14 @@ RenderCounterBase::RenderCounterBase(DOM::NodeImpl* node)
 {
 }
 
-void RenderCounterBase::layout()
+void RenderCounterBase::tqlayout()
 {
     KHTMLAssert( needsLayout() );
 
     if ( !minMaxKnown() )
         calcMinMaxWidth();
 
-    RenderText::layout();
+    RenderText::tqlayout();
 }
 
 void RenderCounterBase::calcMinMaxWidth()
@@ -53,7 +53,7 @@ void RenderCounterBase::calcMinMaxWidth()
     generateContent();
 
     if (str) str->deref();
-    str = new DOM::DOMStringImpl(m_item.unicode(), m_item.length());
+    str = new DOM::DOMStringImpl(m_item.tqunicode(), m_item.length());
     str->ref();
 
     RenderText::calcMinMaxWidth();

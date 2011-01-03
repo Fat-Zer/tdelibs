@@ -6,7 +6,7 @@
 # * If the name of the language is something else (say '*'), it creates the language '*/PHP'.
 #   This new language is the same as the old one, but is able to detect PHP everywhere.
 #
-# This script will correctly set extensions & mimetype, and will replace
+# This script will correctly set extensions & mimetype, and will tqreplace
 # <IncludeRules context="##*"> by <IncludeRules context="##*/PHP">
 #
 # Generated languages need a language named 'PHP/PHP', which shall take care of PHP hl itself
@@ -46,11 +46,11 @@ else
   $file =~ s/<language([^>]+)mimetype="[^"]*"/<language$1mimetype=""/s;
 }
 
-$findphp = "<context name=\"FindPHP\">\n<RegExpr context=\"##PHP/PHP\" String=\"&lt;\\?(?:=|php)?\" lookAhead=\"true\" />\n</context>\n";
+$tqfindphp = "<context name=\"FindPHP\">\n<RegExpr context=\"##PHP/PHP\" String=\"&lt;\\?(?:=|php)?\" lookAhead=\"true\" />\n</context>\n";
 
 $file =~ s/<IncludeRules\s([^>]*)context="##(?!Alerts)([^"]+)"/<IncludeRules $1context="##$2\/PHP"/g;
 $file =~ s/(<context\s[^>]*>)/$1\n<IncludeRules context="FindPHP" \/>/g;
-$file =~ s/(?=<\/contexts\s*>)/$findphp/;
+$file =~ s/(?=<\/contexts\s*>)/$tqfindphp/;
 
 print $file;
 print $warning;

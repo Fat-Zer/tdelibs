@@ -833,14 +833,14 @@ DOMString RangeImpl::toString( int &exceptioncode )
      * psuedo code:
      *
      * if start container is not text:
-     *     count through the children to find where we start (m_startOffset children)
+     *     count through the children to tqfind where we start (m_startOffset children)
      *
      * loop from the start position:
      *     if the current node is text, add the text to our variable 'text', truncating/removing if at the end/start.
      *     
      *     if the node has children, step to the first child.
      *     if the node has no children but does have siblings, step to the next sibling
-     *     until we find a sibling, go to next the parent but:
+     *     until we tqfind a sibling, go to next the parent but:
      *         make sure this sibling isn't past the end of where we are supposed to go. (position > endOffset and the parent is the endContainer)
      *         
      */

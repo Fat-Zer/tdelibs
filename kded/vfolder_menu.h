@@ -29,7 +29,7 @@
 
 #include <kservice.h>
 
-class VFolderMenu : public QObject
+class VFolderMenu : public TQObject
 {
   Q_OBJECT
 public:
@@ -46,9 +46,9 @@ public:
      TQDict<KService> items;
      TQDict<KService> excludeItems; // Needed when merging due to Move.
      TQDomElement defaultLayoutNode;
-     TQDomElement layoutNode;
+     TQDomElement tqlayoutNode;
      bool isDeleted;
-     TQStringList layoutList;
+     TQStringList tqlayoutList;
      appsInfo *apps_info;
   };
 
@@ -56,7 +56,7 @@ public:
   ~VFolderMenu();
 
   /**
-   * Parses VFolder menu defintion and generates a menu layout.
+   * Parses VFolder menu defintion and generates a menu tqlayout.
    * The newService signals is used as callback to load
    * a specific service description.
    *
@@ -148,12 +148,12 @@ private:
   /**
    * Lookup application by relative path
    */
-  KService *findApplication(const TQString &relPath);
+  KService *tqfindApplication(const TQString &relPath);
 
   /**
    * Lookup applications by category
    */
-  TQPtrList<KService::List> findCategory(const TQString &category);
+  TQPtrList<KService::List> tqfindCategory(const TQString &category);
   
   /**
    * Add new application
@@ -253,7 +253,7 @@ private:
   void processKDELegacyDirs();
   void processLegacyDir(const TQString &dir, const TQString &relDir, const TQString &prefix);
   void processMenu(TQDomElement &docElem, int pass);
-  void layoutMenu(VFolderMenu::SubMenu *menu, TQStringList defaultLayout);
+  void tqlayoutMenu(VFolderMenu::SubMenu *menu, TQStringList defaultLayout);
   void processCondition(TQDomElement &docElem, TQDict<KService> *items);
 
   void initDirs();

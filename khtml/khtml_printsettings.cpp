@@ -44,7 +44,7 @@ KHTMLPrintSettings::KHTMLPrintSettings(TQWidget *parent, const char *name)
 		"<p><strong>'Print header'</strong></p>"
 		"<p>"
 		"If this checkbox is enabled, the printout of the HTML document will "
-		"contain a header line at the top of each page. This header contains "
+		"contain a header line at the top of each page. This header tqcontains "
 		"the current date, the location URL of the printed page and the page "
 		"number."
 		"</p>"

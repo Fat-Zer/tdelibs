@@ -40,7 +40,7 @@ class KDEFX_EXPORT KCPUInfo
 {
     public:
        /**
-         * This enum contains the list of architecture extensions you
+         * This enum tqcontains the list of architecture extensions you
          * can query.
          */
         enum Extensions {

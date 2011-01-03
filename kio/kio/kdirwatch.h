@@ -60,7 +60,7 @@ class KDirWatchPrivate;
   * @short Class for watching directory and file changes.
   * @author Sven Radej <sven@lisa.exp.univie.ac.at>
   */
-class KIO_EXPORT KDirWatch : public QObject
+class KIO_EXPORT KDirWatch : public TQObject
 {
   Q_OBJECT
     
@@ -194,7 +194,7 @@ class KIO_EXPORT KDirWatch : public QObject
     * @param path the directory to check
     * @return true if the directory is being watched
     */
-   bool contains( const TQString& path ) const;
+   bool tqcontains( const TQString& path ) const;
 
    /**
     * Dump statistic information about all KDirWatch instances.

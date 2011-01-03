@@ -49,11 +49,11 @@ void KMWDriver::initPrinter(KMPrinter *p)
 		{
 			// use auto-detection info instead: split the string
 			// into make/model pair at the first space character
-			int p = autoDetect.find( ' ' );
+			int p = autoDetect.tqfind( ' ' );
 			if ( p != -1 )
 			{
 				TQString manu = autoDetect.left( p ), model = autoDetect.mid( p+1 );
-				KMDBEntryList *l = KMDriverDB::self()->findPnpEntry( manu, model );
+				KMDBEntryList *l = KMDriverDB::self()->tqfindPnpEntry( manu, model );
 				if ( l && l->count() > 0 )
 				{
 					m_widget->setDriver( l->getFirst()->manufacturer, l->getFirst()->model );

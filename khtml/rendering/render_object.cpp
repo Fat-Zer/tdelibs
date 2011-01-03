@@ -71,8 +71,8 @@ using namespace khtml;
 #define COLOR_DARK_BS_FACTOR 30
 #define COLOR_DARK_TS_FACTOR 50
 
-#define LIGHT_GRAY qRgb(192, 192, 192)
-#define DARK_GRAY  qRgb(96, 96, 96)
+#define LIGHT_GRAY tqRgb(192, 192, 192)
+#define DARK_GRAY  tqRgb(96, 96, 96)
 
 #ifndef NDEBUG
 static void *baseOfRenderObjectBeingDeleted;
@@ -89,7 +89,7 @@ void RenderObject::operator delete(void* ptr, size_t sz)
 {
     assert(baseOfRenderObjectBeingDeleted == ptr);
 
-    // Stash size where detach can find it.
+    // Stash size where detach can tqfind it.
     *(size_t *)ptr = sz;
 }
 
@@ -171,14 +171,14 @@ RenderObject::RenderObject(DOM::NodeImpl* node)
       m_inline( true ),
       m_attached( false ),
 
-      m_replaced( false ),
+      m_tqreplaced( false ),
       m_mouseInside( false ),
       m_hasFirstLine( false ),
       m_isSelectionBorder( false ),
       m_isRoot( false ),
       m_afterPageBreak( false ),
       m_needsPageClear( false ),
-      m_containsPageBreak( false ),
+      m_tqcontainsPageBreak( false ),
       m_hasOverflowClip( false ),
       m_doNotDelete( false )
 {
@@ -319,9 +319,9 @@ static void addLayers(RenderObject* obj, RenderLayer* parentLayer, RenderObject*
     if (obj->layer()) {
         if (!beforeChild && newObject) {
             // We need to figure out the layer that follows newObject.  We only do
-            // this the first time we find a child layer, and then we update the
+            // this the first time we tqfind a child layer, and then we update the
             // pointer values for newObject and beforeChild used by everyone else.
-            beforeChild = newObject->parent()->findNextLayer(parentLayer, newObject);
+            beforeChild = newObject->parent()->tqfindNextLayer(parentLayer, newObject);
             newObject = 0;
         }
         parentLayer->addChild(obj->layer(), beforeChild);
@@ -372,10 +372,10 @@ void RenderObject::moveLayers(RenderLayer* oldParent, RenderLayer* newParent)
         curr->moveLayers(oldParent, newParent);
 }
 
-RenderLayer* RenderObject::findNextLayer(RenderLayer* parentLayer, RenderObject* startPoint,
+RenderLayer* RenderObject::tqfindNextLayer(RenderLayer* parentLayer, RenderObject* startPoint,
                                          bool checkParent)
 {
-    // Error check the parent layer passed in.  If it's null, we can't find anything.
+    // Error check the parent layer passed in.  If it's null, we can't tqfind anything.
     if (!parentLayer)
         return 0;
 
@@ -385,25 +385,25 @@ RenderLayer* RenderObject::findNextLayer(RenderLayer* parentLayer, RenderObject*
         return ourLayer;
 
     // Step 2: If we don't have a layer, or our layer is the desired parent, then descend
-    // into our siblings trying to find the next layer whose parent is the desired parent.
+    // into our siblings trying to tqfind the next layer whose parent is the desired parent.
     if (!ourLayer || ourLayer == parentLayer) {
         for (RenderObject* curr = startPoint ? startPoint->nextSibling() : firstChild();
              curr; curr = curr->nextSibling()) {
-            RenderLayer* nextLayer = curr->findNextLayer(parentLayer, 0, false);
+            RenderLayer* nextLayer = curr->tqfindNextLayer(parentLayer, 0, false);
             if (nextLayer)
                 return nextLayer;
         }
     }
 
     // Step 3: If our layer is the desired parent layer, then we're finished.  We didn't
-    // find anything.
+    // tqfind anything.
     if (parentLayer == ourLayer)
         return 0;
 
     // Step 4: If |checkParent| is set, climb up to our parent and check its siblings that
     // follow us to see if we can locate a layer.
     if (checkParent && parent())
-        return parent()->findNextLayer(parentLayer, this, true);
+        return parent()->tqfindNextLayer(parentLayer, this, true);
 
     return 0;
 }
@@ -535,9 +535,9 @@ bool RenderObject::hasStaticY() const
 
 void RenderObject::setPixmap(const TQPixmap&, const TQRect& /*r*/, CachedImage* image)
 {
-    //repaint bg when it finished loading
-    if(image && parent() && style() && style()->backgroundLayers()->containsImage(image)) {
-        isBody() ? canvas()->repaint() : repaint();
+    //tqrepaint bg when it finished loading
+    if(image && parent() && style() && style()->backgroundLayers()->tqcontainsImage(image)) {
+        isBody() ? canvas()->tqrepaint() : tqrepaint();
     }
 }
 
@@ -592,7 +592,7 @@ void RenderObject::markContainingBlocksForLayout()
         o = o->container();
     }
 
-    last->scheduleRelayout();
+    last->scheduleRetqlayout();
 }
 
 RenderBlock *RenderObject::containingBlock() const
@@ -1103,9 +1103,9 @@ void RenderObject::paint( PaintInfo&, int /*tx*/, int /*ty*/)
 {
 }
 
-void RenderObject::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
+void RenderObject::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 {
-    if(parent()) parent()->repaintRectangle(x, y, w, h, p, f);
+    if(parent()) parent()->tqrepaintRectangle(x, y, w, h, p, f);
 }
 
 #ifdef ENABLE_DUMP
@@ -1164,15 +1164,15 @@ TQString RenderObject::information() const
        << " mB: " << marginBottom() << " qB: " << isBottomMarginQuirk()
        << "}"
         << (isTableCell() ?
-            ( TQString::fromLatin1(" [r=") +
+            ( TQString::tqfromLatin1(" [r=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->row() ) +
-              TQString::fromLatin1(" c=") +
+              TQString::tqfromLatin1(" c=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->col() ) +
-              TQString::fromLatin1(" rs=") +
+              TQString::tqfromLatin1(" rs=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->rowSpan() ) +
-              TQString::fromLatin1(" cs=") +
+              TQString::tqfromLatin1(" cs=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->colSpan() ) +
-              TQString::fromLatin1("]") ) : TQString::null );
+              TQString::tqfromLatin1("]") ) : TQString::null );
     if ( layer() )
         ts << " layer=" << layer();
     if ( continuation() )
@@ -1251,7 +1251,7 @@ void RenderObject::dump(TQTextStream &ts, const TQString &ind) const
     if (isRelPositioned()) { ts << " relPositioned"; }
     if (isText()) { ts << " text"; }
     if (isInline()) { ts << " inline"; }
-    if (isReplaced()) { ts << " replaced"; }
+    if (isReplaced()) { ts << " tqreplaced"; }
     if (shouldPaintBackgroundOrBorder()) { ts << " paintBackground"; }
     if (needsLayout()) { ts << " needsLayout"; }
     if (minMaxKnown()) { ts << " minMaxKnown"; }
@@ -1283,11 +1283,11 @@ void RenderObject::setStyle(RenderStyle *style)
                m_style->outlineWidth() > style->outlineWidth() ||
                (!m_style->hidesOverflow() && style->hidesOverflow()) ||
                ( m_style->hasClip() && !(m_style->clip() == style->clip()) ) ) ) {
-            // schedule a repaint with the old style
+            // schedule a tqrepaint with the old style
             if (layer() && !isInlineFlow())
-                layer()->repaint(pri);
+                layer()->tqrepaint(pri);
             else
-                repaint(pri);
+                tqrepaint(pri);
         }
 
         if ( ( isFloating() && m_style->floating() != style->floating() ) ||
@@ -1339,16 +1339,16 @@ void RenderObject::setStyle(RenderStyle *style)
             d = RenderStyle::Layout;
 
         if ( d > RenderStyle::Position) {
-            // we must perform a full layout
+            // we must perform a full tqlayout
             if (!isText() && d == RenderStyle::CbLayout) {
                 dirtyFormattingContext( true );
             }
             setNeedsLayoutAndMinMaxRecalc();
         } else if (!isText() && d >= RenderStyle::Visible) {
-            // a repaint is enough
+            // a tqrepaint is enough
             if (layer()) {
                 if (canvas() && canvas()->needsWidgetMasks()) {
-                    // update our widget masks
+                    // update our widget tqmasks
                     RenderLayer *p, *d = 0;
                     for (p=layer()->parent();p;p=p->parent())
                         if (p->hasOverlaidWidgets()) d=p;
@@ -1357,9 +1357,9 @@ void RenderObject::setStyle(RenderStyle *style)
                 }
             }
             if (layer() && !isInlineFlow())
-                layer()->repaint(pri);
+                layer()->tqrepaint(pri);
             else
-                repaint(pri);
+                tqrepaint(pri);
         }
     }
 }
@@ -1367,7 +1367,7 @@ void RenderObject::setStyle(RenderStyle *style)
 bool RenderObject::attemptDirectLayerTranslation()
 {
     // When the difference between two successive styles is only 'Position'
-    // we may attempt to save a layout by directly updating the object position.
+    // we may attempt to save a tqlayout by directly updating the object position.
 
     KHTMLAssert( m_style->position() != STATIC );
     if (!layer())
@@ -1383,7 +1383,7 @@ bool RenderObject::attemptDirectLayerTranslation()
     calcHeight();
     if (oldWidth != width() || oldHeight != height()) {
         // implicit size change or overconstrained dimensions:
-        // we'll need a layout.
+        // we'll need a tqlayout.
         setWidth(oldWidth);
         setHeight(oldHeight);
         // kdDebug() << "Layer translation failed for " << information() << endl;
@@ -1423,14 +1423,14 @@ void RenderObject::dirtyFormattingContext( bool checkContainer )
         m_parent->dirtyFormattingContext(false);
 }
 
-void RenderObject::repaintDuringLayout()
+void RenderObject::tqrepaintDuringLayout()
 {
     if (canvas()->needsFullRepaint() || isText())
         return;
     if (layer() && !isInlineFlow()) {
-        layer()->repaint( NormalPriority, true );
+        layer()->tqrepaint( NormalPriority, true );
     } else {
-       repaint();
+       tqrepaint();
        canvas()->deferredRepaint( this );
     }
 }
@@ -1477,11 +1477,11 @@ void RenderObject::updateBackgroundImages(RenderStyle* oldStyle)
     const BackgroundLayer* oldLayers = oldStyle ? oldStyle->backgroundLayers() : 0;
     const BackgroundLayer* newLayers = m_style ? m_style->backgroundLayers() : 0;
     for (const BackgroundLayer* currOld = oldLayers; currOld; currOld = currOld->next()) {
-        if (currOld->backgroundImage() && (!newLayers || !newLayers->containsImage(currOld->backgroundImage())))
+        if (currOld->backgroundImage() && (!newLayers || !newLayers->tqcontainsImage(currOld->backgroundImage())))
             currOld->backgroundImage()->deref(this);
     }
     for (const BackgroundLayer* currNew = newLayers; currNew; currNew = currNew->next()) {
-        if (currNew->backgroundImage() && (!oldLayers || !oldLayers->containsImage(currNew->backgroundImage())))
+        if (currNew->backgroundImage() && (!oldLayers || !oldLayers->tqcontainsImage(currNew->backgroundImage())))
             currNew->backgroundImage()->ref(this);
     }
 }
@@ -1571,7 +1571,7 @@ RenderObject *RenderObject::container() const
     // (2) For normal flow elements, it just returns the parent.
     // (3) For absolute positioned elements, it will return a relative positioned inline.
     // containingBlock() simply skips relpositioned inlines and lets an enclosing block handle
-    // the layout of the positioned object.  This does mean that calcAbsoluteHorizontal and
+    // the tqlayout of the positioned object.  This does mean that calcAbsoluteHorizontal and
     // calcAbsoluteVertical have to use container().
     EPosition pos = m_style->position();
     RenderObject *o = 0;
@@ -1617,7 +1617,7 @@ void RenderObject::removeFromObjectLists()
 
     if (isFloating()) {
         RenderBlock* outermostBlock = containingBlock();
-        for (RenderBlock* p = outermostBlock; p && !p->isCanvas() && p->containsFloat(this);) {
+        for (RenderBlock* p = outermostBlock; p && !p->isCanvas() && p->tqcontainsFloat(this);) {
             outermostBlock = p;
             if (p->isFloatingOrPositioned())
                 break;
@@ -1710,11 +1710,11 @@ FindSelectionResult RenderObject::checkSelectionPoint( int _x, int _y, int _tx, 
         if (child->isText() && !static_cast<RenderText *>(child)->inlineTextBoxCount())
             continue;
 
-//        kdDebug(6040) << "iterating " << (child ? child->renderName() : "") << "@" << child << (child->isText() ? " contains: \"" + TQConstString(static_cast<RenderText *>(child)->text(), kMin(static_cast<RenderText *>(child)->length(), 10u)).string() + "\"" : TQString::null) << endl;
+//        kdDebug(6040) << "iterating " << (child ? child->renderName() : "") << "@" << child << (child->isText() ? " tqcontains: \"" + TQConstString(static_cast<RenderText *>(child)->text(), kMin(static_cast<RenderText *>(child)->length(), 10u)).string() + "\"" : TQString::null) << endl;
 //        kdDebug(6040) << "---------- checkSelectionPoint recursive -----------" << endl;
         khtml::FindSelectionResult pos = child->checkSelectionPoint(_x, _y, _tx+xPos(), _ty+yPos(), nod, off, state);
 //        kdDebug(6040) << "-------- end checkSelectionPoint recursive ---------" << endl;
-//        kdDebug(6030) << this << " child->findSelectionNode returned result=" << pos << " nod=" << nod << " off=" << off << endl;
+//        kdDebug(6030) << this << " child->tqfindSelectionNode returned result=" << pos << " nod=" << nod << " off=" << off << endl;
         switch(pos) {
         case SelectionPointBeforeInLine:
         case SelectionPointInside:
@@ -1779,7 +1779,7 @@ bool RenderObject::nodeAtPoint(NodeInfo& info, int _x, int _y, int _tx, int _ty,
         int ol = overflowLeft();
         int ot = overflowTop();
         TQRect overflowRect( tx+ol, ty+ot, overflowWidth()-ol, overflowHeight()-ot );
-        inOverflowRect = overflowRect.contains( _x, _y );
+        inOverflowRect = overflowRect.tqcontains( _x, _y );
     }
 
     // ### table should have its own, more performant method
@@ -1850,7 +1850,7 @@ short RenderObject::getVerticalPosition( bool firstLine, RenderObject* ref ) con
             bool checkParent = ref->isInline() && !ref->isReplacedBlock() &&
                                !( ref->style()->verticalAlign() == TOP || ref->style()->verticalAlign() == BOTTOM );
             vpos = checkParent ? ref->verticalPositionHint( firstLine ) : 0;
-            // don't allow elements nested inside text-top to have a different valignment.
+            // don't allow elements nested inside text-top to have a different vtqalignment.
             if ( va == BASELINE )
                 return vpos;
             else if ( va == LENGTH )
@@ -1881,7 +1881,7 @@ short RenderObject::getVerticalPosition( bool firstLine, RenderObject* ref ) con
 
 short RenderObject::lineHeight( bool firstLine ) const
 {
-    // Inline blocks are replaced elements. Otherwise, just pass off to
+    // Inline blocks are tqreplaced elements. Otherwise, just pass off to
     // the base class.  If we're being queried as though we're the root line
     // box, then the fact that we're an inline-block is irrelevant, and we behave
     // just like a block.
@@ -1911,7 +1911,7 @@ short RenderObject::lineHeight( bool firstLine ) const
 
 short RenderObject::baselinePosition( bool firstLine ) const
 {
-    // Inline blocks are replaced elements. Otherwise, just pass off to
+    // Inline blocks are tqreplaced elements. Otherwise, just pass off to
     // the base class.  If we're being queried as though we're the root line
     // box, then the fact that we're an inline-block is irrelevant, and we behave
     // just like a block.
@@ -1923,12 +1923,12 @@ short RenderObject::baselinePosition( bool firstLine ) const
     return fm.ascent() + ( lineHeight( firstLine) - fm.height() ) / 2;
 }
 
-void RenderObject::invalidateVerticalPositions()
+void RenderObject::tqinvalidateVerticalPositions()
 {
     m_verticalPosition = PositionUndefined;
     RenderObject *child = firstChild();
     while( child ) {
-        child->invalidateVerticalPositions();
+        child->tqinvalidateVerticalPositions();
         child = child->nextSibling();
     }
 }
@@ -1961,7 +1961,7 @@ void RenderObject::recalcMinMaxWidths()
         child = child->nextSibling();
     }
 
-    // we need to recalculate, if the contains inline children, as the change could have
+    // we need to recalculate, if the tqcontains inline children, as the change could have
     // happened somewhere deep inside the child tree
     if ( ( !isInline() || isReplacedBlock() ) && childrenInline() )
         m_minMaxKnown = false;
@@ -1971,12 +1971,12 @@ void RenderObject::recalcMinMaxWidths()
     m_recalcMinMax = false;
 }
 
-void RenderObject::scheduleRelayout(RenderObject *clippedObj)
+void RenderObject::scheduleRetqlayout(RenderObject *clippedObj)
 {
     if (!isCanvas()) return;
     KHTMLView *view = static_cast<RenderCanvas *>(this)->view();
     if ( view )
-        view->scheduleRelayout(clippedObj);
+        view->scheduleRetqlayout(clippedObj);
 }
 
 
@@ -2223,7 +2223,7 @@ CounterNode* RenderObject::lookupCounter(const TQString& counter) const
 {
     TQDict<khtml::CounterNode>* counters = document()->counters(this);
     if (counters)
-        return counters->find(counter);
+        return counters->tqfind(counter);
     else
         return 0;
 }
@@ -2274,7 +2274,7 @@ void RenderObject::updateWidgetMasks() {
                                   curr->height()-pby-curr->borderBottom()-curr->paddingBottom()));
 #ifdef MASK_DEBUG
                 TQMemArray<TQRect> ar = r.rects();
-                kdDebug(6040) << "|| Setting widget mask for " << curr->information() << endl;
+                kdDebug(6040) << "|| Setting widget tqmask for " << curr->information() << endl;
                 for (int i = 0; i < ar.size() ; ++i) {
                     kdDebug(6040) << "		" <<  ar[i] << endl;
                 }

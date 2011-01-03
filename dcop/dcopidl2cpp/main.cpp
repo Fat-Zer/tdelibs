@@ -104,11 +104,11 @@ int main( int argc, char** argv )
     TQString base( argv[argpos] );
     TQString idl = base;
 
-    int pos = base.findRev( '.' );
+    int pos = base.tqfindRev( '.' );
     if ( pos != -1 )
 	base = base.left( pos );
 
-    pos = idl.findRev('/');
+    pos = idl.tqfindRev('/');
     if ( pos != -1 )
 	idl = idl.mid( pos+1 );
 
@@ -118,7 +118,7 @@ int main( int argc, char** argv )
     if ( generate_stub ) {
 	TQString header = base;
 	generateStub( idl, header + "_stub.h", de );
-	pos = header.findRev('/');
+	pos = header.tqfindRev('/');
 	if ( pos != -1 )
 	    header = header.mid( pos+1 );
 	generateStubImpl( idl, header + "_stub.h", base+".h", base + "_stub." + suffix, de);

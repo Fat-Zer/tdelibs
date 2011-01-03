@@ -10,7 +10,7 @@ include( $(KDELIBS)/win/common.pro )
 # needed to export library classes:
 DEFINES += MAKE_KDEFX_LIB
 
-system( moc kstyle.h -o moc/kstyle.moc )
+system( tqmoc kstyle.h -o tqmoc/kstyle.moc )
 
 LIBS -= "$(KDEDIR)\lib\kdewin32_$(KDE_VER).lib" "$(KDEDIR)\lib\ltdl_$(KDE_VER).lib"
 

@@ -151,7 +151,7 @@ namespace KJS {
   /**
    * @internal
    *
-   * KJSDebugWin represents the debugger window that is visible to the user. It contains
+   * KJSDebugWin represents the debugger window that is visible to the user. It tqcontains
    * a stack frame list, a code viewer and a source fragment selector, plus buttons
    * to control execution including next, step and continue.
    *

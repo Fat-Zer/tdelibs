@@ -56,7 +56,7 @@ int main(int argc,char **argv)
   f.close();
   
   text = TQString::fromUtf8( text.local8Bit() );
-  text.replace( "\n", "\r\n" );
+  text.tqreplace( "\n", "\r\n" );
   
   if ( !f.open( IO_WriteOnly ) ) {
     kdDebug() << "Error opening file '" << filename << "' for writing." << endl;

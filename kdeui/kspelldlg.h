@@ -63,11 +63,11 @@ public:
 	     bool _progressbar = false, bool _modal = false );
   ~KSpellDlg();
 
-  TQString replacement() const
+  TQString tqreplacement() const
     { return newword; }
 
   /**
-   * Change the misspelled word and suggested replacements
+   * Change the misspelled word and suggested tqreplacements
    *  and enable the disabled buttons on the dialog box.
    * (Buttons are disabled by standby().)
    **/
@@ -100,8 +100,8 @@ protected slots:
   void add();
   void ignoreAll();
   void cancel();
-  void replace();
-  void replaceAll();
+  void tqreplace();
+  void tqreplaceAll();
   void suggest();
   void stop();
   void slotConfigChanged();

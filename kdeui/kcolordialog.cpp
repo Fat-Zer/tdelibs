@@ -21,10 +21,10 @@
 //
 // 1999-09-27 Espen Sand <espensa@online.no>
 // KColorDialog is now subclassed from KDialogBase. I have also extended
-// KColorDialog::getColor() so that it contains a parent argument. This
+// KColorDialog::getColor() so that it tqcontains a parent argument. This
 // improves centering capability.
 //
-// layout management added Oct 1997 by Mario Weilguni
+// tqlayout management added Oct 1997 by Mario Weilguni
 // <mweilguni@sime.com>
 //
 
@@ -376,7 +376,7 @@ void KColorCells::paintCell( TQPainter *painter, int row, int col )
 	if (shade)
         {
 		qDrawShadePanel( painter, 1, 1, cellWidth()-2,
-		    cellHeight()-2, colorGroup(), true, 1, &brush );
+		    cellHeight()-2, tqcolorGroup(), true, 1, &brush );
 		w = 2;
         }
         TQColor color = colors[ row * numCols() + col ];
@@ -565,7 +565,7 @@ KPaletteTable::KPaletteTable( TQWidget *parent, int minWidth, int cols)
   TQStringList diskPaletteList = KPalette::getPaletteList();
   TQStringList paletteList;
 
-  // We must replace the untranslated file names by translate names (of course only for KDE's standard palettes)
+  // We must tqreplace the untranslated file names by translate names (of course only for KDE's standard palettes)
   for ( int i = 0; colorPaletteName[i].m_fileName; ++i )
   {
       diskPaletteList.remove( colorPaletteName[i].m_fileName );
@@ -574,11 +574,11 @@ KPaletteTable::KPaletteTable( TQWidget *parent, int minWidth, int cols)
   paletteList += diskPaletteList;
   paletteList.append( i18n_namedColors );
 
-  TQVBoxLayout *layout = new TQVBoxLayout( this );
+  TQVBoxLayout *tqlayout = new TQVBoxLayout( this );
 
   combo = new TQComboBox( false, this );
   combo->insertStringList( paletteList );
-  layout->addWidget(combo);
+  tqlayout->addWidget(combo);
 
   sv = new TQScrollView( this );
   TQSize cellSize = TQSize( mMinWidth, 120);
@@ -588,16 +588,16 @@ KPaletteTable::KPaletteTable( TQWidget *parent, int minWidth, int cols)
   minSize += TQSize(sv->frameWidth(), 0);
   minSize += TQSize(cellSize);
   sv->setFixedSize(minSize);
-  layout->addWidget(sv);
+  tqlayout->addWidget(sv);
 
   mNamedColorList = new KListBox( this, "namedColorList", 0 );
   mNamedColorList->setFixedSize(minSize);
   mNamedColorList->hide();
-  layout->addWidget(mNamedColorList);
+  tqlayout->addWidget(mNamedColorList);
   connect( mNamedColorList, TQT_SIGNAL(highlighted( const TQString & )),
 	   this, TQT_SLOT( slotColorTextSelected( const TQString & )) );
 
-  setFixedSize( sizeHint());
+  setFixedSize( tqsizeHint());
   connect( combo, TQT_SIGNAL(activated(const TQString &)),
 	this, TQT_SLOT(slotSetPalette( const TQString &)));
 }
@@ -674,8 +674,8 @@ KPaletteTable::readNamedColor( void )
 	// that start with "gray".
 	//
 	TQString name = line.mid(pos).stripWhiteSpace();
-	if( name.isNull() || name.find(' ') != -1 ||
-	    name.find( "gray" ) != -1 ||  name.find( "grey" ) != -1 )
+	if( name.isNull() || name.tqfind(' ') != -1 ||
+	    name.tqfind( "gray" ) != -1 ||  name.tqfind( "grey" ) != -1 )
 	{
 	  continue;
 	}
@@ -782,7 +782,7 @@ KPaletteTable::setPalette( const TQString &_paletteName )
      }
   }
 
-  // We must again find the file name of the palette from the eventual translation
+  // We must again tqfind the file name of the palette from the eventual translation
   for ( int i = 0; colorPaletteName[i].m_fileName; ++i )
   {
       if ( paletteName == i18n( "palette name", colorPaletteName[i].m_displayName ) )
@@ -926,7 +926,7 @@ public:
     KPalette *palette;
     KValueSelector *valuePal;
     TQVBoxLayout* l_right;
-    TQGridLayout* tl_layout;
+    TQGridLayout* tl_tqlayout;
     TQCheckBox *cbDefaultColor;
     KColor defaultColor;
     KColor selColor;
@@ -954,21 +954,21 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   TQLabel *label;
 
   //
-  // Create the top level page and its layout
+  // Create the top level page and its tqlayout
   //
   TQWidget *page = new TQWidget( this );
   setMainWidget( page );
 
-  TQGridLayout *tl_layout = new TQGridLayout( page, 3, 3, 0, spacingHint() );
-  d->tl_layout = tl_layout;
-  tl_layout->addColSpacing( 1, spacingHint() * 2 );
+  TQGridLayout *tl_tqlayout = new TQGridLayout( page, 3, 3, 0, spacingHint() );
+  d->tl_tqlayout = tl_tqlayout;
+  tl_tqlayout->addColSpacing( 1, spacingHint() * 2 );
 
   //
   // the more complicated part: the left side
   // add a V-box
   //
   TQVBoxLayout *l_left = new TQVBoxLayout();
-  tl_layout->addLayout(l_left, 0, 0);
+  tl_tqlayout->addLayout(l_left, 0, 0);
 
   //
   // add a H-Box for the XY-Selector and a grid for the
@@ -1003,7 +1003,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   // add the HSV fields
   //
   label = new TQLabel( i18n("H:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 0, 2);
   d->hedit = new KColorSpinBox( 0, 359, 1, page );
   d->hedit->setValidator( new TQIntValidator( d->hedit ) );
@@ -1012,7 +1012,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   	TQT_SLOT( slotHSVChanged() ) );
 
   label = new TQLabel( i18n("S:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 1, 2);
   d->sedit = new KColorSpinBox( 0, 255, 1, page );
   d->sedit->setValidator( new TQIntValidator( d->sedit ) );
@@ -1021,7 +1021,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   	TQT_SLOT( slotHSVChanged() ) );
 
   label = new TQLabel( i18n("V:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 2, 2);
   d->vedit = new KColorSpinBox( 0, 255, 1, page );
   d->vedit->setValidator( new TQIntValidator( d->vedit ) );
@@ -1033,7 +1033,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   // add the RGB fields
   //
   label = new TQLabel( i18n("R:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 0, 4);
   d->redit = new KColorSpinBox( 0, 255, 1, page );
   d->redit->setValidator( new TQIntValidator( d->redit ) );
@@ -1042,7 +1042,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   	TQT_SLOT( slotRGBChanged() ) );
 
   label = new TQLabel( i18n("G:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget( label, 1, 4);
   d->gedit = new KColorSpinBox( 0, 255,1, page );
   d->gedit->setValidator( new TQIntValidator( d->gedit ) );
@@ -1051,7 +1051,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   	TQT_SLOT( slotRGBChanged() ) );
 
   label = new TQLabel( i18n("B:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 2, 4);
   d->bedit = new KColorSpinBox( 0, 255, 1, page );
   d->bedit->setValidator( new TQIntValidator( d->bedit ) );
@@ -1072,10 +1072,10 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   d->bedit->setFixedWidth(w);
 
   //
-  // add a layout for the right side
+  // add a tqlayout for the right side
   //
   d->l_right = new TQVBoxLayout;
-  tl_layout->addLayout(d->l_right, 0, 2);
+  tl_tqlayout->addLayout(d->l_right, 0, 2);
 
   //
   // Add the palette table
@@ -1143,7 +1143,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   d->htmlName = new KLineEdit( page );
   d->htmlName->setMaxLength( 13 ); // Qt's TQColor allows 12 hexa-digits
   d->htmlName->setText("#FFFFFF"); // But HTML uses only 6, so do not worry about the size
-  w = d->htmlName->fontMetrics().width(TQString::fromLatin1("#DDDDDDD"));
+  w = d->htmlName->fontMetrics().width(TQString::tqfromLatin1("#DDDDDDD"));
   d->htmlName->setFixedWidth(w);
   l_grid->addWidget(d->htmlName, 1, 2, AlignLeft);
 
@@ -1156,8 +1156,8 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   connect( d->patch, TQT_SIGNAL( colorChanged( const TQColor&)),
 	   TQT_SLOT( setColor( const TQColor&)));
 
-  tl_layout->activate();
-  page->setMinimumSize( page->sizeHint() );
+  tl_tqlayout->activate();
+  page->setMinimumSize( page->tqsizeHint() );
 
   readSettings();
   d->bRecursion = false;
@@ -1195,7 +1195,7 @@ KColorDialog::eventFilter( TQObject *obj, TQEvent *ev )
       case TQEvent::DragLeave:
       case TQEvent::Drop:
       case TQEvent::DragResponse:
-            qApp->sendEvent(d->patch, ev);
+            tqApp->sendEvent(d->patch, ev);
             return true;
       default:
             break;
@@ -1222,8 +1222,8 @@ KColorDialog::setDefaultColor( const TQColor& col )
         d->l_right->addWidget( d->cbDefaultColor );
 
         mainWidget()->setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX ); // cancel setFixedSize()
-        d->tl_layout->activate();
-        mainWidget()->setMinimumSize( mainWidget()->sizeHint() );
+        d->tl_tqlayout->activate();
+        mainWidget()->setMinimumSize( mainWidget()->tqsizeHint() );
         disableResize();
 
         connect( d->cbDefaultColor, TQT_SIGNAL( clicked() ), TQT_SLOT( slotDefaultColorClicked() ) );
@@ -1479,7 +1479,7 @@ void KColorDialog::showColor( const KColor &color, const TQString &name )
   d->valuePal->setValue( v );
   d->valuePal->updateContents();
   d->valuePal->blockSignals(false);
-  d->valuePal->repaint( false );
+  d->valuePal->tqrepaint( false );
   d->bRecursion = false;
 }
 

@@ -34,8 +34,8 @@ public:
 	void setOptions(const TQMap<TQString,TQString>& opts);
 	bool isValid(TQString& msg);
 
-	TQSize sizeHint() const;
-	TQSize minimumSizeHint() const;
+	TQSize tqsizeHint() const;
+	TQSize tqminimumSizeHint() const;
 
 private:
 	QTable	*m_tags;

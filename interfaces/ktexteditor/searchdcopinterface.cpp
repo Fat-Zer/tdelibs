@@ -20,16 +20,16 @@ SearchDCOPInterface::~SearchDCOPInterface()
 
 }
 
-bool SearchDCOPInterface::findFirstString( TQString text, bool caseSensitive)
+bool SearchDCOPInterface::tqfindFirstString( TQString text, bool caseSensitive)
 {
 	return m_parent->searchText(0, 0, text, &m_currentrow, &m_currentcol,  &m_currentmatchlen, caseSensitive);
 }
-bool SearchDCOPInterface::findNextString( TQString text, bool caseSensitive)
+bool SearchDCOPInterface::tqfindNextString( TQString text, bool caseSensitive)
 {
 	return m_parent->searchText(m_currentrow, m_currentcol+1, text, &m_currentrow, &m_currentcol,  &m_currentmatchlen, caseSensitive);
 }
 
-bool SearchDCOPInterface::findPreviousString( TQString text, bool caseSensitive)
+bool SearchDCOPInterface::tqfindPreviousString( TQString text, bool caseSensitive)
 {
 	if( m_currentcol == 0)
 		m_currentrow--;
@@ -38,28 +38,28 @@ bool SearchDCOPInterface::findPreviousString( TQString text, bool caseSensitive)
 	return m_parent->searchText(m_currentrow, m_currentcol, text, &m_currentrow, &m_currentcol,  &m_currentmatchlen, caseSensitive, true);
 }
 
-bool SearchDCOPInterface::findLastString( TQString text, bool caseSensitive)
+bool SearchDCOPInterface::tqfindLastString( TQString text, bool caseSensitive)
 {
 	return m_parent->searchText(0,0, text, &m_currentrow, &m_currentcol,  &m_currentmatchlen, caseSensitive, true);
 }
 
-bool SearchDCOPInterface::findStringAt( uint  row, uint  col, TQString text, bool caseSensitive)
+bool SearchDCOPInterface::tqfindStringAt( uint  row, uint  col, TQString text, bool caseSensitive)
 {
 	return m_parent->searchText(row,col, text, &m_currentrow, &m_currentcol,  &m_currentmatchlen, caseSensitive);
 
 }
 
-bool SearchDCOPInterface::findFirstRegExp( TQString regexp)
+bool SearchDCOPInterface::tqfindFirstRegExp( TQString regexp)
 {
 	return m_parent->searchText( 0,0, TQRegExp(regexp), &m_currentrow, &m_currentcol,  &m_currentmatchlen);
 }
 
-bool SearchDCOPInterface::findNextRegExp( TQString regexp)
+bool SearchDCOPInterface::tqfindNextRegExp( TQString regexp)
 {
 	return m_parent->searchText( m_currentrow, m_currentcol+1, TQRegExp(regexp), &m_currentrow, &m_currentcol,  &m_currentmatchlen);
 }
 
-bool SearchDCOPInterface::findPreviousRegExp( TQString regexp)
+bool SearchDCOPInterface::tqfindPreviousRegExp( TQString regexp)
 {
 	if( m_currentcol == 0)
 		m_currentrow--;
@@ -69,12 +69,12 @@ bool SearchDCOPInterface::findPreviousRegExp( TQString regexp)
 
 }
 
-bool SearchDCOPInterface::findLastRegExp(TQString regexp)
+bool SearchDCOPInterface::tqfindLastRegExp(TQString regexp)
 {
 	return m_parent->searchText( 0,0, TQRegExp(regexp), &m_currentrow, &m_currentcol,  &m_currentmatchlen, true);
 }
 
-bool SearchDCOPInterface::findRegExpAt( uint  row, uint  col, TQString regexp)
+bool SearchDCOPInterface::tqfindRegExpAt( uint  row, uint  col, TQString regexp)
 {
 	return m_parent->searchText( row, col, TQRegExp(regexp), &m_currentrow, &m_currentcol, &m_currentmatchlen, false);
 }

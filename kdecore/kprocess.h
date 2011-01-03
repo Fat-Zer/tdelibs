@@ -127,7 +127,7 @@ class KPty;
  * @author Christian Czezatke e9025461@student.tuwien.ac.at
  *
  **/
-class KDECORE_EXPORT KProcess : public QObject
+class KDECORE_EXPORT KProcess : public TQObject
 {
   Q_OBJECT
 
@@ -606,7 +606,7 @@ signals:
    * data structures before returning from the slot.
    * Example:
    * \code
-   *     TQString myBuf = TQString::fromLatin1(buffer, buflen);
+   *     TQString myBuf = TQString::tqfromLatin1(buffer, buflen);
    * \endcode
    **/
   void receivedStdout(KProcess *proc, char *buffer, int buflen);
@@ -752,7 +752,7 @@ protected:
    * will usually do some communications cleanup, like closing in[0],
    * out[1] and out[1].
    *
-   * Furthermore, it must also create the QSocketNotifiers innot,
+   * Furthermore, it must also create the TQSocketNotifiers innot,
    * outnot and errnot and connect their Qt signals to the respective
    * KProcess slots.
    *

@@ -89,7 +89,7 @@ class DOMString;
  * been left for a later Level of the DOM specification.
  *
  *  The \c nodeName attribute that is inherited from
- * \c Node contains the name of the entity.
+ * \c Node tqcontains the name of the entity.
  *
  *  An XML processor may choose to completely expand entities before
  * the structure model is passed to the DOM; in this case there will
@@ -99,21 +99,21 @@ class DOMString;
  * process entity declarations made in the external subset or declared
  * in external parameter entities. This means that parsed entities
  * declared in the external subset need not be expanded by some
- * classes of applications, and that the replacement value of the
- * entity may not be available. When the replacement value is
+ * classes of applications, and that the tqreplacement value of the
+ * entity may not be available. When the tqreplacement value is
  * available, the corresponding \c Entity node's child
- * list represents the structure of that replacement text. Otherwise,
+ * list represents the structure of that tqreplacement text. Otherwise,
  * the child list is empty.
  *
  *  The resolution of the children of the \c Entity (the
- * replacement value) may be lazily evaluated; actions by the user
+ * tqreplacement value) may be lazily evaluated; actions by the user
  * (such as calling the \c childNodes method on the
  * \c Entity Node) are assumed to trigger the evaluation.
  *
  *  The DOM Level 1 does not support editing \c Entity
  * nodes; if a user wants to make changes to the contents of an
  * \c Entity , every related \c EntityReference node
- * has to be replaced in the structure model by a clone of the
+ * has to be tqreplaced in the structure model by a clone of the
  * \c Entity 's contents, and then the desired changes must be
  * made to each of those clones instead. All the descendants of an
  * \c Entity node are readonly.
@@ -178,7 +178,7 @@ protected:
  * \c EntityReference are readonly.
  *
  *  The resolution of the children of the \c EntityReference
- * (the replacement value of the referenced \c Entity
+ * (the tqreplacement value of the referenced \c Entity
  * ) may be lazily evaluated; actions by the user (such as
  * calling the \c childNodes method on the
  * \c EntityReference node) are assumed to trigger the

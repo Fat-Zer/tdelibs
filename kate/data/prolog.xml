@@ -96,7 +96,7 @@
             <item> db_btrees </item>
             <item> db_chains </item>
             <item> fail </item>
-            <item> findall </item>
+            <item> tqfindall </item>
             <item> format </item>
             <item> free </item>
             <item> msgrecv </item>
@@ -109,7 +109,7 @@
             <item> retractall </item>
             <item> save </item>
             <item> term_bin </item>
-            <item> term_replace </item>
+            <item> term_tqreplace </item>
             <item> term_str </item>
             <item> trap </item>
             <item> write </item>

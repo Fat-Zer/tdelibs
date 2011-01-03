@@ -24,7 +24,7 @@
 #include <tqstringlist.h>
 #include <tqobject.h>
 
-class GsChecker : public QObject
+class GsChecker : public TQObject
 {
 public:
 	GsChecker(TQObject *parent = 0, const char *name = 0);

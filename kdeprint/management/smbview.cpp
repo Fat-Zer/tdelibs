@@ -140,7 +140,7 @@ void SmbView::init()
 		while (!smb_stream.atEnd ())
 		{
 			TQString smb_line = smb_stream.readLine ();
-			if (smb_line.contains (wins_keyword, FALSE) > 0)
+			if (smb_line.tqcontains (wins_keyword, FALSE) > 0)
 			{
 				TQString key = smb_line.section ('=', 0, 0);
 				key = key.stripWhiteSpace();
@@ -216,7 +216,7 @@ void SmbView::processGroups()
 	clear();
 	for (TQStringList::ConstIterator it=grps.begin(); it!=grps.end(); ++it)
 	{
-		int	p = (*it).find("<1d>");
+		int	p = (*it).tqfind("<1d>");
 		if (p == -1)
 			continue;
 		QListViewItem	*item = new TQListViewItem(this,(*it).left(p).stripWhiteSpace());

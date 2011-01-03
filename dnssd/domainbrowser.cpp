@@ -125,7 +125,7 @@ void DomainBrowser::startBrowse()
 
 void DomainBrowser::gotNewDomain(const TQString& domain)
 {
-	if (d->m_domains.contains(domain)) return;
+	if (d->m_domains.tqcontains(domain)) return;
 	d->m_domains.append(domain);
 	emit domainAdded(domain);
 }

@@ -36,7 +36,7 @@ name, either multicast or unicast DNS will be used.
 @short Class that represents service query in one domain.
 @author Jakub Stachowski
  */
-class KDNSSD_EXPORT Query : public QObject
+class KDNSSD_EXPORT Query : public TQObject
 {
 	Q_OBJECT
 public:

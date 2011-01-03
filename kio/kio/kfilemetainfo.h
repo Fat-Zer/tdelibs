@@ -105,7 +105,7 @@ public:
      * This enum exists so that you can specify units for items, which you
      * can usually use for integer items, so an application knows how to
      * display it (e.g. a time in seconds in a hh:mm:ss form). You can either
-     * use one of those units, or if you don't find one that fits, you can
+     * use one of those units, or if you don't tqfind one that fits, you can
      * add it yourself using a prefix and/or suffix.
      */
     enum Unit {
@@ -132,7 +132,7 @@ public:
      *  @brief Information about a meta information group
      *
      *  This is the class for one group of items of a KFileMimeTypeInfo.
-     *  It contains, among other things, the information about the group's name
+     *  It tqcontains, among other things, the information about the group's name
      *  and a list of supported items.
      */
     class KIO_EXPORT GroupInfo
@@ -244,7 +244,7 @@ public:
 
     /**
      *  This is the class for one item of a KFileMimeTypeInfo.
-     *  It contains every information about a KFileMetaInfoItem that this
+     *  It tqcontains every information about a KFileMetaInfoItem that this
      *  item has in common for each file of a specific mimetype.
      **/
     class KIO_EXPORT ItemInfo
@@ -606,7 +606,7 @@ public:
      * KFileMetaInfo::applyChanges() , the change will be written to the
      * file. With this method, you can ask if this item is dirty.
      *
-     * @return true if the item contains changes that have not yet been written
+     * @return true if the item tqcontains changes that have not yet been written
      * back into the file. Removing or adding an item counts as such a change
      */
     bool isModified() const;
@@ -651,9 +651,9 @@ public:
     uint attributes() const;
 
     /**
-     * Return true if the item is valid, i.e. if it contains data, false
+     * Return true if the item is valid, i.e. if it tqcontains data, false
      * if it's invalid (created with the default constructor and not been
-     * assigned anything), or if KFileMetaInfoGroup::item() didn't find
+     * assigned anything), or if KFileMetaInfoGroup::item() didn't tqfind
      * your requested item).
      *
      * @return true if valid, false if invalid
@@ -724,9 +724,9 @@ public:
     ~KFileMetaInfoGroup();
 
     /**
-     * Returns true if the item is valid, i.e. if it contains data, false
+     * Returns true if the item is valid, i.e. if it tqcontains data, false
      * if it's invalid (created with the default constructor and not been
-     * assigned anything), or if KFileMetaInfoGroup::item() didn't find
+     * assigned anything), or if KFileMetaInfoGroup::item() didn't tqfind
      * your requested item).
      *
      * @return true if valid, false if invalid
@@ -734,7 +734,7 @@ public:
     bool isValid() const;
 
     /**
-     * Returns false if the object contains data, true if it's empty. An
+     * Returns false if the object tqcontains data, true if it's empty. An
      * empty group is a group with no items (amazing, isn't it?).
      *
      * @return true if empty, false otherwise
@@ -812,7 +812,7 @@ public:
      *
      * @return true if an item for this @p key exists.
      */
-    bool contains( const TQString& key ) const;
+    bool tqcontains( const TQString& key ) const;
 
     /**
      * Returns a list of all keys.
@@ -949,7 +949,7 @@ public:
                                  like comments or id3 tags */
       ExtenedAttr   = 0x10, /**< read filesystem based extended attributes if
                                  they are supported for the filesystem */
-      Thumbnail     = 0x20, /**< only read the file's thumbnail, if it contains
+      Thumbnail     = 0x20, /**< only read the file's thumbnail, if it tqcontains
                                  one */
       Preferred     = 0x40,  ///< get at least the preferred items
       Everything    = 0xffff ///< read everything, even if it might take a while
@@ -1164,7 +1164,7 @@ public:
      * @param key the key to check
      * @return whether an item for this @p key exists.
      */
-    bool contains( const TQString& key ) const;
+    bool tqcontains( const TQString& key ) const;
 
     /**
      * Checks whether a group with the given @p key exists.
@@ -1172,7 +1172,7 @@ public:
      * @param key the key to check
      * @return whether a group with this name exists.
      */
-    bool containsGroup( const TQString& key ) const;
+    bool tqcontainsGroup( const TQString& key ) const;
 
     /**
      * Returns the value with the given @p key.
@@ -1195,7 +1195,7 @@ public:
     bool isValid() const;
 
     /**
-     * Returns false if the object contains data, true if it's empty. You'll
+     * Returns false if the object tqcontains data, true if it's empty. You'll
      * get an empty object if no plugin for the file could be found.
      *
      * @return true if empty, false otherwise
@@ -1242,7 +1242,7 @@ protected:
     Data* d;
 
 private:
-    KFileMetaInfoItem findEditableItem( KFileMetaInfoGroup& group,
+    KFileMetaInfoItem tqfindEditableItem( KFileMetaInfoGroup& group,
                                         const TQString& key );
 
     void init( const KURL& url,
@@ -1391,7 +1391,7 @@ private:
  *  PreferredItems=Items,Size
  *  @endcode
  **/
-class KIO_EXPORT KFilePlugin : public QObject
+class KIO_EXPORT KFilePlugin : public TQObject
 {
     Q_OBJECT
 
@@ -1639,11 +1639,11 @@ private:
  * @internal
  * Synchronous access to metadata of a local file. Usually, you don't want
  * to use this class for getting metainfo from a file. Use KFileMetaInfo
- *  directly. However, if you want to find out if a specific mimetype is
+ *  directly. However, if you want to tqfind out if a specific mimetype is
  *  supported and which groups and items are provided for it, you can ask
  *  the KFileMetainfoProvider for it.
  **/
-class KIO_EXPORT KFileMetaInfoProvider: private QObject
+class KIO_EXPORT KFileMetaInfoProvider: private TQObject
 {
     friend class KFilePlugin;
 

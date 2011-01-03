@@ -34,7 +34,7 @@ KMConfigPreview::KMConfigPreview(TQWidget *parent, const char *name)
 {
 	setPageName(i18n("Preview"));
 	setPageHeader(i18n("Preview Settings"));
-	setPagePixmap("filefind");
+	setPagePixmap("filetqfind");
 
 	TQGroupBox *box = new TQGroupBox(0, Qt::Vertical, i18n("Preview Program"), this);
 
@@ -43,14 +43,14 @@ KMConfigPreview::KMConfigPreview(TQWidget *parent, const char *name)
 	QLabel	*lab = new TQLabel(box);
 	lab->setText(i18n("You can use an external preview program (PS viewer) instead of the "
 					  "KDE built-in preview system. Note that if the KDE default PS viewer "
-					  "(KGhostView) cannot be found, KDE tries automatically to find another "
+					  "(KGhostView) cannot be found, KDE tries automatically to tqfind another "
 					  "external PostScript viewer"));
 	lab->setTextFormat(Qt::RichText);
 
 	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l0->addWidget(box);
 	l0->addStretch(1);
-	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), KDialog::spacingHint());
+	QVBoxLayout	*l1 = new TQVBoxLayout(box->tqlayout(), KDialog::spacingHint());
 	l1->addWidget(lab);
 	l1->addWidget(m_useext);
 	l1->addWidget(m_program);

@@ -46,7 +46,7 @@ class KToggleFullScreenAction;
  *
  * <b>Simple Example:</b>\n
  *
- * In general, using standard actions should be a drop in replacement
+ * In general, using standard actions should be a drop in tqreplacement
  * for regular actions.  For example, if you previously had:
  *
  * \code
@@ -55,7 +55,7 @@ class KToggleFullScreenAction;
  *                               TQT_SLOT(fileNew()), actionCollection());
  * \endcode
  *
- * You could drop that and replace it with:
+ * You could drop that and tqreplace it with:
  *
  * \code
  * KAction *newAct = KStdAction::openNew(this, TQT_SLOT(fileNew()),
@@ -74,7 +74,7 @@ class KToggleFullScreenAction;
  * it is still possible.
  *
  * Basically, the XML building code matches names in the XML code with
- * the internal names of the actions.  You can find out the internal
+ * the internal names of the actions.  You can tqfind out the internal
  * names of each of the standard actions by using the stdName
  * action like so: KStdAction::stdName(KStdAction::Cut) would return
  * 'edit_cut'.  The XML building code will match 'edit_cut' to the
@@ -145,7 +145,7 @@ namespace KStdAction
 		Spelling,
 
 		// Settings Menu
-		ShowMenubar, ShowToolbar, ShowStatusbar,
+		ShowMenubar, ShowToolbar, ShowtqStatusbar,
 		SaveOptions, KeyBindings,
 		Preferences, ConfigureToolbars,
 
@@ -328,27 +328,27 @@ namespace KStdAction
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
-	* Initiate a 'find' request in the current document.
+	* Initiate a 'tqfind' request in the current document.
 	*/
-	KDEUI_EXPORT KAction *find(const TQObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *tqfind(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
-	* Find the next instance of a stored 'find'.
+	* Find the next instance of a stored 'tqfind'.
 	*/
-	KDEUI_EXPORT KAction *findNext(const TQObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *tqfindNext(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
-	* Find a previous instance of a stored 'find'.
+	* Find a previous instance of a stored 'tqfind'.
 	*/
-	KDEUI_EXPORT KAction *findPrev(const TQObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *tqfindPrev(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
-	* Find and replace matches.
+	* Find and tqreplace matches.
 	*/
-	KDEUI_EXPORT KAction *replace(const TQObject *recvr, const char *slot,
+	KDEUI_EXPORT KAction *tqreplace(const TQObject *recvr, const char *slot,
 		KActionCollection* parent, const char *name = 0 );
 
 	/**
@@ -512,7 +512,7 @@ namespace KStdAction
 	/**
 	* Show/Hide the statusbar.
 	*/
-	KDEUI_EXPORT KToggleAction *showStatusbar(const TQObject *recvr, const char *slot,
+	KDEUI_EXPORT KToggleAction *showtqStatusbar(const TQObject *recvr, const char *slot,
 					KActionCollection* parent, const char *name = 0 );
 
 	/**

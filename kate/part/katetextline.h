@@ -32,10 +32,10 @@ class KateRenderer;
 class TQTextStream;
 
 /**
- * The KateTextLine represents a line of text. A text line that contains the
+ * The KateTextLine represents a line of text. A text line that tqcontains the
  * text, an attribute for each character, an attribute for the free space
  * behind the last character and a context number for the syntax highlight.
- * The attribute stores the index to a table that contains fonts and colors
+ * The attribute stores the index to a table that tqcontains fonts and colors
  * and also if a character is selected.
  */
 class KateTextLine : public KShared
@@ -145,16 +145,16 @@ class KateTextLine : public KShared
     inline TQChar getChar (uint pos) const { return m_text[pos]; }
 
     /**
-     * Gets the text as a unicode representation
+     * Gets the text as a tqunicode representation
      * @return text of this line as TQChar array
      */
-    inline const TQChar *text() const { return m_text.unicode(); }
+    inline const TQChar *text() const { return m_text.tqunicode(); }
 
     /**
      * Highlighting array
      * The size of this is string().length()
      *
-     * This contains the index for the attributes (so you can only
+     * This tqcontains the index for the attributes (so you can only
      * have a maximum of 2^8 different highlighting styles in a document)
      *
      * To turn this into actual attributes (bold, green, etc),
@@ -211,7 +211,7 @@ class KateTextLine : public KShared
     uint lengthWithTabs (uint tabChars) const;
 
     /**
-     * Can we find the given string at the given position
+     * Can we tqfind the given string at the given position
      * @param pos startpostion of given string
      * @param match string to match at given pos
      * @return did the string match?
@@ -419,7 +419,7 @@ class KateTextLine : public KShared
    */
   private:
     /**
-     * text of line as unicode
+     * text of line as tqunicode
      */
     TQString m_text;
 
@@ -453,4 +453,4 @@ class KateTextLine : public KShared
 
 #endif
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

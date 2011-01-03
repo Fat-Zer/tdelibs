@@ -225,7 +225,7 @@ void Addressee::setNameFromString( const TQString &s )
   TQString emptyStr = "";
   AddresseeHelper *helper = AddresseeHelper::self();
 
-  int i = str.find( ',' );
+  int i = str.tqfind( ',' );
   if( i < 0 ) {
     TQStringList parts = TQStringList::split( spaceStr, str );
     int leftOffset = 0;
@@ -233,7 +233,7 @@ void Addressee::setNameFromString( const TQString &s )
 
     TQString suffix;
     while ( rightOffset >= 0 ) {
-      if ( helper->containsSuffix( parts[ rightOffset ] ) ) {
+      if ( helper->tqcontainsSuffix( parts[ rightOffset ] ) ) {
         suffix.prepend(parts[ rightOffset ] + (suffix.isEmpty() ? emptyStr : spaceStr));
         rightOffset--;
       } else
@@ -246,7 +246,7 @@ void Addressee::setNameFromString( const TQString &s )
 
     TQStringList inclusionList;
     for ( int n = 1; (rightOffset - n >= 0) && (n < 4); ++n ) {
-      if ( helper->containsPrefix( parts[ rightOffset - n ].lower() ) ) {
+      if ( helper->tqcontainsPrefix( parts[ rightOffset - n ].lower() ) ) {
         inclusionList.prepend( parts[ rightOffset - n ] );
       } else
         break;
@@ -264,7 +264,7 @@ void Addressee::setNameFromString( const TQString &s )
 
     TQString prefix;
     while ( leftOffset < rightOffset ) {
-      if ( helper->containsTitle( parts[ leftOffset ] ) ) {
+      if ( helper->tqcontainsTitle( parts[ leftOffset ] ) ) {
         prefix.append( ( prefix.isEmpty() ? emptyStr : spaceStr) + parts[ leftOffset ] );
         leftOffset++;
       } else
@@ -295,7 +295,7 @@ void Addressee::setNameFromString( const TQString &s )
 
       TQString suffix;
       while ( rightOffset >= 0 ) {
-        if ( helper->containsSuffix( parts[ rightOffset ] ) ) {
+        if ( helper->tqcontainsSuffix( parts[ rightOffset ] ) ) {
           suffix.prepend(parts[ rightOffset ] + (suffix.isEmpty() ? emptyStr : spaceStr));
           rightOffset--;
         } else
@@ -303,7 +303,7 @@ void Addressee::setNameFromString( const TQString &s )
       }
       setSuffix( suffix );
 
-      if ( rightOffset - 1 >= 0 && helper->containsPrefix( parts[ rightOffset - 1 ].lower() ) ) {
+      if ( rightOffset - 1 >= 0 && helper->tqcontainsPrefix( parts[ rightOffset - 1 ].lower() ) ) {
         setFamilyName( parts[ rightOffset - 1 ] + spaceStr + parts[ rightOffset ] );
         rightOffset--;
       } else
@@ -311,7 +311,7 @@ void Addressee::setNameFromString( const TQString &s )
 
       TQString prefix;
       while ( leftOffset < rightOffset ) {
-        if ( helper->containsTitle( parts[ leftOffset ] ) ) {
+        if ( helper->tqcontainsTitle( parts[ leftOffset ] ) ) {
           prefix.append( ( prefix.isEmpty() ? emptyStr : spaceStr) + parts[ leftOffset ] );
           leftOffset++;
         } else
@@ -332,7 +332,7 @@ void Addressee::setNameFromString( const TQString &s )
 
       TQString prefix;
       while ( leftOffset < rightOffset ) {
-        if ( helper->containsTitle( parts[ leftOffset ] ) ) {
+        if ( helper->tqcontainsTitle( parts[ leftOffset ] ) ) {
           prefix.append( ( prefix.isEmpty() ? emptyStr : spaceStr) + parts[ leftOffset ] );
           leftOffset++;
         } else
@@ -398,9 +398,9 @@ TQString Addressee::fullEmail( const TQString &email ) const
     text = e;
   else {
     TQRegExp needQuotes( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" );
-    if ( realName().find( needQuotes ) != -1 ) {
+    if ( realName().tqfind( needQuotes ) != -1 ) {
       TQString name = realName();
-      name.replace( "\"", "\\\"" );
+      name.tqreplace( "\"", "\\\"" );
       text = "\"" + name + "\" <" + e + ">";
     } else
       text = realName() + " <" + e + ">";
@@ -417,7 +417,7 @@ void Addressee::insertEmail( const TQString &email, bool preferred )
   detach();
   mData->empty = false;
 
-  TQStringList::Iterator it = mData->emails.find( email );
+  TQStringList::Iterator it = mData->emails.tqfind( email );
 
   if ( it != mData->emails.end() ) {
     if ( !preferred || it == mData->emails.begin() ) return;
@@ -436,7 +436,7 @@ void Addressee::removeEmail( const TQString &email )
 {
   detach();
 
-  TQStringList::Iterator it = mData->emails.find( email );
+  TQStringList::Iterator it = mData->emails.tqfind( email );
   if ( it == mData->emails.end() ) return;
 
   mData->emails.remove( it );
@@ -520,7 +520,7 @@ PhoneNumber::List Addressee::phoneNumbers( int type ) const
   return list;
 }
 
-PhoneNumber Addressee::findPhoneNumber( const TQString &id ) const
+PhoneNumber Addressee::tqfindPhoneNumber( const TQString &id ) const
 {
   PhoneNumber::List::ConstIterator it;
   for( it = mData->phoneNumbers.constBegin(); it != mData->phoneNumbers.constEnd(); ++it ) {
@@ -612,7 +612,7 @@ Key::List Addressee::keys( int type, TQString customTypeString ) const
   return list;
 }
 
-Key Addressee::findKey( const TQString &id ) const
+Key Addressee::tqfindKey( const TQString &id ) const
 {
   Key::List::ConstIterator it;
   for( it = mData->keys.constBegin(); it != mData->keys.constEnd(); ++it ) {
@@ -739,7 +739,7 @@ Address::List Addressee::addresses( int type ) const
   return list;
 }
 
-Address Addressee::findAddress( const TQString &id ) const
+Address Addressee::tqfindAddress( const TQString &id ) const
 {
   Address::List::ConstIterator it;
   for( it = mData->addresses.constBegin(); it != mData->addresses.constEnd(); ++it ) {
@@ -755,7 +755,7 @@ void Addressee::insertCategory( const TQString &c )
   detach();
   mData->empty = false;
 
-  if ( mData->categories.findIndex( c ) != -1 ) return;
+  if ( mData->categories.tqfindIndex( c ) != -1 ) return;
 
   mData->categories.append( c );
 }
@@ -764,7 +764,7 @@ void Addressee::removeCategory( const TQString &c )
 {
   detach();
 
-  TQStringList::Iterator it = mData->categories.find( c );
+  TQStringList::Iterator it = mData->categories.tqfind( c );
   if ( it == mData->categories.end() ) return;
 
   mData->categories.remove( it );
@@ -772,7 +772,7 @@ void Addressee::removeCategory( const TQString &c )
 
 bool Addressee::hasCategory( const TQString &c ) const
 {
-  return ( mData->categories.findIndex( c ) != -1 );
+  return ( mData->categories.tqfindIndex( c ) != -1 );
 }
 
 void Addressee::setCategories( const TQStringList &c )
@@ -832,7 +832,7 @@ TQString Addressee::custom( const TQString &app, const TQString &name ) const
   TQStringList::ConstIterator it;
   for( it = mData->custom.constBegin(); it != mData->custom.constEnd(); ++it ) {
     if ( (*it).startsWith( qualifiedName ) ) {
-      value = (*it).mid( (*it).find( ":" ) + 1 );
+      value = (*it).mid( (*it).tqfind( ":" ) + 1 );
       break;
     }
   }
@@ -1104,7 +1104,7 @@ bool listEquals( const TQValueList<L> &list, const TQValueList<L> &pattern )
     return false;
 
   for ( uint i = 0; i < list.count(); ++i )
-    if ( pattern.find( list[ i ] ) == pattern.end() )
+    if ( pattern.tqfind( list[ i ] ) == pattern.end() )
       return false;
 
   return true;
@@ -1120,7 +1120,7 @@ bool emailsEquals( const TQStringList &list, const TQStringList &pattern )
 
   TQStringList::ConstIterator it;
   for ( it = list.begin(); it != list.end(); ++it )
-    if ( pattern.find( *it ) == pattern.end() )
+    if ( pattern.tqfind( *it ) == pattern.end() )
       return false;
 
   return true;

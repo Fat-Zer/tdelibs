@@ -64,16 +64,16 @@ ContainerNode::ContainerNode( TQWidget *_container, const TQString &_tagName,
 
 void ContainerNode::removeChild( ContainerNode *child )
 {
-    MergingIndexList::Iterator mergingIt = findIndex( child->mergingName );
+    MergingIndexList::Iterator mergingIt = tqfindIndex( child->mergingName );
     adjustMergingIndices( -1, mergingIt );
     children.removeRef( child );
 }
 
 /*
- * Find a merging index with the given name. Used to find an index defined by <Merge name="blah"/>
+ * Find a merging index with the given name. Used to tqfind an index defined by <Merge name="blah"/>
  * or by a <DefineGroup name="foo" /> tag.
  */
-MergingIndexList::Iterator ContainerNode::findIndex( const TQString &name )
+MergingIndexList::Iterator ContainerNode::tqfindIndex( const TQString &name )
 {
     MergingIndexList::Iterator it( mergingIndices.begin() );
     MergingIndexList::Iterator end( mergingIndices.end() );
@@ -87,7 +87,7 @@ MergingIndexList::Iterator ContainerNode::findIndex( const TQString &name )
  * Check if the given container widget is a child of this node and return the node structure
  * if fonud.
  */
-ContainerNode *ContainerNode::findContainerNode( TQWidget *container )
+ContainerNode *ContainerNode::tqfindContainerNode( TQWidget *container )
 {
     ContainerNodeListIt it( children );
 
@@ -103,7 +103,7 @@ ContainerNode *ContainerNode::findContainerNode( TQWidget *container )
  * container's tag name or the value of the container's name attribute. Specified by
  * the tag bool .
  */
-ContainerNode *ContainerNode::findContainer( const TQString &_name, bool tag )
+ContainerNode *ContainerNode::tqfindContainer( const TQString &_name, bool tag )
 {
     if ( ( tag && tagName == _name ) ||
          ( !tag && name == _name ) )
@@ -112,7 +112,7 @@ ContainerNode *ContainerNode::findContainer( const TQString &_name, bool tag )
     ContainerNodeListIt it( children );
     for (; it.current(); ++it )
     {
-        ContainerNode *res = it.current()->findContainer( _name, tag );
+        ContainerNode *res = it.current()->tqfindContainer( _name, tag );
         if ( res )
             return res;
     }
@@ -125,7 +125,7 @@ ContainerNode *ContainerNode::findContainer( const TQString &_name, bool tag )
  * leaves out container widgets specified in the exludeList . Also ensures that the containers
  * belongs to currClient.
  */
-ContainerNode *ContainerNode::findContainer( const TQString &name, const TQString &tagName,
+ContainerNode *ContainerNode::tqfindContainer( const TQString &name, const TQString &tagName,
                                              const TQPtrList<TQWidget> *excludeList,
                                              KXMLGUIClient * /*currClient*/ )
 {
@@ -136,7 +136,7 @@ ContainerNode *ContainerNode::findContainer( const TQString &name, const TQStrin
     {
         for (; nIt.current(); ++nIt )
             if ( nIt.current()->name == name &&
-                 !excludeList->containsRef( nIt.current()->container ) )
+                 !excludeList->tqcontainsRef( nIt.current()->container ) )
             {
                 res = nIt.current();
                 break;
@@ -149,7 +149,7 @@ ContainerNode *ContainerNode::findContainer( const TQString &name, const TQStrin
         for (; nIt.current(); ++nIt )
         {
             if ( nIt.current()->tagName == tagName &&
-                 !excludeList->containsRef( nIt.current()->container )
+                 !excludeList->tqcontainsRef( nIt.current()->container )
                  /*
                   * It is a bad idea to also compare the client, because
                   * we don't want to do so in situations like these:
@@ -175,7 +175,7 @@ ContainerNode *ContainerNode::findContainer( const TQString &name, const TQStrin
     return res;
 }
 
-ContainerClient *ContainerNode::findChildContainerClient( KXMLGUIClient *currentGUIClient,
+ContainerClient *ContainerNode::tqfindChildContainerClient( KXMLGUIClient *currentGUIClient,
                                                           const TQString &groupName,
                                                           const MergingIndexList::Iterator &mergingIdx )
 {
@@ -226,7 +226,7 @@ void ContainerNode::plugActionList( BuildState &state, const MergingIndexList::I
 
     TQString k( mergingIdx.mergingName );
 
-    if ( k.find( tagActionList ) == -1 )
+    if ( k.tqfind( tagActionList ) == -1 )
         return;
 
     k = k.mid( tagActionList.length() );
@@ -237,7 +237,7 @@ void ContainerNode::plugActionList( BuildState &state, const MergingIndexList::I
     if ( k != state.actionListName )
         return;
 
-    ContainerClient *client = findChildContainerClient( state.guiClient,
+    ContainerClient *client = tqfindChildContainerClient( state.guiClient,
                                                         TQString::null,
                                                         mergingIndices.end() );
 
@@ -268,7 +268,7 @@ void ContainerNode::unplugActionList( BuildState &state, const MergingIndexList:
 
     TQString k = mergingIdx.mergingName;
 
-    if ( k.find( tagActionList ) == -1 )
+    if ( k.tqfind( tagActionList ) == -1 )
         return;
 
     k = k.mid( tagActionList.length() );
@@ -279,11 +279,11 @@ void ContainerNode::unplugActionList( BuildState &state, const MergingIndexList:
     if ( k != state.actionListName )
         return;
 
-    ContainerClient *client = findChildContainerClient( state.guiClient,
+    ContainerClient *client = tqfindChildContainerClient( state.guiClient,
                                                         TQString::null,
                                                         mergingIndices.end() );
 
-    ActionListMap::Iterator lIt( client->actionLists.find( k ) );
+    ActionListMap::Iterator lIt( client->actionLists.tqfind( k ) );
     if ( lIt == client->actionLists.end() )
         return;
 
@@ -352,7 +352,7 @@ void ContainerNode::destructChildren( const TQDomElement &element, BuildState &s
     {
         ContainerNode *childNode = childIt.current();
 
-        TQDomElement childElement = findElementForChild( element, childNode );
+        TQDomElement childElement = tqfindElementForChild( element, childNode );
 
         // destruct returns true in case the container really got deleted
         if ( childNode->destruct( childElement, state ) )
@@ -362,7 +362,7 @@ void ContainerNode::destructChildren( const TQDomElement &element, BuildState &s
     }
 }
 
-TQDomElement ContainerNode::findElementForChild( const TQDomElement &baseElement,
+TQDomElement ContainerNode::tqfindElementForChild( const TQDomElement &baseElement,
                                                 ContainerNode *childNode )
 {
     static const TQString &attrName = KGlobal::staticQString( "name" );
@@ -427,7 +427,7 @@ void ContainerNode::unplugClient( ContainerClient *client )
 
     // now adjust all merging indices
 
-    MergingIndexList::Iterator mergingIt = findIndex( client->mergingName );
+    MergingIndexList::Iterator mergingIt = tqfindIndex( client->mergingName );
 
     adjustMergingIndices( - int( client->actions.count()
                           + client->customElements.count() ),
@@ -441,12 +441,12 @@ void ContainerNode::unplugClient( ContainerClient *client )
     {
         alIt.data().unplug( container );
 
-        // construct the merging index key (i.e. like named merging) , find the
+        // construct the merging index key (i.e. like named merging) , tqfind the
         // corresponding merging index and adjust all indices
         TQString mergingKey = alIt.key();
         mergingKey.prepend( tagActionList );
 
-        MergingIndexList::Iterator mIt = findIndex( mergingKey );
+        MergingIndexList::Iterator mIt = tqfindIndex( mergingKey );
         if ( mIt == mergingIndices.end() )
             continue;
 
@@ -476,9 +476,9 @@ int ContainerNode::calcMergingIndex( const TQString &mergingName,
     MergingIndexList::Iterator mergingIt;
 
     if ( mergingName.isEmpty() )
-        mergingIt = findIndex( state.clientName );
+        mergingIt = tqfindIndex( state.clientName );
     else
-        mergingIt = findIndex( mergingName );
+        mergingIt = tqfindIndex( mergingName );
 
     MergingIndexList::Iterator mergingEnd = mergingIndices.end();
     it = mergingEnd;
@@ -538,7 +538,7 @@ BuildHelper::BuildHelper( BuildState &state, ContainerNode *node )
         containerTags = m_state.clientBuilderContainerTags + containerTags;
     }
 
-    m_state.currentDefaultMergingIt = parentNode->findIndex( defaultMergingName );
+    m_state.currentDefaultMergingIt = parentNode->tqfindIndex( defaultMergingName );
     parentNode->calcMergingIndex( TQString::null, m_state.currentClientMergingIt,
                                   m_state, /*ignoreDefaultMergingIndex*/ false );
 }
@@ -568,9 +568,9 @@ void BuildHelper::processElement( const TQDomElement &e )
 
     bool isActionTag = ( tag == tagAction );
 
-    if ( isActionTag || customTags.findIndex( tag ) != -1 )
+    if ( isActionTag || customTags.tqfindIndex( tag ) != -1 )
         processActionOrCustomElement( e, isActionTag );
-    else if ( containerTags.findIndex( tag ) != -1 )
+    else if ( containerTags.tqfindIndex( tag ) != -1 )
         processContainerElement( e, tag, currName );
     else if ( tag == tagMerge || tag == tagDefineGroup || tag == tagActionList )
         processMergeElement( tag, currName, e );
@@ -588,7 +588,7 @@ void BuildHelper::processActionOrCustomElement( const TQDomElement &e, bool isAc
     TQString group;
     int idx = calcMergingIndex( e, it, group );
 
-    containerClient = parentNode->findChildContainerClient( m_state.guiClient, group, it );
+    containerClient = parentNode->tqfindChildContainerClient( m_state.guiClient, group, it );
 
     bool guiElementCreated = false;
     if ( isActionTag )
@@ -697,7 +697,7 @@ void BuildHelper::processMergeElement( const TQString &tag, const TQString &name
     else if ( tag == tagActionList )
         mergingName.prepend( tagActionList );
 
-    if ( parentNode->findIndex( mergingName ) != parentNode->mergingIndices.end() )
+    if ( parentNode->tqfindIndex( mergingName ) != parentNode->mergingIndices.end() )
         return; //do not allow the redefinition of merging indices!
 
     MergingIndexList::Iterator mIt( parentNode->mergingIndices.end() );
@@ -726,7 +726,7 @@ void BuildHelper::processMergeElement( const TQString &tag, const TQString &name
         ignoreDefaultMergingIndex = true;
 
     // re-calculate the running default and client merging indices.
-    m_state.currentDefaultMergingIt = parentNode->findIndex( defaultMergingName );
+    m_state.currentDefaultMergingIt = parentNode->tqfindIndex( defaultMergingName );
     parentNode->calcMergingIndex( TQString::null, m_state.currentClientMergingIt,
                                   m_state, ignoreDefaultMergingIndex );
 }
@@ -736,7 +736,7 @@ void BuildHelper::processContainerElement( const TQDomElement &e, const TQString
 {
     static const TQString &defaultMergingName = KGlobal::staticQString( "<default>" );
 
-    ContainerNode *containerNode = parentNode->findContainer( name, tag,
+    ContainerNode *containerNode = parentNode->tqfindContainer( name, tag,
                                                               &containerList,
                                                               m_state.guiClient );
 
@@ -759,7 +759,7 @@ void BuildHelper::processContainerElement( const TQDomElement &e, const TQString
 
         parentNode->adjustMergingIndices( 1, it );
 
-        assert( !parentNode->findContainerNode( container ) );
+        assert( !parentNode->tqfindContainerNode( container ) );
 
         containerList.append( container );
 
@@ -783,7 +783,7 @@ void BuildHelper::processContainerElement( const TQDomElement &e, const TQString
     BuildHelper( m_state, containerNode ).build( e );
 
     // and re-calculate running values, for better performance
-    m_state.currentDefaultMergingIt = parentNode->findIndex( defaultMergingName );
+    m_state.currentDefaultMergingIt = parentNode->tqfindIndex( defaultMergingName );
     parentNode->calcMergingIndex( TQString::null, m_state.currentClientMergingIt,
                                   m_state, ignoreDefaultMergingIndex );
 }

@@ -19,7 +19,7 @@
 KLineEditTest::KLineEditTest (TQWidget* widget, const char* name )
               :TQWidget( widget, name )
 {
-    TQVBoxLayout* layout = new TQVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+    TQVBoxLayout* tqlayout = new TQVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
     TQStringList list;
     list << "Tree" << "Suuupa" << "Stroustrup" << "Stone" << "Slick"
@@ -54,8 +54,8 @@ KLineEditTest::KLineEditTest (TQWidget* widget, const char* name )
      m_btnHide->setFixedSize(100,30);
     connect( m_btnHide, TQT_SIGNAL( clicked() ), TQT_SLOT( slotHide() ) );
 
-    layout->addWidget( m_lineedit );
-    layout->addWidget( hbox );
+    tqlayout->addWidget( m_lineedit );
+    tqlayout->addWidget( hbox );
     setCaption( "KLineEdit Unit Test" );
 }
 

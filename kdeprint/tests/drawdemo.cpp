@@ -78,7 +78,7 @@ void drawFonts( TQPainter *p )
 
 
 //
-// This function draws some shapes
+// This function draws some tqshapes
 //
 
 void drawShapes( TQPainter *p )
@@ -115,7 +115,7 @@ struct DrawThing {
 DrawThing ourDrawFunctions[] = {
     { drawColorWheel,	"Draw color wheel" },
     { drawFonts,	"Draw fonts" },
-    { drawShapes,	"Draw shapes" },
+    { drawShapes,	"Draw tqshapes" },
     { 0,		0 } };
 
 

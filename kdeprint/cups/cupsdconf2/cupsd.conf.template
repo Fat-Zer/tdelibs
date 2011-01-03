@@ -450,7 +450,7 @@ $$
 # default browsing information is broadcast to all active interfaces.</p>
 # <p>
 # Note: HP-UX 10.20 and earlier do not properly handle broadcast unless
-# you have a Class A, B, C, or D netmask (i.e. no CIDR support).</p>
+# you have a Class A, B, C, or D nettqmask (i.e. no CIDR support).</p>
 # <p>
 # <i>ex</i>: x.y.z.255, x.y.255.255</p>
 $$
@@ -462,10 +462,10 @@ $$
 %%browseallow
 # <b>Browse allow/deny (BrowseAllow/BrowseDeny)</b>
 # <p>
-# <u>BrowseAllow</u>: specifies an address mask to allow for incoming browser
+# <u>BrowseAllow</u>: specifies an address tqmask to allow for incoming browser
 # packets. The default is to allow packets from all addresses.</p>
 # <p>
-# <u>BrowseDeny</u>: specifies an address mask to deny for incoming browser
+# <u>BrowseDeny</u>: specifies an address tqmask to deny for incoming browser
 # packets. The default is to deny packets from no addresses.</p>
 # <p>
 # Both "BrowseAllow" and "BrowseDeny" accept the following notations for

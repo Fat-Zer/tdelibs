@@ -70,8 +70,8 @@ public:
 				      parent->actionCollection(),
 				      "large rows" );
 
-	smallColumns->setExclusiveGroup(TQString::fromLatin1("IconView mode"));
-	largeRows->setExclusiveGroup(TQString::fromLatin1("IconView mode"));
+	smallColumns->setExclusiveGroup(TQString::tqfromLatin1("IconView mode"));
+	largeRows->setExclusiveGroup(TQString::tqfromLatin1("IconView mode"));
 
         previews = new KToggleAction( i18n("Thumbnail Previews"), 0,
                                       parent->actionCollection(),
@@ -191,7 +191,7 @@ void KFileIconView::readConfig( KConfig *kc, const TQString& group )
 {
     TQString gr = group.isEmpty() ? TQString("KFileIconView") : group;
     KConfigGroupSaver cs( kc, gr );
-    TQString small = TQString::fromLatin1("SmallColumns");
+    TQString small = TQString::tqfromLatin1("SmallColumns");
     d->previewIconSize = kc->readNumEntry( "Preview Size", DEFAULT_PREVIEW_SIZE );
     d->previews->setChecked( kc->readBoolEntry( "ShowPreviews", DEFAULT_SHOW_PREVIEWS ) );
 
@@ -214,8 +214,8 @@ void KFileIconView::writeConfig( KConfig *kc, const TQString& group )
     KConfigGroupSaver cs( kc, gr );
 
     TQString viewMode =  d->smallColumns->isChecked() ?
-        TQString::fromLatin1("SmallColumns") :
-        TQString::fromLatin1("LargeRows");
+        TQString::tqfromLatin1("SmallColumns") :
+        TQString::tqfromLatin1("LargeRows");
     if(!kc->hasDefault( "ViewMode" ) && viewMode == DEFAULT_VIEW_MODE )
         kc->revertToDefault( "ViewMode" );
     else
@@ -251,12 +251,12 @@ void KFileIconView::showToolTip( TQIconViewItem *item )
     int w = maxItemWidth() - ( itemTextPos() == TQIconView::Bottom ? 0 :
 			       item->pixmapRect().width() ) - 4;
     if ( fontMetrics().width( item->text() ) >= w ) {
-	toolTip = new TQLabel( TQString::fromLatin1(" %1 ").arg(item->text()), 0,
+	toolTip = new TQLabel( TQString::tqfromLatin1(" %1 ").arg(item->text()), 0,
 			      "myToolTip",
 			      WStyle_StaysOnTop | WStyle_Customize | WStyle_NoBorder | WStyle_Tool | WX11BypassWM );
 	toolTip->setFrameStyle( TQFrame::Plain | TQFrame::Box );
 	toolTip->setLineWidth( 1 );
-	toolTip->setAlignment( AlignLeft | AlignTop );
+	toolTip->tqsetAlignment( AlignLeft | AlignTop );
 	toolTip->move( TQCursor::pos() + TQPoint( 14, 14 ) );
 	toolTip->adjustSize();
 	TQRect screen = TQApplication::desktop()->screenGeometry(
@@ -338,7 +338,7 @@ void KFileIconView::insertItem( KFileItem *i )
     KFileView::insertItem( i );
 
     TQIconView* qview = static_cast<TQIconView*>( this );
-    // Since creating and initializing an item leads to a repaint,
+    // Since creating and initializing an item leads to a tqrepaint,
     // we disable updates on the IconView for a while.
     qview->setUpdatesEnabled( false );
     KFileIconViewItem *item = new KFileIconViewItem( qview, i );
@@ -450,7 +450,7 @@ void KFileIconView::updateView( bool b )
                 if ( !item->pixmapSize().isNull() )
                     item->setPixmapSize( TQSize( 0, 0 ) );
             }
-            // recalculate item parameters but avoid an in-place repaint
+            // recalculate item parameters but avoid an in-place tqrepaint
             item->setPixmap( (item->fileInfo())->pixmap( myIconSize ), true, false );
             item = static_cast<KFileIconViewItem *>(item->nextItem());
         } while ( item != 0L );
@@ -763,7 +763,7 @@ void KFileIconView::initItem( KFileIconViewItem *item, const KFileItem *i,
 
     if ( updateTextAndPixmap )
     {
-        // this causes a repaint of the item, which we want to avoid during
+        // this causes a tqrepaint of the item, which we want to avoid during
         // directory listing, when all items are created. We want to paint all
         // items at once, not every single item in that case.
         item->setText( i->text() , false, false );
@@ -866,7 +866,7 @@ void KFileIconView::contentsDragEnterEvent( TQDragEnterEvent *e )
     if ((dropOptions() & AutoOpenDirs) == 0)
        return;
 
-    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(findItem( contentsToViewport( e->pos() ) ));
+    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(tqfindItem( contentsToViewport( e->pos() ) ));
     if ( item ) {  // are we over an item ?
        d->dropItem = item;
        d->autoOpenTimer.start( autoOpenDelay() ); // restart timer
@@ -889,7 +889,7 @@ void KFileIconView::contentsDragMoveEvent( TQDragMoveEvent *e )
     if ((dropOptions() & AutoOpenDirs) == 0)
        return;
 
-    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(findItem( contentsToViewport( e->pos() ) ));
+    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(tqfindItem( contentsToViewport( e->pos() ) ));
     if ( item ) {  // are we over an item ?
        if (d->dropItem != item)
        {
@@ -921,7 +921,7 @@ void KFileIconView::contentsDropEvent( TQDropEvent *e )
     }
     e->acceptAction();     // Yes
 
-    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(findItem( contentsToViewport( e->pos() ) ));
+    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(tqfindItem( contentsToViewport( e->pos() ) ));
     KFileItem * fileItem = 0;
     if (item)
         fileItem = item->fileInfo();

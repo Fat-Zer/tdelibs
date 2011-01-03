@@ -82,7 +82,7 @@ Needs other stuff before it can be applied:
 ===========================================================================
 
 - decoder.cpp/.h: changes in APPLE_CHANGES #ifdef that make decoder
-  being a null wrapper just using unicode directly instead of working
+  being a null wrapper just using tqunicode directly instead of working
   on charset specific 8bit data. 
 
 - htmltags.in: removal of <-konqblock>, not sure if that should ever
@@ -112,7 +112,7 @@ changes that need to be merged:
   IMO to speed up style stuff. Should IMO be separated out into a font_mac.cpp
   and font_x11.cpp
 
-- repaint has gotten a bool immediate
+- tqrepaint has gotten a bool immediate
 
 - render_applet.cpp: small #ifdef APPLE changes
 

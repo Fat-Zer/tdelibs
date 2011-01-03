@@ -1,5 +1,5 @@
-#ifndef ViewStatusMsg_DCOP_INTERFACE_H
-#define ViewStatusMsg_DCOP_INTERFACE_H
+#ifndef ViewtqStatusMsg_DCOP_INTERFACE_H
+#define ViewtqStatusMsg_DCOP_INTERFACE_H
 
 #include <dcopobject.h>
 #include <dcopref.h>
@@ -8,36 +8,36 @@
 //#include "editdcopinterface.moc"
 namespace KTextEditor
 {
-	class ViewStatusMsgInterface;
+	class ViewtqStatusMsgInterface;
 	/**
-	This is the main interface to the ViewStatusMsgInterface of KTextEdit.
+	This is the main interface to the ViewtqStatusMsgInterface of KTextEdit.
 	This will provide a consistant dcop interface to all KDE applications that use it.
-	@short DCOP interface to ViewStatusMsgInterface.
+	@short DCOP interface to ViewtqStatusMsgInterface.
 	@author Ian Reinhart Geiser <geiseri@kde.org>
 	*/
-	class KTEXTEDITOR_EXPORT ViewStatusMsgDCOPInterface : virtual public DCOPObject
+	class KTEXTEDITOR_EXPORT ViewtqStatusMsgDCOPInterface : virtual public DCOPObject
 	{
 	K_DCOP
 
 	public:
 		/**
 		Construct a new interface object for the text editor.
-		@param Parent the parent ViewStatusMsgInterface object
+		@param Parent the parent ViewtqStatusMsgInterface object
 		that will provide us with the functions for the interface.
-		@param name the QObject's name
+		@param name the TQObject's name
 		*/
-		ViewStatusMsgDCOPInterface( ViewStatusMsgInterface *Parent, const char *name );
+		ViewtqStatusMsgDCOPInterface( ViewtqStatusMsgInterface *Parent, const char *name );
 		/**
 		Destructor
 		Cleans up the object.
 		*/
-		virtual ~ViewStatusMsgDCOPInterface();
+		virtual ~ViewtqStatusMsgDCOPInterface();
 	k_dcop:
-		uint viewStatusMsgInterfaceNumber ();
-		void viewStatusMsg (class TQString msg) ;
+		uint viewtqStatusMsgInterfaceNumber ();
+		void viewtqStatusMsg (class TQString msg) ;
 	
 	private:
-		ViewStatusMsgInterface *m_parent;
+		ViewtqStatusMsgInterface *m_parent;
 	};
 }
 #endif

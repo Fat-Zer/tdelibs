@@ -106,7 +106,7 @@ KVMAllocator::allocate(size_t _size)
          free_block.start += block.size;
          if (!free_block.size)
             d->free_blocks.remove(it);
-         it = d->used_blocks.replace(block.start, block);
+         it = d->used_blocks.tqreplace(block.start, block);
          return &(it.data());
       }
       ++it;
@@ -120,7 +120,7 @@ KVMAllocator::allocate(size_t _size)
    block.size = (_size + KVM_ALIGN) & ~KVM_ALIGN;
    block.mmap = 0;
    kdDebug(180)<<"VM alloc: using new block "<<(long)block.start<<" size ="<<(long)block.size<<" request = "<<_size<< endl;
-   it = d->used_blocks.replace(block.start, block);
+   it = d->used_blocks.tqreplace(block.start, block);
    d->max_length += block.size;
    return &(it.data());
 }
@@ -138,14 +138,14 @@ KVMAllocator::free(Block *block_p)
       return;
    }
    TQMap<off_t,KVMAllocator::Block>::iterator it;
-   it = d->used_blocks.find(block.start);
+   it = d->used_blocks.tqfind(block.start);
    if (it == d->used_blocks.end())
    {
       kdDebug(180)<<"VM free: Block "<<(long)block.start<<" is not allocated."<<endl;
       return;
    }
    d->used_blocks.remove(it);
-   it = d->free_blocks.replace(block.start, block);
+   it = d->free_blocks.tqreplace(block.start, block);
    TQMap<off_t,KVMAllocator::Block>::iterator before = it;
    --before;
    if (before != d->free_blocks.end())

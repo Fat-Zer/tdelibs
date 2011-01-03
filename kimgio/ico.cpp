@@ -29,9 +29,9 @@ namespace
     struct IcoHeader
     {
         enum Type { Icon = 1, Cursor };
-        Q_UINT16 reserved;
-        Q_UINT16 type;
-        Q_UINT16 count;
+        TQ_UINT16 reserved;
+        TQ_UINT16 type;
+        TQ_UINT16 count;
     };
 
     inline TQDataStream& operator >>( TQDataStream& s, IcoHeader& h )
@@ -43,21 +43,21 @@ namespace
     // (c) 1992-2002 Trolltech AS.
     struct BMP_INFOHDR
     {
-        static const Q_UINT32 Size = 40;
-        Q_UINT32  biSize;                // size of this struct
-        Q_UINT32  biWidth;               // pixmap width
-        Q_UINT32  biHeight;              // pixmap height
-        Q_UINT16  biPlanes;              // should be 1
-        Q_UINT16  biBitCount;            // number of bits per pixel
+        static const TQ_UINT32 Size = 40;
+        TQ_UINT32  biSize;                // size of this struct
+        TQ_UINT32  biWidth;               // pixmap width
+        TQ_UINT32  biHeight;              // pixmap height
+        TQ_UINT16  biPlanes;              // should be 1
+        TQ_UINT16  biBitCount;            // number of bits per pixel
         enum Compression { RGB = 0 };
-        Q_UINT32  biCompression;         // compression method
-        Q_UINT32  biSizeImage;           // size of image
-        Q_UINT32  biXPelsPerMeter;       // horizontal resolution
-        Q_UINT32  biYPelsPerMeter;       // vertical resolution
-        Q_UINT32  biClrUsed;             // number of colors used
-        Q_UINT32  biClrImportant;        // number of important colors
+        TQ_UINT32  biCompression;         // compression method
+        TQ_UINT32  biSizeImage;           // size of image
+        TQ_UINT32  biXPelsPerMeter;       // horizontal resolution
+        TQ_UINT32  biYPelsPerMeter;       // vertical resolution
+        TQ_UINT32  biClrUsed;             // number of colors used
+        TQ_UINT32  biClrImportant;        // number of important colors
     };
-    const Q_UINT32 BMP_INFOHDR::Size;
+    const TQ_UINT32 BMP_INFOHDR::Size;
   
     TQDataStream& operator >>( TQDataStream &s, BMP_INFOHDR &bi )
     {
@@ -92,11 +92,11 @@ namespace
     {
         unsigned char width;
         unsigned char height;
-        Q_UINT16 colors;
-        Q_UINT16 hotspotX;
-        Q_UINT16 hotspotY;
-        Q_UINT32 size;
-        Q_UINT32 offset;
+        TQ_UINT16 colors;
+        TQ_UINT16 hotspotX;
+        TQ_UINT16 hotspotY;
+        TQ_UINT32 size;
+        TQ_UINT32 offset;
     };
 
     inline TQDataStream& operator >>( TQDataStream& s, IconRec& r )
@@ -163,7 +163,7 @@ namespace
                 paletteEntries = header.biClrUsed;
         }
         
-        // Always create a 32-bit image to get the mask right
+        // Always create a 32-bit image to get the tqmask right
         // Note: this is safe as rec.width, rec.height are bytes
         icon.create( rec.width, rec.height, 32 );
         if ( icon.isNull() ) return false;
@@ -177,7 +177,7 @@ namespace
             unsigned char rgb[ 4 ];
             stream.readRawBytes( reinterpret_cast< char* >( &rgb ),
                                  sizeof( rgb ) );
-            colorTable[ i ] = qRgb( rgb[ 2 ], rgb[ 1 ], rgb[ 0 ] );
+            colorTable[ i ] = tqRgb( rgb[ 2 ], rgb[ 1 ], rgb[ 0 ] );
         }
 
         unsigned bpl = ( rec.width * header.biBitCount + 31 ) / 32 * 4;
@@ -207,13 +207,13 @@ namespace
                     break;
                 case 24:
                     for ( unsigned x = 0; x < rec.width; ++x )
-                        *p++ = qRgb( pixel[ 3 * x + 2 ],
+                        *p++ = tqRgb( pixel[ 3 * x + 2 ],
                                      pixel[ 3 * x + 1 ],
                                      pixel[ 3 * x ] );
                     break;
                 case 32:
                     for ( unsigned x = 0; x < rec.width; ++x )
-                        *p++ = qRgba( pixel[ 4 * x + 2 ],
+                        *p++ = tqRgba( pixel[ 4 * x + 2 ],
                                       pixel[ 4 * x + 1 ],
                                       pixel[ 4 * x ],
                                       pixel[ 4 * x  + 3] );
@@ -224,7 +224,7 @@ namespace
 
         if ( header.biBitCount < 32 )
         {
-            // Traditional 1-bit mask
+            // Traditional 1-bit tqmask
             bpl = ( rec.width + 31 ) / 32 * 4;
             buf = new unsigned char[ bpl ];
             for ( unsigned y = rec.height; y--; )
@@ -233,7 +233,7 @@ namespace
                 QRgb* p = reinterpret_cast< QRgb* >( lines[ y ] );
                 for ( unsigned x = 0; x < rec.width; ++x, ++p )
                     if ( ( ( buf[ x / 8 ] >> ( 7 - ( x & 0x07 ) ) ) & 1 ) )
-                        *p &= RGB_MASK;
+                        *p &= TQRGB_MASK;
             }
             delete[] buf;
         }
@@ -321,21 +321,21 @@ void kimgio_ico_write(TQImageIO *io)
     dib.setByteOrder(TQDataStream::LittleEndian);
 
     TQImage pixels = io->image();
-    TQImage mask;
+    TQImage tqmask;
     if (io->image().hasAlphaBuffer())
-        mask = io->image().createAlphaMask();
+        tqmask = io->image().createAlphaMask();
     else
-        mask = io->image().createHeuristicMask();
-    mask.invertPixels();
+        tqmask = io->image().createHeuristicMask();
+    tqmask.invertPixels();
     for ( int y = 0; y < pixels.height(); ++y )
         for ( int x = 0; x < pixels.width(); ++x )
-            if ( mask.pixel( x, y ) == 0 ) pixels.setPixel( x, y, 0 );
+            if ( tqmask.pixel( x, y ) == 0 ) pixels.setPixel( x, y, 0 );
 
     if (!qt_write_dib(dib, pixels))
         return;
 
    uint hdrPos = dib.device()->at();
-    if (!qt_write_dib(dib, mask))
+    if (!qt_write_dib(dib, tqmask))
         return;
     memmove(dibData.data() + hdrPos, dibData.data() + hdrPos + BMP_WIN + 8, dibData.size() - hdrPos - BMP_WIN - 8);
     dibData.resize(dibData.size() - BMP_WIN - 8);

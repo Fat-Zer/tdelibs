@@ -18,7 +18,7 @@
 an HTML <sgmltag>DL</sgmltag>. Some browsers don't align DLs very well
 if <parameter>callout.graphics</parameter> are used. With this option
 turned on, <sgmltag>CalloutList</sgmltag>s are presented in an HTML
-<sgmltag>TABLE</sgmltag>, which usually results in better alignment
+<sgmltag>TABLE</sgmltag>, which usually results in better tqalignment
 of the callout number with the callout description.</para>
 
 </refsect1>

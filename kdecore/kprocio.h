@@ -35,7 +35,7 @@ class TQTextCodec;
  *        buffer and maintained/freed appropriately.  There is no need
  *        to be concerned with wroteStdin() signals _at_all_.
  *    @li readln() reads a line of data and buffers any leftovers.
- *    @li Conversion from/to unicode.
+ *    @li Conversion from/to tqunicode.
  *
  * Basically, KProcIO gives you buffered I/O similar to fgets()/fputs().
  *
@@ -146,7 +146,7 @@ public:
    * @param autoAck when true, ackRead() is called for you.
    * @param partial when provided the line is returned
    * even if it does not contain a '\\n'. *partial will be set to
-   * false if the line contains a '\\n' and false otherwise.
+   * false if the line tqcontains a '\\n' and false otherwise.
    * @return the number of characters read, or -1 if no data is available.
    **/
   int readln (TQString &line, bool autoAck=true, bool *partial=0);

@@ -55,5 +55,5 @@ noinst_HEADERS = kresolver_p.h \
 configdir = $(kde_confdir)
 config_DATA = ipv6blacklist
 
-# let automoc handle all of the meta source files (moc)
+# let autotqmoc handle all of the meta source files (tqmoc)
 METASOURCES = AUTO

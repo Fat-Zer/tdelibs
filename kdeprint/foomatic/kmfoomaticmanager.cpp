@@ -97,10 +97,10 @@ KMPrinter* KMFoomaticManager::createPrinterFromElement(TQDomElement *elem)
 		printer->setName(e.text());
 		printer->setPrinterName(e.text());
 		printer->setState(KMPrinter::Idle);
-		/*if (printer->name().find('/') != -1)
+		/*if (printer->name().tqfind('/') != -1)
 		{
 			QString	s(printer->name());
-			int	p = s.find('/');
+			int	p = s.tqfind('/');
 			printer->setPrinterName(s.left(p));
 			printer->setInstanceName(s.mid(p+1));
 			printer->addType(KMPrinter::Virtual);
@@ -136,7 +136,7 @@ DrMain* KMFoomaticManager::createDriverFromXML(TQDomElement *elem)
 	{
 		driver->set("manufacturer", pelem.namedItem("make").toElement().text());
 		driver->set("model", pelem.namedItem("model").toElement().text());
-		QString	s = TQString::fromLatin1("%1 %2 (%3)").arg(driver->get("manufacturer")).arg(driver->get("model")).arg(delem.namedItem("name").toElement().text());
+		QString	s = TQString::tqfromLatin1("%1 %2 (%3)").arg(driver->get("manufacturer")).arg(driver->get("model")).arg(delem.namedItem("name").toElement().text());
 		driver->set("description", s);
 		driver->set("text", s);
 

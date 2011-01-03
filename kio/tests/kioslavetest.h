@@ -35,7 +35,7 @@ public:
 
   enum Operations { List, ListRecursive, Stat, Get, Put, Copy, Move, Delete, Shred, Mkdir, Mimetype };
 
-  enum ProgressModes { ProgressNone, ProgressDefault, ProgressStatus };
+  enum ProgressModes { ProgressNone, ProgressDefault, ProgresstqStatus };
 
 protected:
 
@@ -70,7 +70,7 @@ protected:
 
   TQRadioButton *rbProgressNone;
   TQRadioButton *rbProgressDefault;
-  TQRadioButton *rbProgressStatus;
+  TQRadioButton *rbProgresstqStatus;
 
   TQPushButton *pbStart;
   TQPushButton *pbStop;
@@ -97,7 +97,7 @@ private:
   KIO::Job *job;
   TQWidget *main_widget;
 
-  KIO::StatusbarProgress *statusProgress;
+  KIO::tqStatusbarProgress *statusProgress;
 
   int selectedOperation;
   int progressMode;

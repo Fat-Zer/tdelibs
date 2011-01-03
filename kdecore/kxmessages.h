@@ -153,7 +153,7 @@ class KDECORE_EXPORT KXMessages
 	 */
         virtual bool x11Event( XEvent* ev );
     private:
-        static void send_message_internal( WId w_P, const TQString& msg_P, long mask_P,
+        static void send_message_internal( WId w_P, const TQString& msg_P, long tqmask_P,
             Display* disp, Atom atom1_P, Atom atom2_P, Window handle_P );
         TQWidget* handle;
         Atom accept_atom2;

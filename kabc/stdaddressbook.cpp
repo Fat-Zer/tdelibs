@@ -191,7 +191,7 @@ Addressee StdAddressBook::whoAmI()
   KConfig config( "kabcrc" );
   config.setGroup( "General" );
 
-  return findByUid( config.readEntry( "WhoAmI" ) );
+  return tqfindByUid( config.readEntry( "WhoAmI" ) );
 }
 
 void StdAddressBook::setWhoAmI( const Addressee &addr )

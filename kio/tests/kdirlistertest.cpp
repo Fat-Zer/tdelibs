@@ -36,18 +36,18 @@ KDirListerTest::KDirListerTest( TQWidget *parent, const char *name )
   lister = new KDirLister( false /* true */ );
   debug = new PrintSignals;
 
-  TQVBoxLayout* layout = new TQVBoxLayout( this );
+  TQVBoxLayout* tqlayout = new TQVBoxLayout( this );
 
   TQPushButton* startH = new TQPushButton( "Start listing $HOME", this );
   TQPushButton* startR= new TQPushButton( "Start listing /", this );
   TQPushButton* test = new TQPushButton( "Many", this );
   TQPushButton* startT = new TQPushButton( "tarfile", this );
 
-  layout->addWidget( startH );
-  layout->addWidget( startR );
-  layout->addWidget( startT );
-  layout->addWidget( test );
-  resize( layout->sizeHint() );
+  tqlayout->addWidget( startH );
+  tqlayout->addWidget( startR );
+  tqlayout->addWidget( startT );
+  tqlayout->addWidget( test );
+  resize( tqlayout->tqsizeHint() );
 
   connect( startR, TQT_SIGNAL( clicked() ), TQT_SLOT( startRoot() ) );
   connect( startH, TQT_SIGNAL( clicked() ), TQT_SLOT( startHome() ) );

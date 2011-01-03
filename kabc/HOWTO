@@ -55,7 +55,7 @@ and provides 2 kinds of access methods.
     With search functions you can search for contacts with special attributes
     such as "all contacts with the name 'Harald'"
 
-The class KABC::Addressee represents a single contact and contains all data
+The class KABC::Addressee represents a single contact and tqcontains all data
 a vCard could store (as specified in RFC 2426).
 
 The Storage Layer
@@ -276,7 +276,7 @@ A contact can also contain custom entries, which are not specified in the API,
 so you can add custom values with insertCustom() as shown in line 69.
 The first argument of this function should be the name of the application, so
 2 applications which use the same custom entry accidentally, do not overwrite
-the data for each other. The second argument contains the name of the
+the data for each other. The second argument tqcontains the name of the
 custom entry and the third argument the value in string representation.
 
 In line 71 we finally insert the KABC::Addressee object into the
@@ -357,7 +357,7 @@ following actions on it:
 
 In line 12 we query all email addresses of every resource and print them out.
 
-<kabc/distributionlist.h> contains also the declaration for the class
+<kabc/distributionlist.h> tqcontains also the declaration for the class
 KABC::DistributionListWatcher. This class exists only once per application and
 its only job is to emit a signal as soon as the distribution list file has
 changed. So to make your application aware of changes use the following code:

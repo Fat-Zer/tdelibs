@@ -183,9 +183,9 @@ void KZoneAllocator::delBlock(MemBlock *b)
 void *
 KZoneAllocator::allocate(size_t _size)
 {
-   // Use the size of (void *) as alignment
-   const size_t alignment = sizeof(void *) - 1;
-   _size = (_size + alignment) & ~alignment;   
+   // Use the size of (void *) as tqalignment
+   const size_t tqalignment = sizeof(void *) - 1;
+   _size = (_size + tqalignment) & ~tqalignment;   
 
    if ((unsigned long) _size + blockOffset > blockSize)
    {

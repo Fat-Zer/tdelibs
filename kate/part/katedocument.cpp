@@ -91,7 +91,7 @@ class KatePartPluginItem
 // KateDocument Constructor
 //
 KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
-                             bool bReadOnly, TQWidget *parentWidget,
+                             bool bReadOnly, TQWidget *tqparentWidget,
                              const char *widgetName, TQObject *parent, const char *name)
 : Kate::Document(parent, name),
   m_plugins (KateFactory::self()->plugins().count()),
@@ -214,7 +214,7 @@ KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
   // if single view mode, like in the konqui embedding, create a default view ;)
   if ( m_bSingleViewMode )
   {
-    KTextEditor::View *view = createView( parentWidget, widgetName );
+    KTextEditor::View *view = createView( tqparentWidget, widgetName );
     insertChildClient( view );
     view->show();
     setWidget( view );
@@ -700,7 +700,7 @@ bool KateDocument::insertText( uint line, uint col, const TQString &s, bool bloc
 
   TQString buf;
 
-  bool replacetabs = ( config()->configFlags() & KateDocumentConfig::cfReplaceTabsDyn && ! m_isInUndo );
+  bool tqreplacetabs = ( config()->configFlags() & KateDocumentConfig::cfReplaceTabsDyn && ! m_isInUndo );
   uint tw = config()->tabWidth();
   uint insertPosExpanded = insertPos;
   KateTextLine::Ptr l = m_buffer->line( line );
@@ -734,7 +734,7 @@ bool KateDocument::insertText( uint line, uint col, const TQString &s, bool bloc
     }
     else
     {
-      if ( replacetabs && ch == '\t' )
+      if ( tqreplacetabs && ch == '\t' )
       {
         uint tr = tw - ( insertPosExpanded+buf.length() )%tw;
         for ( uint i=0; i < tr; i++ )
@@ -1092,7 +1092,7 @@ bool KateDocument::wrapText (uint startLine, uint endLine)
       // Scan backwards looking for a place to break the line
       // We are not interested in breaking at the first char
       // of the line (if it is a space), but we are at the second
-      // anders: if we can't find a space, try breaking on a word
+      // anders: if we can't tqfind a space, try breaking on a word
       // boundry, using KateHighlight::canBreakAt().
       // This could be a priority (setting) in the hl/filetype/document
       int z = 0;
@@ -1176,10 +1176,10 @@ bool KateDocument::editInsertText ( uint line, uint col, const TQString &str )
       uint tw = config()->tabWidth();
       int pos = 0;
       uint l = 0;
-      while ( (pos = s.find('\t')) > -1 )
+      while ( (pos = s.tqfind('\t')) > -1 )
       {
         l = tw - ( (col + pos)%tw );
-        s.replace( pos, 1, TQString().fill( ' ', l ) );
+        s.tqreplace( pos, 1, TQString().fill( ' ', l ) );
       }
     }
 
@@ -1187,7 +1187,7 @@ bool KateDocument::editInsertText ( uint line, uint col, const TQString &str )
 
   editAddUndo (KateUndoGroup::editInsertText, line, col, s.length(), s);
 
-  l->insertText (col, s.length(), s.unicode());
+  l->insertText (col, s.length(), s.tqunicode());
 //   removeTrailingSpace(line); // ### nessecary?
 
   m_buffer->changeLine(line);
@@ -1410,7 +1410,7 @@ bool KateDocument::editInsertLine ( uint line, const TQString &s )
   removeTrailingSpace( line ); // old line
 
   KateTextLine::Ptr tl = new KateTextLine();
-  tl->insertText (0, s.length(), s.unicode(), 0);
+  tl->insertText (0, s.length(), s.tqunicode(), 0);
   m_buffer->insertLine(line, tl);
   m_buffer->changeLine(line);
 
@@ -1568,7 +1568,7 @@ void KateDocument::updateModified()
       lastRedoGroupWhenSavedIsLastUndo     BIT 7
       lastRedoGroupWhenSavedIsLastRedo     BIT 8
 
-    If you find a new pattern, please add it to the patterns array
+    If you tqfind a new pattern, please add it to the patterns array
   */
 
   unsigned char currentPattern = 0;
@@ -1833,7 +1833,7 @@ bool KateDocument::searchText (unsigned int startLine, unsigned int startCol, co
 
 uint KateDocument::hlMode ()
 {
-  return KateHlManager::self()->findHl(highlight());
+  return KateHlManager::self()->tqfindHl(highlight());
 }
 
 bool KateDocument::setHlMode (uint mode)
@@ -2050,7 +2050,7 @@ void KateDocument::clearMark( uint line )
   emit marksChanged();
   delete mark;
   tagLines( line, line );
-  repaintViews(true);
+  tqrepaintViews(true);
 }
 
 void KateDocument::addMark( uint line, uint markType )
@@ -2087,7 +2087,7 @@ void KateDocument::addMark( uint line, uint markType )
 
   emit marksChanged();
   tagLines( line, line );
-  repaintViews(true);
+  tqrepaintViews(true);
 }
 
 void KateDocument::removeMark( uint line, uint markType )
@@ -2119,7 +2119,7 @@ void KateDocument::removeMark( uint line, uint markType )
 
   emit marksChanged();
   tagLines( line, line );
-  repaintViews(true);
+  tqrepaintViews(true);
 }
 
 TQPtrList<KTextEditor::Mark> KateDocument::marks()
@@ -2146,17 +2146,17 @@ void KateDocument::clearMarks()
   m_marks.clear();
 
   emit marksChanged();
-  repaintViews(true);
+  tqrepaintViews(true);
 }
 
 void KateDocument::setPixmap( MarkInterface::MarkTypes type, const TQPixmap& pixmap )
 {
-  m_markPixmaps.replace( type, new TQPixmap( pixmap ) );
+  m_markPixmaps.tqreplace( type, new TQPixmap( pixmap ) );
 }
 
 void KateDocument::setDescription( MarkInterface::MarkTypes type, const TQString& description )
 {
-  m_markDescriptions.replace( type, new TQString( description ) );
+  m_markDescriptions.tqreplace( type, new TQString( description ) );
 }
 
 TQPixmap *KateDocument::markPixmap( MarkInterface::MarkTypes type )
@@ -2254,7 +2254,7 @@ KMimeType::Ptr KateDocument::mimeTypeForContent()
   buf.resize( bufpos );
 
   int accuracy = 0;
-  return KMimeType::findByContent( buf, &accuracy );
+  return KMimeType::tqfindByContent( buf, &accuracy );
 }
 //END KTextEditor::DocumentInfoInterface
 
@@ -2316,7 +2316,7 @@ bool KateDocument::openURL( const KURL &url )
       w = m_views.first();
 
     if (w)
-      m_job->setWindow (w->topLevelWidget());
+      m_job->setWindow (w->tqtopLevelWidget());
 
     emit started( m_job );
 
@@ -2395,7 +2395,7 @@ bool KateDocument::openFile(KIO::Job * job)
   // service type magic to get encoding right
   //
   TQString serviceType = m_extension->urlArgs().serviceType.simplifyWhiteSpace();
-  int pos = serviceType.find(';');
+  int pos = serviceType.tqfind(';');
   if (pos != -1)
     setEncoding (serviceType.mid(pos+1));
 
@@ -2589,7 +2589,7 @@ bool KateDocument::saveFile()
   //
   if (!m_buffer->canEncode ()
        && (KMessageBox::warningContinueCancel(0,
-           i18n("The selected encoding cannot encode every unicode character in this document. Do you really want to save it? There could be some data lost."),i18n("Possible Data Loss"),i18n("Save Nevertheless")) != KMessageBox::Continue))
+           i18n("The selected encoding cannot encode every tqunicode character in this document. Do you really want to save it? There could be some data lost."),i18n("Possible Data Loss"),i18n("Save Nevertheless")) != KMessageBox::Continue))
   {
     return false;
   }
@@ -2872,7 +2872,7 @@ void KateDocument::makeAttribs(bool needInvalidate)
     m_views.at(z)->renderer()->updateAttributes ();
 
   if (needInvalidate)
-    m_buffer->invalidateHighlighting();
+    m_buffer->tqinvalidateHighlighting();
 
   tagAll ();
 }
@@ -2934,7 +2934,7 @@ void KateDocument::removeSuperCursor(KateSuperCursor *cursor, bool privateC) {
 
 bool KateDocument::ownedView(KateView *view) {
   // do we own the given view?
-  return (m_views.containsRef(view) > 0);
+  return (m_views.tqcontainsRef(view) > 0);
 }
 
 bool KateDocument::isLastView(int numViews) {
@@ -3195,7 +3195,7 @@ void KateDocument::backspace( KateView *view, const KateTextCursor& c )
       if (!textLine)
         return;
 
-      if (config()->wordWrap() && textLine->endingWith(TQString::fromLatin1(" ")))
+      if (config()->wordWrap() && textLine->endingWith(TQString::tqfromLatin1(" ")))
       {
         // gg: in hard wordwrap mode, backspace must also eat the trailing space
         removeText (line-1, textLine->length()-1, line, 0);
@@ -3232,7 +3232,7 @@ void KateDocument::paste ( KateView* view )
   if (s.isEmpty())
     return;
 
-  uint lines = s.contains (TQChar ('\n'));
+  uint lines = s.tqcontains (TQChar ('\n'));
 
   m_undoDontMerge = true;
 
@@ -3399,11 +3399,11 @@ void KateDocument::optimizeLeadingSpace(uint line, int flags, int change)
     }
   }
 
-  //kdDebug(13020)  << "replace With Op: " << line << " " << first_char << " " << space << endl;
-  replaceWithOptimizedSpace(line, first_char, space, flags);
+  //kdDebug(13020)  << "tqreplace With Op: " << line << " " << first_char << " " << space << endl;
+  tqreplaceWithOptimizedSpace(line, first_char, space, flags);
 }
 
-void KateDocument::replaceWithOptimizedSpace(uint line, uint upto_column, uint space, int flags)
+void KateDocument::tqreplaceWithOptimizedSpace(uint line, uint upto_column, uint space, int flags)
 {
   uint length;
   TQString new_space;
@@ -3908,7 +3908,7 @@ void KateDocument::comment( KateView *v, uint line,uint column, int change)
         kdDebug(13020)<<"easy approach for uncommenting did not work, trying harder (folding tree)"<<endl;
         int commentRegion=(highlight()->commentRegion(startAttrib));
         if (commentRegion){
-           KateCodeFoldingNode *n=foldingTree()->findNodeForPosition(line,column);
+           KateCodeFoldingNode *n=foldingTree()->tqfindNodeForPosition(line,column);
            if (n) {
             KateTextCursor start,end;
              if ((n->nodeType()==commentRegion) && n->getBegin(foldingTree(), &start) && n->getEnd(foldingTree(), &end)) {
@@ -4112,10 +4112,10 @@ void KateDocument::tagLines(KateTextCursor start, KateTextCursor end)
     m_views.at(z)->tagLines(start, end, true);
 }
 
-void KateDocument::repaintViews(bool paintOnlyDirty)
+void KateDocument::tqrepaintViews(bool paintOnlyDirty)
 {
   for (uint z = 0; z < m_views.count(); z++)
-    m_views.at(z)->repaintText(paintOnlyDirty);
+    m_views.at(z)->tqrepaintText(paintOnlyDirty);
 }
 
 void KateDocument::tagAll()
@@ -4157,7 +4157,7 @@ void KateDocument::newBracketMark( const KateTextCursor& cursor, KateBracketRang
 
   bm.start() = cursor;
 
-  if( !findMatchingBracket( bm.start(), bm.end(), maxLines ) )
+  if( !tqfindMatchingBracket( bm.start(), bm.end(), maxLines ) )
     return;
 
   bm.setValid(true);
@@ -4168,7 +4168,7 @@ void KateDocument::newBracketMark( const KateTextCursor& cursor, KateBracketRang
   bm.setIndentMin(kMin(indentStart, indentEnd));
 }
 
-bool KateDocument::findMatchingBracket( KateTextCursor& start, KateTextCursor& end, int maxLines )
+bool KateDocument::tqfindMatchingBracket( KateTextCursor& start, KateTextCursor& end, int maxLines )
 {
   KateTextLine::Ptr textLine = m_buffer->plainLine( start.line() );
   if( !textLine )
@@ -4634,7 +4634,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
 {
   // simple check first, no regex
   // no kate inside, no vars, simple...
-  if (t.find("kate") < 0)
+  if (t.tqfind("kate") < 0)
     return;
 
   // found vars, if any
@@ -4672,7 +4672,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
     TQStringList types (TQStringList::split(';', kvLineMime.cap(1)));
 
     // no matching type found
-    if (!types.contains (mimeType ()))
+    if (!types.tqcontains (mimeType ()))
       return;
 
     s = kvLineMime.cap(2);
@@ -4708,7 +4708,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
     // only apply view & renderer config stuff
     if (onlyViewAndRenderer)
     {
-      if ( vvl.contains( var ) ) // FIXME define above
+      if ( vvl.tqcontains( var ) ) // FIXME define above
         setViewVariable( var, val );
     }
     else
@@ -4722,7 +4722,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
       // FIXME should this be optimized to only a few calls? how?
       else if ( var == "backspace-indents" && checkBoolValue( val, &state ) )
         m_config->setConfigFlags( KateDocumentConfig::cfBackspaceIndents, state );
-      else if ( var == "replace-tabs" && checkBoolValue( val, &state ) )
+      else if ( var == "tqreplace-tabs" && checkBoolValue( val, &state ) )
         m_config->setConfigFlags( KateDocumentConfig::cfReplaceTabsDyn, state );
       else if ( var == "remove-trailing-space" && checkBoolValue( val, &state ) )
         m_config->setConfigFlags( KateDocumentConfig::cfRemoveTrailingDyn, state );
@@ -4744,7 +4744,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
         m_config->setConfigFlags( KateDocumentConfig::cfSpaceIndent, state );
       else if ( var == "smart-home" && checkBoolValue( val, &state ) )
         m_config->setConfigFlags( KateDocumentConfig::cfSmartHome, state );
-      else if ( var == "replace-trailing-space-save" && checkBoolValue( val, &state ) )
+      else if ( var == "tqreplace-trailing-space-save" && checkBoolValue( val, &state ) )
         m_config->setConfigFlags( KateDocumentConfig::cfRemoveSpaces, state );
       else if ( var == "auto-insert-doxygen" && checkBoolValue( val, &state) )
         m_config->setConfigFlags( KateDocumentConfig::cfDoxygenAutoTyping, state);
@@ -4773,7 +4773,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
       {
         TQStringList l;
         l << "unix" << "dos" << "mac";
-        if ( (n = l.findIndex( val.lower() )) != -1 )
+        if ( (n = l.tqfindIndex( val.lower() )) != -1 )
           m_config->setEol( n );
       }
       else if ( var == "encoding" )
@@ -4791,7 +4791,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
       }
 
       // VIEW SETTINGS
-      else if ( vvl.contains( var ) )
+      else if ( vvl.tqcontains( var ) )
         setViewVariable( var, val );
       else
       {
@@ -4862,14 +4862,14 @@ bool KateDocument::checkBoolValue( TQString val, bool *result )
   val = val.stripWhiteSpace().lower();
   TQStringList l;
   l << "1" << "on" << "true";
-  if ( l.contains( val ) )
+  if ( l.tqcontains( val ) )
   {
     *result = true;
     return true;
   }
   l.clear();
   l << "0" << "off" << "false";
-  if ( l.contains( val ) )
+  if ( l.tqcontains( val ) )
   {
     *result = false;
     return true;
@@ -4893,7 +4893,7 @@ bool KateDocument::checkColorValue( TQString val, TQColor &c )
 // KTextEditor::variable
 TQString KateDocument::variable( const TQString &name ) const
 {
-  if ( m_storedVariables.contains( name ) )
+  if ( m_storedVariables.tqcontains( name ) )
     return m_storedVariables[ name ];
 
   return "";
@@ -5172,4 +5172,4 @@ bool KateDocument::toggleBlockSelectionMode ()
 
 //END DEPRECATED STUFF
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

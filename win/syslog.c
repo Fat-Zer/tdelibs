@@ -29,7 +29,7 @@ KDEWIN32_EXPORT void openlog (const char *ident , int option , int facility)
 	/*! @todo */
 }
 
-KDEWIN32_EXPORT int setlogmask (int priority)
+KDEWIN32_EXPORT int setlogtqmask (int priority)
 {
 	/*! @todo */
 	return 0;

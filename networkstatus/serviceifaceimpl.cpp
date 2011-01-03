@@ -21,16 +21,16 @@
 
 #include "serviceifaceimpl.h"
 
-ServiceIfaceImpl::ServiceIfaceImpl( NetworkStatusModule * module ) : m_module ( module )
+ServiceIfaceImpl::ServiceIfaceImpl( NetworktqStatusModule * module ) : m_module ( module )
 {
 }
 
 void ServiceIfaceImpl::setStatus( TQString networkName, int status )
 {
-	m_module->setStatus( networkName, (NetworkStatus::EnumStatus)status );
+	m_module->setStatus( networkName, (NetworktqStatus::EnumtqStatus)status );
 }
 
-void ServiceIfaceImpl::registerNetwork( TQString networkName, NetworkStatus::Properties properties )
+void ServiceIfaceImpl::registerNetwork( TQString networkName, NetworktqStatus::Properties properties )
 {
 	m_module->registerNetwork( networkName, properties );
 }

@@ -111,9 +111,9 @@ void KActiveLabel::keyPressEvent( TQKeyEvent *e )
     }
 }
 
-TQSize KActiveLabel::minimumSizeHint() const
+TQSize KActiveLabel::tqminimumSizeHint() const
 {
-   TQSize ms = minimumSize();
+   TQSize ms = tqminimumSize();
    if ((ms.width() > 0) && (ms.height() > 0))
       return ms;
 
@@ -134,9 +134,9 @@ TQSize KActiveLabel::minimumSizeHint() const
    return TQSize(w, h);
 }
 
-TQSize KActiveLabel::sizeHint() const
+TQSize KActiveLabel::tqsizeHint() const
 {
-   return minimumSizeHint();
+   return tqminimumSizeHint();
 }
 
 #include "kactivelabel.moc"

@@ -61,7 +61,7 @@ public:
      */
     ~KCompletionBox();
 
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 
     /**
      * @returns true if selecting an item results in the emition of the selected signal.
@@ -191,7 +191,7 @@ public slots:
 
 signals:
     /**
-     * Emitted when an item was selected, contains the text of
+     * Emitted when an item was selected, tqcontains the text of
      * the selected item.
      */
     void activated( const TQString& );
@@ -205,7 +205,7 @@ signals:
 protected:
     /**
      * This calculates the size of the dropdown and the relative position of the top
-     * left corner with respect to the parent widget. This matches the geometry and position
+     * left corner with respect to the parent widget. This matches the tqgeometry and position
      * normally used by K/TQComboBox when used with one.
      */
     TQRect calculateGeometry() const;

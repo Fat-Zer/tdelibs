@@ -537,13 +537,13 @@ void KateRenderer::paintTextLine(TQPainter& paint, const KateLineRange* range, i
             if (isIMSel && !isTab)
             {
               // input method selection
-              fillColor = m_view->colorGroup().color(TQColorGroup::Foreground);
+              fillColor = m_view->tqcolorGroup().color(TQColorGroup::Foreground);
             }
             else if (isIMEdit && !isTab)
             {
               // XIM support
               // input method edit area
-              const TQColorGroup& cg = m_view->colorGroup();
+              const TQColorGroup& cg = m_view->tqcolorGroup();
               int h1, s1, v1, h2, s2, v2;
               cg.color( TQColorGroup::Base ).hsv( &h1, &s1, &v1 );
               cg.color( TQColorGroup::Background ).hsv( &h2, &s2, &v2 );
@@ -576,7 +576,7 @@ void KateRenderer::paintTextLine(TQPainter& paint, const KateLineRange* range, i
             if (isIMSel && paintBackground && !isTab)
             {
               paint.save();
-              paint.setPen( m_view->colorGroup().color( TQColorGroup::BrightText ) );
+              paint.setPen( m_view->tqcolorGroup().color( TQColorGroup::BrightText ) );
             }
 
             // Draw indentation markers.
@@ -745,7 +745,7 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, int cursorCol)
 
   KateFontStruct *fs = config()->fontStruct();
 
-  const TQChar *unicode = textLine->text();
+  const TQChar *tqunicode = textLine->text();
   const TQString &textString = textLine->string();
 
   int x = 0;
@@ -763,7 +763,7 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, int cursorCol)
 
     x += width;
 
-    if (z < len && unicode[z] == TQChar('\t'))
+    if (z < len && tqunicode[z] == TQChar('\t'))
       x -= x % width;
   }
 
@@ -787,7 +787,7 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, uint startcol, u
   *needWrap = false;
 
   const uint len = textLine->length();
-  const TQChar *unicode = textLine->text();
+  const TQChar *tqunicode = textLine->text();
   const TQString &textString = textLine->string();
 
   uint z = startcol;
@@ -800,10 +800,10 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, uint startcol, u
 
     // How should tabs be treated when they word-wrap on a print-out?
     // if startcol != 0, this messes up (then again, word wrapping messes up anyway)
-    if (unicode[z] == TQChar('\t'))
+    if (tqunicode[z] == TQChar('\t'))
       x -= x % width;
 
-    if (unicode[z].isSpace())
+    if (tqunicode[z].isSpace())
     {
       lastWhiteSpace = z+1;
       lastWhiteSpaceX = x;
@@ -887,7 +887,7 @@ uint KateRenderer::textWidth( KateTextCursor &cursor, int xPos, uint startCol)
   if (!textLine) return 0;
 
   const uint len = textLine->length();
-  const TQChar *unicode = textLine->text();
+  const TQChar *tqunicode = textLine->text();
   const TQString &textString = textLine->string();
 
   x = oldX = 0;
@@ -906,7 +906,7 @@ uint KateRenderer::textWidth( KateTextCursor &cursor, int xPos, uint startCol)
 
     x += width;
 
-    if (z < len && unicode[z] == TQChar('\t'))
+    if (z < len && tqunicode[z] == TQChar('\t'))
       x -= x % width;
 
     z++;
@@ -1029,4 +1029,4 @@ uint KateRenderer::spaceWidth()
   return attribute(0)->width(*config()->fontStruct(), TQChar(' '), m_tabWidth);
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

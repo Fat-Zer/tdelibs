@@ -64,7 +64,7 @@ public:
     bool autoSaveSettings:1;
     bool settingsDirty:1;
     bool autoSaveWindowSize:1;
-    bool care_about_geometry:1;
+    bool care_about_tqgeometry:1;
     bool shuttingDown:1;
     TQString autoSaveGroup;
     KAccel * kaccel;
@@ -105,8 +105,8 @@ public:
             n++;
             it.current()->savePropertiesInternal(config, n);
         }
-        config->setGroup(TQString::fromLatin1("Number"));
-        config->writeEntry(TQString::fromLatin1("NumberOfWindows"), n );
+        config->setGroup(TQString::tqfromLatin1("Number"));
+        config->writeEntry(TQString::tqfromLatin1("NumberOfWindows"), n );
         return true;
     }
 
@@ -212,7 +212,7 @@ void KMainWindow::initKMainWindow(const char *name, int cflags)
         unusedNumber = 0; // add numbers only when needed
         }
     for(;;) {
-        TQWidgetList* list = kapp->topLevelWidgets();
+        TQWidgetList* list = kapp->tqtopLevelWidgets();
         TQWidgetListIt it( *list );
         bool found = false;
         for( TQWidget* w = it.current();
@@ -243,10 +243,10 @@ void KMainWindow::initKMainWindow(const char *name, int cflags)
     d->settingsTimer = 0;
     d->showStatusBarAction = NULL;
     d->shuttingDown = false;
-    if ((d->care_about_geometry = being_first)) {
+    if ((d->care_about_tqgeometry = being_first)) {
         being_first = false;
-        if ( kapp->geometryArgument().isNull() ) // if there is no geometry, it doesn't mater
-            d->care_about_geometry = false;
+        if ( kapp->geometryArgument().isNull() ) // if there is no tqgeometry, it doesn't mater
+            d->care_about_tqgeometry = false;
         else
             parseGeometry(false);
     }
@@ -279,15 +279,15 @@ void KMainWindow::setupToolbarMenuActions()
 void KMainWindow::parseGeometry(bool parsewidth)
 {
     assert ( !kapp->geometryArgument().isNull() );
-    assert ( d->care_about_geometry );
+    assert ( d->care_about_tqgeometry );
 
 #if defined Q_WS_X11
     int x, y;
     int w, h;
     int m = XParseGeometry( kapp->geometryArgument().latin1(), &x, &y, (unsigned int*)&w, (unsigned int*)&h);
     if (parsewidth) {
-        TQSize minSize = minimumSize();
-        TQSize maxSize = maximumSize();
+        TQSize minSize = tqminimumSize();
+        TQSize maxSize = tqmaximumSize();
         if ( !(m & WidthValue) )
             w = width();
         if ( !(m & HeightValue) )
@@ -299,9 +299,9 @@ void KMainWindow::parseGeometry(bool parsewidth)
          resize(w, h);
     } else {
         if ( parsewidth && !(m & XValue) )
-            x = geometry().x();
+            x = tqgeometry().x();
         if ( parsewidth && !(m & YValue) )
-            y = geometry().y();
+            y = tqgeometry().y();
         if ( (m & XNegative) )
             x = KApplication::desktop()->width()  + x - w;
         if ( (m & YNegative) )
@@ -356,8 +356,8 @@ bool KMainWindow::canBeRestored( int number )
     KConfig *config = kapp->sessionConfig();
     if ( !config )
         return false;
-    config->setGroup( TQString::fromLatin1("Number") );
-    int n = config->readNumEntry( TQString::fromLatin1("NumberOfWindows") , 1 );
+    config->setGroup( TQString::tqfromLatin1("Number") );
+    int n = config->readNumEntry( TQString::tqfromLatin1("NumberOfWindows") , 1 );
     return number >= 1 && number <= n;
 }
 
@@ -370,12 +370,12 @@ const TQString KMainWindow::classNameOfToplevel( int number )
         return TQString::null;
     TQString s;
     s.setNum( number );
-    s.prepend( TQString::fromLatin1("WindowProperties") );
+    s.prepend( TQString::tqfromLatin1("WindowProperties") );
     config->setGroup( s );
-    if ( !config->hasKey( TQString::fromLatin1("ClassName") ) )
+    if ( !config->hasKey( TQString::tqfromLatin1("ClassName") ) )
         return TQString::null;
     else
-        return config->readEntry( TQString::fromLatin1("ClassName") );
+        return config->readEntry( TQString::tqfromLatin1("ClassName") );
 }
 
 void KMainWindow::show()
@@ -545,7 +545,7 @@ void KMainWindow::createGUI( const TQString &xmlfile, bool _conserveMemory )
       // In addition we have to take care of not removing containers
       // like popupmenus, defined in the XML document.
       // this code should probably go into a separate method in KMainWindow.
-      // there's just one problem: I'm bad in finding names ;-) , so
+      // there's just one problem: I'm bad in tqfinding names ;-) , so
       // I skipped this ;-)
 
       TQDomDocument doc = domDocument();
@@ -696,13 +696,13 @@ void KMainWindow::savePropertiesInternal( KConfig *config, int number )
 
     TQString s;
     s.setNum(number);
-    s.prepend(TQString::fromLatin1("WindowProperties"));
+    s.prepend(TQString::tqfromLatin1("WindowProperties"));
     config->setGroup(s);
 
     // store objectName, className, Width and Height  for later restoring
     // (Only useful for session management)
-    config->writeEntry(TQString::fromLatin1("ObjectName"), name());
-    config->writeEntry(TQString::fromLatin1("ClassName"), className());
+    config->writeEntry(TQString::tqfromLatin1("ObjectName"), name());
+    config->writeEntry(TQString::tqfromLatin1("ClassName"), className());
 
     saveMainWindowSettings(config); // Menubar, statusbar and Toolbar settings.
 
@@ -738,7 +738,7 @@ void KMainWindow::saveMainWindowSettings(KConfig *config, const TQString &config
 
     TQMenuBar* mb = internalMenuBar();
     if (mb) {
-       TQString MenuBar = TQString::fromLatin1("MenuBar");
+       TQString MenuBar = TQString::tqfromLatin1("MenuBar");
        if(!config->hasDefault("MenuBar") && !mb->isHidden() )
            config->revertToDefault("MenuBar");
        else
@@ -795,7 +795,7 @@ bool KMainWindow::isStandardToolBarMenuEnabled() const
 
 void KMainWindow::createStandardStatusBarAction(){
   if(!d->showStatusBarAction){
-    d->showStatusBarAction = KStdAction::showStatusbar(this, TQT_SLOT(setSettingsDirty()), actionCollection());
+    d->showStatusBarAction = KStdAction::showtqStatusbar(this, TQT_SLOT(setSettingsDirty()), actionCollection());
     KStatusBar *sb = statusBar(); // Creates statusbar if it doesn't exist already.
     connect(d->showStatusBarAction, TQT_SIGNAL(toggled(bool)), sb, TQT_SLOT(setShown(bool)));
     d->showStatusBarAction->setChecked(sb->isHidden());
@@ -810,13 +810,13 @@ bool KMainWindow::readPropertiesInternal( KConfig *config, int number )
     // in order they are in toolbar list
     TQString s;
     s.setNum(number);
-    s.prepend(TQString::fromLatin1("WindowProperties"));
+    s.prepend(TQString::tqfromLatin1("WindowProperties"));
 
     config->setGroup(s);
 
     // restore the object name (window role)
-    if ( config->hasKey(TQString::fromLatin1("ObjectName" )) )
-        setName( config->readEntry(TQString::fromLatin1("ObjectName")).latin1()); // latin1 is right here
+    if ( config->hasKey(TQString::tqfromLatin1("ObjectName" )) )
+        setName( config->readEntry(TQString::tqfromLatin1("ObjectName")).latin1()); // latin1 is right here
 
     applyMainWindowSettings(config); // Menubar, statusbar and toolbar settings.
 
@@ -901,7 +901,7 @@ void KMainWindow::finalizeGUI( bool force )
 
 void KMainWindow::saveWindowSize( KConfig * config ) const
 {
-  int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+  int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
   TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
   int w, h;
 #if defined Q_WS_X11
@@ -918,8 +918,8 @@ void KMainWindow::saveWindowSize( KConfig * config ) const
 #endif
   TQRect size( desk.width(), w, desk.height(), h );
   bool defaultSize = (size == d->defaultWindowSize);
-  TQString widthString = TQString::fromLatin1("Width %1").arg(desk.width());
-  TQString heightString = TQString::fromLatin1("Height %1").arg(desk.height());
+  TQString widthString = TQString::tqfromLatin1("Width %1").arg(desk.width());
+  TQString heightString = TQString::tqfromLatin1("Height %1").arg(desk.height());
   if (!config->hasDefault(widthString) && defaultSize)
      config->revertToDefault(widthString);
   else
@@ -933,24 +933,24 @@ void KMainWindow::saveWindowSize( KConfig * config ) const
 
 void KMainWindow::restoreWindowSize( KConfig * config )
 {
-    if (d->care_about_geometry) {
+    if (d->care_about_tqgeometry) {
         parseGeometry(true);
     } else {
         // restore the size
-        int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+        int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
         TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
         if ( d->defaultWindowSize.isNull() ) // only once
           d->defaultWindowSize = TQRect(desk.width(), width(), desk.height(), height()); // store default values
-        TQSize size( config->readNumEntry( TQString::fromLatin1("Width %1").arg(desk.width()), 0 ),
-                    config->readNumEntry( TQString::fromLatin1("Height %1").arg(desk.height()), 0 ) );
+        TQSize size( config->readNumEntry( TQString::tqfromLatin1("Width %1").arg(desk.width()), 0 ),
+                    config->readNumEntry( TQString::tqfromLatin1("Height %1").arg(desk.height()), 0 ) );
         if (size.isEmpty()) {
             // try the KDE 2.0 way
-            size = TQSize( config->readNumEntry( TQString::fromLatin1("Width"), 0 ),
-                          config->readNumEntry( TQString::fromLatin1("Height"), 0 ) );
+            size = TQSize( config->readNumEntry( TQString::tqfromLatin1("Width"), 0 ),
+                          config->readNumEntry( TQString::tqfromLatin1("Height"), 0 ) );
             if (!size.isEmpty()) {
                 // make sure the other resolutions don't get old settings
-                config->writeEntry( TQString::fromLatin1("Width"), 0 );
-                config->writeEntry( TQString::fromLatin1("Height"), 0 );
+                config->writeEntry( TQString::tqfromLatin1("Width"), 0 );
+                config->writeEntry( TQString::tqfromLatin1("Height"), 0 );
             }
         }
         if ( !size.isEmpty() ) {
@@ -979,12 +979,12 @@ void KMainWindow::restoreWindowSize( KConfig * config )
 
 bool KMainWindow::initialGeometrySet() const
 {
-    return d->care_about_geometry;
+    return d->care_about_tqgeometry;
 }
 
 void KMainWindow::ignoreInitialGeometry()
 {
-    d->care_about_geometry = false;
+    d->care_about_tqgeometry = false;
 }
 
 void KMainWindow::setSettingsDirty()
@@ -1073,7 +1073,7 @@ KMenuBar *KMainWindow::menuBar()
     KMenuBar * mb = internalMenuBar();
     if ( !mb ) {
         mb = new KMenuBar( this );
-        // trigger a re-layout and trigger a call to the private
+        // trigger a re-tqlayout and trigger a call to the private
         // setMenuBar method.
         TQMainWindow::menuBar();
     }
@@ -1085,7 +1085,7 @@ KStatusBar *KMainWindow::statusBar()
     KStatusBar * sb = internalStatusBar();
     if ( !sb ) {
         sb = new KStatusBar( this );
-        // trigger a re-layout and trigger a call to the private
+        // trigger a re-tqlayout and trigger a call to the private
         // setStatusBar method.
         TQMainWindow::statusBar();
     }
@@ -1188,16 +1188,16 @@ TQSize KMainWindow::sizeForCentralWidgetSize(TQSize size)
         {
           case KToolBar::Top:
           case KToolBar::Bottom:
-            size += TQSize(0, tb->sizeHint().height());
+            size += TQSize(0, tb->tqsizeHint().height());
             break;
 
           case KToolBar::Left:
           case KToolBar::Right:
-            size += TQSize(toolBar()->sizeHint().width(), 0);
+            size += TQSize(toolBar()->tqsizeHint().width(), 0);
             break;
 
           case KToolBar::Flat:
-            size += TQSize(0, 3+kapp->style().pixelMetric( TQStyle::PM_DockWindowHandleExtent ));
+            size += TQSize(0, 3+kapp->style().tqpixelMetric( TQStyle::PM_DockWindowHandleExtent ));
             break;
 
           default:
@@ -1207,12 +1207,12 @@ TQSize KMainWindow::sizeForCentralWidgetSize(TQSize size)
     KMenuBar *mb = internalMenuBar();
     if (mb && !mb->isHidden()) {
         size += TQSize(0,mb->heightForWidth(size.width()));
-        if (style().styleHint(TQStyle::SH_MainWindow_SpaceBelowMenuBar, this))
+        if (style().tqstyleHint(TQStyle::SH_MainWindow_SpaceBelowMenuBar, this))
            size += TQSize( 0, dockWindowsMovable() ? 1 : 2);
     }
     TQStatusBar *sb = internalStatusBar();
     if( sb && !sb->isHidden() )
-       size += TQSize(0, sb->sizeHint().height());
+       size += TQSize(0, sb->tqsizeHint().height());
 
     return size;
 }

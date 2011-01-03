@@ -185,7 +185,7 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
     TQMap<int,TQValueList<int> > scIcons;
     for (KIconThemeDir *dir=mDirs.first(); dir!=0L; dir=mDirs.next())
     {
-        if ((dir->type() == KIcon::Scalable) && !scIcons.contains(dir->size()))
+        if ((dir->type() == KIcon::Scalable) && !scIcons.tqcontains(dir->size()))
         {
             TQValueList<int> lst;
             for (i=dir->minSize(); i<=dir->maxSize(); i++)
@@ -209,7 +209,7 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
         TQValueList<int>::ConstIterator it2;
         for (it2=lst.begin(); it2!=lst.end(); ++it2)
         {
-            if (scIcons.contains(*it2))
+            if (scIcons.tqcontains(*it2))
                 exp += scIcons[*it2];
             else
                 exp += *it2;
@@ -269,7 +269,7 @@ TQStringList KIconTheme::queryIcons(int size, KIcon::Context context) const
     TQPtrListIterator<KIconThemeDir> dirs(mDirs);
     KIconThemeDir *dir;
 
-    // Try to find exact match
+    // Try to tqfind exact match
     TQStringList result;
     for ( ; dirs.current(); ++dirs)
     {
@@ -422,13 +422,13 @@ KIcon KIconTheme::iconPath(const TQString& name, int size, KIcon::MatchType matc
 	icon.threshold = dir->threshold();
         icon.context = dir->context();
 
-        // if we got in MatchExact that far, we find no better
+        // if we got in MatchExact that far, we tqfind no better
         if (match == KIcon::MatchExact)
             return icon;
 	else
         {
 	    delta = dw;
-	    if (delta==0) return icon; // We won't find a better match anyway
+	    if (delta==0) return icon; // We won't tqfind a better match anyway
         }
     }
     return icon;
@@ -451,13 +451,13 @@ TQString KIconTheme::current()
     KConfig *config = KGlobal::config();
     KConfigGroupSaver saver(config, "Icons");
     *_theme = config->readEntry("Theme",defaultThemeName());
-    if ( *_theme == TQString::fromLatin1("hicolor") ) *_theme = defaultThemeName();
+    if ( *_theme == TQString::tqfromLatin1("hicolor") ) *_theme = defaultThemeName();
 /*    if (_theme->isEmpty())
     {
         if (TQPixmap::defaultDepth() > 8)
             *_theme = defaultThemeName();
         else
-            *_theme = TQString::fromLatin1("locolor");
+            *_theme = TQString::tqfromLatin1("locolor");
     }*/
     return *_theme;
 }
@@ -492,7 +492,7 @@ TQStringList KIconTheme::list()
 		KIconTheme oink(*it2);
 	    if (!oink.isValid()) continue;
 
-	    if (!_theme_list->contains(*it2))
+	    if (!_theme_list->tqcontains(*it2))
                 _theme_list->append(*it2);
         }
     }
@@ -511,7 +511,7 @@ void KIconTheme::reconfigure()
 // static
 TQString KIconTheme::defaultThemeName()
 {
-    return TQString::fromLatin1("crystalsvg");
+    return TQString::tqfromLatin1("crystalsvg");
 }
 
 /*** KIconThemeDir ***/
@@ -551,8 +551,8 @@ KIconThemeDir::KIconThemeDir(const TQString& dir, const KConfigBase *config)
         mContext = KIcon::International;
     else if (tmp == "Places")
         mContext = KIcon::Place;
-    else if (tmp == "Status")
-        mContext = KIcon::StatusIcon;
+    else if (tmp == "tqStatus")
+        mContext = KIcon::tqStatusIcon;
     else {
         kdDebug(264) << "Invalid Context= line for icon theme: " << mDir << "\n";
         return;

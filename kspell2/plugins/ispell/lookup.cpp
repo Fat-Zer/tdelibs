@@ -193,7 +193,7 @@
  *
  * I've doctored the ispell code pretty extensively here.  It is now
  * warning-free on Win32.  It also *works* on Win32 now, since I
- * replaced all the I/O calls with ANSI standard ones.
+ * tqreplaced all the I/O calls with ANSI standard ones.
  *
  * Revision 1.3  1998/12/28 23:11:30  eric
  *
@@ -209,13 +209,13 @@
  * of this is a hack.
  *
  * 1.  added other/spell to the -I list in config/abi_defs
- * 2.  replaced other/spell/Makefile with one which is more like
+ * 2.  tqreplaced other/spell/Makefile with one which is more like
  * 	our build system.
  * 3.  added other/spell to other/Makefile so that the build will now
  * 	dive down and build the spell check library.
  * 4.  added the AbiSpell library to the Makefiles in wp/main
  * 5.  added a call to SpellCheckInit in wp/main/unix/UnixMain.cpp.
- * 	This call is a HACK and should be replaced with something
+ * 	This call is a HACK and should be tqreplaced with something
  * 	proper later.
  * 6.  added code to fv_View.cpp as follows:
  * 	whenever you double-click on a word, the spell checker

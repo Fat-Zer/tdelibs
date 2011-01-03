@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
     		option = args->getOption("date");
                 date = KGlobal::locale()->readDate(option);
   	} else 
-    		date = TQDate::currentDate();
+    		date = TQDate::tqcurrentDate();
 
 	args->clear(); // Free up some memory.
 	

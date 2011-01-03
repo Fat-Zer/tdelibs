@@ -59,7 +59,7 @@ namespace KShell {
     };
 
     /**
-     * Status codes from splitArgs()
+     * tqStatus codes from splitArgs()
      */
     enum Errors {
         /**
@@ -81,7 +81,7 @@ namespace KShell {
 
     /**
      * Splits @p cmd according to POSIX shell word splitting and quoting rules.
-     * Can optionally perform tilde expansion and/or abort if it finds shell
+     * Can optionally perform tilde expansion and/or abort if it tqfinds shell
      * meta characters it cannot process.
      *
      * @param cmd the command to split

@@ -61,7 +61,7 @@ class KStartupInfoPrivate;
  * @author Lubos Lunak <l.lunak@kde.org>
  */
 class KDECORE_EXPORT KStartupInfo
-    : public QObject
+    : public TQObject
     {
     Q_OBJECT
     public:
@@ -358,11 +358,11 @@ class KDECORE_EXPORT KStartupInfo
         void remove_startup_pids( const KStartupInfoId& id, const KStartupInfoData& data );
         void remove_startup_pids( const KStartupInfoData& data );
         startup_t check_startup_internal( WId w, KStartupInfoId* id, KStartupInfoData* data );
-        bool find_id( const TQCString& id_P, KStartupInfoId* id_O,
+        bool tqfind_id( const TQCString& id_P, KStartupInfoId* id_O,
             KStartupInfoData* data_O );
-        bool find_pid( pid_t pid_P, const TQCString& hostname, KStartupInfoId* id_O,
+        bool tqfind_pid( pid_t pid_P, const TQCString& hostname, KStartupInfoId* id_O,
             KStartupInfoData* data_O );
-        bool find_wclass( TQCString res_name_P, TQCString res_class_P,
+        bool tqfind_wclass( TQCString res_name_P, TQCString res_class_P,
             KStartupInfoId* id_O, KStartupInfoData* data_O );
         static TQCString get_window_hostname( WId w_P );
         void startups_cleanup_internal( bool age_P );
@@ -482,7 +482,7 @@ class KDECORE_EXPORT KStartupInfoData
          * it tries to use other information (binary name).
 	 * @return the name of the startup notification
 	 */
-        const TQString& findName() const;
+        const TQString& tqfindName() const;
 	/**
 	 * Returns the name of the startup notification, or empty if not available.
 	 * @return the name of the startup notification, or an empty string
@@ -502,7 +502,7 @@ class KDECORE_EXPORT KStartupInfoData
 	 * @return the description of the startup notification
          * @since 3.2
 	 */
-        const TQString& findDescription() const;
+        const TQString& tqfindDescription() const;
 	/**
 	 * Returns the name of the startup notification, or empty if not available.
 	 * @return the name of the startup notificaiton, or an empty string
@@ -521,7 +521,7 @@ class KDECORE_EXPORT KStartupInfoData
 	 * @return the name of the startup notification's icon, or the name of
 	 *         the binary if not set
 	 */
-        const TQString& findIcon() const;
+        const TQString& tqfindIcon() const;
 	/**
 	 * Returns the icon of the startup notification, or empty if not available.
 	 * @return the name of the icon, or an empty string if not set.
@@ -551,7 +551,7 @@ class KDECORE_EXPORT KStartupInfoData
 	 * @return the WM_CLASS value for the startup notification, or the binary name
 	 *         if not set
 	 */
-        const TQCString findWMClass() const;
+        const TQCString tqfindWMClass() const;
 	/**
 	 * Returns the WM_CLASS value for the startup notification, or empty if not available.
 	 * @return the WM_CLASS value for the startup notification, or empty

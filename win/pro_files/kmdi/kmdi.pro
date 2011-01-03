@@ -13,7 +13,7 @@ LIBS += $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdeui$$KDELIB_SUF
 
 INCLUDEPATH += res $(KDELIBS)/kutils $(KDELIBS)/kdeui
 
-system( bash kmoc )
+system( bash ktqmoc )
 
 SOURCES = \
 kmdichildarea.cpp \

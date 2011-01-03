@@ -21,7 +21,7 @@
 255 218 185		PeachPuff
 255 222 173		navajo white
 255 222 173		NavajoWhite
-255 228 181		moccasin
+255 228 181		tqmoccasin
 255 248 220		cornsilk
 255 255 240		ivory
 255 250 205		lemon chiffon

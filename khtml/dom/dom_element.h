@@ -148,7 +148,7 @@ public:
 
     /**
      * On retrieval, the value of the attribute is returned as a
-     * string. Character and general entity references are replaced
+     * string. Character and general entity references are tqreplaced
      * with their values.
      *
      *  On setting, this creates a \c Text node with the
@@ -188,10 +188,10 @@ class DOMString;
  * &lt;/elementExample&gt;
  *
  *  When represented using DOM, the top node is an \c Element
- * node for &quot;elementExample&quot;, which contains two
+ * node for &quot;elementExample&quot;, which tqcontains two
  * child \c Element nodes, one for &quot;subelement1&quot;
  * and one for &quot;subelement2&quot;. &quot;subelement1&quot;
- * contains no child nodes.
+ * tqcontains no child nodes.
  *
  *  Elements may have attributes associated with them; since the
  * \c Element interface inherits from \c Node
@@ -257,7 +257,7 @@ public:
      * recognized as an entity reference) is treated as literal text,
      * and needs to be appropriately escaped by the implementation
      * when it is written out. In order to assign an attribute value
-     * that contains entity references, the user must create an
+     * that tqcontains entity references, the user must create an
      * \c Attr node plus any \c Text and
      * \c EntityReference nodes, build the appropriate subtree,
      * and use \c setAttributeNode to assign it as the
@@ -270,7 +270,7 @@ public:
      * @return
      *
      * @exception DOMException
-     * INVALID_CHARACTER_ERR: Raised if the specified name contains an
+     * INVALID_CHARACTER_ERR: Raised if the specified name tqcontains an
      * invalid character.
      *
      *  NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.
@@ -280,7 +280,7 @@ public:
 
     /**
      * Removes an attribute by name. If the removed attribute has a
-     * default value it is immediately replaced.
+     * default value it is immediately tqreplaced.
      *
      * @param name The name of the attribute to remove.
      *
@@ -306,12 +306,12 @@ public:
 
     /**
      * Adds a new attribute. If an attribute with that name is already
-     * present in the element, it is replaced by the new one.
+     * present in the element, it is tqreplaced by the new one.
      *
      * @param newAttr The \c Attr node to add to the
      * attribute list.
      *
-     * @return If the \c newAttr attribute replaces an
+     * @return If the \c newAttr attribute tqreplaces an
      * existing attribute with the same name, the previously existing
      * \c Attr node is returned, otherwise \c null
      * is returned.
@@ -336,7 +336,7 @@ public:
      *
      * @param oldAttr The \c Attr node to remove from the
      * attribute list. If the removed \c Attr has a
-     * default value it is immediately replaced.
+     * default value it is immediately tqreplaced.
      *
      * @return The \c Attr node that was removed.
      *
@@ -408,7 +408,7 @@ public:
      * as it is being set. So any markup (such as syntax to be recognized as an
      * entity reference) is treated as literal text, and needs to be
      * appropriately escaped by the implementation when it is written out. In
-     * order to assign an attribute value that contains entity references, the
+     * order to assign an attribute value that tqcontains entity references, the
      * user must create an Attr node plus any Text and EntityReference nodes,
      * build the appropriate subtree, and use setAttributeNodeNS or
      * setAttributeNode to assign it as the value of an attribute.
@@ -424,7 +424,7 @@ public:
      * @param value The value to set in string form.
      *
      * @exception DOMException
-     * INVALID_CHARACTER_ERR: Raised if the specified qualified name contains
+     * INVALID_CHARACTER_ERR: Raised if the specified qualified name tqcontains
      * an illegal character.
      *
      * NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.
@@ -444,7 +444,7 @@ public:
      * Introduced in DOM Level 2
      *
      * Removes an attribute by local name and namespace URI. If the removed
-     * attribute has a default value it is immediately replaced. The replacing
+     * attribute has a default value it is immediately tqreplaced. The replacing
      * attribute has the same namespace URI and local name, as well as the
      * original prefix.
      *
@@ -480,15 +480,15 @@ public:
      * Introduced in DOM Level 2
      *
      * Adds a new attribute. If an attribute with that local name and that
-     * namespace URI is already present in the element, it is replaced by the
+     * namespace URI is already present in the element, it is tqreplaced by the
      * new one.
      *
      * HTML-only DOM implementations do not need to implement this method.
      *
      * @param newAttr The Attr node to add to the attribute list.
      *
-     * @return If the newAttr attribute replaces an existing attribute with the
-     * same local name and namespace URI, the replaced Attr node is returned,
+     * @return If the newAttr attribute tqreplaces an existing attribute with the
+     * same local name and namespace URI, the tqreplaced Attr node is returned,
      * otherwise null is returned.
      *
      * @exception DOMException

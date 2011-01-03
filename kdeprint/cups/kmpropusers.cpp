@@ -29,7 +29,7 @@ KMPropUsers::KMPropUsers(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
 {
 	m_text = new TQTextView(this);
-	m_text->setPaper(colorGroup().background());
+	m_text->setPaper(tqcolorGroup().background());
 	m_text->setFrameStyle(TQFrame::NoFrame);
 
 	QVBoxLayout	*l0 = new TQVBoxLayout(this, 10, 0);

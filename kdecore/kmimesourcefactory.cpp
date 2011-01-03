@@ -60,7 +60,7 @@ TQString KMimeSourceFactory::makeAbsolute (const TQString& absOrRelName, const T
   TQString myName;
   TQString myContext;
 
-  const int pos = absOrRelName.find ('|');
+  const int pos = absOrRelName.tqfind ('|');
   if (pos > -1)
 	{
 	  myContext = absOrRelName.left (pos);

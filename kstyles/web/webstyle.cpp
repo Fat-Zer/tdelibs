@@ -92,7 +92,7 @@ scrollBarControlsMetrics
 
   int extent  = horizontal ? sb->height() : sb->width();
 
-  TQColorGroup g = sb->colorGroup();
+  TQColorGroup g = sb->tqcolorGroup();
 
   if (sliderStart > sliderMax)
     sliderStart = sliderMax;
@@ -303,12 +303,12 @@ WebStyle::eventFilter(TQObject * o, TQEvent * e)
   if (e->type() == TQEvent::Enter)
   {
     _highlightedButton = pb;
-    pb->repaint(false);
+    pb->tqrepaint(false);
   }
   else if (e->type() == TQEvent::Leave)
   {
     _highlightedButton = 0;
-    pb->repaint(false);
+    pb->tqrepaint(false);
   }
 
   return false;
@@ -371,14 +371,14 @@ WebStyle::drawPushButton(TQPushButton * b, TQPainter * p)
   bool sunken(b->isDown() || b->isOn());
   bool hl(_highlightedButton == b);
 
-  TQColor bg(b->colorGroup().button());
+  TQColor bg(b->tqcolorGroup().button());
 
   p->save();
-  p->fillRect(b->rect(), b->colorGroup().brush(TQColorGroup::Background));
+  p->fillRect(b->rect(), b->tqcolorGroup().brush(TQColorGroup::Background));
 
   if (b->isDefault())
   {
-    TQColor c(hl ? b->colorGroup().highlight() : b->colorGroup().mid());
+    TQColor c(hl ? b->tqcolorGroup().highlight() : b->tqcolorGroup().mid());
 
     p->setPen(contrastingForeground(c, bg));
 
@@ -391,26 +391,26 @@ WebStyle::drawPushButton(TQPushButton * b, TQPainter * p)
      4,
      b->width() - 8,
      b->height() - 8,
-     b->colorGroup().brush(TQColorGroup::Button)
+     b->tqcolorGroup().brush(TQColorGroup::Button)
     );
 
   if (b->isEnabled())
   {
     if (sunken)
     {
-      p->setPen(contrastingForeground(b->colorGroup().light(), bg));
+      p->setPen(contrastingForeground(b->tqcolorGroup().light(), bg));
     }
     else
     {
       if (hl)
-        p->setPen(contrastingForeground(b->colorGroup().highlight(), bg));
+        p->setPen(contrastingForeground(b->tqcolorGroup().highlight(), bg));
       else
-        p->setPen(contrastingForeground(b->colorGroup().mid(), bg));
+        p->setPen(contrastingForeground(b->tqcolorGroup().mid(), bg));
     }
   }
   else
   {
-    p->setPen(b->colorGroup().button());
+    p->setPen(b->tqcolorGroup().button());
   }
 
   drawFunkyRect(p, 3, 3, b->width() - 6, b->height() - 6, true);
@@ -459,7 +459,7 @@ WebStyle::drawScrollBarControls
      rSlider
     );
 
-  TQColorGroup g(sb->colorGroup());
+  TQColorGroup g(sb->tqcolorGroup());
 
   if (controls & AddLine && rAdd.isValid())
   {
@@ -583,7 +583,7 @@ WebStyle::scrollBarPointOver
  const TQPoint & point
 )
 {
-  if (!sb->rect().contains(point))
+  if (!sb->rect().tqcontains(point))
     return NoScroll;
 
   int sliderMin, sliderMax, sliderLength, buttonDim;
@@ -754,7 +754,7 @@ WebStyle::drawExclusiveIndicator
 
   p->setBrush(g.brush(TQColorGroup::Background));
 
-  // Avoid misshapen ellipses. Qt or X bug ? Who knows...
+  // Avoid mistqshapen ellipses. Qt or X bug ? Who knows...
 
   if (0 == w % 2)
     --w;
@@ -1450,14 +1450,14 @@ WebStyle::drawTab
 {
   TQRect r(tab->rect());
 
-  TQColorGroup g(tabBar->colorGroup());
+  TQColorGroup g(tabBar->tqcolorGroup());
 
   p->save();
 
   p->setPen(selected ? g.dark() : g.mid());
   p->fillRect(r, g.brush(TQColorGroup::Background));
 
-  switch (tabBar->shape())
+  switch (tabBar->tqshape())
   {
     case TQTabBar::RoundedAbove:
     case TQTabBar::TriangularAbove:
@@ -1603,7 +1603,7 @@ WebStyle::drawKickerTaskButton
   static TQString modStr =
     TQString::fromUtf8("[") + i18n("modified") + TQString::fromUtf8("]");
 
-  int modStrPos = s.find(modStr);
+  int modStrPos = s.tqfind(modStr);
 
   if (-1 != modStrPos)
   {

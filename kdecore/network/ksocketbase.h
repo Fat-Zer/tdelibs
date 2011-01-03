@@ -128,7 +128,7 @@ public:
    * Possible socket error codes.
    *
    * This is a list of possible error conditions that socket classes may
-   * be expected to find.
+   * be expected to tqfind.
    *
    * - NoError: no error has been detected
    * - LookupFailure: if a name lookup has failed
@@ -191,11 +191,11 @@ protected:
   /**
    * Set the given socket options.
    *
-   * The default implementation does nothing but store the mask internally.
+   * The default implementation does nothing but store the tqmask internally.
    * Descended classes must override this function to achieve functionality and
    * must also call this implementation.
    *
-   * @param opts	a mask of @ref SocketOptions or-ed bits of options to set
+   * @param opts	a tqmask of @ref SocketOptions or-ed bits of options to set
    *			or unset
    * @returns true on success
    * @note this function sets the options corresponding to the bits enabled in @p opts
@@ -206,11 +206,11 @@ protected:
   /**
    * Retrieves the socket options that have been set.
    *
-   * The default implementation just retrieves the mask from an internal variable.
+   * The default implementation just retrieves the tqmask from an internal variable.
    * Descended classes may choose to override this function to read the values
    * from the operating system.
    *
-   * @returns the mask of the options set
+   * @returns the tqmask of the options set
    */
   virtual int socketOptions() const;
 
@@ -350,9 +350,9 @@ public:
    *       should test the object returned by @ref socketDevice (through
    *       @ref KSocketDevice::capabilities, for instance) the availability.
    *
-   * @param add		mask of @ref KSocketDevice::Capabilities to add
-   * @param remove	mask of bits to remove from the requirements
-   * @return the current mask of requested capabilities
+   * @param add		tqmask of @ref KSocketDevice::Capabilities to add
+   * @param remove	tqmask of bits to remove from the requirements
+   * @return the current tqmask of requested capabilities
    */
   int setRequestedCapabilities(int add, int remove = 0);
 
@@ -533,7 +533,7 @@ public:
    * blocking.
    */
 #ifdef USE_QT3
-  virtual Q_LONG bytesAvailable() const = 0;
+  virtual TQ_LONG bytesAvailable() const = 0;
 #endif
 #ifdef USE_QT4
   virtual qint64 bytesAvailable() const = 0;
@@ -550,7 +550,7 @@ public:
    *
    * @returns the number of bytes available
    */
-  virtual Q_LONG waitForMore(int msecs, bool *timeout = 0L) = 0;
+  virtual TQ_LONG waitForMore(int msecs, bool *timeout = 0L) = 0;
 
   /**
    * Reads data from the socket.
@@ -558,7 +558,7 @@ public:
    * Reimplemented from TQIODevice. See TQIODevice::readBlock for
    * more information.
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG len) = 0;
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG len) = 0;
 
   /** @overload
    * Receives data and the source address.
@@ -571,7 +571,7 @@ public:
    * @param from		the address of the sender will be stored here
    * @returns the actual number of bytes read
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen, KSocketAddress& from) = 0;
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from) = 0;
 
   /**
    * Peeks the data in the socket.
@@ -584,7 +584,7 @@ public:
    * @param maxlen		the maximum number of bytes to peek
    * @returns the actual number of bytes copied into @p data
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen) = 0;
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen) = 0;
 
   /** @overload
    * Peeks the data in the socket and the source address.
@@ -598,7 +598,7 @@ public:
    * @param from		the address of the sender will be stored here
    * @returns the actual number of bytes copied into @p data
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen, KSocketAddress& from) = 0;
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from) = 0;
 
   /**
    * Writes the given data to the socket.
@@ -606,7 +606,7 @@ public:
    * Reimplemented from TQIODevice. See TQIODevice::writeBlock for
    * more information.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len) = 0;
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len) = 0;
 
   /** @overload
    * Writes the given data to the destination address.
@@ -619,7 +619,7 @@ public:
    * @param to			the address to send to
    * @returns the number of bytes actually sent
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len, const KSocketAddress& to) = 0;
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to) = 0;
 
   /**
    * Reads one character from the socket.

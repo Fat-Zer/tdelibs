@@ -45,7 +45,7 @@ Factory *Factory::self( const TQString& resourceFamily )
   if ( !mSelves )
     staticDeleter.setObject( mSelves, new TQDict<Factory> );
 
-  factory = mSelves->find( resourceFamily );
+  factory = mSelves->tqfind( resourceFamily );
 
   if ( !factory ) {
     factory = new Factory( resourceFamily );
@@ -79,7 +79,7 @@ TQStringList Factory::typeNames() const
 
 ConfigWidget *Factory::configWidget( const TQString& type, TQWidget *parent )
 {
-  if ( type.isEmpty() || !mTypeMap.contains( type ) )
+  if ( type.isEmpty() || !mTypeMap.tqcontains( type ) )
     return 0;
 
   KService::Ptr ptr = mTypeMap[ type ];
@@ -109,7 +109,7 @@ ConfigWidget *Factory::configWidget( const TQString& type, TQWidget *parent )
 
 TQString Factory::typeName( const TQString &type ) const
 {
-  if ( type.isEmpty() || !mTypeMap.contains( type ) )
+  if ( type.isEmpty() || !mTypeMap.tqcontains( type ) )
     return TQString();
 
   KService::Ptr ptr = mTypeMap[ type ];
@@ -118,7 +118,7 @@ TQString Factory::typeName( const TQString &type ) const
 
 TQString Factory::typeDescription( const TQString &type ) const
 {
-  if ( type.isEmpty() || !mTypeMap.contains( type ) )
+  if ( type.isEmpty() || !mTypeMap.tqcontains( type ) )
     return TQString();
 
   KService::Ptr ptr = mTypeMap[ type ];
@@ -129,7 +129,7 @@ Resource *Factory::resource( const TQString& type, const KConfig *config )
 {
   kdDebug(5650) << "Factory::resource( " << type << ", config )" << endl;
 
-  if ( type.isEmpty() || !mTypeMap.contains( type ) ) {
+  if ( type.isEmpty() || !mTypeMap.tqcontains( type ) ) {
     kdDebug(5650) << "Factory::resource() no such type " << type << endl;
     return 0;
   }

@@ -142,7 +142,7 @@
     <xsl:with-param name="conum">
       <xsl:number count="co"
                   level="any"
-                  from="programlisting|screen|literallayout|synopsis"
+                  from="programlisting|screen|literaltqlayout|synopsis"
                   format="1"/>
     </xsl:with-param>
   </xsl:call-template>
@@ -157,10 +157,10 @@
       <img src="{$callout.graphics.path}{$conum}{$callout.graphics.extension}"
            alt="{$conum}" border="0"/>
     </xsl:when>
-    <xsl:when test="$callout.unicode != 0
-                    and $conum &lt;= $callout.unicode.number.limit">
+    <xsl:when test="$callout.tqunicode != 0
+                    and $conum &lt;= $callout.tqunicode.number.limit">
       <xsl:choose>
-        <xsl:when test="$callout.unicode.start.character = 10102">
+        <xsl:when test="$callout.tqunicode.start.character = 10102">
           <xsl:choose>
             <xsl:when test="$conum = 1">&#10102;</xsl:when>
             <xsl:when test="$conum = 2">&#10103;</xsl:when>
@@ -177,8 +177,8 @@
         <xsl:otherwise>
           <xsl:message>
             <xsl:text>Don't know how to generate Unicode callouts </xsl:text>
-            <xsl:text>when $callout.unicode.start.character is </xsl:text>
-            <xsl:value-of select="$callout.unicode.start.character"/>
+            <xsl:text>when $callout.tqunicode.start.character is </xsl:text>
+            <xsl:value-of select="$callout.tqunicode.start.character"/>
           </xsl:message>
           <xsl:text>(</xsl:text>
           <xsl:value-of select="$conum"/>

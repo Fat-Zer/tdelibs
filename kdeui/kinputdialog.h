@@ -57,7 +57,7 @@ class KDEUI_EXPORT KInputDialog : public KDialogBase
      */
     KInputDialog( const TQString &caption, const TQString &label,
       const TQString &value, TQWidget *parent, const char *name,
-      TQValidator *validator, const TQString &mask );
+      TQValidator *validator, const TQString &tqmask );
     KInputDialog( const TQString &caption, const TQString &label,
       const TQString &value, TQWidget *parent, const char *name );
     KInputDialog( const TQString &caption, const TQString &label, int value,
@@ -111,15 +111,15 @@ class KDEUI_EXPORT KInputDialog : public KDialogBase
      * @param parent    Parent of the dialog widget
      * @param name      Name of the dialog widget
      * @param validator A @ref TQValidator to be associated with the line edit
-     * @param mask      Mask associated with the line edit. See the
-     *                  documentation for @ref TQLineEdit about masks.
+     * @param tqmask      Mask associated with the line edit. See the
+     *                  documentation for @ref TQLineEdit about tqmasks.
      *
      * @return String user entered if Ok was pressed, else a null string
      */
     static TQString getText( const TQString &caption, const TQString &label,
         const TQString &value=TQString::null, bool *ok=0, TQWidget *parent=0,
         const char *name=0, TQValidator *validator=0,
-        const TQString &mask=TQString::null );
+        const TQString &tqmask=TQString::null );
 
     /** 
      * Same as @ref getText except it provides an extra parameter to specify 
@@ -132,7 +132,7 @@ class KDEUI_EXPORT KInputDialog : public KDialogBase
     static TQString text( const TQString &caption, const TQString &label, 
         const TQString &value=TQString::null, bool *ok=0, TQWidget *parent=0, 
         const char *name=0, TQValidator *validator=0,
-        const TQString &mask=TQString::null,
+        const TQString &tqmask=TQString::null,
         const TQString& whatsThis=TQString::null );
 
     /**

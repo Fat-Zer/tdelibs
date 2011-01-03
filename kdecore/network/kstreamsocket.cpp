@@ -246,7 +246,7 @@ void KStreamSocket::connectionEvent()
       // try to bind
       if (!bindLocallyFor(r))
 	{
-	  // could not find a matching family
+	  // could not tqfind a matching family
 	  ++d->peer;
 	  continue;
 	}

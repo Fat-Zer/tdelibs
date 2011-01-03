@@ -169,7 +169,7 @@ TQString KSSLSettings::getCipherList() {
 		int bits = d->kossl->SSL_CIPHER_get_bits(sc, NULL);
 		if (m_cfg->readBoolEntry(tcipher, bits >= 56)) {
 			CipherNode *xx = new CipherNode(sc->name,bits);
-			if (!cipherList.contains(xx))
+			if (!cipherList.tqcontains(xx))
 				cipherList.prepend(xx);
 			else
 				delete xx;
@@ -183,7 +183,7 @@ TQString KSSLSettings::getCipherList() {
 	for (unsigned int i = 0; i < cipherList.count(); i++) {
 		CipherNode *j = 0L;
 		while ((j = cipherList.at(i)) != 0L) {
-			if (j->name.contains("ADH-") || j->name.contains("NULL-") || j->name.contains("DES-CBC3-SHA") || j->name.contains("FZA")) {
+			if (j->name.tqcontains("ADH-") || j->name.tqcontains("NULL-") || j->name.tqcontains("DES-CBC3-SHA") || j->name.tqcontains("FZA")) {
 				cipherList.remove(j);
 			} else {
 				break;
@@ -298,7 +298,7 @@ void KSSLSettings::save() {
   for (unsigned int i = 0; i < v2ciphers.count(); i++) {
     TQString ciphername;
     ciphername.sprintf("cipher_%s", v2ciphers[i].ascii());
-    if (v2selectedciphers.contains(v2ciphers[i])) {
+    if (v2selectedciphers.tqcontains(v2ciphers[i])) {
       m_cfg->writeEntry(ciphername, true);
     } else m_cfg->writeEntry(ciphername, false);
   }
@@ -307,7 +307,7 @@ void KSSLSettings::save() {
   for (unsigned int i = 0; i < v3ciphers.count(); i++) {
     TQString ciphername;
     ciphername.sprintf("cipher_%s", v3ciphers[i].ascii());
-    if (v3selectedciphers.contains(v3ciphers[i])) {
+    if (v3selectedciphers.tqcontains(v3ciphers[i])) {
       m_cfg->writeEntry(ciphername, true);
     } else m_cfg->writeEntry(ciphername, false);
   }
@@ -315,7 +315,7 @@ void KSSLSettings::save() {
  
   m_cfg->sync();
  
-  // insure proper permissions -- contains sensitive data
+  // insure proper permissions -- tqcontains sensitive data
   TQString cfgName(KGlobal::dirs()->findResource("config", "cryptodefaults"));
   if (!cfgName.isEmpty())
     ::chmod(TQFile::encodeName(cfgName), 0600);

@@ -7,7 +7,7 @@ DEFINES += MAKE_DCOP_LIB
 
 TARGET		= dcop$$KDEBUG
 
-system( bash kmoc )
+system( bash ktqmoc )
 
 LIBS += $$KDELIBDESTDIR/kdeice$$KDELIB_SUFFIX
 

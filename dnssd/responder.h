@@ -41,7 +41,7 @@ This class should not be used directly.
 @author Jakub Stachowski
 @short Internal class wrapping avahi client
  */
-class Responder : public QObject
+class Responder : public TQObject
 {
 	Q_OBJECT
 

@@ -50,8 +50,8 @@ When the document is processed, the processor
 first looks for a target dataset in the
 olink database starting with:</para>
 
-<literallayout><literal>&lt;document targetdoc="adminguide" lang="de"&gt;</literal>.
-</literallayout>
+<literaltqlayout><literal>&lt;document targetdoc="adminguide" lang="de"&gt;</literal>.
+</literaltqlayout>
 
 <para>If there is no such element, then the
 <parameter>olink.lang.fallback.sequence</parameter> 

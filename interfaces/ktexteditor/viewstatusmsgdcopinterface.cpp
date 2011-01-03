@@ -6,24 +6,24 @@
 #include <dcopclient.h>
 using namespace KTextEditor;
 
-ViewStatusMsgDCOPInterface::ViewStatusMsgDCOPInterface( ViewStatusMsgInterface *Parent, const char *name)
+ViewtqStatusMsgDCOPInterface::ViewtqStatusMsgDCOPInterface( ViewtqStatusMsgInterface *Parent, const char *name)
 	: DCOPObject(name)
 {
 	m_parent = Parent;
 }
 
-ViewStatusMsgDCOPInterface::~ViewStatusMsgDCOPInterface()
+ViewtqStatusMsgDCOPInterface::~ViewtqStatusMsgDCOPInterface()
 {
 
 }
 
-uint ViewStatusMsgDCOPInterface::viewStatusMsgInterfaceNumber ()
+uint ViewtqStatusMsgDCOPInterface::viewtqStatusMsgInterfaceNumber ()
 {
-	return m_parent->viewStatusMsgInterfaceNumber ();
+	return m_parent->viewtqStatusMsgInterfaceNumber ();
 }
 
-void ViewStatusMsgDCOPInterface::viewStatusMsg (TQString msg)
+void ViewtqStatusMsgDCOPInterface::viewtqStatusMsg (TQString msg)
 {
-	m_parent->viewStatusMsg(msg);
+	m_parent->viewtqStatusMsg(msg);
 }
 

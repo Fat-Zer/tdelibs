@@ -42,7 +42,7 @@ KStatusBarLabel::KStatusBarLabel( const TQString& text, int _id,
   setLineWidth  (0);
   setFrameStyle (TQFrame::NoFrame);
 
-  setAlignment( AlignHCenter | AlignVCenter | SingleLine );
+  tqsetAlignment( AlignHCenter | AlignVCenter | SingleLine );
 
   connect (this, TQT_SIGNAL(itemPressed(int)), parent, TQT_SIGNAL(pressed(int)));
   connect (this, TQT_SIGNAL(itemReleased(int)), parent, TQT_SIGNAL(released(int)));
@@ -65,8 +65,8 @@ KStatusBar::KStatusBar( TQWidget *parent, const char *name )
   // ...but off by default (sven)
   KConfig *config = KGlobal::config();
   TQString group(config->group());
-  config->setGroup(TQString::fromLatin1("StatusBar style"));
-  bool grip_enabled = config->readBoolEntry(TQString::fromLatin1("SizeGripEnabled"), false);
+  config->setGroup(TQString::tqfromLatin1("StatusBar style"));
+  bool grip_enabled = config->readBoolEntry(TQString::tqfromLatin1("SizeGripEnabled"), false);
   setSizeGripEnabled(grip_enabled);
   config->setGroup(group);
 }
@@ -129,7 +129,7 @@ void KStatusBar::setItemAlignment (int id, int align)
   KStatusBarLabel *l = items[id];
   if (l)
   {
-    l->setAlignment(align);
+    l->tqsetAlignment(align);
   }
   else
     kdDebug() << "KStatusBar::setItemAlignment: bad item id: " << id << endl;

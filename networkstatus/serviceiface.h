@@ -31,10 +31,10 @@ class ServiceIface : virtual public DCOPObject
 K_DCOP
 k_dcop:
 	/** Change the status for the given network */
-	virtual void setNetworkStatus( const TQString & networkName, int status ) = 0;
+	virtual void setNetworktqStatus( const TQString & networkName, int status ) = 0;
 	/** Register or update the properties for a network 
 	NB Check that people don't use this to change status */
-	virtual void registerNetwork( const TQString & networkName, NetworkStatus::Properties properties ) = 0;
+	virtual void registerNetwork( const TQString & networkName, NetworktqStatus::Properties properties ) = 0;
 	/**
 	 * Indicate that this service is no longer administering the named network
 	 * TODO: Work out the implications to clients of unregistering a network 

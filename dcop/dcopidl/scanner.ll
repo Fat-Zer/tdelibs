@@ -169,8 +169,8 @@ Kidl_Identifier		[_a-zA-Z][a-zA-Z0-9_]*
                         }
 "#include"[ \t]*[<\"][^>"]*[>\"]\s*\n {
 			  TQString s( yytext );
-                          int i = s.find(TQRegExp("[\"<]"))+1;
-                          int j = s.find(TQRegExp("[\">]"), i);
+                          int i = s.tqfind(TQRegExp("[\"<]"))+1;
+                          int j = s.tqfind(TQRegExp("[\">]"), i);
 			  yylval._str = new TQString( s.mid( i, j - i ) );
                           idl_line_no++;
                           return T_INCLUDE;

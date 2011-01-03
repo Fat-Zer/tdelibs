@@ -319,7 +319,7 @@ bool ResourceFile::asyncSave( Ticket *ticket )
 void ResourceFile::setFileName( const TQString &fileName )
 {
   mDirWatch.stopScan();
-  if ( mDirWatch.contains( mFileName ) )
+  if ( mDirWatch.tqcontains( mFileName ) )
     mDirWatch.removeFile( mFileName );
 
   mFileName = fileName;

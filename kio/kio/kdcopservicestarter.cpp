@@ -46,7 +46,7 @@ KDCOPServiceStarter::~KDCOPServiceStarter()
 {
 }
 
-int KDCOPServiceStarter::findServiceFor( const TQString& serviceType,
+int KDCOPServiceStarter::tqfindServiceFor( const TQString& serviceType,
                                          const TQString& _constraint,
                                          const TQString& preferences,
                                          TQString *error, TQCString* pDcopService,

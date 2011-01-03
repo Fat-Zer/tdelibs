@@ -60,7 +60,7 @@ EXCLUDE_PATTERNS       = */.svn/* \
                          */.git/* \
                          */cmake/* \
                          *.moc.* \
-                         moc* \
+                         tqmoc* \
                          *.all_cpp.* \
                          *unload.* \
                          */test/* \

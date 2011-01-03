@@ -247,7 +247,7 @@ void Kded::noDemandLoad(const TQString &obj)
 
 KDEDModule *Kded::loadModule(const TQCString &obj, bool onDemand)
 {
-  KDEDModule *module = m_modules.find(obj);
+  KDEDModule *module = m_modules.tqfind(obj);
   if (module)
      return module;
   KService::Ptr s = KService::serviceByDesktopPath("kded/"+obj+".desktop");
@@ -260,7 +260,7 @@ KDEDModule *Kded::loadModule(const KService *s, bool onDemand)
   if (s && !s->library().isEmpty())
   {
     TQCString obj = s->desktopEntryName().latin1();
-    KDEDModule *oldModule = m_modules.find(obj);
+    KDEDModule *oldModule = m_modules.tqfind(obj);
     if (oldModule)
        return oldModule;
 
@@ -374,7 +374,7 @@ void Kded::slotApplicationRemoved(const TQCString &appId)
      it.current()->removeAll(appId);
   }
 
-  TQValueList<long> *windowIds = m_windowIdList.find(appId);
+  TQValueList<long> *windowIds = m_windowIdList.tqfind(appId);
   if (windowIds)
   {
      for( TQValueList<long>::ConstIterator it = windowIds->begin();
@@ -428,7 +428,7 @@ void Kded::updateResourceList()
        it != dirs.end();
        ++it )
   {
-     if (m_allResourceDirs.find(*it) == m_allResourceDirs.end())
+     if (m_allResourceDirs.tqfind(*it) == m_allResourceDirs.end())
      {
         m_allResourceDirs.append(*it);
         readDirectory(*it);
@@ -562,7 +562,7 @@ void Kded::readDirectory( const TQString& _path )
   if ( path.right(1) != "/" )
     path += "/";
 
-  if ( m_pDirWatch->contains( path ) ) // Already seen this one?
+  if ( m_pDirWatch->tqcontains( path ) ) // Already seen this one?
      return;
 
   TQDir d( _path, TQString::null, TQDir::Unsorted, TQDir::Readable | TQDir::Executable | TQDir::Dirs | TQDir::Hidden );
@@ -603,18 +603,18 @@ void Kded::readDirectory( const TQString& _path )
 
 bool Kded::isWindowRegistered(long windowId)
 {
-  return m_globalWindowIdList.find(windowId) != 0;
+  return m_globalWindowIdList.tqfind(windowId) != 0;
 
 }
 
 // DCOP
 void Kded::registerWindowId(long windowId)
 {
-  m_globalWindowIdList.replace(windowId, &windowId);
+  m_globalWindowIdList.tqreplace(windowId, &windowId);
   TQCString sender = callingDcopClient()->senderId();
   if( sender.isEmpty()) // local call
       sender = callingDcopClient()->appId();
-  TQValueList<long> *windowIds = m_windowIdList.find(sender);
+  TQValueList<long> *windowIds = m_windowIdList.tqfind(sender);
   if (!windowIds)
   {
     windowIds = new TQValueList<long>;
@@ -636,7 +636,7 @@ void Kded::unregisterWindowId(long windowId)
   TQCString sender = callingDcopClient()->senderId();
   if( sender.isEmpty()) // local call
       sender = callingDcopClient()->appId();
-  TQValueList<long> *windowIds = m_windowIdList.find(sender);
+  TQValueList<long> *windowIds = m_windowIdList.tqfind(sender);
   if (windowIds)
   {
      windowIds->remove(windowId);
@@ -674,7 +674,7 @@ KUpdateD::KUpdateD()
        if (path[path.length()-1] != '/')
           path += "/";
 
-       if (!m_pDirWatch->contains(path))
+       if (!m_pDirWatch->tqcontains(path))
           m_pDirWatch->addDir(path);
     }
 }

@@ -26,7 +26,7 @@
 #include "kdelibs_export.h"
 
 /**
- * This class contains utility functions for handling strings.
+ * This class tqcontains utility functions for handling strings.
  *
  * This class is @em not a substitute for the TQString class. What
  * I tried to do with this class is provide an easy way to
@@ -45,7 +45,7 @@
  * a string. These ranges function, for the large part, as they would in
  * python. See the word(const TQString&, const char *) and remword(const TQString&, uint) functions for more detail.
  *
- * This class contains no data members of its own. All strings are cut
+ * This class tqcontains no data members of its own. All strings are cut
  * on the fly and returned as new qstrings/qstringlists.
  *
  * Quick example on how to use:
@@ -331,7 +331,7 @@ public:
      * Example:
      * \code
      * perlSplit("__", "some__string__for__you__here", 4)
-     * TQStringList contains: "some", "string", "for", "you__here"
+     * TQStringList tqcontains: "some", "string", "for", "you__here"
      * \endcode
      *
      * @param sep is the string to use to delimit s.
@@ -351,7 +351,7 @@ public:
      * Example:
      * \code
      * perlSplit(' ', "kparts reaches the parts other parts can't", 3)
-     * TQStringList contains: "kparts", "reaches", "the parts other parts can't"
+     * TQStringList tqcontains: "kparts", "reaches", "the parts other parts can't"
      * \endcode
      *
      * @param sep is the character to use to delimit s.
@@ -371,7 +371,7 @@ public:
      * Example:
      * \code
      * perlSplit(TQRegExp("[! ]", "Split me up ! I'm bored ! OK ?", 3)
-     * TQStringList contains: "Split", "me", "up ! I'm bored, OK ?"
+     * TQStringList tqcontains: "Split", "me", "up ! I'm bored, OK ?"
      * \endcode
      *
      * @param sep is the regular expression to use to delimit s.

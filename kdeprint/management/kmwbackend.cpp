@@ -56,8 +56,8 @@ KMWBackend::KMWBackend(TQWidget *parent, const char *name)
 	m_buttons = new TQButtonGroup(this);
 	m_buttons->hide();
 
-	m_layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
-	m_layout->addStretch(1);
+	m_tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	m_tqlayout->addStretch(1);
 	m_count = 0;
 }
 
@@ -91,7 +91,7 @@ void KMWBackend::initPrinter(KMPrinter *p)
 		else if (p->members().count() > 0) ID = KMWizard::Class;
 	}
 
-	if (m_buttons->find(ID))
+	if (m_buttons->tqfind(ID))
 		m_buttons->setButton(ID);
 }
 
@@ -102,9 +102,9 @@ void KMWBackend::updatePrinter(KMPrinter *p)
 	else p->setType(KMPrinter::Printer);
 	p->setOption("kde-backend",TQString::number(ID));
 	QString	s = m_buttons->selected()->text();
-	s.replace(TQRegExp("&(?=\\w)"), TQString::fromLatin1(""));
+	s.tqreplace(TQRegExp("&(?=\\w)"), TQString::tqfromLatin1(""));
 	p->setOption("kde-backend-description",s);
-	setNextPage((m_map.contains(ID) ? m_map[ID] : KMWizard::Error));
+	setNextPage((m_map.tqcontains(ID) ? m_map[ID] : KMWizard::Error));
 }
 
 void KMWBackend::addBackend( int ID, bool on, int nextpage )
@@ -154,7 +154,7 @@ void KMWBackend::addBackend(int ID, const TQString& txt, bool on, const TQString
 	if (ID == -1)
 	{
 		KSeparator* sep = new KSeparator( KSeparator::HLine, this);
-		m_layout->insertWidget(m_count, sep);
+		m_tqlayout->insertWidget(m_count, sep);
 	}
 	else
 	{
@@ -164,14 +164,14 @@ void KMWBackend::addBackend(int ID, const TQString& txt, bool on, const TQString
 			TQWhatsThis::add( btn, whatsThis );
 		m_buttons->insert(btn, ID);
 		m_map[ID] = (nextpage == -1 ? ID : nextpage);	// use nextpage if specified, default to ID
-		m_layout->insertWidget(m_count, btn);
+		m_tqlayout->insertWidget(m_count, btn);
 	}
 	m_count++;
 }
 
 void KMWBackend::enableBackend(int ID, bool on)
 {
-	QButton	*btn = m_buttons->find(ID);
+	QButton	*btn = m_buttons->tqfind(ID);
 	if (btn)
 		btn->setEnabled(on);
 }

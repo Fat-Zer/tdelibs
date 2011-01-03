@@ -121,7 +121,7 @@ int KWalletD::generateHandle() {
 	// ASSUMPTION: RAND_MAX is fairly large.
 	do {
 		rc = rand();
-	} while (_wallets.find(rc) || rc == 0);
+	} while (_wallets.tqfind(rc) || rc == 0);
 
 	return rc;
 }
@@ -308,7 +308,7 @@ void KWalletD::checkActiveDialog() {
 }
 
 int KWalletD::doTransactionOpen(const TQCString& appid, const TQString& wallet, uint wId, bool modal) {
-	if (_firstUse && !wallets().contains(KWallet::Wallet::LocalWallet())) {
+	if (_firstUse && !wallets().tqcontains(KWallet::Wallet::LocalWallet())) {
 		// First use wizard
 		KWalletWizard *wiz = new KWalletWizard(0);
 		setupDialog( wiz, wId, appid, modal );
@@ -529,11 +529,11 @@ int KWalletD::internalOpen(const TQCString& appid, const TQString& wallet, bool 
 			KApplication::startServiceByDesktopName("kwalletmanager-kwalletd");
 		}
 	} else {
-		if (!_handles[appid].contains(rc) && _openPrompt && !isAuthorizedApp(appid, wallet, w)) {
+		if (!_handles[appid].tqcontains(rc) && _openPrompt && !isAuthorizedApp(appid, wallet, w)) {
 			return -1;
 		}
 		_handles[appid].append(rc);
-		_wallets.find(rc)->ref();
+		_wallets.tqfind(rc)->ref();
 	}
 
 	return rc;
@@ -567,7 +567,7 @@ bool KWalletD::isAuthorizedApp(const TQCString& appid, const TQString& wallet, W
 			KConfig cfg("kwalletrc");
 			cfg.setGroup("Auto Allow");
 			TQStringList apps = cfg.readListEntry(wallet);
-			if (!apps.contains(thisApp)) {
+			if (!apps.tqcontains(thisApp)) {
 				apps += thisApp;
 				_implicitAllowMap[wallet] += thisApp;
 				cfg.writeEntry(wallet, apps);
@@ -578,7 +578,7 @@ bool KWalletD::isAuthorizedApp(const TQCString& appid, const TQString& wallet, W
 		KConfig cfg("kwalletrc");
 		cfg.setGroup("Auto Deny");
 		TQStringList apps = cfg.readListEntry(wallet);
-		if (!apps.contains(thisApp)) {
+		if (!apps.tqcontains(thisApp)) {
 			apps += thisApp;
 			_implicitDenyMap[wallet] += thisApp;
 			cfg.writeEntry(wallet, apps);
@@ -646,7 +646,7 @@ void KWalletD::doTransactionChangePassword(const TQCString& appid, const TQStrin
 			return;
 		}
 
-		w = _wallets.find(handle);
+		w = _wallets.tqfind(handle);
 		reclose = true;
 	} else {
 		handle = it.currentKey();
@@ -710,14 +710,14 @@ int KWalletD::close(const TQString& wallet, bool force) {
 int KWalletD::closeWallet(KWallet::Backend *w, int handle, bool force) {
 	if (w) {
 		const TQString& wallet = w->walletName();
-		assert(_passwords.contains(wallet));
+		assert(_passwords.tqcontains(wallet));
 		if (w->refCount() == 0 || force) {
-			invalidateHandle(handle);
+			tqinvalidateHandle(handle);
 			if (_closeIdle && _timeouts) {
 				_timeouts->removeTimer(handle);
 			}
 			_wallets.remove(handle);
-			if (_passwords.contains(wallet)) {
+			if (_passwords.tqcontains(wallet)) {
 				w->close(TQByteArray().duplicate(_passwords[wallet].data(), _passwords[wallet].length()));
 				_passwords[wallet].fill(0);
 				_passwords.remove(wallet);
@@ -735,15 +735,15 @@ int KWalletD::closeWallet(KWallet::Backend *w, int handle, bool force) {
 
 int KWalletD::close(int handle, bool force) {
 	TQCString appid = friendlyDCOPPeerName();
-	KWallet::Backend *w = _wallets.find(handle);
-	bool contains = false;
+	KWallet::Backend *w = _wallets.tqfind(handle);
+	bool tqcontains = false;
 
 	if (w) { // the handle is valid
-		if (_handles.contains(appid)) { // we know this app
-			if (_handles[appid].contains(handle)) {
+		if (_handles.tqcontains(appid)) { // we know this app
+			if (_handles[appid].tqcontains(handle)) {
 				// the app owns this handle
-				_handles[appid].remove(_handles[appid].find(handle));
-				contains = true;
+				_handles[appid].remove(_handles[appid].tqfind(handle));
+				tqcontains = true;
 				if (_handles[appid].isEmpty()) {
 					_handles.remove(appid);
 				}
@@ -751,15 +751,15 @@ int KWalletD::close(int handle, bool force) {
 		}
 
 		// watch the side effect of the deref()
-		if ((contains && w->deref() == 0 && !_leaveOpen) || force) {
+		if ((tqcontains && w->deref() == 0 && !_leaveOpen) || force) {
 			if (_closeIdle && _timeouts) {
 				_timeouts->removeTimer(handle);
 			}
 			_wallets.remove(handle);
 			if (force) {
-				invalidateHandle(handle);
+				tqinvalidateHandle(handle);
 			}
-			if (_passwords.contains(w->walletName())) {
+			if (_passwords.tqcontains(w->walletName())) {
 				w->close(TQByteArray().duplicate(_passwords[w->walletName()].data(), _passwords[w->walletName()].length()));
 				_passwords[w->walletName()].fill(0);
 				_passwords.remove(w->walletName());
@@ -792,7 +792,7 @@ bool KWalletD::isOpen(int handle) {
 		return false;
 	}
 
-	KWallet::Backend *rc = _wallets.find(handle);
+	KWallet::Backend *rc = _wallets.tqfind(handle);
 
 	if (rc == 0 && ++_failed > 5) {
 		_failed = 0;
@@ -1179,11 +1179,11 @@ int KWalletD::removeEntry(int handle, const TQString& folder, const TQString& ke
 
 
 void KWalletD::slotAppUnregistered(const TQCString& app) {
-	if (_handles.contains(app)) {
+	if (_handles.tqcontains(app)) {
 		TQValueList<int> l = _handles[app];
 		for (TQValueList<int>::Iterator i = l.begin(); i != l.end(); ++i) {
 			_handles[app].remove(*i);
-			KWallet::Backend *w = _wallets.find(*i);
+			KWallet::Backend *w = _wallets.tqfind(*i);
 			if (w && !_leaveOpen && 0 == w->deref()) {
 				close(w->walletName(), true);
 			}
@@ -1193,7 +1193,7 @@ void KWalletD::slotAppUnregistered(const TQCString& app) {
 }
 
 
-void KWalletD::invalidateHandle(int handle) {
+void KWalletD::tqinvalidateHandle(int handle) {
 	for (TQMap<TQCString,TQValueList<int> >::Iterator i = _handles.begin();
 							i != _handles.end();
 									++i) {
@@ -1207,11 +1207,11 @@ KWallet::Backend *KWalletD::getWallet(const TQCString& appid, int handle) {
 		return 0L;
 	}
 
-	KWallet::Backend *w = _wallets.find(handle);
+	KWallet::Backend *w = _wallets.tqfind(handle);
 
 	if (w) { // the handle is valid
-		if (_handles.contains(appid)) { // we know this app
-			if (_handles[appid].contains(handle)) {
+		if (_handles.tqcontains(appid)) { // we know this app
+			if (_handles[appid].tqcontains(handle)) {
 				// the app owns this handle
 				_failed = 0;
 				if (_closeIdle && _timeouts) {
@@ -1285,7 +1285,7 @@ TQStringList KWalletD::users(const TQString& wallet) const {
 							++it) {
 		if (it.current()->walletName() == wallet) {
 			for (TQMap<TQCString,TQValueList<int> >::ConstIterator hit = _handles.begin(); hit != _handles.end(); ++hit) {
-				if (hit.data().contains(it.currentKey())) {
+				if (hit.data().tqcontains(it.currentKey())) {
 					rc += hit.key();
 				}
 			}
@@ -1302,7 +1302,7 @@ bool KWalletD::disconnectApplication(const TQString& wallet, const TQCString& ap
 						it.current();
 							++it) {
 		if (it.current()->walletName() == wallet) {
-			if (_handles[application].contains(it.currentKey())) {
+			if (_handles[application].tqcontains(it.currentKey())) {
 				_handles[application].remove(it.currentKey());
 
 				if (_handles[application].isEmpty()) {
@@ -1416,7 +1416,7 @@ bool KWalletD::isEnabled() const {
 
 
 bool KWalletD::folderDoesNotExist(const TQString& wallet, const TQString& folder) {
-	if (!wallets().contains(wallet)) {
+	if (!wallets().tqcontains(wallet)) {
 		return true;
 	}
 
@@ -1435,7 +1435,7 @@ bool KWalletD::folderDoesNotExist(const TQString& wallet, const TQString& folder
 
 
 bool KWalletD::keyDoesNotExist(const TQString& wallet, const TQString& folder, const TQString& key) {
-	if (!wallets().contains(wallet)) {
+	if (!wallets().tqcontains(wallet)) {
 		return true;
 	}
 
@@ -1454,12 +1454,12 @@ bool KWalletD::keyDoesNotExist(const TQString& wallet, const TQString& folder, c
 
 
 bool KWalletD::implicitAllow(const TQString& wallet, const TQCString& app) {
-	return _implicitAllowMap[wallet].contains(TQString::fromLocal8Bit(app));
+	return _implicitAllowMap[wallet].tqcontains(TQString::fromLocal8Bit(app));
 }
 
 
 bool KWalletD::implicitDeny(const TQString& wallet, const TQCString& app) {
-	return _implicitDenyMap[wallet].contains(TQString::fromLocal8Bit(app));
+	return _implicitDenyMap[wallet].tqcontains(TQString::fromLocal8Bit(app));
 }
 
 
@@ -1468,12 +1468,12 @@ TQCString KWalletD::friendlyDCOPPeerName() {
 	if (!dc) {
 		return "";
 	}
-	return dc->senderId().replace(TQRegExp("-[0-9]+$"), "");
+	return dc->senderId().tqreplace(TQRegExp("-[0-9]+$"), "");
 }
 
 
 void KWalletD::timedOut(int id) {
-	KWallet::Backend *w = _wallets.find(id);
+	KWallet::Backend *w = _wallets.tqfind(id);
 	if (w) {
 		closeWallet(w, id, true);
 	}

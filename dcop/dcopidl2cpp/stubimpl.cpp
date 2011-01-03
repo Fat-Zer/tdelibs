@@ -98,7 +98,7 @@ void generateStubImpl( const TQString& idl, const TQString& header, const TQStri
 	TQString namespace_tmp = className_stub;
 	str << endl;
 	for(;;) {
-	    int pos = namespace_tmp.find( "::" );
+	    int pos = namespace_tmp.tqfind( "::" );
 	    if( pos < 0 ) {
 		className_stub = namespace_tmp;
 		break;

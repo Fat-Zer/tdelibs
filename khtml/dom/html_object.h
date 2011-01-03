@@ -535,7 +535,7 @@ public:
     /**
      * Introduced in DOM Level 2
      *
-     * Returns the document this iframe contains, if there is any and
+     * Returns the document this iframe tqcontains, if there is any and
      * it is available, a Null document otherwise. The attribute is
      * read-only.
      *

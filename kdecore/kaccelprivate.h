@@ -47,7 +47,7 @@ class KDECORE_EXPORT KAccelPrivate : public TQObject, public KAccelBase
 	void slotShowMenu();
 	void slotMenuActivated( int iAction );
 	
-	bool eventFilter( TQObject* pWatched, TQEvent* pEvent ); // virtual method from QObject
+	bool eventFilter( TQObject* pWatched, TQEvent* pEvent ); // virtual method from TQObject
 };
 
 #endif // !__KACCELPRIVATE_H

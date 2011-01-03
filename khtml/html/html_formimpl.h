@@ -415,7 +415,7 @@ public:
     virtual void restoreState(const TQString &state);
 
     virtual NodeImpl *insertBefore ( NodeImpl *newChild, NodeImpl *refChild, int &exceptioncode );
-    virtual void      replaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode );
+    virtual void      tqreplaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode );
     virtual void      removeChild ( NodeImpl *oldChild, int &exceptioncode );
     virtual NodeImpl *appendChild ( NodeImpl *newChild, int &exceptioncode );
     virtual NodeImpl *addChild( NodeImpl* newChild );

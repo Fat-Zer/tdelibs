@@ -40,7 +40,7 @@ class Ticket;
 
   This class provides access to a collection of address book entries.
  */
-class KABC_EXPORT AddressBook : public QObject
+class KABC_EXPORT AddressBook : public TQObject
 {
   Q_OBJECT
 
@@ -113,7 +113,7 @@ class KABC_EXPORT AddressBook : public QObject
       Constructs an address book object.
       The resources are loaded automatically.
 
-      @param config The config file which contains the resource settings.
+      @param config The config file which tqcontains the resource settings.
      */
     AddressBook( const TQString &config );
 
@@ -207,7 +207,7 @@ class KABC_EXPORT AddressBook : public QObject
 
     /**
       Insert an addressee into the address book. If an addressee with the same
-      unique id already exists, it is replaced by the new one, otherwise it is
+      unique id already exists, it is tqreplaced by the new one, otherwise it is
       appended.
 
       @param addr The addressee which shall be insert.
@@ -235,7 +235,7 @@ class KABC_EXPORT AddressBook : public QObject
 
       @param addr The addresee you are looking for.
      */
-    Iterator find( const Addressee &addr ); // KDE4: const
+    Iterator tqfind( const Addressee &addr ); // KDE4: const
 
     /**
       Searches an addressee with the specified unique identifier.
@@ -244,7 +244,7 @@ class KABC_EXPORT AddressBook : public QObject
       @return The addressee with the specified unique identifier or an
               empty addressee.
      */
-    Addressee findByUid( const TQString &uid ); // KDE4: const
+    Addressee tqfindByUid( const TQString &uid ); // KDE4: const
 
     /**
       Returns a list of all addressees in the address book.
@@ -257,7 +257,7 @@ class KABC_EXPORT AddressBook : public QObject
       @param name The name you are looking for.
       @return A list of all matching addressees.
      */
-    Addressee::List findByName( const TQString &name ); // KDE4: const
+    Addressee::List tqfindByName( const TQString &name ); // KDE4: const
 
     /**
       Searches all addressees which match the specified email address.
@@ -265,7 +265,7 @@ class KABC_EXPORT AddressBook : public QObject
       @param email The email address you are looking for.
       @return A list of all matching addressees.
      */
-    Addressee::List findByEmail( const TQString &email ); // KDE4: const
+    Addressee::List tqfindByEmail( const TQString &email ); // KDE4: const
 
     /**
       Searches all addressees which belongs to the specified category.
@@ -273,7 +273,7 @@ class KABC_EXPORT AddressBook : public QObject
       @param category The category you are looking for.
       @return A list of all matching addressees.
      */
-    Addressee::List findByCategory( const TQString &category ); // KDE4: const
+    Addressee::List tqfindByCategory( const TQString &category ); // KDE4: const
 
     /**
       Returns a string identifying this addressbook. The identifier is

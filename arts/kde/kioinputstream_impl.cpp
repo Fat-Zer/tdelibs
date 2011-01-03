@@ -78,7 +78,7 @@ void KIOInputStream_impl::streamStart()
 	m_job = KIO::get(m_url, false, false);
 
 	m_job->addMetaData("accept", "audio/x-mp3, video/mpeg, application/ogg");
-	m_job->addMetaData("UserAgent", TQString::fromLatin1("aRts/") + TQString::fromLatin1(ARTS_VERSION));
+	m_job->addMetaData("UserAgent", TQString::tqfromLatin1("aRts/") + TQString::tqfromLatin1(ARTS_VERSION));
 
 	TQObject::connect(m_job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
 			 this, TQT_SLOT(slotData(KIO::Job *, const TQByteArray &)));		     

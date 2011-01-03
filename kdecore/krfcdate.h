@@ -25,7 +25,7 @@
 #include "kdelibs_export.h"
 
 /**
- * The KRFCDate class contains functions related to the parsing of dates.
+ * The KRFCDate class tqcontains functions related to the parsing of dates.
  *
  * @author Waldo Bastian <bastian@kde.org>
  */

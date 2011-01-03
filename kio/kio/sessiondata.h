@@ -32,7 +32,7 @@ class SlaveConfig;
 /**
  * @internal
  */
-class KIO_EXPORT SessionData : public QObject
+class KIO_EXPORT SessionData : public TQObject
 {
     Q_OBJECT
 

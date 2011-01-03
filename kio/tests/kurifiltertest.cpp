@@ -45,7 +45,7 @@ void filter( const char* u, const char * expectedResult = 0, int expectedUriType
 
     if( abs_path )
     {
-        m_filterData->setAbsolutePath( TQString::fromLatin1( abs_path ) );
+        m_filterData->setAbsolutePath( TQString::tqfromLatin1( abs_path ) );
         kdDebug() << "Filtering: " << a << " with abs_path=" << abs_path << endl;
     }
     else
@@ -97,8 +97,8 @@ void filter( const char* u, const char * expectedResult = 0, int expectedUriType
         if ( expectedResult )
         {
             // Hack for other locales than english, normalize google hosts to google.com
-            cmd = cmd.replace( TQRegExp( "www\\.google\\.[^/]*/" ), "www.google.com/" );
-            if ( cmd != TQString::fromLatin1( expectedResult ) )
+            cmd = cmd.tqreplace( TQRegExp( "www\\.google\\.[^/]*/" ), "www.google.com/" );
+            if ( cmd != TQString::tqfromLatin1( expectedResult ) )
             {
                 kdError() << " Got " << cmd << " expected " << expectedResult << endl;
                 ::exit(1);

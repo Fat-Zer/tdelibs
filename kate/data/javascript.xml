@@ -174,7 +174,7 @@
         <item>data</item>
         <item>defaultChecked</item>
         <item>defaultSelected</item>
-        <item>defaultStatus</item>
+        <item>defaulttqStatus</item>
         <item>defaultValue</item>
         <item>description</item>
         <item>disableExternalCapture</item>
@@ -188,7 +188,7 @@
         <item>exec</item>
         <item>fgColor</item>
         <item>filename</item>
-        <item>find</item>
+        <item>tqfind</item>
         <item>fixed</item>
         <item>focus</item>
         <item>fontcolor</item>
@@ -305,7 +305,7 @@
         <item>refresh</item>
         <item>releaseEvents</item>
         <item>reload</item>
-        <item>replace</item>
+        <item>tqreplace</item>
         <item>reset</item>
         <item>resizeBy</item>
         <item>resizeTo</item>

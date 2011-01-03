@@ -15,12 +15,12 @@ function indentChar(c)
 
     -- unindent } and {, if not in a comment
 
-	if not(string.find(textLine,"^%s*//")) then
+	if not(string.tqfind(textLine,"^%s*//")) then
 		katedebug("no comment")
 		katedebug(c);
 		if (c=="}") or (c=="{") then
 			katedebug("} or { found");
-			if (string.find(textLine,"^%s%s%s%s")) then
+			if (string.tqfind(textLine,"^%s%s%s%s")) then
 				katedebug("removing one indentation level");
 				document.removeText(line,0,line,tabWidth)
 				view.setCursorPositionReal(line,col-tabWidth)
@@ -60,7 +60,7 @@ function indentNewLine()
 
 
 	function firstNonSpace( text )
-		local pos=string.find(text,"[^%s]")
+		local pos=string.tqfind(text,"[^%s]")
 		if pos then
 			return pos
 		else
@@ -69,7 +69,7 @@ function indentNewLine()
 	end
 
 	function lastNonSpace (text)
-		local pos=string.find(text,"[^%s]%s*$")
+		local pos=string.tqfind(text,"[^%s]%s*$")
 		if pos then
 			return pos
 		else
@@ -88,7 +88,7 @@ function indentNewLine()
 			strCurrentLine=document.textLine(intCurrentLine)
 			intLastChar= lastNonSpace(strCurrentLine)
 			intFirstChar=firstNonSpace(strCurrentLine)
-			if not (string.find(strCurrentLine,"//")) then
+			if not (string.tqfind(strCurrentLine,"//")) then
 				for intCurrentChar=intLastChar,intFirstChar,-1 do
 					ch=string.sub(strCurrentLine,intCurrentChar,intCurrentChar)
 					if (ch=="(") or (ch=="[") then
@@ -122,7 +122,7 @@ function indentNewLine()
         katedebug( "line: " .. intCurrentLine)
         katedebug( openParenCount .. ", " .. openBraceCount)
 
-	local ok,match=pcall(function () return string.sub(strCurrentLine,string.find(strCurrentLine,"^%s+")) end)
+	local ok,match=pcall(function () return string.sub(strCurrentLine,string.tqfind(strCurrentLine,"^%s+")) end)
 	if ok then
 		katedebug("Line HAD leading whitespaces")
 		strIndentFiller=match

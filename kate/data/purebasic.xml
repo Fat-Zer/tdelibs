@@ -129,7 +129,7 @@
       <item> CatchSprite </item>
       <item> CDAudioLength </item>
       <item> CDAudioName </item>
-      <item> CDAudioStatus </item>
+      <item> CDAudiotqStatus </item>
       <item> CDAudioTrackLength </item>
       <item> CDAudioTrackSeconds </item>
       <item> CDAudioTracks </item>
@@ -522,7 +522,7 @@
       <item> MovieInfo </item>
       <item> MovieLength </item>
       <item> MovieSeek </item>
-      <item> MovieStatus </item>
+      <item> MovietqStatus </item>
       <item> MovieWidth </item>
       <item> NetworkClientEvent </item>
       <item> NetworkClientID </item>
@@ -915,4 +915,4 @@
     </comments>
   </general>
 </language>
-<!-- // kate: space-indent on; indent-width 2; replace-tabs on; -->
+<!-- // kate: space-indent on; indent-width 2; tqreplace-tabs on; -->

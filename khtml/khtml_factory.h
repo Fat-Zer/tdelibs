@@ -45,7 +45,7 @@ public:
   KHTMLFactory( bool clone = false );
   virtual ~KHTMLFactory();
 
-  virtual KParts::Part *createPartObject( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *className, const TQStringList &args );
+  virtual KParts::Part *createPartObject( TQWidget *tqparentWidget, const char *widgetName, TQObject *parent, const char *name, const char *className, const TQStringList &args );
 
   static void registerPart( KHTMLPart *part );
   static void deregisterPart( KHTMLPart *part );

@@ -66,7 +66,7 @@ static int minimumListWidth( const TQListBox *list )
   }
   if( w == 0 ) { w = 40; }
   w += list->frameWidth() * 2;
-  w += list->verticalScrollBar()->sizeHint().width();
+  w += list->verticalScrollBar()->tqsizeHint().width();
   return w;
 }
 
@@ -284,7 +284,7 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
 
   connect( sizeListBox, TQT_SIGNAL(highlighted(const TQString&)),
 	   TQT_SLOT(size_chosen_slot(const TQString&)) );
-  sizeListBox->setSelected(sizeListBox->findItem(TQString::number(10)), true); // default to 10pt.
+  sizeListBox->setSelected(sizeListBox->tqfindItem(TQString::number(10)), true); // default to 10pt.
 
   row ++;
 
@@ -292,10 +292,10 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
   sampleEdit = new TQLineEdit( page, "sampleEdit");
   TQFont tmpFont( KGlobalSettings::generalFont().family(), 64, TQFont::Black );
   sampleEdit->setFont(tmpFont);
-  //i18n: This is a classical test phrase. (It contains all letters from A to Z.)
+  //i18n: This is a classical test phrase. (It tqcontains all letters from A to Z.)
   sampleEdit->setText(i18n("The Quick Brown Fox Jumps Over The Lazy Dog"));
   sampleEdit->setMinimumHeight( sampleEdit->fontMetrics().lineSpacing() );
-  sampleEdit->setAlignment(Qt::AlignCenter);
+  sampleEdit->tqsetAlignment(Qt::AlignCenter);
   gridLayout->addMultiCellWidget(sampleEdit, 4, 4, 0, 2);
   TQString sampleEditWhatsThisText =
     i18n("This sample text illustrates the current settings. "
@@ -331,8 +331,8 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
     setSizeIsRelative( *sizeIsRelativeState );
 
   KConfig *config = KGlobal::config();
-  KConfigGroupSaver saver(config, TQString::fromLatin1("General"));
-  showXLFDArea(config->readBoolEntry(TQString::fromLatin1("fontSelectorShowXLFD"), false));
+  KConfigGroupSaver saver(config, TQString::tqfromLatin1("General"));
+  showXLFDArea(config->readBoolEntry(TQString::tqfromLatin1("fontSelectorShowXLFD"), false));
 }
 
 KFontChooser::~KFontChooser()
@@ -403,9 +403,9 @@ TQButton::ToggleState KFontChooser::sizeIsRelative() const
        : TQButton::NoChange;
 }
 
-TQSize KFontChooser::sizeHint( void ) const
+TQSize KFontChooser::tqsizeHint( void ) const
 {
-  return minimumSizeHint();
+  return tqminimumSizeHint();
 }
 
 
@@ -469,13 +469,13 @@ void KFontChooser::family_chosen_slot(const TQString& family)
     currentStyles.clear();
     for ( TQStringList::Iterator it = styles.begin(); it != styles.end(); ++it ) {
         TQString style = *it;
-        int pos = style.find("Plain");
-        if(pos >=0) style = style.replace(pos,5,i18n("Regular"));
-        pos = style.find("Normal");
-        if(pos >=0) style = style.replace(pos,6,i18n("Regular"));
-        pos = style.find("Oblique");
-        if(pos >=0) style = style.replace(pos,7,i18n("Italic"));
-        if(!styleListBox->findItem(style)) {
+        int pos = style.tqfind("Plain");
+        if(pos >=0) style = style.tqreplace(pos,5,i18n("Regular"));
+        pos = style.tqfind("Normal");
+        if(pos >=0) style = style.tqreplace(pos,6,i18n("Regular"));
+        pos = style.tqfind("Oblique");
+        if(pos >=0) style = style.tqreplace(pos,7,i18n("Italic"));
+        if(!styleListBox->tqfindItem(style)) {
             styleListBox->insertItem(i18n(style.utf8()));
             currentStyles.insert(i18n(style.utf8()), *it);
         }
@@ -486,9 +486,9 @@ void KFontChooser::family_chosen_slot(const TQString& family)
     }
 
     styleListBox->blockSignals(true);
-    TQListBoxItem *item = styleListBox->findItem(selectedStyle);
+    TQListBoxItem *item = styleListBox->tqfindItem(selectedStyle);
     if (item)
-       styleListBox->setSelected(styleListBox->findItem(selectedStyle), true);
+       styleListBox->setSelected(styleListBox->tqfindItem(selectedStyle), true);
     else
        styleListBox->setSelected(0, true);
     styleListBox->blockSignals(false);
@@ -538,7 +538,7 @@ void KFontChooser::style_chosen_slot(const TQString& style)
             fillSizeList();
     }
     sizeListBox->blockSignals(true);
-    sizeListBox->setSelected(sizeListBox->findItem(TQString::number(selectedSize)), true);
+    sizeListBox->setSelected(sizeListBox->tqfindItem(TQString::number(selectedSize)), true);
     sizeListBox->blockSignals(false);
     sizeListBox->ensureCurrentVisible();
 
@@ -585,9 +585,9 @@ void KFontChooser::setupDisplay()
   // 1st Fallback
   if ( (i == numEntries) )
   {
-    if (family.contains('['))
+    if (family.tqcontains('['))
     {
-      family = family.left(family.find('[')).stripWhiteSpace();
+      family = family.left(family.tqfind('[')).stripWhiteSpace();
       for (i = 0; i < numEntries; i++) {
         if (family == familyListBox->text(i).lower()) {
           familyListBox->setCurrentItem(i);
@@ -681,13 +681,13 @@ void KFontChooser::addFont( TQStringList &list, const char *xfont )
   if ( !ptr )
     return;
 
-  TQString font = TQString::fromLatin1(ptr + 1);
+  TQString font = TQString::tqfromLatin1(ptr + 1);
 
   int pos;
-  if ( ( pos = font.find( '-' ) ) > 0 ) {
+  if ( ( pos = font.tqfind( '-' ) ) > 0 ) {
     font.truncate( pos );
 
-    if ( font.find( TQString::fromLatin1("open look"), 0, false ) >= 0 )
+    if ( font.tqfind( TQString::tqfromLatin1("open look"), 0, false ) >= 0 )
       return;
 
     TQStringList::Iterator it = list.begin();
@@ -711,11 +711,11 @@ void KFontChooser::showXLFDArea(bool show)
 {
   if( show )
   {
-    xlfdEdit->parentWidget()->show();
+    xlfdEdit->tqparentWidget()->show();
   }
   else
   {
-    xlfdEdit->parentWidget()->hide();
+    xlfdEdit->tqparentWidget()->hide();
   }
 }
 

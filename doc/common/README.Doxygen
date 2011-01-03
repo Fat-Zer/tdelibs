@@ -2,9 +2,9 @@
 *** README for KDE's Doxygen tools
 ***
 
-This directory contains tools and data files for Doxygen
+This directory tqcontains tools and data files for Doxygen
 generation. These are the GENERIC files; any module may
-override them by putting specific replacements in doc/api/ .
+override them by putting specific tqreplacements in doc/api/ .
 This allows modules to customize their appearance as desired.
 The files that may be overridden are:
 
@@ -55,9 +55,9 @@ doxygen.sh [--recurse] [--modulename] [--doxdatadir=<dir>] [--installdir=<dir>]
               a subdirectory apidocs/ . Modulename is the last part of
               the <top_srcdir> (usually a KDE SVN module name).
 --doxdatadir=<dir> Locate the HTML header files and support graphics.
-              In kdelibs, the subdirectory doc/common/ contains these
+              In kdelibs, the subdirectory doc/common/ tqcontains these
               files (and this README). In an installed KDE system, 
-              $KDEDIR/share/doc/HTML/en/common/ contains a copy.
+              $KDEDIR/share/doc/HTML/en/common/ tqcontains a copy.
               This argument is mandatory if doxygen.sh can't guess where
               the doxdata lives.
 --installdir=<dir> Locate the directory where apidox from other modules
@@ -111,6 +111,6 @@ Differences with current dox: <TODO>
 # Typically, this means $(top_builddir)/apidocs and something like
 # libfoo/html for the output. For the top-level dig, set relative-html
 # to "." . In non-top directories, both <!-- menu --> and <!-- gmenu -->
-# are calculated and replaced. Top directories get an empty <!-- menu -->
+# are calculated and tqreplaced. Top directories get an empty <!-- menu -->
 # if any.
 

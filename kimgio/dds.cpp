@@ -33,9 +33,9 @@
 #define sqrtf(x) ((float)sqrt(x))
 #endif
 
-typedef Q_UINT32 uint;
-typedef Q_UINT16 ushort;
-typedef Q_UINT8 uchar;
+typedef TQ_UINT32 uint;
+typedef TQ_UINT16 ushort;
+typedef TQ_UINT8 uchar;
 
 namespace {	// Private.
 
@@ -137,10 +137,10 @@ namespace {	// Private.
 		uint flags;
 		uint fourcc;
 		uint bitcount;
-		uint rmask;
-		uint gmask;
-		uint bmask;
-		uint amask;
+		uint rtqmask;
+		uint gtqmask;
+		uint btqmask;
+		uint atqmask;
 	};
 
 	static TQDataStream & operator>> ( TQDataStream & s, DDSPixelFormat & pf )
@@ -149,10 +149,10 @@ namespace {	// Private.
 		s >> pf.flags;
 		s >> pf.fourcc;
 		s >> pf.bitcount;
-		s >> pf.rmask;
-		s >> pf.gmask;
-		s >> pf.bmask;
-		s >> pf.amask;
+		s >> pf.rtqmask;
+		s >> pf.gtqmask;
+		s >> pf.btqmask;
+		s >> pf.atqmask;
 		return s;
 	}
 
@@ -230,7 +230,7 @@ namespace {	// Private.
 			if( header.pf.flags & DDPF_ALPHAPIXELS ) {
 				switch( header.pf.bitcount ) {
 					case 16:
-						return (header.pf.amask == 0x8000) ? DDS_A1R5G5B5 : DDS_A4R4G4B4;
+						return (header.pf.atqmask == 0x8000) ? DDS_A1R5G5B5 : DDS_A4R4G4B4;
 					case 32:
 						return DDS_A8R8G8B8;
 				}
@@ -298,7 +298,7 @@ namespace {	// Private.
 			for( uint x = 0; x < w; x++ ) {
 				uchar r, g, b, a;
 				s >> b >> g >> r >> a;
-				scanline[x] = qRgba(r, g, b, a);
+				scanline[x] = tqRgba(r, g, b, a);
 			}
 		}
 
@@ -315,7 +315,7 @@ namespace {	// Private.
 			for( uint x = 0; x < w; x++ ) {
 				uchar r, g, b;
 				s >> b >> g >> r;
-				scanline[x] = qRgb(r, g, b);
+				scanline[x] = tqRgb(r, g, b);
 			}
 		}
 
@@ -336,7 +336,7 @@ namespace {	// Private.
 				uchar r = (color.c.r << 3) | (color.c.r >> 2);
 				uchar g = (color.c.g << 3) | (color.c.g >> 2);
 				uchar b = (color.c.b << 3) | (color.c.b >> 2);
-				scanline[x] = qRgba(r, g, b, a);
+				scanline[x] = tqRgba(r, g, b, a);
 			}
 		}
 
@@ -357,7 +357,7 @@ namespace {	// Private.
 				uchar r = (color.c.r << 4) | color.c.r;
 				uchar g = (color.c.g << 4) | color.c.g;
 				uchar b = (color.c.b << 4) | color.c.b;
-				scanline[x] = qRgba(r, g, b, a);
+				scanline[x] = tqRgba(r, g, b, a);
 			}
 		}
 
@@ -377,7 +377,7 @@ namespace {	// Private.
 				uchar r = (color.c.r << 3) | (color.c.r >> 2);
 				uchar g = (color.c.g << 2) | (color.c.g >> 4);
 				uchar b = (color.c.b << 3) | (color.c.b >> 2);
-				scanline[x] = qRgb(r, g, b);
+				scanline[x] = tqRgb(r, g, b);
 			}
 		}
 
@@ -539,16 +539,16 @@ namespace {	// Private.
 				Color8888 color_array[4];
 				block.GetColors(color_array);
 
-				// bit masks = 00000011, 00001100, 00110000, 11000000
-				const uint masks[4] = { 3, 3<<2, 3<<4, 3<<6 };
+				// bit tqmasks = 00000011, 00001100, 00110000, 11000000
+				const uint tqmasks[4] = { 3, 3<<2, 3<<4, 3<<6 };
 				const int shift[4] = { 0, 2, 4, 6 };
 
 				// Write color block.
 				for( uint j = 0; j < 4; j++ ) {
 					for( uint i = 0; i < 4; i++ ) {
 						if( img.valid( x+i, y+j ) ) {
-							uint idx = (block.row[j] & masks[i]) >> shift[i];
-							scanline[j][x+i] = qRgba(color_array[idx].r, color_array[idx].g, color_array[idx].b, color_array[idx].a);
+							uint idx = (block.row[j] & tqmasks[i]) >> shift[i];
+							scanline[j][x+i] = tqRgba(color_array[idx].r, color_array[idx].g, color_array[idx].b, color_array[idx].a);
 						}
 					}
 				}
@@ -580,8 +580,8 @@ namespace {	// Private.
 				Color8888 color_array[4];
 				block.GetColors(color_array);
 
-				// bit masks = 00000011, 00001100, 00110000, 11000000
-				const uint masks[4] = { 3, 3<<2, 3<<4, 3<<6 };
+				// bit tqmasks = 00000011, 00001100, 00110000, 11000000
+				const uint tqmasks[4] = { 3, 3<<2, 3<<4, 3<<6 };
 				const int shift[4] = { 0, 2, 4, 6 };
 
 				// Write color block.
@@ -589,10 +589,10 @@ namespace {	// Private.
 					ushort a = alpha.row[j];
 					for( uint i = 0; i < 4; i++ ) {
 						if( img.valid( x+i, y+j ) ) {
-							uint idx = (block.row[j] & masks[i]) >> shift[i];
+							uint idx = (block.row[j] & tqmasks[i]) >> shift[i];
 							color_array[idx].a = a & 0x0f;
 							color_array[idx].a = color_array[idx].a | (color_array[idx].a << 4);
-							scanline[j][x+i] = qRgba(color_array[idx].r, color_array[idx].g, color_array[idx].b, color_array[idx].a);
+							scanline[j][x+i] = tqRgba(color_array[idx].r, color_array[idx].g, color_array[idx].b, color_array[idx].a);
 						}
 						a >>= 4;
 					}
@@ -638,17 +638,17 @@ namespace {	// Private.
 				uchar bit_array[16];
 				alpha.GetBits(bit_array);
 
-				// bit masks = 00000011, 00001100, 00110000, 11000000
-				const uint masks[4] = { 3, 3<<2, 3<<4, 3<<6 };
+				// bit tqmasks = 00000011, 00001100, 00110000, 11000000
+				const uint tqmasks[4] = { 3, 3<<2, 3<<4, 3<<6 };
 				const int shift[4] = { 0, 2, 4, 6 };
 
 				// Write color block.
 				for( uint j = 0; j < 4; j++ ) {
 					for( uint i = 0; i < 4; i++ ) {
 						if( img.valid( x+i, y+j ) ) {
-							uint idx = (block.row[j] & masks[i]) >> shift[i];
+							uint idx = (block.row[j] & tqmasks[i]) >> shift[i];
 							color_array[idx].a = alpha_array[bit_array[j*4+i]];
-							scanline[j][x+i] = qRgba(color_array[idx].r, color_array[idx].g, color_array[idx].b, color_array[idx].a);
+							scanline[j][x+i] = tqRgba(color_array[idx].r, color_array[idx].g, color_array[idx].b, color_array[idx].a);
 						}
 					}
 				}
@@ -693,17 +693,17 @@ namespace {	// Private.
 				uchar bit_array[16];
 				alpha.GetBits(bit_array);
 
-				// bit masks = 00000011, 00001100, 00110000, 11000000
-				const uint masks[4] = { 3, 3<<2, 3<<4, 3<<6 };
+				// bit tqmasks = 00000011, 00001100, 00110000, 11000000
+				const uint tqmasks[4] = { 3, 3<<2, 3<<4, 3<<6 };
 				const int shift[4] = { 0, 2, 4, 6 };
 
 				// Write color block.
 				for( uint j = 0; j < 4; j++ ) {
 					for( uint i = 0; i < 4; i++ ) {
 						if( img.valid( x+i, y+j ) ) {
-							uint idx = (block.row[j] & masks[i]) >> shift[i];
+							uint idx = (block.row[j] & tqmasks[i]) >> shift[i];
 							color_array[idx].a = alpha_array[bit_array[j*4+i]];
-							scanline[j][x+i] = qRgb(color_array[idx].a, color_array[idx].g, color_array[idx].b);
+							scanline[j][x+i] = tqRgb(color_array[idx].a, color_array[idx].g, color_array[idx].b);
 						}
 					}
 				}
@@ -757,7 +757,7 @@ namespace {	// Private.
 							const float fz = sqrtf(1.0f - fx*fx - fy*fy);
 							const uchar nz = uchar((fz + 1.0f) * 127.5f);
 							
-							scanline[j][x+i] = qRgb(nx, ny, nz);
+							scanline[j][x+i] = tqRgb(nx, ny, nz);
 						}
 					}
 				}

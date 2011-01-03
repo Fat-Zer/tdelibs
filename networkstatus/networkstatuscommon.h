@@ -24,31 +24,31 @@
 
 #include <tqstringlist.h>
 
-namespace NetworkStatus
+namespace NetworktqStatus
 {
-	enum EnumStatus { NoNetworks = 1, Unreachable, OfflineDisconnected,  OfflineFailed, ShuttingDown, Offline, Establishing, Online };
+	enum EnumtqStatus { NoNetworks = 1, Unreachable, OfflineDisconnected,  OfflineFailed, ShuttingDown, Offline, Establishing, Online };
 	enum EnumRequestResult { RequestAccepted = 1, Connected, UserRefused, Unavailable };
 	enum EnumOnDemandPolicy { All, User, None, Permanent };
 	struct Properties
 	{
 		TQString name;
 		// status of the network
-		EnumStatus status;
+		EnumtqStatus status;
 		// policy for on-demand usage as defined by the service
 		EnumOnDemandPolicy onDemandPolicy;
 		// identifier for the service
 		TQCString service;
 		// indicate that the connection is to 'the internet' - similar to default gateway in routing
 		bool internet;
-		// list of netmasks that the network connects to - overridden by above internet
-		TQStringList netmasks;
+		// list of nettqmasks that the network connects to - overridden by above internet
+		TQStringList nettqmasks;
 		// for future expansion consider
 		// EnumChargingModel - FlatRate, TimeCharge, VolumeCharged
-		// EnumLinkStatus - for WLANs - VPOOR, POOR, AVERAGE, GOOD, EXCELLENT
+		// EnumLinktqStatus - for WLANs - VPOOR, POOR, AVERAGE, GOOD, EXCELLENT
 	};
 }
 
-TQDataStream & operator>> ( TQDataStream & s, NetworkStatus::Properties &p );
-TQDataStream & operator<< ( TQDataStream & s, const NetworkStatus::Properties p );
+TQDataStream & operator>> ( TQDataStream & s, NetworktqStatus::Properties &p );
+TQDataStream & operator<< ( TQDataStream & s, const NetworktqStatus::Properties p );
 
 #endif

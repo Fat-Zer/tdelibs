@@ -225,7 +225,7 @@ bool AddressBook::Entry::Address::nameOfField(const char* key, TQString& value)
       for(counter=0; counter<AddressBook::Entry::Address::NoOfFields;
 	  ++counter)
 	{
-	  pos=fields->find(Fields[counter]);
+	  pos=fields->tqfind(Fields[counter]);
 	  if(pos==fields->end())
 	    {
 	      kdDebug(KAB_KDEBUG_AREA) << "  UNDEFINED" << endl;
@@ -238,7 +238,7 @@ bool AddressBook::Entry::Address::nameOfField(const char* key, TQString& value)
 #endif
     }
   // ----- now finally do the lookup:
-  pos=fields->find(key);
+  pos=fields->tqfind(key);
   if(pos==fields->end())
     {
       return false;
@@ -354,7 +354,7 @@ bool AddressBook::Entry::nameOfField(const char* key, TQString& value)
       for(counter=0; counter<AddressBook::Entry::Address::NoOfFields;
 	  ++counter)
 	{
-	  pos=fields->find(Fields[counter]);
+	  pos=fields->tqfind(Fields[counter]);
 	  if(pos==fields->end())
 	    {
 	      kdDebug(KAB_KDEBUG_AREA) << "  UNDEFINED" << endl;
@@ -367,7 +367,7 @@ bool AddressBook::Entry::nameOfField(const char* key, TQString& value)
 #endif
     }
   // ----- now finally do the lookup:
-  pos=fields->find(key);
+  pos=fields->tqfind(key);
   if(pos==fields->end())
     {
       return false;
@@ -1148,7 +1148,7 @@ AddressBook::change(const KabKey& key, const Entry& entry)
       return PermDenied; // cannot get r/w mode
     }
   // -----
-  if(!theEntries->find(key.getKey(), oldEntry))
+  if(!theEntries->tqfind(key.getKey(), oldEntry))
     {
       rc=NoSuchEntry;
     } else {
@@ -1386,13 +1386,13 @@ AddressBook::makeEntryFromSection(Section* section, Entry& entry)
   };
   const int StringListKeySize=sizeof(StringListKeys)/sizeof(StringListKeys[0]);
   // ----- first parse "addresses" subsection:
-  if(!section->find(ADDRESS_SUBSECTION, addresses))
+  if(!section->tqfind(ADDRESS_SUBSECTION, addresses))
     {
       return InternError; // no subsection called "addresses"
     }
   for(pos=addresses->sectionsBegin(); pos!=addresses->sectionsEnd(); ++pos)
     {
-      if(!addresses->find((*pos).first, addressSection))
+      if(!addresses->tqfind((*pos).first, addressSection))
 	{
 	  return InternError; // no section we have an iterator for?
 	}
@@ -1404,7 +1404,7 @@ AddressBook::makeEntryFromSection(Section* section, Entry& entry)
 	  temp.addresses.push_back(address);
 	} else {
 	  kdDebug(KAB_KDEBUG_AREA)
-	    << "AddressBook::makeEntryFromSection: cannot find all fields "
+	    << "AddressBook::makeEntryFromSection: cannot tqfind all fields "
 	    << "in an address subsection." << endl;
 	}
     }
@@ -1505,7 +1505,7 @@ AddressBook::makeSectionFromEntry(const Entry& entry, Section& section)
 	<< " " << endl;
       return InternError;
     }
-  if(!section.find(ADDRESS_SUBSECTION, addresses))
+  if(!section.tqfind(ADDRESS_SUBSECTION, addresses))
     {
       kdDebug(KAB_KDEBUG_AREA) 
 	<< "AddressBook::makeSectionFromEntry: cannot get new section." << endl;
@@ -1522,7 +1522,7 @@ AddressBook::makeSectionFromEntry(const Entry& entry, Section& section)
 	    << "AddressBook::makeSectionFromEntry: cannot create address " << endl;
 	  return InternError;
 	}
-      if(!addresses->find(key, address))
+      if(!addresses->tqfind(key, address))
 	{
 	  kdDebug(KAB_KDEBUG_AREA) 
 	    << "AddressBook::makeSectionFromEntry: cannot get new " << endl;
@@ -1596,7 +1596,7 @@ AddressBook::createNew(const TQString& filename)
      || !db.setFileName(KabTemplateFile, true, true))
     {
       KMessageBox::error(this,
-	 i18n("Cannot find kab's template file.\n"
+	 i18n("Cannot tqfind kab's template file.\n"
 	      "You cannot create new files."),
 	 i18n("File Error"));
       return InternError;
@@ -1648,7 +1648,7 @@ AddressBook::createConfigFile()
      || !db.setFileName(ConfigTemplateFile, true, true))
     {
       KMessageBox::error(this,
-	 i18n("Cannot find kab's configuration template file.\n"
+	 i18n("Cannot tqfind kab's configuration template file.\n"
 	      "kab cannot be configured."),
 	 i18n("File Error"));
 
@@ -1705,7 +1705,7 @@ AddressBook::loadConfigFile()
 	}
     } else {
       KMessageBox::information(this,
-	 i18n("Cannot find kab's local configuration file.\n"
+	 i18n("Cannot tqfind kab's local configuration file.\n"
 	      "kab cannot be configured."),
 	 i18n("File Error"));
       return NoSuchFile;
@@ -1872,7 +1872,7 @@ AddressBook::ErrorCode AddressBook::Entry::get(const char* fieldname, TQVariant&
       field=custom;
       return NoError;
     }
-  // ----- we did not find that field:
+  // ----- we did not tqfind that field:
   return NoSuchField;
 }
 
@@ -1939,7 +1939,7 @@ AddressBook::ErrorCode AddressBook::Entry::Address::get(const char* fieldname,
       field=state;
       return NoError;
     }
-  // ----- we did not find that field:
+  // ----- we did not tqfind that field:
   return NoSuchField;
 }
 
@@ -2005,7 +2005,7 @@ AddressBook::ErrorCode AddressBook::categories(CategoriesMap& cat)
   section=categoriesSection();
   Q_CHECK_PTR(section);
   // ----- 
-  if(!section->find(KAB_CATEGORY_KEY, categories))
+  if(!section->tqfind(KAB_CATEGORY_KEY, categories))
     {
       kdDebug(KAB_KDEBUG_AREA) 
 	<< "AddressBook::categories: error in database structure."

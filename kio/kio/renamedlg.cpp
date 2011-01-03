@@ -317,11 +317,11 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
         TQLabel *lb = new KSqueezedTextLabel( sentence1.arg(d->dest.pathOrURL()), this );
         pLayout->addWidget(lb);
     }
-    TQHBoxLayout* layout2 = new TQHBoxLayout();
-    pLayout->addLayout( layout2 );
+    TQHBoxLayout* tqlayout2 = new TQHBoxLayout();
+    pLayout->addLayout( tqlayout2 );
 
     d->m_pLineEdit = new TQLineEdit( this );
-    layout2->addWidget( d->m_pLineEdit );
+    tqlayout2->addWidget( d->m_pLineEdit );
     TQString fileName = d->dest.fileName();
     d->m_pLineEdit->setText( KIO::decodeFileName( fileName ) );
     if ( d->bRename || d->bOverwrite )
@@ -329,58 +329,58 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
                 TQT_SLOT(enableRenameButton(const TQString &)));
     if ( d->bSuggestNewName )
     {
-        layout2->addWidget( d->bSuggestNewName );
+        tqlayout2->addWidget( d->bSuggestNewName );
         setTabOrder( d->m_pLineEdit, d->bSuggestNewName );
     }
 
     KSeparator* separator = new KSeparator( this );
     pLayout->addWidget( separator );
 
-    TQHBoxLayout* layout = new TQHBoxLayout();
-    pLayout->addLayout( layout );
+    TQHBoxLayout* tqlayout = new TQHBoxLayout();
+    pLayout->addLayout( tqlayout );
 
-    layout->addStretch(1);
+    tqlayout->addStretch(1);
 
     if ( d->bRename )
     {
-        layout->addWidget( d->bRename );
+        tqlayout->addWidget( d->bRename );
         setTabOrder( d->bRename, d->bCancel );
     }
     if ( d->bSkip )
     {
-        layout->addWidget( d->bSkip );
+        tqlayout->addWidget( d->bSkip );
         setTabOrder( d->bSkip, d->bCancel );
     }
     if ( d->bAutoSkip )
     {
-        layout->addWidget( d->bAutoSkip );
+        tqlayout->addWidget( d->bAutoSkip );
         setTabOrder( d->bAutoSkip, d->bCancel );
     }
     if ( d->bOverwrite )
     {
-        layout->addWidget( d->bOverwrite );
+        tqlayout->addWidget( d->bOverwrite );
         setTabOrder( d->bOverwrite, d->bCancel );
     }
     if ( d->bOverwriteAll )
     {
-        layout->addWidget( d->bOverwriteAll );
+        tqlayout->addWidget( d->bOverwriteAll );
         setTabOrder( d->bOverwriteAll, d->bCancel );
     }
     if ( d->bResume )
     {
-        layout->addWidget( d->bResume );
+        tqlayout->addWidget( d->bResume );
         setTabOrder( d->bResume, d->bCancel );
     }
     if ( d->bResumeAll )
     {
-        layout->addWidget( d->bResumeAll );
+        tqlayout->addWidget( d->bResumeAll );
         setTabOrder( d->bResumeAll, d->bCancel );
     }
 
     d->bCancel->setDefault( true );
-    layout->addWidget( d->bCancel );
+    tqlayout->addWidget( d->bCancel );
 
-    resize( sizeHint() );
+    resize( tqsizeHint() );
 }
 
 RenameDlg::~RenameDlg()
@@ -440,13 +440,13 @@ TQString RenameDlg::suggestName(const KURL& baseURL, const TQString& oldName)
   TQString dotSuffix, suggestedName;
   TQString basename = oldName;
 
-  int index = basename.find( '.' );
+  int index = basename.tqfind( '.' );
   if ( index != -1 ) {
     dotSuffix = basename.mid( index );
     basename.truncate( index );
   }
 
-  int pos = basename.findRev( '_' );
+  int pos = basename.tqfindRev( '_' );
   if(pos != -1 ){
     TQString tmp = basename.mid( pos+1 );
     bool ok;
@@ -456,7 +456,7 @@ TQString RenameDlg::suggestName(const KURL& baseURL, const TQString& oldName)
     }
     else {
      // yes there's already a number behind the _ so increment it by one
-      basename.replace( pos+1, tmp.length(), TQString::number(number+1) );
+      basename.tqreplace( pos+1, tmp.length(), TQString::number(number+1) );
       suggestedName = basename + dotSuffix;
     }
   }

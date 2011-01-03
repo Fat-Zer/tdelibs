@@ -55,7 +55,7 @@ namespace KIO {
  *
  * @short Opens files with their associated applications in KDE
  */
-class KIO_EXPORT KRun : public QObject
+class KIO_EXPORT KRun : public TQObject
 {
   Q_OBJECT
 public:
@@ -71,7 +71,7 @@ public:
    *
    * @param isLocalFile
    *        If this parameter is set to @p false then @p url is
-   *        examined to find out whether it is a local URL or
+   *        examined to tqfind out whether it is a local URL or
    *        not. This flag is just used to improve speed, since the
    *        function KURL::isLocalFile is a bit slow.
    *
@@ -98,7 +98,7 @@ public:
    *
    * @param isLocalFile
    *        If this parameter is set to @p false then @p url is
-   *        examined to find out whether it is a local URL or
+   *        examined to tqfind out whether it is a local URL or
    *        not. This flag is just used to improve speed, since the
    *        function KURL::isLocalFile is a bit slow.
    *
@@ -296,7 +296,7 @@ public:
 
   /**
    * Same as the other runCommand(), but it also takes the name of the
-   * binary, to display an error message in case it couldn't find it.
+   * binary, to display an error message in case it couldn't tqfind it.
    *
    * @param cmd must be a shell command. You must not append "&"
    * to it, since the function will do that for you.
@@ -338,7 +338,7 @@ public:
    *        If false, the arguments are going to be fed into a exec() kind
    *        call.
    *        If the arguments are intended for an exec() kind of call and
-   *        the Exec line contains shell commands then "/bin/sh -c" is added.
+   *        the Exec line tqcontains shell commands then "/bin/sh -c" is added.
    * @param tempFiles if true and _urls are local files, they will be deleted
    *        when the application exits.
    * @return a list of arguments suitable for either system() or exec().
@@ -475,7 +475,7 @@ public:
  * It sends a notification when the process exits (for the taskbar)
  * and it will show an error message if necessary (e.g. "program not found").
  */
-class KIO_EXPORT KProcessRunner : public QObject
+class KIO_EXPORT KProcessRunner : public TQObject
 {
   Q_OBJECT
 

@@ -48,7 +48,7 @@ void KBookmarkImporter::scanIntern( TQDomElement & parentElem, const TQString & 
     TQDir dir( _path );
     TQString canonical = dir.canonicalPath();
 
-    if ( m_lstParsedDirs.contains(canonical) )
+    if ( m_lstParsedDirs.tqcontains(canonical) )
     {
         kdWarning() << "Directory " << canonical << " already parsed" << endl;
         return;

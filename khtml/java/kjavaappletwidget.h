@@ -96,7 +96,7 @@ public:
      */
     void showApplet();
 
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
     void resize( int, int );
 
 protected slots:

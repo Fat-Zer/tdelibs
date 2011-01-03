@@ -111,7 +111,7 @@ public:
     void setCssText( const DOM::DOMString & );
 
     /**
-     * The style sheet that contains this rule.
+     * The style sheet that tqcontains this rule.
      *
      */
     CSSStyleSheet parentStyleSheet() const;
@@ -299,7 +299,7 @@ public:
      * Used to insert a new rule into the media block.
      *
      * @param rule The parsable text representing the rule. For rule
-     * sets this contains both the selector and the style declaration.
+     * sets this tqcontains both the selector and the style declaration.
      * For at-rules, this specifies both the at-identifier and the
      * rule content.
      *

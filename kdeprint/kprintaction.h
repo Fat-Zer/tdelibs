@@ -30,14 +30,14 @@ class KDEPRINT_EXPORT KPrintAction : public KActionMenu
 public:
 	enum PrinterType { All, Regular, Specials };
 
-	KPrintAction(const TQString& text, PrinterType type = All, TQWidget *parentWidget = 0, TQObject *parent = 0, const char *name = 0);
-	KPrintAction(const TQString& text, const TQIconSet& icon, PrinterType type = All, TQWidget *parentWidget = 0, TQObject *parent = 0, const char *name = 0);
-	KPrintAction(const TQString& text, const TQString& icon, PrinterType type = All, TQWidget *parentWidget = 0, TQObject *parent = 0, const char *name = 0);
+	KPrintAction(const TQString& text, PrinterType type = All, TQWidget *tqparentWidget = 0, TQObject *parent = 0, const char *name = 0);
+	KPrintAction(const TQString& text, const TQIconSet& icon, PrinterType type = All, TQWidget *tqparentWidget = 0, TQObject *parent = 0, const char *name = 0);
+	KPrintAction(const TQString& text, const TQString& icon, PrinterType type = All, TQWidget *tqparentWidget = 0, TQObject *parent = 0, const char *name = 0);
 	virtual ~KPrintAction();
 
-	static KPrintAction* exportAll(TQWidget *parentWidget = 0, TQObject *parent = 0, const char *name = 0);
-	static KPrintAction* exportRegular(TQWidget *parentWidget = 0, TQObject *parent = 0, const char *name = 0);
-	static KPrintAction* exportSpecial(TQWidget *parentWidget = 0, TQObject *parent = 0, const char *name = 0);
+	static KPrintAction* exportAll(TQWidget *tqparentWidget = 0, TQObject *parent = 0, const char *name = 0);
+	static KPrintAction* exportRegular(TQWidget *tqparentWidget = 0, TQObject *parent = 0, const char *name = 0);
+	static KPrintAction* exportSpecial(TQWidget *tqparentWidget = 0, TQObject *parent = 0, const char *name = 0);
 
 signals:
 	void print(KPrinter*);
@@ -47,7 +47,7 @@ protected slots:
 	void slotActivated(int);
 
 protected:
-	void initialize(PrinterType type, TQWidget *parentWidget);
+	void initialize(PrinterType type, TQWidget *tqparentWidget);
 
 private:
 	class KPrintActionPrivate;

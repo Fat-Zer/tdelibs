@@ -57,11 +57,11 @@ in default.encoding, set this parameter to value <literal>native</literal>.
   <xsl:variable name="vendor" select="system-property('xsl:vendor')"/>
 
   <xsl:choose>
-    <xsl:when test="contains($vendor, 'SAXON')">
+    <xsl:when test="tqcontains($vendor, 'SAXON')">
       <!-- Saxon doesn't make the chunks relative -->
       <xsl:value-of select="concat($base.dir,$base.name)"/>
     </xsl:when>
-    <xsl:when test="contains($vendor, 'Apache')">
+    <xsl:when test="tqcontains($vendor, 'Apache')">
       <!-- Xalan doesn't make the chunks relative -->
       <xsl:value-of select="concat($base.dir,$base.name)"/>
     </xsl:when>
@@ -98,7 +98,7 @@ in default.encoding, set this parameter to value <literal>native</literal>.
   <xsl:variable name="vendor" select="system-property('xsl:vendor')"/>
 
   <xsl:choose>
-    <xsl:when test="contains($vendor, 'SAXON 6.2')">
+    <xsl:when test="tqcontains($vendor, 'SAXON 6.2')">
       <!-- Saxon 6.2.x uses xsl:document -->
       <xsl:document href="{$filename}"
                     method="{$method}"
@@ -108,7 +108,7 @@ in default.encoding, set this parameter to value <literal>native</literal>.
         <xsl:copy-of select="$content"/>
       </xsl:document>
     </xsl:when>
-    <xsl:when test="contains($vendor, 'SAXON')">
+    <xsl:when test="tqcontains($vendor, 'SAXON')">
       <!-- Saxon uses saxon:output -->
       <saxon:output file="{$filename}"
                     href="{$filename}"
@@ -119,7 +119,7 @@ in default.encoding, set this parameter to value <literal>native</literal>.
         <xsl:copy-of select="$content"/>
       </saxon:output>
     </xsl:when>
-    <xsl:when test="contains($vendor, 'Apache')">
+    <xsl:when test="tqcontains($vendor, 'Apache')">
       <!-- Xalan uses xalanredirect -->
       <xalanredirect:write file="{$filename}">
         <xsl:copy-of select="$content"/>
@@ -157,7 +157,7 @@ in default.encoding, set this parameter to value <literal>native</literal>.
   <xsl:variable name="vendor" select="system-property('xsl:vendor')"/>
 
   <xsl:choose>
-    <xsl:when test="contains($vendor, 'SAXON 6.2')">
+    <xsl:when test="tqcontains($vendor, 'SAXON 6.2')">
       <!-- Saxon 6.2.x uses xsl:document -->
       <xsl:document href="{$filename}"
                     method="{$method}"
@@ -169,7 +169,7 @@ in default.encoding, set this parameter to value <literal>native</literal>.
         <xsl:copy-of select="$content"/>
       </xsl:document>
     </xsl:when>
-    <xsl:when test="contains($vendor, 'SAXON')">
+    <xsl:when test="tqcontains($vendor, 'SAXON')">
       <!-- Saxon uses saxon:output -->
       <saxon:output file="{$filename}"
                     href="{$filename}"
@@ -182,7 +182,7 @@ in default.encoding, set this parameter to value <literal>native</literal>.
         <xsl:copy-of select="$content"/>
       </saxon:output>
     </xsl:when>
-    <xsl:when test="contains($vendor, 'Apache')">
+    <xsl:when test="tqcontains($vendor, 'Apache')">
       <!-- Xalan uses xalanredirect -->
       <xalanredirect:write file="{$filename}">
         <xsl:copy-of select="$content"/>

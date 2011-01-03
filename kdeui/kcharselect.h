@@ -56,7 +56,7 @@ public:
     KCharSelectTable( TQWidget *parent, const char *name, const TQString &_font,
 		      const TQChar &_chr, int _tableNum );
 
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
     virtual void resizeEvent( TQResizeEvent * );
 
     virtual void setFont( const TQString &_font );
@@ -127,7 +127,7 @@ private:
  * KCharSelect supports keyboard and mouse navigation. Click+Move
  * always selects the character below the mouse cursor. Using the
  * arrow keys moves the focus mark around and pressing RETURN
- * or SPACE selects the cell which contains the focus mark.
+ * or SPACE selects the cell which tqcontains the focus mark.
  *
  * To get the current selected character, use the chr()
  * method. You can set the character which should be displayed with
@@ -157,7 +157,7 @@ public:
     /**
      * Reimplemented.
      */
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 
     /**
      * Sets the font which is displayed to @p font

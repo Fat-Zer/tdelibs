@@ -47,7 +47,7 @@
 
 /**
  * This class is used as the codecompletion listbox. It can be resized according to its contents,
- *  therfor the needed size is provided by sizeHint();
+ *  therfor the needed size is provided by tqsizeHint();
  *@short Listbox showing codecompletion
  *@author Jonas B. Jacobi <j.jacobi@gmx.de>
  */
@@ -61,7 +61,7 @@ class KateCCListBox : public QListBox
     {
     }
 
-    TQSize sizeHint()  const
+    TQSize tqsizeHint()  const
     {
         int count = this->count();
         int height = 20;
@@ -124,7 +124,7 @@ KateCodeCompletion::KateCodeCompletion( KateView* view )
 
   m_completionListBox->installEventFilter( this );
 
-  m_completionPopup->resize(m_completionListBox->sizeHint() + TQSize(2,2));
+  m_completionPopup->resize(m_completionListBox->tqsizeHint() + TQSize(2,2));
   m_completionPopup->installEventFilter( this );
   m_completionPopup->setFocusProxy( m_view->m_viewInternal );
 
@@ -305,7 +305,7 @@ void KateCodeCompletion::updateBox( bool )
   }
 
     kdDebug(13035)<<"KateCodeCompletion::updateBox: Resizing widget"<<endl;
-        m_completionPopup->resize(m_completionListBox->sizeHint() + TQSize(2,2));
+        m_completionPopup->resize(m_completionListBox->tqsizeHint() + TQSize(2,2));
     TQPoint p = m_view->mapToGlobal( m_view->cursorCoordinates() );
         int x = p.x();
         int y = p.y() ;
@@ -384,7 +384,7 @@ void KateCodeCompletion::showComment()
   m_completionListBox->ensureCurrentVisible();
 
   finalPoint.setY(
-    m_completionListBox->viewport()->mapToGlobal(m_completionListBox->itemRect(
+    m_completionListBox->viewport()->mapToGlobal(m_completionListBox->tqitemRect(
       m_completionListBox->item(m_completionListBox->currentItem())).topLeft()).y());
 
   m_commentLabel->move(finalPoint);
@@ -398,8 +398,8 @@ KateArgHint::KateArgHint( KateView* parent, const char* name )
     setPaletteForegroundColor( Qt::black );
 
     labelDict.setAutoDelete( true );
-    layout = new TQVBoxLayout( this, 1, 2 );
-    layout->setAutoAdd( true );
+    tqlayout = new TQVBoxLayout( this, 1, 2 );
+    tqlayout->setAutoAdd( true );
     editorView = parent;
 
     m_markCurrentFunction = true;
@@ -460,8 +460,8 @@ void KateArgHint::cursorPositionChanged( KateView* view, int line, int col )
     TQRegExp chrconst_rx( "'[^']*'" );
 
     text = text
-        .replace( strconst_rx, "\"\"" )
-        .replace( chrconst_rx, "''" );
+        .tqreplace( strconst_rx, "\"\"" )
+        .tqreplace( chrconst_rx, "''" );
 
     int index = 0;
     while( index < (int)text.length() ){
@@ -563,4 +563,4 @@ void KateArgHint::adjustSize( )
         move( screen.x() + screen.width() - width(), y() );
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

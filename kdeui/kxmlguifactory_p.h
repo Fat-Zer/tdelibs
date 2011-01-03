@@ -99,7 +99,7 @@ typedef TQValueList<MergingIndex> MergingIndexList;
  * is shared all over the place, so there's no need to worry about memory consumption for these
  * variables :-)
  *
- * The mergingIndices list contains the merging indices ;-) , as defined by <Merge>, <DefineGroup>
+ * The mergingIndices list tqcontains the merging indices ;-) , as defined by <Merge>, <DefineGroup>
  * or by <ActionList> tags. The order of these index structures within the mergingIndices list
  * is (and has to be) identical with the order in the DOM tree.
  *
@@ -141,14 +141,14 @@ struct KDEUI_EXPORT ContainerNode
     void clearChildren() { children.clear(); }
     void removeChild( ContainerNode *child );
 
-    MergingIndexList::Iterator findIndex( const TQString &name );
-    ContainerNode *findContainerNode( TQWidget *container );
-    ContainerNode *findContainer( const TQString &_name, bool tag );
-    ContainerNode *findContainer( const TQString &name, const TQString &tagName,
+    MergingIndexList::Iterator tqfindIndex( const TQString &name );
+    ContainerNode *tqfindContainerNode( TQWidget *container );
+    ContainerNode *tqfindContainer( const TQString &_name, bool tag );
+    ContainerNode *tqfindContainer( const TQString &name, const TQString &tagName,
                                   const TQPtrList<TQWidget> *excludeList,
                                   KXMLGUIClient *currClient );
 
-    ContainerClient *findChildContainerClient( KXMLGUIClient *currentGUIClient, 
+    ContainerClient *tqfindChildContainerClient( KXMLGUIClient *currentGUIClient, 
                                                const TQString &groupName, 
                                                const MergingIndexList::Iterator &mergingIdx );
 
@@ -162,7 +162,7 @@ struct KDEUI_EXPORT ContainerNode
 
     bool destruct( TQDomElement element, BuildState &state );
     void destructChildren( const TQDomElement &element, BuildState &state );
-    static TQDomElement findElementForChild( const TQDomElement &baseElement, 
+    static TQDomElement tqfindElementForChild( const TQDomElement &baseElement, 
                                             ContainerNode *childNode );
     void unplugActions( BuildState &state );
     void unplugClient( ContainerClient *client );

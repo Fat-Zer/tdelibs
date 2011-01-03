@@ -60,7 +60,7 @@ void KMJobManager::removeDiscardedJobs()
 		}
 }
 
-/*KMJob* KMJobManager::findJob(int ID)
+/*KMJob* KMJobManager::tqfindJob(int ID)
 {
 	TQPtrListIterator<KMJob>	it(m_jobs);
 	for (;it.current();++it)
@@ -69,7 +69,7 @@ void KMJobManager::removeDiscardedJobs()
 	return 0;
 }*/
 
-KMJob* KMJobManager::findJob(const TQString& uri)
+KMJob* KMJobManager::tqfindJob(const TQString& uri)
 {
 	TQPtrListIterator<KMJob>	it(m_jobs);
 	for (;it.current();++it)
@@ -83,7 +83,7 @@ void KMJobManager::addJob(KMJob *job)
 	// only keep it if "printer" is not empty, and in printer filter
 	if (!job->uri().isEmpty() && !job->printer().isEmpty())
 	{
-		KMJob	*aJob = findJob(job->uri());
+		KMJob	*aJob = tqfindJob(job->uri());
 		if (aJob)
 		{
 			aJob->copy(*job);
@@ -101,7 +101,7 @@ void KMJobManager::addJob(KMJob *job)
 
 /*bool KMJobManager::sendCommand(int ID, int action, const TQString& arg)
 {
-	KMJob	*job = findJob(ID);
+	KMJob	*job = tqfindJob(ID);
 	if (job)
 	{
 		TQPtrList<KMJob>	l;
@@ -114,7 +114,7 @@ void KMJobManager::addJob(KMJob *job)
 
 bool KMJobManager::sendCommand(const TQString& uri, int action, const TQString& arg)
 {
-	KMJob	*job = findJob(uri);
+	KMJob	*job = tqfindJob(uri);
 	if (job)
 	{
 		TQPtrList<KMJob>	l;
@@ -214,7 +214,7 @@ void KMJobManager::validatePluginActions(KActionCollection*, const TQPtrList<KMJ
 
 void KMJobManager::addPrinter(const TQString& pr, KMJobManager::JobType type, bool isSpecial)
 {
-	struct JobFilter	*jf = m_filter.find(pr);
+	struct JobFilter	*jf = m_filter.tqfind(pr);
 	if (!jf)
 	{
 		jf = new JobFilter;
@@ -226,7 +226,7 @@ void KMJobManager::addPrinter(const TQString& pr, KMJobManager::JobType type, bo
 
 void KMJobManager::removePrinter(const TQString& pr, KMJobManager::JobType type)
 {
-	struct JobFilter	*jf = m_filter.find(pr);
+	struct JobFilter	*jf = m_filter.tqfind(pr);
 	if (jf)
 	{
 		jf->m_type[type] = QMAX(0, jf->m_type[type]-1);

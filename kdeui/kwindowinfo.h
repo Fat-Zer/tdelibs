@@ -38,7 +38,7 @@
  * @author Richard Moore, rich@kde.org
  * @since 3.1
 */
-class KDEUI_EXPORT KWindowInfo : public QObject
+class KDEUI_EXPORT KWindowInfo : public TQObject
 {
     Q_OBJECT
 

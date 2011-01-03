@@ -56,7 +56,7 @@ static bool kdither_32_to_8( const TQImage *src, TQImage *dst )
         for ( gc=0; gc<=MAX_G; gc++ )
 	    for ( bc=0; bc<=MAX_B; bc++ ) {
 		dst->setColor( INDEXOF(rc,gc,bc),
-		qRgb( rc*255/MAX_R, gc*255/MAX_G, bc*255/MAX_B ) );
+		tqRgb( rc*255/MAX_R, gc*255/MAX_G, bc*255/MAX_B ) );
 	    }	
 
     int sw = src->width();
@@ -259,7 +259,7 @@ bool KPixmap::convertFromImage( const TQImage &img, int conversion_flags  )
 		return TQPixmap::convertFromImage( img, TQPixmap::Auto );
 	}
 	
-	TQBitmap mask;
+	TQBitmap tqmask;
 	bool isMask = false;
 
 	TQImage  image = img.convertDepth(32);
@@ -268,13 +268,13 @@ bool KPixmap::convertFromImage( const TQImage &img, int conversion_flags  )
 	if( img.hasAlphaBuffer() ) {
 	    image.setAlphaBuffer( true );
 	    tImage.setAlphaBuffer( true );
-	    isMask = mask.convertFromImage( img.createAlphaMask() );
+	    isMask = tqmask.convertFromImage( img.createAlphaMask() );
 	}
 	
 	kdither_32_to_8( &image, &tImage );
 		
 	if( TQPixmap::convertFromImage( tImage ) ) {
-	    if ( isMask ) TQPixmap::setMask( mask );
+	    if ( isMask ) TQPixmap::setMask( tqmask );
 		return true;
 	} else
 	    return false;
@@ -367,9 +367,9 @@ bool KPixmap::checkColorTable( const TQImage &image )
 
     for ( i=0; i<ncols; i++ ) {
 	for ( j=0; j<40; j++ ) {
-	    if ( kpixmap_iconPalette[j].red() == qRed( ctable[i] ) &&
-		 kpixmap_iconPalette[j].green() == qGreen( ctable[i] ) &&
-		 kpixmap_iconPalette[j].blue() == qBlue( ctable[i] ) ) {
+	    if ( kpixmap_iconPalette[j].red() == tqRed( ctable[i] ) &&
+		 kpixmap_iconPalette[j].green() == tqGreen( ctable[i] ) &&
+		 kpixmap_iconPalette[j].blue() == tqBlue( ctable[i] ) ) {
 		break;
 	    }
 	}

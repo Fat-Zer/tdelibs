@@ -393,7 +393,7 @@ bool KSpell::addPersonal( const TQString & word )
   TQString qs = word.simplifyWhiteSpace();
 
   //we'll let ispell do the work here b/c we can
-  if ( qs.find(' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
+  if ( qs.tqfind(' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
     return false;
 
   qs.prepend( "*" );
@@ -412,7 +412,7 @@ bool KSpell::ignore( const TQString & word )
   TQString qs = word.simplifyWhiteSpace();
 
   //we'll let ispell do the work here b/c we can
-  if ( qs.find (' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
+  if ( qs.tqfind (' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
     return false;
 
   qs.prepend( "@" );
@@ -483,7 +483,7 @@ bool KSpell::checkWord( const TQString & buffer, bool _usedialog )
   d->checking = true;
   TQString qs = buffer.simplifyWhiteSpace();
 
-  if ( qs.find (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
+  if ( qs.tqfind (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
     d->checkNextTimer->start( 0, true );
     return false;
   }
@@ -525,7 +525,7 @@ bool KSpell::checkWord( const TQString & buffer, bool _usedialog, bool suggest )
   d->checking = true;
   TQString qs = buffer.simplifyWhiteSpace();
 
-  if ( qs.find (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
+  if ( qs.tqfind (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
     d->checkNextTimer->start( 0, true );
     return false;
   }
@@ -635,7 +635,7 @@ void KSpell::checkWord3()
 {
   disconnect( this, TQT_SIGNAL(dialog3()), this, TQT_SLOT(checkWord3()) );
 
-  emit corrected( cwword, replacement(), 0L );
+  emit corrected( cwword, tqreplacement(), 0L );
 }
 
 TQString KSpell::funnyWord( const TQString & word )
@@ -660,7 +660,7 @@ TQString KSpell::funnyWord( const TQString & word )
 
       i = j-1;
 
-      if ( !( k = qs.findRev(shorty) ) || k != -1 )
+      if ( !( k = qs.tqfindRev(shorty) ) || k != -1 )
         qs.remove( k, shorty.length() );
       else
       {
@@ -681,7 +681,7 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
   // returns
   //   GOOD    if word is fine
   //   IGNORE  if word is in ignorelist
-  //   REPLACE if word is in replacelist
+  //   REPLACE if word is in tqreplacelist
   //   MISTAKE if word is misspelled
 {
   word = "";
@@ -699,7 +699,7 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
     int i,j;
 
 
-    word = buffer.mid( 2, buffer.find( ' ', 3 ) -2 );
+    word = buffer.mid( 2, buffer.tqfind( ' ', 3 ) -2 );
     //check() needs this
     orig=word;
 
@@ -717,22 +717,22 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
     //We don't take advantage of ispell's ignore function because
     //we can't interrupt ispell's output (when checking a large
     //buffer) to add a word to _it's_ ignore-list.
-    if ( ignorelist.findIndex( word.lower() ) != -1 )
+    if ( ignorelist.tqfindIndex( word.lower() ) != -1 )
       return IGNORE;
 
     //// Position in line ///
     TQString qs2;
 
-    if ( buffer.find( ':' ) != -1 )
-      qs2 = buffer.left( buffer.find(':') );
+    if ( buffer.tqfind( ':' ) != -1 )
+      qs2 = buffer.left( buffer.tqfind(':') );
     else
       qs2 = buffer;
 
-    posinline = qs2.right( qs2.length()-qs2.findRev(' ') ).toInt()-1;
+    posinline = qs2.right( qs2.length()-qs2.tqfindRev(' ') ).toInt()-1;
 
     ///// Replace-list stuff ////
-    TQStringList::Iterator it = replacelist.begin();
-    for( ;it != replacelist.end(); ++it, ++it ) // Skip two entries at a time.
+    TQStringList::Iterator it = tqreplacelist.begin();
+    for( ;it != tqreplacelist.end(); ++it, ++it ) // Skip two entries at a time.
     {
       if ( word == *it ) // Word matches
       {
@@ -745,14 +745,14 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
     /////// Suggestions //////
     if ( buffer[0] != '#' )
     {
-      TQString qs = buffer.mid( buffer.find(':')+2, buffer.length() );
+      TQString qs = buffer.mid( buffer.tqfind(':')+2, buffer.length() );
       qs += ',';
       sugg.clear();
       i = j = 0;
 
       while( (unsigned int)i < qs.length() )
       {
-        TQString temp = qs.mid( i, (j=qs.find (',',i)) - i );
+        TQString temp = qs.mid( i, (j=qs.tqfind (',',i)) - i );
         sugg.append( funnyWord(temp) );
 
         i=j+2;
@@ -873,7 +873,7 @@ void KSpell::checkList3a (KProcIO *)
         if ( e == REPLACE )
         {
           TQString old = *(--wlIt); ++wlIt;
-          dlgreplacement = word;
+          dlgtqreplacement = word;
           checkListReplaceCurrent();
           // inform application
           emit corrected( old, *(--wlIt), lastpos ); ++wlIt;
@@ -916,8 +916,8 @@ void KSpell::checkListReplaceCurrent()
   wlIt--;
 
   TQString s = *wlIt;
-  s.replace(posinline+offset,orig.length(),replacement());
-  offset += replacement().length()-orig.length();
+  s.tqreplace(posinline+offset,orig.length(),tqreplacement());
+  offset += tqreplacement().length()-orig.length();
   wordlist->insert (wlIt, s);
   wlIt = wordlist->remove (wlIt);
   // wlIt now points to the word after the repalced one
@@ -940,7 +940,7 @@ void KSpell::checkList4 ()
     kdDebug(750) << "KS: cklist4: lastpos: " << lastpos << endl;
     old = *(--wlIt);
     ++wlIt;
-    // replace word
+    // tqreplace word
     checkListReplaceCurrent();
     emit corrected( old, *(--wlIt), lastpos );
     ++wlIt;
@@ -1016,7 +1016,7 @@ bool KSpell::check( const TQString &_buffer, bool _usedialog )
   emitProgress();
 
   // send first buffer line
-  int i = origbuffer.find( '\n', 0 ) + 1;
+  int i = origbuffer.tqfind( '\n', 0 ) + 1;
   qs = origbuffer.mid( 0, i );
   cleanFputs( qs, false );
 
@@ -1079,10 +1079,10 @@ void KSpell::check2( KProcIO * )
 
         if (e==REPLACE)
         {
-          dlgreplacement=word;
-          emit corrected( orig, replacement(), lastpos );
-          offset += replacement().length()-orig.length();
-          newbuffer.replace( lastpos, orig.length(), word );
+          dlgtqreplacement=word;
+          emit corrected( orig, tqreplacement(), lastpos );
+          offset += tqreplacement().length()-orig.length();
+          newbuffer.tqreplace( lastpos, orig.length(), word );
         }
         else  //MISTAKE
         {
@@ -1130,7 +1130,7 @@ void KSpell::check2( KProcIO * )
     //kdDebug(750) << "[EOL](" << tempe << ")[" << temp << "]" << endl;
 
     lastpos = (lastlastline=lastline) + offset; //do we really want this?
-    i = origbuffer.find('\n', lastline) + 1;
+    i = origbuffer.tqfind('\n', lastline) + 1;
     qs = origbuffer.mid( lastline, i-lastline );
     cleanFputs( qs, false );
     lastline = i;
@@ -1153,17 +1153,17 @@ void KSpell::check3 ()
   // evaluates the return value of the dialog
 {
   disconnect (this, TQT_SIGNAL (dialog3()), this, TQT_SLOT (check3()));
-  kdDebug(750) << "check3 [" << cwword << "] [" << replacement() << "] " << dlgresult << endl;
+  kdDebug(750) << "check3 [" << cwword << "] [" << tqreplacement() << "] " << dlgresult << endl;
 
   //others should have been processed by dialog() already
   switch (dlgresult)
   {
   case KS_REPLACE:
   case KS_REPLACEALL:
-    offset+=replacement().length()-cwword.length();
-    newbuffer.replace (lastpos, cwword.length(),
-                       replacement());
-    emit corrected (dlgorigword, replacement(), lastpos);
+    offset+=tqreplacement().length()-cwword.length();
+    newbuffer.tqreplace (lastpos, cwword.length(),
+                       tqreplacement());
+    emit corrected (dlgorigword, tqreplacement(), lastpos);
     break;
   case KS_CANCEL:
     //      kdDebug(750) << "canceled\n" << endl;
@@ -1215,15 +1215,15 @@ void KSpell::dialog( const TQString & word, TQStringList & sugg, const char *_sl
   TQString tmpBuf = newbuffer;
   kdDebug(750)<<" position = "<<lastpos<<endl;
 
-  // extract a context string, replace all characters which might confuse
+  // extract a context string, tqreplace all characters which might confuse
   // the RichText display and highlight the possibly wrong word
   TQString marker( "_MARKER_" );
-  tmpBuf.replace( lastpos, word.length(), marker );
+  tmpBuf.tqreplace( lastpos, word.length(), marker );
   TQString context = tmpBuf.mid(QMAX(lastpos-18,0), 2*18+marker.length());
-  context.replace( '\n',TQString::fromLatin1(" "));
-  context.replace( '<', TQString::fromLatin1("&lt;") );
-  context.replace( '>', TQString::fromLatin1("&gt;") );
-  context.replace( marker, TQString::fromLatin1("<b>%1</b>").arg( word ) );
+  context.tqreplace( '\n',TQString::tqfromLatin1(" "));
+  context.tqreplace( '<', TQString::tqfromLatin1("&lt;") );
+  context.tqreplace( '>', TQString::tqfromLatin1("&gt;") );
+  context.tqreplace( marker, TQString::tqfromLatin1("<b>%1</b>").arg( word ) );
   context = "<qt>" + context + "</qt>";
 
   ksdlg->init( word, &sugg, context );
@@ -1243,7 +1243,7 @@ void KSpell::dialog2( int result )
   dlgresult = result;
   ksdlg->standby();
 
-  dlgreplacement = ksdlg->replacement();
+  dlgtqreplacement = ksdlg->tqreplacement();
 
   //process result here
   switch ( dlgresult )
@@ -1265,14 +1265,14 @@ void KSpell::dialog2( int result )
     break;
   case KS_REPLACEALL:
   {
-    replacelist.append( dlgorigword );
-    TQString _replacement = replacement();
-    replacelist.append( _replacement );
-    emit replaceall( dlgorigword ,  _replacement );
+    tqreplacelist.append( dlgorigword );
+    TQString _tqreplacement = tqreplacement();
+    tqreplacelist.append( _tqreplacement );
+    emit tqreplaceall( dlgorigword ,  _tqreplacement );
   }
     break;
   case KS_SUGGEST:
-    checkWord( ksdlg->replacement(), false, true );
+    checkWord( ksdlg->tqreplacement(), false, true );
     return;
     break;
   }
@@ -1295,7 +1295,7 @@ KSpell::~KSpell()
 KSpellConfig KSpell::ksConfig() const
 {
   ksconfig->setIgnoreList(ignorelist);
-  ksconfig->setReplaceAllList(replacelist);
+  ksconfig->setReplaceAllList(tqreplacelist);
   return *ksconfig;
 }
 
@@ -1413,13 +1413,13 @@ KSpell::modalCheck( TQString& text, KSpellConfig* _kcs )
 
 void KSpell::slotSpellCheckerCorrected( const TQString & oldText, const TQString & newText, unsigned int pos )
 {
-  modaltext=modaltext.replace(pos,oldText.length(),newText);
+  modaltext=modaltext.tqreplace(pos,oldText.length(),newText);
 }
 
 
 void KSpell::slotModalReady()
 {
-  //kdDebug() << qApp->loopLevel() << endl;
+  //kdDebug() << tqApp->loopLevel() << endl;
   //kdDebug(750) << "MODAL READY------------------" << endl;
 
   Q_ASSERT( m_status == Running );
@@ -1439,7 +1439,7 @@ void KSpell::slotModalDone( const TQString &/*_buffer*/ )
   cleanUp();
 
   //kdDebug() << "ABOUT TO EXIT LOOP" << endl;
-  //qApp->exit_loop();
+  //tqApp->exit_loop();
 
   //modalWidgetHack->close(true);
   slotModalSpellCheckerFinished();
@@ -1537,7 +1537,7 @@ void KSpell::initialize( TQWidget *_parent, const TQString &_caption,
   // copy ignore list from ksconfig
   ignorelist += ksconfig->ignoreList();
 
-  replacelist += ksconfig->replaceAllList();
+  tqreplacelist += ksconfig->tqreplaceAllList();
   texmode=dlgon=false;
   m_status = Starting;
   dialogsetup = false;

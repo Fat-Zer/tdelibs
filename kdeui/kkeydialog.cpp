@@ -301,7 +301,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   //
   // TOP LAYOUT MANAGER
   //
-  // The following layout is used for the dialog
+  // The following tqlayout is used for the dialog
   //            LIST LABELS LAYOUT
   //            SPLIT LIST BOX WIDGET
   //            CHOOSE KEY GROUP BOX WIDGET
@@ -423,7 +423,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   d->pbtnShortcut = new KKeyButton(d->fCArea, "key");
   d->pbtnShortcut->setEnabled( false );
   connect( d->pbtnShortcut, TQT_SIGNAL(capturedShortcut(const KShortcut&)), TQT_SLOT(capturedShortcut(const KShortcut&)) );
-  grid->addRowSpacing( 1, d->pbtnShortcut->sizeHint().height() + 5 );
+  grid->addRowSpacing( 1, d->pbtnShortcut->tqsizeHint().height() + 5 );
 
   wtstr = i18n("Use this button to choose a new shortcut key. Once you click it, "
   		"you can press the key-combination which you would like to be assigned "
@@ -431,7 +431,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   TQWhatsThis::add( d->pbtnShortcut, wtstr );
 
   //
-  // Add widgets to the geometry manager
+  // Add widgets to the tqgeometry manager
   //
   pushLayout->addSpacing( KDialog::spacingHint()*2 );
   pushLayout->addWidget( d->pbtnShortcut );
@@ -439,7 +439,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
 
   d->lInfo = new TQLabel(d->fCArea);
   //resize(0,0);
-  //d->lInfo->setAlignment( AlignCenter );
+  //d->lInfo->tqsetAlignment( AlignCenter );
   //d->lInfo->setEnabled( false );
   //d->lInfo->hide();
   grid->addMultiCellWidget( d->lInfo, 2, 2, 0, 3 );
@@ -532,7 +532,7 @@ void KKeyChooser::updateButtons()
 
 		d->pbtnShortcut->setShortcut( pItem->shortcut(), bQtShortcut );
 		//item->setText( 1, keyStrCfg );
-		pItem->repaint();
+		pItem->tqrepaint();
 		d->lInfo->setText( i18n("Default key:") + TQString(" %1").arg(keyStrDef.isEmpty() ? i18n("None") : keyStrDef) );
 
 		// Select the appropriate radio button.
@@ -601,7 +601,7 @@ void KKeyChooser::slotSettingsChanged( int category )
 
 void KKeyChooser::fontChange( const TQFont & )
 {
-        d->fCArea->setMinimumHeight( 4*d->pbtnShortcut->sizeHint().height() );
+        d->fCArea->setMinimumHeight( 4*d->pbtnShortcut->tqsizeHint().height() );
 
         int widget_width = 0;
 
@@ -610,7 +610,7 @@ void KKeyChooser::fontChange( const TQFont & )
 
 // KDE4 IMHO this shouldn't be here at all - it cannot check whether the default
 // shortcut don't conflict with some already changed ones (e.g. global shortcuts).
-// Also, I personally find reseting all shortcuts to default (i.e. hardcoded in the app)
+// Also, I personally tqfind reseting all shortcuts to default (i.e. hardcoded in the app)
 // ones after pressing the 'Default' button rather a misfeature.
 void KKeyChooser::allDefault()
 {
@@ -1010,7 +1010,7 @@ void KKeyChooserItem::setShortcut( const KShortcut& cut )
 {
 	m_cut = cut;
 	m_bModified = (m_cut != m_pList->shortcut(m_iAction));
-	listView()->repaintItem( this );
+	listView()->tqrepaintItem( this );
 }
 
 void KKeyChooserItem::commitChanges()

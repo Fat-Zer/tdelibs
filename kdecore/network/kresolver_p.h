@@ -283,14 +283,14 @@ namespace KNetwork
 
     private:
       /*
-       * finds a suitable worker for this request
+       * tqfinds a suitable worker for this request
        */
-      KNetwork::KResolverWorkerBase *findWorker(KNetwork::KResolverPrivate *p);
+      KNetwork::KResolverWorkerBase *tqfindWorker(KNetwork::KResolverPrivate *p);
 
       /*
-       * finds data for this request
+       * tqfinds data for this request
        */
-      RequestData* findData(KResolverThread*);
+      RequestData* tqfindData(KResolverThread*);
 
       /*
        * Handle completed requests.

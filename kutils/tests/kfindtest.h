@@ -25,20 +25,20 @@
 
 class KFind;
 
-class KFindTest : public QObject
+class KFindTest : public TQObject
 {
 	Q_OBJECT
 
 	public:
 		KFindTest(const TQStringList &text) :
 		  TQObject(0),
-		  m_find(0),
+		  m_tqfind(0),
 		  m_text(text),
 		  m_line(0)
 		{}
 
-		void find(const TQString &pattern, long options = 0);
-		void findNext(const TQString &pattern = TQString::null);
+		void tqfind(const TQString &pattern, long options = 0);
+		void tqfindNext(const TQString &pattern = TQString::null);
 
 		void changeText(uint line, const TQString &text);
 
@@ -50,7 +50,7 @@ class KFindTest : public QObject
 		void slotHighlight(int id, int index, int matchedLengthlength);
 
 	private:
-		KFind                 *m_find;
+		KFind                 *m_tqfind;
 		TQStringList            m_text;
 		uint                   m_line;
 		TQStringList            m_hits;

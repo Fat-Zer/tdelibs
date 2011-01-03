@@ -20,7 +20,7 @@
 messages about how it is being resolved during processing.
 This is useful when an olink does not resolve properly
 and the standard error messages are not sufficient to
-find the problem. 
+tqfind the problem. 
 </para>
 
 <para>You may need to read through the olink XSL templates

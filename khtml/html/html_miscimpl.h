@@ -106,7 +106,7 @@ protected:
     bool checkForNameMatch(NodeImpl *node, const DOMString &name) const;
 };
 
-// this whole class is just a big hack to find form elements even in
+// this whole class is just a big hack to tqfind form elements even in
 // malformed HTML elements
 // the famous <table><tr><form><td> problem
 class HTMLFormCollectionImpl : public HTMLCollectionImpl

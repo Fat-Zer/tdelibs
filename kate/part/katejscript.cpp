@@ -62,7 +62,7 @@ UString::UString(const TQString &d)
 {
   unsigned int len = d.length();
   UChar *dat = new UChar[len];
-  memcpy(dat, d.unicode(), len * sizeof(UChar));
+  memcpy(dat, d.tqunicode(), len * sizeof(UChar));
   rep = UString::Rep::create(dat, len);
 }
 
@@ -1166,4 +1166,4 @@ void KateIndentJScriptManager::parseScriptHeader(const TQString &filePath,
   f.close();
 }
 //END
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

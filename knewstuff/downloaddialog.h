@@ -227,7 +227,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
     Entry *getEntry();
     void loadProvider(Provider *p);
     void install(Entry *e);
-    int installStatus(Entry *e);
+    int installtqStatus(Entry *e);
     TQListViewItem *currentEntryItem();
 
     ProviderLoader *m_loader;

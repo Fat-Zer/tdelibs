@@ -53,8 +53,8 @@ void PhoneNumber::validateNumber( const TQString &number )
   mNumber = number;
 
   // remove line breaks
-  mNumber = mNumber.replace( '\n', "" );
-  mNumber = mNumber.replace( '\r', "" );
+  mNumber = mNumber.tqreplace( '\n', "" );
+  mNumber = mNumber.tqreplace( '\r', "" );
 }
 
 bool PhoneNumber::operator==( const PhoneNumber &p ) const

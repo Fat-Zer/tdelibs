@@ -106,7 +106,7 @@ public:
     enum Type { Normal = 0, Stretch };
     /**
      * This enum holds flags which can be ORed together to describe
-     * which items the context menu over the applet handle contains.
+     * which items the context menu over the applet handle tqcontains.
      */
     // KDE4: Merge these with KPanelExtension's enums
     enum Action { About = 1, Help = 2, Preferences = 4, ReportBug = 8 };
@@ -224,22 +224,22 @@ public:
     /**
      * @internal
      **/
-    void setAlignment( Alignment a );
+    void tqsetAlignment( Alignment a );
 
 signals:
     /**
-     * Emit this signal to make the panel relayout all applets, when
+     * Emit this signal to make the panel retqlayout all applets, when
      * you want to change your width (horizontal panel) or
      * height (vertical panel).
      *
-     * The panel is going to relayout all applets based on their
+     * The panel is going to retqlayout all applets based on their
      * widthForHeight(int height) (horizontal panel) or
      * heightForWidth(int width) (vertical panel).
      *
      * Please note that the panel may change the applet's location
      * if the new widthForHeight(int height) (horizontal panel) or
      * heightForWidth(int width) (vertical panel) does not fit into the
-     * current panel layout.
+     * current panel tqlayout.
      **/
     void updateLayout();
 
@@ -308,9 +308,9 @@ protected:
      **/
     Position position() const { return _position; }
     /**
-     * @return the applet's alignment. (top/left, center, or bottom/right)
+     * @return the applet's tqalignment. (top/left, center, or bottom/right)
      **/
-    Alignment alignment() const { return _alignment; }
+    Alignment tqalignment() const { return _tqalignment; }
 
     /**
      * The panel on which this applet resides has changed its position.
@@ -320,11 +320,11 @@ protected:
     virtual void positionChange( Position p );
 
     /**
-     * The panel on which this applet resides has changed its alignment.
+     * The panel on which this applet resides has changed its tqalignment.
      * Reimplement this change handler in order to adjust the look of your
      * applet.
      **/
-    virtual void alignmentChange( Alignment /*a*/ ) {}
+    virtual void tqalignmentChange( Alignment /*a*/ ) {}
 
     /**
      * Use this method to set the custom menu for this applet so that it can be shown
@@ -383,7 +383,7 @@ protected:
 private:
     Type         _type;
     Position     _position;
-    Alignment    _alignment;
+    Alignment    _tqalignment;
     KConfig*     _config;
     int          _actions;
 protected:

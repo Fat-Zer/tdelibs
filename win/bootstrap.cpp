@@ -35,9 +35,9 @@ QEventLoopEx* qeventloopex = 0;
  Additional algorithm for win9x (including Millenium), where are problems with 
  easy setting environment variables:
 
- - try to find HOME env. variable
- - if not found, try to find USERPROFILE env. variable
- - if not found, try to find both HOMEDRIVE and HOMEPATH env. variables
+ - try to tqfind HOME env. variable
+ - if not found, try to tqfind USERPROFILE env. variable
+ - if not found, try to tqfind both HOMEDRIVE and HOMEPATH env. variables
  - if not found, try in the Windows Registry:
    - try get 'Software\KDE' value from HKEY_CURRENT_USER section of Windows Registry
    - if not found, try to get from 

@@ -9,7 +9,7 @@ kthemestyle.cpp \
 kthemebase.cpp \
 kstyledirs.cpp
 
-system( moc kthemestyle.h -o moc/kthemestyle.moc )
-system( moc kthemebase.h -o moc/kthemebase.moc )
+system( tqmoc kthemestyle.h -o tqmoc/kthemestyle.moc )
+system( tqmoc kthemebase.h -o tqmoc/kthemebase.moc )
 
 

@@ -59,7 +59,7 @@ public:
       Emote, ///< An icon that expresses an emotion.
       International, ///< An icon that represents a country's flag.
       Place, ///< An icon that represents a location (e.g. 'home', 'trash').
-      StatusIcon ///< An icon that represents an event.
+      tqStatusIcon ///< An icon that represents an event.
     };
 
     /**
@@ -75,7 +75,7 @@ public:
      * The type of a match.
      */
     enum MatchType {
-      MatchExact, ///< Only try to find an exact match.
+      MatchExact, ///< Only try to tqfind an exact match.
       MatchBest   ///< Take the best match if there is no exact match.
 
     };

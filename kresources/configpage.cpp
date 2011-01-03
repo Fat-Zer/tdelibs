@@ -106,9 +106,9 @@ ConfigPage::ConfigPage( TQWidget *parent, const char *name )
 
   TQGroupBox *groupBox = new TQGroupBox( i18n( "Resources" ), this );
   groupBox->setColumnLayout(0, Qt::Vertical );
-  groupBox->layout()->setSpacing( 6 );
-  groupBox->layout()->setMargin( 11 );
-  TQGridLayout *groupBoxLayout = new TQGridLayout( groupBox->layout(), 2, 2 );
+  groupBox->tqlayout()->setSpacing( 6 );
+  groupBox->tqlayout()->setMargin( 11 );
+  TQGridLayout *groupBoxLayout = new TQGridLayout( groupBox->tqlayout(), 2, 2 );
 
   mFamilyCombo = new KComboBox( false, groupBox );
   groupBoxLayout->addMultiCellWidget( mFamilyCombo, 0, 0, 0, 1 );
@@ -130,7 +130,7 @@ ConfigPage::ConfigPage( TQWidget *parent, const char *name )
   mEditButton->setEnabled( false );
   mStandardButton = buttonBox->addButton( i18n( "&Use as Standard" ), this, TQT_SLOT(slotStandard()) );
   mStandardButton->setEnabled( false );
-  buttonBox->layout();
+  buttonBox->tqlayout();
 
   groupBoxLayout->addWidget( buttonBox, 1, 1 );
 
@@ -179,7 +179,7 @@ void ConfigPage::load()
   KTrader::OfferList::ConstIterator end = plugins.end();
   for ( ; it != end; ++it ) {
     const TQString family = (*it)->property( "X-KDE-ResourceFamily" ).toString();
-    if ( compatFamilyNames.find( family ) == compatFamilyNames.end() )
+    if ( compatFamilyNames.tqfind( family ) == compatFamilyNames.end() )
         compatFamilyNames.append( family );
   }
 
@@ -300,7 +300,7 @@ void ConfigPage::slotAdd()
   if ( !ok )
     return;
 
-  TQString type = types[ descs.findIndex( desc ) ];
+  TQString type = types[ descs.tqfindIndex( desc ) ];
 
   // Create new resource
   Resource *resource = mCurrentManager->createResource( type );
@@ -460,7 +460,7 @@ void ConfigPage::resourceModified( Resource *resource )
 {
   kdDebug(5650) << "ConfigPage::resourceModified( " << resource->resourceName()
                 << " )" << endl;
-  ConfigViewItem *item = findItem( resource );
+  ConfigViewItem *item = tqfindItem( resource );
   if ( !item ) return;
 
   // TODO: Reread resource config. Otherwise we won't see the modification.
@@ -473,13 +473,13 @@ void ConfigPage::resourceDeleted( Resource *resource )
   kdDebug(5650) << "ConfigPage::resourceDeleted( " << resource->resourceName()
                 << " )" << endl;
 
-  ConfigViewItem *item = findItem( resource );
+  ConfigViewItem *item = tqfindItem( resource );
   if ( !item ) return;
 
   delete item;
 }
 
-ConfigViewItem *ConfigPage::findItem( Resource *resource )
+ConfigViewItem *ConfigPage::tqfindItem( Resource *resource )
 {
   TQListViewItem *i;
   for( i = mListView->firstChild(); i; i = i->nextSibling() ) {

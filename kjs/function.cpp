@@ -55,7 +55,7 @@ UString encodeURI(ExecState *exec, UString string, UString unescapedSet)
   for (int k = 0; k < string.size(); k++) {
 
     UChar C = string[k];
-    if (unescapedSet.find(C) >= 0) {
+    if (unescapedSet.tqfind(C) >= 0) {
       if (encbufLen+1 >= encbufAlloc)
 	encbuf = (UChar*)realloc(encbuf,(encbufAlloc *= 2)*sizeof(UChar));
       encbuf[encbufLen++] = C;
@@ -244,7 +244,7 @@ UString decodeURI(ExecState *exec, UString string, UString reservedSet)
       }
 
       // UTF-8 transform
-      const unsigned long replacementChar = 0xFFFD;
+      const unsigned long tqreplacementChar = 0xFFFD;
       unsigned long V;
       if (n == 2) {
 	unsigned long yyyyy = octets[0] & 0x1F;
@@ -252,7 +252,7 @@ UString decodeURI(ExecState *exec, UString string, UString reservedSet)
 	V = (yyyyy << 6) | zzzzzz;
 	// 2-byte sequence overlong for this value?       
 	if (V < 0x80)
-	  V = replacementChar;
+	  V = tqreplacementChar;
 	C = UChar((unsigned short)V);
       }
       else if (n == 3) {
@@ -264,7 +264,7 @@ UString decodeURI(ExecState *exec, UString string, UString reservedSet)
 	// an invalid value or UTF-16 surrogate?
 	if (V < 0x800 || V == 0xFFFE || V == 0xFFFF ||
 	    (V >= 0xD800 && V <= 0xDFFF))
-	  V = replacementChar;
+	  V = tqreplacementChar;
 	C = UChar((unsigned short)V);
       }
       else {
@@ -289,7 +289,7 @@ UString decodeURI(ExecState *exec, UString string, UString reservedSet)
       }
     }
 
-    if (reservedSet.find(C) < 0) {
+    if (reservedSet.tqfind(C) < 0) {
         decbuf[decbufLen++] = C;
     }
     else {

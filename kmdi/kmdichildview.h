@@ -71,14 +71,14 @@ class KMdiChildViewPrivate;
   *   KMdiChildView* pMDICover = new KMdiChildView( pNewView->caption());
   *   pMDICover->setIcon(icon);
   *   m_MDICoverList.append( pMDICover);
-  *   TQBoxLayout* pLayout = new TQHBoxLayout( pMDICover, 0, -1, "layout");
+  *   TQBoxLayout* pLayout = new TQHBoxLayout( pMDICover, 0, -1, "tqlayout");
   *   pNewView->reparent( pMDICover, TQPoint(0,0));
   *   pLayout->addWidget( pNewView);
   *   pMDICover->setName( pNewView->name());
   *   // captions
   *   TQString shortName = pNewView->caption();
   *   int length = shortName.length();
-  *   shortName = shortName.right(length - (shortName.findRev('/') +1));
+  *   shortName = shortName.right(length - (shortName.tqfindRev('/') +1));
   *   pMDICover->setTabCaption( shortName);
   *   pMDICover->setCaption(pNewView->caption());
   *
@@ -182,13 +182,13 @@ public:
 	/**
 	 * Constructor
 	 */
-	KMdiChildView( const TQString& caption, TQWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
+	KMdiChildView( const TQString& caption, TQWidget* tqparentWidget = 0L, const char* name = 0L, WFlags f = 0 );
 	
 	/**
 	 * Constructor 
 	 * sets "Unnamed" as default caption
 	 */
-	KMdiChildView( TQWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
+	KMdiChildView( TQWidget* tqparentWidget = 0L, const char* name = 0L, WFlags f = 0 );
 	
 	/**
 	 * Destructor
@@ -196,7 +196,7 @@ public:
 	~KMdiChildView();
 	
 	/**
-	 * This method does the same as focusInEvent(). That's why it is a replacement for the setFocus() call. It makes
+	 * This method does the same as focusInEvent(). That's why it is a tqreplacement for the setFocus() call. It makes
 	 * sense if you for instance want to focus (I mean raise and activate) this view although the real focus is
 	 * in another toplevel widget. focusInEvent() will never get called in that case and your setFocus() call for this
 	 * widget would fail without any effect.
@@ -270,12 +270,12 @@ public:
 	bool isMaximized() const;
 	
 	/**
-	 * Returns the geometry of this MDI child window as TQWidget::geometry() does.
+	 * Returns the tqgeometry of this MDI child window as TQWidget::tqgeometry() does.
 	 */
 	TQRect internalGeometry() const;
 	
 	/**
-	 * Sets the geometry of the client area of this MDI child window. The
+	 * Sets the tqgeometry of the client area of this MDI child window. The
 	 * top left position of the argument is the position of the top left point
 	 * of the client area in its parent coordinates and the arguments width
 	 * and height is the width and height of the client area. Please note: This
@@ -284,12 +284,12 @@ public:
 	void setInternalGeometry( const TQRect& newGeomety );
 	
 	/**
-	 * Returns the frame geometry of this window or of the parent if there is any...
+	 * Returns the frame tqgeometry of this window or of the parent if there is any...
 	 */
 	TQRect externalGeometry() const;
 	
 	/**
-	 * Sets the geometry of the frame of this MDI child window. The top left
+	 * Sets the tqgeometry of the frame of this MDI child window. The top left
 	 * position of the argument is the position of the top left point of the
 	 * frame in its parent coordinates and the arguments width and height is
 	 * the width and height of the widget frame. Please note: This differs
@@ -315,12 +315,12 @@ public:
 	virtual void maximize( bool bAnimate );
 	
 	/**
-	 * Returns the geometry that will be restored by calling restore().
+	 * Returns the tqgeometry that will be restored by calling restore().
 	 */
 	TQRect restoreGeometry();
 	
 	/**
-	 * Sets the geometry that will be restored by calling restore().
+	 * Sets the tqgeometry that will be restored by calling restore().
 	 */
 	void setRestoreGeometry( const TQRect& newRestGeo );
 	
@@ -358,7 +358,7 @@ public:
 	 */
 	inline void updateTimeStamp()
 	{
-		m_time.setDate( TQDate::currentDate() );
+		m_time.setDate( TQDate::tqcurrentDate() );
 		m_time.setTime( TQTime::currentTime() );
 	}
 	
@@ -603,7 +603,7 @@ private:
 
 inline KMdiChildFrm *KMdiChildView::mdiParent() const
 {
-	TQWidget * pw = parentWidget();
+	TQWidget * pw = tqparentWidget();
 	if ( pw != 0L )
 		if ( pw->inherits( "KMdiChildFrm" ) )
 			return ( KMdiChildFrm * ) pw;
@@ -612,4 +612,4 @@ inline KMdiChildFrm *KMdiChildView::mdiParent() const
 
 #endif //_KMDICHILDVIEW_H_
 
-// kate: space-indent off; replace-tabs off; indent-mode csands; tab-width 4;
+// kate: space-indent off; tqreplace-tabs off; indent-mode csands; tab-width 4;

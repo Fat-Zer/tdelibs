@@ -89,7 +89,7 @@ void KMListViewItem::updatePrinter(KMPrinter *p)
 	}
 	setDiscarded(false);
 	if (update)
-		repaint();
+		tqrepaint();
 }
 
 void KMListViewItem::paintCell(TQPainter *p, const TQColorGroup& cg, int c, int w, int a)
@@ -147,7 +147,7 @@ void KMListView::slotRightButtonClicked(TQListViewItem *item, const TQPoint& p, 
 	emit rightButtonClicked(item && item->depth() == 2 ? item->text(0) : TQString::null, p);
 }
 
-KMListViewItem* KMListView::findItem(KMPrinter *p)
+KMListViewItem* KMListView::tqfindItem(KMPrinter *p)
 {
 	if (p)
 	{
@@ -169,7 +169,7 @@ KMListViewItem* KMListView::findItem(KMPrinter *p)
 	return 0;
 }
 
-KMListViewItem* KMListView::findItem(const TQString& prname)
+KMListViewItem* KMListView::tqfindItem(const TQString& prname)
 {
 	TQPtrListIterator<KMListViewItem>	it(m_items);
 	for (; it.current(); ++it)
@@ -192,12 +192,12 @@ void KMListView::setPrinterList(TQPtrList<KMPrinter> *list)
 		KMListViewItem			*item (0);
 		for (;it.current();++it)
 		{
-			item = findItem(it.current());
+			item = tqfindItem(it.current());
 			if (!item)
 			{
 				if (it.current()->isVirtual())
 				{
-					KMListViewItem	*pItem = findItem(it.current()->printerName());
+					KMListViewItem	*pItem = tqfindItem(it.current()->printerName());
 					if (!pItem)
 						continue;
 					item = new KMListViewItem(pItem, it.current());

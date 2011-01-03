@@ -27,7 +27,7 @@
  * version of this file only under the terms of one of those two
  * licenses (the MPL or the GPL) and not to allow others to use your
  * version of this file under the LGPL, indicate your decision by
- * deletingthe provisions above and replace them with the notice and
+ * deletingthe provisions above and tqreplace them with the notice and
  * other provisions required by the MPL or the GPL, as the case may be.
  * If you do not delete the provisions above, a recipient may use your
  * version of this file under any of the LGPL, the MPL or the GPL.
@@ -52,7 +52,7 @@ typedef struct {
 } RenderArenaDebugHeader;
 
 #ifdef VALGRIND_SUPPORT
-Arena* findContainingArena(ArenaPool* pool, void* ptr) {
+Arena* tqfindContainingArena(ArenaPool* pool, void* ptr) {
     uword ptrBits = reinterpret_cast<uword>(ptr);
     for (Arena* a = &pool->first; a; a = a->next)
         if (ptrBits >= a->base && ptrBits < a->limit)
@@ -88,7 +88,7 @@ void* RenderArena::allocate(size_t size)
 #else
     void* result = 0;
 
-    // Ensure we have correct alignment for pointers.  Important for Tru64
+    // Ensure we have correct tqalignment for pointers.  Important for Tru64
     size = KHTML_ROUNDUP(size, sizeof(void*));
 
     // Check recyclers first
@@ -98,7 +98,7 @@ void* RenderArena::allocate(size_t size)
         result = m_recyclers[index];
         if (result) {
 #ifdef VALGRIND_SUPPORT
-            VALGRIND_MEMPOOL_ALLOC(findContainingArena(&m_pool, result)->base, result, size);
+            VALGRIND_MEMPOOL_ALLOC(tqfindContainingArena(&m_pool, result)->base, result, size);
 #endif
             // Need to move to the next object
             void* next = *((void**)result);
@@ -127,10 +127,10 @@ void RenderArena::free(size_t size, void* ptr)
 #else
 
 #ifdef VALGRIND_SUPPORT
-    VALGRIND_MEMPOOL_FREE(findContainingArena(&m_pool, ptr)->base, ptr);
+    VALGRIND_MEMPOOL_FREE(tqfindContainingArena(&m_pool, ptr)->base, ptr);
 #endif
 
-    // Ensure we have correct alignment for pointers.  Important for Tru64
+    // Ensure we have correct tqalignment for pointers.  Important for Tru64
     size = KHTML_ROUNDUP(size, sizeof(void*));
 
     // See if it's a size that we recycle

@@ -257,7 +257,7 @@ CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, TQString userStyleSheet, 
     u.setQuery( TQString::null );
     u.setRef( TQString::null );
     encodedurl.file = u.url();
-    int pos = encodedurl.file.findRev('/');
+    int pos = encodedurl.file.tqfindRev('/');
     encodedurl.path = encodedurl.file;
     if ( pos > 0 ) {
 	encodedurl.path.truncate( pos );
@@ -327,7 +327,7 @@ void CSSStyleSelector::loadDefaultStyle(const KHTMLSettings *s, DocumentImpl *do
 	if ( readbytes >= 0 )
 	    file[readbytes] = '\0';
 
-	TQString style = TQString::fromLatin1( file.data() );
+	TQString style = TQString::tqfromLatin1( file.data() );
 	if(s)
 	    style += s->settingsToCSS();
 	DOMString str(style);
@@ -352,7 +352,7 @@ void CSSStyleSelector::loadDefaultStyle(const KHTMLSettings *s, DocumentImpl *do
 	if ( readbytes >= 0 )
 	    file[readbytes] = '\0';
 
-	TQString style = TQString::fromLatin1( file.data() );
+	TQString style = TQString::tqfromLatin1( file.data() );
 	DOMString str(style);
 
 	s_quirksSheet = new DOM::CSSStyleSheetImpl(doc);
@@ -496,12 +496,12 @@ RenderStyle *CSSStyleSelector::styleForElement(ElementImpl *e)
     unsigned int numPseudoProps = 0;
 
     // try to sort out most style rules as early as possible.
-    Q_UINT16 cssTagId = localNamePart(element->id());
+    TQ_UINT16 cssTagId = localNamePart(element->id());
     int smatch = 0;
     int schecked = 0;
 
     for ( unsigned int i = 0; i < selectors_size; i++ ) {
-	Q_UINT16 tag = localNamePart(selectors[i]->tag);
+	TQ_UINT16 tag = localNamePart(selectors[i]->tag);
 	if ( cssTagId == tag || tag == anyLocalName ) {
 	    ++schecked;
 
@@ -741,8 +741,8 @@ void CSSStyleSelector::adjustRenderStyle(RenderStyle* style, DOM::ElementImpl *e
     // Cull out any useless layers and also repeat patterns into additional layers.
     style->adjustBackgroundLayers();
 
-    // Only use slow repaints if we actually have a background image.
-    // FIXME: We only need to invalidate the fixed regions when scrolling.  It's total overkill to
+    // Only use slow tqrepaints if we actually have a background image.
+    // FIXME: We only need to tqinvalidate the fixed regions when scrolling.  It's total overkill to
     // prevent the entire view from blitting on a scroll.
     if (style->hasFixedBackgroundImage() && view)
         view->useSlowRepaints();
@@ -828,12 +828,12 @@ unsigned int CSSStyleSelector::addInlineDeclarations(DOM::ElementImpl* e,
 static void cleanpath(TQString &path)
 {
     int pos;
-    while ( (pos = path.find( "/../" )) != -1 ) {
+    while ( (pos = path.tqfind( "/../" )) != -1 ) {
         int prev = 0;
         if ( pos > 0 )
-            prev = path.findRev( "/", pos -1 );
+            prev = path.tqfindRev( "/", pos -1 );
         // don't remove the host, i.e. http://foo.org/../foo.html
-        if (prev < 0 || (prev > 3 && path.findRev("://", prev-1) == prev-2))
+        if (prev < 0 || (prev > 3 && path.tqfindRev("://", prev-1) == prev-2))
             path.remove( pos, 3);
         else
             // matching directory found ?
@@ -846,9 +846,9 @@ static void cleanpath(TQString &path)
     // We don't want to waste a function call on the search for the anchor
     // in the vast majority of cases where there is no "//" in the path.
     int refPos = -2;
-    while ( (pos = path.find( "//", pos )) != -1) {
+    while ( (pos = path.tqfind( "//", pos )) != -1) {
         if (refPos == -2)
-            refPos = path.find("#", 0);
+            refPos = path.tqfind("#", 0);
         if (refPos > 0 && pos >= refPos)
             break;
 
@@ -857,7 +857,7 @@ static void cleanpath(TQString &path)
         else
             pos += 2;
     }
-    while ( (pos = path.find( "/./" )) != -1)
+    while ( (pos = path.tqfind( "/./" )) != -1)
         path.remove( pos, 2 );
     //kdDebug() << "checkPseudoState " << path << endl;
 }
@@ -871,9 +871,9 @@ static PseudoState checkPseudoState( const CSSStyleSelector::Encodedurl& encoded
     if( attr.isNull() ) {
         return PseudoNone;
     }
-    TQConstString cu(attr.unicode(), attr.length());
+    TQConstString cu(attr.tqunicode(), attr.length());
     TQString u = cu.string();
-    if ( !u.contains("://") ) {
+    if ( !u.tqcontains("://") ) {
         if ( u[0] == '/' )
             u = encodedurl.host + u;
         else if ( u[0] == '#' )
@@ -883,10 +883,10 @@ static PseudoState checkPseudoState( const CSSStyleSelector::Encodedurl& encoded
         cleanpath( u );
     }
     //completeURL( attr.string() );
-    bool contains = KHTMLFactory::vLinks()->contains( u );
-    if ( !contains && u.contains('/')==2 )
-      contains = KHTMLFactory::vLinks()->contains( u+'/' );
-    return contains ? PseudoVisited : PseudoLink;
+    bool tqcontains = KHTMLFactory::vLinks()->tqcontains( u );
+    if ( !tqcontains && u.tqcontains('/')==2 )
+      tqcontains = KHTMLFactory::vLinks()->tqcontains( u+'/' );
+    return tqcontains ? PseudoVisited : PseudoLink;
 }
 
 // a helper function for parsing nth-arguments
@@ -904,7 +904,7 @@ static bool matchNth(int count, const TQString& nth)
         b = 0;
     }
     else {
-        int n = nth.find('n');
+        int n = nth.tqfind('n');
         if (n != -1) {
             if (nth[0] == '-')
                 if (n==1)
@@ -917,11 +917,11 @@ static bool matchNth(int count, const TQString& nth)
                 else
                     a = nth.left(n).toInt();
 
-            int p = nth.find('+');
+            int p = nth.tqfind('+');
             if (p != -1)
                 b = nth.mid(p+1).toInt();
             else {
-                p = nth.find('-');
+                p = nth.tqfind('-');
                 b = -nth.mid(p+1).toInt();
             }
         }
@@ -1107,10 +1107,10 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
 
     if (sel->tag != anyQName) {
         int eltID = e->id();
-        Q_UINT16 localName = localNamePart(eltID);
-        Q_UINT16 ns = namespacePart(eltID);
-        Q_UINT16 selLocalName = localNamePart(sel->tag);
-        Q_UINT16 selNS = namespacePart(sel->tag);
+        TQ_UINT16 localName = localNamePart(eltID);
+        TQ_UINT16 ns = namespacePart(eltID);
+        TQ_UINT16 selLocalName = localNamePart(sel->tag);
+        TQ_UINT16 selNS = namespacePart(sel->tag);
 
         if (localName <= ID_LAST_TAG && ns == defaultNamespace) {
             assert(e->isHTMLElement());
@@ -1158,22 +1158,22 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             // Be smart compare on length first
             if (sel_len > val_len) return false;
             // Selector string may not contain spaces
-            if ((sel->attr != ATTR_CLASS || e->hasClassList()) && sel->value.find(' ') != -1) return false;
+            if ((sel->attr != ATTR_CLASS || e->hasClassList()) && sel->value.tqfind(' ') != -1) return false;
             if (sel_len == val_len)
                 return (caseSensitive && !strcmp(sel->value, value)) ||
 		       (!caseSensitive && !strcasecmp(sel->value, value));
             // else the value is longer and can be a list
             if ( sel->match == CSSSelector::Class && !e->hasClassList() ) return false;
 
-            TQChar* sel_uc = sel->value.unicode();
-            TQChar* val_uc = value->unicode();
+            TQChar* sel_uc = sel->value.tqunicode();
+            TQChar* val_uc = value->tqunicode();
 
             TQConstString sel_str(sel_uc, sel_len);
             TQConstString val_str(val_uc, val_len);
 
             int pos = 0;
             for ( ;; ) {
-                pos = val_str.string().find(sel_str.string(), pos, caseSensitive);
+                pos = val_str.string().tqfind(sel_str.string(), pos, caseSensitive);
                 if ( pos == -1 ) return false;
                 if ( pos == 0 || val_uc[pos-1].isSpace() ) {
                     int endpos = pos + sel_len;
@@ -1186,35 +1186,35 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
         }
         case CSSSelector::Contain:
         {
-            //kdDebug( 6080 ) << "checking for contains match" << endl;
-            TQConstString val_str(value->unicode(), value->length());
-            TQConstString sel_str(sel->value.unicode(), sel->value.length());
-            return val_str.string().contains(sel_str.string(), caseSensitive);
+            //kdDebug( 6080 ) << "checking for tqcontains match" << endl;
+            TQConstString val_str(value->tqunicode(), value->length());
+            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
+            return val_str.string().tqcontains(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Begin:
         {
             //kdDebug( 6080 ) << "checking for beginswith match" << endl;
-            TQConstString val_str(value->unicode(), value->length());
-            TQConstString sel_str(sel->value.unicode(), sel->value.length());
+            TQConstString val_str(value->tqunicode(), value->length());
+            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
             return val_str.string().startsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::End:
         {
             //kdDebug( 6080 ) << "checking for endswith match" << endl;
-            TQConstString val_str(value->unicode(), value->length());
-            TQConstString sel_str(sel->value.unicode(), sel->value.length());
+            TQConstString val_str(value->tqunicode(), value->length());
+            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
             return val_str.string().endsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Hyphen:
         {
             //kdDebug( 6080 ) << "checking for hyphen match" << endl;
-            TQConstString val_str(value->unicode(), value->length());
-            TQConstString sel_str(sel->value.unicode(), sel->value.length());
+            TQConstString val_str(value->tqunicode(), value->length());
+            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
             const TQString& str = val_str.string();
             const TQString& selStr = sel_str.string();
             if(str.length() < selStr.length()) return false;
             // Check if str begins with selStr:
-            if(str.find(selStr, 0, caseSensitive) != 0) return false;
+            if(str.tqfind(selStr, 0, caseSensitive) != 0) return false;
             // It does. Check for exact match or following '-':
             if(str.length() != selStr.length()
                 && str[selStr.length()] != '-') return false;
@@ -1557,8 +1557,8 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
                 elem = static_cast<HTMLElementImpl*>(e);
                 DOMString s = elem->innerText();
                 TQString selStr = sel->string_arg.string();
-//                kdDebug(6080) << ":contains(\"" << selStr << "\")" << " on \"" << s << "\"" << endl;
-                return s.string().contains(selStr);
+//                kdDebug(6080) << ":tqcontains(\"" << selStr << "\")" << " on \"" << s << "\"" << endl;
+                return s.string().tqcontains(selStr);
             }
             break;
         }
@@ -1768,7 +1768,7 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
 
     // No media implies "all", but if a medialist exists it must
     // contain our current medium
-    if( sheet->media() && !sheet->media()->contains( medium ) )
+    if( sheet->media() && !sheet->media()->tqcontains( medium ) )
         return; // style sheet not applicable for this medium
 
     int len = sheet->length();
@@ -1794,7 +1794,7 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
             //kdDebug( 6080 ) << "@import: Media: "
             //                << import->media()->mediaText().string() << endl;
 
-            if( !import->media() || import->media()->contains( medium ) )
+            if( !import->media() || import->media()->tqcontains( medium ) )
             {
                 CSSStyleSheetImpl *importedSheet = import->styleSheet();
                 append( importedSheet, medium );
@@ -1809,7 +1809,7 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
             //kdDebug( 6080 ) << "@media: Media: "
             //                << r->media()->mediaText().string() << endl;
 
-            if( ( !r->media() || r->media()->contains( medium ) ) && rules)
+            if( ( !r->media() || r->media()->tqcontains( medium ) ) && rules)
             {
                 // Traverse child elements of the @import rule. Since
                 // many elements are not allowed as child we do not use
@@ -2079,13 +2079,13 @@ static TQColor colorForCSSValue( int css_value )
 	    KConfig bckgrConfig("kdesktoprc", true, false); // No multi-screen support
 	    bckgrConfig.setGroup("Desktop0");
 	    // Desktop background.
-	    return bckgrConfig.readColorEntry("Color1", &qApp->palette().disabled().background());
+	    return bckgrConfig.readColorEntry("Color1", &tqApp->palette().disabled().background());
 	}
 	return TQColor();
     }
 #endif
 
-    const TQPalette &pal = qApp->palette();
+    const TQPalette &pal = tqApp->palette();
     TQColor c = pal.color( uicol->group, uicol->role );
 #ifndef APPLE_CHANGES
     if ( uicol->configEntry ) {
@@ -2597,7 +2597,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
     }
 
     case CSS_PROP_UNICODE_BIDI: {
-        HANDLE_INHERIT_AND_INITIAL(unicodeBidi, UnicodeBidi)
+        HANDLE_INHERIT_AND_INITIAL(tqunicodeBidi, UnicodeBidi)
         if(!primitiveValue) break;
         switch (primitiveValue->getIdent()) {
             case CSS_VAL_NORMAL:
@@ -2772,7 +2772,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
 		    col = colorForCSSValue( ident );
 	    } else if ( primitiveValue->primitiveType() == CSSPrimitiveValue::CSS_RGBCOLOR ) {
 #ifndef APPLE_CHANGES
-		if(qAlpha(primitiveValue->getRGBColorValue()))
+		if(tqAlpha(primitiveValue->getRGBColorValue()))
 #endif
 		    col.setRgb(primitiveValue->getRGBColorValue());
 	    } else {
@@ -3241,7 +3241,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         if (size < 0) return;
 
         // we never want to get smaller than the minimum font size to keep fonts readable
-        // do not however maximize zero as that is commonly used for fancy layouting purposes
+        // do not however maximize zero as that is commonly used for fancy tqlayouting purposes
         if (size && size < minFontSize) size = minFontSize;
 
         //kdDebug( 6080 ) << "computed raw font size: " << size << endl;

@@ -43,8 +43,8 @@
   </span>
 </xsl:template>
 
-<xsl:template match="replaceable" priority="1">
-  <span class="replaceable">
+<xsl:template match="tqreplaceable" priority="1">
+  <span class="tqreplaceable">
     <xsl:call-template name="inline.italicmonoseq"/>
   </span>
 </xsl:template>

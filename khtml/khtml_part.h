@@ -243,10 +243,10 @@ public:
    * rendered in. You can specify two different parent objects for a
    * KHTMLPart, one parent for the KHTMLPart document and on parent
    * for the KHTMLView. If the second @p parent argument is 0L, then
-   * @p parentWidget is used as parent for both objects, the part and
+   * @p tqparentWidget is used as parent for both objects, the part and
    * the view.
    */
-  KHTMLPart( TQWidget *parentWidget = 0, const char *widgetname = 0,
+  KHTMLPart( TQWidget *tqparentWidget = 0, const char *widgetname = 0,
              TQObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
 
   KHTMLPart( KHTMLView *view, TQObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
@@ -629,7 +629,7 @@ public:
    * default style sheet.
    *
    * This gives a wide range of possibilities to
-   * change the layout of the page.
+   * change the tqlayout of the page.
    *
    * To have an effect this function has to be called after calling begin().
    */
@@ -640,7 +640,7 @@ public:
    * default style sheet.
    *
    * This gives a wide range of possibilities to
-   * change the layout of the page.
+   * change the tqlayout of the page.
    *
    * To have an effect this function has to be called after calling begin().
    */
@@ -697,7 +697,7 @@ public:
   TQCursor urlCursor() const;
 
   /**
-   * Extra Find options that can be used when calling the extended findText().
+   * Extra Find options that can be used when calling the extended tqfindText().
    * @since 3.3
    */
   enum FindOptions
@@ -712,46 +712,46 @@ public:
    * search for.
    * @since 3.3
    */
-  void findText();
+  void tqfindText();
 
   /**
    * Starts a new search, but bypasses the user dialog.
    * @param str The string to search for.
    * @param options Find options.
    * @param parent Parent used for centering popups like "string not found".
-   * @param findDialog Optionally, you can supply your own dialog.
+   * @param tqfindDialog Optionally, you can supply your own dialog.
    * @since 3.3
    */
-  void findText( const TQString &str, long options, TQWidget *parent = 0,
-                 KFindDialog *findDialog = 0 );
+  void tqfindText( const TQString &str, long options, TQWidget *parent = 0,
+                 KFindDialog *tqfindDialog = 0 );
 
   /**
    * Initiates a text search.
    */
-  void findTextBegin();
+  void tqfindTextBegin();
 
   /**
    * Finds the next occurrence of the string or expression.
    * If isRegExp is true then str is converted to a TQRegExp, and caseSensitive is ignored.
-   * @deprecated, use findText( str, options, parent, findDialog )
+   * @deprecated, use tqfindText( str, options, parent, tqfindDialog )
    */
-  bool findTextNext( const TQString &str, bool forward, bool caseSensitive, bool isRegExp );
+  bool tqfindTextNext( const TQString &str, bool forward, bool caseSensitive, bool isRegExp );
 
   /**
-   * Finds the next occurence of a string set by @ref findText()
+   * Finds the next occurence of a string set by @ref tqfindText()
    * @return true if a new match was found.
    * @since 3.3
    */
-  bool findTextNext();
+  bool tqfindTextNext();
 
   /**
-   * Finds the next occurence of a string set by @ref findText()
-   * @param reverse if true, revert seach direction (only if no find dialog is used)
+   * Finds the next occurence of a string set by @ref tqfindText()
+   * @param reverse if true, revert seach direction (only if no tqfind dialog is used)
    * @return true if a new match was found.
    * @since 3.5
    */
   // KDE4 merge with default = false
-  bool findTextNext( bool reverse );
+  bool tqfindTextNext( bool reverse );
 
   /**
    * Sets the Zoom factor. The value is given in percent, larger values mean a
@@ -906,17 +906,17 @@ public:
   /**
    * Finds a frame by name. Returns 0L if frame can't be found.
    */
-  KHTMLPart *findFrame( const TQString &f );
+  KHTMLPart *tqfindFrame( const TQString &f );
 
   /**
-   * Recursively finds the part containing the frame with name @p f
+   * Recursively tqfinds the part containing the frame with name @p f
    * and checks if it is accessible by @p callingPart
    * Returns 0L if no suitable frame can't be found.
    * Returns parent part if a suitable frame was found and
    * frame info in @p *childFrame
    * @since 3.3
    */
-  KHTMLPart *findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f, khtml::ChildFrame **childFrame=0 );
+  KHTMLPart *tqfindFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f, khtml::ChildFrame **childFrame=0 );
 
   /**
    * Return the current frame (the one that has focus)
@@ -927,7 +927,7 @@ public:
 
   /**
    * Returns whether a frame with the specified name is exists or not.
-   * In contrary to the findFrame method this one also returns true
+   * In contrary to the tqfindFrame method this one also returns true
    * if the frame is defined but no displaying component has been
    * found/loaded, yet.
    */
@@ -941,7 +941,7 @@ public:
   /**
    * Finds a frame by name. Returns 0L if frame can't be found.
    */
-  KParts::ReadOnlyPart *findFramePart( const TQString &f );
+  KParts::ReadOnlyPart *tqfindFramePart( const TQString &f );
   /**
    * Called by KJS.
    * Sets the StatusBarText assigned
@@ -952,7 +952,7 @@ public:
   /**
    * Called by KJS.
    * Sets the DefaultStatusBarText assigned
-   * via window.defaultStatus
+   * via window.defaulttqStatus
    */
   void setJSDefaultStatusBarText( const TQString &text );
 
@@ -966,7 +966,7 @@ public:
   /**
    * Called by KJS.
    * Returns the DefaultStatusBarText assigned
-   * via window.defaultStatus
+   * via window.defaulttqStatus
    */
   TQString jsDefaultStatusBarText() const;
 
@@ -1028,7 +1028,7 @@ public:
   KURL toplevelURL();
 
   /**
-   * Checks whether the page contains unsubmitted form changes.
+   * Checks whether the page tqcontains unsubmitted form changes.
    *
    * @return true if form changes exist
    * @since 3.3
@@ -1168,7 +1168,7 @@ protected:
    * to be a object of your derived type, in which case you should return a new instance for
    * the mimetype 'text/html' .
    */
-  virtual KParts::ReadOnlyPart *createPart( TQWidget *parentWidget, const char *widgetName,
+  virtual KParts::ReadOnlyPart *createPart( TQWidget *tqparentWidget, const char *widgetName,
                                             TQObject *parent, const char *name,
                                             const TQString &mimetype, TQString &serviceName,
                                             TQStringList &serviceTypes, const TQStringList &params);

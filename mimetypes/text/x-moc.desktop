@@ -1,5 +1,5 @@
 [Desktop Entry]
-MimeType=text/x-moc
+MimeType=text/x-tqmoc
 Comment=Qt Meta Object File
 Comment[af]=Qt Meta Voorwerp Lêer
 Comment[az]=Qt Meta Cism Faylı
@@ -8,7 +8,7 @@ Comment[bg]=Метаобектен файл на Qt
 Comment[bn]=কিউটি মেটা অবজেক্ট ফাইল
 Comment[br]=Restr Qt Meta Object
 Comment[bs]=Qt Meta objektna datoteka
-Comment[ca]=Fitxer meta objecte Qt (moc)
+Comment[ca]=Fitxer meta objecte Qt (tqmoc)
 Comment[cs]=Meta-objektový soubor Qt
 Comment[csb]=Metaòbiekt Qt
 Comment[cy]=Ffeil Meta-wrthrych Qt
@@ -48,12 +48,12 @@ Comment[ne]=Qt मेटा वस्तु फाइल
 Comment[nl]=Qt-Meta-Object-bestand
 Comment[nn]=Qt-metaobjektfil
 Comment[nso]=Faele ya Sediriswa sa Meta wa Qt
-Comment[oc]=FiquièR meta objecte Qt (moc)
+Comment[oc]=FiquièR meta objecte Qt (tqmoc)
 Comment[pa]=Qt ਮੇਟਾ ਆਬਜੈਕਟ ਫਾਇਲ
 Comment[pl]=Metaobiekt Qt
 Comment[pt]=Meta-objecto Qt
 Comment[pt_BR]=Meta-Objeto Qt
-Comment[ro]=Fişier MOC Qt
+Comment[ro]=Fişier TQMOC Qt
 Comment[ru]=Файл-метаобъект Qt
 Comment[rw]=Idosiye Ibikoresho Bidasanzwe Qt
 Comment[se]=Qt-metaobjeaktafiila
@@ -81,7 +81,7 @@ Comment[zh_TW]=Qt Meta 目標文件
 Comment[zu]=Ifayela Lento ye-Meta lwe-Qt
 Type=MimeType
 Patterns=*.moc;
-Icon=source_moc
+Icon=source_tqmoc
 X-KDE-IsAlso=text/plain
 
 [Property::X-KDE-text]

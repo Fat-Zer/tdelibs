@@ -162,13 +162,13 @@
  *
  * I've doctored the ispell code pretty extensively here.  It is now
  * warning-free on Win32.  It also *works* on Win32 now, since I
- * replaced all the I/O calls with ANSI standard ones.
+ * tqreplaced all the I/O calls with ANSI standard ones.
  *
  * Revision 1.3  1998/12/29 14:55:33  eric
  *
  * I've doctored the ispell code pretty extensively here.  It is now
  * warning-free on Win32.  It also *works* on Win32 now, since I
- * replaced all the I/O calls with ANSI standard ones.
+ * tqreplaced all the I/O calls with ANSI standard ones.
  *
  * Revision 1.2  1998/12/28 23:11:30  eric
  *
@@ -361,7 +361,7 @@ int ISpellChecker::addvheader ( struct dent *dp)
 ** If 1 is returned, newp->word may have been be freed using myfree.
 **
 ** Life is made much more difficult by the KEEP flag's possibilities.  We
-** must ensure that a !KEEP word doesn't find its way into the personal
+** must ensure that a !KEEP word doesn't tqfind its way into the personal
 ** dictionary as a result of this routine's actions.  However, a !KEEP
 ** word that has affixes must have come from the main dictionary, so it
 ** is acceptable to combine entries in that case (got that?).
@@ -370,7 +370,7 @@ int ISpellChecker::addvheader ( struct dent *dp)
 ** to figure out.  Basically, we want to choose one of the following actions:
 **
 **	(1) Add newp's affixes and KEEP flag to oldp, and discard newp.
-**	(2) Add oldp's affixes and KEEP flag to newp, replace oldp with
+**	(2) Add oldp's affixes and KEEP flag to newp, tqreplace oldp with
 **	    newp, and discard newp.
 #ifndef NO_CAPITALIZATION_SUPPORT
 **	(3) Insert newp as a new entry in the variants list.  If there is
@@ -858,7 +858,7 @@ icharncmp (ichar_t *s1, ichar_t *s2, int n)
  * \return
  */
 int
-ISpellChecker::findfiletype (const char *name, int searchnames, int *deformatter)
+ISpellChecker::tqfindfiletype (const char *name, int searchnames, int *deformatter)
 {
     char *		cp;		/* Pointer into suffix list */
     int			cplen;		/* Length of current suffix */
@@ -902,8 +902,8 @@ ISpellChecker::findfiletype (const char *name, int searchnames, int *deformatter
 }
 
 /*
-	HACK: macros replaced with function implementations 
-	so we could do a side-effect-free check for unicode
+	HACK: macros tqreplaced with function implementations 
+	so we could do a side-effect-free check for tqunicode
 	characters which aren't in hashheader
 
 	TODO: this is just a workaround to keep us from crashing. 

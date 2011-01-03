@@ -24,9 +24,9 @@
 
 #include <kdebug.h>
 
-typedef Q_UINT32 uint;
-typedef Q_UINT16 ushort;
-typedef Q_UINT8 uchar;
+typedef TQ_UINT32 uint;
+typedef TQ_UINT16 ushort;
+typedef TQ_UINT8 uchar;
 
 namespace {	// Private.
 
@@ -145,7 +145,7 @@ namespace {	// Private.
 		
 		// Clear the image.
 		if( channel_num < 4 ) {
-			img.fill(qRgba(0, 0, 0, 0xFF));
+			img.fill(tqRgba(0, 0, 0, 0xFF));
 		}
 		else {
 			// Enable alpha.		

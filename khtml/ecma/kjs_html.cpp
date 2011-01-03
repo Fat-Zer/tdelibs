@@ -205,12 +205,12 @@ bool KJS::HTMLDocument::hasProperty(ExecState *exec, const Identifier &p) const
     return false;
 
 
-  if ( docImpl->underDocNamedCache().contains( p.qstring() ) )
+  if ( docImpl->underDocNamedCache().tqcontains( p.qstring() ) )
     return true;
 
   if ( view && view->part() )
   {
-    KHTMLPart *kp = view->part()->findFrame( p.qstring() );
+    KHTMLPart *kp = view->part()->tqfindFrame( p.qstring() );
     if (kp)
       return true;
   }
@@ -260,8 +260,8 @@ Value KJS::HTMLDocument::tryGet(ExecState *exec, const Identifier &propertyName)
   if ( view && view->part() )
   {
     // ###### TODO return a collection in case several frames have the same name
-    // (IE does that). Hard to do with findFrame :}
-    KHTMLPart *kp = view->part()->findFrame( propertyName.qstring() );
+    // (IE does that). Hard to do with tqfindFrame :}
+    KHTMLPart *kp = view->part()->tqfindFrame( propertyName.qstring() );
     if (kp)
       return Window::retrieve(kp);
   }
@@ -896,7 +896,7 @@ const ClassInfo* KJS::HTMLElement::classInfo() const
   rel		KJS::HTMLElement::AnchorRel		DontDelete
   rev		KJS::HTMLElement::AnchorRev		DontDelete
   search	KJS::HTMLElement::AnchorSearch		DontDelete
-  shape		KJS::HTMLElement::AnchorShape		DontDelete
+  tqshape		KJS::HTMLElement::AnchorShape		DontDelete
   tabIndex	KJS::HTMLElement::AnchorTabIndex	DontDelete
   target	KJS::HTMLElement::AnchorTarget		DontDelete
   text		KJS::HTMLElement::AnchorText		DontDelete|ReadOnly
@@ -981,7 +981,7 @@ const ClassInfo* KJS::HTMLElement::classInfo() const
   protocol	KJS::HTMLElement::AreaProtocol		DontDelete|ReadOnly
   search	KJS::HTMLElement::AreaSearch		DontDelete|ReadOnly
   noHref	KJS::HTMLElement::AreaNoHref		DontDelete
-  shape		KJS::HTMLElement::AreaShape		DontDelete
+  tqshape		KJS::HTMLElement::AreaShape		DontDelete
   tabIndex	KJS::HTMLElement::AreaTabIndex		DontDelete
   target	KJS::HTMLElement::AreaTarget		DontDelete
 @end
@@ -1599,7 +1599,7 @@ Value KJS::HTMLElement::getValueProperty(ExecState *exec, int token) const
     case AnchorName:            return String(anchor.name());
     case AnchorRel:             return String(anchor.rel());
     case AnchorRev:             return String(anchor.rev());
-    case AnchorShape:           return String(anchor.shape());
+    case AnchorShape:           return String(anchor.tqshape());
     case AnchorTabIndex:        return Number(anchor.tabIndex());
     case AnchorTarget:          return String(anchor.target());
     // Not specified in http://msdn.microsoft.com/workshop/author/dhtml/reference/objects/a.asp
@@ -1735,7 +1735,7 @@ Value KJS::HTMLElement::getValueProperty(ExecState *exec, int token) const
       }
     }
     case AreaNoHref:          return Boolean(area.noHref());
-    case AreaShape:           return String(area.shape());
+    case AreaShape:           return String(area.tqshape());
     case AreaTabIndex:        return Number(area.tabIndex());
     case AreaTarget:          return String(area.target());
     }
@@ -3773,7 +3773,7 @@ void KJS::HTMLSelectCollection::tryPut(ExecState *exec, const Identifier &proper
     while (diff--) {
       element.add(element.ownerDocument().createElement("OPTION"), before);
     }
-    // replace an existing entry ?
+    // tqreplace an existing entry ?
   } else if (diff < 0) {
     before = element.options().item(u+1);
     element.remove(u);

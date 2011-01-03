@@ -541,27 +541,27 @@ private:
   KMD5& operator=(const KMD5& md);
 
   void init();
-  void encode( unsigned char* output, Q_UINT32 *in, Q_UINT32 len );
-  void decode( Q_UINT32 *output, const unsigned char* in, Q_UINT32 len );
+  void encode( unsigned char* output, TQ_UINT32 *in, TQ_UINT32 len );
+  void decode( TQ_UINT32 *output, const unsigned char* in, TQ_UINT32 len );
 
-  Q_UINT32 rotate_left( Q_UINT32 x, Q_UINT32 n );
-  Q_UINT32 F( Q_UINT32 x, Q_UINT32 y, Q_UINT32 z );
-  Q_UINT32 G( Q_UINT32 x, Q_UINT32 y, Q_UINT32 z );
-  Q_UINT32 H( Q_UINT32 x, Q_UINT32 y, Q_UINT32 z );
-  Q_UINT32 I( Q_UINT32 x, Q_UINT32 y, Q_UINT32 z );
-  void FF( Q_UINT32& a, Q_UINT32 b, Q_UINT32 c, Q_UINT32 d, Q_UINT32 x,
-               Q_UINT32  s, Q_UINT32 ac );
-  void GG( Q_UINT32& a, Q_UINT32 b, Q_UINT32 c, Q_UINT32 d, Q_UINT32 x,
-                Q_UINT32 s, Q_UINT32 ac );
-  void HH( Q_UINT32& a, Q_UINT32 b, Q_UINT32 c, Q_UINT32 d, Q_UINT32 x,
-                Q_UINT32 s, Q_UINT32 ac );
-  void II( Q_UINT32& a, Q_UINT32 b, Q_UINT32 c, Q_UINT32 d, Q_UINT32 x,
-             Q_UINT32 s, Q_UINT32 ac );
+  TQ_UINT32 rotate_left( TQ_UINT32 x, TQ_UINT32 n );
+  TQ_UINT32 F( TQ_UINT32 x, TQ_UINT32 y, TQ_UINT32 z );
+  TQ_UINT32 G( TQ_UINT32 x, TQ_UINT32 y, TQ_UINT32 z );
+  TQ_UINT32 H( TQ_UINT32 x, TQ_UINT32 y, TQ_UINT32 z );
+  TQ_UINT32 I( TQ_UINT32 x, TQ_UINT32 y, TQ_UINT32 z );
+  void FF( TQ_UINT32& a, TQ_UINT32 b, TQ_UINT32 c, TQ_UINT32 d, TQ_UINT32 x,
+               TQ_UINT32  s, TQ_UINT32 ac );
+  void GG( TQ_UINT32& a, TQ_UINT32 b, TQ_UINT32 c, TQ_UINT32 d, TQ_UINT32 x,
+                TQ_UINT32 s, TQ_UINT32 ac );
+  void HH( TQ_UINT32& a, TQ_UINT32 b, TQ_UINT32 c, TQ_UINT32 d, TQ_UINT32 x,
+                TQ_UINT32 s, TQ_UINT32 ac );
+  void II( TQ_UINT32& a, TQ_UINT32 b, TQ_UINT32 c, TQ_UINT32 d, TQ_UINT32 x,
+             TQ_UINT32 s, TQ_UINT32 ac );
 
 private:
-  Q_UINT32 m_state[4];
-  Q_UINT32 m_count[2];
-  Q_UINT8 m_buffer[64];
+  TQ_UINT32 m_state[4];
+  TQ_UINT32 m_count[2];
+  TQ_UINT8 m_buffer[64];
   Digest m_digest;
   bool m_finalized;
 
@@ -704,7 +704,7 @@ protected:
    *  Performs the real update work.  Note
    *  that length is implied to be 64.
    */
-  void transform( Q_UINT32 buf[4], Q_UINT32 const in[16] );
+  void transform( TQ_UINT32 buf[4], TQ_UINT32 const in[16] );
 
   /**
    * finalizes the digest
@@ -717,23 +717,23 @@ private:
 
   void init();
 
-  void byteReverse( unsigned char *buf, Q_UINT32 len );
+  void byteReverse( unsigned char *buf, TQ_UINT32 len );
 
-  Q_UINT32 rotate_left( Q_UINT32 x, Q_UINT32 n );
-  Q_UINT32 F( Q_UINT32 x, Q_UINT32 y, Q_UINT32 z );
-  Q_UINT32 G( Q_UINT32 x, Q_UINT32 y, Q_UINT32 z );
-  Q_UINT32 H( Q_UINT32 x, Q_UINT32 y, Q_UINT32 z );
-  void FF( Q_UINT32& a, Q_UINT32 b, Q_UINT32 c, Q_UINT32 d, Q_UINT32 x,
-               Q_UINT32  s );
-  void GG( Q_UINT32& a, Q_UINT32 b, Q_UINT32 c, Q_UINT32 d, Q_UINT32 x,
-                Q_UINT32 s );
-  void HH( Q_UINT32& a, Q_UINT32 b, Q_UINT32 c, Q_UINT32 d, Q_UINT32 x,
-                Q_UINT32 s );
+  TQ_UINT32 rotate_left( TQ_UINT32 x, TQ_UINT32 n );
+  TQ_UINT32 F( TQ_UINT32 x, TQ_UINT32 y, TQ_UINT32 z );
+  TQ_UINT32 G( TQ_UINT32 x, TQ_UINT32 y, TQ_UINT32 z );
+  TQ_UINT32 H( TQ_UINT32 x, TQ_UINT32 y, TQ_UINT32 z );
+  void FF( TQ_UINT32& a, TQ_UINT32 b, TQ_UINT32 c, TQ_UINT32 d, TQ_UINT32 x,
+               TQ_UINT32  s );
+  void GG( TQ_UINT32& a, TQ_UINT32 b, TQ_UINT32 c, TQ_UINT32 d, TQ_UINT32 x,
+                TQ_UINT32 s );
+  void HH( TQ_UINT32& a, TQ_UINT32 b, TQ_UINT32 c, TQ_UINT32 d, TQ_UINT32 x,
+                TQ_UINT32 s );
 
 private:
-  Q_UINT32 m_state[4];
-  Q_UINT32 m_count[2];
-  Q_UINT8 m_buffer[64];
+  TQ_UINT32 m_state[4];
+  TQ_UINT32 m_count[2];
+  TQ_UINT8 m_buffer[64];
   Digest m_digest;
   bool m_finalized;
 

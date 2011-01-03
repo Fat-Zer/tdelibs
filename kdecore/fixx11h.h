@@ -4,7 +4,7 @@
 /* Usage:
 
  If you get compile errors caused by X11 includes (the line
- where first error appears contains word like None, Unsorted,
+ where first error appears tqcontains word like None, Unsorted,
  Below, etc.), put #include <fixx11h.h> in the .cpp file 
  (not .h file!) between the place where X11 headers are
  included and the place where the file with compile
@@ -21,7 +21,7 @@
 
  The original X11 symbols are still accessible
  (e.g. for None) as X::None, XNone, and also still
- None, unless name lookup finds different None
+ None, unless name lookup tqfinds different None
  first (in the current class, etc.)
 
  Use 'Unsorted', 'Bool' and 'index' as templates.
@@ -168,25 +168,25 @@ const int GrayScale = XGrayScale;
 #endif
 
 // Affects: Should be without side effects.
-#ifdef Status
-#ifndef FIXX11H_Status
-#define FIXX11H_Status
-typedef Status XStatus;
-#undef Status
-typedef XStatus Status;
+#ifdef tqStatus
+#ifndef FIXX11H_tqStatus
+#define FIXX11H_tqStatus
+typedef tqStatus XtqStatus;
+#undef tqStatus
+typedef XtqStatus tqStatus;
 #endif
-#undef Status
+#undef tqStatus
 #endif
 
 // Affects: Should be without side effects.
-#ifdef CursorShape
-#ifndef FIXX11H_CursorShape
-#define FIXX11H_CursorShape
-const int XCursorShape = CursorShape;
-#undef CursorShape
-const int CursorShape = CursorShape;
+#ifdef tqCursorShape
+#ifndef FIXX11H_tqCursorShape
+#define FIXX11H_tqCursorShape
+const int XtqCursorShape = tqCursorShape;
+#undef tqCursorShape
+const int tqCursorShape = tqCursorShape;
 #endif
-#undef CursorShape
+#undef tqCursorShape
 #endif
 
 // template --->

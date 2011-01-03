@@ -80,7 +80,7 @@ AdrParam::operator == (AdrParam & x)
 	TQStrListIterator it(x.adrTypeList_);
 	
 	for (; it.current(); ++it)
-		if (!adrTypeList_.find(it.current()))
+		if (!adrTypeList_.tqfind(it.current()))
 			return false;
 	
 	return true;
@@ -100,7 +100,7 @@ AdrParam::_parse()
 		return;
 	}
 	
-	if (!strRep_.contains('='))
+	if (!strRep_.tqcontains('='))
 		return;
 	
 	RTokenise(strRep_, ",", adrTypeList_);

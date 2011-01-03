@@ -54,7 +54,7 @@ extern char *strchr(const char *, int);
 #endif
 
 /*
- * The transport table contains a definition for every transport (protocol)
+ * The transport table tqcontains a definition for every transport (protocol)
  * family. All operations that can be made on the transport go through this
  * table.
  *
@@ -405,7 +405,7 @@ TRANS(Open) (int type, char *address)
 
     if ((thistrans = TRANS(SelectTransport) (protocol)) == NULL)
     {
-	PRMSG (1,"Open: Unable to find transport for %s\n",
+	PRMSG (1,"Open: Unable to tqfind transport for %s\n",
 	       protocol, 0, 0);
 
 	xfree (protocol);
@@ -495,7 +495,7 @@ TRANS(Reopen) (int type, int trans_id, int fd, char *port)
 
     if (thistrans == NULL)
     {
-	PRMSG (1,"Reopen: Unable to find transport id %d\n",
+	PRMSG (1,"Reopen: Unable to tqfind transport id %d\n",
 	       trans_id, 0, 0);
 
 	return NULL;
@@ -750,7 +750,7 @@ TRANS(NoListen) (char * protocol)
 
    if ((trans = TRANS(SelectTransport)(protocol)) == NULL)
    {
-	PRMSG (1,"TRANS(TransNoListen): unable to find transport: %s\n",
+	PRMSG (1,"TRANS(TransNoListen): unable to tqfind transport: %s\n",
 	       protocol, 0, 0);
 
 	return -1;

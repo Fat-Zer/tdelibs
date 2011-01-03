@@ -21,7 +21,7 @@ class Test8b : public Test8a
     static
     void setSomething( uint v )
     {
-      if (!self()->isImmutable( TQString::fromLatin1( "Something" ) ))
+      if (!self()->isImmutable( TQString::tqfromLatin1( "Something" ) ))
         self()->mSomething = v;
     }
 
@@ -40,7 +40,7 @@ class Test8b : public Test8a
     static
     void setFooBoo( bool v )
     {
-      if (!self()->isImmutable( TQString::fromLatin1( "FooBoo" ) ))
+      if (!self()->isImmutable( TQString::tqfromLatin1( "FooBoo" ) ))
         self()->mFooBoo = v;
     }
 
@@ -59,7 +59,7 @@ class Test8b : public Test8a
     static
     void setPort( uint v )
     {
-      if (!self()->isImmutable( TQString::fromLatin1( "Port" ) ))
+      if (!self()->isImmutable( TQString::tqfromLatin1( "Port" ) ))
         self()->mPort = v;
     }
 

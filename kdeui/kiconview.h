@@ -247,10 +247,10 @@ public:
 
    /**
     * Using this function, you can specify a custom size for the pixmap. The
-    * geometry of the item will be calculated to let a pixmap of the given size
+    * tqgeometry of the item will be calculated to let a pixmap of the given size
     * fit in the iconView without needing an update.
     * This may be useful if you want to change the pixmap later without breaking
-    * the layout. A possible use of this function is to replace a fileItem icon
+    * the tqlayout. A possible use of this function is to tqreplace a fileItem icon
     * by a larger pixmap (preview).
     * @since 3.3
     *

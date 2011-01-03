@@ -368,15 +368,15 @@
       <item> file-write-date </item> 
       <item> fill </item> 
       <item> fill-pointer </item> 
-      <item> find </item> 
-      <item> find-all-symbols </item> 
-      <item> find-class </item> 
-      <item> find-if </item> 
-      <item> find-if-not </item> 
-      <item> find-method </item> 
-      <item> find-package </item> 
-      <item> find-restart </item> 
-      <item> find-symbol </item> 
+      <item> tqfind </item> 
+      <item> tqfind-all-symbols </item> 
+      <item> tqfind-class </item> 
+      <item> tqfind-if </item> 
+      <item> tqfind-if-not </item> 
+      <item> tqfind-method </item> 
+      <item> tqfind-package </item> 
+      <item> tqfind-restart </item> 
+      <item> tqfind-symbol </item> 
       <item> finish-output </item> 
       <item> first </item> 
       <item> fixnum </item> 
@@ -575,7 +575,7 @@
       <item> map-into </item> 
       <item> mapl </item> 
       <item> maplist </item> 
-      <item> mask-field </item> 
+      <item> tqmask-field </item> 
       <item> max </item> 
       <item> member </item> 
       <item> member-if </item> 
@@ -759,7 +759,7 @@
       <item> remprop </item> 
       <item> rename-file </item> 
       <item> rename-package </item> 
-      <item> replace </item> 
+      <item> tqreplace </item> 
       <item> require </item> 
       <item> rest </item> 
       <item> restart </item> 

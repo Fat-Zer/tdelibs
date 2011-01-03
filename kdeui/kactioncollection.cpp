@@ -426,7 +426,7 @@ TQStringList KActionCollection::groups() const
 
   TQAsciiDictIterator<KAction> it( d->m_actionDict );
   for( ; it.current(); ++it )
-    if ( !it.current()->group().isEmpty() && !lst.contains( it.current()->group() ) )
+    if ( !it.current()->group().isEmpty() && !lst.tqcontains( it.current()->group() ) )
       lst.append( it.current()->group() );
 
   return lst;
@@ -549,12 +549,12 @@ void KActionCollection::slotMenuItemHighlighted( int id )
 
   TQWidget *container = static_cast<TQWidget *>( const_cast<TQObject *>( sender() ) );
 
-  d->m_currentHighlightAction = findAction( container, id );
+  d->m_currentHighlightAction = tqfindAction( container, id );
 
   if ( !d->m_currentHighlightAction )
   {
       if ( !d->m_statusCleared )
-          emit clearStatusText();
+          emit cleartqStatusText();
       d->m_statusCleared = true;
       return;
   }
@@ -562,7 +562,7 @@ void KActionCollection::slotMenuItemHighlighted( int id )
   d->m_statusCleared = false;
   emit actionHighlighted( d->m_currentHighlightAction );
   emit actionHighlighted( d->m_currentHighlightAction, true );
-  emit actionStatusText( d->m_currentHighlightAction->toolTip() );
+  emit actiontqStatusText( d->m_currentHighlightAction->toolTip() );
 }
 
 void KActionCollection::slotMenuAboutToHide()
@@ -572,7 +572,7 @@ void KActionCollection::slotMenuAboutToHide()
     d->m_currentHighlightAction = 0;
 
     if ( !d->m_statusCleared )
-        emit clearStatusText();
+        emit cleartqStatusText();
     d->m_statusCleared = true;
 }
 
@@ -583,13 +583,13 @@ void KActionCollection::slotToolBarButtonHighlighted( int id, bool highlight )
 
   TQWidget *container = static_cast<TQWidget *>( const_cast<TQObject *>( sender() ) );
 
-  KAction *action = findAction( container, id );
+  KAction *action = tqfindAction( container, id );
 
   if ( !action )
   {
       d->m_currentHighlightAction = 0;
       // use tooltip groups for toolbar status text stuff instead (Simon)
-//      emit clearStatusText();
+//      emit cleartqStatusText();
       return;
   }
 
@@ -600,7 +600,7 @@ void KActionCollection::slotToolBarButtonHighlighted( int id, bool highlight )
   else
   {
     d->m_currentHighlightAction = 0;
-//    emit clearStatusText();
+//    emit cleartqStatusText();
   }
 }
 
@@ -609,7 +609,7 @@ void KActionCollection::slotDestroyed()
     d->m_dctHighlightContainers.remove( reinterpret_cast<void *>( const_cast<TQObject *>(sender()) ) );
 }
 
-KAction *KActionCollection::findAction( TQWidget *container, int id )
+KAction *KActionCollection::tqfindAction( TQWidget *container, int id )
 {
   TQPtrList<KAction> *actionList = d->m_dctHighlightContainers[ reinterpret_cast<void *>( container ) ];
 
@@ -713,8 +713,8 @@ bool KActionShortcutList::save() const
 	if( m_actions.xmlFile().isEmpty() )
 		return writeSettings();
 
-	TQString attrShortcut  = TQString::fromLatin1("shortcut");
-	TQString attrAccel     = TQString::fromLatin1("accel"); // Depricated attribute
+	TQString attrShortcut  = TQString::tqfromLatin1("shortcut");
+	TQString attrAccel     = TQString::tqfromLatin1("accel"); // Depricated attribute
 
 	// Read XML file
 	TQString sXml( KXMLGUIFactory::readConfigFile( xmlFile, false, instance() ) );
@@ -736,7 +736,7 @@ bool KActionShortcutList::save() const
 
 		// now see if this element already exists
                 // and create it if necessary (unless bSameAsDefault)
-		TQDomElement act_elem = KXMLGUIFactory::findActionByName( elem, sName, !bSameAsDefault );
+		TQDomElement act_elem = KXMLGUIFactory::tqfindActionByName( elem, sName, !bSameAsDefault );
                 if ( act_elem.isNull() )
                     continue;
 

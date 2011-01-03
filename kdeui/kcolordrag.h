@@ -48,14 +48,14 @@ public:
     virtual ~KColorDrag() {}
 
     virtual const char *format(int i) const;
-    virtual TQByteArray encodedData ( const char * m ) const;
+    virtual TQByteArray tqencodedData ( const char * m ) const;
 
     /**
      * Sets the color of the drag to @p col.
      */
     void setColor(const TQColor &col);
     /**
-     * Returns true if the MIME source @p e contains a color object.
+     * Returns true if the MIME source @p e tqcontains a color object.
      */
     static bool canDecode(TQMimeSource *e);
     /**

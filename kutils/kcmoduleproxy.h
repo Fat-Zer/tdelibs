@@ -39,14 +39,14 @@ class KProcess;
  * @brief Encapsulates a KCModule for embedding.
  *
  * KCModuleProxy is a wrapper for KCModule intended for cases where
- * modules are to be displayed. It ensures layout is consistent, handles
+ * modules are to be displayed. It ensures tqlayout is consistent, handles
  * root/administrator modules and in general takes care of the details
  * needed for making a module available in an interface. A KCModuleProxy
  * can be treated as a TQWidget, without worrying about the details specific
  * for modules such as library loading. KCModuleProxy is not a sub class of KCModule
  * but its API closely resembles KCModule's.\n
  * Usually, an instance is created by passing one of the constructors a KService::Ptr,
- * KCModuleInfo or simply the name of the module and then added to the layout as any
+ * KCModuleInfo or simply the name of the module and then added to the tqlayout as any
  * other widget. \n
  * When the user have changed the module, changed( bool ) as well as changed ( KCModuleProxy * )
  * is emitted. KCModuleProxy does not take care of prompting for saving - if the object is deleted while

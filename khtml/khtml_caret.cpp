@@ -150,7 +150,7 @@ static inline bool isIndicatedInlineBox(InlineBox *box)
   	|| s->borderTopWidth() || s->borderBottomWidth()
 	|| s->paddingLeft().value() || s->paddingRight().value()
 	|| s->paddingTop().value() || s->paddingBottom().value()
-	// ### Can inline elements have top/bottom margins? Couldn't find
+	// ### Can inline elements have top/bottom margins? Couldn't tqfind
 	// it in the CSS 2 spec, but Mozilla ignores them, so we do, too.
 	|| s->marginLeft().value() || s->marginRight().value();
 }
@@ -581,7 +581,7 @@ static inline void mapTraversalStateToRenderPos(ObjectTraversalState trav,
  * @param outsideEnd returns whether the end of the outside position is meant
  * @return renderer or 0 if no following node has a renderer.
  */
-static RenderObject* findRenderer(NodeImpl *&node, long offset,
+static RenderObject* tqfindRenderer(NodeImpl *&node, long offset,
 			RenderObject *base, long &r_ofs,
                         bool &outside, bool &outsideEnd)
 {
@@ -589,7 +589,7 @@ static RenderObject* findRenderer(NodeImpl *&node, long offset,
   RenderObject *r;
   mapDOMPosToRenderPos(node, offset, r, r_ofs, outside, outsideEnd);
 #if DEBUG_CARETMODE > 2
-   kdDebug(6200) << "findRenderer: node " << node << " " << (node ? node->nodeName().string() : TQString::null) << " offset " << offset << " r " << r << "[" << (r ? r->renderName() : TQString::null) << "] r_ofs " << r_ofs << " outside " << outside << " outsideEnd " << outsideEnd << endl;
+   kdDebug(6200) << "tqfindRenderer: node " << node << " " << (node ? node->nodeName().string() : TQString::null) << " offset " << offset << " r " << r << "[" << (r ? r->renderName() : TQString::null) << "] r_ofs " << r_ofs << " outside " << outside << " outsideEnd " << outsideEnd << endl;
 #endif
   if (r) return r;
   NodeImpl *baseElem = base ? base->element() : 0;
@@ -730,7 +730,7 @@ kdDebug(6200) << "== recursive invocation end" << endl;
 
     } else if (box->isInlineTextBox()) {
 #if DEBUG_ACIB
-kdDebug(6200) << "isinlinetextbox " << box << (box->object() ? TQString(" contains \"%1\"").arg(TQConstString(static_cast<RenderText *>(box->object())->str->s+box->minOffset(), kMin(box->maxOffset() - box->minOffset(), 15L)).string()) : TQString::null) << endl;
+kdDebug(6200) << "isinlinetextbox " << box << (box->object() ? TQString(" tqcontains \"%1\"").arg(TQConstString(static_cast<RenderText *>(box->object())->str->s+box->minOffset(), kMin(box->maxOffset() - box->minOffset(), 15L)).string()) : TQString::null) << endl;
 #endif
       caret_boxes.append(new CaretBox(box, false, false));
       sbp.check(preEnd());
@@ -739,7 +739,7 @@ kdDebug(6200) << "isinlinetextbox " << box << (box->object() ? TQString(" contai
 
     } else {
 #if DEBUG_ACIB
-kdDebug(6200) << "some replaced or what " << box << endl;
+kdDebug(6200) << "some tqreplaced or what " << box << endl;
 #endif
       // must be an inline-block, inline-table, or any RenderReplaced
       bool rtl = ps->direction() == RTL;
@@ -775,7 +775,7 @@ void CaretBoxLine::addCreatedFlowBoxInside(InlineFlowBox *flowBox, const TQFontM
   caret_boxes.append(caretBox);
 
   // afaik an inner flow box can only have the width 0, therefore we don't
-  // have to care for rtl or alignment
+  // have to care for rtl or tqalignment
   // ### can empty inline elements have a width? css 2 spec isn't verbose about it
 
   caretBox->_y += flowBox->baseline() - fm.ascent();
@@ -818,10 +818,10 @@ CaretBoxLine *CaretBoxLine::constructCaretBoxLine(CaretBoxLineDeleter *deleter,
   // - outside begin of an inline flow box (except for the basic inline flow box)
   // - outside end of an inline flow box (except for the basic inline flow box)
   // - inside of an empty inline flow box
-  // - outside begin of an inline box resembling a replaced element
-  // - outside end of an inline box resembling a replaced element
+  // - outside begin of an inline box resembling a tqreplaced element
+  // - outside end of an inline box resembling a tqreplaced element
   // - inline text box
-  // - inline replaced box
+  // - inline tqreplaced box
 
   CaretBoxLine *result = new CaretBoxLine(basicFlowBox);
   deleter->append(result);
@@ -885,7 +885,7 @@ CaretBoxLine *CaretBoxLine::constructCaretBoxLine(CaretBoxLineDeleter *deleter,
     switch (s->textAlign()) {
       case LEFT:
       case KHTML_LEFT:
-      case TAAUTO:	// ### find out what this does
+      case TAAUTO:	// ### tqfind out what this does
       case JUSTIFY:
         break;
       case CENTER:
@@ -938,14 +938,14 @@ inline InlineFlowBox *seekBaseFlowBox(InlineBox *b, RenderObject *base = 0)
   return static_cast<InlineFlowBox *>(b);
 }
 
-/** determines whether the given element is a block level replaced element.
+/** determines whether the given element is a block level tqreplaced element.
  */
 inline bool isBlockRenderReplaced(RenderObject *r)
 {
   return r->isRenderReplaced() && r->style()->display() == BLOCK;
 }
 
-/** determines the caret line box that contains the given position.
+/** determines the caret line box that tqcontains the given position.
  *
  * If the node does not map to a render object, the function will snap to
  * the next suitable render object following it.
@@ -955,38 +955,38 @@ inline bool isBlockRenderReplaced(RenderObject *r)
  * @param cblDeleter deleter for caret box lines
  * @param base base render object which the caret must not be placed beyond.
  * @param r_ofs adjusted offset within render object
- * @param caretBoxIt returns an iterator to the caret box that contains the
+ * @param caretBoxIt returns an iterator to the caret box that tqcontains the
  *	given position.
  * @return the determined caret box lineor 0 if either the node is 0 or
  *	there is no inline flow box containing this node. The containing block
  *	will still be set. If it is 0 too, @p node was invalid.
  */
-static CaretBoxLine* findCaretBoxLine(DOM::NodeImpl *node, long offset,
+static CaretBoxLine* tqfindCaretBoxLine(DOM::NodeImpl *node, long offset,
 		CaretBoxLineDeleter *cblDeleter, RenderObject *base,
                 long &r_ofs, CaretBoxIterator &caretBoxIt)
 {
   bool outside, outsideEnd;
-  RenderObject *r = findRenderer(node, offset, base, r_ofs, outside, outsideEnd);
+  RenderObject *r = tqfindRenderer(node, offset, base, r_ofs, outside, outsideEnd);
   if (!r) { return 0; }
 #if DEBUG_CARETMODE > 0
-  kdDebug(6200) << "=================== findCaretBoxLine" << endl;
+  kdDebug(6200) << "=================== tqfindCaretBoxLine" << endl;
   kdDebug(6200) << "node " << node << " offset: " << offset << " r " << r->renderName() << "[" << r << "].node " << r->element()->nodeName().string() << "[" << r->element() << "]" << " r_ofs " << r_ofs << " outside " << outside << " outsideEnd " << outsideEnd << endl;
 #endif
 
-  // There are two strategies to find the correct line box. (The third is failsafe)
+  // There are two strategies to tqfind the correct line box. (The third is failsafe)
   // (A) First, if node's renderer is a RenderText, we only traverse its text
   // runs and return the root line box (saves much time for long blocks).
   // This should be the case 99% of the time.
   // (B) Second, we derive the inline flow box directly when the renderer is
   // a RenderBlock, RenderInline, or blocked RenderReplaced.
-  // (C) Otherwise, we iterate linearly through all line boxes in order to find
+  // (C) Otherwise, we iterate linearly through all line boxes in order to tqfind
   // the renderer.
 
   // (A)
   if (r->isText()) do {
     RenderText *t = static_cast<RenderText *>(r);
     int dummy;
-    InlineBox *b = t->findInlineTextBox(offset, dummy, true);
+    InlineBox *b = t->tqfindInlineTextBox(offset, dummy, true);
     // Actually b should never be 0, but some render texts don't have text
     // boxes, so we insert the last run as an error correction.
     // If there is no last run, we resort to (B)
@@ -1000,13 +1000,13 @@ static CaretBoxLine* findCaretBoxLine(DOM::NodeImpl *node, long offset,
     outside = false;	// text boxes cannot have outside positions
     InlineFlowBox *baseFlowBox = seekBaseFlowBox(b, base);
 #if DEBUG_CARETMODE > 2
-  kdDebug(6200) << "text-box b: " << b << " baseFlowBox: " << baseFlowBox << (b && b->object() ? TQString(" contains \"%1\"").arg(TQConstString(static_cast<RenderText *>(b->object())->str->s+b->minOffset(), kMin(b->maxOffset() - b->minOffset(), 15L)).string()) : TQString::null) << endl;
+  kdDebug(6200) << "text-box b: " << b << " baseFlowBox: " << baseFlowBox << (b && b->object() ? TQString(" tqcontains \"%1\"").arg(TQConstString(static_cast<RenderText *>(b->object())->str->s+b->minOffset(), kMin(b->maxOffset() - b->minOffset(), 15L)).string()) : TQString::null) << endl;
 #endif
 #if 0
     if (t->containingBlock()->isListItem()) dumpLineBoxes(static_cast<RenderFlow *>(t->containingBlock()));
 #endif
 #if DEBUG_CARETMODE > 0
-  kdDebug(6200) << "=================== end findCaretBoxLine (renderText)" << endl;
+  kdDebug(6200) << "=================== end tqfindCaretBoxLine (renderText)" << endl;
 #endif
     return CaretBoxLine::constructCaretBoxLine(cblDeleter, baseFlowBox,
         b, outside, outsideEnd, caretBoxIt);
@@ -1024,7 +1024,7 @@ static CaretBoxLine* findCaretBoxLine(DOM::NodeImpl *node, long offset,
     if (isrepl || r->isRenderBlock() && (outside || !firstLineBox)
     		|| r->isRenderInline() && !firstLineBox) {
   #if DEBUG_CARETMODE > 0
-    kdDebug(6200) << "=================== end findCaretBoxLine (box " << (outside ? (outsideEnd ? "outside end" : "outside begin") : "inside") << ")" << endl;
+    kdDebug(6200) << "=================== end tqfindCaretBoxLine (box " << (outside ? (outsideEnd ? "outside end" : "outside begin") : "inside") << ")" << endl;
   #endif
       Q_ASSERT(r->isBox());
       return CaretBoxLine::constructCaretBoxLine(cblDeleter,
@@ -1049,23 +1049,23 @@ static CaretBoxLine* findCaretBoxLine(DOM::NodeImpl *node, long offset,
 
   InlineFlowBox *flowBox = cb->firstLineBox();
   // (C)
-  // This case strikes when the element is replaced, but neither a
+  // This case strikes when the element is tqreplaced, but neither a
   // RenderBlock nor a RenderInline
   if (!flowBox) {	// ### utter emergency (why is this possible at all?)
 //    flowBox = generateDummyFlowBox(arena, cb, r);
 //    if (ibox) *ibox = flowBox->firstChild();
 //    outside = outside_end = true;
 
-//    kdWarning() << "containing block contains no inline flow boxes!!! crash imminent" << endl;
+//    kdWarning() << "containing block tqcontains no inline flow boxes!!! crash imminent" << endl;
 #if DEBUG_CARETMODE > 0
-   kdDebug(6200) << "=================== end findCaretBoxLine (2)" << endl;
+   kdDebug(6200) << "=================== end tqfindCaretBoxLine (2)" << endl;
 #endif
     return CaretBoxLine::constructCaretBoxLine(cblDeleter, cb,
 			outside, outsideEnd, caretBoxIt);
   }/*end if*/
 
   // We iterate the inline flow boxes of the containing block until
-  // we find the given node. This has one major flaw: it is linear, and therefore
+  // we tqfind the given node. This has one major flaw: it is linear, and therefore
   // painfully slow for really large blocks.
   for (; flowBox; flowBox = static_cast<InlineFlowBox *>(flowBox->nextLineBox())) {
 #if DEBUG_CARETMODE > 0
@@ -1081,7 +1081,7 @@ static CaretBoxLine* findCaretBoxLine(DOM::NodeImpl *node, long offset,
 #endif
     if (caretBoxIt != cbl->end()) {
 #if DEBUG_CARETMODE > 0
-   kdDebug(6200) << "=================== end findCaretBoxLine (3)" << endl;
+   kdDebug(6200) << "=================== end tqfindCaretBoxLine (3)" << endl;
 #endif
       return cbl;
     }
@@ -1091,20 +1091,20 @@ static CaretBoxLine* findCaretBoxLine(DOM::NodeImpl *node, long offset,
   // Danger: this is O(n^2). It's only called to recover from
   // errors, that means, theoretically, never. (Practically, far too often :-( )
   Q_ASSERT(!flowBox);
-  CaretBoxLine *cbl = findCaretBoxLine(nextLeafNode(node, base ? base->element() : 0), 0, cblDeleter, base, r_ofs, caretBoxIt);
+  CaretBoxLine *cbl = tqfindCaretBoxLine(nextLeafNode(node, base ? base->element() : 0), 0, cblDeleter, base, r_ofs, caretBoxIt);
 #if DEBUG_CARETMODE > 0
-  kdDebug(6200) << "=================== end findCaretBoxLine" << endl;
+  kdDebug(6200) << "=================== end tqfindCaretBoxLine" << endl;
 #endif
   return cbl;
 }
 
-/** finds the innermost table object @p r is contained within, but no
+/** tqfinds the innermost table object @p r is contained within, but no
  * farther than @p cb.
  * @param r leaf element to begin with
  * @param cb bottom element where to stop search at least.
  * @return the table object or 0 if none found.
  */
-static inline RenderTable *findTableUpTo(RenderObject *r, RenderFlow *cb)
+static inline RenderTable *tqfindTableUpTo(RenderObject *r, RenderFlow *cb)
 {
   while (r && r != cb && !r->isTable()) r = r->parent();
   return r && r->isTable() ? static_cast<RenderTable *>(r) : 0;
@@ -1118,7 +1118,7 @@ static inline bool isDescendant(RenderObject *r, RenderObject *cb)
   return r;
 }
 
-/** checks whether the given block contains at least one editable element.
+/** checks whether the given block tqcontains at least one editable element.
  *
  * Warning: This function has linear complexity, and therefore is expensive.
  * Use it sparingly, and cache the result.
@@ -1128,7 +1128,7 @@ static inline bool isDescendant(RenderObject *r, RenderObject *cb)
  *	or at the end.
  * @param fromEnd begin search from end (default: begin from beginning)
  */
-static bool containsEditableElement(KHTMLPart *part, RenderBlock *cb,
+static bool tqcontainsEditableElement(KHTMLPart *part, RenderBlock *cb,
 	RenderTable *&table, bool fromEnd = false)
 {
   RenderObject *r = cb;
@@ -1150,7 +1150,7 @@ static bool containsEditableElement(KHTMLPart *part, RenderBlock *cb,
       modWithinCb = true;
       r = cb;
     } else
-      tempTable = findTableUpTo(r, cb);
+      tempTable = tqfindTableUpTo(r, cb);
 
 #if DEBUG_CARETMODE > 1
     kdDebug(6201) << "cee: r " << (r ? r->renderName() : TQString::null) << "@" << r << " cb " << cb << " withinCb " << withinCb << " modWithinCb " << modWithinCb << " tempTable " << tempTable << endl;
@@ -1173,7 +1173,7 @@ static bool containsEditableElement(KHTMLPart *part, RenderBlock *cb,
   return false;
 }
 
-/** checks whether the given block contains at least one editable child
+/** checks whether the given block tqcontains at least one editable child
  * element, beginning with but excluding @p start.
  *
  * Warning: This function has linear complexity, and therefore is expensive.
@@ -1185,7 +1185,7 @@ static bool containsEditableElement(KHTMLPart *part, RenderBlock *cb,
  * @param fromEnd begin search from end (default: begin from beginning)
  * @param start object after which to begin search.
  */
-static bool containsEditableChildElement(KHTMLPart *part, RenderBlock *cb,
+static bool tqcontainsEditableChildElement(KHTMLPart *part, RenderBlock *cb,
 	RenderTable *&table, bool fromEnd, RenderObject *start)
 {
   int state = 0;
@@ -1220,7 +1220,7 @@ static bool containsEditableChildElement(KHTMLPart *part, RenderBlock *cb,
       modWithinCb = true;
       r = cb;
     } else
-      tempTable = findTableUpTo(r, cb);
+      tempTable = tqfindTableUpTo(r, cb);
 
 #if DEBUG_CARETMODE > 1
     kdDebug(6201) << "cece: r " << (r ? r->renderName() : TQString::null) << "@" << r << " cb " << cb << " withinCb " << withinCb << " modWithinCb " << modWithinCb << " tempTable " << tempTable << endl;
@@ -1322,7 +1322,7 @@ LineIterator::LineIterator(LinearDocument *l, DOM::NodeImpl *node, long offset)
 {
 //  kdDebug(6200) << "LineIterator: node " << node << " offset " << offset << endl;
   if (!node) { cbl = 0; return; }
-  cbl = findCaretBoxLine(node, offset, &lines->cblDeleter,
+  cbl = tqfindCaretBoxLine(node, offset, &lines->cblDeleter,
   		l->baseObject(), currentOffset, currentBox);
   // can happen on partially loaded documents
 #if DEBUG_CARETMODE > 0
@@ -1337,7 +1337,7 @@ LineIterator::LineIterator(LinearDocument *l, DOM::NodeImpl *node, long offset)
 #endif
   if (currentBox == cbl->end()) {
 #if DEBUG_CARETMODE > 0
-    kdDebug(6200) << "LineIterator: findCaretBoxLine failed" << endl;
+    kdDebug(6200) << "LineIterator: tqfindCaretBoxLine failed" << endl;
 #endif
     cbl = 0;
   }/*end if*/
@@ -1357,7 +1357,7 @@ void LineIterator::nextBlock()
     int state;		// not used
     mapRenderPosToTraversalState(cb_outside, cb_outside_end, false, trav);
 #if DEBUG_CARETMODE > 1
-    kdDebug(6200) << "nextBlock: before adv r" << r << " " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, QMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << " trav " << trav << " cb_outside " << cb_outside << " cb_outside_end " << cb_outside_end << endl;
+    kdDebug(6200) << "nextBlock: before adv r" << r << " " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " tqcontains \"" + TQString(((RenderText *)r)->str->s, QMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << " trav " << trav << " cb_outside " << cb_outside << " cb_outside_end " << cb_outside_end << endl;
 #endif
     r = advanceSuitableObject(r, trav, false, base, state);
     if (!r) {
@@ -1375,7 +1375,7 @@ void LineIterator::nextBlock()
 
     RenderBlock *cb;
 
-    // If we hit a block or replaced object, use this as its enclosing object
+    // If we hit a block or tqreplaced object, use this as its enclosing object
     bool isrepl = isBlockRenderReplaced(r);
     if (r->isRenderBlock() || isrepl) {
       RenderBox *cb = static_cast<RenderBox *>(r);
@@ -1426,7 +1426,7 @@ void LineIterator::prevBlock()
     int state;		// not used
     mapRenderPosToTraversalState(cb_outside, cb_outside_end, true, trav);
 #if DEBUG_CARETMODE > 1
-    kdDebug(6200) << "prevBlock: before adv r" << r << " " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, QMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << " trav " << trav << " cb_outside " << cb_outside << " cb_outside_end " << cb_outside_end << endl;
+    kdDebug(6200) << "prevBlock: before adv r" << r << " " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " tqcontains \"" + TQString(((RenderText *)r)->str->s, QMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << " trav " << trav << " cb_outside " << cb_outside << " cb_outside_end " << cb_outside_end << endl;
 #endif
     r = advanceSuitableObject(r, trav, true, base, state);
     if (!r) {
@@ -1602,7 +1602,7 @@ if (box->isInline()) {
                 << " padr " << s->paddingRight().value()
       		<< " padt " << s->paddingTop().value()
                 << " padb " << s->paddingBottom().value()
-	// ### Can inline elements have top/bottom margins? Couldn't find
+	// ### Can inline elements have top/bottom margins? Couldn't tqfind
 	// it in the CSS 2 spec, but Mozilla ignores them, so we do, too.
 		<< " marl " << s->marginLeft().value()
                 << " marr " << s->marginRight().value()
@@ -1647,7 +1647,7 @@ bool EditableCaretBoxIterator::isEditable(const CaretBoxIterator &boxit, bool fr
   RenderObject *r = b->object();
 #if DEBUG_CARETMODE > 0
 //  if (b->isInlineFlowBox()) kdDebug(6200) << "b is inline flow box" << (outside ? " (outside)" : "") << endl;
-  kdDebug(6200) << "isEditable r" << r << ": " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, QMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << endl;
+  kdDebug(6200) << "isEditable r" << r << ": " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " tqcontains \"" + TQString(((RenderText *)r)->str->s, QMIN(((RenderText *)r)->str->l,15)) + "\"" : TQString::null) << endl;
 #endif
   // Must check caret mode or design mode *after* r->element(), otherwise
   // lines without a backing DOM node get regarded, leading to a crash.
@@ -1659,7 +1659,7 @@ bool EditableCaretBoxIterator::isEditable(const CaretBoxIterator &boxit, bool fr
     return false;
   }
 
-  // generally exclude replaced elements with no children from navigation
+  // generally exclude tqreplaced elements with no children from navigation
   if (!b->isOutside() && r->isRenderReplaced() && !r->firstChild())
     return false;
 
@@ -1749,7 +1749,7 @@ void EditableCharacterIterator::initFirstChar()
   if (_offset == box->maxOffset())
     peekNext();
   else if (b && !box->isOutside() && b->isInlineTextBox())
-    _char = static_cast<RenderText *>(b->object())->str->s[_offset].unicode();
+    _char = static_cast<RenderText *>(b->object())->str->s[_offset].tqunicode();
   else
     _char = -1;
 }
@@ -1849,7 +1849,7 @@ kdDebug(6200) << "_offset " << _offset << endl;
 readchar:
     // get character
     if (b && !box->isOutside() && b->isInlineTextBox() && _offset < b->maxOffset())
-      _char = static_cast<RenderText *>(b->object())->str->s[_offset].unicode();
+      _char = static_cast<RenderText *>(b->object())->str->s[_offset].tqunicode();
     else
       _char = -1;
   }/*end if*/
@@ -1861,7 +1861,7 @@ kdDebug(6200) << "_offset: " << _offset /*<< " _peekNext: " << _peekNext*/ << " 
   if (!_end && ebit != (*_it)->end()) {
     CaretBox *box = *ebit;
     RenderObject *_r = box->object();
-    kdDebug(6200) << "echit++(1): box " << box << (box && box->isInlineTextBox() ? TQString(" contains \"%1\"").arg(TQConstString(static_cast<RenderText *>(box->object())->str->s+box->minOffset(), box->maxOffset() - box->minOffset()).string()) : TQString::null) << " _r " << (_r ? _r->element()->nodeName().string() : TQString("<nil>")) << endl;
+    kdDebug(6200) << "echit++(1): box " << box << (box && box->isInlineTextBox() ? TQString(" tqcontains \"%1\"").arg(TQConstString(static_cast<RenderText *>(box->object())->str->s+box->minOffset(), box->maxOffset() - box->minOffset()).string()) : TQString::null) << " _r " << (_r ? _r->element()->nodeName().string() : TQString("<nil>")) << endl;
   }
 #endif
   return *this;
@@ -1887,7 +1887,7 @@ kdDebug(6200) << "_offset == minofs: " << _offset << " == " << minofs << endl;
 //     _peekNext = b;
     // get character
     if (b && !box->isOutside() && b->isInlineTextBox())
-      _char = static_cast<RenderText *>(b->object())->text()[_offset].unicode();
+      _char = static_cast<RenderText *>(b->object())->text()[_offset].tqunicode();
     else
       _char = -1;
 
@@ -1934,7 +1934,7 @@ kdDebug(6200) << "box " << box << " b " << box->inlineBox() << " isText " << box
 // 	  if (!_it.outside) _offset = r->isBR() ? (*ebit)->minOffset() : (*ebit)->maxOffset();
 	  _char = -1;
 #if DEBUG_CARETMODE > 0
-          kdDebug(6200) << "echit--(2): box " << box << " b " << box->inlineBox() << (box->isInlineTextBox() ? TQString(" contains \"%1\"").arg(TQConstString(static_cast<RenderText *>(box->object())->str->s+box->minOffset(), box->maxOffset() - box->minOffset()).string()) : TQString::null) << endl;
+          kdDebug(6200) << "echit--(2): box " << box << " b " << box->inlineBox() << (box->isInlineTextBox() ? TQString(" tqcontains \"%1\"").arg(TQConstString(static_cast<RenderText *>(box->object())->str->s+box->minOffset(), box->maxOffset() - box->minOffset()).string()) : TQString::null) << endl;
 #endif
 	} else
 	  _end = true;
@@ -1990,9 +1990,9 @@ kdDebug(6200) << "_offset: " << _offset << " _peekNext: " << _peekNext << endl;
 #endif
     // get character
     if (_peekNext && _offset >= box->maxOffset() && _peekNext->isInlineTextBox())
-      _char = static_cast<RenderText *>(_peekNext->object())->text()[_peekNext->minOffset()].unicode();
+      _char = static_cast<RenderText *>(_peekNext->object())->text()[_peekNext->minOffset()].tqunicode();
     else if (b && _offset < b->maxOffset() && b->isInlineTextBox())
-      _char = static_cast<RenderText *>(b->object())->text()[_offset].unicode();
+      _char = static_cast<RenderText *>(b->object())->text()[_offset].tqunicode();
     else
       _char = -1;
   }/*end if*/
@@ -2000,7 +2000,7 @@ kdDebug(6200) << "_offset: " << _offset << " _peekNext: " << _peekNext << endl;
 #if DEBUG_CARETMODE > 0
   if (!_end && ebit != (*_it)->preBegin()) {
     CaretBox *box = *ebit;
-    kdDebug(6200) << "echit--(1): box " << box << " b " << box->inlineBox() << (box->isInlineTextBox() ? TQString(" contains \"%1\"").arg(TQConstString(static_cast<RenderText *>(box->object())->str->s+box->minOffset(), box->maxOffset() - box->minOffset()).string()) : TQString::null) << endl;
+    kdDebug(6200) << "echit--(1): box " << box << " b " << box->inlineBox() << (box->isInlineTextBox() ? TQString(" tqcontains \"%1\"").arg(TQConstString(static_cast<RenderText *>(box->object())->str->s+box->minOffset(), box->maxOffset() - box->minOffset()).string()) : TQString::null) << endl;
   }
 #endif
   return *this;
@@ -2052,10 +2052,10 @@ TableRowIterator &TableRowIterator::operator --()
 // == class ErgonomicEditableLineIterator implementation
 
 // some decls
-static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
+static RenderTableCell *tqfindNearestTableCellInRow(KHTMLPart *part, int x,
 		RenderTableSection::RowStruct *row, bool fromEnd);
 
-/** finds the cell corresponding to absolute x-coordinate @p x in the given
+/** tqfinds the cell corresponding to absolute x-coordinate @p x in the given
  * table.
  *
  * If there is no direct cell, or the cell is not accessible, the function
@@ -2068,13 +2068,13 @@ static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
  *	beginning
  * @return the cell, or 0 if no editable cell was found.
  */
-static inline RenderTableCell *findNearestTableCell(KHTMLPart *part, int x,
+static inline RenderTableCell *tqfindNearestTableCell(KHTMLPart *part, int x,
 		TableRowIterator &it, bool fromEnd)
 {
   RenderTableCell *result = 0;
 
   while (*it) {
-    result = findNearestTableCellInRow(part, x, *it, fromEnd);
+    result = tqfindNearestTableCellInRow(part, x, *it, fromEnd);
     if (result) break;
 
     if (fromEnd) --it; else ++it;
@@ -2083,7 +2083,7 @@ static inline RenderTableCell *findNearestTableCell(KHTMLPart *part, int x,
   return result;
 }
 
-/** finds the nearest editable cell around the given absolute x-coordinate
+/** tqfinds the nearest editable cell around the given absolute x-coordinate
  *
  * It will dive into nested tables as necessary to provide seamless navigation.
  *
@@ -2096,7 +2096,7 @@ static inline RenderTableCell *findNearestTableCell(KHTMLPart *part, int x,
  * @param fromEnd @p true, begin from end (applies only to nested tables)
  * @return the found cell or 0 if no editable cell was found
  */
-static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
+static RenderTableCell *tqfindNearestTableCellInRow(KHTMLPart *part, int x,
 		RenderTableSection::RowStruct *row, bool fromEnd)
 {
   // First pass. Find spatially nearest cell.
@@ -2134,13 +2134,13 @@ static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
     kdDebug(6201) << "index " << index << " cell " << cell << endl;
 #endif
     RenderTable *nestedTable;
-    if (containsEditableElement(part, cell, nestedTable, fromEnd)) {
+    if (tqcontainsEditableElement(part, cell, nestedTable, fromEnd)) {
 
       if (nestedTable) {
         TableRowIterator it(nestedTable, fromEnd);
 	while (*it) {
 // kdDebug(6201) << "=== recursive invocation" << endl;
-          cell = findNearestTableCell(part, x, it, fromEnd);
+          cell = tqfindNearestTableCell(part, x, it, fromEnd);
 	  if (cell) break;
 	  if (fromEnd) --it; else ++it;
 	}/*wend*/
@@ -2164,7 +2164,7 @@ static RenderObject *commonAncestorTableSectionOrCell(RenderObject *r1,
   if (!r1 || !r2) return 0;
   RenderTableSection *sec = 0;
   int start_depth=0, end_depth=0;
-  // First we find the depths of the two objects in the tree (start_depth, end_depth)
+  // First we tqfind the depths of the two objects in the tree (start_depth, end_depth)
   RenderObject *n = r1;
   while (n->parent()) {
     n = n->parent();
@@ -2200,14 +2200,14 @@ static RenderObject *commonAncestorTableSectionOrCell(RenderObject *r1,
   return r1 && r1->isTable() ? sec : r1;
 }
 
-/** Finds the row that contains the given cell, directly, or indirectly
+/** Finds the row that tqcontains the given cell, directly, or indirectly
  * @param section section to be searched
  * @param cell table cell
  * @param row returns the row
- * @param directCell returns the direct cell that contains @p cell
+ * @param directCell returns the direct cell that tqcontains @p cell
  * @return the index of the row.
  */
-static int findRowInSection(RenderTableSection *section, RenderTableCell *cell,
+static int tqfindRowInSection(RenderTableSection *section, RenderTableCell *cell,
 		RenderTableSection::RowStruct *&row, RenderTableCell *&directCell)
 {
   // Seek direct cell
@@ -2236,12 +2236,12 @@ static int findRowInSection(RenderTableSection *section, RenderTableCell *cell,
   return -1;
 }
 
-/** finds the table that is the first direct or indirect descendant of @p block.
+/** tqfinds the table that is the first direct or indirect descendant of @p block.
  * @param leaf object to begin search from.
  * @param block object to search to, or 0 to search up to top.
  * @return the table or 0 if there were none.
  */
-static inline RenderTable *findFirstDescendantTable(RenderObject *leaf, RenderBlock *block)
+static inline RenderTable *tqfindFirstDescendantTable(RenderObject *leaf, RenderBlock *block)
 {
   RenderTable *result = 0;
   while (leaf && leaf != block) {
@@ -2299,7 +2299,7 @@ void ErgonomicEditableLineIterator::determineTopologicalElement(
   if (!commonAncestor || commonAncestor->isTableCell()) {	// (1)
 
     RenderTableCell *cell = static_cast<RenderTableCell *>(commonAncestor);
-    RenderTable *table = findFirstDescendantTable(newObject, cell);
+    RenderTable *table = tqfindFirstDescendantTable(newObject, cell);
 
 #if DEBUG_CARETMODE > 0
     kdDebug(6201) << "table cell: " << cell << endl;
@@ -2315,7 +2315,7 @@ void ErgonomicEditableLineIterator::determineTopologicalElement(
 
     RenderTableSection *section = static_cast<RenderTableSection *>(commonAncestor);
     RenderTableSection::RowStruct *row;
-    int idx = findRowInSection(section, oldCell, row, oldCell);
+    int idx = tqfindRowInSection(section, oldCell, row, oldCell);
 #if DEBUG_CARETMODE > 1
     kdDebug(6201) << "table section: row idx " << idx << endl;
 #endif
@@ -2333,9 +2333,9 @@ void ErgonomicEditableLineIterator::determineTopologicalElement(
     // will crash on uninitialized table row iterator
   }/*end if*/
 
-  RenderTableCell *cell = findNearestTableCell(lines->m_part, xCoor, it, toBegin);
+  RenderTableCell *cell = tqfindNearestTableCell(lines->m_part, xCoor, it, toBegin);
 #if DEBUG_CARETMODE > 1
-  kdDebug(6201) << "findNearestTableCell result: " << cell << endl;
+  kdDebug(6201) << "tqfindNearestTableCell result: " << cell << endl;
 #endif
 
   RenderBlock *newBlock = cell;
@@ -2348,7 +2348,7 @@ void ErgonomicEditableLineIterator::determineTopologicalElement(
 #endif
 
     RenderTable *nestedTable;
-    bool editableChild = cell && containsEditableChildElement(lines->m_part,
+    bool editableChild = cell && tqcontainsEditableChildElement(lines->m_part,
     		cell, nestedTable, toBegin, section->table());
 
     if (cell && !editableChild) {
@@ -2436,7 +2436,7 @@ ErgonomicEditableLineIterator &ErgonomicEditableLineIterator::operator --()
 
 // == Navigational helper functions ==
 
-/** seeks the caret box which contains or is the nearest to @p x
+/** seeks the caret box which tqcontains or is the nearest to @p x
  * @param it line iterator pointing to line to be searched
  * @param cv caret view context
  * @param x returns the cv->origX approximation, relatively positioned to the
@@ -2457,7 +2457,7 @@ static CaretBox *nearestCaretBox(LineIterator &it, CaretViewContext *cv,
   if (cb) cb->absolutePosition(absx, absy);
   else absx = absy = 0;
 
-  // Otherwise find out in which inline box the caret is to be placed.
+  // Otherwise tqfind out in which inline box the caret is to be placed.
 
   // this horizontal position is to be approximated
   x = cv->origX - absx;
@@ -2478,7 +2478,7 @@ static CaretBox *nearestCaretBox(LineIterator &it, CaretViewContext *cv,
 #if DEBUG_CARETMODE > 0
 //    RenderObject *r = b->object();
 //	if (b->isInlineFlowBox()) kdDebug(6200) << "b is inline flow box" << endl;
-//	kdDebug(6200) << "approximate r" << r << ": " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " contains \"" + TQString(((RenderText *)r)->str->s, ((RenderText *)r)->str->l) + "\"" : TQString::null) << endl;
+//	kdDebug(6200) << "approximate r" << r << ": " << (r ? r->renderName() : TQString::null) << (r && r->isText() ? " tqcontains \"" + TQString(((RenderText *)r)->str->s, ((RenderText *)r)->str->l) + "\"" : TQString::null) << endl;
 #endif
     xPos = b->xPos();
 

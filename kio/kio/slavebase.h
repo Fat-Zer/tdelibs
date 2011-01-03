@@ -130,11 +130,11 @@ public:
      *        empty if not connected)
      * @param connected Whether an actual network connection exists.
      **/
-    void slaveStatus(const TQString &host, bool connected);
+    void slavetqStatus(const TQString &host, bool connected);
 
     /**
      * Call this from stat() to express details about an object, the
-     * UDSEntry customarily contains the atoms describing file name, size,
+     * UDSEntry customarily tqcontains the atoms describing file name, size,
      * mimetype, etc.
      * @param _entry The UDSEntry containing all of the object attributes.
      */
@@ -505,7 +505,7 @@ public:
 
     /**
      * Called to get the status of the slave. Slave should respond
-     * by calling slaveStatus(...)
+     * by calling slavetqStatus(...)
      */
     virtual void slave_status();
 
@@ -618,10 +618,10 @@ public:
      * KIO::AuthInfo authInfo;
      * if ( openPassDlg( authInfo ) )
      * {
-     *    kdDebug() << TQString::fromLatin1("User: ")
+     *    kdDebug() << TQString::tqfromLatin1("User: ")
      *              << authInfo.username << endl;
-     *    kdDebug() << TQString::fromLatin1("Password: ")
-     *              << TQString::fromLatin1("Not displayed here!") << endl;
+     *    kdDebug() << TQString::tqfromLatin1("Password: ")
+     *              << TQString::tqfromLatin1("Not displayed here!") << endl;
      * }
      * \endcode
      *
@@ -635,10 +635,10 @@ public:
      * TQString errorMsg = "You entered an incorrect password.";
      * if ( openPassDlg( authInfo, errorMsg ) )
      * {
-     *    kdDebug() << TQString::fromLatin1("User: ")
+     *    kdDebug() << TQString::tqfromLatin1("User: ")
      *              << authInfo.username << endl;
-     *    kdDebug() << TQString::fromLatin1("Password: ")
-     *              << TQString::fromLatin1("Not displayed here!") << endl;
+     *    kdDebug() << TQString::tqfromLatin1("Password: ")
+     *              << TQString::tqfromLatin1("Not displayed here!") << endl;
      * }
      * \endcode
      *

@@ -282,7 +282,7 @@ KFileItem * KCombiView::prevItem( const KFileItem *fileItem ) const
         // with the next view's last item!
         if ( m_lastViewForPrevItem != otherView ) {
             fileItem = otherView->firstFileItem();
-            while ( otherView->nextItem( fileItem ) ) // find the last item
+            while ( otherView->nextItem( fileItem ) ) // tqfind the last item
                 fileItem = otherView->nextItem( fileItem );
         }
 
@@ -300,7 +300,7 @@ void KCombiView::slotSortingChanged( TQDir::SortSpec sorting )
 
 KFileView *KCombiView::focusView( KFileView *preferred ) const
 {
-    TQWidget *w = focusWidget();
+    TQWidget *w = tqfocusWidget();
     KFileView *other = (right == preferred) ? left : right;
     return (preferred && w == preferred->widget()) ? preferred : other;
 }

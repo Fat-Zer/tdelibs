@@ -258,7 +258,7 @@ bool ResourceDir::asyncSave( Ticket *ticket )
 void ResourceDir::setPath( const TQString &path )
 {
   mDirWatch.stopScan();
-  if ( mDirWatch.contains( mPath ) )
+  if ( mDirWatch.tqcontains( mPath ) )
     mDirWatch.removeDir( mPath );
 
   mPath = path;

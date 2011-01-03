@@ -116,7 +116,7 @@ private:
     State state;
 };
 
-class Tokenizer : public QObject
+class Tokenizer : public TQObject
 {
     Q_OBJECT
 public:
@@ -155,7 +155,7 @@ public:
 private:
     TQString      m_data;
     uint         m_pos;
-    const TQChar *m_unicode;
+    const TQChar *m_tqunicode;
     bool         m_finished;
 };
 

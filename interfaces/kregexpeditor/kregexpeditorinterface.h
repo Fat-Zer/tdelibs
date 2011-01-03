@@ -59,8 +59,8 @@
  *   // now use the editor.
  *   editor->setRegExp("^kde$");
 
- *   // Finally insert the widget into the layout of its parent
- *   layout->addWidget( editorWidget );
+ *   // Finally insert the widget into the tqlayout of its parent
+ *   tqlayout->addWidget( editorWidget );
  * }
  * else {
  *   // Don't offer the editor widget.

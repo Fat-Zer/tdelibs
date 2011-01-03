@@ -45,7 +45,7 @@ class PrinterFilter;
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT KMManager : public QObject
+class KDEPRINT_EXPORT KMManager : public TQObject
 {
 	Q_OBJECT
 
@@ -97,7 +97,7 @@ public:
 	bool startPrinter(const TQString& name, bool state);
 	bool completePrinter(const TQString& name);
 	bool setDefaultPrinter(const TQString& name);
-	int printerOperationMask() const 	{ return m_printeroperationmask; }
+	int printerOperationMask() const 	{ return m_printeroperationtqmask; }
 	int addPrinterWizard(TQWidget *parent = 0);
 
 	// special printer management functions
@@ -105,7 +105,7 @@ public:
 	bool removeSpecialPrinter(KMPrinter *p);
 
 	// printer listing functions
-	KMPrinter* findPrinter(const TQString& name);
+	KMPrinter* tqfindPrinter(const TQString& name);
 	TQPtrList<KMPrinter>* printerList(bool reload = true);
 	TQPtrList<KMPrinter>* printerListComplete(bool reload = true);
 	KMPrinter* defaultPrinter();
@@ -129,7 +129,7 @@ public:
 	virtual TQString stateInformation();
 
 	// server functions
-	int serverOperationMask() const 	{ return m_serveroperationmask; }
+	int serverOperationMask() const 	{ return m_serveroperationtqmask; }
 	virtual bool restartServer();
 	virtual bool configureServer(TQWidget *parent = 0);
 	virtual TQStringList detectLocalPrinters();
@@ -161,8 +161,8 @@ protected:
 	bool uncompressFile(const TQString& srcname, TQString& destname);
 	bool notImplemented();
 	void setHasManagement(bool on)		{ m_hasmanagement = on; }
-	void setPrinterOperationMask(int m)	{ m_printeroperationmask = m; }
-	void setServerOperationMask(int m)	{ m_serveroperationmask = m; }
+	void setPrinterOperationMask(int m)	{ m_printeroperationtqmask = m; }
+	void setServerOperationMask(int m)	{ m_serveroperationtqmask = m; }
 	TQString testPage();
 	void discardAllPrinters(bool);
 	void setUpdatePossible( bool );
@@ -172,8 +172,8 @@ protected:
 	QString			m_errormsg;
 	KMPrinterList		m_printers, m_fprinters;	// filtered printers
 	bool 			m_hasmanagement;
-	int			m_printeroperationmask;
-	int 			m_serveroperationmask;
+	int			m_printeroperationtqmask;
+	int 			m_serveroperationtqmask;
 	KMSpecialManager	*m_specialmgr;
 	KMVirtualManager	*m_virtualmgr;
 	PrinterFilter	*m_printerfilter;

@@ -102,7 +102,7 @@ KAuthIcon::KAuthIcon(TQWidget *parent, const char *name)
   lockBox = new TQLabel(this);
   lockBox->setFrameStyle(TQFrame::WinPanel|TQFrame::Raised);
   lockBox->setPixmap(lockPM);
-  lockBox->setFixedSize(lockBox->sizeHint());
+  lockBox->setFixedSize(lockBox->tqsizeHint());
 
   lockLabel = new TQLabel(this);
   lockLabel->setFrameStyle(TQFrame::NoFrame);
@@ -113,18 +113,18 @@ KAuthIcon::KAuthIcon(TQWidget *parent, const char *name)
     lockLabel->setText(lockText);
   else
     lockLabel->setText(openLockText);
-  lockLabel->setAlignment(AlignCenter);
-  lockLabel->setMinimumSize(lockLabel->sizeHint());
+  lockLabel->tqsetAlignment(AlignCenter);
+  lockLabel->setMinimumSize(lockLabel->tqsizeHint());
   lockLabel->setText(lockText);
 
-  layout = new TQHBoxLayout(this);
+  tqlayout = new TQHBoxLayout(this);
 
-  layout->addWidget(lockBox, 0, AlignLeft|AlignVCenter);
-  layout->addSpacing(5);
-  layout->addWidget(lockLabel, 0, AlignRight|AlignVCenter);
+  tqlayout->addWidget(lockBox, 0, AlignLeft|AlignVCenter);
+  tqlayout->addSpacing(5);
+  tqlayout->addWidget(lockLabel, 0, AlignRight|AlignVCenter);
 
-  layout->activate();
-  resize(sizeHint());
+  tqlayout->activate();
+  resize(tqsizeHint());
 }
 
 KAuthIcon::~KAuthIcon()
@@ -132,9 +132,9 @@ KAuthIcon::~KAuthIcon()
 }
 
 
-TQSize KAuthIcon::sizeHint() const
+TQSize KAuthIcon::tqsizeHint() const
 {
-  return layout->minimumSize();
+  return tqlayout->tqminimumSize();
 }
 
 
@@ -143,7 +143,7 @@ TQSize KAuthIcon::sizeHint() const
 KRootPermsIcon::KRootPermsIcon(TQWidget *parent, const char *name)
   : KAuthIcon(parent, name)
 {
-  updateStatus();
+  updatetqStatus();
 }
 
 
@@ -151,7 +151,7 @@ KRootPermsIcon::~KRootPermsIcon()
 {
 }
 
-void KRootPermsIcon::updateStatus()
+void KRootPermsIcon::updatetqStatus()
 {
   const bool newRoot = (geteuid() == 0);
   lockBox->setPixmap(newRoot ? openLockPM : lockPM);
@@ -170,7 +170,7 @@ KWritePermsIcon::KWritePermsIcon(const TQString & fileName,
   : KAuthIcon(parent, name)
 {
   fi.setFile(fileName);
-  updateStatus();
+  updatetqStatus();
 }
 
 
@@ -178,7 +178,7 @@ KWritePermsIcon::~KWritePermsIcon()
 {
 }
 
-void KWritePermsIcon::updateStatus()
+void KWritePermsIcon::updatetqStatus()
 {
   bool newwrite;
   newwrite = fi.isWritable();

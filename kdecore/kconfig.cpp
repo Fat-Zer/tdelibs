@@ -144,7 +144,7 @@ TQMap<TQString, TQString> KConfig::entryMap(const TQString &pGroup) const
   KEntryKey groupKey( pGroup_utf, 0 );
   TQMap<TQString, TQString> tmpMap;
 
-  KEntryMapConstIterator aIt = aEntryMap.find(groupKey);
+  KEntryMapConstIterator aIt = aEntryMap.tqfind(groupKey);
   if (aIt == aEntryMap.end())
      return tmpMap;
   ++aIt; // advance past special group entry marker
@@ -183,7 +183,7 @@ KEntryMap KConfig::internalEntryMap(const TQString &pGroup) const
   KEntryKey aKey(pGroup_utf, 0);
   KEntryMap tmpEntryMap;
 
-  aIt = aEntryMap.find(aKey);
+  aIt = aEntryMap.tqfind(aKey);
   if (aIt == aEntryMap.end()) {
     // the special group key is not in the map,
     // so it must be an invalid group.  Return
@@ -215,7 +215,7 @@ void KConfig::putData(const KEntryKey &_key, const KEntry &_data, bool _checkGro
   if (bGroupImmutable && !_key.bDefault)
     return;
 
-  // now either add or replace the data
+  // now either add or tqreplace the data
   KEntry &entry = aEntryMap[_key];
   bool immutable = entry.bImmutable;
   if (immutable && !_key.bDefault)
@@ -237,7 +237,7 @@ void KConfig::putData(const KEntryKey &_key, const KEntry &_data, bool _checkGro
 
 KEntry KConfig::lookupData(const KEntryKey &_key) const
 {
-  KEntryMapConstIterator aIt = aEntryMap.find(_key);
+  KEntryMapConstIterator aIt = aEntryMap.tqfind(_key);
   if (aIt != aEntryMap.end())
   {
     const KEntry &entry = *aIt;
@@ -255,7 +255,7 @@ bool KConfig::internalHasGroup(const TQCString &group) const
 {
   KEntryKey groupKey( group, 0);
 
-  KEntryMapConstIterator aIt = aEntryMap.find(groupKey);
+  KEntryMapConstIterator aIt = aEntryMap.tqfind(groupKey);
   KEntryMapConstIterator aEnd = aEntryMap.end();
 
   if (aIt == aEnd)
@@ -290,7 +290,7 @@ void KConfig::checkUpdate(const TQString &id, const TQString &updateFile)
   setGroup("$Version");
   TQString cfg_id = updateFile+":"+id;
   TQStringList ids = readListEntry("update_info");
-  if (!ids.contains(cfg_id))
+  if (!ids.tqcontains(cfg_id))
   {
      TQStringList args;
      args << "--check" << updateFile;

@@ -73,16 +73,16 @@ public:
     bool hasDefaultEntries() const;
     bool allowDefaults() const { return m_allowDefaults; }
     void setAllowDefaults( bool v ) { m_allowDefaults = v; }
-    unsigned short maskPermissions() const;
-    void setMaskPermissions( unsigned short maskPerms );
-    acl_perm_t maskPartialPermissions() const;
-    void setMaskPartialPermissions( acl_perm_t maskPerms );
+    unsigned short tqmaskPermissions() const;
+    void setMaskPermissions( unsigned short tqmaskPerms );
+    acl_perm_t tqmaskPartialPermissions() const;
+    void setMaskPartialPermissions( acl_perm_t tqmaskPerms );
 
-    bool maskCanBeDeleted() const;
+    bool tqmaskCanBeDeleted() const;
     bool defaultMaskCanBeDeleted() const;
 
-    const KACLListViewItem* findDefaultItemByType( EntryType type ) const;
-    const KACLListViewItem* findItemByType( EntryType type,
+    const KACLListViewItem* tqfindDefaultItemByType( EntryType type ) const;
+    const KACLListViewItem* tqfindItemByType( EntryType type,
                                             bool defaults = false ) const;
     unsigned short calculateMaskValue( bool defaults ) const;
     void calculateEffectiveRights();
@@ -117,7 +117,7 @@ private:
 
     KACL m_ACL;
     KACL m_defaultACL;
-    unsigned short m_mask;
+    unsigned short m_tqmask;
     bool m_hasMask;
     bool m_allowDefaults;
     TQStringList m_allUsers;
@@ -180,10 +180,10 @@ public:
     void togglePerm( acl_perm_t perm );
 
     virtual void paintCell( TQPainter *p, const TQColorGroup &cg,
-                            int column, int width, int alignment );
+                            int column, int width, int tqalignment );
 
     void updatePermPixmaps();
-    void repaint();
+    void tqrepaint();
 
     KACLListView::EntryType type;
     unsigned short value;

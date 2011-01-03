@@ -65,7 +65,7 @@ void KSSLPeerInfo::setPeerHost(TQString realHost) {
 #ifdef Q_WS_WIN //TODO kresolver not ported
 	d->peerHost = d->peerHost.lower();
 #else	
-	d->peerHost = TQString::fromLatin1(KNetwork::KResolver::domainToAscii(d->peerHost));
+	d->peerHost = TQString::tqfromLatin1(KNetwork::KResolver::domainToAscii(d->peerHost));
 #endif	
 }
 
@@ -95,7 +95,7 @@ bool KSSLPeerInfo::cnMatchesAddress(TQString cn) {
 
 	// Check for invalid characters
 	if (TQRegExp("[^a-zA-Z0-9\\.\\*\\-]").search(cn) >= 0) {
-		kdDebug(7029) << "CN contains invalid characters!  Failing." << endl;
+		kdDebug(7029) << "CN tqcontains invalid characters!  Failing." << endl;
 		return false;
 	}
 
@@ -117,7 +117,7 @@ bool KSSLPeerInfo::cnMatchesAddress(TQString cn) {
 	if (rx.exactMatch(d->peerHost))
 		return d->peerHost == cn;
 
-	if (cn.contains('*')) {
+	if (cn.tqcontains('*')) {
 		// First make sure that there are at least two valid parts
 		// after the wildcard (*).
 		TQStringList parts = TQStringList::split('.', cn, false);
@@ -129,7 +129,7 @@ bool KSSLPeerInfo::cnMatchesAddress(TQString cn) {
 			return false;  // we don't allow *.root - that's bad
 		}
 
-		if (parts[0].contains('*') || parts[1].contains('*')) {
+		if (parts[0].tqcontains('*') || parts[1].tqcontains('*')) {
 			return false;
 		}
 

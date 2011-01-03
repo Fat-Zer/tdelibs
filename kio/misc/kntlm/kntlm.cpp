@@ -32,12 +32,12 @@
 #include "des.h"
 #include "kntlm.h"
 
-TQString KNTLM::getString( const TQByteArray &buf, const SecBuf &secbuf, bool unicode )
+TQString KNTLM::getString( const TQByteArray &buf, const SecBuf &secbuf, bool tqunicode )
 {
   //watch for buffer overflows
-  Q_UINT32 offset;
-  Q_UINT16 len;
-  offset = KFromToLittleEndian((Q_UINT32)secbuf.offset);
+  TQ_UINT32 offset;
+  TQ_UINT16 len;
+  offset = KFromToLittleEndian((TQ_UINT32)secbuf.offset);
   len = KFromToLittleEndian(secbuf.len);
   if ( offset > buf.size() ||
        offset + len > buf.size() ) return TQString::null;
@@ -45,10 +45,10 @@ TQString KNTLM::getString( const TQByteArray &buf, const SecBuf &secbuf, bool un
   TQString str;
   const char *c = buf.data() + offset;
   
-  if ( unicode ) {
+  if ( tqunicode ) {
     str = UnicodeLE2TQString( (TQChar*) c, len >> 1 );
   } else {
-    str = TQString::fromLatin1( c, len );
+    str = TQString::tqfromLatin1( c, len );
   }
   return str;
 }
@@ -56,9 +56,9 @@ TQString KNTLM::getString( const TQByteArray &buf, const SecBuf &secbuf, bool un
 TQByteArray KNTLM::getBuf( const TQByteArray &buf, const SecBuf &secbuf )
 {
   TQByteArray ret;
-  Q_UINT32 offset;
-  Q_UINT16 len;
-  offset = KFromToLittleEndian((Q_UINT32)secbuf.offset);
+  TQ_UINT32 offset;
+  TQ_UINT16 len;
+  offset = KFromToLittleEndian((TQ_UINT32)secbuf.offset);
   len = KFromToLittleEndian(secbuf.len);
   //watch for buffer overflows
   if ( offset > buf.size() ||
@@ -67,11 +67,11 @@ TQByteArray KNTLM::getBuf( const TQByteArray &buf, const SecBuf &secbuf )
   return ret;
 }
 
-void KNTLM::addString( TQByteArray &buf, SecBuf &secbuf, const TQString &str, bool unicode )
+void KNTLM::addString( TQByteArray &buf, SecBuf &secbuf, const TQString &str, bool tqunicode )
 {
   TQByteArray tmp;
 
-  if ( unicode ) {
+  if ( tqunicode ) {
     tmp = QString2UnicodeLE( str );
     addBuf( buf, secbuf, tmp );
   } else {
@@ -85,26 +85,26 @@ void KNTLM::addString( TQByteArray &buf, SecBuf &secbuf, const TQString &str, bo
 
 void KNTLM::addBuf( TQByteArray &buf, SecBuf &secbuf, TQByteArray &data )
 {
-  Q_UINT32 offset;
-  Q_UINT16 len, maxlen;
+  TQ_UINT32 offset;
+  TQ_UINT16 len, maxlen;
   offset = (buf.size() + 1) & 0xfffffffe;
   len = data.size();
   maxlen = data.size();
   
-  secbuf.offset = KFromToLittleEndian((Q_UINT32)offset);
+  secbuf.offset = KFromToLittleEndian((TQ_UINT32)offset);
   secbuf.len = KFromToLittleEndian(len);
   secbuf.maxlen = KFromToLittleEndian(maxlen);
   buf.resize( offset + len );
   memcpy( buf.data() + offset, data.data(), data.size() );
 }
 
-bool KNTLM::getNegotiate( TQByteArray &negotiate, const TQString &domain, const TQString &workstation, Q_UINT32 flags )
+bool KNTLM::getNegotiate( TQByteArray &negotiate, const TQString &domain, const TQString &workstation, TQ_UINT32 flags )
 {
   TQByteArray rbuf( sizeof(Negotiate) );
   
   rbuf.fill( 0 );
   memcpy( rbuf.data(), "NTLMSSP", 8 );
-  ((Negotiate*) rbuf.data())->msgType = KFromToLittleEndian( (Q_UINT32)1 );
+  ((Negotiate*) rbuf.data())->msgType = KFromToLittleEndian( (TQ_UINT32)1 );
   if ( !domain.isEmpty() ) {
     flags |= Negotiate_Domain_Supplied;
     addString( rbuf, ((Negotiate*) rbuf.data())->domain, domain );
@@ -126,21 +126,21 @@ bool KNTLM::getAuth( TQByteArray &auth, const TQByteArray &challenge, const TQSt
   Challenge *ch = (Challenge *) challenge.data();
   TQByteArray response;
   uint chsize = challenge.size();
-  bool unicode = false;
+  bool tqunicode = false;
   TQString dom;
 
   //challenge structure too small
   if ( chsize < 32 ) return false;
 
-  unicode = KFromToLittleEndian(ch->flags) & Negotiate_Unicode;
+  tqunicode = KFromToLittleEndian(ch->flags) & Negotiate_Unicode;
   if ( domain.isEmpty() )
-    dom = getString( challenge, ch->targetName, unicode );
+    dom = getString( challenge, ch->targetName, tqunicode );
   else
     dom = domain;
     
   rbuf.fill( 0 );
   memcpy( rbuf.data(), "NTLMSSP", 8 );
-  ((Auth*) rbuf.data())->msgType = KFromToLittleEndian( (Q_UINT32)3 );
+  ((Auth*) rbuf.data())->msgType = KFromToLittleEndian( (TQ_UINT32)3 );
   ((Auth*) rbuf.data())->flags = ch->flags;
   TQByteArray targetInfo = getBuf( challenge, ch->targetInfo );
 
@@ -164,10 +164,10 @@ bool KNTLM::getAuth( TQByteArray &auth, const TQByteArray &challenge, const TQSt
     addBuf( rbuf, ((Auth*) rbuf.data())->lmResponse, response );
 //  }
   if ( !dom.isEmpty() )
-    addString( rbuf, ((Auth*) rbuf.data())->domain, dom, unicode );
-  addString( rbuf, ((Auth*) rbuf.data())->user, user, unicode );
+    addString( rbuf, ((Auth*) rbuf.data())->domain, dom, tqunicode );
+  addString( rbuf, ((Auth*) rbuf.data())->user, user, tqunicode );
   if ( !workstation.isEmpty() )
-    addString( rbuf, ((Auth*) rbuf.data())->workstation, workstation, unicode );
+    addString( rbuf, ((Auth*) rbuf.data())->workstation, workstation, tqunicode );
 
   auth = rbuf;
 
@@ -241,10 +241,10 @@ TQByteArray KNTLM::getNTLMResponse( const TQString &password, const unsigned cha
 TQByteArray KNTLM::ntlmHash( const TQString &password )
 {
   KMD4::Digest digest;
-  TQByteArray ret, unicode;
-  unicode = QString2UnicodeLE( password );
+  TQByteArray ret, tqunicode;
+  tqunicode = QString2UnicodeLE( password );
 
-  KMD4 md4( unicode );
+  KMD4 md4( tqunicode );
   md4.rawDigest( digest );
   ret.duplicate( (const char*) digest, sizeof( digest ) );
   return ret;
@@ -298,10 +298,10 @@ TQByteArray KNTLM::createBlob( const TQByteArray &targetinfo )
   blob.fill( 0 );
   
   Blob *bl = (Blob *) blob.data();
-  bl->signature = KFromToBigEndian( (Q_UINT32) 0x01010000 );
-  Q_UINT64 now = TQDateTime::currentDateTime().toTime_t();
-  now += (Q_UINT64)3600*(Q_UINT64)24*(Q_UINT64)134774;
-  now *= (Q_UINT64)10000000;
+  bl->signature = KFromToBigEndian( (TQ_UINT32) 0x01010000 );
+  TQ_UINT64 now = TQDateTime::tqcurrentDateTime().toTime_t();
+  now += (TQ_UINT64)3600*(TQ_UINT64)24*(TQ_UINT64)134774;
+  now *= (TQ_UINT64)10000000;
   bl->timestamp = KFromToLittleEndian( now );
   for ( uint i = 0; i<8; i++ ) {
     bl->challenge[i] = KApplication::random() % 0xff;
@@ -312,7 +312,7 @@ TQByteArray KNTLM::createBlob( const TQByteArray &targetinfo )
 
 TQByteArray KNTLM::hmacMD5( const TQByteArray &data, const TQByteArray &key )
 {
-  Q_UINT8 ipad[64], opad[64];
+  TQ_UINT8 ipad[64], opad[64];
   KMD5::Digest digest;
   TQByteArray ret;
   
@@ -372,18 +372,18 @@ void KNTLM::convertKey( unsigned char *key_56, void* ks )
 
 TQByteArray KNTLM::QString2UnicodeLE( const TQString &target )
 {
-  TQByteArray unicode( target.length() * 2 );
+  TQByteArray tqunicode( target.length() * 2 );
   for ( uint i = 0; i < target.length(); i++ ) {
-    ((Q_UINT16*)unicode.data())[ i ] = KFromToLittleEndian( target[i].unicode() );
+    ((TQ_UINT16*)tqunicode.data())[ i ] = KFromToLittleEndian( target[i].tqunicode() );
   }
-  return unicode;
+  return tqunicode;
 }
 
 TQString KNTLM::UnicodeLE2TQString( const TQChar* data, uint len )
 {
   TQString ret;
   for ( uint i = 0; i < len; i++ ) {
-    ret += KFromToLittleEndian( data[ i ].unicode() );
+    ret += KFromToLittleEndian( data[ i ].tqunicode() );
   }
   return ret;
 }

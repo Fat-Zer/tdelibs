@@ -210,7 +210,7 @@ using namespace DOM;
 
 //
 // The following file defines the function
-//     const struct props *findProp(const char *word, int len)
+//     const struct props *tqfindProp(const char *word, int len)
 //
 // with 'props->id' a CSS property in the range from CSS_PROP_MIN to
 // (and including) CSS_PROP_TOTAL-1
@@ -224,7 +224,7 @@ using namespace DOM;
 
 int DOM::getPropertyID(const char *tagStr, int len)
 {
-    const struct props *propsPtr = findProp(tagStr, len);
+    const struct props *propsPtr = tqfindProp(tagStr, len);
     if (!propsPtr)
         return 0;
 
@@ -233,7 +233,7 @@ int DOM::getPropertyID(const char *tagStr, int len)
 
 static inline int getValueID(const char *tagStr, int len)
 {
-    const struct css_value *val = findValue(tagStr, len);
+    const struct css_value *val = tqfindValue(tagStr, len);
     if (!val)
         return 0;
 

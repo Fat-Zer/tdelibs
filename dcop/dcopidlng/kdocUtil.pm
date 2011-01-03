@@ -30,7 +30,7 @@ sub countReg
 	return $count;
 }
 
-=head2 findCommonPrefix
+=head2 tqfindCommonPrefix
 
 	Parameters: string, string
 
@@ -39,7 +39,7 @@ sub countReg
 
 =cut
 
-sub findCommonPrefix
+sub tqfindCommonPrefix
 {
 	my @s1 = split( "/", $_[0] );
 	my @s2 = split( "/", $_[1] );
@@ -72,7 +72,7 @@ sub makeRelativePath
 	$from .= '/' unless $from =~ m#/$#;
 	$to .= '/' unless $to =~ m#/$#;
 
-	my $pfx = findCommonPrefix( $from, $to );
+	my $pfx = tqfindCommonPrefix( $from, $to );
 
 	if ( $pfx ne "" ) {
 		$from =~ s/^$pfx//g;

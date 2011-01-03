@@ -96,9 +96,9 @@ void KURLCompletionTest::testLocalRelativePath()
     waitForCompletion();
     TQStringList comp1all = m_completion->allMatches();
     assert( comp1all.count() == 2 );
-    assert( comp1all.find( "file1" ) != comp1all.end() );
-    assert( comp1all.find( "file#a" ) != comp1all.end() );
-    TQString comp1 = m_completion->replacedPath( "file1" ); // like KURLRequester does
+    assert( comp1all.tqfind( "file1" ) != comp1all.end() );
+    assert( comp1all.tqfind( "file#a" ) != comp1all.end() );
+    TQString comp1 = m_completion->tqreplacedPath( "file1" ); // like KURLRequester does
     assert( comp1 == "file1" );
 
     // Completion from relative path
@@ -109,7 +109,7 @@ void KURLCompletionTest::testLocalRelativePath()
     kdDebug() << compall << endl;
     assert( compall.count() == 1 );
     assert( compall.first() == "file#a" );
-    TQString comp2 = m_completion->replacedPath( compall.first() ); // like KURLRequester does
+    TQString comp2 = m_completion->tqreplacedPath( compall.first() ); // like KURLRequester does
     assert( comp2 == "file#a" );
 }
 
@@ -124,7 +124,7 @@ void KURLCompletionTest::testLocalAbsolutePath()
     assert( compall.count() == 1 );
     TQString comp = compall.first();
     assert( comp == m_dir + "file#a" );
-    comp = m_completion->replacedPath( comp ); // like KURLRequester does
+    comp = m_completion->tqreplacedPath( comp ); // like KURLRequester does
     assert( comp == m_dir + "file#a" );
 }
 
@@ -138,10 +138,10 @@ void KURLCompletionTest::testLocalURL()
     TQStringList comp1all = m_completion->allMatches();
     kdDebug() << comp1all << endl;
     assert( comp1all.count() == 2 );
-    assert( comp1all.find( m_dirURL.url() + "file1" ) != comp1all.end() );
+    assert( comp1all.tqfind( m_dirURL.url() + "file1" ) != comp1all.end() );
     TQString filehash = m_dirURL.url() + "file%23a";
-    assert( comp1all.find( filehash ) != comp1all.end() );
-    TQString filehashPath = m_completion->replacedPath( filehash ); // note that it returns a path!!
+    assert( comp1all.tqfind( filehash ) != comp1all.end() );
+    TQString filehashPath = m_completion->tqreplacedPath( filehash ); // note that it returns a path!!
     kdDebug() << filehashPath << endl;
     assert( filehashPath == m_dirURL.path() + "file#a" );
 

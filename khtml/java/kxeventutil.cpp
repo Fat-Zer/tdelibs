@@ -248,7 +248,7 @@ TQString KXEventUtil::getXConfigureEventInfo(XEvent *xevent) {
 
 TQString KXEventUtil::getXConfigureRequestEventInfo(XEvent *xevent) {
     XConfigureRequestEvent *e = &xevent->xconfigurerequest;
-    unsigned vm = e->value_mask;
+    unsigned vm = e->value_tqmask;
     TQStringList vml;
     if (vm & CWX)           vml.append("CWX");
     if (vm & CWY)           vml.append("CWY");
@@ -258,7 +258,7 @@ TQString KXEventUtil::getXConfigureRequestEventInfo(XEvent *xevent) {
     if (vm & CWSibling)     vml.append("CWSibling");
     if (vm & CWStackMode)   vml.append("CWStackMode");
     TQString vms = vml.join("|");
-    TQString s("window=%1 x=%2 y=%2 width=%3 height=%4 border_width=%5 above=%6 detail=%7 value_mask=0x%8=%9");
+    TQString s("window=%1 x=%2 y=%2 width=%3 height=%4 border_width=%5 above=%6 detail=%7 value_tqmask=0x%8=%9");
     return 
         s.arg(e->window)
         .arg(e->x).arg(e->y)
@@ -266,7 +266,7 @@ TQString KXEventUtil::getXConfigureRequestEventInfo(XEvent *xevent) {
         .arg(e->border_width)
         .arg(e->above)
         .arg(e->detail)
-        .arg(e->value_mask, 0, 16)
+        .arg(e->value_tqmask, 0, 16)
         .arg(vms);
 }
 TQString KXEventUtil::getX11EventInfo( XEvent* e )

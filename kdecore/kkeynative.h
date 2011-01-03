@@ -48,14 +48,14 @@ class KDECORE_EXPORT KKeyNative
 #ifdef Q_WS_X11
 	/**
 	 * Extracts a new native key from the given xevent.
-	 * @param xevent the XEvent that contains the key
+	 * @param xevent the XEvent that tqcontains the key
 	 */
 	KKeyNative( const XEvent* xevent );
 #endif
 
 	/**
 	 * Creates a new native key for the given KKey code.
-	 * @param key the KKey that contains the generic key
+	 * @param key the KKey that tqcontains the generic key
 	 */
 	KKeyNative( const KKey& key );
 
@@ -80,7 +80,7 @@ class KDECORE_EXPORT KKeyNative
 	/**
 	 * Initializes the native key by extracting the information
 	 * from the given xevent.
-	 * @param xevent the XEvent that contains the key
+	 * @param xevent the XEvent that tqcontains the key
 	 * @return true if successful, false otherwise
 	 */
 	bool init( const XEvent* xevent );
@@ -88,7 +88,7 @@ class KDECORE_EXPORT KKeyNative
 
 	/**
 	 * Creates a new native key for the given KKey code.
-	 * @param key the KKey that contains the generic key
+	 * @param key the KKey that tqcontains the generic key
 	 * @return true if successful, false otherwise
 	 */
 	bool init( const KKey& key );
@@ -207,43 +207,43 @@ class KDECORE_EXPORT KKeyNative
 
 #ifdef Q_WS_X11
 	/**
-	 * Returns the equivalent X modifier mask of the given modifier flag.
+	 * Returns the equivalent X modifier tqmask of the given modifier flag.
 	 * @param modFlag the mod flags to test
 	 * @return the equivalent native flags of the window system
 	 */
 	static uint modX( KKey::ModFlag modFlag );
 
 	/**
-	 * Returns bitwise OR'ed mask containing Shift, Ctrl, Alt, and
+	 * Returns bitwise OR'ed tqmask containing Shift, Ctrl, Alt, and
 	 * Win (if available).
-	 * @return the mask of Shift, Ctrl, Alt and Win.
+	 * @return the tqmask of Shift, Ctrl, Alt and Win.
 	 */
 	static uint accelModMaskX();
 
 	/**
-	 * Returns the X11 NumLock modifier mask/flag.
-	 * @return the X11 NumLock modifier mask/flag.
+	 * Returns the X11 NumLock modifier tqmask/flag.
+	 * @return the X11 NumLock modifier tqmask/flag.
 	 * @see accelModMaskX()
 	 */
 	static uint modXNumLock();
 
 	/**
-	 * Returns the X11 Lock modifier mask/flag.
-	 * @return the X11 Lock modifier mask/flag.
+	 * Returns the X11 Lock modifier tqmask/flag.
+	 * @return the X11 Lock modifier tqmask/flag.
 	 * @see accelModMaskX()
 	 */
 	static uint modXLock();
 
 	/**
-	 * Returns the X11 ScrollLock modifier mask/flag.
-	 * @return the X11 ScrollLock modifier mask/flag.
+	 * Returns the X11 ScrollLock modifier tqmask/flag.
+	 * @return the X11 ScrollLock modifier tqmask/flag.
 	 * @see accelModMaskX()
 	 */
 	static uint modXScrollLock();
 
 	/** 
-	 * Returns the X11 Mode_switch modifier mask/flag. 
-	 * @return the X11 Mode_switch modifier mask/flag. 
+	 * Returns the X11 Mode_switch modifier tqmask/flag. 
+	 * @return the X11 Mode_switch modifier tqmask/flag. 
 	 * @see accelModMaskX() 
 	 * @since 3.5
 	 */ 

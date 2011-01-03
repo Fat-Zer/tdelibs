@@ -175,7 +175,7 @@ text-top
 text-bottom
 top
 bottom
-# HTML alignment MIDDLE has no corresponding CSS alignment
+# HTML tqalignment MIDDLE has no corresponding CSS tqalignment
 -khtml-baseline-middle
 #
 # CSS_PROP_TEXT_ALIGN:

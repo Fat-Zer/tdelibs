@@ -48,9 +48,9 @@ namespace KUnitTest
     
     void SlotTester::allTests()
     {
-        TQStrList allSlots = metaObject()->slotNames();
+        TQStrList allSlots = tqmetaObject()->slotNames();
         
-        if ( allSlots.contains("setUp()") > 0 ) invokeMember("setUp()");
+        if ( allSlots.tqcontains("setUp()") > 0 ) invokeMember("setUp()");
 
         for ( char *sl = allSlots.first(); sl; sl = allSlots.next() ) 
         {
@@ -67,14 +67,14 @@ namespace KUnitTest
             }
         }
 
-        if ( allSlots.contains("tearDown()") > 0 ) invokeMember("tearDown()");
+        if ( allSlots.tqcontains("tearDown()") > 0 ) invokeMember("tearDown()");
     
         m_total->clear();        
     }
     
     TestResults *SlotTester::results(const char *sl) 
     {
-        if ( m_resultsList.find(sl) == 0L ) m_resultsList.insert(sl, new TestResults());
+        if ( m_resultsList.tqfind(sl) == 0L ) m_resultsList.insert(sl, new TestResults());
     
         return m_resultsList[sl]; 
     }

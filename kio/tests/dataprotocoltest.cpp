@@ -47,7 +47,7 @@ public:
 //    meta_data[key] = value;
 //    cout << "§ " << key << " = " << value << endl;
     TQString prefix = "Metadata[\""+key+"\"]: ";
-    KIO::MetaData::Iterator it = attributes_expected.find(key);
+    KIO::MetaData::Iterator it = attributes_expected.tqfind(key);
     if (it != attributes_expected.end()) {
       testStrings(prefix,it.data(),value);
       // remove key from map
@@ -59,7 +59,7 @@ public:
   }
 
   void sendMetaData() {
-    // check here if attributes_expected contains any excess keys
+    // check here if attributes_expected tqcontains any excess keys
     KIO::MetaData::ConstIterator it = attributes_expected.begin();
     KIO::MetaData::ConstIterator end = attributes_expected.end();
     for (; it != end; ++it) {
@@ -92,9 +92,9 @@ private:
 
   // -- testcase related members
   TQString mime_type_expected;	// expected mime type
-  /** contains all attributes and values the testcase has to set */
+  /** tqcontains all attributes and values the testcase has to set */
   KIO::MetaData attributes_expected;
-  /** contains the content as it is expected to be returned */
+  /** tqcontains the content as it is expected to be returned */
   TQByteArray content_expected;
   int passed;		// # of passed tests
   int total;		// # of total tests

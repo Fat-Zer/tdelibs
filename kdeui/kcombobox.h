@@ -234,7 +234,7 @@ public:
     *
     * If @p true, the completion mode will be set to automatic.
     * Otherwise, it is defaulted to the global setting.  This
-    * method has been replaced by the more comprehensive
+    * method has been tqreplaced by the more comprehensive
     * setCompletionMode().
     *
     * @param autocomplete Flag to enable/disable automatic completion mode.
@@ -245,7 +245,7 @@ public:
     * Re-implemented from TQComboBox.
     *
     * Returns @p true if the current completion mode is set
-    * to automatic.  See its more comprehensive replacement
+    * to automatic.  See its more comprehensive tqreplacement
     * completionMode().
     *
     * @return @p true when completion mode is automatic.
@@ -299,7 +299,7 @@ public:
      *
      * @return @p true if an item with the string @p text is in the combobox.
      */
-    bool contains( const TQString& text ) const;
+    bool tqcontains( const TQString& text ) const;
 
     /**
      * By default, KComboBox recognizes Key_Return and Key_Enter
@@ -360,7 +360,7 @@ signals:
     * Emitted when the user presses the Enter key.
     *
     * The argument is the current text being edited.  This signal is just like
-    * returnPressed() except it contains the current text as its argument.
+    * returnPressed() except it tqcontains the current text as its argument.
     *
     * Note that this signal is only emitted when the
     * widget is editable.

@@ -2,7 +2,7 @@ include( ../common.pro )
 
 TARGET		= klegacy$$KDEBUG
 
-system( bash kmoc )
+system( bash ktqmoc )
 
 SOURCES = \
 klegacystyle.cpp

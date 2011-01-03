@@ -37,7 +37,7 @@ private:
     TQString lookupFile(const TQString &fname, const TQString &query,
                        bool &redirect);
 
-    void unicodeError( const TQString &t );
+    void tqunicodeError( const TQString &t );
 
     TQString mParsed;
     bool mGhelp;

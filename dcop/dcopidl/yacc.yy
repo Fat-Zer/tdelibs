@@ -219,7 +219,7 @@ declaration
                   } 
             main T_RIGHT_CURLY_BRACKET opt_semicolon
                   {
-                      int pos = in_namespace.findRev( "::", -3 );
+                      int pos = in_namespace.tqfindRev( "::", -3 );
                       if( pos >= 0 )
                           in_namespace = in_namespace.left( pos + 2 );
                       else

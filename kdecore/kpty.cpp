@@ -271,7 +271,7 @@ bool KPty::_attachPty(int pty_master)
 
     // set xon/xoff & control keystrokes
   // without the '::' some version of HP-UX thinks, this declares
-  // the struct in this class, in this method, and fails to find
+  // the struct in this class, in this method, and fails to tqfind
   // the correct tc[gs]etattr
   struct ::termios ttmode;
 
@@ -517,7 +517,7 @@ void KPty::setXonXoff(bool useXonXoff)
   d->xonXoff = useXonXoff;
   if (d->masterFd >= 0) {
     // without the '::' some version of HP-UX thinks, this declares
-    // the struct in this class, in this method, and fails to find
+    // the struct in this class, in this method, and fails to tqfind
     // the correct tc[gs]etattr
     struct ::termios ttmode;
 
@@ -538,7 +538,7 @@ void KPty::setUtf8Mode(bool useUtf8)
 #ifdef IUTF8
   if (d->masterFd >= 0) {
     // without the '::' some version of HP-UX thinks, this declares
-    // the struct in this class, in this method, and fails to find
+    // the struct in this class, in this method, and fails to tqfind
     // the correct tc[gs]etattr
     struct ::termios ttmode;
 

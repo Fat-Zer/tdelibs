@@ -97,7 +97,7 @@ PartManager::PartManager( TQWidget * parent, const char * name )
 {
   d = new PartManagerPrivate;
 
-  qApp->installEventFilter( this );
+  tqApp->installEventFilter( this );
 
   d->m_policy = Direct;
 
@@ -109,7 +109,7 @@ PartManager::PartManager( TQWidget *topLevel, TQObject *parent, const char *name
 {
   d = new PartManagerPrivate;
 
-  qApp->installEventFilter( this );
+  tqApp->installEventFilter( this );
 
   d->m_policy = Direct;
 
@@ -129,7 +129,7 @@ PartManager::~PartManager()
   }
 
   // core dumps ... setActivePart( 0L );
-  qApp->removeEventFilter( this );
+  tqApp->removeEventFilter( this );
   delete d;
 }
 
@@ -206,7 +206,7 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
   {
     TQPoint pos;
 
-    if ( !d->m_managedTopLevelWidgets.containsRef( w->topLevelWidget() ) )
+    if ( !d->m_managedTopLevelWidgets.tqcontainsRef( w->tqtopLevelWidget() ) )
       return false;
 
     if ( d->m_bIgnoreScrollBars && w->inherits( "QScrollBar" ) )
@@ -215,9 +215,9 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
     if ( mev ) // mouse press or mouse double-click event
     {
       pos = mev->globalPos();
-      part = findPartFromWidget( w, pos );
+      part = tqfindPartFromWidget( w, pos );
     } else
-      part = findPartFromWidget( w );
+      part = tqfindPartFromWidget( w );
 
 #ifdef DEBUG_PARTMANAGER
     TQCString evType = ( ev->type() == TQEvent::MouseButtonPress ) ? "MouseButtonPress"
@@ -288,7 +288,7 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
       return false;
     }
 
-    w = w->parentWidget();
+    w = w->tqparentWidget();
 
     if ( w && ( ( w->testWFlags( WType_Dialog ) && w->isModal() ) ||
                 w->testWFlags( WType_Popup ) || w->testWFlags( WStyle_Tool ) ) )
@@ -307,19 +307,19 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
   return false;
 }
 
-Part * PartManager::findPartFromWidget( TQWidget * widget, const TQPoint &pos )
+Part * PartManager::tqfindPartFromWidget( TQWidget * widget, const TQPoint &pos )
 {
   TQPtrListIterator<Part> it ( d->m_parts );
   for ( ; it.current() ; ++it )
   {
     Part *part = it.current()->hitTest( widget, pos );
-    if ( part && d->m_parts.findRef( part ) != -1 )
+    if ( part && d->m_parts.tqfindRef( part ) != -1 )
       return part;
   }
   return 0L;
 }
 
-Part * PartManager::findPartFromWidget( TQWidget * widget )
+Part * PartManager::tqfindPartFromWidget( TQWidget * widget )
 {
   TQPtrListIterator<Part> it ( d->m_parts );
   for ( ; it.current() ; ++it )
@@ -332,7 +332,7 @@ Part * PartManager::findPartFromWidget( TQWidget * widget )
 
 void PartManager::addPart( Part *part, bool setActive )
 {
-  if ( d->m_parts.findRef( part ) != -1 ) // don't add parts more than once :)
+  if ( d->m_parts.tqfindRef( part ) != -1 ) // don't add parts more than once :)
   {
 #ifdef DEBUG_PARTMANAGER
     kdWarning(1000) << k_funcinfo << part << " already added" << kdBacktrace(5) << endl;
@@ -368,7 +368,7 @@ void PartManager::addPart( Part *part, bool setActive )
 
 void PartManager::removePart( Part *part )
 {
-  if ( d->m_parts.findRef( part ) == -1 )
+  if ( d->m_parts.tqfindRef( part ) == -1 )
   {
     kdFatal(1000) << TQString("Can't remove part %1, not in KPartManager's list.").arg(part->name()) << endl;
     return;
@@ -390,11 +390,11 @@ void PartManager::removePart( Part *part )
     setSelectedPart( 0 );
 }
 
-void PartManager::replacePart( Part * oldPart, Part * newPart, bool setActive )
+void PartManager::tqreplacePart( Part * oldPart, Part * newPart, bool setActive )
 {
-  //kdDebug(1000) << "replacePart " << oldPart->name() << "-> " << newPart->name() << " setActive=" << setActive << endl;
+  //kdDebug(1000) << "tqreplacePart " << oldPart->name() << "-> " << newPart->name() << " setActive=" << setActive << endl;
   // This methods does exactly removePart + addPart but without calling setActivePart(0) in between
-  if ( d->m_parts.findRef( oldPart ) == -1 )
+  if ( d->m_parts.tqfindRef( oldPart ) == -1 )
   {
     kdFatal(1000) << TQString("Can't remove part %1, not in KPartManager's list.").arg(oldPart->name()) << endl;
     return;
@@ -410,7 +410,7 @@ void PartManager::replacePart( Part * oldPart, Part * newPart, bool setActive )
 
 void PartManager::setActivePart( Part *part, TQWidget *widget )
 {
-  if ( part && d->m_parts.findRef( part ) == -1 )
+  if ( part && d->m_parts.tqfindRef( part ) == -1 )
   {
       kdWarning( 1000 ) << "PartManager::setActivePart : trying to activate a non-registered part! " << part->name() << endl;
       return; // don't allow someone call setActivePart with a part we don't know about
@@ -565,7 +565,7 @@ void PartManager::addManagedTopLevelWidget( const TQWidget *topLevel )
   if ( !topLevel->isTopLevel() )
     return;
 
-  if ( d->m_managedTopLevelWidgets.containsRef( topLevel ) )
+  if ( d->m_managedTopLevelWidgets.tqcontainsRef( topLevel ) )
     return;
 
   d->m_managedTopLevelWidgets.append( topLevel );
@@ -578,7 +578,7 @@ void PartManager::removeManagedTopLevelWidget( const TQWidget *topLevel )
   if ( !topLevel->isTopLevel() )
     return;
 
-  if ( d->m_managedTopLevelWidgets.findRef( topLevel ) == -1 )
+  if ( d->m_managedTopLevelWidgets.tqfindRef( topLevel ) == -1 )
     return;
 
   d->m_managedTopLevelWidgets.remove();

@@ -362,7 +362,7 @@ bool KArchive::writeData( const char* data, uint size )
 bool KArchive::writeData_impl( const char* data, uint size )
 {
     Q_ASSERT( device() );
-    return device()->writeBlock( data, size ) == (Q_LONG)size;
+    return device()->writeBlock( data, size ) == (TQ_LONG)size;
 }
 
 KArchiveDirectory * KArchive::rootDir()
@@ -375,17 +375,17 @@ KArchiveDirectory * KArchive::rootDir()
         TQString username = pw ? TQFile::decodeName(pw->pw_name) : TQString::number( getuid() );
         TQString groupname = grp ? TQFile::decodeName(grp->gr_name) : TQString::number( getgid() );
 
-        d->rootDir = new KArchiveDirectory( this, TQString::fromLatin1("/"), (int)(0777 + S_IFDIR), 0, username, groupname, TQString::null );
+        d->rootDir = new KArchiveDirectory( this, TQString::tqfromLatin1("/"), (int)(0777 + S_IFDIR), 0, username, groupname, TQString::null );
     }
     return d->rootDir;
 }
 
-KArchiveDirectory * KArchive::findOrCreate( const TQString & path )
+KArchiveDirectory * KArchive::tqfindOrCreate( const TQString & path )
 {
-    //kdDebug() << "KArchive::findOrCreate " << path << endl;
+    //kdDebug() << "KArchive::tqfindOrCreate " << path << endl;
     if ( path.isEmpty() || path == "/" || path == "." ) // root dir => found
     {
-        //kdDebug() << "KArchive::findOrCreate returning rootdir" << endl;
+        //kdDebug() << "KArchive::tqfindOrCreate returning rootdir" << endl;
         return rootDir();
     }
     // Important note : for tar files containing absolute paths
@@ -399,14 +399,14 @@ KArchiveDirectory * KArchive::findOrCreate( const TQString & path )
     if ( ent )
     {
         if ( ent->isDirectory() )
-            //kdDebug() << "KArchive::findOrCreate found it" << endl;
+            //kdDebug() << "KArchive::tqfindOrCreate found it" << endl;
             return (KArchiveDirectory *) ent;
         else
             kdWarning() << "Found " << path << " but it's not a directory" << endl;
     }
 
     // Otherwise go up and try again
-    int pos = path.findRev( '/' );
+    int pos = path.tqfindRev( '/' );
     KArchiveDirectory * parent;
     TQString dirname;
     if ( pos == -1 ) // no more slash => create in root dir
@@ -418,7 +418,7 @@ KArchiveDirectory * KArchive::findOrCreate( const TQString & path )
     {
         TQString left = path.left( pos );
         dirname = path.mid( pos + 1 );
-        parent = findOrCreate( left ); // recursive call... until we find an existing dir.
+        parent = tqfindOrCreate( left ); // recursive call... until we tqfind an existing dir.
     }
 
     //kdDebug() << "KTar : found parent " << parent->name() << " adding " << dirname << " to ensure " << path << endl;
@@ -548,13 +548,13 @@ KArchiveEntry* KArchiveDirectory::entry( TQString name )
   // not "const TQString & name" since we want a local copy
   // (to remove leading slash if any)
 {
-  int pos = name.find( '/' );
-  if ( pos == 0 ) // ouch absolute path (see also KArchive::findOrCreate)
+  int pos = name.tqfind( '/' );
+  if ( pos == 0 ) // ouch absolute path (see also KArchive::tqfindOrCreate)
   {
     if (name.length()>1)
     {
       name = name.mid( 1 ); // remove leading slash
-      pos = name.find( '/' ); // look again
+      pos = name.tqfind( '/' ); // look again
     }
     else // "/"
       return this;
@@ -563,7 +563,7 @@ KArchiveEntry* KArchiveDirectory::entry( TQString name )
   if ( pos != -1 && pos == (int)name.length()-1 )
   {
     name = name.left( pos );
-    pos = name.find( '/' ); // look again
+    pos = name.tqfind( '/' ); // look again
   }
   if ( pos != -1 )
   {

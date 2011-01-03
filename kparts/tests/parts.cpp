@@ -18,12 +18,12 @@
 #include <kaction.h>
 #include <klocale.h>
 
-Part1::Part1( TQObject *parent, TQWidget * parentWidget )
+Part1::Part1( TQObject *parent, TQWidget * tqparentWidget )
  : KParts::ReadOnlyPart( parent, "Part1" )
 {
   m_instance = new KInstance( "kpartstestpart" );
   setInstance( m_instance );
-  m_edit = new TQMultiLineEdit( parentWidget );
+  m_edit = new TQMultiLineEdit( tqparentWidget );
   setWidget( m_edit );
   setXMLFile( "kpartstest_part1.rc" );
 
@@ -56,12 +56,12 @@ bool Part1::openFile()
   return true;
 }
 
-Part2::Part2( TQObject *parent, TQWidget * parentWidget )
+Part2::Part2( TQObject *parent, TQWidget * tqparentWidget )
  : KParts::Part( parent, "Part2" )
 {
   m_instance = new KInstance( "part2" );
   setInstance( m_instance );
-  TQWidget * w = new TQWidget( parentWidget, "Part2Widget" );
+  TQWidget * w = new TQWidget( tqparentWidget, "Part2Widget" );
   setWidget( w );
 
   TQCheckBox * cb = new TQCheckBox( "something", w );

@@ -94,7 +94,7 @@ KDEWIN32_EXPORT DIR * opendir(const char *dir)
     dp->finished = 0;
     dp->dir = strdup(dir);
 
-    if ((handle = _findfirst(filespec, &(dp->fileinfo))) < 0) {
+    if ((handle = _tqfindfirst(filespec, &(dp->fileinfo))) < 0) {
         if (errno == ENOENT)
             dp->finished = 1;
         else
@@ -112,7 +112,7 @@ KDEWIN32_EXPORT struct dirent * readdir(DIR *dp)
     if (!dp || dp->finished) return NULL;
 
     if (dp->offset != 0) {
-        if (_findnext(dp->handle, &(dp->fileinfo)) < 0) {
+        if (_tqfindnext(dp->handle, &(dp->fileinfo)) < 0) {
             dp->finished = 1;
             return NULL;
         }
@@ -137,7 +137,7 @@ KDEWIN32_EXPORT struct dirent* readdir_r(DIR *dirp, struct dirent *entry, struct
 KDEWIN32_EXPORT int closedir(DIR *dp)
 {
     if (!dp) return 0;
-    _findclose(dp->handle);
+    _tqfindclose(dp->handle);
     if (dp->dir) free(dp->dir);
     if (dp) free(dp);
 

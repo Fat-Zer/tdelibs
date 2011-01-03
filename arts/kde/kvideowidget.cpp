@@ -92,7 +92,7 @@ KVideoWidget::KVideoWidget( TQWidget *parent, const char *name, WFlags f )
 void KVideoWidget::init(void)
 {
     setMinimumSize(0, 0);
-    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
     setFocusPolicy( ClickFocus );
 
     fullscreenWidget = 0;
@@ -147,7 +147,7 @@ void KVideoWidget::embed( Arts::VideoPlayObject vpo )
 	}
 
 	setBackgroundMode( PaletteBackground );
-	repaint();
+	tqrepaint();
 
 	// Resize GUI
 	videoWidth  = 0;
@@ -286,7 +286,7 @@ void KVideoWidget::setDoubleSize()
     doubleSizeActivated();
 }
 
-TQSize KVideoWidget::sizeHint() const
+TQSize KVideoWidget::tqsizeHint() const
 {
     return TQSize( videoWidth, videoHeight );
 }

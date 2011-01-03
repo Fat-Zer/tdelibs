@@ -220,7 +220,7 @@ bool KBookmarkGroup::isToolbarGroup() const
     return ( element.attribute("toolbar") == "yes" );
 }
 
-TQDomElement KBookmarkGroup::findToolbar() const
+TQDomElement KBookmarkGroup::tqfindToolbar() const
 {
     if ( element.attribute("toolbar") == "yes" )
         return element;
@@ -234,7 +234,7 @@ TQDomElement KBookmarkGroup::findToolbar() const
                 return e;
             else
             {
-                TQDomElement result = KBookmarkGroup(e).findToolbar();
+                TQDomElement result = KBookmarkGroup(e).tqfindToolbar();
                 if (!result.isNull())
                     return result;
             }
@@ -412,7 +412,7 @@ static TQDomText get_or_create_text(TQDomNode node)
 }
 
 // Look for a metadata with owner="http://www.kde.org" or without any owner (for compatibility)
-static TQDomNode findOrCreateMetadata( TQDomNode& parent )
+static TQDomNode tqfindOrCreateMetadata( TQDomNode& parent )
 {
     static const char kdeOwner[] = "http://www.kde.org";
     TQDomElement metadataElement;
@@ -440,14 +440,14 @@ bool KBookmark::hasMetaData() const
     // It doesn't matter much in practice since it's only called for newly-created bookmarks,
     // which will get metadata soon after anyway.
     TQDomNode n = cd_or_create( internalElement(), "info" );
-    return findOrCreateMetadata( n ).hasChildNodes();
+    return tqfindOrCreateMetadata( n ).hasChildNodes();
 }
 
 void KBookmark::updateAccessMetadata()
 {
     kdDebug(7043) << "KBookmark::updateAccessMetadata " << address() << " " << url().prettyURL() << endl;
 
-    const uint timet = TQDateTime::currentDateTime().toTime_t();
+    const uint timet = TQDateTime::tqcurrentDateTime().toTime_t();
     setMetaDataItem( "time_added", TQString::number( timet ), DontOverwriteMetaData );
     setMetaDataItem( "time_visited", TQString::number( timet ) );
 
@@ -465,7 +465,7 @@ void KBookmark::updateAccessMetadata()
 TQString KBookmark::metaDataItem( const TQString &key ) const
 {
     TQDomNode infoNode = cd_or_create( internalElement(), "info" );
-    infoNode = findOrCreateMetadata( infoNode );
+    infoNode = tqfindOrCreateMetadata( infoNode );
     for ( TQDomNode n = infoNode.firstChild(); !n.isNull(); n = n.nextSibling() ) {
         if ( !n.isElement() ) {
             continue;
@@ -481,7 +481,7 @@ TQString KBookmark::metaDataItem( const TQString &key ) const
 void KBookmark::setMetaDataItem( const TQString &key, const TQString &value, MetaDataOverwriteMode mode )
 {
     TQDomNode infoNode = cd_or_create( internalElement(), "info" );
-    infoNode = findOrCreateMetadata( infoNode );
+    infoNode = tqfindOrCreateMetadata( infoNode );
 
     TQDomNode item = cd_or_create( infoNode, key );
     TQDomText text = get_or_create_text( item );

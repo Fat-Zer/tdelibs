@@ -76,7 +76,7 @@ namespace khtml
 
     /**
      * this class selects a RenderStyle for a given Element based on the
-     * collection of stylesheets it contains. This is just a virtual base class
+     * collection of stylesheets it tqcontains. This is just a virtual base class
      * for specific implementations of the Selector. At the moment only CSSStyleSelector
      * exists, but someone may wish to implement XSL...
      */
@@ -136,7 +136,7 @@ namespace khtml
 
 	bool strictParsing;
 	struct Encodedurl {
-	    TQString host; //also contains protocol
+	    TQString host; //also tqcontains protocol
 	    TQString path;
 	    TQString file;
 	} encodedurl;
@@ -290,7 +290,7 @@ public:
 	unsigned int selector;
 	unsigned int position;
 
-	Q_UINT32 priority;
+	TQ_UINT32 priority;
     };
 
     /*

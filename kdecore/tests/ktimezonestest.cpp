@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
      // Find the current offset of the UTC timezone.
      timezone = timezones.zone("UTC");
-     printf( "UTC timezone offset should be 0: %d\n", timezone->offset(TQDateTime::currentDateTime()) );
+     printf( "UTC timezone offset should be 0: %d\n", timezone->offset(TQDateTime::tqcurrentDateTime()) );
 
      // Find some offsets for Europe/London.
      char *london = "Europe/London";

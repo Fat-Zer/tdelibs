@@ -52,7 +52,7 @@ BOOL WINAPI DCOPServer::dcopServerConsoleProc(DWORD dwCtrlType)
 	case CTRL_LOGOFF_EVENT:
 	case CTRL_SHUTDOWN_EVENT:
     case CTRL_C_EVENT:
-        system(findDcopserverShutdown()+" --nokill");
+        system(tqfindDcopserverShutdown()+" --nokill");
         ret = TRUE;
         break;
     default:

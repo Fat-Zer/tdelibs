@@ -221,7 +221,7 @@ class KateViewInternal : public QWidget
     int scrollX;
     int scrollY;
 
-    Qt::CursorShape m_mouseCursor;
+    Qt::tqCursorShape m_mouseCursor;
 
     KateSuperCursor cursor;
     KateTextCursor displayCursor;
@@ -310,20 +310,20 @@ class KateViewInternal : public QWidget
     // Returns the lineRange of the specified realLine + viewLine.
     KateLineRange range(uint realLine, int viewLine);
 
-    // find the view line of cursor c (0 = same line, 1 = down one, etc.)
+    // tqfind the view line of cursor c (0 = same line, 1 = down one, etc.)
     uint viewLine(const KateTextCursor& realCursor);
 
-    // find the view line of the cursor, relative to the display (0 = top line of view, 1 = second line, etc.)
+    // tqfind the view line of the cursor, relative to the display (0 = top line of view, 1 = second line, etc.)
     // if limitToVisible is true, only lines which are currently visible will be searched for, and -1 returned if the line is not visible.
     int displayViewLine(const KateTextCursor& virtualCursor, bool limitToVisible = false);
 
-    // find the index of the last view line for a specific line
+    // tqfind the index of the last view line for a specific line
     uint lastViewLine(uint realLine);
 
     // count the number of view lines for a real line
     uint viewLineCount(uint realLine);
 
-    // find the cursor offset by (offset) view lines from a cursor.
+    // tqfind the cursor offset by (offset) view lines from a cursor.
     // when keepX is true, the column position will be calculated based on the x
     // position of the specified cursor.
     KateTextCursor viewLineOffset(const KateTextCursor& virtualCursor, int offset, bool keepX = false);
@@ -394,4 +394,4 @@ class KateViewInternal : public QWidget
 
 #endif
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

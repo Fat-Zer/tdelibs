@@ -19,7 +19,7 @@ class Test9 : public KConfigSkeleton
     */
     void setMyStringList( const TQStringList & v )
     {
-      if (!isImmutable( TQString::fromLatin1( "MyStringList" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "MyStringList" ) ))
         mMyStringList = v;
     }
 
@@ -36,7 +36,7 @@ class Test9 : public KConfigSkeleton
     */
     void setMyPathList( const TQStringList & v )
     {
-      if (!isImmutable( TQString::fromLatin1( "MyPathList" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "MyPathList" ) ))
         mMyPathList = v;
     }
 
@@ -53,7 +53,7 @@ class Test9 : public KConfigSkeleton
     */
     void setMyPathsList2( const TQStringList & v )
     {
-      if (!isImmutable( TQString::fromLatin1( "MyPathsList2" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "MyPathsList2" ) ))
         mMyPathsList2 = v;
     }
 

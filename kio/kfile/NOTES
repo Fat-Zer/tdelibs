@@ -29,7 +29,7 @@ for more integration between kfile and konqueror. 16/08/2000.
     has a QWidget * canvas() method, xOffset() and yOffset()
 (4) KFileIconView holds a QPtrDict to look up a QIconViewItem quickly from a
     given KFileItem. This will help for e.g. deleteItems and refreshItems.
-(5) KFileListView holds a QPtrDict to find the QListViewItem for a
+(5) KFileListView holds a QPtrDict to tqfind the QListViewItem for a
     KFileItem.  It implements different modes if we want the tree view in
     kfile ?
 
@@ -86,7 +86,7 @@ KActions for it.
 
 Important :
 
-Make sure to take kfind into account. It would be nice if it could use the
+Make sure to take ktqfind into account. It would be nice if it could use the
 same views as konqueror, to have access to all the view modes, as well as
 image preview, etc.
 

@@ -486,7 +486,7 @@ TQValueList<int> KPrinter::pageList() const
 				QStringList	ranges = TQStringList::split(',',option("kde-range"),false);
 				for (TQStringList::ConstIterator it=ranges.begin();it!=ranges.end();++it)
 				{
-					int	p = (*it).find('-');
+					int	p = (*it).tqfind('-');
 					bool	ok;
 					if (p == -1)
 					{
@@ -519,7 +519,7 @@ TQValueList<int> KPrinter::pageList() const
 			if (pageOrder() == LastPageFirst)
 			{
 				for (uint i=0;i<(list.count()/2);i++)
-					qSwap(list[i],list[list.count()-1-i]);
+					tqSwap(list[i],list[list.count()-1-i]);
 			}
 
 			// select page set if needed
@@ -638,7 +638,7 @@ void KPrinter::setOptions(const TQMap<TQString,TQString>& opts)
 	tmpset.remove( "kde-resolution" );
 	tmpset.remove( "kde-fonts" );
 	for (TQMap<TQString,TQString>::ConstIterator it=tmpset.begin();it!=tmpset.end();++it)
-		if (it.key().left(4) == "kde-" && !(d->m_options.contains(it.key())))
+		if (it.key().left(4) == "kde-" && !(d->m_options.tqcontains(it.key())))
 			d->m_options[it.key()] = it.data();
 }
 
@@ -673,7 +673,7 @@ bool KPrinter::autoConfigure(const TQString& prname, TQWidget *parent)
 	if (prname.isEmpty())
 		mprt = mgr->defaultPrinter();
 	else
-		mprt = mgr->findPrinter(prname);
+		mprt = mgr->tqfindPrinter(prname);
 
 	if (mprt)
 		return mprt->autoConfigure(this, parent);
@@ -846,7 +846,7 @@ int KPrinter::toPage() const
 { return (option("kde-topage").isEmpty() ? 0 : option("kde-topage").toInt()); }
 
 void KPrinter::setFromTo(int m, int M)
-{ setOption("kde-frompage",TQString::number(m)); setOption("kde-topage",TQString::number(M)); setOption("kde-range",(m>0 && M>0 ? TQString("%1-%2").arg(m).arg(M) : TQString::fromLatin1(""))); }
+{ setOption("kde-frompage",TQString::number(m)); setOption("kde-topage",TQString::number(M)); setOption("kde-range",(m>0 && M>0 ? TQString("%1-%2").arg(m).arg(M) : TQString::tqfromLatin1(""))); }
 
 // if no page size defined, use the localized one
 KPrinter::PageSize KPrinter::pageSize() const
@@ -880,16 +880,16 @@ void KPrinter::setPrintProgram(const TQString& prg)
 	else
 	{
 		QString	s(prg);
-		if (s.find("%in") == -1)
+		if (s.tqfind("%in") == -1)
 			s.append(" %in");
-		setOutputToFile( s.find( "%out" ) != -1 );
+		setOutputToFile( s.tqfind( "%out" ) != -1 );
 		setOption("kde-isspecial", "1");
 		setOption("kde-special-command", s);
 	}
 }
 
 TQString KPrinter::printerSelectionOption() const
-{ return TQString::fromLatin1(""); }
+{ return TQString::tqfromLatin1(""); }
 
 void KPrinter::setPrinterSelectionOption(const TQString&)
 {}

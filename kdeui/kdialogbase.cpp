@@ -65,7 +65,7 @@ struct SButton : public Qt
   SButton()
   {
     box = 0;
-    mask = 0;
+    tqmask = 0;
     style = 0;
   }
 
@@ -76,7 +76,7 @@ struct SButton : public Qt
   KPushButton *button( int key );
 
   TQWidget *box;
-  int mask;
+  int tqmask;
   int style;
   TQPtrList<KDialogBaseButton> list;
 };
@@ -109,7 +109,7 @@ KDialogBase::KDialogBase( TQWidget *parent, const char *name, bool modal,
   setCaption( caption );
 
   makeRelay();
-  connect( this, TQT_SIGNAL(layoutHintChanged()), TQT_SLOT(updateGeometry()) );
+  connect( this, TQT_SIGNAL(tqlayoutHintChanged()), TQT_SLOT(updateGeometry()) );
 
   enableButtonSeparator( separator );
   makeButtonBox( buttonMask, defaultButton, user1, user2, user3 );
@@ -131,7 +131,7 @@ KDialogBase::KDialogBase( int dialogFace, const TQString &caption,
   setCaption( caption );
 
   makeRelay();
-  connect( this, TQT_SIGNAL(layoutHintChanged()), TQT_SLOT(updateGeometry()) );
+  connect( this, TQT_SIGNAL(tqlayoutHintChanged()), TQT_SLOT(updateGeometry()) );
 
   mJanus = new KJanusWidget( this, "janus", dialogFace );
   connect(mJanus, TQT_SIGNAL(aboutToShowPage(TQWidget *)),
@@ -160,7 +160,7 @@ KDialogBase::KDialogBase(  KDialogBase::DialogType dialogFace, WFlags f, TQWidge
   setCaption( caption );
 
   makeRelay();
-  connect( this, TQT_SIGNAL(layoutHintChanged()), TQT_SLOT(updateGeometry()) );
+  connect( this, TQT_SIGNAL(tqlayoutHintChanged()), TQT_SLOT(updateGeometry()) );
 
   mJanus = new KJanusWidget( this, "janus", dialogFace );
   connect(mJanus, TQT_SIGNAL(aboutToShowPage(TQWidget *)),
@@ -189,7 +189,7 @@ KDialogBase::KDialogBase( const TQString &caption, int buttonMask,
   setCaption( caption );
 
   makeRelay();
-  connect( this, TQT_SIGNAL(layoutHintChanged()), TQT_SLOT(updateGeometry()) );
+  connect( this, TQT_SIGNAL(tqlayoutHintChanged()), TQT_SLOT(updateGeometry()) );
 
   enableButtonSeparator( separator );
 
@@ -230,7 +230,7 @@ void SButton::resize( bool sameWidth, int margin,
 
   for( p = list.first(); p; p =  list.next() )
   {
-    const TQSize s( p->sizeHint() );
+    const TQSize s( p->tqsizeHint() );
     if( s.height() > h ) { h = s.height(); }
     if( s.width() > w ) { w = s.width(); }
   }
@@ -239,7 +239,7 @@ void SButton::resize( bool sameWidth, int margin,
   {
     for( p = list.first(); p; p =  list.next() )
     {
-      TQSize s( p->sizeHint() );
+      TQSize s( p->tqsizeHint() );
       if( sameWidth ) { s.setWidth( w ); }
       p->setFixedWidth( s.width() );
       t += s.width() + spacing;
@@ -253,7 +253,7 @@ void SButton::resize( bool sameWidth, int margin,
     // sameWidth has no effect here
     for( p = list.first(); p; p =  list.next() )
     {
-      TQSize s( p->sizeHint() );
+      TQSize s( p->tqsizeHint() );
       s.setWidth( w );
       p->setFixedSize( s );
       t += s.height() + spacing;
@@ -381,7 +381,7 @@ void KDialogBase::makeRelay()
   if( mTile )
   {
     connect( mTile, TQT_SIGNAL(pixmapChanged()), TQT_SLOT(updateBackground()) );
-    connect( qApp, TQT_SIGNAL(aboutToQuit()), mTile, TQT_SLOT(cleanup()) );
+    connect( tqApp, TQT_SIGNAL(aboutToQuit()), mTile, TQT_SLOT(cleanup()) );
   }
 }
 
@@ -426,20 +426,20 @@ TQFrame *KDialogBase::plainPage()
 
 void KDialogBase::adjustSize()
 {
-//  if (layout())
-//     layout()->activate();
+//  if (tqlayout())
+//     tqlayout()->activate();
   if( d->bFixed )
-    setFixedSize( sizeHint() );
+    setFixedSize( tqsizeHint() );
   else
-    resize( sizeHint() );
+    resize( tqsizeHint() );
 }
 
-TQSize KDialogBase::sizeHint() const
+TQSize KDialogBase::tqsizeHint() const
 {
-   return d->minSize.expandedTo( minimumSizeHint() ) + d->incSize;
+   return d->minSize.expandedTo( tqminimumSizeHint() ) + d->incSize;
 }
 
-TQSize KDialogBase::minimumSizeHint() const
+TQSize KDialogBase::tqminimumSizeHint() const
 {
   const int m = marginHint();
   const int s = spacingHint();
@@ -454,7 +454,7 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( mUrlHelp )
   {
-    s2 = mUrlHelp->minimumSize() + zeroByS;
+    s2 = mUrlHelp->tqminimumSize() + zeroByS;
   }
   s1.rwidth()   = QMAX( s1.rwidth(), s2.rwidth() );
   s1.rheight() += s2.rheight();
@@ -464,13 +464,13 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( mJanus )
   {
-    s2 = mJanus->minimumSizeHint() + zeroByS;
+    s2 = mJanus->tqminimumSizeHint() + zeroByS;
   }
   else if( mMainWidget )
   {
-    s2 = mMainWidget->sizeHint() + zeroByS;
-    s2 = s2.expandedTo( mMainWidget->minimumSize() );
-    s2 = s2.expandedTo( mMainWidget->minimumSizeHint() );
+    s2 = mMainWidget->tqsizeHint() + zeroByS;
+    s2 = s2.expandedTo( mMainWidget->tqminimumSize() );
+    s2 = s2.expandedTo( mMainWidget->tqminimumSizeHint() );
     if( s2.isEmpty() )
     {
       s2 = TQSize( 100, 100+s );
@@ -485,9 +485,9 @@ TQSize KDialogBase::minimumSizeHint() const
 
   if (d->detailsWidget && d->bDetails)
   {
-    s2 = d->detailsWidget->sizeHint() + zeroByS;
-    s2 = s2.expandedTo( d->detailsWidget->minimumSize() );
-    s2 = s2.expandedTo( d->detailsWidget->minimumSizeHint() );
+    s2 = d->detailsWidget->tqsizeHint() + zeroByS;
+    s2 = s2.expandedTo( d->detailsWidget->tqminimumSize() );
+    s2 = s2.expandedTo( d->detailsWidget->tqminimumSizeHint() );
     s1.rwidth()  = QMAX( s1.rwidth(), s2.rwidth() );
     s1.rheight() += s2.rheight();
   }
@@ -497,7 +497,7 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( mActionSep )
   {
-    s1.rheight() += mActionSep->minimumSize().height() + s;
+    s1.rheight() += mActionSep->tqminimumSize().height() + s;
   }
 
   //
@@ -505,7 +505,7 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( d->mButton.box )
   {
-    s2 = d->mButton.box->minimumSize();
+    s2 = d->mButton.box->tqminimumSize();
     if( mButtonOrientation == Horizontal )
     {
       s1.rwidth()   = QMAX( s1.rwidth(), s2.rwidth() );
@@ -530,7 +530,7 @@ TQSize KDialogBase::minimumSizeHint() const
 
 void KDialogBase::disableResize()
 {
-  setFixedSize( sizeHint() );
+  setFixedSize( tqsizeHint() );
 }
 
 
@@ -571,31 +571,31 @@ void KDialogBase::makeButtonBox( int buttonMask, ButtonCode defaultButton,
 
   d->mButton.box = new TQWidget( this );
 
-  d->mButton.mask = buttonMask;
-  if( d->mButton.mask & Help )
+  d->mButton.tqmask = buttonMask;
+  if( d->mButton.tqmask & Help )
   {
     KPushButton *pb = d->mButton.append( Help, KStdGuiItem::help() );
 
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotHelp()) );
   }
-  if( d->mButton.mask & Default )
+  if( d->mButton.tqmask & Default )
   {
     KPushButton *pb = d->mButton.append( Default, KStdGuiItem::defaults() );
 
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotDefault()) );
   }
-  if( d->mButton.mask & Details )
+  if( d->mButton.tqmask & Details )
   {
     KPushButton *pb = d->mButton.append( Details, TQString::null );
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotDetails()) );
     setDetails(false);
   }
-  if( d->mButton.mask & User3 )
+  if( d->mButton.tqmask & User3 )
   {
     KPushButton *pb = d->mButton.append( User3, user3 );
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotUser3()) );
   }
-  if( d->mButton.mask & User2 )
+  if( d->mButton.tqmask & User2 )
   {
     KPushButton *pb = d->mButton.append( User2, user2 );
     if( mMessageBoxMode )
@@ -607,7 +607,7 @@ void KDialogBase::makeButtonBox( int buttonMask, ButtonCode defaultButton,
       connect( pb, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotUser2()) );
     }
   }
-  if( d->mButton.mask & User1 )
+  if( d->mButton.tqmask & User1 )
   {
     KPushButton *pb = d->mButton.append( User1, user1 );
     if( mMessageBoxMode )
@@ -619,29 +619,29 @@ void KDialogBase::makeButtonBox( int buttonMask, ButtonCode defaultButton,
       connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotUser1()) );
     }
   }
-  if( d->mButton.mask & Ok )
+  if( d->mButton.tqmask & Ok )
   {
     KPushButton *pb = d->mButton.append( Ok, KStdGuiItem::ok() );
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotOk()) );
   }
-  if( d->mButton.mask & Apply )
+  if( d->mButton.tqmask & Apply )
   {
     KPushButton *pb = d->mButton.append( Apply, KStdGuiItem::apply() );
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotApply()) );
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(applyPressed()) );
   }
-  if( d->mButton.mask & Try )
+  if( d->mButton.tqmask & Try )
   {
     KPushButton *pb = d->mButton.append( Try,
                            i18n( "&Try" ) );
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotTry()) );
   }
-  if( d->mButton.mask & Cancel )
+  if( d->mButton.tqmask & Cancel )
   {
     KPushButton *pb = d->mButton.append( Cancel, KStdGuiItem::cancel() );
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotCancel()) );
   }
-  if( d->mButton.mask & Close )
+  if( d->mButton.tqmask & Close )
   {
     KPushButton *pb = d->mButton.append( Close, KStdGuiItem::close() );
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotClose()) );
@@ -671,11 +671,11 @@ void KDialogBase::setButtonStyle( int style )
   if( style < 0 || style >= ActionStyleMAX ) { style = ActionStyle0; }
   d->mButton.style = style;
 
-  const int *layout;
-  int layoutMax = 0;
+  const int *tqlayout;
+  int tqlayoutMax = 0;
   if (mMessageBoxMode)
   {
-    static const int layoutRule[5][6] =
+    static const int tqlayoutRule[5][6] =
     {
       {Details,Stretch,User2|Stretch,User1|Stretch,Cancel|Stretch, Details|Filler},
       {Details,Stretch,User2|Stretch,User1|Stretch,Cancel|Stretch, Details|Filler},
@@ -683,12 +683,12 @@ void KDialogBase::setButtonStyle( int style )
       {Details|Filler,Stretch,Cancel|Stretch,User2|Stretch,User1|Stretch,Details},
       {Details|Filler,Stretch,Cancel|Stretch,User2|Stretch,User1|Stretch,Details}
     };
-    layoutMax = 6;
-    layout = layoutRule[ d->mButton.style ];
+    tqlayoutMax = 6;
+    tqlayout = tqlayoutRule[ d->mButton.style ];
   }
   else if (mButtonOrientation == Horizontal)
   {
-    static const int layoutRule[5][10] =
+    static const int tqlayoutRule[5][10] =
     {
       {Details,Help,Default,Stretch,User3,User2,User1,Ok,Apply|Try,Cancel|Close},
       {Details,Help,Default,Stretch,User3,User2,User1,Cancel|Close,Apply|Try,Ok},
@@ -696,12 +696,12 @@ void KDialogBase::setButtonStyle( int style )
       {Ok,Apply|Try,Cancel|Close,User3,User2,User1,Stretch,Default,Help,Details},
       {Ok,Cancel|Close,Apply|Try,User3,User2,User1,Stretch,Default,Help,Details}
     };
-    layoutMax = 10;
-    layout = layoutRule[ d->mButton.style ];
+    tqlayoutMax = 10;
+    tqlayout = tqlayoutRule[ d->mButton.style ];
   }
   else
   {
-    static const int layoutRule[5][10] =
+    static const int tqlayoutRule[5][10] =
     {
       {Ok,Apply|Try,User1,User2,User3,Stretch,Default,Cancel|Close,Help, Details},
       //{Ok,Apply|Try,Cancel|Close,User1,User2,User3,Stretch, Default,Help, Details},
@@ -710,13 +710,13 @@ void KDialogBase::setButtonStyle( int style )
       {Ok,Apply|Try,Cancel|Close,User3,User2,User1,Stretch,Default,Help,Details},
       {Ok,Cancel|Close,Apply|Try,User3,User2,User1,Stretch,Default,Help,Details}
     };
-    layoutMax = 10;
-    layout = layoutRule[ d->mButton.style ];
+    tqlayoutMax = 10;
+    tqlayout = tqlayoutRule[ d->mButton.style ];
   }
 
-  if( d->mButton.box->layout() )
+  if( d->mButton.box->tqlayout() )
   {
-    delete d->mButton.box->layout();
+    delete d->mButton.box->tqlayout();
   }
 
   TQBoxLayout *lay;
@@ -735,74 +735,74 @@ void KDialogBase::setButtonStyle( int style )
   TQPushButton *prevButton = 0;
   TQPushButton *newButton;
 
-  for( int i=0; i<layoutMax; ++i )
+  for( int i=0; i<tqlayoutMax; ++i )
   {
-    if(((ButtonCode) layout[i]) == Stretch) // Unconditional Stretch
+    if(((ButtonCode) tqlayout[i]) == Stretch) // Unconditional Stretch
     {
       lay->addStretch(1);
       continue;
     }
-    else if (layout[i] & Filler) // Conditional space
+    else if (tqlayout[i] & Filler) // Conditional space
     {
-      if (d->mButton.mask & layout[i])
+      if (d->mButton.tqmask & tqlayout[i])
       {
-        newButton = actionButton( (ButtonCode) (layout[i] & ~(Stretch | Filler)));
+        newButton = actionButton( (ButtonCode) (tqlayout[i] & ~(Stretch | Filler)));
         if (newButton)
-           lay->addSpacing(newButton->sizeHint().width());
+           lay->addSpacing(newButton->tqsizeHint().width());
       }
       continue;
     }
-    else if( d->mButton.mask & Help & layout[i] )
+    else if( d->mButton.tqmask & Help & tqlayout[i] )
     {
       newButton = actionButton( Help );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & Default & layout[i] )
+    else if( d->mButton.tqmask & Default & tqlayout[i] )
     {
       newButton = actionButton( Default );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & User3 & layout[i] )
+    else if( d->mButton.tqmask & User3 & tqlayout[i] )
     {
       newButton = actionButton( User3 );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & User2 & layout[i] )
+    else if( d->mButton.tqmask & User2 & tqlayout[i] )
     {
       newButton = actionButton( User2 );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & User1 & layout[i] )
+    else if( d->mButton.tqmask & User1 & tqlayout[i] )
     {
       newButton = actionButton( User1 );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & Ok & layout[i] )
+    else if( d->mButton.tqmask & Ok & tqlayout[i] )
     {
       newButton = actionButton( Ok );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & Apply & layout[i] )
+    else if( d->mButton.tqmask & Apply & tqlayout[i] )
     {
       newButton = actionButton( Apply );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & Try & layout[i] )
+    else if( d->mButton.tqmask & Try & tqlayout[i] )
     {
       newButton = actionButton( Try );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & Cancel & layout[i] )
+    else if( d->mButton.tqmask & Cancel & tqlayout[i] )
     {
       newButton = actionButton( Cancel );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & Close & layout[i] )
+    else if( d->mButton.tqmask & Close & tqlayout[i] )
     {
       newButton = actionButton( Close );
       lay->addWidget( newButton ); ++numButton;
     }
-    else if( d->mButton.mask & Details & layout[i] )
+    else if( d->mButton.tqmask & Details & tqlayout[i] )
     {
       newButton = actionButton( Details );
       lay->addWidget( newButton ); ++numButton;
@@ -813,7 +813,7 @@ void KDialogBase::setButtonStyle( int style )
     }
 
     // Add conditional stretch (Only added if a button was added)
-    if(layout[i] & Stretch)
+    if(tqlayout[i] & Stretch)
     {
       lay->addStretch(1);
     }
@@ -1113,7 +1113,7 @@ void KDialogBase::setDetailsWidget(TQWidget *detailsWidget)
 {
   delete d->detailsWidget;
   d->detailsWidget = detailsWidget;
-  if (d->detailsWidget->parentWidget() != this)
+  if (d->detailsWidget->tqparentWidget() != this)
      d->detailsWidget->reparent(this, TQPoint(0,0));
   d->detailsWidget->hide();
   if( mIsActivated )
@@ -1136,14 +1136,14 @@ void KDialogBase::setDetails(bool showDetails)
      setButtonText(Details, d->detailsButton+ " <<");
      if (d->detailsWidget)
      {
-        if (layout())
-           layout()->setEnabled(false);
+        if (tqlayout())
+           tqlayout()->setEnabled(false);
         adjustSize();
         d->detailsWidget->show();
-        if (layout())
+        if (tqlayout())
         {
-           layout()->activate();
-           layout()->setEnabled(true);
+           tqlayout()->activate();
+           tqlayout()->setEnabled(true);
         }
      }
   }
@@ -1154,8 +1154,8 @@ void KDialogBase::setDetails(bool showDetails)
      {
         d->detailsWidget->hide();
      }
-     if (layout())
-        layout()->activate();
+     if (tqlayout())
+        tqlayout()->activate();
      adjustSize();
   }
   d->bSettingDetails = false;
@@ -1492,10 +1492,10 @@ TQRect KDialogBase::getContentsRect() const
   r.setLeft( marginHint() );
   r.setTop( marginHint() + (mUrlHelp ? mUrlHelp->height() : 0) );
   r.setRight( width() - marginHint() );
-  int h = (!mActionSep ? 0 : mActionSep->minimumSize().height()+marginHint());
+  int h = (!mActionSep ? 0 : mActionSep->tqminimumSize().height()+marginHint());
   if( d->mButton.box )
   {
-    r.setBottom( height() - d->mButton.box->minimumSize().height() - h );
+    r.setBottom( height() - d->mButton.box->tqminimumSize().height() - h );
   }
   else
   {
@@ -1513,14 +1513,14 @@ void KDialogBase::getBorderWidths(int& ulx, int& uly, int& lrx, int& lry) const
   uly = marginHint();
   if( mUrlHelp  )
   {
-    uly += mUrlHelp->minimumSize().height();
+    uly += mUrlHelp->tqminimumSize().height();
   }
 
   lrx = marginHint();
-  lry = d->mButton.box ? d->mButton.box->minimumSize().height() : 0;
+  lry = d->mButton.box ? d->mButton.box->tqminimumSize().height() : 0;
   if( mActionSep )
   {
-    lry += mActionSep->minimumSize().height() + marginHint();
+    lry += mActionSep->tqminimumSize().height() + marginHint();
   }
 }
 
@@ -1748,15 +1748,15 @@ TQSize KDialogBase::configDialogSize( KConfig& config,
 				      const TQString& groupName ) const
 {
    int w, h;
-   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+   int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
    TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
-   w = sizeHint().width();
-   h = sizeHint().height();
+   w = tqsizeHint().width();
+   h = tqsizeHint().height();
 
    KConfigGroupSaver cs(&config, groupName);
-   w = config.readNumEntry( TQString::fromLatin1("Width %1").arg( desk.width()), w );
-   h = config.readNumEntry( TQString::fromLatin1("Height %1").arg( desk.height()), h );
+   w = config.readNumEntry( TQString::tqfromLatin1("Width %1").arg( desk.width()), w );
+   h = config.readNumEntry( TQString::tqfromLatin1("Height %1").arg( desk.height()), h );
 
    return TQSize( w, h );
 }
@@ -1771,15 +1771,15 @@ void KDialogBase::saveDialogSize( const TQString& groupName, bool global )
 void KDialogBase::saveDialogSize( KConfig& config, const TQString& groupName,
 				      bool global ) const
 {
-   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+   int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
    TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
    KConfigGroupSaver cs(&config, groupName);
    TQSize sizeToSave = size();
 
-   config.writeEntry( TQString::fromLatin1("Width %1").arg( desk.width()),
+   config.writeEntry( TQString::tqfromLatin1("Width %1").arg( desk.width()),
 		      TQString::number( sizeToSave.width()), true, global);
-   config.writeEntry( TQString::fromLatin1("Height %1").arg( desk.height()),
+   config.writeEntry( TQString::tqfromLatin1("Height %1").arg( desk.height()),
 		      TQString::number( sizeToSave.height()), true, global);
 }
 

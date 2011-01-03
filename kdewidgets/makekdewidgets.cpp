@@ -47,7 +47,7 @@ static const char classDef[] = "#ifndef EMBED_IMAGES\n"
                                 "		TQPixmap pix(m_widgets[key].iconSet);\n"
                                 "#else\n"
                                 "		TQPixmap pix(locate( \"data\", \n"
-				"			TQString::fromLatin1(\"%PluginNameLower/pics/\") + m_widgets[key].iconSet));\n"
+				"			TQString::tqfromLatin1(\"%PluginNameLower/pics/\") + m_widgets[key].iconSet));\n"
                                 "#endif\n"
                                 "		return TQIconSet(pix);\n"
                                 "	}\n"
@@ -81,17 +81,17 @@ static const char classDef[] = "#ifndef EMBED_IMAGES\n"
                                 "%PluginName::%PluginName()\n"
                                 "{\n"
                                 "        WidgetInfo widget;\n";
-static const char widgetDef[] = "	widget.group = TQString::fromLatin1(\"%Group\");\n"
+static const char widgetDef[] = "	widget.group = TQString::tqfromLatin1(\"%Group\");\n"
                                  "#ifdef EMBED_IMAGES\n"
                                  "	widget.iconSet = TQPixmap(%Pixmap);\n"
                                  "#else\n"
-                                 "	widget.iconSet = TQString::fromLatin1(\"%IconSet\");\n"
+                                 "	widget.iconSet = TQString::tqfromLatin1(\"%IconSet\");\n"
                                  "#endif\n"
-                                 "	widget.includeFile = TQString::fromLatin1(\"%IncludeFile\");\n"
-                                 "	widget.toolTip = TQString::fromLatin1(\"%ToolTip\");\n"
-                                 "	widget.whatsThis = TQString::fromLatin1(\"%WhatsThis\");\n"
+                                 "	widget.includeFile = TQString::tqfromLatin1(\"%IncludeFile\");\n"
+                                 "	widget.toolTip = TQString::tqfromLatin1(\"%ToolTip\");\n"
+                                 "	widget.whatsThis = TQString::tqfromLatin1(\"%WhatsThis\");\n"
                                  "	widget.isContainer = %IsContainer;\n"
-                                 "	m_widgets.insert(TQString::fromLatin1(\"%Class\"), widget);\n";
+                                 "	m_widgets.insert(TQString::tqfromLatin1(\"%Class\"), widget);\n";
 static const char endCtor[] = "	%Init\n"
                                "}\n"
                                "%PluginName::~%PluginName()\n"
@@ -100,7 +100,7 @@ static const char endCtor[] = "	%Init\n"
                                "}\n"
                                "TQWidget *%PluginName::create(const TQString &key, TQWidget *parent, const char *name)\n"
                                "{\n";
-static const char widgetCreate[] = "         if (key == TQString::fromLatin1(\"%Class\"))\n"
+static const char widgetCreate[] = "         if (key == TQString::tqfromLatin1(\"%Class\"))\n"
                                     "                return new %ImplClass%ConstructorArgs;\n";
 static const char endCreate[] = "	return 0;\n"
                                  "}\n"
@@ -172,7 +172,7 @@ void buildFile( TQTextStream &ts, const TQString& group, const TQString& fileNam
     for ( uint idx = 0; idx < includes.count(); ++idx )
         ts << "#include <" << includes[ idx ] << ">" << endl;
     TQStringList classes = input.groupList();
-    classes.remove( classes.find( "Global" ) );
+    classes.remove( classes.tqfind( "Global" ) );
     // Autogenerate widget includes here
     for ( uint idx = 0; idx < classes.count(); ++idx )
         ts << buildWidgetInclude( classes[ idx ], input ) << endl;
@@ -198,12 +198,12 @@ void buildFile( TQTextStream &ts, const TQString& group, const TQString& fileNam
 TQString buildWidgetDef( const TQString &name, KConfig &input, const TQString &group ) {
     input.setGroup( name );
     TQMap<TQString, TQString> defMap;
-    defMap.insert( "Group", input.readEntry( "Group", group ).replace( "\"", "\\\"" ) );
-    defMap.insert( "IconSet", input.readEntry( "IconSet", name.lower() + ".png" ).replace( ":", "_" ) );
-    defMap.insert( "Pixmap", name.lower().replace( ":", "_" ) + "_xpm" );
+    defMap.insert( "Group", input.readEntry( "Group", group ).tqreplace( "\"", "\\\"" ) );
+    defMap.insert( "IconSet", input.readEntry( "IconSet", name.lower() + ".png" ).tqreplace( ":", "_" ) );
+    defMap.insert( "Pixmap", name.lower().tqreplace( ":", "_" ) + "_xpm" );
     defMap.insert( "IncludeFile", input.readEntry( "IncludeFile", name.lower() + ".h" ).remove( ":" ) );
-    defMap.insert( "ToolTip", input.readEntry( "ToolTip", name + " Widget" ).replace( "\"", "\\\"" ) );
-    defMap.insert( "WhatsThis", input.readEntry( "WhatsThis", name + " Widget" ).replace( "\"", "\\\"" ) );
+    defMap.insert( "ToolTip", input.readEntry( "ToolTip", name + " Widget" ).tqreplace( "\"", "\\\"" ) );
+    defMap.insert( "WhatsThis", input.readEntry( "WhatsThis", name + " Widget" ).tqreplace( "\"", "\\\"" ) );
     defMap.insert( "IsContainer", input.readEntry( "IsContainer", "false" ) );
     defMap.insert( "Class", name );
     return KMacroExpander::expandMacros( widgetDef, defMap );
@@ -225,7 +225,7 @@ TQString buildWidgetInclude( const TQString &name, KConfig &input ) {
 
 TQString buildPixmap( const TQString &name, KConfig &input, const TQString &iconPath ) {
     input.setGroup( name );
-    TQString cleanName = name.lower().replace( ":", "_" );
+    TQString cleanName = name.lower().tqreplace( ":", "_" );
     TQString iconName = input.readEntry( "IconSet", cleanName + ".png" );
 
     TQFileInfo fi( iconPath + "/" + iconName );

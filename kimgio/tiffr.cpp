@@ -133,7 +133,7 @@ KDE_EXPORT void kimgio_tiff_read( TQImageIO *io )
 
 //	for( int ctr = (image.numBytes() / sizeof(uint32))+1; ctr ; ctr-- ) {
 //		// TODO: manage alpha with TIFFGetA
-//		*data = qRgb( TIFFGetR( *data ), 
+//		*data = tqRgb( TIFFGetR( *data ), 
 //			TIFFGetG( *data ), TIFFGetB( *data ) );
 //		data++;
 //	}

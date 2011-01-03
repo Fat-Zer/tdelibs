@@ -72,7 +72,7 @@ class KABC_EXPORT Geo
     float longitude() const;
   
     /**
-      Returns, if this object contains a valid geographical position.
+      Returns, if this object tqcontains a valid geographical position.
     */
     bool isValid() const;
     

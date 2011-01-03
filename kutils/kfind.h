@@ -26,8 +26,8 @@
 
 /**
  * @ingroup main
- * @ingroup findreplace
- * @brief A generic implementation of the "find" function.
+ * @ingroup tqfindtqreplace
+ * @brief A generic implementation of the "tqfind" function.
  *
  * @author S.R.Haque <srhaque@iee.org>, David Faure <faure@kde.org>,
  *         Arend van Beelen jr. <arend@auton.nl>
@@ -40,25 +40,25 @@
  *
  * \b Example:
  *
- * To use the class to implement a complete find feature:
+ * To use the class to implement a complete tqfind feature:
  *
- * In the slot connected to the find action, after using KFindDialog:
+ * In the slot connected to the tqfind action, after using KFindDialog:
  * \code
  *
- *  // This creates a find-next-prompt dialog if needed.
- *  m_find = new KFind(pattern, options, this);
+ *  // This creates a tqfind-next-prompt dialog if needed.
+ *  m_tqfind = new KFind(pattern, options, this);
  *
  *  // Connect highlight signal to code which handles highlighting
  *  // of found text.
- *  connect( m_find, TQT_SIGNAL( highlight( const TQString &, int, int ) ),
+ *  connect( m_tqfind, TQT_SIGNAL( highlight( const TQString &, int, int ) ),
  *          this, TQT_SLOT( slotHighlight( const TQString &, int, int ) ) );
- *  // Connect findNext signal - called when pressing the button in the dialog
- *  connect( m_find, TQT_SIGNAL( findNext() ),
+ *  // Connect tqfindNext signal - called when pressing the button in the dialog
+ *  connect( m_tqfind, TQT_SIGNAL( tqfindNext() ),
  *          this, TQT_SLOT( slotFindNext() ) );
  * \endcode
  *
- * If you are using a non-modal find dialog (the recommended new way
- * in KDE-3.2), you should call right away m_find->closeFindNextDialog().
+ * If you are using a non-modal tqfind dialog (the recommended new way
+ * in KDE-3.2), you should call right away m_tqfind->closeFindNextDialog().
  *
  *  Then initialize the variables determining the "current position"
  *  (to the cursor, if the option FromCursor is set,
@@ -73,11 +73,11 @@
  *  {
  *      KFind::Result res = KFind::NoMatch;
  *      while ( res == KFind::NoMatch && <position not at end> ) {
- *          if ( m_find->needData() )
- *              m_find->setData( <current text fragment> );
+ *          if ( m_tqfind->needData() )
+ *              m_tqfind->setData( <current text fragment> );
  *
  *          // Let KFind inspect the text fragment, and display a dialog if a match is found
- *          res = m_find->find();
+ *          res = m_tqfind->tqfind();
  *
  *          if ( res == KFind::NoMatch ) {
  *              <Move to the next text fragment, honoring the FindBackwards setting for the direction>
@@ -85,13 +85,13 @@
  *      }
  *
  *      if ( res == KFind::NoMatch ) // i.e. at end
- *          <Call either  m_find->displayFinalDialog(); delete m_find; m_find = 0L;
- *           or           if ( m_find->shouldRestart() ) { reinit (w/o FromCursor) and call slotFindNext(); }
- *                        else { m_find->closeFindNextDialog(); }>
+ *          <Call either  m_tqfind->displayFinalDialog(); delete m_tqfind; m_tqfind = 0L;
+ *           or           if ( m_tqfind->shouldRestart() ) { reinit (w/o FromCursor) and call slotFindNext(); }
+ *                        else { m_tqfind->closeFindNextDialog(); }>
  *  }
  * \endcode
  *
- *  Don't forget to delete m_find in the destructor of your class,
+ *  Don't forget to delete m_tqfind in the destructor of your class,
  *  unless you gave it a parent widget on construction.
  *
  *  This implementation allows to have a "Find Next" action, which resumes the
@@ -101,7 +101,7 @@
  *  FindBackwards and call slotFindNext() - and reset the value afterwards.
  */
 class KUTILS_EXPORT KFind :
-    public QObject
+    public TQObject
 {
     Q_OBJECT
 
@@ -111,7 +111,7 @@ public:
      * Only use this constructor if you don't use KFindDialog, or if
      * you use it as a modal dialog.
      * @param pattern The pattern to look for.
-     * @param options Options for the find dialog. @see KFindDialog.
+     * @param options Options for the tqfind dialog. @see KFindDialog.
      * @param parent The parent widget.
      */
     KFind(const TQString &pattern, long options, TQWidget *parent);
@@ -120,13 +120,13 @@ public:
      * This is the recommended constructor if you also use KFindDialog (non-modal).
      * You should pass the pointer to it here, so that when a message box
      * appears it has the right parent. Don't worry about deletion, KFind
-     * will notice if the find dialog is closed.
+     * will notice if the tqfind dialog is closed.
      * @param pattern The pattern to look for.
-     * @param options Options for the find dialog. @see KFindDialog.
+     * @param options Options for the tqfind dialog. @see KFindDialog.
      * @param parent The parent widget.
-     * @param findDialog A pointer to the KFindDialog object.
+     * @param tqfindDialog A pointer to the KFindDialog object.
      */
-    KFind(const TQString &pattern, long options, TQWidget *parent, TQWidget* findDialog);
+    KFind(const TQString &pattern, long options, TQWidget *parent, TQWidget* tqfindDialog);
 
     /**
      * Destructor.
@@ -134,7 +134,7 @@ public:
     virtual ~KFind();
 
     /**
-     * Result enum. Holds information if the find was successful.
+     * Result enum. Holds information if the tqfind was successful.
      */
     enum Result {
         NoMatch,  ///< No match was found.
@@ -150,24 +150,24 @@ public:
     bool needData() const;
 
     /**
-     * Call this when needData returns @c true, before calling find().
+     * Call this when needData returns @c true, before calling tqfind().
      * @param data the text fragment (line)
      * @param startPos if set, the index at which the search should start.
      * This is only necessary for the very first call to setData usually,
-     * for the 'find in selection' feature. A value of -1 (the default value)
+     * for the 'tqfind in selection' feature. A value of -1 (the default value)
      * means "process all the data", i.e. either 0 or data.length()-1 depending
      * on FindBackwards.
      */
     void setData( const TQString& data, int startPos = -1 );
 
     /**
-     * Call this when needData returns @c true, before calling find(). The use of
+     * Call this when needData returns @c true, before calling tqfind(). The use of
      * ID's is especially useful if you're using the FindIncremental option.
      * @param id the id of the text fragment
      * @param data the text fragment (line)
      * @param startPos if set, the index at which the search should start.
      * This is only necessary for the very first call to setData usually,
-     * for the 'find in selection' feature. A value of -1 (the default value)
+     * for the 'tqfind in selection' feature. A value of -1 (the default value)
      * means "process all the data", i.e. either 0 or data.length()-1 depending
      * on FindBackwards.
      *
@@ -177,17 +177,17 @@ public:
 
     /**
      * Walk the text fragment (e.g. text-processor line, kspread cell) looking for matches.
-     * For each match, emits the highlight() signal and displays the find-again dialog
+     * For each match, emits the highlight() signal and displays the tqfind-again dialog
      * proceeding.
      * @return Whether or not there has been a match.
      */
-    Result find();
+    Result tqfind();
 
     /**
      * Return the current options.
      *
      * Warning: this is usually the same value as the one passed to the constructor,
-     * but options might change _during_ the replace operation:
+     * but options might change _during_ the tqreplace operation:
      * e.g. the "All" button resets the PromptOnReplace flag.
      *
      * @return The current options. @see KFindDialog.
@@ -233,7 +233,7 @@ public:
     /**
      * Virtual method, which allows applications to add extra checks for
      * validating a candidate match. It's only necessary to reimplement this
-     * if the find dialog extension has been used to provide additional
+     * if the tqfind dialog extension has been used to provide additional
      * criterias.
      *
      * @param text  The current text fragment
@@ -251,7 +251,7 @@ public:
      * search. In that case it makes sense to restart the search again.
      *
      * @param showNumMatches set to @c true if the dialog should show the number of
-     * matches. Set to @c false if the application provides a "find previous" action,
+     * matches. Set to @c false if the application provides a "tqfind previous" action,
      * in which case the match count will be erroneous when hitting the end,
      * and we could even be hitting the beginning of the document (so not all
      * matches have even been seen).
@@ -274,7 +274,7 @@ public:
      * @param matchedlength The length of the string that was matched
      * @return The index at which a match was found, or -1 if no match was found.
      */
-    static int find( const TQString &text, const TQString &pattern, int index, long options, int *matchedlength );
+    static int tqfind( const TQString &text, const TQString &pattern, int index, long options, int *matchedlength );
 
     /**
      * Search the given regular expression, and returns whether a match was found. If one is,
@@ -289,7 +289,7 @@ public:
      * @param matchedlength The length of the string that was matched
      * @return The index at which a match was found, or -1 if no match was found.
      */
-    static int find( const TQString &text, const TQRegExp &pattern, int index, long options, int *matchedlength );
+    static int tqfind( const TQString &text, const TQRegExp &pattern, int index, long options, int *matchedlength );
 
     /**
      * Displays the final dialog saying "no match was found", if that was the case.
@@ -298,22 +298,22 @@ public:
     virtual void displayFinalDialog() const;
 
     /**
-     * Return (or create) the dialog that shows the "find next?" prompt.
+     * Return (or create) the dialog that shows the "tqfind next?" prompt.
      * Usually you don't need to call this.
      * One case where it can be useful, is when the user selects the "Find"
-     * menu item while a find operation is under way. In that case, the
+     * menu item while a tqfind operation is under way. In that case, the
      * program may want to call setActiveWindow() on that dialog.
-     * @return The find next dialog.
+     * @return The tqfind next dialog.
      */
-    KDialogBase* findNextDialog( bool create = false );
+    KDialogBase* tqfindNextDialog( bool create = false );
 
     /**
-     * Close the "find next?" dialog. The application should do this when
+     * Close the "tqfind next?" dialog. The application should do this when
      * the last match was hit. If the application deletes the KFind, then
-     * "find previous" won't be possible anymore.
+     * "tqfind previous" won't be possible anymore.
      *
      * IMPORTANT: you should also call this if you are using a non-modal
-     * find dialog, to tell KFind not to pop up its own dialog.
+     * tqfind dialog, to tell KFind not to pop up its own dialog.
      */
     void closeFindNextDialog();
 
@@ -329,7 +329,7 @@ public:
 signals:
 
     /**
-     * Connect to this signal to implement highlighting of found text during the find
+     * Connect to this signal to implement highlighting of found text during the tqfind
      * operation.
      *
      * If you've set data with setData(id, text), use the signal highlight(id,
@@ -347,7 +347,7 @@ signals:
     void highlight(const TQString &text, int matchingIndex, int matchedLength);
 
     /**
-     * Connect to this signal to implement highlighting of found text during the find
+     * Connect to this signal to implement highlighting of found text during the tqfind
      * operation.
      *
      * Use this signal if you've set your data with setData(id, text), otherwise
@@ -367,28 +367,28 @@ signals:
     void highlight(int id, int matchingIndex, int matchedLength);
 
     // ## TODO docu
-    // findprevious will also emit findNext, after temporarily switching the value
+    // tqfindprevious will also emit tqfindNext, after temporarily switching the value
     // of FindBackwards
-    void findNext();
+    void tqfindNext();
 
     /**
      * Emitted when the options have changed.
-     * This can happen e.g. with "Replace All", or if our 'find next' dialog
-     * gets a "find previous" one day.
+     * This can happen e.g. with "Replace All", or if our 'tqfind next' dialog
+     * gets a "tqfind previous" one day.
      */
     void optionsChanged();
 
     /**
-     * Emitted when the 'find next' dialog is being closed.
+     * Emitted when the 'tqfind next' dialog is being closed.
      * Some apps might want to remove the highlighted text when this happens.
-     * Apps without support for "Find Next" can also do m_find->deleteLater()
-     * to terminate the find operation.
+     * Apps without support for "Find Next" can also do m_tqfind->deleteLater()
+     * to terminate the tqfind operation.
      */
     void dialogClosed();
 
 protected:
 
-    TQWidget* parentWidget() const { return (TQWidget *)parent(); }
+    TQWidget* tqparentWidget() const { return (TQWidget *)parent(); }
     TQWidget* dialogsParent() const;
 
 protected slots:

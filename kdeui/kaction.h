@@ -199,7 +199,7 @@ class KMainWindow;
  *
  * @see KStdAction
  */
-class KDEUI_EXPORT KAction : public QObject
+class KDEUI_EXPORT KAction : public TQObject
 {
   friend class KActionCollection;
   Q_OBJECT
@@ -576,8 +576,8 @@ protected:
     KToolBar* toolBar( int index ) const;
     TQPopupMenu* popupMenu( int index ) const;
     void removeContainer( int index );
-    int findContainer( const TQWidget* widget ) const;
-    int findContainer( int id ) const;
+    int tqfindContainer( const TQWidget* widget ) const;
+    int tqfindContainer( int id ) const;
     void plugMainWindowAccel( TQWidget *w );
 
     void addContainer( TQWidget* parent, int id );

@@ -5,10 +5,10 @@ include( $(KDELIBS)/win/common.pro )
 TARGET = driver
 DESTDIR = .
 
-system( bash kmoc )
+system( bash ktqmoc )
 system( bash kdcopidl )
 
-INCLUDEPATH += .. ../moc
+INCLUDEPATH += .. ../tqmoc
 
 LIBS += $$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdeice$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX
 

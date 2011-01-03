@@ -2,7 +2,7 @@
 
 QMAKE_CXXFLAGS += -DKBUILDSYCOCA_GUI
 
-!contains(KW_CONFIG,release) {
+!tqcontains(KW_CONFIG,release) {
 	KW_CONFIG = debug windows
 	KDEBUG=_d
 }

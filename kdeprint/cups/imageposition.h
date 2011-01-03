@@ -45,7 +45,7 @@ public:
 	void setPosition(int horiz = 1, int vert = 1);
 	PositionType position() const { return (PositionType)position_; }
 	TQString positionString() const;
-	TQSize sizeHint() const;
+	TQSize tqsizeHint() const;
 
 protected:
 	void paintEvent(TQPaintEvent *);

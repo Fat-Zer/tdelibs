@@ -232,7 +232,7 @@ void DocWordCompletionPluginView::shellComplete()
 {
     // setup
   KTextEditor::EditInterface * ei = KTextEditor::editInterface(m_view->document());
-    // find the word we are typing
+    // tqfind the word we are typing
   uint cline, ccol;
   viewCursorInterface(m_view)->cursorPositionReal(&cline, &ccol);
   TQString wrd = word();
@@ -242,7 +242,7 @@ void DocWordCompletionPluginView::shellComplete()
   TQValueList < KTextEditor::CompletionEntry > matches = allMatches(wrd);
   if (matches.size() == 0)
     return;
-  TQString partial = findLongestUnique(matches);
+  TQString partial = tqfindLongestUnique(matches);
   if (partial.length() == wrd.length())
   {
     KTextEditor::CodeCompletionInterface * cci = codeCompletionInterface(m_view);
@@ -261,7 +261,7 @@ void DocWordCompletionPluginView::complete( bool fw )
 {
   // setup
   KTextEditor::EditInterface *ei = KTextEditor::editInterface( m_view->document() );
-  // find the word we are typing
+  // tqfind the word we are typing
   uint cline, ccol;
   viewCursorInterface( m_view )->cursorPositionReal( &cline, &ccol );
   TQString wrd = word();
@@ -333,7 +333,7 @@ void DocWordCompletionPluginView::complete( bool fw )
       TQString m = d->re.cap( 1 );
       if ( m != d->lastIns )
       {
-        // we got good a match! replace text and return.
+        // we got good a match! tqreplace text and return.
         if ( d->lilen )
           ei->removeText( d->cline, d->ccol, d->cline, d->ccol + d->lilen );
         ei->insertText( d->cline, d->ccol, m );
@@ -393,7 +393,7 @@ void DocWordCompletionPluginView::complete( bool fw )
 }
 
 // Contributed by <brain@hdsnet.hu>
-TQString DocWordCompletionPluginView::findLongestUnique(const TQValueList < KTextEditor::CompletionEntry > &matches)
+TQString DocWordCompletionPluginView::tqfindLongestUnique(const TQValueList < KTextEditor::CompletionEntry > &matches)
 {
   TQString partial = matches.front().text;
   TQValueList < KTextEditor::CompletionEntry >::const_iterator i = matches.begin();
@@ -551,4 +551,4 @@ void DocWordCompletionConfigPage::defaults()
 //END DocWordCompletionConfigPage
 
 #include "docwordcompletion.moc"
-// kate: space-indent on; indent-width 2; replace-tabs on; mixed-indent off;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on; mixed-indent off;

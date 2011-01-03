@@ -423,9 +423,9 @@ void KSelectionWatcher::init()
         manager_atom = XInternAtom( dpy, "MANAGER", False );
         XWindowAttributes attrs;
         XGetWindowAttributes( dpy, RootWindow( dpy, screen ), &attrs );
-        long event_mask = attrs.your_event_mask;
+        long event_tqmask = attrs.your_event_mask;
         // StructureNotifyMask on the root window is needed
-        XSelectInput( dpy, RootWindow( dpy, screen ), event_mask | StructureNotifyMask );
+        XSelectInput( dpy, RootWindow( dpy, screen ), event_tqmask | StructureNotifyMask );
         }
     }    
 

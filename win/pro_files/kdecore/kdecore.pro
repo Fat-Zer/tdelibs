@@ -14,7 +14,7 @@ TARGET		= kdecore$$KDEBUG
 
 INCLUDEPATH += $(KDELIBS)/libltdl $(KDELIBS)/kdecore/network
 
-system( bash kmoc )
+system( bash ktqmoc )
 system( bash kdcopidl )
 
 SOURCES += \

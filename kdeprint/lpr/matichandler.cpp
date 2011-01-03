@@ -85,7 +85,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 	{
 		prt->setLocation(i18n("Local printer on %1").arg(val));
 		KURL	url(val);
-		if (val.find("usb") != -1)
+		if (val.tqfind("usb") != -1)
 			url.setProtocol("usb");
 		else
 			url.setProtocol("parallel");
@@ -104,7 +104,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 				KURL	url ( parsePostpipe(postpipe) );
 				if (!url.isEmpty())
 				{
-					QString	ds = TQString::fromLatin1("%1 (%2)").arg(prt->location()).arg(url.protocol());
+					QString	ds = TQString::tqfromLatin1("%1 (%2)").arg(prt->location()).arg(url.protocol());
 					prt->setDevice(url.url());
 					prt->setLocation(ds);
 				}
@@ -115,7 +115,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 			{
 				prt->setManufacturer(m["make"].toString());
 				prt->setModel(m["model"].toString());
-				prt->setDriverInfo(TQString::fromLatin1("%1 %2 (%3)").arg(prt->manufacturer()).arg(prt->model()).arg(m["driver"].toString()));
+				prt->setDriverInfo(TQString::tqfromLatin1("%1 %2 (%3)").arg(prt->manufacturer()).arg(prt->model()).arg(m["driver"].toString()));
 			}
 		}
 	}
@@ -126,7 +126,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 TQString MaticHandler::parsePostpipe(const TQString& s)
 {
 	QString	url;
-	int	p = s.findRev('|');
+	int	p = s.tqfindRev('|');
 	QStringList	args = TQStringList::split(" ", s.right(s.length()-p-1));
 
 	if (args.count() != 0)
@@ -167,7 +167,7 @@ TQString MaticHandler::parsePostpipe(const TQString& s)
 				else
 				{
 					QString	host = (args[i].length() == 2 ? args[i+1] : args[i].right(args[i].length()-2));
-					int	p = host.find("\\@");
+					int	p = host.tqfind("\\@");
 					if (p != -1)
 					{
 						url = "lpd://" + host.right(host.length()-p-2) + "/" + host.left(p);
@@ -247,11 +247,11 @@ DrMain* MaticHandler::loadDbDriver(const TQString& path)
 	}
 
 	QString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-	QString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	QString	PATH = getenv("PATH") + TQString::tqfromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 	QString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
-		manager()->setErrorMsg(i18n("Unable to find the executable foomatic-datafile "
+		manager()->setErrorMsg(i18n("Unable to tqfind the executable foomatic-datafile "
 		                            "in your PATH. Check that Foomatic is correctly installed."));
 		return NULL;
 	}
@@ -309,15 +309,15 @@ bool MaticHandler::savePrinterDriver(KMPrinter *prt, PrintcapEntry *entry, DrMai
 			line = tin.readLine();
 			if (line.stripWhiteSpace().startsWith("$postpipe"))
 				continue;
-			else if ((p = line.find("'name'")) != -1)
+			else if ((p = line.tqfind("'name'")) != -1)
 			{
-				p = line.find('\'', p+6)+1;
-				q = line.find('\'', p);
+				p = line.tqfind('\'', p+6)+1;
+				q = line.tqfind('\'', p);
 				optname = line.mid(p, q-p);
 			}
-			else if ((p = line.find("'default'")) != -1)
+			else if ((p = line.tqfind("'default'")) != -1)
 			{
-				DrBase	*opt = driver->findOption(optname);
+				DrBase	*opt = driver->tqfindOption(optname);
 				if (opt)
 				{
 					tout << line.left(p+9) << " => '" << opt->valueText() << "'," << endl;
@@ -351,11 +351,11 @@ bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 	if (mdriver.isEmpty() || mprinter.isEmpty())
 		return true;
 
-	QString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	QString	PATH = getenv("PATH") + TQString::tqfromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 	QString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
-		manager()->setErrorMsg(i18n("Unable to find the executable foomatic-datafile "
+		manager()->setErrorMsg(i18n("Unable to tqfind the executable foomatic-datafile "
 		                            "in your PATH. Check that Foomatic is correctly installed."));
 		return false;
 	}
@@ -372,12 +372,12 @@ bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 			line = tin.readLine();
 			if (line.startsWith("*% COMDATA #"))
 			{
-				if (line.find("'default'") != -1)
+				if (line.tqfind("'default'") != -1)
 				{
-					DrBase	*opt = (optname.isEmpty() ? NULL : driver->findOption(optname));
+					DrBase	*opt = (optname.isEmpty() ? NULL : driver->tqfindOption(optname));
 					if (opt)
 					{
-						line.replace(foo2, "'"+opt->valueText()+"',");
+						line.tqreplace(foo2, "'"+opt->valueText()+"',");
 					}
 				}
 				else if (foo.search(line) != -1)
@@ -385,7 +385,7 @@ bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 			}
 			else if (re.search(line) != -1)
 			{
-				DrBase	*opt = driver->findOption(re.cap(1));
+				DrBase	*opt = driver->tqfindOption(re.cap(1));
 				if (opt)
 				{
 					QString	val = opt->valueText();
@@ -423,7 +423,7 @@ PrintcapEntry* MaticHandler::createEntry(KMPrinter *prt)
 	}
 	if (m_exematicpath.isEmpty())
 	{
-		manager()->setErrorMsg(i18n("Unable to find executable lpdomatic. "
+		manager()->setErrorMsg(i18n("Unable to tqfind executable lpdomatic. "
 		                            "Check that Foomatic is correctly installed "
 		                            "and that lpdomatic is installed in a standard "
 		                            "location."));

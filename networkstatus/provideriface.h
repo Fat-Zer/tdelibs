@@ -27,11 +27,11 @@ class ProviderIface : virtual public DCOPObject
 {
 K_DCOP
 k_dcop:
-	/** @return NetworkStatus::EnumOnlineStatus */
+	/** @return NetworktqStatus::EnumOnlinetqStatus */
 	virtual int status( const TQString & network ) = 0;
-	/** @return NetworkStatus::EnumRequestResult */
+	/** @return NetworktqStatus::EnumRequestResult */
 	virtual int establish( const TQString & network ) = 0;
-	/** @return NetworkStatus::EnumRequestResult */
+	/** @return NetworktqStatus::EnumRequestResult */
 	virtual int shutdown( const TQString & network ) = 0;
 	/** fake a failure - go directly to failed */
 	virtual void simulateFailure() = 0;

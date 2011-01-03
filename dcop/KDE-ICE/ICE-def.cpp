@@ -11,7 +11,7 @@ EXPORTS
  IceCloseConnection
  IceComposeNetworkIdList
  IceConnectionNumber
- IceConnectionStatus
+ IceConnectiontqStatus
  IceConnectionString
  IceFlush
  IceFreeAuthFileEntry

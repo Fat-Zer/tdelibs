@@ -517,8 +517,8 @@
       <item> Comparable </item>
       <item> Comparator </item>
       <item> Compiler </item>
-      <item> CompletionStatus </item>
-      <item> CompletionStatusHelper </item>
+      <item> CompletiontqStatus </item>
+      <item> CompletiontqStatusHelper </item>
       <item> Component </item>
       <item> ComponentAdapter </item>
       <item> ComponentColorModel </item>
@@ -2647,7 +2647,7 @@
       <item> VirtualMachineError </item>
       <item> Visibility </item>
       <item> VisibilityHelper </item>
-      <item> VoiceStatus </item>
+      <item> VoicetqStatus </item>
       <item> Void </item>
       <item> VolatileImage </item>
       <item> WCharSeqHelper </item>

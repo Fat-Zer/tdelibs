@@ -88,10 +88,10 @@ protected slots:
   virtual void slotSetStatusBarText( const TQString & );
 
   /**
-   * Rebuilds the GUI after KEditToolbar changed the toolbar layout.
+   * Rebuilds the GUI after KEditToolbar changed the toolbar tqlayout.
    * @see configureToolbars()
    * KDE4: make this virtual. (For now we rely on the fact that it's called
-   * as a slot, so the metaobject finds it here).
+   * as a slot, so the metaobject tqfinds it here).
    */
   void saveNewToolbarConfig();
 

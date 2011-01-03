@@ -177,9 +177,9 @@ void KAccelAction::clearShortcut()
 	m_cut.clear();
 }
 
-bool KAccelAction::contains( const KKeySequence& seq )
+bool KAccelAction::tqcontains( const KKeySequence& seq )
 {
-	return m_cut.contains( seq );
+	return m_cut.tqcontains( seq );
 	for( uint i = 0; i < m_cut.count(); i++ ) {
 		if( m_cut.seq(i) == seq )
 			return true;
@@ -217,7 +217,7 @@ void KAccelAction::useFourModifierKeys( bool b )
 		// If we're 'turning off' the meta key or, if we're turning it on,
 		//  the keyboard must actually have a meta key.
 		if( b && !KKeyNative::keyboardHasWinKey() )
-			kdDebug(125) << "Tried to use four modifier keys on a keyboard layout without a Meta key.\n";
+			kdDebug(125) << "Tried to use four modifier keys on a keyboard tqlayout without a Meta key.\n";
 	}
 	KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
 	KGlobal::config()->writeEntry( "Use Four Modifier Keys", KAccelAction::g_bUseFourModifierKeys, true, true);
@@ -409,7 +409,7 @@ KAccelAction* KAccelActions::actionPtr( KKeySequence cut )
 	for( uint i = 0; i < m_nSize; i++ ) {
 		if( m_prgActions[i] == 0 )
 			kdWarning(125) << "KAccelActions::actionPtr( " << cut.toStringInternal() << " ): encountered null pointer at m_prgActions[" << i << "]" << endl;
-		else if( m_prgActions[i]->contains( cut ) )
+		else if( m_prgActions[i]->tqcontains( cut ) )
 			return m_prgActions[i];
 	}
 	return 0;
@@ -495,7 +495,7 @@ bool KAccelActions::readActions( const TQString& sConfigGroup, KConfigBase* pCon
 			1) KAccelSequence = "Meta+X"
 				1) KKeySequence = Meta+X
 			2) KAccelSequence = "Asterisk"
-				1) KKeySequence = Shift+8 (English layout)
+				1) KKeySequence = Shift+8 (English tqlayout)
 				2) KKeySequence = Keypad_Asterisk
 		2) KKeySequence = "Alt+F2"
 			1) KAccelSequence = "Alt+F2"

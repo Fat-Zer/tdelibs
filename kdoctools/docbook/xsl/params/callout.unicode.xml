@@ -1,15 +1,15 @@
-<refentry id="callout.unicode">
+<refentry id="callout.tqunicode">
 <refmeta>
-<refentrytitle>callout.unicode</refentrytitle>
+<refentrytitle>callout.tqunicode</refentrytitle>
 <refmiscinfo role="type">boolean</refmiscinfo>
 </refmeta>
 <refnamediv>
-<refname>callout.unicode</refname>
+<refname>callout.tqunicode</refname>
 <refpurpose>Use Unicode characters rather than images for callouts.</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
-<src:fragment id='callout.unicode.frag'><xsl:param name="callout.unicode" select="0"/></src:fragment>
+<src:fragment id='callout.tqunicode.frag'><xsl:param name="callout.tqunicode" select="0"/></src:fragment>
 </refsynopsisdiv>
 
 <refsect1><title>Description</title>

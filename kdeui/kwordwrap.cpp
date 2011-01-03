@@ -35,7 +35,7 @@ KWordWrap* KWordWrap::formatText( TQFontMetrics &fm, const TQRect & r, int /*fla
 {
     KWordWrap* kw = new KWordWrap( r );
     // The wordwrap algorithm
-    // The variable names and the global shape of the algorithm are inspired
+    // The variable names and the global tqshape of the algorithm are inspired
     // from QTextFormatterBreakWords::format().
     //kdDebug() << "KWordWrap::formatText " << str << " r=" << r.x() << "," << r.y() << " " << r.width() << "x" << r.height() << endl;
     int height = fm.height();

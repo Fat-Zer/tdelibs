@@ -67,7 +67,7 @@ void KURLRequesterDlg::initDialog(const TQString &text,const TQString &urlName)
     topLayout->addWidget( label );
 
     urlRequester_ = new KURLRequester( urlName, plainPage(), "urlRequester" );
-    urlRequester_->setMinimumWidth( urlRequester_->sizeHint().width() * 3 );
+    urlRequester_->setMinimumWidth( urlRequester_->tqsizeHint().width() * 3 );
     topLayout->addWidget( urlRequester_ );
     urlRequester_->setFocus();
     connect( urlRequester_->lineEdit(), TQT_SIGNAL(textChanged(const TQString&)),

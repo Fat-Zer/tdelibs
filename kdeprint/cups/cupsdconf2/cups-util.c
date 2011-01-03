@@ -250,7 +250,7 @@ cupsGetConf(void)
   return (filename);
 }
 
-int					/* O - Status of operation */
+int					/* O - tqStatus of operation */
 cupsPutConf(const char *name)		/* I - Name of the config file to send */
 {
   int		fd;			/* PPD file */

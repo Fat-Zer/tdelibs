@@ -102,7 +102,7 @@ public:
   /**
    * @return The parsed XML in a TQDomDocument, set by
    * setXMLFile() or setXML().
-   * This document describes the layout of the GUI.
+   * This document describes the tqlayout of the GUI.
    */
   virtual TQDomDocument domDocument() const;
 
@@ -304,7 +304,7 @@ protected:
   virtual void setXML( const TQString &document, bool merge = false );
 
   /**
-   * Sets the Document for the part, describing the layout of the GUI.
+   * Sets the Document for the part, describing the tqlayout of the GUI.
    *
    * Call this in the Part-inherited class constructor if you don't call
    * setXMLFile or setXML .
@@ -344,7 +344,7 @@ private:
   bool mergeXML( TQDomElement &base, const TQDomElement &additive,
                  KActionCollection *actionCollection );
 
-  TQDomElement findMatchingElement( const TQDomElement &base,
+  TQDomElement tqfindMatchingElement( const TQDomElement &base,
                                    const TQDomElement &additive );
 
   typedef TQMap<TQString, TQMap<TQString, TQString> > ActionPropertiesMap;
@@ -353,7 +353,7 @@ private:
 
   static void storeActionProperties( TQDomDocument &doc, const ActionPropertiesMap &properties );
 
-  static TQString findVersionNumber( const TQString &_xml );
+  static TQString tqfindVersionNumber( const TQString &_xml );
 
   // Actions to enable/disable on a state change
   TQMap<TQString,StateChange> m_actionsStateMap;

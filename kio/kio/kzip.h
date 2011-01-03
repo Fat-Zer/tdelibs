@@ -230,8 +230,8 @@ public:
       {}*/
     KZipFileEntry( KZip* zip, const TQString& name, int access, int date,
                    const TQString& user, const TQString& group, const TQString& symlink,
-                   const TQString& path, Q_LONG start, Q_LONG uncompressedSize,
-                   int encoding, Q_LONG compressedSize) :
+                   const TQString& path, TQ_LONG start, TQ_LONG uncompressedSize,
+                   int encoding, TQ_LONG compressedSize) :
         KArchiveFile( zip, name, access, date, user, group, symlink,
                       start, uncompressedSize ),
         m_crc(0),
@@ -241,14 +241,14 @@ public:
         m_path( path )
     {}
     int encoding() const { return m_encoding; }
-    Q_LONG compressedSize() const { return m_compressedSize; }
+    TQ_LONG compressedSize() const { return m_compressedSize; }
 
     /// Only used when writing
-    void setCompressedSize(Q_LONG compressedSize) { m_compressedSize = compressedSize; }
+    void setCompressedSize(TQ_LONG compressedSize) { m_compressedSize = compressedSize; }
 
     /// Header start: only used when writing
-    void setHeaderStart(Q_LONG headerstart) { m_headerStart = headerstart; }
-    Q_LONG headerStart() const {return m_headerStart; }
+    void setHeaderStart(TQ_LONG headerstart) { m_headerStart = headerstart; }
+    TQ_LONG headerStart() const {return m_headerStart; }
 
     /// CRC: only used when writing
     unsigned long crc32() const { return m_crc; }
@@ -274,8 +274,8 @@ public:
 
 private:
     unsigned long m_crc;
-    Q_LONG m_compressedSize;
-    Q_LONG m_headerStart;
+    TQ_LONG m_compressedSize;
+    TQ_LONG m_headerStart;
     int m_encoding;
     TQString m_path;
     // KDE4: d pointer or at least some int for future extensions

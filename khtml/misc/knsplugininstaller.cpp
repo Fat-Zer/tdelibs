@@ -95,7 +95,7 @@ bool KNSPluginInstallEngine::pluginAvailable()
     if(!loadXmlConfig())
         return false;
     
-    return findPlugin();
+    return tqfindPlugin();
 }
 
 bool KNSPluginInstallEngine::isActive() 
@@ -152,7 +152,7 @@ bool KNSPluginInstallEngine::loadXmlConfig()
     return true;
 }
 
-bool KNSPluginInstallEngine::findPlugin()
+bool KNSPluginInstallEngine::tqfindPlugin()
 {
 
     // get system infos
@@ -428,12 +428,12 @@ void KNSPluginWizard::initLicencePage()
 void KNSPluginWizard::initInstallationProgressPage() {
 
     m_installationProgressWidget = new TQWidget(this);
-    TQVBoxLayout *layout = new TQVBoxLayout(m_installationProgressWidget);
-    layout->addWidget(new TQLabel(i18n("Installation in progress."), m_installationProgressWidget));
-    layout->addItem(new TQSpacerItem(40,20,TQSizePolicy::Expanding,TQSizePolicy::Expanding ));
+    TQVBoxLayout *tqlayout = new TQVBoxLayout(m_installationProgressWidget);
+    tqlayout->addWidget(new TQLabel(i18n("Installation in progress."), m_installationProgressWidget));
+    tqlayout->addItem(new TQSpacerItem(40,20,TQSizePolicy::Expanding,TQSizePolicy::Expanding ));
     m_installationProgressBar = new KProgress(m_installationProgressWidget);
     m_installationProgressBar->setTotalSteps(100);
-    layout->addWidget(m_installationProgressBar);
+    tqlayout->addWidget(m_installationProgressBar);
     
     addPage( m_installationProgressWidget, i18n("Plugin installation"));
     
@@ -442,11 +442,11 @@ void KNSPluginWizard::initInstallationProgressPage() {
 void KNSPluginWizard::initFinishPage()
 {
     m_finishWidget = new TQWidget(this);
-    TQVBoxLayout *layout = new TQVBoxLayout(m_finishWidget);
-    layout->addItem(new TQSpacerItem(40,20,TQSizePolicy::Expanding,TQSizePolicy::Expanding ));
+    TQVBoxLayout *tqlayout = new TQVBoxLayout(m_finishWidget);
+    tqlayout->addItem(new TQSpacerItem(40,20,TQSizePolicy::Expanding,TQSizePolicy::Expanding ));
     m_finishLabel = new TQLabel(m_finishWidget);
-    layout->addWidget(m_finishLabel);
-    layout->addItem(new TQSpacerItem(40,20,TQSizePolicy::Expanding,TQSizePolicy::Expanding ));
+    tqlayout->addWidget(m_finishLabel);
+    tqlayout->addItem(new TQSpacerItem(40,20,TQSizePolicy::Expanding,TQSizePolicy::Expanding ));
     
     addPage(m_finishWidget, i18n("Installation status"));
     

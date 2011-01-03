@@ -43,7 +43,7 @@ class KSocketAddressPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short a socket address.
  */
-class KDECORE_EXPORT KSocketAddress: public QObject
+class KDECORE_EXPORT KSocketAddress: public TQObject
 {
   Q_OBJECT
 protected:
@@ -391,7 +391,7 @@ public:
    * @param flowinfo	flowinfo
    * @return true if successful, false otherwise
    */
-  bool setFlowinfo(Q_UINT32 flowinfo);
+  bool setFlowinfo(TQ_UINT32 flowinfo);
 
   /**
    * Sets the scope id for this socket if this is IPv6.
@@ -461,7 +461,7 @@ public:
    * Returns flowinfo for IPv6 socket.
    * @return the flowinfo, 0 if unsupported
    */
-  Q_UINT32 flowinfo() const;
+  TQ_UINT32 flowinfo() const;
 
   /**
    * Returns the scope id for this IPv6 socket.

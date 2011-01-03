@@ -21,7 +21,7 @@
 
 #include "clientifaceimpl.h"
 
-ClientIfaceImpl::ClientIfaceImpl( NetworkStatusModule * module ) : m_module ( module )
+ClientIfaceImpl::ClientIfaceImpl( NetworktqStatusModule * module ) : m_module ( module )
 {
 }
 

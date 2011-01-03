@@ -36,7 +36,7 @@ KServiceGroupFactory::KServiceGroupFactory()
    if (m_str)
    {
       // Read Header
-      Q_INT32 i;
+      TQ_INT32 i;
       (*m_str) >> i;
       m_baseGroupDictOffset = i;
 
@@ -66,12 +66,12 @@ KServiceGroupFactory * KServiceGroupFactory::self()
   return _self;
 }
 
-KServiceGroup * KServiceGroupFactory::findGroupByDesktopPath(const TQString &_name, bool deep)
+KServiceGroup * KServiceGroupFactory::tqfindGroupByDesktopPath(const TQString &_name, bool deep)
 {
    if (!m_sycocaDict) return 0; // Error!
 
    // Warning : this assumes we're NOT building a database
-   // But since findServiceByName isn't called in that case...
+   // But since tqfindServiceByName isn't called in that case...
    // [ see KServiceTypeFactory for how to do it if needed ]
 
    int offset = m_sycocaDict->find_string( _name );
@@ -89,12 +89,12 @@ KServiceGroup * KServiceGroupFactory::findGroupByDesktopPath(const TQString &_na
    return newGroup;
 }
 
-KServiceGroup * KServiceGroupFactory::findBaseGroup(const TQString &_baseGroupName, bool deep)
+KServiceGroup * KServiceGroupFactory::tqfindBaseGroup(const TQString &_baseGroupName, bool deep)
 {
    if (!m_baseGroupDict) return 0; // Error!
 
    // Warning : this assumes we're NOT building a database
-   // But since findServiceByName isn't called in that case...
+   // But since tqfindServiceByName isn't called in that case...
    // [ see KServiceTypeFactory for how to do it if needed ]
 
    int offset = m_baseGroupDict->find_string( _baseGroupName );

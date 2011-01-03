@@ -90,7 +90,7 @@ DockContainer::DockContainer(TQWidget *parent, TQWidget *win, int position, int 
 
   m_ws=new TQWidgetStack(this);
 
-  m_ws->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding,TQSizePolicy::Expanding));
+  m_ws->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Expanding,TQSizePolicy::Expanding));
 
   if ( (position==KDockWidget::DockLeft) || (position==KDockWidget::DockTop))
   {
@@ -118,7 +118,7 @@ DockContainer::~DockContainer()
   while (m_map.count()) {
     it = m_map.begin();
     KDockWidget *w=it.key();
-      if (m_overlapButtons.contains(w)) {
+      if (m_overlapButtons.tqcontains(w)) {
         (static_cast<KDockWidgetHeader*>(w->getHeader()->qt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
         m_overlapButtons.remove(w);
       }
@@ -164,7 +164,7 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
 {
   KDockWidget* w = (KDockWidget*) dwdg;
   int tab;
-  bool alreadyThere=m_map.contains(w);
+  bool alreadyThere=m_map.tqcontains(w);
 
   if (alreadyThere)
   {
@@ -181,8 +181,8 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
     m_revMap.insert(tab,w);
 
 
-    if (((KDockWidget*)parentWidget())->mayBeShow())
-      ((KDockWidget*)parentWidget())->dockBack();
+    if (((KDockWidget*)tqparentWidget())->mayBeShow())
+      ((KDockWidget*)tqparentWidget())->dockBack();
 
     if (w->getHeader()->qt_cast("KDockWidgetHeader"))
     {
@@ -298,7 +298,7 @@ bool DockContainer::eventFilter( TQObject *obj, TQEvent *event )
 }
 
 void DockContainer::showWidget(KDockWidget *w) {
-    if (!m_map.contains(w)) return;
+    if (!m_map.tqcontains(w)) return;
 
     kdDebug()<<"KMDI::DockContainer::<showWidget"<<endl;
     int id=m_map[w];
@@ -337,13 +337,13 @@ void DockContainer::changeOverlapMode()
 void DockContainer::hideIfNeeded() {
   kdDebug(760)<<"************************* hideIfNeeded *************************"<<endl;
   if (!itemNames.count())
-    ((KDockWidget*)parentWidget())->undock();
+    ((KDockWidget*)tqparentWidget())->undock();
 }
 
 void DockContainer::removeWidget(KDockWidget* dwdg)
 {
     KDockWidget* w = (KDockWidget*) dwdg;
-  if (!m_map.contains(w)) return;
+  if (!m_map.tqcontains(w)) return;
   int id=m_map[w];
   if (m_tb->isTabRaised(id)) {
     //why do we hide the tab if we're just going
@@ -356,7 +356,7 @@ void DockContainer::removeWidget(KDockWidget* dwdg)
   m_ws->removeWidget(w);
   m_map.remove(w);
   m_revMap.remove(id);
-  if (m_overlapButtons.contains(w)) {
+  if (m_overlapButtons.tqcontains(w)) {
     (static_cast<KDockWidgetHeader*>(w->getHeader()->qt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
     m_overlapButtons.remove(w);
   }
@@ -365,14 +365,14 @@ void DockContainer::removeWidget(KDockWidget* dwdg)
   tabCaptions.remove(w->name());
   tabTooltips.remove(w->name());
   if (!itemNames.count())
-    ((KDockWidget*)parentWidget())->undock();
+    ((KDockWidget*)tqparentWidget())->undock();
 }
 
 void DockContainer::undockWidget(KDockWidget *dwdg)
 {
   KDockWidget* w = (KDockWidget*) dwdg;
 
-  if (!m_map.contains(w))
+  if (!m_map.tqcontains(w))
     return;
 
   int id=m_map[w];
@@ -631,7 +631,7 @@ void DockContainer::toggle() {
 
 void DockContainer::prevToolView() {
     TQPtrList<KMultiTabBarTab>* tabs=m_tb->tabs();
-    int pos=tabs->findRef(m_tb->tab(oldtab));
+    int pos=tabs->tqfindRef(m_tb->tab(oldtab));
     if (pos==-1) return;
     pos--;
     if (pos<0) pos=tabs->count()-1;
@@ -643,7 +643,7 @@ void DockContainer::prevToolView() {
 
 void DockContainer::nextToolView() {
     TQPtrList<KMultiTabBarTab>* tabs=m_tb->tabs();
-    int pos=tabs->findRef(m_tb->tab(oldtab));
+    int pos=tabs->tqfindRef(m_tb->tab(oldtab));
     if (pos==-1) return;
     pos++;
     if (pos>=(int)tabs->count()) pos=0;
@@ -655,4 +655,4 @@ void DockContainer::nextToolView() {
 
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

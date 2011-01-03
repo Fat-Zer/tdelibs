@@ -23,7 +23,7 @@
 	* calstblx.dtd, dbcentx.mod, dbgenent.mod, dbhierx.mod, dbnotnx.mod, dbpoolx.mod: 
 	Prepare for CR1
 
-	* catalog.xml, docbook.cat: Prepare for CR1 and fix search-and-replace typos
+	* catalog.xml, docbook.cat: Prepare for CR1 and fix search-and-tqreplace typos
 
 	* dbpoolx.mod: Revise graphic attributes: add contentwidth, contentdepth, and valign
 

@@ -182,7 +182,7 @@ dcop_process_message(
 )
 {
   struct DCOPMsg * pMsg = 0L;
-  Status status = False;
+  tqStatus status = False;
 
   char  * buf         = 0L;
   char  * senderId    = 0L;
@@ -390,7 +390,7 @@ dcop_send_signal(
 
   free(header);
 
-  if (IceConnectionStatus(dcop_ice_conn) != IceConnectAccepted)
+  if (IceConnectiontqStatus(dcop_ice_conn) != IceConnectAccepted)
     return False;
 	
   return True;
@@ -412,7 +412,7 @@ dcop_call(
 )
 {
   IceReplyWaitInfo          waitInfo;
-  IceProcessMessagesStatus  status;
+  IceProcessMessagestqStatus  status;
   struct dcop_reply_struct  replyStruct;
 
   char  * pos               = 0L;
@@ -472,7 +472,7 @@ dcop_call(
   free(outputData);
   outputData = NULL;
 
-  if (IceConnectionStatus(dcop_ice_conn) != IceConnectAccepted) {
+  if (IceConnectiontqStatus(dcop_ice_conn) != IceConnectAccepted) {
       fprintf(stderr, "dcop_call(): Connection not accepted\n");
       return False;
   }
@@ -544,7 +544,7 @@ dcop_register(const char * app_name, Bool add_pid)
   char * data       = 0L;
   char * pos        = 0L;
   int    dataLength = 0;
-  Bool   callStatus = False;
+  Bool   calltqStatus = False;
 
   fprintf(stderr, "dcop_register(`%s')\n", app_name);
 
@@ -558,9 +558,9 @@ dcop_register(const char * app_name, Bool add_pid)
 
     fprintf(stderr, "dcop_init(): Reregistering as `%s'\n", app_name);
 
-    callStatus = dcop_detach();
+    calltqStatus = dcop_detach();
 
-    if (False == callStatus) {
+    if (False == calltqStatus) {
       fprintf(stderr, "dcop_init(): Could not detach before reregistering\n");
       return 0L;
     }
@@ -584,7 +584,7 @@ dcop_register(const char * app_name, Bool add_pid)
   pos = dcop_write_string(pos, dcop_requested_name);
   dataLength = pos - data;
 
-  callStatus =
+  calltqStatus =
     dcop_call(
       dcop_requested_name,
       "DCOPServer",
@@ -600,7 +600,7 @@ dcop_register(const char * app_name, Bool add_pid)
   free(dcop_requested_name);
   free(data);
 
-  if (False == callStatus) {
+  if (False == calltqStatus) {
     fprintf(stderr, "dcop_register(): dcop_call() failed\n");
     return 0L;
   }
@@ -769,7 +769,7 @@ dcop_protocol_setup()
 
   return (
     (status == IceProtocolSetupSuccess) &&
-    (IceConnectionStatus(dcop_ice_conn) == IceConnectAccepted)
+    (IceConnectiontqStatus(dcop_ice_conn) == IceConnectAccepted)
   );
 }
 

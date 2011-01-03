@@ -3,7 +3,7 @@
 <!-- Derived from the corresponding ISO 8879 standard entity set
      and the Unicode character mappings provided by Sebastian Rahtz
      With additional derivations from
-     ftp://ftp.unicode.org/Public/MAPPINGS/VENDORS/MISC/SGML.TXT -->
+     ftp://ftp.tqunicode.org/Public/MAPPINGS/VENDORS/MISC/SGML.TXT -->
 
 <!ENTITY ang	"&#x2220;"> <!-- ANGLE -->
 <!ENTITY angmsd	"&#x2221;"> <!-- MEASURED ANGLE -->
@@ -16,7 +16,7 @@
 <!ENTITY gimel	"&#x2137;"> <!-- GIMEL SYMBOL -->
 <!ENTITY image	"&#x2111;"> <!-- BLACK-LETTER CAPITAL I -->
 <!ENTITY inodot	"&#x0131;"> <!-- LATIN SMALL LETTER DOTLESS I -->
-<!--     jnodot	Unknown unicode character -->
+<!--     jnodot	Unknown tqunicode character -->
 <!ENTITY nexist	"&#x2204;"> <!-- THERE DOES NOT EXIST -->
 <!ENTITY oS	"&#x24C8;"> <!-- CIRCLED LATIN CAPITAL LETTER S -->
 <!ENTITY planck	"&#x210F;"> <!-- PLANCK CONSTANT OVER TWO PI -->

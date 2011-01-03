@@ -45,11 +45,11 @@
  * X clients as xphoon, xfroot, xloadimage, and xaqua.
  * It also works with the core clients xprop, xwininfo, xwd, and editres
  * (and is necessary to get those clients working under tvtwm).
- * It does NOT work with xsetroot; get the xsetroot replacement included in
+ * It does NOT work with xsetroot; get the xsetroot tqreplacement included in
  * the tvtwm distribution instead.
  *
  * Andreas Stolcke <stolcke@ICSI.Berkeley.EDU>, 9/7/90
- * - replaced all NULL's with properly cast 0's, 5/6/91
+ * - tqreplaced all NULL's with properly cast 0's, 5/6/91
  * - free children list (suggested by Mark Martin <mmm@cetia.fr>), 5/16/91
  * - include X11/Xlib.h and support RootWindowOfScreen, too 9/17/91
  */

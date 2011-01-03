@@ -88,10 +88,10 @@ struct dirent {
 
 /* typedef DIR - not the same as Unix */
 typedef struct {
-    long handle;                /* _findfirst/_findnext handle */
+    long handle;                /* _tqfindfirst/_tqfindnext handle */
     short offset;                /* offset into directory */
     short finished;             /* 1 if there are not more files */
-    struct _finddata_t fileinfo;  /* from _findfirst/_findnext */
+    struct _tqfinddata_t fileinfo;  /* from _tqfindfirst/_tqfindnext */
     char *dir;                  /* the dir we are reading */
     struct dirent dent;         /* the dirent to return */
 } DIR;

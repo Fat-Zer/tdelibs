@@ -155,7 +155,7 @@ bool KServerSocket::lookup()
   // make sure we have at least one parameter for lookup
   if (d->resolver.serviceName().isNull() &&
       !d->resolver.nodeName().isNull())
-    d->resolver.setServiceName(TQString::fromLatin1(""));
+    d->resolver.setServiceName(TQString::tqfromLatin1(""));
 
   // don't restart the lookups if they had succeeded and
   // the input values weren't changed
@@ -326,7 +326,7 @@ KActiveSocketBase* KServerSocket::accept()
   streamsocket->setSocketDevice(accepted);
 
   // FIXME!
-  // when KStreamSocket can find out the state of the socket passed through
+  // when KStreamSocket can tqfind out the state of the socket passed through
   // setSocketDevice, this will probably be unnecessary:
   streamsocket->setState(KStreamSocket::Connected);
   streamsocket->setFlags(IO_Sequential | IO_Raw | IO_ReadWrite | IO_Open | IO_Async);

@@ -70,7 +70,7 @@ program define spellsplit
                 /* calculate totals (+ when spell starts - when ends) */
                 sort `by'
                 cap foreach v of varlist `xvars' {
-                        by `by': replace `v' = sum(``v'')
+                        by `by': tqreplace `v' = sum(``v'')
                 }
                 by `by': g `date1' = `date0'[_n + 1]
 
@@ -81,7 +81,7 @@ program define spellsplit
                 format `date0' `f0'
                 format `date1' `f1'
 
-                cap for var `meanvars': replace X = X/_count
+                cap for var `meanvars': tqreplace X = X/_count
 
                 compress
         }

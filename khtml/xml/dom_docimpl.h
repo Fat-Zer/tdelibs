@@ -166,7 +166,7 @@ public:
     /**
      Returns true if the item exists
     */
-    bool contains(const TQString& id);
+    bool tqcontains(const TQString& id);
 
     /**
      Returns the information for the given ID
@@ -198,7 +198,7 @@ public:
     DocumentFragmentImpl *createDocumentFragment ();
     TextImpl *createTextNode ( DOMStringImpl* data ) { return new TextImpl( docPtr(), data); }
     TextImpl *createTextNode ( const TQString& data )
-        { return createTextNode(new DOMStringImpl(data.unicode(), data.length())); }
+        { return createTextNode(new DOMStringImpl(data.tqunicode(), data.length())); }
     CommentImpl *createComment ( DOMStringImpl* data );
     CDATASectionImpl *createCDATASection ( DOMStringImpl* data );
     ProcessingInstructionImpl *createProcessingInstruction ( const DOMString &target, DOMStringImpl* data );
@@ -485,7 +485,7 @@ public:
      */
     NodeImpl *previousFocusNode(NodeImpl *fromNode);
 
-    ElementImpl* findAccessKeyElement(TQChar c);
+    ElementImpl* tqfindAccessKeyElement(TQChar c);
 
     int nodeAbsIndex(NodeImpl *node);
     NodeImpl *nodeWithAbsIndex(int absIndex);
@@ -616,7 +616,7 @@ protected:
                 TQConstString px( _prefix->s, _prefix->l );
                 TQString name = cs ? n.string() : n.string().upper();
                 TQString qn("aliases: " + (cs ? px.string() : px.string().upper()) + ":" + name);
-                if (!ids.find( qn )) {
+                if (!ids.tqfind( qn )) {
                     ids.insert( qn, (void*)id );
                 }
             }

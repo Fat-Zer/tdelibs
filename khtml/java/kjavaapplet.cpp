@@ -222,27 +222,27 @@ void KJavaApplet::stateChange( const int newStateInt ) {
             break;
         case INSTANCIATED:
             if (ok) {
-                showStatus(i18n("Initializing Applet \"%1\"...").arg(appletName()));
+                showtqStatus(i18n("Initializing Applet \"%1\"...").arg(appletName()));
             }
             ok = (d->state == CLASS_LOADED);
             break;
         case INITIALIZED:
             ok = (d->state == INSTANCIATED);
             if (ok) { 
-                showStatus(i18n("Starting Applet \"%1\"...").arg(appletName()));
+                showtqStatus(i18n("Starting Applet \"%1\"...").arg(appletName()));
                 start();
             }
             break;
         case STARTED:
             ok = (d->state == INITIALIZED || d->state == STOPPED);
             if (ok) {    
-                showStatus(i18n("Applet \"%1\" started").arg(appletName()));
+                showtqStatus(i18n("Applet \"%1\" started").arg(appletName()));
             }
             break;
         case STOPPED:
             ok = (d->state == INITIALIZED || d->state == STARTED);
             if (ok) {    
-                showStatus(i18n("Applet \"%1\" stopped").arg(appletName()));
+                showtqStatus(i18n("Applet \"%1\" stopped").arg(appletName()));
             }
             break;
         case DESTROYED:
@@ -259,7 +259,7 @@ void KJavaApplet::stateChange( const int newStateInt ) {
     } 
 }
 
-void KJavaApplet::showStatus(const TQString &msg) {
+void KJavaApplet::showtqStatus(const TQString &msg) {
     TQStringList args;
     args << msg;
     context->processCmd("showstatus", args); 

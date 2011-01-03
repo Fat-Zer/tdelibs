@@ -72,7 +72,7 @@ KAction* create( StdAction id, const char *name, const TQObject *recvr, const ch
 			else
 			    aboutData = KGlobal::instance()->aboutData();
 			*/
-			TQString appName = (aboutData) ? aboutData->programName() : TQString::fromLatin1(qApp->name());
+			TQString appName = (aboutData) ? aboutData->programName() : TQString::tqfromLatin1(tqApp->name());
 			sLabel = i18n(pInfo->psLabel).arg(appName);
 			}
 			break;
@@ -95,7 +95,7 @@ KAction* create( StdAction id, const char *name, const TQObject *recvr, const ch
 			break;
 		 case ShowMenubar:
 		 case ShowToolbar:
-		 case ShowStatusbar:
+		 case ShowtqStatusbar:
 		 {
 			KToggleAction *ret;
 			ret = new KToggleAction( sLabel, pInfo->psIconName, cut,
@@ -179,13 +179,13 @@ KAction *selectAll( const TQObject *recvr, const char *slot, KActionCollection* 
 	{ return KStdAction::create( SelectAll, name, recvr, slot, parent ); }
 KAction *deselect( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
 	{ return KStdAction::create( Deselect, name, recvr, slot, parent ); }
-KAction *find( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+KAction *tqfind( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
 	{ return KStdAction::create( Find, name, recvr, slot, parent ); }
-KAction *findNext( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+KAction *tqfindNext( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
 	{ return KStdAction::create( FindNext, name, recvr, slot, parent ); }
-KAction *findPrev( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+KAction *tqfindPrev( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
 	{ return KStdAction::create( FindPrev, name, recvr, slot, parent ); }
-KAction *replace( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+KAction *tqreplace( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
 	{ return KStdAction::create( Replace, name, recvr, slot, parent ); }
 KAction *actualSize( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
 	{ return KStdAction::create( ActualSize, name, recvr, slot, parent ); }
@@ -267,16 +267,16 @@ KToggleToolBarAction *showToolbar( const char* toolBarName, KActionCollection* p
     return ret;
 }
 
-KToggleAction *showStatusbar( const TQObject *recvr, const char *slot,
+KToggleAction *showtqStatusbar( const TQObject *recvr, const char *slot,
                                          KActionCollection* parent, const char *_name )
 {
     KToggleAction *ret;
     ret = new KToggleAction(i18n("Show St&atusbar"), 0, recvr, slot, parent,
-                            _name ? _name : name(ShowStatusbar));
-    ret->setWhatsThis( i18n( "Show Statusbar<p>"
+                            _name ? _name : name(ShowtqStatusbar));
+    ret->setWhatsThis( i18n( "Show tqStatusbar<p>"
                              "Shows the statusbar, which is the bar at the bottom of the window used for status information." ) );
     KGuiItem guiItem( i18n("Hide St&atusbar"), TQString::null, TQString::null,
-                      i18n( "Hide Statusbar<p>"
+                      i18n( "Hide tqStatusbar<p>"
                             "Hides the statusbar, which is the bar at the bottom of the window used for status information." ) );
     ret->setCheckedState( guiItem );
 

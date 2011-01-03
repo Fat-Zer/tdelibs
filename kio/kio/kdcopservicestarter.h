@@ -40,7 +40,7 @@ public:
     /**
      * Check if a given DCOP interface is available - from the serviceType it's supposed to implement.
      *
-     * The trader is queried to find the preferred application for this serviceType,
+     * The trader is queried to tqfind the preferred application for this serviceType,
      * with the constraint that its X-DCOP-ServiceName property must be defined.
      * Then the DCOP server is checked. If the service is not available,
      * this method will call startServiceFor to start it.
@@ -48,17 +48,17 @@ public:
      * @param serviceType the type of service we're looking for
      * @param constraint see KTrader
      * @param preferences see KTrader
-     * @param error On failure, @p error contains a description of the error
+     * @param error On failure, @p error tqcontains a description of the error
      *         that occurred. If the pointer is 0, the argument will be
      *         ignored
-     * @param dcopService On success, @p dcopService contains the DCOP name
+     * @param dcopService On success, @p dcopService tqcontains the DCOP name
      *         under which this service is available. If the pointer is 0 the argument
      *         will be ignored
      * @param flags for future extensions (currently unused)
      *
      * @return an error code indicating success (== 0) or failure (> 0).
      */
-    int findServiceFor( const TQString& serviceType,
+    int tqfindServiceFor( const TQString& serviceType,
                         const TQString& constraint = TQString::null,
                         const TQString& preferences = TQString::null,
                         TQString *error=0, TQCString* dcopService=0,
@@ -67,7 +67,7 @@ public:
     /**
      * Find an implementation of the given @p serviceType,
      * and start it, to use its DCOP interface.
-     * The default implementation uses KTrader to find the preferred Application,
+     * The default implementation uses KTrader to tqfind the preferred Application,
      * and then starts it using kapp->startService...
      *
      * However applications (like kontact) can reimplement this method, to provide
@@ -76,10 +76,10 @@ public:
      * @param serviceType the type of service we're looking for
      * @param constraint see KTrader
      * @param preferences see KTrader
-     * @param error On failure, @p error contains a description of the error
+     * @param error On failure, @p error tqcontains a description of the error
      *         that occurred. If the pointer is 0, the argument will be
      *         ignored
-     * @param dcopService On success, @p dcopService contains the DCOP name
+     * @param dcopService On success, @p dcopService tqcontains the DCOP name
      *         under which this service is available. If the pointer is 0 the argument
      *         will be ignored
      * @param flags for future extensions (currently unused)

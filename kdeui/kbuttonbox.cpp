@@ -20,7 +20,7 @@
 /*
  * KButtonBox class
  *
- * A container widget for buttons. Uses Qt layout control to place the
+ * A container widget for buttons. Uses Qt tqlayout control to place the
  * buttons, can handle both vertical and horizontal button placement.
 *
  * HISTORY
@@ -39,7 +39,7 @@
  * which makes the buttons look better.
  *
  * 01/17/98  Mario Weilguni <mweilguni@sime.com>
- * Fixed a bug in sizeHint()
+ * Fixed a bug in tqsizeHint()
  * Improved the handling of Motif default buttons
  *
  * 01/09/98  Mario Weilguni <mweilguni@sime.com>
@@ -160,7 +160,7 @@ void KButtonBox::addStretch(int scale) {
   }
 }
 
-void KButtonBox::layout() {
+void KButtonBox::tqlayout() {
   // resize all buttons
   const TQSize bs = bestButtonSize();
 
@@ -178,7 +178,7 @@ void KButtonBox::layout() {
     ++itr;
   }
 
-  setMinimumSize(sizeHint());
+  setMinimumSize(tqsizeHint());
 }
 
 void KButtonBox::placeButtons() {
@@ -300,7 +300,7 @@ TQSize KButtonBox::bestButtonSize() const {
   return s;
 }
 
-TQSize KButtonBox::sizeHint() const {
+TQSize KButtonBox::tqsizeHint() const {
   unsigned int dw;
 
   if(data->buttons.isEmpty())
@@ -355,8 +355,8 @@ TQSizePolicy KButtonBox::sizePolicy() const
  * as minimum width
  */
 TQSize KButtonBox::buttonSizeHint(TQPushButton *b) const {
-  TQSize s = b->sizeHint();
-  const TQSize ms = b->minimumSize();
+  TQSize s = b->tqsizeHint();
+  const TQSize ms = b->tqminimumSize();
   if(s.width() < minButtonWidth)
     s.setWidth(minButtonWidth);
 

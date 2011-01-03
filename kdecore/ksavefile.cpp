@@ -47,7 +47,7 @@ KSaveFile::KSaveFile(const TQString &filename, int mode)
    TQString real_filename = KStandardDirs::realFilePath(filename);
 
    // we only check here if the directory can be written to
-   // the actual filename isn't written to, but replaced later
+   // the actual filename isn't written to, but tqreplaced later
    // with the contents of our tempfile
    if (!checkAccess(real_filename, W_OK))
    {
@@ -55,7 +55,7 @@ KSaveFile::KSaveFile(const TQString &filename, int mode)
       return;
    }
 
-   if (mTempFile.create(real_filename, TQString::fromLatin1(".new"), mode))
+   if (mTempFile.create(real_filename, TQString::tqfromLatin1(".new"), mode))
    {
       mFileName = real_filename; // Set filename upon success
 
@@ -165,7 +165,7 @@ bool KSaveFile::backupFile( const TQString& qFilename, const TQString& backupDir
    else
    {
        TQCString nameOnly;
-       int slash = cFilename.findRev('/');
+       int slash = cFilename.tqfindRev('/');
        if (slash < 0)
 	   nameOnly = cFilename;
        else

@@ -130,9 +130,9 @@ void DefaultProgress::init()
   hBox->addWidget(resumeLabel);
 
   progressLabel = new TQLabel( this );
-/*  progressLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::MinimumExpanding,
+/*  progressLabel->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::MinimumExpanding,
                                              TQSizePolicy::Preferred ) );*/
-  progressLabel->setAlignment( TQLabel::AlignRight );
+  progressLabel->tqsetAlignment( TQLabel::AlignRight );
   hBox->addWidget( progressLabel );
 
   hBox = new TQHBoxLayout();
@@ -171,8 +171,8 @@ void DefaultProgress::init()
   connect( d->cancelClose, TQT_SIGNAL( clicked() ), TQT_SLOT( slotStop() ) );
   hBox->addWidget( d->cancelClose );
 
-  resize( sizeHint() );
-  setMaximumHeight(sizeHint().height());
+  resize( tqsizeHint() );
+  setMaximumHeight(tqsizeHint().height());
 
   d->keepOpenChecked = false;
   d->noCaptionYet = true;
@@ -273,7 +273,7 @@ void DefaultProgress::slotPercent( KIO::Job*, unsigned long percent )
 void DefaultProgress::slotInfoMessage( KIO::Job*, const TQString & msg )
 {
   speedLabel->setText( msg );
-  speedLabel->setAlignment( speedLabel->alignment() & ~Qt::WordBreak );
+  speedLabel->tqsetAlignment( speedLabel->tqalignment() & ~Qt::WordBreak );
 }
 
 
@@ -472,7 +472,7 @@ void DefaultProgress::checkDestination(const KURL& dest) {
       TQString path = dest.path( -1 );
       TQStringList tmpDirs = KGlobal::dirs()->resourceDirs( "tmp" );
       for ( TQStringList::Iterator it = tmpDirs.begin() ; ok && it != tmpDirs.end() ; ++it )
-          if ( path.contains( *it ) )
+          if ( path.tqcontains( *it ) )
               ok = false; // it's in the tmp resource
   }
 

@@ -127,7 +127,7 @@ class CategoriesMap : public TQMap<int, TQString>
  *  keys). Of course, in different files a key might be used twice. <BR>
  *  The keys are objects of the type KabKey and define the section in the 
  *  addressbook database where the entry is stored (see QConfigDB
- *  reference). Keys invalidate on file changes, so keep track of the
+ *  reference). Keys tqinvalidate on file changes, so keep track of the
  *  signal ::changed. <BR>
  *  kab watches file changes. If the opened file changes on disk, it is
  *  automatically reloaded and ::changed() is emitted. 
@@ -146,7 +146,7 @@ class CategoriesMap : public TQMap<int, TQString>
  *  \par The mirror map
  *  The entries are stored in the QConfigDB object ::data which represents the
  *  currently opened file. In every file there is a section with the name 
- *  <TT> entries </TT> that contains a subsection for every entry. The name of
+ *  <TT> entries </TT> that tqcontains a subsection for every entry. The name of
  *  the subsection is the key of the entry. <BR>
  *  When retrieving the sections, they are ordered alphabetically by their keys.
  *  This is not what users expect, since the keys show the insertion order of 
@@ -157,10 +157,10 @@ class CategoriesMap : public TQMap<int, TQString>
  *  created as a combination of the entry data, and then displayed in aphabetical 
  *  order in the selector combobox. This map is called the mirror map throughout 
  *  the documentation. It is created or updated every time the database changes.
- *  Thus the way to find a special entry is: <OL>
+ *  Thus the way to tqfind a special entry is: <OL>
  *  <LI> the user selects an item in the selector combo box, returning its 
  *       index, </LI>
- *  <LI> the index is used to find the key of the entry in the mirror map, </LI>
+ *  <LI> the index is used to tqfind the key of the entry in the mirror map, </LI>
  *  <LI> and finally the entry is retrieved by its key from the database. </LI>
  *  </OL>
  *  To modify the sorting order, the way to create the entry descriptors in the 
@@ -230,9 +230,9 @@ public:
    *  First of all, kab II data files (that usually end with \c .kab, while in
    *  kab 1 the fixed file name was \c addressbook.database) have two main
    *  sections (see the documentation of the QConfigDB and Section classes),
-   *  one is called \c config, it contains different file specific
+   *  one is called \c config, it tqcontains different file specific
    *  configuration settings like the last displayed entry, and one section
-   *  called \c entries that in turn contains a subsection for each entry in
+   *  called \c entries that in turn tqcontains a subsection for each entry in
    *  the database file. The keys of this subsections are the literal strings
    *  that are used in the KabKey class in the member KabKey::key. Each entry
    *  subsection has some key-value-pairs described below and another
@@ -260,15 +260,15 @@ public:
    *     ... (more entries may follow)
    *  [END] </PRE> <BR>
    *
-   *  \par The fields an entry contains
-   *  An entry contains all settings that are expected to be unique for all
+   *  \par The fields an entry tqcontains
+   *  An entry tqcontains all settings that are expected to be unique for all
    *  addresses directly as key-value-pairs. Everything that is part of a
    *  specific address of this person is part of an object of the member list
    *  \c addresses referenced in the next paragraph. <BR>
    *  The keys defined directly in the entry sections are: <DL>
    *  <DT>title<DT><DD> The title of that person. </DD>
    *  <DT>rank<DT><DD>A possible military rank of that person. </DD>
-   *  <DT>fn<DT><DD>The formatted name. If it is not empty, it replaces the
+   *  <DT>fn<DT><DD>The formatted name. If it is not empty, it tqreplaces the
    *       standard combination of the other name fields in the address
    *       display. </DD>
    *  <DT>nameprefix<DT><DD>A possible name prefix. </DD>
@@ -290,7 +290,7 @@ public:
    *  See the next section for a description of the addresses subsections.
    * 
    *  \par The fields of the addresses subsections
-   *  The section for each entry contains a subsection \c addresses with
+   *  The section for each entry tqcontains a subsection \c addresses with
    *  in turn a subsection for each address. The addresses are enumerated
    *  in the order they are inserted, their keys are the numbers of
    *  inserting converted to a string. <BR>
@@ -416,7 +416,7 @@ public:
     TQStringList emails; /**< The email addresses. */
     TQStringList keywords; /**< The user defined keywords for searching. */
     /**
-     * Telephon numbers and types. This list contains combinations of telephone
+     * Telephon numbers and types. This list tqcontains combinations of telephone
      * numbers and the types of the phones, in this order. See enum
      * Telephone above.
      */
@@ -506,7 +506,7 @@ public:
     *    firstname (add. name) last name,
     * if it is true, 
     +    last name, first name (add. name).
-    * If \a initials is true, the text contains initials only:
+    * If \a initials is true, the text tqcontains initials only:
     *    f. a. name [with reverse==false] or
     *    name, f. a. [with reverse==true].
     * If there is no entry with this key, the method returns ::NoSuchEntry.
@@ -572,7 +572,7 @@ public:
   ErrorCode createConfigFile();
   ErrorCode loadConfigFile(); /**< Load the local configuration file. */
   // ErrorCode configureKab(); /**< Open the configuration dialog for the KabAPI. */
-  // TQSize sizeHint();  /**< The preferred (minimal) size of the view. */ // ni
+  // TQSize tqsizeHint();  /**< The preferred (minimal) size of the view. */ // ni
   /**
    * This method parses a vCard and creates an Entry object from it.
    */
@@ -597,7 +597,7 @@ public:
    */
   ErrorCode categories(CategoriesMap& categories);
   /**
-   * Modify the categories for this addressbook. The map given will replace the 
+   * Modify the categories for this addressbook. The map given will tqreplace the 
    * previoulsy stored one.
    */
   ErrorCode setCategories(const CategoriesMap& categories);
@@ -630,12 +630,12 @@ protected:
   KabKey nextAvailEntryKey();
   /**
    * Returns true if both pathes point to the same file.
-   *  The method resolves relative file names to find this out.
+   *  The method resolves relative file names to tqfind this out.
    */
   bool isSameFile(const TQString& a, const TQString& b);
   /**
    * Parse the section and copy its contents into \a entry.
-   * The method expects a subsection called \e addresses that contains a
+   * The method expects a subsection called \e addresses that tqcontains a
    * number of subsections each containing data for one Entry::Address object.
    * All other fields are copied directly into the members of \a entry.
    */

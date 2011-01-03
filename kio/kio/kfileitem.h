@@ -47,7 +47,7 @@ public:
    * Creates an item representing a file, from a UDSEntry.
    * This is the preferred constructor when using KIO::listDir().
    *
-   * @param _entry the KIO entry used to get the file, contains info about it
+   * @param _entry the KIO entry used to get the file, tqcontains info about it
    * @param _url the file url
    * @param _determineMimeTypeOnDemand specifies if the mimetype of the given
    *       URL should be determined immediately or on demand

@@ -32,69 +32,69 @@ bool _expandvars = false;
 
 TQString expandvars(const char *_input)
 {
-    TQString result = TQString::fromLatin1(_input);
+    TQString result = TQString::tqfromLatin1(_input);
     if (!_expandvars)
         return result;
 
     bool changed = false;
-    int index = result.find("${prefix}");
+    int index = result.tqfind("${prefix}");
     if (index >= 0) {
-        result = result.replace(index, 9, "@CMAKE_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 9, "@CMAKE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("$(prefix)");
+    index = result.tqfind("$(prefix)");
     if (index >= 0) {
-        result = result.replace(index, 9, "@CMAKE_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 9, "@CMAKE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("${datadir}");
+    index = result.tqfind("${datadir}");
     if (index >= 0) {
-        result = result.replace(index, 10, "@SHARE_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 10, "@SHARE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("$(datadir)");
+    index = result.tqfind("$(datadir)");
     if (index >= 0) {
-        result = result.replace(index, 10, "@SHARE_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 10, "@SHARE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("${exec_prefix}");
+    index = result.tqfind("${exec_prefix}");
     if (index >= 0) {
-        result = result.replace(index, 14, "@EXEC_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 14, "@EXEC_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("$(exec_prefix)");
+    index = result.tqfind("$(exec_prefix)");
     if (index >= 0) {
-        result = result.replace(index, 14, "@EXEC_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 14, "@EXEC_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("${libdir}");
+    index = result.tqfind("${libdir}");
     if (index >= 0) {
-        result = result.replace(index, 9, "@LIB_INSTALL_DIR@");
+        result = result.tqreplace(index, 9, "@LIB_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("$(libdir)");
+    index = result.tqfind("$(libdir)");
     if (index >= 0) {
-        result = result.replace(index, 9, "@LIB_INSTALL_DIR@");
+        result = result.tqreplace(index, 9, "@LIB_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("${includedir}");
+    index = result.tqfind("${includedir}");
     if (index >= 0) {
-        result = result.replace(index, 20, "@INCLUDE_INSTALL_DIR@");
+        result = result.tqreplace(index, 20, "@INCLUDE_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("$(includedir)");
+    index = result.tqfind("$(includedir)");
     if (index >= 0) {
-        result = result.replace(index, 20, "@INCLUDE_INSTALL_DIR@");
+        result = result.tqreplace(index, 20, "@INCLUDE_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("${sysconfdir}");
+    index = result.tqfind("${sysconfdir}");
     if (index >= 0) {
-        result = result.replace(index, 13, "@SYSCONF_INSTALL_DIR@");
+        result = result.tqreplace(index, 13, "@SYSCONF_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("$(sysconfdir)");
+    index = result.tqfind("$(sysconfdir)");
     if (index >= 0) {
-        result = result.replace(index, 13, "@SYSCONF_INSTALL_DIR@");
+        result = result.tqreplace(index, 13, "@SYSCONF_INSTALL_DIR@");
         changed = true;
     }
     if (changed)
@@ -186,7 +186,7 @@ int main(int argc, char **argv)
             "wallpaper", I18N_NOOP("Wallpapers"),
             "xdgdata-apps", I18N_NOOP("XDG Application menu (.desktop files)"),
             "xdgdata-dirs", I18N_NOOP("XDG Menu descriptions (.directory files)"),
-            "xdgconf-menu", I18N_NOOP("XDG Menu layout (.menu files)"),
+            "xdgconf-menu", I18N_NOOP("XDG Menu tqlayout (.menu files)"),
             "cmake", I18N_NOOP("CMake import modules (.cmake files)"),
             "tmp", I18N_NOOP("Temporary files (specific for both current host and current user)"),
             "socket", I18N_NOOP("UNIX Sockets (specific for both current host and current user)"),

@@ -91,7 +91,7 @@ private:
 * @short Blanks a widget using various effects.
 * @author Martin R. Jones <mjones@kde.org>
 */
-class KBlankEffect : public QObject
+class KBlankEffect : public TQObject
 {
 	Q_OBJECT
 public:

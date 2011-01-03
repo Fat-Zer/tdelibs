@@ -61,7 +61,7 @@ namespace Arts
  * }
  * \endcode
  */
-class KDE_EXPORT KArtsDispatcher : public QObject
+class KDE_EXPORT KArtsDispatcher : public TQObject
 {
 Q_OBJECT
 public:

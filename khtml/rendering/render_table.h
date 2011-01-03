@@ -87,7 +87,7 @@ public:
     virtual void addChild(RenderObject *child, RenderObject *beforeChild = 0);
     virtual void paint( PaintInfo&, int tx, int ty);
     virtual void paintBoxDecorations(PaintInfo&, int _tx, int _ty);
-    virtual void layout();
+    virtual void tqlayout();
     virtual void calcMinMaxWidth();
     virtual void close();
 
@@ -224,7 +224,7 @@ public:
 
     void setCellWidths();
     void calcRowHeight();
-    int layoutRows( int height );
+    int tqlayoutRows( int height );
 
     RenderTable *table() const { return static_cast<RenderTable *>(parent()); }
 
@@ -315,7 +315,7 @@ public:
 
     virtual bool nodeAtPoint(NodeInfo& info, int x, int y, int tx, int ty, HitTestAction action, bool inside);
 
-    virtual void layout();
+    virtual void tqlayout();
 
     virtual RenderObject* removeChildNode(RenderObject* child);
 
@@ -336,7 +336,7 @@ class RenderTableCell : public RenderBlock
 public:
     RenderTableCell(DOM::NodeImpl* node);
 
-    virtual void layout();
+    virtual void tqlayout();
     virtual void detach();
 
     virtual const char *renderName() const { return "RenderTableCell"; }
@@ -396,7 +396,7 @@ public:
     // lie position to outside observers
     virtual int yPos() const { return m_y + _topExtra; }
 
-    virtual void repaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
+    virtual void tqrepaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
     virtual bool absolutePosition(int &xPos, int &yPos, bool f = false) const;
 
     virtual short baselinePosition( bool = false ) const;
@@ -455,7 +455,7 @@ public:
 
     virtual short lineHeight( bool ) const { return 0; }
     virtual void position(InlineBox*, int, int, bool) {}
-    virtual void layout() {}
+    virtual void tqlayout() {}
     virtual bool requiresLayer() const { return false; }
 
     virtual void updateFromElement();

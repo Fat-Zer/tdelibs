@@ -144,9 +144,9 @@ public:
    */
   TQString current() const;
   /**
-   * Returns TRUE if the combobox contains id.
+   * Returns TRUE if the combobox tqcontains id.
    */
-  bool contains( const TQString & id ) const;
+  bool tqcontains( const TQString & id ) const;
   /**
    * Sets id as current item.
    */

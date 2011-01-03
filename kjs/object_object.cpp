@@ -119,7 +119,7 @@ Value ObjectProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
     if (propertyName == specialPrototypePropertyName)
       return Value(BooleanImp::staticFalse);
 
-    const HashEntry *entry = obj->findPropertyHashEntry(propertyName);
+    const HashEntry *entry = obj->tqfindPropertyHashEntry(propertyName);
     return Value((entry && !(entry->attr & DontEnum)) ?
 		 BooleanImp::staticTrue : BooleanImp::staticFalse);
   }

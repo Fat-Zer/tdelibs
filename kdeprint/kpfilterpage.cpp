@@ -100,7 +100,7 @@ KPFilterPage::KPFilterPage(TQWidget *parent, const char *name)
 						" the filtering chain fail. For example: if your file is ASCII text, and you want the "
 						" output being processed by the 'Multipage per Sheet' filter, the first filter must be "
 						" one that processes ASCII into PostScript. </p> "
-						" <p>KDEPrint can utilize <em>any</em> external filtering program which you may find useful "
+						" <p>KDEPrint can utilize <em>any</em> external filtering program which you may tqfind useful "
 						" through this interface. </p> "
 						" <p>KDEPrint ships preconfigured with support for a selection of common filters. These "
 						" filters however need to be "
@@ -295,7 +295,7 @@ void KPFilterPage::setOptions(const TQMap<TQString,TQString>& opts)
 	TQDictIterator<KXmlCommand>	dit(m_activefilters);
 	for (;dit.current();)
 	{
-		if (filters.find(dit.currentKey()) == filters.end())
+		if (filters.tqfind(dit.currentKey()) == filters.end())
 			m_activefilters.remove(dit.currentKey());
 		else
 		{
@@ -309,7 +309,7 @@ void KPFilterPage::setOptions(const TQMap<TQString,TQString>& opts)
 	for (TQStringList::ConstIterator sit=filters.begin(); sit!=filters.end(); ++sit)
 	{
 		KXmlCommand	*f(0);
-		if ((f=m_activefilters.find(*sit)) == 0)
+		if ((f=m_activefilters.tqfind(*sit)) == 0)
 		{
 			f = KXmlCommandManager::self()->loadCommand(*sit);
 			if (f)
@@ -329,7 +329,7 @@ void KPFilterPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 	QStringList	filters = activeList();
 	for (TQStringList::ConstIterator it=filters.begin(); it!=filters.end(); ++it)
 	{
-		KXmlCommand	*f = m_activefilters.find(*it);
+		KXmlCommand	*f = m_activefilters.tqfind(*it);
 		if (f)
 			f->getOptions(opts, incldef);
 	}
@@ -355,7 +355,7 @@ KXmlCommand* KPFilterPage::currentFilter()
 {
 	KXmlCommand	*filter(0);
 	if (m_view->selectedItem())
-		filter = m_activefilters.find(m_view->selectedItem()->text(1));
+		filter = m_activefilters.tqfind(m_view->selectedItem()->text(1));
 	return filter;
 }
 
@@ -367,10 +367,10 @@ void KPFilterPage::checkFilterChain()
 	while (item)
 	{
 		item->setPixmap(0, (ok ? SmallIcon("filter") : SmallIcon("filterstop")));
-		KXmlCommand	*f1 = m_activefilters.find(item->text(1));
+		KXmlCommand	*f1 = m_activefilters.tqfind(item->text(1));
 		if (f1 && item->nextSibling())
 		{
-			KXmlCommand	*f2 = m_activefilters.find(item->nextSibling()->text(1));
+			KXmlCommand	*f2 = m_activefilters.tqfind(item->nextSibling()->text(1));
 			if (f2)
 			{
 				if (!f2->acceptMimeType(f1->mimeType()))

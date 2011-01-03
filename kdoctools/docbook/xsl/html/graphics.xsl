@@ -148,10 +148,10 @@
        Don't do that. In fact, a percentage value is not recommended for content
        size at all. Use scale instead.
 
-       Finally, align and valign are troublesome. Horizontal alignment is now
+       Finally, align and valign are troublesome. Horizontal tqalignment is now
        supported by wrapping the image in a <div align="{@align}"> (in block
        contexts!). I can't think of anything (practical) to do about vertical
-       alignment.
+       tqalignment.
   -->
 
   <xsl:variable name="width-units">
@@ -516,7 +516,7 @@ valign: <xsl:value-of select="@valign"/></xsl:message>
 	      <xsl:when test="$img.src.path != '' and
 			      $tag = 'img' and
 	                      not(starts-with($filename, '/')) and
-			      not(contains($filename, '://'))">
+			      not(tqcontains($filename, '://'))">
 	        <xsl:value-of select="$img.src.path"/>
 	      </xsl:when>
 	    </xsl:choose>
@@ -675,7 +675,7 @@ valign: <xsl:value-of select="@valign"/></xsl:message>
 
     <xsl:when test="$scalefit != 0">
       <xsl:choose>
-        <xsl:when test="contains($html.width, '%')">
+        <xsl:when test="tqcontains($html.width, '%')">
           <xsl:choose>
             <xsl:when test="$viewport != 0">
               <!-- The *viewport* will be scaled, so use 100% here! -->
@@ -691,7 +691,7 @@ valign: <xsl:value-of select="@valign"/></xsl:message>
           </xsl:choose>
         </xsl:when>
 
-        <xsl:when test="contains($html.depth, '%')">
+        <xsl:when test="tqcontains($html.depth, '%')">
           <!-- HTML doesn't deal with this case very well...do nothing -->
         </xsl:when>
 
@@ -1170,7 +1170,7 @@ valign: <xsl:value-of select="@valign"/></xsl:message>
 <xsl:template match="@fileref">
   <!-- need a check for absolute urls -->
   <xsl:choose>
-    <xsl:when test="contains(., ':')">
+    <xsl:when test="tqcontains(., ':')">
       <!-- it has a uri scheme so it is an absolute uri -->
       <xsl:value-of select="."/>
     </xsl:when>

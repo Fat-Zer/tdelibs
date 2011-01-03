@@ -5,7 +5,7 @@
  * This file is part of the KDE project, module kdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
- * This file contains code from TEShell.C of the KDE konsole. 
+ * This file tqcontains code from TEShell.C of the KDE konsole. 
  * Copyright (c) 1997,1998 by Lars Doelle <lars.doelle@on-line.de> 
  *
  * This is free software; you can use this library under the GNU Library 
@@ -179,7 +179,7 @@ TQCString PtyProcess::readLine(bool block)
 
     if (!m_Inbuf.isEmpty()) 
     {
-        pos = m_Inbuf.find('\n');
+        pos = m_Inbuf.tqfind('\n');
         if (pos == -1) 
         {
             ret = m_Inbuf;
@@ -228,7 +228,7 @@ TQCString PtyProcess::readLine(bool block)
         buf[nbytes] = '\000';
         m_Inbuf += buf;
 
-        pos = m_Inbuf.find('\n');
+        pos = m_Inbuf.tqfind('\n');
         if (pos == -1) 
         {
             ret = m_Inbuf;
@@ -371,7 +371,7 @@ int PtyProcess::exec(const TQCString &command, const QCStringList &args)
     // From now on, terminal output goes through the tty.
 
     TQCString path;
-    if (command.contains('/'))
+    if (command.tqcontains('/'))
         path = command;
     else 
     {
@@ -513,7 +513,7 @@ int PtyProcess::waitForChild()
                 if (!m_Exit.isEmpty())
                 {
                     // match exit string only at line starts
-                    int pos = output.find(m_Exit);
+                    int pos = output.tqfind(m_Exit);
                     if ((pos >= 0) && ((pos == 0 && lineStart) || (output.at (pos - 1) == '\n')))
                     {
                         kill(m_Pid, SIGTERM);

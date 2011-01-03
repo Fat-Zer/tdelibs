@@ -65,7 +65,7 @@ public:
 		m_useFillGradient = false;
 		m_useStrokeGradient = false;
 
-		m_worldMatrix = new TQWMatrix();
+		m_tqworldMatrix = new TQWMatrix();
 
 		// Create new image with alpha support
 		m_image = new TQImage(width, height, 32);
@@ -102,7 +102,7 @@ public:
 		art_free(m_buffer);
 
 		delete m_image;
-		delete m_worldMatrix;
+		delete m_tqworldMatrix;
 
 		for(TQMap<TQString, ArtGradientLinear *>::Iterator it = m_linearGradientMap.begin(); it != m_linearGradientMap.end(); ++it)
 		{
@@ -185,7 +185,7 @@ public:
 		m_tempBuffer = 0;
 	}
 
-	Q_UINT32 toArtColor(const TQColor &color)
+	TQ_UINT32 toArtColor(const TQColor &color)
 	{
 		// Convert in a libart suitable form
 		TQString tempName = color.name();
@@ -211,7 +211,7 @@ public:
 		return result;
 	}
 
-	void drawSVP(ArtSVP *svp, Q_UINT32 rgb, int opacity)
+	void drawSVP(ArtSVP *svp, TQ_UINT32 rgb, int opacity)
 	{
 		if(!svp)
 			return;
@@ -233,12 +233,12 @@ public:
 	void drawBPath(ArtBpath *bpath)
 	{
 		double affine[6];
-		affine[0] = m_worldMatrix->m11();
-		affine[1] = m_worldMatrix->m12();
-		affine[2] = m_worldMatrix->m21();
-		affine[3] = m_worldMatrix->m22();
-		affine[4] = m_worldMatrix->dx();
-		affine[5] = m_worldMatrix->dy();
+		affine[0] = m_tqworldMatrix->m11();
+		affine[1] = m_tqworldMatrix->m12();
+		affine[2] = m_tqworldMatrix->m21();
+		affine[3] = m_tqworldMatrix->m22();
+		affine[4] = m_tqworldMatrix->dx();
+		affine[5] = m_tqworldMatrix->dy();
 
 		ArtBpath *temp = art_bpath_affine_transform(bpath, affine);
 		ArtVpath *vec = art_bez_path_to_vec(temp, 0.25);
@@ -249,12 +249,12 @@ public:
 	void drawVPath(ArtVpath *vec)
 	{
 		double affine[6];
-		affine[0] = m_worldMatrix->m11();
-		affine[1] = m_worldMatrix->m12();
-		affine[2] = m_worldMatrix->m21();
-		affine[3] = m_worldMatrix->m22();
-		affine[4] = m_worldMatrix->dx();
-		affine[5] = m_worldMatrix->dy();
+		affine[0] = m_tqworldMatrix->m11();
+		affine[1] = m_tqworldMatrix->m12();
+		affine[2] = m_tqworldMatrix->m21();
+		affine[3] = m_tqworldMatrix->m22();
+		affine[4] = m_tqworldMatrix->dx();
+		affine[5] = m_tqworldMatrix->dy();
 
 		ArtVpath *temp = art_vpath_affine_transform(vec, affine);
 		art_free(vec);
@@ -267,7 +267,7 @@ public:
 		ArtSVP *svp;
 		ArtSVP *fillSVP = 0, *strokeSVP = 0;
 
-		Q_UINT32 fillColor = 0, strokeColor = 0;
+		TQ_UINT32 fillColor = 0, strokeColor = 0;
 
 		// Filling
 		{
@@ -461,10 +461,10 @@ public:
 			m.map(x1, y1, &x1, &y1);
 			m.map(x2, y2, &x2, &y2);
 
-			double x1n = x1 * m_worldMatrix->m11() + y1 * m_worldMatrix->m21() + m_worldMatrix->dx();
-			double y1n = x1 * m_worldMatrix->m12() + y1 * m_worldMatrix->m22() + m_worldMatrix->dy();
-			double x2n = x2 * m_worldMatrix->m11() + y2 * m_worldMatrix->m21() + m_worldMatrix->dx();
-			double y2n = x2 * m_worldMatrix->m12() + y2 * m_worldMatrix->m22() + m_worldMatrix->dy();
+			double x1n = x1 * m_tqworldMatrix->m11() + y1 * m_tqworldMatrix->m21() + m_tqworldMatrix->dx();
+			double y1n = x1 * m_tqworldMatrix->m12() + y1 * m_tqworldMatrix->m22() + m_tqworldMatrix->dy();
+			double x2n = x2 * m_tqworldMatrix->m11() + y2 * m_tqworldMatrix->m21() + m_tqworldMatrix->dx();
+			double y2n = x2 * m_tqworldMatrix->m12() + y2 * m_tqworldMatrix->m22() + m_tqworldMatrix->dy();
 
 			double dx = x2n - x1n;
 			double dy = y2n - y1n;
@@ -515,12 +515,12 @@ public:
 			else
 				fy = cy;
 
-			radial->affine[0] = m_worldMatrix->m11();
-			radial->affine[1] = m_worldMatrix->m12();
-			radial->affine[2] = m_worldMatrix->m21();
-			radial->affine[3] = m_worldMatrix->m22();
-			radial->affine[4] = m_worldMatrix->dx();
-			radial->affine[5] = m_worldMatrix->dy();
+			radial->affine[0] = m_tqworldMatrix->m11();
+			radial->affine[1] = m_tqworldMatrix->m12();
+			radial->affine[2] = m_tqworldMatrix->m21();
+			radial->affine[3] = m_tqworldMatrix->m22();
+			radial->affine[4] = m_tqworldMatrix->dx();
+			radial->affine[5] = m_tqworldMatrix->dy();
 
 			radial->fx = (fx - cx) / r;
 			radial->fy = (fy - cy) / r;
@@ -674,7 +674,7 @@ public:
 		  {
 			  QRgb *sl = reinterpret_cast<QRgb *>(m_image->scanLine(y));
 			  for(int x = 0; x < m_width; x++)
-				  sl[x] = qRgba(line[x * 4], line[x * 4 + 1], line[x * 4 + 2], line[x * 4 + 3]);
+				  sl[x] = tqRgba(line[x * 4], line[x * 4 + 1], line[x * 4 + 2], line[x * 4 + 3]);
 
 			  line += m_rowstride;
 		  }
@@ -1123,7 +1123,7 @@ private:
 	ArtSVP *m_clipSVP;
 
 	TQImage *m_image;
-	TQWMatrix *m_worldMatrix;
+	TQWMatrix *m_tqworldMatrix;
 
 	TQString m_fillRule;
 	TQString m_joinStyle;
@@ -1211,17 +1211,17 @@ TQImage *KSVGIconPainter::image()
 	return new TQImage(*d->helper->m_image);
 }
 
-TQWMatrix *KSVGIconPainter::worldMatrix()
+TQWMatrix *KSVGIconPainter::tqworldMatrix()
 {
-	return d->helper->m_worldMatrix;
+	return d->helper->m_tqworldMatrix;
 }
 
 void KSVGIconPainter::setWorldMatrix(TQWMatrix *matrix)
 {
-	if(d->helper->m_worldMatrix)
-		delete d->helper->m_worldMatrix;
+	if(d->helper->m_tqworldMatrix)
+		delete d->helper->m_tqworldMatrix;
 
-	d->helper->m_worldMatrix = matrix;
+	d->helper->m_tqworldMatrix = matrix;
 }
 
 void KSVGIconPainter::setStrokeWidth(double width)
@@ -1263,8 +1263,8 @@ void KSVGIconPainter::setStrokeColor(const TQString &stroke)
 
 		TQString url = stroke;
 
-		unsigned int start = url.find("#") + 1;
-		unsigned int end = url.findRev(")");
+		unsigned int start = url.tqfind("#") + 1;
+		unsigned int end = url.tqfindRev(")");
 
 		d->helper->m_strokeGradientReference = url.mid(start, end - start);
 	}
@@ -1291,8 +1291,8 @@ void KSVGIconPainter::setFillColor(const TQString &fill)
 
 		TQString url = fill;
 
-		unsigned int start = url.find("#") + 1;
-		unsigned int end = url.findRev(")");
+		unsigned int start = url.tqfind("#") + 1;
+		unsigned int end = url.tqfindRev(")");
 
 		d->helper->m_fillGradientReference = url.mid(start, end - start);
 	}
@@ -1315,7 +1315,7 @@ void KSVGIconPainter::setFillRule(const TQString &fillRule)
 	d->helper->m_fillRule = fillRule;
 }
 
-Q_UINT32 KSVGIconPainter::parseOpacity(const TQString &data)
+TQ_UINT32 KSVGIconPainter::parseOpacity(const TQString &data)
 {
 	int opacity = 255;
 
@@ -1323,7 +1323,7 @@ Q_UINT32 KSVGIconPainter::parseOpacity(const TQString &data)
 	{
 		double temp;
 
-		if(data.contains("%"))
+		if(data.tqcontains("%"))
 		{
 			TQString tempString = data.left(data.length() - 1);
 			temp = double(255 * tempString.toDouble()) / 100.0;
@@ -1736,7 +1736,7 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 	double curx = 0.0, cury = 0.0, contrlx = 0.0, contrly = 0.0, xc, yc;
 	unsigned int lastCommand = 0;
 
-	TQString _d = value.replace(",", " ");
+	TQString _d = value.tqreplace(",", " ");
 	_d = _d.simplifyWhiteSpace();
 	const char *ptr = _d.latin1();
 	const char *end = _d.latin1() + _d.length() + 1;
@@ -1759,12 +1759,12 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 				if(index != -1 && lastCommand != 'z')
 				{
 					// Find last subpath
-					int find = -1;
+					int tqfind = -1;
 					for(int i = index; i >= 0; i--)
 					{
 						if(vec[i].code == ART_MOVETO_OPEN || vec[i].code == ART_MOVETO)
 						{
-							find = i;
+							tqfind = i;
 							break;
 						}
 					}
@@ -1775,8 +1775,8 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 						vec.resize(index + 1);
 
 					vec[index].code = (ArtPathcode)ART_END2;
-					vec[index].x3 = vec[find].x3;
-					vec[index].y3 = vec[find].y3;
+					vec[index].x3 = vec[tqfind].x3;
+					vec[index].y3 = vec[tqfind].y3;
 				}
 
 				curx += tox;
@@ -1798,12 +1798,12 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 				if(index != -1 && lastCommand != 'z')
 				{
 					// Find last subpath
-					int find = -1;
+					int tqfind = -1;
 					for(int i = index; i >= 0; i--)
 					{
 						if(vec[i].code == ART_MOVETO_OPEN || vec[i].code == ART_MOVETO)
 						{
-							find = i;
+							tqfind = i;
 							break;
 						}
 					}
@@ -1814,8 +1814,8 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 						vec.resize(index + 1);
 
 					vec[index].code = (ArtPathcode)ART_END2;
-					vec[index].x3 = vec[find].x3;
-					vec[index].y3 = vec[find].y3;
+					vec[index].x3 = vec[tqfind].x3;
+					vec[index].y3 = vec[tqfind].y3;
 				}
 
 				curx = tox;
@@ -2137,34 +2137,34 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 				break;
 			case 'z':
 			case 'Z':
-				int find;
-				find = -1;
+				int tqfind;
+				tqfind = -1;
 				for(int i = index; i >= 0; i--)
 				{
 					if(vec[i].code == ART_MOVETO_OPEN || vec[i].code == ART_MOVETO)
 					{
-						find = i;
+						tqfind = i;
 						break;
 					}
 				}
 
-				if(find != -1)
+				if(tqfind != -1)
 				{
-					if(vec[find].x3 != curx || vec[find].y3 != cury)
+					if(vec[tqfind].x3 != curx || vec[tqfind].y3 != cury)
 					{
 						index++;
 
 						d->helper->ensureSpace(vec, index);
 
 						vec[index].code = ART_LINETO;
-						vec[index].x3 = vec[find].x3;
-						vec[index].y3 = vec[find].y3;
+						vec[index].x3 = vec[tqfind].x3;
+						vec[index].y3 = vec[tqfind].y3;
 					}
 				}
 
 				// reset for next (sub)path
-				curx = vec[find].x3;
-				cury = vec[find].y3;
+				curx = vec[tqfind].x3;
+				cury = vec[tqfind].y3;
 
 				lastCommand = 'z';
 				break;
@@ -2231,20 +2231,20 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 	}
 
 	// Find last subpath
-	int find = -1;
+	int tqfind = -1;
 	for(int i = index; i >= 0; i--)
 	{
 		if(vec[i].code == ART_MOVETO_OPEN || vec[i].code == ART_MOVETO)
 		{
-			find = i;
+			tqfind = i;
 			break;
 		}
 	}
 
 	// Fix a problem where the .svg file used doubles as values... (sofico.svg)
-	if(curx != vec[find].x3 && cury != vec[find].y3)
+	if(curx != vec[tqfind].x3 && cury != vec[tqfind].y3)
 	{
-		if((int) curx == (int) vec[find].x3 && (int) cury == (int) vec[find].y3)
+		if((int) curx == (int) vec[tqfind].x3 && (int) cury == (int) vec[tqfind].y3)
 		{
 			index++;
 
@@ -2252,18 +2252,18 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 				vec.resize(index + 1);
 
 			vec[index].code = ART_LINETO;
-			vec[index].x3 = vec[find].x3;
-			vec[index].y3 = vec[find].y3;
+			vec[index].x3 = vec[tqfind].x3;
+			vec[index].y3 = vec[tqfind].y3;
 
-			curx = vec[find].x3;
-			cury = vec[find].y3;
+			curx = vec[tqfind].x3;
+			cury = vec[tqfind].y3;
 		}
 	}
 
 	// Handle filled paths that are not closed explicitly
 	if(filled)
 	{
-		if((int) curx != (int) vec[find].x3 || (int) cury != (int) vec[find].y3)
+		if((int) curx != (int) vec[tqfind].x3 || (int) cury != (int) vec[tqfind].y3)
 		{
 			index++;
 
@@ -2271,11 +2271,11 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 				vec.resize(index + 1);
 
 			vec[index].code = (ArtPathcode)ART_END2;
-			vec[index].x3 = vec[find].x3;
-			vec[index].y3 = vec[find].y3;
+			vec[index].x3 = vec[tqfind].x3;
+			vec[index].y3 = vec[tqfind].y3;
 
-			curx = vec[find].x3;
-			cury = vec[find].y3;
+			curx = vec[tqfind].x3;
+			cury = vec[tqfind].y3;
 		}
 	}
 
@@ -2310,12 +2310,12 @@ void KSVGIconPainter::drawImage(double x, double y, TQImage &image)
 		image = image.convertDepth(32);
 
 	double affine[6];
-	affine[0] = d->helper->m_worldMatrix->m11();
-	affine[1] = d->helper->m_worldMatrix->m12();
-	affine[2] = d->helper->m_worldMatrix->m21();
-	affine[3] = d->helper->m_worldMatrix->m22();
+	affine[0] = d->helper->m_tqworldMatrix->m11();
+	affine[1] = d->helper->m_tqworldMatrix->m12();
+	affine[2] = d->helper->m_tqworldMatrix->m21();
+	affine[3] = d->helper->m_tqworldMatrix->m22();
 	// use the world matrix to convert the coordinates
-	d->helper->m_worldMatrix->map(x, y, &affine[4], &affine[5]);
+	d->helper->m_tqworldMatrix->map(x, y, &affine[4], &affine[5]);
 
 	d->helper->art_rgba_rgba_affine(d->helper->m_buffer, 0, 0, d->helper->m_width, d->helper->m_height,
 									d->helper->m_rowstride, image.bits(), image.width(), image.height(),
@@ -2338,19 +2338,19 @@ TQColor KSVGIconPainter::parseColor(const TQString &param)
 		TQString g = colors[1];
 		TQString b = colors[2].left((colors[2].length() - 1));
 
-		if(r.contains("%"))
+		if(r.tqcontains("%"))
 		{
 			r = r.left(r.length() - 1);
 			r = TQString::number(int((double(255 * r.toDouble()) / 100.0)));
 		}
 
-		if(g.contains("%"))
+		if(g.tqcontains("%"))
 		{
 			g = g.left(g.length() - 1);
 			g = TQString::number(int((double(255 * g.toDouble()) / 100.0)));
 		}
 
-		if(b.contains("%"))
+		if(b.tqcontains("%"))
 		{
 			b = b.left(b.length() - 1);
 			b = TQString::number(int((double(255 * b.toDouble()) / 100.0)));
@@ -2560,7 +2560,7 @@ TQColor KSVGIconPainter::parseColor(const TQString &param)
 			return TQColor(245, 255, 250);
 		else if(rgbColor == "mistyrose")
 			return TQColor(255, 228, 225);
-		else if(rgbColor == "moccasin")
+		else if(rgbColor == "tqmoccasin")
 			return TQColor(255, 228, 181);
 		else if(rgbColor == "navajowhite")
 			return TQColor(255, 222, 173);
@@ -2753,7 +2753,7 @@ void KSVGIconPainter::addRadialGradientElement(ArtGradientRadial *gradient, TQDo
 	d->helper->m_radialGradientElementMap.insert(gradient, element);
 }
 
-Q_UINT32 KSVGIconPainter::toArtColor(const TQColor &color)
+TQ_UINT32 KSVGIconPainter::toArtColor(const TQColor &color)
 {
 	return d->helper->toArtColor(color);
 }

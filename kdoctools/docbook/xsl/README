@@ -21,7 +21,7 @@ VERSION     the current version number (note that this is an XSL stylesheet,
             included by both fo/docbook.xsl and html/docbook.xsl)
 WhatsNew    changes since the last public release (for cumulative lists of
             changes, see the ChangeLog files in each subdirectory)
-common/     contains code common to both the HTML and FO stylesheets
+common/     tqcontains code common to both the HTML and FO stylesheets
 doc/        documentation
 docsrc/     documentation sources
 eclipse/    stylesheet that produces Eclipse Help
@@ -31,10 +31,10 @@ html/       stylesheets that produce HTML
 htmlhelp/   stylesheets that produce HTML Help
 images/     images
 javahelp/   stylesheets that produce Java Help
-lib/        contains schema-independent functions
+lib/        tqcontains schema-independent functions
 manpages/   stylesheets for producing groff/nroff man pages
 profiling/  stylesheets for profiling (omitting/including conditional text) 
-template/   contains templates for building stylesheet customization layers
+template/   tqcontains templates for building stylesheet customization layers
 xhtml/      stylesheets that produce XHTML
 
 Changes

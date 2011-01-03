@@ -78,7 +78,7 @@ public:
 /**
  * \short Base class for all your special main frames.
  *
- * It contains the child frame area (QMainWindow's central widget) and a child view taskbar
+ * It tqcontains the child frame area (QMainWindow's central widget) and a child view taskbar
  * for switching the MDI views. Most methods are virtual functions for later overriding.
  *
  * Basically, this class provides functionality for docking/undocking view windows and
@@ -98,7 +98,7 @@ public:
  *
  * \code
  *		MyMainWindow mainframe;
- *		qApp->setMainWidget(&mainframe);
+ *		tqApp->setMainWidget(&mainframe);
  *		mainframe->addWindow(view1); // put it under MDI control
  *		mainframe->addWindow(view2);
  * \endcode
@@ -142,7 +142,7 @@ public:
  * use fakeSDIApplication() to fake it and isFakingSDIApplication() to query whether or not an SDI
  * interface is being faked.
  *
- * You can dynamically change the shape of the attached MDI views using setFrameDecorOfAttachedViews().
+ * You can dynamically change the tqshape of the attached MDI views using setFrameDecorOfAttachedViews().
  *
  * Additionally, here's a hint how to restore the mainframe's settings from config file:
  * \code
@@ -188,7 +188,7 @@ public:
  * - expandHorizontal() - expand all the windows to use the most amount of horizontal space
  *
  * activateView(KMdiChildView*) and activateView(int index) set the appropriate MDI child view as the active
- * one. It will be raised, will get an active MDI frame and will get the focus. Call activeView() to find out what the
+ * one. It will be raised, will get an active MDI frame and will get the focus. Call activeView() to tqfind out what the
  * current MDI view is.
  *
  * Use detachWindow() and attachWindow() for docking the MDI views to desktop and back.
@@ -296,7 +296,7 @@ private:
 
 	// methods
 public:
-	KMdiMainFrm( TQWidget* parentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = WType_TopLevel | WDestructiveClose );
+	KMdiMainFrm( TQWidget* tqparentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = WType_TopLevel | WDestructiveClose );
 	virtual ~KMdiMainFrm();
 
 	/**
@@ -345,7 +345,7 @@ public:
 	/**
 	 * Returns the KMdiChildView belonging to the given caption string.
 	 */
-	KMdiChildView * findWindow( const TQString& caption );
+	KMdiChildView * tqfindWindow( const TQString& caption );
 
 	enum ExistsAs {DocumentView, ToolView, AnyView};
 	/**
@@ -411,7 +411,7 @@ public:
 	}
 
 	/**
-	 * Returns a popup menu that contains the MDI controlled view list.
+	 * Returns a popup menu that tqcontains the MDI controlled view list.
 	 * Additionally, this menu provides some placing actions for these views.
 	 * Usually, you insert this popup menu in your main menubar as "Window" menu.
 	 */
@@ -474,7 +474,7 @@ public:
 	bool isFakingSDIApplication() const { return m_bSDIApplication; }
 
 	virtual bool eventFilter( TQObject *obj, TQEvent *e );
-	void findRootDockWidgets( TQPtrList<KDockWidget>* pRootDockWidgetList, TQValueList<TQRect>* pPositionList );
+	void tqfindRootDockWidgets( TQPtrList<KDockWidget>* pRootDockWidgetList, TQValueList<TQRect>* pPositionList );
 
 	/** We're switching something.*/
 	void setSwitching( const bool switching ) { m_bSwitching = switching; }
@@ -532,7 +532,7 @@ public slots:
 	/**
 	 * Adds a KMdiChildView to the MDI system. The main frame takes control of it.
 	 * \param pWnd the parent view.
-	 * \param rectNormal Sets the geometry for this child view
+	 * \param rectNormal Sets the tqgeometry for this child view
 	 * \param flags the flags for the view such as:
 	 * \li whether the view should be attached or detached.
 	 * \li whether the view should be shown or hidden
@@ -570,7 +570,7 @@ public slots:
 	 * Removes a KMdiChildView from the MDI system and from the main frame`s control.
 	 * Note: The view will be deleted!
 	 */
-	virtual void closeWindow( KMdiChildView *pWnd, bool layoutTaskBar = true );
+	virtual void closeWindow( KMdiChildView *pWnd, bool tqlayoutTaskBar = true );
 
 	/**
 	 * Switches the KMdiTaskBar on and off.
@@ -763,7 +763,7 @@ protected:
 	 */
 	void blockClearingOfWindowMenu( bool bBlocked ) { m_bClearingOfWindowMenuBlocked = bBlocked; }
 
-	void findToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDockWidget::DockPosition dprtmw );
+	void tqfindToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDockWidget::DockPosition dprtmw );
 	void dockToolViewsIntoContainers( TQPtrList<KDockWidget>& widgetsToReparent, KDockWidget *container );
 	TQStringList prepareIdealToTabs( KDockWidget* container );
 	void idealToolViewsToStandardTabs( TQStringList widgetNames, KDockWidget::DockPosition pos, int sizee );
@@ -876,4 +876,4 @@ signals:
 
 #endif //_KMDIMAINFRM_H_
 
-// kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
+// kate: space-indent off; tab-width 4; tqreplace-tabs off; indent-mode csands;

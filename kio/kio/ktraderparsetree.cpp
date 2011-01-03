@@ -415,7 +415,7 @@ bool ParseTreeMATCH::eval( ParseContext *_context ) const
   if ( c1.type != ParseContext::T_STRING || c2.type != ParseContext::T_STRING )
     return false;
 
-  _context->b = ( c2.str.find( c1.str ) != -1 );
+  _context->b = ( c2.str.tqfind( c1.str ) != -1 );
 
   return true;
 }
@@ -465,7 +465,7 @@ bool ParseTreeIN::eval( ParseContext *_context ) const
 
   if ( c1.type == ParseContext::T_STRING && c2.type == ParseContext::T_STR_SEQ )
   {
-    _context->b = ( c2.strSeq.find( c1.str ) != c2.strSeq.end() );
+    _context->b = ( c2.strSeq.tqfind( c1.str ) != c2.strSeq.end() );
     return true;
   }
 
@@ -535,7 +535,7 @@ bool ParseTreeMIN2::eval( ParseContext *_context ) const
   if ( !_context->initMaxima( m_strId ) )
     return false;
 
-  TQMap<TQString,PreferencesMaxima>::Iterator it = _context->maxima.find( m_strId );
+  TQMap<TQString,PreferencesMaxima>::Iterator it = _context->maxima.tqfind( m_strId );
   if ( it == _context->maxima.end() )
     return false;
 
@@ -568,7 +568,7 @@ bool ParseTreeMAX2::eval( ParseContext *_context ) const
     return false;
 
   // Find extrema
-  TQMap<TQString,PreferencesMaxima>::Iterator it = _context->maxima.find( m_strId );
+  TQMap<TQString,PreferencesMaxima>::Iterator it = _context->maxima.tqfind( m_strId );
   if ( it == _context->maxima.end() )
     return false;
 
@@ -651,7 +651,7 @@ bool ParseContext::initMaxima( const TQString& _prop )
     return false;
 
   // Did we cache the result ?
-  TQMap<TQString,PreferencesMaxima>::Iterator it = maxima.find( _prop );
+  TQMap<TQString,PreferencesMaxima>::Iterator it = maxima.tqfind( _prop );
   if ( it != maxima.end() )
     return ( it.data().type == PreferencesMaxima::PM_DOUBLE ||
 	     it.data().type == PreferencesMaxima::PM_INT );

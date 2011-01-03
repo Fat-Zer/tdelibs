@@ -30,15 +30,15 @@
 #include "network.h"
 #include "serviceiface.h"
 
-struct NetworkStatusStruct;
+struct NetworktqStatusStruct;
 
-class NetworkStatusModule : virtual public KDEDModule/*, public ClientIface, ServiceIface*/ // <-spot the multiple inheritance pb
+class NetworktqStatusModule : virtual public KDEDModule/*, public ClientIface, ServiceIface*/ // <-spot the multiple inheritance pb
 {
 Q_OBJECT
 K_DCOP
 public:
-	NetworkStatusModule( const TQCString & obj );
-	~NetworkStatusModule();
+	NetworktqStatusModule( const TQCString & obj );
+	~NetworktqStatusModule();
 k_dcop:
 	// Client interface
 	TQStringList networks();
@@ -48,8 +48,8 @@ k_dcop:
 	bool reportFailure( const TQString & host );
 // 	TQString statusAsString();
 	// Service interface
-	void setNetworkStatus( const TQString & networkName, int status );
-	void registerNetwork( const TQString & networkName, NetworkStatus::Properties properties );
+	void setNetworktqStatus( const TQString & networkName, int status );
+	void registerNetwork( const TQString & networkName, NetworktqStatus::Properties properties );
 	void unregisterNetwork( const TQString & networkName );
 	void requestShutdown( const TQString & networkName );
 k_dcop_signals:

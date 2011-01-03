@@ -681,7 +681,7 @@ yy_match:
 			}
 		while ( yy_base[yy_current_state] != 94 );
 
-yy_find_action:
+yy_tqfind_action:
 		yy_act = yy_accept[yy_current_state];
 		if ( yy_act == 0 )
 			{ /* have to back up */
@@ -703,7 +703,7 @@ do_action:	/* This label is used only to access EOF actions. */
 			*yy_cp = yy_hold_char;
 			yy_cp = yy_last_accepting_cpos;
 			yy_current_state = yy_last_accepting_state;
-			goto yy_find_action;
+			goto yy_tqfind_action;
 
 case 1:
 *yy_cp = yy_hold_char; /* undo effects of setting up yytext */
@@ -878,7 +878,7 @@ case YY_STATE_EOF(INITIAL):
 			else
 				{
 				yy_cp = yy_c_buf_p;
-				goto yy_find_action;
+				goto yy_tqfind_action;
 				}
 			}
 
@@ -931,7 +931,7 @@ case YY_STATE_EOF(INITIAL):
 
 				yy_cp = yy_c_buf_p;
 				yy_bp = yytext_ptr + YY_MORE_ADJ;
-				goto yy_find_action;
+				goto yy_tqfind_action;
 			}
 		break;
 		}

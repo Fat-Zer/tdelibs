@@ -144,7 +144,7 @@ class KUTILS_EXPORT KPluginSelector : public QWidget
 
         /**
          * Set whether the area for showing the KCMs of the plugins should be
-         * hidden if the plugin doesn't have a KCM or whether the layout should
+         * hidden if the plugin doesn't have a KCM or whether the tqlayout should
          * rather stay static and only an message should be shown.
          *
          * By default the config page is not hidden.

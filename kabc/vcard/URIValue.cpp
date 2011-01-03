@@ -89,7 +89,7 @@ URIValue::~URIValue()
 	void
 URIValue::_parse()
 {
-	int split = strRep_.find(':');
+	int split = strRep_.tqfind(':');
 	if (split == -1)
 		return;
 	

@@ -16,7 +16,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
-typedef Q_UINT8 uchar;
+typedef TQ_UINT8 uchar;
 
 namespace {	// Private.
 
@@ -85,7 +85,7 @@ namespace {	// Private.
 				v = 1.0f / float(1 << -e);
 			}
 			
-			scanline[j] = qRgb( ClipToByte(float(image[0]) * v),
+			scanline[j] = tqRgb( ClipToByte(float(image[0]) * v),
 								ClipToByte(float(image[1]) * v),
 								ClipToByte(float(image[2]) * v) );
 

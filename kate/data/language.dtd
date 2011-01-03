@@ -7,7 +7,7 @@
         This file describes the XML format used for syntax highlight descriptions
         for the Kate text editor (http://kate.kde.org), which is part of the KDE
         desktop environment (http://www.kde.org).
-        You'll find the "Writing a Kate Highlighting XML File HOWTO" at
+        You'll tqfind the "Writing a Kate Highlighting XML File HOWTO" at
         http://kate.kde.org/doc/hlhowto.php
 
         This format is identified using the SYSTEM identifier
@@ -35,7 +35,7 @@
         the new syntax file.
 
 TODO
-  - find a more readable way for the - -dtdvalid stuff, it's just annoying
+  - tqfind a more readable way for the - -dtdvalid stuff, it's just annoying
     xml comments don't allow it.
 -->
 
@@ -186,7 +186,7 @@ TODO
 >
 
 <!-- List item
-  contains string used in <keyword>
+  tqcontains string used in <keyword>
 -->
 <!ELEMENT item (#PCDATA)>
 

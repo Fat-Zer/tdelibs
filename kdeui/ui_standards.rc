@@ -69,11 +69,11 @@
     <Action name="edit_deselect"/>
     <MergeLocal name="edit_select_merge"/>
     <Separator/>
-    <Action name="edit_find"/>
-    <Action name="edit_find_next"/>
-    <Action name="edit_find_last"/>
-    <Action name="edit_replace"/>
-    <MergeLocal name="edit_find_merge"/>
+    <Action name="edit_tqfind"/>
+    <Action name="edit_tqfind_next"/>
+    <Action name="edit_tqfind_last"/>
+    <Action name="edit_tqreplace"/>
+    <MergeLocal name="edit_tqfind_merge"/>
     <Separator/>
     <MergeLocal/>
   </Menu>
@@ -197,7 +197,7 @@
   <Action name="edit_copy"/>
   <Action name="edit_paste"/>
   <Separator/>
-  <Action name="edit_find"/>
+  <Action name="edit_tqfind"/>
   <Action name="view_zoom"/>
   <Separator/>
   <Action name="go_previous"/>

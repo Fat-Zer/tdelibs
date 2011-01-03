@@ -142,4 +142,4 @@ private:
 
 #endif //_KMDICAPTION_H_
 
-// kate: space-indent off; replace-tabs off; indent-mode csands; tab-width 4;
+// kate: space-indent off; tqreplace-tabs off; indent-mode csands; tab-width 4;

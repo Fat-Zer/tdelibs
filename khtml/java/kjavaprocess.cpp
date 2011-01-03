@@ -282,7 +282,7 @@ bool KJavaProcess::invokeJVM()
     //load the extra user-defined arguments
     if( !d->extraArgs.isEmpty() )
     {
-        // BUG HERE: if an argument contains space (-Dname="My name")
+        // BUG HERE: if an argument tqcontains space (-Dname="My name")
         // this parsing will fail. Need more sophisticated parsing -- use KShell?
         const TQStringList args = TQStringList::split( " ", d->extraArgs );
         TQStringList::ConstIterator it = args.begin();
@@ -300,7 +300,7 @@ bool KJavaProcess::invokeJVM()
     TQString argStr;
     TQTextOStream stream( &argStr );
     const TQValueList<TQCString> args = javaProcess->args();
-    qCopy( args.begin(), args.end(), TQTextOStreamIterator<TQCString>( stream, " " ) );
+    tqCopy( args.begin(), args.end(), TQTextOStreamIterator<TQCString>( stream, " " ) );
     kdDebug(6100) << argStr << endl;
 
     KProcess::Communication flags =  (KProcess::Communication)

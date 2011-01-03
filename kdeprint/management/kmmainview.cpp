@@ -68,7 +68,7 @@ int kdeprint_management_add_printer_wizard( TQWidget* parent )
 		{
 			flag = 1;
 			// check if the printer already exists, and ask confirmation if needed.
-			if (KMFactory::self()->manager()->findPrinter(dlg.printer()->name()) != 0)
+			if (KMFactory::self()->manager()->tqfindPrinter(dlg.printer()->name()) != 0)
 				if (KMessageBox::warningContinueCancel(parent,i18n("The printer %1 already exists. Continuing will overwrite existing printer. Do you want to continue?").arg(dlg.printer()->name())) == KMessageBox::Cancel)
 					flag = 0;
 			// try to add printer only if flag is true.
@@ -99,16 +99,16 @@ KMMainView::KMMainView(TQWidget *parent, const char *name, KActionCollection *co
 	m_menubar->setIconText( KToolBar::IconTextRight );
 	m_menubar->setMovingEnabled( false );
 
-	// layout
-	QVBoxLayout	*m_layout = new TQVBoxLayout(this, 0, 0);
-	m_layout->addWidget(m_toolbar);
-	m_layout->addWidget( m_menubar );
-	m_boxlayout = new TQBoxLayout(TQBoxLayout::TopToBottom, 0, 0);
-	m_layout->addLayout(m_boxlayout);
-	m_boxlayout->addWidget(m_printerview);
-	m_boxlayout->addWidget(m_printerpages);
-	m_layout->addSpacing(5);
-	m_layout->addWidget(m_plugin, 0);
+	// tqlayout
+	QVBoxLayout	*m_tqlayout = new TQVBoxLayout(this, 0, 0);
+	m_tqlayout->addWidget(m_toolbar);
+	m_tqlayout->addWidget( m_menubar );
+	m_boxtqlayout = new TQBoxLayout(TQBoxLayout::TopToBottom, 0, 0);
+	m_tqlayout->addLayout(m_boxtqlayout);
+	m_boxtqlayout->addWidget(m_printerview);
+	m_boxtqlayout->addWidget(m_printerpages);
+	m_tqlayout->addSpacing(5);
+	m_tqlayout->addWidget(m_plugin, 0);
 
 	// connections
 	connect(KMTimer::self(),TQT_SIGNAL(timeout()),TQT_SLOT(slotTimer()));
@@ -374,7 +374,7 @@ void KMMainView::slotTimer()
 
 void KMMainView::slotPrinterSelected(const TQString& prname)
 {
-	KMPrinter	*p = KMManager::self()->findPrinter(prname);
+	KMPrinter	*p = KMManager::self()->tqfindPrinter(prname);
 	m_current = p;
 	if (p && !p->isSpecial())
 		KMFactory::self()->manager()->completePrinter(p);
@@ -384,26 +384,26 @@ void KMMainView::slotPrinterSelected(const TQString& prname)
 	// problem).
 	//if (m_toolbar->isEnabled())
 	//{
-		int 	mask = (m_manager->hasManagement() ? m_manager->printerOperationMask() : 0);
+		int 	tqmask = (m_manager->hasManagement() ? m_manager->printerOperationMask() : 0);
 		bool	sp = !(p && p->isSpecial());
-//		m_actions->action("printer_remove")->setEnabled(!sp || ((mask & KMManager::PrinterRemoval) && p && p->isLocal() && !p->isImplicit()));
-		m_actions->action("printer_remove")->setEnabled(!sp || ((mask & KMManager::PrinterRemoval) && p && !p->isImplicit()));
-		m_actions->action("printer_configure")->setEnabled(!sp || ((mask & KMManager::PrinterConfigure) && p && !p->isClass(true) /*&& p->isLocal()*/));
-		m_actions->action("printer_hard_default")->setEnabled((sp && (mask & KMManager::PrinterDefault) && p && !p->isClass(true) && !p->isHardDefault() && p->isLocal()));
+//		m_actions->action("printer_remove")->setEnabled(!sp || ((tqmask & KMManager::PrinterRemoval) && p && p->isLocal() && !p->isImplicit()));
+		m_actions->action("printer_remove")->setEnabled(!sp || ((tqmask & KMManager::PrinterRemoval) && p && !p->isImplicit()));
+		m_actions->action("printer_configure")->setEnabled(!sp || ((tqmask & KMManager::PrinterConfigure) && p && !p->isClass(true) /*&& p->isLocal()*/));
+		m_actions->action("printer_hard_default")->setEnabled((sp && (tqmask & KMManager::PrinterDefault) && p && !p->isClass(true) && !p->isHardDefault() && p->isLocal()));
 		m_actions->action("printer_soft_default")->setEnabled((p && !p->isSoftDefault()));
-		m_actions->action("printer_test")->setEnabled((sp && (mask & KMManager::PrinterTesting) && p && !p->isClass(true)));
-		bool	stmask = (sp && (mask & KMManager::PrinterEnabling) && p);
-		m_actions->action("printer_state_change")->setEnabled(stmask && p->isLocal());
-		m_actions->action("printer_spool_change")->setEnabled(stmask);
-		m_actions->action("printer_start")->setEnabled((stmask && p->state() == KMPrinter::Stopped));
-		m_actions->action("printer_stop")->setEnabled((stmask && p->state() != KMPrinter::Stopped));
-		m_actions->action("printer_enable")->setEnabled((stmask && !p->acceptJobs()));
-		m_actions->action("printer_disable")->setEnabled((stmask && p->acceptJobs()));
+		m_actions->action("printer_test")->setEnabled((sp && (tqmask & KMManager::PrinterTesting) && p && !p->isClass(true)));
+		bool	sttqmask = (sp && (tqmask & KMManager::PrinterEnabling) && p);
+		m_actions->action("printer_state_change")->setEnabled(sttqmask && p->isLocal());
+		m_actions->action("printer_spool_change")->setEnabled(sttqmask);
+		m_actions->action("printer_start")->setEnabled((sttqmask && p->state() == KMPrinter::Stopped));
+		m_actions->action("printer_stop")->setEnabled((sttqmask && p->state() != KMPrinter::Stopped));
+		m_actions->action("printer_enable")->setEnabled((sttqmask && !p->acceptJobs()));
+		m_actions->action("printer_disable")->setEnabled((sttqmask && p->acceptJobs()));
 
-		m_actions->action("printer_add")->setEnabled((mask & KMManager::PrinterCreation));
-		mask = m_manager->serverOperationMask();
-		m_actions->action("server_restart")->setEnabled((mask & KMManager::ServerRestarting));
-		m_actions->action("server_configure")->setEnabled((mask & KMManager::ServerConfigure));
+		m_actions->action("printer_add")->setEnabled((tqmask & KMManager::PrinterCreation));
+		tqmask = m_manager->serverOperationMask();
+		m_actions->action("server_restart")->setEnabled((tqmask & KMManager::ServerRestarting));
+		m_actions->action("server_configure")->setEnabled((tqmask & KMManager::ServerConfigure));
 
 		KMFactory::self()->manager()->validatePluginActions(m_actions, p);
 	//}
@@ -428,7 +428,7 @@ void KMMainView::slotChangeView(int ID)
 
 void KMMainView::slotRightButtonClicked(const TQString& prname, const TQPoint& p)
 {
-	KMPrinter	*printer = KMManager::self()->findPrinter(prname);
+	KMPrinter	*printer = KMManager::self()->tqfindPrinter(prname);
 	// construct popup menu
 	m_pop->clear();
 	if (printer)
@@ -622,11 +622,11 @@ void KMMainView::setOrientation(int o)
 }
 
 int KMMainView::orientation() const
-{ return (m_boxlayout->direction() == TQBoxLayout::LeftToRight ? Qt::Horizontal : Qt::Vertical);  }
+{ return (m_boxtqlayout->direction() == TQBoxLayout::LeftToRight ? Qt::Horizontal : Qt::Vertical);  }
 
 void KMMainView::slotChangeDirection(int d)
 {
-	m_boxlayout->setDirection(d == 1 ? TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom);
+	m_boxtqlayout->setDirection(d == 1 ? TQBoxLayout::LeftToRight : TQBoxLayout::TopToBottom);
 }
 
 void KMMainView::slotTest()
@@ -807,7 +807,7 @@ void KMMainView::loadPluginActions()
 	KMFactory::self()->manager()->createPluginActions(m_actions);
 	TQValueList<KAction*>	pactions = m_actions->actions("plugin");
 	int	index = m_pactionsindex;
-	//TQPopupMenu *menu = m_menubar->findItem( m_menubar->idAt( 1 ) )->popup();
+	//TQPopupMenu *menu = m_menubar->tqfindItem( m_menubar->idAt( 1 ) )->popup();
 	TQPopupMenu *menu = m_menubar->getButton( 1 )->popup();
 	for (TQValueList<KAction*>::Iterator it=pactions.begin(); it!=pactions.end(); ++it)
 	{

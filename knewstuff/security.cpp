@@ -125,7 +125,7 @@ void Security::slotDataArrived(KProcIO *procIO)
               key.mail=data.section('<', -1, -1);
               key.mail.truncate(key.mail.length() - 1);
               key.name=data.section('<',0,0);
-              if (key.name.find("(")!=-1)
+              if (key.name.tqfind("(")!=-1)
                   key.name=key.name.section('(',0,0);
               m_keys[shortId] = key;
           }
@@ -137,7 +137,7 @@ void Security::slotDataArrived(KProcIO *procIO)
               m_result &= SIGNED_BAD_CLEAR;
               m_result |= SIGNED_OK;
               TQString id = data.section(" ", 1 , 1).right(8);
-              if (!m_keys.contains(id))
+              if (!m_keys.tqcontains(id))
               {
                   m_result |= UNKNOWN;
               } else
@@ -154,7 +154,7 @@ void Security::slotDataArrived(KProcIO *procIO)
           {
               m_result |= SIGNED_BAD;
               TQString id = data.section(" ", 1 , 1).right(8);
-              if (!m_keys.contains(id))
+              if (!m_keys.tqcontains(id))
               {
                   m_result |= UNKNOWN;
               } else
@@ -170,7 +170,7 @@ void Security::slotDataArrived(KProcIO *procIO)
           break;
 
        case Sign:
-         if (data.find("passphrase.enter") != -1)
+         if (data.tqfind("passphrase.enter") != -1)
          {
            TQCString password;
            KeyStruct key = m_keys[m_secretKey];
@@ -187,7 +187,7 @@ void Security::slotDataArrived(KProcIO *procIO)
              return;
            }
          } else
-         if (data.find("BAD_PASSPHRASE") != -1)
+         if (data.tqfind("BAD_PASSPHRASE") != -1)
          {
            m_result |= BAD_PASSPHRASE;
          }

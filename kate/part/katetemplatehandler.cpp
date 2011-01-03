@@ -83,7 +83,7 @@ KateTemplateHandler::KateTemplateHandler(
       if ( rx.cap( 1 ) != "%" || placeholder == value )
         buildList.append( KateTemplateHandlerPlaceHolderInfo( pos, value.length(), placeholder ) );
 
-      insertString.replace( pos, rx.matchedLength(), value );
+      insertString.tqreplace( pos, rx.matchedLength(), value );
       pos += value.length();
       opos = pos;
     }
@@ -168,7 +168,7 @@ void KateTemplateHandler::generateRangeTable( uint insertLine, uint insertCol, c
       ph->ranges.setAutoManage( false );
     }
 
-    // FIXME handle space/tab replacement correctly make it use of the indenter
+    // FIXME handle space/tab tqreplacement correctly make it use of the indenter
     while ( colInText < ( *it ).begin )
     {
       ++col;

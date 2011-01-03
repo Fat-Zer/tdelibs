@@ -66,8 +66,8 @@
 		<item>redim</item>
 		<item>rem</item>
 		<item>rename</item>
-		<item>replace$</item>
-		<item>replacesubstr$</item>
+		<item>tqreplace$</item>
+		<item>tqreplacesubstr$</item>
 		<item>resource</item>
 		<item>resourcecount</item>
 		<item>restore</item>
@@ -140,7 +140,7 @@
 		<item>for</item>
 		<item>next</item>
 		<item>with</item>
-		<item>mask</item>
+		<item>tqmask</item>
 		<item>and</item>
 		<item>or</item>
 		<item>constructor</item>
@@ -270,7 +270,7 @@
 		<item>borderstyle</item>
 		<item>wordwrap</item>
 		<item>align</item>
-		<item>alignment</item>
+		<item>tqalignment</item>
 		<item>font</item>
 		<item>visible</item>
 		<item>enabled</item>
@@ -324,7 +324,7 @@
 		<item>clear</item>
 		<item>underline</item>
 		<item>maxlength</item>
-		<item>inputmask</item>
+		<item>inputtqmask</item>
 		<item>forecolor</item>
 		<item></item>
 		<item>backcolor</item>

@@ -135,7 +135,7 @@ char    	**errorStringRet;
 	if (!data)
 	{
 	    const char *tempstr =
-		"Could not find correct MIT-MAGIC-COOKIE-1 authentication";
+		"Could not tqfind correct MIT-MAGIC-COOKIE-1 authentication";
 
 	    *errorStringRet = (char *) malloc (strlen (tempstr) + 1);
 	    if (*errorStringRet)
@@ -243,7 +243,7 @@ char    	**errorStringRet;
 	    /*
 	     * We should never get here because in the ConnectionReply
 	     * we should have passed all the valid methods.  So we should
-	     * always find a valid entry.
+	     * always tqfind a valid entry.
 	     */
 
 	    const char *tempstr =

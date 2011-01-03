@@ -86,7 +86,7 @@ KMWizard::KMWizard(TQWidget *parent, const char *name)
 		m_side = 0;
 	}
 
-	// layout
+	// tqlayout
 	TQVBoxLayout *main0_ = new TQVBoxLayout(this, 10, 10);
 	QVBoxLayout	*main_ = new TQVBoxLayout(0, 0, 0);
 	TQHBoxLayout *main1_ = new TQHBoxLayout(0, 0, 10);
@@ -178,17 +178,17 @@ void KMWizard::configure(int start, int end, bool inclusive)
 
 void KMWizard::setNextPage(int page, int next)
 {
-	KMWizardPage	*p = m_pagepool.find(page);
+	KMWizardPage	*p = m_pagepool.tqfind(page);
 	if (p)
 		p->setNextPage(next);
 }
 
 void KMWizard::setCurrentPage(int ID, bool back)
 {
-	KMWizardPage	*page = m_pagepool.find(ID);
+	KMWizardPage	*page = m_pagepool.tqfind(ID);
 	if (!page)
 	{
-		KMessageBox::error(this,i18n("Unable to find the requested page."),i18n("Add Printer Wizard"));
+		KMessageBox::error(this,i18n("Unable to tqfind the requested page."),i18n("Add Printer Wizard"));
 		return;
 	}
 

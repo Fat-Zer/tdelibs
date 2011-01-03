@@ -15,7 +15,7 @@
 #define BBOX "%%BoundingBox:"
 #define BBOX_LEN strlen(BBOX)
 
-static bool seekToCodeStart( TQIODevice * io, Q_UINT32 & ps_offset, Q_UINT32 & ps_size )
+static bool seekToCodeStart( TQIODevice * io, TQ_UINT32 & ps_offset, TQ_UINT32 & ps_size )
 {
     char buf[4]; // We at most need to read 4 bytes at a time
     ps_offset=0L;
@@ -134,13 +134,13 @@ KDE_EXPORT void kimgio_eps_read (TQImageIO *image)
         TQString tmp;
 
         TQIODevice* io = image->ioDevice();
-        Q_UINT32 ps_offset, ps_size;
+        TQ_UINT32 ps_offset, ps_size;
 
-        // find start of PostScript code
+        // tqfind start of PostScript code
         if ( !seekToCodeStart(io, ps_offset, ps_size) )
             return;
 
-        // find bounding box
+        // tqfind bounding box
         if ( !bbox (io, &x1, &y1, &x2, &y2)) {
             kdError(399) << "kimgio EPS: no bounding box found!" << endl;
             return;
@@ -210,7 +210,7 @@ KDE_EXPORT void kimgio_eps_read (TQImageIO *image)
             return;
         }
 
-        fprintf (ghostfd, "\n%d %d translate\n", -qRound(x1*xScale), -qRound(y1*yScale));
+        fprintf (ghostfd, "\n%d %d translate\n", -tqRound(x1*xScale), -tqRound(y1*yScale));
         if ( needsScaling )
             fprintf (ghostfd, "%g %g scale\n", xScale, yScale);
 

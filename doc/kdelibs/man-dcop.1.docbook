@@ -26,19 +26,19 @@
 <cmdsynopsis>
 <command>dcop</command>
 <group><option>--pipe</option></group>
-<group><option>--user</option> <replaceable> user</replaceable></group>
+<group><option>--user</option> <tqreplaceable> user</tqreplaceable></group>
 <group><option>--all-users</option></group>
-<group><option>--session</option> <replaceable> session</replaceable></group>
+<group><option>--session</option> <tqreplaceable> session</tqreplaceable></group>
 <group><option>--all-sessions</option></group>
 <group><option>--list-sessions</option></group>
 <group><option>--no-user-time</option></group>
 <group>
-  <arg><replaceable>application</replaceable></arg>
+  <arg><tqreplaceable>application</tqreplaceable></arg>
   <group>
-    <arg><replaceable>object</replaceable></arg>
+    <arg><tqreplaceable>object</tqreplaceable></arg>
 	<group>
-           <arg choice="opt"><replaceable>function</replaceable></arg> 
-<group><arg choice="opt" rep="repeat"><replaceable>arguments</replaceable></arg></group>
+           <arg choice="opt"><tqreplaceable>function</tqreplaceable></arg> 
+<group><arg choice="opt" rep="repeat"><tqreplaceable>arguments</tqreplaceable></arg></group>
 </group>
 </group>
 </group>
@@ -70,7 +70,7 @@ linkers.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><option>--user</option> <replaceable>user</replaceable></term>
+<term><option>--user</option> <tqreplaceable>user</tqreplaceable></term>
 <listitem>
 <para>Connect to the given user's &DCOP; server. This option will
 ignore the values of the environment vars $<envar>DCOPSERVER</envar>
@@ -92,7 +92,7 @@ be generated.</para>
 </varlistentry>
 <varlistentry>
 <term><option>--session</option>
-<replaceable>session</replaceable></term>
+<tqreplaceable>session</tqreplaceable></term>
 <listitem><para>Send to the given &kde; session.  This option can only
 be used in combination with the <option>--user</option> option.</para>
 </listitem>
@@ -148,14 +148,14 @@ options.</para>
 <refsect1>
 <title>See Also</title>
 
-<para>dcopclient(1) dcopref(1) dcopfind(1) kdcop(1)</para>
+<para>dcopclient(1) dcopref(1) dcoptqfind(1) kdcop(1)</para>
 
 <para>Inside &kde;, you can enter <userinput>help:/kdcop</userinput>
 in &konqueror; to see the User Manual for
 <application>kdcop</application> graphical dcop tool.</para>
 
 <!--
-<para> Info on where to find proper dcop docs </para>
+<para> Info on where to tqfind proper dcop docs </para>
 -->
 </refsect1>
 </refentry>

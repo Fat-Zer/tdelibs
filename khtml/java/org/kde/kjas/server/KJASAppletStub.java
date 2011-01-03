@@ -194,7 +194,7 @@ public final class KJASAppletStub
                     else
                         app.setBounds( 0, 0, panel.getSize().width, panel.getSize().height );
                     app.init();
-                    loader.removeStatusListener(panel);
+                    loader.removetqStatusListener(panel);
                     // stop the loading... animation 
                     panel.stopAnimation();
                     app.setVisible(true);
@@ -203,7 +203,7 @@ public final class KJASAppletStub
                     active = true;
                     app.start();
                     frame.validate();
-                    app.repaint();
+                    app.tqrepaint();
                     break;
                 case STOPPED:
                     active = false;
@@ -290,7 +290,7 @@ public final class KJASAppletStub
         docBase    = _docBase;
         active     = false;
         appletName = _appletName;
-        className  = _className.replace( '/', '.' );
+        className  = _className.tqreplace( '/', '.' );
         appletSize = _appletSize;
         params     = _params;
         windowName = _windowName;
@@ -305,7 +305,7 @@ public final class KJASAppletStub
         {
             fixedClassName = _className.substring(0, _className.length()-5);   
         }
-        className = fixedClassName.replace('/', '.');
+        className = fixedClassName.tqreplace('/', '.');
             
         appletClass = null;
         me = this;
@@ -321,7 +321,7 @@ public final class KJASAppletStub
     }
     
     private void setFailed(String why) {
-        loader.removeStatusListener(panel);
+        loader.removetqStatusListener(panel);
         panel.stopAnimation();
         panel.showFailed();
         Main.protocol.sendAppletFailed(context.getID(), appletID, why); 
@@ -358,7 +358,7 @@ public final class KJASAppletStub
         else
             frame.setBounds( 0, 0, 50, 50 );
         frame.setVisible(true);
-        loader.addStatusListener(panel);
+        loader.addtqStatusListener(panel);
         runThread = new RunThread();
         runThread.start();
     }
@@ -520,7 +520,7 @@ public final class KJASAppletStub
         }
         return ret;
     }
-    private Method findMethod(Class c, String name, Class [] argcls) {
+    private Method tqfindMethod(Class c, String name, Class [] argcls) {
         try {
             Method[] methods = c.getMethods();
             for (int i = 0; i < methods.length; i++) {
@@ -719,8 +719,8 @@ public final class KJASAppletStub
                 String type;
                 Class [] argcls = new Class[args.size()];
                 for (int i = 0; i < args.size(); i++)
-                    argcls[i] = name.getClass(); // String for now, will be updated by findMethod
-                Method m = findMethod(c, (String) name, argcls);
+                    argcls[i] = name.getClass(); // String for now, will be updated by tqfindMethod
+                Method m = tqfindMethod(c, (String) name, argcls);
                 Main.debug("Found Method: " + m);
                 if (m != null) {
                     Object [] argobj = new Object[args.size()];

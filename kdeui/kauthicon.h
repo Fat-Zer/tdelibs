@@ -55,7 +55,7 @@ public:
   KAuthIcon(TQWidget *parent = 0, const char *name = 0);
   ~KAuthIcon();
 
-  virtual TQSize sizeHint() const;
+  virtual TQSize tqsizeHint() const;
   /**
    * return the status of whatever is being monitored.
    */
@@ -66,7 +66,7 @@ public slots:
    * Re-implement this method if you want the icon to update itself
    * when something external has changed (i.e. a file on disk, uid/gid).
    */
-  virtual void updateStatus() = 0;
+  virtual void updatetqStatus() = 0;
 
 signals:
   /**
@@ -78,7 +78,7 @@ signals:
   void authChanged(bool authorized);
 
 protected:
-  TQHBoxLayout *layout;
+  TQHBoxLayout *tqlayout;
 
   TQLabel *lockBox;
   TQLabel *lockLabel;
@@ -114,7 +114,7 @@ public:
   bool status() const { return root; }
 
 public slots:
-  void updateStatus();
+  void updatetqStatus();
 
 protected:
   bool root;
@@ -149,7 +149,7 @@ public:
    * make the icon watch a new filename.
    * @param fileName the new file to monitor / display status for.
    */
-  void setFileName(const TQString & fileName) { fi.setFile(fileName); updateStatus(); }
+  void setFileName(const TQString & fileName) { fi.setFile(fileName); updatetqStatus(); }
 
   /**
   * return the filename of the currently watched file.
@@ -158,7 +158,7 @@ public:
   TQString fileName() const { return fi.fileName(); }
 
 public slots:
-  void updateStatus();
+  void updatetqStatus();
 
 protected:
   bool writable;

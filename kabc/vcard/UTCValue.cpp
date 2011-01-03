@@ -93,7 +93,7 @@ UTCValue::_parse()
 
 	positive_ = ( strRep_[0] == '+' );
 	
-	int colon = strRep_.find( ':' );
+	int colon = strRep_.tqfind( ':' );
 	
 	if ( colon == -1 ) // Not valid.
 		return;

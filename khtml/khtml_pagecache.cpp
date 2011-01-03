@@ -157,7 +157,7 @@ KHTMLPageCache::createCacheEntry()
 void
 KHTMLPageCache::addData(long id, const TQByteArray &data)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  KHTMLPageCacheEntry *entry = d->dict.tqfind(id);
   if (entry)
      entry->addData(data);
 }
@@ -165,7 +165,7 @@ KHTMLPageCache::addData(long id, const TQByteArray &data)
 void
 KHTMLPageCache::endData(long id)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  KHTMLPageCacheEntry *entry = d->dict.tqfind(id);
   if (entry)
      entry->endData();
 }
@@ -184,13 +184,13 @@ KHTMLPageCache::cancelEntry(long id)
 bool
 KHTMLPageCache::isValid(long id)
 {
-  return (d->dict.find(id) != 0);
+  return (d->dict.tqfind(id) != 0);
 }
 
 bool
 KHTMLPageCache::isComplete(long id)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  KHTMLPageCacheEntry *entry = d->dict.tqfind(id);
   if (entry)
      return entry->isComplete();
   return false;
@@ -199,7 +199,7 @@ KHTMLPageCache::isComplete(long id)
 void
 KHTMLPageCache::fetchData(long id, TQObject *recvObj, const char *recvSlot)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  KHTMLPageCacheEntry *entry = d->dict.tqfind(id);
   if (!entry || !entry->isComplete()) return;
 
   // Make this entry the most recent entry.
@@ -271,7 +271,7 @@ KHTMLPageCache::sendData()
 void
 KHTMLPageCache::saveData(long id, TQDataStream *str)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  KHTMLPageCacheEntry *entry = d->dict.tqfind(id);
   assert(entry);
 
   int fd = entry->m_file->handle();

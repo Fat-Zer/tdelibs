@@ -10,6 +10,6 @@
 <!ENTITY drcorn	"&#x231F;"> <!-- BOTTOM RIGHT CORNER -->
 <!ENTITY lceil	"&#x2308;"> <!-- LEFT CEILING -->
 <!ENTITY lfloor	"&#x230A;"> <!-- LEFT FLOOR -->
-<!--     lpargt	Unknown unicode character -->
+<!--     lpargt	Unknown tqunicode character -->
 <!ENTITY ulcorn	"&#x231C;"> <!-- TOP LEFT CORNER -->
 <!ENTITY dlcorn	"&#x231E;"> <!-- BOTTOM LEFT CORNER -->

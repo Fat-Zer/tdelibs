@@ -26,14 +26,14 @@
 class KMJob;
 class KMJobManager;
 
-class KMThreadJob : public QObject
+class KMThreadJob : public TQObject
 {
 public:
 	KMThreadJob(TQObject *parent = 0, const char *name = 0);
 	~KMThreadJob();
 
-	KMJob* findJob(int ID);
-	KMJob* findJob(const TQString& uri);
+	KMJob* tqfindJob(int ID);
+	KMJob* tqfindJob(const TQString& uri);
 	bool removeJob(int ID);
 	void createJob(KMJob*);
 	void updateManager(KMJobManager*);

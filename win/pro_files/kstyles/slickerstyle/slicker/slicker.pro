@@ -2,7 +2,7 @@ include( ../../common.pro )
 
 TARGET		= slicker$$KDEBUG
 
-system( bash kmoc )
+system( bash ktqmoc )
 
 SOURCES = \
 slicker.cpp

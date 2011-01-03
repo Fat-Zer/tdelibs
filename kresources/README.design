@@ -27,7 +27,7 @@ Resource families are usually implemented as (abstract) classes
 in a library, e.g. the calendar resource in libkcal en the
 addressbook resource family in libkabc. Resource type are like 
 plugins: that can be loaded on-demand, they are implemented in
-their own library, and a .desktop file tells KDE where to find 
+their own library, and a .desktop file tells KDE where to tqfind 
 them.
 
 The user then configures one or more resources for a certain
@@ -94,7 +94,7 @@ For examples, check the following files in kdepim/libkcal:
 - kcmcalendars.{h,cpp}
   Defines the KControl applet for calendar resources
 - kcalendars.desktop
-  This .desktop files tells KControl where to find the 
+  This .desktop files tells KControl where to tqfind the 
   applet for calendar resources.
 - Makefile.am
   How to build and install the calendar resource family
@@ -119,7 +119,7 @@ kdepim/kresources/exchange:
   Defines the configuration widget for the exchange resource
 - exchange.desktop
   This file is installed so that the resource manager can
-  find the exchange resource type
+  tqfind the exchange resource type
 - Makefile.am
   How to build and install the exchange resource type
 

@@ -44,7 +44,7 @@ public:
 
     virtual const char *renderName() const { return "RenderApplet"; }
 
-    virtual void layout();
+    virtual void tqlayout();
     virtual short intrinsicWidth() const;
     virtual int intrinsicHeight() const;
     virtual bool isApplet() const { return true; }

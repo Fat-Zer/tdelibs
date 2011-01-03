@@ -63,7 +63,7 @@ public:
     ~HTMLTableCaptionElement();
 
     /**
-     * Caption alignment with respect to the table. See the <a
+     * Caption tqalignment with respect to the table. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-align-CAPTION">
      * align attribute definition </a> in HTML 4.0. This attribute is
      * deprecated in HTML 4.0.
@@ -134,7 +134,7 @@ public:
     void setAbbr( const DOMString & );
 
     /**
-     * Horizontal alignment of data in cell. See the <a
+     * Horizontal tqalignment of data in cell. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-align-TD">
      * align attribute definition </a> in HTML 4.0.
      *
@@ -187,7 +187,7 @@ public:
     void setCh( const DOMString & );
 
     /**
-     * Offset of alignment character. See the <a
+     * Offset of tqalignment character. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-charoff">
      * charoff attribute definition </a> in HTML 4.0.
      *
@@ -281,7 +281,7 @@ public:
     void setScope( const DOMString & );
 
     /**
-     * Vertical alignment of data in cell. See the <a
+     * Vertical tqalignment of data in cell. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-valign">
      * valign attribute definition </a> in HTML 4.0.
      *
@@ -338,7 +338,7 @@ public:
     ~HTMLTableColElement();
 
     /**
-     * Horizontal alignment of cell data in column. See the <a
+     * Horizontal tqalignment of cell data in column. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-align-TD">
      * align attribute definition </a> in HTML 4.0.
      *
@@ -364,7 +364,7 @@ public:
     void setCh( const DOMString & );
 
     /**
-     * Offset of alignment character. See the <a
+     * Offset of tqalignment character. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-charoff">
      * charoff attribute definition </a> in HTML 4.0.
      *
@@ -391,7 +391,7 @@ public:
     void setSpan( long  );
 
     /**
-     * Vertical alignment of cell data in column. See the <a
+     * Vertical tqalignment of cell data in column. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-valign">
      * valign attribute definition </a> in HTML 4.0.
      *
@@ -790,7 +790,7 @@ public:
     void setCells( const HTMLCollection & );
 
     /**
-     * Horizontal alignment of data within cells of this row. See the
+     * Horizontal tqalignment of data within cells of this row. See the
      * <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-align-TD">
      * align attribute definition </a> in HTML 4.0.
@@ -831,7 +831,7 @@ public:
     void setCh( const DOMString & );
 
     /**
-     * Offset of alignment character. See the <a
+     * Offset of tqalignment character. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-charoff">
      * charoff attribute definition </a> in HTML 4.0.
      *
@@ -844,7 +844,7 @@ public:
     void setChOff( const DOMString & );
 
     /**
-     * Vertical alignment of data within cells of this row. See the <a
+     * Vertical tqalignment of data within cells of this row. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-valign">
      * valign attribute definition </a> in HTML 4.0.
      *
@@ -913,7 +913,7 @@ public:
     ~HTMLTableSectionElement();
 
     /**
-     * Horizontal alignment of data in cells. See the \c align
+     * Horizontal tqalignment of data in cells. See the \c align
      * attribute for HTMLTheadElement for details.
      *
      */
@@ -938,7 +938,7 @@ public:
     void setCh( const DOMString & );
 
     /**
-     * Offset of alignment character. See the <a
+     * Offset of tqalignment character. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/tables.html#adef-charoff">
      * charoff attribute definition </a> in HTML 4.0.
      *
@@ -951,7 +951,7 @@ public:
     void setChOff( const DOMString & );
 
     /**
-     * Vertical alignment of data in cells. See the \c valign
+     * Vertical tqalignment of data in cells. See the \c valign
      * attribute for HTMLTheadElement for details.
      *
      */

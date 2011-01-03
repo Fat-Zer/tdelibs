@@ -158,7 +158,7 @@ void KSwitchLanguageDialog::removeButtonClicked()
         return;
     }
     
-    TQMap<KPushButton *, LanguageRowData>::iterator it = d->languageRows.find(removeButton);
+    TQMap<KPushButton *, LanguageRowData>::iterator it = d->languageRows.tqfind(removeButton);
     
     if (it == d->languageRows.end())
     {

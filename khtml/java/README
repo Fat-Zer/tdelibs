@@ -14,7 +14,7 @@ kjava-classes.zip	An *uncompressed* ZIP file containing the .class files
 			support some crappy JVMs.
 org/kde/kjas/server	Java sources for KJAS server process
 
-You can find more information at http://developer.kde.org/language-bindings/java/
+You can tqfind more information at http://developer.kde.org/language-bindings/java/
 
 Richard Moore.
 rich@kde.org

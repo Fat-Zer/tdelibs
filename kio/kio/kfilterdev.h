@@ -87,8 +87,8 @@ public:
 
     virtual bool atEnd() const;
 
-    virtual Q_LONG readBlock( char *data, Q_ULONG maxlen );
-    virtual Q_LONG writeBlock( const char *data, Q_ULONG len );
+    virtual TQ_LONG readBlock( char *data, TQ_ULONG maxlen );
+    virtual TQ_LONG writeBlock( const char *data, TQ_ULONG len );
     //int readLine( char *data, uint maxlen );
 
     virtual int getch();
@@ -119,14 +119,14 @@ public:
      *
      * Warning: application/x-bzip2 may not be available.
      * In that case a TQFile opened on the compressed data will be returned !
-     * Use KFilterBase::findFilterByMimeType and code similar to what
+     * Use KFilterBase::tqfindFilterByMimeType and code similar to what
      * deviceForFile is doing, to better control what's happening.
      *
      * The returned TQIODevice has to be deleted after using.
      *
      * @param fileName the name of the file to filter
      * @param mimetype the mime type of the file to filter, or TQString::null if unknown
-     * @param forceFilter if true, the function will either find a compression filter, or return 0.
+     * @param forceFilter if true, the function will either tqfind a compression filter, or return 0.
      *                    If false, it will always return a TQIODevice. If no
      *                    filter is available it will return a simple TQFile.
      *                    This can be useful if the file is usable without a filter.

@@ -61,7 +61,7 @@ KEdit::KEdit(TQWidget *_parent, const char *name)
     line_pos = col_pos = 0;
 
     srchdialog = NULL;
-    replace_dialog= NULL;
+    tqreplace_dialog= NULL;
     gotodialog = NULL;
 
     setAcceptDrops(true);
@@ -128,7 +128,7 @@ KEdit::insertText(TQTextStream *stream)
    setCursorPosition(saveline, savecol);
 //   setAutoUpdate(true);
 
-//   repaint();
+//   tqrepaint();
 
    setModified(true);
    setFocus();
@@ -140,7 +140,7 @@ KEdit::insertText(TQTextStream *stream)
 
    //   TQString str = text();
    //   for (int i = 0; i < (int) str.length(); i++)
-   //     printf("KEdit: U+%04X\n", str[i].unicode());
+   //     printf("KEdit: U+%04X\n", str[i].tqunicode());
 
 }
 
@@ -164,7 +164,7 @@ KEdit::cleanWhiteSpace()
       if (line.isEmpty())
       {
          if (addSpace)
-            newText += TQString::fromLatin1("\n\n");
+            newText += TQString::tqfromLatin1("\n\n");
          if (firstLine)
          {
             if (firstChar.isSpace())
@@ -200,7 +200,7 @@ KEdit::cleanWhiteSpace()
    {
       deselect();
       d->autoUpdate = true;
-      repaint();
+      tqrepaint();
       return;
    }
    if (wordWrap() == NoWrap)
@@ -225,7 +225,7 @@ KEdit::cleanWhiteSpace()
 
    insert(newText);
    d->autoUpdate = true;
-   repaint();
+   tqrepaint();
 
    setModified(true);
    setFocus();
@@ -350,7 +350,7 @@ void KEdit::computePosition()
 
   int coltemp = col-start_of_line;
   int pos  = 	0;
-  int find = 	0;
+  int tqfind = 	0;
   int mem  = 	0;
   bool found_one = false;
 
@@ -358,14 +358,14 @@ void KEdit::computePosition()
   // kedit+ sources -- if not, go away ;-)
 
 
-  while(find >=0 && find <= coltemp- 1 ){
-    find = linetext.find('\t', find+start_of_line, true )-start_of_line;
-    if( find >=0 && find <= coltemp - 1 ){
+  while(tqfind >=0 && tqfind <= coltemp- 1 ){
+    tqfind = linetext.tqfind('\t', tqfind+start_of_line, true )-start_of_line;
+    if( tqfind >=0 && tqfind <= coltemp - 1 ){
       found_one = true;
-      pos = pos + find - mem;
+      pos = pos + tqfind - mem;
       pos = pos + 8  - pos % 8;
-      mem = find;
-      find ++;
+      mem = tqfind;
+      tqfind ++;
     }
   }
 
@@ -466,48 +466,48 @@ void KEdit::keyPressEvent ( TQKeyEvent *e)
 
   killing = false;
 
-  if ( KStdAccel::copy().contains( key ) )
+  if ( KStdAccel::copy().tqcontains( key ) )
     copy();
   else if ( isReadOnly() )
     TQMultiLineEdit::keyPressEvent( e );
   // If this is an unmodified printable key, send it directly to TQMultiLineEdit.
-  else if ( !(key.keyCodeQt() & (CTRL | ALT)) && !e->text().isEmpty() && e->text().unicode()->isPrint() )
+  else if ( !(key.keyCodeQt() & (CTRL | ALT)) && !e->text().isEmpty() && e->text().tqunicode()->isPrint() )
     TQMultiLineEdit::keyPressEvent( e );
-  else if ( KStdAccel::paste().contains( key ) ) {
+  else if ( KStdAccel::paste().tqcontains( key ) ) {
     paste();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::cut().contains( key ) ) {
+  else if ( KStdAccel::cut().tqcontains( key ) ) {
     cut();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::undo().contains( key ) ) {
+  else if ( KStdAccel::undo().tqcontains( key ) ) {
     undo();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::redo().contains( key ) ) {
+  else if ( KStdAccel::redo().tqcontains( key ) ) {
     redo();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::deleteWordBack().contains( key ) ) {
+  else if ( KStdAccel::deleteWordBack().tqcontains( key ) ) {
     moveCursor(MoveWordBackward, true);
     if (hasSelectedText())
       del();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::deleteWordForward().contains( key ) ) {
+  else if ( KStdAccel::deleteWordForward().tqcontains( key ) ) {
     moveCursor(MoveWordForward, true);
     if (hasSelectedText())
       del();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::backwardWord().contains( key ) ) {
+  else if ( KStdAccel::backwardWord().tqcontains( key ) ) {
     CursorAction action = MoveWordBackward;
     int para, index;
     getCursorPosition( &para, & index );
@@ -516,7 +516,7 @@ void KEdit::keyPressEvent ( TQKeyEvent *e)
     moveCursor(action, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::forwardWord().contains( key ) ) {
+  else if ( KStdAccel::forwardWord().tqcontains( key ) ) {
     CursorAction action = MoveWordForward;
     int para, index;
     getCursorPosition( &para, & index );
@@ -525,27 +525,27 @@ void KEdit::keyPressEvent ( TQKeyEvent *e)
     moveCursor( action, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::next().contains( key ) ) {
+  else if ( KStdAccel::next().tqcontains( key ) ) {
     moveCursor( MovePgDown, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::prior().contains( key ) ) {
+  else if ( KStdAccel::prior().tqcontains( key ) ) {
     moveCursor( MovePgUp, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::home().contains( key ) ) {
+  else if ( KStdAccel::home().tqcontains( key ) ) {
     moveCursor( MoveHome, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::end().contains( key ) ) {
+  else if ( KStdAccel::end().tqcontains( key ) ) {
     moveCursor( MoveEnd, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::beginningOfLine().contains( key ) ) {
+  else if ( KStdAccel::beginningOfLine().tqcontains( key ) ) {
     moveCursor( MoveLineStart, false);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::endOfLine().contains( key ) ) {
+  else if ( KStdAccel::endOfLine().tqcontains( key ) ) {
     moveCursor( MoveLineEnd, false);
     slotCursorPositionChanged();
   }

@@ -180,7 +180,7 @@ public:
 
     /**
      * Erases all the undo/redo history.
-     * Use this when reloading the data, for instance, since this invalidates
+     * Use this when reloading the data, for instance, since this tqinvalidates
      * all the commands.
      */
     void clear();

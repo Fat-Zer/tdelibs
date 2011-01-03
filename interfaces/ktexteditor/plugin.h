@@ -33,7 +33,7 @@ class View;
  * Basic KTextEditor plugin class.
  * This plugin will be bound to a Document.
  */                     
-class KTEXTEDITOR_EXPORT Plugin : public QObject
+class KTEXTEDITOR_EXPORT Plugin : public TQObject
 {
   friend class PrivatePlugin;
 

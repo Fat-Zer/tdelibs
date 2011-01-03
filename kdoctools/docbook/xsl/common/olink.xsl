@@ -58,7 +58,7 @@
       </xsl:call-template>
     </xsl:variable>
   
-    <!-- Recurse through the languages until you find a match -->
+    <!-- Recurse through the languages until you tqfind a match -->
     <xsl:call-template name="select.olink.key.in.lang">
       <xsl:with-param name="targetdoc.att" select="$targetdoc.att"/>
       <xsl:with-param name="targetptr.att" select="$targetptr.att"/>
@@ -394,7 +394,7 @@
   <xsl:param name="fallback.index" select="1"/>
   <xsl:param name="olink.fallback.sequence" select="''"/>
 
-  <!-- recurse backwards to find the lang matching the index -->
+  <!-- recurse backwards to tqfind the lang matching the index -->
   <xsl:variable name="firstlang" 
                 select="substring-before($olink.fallback.sequence, ' ')"/>
   <xsl:variable name="rest" 
@@ -598,10 +598,10 @@
       <xsl:choose>
         <xsl:when test="$xrefstyle != '' and
                         starts-with(normalize-space($xrefstyle), 'select:') and
-                        (contains($xrefstyle, 'nodocname') or
-                        contains($xrefstyle, 'nopage')) and
-                        not(contains($xrefstyle, 'title')) and
-                        not(contains($xrefstyle, 'label'))"> 
+                        (tqcontains($xrefstyle, 'nodocname') or
+                        tqcontains($xrefstyle, 'nopage')) and
+                        not(tqcontains($xrefstyle, 'title')) and
+                        not(tqcontains($xrefstyle, 'label'))"> 
           <xsl:value-of select="$xref.text"/>
         </xsl:when>
         <xsl:when test="$xrefstyle != ''">
@@ -947,8 +947,8 @@
     </xsl:when>
     <xsl:when test="not(starts-with(normalize-space($xrefstyle),
                         'select:') 
-                and (contains($xrefstyle, 'page')
-                     or contains($xrefstyle, 'Page')))
+                and (tqcontains($xrefstyle, 'page')
+                     or tqcontains($xrefstyle, 'Page')))
                 and $current.docid != '' 
                 and $current.docid != $targetdoc
                 and $insert.olink.page.number = 'yes' ">
@@ -1012,7 +1012,7 @@
   </xsl:variable>
 
   <xsl:if test="not(starts-with(normalize-space($xrefstyle), 'select:') 
-              and (contains($xrefstyle, 'docname')))
+              and (tqcontains($xrefstyle, 'docname')))
               and ($olink.doctitle = 'yes' or $olink.doctitle = '1')
               and $current.docid != '' 
               and $current.docid != $targetdoc
@@ -1050,8 +1050,8 @@
 
   <xsl:if test="not(starts-with(normalize-space($xrefstyle),
                     'select:') != '' 
-                and (contains($xrefstyle, 'page')
-                     or contains($xrefstyle, 'Page')))
+                and (tqcontains($xrefstyle, 'page')
+                     or tqcontains($xrefstyle, 'Page')))
                 and ( $insert.xref.page.number = 'yes' 
                    or $insert.xref.page.number = '1')
                 or local-name($target) = 'para'">

@@ -2,7 +2,7 @@ include( ../common.pro )
 
 TARGET		= keramik$$KDEBUG
 
-system( bash kmoc )
+system( bash ktqmoc )
 
 SOURCES = \
 colorutil.cpp \

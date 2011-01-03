@@ -66,7 +66,7 @@ public:
     TQTextCodec *codecForName(const TQString &name) const;
 
     /**
-     * Tries to find a TQTextCodec to convert the given encoding from and to
+     * Tries to tqfind a TQTextCodec to convert the given encoding from and to
      * Unicode. If no codec could be found the latin1 codec will be returned an
      * @p ok will be set to false.
      * @return the TQTextCodec. If the desired codec could not be found,
@@ -82,7 +82,7 @@ public:
      */
     static TQChar fromEntity(const TQString &str);
     /**
-     * Overloaded member function. Tries to find an entity in the
+     * Overloaded member function. Tries to tqfind an entity in the
      * TQString str.
      * @param str the string containing entified
      * @param len is a return value, that gives the length of the decoded

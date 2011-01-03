@@ -34,7 +34,7 @@
  * A class for importing NS bookmarks
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KNSBookmarkImporter : public QObject
+class KIO_EXPORT_DEPRECATED KNSBookmarkImporter : public TQObject
 {
     Q_OBJECT
 public:
@@ -70,7 +70,7 @@ public:
     KNSBookmarkImporterImpl() : m_utf8(false) { }
     void setUtf8(bool utf8) { m_utf8 = utf8; }
     virtual void parse();
-    virtual TQString findDefaultLocation(bool forSaving = false) const;
+    virtual TQString tqfindDefaultLocation(bool forSaving = false) const;
 private:
     bool m_utf8;
     class KNSBookmarkImporterImplPrivate *d;

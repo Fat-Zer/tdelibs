@@ -76,15 +76,15 @@ KProgressBoxDialog::KProgressBoxDialog(TQWidget* parent, const char* name,
     mCancelText = actionButton(KDialogBase::Cancel)->text();
 
     TQFrame* mainWidget = plainPage();
-    TQVBoxLayout* layout = new TQVBoxLayout(mainWidget, 10);
+    TQVBoxLayout* tqlayout = new TQVBoxLayout(mainWidget, 10);
 
     mLabel = new TQLabel(text, mainWidget);
-    layout->addWidget(mLabel);
+    tqlayout->addWidget(mLabel);
 
     mProgressBar = new KProgress(mainWidget);
-    layout->addWidget(mProgressBar);
+    tqlayout->addWidget(mProgressBar);
     mTextBox = new KTextEdit(mainWidget);
-    layout->addWidget(mTextBox);
+    tqlayout->addWidget(mTextBox);
 
     connect(mProgressBar, TQT_SIGNAL(percentageChanged(int)),
             this, TQT_SLOT(slotAutoActions(int)));

@@ -64,12 +64,12 @@ private:
 	 */
 	class Layer {
 	public:
-		Q_UINT32 width;			//!< Width of the layer
-		Q_UINT32 height;		//!< Height of the layer
-		Q_INT32 type;			//!< Type of the layer (GimpImageType)
+		TQ_UINT32 width;			//!< Width of the layer
+		TQ_UINT32 height;		//!< Height of the layer
+		TQ_INT32 type;			//!< Type of the layer (GimpImageType)
 		char* name;			//!< Name of the layer
-		Q_UINT32 hierarchy_offset;	//!< File position of Tile hierarchy
-		Q_UINT32 mask_offset;		//!< File position of mask image
+		TQ_UINT32 hierarchy_offset;	//!< File position of Tile hierarchy
+		TQ_UINT32 tqmask_offset;		//!< File position of tqmask image
 
 		uint nrows;			//!< Number of rows of tiles (y direction)
 		uint ncols;			//!< Number of columns of tiles (x direction)
@@ -78,36 +78,36 @@ private:
 		//! For Grayscale and Indexed images, the alpha channel is stored
 		//! separately (in this data structure, anyway).
 		Tiles alpha_tiles;
-		Tiles mask_tiles;		//!< The layer mask (optional)
+		Tiles tqmask_tiles;		//!< The layer tqmask (optional)
 
-		//! Additional information about a layer mask.
+		//! Additional information about a layer tqmask.
 		struct {
-			Q_UINT32 opacity;
-			Q_UINT32 visible;
-			Q_UINT32 show_masked;
+			TQ_UINT32 opacity;
+			TQ_UINT32 visible;
+			TQ_UINT32 show_tqmasked;
 			uchar red, green, blue;
-			Q_UINT32 tattoo;
-		} mask_channel;
+			TQ_UINT32 tattoo;
+		} tqmask_channel;
 
 		bool active;			//!< Is this layer the active layer?
-		Q_UINT32 opacity;		//!< The opacity of the layer
-		Q_UINT32 visible;		//!< Is the layer visible?
-		Q_UINT32 linked;		//!< Is this layer linked (geometrically)
-		Q_UINT32 preserve_transparency; //!< Preserve alpha when drawing on layer?
-		Q_UINT32 apply_mask;		//!< Apply the layer mask?
-		Q_UINT32 edit_mask;		//!< Is the layer mask the being edited?
-		Q_UINT32 show_mask;		//!< Show the layer mask rather than the image?
-		Q_INT32 x_offset;		//!< x offset of the layer relative to the image
-		Q_INT32 y_offset;		//!< y offset of the layer relative to the image
-		Q_UINT32 mode;			//!< Combining mode of layer (LayerModeEffects)
-		Q_UINT32 tattoo;		//!< (unique identifier?)
+		TQ_UINT32 opacity;		//!< The opacity of the layer
+		TQ_UINT32 visible;		//!< Is the layer visible?
+		TQ_UINT32 linked;		//!< Is this layer linked (geometrically)
+		TQ_UINT32 preserve_transparency; //!< Preserve alpha when drawing on layer?
+		TQ_UINT32 apply_tqmask;		//!< Apply the layer tqmask?
+		TQ_UINT32 edit_tqmask;		//!< Is the layer tqmask the being edited?
+		TQ_UINT32 show_tqmask;		//!< Show the layer tqmask rather than the image?
+		TQ_INT32 x_offset;		//!< x offset of the layer relative to the image
+		TQ_INT32 y_offset;		//!< y offset of the layer relative to the image
+		TQ_UINT32 mode;			//!< Combining mode of layer (LayerModeEffects)
+		TQ_UINT32 tattoo;		//!< (unique identifier?)
 
 		//! As each tile is read from the file, it is buffered here.
 		uchar tile[TILE_WIDTH * TILE_HEIGHT * sizeof(QRgb)];
 
 		//! The data from tile buffer is copied to the Tile by this
 		//! method.  Depending on the type of the tile (RGB, Grayscale,
-		//! Indexed) and use (image or mask), the bytes in the buffer are
+		//! Indexed) and use (image or tqmask), the bytes in the buffer are
 		//! copied in different ways.
 		void (*assignBytes)(Layer& layer, uint i, uint j);
 
@@ -117,21 +117,21 @@ private:
 
 
 	/*!
-	 * The in-memory representation of the XCF Image. It contains a few
+	 * The in-memory representation of the XCF Image. It tqcontains a few
 	 * metadata items, but is mostly a container for the layer information.
 	 */
 	class XCFImage {
 	public:
-		Q_UINT32 width;			//!< width of the XCF image
-		Q_UINT32 height;		//!< height of the XCF image
-		Q_INT32 type;			//!< type of the XCF image (GimpImageBaseType)
+		TQ_UINT32 width;			//!< width of the XCF image
+		TQ_UINT32 height;		//!< height of the XCF image
+		TQ_INT32 type;			//!< type of the XCF image (GimpImageBaseType)
 
-		Q_UINT8 compression;		//!< tile compression method (CompressionType)
+		TQ_UINT8 compression;		//!< tile compression method (CompressionType)
 		float x_resolution;		//!< x resolution in dots per inch
 		float y_resolution;		//!< y resolution in dots per inch
-		Q_INT32 tattoo;			//!< (unique identifier?)
-		Q_UINT32 unit;			//!< Units of The GIMP (inch, mm, pica, etc...)
-		Q_INT32 num_colors;		//!< number of colors in an indexed image
+		TQ_INT32 tattoo;			//!< (unique identifier?)
+		TQ_UINT32 unit;			//!< Units of The GIMP (inch, mm, pica, etc...)
+		TQ_INT32 num_colors;		//!< number of colors in an indexed image
 		TQValueVector<QRgb> palette;	//!< indexed image color palette
 
 		int num_layers;			//!< number of layers
@@ -146,7 +146,7 @@ private:
 
 	//! In layer DISSOLVE mode, a random number is chosen to compare to a
 	//! pixel's alpha. If the alpha is greater than the random number, the
-	//! pixel is drawn. This table merely contains the random number seeds
+	//! pixel is drawn. This table merely tqcontains the random number seeds
 	//! for each ROW of an image. Therefore, the random numbers chosen
 	//! are consistent from run to run.
 	static int random_table[RANDOM_TABLE_SIZE];
@@ -182,13 +182,13 @@ private:
 	void setPalette(XCFImage& xcf_image, TQImage& image);
 	static void assignImageBytes(Layer& layer, uint i, uint j);
 	bool loadHierarchy(TQDataStream& xcf_io, Layer& layer);
-	bool loadLevel(TQDataStream& xcf_io, Layer& layer, Q_INT32 bpp);
+	bool loadLevel(TQDataStream& xcf_io, Layer& layer, TQ_INT32 bpp);
 	static void assignMaskBytes(Layer& layer, uint i, uint j);
 	bool loadMask(TQDataStream& xcf_io, Layer& layer);
 	bool loadChannelProperties(TQDataStream& xcf_io, Layer& layer);
 	bool initializeImage(XCFImage& xcf_image);
 	bool loadTileRLE(TQDataStream& xcf_io, uchar* tile, int size,
-			int data_length, Q_INT32 bpp);
+			int data_length, TQ_INT32 bpp);
 	static void copyLayerToImage(XCFImage& xcf_image);
 	static void copyRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
 			TQImage& image, int m, int n);

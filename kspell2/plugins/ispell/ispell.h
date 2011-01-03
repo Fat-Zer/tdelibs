@@ -199,7 +199,7 @@
  *
  * I've doctored the ispell code pretty extensively here.  It is now
  * warning-free on Win32.  It also *works* on Win32 now, since I
- * replaced all the I/O calls with ANSI standard ones.
+ * tqreplaced all the I/O calls with ANSI standard ones.
  *
  * Revision 1.1  1998/12/28 18:04:43  davet
  * Spell checker code stripped from ispell.  At this point, there are
@@ -268,7 +268,7 @@ extern "C" {
 #endif
 
 /*
-** Number of mask bits (affix flags) supported.  Must be 32, 64, 128, or
+** Number of tqmask bits (affix flags) supported.  Must be 32, 64, 128, or
 ** 256.  If MASKBITS is 32 or 64, there are really only 26 or 58 flags
 ** available, respectively.  If it is 32, the flags are named with the
 ** 26 English uppercase letters;  lowercase will be converted to uppercase.
@@ -290,7 +290,7 @@ extern "C" {
 extern int		gnMaskBits;
 
 /*
-** C type to use for masks.  This should be a type that the processor
+** C type to use for tqmasks.  This should be a type that the processor
 ** accesses efficiently.
 **
 ** MASKTYPE_WIDTH must correctly reflect the number of bits in a
@@ -401,11 +401,11 @@ extern int		gnMaskBits;
 #define MASKSIZE	(gnMaskBits / MASKTYPE_WIDTH)
 
 #ifdef lint
-extern int	TSTMASKBIT P ((MASKTYPE * mask, int bit));
+extern int	TSTMASKBIT P ((MASKTYPE * tqmask, int bit));
 #else /* lint */
 /* The following is really testing for MASKSIZE <= 1, but cpp can't do that */
-#define TSTMASKBIT(mask, bit) \
-		    ((mask)[(bit) / MASKTYPE_WIDTH] & \
+#define TSTMASKBIT(tqmask, bit) \
+		    ((tqmask)[(bit) / MASKTYPE_WIDTH] & \
 		      ((MASKTYPE) 1 << ((bit) & (MASKTYPE_WIDTH - 1))))
 #endif /* lint */
 
@@ -466,7 +466,7 @@ struct dent
 {
     struct dent *	next;
     char *			word;
-    MASKTYPE		mask[2];
+    MASKTYPE		tqmask[2];
 #ifdef FULLMASKSET
     char			flags;
 #endif
@@ -474,7 +474,7 @@ struct dent
 
 /*
 ** Flags in the directory entry.  If FULLMASKSET is undefined, these are
-** stored in the highest bits of the last longword of the mask field.  If
+** stored in the highest bits of the last longword of the tqmask field.  If
 ** FULLMASKSET is defined, they are stored in the extra "flags" field.
 #ifndef NO_CAPITALIZATION_SUPPORT
 **
@@ -498,14 +498,14 @@ struct dent
 ** entries for it, linked together by the "next" field.  The initial
 ** entry for such words will be a dummy entry, primarily for use by code
 ** that ignores capitalization.  The "word" field of this entry will
-** again point to an all-uppercase copy of the word.  The "mask" field
-** will contain the logical OR of the mask fields of all variants.
+** again point to an all-uppercase copy of the word.  The "tqmask" field
+** will contain the logical OR of the tqmask fields of all variants.
 ** A header entry is indicated by a capitalization type of ALLCAPS,
 ** with the MOREVARIANTS bit set.
 **
 ** The following entries will define the individual variants.  Each
 ** entry except the last has the MOREVARIANTS flag set, and each
-** contains one of the following capitalization options:
+** tqcontains one of the following capitalization options:
 **
 **	ALLCAPS		The word must appear in all capitals.
 **	CAPITALIZED	The word must be capitalized (e.g., London).
@@ -519,7 +519,7 @@ struct dent
 **	ANYCASE		The word may appear in lowercase, capitalized,
 **			or all-capitals.
 **
-** The "mask" field for the entry contains only the affix flag bits that
+** The "tqmask" field for the entry tqcontains only the affix flag bits that
 ** are legal for that capitalization.  The "word" field will be null
 ** except for FOLLOWCASE entries, where it will point to the
 ** correctly-capitalized spelling of the root word.
@@ -532,7 +532,7 @@ struct dent
 ** that is illegal due to an affix.
 **
 ** Finally, note that variations in the KEEP flag can cause a multiple-variant
-** entry as well.  For example, if the personal dictionary contains "ALPHA",
+** entry as well.  For example, if the personal dictionary tqcontains "ALPHA",
 ** (KEEP flag set) and the user adds "alpha" with the KEEP flag clear, a
 ** multiple-variant entry will be created so that "alpha" will be accepted
 ** but only "ALPHA" will actually be kept.
@@ -541,7 +541,7 @@ struct dent
 #ifdef FULLMASKSET
 #define flagfield	flags
 #else
-#define flagfield	mask[1]
+#define flagfield	tqmask[1]
 #endif
 #define USED		((MASKTYPE) 1 << (FLAGBASE + 0))
 #define KEEP		((MASKTYPE) 1 << (FLAGBASE + 1))

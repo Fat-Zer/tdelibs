@@ -220,7 +220,7 @@ void KHTMLPartBrowserExtension::copy()
     {
         // get selected text and paste to the clipboard
         TQString text= m_part->selectedText();
-	text.replace( TQChar( 0xa0 ), ' ' );
+	text.tqreplace( TQChar( 0xa0 ), ' ' );
 
 
         QClipboard *cb = TQApplication::clipboard();
@@ -240,7 +240,7 @@ void KHTMLPartBrowserExtension::copy()
 	KMultipleDrag *drag = new KMultipleDrag( m_editableFormWidget );
 	drag->addDragObject( textdrag );
 	if(!htmltext.isEmpty()) {
-	    htmltext.replace( TQChar( 0xa0 ), ' ' );
+	    htmltext.tqreplace( TQChar( 0xa0 ), ' ' );
 	    TQTextDrag *htmltextdrag = new TQTextDrag(htmltext, 0L);
 	    htmltextdrag->setSubtype("html");
 	    drag->addDragObject( htmltextdrag );
@@ -276,7 +276,7 @@ void KHTMLPartBrowserExtension::searchProvider()
         KDesktopFile file("searchproviders/google.desktop", true, "services");
 	TQString encodedSearchTerm = m_part->selectedText();
 	TQUrl::encode(encodedSearchTerm);
-	data.setData(file.readEntry("Query").replace("\\{@}", encodedSearchTerm));
+	data.setData(file.readEntry("Query").tqreplace("\\{@}", encodedSearchTerm));
     }
 
     KParts::URLArgs args;
@@ -315,7 +315,7 @@ void KHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
     if ( !m_extensionProxy )
         return;
 
-    int slot = m_extensionProxy->metaObject()->findSlot( method );
+    int slot = m_extensionProxy->tqmetaObject()->tqfindSlot( method );
     if ( slot == -1 )
         return;
 
@@ -339,7 +339,7 @@ void KHTMLPartBrowserExtension::updateEditActions()
     enableAction( "paste", data->provides( "text/plain" ) );
 #else
     TQString data=TQApplication::clipboard()->text();
-    enableAction( "paste", data.contains("://"));
+    enableAction( "paste", data.tqcontains("://"));
 #endif
     bool hasSelection = false;
 
@@ -444,7 +444,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const TQString &doc,
 
       // search text
       TQString selectedText = khtml->selectedText();
-      selectedText.replace("&", "&&");
+      selectedText.tqreplace("&", "&&");
       if ( selectedText.length()>18 ) {
         selectedText.truncate(15);
         selectedText+="...";
@@ -465,7 +465,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const TQString &doc,
       {
         TQString iconPath = locate("cache", KMimeType::favIconForURL(data.uri()) + ".png");
         if ( iconPath.isEmpty() )
-          icon = SmallIcon("find");
+          icon = SmallIcon("tqfind");
         else
           icon = TQPixmap( iconPath );
         name = service->name();
@@ -502,7 +502,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const TQString &doc,
           {
             TQString iconPath = locate("cache", KMimeType::favIconForURL(data.uri()) + ".png");
             if ( iconPath.isEmpty() )
-              icon = SmallIcon("find");
+              icon = SmallIcon("tqfind");
             else
               icon = TQPixmap( iconPath );
             name = service->name();
@@ -514,7 +514,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const TQString &doc,
       }
 
 
-      if ( selectedText.contains("://") && KURL(selectedText).isValid() )
+      if ( selectedText.tqcontains("://") && KURL(selectedText).isValid() )
          new KAction( i18n( "Open '%1'" ).arg( selectedText ), "window_new", 0,
          d->m_khtml->browserExtension(), TQT_SLOT( openSelection() ), actionCollection(), "openSelection" );
   }
@@ -615,7 +615,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const TQString &doc,
     }
 
     TQString name = KStringHandler::csqueeze(d->m_imageURL.fileName()+d->m_imageURL.query(), 25);
-    new KAction( i18n( "View Image (%1)" ).arg(d->m_suggestedFilename.isEmpty() ? name.replace("&", "&&") : d->m_suggestedFilename.replace("&", "&&")), 0, this, TQT_SLOT( slotViewImage() ),
+    new KAction( i18n( "View Image (%1)" ).arg(d->m_suggestedFilename.isEmpty() ? name.tqreplace("&", "&&") : d->m_suggestedFilename.tqreplace("&", "&&")), 0, this, TQT_SLOT( slotViewImage() ),
                  actionCollection(), "viewimage" );
 
     if (KHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled())
@@ -809,7 +809,7 @@ void KHTMLPopupGUIClient::saveURL( TQWidget *parent, const TQString &caption,
                                    const TQString &filter, long cacheId,
                                    const TQString & suggestedFilename )
 {
-  TQString name = TQString::fromLatin1( "index.html" );
+  TQString name = TQString::tqfromLatin1( "index.html" );
   if ( !suggestedFilename.isEmpty() )
     name = suggestedFilename;
   else if ( !url.fileName().isEmpty() )
@@ -870,7 +870,7 @@ void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
         if(!saved)
         {
           // DownloadManager <-> konqueror integration
-          // find if the integration is enabled
+          // tqfind if the integration is enabled
           // the empty key  means no integration
           // only use download manager for non-local urls!
           bool downloadViaKIO = true;
@@ -881,7 +881,7 @@ void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
             TQString downloadManger = cfg.readPathEntry("DownloadManager");
             if (!downloadManger.isEmpty())
             {
-                // then find the download manager location
+                // then tqfind the download manager location
                 kdDebug(1000) << "Using: "<<downloadManger <<" as Download Manager" <<endl;
                 TQString cmd = KStandardDirs::findExe(downloadManger);
                 if (cmd.isEmpty())
@@ -947,7 +947,7 @@ void KHTMLPartBrowserHostExtension::virtual_hook( int id, void *data )
   if (id == VIRTUAL_FIND_FRAME_PARENT)
   {
     FindFrameParentParams *param = static_cast<FindFrameParentParams*>(data);
-    KHTMLPart *parentPart = m_part->findFrameParent(param->callingPart, param->frame);
+    KHTMLPart *parentPart = m_part->tqfindFrameParent(param->callingPart, param->frame);
     if (parentPart)
        param->parent = parentPart->browserHostExtension();
     return;

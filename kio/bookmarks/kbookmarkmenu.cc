@@ -226,7 +226,7 @@ bool RMB::invalid( int val )
 
 KBookmark RMB::atAddress(const TQString & address)
 {
-  KBookmark bookmark = m_pManager->findByAddress( address );
+  KBookmark bookmark = m_pManager->tqfindByAddress( address );
   Q_ASSERT(!bookmark.isNull());
   return bookmark;
 }
@@ -537,7 +537,7 @@ void KBookmarkMenu::addNewFolder()
 
   TQString title = i18n( "&New Bookmark Folder..." );
   int p;
-  while ( ( p = title.find( '&' ) ) >= 0 )
+  while ( ( p = title.tqfind( '&' ) ) >= 0 )
     title.remove( p, 1 );
 
   KAction * paNewFolder = new KAction( title,
@@ -617,13 +617,13 @@ void KBookmarkMenu::fillBookmarkMenu()
     }
   }
 
-  KBookmarkGroup parentBookmark = m_pManager->findByAddress( m_parentAddress ).toGroup();
+  KBookmarkGroup parentBookmark = m_pManager->tqfindByAddress( m_parentAddress ).toGroup();
   Q_ASSERT(!parentBookmark.isNull());
   bool separatorInserted = false;
   for ( KBookmark bm = parentBookmark.first(); !bm.isNull();  bm = parentBookmark.next(bm) )
   {
     TQString text = KStringHandler::csqueeze(bm.fullText(), 60);
-    text.replace( '&', "&&" );
+    text.tqreplace( '&', "&&" );
     if ( !separatorInserted && m_bIsRoot) {
       // inserted before the first konq bookmark, to avoid the separator if no konq bookmark
       m_parentMenu->insertSeparator();
@@ -708,7 +708,7 @@ void KBookmarkMenu::slotAddBookmarksList()
   KExtendedBookmarkOwner::QStringPairList list;
   extOwner->fillBookmarksList( list );
 
-  KBookmarkGroup parentBookmark = m_pManager->findByAddress( m_parentAddress ).toGroup();
+  KBookmarkGroup parentBookmark = m_pManager->tqfindByAddress( m_parentAddress ).toGroup();
   Q_ASSERT(!parentBookmark.isNull());
   KBookmarkGroup group = parentBookmark.createNewFolder( m_pManager );
   if ( group.isNull() )
@@ -733,7 +733,7 @@ void KBookmarkMenu::slotAddBookmark()
 void KBookmarkMenu::slotNewFolder()
 {
   if ( !m_pOwner ) return; // this view doesn't handle bookmarks...
-  KBookmarkGroup parentBookmark = m_pManager->findByAddress( m_parentAddress ).toGroup();
+  KBookmarkGroup parentBookmark = m_pManager->tqfindByAddress( m_parentAddress ).toGroup();
   Q_ASSERT(!parentBookmark.isNull());
   KBookmarkGroup group = parentBookmark.createNewFolder( m_pManager );
   if ( !group.isNull() )
@@ -895,7 +895,7 @@ void KBookmarkEditDialog::slotUser1()
 
   TQString address = KBookmarkFolderTree::selectedAddress( m_folderTree );
   if ( address.isNull() ) return;
-  KBookmarkGroup bm = m_mgr->findByAddress( address ).toGroup();
+  KBookmarkGroup bm = m_mgr->tqfindByAddress( address ).toGroup();
   Q_ASSERT(!bm.isNull());
   Q_ASSERT(m_editType == InsertionMode);
 
@@ -1056,7 +1056,7 @@ void KBookmarkMenuNSImporter::connectToImporter(const TQObject &importer)
 void KBookmarkMenuNSImporter::newBookmark( const TQString & text, const TQCString & url, const TQString & )
 {
   TQString _text = KStringHandler::csqueeze(text);
-  _text.replace( '&', "&&" );
+  _text.tqreplace( '&', "&&" );
   KAction * action = new KBookmarkAction(_text, "html", 0, 0, "", m_actionCollection, 0);
   connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, Qt::ButtonState )),
           m_menu, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, Qt::ButtonState ) ));
@@ -1069,7 +1069,7 @@ void KBookmarkMenuNSImporter::newBookmark( const TQString & text, const TQCStrin
 void KBookmarkMenuNSImporter::newFolder( const TQString & text, bool, const TQString & )
 {
   TQString _text = KStringHandler::csqueeze(text);
-  _text.replace( '&', "&&" );
+  _text.tqreplace( '&', "&&" );
   KActionMenu * actionMenu = new KActionMenu( _text, "folder", m_actionCollection, 0L );
   actionMenu->plug( mstack.top()->m_parentMenu );
   mstack.top()->m_actions.append( actionMenu );
@@ -1175,7 +1175,7 @@ void KBookmarkMenu::setDynamicBookmarks(const TQString &id, const DynMenuInfo &n
 
   // make sure list includes type
   config.setGroup("Bookmarks");
-  if (elist.contains(id) < 1) {
+  if (elist.tqcontains(id) < 1) {
     elist << id;
     config.writeEntry("DynamicMenus", elist);
   }

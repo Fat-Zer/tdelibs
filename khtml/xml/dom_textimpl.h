@@ -51,9 +51,9 @@ public:
     virtual void appendData ( const DOMString &arg, int &exceptioncode );
     virtual void insertData ( const unsigned long offset, const DOMString &arg, int &exceptioncode );
     virtual void deleteData ( const unsigned long offset, const unsigned long count, int &exceptioncode );
-    virtual void replaceData ( const unsigned long offset, const unsigned long count, const DOMString &arg, int &exceptioncode );
+    virtual void tqreplaceData ( const unsigned long offset, const unsigned long count, const DOMString &arg, int &exceptioncode );
 
-    virtual bool containsOnlyWhitespace() const;
+    virtual bool tqcontainsOnlyWhitespace() const;
 
     // DOM methods overridden from  parent classes
 
@@ -135,7 +135,7 @@ public:
     DOMStringImpl *renderString() const;
     
     virtual DOMString toString() const;
-    /** Return the text for the node, with < replaced with &lt; and so on.
+    /** Return the text for the node, with < tqreplaced with &lt; and so on.
      *  @param startOffset The number of characters counted from the left, zero indexed, counting "<" as one character, to start from.  Use -1 to start from 0.
      *  @param endOffset The number of characters counted from the left, zero indexed, counting "<" as one character, to end on.  Use -1 to end at the end of the string.
      *  @return An html escaped version of the substring.

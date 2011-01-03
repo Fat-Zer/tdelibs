@@ -36,11 +36,11 @@
 class KMimeMagic; // see below (read this one first)
 
 /**
- * @deprecated Use KMimeType::findByContent() instead
+ * @deprecated Use KMimeType::tqfindByContent() instead
  * May be removed in KDE 4.0.
- * Returned by KMimeMagic @p find...Type methods.
+ * Returned by KMimeMagic @p tqfind...Type methods.
  *
- * It contains the mimetype and the encoding of
+ * It tqcontains the mimetype and the encoding of
  * the file or buffer read.
  */
 class KIO_EXPORT_DEPRECATED KMimeMagicResult
@@ -75,7 +75,7 @@ protected:
 };
 
 /**
- * @deprecated Use KMimeType::findByContent() instead
+ * @deprecated Use KMimeType::tqfindByContent() instead
  * May be removed in KDE 4.0.
  * Determine auto-magically the type of file,
  * not only by using its extension, but also by reading its contents.
@@ -94,7 +94,7 @@ protected:
  * The basic usage of KMimeMagic is :
  * @li Get a pointer to it, using KMimeMagic::self().
  * @li Use it for any file or buffer you want, using one of the three
- * @p find...Type() methods.
+ * @p tqfind...Type() methods.
  *
  * The result is contained in the class KMimeMagicResult.
  */
@@ -142,7 +142,7 @@ public:
   void setFollowLinks( bool _enable );
 
   /**
-   * Try to find a MimeType for the given file.
+   * Try to tqfind a MimeType for the given file.
    *
    * If no special
    * MimeType is found, the default MimeType is returned.
@@ -153,7 +153,7 @@ public:
    *         the returned result object changes its value
    *         since it is reused by KMimeMagic.
    */
-  KMimeMagicResult* findFileType( const TQString & _filename );
+  KMimeMagicResult* tqfindFileType( const TQString & _filename );
 
   /**
    * Same functionality as above, except data is not
@@ -167,10 +167,10 @@ public:
    *         the returned result object changes its value
    *         since it is reused by KMimeMagic.
    */
-  KMimeMagicResult* findBufferType( const TQByteArray &p );
+  KMimeMagicResult* tqfindBufferType( const TQByteArray &p );
 
   /**
-   * Same functionality as findBufferType() but with
+   * Same functionality as tqfindBufferType() but with
    * additional capability of distinguishing between
    * C-headers and C-Source.
    *
@@ -183,7 +183,7 @@ public:
    *         the returned result object changes its value
    *         since it is reused by KMimeMagic.
    */
-  KMimeMagicResult * findBufferFileType( const TQByteArray &, const TQString & filename );
+  KMimeMagicResult * tqfindBufferFileType( const TQByteArray &, const TQString & filename );
 
   /**
    * Returns a pointer to the unique KMimeMagic instance in this process.

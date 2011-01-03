@@ -133,7 +133,7 @@ bool KDatagramSocket::connect(const TQString& node, const TQString& service)
 
 KDatagramPacket KDatagramSocket::receive()
 {
-  Q_LONG size = bytesAvailable();
+  TQ_LONG size = bytesAvailable();
   if (size == 0)
     {
       // nothing available yet to read
@@ -165,12 +165,12 @@ KDatagramPacket KDatagramSocket::receive()
   return KDatagramPacket(data, address);
 }
 
-Q_LONG KDatagramSocket::send(const KDatagramPacket& packet)
+TQ_LONG KDatagramSocket::send(const KDatagramPacket& packet)
 {
   return writeBlock(packet.data(), packet.size(), packet.address());
 }
 
-Q_LONG KDatagramSocket::writeBlock(const char *data, Q_ULONG len, const KSocketAddress& to)
+TQ_LONG KDatagramSocket::writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to)
 {
   if (to.family() != AF_UNSPEC)
     {

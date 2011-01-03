@@ -259,7 +259,7 @@ signals:
   void clicked(int);
   /**
    * Emitted when the toolbar button is clicked (with any mouse button)
-   * @param state makes it possible to find out which button was pressed,
+   * @param state makes it possible to tqfind out which button was pressed,
    * and whether any keyboard modifiers were held.
    * @since 3.4
    */
@@ -291,9 +291,9 @@ protected:
   /// @since 3.4
   void mouseReleaseEvent( TQMouseEvent * );
   void showMenu();
-  TQSize sizeHint() const;
-  TQSize minimumSizeHint() const;
-  TQSize minimumSize() const;
+  TQSize tqsizeHint() const;
+  TQSize tqminimumSizeHint() const;
+  TQSize tqminimumSize() const;
 
   /// @since 3.1
   bool isRaised() const;

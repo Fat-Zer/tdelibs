@@ -39,14 +39,14 @@ DCOPSignals::emitSignal( DCOPConnection *conn, const TQCString &_fun, const TQBy
 {
    TQCString senderObj;
    TQCString fun = _fun;
-   int i = fun.find('#');
+   int i = fun.tqfind('#');
    if (i > -1)
    {
       senderObj = fun.left(i);
       fun = fun.mid(i+1);
    }
 
-   DCOPSignalConnectionList *list = connections.find(fun);
+   DCOPSignalConnectionList *list = connections.tqfind(fun);
    if (!list) return;
    for(DCOPSignalConnection *current = list->first(); current; current = list->next())
    {
@@ -102,16 +102,16 @@ DCOPSignals::connectSignal( const TQCString &sender, const TQCString &senderObj,
    // TODO: Check if signal and slot match
    TQCString signalArgs, slotArgs;
    int i,j;
-   i = signal.find('(');
+   i = signal.tqfind('(');
    if (i < 0) return false;
    signalArgs = signal.mid(i+1);
-   j = signalArgs.find(')');
+   j = signalArgs.tqfind(')');
    if (j < 0) return false;
    signalArgs.truncate(j);
-   i = slot.find('(');
+   i = slot.tqfind('(');
    if (i < 0) return false;
    slotArgs = slot.mid(i+1);
-   j = slotArgs.find(')');
+   j = slotArgs.tqfind(')');
    if (j < 0) return false;
    slotArgs.truncate(j);
 
@@ -129,7 +129,7 @@ DCOPSignals::connectSignal( const TQCString &sender, const TQCString &senderObj,
    DCOPConnection *senderConn = 0;
    if (Volatile)
    {
-      senderConn = the_server->findApp(sender);
+      senderConn = the_server->tqfindApp(sender);
       if (!senderConn)
          return false; // Sender does not exist.
    }
@@ -142,7 +142,7 @@ DCOPSignals::connectSignal( const TQCString &sender, const TQCString &senderObj,
    current->recvObj = receiverObj;
    current->slot = slot;
 
-   DCOPSignalConnectionList *list = connections.find(signal);
+   DCOPSignalConnectionList *list = connections.tqfind(signal);
    if (!list)
    {
       list = new DCOPSignalConnectionList;
@@ -177,7 +177,7 @@ DCOPSignals::disconnectSignal( const TQCString &sender, const TQCString &senderO
       return true;
    }
 
-   DCOPSignalConnectionList *list = connections.find(signal);
+   DCOPSignalConnectionList *list = connections.tqfind(signal);
    if (!list)
       return false; // Not found...
 
@@ -255,7 +255,7 @@ DCOPSignals::removeConnections(DCOPConnection *conn, const TQCString &obj)
       if (current->recvConn != conn)
          current->recvConn->signalConnectionList()->removeRef(current);
 
-      DCOPSignalConnectionList *signalList = connections.find(current->signal);
+      DCOPSignalConnectionList *signalList = connections.tqfind(current->signal);
       if (signalList)
       {
          signalList->removeRef(current);

@@ -32,7 +32,7 @@
 
 namespace KIO {
 
-StatusbarProgress::StatusbarProgress( TQWidget* parent, bool button )
+tqStatusbarProgress::tqStatusbarProgress( TQWidget* parent, bool button )
   : ProgressBase( parent ) {
 
   m_bShowButton = button;
@@ -60,18 +60,18 @@ StatusbarProgress::StatusbarProgress( TQWidget* parent, bool button )
   stack->addWidget( m_pProgressBar, 1 );
 
   m_pLabel = new TQLabel( "", this );
-  m_pLabel->setAlignment( AlignHCenter | AlignVCenter );
+  m_pLabel->tqsetAlignment( AlignHCenter | AlignVCenter );
   m_pLabel->installEventFilter( this );
   m_pLabel->setMinimumWidth( w );
   stack->addWidget( m_pLabel, 2 );
-  setMinimumSize( sizeHint() );
+  setMinimumSize( tqsizeHint() );
 
   mode = None;
   setMode();
 }
 
 
-void StatusbarProgress::setJob( KIO::Job *job )
+void tqStatusbarProgress::setJob( KIO::Job *job )
 {
   ProgressBase::setJob( job );
 
@@ -80,7 +80,7 @@ void StatusbarProgress::setJob( KIO::Job *job )
 }
 
 
-void StatusbarProgress::setMode() {
+void tqStatusbarProgress::setMode() {
   switch ( mode ) {
   case None:
     if ( m_bShowButton ) {
@@ -108,7 +108,7 @@ void StatusbarProgress::setMode() {
 }
 
 
-void StatusbarProgress::slotClean() {
+void tqStatusbarProgress::slotClean() {
   // we don't want to delete this widget, only clean
   m_pProgressBar->setValue( 0 );
   m_pLabel->clear();
@@ -118,16 +118,16 @@ void StatusbarProgress::slotClean() {
 }
 
 
-void StatusbarProgress::slotTotalSize( KIO::Job*, KIO::filesize_t size ) {
+void tqStatusbarProgress::slotTotalSize( KIO::Job*, KIO::filesize_t size ) {
   m_iTotalSize = size;  // size is measured in bytes
 }
 
-void StatusbarProgress::slotPercent( KIO::Job*, unsigned long percent ) {
+void tqStatusbarProgress::slotPercent( KIO::Job*, unsigned long percent ) {
   m_pProgressBar->setValue( percent );
 }
 
 
-void StatusbarProgress::slotSpeed( KIO::Job*, unsigned long speed ) {
+void tqStatusbarProgress::slotSpeed( KIO::Job*, unsigned long speed ) {
   if ( speed == 0 ) { // spped is measured in bytes-per-second
     m_pLabel->setText( i18n( " Stalled ") );
   } else {
@@ -136,7 +136,7 @@ void StatusbarProgress::slotSpeed( KIO::Job*, unsigned long speed ) {
 }
 
 
-bool StatusbarProgress::eventFilter( TQObject *, TQEvent *ev ) {
+bool tqStatusbarProgress::eventFilter( TQObject *, TQEvent *ev ) {
   if ( ! m_pJob ) { // don't react when there isn't any job doing IO
     return true;
   }
@@ -159,7 +159,7 @@ bool StatusbarProgress::eventFilter( TQObject *, TQEvent *ev ) {
   return false;
 }
 
-void StatusbarProgress::virtual_hook( int id, void* data )
+void tqStatusbarProgress::virtual_hook( int id, void* data )
 { ProgressBase::virtual_hook( id, data ); }
 
 } /* namespace */

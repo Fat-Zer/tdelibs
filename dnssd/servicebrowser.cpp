@@ -138,7 +138,7 @@ void ServiceBrowser::startBrowse()
 
 void ServiceBrowser::gotNewService(RemoteService::Ptr svr)
 {
-	if (findDuplicate(svr)==(d->m_services.end()))  {
+	if (tqfindDuplicate(svr)==(d->m_services.end()))  {
 		if (d->m_flags & AutoResolve) {
 			connect(svr,TQT_SIGNAL(resolved(bool )),this,TQT_SLOT(serviceResolved(bool )));
 			d->m_duringResolve+=svr;
@@ -152,7 +152,7 @@ void ServiceBrowser::gotNewService(RemoteService::Ptr svr)
 
 void ServiceBrowser::gotRemoveService(RemoteService::Ptr svr)
 {
-	TQValueList<RemoteService::Ptr>::Iterator it = findDuplicate(svr);
+	TQValueList<RemoteService::Ptr>::Iterator it = tqfindDuplicate(svr);
 	if (it!=(d->m_services.end())) {
 		emit serviceRemoved(*it);
 		d->m_services.remove(it);
@@ -212,7 +212,7 @@ const TQValueList<RemoteService::Ptr>& ServiceBrowser::services() const
 void ServiceBrowser::virtual_hook(int, void*)
 {}
 
-TQValueList<RemoteService::Ptr>::Iterator ServiceBrowser::findDuplicate(RemoteService::Ptr src)
+TQValueList<RemoteService::Ptr>::Iterator ServiceBrowser::tqfindDuplicate(RemoteService::Ptr src)
 {
 	TQValueList<RemoteService::Ptr>::Iterator itEnd = d->m_services.end();
 	for (TQValueList<RemoteService::Ptr>::Iterator it = d->m_services.begin(); it!=itEnd; ++it)

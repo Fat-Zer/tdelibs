@@ -29,7 +29,7 @@
 
 class KMDBCreator;
 
-class KMDriverDB : public QObject
+class KMDriverDB : public TQObject
 {
 	Q_OBJECT
 public:
@@ -40,8 +40,8 @@ public:
 
 	void init(TQWidget *parent = 0);
 	KMDBEntryList* findEntry(const TQString& manu, const TQString& model);
-	KMDBEntryList* findPnpEntry(const TQString& manu, const TQString& model);
-	TQDict<KMDBEntryList>* findModels(const TQString& manu);
+	KMDBEntryList* tqfindPnpEntry(const TQString& manu, const TQString& model);
+	TQDict<KMDBEntryList>* tqfindModels(const TQString& manu);
 	const TQDict< TQDict<KMDBEntryList> >& manufacturers() const	{ return m_entries; }
 
 protected:

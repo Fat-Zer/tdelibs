@@ -48,15 +48,15 @@ public:
 		       SFlags = Style_Default,
 		       const TQStyleOption & = TQStyleOption::Default ) const;
 
-    void drawControl(ControlElement, TQPainter *, const TQWidget *, const TQRect &,
+    void tqdrawControl(ControlElement, TQPainter *, const TQWidget *, const TQRect &,
 		     const TQColorGroup &, SFlags = Style_Default,
 		     const TQStyleOption & = TQStyleOption::Default ) const;
-    void drawControlMask(ControlElement, TQPainter *, const TQWidget *, const TQRect &,
+    void tqdrawControlMask(ControlElement, TQPainter *, const TQWidget *, const TQRect &,
 			 const TQStyleOption & = TQStyleOption::Default) const;
 
     TQRect subRect(SubRect, const TQWidget *) const;
 
-    void drawComplexControl(ComplexControl, TQPainter *, const TQWidget *, const TQRect &,
+    void tqdrawComplexControl(ComplexControl, TQPainter *, const TQWidget *, const TQRect &,
 			    const TQColorGroup &, SFlags = Style_Default,
 			    SCFlags = SC_All, SCFlags = SC_None,
 			    const TQStyleOption & = TQStyleOption::Default ) const;
@@ -67,12 +67,12 @@ public:
     SubControl querySubControl(ComplexControl, const TQWidget *, const TQPoint &,
 			       const TQStyleOption &data = TQStyleOption::Default ) const;
 
-    int pixelMetric(PixelMetric, const TQWidget * = 0 ) const;
+    int tqpixelMetric(PixelMetric, const TQWidget * = 0 ) const;
 
     TQSize sizeFromContents(ContentsType, const TQWidget *, const TQSize &,
 			   const TQStyleOption & = TQStyleOption::Default ) const;
 
-    int styleHint(StyleHint, const TQWidget * = 0,
+    int tqstyleHint(StyleHint, const TQWidget * = 0,
 		  const TQStyleOption & = TQStyleOption::Default,
 		  QStyleHintReturn * = 0 ) const;
 

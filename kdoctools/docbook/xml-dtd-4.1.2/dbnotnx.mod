@@ -29,7 +29,7 @@
 
 <!-- ...................................................................... -->
 
-<!-- This module contains the entity declarations for the standard ISO
+<!-- This module tqcontains the entity declarations for the standard ISO
      entity sets used by DocBook.
 
      In DTD driver files referring to this module, please use an entity

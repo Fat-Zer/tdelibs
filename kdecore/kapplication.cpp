@@ -170,7 +170,7 @@ static Atom kde_xdnd_drop;
 #endif
 
 // duplicated from patched Qt, so that there won't be unresolved symbols if Qt gets
-// replaced by unpatched one
+// tqreplaced by unpatched one
 KDECORE_EXPORT bool qt_qclipboard_bailout_hack = false;
 
 template class TQPtrList<KSessionManaged>;
@@ -250,7 +250,7 @@ public:
   IceIOErrorHandler oldIceIOErrorHandler;
   KCheckAccelerators* checkAccelerators;
   TQString overrideStyle;
-  TQString geometry_arg;
+  TQString tqgeometry_arg;
   TQCString startup_id;
   TQTimer* app_started_timer;
   KAppDCOPInterface *m_KAppDCOPInterface;
@@ -466,7 +466,7 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
           // We have a keypress for a lineedit...
           TQKeyEvent *kevent = static_cast<TQKeyEvent *>(event);
           KKey key(kevent);
-          if (_selectAll.contains(key))
+          if (_selectAll.tqcontains(key))
           {
              if (t == TQEvent::KeyPress)
              {
@@ -503,7 +503,7 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
        {
           // We have a keypress for a multilineedit...
           TQKeyEvent *kevent = static_cast<TQKeyEvent *>(event);
-          if (_selectAll.contains(KKey(kevent)))
+          if (_selectAll.tqcontains(KKey(kevent)))
           {
              if (t == TQEvent::KeyPress)
              {
@@ -519,7 +519,7 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
     }
     if( t == TQEvent::Show && receiver->isWidgetType())
     {
-        TQWidget* w = static_cast< TQWidget* >( receiver );
+        TQWidget* w = static_cast< TQWidget* >( static_cast<QObject*>(receiver) );
 #if defined Q_WS_X11
         if( w->isTopLevel() && !startupId().isEmpty() && !static_cast<TQShowEvent*>(event)->spontaneous()) // TODO better done using window group leader?
             KStartupInfo::setWindowStartupId( w->winId(), startupId());
@@ -765,7 +765,7 @@ class KDETranslator : public TQTranslator
 {
 public:
   KDETranslator(TQObject *parent) : TQTranslator(parent, "kdetranslator") {}
-  virtual TQTranslatorMessage findMessage(const char* context,
+  virtual TQTranslatorMessage tqfindMessage(const char* context,
 					 const char *sourceText,
 					 const char* message) const
   {
@@ -832,7 +832,7 @@ void KApplication::init(bool GUIenabled)
 
   smw = 0;
 
-  // Initial KIPC event mask.
+  // Initial KIPC event tqmask.
 #if defined Q_WS_X11
   kipcEventMask = (1 << KIPC::StyleChanged) | (1 << KIPC::PaletteChanged) |
                   (1 << KIPC::FontChanged) | (1 << KIPC::BackgroundChanged) |
@@ -901,7 +901,7 @@ void KApplication::init(bool GUIenabled)
         TQMimeSourceFactory::addFactory( oldDefaultFactory );
     }
 
-    d->checkAccelerators = new KCheckAccelerators( this );
+    d->checkAccelerators = new KCheckAccelerators( TQT_TQOBJECT(this) );
   }
 
 #ifdef Q_WS_MACX
@@ -934,16 +934,16 @@ void KApplication::init(bool GUIenabled)
   // save and restore the RTL setting, as installTranslator calls qt_detectRTLLanguage,
   // which makes it impossible to use the -reverse cmdline switch with KDE apps
   bool rtl = reverseLayout();
-  installTranslator(new KDETranslator(this));
+  installTranslator(new KDETranslator(TQT_TQOBJECT(this)));
   setReverseLayout( rtl );
   if (i18n( "_: Dear Translator! Translate this string to the string 'LTR' in "
 	 "left-to-right languages (as english) or to 'RTL' in right-to-left "
-	 "languages (such as Hebrew and Arabic) to get proper widget layout." ) == "RTL")
+	 "languages (such as Hebrew and Arabic) to get proper widget tqlayout." ) == "RTL")
 	setReverseLayout( !rtl );
 
   // install appdata resource type
   KGlobal::dirs()->addResourceType("appdata", KStandardDirs::kde_default("data")
-                                   + TQString::fromLatin1(name()) + '/');
+                                   + TQString::tqfromLatin1(name()) + '/');
   pSessionConfig = 0L;
   bSessionManagement = true;
 
@@ -1179,9 +1179,9 @@ void KApplication::propagateSessionManager()
     TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
     TQCString display = ::getenv(DISPLAY);
     // strip the screen number from the display
-    display.replace(TQRegExp("\\.[0-9]+$"), "");
+    display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
     int i;
-    while( (i = display.find(':')) >= 0)
+    while( (i = display.tqfind(':')) >= 0)
        display[i] = '_';
 
     fName += "_"+display;
@@ -1222,7 +1222,7 @@ void KApplication::commitData( QSessionManager& sm )
 
     if ( sm.allowsInteraction() ) {
         TQWidgetList done;
-        TQWidgetList *list = TQApplication::topLevelWidgets();
+        TQWidgetList *list = TQApplication::tqtopLevelWidgets();
         bool canceled = false;
         TQWidget* w = list->first();
         while ( !canceled && w ) {
@@ -1233,12 +1233,12 @@ void KApplication::commitData( QSessionManager& sm )
                 if ( !canceled )
                     done.append( w );
                 delete list; // one never knows...
-                list = TQApplication::topLevelWidgets();
+                list = TQApplication::tqtopLevelWidgets();
                 w = list->first();
             } else {
                 w = list->next();
             }
-            while ( w && done.containsRef( w ) )
+            while ( w && done.tqcontainsRef( w ) )
                 w = list->next();
         }
         delete list;
@@ -1380,9 +1380,9 @@ void KApplication::startKdeinit()
          return; // whoever held the lock has already started dcopserver
   }
   // Try to launch kdeinit.
-  TQString srv = KStandardDirs::findExe(TQString::fromLatin1("kdeinit"));
+  TQString srv = KStandardDirs::findExe(TQString::tqfromLatin1("kdeinit"));
   if (srv.isEmpty())
-     srv = KStandardDirs::findExe(TQString::fromLatin1("kdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
+     srv = KStandardDirs::findExe(TQString::tqfromLatin1("kdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
   if (srv.isEmpty())
      return;
   if (kapp && (Tty != kapp->type()))
@@ -1467,7 +1467,7 @@ static const KCmdLineOptions qt_options[] =
 #ifdef Q_WS_QWS
    { "qws", I18N_NOOP("forces the application to run as QWS Server"), 0},
 #endif
-   { "reverse", I18N_NOOP("mirrors the whole layout of widgets"), 0},
+   { "reverse", I18N_NOOP("mirrors the whole tqlayout of widgets"), 0},
    KCmdLineLastOption
 };
 
@@ -1481,7 +1481,7 @@ static const KCmdLineOptions kde_options[] =
    { "nocrashhandler",          I18N_NOOP("Disable crash handler, to get core dumps"), 0},
    { "waitforwm",          I18N_NOOP("Waits for a WM_NET compatible windowmanager"), 0},
    { "style <style>", I18N_NOOP("sets the application GUI style"), 0},
-   { "geometry <geometry>", I18N_NOOP("sets the client geometry of the main widget - see man X for the argument format"), 0},
+   { "tqgeometry <tqgeometry>", I18N_NOOP("sets the client tqgeometry of the main widget - see man X for the argument format"), 0},
    { "smkey <sessionKey>", 0, 0}, // this option is obsolete and exists only to allow smooth upgrades from sessions
                                   // saved under Qt 3.0.x -- Qt 3.1.x includes the session key now automatically in
 				  // the session id (Simon)
@@ -1589,9 +1589,9 @@ void KApplication::parseCommandLine( )
     // FIXME(E): Implement for Qt Embedded
 #endif
 
-    if (args->isSet("geometry"))
+    if (args->isSet("tqgeometry"))
     {
-        d->geometry_arg = args->getOption("geometry");
+        d->tqgeometry_arg = args->getOption("tqgeometry");
     }
 
     if (args->isSet("smkey"))
@@ -1603,7 +1603,7 @@ void KApplication::parseCommandLine( )
 
 TQString KApplication::geometryArgument() const
 {
-    return d->geometry_arg;
+    return d->tqgeometry_arg;
 }
 
 TQPixmap KApplication::icon() const
@@ -1883,13 +1883,13 @@ void KApplication::updateRemoteUserTimestamp( const TQCString& dcopId, unsigned 
 
 void KApplication::invokeEditSlot( const char *slot )
 {
-  TQObject *object = focusWidget();
+  TQObject *object = TQT_TQOBJECT(tqfocusWidget());
   if( !object )
     return;
 
-  TQMetaObject *meta = object->metaObject();
+  TQMetaObject *meta = object->tqmetaObject();
 
-  int idx = meta->findSlot( slot + 1, true );
+  int idx = meta->tqfindSlot( slot + 1, true );
   if( idx < 0 )
     return;
 
@@ -1900,7 +1900,7 @@ void KApplication::addKipcEventMask(int id)
 {
     if (id >= 32)
     {
-        kdDebug(101) << "Cannot use KIPC event mask for message IDs >= 32\n";
+        kdDebug(101) << "Cannot use KIPC event tqmask for message IDs >= 32\n";
         return;
     }
     kipcEventMask |= (1 << id);
@@ -1910,7 +1910,7 @@ void KApplication::removeKipcEventMask(int id)
 {
     if (id >= 32)
     {
-        kdDebug(101) << "Cannot use KIPC event mask for message IDs >= 32\n";
+        kdDebug(101) << "Cannot use KIPC event tqmask for message IDs >= 32\n";
         return;
     }
     kipcEventMask &= ~(1 << id);
@@ -2452,10 +2452,10 @@ void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const 
    TQString command = config.readPathEntry("EmailClient");
 
    TQString to, cc, bcc;
-   if (command.isEmpty() || command == TQString::fromLatin1("kmail")
+   if (command.isEmpty() || command == TQString::tqfromLatin1("kmail")
        || command.endsWith("/kmail"))
    {
-     command = TQString::fromLatin1("kmail --composer -s %s -c %c -b %b --body %B --attach %A -- %t");
+     command = TQString::tqfromLatin1("kmail --composer -s %s -c %c -b %b --body %B --attach %A -- %t");
      if ( !_to.isEmpty() )
      {
        // put the whole address lists into RFC2047 encoded blobs; technically
@@ -2473,7 +2473,7 @@ void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const 
      to = _to;
      cc = _cc;
      bcc = _bcc;
-     if( !command.contains( '%' ))
+     if( !command.tqcontains( '%' ))
          command += " %u";
    }
 
@@ -2826,7 +2826,7 @@ TQString KApplication::tempSaveName( const TQString& pFilename ) const
         }
     }
 
-  aFilename.replace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
+  aFilename.tqreplace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
 
   return aFilename;
 }
@@ -2855,7 +2855,7 @@ TQString KApplication::checkRecoverFile( const TQString& pFilename,
         }
     }
 
-  aFilename.replace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
+  aFilename.tqreplace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
 
   if( TQFile( aFilename ).exists() )
     {
@@ -2888,7 +2888,7 @@ bool checkAccess(const TQString& pathname, int mode)
 
   //strip the filename (everything until '/' from the end
   TQString dirName(pathname);
-  int pos = dirName.findRev('/');
+  int pos = dirName.tqfindRev('/');
   if ( pos == -1 )
     return false;   // No path in argument. This is evil, we won't allow this
   else if ( pos == 0 ) // don't turn e.g. /root into an empty string
@@ -3103,18 +3103,18 @@ void KApplication::initUrlActionRestrictions()
     bool bEnabled = (strEnabled == "true");
 
     if (refPath.startsWith("$HOME"))
-       refPath.replace(0, 5, TQDir::homeDirPath());
+       refPath.tqreplace(0, 5, TQDir::homeDirPath());
     else if (refPath.startsWith("~"))
-       refPath.replace(0, 1, TQDir::homeDirPath());
+       refPath.tqreplace(0, 1, TQDir::homeDirPath());
     if (urlPath.startsWith("$HOME"))
-       urlPath.replace(0, 5, TQDir::homeDirPath());
+       urlPath.tqreplace(0, 5, TQDir::homeDirPath());
     else if (urlPath.startsWith("~"))
-       urlPath.replace(0, 1, TQDir::homeDirPath());
+       urlPath.tqreplace(0, 1, TQDir::homeDirPath());
 
     if (refPath.startsWith("$TMP"))
-       refPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
+       refPath.tqreplace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
     if (urlPath.startsWith("$TMP"))
-       urlPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
+       urlPath.tqreplace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
 
     d->urlActionRestrictions.append(new KApplicationPrivate::URLActionRule
     	( action, refProt, refHost, refPath, urlProt, urlHost, urlPath, bEnabled));

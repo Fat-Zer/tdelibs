@@ -22,7 +22,7 @@
 **
 **  Originally written and released under the GPL by 
 **  Ariel Glenn from the AcIS R&D group at Columbia
-**  as the two sources findoffset.c and dblist.c. See under
+**  as the two sources tqfindoffset.c and dblist.c. See under
 **  http://www.columbia.edu/~ariel/good-certs/ for more details.
 **
 **  Merged into one single program in August 1998 
@@ -46,9 +46,9 @@
 #include "openssl/asn1.h"
 #include "openssl/x509.h"
 
-int findoffset(char *dbname);
+int tqfindoffset(char *dbname);
 
-int findoffset(char *dbname)
+int tqfindoffset(char *dbname)
 {
     DB *db;
     DBT dkey, dvalue;
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
     int result;
     char oname[40];
     int fout;
-    int find;
+    int tqfind;
     char *p;
     int ptag = 0, pclass, plen;
     X509 *mycert;
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
     }
 
     dbname = argv[1];
-    offset = findoffset(dbname);
+    offset = tqfindoffset(dbname);
     if (offset == 0) {
         fprintf(stderr, "Could not determine cert offset in DB file '%s'\n", dbname);
         exit(1);
@@ -126,7 +126,7 @@ int main(int argc, char **argv)
         fprintf(stderr, "Failed to open DB file '%s': %s\n", dbname, strerror(errno));
         exit(1);
     }
-    if ((find = open("cert.index", O_WRONLY | O_CREAT | O_TRUNC, 0755)) == -1) {
+    if ((tqfind = open("cert.index", O_WRONLY | O_CREAT | O_TRUNC, 0755)) == -1) {
         fprintf(stderr, "Failed to open Index file '%s': %s\n", "cert-index", strerror(errno));
         exit(1);
     }
@@ -161,11 +161,11 @@ int main(int argc, char **argv)
                 }
                 write(fout, (char *) dvalue.data + offset - 1, plen);
                 close(fout);
-                write(find, oname, strlen(oname));
-                write(find, ": ", 2);
+                write(tqfind, oname, strlen(oname));
+                write(tqfind, ": ", 2);
                 shortname = (char *) dvalue.data + offset - 1 + plen;
-                write(find, shortname, dvalue.size - plen - offset);
-                write(find, "\n", 1);
+                write(tqfind, shortname, dvalue.size - plen - offset);
+                write(tqfind, "\n", 1);
                 fprintf(stderr, "Extracted: %s (", oname);
                 write(fileno(stderr), shortname, dvalue.size - plen - offset);
                 fprintf(stderr, ")\n");
@@ -175,7 +175,7 @@ int main(int argc, char **argv)
             }
         }
     }
-    close(find);
+    close(tqfind);
     db->close(db);
 
     return (0);

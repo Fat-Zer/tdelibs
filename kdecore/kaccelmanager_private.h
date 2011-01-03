@@ -32,7 +32,7 @@ class TQWidgetStack;
 /**
  * A string class handling accelerators.
  *
- * This class contains a string and knowledge about accelerators.
+ * This class tqcontains a string and knowledge about accelerators.
  * It keeps a list weights, telling how valuable each character
  * would be as an accelerator.
  *
@@ -81,7 +81,7 @@ typedef TQValueList<KAccelString> KAccelStringList;
 
 
 /**
- * This class encapsulates the algorithm finding the 'best'
+ * This class encapsulates the algorithm tqfinding the 'best'
  * distribution of accelerators in a hierarchy of widgets.
  *
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>
@@ -113,8 +113,8 @@ public:
     STANDARD_ACCEL = 300
   };
 
-  /// Method to call to find the best distribution of accelerators.
-  static void findAccelerators(KAccelStringList &result, TQString &used);
+  /// Method to call to tqfind the best distribution of accelerators.
+  static void tqfindAccelerators(KAccelStringList &result, TQString &used);
 
 };
 
@@ -131,7 +131,7 @@ class TQPopupMenu;
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>
 */
 
-class KPopupAccelManager : public QObject
+class KPopupAccelManager : public TQObject
 {
   Q_OBJECT
 
@@ -154,7 +154,7 @@ private:
 
   void calculateAccelerators();
 
-  void findMenuEntries(KAccelStringList &list);
+  void tqfindMenuEntries(KAccelStringList &list);
   void setMenuEntries(const KAccelStringList &list);
 
   TQPopupMenu       *m_popup;
@@ -164,7 +164,7 @@ private:
 };
 
 
-class QWidgetStackAccelManager : public QObject
+class QWidgetStackAccelManager : public TQObject
 {
   Q_OBJECT
 

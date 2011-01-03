@@ -122,7 +122,7 @@ public:
      * @return A new DocumentType node with Node.ownerDocument set to null.
      *
      * @exception DOMException
-     * INVALID_CHARACTER_ERR: Raised if the specified qualified name contains
+     * INVALID_CHARACTER_ERR: Raised if the specified qualified name tqcontains
      * an illegal character.
      *
      * NAMESPACE_ERR: Raised if the qualifiedName is malformed.
@@ -150,7 +150,7 @@ public:
      * @return A new Document object.
      *
      * @exception DOMException
-     * INVALID_CHARACTER_ERR: Raised if the specified qualified name contains
+     * INVALID_CHARACTER_ERR: Raised if the specified qualified name tqcontains
      * an illegal character.
      *
      * NAMESPACE_ERR: Raised if the qualifiedName is malformed, if the
@@ -235,7 +235,7 @@ protected:
  *
  *  Since elements, text nodes, comments, processing instructions,
  * etc. cannot exist outside the context of a \c Document
- * , the \c Document interface also contains the factory
+ * , the \c Document interface also tqcontains the factory
  * methods needed to create these objects. The \c Node
  * objects created have a \c ownerDocument attribute which
  * associates them with the \c Document within whose
@@ -309,7 +309,7 @@ public:
      * @return A new \c Element object.
      *
      * @exception DOMException
-     * INVALID_CHARACTER_ERR: Raised if the specified name contains an
+     * INVALID_CHARACTER_ERR: Raised if the specified name tqcontains an
      * invalid character.
      *
      */
@@ -326,7 +326,7 @@ public:
      * @return A new Element object with the following attributes:
      *
      * @exception INVALID_CHARACTER_ERR Raised if the specified qualified name
-     * contains an illegal character.
+     * tqcontains an illegal character.
      *
      * @exception NAMESPACE_ERR Raised if the qualifiedName is malformed, if
      * the qualifiedName has a prefix and the namespaceURI is null, or if the
@@ -411,7 +411,7 @@ public:
      * @return A new \c Attr object.
      *
      * @exception DOMException
-     * INVALID_CHARACTER_ERR: Raised if the specified name contains an
+     * INVALID_CHARACTER_ERR: Raised if the specified name tqcontains an
      * invalid character.
      *
      */
@@ -436,7 +436,7 @@ public:
      * Node.nodeValue - the empty string
      *
      * @exception INVALID_CHARACTER_ERR Raised if the specified qualified name
-     * contains an illegal character.
+     * tqcontains an illegal character.
      *
      * @exception NAMESPACE_ERR Raised if the qualifiedName is malformed, if
      * the qualifiedName has a prefix and the namespaceURI is null, if the
@@ -456,7 +456,7 @@ public:
      * @return The new \c EntityReference object.
      *
      * @exception DOMException
-     * INVALID_CHARACTER_ERR: Raised if the specified name contains an
+     * INVALID_CHARACTER_ERR: Raised if the specified name tqcontains an
      * invalid character.
      *
      *  NOT_SUPPORTED_ERR: Raised if this document is an HTML

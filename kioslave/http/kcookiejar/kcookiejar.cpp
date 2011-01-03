@@ -84,12 +84,12 @@
 #define READ_BUFFER_SIZE 8192
 #define IP_ADDRESS_EXPRESSION "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
 
-// Note with respect to TQString::fromLatin1( )
+// Note with respect to TQString::tqfromLatin1( )
 // Cookies are stored as 8 bit data and passed to kio_http as
 // latin1 regardless of their actual encoding.
 
 // L1 is used to indicate latin1 constants
-#define L1(x) TQString::fromLatin1(x)
+#define L1(x) TQString::tqfromLatin1(x)
 
 template class TQPtrList<KHttpCookie>;
 template class TQPtrDict<KHttpCookieList>;
@@ -154,9 +154,9 @@ KHttpCookie::KHttpCookie(const TQString &_host,
 //
 // Checks if a cookie has been expired
 //
-bool    KHttpCookie::isExpired(time_t currentDate)
+bool    KHttpCookie::isExpired(time_t tqcurrentDate)
 {
-    return (mExpireDate != 0) && (mExpireDate < currentDate);
+    return (mExpireDate != 0) && (mExpireDate < tqcurrentDate);
 }
 
 //
@@ -194,14 +194,14 @@ bool KHttpCookie::match(const TQString &fqdn, const TQStringList &domains,
        if (fqdn != mHost)
           return false;
     }
-    else if (!domains.contains(mDomain))
+    else if (!domains.tqcontains(mDomain))
     {
         if (mDomain[0] == '.')
             return false;
 
         // Maybe the domain needs an extra dot.
         TQString domain = '.' + mDomain;
-        if ( !domains.contains( domain ) )
+        if ( !domains.tqcontains( domain ) )
           if ( fqdn != mDomain )
             return false;
     }
@@ -261,7 +261,7 @@ KCookieJar::KCookieJar()
     for(TQStringList::ConstIterator it = countries.begin();
         it != countries.end(); ++it)
     {
-       m_twoLevelTLD.replace(*it, (int *) 1);
+       m_twoLevelTLD.tqreplace(*it, (int *) 1);
     }
 }
 
@@ -301,7 +301,7 @@ static void removeDuplicateFromList(KHttpCookieList *list, KHttpCookie *cookiePt
                 it != cookie->windowIds().end(); ++it)
             {
                long windowId = *it;
-               if (windowId && (cookiePtr->windowIds().find(windowId) == cookiePtr->windowIds().end()))
+               if (windowId && (cookiePtr->windowIds().tqfind(windowId) == cookiePtr->windowIds().end()))
                {
                   cookiePtr->windowIds().append(windowId);
                }
@@ -325,7 +325,7 @@ static void removeDuplicateFromList(KHttpCookieList *list, KHttpCookie *cookiePt
 // Returned is a string containing all appropriate cookies in a format
 // which can be added to a HTTP-header without any additional processing.
 //
-TQString KCookieJar::findCookies(const TQString &_url, bool useDOMFormat, long windowId, KHttpCookieList *pendingCookies)
+TQString KCookieJar::tqfindCookies(const TQString &_url, bool useDOMFormat, long windowId, KHttpCookieList *pendingCookies)
 {
     TQString cookieStr;
     TQStringList domains;
@@ -337,10 +337,10 @@ TQString KCookieJar::findCookies(const TQString &_url, bool useDOMFormat, long w
     if (!parseURL(_url, fqdn, path))
         return cookieStr;
 
-    bool secureRequest = (_url.find( L1("https://"), 0, false) == 0 ||
-                          _url.find( L1("webdavs://"), 0, false) == 0);
+    bool secureRequest = (_url.tqfind( L1("https://"), 0, false) == 0 ||
+                          _url.tqfind( L1("webdavs://"), 0, false) == 0);
 
-    // kdDebug(7104) << "findCookies: URL= " << _url << ", secure = " << secureRequest << endl;
+    // kdDebug(7104) << "tqfindCookies: URL= " << _url << ", secure = " << secureRequest << endl;
 
     extractDomains(fqdn, domains);
 
@@ -399,7 +399,7 @@ TQString KCookieJar::findCookies(const TQString &_url, bool useDOMFormat, long w
              continue;
           }
 
-          if (windowId && (cookie->windowIds().find(windowId) == cookie->windowIds().end()))
+          if (windowId && (cookie->windowIds().tqfind(windowId) == cookie->windowIds().end()))
           {
              cookie->windowIds().append(windowId);
           }
@@ -479,7 +479,7 @@ static const char * parseNameValue(const char *header,
             // No '=' sign -> use string as the value, name is empty
             // (behavior found in Mozilla and IE)
             Name = "";
-            Value = TQString::fromLatin1(header);
+            Value = TQString::tqfromLatin1(header);
             Value.truncate( s - header );
             Value = Value.stripWhiteSpace();
             return (s);
@@ -516,12 +516,12 @@ static const char * parseNameValue(const char *header,
             if ((*s=='\0') || (*s=='\n'))
             {
                 // End of Name
-                Value = TQString::fromLatin1(header);
+                Value = TQString::tqfromLatin1(header);
                 Value.truncate(s - header);
                 return (s);
             }
         }
-        Value = TQString::fromLatin1(header);
+        Value = TQString::tqfromLatin1(header);
         // *s == '\"';
         if (keepQuotes)
            Value.truncate( ++s - header );
@@ -542,7 +542,7 @@ static const char * parseNameValue(const char *header,
         while ((*s != '\0') && (*s != ';') && (*s != '\n'))
             s++;
         // End of Name
-        Value = TQString::fromLatin1(header);
+        Value = TQString::tqfromLatin1(header);
         Value.truncate( s - header );
         Value = Value.stripWhiteSpace();
     }
@@ -591,7 +591,7 @@ bool KCookieJar::parseURL(const TQString &_url,
     // Cookie spoofing protection.  Since there is no way a path separator
     // or escape encoded character is allowed in the hostname according
     // to RFC 2396, reject attempts to include such things there!
-    if(_fqdn.find('/') > -1 || _fqdn.find('%') > -1)
+    if(_fqdn.tqfind('/') > -1 || _fqdn.tqfind('%') > -1)
     {
         return false;  // deny everything!!
     }
@@ -620,7 +620,7 @@ void KCookieJar::extractDomains(const TQString &_fqdn,
     // Return numeric IPv4 addresses as is...
     if ((_fqdn[0] >= '0') && (_fqdn[0] <= '9'))
     {
-       if (_fqdn.find(TQRegExp(IP_ADDRESS_EXPRESSION)) > -1)
+       if (_fqdn.tqfind(TQRegExp(IP_ADDRESS_EXPRESSION)) > -1)
        {
           _domains.append( _fqdn );
           return;
@@ -683,7 +683,7 @@ void KCookieJar::extractDomains(const TQString &_fqdn,
 */
 static TQString fixupDateTime(const TQString& dt)
 {
-  const int index = dt.find(TQRegExp("[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}"));
+  const int index = dt.tqfind(TQRegExp("[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}"));
 
   if (index > -1)
   {
@@ -694,7 +694,7 @@ static TQString fixupDateTime(const TQString& dt)
       dateStrList[0] = dateStrList[1];
       dateStrList[1] = date;
       date = dt;
-      return date.replace(index, date.length(), dateStrList.join(" "));
+      return date.tqreplace(index, date.length(), dateStrList.join(" "));
     }
   }
 
@@ -729,7 +729,7 @@ KHttpCookieList KCookieJar::makeCookies(const TQString &_url,
         return KHttpCookieList();
     }
     TQString defaultPath;
-    int i = path.findRev('/');
+    int i = path.tqfindRev('/');
     if (i > 0)
        defaultPath = path.left(i);
 
@@ -811,7 +811,7 @@ KHttpCookieList KCookieJar::makeCookies(const TQString &_url,
                 if(dom.length() > 2 && dom[dom.length()-1] == '.')
                     dom = dom.left(dom.length()-1);
 
-                if(dom.contains('.') > 1 || dom == ".local")
+                if(dom.tqcontains('.') > 1 || dom == ".local")
                     lastCookie->mDomain = dom;
             }
             else if (cName == "max-age")
@@ -1020,7 +1020,7 @@ KCookieAdvice KCookieJar::cookieAdvice(KHttpCookiePtr cookiePtr)
     // cross-site cookie injection.
     if (!cookiePtr->domain().isEmpty())
     {
-      if (!domains.contains(cookiePtr->domain()) && 
+      if (!domains.tqcontains(cookiePtr->domain()) && 
           !cookiePtr->domain().endsWith("."+cookiePtr->host()))
           cookiePtr->fixDomain(TQString::null);
     }
@@ -1457,11 +1457,11 @@ bool KCookieJar::loadCookies(const TQString &_filename)
             if ((expDate == 0) || (expDate < curTime))
                 continue;
 
-            KHttpCookie *cookie = new KHttpCookie(TQString::fromLatin1(host),
-                                                  TQString::fromLatin1(domain), 
-                                                  TQString::fromLatin1(path), 
-                                                  TQString::fromLatin1(name),
-                                                  TQString::fromLatin1(value), 
+            KHttpCookie *cookie = new KHttpCookie(TQString::tqfromLatin1(host),
+                                                  TQString::tqfromLatin1(domain), 
+                                                  TQString::tqfromLatin1(path), 
+                                                  TQString::tqfromLatin1(name),
+                                                  TQString::tqfromLatin1(value), 
                                                   expDate, protVer,
                                                   secure, httpOnly, explicitPath);
             addCookie(cookie);
@@ -1546,7 +1546,7 @@ void KCookieJar::loadConfig(KConfig *_config, bool reparse )
     {
         const TQString &value = *it++;
 
-        int sepPos = value.findRev(':');
+        int sepPos = value.tqfindRev(':');
 
         if (sepPos <= 0)
           continue;

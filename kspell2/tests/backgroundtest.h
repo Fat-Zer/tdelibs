@@ -26,7 +26,7 @@
 
 #include "backgroundchecker.h"
 
-class BackgroundTest : public QObject
+class BackgroundTest : public TQObject
 {
     Q_OBJECT
 public:

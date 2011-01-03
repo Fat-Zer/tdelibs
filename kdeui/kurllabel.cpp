@@ -114,7 +114,7 @@ void KURLLabel::mouseReleaseEvent (TQMouseEvent* e)
     return;
   d->MousePressed = false;
   TQRect r( activeRect() );
-  if (!r.contains(e->pos()))
+  if (!r.tqcontains(e->pos()))
     return;
 
   setLinkColor (d->HighlightedLinkColor);
@@ -162,7 +162,7 @@ void KURLLabel::updateColor ()
   d->Timer->stop();
 
   TQRect r( activeRect() );
-  if (!(d->Glow || d->Float) || !r.contains (mapFromGlobal(TQCursor::pos())))
+  if (!(d->Glow || d->Float) || !r.tqcontains (mapFromGlobal(TQCursor::pos())))
     setLinkColor (d->LinkColor);
 }
 
@@ -308,7 +308,7 @@ void KURLLabel::enterEvent (TQEvent* e)
   TQLabel::enterEvent (e);
 
   TQRect r( activeRect() );
-  if (!r.contains( static_cast<TQMouseEvent*>(e)->pos() ))
+  if (!r.tqcontains( static_cast<TQMouseEvent*>(e)->pos() ))
     return;
 
   if (!d->AltPixmap.isNull() && pixmap())
@@ -353,8 +353,8 @@ bool KURLLabel::event (TQEvent *e)
 {
   if (e && e->type() == TQEvent::ParentPaletteChange)
   {
-    // use parentWidget() unless you are a toplevel widget, then try qAapp
-    TQPalette p = parentWidget() ? parentWidget()->palette() : qApp->palette();
+    // use tqparentWidget() unless you are a toplevel widget, then try qAapp
+    TQPalette p = tqparentWidget() ? tqparentWidget()->palette() : tqApp->palette();
     p.setBrush(TQColorGroup::Base, p.brush(TQPalette::Normal, TQColorGroup::Background));
     p.setColor(TQColorGroup::Foreground, palette().active().foreground());
     setPalette(p);
@@ -367,7 +367,7 @@ bool KURLLabel::event (TQEvent *e)
     if (result && hasFocus()) {
         TQPainter p(this);
         TQRect r( activeRect() );
-        style().drawPrimitive( TQStyle::PE_FocusRect, &p, r, colorGroup() );
+        style().drawPrimitive( TQStyle::PE_FocusRect, &p, r, tqcolorGroup() );
     }
     return result;
   }
@@ -384,12 +384,12 @@ bool KURLLabel::event (TQEvent *e)
   }
   else if (e->type() == TQEvent::MouseButtonPress) {
     TQRect r( activeRect() );
-    d->MousePressed = r.contains(static_cast<TQMouseEvent*>(e)->pos());
+    d->MousePressed = r.tqcontains(static_cast<TQMouseEvent*>(e)->pos());
   }
   else if (e->type() == TQEvent::MouseMove) {
     if (d->Cursor) {
       TQRect r( activeRect() );
-      bool inside = r.contains(static_cast<TQMouseEvent*>(e)->pos());
+      bool inside = r.tqcontains(static_cast<TQMouseEvent*>(e)->pos());
       if (d->WasInsideRect != inside) {
         if (inside)
           TQLabel::setCursor(*d->Cursor);
@@ -407,7 +407,7 @@ TQRect KURLLabel::activeRect() const
   TQRect r( contentsRect() );
   if (text().isEmpty() || (!d->MarginAltered && sizePolicy() == TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed)))
       return r; //fixed size is sometimes used with pixmap
-  int hAlign = TQApplication::horizontalAlignment( alignment() );
+  int hAlign = TQApplication::horizontalAlignment( tqalignment() );
   int indentX = (hAlign && indent()>0) ? indent() : 0;
   TQFontMetrics fm(font());
   r.setWidth( QMIN(fm.width(text()), r.width()));
@@ -436,9 +436,9 @@ void KURLLabel::setFocusPolicy( FocusPolicy policy )
   }
 }
 
-void KURLLabel::setSizePolicy ( TQSizePolicy policy )
+void KURLLabel::tqsetSizePolicy ( TQSizePolicy policy )
 {
-  TQLabel::setSizePolicy(policy);
+  TQLabel::tqsetSizePolicy(policy);
   if (!d->MarginAltered && policy.horData()==TQSizePolicy::Fixed && policy.verData()==TQSizePolicy::Fixed) {
       TQLabel::setMargin(0); //better default : better look when fixed size
   }

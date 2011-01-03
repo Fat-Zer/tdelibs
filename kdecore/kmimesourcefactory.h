@@ -30,7 +30,7 @@ class KInstance;
 
 /**
  * An extension to TQMimeSourceFactory that uses KIconLoader to
- * find images.
+ * tqfind images.
  *
  * Normally you don't have to instantiate this class at all, KApplication does that for
  * you automagically and sets TQMimeSourceFactory::setDefaultFactory().
@@ -44,7 +44,7 @@ public:
   /**
    * Constructor.
    *
-   * @param loader is the iconloader used to find images.
+   * @param loader is the iconloader used to tqfind images.
    */
   KMimeSourceFactory (KIconLoader* loader = KGlobal::iconLoader());
 

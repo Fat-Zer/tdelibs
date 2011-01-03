@@ -146,10 +146,10 @@ public:
     static KGuiItem quit();
 
     /**
-    * Returns a "find" item.
+    * Returns a "tqfind" item.
     * @since 3.4
     */
-    static KGuiItem find();
+    static KGuiItem tqfind();
 
     /**
     * Returns a "stop" item.

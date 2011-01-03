@@ -50,7 +50,7 @@ public:
     virtual const char *renderName() const { return "RenderFrameSet"; }
     virtual bool isFrameSet() const { return true; }
 
-    virtual void layout();
+    virtual void tqlayout();
 
     void positionFrames( );
 
@@ -61,7 +61,7 @@ public:
     bool canResize( int _x, int _y);
     void setResizing(bool e);
 
-    Qt::CursorShape cursorShape() const { return m_cursor; }
+    Qt::tqCursorShape cursorShape() const { return m_cursor; }
 
     bool nodeAtPoint(NodeInfo& info, int x, int y, int tx, int ty, HitTestAction hitTestAction, bool inside);
 
@@ -73,7 +73,7 @@ public:
 #endif
 
 private:
-    Qt::CursorShape m_cursor;
+    Qt::tqCursorShape m_cursor;
     int m_oldpos;
     int m_gridLen[2];
     int* m_gridDelta[2];
@@ -154,7 +154,7 @@ public:
 
     virtual void close();
 
-    virtual void layout( );
+    virtual void tqlayout( );
     virtual void updateWidget();
     
     virtual bool canHaveBorder() const { return true; }

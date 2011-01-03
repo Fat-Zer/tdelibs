@@ -84,12 +84,12 @@ KServiceGroup::KServiceGroup( const TQString &configFile, const TQString & _relp
   TQStringList tmpList;
   if (config.hasKey("OnlyShowIn"))
   {
-     if (!config.readListEntry("OnlyShowIn", ';').contains("KDE"))
+     if (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
         d->m_bNoDisplay = true;
   }
   if (config.hasKey("NotShowIn"))
   {
-     if (config.readListEntry("NotShowIn", ';').contains("KDE"))
+     if (config.readListEntry("NotShowIn", ';').tqcontains("KDE"))
         d->m_bNoDisplay = true;
   }
 
@@ -103,7 +103,7 @@ KServiceGroup::KServiceGroup( const TQString &configFile, const TQString & _relp
      m_strCaption = _relpath;
      if (m_strCaption.right(1) == "/")
         m_strCaption = m_strCaption.left(m_strCaption.length()-1);
-     int i = m_strCaption.findRev('/');
+     int i = m_strCaption.tqfindRev('/');
      if (i > 0)
         m_strCaption = m_strCaption.mid(i+1);
   }
@@ -229,11 +229,11 @@ bool KServiceGroup::SuSEshortMenu() const
 void KServiceGroup::load( TQDataStream& s )
 {
   TQStringList groupList;
-  Q_INT8 noDisplay;
-  Q_INT8 _showEmptyMenu;
-  Q_INT8 inlineHeader;
-  Q_INT8 _inlineAlias;
-  Q_INT8 _allowInline;
+  TQ_INT8 noDisplay;
+  TQ_INT8 _showEmptyMenu;
+  TQ_INT8 inlineHeader;
+  TQ_INT8 _inlineAlias;
+  TQ_INT8 _allowInline;
   s >> m_strCaption >> m_strIcon >>
       m_strComment >> groupList >> m_strBaseGroupName >> m_childCount >>
       noDisplay >> d->suppressGenericNames >> d->directoryEntryPath >>
@@ -255,14 +255,14 @@ void KServiceGroup::load( TQDataStream& s )
         if (path[path.length()-1] == '/')
         {
            KServiceGroup *serviceGroup;
-           serviceGroup = KServiceGroupFactory::self()->findGroupByDesktopPath(path, false);
+           serviceGroup = KServiceGroupFactory::self()->tqfindGroupByDesktopPath(path, false);
            if (serviceGroup)
               m_serviceList.append( SPtr(serviceGroup) );
         }
         else
         {
            KService *service;
-           service = KServiceFactory::self()->findServiceByDesktopPath(path);
+           service = KServiceFactory::self()->tqfindServiceByDesktopPath(path);
            if (service)
               m_serviceList.append( SPtr(service) );
         }
@@ -302,11 +302,11 @@ void KServiceGroup::save( TQDataStream& s )
 
   (void) childCount();
 
-  Q_INT8 noDisplay = d->m_bNoDisplay ? 1 : 0;
-  Q_INT8 _showEmptyMenu = d->m_bShowEmptyMenu ? 1 : 0;
-  Q_INT8 inlineHeader = d->m_bShowInlineHeader ? 1 : 0;
-  Q_INT8 _inlineAlias = d->m_bInlineAlias ? 1 : 0;
-  Q_INT8 _allowInline = d->m_bAllowInline ? 1 : 0;
+  TQ_INT8 noDisplay = d->m_bNoDisplay ? 1 : 0;
+  TQ_INT8 _showEmptyMenu = d->m_bShowEmptyMenu ? 1 : 0;
+  TQ_INT8 inlineHeader = d->m_bShowInlineHeader ? 1 : 0;
+  TQ_INT8 _inlineAlias = d->m_bInlineAlias ? 1 : 0;
+  TQ_INT8 _allowInline = d->m_bAllowInline ? 1 : 0;
   s << m_strCaption << m_strIcon <<
       m_strComment << groupList << m_strBaseGroupName << m_childCount <<
       noDisplay << d->suppressGenericNames << d->directoryEntryPath <<
@@ -352,7 +352,7 @@ KServiceGroup::SuSEentries(bool sort, bool excludeNoDisplay, bool allowSeparator
     if (!m_bDeep) {
 
         group =
-            KServiceGroupFactory::self()->findGroupByDesktopPath(relPath(), true);
+            KServiceGroupFactory::self()->tqfindGroupByDesktopPath(relPath(), true);
 
         if (0 == group) // No guarantee that we still exist!
             return List();
@@ -491,7 +491,7 @@ KServiceGroup::SuSEsortEntries( KSortableValueList<SPtr,TQCString> slist, KSorta
              if (allowSeparators)
                 needSeparator = true;
           }
-          else if ( item.contains( ":O" ) )
+          else if ( item.tqcontains( ":O" ) )
           {
               //todo parse attribute:
               TQString tmp(  item );
@@ -657,7 +657,7 @@ void KServiceGroup::parseAttribute( const TQString &item ,  bool &showEmptyMenu,
         showInlineAlias = true;
     else if (  item == "NIA") //not inline alias!
         showInlineAlias = false;
-    else if( ( item ).contains( "IL" )) //inline limite!
+    else if( ( item ).tqcontains( "IL" )) //inline limite!
     {
         TQString tmp( item );
         tmp = tmp.remove( "IL[" );
@@ -672,12 +672,12 @@ void KServiceGroup::parseAttribute( const TQString &item ,  bool &showEmptyMenu,
         kdDebug()<<" This attribute is not supported :"<<item<<endl;
 }
 
-void KServiceGroup::setLayoutInfo(const TQStringList &layout)
+void KServiceGroup::setLayoutInfo(const TQStringList &tqlayout)
 {
-    d->sortOrder = layout;
+    d->sortOrder = tqlayout;
 }
 
-TQStringList KServiceGroup::layoutInfo() const
+TQStringList KServiceGroup::tqlayoutInfo() const
 {
     return d->sortOrder;
 }
@@ -685,26 +685,26 @@ TQStringList KServiceGroup::layoutInfo() const
 KServiceGroup::Ptr
 KServiceGroup::baseGroup( const TQString & _baseGroupName )
 {
-    return KServiceGroupFactory::self()->findBaseGroup(_baseGroupName, true);
+    return KServiceGroupFactory::self()->tqfindBaseGroup(_baseGroupName, true);
 }
 
 KServiceGroup::Ptr
 KServiceGroup::root()
 {
-   return KServiceGroupFactory::self()->findGroupByDesktopPath("/", true);
+   return KServiceGroupFactory::self()->tqfindGroupByDesktopPath("/", true);
 }
 
 KServiceGroup::Ptr
 KServiceGroup::group(const TQString &relPath)
 {
    if (relPath.isEmpty()) return root();
-   return KServiceGroupFactory::self()->findGroupByDesktopPath(relPath, true);
+   return KServiceGroupFactory::self()->tqfindGroupByDesktopPath(relPath, true);
 }
 
 KServiceGroup::Ptr
 KServiceGroup::childGroup(const TQString &parent)
 {
-   return KServiceGroupFactory::self()->findGroupByDesktopPath("#parent#"+parent, true);
+   return KServiceGroupFactory::self()->tqfindGroupByDesktopPath("#parent#"+parent, true);
 }
 
 QString

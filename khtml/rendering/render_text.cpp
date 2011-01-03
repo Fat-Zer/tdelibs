@@ -88,7 +88,7 @@ void InlineTextBox::operator delete(void* ptr, size_t sz)
 {
     assert(inInlineTextBoxDetach);
 
-    // Stash size where detach can find it.
+    // Stash size where detach can tqfind it.
     *(size_t *)ptr = sz;
 }
 
@@ -230,7 +230,7 @@ void InlineTextBox::paintSelection(const Font *f, RenderText *text, TQPainter *p
 	// In this case, simply swap the colors, thus in compliance with
 	// NN4 (win32 only), IE, and Mozilla.
 	if (!khtml::hasSufficientContrast(hbg, bg))
-	    qSwap(hc, hbg);
+	    tqSwap(hc, hbg);
     }
 
     p->setPen(hc);
@@ -319,9 +319,9 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
         const int w = m_width+2*thickness;
         const int h = m_height+2*thickness;
         const QRgb color = shadow->color.rgb();
-        const int gray = qGray(color);
+        const int gray = tqGray(color);
         const bool inverse = (gray < 100);
-        const QRgb bgColor = (inverse) ? qRgb(255,255,255) : qRgb(0,0,0);
+        const QRgb bgColor = (inverse) ? tqRgb(255,255,255) : tqRgb(0,0,0);
         TQPixmap pixmap(w, h);
         pixmap.fill(bgColor);
         TQPainter p;
@@ -365,7 +365,7 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
             for(int i=thickness; i<w-thickness; i++) {
                 QRgb col= img.pixel(i,j);
                 if (col == bgColor) continue;
-                float g = qGray(col);
+                float g = tqGray(col);
                 if (inverse)
                     g = (255-g)/(255-gray);
                 else
@@ -383,9 +383,9 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
 
         TQImage res(w,h,32);
         res.setAlphaBuffer(true);
-        int r = qRed(color);
-        int g = qGreen(color);
-        int b = qBlue(color);
+        int r = tqRed(color);
+        int g = tqGreen(color);
+        int b = tqBlue(color);
 
         // divide by factor
         factor = 1.0/factor;
@@ -394,7 +394,7 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
             for(int i=0; i<w; i++) {
                 int a = (int)(amap[i+j*w] * factor * 255.0);
                 if (a > 255) a = 255;
-                res.setPixel(i,j, qRgba(r,g,b,a));
+                res.setPixel(i,j, tqRgba(r,g,b,a));
             }
         }
 
@@ -494,7 +494,7 @@ FindSelectionResult InlineTextBox::checkSelectionPoint(int _x, int _y, int _tx, 
 
 int InlineTextBox::offsetForPoint(int _x, int &ax) const
 {
-  // Do binary search for finding out offset, saves some time for long
+  // Do binary search for tqfinding out offset, saves some time for long
   // runs.
   int start = 0;
   int end = m_len;
@@ -643,7 +643,7 @@ int InlineTextBoxArray::compareItems( Item d1, Item d2 )
 }
 
 // remove this once QVector::bsearch is fixed
-int InlineTextBoxArray::findFirstMatching(Item d) const
+int InlineTextBoxArray::tqfindFirstMatching(Item d) const
 {
     int len = count();
 
@@ -758,7 +758,7 @@ DOM::DOMStringImpl* RenderText::originalString() const
     return element() ? element()->string() : 0;
 }
 
-InlineTextBox * RenderText::findInlineTextBox( int offset, int &pos, bool checkFirstLetter )
+InlineTextBox * RenderText::tqfindInlineTextBox( int offset, int &pos, bool checkFirstLetter )
 {
     // The text boxes point to parts of the rendertext's str string
     // (they don't include '\n')
@@ -775,7 +775,7 @@ InlineTextBox * RenderText::findInlineTextBox( int offset, int &pos, bool checkF
             RenderText *letterText = static_cast<RenderText *>(firstLetter->firstChild());
             //kdDebug(6040) << "lettertext: " << letterText << " minOfs: " << letterText->minOffset() << " maxOfs: " << letterText->maxOffset() << endl;
 	    if (offset >= letterText->minOffset() && offset <= letterText->maxOffset()) {
-	        InlineTextBox *result = letterText->findInlineTextBox(offset, pos, false);
+	        InlineTextBox *result = letterText->tqfindInlineTextBox(offset, pos, false);
             //kdDebug(6040) << "result: " << result << endl;
 		if (result) return result;
 	    }
@@ -927,7 +927,7 @@ void RenderText::caretPos(int offset, int flags, int &_x, int &_y, int &width, i
   }
 
   int pos;
-  InlineTextBox * s = findInlineTextBox( offset, pos, true );
+  InlineTextBox * s = tqfindInlineTextBox( offset, pos, true );
   RenderText *t = s->renderText();
 //  kdDebug(6040) << "offset="<<offset << " pos="<<pos << endl;
 
@@ -963,7 +963,7 @@ void RenderText::caretPos(int offset, int flags, int &_x, int &_y, int &width, i
 long RenderText::minOffset() const
 {
   if (!m_lines.count()) return 0;
-  // FIXME: it is *not* guaranteed that the first run contains the lowest offset
+  // FIXME: it is *not* guaranteed that the first run tqcontains the lowest offset
   // Either make this a linear search (slow),
   // or maintain an index (needs much mem),
   // or calculate and store it in bidi.cpp (needs calculation even if not needed)
@@ -975,7 +975,7 @@ long RenderText::maxOffset() const
 {
   int count = m_lines.count();
   if (!count) return str->l;
-  // FIXME: it is *not* guaranteed that the last run contains the highest offset
+  // FIXME: it is *not* guaranteed that the last run tqcontains the highest offset
   // Either make this a linear search (slow),
   // or maintain an index (needs much mem),
   // or calculate and store it in bidi.cpp (needs calculation even if not needed)
@@ -995,7 +995,7 @@ bool RenderText::posOfChar(int chr, int &x, int &y)
     parent()->absolutePosition( x, y, false );
 
     int pos;
-    InlineTextBox * s = findInlineTextBox( chr, pos );
+    InlineTextBox * s = tqfindInlineTextBox( chr, pos );
 
     if ( s ) {
         // s is the line containing the character
@@ -1036,7 +1036,7 @@ void RenderText::calcMinMaxWidth()
     bool firstLine = true;
     for(int i = 0; i < len; i++)
     {
-        unsigned short c = str->s[i].unicode();
+        unsigned short c = str->s[i].tqunicode();
         bool isNewline = false;
 
         // If line-breaks survive to here they are preserved
@@ -1056,7 +1056,7 @@ void RenderText::calcMinMaxWidth()
             continue;
 
         int wordlen = 0;
-        while( i+wordlen < len && (i+wordlen == 0 || str->s[i+wordlen].unicode() != SOFT_HYPHEN) &&
+        while( i+wordlen < len && (i+wordlen == 0 || str->s[i+wordlen].tqunicode() != SOFT_HYPHEN) &&
                !(isBreakable( str->s, i+wordlen, str->l )) )
             wordlen++;
 
@@ -1071,7 +1071,7 @@ void RenderText::calcMinMaxWidth()
             currMaxWidth += w;
 
             // Add in wordspacing to our maxwidth, but not if this is the last word.
-            if (wordSpacing && !containsOnlyWhitespace(i+wordlen, len-(i+wordlen)))
+            if (wordSpacing && !tqcontainsOnlyWhitespace(i+wordlen, len-(i+wordlen)))
                 currMaxWidth += wordSpacing;
 
             if (firstWord) {
@@ -1175,7 +1175,7 @@ void RenderText::setText(DOMStringImpl *text, bool force)
             RenderObject *o;
             bool runOnString = false;
 
-            // find previous non-empty text renderer if one exists
+            // tqfind previous non-empty text renderer if one exists
             for (o = previousRenderer(); o; o = o->previousRenderer()) {
                 if (!o->isInlineFlow()) {
                     if (!o->isText())
@@ -1259,7 +1259,7 @@ void RenderText::position(InlineBox* box, int from, int len, bool reverse)
 {
 //kdDebug(6040) << "position: from="<<from<<" len="<<len<<endl;
     // ### should not be needed!!!
-    // asserts sometimes with pre (that unibw-hamburg testcase). ### find out why
+    // asserts sometimes with pre (that unibw-hamburg testcase). ### tqfind out why
     //KHTMLAssert(!(len == 0 || (str->l && len == 1 && *(str->s+from) == '\n') ));
     // It is now needed. BRs need text boxes too otherwise caret navigation
     // gets stuck (LS)
@@ -1328,11 +1328,11 @@ short RenderText::width() const
     return w;
 }
 
-void RenderText::repaint(Priority p)
+void RenderText::tqrepaint(Priority p)
 {
     RenderObject *cb = containingBlock();
     if(cb)
-        cb->repaint(p);
+        cb->tqrepaint(p);
 }
 
 bool RenderText::isFixedWidthFont() const
@@ -1368,7 +1368,7 @@ const Font *RenderText::htmlFont(bool firstLine) const
     return f;
 }
 
-bool RenderText::containsOnlyWhitespace(unsigned int from, unsigned int len) const
+bool RenderText::tqcontainsOnlyWhitespace(unsigned int from, unsigned int len) const
 {
     unsigned int currPos;
     for (currPos = from;
@@ -1390,7 +1390,7 @@ void RenderText::trimmedMinMaxWidth(short& beginMinW, bool& beginWS,
         stripFrontSpaces = false;
 
     int len = str->l;
-    if (len == 0 || (stripFrontSpaces && str->containsOnlyWhitespace())) {
+    if (len == 0 || (stripFrontSpaces && str->tqcontainsOnlyWhitespace())) {
         maxW = 0;
         hasBreak = false;
         return;
@@ -1470,7 +1470,7 @@ static TQString quoteAndEscapeNonPrintables(const TQString &s)
         } else if (c == '"') {
             result += "\\\"";
         } else {
-            ushort u = c.unicode();
+            ushort u = c.tqunicode();
             if (u >= 0x20 && u < 0x7F) {
                 result += c;
             } else {

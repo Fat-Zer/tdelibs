@@ -56,9 +56,9 @@ StyleSheetImpl* StyleBaseImpl::stylesheet()
 
 KURL StyleBaseImpl::baseURL()
 {
-    // try to find the style sheet. If found look for its url.
+    // try to tqfind the style sheet. If found look for its url.
     // If it has none, look for the parentsheet, or the parentNode and
-    // try to find out about their url
+    // try to tqfind out about their url
 
     StyleSheetImpl *sheet = stylesheet();
 
@@ -67,7 +67,7 @@ KURL StyleBaseImpl::baseURL()
     if(!sheet->href().isNull())
         return KURL( sheet->href().string() );
 
-    // find parent
+    // tqfind parent
     if(sheet->parent()) return sheet->parent()->baseURL();
 
     if(!sheet->ownerNode()) return KURL();
@@ -172,7 +172,7 @@ void CSSSelector::extractPseudoType() const
         value = value.lower();
         switch (value[0]) {
             case '-':
-                if (value == "-khtml-replaced")
+                if (value == "-khtml-tqreplaced")
                     _pseudoType = PseudoReplaced;
                 else
                 if (value == "-khtml-marker")
@@ -196,7 +196,7 @@ void CSSSelector::extractPseudoType() const
             case 'c':
                 if (value == "checked")
                     _pseudoType = PseudoChecked;
-                else if (value == "contains(")
+                else if (value == "tqcontains(")
                     _pseudoType = PseudoContains;
                 break;
             case 'd':
@@ -319,7 +319,7 @@ DOMString CSSSelector::selectorText() const
     // the original namespace prefix used. Ugh. -dwh
     DOMString str;
     const CSSSelector* cs = this;
-    Q_UINT16 tag = localNamePart(cs->tag);
+    TQ_UINT16 tag = localNamePart(cs->tag);
     if (tag == anyLocalName && cs->match == CSSSelector::None)
         str = "*";
     else if (tag != anyLocalName)

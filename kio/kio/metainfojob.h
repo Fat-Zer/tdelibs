@@ -53,7 +53,7 @@ namespace KIO {
 
         /**
          * Returns a list of all available metainfo plugins. The list
-         * contains the basenames of the plugins' .desktop files (no path,
+         * tqcontains the basenames of the plugins' .desktop files (no path,
          * no .desktop).
 	 * @return the list of available meta info plugins
          */

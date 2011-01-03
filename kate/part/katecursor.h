@@ -61,7 +61,7 @@ class KateTextCursor
     }
 
 #ifndef Q_WS_WIN //not needed
-    friend void qSwap(KateTextCursor & c1, KateTextCursor & c2) {
+    friend void tqSwap(KateTextCursor & c1, KateTextCursor & c2) {
       KateTextCursor tmp = c1;
       c1 = c2;
       c2 = tmp;
@@ -200,7 +200,7 @@ class KateTextRange : public KateRange
     
     inline void normalize() {
       if( m_start > m_end )
-        qSwap(m_start, m_end);
+        tqSwap(m_start, m_end);
     }
     
   protected:
@@ -247,4 +247,4 @@ class KateBracketRange : public KateTextRange
 
 #endif
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

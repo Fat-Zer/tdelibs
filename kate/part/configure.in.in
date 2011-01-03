@@ -55,7 +55,7 @@ dnl	Based on the lua check used by yzis-M3
                         )
 
 
-        dnl find the libs name
+        dnl tqfind the libs name
 	if test -z "$LUALIBH_FOUND" -o -z "$LUAH_FOUND"; then
 		LUA_LIBS=""
 	else

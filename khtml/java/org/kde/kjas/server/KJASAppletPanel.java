@@ -17,7 +17,7 @@ import java.net.URL;
  * A panel which embeds the applet and shows some
  * information during class loading.
  */
-public class KJASAppletPanel extends javax.swing.JPanel implements StatusListener {
+public class KJASAppletPanel extends javax.swing.JPanel implements tqStatusListener {
     private final static int LOADING = 1;
     private final static int RUNNING = 2;
     private final static int FAILED = 3;
@@ -45,10 +45,10 @@ public class KJASAppletPanel extends javax.swing.JPanel implements StatusListene
 		validate();
 	}
 
-    public void showStatus(String msg) {
+    public void showtqStatus(String msg) {
         this.msg = msg;
         if (status != RUNNING)
-            repaint();
+            tqrepaint();
     }
 
 	public void paint(Graphics g) {
@@ -88,12 +88,12 @@ public class KJASAppletPanel extends javax.swing.JPanel implements StatusListene
 		fail_img = getToolkit().createImage(url);
         status = FAILED;
 		msg = "Applet Failed.";
-		repaint();
+		tqrepaint();
 	}
 
 	void showFailed(String message) {
 		showFailed();
-		showStatus(message);
+		showtqStatus(message);
 	}
 
 	public void stopAnimation() {

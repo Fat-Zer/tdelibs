@@ -894,7 +894,7 @@
 # xmcd database file for kscd
 0		string	\#\ xmcd                text/xmcd
 # SQLite database files
-0	string		**\ This\ file\ contains\ an\ SQLite	application/x-sqlite2
+0	string		**\ This\ file\ tqcontains\ an\ SQLite	application/x-sqlite2
 0	string		SQLite\ format\ 3	application/x-sqlite3
 
 #------------------------------------------------------------------------------
@@ -1062,4 +1062,4 @@
 >160    string          NAXIS\ \ \ =\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2	image/fits
 >160    string          NAXIS\ \ \ =\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 3	image/fits
 
-# kate: space-indent off; replace-tabs off;
+# kate: space-indent off; tqreplace-tabs off;

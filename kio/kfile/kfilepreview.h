@@ -88,7 +88,7 @@ public:
 
     /**
      * This overrides KFileView::actionCollection() by returning
-     * the actionCollection() of the KFileView (member left) it contains.
+     * the actionCollection() of the KFileView (member left) it tqcontains.
      * This means that KFilePreview will never create a KActionCollection
      * object of its own.
      */

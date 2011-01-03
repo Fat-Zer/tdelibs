@@ -37,8 +37,8 @@ int main(int argc, char **argv) {
 			   "the window!\n"
 			   "Press OK or Cancel when done"
 			   , w);
-    l->setAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->sizeHint());
+    l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
+    l->setMinimumSize(l->tqsizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     TQPushButton *b = bbox->addButton("OK");
@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
     
     bbox->addStretch(1);
     bbox->addButton("Help");
-    bbox->layout();
+    bbox->tqlayout();
     tl->addWidget(bbox,0);
     tl->activate();
     w->exec();
@@ -65,8 +65,8 @@ int main(int argc, char **argv) {
     TQLabel *l = new TQLabel("Another common dialog\n\n"\
 			   "OK and Cancel are right aligned\n"\
 			   "Try resizing the window!", w);
-    l->setAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->sizeHint());
+    l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
+    l->setMinimumSize(l->tqsizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
 	       w, TQT_SLOT(accept()));
     w->connect(bbox->addButton("Cancel"), TQT_SIGNAL(clicked()),
 	       w, TQT_SLOT(accept()));
-    bbox->layout();
+    bbox->tqlayout();
     tl->addWidget(bbox,0);
     tl->activate();  
     w->exec();
@@ -91,8 +91,8 @@ int main(int argc, char **argv) {
     TQLabel *l = new TQLabel("Another common dialog\n\n"\
 			   "OK and Cancel are middle aligned\n"\
 			   "Try resizing the window!", w);
-    l->setAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->sizeHint());
+    l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
+    l->setMinimumSize(l->tqsizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
     w->connect(bbox->addButton("Cancel"), TQT_SIGNAL(clicked()),
 	       w, TQT_SLOT(accept()));
     bbox->addStretch(1);
-    bbox->layout();
+    bbox->tqlayout();
     tl->addWidget(bbox,0);
     tl->activate();  
     w->exec();
@@ -120,8 +120,8 @@ int main(int argc, char **argv) {
 			   "the maximum width for all buttons\n"
 			   "since it will look ugly -- "
 			   "anyway, it works", w);
-    l->setAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->sizeHint());
+    l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
+    l->setMinimumSize(l->tqsizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
@@ -134,7 +134,7 @@ int main(int argc, char **argv) {
 
     bbox->addButton("Push me and I give you a banana");
     bbox->addStretch(1);
-    bbox->layout();
+    bbox->tqlayout();
     tl->addWidget(bbox,0);
     tl->activate();  
     w->exec();
@@ -152,8 +152,8 @@ int main(int argc, char **argv) {
 			   "prevent this strange effect as seen\n"
 			   "the former example!"
 			   ,w);
-    l->setAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->sizeHint());
+    l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
+    l->setMinimumSize(l->tqsizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
@@ -166,7 +166,7 @@ int main(int argc, char **argv) {
 
     bbox->addButton("Push me and I give you a banana", true);
     bbox->addStretch(1);
-    bbox->layout();
+    bbox->tqlayout();
     tl->addWidget(bbox,0);
     tl->activate();  
     w->exec();
@@ -182,8 +182,8 @@ int main(int argc, char **argv) {
 			   "to make vertically aligned buttons\n"
 			   "too?"
 			   ,w);
-    l->setAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->sizeHint());
+    l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
+    l->setMinimumSize(l->tqsizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w, KButtonBox::Vertical);
     TQPushButton *b = bbox->addButton("OK");
@@ -194,7 +194,7 @@ int main(int argc, char **argv) {
 	       w, TQT_SLOT(accept()));
 
     bbox->addStretch(1);
-    bbox->layout();
+    bbox->tqlayout();
     tl->addWidget(bbox,0);
     tl->activate();  
     w->exec();

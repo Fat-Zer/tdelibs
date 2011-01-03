@@ -65,7 +65,7 @@
 			<item>initials</item>
 			<item>internationaliSDNNumber</item>
 			<item>ipHostNumber</item>
-			<item>ipNetmaskNumber</item>
+			<item>ipNettqmaskNumber</item>
 			<item>ipNetworkNumber</item>
 			<item>ipProtocolNumber</item>
 			<item>ipServicePort</item>
@@ -112,7 +112,7 @@
 			<item>objectClass</item>
 			<item>oncRpcNumber</item>
 			<item>organizationName</item>
-			<item>organizationalStatus</item>
+			<item>organizationaltqStatus</item>
 			<item>organizationalUnitName</item>
 			<item>otherFacsimiletelephoneNumber</item>
 			<item>otherMailbox</item>

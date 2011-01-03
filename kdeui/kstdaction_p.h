@@ -58,11 +58,11 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ Clear,         KStdAccel::AccelNone, "edit_clear", I18N_NOOP("C&lear"), 0, "editclear" },
 	{ SelectAll,     KStdAccel::SelectAll, "edit_select_all", I18N_NOOP("Select &All"), 0, 0 },
 	{ Deselect,      KStdAccel::Deselect, "edit_deselect", I18N_NOOP("Dese&lect"), 0, 0 },
-	{ Find,          KStdAccel::Find, "edit_find", I18N_NOOP("&Find..."), 0, "find" },
-	{ FindNext,      KStdAccel::FindNext, "edit_find_next", I18N_NOOP("Find &Next"), 0, "next" },
-	// FIXME: rename edit_find_last to edit_find_prev for KDE 4
-	{ FindPrev,      KStdAccel::FindPrev, "edit_find_last", I18N_NOOP("Find Pre&vious"), 0, "previous" },
-	{ Replace,       KStdAccel::Replace, "edit_replace", I18N_NOOP("&Replace..."), 0, 0 },
+	{ Find,          KStdAccel::Find, "edit_tqfind", I18N_NOOP("&Find..."), 0, "tqfind" },
+	{ FindNext,      KStdAccel::FindNext, "edit_tqfind_next", I18N_NOOP("Find &Next"), 0, "next" },
+	// FIXME: rename edit_tqfind_last to edit_tqfind_prev for KDE 4
+	{ FindPrev,      KStdAccel::FindPrev, "edit_tqfind_last", I18N_NOOP("Find Pre&vious"), 0, "previous" },
+	{ Replace,       KStdAccel::Replace, "edit_tqreplace", I18N_NOOP("&Replace..."), 0, 0 },
 
 	{ ActualSize,    KStdAccel::AccelNone, "view_actual_size", I18N_NOOP("&Actual Size"), 0, "viewmag1" },
 	{ FitToPage,     KStdAccel::AccelNone, "view_fit_to_page", I18N_NOOP("&Fit to Page"), 0, "view_fit_window" },
@@ -94,7 +94,7 @@ static const KStdActionInfo g_rgActionInfo[] =
 
 	{ ShowMenubar,   KStdAccel::ShowMenubar, "options_show_menubar", I18N_NOOP("Show &Menubar"), 0, "showmenu" },
 	{ ShowToolbar,   KStdAccel::AccelNone, "options_show_toolbar", I18N_NOOP("Show &Toolbar"), 0, 0 },
-	{ ShowStatusbar, KStdAccel::AccelNone, "options_show_statusbar", I18N_NOOP("Show St&atusbar"), 0, 0 },
+	{ ShowtqStatusbar, KStdAccel::AccelNone, "options_show_statusbar", I18N_NOOP("Show St&atusbar"), 0, 0 },
 	{ FullScreen,    KStdAccel::FullScreen, "fullscreen", I18N_NOOP("F&ull Screen Mode"), 0, "window_fullscreen" },
 	{ SaveOptions,   KStdAccel::AccelNone, "options_save_options", I18N_NOOP("&Save Settings"), 0, 0 },
 	{ KeyBindings,   KStdAccel::AccelNone, "options_configure_keybinding", I18N_NOOP("Configure S&hortcuts..."), 0,"configure_shortcuts" },

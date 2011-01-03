@@ -423,7 +423,7 @@ ISpellChecker::setDictionaryEncoding( const TQString& hashname, const char * enc
 	if (m_translate_in)
 		{
 			/* We still have to setup prefstringchar*/
-			prefstringchar = findfiletype("utf8", 1, deftflag < 0 ? &deftflag
+			prefstringchar = tqfindfiletype("utf8", 1, deftflag < 0 ? &deftflag
 						      : static_cast<int *>(NULL));
 
 			if (prefstringchar < 0)
@@ -432,7 +432,7 @@ ISpellChecker::setDictionaryEncoding( const TQString& hashname, const char * enc
 					for(int n1 = 1; n1 <= 15; n1++)
 						{
 							teststring = "latin" + n1;
-							prefstringchar = findfiletype(teststring.c_str(), 1,
+							prefstringchar = tqfindfiletype(teststring.c_str(), 1,
 										      deftflag < 0 ? &deftflag : static_cast<int *>(NULL));
 							if (prefstringchar >= 0)
 								break;
@@ -443,7 +443,7 @@ ISpellChecker::setDictionaryEncoding( const TQString& hashname, const char * enc
 		}
 
 	/* Test for UTF-8 first */
-	prefstringchar = findfiletype("utf8", 1, deftflag < 0 ? &deftflag : static_cast<int *>(NULL));
+	prefstringchar = tqfindfiletype("utf8", 1, deftflag < 0 ? &deftflag : static_cast<int *>(NULL));
 	if (prefstringchar >= 0)
 		{
 			m_translate_in = TQTextCodec::codecForName("utf8");
@@ -459,7 +459,7 @@ ISpellChecker::setDictionaryEncoding( const TQString& hashname, const char * enc
 			for(int n1 = 1; n1 <= 15; n1++)
 				{
 					TQString teststring = TQString("latin%1").arg(n1);
-					prefstringchar = findfiletype(teststring.latin1(), 1,
+					prefstringchar = tqfindfiletype(teststring.latin1(), 1,
 								      deftflag < 0 ? &deftflag : static_cast<int *>(NULL));
 					if (prefstringchar >= 0)
 						{

@@ -68,7 +68,7 @@ protected slots:
 	void slotSelectionChanged();
 
 private:
-	KMIconViewItem* findItem(KMPrinter *p);
+	KMIconViewItem* tqfindItem(KMPrinter *p);
 
 private:
 	TQPtrList<KMIconViewItem>	m_items;

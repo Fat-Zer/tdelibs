@@ -33,7 +33,7 @@ class TQPushButton;
 /**
  * KDE X.509 Certificate Dialog
  *
- * This class is used to create and display a dialog which contains the user's
+ * This class is used to create and display a dialog which tqcontains the user's
  * X.509 certificates and allows the user to present it during SSL sessions.
  *
  * @author George Staikos <staikos@kde.org>

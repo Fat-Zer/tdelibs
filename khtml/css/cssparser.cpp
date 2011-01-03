@@ -166,7 +166,7 @@ void CSSParser::parseSheet( CSSStyleSheetImpl *sheet, const DOMString &string )
 
     int length = string.length() + 3;
     data = (unsigned short *)malloc( length *sizeof( unsigned short ) );
-    memcpy( data, string.unicode(), string.length()*sizeof( unsigned short) );
+    memcpy( data, string.tqunicode(), string.length()*sizeof( unsigned short) );
 
 #ifdef CSS_DEBUG
     kdDebug( 6080 ) << ">>>>>>> start parsing style sheet" << endl;
@@ -190,7 +190,7 @@ CSSRuleImpl *CSSParser::parseRule( DOM::CSSStyleSheetImpl *sheet, const DOM::DOM
     data = (unsigned short *)malloc( length *sizeof( unsigned short ) );
     for ( unsigned int i = 0; i < strlen(khtml_rule); i++ )
         data[i] = khtml_rule[i];
-    memcpy( data + strlen( khtml_rule ), string.unicode(), string.length()*sizeof( unsigned short) );
+    memcpy( data + strlen( khtml_rule ), string.tqunicode(), string.length()*sizeof( unsigned short) );
     // qDebug("parse string = '%s'", TQConstString( (const TQChar *)data, length ).string().latin1() );
     data[length-4] = '}';
 
@@ -218,7 +218,7 @@ bool CSSParser::parseValue( DOM::CSSStyleDeclarationImpl *declaration, int _id, 
     data = (unsigned short *)malloc( length *sizeof( unsigned short ) );
     for ( unsigned int i = 0; i < strlen(khtml_value); i++ )
         data[i] = khtml_value[i];
-    memcpy( data + strlen( khtml_value ), string.unicode(), string.length()*sizeof( unsigned short) );
+    memcpy( data + strlen( khtml_value ), string.tqunicode(), string.length()*sizeof( unsigned short) );
     data[length-4] = '}';
     // qDebug("parse string = '%s'", TQConstString( (const TQChar *)data, length ).string().latin1() );
 
@@ -260,7 +260,7 @@ bool CSSParser::parseDeclaration( DOM::CSSStyleDeclarationImpl *declaration, con
     data = (unsigned short *)malloc( length *sizeof( unsigned short ) );
     for ( unsigned int i = 0; i < strlen(khtml_decls); i++ )
         data[i] = khtml_decls[i];
-    memcpy( data + strlen( khtml_decls ), string.unicode(), string.length()*sizeof( unsigned short) );
+    memcpy( data + strlen( khtml_decls ), string.tqunicode(), string.length()*sizeof( unsigned short) );
     data[length-4] = '}';
 
     nonCSSHint = _nonCSSHint;
@@ -522,7 +522,7 @@ bool CSSParser::parseValue( int propId, bool important )
             valid_primitive = true;
         break;
 
-    case CSS_PROP_CLIP:                 // <shape> | auto | inherit
+    case CSS_PROP_CLIP:                 // <tqshape> | auto | inherit
         if ( id == CSS_VAL_AUTO )
             valid_primitive = true;
         else if ( value->unit == Value::Function )
@@ -1186,7 +1186,7 @@ bool CSSParser::parseBackgroundShorthand(bool important)
 	    }
 	}
 
-        // if we didn't find at least one match, this is an
+        // if we didn't tqfind at least one match, this is an
         // invalid shorthand and we have to ignore it
         if (!found)
             goto fail;
@@ -1243,7 +1243,7 @@ bool CSSParser::parseShortHand(int propId, const int *properties, int numPropert
             }
         }
 
-        // if we didn't find at least one match, this is an
+        // if we didn't tqfind at least one match, this is an
         // invalid shorthand and we have to ignore it
         if (!found)
             return false;
@@ -2125,7 +2125,7 @@ CSSPrimitiveValueImpl *CSSParser::parseColorFromValue(Value* value)
         colorValues[0] = kMax( 0, kMin( 255, colorValues[0] ) );
         colorValues[1] = kMax( 0, kMin( 255, colorValues[1] ) );
         colorValues[2] = kMax( 0, kMin( 255, colorValues[2] ) );
-        c = qRgb(colorValues[0], colorValues[1], colorValues[2]);
+        c = tqRgb(colorValues[0], colorValues[1], colorValues[2]);
     } else if (value->unit == Value::Function &&
                 value->function->args != 0 &&
                 value->function->args->size() == 7 /* rgba + three commas */ &&
@@ -2136,7 +2136,7 @@ CSSPrimitiveValueImpl *CSSParser::parseColorFromValue(Value* value)
         colorValues[0] = kMax( 0, kMin( 255, colorValues[0] ) );
         colorValues[1] = kMax( 0, kMin( 255, colorValues[1] ) );
         colorValues[2] = kMax( 0, kMin( 255, colorValues[2] ) );
-        c = qRgba(colorValues[0], colorValues[1], colorValues[2], colorValues[3]);
+        c = tqRgba(colorValues[0], colorValues[1], colorValues[2], colorValues[3]);
     } else if (value->unit == Value::Function &&
                 value->function->args != 0 &&
                 value->function->args->size() == 5 /* hsl + two commas */ &&
@@ -2144,7 +2144,7 @@ CSSPrimitiveValueImpl *CSSParser::parseColorFromValue(Value* value)
         double colorValues[3];
         if (!parseHSLParameters(value, colorValues, false))
             return 0;
-        c = khtml::qRgbaFromHsla(colorValues[0], colorValues[1], colorValues[2], 1.0);
+        c = khtml::tqRgbaFromHsla(colorValues[0], colorValues[1], colorValues[2], 1.0);
     } else if (value->unit == Value::Function &&
                 value->function->args != 0 &&
                 value->function->args->size() == 7 /* hsla + three commas */ &&
@@ -2152,7 +2152,7 @@ CSSPrimitiveValueImpl *CSSParser::parseColorFromValue(Value* value)
         double colorValues[4];
         if (!parseHSLParameters(value, colorValues, true))
             return 0;
-        c = khtml::qRgbaFromHsla(colorValues[0], colorValues[1], colorValues[2], colorValues[3]);
+        c = khtml::tqRgbaFromHsla(colorValues[0], colorValues[1], colorValues[2], colorValues[3]);
     }
     else
         return 0;

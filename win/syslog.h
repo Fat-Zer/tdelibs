@@ -89,7 +89,7 @@ extern "C" {
 
 KDEWIN32_EXPORT void closelog (void);
 KDEWIN32_EXPORT void openlog (const char *ident , int option , int facility);
-KDEWIN32_EXPORT int setlogmask (int priority);
+KDEWIN32_EXPORT int setlogtqmask (int priority);
 KDEWIN32_EXPORT void syslog (int priority, const char * format, ...);
 
 #ifdef __cplusplus

@@ -219,7 +219,7 @@ int KMessageBox::createKMessageBox(KDialogBase *dialog, TQPixmap icon,
     }
 
     // We add 10 pixels extra to compensate for some KActiveLabel margins.
-    // TODO: find out why this is 10.
+    // TODO: tqfind out why this is 10.
     label2->setFixedSize(TQSize(pref_width+10, pref_height));
     lay->addWidget( label2 );
     lay->addStretch();
@@ -247,7 +247,7 @@ int KMessageBox::createKMessageBox(KDialogBase *dialog, TQPixmap icon,
        if ( details.length() < 512 ) {
          KActiveLabel *label3 = new KActiveLabel(qrichtextify(details),
                                                  detailsGroup);
-         label3->setMinimumSize(label3->sizeHint());
+         label3->setMinimumSize(label3->tqsizeHint());
          if (!(options & KMessageBox::AllowLink))
          {
            TQObject::disconnect(label3, TQT_SIGNAL(linkClicked(const TQString &)),
@@ -288,7 +288,7 @@ int KMessageBox::createKMessageBox(KDialogBase *dialog, TQPixmap icon,
 		btn->setFocus();
 
     if ( (options & KMessageBox::Notify) )
-        sendNotification( text, strlist, notifyType, dialog->topLevelWidget()->winId());
+        sendNotification( text, strlist, notifyType, dialog->tqtopLevelWidget()->winId());
 
     if (KMessageBox_queue)
     {
@@ -342,7 +342,7 @@ KMessageBox::shouldBeShownYesNo(const TQString &dontShowAgainName,
                                 ButtonCode &result)
 {
     if ( dontShowAgainName.isEmpty() ) return true;
-    TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
+    TQString grpNotifMsgs = TQString::tqfromLatin1("Notification Messages");
     KConfig *config = againConfig ? againConfig : KGlobal::config();
     KConfigGroupSaver saver( config, grpNotifMsgs );
     TQString dontAsk = config->readEntry(dontShowAgainName).lower();
@@ -361,7 +361,7 @@ bool
 KMessageBox::shouldBeShownContinue(const TQString &dontShowAgainName)
 {
     if ( dontShowAgainName.isEmpty() ) return true;
-    TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
+    TQString grpNotifMsgs = TQString::tqfromLatin1("Notification Messages");
     KConfig *config = againConfig ? againConfig : KGlobal::config();
     KConfigGroupSaver saver( config, grpNotifMsgs );
     return config->readBoolEntry(dontShowAgainName,  true);
@@ -372,7 +372,7 @@ KMessageBox::saveDontShowAgainYesNo(const TQString &dontShowAgainName,
                                     ButtonCode result)
 {
     if ( dontShowAgainName.isEmpty() ) return;
-    TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
+    TQString grpNotifMsgs = TQString::tqfromLatin1("Notification Messages");
     KConfig *config = againConfig ? againConfig : KGlobal::config();
     KConfigGroupSaver saver( config, grpNotifMsgs );
     config->writeEntry( dontShowAgainName, result==Yes ? "yes" : "no", true, (dontShowAgainName[0] == ':'));
@@ -383,7 +383,7 @@ void
 KMessageBox::saveDontShowAgainContinue(const TQString &dontShowAgainName)
 {
     if ( dontShowAgainName.isEmpty() ) return;
-    TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
+    TQString grpNotifMsgs = TQString::tqfromLatin1("Notification Messages");
     KConfig *config = againConfig ? againConfig : KGlobal::config();
     KConfigGroupSaver saver( config, grpNotifMsgs );
     config->writeEntry( dontShowAgainName, false, true, (dontShowAgainName[0] == ':'));
@@ -423,7 +423,7 @@ KMessageBox::questionYesNoListWId(WId parent_id, const TQString &text,
     if ( !shouldBeShownYesNo(dontAskAgainName, res) )
         return res;
 
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Question") : caption,
                        KDialogBase::Yes | KDialogBase::No,
@@ -474,7 +474,7 @@ KMessageBox::questionYesNoCancelWId(WId parent_id,
     if ( !shouldBeShownYesNo(dontAskAgainName, res) )
         return res;
 
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Question") : caption,
                        KDialogBase::Yes | KDialogBase::No | KDialogBase::Cancel,
@@ -556,7 +556,7 @@ KMessageBox::warningYesNoListWId(WId parent_id, const TQString &text,
     if ( !shouldBeShownYesNo(dontAskAgainName, res) )
         return res;
 
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Warning") : caption,
                        KDialogBase::Yes | KDialogBase::No,
@@ -628,7 +628,7 @@ KMessageBox::warningContinueCancelListWId(WId parent_id, const TQString &text,
     if ( !shouldBeShownContinue(dontAskAgainName) )
         return Continue;
 
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Warning") : caption,
                        KDialogBase::Yes | KDialogBase::No,
@@ -704,7 +704,7 @@ KMessageBox::warningYesNoCancelListWId(WId parent_id, const TQString &text,
     if ( !shouldBeShownYesNo(dontAskAgainName, res) )
         return res;
 
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Warning") : caption,
                        KDialogBase::Yes | KDialogBase::No | KDialogBase::Cancel,
@@ -755,7 +755,7 @@ void
 KMessageBox::errorListWId(WId parent_id,  const TQString &text, const TQStringList &strlist,
                    const TQString &caption, int options)
 {
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Error") : caption,
                        KDialogBase::Yes,
@@ -785,7 +785,7 @@ KMessageBox::detailedErrorWId(WId parent_id,  const TQString &text,
                    const TQString &details,
                    const TQString &caption, int options)
 {
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Error") : caption,
                        KDialogBase::Yes | KDialogBase::Details,
@@ -832,7 +832,7 @@ void
 KMessageBox::sorryWId(WId parent_id, const TQString &text,
                    const TQString &caption, int options)
 {
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Sorry") : caption,
                        KDialogBase::Yes,
@@ -862,7 +862,7 @@ KMessageBox::detailedSorryWId(WId parent_id, const TQString &text,
                    const TQString &details,
                    const TQString &caption, int options)
 {
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Sorry") : caption,
                        KDialogBase::Yes | KDialogBase::Details,
@@ -908,7 +908,7 @@ KMessageBox::informationListWId(WId parent_id,const TQString &text, const TQStri
     if ( !shouldBeShownContinue(dontShowAgainName) )
         return;
 
-    TQWidget* parent = TQWidget::find( parent_id );
+    TQWidget* parent = TQWidget::tqfind( parent_id );
     KDialogBase *dialog= new KDialogBase(
                        caption.isEmpty() ? i18n("Information") : caption,
                        KDialogBase::Yes,
@@ -936,7 +936,7 @@ void
 KMessageBox::enableAllMessages()
 {
    KConfig *config = againConfig ? againConfig : KGlobal::config();
-   TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
+   TQString grpNotifMsgs = TQString::tqfromLatin1("Notification Messages");
    if (!config->hasGroup(grpNotifMsgs))
       return;
 
@@ -956,7 +956,7 @@ void
 KMessageBox::enableMessage(const TQString &dontShowAgainName)
 {
    KConfig *config = againConfig ? againConfig : KGlobal::config();
-   TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
+   TQString grpNotifMsgs = TQString::tqfromLatin1("Notification Messages");
    if (!config->hasGroup(grpNotifMsgs))
       return;
 

@@ -338,7 +338,7 @@ bool initializeMods()
         XFree( XGetKeyboardMapping( qt_xdisplay(), min_keycode, 1, &keysyms_per_keycode ));
 	// Qt assumes that Alt is always Mod1Mask, so start at Mod2Mask.
 	for( int i = Mod2MapIndex; i < 8; i++ ) {
-		uint mask = (1 << i);
+		uint tqmask = (1 << i);
 		uint keySymX = NoSymbol;
                 // This used to be only XKeycodeToKeysym( ... , 0 ), but that fails with XFree4.3.99
                 // and X.org R6.7 , where for some reason only ( ... , 1 ) works. I have absolutely no
@@ -348,13 +348,13 @@ bool initializeMods()
                     for( int k = 0; k < keysyms_per_keycode && keySymX == NoSymbol; ++k )
                         keySymX = XKeycodeToKeysym( qt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * i + j], k );
 		switch( keySymX ) {
-			case XK_Num_Lock:    g_modXNumLock = mask; break;     // Normally Mod2Mask
+			case XK_Num_Lock:    g_modXNumLock = tqmask; break;     // Normally Mod2Mask
 			case XK_Super_L:
-			case XK_Super_R:     g_rgModInfo[3].modX = mask; break; // Win key, Normally Mod4Mask
+			case XK_Super_R:     g_rgModInfo[3].modX = tqmask; break; // Win key, Normally Mod4Mask
 			case XK_Meta_L:
-			case XK_Meta_R:      if( !g_rgModInfo[3].modX ) g_rgModInfo[3].modX = mask; break; // Win alternate
-			case XK_Scroll_Lock: g_modXScrollLock = mask; break;  // Normally Mod5Mask
-			case XK_Mode_switch: g_modXModeSwitch = mask; break; 
+			case XK_Meta_R:      if( !g_rgModInfo[3].modX ) g_rgModInfo[3].modX = tqmask; break; // Win alternate
+			case XK_Scroll_Lock: g_modXScrollLock = tqmask; break;  // Normally Mod5Mask
+			case XK_Mode_switch: g_modXModeSwitch = tqmask; break; 
 		}
 	}
 
@@ -406,7 +406,7 @@ bool Sym::initQt( int keyQt )
 	int symQt = keyQt & 0xffff;
 
 	if( (keyQt & Qt::UNICODE_ACCEL) || symQt < 0x1000 ) {
-		m_sym = TQChar(symQt).lower().unicode();
+		m_sym = TQChar(symQt).lower().tqunicode();
 		return true;
 	}
 
@@ -434,9 +434,9 @@ bool Sym::initQt( int keyQt )
 
 bool Sym::init( const TQString& s )
 {
-	// If it's a single character, get unicode value.
+	// If it's a single character, get tqunicode value.
 	if( s.length() == 1 ) {
-		m_sym = s[0].lower().unicode();
+		m_sym = s[0].lower().tqunicode();
 		return true;
 	}
 
@@ -498,7 +498,7 @@ TQString Sym::toString( bool bUserSpace ) const
 	if( m_sym == 0 )
 		return TQString::null;
 
-	// If it's a unicode character,
+	// If it's a tqunicode character,
 #ifdef Q_WS_WIN
 	else if( m_sym < 0x1000 ) {
 #else
@@ -536,13 +536,13 @@ uint Sym::getModsRequired() const
 {
 	uint mod = 0;
 #ifdef Q_WS_X11
-	// FIXME: This might not be true on all keyboard layouts!
+	// FIXME: This might not be true on all keyboard tqlayouts!
 	if( m_sym == XK_Sys_Req ) return KKey::ALT;
 	if( m_sym == XK_Break ) return KKey::CTRL;
 
 	if( m_sym < 0x3000 ) {
 		TQChar c(m_sym);
-		if( c.isLetter() && c.lower() != c.upper() && m_sym == c.upper().unicode() )
+		if( c.isLetter() && c.lower() != c.upper() && m_sym == c.upper().tqunicode() )
 			return KKey::SHIFT;
 	}
 
@@ -823,7 +823,7 @@ uint stringUserToMod( const TQString& mod )
 	// Get code of just the primary key
 	keySymQt = keyCombQt & 0xffff;
 
-	// If unicode value beneath 0x1000 (special Qt codes begin thereafter),
+	// If tqunicode value beneath 0x1000 (special Qt codes begin thereafter),
 	if( keySymQt < 0x1000 ) {
 		// For reasons unbeknownst to me, Qt converts 'a-z' to 'A-Z'.
 		// So convert it back to lowercase if SHIFT isn't held down.
@@ -1041,7 +1041,7 @@ void KKey::simplify()
 
 	// If this is a letter, don't remove any modifiers.
 	if( m_sym < 0x3000 && TQChar(m_sym).isLetter() )
-		m_sym = TQChar(m_sym).lower().unicode();
+		m_sym = TQChar(m_sym).lower().tqunicode();
 
 	// Remove modifers from modifier list which are implicit in the symbol.
 	// Ex. Shift+Plus => Plus (en)

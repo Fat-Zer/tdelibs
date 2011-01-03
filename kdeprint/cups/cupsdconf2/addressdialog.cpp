@@ -76,7 +76,7 @@ TQString AddressDialog::newAddress(TQWidget *parent)
 TQString AddressDialog::editAddress(const TQString& addr, TQWidget *parent)
 {
 	AddressDialog	dlg(parent);
-	int p = addr.find(' ');
+	int p = addr.tqfind(' ');
 	if (p != -1)
 	{
 		dlg.type_->setCurrentItem(addr.left(p).lower() == "deny" ? 1 : 0);

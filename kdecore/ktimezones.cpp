@@ -285,12 +285,12 @@ int KTimezone::offset(Qt::TimeSpec basisSpec) const
     char *originalZone = ::getenv("TZ");
 
     // Get the time in the current timezone.
-    TQDateTime basisTime = TQDateTime::currentDateTime(basisSpec);
+    TQDateTime basisTime = TQDateTime::tqcurrentDateTime(basisSpec);
 
-    // Set the timezone and find out what time it is there compared to the basis.
+    // Set the timezone and tqfind out what time it is there compared to the basis.
     ::setenv("TZ", m_name.utf8(), 1);
     tzset();
-    TQDateTime remoteTime = TQDateTime::currentDateTime(Qt::LocalTime);
+    TQDateTime remoteTime = TQDateTime::tqcurrentDateTime(Qt::LocalTime);
     int offset = remoteTime.secsTo(basisTime);
 
     // Now restore things
@@ -308,11 +308,11 @@ int KTimezone::offset(Qt::TimeSpec basisSpec) const
 
 int KTimezone::offset(const TQDateTime &dateTime) const
 {
-    OffsetFind finder(dateTime.toTime_t());
+    OffsetFind tqfinder(dateTime.toTime_t());
     int result = 0;
-    if (parse(finder))
+    if (parse(tqfinder))
     {
-        result = finder.offset();
+        result = tqfinder.offset();
     }
     return result;
 }
@@ -595,7 +595,7 @@ const KTimezone *KTimezones::local()
         return local;
 
     // None of the deterministic stuff above has worked: try a heuristic. We
-    // try to find a pair of matching timezone abbreviations...that way, we'll
+    // try to tqfind a pair of matching timezone abbreviations...that way, we'll
     // likely return a value in the user's own country.
     if (!m_zoneinfoDir.isEmpty())
     {
@@ -623,7 +623,7 @@ const KTimezone *KTimezones::zone(const TQString &name)
 {
     if (name.isEmpty())
         return m_UTC;
-    ZoneMap::ConstIterator it = m_zones->find(name);
+    ZoneMap::ConstIterator it = m_zones->tqfind(name);
     if (it != m_zones->end())
         return it.data();
 
@@ -695,28 +695,28 @@ bool KTimezoneSource::parse(const TQString &zone, KTimezoneDetails &dataReceiver
     }
 
     // Structures that represent the zoneinfo file.
-    Q_UINT8 T, z, i_, f_;
+    TQ_UINT8 T, z, i_, f_;
     struct
     {
-        Q_UINT32 ttisgmtcnt;
-        Q_UINT32 ttisstdcnt;
-        Q_UINT32 leapcnt;
-        Q_UINT32 timecnt;
-        Q_UINT32 typecnt;
-        Q_UINT32 charcnt;
+        TQ_UINT32 ttisgmtcnt;
+        TQ_UINT32 ttisstdcnt;
+        TQ_UINT32 leapcnt;
+        TQ_UINT32 timecnt;
+        TQ_UINT32 typecnt;
+        TQ_UINT32 charcnt;
     } tzh;
-    Q_UINT32 transitionTime;
-    Q_UINT8 localTimeIndex;
+    TQ_UINT32 transitionTime;
+    TQ_UINT8 localTimeIndex;
     struct
     {
-        Q_INT32 gmtoff;
-        Q_INT8 isdst;
-        Q_UINT8 abbrind;
+        TQ_INT32 gmtoff;
+        TQ_INT8 isdst;
+        TQ_UINT8 abbrind;
     } tt;
-    Q_UINT32 leapTime;
-    Q_UINT32 leapSeconds;
-    Q_UINT8 isStandard;
-    Q_UINT8 isUTC;
+    TQ_UINT32 leapTime;
+    TQ_UINT32 leapSeconds;
+    TQ_UINT8 isStandard;
+    TQ_UINT8 isUTC;
 
     TQDataStream str(&f);
     str >> T >> z >> i_ >> f_;

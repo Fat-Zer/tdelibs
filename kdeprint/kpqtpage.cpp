@@ -55,7 +55,7 @@ KPQtPage::KPQtPage(TQWidget *parent, const char *name)
 }
 
 KPQtPage::KPQtPage(DrMain *driver, TQWidget *parent, const char *name)
-: KPrintDialogPage(0, (driver && driver->findOption("PageSize") ? driver : 0), parent, name)
+: KPrintDialogPage(0, (driver && driver->tqfindOption("PageSize") ? driver : 0), parent, name)
 {
 	init();
 }
@@ -116,7 +116,7 @@ void KPQtPage::init()
 	m_pagesize = new TQComboBox(this);
           TQWhatsThis::add(m_pagesize, whatsThisPageSizeOtPageLabel);
 	QLabel	*m_pagesizelabel = new TQLabel(i18n("Page s&ize:"), this);
-	m_pagesizelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
+	m_pagesizelabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
 	m_pagesizelabel->setBuddy(m_pagesize);
 	m_orientbox = new TQButtonGroup(0, Qt::Vertical, i18n("Orientation"), this);
           TQWhatsThis::add(m_orientbox, whatsThisOrientationOtPageLabel);
@@ -129,7 +129,7 @@ void KPQtPage::init()
           TQWhatsThis::add(m_landscape, whatsThisOrientationOtPageLabel);
 
 	m_orientpix = new TQLabel(m_orientbox);
-	m_orientpix->setAlignment(Qt::AlignCenter);
+	m_orientpix->tqsetAlignment(Qt::AlignCenter);
           TQWhatsThis::add(m_orientpix, whatsThisOrientationOtPageLabel);
 
 	QRadioButton	*m_color = new TQRadioButton(i18n("Colo&r"), m_colorbox);
@@ -137,7 +137,7 @@ void KPQtPage::init()
 
 	QRadioButton	*m_grayscale = new TQRadioButton(i18n("&Grayscale"), m_colorbox);
 	m_colorpix = new TQLabel(m_colorbox);
-	m_colorpix->setAlignment(Qt::AlignCenter);
+	m_colorpix->tqsetAlignment(Qt::AlignCenter);
           TQWhatsThis::add(m_colorpix, whatsThisColorModeOtPageLabel);
 
 	m_nupbox = new TQButtonGroup(0, Qt::Vertical, i18n("Pages per Sheet"), this);
@@ -152,10 +152,10 @@ void KPQtPage::init()
           TQWhatsThis::add(m_nupother, whatsThisPagesPerSheetOtPageLabel);
 
 	m_nuppix = new TQLabel(m_nupbox);
-	m_nuppix->setAlignment(Qt::AlignCenter);
+	m_nuppix->tqsetAlignment(Qt::AlignCenter);
           TQWhatsThis::add(m_nuppix, whatsThisPagesPerSheetOtPageLabel);
 
-	// layout creation
+	// tqlayout creation
 	QGridLayout	*lay0 = new TQGridLayout(this, 3, 2, 0, 10);
 	lay0->setRowStretch(1,1);
 	lay0->setRowStretch(2,1);
@@ -164,15 +164,15 @@ void KPQtPage::init()
 	lay0->addWidget(m_orientbox,1,0);
 	lay0->addWidget(m_colorbox,1,1);
 	lay0->addWidget(m_nupbox,2,0);
-	QGridLayout	*lay1 = new TQGridLayout(m_orientbox->layout(), 2, 2, 10);
+	QGridLayout	*lay1 = new TQGridLayout(m_orientbox->tqlayout(), 2, 2, 10);
 	lay1->addWidget(m_portrait,0,0);
 	lay1->addWidget(m_landscape,1,0);
 	lay1->addMultiCellWidget(m_orientpix,0,1,1,1);
-	QGridLayout	*lay2 = new TQGridLayout(m_colorbox->layout(), 2, 2, 10);
+	QGridLayout	*lay2 = new TQGridLayout(m_colorbox->tqlayout(), 2, 2, 10);
 	lay2->addWidget(m_color,0,0);
 	lay2->addWidget(m_grayscale,1,0);
 	lay2->addMultiCellWidget(m_colorpix,0,1,1,1);
-	QGridLayout	*lay3 = new TQGridLayout(m_nupbox->layout(), 4, 2, 5);
+	QGridLayout	*lay3 = new TQGridLayout(m_nupbox->tqlayout(), 4, 2, 5);
 	lay3->addWidget(m_nup1,0,0);
 	lay3->addWidget(m_nup2,1,0);
 	lay3->addWidget(m_nup4,2,0);
@@ -203,11 +203,11 @@ void KPQtPage::init()
 		for (int i=0; i<KPrinter::NPageSize-1; i++)
 			m_pagesize->insertItem(i18n(page_sizes[i].text));
 		// default page size to locale settings
-		m_pagesize->setCurrentItem(findIndex((KPrinter::PageSize)(KGlobal::locale()->pageSize())));
+		m_pagesize->setCurrentItem(tqfindIndex((KPrinter::PageSize)(KGlobal::locale()->pageSize())));
 	}
 	else
 	{
-		DrListOption	*lopt = static_cast<DrListOption*>(driver()->findOption("PageSize"));
+		DrListOption	*lopt = static_cast<DrListOption*>(driver()->tqfindOption("PageSize"));
 		TQPtrListIterator<DrBase>	it(*(lopt->choices()));
 		for (; it.current(); ++it)
 		{
@@ -259,18 +259,18 @@ void KPQtPage::setOptions(const TQMap<TQString,TQString>& opts)
 		QString	val = opts["PageSize"];
 		if (!val.isEmpty())
 		{
-			DrListOption	*opt = static_cast<DrListOption*>(driver()->findOption("PageSize"));
-			DrBase	*ch = opt->findChoice(val);
+			DrListOption	*opt = static_cast<DrListOption*>(driver()->tqfindOption("PageSize"));
+			DrBase	*ch = opt->tqfindChoice(val);
 			if (ch)
-				m_pagesize->setCurrentItem(opt->choices()->findRef(ch));
+				m_pagesize->setCurrentItem(opt->choices()->tqfindRef(ch));
 		}
 	}
 	else if (!opts["kde-pagesize"].isEmpty())
-		m_pagesize->setCurrentItem(findIndex(opts["kde-pagesize"].toInt()));
+		m_pagesize->setCurrentItem(tqfindIndex(opts["kde-pagesize"].toInt()));
 	ID = NUP_1;
-	if (opts["_kde-filters"].find("psnup") != -1)
+	if (opts["_kde-filters"].tqfind("psnup") != -1)
 	{
-               if (opts.contains("_kde-psnup-nup")) {
+               if (opts.tqcontains("_kde-psnup-nup")) {
                        ID = opts["_kde-psnup-nup"].toInt();
                        if (ID == 1 || ID == 2 || ID == 4)
                        {
@@ -302,7 +302,7 @@ void KPQtPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 	opts["kde-colormode"] = (m_colorbox->id(m_colorbox->selected()) == COLORMODE_GRAYSCALE_ID ? "GrayScale" : "Color");
 	if (driver())
 	{
-		DrListOption	*opt = static_cast<DrListOption*>(driver()->findOption("PageSize"));
+		DrListOption	*opt = static_cast<DrListOption*>(driver()->tqfindOption("PageSize"));
 		if (opt)
 		{
 			DrBase	*ch = opt->choices()->at(m_pagesize->currentItem());
@@ -323,7 +323,7 @@ void KPQtPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 	else if (ID != NUP_OTHER)
 	{
 		int	nup(ID == NUP_2 ? 2 : 4);
-		if (s.find("psnup") == -1)
+		if (s.tqfind("psnup") == -1)
 		{
 			QStringList	fl = TQStringList::split(',', s, false);
 			KXmlCommandManager::self()->insertCommand(fl, "psnup");

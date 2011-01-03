@@ -138,7 +138,7 @@ TQVBox * KPassivePopup::standardView( const TQString& caption,
 	hb->setSpacing( KDialog::spacingHint() );
 	ttlIcon = new TQLabel( hb, "title_icon" );
 	ttlIcon->setPixmap( icon );
-        ttlIcon->setAlignment( AlignLeft );
+        ttlIcon->tqsetAlignment( AlignLeft );
     }
 
     if ( !caption.isEmpty() ) {
@@ -146,14 +146,14 @@ TQVBox * KPassivePopup::standardView( const TQString& caption,
 	TQFont fnt = ttl->font();
 	fnt.setBold( true );
 	ttl->setFont( fnt );
-	ttl->setAlignment( Qt::AlignHCenter );
+	ttl->tqsetAlignment( Qt::AlignHCenter );
         if ( hb )
             hb->setStretchFactor( ttl, 10 ); // enforce centering
     }
 
     if ( !text.isEmpty() ) {
         msg = new TQLabel( text, vb, "msg_label" );
-        msg->setAlignment( AlignLeft );
+        msg->tqsetAlignment( AlignLeft );
     }
 
     return vb;
@@ -194,8 +194,8 @@ void KPassivePopup::mouseReleaseEvent( TQMouseEvent *e )
 
 void KPassivePopup::show()
 {
-    if ( size() != sizeHint() )
-	resize( sizeHint() );
+    if ( size() != tqsizeHint() )
+	resize( tqsizeHint() );
 
     if ( d->fixedPosition.isNull() )
 	positionSelf();
@@ -303,7 +303,7 @@ void KPassivePopup::moveNear( TQRect target )
 
     if( d->popupStyle == Balloon )
     {
-        // find a point to anchor to
+        // tqfind a point to anchor to
         if( x + w > r.width() ){
             x = x + target.width();
         }
@@ -356,8 +356,8 @@ void KPassivePopup::paintEvent( TQPaintEvent* pe )
 
 void KPassivePopup::updateMask()
 {
-    // get screen-geometry for screen our anchor is on
-    // (geometry can differ from screen to screen!
+    // get screen-tqgeometry for screen our anchor is on
+    // (tqgeometry can differ from screen to screen!
     TQRect deskRect = KGlobalSettings::desktopGeometry(d->anchor);
 
     int xh = 70, xl = 40;
@@ -376,8 +376,8 @@ void KPassivePopup::updateMask()
         TQPoint( width() - 50, height() - 50 )
     };
 
-    TQBitmap mask( width(), height(), true );
-    TQPainter p( &mask );
+    TQBitmap tqmask( width(), height(), true );
+    TQPainter p( &tqmask );
     TQBrush brush( Qt::white, Qt::SolidPattern );
     p.setBrush( brush );
 
@@ -421,7 +421,7 @@ void KPassivePopup::updateMask()
     d->surround.resize( z + 1 );
     d->surround.setPoint( z, d->surround[0] );
     p.drawPolygon( d->surround );
-    setMask(mask);
+    setMask(tqmask);
 
     move( right ? d->anchor.x() - width() + 20 : ( d->anchor.x() < 11 ? 11 : d->anchor.x() - 20 ),
           bottom ? d->anchor.y() - height() : ( d->anchor.y() < 11 ? 11 : d->anchor.y() ) );

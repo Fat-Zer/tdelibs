@@ -76,11 +76,11 @@ VCardEntity::_parse()
 	vDebug("parse");
 	TQCString s(strRep_);
 	
-	int i = s.find(TQRegExp("BEGIN:VCARD", false));
+	int i = s.tqfind(TQRegExp("BEGIN:VCARD", false));
 	
 	while (i != -1) {
 		
-		i = s.find(TQRegExp("BEGIN:VCARD", false), 11);
+		i = s.tqfind(TQRegExp("BEGIN:VCARD", false), 11);
 		
 		TQCString cardStr(s.left(i));
 		

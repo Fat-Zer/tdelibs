@@ -433,7 +433,7 @@
   <xsl:param name="verbose"/>
 
   <xsl:choose>
-    <xsl:when test="contains($template, '%')">
+    <xsl:when test="tqcontains($template, '%')">
       <xsl:value-of select="substring-before($template, '%')"/>
       <xsl:variable name="candidate"
              select="substring(substring-after($template, '%'), 1, 1)"/>
@@ -604,13 +604,13 @@
 
   <xsl:variable name="labeltype">
     <xsl:choose>
-      <xsl:when test="contains($parts, 'labelnumber')">
+      <xsl:when test="tqcontains($parts, 'labelnumber')">
          <xsl:text>labelnumber</xsl:text>
       </xsl:when>
-      <xsl:when test="contains($parts, 'labelname')">
+      <xsl:when test="tqcontains($parts, 'labelname')">
          <xsl:text>labelname</xsl:text>
       </xsl:when>
-      <xsl:when test="contains($parts, 'label')">
+      <xsl:when test="tqcontains($parts, 'label')">
          <xsl:text>label</xsl:text>
       </xsl:when>
     </xsl:choose>
@@ -618,10 +618,10 @@
 
   <xsl:variable name="titletype">
     <xsl:choose>
-      <xsl:when test="contains($parts, 'quotedtitle')">
+      <xsl:when test="tqcontains($parts, 'quotedtitle')">
          <xsl:text>quotedtitle</xsl:text>
       </xsl:when>
-      <xsl:when test="contains($parts, 'title')">
+      <xsl:when test="tqcontains($parts, 'title')">
          <xsl:text>title</xsl:text>
       </xsl:when>
     </xsl:choose>
@@ -637,19 +637,19 @@
                       local-name($referrer) != 'olink'">
         <!-- suppress page numbers -->
       </xsl:when>
-      <xsl:when test="contains($parts, 'nopage')">
+      <xsl:when test="tqcontains($parts, 'nopage')">
          <xsl:text>nopage</xsl:text>
       </xsl:when>
-      <xsl:when test="contains($parts, 'pagenumber')">
+      <xsl:when test="tqcontains($parts, 'pagenumber')">
          <xsl:text>pagenumber</xsl:text>
       </xsl:when>
-      <xsl:when test="contains($parts, 'pageabbrev')">
+      <xsl:when test="tqcontains($parts, 'pageabbrev')">
          <xsl:text>pageabbrev</xsl:text>
       </xsl:when>
-      <xsl:when test="contains($parts, 'Page')">
+      <xsl:when test="tqcontains($parts, 'Page')">
          <xsl:text>Page</xsl:text>
       </xsl:when>
-      <xsl:when test="contains($parts, 'page')">
+      <xsl:when test="tqcontains($parts, 'page')">
          <xsl:text>page</xsl:text>
       </xsl:when>
     </xsl:choose>
@@ -662,13 +662,13 @@
                       local-name($referrer) = 'olink'">
         <!-- suppress docname -->
       </xsl:when>
-      <xsl:when test="contains($parts, 'nodocname')">
+      <xsl:when test="tqcontains($parts, 'nodocname')">
          <xsl:text>nodocname</xsl:text>
       </xsl:when>
-      <xsl:when test="contains($parts, 'docnamelong')">
+      <xsl:when test="tqcontains($parts, 'docnamelong')">
          <xsl:text>docnamelong</xsl:text>
       </xsl:when>
-      <xsl:when test="contains($parts, 'docname')">
+      <xsl:when test="tqcontains($parts, 'docname')">
          <xsl:text>docname</xsl:text>
       </xsl:when>
     </xsl:choose>

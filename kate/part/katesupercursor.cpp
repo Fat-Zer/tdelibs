@@ -662,7 +662,7 @@ void KateSuperRangeList::slotDeleted(TQObject* range)
       m_columnBoundaries.removeRef(r->m_end);
   }
 
-  int index = findRef(r);
+  int index = tqfindRef(r);
   if (index != -1)
     take(index);
   //else kdDebug(13020)<<"Range not found in list"<<endl;
@@ -743,4 +743,4 @@ TQPtrCollection::Item KateSuperRangeList::newItem(TQPtrCollection::Item d)
   return TQPtrList<KateSuperRange>::newItem(d);
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

@@ -169,7 +169,7 @@ public:
     /**
      * This method retrieves a \c Node using a name. It
      * first searches for a \c Node with a matching
-     * \c id attribute. If it doesn't find one, it then searches
+     * \c id attribute. If it doesn't tqfind one, it then searches
      * for a \c Node with a matching \c name
      * attribute, but only on those elements that are allowed a name
      * attribute.

@@ -32,20 +32,20 @@ class TQCheckBox;
 
 /**
  * @ingroup main
- * @ingroup findreplace
- * @brief A generic "find" dialog.
+ * @ingroup tqfindtqreplace
+ * @brief A generic "tqfind" dialog.
  *
  * @author S.R.Haque <srhaque@iee.org>
  *
  * \b Detail:
  *
  * This widget inherits from KDialogBase and implements
- * the following additional functionalities:  a find string
+ * the following additional functionalities:  a tqfind string
  * object and an area for a user-defined widget to extend the dialog.
  *
  * \b Example:
  *
- * To use the basic modal find dialog, and then run the search:
+ * To use the basic modal tqfind dialog, and then run the search:
  *
  * \code
  *  KFindDialog dlg(....)
@@ -55,20 +55,20 @@ class TQCheckBox;
  *  // proceed with KFind from here
  * \endcode
  *
- * To create a non-modal find dialog:
+ * To create a non-modal tqfind dialog:
  * \code
- *   if ( m_findDia )
- *     KWin::setActiveWindow( m_findDia->winId() );
+ *   if ( m_tqfindDia )
+ *     KWin::setActiveWindow( m_tqfindDia->winId() );
  *   else
  *   {
- *     m_findDia = new KFindDialog(false,...);
- *     connect( m_findDia, TQT_SIGNAL(okClicked()), this, TQT_SLOT(findTextNext()) );
+ *     m_tqfindDia = new KFindDialog(false,...);
+ *     connect( m_tqfindDia, TQT_SIGNAL(okClicked()), this, TQT_SLOT(tqfindTextNext()) );
  *   }
  * \endcode
- * Don't forget to delete and reset m_findDia when closed.
+ * Don't forget to delete and reset m_tqfindDia when closed.
  * (But do NOT delete your KFind object at that point, it's needed for "Find Next")
  *
- * To use your own extensions: see findExtension().
+ * To use your own extensions: see tqfindExtension().
  *
  */
 class KUTILS_EXPORT KFindDialog:
@@ -99,31 +99,31 @@ public:
     };
 
     /**
-     * Construct a modal find dialog
+     * Construct a modal tqfind dialog
      *
      * @param parent The parent object of this widget.
      * @param name The name of this widget.
      * @param options A bitfield of the Options to be checked.
-     * @param findStrings The find history, see findHistory()
+     * @param tqfindStrings The tqfind history, see tqfindHistory()
      * @param hasSelection Whether a selection exists
      */
     KFindDialog( TQWidget *parent = 0, const char *name = 0, long options = 0,
-                 const TQStringList &findStrings = TQStringList(), bool hasSelection = false );
+                 const TQStringList &tqfindStrings = TQStringList(), bool hasSelection = false );
     // KDE4: fix ambiguity with private constructor
-    // Maybe remove options (there's setOptions) and findStrings (setFindHistory) and hasSelection (setHasSelection)
+    // Maybe remove options (there's setOptions) and tqfindStrings (setFindHistory) and hasSelection (setHasSelection)
 
     /**
-     * Construct a non-modal find dialog
+     * Construct a non-modal tqfind dialog
      *
      * @param modal set to @c false to get a non-modal dialog
      * @param parent The parent object of this widget.
      * @param name The name of this widget.
      * @param options A bitfield of the Options to be checked.
-     * @param findStrings The find history, see findHistory()
+     * @param tqfindStrings The tqfind history, see tqfindHistory()
      * @param hasSelection Whether a selection exists
      */
     KFindDialog( bool modal, TQWidget *parent = 0, const char *name = 0, long options = 0,
-                 const TQStringList &findStrings = TQStringList(), bool hasSelection = false );
+                 const TQStringList &tqfindStrings = TQStringList(), bool hasSelection = false );
     // KDE4: consider simplifying
 
     /**
@@ -133,21 +133,21 @@ public:
 
     /**
      * Provide the list of @p strings to be displayed as the history
-     * of find strings. @p strings might get truncated if it is
+     * of tqfind strings. @p strings might get truncated if it is
      * too long.
      *
-     * @param history The find history.
-     * @see findHistory
+     * @param history The tqfind history.
+     * @see tqfindHistory
      */
     void setFindHistory( const TQStringList &history );
 
     /**
      * Returns the list of history items.
      *
-     * @return The find history.
+     * @return The tqfind history.
      * @see setFindHistory
      */
-    TQStringList findHistory() const;
+    TQStringList tqfindHistory() const;
 
     /**
      * Enable/disable the 'search in selection' option, depending
@@ -170,7 +170,7 @@ public:
      * Enable/disable the 'Find backwards' option, depending
      * on whether the application supports it.
      *
-     * @param supports @c true if the application supports backwards find
+     * @param supports @c true if the application supports backwards tqfind
      * This is assumed to be the case by default.
      * @since 3.4
      */
@@ -180,7 +180,7 @@ public:
      * Enable/disable the 'Case sensitive' option, depending
      * on whether the application supports it.
      *
-     * @param supports @c true if the application supports case sensitive find
+     * @param supports @c true if the application supports case sensitive tqfind
      * This is assumed to be the case by default.
      * @since 3.4
      */
@@ -190,7 +190,7 @@ public:
      * Enable/disable the 'Whole words only' option, depending
      * on whether the application supports it.
      *
-     * @param supports @c true if the application supports whole words only find
+     * @param supports @c true if the application supports whole words only tqfind
      * This is assumed to be the case by default.
      * @since 3.4
      */
@@ -200,7 +200,7 @@ public:
      * Enable/disable the 'Regular expression' option, depending
      * on whether the application supports it.
      *
-     * @param supports @c true if the application supports regular expression find
+     * @param supports @c true if the application supports regular expression tqfind
      * This is assumed to be the case by default.
      * @since 3.4
      */
@@ -224,13 +224,13 @@ public:
     long options() const;
 
     /**
-     * Returns the pattern to find.
+     * Returns the pattern to tqfind.
      * @return The search text.
      */
     TQString pattern() const;
 
     /**
-     * Sets the pattern to find.
+     * Sets the pattern to tqfind.
      * @param pattern The new search pattern.
      */
     void setPattern ( const TQString &pattern );
@@ -242,7 +242,7 @@ public:
      * widgets for the pattern string.
      * @return An extensible TQWidget.
      */
-    TQWidget *findExtension();
+    TQWidget *tqfindExtension();
 
 protected slots:
 
@@ -264,44 +264,44 @@ private slots:
 
 private:
 
-    TQGroupBox *m_findGrp;
-    TQLabel *m_findLabel;
-    KHistoryCombo *m_find;
+    TQGroupBox *m_tqfindGrp;
+    TQLabel *m_tqfindLabel;
+    KHistoryCombo *m_tqfind;
     TQCheckBox *m_regExp;
     TQPushButton *m_regExpItem;
-    TQGridLayout *m_findLayout;
-    TQWidget *m_findExtension;
+    TQGridLayout *m_tqfindLayout;
+    TQWidget *m_tqfindExtension;
 
     TQGroupBox *m_optionGrp;
     TQCheckBox *m_wholeWordsOnly;
     TQCheckBox *m_fromCursor;
     TQCheckBox *m_selectedText;
     TQCheckBox *m_caseSensitive;
-    TQCheckBox *m_findBackwards;
+    TQCheckBox *m_tqfindBackwards;
 
     TQPopupMenu *m_patterns;
 
-    // Our dirty little secret is that we also implement the "replace" dialog. But we
+    // Our dirty little secret is that we also implement the "tqreplace" dialog. But we
     // keep that fact hidden from all but our friends.
 
     friend class KReplaceDialog;
 
     /**
-     * Construct a find dialog with a parent object and a name. This version of the
+     * Construct a tqfind dialog with a parent object and a name. This version of the
      * constructor is for use by friends only!
      *
-     * @param forReplace Is this a replace dialog?
+     * @param forReplace Is this a tqreplace dialog?
      */
     KFindDialog( TQWidget *parent, const char *name, bool forReplace );
-    void init( bool forReplace, const TQStringList &findStrings, bool hasSelection );
+    void init( bool forReplace, const TQStringList &tqfindStrings, bool hasSelection );
 
-    TQGroupBox *m_replaceGrp;
-    TQLabel *m_replaceLabel;
-    KHistoryCombo *m_replace;
+    TQGroupBox *m_tqreplaceGrp;
+    TQLabel *m_tqreplaceLabel;
+    KHistoryCombo *m_tqreplace;
     TQCheckBox* m_backRef;
     TQPushButton* m_backRefItem;
-    TQGridLayout *m_replaceLayout;
-    TQWidget *m_replaceExtension;
+    TQGridLayout *m_tqreplaceLayout;
+    TQWidget *m_tqreplaceExtension;
 
     TQCheckBox* m_promptOnReplace;
 

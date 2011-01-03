@@ -85,7 +85,7 @@ int KIconSelectAction::plug(TQWidget* widget, int index)
 	{
 		KToolBar* bar = static_cast<KToolBar*>(widget);
 		int id = KAction::getToolButtonID();
-		// To have a correct layout in the toolbar, a non
+		// To have a correct tqlayout in the toolbar, a non
 		// empty icon has to be used. Use "unknown" by default.
 		QString	iconName = (currentItem() != -1 ? d->m_iconlst[currentItem()] : "unknown");
 

@@ -105,7 +105,7 @@ end
     puts "Artist is #$1"
 end
 
-case shape
+case tqshape
   when Square, Rectangle
     # ...
   when Circle
@@ -143,7 +143,7 @@ end
 for i in 1..3
   print i, " "
 end
-for i in File.open("ordinal").find_all { |l| l =~ /d$/}
+for i in File.open("ordinal").tqfind_all { |l| l =~ /d$/}
   print i.chomp, " "
 end
 

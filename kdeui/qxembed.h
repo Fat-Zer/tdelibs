@@ -183,8 +183,8 @@ public:
     bool autoDelete() const;
 
     /* Reimp */
-    TQSize sizeHint() const;
-    TQSize minimumSizeHint() const;
+    TQSize tqsizeHint() const;
+    TQSize tqminimumSizeHint() const;
     TQSizePolicy sizePolicy() const;
     bool eventFilter( TQObject *, TQEvent * );
     bool customWhatsThis() const;

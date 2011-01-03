@@ -99,7 +99,7 @@ public:
 
     // Returns a child of this node matching ch, if available.
     // Otherwise, returns 0L
-    inline KCompTreeNode * find( const TQChar& ch ) const {
+    inline KCompTreeNode * tqfind( const TQChar& ch ) const {
       KCompTreeNode * cur = myChildren.begin();
       while (cur && (*cur != ch)) cur = cur->next;
       return cur;
@@ -118,7 +118,7 @@ public:
     inline const KCompTreeChildren * children() const {
 	return &myChildren;
     }
-    inline const KCompTreeNode * childAt(int index) const {
+    inline const KCompTreeNode * tqchildAt(int index) const {
 	return myChildren.at(index);
     }
     inline const KCompTreeNode * firstChild() const {

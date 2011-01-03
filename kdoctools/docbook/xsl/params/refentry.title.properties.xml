@@ -34,7 +34,7 @@
 <para>Formatting properties applied to refentry titles,
 including refnamediv, refsect1 through 3, and refsection.
 The font size is supplied by the appropriate 
-<parameter>section.level<replaceable>X</replaceable>.title.properties</parameter>
+<parameter>section.level<tqreplaceable>X</tqreplaceable>.title.properties</parameter>
 attribute-set,
 computed from its location in the section hierarchy.
 </para>

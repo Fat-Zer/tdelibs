@@ -166,7 +166,7 @@ void RemoteService::virtual_hook(int, void*)
 TQDataStream & operator<< (TQDataStream & s, const RemoteService & a)
 {
 	s << (static_cast<ServiceBase>(a));
-	Q_INT8 resolved = a.d->m_resolved ? 1:0;
+	TQ_INT8 resolved = a.d->m_resolved ? 1:0;
 	s << resolved;
 	return s;
 }
@@ -177,7 +177,7 @@ TQDataStream & operator>> (TQDataStream & s, RemoteService & a)
 #ifdef HAVE_DNSSD
 	a.d->stop();
 #endif
-	Q_INT8 resolved;
+	TQ_INT8 resolved;
 	operator>>(s,(static_cast<ServiceBase&>(a)));
 	s >> resolved;
 	a.d->m_resolved = (resolved == 1);

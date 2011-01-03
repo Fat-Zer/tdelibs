@@ -318,10 +318,10 @@ void Job::showErrorDialog( TQWidget * parent )
   }
 }
 
-void Job::setAutoErrorHandlingEnabled( bool enable, TQWidget *parentWidget )
+void Job::setAutoErrorHandlingEnabled( bool enable, TQWidget *tqparentWidget )
 {
   d->m_autoErrorHandling = enable;
-  d->m_errorParentWidget = parentWidget;
+  d->m_errorParentWidget = tqparentWidget;
 }
 
 bool Job::isAutoErrorHandlingEnabled() const
@@ -392,7 +392,7 @@ MetaData Job::metaData() const
 
 TQString Job::queryMetaData(const TQString &key)
 {
-    if (!m_incomingMetaData.contains(key))
+    if (!m_incomingMetaData.tqcontains(key))
        return TQString::null;
     return m_incomingMetaData[key];
 }
@@ -758,7 +758,7 @@ SimpleJob *KIO::mkdir( const KURL& url, int permissions )
 SimpleJob *KIO::rmdir( const KURL& url )
 {
     //kdDebug(7007) << "rmdir " << url << endl;
-    KIO_ARGS << url << Q_INT8(false); // isFile is false
+    KIO_ARGS << url << TQ_INT8(false); // isFile is false
     return new SimpleJob(url, CMD_DEL, packedArgs, false);
 }
 
@@ -772,14 +772,14 @@ SimpleJob *KIO::chmod( const KURL& url, int permissions )
 SimpleJob *KIO::rename( const KURL& src, const KURL & dest, bool overwrite )
 {
     //kdDebug(7007) << "rename " << src << " " << dest << endl;
-    KIO_ARGS << src << dest << (Q_INT8) overwrite;
+    KIO_ARGS << src << dest << (TQ_INT8) overwrite;
     return new SimpleJob(src, CMD_RENAME, packedArgs, false);
 }
 
 SimpleJob *KIO::symlink( const TQString& target, const KURL & dest, bool overwrite, bool showProgressInfo )
 {
     //kdDebug(7007) << "symlink target=" << target << " " << dest << endl;
-    KIO_ARGS << target << dest << (Q_INT8) overwrite;
+    KIO_ARGS << target << dest << (TQ_INT8) overwrite;
     return new SimpleJob(dest, CMD_SYMLINK, packedArgs, showProgressInfo);
 }
 
@@ -791,8 +791,8 @@ SimpleJob *KIO::special(const KURL& url, const TQByteArray & data, bool showProg
 
 SimpleJob *KIO::mount( bool ro, const char *fstype, const TQString& dev, const TQString& point, bool showProgressInfo )
 {
-    KIO_ARGS << int(1) << Q_INT8( ro ? 1 : 0 )
-             << TQString::fromLatin1(fstype) << dev << point;
+    KIO_ARGS << int(1) << TQ_INT8( ro ? 1 : 0 )
+             << TQString::tqfromLatin1(fstype) << dev << point;
     SimpleJob *job = special( KURL("file:/"), packedArgs, showProgressInfo );
     if ( showProgressInfo )
          Observer::self()->mounting( job, dev, point );
@@ -821,8 +821,8 @@ StatJob::StatJob( const KURL& url, int command,
 
 void StatJob::start(Slave *slave)
 {
-    m_outgoingMetaData.replace( "statSide", m_bSource ? "source" : "dest" );
-    m_outgoingMetaData.replace( "details", TQString::number(m_details) );
+    m_outgoingMetaData.tqreplace( "statSide", m_bSource ? "source" : "dest" );
+    m_outgoingMetaData.tqreplace( "details", TQString::number(m_details) );
 
     connect( slave, TQT_SIGNAL( statEntry( const KIO::UDSEntry& ) ),
              TQT_SLOT( slotStatEntry( const KIO::UDSEntry & ) ) );
@@ -946,7 +946,7 @@ void TransferJob::slotRedirection( const KURL &url)
     // Some websites keep redirecting to themselves where each redirection
     // acts as the stage in a state-machine. We define "endless redirections"
     // as 5 redirections to the same URL.
-    if (m_redirectionList.contains(url) > 5)
+    if (m_redirectionList.tqcontains(url) > 5)
     {
        kdDebug(7007) << "TransferJob::slotRedirection: CYCLIC REDIRECTION!" << endl;
        m_error = ERR_CYCLIC_LINK;
@@ -997,7 +997,7 @@ void TransferJob::slotFinished()
             }
             case CMD_PUT: {
                 int permissions;
-                Q_INT8 iOverwrite, iResume;
+                TQ_INT8 iOverwrite, iResume;
                 istream >> dummyUrl >> iOverwrite >> iResume >> permissions;
                 m_packedArgs.truncate(0);
                 TQDataStream stream( m_packedArgs, IO_WriteOnly );
@@ -1328,7 +1328,7 @@ TransferJob *KIO::http_post( const KURL& url, const TQByteArray &postData, bool 
 	for( TQValueList< int >::ConstIterator it = overriden_ports->begin();
 	     it != overriden_ports->end();
 	     ++it )
-	    if( overriden_ports->contains( url.port()))
+	    if( overriden_ports->tqcontains( url.port()))
 		_error = 0;
     }
 
@@ -1380,7 +1380,7 @@ void TransferJob::slotPostRedirection()
 TransferJob *KIO::put( const KURL& url, int permissions,
                   bool overwrite, bool resume, bool showProgressInfo )
 {
-    KIO_ARGS << url << Q_INT8( overwrite ? 1 : 0 ) << Q_INT8( resume ? 1 : 0 ) << permissions;
+    KIO_ARGS << url << TQ_INT8( overwrite ? 1 : 0 ) << TQ_INT8( resume ? 1 : 0 ) << permissions;
     TransferJob * job = new TransferJob( url, CMD_PUT, packedArgs, TQByteArray(), showProgressInfo );
     return job;
 }
@@ -1451,7 +1451,7 @@ StoredTransferJob *KIO::storedGet( const KURL& url, bool reload, bool showProgre
 StoredTransferJob *KIO::storedPut( const TQByteArray& arr, const KURL& url, int permissions,
                                    bool overwrite, bool resume, bool showProgressInfo )
 {
-    KIO_ARGS << url << Q_INT8( overwrite ? 1 : 0 ) << Q_INT8( resume ? 1 : 0 ) << permissions;
+    KIO_ARGS << url << TQ_INT8( overwrite ? 1 : 0 ) << TQ_INT8( resume ? 1 : 0 ) << permissions;
     StoredTransferJob * job = new StoredTransferJob( url, CMD_PUT, packedArgs, TQByteArray(), showProgressInfo );
     job->setData( arr );
     return job;
@@ -1480,7 +1480,7 @@ void MimetypeJob::slotFinished( )
         // Due to the "protocol doesn't support listing" code in KRun, we
         // assumed it was a file.
         kdDebug(7007) << "It is in fact a directory!" << endl;
-        m_mimetype = TQString::fromLatin1("inode/directory");
+        m_mimetype = TQString::tqfromLatin1("inode/directory");
         emit TransferJob::mimetype( this, m_mimetype );
         m_error = 0;
     }
@@ -1663,7 +1663,7 @@ void FileCopyJob::startCopyJob()
 void FileCopyJob::startCopyJob(const KURL &slave_url)
 {
     //kdDebug(7007) << "FileCopyJob::startCopyJob()" << endl;
-    KIO_ARGS << m_src << m_dest << m_permissions << (Q_INT8) m_overwrite;
+    KIO_ARGS << m_src << m_dest << m_permissions << (TQ_INT8) m_overwrite;
     m_copyJob = new DirectCopyJob(slave_url, CMD_COPY, packedArgs, false);
     addSubjob( m_copyJob );
     connectSubjob( m_copyJob );
@@ -1673,7 +1673,7 @@ void FileCopyJob::startCopyJob(const KURL &slave_url)
 
 void FileCopyJob::startRenameJob(const KURL &slave_url)
 {
-    KIO_ARGS << m_src << m_dest << (Q_INT8) m_overwrite;
+    KIO_ARGS << m_src << m_dest << (TQ_INT8) m_overwrite;
     m_moveJob = new SimpleJob(slave_url, CMD_RENAME, packedArgs, false);
     addSubjob( m_moveJob );
     connectSubjob( m_moveJob );
@@ -1974,7 +1974,7 @@ FileCopyJob *KIO::file_move( const KURL& src, const KURL& dest, int permissions,
 
 SimpleJob *KIO::file_delete( const KURL& src, bool showProgressInfo)
 {
-    KIO_ARGS << src << Q_INT8(true); // isFile
+    KIO_ARGS << src << TQ_INT8(true); // isFile
     return new SimpleJob(src, CMD_DEL, packedArgs, showProgressInfo );
 }
 
@@ -2571,11 +2571,11 @@ void CopyJob::slotEntries(KIO::Job* job, const UDSEntryList& list)
                      KProtocolInfo::fileNameUsedForCopying( url ) == KProtocolInfo::FromURL ) {
                     //destFileName = url.fileName(); // Doesn't work for recursive listing
                     // Count the number of prefixes used by the recursive listjob
-                    int numberOfSlashes = displayName.contains( '/' ); // don't make this a find()!
+                    int numberOfSlashes = displayName.tqcontains( '/' ); // don't make this a tqfind()!
                     TQString path = url.path();
                     int pos = 0;
                     for ( int n = 0; n < numberOfSlashes + 1; ++n ) {
-                        pos = path.findRev( '/', pos - 1 );
+                        pos = path.tqfindRev( '/', pos - 1 );
                         if ( pos == -1 ) { // error
                             kdWarning(7007) << "kioslave bug: not enough slashes in UDS_URL " << path << " - looking for " << numberOfSlashes << " slashes" << endl;
                             break;
@@ -2677,7 +2677,7 @@ void CopyJob::statCurrentSrc()
             return;
         }
         else if ( m_mode == Move && (
-                // Don't go renaming right away if we need a stat() to find out the destination filename
+                // Don't go renaming right away if we need a stat() to tqfind out the destination filename
                 KProtocolInfo::fileNameUsedForCopying( m_currentSrcURL ) == KProtocolInfo::FromURL ||
                 destinationState != DEST_IS_DIR || m_asMethod )
             )
@@ -2763,7 +2763,7 @@ void CopyJob::startRenameJob( const KURL& slave_url )
     files.append(info);
     emit aboutToCreate( this, files );
 
-    KIO_ARGS << m_currentSrcURL << dest << (Q_INT8) false /*no overwrite*/;
+    KIO_ARGS << m_currentSrcURL << dest << (TQ_INT8) false /*no overwrite*/;
     SimpleJob * newJob = new SimpleJob(slave_url, CMD_RENAME, packedArgs, false);
     Scheduler::scheduleJob(newJob);
     addSubjob( newJob );
@@ -2789,7 +2789,7 @@ void CopyJob::skip( const KURL & sourceUrl )
     // Check if this is one if toplevel sources
     // If yes, remove it from m_srcList, for a correct FilesRemoved() signal
     //kdDebug(7007) << "CopyJob::skip: looking for " << sourceUrl << endl;
-    KURL::List::Iterator sit = m_srcList.find( sourceUrl );
+    KURL::List::Iterator sit = m_srcList.tqfind( sourceUrl );
     if ( sit != m_srcList.end() )
     {
         //kdDebug(7007) << "CopyJob::skip: removing " << sourceUrl << " from list" << endl;
@@ -2967,7 +2967,7 @@ void CopyJob::slotResultConflictCreatingDirs( KIO::Job * job )
                 TQString path = (*renamedirit).uDest.path();
                 if ( path.left(oldPath.length()) == oldPath ) {
                     TQString n = path;
-                    n.replace( 0, oldPath.length(), newPath );
+                    n.tqreplace( 0, oldPath.length(), newPath );
                     kdDebug(7007) << "dirs list: " << (*renamedirit).uSource.path()
                                   << " was going to be " << path
                                   << ", changed into " << n << endl;
@@ -2981,7 +2981,7 @@ void CopyJob::slotResultConflictCreatingDirs( KIO::Job * job )
                 TQString path = (*renamefileit).uDest.path();
                 if ( path.left(oldPath.length()) == oldPath ) {
                     TQString n = path;
-                    n.replace( 0, oldPath.length(), newPath );
+                    n.tqreplace( 0, oldPath.length(), newPath );
                     kdDebug(7007) << "files list: " << (*renamefileit).uSource.path()
                                   << " was going to be " << path
                                   << ", changed into " << n << endl;
@@ -3359,7 +3359,7 @@ void CopyJob::copyNextFile()
                     bool devicesOk=false;
 
                     // if the source is a devices url, handle it a littlebit special
-                    if ((*it).uSource.protocol()==TQString::fromLatin1("devices"))
+                    if ((*it).uSource.protocol()==TQString::tqfromLatin1("devices"))
                     {
                        TQByteArray data;
                        TQByteArray param;
@@ -3395,20 +3395,20 @@ void CopyJob::copyNextFile()
                            config.setDesktopGroup();
                            KURL url = (*it).uSource;
                            url.setPass( "" );
-                           config.writePathEntry( TQString::fromLatin1("URL"), url.url() );
-                           config.writeEntry( TQString::fromLatin1("Name"), url.url() );
-                           config.writeEntry( TQString::fromLatin1("Type"), TQString::fromLatin1("Link") );
+                           config.writePathEntry( TQString::tqfromLatin1("URL"), url.url() );
+                           config.writeEntry( TQString::tqfromLatin1("Name"), url.url() );
+                           config.writeEntry( TQString::tqfromLatin1("Type"), TQString::tqfromLatin1("Link") );
                            TQString protocol = (*it).uSource.protocol();
-                           if ( protocol == TQString::fromLatin1("ftp") )
-                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("ftp") );
-                           else if ( protocol == TQString::fromLatin1("http") )
-                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("www") );
-                           else if ( protocol == TQString::fromLatin1("info") )
-                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("info") );
-                           else if ( protocol == TQString::fromLatin1("mailto") )   // sven:
-                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("kmail") ); // added mailto: support
+                           if ( protocol == TQString::tqfromLatin1("ftp") )
+                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("ftp") );
+                           else if ( protocol == TQString::tqfromLatin1("http") )
+                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("www") );
+                           else if ( protocol == TQString::tqfromLatin1("info") )
+                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("info") );
+                           else if ( protocol == TQString::tqfromLatin1("mailto") )   // sven:
+                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("kmail") ); // added mailto: support
                            else
-                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("unknown") );
+                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("unknown") );
                            config.sync();
                            files.remove( it );
                            m_processedFiles++;
@@ -4305,7 +4305,7 @@ void DeleteJob::slotResult( Job *job )
          {
             // Add toplevel dir in list of dirs
             dirs.append( url );
-            if ( url.isLocalFile() && !m_parentDirs.contains( url.path(-1) ) )
+            if ( url.isLocalFile() && !m_parentDirs.tqcontains( url.path(-1) ) )
                 m_parentDirs.append( url.path(-1) );
 
             if ( !KProtocolInfo::canDeleteRecursive( url ) ) {
@@ -4334,7 +4334,7 @@ void DeleteJob::slotResult( Job *job )
                 //kdDebug(7007) << " Target is a file" << endl;
                 files.append( url );
             }
-            if ( url.isLocalFile() && !m_parentDirs.contains( url.directory(false) ) )
+            if ( url.isLocalFile() && !m_parentDirs.tqcontains( url.directory(false) ) )
                 m_parentDirs.append( url.directory(false) );
             ++m_currentStat;
             statNextSrc();
@@ -4435,7 +4435,7 @@ void MultiGetJob::flushQueue(TQPtrList<GetRequest> &queue)
       }
    }
    // Send number of URLs, (URL, metadata)*
-   KIO_ARGS << (Q_INT32) queue.count();
+   KIO_ARGS << (TQ_INT32) queue.count();
    for(entry = queue.first(); entry; entry = queue.next())
    {
       stream << entry->url << entry->metaData;
@@ -4471,7 +4471,7 @@ void MultiGetJob::start(Slave *slave)
    TransferJob::start(slave); // Anything else to do??
 }
 
-bool MultiGetJob::findCurrentEntry()
+bool MultiGetJob::tqfindCurrentEntry()
 {
    if (b_multiGetActive)
    {
@@ -4496,7 +4496,7 @@ bool MultiGetJob::findCurrentEntry()
 
 void MultiGetJob::slotRedirection( const KURL &url)
 {
-  if (!findCurrentEntry()) return; // Error
+  if (!tqfindCurrentEntry()) return; // Error
   if (kapp && !kapp->authorizeURLAction("redirect", m_url, url))
   {
      kdWarning(7007) << "MultiGetJob: Redirection from " << m_currentEntry->url << " to " << url << " REJECTED!" << endl;
@@ -4511,7 +4511,7 @@ void MultiGetJob::slotRedirection( const KURL &url)
 
 void MultiGetJob::slotFinished()
 {
-  if (!findCurrentEntry()) return;
+  if (!tqfindCurrentEntry()) return;
   if (m_redirectionURL.isEmpty())
   {
      // No redirection, tell the world that we are finished.
@@ -4561,7 +4561,7 @@ void MultiGetJob::slotMimetype( const TQString &_mimetype )
         m_slave->send( m_command, m_packedArgs );
      }
   }
-  if (!findCurrentEntry()) return; // Error, unknown request!
+  if (!tqfindCurrentEntry()) return; // Error, unknown request!
   emit mimetype(m_currentEntry->id, _mimetype);
 }
 
@@ -4585,12 +4585,12 @@ TQString CacheInfo::cachedFileName()
 
    TQString CEF = m_url.path();
 
-   int p = CEF.find('/');
+   int p = CEF.tqfind('/');
 
    while(p != -1)
    {
       CEF[p] = separator;
-      p = CEF.find('/', p);
+      p = CEF.tqfind('/', p);
    }
 
    TQString host = m_url.host().lower();
@@ -4651,7 +4651,7 @@ TQFile *CacheInfo::cachedFile()
       ok = false;
 
    time_t date;
-   time_t currentDate = time(0);
+   time_t tqcurrentDate = time(0);
 
    // URL
    if (ok && (!fgets(buffer, 400, fs)))
@@ -4673,10 +4673,10 @@ TQFile *CacheInfo::cachedFile()
    if (ok)
    {
       date = (time_t) strtoul(buffer, 0, 10);
-      if (m_maxCacheAge && (difftime(currentDate, date) > m_maxCacheAge))
+      if (m_maxCacheAge && (difftime(tqcurrentDate, date) > m_maxCacheAge))
       {
          m_bMustRevalidate = true;
-         m_expireDate = currentDate;
+         m_expireDate = tqcurrentDate;
       }
    }
 
@@ -4690,7 +4690,7 @@ TQFile *CacheInfo::cachedFile()
       {
          date = (time_t) strtoul(buffer, 0, 10);
          // After the expire date we need to revalidate.
-         if (!date || difftime(currentDate, date) >= 0)
+         if (!date || difftime(tqcurrentDate, date) >= 0)
             m_bMustRevalidate = true;
          m_expireDate = date;
       }

@@ -247,7 +247,7 @@ public:
      * now becomes part of the cascade.
      *
      * @param rule The parsable text representing the rule. For rule
-     * sets this contains both the selector and the style declaration.
+     * sets this tqcontains both the selector and the style declaration.
      * For at-rules, this specifies both the at-identifier and the
      * rule content.
      *
@@ -425,7 +425,7 @@ public:
      * @param newMedium The new medium to add.
      *
      * @exception DOMException
-     * INVALID_CHARACTER_ERR: If the medium contains characters that are
+     * INVALID_CHARACTER_ERR: If the medium tqcontains characters that are
      * invalid in the underlying style language.
      *
      * NO_MODIFICATION_ALLOWED_ERR: Raised if this list is readonly.

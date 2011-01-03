@@ -45,7 +45,7 @@ void DynamicDomRestyler::removeDependency(ElementImpl* subject, ElementImpl* dep
 
 void DynamicDomRestyler::removeDependencies(ElementImpl* subject, StructuralDependencyType type)
 {
-    KMultiMap<ElementImpl>::List* my_dependencies = reverse_map.find(subject);
+    KMultiMap<ElementImpl>::List* my_dependencies = reverse_map.tqfind(subject);
 
     if (!my_dependencies) return;
 
@@ -60,7 +60,7 @@ void DynamicDomRestyler::removeDependencies(ElementImpl* subject, StructuralDepe
 
 void DynamicDomRestyler::resetDependencies(ElementImpl* subject)
 {
-    KMultiMap<ElementImpl>::List* my_dependencies = reverse_map.find(subject);
+    KMultiMap<ElementImpl>::List* my_dependencies = reverse_map.tqfind(subject);
 
     if (!my_dependencies) return;
 
@@ -78,7 +78,7 @@ void DynamicDomRestyler::resetDependencies(ElementImpl* subject)
 void DynamicDomRestyler::restyleDepedent(ElementImpl* dependency, StructuralDependencyType type)
 {
     assert(type < LastStructuralDependency);
-    KMultiMap<ElementImpl>::List* dep = dependency_map[type].find(dependency);
+    KMultiMap<ElementImpl>::List* dep = dependency_map[type].tqfind(dependency);
 
     if (!dep) return;
 

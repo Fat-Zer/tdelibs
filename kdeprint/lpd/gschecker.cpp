@@ -32,7 +32,7 @@ bool GsChecker::checkGsDriver(const TQString& name)
 {
 	if (m_driverlist.count() == 0)
 		loadDriverList();
-	return m_driverlist.contains(name);
+	return m_driverlist.tqcontains(name);
 }
 
 void GsChecker::loadDriverList()
@@ -48,12 +48,12 @@ void GsChecker::loadDriverList()
 			line = t.readLine().stripWhiteSpace();
 			if (ok)
 			{
-				if (line.find(':') != -1)
+				if (line.tqfind(':') != -1)
 					break;
 				else
 					buffer.append(line).append(" ");
 			}
-			else if (line.startsWith(TQString::fromLatin1("Available devices:")))
+			else if (line.startsWith(TQString::tqfromLatin1("Available devices:")))
 				ok = true;
 		}
 		m_driverlist = TQStringList::split(' ',buffer,false);

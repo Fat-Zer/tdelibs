@@ -87,7 +87,7 @@ signals:
 	*/
 	void rightMouseButtonClicked( KMdiChildView* );
 	/**
-	* Emitted when the button text has changed. Internally connected with KMdiTaskBar::layoutTaskBar
+	* Emitted when the button text has changed. Internally connected with KMdiTaskBar::tqlayoutTaskBar
 	*/
 	void buttonTextChanged( int );
 public slots:
@@ -171,7 +171,7 @@ public:
 	};
 protected:
 	/**
-	* Reimplemented from its base class to call layoutTaskBar, additionally.
+	* Reimplemented from its base class to call tqlayoutTaskBar, additionally.
 	*/
 	void resizeEvent( TQResizeEvent* );
 protected slots:
@@ -182,7 +182,7 @@ protected slots:
 	* fixed width and show() is called for each one.
 	* If one drags the taskbar to a vertical orientation, the button width is set to 80 pixel.
 	*/
-	void layoutTaskBar( int taskBarWidth = 0 );
+	void tqlayoutTaskBar( int taskBarWidth = 0 );
 public slots:
 	/**
 	* Pushes the desired taskbar button down (switch on), the old one is released (switched off).
@@ -207,7 +207,7 @@ protected:
 	* A stretchable widget used as 'space' at the end of a half filled taskbar
 	*/
 	TQLabel* m_pStretchSpace;
-	bool m_layoutIsPending;
+	bool m_tqlayoutIsPending;
 	bool m_bSwitchedOn;
 
 private:
@@ -215,5 +215,5 @@ private:
 };
 
 #endif //_KMDITASKBAR_H_ 
-// kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
+// kate: space-indent off; tab-width 4; tqreplace-tabs off; indent-mode csands;
 

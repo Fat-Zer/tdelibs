@@ -39,21 +39,21 @@ void KFilterBase::setDevice( TQIODevice * dev, bool autodelete )
     m_bAutoDel = autodelete;
 }
 
-KFilterBase * KFilterBase::findFilterByFileName( const TQString & fileName )
+KFilterBase * KFilterBase::tqfindFilterByFileName( const TQString & fileName )
 {
-    KMimeType::Ptr mime = KMimeType::findByPath( fileName );
-    kdDebug(7005) << "KFilterBase::findFilterByFileName mime=" << mime->name() << endl;
-    return findFilterByMimeType(mime->name());
+    KMimeType::Ptr mime = KMimeType::tqfindByPath( fileName );
+    kdDebug(7005) << "KFilterBase::tqfindFilterByFileName mime=" << mime->name() << endl;
+    return tqfindFilterByMimeType(mime->name());
 }
 
-KFilterBase * KFilterBase::findFilterByMimeType( const TQString & mimeType )
+KFilterBase * KFilterBase::tqfindFilterByMimeType( const TQString & mimeType )
 {
     KTrader::OfferList offers = KTrader::self()->query( "KDECompressionFilter",
                                                         TQString("'") + mimeType + "' in ServiceTypes" );
     KTrader::OfferList::ConstIterator it = offers.begin();
     KTrader::OfferList::ConstIterator end = offers.end();
 
-    kdDebug(7005) << "KFilterBase::findFilterByMimeType(" << mimeType << ") got " << offers.count() << " offers" << endl;
+    kdDebug(7005) << "KFilterBase::tqfindFilterByMimeType(" << mimeType << ") got " << offers.count() << " offers" << endl;
     for (; it != end; ++it )
     {
         if ((*it)->library().isEmpty()) { continue; }
@@ -65,7 +65,7 @@ KFilterBase * KFilterBase::findFilterByMimeType( const TQString & mimeType )
     }
 
     if ( mimeType == "application/x-bzip2" || mimeType == "application/x-gzip" ) // #88574
-        kdWarning(7005) << "KFilterBase::findFilterByMimeType : no filter found for " << mimeType << endl;
+        kdWarning(7005) << "KFilterBase::tqfindFilterByMimeType : no filter found for " << mimeType << endl;
 
     return 0L;
 }

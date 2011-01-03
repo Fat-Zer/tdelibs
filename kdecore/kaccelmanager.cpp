@@ -64,7 +64,7 @@
 
  class KAcceleratorManagerPrivate - internal helper class
 
- This class does all the work to find accelerators for a hierarchy of
+ This class does all the work to tqfind accelerators for a hierarchy of
  widgets.
 
  *********************************************************************/
@@ -144,7 +144,7 @@ bool KAcceleratorManagerPrivate::standardName(const TQString &str)
 {
     if (!kaccmp_sns)
         kaccmp_sns_d.setObject(kaccmp_sns, new TQStringList(KStdAction::internal_stdNames()));
-        return kaccmp_sns->contains(str);
+        return kaccmp_sns->tqcontains(str);
 }
 
 KAcceleratorManagerPrivate::Item::~Item()
@@ -201,8 +201,8 @@ void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &use
         contents << it->m_content;
     }
 
-    // find the right accelerators
-    KAccelManagerAlgorithm::findAccelerators(contents, used);
+    // tqfind the right accelerators
+    KAccelManagerAlgorithm::tqfindAccelerators(contents, used);
 
     // write them back into the widgets
     int cnt = -1;
@@ -223,7 +223,7 @@ void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &use
         {
             if (it->m_index >= 0)
             {
-                TQMenuItem *mitem = menuBar->findItem(menuBar->idAt(it->m_index));
+                TQMenuItem *mitem = menuBar->tqfindItem(menuBar->idAt(it->m_index));
                 if (mitem)
                 {
                     checkChange(contents[cnt]);
@@ -239,12 +239,12 @@ void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &use
         if ( dynamic_cast<TQLabel*>( it->m_widget ) && it->m_widget->inherits("KURLLabel") )
              continue;
 
-        int tprop = it->m_widget->metaObject()->findProperty("text", true);
+        int tprop = it->m_widget->tqmetaObject()->tqfindProperty("text", true);
         if (tprop != -1)  {
             if (checkChange(contents[cnt]))
                 it->m_widget->setProperty("text", contents[cnt].accelerated());
         } else {
-            tprop = it->m_widget->metaObject()->findProperty("title", true);
+            tprop = it->m_widget->tqmetaObject()->tqfindProperty("title", true);
             if (tprop != -1 && checkChange(contents[cnt]))
                 it->m_widget->setProperty("title", contents[cnt].accelerated());
         }
@@ -265,12 +265,12 @@ void KAcceleratorManagerPrivate::traverseChildren(TQWidget *widget, Item *item)
   TQObjectList *childList = widget->queryList("TQWidget", 0, false, false);
   for ( TQObject *it = childList->first(); it; it = childList->next() )
   {
-    TQWidget *w = static_cast<TQWidget*>(it);
+    TQWidget *w = static_cast<TQWidget*>(static_cast<QObject*>(it));
 
     if ( !w->isVisibleTo( widget ) || ( w->isTopLevel() && dynamic_cast<TQPopupMenu*>(w) == NULL ) )
         continue;
 
-    if ( KAcceleratorManagerPrivate::ignored_widgets.find( w ) != KAcceleratorManagerPrivate::ignored_widgets.end() )
+    if ( KAcceleratorManagerPrivate::ignored_widgets.tqfind( w ) != KAcceleratorManagerPrivate::ignored_widgets.end() )
         continue;
 
     manageWidget(w, item);
@@ -340,9 +340,9 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
   {
     TQString content;
     TQVariant variant;
-    int tprop = w->metaObject()->findProperty("text", true);
+    int tprop = w->tqmetaObject()->tqfindProperty("text", true);
     if (tprop != -1)  {
-        const TQMetaProperty* p = w->metaObject()->property( tprop, true );
+        const TQMetaProperty* p = w->tqmetaObject()->property( tprop, true );
         if ( p && p->isValid() )
             w->qt_property( tprop, 1, &variant );
         else
@@ -350,9 +350,9 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
     }
 
     if (tprop == -1)  {
-        tprop = w->metaObject()->findProperty("title", true);
+        tprop = w->tqmetaObject()->tqfindProperty("title", true);
         if (tprop != -1)  {
-            const TQMetaProperty* p = w->metaObject()->property( tprop, true );
+            const TQMetaProperty* p = w->tqmetaObject()->property( tprop, true );
             if ( p && p->isValid() )
                 w->qt_property( tprop, 1, &variant );
         }
@@ -409,7 +409,7 @@ void KAcceleratorManagerPrivate::manageMenuBar(TQMenuBar *mbar, Item *item)
 
     for (uint i=0; i<mbar->count(); ++i)
     {
-        mitem = mbar->findItem(mbar->idAt(i));
+        mitem = mbar->tqfindItem(mbar->idAt(i));
         if (!mitem)
             continue;
 
@@ -478,18 +478,18 @@ void KAcceleratorManager::last_manage(TQString &added,  TQString &changed, TQStr
 KAccelString::KAccelString(const TQString &input, int initialWeight)
   : m_pureText(input), m_weight()
 {
-    m_orig_accel = m_pureText.find("(!)&");
+    m_orig_accel = m_pureText.tqfind("(!)&");
     if (m_orig_accel != -1)
 	m_pureText.remove(m_orig_accel, 4);
 
-    m_orig_accel = m_pureText.find("(&&)");
+    m_orig_accel = m_pureText.tqfind("(&&)");
     if (m_orig_accel != -1)
-        m_pureText.replace(m_orig_accel, 4, "&");
+        m_pureText.tqreplace(m_orig_accel, 4, "&");
 
     m_origText = m_pureText;
 
-    if (m_pureText.contains('\t'))
-        m_pureText = m_pureText.left(m_pureText.find('\t'));
+    if (m_pureText.tqcontains('\t'))
+        m_pureText = m_pureText.left(m_pureText.tqfind('\t'));
 
     m_orig_accel = m_accel = stripAccelerator(m_pureText);
 
@@ -519,7 +519,7 @@ TQString KAccelString::accelerated() const
                   oa += 4;
       }
       if (m_orig_accel >= 0)
-	  result.replace(oa, 1, "(&&)");
+	  result.tqreplace(oa, 1, "(&&)");
     }
   } else {
       if (m_accel >= 0 && m_orig_accel != m_accel) {
@@ -598,7 +598,7 @@ int KAccelString::stripAccelerator(TQString &text)
 
   while (p >= 0)
   {
-    p = text.find('&', p)+1;
+    p = text.tqfind('&', p)+1;
 
     if (p <= 0 || p >= (int)text.length())
       return -1;
@@ -626,7 +626,7 @@ int KAccelString::maxWeight(int &index, const TQString &used)
   index = -1;
 
   for (uint pos=0; pos<m_pureText.length(); ++pos)
-    if (used.find(m_pureText[pos], 0, FALSE) == -1 && m_pureText[pos].latin1() != 0)
+    if (used.tqfind(m_pureText[pos], 0, FALSE) == -1 && m_pureText[pos].latin1() != 0)
       if (m_weight[pos] > max)
       {
         max = m_weight[pos];
@@ -648,7 +648,7 @@ void KAccelString::dump()
 
 /*********************************************************************
 
- findAccelerators - the algorithm determining the new accelerators
+ tqfindAccelerators - the algorithm determining the new accelerators
 
  The algorithm is very crude:
 
@@ -666,7 +666,7 @@ void KAccelString::dump()
 
  The disadvantages:
 
-   * it does not try to find as many accelerators as possible
+   * it does not try to tqfind as many accelerators as possible
 
  TODO:
 
@@ -679,9 +679,9 @@ void KAccelString::dump()
 
  *********************************************************************/
 
-void KAccelManagerAlgorithm::findAccelerators(KAccelStringList &result, TQString &used)
+void KAccelManagerAlgorithm::tqfindAccelerators(KAccelStringList &result, TQString &used)
 {
-    kdDebug(131) << "findAccelerators\n";
+    kdDebug(131) << "tqfindAccelerators\n";
   KAccelStringList accel_strings = result;
 
   // initally remove all accelerators
@@ -694,7 +694,7 @@ void KAccelManagerAlgorithm::findAccelerators(KAccelStringList &result, TQString
   {
     int max = 0, index = -1, accel = -1;
 
-    // find maximum weight
+    // tqfind maximum weight
     for (uint i=0; i<accel_strings.count(); ++i)
     {
       int a;
@@ -747,14 +747,14 @@ void KPopupAccelManager::aboutToShow()
 
   if (m_count != (int)m_popup->count())
   {
-    findMenuEntries(m_entries);
+    tqfindMenuEntries(m_entries);
     calculateAccelerators();
     m_count = m_popup->count();
   }
   else
   {
     KAccelStringList entries;
-    findMenuEntries(entries);
+    tqfindMenuEntries(entries);
     if (entries != m_entries)
     {
       m_entries = entries;
@@ -766,16 +766,16 @@ void KPopupAccelManager::aboutToShow()
 
 void KPopupAccelManager::calculateAccelerators()
 {
-  // find the new accelerators
+  // tqfind the new accelerators
   TQString used;
-  KAccelManagerAlgorithm::findAccelerators(m_entries, used);
+  KAccelManagerAlgorithm::tqfindAccelerators(m_entries, used);
 
   // change the menu entries
   setMenuEntries(m_entries);
 }
 
 
-void KPopupAccelManager::findMenuEntries(KAccelStringList &list)
+void KPopupAccelManager::tqfindMenuEntries(KAccelStringList &list)
 {
   TQMenuItem *mitem;
   TQString s;
@@ -785,7 +785,7 @@ void KPopupAccelManager::findMenuEntries(KAccelStringList &list)
   // read out the menu entries
   for (uint i=0; i<m_popup->count(); i++)
   {
-    mitem = m_popup->findItem(m_popup->idAt(i));
+    mitem = m_popup->tqfindItem(m_popup->idAt(i));
     if (mitem->isSeparator())
       continue;
 
@@ -793,7 +793,7 @@ void KPopupAccelManager::findMenuEntries(KAccelStringList &list)
 
     // in full menus, look at entries with global accelerators last
     int weight = 50;
-    if (s.contains('\t'))
+    if (s.tqcontains('\t'))
         weight = 0;
 
     list.append(KAccelString(s, weight));
@@ -812,7 +812,7 @@ void KPopupAccelManager::setMenuEntries(const KAccelStringList &list)
   uint cnt = 0;
   for (uint i=0; i<m_popup->count(); i++)
   {
-    mitem = m_popup->findItem(m_popup->idAt(i));
+    mitem = m_popup->tqfindItem(m_popup->idAt(i));
     if (mitem->isSeparator())
       continue;
 
@@ -845,8 +845,8 @@ QWidgetStackAccelManager::QWidgetStackAccelManager(TQWidgetStack *stack)
 
 bool QWidgetStackAccelManager::eventFilter ( TQObject * watched, TQEvent * e )
 {
-    if ( e->type() == TQEvent::Show && qApp->activeWindow() ) {
-        KAcceleratorManager::manage( qApp->activeWindow() );
+    if ( e->type() == TQEvent::Show && tqApp->activeWindow() ) {
+        KAcceleratorManager::manage( tqApp->activeWindow() );
         watched->removeEventFilter( this );
     }
     return false;

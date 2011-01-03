@@ -119,7 +119,7 @@ public:
    * Derived classes will put their resolved data in this list, or will
    * leave it empty in case of error.
    *
-   * Status and error codes should also be stored in this object (the
+   * tqStatus and error codes should also be stored in this object (the
    * @ref setError function does that).
    */
   KResolverResults results;
@@ -147,7 +147,7 @@ public:
   int flags() const;
 
   /**
-   * gets the family mask
+   * gets the family tqmask
    */
   int familyMask() const;
 

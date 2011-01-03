@@ -60,7 +60,7 @@ KMDriverDB::~KMDriverDB()
 TQString KMDriverDB::dbFile()
 {
 	// this calls insure missing directories creation
-	QString	filename = locateLocal("data",TQString::fromLatin1("kdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
+	QString	filename = locateLocal("data",TQString::tqfromLatin1("kdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
 	return filename;
 }
 
@@ -110,23 +110,23 @@ void KMDriverDB::slotDbCreated()
 
 KMDBEntryList* KMDriverDB::findEntry(const TQString& manu, const TQString& model)
 {
-	TQDict<KMDBEntryList>	*models = m_entries.find(manu);
+	TQDict<KMDBEntryList>	*models = m_entries.tqfind(manu);
 	if (models)
-		return models->find(model);
+		return models->tqfind(model);
 	return 0;
 }
 
-KMDBEntryList* KMDriverDB::findPnpEntry(const TQString& manu, const TQString& model)
+KMDBEntryList* KMDriverDB::tqfindPnpEntry(const TQString& manu, const TQString& model)
 {
-	TQDict<KMDBEntryList>	*models = m_pnpentries.find(manu);
+	TQDict<KMDBEntryList>	*models = m_pnpentries.tqfind(manu);
 	if (models)
-		return models->find(model);
+		return models->tqfind(model);
 	return 0;
 }
 
-TQDict<KMDBEntryList>* KMDriverDB::findModels(const TQString& manu)
+TQDict<KMDBEntryList>* KMDriverDB::tqfindModels(const TQString& manu)
 {
-	return m_entries.find(manu);
+	return m_entries.tqfind(manu);
 }
 
 void KMDriverDB::insertEntry(KMDBEntry *entry)
@@ -140,14 +140,14 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 	}
 
 	// insert it in normal entries
-	TQDict<KMDBEntryList>	*models = m_entries.find(entry->manufacturer);
+	TQDict<KMDBEntryList>	*models = m_entries.tqfind(entry->manufacturer);
 	if (!models)
 	{
 		models = new TQDict<KMDBEntryList>(17,false);
 		models->setAutoDelete(true);
 		m_entries.insert(entry->manufacturer,models);
 	}
-	KMDBEntryList	*list = models->find(entry->model);
+	KMDBEntryList	*list = models->tqfind(entry->model);
 	if (!list)
 	{
 		list = new KMDBEntryList;
@@ -159,14 +159,14 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 	if (!entry->pnpmanufacturer.isEmpty() && !entry->pnpmodel.isEmpty())
 	{
 		// insert it in PNP entries
-		models = m_pnpentries.find(entry->manufacturer);
+		models = m_pnpentries.tqfind(entry->manufacturer);
 		if (!models)
 		{
 			models = new TQDict<KMDBEntryList>(17,false);
 			models->setAutoDelete(true);
 			m_pnpentries.insert(entry->manufacturer,models);
 		}
-		list = models->find(entry->model);
+		list = models->tqfind(entry->model);
 		if (!list)
 		{
 			list = new KMDBEntryList;
@@ -209,7 +209,7 @@ void KMDriverDB::loadDbFile()
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			int	p = line.find('=');
+			int	p = line.tqfind('=');
 			if (p == -1)
 				continue;
 			words.clear();
@@ -235,7 +235,7 @@ void KMDriverDB::loadDbFile()
 			else if (words[0] == "RECOMMANDED" && entry && words[1].lower() == "yes")
 				entry->recommended = true;
 			else if (words[0] == "DRIVERCOMMENT" && entry)
-				entry->drivercomment = ("<qt>"+words[1].replace("&lt;", "<").replace("&gt;", ">")+"</qt>");
+				entry->drivercomment = ("<qt>"+words[1].tqreplace("&lt;", "<").tqreplace("&gt;", ">")+"</qt>");
 		}
 		if (entry)
 			insertEntry(entry);

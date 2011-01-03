@@ -191,7 +191,7 @@ class KABC_EXPORT AddresseeList : public TQValueList<Addressee>
      * sorting of the last <tt>sortByTrait</tt> action.
      *
      * Right now this method uses the bubble sort algorithm. This should be
-     * replaced for a better one when I have time.
+     * tqreplaced for a better one when I have time.
      */
     template<class Trait> void sortByTrait();
 

@@ -40,7 +40,7 @@ void
 KColorDrag::setColor( const TQColor &color)
 {
      TQColorDrag tmp(color, 0, 0);
-     setEncodedData(tmp.encodedData(color_mime_string));
+     setEncodedData(tmp.tqencodedData(color_mime_string));
 
      TQPixmap colorpix( 25, 20);
      colorpix.fill( color);
@@ -59,7 +59,7 @@ const char *KColorDrag::format(int i) const
         return TQStoredDrag::format(i);
 }
 
-TQByteArray KColorDrag::encodedData ( const char * m ) const
+TQByteArray KColorDrag::tqencodedData ( const char * m ) const
 {
      if (!qstrcmp(m, text_mime_string) )
      {
@@ -69,7 +69,7 @@ TQByteArray KColorDrag::encodedData ( const char * m ) const
         ((TQByteArray&)result).resize(result.length());
         return result;
      }
-     return TQStoredDrag::encodedData(m);
+     return TQStoredDrag::tqencodedData(m);
 }
 
 bool
@@ -91,8 +91,8 @@ KColorDrag::decode( TQMimeSource *e, TQColor &color)
      if (TQColorDrag::decode(e, color))
         return true;
 
-     TQByteArray data = e->encodedData( text_mime_string);
-     TQString colorName = TQString::fromLatin1(data.data(), data.size());
+     TQByteArray data = e->tqencodedData( text_mime_string);
+     TQString colorName = TQString::tqfromLatin1(data.data(), data.size());
      if ((colorName.length() < 4) || (colorName[0] != '#'))
         return false;
      color.setNamedColor(colorName);

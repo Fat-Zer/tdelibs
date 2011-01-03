@@ -98,11 +98,11 @@ static KService::Ptr locateModule(const TQCString& module)
     KService::Ptr service = KService::serviceByStorageId( path );
     if (!service)
     {
-        kdWarning(780) << "Could not find module '" << module << "'." << endl;
+        kdWarning(780) << "Could not tqfind module '" << module << "'." << endl;
         return 0;
     }
 
-    // avoid finding random non-kde applications
+    // avoid tqfinding random non-kde applications
     if ( module.left( 4 ) != "kde-" && service->library().isEmpty() )
         return locateModule( "kde-" + module );
 

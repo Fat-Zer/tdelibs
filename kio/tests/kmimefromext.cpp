@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
   // The "true" here means only the filename will be looked at.
   // "Mime-magic" will not interfer. The file doesn't exist.
   // TODO: a cmd line parameter for controlling this bool ;)
-  KMimeType::Ptr mime = KMimeType::findByPath( fileName, 0, true );
+  KMimeType::Ptr mime = KMimeType::tqfindByPath( fileName, 0, true );
   if ( mime && mime->name() != KMimeType::defaultMimeType() )
     printf( "%s\n", mime->name().latin1());
   else

@@ -209,7 +209,7 @@
 			<item>short</item>
 			<item>sigaction</item>
 			<item>sighandler</item>
-			<item>sigmask</item>
+			<item>sigtqmask</item>
 			<item>signal</item>
 			<item>size</item>
 			<item>sizeRequest</item>

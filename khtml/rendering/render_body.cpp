@@ -81,20 +81,20 @@ void RenderBody::paintBoxDecorations(PaintInfo& paintInfo, int _tx, int _ty)
 
 }
 
-void RenderBody::repaint(Priority p)
+void RenderBody::tqrepaint(Priority p)
 {
     RenderObject *cb = containingBlock();
     if(cb)
-	cb->repaint(p);
+	cb->tqrepaint(p);
 }
 
-void RenderBody::layout()
+void RenderBody::tqlayout()
 {
     // in quirk mode, we'll need to have our margins determined
     // for percentage height calculations
     if (style()->htmlHacks())
         calcHeight();
-    RenderBlock::layout();
+    RenderBlock::tqlayout();
 
     if (!scrollbarsStyled)
     {

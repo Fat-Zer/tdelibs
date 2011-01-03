@@ -39,7 +39,7 @@ class KSimpleConfig;
  *
  * The starting point you need is often the static methods.
  *
- * KMimeType inherits KServiceType because "text/plain" can be used to find
+ * KMimeType inherits KServiceType because "text/plain" can be used to tqfind
  * services (apps and components) "which can open text/plain".
  *
  * @see KServiceType
@@ -113,7 +113,7 @@ public:
    * Use this function only if you don't have a special URL
    * for which you search a pixmap.
    *
-   * This function is useful to find
+   * This function is useful to tqfind
    * out, which icon is usually chosen for a certain mime type. Since
    * no URL is passed, it is impossible to obey icon hints in desktop
    * entries for example.
@@ -149,7 +149,7 @@ public:
 	    int _state = 0, TQString * _path = 0L ) const;
 
   /**
-   * Convenience method to find the pixmap for a URL.
+   * Convenience method to tqfind the pixmap for a URL.
    *
    * Call this one when you don't know the mimetype.
    *
@@ -282,7 +282,7 @@ public:
    * "application/octet-stream" is returned otherwise.
    *
    * @param _url Is the right most URL with a filesystem protocol. It
-   *        is up to you to find out about that if you have a nested
+   *        is up to you to tqfind out about that if you have a nested
    *        URL.  For example
    *        "http://localhost/mist.gz#gzip:/decompress" would have to
    *        pass the "http://..." URL part, while
@@ -293,7 +293,7 @@ public:
    *              executables)
    * @param _is_local_file true if the file is local
    * @param _fast_mode If set to true no disk access is allowed to
-   *        find out the mimetype. The result may be suboptimal, but
+   *        tqfind out the mimetype. The result may be suboptimal, but
    *        it is @em fast.
    * @return A pointer to the matching mimetype. 0L is never returned.
    * @em Very @em Important: Don't store the result in a KMimeType* !
@@ -326,14 +326,14 @@ public:
    * @param mode the mode of the file (used, for example, to identify
    *              executables)
    * @param fast_mode If set to true no disk access is allowed to
-   *        find out the mimetype. The result may be suboptimal, but
+   *        tqfind out the mimetype. The result may be suboptimal, but
    *        it is @em fast.
    * @return A pointer to the matching mimetype. 0L is never returned.
    */
-  static Ptr findByPath( const TQString& path, mode_t mode = 0, bool fast_mode = false );
+  static Ptr tqfindByPath( const TQString& path, mode_t mode = 0, bool fast_mode = false );
 
   /**
-   * Tries to find out the MIME type of a data chunk by looking for
+   * Tries to tqfind out the MIME type of a data chunk by looking for
    * certain magic numbers and characteristic strings in it.
    *
    * @param data the data to examine
@@ -342,10 +342,10 @@ public:
    * @return a pointer to the KMimeType. application/octet-stream's KMimeType of the
    *         type can not be found this way.
    */
-  static Ptr findByContent( const TQByteArray &data, int *accuracy=0 );
+  static Ptr tqfindByContent( const TQByteArray &data, int *accuracy=0 );
 
   /**
-   * Tries to find out the MIME type of a file by looking for
+   * Tries to tqfind out the MIME type of a file by looking for
    * certain magic numbers and characteristic strings in it.
    * This function is similar to the previous one. Note that the
    * file name is not used for determining the file type, it is just
@@ -357,7 +357,7 @@ public:
    * @return a pointer to the KMimeType. application/octet-stream's KMimeType of the
    *         type can not be found this way.
    */
-  static Ptr findByFileContent( const TQString &fileName, int *accuracy=0 );
+  static Ptr tqfindByFileContent( const TQString &fileName, int *accuracy=0 );
 
   struct Format{
      bool text : 1;
@@ -370,7 +370,7 @@ public:
    * or that would be human readable after decompression.
    * @since 3.2
    */
-  static Format findFormatByFileContent( const TQString &fileName );
+  static Format tqfindFormatByFileContent( const TQString &fileName );
 
   /**
    * Get all the mimetypes.

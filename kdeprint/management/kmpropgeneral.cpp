@@ -38,7 +38,7 @@ KMPropGeneral::KMPropGeneral(TQWidget *parent, const char *name)
 	QLabel	*l2 = new TQLabel(i18n("Physical Location", "Location:"), this);
 	QLabel	*l3 = new TQLabel(i18n("Description:"), this);
 
-	// layout
+	// tqlayout
 	QGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);

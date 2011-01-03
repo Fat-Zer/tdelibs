@@ -40,7 +40,7 @@ LPRngToolHandler::LPRngToolHandler(KMManager *mgr)
 bool LPRngToolHandler::validate(PrintcapEntry *entry)
 {
 	if (entry->comment.startsWith("##LPRNGTOOL##") &&
-	    entry->comment.find("UNKNOWN") == -1)
+	    entry->comment.tqfind("UNKNOWN") == -1)
 		return true;
 	return false;
 }
@@ -82,14 +82,14 @@ bool LPRngToolHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, boo
 		if (!(str=entry->field("ifhp")).isEmpty())
 		{
 			QString	model;
-			int	p = str.find("model");
+			int	p = str.tqfind("model");
 			if (p != -1)
 			{
-				p = str.find('=', p);
+				p = str.tqfind('=', p);
 				if (p != -1)
 				{
 					p++;
-					int	q = str.find(',', p);
+					int	q = str.tqfind(',', p);
 					if (q == -1)
 						model = str.mid(p);
 					else
@@ -142,7 +142,7 @@ void LPRngToolHandler::loadAuthFile(const TQString& filename, TQString& user, TQ
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			int	p = line.find('=');
+			int	p = line.tqfind('=');
 			if (p != -1)
 			{
 				QString	key = line.left(p);
@@ -182,7 +182,7 @@ DrMain* LPRngToolHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool 
 
 DrMain* LPRngToolHandler::loadDbDriver(const TQString& s)
 {
-	int	p = s.find('/');
+	int	p = s.tqfind('/');
 	DrMain*	driver = loadToolDriver(locate("data", "kdeprint/lprngtooldriver1"));
 	if (driver)
 		driver->set("driverID", s.mid(p+1));
@@ -207,15 +207,15 @@ TQValueList< QPair<TQString,TQStringList> > LPRngToolHandler::loadChoiceDict(con
 					dict << QPair<TQString,TQStringList>(key, l);
 				l.clear();
 				key = TQString::null;
-				if (line.contains('|') == 2 || line.right(7) == "BOOLEAN")
+				if (line.tqcontains('|') == 2 || line.right(7) == "BOOLEAN")
 				{
-					int	p = line.find('|', 7);
+					int	p = line.tqfind('|', 7);
 					key = line.mid(7, p-7);
 				}
 			}
 			else if (line.startsWith("CHOICE"))
 			{
-				int	p = line.find('|', 7);
+				int	p = line.tqfind('|', 7);
 				l << line.mid(7, p-7);
 			}
 		}
@@ -239,7 +239,7 @@ TQMap<TQString,TQString> LPRngToolHandler::parseZOptions(const TQString& optstr)
 		bool	found(false);
 		for (TQValueList< QPair<TQString,TQStringList> >::ConstIterator p=m_dict.begin(); p!=m_dict.end() && !found; ++p)
 		{
-			if ((*p).second.find(*it) != (*p).second.end())
+			if ((*p).second.tqfind(*it) != (*p).second.end())
 			{
 				opts[(*p).first] = (*it);
 				found = true;
@@ -308,7 +308,7 @@ PrintcapEntry* LPRngToolHandler::createEntry(KMPrinter *prt)
 		QString	work, server, printer, user, passwd;
 		if ( splitSmbURI( prt->device(), work, server, printer, user, passwd ) )
 		{
-			entry->addField("xfer_options", Field::String, TQString::fromLatin1("authfile=\"auth\" crlf=\"0\" hostip=\"\" host=\"%1\" printer=\"%2\" remote_mode=\"SMB\" share=\"//%3/%4\" workgroup=\"%5\"").arg(server).arg(printer).arg(server).arg(printer).arg(work));
+			entry->addField("xfer_options", Field::String, TQString::tqfromLatin1("authfile=\"auth\" crlf=\"0\" hostip=\"\" host=\"%1\" printer=\"%2\" remote_mode=\"SMB\" share=\"//%3/%4\" workgroup=\"%5\"").arg(server).arg(printer).arg(server).arg(printer).arg(work));
 			QFile	authfile(LprSettings::self()->baseSpoolDir() + "/" + prt->printerName() + "/auth");
 			if (authfile.open(IO_WriteOnly))
 			{
@@ -331,8 +331,8 @@ PrintcapEntry* LPRngToolHandler::createEntry(KMPrinter *prt)
 		DrMain	*driver = prt->driver();
 		comment.append("filtertype=IFHP ifhp_options=status@,sync@,pagecount@,waitend@ printerdb_entry=");
 		comment.append(driver->get("driverID"));
-		entry->addField("ifhp", Field::String, TQString::fromLatin1("model=%1,status@,sync@,pagecount@,waitend@").arg(driver->get("driverID")));
-		entry->addField("lprngtooloptions", Field::String, TQString::fromLatin1("FILTERTYPE=\"IFHP\" IFHP_OPTIONS=\"status@,sync@,pagecount@,waitend@\" PRINTERDB_ENTRY=\"%1\"").arg(driver->get("driverID")));
+		entry->addField("ifhp", Field::String, TQString::tqfromLatin1("model=%1,status@,sync@,pagecount@,waitend@").arg(driver->get("driverID")));
+		entry->addField("lprngtooloptions", Field::String, TQString::tqfromLatin1("FILTERTYPE=\"IFHP\" IFHP_OPTIONS=\"status@,sync@,pagecount@,waitend@\" PRINTERDB_ENTRY=\"%1\"").arg(driver->get("driverID")));
 		TQMap<TQString,TQString>	opts;
 		QString	optstr;
 		driver->getOptions(opts, false);

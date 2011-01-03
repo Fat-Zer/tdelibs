@@ -127,8 +127,8 @@ bool CupsdBrowsingPage::loadConfig(CupsdConf *conf, TQString&)
 {
 	conf_ = conf;
 	browsing_->setChecked(conf_->browsing_);
-	cups_->setChecked(conf_->browseprotocols_.findIndex("CUPS") != -1);
-	slp_->setChecked(conf_->browseprotocols_.findIndex("SLP") != -1);
+	cups_->setChecked(conf_->browseprotocols_.tqfindIndex("CUPS") != -1);
+	slp_->setChecked(conf_->browseprotocols_.tqfindIndex("SLP") != -1);
 	browseport_->setValue(conf_->browseport_);
 	browseinterval_->setValue(conf_->browseinterval_);
 	browsetimeout_->setValue(conf_->browsetimeout_);

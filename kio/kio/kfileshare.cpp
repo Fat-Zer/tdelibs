@@ -90,7 +90,7 @@ void KFileShare::readConfig() // static
 {    
     // Create KFileSharePrivate instance
     KFileSharePrivate::self();
-    KSimpleConfig config(TQString::fromLatin1(FILESHARECONF),true);
+    KSimpleConfig config(TQString::tqfromLatin1(FILESHARECONF),true);
     
     s_sharingEnabled = config.readEntry("FILESHARING", "yes") == "yes";
     s_restricted = config.readEntry("RESTRICT", "yes") == "yes";
@@ -105,7 +105,7 @@ void KFileShare::readConfig() // static
     else {
         // check if current user is in fileshare group
         KUserGroup shareGroup(s_fileShareGroup);
-        if (shareGroup.users().findIndex(KUser()) > -1 ) 
+        if (shareGroup.users().tqfindIndex(KUser()) > -1 ) 
             s_authorization = Authorized;
         else
             s_authorization = UserNotAllowed;
@@ -220,10 +220,10 @@ int KFileShare::isDirectoryShared( const TQString& _path )
     TQString path( _path );
     if ( path[path.length()-1] != '/' )
         path += '/';
-    //return s_shareList && s_shareList->contains( path );
-    if( (*s_shareMap).contains(path) && !((*s_shareMap)[path].isEmpty()) ) {
+    //return s_shareList && s_shareList->tqcontains( path );
+    if( (*s_shareMap).tqcontains(path) && !((*s_shareMap)[path].isEmpty()) ) {
         ret+=1;
-        if( (*s_shareMap)[path].find("readwrite") != -1 )
+        if( (*s_shareMap)[path].tqfind("readwrite") != -1 )
             ret+=2;
     }
     
@@ -241,7 +241,7 @@ KFileShare::Authorization KFileShare::authorization()
 TQString KFileShare::findExe( const char* exeName )
 {
    // /usr/sbin on Mandrake, $PATH allows flexibility for other distributions
-   TQString path = TQString::fromLocal8Bit(getenv("PATH")) + TQString::fromLatin1(":/usr/sbin");
+   TQString path = TQString::fromLocal8Bit(getenv("PATH")) + TQString::tqfromLatin1(":/usr/sbin");
    TQString exe = KStandardDirs::findExe( exeName, path );
    if (exe.isEmpty())
        kdError() << exeName << " not found in " << path << endl;

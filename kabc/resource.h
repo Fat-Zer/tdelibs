@@ -230,7 +230,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @return The addressee with the specified unique identifier or an
               empty addressee.
      */
-    virtual Addressee findByUid( const TQString &uid );
+    virtual Addressee tqfindByUid( const TQString &uid );
 
     /**
       Searches all addressees which match the specified name.
@@ -238,7 +238,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @param name The name you are looking for.
       @return A list of all matching addressees.
      */
-    virtual Addressee::List findByName( const TQString &name );
+    virtual Addressee::List tqfindByName( const TQString &name );
 
     /**
       Searches all addressees which match the specified email address.
@@ -246,7 +246,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @param email The email address you are looking for.
       @return A list of all matching addressees.
      */
-    virtual Addressee::List findByEmail( const TQString &email );
+    virtual Addressee::List tqfindByEmail( const TQString &email );
 
     /**
       Searches all addressees which belongs to the specified category.
@@ -254,7 +254,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @param category The category you are looking for.
       @return A list of all matching addressees.
      */
-    virtual Addressee::List findByCategory( const TQString &category );
+    virtual Addressee::List tqfindByCategory( const TQString &category );
 
     /**
       Removes all addressees from the resource.

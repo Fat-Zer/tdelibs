@@ -27,16 +27,16 @@
 #include <kdemacros.h>
 #include <networkstatuscommon.h>
 
-class StatusBarNetworkStatusIndicator : public TQHBox
+class StatusBarNetworktqStatusIndicator : public TQHBox
 {
 Q_OBJECT
 public:
-  StatusBarNetworkStatusIndicator( TQWidget * parent, const char * name );
-  virtual ~StatusBarNetworkStatusIndicator();
+  StatusBarNetworktqStatusIndicator( TQWidget * parent, const char * name );
+  virtual ~StatusBarNetworktqStatusIndicator();
   void init();
 protected slots:
-  void networkStatusChanged( const TQString & host, NetworkStatus::EnumStatus status );
-  void networkStatusChanged( NetworkStatus::EnumStatus status );
+  void networktqStatusChanged( const TQString & host, NetworktqStatus::EnumtqStatus status );
+  void networktqStatusChanged( NetworktqStatus::EnumtqStatus status );
 };
 
 #endif

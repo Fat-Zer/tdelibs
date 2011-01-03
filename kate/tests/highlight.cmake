@@ -42,7 +42,7 @@ ENDMACRO(ECOS_ADD_EXECUTABLE)
 # END of macro
 
 #calling a self-defined function, variables are also blue here
-ECOS_ADD_EXECUTABLE(${PROJECT_NAME} ${the_sources} ${qt4_moc_SRCS})
+ECOS_ADD_EXECUTABLE(${PROJECT_NAME} ${the_sources} ${qt4_tqmoc_SRCS})
 
 
 

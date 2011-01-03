@@ -110,11 +110,11 @@ void KateTextLine::truncate(uint newLen)
 int KateTextLine::nextNonSpaceChar(uint pos) const
 {
   const uint len = m_text.length();
-  const TQChar *unicode = m_text.unicode();
+  const TQChar *tqunicode = m_text.tqunicode();
 
   for(uint i = pos; i < len; i++)
   {
-    if(!unicode[i].isSpace())
+    if(!tqunicode[i].isSpace())
       return i;
   }
 
@@ -128,11 +128,11 @@ int KateTextLine::previousNonSpaceChar(uint pos) const
   if (pos >= (uint)len)
     pos = len - 1;
 
-  const TQChar *unicode = m_text.unicode();
+  const TQChar *tqunicode = m_text.tqunicode();
 
   for(int i = pos; i >= 0; i--)
   {
-    if(!unicode[i].isSpace())
+    if(!tqunicode[i].isSpace())
       return i;
   }
 
@@ -152,20 +152,20 @@ int KateTextLine::lastChar() const
 const TQChar *KateTextLine::firstNonSpace() const
 {
   int first = firstChar();
-  return (first > -1) ? ((TQChar*)m_text.unicode())+first : m_text.unicode();
+  return (first > -1) ? ((TQChar*)m_text.tqunicode())+first : m_text.tqunicode();
 }
 
 uint KateTextLine::indentDepth (uint tabwidth) const
 {
   uint d = 0;
   const uint len = m_text.length();
-  const TQChar *unicode = m_text.unicode();
+  const TQChar *tqunicode = m_text.tqunicode();
 
   for(uint i = 0; i < len; i++)
   {
-    if(unicode[i].isSpace())
+    if(tqunicode[i].isSpace())
     {
-      if (unicode[i] == TQChar('\t'))
+      if (tqunicode[i] == TQChar('\t'))
         d += tabwidth - (d % tabwidth);
       else
         d++;
@@ -189,11 +189,11 @@ bool KateTextLine::stringAtPos(uint pos, const TQString& match) const
   // overflow again which (pos+matchlen > len) does not catch; see bugs #129263 and #129580
   Q_ASSERT(pos < len);
 
-  const TQChar *unicode = m_text.unicode();
-  const TQChar *matchUnicode = match.unicode();
+  const TQChar *tqunicode = m_text.tqunicode();
+  const TQChar *matchUnicode = match.tqunicode();
 
   for (uint i=0; i < matchlen; i++)
-    if (unicode[i+pos] != matchUnicode[i])
+    if (tqunicode[i+pos] != matchUnicode[i])
       return false;
 
   return true;
@@ -206,11 +206,11 @@ bool KateTextLine::startingWith(const TQString& match) const
   if (matchlen > m_text.length())
     return false;
 
-  const TQChar *unicode = m_text.unicode();
-  const TQChar *matchUnicode = match.unicode();
+  const TQChar *tqunicode = m_text.tqunicode();
+  const TQChar *matchUnicode = match.tqunicode();
 
   for (uint i=0; i < matchlen; i++)
-    if (unicode[i] != matchUnicode[i])
+    if (tqunicode[i] != matchUnicode[i])
       return false;
 
   return true;
@@ -223,12 +223,12 @@ bool KateTextLine::endingWith(const TQString& match) const
   if (matchlen > m_text.length())
     return false;
 
-  const TQChar *unicode = m_text.unicode();
-  const TQChar *matchUnicode = match.unicode();
+  const TQChar *tqunicode = m_text.tqunicode();
+  const TQChar *matchUnicode = match.tqunicode();
 
   uint start = m_text.length() - matchlen;
   for (uint i=0; i < matchlen; i++)
-    if (unicode[start+i] != matchUnicode[i])
+    if (tqunicode[start+i] != matchUnicode[i])
       return false;
 
   return true;
@@ -239,11 +239,11 @@ int KateTextLine::cursorX(uint pos, uint tabChars) const
   uint x = 0;
 
   const uint n = kMin (pos, m_text.length());
-  const TQChar *unicode = m_text.unicode();
+  const TQChar *tqunicode = m_text.tqunicode();
 
   for ( uint z = 0; z < n; z++)
   {
-    if (unicode[z] == TQChar('\t'))
+    if (tqunicode[z] == TQChar('\t'))
       x += tabChars - (x % tabChars);
     else
       x++;
@@ -257,11 +257,11 @@ uint KateTextLine::lengthWithTabs (uint tabChars) const
 {
   uint x = 0;
   const uint len = m_text.length();
-  const TQChar *unicode = m_text.unicode();
+  const TQChar *tqunicode = m_text.tqunicode();
 
   for ( uint z = 0; z < len; z++)
   {
-    if (unicode[z] == TQChar('\t'))
+    if (tqunicode[z] == TQChar('\t'))
       x += tabChars - (x % tabChars);
     else
       x++;
@@ -278,16 +278,16 @@ bool KateTextLine::searchText (uint startCol, const TQString &text, uint *foundA
   {
     int col = startCol;
     uint l = text.length();
-    // allow finding the string ending at eol
+    // allow tqfinding the string ending at eol
     if ( col == (int) m_text.length() ) ++startCol;
 
     do {
-      index = m_text.findRev( text, col, casesensitive );
+      index = m_text.tqfindRev( text, col, casesensitive );
       col--;
     } while ( col >= 0 && l + index >= startCol );
   }
   else
-    index = m_text.find (text, startCol, casesensitive);
+    index = m_text.tqfind (text, startCol, casesensitive);
 
   if (index > -1)
   {
@@ -309,7 +309,7 @@ bool KateTextLine::searchText (uint startCol, const TQRegExp &regexp, uint *foun
   {
     int col = startCol;
 
-    // allow finding the string ending at eol
+    // allow tqfinding the string ending at eol
     if ( col == (int) m_text.length() ) ++startCol;
     do {
       index = regexp.searchRev (m_text, col);
@@ -346,7 +346,7 @@ char *KateTextLine::dump (char *buf, bool withHighlighting) const
   memcpy(buf, &l, sizeof(uint));
   buf += sizeof(uint);
 
-  memcpy(buf, (char *) m_text.unicode(), sizeof(TQChar)*l);
+  memcpy(buf, (char *) m_text.tqunicode(), sizeof(TQChar)*l);
   buf += sizeof(TQChar) * l;
 
   if (!withHighlighting)
@@ -440,4 +440,4 @@ char *KateTextLine::restore (char *buf)
   return buf;
 }
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

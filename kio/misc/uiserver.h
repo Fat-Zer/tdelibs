@@ -386,7 +386,7 @@ protected slots:
 
 protected:
 
-  ProgressItem* findItem( int id );
+  ProgressItem* tqfindItem( int id );
 
   virtual void resizeEvent(TQResizeEvent* e);
   virtual bool queryClose();

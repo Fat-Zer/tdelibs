@@ -51,7 +51,7 @@ static const char* time_keywords[] = {
 	I18N_NOOP("month(s)")
 };
 
-int findUnit(int& period)
+int tqfindUnit(int& period)
 {
 	int	unit(0);
 	for (int i=N_TIME_LIMITS-1;i>=0;i--)
@@ -146,7 +146,7 @@ void KMWQuota::initPrinter(KMPrinter *p)
 	m_pagelimit->setValue(pa);
 	if (qu > 0)
 	{
-		un = findUnit(qu);
+		un = tqfindUnit(qu);
 	}
 	m_timeunit->setCurrentItem(un);
 	m_period->setValue(qu);

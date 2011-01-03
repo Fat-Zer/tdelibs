@@ -61,7 +61,7 @@ DriverItem* DrBase::createItem(DriverItem *parent, DriverItem *after)
 
 void DrBase::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	if (opts.contains(name())) setValueText(opts[name()]);
+	if (opts.tqcontains(name())) setValueText(opts[name()]);
 }
 
 void DrBase::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
@@ -138,7 +138,7 @@ void DrMain::addPageSize(DrPageSize *ps)
 void DrMain::removeOptionGlobally(const TQString& name)
 {
 	DrGroup	*grp(0);
-	DrBase	*opt = findOption(name, &grp);
+	DrBase	*opt = tqfindOption(name, &grp);
 
 	if (opt && grp)
 	{
@@ -151,7 +151,7 @@ void DrMain::removeOptionGlobally(const TQString& name)
 void DrMain::removeGroupGlobally(DrGroup *grp)
 {
 	DrGroup	*parent(0);
-	if (findGroup(grp, &parent) && parent)
+	if (tqfindGroup(grp, &parent) && parent)
 	{
 		parent->removeGroup(grp);
 		if (parent->isEmpty() && parent != this)
@@ -224,7 +224,7 @@ void DrGroup::addObject(DrBase *optgrp)
 
 void DrGroup::removeOption(const TQString& name)
 {
-	DrBase	*opt = m_options.find(name);
+	DrBase	*opt = m_options.tqfind(name);
 	if (opt)
 	{
 		m_listoptions.removeRef(opt);
@@ -262,28 +262,28 @@ void DrGroup::createTree(DriverItem *parent)
 		item = dit.current()->createItem(parent, item);
 }
 
-DrBase* DrGroup::findOption(const TQString& name, DrGroup **parentGroup)
+DrBase* DrGroup::tqfindOption(const TQString& name, DrGroup **parentGroup)
 {
-	DrBase	*opt = m_options.find(name);
+	DrBase	*opt = m_options.tqfind(name);
 	if (!opt)
 	{
 		TQPtrListIterator<DrGroup>	it(m_subgroups);
 		for (;it.current() && !opt; ++it)
-			opt = it.current()->findOption(name, parentGroup);
+			opt = it.current()->tqfindOption(name, parentGroup);
 	}
 	else if (parentGroup)
 		*parentGroup = this;
 	return opt;
 }
 
-DrGroup* DrGroup::findGroup(DrGroup *grp, DrGroup ** parentGroup)
+DrGroup* DrGroup::tqfindGroup(DrGroup *grp, DrGroup ** parentGroup)
 {
-	DrGroup	*group = (m_subgroups.findRef(grp) == -1 ? 0 : grp);
+	DrGroup	*group = (m_subgroups.tqfindRef(grp) == -1 ? 0 : grp);
 	if (!group)
 	{
 		TQPtrListIterator<DrGroup>	it(m_subgroups);
 		for (;it.current() && !group; ++it)
-			group = it.current()->findGroup(grp, parentGroup);
+			group = it.current()->tqfindGroup(grp, parentGroup);
 	}
 	else if (parentGroup)
 		*parentGroup = this;
@@ -334,7 +334,7 @@ void DrGroup::flattenGroup(TQMap<TQString, DrBase*>& optmap, int& index)
 		optmap[oit.current()->name()] = oit.current();
 
 	if (name().isEmpty())
-		optmap[TQString::fromLatin1("group%1").arg(index++)] = this;
+		optmap[TQString::tqfromLatin1("group%1").arg(index++)] = this;
 	else
 		optmap[name()] = this;
 
@@ -567,7 +567,7 @@ TQString DrListOption::prettyText()
 
 void DrListOption::setValueText(const TQString& s)
 {
-	m_current = findChoice(s);
+	m_current = tqfindChoice(s);
 	if (!m_current)
 	{
 		bool	ok;
@@ -577,7 +577,7 @@ void DrListOption::setValueText(const TQString& s)
 	}
 }
 
-DrBase* DrListOption::findChoice(const TQString& txt)
+DrBase* DrListOption::tqfindChoice(const TQString& txt)
 {
 	TQPtrListIterator<DrBase>	it(m_choices);
 	for (;it.current();++it)
@@ -647,8 +647,8 @@ DrConstraint::DrConstraint(const DrConstraint& d)
 
 bool DrConstraint::check(DrMain *driver)
 {
-	if (!m_option1) m_option1 = (DrListOption*)driver->findOption(m_opt1);
-	if (!m_option2) m_option2 = (DrListOption*)driver->findOption(m_opt2);
+	if (!m_option1) m_option1 = (DrListOption*)driver->tqfindOption(m_opt1);
+	if (!m_option2) m_option2 = (DrListOption*)driver->tqfindOption(m_opt2);
 	if (m_option1 && m_option2 && m_option1->currentChoice() && m_option2->currentChoice())
 	{
 		bool	f1(false), f2(false);

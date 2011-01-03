@@ -120,10 +120,10 @@ bool	qt_try_modal( TQWidget *, XEvent * );
 
 bool KAccelEventHandler::x11Event( XEvent* pEvent )
 {
-	if( TQWidget::keyboardGrabber() || !kapp->focusWidget() )
+	if( TQWidget::keyboardGrabber() || !kapp->tqfocusWidget() )
 		return false;
 
-	if ( !qt_try_modal(kapp->focusWidget(), pEvent) )
+	if ( !qt_try_modal(kapp->tqfocusWidget(), pEvent) )
 	        return false;
 
 	if( pEvent->type == XKeyPress ) {
@@ -144,7 +144,7 @@ bool KAccelEventHandler::x11Event( XEvent* pEvent )
 		ke.ignore();
 
 		g_bAccelActivated = false;
-		kapp->sendEvent( kapp->focusWidget(), &ke );
+		kapp->sendEvent( kapp->tqfocusWidget(), &ke );
 
 		// If the Override event was accepted from a non-KAccel widget,
 		//  then kill the next AccelOverride in KApplication::notify.
@@ -206,7 +206,7 @@ bool KAccelPrivate::setEnabled( const TQString& sAction, bool bEnable )
 
 bool KAccelPrivate::removeAction( const TQString& sAction )
 {
-	// FIXME: getID() doesn't contains any useful
+	// FIXME: getID() doesn't tqcontains any useful
 	//  information!  Use mapIDToAction. --ellis, 2/May/2002
 	//  Or maybe KAccelBase::remove() takes care of TQAccel indirectly...
 	KAccelAction* pAction = actions().actionPtr( sAction );
@@ -278,7 +278,7 @@ bool KAccelPrivate::disconnectKey( KAccelAction& action, const KKeyServer::Key& 
 		}
 	}
 	//kdWarning(125) << kdBacktrace() << endl;
-	kdWarning(125) << "Didn't find key in m_mapIDToKey." << endl;
+	kdWarning(125) << "Didn't tqfind key in m_mapIDToKey." << endl;
 	return false;
 }
 
@@ -295,7 +295,7 @@ bool KAccelPrivate::disconnectKey( const KKeyServer::Key& key )
 		}
 	}
 	//kdWarning(125) << kdBacktrace() << endl;
-	kdWarning(125) << "Didn't find key in m_mapIDTokey." << endl;
+	kdWarning(125) << "Didn't tqfind key in m_mapIDTokey." << endl;
 	return false;
 }
 
@@ -303,7 +303,7 @@ void KAccelPrivate::slotKeyPressed( int id )
 {
 	kdDebug(125) << "KAccelPrivate::slotKeyPressed( " << id << " )" << endl;
 
-	if( m_mapIDToKey.contains( id ) ) {
+	if( m_mapIDToKey.tqcontains( id ) ) {
 		KKey key = m_mapIDToKey[id];
 		KKeySequence seq( key );
 		TQPopupMenu* pMenu = createPopupMenu( m_pWatch, seq );
@@ -357,7 +357,7 @@ bool KAccelPrivate::eventFilter( TQObject* /*pWatched*/, TQEvent* pEvent )
 			if( (*it) == keyCodeQt ) {
 				int nID = it.key();
 				kdDebug(125) << "shortcut found!" << endl;
-				if( m_mapIDToAction.contains( nID ) ) {
+				if( m_mapIDToAction.tqcontains( nID ) ) {
 					// TODO: reduce duplication between here and slotMenuActivated
 					KAccelAction* pAction = m_mapIDToAction[nID];
 					if( !pAction->isEnabled() )
@@ -608,14 +608,14 @@ void KAccel::changeMenuAccel( TQPopupMenu *menu, int id, const TQString& action 
 	if( !pAction || s.isEmpty() )
 		return;
 
-	int i = s.find( '\t' );
+	int i = s.tqfind( '\t' );
 
 	TQString k = pAction->shortcut().seq(0).toString();
 	if( k.isEmpty() )
 		return;
 
 	if ( i >= 0 )
-		s.replace( i+1, s.length()-i, k );
+		s.tqreplace( i+1, s.length()-i, k );
 	else {
 		s += '\t';
 		s += k;
@@ -646,7 +646,7 @@ int KAccel::currentKey( const TQString& sAction ) const
 	return 0;
 }
 
-TQString KAccel::findKey( int key ) const
+TQString KAccel::tqfindKey( int key ) const
 {
 	KAccelAction* pAction = d->actionPtr( KKey(key) );
 	if( pAction )

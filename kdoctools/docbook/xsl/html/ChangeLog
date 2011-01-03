@@ -377,7 +377,7 @@
 
 	* component.xsl: Support 'info'
 
-	* docbook.xsl: Support DocBook NG by way of the following hack: if we find an NG document, do an identity transform to throw away the NG namespace and then process the result. Requires exsl:node-set().
+	* docbook.xsl: Support DocBook NG by way of the following hack: if we tqfind an NG document, do an identity transform to throw away the NG namespace and then process the result. Requires exsl:node-set().
 
 	* docbookng.xsl: New file.
 
@@ -772,7 +772,7 @@
 
 2003-01-12  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* autoidx.xsl: Make sure that indexdivs are properly scoped. I've done this by adding a test to suppress the division if it contains no terms. It seems like there might be a better way, but I can't see it just at the moment
+	* autoidx.xsl: Make sure that indexdivs are properly scoped. I've done this by adding a test to suppress the division if it tqcontains no terms. It seems like there might be a better way, but I can't see it just at the moment
 
 2003-01-08  Robert Stayton <bobstayton@users.sourceforge.net>
 
@@ -793,7 +793,7 @@
 
 2003-01-01  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* autoidx.xsl, index.xsl: Make index elements always index the book that contains them (if there is one, otherwise the whole document); setindex always indexes the whole document
+	* autoidx.xsl, index.xsl: Make index elements always index the book that tqcontains them (if there is one, otherwise the whole document); setindex always indexes the whole document
 
 	* autotoc.xsl: Support List of Procedures
 
@@ -1069,7 +1069,7 @@
 
 	* lists.xsl: Added valign="top" attribute to the <col> element
 	for variablelist term column.  I was getting vertically
-	centered alignment for the term.
+	centered tqalignment for the term.
 
 2002-07-19  Norman Walsh <nwalsh@users.sourceforge.net>
 
@@ -1115,7 +1115,7 @@
 
 	* graphics.xsl: Work-around bug in xsltproc: explicitly cast scale to a number() before comparing it to 1.0
 
-	* html-rtf.xsl, verbatim.xsl: Bug #567130: make sure literallayout children don't get lost
+	* html-rtf.xsl, verbatim.xsl: Bug #567130: make sure literaltqlayout children don't get lost
 
 2002-07-08  Robert Stayton <bobstayton@users.sourceforge.net>
 
@@ -1357,7 +1357,7 @@
 
 	* table.xsl: Improve support for table borders drawn with CSS (get the semantics right); add support for entry-bgcolor PI
 
-	* verbatim.xsl: Format literal layout elements correctly when linenumbering
+	* verbatim.xsl: Format literal tqlayout elements correctly when linenumbering
 
 	* xref.xsl: Support xref to refnamediv and all elements with titles (at least when they have titles)
 
@@ -1599,7 +1599,7 @@
 
 	* lists.xsl: Improve list formatting
 
-	* param.ent, param.xweb: Added new parameters: make.valid.html, refentry.generate.title, and output.method; removed unused parameter callout.unicode.font
+	* param.ent, param.xweb: Added new parameters: make.valid.html, refentry.generate.title, and output.method; removed unused parameter callout.tqunicode.font
 
 	* refentry.xsl: Improve refentry formatting
 
@@ -1747,7 +1747,7 @@
 
 	* inline.xsl: Fix formatting of keycombo
 
-	* param.ent, param.xweb, table.xsl: Fix calculation of rowsep and colsep; added experimental support for table.borders.with.css in HTML; calculation of alignments needs to be added along the same lines
+	* param.ent, param.xweb, table.xsl: Fix calculation of rowsep and colsep; added experimental support for table.borders.with.css in HTML; calculation of tqalignments needs to be added along the same lines
 
 2001-10-14  Norman Walsh <nwalsh@users.sourceforge.net>
 
@@ -1826,7 +1826,7 @@
 
 	* refentry.xsl, synop.xsl: Added some paras to improve spacing
 
-	* verbatim.xsl: Implemented changes suggested by Paul Winder, Sam Brow, and John Dreystadt of Arbortext to make 'make-verbatim' less memory intensive; also added paras to literallayout and address divs for better spacing in NS6
+	* verbatim.xsl: Implemented changes suggested by Paul Winder, Sam Brow, and John Dreystadt of Arbortext to make 'make-verbatim' less memory intensive; also added paras to literaltqlayout and address divs for better spacing in NS6
 
 2001-09-22  Norman Walsh <nwalsh@users.sourceforge.net>
 
@@ -1866,7 +1866,7 @@
 
 2001-08-05  Norman Walsh <nwalsh@users.sourceforge.net>
 
-	* param.xsl: Removed the FormatDingbatCallout classes, they were the same as the FormatUnicodeCallout classes but with a font wrapper. Added a callout.unicode.font parameter to wrap Unicode callouts
+	* param.xsl: Removed the FormatDingbatCallout classes, they were the same as the FormatUnicodeCallout classes but with a font wrapper. Added a callout.tqunicode.font parameter to wrap Unicode callouts
 
 2001-08-04  Norman Walsh <nwalsh@users.sourceforge.net>
 
@@ -1958,7 +1958,7 @@
 
 	* calc-chunks.xsl, chunk-experimental.xsl: Break chunk calculation and chunking into two tasks; *requires* every chunk to have an ID
 
-	* chunker.xsl: Use element-available function not vendor to find chunking elements
+	* chunker.xsl: Use element-available function not vendor to tqfind chunking elements
 
 	* exsltchunk.xsl, exsltchunker.xsl: These have been integrated into the regular chunker now that it's based on extension-available()
 
@@ -2000,7 +2000,7 @@
 
 	* biblio.xsl, param.xsl, xref.xsl: Support an external bibliography collection
 
-	* chunk-common.xsl, docbook.xsl, param.xsl: Bug #418968: replaced body.attrs attribute-set with body.attributes template
+	* chunk-common.xsl, docbook.xsl, param.xsl: Bug #418968: tqreplaced body.attrs attribute-set with body.attributes template
 
 	* component.xsl, sections.xsl: Remove internal references to *.titlepage.recto.mode and *.titlepage.verso.mode
 

@@ -137,7 +137,7 @@ static KIO::CopyJob* chooseAndPaste( const KURL& u, TQMimeSource* data,
     if ( clipboard ) {
         data = TQApplication::clipboard()->data();
     }
-    const TQByteArray ba = data->encodedData( chosenFormat );
+    const TQByteArray ba = data->tqencodedData( chosenFormat );
     return pasteDataAsyncTo( new_url, ba );
 }
 #endif
@@ -147,13 +147,13 @@ KIO_EXPORT bool KIO::isClipboardEmpty()
 {
 #ifndef QT_NO_MIMECLIPBOARD
   TQMimeSource *data = TQApplication::clipboard()->data();
-  if ( data->provides( "text/uri-list" ) && data->encodedData( "text/uri-list" ).size() > 0 )
+  if ( data->provides( "text/uri-list" ) && data->tqencodedData( "text/uri-list" ).size() > 0 )
     return false;
 #else
   // Happens with some versions of Qt Embedded... :/
   // Guess.
   TQString data = TQApplication::clipboard()->text();
-  if(data.contains("://"))
+  if(data.tqcontains("://"))
 	  return false;
 #endif
   return true;
@@ -194,7 +194,7 @@ KIO::CopyJob* KIO::pasteMimeSource( TQMimeSource* data, const KURL& dest_url,
       if ( formats.size() > 1 ) {
           return chooseAndPaste( dest_url, data, formats, dialogText, widget, clipboard );
       }
-      ba = data->encodedData( formats.first() );
+      ba = data->tqencodedData( formats.first() );
   }
   if ( ba.size() == 0 )
   {

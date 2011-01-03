@@ -86,7 +86,7 @@ void MetaInfoJob::removeItem(const KFileItem* item)
         determineNextFile();
     }
 
-    d->items.remove(d->items.find(item));
+    d->items.remove(d->items.tqfind(item));
 }
 
 void MetaInfoJob::determineNextFile()

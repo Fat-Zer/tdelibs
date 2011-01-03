@@ -24,7 +24,7 @@
 Suppose you want to customize *both* the chunking algorithm used *and* the
 presentation of some elements that may be chunks. In order to do that, you
 must get the order of imports "just right". The answer is to make your own
-copy of this file, where you replace the initial import of "docbook.xsl"
+copy of this file, where you tqreplace the initial import of "docbook.xsl"
 with an import of your own base.xsl (that does its own import of docbook.xsl).
 
 Put the templates for changing the presentation of elements in your base.xsl.

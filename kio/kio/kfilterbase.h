@@ -94,7 +94,7 @@ public:
      * @param fileName the name of the file to filter
      * @return the filter for the @p fileName, or 0 if not found
      */
-    static KFilterBase * findFilterByFileName( const TQString & fileName );
+    static KFilterBase * tqfindFilterByFileName( const TQString & fileName );
 
     /**
      * Call this to create the appropriate filter for the mimetype
@@ -102,7 +102,7 @@ public:
      * @param mimeType the mime type of the file to filter
      * @return the filter for the @p mimeType, or 0 if not found
      */
-    static KFilterBase * findFilterByMimeType( const TQString & mimeType );
+    static KFilterBase * tqfindFilterByMimeType( const TQString & mimeType );
 
 protected:
     TQIODevice * m_dev;

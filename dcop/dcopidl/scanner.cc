@@ -803,7 +803,7 @@ static int yy_lp;
 *yy_cp = yy_hold_char; /* undo effects of setting up yytext */ \
 yy_cp = yy_full_match; /* restore poss. backed-over text */ \
 ++yy_lp; \
-goto find_rule; \
+goto tqfind_rule; \
 }
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
@@ -1140,11 +1140,11 @@ yy_match:
 			}
 		while ( yy_current_state != 310 );
 
-yy_find_action:
+yy_tqfind_action:
 		yy_current_state = *--yy_state_ptr;
 		yy_lp = yy_accept[yy_current_state];
-find_rule: /* we branch to this label when backing up */
-		for ( ; ; ) /* until we find what rule we matched */
+tqfind_rule: /* we branch to this label when backing up */
+		for ( ; ; ) /* until we tqfind what rule we matched */
 			{
 			if ( yy_lp && yy_lp < yy_accept[yy_current_state + 1] )
 				{
@@ -1226,8 +1226,8 @@ YY_RULE_SETUP
 #line 170 "scanner.ll"
 {
 			  TQString s( yytext );
-                          int i = s.find(TQRegExp("[\"<]"))+1;
-                          int j = s.find(TQRegExp("[\">]"), i);
+                          int i = s.tqfind(TQRegExp("[\"<]"))+1;
+                          int j = s.tqfind(TQRegExp("[\">]"), i);
 			  yylval._str = new TQString( s.mid( i, j - i ) );
                           idl_line_no++;
                           return T_INCLUDE;
@@ -1686,7 +1686,7 @@ ECHO;
 			else
 				{
 				yy_cp = yy_c_buf_p;
-				goto yy_find_action;
+				goto yy_tqfind_action;
 				}
 			}
 
@@ -1739,7 +1739,7 @@ ECHO;
 
 				yy_cp = yy_c_buf_p;
 				yy_bp = yytext_ptr + YY_MORE_ADJ;
-				goto yy_find_action;
+				goto yy_tqfind_action;
 			}
 		break;
 		}

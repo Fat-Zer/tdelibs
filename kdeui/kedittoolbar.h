@@ -43,7 +43,7 @@ namespace
  *
  * This dialog only works if your application uses the XML UI
  * framework for creating menus and toolbars.  It depends on the XML
- * files to describe the toolbar layouts and it requires the actions
+ * files to describe the toolbar tqlayouts and it requires the actions
  * to determine which buttons are active.
  *
  * Typically, you would include the KStdAction::configureToolbars()
@@ -83,7 +83,7 @@ namespace
  * Note that the procedure is a bit different for KParts applications.
  * In this case, you need only pass along a pointer to your
  * application's KXMLGUIFactory object.  The editor will take care of
- * finding all of the action collections and XML files.  The editor
+ * tqfinding all of the action collections and XML files.  The editor
  * aims to be semi-intelligent about where it assigns any
  * modifications.  In other words, it will not write out part specific
  * changes to your shell's XML file.
@@ -164,7 +164,7 @@ public:
    * Constructor for KParts based apps.
    *
    * The main parameter, factory(), is a pointer to the
-   * XML GUI factory object for your application.  It contains a list
+   * XML GUI factory object for your application.  It tqcontains a list
    * of all of the GUI clients (along with the action collections and
    * xml files) and the toolbar editor uses that.
    *
@@ -261,7 +261,7 @@ private:
  *
  * This widget only works if your application uses the XML UI
  * framework for creating menus and toolbars.  It depends on the XML
- * files to describe the toolbar layouts and it requires the actions
+ * files to describe the toolbar tqlayouts and it requires the actions
  * to determine which buttons are active.
  *
  * @author Kurt Granroth <granroth@kde.org>
@@ -325,7 +325,7 @@ public:
    * Constructor for KParts based apps.
    *
    * The first parameter, factory, is a pointer to the XML GUI
-   * factory object for your application.  It contains a list of all
+   * factory object for your application.  It tqcontains a list of all
    * of the GUI clients (along with the action collections and xml
    * files) and the toolbar editor uses that.
    *

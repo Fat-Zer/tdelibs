@@ -54,15 +54,15 @@ DOMStringImpl::DOMStringImpl(const char *str)
 }
 
 // FIXME: should be a cached flag maybe.
-bool DOMStringImpl::containsOnlyWhitespace() const
+bool DOMStringImpl::tqcontainsOnlyWhitespace() const
 {
     if (!s)
         return true;
 
     for (uint i = 0; i < l; i++) {
         TQChar c = s[i];
-        if (c.unicode() <= 0x7F) {
-            if (c.unicode() > ' ')
+        if (c.tqunicode() <= 0x7F) {
+            if (c.tqunicode() > ' ')
                 return false;
         } else {
             if (c.direction() != TQChar::DirWS)
@@ -286,18 +286,18 @@ khtml::Length* DOMStringImpl::toCoordsArray(int& len) const
     }
     str = str.simplifyWhiteSpace();
 
-    len = str.contains(' ') + 1;
+    len = str.tqcontains(' ') + 1;
     khtml::Length* r = new khtml::Length[len];
 
     int i = 0;
     int pos = 0;
     int pos2;
 
-    while((pos2 = str.find(' ', pos)) != -1) {
-        r[i++] = parseLength((TQChar *) str.unicode()+pos, pos2-pos);
+    while((pos2 = str.tqfind(' ', pos)) != -1) {
+        r[i++] = parseLength((TQChar *) str.tqunicode()+pos, pos2-pos);
         pos = pos2+1;
     }
-    r[i] = parseLength((TQChar *) str.unicode()+pos, str.length()-pos);
+    r[i] = parseLength((TQChar *) str.tqunicode()+pos, str.length()-pos);
 
     return r;
 }
@@ -307,7 +307,7 @@ khtml::Length* DOMStringImpl::toLengthArray(int& len) const
     TQString str(s, l);
     str = str.simplifyWhiteSpace();
 
-    len = str.contains(',') + 1;
+    len = str.tqcontains(',') + 1;
 
     // If we have no commas, we have no array.
     if( len == 1 )
@@ -319,14 +319,14 @@ khtml::Length* DOMStringImpl::toLengthArray(int& len) const
     int pos = 0;
     int pos2;
 
-    while((pos2 = str.find(',', pos)) != -1) {
-        r[i++] = parseLength((TQChar *) str.unicode()+pos, pos2-pos);
+    while((pos2 = str.tqfind(',', pos)) != -1) {
+        r[i++] = parseLength((TQChar *) str.tqunicode()+pos, pos2-pos);
         pos = pos2+1;
     }
 
     /* IE Quirk: If the last comma is the last char skip it and reduce len by one */
     if (str.length()-pos > 0)
-        r[i] = parseLength((TQChar *) str.unicode()+pos, str.length()-pos);
+        r[i] = parseLength((TQChar *) str.tqunicode()+pos, str.length()-pos);
     else
         len--;
 

@@ -55,8 +55,8 @@ void dumpRequest(ipp_t *req, bool answer = false, const TQString& s = TQString::
 	kdDebug(500) << "ID = 0x" << TQString::number(req->request.status.request_id, 16) << endl;
 	if (answer)
 	{
-		kdDebug(500) << "Status = 0x" << TQString::number(req->request.status.status_code, 16) << endl;
-		kdDebug(500) << "Status message = " << ippErrorString(req->request.status.status_code) << endl;
+		kdDebug(500) << "tqStatus = 0x" << TQString::number(req->request.status.status_code, 16) << endl;
+		kdDebug(500) << "tqStatus message = " << ippErrorString(req->request.status.status_code) << endl;
 	}
 	else
 		kdDebug(500) << "Operation = 0x" << TQString::number(req->request.op.operation_id, 16) << endl;
@@ -66,7 +66,7 @@ void dumpRequest(ipp_t *req, bool answer = false, const TQString& s = TQString::
 	ipp_attribute_t *attr = req->attrs;
 	while (attr)
 	{
-		TQString s = TQString::fromLatin1("%1 (0x%2) = ").arg(attr->name).arg(attr->value_tag, 0, 16);
+		TQString s = TQString::tqfromLatin1("%1 (0x%2) = ").arg(attr->name).arg(attr->value_tag, 0, 16);
 		for (int i=0;i<attr->num_values;i++)
 		{
 			switch (attr->value_tag)
@@ -504,7 +504,7 @@ void IppRequest::setMap(const TQMap<TQString,TQString>& opts)
 		if (it.key().startsWith("kde-") || it.key().startsWith("app-"))
 			continue;
 		QString	value = it.data().stripWhiteSpace(), lovalue;
-		value.replace(re, "");
+		value.tqreplace(re, "");
 		lovalue = value.lower();
 
 		// handles specific cases: boolean, empty strings, or option that has that boolean
@@ -522,7 +522,7 @@ void IppRequest::setMap(const TQMap<TQString,TQString>& opts)
 		cupsEncodeOptions(request_, n, options);
 	cupsFreeOptions(n, options);
 
-	// find an remove that annoying "document-format" attribute
+	// tqfind an remove that annoying "document-format" attribute
 #if CUPS_VERSION_MAJOR == 1 && CUPS_VERSION_MINOR >= 2
     ipp_attribute_t *attr = ippFindAttribute(request_, "document-format", IPP_TAG_NAME);
     ippDeleteAttribute(request_, attr);

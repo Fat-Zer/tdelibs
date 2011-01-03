@@ -108,7 +108,7 @@ class KPluginSelectionWidget : public QWidget
     protected:
         /**
          * Reimplement in your subclass if you have special needs: The standard
-         * implementation looks at the KPluginInfo objects to find the
+         * implementation looks at the KPluginInfo objects to tqfind the
          * needed information. But if, for some reason, your program doesn't
          * work with that here's your chance to get it working.
          *

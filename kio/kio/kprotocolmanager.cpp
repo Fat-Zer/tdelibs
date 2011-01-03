@@ -277,7 +277,7 @@ TQString KProtocolManager::proxyForURL( const KURL &url )
           break;
   }
 
-  return (proxy.isEmpty() ? TQString::fromLatin1("DIRECT") : proxy);
+  return (proxy.isEmpty() ? TQString::tqfromLatin1("DIRECT") : proxy);
 }
 
 void KProtocolManager::badProxy( const TQString &proxy )
@@ -305,7 +305,7 @@ static bool revmatch(const char *host, const char *nplist)
     {
       hptr = shptr;
 
-      // Try to find another domain or host in the list
+      // Try to tqfind another domain or host in the list
       while(--nptr>=nplist && *nptr!=',' && *nptr!=' ') ;
 
       // Strip out multiple spaces and commas
@@ -453,31 +453,31 @@ TQString KProtocolManager::defaultUserAgent( const TQString &_modifiers )
   struct utsname nam;
   if( uname(&nam) >= 0 )
   {
-    if( modifiers.contains('o') )
+    if( modifiers.tqcontains('o') )
     {
       supp += TQString("; %1").arg(nam.sysname);
-      if ( modifiers.contains('v') )
+      if ( modifiers.tqcontains('v') )
         supp += TQString(" %1").arg(nam.release);
     }
-    if( modifiers.contains('p') )
+    if( modifiers.tqcontains('p') )
     {
       // TODO: determine this value instead of hardcoding it...
-      supp += TQString::fromLatin1("; X11");
+      supp += TQString::tqfromLatin1("; X11");
     }
-    if( modifiers.contains('m') )
+    if( modifiers.tqcontains('m') )
     {
       supp += TQString("; %1").arg(nam.machine);
     }
-    if( modifiers.contains('l') )
+    if( modifiers.tqcontains('l') )
     {
       TQStringList languageList = KGlobal::locale()->languageList();
-      TQStringList::Iterator it = languageList.find( TQString::fromLatin1("C") );
+      TQStringList::Iterator it = languageList.tqfind( TQString::tqfromLatin1("C") );
       if( it != languageList.end() )
       {
-        if( languageList.contains( TQString::fromLatin1("en") ) > 0 )
+        if( languageList.tqcontains( TQString::tqfromLatin1("en") ) > 0 )
           languageList.remove( it );
         else
-          (*it) = TQString::fromLatin1("en");
+          (*it) = TQString::tqfromLatin1("en");
       }
       if( languageList.count() )
         supp += TQString("; %1").arg(languageList.join(", "));

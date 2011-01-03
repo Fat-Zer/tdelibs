@@ -141,7 +141,7 @@ typedef int mode_t;
 /* warning C4150: deletion of pointer to incomplete type 'type'; no destructor called
 
 The delete operator was called to delete the given type, which was 
-declared but not defined. The compiler was unable to find any destructors for the given type.
+declared but not defined. The compiler was unable to tqfind any destructors for the given type.
 */
 #pragma warning( disable: 4150 )
 

@@ -38,7 +38,7 @@ namespace KParts {
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KPARTS_EXPORT HistoryProvider : public QObject
+class KPARTS_EXPORT HistoryProvider : public TQObject
 {
     Q_OBJECT
 
@@ -58,7 +58,7 @@ public:
     /**
      * @returns true if @p item is present in the history.
      */
-    virtual bool contains( const TQString& item ) const;
+    virtual bool tqcontains( const TQString& item ) const;
 
     /**
      * Inserts @p item into the history.

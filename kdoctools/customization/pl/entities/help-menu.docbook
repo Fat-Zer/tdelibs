@@ -5,12 +5,12 @@
 <shortcut>
 <keycombo action="simul"><keycap>F1</keycap></keycombo>
 </shortcut>
-<guimenu>Pomoc</guimenu>
+<guimenu>Potqmoc</guimenu>
 <guimenuitem>Podręcznik programu ...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Uruchamia System pomocy KDE</action> 
-na stronie pomocy programu (czyli na tym dokumencie).</para></listitem>
+<listitem><para><action>Uruchamia System potqmocy KDE</action> 
+na stronie potqmocy programu (czyli na tym dokumencie).</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -18,13 +18,13 @@ na stronie pomocy programu (czyli na tym dokumencie).</para></listitem>
 <shortcut>
 <keycombo action="simul">&Shift;<keycap>F1</keycap></keycombo>
 </shortcut>
-<guimenu>Pomoc</guimenu>
+<guimenu>Potqmoc</guimenu>
 <guimenuitem>Co to jest?</guimenuitem>
 </menuchoice>
 </term>
 <listitem><para><action>Zmienia kursor myszy w strzałkę ze znakiem zapytania
-.</action> Kliknięcie na elemencie programu spowoduje otworzenie okna pomocy 
-objaśniającego funkcję tego elementu (o ile taka pomoc istnieje).</para></listitem>
+.</action> Kliknięcie na elemencie programu spowoduje otworzenie okna potqmocy 
+objaśniającego funkcję tego elementu (o ile taka potqmoc istnieje).</para></listitem>
 </varlistentry>
 
 
@@ -39,7 +39,7 @@ możesz zgłosić błąd lub prośbę o dodanie nowej funkcji.</para></listitem>
 
 <varlistentry>
 <term><menuchoice>
-<guimenu>Pomoc</guimenu>
+<guimenu>Potqmoc</guimenu>
 <guimenuitem>O programie ...</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Wyświetla informację o autorach i wersji programu.</action></para></listitem>
@@ -47,7 +47,7 @@ możesz zgłosić błąd lub prośbę o dodanie nowej funkcji.</para></listitem>
 
 <varlistentry>
 <term><menuchoice>
-<guimenu>Pomoc</guimenu>
+<guimenu>Potqmoc</guimenu>
 <guimenuitem>Informacje o KDE</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Wyświetla informację o wersji KDE i inne podstawowe informacje.</action></para></listitem>

@@ -30,7 +30,7 @@ namespace KNetwork {
 
 /**
  * A place-holder class for a future network interface class.
- * This class is to be replaced with a more powerful version, inspired
+ * This class is to be tqreplaced with a more powerful version, inspired
  * by:
  *  - KInetInterface (kdenetwork/krfb/srvloc)
  *  - NWInterface (kdenonbeta/knot/lib)

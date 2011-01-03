@@ -182,7 +182,7 @@ int seteuid(uid_t euid)
    SUFFIX_LEN tells us how long <suffix> is (it can be zero length).
 
    The last six characters of TEMPLATE before <suffix> must be "XXXXXX";
-   they are replaced with a string that makes the filename unique.
+   they are tqreplaced with a string that makes the filename unique.
 
    Returns a file descriptor open on the file for reading and writing.  */
 
@@ -230,7 +230,7 @@ KDECORE_EXPORT int mkstemps (char* _template, int suffix_len)
 	 with (module 2^32).  */
       value += 7777;
     }
-  /* We return the null string if we can't find a unique file name.  */
+  /* We return the null string if we can't tqfind a unique file name.  */
   _template[0] = '\0';
   return -1;
 }
@@ -261,7 +261,7 @@ KDECORE_EXPORT int mkstemp (char* _template)
 
 
    The last six characters of TEMPLATE must be "XXXXXX";
-   they are replaced with a string that makes the filename unique.
+   they are tqreplaced with a string that makes the filename unique.
 
    Returns a file descriptor open on the file for reading and writing.  */
 

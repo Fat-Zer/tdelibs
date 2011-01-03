@@ -30,7 +30,7 @@ class KateView;
 class KAction;
 class KSpell;
 
-class KateSpell : public QObject
+class KateSpell : public TQObject
 {
   Q_OBJECT
 
@@ -83,4 +83,4 @@ class KateSpell : public QObject
 
 #endif
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

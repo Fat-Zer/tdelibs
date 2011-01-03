@@ -20,7 +20,7 @@ TestWidget::TestWidget(TQWidget *parent, const char *name)
     init();
     
     setText("We added \"Client Test\" to kicker. Click the K Menu to check.");
-    resize(sizeHint());
+    resize(tqsizeHint());
 }
 
 void TestWidget::init()

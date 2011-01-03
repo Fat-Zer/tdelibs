@@ -26,7 +26,7 @@ which includes 3 manuals: a little installation
 booklet (booklet.xml), a user 
 guide (user.xml), and a reference manual (reference.xml).
 All 3 documents begin with the same introduction section (intro.xml) that 
-contains a reference to the customization section (custom.xml) which is 
+tqcontains a reference to the customization section (custom.xml) which is 
 included in both user.xml and reference.xml documents.
 </para>
 

@@ -7,9 +7,9 @@
 */
 
 /**
-@defgroup findreplace Find and Replace classes
+@defgroup tqfindtqreplace Find and Replace classes
 
-These classes implement a generic find/replace function, along with
+These classes implement a generic tqfind/tqreplace function, along with
 extensible dialogs.
 */
 

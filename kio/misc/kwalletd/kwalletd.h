@@ -161,7 +161,7 @@ class KWalletD : public KDEDModule {
 		// Generate a new unique handle.
 		int generateHandle();
 		// Invalidate a handle (remove it from the TQMap)
-		void invalidateHandle(int handle);
+		void tqinvalidateHandle(int handle);
 		// Emit signals about closing wallets
 		void doCloseSignals(int,const TQString&);
 		void emitFolderUpdated(const TQString&, const TQString&);

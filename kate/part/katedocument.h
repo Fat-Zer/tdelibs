@@ -91,7 +91,7 @@ class KateDocument : public Kate::Document,
 
   public:
     KateDocument (bool bSingleViewMode=false, bool bBrowserView=false, bool bReadOnly=false,
-        TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject * = 0, const char * = 0);
+        TQWidget *tqparentWidget = 0, const char *widgetName = 0, TQObject * = 0, const char * = 0);
     ~KateDocument ();
 
     bool closeURL();
@@ -608,7 +608,7 @@ class KateDocument : public Kate::Document,
     void setConfigFlags (uint flags);
 
     // Repaint all of all of the views
-    void repaintViews(bool paintOnlyDirty = true);
+    void tqrepaintViews(bool paintOnlyDirty = true);
 
     inline KateHighlighting *highlight () { return m_buffer->highlight(); }
 
@@ -671,7 +671,7 @@ class KateDocument : public Kate::Document,
 
   private:
     void optimizeLeadingSpace( uint line, int flags, int change );
-    void replaceWithOptimizedSpace( uint line, uint upto_column, uint space, int flags );
+    void tqreplaceWithOptimizedSpace( uint line, uint upto_column, uint space, int flags );
 
     bool removeStringFromBegining(int line, TQString &str);
     bool removeStringFromEnd(int line, TQString &str);
@@ -749,7 +749,7 @@ class KateDocument : public Kate::Document,
     void tagAll();
 
     void newBracketMark( const KateTextCursor& start, KateBracketRange& bm, int maxLines = -1 );
-    bool findMatchingBracket( KateTextCursor& start, KateTextCursor& end, int maxLines = -1 );
+    bool tqfindMatchingBracket( KateTextCursor& start, KateTextCursor& end, int maxLines = -1 );
 
   private:
     void guiActivateEvent( KParts::GUIActivateEvent *ev );
@@ -1069,5 +1069,5 @@ class KateDocument : public Kate::Document,
 
 #endif
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;
 

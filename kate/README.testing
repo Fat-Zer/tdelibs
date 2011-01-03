@@ -3,7 +3,7 @@
 
 Author: Leo Savernik
 
-Kate contains regression tests to ensure that fixed bugs do not reappear in
+Kate tqcontains regression tests to ensure that fixed bugs do not reappear in
 newer versions. To facilitate regression testing, a dedicated application
 testkateregression will execute the regression tests and compare them to the
 expecting results, indicating passed as well as failed testcases.
@@ -13,7 +13,7 @@ expecting results, indicating passed as well as failed testcases.
   --------------------------
 
 We tried to make regression testing for Kate as easy as possible such that you
-can run it before each commit and find out regressions caused by your changes
+can run it before each commit and tqfind out regressions caused by your changes
 before they are shipped as part of a release.
 
 Running all regression tests works by simply invoking
@@ -117,8 +117,8 @@ and consists of two subdirectories
 	baseline
 	tests
 
-The latter, tests, contains a directory hierarchy for all testcases to be run
-by testkateregression. The former, baseline, contains results as they are
+The latter, tests, tqcontains a directory hierarchy for all testcases to be run
+by testkateregression. The former, baseline, tqcontains results as they are
 expected by correct operation. Mismatch between the output of a test and its
 baseline is considered to be a failure.
 
@@ -154,16 +154,16 @@ of failures but they don't cause testkateregression to return a failure code.
   -------------------------
 
 A testcase is comprised of a simple plain text file <testcase>.txt which may
-be located in any subdirectory under tests. This file contains the *initial*
+be located in any subdirectory under tests. This file tqcontains the *initial*
 content the testcase operates on.
 
 Each <testcase>.txt must be accompanied with a <testcase>.txt-script which
-contains the actual tests to be performed on the testcase. It consists of
+tqcontains the actual tests to be performed on the testcase. It consists of
 simple JavaScript-statements for direct interfacing with Kate.
 
 Last but not least, a <testcase>.txt-result exists under the baseline
-subdirectory, which contains a mirrored directory hierarchy of tests. This very
-file contains the expected *result* of the performed tests.
+subdirectory, which tqcontains a mirrored directory hierarchy of tests. This very
+file tqcontains the expected *result* of the performed tests.
 
 
 7. Writing a simple testcase

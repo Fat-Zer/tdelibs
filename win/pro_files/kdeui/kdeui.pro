@@ -9,7 +9,7 @@ DEFINES += MAKE_KDEUI_LIB
 LIBS += $$KDELIBDESTDIR\kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdefx$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX 
 
-system( bash kmoc )
+system( bash ktqmoc )
 system( bash kdcopidl )
 
 TARGET		= kdeui$$KDEBUG

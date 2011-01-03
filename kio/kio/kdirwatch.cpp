@@ -123,7 +123,7 @@ static int dnotify_signal = 0;
  *
  * As this is called asynchronously, only a flag is set and
  * a rescan is requested.
- * This is done by writing into a pipe to trigger a QSocketNotifier
+ * This is done by writing into a pipe to trigger a TQSocketNotifier
  * watching on this pipe: a timer is started and after a timeout,
  * the rescan is done.
  */
@@ -135,7 +135,7 @@ void KDirWatchPrivate::dnotify_handler(int, siginfo_t *si, void *)
   // (Richard Stevens, Advanced programming in the Unix Environment)
   int saved_errno = errno;
 
-  Entry* e = dwp_self->fd_Entry.find(si->si_fd);
+  Entry* e = dwp_self->fd_Entry.tqfind(si->si_fd);
 
 //  kdDebug(7001) << "DNOTIFY Handler: fd " << si->si_fd << " path "
 //		<< TQString(e ? e->path:"unknown") << endl;
@@ -413,9 +413,9 @@ void KDirWatchPrivate::slotActivated()
       if ( path.length() && isNoisyFile( path.latin1() ) )
         continue;
 
-      kdDebug(7001) << "ev wd: " << event->wd << " mask " << event->mask << " path: " << path << endl;
+      kdDebug(7001) << "ev wd: " << event->wd << " tqmask " << event->tqmask << " path: " << path << endl;
 
-      // now we're in deep trouble of finding the
+      // now we're in deep trouble of tqfinding the
       // associated entries
       // for now, we suck and iterate
       for ( EntryMap::Iterator it = m_mapEntries.begin();
@@ -425,7 +425,7 @@ void KDirWatchPrivate::slotActivated()
           e->dirty = true;
 
           if ( 1 || e->isDir) {
-            if( event->mask & IN_DELETE_SELF) {
+            if( event->tqmask & IN_DELETE_SELF) {
               kdDebug(7001) << "-->got deleteself signal for " << e->path << endl;
               e->m_status = NonExistent;
               if (e->isDir)
@@ -433,10 +433,10 @@ void KDirWatchPrivate::slotActivated()
               else
                 addEntry(0, TQFileInfo(e->path).dirPath(true), e, true);
             }
-            if ( event->mask & IN_IGNORED ) {
+            if ( event->tqmask & IN_IGNORED ) {
               e->wd = 0;
             }
-            if ( event->mask & (IN_CREATE|IN_MOVED_TO) ) {
+            if ( event->tqmask & (IN_CREATE|IN_MOVED_TO) ) {
               Entry *sub_entry = e->m_entries.first();
               for(;sub_entry; sub_entry = e->m_entries.next())
                 if (sub_entry->path == e->path + "/" + path) break;
@@ -551,7 +551,7 @@ KDirWatchPrivate::Entry* KDirWatchPrivate::entry(const TQString& _path)
   if ( path.length() > 1 && path.right(1) == "/" )
     path.truncate( path.length() - 1 );
 
-  EntryMap::Iterator it = m_mapEntries.find( path );
+  EntryMap::Iterator it = m_mapEntries.tqfind( path );
   if ( it == m_mapEntries.end() )
     return 0;
   else
@@ -668,13 +668,13 @@ bool KDirWatchPrivate::useDNotify(Entry* e)
 	return false;
       }
 
-      int mask = DN_DELETE|DN_CREATE|DN_RENAME|DN_MULTISHOT;
+      int tqmask = DN_DELETE|DN_CREATE|DN_RENAME|DN_MULTISHOT;
       // if dependant is a file watch, we check for MODIFY & ATTRIB too
       for(Entry* dep=e->m_entries.first();dep;dep=e->m_entries.next())
-	if (!dep->isDir) { mask |= DN_MODIFY|DN_ATTRIB; break; }
+	if (!dep->isDir) { tqmask |= DN_MODIFY|DN_ATTRIB; break; }
 
       if(fcntl(fd, F_SETSIG, dnotify_signal) < 0 ||
-	 fcntl(fd, F_NOTIFY, mask) < 0) {
+	 fcntl(fd, F_NOTIFY, tqmask) < 0) {
 
 	kdDebug(7001) << "Not using Linux Directory Notifications."
 		      << endl;
@@ -684,7 +684,7 @@ bool KDirWatchPrivate::useDNotify(Entry* e)
 	return false;
       }
 
-      fd_Entry.replace(fd, e);
+      fd_Entry.tqreplace(fd, e);
       e->dn_fd = fd;
 
       kdDebug(7001) << " Setup DNotify (fd " << fd
@@ -714,19 +714,19 @@ bool KDirWatchPrivate::useINotify( Entry* e )
 
   e->m_mode = INotifyMode;
 
-  int mask = IN_DELETE|IN_DELETE_SELF|IN_CREATE|IN_MOVE|IN_MOVE_SELF|IN_DONT_FOLLOW;
+  int tqmask = IN_DELETE|IN_DELETE_SELF|IN_CREATE|IN_MOVE|IN_MOVE_SELF|IN_DONT_FOLLOW;
   if(!e->isDir)
-    mask |= IN_MODIFY|IN_ATTRIB;
+    tqmask |= IN_MODIFY|IN_ATTRIB;
   else
-    mask |= IN_ONLYDIR;
+    tqmask |= IN_ONLYDIR;
 
   // if dependant is a file watch, we check for MODIFY & ATTRIB too
   for(Entry* dep=e->m_entries.first();dep;dep=e->m_entries.next()) {
-    if (!dep->isDir) { mask |= IN_MODIFY|IN_ATTRIB; break; }
+    if (!dep->isDir) { tqmask |= IN_MODIFY|IN_ATTRIB; break; }
   }
 
   if ( ( e->wd = inotify_add_watch( m_inotify_fd,
-        TQFile::encodeName( e->path ), mask) ) > 0 )
+        TQFile::encodeName( e->path ), tqmask) ) > 0 )
     return true;
 
   if ( e->m_status == NonExistent ) {
@@ -782,7 +782,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
   if ( path.length() > 1 && path.right(1) == "/" )
     path.truncate( path.length() - 1 );
 
-  EntryMap::Iterator it = m_mapEntries.find( path );
+  EntryMap::Iterator it = m_mapEntries.tqfind( path );
   if ( it != m_mapEntries.end() )
   {
     if (sub_entry) {
@@ -794,11 +794,11 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
      {
        Entry* e = &(*it);
        if( (e->m_mode == DNotifyMode) && (e->dn_fd > 0) ) {
-         int mask = DN_DELETE|DN_CREATE|DN_RENAME|DN_MULTISHOT;
+         int tqmask = DN_DELETE|DN_CREATE|DN_RENAME|DN_MULTISHOT;
          // if dependant is a file watch, we check for MODIFY & ATTRIB too
          for(Entry* dep=e->m_entries.first();dep;dep=e->m_entries.next())
-     	   if (!dep->isDir) { mask |= DN_MODIFY|DN_ATTRIB; break; }
-	 if( fcntl(e->dn_fd, F_NOTIFY, mask) < 0) { // shouldn't happen
+     	   if (!dep->isDir) { tqmask |= DN_MODIFY|DN_ATTRIB; break; }
+	 if( fcntl(e->dn_fd, F_NOTIFY, tqmask) < 0) { // shouldn't happen
 	   ::close(e->dn_fd);
 	   e->m_mode = UnknownMode;
   	   fd_Entry.remove(e->dn_fd);
@@ -813,14 +813,14 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
      {
        Entry* e = &(*it);
        if( (e->m_mode == INotifyMode) && (e->wd > 0) ) {
-         int mask = IN_DELETE|IN_DELETE_SELF|IN_CREATE|IN_MOVE|IN_MOVE_SELF|IN_DONT_FOLLOW;
+         int tqmask = IN_DELETE|IN_DELETE_SELF|IN_CREATE|IN_MOVE|IN_MOVE_SELF|IN_DONT_FOLLOW;
          if(!e->isDir)
-           mask |= IN_MODIFY|IN_ATTRIB;
+           tqmask |= IN_MODIFY|IN_ATTRIB;
          else
-           mask |= IN_ONLYDIR;
+           tqmask |= IN_ONLYDIR;
 
          inotify_rm_watch (m_inotify_fd, e->wd);
-         e->wd = inotify_add_watch( m_inotify_fd, TQFile::encodeName( e->path ), mask);
+         e->wd = inotify_add_watch( m_inotify_fd, TQFile::encodeName( e->path ), tqmask);
        }
     }
 #endif
@@ -923,7 +923,7 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
 
   if (delayRemove) {
     // removeList is allowed to contain any entry at most once
-    if (removeList.findRef(e)==-1)
+    if (removeList.tqfindRef(e)==-1)
       removeList.append(e);
     // now e->isValid() is false
     return;
@@ -1704,7 +1704,7 @@ void KDirWatch::startScan( bool notify, bool skippedToo )
 }
 
 
-bool KDirWatch::contains( const TQString& _path ) const
+bool KDirWatch::tqcontains( const TQString& _path ) const
 {
   KDirWatchPrivate::Entry* e = d->entry(_path);
   if (!e)

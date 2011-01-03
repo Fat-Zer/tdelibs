@@ -2,7 +2,7 @@ include( ../common.pro )
 
 TARGET		= highcolor$$KDEBUG
 
-system( bash kmoc )
+system( bash ktqmoc )
 
 SOURCES = \
 highcolor.cpp

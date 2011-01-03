@@ -32,12 +32,12 @@
 namespace khtml {
 
 /**
- * all geometry managing stuff is only in the block elements.
+ * all tqgeometry managing stuff is only in the block elements.
  *
- * Inline elements don't layout themselves, but the whole paragraph
+ * Inline elements don't tqlayout themselves, but the whole paragraph
  * gets flowed by the surrounding block element. This is, because
  * one needs to know the whole paragraph to calculate bidirectional
- * behaviour of text, so putting the layouting routines in the inline
+ * behaviour of text, so putting the tqlayouting routines in the inline
  * elements is impossible.
  */
 class RenderFlow : public RenderBox
@@ -69,7 +69,7 @@ public:
     void paintLines(PaintInfo& i, int _tx, int _ty);
     bool hitTestLines(NodeInfo& i, int x, int y, int tx, int ty, HitTestAction hitTestAction);
 
-    virtual void repaint(Priority p=NormalPriority);
+    virtual void tqrepaint(Priority p=NormalPriority);
 
     virtual int highestPosition(bool includeOverflowInterior=true, bool includeSelf=true) const;
     virtual int lowestPosition(bool includeOverflowInterior=true, bool includeSelf=true) const;

@@ -66,7 +66,7 @@ static bool expandEnv(TQString &);
 
 static TQString unescape(const TQString &text);
 
-// Permission mask for files that are executable by
+// Permission tqmask for files that are executable by
 // user, group or other
 #define MODE_EXE (S_IXUSR | S_IXGRP | S_IXOTH)
 
@@ -330,7 +330,7 @@ public:
 	// Is the initial string a URL, or just a path (whether absolute or relative)
 	bool isURL() const { return m_isURL; }
 
-	void filter( bool replace_user_dir, bool replace_env );
+	void filter( bool tqreplace_user_dir, bool tqreplace_env );
 
 private:
 	void init(const TQString &url, const TQString &cwd);
@@ -363,9 +363,9 @@ void KURLCompletion::MyURL::init(const TQString &url, const TQString &cwd)
 	// Special shortcuts for "man:" and "info:"
 	if ( url_copy[0] == '#' ) {
 		if ( url_copy[1] == '#' )
-			url_copy.replace( 0, 2, TQString("info:") );
+			url_copy.tqreplace( 0, 2, TQString("info:") );
 		else
-			url_copy.replace( 0, 1, TQString("man:") );
+			url_copy.tqreplace( 0, 1, TQString("man:") );
 	}
 
 	// Look for a protocol in 'url'
@@ -414,11 +414,11 @@ KURLCompletion::MyURL::~MyURL()
 	delete m_kurl;
 }
 
-void KURLCompletion::MyURL::filter( bool replace_user_dir, bool replace_env )
+void KURLCompletion::MyURL::filter( bool tqreplace_user_dir, bool tqreplace_env )
 {
 	TQString d = dir() + file();
-	if ( replace_user_dir ) expandTilde( d );
-	if ( replace_env ) expandEnv( d );
+	if ( tqreplace_user_dir ) expandTilde( d );
+	if ( tqreplace_env ) expandEnv( d );
 	m_kurl->setPath( d );
 }
 
@@ -455,8 +455,8 @@ public:
 	TQString cwd; // "current directory" = base dir for completion
 
 	KURLCompletion::Mode mode; // ExeCompletion, FileCompletion, DirCompletion
-	bool replace_env;
-	bool replace_home;
+	bool tqreplace_env;
+	bool tqreplace_home;
 	bool complete_url; // if true completing a URL (i.e. 'prepend' is a URL), otherwise a path
 
 	KIO::ListJob *list_job; // kio job to list directories
@@ -511,8 +511,8 @@ void KURLCompletion::init()
 
 	d->cwd = TQDir::homeDirPath();
 
-	d->replace_home = true;
-	d->replace_env = true;
+	d->tqreplace_home = true;
+	d->tqreplace_env = true;
 	d->last_no_hidden = false;
 	d->last_compl_type = 0;
 	d->list_job = 0L;
@@ -547,24 +547,24 @@ void KURLCompletion::setMode( Mode mode )
 	d->mode = mode;
 }
 
-bool KURLCompletion::replaceEnv() const
+bool KURLCompletion::tqreplaceEnv() const
 {
-	return d->replace_env;
+	return d->tqreplace_env;
 }
 
-void KURLCompletion::setReplaceEnv( bool replace )
+void KURLCompletion::setReplaceEnv( bool tqreplace )
 {
-	d->replace_env = replace;
+	d->tqreplace_env = tqreplace;
 }
 
-bool KURLCompletion::replaceHome() const
+bool KURLCompletion::tqreplaceHome() const
 {
-	return d->replace_home;
+	return d->tqreplace_home;
 }
 
-void KURLCompletion::setReplaceHome( bool replace )
+void KURLCompletion::setReplaceHome( bool tqreplace )
 {
-	d->replace_home = replace;
+	d->tqreplace_home = tqreplace;
 }
 
 /*
@@ -592,16 +592,16 @@ TQString KURLCompletion::makeCompletion(const TQString &text)
 
 	// Environment variables
 	//
-	if ( d->replace_env && envCompletion( url, &match ) )
+	if ( d->tqreplace_env && envCompletion( url, &match ) )
 		return match;
 
 	// User directories
 	//
-	if ( d->replace_home && userCompletion( url, &match ) )
+	if ( d->tqreplace_home && userCompletion( url, &match ) )
 		return match;
 
 	// Replace user directories and variables
-	url.filter( d->replace_home, d->replace_env );
+	url.filter( d->tqreplace_home, d->tqreplace_env );
 
 	//kdDebug() << "Filtered: proto=" << url.protocol()
 	//          << ", dir=" << url.dir()
@@ -786,7 +786,7 @@ bool KURLCompletion::envCompletion(const MyURL &url, TQString *match)
 		while ( *env ) {
 			TQString s = TQString::fromLocal8Bit( *env );
 
-			int pos = s.find('=');
+			int pos = s.tqfind('=');
 
 			if ( pos == -1 )
 				pos = s.length();
@@ -1370,23 +1370,23 @@ void KURLCompletion::customEvent(TQCustomEvent *e)
 }
 
 // static
-TQString KURLCompletion::replacedPath( const TQString& text, bool replaceHome, bool replaceEnv )
+TQString KURLCompletion::tqreplacedPath( const TQString& text, bool tqreplaceHome, bool tqreplaceEnv )
 {
 	if ( text.isEmpty() )
 		return text;
 
-	MyURL url( text, TQString::null ); // no need to replace something of our current cwd
+	MyURL url( text, TQString::null ); // no need to tqreplace something of our current cwd
 	if ( !url.kurl()->isLocalFile() )
 		return text;
 
-	url.filter( replaceHome, replaceEnv );
+	url.filter( tqreplaceHome, tqreplaceEnv );
 	return url.dir() + url.file();
 }
 
 
-TQString KURLCompletion::replacedPath( const TQString& text )
+TQString KURLCompletion::tqreplacedPath( const TQString& text )
 {
-	return replacedPath( text, d->replace_home, d->replace_env );
+	return tqreplacedPath( text, d->tqreplace_home, d->tqreplace_env );
 }
 
 /////////////////////////////////////////////////////////
@@ -1407,7 +1407,7 @@ static bool expandEnv( TQString &text )
 
 	bool expanded = false;
 
-	while ( (pos = text.find('$', pos)) != -1 ) {
+	while ( (pos = text.tqfind('$', pos)) != -1 ) {
 
 		// Skip escaped '$'
 		//
@@ -1419,8 +1419,8 @@ static bool expandEnv( TQString &text )
 		else {
 			// Find the end of the variable = next '/' or ' '
 			//
-			int pos2 = text.find( ' ', pos+1 );
-			int pos_tmp = text.find( '/', pos+1 );
+			int pos2 = text.tqfind( ' ', pos+1 );
+			int pos_tmp = text.tqfind( '/', pos+1 );
 
 			if ( pos2 == -1 || (pos_tmp != -1 && pos_tmp < pos2) )
 				pos2 = pos_tmp;
@@ -1439,7 +1439,7 @@ static bool expandEnv( TQString &text )
 
 				if ( !value.isEmpty() ) {
 					expanded = true;
-					text.replace( pos, len, value );
+					text.tqreplace( pos, len, value );
 					pos = pos + value.length();
 				}
 				else {
@@ -1467,8 +1467,8 @@ static bool expandTilde(TQString &text)
 
 	// Find the end of the user name = next '/' or ' '
 	//
-	int pos2 = text.find( ' ', 1 );
-	int pos_tmp = text.find( '/', 1 );
+	int pos2 = text.tqfind( ' ', 1 );
+	int pos_tmp = text.tqfind( '/', 1 );
 
 	if ( pos2 == -1 || (pos_tmp != -1 && pos_tmp < pos2) )
 		pos2 = pos_tmp;
@@ -1483,12 +1483,12 @@ static bool expandTilde(TQString &text)
 		TQString user = text.mid( 1, pos2-1 );
 		TQString dir;
 
-		// A single ~ is replaced with $HOME
+		// A single ~ is tqreplaced with $HOME
 		//
 		if ( user.isEmpty() ) {
 			dir = TQDir::homeDirPath();
 		}
-		// ~user is replaced with the dir from passwd
+		// ~user is tqreplaced with the dir from passwd
 		//
 		else {
 			struct passwd *pw = ::getpwnam( user.local8Bit() );
@@ -1501,7 +1501,7 @@ static bool expandTilde(TQString &text)
 
 		if ( !dir.isEmpty() ) {
 			expanded = true;
-			text.replace(0, pos2, dir);
+			text.tqreplace(0, pos2, dir);
 		}
 	}
 

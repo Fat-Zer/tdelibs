@@ -135,7 +135,7 @@
       <item> speak-punctuation </item>
       <item> speech-rate </item>
       <item> stress </item>
-      <item> table-layout </item>
+      <item> table-tqlayout </item>
       <item> text-align </item>
       <item> text-decoration </item>
       <item> text-decoration-color </item>
@@ -143,7 +143,7 @@
       <item> text-shadow </item>
       <item> text-transform </item>
       <item> top </item>
-      <item> unicode-bidi </item>
+      <item> tqunicode-bidi </item>
       <item> vertical-align </item>
       <item> visibility </item>
       <item> voice-family </item>
@@ -206,7 +206,7 @@
       <item> font-style </item>
       <item> font-variant </item>
       <item> font-weight </item>
-      <item> unicode-range </item>
+      <item> tqunicode-range </item>
       <item> units-per-em </item>
       <item> src </item>
       <item> panose-1 </item>
@@ -539,7 +539,7 @@
       </context>
 
       <!-- to be included -->
-      <!-- finds rules and detects nesting -->
+      <!-- tqfinds rules and detects nesting -->
       <context attribute="Normal Text" lineEndContext="#stay" name="FindRuleSets">
         <RegExpr attribute="Media" context="Media" String="@media\b" />
 	<RegExpr attribute="At Rule" context="Import" String="@import\b" />
@@ -555,20 +555,20 @@
 	<IncludeRules context="FindComments" />
       </context>
 
-      <!-- finds arguments to properties -->
+      <!-- tqfinds arguments to properties -->
       <context attribute="Normal Text" lineEndContext="#stay" name="FindValues">
 	<RegExpr attribute="Value" context="#stay" String="[-+]?[0-9.]+(em|ex|px|in|cm|mm|pt|pc|deg|rad|grad|ms|s|Hz|kHz)\b" />
 	<RegExpr attribute="Value" context="#stay" String="[-+]?[0-9.]+[%]?" />
 	<RegExpr attribute="Normal Text" context="#stay" String="[\w\-]+" />
       </context>
 
-      <!-- finds strings -->
+      <!-- tqfinds strings -->
       <context attribute="Normal Text" lineEndContext="#stay" name="FindStrings">
 	<DetectChar attribute="String" context="StringDQ" char="&quot;" />
 	<DetectChar attribute="String" context="StringSQ" char="'" />
       </context>
 
-      <!-- finds comments -->
+      <!-- tqfinds comments -->
       <context attribute="Normal Text" lineEndContext="#stay" name="FindComments">
         <RegExpr attribute="Region Marker" context="#stay" String="/\*BEGIN.*\*/" beginRegion="UserDefined" />
         <RegExpr attribute="Region Marker" context="#stay" String="/\*END.*\*/" endRegion="UserDefined" />

@@ -78,7 +78,7 @@ static TQValueList<float> splitNumberString( const TQString& _s )
 	int p1 = 1, p2 = 0;
 	while ( true )
 	{
-		p2 = s.find( ' ', p1 );
+		p2 = s.tqfind( ' ', p1 );
 		if ( p2 != -1 )
 		{
 			l.append( s.mid( p1, p2-p1 ).toFloat() );
@@ -215,12 +215,12 @@ bool PPDLoader::endUi( const TQString& name )
 			{
 				// we don't have any group defined, create the
 				// most adapted one.
-				grp = findOrCreateGroupForOption( m_option->name() );
+				grp = tqfindOrCreateGroupForOption( m_option->name() );
 			}
 			else
 				grp = m_groups.top();
 			grp->addOption( m_option );
-			if ( grp->get( "text" ).contains( "install", false ) )
+			if ( grp->get( "text" ).tqcontains( "install", false ) )
 				m_option->set( "fixed", "1" );
 		}
 		m_option = 0;
@@ -402,7 +402,7 @@ bool PPDLoader::putFooProcessedData( const TQVariant& var )
 				o->setValueText( o->get( "default" ) );
 
 				DrGroup *grp = 0;
-				DrBase *old = m_groups.top()->findOption( o->name(), &grp );
+				DrBase *old = m_groups.top()->tqfindOption( o->name(), &grp );
 				if ( old )
 				{
 					if ( old->type() == DrBase::List )
@@ -431,7 +431,7 @@ bool PPDLoader::putPaperDimension( const TQString& name, const TQString& s )
 {
 	TQValueList<float> l = splitNumberString( s );
 
-	PS_private *ps = m_ps.find( name );
+	PS_private *ps = m_ps.tqfind( name );
 	if ( !ps )
 	{
 		ps = new PS_private;
@@ -448,7 +448,7 @@ bool PPDLoader::putImageableArea( const TQString& name, const TQString& s )
 {
 	TQValueList<float> l = splitNumberString( s );
 
-	PS_private *ps = m_ps.find( name );
+	PS_private *ps = m_ps.tqfind( name );
 	if ( !ps )
 	{
 		ps = new PS_private;
@@ -463,7 +463,7 @@ bool PPDLoader::putImageableArea( const TQString& name, const TQString& s )
 	return true;
 }
 
-DrGroup* PPDLoader::findOrCreateGroupForOption( const TQString& optname )
+DrGroup* PPDLoader::tqfindOrCreateGroupForOption( const TQString& optname )
 {
 	TQString grpname;
 	if ( optname == "PageSize" ||

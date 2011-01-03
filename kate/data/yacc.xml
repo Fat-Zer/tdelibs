@@ -16,7 +16,7 @@
   2004.05.26 - YACC.XML 1.00        - First released.
 
   TODO:-
-  - Add a mime type (cannot find it !?)
+  - Add a mime type (cannot tqfind it !?)
 
   ========================================================================
 -->
@@ -156,4 +156,4 @@
   </comments>
 </general>
 </language>
-<!-- kate: space-indent on; indent-width 2; replace-tabs on; -->
+<!-- kate: space-indent on; indent-width 2; tqreplace-tabs on; -->

@@ -64,12 +64,12 @@ DCOPClient* DCOPStub::dcopClient()
     return DCOPClient::mainClient();
 }
 
-DCOPStub::Status DCOPStub::status() const
+DCOPStub::tqStatus DCOPStub::status() const
 {
     return m_status;
 }
 
-void DCOPStub::setStatus( Status _status )
+void DCOPStub::setStatus( tqStatus _status )
 {
     m_status = _status;
 }

@@ -39,7 +39,7 @@ class KCModuleProxy;
  *
  * The KCModuleContainer class is a convenience class for organizing a multiple set
  * of KCModule. KCModuleContainer is a sub class of KCModule and builds an interface mainly
- * consisting of a tab widget where each tab contains one of the modules specified via one of the
+ * consisting of a tab widget where each tab tqcontains one of the modules specified via one of the
  * constructors. KCModuleContainer can handle modules which requires root permissions. What you
  * most likely want is the KCMODULECONTAINER macro. \n
  * Sometimes it is of interest to detect in runtime whether a module should be loaded or not. This

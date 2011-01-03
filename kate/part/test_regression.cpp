@@ -364,7 +364,7 @@ KJS::Value OutputFunction::call(KJS::ExecState *exec, KJS::Object &thisObj, cons
 
 const char failureSnapshotPrefix[] = "testkateregressionrc-FS.";
 
-static TQString findMostRecentFailureSnapshot() {
+static TQString tqfindMostRecentFailureSnapshot() {
     TQDir dir(kapp->dirs()->saveLocation("config"),
              TQString(failureSnapshotPrefix)+"*",
              TQDir::Time, TQDir::Files);
@@ -515,7 +515,7 @@ int main(int argc, char *argv[])
     KateDocument *part = new KateDocument(/*bSingleViewMode*/true,
                                           /*bBrowserView*/false,
                                           /*bReadOnly*/false,
-                                          /*parentWidget*/toplevel,
+                                          /*tqparentWidget*/toplevel,
                                           /*widgetName*/"testkate");
     part->readConfig(&cfg);
 
@@ -560,7 +560,7 @@ int main(int argc, char *argv[])
     {
         TQString failureSnapshot = args->getOption("cmp-failures");
         if (failureSnapshot.isEmpty())
-            failureSnapshot = findMostRecentFailureSnapshot();
+            failureSnapshot = tqfindMostRecentFailureSnapshot();
         if (!failureSnapshot.isEmpty())
             regressionTest->setFailureSnapshotConfig(
                     new KSimpleConfig(failureSnapshotPrefix + failureSnapshot, true),
@@ -659,7 +659,7 @@ RegressionTest::RegressionTest(KateDocument *part, KConfig *baseConfig,
     m_view = static_cast<KateView *>(m_part->widget());
     m_baseConfig = baseConfig;
     m_baseDir = baseDir;
-    m_baseDir = m_baseDir.replace( "//", "/" );
+    m_baseDir = m_baseDir.tqreplace( "//", "/" );
     if ( m_baseDir.endsWith( "/" ) )
         m_baseDir = m_baseDir.left( m_baseDir.length() - 1 );
     if (outputDir.isEmpty())
@@ -740,7 +740,7 @@ void RegressionTest::setFailureSnapshotSaver(KConfig *cfg, const TQString &sname
 TQStringList RegressionTest::concatListFiles(const TQString &relPath, const TQString &filename)
 {
     TQStringList cmds;
-    int pos = relPath.findRev('/');
+    int pos = relPath.tqfindRev('/');
     if (pos >= 0)
         cmds += concatListFiles(relPath.left(pos), filename);
     cmds += readListFile(m_baseDir + "/tests/" + relPath + "/" + filename);
@@ -779,12 +779,12 @@ bool RegressionTest::runTests(TQString relPath, bool mustExist, int known_failur
 	    TQString filename = sourceDir[fileno];
 	    TQString relFilename = relPath.isEmpty() ? filename : relPath+"/"+filename;
 
-            if (filename.startsWith(".") || ignoreFiles.contains(filename) )
+            if (filename.startsWith(".") || ignoreFiles.tqcontains(filename) )
                 continue;
             int failure_type = NoFailure;
-            if ( failureFiles.contains( filename ) )
+            if ( failureFiles.tqcontains( filename ) )
                 failure_type |= AllFailure;
-            if ( failureFiles.contains ( filename + "-result" ) )
+            if ( failureFiles.tqcontains ( filename + "-result" ) )
                 failure_type |= ResultFailure;
             runTests(relFilename, false, failure_type);
 	}
@@ -855,7 +855,7 @@ void RegressionTest::createLink( const TQString& test, int failures )
 /** returns the path in a way that is relatively reachable from base.
  * @param base base directory (must not include trailing slash)
  * @param path directory/file to be relatively reached by base
- * @return path with all elements replaced by .. and concerning path elements
+ * @return path with all elements tqreplaced by .. and concerning path elements
  *	to be relatively reachable from base.
  */
 static TQString makeRelativePath(const TQString &base, const TQString &path)
@@ -869,10 +869,10 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
     int pos = 0;
     do {
         pos++;
-        int newpos = absBase.find('/', pos);
+        int newpos = absBase.tqfind('/', pos);
         if (newpos == -1) newpos = absBase.length();
-        TQConstString cmpPathComp(absPath.unicode() + pos, newpos - pos);
-        TQConstString cmpBaseComp(absBase.unicode() + pos, newpos - pos);
+        TQConstString cmpPathComp(absPath.tqunicode() + pos, newpos - pos);
+        TQConstString cmpBaseComp(absBase.tqunicode() + pos, newpos - pos);
 //         kdDebug() << "cmpPathComp: \"" << cmpPathComp.string() << "\"" << endl;
 //         kdDebug() << "cmpBaseComp: \"" << cmpBaseComp.string() << "\"" << endl;
 //         kdDebug() << "pos: " << pos << " newpos: " << newpos << endl;
@@ -886,11 +886,11 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
 
     TQString rel;
     {
-        TQConstString relBase(absBase.unicode() + basepos, absBase.length() - basepos);
-        TQConstString relPath(absPath.unicode() + pathpos, absPath.length() - pathpos);
+        TQConstString relBase(absBase.tqunicode() + basepos, absBase.length() - basepos);
+        TQConstString relPath(absPath.tqunicode() + pathpos, absPath.length() - pathpos);
         // generate as many .. as there are path elements in relBase
         if (relBase.string().length() > 0) {
-            for (int i = relBase.string().contains('/'); i > 0; --i)
+            for (int i = relBase.string().tqcontains('/'); i > 0; --i)
                 rel += "../";
             rel += "..";
             if (relPath.string().length() > 0) rel += "/";
@@ -935,13 +935,13 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & ResultFailure ) {
         domDiff += "<pre>";
-        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-result %3/%2-result" )
+        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-result %3/%2-result" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {
             TQString line = is->readLine();
-            line = line.replace( '<', "&lt;" );
-            line = line.replace( '>', "&gt;" );
+            line = line.tqreplace( '<', "&lt;" );
+            line = line.tqreplace( '>', "&gt;" );
             domDiff += line  + "\n";
         }
         delete is;
@@ -1026,7 +1026,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
 void RegressionTest::testStaticFile(const TQString & filename, const TQStringList &commands)
 {
-    qApp->mainWidget()->resize( 800, 600); // restore size
+    tqApp->mainWidget()->resize( 800, 600); // restore size
 
     // Set arguments
     KParts::URLArgs args;
@@ -1271,7 +1271,7 @@ void RegressionTest::printDescription(const TQString& description)
 
     if (!description.isEmpty()) {
         TQString desc = description;
-        desc.replace( '\n', ' ' );
+        desc.tqreplace( '\n', ' ' );
 	printf(" [%s]", desc.latin1());
     }
 
@@ -1291,7 +1291,7 @@ void RegressionTest::createMissingDirs(const TQString & filename)
     pathComponents.prepend(parentDir.absFilePath());
     while (!parentDir.exists()) {
 	TQString parentPath = parentDir.absFilePath();
-	int slashPos = parentPath.findRev('/');
+	int slashPos = parentPath.tqfindRev('/');
 	if (slashPos < 0)
 	    break;
 	parentPath = parentPath.left(slashPos);
@@ -1334,7 +1334,7 @@ bool RegressionTest::svnIgnored( const TQString &filename )
 
 void RegressionTest::resizeTopLevelWidget( int w, int h )
 {
-    qApp->mainWidget()->resize( w, h );
+    tqApp->mainWidget()->resize( w, h );
     // Since we're not visible, this doesn't have an immediate effect, TQWidget posts the event
     TQApplication::sendPostedEvents( 0, TQEvent::Resize );
 }

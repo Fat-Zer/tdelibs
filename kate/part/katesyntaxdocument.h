@@ -128,7 +128,7 @@ class KateSyntaxDocument : public QDomDocument
     /**
      * Returns a list with all the keywords inside the list type
      */
-    TQStringList& finddata(const TQString& mainGroup,const TQString& type,bool clearList=true);
+    TQStringList& tqfinddata(const TQString& mainGroup,const TQString& type,bool clearList=true);
 
   private:
     /**
@@ -161,4 +161,4 @@ class KateSyntaxDocument : public QDomDocument
 
 #endif
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

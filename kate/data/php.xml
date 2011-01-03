@@ -3723,7 +3723,7 @@ Changes:
       <item> dba_open </item>
       <item> dba_optimize </item>
       <item> dba_popen </item>
-      <item> dba_replace </item>
+      <item> dba_tqreplace </item>
       <item> dba_sync </item>
       <item> dbase_add_record </item>
       <item> dbase_close </item>
@@ -3736,7 +3736,7 @@ Changes:
       <item> dbase_numrecords </item>
       <item> dbase_open </item>
       <item> dbase_pack </item>
-      <item> dbase_replace_record </item>
+      <item> dbase_tqreplace_record </item>
       <item> dblist </item>
       <item> dbmclose </item>
       <item> dbmdelete </item>
@@ -3746,7 +3746,7 @@ Changes:
       <item> dbminsert </item>
       <item> dbmnextkey </item>
       <item> dbmopen </item>
-      <item> dbmreplace </item>
+      <item> dbmtqreplace </item>
       <item> dbplus_add </item>
       <item> dbplus_aql </item>
       <item> dbplus_chdir </item>
@@ -3754,7 +3754,7 @@ Changes:
       <item> dbplus_curr </item>
       <item> dbplus_errcode </item>
       <item> dbplus_errno </item>
-      <item> dbplus_find </item>
+      <item> dbplus_tqfind </item>
       <item> dbplus_first </item>
       <item> dbplus_flush </item>
       <item> dbplus_freealllocks </item>
@@ -3865,9 +3865,9 @@ Changes:
       <item> empty </item>
       <item> end </item>
       <item> ereg </item>
-      <item> ereg_replace </item>
+      <item> ereg_tqreplace </item>
       <item> eregi </item>
-      <item> eregi_replace </item>
+      <item> eregi_tqreplace </item>
       <item> error_log </item>
       <item> error_reporting </item>
       <item> escapeshellarg </item>
@@ -4618,7 +4618,7 @@ Changes:
       <item> ldap_list </item>
       <item> ldap_mod_add </item>
       <item> ldap_mod_del </item>
-      <item> ldap_mod_replace </item>
+      <item> ldap_mod_tqreplace </item>
       <item> ldap_modify </item>
       <item> ldap_next_attribute </item>
       <item> ldap_next_entry </item>
@@ -4676,7 +4676,7 @@ Changes:
       <item> mb_encode_numericentity </item>
       <item> mb_ereg </item>
       <item> mb_ereg_match </item>
-      <item> mb_ereg_replace </item>
+      <item> mb_ereg_tqreplace </item>
       <item> mb_ereg_search </item>
       <item> mb_ereg_search_getpos </item>
       <item> mb_ereg_search_getregs </item>
@@ -4685,7 +4685,7 @@ Changes:
       <item> mb_ereg_search_regs </item>
       <item> mb_ereg_search_setpos </item>
       <item> mb_eregi </item>
-      <item> mb_eregi_replace </item>
+      <item> mb_eregi_tqreplace </item>
       <item> mb_get_info </item>
       <item> mb_http_input </item>
       <item> mb_http_output </item>
@@ -4815,7 +4815,7 @@ Changes:
       <item> msession_create </item>
       <item> msession_destroy </item>
       <item> msession_disconnect </item>
-      <item> msession_find </item>
+      <item> msession_tqfind </item>
       <item> msession_get </item>
       <item> msession_get_array </item>
       <item> msession_getdata </item>
@@ -5146,7 +5146,7 @@ Changes:
       <item> ncurses_meta </item>
       <item> ncurses_mouse_trafo </item>
       <item> ncurses_mouseinterval </item>
-      <item> ncurses_mousemask </item>
+      <item> ncurses_mousetqmask </item>
       <item> ncurses_move </item>
       <item> ncurses_move_panel </item>
       <item> ncurses_mvaddch </item>
@@ -5181,7 +5181,7 @@ Changes:
       <item> ncurses_qiflush </item>
       <item> ncurses_raw </item>
       <item> ncurses_refresh </item>
-      <item> ncurses_replace_panel </item>
+      <item> ncurses_tqreplace_panel </item>
       <item> ncurses_reset_prog_mode </item>
       <item> ncurses_reset_shell_mode </item>
       <item> ncurses_resetty </item>
@@ -5247,7 +5247,7 @@ Changes:
       <item> notes_create_db </item>
       <item> notes_create_note </item>
       <item> notes_drop_db </item>
-      <item> notes_find_note </item>
+      <item> notes_tqfind_note </item>
       <item> notes_header_info </item>
       <item> notes_list_msgs </item>
       <item> notes_mark_read </item>
@@ -5502,7 +5502,7 @@ Changes:
       <item> pdf_endpath </item>
       <item> pdf_fill </item>
       <item> pdf_fill_stroke </item>
-      <item> pdf_findfont </item>
+      <item> pdf_tqfindfont </item>
       <item> pdf_get_buffer </item>
       <item> pdf_get_font </item>
       <item> pdf_get_fontname </item>
@@ -5737,8 +5737,8 @@ Changes:
       <item> preg_match </item>
       <item> preg_match_all </item>
       <item> preg_quote </item>
-      <item> preg_replace </item>
-      <item> preg_replace_callback </item>
+      <item> preg_tqreplace </item>
+      <item> preg_tqreplace_callback </item>
       <item> preg_split </item>
       <item> prev </item>
       <item> print </item>
@@ -5795,7 +5795,7 @@ Changes:
       <item> pspell_new_config </item>
       <item> pspell_new_personal </item>
       <item> pspell_save_wordlist </item>
-      <item> pspell_store_replacement </item>
+      <item> pspell_store_tqreplacement </item>
       <item> pspell_suggest </item>
       <item> putenv </item>
       <item> qdom_error </item>
@@ -6026,10 +6026,10 @@ Changes:
       <item> srand </item>
       <item> sscanf </item>
       <item> stat </item>
-      <item> str_ireplace </item>
+      <item> str_itqreplace </item>
       <item> str_pad </item>
       <item> str_repeat </item>
-      <item> str_replace </item>
+      <item> str_tqreplace </item>
       <item> str_rot13 </item>
       <item> str_shuffle </item>
       <item> str_split </item>
@@ -6097,7 +6097,7 @@ Changes:
       <item> substr </item>
       <item> substr_compare </item>
       <item> substr_count </item>
-      <item> substr_replace </item>
+      <item> substr_tqreplace </item>
       <item> swf_actiongeturl </item>
       <item> swf_actiongotoframe </item>
       <item> swf_actiongotolabel </item>
@@ -6119,7 +6119,7 @@ Changes:
       <item> swf_definetext </item>
       <item> swf_endbutton </item>
       <item> swf_enddoaction </item>
-      <item> swf_endshape </item>
+      <item> swf_endtqshape </item>
       <item> swf_endsymbol </item>
       <item> swf_fontsize </item>
       <item> swf_fontslant </item>
@@ -6147,20 +6147,20 @@ Changes:
       <item> swf_scale </item>
       <item> swf_setfont </item>
       <item> swf_setframe </item>
-      <item> swf_shapearc </item>
-      <item> swf_shapecurveto </item>
-      <item> swf_shapecurveto3 </item>
-      <item> swf_shapefillbitmapclip </item>
-      <item> swf_shapefillbitmaptile </item>
-      <item> swf_shapefilloff </item>
-      <item> swf_shapefillsolid </item>
-      <item> swf_shapelinesolid </item>
-      <item> swf_shapelineto </item>
-      <item> swf_shapemoveto </item>
+      <item> swf_tqshapearc </item>
+      <item> swf_tqshapecurveto </item>
+      <item> swf_tqshapecurveto3 </item>
+      <item> swf_tqshapefillbitmapclip </item>
+      <item> swf_tqshapefillbitmaptile </item>
+      <item> swf_tqshapefilloff </item>
+      <item> swf_tqshapefillsolid </item>
+      <item> swf_tqshapelinesolid </item>
+      <item> swf_tqshapelineto </item>
+      <item> swf_tqshapemoveto </item>
       <item> swf_showframe </item>
       <item> swf_startbutton </item>
       <item> swf_startdoaction </item>
-      <item> swf_startshape </item>
+      <item> swf_starttqshape </item>
       <item> swf_startsymbol </item>
       <item> swf_textwidth </item>
       <item> swf_translate </item>
@@ -6171,7 +6171,7 @@ Changes:
       <item> swfbitmap.getwidth </item>
       <item> swfbutton </item>
       <item> swfbutton.addaction </item>
-      <item> swfbutton.addshape </item>
+      <item> swfbutton.addtqshape </item>
       <item> swfbutton.setaction </item>
       <item> swfbutton.setdown </item>
       <item> swfbutton.sethit </item>
@@ -6206,8 +6206,8 @@ Changes:
       <item> swfgradient </item>
       <item> swfgradient.addentry </item>
       <item> swfmorph </item>
-      <item> swfmorph.getshape1 </item>
-      <item> swfmorph.getshape2 </item>
+      <item> swfmorph.gettqshape1 </item>
+      <item> swfmorph.gettqshape2 </item>
       <item> swfmovie </item>
       <item> swfmovie.add </item>
       <item> swfmovie.nextframe </item>
@@ -6219,17 +6219,17 @@ Changes:
       <item> swfmovie.setframes </item>
       <item> swfmovie.setrate </item>
       <item> swfmovie.streammp3 </item>
-      <item> swfshape </item>
-      <item> swfshape.addfill </item>
-      <item> swfshape.drawcurve </item>
-      <item> swfshape.drawcurveto </item>
-      <item> swfshape.drawline </item>
-      <item> swfshape.drawlineto </item>
-      <item> swfshape.movepen </item>
-      <item> swfshape.movepento </item>
-      <item> swfshape.setleftfill </item>
-      <item> swfshape.setline </item>
-      <item> swfshape.setrightfill </item>
+      <item> swftqshape </item>
+      <item> swftqshape.addfill </item>
+      <item> swftqshape.drawcurve </item>
+      <item> swftqshape.drawcurveto </item>
+      <item> swftqshape.drawline </item>
+      <item> swftqshape.drawlineto </item>
+      <item> swftqshape.movepen </item>
+      <item> swftqshape.movepento </item>
+      <item> swftqshape.setleftfill </item>
+      <item> swftqshape.setline </item>
+      <item> swftqshape.setrightfill </item>
       <item> swfsprite </item>
       <item> swfsprite.add </item>
       <item> swfsprite.nextframe </item>
@@ -6307,7 +6307,7 @@ Changes:
       <item> udm_crc32 </item>
       <item> udm_errno </item>
       <item> udm_error </item>
-      <item> udm_find </item>
+      <item> udm_tqfind </item>
       <item> udm_free_agent </item>
       <item> udm_free_ispell_data </item>
       <item> udm_free_res </item>

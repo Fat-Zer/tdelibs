@@ -148,14 +148,14 @@ int KSyntaxHighlighter::highlightParagraph( const TQString &text, int )
     }
 
     TQString simplified = text;
-    simplified = simplified.replace( TQRegExp( "\\s" ), TQString::null ).replace( '|', TQString::fromLatin1(">") );
-    while ( simplified.startsWith( TQString::fromLatin1(">>>>") ) )
+    simplified = simplified.tqreplace( TQRegExp( "\\s" ), TQString::null ).tqreplace( '|', TQString::tqfromLatin1(">") );
+    while ( simplified.startsWith( TQString::tqfromLatin1(">>>>") ) )
 	simplified = simplified.mid(3);
-    if	( simplified.startsWith( TQString::fromLatin1(">>>") ) || simplified.startsWith( TQString::fromLatin1("> >	>") ) )
+    if	( simplified.startsWith( TQString::tqfromLatin1(">>>") ) || simplified.startsWith( TQString::tqfromLatin1("> >	>") ) )
 	setFormat( 0, text.length(), d->col2 );
-    else if	( simplified.startsWith( TQString::fromLatin1(">>") ) || simplified.startsWith( TQString::fromLatin1("> >") ) )
+    else if	( simplified.startsWith( TQString::tqfromLatin1(">>") ) || simplified.startsWith( TQString::tqfromLatin1("> >") ) )
 	setFormat( 0, text.length(), d->col3 );
-    else if	( simplified.startsWith( TQString::fromLatin1(">") ) )
+    else if	( simplified.startsWith( TQString::tqfromLatin1(">") ) )
 	setFormat( 0, text.length(), d->col4 );
     else
 	setFormat( 0, text.length(), d->col5 );
@@ -189,7 +189,7 @@ int KSpellingHighlighter::highlightParagraph( const TQString &text,
     // leave #includes, diffs, and quoted replies alone
     TQString diffAndCo( ">|" );
 
-    bool isCode = diffAndCo.find(text[0]) != -1;
+    bool isCode = diffAndCo.tqfind(text[0]) != -1;
 
     if ( !text.endsWith(" ") )
 	d->alwaysEndsWithSpace = false;
@@ -375,7 +375,7 @@ bool KDictSpellingHighlighter::isMisspelled( const TQString &word )
     // get tricky...
     // For auto detection ignore signature and reply prefix
     if ( !d->autoReady )
-	d->autoIgnoreDict.replace( word, Ignore );
+	d->autoIgnoreDict.tqreplace( word, Ignore );
 
     // "dict" is used as a cache to store the results of KSpell
     TQDict<int>* dict = ( d->globalConfig ? d->sDict() : d->mDict );
@@ -383,14 +383,14 @@ bool KDictSpellingHighlighter::isMisspelled( const TQString &word )
 	if ( d->autoReady && ( d->autoDict[word] != NotOkay )) {
 	    if ( !d->autoIgnoreDict[word] )
 		++d->errorCount;
-	    d->autoDict.replace( word, NotOkay );
+	    d->autoDict.tqreplace( word, NotOkay );
 	}
 
 	return d->active;
     }
     if ( !dict->isEmpty() && (*dict)[word] == Okay ) {
 	if ( d->autoReady && !d->autoDict[word] ) {
-	    d->autoDict.replace( word, Okay );
+	    d->autoDict.tqreplace( word, Okay );
 	}
 	return false;
     }
@@ -399,7 +399,7 @@ bool KDictSpellingHighlighter::isMisspelled( const TQString &word )
 	int para, index;
 	textEdit()->getCursorPosition( &para, &index );
 	++d->wordCount;
-	dict->replace( word, Unknown );
+	dict->tqreplace( word, Unknown );
 	++d->checksRequested;
 	if (currentParagraph() != para)
 	    d->completeRehighlightRequired = true;
@@ -425,9 +425,9 @@ void KDictSpellingHighlighter::slotMisspelling (const TQString &originalWord, co
     Q_UNUSED( suggestions );
     // kdDebug() << suggestions.join( " " ).latin1() << endl;
     if ( d->globalConfig )
-        d->sDict()->replace( originalWord, NotOkay );
+        d->sDict()->tqreplace( originalWord, NotOkay );
     else
-        d->mDict->replace( originalWord, NotOkay );
+        d->mDict->tqreplace( originalWord, NotOkay );
 
     //Emit this baby so that apps that want to have suggestions in a popup over
     //the misspelled word can catch them.
@@ -441,7 +441,7 @@ void KDictSpellingHighlighter::slotCorrected(const TQString &word,
 {
     TQDict<int>* dict = ( d->globalConfig ? d->sDict() : d->mDict );
     if ( !dict->isEmpty() && (*dict)[word] == Unknown ) {
-        dict->replace( word, Okay );
+        dict->tqreplace( word, Okay );
     }
     ++d->checksDone;
     if (d->checksDone == d->checksRequested) {

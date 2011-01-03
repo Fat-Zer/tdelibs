@@ -281,7 +281,7 @@ void KDockSplitter::resizeEvent(TQResizeEvent *ev)
               // xpos should not change, the docking is on the top
               // checkValue is *fuzzy* here, it leads to ugly rounding bugs
               // In truth, it is not needed, because it is called when calculating the "position".
-              xpos = qRound(((double)xpos) * ev->oldSize().height() / height());
+              xpos = tqRound(((double)xpos) * ev->oldSize().height() / height());
             }
           }
         } else {
@@ -291,7 +291,7 @@ void KDockSplitter::resizeEvent(TQResizeEvent *ev)
             } else {
               // xpos should not change
               // checkValue is *fuzzy* here, it leads to ugly rounding bugs
-              xpos = qRound(((double)xpos) * ev->oldSize().width() / width());
+              xpos = tqRound(((double)xpos) * ev->oldSize().width() / width());
             }
           }
         }
@@ -513,7 +513,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
           if (tmp_xpos != xpos) {
             xpos = tmp_xpos;
             resizeEvent(0);
-            divider->repaint(true);
+            divider->tqrepaint(true);
           }
         }
       } else {
@@ -529,7 +529,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
           if (tmp_xpos != xpos) {
             xpos = tmp_xpos;
             resizeEvent(0);
-            divider->repaint(true);
+            divider->tqrepaint(true);
           }
         }
       }
@@ -546,7 +546,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
         }
         xpos = factor* checkValue( mapFromGlobal(mev->globalPos()).y() ) / height();
         resizeEvent(0);
-        divider->repaint(true);
+        divider->tqrepaint(true);
       } else {
         if ((fixedWidth0!=-1) || (fixedWidth1!=-1))
         {
@@ -554,7 +554,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
         }
         xpos = factor* checkValue( mapFromGlobal(mev->globalPos()).x() ) / width();
         resizeEvent(0);
-        divider->repaint(true);
+        divider->tqrepaint(true);
       }
       handled= true;
       break;
@@ -585,15 +585,15 @@ void KDockSplitter::updateName()
   if ( !initialised ) return;
 
   TQString new_name = TQString( child0->name() ) + "," + child1->name();
-  parentWidget()->setName( new_name.latin1() );
-  parentWidget()->setCaption( child0->caption() + "," + child1->caption() );
-  parentWidget()->repaint( false );
+  tqparentWidget()->setName( new_name.latin1() );
+  tqparentWidget()->setCaption( child0->caption() + "," + child1->caption() );
+  tqparentWidget()->tqrepaint( false );
 
-  ((KDockWidget*)parentWidget())->firstName = child0->name();
-  ((KDockWidget*)parentWidget())->lastName = child1->name();
-  ((KDockWidget*)parentWidget())->splitterOrientation = m_orientation;
+  ((KDockWidget*)tqparentWidget())->firstName = child0->name();
+  ((KDockWidget*)tqparentWidget())->lastName = child1->name();
+  ((KDockWidget*)tqparentWidget())->splitterOrientation = m_orientation;
 
-  TQWidget* p = parentWidget()->parentWidget();
+  TQWidget* p = tqparentWidget()->tqparentWidget();
   if ( p && p->inherits("KDockSplitter" ) )
     ((KDockSplitter*)p)->updateName();
 }
@@ -634,7 +634,7 @@ KDockButton_Private::~KDockButton_Private()
 
 void KDockButton_Private::drawButton( TQPainter* p )
 {
-  p->fillRect( 0,0, width(), height(), TQBrush(colorGroup().brush(TQColorGroup::Background)) );
+  p->fillRect( 0,0, width(), height(), TQBrush(tqcolorGroup().brush(TQColorGroup::Background)) );
   p->drawPixmap( (width() - pixmap()->width()) / 2, (height() - pixmap()->height()) / 2, *pixmap() );
   if ( moveMouse && !isDown() ){
     p->setPen( white );
@@ -642,12 +642,12 @@ void KDockButton_Private::drawButton( TQPainter* p )
     p->lineTo( 0, 0 );
     p->lineTo( width() - 1, 0 );
 
-    p->setPen( colorGroup().dark() );
+    p->setPen( tqcolorGroup().dark() );
     p->lineTo( width() - 1, height() - 1 );
     p->lineTo( 0, height() - 1 );
   }
   if ( isOn() || isDown() ){
-    p->setPen( colorGroup().dark() );
+    p->setPen( tqcolorGroup().dark() );
     p->moveTo( 0, height() - 1 );
     p->lineTo( 0, 0 );
     p->lineTo( width() - 1, 0 );
@@ -661,13 +661,13 @@ void KDockButton_Private::drawButton( TQPainter* p )
 void KDockButton_Private::enterEvent( TQEvent * )
 {
   moveMouse = true;
-  repaint();
+  tqrepaint();
 }
 
 void KDockButton_Private::leaveEvent( TQEvent * )
 {
   moveMouse = false;
-  repaint();
+  tqrepaint();
 }
 
 /*************************************************************************/
@@ -707,6 +707,6 @@ void KDockWidgetPrivate::slotFocusEmbeddedWidget(TQWidget* w)
    }
 }
 
-#ifndef NO_INCLUDE_MOCFILES // for Qt-only projects, because tmake doesn't take this name
+#ifndef NO_INCLUDE_TQMOCFILES // for Qt-only projects, because tmake doesn't take this name
 #include "kdockwidget_private.moc"
 #endif

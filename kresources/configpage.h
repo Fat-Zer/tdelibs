@@ -76,7 +76,7 @@ class KRESOURCES_EXPORT ConfigPage : public TQWidget, public ManagerObserver<Res
     virtual void resourceDeleted( Resource *resource );
 
   protected:
-    ConfigViewItem *findItem( Resource *resource );
+    ConfigViewItem *tqfindItem( Resource *resource );
 
   protected slots:
     void slotItemClicked( TQListViewItem * );

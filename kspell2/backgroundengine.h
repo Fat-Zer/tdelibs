@@ -31,7 +31,7 @@ namespace KSpell2
     class Filter;
     class Broker;
     class Dictionary;
-    class BackgroundEngine : public QObject
+    class BackgroundEngine : public TQObject
     {
         Q_OBJECT
     public:

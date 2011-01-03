@@ -50,9 +50,9 @@
 
 void KEdit::search(){
 
-  if( replace_dialog && replace_dialog->isVisible() )
+  if( tqreplace_dialog && tqreplace_dialog->isVisible() )
   {
-    replace_dialog->hide();
+    tqreplace_dialog->hide();
   }
 
   if( !srchdialog )
@@ -62,8 +62,8 @@ void KEdit::search(){
     connect(srchdialog,TQT_SIGNAL(done()),this,TQT_SLOT(searchdone_slot()));
   }
 
-  // If we already searched / replaced something before make sure it shows
-  // up in the find dialog line-edit.
+  // If we already searched / tqreplaced something before make sure it shows
+  // up in the tqfind dialog line-edit.
 
   TQString string;
   string = srchdialog->getText();
@@ -162,7 +162,7 @@ int KEdit::doSearch(TQString s_pattern, bool case_sensitive,
 
       string = textLine(i);
 
-      pos = string.find(s_pattern, i == line ? col : 0, case_sensitive);
+      pos = string.tqfind(s_pattern, i == line ? col : 0, case_sensitive);
 
       if( pos != -1){
 
@@ -191,7 +191,7 @@ int KEdit::doSearch(TQString s_pattern, bool case_sensitive,
       string = textLine(i);
       int line_length = string.length();
 
-      pos = string.findRev(s_pattern, line == i ? col : line_length , case_sensitive);
+      pos = string.tqfindRev(s_pattern, line == i ? col : line_length , case_sensitive);
 
       if (pos != -1){
 
@@ -244,47 +244,47 @@ bool KEdit::repeatSearch() {
 //
 
 
-void KEdit::replace()
+void KEdit::tqreplace()
 {
   if( srchdialog && srchdialog->isVisible() )
   {
     srchdialog->hide();
   }
 
-  if( !replace_dialog )
+  if( !tqreplace_dialog )
   {
-    replace_dialog = new KEdReplace( this, "replace_dialog", false );
-    connect(replace_dialog,TQT_SIGNAL(find()),this,TQT_SLOT(replace_search_slot()));
-    connect(replace_dialog,TQT_SIGNAL(replace()),this,TQT_SLOT(replace_slot()));
-    connect(replace_dialog,TQT_SIGNAL(replaceAll()),this,TQT_SLOT(replace_all_slot()));
-    connect(replace_dialog,TQT_SIGNAL(done()),this,TQT_SLOT(replacedone_slot()));
+    tqreplace_dialog = new KEdReplace( this, "tqreplace_dialog", false );
+    connect(tqreplace_dialog,TQT_SIGNAL(tqfind()),this,TQT_SLOT(tqreplace_search_slot()));
+    connect(tqreplace_dialog,TQT_SIGNAL(tqreplace()),this,TQT_SLOT(tqreplace_slot()));
+    connect(tqreplace_dialog,TQT_SIGNAL(tqreplaceAll()),this,TQT_SLOT(tqreplace_all_slot()));
+    connect(tqreplace_dialog,TQT_SIGNAL(done()),this,TQT_SLOT(tqreplacedone_slot()));
   }
 
-  TQString string = replace_dialog->getText();
-  replace_dialog->setText(string.isEmpty() ? pattern : string);
+  TQString string = tqreplace_dialog->getText();
+  tqreplace_dialog->setText(string.isEmpty() ? pattern : string);
 
 
   deselect();
-  last_replace = NONE;
+  last_tqreplace = NONE;
 
-  replace_dialog->show();
-  replace_dialog->result();
+  tqreplace_dialog->show();
+  tqreplace_dialog->result();
 }
 
 
-void KEdit::replace_slot(){
+void KEdit::tqreplace_slot(){
 
-  if (!replace_dialog)
+  if (!tqreplace_dialog)
     return;
 
-  if(!can_replace){
+  if(!can_tqreplace){
     KNotifyClient::beep();
     return;
   }
 
   int line,col, length;
 
-  TQString string = replace_dialog->getReplaceText();
+  TQString string = tqreplace_dialog->getReplaceText();
   length = string.length();
 
   this->cut();
@@ -293,9 +293,9 @@ void KEdit::replace_slot(){
 
   insertAt(string,line,col);
   setModified(true);
-  can_replace = false;
+  can_tqreplace = false;
 
-  if (replace_dialog->get_direction())
+  if (tqreplace_dialog->get_direction())
   {
     // Backward
     setCursorPosition(line,col+length);
@@ -313,40 +313,40 @@ void KEdit::replace_slot(){
   }
 }
 
-void KEdit::replace_all_slot(){
+void KEdit::tqreplace_all_slot(){
 
-  if (!replace_dialog)
+  if (!tqreplace_dialog)
     return;
 
-  TQString to_find_string = replace_dialog->getText();
+  TQString to_find_string = tqreplace_dialog->getText();
 
   int lineFrom, lineTo, colFrom, colTo;
   getSelection(&lineFrom, &colFrom, &lineTo, &colTo);
 
-  // replace_dialog->get_direction() is true if searching backward
-  if (replace_dialog->get_direction())
+  // tqreplace_dialog->get_direction() is true if searching backward
+  if (tqreplace_dialog->get_direction())
   {
     if (colTo != -1)
     {
-      replace_all_col = colTo - to_find_string.length();
-      replace_all_line = lineTo;
+      tqreplace_all_col = colTo - to_find_string.length();
+      tqreplace_all_line = lineTo;
     }
     else
     {
-      getCursorPosition(&replace_all_line,&replace_all_col);
-      replace_all_col--;
+      getCursorPosition(&tqreplace_all_line,&tqreplace_all_col);
+      tqreplace_all_col--;
     }
   }
   else
   {
     if (colFrom != -1)
     {
-      replace_all_col = colFrom;
-      replace_all_line = lineFrom;
+      tqreplace_all_col = colFrom;
+      tqreplace_all_line = lineFrom;
     }
     else
     {
-      getCursorPosition(&replace_all_line,&replace_all_col);
+      getCursorPosition(&tqreplace_all_line,&tqreplace_all_col);
     }
   }
 
@@ -359,16 +359,16 @@ again:
 
   while(result){
 
-    result = doReplace(to_find_string, replace_dialog->case_sensitive(),
-		       false, (!replace_dialog->get_direction()),
-		       replace_all_line,replace_all_col,true);
+    result = doReplace(to_find_string, tqreplace_dialog->case_sensitive(),
+		       false, (!tqreplace_dialog->get_direction()),
+		       tqreplace_all_line,tqreplace_all_col,true);
 
   }
 
   setAutoUpdate(true);
   update();
 
-  if(!replace_dialog->get_direction()){ // forward search
+  if(!tqreplace_dialog->get_direction()){ // forward search
 
     int query = KMessageBox::questionYesNo(
 			srchdialog,
@@ -376,8 +376,8 @@ again:
                              "Continue from the beginning?"),
                         i18n("Find"),KStdGuiItem::cont(),i18n("Stop"));
     if (query == KMessageBox::Yes){
-      replace_all_line = 0;
-      replace_all_col = 0;
+      tqreplace_all_line = 0;
+      tqreplace_all_col = 0;
       goto again;
     }
   }
@@ -390,9 +390,9 @@ again:
                         i18n("Find"),KStdGuiItem::cont(),i18n("Stop"));
     if (query == KMessageBox::Yes){
       TQString string = textLine( numLines() - 1 );
-      replace_all_line = numLines() - 1;
-      replace_all_col  = string.length();
-      last_replace = BACKWARD;
+      tqreplace_all_line = numLines() - 1;
+      tqreplace_all_col  = string.length();
+      last_tqreplace = BACKWARD;
       goto again;
     }
   }
@@ -402,20 +402,20 @@ again:
 }
 
 
-void KEdit::replace_search_slot(){
+void KEdit::tqreplace_search_slot(){
 
   int line, col;
 
-  if (!replace_dialog)
+  if (!tqreplace_dialog)
     return;
 
-  TQString to_find_string = replace_dialog->getText();
+  TQString to_find_string = tqreplace_dialog->getText();
 
   int lineFrom, lineTo, colFrom, colTo;
   getSelection(&lineFrom, &colFrom, &lineTo, &colTo);
 
-  // replace_dialog->get_direction() is true if searching backward
-  if (replace_dialog->get_direction())
+  // tqreplace_dialog->get_direction() is true if searching backward
+  if (tqreplace_dialog->get_direction())
   {
     if (colFrom != -1)
     {
@@ -443,14 +443,14 @@ void KEdit::replace_search_slot(){
 
 again:
 
-  int  result = doReplace(to_find_string, replace_dialog->case_sensitive(),
-			 false, (!replace_dialog->get_direction()), line, col, false );
+  int  result = doReplace(to_find_string, tqreplace_dialog->case_sensitive(),
+			 false, (!tqreplace_dialog->get_direction()), line, col, false );
 
   if(!result){
-    if(!replace_dialog->get_direction()){ // forward search
+    if(!tqreplace_dialog->get_direction()){ // forward search
 
      int query = KMessageBox::questionYesNo(
-			replace_dialog,
+			tqreplace_dialog,
                         i18n("End of document reached.\n"\
                              "Continue from the beginning?"),
                         i18n("Replace"),KStdGuiItem::cont(),i18n("Stop"));
@@ -463,7 +463,7 @@ again:
     else{ //backward search
 
      int query = KMessageBox::questionYesNo(
-			replace_dialog,
+			tqreplace_dialog,
                         i18n("Beginning of document reached.\n"\
                              "Continue from the end?"),
                         i18n("Replace"),KStdGuiItem::cont(),i18n("Stop"));
@@ -471,7 +471,7 @@ again:
 	TQString string = textLine( numLines() - 1 );
 	line = numLines() - 1;
 	col  = string.length();
-	last_replace = BACKWARD;
+	last_tqreplace = BACKWARD;
 	goto again;
       }
     }
@@ -484,18 +484,18 @@ again:
 
 
 
-void KEdit::replacedone_slot(){
+void KEdit::tqreplacedone_slot(){
 
-  if (!replace_dialog)
+  if (!tqreplace_dialog)
     return;
 
-  replace_dialog->hide();
-  //  replace_dialog->clearFocus();
+  tqreplace_dialog->hide();
+  //  tqreplace_dialog->clearFocus();
 
   setFocus();
 
-  last_replace = NONE;
-  can_replace  = false;
+  last_tqreplace = NONE;
+  can_tqreplace  = false;
 
 }
 
@@ -503,7 +503,7 @@ void KEdit::replacedone_slot(){
 
 /* antlarr: KDE 4: make it const TQString & */
 int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
-	   bool wildcard, bool forward, int line, int col, bool replace_all){
+	   bool wildcard, bool forward, int line, int col, bool tqreplace_all){
 
 
   (void) wildcard; // reserved for possible extension to regex
@@ -513,11 +513,11 @@ int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
 
   TQString string;
   TQString stringnew;
-  TQString replacement;
+  TQString tqreplacement;
 
-  replacement = replace_dialog->getReplaceText();
+  tqreplacement = tqreplace_dialog->getReplaceText();
   line_counter = line;
-  replace_all_col = col;
+  tqreplace_all_col = col;
 
   if(forward){
 
@@ -527,34 +527,34 @@ int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
 
       string = textLine(line_counter);
 
-      if (replace_all){
-	pos = string.find(s_pattern, replace_all_col, case_sensitive);
+      if (tqreplace_all){
+	pos = string.tqfind(s_pattern, tqreplace_all_col, case_sensitive);
       }
       else{
-	pos = string.find(s_pattern, line_counter == line ? col : 0, case_sensitive);
+	pos = string.tqfind(s_pattern, line_counter == line ? col : 0, case_sensitive);
       }
 
       if (pos == -1 ){
 	line_counter++;
-	replace_all_col = 0;
-	replace_all_line = line_counter;
+	tqreplace_all_col = 0;
+	tqreplace_all_line = line_counter;
       }
 
       if( pos != -1){
 
 	length = s_pattern.length();
 
-	if(replace_all){ // automatic
+	if(tqreplace_all){ // automatic
 
           stringnew = string.copy();
           do 
           {  
-	    stringnew.replace(pos,length,replacement);
+	    stringnew.tqreplace(pos,length,tqreplacement);
 
-	    replace_all_col = pos + replacement.length();
-	    replace_all_line = line_counter;
+	    tqreplace_all_col = pos + tqreplacement.length();
+	    tqreplace_all_line = line_counter;
 
-            pos = stringnew.find(s_pattern, replace_all_col, case_sensitive);
+            pos = stringnew.tqfind(s_pattern, tqreplace_all_col, case_sensitive);
           }
           while( pos != -1); 
 
@@ -573,8 +573,8 @@ int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
 
 	  setCursorPosition( line_counter , pos + length, true );
 	  pattern = s_pattern;
-	  last_replace = FORWARD;
-	  can_replace = true;
+	  last_tqreplace = FORWARD;
+	  can_tqreplace = true;
 
 	  return 1;
 
@@ -591,55 +591,55 @@ int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
 
       int line_length = string.length();
 
-      if( replace_all ){
-        if (replace_all_col < 0)
+      if( tqreplace_all ){
+        if (tqreplace_all_col < 0)
           pos = -1;
         else
-          pos = string.findRev(s_pattern, replace_all_col , case_sensitive);
+          pos = string.tqfindRev(s_pattern, tqreplace_all_col , case_sensitive);
       }
       else{
         if ((line == line_counter) && (col < 0))
           pos = -1;
         else
-          pos = string.findRev(s_pattern,
+          pos = string.tqfindRev(s_pattern,
 			   line == line_counter ? col : line_length , case_sensitive);
       }
 
       if (pos == -1 ){
 	line_counter--;
 
-        replace_all_col = 0;
+        tqreplace_all_col = 0;
 	if(line_counter >= 0){
 	  string = textLine(line_counter);
-	  replace_all_col = string.length();
+	  tqreplace_all_col = string.length();
 
 	}
-	replace_all_line = line_counter;
+	tqreplace_all_line = line_counter;
       }
 
 
       if (pos != -1){
 	length = s_pattern.length();
 
-	if(replace_all){ // automatic
+	if(tqreplace_all){ // automatic
 
 	  stringnew = string.copy();
-	  stringnew.replace(pos,length,replacement);
+	  stringnew.tqreplace(pos,length,tqreplacement);
 
 	  removeLine(line_counter);
 	  insertLine(stringnew,line_counter);
 
-	  replace_all_col = pos-length;
-	  replace_all_line = line_counter;
-	  if (replace_all_col < 0)
+	  tqreplace_all_col = pos-length;
+	  tqreplace_all_line = line_counter;
+	  if (tqreplace_all_col < 0)
 	  {
              line_counter--;
 
              if(line_counter >= 0){
                 string = textLine(line_counter);
-                replace_all_col = string.length();
+                tqreplace_all_col = string.length();
              }
-             replace_all_line = line_counter;
+             tqreplace_all_line = line_counter;
 	  }
 
 	  setModified(true);
@@ -658,8 +658,8 @@ int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
 	    setCursorPosition(line_counter, pos ,true );
 	    pattern = s_pattern;
 
-	    last_replace = BACKWARD;
-	    can_replace = true;
+	    last_tqreplace = BACKWARD;
+	    can_tqreplace = true;
 
 	    return 1;
 	  }
@@ -698,7 +698,7 @@ public:
 
 KEdFind::KEdFind( TQWidget *parent, const char *name, bool modal )
   :KDialogBase( parent, name, modal, i18n("Find"),
-		modal ? User1|Cancel : User1|Close, User1, false, KGuiItem( i18n("&Find"), "find") )
+		modal ? User1|Cancel : User1|Close, User1, false, KGuiItem( i18n("&Find"), "tqfind") )
 {
   setWFlags( WType_TopLevel );
 
@@ -709,7 +709,7 @@ KEdFind::KEdFind( TQWidget *parent, const char *name, bool modal )
   d = new KEdFindPrivate( page );
 
   TQString text = i18n("Find:");
-  TQLabel *label = new TQLabel( text, page , "find" );
+  TQLabel *label = new TQLabel( text, page , "tqfind" );
   topLayout->addWidget( label );
 
   d->combo->setMinimumWidth(fontMetrics().maxWidth()*20);
@@ -813,24 +813,24 @@ class KEdReplace::KEdReplacePrivate
 public:
     KEdReplacePrivate( TQWidget *parent ) {
 	searchCombo = new KHistoryCombo( parent, "value" );
-	replaceCombo = new KHistoryCombo( parent, "replace_value" );
+	tqreplaceCombo = new KHistoryCombo( parent, "tqreplace_value" );
 
 	searchCombo->setMaxCount( 20 ); // just some defaults
-	replaceCombo->setMaxCount( 20 );
+	tqreplaceCombo->setMaxCount( 20 );
     }
     ~KEdReplacePrivate() {
 	delete searchCombo;
-	delete replaceCombo;
+	delete tqreplaceCombo;
     }
 
-    KHistoryCombo *searchCombo, *replaceCombo;
+    KHistoryCombo *searchCombo, *tqreplaceCombo;
 };
 
 KEdReplace::KEdReplace( TQWidget *parent, const char *name, bool modal )
   :KDialogBase( parent, name, modal, i18n("Replace"),
 		modal ? User3|User2|User1|Cancel : User3|User2|User1|Close,
                 User3, false,
-		i18n("Replace &All"), i18n("&Replace"), KGuiItem( i18n("&Find"), "find") )
+		i18n("Replace &All"), i18n("&Replace"), KGuiItem( i18n("&Find"), "tqfind") )
 {
   setWFlags( WType_TopLevel );
 
@@ -842,7 +842,7 @@ KEdReplace::KEdReplace( TQWidget *parent, const char *name, bool modal )
   d = new KEdReplacePrivate( page );
 
   TQString text = i18n("Find:");
-  TQLabel *label = new TQLabel( text, page, "find" );
+  TQLabel *label = new TQLabel( text, page, "tqfind" );
   topLayout->addWidget( label );
 
   d->searchCombo->setMinimumWidth(fontMetrics().maxWidth()*20);
@@ -850,11 +850,11 @@ KEdReplace::KEdReplace( TQWidget *parent, const char *name, bool modal )
   topLayout->addWidget(d->searchCombo);
 
   text = i18n("Replace with:");
-  label = new TQLabel( text, page, "replace" );
+  label = new TQLabel( text, page, "tqreplace" );
   topLayout->addWidget( label );
 
-  d->replaceCombo->setMinimumWidth(fontMetrics().maxWidth()*20);
-  topLayout->addWidget(d->replaceCombo);
+  d->tqreplaceCombo->setMinimumWidth(fontMetrics().maxWidth()*20);
+  topLayout->addWidget(d->tqreplaceCombo);
 
   connect(d->searchCombo, TQT_SIGNAL(textChanged ( const TQString & )),
           this,TQT_SLOT(textSearchChanged ( const TQString & )));
@@ -892,7 +892,7 @@ void KEdReplace::slotCancel( void )
 {
   emit done();
   d->searchCombo->clearEdit();
-  d->replaceCombo->clearEdit();
+  d->tqreplaceCombo->clearEdit();
   KDialogBase::slotCancel();
 }
 
@@ -905,8 +905,8 @@ void KEdReplace::slotUser1( void )
 {
     if( !d->searchCombo->currentText().isEmpty() )
     {
-        d->replaceCombo->addToHistory( d->replaceCombo->currentText() );
-        emit replaceAll();
+        d->tqreplaceCombo->addToHistory( d->tqreplaceCombo->currentText() );
+        emit tqreplaceAll();
     }
 }
 
@@ -915,8 +915,8 @@ void KEdReplace::slotUser2( void )
 {
     if( !d->searchCombo->currentText().isEmpty() )
     {
-        d->replaceCombo->addToHistory( d->replaceCombo->currentText() );
-        emit replace();
+        d->tqreplaceCombo->addToHistory( d->tqreplaceCombo->currentText() );
+        emit tqreplace();
     }
 }
 
@@ -925,7 +925,7 @@ void KEdReplace::slotUser3( void )
   if( !d->searchCombo->currentText().isEmpty() )
   {
     d->searchCombo->addToHistory( d->searchCombo->currentText() );
-    emit find();
+    emit tqfind();
   }
 }
 
@@ -938,7 +938,7 @@ TQString KEdReplace::getText()
 
 TQString KEdReplace::getReplaceText()
 {
-    return d->replaceCombo->currentText();
+    return d->tqreplaceCombo->currentText();
 }
 
 
@@ -966,9 +966,9 @@ KHistoryCombo * KEdReplace::searchCombo() const
     return d->searchCombo;
 }
 
-KHistoryCombo * KEdReplace::replaceCombo() const
+KHistoryCombo * KEdReplace::tqreplaceCombo() const
 {
-    return d->replaceCombo;
+    return d->tqreplaceCombo;
 }
 
 
@@ -1034,7 +1034,7 @@ void KEdit::misspelling (const TQString &word, const TQStringList &, unsigned in
 void KEdit::corrected (const TQString &originalword, const TQString &newword, unsigned int pos)
 {
   //we'll reselect the original word in case the user has played with
-  //the selection in eframe or the word was auto-replaced
+  //the selection in eframe or the word was auto-tqreplaced
 
   unsigned int l = 0;
   unsigned int cnt = 0;

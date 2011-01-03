@@ -45,7 +45,7 @@ element in the olink database with the matching
 and the value of the <sgmltag class="attribute">href</sgmltag>
 attribute for the targeted element in the olink database.
 The <sgmltag class="attribute">href</sgmltag> attribute
-contains the fragment identifier.
+tqcontains the fragment identifier.
 </para>
 
 <para>If <parameter>insert.olink.pdf.frag</parameter> is set

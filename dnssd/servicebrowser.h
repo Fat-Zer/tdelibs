@@ -51,7 +51,7 @@ to constructor, domains configured by user will be searched.
 @author Jakub Stachowski
 @short Browsing for specific type of services or all available service types
  */
-class KDNSSD_EXPORT ServiceBrowser : public QObject
+class KDNSSD_EXPORT ServiceBrowser : public TQObject
 {
 	Q_OBJECT
 public:
@@ -213,7 +213,7 @@ private:
 
 	bool allFinished();
 	void init(const TQStringList&, DomainBrowser*, int);
-	TQValueList<RemoteService::Ptr>::Iterator findDuplicate(RemoteService::Ptr src);
+	TQValueList<RemoteService::Ptr>::Iterator tqfindDuplicate(RemoteService::Ptr src);
 private slots:
 	void serviceResolved(bool success);
 	void gotNewService(DNSSD::RemoteService::Ptr);

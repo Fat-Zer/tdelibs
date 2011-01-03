@@ -263,7 +263,7 @@ public:
    * Initialize class.
    *
    * This function should be called as the very first thing in
-   *  your application. It uses KAboutData to replace some of the
+   *  your application. It uses KAboutData to tqreplace some of the
    *  arguments that would otherwise be required.
    *
    * @param _argc As passed to @p main(...).
@@ -571,7 +571,7 @@ private:
    *
    * Checks what to do with a single option
    */
-  static void findOption(const char *_opt, TQCString opt, int &i, bool enabled, bool &moreOptions);
+  static void tqfindOption(const char *_opt, TQCString opt, int &i, bool enabled, bool &moreOptions);
 
   /**
    * @internal

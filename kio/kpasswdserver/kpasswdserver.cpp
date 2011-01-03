@@ -94,7 +94,7 @@ static TQString makeWalletKey( const TQString& key, const TQString& realm )
 // Helper for storeInWallet/readFromWallet
 static TQString makeMapKey( const char* key, int entryNumber )
 {
-    TQString str = TQString::fromLatin1( key );
+    TQString str = TQString::tqfromLatin1( key );
     if ( entryNumber > 1 )
         str += "-" + TQString::number( entryNumber );
     return str;
@@ -107,7 +107,7 @@ static bool storeInWallet( KWallet::Wallet* wallet, const TQString& key, const K
             return false;
     wallet->setFolder( KWallet::Wallet::PasswordFolder() );
     // Before saving, check if there's already an entry with this login.
-    // If so, replace it (with the new password). Otherwise, add a new entry.
+    // If so, tqreplace it (with the new password). Otherwise, add a new entry.
     typedef TQMap<TQString,TQString> Map;
     int entryNumber = 1;
     Map map;
@@ -115,12 +115,12 @@ static bool storeInWallet( KWallet::Wallet* wallet, const TQString& key, const K
     kdDebug(130) << "storeInWallet: walletKey=" << walletKey << "  reading existing map" << endl;
     if ( wallet->readMap( walletKey, map ) == 0 ) {
         Map::ConstIterator end = map.end();
-        Map::ConstIterator it = map.find( "login" );
+        Map::ConstIterator it = map.tqfind( "login" );
         while ( it != end ) {
             if ( it.data() == info.username ) {
                 break; // OK, overwrite this entry
             }
-            it = map.find( TQString( "login-" ) + TQString::number( ++entryNumber ) );
+            it = map.tqfind( TQString( "login-" ) + TQString::number( ++entryNumber ) );
         }
         // If no entry was found, create a new entry - entryNumber is set already.
     }
@@ -148,17 +148,17 @@ static bool readFromWallet( KWallet::Wallet* wallet, const TQString& key, const 
             typedef TQMap<TQString,TQString> Map;
             int entryNumber = 1;
             Map::ConstIterator end = map.end();
-            Map::ConstIterator it = map.find( "login" );
+            Map::ConstIterator it = map.tqfind( "login" );
             while ( it != end ) {
                 //kdDebug(130) << "readFromWallet: found " << it.key() << "=" << it.data() << endl;
-                Map::ConstIterator pwdIter = map.find( makeMapKey( "password", entryNumber ) );
+                Map::ConstIterator pwdIter = map.tqfind( makeMapKey( "password", entryNumber ) );
                 if ( pwdIter != end ) {
                     if ( it.data() == username )
                         password = pwdIter.data();
                     knownLogins.insert( it.data(), pwdIter.data() );
                 }
 
-                it = map.find( TQString( "login-" ) + TQString::number( ++entryNumber ) );
+                it = map.tqfind( TQString( "login-" ) + TQString::number( ++entryNumber ) );
             }
             //kdDebug(130) << knownLogins.count() << " known logins" << endl;
 
@@ -214,7 +214,7 @@ KPasswdServer::checkAuthInfo(KIO::AuthInfo info, long windowId, unsigned long us
        return info;
     }
 
-    const AuthInfo *result = findAuthInfoItem(key, info);
+    const AuthInfo *result = tqfindAuthInfoItem(key, info);
     if (!result || result->isCanceled)
     {
        if (!result &&
@@ -320,7 +320,7 @@ KPasswdServer::processRequest()
 
     kdDebug(130) << "KPasswdServer::processRequest: User= " << info.username
               << ", Message= " << info.prompt << endl;
-    const AuthInfo *result = findAuthInfoItem(request->key, request->info);
+    const AuthInfo *result = tqfindAuthInfoItem(request->key, request->info);
 
     if (result && (request->seqNr < result->seqNr))
     {
@@ -464,7 +464,7 @@ KPasswdServer::processRequest()
        }
        else
        {
-           const AuthInfo *result = findAuthInfoItem(waitRequest->key, waitRequest->info);
+           const AuthInfo *result = tqfindAuthInfoItem(waitRequest->key, waitRequest->info);
 
            TQCString replyType;
            TQByteArray replyData;
@@ -500,7 +500,7 @@ KPasswdServer::processRequest()
 TQString KPasswdServer::createCacheKey( const KIO::AuthInfo &info )
 {
     if( !info.url.isValid() ) {
-        // Note that a null key will break findAuthInfoItem later on...
+        // Note that a null key will break tqfindAuthInfoItem later on...
         kdWarning(130) << "createCacheKey: invalid URL " << info.url << endl;
         return TQString::null;
     }
@@ -539,9 +539,9 @@ KPasswdServer::copyAuthInfo(const AuthInfo *i)
 }
 
 const KPasswdServer::AuthInfo *
-KPasswdServer::findAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
+KPasswdServer::tqfindAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
 {
-   AuthInfoList *authList = m_authDict.find(key);
+   AuthInfoList *authList = m_authDict.tqfind(key);
    if (!authList)
       return 0;
 
@@ -579,7 +579,7 @@ KPasswdServer::findAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
 void
 KPasswdServer::removeAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
 {
-   AuthInfoList *authList = m_authDict.find(key);
+   AuthInfoList *authList = m_authDict.tqfind(key);
    if (!authList)
       return;
 
@@ -606,7 +606,7 @@ KPasswdServer::removeAuthInfoItem(const TQString &key, const KIO::AuthInfo &info
 void
 KPasswdServer::addAuthInfoItem(const TQString &key, const KIO::AuthInfo &info, long windowId, long seqNr, bool canceled)
 {
-   AuthInfoList *authList = m_authDict.find(key);
+   AuthInfoList *authList = m_authDict.tqfind(key);
    if (!authList)
    {
       authList = new AuthInfoList;
@@ -659,7 +659,7 @@ KPasswdServer::updateAuthExpire(const TQString &key, const AuthInfo *auth, long 
    else if (windowId && (current->expire != AuthInfo::expNever))
    {
       current->expire = AuthInfo::expWindowClose;
-      if (!current->windowList.contains(windowId))
+      if (!current->windowList.tqcontains(windowId))
          current->windowList.append(windowId);
    }
    else if (current->expire == AuthInfo::expTime)
@@ -670,13 +670,13 @@ KPasswdServer::updateAuthExpire(const TQString &key, const AuthInfo *auth, long 
    // Update mWindowIdList
    if (windowId)
    {
-      TQStringList *keysChanged = mWindowIdList.find(windowId);
+      TQStringList *keysChanged = mWindowIdList.tqfind(windowId);
       if (!keysChanged)
       {
          keysChanged = new TQStringList;
          mWindowIdList.insert(windowId, keysChanged);
       }
-      if (!keysChanged->contains(key))
+      if (!keysChanged->tqcontains(key))
          keysChanged->append(key);
    }
 }
@@ -684,14 +684,14 @@ KPasswdServer::updateAuthExpire(const TQString &key, const AuthInfo *auth, long 
 void
 KPasswdServer::removeAuthForWindowId(long windowId)
 {
-   TQStringList *keysChanged = mWindowIdList.find(windowId);
+   TQStringList *keysChanged = mWindowIdList.tqfind(windowId);
    if (!keysChanged) return;
 
    for(TQStringList::ConstIterator it = keysChanged->begin();
        it != keysChanged->end(); ++it)
    {
       TQString key = *it;
-      AuthInfoList *authList = m_authDict.find(key);
+      AuthInfoList *authList = m_authDict.tqfind(key);
       if (!authList)
          continue;
 

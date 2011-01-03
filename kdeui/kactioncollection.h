@@ -69,13 +69,13 @@ typedef TQValueList<KAction *> KActionPtrList;
  *
  * \code
  * actionCollection()->setHighlightingEnabled(true);  
- * connect(actionCollection(), TQT_SIGNAL( actionStatusText( const TQString & ) ),
+ * connect(actionCollection(), TQT_SIGNAL( actiontqStatusText( const TQString & ) ),
  *           statusBar(), TQT_SLOT( message( const TQString & ) ) );
- * connect(actionCollection(), TQT_SIGNAL( clearStatusText() ),
+ * connect(actionCollection(), TQT_SIGNAL( cleartqStatusText() ),
  *           statusBar(), TQT_SLOT( clear() ) );
  * \endcode
  */
-class KDEUI_EXPORT KActionCollection : public QObject
+class KDEUI_EXPORT KActionCollection : public TQObject
 {
   friend class KAction;
   friend class KXMLGUIClient;
@@ -298,13 +298,13 @@ signals:
    *  
    * @see setHighlightingEnabled()
    */
-  void actionStatusText( const TQString &text );
+  void actiontqStatusText( const TQString &text );
   /** Emitted when an action loses highlighting.
    *  This is only emitted if you have setHighlightingEnabled()
    *  
    * @see setHighlightingEnabled()
    */
-  void clearStatusText();
+  void cleartqStatusText();
 
 private:
   /**
@@ -331,7 +331,7 @@ private slots:
    void slotDestroyed();
 
 private:
-   KAction *findAction( TQWidget *container, int id );
+   KAction *tqfindAction( TQWidget *container, int id );
 
 #ifndef KDE_NO_COMPAT
 public:

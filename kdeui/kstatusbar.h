@@ -62,7 +62,7 @@ signals:
  *
  *  Display status messages.
  *
- *  You can insert text labels or custom widgets. Their geometry is managed
+ *  You can insert text labels or custom widgets. Their tqgeometry is managed
  *  internally. KStatusBar resizes itself, but positioning is left to
  *  KMainWindow (or to you, if you don't use KMainWindow ).
  *
@@ -94,7 +94,7 @@ public:
    * WARNING: This enum is only for backward compatibility and it may be removed.
    * No method here uses it.
    */
-  enum BarStatus{ Toggle, Show, Hide };
+  enum BartqStatus{ Toggle, Show, Hide };
 
   /**
    *  Constructs a status bar. @p parent is usually KMainWindow.
@@ -121,7 +121,7 @@ public:
    *  @param stretch stretch passed to TQStatusBar::addWidget
    *  @param permanent is item permanent or not (passed to TQStatusBar::addWidget )
    *
-   *  @see QStatusbar::addWidget
+   *  @see QtqStatusbar::addWidget
    *
    */
   void insertItem(const TQString& text, int id, int stretch=0, bool permanent=false );
@@ -167,8 +167,8 @@ public:
   void changeItem( const TQString& text, int id );
 
   /**
-   * Sets the alignment of item @p id. By default all fields are aligned
-   * @p AlignHCenter | @p AlignVCenter. See TQLabel::setAlignment for details.
+   * Sets the tqalignment of item @p id. By default all fields are aligned
+   * @p AlignHCenter | @p AlignVCenter. See TQLabel::tqsetAlignment for details.
    *
   */
   void setItemAlignment(int id, int align);

@@ -66,7 +66,7 @@ KMWSocket::KMWSocket(TQWidget *parent, const char *name)
 	connect( m_scanner, TQT_SIGNAL( scanStarted() ), parent, TQT_SLOT( disableWizard() ) );
 	connect( m_scanner, TQT_SIGNAL( scanFinished() ), parent, TQT_SLOT( enableWizard() ) );
 
-	// layout
+	// tqlayout
 	QHBoxLayout	*lay3 = new TQHBoxLayout(this, 0, 10);
 	QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 0);
 
@@ -88,7 +88,7 @@ KMWSocket::~KMWSocket()
 
 void KMWSocket::updatePrinter(KMPrinter *p)
 {
-	QString	dev = TQString::fromLatin1("socket://%1:%2").arg(m_printer->text()).arg(m_port->text());
+	QString	dev = TQString::tqfromLatin1("socket://%1:%2").arg(m_printer->text()).arg(m_port->text());
 	p->setDevice(dev);
 }
 

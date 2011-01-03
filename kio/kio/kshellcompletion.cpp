@@ -217,33 +217,33 @@ bool KShellCompletion::quoteText(TQString *text, bool force, bool skip_last) con
 	int pos = 0;
 
 	if ( !force ) {
-		pos = text->find( m_word_break_char );
+		pos = text->tqfind( m_word_break_char );
 		if ( skip_last && (pos == (int)(text->length())-1) ) pos = -1;
 	}
 
 	if ( !force && pos == -1 ) {
-		pos = text->find( m_quote_char1 );
+		pos = text->tqfind( m_quote_char1 );
 		if ( skip_last && (pos == (int)(text->length())-1) ) pos = -1;
 	}
 
 	if ( !force && pos == -1 ) {
-		pos = text->find( m_quote_char2 );
+		pos = text->tqfind( m_quote_char2 );
 		if ( skip_last && (pos == (int)(text->length())-1) ) pos = -1;
 	}
 
 	if ( !force && pos == -1 ) {
-		pos = text->find( m_escape_char );
+		pos = text->tqfind( m_escape_char );
 		if ( skip_last && (pos == (int)(text->length())-1) ) pos = -1;
 	}
 
 	if ( force || (pos >= 0) ) {
 
 		// Escape \ in the string
-		text->replace( m_escape_char,
+		text->tqreplace( m_escape_char,
 		               TQString( m_escape_char ) + m_escape_char );
 
 		// Escape " in the string
-		text->replace( m_quote_char1,
+		text->tqreplace( m_quote_char1,
 		               TQString( m_escape_char ) + m_quote_char1 );
 
 		// " at the beginning

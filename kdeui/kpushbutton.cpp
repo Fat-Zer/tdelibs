@@ -98,7 +98,7 @@ void KPushButton::init( const KGuiItem &item )
 
     setIconSet( d->item.iconSet() );
 
-    setSizePolicy( TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum ) );
+    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum ) );
 
     TQToolTip::add( this, item.toolTip() );
 

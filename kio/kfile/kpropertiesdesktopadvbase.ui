@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>widget11</cstring>
     </property>
-    <property name="geometry">
+    <property name="tqgeometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -40,7 +40,7 @@
                     <property name="sizeType">
                         <enum>Minimum</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -119,7 +119,7 @@
                     <property name="sizeType">
                         <enum>Minimum</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>
@@ -229,7 +229,7 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>50</width>
                             <height>20</height>
@@ -275,5 +275,5 @@
 <includes>
     <include location="global" impldecl="in implementation">klineedit.h</include>
 </includes>
-<layoutdefaults spacing="6" margin="11"/>
+<tqlayoutdefaults spacing="6" margin="11"/>
 </UI>

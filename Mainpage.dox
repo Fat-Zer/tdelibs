@@ -1,7 +1,7 @@
 /**
 	* @mainpage The Trinity API Reference
 	*
-	* This section contains the Trinity online class reference for the current
+	* This section tqcontains the Trinity online class reference for the current
 	* development version of Trinity. You can also 
 	* download the complete API documentation from
         * <a target="_top" href="http://trinity.pearsoncomputing.net/">trinity.pearsoncomputing.net</a>.  Additionally, you 
@@ -57,7 +57,7 @@
 	*   <i>The Trinity resources system.</i>
 	* - <a target="_top" href="kutils/html/index.html"><b>kutils</b></a>
         *   (<a target="_top" href="kutils/html/classes.html">classes</a>)\n
-	*   <i>High-level utils, like search/replace support.</i>
+	*   <i>High-level utils, like search/tqreplace support.</i>
 	* - <a target="_top" href="arts/html/index.html"><b>arts</b></a>
         *   (<a target="_top" href="arts/html/classes.html">classes</a>)\n
 	*   <i>Trinity bindings for arts including knotify.</i>

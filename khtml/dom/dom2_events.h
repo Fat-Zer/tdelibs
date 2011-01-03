@@ -70,8 +70,8 @@ public:
      * This method is called whenever an event occurs of the type for which the
      * EventListener interface was registered. Parameters
      *
-     * @param evt The Event contains contextual information about the event. It
-     * also contains the stopPropagation and preventDefault methods which are
+     * @param evt The Event tqcontains contextual information about the event. It
+     * also tqcontains the stopPropagation and preventDefault methods which are
      * used in determining the event's flow and default action.
      *
      */

@@ -186,7 +186,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	m_order = new TQCheckBox(i18n("Re&verse"), m_copybox);
 	TQWhatsThis::add(m_order, whatsThisReverseLabel);
 	m_collatepix = new TQLabel(m_copybox);
-	m_collatepix->setAlignment(Qt::AlignCenter);
+	m_collatepix->tqsetAlignment(Qt::AlignCenter);
 	m_collatepix->setMinimumHeight(70);
 	QLabel	*m_copieslabel = new TQLabel(i18n("Cop&ies:"), m_copybox);
 	m_copies = new TQSpinBox(m_copybox);
@@ -213,14 +213,14 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	TQWidget::setTabOrder( m_copies, m_collate );
 	TQWidget::setTabOrder( m_collate, m_order );
 
-	// layout creation
+	// tqlayout creation
 	QGridLayout	*l1 = new TQGridLayout(this, 2, 2, 0, 5);
 	l1->setRowStretch(1,1);
 	l1->setColStretch(0,1);
 	l1->setColStretch(1,1);
 	l1->addWidget(m_pagebox,0,0);
 	l1->addWidget(m_copybox,0,1);
-	QVBoxLayout	*l3 = new TQVBoxLayout(m_pagebox->layout(), 5);
+	QVBoxLayout	*l3 = new TQVBoxLayout(m_pagebox->tqlayout(), 5);
 	l3->addWidget(m_all);
 	l3->addWidget(m_current);
 	QHBoxLayout	*l4 = new TQHBoxLayout(0, 0, 5);
@@ -233,7 +233,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	l3->addLayout(l2);
 	l2->addWidget(m_pagesetlabel,0);
 	l2->addWidget(m_pageset,1);
-	QGridLayout	*l5 = new TQGridLayout(m_copybox->layout(), 4, 2, 10);
+	QGridLayout	*l5 = new TQGridLayout(m_copybox->tqlayout(), 4, 2, 10);
 	l5->setRowStretch(4,1);
 	l5->addWidget(m_copieslabel,0,0);
 	l5->addWidget(m_copies,0,1);
@@ -336,7 +336,7 @@ void KPCopiesPage::getOptions(TQMap<TQString,TQString>& options, bool incldef)
 	options["kde-collate"] = (m_collate->isChecked() ? "Collate" : "Uncollate");
 	// ranges
 	options["kde-current"] = (m_current->isChecked() ? "1" : "0");
-	options["kde-range"] = (m_range->isChecked() ? m_rangeedit->text() : (incldef ? TQString::fromLatin1("1-") : TQString::fromLatin1("")));
+	options["kde-range"] = (m_range->isChecked() ? m_rangeedit->text() : (incldef ? TQString::tqfromLatin1("1-") : TQString::tqfromLatin1("")));
 	// page set
 	options["kde-pageset"] = TQString::number(m_pageset->currentItem());
 }

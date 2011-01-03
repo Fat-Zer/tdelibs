@@ -54,7 +54,7 @@ KBuildServiceTypeFactory::~KBuildServiceTypeFactory()
    delete m_resourceList;
 }
 
-KServiceType * KBuildServiceTypeFactory::findServiceTypeByName(const TQString &_name)
+KServiceType * KBuildServiceTypeFactory::tqfindServiceTypeByName(const TQString &_name)
 {
    assert (KSycoca::self()->isBuilding());
    // We're building a database - the service type must be in memory
@@ -69,7 +69,7 @@ KSycocaEntry *
 KBuildServiceTypeFactory::createEntry(const TQString &file, const char *resource)
 {
   TQString name = file;
-  int pos = name.findRev('/');
+  int pos = name.tqfindRev('/');
   if (pos != -1)
   {
      name = name.mid(pos+1);
@@ -133,14 +133,14 @@ void
 KBuildServiceTypeFactory::saveHeader(TQDataStream &str)
 {
    KSycocaFactory::saveHeader(str);
-   str << (Q_INT32) m_fastPatternOffset;
-   str << (Q_INT32) m_otherPatternOffset;
-   str << (Q_INT32) m_propertyTypeDict.count();
+   str << (TQ_INT32) m_fastPatternOffset;
+   str << (TQ_INT32) m_otherPatternOffset;
+   str << (TQ_INT32) m_propertyTypeDict.count();
 
    TQMapIterator<TQString, int> it;
    for (it = m_propertyTypeDict.begin(); it != m_propertyTypeDict.end(); ++it)
    {
-     str << it.key() << (Q_INT32)it.data();
+     str << it.key() << (TQ_INT32)it.data();
    }
 
 }
@@ -183,8 +183,8 @@ KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
         for ( ; patit != pat.end() ; ++patit )
         {
            const TQString &pattern = *patit;
-           if ( pattern.findRev('*') == 0
-                && pattern.findRev('.') == 1
+           if ( pattern.tqfindRev('*') == 0
+                && pattern.tqfindRev('.') == 1
                 && pattern.length() <= 6 )
               // it starts with "*.", has no other '*' and no other '.', and is max 6 chars
               // => fast patttern
@@ -193,15 +193,15 @@ KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
               otherPatterns.append( pattern );
            // Assumption : there is only one mimetype for that pattern
            // It doesn't really make sense otherwise, anyway.
-           dict.replace( pattern, mimeType );
+           dict.tqreplace( pattern, mimeType );
         }
       }
    }
    // Sort the list - the fast one, useless for the other one
    fastPatterns.sort();
 
-   Q_INT32 entrySize = 0;
-   Q_INT32 nrOfEntries = 0;
+   TQ_INT32 entrySize = 0;
+   TQ_INT32 nrOfEntries = 0;
 
    m_fastPatternOffset = str.device()->at();
 
@@ -267,7 +267,7 @@ KBuildServiceTypeFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
    TQMap<TQString,TQVariant::Type>::ConstIterator pit = pd.begin();
    for( ; pit != pd.end(); ++pit )
    {
-     if (!m_propertyTypeDict.contains(pit.key()))
+     if (!m_propertyTypeDict.tqcontains(pit.key()))
        m_propertyTypeDict.insert(pit.key(), pit.data());
      else if (m_propertyTypeDict[pit.key()] != pit.data())
        kdWarning(7021) << "Property '"<< pit.key() << "' is defined multiple times ("<< serviceType->name() <<")" <<endl;

@@ -93,17 +93,17 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
     }
 # endif
 #endif
-    // Main widget's layout manager...
-    TQVBoxLayout* vlayout = new TQVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
-    vlayout->setResizeMode( TQLayout::Fixed );
+    // Main widget's tqlayout manager...
+    TQVBoxLayout* vtqlayout = new TQVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+    vtqlayout->setResizeMode( TQLayout::Fixed );
 
     // Cookie image and message to user
     TQHBox* hBox = new TQHBox( this );
     hBox->setSpacing( KDialog::spacingHint() );
     TQLabel* icon = new TQLabel( hBox );
     icon->setPixmap( TQMessageBox::standardIcon(TQMessageBox::Warning) );
-    icon->setAlignment( Qt::AlignCenter );
-    icon->setFixedSize( 2*icon->sizeHint() );
+    icon->tqsetAlignment( Qt::AlignCenter );
+    icon->setFixedSize( 2*icon->tqsizeHint() );
 
     int count = cookieList.count();
 
@@ -111,11 +111,11 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
     TQString txt = i18n("You received a cookie from",
                        "You received %n cookies from", count);
     TQLabel* lbl = new TQLabel( txt, vBox );
-    lbl->setAlignment( Qt::AlignCenter );
+    lbl->tqsetAlignment( Qt::AlignCenter );
     KHttpCookiePtr cookie = cookieList.first();
 
     TQString host (cookie->host());
-    int pos = host.find(':');
+    int pos = host.tqfind(':');
     if ( pos > 0 )
     {
       TQString portNum = host.left(pos);
@@ -128,14 +128,14 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
     if (cookie->isCrossDomain())
        txt += i18n(" <b>[Cross Domain!]</b>");
     lbl = new TQLabel( txt, vBox );
-    lbl->setAlignment( Qt::AlignCenter );
+    lbl->tqsetAlignment( Qt::AlignCenter );
     lbl = new TQLabel( i18n("Do you want to accept or reject?"), vBox );
-    lbl->setAlignment( Qt::AlignCenter );
-    vlayout->addWidget( hBox, 0, Qt::AlignLeft );
+    lbl->tqsetAlignment( Qt::AlignCenter );
+    vtqlayout->addWidget( hBox, 0, Qt::AlignLeft );
 
     // Cookie Details dialog...
     m_detailView = new KCookieDetail( cookieList, count, this );
-    vlayout->addWidget( m_detailView );
+    vtqlayout->addWidget( m_detailView );
     m_showDetails = showDetails;
     m_showDetails ? m_detailView->show():m_detailView->hide();
 
@@ -168,7 +168,7 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
                               "<em>(see WebBrowsing/Cookies in the Control Center)</em>.") );
 #endif
     m_btnGrp->insert( rb );
-    vlayout->addWidget( m_btnGrp );
+    vtqlayout->addWidget( m_btnGrp );
 
     if ( defaultButton > -1 && defaultButton < 3 )
         m_btnGrp->setButton( defaultButton );
@@ -202,8 +202,8 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
 #endif
 
 
-    vlayout->addWidget( bbox );
-    setFixedSize( sizeHint() );
+    vtqlayout->addWidget( bbox );
+    setFixedSize( tqsizeHint() );
 }
 
 KCookieWin::~KCookieWin()
@@ -313,7 +313,7 @@ KCookieDetail::KCookieDetail( KHttpCookieList cookieList, int cookieCount,
     if ( cookieCount > 1 )
     {
         TQPushButton* btnNext = new TQPushButton( i18n("Next cookie","&Next >>"), this );
-        btnNext->setFixedSize( btnNext->sizeHint() );
+        btnNext->setFixedSize( btnNext->tqsizeHint() );
         grid->addMultiCellWidget( btnNext, 8, 8, 0, 1 );
         connect( btnNext, TQT_SIGNAL(clicked()), TQT_SLOT(slotNextCookie()) );
 #ifndef QT_NO_TOOLTIP

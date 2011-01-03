@@ -89,7 +89,7 @@ class SlaveInterfacePrivate;
  *
  * A call to foo() results in a call to slotFoo() on the other end.
  */
-class KIO_EXPORT SlaveInterface : public QObject
+class KIO_EXPORT SlaveInterface : public TQObject
 {
     Q_OBJECT
 
@@ -121,7 +121,7 @@ signals:
     void error( int , const TQString & );
     void connected();
     void finished();
-    void slaveStatus(pid_t, const TQCString &, const TQString &, bool);
+    void slavetqStatus(pid_t, const TQCString &, const TQString &, bool);
     void listEntries( const KIO::UDSEntryList& );
     void statEntry( const KIO::UDSEntry& );
     void needSubURLData();
@@ -252,7 +252,7 @@ private:
 
 inline TQDataStream &operator >>(TQDataStream &s, KIO::UDSAtom &a )
 {
-    Q_INT32 l;
+    TQ_INT32 l;
     s >> a.m_uds;
 
     if ( a.m_uds & KIO::UDS_LONG ) {
@@ -273,7 +273,7 @@ inline TQDataStream &operator <<(TQDataStream &s, const KIO::UDSAtom &a )
     s << a.m_uds;
 
     if ( a.m_uds & KIO::UDS_LONG )
-        s << (Q_INT32) a.m_long;
+        s << (TQ_INT32) a.m_long;
     else if ( a.m_uds & KIO::UDS_STRING )
         s << a.m_str;
     else {} // DIE!

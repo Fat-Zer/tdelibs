@@ -67,7 +67,7 @@ private:
 	TQString               m_errormsg;
 
 	friend int kdeprint_ppdparse(void*);
-	DrGroup* findOrCreateGroupForOption( const TQString& );
+	DrGroup* tqfindOrCreateGroupForOption( const TQString& );
 	void processPageSizes( DrMain* );
 };
 

@@ -32,7 +32,7 @@
    parse code behind '<<HEREDELIMITER' as code, or at least ignore it, to eol.
    Requires the ability to pass the delimiter through a context level.
 
-   find a here delimiter like '*END*' (Shell.pm). Requires that when a regex is
+   tqfind a here delimiter like '*END*' (Shell.pm). Requires that when a regex is
    inserting a dynamic string, it escapes [*(){}$[]
 
    support for more regex extensions, such as (?>), (?{}), (?(cond)yes|no)
@@ -356,22 +356,22 @@
         <DetectChar attribute="Operator" context="string" char="'"  beginRegion="String"/>
         <DetectChar attribute="Operator" context="Backticked" char="`" />
 
-        <RegExpr attribute="Normal Text" context="find_variable" String="(?:[$@]\S|%[\w{]|\*[^\d\*{\$@%=(])" lookAhead="true" />
+        <RegExpr attribute="Normal Text" context="tqfind_variable" String="(?:[$@]\S|%[\w{]|\*[^\d\*{\$@%=(])" lookAhead="true" />
 
         <RegExpr attribute="Keyword" context="#stay" String="&lt;[A-Z0-9_]+&gt;" />
 
-        <RegExpr attribute="Operator" context="find_here_document" String="\s*&lt;&lt;(?=\w+|\s*[&quot;'])" beginRegion="HereDocument" />
+        <RegExpr attribute="Operator" context="tqfind_here_document" String="\s*&lt;&lt;(?=\w+|\s*[&quot;'])" beginRegion="HereDocument" />
 
         <RegExpr attribute="Normal Text" context="#stay" String="\s*\}\s*/" endRegion="Block"/>
         <RegExpr attribute="Normal Text" context="#stay" String="\s*[)]\s*/" />
         <RegExpr attribute="Function" context="sub_name_def" String="\w+::" />
         <RegExpr attribute="Normal Text" context="#stay" String="\w+[=]" />
 
-        <RegExpr attribute="Operator" context="find_quoted" String="\bq(?=[qwx]?\s*[^\w\s])" />
-        <RegExpr attribute="Operator" context="find_subst" String="\bs(?=\s*[^\w\s\]})])" />
+        <RegExpr attribute="Operator" context="tqfind_quoted" String="\bq(?=[qwx]?\s*[^\w\s])" />
+        <RegExpr attribute="Operator" context="tqfind_subst" String="\bs(?=\s*[^\w\s\]})])" />
         <RegExpr attribute="Operator" context="tr" String="\b(?:tr|y)\s*(?=[^\w\s\]})])" />
 
-        <RegExpr attribute="Operator" context="find_pattern" String="\b(?:m|qr)(?=\s*[^\w\s\]})])" />
+        <RegExpr attribute="Operator" context="tqfind_pattern" String="\b(?:m|qr)(?=\s*[^\w\s\]})])" />
 
         <RegExpr attribute="Normal Text" context="#stay" String="[\w_]+\s*/" />
         <RegExpr attribute="Normal Text" context="#stay" String="[&lt;&gt;&quot;':]/" />
@@ -383,11 +383,11 @@
       </context>
 
       <!-- ====== quoted construct central ===== -->
-      <context name="find_quoted" attribute="Normal Text" lineEndContext="#stay" >
+      <context name="tqfind_quoted" attribute="Normal Text" lineEndContext="#stay" >
         <!-- NOTE - qx'not interpolated regex' does not cover newline between "qr" and "'" -->
         <RegExpr attribute="Operator" context="string_6" String="x\s*(')" beginRegion="String" />
-        <AnyChar attribute="Operator" context="find_qqx" String="qx" />
-        <DetectChar attribute="Operator" context="find_qw" char="w" />
+        <AnyChar attribute="Operator" context="tqfind_qqx" String="qx" />
+        <DetectChar attribute="Operator" context="tqfind_qw" char="w" />
         <DetectChar attribute="Operator" context="string_2" char="(" beginRegion="String" />
         <DetectChar attribute="Operator" context="string_3" char="{" beginRegion="String" />
         <DetectChar attribute="Operator" context="string_4" char="[" beginRegion="String" />
@@ -395,7 +395,7 @@
         <RegExpr attribute="Operator" context="string_6" String="([^a-zA-Z0-9_\s[\]{}()])" beginRegion="String" />
         <RegExpr attribute="Comment" context="#stay" String="\s+#.*" /><!-- q[qwx] # == comment, look for the delim on the next line -->
       </context>
-      <context name="find_qqx" attribute="Normal Text" lineEndContext="#stay" >
+      <context name="tqfind_qqx" attribute="Normal Text" lineEndContext="#stay" >
         <DetectChar attribute="Operator" context="ip_string_2" char="(" beginRegion="String" />
         <DetectChar attribute="Operator" context="ip_string_3" char="{" beginRegion="String" />
         <DetectChar attribute="Operator" context="ip_string_4" char="[" beginRegion="String" />
@@ -403,7 +403,7 @@
         <RegExpr attribute="Operator" context="ip_string_6" String="([^a-zA-Z0-9_\s[\]{}()])" beginRegion="String" />
         <RegExpr attribute="Comment" context="#stay" String="\s+#.*" /><!-- q[qwx] # == comment, look for the delim on the next line -->
       </context>
-      <context name="find_qw" attribute="Normal Text" lineEndContext="#stay" >
+      <context name="tqfind_qw" attribute="Normal Text" lineEndContext="#stay" >
         <DetectChar attribute="Operator" context="quote_word_paren" char="(" beginRegion="Wordlist" />
         <DetectChar attribute="Operator" context="quote_word_brace" char="{" beginRegion="Wordlist" />
         <DetectChar attribute="Operator" context="quote_word_bracket" char="[" beginRegion="Wordlist" />
@@ -416,7 +416,7 @@
         <DetectIdentifier />
         <RegExpr attribute="String Special Character" context="#stay" String="\\[UuLlEtnaefr]" />
         <RegExpr attribute="String (interpolated)" context="#stay" String="\\." />
-        <RegExpr attribute="Normal Text" context="find_variable_unsafe" String="(?:[\$@]\S|%[\w{])" lookAhead="true" />
+        <RegExpr attribute="Normal Text" context="tqfind_variable_unsafe" String="(?:[\$@]\S|%[\w{])" lookAhead="true" />
       </context>
       <context name="ip_string" attribute="String (interpolated)" lineEndContext="#stay">
         <DetectChar attribute="Operator" context="#pop" char="&quot;" endRegion="String"/>
@@ -491,7 +491,7 @@
       </context>
 
       <!-- ====== contexts for  s/// ====== -->
-      <context name="find_subst" attribute="Normal Text" lineEndContext="#stay" >
+      <context name="tqfind_subst" attribute="Normal Text" lineEndContext="#stay" >
         <RegExpr attribute="Comment" context="#stay" String="\s+#.*" /><!-- s # == comment, look for the delim on the next line -->
         <DetectChar attribute="Operator" context="subst_curlybrace_pattern" char="{" beginRegion="Pattern" />
         <DetectChar attribute="Operator" context="subst_paren_pattern" char="(" beginRegion="Pattern" />
@@ -511,15 +511,15 @@
       </context>
       <context name="subst_curlybrace_middle" attribute="Normal Text" lineEndContext="#stay" >
         <RegExpr attribute="Comment" context="#stay" String="#.*$" />
-        <DetectChar attribute="Operator" context="subst_curlybrace_replace" char="{" beginRegion="Replacement" />
+        <DetectChar attribute="Operator" context="subst_curlybrace_tqreplace" char="{" beginRegion="Replacement" />
       </context>
-      <context name="subst_curlybrace_replace" attribute="String (interpolated)" lineEndContext="#stay">
+      <context name="subst_curlybrace_tqreplace" attribute="String (interpolated)" lineEndContext="#stay">
         <IncludeRules context="ipstring_internal" />
-        <DetectChar attribute="Normal Text" context="subst_curlybrace_replace_recursive" char="{" beginRegion="Block" />
+        <DetectChar attribute="Normal Text" context="subst_curlybrace_tqreplace_recursive" char="{" beginRegion="Block" />
         <RegExpr attribute="Operator" context="#pop#pop#pop#pop" String="\}[cegimosx]*" endRegion="Replacement" />
       </context>
-      <context name="subst_curlybrace_replace_recursive" attribute="String (interpolated)" lineEndContext="#stay" >
-        <DetectChar attribute="String (interpolated)" context="subst_curlybrace_replace_recursive" char="{" beginRegion="Block" />
+      <context name="subst_curlybrace_tqreplace_recursive" attribute="String (interpolated)" lineEndContext="#stay" >
+        <DetectChar attribute="String (interpolated)" context="subst_curlybrace_tqreplace_recursive" char="{" beginRegion="Block" />
         <DetectChar attribute="Normal Text" context="#pop" char="}" endRegion="Block" />
         <IncludeRules context="ipstring_internal" />
       </context>
@@ -527,9 +527,9 @@
       <context name="subst_paren_pattern" attribute="Pattern" lineEndContext="#stay">
         <RegExpr attribute="Comment" context="#stay" String="\s+#.*$" />
         <IncludeRules context="regex_pattern_internal_ip" />
-        <DetectChar attribute="Operator" context="subst_paren_replace" char="}" endRegion="Pattern" />
+        <DetectChar attribute="Operator" context="subst_paren_tqreplace" char="}" endRegion="Pattern" />
       </context>
-      <context name="subst_paren_replace" attribute="String (interpolated)" lineEndContext="#stay">
+      <context name="subst_paren_tqreplace" attribute="String (interpolated)" lineEndContext="#stay">
         <IncludeRules context="ipstring_internal" />
         <DetectChar attribute="Operator" context="#stay" char="(" beginRegion="Replacement" />
         <RegExpr attribute="Operator" context="#pop#pop#pop" String="\)[cegimosx]*" endRegion="Replacement" />
@@ -538,9 +538,9 @@
       <context name="subst_bracket_pattern" attribute="Pattern" lineEndContext="#stay">
         <RegExpr attribute="Comment" context="#stay" String="\s+#.*$" />
         <IncludeRules context="regex_pattern_internal_ip" />
-        <DetectChar attribute="Operator" context="subst_bracket_replace" char="]" endRegion="Pattern" />
+        <DetectChar attribute="Operator" context="subst_bracket_tqreplace" char="]" endRegion="Pattern" />
       </context>
-      <context name="subst_bracket_replace" attribute="String (interpolated)" lineEndContext="#stay">
+      <context name="subst_bracket_tqreplace" attribute="String (interpolated)" lineEndContext="#stay">
         <IncludeRules context="ipstring_internal" />
         <DetectChar attribute="Operator" context="#stay" char="[" beginRegion="Replacement" />
         <RegExpr attribute="Operator" context="#pop#pop#pop" String="\][cegimosx]*" endRegion="Replacement" />
@@ -548,10 +548,10 @@
 
       <context name="subst_slash_pattern" attribute="Pattern" lineEndContext="#stay" dynamic="true">
         <RegExpr attribute="Pattern Internal Operator" context="#stay" String="\$(?=%1)" dynamic="true" />
-        <RegExpr attribute="Operator" context="subst_slash_replace" String="(%1)" dynamic="true" endRegion="Pattern" beginRegion="Replacement" />
+        <RegExpr attribute="Operator" context="subst_slash_tqreplace" String="(%1)" dynamic="true" endRegion="Pattern" beginRegion="Replacement" />
         <IncludeRules context="regex_pattern_internal_ip" />
       </context>
-      <context name="subst_slash_replace" attribute="String (interpolated)" lineEndContext="#stay" dynamic="true">
+      <context name="subst_slash_tqreplace" attribute="String (interpolated)" lineEndContext="#stay" dynamic="true">
         <RegExpr attribute="Operator" context="#pop#pop#pop" String="%1[cegimosx]*" dynamic="true" endRegion="Replacement" />
         <IncludeRules context="ipstring_internal" />
 
@@ -560,9 +560,9 @@
       <context name="subst_sq_pattern" attribute="Pattern" lineEndContext="#stay">
         <RegExpr attribute="Comment" context="#stay" String="\s+#.*$" />
         <IncludeRules context="regex_pattern_internal" />
-        <DetectChar attribute="Operator" context="subst_sq_replace" char="'" endRegion="Pattern" beginRegion="Pattern" />
+        <DetectChar attribute="Operator" context="subst_sq_tqreplace" char="'" endRegion="Pattern" beginRegion="Pattern" />
       </context>
-      <context name="subst_sq_replace" attribute="String" lineEndContext="#stay">
+      <context name="subst_sq_tqreplace" attribute="String" lineEndContext="#stay">
         <RegExpr attribute="Operator" context="#pop#pop#pop" String="'[cegimosx]*" endRegion="Replacement" />
       </context>
 
@@ -574,7 +574,7 @@
       </context>
 
       <!-- ====== PATTERNs ====== -->
-      <context name="find_pattern" attribute="Pattern" lineEndContext="#stay">
+      <context name="tqfind_pattern" attribute="Pattern" lineEndContext="#stay">
         <RegExpr attribute="Comment" context="#stay" String="\s+#.*" /><!-- s # == comment, look for the delim on the next line -->
         <DetectChar attribute="Operator" context="pattern_brace" char="{" beginRegion="Pattern" />
         <DetectChar attribute="Operator" context="pattern_paren" char="(" beginRegion="Pattern" />
@@ -637,7 +637,7 @@
              This is because perl considers
              s{foo$} {bar} OK as well as s{foo$}} {bar}, and detecting that is a huge work overload
              for something that is unlikely to happen. -->
-        <RegExpr attribute="Data Type" context="find_variable_unsafe" String="[$@][^]\s{}()|&gt;']" lookAhead="true" />
+        <RegExpr attribute="Data Type" context="tqfind_variable_unsafe" String="[$@][^]\s{}()|&gt;']" lookAhead="true" />
         <IncludeRules context="regex_pattern_internal_rules_2" />
       </context>
       <context name="pat_ext" attribute="Pattern Internal Operator" lineEndContext="#stay">
@@ -654,7 +654,7 @@
       </context>
 
       <!-- ====== Variables ====== -->
-      <context name="find_variable" attribute="Data Type" lineEndContext="#pop" fallthrough="true" fallthroughContext="#pop" >
+      <context name="tqfind_variable" attribute="Data Type" lineEndContext="#pop" fallthrough="true" fallthroughContext="#pop" >
         <RegExpr attribute="Special Variable" context="var_detect" String="\$[0-9]+" />
         <RegExpr attribute="Special Variable" context="var_detect" String="[@\$](?:[\+\-_]\B|ARGV\b|INC\b)" />
         <RegExpr attribute="Special Variable" context="var_detect" String="[%\$](?:INC\b|ENV\b|SIG\b)" />
@@ -670,7 +670,7 @@
         <AnyChar attribute="Operator" context="#pop" String="$@%*" />
       </context>
       <!-- This does not check fo a trailing slash, for usage in strings. -->
-      <context name="find_variable_unsafe" attribute="Data Type" lineEndContext="#pop" fallthrough="true" fallthroughContext="#pop" >
+      <context name="tqfind_variable_unsafe" attribute="Data Type" lineEndContext="#pop" fallthrough="true" fallthroughContext="#pop" >
         <RegExpr attribute="Special Variable" context="var_detect_unsafe" String="\$[0-9]+" />
         <RegExpr attribute="Special Variable" context="var_detect_unsafe" String="[@\$](?:[\+\-_]\B|ARGV\b|INC\b)" />
         <RegExpr attribute="Special Variable" context="var_detect_unsafe" String="[%\$](?:INC\b|ENV\b|SIG\b)" />
@@ -728,7 +728,7 @@
       </context>
 
       <!-- ====== Here Documents ====== -->
-      <context name="find_here_document" attribute="Normal Text" lineEndContext="#pop" >
+      <context name="tqfind_here_document" attribute="Normal Text" lineEndContext="#pop" >
         <RegExpr attribute="Keyword" context="here_document" String="(\w+)\s*;?" />
         <RegExpr attribute="Keyword" context="here_document" String="\s*&quot;([^&quot;]+)&quot;\s*;?" />
         <RegExpr attribute="Keyword" context="here_document" String="\s*`([^`]+)`\s*;?" />
@@ -774,7 +774,7 @@
 
       <context name="sub_name_def" attribute="Normal Text" lineEndContext="#pop" fallthrough="true" fallthroughContext="#pop">
         <RegExpr attribute="Function" context="#stay" String="\w+" />
-        <RegExpr attribute="Normal Text" context="find_variable" String="\$\S" lookAhead="true" />
+        <RegExpr attribute="Normal Text" context="tqfind_variable" String="\$\S" lookAhead="true" />
         <RegExpr attribute="Normal Text" context="sub_arg_definition" String="\s*\(" />
         <Detect2Chars attribute="Normal Text" context="#stay" char=":" char1=":" />
       </context>
@@ -830,4 +830,4 @@
     <keywords casesensitive="1" />
   </general>
 </language>
-<!-- kate: space-indent on; indent-width 2; replace-tabs on; -->
+<!-- kate: space-indent on; indent-width 2; tqreplace-tabs on; -->

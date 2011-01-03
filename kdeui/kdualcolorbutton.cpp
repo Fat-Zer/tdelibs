@@ -51,8 +51,8 @@ KDualColorButton::KDualColorButton(TQWidget *parent, const char *name, TQWidget*
     curColor = Foreground;
     dragFlag = false;
     miniCtlFlag = false;
-    if(sizeHint().isValid())
-        setMinimumSize(sizeHint());
+    if(tqsizeHint().isValid())
+        setMinimumSize(tqsizeHint());
     setAcceptDrops(true);
 }
 
@@ -72,8 +72,8 @@ KDualColorButton::KDualColorButton(const TQColor &fgColor, const TQColor &bgColo
     curColor = Foreground;
     dragFlag = false;
     miniCtlFlag = false;
-    if(sizeHint().isValid())
-        setMinimumSize(sizeHint());
+    if(tqsizeHint().isValid())
+        setMinimumSize(tqsizeHint());
     setAcceptDrops(true);
 }
 
@@ -104,7 +104,7 @@ TQColor KDualColorButton::currentColor() const
     return (curColor == Background ? bg.color() : fg.color());
 }
 
-TQSize KDualColorButton::sizeHint() const
+TQSize KDualColorButton::tqsizeHint() const
 {
     return TQSize(34, 34);
 }
@@ -112,7 +112,7 @@ TQSize KDualColorButton::sizeHint() const
 void KDualColorButton::setForeground(const TQColor &c)
 {
     fg = TQBrush(c, SolidPattern);
-    repaint(false);
+    tqrepaint(false);
 
     emit fgChanged(fg.color());
 }
@@ -120,7 +120,7 @@ void KDualColorButton::setForeground(const TQColor &c)
 void KDualColorButton::setBackground(const TQColor &c)
 {
     bg = TQBrush(c, SolidPattern);
-    repaint(false);
+    tqrepaint(false);
 
     emit bgChanged(bg.color());
 }
@@ -131,13 +131,13 @@ void KDualColorButton::setCurrentColor(const TQColor &c)
         bg = TQBrush(c, SolidPattern);
     else
         fg = TQBrush(c, SolidPattern);
-    repaint(false);
+    tqrepaint(false);
 }
 
 void KDualColorButton::setCurrent(DualColor s)
 {
     curColor = s;
-    repaint(false);
+    tqrepaint(false);
 }
 
 void KDualColorButton::metrics(TQRect &fgRect, TQRect &bgRect)
@@ -152,13 +152,13 @@ void KDualColorButton::paintEvent(TQPaintEvent *)
     TQPainter p(this);
 
     metrics(fgRect, bgRect);
-    TQBrush defBrush = colorGroup().brush(TQColorGroup::Button);
+    TQBrush defBrush = tqcolorGroup().brush(TQColorGroup::Button);
 
-    qDrawShadeRect(&p, bgRect, colorGroup(), curColor == Background, 2, 0,
+    qDrawShadeRect(&p, bgRect, tqcolorGroup(), curColor == Background, 2, 0,
                    isEnabled() ? &bg : &defBrush);
-    qDrawShadeRect(&p, fgRect, colorGroup(), curColor == Foreground, 2, 0,
+    qDrawShadeRect(&p, fgRect, tqcolorGroup(), curColor == Foreground, 2, 0,
                    isEnabled() ? &fg : &defBrush);
-    p.setPen(colorGroup().shadow());
+    p.setPen(tqcolorGroup().shadow());
     p.drawPixmap(fgRect.right()+2, 0, *arrowBitmap);
     p.drawPixmap(0, fgRect.bottom()+2, *resetPixmap);
 
@@ -181,7 +181,7 @@ void KDualColorButton::dropEvent(TQDropEvent *ev)
             bg.setColor(c);
             emit(bgChanged(c));
         }
-        repaint(false);
+        tqrepaint(false);
     }
 }
 
@@ -192,11 +192,11 @@ void KDualColorButton::mousePressEvent(TQMouseEvent *ev)
     mPos = ev->pos();
     tmpColor = curColor;
     dragFlag = false;
-    if(fgRect.contains(mPos)){
+    if(fgRect.tqcontains(mPos)){
         curColor = Foreground;
         miniCtlFlag = false;
     }
-    else if(bgRect.contains(mPos)){
+    else if(bgRect.tqcontains(mPos)){
         curColor = Background;
         miniCtlFlag = false;
    }
@@ -217,7 +217,7 @@ void KDualColorButton::mousePressEvent(TQMouseEvent *ev)
         emit bgChanged(bg.color());
         miniCtlFlag = true;
     }
-    repaint(false);
+    tqrepaint(false);
 }
 
 
@@ -244,7 +244,7 @@ void KDualColorButton::mouseReleaseEvent(TQMouseEvent *ev)
         metrics(fgRect, bgRect);
         if(dragFlag)
             curColor = tmpColor;
-        else if(fgRect.contains(ev->pos()) && curColor == Foreground){
+        else if(fgRect.tqcontains(ev->pos()) && curColor == Foreground){
             if(tmpColor == Background){
                 curColor = Foreground;
                 emit currentChanged(Foreground);
@@ -257,7 +257,7 @@ void KDualColorButton::mouseReleaseEvent(TQMouseEvent *ev)
                 }
             }
         }
-        else if(bgRect.contains(ev->pos()) && curColor == Background){
+        else if(bgRect.tqcontains(ev->pos()) && curColor == Background){
             if(tmpColor == Foreground){
                 curColor = Background;
                 emit currentChanged(Background);
@@ -270,7 +270,7 @@ void KDualColorButton::mouseReleaseEvent(TQMouseEvent *ev)
                 }
             }
         }
-        repaint(false);
+        tqrepaint(false);
         dragFlag = false;
     }
     else

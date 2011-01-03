@@ -62,7 +62,7 @@ bool PrinterFilter::filter(KMPrinter *prt)
 	if (m_enabled)
 	{
 		if ((!m_locationRe.isEmpty() && m_locationRe.exactMatch(prt->location())) ||
-		    m_printers.find(prt->printerName()) != m_printers.end())
+		    m_printers.tqfind(prt->printerName()) != m_printers.end())
 			return true;
 		else
 			return false;

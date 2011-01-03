@@ -40,7 +40,7 @@ class KateFileLoader;
 class TQTextCodec;
 
 /**
- * The KateBufBlock class contains an amount of data representing
+ * The KateBufBlock class tqcontains an amount of data representing
  * a certain number of lines.
  *
  * @author Waldo Bastian <bastian@kde.org>
@@ -116,7 +116,7 @@ class KateBufBlock
     void removeLine(uint i);
 
     /**
-     * mark this block as dirty, will invalidate the swap data
+     * mark this block as dirty, will tqinvalidate the swap data
      * insert/removeLine will mark the block dirty itself
      */
     void markDirty ();
@@ -338,7 +338,7 @@ class KateBufBlockList
  * @author Waldo Bastian <bastian@kde.org>
  * @author Christoph Cullmann <cullmann@kde.org>
  */
-class KateBuffer : public QObject
+class KateBuffer : public TQObject
 {
   Q_OBJECT
 
@@ -487,7 +487,7 @@ class KateBuffer : public QObject
      */
     inline KateTextLine::Ptr line(uint i)
     {
-      KateBufBlock *buf = findBlock(i);
+      KateBufBlock *buf = tqfindBlock(i);
       if (!buf)
         return 0;
 
@@ -511,7 +511,7 @@ class KateBuffer : public QObject
      */
     inline KateTextLine::Ptr plainLine(uint i)
     {
-      KateBufBlock *buf = findBlock(i);
+      KateBufBlock *buf = tqfindBlock(i);
       if (!buf)
         return 0;
 
@@ -529,7 +529,7 @@ class KateBuffer : public QObject
      * index pointer gets filled with index of block in m_blocks
      * index only valid if returned block != 0 !
      */
-    KateBufBlock *findBlock (uint i, uint *index = 0)
+    KateBufBlock *tqfindBlock (uint i, uint *index = 0)
     {
       // out of range !
       if (i >= m_lines)
@@ -543,10 +543,10 @@ class KateBuffer : public QObject
         return m_blocks[m_lastFoundBlock];
       }
 
-      return findBlock_internal (i, index);
+      return tqfindBlock_internal (i, index);
     }
 
-    KateBufBlock *findBlock_internal (uint i, uint *index = 0);
+    KateBufBlock *tqfindBlock_internal (uint i, uint *index = 0);
 
   public:
     /**
@@ -591,7 +591,7 @@ class KateBuffer : public QObject
     /**
      * Invalidate highlighting of whole buffer.
      */
-    void invalidateHighlighting();
+    void tqinvalidateHighlighting();
 
     KateCodeFoldingTree *foldingTree () { return &m_regionTree; };
 
@@ -611,7 +611,7 @@ class KateBuffer : public QObject
      * @returns true when the highlighting in the next block needs to be updated,
      * false otherwise.
      */
-    bool doHighlight (KateBufBlock *buf, uint from, uint to, bool invalidate);
+    bool doHighlight (KateBufBlock *buf, uint from, uint to, bool tqinvalidate);
 
   signals:
     /**
@@ -648,7 +648,7 @@ class KateBuffer : public QObject
     uint m_lastInSyncBlock;
 
     /**
-     * last block found by findBlock, there to make searching faster
+     * last block found by tqfindBlock, there to make searching faster
      */
     uint m_lastFoundBlock;
 
@@ -706,4 +706,4 @@ class KateBuffer : public QObject
 
 #endif
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

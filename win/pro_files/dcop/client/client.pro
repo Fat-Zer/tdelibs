@@ -9,9 +9,9 @@ DEFINES += KDECORE_EXPORT=
 
 TARGET		= dcopclient
 
-#system( bash kmoc .. )
+#system( bash ktqmoc .. )
 
-#INCLUDEPATH += .. ../moc
+#INCLUDEPATH += .. ../tqmoc
 
 LIBS += $$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdeice$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX
 

@@ -155,13 +155,13 @@ void KSSLCertDlg::slotDont() {
 
 
 TQDataStream& operator<<(TQDataStream& s, const KSSLCertDlgRet& r) {
-   s << Q_INT8(r.ok?1:0) <<  r.choice << Q_INT8(r.save?1:0) << Q_INT8(r.send?1:0);
+   s << TQ_INT8(r.ok?1:0) <<  r.choice << TQ_INT8(r.save?1:0) << TQ_INT8(r.send?1:0);
    return s;
 }
 
 
 TQDataStream& operator>>(TQDataStream& s, KSSLCertDlgRet& r) {
-Q_INT8 tmp;
+TQ_INT8 tmp;
    s >> tmp; r.ok = (tmp == 1);
    s >> r.choice;
    s >> tmp; r.save = (tmp == 1);

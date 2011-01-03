@@ -136,7 +136,7 @@ void RenderCanvas::calcMinMaxWidth()
 
 //#define SPEED_DEBUG
 
-void RenderCanvas::layout()
+void RenderCanvas::tqlayout()
 {
     if (m_pagedMode) {
        m_minWidth = m_width;
@@ -178,12 +178,12 @@ void RenderCanvas::layout()
     qt.start();
 #endif
 
-    bool relayoutChildren = (oldWidth != m_width) || (oldHeight != m_height);
+    bool retqlayoutChildren = (oldWidth != m_width) || (oldHeight != m_height);
 
-    RenderBlock::layoutBlock( relayoutChildren );
+    RenderBlock::tqlayoutBlock( retqlayoutChildren );
 
 #ifdef SPEED_DEBUG
-    kdDebug() << "RenderCanvas::layout time used=" << qt.elapsed() << endl;
+    kdDebug() << "RenderCanvas::tqlayout time used=" << qt.elapsed() << endl;
     qt.start();
 #endif
 
@@ -217,11 +217,11 @@ void RenderCanvas::updateDocumentSize()
         // if we are about to show a scrollbar, and the document is sized to the viewport w or h,
         // then reserve the scrollbar space so that it doesn't trigger the _other_ scrollbar
 
-        if (!vss && m_width - m_view->verticalScrollBar()->sizeHint().width() == s.width() &&
+        if (!vss && m_width - m_view->verticalScrollBar()->tqsizeHint().width() == s.width() &&
             m_cachedDocWidth <= m_width)
             hDocW = kMin( m_cachedDocWidth, s.width() );
 
-        if (!hss && m_height - m_view->horizontalScrollBar()->sizeHint().height() == s.height() &&
+        if (!hss && m_height - m_view->horizontalScrollBar()->tqsizeHint().height() == s.height() &&
             m_cachedDocHeight <= m_height)
             hDocH = kMin( m_cachedDocHeight, s.height() );
 
@@ -269,7 +269,7 @@ bool RenderCanvas::needsFullRepaint() const
     return m_needsFullRepaint || m_pagedMode;
 }
 
-void RenderCanvas::repaintViewRectangle(int x, int y, int w, int h, bool asap)
+void RenderCanvas::tqrepaintViewRectangle(int x, int y, int w, int h, bool asap)
 {
   KHTMLAssert( view() );
   view()->scheduleRepaint( x, y, w, h, asap );
@@ -332,7 +332,7 @@ void RenderCanvas::paintBoxDecorations(PaintInfo& paintInfo, int /*_tx*/, int /*
     paintInfo.p->fillRect(paintInfo.r, view()->palette().active().color(TQColorGroup::Base));
 }
 
-void RenderCanvas::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
+void RenderCanvas::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 {
     if (m_staticMode) return;
 //    kdDebug( 6040 ) << "updating views contents (" << x << "/" << y << ") (" << w << "/" << h << ")" << endl;
@@ -353,7 +353,7 @@ void RenderCanvas::repaintRectangle(int x, int y, int w, int h, Priority p, bool
         if (p == RealtimePriority)
 	// ### KWQ's updateContents has an additional parameter "now".
 	// It's not clear what the difference between updateContents(...,true)
-	// and repaintContents(...) is. As Qt doesn't have this, I'm leaving it out. (LS)
+	// and tqrepaintContents(...) is. As Qt doesn't have this, I'm leaving it out. (LS)
             m_view->updateContents(ur/*, true*/);
         else if (p == HighPriority)
             m_view->scheduleRepaint(x, y, w, h, true /*asap*/);
@@ -372,23 +372,23 @@ void RenderCanvas::scheduleDeferredRepaints()
     if (!needsFullRepaint()) {
         TQValueList<RenderObject*>::const_iterator it;
         for ( it = m_dirtyChildren.begin(); it != m_dirtyChildren.end(); ++it )
-            (*it)->repaint();
+            (*it)->tqrepaint();
     }
-    //kdDebug(6040) << "scheduled deferred repaints: " << m_dirtyChildren.count() << " needed full repaint: " << needsFullRepaint() << endl;
+    //kdDebug(6040) << "scheduled deferred tqrepaints: " << m_dirtyChildren.count() << " needed full tqrepaint: " << needsFullRepaint() << endl;
     m_dirtyChildren.clear();
 }
 
-void RenderCanvas::repaint(Priority p)
+void RenderCanvas::tqrepaint(Priority p)
 {
     if (m_view && !m_staticMode) {
         if (p == RealtimePriority) {
             //m_view->resizeContents(docWidth(), docHeight());
             m_view->unscheduleRepaint();
             if (needsLayout()) {
-                m_view->scheduleRelayout();
+                m_view->scheduleRetqlayout();
                 return;
             }
-	    // ### same as in repaintRectangle
+	    // ### same as in tqrepaintRectangle
             m_view->updateContents(m_view->contentsX(), m_view->contentsY(),
                                    m_view->visibleWidth(), m_view->visibleHeight()/*, true*/);
         }
@@ -454,7 +454,7 @@ TQRect RenderCanvas::selectionRect() const
 void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep)
 {
     // Check we got valid renderobjects. www.msnbc.com and clicking
-    // around, to find the case where this happened.
+    // around, to tqfind the case where this happened.
     if ( !s || !e )
     {
         kdWarning(6040) << "RenderCanvas::setSelection() called with start=" << s << " end=" << e << endl;
@@ -492,7 +492,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
                     no = no->nextSibling();
             }
         }
-        if (os->selectionState() == SelectionInside && !oldSelectedInside.containsRef(os))
+        if (os->selectionState() == SelectionInside && !oldSelectedInside.tqcontainsRef(os))
             oldSelectedInside.append(os);
 
         os = no;
@@ -550,7 +550,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
                 if (no)
                     no = no->nextSibling();
             }
-        if (o->selectionState() == SelectionInside && !newSelectedInside.containsRef(o))
+        if (o->selectionState() == SelectionInside && !newSelectedInside.tqcontainsRef(o))
             newSelectedInside.append(o);
 
         o=no;
@@ -567,7 +567,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
 
     TQRect updateRect;
 
-    // Don't use repaint() because it will cause all rects to
+    // Don't use tqrepaint() because it will cause all rects to
     // be united (see khtmlview::scheduleRepaint()).  Instead
     // just draw damage rects for objects that have a change
     // in selection state.
@@ -581,7 +581,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     TQPtrListIterator<RenderObject> oldIterator(oldSelectedInside);
     bool firstRect = true;
     for (; oldIterator.current(); ++oldIterator){
-        if (!newSelectedInside.containsRef(oldIterator.current())){
+        if (!newSelectedInside.tqcontainsRef(oldIterator.current())){
             if (firstRect){
                 updateRect = enclosingPositionedRect(oldIterator.current());
                 firstRect = false;
@@ -601,7 +601,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     TQPtrListIterator<RenderObject> newIterator(newSelectedInside);
     firstRect = true;
     for (; newIterator.current(); ++newIterator){
-        if (!oldSelectedInside.containsRef(newIterator.current())){
+        if (!oldSelectedInside.tqcontainsRef(newIterator.current())){
             if (firstRect){
                 updateRect = enclosingPositionedRect(newIterator.current());
                 firstRect = false;
@@ -651,9 +651,9 @@ void RenderCanvas::clearSelection(bool doRepaint)
     {
         if (o->selectionState()!=SelectionNone)
             if (doRepaint)
-                o->repaint();
+                o->tqrepaint();
         o->setSelectionState(SelectionNone);
-        o->repaint();
+        o->tqrepaint();
         RenderObject* no;
         if ( !(no = o->firstChild()) )
             if ( !(no = o->nextSibling()) )
@@ -669,7 +669,7 @@ void RenderCanvas::clearSelection(bool doRepaint)
     if (m_selectionEnd) {
         m_selectionEnd->setSelectionState(SelectionNone);
         if (doRepaint)
-            m_selectionEnd->repaint();
+            m_selectionEnd->tqrepaint();
     }
 
     // set selection start & end to 0

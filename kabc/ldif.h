@@ -96,7 +96,7 @@ namespace KABC {
      * Process the LDIF until a complete item can be returned
      * @returns NewEntry if a new DN encountered, 
      * Item if a new item returned, 
-     * Err if the LDIF contains error,
+     * Err if the LDIF tqcontains error,
      * EndEntry if the parser reached the end of the current entry
      * and MoreData if the parser encountered the end of the current chunk of 
      * the LDIF. If you want to finish the parsing after receiving 

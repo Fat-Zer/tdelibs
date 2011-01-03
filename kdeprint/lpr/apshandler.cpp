@@ -50,8 +50,8 @@ bool ApsHandler::validate(PrintcapEntry *entry)
 
 KMPrinter* ApsHandler::createPrinter(PrintcapEntry *entry)
 {
-	entry->comment = TQString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
-	entry->postcomment = TQString::fromLatin1("# APS%1_END - don't delete this").arg(m_counter);
+	entry->comment = TQString::tqfromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
+	entry->postcomment = TQString::tqfromLatin1("# APS%1_END - don't delete this").arg(m_counter);
 	m_counter++;
 	return LprHandler::createPrinter(entry);
 }
@@ -63,7 +63,7 @@ bool ApsHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool shor
 		if (!shortmode)
 		{
 			TQMap<TQString,TQString>	opts = loadResources(entry);
-			if (opts.contains("PRINTER"))
+			if (opts.tqcontains("PRINTER"))
 			{
 				prt->setDescription(i18n("APS Driver (%1)").arg(opts["PRINTER"]));
 				prt->setDriverInfo(prt->description());
@@ -103,7 +103,7 @@ bool ApsHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool shor
 							opts[ "NCP_PRINTER" ],
 							opts[ "NCP_USER" ],
 							opts[ "NCP_PASSWD" ] );
-					uri.replace( 0, 3, "ncp" );
+					uri.tqreplace( 0, 3, "ncp" );
 					prt->setDevice(uri);
 				}
 				prot = "ncp";
@@ -148,7 +148,7 @@ TQMap<TQString,TQString> ApsHandler::loadVarFile(const TQString& filename)
 		while (!t.atEnd())
 		{
 			line = t.readLine().stripWhiteSpace();
-			if (line.isEmpty() || line[0] == '#' || (p = line.find('=')) == -1)
+			if (line.isEmpty() || line[0] == '#' || (p = line.tqfind('=')) == -1)
 				continue;
 			QString	variable = line.left(p).stripWhiteSpace();
 			QString	value = line.mid(p+1).stripWhiteSpace();
@@ -166,7 +166,7 @@ DrMain* ApsHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool config
 	if (driver /* && config */ )    // Load resources in all case, to get the correct page size
 	{
 		TQMap<TQString,TQString>	opts = loadResources(entry);
-		if ( !config && opts.contains( "PAPERSIZE" ) )
+		if ( !config && opts.tqcontains( "PAPERSIZE" ) )
 		{
 			// this is needed to keep applications informed
 			// about the current selected page size
@@ -175,7 +175,7 @@ DrMain* ApsHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool config
 			// default page size needs to be set to the actual
 			// value of the printer driver, otherwise it's blocked
 			// to A4
-			DrBase *opt = driver->findOption( "PageSize" );
+			DrBase *opt = driver->tqfindOption( "PageSize" );
 			if ( opt )
 				opt->set( "default", opts[ "PageSize" ] );
 		}
@@ -187,7 +187,7 @@ DrMain* ApsHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool config
 
 DrMain* ApsHandler::loadDbDriver(const TQString& s)
 {
-	int	p = s.find('/');
+	int	p = s.tqfind('/');
 	DrMain	*driver = loadApsDriver(true);
 	if (driver)
 		driver->set("gsdriver", s.mid(p+1));
@@ -272,7 +272,7 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 			{
 				TQString work, server, printer, user, passwd;
 				TQString uri = prt->device();
-				uri.replace( 0, 3, "smb" );
+				uri.tqreplace( 0, 3, "smb" );
 				if ( splitSmbURI( uri, work, server, printer, user, passwd ) )
 				{
 					QTextStream	t(&f);
@@ -309,8 +309,8 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 	entry->addField("af", Field::String, sd + "/acct");
 	entry->addField("lf", Field::String, sd + "/log");
 	entry->addField("if", Field::String, sysconfDir() + "/basedir/bin/apsfilter");
-	entry->comment = TQString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
-	entry->postcomment = TQString::fromLatin1("# APS%1_END").arg(m_counter);
+	entry->comment = TQString::tqfromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
+	entry->postcomment = TQString::tqfromLatin1("# APS%1_END").arg(m_counter);
 	m_counter++;
 	return entry;
 }

@@ -82,7 +82,7 @@ KHostName::KHostName()
 
    display = ::getenv("DISPLAY");
    // strip the screen number from the display
-   display.replace(TQRegExp("\\.[0-9]+$"), "");
+   display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
    if (display.isEmpty())
    {
       fprintf(stderr, "%s", i18n("Error: DISPLAY environment variable not set.\n").local8Bit().data());
@@ -145,14 +145,14 @@ void KHostName::changeX()
       TQCString authName = entries[1];
       TQCString authKey = entries[2];
 
-      int i = netId.findRev(':');
+      int i = netId.tqfindRev(':');
       if (i == -1)
          continue;
       TQCString netDisplay = netId.mid(i);
       if (netDisplay != display)
          continue;
 
-      i = netId.find('/');
+      i = netId.tqfind('/');
       if (i == -1)
          continue;
 
@@ -208,7 +208,7 @@ void KHostName::changeDcop()
 
    if (!newName.isEmpty())
    {
-      int i = line1.findRev(':');
+      int i = line1.tqfindRev(':');
       if (i == -1)
       {
          fprintf(stderr, "Warning: File '%s' has unexpected format.\n", fname.data());
@@ -286,7 +286,7 @@ void KHostName::changeDcop()
    // Remove old entries, but only if XAUTHLOCALHOSTNAME doesn't point
    // to it
    char* xauthlocalhostname = getenv("XAUTHLOCALHOSTNAME");
-   if (!xauthlocalhostname || !oldNetId.contains(xauthlocalhostname))
+   if (!xauthlocalhostname || !oldNetId.tqcontains(xauthlocalhostname))
    {
       TQString cmd = "iceauth remove "+KProcess::quote("netid="+oldNetId);
       system(TQFile::encodeName(cmd));
@@ -340,7 +340,7 @@ void KHostName::changeSessionManager()
       fprintf(stderr, "Warning: No session management specified.\n");
       return;
    }
-   int i = sm.findRev(':');
+   int i = sm.tqfindRev(':');
    if ((i == -1) || (sm.left(6) != "local/"))
    {
       fprintf(stderr, "Warning: Session Management socket '%s' has unexpected format.\n", sm.data());

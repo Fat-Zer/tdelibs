@@ -30,7 +30,7 @@ class KSSLSettingsPrivate;
 /**
  * KDE SSL Settings
  *
- * This class contains some of the SSL settings for easy use.
+ * This class tqcontains some of the SSL settings for easy use.
  *
  * @author George Staikos <staikos@kde.org>
  * @see KSSL

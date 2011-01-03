@@ -44,7 +44,7 @@ class KPanelMenuPrivate;
  * the menu object.
  *
  * Finally, you also have to provide a desktop file describing your dynamic menu. The
- * relevant entries are: Name, Comment, Icon and X-KDE-Library (which contains the
+ * relevant entries are: Name, Comment, Icon and X-KDE-Library (which tqcontains the
  * library name without any extension). This desktop file has to be installed in
  * $KDEDIR/share/apps/kicker/menuext/.
  *
@@ -87,7 +87,7 @@ public:
      */
     void setPath(const TQString &p);
     /**
-     * Tell if the menu has been initialized, that is it already contains items.
+     * Tell if the menu has been initialized, that is it already tqcontains items.
      * This is useful when you need to know if you have to clear the menu, or to
      * fill it.
      * @return the initial state

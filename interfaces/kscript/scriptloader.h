@@ -26,7 +26,7 @@
 /**
  * Script loader
  */
-class ScriptLoader : virtual public QObject
+class ScriptLoader : virtual public TQObject
 {
 	Q_OBJECT
 	public:

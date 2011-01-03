@@ -102,12 +102,12 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
 {
     TQCString result;
 
-    if ( type == "int" || type == "Q_INT32" )
+    if ( type == "int" || type == "TQ_INT32" )
     {
         int i;
         stream >> i;
         result.setNum( i );
-    } else if ( type == "uint" || type == "Q_UINT32" || type == "unsigned int" )
+    } else if ( type == "uint" || type == "TQ_UINT32" || type == "unsigned int" )
     {
         uint i;
         stream >> i;
@@ -132,12 +132,12 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         double d;
         stream >> d;
         result.setNum( d, 'f' );
-    } else if ( type == "Q_INT64" ) {
-        Q_INT64 i;
+    } else if ( type == "TQ_INT64" ) {
+        TQ_INT64 i;
         stream >> i;
         result.sprintf( "%lld", i );
-    } else if ( type == "Q_UINT64" ) {
-        Q_UINT64 i;
+    } else if ( type == "TQ_UINT64" ) {
+        TQ_UINT64 i;
         stream >> i;
         result.sprintf( "%llu", i );
     } else if ( type == "bool" )
@@ -190,7 +190,7 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         result.sprintf( "%dx%d+%d+%d", r.width(), r.height(), r.x(), r.y() );
     } else if ( type == "TQVariant" )
     {
-        Q_INT32 type;
+        TQ_INT32 type;
         stream >> type;
         return demarshal( stream, TQVariant::typeToName( (TQVariant::Type)type ) );
     } else if ( type == "DCOPRef" )
@@ -205,7 +205,7 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         result = r.url().local8Bit();
     } else if ( type.left( 11 ) == "TQValueList<" )
     {
-        if ( (uint)type.find( '>', 11 ) != type.length() - 1 )
+        if ( (uint)type.tqfind( '>', 11 ) != type.length() - 1 )
             return result;
 
         TQString nestedType = type.mid( 11, type.length() - 12 );
@@ -213,10 +213,10 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         if ( nestedType.isEmpty() )
             return result;
 
-        Q_UINT32 count;
+        TQ_UINT32 count;
         stream >> count;
 
-        Q_UINT32 i = 0;
+        TQ_UINT32 i = 0;
         for (; i < count; ++i )
         {
             TQCString arg = demarshal( stream, nestedType );
@@ -227,21 +227,21 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         }
     } else if ( type.left( 5 ) == "TQMap<" )
     {
-        int commaPos = type.find( ',', 5 );
+        int commaPos = type.tqfind( ',', 5 );
 
         if ( commaPos == -1 )
             return result;
 
-        if ( (uint)type.find( '>', commaPos ) != type.length() - 1 )
+        if ( (uint)type.tqfind( '>', commaPos ) != type.length() - 1 )
             return result;
 
         TQString keyType = type.mid( 5, commaPos - 5 );
         TQString valueType = type.mid( commaPos + 1, type.length() - commaPos - 2 );
 
-        Q_UINT32 count;
+        TQ_UINT32 count;
         stream >> count;
 
-        Q_UINT32 i = 0;
+        TQ_UINT32 i = 0;
         for (; i < count; ++i )
         {
             TQCString key = demarshal( stream, keyType );
@@ -291,15 +291,15 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
 	arg << s.toUInt();
     else if ( type == "unsigned int" )
 	arg << s.toUInt();
-    else if ( type == "Q_INT32" )
+    else if ( type == "TQ_INT32" )
 	arg << s.toInt();
-    else if ( type == "Q_INT64" ) {
+    else if ( type == "TQ_INT64" ) {
 	TQVariant qv = TQVariant( s );
 	arg << qv.toLongLong();
     }
-    else if ( type == "Q_UINT32" )
+    else if ( type == "TQ_UINT32" )
 	arg << s.toUInt();
-    else if ( type == "Q_UINT64" ) {
+    else if ( type == "TQ_UINT64" ) {
 	TQVariant qv = TQVariant( s );
 	arg << qv.toULongLong();
     }
@@ -376,7 +376,7 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
 	    marshall( dummy_arg, args, j, type );
 	    count++;
 	}
-	arg << (Q_UINT32) count;
+	arg << (TQ_UINT32) count;
 	// Parse the list for real
 	while (true) {
 	    if( i > args.count() )

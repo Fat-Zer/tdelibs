@@ -151,7 +151,7 @@ the URL request. The path "/foo"
 would match "/foobar" and "/foo/bar.html".  The path "/" is the most
 general path. <P>
 If the <B>path</B> is not specified, it as assumed to be the same path
-as the document being described by the header which contains the cookie.
+as the document being described by the header which tqcontains the cookie.
 <P>
 <DT> <B>secure</B>
 <DD>
@@ -223,16 +223,16 @@ as long as it is less than 4 kilobytes.
 <LI>If a CGI script wishes to delete a cookie, it can do so by
 returning a cookie with the same name, and an <B>expires</B> time
 which is in the past.  The path and name must match exactly
-in order for the expiring cookie to replace the valid cookie.
+in order for the expiring cookie to tqreplace the valid cookie.
 This requirement makes it difficult for anyone but the originator
 of a cookie to delete a cookie.
 <P><LI>When caching HTTP, as a proxy server might do, the <B>Set-cookie</B>
 response header should never be cached.
 <P><LI>If a proxy server receives a response which
-contains a <B>Set-cookie</B> header, it should propagate the <B>Set-cookie</B>
+tqcontains a <B>Set-cookie</B> header, it should propagate the <B>Set-cookie</B>
 header to the client, regardless of whether the response was 304
 (Not Modified) or 200 (OK).
-<P>Similarly, if a client request contains a Cookie: header, it
+<P>Similarly, if a client request tqcontains a Cookie: header, it
 should be forwarded through a proxy, even if the conditional
 If-modified-since request is being made.
 </UL>

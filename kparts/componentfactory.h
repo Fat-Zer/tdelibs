@@ -82,7 +82,7 @@ namespace KParts
          * \endcode
          *
          * @param factory The factory to ask for the creation of the component
-         * @param parentWidget the parent widget for the part
+         * @param tqparentWidget the parent widget for the part
          * @param widgetName the name of the part's widget
          * @param parent The parent object (see TQObject constructor)
          * @param name The name of the object to create (see TQObject constructor)
@@ -93,13 +93,13 @@ namespace KParts
          */
         template <class T>
         static T *createPartInstanceFromFactory( KParts::Factory *factory,
-                                                 TQWidget *parentWidget = 0,
+                                                 TQWidget *tqparentWidget = 0,
                                                  const char *widgetName = 0,
                                                  TQObject *parent = 0,
                                                  const char *name = 0,
                                                  const TQStringList &args = TQStringList() )
         {
-            KParts::Part *object = factory->createPart( parentWidget, widgetName,
+            KParts::Part *object = factory->createPart( tqparentWidget, widgetName,
                                                         parent, name,
                                                         T::staticMetaObject()->className(),
                                                         args );
@@ -156,7 +156,7 @@ namespace KParts
 
         template <class T>
         static T *createPartInstanceFromLibrary( const char *libraryName,
-                                                 TQWidget *parentWidget = 0,
+                                                 TQWidget *tqparentWidget = 0,
                                                  const char *widgetName = 0,
                                                  TQObject *parent = 0,
                                                  const char *name = 0,
@@ -186,7 +186,7 @@ namespace KParts
                     *error = ErrNoFactory;
                 return 0;
             }
-            T *res = createPartInstanceFromFactory<T>( partFactory, parentWidget,
+            T *res = createPartInstanceFromFactory<T>( partFactory, tqparentWidget,
                                                        widgetName, parent, name, args );
             if ( !res )
             {
@@ -218,7 +218,7 @@ namespace KParts
 
         template <class T>
         static T *createPartInstanceFromService( const KService::Ptr &service,
-                                                 TQWidget *parentWidget = 0,
+                                                 TQWidget *tqparentWidget = 0,
                                                  const char *widgetName = 0,
                                                  TQObject *parent = 0,
                                                  const char *name = 0,
@@ -233,7 +233,7 @@ namespace KParts
                 return 0;
             }
 
-            return createPartInstanceFromLibrary<T>( library.local8Bit().data(), parentWidget,
+            return createPartInstanceFromLibrary<T>( library.local8Bit().data(), tqparentWidget,
                                                      widgetName, parent, name, args, error );
         }
 
@@ -267,7 +267,7 @@ namespace KParts
         template <class T, class ServiceIterator>
         static T *createPartInstanceFromServices( ServiceIterator begin,
                                                   ServiceIterator end,
-                                                  TQWidget *parentWidget = 0,
+                                                  TQWidget *tqparentWidget = 0,
                                                   const char *widgetName = 0,
                                                   TQObject *parent = 0,
                                                   const char *name = 0,
@@ -281,7 +281,7 @@ namespace KParts
                 if ( error )
                     *error = 0;
 
-                T *component = createPartInstanceFromService<T>( service, parentWidget,
+                T *component = createPartInstanceFromService<T>( service, tqparentWidget,
                                                                  widgetName, parent,
                                                                  name, args, error );
                 if ( component )
@@ -306,7 +306,7 @@ namespace KParts
          * }
          * \endcode
          *
-         * @param serviceType the type of service for which to find a plugin
+         * @param serviceType the type of service for which to tqfind a plugin
          * @param constraint an optional constraint to pass to the trader (see KIO::KTrader)
          * @param parent the parent object for the part itself
          * @param name the name that will be given to the part
@@ -344,18 +344,18 @@ namespace KParts
          * You can use this method to create a generic viewer - that can display any
          * kind of file, provided that there is a ReadOnlyPart installed for it - in 5 lines:
          * \code
-         * // Given the following: KURL url, TQWidget* parentWidget and TQObject* parentObject.
+         * // Given the following: KURL url, TQWidget* tqparentWidget and TQObject* parentObject.
          * TQString mimetype = KMimeType::findByURL( url )->name();
-         * KParts::ReadOnlyPart* part = KParts::ComponentFactory::createPartInstanceFromQuery<KParts::ReadOnlyPart>( mimetype, TQString::null, parentWidget, 0, parentObject, 0 );
+         * KParts::ReadOnlyPart* part = KParts::ComponentFactory::createPartInstanceFromQuery<KParts::ReadOnlyPart>( mimetype, TQString::null, tqparentWidget, 0, parentObject, 0 );
          * if ( part ) {
          *     part->openURL( url );
-         *     part->widget()->show();  // also insert the widget into a layout, or simply use a TQVBox as parentWidget
+         *     part->widget()->show();  // also insert the widget into a tqlayout, or simply use a TQVBox as tqparentWidget
          * }
          * \endcode
          *
-         * @param serviceType the type of service for which to find a part, e.g. a mimetype
+         * @param serviceType the type of service for which to tqfind a part, e.g. a mimetype
          * @param constraint an optional constraint to pass to the trader (see KTrader)
-         * @param parentWidget the parent widget, will be set as the parent of the part's widget
+         * @param tqparentWidget the parent widget, will be set as the parent of the part's widget
          * @param widgetName the name that will be given to the part's widget
          * @param parent the parent object for the part itself
          * @param name the name that will be given to the part
@@ -369,14 +369,14 @@ namespace KParts
         template <class T>
         static T *createPartInstanceFromQuery( const TQString &serviceType,
                                                const TQString &constraint,
-                                               TQWidget *parentWidget = 0,
+                                               TQWidget *tqparentWidget = 0,
                                                const char *widgetName = 0,
                                                TQObject *parent = 0,
                                                const char *name = 0,
                                                const TQStringList &args = TQStringList(),
                                                int *error = 0 )
         {
-            KTrader::OfferList offers = KTrader::self()->query( serviceType, TQString::fromLatin1("KParts/ReadOnlyPart"), constraint, TQString::null );
+            KTrader::OfferList offers = KTrader::self()->query( serviceType, TQString::tqfromLatin1("KParts/ReadOnlyPart"), constraint, TQString::null );
             if ( offers.isEmpty() )
             {
                 if ( error )
@@ -385,7 +385,7 @@ namespace KParts
             }
 
             return createPartInstanceFromServices<T>( offers.begin(), offers.end(),
-                                                      parentWidget, widgetName,
+                                                      tqparentWidget, widgetName,
                                                       parent, name, args, error );
         }
 

@@ -95,7 +95,7 @@ namespace KSpell2
 
         virtual void setCurrentPosition( int );
         virtual int currentPosition() const;
-        virtual void replace( const Word& w, const TQString& newWord );
+        virtual void tqreplace( const Word& w, const TQString& newWord );
 
         /**
          * Should return the sentence containing the current word

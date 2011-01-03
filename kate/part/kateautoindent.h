@@ -67,7 +67,7 @@ class IndenterConfigPage : public QWidget
  * This baseclass is a real dummy, does nothing beside remembering the document it belongs too,
  * only to have the object around
  */
-class KateAutoIndent : public QObject
+class KateAutoIndent : public TQObject
 {
   Q_OBJECT
 
@@ -321,7 +321,7 @@ protected:
   TQString tabString(uint length) const;
 
   uint  tabWidth;     //!< The number of characters simulated for a tab
-  uint  indentWidth;  //!< The number of characters used when tabs are replaced by spaces
+  uint  indentWidth;  //!< The number of characters used when tabs are tqreplaced by spaces
 
 public:
     // Attributes that we should skip over or otherwise know about
@@ -366,9 +366,9 @@ class KateCSmartIndent : public KateNormalIndent
   private:
     uint calcIndent (KateDocCursor &begin, bool needContinue);
     uint calcContinue (KateDocCursor &begin, KateDocCursor &end);
-    uint findOpeningBrace (KateDocCursor &start);
-    uint findOpeningParen (KateDocCursor &start);
-    uint findOpeningComment (KateDocCursor &start);
+    uint tqfindOpeningBrace (KateDocCursor &start);
+    uint tqfindOpeningParen (KateDocCursor &start);
+    uint tqfindOpeningComment (KateDocCursor &start);
     bool firstOpeningBrace (KateDocCursor &start);
     bool handleDoxygen (KateDocCursor &begin);
 
@@ -459,7 +459,7 @@ class KateCSAndSIndent : public KateNormalIndent
     TQString calcIndentInBrace(const KateDocCursor &indentCursor, const KateDocCursor &braceCursor, int bracePos);
 
     bool handleDoxygen (KateDocCursor &begin);
-    TQString findOpeningCommentIndentation (const KateDocCursor &start);
+    TQString tqfindOpeningCommentIndentation (const KateDocCursor &start);
 
     TQString indentString;
 };
@@ -578,4 +578,4 @@ class ScriptIndentConfigPage : public IndenterConfigPage
 
 #endif
 
-// kate: space-indent on; indent-width 2; replace-tabs on;
+// kate: space-indent on; indent-width 2; tqreplace-tabs on;

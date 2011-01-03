@@ -442,7 +442,7 @@
  * a Spanish synthesizer would likely be unintelligible).  So the language
  * attribute is said to have "priority".
  * If an application does not specify a language attribute, a default one will be assumed.
- * The rest of the attributes are said to be "preferred".  If %KTTSD cannot find
+ * The rest of the attributes are said to be "preferred".  If %KTTSD cannot tqfind
  * a talker with the exact preferred attributes requested, the closest matching
  * talker will likely still be understandable.
  *
@@ -458,7 +458,7 @@
  * and Soft volume would not be picked as long as an English Female talker is
  * available.
  *
- * The algorithm used by %KTTSD to find a matching talker is as follows:
+ * The algorithm used by %KTTSD to tqfind a matching talker is as follows:
  *
  * - If language code is not specified by the application, assume default configured
  *   by user.  The primary language code automatically has priority.
@@ -511,8 +511,8 @@
  * and if there are none, display an error message to the user.
  *
  * Applications can implement their own talker-matching algorithm by
- * calling getTalkers, then finding the desired talker from the returned
- * list.  When the full talker code is passed in, %KKTSD will find an exact
+ * calling getTalkers, then tqfinding the desired talker from the returned
+ * list.  When the full talker code is passed in, %KKTSD will tqfind an exact
  * match and use the specified talker.
  *
  * If an application requires a configuration that user has not created,
@@ -708,7 +708,7 @@ class KSpeech : virtual public DCOPObject {
         *                       defaults to the closest matching talker.
         *
         * If an existing Screen Reader output is in progress, it is stopped and discarded and
-        * replaced with this new message.
+        * tqreplaced with this new message.
         */
         virtual ASYNC sayScreenReaderOutput(const TQString &msg, const TQString &talker) = 0;
 
@@ -748,14 +748,14 @@ class KSpeech : virtual public DCOPObject {
           @endverbatim
         *
         * Note that backward slashes must be escaped.
-        * When %KTTSD parses the text, it replaces all tabs, spaces, and formfeeds
-        * with a single space, and then replaces the sentence delimiters using
+        * When %KTTSD parses the text, it tqreplaces all tabs, spaces, and formfeeds
+        * with a single space, and then tqreplaces the sentence delimiters using
         * the following statement:
           @verbatim
-              TQString::replace(sentenceDelimiter, "\\1\t");
+              TQString::tqreplace(sentenceDelimiter, "\\1\t");
           @endverbatim
         *
-        * which replaces all sentence delimiters with a tab, but
+        * which tqreplaces all sentence delimiters with a tab, but
         * preserving the first capture text (first parenthesis).  In other
         * words, the sentence punctuation is preserved.
         * The tab is later used to separate the text into sentences.
@@ -922,7 +922,7 @@ class KSpeech : virtual public DCOPObject {
         * @return               A TQDataStream containing information about the job.
         *                       Blank if no such job.
         *
-        * The stream contains the following elements:
+        * The stream tqcontains the following elements:
         *   - int state        - Job state.
         *   - TQCString appId   - DCOP senderId of the application that requested the speech job.
         *   - TQString talker   - Talker Code requested by application.

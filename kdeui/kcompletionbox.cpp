@@ -231,7 +231,7 @@ bool KCompletionBox::eventFilter( TQObject *o, TQEvent *e )
     // any mouse-click on something else than "this" makes us hide
     else if ( type == TQEvent::MouseButtonPress ) {
         TQMouseEvent *ev = static_cast<TQMouseEvent *>( e );
-        if ( !rect().contains( ev->pos() )) // this widget
+        if ( !rect().tqcontains( ev->pos() )) // this widget
             hide();
 
         if ( !d->emitSelected && currentItem() && !::qt_cast<TQScrollBar*>(o) )
@@ -260,7 +260,7 @@ void KCompletionBox::popup()
         clearSelection();
         if ( !isVisible() )
             show();
-        else if ( size().height() != sizeHint().height() )
+        else if ( size().height() != tqsizeHint().height() )
             sizeAndPosition();
     }
 }
@@ -302,7 +302,7 @@ void KCompletionBox::show()
     d->upwardBox = false;
     if ( d->m_parent ) {
         sizeAndPosition();
-        qApp->installEventFilter( this );
+        tqApp->installEventFilter( this );
     }
 
     // ### we shouldn't need to call this, but without this, the scrollbars
@@ -310,21 +310,21 @@ void KCompletionBox::show()
     //triggerUpdate( true );
 
     // Workaround for I'm not sure whose bug - if this KCompletionBox' parent
-    // is in a layout, that layout will detect inserting new child (posted
-    // ChildInserted event), and will trigger relayout (post LayoutHint event).
+    // is in a tqlayout, that tqlayout will detect inserting new child (posted
+    // ChildInserted event), and will trigger retqlayout (post LayoutHint event).
     // TQWidget::show() sends also posted ChildInserted events for the parent,
-    // and later all LayoutHint events, which causes layout updating.
+    // and later all LayoutHint events, which causes tqlayout updating.
     // The problem is, KCompletionBox::eventFilter() detects resizing
     // of the parent, and calls hide() - and this hide() happen in the middle
     // of show(), causing inconsistent state. I'll try to submit a Qt patch too.
-    qApp->sendPostedEvents();
+    tqApp->sendPostedEvents();
     KListBox::show();
 }
 
 void KCompletionBox::hide()
 {
     if ( d->m_parent )
-        qApp->removeEventFilter( this );
+        tqApp->removeEventFilter( this );
     d->cancelText = TQString::null;
     KListBox::hide();
 }
@@ -335,8 +335,8 @@ TQRect KCompletionBox::calculateGeometry() const
     int ih = itemHeight();
     int h = QMIN( 15 * ih, (int) count() * ih ) + 2*frameWidth();
 
-    int w = (d->m_parent) ? d->m_parent->width() : KListBox::minimumSizeHint().width();
-    w = QMAX( KListBox::minimumSizeHint().width(), w );
+    int w = (d->m_parent) ? d->m_parent->width() : KListBox::tqminimumSizeHint().width();
+    w = QMAX( KListBox::tqminimumSizeHint().width(), w );
 
     //If we're inside a combox, Qt by default makes the dropdown
     // as wide as the combo, and gives the style a chance
@@ -373,7 +373,7 @@ TQRect KCompletionBox::calculateGeometry() const
     return TQRect(x, y, w, h);
 }
 
-TQSize KCompletionBox::sizeHint() const
+TQSize KCompletionBox::tqsizeHint() const
 {
     return calculateGeometry().size();
 }
@@ -485,7 +485,7 @@ void KCompletionBox::setItems( const TQStringList& items )
     }
     else {
         //Keep track of whether we need to change anything,
-        //so we can avoid a repaint for identical updates,
+        //so we can avoid a tqrepaint for identical updates,
         //to reduce flicker
         bool dirty = false;
 
@@ -520,7 +520,7 @@ void KCompletionBox::setItems( const TQStringList& items )
             triggerUpdate( false );
     }
 
-    if ( isVisible() && size().height() != sizeHint().height() )
+    if ( isVisible() && size().height() != tqsizeHint().height() )
         sizeAndPosition();
 
     blockSignals( block );

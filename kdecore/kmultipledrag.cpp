@@ -32,24 +32,24 @@ void KMultipleDrag::addDragObject( TQDragObject *dragObject )
 {
     //kdDebug() << "KMultipleDrag::addDragObject" << endl;
     m_dragObjects.append( dragObject );
-    // We need to find out how many formats this dragObject supports
+    // We need to tqfind out how many formats this dragObject supports
     int i = 0;
     while ( dragObject->format( i ) )
         ++i;
     m_numberFormats.append( i ); // e.g. if it supports two formats, 0 and 1, store 2.
 }
 
-TQByteArray KMultipleDrag::encodedData( const char *mime ) const
+TQByteArray KMultipleDrag::tqencodedData( const char *mime ) const
 {
-    //kdDebug() << "KMultipleDrag::encodedData " << mime << endl;
-    // Iterate over the drag objects, and find the format in the right one
+    //kdDebug() << "KMultipleDrag::tqencodedData " << mime << endl;
+    // Iterate over the drag objects, and tqfind the format in the right one
     TQPtrListIterator<TQDragObject> it( m_dragObjects );
     for ( ; it.current(); ++it )
     {
         for ( int i = 0; it.current()->format( i ); ++i )
         {
             if ( ::qstrcmp( it.current()->format( i ), mime ) == 0 )
-                return it.current()->encodedData( mime );
+                return it.current()->tqencodedData( mime );
         }
     }
     return TQByteArray();

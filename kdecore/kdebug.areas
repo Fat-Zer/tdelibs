@@ -81,7 +81,7 @@
 1210        kicker
 1211        konsole
 1212        kwin
-1213        kappfinder
+1213        kapptqfinder
 1214        kdesktop (icons)
 1215        ksysguard
 1216        kwin (client errors)
@@ -107,10 +107,10 @@
 1511        kdessh (kdeutils)
 1512        kdepasswd (kdeutils)
 1601        ark (kdeutils)
-1901        kfind
-1902        kfind (KfindWindow::updateResults)
-1903        kfind (KfindTabDialog::createQuery)
-2000        kfind
+1901        ktqfind
+1902        ktqfind (KtqfindWindow::updateResults)
+1903        ktqfind (KtqfindTabDialog::createQuery)
+2000        ktqfind
 2001        kregexpeditor
 2002        kfloppy
 2003        ksim
@@ -427,11 +427,11 @@
 20011        KDB (Connection)
 20012        KDB (plugin)
 
-#kfilereplace
-23000 	     KFileReplace (kfilereplacepart)
+#kfiletqreplace
+23000 	     KFileReplace (kfiletqreplacepart)
 
 #klinkstatus
-23100        KLinkStatus
+23100        KLinktqStatus
 
 # Quanta
 24000        Quanta

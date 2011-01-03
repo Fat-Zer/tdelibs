@@ -35,7 +35,7 @@ template class TQPtrList<KURIFilterPlugin>;
 KURIFilterPlugin::KURIFilterPlugin( TQObject *parent, const char *name, double pri )
                  :TQObject( parent, name )
 {
-    m_strName = TQString::fromLatin1( name );
+    m_strName = TQString::tqfromLatin1( name );
     m_dblPriority = pri;
 }
 
@@ -171,32 +171,32 @@ TQString KURIFilterData::iconName()
             case KURIFilterData::EXECUTABLE:
             {
                 TQString exeName = m_pURI.url();
-                exeName = exeName.mid( exeName.findRev( '/' ) + 1 ); // strip path if given
+                exeName = exeName.mid( exeName.tqfindRev( '/' ) + 1 ); // strip path if given
                 KService::Ptr service = KService::serviceByDesktopName( exeName );
-                if (service && service->icon() != TQString::fromLatin1( "unknown" ))
+                if (service && service->icon() != TQString::tqfromLatin1( "unknown" ))
                     m_strIconName = service->icon();
-                // Try to find an icon with the same name as the binary (useful for non-kde apps)
+                // Try to tqfind an icon with the same name as the binary (useful for non-kde apps)
                 else if ( !KGlobal::iconLoader()->loadIcon( exeName, KIcon::NoGroup, 16, KIcon::DefaultState, 0, true ).isNull() )
                     m_strIconName = exeName;
                 else
                     // not found, use default
-                    m_strIconName = TQString::fromLatin1("exec");
+                    m_strIconName = TQString::tqfromLatin1("exec");
                 break;
             }
             case KURIFilterData::HELP:
             {
-                m_strIconName = TQString::fromLatin1("khelpcenter");
+                m_strIconName = TQString::tqfromLatin1("khelpcenter");
                 break;
             }
             case KURIFilterData::SHELL:
             {
-                m_strIconName = TQString::fromLatin1("konsole");
+                m_strIconName = TQString::tqfromLatin1("konsole");
                 break;
             }
             case KURIFilterData::ERROR:
             case KURIFilterData::BLOCKED:
             {
-                m_strIconName = TQString::fromLatin1("error");
+                m_strIconName = TQString::tqfromLatin1("error");
                 break;
             }
             default:

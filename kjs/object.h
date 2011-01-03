@@ -602,7 +602,7 @@ namespace KJS {
   protected:
     PropertyMap _prop;
   private:
-    const HashEntry* findPropertyHashEntry( const Identifier& propertyName ) const;
+    const HashEntry* tqfindPropertyHashEntry( const Identifier& propertyName ) const;
     ObjectImpPrivate *_od;
     ValueImp *_proto;
     ValueImp *_internalValue;

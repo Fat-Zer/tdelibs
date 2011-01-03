@@ -43,7 +43,7 @@ class KAction;
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT KMJobManager : public QObject
+class KDEPRINT_EXPORT KMJobManager : public TQObject
 {
 	Q_OBJECT
 
@@ -68,8 +68,8 @@ public:
 	int limit();
 	void setLimit(int val);
 
-	//KMJob* findJob(int ID);
-	KMJob* findJob(const TQString& uri);
+	//KMJob* tqfindJob(int ID);
+	KMJob* tqfindJob(const TQString& uri);
 	//bool sendCommand(int ID, int action, const TQString& arg = TQString::null);
 	bool sendCommand(const TQString& uri, int action, const TQString& arg = TQString::null);
 	bool sendCommand(const TQPtrList<KMJob>& jobs, int action, const TQString& arg = TQString::null);

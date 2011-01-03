@@ -39,7 +39,7 @@
  */
 
 class KJavaProcessPrivate;
-class KJavaProcess : public KProcess //QObject
+class KJavaProcess : public KProcess //TQObject
 {
 Q_OBJECT
 
@@ -125,7 +125,7 @@ public:
 protected slots:
     /**
      * This slot is called whenever something is written to stdin of the process.
-     * It's called again to make sure we keep emptying out the buffer that contains
+     * It's called again to make sure we keep emptying out the buffer that tqcontains
      * the messages we need send.
      */
     void slotWroteData();

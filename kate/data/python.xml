@@ -118,7 +118,7 @@
 			<item> tuple </item>
 			<item> type </item>
 			<item> unichr </item>
-			<item> unicode </item>
+			<item> tqunicode </item>
 			<item> vars </item>
 			<item> xrange </item>
 			<item> zip </item>
@@ -152,7 +152,7 @@
 			<item>__rcmp__</item>
 			<item>__hash__</item>
 			<item>__nonzero__</item>
-			<item>__unicode__</item>
+			<item>__tqunicode__</item>
 		</list>
 		<list name="exceptions">
 			<item>ArithmeticError</item>

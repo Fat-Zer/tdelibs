@@ -11,5 +11,5 @@ Optionally you can also get binaries and copy include files to above
 directories.
 
 You can give up with touching zlib diectory at all if your Qt library
-contains zlib.
+tqcontains zlib.
 

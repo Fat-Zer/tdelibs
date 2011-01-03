@@ -5,7 +5,7 @@
 
 namespace KWallet { class Wallet; }
 
-class WalletReceiver : public QObject
+class WalletReceiver : public TQObject
 {
 	Q_OBJECT
 public slots:

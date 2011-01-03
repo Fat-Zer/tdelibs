@@ -72,7 +72,7 @@ public:
 	TQMap<TQString,Field>	fields;
 	QString			postcomment;
 
-	bool has(const TQString& f) const	{ return fields.contains(f); }
+	bool has(const TQString& f) const	{ return fields.tqcontains(f); }
 	TQString field(const TQString& f) const	{ return fields[f].value; }
 	bool writeEntry(TQTextStream&);
 	void addField(const TQString& name, Field::Type type = Field::Boolean, const TQString& value = TQString::null);

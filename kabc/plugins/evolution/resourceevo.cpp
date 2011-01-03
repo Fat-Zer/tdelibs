@@ -51,7 +51,7 @@ bool ResourceEvolution::doOpen() {
     }
 
     TQString val;
-    if (!mWrap->find( "PAS-DB-VERSION", val ) )
+    if (!mWrap->tqfind( "PAS-DB-VERSION", val ) )
         return false;
 
     if (!val.startsWith("0.2") )

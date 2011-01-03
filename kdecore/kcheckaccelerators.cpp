@@ -66,7 +66,7 @@
  even if the GUI changed (in the latter case, use manual check ). Automatic
  checks can be anytime disabled by the checkbox in the dialog presenting
  the results of the check. If you set 'AlwaysShowCheckAccelerators' to true,
- the dialog will be shown even if the automatic check didn't find any conflicts,
+ the dialog will be shown even if the automatic check didn't tqfind any conflicts,
  and all submenus will be shown, even those without conflicts.
 
  The dialog first lists the name of the window, then all results for all menus
@@ -147,8 +147,8 @@ void KCheckAccelerators::createDialog(TQWidget *actWin, bool automatic)
     drklash = new TQDialog( actWin, "kapp_accel_check_dlg", false, Qt::WDestructiveClose);
     drklash->setCaption( i18n( "Dr. Klash' Accelerator Diagnosis" ));
     drklash->resize( 500, 460 );
-    TQVBoxLayout* layout = new TQVBoxLayout( drklash, 11, 6 );
-    layout->setAutoAdd( true );
+    TQVBoxLayout* tqlayout = new TQVBoxLayout( drklash, 11, 6 );
+    tqlayout->setAutoAdd( true );
     drklash_view = new TQTextView( drklash );
     TQCheckBox* disableAutoCheck = NULL;
     if( automatic )  {
@@ -173,7 +173,7 @@ void KCheckAccelerators::slotDisableCheck(bool on)
 
 void KCheckAccelerators::checkAccelerators( bool automatic )
 {
-    TQWidget* actWin = qApp->activeWindow();
+    TQWidget* actWin = tqApp->activeWindow();
     if ( !actWin )
         return;
 

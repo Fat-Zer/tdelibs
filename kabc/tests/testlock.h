@@ -44,7 +44,7 @@ class KABC_EXPORT LockWidget : public QWidget
   private:
     KABC::Lock *mLock;
 
-    TQLabel *mStatus;
+    TQLabel *mtqStatus;
     TQListView *mLockView;
 };
 

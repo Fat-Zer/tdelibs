@@ -66,7 +66,7 @@ KMWPassword::KMWPassword(TQWidget *parent, const char *name)
 	connect(btn3,TQT_SIGNAL(toggled(bool)),m_login,TQT_SLOT(setEnabled(bool)));
 	connect(btn3,TQT_SIGNAL(toggled(bool)),m_password,TQT_SLOT(setEnabled(bool)));
 
-	// layout
+	// tqlayout
 	TQVBoxLayout *main_ = new TQVBoxLayout( this, 0, 0 );
 	main_->addWidget( infotext_ );
 	main_->addSpacing( 10 );
@@ -99,12 +99,12 @@ void KMWPassword::initPrinter( KMPrinter* p )
 	if ( p->option( "kde-backend" ).toInt() != KMWizard::SMB )
 	{
 		int ID = m_btngroup->selectedId();
-		m_btngroup->find( 1 )->hide();
+		m_btngroup->tqfind( 1 )->hide();
 		if ( ID == 1 )
 			m_btngroup->setButton( 0 );
 	}
 	else
-		m_btngroup->find( 1 )->show();
+		m_btngroup->tqfind( 1 )->show();
 }
 
 void KMWPassword::updatePrinter(KMPrinter *p)
@@ -121,7 +121,7 @@ void KMWPassword::updatePrinter(KMPrinter *p)
 			p->setOption( "kde-password", TQString::null );
 			break;
 		case 1:
-			p->setOption( "kde-login", TQString::fromLatin1( "guest" ) );
+			p->setOption( "kde-login", TQString::tqfromLatin1( "guest" ) );
 			p->setOption( "kde-password", TQString::null );
 			break;
 		case 2:

@@ -138,7 +138,7 @@
  *
  * I've doctored the ispell code pretty extensively here.  It is now
  * warning-free on Win32.  It also *works* on Win32 now, since I
- * replaced all the I/O calls with ANSI standard ones.
+ * tqreplaced all the I/O calls with ANSI standard ones.
  *
  * Revision 1.2  1998/12/28 23:11:30  eric
  *

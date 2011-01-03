@@ -1,5 +1,5 @@
 /* ANSI-C code produced by gperf version 3.0.1 */
-/* Command-line: gperf -a -L ANSI-C -P -D -E -C -l -o -t -k '*' -NfindTag -Hhash_tag -Wwordlist_tag -Qspool_Tag htmltags.gperf  */
+/* Command-line: gperf -a -L ANSI-C -P -D -E -C -l -o -t -k '*' -NtqfindTag -Hhash_tag -Wwordlist_tag -Qspool_Tag htmltags.gperf  */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
       && ('%' == 37) && ('&' == 38) && ('\'' == 39) && ('(' == 40) \
@@ -338,7 +338,7 @@ static const struct spool_Tag_t spool_Tag_contents =
 __inline
 #endif
 const struct tags *
-findTag (register const char *str, register unsigned int len)
+tqfindTag (register const char *str, register unsigned int len)
 {
   enum
     {

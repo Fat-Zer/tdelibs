@@ -94,12 +94,12 @@ TQValueList<TQCString> KDCOPPropertyProxy::functions( TQObject *object )
   res << "bool setProperty(TQCString name,TQVariant property)";
   res << "TQValueList<TQCString> propertyNames(bool super)";
 
-  TQMetaObject *metaObj = object->metaObject();
+  TQMetaObject *metaObj = object->tqmetaObject();
   TQStrList properties = metaObj->propertyNames( true );
   TQStrListIterator it( properties );
   for (; it.current(); ++it )
   {
-    const TQMetaProperty *metaProp = metaObj->property( metaObj->findProperty( it.current(), true ), true );
+    const TQMetaProperty *metaProp = metaObj->property( metaObj->tqfindProperty( it.current(), true ), true );
 
     assert( metaProp );
 
@@ -146,18 +146,18 @@ bool KDCOPPropertyProxy::processPropertyRequest( const TQCString &fun, const TQB
 
     replyType = "bool";
     TQDataStream reply( replyData, IO_WriteOnly );
-    reply << (Q_INT8)object->setProperty( propName, propValue );
+    reply << (TQ_INT8)object->setProperty( propName, propValue );
     return true;
   }
 
   if ( fun == "propertyNames(bool)" )
   {
-    Q_INT8 b;
+    TQ_INT8 b;
     TQDataStream stream( data, IO_ReadOnly );
     stream >> b;
 
     TQValueList<TQCString> res;
-    TQStrList props = object->metaObject()->propertyNames( static_cast<bool>( b ) );
+    TQStrList props = object->tqmetaObject()->propertyNames( static_cast<bool>( b ) );
     TQStrListIterator it( props );
     for (; it.current(); ++it )
       res.append( it.current() );
@@ -228,7 +228,7 @@ bool KDCOPPropertyProxy::processPropertyRequest( const TQCString &fun, const TQB
       DEMARSHAL( UInt, uint )
       case TQVariant::Bool:
       {
-        Q_INT8 v;
+        TQ_INT8 v;
         stream >> v;
         prop = TQVariant( static_cast<bool>( v ), 1 );
       }
@@ -283,7 +283,7 @@ bool KDCOPPropertyProxy::processPropertyRequest( const TQCString &fun, const TQB
       MARSHAL( Int )
       MARSHAL( UInt )
       case TQVariant::Bool:
-        reply << (Q_INT8)prop.toBool();
+        reply << (TQ_INT8)prop.toBool();
         break;
       MARSHAL( Double )
       default:
@@ -314,7 +314,7 @@ bool KDCOPPropertyProxy::decodePropertyRequestInternal( const TQCString &fun, TQ
     propName.detach();
     set = true;
     propName = propName.mid( 3 );
-    int p1 = propName.find( '(' );
+    int p1 = propName.tqfind( '(' );
 
     uint len = propName.length();
 
@@ -328,7 +328,7 @@ bool KDCOPPropertyProxy::decodePropertyRequestInternal( const TQCString &fun, TQ
   else
     propName.truncate( propName.length() - 2 );
 
-  if ( !object->metaObject()->propertyNames( true ).contains( propName ) )
+  if ( !object->tqmetaObject()->propertyNames( true ).tqcontains( propName ) )
     return false;
 
   return true;

@@ -18,7 +18,7 @@ int main(int argc, char **argv)
   s = t.findResource("icon", "xv.xpm");
   if (!s.isNull()) kdDebug() << s << endl;
 
-  list = t.findAllResources("data", "kfind/toolbar", true);
+  list = t.findAllResources("data", "ktqfind/toolbar", true);
   for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it) {
     kdDebug() << "data " << (*it).ascii() << endl;
   }

@@ -5,7 +5,7 @@
 	* calstblx.dtd, dbcentx.mod, dbgenent.mod, dbhierx.mod, dbnotnx.mod, dbpoolx.mod, docbook.cat: 
 	Updated version numbers
 
-	* docbook.cat: Fixed stupid search-and-replace error in ISO FPIs
+	* docbook.cat: Fixed stupid search-and-tqreplace error in ISO FPIs
 
 	* docbookx.dtd: DocBook XML V4.1.2 released
 

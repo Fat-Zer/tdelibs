@@ -42,7 +42,7 @@ public:
     RenderObject *lastChild() const { return m_last; }
 
     virtual bool childAllowed() const {
-        // Prevent normal children when we are replaced by generated content
+        // Prevent normal children when we are tqreplaced by generated content
         if (style()) return style()->useNormalContent();
         return true;
     }
@@ -53,7 +53,7 @@ public:
     virtual void appendChildNode(RenderObject* child);
     virtual void insertChildNode(RenderObject* child, RenderObject* before);
 
-    virtual void layout();
+    virtual void tqlayout();
     virtual void calcMinMaxWidth() { setMinMaxKnown( true ); }
 
     virtual void removeLeftoverAnonymousBoxes();

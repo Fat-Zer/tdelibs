@@ -215,8 +215,8 @@ static TQCString encodeKey(const char* key)
 {
     TQCString newKey(key);
 
-    newKey.replace('[', "%5b");
-    newKey.replace(']', "%5d");
+    newKey.tqreplace('[', "%5b");
+    newKey.tqreplace(']', "%5d");
 
     return newKey;
 }
@@ -225,8 +225,8 @@ static TQCString decodeKey(const char* key)
 {
     TQCString newKey(key);
 
-    newKey.replace("%5b", "[");
-    newKey.replace("%5d", "]");
+    newKey.tqreplace("%5b", "[");
+    newKey.tqreplace("%5d", "]");
 
     return newKey;
 }
@@ -256,7 +256,7 @@ void KConfigBackEnd::changeFileName(const TQString &_fileName,
 
    if (useKDEGlobals)
       mGlobalFileName = KGlobal::dirs()->saveLocation("config") +
-	      TQString::fromLatin1("kdeglobals");
+	      TQString::tqfromLatin1("kdeglobals");
    else
       mGlobalFileName = TQString::null;
 
@@ -347,19 +347,19 @@ bool KConfigINIBackEnd::parseConfigFiles()
   // Parse the general config files
   if (useKDEGlobals) {
     TQStringList kdercs = KGlobal::dirs()->
-      findAllResources("config", TQString::fromLatin1("kdeglobals"));
+      findAllResources("config", TQString::tqfromLatin1("kdeglobals"));
 
 #ifdef Q_WS_WIN
     TQString etc_kderc = TQFile::decodeName( TQCString(getenv("WINDIR")) + "\\kderc" );
 #else
-    TQString etc_kderc = TQString::fromLatin1("/etc/kderc");
+    TQString etc_kderc = TQString::tqfromLatin1("/etc/kderc");
 #endif
 
     if (checkAccess(etc_kderc, R_OK))
       kdercs += etc_kderc;
 
     kdercs += KGlobal::dirs()->
-      findAllResources("config", TQString::fromLatin1("system.kdeglobals"));
+      findAllResources("config", TQString::tqfromLatin1("system.kdeglobals"));
 
     TQStringList::ConstIterator it;
 
@@ -605,13 +605,13 @@ qWarning("SIGBUS while reading %s", rFile.name().latin1());
       const char *endOfKey = 0, *locale = 0, *elocale = 0;
       for (; (s < eof) && (*s != '\n'); s++)
       {
-         if (*s == '=') //find the equal sign
+         if (*s == '=') //tqfind the equal sign
          {
 	    if (!endOfKey)
         	endOfKey = s;
             goto haveeq;
 	 }
-	 if (*s == '[') //find the locale or options.
+	 if (*s == '[') //tqfind the locale or options.
 	 {
             const char *option;
             const char *eoption;
@@ -792,7 +792,7 @@ void KConfigINIBackEnd::sync(bool bMerge)
 
   bool bEntriesLeft = true;
 
-  // find out the file to write to (most specific writable file)
+  // tqfind out the file to write to (most specific writable file)
   // try local app-specific file first
 
   if (!mfileName.isEmpty()) {
@@ -999,7 +999,7 @@ bool KConfigINIBackEnd::getEntryMap(KEntryMap &aTempMap, bool bGlobal,
     const KEntry &currentEntry = *aIt;
     if(aIt.key().bDefault)
     {
-       aTempMap.replace(aIt.key(), currentEntry);
+       aTempMap.tqreplace(aIt.key(), currentEntry);
        continue;
     }
 
@@ -1017,7 +1017,7 @@ bool KConfigINIBackEnd::getEntryMap(KEntryMap &aTempMap, bool bGlobal,
 
     // put this entry from the config object into the
     // temporary map, possibly replacing an existing entry
-    KEntryMapIterator aIt2 = aTempMap.find(aIt.key());
+    KEntryMapIterator aIt2 = aTempMap.tqfind(aIt.key());
     if (aIt2 != aTempMap.end() && (*aIt2).bImmutable)
        continue; // Bail out if the on-disk entry is immutable
 

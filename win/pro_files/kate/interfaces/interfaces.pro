@@ -13,7 +13,7 @@ LIBS += $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdeui$$KDELIB_SUF
 
 INCLUDEPATH += $(KDELIBS)/interfaces
 
-system( bash kmoc )
+system( bash ktqmoc )
 
 SOURCES = \
 katecmd.cpp \

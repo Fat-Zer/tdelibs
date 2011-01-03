@@ -102,7 +102,7 @@ bool KSharedPixmap::loadFromShared(const TQString & name, const TQRect & rect)
 	// already active
 	return false;
 
-    TQPixmap::resize(0, 0); // invalidate
+    TQPixmap::resize(0, 0); // tqinvalidate
 
     TQString str = TQString("KDESHPIXMAP:%1").arg(name);
     d->selection = XInternAtom(qt_xdisplay(), str.latin1(), true);
@@ -160,7 +160,7 @@ bool KSharedPixmap::x11Event(XEvent *event)
     void *drawable_id = (void *) pixmap_id;
     Drawable pixmap = *(Drawable*) drawable_id;
 
-    Status status = XGetGeometry(qt_xdisplay(), pixmap, &root, &dummy, &dummy, &width, &height, &udummy, &udummy);
+    tqStatus status = XGetGeometry(qt_xdisplay(), pixmap, &root, &dummy, &dummy, &width, &height, &udummy, &udummy);
 
     if (status == BadDrawable)
         return false;
