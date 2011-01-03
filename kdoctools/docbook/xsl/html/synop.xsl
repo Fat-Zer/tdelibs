@@ -160,9 +160,9 @@
 funcprototype ::= (funcdef,
                    (void|varargs|paramdef+))
 
-funcdef       ::= (#PCDATA|type|tqreplaceable|function)*
+funcdef       ::= (#PCDATA|type|replaceable|function)*
 
-paramdef      ::= (#PCDATA|type|tqreplaceable|parameter|funcparams)*
+paramdef      ::= (#PCDATA|type|replaceable|parameter|funcparams)*
 -->
 
 <xsl:template match="funcprototype">

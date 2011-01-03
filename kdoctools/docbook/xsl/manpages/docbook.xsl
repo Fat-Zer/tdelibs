@@ -86,7 +86,7 @@
   <xsl:text>&#10;.PP&#10;</xsl:text>
   <xsl:for-each select="node()">
     <xsl:choose>
-      <xsl:when test="self::literaltqlayout|self::informaltable|self::screen|
+      <xsl:when test="self::literallayout|self::informaltable|self::screen|
 		      self::programlisting|self::itemizedlist|
 		      self::orderedlist|self::variablelist|self::simplelist">
         <xsl:text>&#10;</xsl:text>
@@ -183,12 +183,12 @@
     </xsl:choose>
   </xsl:variable>
 
-  <!-- tqreplace spaces with underscores in the filename -->
+  <!-- replace spaces with underscores in the filename -->
   <xsl:variable name="filename">
-    <xsl:call-template name="tqreplace-string">
+    <xsl:call-template name="replace-string">
       <xsl:with-param name="content"
                       select="concat(normalize-space ($name), '.', $section)"/>
-      <xsl:with-param name="tqreplace" select="' '"/>
+      <xsl:with-param name="replace" select="' '"/>
       <xsl:with-param name="with" select="'_'"/>
     </xsl:call-template>
   </xsl:variable>
@@ -323,7 +323,7 @@
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="filename|tqreplaceable|varname">
+<xsl:template match="filename|replaceable|varname">
   <xsl:text>\fI</xsl:text><xsl:apply-templates/><xsl:text>\fR</xsl:text>
 </xsl:template>
 
@@ -348,7 +348,7 @@
   <xsl:text>''</xsl:text>
 </xsl:template>
 
-<xsl:template match="programlisting|literaltqlayout">
+<xsl:template match="programlisting|literallayout">
   <xsl:text>&#10;.nf&#10;</xsl:text>
   <xsl:apply-templates/>
   <xsl:text>&#10;.fi&#10;</xsl:text>
@@ -398,91 +398,91 @@
 </xsl:template>
 
 <!-- Translate some entities to textual equivalents. -->
-<xsl:template name="tqreplace-string">
+<xsl:template name="replace-string">
   <xsl:param name="content" select="''"/>
-  <xsl:param name="tqreplace" select="''"/>
+  <xsl:param name="replace" select="''"/>
   <xsl:param name="with" select="''"/>
   <xsl:choose>
-    <xsl:when test="not(tqcontains($content,$tqreplace))">
+    <xsl:when test="not(contains($content,$replace))">
       <xsl:value-of select="$content"/>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:value-of select="substring-before($content,$tqreplace)"/>
+      <xsl:value-of select="substring-before($content,$replace)"/>
       <xsl:value-of select="$with"/>
-      <xsl:call-template name="tqreplace-string">
+      <xsl:call-template name="replace-string">
         <xsl:with-param name="content"
-             select="substring-after($content,$tqreplace)"/>
-        <xsl:with-param name="tqreplace" select="$tqreplace"/>
+             select="substring-after($content,$replace)"/>
+        <xsl:with-param name="replace" select="$replace"/>
         <xsl:with-param name="with" select="$with"/>
       </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
-<xsl:template name="tqreplace-dash">
+<xsl:template name="replace-dash">
   <xsl:param name="content" select="''"/>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="$content"/>
-    <xsl:with-param name="tqreplace" select="'-'"/>
+    <xsl:with-param name="replace" select="'-'"/>
     <xsl:with-param name="with" select="'\-'"/>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="tqreplace-ndash">
+<xsl:template name="replace-ndash">
   <xsl:param name="content" select="''"/>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="$content"/>
-    <xsl:with-param name="tqreplace" select="'&#8211;'"/>
+    <xsl:with-param name="replace" select="'&#8211;'"/>
     <xsl:with-param name="with" select="'-'"/>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="tqreplace-mdash">
+<xsl:template name="replace-mdash">
   <xsl:param name="content" select="''"/>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="$content"/>
-    <xsl:with-param name="tqreplace" select="'&#8212;'"/>
+    <xsl:with-param name="replace" select="'&#8212;'"/>
     <xsl:with-param name="with" select="'--'"/>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="tqreplace-hellip">
+<xsl:template name="replace-hellip">
   <xsl:param name="content" select="''"/>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="$content"/>
-    <xsl:with-param name="tqreplace" select="'&#8230;'"/>
+    <xsl:with-param name="replace" select="'&#8230;'"/>
     <xsl:with-param name="with" select="'...'"/>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="tqreplace-setmn">
+<xsl:template name="replace-setmn">
   <xsl:param name="content" select="''"/>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="$content"/>
-    <xsl:with-param name="tqreplace" select="'&#8726;'"/>
+    <xsl:with-param name="replace" select="'&#8726;'"/>
     <xsl:with-param name="with" select="'\\'"/>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="tqreplace-minus">
+<xsl:template name="replace-minus">
   <xsl:param name="content" select="''"/>
   <xsl:value-of select="translate($content,'&#8722;','-')"/>
 </xsl:template>
 
-<xsl:template name="tqreplace-nbsp">
+<xsl:template name="replace-nbsp">
   <xsl:param name="content" select="''"/>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="$content"/>
-    <xsl:with-param name="tqreplace" select="'&#x00a0;'"/>
+    <xsl:with-param name="replace" select="'&#x00a0;'"/>
     <xsl:with-param name="with" select="'\~'"/>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="tqreplace-backslash">
+<xsl:template name="replace-backslash">
   <xsl:param name="content" select="''"/>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="$content"/>
-    <xsl:with-param name="tqreplace" select="'\'"/>
+    <xsl:with-param name="replace" select="'\'"/>
     <xsl:with-param name="with" select="'\\'"/>
   </xsl:call-template>
 </xsl:template>
@@ -490,34 +490,34 @@
 <!-- if a period character is output at the beginning of a line
   it will be interpreted as a groff macro, so prefix all periods
   with "\&", a zero-width space. -->
-<xsl:template name="tqreplace-period">
+<xsl:template name="replace-period">
   <xsl:param name="content" select="''"/>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="$content"/>
-    <xsl:with-param name="tqreplace" select="'.'"/>
+    <xsl:with-param name="replace" select="'.'"/>
     <xsl:with-param name="with" select="'\&#38;.'"/>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="tqreplace-entities">
+<xsl:template name="replace-entities">
   <xsl:param name="content" select="''"/>
-  <xsl:call-template name="tqreplace-hellip">
+  <xsl:call-template name="replace-hellip">
     <xsl:with-param name="content">
-      <xsl:call-template name="tqreplace-minus">
+      <xsl:call-template name="replace-minus">
         <xsl:with-param name="content">
-          <xsl:call-template name="tqreplace-mdash">
+          <xsl:call-template name="replace-mdash">
             <xsl:with-param name="content">
-              <xsl:call-template name="tqreplace-ndash">
+              <xsl:call-template name="replace-ndash">
                 <xsl:with-param name="content">
-                  <xsl:call-template name="tqreplace-dash">
+                  <xsl:call-template name="replace-dash">
                     <xsl:with-param name="content">
-                      <xsl:call-template name="tqreplace-setmn">
+                      <xsl:call-template name="replace-setmn">
                         <xsl:with-param name="content">
-        		  <xsl:call-template name="tqreplace-period">
+        		  <xsl:call-template name="replace-period">
                             <xsl:with-param name="content">
-                              <xsl:call-template name="tqreplace-nbsp">
+                              <xsl:call-template name="replace-nbsp">
 		                <xsl:with-param name="content">
-		                  <xsl:call-template name="tqreplace-backslash">
+		                  <xsl:call-template name="replace-backslash">
 		                    <xsl:with-param name="content" select="$content"/>
 			          </xsl:call-template>
 			        </xsl:with-param>
@@ -565,7 +565,7 @@
 </xsl:template>
 
 <xsl:template match="text()">
-  <xsl:call-template name="tqreplace-entities">
+  <xsl:call-template name="replace-entities">
     <xsl:with-param name="content">
       <xsl:value-of select="."/>
     </xsl:with-param>

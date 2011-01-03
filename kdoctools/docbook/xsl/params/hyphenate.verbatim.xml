@@ -33,8 +33,8 @@ attribute set:</para>
 </xsl:attribute-set>]]></programlisting>
 
 <para>For a list of arrows available in Unicode see <ulink
-url="http://www.tqunicode.org/charts/PDF/U2190.pdf"/> and <ulink
-url="http://www.tqunicode.org/charts/PDF/U2900.pdf"/> and make sure that
+url="http://www.unicode.org/charts/PDF/U2190.pdf"/> and <ulink
+url="http://www.unicode.org/charts/PDF/U2900.pdf"/> and make sure that
 selected character is available in the font you are using for verbatim
 environments.</para>
 

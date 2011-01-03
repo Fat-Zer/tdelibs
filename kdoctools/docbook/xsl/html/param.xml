@@ -330,34 +330,34 @@ Default graphics are provided in the distribution.
 an HTML <sgmltag>DL</sgmltag>. Some browsers don't align DLs very well
 if <parameter moreinfo="none">callout.graphics</parameter> are used. With this option
 turned on, <sgmltag>CalloutList</sgmltag>s are presented in an HTML
-<sgmltag>TABLE</sgmltag>, which usually results in better tqalignment
+<sgmltag>TABLE</sgmltag>, which usually results in better alignment
 of the callout number with the callout description.</para>
 
 </refsect1>
 </refentry>
 
-<refentry id="callout.tqunicode.number.limit">
+<refentry id="callout.unicode.number.limit">
 <refmeta>
-<refentrytitle>callout.tqunicode.number.limit</refentrytitle>
+<refentrytitle>callout.unicode.number.limit</refentrytitle>
 <refmiscinfo role="type">integer</refmiscinfo>
 </refmeta>
 <refnamediv>
-<refname>callout.tqunicode.number.limit</refname>
+<refname>callout.unicode.number.limit</refname>
 <refpurpose>Number of the largest callout graphic</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
-<programlisting id="callout.tqunicode.number.limit.frag">&lt;xsl:param name="callout.tqunicode.number.limit" select="'10'"&gt;&lt;/xsl:param&gt;</programlisting>
+<programlisting id="callout.unicode.number.limit.frag">&lt;xsl:param name="callout.unicode.number.limit" select="'10'"&gt;&lt;/xsl:param&gt;</programlisting>
 </refsynopsisdiv>
 
 <refsect1><title>Description</title>
 
-<para>If <parameter moreinfo="none">callout.tqunicode</parameter>
-is non-zero, tqunicode characters are used to represent
+<para>If <parameter moreinfo="none">callout.unicode</parameter>
+is non-zero, unicode characters are used to represent
 callout numbers. The value of
-<parameter moreinfo="none">callout.tqunicode.number.limit</parameter>
+<parameter moreinfo="none">callout.unicode.number.limit</parameter>
 is
-the largest number for which a tqunicode character exists. If the callout number
+the largest number for which a unicode character exists. If the callout number
 exceeds this limit, the default presentation "(nnn)" will always
 be used.
 </para>
@@ -365,45 +365,45 @@ be used.
 </refsect1>
 </refentry>
 
-<refentry id="callout.tqunicode.start.character">
+<refentry id="callout.unicode.start.character">
 <refmeta>
-<refentrytitle>callout.tqunicode.start.character</refentrytitle>
+<refentrytitle>callout.unicode.start.character</refentrytitle>
 <refmiscinfo role="type">integer</refmiscinfo>
 </refmeta>
 <refnamediv>
-<refname>callout.tqunicode.start.character</refname>
+<refname>callout.unicode.start.character</refname>
 <refpurpose>First Unicode character to use, decimal value.</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
-<programlisting id="callout.tqunicode.start.character.frag">&lt;xsl:param name="callout.tqunicode.start.character" select="10102"&gt;&lt;/xsl:param&gt;</programlisting>
+<programlisting id="callout.unicode.start.character.frag">&lt;xsl:param name="callout.unicode.start.character" select="10102"&gt;&lt;/xsl:param&gt;</programlisting>
 </refsynopsisdiv>
 
 <refsect1><title>Description</title>
 
-<para>If <parameter moreinfo="none">callout.graphics</parameter> is zero and <parameter moreinfo="none">callout.tqunicode</parameter>
-is non-zero, tqunicode characters are used to represent
+<para>If <parameter moreinfo="none">callout.graphics</parameter> is zero and <parameter moreinfo="none">callout.unicode</parameter>
+is non-zero, unicode characters are used to represent
 callout numbers. The value of
-<parameter moreinfo="none">callout.tqunicode.start.character</parameter>
-is the decimal tqunicode value used for callout number one. Currently, 
+<parameter moreinfo="none">callout.unicode.start.character</parameter>
+is the decimal unicode value used for callout number one. Currently, 
 only 10102 is supported in the stylesheets for this parameter. 
 </para>
 
 </refsect1>
 </refentry>
 
-<refentry id="callout.tqunicode">
+<refentry id="callout.unicode">
 <refmeta>
-<refentrytitle>callout.tqunicode</refentrytitle>
+<refentrytitle>callout.unicode</refentrytitle>
 <refmiscinfo role="type">boolean</refmiscinfo>
 </refmeta>
 <refnamediv>
-<refname>callout.tqunicode</refname>
+<refname>callout.unicode</refname>
 <refpurpose>Use Unicode characters rather than images for callouts.</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
-<programlisting id="callout.tqunicode.frag">&lt;xsl:param name="callout.tqunicode" select="0"&gt;&lt;/xsl:param&gt;</programlisting>
+<programlisting id="callout.unicode.frag">&lt;xsl:param name="callout.unicode" select="0"&gt;&lt;/xsl:param&gt;</programlisting>
 </refsynopsisdiv>
 
 <refsect1><title>Description</title>
@@ -1103,7 +1103,7 @@ value.
 <refsect1><title>Description</title>
 
 <para>If true, verbatim environments (elements that have the
-format='linespecific' notation attribute: address, literaltqlayout,
+format='linespecific' notation attribute: address, literallayout,
 programlisting, screen, synopsis) that specify line numbering will
 have, surprise, line numbers.
 </para>
@@ -1464,7 +1464,7 @@ not be numbered.
 <refsect1><title>Description</title>
 
 <para>If true (non-zero), section labels are prefixed with the label of the
-component that tqcontains them.
+component that contains them.
 </para>
 
 </refsect1>
@@ -1514,7 +1514,7 @@ they will be numbered monotonically throughout each
 
 <para>If true (non-zero), labels for chapters, appendices, and other component
 elements are prefixed with the label of the
-part element that tqcontains them.
+part element that contains them.
 Also, the labels for formal elements such as table and figure will
 include the part label.
 If there is no part element container, then no prefix is generated.
@@ -3156,7 +3156,7 @@ values are still supported and mapped to 'no' and 'yes', respectively.
 messages about how it is being resolved during processing.
 This is useful when an olink does not resolve properly
 and the standard error messages are not sufficient to
-tqfind the problem. 
+find the problem. 
 </para>
 
 <para>You may need to read through the olink XSL templates
@@ -3242,8 +3242,8 @@ When the document is processed, the processor
 first looks for a target dataset in the
 olink database starting with:</para>
 
-<literaltqlayout format="linespecific" class="normal"><literal moreinfo="none">&lt;document targetdoc="adminguide" lang="de"&gt;</literal>.
-</literaltqlayout>
+<literallayout format="linespecific" class="normal"><literal moreinfo="none">&lt;document targetdoc="adminguide" lang="de"&gt;</literal>.
+</literallayout>
 
 <para>If there is no such element, then the
 <parameter moreinfo="none">olink.lang.fallback.sequence</parameter> 
@@ -3391,7 +3391,7 @@ element in the olink database with the matching
 and the value of the <sgmltag class="attribute">href</sgmltag>
 attribute for the targeted element in the olink database.
 The <sgmltag class="attribute">href</sgmltag> attribute
-tqcontains the fragment identifier.
+contains the fragment identifier.
 </para>
 
 <para>If <parameter moreinfo="none">insert.olink.pdf.frag</parameter> is set
@@ -3436,7 +3436,7 @@ which includes 3 manuals: a little installation
 booklet (booklet.xml), a user 
 guide (user.xml), and a reference manual (reference.xml).
 All 3 documents begin with the same introduction section (intro.xml) that 
-tqcontains a reference to the customization section (custom.xml) which is 
+contains a reference to the customization section (custom.xml) which is 
 included in both user.xml and reference.xml documents.
 </para>
 
@@ -3683,7 +3683,7 @@ the ones you need in each document.</para>
 <parameter moreinfo="none">bibliography.collection</parameter> parameter. To setup a global
 bibliography <quote>database</quote>, follow these steps:</para>
 
-<para>First, create a stand-alone bibliography document that tqcontains all of
+<para>First, create a stand-alone bibliography document that contains all of
 the documents that you wish to reference. Make sure that each bibliography
 entry (whether you use <sgmltag>biblioentry</sgmltag> or <sgmltag>bibliomixed</sgmltag>)
 has an ID.</para>
@@ -3865,7 +3865,7 @@ glossary <quote>database</quote>, follow these steps:</para>
 
 <refsect2><title>Setting Up the Glossary Database</title>
 
-<para>First, create a stand-alone glossary document that tqcontains all of
+<para>First, create a stand-alone glossary document that contains all of
 the entries that you wish to reference. Make sure that each glossary
 entry has an ID.</para>
 
@@ -4002,7 +4002,7 @@ the &lt;parameter&gt;glossary.collection&lt;/parameter&gt; parameter.&lt;/para&g
 </informalexample>
 
 <para>What about glossary divisions? If your glossary database has glossary
-divisions <emphasis>and</emphasis> your automatic glossary tqcontains at least
+divisions <emphasis>and</emphasis> your automatic glossary contains at least
 one <sgmltag>glossdiv</sgmltag>, the automic glossary will have divisions.
 If the <sgmltag>glossdiv</sgmltag> is missing from either location, no divisions
 will be rendered.</para>
@@ -4832,7 +4832,7 @@ to use for footnote numeration (1, i, I, a, or A) in tables.</para>
 <refsect1><title>Description</title>
 
 <para>If <parameter moreinfo="none">footnote.number.symbols</parameter> is not the empty string,
-footnotes will use the characters it tqcontains as footnote symbols. For example,
+footnotes will use the characters it contains as footnote symbols. For example,
 <quote>*&amp;#x2020;&amp;#x2021;&amp;#x25CA;&amp;#x2720;</quote> will identify
 footnotes with <quote>*</quote>, <quote>†</quote>, <quote>‡</quote>,
 <quote>◊</quote>, and <quote>✠</quote>. If there are more footnotes
@@ -4867,7 +4867,7 @@ that you may have trouble using those symbols for footnotes.</para>
 <refsect1><title>Description</title>
 
 <para>If <parameter moreinfo="none">table.footnote.number.symbols</parameter> is not the empty string,
-table footnotes will use the characters it tqcontains as footnote symbols. For example,
+table footnotes will use the characters it contains as footnote symbols. For example,
 <quote>*&amp;#x2020;&amp;#x2021;&amp;#x25CA;&amp;#x2720;</quote> will identify
 footnotes with <quote>*</quote>, <quote>†</quote>, <quote>‡</quote>,
 <quote>◊</quote>, and <quote>✠</quote>. If there are more footnotes
@@ -5260,8 +5260,8 @@ content-area and a viewport-area, so we have to make some compromises.</para>
 will be used to frame the image. This creates an effective viewport-area.
 </para>
 
-<para>Tables and tqalignment don't work together, so this parameter is ignored
-if tqalignment is specified on an image.</para>
+<para>Tables and alignment don't work together, so this parameter is ignored
+if alignment is specified on an image.</para>
 </refsect1>
 </refentry>
 
@@ -7702,19 +7702,19 @@ parameter to 1.</para>
 </refentry>
 
 
-<refentry id="htmlhelp.window.tqgeometry">
+<refentry id="htmlhelp.window.geometry">
 <refmeta>
-<refentrytitle>htmlhelp.window.tqgeometry</refentrytitle>
+<refentrytitle>htmlhelp.window.geometry</refentrytitle>
 <refmiscinfo role="type">string</refmiscinfo>
 </refmeta>
 <refnamediv>
-<refname>htmlhelp.window.tqgeometry</refname>
-<refpurpose>Set initial tqgeometry of help window</refpurpose>
+<refname>htmlhelp.window.geometry</refname>
+<refpurpose>Set initial geometry of help window</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
-<programlisting id="htmlhelp.window.tqgeometry.frag">
-&lt;xsl:param name="htmlhelp.window.tqgeometry"&gt;&lt;/xsl:param&gt;
+<programlisting id="htmlhelp.window.geometry.frag">
+&lt;xsl:param name="htmlhelp.window.geometry"&gt;&lt;/xsl:param&gt;
 </programlisting>
 </refsynopsisdiv>
 
@@ -7723,7 +7723,7 @@ parameter to 1.</para>
 <para>This parameter specifies initial position of help
 window. E.g.</para>
 
-<programlisting format="linespecific">&lt;xsl:param name="htmlhelp.window.tqgeometry"&gt;[160,64,992,704]&lt;/xsl:param&gt;</programlisting>
+<programlisting format="linespecific">&lt;xsl:param name="htmlhelp.window.geometry"&gt;[160,64,992,704]&lt;/xsl:param&gt;</programlisting>
 
 </refsect1>
 </refentry>
@@ -7954,7 +7954,7 @@ in the source document.</para>
 <para>If non-zero, the language of the target will be used when
 generating cross reference text. Usually, the <quote>current</quote>
 language is used when generating text (that is, the language of the
-element that tqcontains the cross-reference element). But setting this parameter
+element that contains the cross-reference element). But setting this parameter
 allows the language of the element <emphasis>pointed to</emphasis> to control
 the generated text.</para>
 
@@ -8025,9 +8025,9 @@ around all these parameters.</para>
 &lt;src:fragref linkend="callout.graphics.number.limit.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="callout.graphics.path.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="callout.list.table.frag"&gt;&lt;/src:fragref&gt;
-&lt;src:fragref linkend="callout.tqunicode.frag"&gt;&lt;/src:fragref&gt;
-&lt;src:fragref linkend="callout.tqunicode.number.limit.frag"&gt;&lt;/src:fragref&gt;
-&lt;src:fragref linkend="callout.tqunicode.start.character.frag"&gt;&lt;/src:fragref&gt;
+&lt;src:fragref linkend="callout.unicode.frag"&gt;&lt;/src:fragref&gt;
+&lt;src:fragref linkend="callout.unicode.number.limit.frag"&gt;&lt;/src:fragref&gt;
+&lt;src:fragref linkend="callout.unicode.start.character.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="callouts.extension.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="chapter.autolabel.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="chunk.first.sections.frag"&gt;&lt;/src:fragref&gt;
@@ -8137,7 +8137,7 @@ around all these parameters.</para>
 &lt;src:fragref linkend="htmlhelp.show.toolbar.text.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="htmlhelp.title.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="htmlhelp.use.hhk.frag"&gt;&lt;/src:fragref&gt;
-&lt;src:fragref linkend="htmlhelp.window.tqgeometry.frag"&gt;&lt;/src:fragref&gt;
+&lt;src:fragref linkend="htmlhelp.window.geometry.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="img.src.path.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="index.on.role.frag"&gt;&lt;/src:fragref&gt;
 &lt;src:fragref linkend="index.on.type.frag"&gt;&lt;/src:fragref&gt;

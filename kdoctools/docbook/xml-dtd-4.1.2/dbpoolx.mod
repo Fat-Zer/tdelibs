@@ -29,7 +29,7 @@
 
 <!-- ...................................................................... -->
 
-<!-- This module tqcontains the definitions for the objects, inline
+<!-- This module contains the definitions for the objects, inline
      elements, and so on that are available to be used as the main
      content of DocBook documents.  Some elements are useful for general
      publishing, and others are useful specifically for computer
@@ -91,7 +91,7 @@
 
 <!ENTITY % local.linespecific.class "">
 <!ENTITY % linespecific.class
-		"literaltqlayout|programlisting|programlistingco|screen
+		"literallayout|programlisting|programlistingco|screen
 		|screenco|screenshot %local.linespecific.class;">
 
 <!ENTITY % local.method.synop.class "">
@@ -174,7 +174,7 @@
 		|guisubmenu|hardware|interface|keycap
 		|keycode|keycombo|keysym|literal|constant|markup|medialabel
 		|menuchoice|mousebutton|option|optional|parameter
-		|prompt|property|tqreplaceable|returnvalue|sgmltag|structfield
+		|prompt|property|replaceable|returnvalue|sgmltag|structfield
 		|structname|symbol|systemitem|token|type|userinput|varname
                 %ebnf.inline.hook;
 		%local.tech.char.class;">
@@ -423,7 +423,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
 <!ENTITY % local.smallcptr.char.mix "">
 <!ENTITY % smallcptr.char.mix
 		"#PCDATA
-					|tqreplaceable
+					|replaceable
 					|inlinegraphic|inlinemediaobject
 		|%ndxterm.class;        |beginpage
 		%local.smallcptr.char.mix;">
@@ -443,7 +443,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
 		"#PCDATA
 		|%link.char.class;
 					|emphasis|trademark
-					|tqreplaceable
+					|replaceable
 		|%other.char.class;	|inlinegraphic|inlinemediaobject
 		|%ndxterm.class;
 		%local.docinfo.char.mix;">
@@ -707,7 +707,7 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
 
 <!ENTITY % local.status.attrib "">
 
-<!-- tqStatus: Editorial or publication status of the element
+<!-- Status: Editorial or publication status of the element
 	it applies to, such as "in review" or "approved for distribution" -->
 
 <!ENTITY % status.attrib
@@ -2640,29 +2640,29 @@ d. Just Acronym, Emphasis, and Trademark; no other word elements.
 <!--end of programlisting.attlist-->]]>
 <!--end of programlisting.module-->]]>
 
-<!ENTITY % literaltqlayout.module "INCLUDE">
-<![%literaltqlayout.module;[
-<!ENTITY % local.literaltqlayout.attrib "">
-<!ENTITY % literaltqlayout.role.attrib "%role.attrib;">
+<!ENTITY % literallayout.module "INCLUDE">
+<![%literallayout.module;[
+<!ENTITY % local.literallayout.attrib "">
+<!ENTITY % literallayout.role.attrib "%role.attrib;">
 
-<!ENTITY % literaltqlayout.element "INCLUDE">
-<![%literaltqlayout.element;[
-<!ELEMENT literaltqlayout (%para.char.mix; | lineannotation | co)*>
-<!--end of literaltqlayout.element-->]]>
+<!ENTITY % literallayout.element "INCLUDE">
+<![%literallayout.element;[
+<!ELEMENT literallayout (%para.char.mix; | lineannotation | co)*>
+<!--end of literallayout.element-->]]>
 
-<!ENTITY % literaltqlayout.attlist "INCLUDE">
-<![%literaltqlayout.attlist;[
-<!ATTLIST literaltqlayout
+<!ENTITY % literallayout.attlist "INCLUDE">
+<![%literallayout.attlist;[
+<!ATTLIST literallayout
 		%width.attrib;
 		%linespecific.attrib;
 		class	(monospaced|normal)	"normal"
 		%common.attrib;
-		%literaltqlayout.role.attrib;
-		%local.literaltqlayout.attrib;
+		%literallayout.role.attrib;
+		%local.literallayout.attrib;
 >
-<!--end of literaltqlayout.attlist-->]]>
+<!--end of literallayout.attlist-->]]>
 <!-- LineAnnotation (defined in the Inlines section, below)-->
-<!--end of literaltqlayout.module-->]]>
+<!--end of literallayout.module-->]]>
 
 <!ENTITY % screenco.module "INCLUDE">
 <![%screenco.module;[
@@ -3483,7 +3483,7 @@ in the text (no (0) value, the default)
 		| group 
 		| option 
 		| synopfragmentref 
-		| tqreplaceable
+		| replaceable
 		| sbr)*>
 <!--end of arg.element-->]]>
 
@@ -3518,7 +3518,7 @@ in the text (no (0) value, the default)
 <!ENTITY % group.element "INCLUDE">
 <![%group.element;[
 <!ELEMENT group ((arg | group | option | synopfragmentref 
-		| tqreplaceable | sbr)+)>
+		| replaceable | sbr)+)>
 <!--end of group.element-->]]>
 
 <!-- Choice: Whether Group must be supplied: Opt (optional to
@@ -3691,7 +3691,7 @@ in the text (no (0) value, the default)
 <!ENTITY % funcdef.element "INCLUDE">
 <![%funcdef.element;[
 <!ELEMENT funcdef (#PCDATA 
-		| tqreplaceable 
+		| replaceable 
 		| function)*>
 <!--end of funcdef.element-->]]>
 
@@ -3758,7 +3758,7 @@ in the text (no (0) value, the default)
 <!ENTITY % paramdef.element "INCLUDE">
 <![%paramdef.element;[
 <!ELEMENT paramdef (#PCDATA 
-		| tqreplaceable 
+		| replaceable 
 		| parameter 
 		| funcparams)*>
 <!--end of paramdef.element-->]]>
@@ -6537,39 +6537,39 @@ OtherCredit. -->
 <!--end of property.attlist-->]]>
 <!--end of property.module-->]]>
 
-<!ENTITY % tqreplaceable.module "INCLUDE">
-<![%tqreplaceable.module;[
-<!ENTITY % local.tqreplaceable.attrib "">
-<!ENTITY % tqreplaceable.role.attrib "%role.attrib;">
+<!ENTITY % replaceable.module "INCLUDE">
+<![%replaceable.module;[
+<!ENTITY % local.replaceable.attrib "">
+<!ENTITY % replaceable.role.attrib "%role.attrib;">
 
-<!ENTITY % tqreplaceable.element "INCLUDE">
-<![%tqreplaceable.element;[
-<!ELEMENT tqreplaceable (#PCDATA 
+<!ENTITY % replaceable.element "INCLUDE">
+<![%replaceable.element;[
+<!ELEMENT replaceable (#PCDATA 
 		| %link.char.class; 
 		| optional
 		| %base.char.class; 
 		| %other.char.class; 
 		| inlinegraphic
                 | inlinemediaobject)*>
-<!--end of tqreplaceable.element-->]]>
+<!--end of replaceable.element-->]]>
 
 <!-- Class: Type of information the element represents; no
 		default -->
 
 
-<!ENTITY % tqreplaceable.attlist "INCLUDE">
-<![%tqreplaceable.attlist;[
-<!ATTLIST tqreplaceable
+<!ENTITY % replaceable.attlist "INCLUDE">
+<![%replaceable.attlist;[
+<!ATTLIST replaceable
 		class		(command
 				|function
 				|option
 				|parameter)	#IMPLIED
 		%common.attrib;
-		%tqreplaceable.role.attrib;
-		%local.tqreplaceable.attrib;
+		%replaceable.role.attrib;
+		%local.replaceable.attrib;
 >
-<!--end of tqreplaceable.attlist-->]]>
-<!--end of tqreplaceable.module-->]]>
+<!--end of replaceable.attlist-->]]>
+<!--end of replaceable.module-->]]>
 
 <!ENTITY % returnvalue.module "INCLUDE">
 <![%returnvalue.module;[
@@ -7077,7 +7077,7 @@ OtherCredit. -->
 <!ELEMENT subscript (#PCDATA 
 		| %link.char.class;
 		| emphasis
-		| tqreplaceable 
+		| replaceable 
 		| symbol 
 		| inlinegraphic
                 | inlinemediaobject
@@ -7099,7 +7099,7 @@ OtherCredit. -->
 <!ELEMENT superscript (#PCDATA 
 		| %link.char.class;
 		| emphasis
-		| tqreplaceable 
+		| replaceable 
 		| symbol 
 		| inlinegraphic
                 | inlinemediaobject 
@@ -7323,7 +7323,7 @@ OtherCredit. -->
 <!--end of anchor.element-->]]>
 
 <!-- required -->
-<!-- tqreplaces Lang -->
+<!-- replaces Lang -->
 
 
 <!ENTITY % anchor.attlist "INCLUDE">

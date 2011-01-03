@@ -28,7 +28,7 @@ glossary <quote>database</quote>, follow these steps:</para>
 
 <refsect2><title>Setting Up the Glossary Database</title>
 
-<para>First, create a stand-alone glossary document that tqcontains all of
+<para>First, create a stand-alone glossary document that contains all of
 the entries that you wish to reference. Make sure that each glossary
 entry has an ID.</para>
 
@@ -165,7 +165,7 @@ the <parameter>glossary.collection</parameter> parameter.</para>
 </informalexample>
 
 <para>What about glossary divisions? If your glossary database has glossary
-divisions <emphasis>and</emphasis> your automatic glossary tqcontains at least
+divisions <emphasis>and</emphasis> your automatic glossary contains at least
 one <sgmltag>glossdiv</sgmltag>, the automic glossary will have divisions.
 If the <sgmltag>glossdiv</sgmltag> is missing from either location, no divisions
 will be rendered.</para>

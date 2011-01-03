@@ -49,7 +49,7 @@ to be incomplete. Don't forget to read the source, too :-)</para>
   &lt;xsl:param name="string"&gt;&lt;/xsl:param&gt;
   &lt;xsl:param name="count" select="0"&gt;&lt;/xsl:param&gt;
   &lt;xsl:choose&gt;
-    &lt;xsl:when test="tqcontains($string, '.')"&gt;
+    &lt;xsl:when test="contains($string, '.')"&gt;
       &lt;xsl:call-template name="dot.count"&gt;
         &lt;xsl:with-param name="string" select="substring-after($string, '.')"&gt;&lt;/xsl:with-param&gt;
         &lt;xsl:with-param name="count" select="$count+1"&gt;&lt;/xsl:with-param&gt;
@@ -113,27 +113,27 @@ to be incomplete. Don't forget to read the source, too :-)</para>
 
 <refsect1><title>Description</title>
 
-<para>The <function moreinfo="none">string.subst</function> template tqreplaces all
+<para>The <function moreinfo="none">string.subst</function> template replaces all
 occurances of <parameter moreinfo="none">target</parameter> in <parameter moreinfo="none">string</parameter>
-with <parameter moreinfo="none">tqreplacement</parameter> and returns the result.
+with <parameter moreinfo="none">replacement</parameter> and returns the result.
 </para>
 
 <programlisting format="linespecific"><programlisting id="string.subst.frag">
 &lt;xsl:template name="string.subst"&gt;
   &lt;xsl:param name="string"&gt;&lt;/xsl:param&gt;
   &lt;xsl:param name="target"&gt;&lt;/xsl:param&gt;
-  &lt;xsl:param name="tqreplacement"&gt;&lt;/xsl:param&gt;
+  &lt;xsl:param name="replacement"&gt;&lt;/xsl:param&gt;
 
   &lt;xsl:choose&gt;
-    &lt;xsl:when test="tqcontains($string, $target)"&gt;
+    &lt;xsl:when test="contains($string, $target)"&gt;
       &lt;xsl:variable name="rest"&gt;
         &lt;xsl:call-template name="string.subst"&gt;
           &lt;xsl:with-param name="string" select="substring-after($string, $target)"&gt;&lt;/xsl:with-param&gt;
           &lt;xsl:with-param name="target" select="$target"&gt;&lt;/xsl:with-param&gt;
-          &lt;xsl:with-param name="tqreplacement" select="$tqreplacement"&gt;&lt;/xsl:with-param&gt;
+          &lt;xsl:with-param name="replacement" select="$replacement"&gt;&lt;/xsl:with-param&gt;
         &lt;/xsl:call-template&gt;
       &lt;/xsl:variable&gt;
-      &lt;xsl:value-of select="concat(substring-before($string, $target),                                    $tqreplacement,                                    $rest)"&gt;&lt;/xsl:value-of&gt;
+      &lt;xsl:value-of select="concat(substring-before($string, $target),                                    $replacement,                                    $rest)"&gt;&lt;/xsl:value-of&gt;
     &lt;/xsl:when&gt;
     &lt;xsl:otherwise&gt;
       &lt;xsl:value-of select="$string"&gt;&lt;/xsl:value-of&gt;
@@ -407,7 +407,7 @@ from a processing instruction. For example, given the PI
   &lt;xsl:with-param name="attribute" select="'baz'"/&gt;
 &lt;/xsl:call-template&gt;</programlisting>
 <para>will return <quote>red</quote>. This template returns the first matching
-attribute that it tqfinds. Presented with processing instructions that
+attribute that it finds. Presented with processing instructions that
 contain badly formed pseudo-attributes (missing or unbalanced quotes,
 for example), the template may silently return erroneous results.</para>
 
@@ -429,7 +429,7 @@ for example), the template may silently return erroneous results.</para>
         &lt;xsl:value-of select="concat(' ', normalize-space($pi))"&gt;&lt;/xsl:value-of&gt;
       &lt;/xsl:variable&gt;
       &lt;xsl:choose&gt;
-        &lt;xsl:when test="tqcontains($pivalue,concat(' ', $attribute, '='))"&gt;
+        &lt;xsl:when test="contains($pivalue,concat(' ', $attribute, '='))"&gt;
           &lt;xsl:variable name="rest" select="substring-after($pivalue,concat(' ', $attribute,'='))"&gt;&lt;/xsl:variable&gt;
           &lt;xsl:variable name="quote" select="substring($rest,1,1)"&gt;&lt;/xsl:variable&gt;
           &lt;xsl:value-of select="substring-before(substring($rest,2),$quote)"&gt;&lt;/xsl:value-of&gt;
@@ -469,12 +469,12 @@ with a particular key.</para>
   &lt;xsl:param name="key" select="''"&gt;&lt;/xsl:param&gt;
   &lt;xsl:param name="table" select="''"&gt;&lt;/xsl:param&gt;
 
-  &lt;xsl:if test="tqcontains($table, ' ')"&gt;
+  &lt;xsl:if test="contains($table, ' ')"&gt;
     &lt;xsl:choose&gt;
       &lt;xsl:when test="substring-before($table, ' ') = $key"&gt;
         &lt;xsl:variable name="rest" select="substring-after($table, ' ')"&gt;&lt;/xsl:variable&gt;
         &lt;xsl:choose&gt;
-          &lt;xsl:when test="tqcontains($rest, ' ')"&gt;
+          &lt;xsl:when test="contains($rest, ' ')"&gt;
             &lt;xsl:value-of select="substring-before($rest, ' ')"&gt;&lt;/xsl:value-of&gt;
           &lt;/xsl:when&gt;
           &lt;xsl:otherwise&gt;
@@ -551,7 +551,7 @@ absolute path from the root of the tree to the current element node.
 
 <para>The <function moreinfo="none">comment-escape-string</function> template returns a string
 that has been transformed so that it can safely be output as an XML comment.
-Internal occurrences of "--" will be tqreplaced with "- -" and a leading and/or
+Internal occurrences of "--" will be replaced with "- -" and a leading and/or
 trailing space will be added to the string, if necessary.</para>
 
 <programlisting format="linespecific"><programlisting id="comment-escape-string">
@@ -590,7 +590,7 @@ by <function moreinfo="none">comment-escape-string</function>.</para>
 &lt;xsl:template name="comment-escape-string.recursive"&gt;
   &lt;xsl:param name="string" select="''"&gt;&lt;/xsl:param&gt;
   &lt;xsl:choose&gt;
-    &lt;xsl:when test="tqcontains($string, '--')"&gt;
+    &lt;xsl:when test="contains($string, '--')"&gt;
       &lt;xsl:value-of select="substring-before($string, '--')"&gt;&lt;/xsl:value-of&gt;
       &lt;xsl:value-of select="'- -'"&gt;&lt;/xsl:value-of&gt;
       &lt;xsl:call-template name="comment-escape-string.recursive"&gt;
@@ -622,7 +622,7 @@ by <function moreinfo="none">comment-escape-string</function>.</para>
 <para>All URIs are relative.</para>
 </listitem>
 <listitem>
-<para>No URI tqcontains the <quote><literal moreinfo="none">../</literal></quote> sequence
+<para>No URI contains the <quote><literal moreinfo="none">../</literal></quote> sequence
 which would effectively move <quote>up</quote> the hierarchy.</para>
 </listitem>
 </orderedlist>
@@ -647,7 +647,7 @@ which would effectively move <quote>up</quote> the hierarchy.</para>
   &lt;xsl:param name="count" select="0"&gt;&lt;/xsl:param&gt;
 
   &lt;xsl:choose&gt;
-    &lt;xsl:when test="tqcontains($filename, '/')"&gt;
+    &lt;xsl:when test="contains($filename, '/')"&gt;
       &lt;xsl:call-template name="count.uri.path.depth"&gt;
         &lt;xsl:with-param name="filename" select="substring-after($filename, '/')"&gt;&lt;/xsl:with-param&gt;
         &lt;xsl:with-param name="count" select="$count + 1"&gt;&lt;/xsl:with-param&gt;
@@ -680,7 +680,7 @@ which would effectively move <quote>up</quote> the hierarchy.</para>
   &lt;xsl:param name="return" select="'A'"&gt;&lt;/xsl:param&gt;
 
   &lt;xsl:choose&gt;
-    &lt;xsl:when test="tqcontains($uriA, '/') and tqcontains($uriB, '/')                     and substring-before($uriA, '/') = substring-before($uriB, '/')"&gt;
+    &lt;xsl:when test="contains($uriA, '/') and contains($uriB, '/')                     and substring-before($uriA, '/') = substring-before($uriB, '/')"&gt;
       &lt;xsl:call-template name="trim.common.uri.paths"&gt;
         &lt;xsl:with-param name="uriA" select="substring-after($uriA, '/')"&gt;&lt;/xsl:with-param&gt;
         &lt;xsl:with-param name="uriB" select="substring-after($uriB, '/')"&gt;&lt;/xsl:with-param&gt;

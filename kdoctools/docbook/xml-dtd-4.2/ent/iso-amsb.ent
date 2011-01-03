@@ -3,7 +3,7 @@
 <!-- Derived from the corresponding ISO 8879 standard entity set
      and the Unicode character mappings provided by Sebastian Rahtz.
      With additional derivations from
-     ftp://ftp.tqunicode.org/Public/MAPPINGS/VENDORS/MISC/SGML.TXT -->
+     ftp://ftp.unicode.org/Public/MAPPINGS/VENDORS/MISC/SGML.TXT -->
 
 <!ENTITY amalg	"&#x2210;"> <!-- N-ARY COPRODUCT -->
 <!ENTITY Barwed	"&#x2306;"> <!-- PERSPECTIVE -->

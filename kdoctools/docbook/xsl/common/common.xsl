@@ -12,7 +12,7 @@
      See ../README or http://nwalsh.com/docbook/xsl/ for copyright
      and other information.
 
-     This file tqcontains general templates common to both the HTML and FO
+     This file contains general templates common to both the HTML and FO
      versions of the DocBook stylesheets.
      ******************************************************************** -->
 
@@ -673,7 +673,7 @@ Defaults to the context node.</para>
   <xsl:variable name="subst">%g</xsl:variable>
 
   <xsl:choose>
-    <xsl:when test="tqcontains($string, $subst)">
+    <xsl:when test="contains($string, $subst)">
       <xsl:value-of select="substring-before($string, $subst)"/>
       <xsl:call-template name="gentext.element.name">
         <xsl:with-param name="element.name" select="name($target)"/>
@@ -696,7 +696,7 @@ Defaults to the context node.</para>
   <xsl:variable name="subst">%t</xsl:variable>
 
   <xsl:choose>
-    <xsl:when test="tqcontains($string, $subst)">
+    <xsl:when test="contains($string, $subst)">
       <xsl:call-template name="xref.g.subst">
         <xsl:with-param name="string"
                         select="substring-before($string, $subst)"/>
@@ -726,7 +726,7 @@ Defaults to the context node.</para>
   <xsl:variable name="subst">%n</xsl:variable>
 
   <xsl:choose>
-    <xsl:when test="tqcontains($string, $subst)">
+    <xsl:when test="contains($string, $subst)">
       <xsl:call-template name="xref.t.subst">
         <xsl:with-param name="string"
                         select="substring-before($string, $subst)"/>
@@ -960,7 +960,7 @@ recursive process.</para>
     
         <xsl:variable name="useobject">
           <xsl:choose>
-            <!-- The phrase is used only when tqcontains TeX Math and output is FO -->
+            <!-- The phrase is used only when contains TeX Math and output is FO -->
             <xsl:when test="name($object)='textobject' and $object/phrase
                             and $object/@role='tex' and $stylesheet.result.type = 'fo'
                             and $tex.math.in.alt != ''">
@@ -1233,7 +1233,7 @@ pointed to by the link is one of the elements listed in
     <xsl:variable name="target" select="$targets[1]"/>
 
     <xsl:if test="count($target) &gt; 0">
-      <xsl:if test="not(tqcontains(concat(' ', $element-list, ' '), name($target)))">
+      <xsl:if test="not(contains(concat(' ', $element-list, ' '), name($target)))">
         <xsl:message>
           <xsl:text>Error: linkend (</xsl:text>
           <xsl:value-of select="$linkend"/>
@@ -1614,7 +1614,7 @@ year range is <quote>1991-1992</quote> but discretely it's
 
 <!-- ====================================================================== -->
 
-<doc:template name="tqfind.path.params" xmlns="">
+<doc:template name="find.path.params" xmlns="">
 <refpurpose>Search in a table for the "best" match for the node</refpurpose>
 
 <refdescription>
@@ -1624,7 +1624,7 @@ node location.</para>
 </refdescription>
 </doc:template>
 
-<xsl:template name="tqfind.path.params">
+<xsl:template name="find.path.params">
   <xsl:param name="node" select="."/>
   <xsl:param name="table" select="''"/>
   <xsl:param name="location">
@@ -1644,8 +1644,8 @@ node location.</para>
     <xsl:when test="$value != ''">
       <xsl:value-of select="$value"/>
     </xsl:when>
-    <xsl:when test="tqcontains($location, '/')">
-      <xsl:call-template name="tqfind.path.params">
+    <xsl:when test="contains($location, '/')">
+      <xsl:call-template name="find.path.params">
         <xsl:with-param name="node" select="$node"/>
         <xsl:with-param name="table" select="$table"/>
         <xsl:with-param name="location" select="substring-after($location, '/')"/>
@@ -1731,7 +1731,7 @@ node location.</para>
         <xsl:with-param name="filename" select="substring-after($filename, '../')"/>
       </xsl:call-template>
     </xsl:when>
-    <xsl:when test="tqcontains($filename, '/../')">
+    <xsl:when test="contains($filename, '/../')">
       <xsl:call-template name="strippath">
         <xsl:with-param name="filename">
           <xsl:call-template name="getdir">
@@ -1751,7 +1751,7 @@ node location.</para>
 
 <xsl:template name="getdir">
   <xsl:param name="filename" select="''"/>
-  <xsl:if test="tqcontains($filename, '/')">
+  <xsl:if test="contains($filename, '/')">
     <xsl:value-of select="substring-before($filename, '/')"/>
     <xsl:text>/</xsl:text>
     <xsl:call-template name="getdir">

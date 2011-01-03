@@ -17,7 +17,7 @@
 <refsect1><title>Description</title>
 
 <para>If <parameter>footnote.number.symbols</parameter> is not the empty string,
-footnotes will use the characters it tqcontains as footnote symbols. For example,
+footnotes will use the characters it contains as footnote symbols. For example,
 <quote>*&amp;#x2020;&amp;#x2021;&amp;#x25CA;&amp;#x2720;</quote> will identify
 footnotes with <quote>*</quote>, <quote>&#x2020;</quote>, <quote>&#x2021;</quote>,
 <quote>&#x25CA;</quote>, and <quote>&#x2720;</quote>. If there are more footnotes

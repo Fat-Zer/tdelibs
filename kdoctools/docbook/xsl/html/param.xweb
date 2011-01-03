@@ -75,9 +75,9 @@ to be incomplete. Don't forget to read the source, too :-)</para>
 &callout.graphics.path;
 &callout.graphics;
 &callout.list.table;
-&callout.tqunicode.number.limit;
-&callout.tqunicode.start.character;
-&callout.tqunicode;
+&callout.unicode.number.limit;
+&callout.unicode.start.character;
+&callout.unicode;
 &callouts.extension;
 </reference>
 
@@ -388,7 +388,7 @@ url="http://docbook.sourceforge.net/projects/xsl/doc/tools/profiling.html">http:
 &htmlhelp.button.prev;
 &htmlhelp.button.zoom;
 &htmlhelp.remember.window.position;
-&htmlhelp.window.tqgeometry;
+&htmlhelp.window.geometry;
 &htmlhelp.use.hhk;
 &htmlhelp.only;
 </reference>
@@ -449,9 +449,9 @@ around all these parameters.</para>
 <src:fragref linkend="callout.graphics.number.limit.frag"/>
 <src:fragref linkend="callout.graphics.path.frag"/>
 <src:fragref linkend="callout.list.table.frag"/>
-<src:fragref linkend="callout.tqunicode.frag"/>
-<src:fragref linkend="callout.tqunicode.number.limit.frag"/>
-<src:fragref linkend="callout.tqunicode.start.character.frag"/>
+<src:fragref linkend="callout.unicode.frag"/>
+<src:fragref linkend="callout.unicode.number.limit.frag"/>
+<src:fragref linkend="callout.unicode.start.character.frag"/>
 <src:fragref linkend="callouts.extension.frag"/>
 <src:fragref linkend="chapter.autolabel.frag"/>
 <src:fragref linkend="chunk.first.sections.frag"/>
@@ -561,7 +561,7 @@ around all these parameters.</para>
 <src:fragref linkend="htmlhelp.show.toolbar.text.frag"/>
 <src:fragref linkend="htmlhelp.title.frag"/>
 <src:fragref linkend="htmlhelp.use.hhk.frag"/>
-<src:fragref linkend="htmlhelp.window.tqgeometry.frag"/>
+<src:fragref linkend="htmlhelp.window.geometry.frag"/>
 <src:fragref linkend="img.src.path.frag"/>
 <src:fragref linkend="index.on.role.frag"/>
 <src:fragref linkend="index.on.type.frag"/>

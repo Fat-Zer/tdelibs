@@ -5,11 +5,11 @@
 <shortcut>
 <keycombo action="simul"><keycap>F1</keycap></keycombo>
 </shortcut>
-<guimenu>Potqmocník</guimenu>
+<guimenu>Pomocník</guimenu>
 <guimenuitem>Obsah...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Spustí systém Potqmocník KDE</action> a zobrazí manuál pre
+<listitem><para><action>Spustí systém Pomocník KDE</action> a zobrazí manuál pre
 &kappname;. (tento dokument).</para></listitem>
 </varlistentry>
 
@@ -18,7 +18,7 @@
 <shortcut>
 <keycombo action="simul">&Shift;<keycap>F1</keycap></keycombo>
 </shortcut>
-<guimenu>Potqmocník</guimenu>
+<guimenu>Pomocník</guimenu>
 <guimenuitem>Čo je to?</guimenuitem>
 </menuchoice>
 </term>
@@ -31,7 +31,7 @@ daného miesta.</para></listitem>
 
 <varlistentry>
 <term><menuchoice>
-<guimenu>Potqmocník</guimenu>
+<guimenu>Pomocník</guimenu>
 <guimenuitem>Poslať správu o chybe...</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Zobrazí dialóg pre správu o chybe</action>, kde môžete
@@ -40,7 +40,7 @@ poslať správu o chybe alebo požiadavku na <quote>novú funkciu</quote>.</para
 
 <varlistentry>
 <term><menuchoice>
-<guimenu>Potqmocník</guimenu>
+<guimenu>Pomocník</guimenu>
 <guimenuitem>O &kappname;</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Toto zobrazí informáciu o verzii a autorovi aplikácie.</action></para></listitem>
@@ -48,7 +48,7 @@ poslať správu o chybe alebo požiadavku na <quote>novú funkciu</quote>.</para
 
 <varlistentry>
 <term><menuchoice>
-<guimenu>Potqmocník</guimenu>
+<guimenu>Pomocník</guimenu>
 <guimenuitem>O KDE</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Toto zobrazí verziu KDE a iné základné informácie.</action></para></listitem>

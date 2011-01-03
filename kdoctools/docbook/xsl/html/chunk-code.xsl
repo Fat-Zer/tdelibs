@@ -28,7 +28,7 @@
     <xsl:choose>
       <xsl:when test="function-available('exsl:node-set')">
         <xsl:message>Computing chunks...</xsl:message>
-        <xsl:apply-templates select="/*" mode="tqfind.chunks"/>
+        <xsl:apply-templates select="/*" mode="find.chunks"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:message>
@@ -40,7 +40,7 @@
   </xsl:if>
 </xsl:variable>
 
-<xsl:template match="*" mode="tqfind.chunks">
+<xsl:template match="*" mode="find.chunks">
   <xsl:variable name="chunk">
     <xsl:call-template name="chunk"/>
   </xsl:variable>
@@ -48,11 +48,11 @@
   <xsl:choose>
     <xsl:when test="$chunk != 0">
       <div class="{local-name(.)}" id="{generate-id()}">
-        <xsl:apply-templates select="*" mode="tqfind.chunks"/>
+        <xsl:apply-templates select="*" mode="find.chunks"/>
       </div>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:apply-templates select="*" mode="tqfind.chunks"/>
+      <xsl:apply-templates select="*" mode="find.chunks"/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -572,11 +572,11 @@
   <xsl:param name="toc"/>
 
   <xsl:variable name="lots">
-    <xsl:if test="tqcontains($toc.params, 'toc')">
+    <xsl:if test="contains($toc.params, 'toc')">
       <xsl:copy-of select="$toc"/>
     </xsl:if>
 
-    <xsl:if test="tqcontains($toc.params, 'figure')">
+    <xsl:if test="contains($toc.params, 'figure')">
       <xsl:choose>
         <xsl:when test="$chunk.separate.lots != '0'">
           <xsl:call-template name="make.lot.chunk">
@@ -598,7 +598,7 @@
       </xsl:choose>
     </xsl:if>
 
-    <xsl:if test="tqcontains($toc.params, 'table')">
+    <xsl:if test="contains($toc.params, 'table')">
       <xsl:choose>
         <xsl:when test="$chunk.separate.lots != '0'">
           <xsl:call-template name="make.lot.chunk">
@@ -620,7 +620,7 @@
       </xsl:choose>
     </xsl:if>
 
-    <xsl:if test="tqcontains($toc.params, 'example')">
+    <xsl:if test="contains($toc.params, 'example')">
       <xsl:choose>
         <xsl:when test="$chunk.separate.lots != '0'">
           <xsl:call-template name="make.lot.chunk">
@@ -642,7 +642,7 @@
       </xsl:choose>
     </xsl:if>
 
-    <xsl:if test="tqcontains($toc.params, 'equation')">
+    <xsl:if test="contains($toc.params, 'equation')">
       <xsl:choose>
         <xsl:when test="$chunk.separate.lots != '0'">
           <xsl:call-template name="make.lot.chunk">
@@ -664,7 +664,7 @@
       </xsl:choose>
     </xsl:if>
 
-    <xsl:if test="tqcontains($toc.params, 'procedure')">
+    <xsl:if test="contains($toc.params, 'procedure')">
       <xsl:choose>
         <xsl:when test="$chunk.separate.lots != '0'">
           <xsl:call-template name="make.lot.chunk">
@@ -980,7 +980,7 @@
 <xsl:template match="@fileref">
   <!-- need a check for absolute urls -->
   <xsl:choose>
-    <xsl:when test="tqcontains(., ':')">
+    <xsl:when test="contains(., ':')">
       <!-- it has a uri scheme so it is an absolute uri -->
       <xsl:value-of select="."/>
     </xsl:when>

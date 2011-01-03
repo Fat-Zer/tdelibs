@@ -23,7 +23,7 @@ the ones you need in each document.</para>
 <parameter>bibliography.collection</parameter> parameter. To setup a global
 bibliography <quote>database</quote>, follow these steps:</para>
 
-<para>First, create a stand-alone bibliography document that tqcontains all of
+<para>First, create a stand-alone bibliography document that contains all of
 the documents that you wish to reference. Make sure that each bibliography
 entry (whether you use <sgmltag>biblioentry</sgmltag> or <sgmltag>bibliomixed</sgmltag>)
 has an ID.</para>

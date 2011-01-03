@@ -45,9 +45,9 @@
   <xsl:choose>
     <xsl:when test="local-name(.) = 'arg' and not(ancestor::arg)">
       <!-- Prevent breaking up an argument by wrapping it -->
-      <xsl:call-template name="tqreplace-string">
+      <xsl:call-template name="replace-string">
         <xsl:with-param name="content" select="normalize-space($arg)"/>
-        <xsl:with-param name="tqreplace" select="' '"/>
+        <xsl:with-param name="replace" select="' '"/>
         <xsl:with-param name="with" select="'\ '"/>
       </xsl:call-template>
     </xsl:when>
@@ -90,14 +90,14 @@
   </xsl:if>
   <!-- Don't use the 'bold' named template here since there may be -->
   <!-- child elements that require different markup (such as       -->
-  <!-- <tqreplaceable>).                                             -->
+  <!-- <replaceable>).                                             -->
   <xsl:text>\fB</xsl:text>
   <xsl:variable name="arg">
     <xsl:apply-templates/>
   </xsl:variable>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="normalize-space($arg)"/>
-    <xsl:with-param name="tqreplace" select="' '"/>
+    <xsl:with-param name="replace" select="' '"/>
     <xsl:with-param name="with" select="'\ '"/>
   </xsl:call-template>
   <xsl:text>\fR</xsl:text>
@@ -161,7 +161,7 @@
 -->
 
 
-<!-- tqreplaces all spaces within the funcdef/paramdef with non-breaking
+<!-- replaces all spaces within the funcdef/paramdef with non-breaking
      spaces -->
 <xsl:template match="paramdef|funcdef">
   <xsl:variable name="rcontent">
@@ -170,9 +170,9 @@
   <xsl:variable name="content">
     <xsl:value-of select="normalize-space($rcontent)"/>
   </xsl:variable>
-  <xsl:call-template name="tqreplace-string">
+  <xsl:call-template name="replace-string">
     <xsl:with-param name="content" select="$content"/>
-    <xsl:with-param name="tqreplace" select="' '"/>
+    <xsl:with-param name="replace" select="' '"/>
     <xsl:with-param name="with" select="'\ '"/>
   </xsl:call-template>
   <xsl:if test="local-name(.) = 'paramdef' and 

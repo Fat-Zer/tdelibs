@@ -191,7 +191,7 @@ int main(int argc, char **argv) {
                 return 1;
             }
         } else {
-            kdWarning() << "couldn't tqfind xmllint" << endl;
+            kdWarning() << "couldn't find xmllint" << endl;
         }
 #if !defined(PATH_MAX) && defined(__GLIBC__)
         free( pwd_buffer );

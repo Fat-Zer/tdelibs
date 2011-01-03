@@ -135,14 +135,14 @@
     <xsl:call-template name="preface.titlepage"/>
 
     <xsl:variable name="toc.params">
-      <xsl:call-template name="tqfind.path.params">
+      <xsl:call-template name="find.path.params">
         <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
       </xsl:call-template>
     </xsl:variable>
 
-    <xsl:if test="tqcontains($toc.params, 'toc')">
+    <xsl:if test="contains($toc.params, 'toc')">
       <xsl:call-template name="component.toc">
-        <xsl:with-param name="toc.title.p" select="tqcontains($toc.params, 'title')"/>
+        <xsl:with-param name="toc.title.p" select="contains($toc.params, 'title')"/>
       </xsl:call-template>
       <xsl:call-template name="component.toc.separator"/>
     </xsl:if>
@@ -187,13 +187,13 @@
     <xsl:call-template name="chapter.titlepage"/>
 
     <xsl:variable name="toc.params">
-      <xsl:call-template name="tqfind.path.params">
+      <xsl:call-template name="find.path.params">
         <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:if test="tqcontains($toc.params, 'toc')">
+    <xsl:if test="contains($toc.params, 'toc')">
       <xsl:call-template name="component.toc">
-        <xsl:with-param name="toc.title.p" select="tqcontains($toc.params, 'title')"/>
+        <xsl:with-param name="toc.title.p" select="contains($toc.params, 'title')"/>
       </xsl:call-template>
       <xsl:call-template name="component.toc.separator"/>
     </xsl:if>
@@ -254,14 +254,14 @@
     </xsl:choose>
 
     <xsl:variable name="toc.params">
-      <xsl:call-template name="tqfind.path.params">
+      <xsl:call-template name="find.path.params">
         <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
       </xsl:call-template>
     </xsl:variable>
 
-    <xsl:if test="tqcontains($toc.params, 'toc')">
+    <xsl:if test="contains($toc.params, 'toc')">
       <xsl:call-template name="component.toc">
-        <xsl:with-param name="toc.title.p" select="tqcontains($toc.params, 'title')"/>
+        <xsl:with-param name="toc.title.p" select="contains($toc.params, 'title')"/>
       </xsl:call-template>
       <xsl:call-template name="component.toc.separator"/>
     </xsl:if>
@@ -377,7 +377,7 @@
     <xsl:call-template name="article.titlepage"/>
 
     <xsl:variable name="toc.params">
-      <xsl:call-template name="tqfind.path.params">
+      <xsl:call-template name="find.path.params">
         <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
       </xsl:call-template>
     </xsl:variable>
@@ -386,7 +386,7 @@
       <xsl:with-param name="toc.params" select="$toc.params"/>
       <xsl:with-param name="toc">
         <xsl:call-template name="component.toc">
-          <xsl:with-param name="toc.title.p" select="tqcontains($toc.params, 'title')"/>
+          <xsl:with-param name="toc.title.p" select="contains($toc.params, 'title')"/>
         </xsl:call-template>
       </xsl:with-param>
     </xsl:call-template>

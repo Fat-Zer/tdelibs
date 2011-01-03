@@ -109,7 +109,7 @@
 
   <xsl:variable name="placement">
     <xsl:choose>
-      <xsl:when test="tqcontains($param.placement, ' ')">
+      <xsl:when test="contains($param.placement, ' ')">
         <xsl:value-of select="substring-before($param.placement, ' ')"/>
       </xsl:when>
       <xsl:when test="$param.placement = ''">before</xsl:when>
@@ -185,7 +185,7 @@
 
   <xsl:variable name="placement">
     <xsl:choose>
-      <xsl:when test="tqcontains($param.placement, ' ')">
+      <xsl:when test="contains($param.placement, ' ')">
         <xsl:value-of select="substring-before($param.placement, ' ')"/>
       </xsl:when>
       <xsl:when test="$param.placement = ''">before</xsl:when>
@@ -228,7 +228,7 @@
 
   <xsl:variable name="placement">
     <xsl:choose>
-      <xsl:when test="tqcontains($param.placement, ' ')">
+      <xsl:when test="contains($param.placement, ' ')">
         <xsl:value-of select="substring-before($param.placement, ' ')"/>
       </xsl:when>
       <xsl:when test="$param.placement = ''">before</xsl:when>
@@ -251,7 +251,7 @@
 
   <xsl:variable name="placement">
     <xsl:choose>
-      <xsl:when test="tqcontains($param.placement, ' ')">
+      <xsl:when test="contains($param.placement, ' ')">
         <xsl:value-of select="substring-before($param.placement, ' ')"/>
       </xsl:when>
       <xsl:when test="$param.placement = ''">before</xsl:when>

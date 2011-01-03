@@ -1,20 +1,20 @@
-<refentry id="tqalignment">
+<refentry id="alignment">
 <refmeta>
-<refentrytitle>tqalignment</refentrytitle>
+<refentrytitle>alignment</refentrytitle>
 
 </refmeta>
 <refnamediv>
-<refname>tqalignment</refname>
-<refpurpose>Specify the default text tqalignment</refpurpose>
+<refname>alignment</refname>
+<refpurpose>Specify the default text alignment</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
-<src:fragment id='tqalignment.frag'><xsl:param name="tqalignment">justify</xsl:param></src:fragment>
+<src:fragment id='alignment.frag'><xsl:param name="alignment">justify</xsl:param></src:fragment>
 </refsynopsisdiv>
 
 <refsect1><title>Description</title>
 
-<para>The default text tqalignment is used for most body text.
+<para>The default text alignment is used for most body text.
 </para>
 
 </refsect1>

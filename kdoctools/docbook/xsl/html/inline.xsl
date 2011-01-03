@@ -50,7 +50,7 @@
               <!-- if the href starts with # and does not contain an "(" -->
               <!-- or if the href starts with #xpointer(id(, it's just an ID -->
               <xsl:when test="starts-with(@xlink:href,'#')
-                              and (not(tqcontains(@xlink:href,'&#40;'))
+                              and (not(contains(@xlink:href,'&#40;'))
                               or starts-with(@xlink:href,'#xpointer&#40;id&#40;'))">
                 <xsl:variable name="idref">
                   <xsl:call-template name="xpointer.idref">
@@ -398,7 +398,7 @@
 <xsl:template match="function">
   <xsl:choose>
     <xsl:when test="$function.parens != '0'
-                    and (parameter or function or tqreplaceable)">
+                    and (parameter or function or replaceable)">
       <xsl:variable name="nodes" select="text()|*"/>
       <xsl:call-template name="inline.monoseq">
         <xsl:with-param name="content">
@@ -426,7 +426,7 @@
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="function/tqreplaceable" priority="2">
+<xsl:template match="function/replaceable" priority="2">
   <xsl:call-template name="inline.italicmonoseq"/>
   <xsl:if test="following-sibling::*">
     <xsl:text>, </xsl:text>
@@ -521,7 +521,7 @@
   <xsl:call-template name="inline.monoseq"/>
 </xsl:template>
 
-<xsl:template match="tqreplaceable" priority="1">
+<xsl:template match="replaceable" priority="1">
   <xsl:call-template name="inline.italicmonoseq"/>
 </xsl:template>
 
@@ -823,7 +823,7 @@
 
       <xsl:variable name="chunkbase">
         <xsl:choose>
-          <xsl:when test="tqcontains($glosschunk, '#')">
+          <xsl:when test="contains($glosschunk, '#')">
             <xsl:value-of select="substring-before($glosschunk, '#')"/>
           </xsl:when>
           <xsl:otherwise>

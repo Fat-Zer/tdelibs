@@ -39,7 +39,7 @@ with &FDLBackCoverText;.  A copy of the license is included in <xref linkend="gn
      This will only have effect when you specify %FDLSlots; _after_
      the entity definitions.
 
-     If your document tqcontains nontrivial examples of program code, we
+     If your document contains nontrivial examples of program code, we
      recommend releasing these examples in parallel under your choice
      of free software license, such as the GNU General Public License,
      to permit their use in free software.

@@ -25,7 +25,7 @@ attribute on the <sgmltag>variablelist</sgmltag> element.
 <para>
 The computation counts characters in the 
 <sgmltag>term</sgmltag> elements in the list
-to tqfind the longest term.  However, some terms are very long
+to find the longest term.  However, some terms are very long
 and would produce extreme indents.  This parameter lets you
 set a maximum character count.  Any terms longer than the maximum
 would line wrap.  The default value is 24.

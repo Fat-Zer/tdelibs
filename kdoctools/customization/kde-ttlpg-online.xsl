@@ -39,7 +39,7 @@
   <xsl:call-template name="inline.monoseq">
     <xsl:with-param name="content">
       <xsl:text>(</xsl:text>
-		<xsl:call-template name="tqreplaceCharsInString">
+		<xsl:call-template name="replaceCharsInString">
 			<xsl:with-param name="stringIn" select="."/>
 			<xsl:with-param name="charsIn" select="'@'"/>
 			<xsl:with-param name="charsOut" select="'  '"/>

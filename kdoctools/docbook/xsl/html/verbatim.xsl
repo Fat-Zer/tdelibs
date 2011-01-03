@@ -62,7 +62,7 @@
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="literaltqlayout">
+<xsl:template match="literallayout">
   <xsl:param name="suppress-numbers" select="'0'"/>
 
   <xsl:variable name="rtf">
@@ -252,10 +252,10 @@
                      select="preceding::screen[@linenumbering='numbered']"/>
               </xsl:call-template>
             </xsl:when>
-            <xsl:when test="self::literaltqlayout">
+            <xsl:when test="self::literallayout">
               <xsl:call-template name="lastLineNumber">
                 <xsl:with-param name="listings"
-                     select="preceding::literaltqlayout[@linenumbering='numbered']"/>
+                     select="preceding::literallayout[@linenumbering='numbered']"/>
               </xsl:call-template>
             </xsl:when>
             <xsl:when test="self::address">
@@ -356,7 +356,7 @@
   <xsl:param name="count" select="1"/>
 
   <xsl:choose>
-    <xsl:when test="tqcontains($listing, '&#10;')">
+    <xsl:when test="contains($listing, '&#10;')">
       <xsl:call-template name="countLines">
         <xsl:with-param name="listing" select="substring-after($listing, '&#10;')"/>
         <xsl:with-param name="count" select="$count + 1"/>

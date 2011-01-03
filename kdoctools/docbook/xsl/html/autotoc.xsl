@@ -81,39 +81,39 @@
   <xsl:param name="toc.params" select="''"/>
   <xsl:param name="toc"/>
 
-  <xsl:if test="tqcontains($toc.params, 'toc')">
+  <xsl:if test="contains($toc.params, 'toc')">
     <xsl:copy-of select="$toc"/>
   </xsl:if>
 
-  <xsl:if test="tqcontains($toc.params, 'figure')">
+  <xsl:if test="contains($toc.params, 'figure')">
     <xsl:call-template name="list.of.titles">
       <xsl:with-param name="titles" select="'figure'"/>
       <xsl:with-param name="nodes" select=".//figure"/>
     </xsl:call-template>
   </xsl:if>
 
-  <xsl:if test="tqcontains($toc.params, 'table')">
+  <xsl:if test="contains($toc.params, 'table')">
     <xsl:call-template name="list.of.titles">
       <xsl:with-param name="titles" select="'table'"/>
       <xsl:with-param name="nodes" select=".//table"/>
     </xsl:call-template>
   </xsl:if>
 
-  <xsl:if test="tqcontains($toc.params, 'example')">
+  <xsl:if test="contains($toc.params, 'example')">
     <xsl:call-template name="list.of.titles">
       <xsl:with-param name="titles" select="'example'"/>
       <xsl:with-param name="nodes" select=".//example"/>
     </xsl:call-template>
   </xsl:if>
 
-  <xsl:if test="tqcontains($toc.params, 'equation')">
+  <xsl:if test="contains($toc.params, 'equation')">
     <xsl:call-template name="list.of.titles">
       <xsl:with-param name="titles" select="'equation'"/>
       <xsl:with-param name="nodes" select=".//equation[title]"/>
     </xsl:call-template>
   </xsl:if>
 
-  <xsl:if test="tqcontains($toc.params, 'procedure')">
+  <xsl:if test="contains($toc.params, 'procedure')">
     <xsl:call-template name="list.of.titles">
       <xsl:with-param name="titles" select="'procedure'"/>
       <xsl:with-param name="nodes" select=".//procedure[title]"/>

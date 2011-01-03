@@ -66,7 +66,7 @@
 <!ENTITY ldquor	"&#x201E;"> <!-- DOUBLE LOW-9 QUOTATION MARK -->
 <!ENTITY fflig	"&#xFB00;"> <!--  -->
 <!ENTITY filig	"&#xFB01;"> <!--  -->
-<!--     fjlig	Unknown tqunicode character -->
+<!--     fjlig	Unknown unicode character -->
 <!ENTITY ffilig	"&#xFB03;"> <!--  -->
 <!ENTITY ffllig	"&#xFB04;"> <!--  -->
 <!ENTITY fllig	"&#xFB02;"> <!--  -->

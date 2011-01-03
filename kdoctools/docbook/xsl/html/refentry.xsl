@@ -23,12 +23,12 @@
     <xsl:call-template name="reference.titlepage"/>
 
     <xsl:variable name="toc.params">
-      <xsl:call-template name="tqfind.path.params">
+      <xsl:call-template name="find.path.params">
         <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
       </xsl:call-template>
     </xsl:variable>
 
-    <xsl:if test="not(partintro) and tqcontains($toc.params, 'toc')">
+    <xsl:if test="not(partintro) and contains($toc.params, 'toc')">
       <xsl:call-template name="division.toc"/>
     </xsl:if>
     <xsl:apply-templates/>

@@ -8,7 +8,7 @@
 		     remark[ancestor::listitem or ancestor::step]">
   <xsl:for-each select="node()">
     <xsl:choose>
-      <xsl:when test="self::literaltqlayout|self::screen|self::programlisting|
+      <xsl:when test="self::literallayout|self::screen|self::programlisting|
 		      self::itemizedlist|self::orderedlist|self::variablelist|
 		      self::simplelist">
         <xsl:text>&#10;</xsl:text>

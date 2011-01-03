@@ -15,7 +15,7 @@
 <refsect1><title>Description</title>
 
 <para>If true, verbatim environments (elements that have the
-format='linespecific' notation attribute: address, literaltqlayout,
+format='linespecific' notation attribute: address, literallayout,
 programlisting, screen, synopsis) that specify line numbering will
 have, surprise, line numbers.
 </para>

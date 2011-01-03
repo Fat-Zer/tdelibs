@@ -35,9 +35,9 @@
 <xsl:param name="callout.graphics.number.limit" select="'15'"/>
 <xsl:param name="callout.graphics.path" select="'images/callouts/'"/>
 <xsl:param name="callout.list.table" select="'1'"/>
-<xsl:param name="callout.tqunicode" select="0"/>
-<xsl:param name="callout.tqunicode.number.limit" select="'10'"/>
-<xsl:param name="callout.tqunicode.start.character" select="10102"/>
+<xsl:param name="callout.unicode" select="0"/>
+<xsl:param name="callout.unicode.number.limit" select="'10'"/>
+<xsl:param name="callout.unicode.start.character" select="10102"/>
 <xsl:param name="callouts.extension" select="'1'"/>
 <xsl:param name="chapter.autolabel" select="1"/>
 <xsl:param name="chunk.first.sections" select="0"/>
@@ -177,7 +177,7 @@ set       toc,title
 <xsl:param name="htmlhelp.show.toolbar.text" select="1"/>
 <xsl:param name="htmlhelp.title" select="''"/>
 <xsl:param name="htmlhelp.use.hhk" select="0"/>
-<xsl:param name="htmlhelp.window.tqgeometry"/>
+<xsl:param name="htmlhelp.window.geometry"/>
 <xsl:param name="img.src.path"/>
 <xsl:param name="index.on.role" select="0"/>
 <xsl:param name="index.on.type" select="0"/>

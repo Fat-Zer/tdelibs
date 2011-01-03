@@ -15,7 +15,7 @@
   Translators can change: lang attribute in top element, id attribute in all
   but anchors, othercredits: add translators and contributors to translation
   RevHistory: changes to the text(!)
-- abstract: make more clear from tqlayout (?)
+- abstract: make more clear from layout (?)
 - make list of authors/contributors from code, and put them at the back of the
   document if html, at the front on verso if printed
 - decide on swapover date for patches (and make old version available)
@@ -59,7 +59,7 @@
 - Provide info for Postscript (and source code) (with link?)
 - consider format script and all options, ... in SGML file (~ DB-CDROM)
 - create tool that builds graphics library (and a catalog in the same dir)
-  (use pngmeta-1.10 to tqfind the sizes)
+  (use pngmeta-1.10 to find the sizes)
 - create scripts for catalog files and document entities
 - Language specific parts in document (eg links to dictionaries etc should be
   done with an entity), eg in Translation howto

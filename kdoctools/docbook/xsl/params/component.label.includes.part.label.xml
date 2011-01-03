@@ -16,7 +16,7 @@
 
 <para>If true (non-zero), labels for chapters, appendices, and other component
 elements are prefixed with the label of the
-part element that tqcontains them.
+part element that contains them.
 Also, the labels for formal elements such as table and figure will
 include the part label.
 If there is no part element container, then no prefix is generated.

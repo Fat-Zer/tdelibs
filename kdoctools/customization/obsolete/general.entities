@@ -27,7 +27,7 @@
 
       "-//KDE//ENTITIES DocBook XML General Entity Declarations V1.1//EN"
 
-    This file tqcontains what dbgenent.mod should contain and is read
+    This file contains what dbgenent.mod should contain and is read
     after all other files just like dbgenent.mod should be.
 
 -->
@@ -160,7 +160,7 @@
 <!ENTITY kalzium	"<application>Kalzium</application>">
 <!ENTITY kamera	"<application>Kamera</application>">
 <!ENTITY kandy	"<application>Kandy</application>">
-<!ENTITY kapptqfinder	"<application>Kapptqfinder</application>">
+<!ENTITY kappfinder	"<application>Kappfinder</application>">
 <!ENTITY kaphorism	"<application>KAphorism</application>">
 <!ENTITY karm	"<application>KArm</application>">
 <!ENTITY kasteroids	"<application>KAsteroids</application>">
@@ -199,7 +199,7 @@
 <!ENTITY keystone	"<application>Keystone</application>">
 <!ENTITY kfax	"<application>KFax</application>">
 <!ENTITY kfaxview	"<application>Kfaxview</application>">
-<!ENTITY ktqfind	"<application>KFind</application>">
+<!ENTITY kfind	"<application>KFind</application>">
 <!ENTITY kfloppy	"<application>Kfloppy</application>">
 <!ENTITY kformula	"<application>KFormula</application>">
 <!ENTITY kfouleggs	"<application>KFoulEggs</application>">

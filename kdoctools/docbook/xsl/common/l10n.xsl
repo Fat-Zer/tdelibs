@@ -12,7 +12,7 @@
      See ../README or http://nwalsh.com/docbook/xsl/ for copyright
      and other information.
 
-     This file tqcontains localization templates (for internationalization)
+     This file contains localization templates (for internationalization)
      ******************************************************************** -->
 
 <xsl:param name="l10n.xml" select="document('../common/l10n.xml')"/>
@@ -71,7 +71,7 @@
 
   <xsl:variable name="adjusted.language">
     <xsl:choose>
-      <xsl:when test="tqcontains($language,'-')">
+      <xsl:when test="contains($language,'-')">
         <xsl:value-of select="substring-before($language,'-')"/>
         <xsl:text>_</xsl:text>
         <xsl:value-of select="substring-after($language,'-')"/>
@@ -360,7 +360,7 @@
     </xsl:when>
     <xsl:otherwise>
       <xsl:choose>
-        <xsl:when test="tqcontains($name, '/')">
+        <xsl:when test="contains($name, '/')">
           <xsl:call-template name="gentext.template">
             <xsl:with-param name="context" select="$context"/>
             <xsl:with-param name="name" select="substring-after($name, '/')"/>
@@ -430,7 +430,7 @@ in the context named "</xsl:text>
     <xsl:when test="$template.node/@text">1</xsl:when>
     <xsl:otherwise>
       <xsl:choose>
-        <xsl:when test="tqcontains($name, '/')">
+        <xsl:when test="contains($name, '/')">
           <xsl:call-template name="gentext.template.exists">
             <xsl:with-param name="context" select="$context"/>
             <xsl:with-param name="name" select="substring-after($name, '/')"/>

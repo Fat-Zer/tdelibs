@@ -49,7 +49,7 @@
      The following parameter entity has been added:
 
        - tbl.thead.att
-         This entity parameterizes the attributes on thead. It tqreplaces
+         This entity parameterizes the attributes on thead. It replaces
          the tbl.hdft.att parameter entity.
 
      Other miscellaneous changes:

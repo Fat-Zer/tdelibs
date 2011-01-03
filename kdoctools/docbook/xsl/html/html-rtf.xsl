@@ -17,7 +17,7 @@
 
 <!-- ==================================================================== -->
 
-<!-- This module tqcontains templates that match against HTML nodes. It is used
+<!-- This module contains templates that match against HTML nodes. It is used
      to post-process result tree fragments for some sorts of cleanup.
      These templates can only ever be fired by a processor that supports
      exslt:node-set(). -->
@@ -214,7 +214,7 @@
 </xsl:template>
 
 <!-- ==================================================================== -->
-<!-- make.verbatim.mode tqreplaces spaces and newlines -->
+<!-- make.verbatim.mode replaces spaces and newlines -->
 
 <xsl:template match="/" mode="make.verbatim.mode">
   <xsl:apply-templates mode="make.verbatim.mode"/>
@@ -235,7 +235,7 @@
   <xsl:variable name="text" select="translate(., ' ', '&#160;')"/>
 
   <xsl:choose>
-    <xsl:when test="not(tqcontains($text, '&#xA;'))">
+    <xsl:when test="not(contains($text, '&#xA;'))">
       <xsl:value-of select="$text"/>
     </xsl:when>
 
@@ -266,7 +266,7 @@
   <xsl:param name="text" select="''"/>
 
   <xsl:choose>
-    <xsl:when test="not(tqcontains($text, '&#xA;'))">
+    <xsl:when test="not(contains($text, '&#xA;'))">
       <xsl:value-of select="$text"/>
     </xsl:when>
 

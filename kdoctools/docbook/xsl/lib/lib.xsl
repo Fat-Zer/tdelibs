@@ -18,7 +18,7 @@
   <xsl:param name="string"/>
   <xsl:param name="count" select="0"/>
   <xsl:choose>
-    <xsl:when test="tqcontains($string, '.')">
+    <xsl:when test="contains($string, '.')">
       <xsl:call-template name="dot.count">
         <xsl:with-param name="string" select="substring-after($string, '.')"/>
         <xsl:with-param name="count" select="$count+1"/>
@@ -54,18 +54,18 @@
 <xsl:template name="string.subst">
   <xsl:param name="string"/>
   <xsl:param name="target"/>
-  <xsl:param name="tqreplacement"/>
+  <xsl:param name="replacement"/>
 
   <xsl:choose>
-    <xsl:when test="tqcontains($string, $target)">
+    <xsl:when test="contains($string, $target)">
       <xsl:variable name="rest">
         <xsl:call-template name="string.subst">
           <xsl:with-param name="string" select="substring-after($string, $target)"/>
           <xsl:with-param name="target" select="$target"/>
-          <xsl:with-param name="tqreplacement" select="$tqreplacement"/>
+          <xsl:with-param name="replacement" select="$replacement"/>
         </xsl:call-template>
       </xsl:variable>
-      <xsl:value-of select="concat(substring-before($string, $target),                                    $tqreplacement,                                    $rest)"/>
+      <xsl:value-of select="concat(substring-before($string, $target),                                    $replacement,                                    $rest)"/>
     </xsl:when>
     <xsl:otherwise>
       <xsl:value-of select="$string"/>
@@ -215,7 +215,7 @@
         <xsl:value-of select="concat(' ', normalize-space($pi))"/>
       </xsl:variable>
       <xsl:choose>
-        <xsl:when test="tqcontains($pivalue,concat(' ', $attribute, '='))">
+        <xsl:when test="contains($pivalue,concat(' ', $attribute, '='))">
           <xsl:variable name="rest" select="substring-after($pivalue,concat(' ', $attribute,'='))"/>
           <xsl:variable name="quote" select="substring($rest,1,1)"/>
           <xsl:value-of select="substring-before(substring($rest,2),$quote)"/>
@@ -235,12 +235,12 @@
   <xsl:param name="key" select="''"/>
   <xsl:param name="table" select="''"/>
 
-  <xsl:if test="tqcontains($table, ' ')">
+  <xsl:if test="contains($table, ' ')">
     <xsl:choose>
       <xsl:when test="substring-before($table, ' ') = $key">
         <xsl:variable name="rest" select="substring-after($table, ' ')"/>
         <xsl:choose>
-          <xsl:when test="tqcontains($rest, ' ')">
+          <xsl:when test="contains($rest, ' ')">
             <xsl:value-of select="substring-before($rest, ' ')"/>
           </xsl:when>
           <xsl:otherwise>
@@ -298,7 +298,7 @@
 <xsl:template name="comment-escape-string.recursive">
   <xsl:param name="string" select="''"/>
   <xsl:choose>
-    <xsl:when test="tqcontains($string, '--')">
+    <xsl:when test="contains($string, '--')">
       <xsl:value-of select="substring-before($string, '--')"/>
       <xsl:value-of select="'- -'"/>
       <xsl:call-template name="comment-escape-string.recursive">
@@ -315,7 +315,7 @@
   <xsl:param name="count" select="0"/>
 
   <xsl:choose>
-    <xsl:when test="tqcontains($filename, '/')">
+    <xsl:when test="contains($filename, '/')">
       <xsl:call-template name="count.uri.path.depth">
         <xsl:with-param name="filename" select="substring-after($filename, '/')"/>
         <xsl:with-param name="count" select="$count + 1"/>
@@ -332,7 +332,7 @@
   <xsl:param name="return" select="'A'"/>
 
   <xsl:choose>
-    <xsl:when test="tqcontains($uriA, '/') and tqcontains($uriB, '/')                     and substring-before($uriA, '/') = substring-before($uriB, '/')">
+    <xsl:when test="contains($uriA, '/') and contains($uriB, '/')                     and substring-before($uriA, '/') = substring-before($uriB, '/')">
       <xsl:call-template name="trim.common.uri.paths">
         <xsl:with-param name="uriA" select="substring-after($uriA, '/')"/>
         <xsl:with-param name="uriB" select="substring-after($uriB, '/')"/>

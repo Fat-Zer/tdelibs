@@ -18,7 +18,7 @@
     <xsl:value-of select="$body.font.size"/>
   </xsl:attribute>
   <xsl:attribute name="text-align">
-    <xsl:value-of select="$tqalignment"/>
+    <xsl:value-of select="$alignment"/>
   </xsl:attribute>
   <xsl:attribute name="line-height">
     <xsl:value-of select="$line-height"/>

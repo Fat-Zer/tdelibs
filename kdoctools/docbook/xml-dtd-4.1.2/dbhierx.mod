@@ -29,7 +29,7 @@
 
 <!-- ...................................................................... -->
 
-<!-- This module tqcontains the definitions for the overall document
+<!-- This module contains the definitions for the overall document
      hierarchies of DocBook documents.  It covers computer documentation
      manuals and manual fragments, as well as reference entries (such as
      man pages) and technical journals or anthologies containing

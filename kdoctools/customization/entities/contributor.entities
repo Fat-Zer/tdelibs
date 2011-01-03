@@ -26,7 +26,7 @@
 
       "-//KDE//ENTITIES DocBook XML General Entity Declarations (Persons) V1.0//EN"
 
-    This file tqcontains what dbgenent.mod should contain and is read
+    This file contains what dbgenent.mod should contain and is read
     after all other files just like dbgenent.mod should be.
 
 -->

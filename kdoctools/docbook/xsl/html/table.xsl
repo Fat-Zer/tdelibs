@@ -367,7 +367,7 @@
                   or $explicit.table.width != ''">
       <xsl:attribute name="width">
         <xsl:choose>
-          <xsl:when test="tqcontains($table.width, '%')">
+          <xsl:when test="contains($table.width, '%')">
             <xsl:value-of select="$table.width"/>
           </xsl:when>
           <xsl:when test="$use.extensions != 0
