@@ -754,6 +754,7 @@ add_definitions(
   -DQT_NO_TRANSLATION
 )
 
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include tqt.h" )
 set( CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined" )
 set( CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined" )
 
@@ -819,4 +820,4 @@ add_subdirectory( mimetypes )
 
 ##### install import cmake modules ###############
 
-install( EXPORT ${CMAKE_PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_DIR} )
+tde_install_export( )

@@ -9,13 +9,15 @@
 #
 #################################################
 
-##### kjava #####################################
+include_directories(
+  ${TQT_INCLUDE_DIRS}
+)
 
-set( target kjava )
+##### kjava #####################################
 
 configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy.cpp COPYONLY )
 
-tde_add_library( ${target} SHARED
+tde_add_library( kjava SHARED
   SOURCES dummy.cpp
   VERSION 1.0.0
   DESTINATION ${LIB_INSTALL_DIR}

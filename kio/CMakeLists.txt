@@ -24,6 +24,9 @@ add_subdirectory( misc )
 add_subdirectory( kpasswdserver )
 add_subdirectory( tests )
 
+include_directories(
+  ${TQT_INCLUDE_DIRS}
+)
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
