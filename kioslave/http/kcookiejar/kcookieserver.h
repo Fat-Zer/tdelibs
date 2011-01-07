@@ -45,12 +45,12 @@ public:
   ~KCookieServer();
 
 k_dcop:
-  TQString tqfindCookies(TQString);
-  TQString tqfindCookies(TQString, long);
-  TQStringList tqfindDomains();
-  TQStringList tqfindCookies(TQValueList<int>,TQString,TQString,TQString,TQString);
-  TQString tqfindDOMCookies(TQString);
-  TQString tqfindDOMCookies(TQString, long);
+  TQString findCookies(TQString);
+  TQString findCookies(TQString, long);
+  TQStringList findDomains();
+  TQStringList findCookies(TQValueList<int>,TQString,TQString,TQString,TQString);
+  TQString findDOMCookies(TQString);
+  TQString findDOMCookies(TQString, long);
   void addCookies(TQString, TQCString, long);
   void deleteCookie(TQString, TQString, TQString, TQString);
   void deleteCookiesFromDomain(TQString);

@@ -33,7 +33,7 @@
 	* ecma/kjs_window.cpp (executeOpenWindow): fixed location href
 	and pathname for about:blank windows
 
-	* khtml_part.cpp (tqfindFrameParent): made frame name lookup locale
+	* khtml_part.cpp (findFrameParent): made frame name lookup locale
 	independant. Was mostly problematic with non-ascii names.
 
 	* html/html_formimpl.cpp (gatherWalletData): prevent crash occuring
@@ -79,16 +79,16 @@
 
         . Correct drawing of borders on iframes and objects (#118277/#56109)
         . Frameborder attribute for iframes (http://www.w3.org/TR/html401/present/frames.html#adef-frameborder)
-        . Fix widget counter-tqmask not being updated in time, thus sometimes missing a tqrepaint (e.g: http://lequipe.fr)
+        . Fix widget counter-mask not being updated in time, thus sometimes missing a repaint (e.g: http://lequipe.fr)
 
         * html/html_baseimpl.{h,cpp} (HTMLIFrameElementImpl::parseAttribute): parse frameborder attribute. Defaults to true as per specification.
         (HTMLIFrameElementImpl::updateFrame/attach): apply/remove frameborder style at attachment time.
-        * khtmlview.cpp (drawContents): fix counter-tqmask problem. Widget tqgeometry is not accurate before painting, so we must
+        * khtmlview.cpp (drawContents): fix counter-mask problem. Widget geometry is not accurate before painting, so we must
         use the RenderObject's.
         * rendering/render_frames.h (paddingTop/paddingBottom/paddingLeft/paddingRight): reimplement. Frames have no padding.
         (RenderPartObject::canHaveBorder): reimplement. True.
-        * rendering/render_object.cpp (RenderObject::updateWidgetMasks): clip tqmask to correct width/height, though it doesn't matter much on X11.
-        * rendering/render_tqreplaced.h (RenderWidget::borderTop/borderBottom/borderLeft/borderRight): percolated down from RenderForm.
+        * rendering/render_object.cpp (RenderObject::updateWidgetMasks): clip mask to correct width/height, though it doesn't matter much on X11.
+        * rendering/render_replaced.h (RenderWidget::borderTop/borderBottom/borderLeft/borderRight): percolated down from RenderForm.
         Frames/Iframes also need that reimplementation.
 
 2006-06-22  Germain Garand  <germain@ebooksfrance.org>
@@ -96,7 +96,7 @@
         Implement floating auto-width table quirk
 
         * rendering/render_block.cpp (positionNewFloats): in quirkmode, floated auto-width
-        tables try to fit within remaining linewidth, so look for minWidth, and retqlayout if
+        tables try to fit within remaining linewidth, so look for minWidth, and relayout if
         position found ends up being narrower than current table width.
 
 2006-06-20  Germain Garand  <germain@ebooksfrance.org>
@@ -106,7 +106,7 @@
         * rendering/render_block.cpp (calcInlineMinMaxWidth/calcBlockMinMaxWidth): lazzily check available width
         so floats don't overflow it if they can break line.
         * rendering/render_box.{h,cpp} (availableWidth{,Using}): new. Like availableHeight{,Using}
-        * rendering/render_canvas.cpp (RenderCanvas::tqlayout): set m_viewportWidth before recalculating minmax, as
+        * rendering/render_canvas.cpp (RenderCanvas::layout): set m_viewportWidth before recalculating minmax, as
         availableWidth needs it.
 
 2006-06-15  Allan Sandfeld Jensen <kde@carewolf.com>
@@ -124,7 +124,7 @@
 
 2006-06-14  Allan Sandfeld Jensen <kde@carewolf.com>
 
-        Implement tqreplaced CSS(3) content, and fix various details in generated pseudo elements for CSS 2.1
+        Implement replaced CSS(3) content, and fix various details in generated pseudo elements for CSS 2.1
 
         * rendering/render_style.{h,cpp}: Add REPLACED and MARKER pseudo styles
         * rendering/render_container.{h,cpp}:
@@ -138,7 +138,7 @@
         * rendering/render_generated.{h,cpp}: Add new class RenderGlyph to render list-style glyphs (square, disc, etc.)
         * xml/dom_nodeimpl.cpp:
             (NodeImpl::diff) detect changes in content and return Detach
-        * css/css_base.{h,cpp}: Add marker and tqreplaced pseudo-styles
+        * css/css_base.{h,cpp}: Add marker and replaced pseudo-styles
         * css/cssstyleselector.cpp:
             (checkOneSelector) Allow content on more elements
             (precomputeAttributeDependencies) Track attributes inside :not elements as well
@@ -158,7 +158,7 @@
             (RenderBox::calcAbsoluteHorizontalValues):
             (RenderBox::calcAbsoluteVertical):
             (RenderBox::calcAbsoluteVerticalValues):
-            (RenderBox::calcAbsoluteHorizontalReplaced): Handle tqreplaced case separately.
+            (RenderBox::calcAbsoluteHorizontalReplaced): Handle replaced case separately.
             (RenderBox::calcAbsoluteVerticalReplaced): ditto.
 
 2006-04-20  Allan Sandfeld Jensen <kde@carewolf.com>
@@ -209,7 +209,7 @@
         * misc/stringit.h (TokenizerQueue): a LIFO stack of TokenizerStrings
         * html/htmltokenizer.{h,cpp} (scriptHandler/write/notifyFinished): use a TokenizerQueue to store
         postponed fragments while executing/loading scripts.
-        (fixUpChar): unrelated - fill in missing tqunicode tqreplacements.
+        (fixUpChar): unrelated - fill in missing unicode replacements.
 
 2006-03-20  Dirk Mueller <mueller@kde.org>
 
@@ -225,27 +225,27 @@
 
 2006-03-07  Germain Garand  <germain@ebooksfrance.org>
 
-        Scope: retqlayout/tqrepaint/widget tqmasks fixes. Refine stacking context exploration. Optimise.
+        Scope: relayout/repaint/widget masks fixes. Refine stacking context exploration. Optimise.
 
-        * khtmlview.cpp (drawContents): use widget tqgeometry rather than the RenderWidget's rect (fixes widget borders not being updated)
+        * khtmlview.cpp (drawContents): use widget geometry rather than the RenderWidget's rect (fixes widget borders not being updated)
         Check if widget is in the dirty rect before doing any work.
 
-        * rendering/render_block.cpp (tqlayoutBlockChildren): I meant !child->isPositioned() here, not isPositioned(). No need to
-        dirty positioned children as this is handled by the containing block chain through tqlayoutPositionedObjects
-        (tqlayoutPositionedObjects): always retqlayout fixed objects.
+        * rendering/render_block.cpp (layoutBlockChildren): I meant !child->isPositioned() here, not isPositioned(). No need to
+        dirty positioned children as this is handled by the containing block chain through layoutPositionedObjects
+        (layoutPositionedObjects): always relayout fixed objects.
 
-        * rendering/render_canvas.cpp (tqlayout): check canvas dimensions and call tqlayoutBlock directly with retqlayoutChildren boolean.
+        * rendering/render_canvas.cpp (layout): check canvas dimensions and call layoutBlock directly with relayoutChildren boolean.
 
-        * rendering/render_layer.{h,cpp} (paintedRegion): constrain our tqshape to the visibleRect. Use convertToLayerCoords to get a correct
-        visibleFlowRegion (updateWidgetMasks): don't forget to update the tqmask if it reverts to none at all.
+        * rendering/render_layer.{h,cpp} (paintedRegion): constrain our shape to the visibleRect. Use convertToLayerCoords to get a correct
+        visibleFlowRegion (updateWidgetMasks): don't forget to update the mask if it reverts to none at all.
 
         * rendering/render_object.{h,cpp} (containingBlock): for relpos inlines, return the nearest block (skipping to next containingBlock gives
-        stalled tqlayout flags problems - #121653). (updateWidgetMasks): tqmask the content box, not the border box.
+        stalled layout flags problems - #121653). (updateWidgetMasks): mask the content box, not the border box.
         (enclosingStackingContext) new. Returns the layer defining current stacking context.
 
-        * rendering/render_tqreplaced.{h,cpp} (isKHTMLWidget): new flag for KHTML-proxied widgets.
-        (detach/resizeWidget/setQWidget/tqlayout/updateFromElement/slotWidgetDestructed/setStyle/paint): use the flag insead of strcmp's
-        Only allow !khtml widgets to register in the view (only those need tqmasking).
+        * rendering/render_replaced.{h,cpp} (isKHTMLWidget): new flag for KHTML-proxied widgets.
+        (detach/resizeWidget/setQWidget/layout/updateFromElement/slotWidgetDestructed/setStyle/paint): use the flag insead of strcmp's
+        Only allow !khtml widgets to register in the view (only those need masking).
 
 2006-03-05  Charles Samuels  <charles@kde.org>
 	* link not accessable with negative text-indent (#96275)
@@ -259,20 +259,20 @@
 
         get iframes, objects and some other overlaid widgets to obey their stacking context (#31121)
 
-        * khtmlview.cpp: tqmask widgets more precisely (i.e. allow layers to paint over overlaid widgets,
+        * khtmlview.cpp: mask widgets more precisely (i.e. allow layers to paint over overlaid widgets,
         when they ought to).
 
-        * rendering/render_canvas.{cpp,h}: update widget tqmasks after pos child tqlayout/positioning;
+        * rendering/render_canvas.{cpp,h}: update widget masks after pos child layout/positioning;
         set a boolean m_needsWidgetMasks to optimise for common case (where we have no such widgets).
 
-        * rendering/render_layer.{cpp,h} (updateWidgetMasks/paintedRegion):  build a rough tqmask for the positive Z order
-        childs. We'll apply that tqmask later to widgets that are under our aegis.
+        * rendering/render_layer.{cpp,h} (updateWidgetMasks/paintedRegion):  build a rough mask for the positive Z order
+        childs. We'll apply that mask later to widgets that are under our aegis.
 
-        * rendering/render_object.{cpp,h} (visibleFlowRegion): helper for calculation of broad region we want to tqmask in flows.
-        (updateWidgetMasks): walk our children looking for widgets suitable to tqmasking. Apply our enclosingLayer's tqmask,
+        * rendering/render_object.{cpp,h} (visibleFlowRegion): helper for calculation of broad region we want to mask in flows.
+        (updateWidgetMasks): walk our children looking for widgets suitable to masking. Apply our enclosingLayer's mask,
         transformis transformandi.
 
-        * rendering/render_tqreplaced.cpp: overlaid widgets must advertise their existence to the enclosing layer.
+        * rendering/render_replaced.cpp: overlaid widgets must advertise their existence to the enclosing layer.
 
 2006-03-01  Germain Garand  <germain@ebooksfrance.org>
 
@@ -295,11 +295,11 @@
 
 2006-02-28  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/render_block.cpp (tqlayoutBlockChildren): be more efficient with regard to positioned objects retqlayout.
+        * rendering/render_block.cpp (layoutBlockChildren): be more efficient with regard to positioned objects relayout.
         Merge WC margin-collapse regression fix (WC/#3508).
-        (tqlayoutPositionedObjects) Objects with staticX() need a retqlayout too.
-        * rendering/render_canvas.cpp (tqlayout): no need to retqlayout positioned objects here. This would mark entire branches of the tree
-        as needing a tqlayout, thus stalling update requests in those branches (#116626)
+        (layoutPositionedObjects) Objects with staticX() need a relayout too.
+        * rendering/render_canvas.cpp (layout): no need to relayout positioned objects here. This would mark entire branches of the tree
+        as needing a layout, thus stalling update requests in those branches (#116626)
 
 2006-01-14  Allan Sandfeld Jensen <kde@carewolf.com>
 
@@ -313,14 +313,14 @@
 
 2005-12-09  Germain Garand  <germain@ebooksfrance.org>
 
-        implement quirky HTML tqalignment ; introduce special float values
+        implement quirky HTML alignment ; introduce special float values
         -khtml-left/-khtml-right to this effect.
 
         * css/cssparser.cpp: ditto. Fix memory leak from Function struct deletion also.
         * css/cssstyleselector.cpp: ditto.
         * css/html4.css: set as default style for table[align="left/right"]
         * html/html_tableimpl.cpp (parseAttribute): remove setting of float property
-        * rendering/render_block{h,cpp}: quirky HTML tqalignment never clears, and never cause fafs to clear.
+        * rendering/render_block{h,cpp}: quirky HTML alignment never clears, and never cause fafs to clear.
           Only examine the last floating object on line, so as to match MSIE behaviour.
         * rendering/render_style.h: extra float enumeration values
         * css/css_renderstyledeclarationimpl.cpp (getPropertyCSSValue): adjust
@@ -345,19 +345,19 @@
 
         * rendering/render_table.{cpp,h}:
         had member booleans to hold whether flexing of cells in a row is
-        needed, and in the affirmative, whether we need to mark our anonymous childs for retqlayout (hence go one level deeper).
+        needed, and in the affirmative, whether we need to mark our anonymous childs for relayout (hence go one level deeper).
         Part of line 1394 comes from WebCore.
-        Also: don't allow negative offset in vertical tqalignment when content overflows ; matches MSIE better.
+        Also: don't allow negative offset in vertical alignment when content overflows ; matches MSIE better.
 
 2005-10-28  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/table_tqlayout.cpp (calcEffectiveWidth): do proportional distribution of overflowing minwidth
+        * rendering/table_layout.cpp (calcEffectiveWidth): do proportional distribution of overflowing minwidth
         when all cols are percent (#104156)
 
 2005-10-21  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/bidi.cpp (tqfindNextLineBreak): implement needed quirk for line breaking of
-        tqreplaced elements within table cells.
+        * rendering/bidi.cpp (findNextLineBreak): implement needed quirk for line breaking of
+        replaced elements within table cells.
         * rendering/render_block.cpp (calcInlineMinMaxWidth): ditto.
         Bugs #93745, #72457
 
@@ -397,7 +397,7 @@
 
         Port soft-hyphen support from WebCore
 
-        * rendering/bidi.cpp (tqfindNextLineBreak): main skipping/breaking logic
+        * rendering/bidi.cpp (findNextLineBreak): main skipping/breaking logic
 
         * rendering/render_text.{cpp,h} (calcMinMaxWidth): account for soft hyphen
 
@@ -416,7 +416,7 @@
 
 2005-10-07  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/bidi.cpp (tqfindNextLineBreak): integrate all positioned inlines in the lineboxes to get a correct static position
+        * rendering/bidi.cpp (findNextLineBreak): integrate all positioned inlines in the lineboxes to get a correct static position
         in initial whitespace. Use some midpoints voodoo to take care of whitespace.
 
         cf. unsorted/113527.html
@@ -442,7 +442,7 @@
         Implementation of real page-breaking algorithm respecting the CSS 2.1 specification.
 
         * khtmlview.cpp:
-        Do tqlayout for page-breaks before printing.
+        Do layout for page-breaks before printing.
         Use screen resolution as default instead of 72DPI.
         * css/html4.css: Add the print media default styles
         * rendering/render_style.*: Add RenderPageStyle as the style for the page-context. Not yet used.
@@ -454,12 +454,12 @@
         (deleteLastLineBox) new function to remove the last line (in order to redo it).
         * rendering/render_line.*:
         (removeFromLine) ditto
-        * rendering/bidi.cpp: New algorithm in tqlayoutInlineChildren for doing page-breaks at tqlayout-time,
+        * rendering/bidi.cpp: New algorithm in layoutInlineChildren for doing page-breaks at layout-time,
         and respecting orphans/widows CSS settings.
         * rendering/render_block.cpp:
         (makePageBreakAvoidBlocks) Function for collecting runs of page-break-after/before: avoid blocks, so
         they can be moved across page-breaks collectively.
-        (tqlayoutBlockChildren) New algorithm for doing page-breaks at tqlayout time,
+        (layoutBlockChildren) New algorithm for doing page-breaks at layout time,
         and respecting page-break-after/before/inside
         * rendering/render_table.cpp: Force page-breaks to happen inside cells and not between rows.
         (RenderTableSection::addSpaceAt) moves later table-rows down when one cell expands to handle a
@@ -494,7 +494,7 @@
 
 2005-08-02  Allan Sandfeld Jensen <kde@carewolf.com>
 
-        * rendering/render_block.{h,cpp}: Split tqlayoutBlockChildren into several auxilary functions.
+        * rendering/render_block.{h,cpp}: Split layoutBlockChildren into several auxilary functions.
 
 2005-07-26  Andreas Kling <kling@impul.se>
 
@@ -507,7 +507,7 @@
 2005-07-25  Andreas Kling <kling@impul.se>
 
         Make new ad filters have instant effect (either hide affected elements
-        tqreplace them with the "blocked" pixmap.)
+        replace them with the "blocked" pixmap.)
 
         * khtml_part.{cpp,h}: Added runAdFilters() function which is called from reparseConfiguration()
         * khtml_ext.cpp: Call KHTMLPart::reparseConfiguration() after adding new filters.
@@ -535,7 +535,7 @@
         vertical-align fixes
 
         * rendering/render_object.cpp (getVerticalPosition): block level
-        elements must ignore vertical tqalignment (#92118). For Length values, check the parent
+        elements must ignore vertical alignment (#92118). For Length values, check the parent
         too. Don't use the parent's position if it's top/bottom - it's waiting for
         our subtree's to complete! (cf. css/vertical-align.html)
 
@@ -721,7 +721,7 @@
         * khtmlview.cpp (dispatchKeyEvent): Don't send DOM keypress if
         the DOM keydown that precedes it was blocked by javascript, as in IE.
 
-        * rendering/render_tqreplaced.cpp (handleEvent): send Qt::KeyPress to the
+        * rendering/render_replaced.cpp (handleEvent): send Qt::KeyPress to the
         widget for DOM keypress and not DOM keydown to allow sites to block a key
         with onkeypress, #99749.
 
@@ -753,7 +753,7 @@
         * khtml_popupmenu.rc: ditto
         * khtml_settings.{cc,h}: Add adFilter settings and helper functions
         * html/htmlparser.cpp: Strip blocked IMG tags
-        * misc/loader.{cpp,h}: Return tqreplacement blocked images and refuse to load blocked scripts.
+        * misc/loader.{cpp,h}: Return replacement blocked images and refuse to load blocked scripts.
         * misc/blocked_icon.{cpp,png}: Image for above
         * xml/dom_docimpl.cpp: isURLAllowed returns false for blocked URL's
 
@@ -780,7 +780,7 @@
             - Make sure percentage min-height goes to 0 and not auto when the percentage does not apply.
         * renderer/render_table.cpp:
             - Make sure empty tables honor CSS-specified height in strict mode.
-            - Fix baseline tqalignment within table cells to use the bottom of empty blocks.
+            - Fix baseline alignment within table cells to use the bottom of empty blocks.
 
 2005-04-30  Harri Porten  <porten@kde.org>
 
@@ -810,10 +810,10 @@
 
 2005-04-06  Lubos Lunak <l.lunak@kde.org>
 
-        * khtmlview.{h,cpp}: Use KActions for type ahead tqfind.
+        * khtmlview.{h,cpp}: Use KActions for type ahead find.
         * khtml_part.{h,cpp}: ditto.
         * khtml_part.{h,cpp}: Add Find Previous action.
-        * khtml_part.cpp (tqfindTextNext): Fix changing direction while searching text.
+        * khtml_part.cpp (findTextNext): Fix changing direction while searching text.
 
 2005-04-05  Lubos Lunak <l.lunak@kde.org>
 
@@ -821,7 +821,7 @@
 
 2005-04-04  Lubos Lunak <l.lunak@kde.org>
 
-        * khtmlview.cpp: Don't use keyboard grab for type-ahead tqfind.
+        * khtmlview.cpp: Don't use keyboard grab for type-ahead find.
 
 2005-04-03  Allan Sandfeld Jensen <kde@carewolf.com>
 
@@ -839,15 +839,15 @@
         * ecma/kjs_dom.cpp (putValueProperty): scrollLeft/scrollTop need an
         up-to-date rendering.
 
-        * rendering/render_box.cpp (tqrepaintRectangle): apply scroll offset
-        to the tqrepaint rectangle (overflow != visible objects).
+        * rendering/render_box.cpp (repaintRectangle): apply scroll offset
+        to the repaint rectangle (overflow != visible objects).
 
-        * rendering/render_layer.{h,cpp} (tqrepaint): rename markForRepaint to
-        less equivocal tqrepaint.
+        * rendering/render_layer.{h,cpp} (repaint): rename markForRepaint to
+        less equivocal repaint.
         (updateLayerPositions): small fixes.
         (scrollToOffset): update our child layers (#102235)
 
-        * rendering/render_object.cpp (setStyle/tqrepaintDuringLayout): rename ditto.
+        * rendering/render_object.cpp (setStyle/repaintDuringLayout): rename ditto.
 
 2005-03-29  Germain Garand  <germain@ebooksfrance.org>
 
@@ -906,7 +906,7 @@
 
 2005-03-17  Leo Savernik  <l.savernik@aon.at>
 
-	* rendering/render_flow.cpp (tqrepaint): Calculate height, do not simply
+	* rendering/render_flow.cpp (repaint): Calculate height, do not simply
 	use the bottom overflow of the root line box.
 
 2005-03-16  George Staikos  <staikos@kde.org>
@@ -941,7 +941,7 @@
 
 2005-03-04  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/render_block.cpp (tqlayoutBlockChildren): percent width
+        * rendering/render_block.cpp (layoutBlockChildren): percent width
         children behaves like fixed width children with regard to float
         clearing. In both cases we need to check if current line as enough width to
         hold the (flowing-around-float) child. If not, we need to clear.
@@ -980,7 +980,7 @@
 2005-02-28  David Faure  <faure@kde.org>
 
         * html/html_formimpl.cpp (setName): Also set ATTR_NAME so that
-        form.foo tqfinds the input element. Testcase forms/input_setName.html.
+        form.foo finds the input element. Testcase forms/input_setName.html.
 
 2005-02-27  Leo Savernik  <l.savernik@aon.at>
 
@@ -1002,14 +1002,14 @@
         needs to use QWidget::focusNextPrevChild.
         (defaultEventHandler): only handle key tab if it wasn't accepted by the widget (#58247)
 
-        * rendering/render_tqreplaced.cpp (RenderWidget::handleEvent): return
+        * rendering/render_replaced.cpp (RenderWidget::handleEvent): return
         something meaningful.
 
 2005-02-18  Germain Garand  <germain@ebooksfrance.org>
 
-        scope: table percentage height, tqreplaced element height calculation.
+        scope: table percentage height, replaced element height calculation.
 
-        * rendering/render_body.cpp (tqlayout): pre-calculate our margins in
+        * rendering/render_body.cpp (layout): pre-calculate our margins in
         quirk mode, to be able to compute calcPercentageHeight in a const way.
 
         * rendering/render_box.{h,cpp}
@@ -1020,7 +1020,7 @@
         Looking for available height is an IE quirk and is thusly only done in quirk mode now.
         When it is not computable, it behaves like 'auto', so use the intrinsicHeight (cf.10.6.2).
 
-        * rendering/render_table.cpp (tqlayoutRows): fix vertical tqalignment within
+        * rendering/render_table.cpp (layoutRows): fix vertical alignment within
         percentage driven cells. Subtract the cell's PB from cellPercentageHeight.
 
 2005-02-18  Leo Savernik  <l.savernik@aon.at>
@@ -1066,14 +1066,14 @@
         * rendering/counter_tree.{h,cpp}: Adds a dynamic counter-tree to keep counter values up-to-date
         * rendering/render_generated.{h,cpp}: New renderCounter class to renders counters as text
         * rendering/render_container.cpp: Content now only inherits style from the pseudo-container rather than use an exact duplicate.
-        * rendering/render_object.cpp: Add new functions to tqfind and attach counter-tree nodes.
+        * rendering/render_object.cpp: Add new functions to find and attach counter-tree nodes.
         * rendering/render_style.cpp: New counter content and counter acts
         * rendering/render_list.cpp: Use the new counters to count lists
 
 2005-02-14  Leo Savernik  <l.savernik@aon.at>
 
-	* rendering/render_flow.cpp (tqrepaint): Only include top and bottom
-	overflow while not retqlayouting, otherwise root inline box may not be
+	* rendering/render_flow.cpp (repaint): Only include top and bottom
+	overflow while not relayouting, otherwise root inline box may not be
 	available yet.
 
 2005-02-14  David Faure  <faure@kde.org>
@@ -1087,15 +1087,15 @@
 	* rendering/render_block.{cpp,h} (paintObject): Added parameter to only
 	paint the block's outline on demand.
 
-	* rendering/render_flow.cpp (tqrepaint): Fix tqrepaint rectangle to also
+	* rendering/render_flow.cpp (repaint): Fix repaint rectangle to also
 	encompass the top and bottom overflow of the root inline box.
 
 	* rendering/render_line.{cpp,h} (InlineBox::root): Ported over from
 	WebCore. Returns the root inline box of this box.
 
-	* rendering/render_table.{cpp,h} (RenderTableCell::tqrepaintRectangle):
+	* rendering/render_table.{cpp,h} (RenderTableCell::repaintRectangle):
 	Use full height of table cell, otherwise outline won't be fully
-	tqrepainted.
+	repainted.
 	(RenderTableCell::paint): Paint outline of table cells explicitly,
 	and keep the underlying render block from painting it itself.
 	(RenderTableCell::paintObject): Removed. Nowhere used anymore.
@@ -1144,7 +1144,7 @@
 	the according RenderTableRows, and call their paintRow routine.
 	Fixed overflow size of damage rectangle.
 	(RenderTableRow::paintRow): Added. Can't use paint() because
-	RenderTableRow is not a RenderBox, and hence doesn't store tqlayout
+	RenderTableRow is not a RenderBox, and hence doesn't store layout
 	information.
 	(RenderTableCell::paint): Added painting of the table cell's outline
 	herein instead in RenderBlock to encompass the extra table cell top
@@ -1157,7 +1157,7 @@
         Blockquote and DL don't by any stretch of the mind, so clear this property for those.
         Also, don't center fieldset.
 
-        * rendering/render_block.cpp (tqlayoutBlock): make flowAroundFloats encompass their own floats
+        * rendering/render_block.cpp (layoutBlock): make flowAroundFloats encompass their own floats
         (#85984).
 
 2005-02-02  Leo Savernik  <l.savernik@aon.at>
@@ -1200,7 +1200,7 @@
 
 2005-01-25  Germain Garand  <germain@ebooksfrance.org>
 
-        * khtmlview.cpp (viewportWheelEvent): discard wheel events occuring before the first retqlayout (avoids blanking the view).
+        * khtmlview.cpp (viewportWheelEvent): discard wheel events occuring before the first relayout (avoids blanking the view).
          Also support Horizontal wheel events (needs qt-copy/patch #61).
 
 2005-01-25  Germain Garand  <germain@ebooksfrance.org>
@@ -1219,7 +1219,7 @@
 
 2005-01-12  Allan Sandfeld Jensen <kde@carewolf.com>
 
-        * css/cssstyleselector.cpp: Match :tqcontains() against innerText on HTMLElements
+        * css/cssstyleselector.cpp: Match :contains() against innerText on HTMLElements
 
 2005-01-11  Leo Savernik  <l.savernik@aon.at>
 
@@ -1304,39 +1304,39 @@
 
 2004-12-12  Germain Garand  <germain@ebooksfrance.org>
 
-        Pragmatic incremental tqrepaints: be accurate on layered objects, conservative on
-        objects in normal flow. Fix performance issues on repeated retqlayouts (#53114)
+        Pragmatic incremental repaints: be accurate on layered objects, conservative on
+        objects in normal flow. Fix performance issues on repeated relayouts (#53114)
 
         * khtmlview.{cpp,h}: add needsFullRepaint flag, mostly similar to WebCore's.
-        (tqlayout): don't tqrepaint the canvas systematically anymore.
+        (layout): don't repaint the canvas systematically anymore.
 
-        * rendering/bidi.cpp (tqlayoutInlineChildren): schedule a tqrepaint on
+        * rendering/bidi.cpp (layoutInlineChildren): schedule a repaint on
         old rectangle and future rectangle, if marked dirty.
 
-        * rendering/render_block.cpp (tqlayoutBlock/tqlayoutBlockChildren/tqlayoutPositionedObjects): ditto.
+        * rendering/render_block.cpp (layoutBlock/layoutBlockChildren/layoutPositionedObjects): ditto.
 
-        * rendering/render_table.cpp (tqlayout): ditto.
+        * rendering/render_table.cpp (layout): ditto.
 
         * rendering/render_box.cpp (calcAbsoluteHorizontal): no more updateLayerPosition() here.
         Layers positioning now happen in a separate pass.
 
         * rendering/render_canvas.{cpp,h}
-        (needsFullRepaint): new - used to determine if we need to do incremental tqrepaint at all. Don't waste time if the whole canvas is dirty.
-        (tqrepaintViewRectangle): new - schedule a tqrepaint in absolute coordinates.
-        (deferredRepaint): new - append argument to a list of objects needing a post-tqlayout tqrepaint.
-        (scheduleDeferredRepaints): new - tqrepaint all objects in list described above, at the end of tqlayout.
+        (needsFullRepaint): new - used to determine if we need to do incremental repaint at all. Don't waste time if the whole canvas is dirty.
+        (repaintViewRectangle): new - schedule a repaint in absolute coordinates.
+        (deferredRepaint): new - append argument to a list of objects needing a post-layout repaint.
+        (scheduleDeferredRepaints): new - repaint all objects in list described above, at the end of layout.
 
-        * rendering/render_layer.{cpp,h} (markForRepaint): new - schedule a tqrepaint of a layer, calculating its visible rectangle,
-        and optionnally marking it as needing a post-tqlayout tqrepaint.
+        * rendering/render_layer.{cpp,h} (markForRepaint): new - schedule a repaint of a layer, calculating its visible rectangle,
+        and optionnally marking it as needing a post-layout repaint.
         (updateLayerPositions): merged++ from WebCore. Position layers. Repaint layers marked by the above.
         (calculateClipRects/calculateRects): no more updateLayerPosition call there.
 
         * rendering/render_object.cpp
-        (setNeedsLayout): when marking for tqlayout, also mark the formatting context for tqrepaint (m_markedForRepaint boolean)
+        (setNeedsLayout): when marking for layout, also mark the formatting context for repaint (m_markedForRepaint boolean)
         (setChildNeedsLayout): merge WebCore guard against multiple dirtying.
         (setStyle): based on the Style diff, decide whether to dirty only the current formatting context, or also the parent's.
         (dirtyFormattingContext): new.
-        (tqrepaintDuringLayout): new - schedule a pre/post-tqlayout tqrepaint on the object, if it makes sense.
+        (repaintDuringLayout): new - schedule a pre/post-layout repaint on the object, if it makes sense.
 
 2004-12-12  Germain Garand  <germain@ebooksfrance.org>
 
@@ -1411,9 +1411,9 @@
 
 2004-11-27  Germain Garand  <germain@ebooksfrance.org>
 
-        merge WebCore differences in logic for Auto table tqlayout
+        merge WebCore differences in logic for Auto table layout
 
-        * rendering/table_tqlayout.cpp (calcEffectiveWidth/tqlayout):
+        * rendering/table_layout.cpp (calcEffectiveWidth/layout):
         distribute remaining width starting with fixed rather than percent (#88104).
 
 2004-11-26  Germain Garand  <germain@ebooksfrance.org>
@@ -1432,17 +1432,17 @@
         The later because the not-function is unique in its parsing.
         * css/tokenizer.cpp: Manually merge output from flex :(
         * css/parser.y: Update parsing of pseudo-functions.
-        Also enables correct parsing of :lang and :tqcontains.
+        Also enables correct parsing of :lang and :contains.
         * css/css_base.{h,cpp}: Add new pseudoselectors
         * css/cssstyleselector.cpp: Implement new selectors
 
 2004-11-22  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/bidi.cpp (tqlayoutInlineChildren): for elements with some kind of
+        * rendering/bidi.cpp (layoutInlineChildren): for elements with some kind of
         scrolling overflow and a variable height, include the scrollbar height in
-        calculations to avoid tqmasking content (#89136).
+        calculations to avoid masking content (#89136).
 
-        * rendering/render_block.cpp (tqlayoutBlock/tqlayoutBlockChildren): ditto.
+        * rendering/render_block.cpp (layoutBlock/layoutBlockChildren): ditto.
 
         * rendering/render_box.cpp (contentWidth/contentHeight): subtract scrollbars
         height/width when applicable.
@@ -1457,7 +1457,7 @@
         * css/html4.css: Make -khtml-native default border-style for form-widgets
         * render/render_style.h: Add BNATIVE
         * render/render_object.cpp: Treat BNATIVE like BNONE
-        * render/render_tqreplaced.cpp: Remove native, and paint CSS border when allowed
+        * render/render_replaced.cpp: Remove native, and paint CSS border when allowed
 
 2004-11-21  Germain Garand  <germain@ebooksfrance.org>
 
@@ -1465,8 +1465,8 @@
 
         * css/html4.css: make fieldset -khtml-around-floats (#92979)
 
-        * rendering/render_block.cpp (tqlayoutBlockChildren): cleanup float/flowAroundFloats
-        logic. Merges: add better RTL tqlayouting of fAFs.
+        * rendering/render_block.cpp (layoutBlockChildren): cleanup float/flowAroundFloats
+        logic. Merges: add better RTL layouting of fAFs.
         (lineWidth): guard against negative values
         (clearFloats): don't copy floats if element defines a new block
         formatting context (#93511)
@@ -1480,7 +1480,7 @@
         * rendering/render_box.cpp (calcWidth): use containingBlockWidth
 
         * rendering/render_object.cpp (isHR): new. Evil but useful for quirkmode (cf. usesLineWidth).
-        (flowAroundFloats): add tqreplaced and overflowClip elements
+        (flowAroundFloats): add replaced and overflowClip elements
         (usesLineWidth): adapt to above.
 
         * rendering/render_table.cpp (calcWidth): style()->flowAroundFloats => flowAroundFloats()
@@ -1500,15 +1500,15 @@
 
 2004-11-16  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/render_tqreplaced.{cpp,h} (cancelPendingResize): allow
+        * rendering/render_replaced.{cpp,h} (cancelPendingResize): allow
         canceling of scheduled widget resizes, to avoid flicker when we
-        had to perform temporary tqlayouts.
+        had to perform temporary layouts.
 
-        * rendering/render_table.cpp (calcRowHeight): displace resetting tqlayout of cells with
+        * rendering/render_table.cpp (calcRowHeight): displace resetting layout of cells with
         percent children here and mark those dirty, or we might get zero-height widgets on resize
         (cf. map24.com)
-        (tqlayout): ditto.
-        (tqlayoutRows): cancel widget resizes from temporary tqlayouts.
+        (layout): ditto.
+        (layoutRows): cancel widget resizes from temporary layouts.
 
 2004-11-16  Stephan Kulow  <coolo@kde.org>
 
@@ -1556,7 +1556,7 @@
 2004-11-05  Germain Garand  <germain@ebooksfrance.org>
 
         * khtml_part.cpp (closeURL/slotData/restoreState): avoid triggering
-        full tqrepaints of the view before the first tqlayout is done.
+        full repaints of the view before the first layout is done.
 
 2004-11-05  Germain Garand  <germain@ebooksfrance.com>
 
@@ -1571,12 +1571,12 @@
 
 2004-11-03  Germain Garand  <germain@ebooksfrance.com>
 
-        * khtmlview.cpp (slotScrollBarMoved): make sure we are tqlayouted before
+        * khtmlview.cpp (slotScrollBarMoved): make sure we are layouted before
         scrolling if we are still loading (#51473)
 
 2004-11-02  Stephan Kulow  <coolo@kde.org>
 
-        * rendering/render_tqreplaced.cpp (setStyle): set hidden widgets to invisible
+        * rendering/render_replaced.cpp (setStyle): set hidden widgets to invisible
 
         * xml/dom_docimpl.cpp (recalcStyleSelector): avoid invalid casts on XML documents
 
@@ -1588,7 +1588,7 @@
 
 2004-11-01  Sandro Giessl <sandro@giessl.com>
 
-        * rendering/render_tqreplaced.cpp (copyWidget): don't fill the
+        * rendering/render_replaced.cpp (copyWidget): don't fill the
 	background of QFrames. they paint their own background now
 
 2004-10-30  Stephan Kulow  <coolo@kde.org>
@@ -1684,13 +1684,13 @@
         * css/cssstyleselector.cpp (adjustRenderStyle): remember our original display
         * rendering/bidi.cpp (appendRun): include positioned objects with static X/Y,
         now that we use those.
-        (tqfindNextLineBreak): adjust static position
+        (findNextLineBreak): adjust static position
 
-        * rendering/render_block.cpp (tqlayoutBlockChildren): ditto.
+        * rendering/render_block.cpp (layoutBlockChildren): ditto.
 
         * rendering/render_box.cpp (containingBlockWidth): use usesLineWidth
         (position): activate static position logic
-        (calcAbsoluteHorizontal): tqreplace static position calculation
+        (calcAbsoluteHorizontal): replace static position calculation
         (calcAbsoluteVertical): ditto.
 
         * rendering/render_object.cpp (removeChild): fix typo
@@ -1704,7 +1704,7 @@
 
 2004-10-18  Allan Sandfeld Jensen <kde@carewolf.com>
 
-        * rendering/render_table.cpp: Merge tqlayout fixes from Webcore
+        * rendering/render_table.cpp: Merge layout fixes from Webcore
 
 2004-10-17  Stephan Kulow  <coolo@kde.org>
 
@@ -1731,14 +1731,14 @@
         * html/html_formimpl.cpp (defaultEventHandler): propagate events to
         QScrollView
 
-        * khtmlview.{cpp,h}: QScrollview needs fast tqrepaints. Fix
+        * khtmlview.{cpp,h}: QScrollview needs fast repaints. Fix
         background color of QFrames.
 
         * rendering/render_form.cpp (createListBox/TextAreaWidget):
         make those widgets z-ordered as well.
 
-        * rendering/render_tqreplaced.cpp (paintWidget): optimize painting by
-        avoiding unnecessary background tqrepaints and by using a shared
+        * rendering/render_replaced.cpp (paintWidget): optimize painting by
+        avoiding unnecessary background repaints and by using a shared
         paint buffer.
 
 2004-10-15  Germain Garand  <germain@ebooksfrance.org>
@@ -1748,7 +1748,7 @@
         * rendering/bidi.cpp: remove checks for display: compact,
         not needed anymore.
 
-        * rendering/render_block.cpp (tqlayoutBlockChildren):
+        * rendering/render_block.cpp (layoutBlockChildren):
         simpler implementation for compact display: do not insert the
         compact child within the next block anymore.
         Solves lot of problems with host blocks having non-inline children.
@@ -1767,7 +1767,7 @@
         ("htmlCompat") lookup of tags and attributes (but not in CSS parser). (#86446)
 
 2004-10-14  Allan Sandfeld Jensen <kde@carewolf.com>
-        * rendering/*.*: WebCore merge/port of tqlayouted->needsLayout
+        * rendering/*.*: WebCore merge/port of layouted->needsLayout
 
 2004-10-11  David Faure  <faure@kde.org>
 
@@ -1793,7 +1793,7 @@
         setStyle/close. Better drilling logic. Use RenderTextFragment to
         correctly handle text-transform on first-letter(#76078).
         (addChildToFlow): ditto. fix display: block on pseudo-elements (#90917)
-        (tqlayoutBlockChildren): only clear if floats actually changed our
+        (layoutBlockChildren): only clear if floats actually changed our
         height.
         * rendering/render_object.h (node): accessor to m_node
         * rendering/render_text.{cpp,h}: merge RenderTextFragment class
@@ -1867,7 +1867,7 @@
         (HTMLTextAreaElementImpl::setValue): Mark element as initialized after
         setting.
         * render_form.cpp (RenderTextArea::setStyle):
-        Block signals on call to QTextEdit::tqsetAlignment. Otherwise, a bogus
+        Block signals on call to QTextEdit::setAlignment. Otherwise, a bogus
         textChanged signal is emitted.
 
 2004-08-27  Germain Garand  <germain@ebooksfrance.org>
@@ -1881,7 +1881,7 @@
         (gotoAnchor): "top" and "" anchors mean top of document.
 
         (checkCompleted): entrust the view to emit completed on our behalf
-        after any pending tqlayout/tqrepaint is done.
+        after any pending layout/repaint is done.
 
         * khtmlview.{cpp,h}: ditto
 
@@ -1915,19 +1915,19 @@
 
 2004-08-18  Leo Savernik  <l.savernik@aon.at>
 
-	* rendering/render_block.cpp (tqlayoutBlock, tqlayoutBlockChildren,
-	tqlayoutPositionedObject): Ensure that m_overflowWidth/m_overflowHeight
+	* rendering/render_block.cpp (layoutBlock, layoutBlockChildren,
+	layoutPositionedObject): Ensure that m_overflowWidth/m_overflowHeight
 	get updated properly to include relatively positioned
 	elements, but to exclude the overflow-area of clipped children.
 
-	* rendering/render_box.cpp (tqrepaint): Removed superfluous null ptr check.
+	* rendering/render_box.cpp (repaint): Removed superfluous null ptr check.
 	Use effectiveWidth/Height instead of overflowWidth/Height.
 
 	* rendering/render_canvas.cpp (docHeight): Fixed superfluous vertical
 	scrollbars on clipped children.
 	(docWidth): Fixed superfluous horizontal scrollbars on clipped children.
 
-	* rendering/render_flow.cpp (tqrepaint):
+	* rendering/render_flow.cpp (repaint):
 	Use effectiveWidth/Height instead of overflowWidth/Height.
 
 	* rendering/render_object.h: Added effectiveWidth/Height.
@@ -1935,7 +1935,7 @@
 
 2004-08-05  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/render_block.cpp (tqlayoutBlockChildren): when positionning floats,
+        * rendering/render_block.cpp (layoutBlockChildren): when positionning floats,
         use the margin tracking variables, and not the prevFlow -there might be
         self-collapsing blocks in between (#85150).
         (calcMinMaxWidth): better calculation merged from WebCore.  Fixes a few testcases.
@@ -1944,7 +1944,7 @@
         they are virtuals reimplemented for RenderBlock.
 
         * rendering/render_object.cpp (createObject): do not set the style before
-        the renderer is assigned to a node. Fixes Marquee initial tqlayout
+        the renderer is assigned to a node. Fixes Marquee initial layout
         (unsorted/RESOLVED-57087-1342.html) failing because of 'element()->renderer() == this' checks.
 
         * xml/dom_elementimpl.cpp (attach): ditto
@@ -1952,10 +1952,10 @@
 2004-08-04  Germain Garand <germain@ebooksfrance.org>
 
 	* khtmlview.cpp (resizeEvent): take care, in case we are shrinking,
-        not to pass past the content limits yet. Next tqlayout will calculate
+        not to pass past the content limits yet. Next layout will calculate
         if we positively need scrollbars or not (#84798).
 
-        * rendering/render_canvas.cpp (tqlayout): remove scrollbar flickering turnarounds.
+        * rendering/render_canvas.cpp (layout): remove scrollbar flickering turnarounds.
         instead, account for a scrollbar hysteresis level when sizing the content (#61730).
 
 2004-07-30  Jean-Baptiste Mardelle <bj@altern.org>
@@ -2025,8 +2025,8 @@
 
         * rendering/render_object.cpp:
         (getVerticalPosition): fix inverted logic. cf.unsorted/74399.html
-        (lineHeight/baselinePosition): inline-blocks behaves like tqreplaced elements
-        only after they are tqlayouted.
+        (lineHeight/baselinePosition): inline-blocks behaves like replaced elements
+        only after they are layouted.
 
         * rendering/render_table.h (position): remove empty reimplementation:
         inline-tables need positioning. cf.webcore/fast/inline-block/001.html
@@ -2053,8 +2053,8 @@
         * rendering/render_block.cpp:
         (setStyle): do not overwrite inline status
         (makeChildrenNonInline): change assert
-        (tqlayoutBlock): account for inline-blocks
-        (tqlayoutBlockChildren): ditto
+        (layoutBlock): account for inline-blocks
+        (layoutBlockChildren): ditto
         (clearFloats): ditto. bail out.
 
         * rendering/render_box.cpp:
@@ -2062,8 +2062,8 @@
         (calcHeight): fix logic
 
         * rendering/render_form.cpp:
-        (tqlayoutLegend): merges from WebCore-125
-        (tqfindLegend): ditto
+        (layoutLegend): merges from WebCore-125
+        (findLegend): ditto
         (paintBoxDecorations): ditto
         (setStyle): cf.webcore/fast/forms/007.html
 
@@ -2073,7 +2073,7 @@
 
         * rendering/bidi.cpp (Bidinext): simplified logic. Do not return each
         InlineFlow twice.
-        (tqlayoutInlineChildren): clear InlineBoxes on retqlayout.
+        (layoutInlineChildren): clear InlineBoxes on relayout.
 
         * rendering/render_object.{cpp,h}:
         (deleteInlineBoxes): new virtual method.
@@ -2084,7 +2084,7 @@
         * rendering/render_flow.{cpp,h}:
         (createInlineBox/deleteInlineBoxes): ditto.
 
-        * rendering/render_tqreplaced.cpp (detach): call deleteLineBoxes
+        * rendering/render_replaced.cpp (detach): call deleteLineBoxes
 
         * rendering/render_text.{cpp,h} (deleteInlineBoxes): reimplemented, replacing
         deleteTextBoxes
@@ -2116,7 +2116,7 @@
 	* htmlattrs.{c,h}: Regenerated.
 	* htmlattrs.in: Added behavior, direction, loop, scrollamount, scrolldelay,
 	truespeed attribute keywords.
-	* rendering/bidi.cpp: (RenderBlock::tqfindNextLineBreak): marquee-related extensions.
+	* rendering/bidi.cpp: (RenderBlock::findNextLineBreak): marquee-related extensions.
 	* rendering/render_block.{cpp,h}: Updated lowestPosition, rightmostPosition, added
 	leftmostPosition.
 	* rendering/render_box.{cpp,h}: Updated lowestPosition, rightmostPosition, added
@@ -2198,7 +2198,7 @@
 
         * html/htmltokenizer.cpp (parseEntity): Fix to make 8-character
         hexadecimal entities work in khtml from Darin Adler. Testcase at
-        http://www.alanwood.net/tqunicode/deseret.html
+        http://www.alanwood.net/unicode/deseret.html
 
 2004-06-06  Zack Rusin  <zack@kde.org>
 
@@ -2362,7 +2362,7 @@
 
 	* rendering/render_text.h: Merged inlineTextBoxes function, needed by
 	firstRunAt, lastRunAt.
-	(tqfindInlineTextBox): Make it public.
+	(findInlineTextBox): Make it public.
 
 2004-04-15  Leo Savernik  <l.savernik@aon.at>
 
@@ -2385,7 +2385,7 @@
 	flags to denote outside positions.
 	Add RenderObject::isRenderReplaced.
 
-	* rendering/render_tqreplaced.h: Add RenderReplaced::isRenderReplaced
+	* rendering/render_replaced.h: Add RenderReplaced::isRenderReplaced
 	returning true.
 
 	* rendering/render_text.{cpp,h}: (RenderText::caretPos) Handle flags.
@@ -2416,14 +2416,14 @@
 	* khtml_part.cpp/.h: if text in a link is highlighted, the link now receives
 	focus.
 
-	* khtmlview.cpp: made type-ahead tqfind more aggressive by grabbing the keyboard
+	* khtmlview.cpp: made type-ahead find more aggressive by grabbing the keyboard
 	when active, this way it temporarily overrules single-letter shortcuts as seen
 	in KMail. Note it immediately releases the keyboard when it looses focus.
 
 2004-03-20  Arend van Beelen jr. <arend@auton.nl>
 	* khtml_part.cpp/.h: finished new searching API.
 
-	* khtmlview.cpp/.h: implemented type-ahead tqfind (#51259).
+	* khtmlview.cpp/.h: implemented type-ahead find (#51259).
 
 2004-03-21  Dirk Mueller  <mueller@kde.org>
 
@@ -2459,10 +2459,10 @@
 	* html/html_documentimpl.cpp (determineParseMode): treat xhtml transitional
 	that way (#76449).
 
-	* rendering/bidi.cpp (tqfindNextLineBreak): make sure we move
-	tqreplaced elements, that don't fit on a line below the floats (#74609).
+	* rendering/bidi.cpp (findNextLineBreak): make sure we move
+	replaced elements, that don't fit on a line below the floats (#74609).
 
-	* rendering/render_tqreplaced.cpp (calcMinMaxWidth): respect
+	* rendering/render_replaced.cpp (calcMinMaxWidth): respect
 	padding and borders (#65788).
 
 	* rendering/render_form.h (RenderFormElement): make sure we never
@@ -2477,8 +2477,8 @@
 
 2004-02-28  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/render_block.cpp (tqlayoutBlockChildren):
-        - displace the check for if we need to retqlayout our childs
+        * rendering/render_block.cpp (layoutBlockChildren):
+        - displace the check for if we need to relayout our childs
         because of a float. It was outside of loop (#71445)
         - remove check for floatBottom() > m_y has it seems outdated.
 
@@ -2497,7 +2497,7 @@
 	* misc/htmlattrs.h: don't export getAttrName symbol.
 
 	* rendering/render_object.h (class RenderObject): move background
-	tqrepaint handling over here, since TableSections don't inherit RenderBox,
+	repaint handling over here, since TableSections don't inherit RenderBox,
 	but still have a background.
 
 	* khtml_settings.cc (init)/html4.css: MediumFontSize up to 12. Form elements
@@ -2512,7 +2512,7 @@
 	to KEYUP/DOWN_EVENT. Add events needed for XMLHttpRequest.
 
 	* rendering/render_object.h (class RenderObject): introduce a PaintInfo
-	struct that tqcontains the information necessary for all those paint..() methods.
+	struct that contains the information necessary for all those paint..() methods.
 	Requires much less parameters to pass and is therefore faster. While being
 	at it, eliminate the unnecessary virtual method paintObject.
 
@@ -2620,7 +2620,7 @@
         (Bidinext): merge skipInline bool to avoid leak.
         (RenderBlock::bidiReorderLine): handle whitespace count through
         category separator_Space
-        (RenderBlock::tqfindNextLineBreak): account for empty InlineFlow
+        (RenderBlock::findNextLineBreak): account for empty InlineFlow
 
         * rendering/font.cpp (drawText, width): whitespace handling
 
@@ -2635,7 +2635,7 @@
         * rendering/render_object.cpp (offsetLeft/offsetTop): adjust
         (hasStaticX/hasStaticY): merged non-virtual methods
 
-        * rendering/render_tqreplaced.cpp (position): do not add margin anymore
+        * rendering/render_replaced.cpp (position): do not add margin anymore
 
         * rendering/render_text.cpp: whitespace handling. No more p/b/m.
 
@@ -2718,11 +2718,11 @@
 	state machine goes out of sync.
 
 	* rendering/render_image.cpp: avoid shoot-out effect when neither oimage nor
-	image are fully loaded. do a tqrepaint when the new image finished loading, so
+	image are fully loaded. do a repaint when the new image finished loading, so
 	that it actually updates. avoid reloading images on news.google.com on hover.
 
-	* khtmlview.cpp (scheduleRepaint): make scheduling not starvating tqrepaints.
-	Fix tqrepainting logic to optimize for reduced X server load and minimum CPU
+	* khtmlview.cpp (scheduleRepaint): make scheduling not starvating repaints.
+	Fix repainting logic to optimize for reduced X server load and minimum CPU
 	usage in traversing the render tree (#72575).
 
 2004-01-25  Dirk Mueller  <mueller@kde.org>
@@ -2738,7 +2738,7 @@
 	* html/html_objectimpl.cpp (renderAlternative): give the alternative rendering
 	some time to avoid ugly deletion races.
 
-	* rendering/render_canvas.cpp (tqlayout): don't recurse when printing (#72775).
+	* rendering/render_canvas.cpp (layout): don't recurse when printing (#72775).
 
 	* rendering/render_image.cpp (setPixmap): handle cases when
 	we're not inserted in the tree yet, but the image is already loaded
@@ -2783,7 +2783,7 @@
 	done by setNamedItem
 
 	* xml/dom_elementimpl.cpp (setNamedItem): if attribute exists already,
-	return it, to fix DOMTS-Core-level1 test hc_elementtqreplaceattributewithself
+	return it, to fix DOMTS-Core-level1 test hc_elementreplaceattributewithself
 
 2004-01-21  Leo Savernik <l.savernik@aon.at>
 
@@ -2797,7 +2797,7 @@
 
 2004-01-21  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/render_block.cpp (tqlayoutBlockChildren): use maxTopMargin
+        * rendering/render_block.cpp (layoutBlockChildren): use maxTopMargin
         again, for correct margin-top determination (#67527)
 
 2004-01-20  Dirk Mueller  <mueller@kde.org>
@@ -2855,7 +2855,7 @@
 2004-01-15  Lars Knoll <knoll@kde.org>
 
 	* rendering/render_table.cpp: set overflowWidth to width
-	when tqlayouting (#72420)
+	when layouting (#72420)
 	* xml/dom2_eventsimpl.cpp rendering/render_block.cpp
 	nodeAtPoint() should always use contents coordinates.
 
@@ -2870,8 +2870,8 @@
 
 2004-01-13  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/render_canvas.cpp (tqlayout):
-        force scrollbar visibility status while tqlayouting
+        * rendering/render_canvas.cpp (layout):
+        force scrollbar visibility status while layouting
         to avoid endless cycles (#69613)
 
 2004-01-13  Dirk Mueller  <mueller@kde.org>
@@ -2931,7 +2931,7 @@
 	down the machine with large images
 	(try http://www.parisc-linux.org/~willy/kde/graph.jpg)
 
-	* rendering/render_image.cpp (tqlayout): ugh, major stupidity. don't rescale large
+	* rendering/render_image.cpp (layout): ugh, major stupidity. don't rescale large
 	images if nobody explicitely asked for it. makes loading of very large images
 	quite a bit faster.
 
@@ -2943,7 +2943,7 @@
 
 2004-01-09  Dirk Mueller  <mueller@kde.org>
 
-	* rendering/render_tqreplaced.cpp (eventFilter): readd the wheel event handling
+	* rendering/render_replaced.cpp (eventFilter): readd the wheel event handling
 	which allows scrolling of the page again. Thanks a lot for just removing it. (#45180)
 
 
@@ -2979,7 +2979,7 @@
 
 2003-12-10  Germain Garand  <germain@ebooksfrance.org>
 
-        * rendering/render_tqreplaced.cpp (updateFromElement): don't use setEraseColor for __khtml
+        * rendering/render_replaced.cpp (updateFromElement): don't use setEraseColor for __khtml
         widgets as it changes the background mode and induces flicker (#69130)
         (copyWidget): retrieve background color from the widget's palette.
 
@@ -3005,7 +3005,7 @@
 	that dispatchKeyEvent returns defaultHandled || defaultPrevented.
 	* dom/dom_node.cpp (dispatchEvent): Return !defaultPrevented as mandated by
 	the DOM, now that NodeImpl doesn't do it anymore.
-	* rendering/render_tqreplaced.cpp (eventFilter): Adapted to new logic
+	* rendering/render_replaced.cpp (eventFilter): Adapted to new logic
 	* khtmlview.cpp (dispatchKeyEventHelper): Adapted to new logic
 
 2003-12-05  Stephan Kulow  <coolo@kde.org>
@@ -3014,7 +3014,7 @@
 
 2003-12-05  Lubos Lunak  <l.lunak@kde.org>
 
-	* khtmlview.cpp, xml/dom2_eventsimpl.*, xml/dom_nodeimpl.*, rendering/render_tqreplaced.cpp :
+	* khtmlview.cpp, xml/dom2_eventsimpl.*, xml/dom_nodeimpl.*, rendering/render_replaced.cpp :
             fix mapping between Qt and DOM key events
 
 2003-12-05  Germain Garand  <germain@ebooksfrance.org>
@@ -3032,7 +3032,7 @@
 
 2003-12-03  Stephan Kulow  <coolo@kde.org>
 
-	* css/html4.css: define default text-tqalignments for input fields to avoid
+	* css/html4.css: define default text-alignments for input fields to avoid
 	problems with inherited attributes
 
 2003-12-02  Stephan Kulow  <coolo@kde.org>
@@ -3055,7 +3055,7 @@
 	(#65610)
 
 	* html/html_formimpl.cpp (HTMLInputElementImpl): don't make input elements
-	floating, but only care for the text tqalignment
+	floating, but only care for the text alignment
 
 2003-11-28  Harri Porten  <porten@kde.org>
 
@@ -3127,7 +3127,7 @@
 	* html/htmlparser.cpp (popInlineBlocks): Fixed infinite loop due to
 	popOneBlock returning immediately if blockStack==0. #68034.
 
-	* rendering/bidi.cpp: Fixed infinite loop with <nobr> due to tqfindNextLineBreak
+	* rendering/bidi.cpp: Fixed infinite loop with <nobr> due to findNextLineBreak
 	going back (wrong variable used). #66867, #68598, #59230 and their duplicates.
 
 2003-11-24  Stephan Kulow  <coolo@kde.org>
@@ -3210,7 +3210,7 @@
 	* rendering/render_*.cpp: changing the output of dump to
 	get a more comprehensive renderer tree output - as inspired
 	by Safari's kwqDebugTree. This allows for a change in
-	test_regression to check tqlayouts
+	test_regression to check layouts
 
 2003-11-15  Zack Rusin  <zack@kde.org>
 
@@ -3220,13 +3220,13 @@
 
 2003-11-14  Germain Garand  <germain@ebooksfrance.org>
 
-        fix "overflow: scroll" tqlayout/painting issues
+        fix "overflow: scroll" layout/painting issues
 
         * rendering/render_box.cpp (getOverflowClipRect): substract
         scrollbars width/height if any. Merged from WebCore.
 
         * rendering/render_layer.cpp (horizontalScrollbarHeight,
-        verticalScrollbarWidth): use tqpixelMetric instead of width()/height().
+        verticalScrollbarWidth): use pixelMetric instead of width()/height().
 
 2003-11-13  Zack Rusin  <zack@kde.org>
 
@@ -3339,11 +3339,11 @@
 
 	* rendering/render_object.cpp (nodeAtPoint): merge from Safari. Still
 	does not work, but at least its the same now.
-	(lineHeight): handle tqreplaced elements here. They don't necessarily
+	(lineHeight): handle replaced elements here. They don't necessarily
 	inherit RenderReplaced anymore.
-	(baselinePosition): handle tqreplaced elements.
+	(baselinePosition): handle replaced elements.
 
-	* rendering/render_tqreplaced.cpp: remove baselinePosition/lineHeight. its in
+	* rendering/render_replaced.cpp: remove baselinePosition/lineHeight. its in
 	RenderObject now.
 
 	* rendering/render_block.cpp (isSelfCollapsingBlock): collapse away trailing whitespace
@@ -3354,7 +3354,7 @@
 
 2003-11-02  Stephan Kulow  <coolo@kde.org>
 
-	* rendering/render_form.cpp (updateFromElement): tqinvalidate the size hint
+	* rendering/render_form.cpp (updateFromElement): invalidate the size hint
 	of comboboxes as they are cached in QComboBox (#64229)
 
 2003-11-01  Dirk Mueller  <mueller@kde.org>
@@ -3410,7 +3410,7 @@
 
 2003-10-28  Leo Savernik  <l.savernik@aon.at>
 
-	* rendering/render_tqreplaced.cpp (checkSelectionPoint):
+	* rendering/render_replaced.cpp (checkSelectionPoint):
 	Readded RenderReplaced::checkSelectionPoint to fix disrupted selection
 	of sole inline images within block elements (<p><img ...></p>).
 	Also fixes caret placement issues.
@@ -3591,7 +3591,7 @@
 	either modality or QScrollView (but doesn't work in 3.1.x neither).
 
 2003-10-24  Lars Knoll <knoll@kde.org>
-	* Hopefully fixed most tqrepainting problems.
+	* Hopefully fixed most repainting problems.
 
 2003-10-24  Lars Knoll <knoll@kde.org>
 	* Fix most of the form related regressions introduced by my
@@ -3638,18 +3638,18 @@
 
 	* rendering/render_list.cpp (calcListValue): handle <ul><p><li> again.
 
-	* rendering/render_box.cpp (tqrepaint): revert commit which introduced another
+	* rendering/render_box.cpp (repaint): revert commit which introduced another
 	4 bytes overhead. No need to waste memory here.
 
-	* rendering/render_object.cpp (setStyle): schedule tqrepaint on old object
+	* rendering/render_object.cpp (setStyle): schedule repaint on old object
 	when the new outline is going to be thinner.
 
 	* rendering/render_form.cpp (RenderCustomButton): Remove.
 
-	* rendering/render_tqreplaced.cpp (RenderReplaced::checkSelectionPoint): Remove.
+	* rendering/render_replaced.cpp (RenderReplaced::checkSelectionPoint): Remove.
 	RenderObject/RenderBox'es implementation *must* work. No need to add useless code.
 
-	* rendering/render_tqreplaced.cpp (RenderReplacedBlock): Remove.
+	* rendering/render_replaced.cpp (RenderReplacedBlock): Remove.
 
 	* html/html_formimpl.cpp (HTMLButtonElement::attach): Remove.
 
@@ -3671,15 +3671,15 @@
 
 	* css/makeprop: don't export getPropertyName. declare it.
 
-	* xml/dom_nodeimpl.cpp (tqreplaceChild/appendChild/removeChild):
-	Reverting patch which tqinvalidated tqlayout on child when it was attached.
+	* xml/dom_nodeimpl.cpp (replaceChild/appendChild/removeChild):
+	Reverting patch which invalidated layout on child when it was attached.
 
 2003-10-20  Lars Knoll <knoll@kde.org>
 
 	* fix most issues with the layering code by
 	merging and adapting safaris implementation
 	* fix a bug in RenderBox::calcAbsoluteVertical(), that probably
-	has destroyed a lot of tqlayouts.
+	has destroyed a lot of layouts.
 	* don't add the scroll offset in RenderBox::paintBoxDecorations()
 
 2003-10-20  Dirk Mueller  <mueller@kde.org>
@@ -3694,7 +3694,7 @@
 
 2003-10-20  Dirk Mueller  <mueller@kde.org>
 
-	* rendering/render_form.cpp (tqlayout): set IE-CSS-extension style palette
+	* rendering/render_form.cpp (layout): set IE-CSS-extension style palette
 	on <textarea> scrollbars (#56532).
 
 	* rendering/render_layer.cpp (showScrollbar): set IE-CSS-extension styled
@@ -3808,7 +3808,7 @@
 	meaningful peripheral mouse events to focused widget to restore correct
 	mouse handling in proxied widgets. #65216 (selection part)
 
-	* rendering/render_tqreplaced.cpp (handleEvent):
+	* rendering/render_replaced.cpp (handleEvent):
 	map MOUSEOUT/MOUSEOVER DOM events to Enter/Leave events. Honours stacking
 	while mouse buttons are pressed.
 
@@ -3817,7 +3817,7 @@
 
 2003-10-06  Daniel Molkentin  <molkentin@kde.org>
 
-	* ecma/kjs_window.cpp: added window.open targets _self and tqreplace
+	* ecma/kjs_window.cpp: added window.open targets _self and replace
 
 2003-10-06  David Faure  <faure@kde.org>
 
@@ -3835,7 +3835,7 @@
 	to make the one call entering a local event loop the last, so that we can
 	cleanly exit when it the view is already deleted.
 
-	* khtml_ext.cpp (KHTMLPopupGUIClient): pass TQObject parent
+	* khtml_ext.cpp (KHTMLPopupGUIClient): pass QObject parent
 
 2003-10-05  Dirk Mueller  <mueller@kde.org>
 
@@ -3847,7 +3847,7 @@
 
 2003-10-04 Germain Garand <germain@ebooksfrance.org>
 
-	* rendering/render_tqreplaced.cpp (baselinePosition): use setPos to adjust
+	* rendering/render_replaced.cpp (baselinePosition): use setPos to adjust
 	layer position if needed. Fix relatively positioned widgets not being painted.
 
 2003-10-04  Dirk Mueller  <mueller@kde.org>

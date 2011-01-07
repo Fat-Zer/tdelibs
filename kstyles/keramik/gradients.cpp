@@ -96,7 +96,7 @@ void GradientPainter::renderGradient( TQPainter* p, const TQRect& r, TQColor c,
 	
 	int key = entry.key();
 	
-	if ((cacheEntry = cache.tqfind(key, false)))
+	if ((cacheEntry = cache.find(key, false)))
 	{
 		if (entry == *cacheEntry)
 		{

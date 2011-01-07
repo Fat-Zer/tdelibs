@@ -59,7 +59,7 @@ KTipDatabase::KTipDatabase(const TQString &_tipFile)
 {
     TQString tipFile = _tipFile;
     if (tipFile.isEmpty())
-	tipFile = TQString::tqfromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips";
+	tipFile = TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips";
 
     loadTips(tipFile);
 
@@ -72,7 +72,7 @@ KTipDatabase::KTipDatabase( const TQStringList& tipsFiles )
 {
    if ( tipsFiles.isEmpty() || ( ( tipsFiles.count() == 1 ) && tipsFiles.first().isEmpty() ) )
    {
-       addTips(TQString::tqfromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips");
+       addTips(TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips");
    }
    else
    {
@@ -99,7 +99,7 @@ void KTipDatabase::addTips(const TQString& tipFile )
 
     if (fileName.isEmpty())
     {
-	kdDebug() << "KTipDatabase::addTips: can't tqfind '" << tipFile << "' in standard dirs" << endl;
+	kdDebug() << "KTipDatabase::addTips: can't find '" << tipFile << "' in standard dirs" << endl;
         return;
     }
 
@@ -115,13 +115,13 @@ void KTipDatabase::addTips(const TQString& tipFile )
     const TQRegExp rx("\\n+");
 
     int pos = -1;
-    while ((pos = content.tqfind("<html>", pos + 1, false)) != -1)
+    while ((pos = content.find("<html>", pos + 1, false)) != -1)
     {
        // to make translations work, tip extraction here must exactly 
        // match what is done by the preparetips script 
        TQString tip = content 
-           .mid(pos + 6, content.tqfind("</html>", pos, false) - pos - 6)
-           .tqreplace(rx, "\n");
+           .mid(pos + 6, content.find("</html>", pos, false) - pos - 6)
+           .replace(rx, "\n");
        if (!tip.endsWith("\n"))
            tip += "\n";
        if (tip.startsWith("\n")) 
@@ -173,7 +173,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 {
     /**
      * Parent is 0L when TipDialog is used as a mainWidget. This should
-     * be the case only in ktip, so let's use the ktip tqlayout.
+     * be the case only in ktip, so let's use the ktip layout.
      */
     bool isTipDialog = (parent);
 
@@ -191,7 +191,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	KIconEffect::colorize(img, mBlendedColor, 1.0);
 	QRgb colPixel( img.pixel(0,0) );
 
-	mBlendedColor = TQColor(tqRed(colPixel),tqGreen(colPixel),tqBlue(colPixel));
+	mBlendedColor = TQColor(qRed(colPixel),qGreen(colPixel),qBlue(colPixel));
     }
 
     mBaseColor = KGlobalSettings::alternateBackgroundColor();
@@ -223,7 +223,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	titlePane->setBackgroundPixmap(locate("data", "kdeui/pics/ktip-background.png"));
 	titlePane->setText(i18n("Did you know...?\n"));
 	titlePane->setFont(TQFont(KGlobalSettings::generalFont().family(), 20, TQFont::Bold));
-	titlePane->tqsetAlignment(TQLabel::AlignCenter);
+	titlePane->setAlignment(TQLabel::AlignCenter);
 	pl->addWidget(titlePane, 100);
     }
 
@@ -268,7 +268,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	TQLabel *l = new TQLabel(hbox);
 	l->setPixmap(img);
 	l->setBackgroundColor(mBlendedColor);
-	l->tqsetAlignment(Qt::AlignRight | Qt::AlignBottom);
+	l->setAlignment(Qt::AlignRight | Qt::AlignBottom);
 
 	resize(550, 230);
         TQSize sh = size();
@@ -347,10 +347,10 @@ void KTipDialog::showMultiTip(TQWidget *parent, const TQStringList &tipFiles, bo
            const int oneDay = 24*60*60;
            TQDateTime lastShown = configGroup.readDateTimeEntry("TipLastShown");
            // Show tip roughly once a week
-           if (lastShown.secsTo(TQDateTime::tqcurrentDateTime()) < (oneDay + (kapp->random() % (10*oneDay))))
+           if (lastShown.secsTo(TQDateTime::currentDateTime()) < (oneDay + (kapp->random() % (10*oneDay))))
                return;
         }
-        configGroup.writeEntry("TipLastShown", TQDateTime::tqcurrentDateTime());
+        configGroup.writeEntry("TipLastShown", TQDateTime::currentDateTime());
         kapp->config()->sync();
         if (!hasLastShown)
            return; // Don't show tip on first start
@@ -375,7 +375,7 @@ static TQString fixTip(TQString tip)
       TQString iconName = iconRegExp.cap(1);
       if (!iconName.isEmpty())
          if (KGlobal::dirs()->findResource("icon", iconName).isEmpty())
-           tip.tqreplace("crystalsvg","hicolor");
+           tip.replace("crystalsvg","hicolor");
     }
 
     return tip;
@@ -384,7 +384,7 @@ static TQString fixTip(TQString tip)
   void KTipDialog::prevTip()
   {
       mDatabase->prevTip();
-      TQString currentTip = TQString::tqfromLatin1(
+      TQString currentTip = TQString::fromLatin1(
      "<qt text=\"%1\" bgcolor=\"%2\">%3</qt>")
      .arg(mTextColor.name())
      .arg(mBaseColor.name())
@@ -399,7 +399,7 @@ static TQString fixTip(TQString tip)
   void KTipDialog::nextTip()
   {
       mDatabase->nextTip();
-      TQString currentTip = TQString::tqfromLatin1(
+      TQString currentTip = TQString::fromLatin1(
         "<qt text=\"%1\" bgcolor=\"%2\">%3</qt>")
         .arg(mTextColor.name())
         .arg(mBaseColor.name())

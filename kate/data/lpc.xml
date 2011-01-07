@@ -26,7 +26,7 @@ License:     Artistic
       <item> protected </item>
       <item> static </item>
       <item> public </item>
-      <item> notqmask </item>
+      <item> nomask </item>
       <item> varargs </item>
       <item> nosave </item>
       <item> virtual </item>
@@ -162,5 +162,5 @@ License:     Artistic
   </general>
 
 </language>
-<!-- kate: space-indent on; indent-width 2; tqreplace-tabs on; -->
+<!-- kate: space-indent on; indent-width 2; replace-tabs on; -->
 <!-- === End of file. === -->

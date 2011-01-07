@@ -61,10 +61,10 @@ protected:
 	bool checkGsDriver(const TQString& gsdriver);
 	bool createSpooldir(PrintcapEntry*);
 	bool createPrinttoolEntry(KMPrinter*, PrintcapEntry*);
-	PrintcapEntry* tqfindPrintcapEntry(const TQString& name);
-	PrinttoolEntry* tqfindPrinttoolEntry(const TQString& name);
+	PrintcapEntry* findPrintcapEntry(const TQString& name);
+	PrinttoolEntry* findPrinttoolEntry(const TQString& name);
 	TQString programName(int);
-	void checktqStatus();
+	void checkStatus();
 	bool enablePrinter(KMPrinter*, bool);
 
 private:

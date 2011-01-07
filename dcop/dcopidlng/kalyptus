@@ -67,14 +67,14 @@ $exe = basename $0;
 @inputqueue = ();
 @codeqobject = split "\n", <<CODE;
 public:
-    virtual QMetaObject *tqmetaObject() const;
+    virtual QMetaObject *metaObject() const;
     virtual const char *className() const;
     virtual void* qt_cast( const char* );
     virtual bool qt_invoke( int, QUObject* );
     virtual bool qt_emit( int, QUObject* );
     virtual bool qt_property( int, int, QVariant* );
     static QMetaObject* staticMetaObject();
-    TQObject* qObject();
+    QObject* qObject();
     static QString tr( const char *, const char * = 0 );
     static QString trUtf8( const char *, const char * = 0 );
 private:
@@ -116,7 +116,7 @@ $allowed_k_dcop_accesors_re = join("|", @allowed_k_dcop_accesors);
     Q_WS_MAC => 'undef',
     Q_OBJECT => <<'CODE',
 public:
-    virtual QMetaObject *tqmetaObject() const;
+    virtual QMetaObject *metaObject() const;
     virtual const char *className() const;
     virtual bool qt_invoke( int, QUObject* );
     virtual bool qt_emit( int, QUObject* );
@@ -419,7 +419,7 @@ LOOP:
 		}
 
 		next if ( $p =~ /^\s*$/s ); 		# blank lines
-#			|| $p =~ /^\s*Q_OBJECT/		# TQObject macro
+#			|| $p =~ /^\s*Q_OBJECT/		# QObject macro
 #			);
 #
 
@@ -514,7 +514,7 @@ sub readCxxCodeBlock
 		return $lastLine if ( $open || $close) && $count == 0;
 	}
 
-	# tqfind opening brace
+	# find opening brace
 	if ( $count == 0 ) {
 		while( $count == 0 ) {
 			$l = readCxxLine();
@@ -529,7 +529,7 @@ sub readCxxCodeBlock
 		$count -= kdocUtil::countReg( $l, "}" );
 	}
 
-	# tqfind associated closing brace
+	# find associated closing brace
 	while ( $count > 0 ) {
 		$l = readCxxLine();
 		croak "Confused by unmatched braces" if !defined $l;
@@ -1096,8 +1096,8 @@ sub newClass
 	my $access = "private";
 	$access = "public" if $cNodeType ne "class";
 
-	# try to tqfind an exisiting node, or create a new one
-    # We need to make the fully-qualified-name otherwise tqfindRef will look
+	# try to find an exisiting node, or create a new one
+    # We need to make the fully-qualified-name otherwise findRef will look
 	# for that classname in the global namespace
     # testcase: class Foo; namespace Bar { class Foo { ... } }
     my @parents;
@@ -1105,7 +1105,7 @@ sub newClass
 	push @parents, $name;
 	my $fullyQualifiedName = join "::", @parents;
     print "looking for $fullyQualifiedName\n" if($debug);
-	my $oldnode = kdocAstUtil::tqfindRef( $cNode, $fullyQualifiedName );
+	my $oldnode = kdocAstUtil::findRef( $cNode, $fullyQualifiedName );
 	my $node = defined $oldnode ? $oldnode : Ast::New( $name );
 
 	if ( $endTag ne "{" ) {
@@ -1344,15 +1344,15 @@ sub newMethod
 			# ALWAYS IGNORE...
 			return undef;
 			
-			my $node = kdocAstUtil::tqfindRef( $cNode, $class );
+			my $node = kdocAstUtil::findRef( $cNode, $class );
 			
 			if ( !defined $node ) {
-				# if we couldn't tqfind the name, try again with
+				# if we couldn't find the name, try again with
 				# all template parameters stripped off:
 				my $strippedClass = $class;
 				$strippedClass =~ s/<[^<>]*>//g;
 
-				$node = kdocAstUtil::tqfindRef( $cNode, $strippedClass );
+				$node = kdocAstUtil::findRef( $cNode, $strippedClass );
 
 				# if still not found: give up
 				if ( !defined $node ) {
@@ -1370,7 +1370,7 @@ sub newMethod
 	    $class = $globalSpaceClassName; # FIXME - sanitize the naming system?
 	    $isGlobalSpace = 1;
 
-	    my $opsNode = kdocAstUtil::tqfindRef( $cNode, $class );
+	    my $opsNode = kdocAstUtil::findRef( $cNode, $class );
 	    if (!$opsNode) {
 		# manually create a "GlobalSpace" class
 		$opsNode = Ast::New( $class );
@@ -1468,7 +1468,7 @@ sub newMethod
 	* 1 for enums
 
 	Adds a property "ParamList" to the method node.
-	This property tqcontains a list of nodes, one for each parameter.
+	This property contains a list of nodes, one for each parameter.
 
 	Each parameter node has the following properties:
 	* ArgType the type of the argument, e.g. const QString&

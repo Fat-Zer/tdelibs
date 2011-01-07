@@ -45,7 +45,7 @@
 class KCharSelect::KCharSelectPrivate
 {
 public:
-    TQLineEdit *tqunicodeLine;
+    TQLineEdit *unicodeLine;
 };
 
 TQFontDatabase * KCharSelect::fontDataBase = 0;
@@ -66,7 +66,7 @@ KCharSelectTable::KCharSelectTable( TQWidget *parent, const char *name, const TQ
     : TQGridView( parent, name ), vFont( _font ), vChr( _chr ),
       vTableNum( _tableNum ), vPos( 0, 0 ), focusItem( _chr ), focusPos( 0, 0 ), d(0)
 {
-    setBackgroundColor( tqcolorGroup().base() );
+    setBackgroundColor( colorGroup().base() );
 
     setCellWidth( 20 );
     setCellHeight( 25 );
@@ -74,7 +74,7 @@ KCharSelectTable::KCharSelectTable( TQWidget *parent, const char *name, const TQ
     setNumCols( 32 );
     setNumRows( 8 );
 
-    tqrepaintContents( false );
+    repaintContents( false );
     
     setToolTips();
 
@@ -86,7 +86,7 @@ KCharSelectTable::KCharSelectTable( TQWidget *parent, const char *name, const TQ
 void KCharSelectTable::setFont( const TQString &_font )
 {
     vFont = _font;
-    tqrepaintContents( false );
+    repaintContents( false );
 
     setToolTips();
 }
@@ -95,7 +95,7 @@ void KCharSelectTable::setFont( const TQString &_font )
 void KCharSelectTable::setChar( const TQChar &_chr )
 {
     vChr = _chr;
-    tqrepaintContents( false );
+    repaintContents( false );
 }
 
 //==================================================================
@@ -104,13 +104,13 @@ void KCharSelectTable::setTableNum( int _tableNum )
     focusItem = TQChar( _tableNum * 256 );
 
     vTableNum = _tableNum;
-    tqrepaintContents( false );
+    repaintContents( false );
 
     setToolTips();
 }
 
 //==================================================================
-TQSize KCharSelectTable::tqsizeHint() const
+TQSize KCharSelectTable::sizeHint() const
 {
     int w = cellWidth();
     int h = cellHeight();
@@ -155,26 +155,26 @@ void KCharSelectTable::paintCell( class TQPainter* p, int row, int col )
     c += row * numCols();
     c += col;
 
-    if ( c == vChr.tqunicode() ) {
-	p->setBrush( TQBrush( tqcolorGroup().highlight() ) );
+    if ( c == vChr.unicode() ) {
+	p->setBrush( TQBrush( colorGroup().highlight() ) );
 	p->setPen( NoPen );
 	p->drawRect( 0, 0, w, h );
-	p->setPen( tqcolorGroup().highlightedText() );
+	p->setPen( colorGroup().highlightedText() );
 	vPos = TQPoint( col, row );
     } else {
 	TQFontMetrics fm = TQFontMetrics( font );
 	if( fm.inFont( c ) )
-		p->setBrush( TQBrush( tqcolorGroup().base() ) );
+		p->setBrush( TQBrush( colorGroup().base() ) );
 	else
-		p->setBrush( TQBrush( tqcolorGroup().button() ) );
+		p->setBrush( TQBrush( colorGroup().button() ) );
 	p->setPen( NoPen );
 	p->drawRect( 0, 0, w, h );
-	p->setPen( tqcolorGroup().text() );
+	p->setPen( colorGroup().text() );
     }
 
-    if ( c == focusItem.tqunicode() && hasFocus() ) {
+    if ( c == focusItem.unicode() && hasFocus() ) {
 	style().drawPrimitive( TQStyle::PE_FocusRect, p, TQRect( 2, 2, w - 4, h - 4 ), 
-			       tqcolorGroup() );
+			       colorGroup() );
 	focusPos = TQPoint( col, row );
     }
 
@@ -182,7 +182,7 @@ void KCharSelectTable::paintCell( class TQPainter* p, int row, int col )
 
     p->drawText( 0, 0, x2, y2, AlignHCenter | AlignVCenter, TQString( TQChar( c ) ) );
 
-    p->setPen( tqcolorGroup().text() );
+    p->setPen( colorGroup().text() );
     p->drawLine( x2, 0, x2, y2 );
     p->drawLine( 0, y2, x2, y2 );
 
@@ -210,9 +210,9 @@ void KCharSelectTable::mouseMoveEvent( TQMouseEvent *e )
 	focusPos = vPos;
 	focusItem = vChr;
 
-	tqrepaintCell( oldFocus.y(), oldFocus.x(), true );
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( vPos.y(), vPos.x(), true );
+	repaintCell( oldFocus.y(), oldFocus.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( vPos.y(), vPos.x(), true );
 
 	emit highlighted( vChr );
 	emit highlighted();
@@ -256,8 +256,8 @@ void KCharSelectTable::keyPressEvent( TQKeyEvent *e )
 	vPos = focusPos;
 	vChr = focusItem;
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( vPos.y(), vPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( vPos.y(), vPos.x(), true );
 
 	emit activated( vChr );
 	emit activated();
@@ -277,8 +277,8 @@ void KCharSelectTable::gotoLeft()
 
 	focusItem = TQChar( vTableNum * 256 + numCols() * focusPos.y() + focusPos.x() );
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( focusPos.y(), focusPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( focusPos.y(), focusPos.x(), true );
 
 	emit focusItemChanged( vChr );
 	emit focusItemChanged();
@@ -295,8 +295,8 @@ void KCharSelectTable::gotoRight()
 
 	focusItem = TQChar( vTableNum * 256 + numCols() * focusPos.y() + focusPos.x() );
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( focusPos.y(), focusPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( focusPos.y(), focusPos.x(), true );
 
 	emit focusItemChanged( vChr );
 	emit focusItemChanged();
@@ -313,8 +313,8 @@ void KCharSelectTable::gotoUp()
 
 	focusItem = TQChar( vTableNum * 256 + numCols() * focusPos.y() + focusPos.x() );
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( focusPos.y(), focusPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( focusPos.y(), focusPos.x(), true );
 
 	emit focusItemChanged( vChr );
 	emit focusItemChanged();
@@ -331,8 +331,8 @@ void KCharSelectTable::gotoDown()
 
 	focusItem = TQChar( vTableNum * 256 + numCols() * focusPos.y() + focusPos.x() );
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( focusPos.y(), focusPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( focusPos.y(), focusPos.x(), true );
 
 	emit focusItemChanged( vChr );
 	emit focusItemChanged();
@@ -381,41 +381,41 @@ KCharSelect::KCharSelect( TQWidget *parent, const char *name, const TQString &_f
     bar->setSpacing( KDialog::spacingHint() );
 
     TQLabel* const lFont = new TQLabel( i18n( "Font:" ), bar );
-    lFont->resize( lFont->tqsizeHint() );
-    lFont->tqsetAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    lFont->setMaximumWidth( lFont->tqsizeHint().width() );
+    lFont->resize( lFont->sizeHint() );
+    lFont->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    lFont->setMaximumWidth( lFont->sizeHint().width() );
 
     fontCombo = new TQComboBox( true, bar );
     fillFontCombo();
-    fontCombo->resize( fontCombo->tqsizeHint() );
+    fontCombo->resize( fontCombo->sizeHint() );
 
     connect( fontCombo, TQT_SIGNAL( activated( const TQString & ) ), this, TQT_SLOT( fontSelected( const TQString & ) ) );
 
     TQLabel* const lTable = new TQLabel( i18n( "Table:" ), bar );
-    lTable->resize( lTable->tqsizeHint() );
-    lTable->tqsetAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    lTable->setMaximumWidth( lTable->tqsizeHint().width() );
+    lTable->resize( lTable->sizeHint() );
+    lTable->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    lTable->setMaximumWidth( lTable->sizeHint().width() );
 
     tableSpinBox = new TQSpinBox( 0, 255, 1, bar );
-    tableSpinBox->resize( tableSpinBox->tqsizeHint() );
+    tableSpinBox->resize( tableSpinBox->sizeHint() );
 
     connect( tableSpinBox, TQT_SIGNAL( valueChanged( int ) ), this, TQT_SLOT( tableChanged( int ) ) );
 
     TQLabel* const lUnicode = new TQLabel( i18n( "&Unicode code point:" ), bar );
-    lUnicode->resize( lUnicode->tqsizeHint() );
-    lUnicode->tqsetAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    lUnicode->setMaximumWidth( lUnicode->tqsizeHint().width() );
+    lUnicode->resize( lUnicode->sizeHint() );
+    lUnicode->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    lUnicode->setMaximumWidth( lUnicode->sizeHint().width() );
 
     const TQRegExp rx( "[a-fA-F0-9]{1,4}" );
     TQValidator* const validator = new TQRegExpValidator( rx, this );
 
-    d->tqunicodeLine = new KLineEdit( bar );
-    d->tqunicodeLine->setValidator(validator);
-    lUnicode->setBuddy(d->tqunicodeLine);
-    d->tqunicodeLine->resize( d->tqunicodeLine->tqsizeHint() );
+    d->unicodeLine = new KLineEdit( bar );
+    d->unicodeLine->setValidator(validator);
+    lUnicode->setBuddy(d->unicodeLine);
+    d->unicodeLine->resize( d->unicodeLine->sizeHint() );
     slotUpdateUnicode(_chr);
 
-    connect( d->tqunicodeLine, TQT_SIGNAL( returnPressed() ), this, TQT_SLOT( slotUnicodeEntered() ) );
+    connect( d->unicodeLine, TQT_SIGNAL( returnPressed() ), this, TQT_SLOT( slotUnicodeEntered() ) );
 
     charTable = new KCharSelectTable( this, name, _font.isEmpty() ? TQVBox::font().family() : _font, _chr, _tableNum );
     const TQSize sz( charTable->contentsWidth()  +  4 ,
@@ -452,15 +452,15 @@ KCharSelect::~KCharSelect()
 }
 
 //==================================================================
-TQSize KCharSelect::tqsizeHint() const
+TQSize KCharSelect::sizeHint() const
 {
-    return TQVBox::tqsizeHint();
+    return TQVBox::sizeHint();
 }
 
 //==================================================================
 void KCharSelect::setFont( const TQString &_font )
 {
-    const TQValueList<TQString>::Iterator it = fontList.tqfind( _font );
+    const TQValueList<TQString>::Iterator it = fontList.find( _font );
     if ( it != fontList.end() ) {
 	TQValueList<TQString>::Iterator it2 = fontList.begin();
 	int pos = 0;
@@ -469,7 +469,7 @@ void KCharSelect::setFont( const TQString &_font )
 	charTable->setFont( _font );
     }
     else
-	kdWarning() << "Can't tqfind Font: " << _font << endl;
+	kdWarning() << "Can't find Font: " << _font << endl;
 }
 
 //==================================================================
@@ -513,7 +513,7 @@ void KCharSelect::tableChanged( int _value )
 //==================================================================
 void KCharSelect::slotUnicodeEntered( )
 {
-    const TQString s = d->tqunicodeLine->text();
+    const TQString s = d->unicodeLine->text();
     if (s.isEmpty())
         return;
     
@@ -532,10 +532,10 @@ void KCharSelect::slotUnicodeEntered( )
 
 void KCharSelect::slotUpdateUnicode( const TQChar &c )
 {
-    const int uc = c.tqunicode();
+    const int uc = c.unicode();
     TQString s;
     s.sprintf("%04X", uc);
-    d->tqunicodeLine->setText(s);
+    d->unicodeLine->setText(s);
 }
 
 void KCharSelectTable::virtual_hook( int, void*)

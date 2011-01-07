@@ -49,7 +49,7 @@ class KWinModulePrivate;
  * @short Base class for KDE Window Manager modules.
  * @author Matthias Ettrich (ettrich@kde.org)
  */
-class KDECORE_EXPORT KWinModule : public TQObject
+class KDECORE_EXPORT KWinModule : public QObject
 {
     Q_OBJECT
 
@@ -61,7 +61,7 @@ public:
     /**
      * Creates a KWinModule object and connects to the window
      * manager.
-     * @param parent the parent for the TQObject
+     * @param parent the parent for the QObject
      * @param what The information you are interested in:
      *   INFO_DESKTOP:  currentDesktop, 
      *                  numberOfDesktops, 
@@ -89,7 +89,7 @@ public:
     /**
      * Creates a KWinModule object and connects to the window
      * manager.
-     * @param parent the parent for the TQObject
+     * @param parent the parent for the QObject
      **/
     KWinModule( TQObject* parent = 0 );
 
@@ -298,7 +298,7 @@ signals:
     /**
      * The window changed.
      *
-     * The properties parameter tqcontains the NET properties that
+     * The properties parameter contains the NET properties that
      * were modified (see netwm_def.h). First element are NET::Property
      * values, second element are NET::Property2 values (i.e. the format
      * is the same like for the NETWinInfo class constructor).
@@ -311,7 +311,7 @@ signals:
      * @deprecated
      * The window changed.
      *
-     * The unsigned int parameter tqcontains the NET properties that
+     * The unsigned int parameter contains the NET properties that
      * were modified (see netwm_def.h).
      * @param id the id of the window
      * @param properties the properties that were modified

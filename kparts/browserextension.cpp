@@ -276,14 +276,14 @@ WindowArgs &WindowArgs::operator=( const WindowArgs &args )
     return *this;
 }
 
-WindowArgs::WindowArgs( const TQRect &_tqgeometry, bool _fullscreen, bool _menuBarVisible,
+WindowArgs::WindowArgs( const TQRect &_geometry, bool _fullscreen, bool _menuBarVisible,
                         bool _toolBarsVisible, bool _statusBarVisible, bool _resizable )
 {
     d = 0;
-    x = _tqgeometry.x();
-    y = _tqgeometry.y();
-    width = _tqgeometry.width();
-    height = _tqgeometry.height();
+    x = _geometry.x();
+    y = _geometry.y();
+    width = _geometry.width();
+    height = _geometry.height();
     fullscreen = _fullscreen;
     menuBarVisible = _menuBarVisible;
     toolBarsVisible = _toolBarsVisible;
@@ -342,7 +342,7 @@ public:
   };
   TQValueList<DelayedRequest> m_requests;
   bool m_urlDropHandlingEnabled;
-  KBitArray m_actiontqStatus;
+  KBitArray m_actionStatus;
   TQMap<int, TQString> m_actionText;
   BrowserInterface *m_browserInterface;
 };
@@ -370,11 +370,11 @@ BrowserExtension::BrowserExtension( KParts::ReadOnlyPart *parent,
   // they're supported or not
   ActionSlotMap::ConstIterator it = s_actionSlotMap->begin();
   ActionSlotMap::ConstIterator itEnd = s_actionSlotMap->end();
-  TQStrList slotNames = tqmetaObject()->slotNames();
+  TQStrList slotNames = metaObject()->slotNames();
   for ( int i=0 ; it != itEnd ; ++it, ++i )
   {
       // Does the extension have a slot with the name of this action ?
-      d->m_actiontqStatus.setBit( i, slotNames.tqcontains( it.key()+"()" ) );
+      d->m_actionStatus.setBit( i, slotNames.contains( it.key()+"()" ) );
   }
 
   connect( m_part, TQT_SIGNAL( completed() ),
@@ -415,13 +415,13 @@ int BrowserExtension::yOffset()
 
 void BrowserExtension::saveState( TQDataStream &stream )
 {
-  stream << m_part->url() << (TQ_INT32)xOffset() << (TQ_INT32)yOffset();
+  stream << m_part->url() << (Q_INT32)xOffset() << (Q_INT32)yOffset();
 }
 
 void BrowserExtension::restoreState( TQDataStream &stream )
 {
   KURL u;
-  TQ_INT32 xOfs, yOfs;
+  Q_INT32 xOfs, yOfs;
   stream >> u >> xOfs >> yOfs;
 
   URLArgs args( urlArgs() );
@@ -483,7 +483,7 @@ void BrowserExtension::pasteRequest()
     {
         if ( KMessageBox::questionYesNo( m_part->widget(),
 		    i18n( "<qt>Do you want to search the Internet for <b>%1</b>?" ).arg( TQStyleSheet::escape(url) ),
-		    i18n( "Internet Search" ), KGuiItem( i18n( "&Search" ), "tqfind"),
+		    i18n( "Internet Search" ), KGuiItem( i18n( "&Search" ), "find"),
 		    KStdGuiItem::cancel(), "MiddleClickSearch" ) == KMessageBox::Yes)
           slotOpenURLRequest( filterData.uri(), KParts::URLArgs() );
     }
@@ -521,10 +521,10 @@ BrowserInterface *BrowserExtension::browserInterface() const
 void BrowserExtension::slotEnableAction( const char * name, bool enabled )
 {
     //kdDebug() << "BrowserExtension::slotEnableAction " << name << " " << enabled << endl;
-    ActionNumberMap::ConstIterator it = s_actionNumberMap->tqfind( name );
+    ActionNumberMap::ConstIterator it = s_actionNumberMap->find( name );
     if ( it != s_actionNumberMap->end() )
     {
-        d->m_actiontqStatus.setBit( it.data(), enabled );
+        d->m_actionStatus.setBit( it.data(), enabled );
         //kdDebug() << "BrowserExtension::slotEnableAction setting bit " << it.data() << " to " << enabled << endl;
     }
     else
@@ -534,13 +534,13 @@ void BrowserExtension::slotEnableAction( const char * name, bool enabled )
 bool BrowserExtension::isActionEnabled( const char * name ) const
 {
     int actionNumber = (*s_actionNumberMap)[ name ];
-    return d->m_actiontqStatus[ actionNumber ];
+    return d->m_actionStatus[ actionNumber ];
 }
 
 void BrowserExtension::slotSetActionText( const char * name, const TQString& text )
 {
     kdDebug() << "BrowserExtension::slotSetActionText " << name << " " << text << endl;
-    ActionNumberMap::ConstIterator it = s_actionNumberMap->tqfind( name );
+    ActionNumberMap::ConstIterator it = s_actionNumberMap->find( name );
     if ( it != s_actionNumberMap->end() )
     {
         d->m_actionText[ it.data() ] = text;
@@ -552,7 +552,7 @@ void BrowserExtension::slotSetActionText( const char * name, const TQString& tex
 TQString BrowserExtension::actionText( const char * name ) const
 {
     int actionNumber = (*s_actionNumberMap)[ name ];
-    TQMap<int, TQString>::ConstIterator it = d->m_actionText.tqfind( actionNumber );
+    TQMap<int, TQString>::ConstIterator it = d->m_actionText.find( actionNumber );
     if ( it != d->m_actionText.end() )
         return *it;
     return TQString::null;
@@ -684,7 +684,7 @@ void BrowserExtension::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 BrowserHostExtension *
-BrowserHostExtension::tqfindFrameParent(KParts::ReadOnlyPart *callingPart, const TQString &frame)
+BrowserHostExtension::findFrameParent(KParts::ReadOnlyPart *callingPart, const TQString &frame)
 {
     FindFrameParentParams param;
     param.parent = 0;

@@ -36,7 +36,7 @@ Author: Ralph Mor, X Consortium
 #include <string.h>
 
 
-tqStatus
+Status
 IceListenForConnections (countRet, listenObjsRet, errorLength, errorStringRet)
 
 int		*countRet;
@@ -50,7 +50,7 @@ char		*errorStringRet;
     int				transCount, partial, i, j;
     int                         result = -1;
     int                         count = 0;
-    tqStatus			status = 1;
+    Status			status = 1;
     XtransConnInfo		*transConns = NULL;
 
     while ((result < 0) && (count < 5))

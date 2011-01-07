@@ -609,8 +609,8 @@
 					push operator '<<' than requiring to put space between the operator
 										and the string.
 										-->
-				<RegExpr attribute="Operator" context="tqfind_indented_heredoc" String="\s*&lt;&lt;-(?=\w+|[&quot;'])" beginRegion="HereDocument" />
-				<RegExpr attribute="Operator" context="tqfind_heredoc" String="\s*&lt;&lt;(?=\w+|[&quot;'])" beginRegion="HereDocument" />
+				<RegExpr attribute="Operator" context="find_indented_heredoc" String="\s*&lt;&lt;-(?=\w+|[&quot;'])" beginRegion="HereDocument" />
+				<RegExpr attribute="Operator" context="find_heredoc" String="\s*&lt;&lt;(?=\w+|[&quot;'])" beginRegion="HereDocument" />
 				
 				<DetectChar attribute="Operator" char="." context="#stay"/>
 				<Detect2Chars attribute="Operator" char="&amp;" char1="&amp;" context="#stay"/>
@@ -648,7 +648,7 @@
 				
 				<!-- recognize the beginning of a general delimited input format -->
 				<!-- this moves to the next context to separate out the exact nature of the GDL input -->
-				<RegExpr attribute="GDL input" context="tqfind_gdl_input" String="\s*[%](?=[Qqxw]?[^\s&gt;])" beginRegion="GdlInput" />
+				<RegExpr attribute="GDL input" context="find_gdl_input" String="\s*[%](?=[Qqxw]?[^\s&gt;])" beginRegion="GdlInput" />
 			</context>
 			
 			<context name="Line Continue" attribute="Ruby Normal Text" lineEndContext="#pop">
@@ -741,11 +741,11 @@
 				The contexts below support both normal and indented heredocs
 				-->
 			<!-- here we markup the heredoc markers -->
-			<context name="tqfind_heredoc" attribute="Ruby Normal Text" lineEndContext="#pop" >
+			<context name="find_heredoc" attribute="Ruby Normal Text" lineEndContext="#pop" >
 				<RegExpr attribute="Keyword" context="apostrophed_normal_heredoc" String="'(\w+)'" />
 				<RegExpr attribute="Keyword" context="normal_heredoc" String="&quot;?(\w+)&quot;?" />
 			</context>
-			<context name="tqfind_indented_heredoc" attribute="Ruby Normal Text" lineEndContext="#pop" >
+			<context name="find_indented_heredoc" attribute="Ruby Normal Text" lineEndContext="#pop" >
 				<RegExpr attribute="Keyword" context="apostrophed_indented_heredoc" String="'(\w+)'" />
 				<RegExpr attribute="Keyword" context="indented_heredoc" String="&quot;?(\w+)&quot;?" />
 			</context>
@@ -779,7 +779,7 @@
 			<!-- General delimited input support
 				The contexts below handle the various gdl formats
 				-->
-			<context name="tqfind_gdl_input" attribute="Ruby Normal Text" lineEndContext="#pop">
+			<context name="find_gdl_input" attribute="Ruby Normal Text" lineEndContext="#pop">
 				
 				<!-- handle token arrays -->
 				<RegExpr attribute="GDL input" context="gdl_token_array_1" String="w\(" />

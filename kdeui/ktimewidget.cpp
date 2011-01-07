@@ -36,8 +36,8 @@ void KTimeWidget::init()
 {
   d = new KTimeWidgetPrivate;
 
-  TQHBoxLayout *tqlayout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
-  tqlayout->setAutoAdd(true);
+  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
+  layout->setAutoAdd(true);
 
   d->timeWidget = new QTimeEdit(this);
 

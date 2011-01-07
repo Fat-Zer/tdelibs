@@ -48,8 +48,8 @@ public:
     bool atEnd(void) const;
     bool reset (void);
 
-    TQ_LONG readBlock( char *data, TQ_ULONG maxlen );
-    TQ_LONG writeBlock( const char *data, TQ_ULONG len );
+    Q_LONG readBlock( char *data, Q_ULONG maxlen );
+    Q_LONG writeBlock( const char *data, Q_ULONG len );
 
     int getch(void);
     int putch(int ch);

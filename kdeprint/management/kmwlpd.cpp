@@ -58,7 +58,7 @@ bool KMWLpd::isValid(TQString& msg)
 	// check LPD queue
 	if (!checkLpdQueue(text(0).latin1(),text(1).latin1()))
 	{
-		if (KMessageBox::warningContinueCancel(this, i18n("Cannot tqfind queue %1 on server %2; do you want to continue anyway?").arg(text(1)).arg(text(0))) == KMessageBox::Cancel)
+		if (KMessageBox::warningContinueCancel(this, i18n("Cannot find queue %1 on server %2; do you want to continue anyway?").arg(text(1)).arg(text(0))) == KMessageBox::Cancel)
 			return false;
 	}
 	return true;
@@ -66,7 +66,7 @@ bool KMWLpd::isValid(TQString& msg)
 
 void KMWLpd::updatePrinter(KMPrinter *p)
 {
-	QString	dev = TQString::tqfromLatin1("lpd://%1/%2").arg(text(0)).arg(text(1));
+	QString	dev = TQString::fromLatin1("lpd://%1/%2").arg(text(0)).arg(text(1));
 	p->setDevice(dev);
 }
 
@@ -81,7 +81,7 @@ bool checkLpdQueue(const char *host, const char *queue)
 
 	char	res[64] = {0};
 	snprintf(res,64,"%c%s\n",(char)4,queue);
-	if (sock.writeBlock(res, strlen(res)) != (TQ_LONG)(strlen(res)))
+	if (sock.writeBlock(res, strlen(res)) != (Q_LONG)(strlen(res)))
 		return false;
 
 	char	buf[1024] = {0};

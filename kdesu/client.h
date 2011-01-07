@@ -134,7 +134,7 @@ public:
      * @param group the group key
      * @return true if the group is found
      */
-    bool tqfindGroup(const TQCString &group);
+    bool findGroup(const TQCString &group);
 
     /**
      * Delete a persistent variable.

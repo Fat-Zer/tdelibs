@@ -27,7 +27,7 @@
  * version of this file only under the terms of one of those two
  * licenses (the MPL or the GPL) and not to allow others to use your
  * version of this file under the LGPL, indicate your decision by
- * deletingthe provisions above and tqreplace them with the notice and
+ * deletingthe provisions above and replace them with the notice and
  * other provisions required by the MPL or the GPL, as the case may be.
  * If you do not delete the provisions above, a recipient may use your
  * version of this file under any of the LGPL, the MPL or the GPL.

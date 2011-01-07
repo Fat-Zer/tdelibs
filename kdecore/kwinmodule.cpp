@@ -172,7 +172,7 @@ const TQValueList<WId>& KWinModule::stackingOrder() const
 
 bool KWinModule::hasWId(WId w) const
 {
-    return d->windows.tqfindIndex( w ) != -1;
+    return d->windows.findIndex( w ) != -1;
 }
 
 const TQValueList<WId>& KWinModule::systemTrayWindows() const
@@ -243,7 +243,7 @@ bool KWinModulePrivate::x11Event( XEvent * ev )
 	    for ( TQPtrListIterator<KWinModule> mit( modules ); mit.current(); ++mit )
 		emit (*mit)->showingDesktopChanged( showingDesktop());
         }
-    } else  if ( windows.tqfindIndex( ev->xany.window ) != -1 ){
+    } else  if ( windows.findIndex( ev->xany.window ) != -1 ){
 	NETWinInfo ni( qt_xdisplay(), ev->xany.window, qt_xrootwin(), 0 );
         unsigned long dirty[ 2 ];
 	ni.event( ev, dirty, 2 );
@@ -257,7 +257,7 @@ bool KWinModulePrivate::x11Event( XEvent * ev )
         }
 	if ( (dirty[ NETWinInfo::PROTOCOLS ] & NET::WMStrut) != 0 ) {
             removeStrutWindow( ev->xany.window );
-            if ( possibleStrutWindows.tqfindIndex( ev->xany.window ) == -1 )
+            if ( possibleStrutWindows.findIndex( ev->xany.window ) == -1 )
         	possibleStrutWindows.append( ev->xany.window );
 	}
 	if ( dirty[ NETWinInfo::PROTOCOLS ] || dirty[ NETWinInfo::PROTOCOLS2 ] ) {
@@ -295,7 +295,7 @@ void KWinModulePrivate::updateStackingOrder()
 
 void KWinModulePrivate::addClient(Window w)
 {
-    if ( (what >= KWinModule::INFO_WINDOWS) && !TQWidget::tqfind( w ) )
+    if ( (what >= KWinModule::INFO_WINDOWS) && !TQWidget::find( w ) )
 	XSelectInput( qt_xdisplay(), w, PropertyChangeMask | StructureNotifyMask );
     bool emit_strutChanged = false;
     if( strutSignalConnected && modules.count() > 0 ) {
@@ -318,7 +318,7 @@ void KWinModulePrivate::addClient(Window w)
 void KWinModulePrivate::removeClient(Window w)
 {
     bool emit_strutChanged = removeStrutWindow( w );
-    if( strutSignalConnected && possibleStrutWindows.tqfindIndex( w ) != -1 && modules.count() > 0 ) {
+    if( strutSignalConnected && possibleStrutWindows.findIndex( w ) != -1 && modules.count() > 0 ) {
         NETWinInfo info( qt_xdisplay(), w, qt_xrootwin(), NET::WMStrut );
         NETStrut strut = info.strut();
         if ( strut.left || strut.top || strut.right || strut.bottom ) {
@@ -382,16 +382,16 @@ TQRect KWinModule::workArea( int desktop ) const
 {
     int desk  = (desktop > 0 && desktop <= (int) d->numberOfDesktops() ) ? desktop : currentDesktop();
     if ( desk <= 0 )
-	return TQApplication::desktop()->tqgeometry();
+	return TQApplication::desktop()->geometry();
     NETRect r = d->workArea( desk );
     if( r.size.width <= 0 || r.size.height <= 0 ) // not set
-	return TQApplication::desktop()->tqgeometry();
+	return TQApplication::desktop()->geometry();
     return TQRect( r.pos.x, r.pos.y, r.size.width, r.size.height );
 }
 
 TQRect KWinModule::workArea( const TQValueList<WId>& exclude, int desktop ) const
 {
-    TQRect all = TQApplication::desktop()->tqgeometry();
+    TQRect all = TQApplication::desktop()->geometry();
     TQRect a = all;
 
     if (desktop == -1)
@@ -400,10 +400,10 @@ TQRect KWinModule::workArea( const TQValueList<WId>& exclude, int desktop ) cons
     TQValueList<WId>::ConstIterator it1;
     for( it1 = d->windows.begin(); it1 != d->windows.end(); ++it1 ) {
 
-	if(exclude.tqfindIndex(*it1) != -1) continue;
+	if(exclude.findIndex(*it1) != -1) continue;
         
 // Kicker (very) extensively calls this function, causing hundreds of roundtrips just
-// to repeatedly tqfind out struts of all windows. Therefore strut values for strut
+// to repeatedly find out struts of all windows. Therefore strut values for strut
 // windows are cached here.
         NETStrut strut;
         TQValueList< KWinModulePrivate::StrutData >::Iterator it2 = d->strutWindows.begin();
@@ -416,7 +416,7 @@ TQRect KWinModule::workArea( const TQValueList<WId>& exclude, int desktop ) cons
             if(!((*it2).desktop == desktop || (*it2).desktop == NETWinInfo::OnAllDesktops ))
                 continue;
             strut = (*it2).strut;
-        } else if( d->possibleStrutWindows.tqfindIndex( *it1 ) != -1 ) {
+        } else if( d->possibleStrutWindows.findIndex( *it1 ) != -1 ) {
             NETWinInfo info( qt_xdisplay(), (*it1), qt_xrootwin(), NET::WMStrut | NET::WMDesktop);
 	    strut = info.strut();
             d->possibleStrutWindows.remove( *it1 );

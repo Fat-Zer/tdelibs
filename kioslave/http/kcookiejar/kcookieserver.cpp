@@ -277,7 +277,7 @@ void KCookieServer::checkCookies( KHttpCookieList *cookieList)
         {
            TQCString replyType;
            TQByteArray replyData;
-           TQString res = mCookieJar->tqfindCookies( request->url, request->DOM, request->windowId );
+           TQString res = mCookieJar->findCookies( request->url, request->DOM, request->windowId );
 
            TQDataStream stream2(replyData, IO_WriteOnly);
            stream2 << res;
@@ -369,14 +369,14 @@ bool KCookieServer::cookieMatches( KHttpCookiePtr c,
 
 // DCOP function
 QString
-KCookieServer::tqfindCookies(TQString url)
+KCookieServer::findCookies(TQString url)
 {
-  return tqfindCookies(url, 0);
+  return findCookies(url, 0);
 }
 
 // DCOP function
 QString
-KCookieServer::tqfindCookies(TQString url, long windowId)
+KCookieServer::findCookies(TQString url, long windowId)
 {
    if (cookiesPending(url))
    {
@@ -390,7 +390,7 @@ KCookieServer::tqfindCookies(TQString url, long windowId)
       return TQString::null; // Talk to you later :-)
    }
 
-   TQString cookies = mCookieJar->tqfindCookies(url, false, windowId);
+   TQString cookies = mCookieJar->findCookies(url, false, windowId);
 
    if (mCookieJar->changed())
       saveCookieJar();
@@ -400,7 +400,7 @@ KCookieServer::tqfindCookies(TQString url, long windowId)
 
 // DCOP function
 QStringList
-KCookieServer::tqfindDomains()
+KCookieServer::findDomains()
 {
    TQStringList result;
    const TQStringList domains = mCookieJar->getDomainList();
@@ -418,7 +418,7 @@ KCookieServer::tqfindDomains()
 
 // DCOP function
 QStringList
-KCookieServer::tqfindCookies(TQValueList<int> fields,
+KCookieServer::findCookies(TQValueList<int> fields,
                            TQString domain,
                            TQString fqdn,
                            TQString path,
@@ -450,14 +450,14 @@ KCookieServer::tqfindCookies(TQValueList<int> fields,
 
 // DCOP function
 QString
-KCookieServer::tqfindDOMCookies(TQString url)
+KCookieServer::findDOMCookies(TQString url)
 {
-   return tqfindDOMCookies(url, 0);
+   return findDOMCookies(url, 0);
 }
 
 // DCOP function
 QString
-KCookieServer::tqfindDOMCookies(TQString url, long windowId)
+KCookieServer::findDOMCookies(TQString url, long windowId)
 {
    // We don't wait for pending cookies because it locks up konqueror 
    // which can cause a deadlock if it happens to have a popup-menu up.
@@ -465,7 +465,7 @@ KCookieServer::tqfindDOMCookies(TQString url, long windowId)
    KHttpCookieList pendingCookies;
    cookiesPending(url, &pendingCookies);
 
-   return mCookieJar->tqfindCookies(url, true, windowId, &pendingCookies);
+   return mCookieJar->findCookies(url, true, windowId, &pendingCookies);
 }
 
 // DCOP function

@@ -202,7 +202,7 @@ static struct Builtin
     { "ascii", "iso 8859-1" },
     { "x-utf-8", "utf-8" },
     { "x-utf-7", "utf-7" }, // ### FIXME: UTF-7 is not in Qt 
-    { "tqunicode-1-1-utf-7", "utf-7" }, // ### FIXME: UTF-7 is not in Qt
+    { "unicode-1-1-utf-7", "utf-7" }, // ### FIXME: UTF-7 is not in Qt
     { "utf-16", "iso-10646-ucs-2" },
     { "utf16", "iso-10646-ucs-2" },
     { "ucs2", "iso-10646-ucs-2" },
@@ -323,7 +323,7 @@ static struct ConversionHints
     { 0, 0 }};
 
 
-// search an array of items index/data, index is const char*, data is T, tqfind first matching index
+// search an array of items index/data, index is const char*, data is T, find first matching index
 // and return data, or return 0
 template< typename T, typename Data >
 static Data kcharsets_array_search( const T* start, const char* entry )
@@ -381,17 +381,17 @@ TQChar KCharsets::fromEntity(const TQString &str)
         if (str[pos] == (QChar)'x' || str[pos] == (QChar)'X') {
             pos++;
             // '&#x0000', hexadeciaml character reference
-            TQString tmp(str.tqunicode()+pos, str.length()-pos);
+            TQString tmp(str.unicode()+pos, str.length()-pos);
             res = tmp.toInt(&ok, 16);
         } else {
             //  '&#0000', decimal character reference
-            TQString tmp(str.tqunicode()+pos, str.length()-pos);
+            TQString tmp(str.unicode()+pos, str.length()-pos);
             res = tmp.toInt(&ok, 10);
         }
         return res;
     }
 
-    const entity *e = kde_tqfindEntity(str.ascii(), str.length());
+    const entity *e = kde_findEntity(str.ascii(), str.length());
 
     if(!e)
     {
@@ -422,14 +422,14 @@ TQChar KCharsets::fromEntity(const TQString &str, int &len)
 TQString KCharsets::toEntity(const TQChar &ch)
 {
     TQString ent;
-    ent.sprintf("&#0x%x;", ch.tqunicode());
+    ent.sprintf("&#0x%x;", ch.unicode());
     return ent;
 }
 
 TQString KCharsets::resolveEntities( const TQString &input )
 {
     TQString text = input;
-    const TQChar *p = text.tqunicode();
+    const TQChar *p = text.unicode();
     const TQChar *end = p + text.length();
     const TQChar *ampersand = 0;
     bool scanForSemicolon = false;
@@ -460,12 +460,12 @@ TQString KCharsets::resolveEntities( const TQString &input )
         if ( entityValue.isNull() )
             continue;
 
-        const uint ampersandPos = ampersand - text.tqunicode();
+        const uint ampersandPos = ampersand - text.unicode();
 
         text[ (int)ampersandPos ] = entityValue;
         text.remove( ampersandPos + 1, entityLength + 1 );
-        p = text.tqunicode() + ampersandPos;
-        end = text.tqunicode() + text.length();
+        p = text.unicode() + ampersandPos;
+        end = text.unicode() + text.length();
         ampersand = 0;
     }
 
@@ -477,7 +477,7 @@ TQStringList KCharsets::availableEncodingNames()
     TQStringList available;
     for ( const char* const* pos = charsets_for_encoding; *pos; ++pos ) {
         //kdDebug(0) << *charsets << " available" << endl;
-        available.append( TQString::tqfromLatin1( *pos ));
+        available.append( TQString::fromLatin1( *pos ));
     }
     return available;
 }
@@ -491,14 +491,14 @@ TQString KCharsets::languageForEncoding( const TQString &encoding )
 
 TQString KCharsets::encodingForName( const TQString &descriptiveName )
 {
-    const int left = descriptiveName.tqfindRev( '(' );
+    const int left = descriptiveName.findRev( '(' );
     
     if (left<0) // No parenthesis, so assume it is a normal encoding name
 	return descriptiveName.stripWhiteSpace();
     
     TQString name(descriptiveName.mid(left+1));
     
-    const int right = name.tqfindRev( ')' );
+    const int right = name.findRev( ')' );
     
     if (right<0) 
         return name;
@@ -511,7 +511,7 @@ TQStringList KCharsets::descriptiveEncodingNames()
     // As we are sorting, we can directly read the array language_for_encoding
     TQStringList encodings;
     for ( const LanguageForEncoding* pos = language_for_encoding; pos->index; ++pos ) {
-        const TQString name = TQString::tqfromLatin1( pos->index );
+        const TQString name = TQString::fromLatin1( pos->index );
         const TQString description = i18n( language_names[ pos->data ] );
         encodings.append( i18n("Descriptive Encoding Name", "%1 ( %2 )"). arg ( description ). arg( name ) );
     }
@@ -536,7 +536,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
 
     if (n.isEmpty()) {
         codec = KGlobal::locale()->codecForEncoding();
-        d->codecForNameDict.tqreplace("->locale<-", codec);
+        d->codecForNameDict.replace("->locale<-", codec);
         return codec;
     }
 
@@ -553,7 +553,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
     codec = TQTextCodec::codecForName(name);
 
     if(codec) {
-        d->codecForNameDict.tqreplace(key, codec);
+        d->codecForNameDict.replace(key, codec);
         return codec;
     }
 
@@ -566,14 +566,14 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
 
     if(codec)
     {
-        d->codecForNameDict.tqreplace(key, codec);
+        d->codecForNameDict.replace(key, codec);
         return codec;
     }
 
     TQString dir;
     {
     KConfigGroupSaver cfgsav( KGlobal::config(), "i18n" );
-    dir = KGlobal::config()->readPathEntry("i18ndir", TQString::tqfromLatin1("/usr/share/i18n/charmaps"));
+    dir = KGlobal::config()->readPathEntry("i18ndir", TQString::fromLatin1("/usr/share/i18n/charmaps"));
     }
 
     // these are codecs not included in Qt. They can be build up if the corresponding charmap
@@ -584,8 +584,8 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
         cname = name;
     cname = cname.upper();
 
-    const TQString basicName = TQString::tqfromLatin1(cname);
-    kdDebug() << k_funcinfo << endl << " Trying to tqfind " << cname << " in " << dir << endl;
+    const TQString basicName = TQString::fromLatin1(cname);
+    kdDebug() << k_funcinfo << endl << " Trying to find " << cname << " in " << dir << endl;
     
     TQString charMapFileName;
     bool gzipped = false; 
@@ -603,7 +603,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
     else {
         // Check if we are asking a code page
         // If yes, then check "CP99999" and "IBM99999"
-        // First we need to tqfind the number of the codepage
+        // First we need to find the number of the codepage
         TQRegExp regexp("^(X-)?(CP|IBM)(-| )?(0-9)+");
         if ( regexp.search(basicName) != -1) {
             const TQString num = regexp.cap(4);
@@ -642,7 +642,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
     }
 
     if(codec) {
-        d->codecForNameDict.tqreplace(key, codec);
+        d->codecForNameDict.replace(key, codec);
         return codec;
     }
 
@@ -654,7 +654,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
         codec = TQTextCodec::codecForName(cname);
 
     if(codec) {
-        d->codecForNameDict.tqreplace(key, codec);
+        d->codecForNameDict.replace(key, codec);
         return codec;
     }
 

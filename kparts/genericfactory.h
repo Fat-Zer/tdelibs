@@ -66,7 +66,7 @@ namespace KParts
      *
      * The template argument has to inherit from KParts::Part and has to implement two methods:
      *  1) There needs to be a public constructor with the following signature:
-     *         MyPart( TQWidget *tqparentWidget, const char *widgetName, TQObject *parent, const char *name, const TQStringList& args )
+     *         MyPart( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const TQStringList& args )
      *
      *  2) It needs to provide one static method to create a KAboutData object per
      *     request, holding information about the component's name, its authors, license, etc.
@@ -97,12 +97,12 @@ namespace KParts
     public:
         GenericFactory() { }
 
-        virtual KParts::Part *createPartObject( TQWidget *tqparentWidget, const char *widgetName,
+        virtual KParts::Part *createPartObject( TQWidget *parentWidget, const char *widgetName,
                                                 TQObject *parent, const char *name,
                                                 const char *className,
                                                 const TQStringList &args )
         {
-            T *part = KDEPrivate::ConcreteFactory<T>::create( tqparentWidget,
+            T *part = KDEPrivate::ConcreteFactory<T>::create( parentWidget,
                                                               widgetName,
                                                               parent,
                                                               name,
@@ -125,12 +125,12 @@ namespace KParts
     public:
         GenericFactory() { }
 
-        virtual KParts::Part *createPartObject( TQWidget *tqparentWidget, const char *widgetName,
+        virtual KParts::Part *createPartObject( TQWidget *parentWidget, const char *widgetName,
                                                 TQObject *parent, const char *name,
                                                 const char *className,
                                                 const TQStringList &args )
         {
-            TQObject *object = KDEPrivate::MultiFactory< KTypeList<T1, T2> >::create( tqparentWidget,
+            TQObject *object = KDEPrivate::MultiFactory< KTypeList<T1, T2> >::create( parentWidget,
                                                                                      widgetName,
                                                                                      parent, name,
                                                                                      className,

@@ -117,7 +117,7 @@ void KConfigDialogManager::init(bool trackChanges)
     changedMap.insert( "KDoubleNumInput", TQT_SIGNAL(valueChanged (double)));
   }
 
-  // Go through all of the children of the widgets and tqfind all known widgets
+  // Go through all of the children of the widgets and find all known widgets
   (void) parseChildren(m_dialog, trackChanges);
 }
 
@@ -131,13 +131,13 @@ void KConfigDialogManager::setupWidget(TQWidget *widget, KConfigSkeletonItem *it
   TQVariant minValue = item->minValue();
   if (minValue.isValid())
   {
-    if (widget->tqmetaObject()->tqfindProperty("minValue", true) != -1)
+    if (widget->metaObject()->findProperty("minValue", true) != -1)
        widget->setProperty("minValue", minValue);
   }
   TQVariant maxValue = item->maxValue();
   if (maxValue.isValid())
   {
-    if (widget->tqmetaObject()->tqfindProperty("maxValue", true) != -1)
+    if (widget->metaObject()->findProperty("maxValue", true) != -1)
        widget->setProperty("maxValue", maxValue);
   }
   if (TQWhatsThis::textFor( widget ).isEmpty())
@@ -153,12 +153,12 @@ void KConfigDialogManager::setupWidget(TQWidget *widget, KConfigSkeletonItem *it
 bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChanges)
 {
   bool valueChanged = false;
-  const TQObjectList listOfChildren = widget->tqchildren();
-  if(listOfChildren.isEmpty())
+  const TQObjectList *listOfChildren = widget->children();
+  if(!listOfChildren)
     return valueChanged;
 
   TQObject *object;
-  for( TQObjectListIterator it( listOfChildren );
+  for( TQObjectListIterator it( *listOfChildren );
        (object = it.current()); ++it )
   {
     if(!object->isWidgetType())
@@ -174,14 +174,14 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
     {
       // This is one of our widgets!
       TQString configId = widgetName+5;
-      KConfigSkeletonItem *item = m_conf->tqfindItem(configId);
+      KConfigSkeletonItem *item = m_conf->findItem(configId);
       if (item)
       {
         d->knownWidget.insert(configId, childWidget);
 
         setupWidget(childWidget, item);
 
-        TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.tqfind(childWidget->className());
+        TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.find(childWidget->className());
 
         if (changedIt == changedMap.end())
         {
@@ -189,7 +189,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
 		   // it again using the super class name. This fixes a problem with using QtRuby/Korundum 
 		   // widgets with KConfigXT where 'Qt::Widget' wasn't being seen a the real deal, even 
 		   // though it was a 'QWidget'.
-          changedIt = changedMap.tqfind(childWidget->tqmetaObject()->superClassName());
+          changedIt = changedMap.find(childWidget->metaObject()->superClassName());
         }
 
         if (changedIt == changedMap.end())
@@ -236,7 +236,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
 #ifndef NDEBUG
     else if (widgetName)
     {
-      TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.tqfind(childWidget->className());
+      TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.find(childWidget->className());
       if (changedIt != changedMap.end())
       {
         if ((!d->insideGroupBox || !childWidget->inherits("QRadioButton")) && 
@@ -267,7 +267,7 @@ void KConfigDialogManager::updateWidgets()
   for( TQDictIterator<TQWidget> it( d->knownWidget );
        (widget = it.current()); ++it )
   {
-     KConfigSkeletonItem *item = m_conf->tqfindItem(it.currentKey());
+     KConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
      if (!item)
      {
         kdWarning(178) << "The setting '" << it.currentKey() << "' has disappeared!" << endl;
@@ -284,7 +284,7 @@ void KConfigDialogManager::updateWidgets()
      if (item->isImmutable())
      {
         widget->setEnabled(false);
-        TQWidget *buddy = d->buddyWidget.tqfind(it.currentKey());
+        TQWidget *buddy = d->buddyWidget.find(it.currentKey());
         if (buddy)
            buddy->setEnabled(false);
      }
@@ -310,7 +310,7 @@ void KConfigDialogManager::updateSettings()
   for( TQDictIterator<TQWidget> it( d->knownWidget );
        (widget = it.current()); ++it )
   {
-     KConfigSkeletonItem *item = m_conf->tqfindItem(it.currentKey());
+     KConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
      if (!item)
      {
         kdWarning(178) << "The setting '" << it.currentKey() << "' has disappeared!" << endl;
@@ -370,7 +370,7 @@ bool KConfigDialogManager::hasChanged()
   for( TQDictIterator<TQWidget> it( d->knownWidget );
        (widget = it.current()); ++it )
   {
-     KConfigSkeletonItem *item = m_conf->tqfindItem(it.currentKey());
+     KConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
      if (!item)
      {
         kdWarning(178) << "The setting '" << it.currentKey() << "' has disappeared!" << endl;

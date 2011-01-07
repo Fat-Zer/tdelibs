@@ -205,7 +205,7 @@ msgid ""
 "_: QT_LAYOUT_DIRECTION\n"
 "Translate this string to the string 'LTR' in left-to-right languages or to "
 "'RTL' in right-to-left languages (such as Hebrew and Arabic) to get proper "
-"widget tqlayout."
+"widget layout."
 msgstr ""
 
 #: kernel/qfontdatabase.cpp:1956

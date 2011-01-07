@@ -72,8 +72,8 @@ LockWidget::LockWidget( const TQString &identifier )
     TQLabel *resourceIdentifier = new TQLabel( identifier, this );
     identifierLayout->addWidget( resourceIdentifier );
 
-    mtqStatus = new TQLabel( "tqStatus: Unlocked", this );
-    topLayout->addWidget( mtqStatus );
+    mStatus = new TQLabel( "Status: Unlocked", this );
+    topLayout->addWidget( mStatus );
 
     TQPushButton *button = new TQPushButton( "Lock", this );
     topLayout->addWidget( button );
@@ -139,7 +139,7 @@ void LockWidget::lock()
   if ( !mLock->lock() ) {
     KMessageBox::sorry( this, mLock->error() );
   } else {
-    mtqStatus->setText( "tqStatus: Locked" );
+    mStatus->setText( "Status: Locked" );
   }
 }
 
@@ -148,7 +148,7 @@ void LockWidget::unlock()
   if ( !mLock->unlock() ) {
     KMessageBox::sorry( this, mLock->error() );
   } else {
-    mtqStatus->setText( "tqStatus: Unlocked" );
+    mStatus->setText( "Status: Unlocked" );
   }
 }
 

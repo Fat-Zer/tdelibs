@@ -153,8 +153,8 @@ TQString KIconEffect::fingerprint(int group, int state) const
         cached += ':';
         cached += tmp.setNum(mValue[group][state]);
         cached += ':';
-        cached += mTrans[group][state] ? TQString::tqfromLatin1("trans")
-            : TQString::tqfromLatin1("notrans");
+        cached += mTrans[group][state] ? TQString::fromLatin1("trans")
+            : TQString::fromLatin1("notrans");
         if (mEffect[group][state] == Colorize || mEffect[group][state] == ToMonochrome)
         {
             cached += ':';
@@ -291,16 +291,16 @@ void KIconEffect::toGray(TQImage &img, float value)
     int rval, gval, bval, val, alpha, i;
     for (i=0; i<pixels; i++)
     {
-	val = tqGray(data[i]);
-	alpha = tqAlpha(data[i]);
+	val = qGray(data[i]);
+	alpha = qAlpha(data[i]);
 	if (value < 1.0)
 	{
-	    rval = static_cast<int>(value*val+(1.0-value)*tqRed(data[i]));
-	    gval = static_cast<int>(value*val+(1.0-value)*tqGreen(data[i]));
-	    bval = static_cast<int>(value*val+(1.0-value)*tqBlue(data[i]));
-	    data[i] = tqRgba(rval, gval, bval, alpha);
+	    rval = static_cast<int>(value*val+(1.0-value)*qRed(data[i]));
+	    gval = static_cast<int>(value*val+(1.0-value)*qGreen(data[i]));
+	    bval = static_cast<int>(value*val+(1.0-value)*qBlue(data[i]));
+	    data[i] = qRgba(rval, gval, bval, alpha);
 	} else
-	    data[i] = tqRgba(val, val, val, alpha);
+	    data[i] = qRgba(val, val, val, alpha);
     }
 }
 
@@ -314,7 +314,7 @@ void KIconEffect::colorize(TQImage &img, const TQColor &col, float value)
     float rcol = col.red(), gcol = col.green(), bcol = col.blue();
     for (i=0; i<pixels; i++)
     {
-        val = tqGray(data[i]);
+        val = qGray(data[i]);
         if (val < 128)
         {
              rval = static_cast<int>(rcol/128*val);
@@ -335,13 +335,13 @@ void KIconEffect::colorize(TQImage &img, const TQColor &col, float value)
 	}
 	if (value < 1.0)
 	{
-	    rval = static_cast<int>(value*rval+(1.0 - value)*tqRed(data[i]));
-	    gval = static_cast<int>(value*gval+(1.0 - value)*tqGreen(data[i]));
-	    bval = static_cast<int>(value*bval+(1.0 - value)*tqBlue(data[i]));
+	    rval = static_cast<int>(value*rval+(1.0 - value)*qRed(data[i]));
+	    gval = static_cast<int>(value*gval+(1.0 - value)*qGreen(data[i]));
+	    bval = static_cast<int>(value*bval+(1.0 - value)*qBlue(data[i]));
 	}
 
-	alpha = tqAlpha(data[i]);
-	data[i] = tqRgba(rval, gval, bval, alpha);
+	alpha = qAlpha(data[i]);
+	data[i] = qRgba(rval, gval, bval, alpha);
     }
 }
 
@@ -357,9 +357,9 @@ void KIconEffect::toMonochrome(TQImage &img, const TQColor &black, const TQColor
    bool grayscale = true;
    // Step 1: determine the average brightness
    for (i=0; i<pixels; i++) {
-       sum += tqGray(data[i])*tqAlpha(data[i]) + 255*(255-tqAlpha(data[i]));
+       sum += qGray(data[i])*qAlpha(data[i]) + 255*(255-qAlpha(data[i]));
        values += 255;
-       if ((tqRed(data[i]) != tqGreen(data[i]) ) || (tqGreen(data[i]) != tqBlue(data[i]) ))
+       if ((qRed(data[i]) != qGreen(data[i]) ) || (qGreen(data[i]) != qBlue(data[i]) ))
            grayscale = false;
    }
    double medium = sum/values;
@@ -367,30 +367,30 @@ void KIconEffect::toMonochrome(TQImage &img, const TQColor &black, const TQColor
    // Step 2: Modify the image
    if (grayscale) {
        for (i=0; i<pixels; i++) {
-           int v = tqRed(data[i]);
-           rval = static_cast<int>( ((255-v)*rb + v*rw)*value/255 + (1.0-value)*tqRed(data[i]));
-           gval = static_cast<int>( ((255-v)*gb + v*gw)*value/255 + (1.0-value)*tqGreen(data[i]));
-           bval = static_cast<int>( ((255-v)*bb + v*bw)*value/255 + (1.0-value)*tqBlue(data[i]));
+           int v = qRed(data[i]);
+           rval = static_cast<int>( ((255-v)*rb + v*rw)*value/255 + (1.0-value)*qRed(data[i]));
+           gval = static_cast<int>( ((255-v)*gb + v*gw)*value/255 + (1.0-value)*qGreen(data[i]));
+           bval = static_cast<int>( ((255-v)*bb + v*bw)*value/255 + (1.0-value)*qBlue(data[i]));
 
-           alpha = tqAlpha(data[i]);
-           data[i] = tqRgba(rval, gval, bval, alpha);
+           alpha = qAlpha(data[i]);
+           data[i] = qRgba(rval, gval, bval, alpha);
        }
    }
    else {
       for (i=0; i<pixels; i++) {
-         if (tqGray(data[i]) <= medium) {
-            rval = static_cast<int>(value*rb+(1.0-value)*tqRed(data[i]));
-            gval = static_cast<int>(value*gb+(1.0-value)*tqGreen(data[i]));
-            bval = static_cast<int>(value*bb+(1.0-value)*tqBlue(data[i]));
+         if (qGray(data[i]) <= medium) {
+            rval = static_cast<int>(value*rb+(1.0-value)*qRed(data[i]));
+            gval = static_cast<int>(value*gb+(1.0-value)*qGreen(data[i]));
+            bval = static_cast<int>(value*bb+(1.0-value)*qBlue(data[i]));
          }
          else {
-            rval = static_cast<int>(value*rw+(1.0-value)*tqRed(data[i]));
-            gval = static_cast<int>(value*gw+(1.0-value)*tqGreen(data[i]));
-            bval = static_cast<int>(value*bw+(1.0-value)*tqBlue(data[i]));
+            rval = static_cast<int>(value*rw+(1.0-value)*qRed(data[i]));
+            gval = static_cast<int>(value*gw+(1.0-value)*qGreen(data[i]));
+            bval = static_cast<int>(value*bw+(1.0-value)*qBlue(data[i]));
          }
 
-         alpha = tqAlpha(data[i]);
-         data[i] = tqRgba(rval, gval, bval, alpha);
+         alpha = qAlpha(data[i]);
+         data[i] = qRgba(rval, gval, bval, alpha);
       }
    }
 }
@@ -408,8 +408,8 @@ void KIconEffect::deSaturate(TQImage &img, float value)
         color.setRgb(data[i]);
         color.hsv(&h, &s, &v);
         color.setHsv(h, (int) (s * (1.0 - value) + 0.5), v);
-	data[i] = tqRgba(color.red(), color.green(), color.blue(),
-		tqAlpha(data[i]));
+	data[i] = qRgba(color.red(), color.green(), color.blue(),
+		qAlpha(data[i]));
     }
 }
 
@@ -431,7 +431,7 @@ void KIconEffect::toGamma(TQImage &img, float value)
         rval = static_cast<int>(pow(static_cast<float>(rval)/255 , gamma)*255);
         gval = static_cast<int>(pow(static_cast<float>(gval)/255 , gamma)*255);
         bval = static_cast<int>(pow(static_cast<float>(bval)/255 , gamma)*255);
-	data[i] = tqRgba(rval, gval, bval, tqAlpha(data[i]));
+	data[i] = qRgba(rval, gval, bval, qAlpha(data[i]));
     }
 }
 
@@ -475,8 +475,8 @@ void KIconEffect::semiTransparent(TQImage &img)
         // search for a color that is already transparent
         for (x=0; x<img.numColors(); x++)
         {
-            // try to tqfind already transparent pixel
-            if (tqAlpha(img.color(x)) < 127)
+            // try to find already transparent pixel
+            if (qAlpha(img.color(x)) < 127)
             {
                 transColor = x;
                 break;
@@ -535,9 +535,9 @@ void KIconEffect::semiTransparent(TQPixmap &pix)
 	for (int x=0; x<(img.width()+31)/32; x++)
 	    line[x] &= pattern;
     }
-    TQBitmap tqmask;
-    tqmask.convertFromImage(img);
-    pix.setMask(tqmask);
+    TQBitmap mask;
+    mask.convertFromImage(img);
+    pix.setMask(mask);
 }
 
 TQImage KIconEffect::doublePixels(TQImage src) const
@@ -631,7 +631,7 @@ void KIconEffect::overlay(TQImage &src, TQImage &overlay)
 	int trans;
 	for (trans=0; trans<overlay.numColors(); trans++)
 	{
-	    if (tqAlpha(overlay.color(trans)) == 0)
+	    if (qAlpha(overlay.color(trans)) == 0)
 	    {
 		kdDebug(265) << "transparent pixel found at " << trans << "\n";
 		break;
@@ -680,22 +680,22 @@ void KIconEffect::overlay(TQImage &src, TQImage &overlay)
 
 	    for (j=0; j<src.width(); j++)
 	    {
-		r1 = tqRed(oline[j]);
-		g1 = tqGreen(oline[j]);
-		b1 = tqBlue(oline[j]);
-		a1 = tqAlpha(oline[j]);
+		r1 = qRed(oline[j]);
+		g1 = qGreen(oline[j]);
+		b1 = qBlue(oline[j]);
+		a1 = qAlpha(oline[j]);
 
-		r2 = tqRed(sline[j]);
-		g2 = tqGreen(sline[j]);
-		b2 = tqBlue(sline[j]);
-		a2 = tqAlpha(sline[j]);
+		r2 = qRed(sline[j]);
+		g2 = qGreen(sline[j]);
+		b2 = qBlue(sline[j]);
+		a2 = qAlpha(sline[j]);
 
 		r2 = (a1 * r1 + (0xff - a1) * r2) >> 8;
 		g2 = (a1 * g1 + (0xff - a1) * g2) >> 8;
 		b2 = (a1 * b1 + (0xff - a1) * b2) >> 8;
 		a2 = QMAX(a1, a2);
 
-		sline[j] = tqRgba(r2, g2, b2, a2);
+		sline[j] = qRgba(r2, g2, b2, a2);
 	    }
 	}
     }
@@ -742,7 +742,7 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect)
 
     TQPainter p(widget);
 
-    // Use NotROP to avoid having to tqrepaint the pixmap each time.
+    // Use NotROP to avoid having to repaint the pixmap each time.
     p.setPen(TQPen(Qt::black, 2, Qt::DotLine));
     p.setRasterOp(Qt::NotROP);
 

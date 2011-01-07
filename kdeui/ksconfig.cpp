@@ -41,7 +41,7 @@
 class KSpellConfigPrivate
 {
 public:
-    TQStringList tqreplacelist;
+    TQStringList replacelist;
 };
 
 
@@ -56,7 +56,7 @@ KSpellConfig::KSpellConfig (const KSpellConfig &_ksc)
   , clientcombo(0)
 {
   d = new KSpellConfigPrivate;
-  setReplaceAllList( _ksc.tqreplaceAllList() );
+  setReplaceAllList( _ksc.replaceAllList() );
   setNoRootAffix( _ksc.noRootAffix() );
   setRunTogether( _ksc.runTogether() );
   setDictionary( _ksc.dictionary() );
@@ -266,7 +266,7 @@ KSpellConfig::interpret( TQString &fname, TQString &lname,
 
   TQString extension;
 
-  int i = dname.tqfind('-');
+  int i = dname.find('-');
   if ( i != -1 )
   {
     extension = dname.mid(i+1);
@@ -363,8 +363,8 @@ KSpellConfig::interpret( TQString &fname, TQString &lname,
   }
 
   //We have explicitly chosen English as the default here.
-  if ( ( KGlobal::locale()->language() == TQString::tqfromLatin1("C") &&
-         lname==TQString::tqfromLatin1("en") ) ||
+  if ( ( KGlobal::locale()->language() == TQString::fromLatin1("C") &&
+         lname==TQString::fromLatin1("en") ) ||
        KGlobal::locale()->language() == lname )
     return true;
 
@@ -406,9 +406,9 @@ KSpellConfig::fillInDialog ()
   int whichelement=-1;
 
   if ( dictFromList() )
-    whichelement = langfnames.tqfindIndex(dictionary());
+    whichelement = langfnames.findIndex(dictionary());
 
-  dictcombo->setMinimumWidth (dictcombo->tqsizeHint().width());
+  dictcombo->setMinimumWidth (dictcombo->sizeHint().width());
 
   if (dictionary().isEmpty() ||  whichelement!=-1)
   {
@@ -668,7 +668,7 @@ KSpellConfig::fillDicts( TQComboBox* box, TQStringList* dictionaries )
       box->insertItem (i18n("ASpell Default"));
 
       // dictionary path
-      // FIXME: use "aspell dump config" to tqfind out the dict-dir
+      // FIXME: use "aspell dump config" to find out the dict-dir
       TQFileInfo dir ("/usr/lib" KDELIBSUFF "/aspell");
       if (!dir.exists() || !dir.isDir())
         dir.setFile ("/usr/lib" KDELIBSUFF "/aspell-0.60");
@@ -742,7 +742,7 @@ KSpellConfig::fillDicts( TQComboBox* box, TQStringList* dictionaries )
         }
       }
     }
-    int whichelement = langfnames.tqfindIndex(qsdict);
+    int whichelement = langfnames.findIndex(qsdict);
     if ( whichelement >= 0 ) {
       box->setCurrentItem( whichelement );
     }
@@ -788,7 +788,7 @@ KSpellConfig::setDictionary (const TQString s)
   qsdict=s; //.copy();
 
   if (qsdict.length()>5)
-    if ((signed)qsdict.tqfind(".hash")==(signed)qsdict.length()-5)
+    if ((signed)qsdict.find(".hash")==(signed)qsdict.length()-5)
       qsdict.remove (qsdict.length()-5,5);
 
 
@@ -797,7 +797,7 @@ KSpellConfig::setDictionary (const TQString s)
     int whichelement=-1;
     if (dictFromList())
     {
-      whichelement = langfnames.tqfindIndex(s);
+      whichelement = langfnames.findIndex(s);
 
       if(whichelement >= 0)
       {
@@ -903,7 +903,7 @@ KSpellConfig::sBrowseDict()
 /*
 void KSpellConfig::sBrowsePDict()
 {
-  //how do I tqfind home directory path??
+  //how do I find home directory path??
   TQString qs( KFileDialog::getOpenFileName ("",".ispell_*") );
   if ( !qs.isNull() )
       kle2->setText (qs);
@@ -1011,15 +1011,15 @@ KSpellConfig::ignoreList () const
 
 // KDE 4: Make it const TQStringList &
 void
-KSpellConfig::setReplaceAllList (TQStringList _tqreplacelist)
+KSpellConfig::setReplaceAllList (TQStringList _replacelist)
 {
-  d->tqreplacelist=_tqreplacelist;
+  d->replacelist=_replacelist;
 }
 
 QStringList
-KSpellConfig::tqreplaceAllList() const
+KSpellConfig::replaceAllList() const
 {
-  return d->tqreplacelist;
+  return d->replacelist;
 }
 
 #include "ksconfig.moc"

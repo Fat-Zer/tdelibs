@@ -39,7 +39,7 @@ class KAccelPrivate;
  * through application configuration files or through the
  * KKeyChooser GUI.
  *
- * A KAccel tqcontains a list of accelerator actions.
+ * A KAccel contains a list of accelerator actions.
  *
  * For example, CTRL+Key_P could be a shortcut for printing a document. The key
  * codes are listed in tqnamespace.h. "Print" could be the action name for printing.
@@ -96,10 +96,10 @@ class KDECORE_EXPORT KAccel : public TQAccel
  public:
 	/**
 	 * Creates a new KAccel that watches @p pParent, which is also
-	 * the TQObject's parent.
+	 * the QObject's parent.
 	 *
 	 * @param pParent the parent and widget to watch for key strokes
-	 * @param psName the name of the TQObject
+	 * @param psName the name of the QObject
 	 */
 	KAccel( TQWidget* pParent, const char* psName = 0 );
 
@@ -107,8 +107,8 @@ class KDECORE_EXPORT KAccel : public TQAccel
 	 * Creates a new KAccel that watches @p watch.
 	 *
 	 * @param watch the widget to watch for key strokes
-	 * @param parent the parent of the TQObject
-	 * @param psName the name of the TQObject
+	 * @param parent the parent of the QObject
+	 * @param psName the name of the QObject
 	 */
 	KAccel( TQWidget* watch, TQObject* parent, const char* psName = 0 );
 	virtual ~KAccel();
@@ -376,7 +376,7 @@ class KDECORE_EXPORT KAccel : public TQAccel
 	 * Return the name of the accelerator item with the keycode @p key,
 	 * or TQString::null if the item cannot be found.
 	 */
-	TQString tqfindKey( int key ) const KDE_DEPRECATED;
+	TQString findKey( int key ) const KDE_DEPRECATED;
 #endif // !KDE_NO_COMPAT
 
  protected:

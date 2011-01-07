@@ -186,7 +186,7 @@ class KABC_EXPORT DistributionListManager
   \endcode
 */
 
-class KABC_EXPORT DistributionListWatcher : public TQObject
+class KABC_EXPORT DistributionListWatcher : public QObject
 {
   Q_OBJECT
 

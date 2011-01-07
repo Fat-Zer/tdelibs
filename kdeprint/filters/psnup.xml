@@ -16,7 +16,7 @@
 			<value name="-l" description="Landscape" />
 			<value name="-r" description="Seascape" />
 		</filterarg>
-		<filterarg name="tqlayout" description="Layout" format="%value" type="list" default="">
+		<filterarg name="layout" description="Layout" format="%value" type="list" default="">
 			<value name="" description="Row-Major" />
 			<value name="-c" description="Column-Major" />
 		</filterarg>

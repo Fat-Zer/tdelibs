@@ -6,7 +6,7 @@ DEFINES += ICE_t TRANS_SERVER TRANS_CLIENT SOCKCONN TCPCONN ANSICPP
 
 TARGET = kdeice$$KDEBUG$(KDE_VER)
 
-system( bash ktqmoc )
+system( bash kmoc )
 
 DEF_FILE = kde-ice.def
 

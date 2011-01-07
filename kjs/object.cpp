@@ -234,7 +234,7 @@ bool ObjectImp::canPut(ExecState *, const Identifier &propertyName) const
     return!(attributes & ReadOnly);
 
   // Look in the static hashtable of properties
-  const HashEntry* e = tqfindPropertyHashEntry(propertyName);
+  const HashEntry* e = findPropertyHashEntry(propertyName);
   if (e)
     return !(e->attr & ReadOnly);
 
@@ -250,7 +250,7 @@ bool ObjectImp::hasProperty(ExecState *exec, const Identifier &propertyName) con
     return true;
 
   // Look in the static hashtable of properties
-  if (tqfindPropertyHashEntry(propertyName))
+  if (findPropertyHashEntry(propertyName))
       return true;
 
   // non-standard netscape extension
@@ -280,7 +280,7 @@ bool ObjectImp::deleteProperty(ExecState * /*exec*/, const Identifier &propertyN
   }
 
   // Look in the static hashtable of properties
-  const HashEntry* entry = tqfindPropertyHashEntry(propertyName);
+  const HashEntry* entry = findPropertyHashEntry(propertyName);
   if (entry && entry->attr & DontDelete)
     return false; // this builtin property can't be deleted
   return true;
@@ -351,7 +351,7 @@ Value ObjectImp::defaultValue(ExecState *exec, Type hint) const
   return err;
 }
 
-const HashEntry* ObjectImp::tqfindPropertyHashEntry( const Identifier& propertyName ) const
+const HashEntry* ObjectImp::findPropertyHashEntry( const Identifier& propertyName ) const
 {
   const ClassInfo *info = classInfo();
   while (info) {

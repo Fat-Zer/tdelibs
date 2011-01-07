@@ -13,10 +13,10 @@ win32 {
 DESTDIR=.
 
 
-tqcontains( KW_CONFIG, release ) {
+contains( KW_CONFIG, release ) {
 TARGET		= genembed_rel
 }
-!tqcontains( KW_CONFIG, release ) {
+!contains( KW_CONFIG, release ) {
 TARGET		= genembed
 }
 

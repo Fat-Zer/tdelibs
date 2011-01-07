@@ -105,11 +105,11 @@
  * this is because usually get called by the class which they belong to,
  * and one'd assume that a class author doesn't use deprecated methods of his
  * own class. The only exception to this are signals which are connected to
- * other signals; they get invoked from tqmoc-generated code. In any case, 
+ * other signals; they get invoked from moc-generated code. In any case, 
  * printing a warning message in either case is not useful.
  * For slots, it can make sense (since slots can be invoked directly) but be
  * aware that if the slots get triggered by a signal, the will get called from
- * tqmoc code as well and thus the warnings are useless.
+ * moc code as well and thus the warnings are useless.
  *
  * \par
  * Also note that it is not possible to use KDE_DEPRECATED for classes which
@@ -148,7 +148,7 @@
  * The KDE_ISUNLIKELY macro tags an expression as unlikely evaluating to 'true'. 
  *
  * \note
- * Do NOT use ( !KDE_ISLIKELY(foo) ) as an tqreplacement for KDE_ISUNLIKELY !
+ * Do NOT use ( !KDE_ISLIKELY(foo) ) as an replacement for KDE_ISUNLIKELY !
  *
  * \code
  * if ( KDE_ISUNLIKELY( testsomething() ) )
@@ -172,7 +172,7 @@
  *
  * \note The added functions must be added to the header at the same location
  * as the macro; changing the order of virtual functions in a header is also
- * binary incompatible as it breaks the tqlayout of the vtable.
+ * binary incompatible as it breaks the layout of the vtable.
  */
 
 #define RESERVE_VIRTUAL_1 \

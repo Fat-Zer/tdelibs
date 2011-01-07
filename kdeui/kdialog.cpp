@@ -132,9 +132,9 @@ void KDialog::setPlainCaption( const TQString &caption )
 
 void KDialog::resizeLayout( TQWidget *w, int margin, int spacing )
 {
-  if( w->tqlayout() )
+  if( w->layout() )
   {
-    resizeLayout( w->tqlayout(), margin, spacing );
+    resizeLayout( w->layout(), margin, spacing );
   }
 
   if( w->children() )
@@ -162,10 +162,10 @@ void KDialog::resizeLayout( TQLayoutItem *lay, int margin, int spacing )
     resizeLayout( child, margin, spacing );
     ++it;
   }
-  if( lay->tqlayout() )
+  if( lay->layout() )
   {
-    lay->tqlayout()->setMargin( margin );
-    lay->tqlayout()->setSpacing( spacing );
+    lay->layout()->setMargin( margin );
+    lay->layout()->setSpacing( spacing );
   }
 }
 
@@ -188,7 +188,7 @@ static TQRect screenRect( TQWidget *w, int screen )
     }
     return desktop->availableGeometry(screen);
   } else {
-    return desktop->tqgeometry();
+    return desktop->geometry();
   }
 }
 

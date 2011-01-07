@@ -170,7 +170,7 @@ void Font::drawText( TQPainter *p, int x, int y, TQChar *str, int slen, int pos,
 	// and stored. In the second, the actual characters are drawn.
 
 	// For each letter in the text box, save the width of the character.
-	// When word-wise, only the first letter tqcontains the width, but of the
+	// When word-wise, only the first letter contains the width, but of the
 	// whole word.
         short* const widthList = (short *)alloca(to*sizeof(short));
 
@@ -293,7 +293,7 @@ int Font::width( TQChar *chs, int, int pos, int len, int start, int end, int toA
     const TQString qstr = cstr.string();
     if ( scFont ) {
 	const TQString upper = qstr.upper();
-	const TQChar *uc = qstr.tqunicode();
+	const TQChar *uc = qstr.unicode();
 	const TQFontMetrics sc_fm( *scFont );
 	for ( int i = 0; i < len; ++i ) {
 	    if ( (uc+i)->category() == TQChar::Letter_Lowercase )
@@ -431,7 +431,7 @@ void Font::update( TQPaintDeviceMetrics* devMetrics ) const
     if( !isFontScalable(db, f) )
     {
         const TQValueList<int>& pointSizes = (*scalSizesCache)[ScalKey(f)];
-        // lets see if we tqfind a nice looking font, which is not too far away
+        // lets see if we find a nice looking font, which is not too far away
         // from the requested one.
         // kdDebug(6080) << "khtml::setFontSize family = " << f.family() << " size requested=" << size << endl;
 

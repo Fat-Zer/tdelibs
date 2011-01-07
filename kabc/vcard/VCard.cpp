@@ -113,7 +113,7 @@ VCard::_parse()
 	///////////////////////////////////////////////////////////////
 	// FIRST LINE
 
-	int split = beginLine.tqfind(':');
+	int split = beginLine.find(':');
 
 	if (split == -1) { // invalid, no BEGIN
 		vDebug("No split");
@@ -123,7 +123,7 @@ VCard::_parse()
 	TQCString firstPart(beginLine.left(split));
 	TQCString valuePart(beginLine.mid(split + 1));
 
-	split = firstPart.tqfind('.');
+	split = firstPart.find('.');
 
 	if (split != -1) {
 		group_		= firstPart.left(split);
@@ -188,7 +188,7 @@ VCard::_parse()
 	///////////////////////////////////////////////////////////////
 	// LAST LINE
 
-	split = endLine.tqfind(':');
+	split = endLine.find(':');
 
 	if (split == -1) // invalid, no END
 		return;
@@ -196,7 +196,7 @@ VCard::_parse()
 	firstPart = endLine.left(split);
 	valuePart = endLine.right(firstPart.length() - split - 1);
 
-	split = firstPart.tqfind('.');
+	split = firstPart.find('.');
 
 	if (split != -1) {
 		group_		= firstPart.left(split);

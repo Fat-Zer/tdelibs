@@ -295,7 +295,7 @@ int KCalendarSystemGregorian::weekDayOfPray() const
 
 TQString KCalendarSystemGregorian::calendarName() const
 {
-  return TQString::tqfromLatin1("gregorian");
+  return TQString::fromLatin1("gregorian");
 }
 
 bool KCalendarSystemGregorian::isLunar() const

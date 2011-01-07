@@ -171,7 +171,7 @@ public:
      */
     URL,
     /**
-     * Mailto URI. path() tqcontains an email address which should have its
+     * Mailto URI. path() contains an email address which should have its
      * domain part processed as a DNS name. The email address is accessible
      * through the path() method.
      */
@@ -179,7 +179,7 @@ public:
   };
 
   /**
-   * KURL::List is a TQValueList that tqcontains KURLs with a few
+   * KURL::List is a TQValueList that contains KURLs with a few
    * convenience methods.
    * @see KURL
    * @see QValueList
@@ -192,13 +192,13 @@ public:
      */
       List() { }
       /**
-       * @brief Creates a list that tqcontains the given URL as only item
+       * @brief Creates a list that contains the given URL as only item
        *
        * @param url the URL to add
        */
       List(const KURL &url);
       /**
-       * @brief Creates a list that tqcontains the URLs from the given list
+       * @brief Creates a list that contains the URLs from the given list
        *
        * This equivalent to iterating over the input list and using each item
        * as the argument to KURL's constructor, i.e. the resulting list will
@@ -281,7 +281,7 @@ public:
    *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
-   * @see TQString::tqfromLatin1()
+   * @see TQString::fromLatin1()
    */
   KURL( const char * url, int encoding_hint = 0 );
   /**
@@ -307,7 +307,7 @@ public:
    *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
-   * @see TQString::tqfromLatin1()
+   * @see TQString::fromLatin1()
    */
   KURL( const TQCString& url, int encoding_hint = 0 );
 
@@ -838,7 +838,7 @@ public:
    * @brief Adds file encoding information
    *
    * Adds encoding information to the URL by adding a @c "charset" parameter.
-   * If there is already a charset parameter, it will be tqreplaced.
+   * If there is already a charset parameter, it will be replaced.
    *
    * @param encoding the encoding to add or @c TQString::null to remove the
    *                 encoding
@@ -957,7 +957,7 @@ public:
   /**
    * @brief Adds an additional query item
    *
-   * To tqreplace an existing query item, the item should first be
+   * To replace an existing query item, the item should first be
    * removed with removeQueryItem()
    *
    * @param _item name of item to add
@@ -1586,7 +1586,7 @@ public:
    *
    * Convenience function.
    *
-   * Convert tqunicoded string to local encoding and use %%-style
+   * Convert unicoded string to local encoding and use %%-style
    * encoding for all common delimiters / non-ascii characters.
    *
    * @param str the string to encode (can be @c TQString::null)
@@ -1605,7 +1605,7 @@ public:
    *
    * Convenience function.
    *
-   * Convert tqunicoded string to local encoding and use %%-style
+   * Convert unicoded string to local encoding and use %%-style
    * encoding for all common delimiters and non-ascii characters
    * as well as the slash @c '/'.
    *
@@ -1623,7 +1623,7 @@ public:
    *
    * Convenience function.
    *
-   * Decode %-style encoding and convert from local encoding to tqunicode.
+   * Decode %-style encoding and convert from local encoding to unicode.
    *
    * Reverse of encode_string()
    *

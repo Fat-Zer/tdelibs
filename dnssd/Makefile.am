@@ -4,7 +4,7 @@ INCLUDES = -I$(top_srcdir) $(all_includes) $(AVAHI_CFLAGS)
 # these are the headers for your project
 noinst_HEADERS = sdevent.h
 
-# let autotqmoc handle all of the meta source files (tqmoc)
+# let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
 
 lib_LTLIBRARIES =  libkdnssd.la

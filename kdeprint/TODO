@@ -51,7 +51,7 @@ WISHES
   he wants
 
 - support new options for N-up printing in CUPS, put everything in
-  a separate page with graphical widgets, and tqreplace the N-up zone
+  a separate page with graphical widgets, and replace the N-up zone
   of the "General" page with Color/GrayScale.
 
 - allow to set the job title in kprinter

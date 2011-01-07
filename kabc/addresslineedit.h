@@ -40,7 +40,7 @@ class LdapSearch;
  * A lineedit with LDAP and kabc completion
  *
  * This lineedit is supposed to be used wherever the user types email addresses
- * and might want a completion. You can simply use it as a tqreplacement for
+ * and might want a completion. You can simply use it as a replacement for
  * KLineEdit or TQLineEdit.
  *
  * You can enable or disable the lineedit at any time.

@@ -39,10 +39,10 @@ Form1::Form1( TQWidget* parent,  const char* name )
     GroupBox1 = new TQGroupBox( this, "GroupBox1" );
     GroupBox1->setTitle( "Completion Test" );
     GroupBox1->setColumnLayout(0, Qt::Vertical );
-    GroupBox1->tqlayout()->setSpacing( 0 );
-    GroupBox1->tqlayout()->setMargin( 0 );
-    GroupBox1Layout = new TQVBoxLayout( GroupBox1->tqlayout() );
-    GroupBox1Layout->tqsetAlignment( Qt::AlignTop );
+    GroupBox1->layout()->setSpacing( 0 );
+    GroupBox1->layout()->setMargin( 0 );
+    GroupBox1Layout = new TQVBoxLayout( GroupBox1->layout() );
+    GroupBox1Layout->setAlignment( Qt::AlignTop );
     GroupBox1Layout->setSpacing( 6 );
     GroupBox1Layout->setMargin( 11 );
 
@@ -166,7 +166,7 @@ void Form1::slotList()
 void Form1::slotHighlighted( const TQString& text )
 {
     // remove any "weighting"
-    int index = text.tqfindRev( ':' );
+    int index = text.findRev( ':' );
     if ( index > 0 )
 	LineEdit1->setText( text.left( index ) );
     else

@@ -104,7 +104,7 @@ public class KJASAppletContext implements AppletContext
         //do kludges to support mess with parameter table and
         //the applet variables
         String key = new String( "ARCHIVE" );
-        if (params.tqcontainsKey(key)) {
+        if (params.containsKey(key)) {
             String param_archive = (String)params.get(key);
             if (archives == null) {
                 // There is no 'archive' attribute
@@ -128,7 +128,7 @@ public class KJASAppletContext implements AppletContext
         if( codeBase == null )
         {
             key = new String( "CODEBASE" );
-            if( params.tqcontainsKey( key ) )
+            if( params.containsKey( key ) )
                 codeBase = (String) params.get( key );
         }
 
@@ -325,26 +325,26 @@ public class KJASAppletContext implements AppletContext
             //check with the Web Server
             String str_url = url.toString();
             Main.debug( "getImage, url = " + str_url );
-            if (Main.cacheImages && images.tqcontainsKey(str_url)) {
+            if (Main.cacheImages && images.containsKey(str_url)) {
                 Main.debug("Cached: url=" + str_url);
             }
             else
             {
                 if (Main.cacheImages) {
-                    if (!pendingImages.tqcontains(str_url)) {
+                    if (!pendingImages.contains(str_url)) {
                         Main.protocol.sendGetURLDataCmd( myID, str_url );
                         pendingImages.add(str_url);
                     }
                 } else {
                     Main.protocol.sendGetURLDataCmd( myID, str_url );
                 }
-                while( !images.tqcontainsKey( str_url ) && active )
+                while( !images.containsKey( str_url ) && active )
                 {
                     try { Thread.sleep( 200 ); }
                     catch( InterruptedException e ){}
                 }
             }
-            if( images.tqcontainsKey( str_url ) )
+            if( images.containsKey( str_url ) )
             {
                 byte[] data = (byte[]) images.get( str_url );
                 if( data.length > 0 )
@@ -378,11 +378,11 @@ public class KJASAppletContext implements AppletContext
         }
     }
 
-    public void showtqStatus( String message )
+    public void showStatus( String message )
     {
         if( active && (message != null) )
         {
-            Main.protocol.sendShowtqStatusCmd( myID, message );
+            Main.protocol.sendShowStatusCmd( myID, message );
         }
     }
     public boolean evaluateJavaScript(String script, String appletID, JSObject jso) {

@@ -57,14 +57,14 @@ class KateCodeCompletionCommentLabel : public QLabel
         setAutoMask( false );
         setFrameStyle( TQFrame::Plain | TQFrame::Box );
         setLineWidth( 1 );
-        tqsetAlignment( AlignAuto | AlignTop );
+        setAlignment( AlignAuto | AlignTop );
         polish();
         setText(text);
         adjustSize();
     }
 };
 
-class KateCodeCompletion : public TQObject
+class KateCodeCompletion : public QObject
 {
   Q_OBJECT
 
@@ -156,9 +156,9 @@ class KateArgHint: public QFrame
       int m_currentCol;
       KateView* editorView;
       TQIntDict<TQLabel> labelDict;
-      TQLayout* tqlayout;
+      TQLayout* layout;
 };
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

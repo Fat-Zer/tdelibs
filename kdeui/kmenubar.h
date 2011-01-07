@@ -84,7 +84,7 @@ public:
     virtual void setFrameStyle( int );
     virtual void setLineWidth( int );
     virtual void setMargin( int );
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 protected slots:
     void slotReadConfig();
 protected:

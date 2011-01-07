@@ -248,7 +248,7 @@ bool KIMProxy::initialize()
 						{
 							m_apps_available = true;
 							//kdDebug( 790 ) << " app name: " << (*offer)->name() << ", has instance " << *app << ", dcopService: " << dcopService << endl;
-							if ( !m_im_client_stubs.tqfind( dcopService ) )
+							if ( !m_im_client_stubs.find( dcopService ) )
 							{
 								kdDebug( 790 ) << "App " << *app << ", dcopObjectId " << dcopObjectId << " found, using it for presence info." << endl;
 								m_im_client_stubs.insert( *app, new KIMIface_stub( d->dc, *app, dcopObjectId ) );
@@ -284,7 +284,7 @@ void KIMProxy::registeredToDCOP( const TQCString& appId )
 		if ( appId.left( dcopService.length() ) == dcopService )
 		{
 			// if it's not already known, insert it
-			if ( !m_im_client_stubs.tqfind( appId ) )
+			if ( !m_im_client_stubs.find( appId ) )
 			{
 				newApp = true;
 				kdDebug( 790 ) << "App: " << appId << ", dcopService: " << dcopService << " started, using it for presence info."<< endl;
@@ -301,7 +301,7 @@ void KIMProxy::registeredToDCOP( const TQCString& appId )
 void KIMProxy::unregisteredFromDCOP( const TQCString& appId )
 {
 	//kdDebug( 790 ) << k_funcinfo << appId << endl;
-	if ( m_im_client_stubs.tqfind( appId ) )
+	if ( m_im_client_stubs.find( appId ) )
 	{
 		kdDebug( 790 ) << appId << " quit, removing its presence info." << endl;
 		
@@ -558,14 +558,14 @@ bool KIMProxy::imAppsAvailable()
 bool KIMProxy::startPreferredApp()
 {
 	TQString preferences = TQString("[X-DCOP-ServiceName] = '%1'").arg( preferredApp() );
-	// start/tqfind an instance of DCOP/InstantMessenger
+	// start/find an instance of DCOP/InstantMessenger
 	TQString error;
 	TQCString dcopService;
 	// Get a preferred IM client.
 	// The app will notify itself to us using registeredToDCOP, so we don't need to record a stub for it here
 	// FIXME: error in preferences, see debug output
 	preferences = TQString::null;
-	int result = KDCOPServiceStarter::self()->tqfindServiceFor( IM_SERVICE_TYPE, TQString::null, preferences, &error, &dcopService );
+	int result = KDCOPServiceStarter::self()->findServiceFor( IM_SERVICE_TYPE, TQString::null, preferences, &error, &dcopService );
 
 	kdDebug( 790 ) << k_funcinfo << "error was: " << error << ", dcopService: " << dcopService << endl;
 
@@ -578,14 +578,14 @@ void KIMProxy::pollAll( const TQString &uid )
 /*	// We only need to call this function if we don't have any data at all
 	// otherwise, the data will be kept fresh by received presence change
 	// DCOP signals
-	if ( !d->presence_map.tqcontains( uid ) )
+	if ( !d->presence_map.contains( uid ) )
 	{
 		AppPresence *presence = new AppPresence();
 		// record current presence from known clients
 		TQDictIterator<KIMIface_stub> it( m_im_client_stubs );
 		for ( ; it.current(); ++it )
 		{
-			presence->insert( it.currentKey().ascii(), it.current()->presencetqStatus( uid ) ); // m_im_client_stubs has qstring keys...
+			presence->insert( it.currentKey().ascii(), it.current()->presenceStatus( uid ) ); // m_im_client_stubs has qstring keys...
 		}
 		d->presence_map.insert( uid, presence );
 	}*/
@@ -603,7 +603,7 @@ void KIMProxy::pollApp( const TQCString & appId )
 		ContactPresenceListCurrent current = d->presence_map[ *it ];
 		AppPresenceCurrent ap;
 		ap.appId = appId;
-		ap.presence = appStub->presencetqStatus( *it );
+		ap.presence = appStub->presenceStatus( *it );
 		current.append( ap );
 
 		d->presence_map.insert( *it, current );
@@ -618,7 +618,7 @@ KIMIface_stub * KIMProxy::stubForUid( const TQString &uid )
 	// get best appPresence
 	AppPresenceCurrent ap = d->presence_map[ uid ].best();
 	// look up the presence string from that app
-		return m_im_client_stubs.tqfind( ap.appId );
+		return m_im_client_stubs.find( ap.appId );
 }
 
 KIMIface_stub * KIMProxy::stubForProtocol( const TQString &protocol)
@@ -626,7 +626,7 @@ KIMIface_stub * KIMProxy::stubForProtocol( const TQString &protocol)
 	KIMIface_stub * app;
 	// see if the preferred client supports this protocol
 	TQString preferred = preferredApp();
-	if ( ( app = m_im_client_stubs.tqfind( preferred ) ) )
+	if ( ( app = m_im_client_stubs.find( preferred ) ) )
 	{
 		if ( app->protocols().grep( protocol ).count() > 0 )
 			return app;

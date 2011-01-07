@@ -61,8 +61,8 @@ struct BidiIterator
 };
 
 
-struct BiditqStatus {
-    BiditqStatus() : eor(TQChar::DirON), lastStrong(TQChar::DirON), last(TQChar::DirON) {}
+struct BidiStatus {
+    BidiStatus() : eor(TQChar::DirON), lastStrong(TQChar::DirON), last(TQChar::DirON) {}
 
     TQChar::Direction eor;
     TQChar::Direction lastStrong;
@@ -77,7 +77,7 @@ struct BidiState {
     BidiIterator last;
     BidiIterator current;
     BidiContext *context;
-    BiditqStatus status;
+    BidiStatus status;
 };
 
 // Used to track a list of chained bidi runs.
@@ -156,7 +156,7 @@ void BidiRun::operator delete(void* ptr, size_t sz)
 {
     assert(inBidiRunDetach);
 
-    // Stash size where detach can tqfind it.
+    // Stash size where detach can find it.
     *(size_t*)ptr = sz;
 }
 
@@ -181,7 +181,7 @@ static void deleteBidiRuns(RenderArena* arena)
 
 /* a small helper class used internally to resolve Bidi embedding levels.
    Each line of text caches the embedding level at the start of the line for faster
-   retqlayouting
+   relayouting
 */
 BidiContext::BidiContext(unsigned char l, TQChar::Direction e, BidiContext *p, bool o)
     : level(l) , override(o), dir(e)
@@ -242,7 +242,7 @@ static inline RenderObject *Bidinext(RenderObject *par, RenderObject *current, B
         if (!oldEndOfInline && !current->isFloating() && !current->isReplaced() && !current->isPositioned()) {
             next = current->firstChild();
             if ( next && adjustEmbedding ) {
-                EUnicodeBidi ub = next->style()->tqunicodeBidi();
+                EUnicodeBidi ub = next->style()->unicodeBidi();
                 if ( ub != UBNormal && !emptyRun ) {
                     EDirection dir = next->style()->direction();
                     TQChar::Direction d = ( ub == Embed ? ( dir == RTL ? TQChar::DirRLE : TQChar::DirLRE )
@@ -261,7 +261,7 @@ static inline RenderObject *Bidinext(RenderObject *par, RenderObject *current, B
             while (current && current != par) {
                 next = current->nextSibling();
                 if (next) break;
-                if ( adjustEmbedding && current->style()->tqunicodeBidi() != UBNormal && !emptyRun ) {
+                if ( adjustEmbedding && current->style()->unicodeBidi() != UBNormal && !emptyRun ) {
                     embed( TQChar::DirPDF, bidi );
                 }
                 current = current->parent();
@@ -454,7 +454,7 @@ static void checkMidpoints(BidiIterator& lBreak, BidiState &bidi)
                     // Don't shave a character off the endpoint if it was from a soft hyphen.
                     RenderText* textObj = static_cast<RenderText*>(endpoint.obj);
                     if (endpoint.pos+1 < textObj->length() &&
-                        textObj->text()[endpoint.pos+1].tqunicode() == SOFT_HYPHEN)
+                        textObj->text()[endpoint.pos+1].unicode() == SOFT_HYPHEN)
                         return;
                 }
                 endpoint.pos--;
@@ -795,7 +795,7 @@ void RenderBlock::computeVerticalPositionsForLine(InlineFlowBox* lineBox)
 
     bool beforeContent = true;
 
-    // Now make sure we place tqreplaced render objects correctly.
+    // Now make sure we place replaced render objects correctly.
     for (BidiRun* r = sFirstBidiRun; r; r = r->nextRun) {
 
         // For positioned placeholders, cache the static Y position an object with non-inline display would have.
@@ -806,7 +806,7 @@ void RenderBlock::computeVerticalPositionsForLine(InlineFlowBox* lineBox)
         else if (beforeContent)
            beforeContent = false;
 
-        // Position is used to properly position both tqreplaced elements and
+        // Position is used to properly position both replaced elements and
         // to update the static normal flow x/y of positioned elements.
         r->obj->position(r->box, r->start, r->stop - r->start, r->level%2);
     }
@@ -1241,7 +1241,7 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
 	}
 
 	// this causes the operator ++ to open and close embedding levels as needed
-	// for the CSS tqunicode-bidi property
+	// for the CSS unicode-bidi property
 	adjustEmbedding = true;
         bidi.current.increment( bidi );
 	adjustEmbedding = false;
@@ -1264,7 +1264,7 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
 
     // reorder line according to run structure...
 
-    // first tqfind highest and lowest levels
+    // first find highest and lowest levels
     uchar levelLow = 128;
     uchar levelHigh = 0;
     BidiRun *r = sFirstBidiRun;
@@ -1323,17 +1323,17 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
 #endif
 }
 
-void RenderBlock::tqlayoutInlineChildren(bool retqlayoutChildren, int breakBeforeLine)
+void RenderBlock::layoutInlineChildren(bool relayoutChildren, int breakBeforeLine)
 {
     BidiState bidi;
 
     m_overflowHeight = 0;
 
-    tqinvalidateVerticalPositions();
+    invalidateVerticalPositions();
 #ifdef DEBUG_LAYOUT
     TQTime qt;
     qt.start();
-    kdDebug( 6040 ) << renderName() << " tqlayoutInlineChildren( " << this <<" )" << endl;
+    kdDebug( 6040 ) << renderName() << " layoutInlineChildren( " << this <<" )" << endl;
 #endif
 #if BIDI_DEBUG > 1 || defined( DEBUG_LINEBREAKS )
     kdDebug(6041) << " ------- bidi start " << this << " -------" << endl;
@@ -1356,11 +1356,11 @@ void RenderBlock::tqlayoutInlineChildren(bool retqlayoutChildren, int breakBefor
          deleteEllipsisLineBoxes();
 
     if (firstChild()) {
-        // tqlayout tqreplaced elements
+        // layout replaced elements
         RenderObject *o = first( this, bidi, false );
         while ( o ) {
             if (o->markedForRepaint()) {
-                o->tqrepaintDuringLayout();
+                o->repaintDuringLayout();
                 o->setMarkedForRepaint(false);
              }
             if (o->isReplaced() || o->isFloating() || o->isPositioned()) {
@@ -1368,13 +1368,13 @@ void RenderBlock::tqlayoutInlineChildren(bool retqlayoutChildren, int breakBefor
                 if (o->isBox())
                     static_cast<RenderBox*>(o)->RenderBox::deleteInlineBoxes();
 
-                //kdDebug(6041) << "tqlayouting tqreplaced or floating child" << endl;
-                if (retqlayoutChildren || o->style()->width().isPercent() || o->style()->height().isPercent())
+                //kdDebug(6041) << "layouting replaced or floating child" << endl;
+                if (relayoutChildren || o->style()->width().isPercent() || o->style()->height().isPercent())
                     o->setChildNeedsLayout(true, false);
                 if (o->isPositioned())
                     o->containingBlock()->insertPositionedObject(o);
                 else
-                    o->tqlayoutIfNeeded();
+                    o->layoutIfNeeded();
             }
             else {
                 o->deleteInlineBoxes();
@@ -1437,7 +1437,7 @@ void RenderBlock::tqlayoutInlineChildren(bool retqlayoutChildren, int breakBefor
                 pagebreakHint = true;
             }
 redo_linebreak:
-            end = tqfindNextLineBreak(start, bidi);
+            end = findNextLineBreak(start, bidi);
             if( start.atEnd() ) break;
             if (!isLineEmpty) {
                 bidiReorderLine(start, end, bidi);
@@ -1496,13 +1496,13 @@ redo_linebreak:
     sNumMidpoints = 0;
     sCurrMidpoint = 0;
 
-    // If we violate widows page-breaking rules, we set a hint and retqlayout.
+    // If we violate widows page-breaking rules, we set a hint and relayout.
     // Note that the widows rule might still be violated afterwards if the lines have become wider
-    if (canvas()->pagedMode() && tqcontainsPageBreak() && breakBeforeLine == 0)
+    if (canvas()->pagedMode() && containsPageBreak() && breakBeforeLine == 0)
     {
         int orphans = 0;
         int widows = 0;
-        // tqfind breaking line
+        // find breaking line
         InlineRunBox* lineBox = firstLineBox();
         while (lineBox) {
             if (lineBox->isInlineFlowBox()) {
@@ -1527,15 +1527,15 @@ redo_linebreak:
             int newOrphans = orphans - (style()->widows() - widows);
             if (newOrphans < style()->orphans()) {
                 if (parent()->canClear(this,PageBreakHarder)) {
-                    // Retqlayout to remove incorrect page-break
+                    // Relayout to remove incorrect page-break
                     setNeedsPageClear(true);
                     setContainsPageBreak(false);
-                    tqlayoutInlineChildren(retqlayoutChildren, -1);
+                    layoutInlineChildren(relayoutChildren, -1);
                     return;
                 }
             } else {
                 // Set hint and try again
-                tqlayoutInlineChildren(retqlayoutChildren, newOrphans+1);
+                layoutInlineChildren(relayoutChildren, newOrphans+1);
                 return;
             }
         }
@@ -1564,7 +1564,7 @@ redo_linebreak:
 #if BIDI_DEBUG > 1
     kdDebug(6041) << " ------- bidi end " << this << " -------" << endl;
 #endif
-    //kdDebug() << "RenderBlock::tqlayoutInlineChildren time used " << qt.elapsed() << endl;
+    //kdDebug() << "RenderBlock::layoutInlineChildren time used " << qt.elapsed() << endl;
     //kdDebug(6040) << "height = " << m_height <<endl;
 }
 
@@ -1593,13 +1593,13 @@ static void setStaticPosition( RenderBlock* p, RenderObject *o, bool *needToSetS
       if (needToSetStaticY) *needToSetStaticY = nssy;
 }
 
-BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bidi)
+BidiIterator RenderBlock::findNextLineBreak(BidiIterator &start, BidiState &bidi)
 {
     int width = lineWidth(m_height);
     int w = 0;
     int tmpW = 0;
 #ifdef DEBUG_LINEBREAKS
-    kdDebug(6041) << "tqfindNextLineBreak: line at " << m_height << " line width " << width << endl;
+    kdDebug(6041) << "findNextLineBreak: line at " << m_height << " line width " << width << endl;
     kdDebug(6041) << "sol: " << start.obj << " " << start.pos << endl;
 #endif
 
@@ -1611,11 +1611,11 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
     // be skipped.
     while (!start.atEnd() && (start.obj->isInlineFlow() || (!start.obj->style()->preserveWS() && !start.obj->isBR() &&
 #ifndef QT_NO_UNICODETABLES
-        ( (start.current().tqunicode() == (ushort)0x0020) || // ASCII space
-          (start.current().tqunicode() == (ushort)0x0009) || // ASCII tab
-          (start.current().tqunicode() == (ushort)0x000A) || // ASCII line feed
-          (start.current().tqunicode() == (ushort)0x000C) || // ASCII form feed
-          (start.current().tqunicode() == (ushort)0x200B) || // Zero-width space
+        ( (start.current().unicode() == (ushort)0x0020) || // ASCII space
+          (start.current().unicode() == (ushort)0x0009) || // ASCII tab
+          (start.current().unicode() == (ushort)0x000A) || // ASCII line feed
+          (start.current().unicode() == (ushort)0x000C) || // ASCII form feed
+          (start.current().unicode() == (ushort)0x200B) || // Zero-width space
           start.obj->isFloatingOrPositioned() )
 #else
 	      ( start.current() == ' ' || start.current() == '\n' || start.obj->isFloatingOrPositioned() )
@@ -1710,7 +1710,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
                     // only check the clear status for non-empty lines.
                     EClear clear = o->style()->clear();
                     if(clear != CNONE)
-                        m_cleartqStatus = (EClear) (m_cleartqStatus | clear);
+                        m_clearStatus = (EClear) (m_clearStatus | clear);
                 }
             }
             goto end;
@@ -1771,7 +1771,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
             if (lastIt.current->isHTMLMarquee() && lastIt.current->layer() && lastIt.current->layer()->marquee())
                 lastWS = lastIt.current->layer()->marquee()->whiteSpace();
 
-            // Break on tqreplaced elements if either has normal white-space.
+            // Break on replaced elements if either has normal white-space.
             if (currWS == NORMAL || lastWS == NORMAL) {
                 w += tmpW;
                 tmpW = 0;
@@ -1824,7 +1824,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
                     isLineEmpty = false;
 
                 // Check for soft hyphens.  Go ahead and ignore them.
-                if (c.tqunicode() == SOFT_HYPHEN && pos > 0) {
+                if (c.unicode() == SOFT_HYPHEN && pos > 0) {
                     nextIsSoftBreakable = true;
                     if (!ignoringSpaces) {
                         // Ignore soft hyphens
@@ -1877,7 +1877,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
                     tmpW += t->width(lastSpace, pos - lastSpace, f);
 #ifdef APPLE_CHANGES
                     applyWordSpacing = (wordSpacing && currentCharacterIsSpace && !previousCharacterIsSpace &&
-                        !t->tqcontainsOnlyWhitespace(pos+1, strlen-(pos+1)));
+                        !t->containsOnlyWhitespace(pos+1, strlen-(pos+1)));
 #endif
 #ifdef DEBUG_LINEBREAKS
                     kdDebug(6041) << "found space at " << pos << " in string '" << TQString( str, strlen ).latin1() << "' adding " << tmpW << " new width = " << w << endl;
@@ -1886,7 +1886,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
                         int fb = nearestFloatBottom(m_height);
                         int newLineWidth = lineWidth(fb);
                         // See if |tmpW| will fit on the new line.  As long as it does not,
-                        // keep adjusting our float bottom until we tqfind some room.
+                        // keep adjusting our float bottom until we find some room.
                         int lastFloatBottom = m_height;
                         while (lastFloatBottom < fb && tmpW > newLineWidth) {
                             lastFloatBottom = fb;
@@ -1898,7 +1898,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
                             m_height = fb;
                             width = newLineWidth;
 #ifdef DEBUG_LINEBREAKS
-                            kdDebug() << "RenderBlock::tqfindNextLineBreak new position at " << m_height << " newWidth " << width << endl;
+                            kdDebug() << "RenderBlock::findNextLineBreak new position at " << m_height << " newWidth " << width << endl;
 #endif
                         }
                     }
@@ -1911,7 +1911,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
                                 lBreak.endOfInline = false;
                             }
                             goto end;
-                        } else if ( (pos > 1 && str[pos-1].tqunicode() == SOFT_HYPHEN) )
+                        } else if ( (pos > 1 && str[pos-1].unicode() == SOFT_HYPHEN) )
                             // Subtract the width of the soft hyphen out since we fit on a line.
                             tmpW -= t->width(pos-1, 1, f);
                     }
@@ -1971,7 +1971,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
             }
 
             if (!ignoringSpaces) {
-                // We didn't tqfind any space that would be beyond the line |width|.
+                // We didn't find any space that would be beyond the line |width|.
                 // Lets add to |tmpW| the remaining width since the last space we found.
                 // Before we test this new |tmpW| however, we will have to look ahead to check
                 // if the next object/position can serve as a line breaking opportunity.
@@ -2056,7 +2056,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
             int fb = nearestFloatBottom(m_height);
             int newLineWidth = lineWidth(fb);
             // See if |tmpW| will fit on the new line.  As long as it does not,
-            // keep adjusting our float bottom until we tqfind some room.
+            // keep adjusting our float bottom until we find some room.
             int lastFloatBottom = m_height;
             while (lastFloatBottom < fb && tmpW > newLineWidth) {
                 lastFloatBottom = fb;
@@ -2067,7 +2067,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
                 m_height = fb;
                 width = newLineWidth;
 #ifdef DEBUG_LINEBREAKS
-                kdDebug() << "RenderBlock::tqfindNextLineBreak new position at " << m_height << " newWidth " << width << endl;
+                kdDebug() << "RenderBlock::findNextLineBreak new position at " << m_height << " newWidth " << width << endl;
 #endif
             }
 
@@ -2189,7 +2189,7 @@ BidiIterator RenderBlock::tqfindNextLineBreak(BidiIterator &start, BidiState &bi
         // For soft hyphens on line breaks, we have to chop out the midpoints that made us
         // ignore the hyphen so that it will render at the end of the line.
         TQChar c = static_cast<RenderText*>(lBreak.obj)->text()[lBreak.pos-1];
-        if (c.tqunicode() == SOFT_HYPHEN)
+        if (c.unicode() == SOFT_HYPHEN)
             chopMidpointsAt(lBreak.obj, lBreak.pos-2);
     }
 
@@ -2233,7 +2233,7 @@ void RenderBlock::checkLinesForTextOverflow()
         if ((ltr && lineBoxEdge > blockEdge) || (!ltr && lineBoxEdge < blockEdge)) {
             // This line spills out of our box in the appropriate direction.  Now we need to see if the line
             // can be truncated.  In order for truncation to be possible, the line must have sufficient space to
-            // accommodate our truncation string, and no tqreplaced elements (images, tables) can overlap the ellipsis
+            // accommodate our truncation string, and no replaced elements (images, tables) can overlap the ellipsis
             // space.
             int width = curr == firstRootBox() ? firstLineEllipsisWidth : ellipsisWidth;
             if (curr->canAccommodateEllipsis(ltr, blockEdge, lineBoxEdge, width))

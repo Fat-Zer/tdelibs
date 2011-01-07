@@ -55,7 +55,7 @@ namespace
                 if ( !toolBar )
                     continue;
 
-                if ( oldToolBarList.tqfindRef( toolBar ) == -1 )
+                if ( oldToolBarList.findRef( toolBar ) == -1 )
                     m_needsRebuild = true;
 
                 m_toolBars.append( toolBar );
@@ -209,7 +209,7 @@ void ToolBarHandler::init( KMainWindow *mainWindow )
 
     if ( domDocument().documentElement().isNull() ) {
 
-        TQString completeDescription = TQString::tqfromLatin1( guiDescription )
+        TQString completeDescription = TQString::fromLatin1( guiDescription )
             .arg( actionListName );
 
         setXML( completeDescription, false /*merge*/ );

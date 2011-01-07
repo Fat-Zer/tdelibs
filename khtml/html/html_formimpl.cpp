@@ -122,8 +122,8 @@ static TQCString encodeCString(const TQCString& e)
     // http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1
     // safe characters like NS handles them for compatibility
     static const char *safe = "-._*";
-    TQCString encoded(( e.length()+e.tqcontains( '\n' ) )*3
-                     +e.tqcontains('\r') * 3 + 1);
+    TQCString encoded(( e.length()+e.contains( '\n' ) )*3
+                     +e.contains('\r') * 3 + 1);
     int enclen = 0;
     bool crmissing = false;
     unsigned char oldc;
@@ -193,7 +193,7 @@ inline static TQString escapeUnencodeable(const TQTextCodec* codec, const TQStri
             enc_string.append(c);
         else {
             TQString ampersandEscape;
-            ampersandEscape.sprintf("&#%u;", c.tqunicode());
+            ampersandEscape.sprintf("&#%u;", c.unicode());
             enc_string.append(ampersandEscape);
         }
     }
@@ -216,7 +216,7 @@ TQByteArray HTMLFormElementImpl::formData(bool& ok)
     TQByteArray form_data(0);
     TQCString enc_string = ""; // used for non-multipart data
 
-    // tqfind out the QTextcodec to use
+    // find out the QTextcodec to use
     const TQString str = m_acceptcharset.string();
     const TQChar space(' ');
     const unsigned int strLength = str.length();
@@ -231,7 +231,7 @@ TQByteArray HTMLFormElementImpl::formData(bool& ok)
         for ( ; it != itEnd; ++it )
         {
             TQString enc = (*it);
-            if(enc.tqcontains("UNKNOWN"))
+            if(enc.contains("UNKNOWN"))
             {
                 // use standard document encoding
                 enc = "ISO 8859-1";
@@ -391,12 +391,12 @@ TQByteArray HTMLFormElementImpl::formData(bool& ok)
 
 void HTMLFormElementImpl::setEnctype( const DOMString& type )
 {
-    if(type.string().tqfind("multipart", 0, false) != -1 || type.string().tqfind("form-data", 0, false) != -1)
+    if(type.string().find("multipart", 0, false) != -1 || type.string().find("form-data", 0, false) != -1)
     {
         m_enctype = "multipart/form-data";
         m_multipart = true;
         m_post = true;
-    } else if (type.string().tqfind("text", 0, false) != -1 || type.string().tqfind("plain", 0, false) != -1)
+    } else if (type.string().find("text", 0, false) != -1 || type.string().find("plain", 0, false) != -1)
     {
         m_enctype = "text/plain";
         m_multipart = false;
@@ -457,7 +457,7 @@ void HTMLFormElementImpl::walletOpened(KWallet::Wallet *w) {
             if ((current->inputType() == HTMLInputElementImpl::PASSWORD ||
                     current->inputType() == HTMLInputElementImpl::TEXT) &&
                     !current->readOnly() &&
-                    map.tqcontains(current->name().string())) {
+                    map.contains(current->name().string())) {
                 getDocument()->setFocusNode(current);
                 current->setValue(map[current->name().string()]);
             }
@@ -888,7 +888,7 @@ HTMLFormElementImpl *HTMLGenericFormElementImpl::getForm() const
         p = p->parentNode();
     }
 #ifdef FORMS_DEBUG
-    kdDebug( 6030 ) << "couldn't tqfind form!" << endl;
+    kdDebug( 6030 ) << "couldn't find form!" << endl;
     kdDebug( 6030 ) << kdBacktrace() << endl;
 #endif
     return 0;
@@ -1316,10 +1316,10 @@ TQString HTMLInputElementImpl::state( )
 {
     switch (m_type) {
     case PASSWORD:
-        return TQString::tqfromLatin1("."); // empty string, avoid restoring
+        return TQString::fromLatin1("."); // empty string, avoid restoring
     case CHECKBOX:
     case RADIO:
-        return TQString::tqfromLatin1(checked() ? "on" : "off");
+        return TQString::fromLatin1(checked() ? "on" : "off");
     case TEXT:
         if (autoComplete() && value() != getAttribute(ATTR_VALUE) && getDocument()->view())
             getDocument()->view()->addFormCompletionItem(name().string(), value().string());
@@ -1334,7 +1334,7 @@ void HTMLInputElementImpl::restoreState(const TQString &state)
     switch (m_type) {
     case CHECKBOX:
     case RADIO:
-        setChecked((state == TQString::tqfromLatin1("on")));
+        setChecked((state == TQString::fromLatin1("on")));
         break;
     case FILE:
         m_value = DOMString(state.left(state.length()-1));
@@ -1560,12 +1560,12 @@ bool HTMLInputElementImpl::encoding(const TQTextCodec* codec, khtml::encodingLis
             if(m_clicked)
             {
                 m_clicked = false;
-                TQString astr(nme.isEmpty() ? TQString::tqfromLatin1("x") : nme + ".x");
+                TQString astr(nme.isEmpty() ? TQString::fromLatin1("x") : nme + ".x");
 
                 encoding += fixUpfromUnicode(codec, astr);
                 astr.setNum(KMAX( clickX(), 0 ));
                 encoding += fixUpfromUnicode(codec, astr);
-                astr = nme.isEmpty() ? TQString::tqfromLatin1("y") : nme + ".y";
+                astr = nme.isEmpty() ? TQString::fromLatin1("y") : nme + ".y";
                 encoding += fixUpfromUnicode(codec, astr);
                 astr.setNum(KMAX( clickY(), 0 ) );
                 encoding += fixUpfromUnicode(codec, astr);
@@ -1612,7 +1612,7 @@ bool HTMLInputElementImpl::encoding(const TQTextCodec* codec, khtml::encodingLis
             KIO::UDSEntry filestat;
 
             // can't submit file in www-url-form encoded
-            TQWidget* const toplevel = static_cast<RenderSubmitButton*>(m_render)->widget()->tqtopLevelWidget();
+            TQWidget* const toplevel = static_cast<RenderSubmitButton*>(m_render)->widget()->topLevelWidget();
             if (multipart) {
                 TQCString filearray( "" );
                 if ( KIO::NetAccess::stat(fileurl, filestat, toplevel)) {
@@ -2162,7 +2162,7 @@ DOMString HTMLSelectElementImpl::value( ) const
 
 void HTMLSelectElementImpl::setValue(DOMStringImpl* value)
 {
-    // tqfind the option with value() matching the given parameter
+    // find the option with value() matching the given parameter
     // and make it the current selection.
     TQMemArray<HTMLGenericFormElementImpl*> items = listItems();
     for (unsigned i = 0; i < items.size(); i++)
@@ -2192,7 +2192,7 @@ void HTMLSelectElementImpl::restoreState(const TQString &_state)
     recalcListItems();
 
     TQString state = _state;
-    if(!state.isEmpty() && !state.tqcontains('X') && !m_multiple && m_size <= 1) {
+    if(!state.isEmpty() && !state.contains('X') && !m_multiple && m_size <= 1) {
         qWarning("should not happen in restoreState!");
         state[0] = 'X';
     }
@@ -2217,9 +2217,9 @@ NodeImpl *HTMLSelectElementImpl::insertBefore ( NodeImpl *newChild, NodeImpl *re
     return result;
 }
 
-void HTMLSelectElementImpl::tqreplaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode )
+void HTMLSelectElementImpl::replaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode )
 {
-    HTMLGenericFormElementImpl::tqreplaceChild(newChild,oldChild, exceptioncode);
+    HTMLGenericFormElementImpl::replaceChild(newChild,oldChild, exceptioncode);
     if( !exceptioncode )
         setRecalcListItems();
 }
@@ -2374,7 +2374,7 @@ void HTMLSelectElementImpl::recalcListItems() const
     m_length = 0;
     while(current) {
         if (current->id() == ID_OPTGROUP && current->firstChild()) {
-            // ### what if optgroup tqcontains just comments? don't want one of no options in it...
+            // ### what if optgroup contains just comments? don't want one of no options in it...
             m_listItems.resize(m_listItems.size()+1);
             m_listItems[m_listItems.size()-1] = static_cast<HTMLGenericFormElementImpl*>(current);
             current = current->firstChild();
@@ -2745,7 +2745,7 @@ void HTMLTextAreaElementImpl::attach()
 static TQString expandLF(const TQString& s)
 {
     // LF -> CRLF
-    unsigned crs = s.tqcontains( '\n' );
+    unsigned crs = s.contains( '\n' );
     if (crs == 0)
 	return s;
     unsigned len = s.length();
@@ -2756,7 +2756,7 @@ static TQString expandLF(const TQString& s)
     for(unsigned pos = 0; pos < len; pos++)
     {
        TQChar c = s.at(pos);
-       switch(c.tqunicode())
+       switch(c.unicode())
        {
          case '\n':
            r[pos2++] = '\r';
@@ -2814,8 +2814,8 @@ DOMString HTMLTextAreaElementImpl::value()
 void HTMLTextAreaElementImpl::setValue(DOMString _value)
 {
     // \r\n -> \n, \r -> \n
-    TQString str = _value.string().tqreplace( "\r\n", "\n" );
-    m_value = str.tqreplace( '\r', '\n' );
+    TQString str = _value.string().replace( "\r\n", "\n" );
+    m_value = str.replace( '\r', '\n' );
     m_dirtyvalue = false;
     m_initialized = true;
     setChanged(true);
@@ -2844,7 +2844,7 @@ DOMString HTMLTextAreaElementImpl::defaultValue()
 
 void HTMLTextAreaElementImpl::setDefaultValue(DOMString _defaultValue)
 {
-    // there may be comments - remove all the text nodes and tqreplace them with one
+    // there may be comments - remove all the text nodes and replace them with one
     TQPtrList<NodeImpl> toRemove;
     NodeImpl *n;
     for (n = firstChild(); n; n = n->nextSibling())
@@ -2953,7 +2953,7 @@ void HTMLIsIndexElementImpl::parseAttribute(AttributeImpl* attr)
 DOMString HTMLIsIndexElementImpl::prompt() const
 {
     // When IsIndex is parsed, <HR/>Prompt: <ISINDEX/><HR/> is created.
-    // So we have to look at the previous sibling to tqfind the prompt text
+    // So we have to look at the previous sibling to find the prompt text
     DOM::NodeImpl* const prev = previousSibling();
     if ( prev && prev->nodeType() == DOM::Node::TEXT_NODE)
         return prev->nodeValue();
@@ -2963,7 +2963,7 @@ DOMString HTMLIsIndexElementImpl::prompt() const
 void HTMLIsIndexElementImpl::setPrompt(const DOMString& str)
 {
     // When IsIndex is parsed, <HR/>Prompt: <ISINDEX/><HR/> is created.
-    // So we have to look at the previous sibling to tqfind the prompt text
+    // So we have to look at the previous sibling to find the prompt text
     int exceptioncode = 0;
     DOM::NodeImpl* const prev = previousSibling();
     if ( prev && prev->nodeType() == DOM::Node::TEXT_NODE)

@@ -58,7 +58,7 @@ void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )
   TQString comment;
 
   if ( entry.at( entry.length() -1 ) == ')' ) {
-    int br = entry.tqfindRev( '(' );
+    int br = entry.findRev( '(' );
     if ( br >= 0 ) {
       comment = entry.mid( br + 1, entry.length() - br - 2 );
       entry.truncate( br );
@@ -68,7 +68,7 @@ void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )
     }
   }
 
-  int posSpace = entry.tqfindRev( ' ' );
+  int posSpace = entry.findRev( ' ' );
   if ( posSpace < 0 ) {
     email = entry;
     if ( !comment.isEmpty() ) {
@@ -91,7 +91,7 @@ void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )
   }
 
   if ( name.at( name.length() -1 ) == ')' ) {
-    int br = name.tqfindRev( '(' );
+    int br = name.findRev( '(' );
     if ( br >= 0 ) {
       comment = name.mid( br + 1, name.length() - br - 2 ) + " " + comment;
       name.truncate( br );
@@ -105,7 +105,7 @@ void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )
   kdDebug() << "  NAME    : " << name    << endl;
   kdDebug() << "  COMMENT : " << comment << endl;
 
-  KABC::Addressee::List al = ab->tqfindByEmail( email );
+  KABC::Addressee::List al = ab->findByEmail( email );
   if ( al.isEmpty() ) {
     KABC::Addressee a;
     a.setNameFromString( name );
@@ -128,7 +128,7 @@ void importKMailAddressBook( KABC::AddressBook *ab )
     fileName = cfg.readPathEntry( "default", fileName );
   }
   if ( !KStandardDirs::exists( fileName ) ) {
-    kdDebug(5700) << "Couldn't tqfind KMail addressbook." << endl;
+    kdDebug(5700) << "Couldn't find KMail addressbook." << endl;
     return;
   }
 
@@ -180,7 +180,7 @@ void readKAddressBookEntries( const TQString &dataString, Addressee &a )
 
   TQStringList::ConstIterator it;
   for ( it = entries.begin(); it != entries.end(); ++it ) {
-    int pos = (*it).tqfind( "\n" );
+    int pos = (*it).find( "\n" );
     TQString fieldName = (*it).left( pos );
     TQString fieldValue = (*it).mid( pos + 2 );
 
@@ -325,7 +325,7 @@ void importKab( KABC::AddressBook *ab, bool override, bool quiet )
     TQStringList::ConstIterator customIt;
     for ( customIt = entry.custom.begin(); customIt != entry.custom.end(); ++customIt ) {
       if ( (*customIt).startsWith( "X-KABC-UID:" ) ) {
-        a.setUid( (*customIt).mid( (*customIt).tqfind( ":" ) + 1 ) );
+        a.setUid( (*customIt).mid( (*customIt).find( ":" ) + 1 ) );
         idFound = true;
       } else if ( (*customIt).startsWith( "KMail:1.0\n" ) ) {
         readKAddressBookEntries( *customIt, a );

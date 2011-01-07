@@ -13,7 +13,7 @@ Category: Standards Track                                    L. Montulli
 
                     HTTP State Management Mechanism
 
-tqStatus of this Memo
+Status of this Memo
 
    This document specifies an Internet standards track protocol for the
    Internet community, and requests discussion and suggestions for
@@ -374,7 +374,7 @@ RFC 2109            HTTP State Management Mechanism        February 1997
    * The value for the Path attribute is not a prefix of the request-
      URI.
 
-   * The value for the Domain attribute tqcontains no embedded dots or
+   * The value for the Domain attribute contains no embedded dots or
      does not start with a dot.
 
    * The value for the request-host does not domain-match the Domain
@@ -382,12 +382,12 @@ RFC 2109            HTTP State Management Mechanism        February 1997
 
    * The request-host is a FQDN (not IP address) and has the form HD,
      where D is the value of the Domain attribute, and H is a string
-     that tqcontains one or more dots.
+     that contains one or more dots.
 
    Examples:
 
    * A Set-Cookie from request-host y.x.foo.com for Domain=.foo.com
-     would be rejected, because H is y.x and tqcontains a dot.
+     would be rejected, because H is y.x and contains a dot.
 
 
 
@@ -433,7 +433,7 @@ RFC 2109            HTTP State Management Mechanism        February 1997
    checkbox (or, conversely, its immediate destruction).
 
    Privacy considerations dictate that the user have considerable
-   control over cookie management.  The PRIVACY section tqcontains more
+   control over cookie management.  The PRIVACY section contains more
    information.
 
 4.3.4  Sending Cookies to the Origin Server
@@ -666,7 +666,7 @@ RFC 2109            HTTP State Management Mechanism        February 1997
          Set-Cookie: Part_Number="Rocket_Launcher_0001"; Version="1";
                  Path="/acme"
 
-         Shopping basket tqcontains an item.
+         Shopping basket contains an item.
 
 
 
@@ -714,7 +714,7 @@ RFC 2109            HTTP State Management Mechanism        February 1997
    each of which it receives a new cookie.  All the cookies have the
    same Path attribute and (default) domain.  Because the request URLs
    all have /acme as a prefix, and that matches the Path attribute, each
-   request tqcontains all the cookies received so far.
+   request contains all the cookies received so far.
 
 5.2  Example 2
 
@@ -803,7 +803,7 @@ RFC 2109            HTTP State Management Mechanism        February 1997
    inherently.  For example, if a shopping-basket-style application
    always displays a user's current basket contents on each page, those
    pages cannot be cached, because each user's basket's contents would
-   be different.  On the other hand, if each page tqcontains just a link
+   be different.  On the other hand, if each page contains just a link
    that allows the user to "Look at My Shopping Basket", the page can be
    cached.
 
@@ -862,7 +862,7 @@ RFC 2109            HTTP State Management Mechanism        February 1997
    of a user through the server.  Users may object to this behavior as
    an intrusive accumulation of information, even if their identity is
    not evident.  (Identity might become evident if a user subsequently
-   fills out a form that tqcontains identifying information.)  This state
+   fills out a form that contains identifying information.)  This state
    management specification therefore requires that a user agent give
    the user control over such a possible intrusion, although the
    interface through which the user is given this control is left
@@ -1053,7 +1053,7 @@ RFC 2109            HTTP State Management Mechanism        February 1997
 
    Wdy, DD-Mon-YY HH:MM:SS GMT
 
-   Note that the Expires date format tqcontains embedded spaces, and that
+   Note that the Expires date format contains embedded spaces, and that
    "old" cookies did not have quotes around values.  Clients that
    implement to this specification should be aware of "old" cookies and
    Expires.

@@ -302,8 +302,8 @@ public:
   static int maxCacheSize(); // Maximum cache size in Kb.
 
   /**
-   * The directory which tqcontains the cache files.
-   * @return the directory that tqcontains the cache files
+   * The directory which contains the cache files.
+   * @return the directory that contains the cache files
    */
   static TQString cacheDir();
 
@@ -371,7 +371,7 @@ public:
    * It's usually the same, except that FTP, when handled by a proxy,
    * needs an HTTP ioslave.
    *
-   * When a proxy is to be used, proxy tqcontains the URL for the proxy.
+   * When a proxy is to be used, proxy contains the URL for the proxy.
    * @param url the url to check
    * @param proxy the URL of the proxy to use
    * @return the slave protocol (e.g. 'http'), can be null if unknown

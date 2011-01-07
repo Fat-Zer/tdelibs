@@ -213,7 +213,7 @@ class KateHighlighting
 
     inline bool noHighlighting () const { return noHl; };
 
-    // be carefull: all documents hl should be tqinvalidated after calling this method!
+    // be carefull: all documents hl should be invalidated after calling this method!
     void dropDynamicContexts();
 
     TQString indentation () { return m_indentation; }
@@ -299,7 +299,7 @@ class KateHighlighting
      * When a highlight is added, a instance of this class is appended to
      * m_additionalData, and the current position in the attrib and context
      * arrays are stored in the indexes for look up. You can then use
-     * hlKeyForAttrib or hlKeyForContext to tqfind the relevant instance of this
+     * hlKeyForAttrib or hlKeyForContext to find the relevant instance of this
      * class from m_additionalData.
      *
      * If you need to add a property to a highlight, add it here.
@@ -338,7 +338,7 @@ class KateHighlighting
     inline bool allowsFolding(){return folding;}
 };
 
-class KateHlManager : public TQObject
+class KateHlManager : public QObject
 {
   Q_OBJECT
 
@@ -357,7 +357,7 @@ class KateHlManager : public TQObject
 
     int detectHighlighting (class KateDocument *doc);
 
-    int tqfindHl(KateHighlighting *h) {return hlList.tqfind(h);}
+    int findHl(KateHighlighting *h) {return hlList.find(h);}
     TQString identifierForName(const TQString&);
 
     // methodes to get the default style count + names
@@ -377,7 +377,7 @@ class KateHlManager : public TQObject
     uint countDynamicCtxs() { return dynamicCtxsCount; };
     void setForceNoDCReset(bool b) { forceNoDCReset = b; };
 
-    // be carefull: all documents hl should be tqinvalidated after having successfully called this method!
+    // be carefull: all documents hl should be invalidated after having successfully called this method!
     bool resetDynamicCtxs();
 
   signals:
@@ -435,4 +435,4 @@ class KateViewHighlightAction: public Kate::ActionMenu
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

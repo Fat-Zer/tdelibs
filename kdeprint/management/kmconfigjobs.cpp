@@ -44,7 +44,7 @@ KMConfigJobs::KMConfigJobs(TQWidget *parent, const char *name)
 	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l0->addWidget(box, 0);
 	l0->addStretch(1);
-	QVBoxLayout	*l1 = new TQVBoxLayout(box->tqlayout(), KDialog::spacingHint());
+	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), KDialog::spacingHint());
 	l1->addWidget(m_limit);
 }
 

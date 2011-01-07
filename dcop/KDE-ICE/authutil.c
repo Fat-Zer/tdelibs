@@ -62,12 +62,12 @@ extern unsigned sleep ();
 #endif
 #endif
 
-static tqStatus read_short (FILE *file, unsigned short *shortp);
-static tqStatus read_string (FILE *file, char **stringp);
-static tqStatus read_counted_string (FILE *file, unsigned short *countp, char **stringp);
-static tqStatus write_short (FILE *file, unsigned short s);
-static tqStatus write_string (FILE *file, char *string);
-static tqStatus write_counted_string (FILE *file, unsigned short count, char *string);
+static Status read_short (FILE *file, unsigned short *shortp);
+static Status read_string (FILE *file, char **stringp);
+static Status read_counted_string (FILE *file, unsigned short *countp, char **stringp);
+static Status write_short (FILE *file, unsigned short s);
+static Status write_string (FILE *file, char *string);
+static Status write_counted_string (FILE *file, unsigned short count, char *string);
 
 
 
@@ -322,7 +322,7 @@ IceAuthFileEntry	*auth;
 
 
 
-tqStatus
+Status
 IceWriteAuthFileEntry (auth_file, auth)
 
 FILE			*auth_file;
@@ -398,7 +398,7 @@ const char	*auth_name;
  * local routines
  */
 
-static tqStatus
+static Status
 read_short (FILE *file, unsigned short *shortp)
 {
     unsigned char   file_short[2];
@@ -411,7 +411,7 @@ read_short (FILE *file, unsigned short *shortp)
 }
 
 
-static tqStatus
+static Status
 read_string (FILE *file, char **stringp)
 {
     unsigned short  len;
@@ -447,7 +447,7 @@ read_string (FILE *file, char **stringp)
 }
 
 
-static tqStatus
+static Status
 read_counted_string (FILE *file, unsigned short *countp, char **stringp)
 {
     unsigned short  len;
@@ -481,7 +481,7 @@ read_counted_string (FILE *file, unsigned short *countp, char **stringp)
 }
 
 
-static tqStatus
+static Status
 write_short (FILE *file, unsigned short s)
 {
     unsigned char   file_short[2];
@@ -496,7 +496,7 @@ write_short (FILE *file, unsigned short s)
 }
 
 
-static tqStatus
+static Status
 write_string (FILE *file, char *string)
 {
     unsigned short count = strlen (string);
@@ -511,7 +511,7 @@ write_string (FILE *file, char *string)
 }
 
 
-static tqStatus
+static Status
 write_counted_string (FILE *file, unsigned short count, char *string)
 {
     if (!write_short (file, count))

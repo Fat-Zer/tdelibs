@@ -47,36 +47,36 @@ public:
     bool m_regexpDialogQueryDone;
     long m_enabled; // uses Options to define which search options are enabled
     bool m_initialShowDone;
-    TQStringList tqfindStrings;
+    TQStringList findStrings;
     TQString pattern;
 };
 
-KFindDialog::KFindDialog(TQWidget *parent, const char *name, long options, const TQStringList &tqfindStrings, bool hasSelection) :
+KFindDialog::KFindDialog(TQWidget *parent, const char *name, long options, const TQStringList &findStrings, bool hasSelection) :
     KDialogBase(parent, name, true, i18n("Find Text"), Ok | Cancel, Ok),
-    m_tqfindExtension (0),
-    m_tqreplaceExtension (0)
+    m_findExtension (0),
+    m_replaceExtension (0)
 {
     d = new KFindDialogPrivate;
-    init(false, tqfindStrings, hasSelection);
+    init(false, findStrings, hasSelection);
     setOptions(options);
     setButtonCancel( KStdGuiItem::close() );
 }
 
-KFindDialog::KFindDialog(bool modal, TQWidget *parent, const char *name, long options, const TQStringList &tqfindStrings, bool hasSelection) :
+KFindDialog::KFindDialog(bool modal, TQWidget *parent, const char *name, long options, const TQStringList &findStrings, bool hasSelection) :
     KDialogBase(parent, name, modal, i18n("Find Text"), Ok | Cancel, Ok),
-    m_tqfindExtension (0),
-    m_tqreplaceExtension (0)
+    m_findExtension (0),
+    m_replaceExtension (0)
 {
     d = new KFindDialogPrivate;
-    init(false, tqfindStrings, hasSelection);
+    init(false, findStrings, hasSelection);
     setOptions(options);
     setButtonCancel( KStdGuiItem::close() );
 }
 
 KFindDialog::KFindDialog(TQWidget *parent, const char *name, bool /*forReplace*/) :
     KDialogBase(parent, name, true, i18n("Replace Text"), Ok | Cancel, Ok),
-    m_tqfindExtension (0),
-    m_tqreplaceExtension (0)
+    m_findExtension (0),
+    m_replaceExtension (0)
 {
     d = new KFindDialogPrivate;
     setButtonCancel( KStdGuiItem::close() );
@@ -87,23 +87,23 @@ KFindDialog::~KFindDialog()
     delete d;
 }
 
-TQWidget *KFindDialog::tqfindExtension()
+TQWidget *KFindDialog::findExtension()
 {
-    if (!m_tqfindExtension)
+    if (!m_findExtension)
     {
-      m_tqfindExtension = new TQWidget(m_tqfindGrp);
-      m_tqfindLayout->addMultiCellWidget(m_tqfindExtension, 3, 3, 0, 1);
+      m_findExtension = new TQWidget(m_findGrp);
+      m_findLayout->addMultiCellWidget(m_findExtension, 3, 3, 0, 1);
     }
 
-    return m_tqfindExtension;
+    return m_findExtension;
 }
 
-TQStringList KFindDialog::tqfindHistory() const
+TQStringList KFindDialog::findHistory() const
 {
-    return m_tqfind->historyItems();
+    return m_find->historyItems();
 }
 
-void KFindDialog::init(bool forReplace, const TQStringList &tqfindStrings, bool hasSelection)
+void KFindDialog::init(bool forReplace, const TQStringList &findStrings, bool hasSelection)
 {
     TQVBoxLayout *topLayout;
     TQGridLayout *optionsLayout;
@@ -116,73 +116,73 @@ void KFindDialog::init(bool forReplace, const TQStringList &tqfindStrings, bool 
     topLayout->setSpacing( KDialog::spacingHint() );
     topLayout->setMargin( 0 );
 
-    m_tqfindGrp = new TQGroupBox(0, Qt::Vertical, i18n("Find"), page);
-    m_tqfindGrp->tqlayout()->setSpacing( KDialog::spacingHint() );
-   // m_tqfindGrp->tqlayout()->setMargin( KDialog::marginHint() );
-    m_tqfindLayout = new TQGridLayout(m_tqfindGrp->tqlayout());
-    m_tqfindLayout->setSpacing( KDialog::spacingHint() );
-   // m_tqfindLayout->setMargin( KDialog::marginHint() );
+    m_findGrp = new TQGroupBox(0, Qt::Vertical, i18n("Find"), page);
+    m_findGrp->layout()->setSpacing( KDialog::spacingHint() );
+   // m_findGrp->layout()->setMargin( KDialog::marginHint() );
+    m_findLayout = new TQGridLayout(m_findGrp->layout());
+    m_findLayout->setSpacing( KDialog::spacingHint() );
+   // m_findLayout->setMargin( KDialog::marginHint() );
 
-    m_tqfindLabel = new TQLabel(i18n("&Text to tqfind:"), m_tqfindGrp);
-    m_tqfind = new KHistoryCombo(true, m_tqfindGrp);
-    m_tqfind->setMaxCount(10);
-    m_tqfind->setDuplicatesEnabled(false);
-    m_regExp = new TQCheckBox(i18n("Regular e&xpression"), m_tqfindGrp);
-    m_regExpItem = new TQPushButton(i18n("&Edit..."), m_tqfindGrp);
+    m_findLabel = new TQLabel(i18n("&Text to find:"), m_findGrp);
+    m_find = new KHistoryCombo(true, m_findGrp);
+    m_find->setMaxCount(10);
+    m_find->setDuplicatesEnabled(false);
+    m_regExp = new TQCheckBox(i18n("Regular e&xpression"), m_findGrp);
+    m_regExpItem = new TQPushButton(i18n("&Edit..."), m_findGrp);
     m_regExpItem->setEnabled(false);
 
-    m_tqfindLayout->addWidget(m_tqfindLabel, 0, 0);
-    m_tqfindLayout->addMultiCellWidget(m_tqfind, 1, 1, 0, 1);
-    m_tqfindLayout->addWidget(m_regExp, 2, 0);
-    m_tqfindLayout->addWidget(m_regExpItem, 2, 1);
-    topLayout->addWidget(m_tqfindGrp);
+    m_findLayout->addWidget(m_findLabel, 0, 0);
+    m_findLayout->addMultiCellWidget(m_find, 1, 1, 0, 1);
+    m_findLayout->addWidget(m_regExp, 2, 0);
+    m_findLayout->addWidget(m_regExpItem, 2, 1);
+    topLayout->addWidget(m_findGrp);
 
-    m_tqreplaceGrp = new TQGroupBox(0, Qt::Vertical, i18n("Replace With"), page);
-    m_tqreplaceGrp->tqlayout()->setSpacing( KDialog::spacingHint() );
-  //  m_tqreplaceGrp->tqlayout()->setMargin( KDialog::marginHint() );
-    m_tqreplaceLayout = new TQGridLayout(m_tqreplaceGrp->tqlayout());
-    m_tqreplaceLayout->setSpacing( KDialog::spacingHint() );
-//    m_tqreplaceLayout->setMargin( KDialog::marginHint() );
+    m_replaceGrp = new TQGroupBox(0, Qt::Vertical, i18n("Replace With"), page);
+    m_replaceGrp->layout()->setSpacing( KDialog::spacingHint() );
+  //  m_replaceGrp->layout()->setMargin( KDialog::marginHint() );
+    m_replaceLayout = new TQGridLayout(m_replaceGrp->layout());
+    m_replaceLayout->setSpacing( KDialog::spacingHint() );
+//    m_replaceLayout->setMargin( KDialog::marginHint() );
 
-    m_tqreplaceLabel = new TQLabel(i18n("Replace&ment text:"), m_tqreplaceGrp);
-    m_tqreplace = new KHistoryCombo(true, m_tqreplaceGrp);
-    m_tqreplace->setMaxCount(10);
-    m_tqreplace->setDuplicatesEnabled(false);
-    m_backRef = new TQCheckBox(i18n("Use p&laceholders"), m_tqreplaceGrp);
-    m_backRefItem = new TQPushButton(i18n("Insert Place&holder"), m_tqreplaceGrp);
+    m_replaceLabel = new TQLabel(i18n("Replace&ment text:"), m_replaceGrp);
+    m_replace = new KHistoryCombo(true, m_replaceGrp);
+    m_replace->setMaxCount(10);
+    m_replace->setDuplicatesEnabled(false);
+    m_backRef = new TQCheckBox(i18n("Use p&laceholders"), m_replaceGrp);
+    m_backRefItem = new TQPushButton(i18n("Insert Place&holder"), m_replaceGrp);
     m_backRefItem->setEnabled(false);
 
-    m_tqreplaceLayout->addWidget(m_tqreplaceLabel, 0, 0);
-    m_tqreplaceLayout->addMultiCellWidget(m_tqreplace, 1, 1, 0, 1);
-    m_tqreplaceLayout->addWidget(m_backRef, 2, 0);
-    m_tqreplaceLayout->addWidget(m_backRefItem, 2, 1);
-    topLayout->addWidget(m_tqreplaceGrp);
+    m_replaceLayout->addWidget(m_replaceLabel, 0, 0);
+    m_replaceLayout->addMultiCellWidget(m_replace, 1, 1, 0, 1);
+    m_replaceLayout->addWidget(m_backRef, 2, 0);
+    m_replaceLayout->addWidget(m_backRefItem, 2, 1);
+    topLayout->addWidget(m_replaceGrp);
 
     m_optionGrp = new TQGroupBox(0, Qt::Vertical, i18n("Options"), page);
-    m_optionGrp->tqlayout()->setSpacing(KDialog::spacingHint());
-  //  m_optionGrp->tqlayout()->setMargin(KDialog::marginHint());
-    optionsLayout = new TQGridLayout(m_optionGrp->tqlayout());
+    m_optionGrp->layout()->setSpacing(KDialog::spacingHint());
+  //  m_optionGrp->layout()->setMargin(KDialog::marginHint());
+    optionsLayout = new TQGridLayout(m_optionGrp->layout());
     optionsLayout->setSpacing( KDialog::spacingHint() );
    // optionsLayout->setMargin( KDialog::marginHint() );
 
     m_caseSensitive = new TQCheckBox(i18n("C&ase sensitive"), m_optionGrp);
     m_wholeWordsOnly = new TQCheckBox(i18n("&Whole words only"), m_optionGrp);
     m_fromCursor = new TQCheckBox(i18n("From c&ursor"), m_optionGrp);
-    m_tqfindBackwards = new TQCheckBox(i18n("Find &backwards"), m_optionGrp);
+    m_findBackwards = new TQCheckBox(i18n("Find &backwards"), m_optionGrp);
     m_selectedText = new TQCheckBox(i18n("&Selected text"), m_optionGrp);
     setHasSelection( hasSelection );
-    // If we have a selection, we make 'tqfind in selection' default
+    // If we have a selection, we make 'find in selection' default
     // and if we don't, then the option has to be unchecked, obviously.
     m_selectedText->setChecked( hasSelection );
     slotSelectedTextToggled( hasSelection );
 
-    m_promptOnReplace = new TQCheckBox(i18n("&Prompt on tqreplace"), m_optionGrp);
+    m_promptOnReplace = new TQCheckBox(i18n("&Prompt on replace"), m_optionGrp);
     m_promptOnReplace->setChecked( true );
 
     optionsLayout->addWidget(m_caseSensitive, 0, 0);
     optionsLayout->addWidget(m_wholeWordsOnly, 1, 0);
     optionsLayout->addWidget(m_fromCursor, 2, 0);
-    optionsLayout->addWidget(m_tqfindBackwards, 0, 1);
+    optionsLayout->addWidget(m_findBackwards, 0, 1);
     optionsLayout->addWidget(m_selectedText, 1, 1);
     optionsLayout->addWidget(m_promptOnReplace, 2, 1);
     topLayout->addWidget(m_optionGrp);
@@ -198,66 +198,66 @@ void KFindDialog::init(bool forReplace, const TQStringList &tqfindStrings, bool 
     connect(m_regExpItem, TQT_SIGNAL(clicked()), this, TQT_SLOT(showPatterns()));
     connect(m_backRefItem, TQT_SIGNAL(clicked()), this, TQT_SLOT(showPlaceholders()));
 
-    connect(m_tqfind, TQT_SIGNAL(textChanged ( const TQString & )),this, TQT_SLOT(textSearchChanged( const TQString & )));
+    connect(m_find, TQT_SIGNAL(textChanged ( const TQString & )),this, TQT_SLOT(textSearchChanged( const TQString & )));
 
     // tab order
-    setTabOrder(m_tqfind, m_regExp);
+    setTabOrder(m_find, m_regExp);
     setTabOrder(m_regExp, m_regExpItem);
-    setTabOrder(m_regExpItem, m_tqreplace);
-    setTabOrder(m_tqreplace, m_backRef);
+    setTabOrder(m_regExpItem, m_replace);
+    setTabOrder(m_replace, m_backRef);
     setTabOrder(m_backRef, m_backRefItem);
     setTabOrder(m_backRefItem, m_caseSensitive);
     setTabOrder(m_caseSensitive, m_wholeWordsOnly);
     setTabOrder(m_wholeWordsOnly, m_fromCursor);
-    setTabOrder(m_fromCursor, m_tqfindBackwards);
-    setTabOrder(m_tqfindBackwards, m_selectedText);
+    setTabOrder(m_fromCursor, m_findBackwards);
+    setTabOrder(m_findBackwards, m_selectedText);
     setTabOrder(m_selectedText, m_promptOnReplace);
 
     // buddies
-    m_tqfindLabel->setBuddy(m_tqfind);
-    m_tqreplaceLabel->setBuddy(m_tqreplace);
+    m_findLabel->setBuddy(m_find);
+    m_replaceLabel->setBuddy(m_replace);
 
     if (!forReplace)
     {
         m_promptOnReplace->hide();
-        m_tqreplaceGrp->hide();
+        m_replaceGrp->hide();
     }
 
-    d->tqfindStrings = tqfindStrings;
-    m_tqfind->setFocus();
+    d->findStrings = findStrings;
+    m_find->setFocus();
     enableButtonOK( !pattern().isEmpty() );
     if (forReplace)
     {
       setButtonOK(KGuiItem( i18n("&Replace"), TQString::null,
-                    i18n("Start tqreplace"),
+                    i18n("Start replace"),
                     i18n("<qt>If you press the <b>Replace</b> button, the text you entered "
                          "above is searched for within the document and any occurrence is "
-                         "tqreplaced with the tqreplacement text.</qt>")));
+                         "replaced with the replacement text.</qt>")));
     }
     else
     {
-      setButtonOK(KGuiItem( i18n("&Find"), "tqfind",
+      setButtonOK(KGuiItem( i18n("&Find"), "find",
                     i18n("Start searching"),
                     i18n("<qt>If you press the <b>Find</b> button, the text you entered "
                          "above is searched for within the document.</qt>")));
     }
 
     // QWhatsthis texts
-    TQWhatsThis::add ( m_tqfind, i18n(
+    TQWhatsThis::add ( m_find, i18n(
             "Enter a pattern to search for, or select a previous pattern from "
             "the list.") );
     TQWhatsThis::add ( m_regExp, i18n(
             "If enabled, search for a regular expression.") );
     TQWhatsThis::add ( m_regExpItem, i18n(
             "Click here to edit your regular expression using a graphical editor.") );
-    TQWhatsThis::add ( m_tqreplace, i18n(
-            "Enter a tqreplacement string, or select a previous one from the list.") );
+    TQWhatsThis::add ( m_replace, i18n(
+            "Enter a replacement string, or select a previous one from the list.") );
     TQWhatsThis::add( m_backRef, i18n(
             "<qt>If enabled, any occurrence of <code><b>\\N</b></code>, where "
-            "<code><b>N</b></code> is a integer number, will be tqreplaced with "
+            "<code><b>N</b></code> is a integer number, will be replaced with "
             "the corresponding capture (\"parenthesized substring\") from the "
             "pattern.<p>To include (a literal <code><b>\\N</b></code> in your "
-            "tqreplacement, put an extra backslash in front of it, like "
+            "replacement, put an extra backslash in front of it, like "
             "<code><b>\\\\N</b></code>.</qt>") );
     TQWhatsThis::add ( m_backRefItem, i18n(
             "Click for a menu of available captures.") );
@@ -270,7 +270,7 @@ void KFindDialog::init(bool forReplace, const TQStringList &tqfindStrings, bool 
     TQWhatsThis::add ( m_caseSensitive, i18n(
             "Perform a case sensitive search: entering the pattern "
             "'Joe' will not match 'joe' or 'JOE', only 'Joe'.") );
-    TQWhatsThis::add ( m_tqfindBackwards, i18n(
+    TQWhatsThis::add ( m_findBackwards, i18n(
             "Search backwards.") );
     TQWhatsThis::add ( m_promptOnReplace, i18n(
             "Ask before replacing each match found.") );
@@ -287,12 +287,12 @@ void KFindDialog::showEvent( TQShowEvent *e )
     {
         d->m_initialShowDone = true; // only once
         kdDebug() << "showEvent\n";
-        if (!d->tqfindStrings.isEmpty())
-            setFindHistory(d->tqfindStrings);
-        d->tqfindStrings = TQStringList();
+        if (!d->findStrings.isEmpty())
+            setFindHistory(d->findStrings);
+        d->findStrings = TQStringList();
         if (!d->pattern.isEmpty()) {
-            m_tqfind->lineEdit()->setText( d->pattern );
-            m_tqfind->lineEdit()->selectAll();
+            m_find->lineEdit()->setText( d->pattern );
+            m_find->lineEdit()->selectAll();
             d->pattern = TQString::null;
         }
     }
@@ -309,7 +309,7 @@ long KFindDialog::options() const
         options |= WholeWordsOnly;
     if (m_fromCursor->isChecked())
         options |= FromCursor;
-    if (m_tqfindBackwards->isChecked())
+    if (m_findBackwards->isChecked())
         options |= FindBackwards;
     if (m_selectedText->isChecked())
         options |= SelectedText;
@@ -320,13 +320,13 @@ long KFindDialog::options() const
 
 TQString KFindDialog::pattern() const
 {
-    return m_tqfind->currentText();
+    return m_find->currentText();
 }
 
 void KFindDialog::setPattern (const TQString &pattern)
 {
-    m_tqfind->lineEdit()->setText( pattern );
-    m_tqfind->lineEdit()->selectAll();
+    m_find->lineEdit()->setText( pattern );
+    m_find->lineEdit()->selectAll();
     d->pattern = pattern;
     kdDebug() << "setPattern " << pattern<<endl;
 }
@@ -335,12 +335,12 @@ void KFindDialog::setFindHistory(const TQStringList &strings)
 {
     if (strings.count() > 0)
     {
-        m_tqfind->setHistoryItems(strings, true);
-        m_tqfind->lineEdit()->setText( strings.first() );
-        m_tqfind->lineEdit()->selectAll();
+        m_find->setHistoryItems(strings, true);
+        m_find->lineEdit()->setText( strings.first() );
+        m_find->lineEdit()->selectAll();
     }
     else
-        m_tqfind->clearHistory();
+        m_find->clearHistory();
 }
 
 void KFindDialog::setHasSelection(bool hasSelection)
@@ -376,8 +376,8 @@ void KFindDialog::setSupportsBackwardsFind( bool supports )
     // ########## Shouldn't this hide the checkbox instead?
     if (supports) d->m_enabled |= FindBackwards;
     else d->m_enabled &= ~FindBackwards;
-    m_tqfindBackwards->setEnabled( supports );
-    m_tqfindBackwards->setChecked( supports && (options() & FindBackwards) );
+    m_findBackwards->setEnabled( supports );
+    m_findBackwards->setChecked( supports && (options() & FindBackwards) );
 }
 
 void KFindDialog::setSupportsCaseSensitiveFind( bool supports )
@@ -412,7 +412,7 @@ void KFindDialog::setOptions(long options)
     m_caseSensitive->setChecked((d->m_enabled & CaseSensitive) && (options & CaseSensitive));
     m_wholeWordsOnly->setChecked((d->m_enabled & WholeWordsOnly) && (options & WholeWordsOnly));
     m_fromCursor->setChecked((d->m_enabled & FromCursor) && (options & FromCursor));
-    m_tqfindBackwards->setChecked((d->m_enabled & FindBackwards) && (options & FindBackwards));
+    m_findBackwards->setChecked((d->m_enabled & FindBackwards) && (options & FindBackwards));
     m_selectedText->setChecked((d->m_enabled & SelectedText) && (options & SelectedText));
     m_regExp->setChecked((d->m_enabled & RegularExpression) && (options & RegularExpression));
 }
@@ -476,7 +476,7 @@ void KFindDialog::showPatterns()
         i = m_patterns->exec(m_regExpItem->mapToGlobal(m_regExpItem->rect().bottomLeft()));
         if (i != -1)
         {
-            TQLineEdit *editor = m_tqfind->lineEdit();
+            TQLineEdit *editor = m_find->lineEdit();
 
             editor->insert(items[i].regExp);
             editor->setCursorPosition(editor->cursorPosition() + items[i].cursorAdjustment);
@@ -485,7 +485,7 @@ void KFindDialog::showPatterns()
 }
 
 // Create a popup menu with a list of backreference terms, to help the user
-// compose a regular expression tqreplacement pattern.
+// compose a regular expression replacement pattern.
 void KFindDialog::showPlaceholders()
 {
     // Populate the popup menu.
@@ -499,7 +499,7 @@ void KFindDialog::showPlaceholders()
     int i = m_placeholders->exec(m_backRefItem->mapToGlobal(m_backRefItem->rect().bottomLeft()));
     if (i != -1)
     {
-        TQLineEdit *editor = m_tqreplace->lineEdit();
+        TQLineEdit *editor = m_replace->lineEdit();
         editor->insert( TQString("\\%1").arg( i ) );
     }
 }
@@ -517,7 +517,7 @@ void KFindDialog::slotPlaceholdersAboutToShow()
 
 void KFindDialog::slotOk()
 {
-    // Nothing to tqfind?
+    // Nothing to find?
     if (pattern().isEmpty())
     {
         KMessageBox::error(this, i18n("You must enter some text to search for."));
@@ -535,10 +535,10 @@ void KFindDialog::slotOk()
             return;
         }
     }
-    m_tqfind->addToHistory(pattern());
+    m_find->addToHistory(pattern());
     emit okClicked();
     if ( testWFlags( WShowModal ) )
         accept();
 }
-// kate: space-indent on; indent-width 4; tqreplace-tabs on;
+// kate: space-indent on; indent-width 4; replace-tabs on;
 #include "kfinddialog.moc"

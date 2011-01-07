@@ -113,11 +113,11 @@ namespace KPAC
 
     void Discovery::failed()
     {
-        setError( i18n( "Could not tqfind a usable proxy configuration script" ) );
+        setError( i18n( "Could not find a usable proxy configuration script" ) );
 
         // If this is the first DNS query, initialize our host name or abort
         // on failure. Otherwise abort if the current domain (which was already
-        // queried for a host called "wpad" tqcontains a SOA record)
+        // queried for a host called "wpad" contains a SOA record)
         bool firstQuery = m_hostname.isEmpty();
         if ( ( firstQuery && !initHostName() ) ||
              ( !firstQuery && !checkDomain() ) )
@@ -126,7 +126,7 @@ namespace KPAC
             return;
         }
 
-        int dot = m_hostname.tqfind( '.' );
+        int dot = m_hostname.find( '.' );
         if ( dot >= 0 )
         {
             m_hostname.remove( 0, dot + 1 ); // remove one domain level

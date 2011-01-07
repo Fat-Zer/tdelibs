@@ -57,7 +57,7 @@ class KIO_EXPORT KBookmarkManager : public TQObject, public DCOPObject
 protected:
     /**
      * Creates a bookmark manager with a path to the bookmarks.  By
-     * default, it will use the KDE standard dirs to tqfind and create the
+     * default, it will use the KDE standard dirs to find and create the
      * correct location.  If you are using your own app-specific
      * bookmarks directory, you must instantiate this class with your
      * own path <em>before</em> KBookmarkManager::managerForFile() is ever
@@ -152,10 +152,10 @@ public:
     /**
      * @return the bookmark designated by @p address
      * @param address the address belonging to the bookmark you're looking for
-     * @param tolerate when true tries to tqfind the most tolerable bookmark position
+     * @param tolerate when true tries to find the most tolerable bookmark position
      * @see KBookmark::address
      */
-    KBookmark tqfindByAddress( const TQString & address, bool tolerate = false );
+    KBookmark findByAddress( const TQString & address, bool tolerate = false );
 
     /**
      * Saves the bookmark file and notifies everyone.

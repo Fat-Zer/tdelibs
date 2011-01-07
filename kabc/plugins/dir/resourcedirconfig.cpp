@@ -82,7 +82,7 @@ void ResourceDirConfig::loadSettings( KRES::Resource *res )
     return;
   }
 
-  mFormatBox->setCurrentItem( mFormatTypes.tqfindIndex( resource->format() ) );
+  mFormatBox->setCurrentItem( mFormatTypes.findIndex( resource->format() ) );
 
   mFileNameEdit->setURL( resource->path() );
   if ( mFileNameEdit->url().isEmpty() )

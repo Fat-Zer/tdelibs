@@ -575,7 +575,7 @@ void MidiPlayer::play(bool calloutput,void output(void))
   double absTimeAtChangeTempo=0;
   double absTime=0;
   double diffTime=0;
-  MiditqStatus *midistat;
+  MidiStatus *midistat;
   //ulong mspass;
   double prevms=0;
   int j;
@@ -592,7 +592,7 @@ void MidiPlayer::play(bool calloutput,void output(void))
     midi->sync(1);
     midi->tmrStop();
     midi->closeDev();
-    midistat = new MiditqStatus();
+    midistat = new MidiStatus();
     setPos(ctl->gotomsec,midistat);
     minTime=ctl->gotomsec;
     prevms=(ulong)minTime;
@@ -792,7 +792,7 @@ void MidiPlayer::play(bool calloutput,void output(void))
 }
 
 
-void MidiPlayer::setPos(ulong gotomsec,MiditqStatus *midistat)
+void MidiPlayer::setPos(ulong gotomsec,MidiStatus *midistat)
 {
   int trk,minTrk;
   ulong tempo=(ulong)(500000 * ctl->ratioTempo);

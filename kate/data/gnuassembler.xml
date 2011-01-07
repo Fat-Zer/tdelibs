@@ -17,7 +17,7 @@ Author:   John Zaitseff <J.Zaitseff@zap.org.au>
 Date:     15th April, 2002
 Version:  1.0
 
-This file tqcontains the XML syntax highlighting description for the GNU
+This file contains the XML syntax highlighting description for the GNU
 Assembler, for KATE, the KDE Advanced Editor.  Keywords have been taken
 directly from the GNU Assembler source code (read.c).
 

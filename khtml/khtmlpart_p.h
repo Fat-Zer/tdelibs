@@ -72,7 +72,7 @@ namespace KParts
 
 namespace khtml
 {
-  class KDE_EXPORT ChildFrame : public TQObject
+  class KDE_EXPORT ChildFrame : public QObject
   {
       Q_OBJECT
   public:
@@ -118,7 +118,7 @@ namespace khtml
 
 struct KHTMLFrameList : public TQValueList<khtml::ChildFrame*>
 {
-    Iterator tqfind( const TQString &name ) KDE_NO_EXPORT;
+    Iterator find( const TQString &name ) KDE_NO_EXPORT;
 };
 
 typedef KHTMLFrameList::ConstIterator ConstFrameIt;
@@ -127,7 +127,7 @@ typedef KHTMLFrameList::Iterator FrameIt;
 static int khtml_part_dcop_counter = 0;
 
 
-class KHTMLWalletQueue : public TQObject
+class KHTMLWalletQueue : public QObject
 {
   Q_OBJECT
   public:
@@ -214,8 +214,8 @@ public:
     m_jobPercent = 0;
     m_haveEncoding = false;
     m_activeFrame = 0L;
-    m_tqfind = 0;
-    m_tqfindDialog = 0;
+    m_find = 0;
+    m_findDialog = 0;
     m_ssl_in_use = false;
     m_jsedlg = 0;
     m_formNotification = KHTMLPart::NoNotification;
@@ -516,29 +516,29 @@ public:
   };
   TQValueList<StringPortion> m_stringPortions;
 
-  KFind *m_tqfind;
-  KFindDialog *m_tqfindDialog;
+  KFind *m_find;
+  KFindDialog *m_findDialog;
 
-  struct tqfindState
+  struct findState
   {
-    tqfindState() : options( 0 ), last_dir( -1 ) {}
+    findState() : options( 0 ), last_dir( -1 ) {}
     TQStringList history;
     TQString text;
     int options;
     int last_dir; // -1=unknown,0=forward,1=backward
   };
 
-  tqfindState m_lastFindState;
+  findState m_lastFindState;
 
   KJSErrorDlg *m_jsedlg;
 
-  DOM::NodeImpl *m_tqfindNode; // current node
-  DOM::NodeImpl *m_tqfindNodeEnd; // end node
-  DOM::NodeImpl *m_tqfindNodeStart; // start node
-  DOM::NodeImpl *m_tqfindNodePrevious; // previous node used for tqfind
-  int m_tqfindPos; // current pos in current node
-  int m_tqfindPosEnd; // pos in end node
-  int m_tqfindPosStart; // pos in start node
+  DOM::NodeImpl *m_findNode; // current node
+  DOM::NodeImpl *m_findNodeEnd; // end node
+  DOM::NodeImpl *m_findNodeStart; // start node
+  DOM::NodeImpl *m_findNodePrevious; // previous node used for find
+  int m_findPos; // current pos in current node
+  int m_findPosEnd; // pos in end node
+  int m_findPosStart; // pos in start node
   /////////
 
   //TQGuardedPtr<KParts::Part> m_activeFrame;

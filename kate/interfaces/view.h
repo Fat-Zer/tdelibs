@@ -75,7 +75,7 @@ class KATEPARTINTERFACES_EXPORT View : public KTextEditor::View, public KTextEdi
     */
     virtual TQString currentWord() { return 0L; }
     /**
-      Gets the word at position x, y. Can be used to tqfind
+      Gets the word at position x, y. Can be used to find
       the word under the mouse cursor
     */
     virtual TQString word(int , int ) { return 0L; }
@@ -177,11 +177,11 @@ class KATEPARTINTERFACES_EXPORT View : public KTextEditor::View, public KTextEdi
     /**
       Presents a search dialog to the user.
     */
-    virtual void tqfind() { ; };
+    virtual void find() { ; };
     /**
-      Presents a tqreplace dialog to the user.
+      Presents a replace dialog to the user.
     */
-    virtual void tqreplace() { ; };
+    virtual void replace() { ; };
     /**
       Presents a "Goto Line" dialog to the user.
     */
@@ -216,17 +216,17 @@ class KATEPARTINTERFACES_EXPORT View : public KTextEditor::View, public KTextEdi
       Searches for the last searched text forward from cursor position.
       @param forward determines the search direction.
     */
-    virtual void tqfindAgain(bool forward ) { Q_UNUSED(forward); }
+    virtual void findAgain(bool forward ) { Q_UNUSED(forward); }
     /**
       Searches for the last searched text forward from cursor position.
       Searches forward from current cursor position.
     */
-    virtual void tqfindAgain () { };
+    virtual void findAgain () { };
     /**
       Searches for the last searched text forward from cursor position.
       Searches backward from current cursor position.
     */
-    virtual void tqfindPrev () { }
+    virtual void findPrev () { }
     /**
       Presents an edit command popup window, where the user can
       apply a shell command to the contents of the current window.
@@ -289,7 +289,7 @@ class KATEPARTINTERFACES_EXPORT View : public KTextEditor::View, public KTextEdi
 
   signals:
     void gotFocus (View *);
-//  void newtqStatus(); // Kate app connects to this signal, should be in the interface
+//  void newStatus(); // Kate app connects to this signal, should be in the interface
 
   public:
     virtual void setActive (bool b) = 0;

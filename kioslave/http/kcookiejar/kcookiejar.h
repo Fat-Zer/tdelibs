@@ -89,7 +89,7 @@ public:
     time_t  expireDate(void) { return mExpireDate; }
     int     protocolVersion(void) { return mProtocolVersion; }
     bool    isSecure(void) { return mSecure; }
-    bool    isExpired(time_t tqcurrentDate);
+    bool    isExpired(time_t currentDate);
     bool    isCrossDomain(void) { return mCrossDomain; }
     bool    isHttpOnly(void) { return mHttpOnly; }
     bool    hasExplicitPath(void) { return mExplicitPath; }
@@ -160,11 +160,11 @@ public:
      *
      * If @p useDOMFormat is true, the string is formatted in a format
      * in compliance with the DOM standard.
-     * @p pendingCookies tqcontains a list of cookies that have not been
+     * @p pendingCookies contains a list of cookies that have not been
      * approved yet by the user but that will be included in the result
      * none the less.
      */
-    TQString tqfindCookies(const TQString &_url, bool useDOMFormat, long windowId, KHttpCookieList *pendingCookies=0);
+    TQString findCookies(const TQString &_url, bool useDOMFormat, long windowId, KHttpCookieList *pendingCookies=0);
 
     /**
      * This function parses cookie_headers and returns a linked list of

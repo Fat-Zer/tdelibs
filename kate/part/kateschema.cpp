@@ -244,7 +244,7 @@ uint KateSchemaManager::number (const TQString &name)
     return 1;
 
   int i;
-  if ((i = m_schemas.tqfindIndex(name)) > -1)
+  if ((i = m_schemas.findIndex(name)) > -1)
     return i;
 
   return 0;
@@ -281,19 +281,19 @@ KateSchemaConfigColorTab::KateSchemaConfigColorTab( TQWidget *parent, const char
   b = new TQHBox (gbTextArea);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Normal text:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_back = new KColorButton(b);
 
   b = new TQHBox (gbTextArea);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Selected text:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_selected = new KColorButton(b);
 
   b = new TQHBox (gbTextArea);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Current line:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_current = new KColorButton(b);
 
   // Markers from kdelibs/interfaces/ktextinterface/markinterface.h
@@ -319,31 +319,31 @@ KateSchemaConfigColorTab::KateSchemaConfigColorTab( TQWidget *parent, const char
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Left border background:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_iconborder = new KColorButton(b);
 
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Line numbers:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_linenumber = new KColorButton(b);
 
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Bracket highlight:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_bracket = new KColorButton(b);
 
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Word wrap markers:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_wwmarker = new KColorButton(b);
 
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Tab markers:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_tmarker = new KColorButton(b);
 
   blay->addWidget(gbBorder);
@@ -351,7 +351,7 @@ KateSchemaConfigColorTab::KateSchemaConfigColorTab( TQWidget *parent, const char
   blay->addStretch();
 
   // connect signal changed(); changed is emitted by a ColorButton change!
-  connect( this, TQT_SIGNAL( changed() ), parent->tqparentWidget(), TQT_SLOT( slotChanged() ) );
+  connect( this, TQT_SIGNAL( changed() ), parent->parentWidget(), TQT_SLOT( slotChanged() ) );
 
   // TQWhatsThis help
   TQWhatsThis::add(m_back, i18n("<p>Sets the background color of the editing area.</p>"));
@@ -416,7 +416,7 @@ void KateSchemaConfigColorTab::schemaChanged ( int newSchema )
   m_linenumber->disconnect( TQT_SIGNAL( changed( const TQColor & ) ) );
 
   // If we havent this schema, read in from config file
-  if ( ! m_schemas.tqcontains( newSchema ) )
+  if ( ! m_schemas.contains( newSchema ) )
   {
     // fallback defaults
     TQColor tmp0 (KGlobalSettings::baseColor());
@@ -545,7 +545,7 @@ KateSchemaConfigFontTab::KateSchemaConfigFontTab( TQWidget *parent, const char *
   m_fontchooser->enableColumn(KFontChooser::StyleList, false);
   grid->addWidget( m_fontchooser, 0, 0);
 
-  connect (this, TQT_SIGNAL( changed()), parent->tqparentWidget(), TQT_SLOT (slotChanged()));
+  connect (this, TQT_SIGNAL( changed()), parent->parentWidget(), TQT_SLOT (slotChanged()));
   m_schema = -1;
 }
 
@@ -599,7 +599,7 @@ KateSchemaConfigFontColorTab::KateSchemaConfigFontColorTab( TQWidget *parent, co
   m_defaultStyles = new KateStyleListView( this, false );
   grid->addWidget( m_defaultStyles, 0, 0);
 
-  connect (m_defaultStyles, TQT_SIGNAL (changed()), parent->tqparentWidget(), TQT_SLOT (slotChanged()));
+  connect (m_defaultStyles, TQT_SIGNAL (changed()), parent->parentWidget(), TQT_SLOT (slotChanged()));
 
   TQWhatsThis::add( m_defaultStyles,  i18n(
       "This list displays the default styles for the current schema and "
@@ -679,11 +679,11 @@ KateSchemaConfigHighlightTab::KateSchemaConfigHighlightTab( TQWidget *parent, co
 
   m_hlDict.setAutoDelete (true);
 
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
 
   // hl chooser
   TQHBox *hbHl = new TQHBox( this );
-  tqlayout->add (hbHl);
+  layout->add (hbHl);
 
   hbHl->setSpacing( KDialog::spacingHint() );
   TQLabel *lHl = new TQLabel( i18n("H&ighlight:"), hbHl );
@@ -702,7 +702,7 @@ KateSchemaConfigHighlightTab::KateSchemaConfigHighlightTab( TQWidget *parent, co
 
   // styles listview
   m_styles = new KateStyleListView( this, true );
-  tqlayout->addWidget (m_styles, 999);
+  layout->addWidget (m_styles, 999);
 
   hlCombo->setCurrentItem ( hl );
   hlChanged ( hl );
@@ -716,7 +716,7 @@ KateSchemaConfigHighlightTab::KateSchemaConfigHighlightTab( TQWidget *parent, co
     "to edit from the popup menu.<p>You can unset the Background and Selected "
     "Background colors from the context menu when appropriate.") );
 
-  connect (m_styles, TQT_SIGNAL (changed()), parent->tqparentWidget(), TQT_SLOT (slotChanged()));
+  connect (m_styles, TQT_SIGNAL (changed()), parent->parentWidget(), TQT_SLOT (slotChanged()));
 }
 
 KateSchemaConfigHighlightTab::~KateSchemaConfigHighlightTab()
@@ -746,7 +746,7 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
     m_hlDict[m_schema]->setAutoDelete (true);
   }
 
-  if (!m_hlDict[m_schema]->tqfind(m_hl))
+  if (!m_hlDict[m_schema]->find(m_hl))
   {
     kdDebug(13030) << "NEW HL, create list" << endl;
 
@@ -775,20 +775,20 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
   m_styles->viewport()->setPalette( p );
 
   TQDict<KateStyleListCaption> prefixes;
-  for ( KateHlItemData *itemData = m_hlDict[m_schema]->tqfind(m_hl)->last();
+  for ( KateHlItemData *itemData = m_hlDict[m_schema]->find(m_hl)->last();
         itemData != 0L;
-        itemData = m_hlDict[m_schema]->tqfind(m_hl)->prev())
+        itemData = m_hlDict[m_schema]->find(m_hl)->prev())
   {
     kdDebug(13030) << "insert items " << itemData->name << endl;
 
     // All stylenames have their language mode prefixed, e.g. HTML:Comment
     // split them and put them into nice substructures.
-    int c = itemData->name.tqfind(':');
+    int c = itemData->name.find(':');
     if ( c > 0 ) {
       TQString prefix = itemData->name.left(c);
       TQString name   = itemData->name.mid(c+1);
 
-      KateStyleListCaption *parent = prefixes.tqfind( prefix );
+      KateStyleListCaption *parent = prefixes.find( prefix );
       if ( ! parent )
       {
         parent = new KateStyleListCaption( m_styles, prefix );
@@ -826,10 +826,10 @@ KateSchemaConfigPage::KateSchemaConfigPage( TQWidget *parent, KateDocument *doc 
   : KateConfigPage( parent ),
     m_lastSchema (-1)
 {
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
 
   TQHBox *hbHl = new TQHBox( this );
-  tqlayout->add (hbHl);
+  layout->add (hbHl);
   hbHl->setSpacing( KDialog::spacingHint() );
   TQLabel *lHl = new TQLabel( i18n("&Schema:"), hbHl );
   schemaCombo = new TQComboBox( false, hbHl );
@@ -845,7 +845,7 @@ KateSchemaConfigPage::KateSchemaConfigPage( TQWidget *parent, KateDocument *doc 
 
   m_tabWidget = new TQTabWidget ( this );
   m_tabWidget->setMargin (KDialog::marginHint());
-  tqlayout->add (m_tabWidget);
+  layout->add (m_tabWidget);
 
   connect (m_tabWidget, TQT_SIGNAL (currentChanged (TQWidget *)), this, TQT_SLOT (newCurrentPage (TQWidget *)));
 
@@ -863,7 +863,7 @@ KateSchemaConfigPage::KateSchemaConfigPage( TQWidget *parent, KateDocument *doc 
   m_tabWidget->addTab (m_highlightTab, i18n("Highlighting Text Styles"));
 
   hbHl = new TQHBox( this );
-  tqlayout->add (hbHl);
+  layout->add (hbHl);
   hbHl->setSpacing( KDialog::spacingHint() );
   lHl = new TQLabel( i18n("&Default schema for %1:").arg(KApplication::kApplication()->aboutData()->programName ()), hbHl );
   defaultSchemaCombo = new TQComboBox( false, hbHl );
@@ -969,7 +969,7 @@ void KateSchemaConfigPage::newSchema ()
 
   // soft update, no load from disk
   KateFactory::self()->schemaManager()->update (false);
-  int i = KateFactory::self()->schemaManager()->list ().tqfindIndex (t);
+  int i = KateFactory::self()->schemaManager()->list ().findIndex (t);
 
   update ();
   if (i > -1)
@@ -1021,7 +1021,7 @@ void KateViewSchemaAction::slotAboutToShow()
   {
     TQString hlName = KateFactory::self()->schemaManager()->list().operator[](z);
 
-    if (names.tqcontains(hlName) < 1)
+    if (names.contains(hlName) < 1)
     {
       names << hlName;
       popupMenu()->insertItem ( hlName, this, TQT_SLOT(setSchema(int)), 0,  z+1);
@@ -1088,9 +1088,9 @@ void KateStyleListView::showPopupMenu( KateStyleListItem *i, const TQPoint &glob
   TQPixmap scl(16,16);
   scl.fill( i->style()->selectedTextColor() );
   TQPixmap bgcl(16,16);
-  bgcl.fill( i->style()->itemSet(KateAttribute::BGColor) ? i->style()->bgColor() : viewport()->tqcolorGroup().base() );
+  bgcl.fill( i->style()->itemSet(KateAttribute::BGColor) ? i->style()->bgColor() : viewport()->colorGroup().base() );
   TQPixmap sbgcl(16,16);
-  sbgcl.fill( i->style()->itemSet(KateAttribute::SelectedBGColor) ? i->style()->selectedBGColor() : viewport()->tqcolorGroup().base() );
+  sbgcl.fill( i->style()->itemSet(KateAttribute::SelectedBGColor) ? i->style()->selectedBGColor() : viewport()->colorGroup().base() );
 
   if ( showtitle )
     m.insertTitle( i->contextName(), KateStyleListItem::ContextName );
@@ -1156,7 +1156,7 @@ void KateStyleListView::slotMousePressed(int btn, TQListViewItem* i, const TQPoi
   if ( dynamic_cast<KateStyleListItem*>(i) ) {
      if ( btn == Qt::LeftButton && c > 0 ) {
       // map pos to item/column and call KateStyleListItem::activate(col, pos)
-      ((KateStyleListItem*)i)->activate( c, viewport()->mapFromGlobal( pos ) - TQPoint( 0, tqitemRect(i).top() ) );
+      ((KateStyleListItem*)i)->activate( c, viewport()->mapFromGlobal( pos ) - TQPoint( 0, itemRect(i).top() ) );
     }
   }
 }
@@ -1321,7 +1321,7 @@ void KateStyleListItem::activate( int column, const TQPoint &localPos )
     default:
       return;
   }
-  if ( !TQRect( x, 0, w, BoxSize ).tqcontains( localPos ) )
+  if ( !TQRect( x, 0, w, BoxSize ).contains( localPos ) )
   changeProperty( (Property)column );
 }
 
@@ -1357,7 +1357,7 @@ void KateStyleListItem::toggleDefStyle()
     delete is;
     is = new KateAttribute( *ds );
     updateStyle();
-    tqrepaint();
+    repaint();
   }
 }
 
@@ -1441,7 +1441,7 @@ void KateStyleListItem::setColor( int column )
     break;
   }
 
-  tqrepaint();
+  repaint();
 }
 
 void KateStyleListItem::unsetColor( int c )
@@ -1465,7 +1465,7 @@ void KateStyleListItem::paintCell( TQPainter *p, const TQColorGroup& /*cg*/, int
   Q_ASSERT( lv ); //###
 
   // use a private color group and set the text/highlighted text colors
-  TQColorGroup mcg = lv->viewport()->tqcolorGroup();
+  TQColorGroup mcg = lv->viewport()->colorGroup();
 
   if ( col ) // col 0 is drawn by the superclass method
     p->fillRect( 0, 0, width, height(), TQBrush( mcg.base() ) );
@@ -1492,7 +1492,7 @@ void KateStyleListItem::paintCell( TQPainter *p, const TQColorGroup& /*cg*/, int
       }
       TQFont f ( ((KateStyleListView*)lv)->docfont );
       p->setFont( is->font(f) );
-      // FIXME - tqrepainting when text is cropped, and the column is enlarged is buggy.
+      // FIXME - repainting when text is cropped, and the column is enlarged is buggy.
       // Maybe I need painting the string myself :(
       // (wilbert) it depends on the font used
       TQListViewItem::paintCell( p, mcg, col, width, align );
@@ -1602,10 +1602,10 @@ void KateStyleListCaption::paintCell( TQPainter *p, const TQColorGroup& /*cg*/, 
   Q_ASSERT( lv ); //###
 
   // use the same colorgroup as the other items in the viewport
-  TQColorGroup mcg = lv->viewport()->tqcolorGroup();
+  TQColorGroup mcg = lv->viewport()->colorGroup();
 
   TQListViewItem::paintCell( p, mcg, col, width, align );
 }
 //END
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

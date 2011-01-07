@@ -36,7 +36,7 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
   TQHBox* hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
   TQLabel* lbl = new TQLabel("&QCombobox:", hbox);
-  lbl->tqsetSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
   
   m_qc = new TQComboBox(hbox, "QtReadOnlyCombo" );
   lbl->setBuddy (m_qc);  
@@ -48,7 +48,7 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
   hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
   lbl = new TQLabel("&Read-Only Combo:", hbox);
-  lbl->tqsetSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
 
   m_ro = new KComboBox(hbox, "ReadOnlyCombo" );
   lbl->setBuddy (m_ro);
@@ -61,7 +61,7 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
   hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
   lbl = new TQLabel("&Editable Combo:", hbox);
-  lbl->tqsetSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
 
   m_rw = new KComboBox( true, hbox, "ReadWriteCombo" );
   lbl->setBuddy (m_rw);
@@ -78,7 +78,7 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
   hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
   lbl = new TQLabel("&History Combo:", hbox);
-  lbl->tqsetSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
 
   m_hc = new KHistoryCombo( true, hbox, "HistoryCombo" );
   lbl->setBuddy (m_hc);
@@ -94,7 +94,7 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
   hbox = new TQHBox(this);
   hbox->setSpacing (KDialog::spacingHint());
   lbl = new TQLabel( "&Konq's Combo:", hbox);
-  lbl->tqsetSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
+  lbl->setSizePolicy (TQSizePolicy::Maximum, TQSizePolicy::Preferred);
 
   m_konqc = new KComboBox( true, hbox, "KonqyCombo" );
   lbl->setBuddy (m_konqc);

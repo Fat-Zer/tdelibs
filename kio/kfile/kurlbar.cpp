@@ -64,7 +64,7 @@ protected:
         if ( item ) {
             TQString text = static_cast<KURLBarItem*>( item )->toolTip();
             if ( !text.isEmpty() )
-                tip( m_view->tqitemRect( item ), text );
+                tip( m_view->itemRect( item ), text );
         }
     }
 
@@ -188,11 +188,11 @@ void KURLBarItem::paint( TQPainter *p )
     if ( isCurrent() || isSelected() ) {
         int h = height( box );
 
-        TQBrush brush = box->tqcolorGroup().brush( TQColorGroup::Highlight );
+        TQBrush brush = box->colorGroup().brush( TQColorGroup::Highlight );
         p->fillRect( 0, 0, w, h, brush );
         TQPen pen = p->pen();
         TQPen oldPen = pen;
-        pen.setColor( box->tqcolorGroup().mid() );
+        pen.setColor( box->colorGroup().mid() );
         p->setPen( pen );
 
         p->drawPoint( 0, 0 );
@@ -225,10 +225,10 @@ void KURLBarItem::paint( TQPainter *p )
             int xPos = pm->width() + margin + 2;
 
             if ( isCurrent() || isSelected() ) {
-                p->setPen( box->tqcolorGroup().highlight().dark(115) );
+                p->setPen( box->colorGroup().highlight().dark(115) );
                 p->drawText( xPos + ( TQApplication::reverseLayout() ? -1 : 1),
                              yPos + 1, visibleText );
-                p->setPen( box->tqcolorGroup().highlightedText() );
+                p->setPen( box->colorGroup().highlightedText() );
             }
 
             p->drawText( xPos, yPos, visibleText );
@@ -257,10 +257,10 @@ void KURLBarItem::paint( TQPainter *p )
             x = QMAX( x, margin );
 
             if ( isCurrent() || isSelected() ) {
-                p->setPen( box->tqcolorGroup().highlight().dark(115) );
+                p->setPen( box->colorGroup().highlight().dark(115) );
                 p->drawText( x + ( TQApplication::reverseLayout() ? -1 : 1),
                              y + 1, visibleText );
-                p->setPen( box->tqcolorGroup().highlightedText() );
+                p->setPen( box->colorGroup().highlightedText() );
             }
 
             p->drawText( x, y, visibleText );
@@ -268,7 +268,7 @@ void KURLBarItem::paint( TQPainter *p )
     }
 }
 
-TQSize KURLBarItem::tqsizeHint() const
+TQSize KURLBarItem::sizeHint() const
 {
     int wmin = 0;
     int hmin = 0;
@@ -284,9 +284,9 @@ TQSize KURLBarItem::tqsizeHint() const
     }
 
     if ( lb->isVertical() )
-        wmin = QMIN( wmin, lb->viewport()->tqsizeHint().width() );
+        wmin = QMIN( wmin, lb->viewport()->sizeHint().width() );
     else
-        hmin = QMIN( hmin, lb->viewport()->tqsizeHint().height() );
+        hmin = QMIN( hmin, lb->viewport()->sizeHint().height() );
 
     return TQSize( wmin, hmin );
 }
@@ -294,17 +294,17 @@ TQSize KURLBarItem::tqsizeHint() const
 int KURLBarItem::width( const TQListBox *lb ) const
 {
     if ( static_cast<const KURLBarListBox *>( lb )->isVertical() )
-        return QMAX( tqsizeHint().width(), lb->viewport()->width() );
+        return QMAX( sizeHint().width(), lb->viewport()->width() );
     else
-        return tqsizeHint().width();
+        return sizeHint().width();
 }
 
 int KURLBarItem::height( const TQListBox *lb ) const
 {
     if ( static_cast<const KURLBarListBox *>( lb )->isVertical() )
-        return tqsizeHint().height();
+        return sizeHint().height();
     else
-        return QMAX( tqsizeHint().height(), lb->viewport()->height() );
+        return QMAX( sizeHint().height(), lb->viewport()->height() );
 }
 
 bool KURLBarItem::isPersistent() const
@@ -341,7 +341,7 @@ KURLBar::KURLBar( bool useGlobalItems, TQWidget *parent, const char *name, WFlag
     d = new KURLBarPrivate();
 
     setListBox( 0L );
-    tqsetSizePolicy( TQSizePolicy( isVertical() ?
+    setSizePolicy( TQSizePolicy( isVertical() ?
                                 TQSizePolicy::Maximum :
                                 TQSizePolicy::Preferred,
                                 isVertical() ?
@@ -378,7 +378,7 @@ KURLBarItem * KURLBar::insertDynamicItem(const KURL& url, const TQString& descri
 void KURLBar::setOrientation( Qt::Orientation orient )
 {
     m_listBox->setOrientation( orient );
-    tqsetSizePolicy( TQSizePolicy( isVertical() ?
+    setSizePolicy( TQSizePolicy( isVertical() ?
                                 TQSizePolicy::Maximum :
                                 TQSizePolicy::Preferred,
                                 isVertical() ?
@@ -401,7 +401,7 @@ void KURLBar::setListBox( KURLBarListBox *view )
     }
     else {
         m_listBox = view;
-        if ( m_listBox->tqparentWidget() != this )
+        if ( m_listBox->parentWidget() != this )
             m_listBox->reparent( this, TQPoint(0,0) );
         m_listBox->resize( width(), height() );
     }
@@ -435,7 +435,7 @@ void KURLBar::setIconSize( int size )
         item = static_cast<KURLBarItem*>( item->next() );
     }
 
-    resize( tqsizeHint() );
+    resize( sizeHint() );
     updateGeometry();
 }
 
@@ -466,14 +466,14 @@ void KURLBar::paletteChange( const TQPalette & )
     setPalette( pal );
 }
 
-TQSize KURLBar::tqsizeHint() const
+TQSize KURLBar::sizeHint() const
 {
-    return m_listBox->tqsizeHint();
+    return m_listBox->sizeHint();
 
 #if 0
     // this code causes vertical and or horizontal scrollbars appearing
     // depending on the text, font, moonphase and earth rotation. Just using
-    // m_listBox->tqsizeHint() fixes this (although the widget can then be
+    // m_listBox->sizeHint() fixes this (although the widget can then be
     // resized to a smaller size so that scrollbars appear).
     int w = 0;
     int h = 0;
@@ -484,7 +484,7 @@ TQSize KURLBar::tqsizeHint() const
           item;
           item = static_cast<KURLBarItem*>( item->next() ) ) {
 
-        TQSize sh = item->tqsizeHint();
+        TQSize sh = item->sizeHint();
 
         if ( vertical ) {
             w = QMAX( w, sh.width() );
@@ -508,9 +508,9 @@ TQSize KURLBar::tqsizeHint() const
 #endif
 }
 
-TQSize KURLBar::tqminimumSizeHint() const
+TQSize KURLBar::minimumSizeHint() const
 {
-    TQSize s = tqsizeHint(); // ###
+    TQSize s = sizeHint(); // ###
     int w = s.width()  + m_listBox->verticalScrollBar()->width();
     int h = s.height() + m_listBox->horizontalScrollBar()->height();
     return TQSize( w, h );
@@ -844,7 +844,7 @@ KURLBarListBox::~KURLBarListBox()
 void KURLBarListBox::paintEvent( TQPaintEvent* )
 {
     TQPainter p(this);
-    p.setPen( tqcolorGroup().mid() );
+    p.setPen( colorGroup().mid() );
     p.drawRect( 0, 0, width(), height() );
 }
 
@@ -980,7 +980,7 @@ KURLBarItemDialog::KURLBarItemDialog( bool allowGlobal, const KURL& url,
         if ( KGlobal::instance()->aboutData() )
             appName = KGlobal::instance()->aboutData()->programName();
         if ( appName.isEmpty() )
-            appName = TQString::tqfromLatin1( KGlobal::instance()->instanceName() );
+            appName = TQString::fromLatin1( KGlobal::instance()->instanceName() );
         m_appLocal = new TQCheckBox( i18n("&Only show when using this application (%1)").arg( appName ), box );
         m_appLocal->setChecked( appLocal );
         TQWhatsThis::add( m_appLocal,

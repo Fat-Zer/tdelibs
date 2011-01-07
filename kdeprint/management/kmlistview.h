@@ -48,8 +48,8 @@ protected slots:
 	void slotOnViewport();
 
 protected:
-	KMListViewItem* tqfindItem(KMPrinter*);
-	KMListViewItem* tqfindItem(const TQString&);
+	KMListViewItem* findItem(KMPrinter*);
+	KMListViewItem* findItem(const TQString&);
 
 private:
 	TQPtrList<KMListViewItem>	m_items;

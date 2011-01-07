@@ -127,7 +127,7 @@ class KateIconBorder : public QWidget
     KateIconBorder( KateViewInternal* internalView, TQWidget *parent );
 
     // VERY IMPORTANT ;)
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 
     void updateFont();
     int lineNumberWidth() const;
@@ -204,4 +204,4 @@ class KateViewEncodingAction : public KActionMenu
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

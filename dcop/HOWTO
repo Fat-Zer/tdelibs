@@ -190,7 +190,7 @@ Receiving Data via DCOP:
 
 Currently the only real way to receive data from DCOP is to multiply
 inherit from the normal class that you are inheriting (usually some
-sort of QWidget subclass or TQObject) as well as the DCOPObject class.
+sort of QWidget subclass or QObject) as well as the DCOPObject class.
 DCOPObject provides one very important method: DCOPObject::process().
 This is a pure virtual method that you must implement in order to
 process DCOP messages that you receive.  It takes a function
@@ -385,7 +385,7 @@ but virtual, not pure virtual.
 
 Example:
 
-class MyClass: public TQObject, virtual public MyInterface
+class MyClass: public QObject, virtual public MyInterface
 {
   Q_OBJECT
   
@@ -397,7 +397,7 @@ class MyClass: public TQObject, virtual public MyInterface
     QRect mySynchronousMethod();
 };
 
-Note: (Qt issue) Remember that if you are inheriting from TQObject, you must
+Note: (Qt issue) Remember that if you are inheriting from QObject, you must
 place it first in the list of inherited classes.
 
 In the implementation of your class' ctor, you must explicitly initialize
@@ -408,7 +408,7 @@ the interface which your are implementing.
 Example:
 
 MyClass::MyClass()
-  : TQObject(),
+  : QObject(),
     DCOPObject("MyInterface")
 {
   // whatever...
@@ -429,7 +429,7 @@ It is not necessary (though very clean) to define an interface as an
 abstract class of its own, like we did in the example above. We could
 just as well have defined a k_dcop section directly within MyClass:
 
-class MyClass: public TQObject, virtual public DCOPObject
+class MyClass: public QObject, virtual public DCOPObject
 {
   Q_OBJECT
   K_DCOP

@@ -139,7 +139,7 @@ public:
   void setFont( const TQFont &font, bool onlyFixed = false );
 
   /**
-   * @return The bittqmask corresponding to the attributes the user
+   * @return The bitmask corresponding to the attributes the user
    *         wishes to change.
    */
   int fontDiffFlags();
@@ -252,7 +252,7 @@ public:
   /**
    * Reimplemented for internal reasons.
    */
-  virtual TQSize tqsizeHint( void ) const;
+  virtual TQSize sizeHint( void ) const;
 
 signals:
   /**
@@ -431,8 +431,8 @@ public:
    * @param theFont a reference to the font to write the chosen font
    *        into.
    * @param diffFlags a reference to the int into which the chosen
-   *        difference selection bittqmask should be written.
-   *        Check the returned bittqmask like:
+   *        difference selection bitmask should be written.
+   *        Check the returned bitmask like:
    *        \code
    *        if ( diffFlags & KFontChooser::FontDiffFamily )
    *            [...]

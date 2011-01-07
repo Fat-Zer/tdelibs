@@ -70,7 +70,7 @@ public:
 	                    SFlags flags = Style_Default,
 	                    const TQStyleOption& = TQStyleOption::Default ) const;
 
-	void tqdrawControl( ControlElement element,
+	void drawControl( ControlElement element,
 	                  TQPainter* p,
 	                  const TQWidget* widget,
 	                  const TQRect& r,
@@ -78,13 +78,13 @@ public:
 	                  SFlags flags = Style_Default,
 	                  const TQStyleOption& opt = TQStyleOption::Default ) const;
 
-	void tqdrawControlMask( ControlElement element,
+	void drawControlMask( ControlElement element,
 	                      TQPainter* p,
 	                      const TQWidget* widget,
 	                      const TQRect& r,
 	                      const TQStyleOption& opt = TQStyleOption::Default ) const;
 
-	void tqdrawComplexControl( ComplexControl control,
+	void drawComplexControl( ComplexControl control,
 	                         TQPainter* p,
 	                         const TQWidget* widget,
 	                         const TQRect& r,
@@ -94,13 +94,13 @@ public:
 	                         SCFlags active = SC_None,
 	                         const TQStyleOption& = TQStyleOption::Default ) const;
 
-	void tqdrawComplexControlMask( ComplexControl control,
+	void drawComplexControlMask( ComplexControl control,
 	                             TQPainter* p,
 	                             const TQWidget* widget,
 	                             const TQRect& r,
 	                             const TQStyleOption& = TQStyleOption::Default ) const;
 
-	int tqpixelMetric( PixelMetric m, const TQWidget* widget = 0 ) const;
+	int pixelMetric( PixelMetric m, const TQWidget* widget = 0 ) const;
 
 	TQSize sizeFromContents( ContentsType contents,
 	                        const TQWidget* widget,
@@ -133,7 +133,7 @@ private:
 
 	//Rendering flags
 	mutable bool forceSmallMode;
-	mutable bool tqmaskMode;   //Ugly round trip flag to permit tqmasking with little code;
+	mutable bool maskMode;   //Ugly round trip flag to permit masking with little code;
 	mutable bool formMode;   //Set when rendering form widgets
 
 	mutable const TQWidget* toolbarBlendWidget;  //Ditto for blending with toolbars
@@ -166,15 +166,15 @@ private:
 		if (formMode)
 		{
 			//If we're a form widget, we blend on painting, and consider ourselves
-			//not to have a tqmask (so we don't get clipped to it)
-			if (tqmaskMode)
+			//not to have a mask (so we don't get clipped to it)
+			if (maskMode)
 				return Keramik::TilePainter::PaintTrivialMask;
 			else
 				return Keramik::TilePainter::PaintFullBlend;
 		}
 		else
 		{
-			if (tqmaskMode)
+			if (maskMode)
 				return Keramik::TilePainter::PaintMask;
 			else
 				return Keramik::TilePainter::PaintNormal;
@@ -183,7 +183,7 @@ private:
 
 	Keramik::TilePainter::PaintMode pmodeFullBlend() const
 	{
-		return tqmaskMode?Keramik::TilePainter::PaintMask : Keramik::TilePainter::PaintFullBlend;
+		return maskMode?Keramik::TilePainter::PaintMask : Keramik::TilePainter::PaintFullBlend;
 	}
 
 	TQWidget* hoverWidget;
@@ -204,4 +204,4 @@ private:
 #endif
 
 // vim: ts=4 sw=4 noet
-// kate: indent-width 4; tqreplace-tabs off; tab-width 4;
+// kate: indent-width 4; replace-tabs off; tab-width 4;

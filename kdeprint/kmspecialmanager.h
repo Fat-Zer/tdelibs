@@ -28,7 +28,7 @@ class KMManager;
 class KXmlCommand;
 class DrMain;
 
-class KMSpecialManager : public TQObject
+class KMSpecialManager : public QObject
 {
 public:
 	KMSpecialManager(KMManager *parent, const char *name = 0);

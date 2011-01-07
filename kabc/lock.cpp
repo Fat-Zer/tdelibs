@@ -38,7 +38,7 @@ using namespace KABC;
 Lock::Lock( const TQString &identifier )
   : mIdentifier( identifier )
 {
-  mIdentifier.tqreplace( "/", "_" );
+  mIdentifier.replace( "/", "_" );
 }
 
 Lock::~Lock()
@@ -101,7 +101,7 @@ bool Lock::lock()
                       << endl;
     } else {
       TQString identifier( mIdentifier );
-      identifier.tqreplace( '_', '/' );
+      identifier.replace( '_', '/' );
 
       mError = i18n("The address book '%1' is locked by application '%2'.\nIf you believe this is incorrect, just remove the lock file from '%3'")
                .arg( identifier ).arg( app ).arg( locateLocal( "data", "kabc/lock/*.lock" ) );

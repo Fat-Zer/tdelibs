@@ -161,7 +161,7 @@ public:
     /**
      * Makes @p trayWin a system tray window for @p forWin.
      *
-     * A system tray window serves as an icon tqreplacement. It's
+     * A system tray window serves as an icon replacement. It's
      * displayed inside the panel's system tray.
      * @param trayWin the id of the system tray window
      * @param forWin the id of the window represented by the system
@@ -491,7 +491,7 @@ public:
       /// The process id of the window's owner
 	pid_t pid;
       /// Position and size of the window contents.
-	TQRect tqgeometry;
+	TQRect geometry;
       /// Position and size of the window's frame.
 	TQRect frameGeometry;
 
@@ -655,9 +655,9 @@ public:
      * Returns the position and size of the window contents.
      * Requires NET::WMGeometry passed to KWin::windowInfo().
      */
-    TQRect tqgeometry() const;
+    TQRect geometry() const;
     /**
-     * Returns the frame tqgeometry of the window, i.e. including the window decoration.
+     * Returns the frame geometry of the window, i.e. including the window decoration.
      * Requires NET::WMKDEFrameStrut passed to KWin::windowInfo().
      */
     TQRect frameGeometry() const;

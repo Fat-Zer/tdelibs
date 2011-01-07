@@ -48,18 +48,18 @@ class KDialogBaseButton;
 class KDialogBaseTile;
 
 /**
- * @short A dialog base class with standard buttons and predefined tqlayouts.
+ * @short A dialog base class with standard buttons and predefined layouts.
  *
  * Provides basic functionality needed by nearly all dialogs.
  *
- * It offers the standard action buttons you'd expect to tqfind in a
+ * It offers the standard action buttons you'd expect to find in a
  * dialog as well as the capability to define at most three configurable
- * buttons. You can define a main widget that tqcontains your specific
- * dialog tqlayout or you can use a predefined tqlayout. Currently, @p
+ * buttons. You can define a main widget that contains your specific
+ * dialog layout or you can use a predefined layout. Currently, @p
  * TreeList/Paged, @p Tabbed, @p Plain, @p Swallow and @p IconList
- * mode tqlayouts (faces) are available.
+ * mode layouts (faces) are available.
  *
- * The class takes care of the tqgeometry management. You only need to define
+ * The class takes care of the geometry management. You only need to define
  * a minimum size for the widget you want to use as the main widget.
  *
  * You can set a background tile (pixmap) for parts of the dialog. The
@@ -67,7 +67,7 @@ class KDialogBaseTile;
  * application so that they all get the same look and feel.
  *
  * There is a tutorial available on http://developer.kde.org/ (NOT YET)
- * that tqcontains
+ * that contains
  * copy/paste examples as well a screenshots on how to use this class.
  *
  * <b>Standard buttons (action buttons):</b>\n
@@ -100,7 +100,7 @@ class KDialogBaseTile;
  * signals that are related to the standard action buttons will be used
  * when you don't use these buttons.
  *
- * <b>Dialog tqshapes:</b>\n
+ * <b>Dialog shapes:</b>\n
  *
  * You can either use one of the prebuilt, easy to use, faces or
  * define your own main widget. The dialog provides ready to use
@@ -138,7 +138,7 @@ class KDialogBaseTile;
  * equal to KDialog::marginHint(). You should not add a margin yourself,
  * since one will be added automatically.
  * The example below (from kedit) shows how you use the top level widget
- * and its tqlayout. The second argument (the border) to QVBoxLayout
+ * and its layout. The second argument (the border) to QVBoxLayout
  * is 0. This situation is valid for addPage , addVBoxPage ,
  * addHBoxPage , addGridPage , makeMainWidget ,
  * makeVBoxMainWidget , makeHBoxMainWidget and
@@ -279,8 +279,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * In KDE4 a WFlag paramater should be added after modal and next
      * function can be removed.
      *
-     * Constructor for the predefined tqlayout mode where you specify the
-     * kind of tqlayout (face).
+     * Constructor for the predefined layout mode where you specify the
+     * kind of layout (face).
      *
      * @param dialogFace You can use TreeList, Tabbed, Plain, Swallow or
      *        IconList.
@@ -312,8 +312,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
 
     /**
-     * Constructor for the predefined tqlayout mode where you specify the
-     * kind of tqlayout (face).
+     * Constructor for the predefined layout mode where you specify the
+     * kind of layout (face).
      *
      * @param dialogFace You can use TreeList, Tabbed, Plain, Swallow or
      *        IconList.
@@ -426,18 +426,18 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * resized before showing it.
      **/
     virtual void adjustSize();
-    virtual TQSize tqsizeHint() const;
-    virtual TQSize tqminimumSizeHint() const;
+    virtual TQSize sizeHint() const;
+    virtual TQSize minimumSizeHint() const;
 
     /**
-     * Retrieve the empty page when the predefined tqlayout is used in @p Plain
+     * Retrieve the empty page when the predefined layout is used in @p Plain
      * mode.
      *
      * This widget must be used as the toplevel widget of your dialog
      * code.
      *
-     * @return The widget or 0 if the predefined tqlayout mode is not @p Plain
-     *         or if you don't use any predefined tqlayout.
+     * @return The widget or 0 if the predefined layout mode is not @p Plain
+     *         or if you don't use any predefined layout.
      */
     TQFrame *plainPage();
 
@@ -448,8 +448,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * The returned widget must be used as the
      * toplevel widget for this particular page.
      * Note: The returned frame widget has no
-     * tqlayout manager associated with it. In order to use it you must
-     * create a tqlayout yourself as the example below illustrates:
+     * layout manager associated with it. In order to use it you must
+     * create a layout yourself as the example below illustrates:
      *
      * \code
      * TQFrame *page = addPage( i18n("Layout") );
@@ -492,8 +492,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @p IconList or @p Tabbed mode.
      *
      * The returned widget must be used as the toplevel widget for
-     * this particular page. The widget tqcontains a QVBoxLayout
-     * tqlayout so the widget children are lined up vertically.  You can
+     * this particular page. The widget contains a QVBoxLayout
+     * layout so the widget children are lined up vertically.  You can
      * use it as follows:
      *
      * \code
@@ -535,8 +535,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @p IconList or @p Tabbed mode.
      *
      * The returned widget must be used as the
-     * toplevel widget for this particular page. The widget tqcontains a
-     * TQHBoxLayout tqlayout so the widget children are lined up horizontally.
+     * toplevel widget for this particular page. The widget contains a
+     * TQHBoxLayout layout so the widget children are lined up horizontally.
      * You can use it as follows:
      *
      * @param itemName String used in the list or as tab item name.
@@ -572,8 +572,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @p IconList or @p Tabbed mode.
      *
      * The returned widget must be used as the
-     * toplevel widget for this particular page. The widget tqcontains a
-     * TQGridLayout tqlayout so the widget children are  positioned in a grid.
+     * toplevel widget for this particular page. The widget contains a
+     * TQGridLayout layout so the widget children are  positioned in a grid.
      *
      * @param n Specifies the number of columns if @p dir is Qt::Horizontal
      *          or the number of rows if @p dir is Qt::Vertical.
@@ -733,7 +733,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * Sets the page with @p index to be displayed.
      *
      * This method will only
-     * work when the dialog is using the predefined tqshape of TreeList,
+     * work when the dialog is using the predefined shape of TreeList,
      * IconList or Tabbed.
      *
      * @param index Index of the page to be shown.
@@ -745,7 +745,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * Returns the index of the active page.
      *
      * This method will only work when the dialog is using the
-     * predefined tqshape of Tabbed, TreeList or IconList.
+     * predefined shape of Tabbed, TreeList or IconList.
      *
      * @return The page index or -1 if there is no active page.
      */
@@ -828,7 +828,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
    /**
     * read the dialogs size from the configuration according to the screen size.
-    * If no size is saved for one dimension of the screen, tqsizeHint() is returned.
+    * If no size is saved for one dimension of the screen, sizeHint() is returned.
     *
     * @param groupName Name of the group to read from. The old group
     *                  of KGlobal::config is preserved.
@@ -837,7 +837,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
    /**
     * read the dialogs size from the configuration according to the screen size.
-    * If no size is saved for one dimension of the screen, tqsizeHint() is returned.
+    * If no size is saved for one dimension of the screen, sizeHint() is returned.
     *
     * @param config The KConfig object to read from
     * @param groupName Name of the group to read from. The old group
@@ -888,7 +888,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * If the default parameters are used
      * (that is, if no parameters are given) the standard texts are set:
-     * The button shows "OK", the tooltip tqcontains "Accept settings."
+     * The button shows "OK", the tooltip contains "Accept settings."
      * (internationalized) and the quickhelp text explains the standard
      * behavior of the OK button in settings dialogs.
      *
@@ -918,7 +918,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * If the default parameters are
      * used (that is, if no parameters are given) the standard texts are set:
-     * The button shows "Apply", the tooltip tqcontains "Apply settings."
+     * The button shows "Apply", the tooltip contains "Apply settings."
      * (internationalized) and the quickhelp text explains the standard
      * behavior of the apply button in settings dialogs.
      *
@@ -1150,7 +1150,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      *
      * This method returns the contents rectangle of the work area. Place
      * your widgets inside this rectangle, and use it to set up
-     * their tqgeometry. Be careful: The rectangle is only valid after
+     * their geometry. Be careful: The rectangle is only valid after
      * resizing the dialog, as it is a result of the resizing process.
      * If you need the "overhead" the dialog needs for its elements,
      * use getBorderWidths().
@@ -1167,7 +1167,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * set it as a minimum size for the resulting dialog.
      *
      * You should not need to use this method and never if you use one of
-     * the predefined tqshapes.
+     * the predefined shapes.
      *
      * @param w The width of you special widget.
      * @param h The height of you special widget.
@@ -1311,74 +1311,74 @@ class KDEUI_EXPORT KDialogBase : public KDialog
   signals:
     /**
      * The Help button was pressed. This signal is only emitted if
-     * slotHelp() is not tqreplaced.
+     * slotHelp() is not replaced.
      */
     void helpClicked();
 
     /**
      * The Default button was pressed. This signal is only emitted if
-     * slotDefault() is not tqreplaced.
+     * slotDefault() is not replaced.
      */
     void defaultClicked();
 
 
     /**
      * The User3 button was pressed. This signal is only emitted if
-     * slotUser3() is not tqreplaced.
+     * slotUser3() is not replaced.
      */
     void user3Clicked();
 
     /**
      * The User2 button was pressed. This signal is only emitted if
-     * slotUser2() is not tqreplaced.
+     * slotUser2() is not replaced.
      */
     void user2Clicked();
 
     /**
      * The User1 button was pressed. This signal is only emitted if
-     * slotUser1() is not tqreplaced.
+     * slotUser1() is not replaced.
      */
     void user1Clicked();
 
     /**
      * The Apply button was pressed. This signal is only emitted if
-     * slotApply() is not tqreplaced.
+     * slotApply() is not replaced.
      */
     void applyClicked();
 
     /**
      * The Try button was pressed. This signal is only emitted if
-     * slotTry() is not tqreplaced.
+     * slotTry() is not replaced.
      */
     void tryClicked();
 
     /**
      * The OK button was pressed. This signal is only emitted if
-     * slotOk() is not tqreplaced.
+     * slotOk() is not replaced.
      */
     void okClicked();
 
     /**
      * The Yes button was pressed. This signal is only emitted if
-     * slotYes() is not tqreplaced.
+     * slotYes() is not replaced.
      */
     void yesClicked();
 
     /**
      * The No button was pressed. This signal is only emitted if
-     * slotNo() is not tqreplaced.
+     * slotNo() is not replaced.
      */
     void noClicked();
 
     /**
      * The Cancel button was pressed. This signal is only emitted if
-     * slotCancel() is not tqreplaced.
+     * slotCancel() is not replaced.
      */
     void cancelClicked();
 
     /**
      * The Close button was pressed. This signal is only emitted if
-     * slotClose() is not tqreplaced.
+     * slotClose() is not replaced.
      */
     void closeClicked();
 
@@ -1549,7 +1549,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
   private:
     /**
-     * Prepares the tqlayout that manages the widgets of the dialog
+     * Prepares the layout that manages the widgets of the dialog
      */
     void setupLayout();
 
@@ -1572,7 +1572,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * @param user2 User button2 item.
      * @param user2 User button3 item.
      */
-    void makeButtonBox( int tqmask, ButtonCode defaultButton,
+    void makeButtonBox( int mask, ButtonCode defaultButton,
 			const KGuiItem &user1 = KGuiItem(),
 			const KGuiItem &user2 = KGuiItem(),
 			const KGuiItem &user3 = KGuiItem() );

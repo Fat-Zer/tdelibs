@@ -8,17 +8,17 @@ TARGET		= kdewin32$$KDEBUG
 QMAKE_CXXFLAGS += /FI$(KDELIBS)/kdecore/kdelibs_export.h
 QMAKE_CFLAGS += /FI$(KDELIBS)/kdecore/kdelibs_export.h
 
-system( tqmoc qeventloopex.h -o tqmoc/qeventloopex.moc )
+system( moc qeventloopex.h -o moc/qeventloopex.moc )
 
 WIN9x {
 	DEFINES += KDEWIN32_9x
 
 	DESTDIR = $$KDELIBDESTDIR/win9x
 
-	tqcontains(KW_CONFIG,release) {
+	contains(KW_CONFIG,release) {
 		OBJECTS_DIR = 9x/obj_rel
 	}
-	!tqcontains(KW_CONFIG,release) {
+	!contains(KW_CONFIG,release) {
 		OBJECTS_DIR = 9x/obj
 	}
 }

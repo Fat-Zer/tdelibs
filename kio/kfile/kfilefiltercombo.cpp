@@ -68,11 +68,11 @@ void KFileFilterCombo::setFilter(const TQString& filter)
 
     if (!filter.isEmpty()) {
 	TQString tmp = filter;
-	int index = tmp.tqfind('\n');
+	int index = tmp.find('\n');
 	while (index > 0) {
 	    filters.append(tmp.left(index));
 	    tmp = tmp.mid(index + 1);
-	    index = tmp.tqfind('\n');
+	    index = tmp.find('\n');
 	}
 	filters.append(tmp);
     } 
@@ -82,7 +82,7 @@ void KFileFilterCombo::setFilter(const TQString& filter)
     TQStringList::ConstIterator it;
 	TQStringList::ConstIterator end(filters.end());
     for (it = filters.begin(); it != end; ++it) {
-	int tab = (*it).tqfind('|');
+	int tab = (*it).find('|');
 	insertItem((tab < 0) ? *it :
 		   (*it).mid(tab + 1));
     }
@@ -101,7 +101,7 @@ TQString KFileFilterCombo::currentFilter() const
         }
     }
 
-    int tab = f.tqfind('|');
+    int tab = f.find('|');
     if (tab < 0)
 	return f;
     else
@@ -129,7 +129,7 @@ void KFileFilterCombo::setMimeFilter( const TQStringList& types,
 {
     clear();
     filters.clear();
-    TQString delim = TQString::tqfromLatin1(", ");
+    TQString delim = TQString::fromLatin1(", ");
     d->hasAllSupportedFiles = false;
 
     m_allTypes = defaultType.isEmpty() && (types.count() > 1);

@@ -63,7 +63,7 @@ KMConfigFilter::KMConfigFilter(TQWidget *parent, const char *name)
 
 	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l0->addWidget(box, 1);
-	QVBoxLayout	*l1 = new TQVBoxLayout(box->tqlayout(), KDialog::spacingHint());
+	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), KDialog::spacingHint());
 	l1->addWidget(lab);
 	QGridLayout	*l2 = new TQGridLayout(0, 4, 3, 0, KDialog::spacingHint());
 	l1->addLayout(l2);
@@ -97,7 +97,7 @@ void KMConfigFilter::loadConfig(KConfig *conf)
 	{
 		if (!it.current()->isSpecial() && !it.current()->isVirtual())
 		{
-			KListBox	*lb = (m_plist.tqfind(it.current()->printerName()) == m_plist.end() ? m_list1 : m_list2);
+			KListBox	*lb = (m_plist.find(it.current()->printerName()) == m_plist.end() ? m_list1 : m_list2);
 			lb->insertItem(SmallIcon(it.current()->pixmap()), it.current()->printerName());
 		}
 	}

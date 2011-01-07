@@ -128,7 +128,7 @@ class KHelpMenuPrivate;
  * @author Espen Sand (espen@kde.org)
  */
 
-class KDEUI_EXPORT KHelpMenu : public TQObject
+class KDEUI_EXPORT KHelpMenu : public QObject
 {
   Q_OBJECT
 

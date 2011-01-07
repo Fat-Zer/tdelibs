@@ -40,12 +40,12 @@ class Job;
 * Instead of creating a separate window, this is only a widget that can be
 * easily embedded in a statusbar.
 *
-* Usage of tqStatusbarProgress is little different.
+* Usage of StatusbarProgress is little different.
 * This dialog will be a part of some application.
 * \code
 * // create a dialog
-* tqStatusbarProgress *statusProgress;
-* statusProgress = new tqStatusbarProgress( statusBar() );
+* StatusbarProgress *statusProgress;
+* statusProgress = new StatusbarProgress( statusBar() );
 * statusBar()->insertWidget( statusProgress, statusProgress->width() , 0 );
 * ...
 * // create job and connect it to the progress
@@ -57,20 +57,20 @@ class Job;
 * @short IO progress widget for embedding in a statusbar.
 * @author Matej Koss <koss@miesto.sk>
 */
-class KIO_EXPORT tqStatusbarProgress : public ProgressBase {
+class KIO_EXPORT StatusbarProgress : public ProgressBase {
 
   Q_OBJECT
 
 public:
 
   /**
-   * Creates a new tqStatusbarProgress.
+   * Creates a new StatusbarProgress.
    * @param parent the parent of this widget
    * @param button true to add an abort button. The button will be
    *               connected to ProgressBase::slotStop()
    */
-  tqStatusbarProgress( TQWidget* parent, bool button = true );
-  ~tqStatusbarProgress() {}
+  StatusbarProgress( TQWidget* parent, bool button = true );
+  ~StatusbarProgress() {}
 
   /**
    * Sets the job to monitor.
@@ -104,7 +104,7 @@ protected:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class tqStatusbarProgressPrivate* d;
+  class StatusbarProgressPrivate* d;
 };
 
 } /* namespace */

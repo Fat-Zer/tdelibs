@@ -80,22 +80,22 @@ int main(int argc, char *argv[])
 }
 
 #ifdef Q_OS_FREEBSD
-static const TQString s_group1 = TQString::tqfromLatin1("staff");
-static const TQString s_group2 = TQString::tqfromLatin1("guest");
+static const TQString s_group1 = TQString::fromLatin1("staff");
+static const TQString s_group2 = TQString::fromLatin1("guest");
 #else
-static const TQString s_group1 = TQString::tqfromLatin1("audio");
-static const TQString s_group2 = TQString::tqfromLatin1("users");
+static const TQString s_group1 = TQString::fromLatin1("audio");
+static const TQString s_group2 = TQString::fromLatin1("users");
 #endif
 
-static const TQString s_testACL = TQString::tqfromLatin1( "user::rw-\nuser:bin:rwx\ngroup::rw-\ntqmask::rwx\nother::r--\n" );
-static const TQString s_testACL2 = TQString::tqfromLatin1( "user::rwx\nuser:bin:rwx\ngroup::rw-\n") +
-                                  TQString::tqfromLatin1( "group:" ) + s_group1 + TQString::tqfromLatin1( ":--x\n" ) +
-                                  TQString::tqfromLatin1( "group:" ) + s_group2 + TQString::tqfromLatin1( ":r--\n" ) +
-                                  TQString::tqfromLatin1( "tqmask::r-x\nother::r--\n" );
-static const TQString s_testACLEffective = TQString::tqfromLatin1( "user::rwx\nuser:bin:rwx #effective:r-x\ngroup::rw- #effective:r--\n" ) + 
-                                          TQString::tqfromLatin1( "group:" ) + s_group1 + TQString::tqfromLatin1( ":--x\n" ) +
-                                          TQString::tqfromLatin1( "group:" ) + s_group2 + TQString::tqfromLatin1( ":r--\n" ) +
-                                          TQString::tqfromLatin1( "tqmask::r-x\nother::r--\n" );
+static const TQString s_testACL = TQString::fromLatin1( "user::rw-\nuser:bin:rwx\ngroup::rw-\nmask::rwx\nother::r--\n" );
+static const TQString s_testACL2 = TQString::fromLatin1( "user::rwx\nuser:bin:rwx\ngroup::rw-\n") +
+                                  TQString::fromLatin1( "group:" ) + s_group1 + TQString::fromLatin1( ":--x\n" ) +
+                                  TQString::fromLatin1( "group:" ) + s_group2 + TQString::fromLatin1( ":r--\n" ) +
+                                  TQString::fromLatin1( "mask::r-x\nother::r--\n" );
+static const TQString s_testACLEffective = TQString::fromLatin1( "user::rwx\nuser:bin:rwx #effective:r-x\ngroup::rw- #effective:r--\n" ) + 
+                                          TQString::fromLatin1( "group:" ) + s_group1 + TQString::fromLatin1( ":--x\n" ) +
+                                          TQString::fromLatin1( "group:" ) + s_group2 + TQString::fromLatin1( ":r--\n" ) +
+                                          TQString::fromLatin1( "mask::r-x\nother::r--\n" );
 
 KACLTest::KACLTest()
 :m_acl( s_testACL )
@@ -163,8 +163,8 @@ void KACLTest::testGetOthersPermissions()
 void KACLTest::testGetMaskPermissions()
 {
   bool exists = false;
-  unsigned short tqmask = m_acl.tqmaskPermissions( exists );
-  check( "Mask permissions: ", TQString::number( tqmask ), "7" );
+  unsigned short mask = m_acl.maskPermissions( exists );
+  check( "Mask permissions: ", TQString::number( mask ), "7" );
   check( "Mask permissions: ", exists, true );
 }
 
@@ -245,9 +245,9 @@ void KACLTest::testSettingExtended()
   KACL CharlesII( s_testACL );
   CharlesII.setMaskPermissions( 7 ); // clearly
   bool dummy = false;
-  check( "setMaskPermissions: ", TQString::number( CharlesII.tqmaskPermissions( dummy ) ),"7" );
+  check( "setMaskPermissions: ", TQString::number( CharlesII.maskPermissions( dummy ) ),"7" );
 
-  const TQString expected( "user::rw-\nuser:root:rwx\nuser:bin:r--\ngroup::rw-\ntqmask::rwx\nother::r--\n" );
+  const TQString expected( "user::rw-\nuser:root:rwx\nuser:bin:r--\ngroup::rw-\nmask::rwx\nother::r--\n" );
   
   ACLUserPermissionsList users;
   ACLUserPermissions user = qMakePair( TQString( "root" ), ( unsigned short )7 );
@@ -265,8 +265,8 @@ void KACLTest::testSettingExtended()
 
   // groups, all and named
   
-  const TQString expected2 = TQString::tqfromLatin1( "user::rw-\nuser:bin:rwx\ngroup::rw-\ngroup:" ) + s_group1 +
-                            TQString::tqfromLatin1( ":-wx\ngroup:" ) + s_group2 + TQString::tqfromLatin1(":r--\ntqmask::rwx\nother::r--\n" );
+  const TQString expected2 = TQString::fromLatin1( "user::rw-\nuser:bin:rwx\ngroup::rw-\ngroup:" ) + s_group1 +
+                            TQString::fromLatin1( ":-wx\ngroup:" ) + s_group2 + TQString::fromLatin1(":r--\nmask::rwx\nother::r--\n" );
   CharlesII.setACL( s_testACL ); // reset
   ACLGroupPermissionsList groups;
   ACLGroupPermissions group = qMakePair( s_group1, ( unsigned short )3 );
@@ -300,10 +300,10 @@ void KACLTest::testNewMask()
 {
   KACL CharlesII( "user::rw-\ngroup::rw-\nother::rw\n" );
   bool dummy = false;
-  CharlesII.tqmaskPermissions( dummy );
-  check( "tqmask exists: ", dummy, false );
+  CharlesII.maskPermissions( dummy );
+  check( "mask exists: ", dummy, false );
 
   CharlesII.setMaskPermissions( 6 );
-  check( "new tqmask set: ", TQString::number( CharlesII.tqmaskPermissions( dummy ) ), "6" );
-  check( "tqmask exists now: ", dummy, true );
+  check( "new mask set: ", TQString::number( CharlesII.maskPermissions( dummy ) ), "6" );
+  check( "mask exists now: ", dummy, true );
 }

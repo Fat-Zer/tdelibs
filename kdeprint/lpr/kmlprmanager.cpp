@@ -148,7 +148,7 @@ void KMLprManager::initHandlers()
 			if (func)
 				insertHandler(func(this));
 			else
-				kdDebug() << "couldn't tqfind the symbol 'create_handler'" << endl;
+				kdDebug() << "couldn't find the symbol 'create_handler'" << endl;
 		}
 	}
 
@@ -156,11 +156,11 @@ void KMLprManager::initHandlers()
 	insertHandler(new LprHandler("default", this));
 }
 
-LprHandler* KMLprManager::tqfindHandler(KMPrinter *prt)
+LprHandler* KMLprManager::findHandler(KMPrinter *prt)
 {
 	QString	handlerstr(prt->option("kde-lpr-handler"));
 	LprHandler	*handler(0);
-	if (handlerstr.isEmpty() || (handler = m_handlers.tqfind(handlerstr)) == NULL)
+	if (handlerstr.isEmpty() || (handler = m_handlers.find(handlerstr)) == NULL)
 	{
 		return NULL;
 	}
@@ -169,7 +169,7 @@ LprHandler* KMLprManager::tqfindHandler(KMPrinter *prt)
 
 PrintcapEntry* KMLprManager::findEntry(KMPrinter *prt)
 {
-	PrintcapEntry	*entry = m_entries.tqfind(prt->printerName());
+	PrintcapEntry	*entry = m_entries.find(prt->printerName());
 	if (!entry)
 	{
 		return NULL;
@@ -179,7 +179,7 @@ PrintcapEntry* KMLprManager::findEntry(KMPrinter *prt)
 
 bool KMLprManager::completePrinter(KMPrinter *prt)
 {
-	LprHandler	*handler = tqfindHandler(prt);
+	LprHandler	*handler = findHandler(prt);
 	PrintcapEntry	*entry = findEntry(prt);
 	if (handler && entry)
 		return handler->completePrinter(prt, entry, false);
@@ -188,7 +188,7 @@ bool KMLprManager::completePrinter(KMPrinter *prt)
 
 bool KMLprManager::completePrinterShort(KMPrinter *prt)
 {
-	LprHandler	*handler = tqfindHandler(prt);
+	LprHandler	*handler = findHandler(prt);
 	PrintcapEntry	*entry = findEntry(prt);
 	if (!handler || !entry)
 		return false;
@@ -216,7 +216,7 @@ DrMain* KMLprManager::loadPrinterDriver(KMPrinter *prt, bool config)
 	if (!prt)
 		return NULL;
 
-	LprHandler	*handler = tqfindHandler(prt);
+	LprHandler	*handler = findHandler(prt);
 	PrintcapEntry	*entry = findEntry(prt);
 	if (handler && entry)
 	{
@@ -230,9 +230,9 @@ DrMain* KMLprManager::loadPrinterDriver(KMPrinter *prt, bool config)
 
 DrMain* KMLprManager::loadFileDriver(const TQString& filename)
 {
-	int	p = filename.tqfind('/');
-	QString	handler_str = (p != -1 ? filename.left(p) : TQString::tqfromLatin1("default"));
-	LprHandler	*handler = m_handlers.tqfind(handler_str);
+	int	p = filename.find('/');
+	QString	handler_str = (p != -1 ? filename.left(p) : TQString::fromLatin1("default"));
+	LprHandler	*handler = m_handlers.find(handler_str);
 	if (handler)
 	{
 		DrMain	*driver = handler->loadDbDriver(filename);
@@ -267,7 +267,7 @@ bool KMLprManager::startPrinter(KMPrinter *prt, bool state)
 
 bool KMLprManager::savePrinterDriver(KMPrinter *prt, DrMain *driver)
 {
-	LprHandler	*handler = tqfindHandler(prt);
+	LprHandler	*handler = findHandler(prt);
 	PrintcapEntry	*entry = findEntry(prt);
 	if (handler && entry)
 	{
@@ -311,7 +311,7 @@ bool KMLprManager::savePrintcapFile()
 bool KMLprManager::createPrinter(KMPrinter *prt)
 {
 	// remove existing printcap entry
-	PrintcapEntry	*oldEntry = m_entries.tqfind(prt->printerName());
+	PrintcapEntry	*oldEntry = m_entries.find(prt->printerName());
 
 	// look for the handler and re-create entry
 	LprHandler	*handler(0);
@@ -320,11 +320,11 @@ bool KMLprManager::createPrinter(KMPrinter *prt)
 	// or we use the handler of the existing printer
 	// (modifying something else, handler stays the same)
 	if (prt->driver())
-		handler = m_handlers.tqfind(prt->driver()->get("handler"));
+		handler = m_handlers.find(prt->driver()->get("handler"));
 	else if (oldEntry)
-		handler = tqfindHandler(prt);
+		handler = findHandler(prt);
 	else
-		handler = m_handlers.tqfind("default");
+		handler = m_handlers.find("default");
 	if (!handler)
 	{
 		setErrorMsg(i18n("Internal error: no handler defined."));
@@ -390,7 +390,7 @@ bool KMLprManager::createPrinter(KMPrinter *prt)
 
 bool KMLprManager::removePrinter(KMPrinter *prt)
 {
-	LprHandler	*handler = tqfindHandler(prt);
+	LprHandler	*handler = findHandler(prt);
 	PrintcapEntry	*entry = findEntry(prt);
 	if (handler && entry)
 	{
@@ -422,7 +422,7 @@ bool KMLprManager::removePrinter(KMPrinter *prt)
 
 TQString KMLprManager::driverDbCreationProgram()
 {
-	return TQString::tqfromLatin1("make_driver_db_lpr");
+	return TQString::fromLatin1("make_driver_db_lpr");
 }
 
 TQString KMLprManager::driverDirectory()
@@ -442,11 +442,11 @@ TQString KMLprManager::driverDirectory()
 
 TQString KMLprManager::printOptions(KPrinter *prt)
 {
-	KMPrinter	*mprt = tqfindPrinter(prt->printerName());
+	KMPrinter	*mprt = findPrinter(prt->printerName());
 	QString	opts;
 	if (mprt)
 	{
-		LprHandler	*handler = tqfindHandler(mprt);
+		LprHandler	*handler = findHandler(mprt);
 		if (handler)
 			return handler->printOptions(prt);
 	}

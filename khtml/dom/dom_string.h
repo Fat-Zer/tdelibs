@@ -78,7 +78,7 @@ public:
      */
     const TQChar &operator [](unsigned int i) const;
 
-    int tqfind(const TQChar c, int start = 0) const;
+    int find(const TQChar c, int start = 0) const;
 
     uint length() const;
     void truncate( unsigned int len );
@@ -97,7 +97,7 @@ public:
      */
     DOMString upper() const;
 
-    TQChar *tqunicode() const;
+    TQChar *unicode() const;
     TQString string() const;
 
     int toInt() const;

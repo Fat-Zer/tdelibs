@@ -63,7 +63,7 @@ class KTEXTEDITOR_EXPORT MarkInterface
     
     /** 
     * Adds a mark of type @p markType to @p line.
-    * Has no effect if the line allready tqcontains a mark of that type. 
+    * Has no effect if the line allready contains a mark of that type. 
     */
     virtual void setMark (uint line, uint markType) = 0;
     /**

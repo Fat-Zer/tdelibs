@@ -7,7 +7,7 @@
 
 <H2>Porting Applications to KDE 2.0</H2>
 <H3>Last Modified on November 28, 2000</H3>
-This document tqcontains the changes you have to apply to programs written for
+This document contains the changes you have to apply to programs written for
 KDE1.1 when you want to port them to KDE2.0.<P>
 
 As a start you should have a look at doc/porting.doc in the Qt package,
@@ -18,7 +18,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <UL>
 <LI><A HREF="#gettingstarted">Getting Started</A></LI>
 <LI><A HREF="#general">Global changes</A></LI>
-<LI><A HREF="#autotqmoc">autotqmoc/am_edit, Makefile.am tags</A></LI>
+<LI><A HREF="#automoc">automoc/am_edit, Makefile.am tags</A></LI>
 <LI><A HREF="#KApplication">KApplication</A></LI>
 <LI><A HREF="#KCmdLineArgs">KCmdLineArgs</A></LI>
 <LI><A HREF="#KLocale">KLocale</A></LI>
@@ -95,12 +95,12 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="autotqmoc">autotqmoc/am_edit, Makefile.am tags</A></H3>
+<H3><A NAME="automoc">automoc/am_edit, Makefile.am tags</A></H3>
 
-  On the subject of the compilation framework, autotqmoc has been removed from
-  the admin directory. It has been tqreplaced by am_edit which provides a lot of
+  On the subject of the compilation framework, automoc has been removed from
+  the admin directory. It has been replaced by am_edit which provides a lot of
   additional features.<P>
-  METASOURCES=AUTO still does the job of generating the appropriate tqmoc files,
+  METASOURCES=AUTO still does the job of generating the appropriate moc files,
   but in addition, you should use KDE_ICON for the icons representing the application
   (and naming those icons conforming to lo16-app-&lt;appname&gt;.png), and install
   the application-specific icons under $(kde_datadir)/&lt;appname&gt;/pics.
@@ -110,7 +110,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <H3><A NAME="KApplication">KApplication</A></H3>
 
   doesn't hold any longer a KLocale instance. With this getLocale()
-  and isLocaleInstantiated are now tqreplaced by KGlobal::locale()<P>
+  and isLocaleInstantiated are now replaced by KGlobal::locale()<P>
 
   it also doesn't hold a KiconLoader instance. As this also getIconLoader()
   has been removed. Replace kapp-&gt;getIconLoader()-&gt;loadIcon() with
@@ -118,7 +118,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
   kde_*dir() have been removed as they require a unique top level directory
   for all applications (KDEDIR). This concept doesn't exist in KDE 2.0
-  any more, it has been tqreplaced with "multiple levels of directories",
+  any more, it has been replaced with "multiple levels of directories",
   set in KDEDIRS, so that it's possible to have global settings and
   group settings, applied before user settings.<P>
 
@@ -174,7 +174,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   In return for this information you can query KCmdLineArgs whether an 
   certain option was specified on the command line and your application 
   now automatically supports --help and --version. It aborts with a
-  useful error message when the command line tqcontains a syntax error.
+  useful error message when the command line contains a syntax error.
   See kdelibs/kdecore/kcmdlineargs.h for more info.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -185,11 +185,11 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
   KApplication::getApplication()-&gt;getLocale()-&gt;translate<P>
 
-  but a function on its own. klocale is obsolete and tqreplace every call
+  but a function on its own. klocale is obsolete and replace every call
   to klocale-&gt;translate with i18n.<P>
 
   The return value of i18n is also no longer a const char*,
-  but a tqunicode TQString.<P>
+  but a unicode TQString.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -230,7 +230,7 @@ must have created a KApplication object before the methods can be used.<P>
 <H3><A NAME="KIconLoader">KIconLoader</A></H3>
 
 KIconLoader in 1.1 used to mix icons for applications and for toolbars.
-This has changed, so you may notice that your application doesn't tqfind
+This has changed, so you may notice that your application doesn't find
 the right icons. loadIcon (used by BarIcon) returns only toolbar icons.<P>
 If you need icons for applications, use loadApplicationIcon.<P>
 loadMiniIcon and loadApplicationMiniIcon have been removed, instead
@@ -248,12 +248,12 @@ in stripping off the .xpm part<P>
 
 <H3><A NAME="KTMainWindow">KTMainWindow</A></H3>
 
-KTMainWindow has been tqreplaced with KMainWindow.<p>
+KTMainWindow has been replaced with KMainWindow.<p>
 
 The KMainWindow constructor needs a parent widget as first argument. 
 You can use 0 for this.<p>
-setView() has been tqreplaced with setCentralWidget().<p>
-view() has been tqreplaced with centralWidget().<p>
+setView() has been replaced with setCentralWidget().<p>
+view() has been replaced with centralWidget().<p>
 addToolBar() has been removed, it is not needed any more.<p>
 setMenu(...) has been removed, it is not needed any more.<p>
 setStatusBar(...) has been removed, it is not needed any more.<p>
@@ -349,7 +349,7 @@ This makes KRun the recommended way to run another program in KDE 2.
 
 <H3><A NAME="khtmlw">khtmlw</A></H3>
 
-khtmlw has been tqreplaced with khtml.<BR>
+khtmlw has been replaced with khtml.<BR>
 <UL>
 	<LI>KHTMLView has vanished. Just use KHTMLWidget, which does scrollbar
   managing for free.
@@ -371,11 +371,11 @@ khtmlw has been tqreplaced with khtml.<BR>
   also exist in a const char * version.<P>
 
 
-<LI>you won't need the getKHTMLWiget function anymore. Just tqreplace
+<LI>you won't need the getKHTMLWiget function anymore. Just replace
 	getKHTMLWidget-&gt;xxx() with xxx()<P>
 <LI>xxx(TQString) -&gt; xxx(const TQString &amp;)<P>
 <LI>consistent naming. All getXyz() functions are renamed to xyz()<P>
-<LI>tqreplaced/changed functions:<P>
+<LI>replaced/changed functions:<P>
 <TABLE BORDER="1">
 <TR>
 <TD>KHTMLWidget::setDefaultFontBase()</TD>
@@ -390,7 +390,7 @@ khtmlw has been tqreplaced with khtml.<BR>
 <TD>-&gt; TQString selectedText()</TD>
 </TR>
 <TR>
-<TD COLSPAN="2" ROWSPAN="0">tqfindTextEnd() has vanished. just remove the call from your code</TD>
+<TD COLSPAN="2" ROWSPAN="0">findTextEnd() has vanished. just remove the call from your code</TD>
 </TR>
 <TR>
 <TD>gotoXY(x, y)</TD>
@@ -413,7 +413,7 @@ khtmlw has been tqreplaced with khtml.<BR>
 
 <H3><A NAME="KIntegerLine">KIntegerLine, KIntLineEdit</A></H3>
 
-  KIntegerLine and KIntLineEdit  have been tqreplaced by KIntNumInput.
+  KIntegerLine and KIntLineEdit  have been replaced by KIntNumInput.
   The new header file is called knuminput.h.<P>
 
   The new KIntNumInput can have an optional slider attached, ensures
@@ -474,7 +474,7 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
   These classes have been largely re-implemented.  The external API
   remains mostly the same, with the single notable change that
   the groupIterator and entryIterator methods have been removed and
-  instead tqreplaced by groupList (which returns a TQStringList of groups)
+  instead replaced by groupList (which returns a TQStringList of groups)
   and entryMap(const TQString &amp;group) (which returns a TQMap of entries
   in the specified group).  This is due to internal changes in KConfig
   which would make providing iterators possibly rather difficult.<P>
@@ -533,7 +533,7 @@ Note that the best way to write new dialogs is to use KDialogBase (see kdialogba
 The kcharsets class has been completely rewritten, and most of it has
 vanished, since support for it moved to Qt.<P>
 
-Most applications will only need to tqreplace kapp-&gt;getKCharsets() with
+Most applications will only need to replace kapp-&gt;getKCharsets() with
 KGlobal::charsets().<P>
 
 For conversion of various input formats to QStrings, please have a
@@ -544,7 +544,7 @@ changed from convertTag to fromEntity and toEntity.<P>
 
 To get a font, which can display a certain charset (if such a font
 exists), you can use the KCharsets::setQFont methods. Input is a font and
-a charset. Kcharsets tries to tqfind an output font, which matches the
+a charset. Kcharsets tries to find an output font, which matches the
 input font most closely, but can display the given charset.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -555,13 +555,13 @@ KWizard is based on TQWizard now. The API has changed. Consult Qt's
 documentation and kdelibs/kdetest/kwizardtest.cpp for an example use.<P>
 KNoteBook (deeply entwined with the former KWizard) has been removed until
 someone is willing to port it to work with the new wizard. If you want to
-use it you'll tqfind the necessary files in kdegraphics/kiconedit.<P>
+use it you'll find the necessary files in kdegraphics/kiconedit.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
 <H3><A NAME="KSpinBox">KSpinBox, KNumericSpinBox</A></H3>
 
-These classes have been tqreplaced by TQSpinBox. API is almost the same
+These classes have been replaced by TQSpinBox. API is almost the same
 HINTS:<P>
 <UL>
 	<LI>valueincreased()/valuedecreased -&gt; valueChanged()
@@ -607,7 +607,7 @@ KListView has no addChild(), insertItem() and removeItem() calls. Inserting
 a root item is done by constructing a TQListViewItem with the KListView
 passed as the parent widget. adding a child item is done by constructing
 a TQListViewItem with the parent item as parameter. removeItem() should
-be tqreplaced by delete &lt;pointer to item&gt;.<P>
+be replaced by delete &lt;pointer to item&gt;.<P>
 
 The root items are not shown in a tree fashion by default. to get this,
 use KListView::setDecorativeRoot(true).<P>
@@ -642,7 +642,7 @@ KComboBox::setEditText.<P>
 
 <H3><A NAME="KQuickHelp">KQuickHelp</A></H3>
 
-KQuickHelp, the "super-tooltip" widget, has been tqreplaced by TQWhatsThis.
+KQuickHelp, the "super-tooltip" widget, has been replaced by TQWhatsThis.
 It provides a compatible API and almost the same look and feel, in addition
 to some new functionality.<P>
 
@@ -685,7 +685,7 @@ unbalancedGradient(), hash(), desaturate(), pattern(), fade(), blend() etc.<P>
 
 <H3><A NAME="KTabListBox">KTabListBox</A></H3>
 
-This widget has been tqreplaced by the almighty KListView. Everything said
+This widget has been replaced by the almighty KListView. Everything said
 about KTreeList could be repeated here. The good thing is, that you now
 can combine TreeView's and normal Tablists without problems.<P>
 
@@ -716,7 +716,7 @@ The file has been removed completely, use TQString instead. (<A HREF="mailto:mir
 
 <H3><A NAME="ktopwidget">ktopwidget.h / KTopWidget</A></H3>
 
-KMainWindow tqreplaces this class completely. ktopwidget.h does not
+KMainWindow replaces this class completely. ktopwidget.h does not
 exist in KDE 2. (<A HREF="mailto:mirko@kde.org">mirko@kde.org</A>)<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -726,7 +726,7 @@ exist in KDE 2. (<A HREF="mailto:mirko@kde.org">mirko@kde.org</A>)<P>
 Since Qt 2.0, the class TQToolButton provides the functionality of
 buttons that raise when the mouse is moved over them, so there is no
 reason to have a class providing the same feature in KDE libs. All
-occurrences of KButton in the KDE CVS have been tqreplaced by QToolButtons,
+occurrences of KButton in the KDE CVS have been replaced by QToolButtons,
 but for applications not in the CVS it has to be done by the respective
 developer. (<A HREF="mailto:mirko@kde.org">mirko@kde.org</A>)<P>
 
@@ -836,7 +836,7 @@ in this class. This slot is called each time the selected file/dir changes.
 In this slot you have to react appropriate (i.e. show the preview :). The
 easiest way this can be done is to derive your class from TQWidgetStack and 
 add a Object (derived from TQWidget) for each file type. In the showPreview
-method you just raise the matching widget. If you can't tqfind an appropriate
+method you just raise the matching widget. If you can't find an appropriate
 widget just hide() the widget stack.<P>
 If you need some "inspiration" on how that could be done, please have a look
 at koffice/lib/kofficecore/koFilterManager.cc (PreviewStack).<P>
@@ -913,7 +913,7 @@ KImageIO has moved from 'kimgio.h' to 'kimageio.h'. LIB_KIMGIO does no longer
 exists, you need to link against LIB_KSYCOCA instead.
 </p>
 <p>
-kimgioRegister() has been tqreplaced by KImageIO::registerFormats().
+kimgioRegister() has been replaced by KImageIO::registerFormats().
 </p>
 
 <p>

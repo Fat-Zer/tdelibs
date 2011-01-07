@@ -30,12 +30,12 @@ namespace DOM
 void addForbidden(int tagId, ushort *forbiddenTags);
 void removeForbidden(int tagId, ushort *forbiddenTags);
 
-enum tagtqStatus { OPTIONAL, REQUIRED, FORBIDDEN };
+enum tagStatus { OPTIONAL, REQUIRED, FORBIDDEN };
 
 bool checkChild(ushort tagID, ushort childID, bool strict = false);
 
 extern const unsigned short tagPriority[];
-extern const tagtqStatus endTag[];
+extern const tagStatus endTag[];
 
 } //namespace DOM
 #endif

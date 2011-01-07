@@ -422,7 +422,7 @@ TQTextCodec *KateDocumentConfig::codec ()
   if (m_encodingSet || isGlobal())
   {
     if (m_encoding.isEmpty() && isGlobal())
-      return KGlobal::charsets()->codecForName (TQString::tqfromLatin1(KGlobal::locale()->encoding()));
+      return KGlobal::charsets()->codecForName (TQString::fromLatin1(KGlobal::locale()->encoding()));
     else if (m_encoding.isEmpty())
       return s_global->codec ();
     else
@@ -1426,4 +1426,4 @@ void KateRendererConfig::setShowIndentationLines (bool on)
 
 //END
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

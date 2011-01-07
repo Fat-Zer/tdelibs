@@ -117,7 +117,7 @@ void* Collector::allocate(size_t s)
   heap.firstBlockWithPossibleSpace = i;
 
   if (targetBlock == NULL) {
-    // didn't tqfind one, need to allocate a new block
+    // didn't find one, need to allocate a new block
 
     if (heap.usedBlocks == heap.numBlocks) {
       static const size_t maxNumBlocks = ULONG_MAX / sizeof(CollectorBlock*) / GROWTH_FACTOR;
@@ -133,7 +133,7 @@ void* Collector::allocate(size_t s)
     heap.usedBlocks++;
   }
 
-  // tqfind a free spot in the block and detach it from the free list
+  // find a free spot in the block and detach it from the free list
   CollectorCell *newCell = targetBlock->freeList;
 
   ValueImp *imp = (ValueImp*)newCell;

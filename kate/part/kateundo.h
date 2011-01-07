@@ -102,7 +102,7 @@ class KateUndoGroup
   private:
     /**
      * singleType
-     * @return the type if it's only one type, or editInvalid if it tqcontains multiple types.
+     * @return the type if it's only one type, or editInvalid if it contains multiple types.
      */
     KateUndoGroup::UndoType singleType();
 
@@ -138,4 +138,4 @@ class KateUndoGroup
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

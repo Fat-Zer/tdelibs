@@ -103,7 +103,7 @@ bool RandRScreen::applyProposed()
 {
 	//kdDebug() << k_funcinfo << " size " << (SizeID)proposedSize() << ", rotation " << proposedRotation() << ", refresh " << refreshRateIndexToHz(proposedSize(), proposedRefreshRate()) << endl;
 
-	tqStatus status;
+	Status status;
 
 	if (proposedRefreshRate() < 0)
 		status = XRRSetScreenConfig(qt_xdisplay(), d->config, DefaultRootWindow(qt_xdisplay()), (SizeID)proposedSize(), (Rotation)proposedRotation(), CurrentTime);
@@ -555,7 +555,7 @@ RandRDisplay::RandRDisplay()
 	: m_valid(true)
 {
 	// Check extension
-	tqStatus s = XRRQueryExtension(qt_xdisplay(), &m_eventBase, &m_errorBase);
+	Status s = XRRQueryExtension(qt_xdisplay(), &m_eventBase, &m_errorBase);
 	if (!s) {
 		m_errorCode = TQString("%1, base %1").arg(s).arg(m_errorBase);
 		m_valid = false;

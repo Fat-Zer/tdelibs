@@ -42,15 +42,15 @@ class KGlobalAccelPrivate;
 * @see KKeyDialog
 * @short Configurable global shortcut support
 */
-class KDECORE_EXPORT KGlobalAccel : public TQObject
+class KDECORE_EXPORT KGlobalAccel : public QObject
 {
 	Q_OBJECT
  public:
 	/**
 	 * Creates a new KGlobalAccel object with the given pParent and
 	 * psName.
-	 * @param pParent the parent of the TQObject
-	 * @param psName the name of the TQObject
+	 * @param pParent the parent of the QObject
+	 * @param psName the name of the QObject
 	 */
 	KGlobalAccel( TQObject* pParent, const char* psName = 0 );
 	virtual ~KGlobalAccel();

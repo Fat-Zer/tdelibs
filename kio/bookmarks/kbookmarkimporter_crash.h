@@ -34,7 +34,7 @@
  * A class for importing all crash sessions as bookmarks
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KCrashBookmarkImporter : public TQObject
+class KIO_EXPORT_DEPRECATED KCrashBookmarkImporter : public QObject
 {
     Q_OBJECT
 public:
@@ -63,7 +63,7 @@ public:
     KCrashBookmarkImporterImpl() : m_shouldDelete(false) { }
     void setShouldDelete(bool);
     virtual void parse();
-    virtual TQString tqfindDefaultLocation(bool forSaving = false) const;
+    virtual TQString findDefaultLocation(bool forSaving = false) const;
     static TQStringList getCrashLogs();
 private:
     bool m_shouldDelete;

@@ -40,9 +40,9 @@ public:
     virtual bool isBody() const { return true; }
 
     virtual const char *renderName() const { return "RenderBody"; }
-    virtual void tqrepaint(Priority p=NormalPriority);
+    virtual void repaint(Priority p=NormalPriority);
 
-    virtual void tqlayout();
+    virtual void layout();
     virtual void setStyle(RenderStyle* style);
 
     virtual int availableHeight() const;

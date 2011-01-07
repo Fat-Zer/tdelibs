@@ -32,7 +32,7 @@ class KSSLSessionPrivate;
 /**
  * KDE SSL Session Information
  *
- * This class tqcontains data about an SSL session.
+ * This class contains data about an SSL session.
  * It is just used as a container that is taken from or passed to KSSL objects.
  *
  * @author George Staikos <staikos@kde.org>

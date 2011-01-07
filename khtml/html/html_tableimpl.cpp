@@ -81,7 +81,7 @@ NodeImpl* HTMLTableElementImpl::setCaption( HTMLTableCaptionElementImpl *c )
     int exceptioncode = 0;
     NodeImpl* r;
     if(ElementImpl* cap = caption()) {
-        tqreplaceChild ( c, cap, exceptioncode );
+        replaceChild ( c, cap, exceptioncode );
         r = c;
     }
     else
@@ -95,7 +95,7 @@ NodeImpl* HTMLTableElementImpl::setTHead( HTMLTableSectionElementImpl *s )
     int exceptioncode = 0;
     NodeImpl* r;
     if( ElementImpl* head = tHead() ) {
-        tqreplaceChild( s, head, exceptioncode );
+        replaceChild( s, head, exceptioncode );
         r = s;
     }
     else if(ElementImpl* foot = tFoot())
@@ -114,7 +114,7 @@ NodeImpl* HTMLTableElementImpl::setTFoot( HTMLTableSectionElementImpl *s )
     int exceptioncode = 0;
     NodeImpl* r;
     if(ElementImpl* foot = tFoot()) {
-        tqreplaceChild ( s, foot, exceptioncode );
+        replaceChild ( s, foot, exceptioncode );
         r = s;
     } else if(ElementImpl* firstBody = tFirstBody())
         r = insertBefore( s, firstBody, exceptioncode );
@@ -130,7 +130,7 @@ NodeImpl* HTMLTableElementImpl::setTBody( HTMLTableSectionElementImpl *s )
     NodeImpl* r;
 
     if(ElementImpl* firstBody = tFirstBody()) {
-        tqreplaceChild ( s, firstBody, exceptioncode );
+        replaceChild ( s, firstBody, exceptioncode );
         r = s;
     } else
         r = appendChild( s, exceptioncode );
@@ -205,7 +205,7 @@ void HTMLTableElementImpl::deleteCaption(  )
 }
 
 /**
- Helper. This checks whether the section tqcontains the desired index, and if so,
+ Helper. This checks whether the section contains the desired index, and if so,
  returns the section. Otherwise, it adjust the index, and returns 0.
  indeces < 0 are considered to be infinite.
 
@@ -227,7 +227,7 @@ static inline HTMLTableSectionElementImpl* processSection(HTMLTableSectionElemen
 }
 
 
-bool HTMLTableElementImpl::tqfindRowSection(long index,
+bool HTMLTableElementImpl::findRowSection(long index,
                         HTMLTableSectionElementImpl*& outSection,
                         long&                         outIndex) const
 {
@@ -280,7 +280,7 @@ HTMLElementImpl *HTMLTableElementImpl::insertRow( long index, int &exceptioncode
 
     long sectionIndex;
     HTMLTableSectionElementImpl* section;
-    if ( tqfindRowSection( index, section, sectionIndex ) )
+    if ( findRowSection( index, section, sectionIndex ) )
         return section->insertRow( sectionIndex, exceptioncode );
     else if ( index == -1 || sectionIndex == 0 )
         return section->insertRow( section->numRows(), exceptioncode );
@@ -294,7 +294,7 @@ void HTMLTableElementImpl::deleteRow( long index, int &exceptioncode )
 {
     long sectionIndex;
     HTMLTableSectionElementImpl* section;
-    if ( tqfindRowSection( index, section, sectionIndex ) )
+    if ( findRowSection( index, section, sectionIndex ) )
         section->deleteRow( sectionIndex, exceptioncode );
     else if ( section && index == -1 )
         section->deleteRow( -1, exceptioncode );
@@ -389,10 +389,10 @@ NodeImpl *HTMLTableElementImpl::insertBefore ( NodeImpl *newChild, NodeImpl *ref
     return retval;
 }
 
-void HTMLTableElementImpl::tqreplaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode )
+void HTMLTableElementImpl::replaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode )
 {
     handleChildRemove( oldChild ); //Always safe.
-    HTMLElementImpl::tqreplaceChild( newChild, oldChild, exceptioncode );
+    HTMLElementImpl::replaceChild( newChild, oldChild, exceptioncode );
     if ( !exceptioncode )
         handleChildAdd( newChild );
 }

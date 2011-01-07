@@ -28,7 +28,7 @@
 #include <kmediaplayer/playerdcopobject.h>
 #include <kmediaplayer/view.h>
 
-/** KMediaPlayer tqcontains an interface to reusable media player components.
+/** KMediaPlayer contains an interface to reusable media player components.
 */
 namespace KMediaPlayer
 {
@@ -56,7 +56,7 @@ public:
 	/** This constructor is what to use when a GUI is required, as in the
 	 * case of a KMediaPlayer/Player.
 	 */
-	Player(TQWidget *tqparentWidget, const char *widgetName, TQObject *parent, const char *name);
+	Player(TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name);
 
 	virtual ~Player(void);
 

@@ -41,7 +41,7 @@ public:
 
     virtual const char *renderName() const { return "RenderCounterBase"; }
 
-    virtual void tqlayout( );
+    virtual void layout( );
     virtual void calcMinMaxWidth();
     virtual bool isCounter() const { return true; }
 

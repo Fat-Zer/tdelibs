@@ -10,7 +10,7 @@ multilinecomment :)
 (defun bin-search (obj vec)
   (let ((len (length vec)))
     (and (not (zerop len))
-         (tqfinder obj vec 0 (- len 1)))))
+         (finder obj vec 0 (- len 1)))))
 
 (defun parse-date (str)
   (let ((toks (tokens str #'constituent 0)))

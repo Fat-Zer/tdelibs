@@ -32,7 +32,7 @@ TQString KRandrSimpleAPI::getIccFileName(TQString profileName, TQString screenNa
 	TQString retval;
 
 	if (profileName != NULL) {
-		t_config = new KSimpleConfig( TQString::tqfromLatin1( "kiccconfigrc" ));
+		t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
 	}
 	else {
 		t_systemconfig = new KSimpleConfig( kde_confdir + TQString("/kicc/kiccconfigrc") );
@@ -216,7 +216,7 @@ TQString KRandrSimpleAPI::applyIccConfiguration(TQString profileName, TQString k
 	int screenNumber = 0;
 	TQString errorstr = "";
 
-	t_config = new KSimpleConfig( TQString::tqfromLatin1( "kiccconfigrc" ));
+	t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
 
 	// Find all screens
 	if (isValid() == true) {
@@ -248,7 +248,7 @@ TQString KRandrSimpleAPI::getCurrentProfile () {
 	TQString profileName;
 	KSimpleConfig *t_config;
 
-	t_config = new KSimpleConfig( TQString::tqfromLatin1( "kiccconfigrc" ));
+	t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
 	profileName = t_config->readEntry("CurrentProfile");
 	delete t_config;
 	return profileName;
@@ -332,14 +332,14 @@ void KRandrSimpleAPI::output_off(ScreenInfo *screen_info, OutputInfo *output)
     internal_output_off(screen_info, output);
 }
 
-CrtcInfo* KRandrSimpleAPI::auto_tqfind_crtc (ScreenInfo *screen_info, OutputInfo *output_info)
+CrtcInfo* KRandrSimpleAPI::auto_find_crtc (ScreenInfo *screen_info, OutputInfo *output_info)
 {
-    return internal_auto_tqfind_crtc (screen_info, output_info);
+    return internal_auto_find_crtc (screen_info, output_info);
 }
 
-XRRModeInfo *KRandrSimpleAPI::tqfind_mode_by_xid (ScreenInfo *screen_info, RRMode mode_id)
+XRRModeInfo *KRandrSimpleAPI::find_mode_by_xid (ScreenInfo *screen_info, RRMode mode_id)
 {
-    return internal_tqfind_mode_by_xid (screen_info, mode_id);
+    return internal_find_mode_by_xid (screen_info, mode_id);
 }
 
 int KRandrSimpleAPI::mode_height (XRRModeInfo *mode_info, Rotation rotation)
@@ -367,12 +367,12 @@ char *KRandrSimpleAPI::get_output_name (ScreenInfo *screen_info, RROutput id)
     return internal_get_output_name (screen_info, id);
 }
 
-tqStatus KRandrSimpleAPI::crtc_apply (CrtcInfo *crtc_info)
+Status KRandrSimpleAPI::crtc_apply (CrtcInfo *crtc_info)
 {
     return internal_crtc_apply (crtc_info);
 }
 
-tqStatus KRandrSimpleAPI::crtc_disable (CrtcInfo *crtc)
+Status KRandrSimpleAPI::crtc_disable (CrtcInfo *crtc)
 {
     return internal_crtc_disable (crtc);
 }

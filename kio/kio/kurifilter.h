@@ -347,7 +347,7 @@ private:
  *
  * @short Abstract class for URI filter plugins.
  */
-class KIO_EXPORT KURIFilterPlugin : public TQObject
+class KIO_EXPORT KURIFilterPlugin : public QObject
 {
     Q_OBJECT
 
@@ -525,7 +525,7 @@ private:
  *
  * KURIFilter also allows richer data exchange through a simple
  * meta-object called @p KURIFilterData. Using this meta-object
- * you can tqfind out more information about the URL you want to
+ * you can find out more information about the URL you want to
  * filter. See KURIFilterData for examples and details.
  *
  * @short Filters a given URL into its proper format whenever possible.
@@ -550,7 +550,7 @@ public:
      * The given URL is filtered based on the specified list of filters.
      * If the list is empty all available filters would be used.
      *
-     * @param data object that tqcontains the URI to be filtered.
+     * @param data object that contains the URI to be filtered.
      * @param filters specify the list of filters to be used.
      *
      * @return a boolean indicating whether the URI has been changed
@@ -631,7 +631,7 @@ protected:
      * A protected constructor.
      *
      * This constructor creates a KURIFilter and
-     * initializes all plugins it can tqfind by invoking
+     * initializes all plugins it can find by invoking
      * loadPlugins.
      */
     KURIFilter();

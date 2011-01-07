@@ -32,7 +32,7 @@ SidePixmap::SidePixmap(TQWidget *parent, const char *name)
 	m_tileup.load(locate("data", "kdeprint/tileup.png"));
 	m_tiledown.load(locate("data", "kdeprint/tiledown.png"));
 
-	tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Minimum));
+	setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Minimum));
 }
 
 bool SidePixmap::isValid()
@@ -42,7 +42,7 @@ bool SidePixmap::isValid()
 			&& (m_side.width() == m_tiledown.width()));
 }
 
-TQSize SidePixmap::tqsizeHint() const
+TQSize SidePixmap::sizeHint() const
 {
 	return (TQSize(m_side.width()+lineWidth(), 300+lineWidth()));
 }

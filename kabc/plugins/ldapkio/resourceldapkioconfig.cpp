@@ -234,13 +234,13 @@ AttributesDialog::AttributesDialog( const TQMap<TQString, TQString> &attributes,
   mMapList.append( outlookMap );
 
   TQFrame *page = plainPage();
-  TQGridLayout *tqlayout = new TQGridLayout( page, 4, ( attributes.count() + 4 ) >> 1,
+  TQGridLayout *layout = new TQGridLayout( page, 4, ( attributes.count() + 4 ) >> 1,
                                          0, spacingHint() );
 
   TQLabel *label = new TQLabel( i18n( "Template:" ), page );
-  tqlayout->addWidget( label, 0, 0 );
+  layout->addWidget( label, 0, 0 );
   mMapCombo = new KComboBox( page );
-  tqlayout->addWidget( mMapCombo, 0, 1 );
+  layout->addWidget( mMapCombo, 0, 1 );
 
   mMapCombo->insertItem( i18n( "User Defined" ) );
   mMapCombo->insertItem( i18n( "Kolab" ) );
@@ -250,9 +250,9 @@ AttributesDialog::AttributesDialog( const TQMap<TQString, TQString> &attributes,
   connect( mMapCombo, TQT_SIGNAL( activated( int ) ), TQT_SLOT( mapChanged( int ) ) );
 
   label = new TQLabel( i18n( "RDN prefix attribute:" ), page );
-  tqlayout->addWidget( label, 1, 0 );
+  layout->addWidget( label, 1, 0 );
   mRDNCombo = new KComboBox( page );
-  tqlayout->addWidget( mRDNCombo, 1, 1 );
+  layout->addWidget( mRDNCombo, 1, 1 );
   mRDNCombo->insertItem( i18n( "commonName" ) );
   mRDNCombo->insertItem( i18n( "UID" ) );
   mRDNCombo->setCurrentItem( rdnprefix );
@@ -274,14 +274,14 @@ AttributesDialog::AttributesDialog( const TQMap<TQString, TQString> &attributes,
     mLineEditDict.insert( it.key(), lineedit );
     lineedit->setText( it.data() );
     label->setBuddy( lineedit );
-    tqlayout->addWidget( label, i, j );
-    tqlayout->addWidget( lineedit, i, j+1 );
+    layout->addWidget( label, i, j );
+    layout->addWidget( lineedit, i, j+1 );
   }
   
   for ( i = 1; i < mMapCombo->count(); i++ ) {
     TQDictIterator<KLineEdit> it2( mLineEditDict );
     for ( ; it2.current(); ++it2 ) {
-      if ( mMapList[ i ].tqcontains( it2.currentKey() ) ) {
+      if ( mMapList[ i ].contains( it2.currentKey() ) ) {
         if ( mMapList[ i ][ it2.currentKey() ] != it2.current()->text() ) break;
       } else {
         if ( mDefaultMap[ it2.currentKey() ] != it2.current()->text() ) break;
@@ -338,8 +338,8 @@ OfflineDialog::OfflineDialog( bool autoCache, int cachePolicy, const KURL &src,
                  Ok, parent, name, true, true )
 {
   TQFrame *page = plainPage();
-  TQVBoxLayout *tqlayout = new TQVBoxLayout( page );
-  tqlayout->setAutoAdd( true );
+  TQVBoxLayout *layout = new TQVBoxLayout( page );
+  layout->setAutoAdd( true );
 
   mSrc = src; mDst = dst;
   mCacheGroup = new TQButtonGroup( 1, Qt::Horizontal, 

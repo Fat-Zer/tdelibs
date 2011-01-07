@@ -23,7 +23,7 @@
 #include <tqwidget.h>
 #include <kdelibs_export.h>
 
-class KMDI_EXPORT KMdiFocusList: public TQObject
+class KMDI_EXPORT KMdiFocusList: public QObject
 {
 	Q_OBJECT
 public:
@@ -39,4 +39,4 @@ private:
 };
 
 #endif 
-// kate: space-indent off; tab-width 4; tqreplace-tabs off; indent-mode csands;
+// kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;

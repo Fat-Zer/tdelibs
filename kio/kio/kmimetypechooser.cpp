@@ -90,7 +90,7 @@ KMimeTypeChooser::KMimeTypeChooser( const TQString &text,
   if (visuals & KMimeTypeChooser::EditButton)
   {
     TQHBox *btns = new TQHBox( this );
-    ((TQBoxLayout*)btns->tqlayout())->addStretch(1);
+    ((TQBoxLayout*)btns->layout())->addStretch(1);
     d->btnEditMimeType = new TQPushButton( i18n("&Edit..."), btns );
 
     connect( d->btnEditMimeType, TQT_SIGNAL(clicked()), this, TQT_SLOT(editMimeType()) );
@@ -134,15 +134,15 @@ void KMimeTypeChooser::loadMimeTypes( const TQStringList &_selectedMimeTypes )
   for (; it != mimetypes.end(); ++it)
   {
     TQString mimetype = (*it)->name();
-    int index = mimetype.tqfind("/");
+    int index = mimetype.find("/");
     TQString maj = mimetype.left(index);
 
-    if ( d->groups.count() && !d->groups.tqcontains( maj ) )
+    if ( d->groups.count() && !d->groups.contains( maj ) )
       continue;
 
     TQString min = mimetype.right(mimetype.length() - (index+1));
 
-    TQMapIterator<TQString,TQListViewItem*> mit = groups.tqfind( maj );
+    TQMapIterator<TQString,TQListViewItem*> mit = groups.find( maj );
     if ( mit == groups.end() )
     {
       groupItem = new TQListViewItem( d->lvMimeTypes, maj );
@@ -167,7 +167,7 @@ void KMimeTypeChooser::loadMimeTypes( const TQStringList &_selectedMimeTypes )
     if ( d->visuals & Patterns )
       item->setText( cl, (*it)->patterns().join("; ") );
 
-    if ( selMimeTypes.tqcontains(mimetype) )
+    if ( selMimeTypes.contains(mimetype) )
     {
       item->setOn( true );
       groupItem->setOpen( true );
@@ -195,9 +195,9 @@ void KMimeTypeChooser::editMimeType()
   // thanks to libkonq/konq_operations.cc
   connect( KSycoca::self(), TQT_SIGNAL(databaseChanged()),
            this, TQT_SLOT(slotSycocaDatabaseChanged()) );
-  TQString keditfiletype = TQString::tqfromLatin1("keditfiletype");
+  TQString keditfiletype = TQString::fromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype
-                    + " --parent " + TQString::number( (ulong)tqtopLevelWidget()->winId())
+                    + " --parent " + TQString::number( (ulong)topLevelWidget()->winId())
                     + " " + KProcess::quote(mt),
                     keditfiletype, keditfiletype /*unused*/);
 }
@@ -294,5 +294,5 @@ KMimeTypeChooserDialog::~KMimeTypeChooserDialog()
 
 //END KMimeTypeChooserDialog
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;
 #include "kmimetypechooser.moc"

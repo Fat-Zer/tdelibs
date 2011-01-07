@@ -140,14 +140,14 @@ TQString splitOut(const TQString &parsed, int index)
     TQString filedata;
 
     while (true) {
-        int endindex = parsed.tqfind("</FILENAME>", index);
-        int startindex = parsed.tqfind("<FILENAME ", index) + 1;
+        int endindex = parsed.find("</FILENAME>", index);
+        int startindex = parsed.find("<FILENAME ", index) + 1;
 
 //        kdDebug() << "FILENAME " << startindex << " " << endindex << " " << inside << " " << parsed.mid(startindex + 18, 15)<< " " << parsed.length() << endl;
 
         if (startindex > 0) {
             if (startindex < endindex) {
-                //              kdDebug() << "tqfinding another" << endl;
+                //              kdDebug() << "finding another" << endl;
                 index = startindex + 8;
                 inside++;
             } else {
@@ -166,16 +166,16 @@ TQString splitOut(const TQString &parsed, int index)
 
     }
 
-    index = filedata.tqfind("<FILENAME ");
+    index = filedata.find("<FILENAME ");
 
     if (index > 0) {
-        int endindex = filedata.tqfindRev("</FILENAME>");
+        int endindex = filedata.findRev("</FILENAME>");
         while (filedata.at(endindex) != '>') endindex++;
         endindex++;
         filedata = filedata.left(index) + filedata.mid(endindex);
     }
 
-    // filedata.tqreplace(TQRegExp(">"), "\n>");
+    // filedata.replace(TQRegExp(">"), "\n>");
     return filedata;
 }
 
@@ -336,7 +336,7 @@ TQCString fromUnicode( const TQString &data )
                 buffer_len += test.length();
             } else {
                 TQString res;
-                res.sprintf( "&#%d;", part.at( i ).tqunicode() );
+                res.sprintf( "&#%d;", part.at( i ).unicode() );
                 test = locale->fromUnicode( res );
                 if (buffer_len + test.length() + 1 > sizeof(buffer))
                    break;
@@ -350,10 +350,10 @@ TQCString fromUnicode( const TQString &data )
     return result;
 }
 
-void tqreplaceCharsetHeader( TQString &output )
+void replaceCharsetHeader( TQString &output )
 {
     TQString name = TQTextCodec::codecForLocale()->name();
-    name.tqreplace( TQString( "ISO " ), "iso-" );
-    output.tqreplace( TQString( "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" ),
+    name.replace( TQString( "ISO " ), "iso-" );
+    output.replace( TQString( "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">" ),
                     TQString( "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=%1\">" ).arg( name ) );
 }

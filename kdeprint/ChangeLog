@@ -93,7 +93,7 @@ Since 2.2 release, Michael Goffioul <kdeprint@swing.be>
 
 18/10/2001 Michael Goffioul <kdeprint@swing.be>
   * kdeprintfax: don't hardcode program path, use the $PATH variable
-    first to tqfind the program. Default to /usr/bin if not found.
+    first to find the program. Default to /usr/bin if not found.
 
 02/11/2001 Michael Goffioul <kdeprint@swing.be>
   * CUPS plugin:
@@ -116,7 +116,7 @@ Since 2.2 release, Michael Goffioul <kdeprint@swing.be>
 	  of page selection on application-side.
 	. set KPrinter object in KPrintDialog before adding other
 	  dialog pages (some pages may need it)
-  * wizard: changed button tqlayout and added a side graphic. Not
+  * wizard: changed button layout and added a side graphic. Not
     committed as the graphic comes from HP driver (copyright).
 
 08/11/2001 Michael Goffioul <kdeprint@swing.be>
@@ -234,7 +234,7 @@ Since 2.2 release, Michael Goffioul <kdeprint@swing.be>
 	. pseudo-printers and filters are completely based on new XML
 	  object, though old style is supported (only requirements from
 	  previous mechanism are not used).
-	. KPrintFilter and KMFilterManager are now obsolete and tqreplaced
+	. KPrintFilter and KMFilterManager are now obsolete and replaced
 	  by KXmlCommand and KXmlCommandManager respectively.
   * kdeprintfax: made the log window a "real" log window. It is dynamically
     refreshed on new debug output arrival (suggested by user).
@@ -299,7 +299,7 @@ Since 2.2 release, Michael Goffioul <kdeprint@swing.be>
 10/01/2002 Michael Goffioul <kdeprint@swing.be>
   * general: added (temporary) workaround for drawing problems in fixed
     toolbars, until a real fix gets implemented:
-    	static_cast<QWidget*>(tb)->tqlayout()->setMargin(1);
+    	static_cast<QWidget*>(tb)->layout()->setMargin(1);
   * general: started to used new icons provided by Bogdan, for the toolbar
   * general: added KPrinter::autoConfigure(), to automatically configure
     a KPrinter object without the need for a print dialog.
@@ -391,7 +391,7 @@ Since 2.2 release, Michael Goffioul <kdeprint@swing.be>
 15/02/2002 Michael Goffioul <kdeprint@swing.be>
   * general: fixed infinite recursion bug in KIconSelectAction
   * CUPS: temporarily disabled edition of page-ranges as it seems CUPS is
-    buggy. I should tqfind a workaround.
+    buggy. I should find a workaround.
   * general (CUPS): enable some actions for jobs on remote hosts. It seems
     to work OK between my local LM-8.1 and a remote LM-7.2.
 
@@ -401,7 +401,7 @@ Since 2.2 release, Michael Goffioul <kdeprint@swing.be>
 
 17/02/2002 Michael GOffioul <kdeprint@swing.be>
   * preview:
-  	. better algorithm to tqfind a preview object
+  	. better algorithm to find a preview object
 	. more comprehensive error report
 	. possibility to cancel printing even with external PS viewers
   * general: added the backend stuff for printer filtering, needs GUI

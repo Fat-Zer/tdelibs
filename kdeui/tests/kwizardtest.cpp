@@ -36,10 +36,10 @@ int main(int argc, char **argv)
     TQWidget *p = new TQWidget;
     TQString msg = TQString("This is page %1 out of 10").arg(i);
     TQLabel *label = new TQLabel(msg, p);
-    TQHBoxLayout *tqlayout = new TQHBoxLayout(p, 5);
-    label->tqsetAlignment(Qt::AlignCenter);
+    TQHBoxLayout *layout = new TQHBoxLayout(p, 5);
+    label->setAlignment(Qt::AlignCenter);
     label->setFixedSize(300, 200);
-    tqlayout->addWidget(label);
+    layout->addWidget(label);
     TQString title = TQString("%1. page").arg(i);
     wiz->addPage(p, title);
     wiz->setFinishEnabled(p, (i==10));

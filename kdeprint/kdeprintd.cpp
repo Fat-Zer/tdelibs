@@ -48,10 +48,10 @@ extern "C"
 	}
 }
 
-class tqStatusWindow : public QWidget
+class StatusWindow : public QWidget
 {
 public:
-	tqStatusWindow(int pid = -1);
+	StatusWindow(int pid = -1);
 	void setMessage(const TQString&);
 	int pid() const { return m_pid; }
 
@@ -62,15 +62,15 @@ private:
 	QLabel		*m_icon;
 };
 
-tqStatusWindow::tqStatusWindow(int pid)
-: TQWidget(NULL, "tqStatusWindow", WType_TopLevel|WStyle_DialogBorder|WStyle_StaysOnTop|WDestructiveClose), m_pid(pid)
+StatusWindow::StatusWindow(int pid)
+: TQWidget(NULL, "StatusWindow", WType_TopLevel|WStyle_DialogBorder|WStyle_StaysOnTop|WDestructiveClose), m_pid(pid)
 {
 	m_label = new TQLabel(this);
-	m_label->tqsetAlignment(AlignCenter);
+	m_label->setAlignment(AlignCenter);
 	m_button = new KPushButton(KStdGuiItem::close(), this);
 	m_icon = new TQLabel(this);
 	m_icon->setPixmap(DesktopIcon("fileprint"));
-	m_icon->tqsetAlignment(AlignCenter);
+	m_icon->setAlignment(AlignCenter);
 	KWin::setIcons(winId(), *(m_icon->pixmap()), SmallIcon("fileprint"));
 	QGridLayout	*l0 = new TQGridLayout(this, 2, 3, 10, 10);
 	l0->setRowStretch(0, 1);
@@ -82,17 +82,17 @@ tqStatusWindow::tqStatusWindow(int pid)
 	resize(200, 50);
 }
 
-void tqStatusWindow::setMessage(const TQString& msg)
+void StatusWindow::setMessage(const TQString& msg)
 {
 	//QSize	oldSz = size();
 	m_label->setText(msg);
-	//QSize	sz = m_label->tqsizeHint();
-	//sz += TQSize(tqlayout()->margin()*2, tqlayout()->margin()*2+tqlayout()->spacing()+m_button->tqsizeHint().height());
+	//QSize	sz = m_label->sizeHint();
+	//sz += TQSize(layout()->margin()*2, layout()->margin()*2+layout()->spacing()+m_button->sizeHint().height());
 	// dialog will never be smaller
 	//sz = sz.expandedTo(oldSz);
 	//resize(sz);
 	//setFixedSize(sz);
-	//tqlayout()->activate();
+	//layout()->activate();
 }
 
 //*****************************************************************************************************
@@ -124,12 +124,12 @@ int KDEPrintd::print(const TQString& cmd, const TQStringList& files, bool remfla
 		if ( !url.isLocalFile() )
 		{
 			TQString tmpFilename = locateLocal( "tmp", "kdeprint_" + kapp->randomString( 8 ) );
-			command.tqreplace( re, KProcess::quote( tmpFilename ) );
+			command.replace( re, KProcess::quote( tmpFilename ) );
 			proc->setOutput( re.cap( 1 ) );
 			proc->setTempOutput( tmpFilename );
 		}
 		else
-			command.tqreplace( re, KProcess::quote( re.cap( 1 ) ) );
+			command.replace( re, KProcess::quote( re.cap( 1 ) ) );
 	}
 
 	if ( checkFiles( command, files ) )
@@ -192,14 +192,14 @@ bool KDEPrintd::checkFiles(TQString& cmd, const TQStringList& files)
 
 void KDEPrintd::statusMessage(const TQString& msg, int pid, const TQString& appName)
 {
-	tqStatusWindow	*w = m_windows.tqfind(pid);
+	StatusWindow	*w = m_windows.find(pid);
 	if (!w && !msg.isEmpty())
 	{
-		w = new tqStatusWindow(pid);
+		w = new StatusWindow(pid);
 		if (appName.isEmpty())
-			w->setCaption(i18n("Printing tqStatus - %1").arg("(pid="+TQString::number(pid)+")"));
+			w->setCaption(i18n("Printing Status - %1").arg("(pid="+TQString::number(pid)+")"));
 		else
-			w->setCaption(i18n("Printing tqStatus - %1").arg(appName));
+			w->setCaption(i18n("Printing Status - %1").arg(appName));
 		connect(w, TQT_SIGNAL(destroyed()), TQT_SLOT(slotClosed()));
 		w->show();
 		m_windows.insert(pid, w);
@@ -215,7 +215,7 @@ void KDEPrintd::statusMessage(const TQString& msg, int pid, const TQString& appN
 
 void KDEPrintd::slotClosed()
 {
-	const tqStatusWindow	*w = static_cast<const tqStatusWindow*>(sender());
+	const StatusWindow	*w = static_cast<const StatusWindow*>(sender());
 	if (w)
 	{
 		m_windows.remove(w->pid());

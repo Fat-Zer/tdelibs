@@ -54,22 +54,22 @@ public:
   /**
    * Find a service (by name, e.g. "Terminal")
    */
-  KService * tqfindServiceByName( const TQString &_name );
+  KService * findServiceByName( const TQString &_name );
 
   /**
    * Find a service (by desktop file name, e.g. "konsole")
    */
-  KService * tqfindServiceByDesktopName( const TQString &_name );
+  KService * findServiceByDesktopName( const TQString &_name );
 
   /**
    * Find a service ( by desktop path, e.g. "System/konsole.desktop")
    */
-  KService * tqfindServiceByDesktopPath( const TQString &_name );
+  KService * findServiceByDesktopPath( const TQString &_name );
 
   /**
    * Find a service ( by menu id, e.g. "kde-konsole.desktop")
    */
-  KService * tqfindServiceByMenuId( const TQString &_menuId );
+  KService * findServiceByMenuId( const TQString &_menuId );
 
   /**
    * @return the services supporting the given service type

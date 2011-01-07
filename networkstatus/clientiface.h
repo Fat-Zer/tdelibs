@@ -35,14 +35,14 @@ k_dcop:
 	/**
 	 * Get the status of the connection to the given host.
 	 * @param host 
-	 * @return a NetworktqStatus::EnumtqStatus representing the state of the connection to the given host
+	 * @return a NetworkStatus::EnumStatus representing the state of the connection to the given host
 	 */
 	virtual int status( const TQString & host) = 0;
 	/**
 	 * Request a connection to the named host, registering the application's usage of this connection
 	 * @param host The hostname the client wants to connect to.
 	 * @param userInitiated Indicates whether the connection is a direct result of a user action or is a background task.  Used by the daemon to decide whether to create an on-demand connection.
-	 * @return An NetworktqStatus::EnumRequestResult indicating whether the request was accepted
+	 * @return An NetworkStatus::EnumRequestResult indicating whether the request was accepted
 	 */
 	virtual int request( const TQString &  host, bool userInitiated ) = 0;
 	/**

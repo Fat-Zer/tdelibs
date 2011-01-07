@@ -34,7 +34,7 @@ Fri Feb 18 23:35:04 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 Thu Feb 17 19:09:54 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 	* kfiledialog.{cpp,h} (KDirComboBox): 
-	Added KDirComboBox and tqreplaced the directory combobox with it. It
+	Added KDirComboBox and replaced the directory combobox with it. It
 	even does something now :) Items need to be indented tho.
 
 	* kfilereader.cpp, kdiroperator.{cpp,h}: 
@@ -43,12 +43,12 @@ Thu Feb 17 19:09:54 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 Tue Feb 15 14:21:41 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 	* kfile.h (class KFile): 
-	added a small class that tqcontains all the enums now.
+	added a small class that contains all the enums now.
 	cleaned up the enums (hope not too many apps will be broken)
 	added flags for "Existing files only" and "local files only"
 
 	* all views (setSelected()):
-	tqreplaced highlightItem(item) with setSelected(item, bool) which makes
+	replaced highlightItem(item) with setSelected(item, bool) which makes
 	it more suitable and more consistent with Qt.
 	added selectionChanged() method (necessary for multiselection)
 
@@ -161,12 +161,12 @@ Sat Jan 29 15:33:37 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 	* kfileview.cpp (compareItems): 
 	- added support to disable sorting directories first (QDir::DirsFirst)
 	- added support to sort by date and to sort reversed
-	- removed unused tqfindCompletion method
+	- removed unused findCompletion method
 	- sort case insensitive by default
 	- some optimization for mergeList
 	- fixed infinite loop in mergeLists, when the lists are the same
 	  (I think another one is still there, but I'm tired now)
-	- changed setSortMode stuff: Switching-mode tqreplaced with 
+	- changed setSortMode stuff: Switching-mode replaced with 
 	  sortReversed(). The enum Switching will be removed, soon.
 	- made setSortMode public
 
@@ -292,7 +292,7 @@ Wed Dec  2 15:59:13 1998  Carsten Pfeiffer  <pfeiffer@kde.org>
 	* kfilesimpleview.cpp: added some checks to prevent division with
 	zero using the latest qt snapshots
 
-	* kfilesimpleview.cpp: added a tqrepaint call after a resize
+	* kfilesimpleview.cpp: added a repaint call after a resize
 
 	* kfiledialog.cpp: new experimental button order
 
@@ -599,7 +599,7 @@ Wed Mar 18 02:56:32 1998  Stephan Kulow  <coolo@kde.org>
 	
 	* kdir.cpp: disable parent button in /
 
-	* kfiledialog.cpp: fixed tqlayout of mkdir dialog
+	* kfiledialog.cpp: fixed layout of mkdir dialog
 
 	* kdir.cpp: use currentDir instead of homeDir as default
 
@@ -666,7 +666,7 @@ Tue Feb 10 01:09:16 1998  Richard Moore <rich@kde.org>
 
 Fri Feb  6 18:08:14 1998  Stephan Kulow  <coolo@kde.org>
 
-	* kfiledialog.cpp: tqreplaced the location lineedit with an combo
+	* kfiledialog.cpp: replaced the location lineedit with an combo
 	box. Currently configurable with a compiler define. 
 
 Fri Feb  6 17:07:26 1998  Stephan Kulow  <coolo@kde.org>
@@ -694,7 +694,7 @@ Mon Jan 19 01:10:11 1998  Stephan Kulow  <coolo@kde.org>
 	* kdir.cpp: added isReadable() to indicate, that the dir is not
 	correct
 	
-	* kfiledialog.cpp: played a little bit with the tqgeometry management
+	* kfiledialog.cpp: played a little bit with the geometry management
 
 
 Sun Jan 18 15:00:06 1998  Stephan Kulow  <coolo@kde.org>

@@ -67,7 +67,7 @@ HelpWindow::HelpWindow( const TQString& home_, const TQString& _path,
     file->insertItem( "&Print", this, TQT_SLOT( print() ), ALT | Key_P );
     file->insertSeparator();
     file->insertItem( "&Close", this, TQT_SLOT( close() ), ALT | Key_Q );
-    file->insertItem( "E&xit", tqApp, TQT_SLOT( closeAllWindows() ), ALT | Key_X );
+    file->insertItem( "E&xit", qApp, TQT_SLOT( closeAllWindows() ), ALT | Key_X );
 
     // The same three icons are used twice each.
     TQIconSet icon_back( TQPixmap("back.xpm") );
@@ -278,7 +278,7 @@ void HelpWindow::print()
 	TQRect view( body );
 	int page = 1;
 	do {
-	    richText.draw( &p, body.left(), body.top(), view, tqcolorGroup() );
+	    richText.draw( &p, body.left(), body.top(), view, colorGroup() );
 	    view.moveBy( 0, body.height() );
 	    p.translate( 0 , -body.height() );
 	    p.setFont( font );
@@ -333,13 +333,13 @@ void HelpWindow::readBookmarks()
 
 void HelpWindow::histChosen( int i )
 {
-    if ( mHistory.tqcontains( i ) )
+    if ( mHistory.contains( i ) )
 	browser->setSource( mHistory[ i ] );
 }
 
 void HelpWindow::bookmChosen( int i )
 {
-    if ( mBookmarks.tqcontains( i ) )
+    if ( mBookmarks.contains( i ) )
 	browser->setSource( mBookmarks[ i ] );
 }
 

@@ -59,7 +59,7 @@ Offer list
 | * servicetype offset, service offset
 | * servicetype offset, service offset
 | * 0
-This allows to quickly tqfind services associated with a servicetype.
+This allows to quickly find services associated with a servicetype.
 It does NOT reflect the user profile, which is stored in profilerc and
 implemented in KServiceTypeProfile.
 

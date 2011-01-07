@@ -110,15 +110,15 @@ DOMString HTMLDocumentImpl::cookie() const
     long windowId = 0;
     KHTMLView *v = view ();
 
-    if ( v && v->tqtopLevelWidget() )
-      windowId = v->tqtopLevelWidget()->winId();
+    if ( v && v->topLevelWidget() )
+      windowId = v->topLevelWidget()->winId();
 
     TQCString replyType;
     TQByteArray params, reply;
     TQDataStream stream(params, IO_WriteOnly);
     stream << URL().url() << windowId;
     if (!kapp->dcopClient()->call("kcookiejar", "kcookiejar",
-                                  "tqfindDOMCookies(TQString,long int)", params,
+                                  "findDOMCookies(TQString,long int)", params,
                                   replyType, reply))
     {
        kdWarning(6010) << "Can't communicate with cookiejar!" << endl;
@@ -127,7 +127,7 @@ DOMString HTMLDocumentImpl::cookie() const
 
     TQDataStream stream2(reply, IO_ReadOnly);
     if(replyType != "TQString") {
-         kdError(6010) << "DCOP function tqfindDOMCookies(...) returns "
+         kdError(6010) << "DCOP function findDOMCookies(...) returns "
                        << replyType << ", expected TQString" << endl;
          return DOMString();
     }
@@ -142,8 +142,8 @@ void HTMLDocumentImpl::setCookie( const DOMString & value )
     long windowId = 0;
     KHTMLView *v = view ();
 
-    if ( v && v->tqtopLevelWidget() )
-      windowId = v->tqtopLevelWidget()->winId();
+    if ( v && v->topLevelWidget() )
+      windowId = v->topLevelWidget()->winId();
 
     TQByteArray params;
     TQDataStream stream(params, IO_WriteOnly);
@@ -192,7 +192,7 @@ void HTMLDocumentImpl::setBody(HTMLElementImpl *_body, int& exceptioncode)
     if ( !b )
         documentElement()->appendChild( _body, exceptioncode );
     else
-        documentElement()->tqreplaceChild( _body, b, exceptioncode );
+        documentElement()->replaceChild( _body, b, exceptioncode );
 }
 
 Tokenizer *HTMLDocumentImpl::createTokenizer()
@@ -226,18 +226,18 @@ void HTMLDocumentImpl::slotHistoryChanged()
         return;
 
     recalcStyle( Force );
-    m_render->tqrepaint();
+    m_render->repaint();
 }
 
 HTMLMapElementImpl* HTMLDocumentImpl::getMap(const DOMString& _url)
 {
     TQString url = _url.string();
     TQString s;
-    int pos = url.tqfind('#');
+    int pos = url.find('#');
     //kdDebug(0) << "map pos of #:" << pos << endl;
-    s = TQString(_url.tqunicode() + pos + 1, _url.length() - pos - 1);
+    s = TQString(_url.unicode() + pos + 1, _url.length() - pos - 1);
 
-    TQMapConstIterator<TQString,HTMLMapElementImpl*> it = mapMap.tqfind(s);
+    TQMapConstIterator<TQString,HTMLMapElementImpl*> it = mapMap.find(s);
 
     if (it != mapMap.end())
         return *it;
@@ -297,7 +297,7 @@ static int parseDocTypePart(const TQString& buffer, int index)
         else if (ch == '-') {
             int tmpIndex=index;
             if (buffer[index+1] == '-' &&
-                ((tmpIndex=buffer.tqfind("--", index+2)) != -1))
+                ((tmpIndex=buffer.find("--", index+2)) != -1))
                 index = tmpIndex+2;
             else
                 return index;
@@ -307,7 +307,7 @@ static int parseDocTypePart(const TQString& buffer, int index)
     }
 }
 
-static bool tqcontainsString(const char* str, const TQString& buffer, int offset)
+static bool containsString(const char* str, const TQString& buffer, int offset)
 {
     TQString startString(str);
     if (offset + startString.length() > buffer.length())
@@ -330,20 +330,20 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
     // Skip through any comments and processing instructions.
     int index = 0;
     do {
-        index = buffer.tqfind('<', index);
+        index = buffer.find('<', index);
         if (index == -1) break;
         TQChar nextChar = buffer[index+1];
         if (nextChar == '!') {
-            if (tqcontainsString("doctype", buffer, index+2)) {
+            if (containsString("doctype", buffer, index+2)) {
                 haveDocType = true;
                 index += 9; // Skip "<!DOCTYPE"
                 break;
             }
             index = parseDocTypePart(buffer,index);
-            index = buffer.tqfind('>', index);
+            index = buffer.find('>', index);
         }
         else if (nextChar == '?')
-            index = buffer.tqfind('>', index);
+            index = buffer.find('>', index);
         else
             break;
     } while (index != -1);
@@ -353,16 +353,16 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
     *resultFlags |= PARSEMODE_HAVE_DOCTYPE;
 
     index = parseDocTypePart(buffer, index);
-    if (!tqcontainsString("html", buffer, index))
+    if (!containsString("html", buffer, index))
         return false;
 
     index = parseDocTypePart(buffer, index+4);
-    bool hasPublic = tqcontainsString("public", buffer, index);
+    bool hasPublic = containsString("public", buffer, index);
     if (hasPublic) {
         index = parseDocTypePart(buffer, index+6);
 
         // We've read <!DOCTYPE HTML PUBLIC (not case sensitive).
-        // Now we tqfind the beginning and end of the public identifers
+        // Now we find the beginning and end of the public identifers
         // and system identifiers (assuming they're even present).
         TQChar theChar = buffer[index];
         if (theChar != '\"' && theChar != '\'')
@@ -371,7 +371,7 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
         // |start| is the first character (after the quote) and |end|
         // is the final quote, so there are |end|-|start| characters.
         int publicIDStart = index+1;
-        int publicIDEnd = buffer.tqfind(theChar, publicIDStart);
+        int publicIDEnd = buffer.find(theChar, publicIDStart);
         if (publicIDEnd == -1)
             return false;
         index = parseDocTypePart(buffer, publicIDEnd+1);
@@ -385,7 +385,7 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
             // We have a system identifier.
             *resultFlags |= PARSEMODE_HAVE_SYSTEM_ID;
             int systemIDStart = index+1;
-            int systemIDEnd = buffer.tqfind(next, systemIDStart);
+            int systemIDEnd = buffer.find(next, systemIDStart);
             if (systemIDEnd == -1)
                 return false;
             systemID = buffer.mid(systemIDStart, systemIDEnd - systemIDStart);
@@ -402,7 +402,7 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
         publicID = publicID.simplifyWhiteSpace();
         *resultFlags |= PARSEMODE_HAVE_PUBLIC_ID;
     } else {
-        if (tqcontainsString("system", buffer, index)) {
+        if (containsString("system", buffer, index)) {
             // Doctype has a system ID but no public ID
             *resultFlags |= PARSEMODE_HAVE_SYSTEM_ID;
             index = parseDocTypePart(buffer, index+6);
@@ -410,7 +410,7 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
             if (next != '\"' && next != '\'')
                 return false;
             int systemIDStart = index+1;
-            int systemIDEnd = buffer.tqfind(next, systemIDStart);
+            int systemIDEnd = buffer.find(next, systemIDStart);
             if (systemIDEnd == -1)
                 return false;
             systemID = buffer.mid(systemIDStart, systemIDEnd - systemIDStart);
@@ -473,7 +473,7 @@ void HTMLDocumentImpl::determineParseMode( const TQString &str )
             const char* pubIDStr = lowerPubID.latin1();
 
             // Look up the entry in our gperf-generated table.
-            const PubIDInfo* doctypeEntry = tqfindDoctypeEntry(pubIDStr, publicID.length());
+            const PubIDInfo* doctypeEntry = findDoctypeEntry(pubIDStr, publicID.length());
             if (!doctypeEntry) {
                 // The DOCTYPE is not in the list.  Assume strict mode.
                 // ### Doesn't make any sense, but it's what Mozilla does.

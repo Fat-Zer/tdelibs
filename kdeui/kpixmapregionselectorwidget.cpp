@@ -223,7 +223,7 @@ bool KPixmapRegionSelectorWidget::eventFilter(TQObject *obj, TQEvent *ev)
 
       TQCursor cursor;
 
-      if ( m_selectedRegion.tqcontains( mev->pos() ) 
+      if ( m_selectedRegion.contains( mev->pos() ) 
           && m_selectedRegion!=m_originalPixmap.rect() )
       {
          m_state=Moving;

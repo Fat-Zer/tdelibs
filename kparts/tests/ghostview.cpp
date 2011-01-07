@@ -25,7 +25,7 @@ Shell::Shell()
 
   KAction * paQuit = new KAction( "&Quit" , "exit", 0, this, TQT_SLOT( close() ), actionCollection(), "file_quit" );
 
-  // Try to tqfind a postscript component first
+  // Try to find a postscript component first
   KTrader::OfferList offers = KTrader::self()->query("application/postscript", "('KParts/ReadOnlyPart' in ServiceTypes) or ('Browser/View' in ServiceTypes)");
 
   KLibFactory *factory = 0;
@@ -47,7 +47,7 @@ Shell::Shell()
     }
   }
 
-  // if we couldn't tqfind a component with the trader, try the
+  // if we couldn't find a component with the trader, try the
   // kghostview library directly.  if this ever happens, then something
   // is seriously screwed up, though -- the kghostview component
   // should be picked up by the trader

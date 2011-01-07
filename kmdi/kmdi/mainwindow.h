@@ -79,7 +79,7 @@ class KMDI_EXPORT MainWindow : public KParts::DockMainWindow
     /**
      * Constructor.
      */
-    MainWindow ( TQWidget* tqparentWidget, const char* name = "");
+    MainWindow ( TQWidget* parentWidget, const char* name = "");
 
     /**
      * Destructor.
@@ -141,7 +141,7 @@ class KMDI_EXPORT MainWindow : public KParts::DockMainWindow
     void collapseOverlapContainers();
 
   protected:
-    void tqfindToolViewsDockedToMain(TQPtrList<KDockWidget>* list,KDockWidget::DockPosition dprtmw);
+    void findToolViewsDockedToMain(TQPtrList<KDockWidget>* list,KDockWidget::DockPosition dprtmw);
     void dockToolViewsIntoContainers(TQPtrList<KDockWidget>& widgetsToReparent,KDockWidget *container);
 
   private:
@@ -196,4 +196,4 @@ class KMDI_EXPORT MainWindow : public KParts::DockMainWindow
 
 #endif //_MainWindow_H_
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

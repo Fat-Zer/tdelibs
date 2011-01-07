@@ -61,7 +61,7 @@ class KHTMLView;
  *	a recursive descent into the layer's render objects. The first phase is the background phase.
  *	The backgrounds and borders of all blocks are painted.  Inlines are not painted at all.
  *	Floats must paint above block backgrounds but entirely below inline content that can overlap them.
- *	In the foreground phase, all inlines are fully painted.  Inline tqreplaced elements will get all
+ *	In the foreground phase, all inlines are fully painted.  Inline replaced elements will get all
  *	three phases invoked on them during this phase.
  */
 
@@ -161,7 +161,7 @@ public:
     void addLayers(RenderLayer* parentLayer, RenderObject* newObject);
     void removeLayers(RenderLayer* parentLayer);
     void moveLayers(RenderLayer* oldParent, RenderLayer* newParent);
-    RenderLayer* tqfindNextLayer(RenderLayer* parentLayer, RenderObject* startPoint,
+    RenderLayer* findNextLayer(RenderLayer* parentLayer, RenderObject* startPoint,
                                bool checkParent=true);
     virtual void positionChildLayers() { }
     virtual bool requiresLayer() const {
@@ -297,7 +297,7 @@ public:
     bool isCompact() const { return style()->display() == COMPACT; } // compact
     bool isRunIn() const { return style()->display() == RUN_IN; } // run-in object
     bool mouseInside() const;
-    bool isReplaced() const { return m_tqreplaced; }
+    bool isReplaced() const { return m_replaced; }
     bool isReplacedBlock() const { return isInline() && isReplaced() && isRenderBlock(); }
     bool shouldPaintBackgroundOrBorder() const { return m_paintBackground; }
     bool needsLayout() const   { return m_needsLayout || m_normalChildNeedsLayout || m_posChildNeedsLayout; }
@@ -327,7 +327,7 @@ public:
     void setOverhangingContents(bool p=true);
     void markContainingBlocksForLayout();
     void dirtyFormattingContext( bool checkContainer );
-    void tqrepaintDuringLayout();
+    void repaintDuringLayout();
     void setNeedsLayout(bool b, bool markParents = true);
     void setChildNeedsLayout(bool b, bool markParents = true);
     void setMinMaxKnown(bool b=true) {
@@ -353,11 +353,11 @@ public:
     void setMouseInside(bool b=true) { m_mouseInside = b; }
     void setShouldPaintBackgroundOrBorder(bool b=true) { m_paintBackground = b; }
     void setRenderText() { m_isText = true; }
-    void setReplaced(bool b=true) { m_tqreplaced = b; }
+    void setReplaced(bool b=true) { m_replaced = b; }
     void setHasOverflowClip(bool b = true) { m_hasOverflowClip = b; }
     void setIsSelectionBorder(bool b=true) { m_isSelectionBorder = b; }
 
-    void scheduleRetqlayout(RenderObject *clippedObj = 0);
+    void scheduleRelayout(RenderObject *clippedObj = 0);
 
     void updateBackgroundImages(RenderStyle* oldStyle);
 
@@ -402,7 +402,7 @@ public:
      *
      * when a element has a fixed size, m_minWidth and m_maxWidth should be
      * set to the same value. This has the special meaning that m_width,
-     * tqcontains the actual value.
+     * contains the actual value.
      *
      * assumes calcMinMaxWidth has already been called for all children.
      */
@@ -427,21 +427,21 @@ public:
 
     /*
      * This function should cause the Element to calculate its
-     * width and height and the tqlayout of its content
+     * width and height and the layout of its content
      *
-     * when the Element calls setNeedsLayout(false), tqlayout() is no
-     * longer called during retqlayouts, as long as there is no
+     * when the Element calls setNeedsLayout(false), layout() is no
+     * longer called during relayouts, as long as there is no
      * style sheet change. When that occurs, m_needsLayout will be
-     * set to true and the Element receives tqlayout() calls
+     * set to true and the Element receives layout() calls
      * again.
      */
-    virtual void tqlayout() = 0;
+    virtual void layout() = 0;
 
-    /* This function performs a tqlayout only if one is needed. */
-    void tqlayoutIfNeeded() { if (needsLayout()) tqlayout(); }
+    /* This function performs a layout only if one is needed. */
+    void layoutIfNeeded() { if (needsLayout()) layout(); }
 
     // used for element state updates that can not be fixed with a
-    // tqrepaint and do not need a retqlayout
+    // repaint and do not need a relayout
     virtual void updateFromElement() {}
 
     // Called immediately after render-object is inserted
@@ -464,11 +464,11 @@ public:
     virtual bool needsPageClear() const { return m_needsPageClear; }
 
     /*
-     * ContainsPageBreak indicates the object tqcontains a clean page-break.
-     * ### should be removed and tqreplaced with (crossesPageBreak && !needsPageClear)
+     * ContainsPageBreak indicates the object contains a clean page-break.
+     * ### should be removed and replaced with (crossesPageBreak && !needsPageClear)
      */
-    void setContainsPageBreak(bool b = true) { m_tqcontainsPageBreak = b; }
-    virtual bool tqcontainsPageBreak() const { return m_tqcontainsPageBreak; }
+    void setContainsPageBreak(bool b = true) { m_containsPageBreak = b; }
+    virtual bool containsPageBreak() const { return m_containsPageBreak; }
 
     virtual int pageTopAfter(int y) const { if (parent()) return parent()->pageTopAfter(y); else return 0; }
 
@@ -485,7 +485,7 @@ public:
     virtual bool afterPageBreak() const  { return m_afterPageBreak; }
     virtual bool beforePageBreak() const { return m_beforePageBreak; }
 
-    // does a query on the rendertree and tqfinds the innernode
+    // does a query on the rendertree and finds the innernode
     // and overURL for the given position
     // if readonly == false, it will recalc hover styles accordingly
    class NodeInfo
@@ -522,7 +522,7 @@ public:
         bool m_active;
     };
 
-    /** tqcontains stateful information for a checkSelectionPoint call
+    /** contains stateful information for a checkSelectionPoint call
      */
     struct SelPointState {
         /** last node that was before the current position */
@@ -557,7 +557,7 @@ public:
     virtual short contentWidth() const { return 0; }
     virtual int contentHeight() const { return 0; }
 
-    // intrinsic extend of tqreplaced elements. undefined otherwise
+    // intrinsic extend of replaced elements. undefined otherwise
     virtual short intrinsicWidth() const { return 0; }
     virtual int intrinsicHeight() const { return 0; }
 
@@ -681,9 +681,9 @@ public:
     // Used by collapsed border tables.
     virtual void collectBorders(TQValueList<CollapsedBorderValue>& borderStyles);
 
-    // force a complete tqrepaint
-    virtual void tqrepaint(Priority p = NormalPriority) { if(m_parent) m_parent->tqrepaint(p); }
-    virtual void tqrepaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
+    // force a complete repaint
+    virtual void repaint(Priority p = NormalPriority) { if(m_parent) m_parent->repaint(p); }
+    virtual void repaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
 
     virtual unsigned int length() const { return 1; }
 
@@ -693,7 +693,7 @@ public:
     bool isFloatingOrPositioned() const { return (isFloating() || isPositioned()); };
     virtual bool hasOverhangingFloats() const { return false; }
     virtual bool hasFloats() const { return false; }
-    virtual bool tqcontainsFloat(RenderObject* /*o*/) const { return false; }
+    virtual bool containsFloat(RenderObject* /*o*/) const { return false; }
     virtual void markAllDescendantsWithFloatsForLayout(RenderObject* /*floatToRemove*/ = 0) {}
 
     bool flowAroundFloats() const;
@@ -747,8 +747,8 @@ public:
     virtual int leftmostPosition(bool /*includeOverflowInterior*/=true, bool /*includeSelf*/=true) const { return 0; }
     virtual int highestPosition(bool /*includeOverflowInterior*/=true, bool /*includeSelf*/=true) const { return 0; }
 
-    // recursively tqinvalidate current tqlayout
-    // unused: void tqinvalidateLayout();
+    // recursively invalidate current layout
+    // unused: void invalidateLayout();
 
     virtual void calcVerticalMargins() {}
     void removeFromObjectLists();
@@ -790,7 +790,7 @@ protected:
 
     virtual TQRect viewRect() const;
     void remove();
-    void tqinvalidateVerticalPositions();
+    void invalidateVerticalPositions();
     bool attemptDirectLayerTranslation();
     void updateWidgetMasks();
 
@@ -827,7 +827,7 @@ private:
     bool m_inline                    : 1;
     bool m_attached                  : 1;
 
-    bool m_tqreplaced                  : 1;
+    bool m_replaced                  : 1;
     bool m_mouseInside               : 1;
     bool m_hasFirstLine              : 1;
     bool m_isSelectionBorder         : 1;
@@ -838,7 +838,7 @@ private:
     bool m_afterPageBreak            : 1;
 
     bool m_needsPageClear            : 1;
-    bool m_tqcontainsPageBreak         : 1;
+    bool m_containsPageBreak         : 1;
     
     bool m_hasOverflowClip           : 1;
 

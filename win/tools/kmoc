@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # Creates KDE-compatible .moc files out of .h files in current directory
-# .moc files are saved to tqmoc/ subdirectory.
-# Any additional arguments are directories - ktqmoc will be called for each of them.
+# .moc files are saved to moc/ subdirectory.
+# Any additional arguments are directories - kmoc will be called for each of them.
 
-mkdir -p tqmoc
-tqfind . -maxdepth 1 -name \*.h | while read ; do 
+mkdir -p moc
+find . -maxdepth 1 -name \*.h | while read ; do 
 	grep Q_OBJECT $REPLY > /dev/null || continue
-	tqmoc=tqmoc/`echo $REPLY | sed -e "s/\\.h/\\.moc/;s/\\.\\///"`
-	if [ $tqmoc -ot $REPLY ] ; then echo tqmocing $REPLY... ; tqmoc $REPLY -o $tqmoc ; fi
+	moc=moc/`echo $REPLY | sed -e "s/\\.h/\\.moc/;s/\\.\\///"`
+	if [ $moc -ot $REPLY ] ; then echo mocing $REPLY... ; moc $REPLY -o $moc ; fi
 done
 
 pwd=`pwd`
 while [ $# -gt 0 ] ; do
-	cd $pwd/$1 && ktqmoc
+	cd $pwd/$1 && kmoc
 	cd $pwd
 	shift
 done

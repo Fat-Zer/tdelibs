@@ -67,7 +67,7 @@ IMPLEMENT_CONSTANT_TABLE(DOMNodeConstants,"DOMNodeConstants")
 /* Source for DOMNodeProtoTable.
 @begin DOMNodeProtoTable 13
   insertBefore	DOMNode::InsertBefore	DontDelete|Function 2
-  tqreplaceChild	DOMNode::ReplaceChild	DontDelete|Function 2
+  replaceChild	DOMNode::ReplaceChild	DontDelete|Function 2
   removeChild	DOMNode::RemoveChild	DontDelete|Function 1
   appendChild	DOMNode::AppendChild	DontDelete|Function 1
   hasAttributes	DOMNode::HasAttributes	DontDelete|Function 0
@@ -81,7 +81,7 @@ IMPLEMENT_CONSTANT_TABLE(DOMNodeConstants,"DOMNodeConstants")
   removeEventListener	DOMNode::RemoveEventListener	DontDelete|Function 3
   dispatchEvent		DOMNode::DispatchEvent	DontDelete|Function 1
 # IE extensions
-  tqcontains	DOMNode::Contains		DontDelete|Function 1
+  contains	DOMNode::Contains		DontDelete|Function 1
   insertAdjacentHTML	DOMNode::InsertAdjacentHTML	DontDelete|Function 2
 # "DOM level 0" (from Gecko DOM reference; also in WinIE)
   item          DOMNode::Item           DontDelete|Function 1
@@ -216,7 +216,7 @@ static khtml::RenderObject* handleBodyRootQuirk(const DOM::Node& node, khtml::Re
   }
   
   if (needViewport) {
-    //Scan up to tqfind the new target
+    //Scan up to find the new target
     while (rend->parent())
       rend = rend->parent();
   }
@@ -322,7 +322,7 @@ Value DOMNode::getValueProperty(ExecState *exec, int token) const
   default:
     // no DOM standard, found in IE only
 
-    // Make sure our tqlayout is up to date before we allow a query on these attributes.
+    // Make sure our layout is up to date before we allow a query on these attributes.
     DOM::DocumentImpl* docimpl = node.handle()->getDocument();
     if (docimpl) {
       docimpl->updateLayout();
@@ -469,7 +469,7 @@ void DOMNode::putValueProperty(ExecState *exec, int token, const Value& value, i
     setListener(exec,DOM::EventImpl::UNLOAD_EVENT,value);
     break;
   default:
-    // Make sure our tqlayout is up to date 
+    // Make sure our layout is up to date 
     DOM::DocumentImpl* docimpl = node.handle()->getDocument();
     if (docimpl)
       docimpl->updateLayout();
@@ -585,7 +585,7 @@ Value DOMNodeProtoFunc::tryCall(ExecState *exec, Object &thisObj, const List &ar
     case DOMNode::InsertBefore:
       return getDOMNode(exec,node.insertBefore(toNode(args[0]), toNode(args[1])));
     case DOMNode::ReplaceChild:
-      return getDOMNode(exec,node.tqreplaceChild(toNode(args[0]), toNode(args[1])));
+      return getDOMNode(exec,node.replaceChild(toNode(args[0]), toNode(args[1])));
     case DOMNode::Contains:
     {
 	DOM::Node other = toNode(args[0]);
@@ -1738,7 +1738,7 @@ const ClassInfo DOMCharacterData::info = { "CharacterImp",
   appendData	DOMCharacterData::AppendData	DontDelete|Function 1
   insertData	DOMCharacterData::InsertData	DontDelete|Function 2
   deleteData	DOMCharacterData::DeleteData	DontDelete|Function 2
-  tqreplaceData	DOMCharacterData::ReplaceData	DontDelete|Function 2
+  replaceData	DOMCharacterData::ReplaceData	DontDelete|Function 2
 @end
 */
 KJS_DEFINE_PROTOTYPE_WITH_PROTOTYPE(DOMCharacterDataProto, DOMNodeProto)
@@ -1801,7 +1801,7 @@ Value DOMCharacterDataProtoFunc::tryCall(ExecState *exec, Object &thisObj, const
       return  Undefined();
       break;
     case DOMCharacterData::ReplaceData:
-      data.tqreplaceData(args[0].toInteger(exec),args[1].toInteger(exec),args[2].toString(exec).string());
+      data.replaceData(args[0].toInteger(exec),args[1].toInteger(exec),args[2].toString(exec).string());
       return Undefined();
     default:
       break;

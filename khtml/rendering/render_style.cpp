@@ -723,16 +723,16 @@ bool RenderStyle::inheritedNotEqual( RenderStyle *other ) const
   compares two styles. The result gives an idea of the action that
   needs to be taken when replacing the old style with a new one.
 
-  CbLayout: The containing block of the object needs a retqlayout.
-  Layout: the RenderObject needs a retqlayout after the style change
-  Visible: The change is visible, but no retqlayout is needed
-  NonVisible: The object does need neither tqrepaint nor retqlayout after
+  CbLayout: The containing block of the object needs a relayout.
+  Layout: the RenderObject needs a relayout after the style change
+  Visible: The change is visible, but no relayout is needed
+  NonVisible: The object does need neither repaint nor relayout after
        the change.
 
   ### TODO:
   A lot can be optimised here based on the display type, lots of
   optimisations are unimplemented, and currently result in the
-  worst case result causing a retqlayout of the containing block.
+  worst case result causing a relayout of the containing block.
 */
 RenderStyle::Diff RenderStyle::diff( const RenderStyle *other ) const
 {
@@ -743,8 +743,8 @@ RenderStyle::Diff RenderStyle::diff( const RenderStyle *other ) const
 // 	ECursor _cursor_style : 4;
 //	EUserInput _user_input : 2;	as long as :enabled is not impl'd
 
-// ### this needs work to know more exactly if we need a retqlayout
-//     or just a tqrepaint
+// ### this needs work to know more exactly if we need a relayout
+//     or just a repaint
 
 // non-inherited attributes
 //     DataRef<StyleBoxData> box;
@@ -775,18 +775,18 @@ RenderStyle::Diff RenderStyle::diff( const RenderStyle *other ) const
 // 	_border_collapse
 // 	EEmptyCell _empty_cells : 2 ;
 // 	ECaptionSide _caption_side : 2;
-//     ETableLayout _table_tqlayout : 1;
+//     ETableLayout _table_layout : 1;
 //     EPosition _position : 2;
 //     EFloat _floating : 2;
     if ( ((int)noninherited_flags.f._display) >= TABLE ) {
         if ( !(inherited_flags.f._empty_cells == other->inherited_flags.f._empty_cells) ||
              !(inherited_flags.f._caption_side == other->inherited_flags.f._caption_side) ||
              !(inherited_flags.f._border_collapse == other->inherited_flags.f._border_collapse) ||
-             !(noninherited_flags.f._table_tqlayout == other->noninherited_flags.f._table_tqlayout) ||
+             !(noninherited_flags.f._table_layout == other->noninherited_flags.f._table_layout) ||
              !(noninherited_flags.f._position == other->noninherited_flags.f._position) ||
              !(noninherited_flags.f._floating == other->noninherited_flags.f._floating) ||
              !(noninherited_flags.f._flowAroundFloats == other->noninherited_flags.f._flowAroundFloats) ||
-             !(noninherited_flags.f._tqunicodeBidi == other->noninherited_flags.f._tqunicodeBidi) )
+             !(noninherited_flags.f._unicodeBidi == other->noninherited_flags.f._unicodeBidi) )
             return CbLayout;
     }
 
@@ -813,7 +813,7 @@ RenderStyle::Diff RenderStyle::diff( const RenderStyle *other ) const
 	)
         return Layout;
 
-    // Overflow returns a tqlayout hint.
+    // Overflow returns a layout hint.
     if (noninherited_flags.f._overflowX != other->noninherited_flags.f._overflowX ||
         noninherited_flags.f._overflowY != other->noninherited_flags.f._overflowY)
         return Layout;

@@ -37,7 +37,7 @@ namespace KMDI {
 
 class MainWindow;
 
-class ToolViewAccessor : public TQObject
+class ToolViewAccessor : public QObject
 {
    Q_OBJECT
 
@@ -85,4 +85,4 @@ protected:
 
 #endif //_KMDITOOLVIEWACCESSOR_H_
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

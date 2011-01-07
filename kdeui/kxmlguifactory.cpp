@@ -110,7 +110,7 @@ TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_nu
         xml_file = filename;
     else
     {
-        xml_file = locate("data", TQString::tqfromLatin1(instance->instanceName() + '/' ) + filename);
+        xml_file = locate("data", TQString::fromLatin1(instance->instanceName() + '/' ) + filename);
         if ( !TQFile::exists( xml_file ) )
           xml_file = locate( "data", filename );
     }
@@ -120,7 +120,7 @@ TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_nu
     {
         kdError(240) << "No such XML file " << filename << endl;
         if ( never_null )
-            return TQString::tqfromLatin1( "<!DOCTYPE kpartgui>\n<kpartgui name=\"empty\">\n</kpartgui>" );
+            return TQString::fromLatin1( "<!DOCTYPE kpartgui>\n<kpartgui name=\"empty\">\n</kpartgui>" );
         else
             return TQString::null;
     }
@@ -146,7 +146,7 @@ bool KXMLGUIFactory::saveConfigFile( const TQDomDocument& doc,
     TQString xml_file(filename);
 
     if (TQDir::isRelativePath(xml_file))
-        xml_file = locateLocal("data", TQString::tqfromLatin1( instance->instanceName() + '/' )
+        xml_file = locateLocal("data", TQString::fromLatin1( instance->instanceName() + '/' )
                                + filename);
 
     TQFile file( xml_file );
@@ -240,7 +240,7 @@ void KXMLGUIFactory::addClient( KXMLGUIClient *client )
     d->guiClient = client;
 
     // add this client to our client list
-    if ( !d->m_clients.tqcontainsRef( client ) )
+    if ( !d->m_clients.containsRef( client ) )
         d->m_clients.append( client );
     else
         kdDebug(1002) << "XMLGUI client already added " << client << endl;
@@ -251,7 +251,7 @@ void KXMLGUIFactory::addClient( KXMLGUIClient *client )
     client->beginXMLPlug( d->builder->widget() );
 
     // try to use the build document for building the client's GUI, as the build document
-    // tqcontains the correct container state information (like toolbar positions, sizes, etc.) .
+    // contains the correct container state information (like toolbar positions, sizes, etc.) .
     // if there is non available, then use the "real" document.
     TQDomDocument doc = client->xmlguiBuildDocument();
     if ( doc.documentElement().isNull() )
@@ -388,7 +388,7 @@ TQWidget *KXMLGUIFactory::container( const TQString &containerName, KXMLGUIClien
     d->m_containerName = containerName;
     d->guiClient = client;
 
-    TQWidget *result = tqfindRecursive( d->m_rootNode, useTagName );
+    TQWidget *result = findRecursive( d->m_rootNode, useTagName );
 
     d->guiClient = 0L;
     d->m_containerName = TQString::null;
@@ -400,7 +400,7 @@ TQWidget *KXMLGUIFactory::container( const TQString &containerName, KXMLGUIClien
 
 TQPtrList<TQWidget> KXMLGUIFactory::containers( const TQString &tagName )
 {
-    return tqfindRecursive( d->m_rootNode, tagName );
+    return findRecursive( d->m_rootNode, tagName );
 }
 
 void KXMLGUIFactory::reset()
@@ -415,7 +415,7 @@ void KXMLGUIFactory::resetContainer( const TQString &containerName, bool useTagN
     if ( containerName.isEmpty() )
         return;
 
-    ContainerNode *container = d->m_rootNode->tqfindContainer( containerName, useTagName );
+    ContainerNode *container = d->m_rootNode->findContainer( containerName, useTagName );
 
     if ( !container )
         return;
@@ -429,7 +429,7 @@ void KXMLGUIFactory::resetContainer( const TQString &containerName, bool useTagN
     parent->removeChild( container );
 }
 
-TQWidget *KXMLGUIFactory::tqfindRecursive( KXMLGUI::ContainerNode *node, bool tag )
+TQWidget *KXMLGUIFactory::findRecursive( KXMLGUI::ContainerNode *node, bool tag )
 {
     if ( ( ( !tag && node->name == d->m_containerName ) ||
            ( tag && node->tagName == d->m_containerName ) ) &&
@@ -439,7 +439,7 @@ TQWidget *KXMLGUIFactory::tqfindRecursive( KXMLGUI::ContainerNode *node, bool ta
     TQPtrListIterator<ContainerNode> it( node->children );
     for (; it.current(); ++it )
     {
-        TQWidget *cont = tqfindRecursive( it.current(), tag );
+        TQWidget *cont = findRecursive( it.current(), tag );
         if ( cont )
             return cont;
     }
@@ -447,7 +447,7 @@ TQWidget *KXMLGUIFactory::tqfindRecursive( KXMLGUI::ContainerNode *node, bool ta
     return 0L;
 }
 
-TQPtrList<TQWidget> KXMLGUIFactory::tqfindRecursive( KXMLGUI::ContainerNode *node,
+TQPtrList<TQWidget> KXMLGUIFactory::findRecursive( KXMLGUI::ContainerNode *node,
                                                  const TQString &tagName )
 {
     TQPtrList<TQWidget> res;
@@ -458,7 +458,7 @@ TQPtrList<TQWidget> KXMLGUIFactory::tqfindRecursive( KXMLGUI::ContainerNode *nod
     TQPtrListIterator<KXMLGUI::ContainerNode> it( node->children );
     for (; it.current(); ++it )
     {
-        TQPtrList<TQWidget> lst = tqfindRecursive( it.current(), tagName );
+        TQPtrList<TQWidget> lst = findRecursive( it.current(), tagName );
         TQPtrListIterator<TQWidget> wit( lst );
         for (; wit.current(); ++wit )
             res.append( wit.current() );
@@ -566,7 +566,7 @@ int KXMLGUIFactory::configureShortcuts(bool bAllowLetterShortcuts , bool bSaveSe
 
 TQDomElement KXMLGUIFactory::actionPropertiesElement( TQDomDocument& doc )
 {
-	const TQString tagActionProp = TQString::tqfromLatin1("ActionProperties");
+	const TQString tagActionProp = TQString::fromLatin1("ActionProperties");
 	// first, lets see if we have existing properties
 	TQDomElement elem;
 	TQDomNode it = doc.documentElement().firstChild();
@@ -586,7 +586,7 @@ TQDomElement KXMLGUIFactory::actionPropertiesElement( TQDomDocument& doc )
 	return elem;
 }
 
-TQDomElement KXMLGUIFactory::tqfindActionByName( TQDomElement& elem, const TQString& sName, bool create )
+TQDomElement KXMLGUIFactory::findActionByName( TQDomElement& elem, const TQString& sName, bool create )
 {
         static const TQString& attrName = KGlobal::staticQString( "name" );
 	static const TQString& tagAction = KGlobal::staticQString( "Action" );

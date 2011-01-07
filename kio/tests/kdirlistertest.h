@@ -31,7 +31,7 @@
 
 using namespace std;
 
-class PrintSignals : public TQObject
+class PrintSignals : public QObject
 {
    Q_OBJECT
 public:

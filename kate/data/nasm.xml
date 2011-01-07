@@ -450,8 +450,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
       <item>lsl</item>
       <item>lss</item>
       <item>ltr</item>
-      <item>tqmaskmovdqu</item>
-      <item>tqmaskmovq</item>
+      <item>maskmovdqu</item>
+      <item>maskmovq</item>
       <item>maxpd</item>
       <item>maxps</item>
       <item>maxsd</item>
@@ -885,4 +885,4 @@ with this program; if not, write to the Free Software Foundation, Inc.,
     </comments>
   </general>
 </language>
-<!-- kate: space-indent on; indent-width 2; tqreplace-tabs on; -->
+<!-- kate: space-indent on; indent-width 2; replace-tabs on; -->

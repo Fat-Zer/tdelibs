@@ -12,12 +12,12 @@ int main(int argc, char** argv)
     "<center><h1>DialogBase Example</h1></center><hr><br>"
     "This example shows the usage of the <i>DialogBase</i>  class. "
     "<i>DialogBase</i> is the KDE user interface class used to create "
-    "dialogs with unique tqlayout without having to define an own dialog "
+    "dialogs with unique layout without having to define an own dialog "
     "style for your application. <br>"
     "It provides three standard buttons (<b>OK</b>, <b>Apply</b>, and "
     "<b>Cancel</b>) that are needed in most dialogs. Each one may be "
     "hidden, enabled or disabled, and tooltips and quickhelp texts might be"
-    " added. And you do not need to bother about tqgeometry management, this "
+    " added. And you do not need to bother about geometry management, this "
     "is all done automatically.<br>"
     "To polish your user interface even further, you might want to add "
     "textures to the inner and the outer frame of the dialog (the frame is "
@@ -60,11 +60,11 @@ int main(int argc, char** argv)
   view.setMinimumSize( 250, 300 );
   dialog.setMainWidget(&view);
   /* After finishing the setup of your main widget, the dialog needs to be
-     adjusted. It is not done automatically, since the tqlayout of the main
+     adjusted. It is not done automatically, since the layout of the main
      widget may change before the dialog is shown. Additionally, setting a
      help chapter may cause a need for adjustment since it modifies the height
      of the upper frame. */
-  dialog.resize(dialog.tqminimumSize());
+  dialog.resize(dialog.minimumSize());
   /* The dialog object is used just as any other TQDialog: */
   if(dialog.exec())
     {

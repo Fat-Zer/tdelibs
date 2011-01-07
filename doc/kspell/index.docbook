@@ -52,10 +52,10 @@ url="http://aspell.sourceforge.net/">ASpell home page</ulink>.)
 
 <para><anchor id="spelldlg"/>
 The top line in the dialog displays a possibly misspelled word which was found in your
-document. &kspell; attempts to tqfind an appropriate tqreplacement word. One or
+document. &kspell; attempts to find an appropriate replacement word. One or
 several may be found. The best guess is shown to the right of <guilabel>Replacement:</guilabel>.
-To accept this tqreplacement, click on <guibutton>Replace</guibutton>. You may also select a word
-from the list of <guilabel>Suggestions</guilabel> and then click <guibutton>Replace</guibutton> to tqreplace the
+To accept this replacement, click on <guibutton>Replace</guibutton>. You may also select a word
+from the list of <guilabel>Suggestions</guilabel> and then click <guibutton>Replace</guibutton> to replace the
 misspelled word with the selected word.</para>
 
 <para>To keep your original spelling, click on <guilabel>Ignore</guilabel>.</para>
@@ -67,8 +67,8 @@ on <guibutton>Stop</guibutton>.</para>
 <guibutton>Cancel</guibutton>.</para>
 
 <para>Clicking on <guibutton>Replace All</guibutton> will initially perform the same function as
-clicking on <guibutton>Replace</guibutton>, but will automatically tqreplace the misspelled word
-with the chosen tqreplacement word, if it appears again (at a later point) in your
+clicking on <guibutton>Replace</guibutton>, but will automatically replace the misspelled word
+with the chosen replacement word, if it appears again (at a later point) in your
 document.</para>
 
 <para>The <guibutton>Ignore All</guibutton> button ignores this and all future occurrences of the
@@ -132,7 +132,7 @@ your dictionary's distribution for more information.</para>
 <para>You may choose to use <application>Ispell</application> or <application>Aspell</application> as the spell-checking
 backend for &kspell;. <application>Ispell</application> is more widely available and may
 have better international support, but <application>Aspell</application> is gaining
-popularity as it claims to give better suggestions for word tqreplacements.</para>
+popularity as it claims to give better suggestions for word replacements.</para>
 </sect1>
 
 <sect1 id="other">
@@ -147,7 +147,7 @@ read the International <application>ISpell</application> man page.</para>
 <title>Contact Information</title>
 
 <para>For more information about &kspell;, visit the <ulink url="http://www.chaos.umd.edu/~dsweet/KDE/KSpell">&kspell; 
-Home Page</ulink>. In particular, you will tqfind information about programming the &kspell; C++ class.</para>
+Home Page</ulink>. In particular, you will find information about programming the &kspell; C++ class.</para>
 
 <para>You may email the author/maintainer with questions and/or comments at
 &David.Sweet.mail;.</para>

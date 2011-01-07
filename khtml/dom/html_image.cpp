@@ -122,7 +122,7 @@ void HTMLAreaElement::setNoHref( bool _noHref )
     }
 }
 
-DOMString HTMLAreaElement::tqshape() const
+DOMString HTMLAreaElement::shape() const
 {
     if(!impl) return DOMString();
     return ((ElementImpl *)impl)->getAttribute(ATTR_SHAPE);

@@ -70,7 +70,7 @@ public:
 
   /**
    * List of dirs handled by this dirlister. The first entry is the base URL.
-   * For a tree view, it tqcontains all the dirs shown.
+   * For a tree view, it contains all the dirs shown.
    */
   KURL::List lstDirs;
 
@@ -150,13 +150,13 @@ public:
 
   KFileItemList *itemsForDir( const KURL &_dir ) const;
 
-  KFileItem *tqfindByName( const KDirLister *lister, const TQString &_name ) const;
+  KFileItem *findByName( const KDirLister *lister, const TQString &_name ) const;
   // if lister is set, it is checked that the url is held by the lister
   KFileItem *findByURL( const KDirLister *lister, const KURL &_url ) const;
 
   /**
    * Notify that files have been added in @p directory
-   * The receiver will list that directory again to tqfind
+   * The receiver will list that directory again to find
    * the new items (since it needs more than just the names anyway).
    * Reimplemented from KDirNotify.
    */

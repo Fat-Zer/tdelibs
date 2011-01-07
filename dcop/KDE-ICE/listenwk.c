@@ -33,7 +33,7 @@ in this Software without prior written authorization from The Open Group.
 #include <string.h>
 
 
-tqStatus
+Status
 IceListenForWellKnownConnections (port, countRet, listenObjsRet, errorLength, errorStringRet)
 
 char		*port;
@@ -46,7 +46,7 @@ char		*errorStringRet;
     struct _IceListenObj	*listenObjs;
     char			*networkId;
     int				transCount, partial, i, j;
-    tqStatus			status = 1;
+    Status			status = 1;
     XtransConnInfo		*transConns = NULL;
 
 

@@ -112,9 +112,9 @@ bool LDIF::splitLine( const TQCString &line, TQString &fieldname, TQByteArray &v
 
 //  kdDebug(5700) << "splitLine line: " << TQString::fromUtf8(line) << endl;
 
-  position = line.tqfind( ":" );
+  position = line.find( ":" );
   if ( position == -1 ) {
-    // strange: we did not tqfind a fieldname
+    // strange: we did not find a fieldname
     fieldname = "";
     TQCString str;
     str = line.stripWhiteSpace();
@@ -259,7 +259,7 @@ LDIF::ParseVal LDIF::processLine()
           retval = EndEntry;
         } else if ( attrLower == "add" ) {
           mModType = Mod_Add;
-        } else if ( attrLower == "tqreplace" ) {
+        } else if ( attrLower == "replace" ) {
           mModType = Mod_Replace;
           mAttr = TQString::fromUtf8( mVal, mVal.size() );
           mVal.resize( 0 );

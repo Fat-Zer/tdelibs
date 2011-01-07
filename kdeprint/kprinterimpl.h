@@ -31,7 +31,7 @@
 class KPrinter;
 class KMPrinter;
 
-class KDEPRINT_EXPORT KPrinterImpl : public TQObject
+class KDEPRINT_EXPORT KPrinterImpl : public QObject
 {
 	Q_OBJECT
 public:

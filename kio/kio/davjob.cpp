@@ -46,7 +46,7 @@ class DavJob::DavJobPrivate
 {
 public:
   TQByteArray savedStaticData;
-	TQByteArray str_response; // tqreplaces the TQString previously used in DavJob itself
+	TQByteArray str_response; // replaces the TQString previously used in DavJob itself
 };
 
 DavJob::DavJob( const KURL& url, int method, const TQString& request, bool showProgressInfo )

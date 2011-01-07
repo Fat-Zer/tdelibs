@@ -51,7 +51,7 @@ class KonfUpdate
 public:
    KonfUpdate();
    ~KonfUpdate();
-   TQStringList tqfindUpdateFiles(bool dirtyOnly);
+   TQStringList findUpdateFiles(bool dirtyOnly);
 
    TQTextStream &log();
 
@@ -147,7 +147,7 @@ KonfUpdate::KonfUpdate()
    {
       if (config->readBoolEntry("autoUpdateDisabled", false))
          return;
-      updateFiles = tqfindUpdateFiles(true);
+      updateFiles = findUpdateFiles(true);
       updateAll = true;
    }
 
@@ -163,7 +163,7 @@ KonfUpdate::KonfUpdate()
    if (updateAll && !config->readBoolEntry("updateInfoAdded", false))
    {
        config->writeEntry("updateInfoAdded", true);
-       updateFiles = tqfindUpdateFiles(false);
+       updateFiles = findUpdateFiles(false);
 
        for(TQStringList::ConstIterator it = updateFiles.begin();
            it != updateFiles.end();
@@ -201,12 +201,12 @@ KonfUpdate::log()
       }
    }
    
-   (*m_textStream) << TQDateTime::tqcurrentDateTime().toString( Qt::ISODate ) << " ";
+   (*m_textStream) << TQDateTime::currentDateTime().toString( Qt::ISODate ) << " ";
    
    return *m_textStream;
 }
 
-TQStringList KonfUpdate::tqfindUpdateFiles(bool dirtyOnly)
+TQStringList KonfUpdate::findUpdateFiles(bool dirtyOnly)
 {
    TQStringList result;
    TQStringList list = KGlobal::dirs()->findAllResources("data", "kconf_update/*.upd", false, true);
@@ -218,7 +218,7 @@ TQStringList KonfUpdate::tqfindUpdateFiles(bool dirtyOnly)
       struct stat buff;
       if (stat( TQFile::encodeName(file), &buff) == 0)
       {
-         int i = file.tqfindRev('/');
+         int i = file.findRev('/');
          if (i != -1) 
             file = file.mid(i+1);
          config->setGroup(file);
@@ -237,7 +237,7 @@ TQStringList KonfUpdate::tqfindUpdateFiles(bool dirtyOnly)
 bool KonfUpdate::checkFile(const TQString &filename)
 {
    currentFilename = filename;
-   int i = currentFilename.tqfindRev('/');
+   int i = currentFilename.findRev('/');
    if (i != -1) 
       currentFilename = currentFilename.mid(i+1);
    skip = true;
@@ -268,7 +268,7 @@ bool KonfUpdate::checkFile(const TQString &filename)
 void KonfUpdate::checkGotFile(const TQString &_file, const TQString &id)
 {
    TQString file;
-   int i = _file.tqfind(',');
+   int i = _file.find(',');
    if (i == -1)
    {
       file = _file.stripWhiteSpace();
@@ -283,7 +283,7 @@ void KonfUpdate::checkGotFile(const TQString &_file, const TQString &id)
    KSimpleConfig cfg(file);
    cfg.setGroup("$Version");
    TQStringList ids = cfg.readListEntry("update_info");
-   if (ids.tqcontains(id))
+   if (ids.contains(id))
        return;
    ids.append(id);
    cfg.writeEntry("update_info", ids);
@@ -311,7 +311,7 @@ void KonfUpdate::checkGotFile(const TQString &_file, const TQString &id)
 bool KonfUpdate::updateFile(const TQString &filename)
 {
    currentFilename = filename;
-   int i = currentFilename.tqfindRev('/');
+   int i = currentFilename.findRev('/');
    if (i != -1) 
        currentFilename = currentFilename.mid(i+1);
    skip = true;
@@ -398,7 +398,7 @@ void KonfUpdate::gotId(const TQString &_id)
    {
        config->setGroup(currentFilename);
        TQStringList ids = config->readListEntry("done");
-       if (!ids.tqcontains(id))
+       if (!ids.contains(id))
        {
           ids.append(id);
           config->writeEntry("done", ids);
@@ -413,7 +413,7 @@ void KonfUpdate::gotId(const TQString &_id)
    TQStringList ids = config->readListEntry("done");
    if (!_id.isEmpty())
    {
-       if (ids.tqcontains(_id))
+       if (ids.contains(_id))
        {
           //qDebug("Id '%s' was already in done-list", _id.latin1());
           if (!m_bUseConfigInfo)
@@ -445,7 +445,7 @@ void KonfUpdate::gotFile(const TQString &_file)
       oldConfig2->setGroup("$Version");
       TQStringList ids = oldConfig2->readListEntry("update_info");
       TQString cfg_id = currentFilename + ":" + id;
-      if (!ids.tqcontains(cfg_id) && !skip)
+      if (!ids.contains(cfg_id) && !skip)
       {
          ids.append(cfg_id);
          oldConfig2->writeEntry("update_info", ids);
@@ -473,7 +473,7 @@ void KonfUpdate::gotFile(const TQString &_file)
       newConfig->setGroup("$Version");
       TQStringList ids = newConfig->readListEntry("update_info");
       TQString cfg_id = currentFilename + ":" + id;
-      if (!ids.tqcontains(cfg_id) && !skip)
+      if (!ids.contains(cfg_id) && !skip)
       {
          ids.append(cfg_id);
          newConfig->writeEntry("update_info", ids);
@@ -486,7 +486,7 @@ void KonfUpdate::gotFile(const TQString &_file)
    }
    newConfig = 0; 
 
-   int i = _file.tqfind(',');
+   int i = _file.find(',');
    if (i == -1)
    {
       oldFile = _file.stripWhiteSpace();
@@ -505,7 +505,7 @@ void KonfUpdate::gotFile(const TQString &_file)
       TQString cfg_id = currentFilename + ":" + id;
       oldConfig2->setGroup("$Version");
       TQStringList ids = oldConfig2->readListEntry("update_info");
-      if (ids.tqcontains(cfg_id))
+      if (ids.contains(cfg_id))
       {
          skip = true;
          newFile = TQString::null;
@@ -517,7 +517,7 @@ void KonfUpdate::gotFile(const TQString &_file)
          newConfig = new KConfig(newFile, false, false);
          newConfig->setGroup("$Version");
          ids = newConfig->readListEntry("update_info");
-         if (ids.tqcontains(cfg_id))
+         if (ids.contains(cfg_id))
          {
             skip = true;
             log() << currentFilename << ": Skipping update '" << id << "'" << endl;
@@ -541,7 +541,7 @@ void KonfUpdate::gotFile(const TQString &_file)
 
 void KonfUpdate::gotGroup(const TQString &_group)
 {
-   int i = _group.tqfind(',');
+   int i = _group.find(',');
    if (i == -1)
    {
       oldGroup = _group.stripWhiteSpace();
@@ -574,7 +574,7 @@ void KonfUpdate::gotRemoveGroup(const TQString &_group)
 
 void KonfUpdate::gotKey(const TQString &_key)
 {
-   int i = _key.tqfind(',');
+   int i = _key.find(',');
    if (i == -1)
    {
       oldKey = _key.stripWhiteSpace();
@@ -724,7 +724,7 @@ void KonfUpdate::gotScriptArguments(const TQString &_arguments)
 void KonfUpdate::gotScript(const TQString &_script)
 {
    TQString script, interpreter;
-   int i = _script.tqfind(',');
+   int i = _script.find(',');
    if (i == -1)
    {
       script = _script.stripWhiteSpace();
@@ -860,7 +860,7 @@ void KonfUpdate::gotScript(const TQString &_script)
          TQString line = ts.readLine();
          if (line.startsWith("["))
          {
-            int j = line.tqfind(']')+1;
+            int j = line.find(']')+1;
             if (j > 0)
                group = line.mid(1, j-2);
          }
@@ -869,7 +869,7 @@ void KonfUpdate::gotScript(const TQString &_script)
             TQString key = line.mid(9);
             if (key[0] == '[')
             {
-               int j = key.tqfind(']')+1;
+               int j = key.find(']')+1;
                if (j > 0)
                {
                   group = key.mid(1,j-2);
@@ -888,7 +888,7 @@ void KonfUpdate::gotScript(const TQString &_script)
             TQString key = line.mid(13).stripWhiteSpace();
             if (key[0] == '[')
             {
-               int j = key.tqfind(']')+1;
+               int j = key.find(']')+1;
                if (j > 0)
                {
                   group = key.mid(1,j-2);

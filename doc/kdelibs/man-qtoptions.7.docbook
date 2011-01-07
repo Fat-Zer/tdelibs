@@ -23,7 +23,7 @@
 
 <refsynopsisdiv>
 <cmdsynopsis>
-<command><tqreplaceable>Qt application</tqreplaceable></command>
+<command><replaceable>Qt application</replaceable></command>
 <arg choice="opt">Qt Generic Options</arg>
 </cmdsynopsis>
 </refsynopsisdiv>

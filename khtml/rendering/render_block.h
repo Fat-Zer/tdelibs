@@ -98,21 +98,21 @@ public:
     virtual void attach();
     void updateFirstLetter();
 
-    virtual void tqlayout();
-    void tqlayoutBlock( bool retqlayoutChildren );
-    void tqlayoutBlockChildren( bool retqlayoutChildren );
-    void tqlayoutInlineChildren( bool retqlayoutChildren, int breakBeforeLine = 0);
+    virtual void layout();
+    void layoutBlock( bool relayoutChildren );
+    void layoutBlockChildren( bool relayoutChildren );
+    void layoutInlineChildren( bool relayoutChildren, int breakBeforeLine = 0);
 
-    void tqlayoutPositionedObjects( bool retqlayoutChildren );
+    void layoutPositionedObjects( bool relayoutChildren );
     void insertPositionedObject(RenderObject *o);
     void removePositionedObject(RenderObject *o);
 
     // Called to lay out the legend for a fieldset.
-    virtual RenderObject* tqlayoutLegend(bool /*retqlayoutChildren*/) { return 0; };
+    virtual RenderObject* layoutLegend(bool /*relayoutChildren*/) { return 0; };
 
     // the implementation of the following functions is in bidi.cpp
     void bidiReorderLine(const BidiIterator &start, const BidiIterator &end, BidiState &bidi );
-    BidiIterator tqfindNextLineBreak(BidiIterator &start, BidiState &info );
+    BidiIterator findNextLineBreak(BidiIterator &start, BidiState &info );
     InlineFlowBox* constructLine(const BidiIterator& start, const BidiIterator& end);
     InlineFlowBox* createLineBoxes(RenderObject* obj);
     void computeHorizontalPositionsForLine(InlineFlowBox* lineBox, BidiState &bidi);
@@ -136,11 +136,11 @@ public:
     int getClearDelta(RenderObject *child);
     virtual void markAllDescendantsWithFloatsForLayout(RenderObject* floatToRemove = 0);
 
-    // FIXME: tqcontainsFloats() should not return true if the floating objects list
-    // is empty. However, tqlayoutInlineChildren() relies on the current behavior.
+    // FIXME: containsFloats() should not return true if the floating objects list
+    // is empty. However, layoutInlineChildren() relies on the current behavior.
     // http://bugzilla.opendarwin.org/show_bug.cgi?id=7395#c3
     virtual bool hasFloats() const { return m_floatingObjects!=0; }
-    virtual bool tqcontainsFloat(RenderObject* o) const;
+    virtual bool containsFloat(RenderObject* o) const;
 
     virtual bool hasOverhangingFloats() const { return floatBottom() > m_height; }
     void addOverHangingFloats( RenderBlock *block, int xoffset, int yoffset, bool child );
@@ -222,7 +222,7 @@ protected:
         bool crossedLayer : 1; // lock noPaint flag
     };
 
-    // The following helper functions and structs are used by tqlayoutBlockChildren.
+    // The following helper functions and structs are used by layoutBlockChildren.
     class CompactInfo {
         // A compact child that needs to be collapsed into the margin of the following block.
         RenderObject* m_compact;
@@ -342,7 +342,7 @@ protected:
     void handleBottomOfBlock(int top, int bottom, MarginInfo& marginInfo);
     void setCollapsedBottomMargin(const MarginInfo& marginInfo);
     void clearChildOfPageBreaks(RenderObject* child, PageBreakInfo &pageBreakInfo, MarginInfo &marginInfo);
-    // End helper functions and structs used by tqlayoutBlockChildren.
+    // End helper functions and structs used by layoutBlockChildren.
 
 protected:
     // How much content overflows out of our block vertically or horizontally (all we support
@@ -359,8 +359,8 @@ private:
     TQPtrList<RenderObject>* m_positionedObjects;
 
     bool m_childrenInline : 1;
-    bool m_firstLine      : 1; // used in inline tqlayouting
-    EClear m_cleartqStatus  : 2; // used during layuting of paragraphs
+    bool m_firstLine      : 1; // used in inline layouting
+    EClear m_clearStatus  : 2; // used during layuting of paragraphs
     bool m_avoidPageBreak : 1; // anonymous avoid page-break block
     bool m_topMarginQuirk : 1;
     bool m_bottomMarginQuirk : 1;

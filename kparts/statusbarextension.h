@@ -50,7 +50,7 @@ namespace KParts
    *
    * @since 3.2
    */
-  class KPARTS_EXPORT StatusBarExtension : public TQObject
+  class KPARTS_EXPORT StatusBarExtension : public QObject
   {
     Q_OBJECT
 

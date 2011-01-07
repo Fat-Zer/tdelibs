@@ -41,7 +41,7 @@ public:
    * Find a service type in the database file 
    * @return a pointer to the servicetype in the memory dict (don't free!)
    */
-  virtual KServiceType * tqfindServiceTypeByName(const TQString &_name);
+  virtual KServiceType * findServiceTypeByName(const TQString &_name);
 
   /**
    * Construct a KServiceType from a config file.

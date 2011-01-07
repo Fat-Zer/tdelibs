@@ -89,7 +89,7 @@ namespace KIO {
     * the properties of the resource identified by the given @p url.
     *
     * @param url the URL of the resource
-    * @param properties a proptqfind document that describes the properties that
+    * @param properties a propfind document that describes the properties that
     *        should be retrieved
     * @param depth the depth of the request. Can be "0", "1" or "infinity"
     * @param showProgressInfo true to show progress information

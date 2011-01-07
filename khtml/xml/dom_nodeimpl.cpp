@@ -133,7 +133,7 @@ NodeImpl *NodeImpl::insertBefore( NodeImpl *, NodeImpl *, int &exceptioncode )
     return 0;
 }
 
-void NodeImpl::tqreplaceChild( NodeImpl *, NodeImpl *, int &exceptioncode )
+void NodeImpl::replaceChild( NodeImpl *, NodeImpl *, int &exceptioncode )
 {
   exceptioncode = DOMException::HIERARCHY_REQUEST_ERR;
 }
@@ -588,7 +588,7 @@ void NodeImpl::handleLocalEvents(EventImpl *evt, bool useCapture)
 
     Event ev = evt;
     // removeEventListener (e.g. called from a JS event listener) might
-    // tqinvalidate the item after the current iterator (which "it" is pointing to).
+    // invalidate the item after the current iterator (which "it" is pointing to).
     // So we make a copy of the list.
     TQValueList<RegisteredEventListener> listeners = *m_regdListeners.listeners;
     TQValueList<RegisteredEventListener>::iterator it;
@@ -605,7 +605,7 @@ void NodeImpl::handleLocalEvents(EventImpl *evt, bool useCapture)
         if (current.useCapture == useCapture && evt->id() == EventImpl::CLICK_EVENT) {
             MouseEventImpl* me = static_cast<MouseEventImpl*>(evt);
             if (me->button() == 0) {
-                // To tqfind whether to call onclick or ondblclick, we can't
+                // To find whether to call onclick or ondblclick, we can't
                 // * use me->detail(), it's 2 when clicking twice w/o moving, even very slowly
                 // * use me->qEvent(), it's not available when using initMouseEvent/dispatchEvent
                 // So we currently store a bool in MouseEventImpl. If anyone needs to trigger
@@ -669,7 +669,7 @@ void NodeImpl::checkSetPrefix(const DOMString &_prefix, int &exceptioncode)
     // Perform error checking as required by spec for setting Node.prefix. Used by
     // ElementImpl::setPrefix() and AttrImpl::setPrefix()
 
-    // INVALID_CHARACTER_ERR: Raised if the specified prefix tqcontains an illegal character.
+    // INVALID_CHARACTER_ERR: Raised if the specified prefix contains an illegal character.
     if (!Element::khtmlValidPrefix(_prefix)) {
         exceptioncode = DOMException::INVALID_CHARACTER_ERR;
         return;
@@ -698,7 +698,7 @@ void NodeImpl::checkSetPrefix(const DOMString &_prefix, int &exceptioncode)
 void NodeImpl::checkAddChild(NodeImpl *newChild, int &exceptioncode)
 {
     // Perform error checking as required by spec for adding a new child. Used by
-    // appendChild(), tqreplaceChild() and insertBefore()
+    // appendChild(), replaceChild() and insertBefore()
 
     // Not mentioned in spec: throw NOT_FOUND_ERR if newChild is null
     if (!newChild) {
@@ -768,7 +768,7 @@ bool NodeImpl::childAllowed( NodeImpl *newChild )
 
 NodeImpl::StyleChange NodeImpl::diff( khtml::RenderStyle *s1, khtml::RenderStyle *s2 )
 {
-    // This method won't work when a style tqcontains noninherited properties with "inherit" value.
+    // This method won't work when a style contains noninherited properties with "inherit" value.
     StyleChange ch = NoInherit;
 
     EDisplay display1 = s1 ? s1->display() : NONE;
@@ -989,7 +989,7 @@ DOMStringImpl* NodeImpl::textContent() const
       delete kidText;
     }
   }
-  return new DOMStringImpl(out.tqunicode(), out.length());
+  return new DOMStringImpl(out.unicode(), out.length());
 }
 
 //-------------------------------------------------------------------------
@@ -1099,7 +1099,7 @@ NodeImpl *NodeBaseImpl::insertBefore ( NodeImpl *newChild, NodeImpl *refChild, i
     return newChild;
 }
 
-void NodeBaseImpl::tqreplaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode )
+void NodeBaseImpl::replaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode )
 {
     exceptioncode = 0;
 
@@ -1427,7 +1427,7 @@ void NodeBaseImpl::cloneChildNodes(NodeImpl *clone)
     }
 }
 
-// I don't like this way of implementing the method, but I didn't tqfind any
+// I don't like this way of implementing the method, but I didn't find any
 // other way. Lars
 bool NodeBaseImpl::getUpperLeftCorner(int &xPos, int &yPos) const
 {
@@ -1440,7 +1440,7 @@ bool NodeBaseImpl::getUpperLeftCorner(int &xPos, int &yPos) const
         return true;
     }
 
-    // tqfind the next text/image child, to get a position
+    // find the next text/image child, to get a position
     while(o) {
         if(o->firstChild())
             o = o->firstChild();
@@ -1484,7 +1484,7 @@ bool NodeBaseImpl::getLowerRightCorner(int &xPos, int &yPos) const
         yPos += o->height() + o->borderTopExtra() + o->borderBottomExtra();
         return true;
     }
-    // tqfind the last text/image child, to get a position
+    // find the last text/image child, to get a position
     while(o) {
         if(o->lastChild())
             o = o->lastChild();
@@ -2060,7 +2060,7 @@ bool RegisteredListenerList::stillContainsListener(const RegisteredEventListener
 {
     if (!listeners)
         return false;
-    return listeners->tqfind(listener) != listeners->end();
+    return listeners->find(listener) != listeners->end();
 }
 
 RegisteredListenerList::~RegisteredListenerList() {

@@ -634,7 +634,7 @@ yy_match:
 			}
 		while ( yy_base[yy_current_state] != 1638 );
 
-yy_tqfind_action:
+yy_find_action:
 		yy_act = yy_accept[yy_current_state];
 		if ( yy_act == 0 )
 			{ /* have to back up */
@@ -656,7 +656,7 @@ do_action:	/* This label is used only to access EOF actions. */
 			*yy_cp = yy_hold_char;
 			yy_cp = yy_last_accepting_cpos;
 			yy_current_state = yy_last_accepting_state;
-			goto yy_tqfind_action;
+			goto yy_find_action;
 
 case 1:
 YY_RULE_SETUP

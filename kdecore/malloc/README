@@ -38,7 +38,7 @@ commented out #including malloc.h
 added #include <config.h> at the top and enclosed whole file in #ifdef KDE_MALLOC
 taken posix_memalign() from glibc
 removed public icalloc(),icomalloc(),mtrim(),musable()  (they don't exist everywhere anyway)
-enclosed the pthreads part by #if 0 and tqreplaced it with spinlock from glibc CVS (in x86.h)
+enclosed the pthreads part by #if 0 and replaced it with spinlock from glibc CVS (in x86.h)
     also added :
 ----------
 static mutex_t spinlock = MUTEX_INITIALIZER;

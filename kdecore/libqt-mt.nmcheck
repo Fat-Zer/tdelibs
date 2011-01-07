@@ -8,8 +8,8 @@ qt_*
 qDebug
 qFatal
 qWarning
-tqApp
-tqAppName
+qApp
+qAppName
 qVersion
 qSysInfo
 qObsolete

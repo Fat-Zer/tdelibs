@@ -124,13 +124,13 @@ TQStringList VCardLine::parameterList() const
 void VCardLine::addParameter( const TQString& param, const TQString& value )
 {
   TQStringList &list = mParamMap[ param ];
-  if ( list.tqfindIndex( value ) == -1 ) // not included yet
+  if ( list.findIndex( value ) == -1 ) // not included yet
     list.append( value );
 }
 
 TQStringList VCardLine::parameters( const TQString& param ) const
 {
-  ParamMap::ConstIterator it = mParamMap.tqfind( param );
+  ParamMap::ConstIterator it = mParamMap.find( param );
   if ( it == mParamMap.end() )
     return TQStringList();
   else
@@ -139,7 +139,7 @@ TQStringList VCardLine::parameters( const TQString& param ) const
 
 TQString VCardLine::parameter( const TQString& param ) const
 {
-  ParamMap::ConstIterator it = mParamMap.tqfind( param );
+  ParamMap::ConstIterator it = mParamMap.find( param );
   if ( it == mParamMap.end() )
     return TQString::null;
   else {

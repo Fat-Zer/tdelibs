@@ -111,7 +111,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 						" </qt>" );
 	TQString whatsThisPrinterSelect = i18n(  " <qt><b>Printer Selection Menu:</b> "
 						" <p>Use this combo box to select the printer to which you want to print."
-						" Initially (if you run KDEPrint for the first time), you may only tqfind the "
+						" Initially (if you run KDEPrint for the first time), you may only find the "
 						"  <em>KDE special printers</em> (which save"
 						" jobs to disk [as PostScript- or PDF-files], or deliver jobs via"
 						" email (as a PDF"
@@ -237,7 +237,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	TQString whatsThisPreviewCheckBox = i18n(" <qt><b>Print Preview</b>"
 						" Enable this checkbox if you want to see a preview of"
 						" your printout. A preview lets you check if, for instance,"
- 						" your intended \"poster\" or \"pamphlet\" tqlayout"
+ 						" your intended \"poster\" or \"pamphlet\" layout"
 						" looks like you expected, without wasting paper first. It"
 						" also lets you cancel the job if something looks wrong. "
 						" <p><b>Note:</b> The preview feature (and therefore this checkbox) "
@@ -277,7 +277,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	d->m_printers->setMinimumHeight(25);
 	QLabel	*m_printerlabel = new TQLabel(i18n("&Name:"), m_pbox);
 	TQWhatsThis::add(m_printerlabel, whatsThisPrinterSelect);
-	QLabel	*m_statelabel = new TQLabel(i18n("tqStatus", "State:"), m_pbox);
+	QLabel	*m_statelabel = new TQLabel(i18n("Status", "State:"), m_pbox);
 	TQWhatsThis::add(m_statelabel, whatsThisPrinterState);
 	QLabel	*m_typelabel = new TQLabel(i18n("Type:"), m_pbox);
 	TQWhatsThis::add(m_typelabel, whatsThisPrinterType);
@@ -347,7 +347,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	TQWidget::setTabOrder( m_help, d->m_ok );
 	TQWidget::setTabOrder( d->m_ok, m_cancel );
 
-	// tqlayout creation
+	// layout creation
 	QVBoxLayout	*l1 = new TQVBoxLayout(this, 10, 10);
 	l1->addWidget(m_pbox,0);
 	l1->addWidget(d->m_dummy,1);
@@ -361,7 +361,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	l2->addStretch(1);
 	l2->addWidget(d->m_ok,0);
 	l2->addWidget(m_cancel,0);
-	QGridLayout	*l3 = new TQGridLayout(m_pbox->tqlayout(),3,3,7);
+	QGridLayout	*l3 = new TQGridLayout(m_pbox->layout(),3,3,7);
 	l3->setColStretch(1,1);
 	l3->setRowStretch(0,1);
 	QGridLayout	*l4 = new TQGridLayout(0, 5, 2, 0, 5);
@@ -546,7 +546,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 	TQPtrList<KMPrinter>	*plist = KMFactory::self()->manager()->printerList();
 	if (!KMManager::self()->errorMsg().isEmpty())
 	{
-		KMessageBox::error(tqparentWidget(),
+		KMessageBox::error(parentWidget(),
 			"<qt><nobr>"+
 			i18n("An error occurred while retrieving the printer list:")
 			+"</nobr><br><br>"+KMManager::self()->errorMsg()+"</qt>");
@@ -568,7 +568,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 			if (!sep && it.current()->isSpecial())
 			{
 				sep = true;
-				d->m_printers->insertItem(TQPixmap(), TQString::tqfromLatin1("--------"));
+				d->m_printers->insertItem(TQPixmap(), TQString::fromLatin1("--------"));
 			}
 			d->m_printers->insertItem(SmallIcon(it.current()->pixmap(),0,(it.current()->isValid() ? (int)KIcon::DefaultState : (int)KIcon::LockOverlay)),it.current()->name(),false/*sep*/);
 			if (it.current()->isSoftDefault())
@@ -580,9 +580,9 @@ void KPrintDialog::initialize(KPrinter *printer)
 			else if (defsearch == -1 && it.current()->name() == printer->searchName())
 				defsearch = d->m_printers->count()-1;
 		}
-		int	detqfindex = (defsearch != -1 ? defsearch : (defsoft != -1 ? defsoft : QMAX(defhard,0)));
-		d->m_printers->setCurrentItem(detqfindex);
-		//slotPrinterSelected(detqfindex);
+		int	defindex = (defsearch != -1 ? defsearch : (defsoft != -1 ? defsoft : QMAX(defhard,0)));
+		d->m_printers->setCurrentItem(defindex);
+		//slotPrinterSelected(defindex);
 	}
 
 	// Initialize output filename
@@ -614,7 +614,7 @@ void KPrintDialog::slotPrinterSelected(int index)
 	if (index >= 0 && index < d->m_printers->count())
 	{
 		KMManager	*mgr = KMFactory::self()->manager();
-		KMPrinter	*p = mgr->tqfindPrinter(d->m_printers->text(index));
+		KMPrinter	*p = mgr->findPrinter(d->m_printers->text(index));
 		if (p)
 		{
 			if (!p->isSpecial()) mgr->completePrinterShort(p);
@@ -638,14 +638,14 @@ void KPrintDialog::slotProperties()
 {
 	if (!d->m_printer) return;
 
-	KMPrinter	*prt = KMFactory::self()->manager()->tqfindPrinter(d->m_printers->currentText());
+	KMPrinter	*prt = KMFactory::self()->manager()->findPrinter(d->m_printers->currentText());
 	if (prt)
 		KPrinterPropertyDialog::setupPrinter(prt, this);
 }
 
 void KPrintDialog::slotSetDefault()
 {
-	KMPrinter	*p = KMFactory::self()->manager()->tqfindPrinter(d->m_printers->currentText());
+	KMPrinter	*p = KMFactory::self()->manager()->findPrinter(d->m_printers->currentText());
 	if (p)
 		KMFactory::self()->virtualManager()->setDefault(p);
 }
@@ -674,7 +674,7 @@ void KPrintDialog::done(int result)
 
 		// add options from the dialog itself
 		// TODO: ADD PRINTER CHECK MECHANISM !!!
-		prt = KMFactory::self()->manager()->tqfindPrinter(d->m_printers->currentText());
+		prt = KMFactory::self()->manager()->findPrinter(d->m_printers->currentText());
 		if (prt->isSpecial() && prt->option("kde-special-file") == "1")
 		{
 			if (!checkOutputFile()) return;
@@ -800,7 +800,7 @@ void KPrintDialog::setOutputFileExtension(const TQString& ext)
 	{
 		KURL url( d->m_file->url() );
 		TQString f( url.fileName() );
-		int p = f.tqfindRev( '.' );
+		int p = f.findRev( '.' );
 		// change "file.ext"; don't change "file", "file." or ".file" but do change ".file.ext"
 		if ( p > 0 && p != int (f.length () - 1) )
 		{
@@ -863,7 +863,7 @@ void KPrintDialog::expandDialog(bool on)
 
 	if (on)
 	{
-		sz.setHeight(sz.height()+d->m_dummy->tqminimumSize().height()+d->m_plugin->tqminimumSize().height()+2*tqlayout()->spacing());
+		sz.setHeight(sz.height()+d->m_dummy->minimumSize().height()+d->m_plugin->minimumSize().height()+2*layout()->spacing());
 		if (isVisible() || !d->m_dummy->isVisible() || !d->m_plugin->isVisible())
 		{
 			d->m_dummy->show();
@@ -876,7 +876,7 @@ void KPrintDialog::expandDialog(bool on)
 	}
 	else
 	{
-		sz.setHeight(sz.height()-d->m_dummy->height()-d->m_plugin->height()-2*tqlayout()->spacing());
+		sz.setHeight(sz.height()-d->m_dummy->height()-d->m_plugin->height()-2*layout()->spacing());
 		if (!isVisible() || d->m_dummy->isVisible() || d->m_plugin->isVisible())
 		{
 			d->m_dummy->hide();
@@ -890,7 +890,7 @@ void KPrintDialog::expandDialog(bool on)
 
 	if (needResize)
 	{
-		tqlayout()->activate();
+		layout()->activate();
 		resize(sz);
 	}
 }
@@ -934,7 +934,7 @@ void KPrintDialog::slotUpdatePossible( bool flag )
 {
 	MessageWindow::remove( this );
 	if ( !flag )
-		KMessageBox::error(tqparentWidget(),
+		KMessageBox::error(parentWidget(),
 			"<qt><nobr>"+
 			i18n("An error occurred while retrieving the printer list:")
 			+"</nobr><br><br>"+KMManager::self()->errorMsg()+"</qt>");
@@ -966,7 +966,7 @@ void KPrintDialog::slotOpenFileDialog()
 	dialog->setMode(d->m_file->fileDialog()->mode() & ~KFile::LocalOnly);
 	dialog->setOperationMode( KFileDialog::Saving );
 
-	KMPrinter *prt = KMFactory::self()->manager()->tqfindPrinter(d->m_printers->currentText());
+	KMPrinter *prt = KMFactory::self()->manager()->findPrinter(d->m_printers->currentText());
 	if (prt)
 	{
 		QString	mimetype(prt->option("kde-special-mimetype"));

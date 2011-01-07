@@ -128,7 +128,7 @@ public:
     DOMString URL() const;
 
     /**
-     * The element that tqcontains the content for the document. In
+     * The element that contains the content for the document. In
      * documents with \c BODY contents, returns the
      * \c BODY element, and in frameset documents, this returns
      * the outermost \c FRAMESET element.
@@ -187,7 +187,7 @@ public:
      * A collection of all the anchor ( \c A ) elements in
      * a document with a value for the \c name attribute.
      * Note. For reasons of backwards compatibility, the returned set
-     * of anchors only tqcontains those anchors created with the
+     * of anchors only contains those anchors created with the
      * \c name attribute, not those created with the \c id
      * attribute.
      *
@@ -211,7 +211,7 @@ public:
 
     /**
      * Note. This method and the ones following allow a user to add to
-     * or tqreplace the structure model of a document using strings of
+     * or replace the structure model of a document using strings of
      * unparsed HTML. At the time of writing alternate methods for
      * providing similar functionality for both HTML and XML documents
      * were being considered. The following methods may be deprecated

@@ -81,7 +81,7 @@ HTTPFilterMD5::HTTPFilterMD5()
 TQString 
 HTTPFilterMD5::md5()
 {
-   return TQString::tqfromLatin1(context.base64Digest());
+   return TQString::fromLatin1(context.base64Digest());
 }
 
 void 

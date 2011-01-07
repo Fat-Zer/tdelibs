@@ -111,24 +111,24 @@ public:
   /** @return the basic (owner/group/others) part of the ACL as a mode_t */
   mode_t basePermissions() const;
 
-  /** The interface to the extended ACL. This is a tqmask, permissions for 
+  /** The interface to the extended ACL. This is a mask, permissions for 
    * n named users and permissions for m named groups. */
 
   /**
-   * Return whether the ACL tqcontains extended entries or can be expressed
+   * Return whether the ACL contains extended entries or can be expressed
    * using only basic file permissions.
-   * @return whether the ACL tqcontains extended entries */
+   * @return whether the ACL contains extended entries */
   bool isExtended() const;
 
   /**
-   * Return the entry for the permissions tqmask if there is one and sets
+   * Return the entry for the permissions mask if there is one and sets
    * @p exists to true. If there is no such entry, @p exists is set to false.
-   * @return the permissions tqmask entry */
-  unsigned short tqmaskPermissions( bool &exists ) const;
+   * @return the permissions mask entry */
+  unsigned short maskPermissions( bool &exists ) const;
 
-  /** Set the permissions tqmask for the ACL. Permissions set for individual 
-   * entries will be tqmasked with this, such that their effective permissions
-   * are the result of the logical and of their entry and the tqmask. 
+  /** Set the permissions mask for the ACL. Permissions set for individual 
+   * entries will be masked with this, such that their effective permissions
+   * are the result of the logical and of their entry and the mask. 
    * @return success or failure */
   bool setMaskPermissions( unsigned short );
 

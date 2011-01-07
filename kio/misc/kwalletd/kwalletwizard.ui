@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>KWalletWizard</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -36,7 +36,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>21</width>
                         <height>21</height>
@@ -58,7 +58,7 @@
                 <property name="textFormat">
                     <enum>RichText</enum>
                 </property>
-                <property name="tqalignment">
+                <property name="alignment">
                     <set>WordBreak|AlignCenter</set>
                 </property>
             </widget>
@@ -83,7 +83,7 @@
                 <property name="textFormat">
                     <enum>RichText</enum>
                 </property>
-                <property name="tqalignment">
+                <property name="alignment">
                     <set>WordBreak|AlignVCenter</set>
                 </property>
             </widget>
@@ -135,7 +135,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>140</width>
                         <height>21</height>
@@ -152,7 +152,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>140</width>
                         <height>31</height>
@@ -209,7 +209,7 @@
             </widget>
             <widget class="QLayoutWidget" row="3" column="1">
                 <property name="name">
-                    <cstring>tqlayout7</cstring>
+                    <cstring>layout7</cstring>
                 </property>
                 <hbox>
                     <property name="name">
@@ -217,7 +217,7 @@
                     </property>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>tqlayout5</cstring>
+                            <cstring>layout5</cstring>
                         </property>
                         <vbox>
                             <property name="name">
@@ -233,7 +233,7 @@
                                 <property name="text">
                                     <string>Enter a new password:</string>
                                 </property>
-                                <property name="tqalignment">
+                                <property name="alignment">
                                     <set>AlignVCenter|AlignRight</set>
                                 </property>
                                 <property name="buddy" stdset="0">
@@ -250,7 +250,7 @@
                                 <property name="text">
                                     <string>Verify password:</string>
                                 </property>
-                                <property name="tqalignment">
+                                <property name="alignment">
                                     <set>AlignVCenter|AlignRight</set>
                                 </property>
                                 <property name="buddy" stdset="0">
@@ -261,7 +261,7 @@
                     </widget>
                     <widget class="QLayoutWidget">
                         <property name="name">
-                            <cstring>tqlayout4</cstring>
+                            <cstring>layout4</cstring>
                         </property>
                         <vbox>
                             <property name="name">
@@ -311,7 +311,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>21</width>
                         <height>51</height>
@@ -328,7 +328,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>101</width>
                         <height>21</height>
@@ -345,7 +345,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>111</width>
                         <height>31</height>
@@ -362,7 +362,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>21</width>
                         <height>70</height>
@@ -376,7 +376,7 @@
                 <property name="text">
                     <string></string>
                 </property>
-                <property name="tqalignment">
+                <property name="alignment">
                     <set>WordBreak|AlignVCenter|AlignRight</set>
                 </property>
             </widget>
@@ -403,7 +403,7 @@
                 <property name="textFormat">
                     <enum>RichText</enum>
                 </property>
-                <property name="tqalignment">
+                <property name="alignment">
                     <set>WordBreak|AlignVCenter</set>
                 </property>
             </widget>
@@ -417,7 +417,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>21</width>
                         <height>121</height>
@@ -450,7 +450,7 @@
                 <property name="sizeType">
                     <enum>Expanding</enum>
                 </property>
-                <property name="tqsizeHint">
+                <property name="sizeHint">
                     <size>
                         <width>21</width>
                         <height>51</height>
@@ -541,5 +541,5 @@
     <slot>setBasic()</slot>
     <slot access="private">destroy()</slot>
 </slots>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 </UI>

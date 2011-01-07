@@ -57,8 +57,8 @@ public:
       TQString serviceName = s->name();
 
       // item names may contain ampersands. To avoid them being converted
-      // to accelators, tqreplace them with two ampersands.
-      serviceName.tqreplace("&", "&&");
+      // to accelators, replace them with two ampersands.
+      serviceName.replace("&", "&&");
 
       TQPixmap normal = KGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
                               0, KIcon::DefaultState, 0L, true);
@@ -99,7 +99,7 @@ KCustomMenuEditor::KCustomMenuEditor(TQWidget *parent)
    d->pbRemove=buttonBox->addButton(i18n("Remove"), this, TQT_SLOT(slotRemoveItem()));
    d->pbMoveUp=buttonBox->addButton(i18n("Move Up"), this, TQT_SLOT(slotMoveUp()));
    d->pbMoveDown=buttonBox->addButton(i18n("Move Down"), this, TQT_SLOT(slotMoveDown()));
-   buttonBox->tqlayout();
+   buttonBox->layout();
    connect( m_listView, TQT_SIGNAL( selectionChanged () ), this, TQT_SLOT( refreshButton() ) );
    refreshButton();
 }

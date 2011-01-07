@@ -89,27 +89,27 @@ KCrash::setCrashHandler (HandlerType handler)
   if (!handler)
     handler = SIG_DFL;
 
-  sigset_t tqmask;
-  sigemptyset(&tqmask);
+  sigset_t mask;
+  sigemptyset(&mask);
 
 #ifdef SIGSEGV
   signal (SIGSEGV, handler);
-  sigaddset(&tqmask, SIGSEGV);
+  sigaddset(&mask, SIGSEGV);
 #endif
 #ifdef SIGFPE
   signal (SIGFPE, handler);
-  sigaddset(&tqmask, SIGFPE);
+  sigaddset(&mask, SIGFPE);
 #endif
 #ifdef SIGILL
   signal (SIGILL, handler);
-  sigaddset(&tqmask, SIGILL);
+  sigaddset(&mask, SIGILL);
 #endif
 #ifdef SIGABRT
   signal (SIGABRT, handler);
-  sigaddset(&tqmask, SIGABRT);
+  sigaddset(&mask, SIGABRT);
 #endif
 
-  sigprocmask(SIG_UNBLOCK, &tqmask, 0);
+  sigprocmask(SIG_UNBLOCK, &mask, 0);
 #endif //Q_OS_UNIX
 
   _crashHandler = handler;

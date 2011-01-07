@@ -148,7 +148,7 @@ void HTMLLinkElementImpl::parseAttribute(AttributeImpl *attr)
                 // disabling: recheck alternate status
                 TQString rel =  getAttribute(ATTR_REL).string().lower();
                 TQString type = getAttribute(ATTR_TYPE).string().lower();
-                m_alternate = (type.tqcontains("text/css") || rel.tqcontains("stylesheet")) && rel.tqcontains("alternate");
+                m_alternate = (type.contains("text/css") || rel.contains("stylesheet")) && rel.contains("alternate");
             }
             if (isLoading())
                 break;
@@ -179,19 +179,19 @@ void HTMLLinkElementImpl::process()
 
     // IE extension: location of small icon for locationbar / bookmarks
     // Uses both "shortcut icon" and "icon"
-    if ( part && rel.tqcontains("icon") && !m_url.isEmpty() && !part->parentPart())
+    if ( part && rel.contains("icon") && !m_url.isEmpty() && !part->parentPart())
         part->browserExtension()->setIconURL( KURL(m_url.string()) );
 
     // Stylesheet
     else if (!m_isDisabled &&
-        (type.tqcontains("text/css") || rel.tqcontains("stylesheet"))) {
+        (type.contains("text/css") || rel.contains("stylesheet"))) {
         // no need to load style sheets which aren't for the screen output
         // ### there may be in some situations e.g. for an editor or script to manipulate
-        if( m_media.isNull() || m_media.tqcontains("screen") || m_media.tqcontains("all") || m_media.tqcontains("print") ) {
+        if( m_media.isNull() || m_media.contains("screen") || m_media.contains("all") || m_media.contains("print") ) {
             m_loading = true;
             // Add ourselves as a pending sheet, but only if we aren't an alternate
             // stylesheet.  Alternate stylesheets don't hold up render tree construction.
-            m_alternate = rel.tqcontains("alternate");
+            m_alternate = rel.contains("alternate");
             if (!isAlternate())
                 getDocument()->addPendingSheet();
 
@@ -572,7 +572,7 @@ void HTMLStyleElementImpl::childrenChanged()
 
     m_loading = false;
     if ((m_type.isEmpty() || m_type == "text/css") // Type must be empty or CSS
-         && (m_media.isNull() || m_media.tqcontains("screen") || m_media.tqcontains("all") || m_media.tqcontains("print"))) {
+         && (m_media.isNull() || m_media.contains("screen") || m_media.contains("all") || m_media.contains("print"))) {
         getDocument()->addPendingSheet();
         m_loading = true;
         m_sheet = new CSSStyleSheetImpl(this);

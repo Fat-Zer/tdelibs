@@ -93,7 +93,7 @@ struct NETRootInfoPrivate {
     // and requires updates
     NETRArray<NETPoint> viewport;
     NETRArray<NETRect> workarea;
-    NETSize tqgeometry;
+    NETSize geometry;
     Window active;
     Window *clients, *stacking, *virtual_roots, *kde_system_tray_windows;
     NETRArray<const char *> desktop_names;
@@ -103,9 +103,9 @@ struct NETRootInfoPrivate {
     unsigned long clients_count, stacking_count, virtual_roots_count,
 	kde_system_tray_windows_count;
     bool showing_desktop;
-    NET::Orientation desktop_tqlayout_orientation;
-    NET::DesktopLayoutCorner desktop_tqlayout_corner;
-    int desktop_tqlayout_columns, desktop_tqlayout_rows;
+    NET::Orientation desktop_layout_orientation;
+    NET::DesktopLayoutCorner desktop_layout_corner;
+    int desktop_layout_columns, desktop_layout_rows;
 
     unsigned long properties[ 5 ];
     unsigned long client_properties[ 5 ]; // properties the client is interested in

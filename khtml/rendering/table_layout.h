@@ -40,7 +40,7 @@ public:
     virtual ~TableLayout() {}
 
     virtual void calcMinMaxWidth() = 0;
-    virtual void tqlayout() = 0;
+    virtual void layout() = 0;
 
 protected:
     RenderTable *table;
@@ -55,7 +55,7 @@ public:
     ~FixedTableLayout();
 
     void calcMinMaxWidth();
-    void tqlayout();
+    void layout();
 
 protected:
     int calcWidthArray();
@@ -72,7 +72,7 @@ public:
     ~AutoTableLayout();
 
     void calcMinMaxWidth();
-    void tqlayout();
+    void layout();
 
 
 protected:
@@ -100,7 +100,7 @@ protected:
 	short calcWidth;
     };
 
-    TQMemArray<Layout> tqlayoutStruct;
+    TQMemArray<Layout> layoutStruct;
     TQMemArray<RenderTableCell *>spanCells;
     bool hasPercent : 1;
     mutable bool percentagesDirty : 1;

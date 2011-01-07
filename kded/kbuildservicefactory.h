@@ -43,7 +43,7 @@ public:
 
   virtual ~KBuildServiceFactory();
 
-  KService *tqfindServiceByName(const TQString &_name);
+  KService *findServiceByName(const TQString &_name);
 
   /**
    * Construct a KService from a config file.

@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
 		KMessageBox::sorry(0, msg, i18n("Warning"), notifyOptions);
 	} else if (args->isSet("i")) {
 		TQString id = msg;
-		id.tqreplace(TQRegExp("[\\[\\]\\s=]"), "_");
+		id.replace(TQRegExp("[\\[\\]\\s=]"), "_");
 		KMessageBox::information(0, msg, i18n("Informational"), id, notifyOptions);
 	} else {
 		KMessageBox::error(0, msg, i18n("Error"), notifyOptions);

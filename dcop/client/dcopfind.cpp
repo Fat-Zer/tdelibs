@@ -38,11 +38,11 @@ static DCOPClient* dcop = 0;
 static bool bAppIdOnly = 0;
 static bool bLaunchApp = 0;
 
-bool tqfindObject( const char* app, const char* obj, const char* func, QCStringList args )
+bool findObject( const char* app, const char* obj, const char* func, QCStringList args )
 {
-    TQString f = func; // Qt is better with tqunicode strings, so use one.
-    int left = f.tqfind( '(' );
-    int right = f.tqfind( ')' );
+    TQString f = func; // Qt is better with unicode strings, so use one.
+    int left = f.find( '(' );
+    int right = f.find( ')' );
 
     if ( right <  left )
     {
@@ -66,7 +66,7 @@ bool tqfindObject( const char* app, const char* obj, const char* func, QCStringL
 	for ( TQStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
 	    TQString lt = (*it).simplifyWhiteSpace();
 
-	    int s = lt.tqfind(' ');
+	    int s = lt.find(' ');
 
 	    // If there are spaces in the name, there may be two
 	    // reasons: the parameter name is still there, ie.
@@ -86,7 +86,7 @@ bool tqfindObject( const char* app, const char* obj, const char* func, QCStringL
 		//
 	    	s=1;
 
-		while (s < (int)partl.count() && intTypes.tqcontains(partl[s]))
+		while (s < (int)partl.count() && intTypes.contains(partl[s]))
 		{
 			s++;
 		}
@@ -139,7 +139,7 @@ bool tqfindObject( const char* app, const char* obj, const char* func, QCStringL
 
     TQCString foundApp;
     TQCString foundObj;
-    if ( dcop->tqfindObject( app, obj, f.latin1(),  data, foundApp, foundObj) )
+    if ( dcop->findObject( app, obj, f.latin1(),  data, foundApp, foundObj) )
     {
        if (bAppIdOnly)
           puts(foundApp.data());
@@ -192,7 +192,7 @@ bool launchApp(TQString app)
 
 void usage()
 {
-   fprintf( stderr, "Usage: dcoptqfind [-l] [-a] application [object [function [arg1] [arg2] [arg3] ... ] ] ] \n" );
+   fprintf( stderr, "Usage: dcopfind [-l] [-a] application [object [function [arg1] [arg2] [arg3] ... ] ] ] \n" );
    exit(0);
 }
 
@@ -267,7 +267,7 @@ int main( int argc, char** argv )
     QCStringList params;
     for( int i = 0; i < argc; i++ )
         params.append( args[ i ] );
-    bool ok = tqfindObject( app, objid, function, params );
+    bool ok = findObject( app, objid, function, params );
     if (ok)
        return 0;
     if (bLaunchApp)
@@ -275,7 +275,7 @@ int main( int argc, char** argv )
        ok = launchApp(app);
        if (!ok)
           return 2;
-       ok = tqfindObject( app, objid, function, params );
+       ok = findObject( app, objid, function, params );
     }
 
     return 1;

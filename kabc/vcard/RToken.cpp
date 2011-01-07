@@ -30,7 +30,7 @@
 namespace VCARD
 {
 
-	TQ_UINT32
+	Q_UINT32
 RTokenise(const char * str, const char * delim, TQStrList & l)
 {
 	// FIXME no stderr !

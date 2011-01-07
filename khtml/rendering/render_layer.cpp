@@ -37,7 +37,7 @@
  * version of this file only under the terms of one of those two
  * licenses (the MPL or the GPL) and not to allow others to use your
  * version of this file under the LGPL, indicate your decision by
- * deletingthe provisions above and tqreplace them with the notice and
+ * deletingthe provisions above and replace them with the notice and
  * other provisions required by the MPL or the GPL, as the case may be.
  * If you do not delete the provisions above, a recipient may use your
  * version of this file under any of the LGPL, the MPL or the GPL.
@@ -123,7 +123,7 @@ RenderLayer::~RenderLayer()
 void RenderLayer::updateLayerPosition()
 {
 
-    // The canvas is sized to the docWidth/Height over in RenderCanvas::tqlayout, so we
+    // The canvas is sized to the docWidth/Height over in RenderCanvas::layout, so we
     // don't need to ever update our layer position here.
     if (renderer()->isCanvas())
         return;
@@ -195,17 +195,17 @@ TQRegion RenderLayer::paintedRegion(RenderLayer* rootLayer)
     return r;
 }
 
-void RenderLayer::tqrepaint( Priority p, bool markForRepaint )
+void RenderLayer::repaint( Priority p, bool markForRepaint )
 {
     if (markForRepaint && m_markedForRepaint)
         return;
     for (RenderLayer* child = firstChild(); child; child = child->nextSibling())
-        child->tqrepaint( p, markForRepaint );
+        child->repaint( p, markForRepaint );
     TQRect layerBounds, damageRect, fgrect;
     calculateRects(renderer()->canvas()->layer(), renderer()->viewRect(), layerBounds, damageRect, fgrect);
     m_visibleRect = damageRect.intersect( layerBounds );
     if (m_visibleRect.isValid())
-        renderer()->canvas()->tqrepaintViewRectangle( m_visibleRect.x(), m_visibleRect.y(), m_visibleRect.width(), m_visibleRect.height(), (p > NormalPriority) );
+        renderer()->canvas()->repaintViewRectangle( m_visibleRect.x(), m_visibleRect.y(), m_visibleRect.width(), m_visibleRect.height(), (p > NormalPriority) );
     if (markForRepaint)
         m_markedForRepaint = true;
 }
@@ -213,7 +213,7 @@ void RenderLayer::tqrepaint( Priority p, bool markForRepaint )
 void RenderLayer::updateLayerPositions(RenderLayer* rootLayer, bool doFullRepaint, bool checkForRepaint)
 {
     if (doFullRepaint) {
-        m_object->tqrepaint();
+        m_object->repaint();
         checkForRepaint = doFullRepaint = false;
     }
 
@@ -233,14 +233,14 @@ void RenderLayer::updateLayerPositions(RenderLayer* rootLayer, bool doFullRepain
 #ifdef APPLE_CHANGES
     // FIXME: Child object could override visibility.
     if (checkForRepaint && (m_object->style()->visibility() == VISIBLE))
-        m_object->tqrepaintAfterLayoutIfNeeded(m_tqrepaintRect, m_fullRepaintRect);
+        m_object->repaintAfterLayoutIfNeeded(m_repaintRect, m_fullRepaintRect);
 #else
     if (checkForRepaint && m_markedForRepaint) {
         TQRect layerBounds, damageRect, fgrect;
         calculateRects(rootLayer, renderer()->viewRect(), layerBounds, damageRect, fgrect);
         TQRect vr = damageRect.intersect( layerBounds );
         if (vr != m_visibleRect && vr.isValid()) {
-            renderer()->canvas()->tqrepaintViewRectangle( vr.x(), vr.y(), vr.width(), vr.height() );
+            renderer()->canvas()->repaintViewRectangle( vr.x(), vr.y(), vr.width(), vr.height() );
             m_visibleRect = vr;
         }
     }
@@ -340,7 +340,7 @@ void RenderLayer::operator delete(void* ptr, size_t sz)
 {
     assert(inRenderLayerDetach);
 
-    // Stash size where detach can tqfind it.
+    // Stash size where detach can find it.
     *(size_t *)ptr = sz;
 }
 
@@ -450,7 +450,7 @@ void RenderLayer::insertOnlyThisLayer()
         RenderLayer* parentLayer = renderer()->parent()->enclosingLayer();
         if (parentLayer)
             parentLayer->addChild(this,
-                                  renderer()->parent()->tqfindNextLayer(parentLayer, renderer()));
+                                  renderer()->parent()->findNextLayer(parentLayer, renderer()));
     }
 
     // Remove all descendant layers from the hierarchy and add them to the new position.
@@ -528,7 +528,7 @@ void RenderLayer::checkInlineRelOffset(const RenderObject* o, int& x, int& y)
 
     // Despite the positioned child being a block display type inside an inline, we still keep
     // its x locked to our left.  Arguably the correct behavior would be to go flush left to
-    // the block that tqcontains us, but that isn't what other browsers do.
+    // the block that contains us, but that isn't what other browsers do.
     if (o->hasStaticX() && !isInlineType)
         // Avoid adding in the left border/padding of the containing block twice.  Subtract it out.
         x += sx - (o->containingBlock()->borderLeft() + o->containingBlock()->paddingLeft());
@@ -537,7 +537,7 @@ void RenderLayer::checkInlineRelOffset(const RenderObject* o, int& x, int& y)
         y += sy;
 }
 
-void RenderLayer::scrollToOffset(int x, int y, bool updateScrollbars, bool tqrepaint)
+void RenderLayer::scrollToOffset(int x, int y, bool updateScrollbars, bool repaint)
 {
     if (renderer()->style()->overflowX() != OMARQUEE || !renderer()->hasOverflowClip()) {
         if (x < 0) x = 0;
@@ -557,7 +557,7 @@ void RenderLayer::scrollToOffset(int x, int y, bool updateScrollbars, bool tqrep
     // blit, since the check for blitting is going to be very
     // complicated (since it will involve testing whether our layer
     // is either occluded by another layer or clipped by an enclosing
-    // layer or tqcontains fixed backgrounds, etc.).
+    // layer or contains fixed backgrounds, etc.).
     m_scrollX = x;
     m_scrollY = y;
 
@@ -569,9 +569,9 @@ void RenderLayer::scrollToOffset(int x, int y, bool updateScrollbars, bool tqrep
     // Fire the scroll DOM event.
     m_object->element()->dispatchHTMLEvent(EventImpl::SCROLL_EVENT, true, false);
 
-    // Just schedule a full tqrepaint of our object.
-    if (tqrepaint)
-        m_object->tqrepaint(RealtimePriority);
+    // Just schedule a full repaint of our object.
+    if (repaint)
+        m_object->repaint(RealtimePriority);
 
     if (updateScrollbars) {
         if (m_hBar)
@@ -637,7 +637,7 @@ int RenderLayer::verticalScrollbarWidth()
 #ifdef APPLE_CHANGES
     return m_vBar->width();
 #else
-    return m_vBar->style().tqpixelMetric(TQStyle::PM_ScrollBarExtent);
+    return m_vBar->style().pixelMetric(TQStyle::PM_ScrollBarExtent);
 #endif
 
 }
@@ -650,7 +650,7 @@ int RenderLayer::horizontalScrollbarHeight()
 #ifdef APPLE_CHANGES
     return m_hBar->height();
 #else
-    return m_hBar->style().tqpixelMetric(TQStyle::PM_ScrollBarExtent);
+    return m_hBar->style().pixelMetric(TQStyle::PM_ScrollBarExtent);
 #endif
 
 }
@@ -691,7 +691,7 @@ void RenderLayer::positionScrollbars(const TQRect& absBounds)
     TQScrollBar *b = m_hBar;
     if (!m_hBar)
 	b = m_vBar;
-    int sw = b->style().tqpixelMetric(TQStyle::PM_ScrollBarExtent);
+    int sw = b->style().pixelMetric(TQStyle::PM_ScrollBarExtent);
 
     if (m_vBar) {
 	TQRect vBarRect = TQRect(tx + w - sw + 1, ty, sw, h - (m_hBar ? sw : 0) + 1);
@@ -761,9 +761,9 @@ void RenderLayer::checkScrollbarsAfterLayout()
 
         m_object->setNeedsLayout(true);
 	if (m_object->isRenderBlock())
-            static_cast<RenderBlock*>(m_object)->tqlayoutBlock(true);
+            static_cast<RenderBlock*>(m_object)->layoutBlock(true);
         else
-            m_object->tqlayout();
+            m_object->layout();
 	return;
     }
 
@@ -1017,7 +1017,7 @@ RenderLayer* RenderLayer::nodeAtPointForLayer(RenderLayer* rootLayer, RenderObje
     updateZOrderLists();
     updateOverflowList();
 
-    // This variable tracks which layer the mouse ends up being inside.  The minute we tqfind an insideLayer,
+    // This variable tracks which layer the mouse ends up being inside.  The minute we find an insideLayer,
     // we are done and can return it.
     RenderLayer* insideLayer = 0;
 
@@ -1044,7 +1044,7 @@ RenderLayer* RenderLayer::nodeAtPointForLayer(RenderLayer* rootLayer, RenderObje
     }
 
     // Next we want to see if the mouse pos is inside the child RenderObjects of the layer.
-    if (tqcontainsPoint(xMousePos, yMousePos, fgRect) &&
+    if (containsPoint(xMousePos, yMousePos, fgRect) &&
         renderer()->nodeAtPoint(info, xMousePos, yMousePos,
                             layerBounds.x() - renderer()->xPos(),
                             layerBounds.y() - renderer()->yPos() + m_object->borderTopExtra(),
@@ -1065,7 +1065,7 @@ RenderLayer* RenderLayer::nodeAtPointForLayer(RenderLayer* rootLayer, RenderObje
     }
 
     // Next we want to see if the mouse pos is inside this layer but not any of its children.
-    if (tqcontainsPoint(xMousePos, yMousePos, bgRect) &&
+    if (containsPoint(xMousePos, yMousePos, bgRect) &&
         renderer()->nodeAtPoint(info, xMousePos, yMousePos,
                                 layerBounds.x() - renderer()->xPos(),
                                 layerBounds.y() - renderer()->yPos() + m_object->borderTopExtra(),
@@ -1166,12 +1166,12 @@ bool RenderLayer::intersectsDamageRect(const TQRect& layerBounds, const TQRect& 
             layerBounds.intersects(damageRect));
 }
 
-bool RenderLayer::tqcontainsPoint(int x, int y, const TQRect& damageRect) const
+bool RenderLayer::containsPoint(int x, int y, const TQRect& damageRect) const
 {
     return (renderer()->isCanvas() || renderer()->isRoot() || renderer()->isBody() ||
             renderer()->hasOverhangingFloats() ||
             (renderer()->isInline() && !renderer()->isReplaced()) ||
-            damageRect.tqcontains(x, y));
+            damageRect.contains(x, y));
 }
 
 // This code has been written to anticipate the addition of CSS3-::outside and ::inside generated

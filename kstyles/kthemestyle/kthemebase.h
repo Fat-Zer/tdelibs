@@ -107,7 +107,7 @@ inline bool KThemePixmap::isOld()
  *
  * This class is mostly just inline methods that do bit operations on a key
  * composed of the widget ID, width and/or height, and then calls
- * TQIntCache::tqfind().
+ * TQIntCache::find().
  *
  * One other thing to note is that full, horizontal, and vertically scaled
  * pixmaps are not used interchangeably. For example, if you insert a fully
@@ -120,7 +120,7 @@ inline bool KThemePixmap::isOld()
  * @author Daniel M. Duley <mosfet@kde.org>
  *
  */
-class KThemeCache : public TQObject
+class KThemeCache : public QObject
 {
     Q_OBJECT
 public:
@@ -145,12 +145,12 @@ public:
      * @param widgetID The widget ID of the pixmap, usually from KThemeBase's
      * WidgetType enum.
      * @param border True if the pixmap has a border.
-     * @param tqmask True if the pixmap has a tqmask.
+     * @param mask True if the pixmap has a mask.
      *
      * @return True if the insert was successful, false otherwise.
      */
     bool insert( KThemePixmap *pixmap, ScaleHint scale, int widgetID,
-                 bool border = false, bool tqmask = false );
+                 bool border = false, bool mask = false );
     /**
      * Returns a fully scaled pixmap.
      *
@@ -158,13 +158,13 @@ public:
      * @param h The pixmap height to search for.
      * @param widgetID The widget ID to search for.
      * @param border True if the pixmap has a border.
-     * @param tqmask True if the pixmap has a tqmask.
+     * @param mask True if the pixmap has a mask.
      *
      * @return True if a pixmap matching the width, height, and widget ID of
      * the pixmap exists, NULL otherwise.
      */
     KThemePixmap* pixmap( int w, int h, int widgetID, bool border = false,
-                          bool tqmask = false );
+                          bool mask = false );
     /**
      * Returns a horizontally scaled pixmap.
      *
@@ -234,7 +234,7 @@ public:
      */
     enum ShadeStyle{Motif, Windows, Next, KDE};
     /**
-     * The default scrollbar button tqlayout. BottomLeft is like what Next
+     * The default scrollbar button layout. BottomLeft is like what Next
      * uses, BottomRight is like Platinum, and Opposite it like Windows and
      * Motif.
      */
@@ -300,12 +300,12 @@ public:
      * If a color group is set in the theme configuration
      * that is used, otherwise defaultColor is returned.
      *
-     * @param defaultGroup The tqcolorGroup to set if one is available.
+     * @param defaultGroup The colorGroup to set if one is available.
      *
      * @param widget The widget whose color group to retrieve.
      *
      */
-    const TQColorGroup* tqcolorGroup( const TQColorGroup &defaultGroup,
+    const TQColorGroup* colorGroup( const TQColorGroup &defaultGroup,
                                    WidgetType widget ) const;
 
     TQBrush pixmapBrush( const TQColorGroup &group, TQColorGroup::ColorRole role,
@@ -356,7 +356,7 @@ public:
      */
     int getSBExtent() const;
     /**
-     * The scrollbar button tqlayout.
+     * The scrollbar button layout.
      */
     SButton scrollBarLayout() const;
     /**
@@ -508,9 +508,9 @@ protected:
     /**
     These are included for fuuture extension purposes..
     */
-    virtual int tqpixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const
+    virtual int pixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const
     {
-        return KStyle::tqpixelMetric( metric, widget );
+        return KStyle::pixelMetric( metric, widget );
     }
 
     virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRect & r, const TQColorGroup & cg,
@@ -522,7 +522,7 @@ protected:
     }
 
 
-    virtual void tqdrawControl( ControlElement element,
+    virtual void drawControl( ControlElement element,
                               TQPainter *p,
                               const TQWidget *widget,
                               const TQRect &r,
@@ -530,21 +530,21 @@ protected:
                               SFlags how = Style_Default,
                               const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        KStyle::tqdrawControl( element, p, widget,
+        KStyle::drawControl( element, p, widget,
                              r, cg, how, opt );
     }
 
-    virtual void tqdrawControlMask( ControlElement element,
+    virtual void drawControlMask( ControlElement element,
                                   TQPainter *p,
                                   const TQWidget *widget,
                                   const TQRect &r,
                                   const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        KStyle::tqdrawControlMask( element, p, widget, r, opt );
+        KStyle::drawControlMask( element, p, widget, r, opt );
     }
 
 
-    virtual void tqdrawComplexControl( ComplexControl control,
+    virtual void drawComplexControl( ComplexControl control,
                                      TQPainter *p,
                                      const TQWidget* widget,
                                      const TQRect &r,
@@ -554,7 +554,7 @@ protected:
                                      SCFlags active = SC_None,
                                      const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        KStyle::tqdrawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
+        KStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
     }
 
 
@@ -572,12 +572,12 @@ protected:
     }
 
 
-    virtual int tqstyleHint( StyleHint sh,
+    virtual int styleHint( StyleHint sh,
                            const TQWidget *widget = 0,
                            const TQStyleOption& opt = TQStyleOption::Default,
                            QStyleHintReturn* returnData = 0 ) const
     {
-        return KStyle::tqstyleHint( sh,
+        return KStyle::styleHint( sh,
                                   widget,
                                   opt,
                                   returnData );
@@ -731,7 +731,7 @@ inline TQBrush KThemeBase::pixmapBrush( const TQColorGroup &group,
         return ( group.color( role ) );
 }
 
-inline const TQColorGroup* KThemeBase::tqcolorGroup( const TQColorGroup &defaultGroup,
+inline const TQColorGroup* KThemeBase::colorGroup( const TQColorGroup &defaultGroup,
         WidgetType widget ) const
 {
     return ( ( colors[ widget ] ) ? colors[ widget ] : &defaultGroup );

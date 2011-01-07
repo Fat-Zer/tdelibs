@@ -1,5 +1,5 @@
 /* ANSI-C code produced by gperf version 3.0.2 */
-/* Command-line: gperf -a -L ANSI-C -E -C -c -o -t -k '*' -NtqfindProp -Hhash_prop -Wwordlist_prop -D -s 2 cssproperties.gperf  */
+/* Command-line: gperf -a -L ANSI-C -E -C -c -o -t -k '*' -NfindProp -Hhash_prop -Wwordlist_prop -D -s 2 cssproperties.gperf  */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
       && ('%' == 37) && ('&' == 38) && ('\'' == 39) && ('(' == 40) \
@@ -39,7 +39,7 @@ struct props {
     int id;
 };
 
-static const struct props * tqfindProp (register const char *str, register unsigned int len);
+static const struct props * findProp (register const char *str, register unsigned int len);
 /* maximum key range = 469, duplicates = 0 */
 
 #ifdef __GNUC__
@@ -189,7 +189,7 @@ hash_prop (register const char *str, register unsigned int len)
 __inline
 #endif
 const struct props *
-tqfindProp (register const char *str, register unsigned int len)
+findProp (register const char *str, register unsigned int len)
 {
   enum
     {
@@ -281,7 +281,7 @@ tqfindProp (register const char *str, register unsigned int len)
 #line 102 "cssproperties.gperf"
       {"text-align", CSS_PROP_TEXT_ALIGN},
 #line 109 "cssproperties.gperf"
-      {"tqunicode-bidi", CSS_PROP_UNICODE_BIDI},
+      {"unicode-bidi", CSS_PROP_UNICODE_BIDI},
 #line 82 "cssproperties.gperf"
       {"outline-color", CSS_PROP_OUTLINE_COLOR},
 #line 60 "cssproperties.gperf"
@@ -417,7 +417,7 @@ tqfindProp (register const char *str, register unsigned int len)
 #line 129 "cssproperties.gperf"
       {"list-style", CSS_PROP_LIST_STYLE},
 #line 101 "cssproperties.gperf"
-      {"table-tqlayout", CSS_PROP_TABLE_LAYOUT},
+      {"table-layout", CSS_PROP_TABLE_LAYOUT},
 #line 54 "cssproperties.gperf"
       {"font-size", CSS_PROP_FONT_SIZE},
 #line 86 "cssproperties.gperf"
@@ -624,7 +624,7 @@ static const char * const propertyList[] = {
 "quotes", 
 "right", 
 "size", 
-"table-tqlayout", 
+"table-layout", 
 "text-align", 
 "text-decoration", 
 "text-indent", 
@@ -632,7 +632,7 @@ static const char * const propertyList[] = {
 "text-shadow", 
 "text-transform", 
 "top", 
-"tqunicode-bidi", 
+"unicode-bidi", 
 "vertical-align", 
 "visibility", 
 "white-space", 

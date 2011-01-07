@@ -789,9 +789,9 @@ ISpellChecker::save_root_cap (ichar_t *word, ichar_t *pattern,
 #else /* NO_CAPITALIZATION_SUPPORT */
 #define flagsareok(dent)    \
     ((pfxent == NULL \
-	||  TSTMASKBIT (dent->tqmask, pfxent->flagbit)) \
+	||  TSTMASKBIT (dent->mask, pfxent->flagbit)) \
       &&  (sufent == NULL \
-	||  TSTMASKBIT (dent->tqmask, sufent->flagbit)))
+	||  TSTMASKBIT (dent->mask, sufent->flagbit)))
 
     dent = firstdent;
     if ((dent->flagfield & (CAPTYPEMASK | MOREVARIANTS)) == ALLCAPS)

@@ -66,7 +66,7 @@ bool BinaryFormat::loadAll( AddressBook*, Resource *resource, TQFile *file )
   if ( !checkHeader( stream ) )
     return false;
 
-  TQ_UINT32 entries;
+  Q_UINT32 entries;
 
   stream >> entries;
 
@@ -89,7 +89,7 @@ void BinaryFormat::save( const Addressee &addressee, TQFile *file )
 
   writeHeader( stream );
 
-  TQ_UINT32 entries = 1;
+  Q_UINT32 entries = 1;
   stream << entries;
   saveAddressee( addressee, stream );
 }
@@ -98,7 +98,7 @@ void BinaryFormat::saveAll( AddressBook*, Resource *resource, TQFile *file )
 {
   kdDebug(5700) << "BinaryFormat::saveAll()" << endl;
 
-  TQ_UINT32 counter = 0;
+  Q_UINT32 counter = 0;
   TQDataStream stream( file );
 
   writeHeader( stream );
@@ -113,7 +113,7 @@ void BinaryFormat::saveAll( AddressBook*, Resource *resource, TQFile *file )
   }
 
   // set real number of entries
-  stream.device()->at( 2 * sizeof( TQ_UINT32 ) );
+  stream.device()->at( 2 * sizeof( Q_UINT32 ) );
   stream << counter;
 }
 
@@ -128,7 +128,7 @@ bool BinaryFormat::checkFormat( TQFile *file ) const
 
 bool BinaryFormat::checkHeader( TQDataStream &stream ) const
 {
-  TQ_UINT32 magic, version;
+  Q_UINT32 magic, version;
     
   stream >> magic >> version;
 
@@ -154,7 +154,7 @@ bool BinaryFormat::checkHeader( TQDataStream &stream ) const
 
 void BinaryFormat::writeHeader( TQDataStream &stream )
 {
-  TQ_UINT32 magic, version;
+  Q_UINT32 magic, version;
     
   magic = 0x2e93e;
   version = BINARY_FORMAT_VERSION;

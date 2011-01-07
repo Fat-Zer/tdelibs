@@ -8,7 +8,7 @@ DEFINES += MAKE_KDEFX_LIB
 
 TARGET		= kdefx$$KDEBUG
 
-system( bash ktqmoc )
+system( bash kmoc )
 
 SOURCES = \
 kimageeffect.cpp \

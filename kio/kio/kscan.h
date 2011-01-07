@@ -98,7 +98,7 @@ protected:
      * customize it with the usual KDialogBase flags.
      *
      * @param dialogFace the KDialogBase::DialogType
-     * @param buttonMask a ORed tqmask of all buttons (see
+     * @param buttonMask a ORed mask of all buttons (see
      * KDialogBase::ButtonCode)
      * @param parent the QWidget's parent, or 0
      * @param name the name of the TQObject, can be 0
@@ -258,7 +258,7 @@ protected:
      * customize it with the usual KDialogBase flags.
      *
      * @param dialogFace the KDialogBase::DialogType
-     * @param buttonMask a ORed tqmask of all buttons (see
+     * @param buttonMask a ORed mask of all buttons (see
      * KDialogBase::ButtonCode)
      * @param parent the QWidget's parent, or 0
      * @param name the name of the TQObject, can be 0

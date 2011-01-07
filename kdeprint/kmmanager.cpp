@@ -42,8 +42,8 @@ KMManager::KMManager(TQObject *parent, const char *name)
 	m_printers.setAutoDelete(true);
 	m_fprinters.setAutoDelete(false);
 	m_hasmanagement = false;
-	m_printeroperationtqmask = 0;
-	m_serveroperationtqmask = 0;
+	m_printeroperationmask = 0;
+	m_serveroperationmask = 0;
 	m_printerfilter = new PrinterFilter(this);
 
 	m_specialmgr = new KMSpecialManager(this);
@@ -98,7 +98,7 @@ bool KMManager::removePrinter(KMPrinter*)
 
 bool KMManager::removePrinter(const TQString& name)
 {
-	KMPrinter	*p = tqfindPrinter(name);
+	KMPrinter	*p = findPrinter(name);
 	return (p ? removePrinter(p) : false);
 }
 
@@ -109,7 +109,7 @@ bool KMManager::enablePrinter(KMPrinter*, bool)
 
 bool KMManager::enablePrinter(const TQString& name, bool state)
 {
-	KMPrinter	*p = tqfindPrinter(name);
+	KMPrinter	*p = findPrinter(name);
 	return (p ? enablePrinter(p, state) : false);
 }
 
@@ -120,7 +120,7 @@ bool KMManager::startPrinter(KMPrinter*, bool)
 
 bool KMManager::startPrinter(const TQString& name, bool state)
 {
-	KMPrinter	*p = tqfindPrinter(name);
+	KMPrinter	*p = findPrinter(name);
 	return (p ? startPrinter(p, state) : false);
 }
 
@@ -145,7 +145,7 @@ bool KMManager::completePrinterShort(KMPrinter *p)
 
 bool KMManager::completePrinter(const TQString& name)
 {
-	KMPrinter	*p = tqfindPrinter(name);
+	KMPrinter	*p = findPrinter(name);
 	return (p ? completePrinter(p) : false);
 }
 
@@ -156,7 +156,7 @@ bool KMManager::setDefaultPrinter(KMPrinter*)
 
 bool KMManager::setDefaultPrinter(const TQString& name)
 {
-	KMPrinter	*p = tqfindPrinter(name);
+	KMPrinter	*p = findPrinter(name);
 	return (p ? setDefaultPrinter(p) : false);
 }
 
@@ -170,7 +170,7 @@ bool KMManager::testPrinter(KMPrinter *prt)
 		return false;
 	}
 	KPrinter	pr;
-	bool		prExist = (tqfindPrinter(prt->printerName()) != 0), result(false);
+	bool		prExist = (findPrinter(prt->printerName()) != 0), result(false);
 	pr.setPrinterName(prt->printerName());
 	pr.setSearchName(prt->name());
 	pr.setDocName("KDE Print Test");
@@ -186,7 +186,7 @@ bool KMManager::testPrinter(KMPrinter *prt)
 	// return notImplemented();
 }
 
-KMPrinter* KMManager::tqfindPrinter(const TQString& name)
+KMPrinter* KMManager::findPrinter(const TQString& name)
 {
 	TQPtrListIterator<KMPrinter>	it(m_printers);
 	for (;it.current();++it)
@@ -263,12 +263,12 @@ TQPtrList<KMPrinter>* KMManager::printerList(bool reload)
 				m_fprinters.append(prt);
 		}
 
-		// try to tqfind the default printer from these situations:
+		// try to find the default printer from these situations:
 		//   - it already exists from .lpoptions file
 		//   - use the PRINTER variable
 		if (!softDefault())
 		{
-			KMPrinter	*defprinter = tqfindPrinter(TQString::tqfromLatin1(getenv("PRINTER")));
+			KMPrinter	*defprinter = findPrinter(TQString::fromLatin1(getenv("PRINTER")));
 			if (defprinter)
 				setSoftDefault(defprinter);
 		}
@@ -297,7 +297,7 @@ void KMManager::addPrinter(KMPrinter *p)
 			delete p;
 		else
 		{
-			KMPrinter	*other = tqfindPrinter(p->name());
+			KMPrinter	*other = findPrinter(p->name());
 			if (other)
 			{
 				other->copy(*p);
@@ -400,7 +400,7 @@ void KMManager::setSoftDefault(KMPrinter *p)
 	if (p)
         {
                 p->setSoftDefault(true);
-                KMPrinter       *pp = tqfindPrinter(p->printerName());
+                KMPrinter       *pp = findPrinter(p->printerName());
                 if (pp)
                         pp->setOwnSoftDefault(true);
         }
@@ -443,7 +443,7 @@ bool KMManager::createSpecialPrinter(KMPrinter *p)
 {
 	if (p && p->isSpecial())
 	{
-		KMPrinter	*old = tqfindPrinter(p->name());
+		KMPrinter	*old = findPrinter(p->name());
 		if (old && !old->isSpecial())
 		{
 			setErrorMsg(i18n("Can't overwrite regular printer with special printer settings."));
@@ -458,7 +458,7 @@ bool KMManager::createSpecialPrinter(KMPrinter *p)
 
 bool KMManager::removeSpecialPrinter(KMPrinter *p)
 {
-	if (p && p->isSpecial() && m_printers.tqfindRef(p) != -1)
+	if (p && p->isSpecial() && m_printers.findRef(p) != -1)
 	{
 		m_printers.removeRef(p);
 		return m_specialmgr->savePrinters();
@@ -475,7 +475,7 @@ TQStringList KMManager::detectLocalPrinters()
 {
 	QStringList	list;
 	for (int i=0; i<3; i++)
-		list << TQString::null << TQString::tqfromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << TQString::null;
+		list << TQString::null << TQString::fromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << TQString::null;
 	return list;
 }
 
@@ -488,7 +488,7 @@ int KMManager::addPrinterWizard(TQWidget *parent)
 	{
 		int (*func)(TQWidget*) = (int(*)(TQWidget*))lib->symbol("add_printer_wizard");
 		if (!func)
-			setErrorMsg(i18n("Unable to tqfind wizard object in management library."));
+			setErrorMsg(i18n("Unable to find wizard object in management library."));
 		else
 			return func(parent);
 	}
@@ -504,7 +504,7 @@ bool KMManager::invokeOptionsDialog(TQWidget *parent)
 	{
 		bool (*func)(TQWidget*) = (bool(*)(TQWidget*))lib->symbol("config_dialog");
 		if (!func)
-			setErrorMsg(i18n("Unable to tqfind options dialog in management library."));
+			setErrorMsg(i18n("Unable to find options dialog in management library."));
 		else
 			return func(parent);
 	}

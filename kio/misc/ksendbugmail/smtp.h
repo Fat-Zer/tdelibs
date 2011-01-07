@@ -7,7 +7,7 @@
 #include <tqtimer.h>
 #include <ksock.h>
 
-/*int SMTPServertqStatus[] = {
+/*int SMTPServerStatus[] = {
     220,  // greeting from server
     221,  // server acknolages goodbye
     250,  // command successful
@@ -17,7 +17,7 @@
     0     // null
 };
 
-int SMTPClienttqStatus[] = {
+int SMTPClientStatus[] = {
     50,   // not logged in yet.
     100,  // logged in, got 220
     150,  // sent helo, got 250
@@ -37,7 +37,7 @@ int SMTPClienttqStatus[] = {
 
 #define SMTP_READ_BUFFER_SIZE 256
 
-class SMTP:public TQObject
+class SMTP:public QObject
 {
     Q_OBJECT
 public:
@@ -66,7 +66,7 @@ public:
         READYDATA = 354,      // server ready to receive data
         ERROR = 501,          // error
         UNKNOWN = 550        // user unknown
-    }SMTPServertqStatus;
+    }SMTPServerStatus;
 
     typedef enum {
         INIT = 50,            // not logged in yet
@@ -79,7 +79,7 @@ public:
         QUIT = 400,           // sent QUIT, got 221
         OUT = 450,            // finished, logged out
         CERROR = 500           // didn't finish, had error or connection drop
-    }SMTPClienttqStatus;
+    }SMTPClientStatus;
 
     typedef enum {
         NOERROR = 0,
@@ -125,9 +125,9 @@ private:
     TQString messageSubject;
     TQString messageBody, messageHeader;
 
-    SMTPClienttqStatus state;
-    SMTPClienttqStatus lastState;
-    SMTPServertqStatus serverState;
+    SMTPClientStatus state;
+    SMTPClientStatus lastState;
+    SMTPServerStatus serverState;
 
     TQString domainName;
 

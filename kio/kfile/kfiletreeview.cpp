@@ -342,7 +342,7 @@ void KFileTreeView::slotAutoOpenFolder()
       return;
 
    m_dropItem->setOpen( true );
-   m_dropItem->tqrepaint();
+   m_dropItem->repaint();
 }
 
 
@@ -413,7 +413,7 @@ KFileTreeBranchList& KFileTreeView::branches()
 
 bool KFileTreeView::removeBranch( KFileTreeBranch *branch )
 {
-   if(m_branches.tqcontains(branch))
+   if(m_branches.contains(branch))
    {
       delete (branch->root());
       m_branches.remove( branch );
@@ -522,7 +522,7 @@ void KFileTreeView::slotAnimation()
       }
          
       uint & iconNumber = it.data().iconNumber;
-      TQString icon = TQString::tqfromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
+      TQString icon = TQString::fromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
       // kdDebug(250) << "Loading icon " << icon << endl;
       item->setPixmap( 0, DesktopIcon( icon,KIcon::SizeSmall,KIcon::ActiveState )); // KFileTreeViewFactory::instance() ) );
 
@@ -558,7 +558,7 @@ void KFileTreeView::stopAnimation( KFileTreeViewItem * item )
 
    kdDebug(250) << "Stoping Animation !" << endl;
 
-   MapCurrentOpeningFolders::Iterator it = m_mapCurrentOpeningFolders.tqfind(item);
+   MapCurrentOpeningFolders::Iterator it = m_mapCurrentOpeningFolders.find(item);
    if ( it != m_mapCurrentOpeningFolders.end() )
    {
       if( item->isDir() && isOpen( item) )
@@ -575,7 +575,7 @@ void KFileTreeView::stopAnimation( KFileTreeViewItem * item )
    else
    {
       if( item )
-	 kdDebug(250)<< "StopAnimation - could not tqfind item " << item->url().prettyURL()<< endl;
+	 kdDebug(250)<< "StopAnimation - could not find item " << item->url().prettyURL()<< endl;
       else
 	 kdDebug(250)<< "StopAnimation - item is zero !" << endl;
    }
@@ -616,13 +616,13 @@ void KFileTreeView::slotItemRenamed(TQListViewItem* item, const TQString &name, 
    kdDebug(250) << "Do not bother: " << name << col << endl;
 }
 
-KFileTreeViewItem *KFileTreeView::tqfindItem( const TQString& branchName, const TQString& relUrl )
+KFileTreeViewItem *KFileTreeView::findItem( const TQString& branchName, const TQString& relUrl )
 {
    KFileTreeBranch *br = branch( branchName );
-   return( tqfindItem( br, relUrl ));
+   return( findItem( br, relUrl ));
 }
 
-KFileTreeViewItem *KFileTreeView::tqfindItem( KFileTreeBranch* brnch, const TQString& relUrl )
+KFileTreeViewItem *KFileTreeView::findItem( KFileTreeBranch* brnch, const TQString& relUrl )
 {
    KFileTreeViewItem *ret = 0;
    if( brnch )
@@ -666,7 +666,7 @@ void KFileTreeViewToolTip::maybeTip( const TQPoint & )
     if ( item ) {
 	TQString text = static_cast<KFileViewItem*>( item )->toolTipText();
 	if ( !text.isEmpty() )
-	    tip ( m_view->tqitemRect( item ), text );
+	    tip ( m_view->itemRect( item ), text );
     }
 #endif
 }

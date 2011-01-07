@@ -56,7 +56,7 @@
 /* You _must_ have bool */
 #undef HAVE_BOOL
 
-/* Define if getaddrinfo is broken and should be tqreplaced */
+/* Define if getaddrinfo is broken and should be replaced */
 #cmakedefine HAVE_BROKEN_GETADDRINFO 1
 
 /* Defines if bzip2 is compiled */
@@ -236,7 +236,7 @@
 /* Define if you have jasper */
 #cmakedefine HAVE_JASPER 1
 
-/* Define if your locale.h file tqcontains LC_MESSAGES */
+/* Define if your locale.h file contains LC_MESSAGES */
 #undef HAVE_LC_MESSAGES
 
 /* Defines if your system has the libart library */

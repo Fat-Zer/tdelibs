@@ -34,10 +34,10 @@
 class KProcess;
 
 /**
- * This class parses the output of "df" to tqfind the disk usage
+ * This class parses the output of "df" to find the disk usage
  * information for a given partition (mount point).
  */
-class KIO_EXPORT KDiskFreeSp : public TQObject
+class KIO_EXPORT KDiskFreeSp : public QObject
 {  Q_OBJECT
 public:
    KDiskFreeSp( TQObject *parent=0, const char *name=0 );
@@ -60,7 +60,7 @@ public:
     * if this mount point is found, with the info requested.
     * done is emitted in any case.
     */
-   static KDiskFreeSp * tqfindUsageInfo( const TQString & path );
+   static KDiskFreeSp * findUsageInfo( const TQString & path );
 
 signals:
    void foundMountPoint( const TQString & mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail );

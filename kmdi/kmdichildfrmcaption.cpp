@@ -146,7 +146,7 @@ void KMdiChildFrmCaption::mouseMoveEvent( TQMouseEvent *e )
 	TQPoint relMousePosInChildArea = m_pParent->m_pManager->mapFromGlobal( e->globalPos() );
 
 	// mouse out of child area? stop child frame dragging
-	if ( !m_pParent->m_pManager->rect().tqcontains( relMousePosInChildArea ) )
+	if ( !m_pParent->m_pManager->rect().contains( relMousePosInChildArea ) )
 	{
 		if ( relMousePosInChildArea.x() < 0 )
 			relMousePosInChildArea.rx() = 0;
@@ -163,7 +163,7 @@ void KMdiChildFrmCaption::mouseMoveEvent( TQMouseEvent *e )
 	TQPoint mousePosInChildArea = relMousePosInChildArea - m_offset;
 
 	// set new child frame position
-	tqparentWidget() ->move( mousePosInChildArea );
+	parentWidget() ->move( mousePosInChildArea );
 }
 
 //=============== setActive ===============//
@@ -182,7 +182,7 @@ void KMdiChildFrmCaption::setActive( bool bActive )
 	                                            m_pParent->m_pManager->m_captionInactiveBackColor );
 
 	m_bActive = bActive;
-	tqrepaint( false );
+	repaint( false );
 }
 
 //=============== setCaption ===============//
@@ -190,7 +190,7 @@ void KMdiChildFrmCaption::setActive( bool bActive )
 void KMdiChildFrmCaption::setCaption( const TQString& text )
 {
 	m_szCaption = text;
-	tqrepaint( false );
+	repaint( false );
 }
 
 //============== heightHint ===============//
@@ -319,4 +319,4 @@ void KMdiChildFrmCaption::slot_moveViaSystemMenu()
 	m_offset = mapFromGlobal( TQCursor::pos() );
 }
 
-// kate: space-indent off; tqreplace-tabs off; indent-mode csands; tab-width 4;
+// kate: space-indent off; replace-tabs off; indent-mode csands; tab-width 4;

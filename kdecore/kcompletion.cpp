@@ -149,8 +149,8 @@ void KCompletion::addWeightedItem( const TQString& item )
     uint len = item.length();
     uint weight = 0;
 
-    // tqfind out the weighting of this item (appended to the string as ":num")
-    int index = item.tqfindRev(':');
+    // find out the weighting of this item (appended to the string as ":num")
+    int index = item.findRev(':');
     if ( index > 0 ) {
         bool ok;
         weight = item.mid( index + 1 ).toUInt( &ok );
@@ -206,7 +206,7 @@ TQString KCompletion::makeCompletion( const TQString& string )
         // on d->matches here would interfere with call to
         // postProcessMatch() during rotation
     
-        tqfindAllCompletions( string, &d->matches, myHasMultipleMatches );
+        findAllCompletions( string, &d->matches, myHasMultipleMatches );
         TQStringList l = d->matches.list();
         postProcessMatches( &l );
         emit matches( l );
@@ -221,12 +221,12 @@ TQString KCompletion::makeCompletion( const TQString& string )
     // in case-insensitive popup mode, we search all completions at once
     if ( myCompletionMode == KGlobalSettings::CompletionPopup ||
          myCompletionMode == KGlobalSettings::CompletionPopupAuto ) {
-        tqfindAllCompletions( string, &d->matches, myHasMultipleMatches );
+        findAllCompletions( string, &d->matches, myHasMultipleMatches );
         if ( !d->matches.isEmpty() )
             completion = d->matches.first();
     }
     else
-        completion = tqfindCompletion( string );
+        completion = findCompletion( string );
 
     if ( myHasMultipleMatches )
         emit multipleMatches();
@@ -274,7 +274,7 @@ TQStringList KCompletion::substringCompletion( const TQString& string ) const
 
     for( ; it != list.end(); ++it ) {
         TQString item = *it;
-        if ( item.tqfind( string, 0, false ) != -1 ) { // always case insensitive
+        if ( item.find( string, 0, false ) != -1 ) { // always case insensitive
             matches.append( item );
         }
     }
@@ -300,7 +300,7 @@ TQStringList KCompletion::allMatches()
     // postProcessMatch() during rotation
     KCompletionMatchesWrapper matches( myOrder == Weighted );
     bool dummy;
-    tqfindAllCompletions( myLastString, &matches, dummy );
+    findAllCompletions( myLastString, &matches, dummy );
     TQStringList l = matches.list();
     postProcessMatches( &l );
     return l;
@@ -313,7 +313,7 @@ KCompletionMatches KCompletion::allWeightedMatches()
     // postProcessMatch() during rotation
     KCompletionMatchesWrapper matches( myOrder == Weighted );
     bool dummy;
-    tqfindAllCompletions( myLastString, &matches, dummy );
+    findAllCompletions( myLastString, &matches, dummy );
     KCompletionMatches ret( matches );
     postProcessMatches( &ret );
     return ret;
@@ -323,7 +323,7 @@ TQStringList KCompletion::allMatches( const TQString &string )
 {
     KCompletionMatchesWrapper matches( myOrder == Weighted );
     bool dummy;
-    tqfindAllCompletions( string, &matches, dummy );
+    findAllCompletions( string, &matches, dummy );
     TQStringList l = matches.list();
     postProcessMatches( &l );
     return l;
@@ -333,7 +333,7 @@ KCompletionMatches KCompletion::allWeightedMatches( const TQString &string )
 {
     KCompletionMatchesWrapper matches( myOrder == Weighted );
     bool dummy;
-    tqfindAllCompletions( string, &matches, dummy );
+    findAllCompletions( string, &matches, dummy );
     KCompletionMatches ret( matches );
     postProcessMatches( &ret );
     return ret;
@@ -349,7 +349,7 @@ TQString KCompletion::nextMatch()
     myLastMatch = myCurrentMatch;
 
     if ( d->matches.isEmpty() ) {
-        tqfindAllCompletions( myLastString, &d->matches, myHasMultipleMatches );
+        findAllCompletions( myLastString, &d->matches, myHasMultipleMatches );
         completion = d->matches.first();
         myCurrentMatch = completion;
         myRotationIndex = 0;
@@ -382,7 +382,7 @@ TQString KCompletion::previousMatch()
     myLastMatch = myCurrentMatch;
 
     if ( d->matches.isEmpty() ) {
-        tqfindAllCompletions( myLastString, &d->matches, myHasMultipleMatches );
+        findAllCompletions( myLastString, &d->matches, myHasMultipleMatches );
         completion = d->matches.last();
         myCurrentMatch = completion;
         myRotationIndex = 0;
@@ -411,16 +411,16 @@ TQString KCompletion::previousMatch()
 
 
 // tries to complete "string" from the tree-root
-TQString KCompletion::tqfindCompletion( const TQString& string )
+TQString KCompletion::findCompletion( const TQString& string )
 {
     TQChar ch;
     TQString completion;
     const KCompTreeNode *node = myTreeRoot;
 
-    // start at the tree-root and try to tqfind the search-string
+    // start at the tree-root and try to find the search-string
     for( uint i = 0; i < string.length(); i++ ) {
         ch = string.at( i );
-        node = node->tqfind( ch );
+        node = node->find( ch );
 
         if ( node )
             completion += ch;
@@ -438,7 +438,7 @@ TQString KCompletion::tqfindCompletion( const TQString& string )
             completion += *node;
     }
     // if multiple matches and auto-completion mode
-    // -> tqfind the first complete match
+    // -> find the first complete match
     if ( node && node->childrenCount() > 1 ) {
         myHasMultipleMatches = true;
     
@@ -453,7 +453,7 @@ TQString KCompletion::tqfindCompletion( const TQString& string )
                 }
             }
             else {
-                // don't just tqfind the "first" match, but the one with the
+                // don't just find the "first" match, but the one with the
                 // highest priority
         
                 const KCompTreeNode* temp_node = 0L;
@@ -463,7 +463,7 @@ TQString KCompletion::tqfindCompletion( const TQString& string )
                     uint weight = temp_node->weight();
                     const KCompTreeNode* hit = temp_node;
                     for( int i = 1; i < count; i++ ) {
-                        temp_node = node->tqchildAt(i);
+                        temp_node = node->childAt(i);
                         if( temp_node->weight() > weight ) {
                             hit = temp_node;
                             weight = hit->weight();
@@ -487,11 +487,11 @@ TQString KCompletion::tqfindCompletion( const TQString& string )
 }
 
 
-void KCompletion::tqfindAllCompletions(const TQString& string,
+void KCompletion::findAllCompletions(const TQString& string,
                                      KCompletionMatchesWrapper *matches,
                                      bool& hasMultipleMatches) const
 {
-    //kdDebug(0) << "*** tqfinding all completions for " << string << endl;
+    //kdDebug(0) << "*** finding all completions for " << string << endl;
 
     if ( string.isEmpty() )
         return;
@@ -506,10 +506,10 @@ void KCompletion::tqfindAllCompletions(const TQString& string,
     TQString completion;
     const KCompTreeNode *node = myTreeRoot;
 
-    // start at the tree-root and try to tqfind the search-string
+    // start at the tree-root and try to find the search-string
     for( uint i = 0; i < string.length(); i++ ) {
         ch = string.at( i );
-        node = node->tqfind( ch );
+        node = node->find( ch );
 
         if ( node )
             completion += ch;
@@ -535,7 +535,7 @@ void KCompletion::tqfindAllCompletions(const TQString& string,
 
     else {
         // node has more than one child
-        // -> recursively tqfind all remaining completions
+        // -> recursively find all remaining completions
         hasMultipleMatches = true;
         extractStringsFromNode( node, completion, matches );
     }
@@ -579,7 +579,7 @@ void KCompletion::extractStringsFromNode( const KCompTreeNode *node,
             matches->append( node->weight(), string );
         }
 
-        // recursively tqfind all other strings.
+        // recursively find all other strings.
         if ( node && node->childrenCount() > 1 )
             extractStringsFromNode( node, string, matches, addWeight );
     }
@@ -599,19 +599,19 @@ void KCompletion::extractStringsFromNodeCI( const KCompTreeNode *node,
     TQString newRest = restString.mid(1);
     KCompTreeNode *child1, *child2;
 
-    child1 = node->tqfind( ch1 ); // the correct match
+    child1 = node->find( ch1 ); // the correct match
     if ( child1 )
         extractStringsFromNodeCI( child1, beginning + *child1, newRest,
                                   matches );
 
     // append the case insensitive matches, if available
     if ( ch1.isLetter() ) {
-        // tqfind out if we have to lower or upper it. Is there a better way?
+        // find out if we have to lower or upper it. Is there a better way?
         TQChar ch2 = ch1.lower();
         if ( ch1 == ch2 )
             ch2 = ch1.upper();
         if ( ch1 != ch2 ) {
-            child2 = node->tqfind( ch2 );
+            child2 = node->find( ch2 );
             if ( child2 )
                 extractStringsFromNodeCI( child2, beginning + *child2, newRest,
                                           matches );
@@ -628,19 +628,19 @@ void KCompletion::doBeep( BeepMode mode ) const
 
     switch ( mode ) {
         case Rotation:
-            event = TQString::tqfromLatin1("Textcompletion: rotation");
+            event = TQString::fromLatin1("Textcompletion: rotation");
             text = i18n("You reached the end of the list\nof matching items.\n");
             break;
         case PartialMatch:
             if ( myCompletionMode == KGlobalSettings::CompletionShell ||
                  myCompletionMode == KGlobalSettings::CompletionMan ) {
-                event = TQString::tqfromLatin1("Textcompletion: partial match");
+                event = TQString::fromLatin1("Textcompletion: partial match");
                 text = i18n("The completion is ambiguous, more than one\nmatch is available.\n");
             }
             break;
         case NoMatch:
             if ( myCompletionMode == KGlobalSettings::CompletionShell ) {
-                event = TQString::tqfromLatin1("Textcompletion: no match");
+                event = TQString::fromLatin1("Textcompletion: no match");
                 text = i18n("There is no matching item available.\n");
             }
             break;
@@ -676,7 +676,7 @@ KCompTreeNode::~KCompTreeNode()
 // it will not be created. Returns the new/existing node.
 KCompTreeNode * KCompTreeNode::insert( const TQChar& ch, bool sorted )
 {
-    KCompTreeNode *child = tqfind( ch );
+    KCompTreeNode *child = find( ch );
     if ( !child ) {
         child = new KCompTreeNode( ch );
 
@@ -725,7 +725,7 @@ void KCompTreeNode::remove( const TQString& str )
     uint i = 0;
     for ( ; i < string.length(); i++ )
     {
-        child = parent->tqfind( string.at( i ) );
+        child = parent->find( string.at( i ) );
         if ( child )
             deletables.insert( i + 1, child );
         else

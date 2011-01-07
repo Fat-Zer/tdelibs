@@ -104,7 +104,7 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
     {
         TQCString &clientId = *it;
 
-        if ( tqstrncmp(clientId, "konqueror", 9) != 0 ) 
+        if ( qstrncmp(clientId, "konqueror", 9) != 0 ) 
             continue;
 
         TQByteArray data, replyData;
@@ -114,7 +114,7 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
         if ( !dcop->call( clientId.data(), "KonquerorIface", 
                           "crashLogFile()", data, replyType, replyData) ) 
         {
-            kdWarning() << "can't tqfind dcop function KonquerorIface::crashLogFile()" << endl;
+            kdWarning() << "can't find dcop function KonquerorIface::crashLogFile()" << endl;
             continue;
         }
 
@@ -127,7 +127,7 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
         activeLogs[ret] = true;
     }
 
-    TQDir d( KCrashBookmarkImporterImpl().tqfindDefaultLocation() );
+    TQDir d( KCrashBookmarkImporterImpl().findDefaultLocation() );
     d.setSorting( TQDir::Time );
     d.setFilter( TQDir::Files );
     d.setNameFilter( "konqueror-crash-*.log" );
@@ -141,7 +141,7 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
     int count = 0;
     for ( ; (( fi = it.current() ) != 0) && (count < 20); ++it, ++count ) 
     {
-        bool stillAlive = activeLogs.tqcontains( fi->absFilePath() );
+        bool stillAlive = activeLogs.contains( fi->absFilePath() );
         if ( !stillAlive )
             crashFiles << fi->absFilePath();
     }
@@ -190,7 +190,7 @@ TQString KCrashBookmarkImporter::crashBookmarksDir()
     static KCrashBookmarkImporterImpl *p = 0;
     if (!p)
         p = new KCrashBookmarkImporterImpl;
-    return p->tqfindDefaultLocation();
+    return p->findDefaultLocation();
 }
 
 void KCrashBookmarkImporterImpl::setShouldDelete( bool shouldDelete ) 
@@ -207,7 +207,7 @@ void KCrashBookmarkImporter::parseCrashBookmarks( bool del )
     importer.parse();
 }
 
-TQString KCrashBookmarkImporterImpl::tqfindDefaultLocation( bool ) const 
+TQString KCrashBookmarkImporterImpl::findDefaultLocation( bool ) const 
 {
     return locateLocal( "tmp", "" );
 }

@@ -66,7 +66,7 @@ namespace KMdi
       /**
       * standard is: show normal, attached, visible, document view (not toolview). Maximize, Minimize, Hide adds
       * appropriately. Detach adds a view that appears toplevel, ToolWindow adds the view as tool view.
-      * That means it is stay-on-top and toplevel. UseKMdiSizeHint should use the restore tqgeometry of the
+      * That means it is stay-on-top and toplevel. UseKMdiSizeHint should use the restore geometry of the
       * latest current top childframe but is not supported yet.
       */
       StandardAdd = 0,

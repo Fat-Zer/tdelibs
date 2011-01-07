@@ -30,7 +30,7 @@ class KSSL;
 /**
  * KDE SSL Connection Information
  *
- * This class tqcontains the information about an SSL connection.  It is
+ * This class contains the information about an SSL connection.  It is
  * generally referenced through KSSL.
  *
  * @author George Staikos <staikos@kde.org>

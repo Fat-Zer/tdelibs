@@ -30,23 +30,23 @@ class ConnectionManager : public TQObject, virtual public DCOPObject
 		static ConnectionManager* self();
 		enum State { Inactive, Online, Offline, Pending };
 		virtual ~ConnectionManager();
-		NetworktqStatus::EnumtqStatus status( const TQString & host );
+		NetworkStatus::EnumStatus status( const TQString & host );
 			// check if a hostname is available.  Ask user if offline.  Request host
-		NetworktqStatus::EnumRequestResult requestConnection( TQWidget* mainWidget, const TQString & host, bool userInitiated );
+		NetworkStatus::EnumRequestResult requestConnection( TQWidget* mainWidget, const TQString & host, bool userInitiated );
 			// method to relinquish a connection
 		void relinquishConnection( const TQString & host );
 	signals:
 		// signal that the network for a hostname is up/down
-		void statusChanged( const TQString & host, NetworktqStatus::EnumtqStatus status );
+		void statusChanged( const TQString & host, NetworkStatus::EnumStatus status );
 	protected:
 		// sets up internal state
 		void initialise();
 		// reread the desktop status from the daemon and update internal state
-		void updatetqStatus();
+		void updateStatus();
 			// ask if the user would like to reconnect
 		bool askToConnect( TQWidget * mainWidget );
 	k_dcop:
-			void slottqStatusChanged( TQString host, int status );
+			void slotStatusChanged( TQString host, int status );
 	private:
 		ConnectionManager( TQObject *parent, const char * name );
 		ConnectionManagerPrivate *d;

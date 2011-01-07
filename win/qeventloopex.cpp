@@ -263,7 +263,7 @@ void QEventLoopEx::unregisterSocketNotifier( TQSocketNotifier *notifier )
 		SetEvent(d->m_evPendingListEmpty);
 	list->remove(); // remove notifier found above
 
-	if ( d->sn_highest == sockfd ) {// tqfind highest fd
+	if ( d->sn_highest == sockfd ) {// find highest fd
 		d->sn_highest = -1;
 		for ( int i=0; i<3; i++ ) {
 			if ( d->sn_vec[i].list && ! d->sn_vec[i].list->isEmpty() )
@@ -433,7 +433,7 @@ void QEventLoopEx::run()
 			if (WSAGetLastError() == WSAENOTSOCK) {
 
 				
-				// it seems a socket notifier has a bad fd... tqfind out
+				// it seems a socket notifier has a bad fd... find out
 				// which one it is and disable it
 				fd_set fdset;
 				struct timeval zerotm;

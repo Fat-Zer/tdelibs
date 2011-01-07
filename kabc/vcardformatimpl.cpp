@@ -123,7 +123,7 @@ bool VCardFormatImpl::loadAddressee( Addressee& addressee, VCARD::VCard &v )
     TQCString n = cl->name();
     if ( n.left( 2 ) == "X-" ) {
       n = n.mid( 2 );
-      int posDash = n.tqfind( "-" );
+      int posDash = n.find( "-" );
       addressee.insertCustom( TQString::fromUtf8( n.left( posDash ) ),
                         TQString::fromUtf8( n.mid( posDash + 1 ) ),
                         TQString::fromUtf8( cl->value()->asString() ) );
@@ -351,8 +351,8 @@ void VCardFormatImpl::addCustomValue( VCARD::VCard *v, const TQString &txt )
   if ( txt.isEmpty() ) return;
 
   ContentLine cl;
-  cl.setName( "X-" + txt.left( txt.tqfind( ":" ) ).utf8() );
-  TQString value = txt.mid( txt.tqfind( ":" ) + 1 );
+  cl.setName( "X-" + txt.left( txt.find( ":" ) ).utf8() );
+  TQString value = txt.mid( txt.find( ":" ) + 1 );
   if ( value.isEmpty() )
     return;
   cl.setValue( new TextValue( value.utf8() ) );
@@ -777,10 +777,10 @@ void VCardFormatImpl::addAgentValue( VCARD::VCard *vcard, const Agent &agent )
     Addressee *addr = agent.addressee();
     if ( addr ) {
       writeToString( (*addr), vstr );
-      vstr.tqreplace( ":", "\\:" );
-      vstr.tqreplace( ",", "\\," );
-      vstr.tqreplace( ";", "\\;" );
-      vstr.tqreplace( "\r\n", "\\n" );
+      vstr.replace( ":", "\\:" );
+      vstr.replace( ",", "\\," );
+      vstr.replace( ";", "\\;" );
+      vstr.replace( "\r\n", "\\n" );
       cl.setValue( new TextValue( vstr.utf8() ) );
     } else
       return;
@@ -808,10 +808,10 @@ Agent VCardFormatImpl::readAgentValue( VCARD::ContentLine *cl )
 
   if ( isIntern ) {
     TQString vstr = TQString::fromUtf8( v->asString() );
-    vstr.tqreplace( "\\n", "\r\n" );
-    vstr.tqreplace( "\\:", ":" );
-    vstr.tqreplace( "\\,", "," );
-    vstr.tqreplace( "\\;", ";" );
+    vstr.replace( "\\n", "\r\n" );
+    vstr.replace( "\\:", ":" );
+    vstr.replace( "\\,", "," );
+    vstr.replace( "\\;", ";" );
     Addressee *addr = new Addressee;
     readFromString( vstr, *addr );
     agent.setAddressee( addr );

@@ -128,7 +128,7 @@ namespace KJS {
     TQPtrDict<JSEventListener> jsEventListeners;
     virtual const ClassInfo* classInfo() const { return &info; }
     static const ClassInfo info;
-    enum { Closed, Crypto, DefaulttqStatus, tqStatus, Document, Node, EventCtor, Range,
+    enum { Closed, Crypto, DefaultStatus, Status, Document, Node, EventCtor, Range,
            NodeFilter, DOMException, CSSRule, Frames, _History, _External, Event, InnerHeight,
            InnerWidth, Length, _Location, Navigate, Name, _Navigator, _Konqueror, ClientInformation,
            OffscreenBuffering, Opener, OuterHeight, OuterWidth, PageXOffset, PageYOffset,

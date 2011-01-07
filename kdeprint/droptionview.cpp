@@ -219,7 +219,7 @@ void OptionListView::setOption(DrBase *opt)
 
 void OptionListView::setValue(const TQString& val)
 {
-	m_list->setCurrentItem(m_choices.tqfindIndex(val));
+	m_list->setCurrentItem(m_choices.findIndex(val));
 }
 
 void OptionListView::slotSelectionChanged()
@@ -255,9 +255,9 @@ void OptionBooleanView::setOption(DrBase *opt)
 	{
 		TQPtrListIterator<DrBase>	it(*(((DrBooleanOption*)opt)->choices()));
 		m_choices.clear();
-		m_group->tqfind(0)->setText(it.toFirst()->get("text"));
+		m_group->find(0)->setText(it.toFirst()->get("text"));
 		m_choices.append(it.toFirst()->name());
-		m_group->tqfind(1)->setText(it.toLast()->get("text"));
+		m_group->find(1)->setText(it.toLast()->get("text"));
 		m_choices.append(it.toLast()->name());
 		setValue(opt->valueText());
 	}
@@ -265,7 +265,7 @@ void OptionBooleanView::setOption(DrBase *opt)
 
 void OptionBooleanView::setValue(const TQString& val)
 {
-	int	ID = m_choices.tqfindIndex(val);
+	int	ID = m_choices.findIndex(val);
 	m_group->setButton(ID);
 }
 
@@ -306,9 +306,9 @@ DrOptionView::DrOptionView(TQWidget *parent, const char *name)
 	setTitle(i18n("No Option Selected"));
 
 	setColumnLayout(0, Qt::Vertical );
-	tqlayout()->setSpacing( KDialog::spacingHint() );
-	tqlayout()->setMargin( KDialog::marginHint() );
-	QVBoxLayout	*main_ = new TQVBoxLayout(tqlayout(), KDialog::marginHint());
+	layout()->setSpacing( KDialog::spacingHint() );
+	layout()->setMargin( KDialog::marginHint() );
+	QVBoxLayout	*main_ = new TQVBoxLayout(layout(), KDialog::marginHint());
 	main_->addWidget(m_stack);
 
 	m_item = 0;

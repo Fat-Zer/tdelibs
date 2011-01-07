@@ -160,7 +160,7 @@ void KConfigDialog::setupManagerConnections(KConfigDialogManager *manager)
 
 KConfigDialog* KConfigDialog::exists(const char* name)
 {
-  return openDialogs.tqfind(name);
+  return openDialogs.find(name);
 }
 
 bool KConfigDialog::showDialog(const char* name)

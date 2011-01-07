@@ -55,6 +55,6 @@ class ToolViewAccessorPrivate
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;
 
 

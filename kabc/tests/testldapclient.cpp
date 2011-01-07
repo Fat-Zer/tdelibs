@@ -143,7 +143,7 @@ void TestLDAPClient::slotLDAPResult( const KABC::LdapObject& obj )
   assert( !obj.attrs[ "mail" ].isEmpty() );
   TQString mail = join( obj.attrs[ "mail" ], ", " );
   kdDebug() << " mail:" << mail << endl;
-  assert( mail.tqcontains( '@' ) );
+  assert( mail.contains( '@' ) );
 }
 
 void TestLDAPClient::slotLDAPError( const TQString& err )

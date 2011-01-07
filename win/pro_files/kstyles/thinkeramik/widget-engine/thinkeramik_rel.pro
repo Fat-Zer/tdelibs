@@ -4,8 +4,8 @@
 TEMPLATE	= lib
 
 unix { 
-	INCLUDEPATH += tqmoc
-	#force tqfinding libraries in current dir (for installer, etc):
+	INCLUDEPATH += moc
+	#force finding libraries in current dir (for installer, etc):
 	QMAKE_LFLAGS += -Wl,-rpath,.
 	DEFINES += KDEFX_EXPORT=
 }
@@ -42,8 +42,8 @@ SOURCES += \
 ../../../kdefx/kpixmapeffect.cpp \
 ../../../kdefx/kpixmap.cpp
 
-system( tqmoc thinkeramik.h -o tqmoc/thinkeramik.moc )
-system( tqmoc ../../../kdefx/kstyle.h -o tqmoc/kstyle.moc )
+system( moc thinkeramik.h -o moc/thinkeramik.moc )
+system( moc ../../../kdefx/kstyle.h -o moc/kstyle.moc )
 
 
 system( bash ./genemb.sh )

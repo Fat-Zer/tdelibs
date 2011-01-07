@@ -26,7 +26,7 @@
 
 class KMPrinter;
 
-class PrinterFilter : TQObject
+class PrinterFilter : QObject
 {
 public:
 	PrinterFilter(TQObject *parent = 0, const char *name = 0);

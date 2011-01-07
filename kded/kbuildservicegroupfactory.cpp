@@ -59,7 +59,7 @@ KBuildServiceGroupFactory::createEntry( const TQString&, const char * )
 void KBuildServiceGroupFactory::addNewEntryTo( const TQString &menuName, KService *newEntry)
 {
   KServiceGroup *entry = 0;
-  KSycocaEntry::Ptr *ptr = m_entryDict->tqfind(menuName);
+  KSycocaEntry::Ptr *ptr = m_entryDict->find(menuName);
   if (ptr)
      entry = dynamic_cast<KServiceGroup *>(ptr->data());
 
@@ -74,7 +74,7 @@ void KBuildServiceGroupFactory::addNewEntryTo( const TQString &menuName, KServic
 KServiceGroup *
 KBuildServiceGroupFactory::addNew( const TQString &menuName, const TQString& file, KServiceGroup *entry, bool isDeleted)
 {
-  KSycocaEntry::Ptr *ptr = m_entryDict->tqfind(menuName);
+  KSycocaEntry::Ptr *ptr = m_entryDict->find(menuName);
   if (ptr)
   {
     kdWarning(7021) << "KBuildServiceGroupFactory::addNew( " << menuName << ", " << file << " ): menu already exists!" << endl;
@@ -94,14 +94,14 @@ KBuildServiceGroupFactory::addNew( const TQString &menuName, const TQString& fil
      // Make sure parent dir exists.
      KServiceGroup *parentEntry = 0;
      TQString parent = menuName.left(menuName.length()-1);
-     int i = parent.tqfindRev('/');
+     int i = parent.findRev('/');
      if (i > 0) {
         parent = parent.left(i+1);
      } else {
         parent = "/";
      }
      parentEntry = 0;
-     ptr = m_entryDict->tqfind(parent);
+     ptr = m_entryDict->find(parent);
      if (ptr)
         parentEntry = dynamic_cast<KServiceGroup *>(ptr->data());
      if (!parentEntry)
@@ -123,7 +123,7 @@ KBuildServiceGroupFactory::addNewChild( const TQString &parent, const char *reso
   TQString name = "#parent#"+parent;
 
   KServiceGroup *entry = 0;
-  KSycocaEntry::Ptr *ptr = m_entryDict->tqfind(name);
+  KSycocaEntry::Ptr *ptr = m_entryDict->find(name);
   if (ptr)
      entry = dynamic_cast<KServiceGroup *>(ptr->data());
 
@@ -157,7 +157,7 @@ KBuildServiceGroupFactory::saveHeader(TQDataStream &str)
 {
    KSycocaFactory::saveHeader(str);
 
-   str << (TQ_INT32) m_baseGroupDictOffset;
+   str << (Q_INT32) m_baseGroupDictOffset;
 }
 
 void

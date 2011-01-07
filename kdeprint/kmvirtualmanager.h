@@ -43,8 +43,8 @@ public:
 	void virtualList(TQPtrList<KMPrinter>& list, const TQString& prname);
 	void triggerSave();
 
-	KMPrinter* tqfindPrinter(const TQString& name);
-	KMPrinter* tqfindInstance(KMPrinter *p, const TQString& name);
+	KMPrinter* findPrinter(const TQString& name);
+	KMPrinter* findInstance(KMPrinter *p, const TQString& name);
 	void setDefault(KMPrinter *p, bool save = true);
 	TQString defaultPrinterName();
 	bool isDefault(KMPrinter *p, const TQString& name);

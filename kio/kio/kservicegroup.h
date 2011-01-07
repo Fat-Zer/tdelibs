@@ -197,9 +197,9 @@ public:
 
   /**
    * @internal
-   * Sets information related to the tqlayout of services in this group.
+   * Sets information related to the layout of services in this group.
    */
-  void setLayoutInfo(const TQStringList &tqlayout);
+  void setLayoutInfo(const TQStringList &layout);
 
   /**
    * Original API and feature kindly provided by SuSE
@@ -209,9 +209,9 @@ public:
 
   /**
    * @internal
-   * Returns information related to the tqlayout of services in this group.
+   * Returns information related to the layout of services in this group.
    */
-  TQStringList tqlayoutInfo() const;
+  TQStringList layoutInfo() const;
 
   /**
    * @internal

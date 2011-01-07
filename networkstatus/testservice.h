@@ -39,11 +39,11 @@ public:
 	void simulateFailure();
 	void simulateDisconnect();
 protected slots:
-	void slottqStatusChange();
+	void slotStatusChange();
 private:
 	ServiceIface_stub * m_service;
-	NetworktqStatus::EnumtqStatus m_status;
-	NetworktqStatus::EnumtqStatus m_nexttqStatus;
+	NetworkStatus::EnumStatus m_status;
+	NetworkStatus::EnumStatus m_nextStatus;
 };
 
 #endif

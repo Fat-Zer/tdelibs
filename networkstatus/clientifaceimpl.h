@@ -30,14 +30,14 @@
 class ClientIfaceImpl : virtual public ClientIface
 {
 public:
-	ClientIfaceImpl( NetworktqStatusModule * module );
+	ClientIfaceImpl( NetworkStatusModule * module );
 	int status( TQString host );
 	int request( TQString host, bool userInitiated );
 	void relinquish( TQString host );
 	bool reportFailure( TQString host );
 /*	TQString statusAsString();*/
 private:
-	NetworktqStatusModule * m_module;
+	NetworkStatusModule * m_module;
 };
 
 #endif

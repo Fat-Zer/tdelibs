@@ -33,14 +33,14 @@ class TQLabel;
  *
  * \code
  *
- * KHistoryCombo* tqfindCombo = new KHistoryCombo(true, this);
+ * KHistoryCombo* findCombo = new KHistoryCombo(true, this);
  * KWidgetAction* action
- *   = new KWidgetAction(tqfindCombo, i18n("F&ind Combo"), Qt::Key_F6, this,
- *                       TQT_SLOT(slotFocus()), actionCollection(), "tqfind_combo");
+ *   = new KWidgetAction(findCombo, i18n("F&ind Combo"), Qt::Key_F6, this,
+ *                       TQT_SLOT(slotFocus()), actionCollection(), "find_combo");
  *
- * new KToolBarLabelAction(tqfindCombo, i18n("F&ind "), 0, this,
+ * new KToolBarLabelAction(findCombo, i18n("F&ind "), 0, this,
  *                         TQT_SLOT(slotFocus()), actionCollection(),
- *             "tqfind_label");
+ *             "find_label");
  *
  * \endcode
  *

@@ -140,7 +140,7 @@ public:
      */
    static bool backupFile( const TQString& filename,
                            const TQString& backupDir = TQString::null,
-                           const TQString& backupExtension = TQString::tqfromLatin1( "~" ) );
+                           const TQString& backupExtension = TQString::fromLatin1( "~" ) );
 
 private:
    TQString mFileName;

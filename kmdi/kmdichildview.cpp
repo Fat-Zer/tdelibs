@@ -44,8 +44,8 @@
 
 //============ KMdiChildView ============//
 
-KMdiChildView::KMdiChildView( const TQString& caption, TQWidget* tqparentWidget, const char* name, WFlags f )
-	: TQWidget( tqparentWidget, name, f )
+KMdiChildView::KMdiChildView( const TQString& caption, TQWidget* parentWidget, const char* name, WFlags f )
+	: TQWidget( parentWidget, name, f )
 	, m_focusedChildWidget( 0L )
 	, m_firstFocusableChildWidget( 0L )
 	, m_lastFocusableChildWidget( 0L )
@@ -73,8 +73,8 @@ KMdiChildView::KMdiChildView( const TQString& caption, TQWidget* tqparentWidget,
 
 //============ KMdiChildView ============//
 
-KMdiChildView::KMdiChildView( TQWidget* tqparentWidget, const char* name, WFlags f )
-	: TQWidget( tqparentWidget, name, f )
+KMdiChildView::KMdiChildView( TQWidget* parentWidget, const char* name, WFlags f )
+	: TQWidget( parentWidget, name, f )
 	, m_focusedChildWidget( 0L )
 	, m_firstFocusableChildWidget( 0L )
 	, m_lastFocusableChildWidget( 0L )
@@ -108,14 +108,14 @@ void KMdiChildView::trackIconAndCaptionChanges( TQWidget *view )
 }
 
 
-//============== internal tqgeometry ==============//
+//============== internal geometry ==============//
 
 TQRect KMdiChildView::internalGeometry() const
 {
 	if ( mdiParent() )
 	{ // is attached
 		// get the client area coordinates inside the MDI child frame
-		TQRect posInFrame = tqgeometry();
+		TQRect posInFrame = geometry();
 		// map these values to the parent of the MDI child frame
 		// (this usually is the MDI child area) and return
 		TQPoint ptTopLeft = mdiParent() ->mapToParent( posInFrame.topLeft() );
@@ -124,14 +124,14 @@ TQRect KMdiChildView::internalGeometry() const
 	}
 	else
 	{
-		TQRect geo = tqgeometry();
+		TQRect geo = geometry();
 		TQRect frameGeo = externalGeometry();
 		return TQRect( frameGeo.x(), frameGeo.y(), geo.width(), geo.height() );
-		//      return tqgeometry();
+		//      return geometry();
 	}
 }
 
-//============== set internal tqgeometry ==============//
+//============== set internal geometry ==============//
 
 void KMdiChildView::setInternalGeometry( const TQRect& newGeometry )
 {
@@ -143,7 +143,7 @@ void KMdiChildView::setInternalGeometry( const TQRect& newGeometry )
 		int nFrameSizeTop = geo.y() - frameGeo.y();
 		int nFrameSizeLeft = geo.x() - frameGeo.x();
 
-		// create the new tqgeometry that is accepted by the TQWidget::setGeometry() method
+		// create the new geometry that is accepted by the TQWidget::setGeometry() method
 		TQRect newGeoQt;
 		newGeoQt.setX( newGeometry.x() - nFrameSizeLeft );
 		newGeoQt.setY( newGeometry.y() - nFrameSizeTop );
@@ -153,7 +153,7 @@ void KMdiChildView::setInternalGeometry( const TQRect& newGeometry )
 		//      newGeoQt.setWidth(newGeometry.width()+KMDI_MDI_CHILDFRM_DOUBLE_BORDER);
 		//      newGeoQt.setHeight(newGeometry.height()+mdiParent()->captionHeight()+KMDI_MDI_CHILDFRM_DOUBLE_BORDER);
 
-		// set the tqgeometry
+		// set the geometry
 		mdiParent()->setGeometry( newGeoQt );
 	}
 	else
@@ -164,7 +164,7 @@ void KMdiChildView::setInternalGeometry( const TQRect& newGeometry )
 		int nFrameSizeTop = geo.y() - frameGeo.y();
 		int nFrameSizeLeft = geo.x() - frameGeo.x();
 
-		// create the new tqgeometry that is accepted by the TQWidget::setGeometry() method
+		// create the new geometry that is accepted by the TQWidget::setGeometry() method
 		TQRect newGeoQt;
 
 		newGeoQt.setX( newGeometry.x() - nFrameSizeLeft );
@@ -173,19 +173,19 @@ void KMdiChildView::setInternalGeometry( const TQRect& newGeometry )
 		newGeoQt.setWidth( newGeometry.width() );
 		newGeoQt.setHeight( newGeometry.height() );
 
-		// set the tqgeometry
+		// set the geometry
 		setGeometry( newGeoQt );
 	}
 }
 
-//============== external tqgeometry ==============//
+//============== external geometry ==============//
 
 TQRect KMdiChildView::externalGeometry() const
 {
 	return mdiParent() ? mdiParent()->frameGeometry() : frameGeometry();
 }
 
-//============== set external tqgeometry ==============//
+//============== set external geometry ==============//
 
 void KMdiChildView::setExternalGeometry( const TQRect& newGeometry )
 {
@@ -203,7 +203,7 @@ void KMdiChildView::setExternalGeometry( const TQRect& newGeometry )
 		int nFrameSizeTop = geo.y() - frameGeo.y();
 		int nFrameSizeLeft = geo.x() - frameGeo.x();
 
-		// create the new tqgeometry that is accepted by the TQWidget::setGeometry() method
+		// create the new geometry that is accepted by the TQWidget::setGeometry() method
 		// not attached => the window system makes the frame
 		TQRect newGeoQt;
 		newGeoQt.setX( newGeometry.x() + nFrameSizeLeft );
@@ -211,7 +211,7 @@ void KMdiChildView::setExternalGeometry( const TQRect& newGeometry )
 		newGeoQt.setWidth( newGeometry.width() - nTotalFrameWidth );
 		newGeoQt.setHeight( newGeometry.height() - nTotalFrameHeight );
 
-		// set the tqgeometry
+		// set the geometry
 		setGeometry( newGeoQt );
 	}
 }
@@ -278,7 +278,7 @@ TQRect KMdiChildView::restoreGeometry()
 	if ( mdiParent() )
 		return mdiParent() ->restoreGeometry();
 	else //FIXME not really supported, may be we must use Windows or X11 funtions
-		return tqgeometry();
+		return geometry();
 }
 
 //============== setRestoreGeometry ================//
@@ -546,7 +546,7 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 		if ( obj->isWidgetType() )
 		{
 			TQObjectList * list = queryList( "TQWidget" );
-			if ( list->tqfind( obj ) != -1 )
+			if ( list->find( obj ) != -1 )
 				m_focusedChildWidget = ( TQWidget* ) obj;
 
 			delete list;   // delete the list, not the objects
@@ -771,4 +771,4 @@ void KMdiChildView::raise()
 	TQWidget::raise();
 }
 
-// kate: space-indent off; tqreplace-tabs off; indent-mode csands; tab-width 4;
+// kate: space-indent off; replace-tabs off; indent-mode csands; tab-width 4;

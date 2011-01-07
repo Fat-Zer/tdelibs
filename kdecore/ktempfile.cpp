@@ -107,7 +107,7 @@ KTempFile::create(const TQString &filePrefix, const TQString &fileExtension,
        return false;
    }
 
-   // got a file descriptor. nme tqcontains the name
+   // got a file descriptor. nme contains the name
    mTmpName = TQFile::decodeName(nme);
    mode_t tmp = 0;
    mode_t umsk = umask(tmp);

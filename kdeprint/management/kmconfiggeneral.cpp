@@ -57,7 +57,7 @@ KMConfigGeneral::KMConfigGeneral(TQWidget *parent)
 	QGroupBox	*m_testpagebox = new TQGroupBox(0, Qt::Vertical, i18n("Test Page"), this);
 	m_defaulttestpage = new TQCheckBox(i18n("&Specify personal test page"), m_testpagebox, "TestPageCheck");
 	m_testpage = new KURLRequester(m_testpagebox,"TestPage");
-	m_preview = new KPushButton(KGuiItem(i18n("Preview..."), "filetqfind"), m_testpagebox);
+	m_preview = new KPushButton(KGuiItem(i18n("Preview..."), "filefind"), m_testpagebox);
 	connect(m_defaulttestpage,TQT_SIGNAL(toggled(bool)),m_testpage,TQT_SLOT(setEnabled(bool)));
 	connect(m_defaulttestpage,TQT_SIGNAL(toggled(bool)),this,TQT_SLOT(setEnabledPreviewButton(bool)));
 	connect(m_preview,TQT_SIGNAL(clicked()),TQT_SLOT(slotTestPagePreview()));
@@ -70,16 +70,16 @@ KMConfigGeneral::KMConfigGeneral(TQWidget *parent)
 	m_statusmsg = new TQCheckBox(i18n("Sho&w printing status message box"), m_statusbox);
 	m_uselast = new TQCheckBox(i18n("De&faults to the last printer used in the application"), m_statusbox);
 
-	//tqlayout
+	//layout
 	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	lay0->addWidget(m_timerbox);
 	lay0->addWidget(m_testpagebox);
 	lay0->addWidget(m_statusbox);
 	lay0->addStretch(1);
-	QVBoxLayout	*lay1 = new TQVBoxLayout(m_timerbox->tqlayout(),
+	QVBoxLayout	*lay1 = new TQVBoxLayout(m_timerbox->layout(),
 		KDialog::spacingHint());
 	lay1->addWidget(m_timer);
-	QVBoxLayout	*lay2 = new TQVBoxLayout(m_testpagebox->tqlayout(),
+	QVBoxLayout	*lay2 = new TQVBoxLayout(m_testpagebox->layout(),
 		KDialog::spacingHint());
 	QHBoxLayout	*lay3 = new TQHBoxLayout(0, 0, 0);
 	lay2->addWidget(m_defaulttestpage);
@@ -87,7 +87,7 @@ KMConfigGeneral::KMConfigGeneral(TQWidget *parent)
 	lay2->addLayout(lay3);
 	lay3->addStretch(1);
 	lay3->addWidget(m_preview);
-	QVBoxLayout	*lay4 = new TQVBoxLayout(m_statusbox->tqlayout(),
+	QVBoxLayout	*lay4 = new TQVBoxLayout(m_statusbox->layout(),
 		KDialog::spacingHint());
 	lay4->addWidget(m_statusmsg);
 	lay4->addWidget(m_uselast);
@@ -114,7 +114,7 @@ void KMConfigGeneral::loadConfig(KConfig *conf)
 		m_defaulttestpage->setChecked(true);
 		m_testpage->setURL(tpage);
 	}
-	m_statusmsg->setChecked(conf->readBoolEntry("ShowtqStatusMsg", true));
+	m_statusmsg->setChecked(conf->readBoolEntry("ShowStatusMsg", true));
 	m_uselast->setChecked(conf->readBoolEntry("UseLast", true));
 }
 
@@ -123,10 +123,10 @@ void KMConfigGeneral::saveConfig(KConfig *conf)
 	conf->setGroup("General");
 	conf->writeEntry("TimerDelay",m_timer->value());
 	conf->writePathEntry("TestPage",(m_defaulttestpage->isChecked() ? m_testpage->url() : TQString::null));
-	if (m_defaulttestpage->isChecked() && KMimeMagic::self()->tqfindFileType(m_testpage->url())->mimeType() != "application/postscript")
+	if (m_defaulttestpage->isChecked() && KMimeMagic::self()->findFileType(m_testpage->url())->mimeType() != "application/postscript")
 		KMessageBox::sorry(this, i18n("The selected test page is not a PostScript file. You may not "
 		                              "be able to test your printer anymore."));
-	conf->writeEntry("ShowtqStatusMsg", m_statusmsg->isChecked());
+	conf->writeEntry("ShowStatusMsg", m_statusmsg->isChecked());
 	conf->writeEntry("UseLast", m_uselast->isChecked());
 }
 
@@ -136,7 +136,7 @@ void KMConfigGeneral::slotTestPagePreview()
 	if (tpage.isEmpty())
 		KMessageBox::error(this, i18n("Empty file name."));
 	else
-		KRun::runURL(KURL( tpage ), KMimeMagic::self()->tqfindFileType(tpage)->mimeType());
+		KRun::runURL(KURL( tpage ), KMimeMagic::self()->findFileType(tpage)->mimeType());
 }
 
 #include "kmconfiggeneral.moc"

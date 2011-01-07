@@ -311,7 +311,7 @@ void KCModuleProxy::runAsRoot()
 
 	TQPalette pal( red );
 	pal.setColor( TQColorGroup::Background, 
-		tqcolorGroup().background() );
+		colorGroup().background() );
 	d->embedFrame->setPalette( pal );
 	d->embedFrame->setLineWidth( 2 );
 	d->embedFrame->setMidLineWidth( 2 );
@@ -323,7 +323,7 @@ void KCModuleProxy::runAsRoot()
 
 	TQLabel *lblBusy = new TQLabel(i18n("<big>Loading...</big>"), d->embedWidget, "lblBusy" );
 	lblBusy->setTextFormat(RichText);
-	lblBusy->tqsetAlignment(AlignCenter);
+	lblBusy->setAlignment(AlignCenter);
 	lblBusy->setGeometry(0,0, d->kcm->width(), d->kcm->height());
 	lblBusy->show();
 
@@ -347,7 +347,7 @@ void KCModuleProxy::runAsRoot()
 
 		/* Remove all kdesu switches */
 		while( cmd.length() > 1 && cmd[ 0 ] == '-' )
-			cmd = cmd.remove( 0, cmd.tqfind( ' ' ) ).stripWhiteSpace();
+			cmd = cmd.remove( 0, cmd.find( ' ' ) ).stripWhiteSpace();
 	}
 
 	if (cmd.left(8) == "kcmshell")
@@ -416,7 +416,7 @@ void KCModuleProxy::rootExited()
 	/* Such that the "ordinary" module loads again */
 	d->rootMode = false;
 
-	d->topLayout->tqinvalidate();
+	d->topLayout->invalidate();
 
 	TQShowEvent ev;
 	showEvent( &ev ); 

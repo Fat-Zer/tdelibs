@@ -27,50 +27,50 @@
 namespace KTextEditor
 {
 
-class PrivateViewtqStatusMsgInterface
+class PrivateViewStatusMsgInterface
 {
   public:
-    PrivateViewtqStatusMsgInterface() {interface=0;}
-    ~PrivateViewtqStatusMsgInterface() {}
-    ViewtqStatusMsgDCOPInterface  *interface;
+    PrivateViewStatusMsgInterface() {interface=0;}
+    ~PrivateViewStatusMsgInterface() {}
+    ViewStatusMsgDCOPInterface  *interface;
 };
 
 }
 
 using namespace KTextEditor;
 
-unsigned int ViewtqStatusMsgInterface::globalViewtqStatusMsgInterfaceNumber = 0;
+unsigned int ViewStatusMsgInterface::globalViewStatusMsgInterfaceNumber = 0;
 
-ViewtqStatusMsgInterface::ViewtqStatusMsgInterface()
+ViewStatusMsgInterface::ViewStatusMsgInterface()
 {
-  globalViewtqStatusMsgInterfaceNumber++;
-  myViewtqStatusMsgInterfaceNumber = globalViewtqStatusMsgInterfaceNumber++;
+  globalViewStatusMsgInterfaceNumber++;
+  myViewStatusMsgInterfaceNumber = globalViewStatusMsgInterfaceNumber++;
 
-  d = new PrivateViewtqStatusMsgInterface();
-  ::TQString name = "ViewtqStatusMsgInterface#" + ::TQString::number(myViewtqStatusMsgInterfaceNumber);
-  d->interface = new ViewtqStatusMsgDCOPInterface(this, name.latin1());
+  d = new PrivateViewStatusMsgInterface();
+  ::TQString name = "ViewStatusMsgInterface#" + ::TQString::number(myViewStatusMsgInterfaceNumber);
+  d->interface = new ViewStatusMsgDCOPInterface(this, name.latin1());
 }
 
-ViewtqStatusMsgInterface::~ViewtqStatusMsgInterface()
+ViewStatusMsgInterface::~ViewStatusMsgInterface()
 {
   delete d->interface;
   delete d;
 }
 
-unsigned int ViewtqStatusMsgInterface::viewtqStatusMsgInterfaceNumber () const
+unsigned int ViewStatusMsgInterface::viewStatusMsgInterfaceNumber () const
 {
-  return myViewtqStatusMsgInterfaceNumber;
+  return myViewStatusMsgInterfaceNumber;
 }
 
-void ViewtqStatusMsgInterface::setViewtqStatusMsgInterfaceDCOPSuffix (const TQCString &suffix)
+void ViewStatusMsgInterface::setViewStatusMsgInterfaceDCOPSuffix (const TQCString &suffix)
 {
-  d->interface->setObjId ("ViewtqStatusMsgInterface#"+suffix);
+  d->interface->setObjId ("ViewStatusMsgInterface#"+suffix);
 }
 
-ViewtqStatusMsgInterface *KTextEditor::viewtqStatusMsgInterface (View *view)
+ViewStatusMsgInterface *KTextEditor::viewStatusMsgInterface (View *view)
 {           
   if (!view)
     return 0;
 
-  return static_cast<ViewtqStatusMsgInterface*>(view->qt_cast("KTextEditor::ViewtqStatusMsgInterface"));
+  return static_cast<ViewStatusMsgInterface*>(view->qt_cast("KTextEditor::ViewStatusMsgInterface"));
 }

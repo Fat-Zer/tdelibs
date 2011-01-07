@@ -79,7 +79,7 @@ class KateCodeFoldingNode
 
     inline KateCodeFoldingNode *child (uint index) const { return m_children[index]; }
 
-    inline int tqfindChild (KateCodeFoldingNode *node, uint start = 0) const { return m_children.tqfind (node, start); }
+    inline int findChild (KateCodeFoldingNode *node, uint start = 0) const { return m_children.find (node, start); }
 
     inline void appendChild (KateCodeFoldingNode *node) { m_children.resize(m_children.size()+1); m_children[m_children.size()-1] = node; }
 
@@ -113,7 +113,7 @@ class KateCodeFoldingNode
     TQMemArray<KateCodeFoldingNode*> m_children;
 };
 
-class KateCodeFoldingTree : public TQObject
+class KateCodeFoldingTree : public QObject
 {
   friend class KateCodeFoldingNode;
 
@@ -123,7 +123,7 @@ class KateCodeFoldingTree : public TQObject
     KateCodeFoldingTree (KateBuffer *buffer);
     ~KateCodeFoldingTree ();
 
-    KateCodeFoldingNode *tqfindNodeForLine (unsigned int line);
+    KateCodeFoldingNode *findNodeForLine (unsigned int line);
 
     unsigned int getRealLine         (unsigned int virtualLine);
     unsigned int getVirtualLine      (unsigned int realLine);
@@ -141,7 +141,7 @@ class KateCodeFoldingTree : public TQObject
     void fixRoot (int endLRel);
     void clear ();
 
-    KateCodeFoldingNode *tqfindNodeForPosition(unsigned int line, unsigned int column);
+    KateCodeFoldingNode *findNodeForPosition(unsigned int line, unsigned int column);
   private:
 
     KateCodeFoldingNode m_root;
@@ -161,7 +161,7 @@ class KateCodeFoldingTree : public TQObject
 
     static bool trueVal;
 
-    KateCodeFoldingNode *tqfindNodeForLineDescending (KateCodeFoldingNode *, unsigned int, unsigned int, bool oneStepOnly=false);
+    KateCodeFoldingNode *findNodeForLineDescending (KateCodeFoldingNode *, unsigned int, unsigned int, bool oneStepOnly=false);
 
     bool correctEndings (signed char data, KateCodeFoldingNode *node, unsigned int line, unsigned int endCol, int insertPos);
 
@@ -185,8 +185,8 @@ class KateCodeFoldingTree : public TQObject
      */
     bool removeOpening (KateCodeFoldingNode *node,unsigned int line);
 
-    void tqfindAndMarkAllNodesforRemovalOpenedOrClosedAt (unsigned int line);
-    void tqfindAllNodesOpenedOrClosedAt (unsigned int line);
+    void findAndMarkAllNodesforRemovalOpenedOrClosedAt (unsigned int line);
+    void findAllNodesOpenedOrClosedAt (unsigned int line);
 
     void addNodeToFoundList  (KateCodeFoldingNode *node,unsigned int line,int childpos);
     void addNodeToRemoveList (KateCodeFoldingNode *node,unsigned int line);
@@ -219,4 +219,4 @@ class KateCodeFoldingTree : public TQObject
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

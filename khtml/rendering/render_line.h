@@ -129,7 +129,7 @@ public: // FIXME: Would like to make this protected, but methods are accessing t
     InlineBox* m_next; // The next element on the same line as us.
     InlineBox* m_prev; // The previous element on the same line as us.
 
-    InlineFlowBox* m_parent; // The box that tqcontains us.
+    InlineFlowBox* m_parent; // The box that contains us.
 };
 
 class InlineRunBox : public InlineBox

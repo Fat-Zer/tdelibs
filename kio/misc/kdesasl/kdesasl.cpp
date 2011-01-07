@@ -49,10 +49,10 @@ KDESasl::~KDESasl() {
 
 TQCString KDESasl::chooseMethod(const TQStrIList aMethods)
 {
-  if (aMethods.tqcontains("DIGEST-MD5")) mMethod = "DIGEST-MD5";
-  else if (aMethods.tqcontains("CRAM-MD5")) mMethod = "CRAM-MD5";
-  else if (aMethods.tqcontains("PLAIN")) mMethod = "PLAIN";
-  else if (aMethods.tqcontains("LOGIN")) mMethod = "LOGIN";
+  if (aMethods.contains("DIGEST-MD5")) mMethod = "DIGEST-MD5";
+  else if (aMethods.contains("CRAM-MD5")) mMethod = "CRAM-MD5";
+  else if (aMethods.contains("PLAIN")) mMethod = "PLAIN";
+  else if (aMethods.contains("LOGIN")) mMethod = "LOGIN";
   else mMethod = TQCString();
   return mMethod;
 }

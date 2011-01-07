@@ -64,7 +64,7 @@ public:
   virtual void saveAll( AddressBook *, Resource *, TQFile *file ) = 0;
     
   /**
-   * Checks if given file tqcontains the right format
+   * Checks if given file contains the right format
    */
   virtual bool checkFormat( TQFile *file ) const = 0;
 };

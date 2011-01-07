@@ -53,22 +53,22 @@ KMVirtualManager::~KMVirtualManager()
 {
 }
 
-KMPrinter* KMVirtualManager::tqfindPrinter(const TQString& name)
+KMPrinter* KMVirtualManager::findPrinter(const TQString& name)
 {
-        return m_manager->tqfindPrinter(name);
+        return m_manager->findPrinter(name);
 }
 
-KMPrinter* KMVirtualManager::tqfindInstance(KMPrinter *p, const TQString& name)
+KMPrinter* KMVirtualManager::findInstance(KMPrinter *p, const TQString& name)
 {
 	QString	instname(instanceName(p->printerName(),name));
-	return tqfindPrinter(instname);
+	return findPrinter(instname);
 }
 
 void KMVirtualManager::addPrinter(KMPrinter *p)
 {
 	if (p && p->isValid())
 	{
-		KMPrinter	*other = tqfindPrinter(p->name());
+		KMPrinter	*other = findPrinter(p->name());
 		if (other)
 		{
 			other->copy(*p);
@@ -97,7 +97,7 @@ void KMVirtualManager::setDefault(KMPrinter *p, bool saveflag)
 bool KMVirtualManager::isDefault(KMPrinter *p, const TQString& name)
 {
 	QString	instname(instanceName(p->printerName(),name));
-	KMPrinter	*printer = tqfindPrinter(instname);
+	KMPrinter	*printer = findPrinter(instname);
 	if (printer)
 		return printer->isSoftDefault();
 	else
@@ -107,7 +107,7 @@ bool KMVirtualManager::isDefault(KMPrinter *p, const TQString& name)
 void KMVirtualManager::create(KMPrinter *p, const TQString& name)
 {
 	QString	instname = instanceName(p->printerName(),name);
-	if (tqfindPrinter(instname) != NULL) return;
+	if (findPrinter(instname) != NULL) return;
 	KMPrinter	*printer = new KMPrinter;
 	printer->setName(instname);
 	printer->setPrinterName(p->printerName());
@@ -124,8 +124,8 @@ void KMVirtualManager::create(KMPrinter *p, const TQString& name)
 void KMVirtualManager::copy(KMPrinter *p, const TQString& src, const TQString& name)
 {
 	QString	instsrc(instanceName(p->printerName(),src)), instname(instanceName(p->printerName(),name));
-	KMPrinter	*prsrc = tqfindPrinter(instsrc);
-	if (!prsrc || tqfindPrinter(instname) != NULL) return;
+	KMPrinter	*prsrc = findPrinter(instsrc);
+	if (!prsrc || findPrinter(instname) != NULL) return;
 	KMPrinter	*printer = new KMPrinter;
 	printer->copy(*prsrc);
 	printer->setName(instname);
@@ -138,7 +138,7 @@ void KMVirtualManager::copy(KMPrinter *p, const TQString& src, const TQString& n
 void KMVirtualManager::remove(KMPrinter *p, const TQString& name)
 {
         QString	instname = instanceName(p->printerName(),name);
-	KMPrinter	*printer = tqfindPrinter(instname);
+	KMPrinter	*printer = findPrinter(instname);
 	if (!printer) return;
         if (name.isEmpty())
         { // remove default instance => only remove options, keep the KMPrinter object
@@ -167,11 +167,11 @@ void KMVirtualManager::setAsDefault(KMPrinter *p, const TQString& name, TQWidget
 			return;
 	}
 
-	KMPrinter	*printer = tqfindPrinter(instname);
+	KMPrinter	*printer = findPrinter(instname);
 	if (!printer)
 	{ // create it if necessary
 		create(p,name);
-		printer = tqfindPrinter(instname);
+		printer = findPrinter(instname);
 	}
 	if (printer)
 		setDefault(printer,true);
@@ -210,7 +210,7 @@ void KMVirtualManager::refresh()
 
 void KMVirtualManager::checkPrinter(KMPrinter *p)
 {
-	KMPrinter	*realprinter = m_manager->tqfindPrinter(p->printerName());
+	KMPrinter	*realprinter = m_manager->findPrinter(p->printerName());
 	if (!realprinter || realprinter->isDiscarded())
 	{
 		p->setType(KMPrinter::Invalid);
@@ -263,7 +263,7 @@ void KMVirtualManager::loadFile(const TQString& filename)
 			words = TQStringList::split(' ',line,false);
 			if (words.count() < 2) continue;
 			pair = TQStringList::split('/',words[1],false);
-			realprinter = m_manager->tqfindPrinter(KURL::decode_string(pair[0]));
+			realprinter = m_manager->findPrinter(KURL::decode_string(pair[0]));
 			if (realprinter && !realprinter->isDiscarded())
 			{ // keep only instances corresponding to an existing and
 			  // non discarded printer.
@@ -286,7 +286,7 @@ void KMVirtualManager::loadFile(const TQString& filename)
 				addPrinter(printer);	// don't use "printer" after this point !!!
 				// check default state
 				if (words[0].lower().startsWith("default"))
-					setDefault(tqfindPrinter(KURL::decode_string(words[1])),false);
+					setDefault(findPrinter(KURL::decode_string(words[1])),false);
 			}
 		}
 	}

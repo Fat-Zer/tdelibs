@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kdebug.h>
 
-time_t tqcurrentDate;
+time_t currentDate;
 int m_maxCacheAge;
 int m_maxCacheSize;
 
@@ -109,7 +109,7 @@ FileInfo *readEntry( const TQString &filename)
    if (ok)
    {
       creationDate = (time_t) strtoul(buffer, 0, 10);
-      age = (int) difftime(tqcurrentDate, creationDate);
+      age = (int) difftime(currentDate, creationDate);
       if ( m_maxCacheAge && ( age > m_maxCacheAge))
       {
          ok = false; // Expired
@@ -125,7 +125,7 @@ FileInfo *readEntry( const TQString &filename)
 #if 0
       time_t expireDate;
       expireDate = (time_t) strtoul(buffer, 0, 10);
-      if (expireDate && (expireDate < tqcurrentDate))
+      if (expireDate && (expireDate < currentDate))
          ok = false; // Expired
 #endif
    }
@@ -213,7 +213,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
       }
    }
 
-   tqcurrentDate = time(0);
+   currentDate = time(0);
    m_maxCacheAge = KProtocolManager::maxCacheAge();
    m_maxCacheSize = KProtocolManager::maxCacheSize();
 

@@ -11,7 +11,7 @@ void fillInstance(KInstance &ins, const TQString &srcdir = TQString::null );
 bool saveToCache( const TQString &contents, const TQString &filename );
 TQString lookForCache( const TQString &filename );
 TQCString fromUnicode( const TQString &data );
-void tqreplaceCharsetHeader( TQString &output );
+void replaceCharsetHeader( TQString &output );
 
 extern bool warnings_exist;
 extern TQString *SRCDIR;

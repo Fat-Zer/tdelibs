@@ -124,7 +124,7 @@ TQString Agent::asString() const
 
 TQDataStream &KABC::operator<<( TQDataStream &s, const Agent &agent )
 {
-  TQ_UINT32 hasAddressee = ( agent.mAddressee != 0 );
+  Q_UINT32 hasAddressee = ( agent.mAddressee != 0 );
 
   s << agent.mIntern << agent.mUrl << hasAddressee;
   if ( hasAddressee )
@@ -135,7 +135,7 @@ TQDataStream &KABC::operator<<( TQDataStream &s, const Agent &agent )
 
 TQDataStream &KABC::operator>>( TQDataStream &s, Agent &agent )
 {
-  TQ_UINT32 hasAddressee;
+  Q_UINT32 hasAddressee;
 
   s >> agent.mIntern >> agent.mUrl >> hasAddressee;
 

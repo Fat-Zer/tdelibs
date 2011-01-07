@@ -27,13 +27,13 @@ public:
 
     void queryIcons(TQStringList *lst, int size, KIcon::Context context) const;
     void queryIconsByContext(TQStringList *lst, int size, KIcon::Context context) const;
-    KIcon tqfindIcon(const TQString& name, int size, KIcon::MatchType match) const;
+    KIcon findIcon(const TQString& name, int size, KIcon::MatchType match) const;
     void printTree(TQString& dbgString) const;
 
     KIconTheme *theme;
 };
 
-class KIconLoaderPrivate : public TQObject
+class KIconLoaderPrivate : public QObject
 {
     Q_OBJECT
 public:

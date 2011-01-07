@@ -49,7 +49,7 @@ KPanelExtension::KPanelExtension(const TQString& configFile, Type type,
   : TQFrame(parent, name)
   , _type(type)
   , _position( Top )
-  , _tqalignment( LeftTop )
+  , _alignment( LeftTop )
   , _config(0)
   , _actions(actions)
 {
@@ -71,11 +71,11 @@ void KPanelExtension::setPosition( Position p )
   positionChange( p );
 }
 
-void KPanelExtension::tqsetAlignment( Alignment a )
+void KPanelExtension::setAlignment( Alignment a )
 {
-  if( _tqalignment == a ) return;
-  _tqalignment = a;
-  tqalignmentChange( a );
+  if( _alignment == a ) return;
+  _alignment = a;
+  alignmentChange( a );
 }
 
 void KPanelExtension::setSize( Size size, int customSize )

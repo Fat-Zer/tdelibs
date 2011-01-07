@@ -211,7 +211,7 @@ void KDirSelectDialog::setCurrentURL( const KURL& url )
     {
         while ( pos > 0 )
         {
-            pos = path.tqfindRev( '/', pos -1 );
+            pos = path.findRev( '/', pos -1 );
             if ( pos >= 0 )
             {
                 dirToList.setPath( path.left( pos +1 ) );
@@ -232,7 +232,7 @@ void KDirSelectDialog::openNextDir( KFileTreeViewItem * /*parent*/ )
 
     KURL url = d->dirsToList.pop();
 
-    KFileTreeViewItem *item = view()->tqfindItem( d->branch, url.path().mid(1));
+    KFileTreeViewItem *item = view()->findItem( d->branch, url.path().mid(1));
     if ( item )
     {
         if ( !item->isOpen() )
@@ -248,7 +248,7 @@ void KDirSelectDialog::slotNextDirToList( KFileTreeViewItem *item )
 {
     // scroll to make item the topmost item
     view()->ensureItemVisible( item );
-    TQRect r = view()->tqitemRect( item );
+    TQRect r = view()->itemRect( item );
     if ( r.isValid() )
     {
         int x, y;
@@ -376,7 +376,7 @@ void KDirSelectDialog::slotComboTextChanged( const TQString& text )
     if ( d->branch )
     {
         KURL url = KURL::fromPathOrURL( KShell::tildeExpand( text ) );
-        KFileTreeViewItem *item = d->branch->tqfindTVIByURL( url );
+        KFileTreeViewItem *item = d->branch->findTVIByURL( url );
         if ( item )
         {
             view()->setCurrentItem( item );
@@ -390,8 +390,8 @@ void KDirSelectDialog::slotComboTextChanged( const TQString& text )
     if ( item )
     {
         item->setSelected( false );
-        // 2002/12/27, deselected item is not tqrepainted, so force it
-        item->tqrepaint();
+        // 2002/12/27, deselected item is not repainted, so force it
+        item->repaint();
     }
 }
 
@@ -426,7 +426,7 @@ void KDirSelectDialog::slotMkdir()
     {
         folderurl.addPath( *it );
         exists = KIO::NetAccess::exists( folderurl, false, 0 );
-        writeOk = !exists && KIO::NetAccess::mkdir( folderurl, tqtopLevelWidget() );
+        writeOk = !exists && KIO::NetAccess::mkdir( folderurl, topLevelWidget() );
     }
 
     if ( exists ) // url was already existant

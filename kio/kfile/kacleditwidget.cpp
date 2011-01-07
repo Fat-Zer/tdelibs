@@ -63,7 +63,7 @@ static struct {
     { I18N_NOOP( "Owner" ), "user-grey", 0 },
     { I18N_NOOP( "Owning Group" ), "group-grey", 0 },
     { I18N_NOOP( "Others" ), "others-grey", 0 },
-    { I18N_NOOP( "Mask" ), "tqmask", 0 },
+    { I18N_NOOP( "Mask" ), "mask", 0 },
     { I18N_NOOP( "Named User" ), "user", 0 },
     { I18N_NOOP( "Named Group" ), "group", 0 },
 };
@@ -85,7 +85,7 @@ KACLEditWidget::KACLEditWidget( TQWidget *parent, const char *name )
     m_DelBtn = new TQPushButton( i18n( "Delete Entry" ), vbox, "delete_entry_button" );
     connect( m_DelBtn, TQT_SIGNAL( clicked() ), m_listView, TQT_SLOT( slotRemoveEntry() ) );
     TQWidget *spacer = new TQWidget( vbox );
-    spacer->tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Expanding );
+    spacer->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Expanding );
     slotUpdateButtons();
 }
 
@@ -148,7 +148,7 @@ KACLListViewItem::KACLListViewItem( TQListView* parent,
    qualifier( _qualifier ), isPartial( false )
 {
     m_pACLListView = dynamic_cast<KACLListView*>( parent );
-    tqrepaint();
+    repaint();
 }
 
 
@@ -192,7 +192,7 @@ TQString KACLListViewItem::key( int, bool ) const
 }
 
 void KACLListViewItem::paintCell( TQPainter* p, const TQColorGroup &cg,
-                                  int column, int width, int tqalignment )
+                                  int column, int width, int alignment )
 {
     TQColorGroup mycg = cg;
     if ( isDefault ) {
@@ -204,7 +204,7 @@ void KACLListViewItem::paintCell( TQPainter* p, const TQColorGroup &cg,
         mycg.setColor( TQColorGroup::Text, TQColor( 100, 100, 100 ) );
         p->setFont( font );
     }
-    KListViewItem::paintCell( p, mycg, column, width, tqalignment );
+    KListViewItem::paintCell( p, mycg, column, width, alignment );
 
     KACLListViewItem *below =0;
     if ( itemBelow() )
@@ -247,7 +247,7 @@ void KACLListViewItem::updatePermPixmaps()
         setPixmap( 4, TQPixmap() );
 }
 
-void KACLListViewItem::tqrepaint()
+void KACLListViewItem::repaint()
 {
     int idx = 0;
     switch ( type )
@@ -287,7 +287,7 @@ void KACLListViewItem::calcEffectiveRights()
 {
     TQString strEffective = TQString( "---" );
 
-    // Do we need to worry about the tqmask entry? It applies to named users,
+    // Do we need to worry about the mask entry? It applies to named users,
     // owning group, and named groups
     if ( m_pACLListView->hasMaskEntry()
             && ( type == KACLListView::NamedUser
@@ -296,22 +296,22 @@ void KACLListViewItem::calcEffectiveRights()
             && !isDefault )
     {
 
-        strEffective[0] = ( m_pACLListView->tqmaskPermissions() & value & ACL_READ ) ? 'r' : '-';
-        strEffective[1] = ( m_pACLListView->tqmaskPermissions() & value & ACL_WRITE ) ? 'w' : '-';
-        strEffective[2] = ( m_pACLListView->tqmaskPermissions() & value & ACL_EXECUTE ) ? 'x' : '-';
+        strEffective[0] = ( m_pACLListView->maskPermissions() & value & ACL_READ ) ? 'r' : '-';
+        strEffective[1] = ( m_pACLListView->maskPermissions() & value & ACL_WRITE ) ? 'w' : '-';
+        strEffective[2] = ( m_pACLListView->maskPermissions() & value & ACL_EXECUTE ) ? 'x' : '-';
 /*
         // What about any partial perms?
-        if ( tqmaskPerms & partialPerms & ACL_READ || // Partial perms on entry
-             tqmaskPartialPerms & perms & ACL_READ || // Partial perms on tqmask
-             tqmaskPartialPerms & partialPerms & ACL_READ ) // Partial perms on tqmask and entry
+        if ( maskPerms & partialPerms & ACL_READ || // Partial perms on entry
+             maskPartialPerms & perms & ACL_READ || // Partial perms on mask
+             maskPartialPerms & partialPerms & ACL_READ ) // Partial perms on mask and entry
             strEffective[0] = 'R';
-        if ( tqmaskPerms & partialPerms & ACL_WRITE || // Partial perms on entry
-             tqmaskPartialPerms & perms & ACL_WRITE || // Partial perms on tqmask
-             tqmaskPartialPerms & partialPerms & ACL_WRITE ) // Partial perms on tqmask and entry
+        if ( maskPerms & partialPerms & ACL_WRITE || // Partial perms on entry
+             maskPartialPerms & perms & ACL_WRITE || // Partial perms on mask
+             maskPartialPerms & partialPerms & ACL_WRITE ) // Partial perms on mask and entry
             strEffective[1] = 'W';
-        if ( tqmaskPerms & partialPerms & ACL_EXECUTE || // Partial perms on entry
-             tqmaskPartialPerms & perms & ACL_EXECUTE || // Partial perms on tqmask
-             tqmaskPartialPerms & partialPerms & ACL_EXECUTE ) // Partial perms on tqmask and entry
+        if ( maskPerms & partialPerms & ACL_EXECUTE || // Partial perms on entry
+             maskPartialPerms & perms & ACL_EXECUTE || // Partial perms on mask
+             maskPartialPerms & partialPerms & ACL_EXECUTE ) // Partial perms on mask and entry
             strEffective[2] = 'X';
 */
     }
@@ -339,7 +339,7 @@ bool KACLListViewItem::isDeletable() const
 {
     bool isMaskAndDeletable = false;
     if (type == KACLListView::Mask ) {
-        if ( !isDefault &&  m_pACLListView->tqmaskCanBeDeleted() )
+        if ( !isDefault &&  m_pACLListView->maskCanBeDeleted() )
             isMaskAndDeletable = true;
         else if ( isDefault &&  m_pACLListView->defaultMaskCanBeDeleted() )
             isMaskAndDeletable = true;
@@ -424,8 +424,8 @@ EditACLEntryDialog::EditACLEntryDialog( KACLListView *listView, KACLListViewItem
     m_buttonGroup->insert( owningGroupType, KACLListView::Group );
     TQRadioButton *othersType = new TQRadioButton( i18n("Others"), m_buttonGroup, "othersType" );
     m_buttonGroup->insert( othersType, KACLListView::Others );
-    TQRadioButton *tqmaskType = new TQRadioButton( i18n("Mask"), m_buttonGroup, "tqmaskType" );
-    m_buttonGroup->insert( tqmaskType, KACLListView::Mask );
+    TQRadioButton *maskType = new TQRadioButton( i18n("Mask"), m_buttonGroup, "maskType" );
+    m_buttonGroup->insert( maskType, KACLListView::Mask );
     TQRadioButton *namedUserType = new TQRadioButton( i18n("Named User"), m_buttonGroup, "namesUserType" );
     m_buttonGroup->insert( namedUserType, KACLListView::NamedUser );
     TQRadioButton *namedGroupType = new TQRadioButton( i18n("Named Group"), m_buttonGroup, "namedGroupType" );
@@ -481,9 +481,9 @@ void EditACLEntryDialog::slotUpdateAllowedTypes()
     }
     for ( int i=1; i < KACLListView::AllTypes; i=i*2 ) {
         if ( allowedTypes & i )
-            m_buttonGroup->tqfind( i )->show();
+            m_buttonGroup->find( i )->show();
         else
-            m_buttonGroup->tqfind( i )->hide();
+            m_buttonGroup->find( i )->hide();
     }
 }
 
@@ -495,17 +495,17 @@ void EditACLEntryDialog::slotUpdateAllowedUsersAndGroups()
     m_groupsCombo->clear();
     if ( m_defaultCB && m_defaultCB->isChecked() ) {
         m_usersCombo->insertStringList( m_defaultUsers );
-        if ( m_defaultUsers.tqfind( oldUser ) != m_defaultUsers.end() )
+        if ( m_defaultUsers.find( oldUser ) != m_defaultUsers.end() )
             m_usersCombo->setCurrentText( oldUser );
         m_groupsCombo->insertStringList( m_defaultGroups );
-        if ( m_defaultGroups.tqfind( oldGroup ) != m_defaultGroups.end() )
+        if ( m_defaultGroups.find( oldGroup ) != m_defaultGroups.end() )
             m_groupsCombo->setCurrentText( oldGroup );
     } else {
         m_usersCombo->insertStringList( m_users );
-        if ( m_users.tqfind( oldUser ) != m_users.end() )
+        if ( m_users.find( oldUser ) != m_users.end() )
             m_usersCombo->setCurrentText( oldUser );
         m_groupsCombo->insertStringList( m_groups );
-        if ( m_groups.tqfind( oldGroup ) != m_groups.end() )
+        if ( m_groups.find( oldGroup ) != m_groups.end() )
             m_groupsCombo->setCurrentText( oldGroup );
     }
 }
@@ -527,7 +527,7 @@ void EditACLEntryDialog::slotOk()
     }
     if ( m_defaultCB )
         m_item->isDefault = m_defaultCB->isChecked();
-    m_item->tqrepaint();
+    m_item->repaint();
 
     KDialogBase::slotOk();
 }
@@ -571,10 +571,10 @@ KACLListView::KACLListView( TQWidget* parent, const char* name )
 
     // Load the avatars
     for ( int i=0; i < LAST_IDX; ++i ) {
-        s_itemAttributes[i].pixmap = new TQPixmap( qembed_tqfindImage( s_itemAttributes[i].pixmapName ) );
+        s_itemAttributes[i].pixmap = new TQPixmap( qembed_findImage( s_itemAttributes[i].pixmapName ) );
     }
-    m_yesPixmap = new TQPixmap( qembed_tqfindImage( "yes" ) );
-    m_yesPartialPixmap = new TQPixmap( qembed_tqfindImage( "yespartial" ) );
+    m_yesPixmap = new TQPixmap( qembed_findImage( "yes" ) );
+    m_yesPartialPixmap = new TQPixmap( qembed_findImage( "yespartial" ) );
 
     setSelectionMode( TQListView::Extended );
 
@@ -582,14 +582,14 @@ KACLListView::KACLListView( TQWidget* parent, const char* name )
     struct passwd *user = 0;
     setpwent();
     while ( ( user = getpwent() ) != 0 ) {
-       m_allUsers << TQString::tqfromLatin1( user->pw_name );
+       m_allUsers << TQString::fromLatin1( user->pw_name );
     }
     endpwent();
 
     struct group *gr = 0;
     setgrent();
     while ( ( gr = getgrent() ) != 0 ) {
-       m_allGroups << TQString::tqfromLatin1( gr->gr_name );
+       m_allGroups << TQString::fromLatin1( gr->gr_name );
     }
     endgrent();
     m_allUsers.sort();
@@ -651,9 +651,9 @@ void KACLListView::fillItemsFromACL( const KACL &pACL, bool defaults )
     item = new KACLListViewItem( this, Others, pACL.othersPermissions(), defaults );
 
     bool hasMask = false;
-    unsigned short tqmask = pACL.tqmaskPermissions( hasMask );
+    unsigned short mask = pACL.maskPermissions( hasMask );
     if ( hasMask ) {
-        item = new KACLListViewItem( this, Mask, tqmask, defaults );
+        item = new KACLListViewItem( this, Mask, mask, defaults );
     }
 
     // read all named user entries
@@ -680,7 +680,7 @@ void KACLListView::setACL( const KACL &acl )
     m_ACL = acl;
     fillItemsFromACL( m_ACL );
 
-    m_tqmask = acl.tqmaskPermissions( m_hasMask );
+    m_mask = acl.maskPermissions( m_hasMask );
     calculateEffectiveRights();
 }
 
@@ -818,13 +818,13 @@ void KACLListView::entryClicked( TQListViewItem* pItem, const TQPoint& /*pt*/, i
     {
     // Mark the required entries as no longer being partial entries.
     // That is, they will get applied to all selected directories.
-    KACLListViewItem* pUserObj = tqfindACLEntryByType( this, ACL_USER_OBJ );
+    KACLListViewItem* pUserObj = findACLEntryByType( this, ACL_USER_OBJ );
     pUserObj->entry()->setPartialEntry( false );
 
-    KACLListViewItem* pGroupObj = tqfindACLEntryByType( this, ACL_GROUP_OBJ );
+    KACLListViewItem* pGroupObj = findACLEntryByType( this, ACL_GROUP_OBJ );
     pGroupObj->entry()->setPartialEntry( false );
 
-    KACLListViewItem* pOther = tqfindACLEntryByType( this, ACL_OTHER );
+    KACLListViewItem* pOther = findACLEntryByType( this, ACL_OTHER );
     pOther->entry()->setPartialEntry( false );
 
     update();
@@ -845,29 +845,29 @@ void KACLListView::calculateEffectiveRights()
 }
 
 
-unsigned short KACLListView::tqmaskPermissions() const
+unsigned short KACLListView::maskPermissions() const
 {
-  return m_tqmask;
+  return m_mask;
 }
 
 
-void KACLListView::setMaskPermissions( unsigned short tqmaskPerms )
+void KACLListView::setMaskPermissions( unsigned short maskPerms )
 {
-    m_tqmask = tqmaskPerms;
+    m_mask = maskPerms;
     calculateEffectiveRights();
 }
 
 
-acl_perm_t KACLListView::tqmaskPartialPermissions() const
+acl_perm_t KACLListView::maskPartialPermissions() const
 {
   //  return m_pMaskEntry->m_partialPerms;
   return 0;
 }
 
 
-void KACLListView::setMaskPartialPermissions( acl_perm_t /*tqmaskPartialPerms*/ )
+void KACLListView::setMaskPartialPermissions( acl_perm_t /*maskPartialPerms*/ )
 {
-    //m_pMaskEntry->m_partialPerms = tqmaskPartialPerms;
+    //m_pMaskEntry->m_partialPerms = maskPartialPerms;
     calculateEffectiveRights();
 }
 
@@ -882,12 +882,12 @@ bool KACLListView::hasDefaultEntries() const
     return false;
 }
 
-const KACLListViewItem* KACLListView::tqfindDefaultItemByType( EntryType type ) const
+const KACLListViewItem* KACLListView::findDefaultItemByType( EntryType type ) const
 {
-    return tqfindItemByType( type, true );
+    return findItemByType( type, true );
 }
 
-const KACLListViewItem* KACLListView::tqfindItemByType( EntryType type, bool defaults ) const
+const KACLListViewItem* KACLListView::findItemByType( EntryType type, bool defaults ) const
 {
     TQListViewItemIterator it( const_cast<KACLListView*>( this ) );
     while ( it.current() ) {
@@ -905,7 +905,7 @@ unsigned short KACLListView::calculateMaskValue( bool defaults ) const
 {
     // KACL auto-adds the relevant maks entries, so we can simply query
     bool dummy;
-    return itemsToACL( defaults ).tqmaskPermissions( dummy );
+    return itemsToACL( defaults ).maskPermissions( dummy );
 }
 
 void KACLListView::slotAddEntry()
@@ -914,7 +914,7 @@ void KACLListView::slotAddEntry()
     if ( !m_hasMask )
         allowedTypes |= Mask;
     int allowedDefaultTypes = NamedUser | NamedGroup;
-    if ( !tqfindDefaultItemByType( Mask ) )
+    if ( !findDefaultItemByType( Mask ) )
         allowedDefaultTypes |=  Mask;
     if ( !hasDefaultEntries() )
         allowedDefaultTypes |= User | Group;
@@ -927,24 +927,24 @@ void KACLListView::slotAddEntry()
     if ( !item ) return; // canceled
     if ( item->type == Mask && !item->isDefault ) {
         m_hasMask = true;
-        m_tqmask = item->value;
+        m_mask = item->value;
     }
     if ( item->isDefault && !hasDefaultEntries() ) {
         // first default entry, fill in what is needed
         if ( item->type != User ) {
-            unsigned short v = tqfindDefaultItemByType( User )->value;
+            unsigned short v = findDefaultItemByType( User )->value;
             new KACLListViewItem( this, User, v, true );
         }
         if ( item->type != Group ) {
-            unsigned short v = tqfindDefaultItemByType( Group )->value;
+            unsigned short v = findDefaultItemByType( Group )->value;
             new KACLListViewItem( this, Group, v, true );
         }
         if ( item->type != Others ) {
-            unsigned short v = tqfindDefaultItemByType( Others )->value;
+            unsigned short v = findDefaultItemByType( Others )->value;
             new KACLListViewItem( this, Others, v, true );
         }
     }
-    const KACLListViewItem *defaultMaskItem = tqfindDefaultItemByType( Mask );
+    const KACLListViewItem *defaultMaskItem = findDefaultItemByType( Mask );
     if ( item->isDefault && !defaultMaskItem ) {
         unsigned short v = calculateMaskValue( true );
         new KACLListViewItem( this, Mask, v, true );
@@ -953,11 +953,11 @@ void KACLListView::slotAddEntry()
             ( item->type == Group
               || item->type == NamedUser
               || item->type == NamedGroup ) ) {
-        // auto-add a tqmask entry
+        // auto-add a mask entry
         unsigned short v = calculateMaskValue( false );
         new KACLListViewItem( this, Mask, v, false );
         m_hasMask = true;
-        m_tqmask = v;
+        m_mask = v;
     }
     calculateEffectiveRights();
     sort();
@@ -978,7 +978,7 @@ void KACLListView::slotEditEntry()
     if ( !m_hasMask || itemWasMask )
         allowedTypes |= Mask;
     int allowedDefaultTypes = item->type | NamedUser | NamedGroup;
-    if ( !tqfindDefaultItemByType( Mask ) )
+    if ( !findDefaultItemByType( Mask ) )
         allowedDefaultTypes |=  Mask;
     if ( !hasDefaultEntries() )
         allowedDefaultTypes |= User | Group;
@@ -990,10 +990,10 @@ void KACLListView::slotEditEntry()
     dlg.exec();
     if ( itemWasMask && item->type != Mask ) {
         m_hasMask = false;
-        m_tqmask = 0;
+        m_mask = 0;
     }
     if ( !itemWasMask && item->type == Mask ) {
-        m_tqmask = item->value;
+        m_mask = item->value;
         m_hasMask = true;
     }
     calculateEffectiveRights();
@@ -1006,20 +1006,20 @@ void KACLListView::slotRemoveEntry()
     while ( it.current() ) {
         KACLListViewItem *item = static_cast<KACLListViewItem*>( it.current() );
         ++it;
-        /* First check if it's a tqmask entry and if so, make sure that there is
-         * either no name user or group entry, which means the tqmask can be 
+        /* First check if it's a mask entry and if so, make sure that there is
+         * either no name user or group entry, which means the mask can be 
          * removed, or don't remove it, but reset it. That is allowed. */
         if ( item->type == Mask ) {
             bool itemWasDefault = item->isDefault;
-            if ( !itemWasDefault && tqmaskCanBeDeleted() ) {
+            if ( !itemWasDefault && maskCanBeDeleted() ) {
                 m_hasMask= false;
-                m_tqmask = 0;
+                m_mask = 0;
                 delete item;
             } else if ( itemWasDefault && defaultMaskCanBeDeleted() ) {
                 delete item;
             } else {
                 item->value = 0;
-                item->tqrepaint();
+                item->repaint();
             }
             if ( !itemWasDefault )
                 calculateEffectiveRights();
@@ -1030,7 +1030,7 @@ void KACLListView::slotRemoveEntry()
                       || item->type == Group
                       || item->type == Others ) ) {
                 item->value = 0;
-                item->tqrepaint();
+                item->repaint();
             } else {
                 delete item;
             }
@@ -1038,14 +1038,14 @@ void KACLListView::slotRemoveEntry()
     }
 }
 
-bool KACLListView::tqmaskCanBeDeleted() const
+bool KACLListView::maskCanBeDeleted() const
 {
-   return !tqfindItemByType( NamedUser ) && !tqfindItemByType( NamedGroup );
+   return !findItemByType( NamedUser ) && !findItemByType( NamedGroup );
 }
 
 bool KACLListView::defaultMaskCanBeDeleted() const
 {
-    return !tqfindDefaultItemByType( NamedUser ) && !tqfindDefaultItemByType( NamedGroup );
+    return !findDefaultItemByType( NamedUser ) && !findDefaultItemByType( NamedGroup );
 }
 
 #include "kacleditwidget.moc"

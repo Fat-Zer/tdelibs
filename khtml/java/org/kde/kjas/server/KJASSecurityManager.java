@@ -82,9 +82,9 @@ public class KJASSecurityManager extends SecurityManager
             Main.debug("Certificates " + signers.size() + " for " + perm);
 
             // Check granted/denied permission
-            if ( grantAllPermissions.tqcontains(signers) )
+            if ( grantAllPermissions.contains(signers) )
                 return;
-            if ( rejectAllPermissions.tqcontains(signers) )
+            if ( rejectAllPermissions.contains(signers) )
                 throw se;
             Permissions permissions = (Permissions) grantedPermissions.get(signers);
             if (permissions != null && permissions.implies(perm))
@@ -168,7 +168,7 @@ public class KJASSecurityManager extends SecurityManager
                 // try to cast ...
                 KJASAppletClassLoader loader = (KJASAppletClassLoader)contextClassLoader;
                 // ok. cast succeeded. Now get the codebase of the loader
-                // because it tqcontains the host name
+                // because it contains the host name
                 URL codebase = loader.getCodeBase();
                 URL docbase = loader.getDocBase();
                 Main.debug("*   Class Loader docbase=" + docbase + " codebase=" + codebase);

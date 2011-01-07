@@ -99,12 +99,12 @@ void RenderTable::setStyle(RenderStyle *_style)
     if ( !tableLayout || style()->tableLayout() != oldTableLayout ) {
 	delete tableLayout;
 
-        // According to the CSS2 spec, you only use fixed table tqlayout if an
-        // explicit width is specified on the table.  Auto width implies auto table tqlayout.
+        // According to the CSS2 spec, you only use fixed table layout if an
+        // explicit width is specified on the table.  Auto width implies auto table layout.
 	if (style()->tableLayout() == TFIXED && !style()->width().isVariable()) {
 	    tableLayout = new FixedTableLayout(this);
 #ifdef DEBUG_LAYOUT
-	    kdDebug( 6040 ) << "using fixed table tqlayout" << endl;
+	    kdDebug( 6040 ) << "using fixed table layout" << endl;
 #endif
 	} else
 	    tableLayout = new AutoTableLayout(this);
@@ -113,7 +113,7 @@ void RenderTable::setStyle(RenderStyle *_style)
 
 short RenderTable::lineHeight(bool b) const
 {
-    // Inline tables are tqreplaced elements. Otherwise, just pass off to
+    // Inline tables are replaced elements. Otherwise, just pass off to
     // the base class.
     if (isReplaced())
         return height()+marginTop()+marginBottom();
@@ -122,7 +122,7 @@ short RenderTable::lineHeight(bool b) const
 
 short RenderTable::baselinePosition(bool b) const
 {
-    // Inline tables are tqreplaced elements. Otherwise, just pass off to
+    // Inline tables are replaced elements. Otherwise, just pass off to
     // the base class.
     if (isReplaced())
         return height()+marginTop()+marginBottom();
@@ -263,7 +263,7 @@ void RenderTable::calcWidth()
     calcHorizontalMargins(style()->marginLeft(),style()->marginRight(),availableWidth);
 }
 
-void RenderTable::tqlayout()
+void RenderTable::layout()
 {
     KHTMLAssert( needsLayout() );
     KHTMLAssert( minMaxKnown() );
@@ -271,13 +271,13 @@ void RenderTable::tqlayout()
 
     if (posChildNeedsLayout() && !normalChildNeedsLayout() && !selfNeedsLayout()) {
         // All we have to is lay out our positioned objects.
-        tqlayoutPositionedObjects(true);
+        layoutPositionedObjects(true);
         setNeedsLayout(false);
         return;
     }
 
     if (markedForRepaint()) {
-        tqrepaintDuringLayout();
+        repaintDuringLayout();
         setMarkedForRepaint(false);
     }
 
@@ -292,29 +292,29 @@ void RenderTable::tqlayout()
         tCaption->setChildNeedsLayout(true);
 
     // the optimization below doesn't work since the internal table
-    // tqlayout could have changed.  we need to add a flag to the table
-    // tqlayout that tells us if something has changed in the min max
+    // layout could have changed.  we need to add a flag to the table
+    // layout that tells us if something has changed in the min max
     // calculations to do it correctly.
 //     if ( oldWidth != m_width || columns.size() + 1 != columnPos.size() )
-    tableLayout->tqlayout();
+    tableLayout->layout();
 
 #ifdef DEBUG_LAYOUT
-    kdDebug( 6040 ) << renderName() << "(Table)::tqlayout1() width=" << width() << ", marginLeft=" << marginLeft() << " marginRight=" << marginRight() << endl;
+    kdDebug( 6040 ) << renderName() << "(Table)::layout1() width=" << width() << ", marginLeft=" << marginLeft() << " marginRight=" << marginRight() << endl;
 #endif
 
     setCellWidths();
 
-    // tqlayout child objects
+    // layout child objects
     int calculatedHeight = 0;
 
     RenderObject *child = firstChild();
     while( child ) {
         // FIXME: What about a form that has a display value that makes it a table section?
 	if ( child->needsLayout() && !(child->element() && child->element()->id() == ID_FORM) )
-	    child->tqlayout();
+	    child->layout();
 	if ( child->isTableSection() ) {
 	    static_cast<RenderTableSection *>(child)->calcRowHeight();
-	    calculatedHeight += static_cast<RenderTableSection *>(child)->tqlayoutRows( 0 );
+	    calculatedHeight += static_cast<RenderTableSection *>(child)->layoutRows( 0 );
 	}
 	child = child->nextSibling();
     }
@@ -346,7 +346,7 @@ void RenderTable::tqlayout()
     else if (h.isPercent())
         th += calcPercentageHeight(h);
 
-    // tqlayout rows
+    // layout rows
     if ( th > calculatedHeight ) {
 	// we have to redistribute that height to get the constraint correctly
 	// just force the first body to the height needed
@@ -354,7 +354,7 @@ void RenderTable::tqlayout()
 	// accordingly. For now this should be good enough
         if (firstBody) {
             firstBody->calcRowHeight();
-            firstBody->tqlayoutRows( th - calculatedHeight );
+            firstBody->layoutRows( th - calculatedHeight );
         }
         else if (!style()->htmlHacks()) {
             // Completely empty tables (with no sections or anything) should at least honor specified height
@@ -394,12 +394,12 @@ void RenderTable::tqlayout()
 
     if (canvas()->pagedMode()) {
         RenderObject *child = firstChild();
-        // retqlayout taking real position into account
+        // relayout taking real position into account
         while( child ) {
             if ( !(child->element() && child->element()->id() == ID_FORM) ) {
                 child->setNeedsLayout(true);
-                child->tqlayout();
-                if (child->tqcontainsPageBreak()) setContainsPageBreak(true);
+                child->layout();
+                if (child->containsPageBreak()) setContainsPageBreak(true);
                 if (child->needsPageClear()) setNeedsPageClear(true);
             }
             child = child->nextSibling();
@@ -410,7 +410,7 @@ void RenderTable::tqlayout()
 
     // table can be containing block of positioned elements.
     // ### only pass true if width or height changed.
-    tqlayoutPositionedObjects( true );
+    layoutPositionedObjects( true );
 
     m_overflowHeight = m_height;
 
@@ -1078,7 +1078,7 @@ void RenderTableSection::addCell( RenderTableCell *cell, RenderTableRow *row )
     int nCols = columns.size();
 
     // ### mozilla still seems to do the old HTML way, even for strict DTD
-    // (see the annotation on table cell tqlayouting in the CSS specs and the testcase below:
+    // (see the annotation on table cell layouting in the CSS specs and the testcase below:
     // <TABLE border>
     // <TR><TD>1 <TD rowspan="2">2 <TD>3 <TD>4
     // <TR><TD colspan="2">5
@@ -1246,7 +1246,7 @@ void RenderTableSection::calcRowHeight()
                             o->setChildNeedsLayout(true, false);
                 }
                 if (pagedMode) cell->setNeedsLayout(true);
-                cell->tqlayoutIfNeeded();
+                cell->layoutIfNeeded();
             }
 
             ch = cell->style()->height().width(0);
@@ -1261,7 +1261,7 @@ void RenderTableSection::calcRowHeight()
 	    if ( pos > rowPos[r+1] )
 		rowPos[r+1] = pos;
 
-	    // tqfind out the baseline
+	    // find out the baseline
 	    EVerticalAlign va = cell->style()->verticalAlign();
 	    if (va == BASELINE || va == TEXT_BOTTOM || va == TEXT_TOP
 		|| va == SUPER || va == SUB)
@@ -1294,7 +1294,7 @@ void RenderTableSection::calcRowHeight()
     }
 }
 
-int RenderTableSection::tqlayoutRows( int toAdd )
+int RenderTableSection::layoutRows( int toAdd )
 {
     int rHeight;
     int rindx;
@@ -1306,14 +1306,14 @@ int RenderTableSection::tqlayoutRows( int toAdd )
     m_width = table()->contentWidth();
 
     if (markedForRepaint()) {
-        tqrepaintDuringLayout();
+        repaintDuringLayout();
         setMarkedForRepaint(false);
     }
 
     if (toAdd && totalRows && (rowPos[totalRows] || !nextSibling())) {
 
 	int totalHeight = rowPos[totalRows] + toAdd;
-//	qDebug("tqlayoutRows: totalHeight = %d",  totalHeight );
+//	qDebug("layoutRows: totalHeight = %d",  totalHeight );
 
         int dh = toAdd;
 	int totalPercent = 0;
@@ -1443,7 +1443,7 @@ int RenderTableSection::tqlayoutRows( int toAdd )
                 cell->setCellPercentageHeight(kMax(0,
                                                    rHeight - cell->borderTop() - cell->paddingTop() -
                                                    cell->borderBottom() - cell->paddingBottom()));
-                cell->tqlayoutIfNeeded();
+                cell->layoutIfNeeded();
 
             }
             {
@@ -1507,7 +1507,7 @@ bool RenderTableSection::flexCellChildren(RenderObject* p) const
     while (o) {
         if (!o->isText() && o->style()->height().isPercent()) {
             if (o->isWidget()) {
-                // cancel resizes from transitory retqlayouts
+                // cancel resizes from transitory relayouts
                 static_cast<RenderWidget *>(o)->cancelPendingResize();
             }
             o->setNeedsLayout(true, false);
@@ -1608,7 +1608,7 @@ int RenderTableSection::highestPosition(bool includeOverflowInterior, bool inclu
 }
 
 // Search from first_row to last_row for the row containing y
-static unsigned int tqfindRow(unsigned int first_row, unsigned int last_row,
+static unsigned int findRow(unsigned int first_row, unsigned int last_row,
                             const TQMemArray<int> &rowPos, int y)
 {
     unsigned int under = first_row;
@@ -1628,7 +1628,7 @@ static unsigned int tqfindRow(unsigned int first_row, unsigned int last_row,
     return under;
 }
 
-static void tqfindRowCover(unsigned int &startrow, unsigned int &endrow,
+static void findRowCover(unsigned int &startrow, unsigned int &endrow,
                          const TQMemArray<int> &rowPos,
                          int min_y, int max_y)
 {
@@ -1656,9 +1656,9 @@ static void tqfindRowCover(unsigned int &startrow, unsigned int &endrow,
     }
 
     // Binary search for startrow
-    startrow = tqfindRow(startrow, endrow, rowPos, min_y);
+    startrow = findRow(startrow, endrow, rowPos, min_y);
     // Binary search for endrow
-    endrow = tqfindRow(startrow, endrow, rowPos, max_y) + 1;
+    endrow = findRow(startrow, endrow, rowPos, max_y) + 1;
     if (endrow > totalRows) endrow = totalRows;
 }
 
@@ -1682,7 +1682,7 @@ void RenderTableSection::paint( PaintInfo& pI, int tx, int ty )
     int os = 2*maximalOutlineSize(pI.phase);
     unsigned int startrow = 0;
     unsigned int endrow = totalRows;
-    tqfindRowCover(startrow, endrow, rowPos, y - os - ty - kMax(cbsw21, os), y + h + os - ty + kMax(cbsw2, os));
+    findRowCover(startrow, endrow, rowPos, y - os - ty - kMax(cbsw21, os), y + h + os - ty + kMax(cbsw2, os));
 
     // A binary search is probably not worthwhile for coloumns
     unsigned int startcol = 0;
@@ -1877,11 +1877,11 @@ static RenderTableCell *seekCell(RenderTableSection *section, int row, int col)
  *	a renderer.
  * @return the element or @p base if no suitable element found.
  */
-static NodeImpl *tqfindLastSelectableNode(NodeImpl *base)
+static NodeImpl *findLastSelectableNode(NodeImpl *base)
 {
   NodeImpl *last = base;
   // Look for last text/cdata node that has a renderer,
-  // or last childless tqreplaced element
+  // or last childless replaced element
   while ( last && !(last->renderer()
   	&& ((last->nodeType() == Node::TEXT_NODE || last->nodeType() == Node::CDATA_SECTION_NODE)
 		|| (last->renderer()->isReplaced() && !last->renderer()->lastChild()))))
@@ -1920,7 +1920,7 @@ FindSelectionResult RenderTableSection::checkSelectionPoint( int _x, int _y, int
 //    else if (_y >= _ty + height()) save_last = true;
 
     // Find the row containing the pointer
-    int row_idx = tqfindRow(0, totalRows, rowPos, _y - _ty);
+    int row_idx = findRow(0, totalRows, rowPos, _y - _ty);
 
     int col_idx;
     if ( style()->direction() == LTR ) {
@@ -1967,7 +1967,7 @@ FindSelectionResult RenderTableSection::checkSelectionPoint( int _x, int _y, int
     NodeImpl *element = cell->element();
     if (!element) return SelectionPointBefore;
 
-    element = tqfindLastSelectableNode(element);
+    element = findLastSelectableNode(element);
 
     state.m_lastNode = element;
     state.m_lastOffset = element->maxOffset();
@@ -2082,7 +2082,7 @@ void RenderTableRow::addChild(RenderObject *child, RenderObject *beforeChild)
         section()->setNeedCellRecalc();
 }
 
-void RenderTableRow::tqlayout()
+void RenderTableRow::layout()
 {
     KHTMLAssert( needsLayout() );
     KHTMLAssert( minMaxKnown() );
@@ -2095,18 +2095,18 @@ void RenderTableRow::tqlayout()
             if (pagedMode) {
                 cell->setNeedsLayout(true);
                 int oldHeight = child->height();
-                cell->tqlayout();
-                if (oldHeight > 0 && child->tqcontainsPageBreak() && child->height() != oldHeight)
+                cell->layout();
+                if (oldHeight > 0 && child->containsPageBreak() && child->height() != oldHeight)
                     section()->addSpaceAt(child->yPos()+1, child->height() - oldHeight);
             } else
             if ( child->needsLayout() ) {
                 if (markedForRepaint())
                     cell->setMarkedForRepaint( true );
                 cell->calcVerticalMargins();
-                cell->tqlayout();
+                cell->layout();
                 cell->setCellTopExtra(0);
                 cell->setCellBottomExtra(0);
-                if (child->tqcontainsPageBreak()) setContainsPageBreak(true);
+                if (child->containsPageBreak()) setContainsPageBreak(true);
             }
 	}
 	child = child->nextSibling();
@@ -2298,9 +2298,9 @@ void RenderTableCell::setWidth( int width )
     }
 }
 
-void RenderTableCell::tqlayout()
+void RenderTableCell::layout()
 {
-    tqlayoutBlock( m_widthChanged );
+    layoutBlock( m_widthChanged );
     m_widthChanged = false;
 }
 
@@ -2319,9 +2319,9 @@ bool RenderTableCell::requiresLayer() const {
     return /* style()->opacity() < 1.0f || */ hasOverflowClip() || isRelPositioned();
 }
 
-void RenderTableCell::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
+void RenderTableCell::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 {
-    RenderBlock::tqrepaintRectangle(x, y, w, h + _topExtra + _bottomExtra, p, f);
+    RenderBlock::repaintRectangle(x, y, w, h + _topExtra + _bottomExtra, p, f);
 }
 
 bool RenderTableCell::absolutePosition(int &xPos, int &yPos, bool f) const
@@ -2800,7 +2800,7 @@ public:
 
 static void addBorderStyle(TQValueList<CollapsedBorderValue>& borderStyles, CollapsedBorderValue borderValue)
 {
-    if (!borderValue.exists() || borderStyles.tqcontains(borderValue))
+    if (!borderValue.exists() || borderStyles.contains(borderValue))
         return;
 
     TQValueListIterator<CollapsedBorderValue> it = borderStyles.begin();

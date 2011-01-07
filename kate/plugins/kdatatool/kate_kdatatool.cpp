@@ -108,7 +108,7 @@ void KDataToolPluginView::aboutToShow()
 	if ( selectionInterface(m_view->document())->hasSelection() )
 	{
 		word = selectionInterface(m_view->document())->selection();
-		if ( word.tqfind(' ') == -1 && word.tqfind('\t') == -1 && word.tqfind('\n') == -1 )
+		if ( word.find(' ') == -1 && word.find('\t') == -1 && word.find('\n') == -1 )
 			m_singleWord = true;
 		else
 			m_singleWord = false;
@@ -123,7 +123,7 @@ void KDataToolPluginView::aboutToShow()
 		ci->cursorPositionReal(&line, &col);
 		TQString tmp_line = ei->textLine(line);
 		m_wordUnderCursor = "";
-		// tqfind begin of word:
+		// find begin of word:
 		m_singleWord_start = 0;
 		for(int i = col; i >= 0; i--) {
 			TQChar ch = tmp_line.at(i);
@@ -134,7 +134,7 @@ void KDataToolPluginView::aboutToShow()
 			}
 			m_wordUnderCursor = ch + m_wordUnderCursor;
 		}
-		// tqfind end of word:
+		// find end of word:
 		m_singleWord_end = tmp_line.length();
 		for(uint i = col+1; i < tmp_line.length(); i++) {
 			TQChar ch = tmp_line.at(i);
@@ -206,7 +206,7 @@ void KDataToolPluginView::slotToolActivated( const KDataToolInfo &info, const TQ
 	TQString datatype = "TQString";
 
 	// If unsupported (and if we have a single word indeed), try application/x-singleword
-	if ( !info.mimeTypes().tqcontains( mimetype ) && m_singleWord )
+	if ( !info.mimeTypes().contains( mimetype ) && m_singleWord )
 		mimetype = "application/x-singleword";
 	
 	kdDebug() << "Running tool with datatype=" << datatype << " mimetype=" << mimetype << endl;
@@ -227,7 +227,7 @@ void KDataToolPluginView::slotToolActivated( const KDataToolInfo &info, const TQ
 				si->setSelection(m_singleWord_line, m_singleWord_start, m_singleWord_line, m_singleWord_end);
 			}
 		
-			// tqreplace selection with 'text'
+			// replace selection with 'text'
 			selectionInterface(m_view->document())->removeSelectedText();
 			viewCursorInterface(m_view)->cursorPositionReal(&line, &col);
 			editInterface(m_view->document())->insertText(line, col, text);

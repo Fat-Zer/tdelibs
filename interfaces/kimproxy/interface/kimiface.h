@@ -179,7 +179,7 @@ k_dcop:
 	 *
 	 * @see allContacts()
 	 * @see presenceString()
-	 * @see presencetqStatus()
+	 * @see presenceStatus()
 	 * @see KABC::Addressee::uid()
 	 */
 	virtual bool isPresent( const TQString & uid ) = 0;
@@ -197,7 +197,7 @@ k_dcop:
 	 *
 	 * @see isPresent()
 	 * @see presenceString()
-	 * @see presencetqStatus()
+	 * @see presenceStatus()
 	 * @see KABC::Addressee::uid()
 	 */
 	virtual TQString displayName( const TQString & uid ) = 0;
@@ -214,7 +214,7 @@ k_dcop:
 	 *         TQString::null if the UID is unknown
 	 *
 	 * @see isPresent()
-	 * @see presencetqStatus()
+	 * @see presenceStatus()
 	 * @see KABC::Addressee::uid()
 	 */
 	virtual TQString presenceString( const TQString & uid ) = 0;
@@ -247,7 +247,7 @@ k_dcop:
 	 * @see presenceString()
 	 * @see KABC::Addressee::uid()
 	 */
-	virtual int presencetqStatus( const TQString & uid ) = 0;
+	virtual int presenceStatus( const TQString & uid ) = 0;
 
 	/**
 	 * @brief Indicate if a given contact can receive files
@@ -309,7 +309,7 @@ k_dcop:
 	 *
 	 * @see isPresent()
 	 * @see presenceString()
-	 * @see presencetqStatus()
+	 * @see presenceStatus()
 	 * @see KABC::Addressee::uid()
 	 */
 	virtual TQPixmap icon( const TQString & uid ) = 0;
@@ -467,7 +467,7 @@ k_dcop_signals:
 	/**
 	 * @brief Indicates that a contact's presence has changed
 	 *
-	 * Notifies connected DCOP tqreceivers about a change in a contact's
+	 * Notifies connected DCOP receivers about a change in a contact's
 	 * presence.
 	 *
 	 * Implementations just have to call this method with the appropriate
@@ -476,9 +476,9 @@ k_dcop_signals:
 	 * @param uid the KABC UID whose presence changed
 	 * @param appId the DCOP application ID of the program the signal
 	 *        originates from
-	 * @param presence the new presence's numeric value. See presencetqStatus()
+	 * @param presence the new presence's numeric value. See presenceStatus()
 	 *
-	 * @see presencetqStatus()
+	 * @see presenceStatus()
 	 * @see KABC::Addressee::uid()
 	 * @see DCOPClient::appId()
 	 */

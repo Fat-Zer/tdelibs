@@ -60,13 +60,13 @@ KSpellDlg::KSpellDlg( TQWidget * parent, const char * name, bool _progressbar, b
   d->ui = new KSpellUI( this );
   setMainWidget( d->ui );
 
-  connect( d->ui->m_tqreplaceBtn, TQT_SIGNAL(clicked()),
-           this, TQT_SLOT(tqreplace()));
+  connect( d->ui->m_replaceBtn, TQT_SIGNAL(clicked()),
+           this, TQT_SLOT(replace()));
   connect( this, TQT_SIGNAL(ready(bool)),
-           d->ui->m_tqreplaceBtn, TQT_SLOT(setEnabled(bool)) );
+           d->ui->m_replaceBtn, TQT_SLOT(setEnabled(bool)) );
 
-  connect( d->ui->m_tqreplaceAllBtn, TQT_SIGNAL(clicked()), this, TQT_SLOT(tqreplaceAll()));
-  connect(this, TQT_SIGNAL(ready(bool)), d->ui->m_tqreplaceAllBtn, TQT_SLOT(setEnabled(bool)));
+  connect( d->ui->m_replaceAllBtn, TQT_SIGNAL(clicked()), this, TQT_SLOT(replaceAll()));
+  connect(this, TQT_SIGNAL(ready(bool)), d->ui->m_replaceAllBtn, TQT_SLOT(setEnabled(bool)));
 
   connect( d->ui->m_skipBtn, TQT_SIGNAL(clicked()), this, TQT_SLOT(ignore()));
   connect( this, TQT_SIGNAL(ready(bool)), d->ui->m_skipBtn, TQT_SLOT(setEnabled(bool)));
@@ -83,15 +83,15 @@ KSpellDlg::KSpellDlg( TQWidget * parent, const char * name, bool _progressbar, b
 
   connect(this, TQT_SIGNAL(user1Clicked()), this, TQT_SLOT(stop()));
 
-  connect( d->ui->m_tqreplacement, TQT_SIGNAL(textChanged(const TQString &)),
+  connect( d->ui->m_replacement, TQT_SIGNAL(textChanged(const TQString &)),
            TQT_SLOT(textChanged(const TQString &)) );
 
-  connect( d->ui->m_tqreplacement, TQT_SIGNAL(returnPressed()),   TQT_SLOT(tqreplace()) );
+  connect( d->ui->m_replacement, TQT_SIGNAL(returnPressed()),   TQT_SLOT(replace()) );
   connect( d->ui->m_suggestions, TQT_SIGNAL(selectionChanged(TQListViewItem*)),
            TQT_SLOT(slotSelectionChanged(TQListViewItem*)) );
 
   connect( d->ui->m_suggestions, TQT_SIGNAL( doubleClicked ( TQListViewItem *, const TQPoint &, int ) ),
-           TQT_SLOT( tqreplace() ) );
+           TQT_SLOT( replace() ) );
   d->spellConfig = new KSpellConfig( 0, 0 ,0, false );
   d->spellConfig->fillDicts( d->ui->m_language );
   connect( d->ui->m_language, TQT_SIGNAL(activated(int)),
@@ -100,7 +100,7 @@ KSpellDlg::KSpellDlg( TQWidget * parent, const char * name, bool _progressbar, b
            TQT_SLOT(slotConfigChanged()) );
 
   setHelp( "spelldlg", "kspell" );
-  setMinimumSize( tqsizeHint() );
+  setMinimumSize( sizeHint() );
   emit ready( false );
 }
 
@@ -130,14 +130,14 @@ KSpellDlg::init( const TQString & _word, TQStringList * _sugg )
   d->ui->m_unknownWord->setText( _word );
 
   if ( sugg->count() == 0 ) {
-    d->ui->m_tqreplacement->setText( _word );
-    d->ui->m_tqreplaceBtn->setEnabled( false );
-    d->ui->m_tqreplaceAllBtn->setEnabled( false );
+    d->ui->m_replacement->setText( _word );
+    d->ui->m_replaceBtn->setEnabled( false );
+    d->ui->m_replaceAllBtn->setEnabled( false );
     d->ui->m_suggestBtn->setEnabled( false );
   } else {
-    d->ui->m_tqreplacement->setText( (*sugg)[0] );
-    d->ui->m_tqreplaceBtn->setEnabled( true );
-    d->ui->m_tqreplaceAllBtn->setEnabled( true );
+    d->ui->m_replacement->setText( (*sugg)[0] );
+    d->ui->m_replaceBtn->setEnabled( true );
+    d->ui->m_replaceAllBtn->setEnabled( true );
     d->ui->m_suggestBtn->setEnabled( false );
     d->ui->m_suggestions->setSelected( d->ui->m_suggestions->firstChild(), true );
   }
@@ -166,14 +166,14 @@ KSpellDlg::init( const TQString& _word, TQStringList* _sugg,
   d->ui->m_contextLabel->setText( context );
 
   if ( sugg->count() == 0 ) {
-    d->ui->m_tqreplacement->setText( _word );
-    d->ui->m_tqreplaceBtn->setEnabled( false );
-    d->ui->m_tqreplaceAllBtn->setEnabled( false );
+    d->ui->m_replacement->setText( _word );
+    d->ui->m_replaceBtn->setEnabled( false );
+    d->ui->m_replaceAllBtn->setEnabled( false );
     d->ui->m_suggestBtn->setEnabled( false );
   } else {
-    d->ui->m_tqreplacement->setText( (*sugg)[0] );
-    d->ui->m_tqreplaceBtn->setEnabled( true );
-    d->ui->m_tqreplaceAllBtn->setEnabled( true );
+    d->ui->m_replacement->setText( (*sugg)[0] );
+    d->ui->m_replaceBtn->setEnabled( true );
+    d->ui->m_replaceAllBtn->setEnabled( true );
     d->ui->m_suggestBtn->setEnabled( false );
     d->ui->m_suggestions->setSelected( d->ui->m_suggestions->firstChild(), true );
   }
@@ -191,8 +191,8 @@ KSpellDlg::slotProgress( unsigned int p )
 void
 KSpellDlg::textChanged( const TQString & )
 {
-  d->ui->m_tqreplaceBtn->setEnabled( true );
-  d->ui->m_tqreplaceAllBtn->setEnabled( true );
+  d->ui->m_replaceBtn->setEnabled( true );
+  d->ui->m_replaceAllBtn->setEnabled( true );
   d->ui->m_suggestBtn->setEnabled( true );
 }
 
@@ -200,7 +200,7 @@ void
 KSpellDlg::slotSelectionChanged( TQListViewItem* item )
 {
   if ( item )
-    d->ui->m_tqreplacement->setText( item->text( 0 ) );
+    d->ui->m_replacement->setText( item->text( 0 ) );
 }
 
 /*
@@ -248,9 +248,9 @@ KSpellDlg::cancel()
 }
 
 void
-KSpellDlg::tqreplace()
+KSpellDlg::replace()
 {
-  newword = d->ui->m_tqreplacement->text();
+  newword = d->ui->m_replacement->text();
   done( KS_REPLACE );
 }
 
@@ -262,16 +262,16 @@ KSpellDlg::stop()
 }
 
 void
-KSpellDlg::tqreplaceAll()
+KSpellDlg::replaceAll()
 {
-  newword = d->ui->m_tqreplacement->text();
+  newword = d->ui->m_replacement->text();
   done( KS_REPLACEALL );
 }
 
 void
 KSpellDlg::suggest()
 {
-  newword = d->ui->m_tqreplacement->text();
+  newword = d->ui->m_replacement->text();
   done( KS_SUGGEST );
 }
 

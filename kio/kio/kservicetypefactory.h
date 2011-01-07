@@ -63,19 +63,19 @@ public:
    * Find a service type in the database file (allocates it)
    * Overloaded by KBuildServiceTypeFactory to return a memory one.
    */
-  virtual KServiceType * tqfindServiceTypeByName(const TQString &_name);
+  virtual KServiceType * findServiceTypeByName(const TQString &_name);
 
   /**
    * Find a the property type of a named property.
    */
-  TQVariant::Type tqfindPropertyTypeByName(const TQString &_name);
+  TQVariant::Type findPropertyTypeByName(const TQString &_name);
 
   /**
    * Find a mimetype from a filename (using the pattern list)
    * @param _filename filename to check.
    * @param match if provided, returns the pattern that matched.
    */
-  KMimeType * tqfindFromPattern(const TQString &_filename, TQString *match = 0);
+  KMimeType * findFromPattern(const TQString &_filename, TQString *match = 0);
 
   /**
    * @return all mimetypes
@@ -113,7 +113,7 @@ protected:
 
 private:
   TQStringList m_patterns;
-  TQValueVector<TQ_INT32> m_pattern_offsets;
+  TQValueVector<Q_INT32> m_pattern_offsets;
 protected:
   virtual void virtual_hook( int id, void* data );
 private:

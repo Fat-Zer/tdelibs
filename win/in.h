@@ -121,7 +121,7 @@ struct sockaddr_in
 /*
  * Definitions of the bits in an Internet address integer.
  * On subnets, host and network parts are found according
- * to the subnet tqmask, not these tqmasks.
+ * to the subnet mask, not these masks.
  */
 #define	IN_CLASSA(a)		((((long int) (a)) & 0x80000000) == 0)
 #define	IN_CLASSA_NET		0xff000000

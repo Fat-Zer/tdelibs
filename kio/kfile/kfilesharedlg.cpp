@@ -124,13 +124,13 @@ void KFileSharePropsPlugin::init()
             // 0 => not shared
             // 1 => shared read only
             // 3 => shared writeable
-            int dirtqStatus = KFileShare::isDirectoryShared( path );
+            int dirStatus = KFileShare::isDirectoryShared( path );
             if ( !path.startsWith( home ) )
                 ok = false;
-            if ( dirtqStatus == 1 ) {
+            if ( dirStatus == 1 ) {
                 d->m_bAllUnshared = false;
             }
-            else if ( dirtqStatus == 3 ) {
+            else if ( dirStatus == 3 ) {
                 d->m_bAllUnshared = false;
                 d->m_bAllReadOnly = false;
             }
@@ -184,13 +184,13 @@ void KFileSharePropsPlugin::init()
 
             // Some help text
             TQLabel *label = new TQLabel( i18n("Sharing this folder makes it available under Linux/UNIX (NFS) and Windows (Samba).") , m_widget );
-            label->tqsetAlignment( Qt::AlignAuto | Qt::AlignVCenter | Qt::WordBreak );
+            label->setAlignment( Qt::AlignAuto | Qt::AlignVCenter | Qt::WordBreak );
             vbox->addWidget( label, 0 );
 
 	    KSeparator* sep=new KSeparator(m_widget);
 	    vbox->addWidget( sep, 0 );
 	    label = new TQLabel( i18n("You can also reconfigure file sharing authorization.") , m_widget );
-            label->tqsetAlignment( Qt::AlignAuto | Qt::AlignVCenter | Qt::WordBreak );
+            label->setAlignment( Qt::AlignAuto | Qt::AlignVCenter | Qt::WordBreak );
 	    vbox->addWidget( label, 0 );
 	    m_pbConfig = new TQPushButton( i18n("Configure File Sharing..."), m_widget );
 	    connect( m_pbConfig, TQT_SIGNAL( clicked() ), TQT_SLOT( slotConfigureFileSharing() ) );

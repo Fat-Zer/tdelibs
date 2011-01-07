@@ -9,7 +9,7 @@ win32 {
 #CONFIG += windows
 }
 
-#system( bash ktqmoc )
+#system( bash kmoc )
 
 SOURCES = kconfig_compiler.cpp
 

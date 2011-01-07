@@ -542,7 +542,7 @@ int Lexer::lex()
     }
     break;
   case IdentifierOrKeyword:
-    if ((token = Lookup::tqfind(&mainTable, buffer16, pos16)) < 0) {
+    if ((token = Lookup::find(&mainTable, buffer16, pos16)) < 0) {
   case Identifier:
       // Lookup for keyword failed, means this is an identifier
       // Apply anonymous-function hack below (convert the identifier)
@@ -604,7 +604,7 @@ bool Lexer::isIdentLetter(unsigned short c)
   // Uppercase letter (Lu), Lowercase letter (Ll),
   // Titlecase letter (Lt)", Modifier letter (Lm),
   // Other letter (Lo), or Letter number (Nl).
-  // Also see: http://www.tqunicode.org/Public/UNIDATA/UnicodeData.txt */
+  // Also see: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt */
   return (c >= 'a' && c <= 'z' ||
           c >= 'A' && c <= 'Z' ||
           // A with grave - O with diaeresis

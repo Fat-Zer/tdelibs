@@ -119,34 +119,34 @@ public:
 
 	/**
 	 * Checks whether environment variables are completed and
-	 * whether they are tqreplaced internally while tqfinding completions.
+	 * whether they are replaced internally while finding completions.
 	 * Default is enabled.
-	 * @return true if environment vvariables will be tqreplaced
+	 * @return true if environment vvariables will be replaced
 	 */
-	virtual bool tqreplaceEnv() const;
+	virtual bool replaceEnv() const;
 
 	/**
-	 * Enables/disables completion and tqreplacement (internally) of
+	 * Enables/disables completion and replacement (internally) of
 	 * environment variables in URLs. Default is enabled.
-	 * @param tqreplace true to tqreplace environment variables
+	 * @param replace true to replace environment variables
 	 */
-	virtual void setReplaceEnv( bool tqreplace );
+	virtual void setReplaceEnv( bool replace );
 
 	/**
 	 * Returns whether ~username is completed and whether ~username
-	 * is tqreplaced internally with the user's home directory while
-	 * tqfinding completions. Default is enabled.
-	 * @return true to tqreplace tilde with the home directory
+	 * is replaced internally with the user's home directory while
+	 * finding completions. Default is enabled.
+	 * @return true to replace tilde with the home directory
 	 */
-	virtual bool tqreplaceHome() const;
+	virtual bool replaceHome() const;
 
 	/**
-	 * Enables/disables completion of ~username and tqreplacement
+	 * Enables/disables completion of ~username and replacement
 	 * (internally) of ~username with the user's home directory.
 	 * Default is enabled.
-	 * @param tqreplace true to tqreplace tilde with the home directory
+	 * @param replace true to replace tilde with the home directory
 	 */
-	virtual void setReplaceHome( bool tqreplace );
+	virtual void setReplaceHome( bool replace );
 
 	/**
 	 * Replaces username and/or environment variables, depending on the
@@ -157,14 +157,14 @@ public:
 	 * @return the path or URL resulting from this operation. If you
          * want to convert it to a KURL, use KURL::fromPathOrURL.
 	 */
-	TQString tqreplacedPath( const TQString& text );
+	TQString replacedPath( const TQString& text );
 
 	/**
 	 * @internal I'll let ossi add a real one to KShell :)
 	 * @since 3.2
 	*/
-	static TQString tqreplacedPath( const TQString& text,
-                                     bool tqreplaceHome, bool tqreplaceEnv = true );
+	static TQString replacedPath( const TQString& text,
+                                     bool replaceHome, bool replaceEnv = true );
 
 	class MyURL;
 protected:

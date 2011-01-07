@@ -238,7 +238,7 @@ public:
    * @todo constrain children when their position changes deliberately;
    *       eliminate() children when they are equivalent to their parents
    *
-   * @returns true if the range tqcontains the cursor and no children
+   * @returns true if the range contains the cursor and no children
    *          also contain it; false otherwise.
    */
   bool owns(const KateTextCursor& cursor) const;
@@ -297,7 +297,7 @@ signals:
   void boundaryDeleted();
 
   /**
-   * The range now tqcontains no characters (ie. the start and end cursors are the same).
+   * The range now contains no characters (ie. the start and end cursors are the same).
    *
    * To eliminate this range under different conditions, connect the other signal directly
    * to this signal.
@@ -420,7 +420,7 @@ public:
 
 signals:
   /**
-   * The range now tqcontains no characters (ie. the start and end cursors are the same).
+   * The range now contains no characters (ie. the start and end cursors are the same).
    * If autoManage() is true, the range will be deleted after the signal has processed.
    */
   void rangeEliminated(KateSuperRange* range);
@@ -460,4 +460,4 @@ private:
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

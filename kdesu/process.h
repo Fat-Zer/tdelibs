@@ -159,7 +159,7 @@ public: /* static */
     ** (which may be zero).
     ** If child @p has not exited, return -2.
     */
-    enum checkPidtqStatus { Error=-1, NotExited=-2, Killed=-3 } ;
+    enum checkPidStatus { Error=-1, NotExited=-2, Killed=-3 } ;
     static int checkPidExited(pid_t pid);
 
 

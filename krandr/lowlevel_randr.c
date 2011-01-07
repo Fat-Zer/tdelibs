@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <string.h>
 
-tqStatus internal_crtc_disable (struct CrtcInfo *crtc);
+Status internal_crtc_disable (struct CrtcInfo *crtc);
 
 char * internal_get_output_name (struct ScreenInfo *screen_info, RROutput id)
 {
@@ -45,7 +45,7 @@ char * internal_get_output_name (struct ScreenInfo *screen_info, RROutput id)
 	return output_name;
 }
 
-XRRModeInfo * internal_tqfind_mode_by_xid (struct ScreenInfo *screen_info, RRMode mode_id)
+XRRModeInfo * internal_find_mode_by_xid (struct ScreenInfo *screen_info, RRMode mode_id)
 {
 	XRRModeInfo *mode_info = NULL;
 	XRRScreenResources *res;
@@ -62,7 +62,7 @@ XRRModeInfo * internal_tqfind_mode_by_xid (struct ScreenInfo *screen_info, RRMod
 	return mode_info;
 }
 
-static XRRCrtcInfo * internal_tqfind_crtc_by_xid (struct ScreenInfo *screen_info, RRCrtc crtc_id)
+static XRRCrtcInfo * internal_find_crtc_by_xid (struct ScreenInfo *screen_info, RRCrtc crtc_id)
 {
 	XRRCrtcInfo *crtc_info;
 	Display *dpy;
@@ -93,7 +93,7 @@ int internal_get_width_by_output_id (struct ScreenInfo *screen_info, RROutput ou
 				break;
 			}
 			mode_id = crtc_info->cur_mode_id;
-			mode_info = internal_tqfind_mode_by_xid (screen_info, mode_id);
+			mode_info = internal_find_mode_by_xid (screen_info, mode_id);
 
 			width = internal_mode_width (mode_info, crtc_info->cur_rotation);
 
@@ -121,7 +121,7 @@ int internal_get_height_by_output_id (struct ScreenInfo *screen_info, RROutput o
 				break;
 			}
 			mode_id = crtc_info->cur_mode_id;
-			mode_info = internal_tqfind_mode_by_xid (screen_info, mode_id);
+			mode_info = internal_find_mode_by_xid (screen_info, mode_id);
 
 			height = internal_mode_height (mode_info, crtc_info->cur_rotation);
 
@@ -161,7 +161,7 @@ int internal_mode_width (XRRModeInfo *mode_info, Rotation rotation)
 }
 
 
-static struct CrtcInfo * internal_tqfind_crtc (struct ScreenInfo *screen_info, XRROutputInfo *output)
+static struct CrtcInfo * internal_find_crtc (struct ScreenInfo *screen_info, XRROutputInfo *output)
 {
 	struct CrtcInfo *crtc_info = NULL;
 	int i;
@@ -176,7 +176,7 @@ static struct CrtcInfo * internal_tqfind_crtc (struct ScreenInfo *screen_info, X
 	return crtc_info;
 }
 
-struct CrtcInfo * internal_auto_tqfind_crtc (struct ScreenInfo *screen_info, struct OutputInfo *output_info)
+struct CrtcInfo * internal_auto_find_crtc (struct ScreenInfo *screen_info, struct OutputInfo *output_info)
 {
 	struct CrtcInfo *crtc_info = NULL;
 	int i;
@@ -215,7 +215,7 @@ int internal_set_screen_size (struct ScreenInfo *screen_info)
 		if (!crtc->cur_mode_id) {
 			continue;
 		}
-		mode_info = internal_tqfind_mode_by_xid (screen_info, crtc->cur_mode_id);
+		mode_info = internal_find_mode_by_xid (screen_info, crtc->cur_mode_id);
 		cur_x = crtc->cur_x;
 		cur_y = crtc->cur_y;
 
@@ -302,7 +302,7 @@ void internal_screen_apply (struct ScreenInfo *screen_info)
 	}
 }
 
-tqStatus internal_crtc_apply (struct CrtcInfo *crtc_info)
+Status internal_crtc_apply (struct CrtcInfo *crtc_info)
 {
 	struct ScreenInfo *screen_info;
 	XRRCrtcInfo *rr_crtc_info;
@@ -314,7 +314,7 @@ tqStatus internal_crtc_apply (struct CrtcInfo *crtc_info)
 	Rotation rotation;
 	RROutput *outputs;
 	int noutput;
-	tqStatus s;
+	Status s;
 	int i;
 
 	/*if (!crtc_info->changed) {
@@ -361,7 +361,7 @@ tqStatus internal_crtc_apply (struct CrtcInfo *crtc_info)
 	return s;
 }
 
-tqStatus internal_crtc_disable (struct CrtcInfo *crtc)
+Status internal_crtc_disable (struct CrtcInfo *crtc)
 {
 	struct ScreenInfo *screen_info;
 
@@ -433,7 +433,7 @@ struct ScreenInfo* internal_read_screen_info (Display *display)
 
 		output->id = sr->outputs[i];
 		output->info = XRRGetOutputInfo (display, sr, sr->outputs[i]);
-		output->cur_crtc = internal_tqfind_crtc (screen_info, output->info);
+		output->cur_crtc = internal_find_crtc (screen_info, output->info);
 		output->auto_set = 0;
 		if (output->cur_crtc) {
 			output->off_set = 0;
@@ -548,7 +548,7 @@ internal_preferred_mode (struct ScreenInfo *screen_info, struct OutputInfo *outp
     best = NULL;
     bestDist = 0;
     for (m = 0; m < output_info->nmode; m++) {
-        XRRModeInfo *mode_info = internal_tqfind_mode_by_xid (screen_info, output_info->modes[m]);
+        XRRModeInfo *mode_info = internal_find_mode_by_xid (screen_info, output_info->modes[m]);
         int         dist;
 
         if (m < output_info->npreferred)
@@ -584,7 +584,7 @@ int internal_main_low_apply (struct ScreenInfo *screen_info)
 		int old_x, old_y, old_w, old_h;
 
 		XRRCrtcInfo *crtc_info = XRRGetCrtcInfo (screen_info->dpy, screen_info->res, screen_info->crtcs[i]->id);
-		XRRModeInfo *old_mode = internal_tqfind_mode_by_xid (screen_info, crtc_info->mode);
+		XRRModeInfo *old_mode = internal_find_mode_by_xid (screen_info, crtc_info->mode);
 
 		if (crtc_info->mode == None) {
 			continue;
@@ -606,7 +606,7 @@ int internal_main_low_apply (struct ScreenInfo *screen_info)
 	internal_screen_apply (screen_info);
 
 	for (i = 0; i < screen_info->n_crtc; i++) {
-		tqStatus s;
+		Status s;
 		crtc_info = screen_info->crtcs[i];
 
 			s = internal_crtc_apply (crtc_info);
@@ -632,7 +632,7 @@ void internal_output_auto (struct ScreenInfo *screen_info, struct OutputInfo *ou
 		probe_output_info = XRRGetOutputInfo (screen_info->dpy, cur_res, output_info->id);
 		if (RR_Disconnected != probe_output_info->connection) {
 			output_info->info = probe_output_info;
-			output_info->cur_crtc = internal_auto_tqfind_crtc (screen_info, output_info);
+			output_info->cur_crtc = internal_auto_find_crtc (screen_info, output_info);
 		}
 	}
 
@@ -646,10 +646,10 @@ void internal_output_auto (struct ScreenInfo *screen_info, struct OutputInfo *ou
 	if (crtc_info) {
 		crtc_info->cur_mode_id = mode_id;
 	} else {
-		crtc_info = internal_auto_tqfind_crtc (screen_info, output_info);
+		crtc_info = internal_auto_find_crtc (screen_info, output_info);
 		if (!crtc_info) {
 #if RANDR_GUI_DEBUG
-			fprintf (stderr, "Can not tqfind usable CRTC\n");
+			fprintf (stderr, "Can not find usable CRTC\n");
 #endif
 			return;
 		} else {

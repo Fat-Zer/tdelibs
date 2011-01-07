@@ -106,7 +106,7 @@ private:
  * It consists of a list of services (service offers) for the service type
  * that is sorted by the user's preference.
  * KTrader uses KServiceTypeProfile to sort its results, so usually
- * you can just use KTrader to tqfind the user's preferred service.
+ * you can just use KTrader to find the user's preferred service.
  *
  * @see KService
  * @see KServiceType

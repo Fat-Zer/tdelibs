@@ -63,7 +63,7 @@ class KBookmarkMap : private KBookmarkGroupTraverser {
 public:
     KBookmarkMap( KBookmarkManager * );
     void update();
-    TQValueList<KBookmark> tqfind( const TQString &url ) const
+    TQValueList<KBookmark> find( const TQString &url ) const
     { return m_bk_map[url]; }
 private:
     virtual void visit(const KBookmark &);
@@ -329,7 +329,7 @@ bool KBookmarkManager::saveAs( const TQString & filename, bool toolbarCache ) co
 
     // Save the bookmark toolbar folder for quick loading
     // but only when it will actually make things quicker
-    const TQString cacheFilename = filename + TQString::tqfromLatin1(".tbcache");
+    const TQString cacheFilename = filename + TQString::fromLatin1(".tbcache");
     if(toolbarCache && !root().isToolbarGroup())
     {
         KSaveFile cacheFile( cacheFilename );
@@ -337,7 +337,7 @@ bool KBookmarkManager::saveAs( const TQString & filename, bool toolbarCache ) co
         {
             TQString str;
             TQTextStream stream(&str, IO_WriteOnly);
-            stream << root().tqfindToolbar();
+            stream << root().findToolbar();
             TQCString cstr = str.utf8();
             cacheFile.file()->writeBlock( cstr.data(), cstr.length() );
             cacheFile.close();
@@ -367,7 +367,7 @@ bool KBookmarkManager::saveAs( const TQString & filename, bool toolbarCache ) co
                              "of the error needs to be fixed as quickly as possible, "
                              "which is most likely a full hard drive.")
                         .arg(filename).arg(TQString::fromLocal8Bit(strerror(file.status())));
-        if (tqApp->type() != TQApplication::Tty)
+        if (qApp->type() != TQApplication::Tty)
             KMessageBox::error( 0L, error );
         else
             kdError() << error << endl;
@@ -388,7 +388,7 @@ KBookmarkGroup KBookmarkManager::toolbar()
     if(!m_docIsLoaded)
     {
         kdDebug(7043) << "KBookmarkManager::toolbar trying cache" << endl;
-        const TQString cacheFilename = m_bookmarksFile + TQString::tqfromLatin1(".tbcache");
+        const TQString cacheFilename = m_bookmarksFile + TQString::fromLatin1(".tbcache");
         TQFileInfo bmInfo(m_bookmarksFile);
         TQFileInfo cacheInfo(cacheFilename);
         if (m_toolbarDoc.isNull() &&
@@ -415,16 +415,16 @@ KBookmarkGroup KBookmarkManager::toolbar()
 
     // Fallback to the normal way if there is no cache or if the bookmark file
     // is already loaded
-    TQDomElement elem = root().tqfindToolbar();
+    TQDomElement elem = root().findToolbar();
     if (elem.isNull())
         return root(); // Root is the bookmark toolbar if none has been set.
     else
-        return KBookmarkGroup(root().tqfindToolbar());
+        return KBookmarkGroup(root().findToolbar());
 }
 
-KBookmark KBookmarkManager::tqfindByAddress( const TQString & address, bool tolerant )
+KBookmark KBookmarkManager::findByAddress( const TQString & address, bool tolerant )
 {
-    //kdDebug(7043) << "KBookmarkManager::tqfindByAddress " << address << endl;
+    //kdDebug(7043) << "KBookmarkManager::findByAddress " << address << endl;
     KBookmark result = root();
     // The address is something like /5/10/2+
     TQStringList addresses = TQStringList::split(TQRegExp("[/+]"),address);
@@ -452,7 +452,7 @@ KBookmark KBookmarkManager::tqfindByAddress( const TQString & address, bool tole
        result = bk;
     }
     if (result.isNull()) {
-       kdWarning() << "KBookmarkManager::tqfindByAddress: couldn't tqfind item " << address << endl;
+       kdWarning() << "KBookmarkManager::findByAddress: couldn't find item " << address << endl;
        Q_ASSERT(!tolerant);
     }
     //kdWarning() << "found " << result.address() << endl;
@@ -462,7 +462,7 @@ KBookmark KBookmarkManager::tqfindByAddress( const TQString & address, bool tole
 static TQString pickUnusedTitle( KBookmarkGroup parentBookmark,
                                 const TQString &title, const TQString &url
 ) {
-    // If this title is already used, we'll try to tqfind something unused.
+    // If this title is already used, we'll try to find something unused.
     KBookmark ch = parentBookmark.first();
     int count = 1;
     TQString uniqueTitle = title;
@@ -521,7 +521,7 @@ KBookmarkGroup KBookmarkManager::addBookmarkDialog(
     }
 
     KBookmarkGroup parentBookmark;
-    parentBookmark = tqfindByAddress( parentBookmarkAddress ).toGroup();
+    parentBookmark = findByAddress( parentBookmarkAddress ).toGroup();
     Q_ASSERT( !parentBookmark.isNull() );
 
     TQString uniqueTitle = pickUnusedTitle( parentBookmark, title, url );
@@ -584,7 +584,7 @@ void KBookmarkManager::notifyChanged( TQString groupAddress ) // DCOP call
        parse();
 
     //kdDebug(7043) << "KBookmarkManager::notifyChanged " << groupAddress << endl;
-    //KBookmarkGroup group = tqfindByAddress( groupAddress ).toGroup();
+    //KBookmarkGroup group = findByAddress( groupAddress ).toGroup();
     //Q_ASSERT(!group.isNull());
     emit changed( groupAddress, TQString::null );
 }
@@ -614,11 +614,11 @@ void KBookmarkManager::setEditorOptions( const TQString& caption, bool browser )
 void KBookmarkManager::slotEditBookmarks()
 {
     KProcess proc;
-    proc << TQString::tqfromLatin1("keditbookmarks");
+    proc << TQString::fromLatin1("keditbookmarks");
     if (!dptr()->m_editorCaption.isNull())
-       proc << TQString::tqfromLatin1("--customcaption") << dptr()->m_editorCaption;
+       proc << TQString::fromLatin1("--customcaption") << dptr()->m_editorCaption;
     if (!dptr()->m_browserEditor)
-       proc << TQString::tqfromLatin1("--nobrowser");
+       proc << TQString::fromLatin1("--nobrowser");
     proc << m_bookmarksFile;
     proc.start(KProcess::DontCare);
 }
@@ -626,8 +626,8 @@ void KBookmarkManager::slotEditBookmarks()
 void KBookmarkManager::slotEditBookmarksAtAddress( const TQString& address )
 {
     KProcess proc;
-    proc << TQString::tqfromLatin1("keditbookmarks")
-         << TQString::tqfromLatin1("--address") << address
+    proc << TQString::fromLatin1("keditbookmarks")
+         << TQString::fromLatin1("--address") << address
          << m_bookmarksFile;
     proc.start(KProcess::DontCare);
 }
@@ -649,7 +649,7 @@ bool KBookmarkManager::updateAccessMetadata( const TQString & url, bool emitSign
         s_bk_map->update();
     }
 
-    TQValueList<KBookmark> list = s_bk_map->tqfind(url);
+    TQValueList<KBookmark> list = s_bk_map->find(url);
     if ( list.count() == 0 )
         return false;
 
@@ -672,7 +672,7 @@ void KBookmarkManager::updateFavicon( const TQString &url, const TQString &favic
         s_bk_map->update();
     }
 
-    TQValueList<KBookmark> list = s_bk_map->tqfind(url);
+    TQValueList<KBookmark> list = s_bk_map->find(url);
     for ( TQValueList<KBookmark>::iterator it = list.begin();
           it != list.end(); ++it )
     {
@@ -690,7 +690,7 @@ void KBookmarkManager::updateFavicon( const TQString &url, const TQString &favic
 
 TQString KBookmarkManager::userBookmarksFile()
 {
-    return locateLocal("data", TQString::tqfromLatin1("konqueror/bookmarks.xml"));
+    return locateLocal("data", TQString::fromLatin1("konqueror/bookmarks.xml"));
 }
 
 KBookmarkManager* KBookmarkManager::userBookmarksManager()

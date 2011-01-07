@@ -9,7 +9,7 @@ CONFIG -= windows
 CONFIG += debug
 CONFIG += console
 
-unix:DEFINES   = NO_INCLUDE_TQMOCFILES QT_NO_COMPAT
+unix:DEFINES   = NO_INCLUDE_MOCFILES QT_NO_COMPAT
 unix:LIBS       += -lkmdi -L$(KDEDIR)/lib -lkdecore -lkdeui -lDCOP -lkparts
 unix:INCLUDEPATH     += . .. $(KDEDIR)/include
 

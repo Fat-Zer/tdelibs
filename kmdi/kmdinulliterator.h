@@ -45,5 +45,5 @@ public:
 };
 
 #endif // _KMDINULLITERATOR_H_
-// kate: space-indent off; tab-width 4; tqreplace-tabs off; indent-mode csands;
+// kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
 

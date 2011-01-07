@@ -111,7 +111,7 @@ static KLibFactory* componentFactory()
 	factory = KLibLoader::self()->factory("libkghostviewpart");
         if( factory )
             return factory;
-	KTrader::OfferList	offers = KTrader::self()->query(TQString::tqfromLatin1("application/postscript"), TQString::tqfromLatin1("KParts/ReadOnlyPart"), TQString::null, TQString::null);
+	KTrader::OfferList	offers = KTrader::self()->query(TQString::fromLatin1("application/postscript"), TQString::fromLatin1("KParts/ReadOnlyPart"), TQString::null, TQString::null);
 	for (KTrader::OfferList::ConstIterator it = offers.begin(); it != offers.end(); ++it)
 	{
 		KService::Ptr	service = *it;
@@ -217,7 +217,7 @@ void KPrintPreview::initView(KLibFactory *factory)
 	d->toolbar_->setMovingEnabled(false);
 	//d->adjustSize();
 
-	// construct the tqlayout
+	// construct the layout
 	QVBoxLayout	*l0 = new TQVBoxLayout(d->mainwidget_, 0, 0);
 	l0->addWidget(d->toolbar_, AlignTop);
 	if (d->gvpart_)
@@ -239,7 +239,7 @@ bool KPrintPreview::isValid() const
 
 bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId)
 {
-	KMimeType::Ptr mime = KMimeType::tqfindByPath( file );
+	KMimeType::Ptr mime = KMimeType::findByPath( file );
 	bool isPS = ( mime->name() == "application/postscript" );
 	if ( !isPS )
 		kdDebug( 500 ) << "Previewing a non PostScript file, built-in preview disabled" << endl;
@@ -248,7 +248,7 @@ bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId
 	conf->setGroup("General");
 	KLibFactory	*factory(0);
 	bool	externalPreview = conf->readBoolEntry("ExternalPreview", false);
-	QWidget	*parentW = TQWidget::tqfind(parentId);
+	QWidget	*parentW = TQWidget::find(parentId);
 	QString	exe;
 	if (!externalPreview && isPS && (factory = componentFactory()) != 0)
 	{
@@ -304,7 +304,7 @@ bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId
 			               "viewer (KGhostView) nor any other external PostScript "
 			               "viewer could be found.");
 			else
-				msg = i18n( "Preview failed: KDE could not tqfind any application "
+				msg = i18n( "Preview failed: KDE could not find any application "
 						    "to preview files of type %1." ).arg( mime->name() );
 
 			return continuePrint(msg, parentW, previewOnly);

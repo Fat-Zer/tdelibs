@@ -107,12 +107,12 @@ private:
 	int strtoichar (ichar_t* out, char* in, int outlen, int canonical);
 	int ichartostr (char* out, ichar_t* in, int outlen, int canonical);
 	char * ichartosstr (ichar_t* in, int canonical);
-	int	tqfindfiletype (const char * name, int searchnames, int * deformatter);
+	int	findfiletype (const char * name, int searchnames, int * deformatter);
 	long whatcap (ichar_t* word);
 
 	/*
-		HACK: macros tqreplaced with function implementations
-		so we could do a side-effect-free check for tqunicode
+		HACK: macros replaced with function implementations
+		so we could do a side-effect-free check for unicode
 		characters which aren't in hashheader
 	*/
 	char myupper(ichar_t c);
@@ -167,12 +167,12 @@ private:
 			  struct flagptr * ind, int optflags, struct flagent * pfxent,
 			  int ignoreflagbits, int allhits));
 	int		expand_pre P ((char * croot, ichar_t * rootword,
-			  MASKTYPE tqmask[], int option, char * extra));
+			  MASKTYPE mask[], int option, char * extra));
 	int	pr_pre_expansion P ((char * croot, ichar_t * rootword,
-			  struct flagent * flent, MASKTYPE tqmask[], int option,
+			  struct flagent * flent, MASKTYPE mask[], int option,
 			  char * extra));
 	int		expand_suf P ((char * croot, ichar_t * rootword,
-			  MASKTYPE tqmask[], int optflags, int option, char * extra));
+			  MASKTYPE mask[], int optflags, int option, char * extra));
 	int	pr_suf_expansion P ((char * croot, ichar_t * rootword,
 			  struct flagent * flent, int option, char * extra));
 	void	forcelc P ((ichar_t * dst, int len));
@@ -261,7 +261,7 @@ private:
 					/* ..(defined as those using legal affixes) */
 
 	/*
-	 * The following array tqcontains a list of characters that should be tried
+	 * The following array contains a list of characters that should be tried
 	 * in "missingletter."  Note that lowercase characters are omitted.
 	 */
 	int	m_Trynum;		/* Size of "Try" array */

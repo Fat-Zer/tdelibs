@@ -27,7 +27,7 @@
 
 // some forward declarations (see kmwquota.cpp)
 const char* unitKeyword(int);
-int tqfindUnit(int&);
+int findUnit(int&);
 
 KMPropQuota::KMPropQuota(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
@@ -74,7 +74,7 @@ void KMPropQuota::setPrinter(KMPrinter *p)
 		if (si == 0 && pa == 0)
 			qu = -1;
 		if (qu > 0)
-			un = tqfindUnit(qu);
+			un = findUnit(qu);
 		m_period->setText(qu == -1 ? i18n("No quota") : TQString::number(qu).append(" ").append(i18n(unitKeyword(un))));
 		m_sizelimit->setText(si ? TQString::number(si) : i18n("None"));
 		m_pagelimit->setText(pa ? TQString::number(pa) : i18n("None"));

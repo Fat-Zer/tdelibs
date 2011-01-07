@@ -46,7 +46,7 @@ namespace KIO {
      *
      * <h3>1. Direct</h3>
      * This is the default. When you create a job the
-     * KIO::Scheduler will be notified and will tqfind either an existing
+     * KIO::Scheduler will be notified and will find either an existing
      * slave that is idle or it will create a new slave for the job.
      *
      * Example:
@@ -288,7 +288,7 @@ namespace KIO {
 
     public slots:
         void slotSlaveDied(KIO::Slave *slave);
-        void slotSlavetqStatus(pid_t pid, const TQCString &protocol,
+        void slotSlaveStatus(pid_t pid, const TQCString &protocol,
                              const TQString &host, bool connected);
     signals:
         void slaveConnected(KIO::Slave *slave);
@@ -330,7 +330,7 @@ namespace KIO {
         void _publishSlaveOnHold();
         void _registerWindow(TQWidget *wid);
         
-        Slave *tqfindIdleSlave(ProtocolInfo *protInfo, SimpleJob *job, bool &exact);
+        Slave *findIdleSlave(ProtocolInfo *protInfo, SimpleJob *job, bool &exact);
         Slave *createSlave(ProtocolInfo *protInfo, SimpleJob *job, const KURL &url);
         
 

@@ -854,11 +854,11 @@
 	<item> floor </item>
 	<item> fix </item>
 	<item> fit_dat </item>
-	<item> tqfind_path </item>
-	<item> tqfindobj </item>
-	<item> tqfindm </item>
-	<item> tqfind_freq </item>
-	<item> tqfind </item>
+	<item> find_path </item>
+	<item> findobj </item>
+	<item> findm </item>
+	<item> find_freq </item>
+	<item> find </item>
 	<item> filter </item>
 	<item> fileinfo </item>
 	<item> file </item>

@@ -74,7 +74,7 @@ bool TemplateInterface::expandMacros( TQMap<TQString, TQString> &map, TQWidget *
 {
   KABC::StdAddressBook *addrBook = 0;
   KABC::Addressee userAddress;
-  TQDateTime datetime = TQDateTime::tqcurrentDateTime();
+  TQDateTime datetime = TQDateTime::currentDateTime();
   TQDate date = datetime.date();
   TQTime time = datetime.time();
 
@@ -173,7 +173,7 @@ bool TemplateInterface::insertTemplateText ( uint line, uint column, const TQStr
         }
       }
       TQString placeholder = rx.cap( 1 );
-      if ( ! enhancedInitValues.tqcontains( placeholder ) )
+      if ( ! enhancedInitValues.contains( placeholder ) )
         enhancedInitValues[ placeholder ] = "";
 
       pos += rx.matchedLength();

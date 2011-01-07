@@ -186,7 +186,7 @@ public:
     /**
      * Defines the text (and icon, tooltip, whatsthis) that should be displayed
      * instead of the normal text, when the action is checked.
-     * This feature tqreplaces the checkmark that usually appears in front of the text, in menus.
+     * This feature replaces the checkmark that usually appears in front of the text, in menus.
      * It is useful when the text is mainly a verb: e.g. "Show <foo>"
      * should turn into "Hide <foo>" when activated.
      *
@@ -1393,7 +1393,7 @@ public:
     /**
     * Controls the behavior of the clipboard history menu popup.
     *
-    * @param mode If false and the clipboard tqcontains a non-text object
+    * @param mode If false and the clipboard contains a non-text object
     *             the popup menu with the clipboard history will appear
     *             immediately as the user clicks the toolbar action; if
     *             true, the action works like the standard paste action

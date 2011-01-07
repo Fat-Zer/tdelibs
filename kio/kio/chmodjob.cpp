@@ -40,11 +40,11 @@
 
 using namespace KIO;
 
-ChmodJob::ChmodJob( const KFileItemList& lstItems, int permissions, int tqmask,
+ChmodJob::ChmodJob( const KFileItemList& lstItems, int permissions, int mask,
                     int newOwner, int newGroup,
                     bool recursive, bool showProgressInfo )
     : KIO::Job( showProgressInfo ), state( STATE_LISTING ),
-      m_permissions( permissions ), m_tqmask( tqmask ),
+      m_permissions( permissions ), m_mask( mask ),
       m_newOwner( newOwner ), m_newGroup( newGroup ),
       m_recursive( recursive ), m_lstItems( lstItems )
 {
@@ -62,12 +62,12 @@ void ChmodJob::processList()
             ChmodInfo info;
             info.url = item->url();
             // This is a toplevel file, we apply changes directly (no +X emulation here)
-            info.permissions = ( m_permissions & m_tqmask ) | ( item->permissions() & ~m_tqmask );
+            info.permissions = ( m_permissions & m_mask ) | ( item->permissions() & ~m_mask );
             /*kdDebug(7007) << "\n current permissions=" << TQString::number(item->permissions(),8)
                           << "\n wanted permission=" << TQString::number(m_permissions,8)
-                          << "\n with tqmask=" << TQString::number(m_tqmask,8)
-                          << "\n with ~tqmask (tqmask bits we keep) =" << TQString::number((uint)~m_tqmask,8)
-                          << "\n bits we keep =" << TQString::number(item->permissions() & ~m_tqmask,8)
+                          << "\n with mask=" << TQString::number(m_mask,8)
+                          << "\n with ~mask (mask bits we keep) =" << TQString::number((uint)~m_mask,8)
+                          << "\n bits we keep =" << TQString::number(item->permissions() & ~m_mask,8)
                           << "\n new permissions = " << TQString::number(info.permissions,8)
                           << endl;*/
             m_infos.prepend( info );
@@ -121,33 +121,33 @@ void ChmodJob::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
               break;
           }
         }
-        if ( !isLink && relativePath != TQString::tqfromLatin1("..") )
+        if ( !isLink && relativePath != TQString::fromLatin1("..") )
         {
             ChmodInfo info;
             info.url = m_lstItems.first()->url(); // base directory
             info.url.addPath( relativePath );
-            int tqmask = m_tqmask;
+            int mask = m_mask;
             // Emulate -X: only give +x to files that had a +x bit already
             // So the check is the opposite : if the file had no x bit, don't touch x bits
             // For dirs this doesn't apply
             if ( !isDir )
             {
-                int newPerms = m_permissions & tqmask;
+                int newPerms = m_permissions & mask;
                 if ( (newPerms & 0111) && !(permissions & 0111) )
                 {
                     // don't interfere with mandatory file locking
                     if ( newPerms & 02000 )
-                      tqmask = tqmask & ~0101;
+                      mask = mask & ~0101;
                     else
-                      tqmask = tqmask & ~0111;
+                      mask = mask & ~0111;
                 }
             }
-            info.permissions = ( m_permissions & tqmask ) | ( permissions & ~tqmask );
+            info.permissions = ( m_permissions & mask ) | ( permissions & ~mask );
             /*kdDebug(7007) << "\n current permissions=" << TQString::number(permissions,8)
                           << "\n wanted permission=" << TQString::number(m_permissions,8)
-                          << "\n with tqmask=" << TQString::number(tqmask,8)
-                          << "\n with ~tqmask (tqmask bits we keep) =" << TQString::number((uint)~tqmask,8)
-                          << "\n bits we keep =" << TQString::number(permissions & ~tqmask,8)
+                          << "\n with mask=" << TQString::number(mask,8)
+                          << "\n with ~mask (mask bits we keep) =" << TQString::number((uint)~mask,8)
+                          << "\n bits we keep =" << TQString::number(permissions & ~mask,8)
                           << "\n new permissions = " << TQString::number(info.permissions,8)
                           << endl;*/
             // Prepend this info in our todo list.
@@ -227,7 +227,7 @@ void ChmodJob::slotResult( KIO::Job * job )
 }
 
 // antlarr: KDE 4: Make owner and group be const TQString &
-KIO_EXPORT ChmodJob *KIO::chmod( const KFileItemList& lstItems, int permissions, int tqmask,
+KIO_EXPORT ChmodJob *KIO::chmod( const KFileItemList& lstItems, int permissions, int mask,
                       TQString owner, TQString group,
                       bool recursive, bool showProgressInfo )
 {
@@ -249,7 +249,7 @@ KIO_EXPORT ChmodJob *KIO::chmod( const KFileItemList& lstItems, int permissions,
         else
             newGroupID = g->gr_gid;
     }
-    return new ChmodJob( lstItems, permissions, tqmask, newOwnerID, newGroupID, recursive, showProgressInfo );
+    return new ChmodJob( lstItems, permissions, mask, newOwnerID, newGroupID, recursive, showProgressInfo );
 }
 
 void ChmodJob::virtual_hook( int id, void* data )

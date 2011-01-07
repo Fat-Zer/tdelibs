@@ -33,7 +33,7 @@ public:
   KSambaSharePrivate();
   
   bool readSmbConf();
-  bool tqfindSmbConf();
+  bool findSmbConf();
   bool load();
   
   TQDict<bool> sharedPaths;
@@ -49,20 +49,20 @@ KSambaSharePrivate::KSambaSharePrivate()
 #define FILESHARECONF "/etc/security/fileshare.conf"
 
 bool KSambaSharePrivate::load() {
-  if (!tqfindSmbConf())
+  if (!findSmbConf())
       return false;
       
   return readSmbConf();
 }
 
 /**
- * Try to tqfind the samba config file path
+ * Try to find the samba config file path
  * First tries the kconfig, then checks
  * several well-known paths
  * @return wether a smb.conf was found.
  **/
-bool KSambaSharePrivate::tqfindSmbConf() {
-  KSimpleConfig config(TQString::tqfromLatin1(FILESHARECONF),true);
+bool KSambaSharePrivate::findSmbConf() {
+  KSimpleConfig config(TQString::fromLatin1(FILESHARECONF),true);
   smbConf = config.readEntry("SMBCONF");
 
   if ( TQFile::exists(smbConf) )
@@ -144,7 +144,7 @@ bool KSambaSharePrivate::readSmbConf() {
     }
 
     // parameter
-    int i = completeLine.tqfind('=');
+    int i = completeLine.find('=');
 
     if (i>-1)
     {
@@ -203,7 +203,7 @@ bool KSambaShare::isDirectoryShared( const TQString & path ) const {
   if ( path[path.length()-1] != '/' )
        fixedPath += '/';
   
-  return d->sharedPaths.tqfind(fixedPath) != 0;
+  return d->sharedPaths.find(fixedPath) != 0;
 }
 
 TQStringList KSambaShare::sharedDirectories() const {

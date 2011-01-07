@@ -68,9 +68,9 @@ MapNotify=<bool>
     - this key is obsolete
     - true is equivalent to X-KDE-StartupNotify=true and no X-KDE-WMClass set
     - false is equivalent to X-KDE-StartupNotify=true and X-KDE-WMClass=0
-        - many .desktop files in KDE ( especially in kdebase/kapptqfinder )
+        - many .desktop files in KDE ( especially in kdebase/kappfinder )
             seem to have MapNotify=false even though it's not needed, this
-            needs to be checked and tqreplaced by the needed X-KDE-* values,
+            needs to be checked and replaced by the needed X-KDE-* values,
             often just X-KDE-StartupNotify=true should be enough
         
  The best way to check if the entries are set correctly is to start
@@ -216,7 +216,7 @@ Text entries in the messages :
 ------------------------------
 
 Every entry is of the form <name>=<value>. Value may be either a number
-or a string. If the string tqcontains spaces, it must be quoted ("), all
+or a string. If the string contains spaces, it must be quoted ("), all
 backslashes and quotes (") must be escaped by backslashes. If this ever
 becomes more than an internal KDE standard, non-standard entry names should
 start with an underscore.

@@ -62,7 +62,7 @@ Tue Dec 22 22:56:58 1998  Mirko Boehm  <mirko@kde.org>
 1998-10-24 Mirko Boehm  <mirko@kde.org>
 	I debugged the appearance of the EditEntry-dialog. It resizes now
 	automatically and more accurately.
-	The about dialog now tqcontains a KURLLabel that opens an email composer
+	The about dialog now contains a KURLLabel that opens an email composer
 	when the user clicks on it.
 
 1998-11-02 Mirko Boehm  <mirko@kde.org>

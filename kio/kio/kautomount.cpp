@@ -56,7 +56,7 @@ void KAutoMount::slotResult( KIO::Job * job )
     Q_ASSERT( mountpoint.isValid() );
 
     if ( mountpoint.path().isEmpty() )
-        kdWarning(7015) << m_strDevice << " was correctly mounted, but KIO::findDeviceMountPoint didn't tqfind it. "
+        kdWarning(7015) << m_strDevice << " was correctly mounted, but KIO::findDeviceMountPoint didn't find it. "
                         << "This looks like a bug, please report it on http://bugs.kde.org, together with your /etc/fstab line" << endl;
     else if ( m_bShowFilemanagerWindow )
       KRun::runURL( mountpoint, "inode/directory" );

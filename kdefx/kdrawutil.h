@@ -86,7 +86,7 @@ KDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
  * @c \#include @c <kdrawutil.h>
  *
  * Draws a rounded oval button. This function doesn't fill the button.
- * See kRoundMaskRegion() for setting tqmasks for fills.
+ * See kRoundMaskRegion() for setting masks for fills.
  *
  * @param p       The painter to use for drawing the button.
  * @param r       Specifies the rect in which to draw the button.
@@ -125,7 +125,7 @@ KDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h);
  * @c \#include @c <kdrawutil.h>
  *
  * Paints the pixels covered by a round button of the given size with
- * Qt::color1. This function is useful in TQStyle::tqdrawControlMask().
+ * Qt::color1. This function is useful in TQStyle::drawControlMask().
  *
  * @param p      The painter to use for drawing the button.
  * @param x      The X coordinate of the button.
@@ -133,7 +133,7 @@ KDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h);
  * @param w      The width of the button.
  * @param h      The height of the button.
  * @param clear  Whether to clear the rectangle specified by @p (x, y, w, h) to
- *               Qt::color0 before drawing the tqmask.
+ *               Qt::color0 before drawing the mask.
  */
 KDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool clear=false);
 
@@ -145,7 +145,7 @@ KDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool 
  * the foreground colors. There's one bitmap for each color. If you want to skip
  * a color, pass @a null for the corresponding bitmap.
  *
- * @note The bitmaps will be self-tqmasked automatically if not tqmasked
+ * @note The bitmaps will be self-masked automatically if not masked
  *       prior to calling this routine.
  *
  * @param p             The painter to use for drawing the bitmaps.

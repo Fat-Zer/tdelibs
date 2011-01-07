@@ -61,12 +61,12 @@ protected:
   struct AuthInfo;
 
   TQString createCacheKey( const KIO::AuthInfo &info );
-  const AuthInfo *tqfindAuthInfoItem(const TQString &key, const KIO::AuthInfo &info);
+  const AuthInfo *findAuthInfoItem(const TQString &key, const KIO::AuthInfo &info);
   void removeAuthInfoItem(const TQString &key, const KIO::AuthInfo &info);
   void addAuthInfoItem(const TQString &key, const KIO::AuthInfo &info, long windowId, long seqNr, bool canceled);
   KIO::AuthInfo copyAuthInfo(const AuthInfo *);
   void updateAuthExpire(const TQString &key, const AuthInfo *, long windowId, bool keep);
-  int tqfindWalletEntry( const TQMap<TQString,TQString>& map, const TQString& username );
+  int findWalletEntry( const TQMap<TQString,TQString>& map, const TQString& username );
   bool openWallet( WId windowId );
 
   struct AuthInfo {

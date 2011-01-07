@@ -58,7 +58,7 @@ public:
 
     void setValue( long v ) { predefVal = v; }
 
-    virtual void tqlayout( );
+    virtual void layout( );
     virtual void detach( );
     virtual void calcMinMaxWidth();
     //virtual short marginLeft() const;
@@ -89,11 +89,11 @@ public:
     virtual void setStyle(RenderStyle *style);
 
     virtual const char *renderName() const { return "RenderListMarker"; }
-    // so the marker gets to tqlayout itself. Only needed for
+    // so the marker gets to layout itself. Only needed for
     // list-style-position: inside
 
     virtual void paint(PaintInfo& i, int xoff, int yoff);
-    virtual void tqlayout( );
+    virtual void layout( );
     virtual void calcMinMaxWidth();
 
     virtual short lineHeight( bool firstLine ) const;
@@ -123,7 +123,7 @@ protected:
 };
 
 // Implementation of list-item counter
-// ### should tqreplace most list-item specific code in renderObject::getCounter
+// ### should replace most list-item specific code in renderObject::getCounter
 /*
 class CounterListItem : public CounterNode
 {

@@ -9,17 +9,17 @@ DEFINES += MAKE_KIO_LIB
 LIBS += $$KDELIBDESTDIR\kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdeui$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdewin32$$KDELIB_SUFFIX
 
-system( bash ktqmoc kio kfile misc bookmarks kssl )
+system( bash kmoc kio kfile misc bookmarks kssl )
 
 TARGET = kio$$KDEBUG
 
 INCLUDEPATH += $(KDELIBS)/kdecore/network $(KDELIBS)/kio/kio $(KDELIBS)/kio/misc $(KDELIBS)/kio/bookmarks \
   $(KDELIBS)/kio/kssl \
   $(KDELIBS)/libltdl $(KDELIBS)/interfaces \
-  $(KDELIBS)/kio/kio/tqmoc $(KDELIBS)/kio/misc/tqmoc $(KDELIBS)/kio/kfile/tqmoc \
-  $(KDELIBS)/kio/misc/tqmoc \
-  $(KDELIBS)/kio/bookmarks/tqmoc \
-  $(KDELIBS)/kio/kssl/tqmoc $(KDELIBS)/kwallet/client 
+  $(KDELIBS)/kio/kio/moc $(KDELIBS)/kio/misc/moc $(KDELIBS)/kio/kfile/moc \
+  $(KDELIBS)/kio/misc/moc \
+  $(KDELIBS)/kio/bookmarks/moc \
+  $(KDELIBS)/kio/kssl/moc $(KDELIBS)/kwallet/client 
 
 system( cd kio && dcopidl kdirnotify.h > kdirnotify.kidl && dcopidl2cpp --no-stub kdirnotify.kidl )
 system( cd kio && dcopidl observer.h > observer.kidl && dcopidl2cpp observer.kidl )

@@ -66,15 +66,15 @@ double calcHue(double temp1, double temp2, double hueVal)
 // explanation available at http://en.wikipedia.org/wiki/HSL_color_space
 
 // all values are in the range of 0 to 1.0
-QRgb khtml::tqRgbaFromHsla(double h, double s, double l, double a)
+QRgb khtml::qRgbaFromHsla(double h, double s, double l, double a)
 {
     double temp2 = l < 0.5 ? l * (1.0 + s) : l + s - l * s;
     double temp1 = 2.0 * l - temp2;
 
-    return tqRgba(calcHue(temp1, temp2, h + 1.0 / 3.0) * 255, calcHue(temp1, temp2, h) * 255, calcHue(temp1, temp2, h - 1.0 / 3.0) * 255, a * 255);
+    return qRgba(calcHue(temp1, temp2, h + 1.0 / 3.0) * 255, calcHue(temp1, temp2, h) * 255, calcHue(temp1, temp2, h - 1.0 / 3.0) * 255, a * 255);
 }
 
-/** tqfinds out the background color of an element
+/** finds out the background color of an element
  * @param obj render object
  * @return the background color. It is guaranteed that a valid color is returned.
  */

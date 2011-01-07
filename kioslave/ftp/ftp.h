@@ -284,14 +284,14 @@ private:
   // ------------------------------------------------------------------------
 
   /**
-   * tqStatus Code returned from ftpPut() and ftpGet(), used to select
+   * Status Code returned from ftpPut() and ftpGet(), used to select
    * source or destination url for error messages
    */
   typedef enum {
     statusSuccess,
     statusClientError,
     statusServerError
-  } tqStatusCode;
+  } StatusCode;
 
   /**
    * Login Mode for ftpOpenConnection
@@ -482,7 +482,7 @@ private:
    * @param hCopyOffset local file only: non-zero for resume
    * @return 0 for success, -1 for server error, -2 for client error
    */
-  tqStatusCode ftpGet(int& iError, int iCopyFile, const KURL& url, KIO::fileoffset_t hCopyOffset);
+  StatusCode ftpGet(int& iError, int iCopyFile, const KURL& url, KIO::fileoffset_t hCopyOffset);
 
   /**
    * This is the internal implementation of put() - see copy().
@@ -494,7 +494,7 @@ private:
    * @param iCopyFile   -1 -or- handle of a local source file
    * @return 0 for success, -1 for server error, -2 for client error
    */
-  tqStatusCode ftpPut(int& iError, int iCopyFile, const KURL& url, int permissions, bool overwrite, bool resume);
+  StatusCode ftpPut(int& iError, int iCopyFile, const KURL& url, int permissions, bool overwrite, bool resume);
 
   /**
    * helper called from copy() to implement FILE -> FTP transfers
@@ -504,7 +504,7 @@ private:
    * @param sCopyFile   path of the local source file
    * @return 0 for success, -1 for server error, -2 for client error
    */
-  tqStatusCode ftpCopyPut(int& iError, int& iCopyFile, TQString sCopyFile, const KURL& url, int permissions, bool overwrite);
+  StatusCode ftpCopyPut(int& iError, int& iCopyFile, TQString sCopyFile, const KURL& url, int permissions, bool overwrite);
 
   /**
    * helper called from copy() to implement FTP -> FILE transfers
@@ -514,7 +514,7 @@ private:
    * @param sCopyFile   path of the local destination file
    * @return 0 for success, -1 for server error, -2 for client error
    */
-  tqStatusCode ftpCopyGet(int& iError, int& iCopyFile, TQString sCopyFile, const KURL& url, int permissions, bool overwrite);
+  StatusCode ftpCopyGet(int& iError, int& iCopyFile, TQString sCopyFile, const KURL& url, int permissions, bool overwrite);
 
 private: // data members
 
@@ -544,7 +544,7 @@ private: // data members
   int  m_iRespType;
 
   /**
-   * This flag is maintained by ftpDataMode() and tqcontains I or A after
+   * This flag is maintained by ftpDataMode() and contains I or A after
    * ftpDataMode() has successfully set the mode.
    */
   char m_cDataMode;

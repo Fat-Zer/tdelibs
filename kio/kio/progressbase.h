@@ -47,7 +47,7 @@ namespace KIO
 * Add your GUI code to the constructor and implemement those virtual
 * methods which you need in order to display progress.
 *
-* E.g. tqStatusbarProgress only implements slotTotalSize(),
+* E.g. StatusbarProgress only implements slotTotalSize(),
 * slotPercent() and slotSpeed().
 *
 * Custom progress dialog will be used like this :

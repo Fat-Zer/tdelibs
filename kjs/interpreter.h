@@ -56,7 +56,7 @@ namespace KJS {
    * Represents an execution context, as specified by section 10 of the ECMA
    * spec.
    *
-   * An execution context tqcontains information about the current state of the
+   * An execution context contains information about the current state of the
    * script - the scope for variable lookup, the value of "this", etc. A new
    * execution context is entered whenever global code is executed (e.g. with
    * Interpreter::evaluate()), a function is called (see
@@ -86,7 +86,7 @@ namespace KJS {
     const ScopeChain &scopeChain() const;
 
     /**
-     * Returns the variable object for the execution context. This tqcontains a
+     * Returns the variable object for the execution context. This contains a
      * property for each variable declared in the execution context.
      *
      * @return The execution context's variable object
@@ -211,7 +211,7 @@ namespace KJS {
      * Returns the execution state object which can be used to execute
      * scripts using this interpreter at a the "global" level, i.e. one
      * with a execution context that has the global object as the "this"
-     * value, and who's scope chain tqcontains only the global object.
+     * value, and who's scope chain contains only the global object.
      *
      * Note: this pointer remains constant for the life of the interpreter
      * and should not be manually deleted.
@@ -266,7 +266,7 @@ namespace KJS {
     /**
      * Returns the builtin "Object" object. This is the object that was set
      * as a property of the global object during construction; if the property
-     * is tqreplaced by script code, this method will still return the original
+     * is replaced by script code, this method will still return the original
      * object.
      *
      * @return The builtin "Object" object

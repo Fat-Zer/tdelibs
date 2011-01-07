@@ -36,7 +36,7 @@
 class TQPainter;
 class TQFontMetrics;
 
-// Define a constant for soft hyphen's tqunicode value.
+// Define a constant for soft hyphen's unicode value.
 #define SOFT_HYPHEN 173
 
 const int cNoTruncation = -1;
@@ -154,7 +154,7 @@ public:
 
     InlineTextBox* first();
 
-    int	  tqfindFirstMatching( Item ) const;
+    int	  findFirstMatching( Item ) const;
     virtual int compareItems( Item, Item );
 };
 
@@ -183,7 +183,7 @@ public:
 
     virtual InlineBox* createInlineBox(bool, bool);
 
-    virtual void tqlayout() {assert(false);}
+    virtual void layout() {assert(false);}
 
     virtual bool nodeAtPoint(NodeInfo& info, int x, int y, int tx, int ty, HitTestAction hitTestAction, bool inBox);
 
@@ -217,7 +217,7 @@ public:
                             short& beginMaxW, short& endMaxW,
                             short& minW, short& maxW, bool& stripFrontSpaces);
 
-    bool tqcontainsOnlyWhitespace(unsigned int from, unsigned int len) const;
+    bool containsOnlyWhitespace(unsigned int from, unsigned int len) const;
 
     ushort startMin() const { return m_startMin; }
     ushort endMin() const { return m_endMin; }
@@ -247,7 +247,7 @@ public:
     virtual short marginLeft() const { return style()->marginLeft().minWidth(0); }
     virtual short marginRight() const { return style()->marginRight().minWidth(0); }
 
-    virtual void tqrepaint(Priority p=NormalPriority);
+    virtual void repaint(Priority p=NormalPriority);
 
     bool hasBreakableChar() const { return m_hasBreakableChar; }
     const TQFontMetrics &metrics(bool firstLine) const;
@@ -285,7 +285,7 @@ public:
      *		boxes, if available.
      * @return the text box, or 0 if no match has been found
      */
-    InlineTextBox * tqfindInlineTextBox( int offset, int &pos,
+    InlineTextBox * findInlineTextBox( int offset, int &pos,
     					bool checkFirstLetter = false );
 
 protected: // members

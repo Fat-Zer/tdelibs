@@ -35,7 +35,7 @@ KSettings::Dialog:
 m_dlg = new KSettings::Dialog( QStringList::split( ';', "component1;component2" ) );
 \endcode
 
-The KSettings::Dialog object will be destructed automatically by the TQObject
+The KSettings::Dialog object will be destructed automatically by the QObject
 mechanisms.
 
 
@@ -85,7 +85,7 @@ object for every registered instance name: \ref KSettings::Dispatcher::configFor
 <hr>
 <h3>3. The .desktop file for the page</h3>
 
-The .desktop file holds all the information for the dialog to tqfind the page and
+The .desktop file holds all the information for the dialog to find the page and
 insert it at the right place (with the right icon, name and comment).
 
 An example file:
@@ -123,7 +123,7 @@ Some explanation for those keys:
   is used by the first two \ref KSettings::Dialog constructors. The Dialog will
   use all modules that set X-KDE-ParentApp to
   KGlobal::instance()->instanceName(). It
-  should be pretty easy to tqfind out what name that is: look at the first
+  should be pretty easy to find out what name that is: look at the first
   argument to the KAboutData ctor.
 - X-KDE-ParentComponents is a list of the components (plugin/KPart/whatever)
   this config page belongs to. Normally there is only one component.
@@ -146,7 +146,7 @@ Some explanation for those keys:
 
 
 <hr>
-<h3>4. The .setdlg file for hierarchical (TreeList) page tqlayouts</h3>
+<h3>4. The .setdlg file for hierarchical (TreeList) page layouts</h3>
 
 If your config dialog should show a tree of pages in the config dialog you need
 to define that hierarchy with a .setdlg file.
@@ -155,7 +155,7 @@ The file should be installed in apps/&lt;appname&gt;/&lt;appname&gt;.setdlg. If 
 plugins need to merge in they will install their file to
 apps/&lt;appname&gt;/ksettingsdialog/&lt;pluginname&gt;.setdlg.
 
-A .setdlg file tqcontains one or more blocks like the following:
+A .setdlg file contains one or more blocks like the following:
 
 \verbatim
 [id]

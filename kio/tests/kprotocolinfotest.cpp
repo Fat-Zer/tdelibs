@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
 
     TQStringList capabilities = KProtocolInfo::capabilities( "imap" );
     kdDebug() << "kio_imap capabilities: " << capabilities << endl;
-    //assert(capabilities.tqcontains("ACL"));
+    //assert(capabilities.contains("ACL"));
 
     return 0;
 }

@@ -296,7 +296,7 @@ KAboutData::setProgramLogo(const TQImage& image)
 QString
 KAboutData::version() const
 {
-   return TQString::tqfromLatin1(mVersion);
+   return TQString::fromLatin1(mVersion);
 }
 
 QString
@@ -311,13 +311,13 @@ KAboutData::shortDescription() const
 QString
 KAboutData::homepage() const
 {
-   return TQString::tqfromLatin1(mHomepageAddress);
+   return TQString::fromLatin1(mHomepageAddress);
 }
 
 QString
 KAboutData::bugAddress() const
 {
-   return TQString::tqfromLatin1(mBugEmailAddress);
+   return TQString::fromLatin1(mBugEmailAddress);
 }
 
 const TQValueList<KAboutPerson>
@@ -384,7 +384,7 @@ KAboutData::translators() const
 QString
 KAboutData::aboutTranslationTeam()
 {
-    return i18n("tqreplace this with information about your translation team",
+    return i18n("replace this with information about your translation team",
             "<p>KDE is translated into many languages thanks to the work "
             "of the translation teams all over the world.</p>"
             "<p>For more information on KDE internationalization "

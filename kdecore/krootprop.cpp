@@ -118,7 +118,7 @@ void KRootProp::setProp( const TQString& rProp )
   {
     // parse the string for first key-value pair separator '\n'
 
-    i = s.tqfind("\n");
+    i = s.find("\n");
     if(i == -1)
       i = s.length();
 
@@ -131,7 +131,7 @@ void KRootProp::setProp( const TQString& rProp )
 
     keypair.simplifyWhiteSpace();
 
-    i = keypair.tqfind( "=" );
+    i = keypair.find( "=" );
     if( i != -1 )
     {
       key = keypair.left( i );
@@ -160,7 +160,7 @@ void KRootProp::destroy()
 TQString KRootProp::readEntry( const TQString& rKey,
 			    const TQString& pDefault ) const
 {
-  if( propDict.tqcontains( rKey ) )
+  if( propDict.contains( rKey ) )
       return propDict[ rKey ];
   else
       return pDefault;
@@ -217,18 +217,18 @@ TQColor KRootProp::readColorEntry( const TQString& rKey,
 
   // Support #ffffff style color naming.
   // Help ease transistion from legacy KDE setups
-  if( aValue.tqfind("#") == 0 ) {
+  if( aValue.find("#") == 0 ) {
     aRetColor.setNamedColor( aValue );
     return aRetColor;
   }
 
   // Parse "red,green,blue"
-  // tqfind first comma
-  int nIndex1 = aValue.tqfind( ',' );
+  // find first comma
+  int nIndex1 = aValue.find( ',' );
   if( nIndex1 == -1 )
     return aRetColor;
-  // tqfind second comma
-  int nIndex2 = aValue.tqfind( ',', nIndex1+1 );
+  // find second comma
+  int nIndex2 = aValue.find( ',', nIndex1+1 );
   if( nIndex2 == -1 )
     return aRetColor;
 
@@ -246,9 +246,9 @@ TQColor KRootProp::readColorEntry( const TQString& rKey,
 TQString KRootProp::writeEntry( const TQString& rKey, const TQString& rValue )
 {
     dirty = true;
-    if ( propDict.tqcontains( rKey ) ) {
+    if ( propDict.contains( rKey ) ) {
 	TQString aValue = propDict[ rKey ];
-	propDict.tqreplace( rKey, rValue );
+	propDict.replace( rKey, rValue );
 	return aValue;
     }
     else {
@@ -280,7 +280,7 @@ TQString KRootProp::writeEntry( const TQString& rKey, const TQColor& rColor )
 
 TQString KRootProp::removeEntry(const TQString& rKey)
 {
-    if (propDict.tqcontains(rKey)) {
+    if (propDict.contains(rKey)) {
 	dirty = true;
 	TQString aValue = propDict[rKey];
 	propDict.remove(rKey);

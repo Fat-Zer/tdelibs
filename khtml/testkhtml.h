@@ -8,7 +8,7 @@
 /**
  * @internal
  */
-class Dummy : public TQObject
+class Dummy : public QObject
 {
   Q_OBJECT
 public:

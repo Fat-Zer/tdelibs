@@ -5,9 +5,9 @@ include( $(KDELIBS)/win/common.pro )
 TARGET = testdcop
 DESTDIR = .
 
-system( bash ktqmoc .. )
+system( bash kmoc .. )
 
-INCLUDEPATH += ../tqmoc
+INCLUDEPATH += ../moc
 
 LIBS += $$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdeice$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX
 

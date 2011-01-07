@@ -144,7 +144,7 @@ void RenderContainer::addChild(RenderObject *newChild, RenderObject *beforeChild
             newStyle->inheritFrom(style());
 	    newStyle->setDisplay( TABLE );
 	    newStyle->setFlowAroundFloats( true );
-	    table->setParent( this ); // so it tqfinds the arena
+	    table->setParent( this ); // so it finds the arena
             table->setStyle(newStyle);
 	    table->setParent( 0 );
             addChild(table, beforeChild);
@@ -170,15 +170,15 @@ RenderObject* RenderContainer::removeChildNode(RenderObject* oldChild)
     KHTMLAssert(oldChild->parent() == this);
 
     // So that we'll get the appropriate dirty bit set (either that a normal flow child got yanked or
-    // that a positioned child got yanked).  We also tqrepaint, so that the area exposed when the child
-    // disappears gets tqrepainted properly.
+    // that a positioned child got yanked).  We also repaint, so that the area exposed when the child
+    // disappears gets repainted properly.
     if ( document()->renderer() ) {
         oldChild->setNeedsLayoutAndMinMaxRecalc();
-        oldChild->tqrepaint();
+        oldChild->repaint();
 
         // Keep our layer hierarchy updated.
         oldChild->removeLayers(enclosingLayer());
-        // remove the child from any special tqlayout lists
+        // remove the child from any special layout lists
         oldChild->removeFromObjectLists();
 
         // if oldChild is the start or end of the selection, then clear
@@ -524,7 +524,7 @@ void RenderContainer::insertChildNode(RenderObject* child, RenderObject* beforeC
 }
 
 
-void RenderContainer::tqlayout()
+void RenderContainer::layout()
 {
     KHTMLAssert( needsLayout() );
     KHTMLAssert( minMaxKnown() );
@@ -532,8 +532,8 @@ void RenderContainer::tqlayout()
     RenderObject *child = firstChild();
     while( child ) {
         if (pagedMode) child->setNeedsLayout(true);
-        child->tqlayoutIfNeeded();
-        if (child->tqcontainsPageBreak()) setContainsPageBreak(true);
+        child->layoutIfNeeded();
+        if (child->containsPageBreak()) setContainsPageBreak(true);
         if (child->needsPageClear()) setNeedsPageClear(true);
         child = child->nextSibling();
     }

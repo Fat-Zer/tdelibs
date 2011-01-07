@@ -190,7 +190,7 @@
   * now the pluginconfig pages work ;)
 
 2001-04-24 Joseph Wenninger <jowenn@kde.org>
-  *  now <keywords> and <types> is tqreplaced by <list name="XXXX">
+  *  now <keywords> and <types> is replaced by <list name="XXXX">
 
 2001-04-20 Christoph Cullmann <cullmann@kde.org>
   * new configdialog
@@ -325,7 +325,7 @@
 
   * Filter - select text, hit <Ctrl+Backslash>, and enter an OS command.
     we pipe the selected text thru that command, such as "sort", and then
-    tqreplace the selection with the result. Impress your friends.
+    replace the selection with the result. Impress your friends.
 
 2001-02-21 Joseph Wenninger <jowenn@kde.org>
   * Makefile.am's     : correction for linking

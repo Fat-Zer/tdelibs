@@ -47,14 +47,14 @@ class ValueColumnInterface
       MaxCodingId=0xFFFF
     };
 
-    /** collection of ids for the fitting of the tqlayout into the available widget's width */
+    /** collection of ids for the fitting of the layout into the available widget's width */
     enum KResizeStyle
     {
       /** we don't care about the actual sizing of the widget
         * but stick to the given NoOfBytesPerLine
         */
       NoResize=0,
-      /** we try to fit the tqlayout to the available width
+      /** we try to fit the layout to the available width
         * but only with full groups like set in NoOfGroupedBytes
         * with minimum of one full group
         */

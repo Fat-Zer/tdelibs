@@ -244,7 +244,7 @@
       <item> pkcross </item>
       <item> pkequiv </item>
       <item> pkexamine </item>
-      <item> pktqshape </item>
+      <item> pkshape </item>
       <item> pksumm </item>
       <item> plot </item>
       <item> poisson </item>
@@ -275,8 +275,8 @@
       <item> reg </item>
       <item> regress </item>
       <item> rename </item>
-      <item> tqreplace </item>
-      <item> retqshape </item>
+      <item> replace </item>
+      <item> reshape </item>
       <item> restore </item>
       <item> return </item>
       <item> roc </item>
@@ -475,4 +475,4 @@
     <keywords casesensitive="1" />
   </general>
 </language>
-<!-- kate: space-indent on; indent-width 2; tqreplace-tabs on; -->
+<!-- kate: space-indent on; indent-width 2; replace-tabs on; -->

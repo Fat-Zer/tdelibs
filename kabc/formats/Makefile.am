@@ -11,7 +11,7 @@ kabcformat_binary_la_COMPILE_FIRST = $(top_builddir)/kabc/addressee.h
 # these are the headers for your project
 noinst_HEADERS = binaryformat.h
 
-# let autotqmoc handle all of the meta source files (tqmoc)
+# let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
 
 messages: rc.cpp

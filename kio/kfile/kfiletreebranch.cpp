@@ -126,7 +126,7 @@ KFileTreeViewItem *KFileTreeBranch::parentKFTVItem( KFileItem *item )
     dirUrl.setFileName( TQString::null );
     // kdDebug(250) << "Directory url is " << dirUrl.prettyURL() << endl;
 
-    parent  = tqfindTVIByURL( dirUrl );
+    parent  = findTVIByURL( dirUrl );
     // kdDebug(250) << "Returning as parent item <" << parent <<  ">" << endl;
     return( parent );
 }
@@ -141,7 +141,7 @@ void KFileTreeBranch::slotRefreshItems( const KFileItemList& list )
 
     while ( (currItem = it.current()) != 0 )
     {
-        item = tqfindTVIByURL(currItem->url());
+        item = findTVIByURL(currItem->url());
         if (item) {
             item->setPixmap(0, item->fileItem()->pixmap( KIcon::SizeSmall ));
             item->setText( 0, item->fileItem()->text());
@@ -182,14 +182,14 @@ void KFileTreeBranch::addItems( const KFileItemList& list )
             if( !m_showExtensions && !currItem->isDir() )	/* Need to cut the extension */
             {
                 TQString name = currItem->text();
-                int mPoint = name.tqfindRev( '.' );
+                int mPoint = name.findRev( '.' );
                 if( mPoint > 0 )
                     name = name.left( mPoint );
                 newKFTVI->setText( 0, name );
             }
         }
 
-        /* Now try to tqfind out if there are children for dirs in the treeview */
+        /* Now try to find out if there are children for dirs in the treeview */
         /* This stats a directory on the local file system and checks the */
         /* hardlink entry in the stat-buf. This works only for local directories. */
         if( dirOnlyMode() && !m_recurseChildren && currItem->isLocalFile( ) && currItem->isDir() )
@@ -197,7 +197,7 @@ void KFileTreeBranch::addItems( const KFileItemList& list )
             KURL url = currItem->url();
             TQString filename = url.directory( false, true ) + url.fileName();
             /* do the stat trick of Carsten. The problem is, that the hardlink
-             *  count only tqcontains directory links. Thus, this method only seem
+             *  count only contains directory links. Thus, this method only seem
              * to work in dir-only mode */
             kdDebug(250) << "Doing stat on " << filename << endl;
             KDE_struct_stat statBuf;
@@ -321,7 +321,7 @@ void KFileTreeBranch::slotCanceled( const KURL& url )
     m_openChildrenURLs.remove( url);
 
     // stop animations etc.
-    KFileTreeViewItem *item = tqfindTVIByURL(url);
+    KFileTreeViewItem *item = findTVIByURL(url);
     if (!item) return; // Uh oh...
     emit populateFinished(item);
 }
@@ -365,7 +365,7 @@ void KFileTreeBranch::slotRedirect( const KURL& oldUrl, const KURL&newUrl )
     }
 }
 
-KFileTreeViewItem* KFileTreeBranch::tqfindTVIByURL( const KURL& url )
+KFileTreeViewItem* KFileTreeBranch::findTVIByURL( const KURL& url )
 {
     KFileTreeViewItem *resultItem = 0;
 
@@ -400,7 +400,7 @@ KFileTreeViewItem* KFileTreeBranch::tqfindTVIByURL( const KURL& url )
 void KFileTreeBranch::slCompleted( const KURL& url )
 {
     kdDebug(250) << "SlotCompleted hit for " << url.prettyURL() << endl;
-    KFileTreeViewItem *currParent = tqfindTVIByURL( url );
+    KFileTreeViewItem *currParent = findTVIByURL( url );
     if( ! currParent ) return;
 
     kdDebug(250) << "current parent " << currParent << " is already listed: "
@@ -463,7 +463,7 @@ void KFileTreeBranch::slCompleted( const KURL& url )
         if( nextChild ) /* This implies that idx > -1 */
         {
             /* Next child is defined. We start a dirlister job on every child item
-             * which is a directory to tqfind out how much children are in the child
+             * which is a directory to find out how much children are in the child
              * of the last opened dir
              */
 

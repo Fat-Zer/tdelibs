@@ -34,7 +34,7 @@ class TQValidator;
  * Dialog for user to enter a single line of text.
  *
  * @version $Id$
- * @author David Faure <faure@kde.org>, tqlayout management by Preston Brown <pbrown@kde.org>
+ * @author David Faure <faure@kde.org>, layout management by Preston Brown <pbrown@kde.org>
  */
 
 class KDEUI_EXPORT_DEPRECATED KLineEditDlg : public KDialogBase

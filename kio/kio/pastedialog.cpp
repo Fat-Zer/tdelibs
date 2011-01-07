@@ -35,23 +35,23 @@ KIO::PasteDialog::PasteDialog( const TQString &caption, const TQString &label,
     : KDialogBase( parent, 0 /*name*/, true, caption, Ok|Cancel, Ok, true )
 {
     TQFrame *frame = makeMainWidget();
-    TQVBoxLayout *tqlayout = new TQVBoxLayout( frame, 0, spacingHint() );
+    TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
     m_label = new TQLabel( label, frame );
-    tqlayout->addWidget( m_label );
+    layout->addWidget( m_label );
 
     m_lineEdit = new KLineEdit( value, frame );
-    tqlayout->addWidget( m_lineEdit );
+    layout->addWidget( m_lineEdit );
 
     m_lineEdit->setFocus();
     m_label->setBuddy( m_lineEdit );
 
-    tqlayout->addWidget( new TQLabel( i18n( "Data format:" ), frame ) );
+    layout->addWidget( new TQLabel( i18n( "Data format:" ), frame ) );
     m_comboBox = new TQComboBox( frame );
     m_comboBox->insertStringList( items );
-    tqlayout->addWidget( m_comboBox );
+    layout->addWidget( m_comboBox );
 
-    tqlayout->addStretch();
+    layout->addStretch();
 
     //connect( m_lineEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
     //    TQT_SLOT( slotEditTextChanged( const TQString & ) ) );

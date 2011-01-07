@@ -154,31 +154,31 @@ public:
 
 	/**
 	 * Sets the MDI childframe window caption font
-	 * A retqlayout does not occur when using this function
+	 * A relayout does not occur when using this function
 	 */
 	void setMdiCaptionFont( const TQFont &fnt );
 
 	/**
 	 * Sets the foreground color of the active MDI childframe window caption
-	 * A retqlayout does not occur when using this function
+	 * A relayout does not occur when using this function
 	 */
 	void setMdiCaptionActiveForeColor( const TQColor &clr );
 
 	/**
 	 * Sets the background color of the active MDI childframe window captions
-	 * A retqlayout does not occur when using this function
+	 * A relayout does not occur when using this function
 	 */
 	void setMdiCaptionActiveBackColor( const TQColor &clr );
 
 	/**
 	 * Sets the foreground color of inactive MDI childframe window captions
-	 * A retqlayout does not occur when using this function
+	 * A relayout does not occur when using this function
 	 */
 	void setMdiCaptionInactiveForeColor( const TQColor &clr );
 
 	/**
 	 * Sets the background color of inactive MDI childframe window captions
-	 * A retqlayout does not occur when using this function
+	 * A relayout does not occur when using this function
 	 */
 	void setMdiCaptionInactiveBackColor( const TQColor &clr );
 
@@ -237,9 +237,9 @@ public slots:
 	void tileVertically();
 
 	/**
-	 * Position and tqlayout the minimized child frames
+	 * Position and layout the minimized child frames
 	 */
-	void tqlayoutMinimizedChildren();
+	void layoutMinimizedChildren();
 
 protected:
 
@@ -249,7 +249,7 @@ protected:
 	void tileAllInternal( int maxWnds );
 
 	/**
-	 * Automatically resizes a maximized MDI view and tqlayouts the positions of minimized MDI views.
+	 * Automatically resizes a maximized MDI view and layouts the positions of minimized MDI views.
 	 */
 	virtual void resizeEvent( TQResizeEvent * );
 

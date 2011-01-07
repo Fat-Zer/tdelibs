@@ -25,10 +25,10 @@ void KFDTest::doit()
 
     if ( dlg->exec() == KDialog::Accepted )
     {
-        KMessageBox::information(0, TQString::tqfromLatin1("You selected the file: %1").arg( dlg->selectedURL().prettyURL() ));
+        KMessageBox::information(0, TQString::fromLatin1("You selected the file: %1").arg( dlg->selectedURL().prettyURL() ));
     }
     
-//     tqApp->quit();
+//     qApp->quit();
 }
 
 #include "kfdtest.moc"

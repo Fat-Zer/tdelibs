@@ -58,7 +58,7 @@ KMDriverDbWidget::KMDriverDbWidget(TQWidget *parent, const char *name)
 	l1->setBuddy(m_manu);
 	l2->setBuddy(m_model);
 
-	// build tqlayout
+	// build layout
 	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
 	QGridLayout	*sub1_ = new TQGridLayout(0, 2, 3, 0, 0);
 	QHBoxLayout	*sub2_ = new TQHBoxLayout(0, 0, 10);
@@ -95,17 +95,17 @@ KMDriverDbWidget::~KMDriverDbWidget()
 
 void KMDriverDbWidget::setDriver(const TQString& manu, const TQString& model)
 {
-	QListBoxItem	*item = m_manu->tqfindItem(manu);
+	QListBoxItem	*item = m_manu->findItem(manu);
 	QString		model_(model);
 	if (item)
 	{
 		m_manu->setCurrentItem(item);
-		item = m_model->tqfindItem(model_);
+		item = m_model->findItem(model_);
 		if (!item)
 			// try by stripping the manufacturer name from
 			// the beginning of the model string. This is
 			// often the case with PPD files
-			item = m_model->tqfindItem(model_.tqreplace(0,manu.length()+1,TQString::tqfromLatin1("")));
+			item = m_model->findItem(model_.replace(0,manu.length()+1,TQString::fromLatin1("")));
 		if (item)
 			m_model->setCurrentItem(item);
 	}
@@ -186,7 +186,7 @@ void KMDriverDbWidget::slotError(const TQString& msg)
 void KMDriverDbWidget::slotManufacturerSelected(const TQString& name)
 {
 	m_model->clear();
-	TQDict<KMDBEntryList>	*models = KMDriverDB::self()->tqfindModels(name);
+	TQDict<KMDBEntryList>	*models = KMDriverDB::self()->findModels(name);
 	if (models)
 	{
 		QStrIList	ilist(true);
@@ -203,18 +203,18 @@ void KMDriverDbWidget::slotPostscriptToggled(bool on)
 {
 	if (on)
 	{
-		QListBoxItem	*item = m_manu->tqfindItem("GENERIC");
+		QListBoxItem	*item = m_manu->findItem("GENERIC");
 		if (item)
 		{
 			m_manu->setCurrentItem(item);
-			item = m_model->tqfindItem( "POSTSCRIPT PRINTER" );
+			item = m_model->findItem( "POSTSCRIPT PRINTER" );
 			if ( item )
 			{
 				m_model->setCurrentItem( item );
 				return;
 			}
 		}
-		KMessageBox::error(this,i18n("Unable to tqfind the PostScript driver."));
+		KMessageBox::error(this,i18n("Unable to find the PostScript driver."));
 		m_postscript->setChecked(false);
 	}
 }

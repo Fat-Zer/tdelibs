@@ -79,7 +79,7 @@ class KDEUI_EXPORT KAboutApplication : public KAboutDialog
     KAboutApplication( const KAboutData *aboutData, TQWidget *parent=0, const char *name=0, bool modal=true );
 
 /*
- FIXME: The two constructors should be tqreplaced with the following  after the lib freeze:
+ FIXME: The two constructors should be replaced with the following  after the lib freeze:
 
     KAboutApplication( const KAboutData *aboutData=0, TQWidget *parent=0, const char *name=0, bool modal=true );
 

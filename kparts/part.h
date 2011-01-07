@@ -172,7 +172,7 @@ private:
  * <b>About the GUI elements:</b>\n
  *
  * Those elements trigger actions, defined by the part (action()).
- * The tqlayout of the actions in the GUI is defined by an XML file (setXMLFile()).
+ * The layout of the actions in the GUI is defined by an XML file (setXMLFile()).
  *
  * See also ReadOnlyPart and ReadWritePart, which define the
  * framework for a "viewer" part and for an "editor"-like part.
@@ -208,7 +208,7 @@ public:
      * This method is not recommended since creating the widget with the correct
      * parent is simpler anyway.
      */
-    virtual void embed( TQWidget * tqparentWidget );
+    virtual void embed( TQWidget * parentWidget );
 
     /**
      * @return The widget defined by this part, set by setWidget().

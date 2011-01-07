@@ -271,7 +271,7 @@ mode_t KACL::basePermissions() const
    return perms;
 }
 
-unsigned short KACL::tqmaskPermissions( bool &exists ) const
+unsigned short KACL::maskPermissions( bool &exists ) const
 {
     exists = true;
 #ifdef USE_POSIX_ACL
@@ -376,7 +376,7 @@ bool KACL::KACLPrivate::setNamedUserOrGroupPermissions( const TQString& name, un
     }
     if ( allIsWell && createdNewEntry ) {
         // 23.1.1 of 1003.1e states that as soon as there is a named user or
-        // named group entry, there needs to be a tqmask entry as well, so add
+        // named group entry, there needs to be a mask entry as well, so add
         // one, if the user hasn't explicitely set one.
         if ( entryForTag( newACL, ACL_MASK ) == 0 ) {
             acl_calc_mask( &newACL );
@@ -447,7 +447,7 @@ bool KACL::KACLPrivate::setAllUsersOrGroups( const TQValueList< QPair<TQString, 
         if ( currentTag ==  type ) {
             acl_delete_entry( newACL, entry );
             // we have to start from the beginning, the iterator is
-            // tqinvalidated, on deletion
+            // invalidated, on deletion
             ret = acl_get_entry( newACL, ACL_FIRST_ENTRY, &entry );
         } else {
             ret = acl_get_entry( newACL, ACL_NEXT_ENTRY, &entry );
@@ -475,7 +475,7 @@ bool KACL::KACLPrivate::setAllUsersOrGroups( const TQValueList< QPair<TQString, 
 //printACL( newACL, "After adding entries: " );
     if ( allIsWell && atLeastOneUserOrGroup ) {
         // 23.1.1 of 1003.1e states that as soon as there is a named user or
-        // named group entry, there needs to be a tqmask entry as well, so add
+        // named group entry, there needs to be a mask entry as well, so add
         // one, if the user hasn't explicitely set one.
         if ( entryForTag( newACL, ACL_MASK ) == 0 ) {
             acl_calc_mask( &newACL );
@@ -619,12 +619,12 @@ TQString KACL::asString() const
 TQString KACL::KACLPrivate::getUserName( uid_t uid ) const
 {
     TQString *temp;
-    temp = m_usercache.tqfind( uid );
+    temp = m_usercache.find( uid );
     if ( !temp ) {
         struct passwd *user = getpwuid( uid );
         if ( user ) {
-            m_usercache.insert( uid, new TQString(TQString::tqfromLatin1(user->pw_name)) );
-            return TQString::tqfromLatin1( user->pw_name );
+            m_usercache.insert( uid, new TQString(TQString::fromLatin1(user->pw_name)) );
+            return TQString::fromLatin1( user->pw_name );
         }
         else
             return TQString::number( uid );
@@ -637,12 +637,12 @@ TQString KACL::KACLPrivate::getUserName( uid_t uid ) const
 TQString KACL::KACLPrivate::getGroupName( gid_t gid ) const
 {
     TQString *temp;
-    temp = m_groupcache.tqfind( gid );
+    temp = m_groupcache.find( gid );
     if ( !temp ) {
         struct group *grp = getgrgid( gid );
         if ( grp ) {
-            m_groupcache.insert( gid, new TQString(TQString::tqfromLatin1(grp->gr_name)) );
-            return TQString::tqfromLatin1( grp->gr_name );
+            m_groupcache.insert( gid, new TQString(TQString::fromLatin1(grp->gr_name)) );
+            return TQString::fromLatin1( grp->gr_name );
         }
         else
             return TQString::number( gid );
@@ -654,7 +654,7 @@ TQString KACL::KACLPrivate::getGroupName( gid_t gid ) const
 static TQString aclAsString(const acl_t acl)
 {
     char *aclString = acl_to_text( acl, 0 );
-    TQString ret = TQString::tqfromLatin1( aclString );
+    TQString ret = TQString::fromLatin1( aclString );
     acl_free( (void*)aclString );
     return ret;
 }

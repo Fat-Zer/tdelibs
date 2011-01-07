@@ -1,6 +1,6 @@
 /* Private Header for class of KDirWatchPrivate
  *
- * this separate header file is needed for TQMOC processing
+ * this separate header file is needed for MOC processing
  * because KDirWatchPrivate has signals and slots
  */
 
@@ -18,12 +18,12 @@
 /* KDirWatchPrivate is a singleton and does the watching
  * for every KDirWatch instance in the application.
  */
-class KDirWatchPrivate : public TQObject
+class KDirWatchPrivate : public QObject
 {
   Q_OBJECT
 public:
 
-  enum entrytqStatus { Normal = 0, NonExistent };
+  enum entryStatus { Normal = 0, NonExistent };
   enum entryMode { UnknownMode = 0, StatMode, DNotifyMode, INotifyMode, FAMMode };
   enum { NoChange=0, Changed=1, Created=2, Deleted=4 };
 
@@ -43,7 +43,7 @@ public:
     time_t m_ctime;
     // the last observed link count
     int m_nlink;
-    entrytqStatus m_status;
+    entryStatus m_status;
     entryMode m_mode;
     bool isDir;
     // instances interested in events

@@ -38,7 +38,7 @@ namespace KSpell2
      * I don't really feel like writting my own KLibFactory
      * that would load anything else then TQObject derivatives.
      */
-    class KDE_EXPORT Client : public TQObject
+    class KDE_EXPORT Client : public QObject
     {
         Q_OBJECT
     public:

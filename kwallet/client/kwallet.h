@@ -384,7 +384,7 @@ class KIO_EXPORT Wallet : public TQObject, public DCOPObject {
 		/**
 		 *  Determine if the current folder has they entry @p key.
 		 *  @param key The key to search for.
-		 *  @return Returns true if the folder tqcontains @p key.
+		 *  @return Returns true if the folder contains @p key.
 		 */
 		virtual bool hasEntry(const TQString& key);
 

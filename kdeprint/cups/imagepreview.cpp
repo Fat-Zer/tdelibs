@@ -51,7 +51,7 @@ void ImagePreview::setParameters(int brightness, int hue, int saturation, int ga
 	hue_ = hue;
 	saturation_ = saturation;
 	gamma_ = gamma;
-	tqrepaint();
+	repaint();
 }
 
 void ImagePreview::paintEvent(TQPaintEvent*){
@@ -59,7 +59,7 @@ void ImagePreview::paintEvent(TQPaintEvent*){
 	int	x = (width()-tmpImage.width())/2, y = (height()-tmpImage.height())/2;
 
 	QPixmap	buffer(width(), height());
-	buffer.fill(tqparentWidget(), 0, 0);
+	buffer.fill(parentWidget(), 0, 0);
 	QPainter	p(&buffer);
 	p.drawImage(x,y,tmpImage);
 	p.end();
@@ -72,7 +72,7 @@ void ImagePreview::setBlackAndWhite(bool on){
 	update();
 }
 
-TQSize ImagePreview::tqminimumSizeHint() const
+TQSize ImagePreview::minimumSizeHint() const
 {
 	return image_.size();
 }

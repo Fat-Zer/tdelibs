@@ -163,7 +163,7 @@ protected:
 
     /**
        Reimplemented to provide the standard show/raise behavior
-       for the tqparentWidget() and the context menu.
+       for the parentWidget() and the context menu.
 
        Feel free to reimplement this if you need something special.
      */
@@ -171,7 +171,7 @@ protected:
 
     /**
        Reimplemented to provide the standard show/raise behavior
-       for the tqparentWidget() and the context menu.
+       for the parentWidget() and the context menu.
 
        Feel free to reimplement this if you need something special.
      */

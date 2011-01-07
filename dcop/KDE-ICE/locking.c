@@ -32,7 +32,7 @@ Author: Ralph Mor, X Consortium
  */
 
 
-tqStatus
+Status
 IceInitThreads ()
 
 {

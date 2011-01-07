@@ -97,8 +97,8 @@ namespace KMDI
 {
 
 //============ constructor ============//
-MainWindow::MainWindow(TQWidget* tqparentWidget, const char* name)
- : KParts::DockMainWindow( tqparentWidget, name)
+MainWindow::MainWindow(TQWidget* parentWidget, const char* name)
+ : KParts::DockMainWindow( parentWidget, name)
  , m_toolViews (new TQMap<TQWidget*,KMDI::ToolViewAccessor*>)
  , d(new KMDIPrivate::MainWindowPrivate())
 {
@@ -156,19 +156,19 @@ void MainWindow::setupToolViews ()
     w=static_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
   }
 
-  TQPtrList<KDockWidget> leftRetqparentWidgets;
-  TQPtrList<KDockWidget> rightRetqparentWidgets;
-  TQPtrList<KDockWidget> bottomRetqparentWidgets;
-  TQPtrList<KDockWidget> topRetqparentWidgets;
+  TQPtrList<KDockWidget> leftReparentWidgets;
+  TQPtrList<KDockWidget> rightReparentWidgets;
+  TQPtrList<KDockWidget> bottomReparentWidgets;
+  TQPtrList<KDockWidget> topReparentWidgets;
 
   if (mainDock->parentDockTabGroup()) {
     mainDock=static_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
   }
 
-  tqfindToolViewsDockedToMain(&leftRetqparentWidgets,KDockWidget::DockLeft);
-  tqfindToolViewsDockedToMain(&rightRetqparentWidgets,KDockWidget::DockRight);
-  tqfindToolViewsDockedToMain(&bottomRetqparentWidgets,KDockWidget::DockBottom);
-  tqfindToolViewsDockedToMain(&topRetqparentWidgets,KDockWidget::DockTop);
+  findToolViewsDockedToMain(&leftReparentWidgets,KDockWidget::DockLeft);
+  findToolViewsDockedToMain(&rightReparentWidgets,KDockWidget::DockRight);
+  findToolViewsDockedToMain(&bottomReparentWidgets,KDockWidget::DockBottom);
+  findToolViewsDockedToMain(&topReparentWidgets,KDockWidget::DockTop);
 
   mainDock->setEnableDocking(KDockWidget::DockNone); //::DockCorner);
   mainDock->setDockSite(KDockWidget::DockCorner);
@@ -220,10 +220,10 @@ void MainWindow::setupToolViews ()
   m_topContainer->setDockSite( KDockWidget::DockCenter );
   m_bottomContainer->setDockSite( KDockWidget::DockCenter );
 
-  dockToolViewsIntoContainers(leftRetqparentWidgets,m_leftContainer);
-  dockToolViewsIntoContainers(rightRetqparentWidgets,m_rightContainer);
-  dockToolViewsIntoContainers(bottomRetqparentWidgets,m_bottomContainer);
-  dockToolViewsIntoContainers(topRetqparentWidgets,m_topContainer);
+  dockToolViewsIntoContainers(leftReparentWidgets,m_leftContainer);
+  dockToolViewsIntoContainers(rightReparentWidgets,m_rightContainer);
+  dockToolViewsIntoContainers(bottomReparentWidgets,m_bottomContainer);
+  dockToolViewsIntoContainers(topReparentWidgets,m_topContainer);
 
   dockManager->setSpecialLeftDockContainer(m_leftContainer);
   dockManager->setSpecialRightDockContainer(m_rightContainer);
@@ -273,7 +273,7 @@ KMDI::ToolViewAccessor *MainWindow::addToolWindow( TQWidget* pWnd, KDockWidget::
     pWnd=pDW;
   }
 
-  TQRect r=pWnd->tqgeometry();
+  TQRect r=pWnd->geometry();
 
   KMDI::ToolViewAccessor *mtva=new KMDI::ToolViewAccessor(this,pWnd,tabToolTip,(tabCaption==0)?pWnd->caption():tabCaption);
   m_toolViews->insert(tvta,mtva);
@@ -302,7 +302,7 @@ void MainWindow::deleteToolWindow( TQWidget* pWnd)
   if (!pWnd)
     return;
 
-  if (m_toolViews->tqcontains(pWnd)) {
+  if (m_toolViews->contains(pWnd)) {
     deleteToolWindow((*m_toolViews)[pWnd]);
   }
 }
@@ -370,14 +370,14 @@ void MainWindow::dockToolViewsIntoContainers(TQPtrList<KDockWidget>& widgetsToRe
   }
 }
 
-void MainWindow::tqfindToolViewsDockedToMain(TQPtrList<KDockWidget>* list,KDockWidget::DockPosition dprtmw) {
+void MainWindow::findToolViewsDockedToMain(TQPtrList<KDockWidget>* list,KDockWidget::DockPosition dprtmw) {
   KDockWidget *mainDock=getMainDockWidget();
   if (mainDock->parentDockTabGroup()) {
     mainDock=dynamic_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
     // FIXME: will likely crash below due to unchecked cast
   }
 
-  KDockWidget* widget=mainDock->tqfindNearestDockWidget(dprtmw);
+  KDockWidget* widget=mainDock->findNearestDockWidget(dprtmw);
   if (widget) {
     if (widget->parentDockTabGroup()) {
       widget=static_cast<KDockWidget*>(widget->parentDockTabGroup()->parent());
@@ -448,4 +448,4 @@ void MainWindow::nextToolViewInDock() {
 
 }
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

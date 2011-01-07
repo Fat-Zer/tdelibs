@@ -202,7 +202,7 @@ int Filter::currentPosition() const
     return m_currentPosition;
 }
 
-void Filter::tqreplace( const Word& w, const TQString& newWord)
+void Filter::replace( const Word& w, const TQString& newWord)
 {
     int oldLen = w.word.length();
     int newLen = newWord.length();
@@ -213,7 +213,7 @@ void Filter::tqreplace( const Word& w, const TQString& newWord)
             m_currentPosition += len;
         }
     }
-    m_buffer = m_buffer.tqreplace( w.start, oldLen, newWord );
+    m_buffer = m_buffer.replace( w.start, oldLen, newWord );
 }
 
 TQString Filter::context() const
@@ -227,7 +227,7 @@ TQString Filter::context() const
 
     TQString buffer = m_buffer;
     Word word = wordAtPosition( m_currentPosition );
-    buffer = buffer.tqreplace( word.start, word.word.length(),
+    buffer = buffer.replace( word.start, word.word.length(),
                              TQString( "<b>%1</b>" ).arg( word.word ) );
 
     TQString context;
@@ -238,7 +238,7 @@ TQString Filter::context() const
         context = TQString( "...%1..." )
                   .arg( buffer.mid(  m_currentPosition - 20, len ) );
 
-    context = context.tqreplace( '\n', ' ' );
+    context = context.replace( '\n', ' ' );
 
     return context;
 }

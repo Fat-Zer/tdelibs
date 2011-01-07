@@ -47,7 +47,7 @@ class KJavaAppletContext;
 class KJavaAppletPrivate;
 
 
-class KJavaApplet : public TQObject
+class KJavaApplet : public QObject
 {
 Q_OBJECT
 
@@ -238,7 +238,7 @@ public:
 signals:
     void jsEvent (const TQStringList & args);
 private:
-    void showtqStatus( const TQString &msg);
+    void showStatus( const TQString &msg);
     KJavaAppletPrivate*    d;
     TQMap<TQString, TQString> params;
     KJavaAppletContext*    context;

@@ -46,7 +46,7 @@ int KShortcutList::index( const KKeySequence& seq ) const
 
 	uint nSize = count();
 	for( uint i = 0; i < nSize; i++ ) {
-		if( shortcut(i).tqcontains( seq ) )
+		if( shortcut(i).contains( seq ) )
 			return i;
 	}
 

@@ -79,13 +79,13 @@ void KPMarginPage::initPageSize(const TQString& ps, bool landscape)
 
 		if (pageSize.isEmpty())
 		{
-			DrListOption	*o = (DrListOption*)driver()->tqfindOption("PageSize");
+			DrListOption	*o = (DrListOption*)driver()->findOption("PageSize");
 			if (o)
 				pageSize = o->get("default");
 		}
 		if (!pageSize.isEmpty())
 		{
-			DrPageSize	*dps = driver()->tqfindPageSize(pageSize);
+			DrPageSize	*dps = driver()->findPageSize(pageSize);
 			if (dps)
 			{
 				w = dps->pageWidth();

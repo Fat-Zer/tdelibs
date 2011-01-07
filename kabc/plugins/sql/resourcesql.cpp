@@ -317,8 +317,8 @@ bool ResourceSql::save( Ticket * )
       TQStringList list = (*it).customs();
       TQStringList::ConstIterator it;
       for( it = list.begin(); it != list.end(); ++it ) {
-        int dashPos = (*it).tqfind( '-' );
-        int colonPos = (*it).tqfind( ':' );
+        int dashPos = (*it).find( '-' );
+        int colonPos = (*it).find( ':' );
         TQString app = (*it).left( dashPos );
         TQString name = (*it).mid( dashPos + 1, colonPos - dashPos - 1 );
         TQString value = (*it).right( (*it).length() - colonPos - 1 );

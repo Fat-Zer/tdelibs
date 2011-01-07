@@ -223,8 +223,8 @@ void KConfigSkeleton::ItemInt::setMaxValue(int v)
 
 
 KConfigSkeleton::ItemInt64::ItemInt64( const TQString &group, const TQString &key,
-                              TQ_INT64 &reference, TQ_INT64 defaultValue )
-  : KConfigSkeletonGenericItem<TQ_INT64>( group, key, reference, defaultValue )
+                              Q_INT64 &reference, Q_INT64 defaultValue )
+  : KConfigSkeletonGenericItem<Q_INT64>( group, key, reference, defaultValue )
   ,mHasMin(false), mHasMax(false)
 {
 }
@@ -266,13 +266,13 @@ TQVariant KConfigSkeleton::ItemInt64::maxValue() const
   return TQVariant();
 }
 
-void KConfigSkeleton::ItemInt64::setMinValue(TQ_INT64 v)
+void KConfigSkeleton::ItemInt64::setMinValue(Q_INT64 v)
 {
   mHasMin = true;
   mMin = v;
 }
 
-void KConfigSkeleton::ItemInt64::setMaxValue(TQ_INT64 v)
+void KConfigSkeleton::ItemInt64::setMaxValue(Q_INT64 v)
 {
   mHasMax = true;
   mMax = v;
@@ -394,8 +394,8 @@ void KConfigSkeleton::ItemUInt::setMaxValue(unsigned int v)
 
 
 KConfigSkeleton::ItemUInt64::ItemUInt64( const TQString &group, const TQString &key,
-                              TQ_UINT64 &reference, TQ_UINT64 defaultValue )
-  : KConfigSkeletonGenericItem<TQ_UINT64>( group, key, reference, defaultValue )
+                              Q_UINT64 &reference, Q_UINT64 defaultValue )
+  : KConfigSkeletonGenericItem<Q_UINT64>( group, key, reference, defaultValue )
   ,mHasMin(false), mHasMax(false)
 {
 }
@@ -437,13 +437,13 @@ TQVariant KConfigSkeleton::ItemUInt64::maxValue() const
   return TQVariant();
 }
 
-void KConfigSkeleton::ItemUInt64::setMinValue(TQ_UINT64 v)
+void KConfigSkeleton::ItemUInt64::setMinValue(Q_UINT64 v)
 {
   mHasMin = true;
   mMin = v;
 }
 
-void KConfigSkeleton::ItemUInt64::setMaxValue(TQ_UINT64 v)
+void KConfigSkeleton::ItemUInt64::setMaxValue(Q_UINT64 v)
 {
   mHasMax = true;
   mMax = v;
@@ -1065,8 +1065,8 @@ KConfigSkeleton::ItemUInt *KConfigSkeleton::addItemUInt( const TQString &name, u
   return item;
 }
 
-KConfigSkeleton::ItemInt64 *KConfigSkeleton::addItemInt64( const TQString &name, TQ_INT64 &reference,
-                                    TQ_INT64 defaultValue, const TQString &key )
+KConfigSkeleton::ItemInt64 *KConfigSkeleton::addItemInt64( const TQString &name, Q_INT64 &reference,
+                                    Q_INT64 defaultValue, const TQString &key )
 {
   KConfigSkeleton::ItemInt64 *item;
   item = new KConfigSkeleton::ItemInt64( mCurrentGroup, key.isNull() ? name : key,
@@ -1075,8 +1075,8 @@ KConfigSkeleton::ItemInt64 *KConfigSkeleton::addItemInt64( const TQString &name,
   return item;
 }
 
-KConfigSkeleton::ItemUInt64 *KConfigSkeleton::addItemUInt64( const TQString &name, TQ_UINT64 &reference,
-                                     TQ_UINT64 defaultValue, const TQString &key )
+KConfigSkeleton::ItemUInt64 *KConfigSkeleton::addItemUInt64( const TQString &name, Q_UINT64 &reference,
+                                     Q_UINT64 defaultValue, const TQString &key )
 {
   KConfigSkeleton::ItemUInt64 *item;
   item = new KConfigSkeleton::ItemUInt64( mCurrentGroup, key.isNull() ? name : key,
@@ -1197,11 +1197,11 @@ KConfigSkeleton::ItemIntList *KConfigSkeleton::addItemIntList( const TQString &n
 
 bool KConfigSkeleton::isImmutable(const TQString &name)
 {
-  KConfigSkeletonItem *item = tqfindItem(name);
+  KConfigSkeletonItem *item = findItem(name);
   return !item || item->isImmutable();
 }
 
-KConfigSkeletonItem *KConfigSkeleton::tqfindItem(const TQString &name)
+KConfigSkeletonItem *KConfigSkeleton::findItem(const TQString &name)
 {
-  return mItemDict.tqfind(name);
+  return mItemDict.find(name);
 }

@@ -18,11 +18,11 @@ multiple lines.
 
 \paper {
   #(set-paper-size "a4")  % a hash introduces scheme
-  indent = 0              % recognize variable names inside \paper, \tqlayout etc.
+  indent = 0              % recognize variable names inside \paper, \layout etc.
   between-system-space = 3\mm
 }
 
-\tqlayout {
+\layout {
   \context {
     \Score
     \remove Bar_number_engraver   % recognize engraver names

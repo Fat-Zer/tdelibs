@@ -83,20 +83,20 @@ public:
   /**
    * Overrides reading.
    */
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen);
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
+  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen);
+  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen, KSocketAddress& from);
 
   /**
    * Overrides peeking.
    */
-  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen);
-  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
+  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen);
+  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen, KSocketAddress& from);
 
   /**
    * Overrides writing.
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len);
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
+  virtual Q_LONG writeBlock(const char *data, Q_ULONG len);
+  virtual Q_LONG writeBlock(const char *data, Q_ULONG len, const KSocketAddress& to);
 
   /**
    * Overrides getting socket address.

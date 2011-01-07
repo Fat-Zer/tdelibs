@@ -105,7 +105,7 @@
 			<item> protected </item>
 			<item> public </item>
 			<item> redeclare </item>
-			<item> tqreplaceable </item>
+			<item> replaceable </item>
 			<item> return </item>
 			<item> then </item>
 			<item> true </item>

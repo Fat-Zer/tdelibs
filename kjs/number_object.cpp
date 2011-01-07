@@ -156,7 +156,7 @@ Value NumberProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
       const char digits[] = "0123456789abcdefghijklmnopqrstuvwxyz";
       // INT_MAX results in 1024 characters left of the dot with radix 2
       // give the same space on the right side. safety checks are in place
-      // unless someone tqfinds a precise rule.
+      // unless someone finds a precise rule.
       char s[2048 + 3];
       double x = v.toNumber(exec);
       if (isNaN(x) || isInf(x))

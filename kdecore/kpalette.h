@@ -150,7 +150,7 @@ public:
    
    /**
     * Find index by @p color.
-    * @param color the color to tqfind
+    * @param color the color to find
     * @return The index of the color in the palette or -1 if the
     * color is not found.
     **/

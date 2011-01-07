@@ -51,9 +51,9 @@ void KColorWidget::doIntensityLoop()
 	  for (int i=0;i<size; i++, qptr++)
 	    {
 	      qrgb=*(QRgb *)qptr;
-	      *qptr=tqRgb((int)(tqRed(qrgb)*1./max),
-			 (int)(tqGreen(qrgb)*1./max),
-			 (int)(tqBlue(qrgb)*1./max));
+	      *qptr=qRgb((int)(qRed(qrgb)*1./max),
+			 (int)(qGreen(qrgb)*1./max),
+			 (int)(qBlue(qrgb)*1./max));
 	    }
 	}
 	pixmap.convertFromImage(image);

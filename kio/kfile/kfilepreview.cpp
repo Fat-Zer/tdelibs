@@ -53,7 +53,7 @@ KFilePreview::~KFilePreview()
 
     // don't delete the preview, we can reuse it
     // (it will get deleted by ~KDirOperator)
-    if ( preview && preview->tqparentWidget() == this ) {
+    if ( preview && preview->parentWidget() == this ) {
         preview->reparent(0L, 0, TQPoint(0, 0), false);
     }
 }
@@ -68,9 +68,9 @@ void KFilePreview::init( KFileView *view )
     preview = new TQWidget((TQSplitter*)this, "preview");
     TQString tmp = i18n("No preview available.");
     TQLabel *l = new TQLabel(tmp, preview);
-    l->setMinimumSize(l->tqsizeHint());
+    l->setMinimumSize(l->sizeHint());
     l->move(10, 5);
-    preview->setMinimumWidth(l->tqsizeHint().width()+20);
+    preview->setMinimumWidth(l->sizeHint().width()+20);
     setResizeMode(preview, TQSplitter::KeepSize);
 
     // Why copy the actions? --ellis, 13 Jan 02.
@@ -123,7 +123,7 @@ void KFilePreview::setPreviewWidget(const TQWidget *w, const KURL &)
     delete preview;
     preview = const_cast<TQWidget*>(w);
     preview->reparent((TQSplitter*)this, 0, TQPoint(0, 0), true);
-    preview->resize(preview->tqsizeHint());
+    preview->resize(preview->sizeHint());
     preview->show();
 }
 
@@ -149,7 +149,7 @@ void KFilePreview::updateView(bool b)
 {
     left->updateView(b);
     if(preview)
-        preview->tqrepaint(b);
+        preview->repaint(b);
 }
 
 void KFilePreview::updateView(const KFileItem *i)

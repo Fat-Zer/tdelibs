@@ -234,7 +234,7 @@ int **RegExpObjectImp::registerRegexp( const RegExp* re, const UString& s )
 Object RegExpObjectImp::arrayOfMatches(ExecState *exec, const UString &result) const
 {
   List list;
-  // The returned array tqcontains 'result' as first item, followed by the list of matches
+  // The returned array contains 'result' as first item, followed by the list of matches
   list.append(String(result));
   if ( lastOvector )
     for ( unsigned int i = 1 ; i < lastNrSubPatterns + 1 ; ++i )
@@ -292,7 +292,7 @@ RegExp* RegExpObjectImp::makeEngine(ExecState *exec, const UString &p, const Val
 
   // Check for validity of flags
   for (int pos = 0; pos < flags.size(); ++pos) {
-    switch (flags[pos].tqunicode()) {
+    switch (flags[pos].unicode()) {
     case 'g':
     case 'i':
     case 'm':
@@ -306,9 +306,9 @@ RegExp* RegExpObjectImp::makeEngine(ExecState *exec, const UString &p, const Val
     }
   }
 
-  bool global = (flags.tqfind("g") >= 0);
-  bool ignoreCase = (flags.tqfind("i") >= 0);
-  bool multiline = (flags.tqfind("m") >= 0);
+  bool global = (flags.find("g") >= 0);
+  bool ignoreCase = (flags.find("i") >= 0);
+  bool multiline = (flags.find("m") >= 0);
 
   int reflags = RegExp::None;
   if (global)

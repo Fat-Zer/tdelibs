@@ -57,7 +57,7 @@ public:
  * - identical highlight for whole list
  * - signals for view movement
  */
-class KateArbitraryHighlight : public TQObject
+class KateArbitraryHighlight : public QObject
 {
   Q_OBJECT
 
@@ -84,4 +84,4 @@ private:
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

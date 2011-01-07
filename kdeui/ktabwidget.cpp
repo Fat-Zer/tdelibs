@@ -163,8 +163,8 @@ bool KTabWidget::tabCloseActivatePrevious() const
 unsigned int KTabWidget::tabBarWidthForMaxChars( uint maxLength )
 {
     int hframe, overlap;
-    hframe  = tabBar()->style().tqpixelMetric( TQStyle::PM_TabBarTabHSpace, tabBar() );
-    overlap = tabBar()->style().tqpixelMetric( TQStyle::PM_TabBarTabOverlap, tabBar() );
+    hframe  = tabBar()->style().pixelMetric( TQStyle::PM_TabBarTabHSpace, tabBar() );
+    overlap = tabBar()->style().pixelMetric( TQStyle::PM_TabBarTabOverlap, tabBar() );
 
     TQFontMetrics fm = tabBar()->fontMetrics();
     int x = 0;
@@ -253,7 +253,7 @@ void KTabWidget::resizeTabs( int changeTabIndex )
         newMaxLength=d->m_maxLength;
         uint lcw=0, rcw=0;
 
-        int tabBarHeight = tabBar()->tqsizeHint().height();
+        int tabBarHeight = tabBar()->sizeHint().height();
         if ( cornerWidget( TopLeft ) && cornerWidget( TopLeft )->isVisible() )
             lcw = QMAX( cornerWidget( TopLeft )->width(), tabBarHeight );
         if ( cornerWidget( TopRight ) && cornerWidget( TopRight )->isVisible() )
@@ -291,7 +291,7 @@ void KTabWidget::updateTab( int index )
     }
 
     title = KStringHandler::rsqueeze( title, d->m_CurrentMaxLength ).leftJustify( d->m_minLength, ' ' );
-    title.tqreplace( '&', "&&" );
+    title.replace( '&', "&&" );
 
     if ( TQTabWidget::label( index ) != title )
         TQTabWidget::setTabLabel( page( index ), title );
@@ -301,7 +301,7 @@ void KTabWidget::dragMoveEvent( TQDragMoveEvent *e )
 {
     if ( isEmptyTabbarSpace( e->pos() ) ) {
         bool accept = false;
-        // The tqreceivers of the testCanDecode() signal has to adjust
+        // The receivers of the testCanDecode() signal has to adjust
         // 'accept' accordingly.
         emit testCanDecode( e, accept);
         e->accept( accept );
@@ -451,7 +451,7 @@ void KTabWidget::removePage( TQWidget * w ) {
 
 bool KTabWidget::isEmptyTabbarSpace( const TQPoint &point ) const
 {
-    TQSize size( tabBar()->tqsizeHint() );
+    TQSize size( tabBar()->sizeHint() );
     if ( ( tabPosition()==Top && point.y()< size.height() ) || ( tabPosition()==Bottom && point.y()>(height()-size.height() ) ) ) {
         TQWidget *rightcorner = cornerWidget( TopRight );
         if ( rightcorner ) {

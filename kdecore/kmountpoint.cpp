@@ -59,7 +59,7 @@
 #include <sys/mntctl.h>
 #include <sys/vmount.h>
 #include <sys/vfs.h>
-/* AIX does not prototype mntctl anywhere that I can tqfind */
+/* AIX does not prototype mntctl anywhere that I can find */
 #ifndef mntctl
 extern "C" {
 int mntctl(int command, int size, void* buffer);
@@ -375,7 +375,7 @@ KMountPoint::List KMountPoint::currentMountPoints(int infoNeeded)
 
 TQString KMountPoint::devNameFromOptions(const TQStringList &options)
 {
-   // Search options to tqfind the device name
+   // Search options to find the device name
    for ( TQStringList::ConstIterator it = options.begin(); it != options.end(); ++it)
    {
       if( (*it).startsWith("dev="))

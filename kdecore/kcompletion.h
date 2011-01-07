@@ -119,7 +119,7 @@ class TQPopupMenu;
  * tell the user) where a completion comes from.
  *
  * Note: KCompletion does not work with strings that contain 0x0 characters
- *       (tqunicode nul), as this is used internally as a delimiter.
+ *       (unicode nul), as this is used internally as a delimiter.
  *
  * You may inherit from KCompletion and override makeCompletion() in
  * special cases (like reading directories/urls and then supplying the
@@ -129,7 +129,7 @@ class TQPopupMenu;
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KDECORE_EXPORT KCompletion : public TQObject
+class KDECORE_EXPORT KCompletion : public QObject
 {
     Q_ENUMS( CompOrder )
     Q_PROPERTY( CompOrder order READ order WRITE setOrder )
@@ -160,7 +160,7 @@ public:
     virtual ~KCompletion();
 
     /**
-     * Attempts to tqfind an item in the list of available completions,
+     * Attempts to find an item in the list of available completions,
      * that begins with @p string. Will either return the first matching item
      * (if there is more than one match) or TQString::null, if no match was
      * found.
@@ -244,7 +244,7 @@ public:
     TQStringList items() const;
     
     /**
-     * Returns true when the completion object tqcontains no entries.
+     * Returns true when the completion object contains no entries.
      */
     bool isEmpty() const;
 
@@ -354,7 +354,7 @@ public:
 
     /**
      * Enables/disables playing a sound when
-     * @li makeCompletion() can't tqfind a match
+     * @li makeCompletion() can't find a match
      * @li there is a partial completion (= multiple matches in
      *     Shell-completion mode)
      * @li nextMatch() or previousMatch() hit the last possible
@@ -553,8 +553,8 @@ protected:
 
 private:
     void            addWeightedItem( const TQString& );
-    TQString         tqfindCompletion( const TQString& string );
-    void            tqfindAllCompletions( const TQString&,
+    TQString         findCompletion( const TQString& string );
+    void            findAllCompletions( const TQString&,
                                         KCompletionMatchesWrapper *matches,
                                         bool& hasMultipleMatches ) const;
 
@@ -829,7 +829,7 @@ public:
      *
      * @param mode Completion type:
      *   @li CompletionNone:  Disables completion feature.
-     *   @li CompletionAuto:  Attempts to tqfind a match &
+     *   @li CompletionAuto:  Attempts to find a match &
      *                        fills-in the remaining text.
      *   @li CompletionMan:   Acts the same as the above
      *                        except the action has to be
@@ -892,7 +892,7 @@ public:
      *
      * This methods returns the key-binding used to activate
      * the feature feature given by @p item.  If the binding
-     * tqcontains modifier key(s), the SUM of the modifier key
+     * contains modifier key(s), the SUM of the modifier key
      * and the actual key code are returned.
      *
      * @param item the item to check

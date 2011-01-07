@@ -135,7 +135,7 @@ KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting rep
           .arg( mod.moduleName() ),
           i18n("<qt><p>The Lisa and lan:/ ioslave modules "
             "are not installed by default in Kubuntu, because they are obsolete "
-            "and tqreplaced by zeroconf.<br> If you still wish to use them, you "
+            "and replaced by zeroconf.<br> If you still wish to use them, you "
             "should install the lisa package from the Universe repository.</p></qt>"),
           parent );
     } else { 

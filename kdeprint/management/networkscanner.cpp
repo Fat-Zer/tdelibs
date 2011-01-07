@@ -80,7 +80,7 @@ TQString NetworkScanner::NetworkScannerPrivate::localPrefix()
 	if (infos.count() > 0)
 	{
 		QString	IPstr = infos.first()->address()->nodeName();
-		int	p = IPstr.tqfindRev('.');
+		int	p = IPstr.findRev('.');
 		IPstr.truncate(p);
 		return IPstr;
 	}
@@ -157,7 +157,7 @@ void NetworkScanner::slotScanClicked()
 	if ( !d->scanning )
 	{
 		if ( d->localPrefix() == d->prefixaddress ||
-				KMessageBox::warningContinueCancel( this->tqparentWidget(),
+				KMessageBox::warningContinueCancel( this->parentWidget(),
 					i18n( "You are about to scan a subnet (%1.*) that does not "
 						  "correspond to the current subnet of this computer (%2.*). Do you want "
 						  "to scan the specified subnet anyway?" ).arg( d->prefixaddress ).arg( d->localPrefix() ),
@@ -312,7 +312,7 @@ void NetworkScanner::setPort( int p )
 
 bool NetworkScanner::checkPrinter( const TQString& host, int port )
 {
-	// try first to tqfind it in the SocketInfo list
+	// try first to find it in the SocketInfo list
 	TQPtrListIterator<NetworkScanner::SocketInfo> it( d->printers );
 	for ( ; it.current(); ++it )
 	{
@@ -335,27 +335,27 @@ NetworkScannerConfig::NetworkScannerConfig(NetworkScanner *scanner, const char *
 	QWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
         KIntValidator *val = new KIntValidator( this );
-	QLabel	*tqmasklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
+	QLabel	*masklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
 	QLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
 	QLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
 	QLineEdit	*mm = new TQLineEdit(dummy);
-	mm->setText(TQString::tqfromLatin1(".[0-255]"));
+	mm->setText(TQString::fromLatin1(".[0-255]"));
 	mm->setReadOnly(true);
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
 
-	tqmask_ = new TQLineEdit(dummy);
-	tqmask_->tqsetAlignment(Qt::AlignRight);
+	mask_ = new TQLineEdit(dummy);
+	mask_->setAlignment(Qt::AlignRight);
 	port_ = new TQComboBox(true,dummy);
         if ( port_->lineEdit() )
             port_->lineEdit()->setValidator( val );
 	tout_ = new TQLineEdit(dummy);
         tout_->setValidator( val );
 
-	tqmasklabel->setBuddy(tqmask_);
+	masklabel->setBuddy(mask_);
 	portlabel->setBuddy(port_);
 	toutlabel->setBuddy(tout_);
 
-	tqmask_->setText(scanner_->subnet());
+	mask_->setText(scanner_->subnet());
 	port_->insertItem("631");
 	port_->insertItem("9100");
 	port_->insertItem("9101");
@@ -365,13 +365,13 @@ NetworkScannerConfig::NetworkScannerConfig(NetworkScanner *scanner, const char *
 
 	QGridLayout	*main_ = new TQGridLayout(dummy, 3, 2, 0, 10);
 	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 5);
-	main_->addWidget(tqmasklabel, 0, 0);
+	main_->addWidget(masklabel, 0, 0);
 	main_->addWidget(portlabel, 1, 0);
 	main_->addWidget(toutlabel, 2, 0);
 	main_->addLayout(lay1, 0, 1);
 	main_->addWidget(port_, 1, 1);
 	main_->addWidget(tout_, 2, 1);
-	lay1->addWidget(tqmask_,1);
+	lay1->addWidget(mask_,1);
 	lay1->addWidget(mm,0);
 
 	resize(250,130);
@@ -386,7 +386,7 @@ void NetworkScannerConfig::slotOk()
 {
 	QString	msg;
 	QRegExp	re("(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})");
-	if (!re.exactMatch(tqmask_->text()))
+	if (!re.exactMatch(mask_->text()))
 		msg = i18n("Wrong subnetwork specification.");
 	else
 	{
@@ -412,7 +412,7 @@ void NetworkScannerConfig::slotOk()
 	}
 
 	scanner_->setTimeout( tout_->text().toInt() );
-	scanner_->setSubnet( tqmask_->text() );
+	scanner_->setSubnet( mask_->text() );
 	scanner_->setPort( port_->currentText().toInt() );
 
 	KDialogBase::slotOk();

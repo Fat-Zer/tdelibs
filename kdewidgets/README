@@ -5,7 +5,7 @@ KDE Custom Widgets for Qt Designer 2
 Summary:
 ========
 
-This directory tqcontains KDE custom widgets for designer 2 which comes with
+This directory contains KDE custom widgets for designer 2 which comes with
 Qt 3. Just make sure your plugin path in qtconfig includes
 $KDEDIR/lib/kde3/plugins . With the KDE build system nothing special 
 (i.e. editing the plugin path) is needed, as uic will automatically be

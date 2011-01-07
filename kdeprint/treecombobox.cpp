@@ -44,7 +44,7 @@ TreeListBoxItem::TreeListBoxItem(TQListBox *lb, const TQPixmap& pix, const TQStr
 	else
 	{
 		QString	parentStr = txt.left(txt.length()-m_path[m_depth].length()-1);
-		TreeListBoxItem	*parentItem = static_cast<TreeListBoxItem*>(lb->tqfindItem(parentStr, Qt::ExactMatch));
+		TreeListBoxItem	*parentItem = static_cast<TreeListBoxItem*>(lb->findItem(parentStr, Qt::ExactMatch));
 		if (!parentItem)
 		{
 			// parent not found, add parent first into QListBox
@@ -102,7 +102,7 @@ void TreeListBoxItem::paint(TQPainter *p)
 	if (m_depth > 0)
 	{
 		QPen	oldPen = p->pen();
-		p->setPen(listBox()->tqcolorGroup().mid());
+		p->setPen(listBox()->colorGroup().mid());
 
 		TreeListBoxItem	*item = this;
 		int	s = xo-stepSize()/2;

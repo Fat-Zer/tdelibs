@@ -11,7 +11,7 @@ INCLUDEPATH	+= $(KDELIBS)/ab
 LIBS += $$KDELIBDESTDIR\kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdeui$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR\kio$$KDELIB_SUFFIX 
 
-system( bash ktqmoc )
+system( bash kmoc )
 system( bash kdcopidl )
 
 TARGET = kresources$$KDEBUG

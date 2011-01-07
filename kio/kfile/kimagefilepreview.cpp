@@ -43,8 +43,8 @@ KImageFilePreview::KImageFilePreview( TQWidget *parent )
 
     imageLabel = new TQLabel( this );
     imageLabel->setFrameStyle( TQFrame::NoFrame );
-    imageLabel->tqsetAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    imageLabel->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding) );
+    imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
+    imageLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding) );
     vb->addWidget( imageLabel );
 
     TQHBoxLayout *hb = new TQHBoxLayout( 0 );
@@ -137,7 +137,7 @@ void KImageFilePreview::resizeEvent( TQResizeEvent * )
     timer->start( 100, true ); // forces a new preview
 }
 
-TQSize KImageFilePreview::tqsizeHint() const
+TQSize KImageFilePreview::sizeHint() const
 {
     return TQSize( 20, 200 ); // otherwise it ends up huge???
 }

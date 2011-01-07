@@ -42,11 +42,11 @@ KMWEnd::KMWEnd(TQWidget *parent, const char *name)
 void KMWEnd::initPrinter(KMPrinter *p)
 {
 	QString	txt;
-	QString	s(TQString::tqfromLatin1("<li><u>%1</u>: %2</li>"));
+	QString	s(TQString::fromLatin1("<li><u>%1</u>: %2</li>"));
 	int	ID = p->option("kde-backend").toInt();
 
 	// general information
-	txt.append(TQString::tqfromLatin1("<b>%1</b><ul type=circle>").arg(i18n("General")));
+	txt.append(TQString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("General")));
 	txt.append(s.arg(i18n("Type")).arg(p->option("kde-backend-description")));
 	txt.append(s.arg(i18n("Name")).arg(p->name()));
 	txt.append(s.arg(i18n("Location")).arg(p->location()));
@@ -56,9 +56,9 @@ void KMWEnd::initPrinter(KMPrinter *p)
 	if (ID == KMWizard::Class)
 	{
 		// class members
-		txt.append(TQString::tqfromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Members")));
+		txt.append(TQString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Members")));
 		QStringList	m(p->members());
-		QString		s1(TQString::tqfromLatin1("<li>%1</li>"));
+		QString		s1(TQString::fromLatin1("<li>%1</li>"));
 		for (TQStringList::ConstIterator it=m.begin(); it!=m.end(); ++it)
 			txt.append(s1.arg(*it));
 		txt.append("</ul><br>");
@@ -66,7 +66,7 @@ void KMWEnd::initPrinter(KMPrinter *p)
 	else
 	{
 		// backend information
-		txt.append(TQString::tqfromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Backend")));
+		txt.append(TQString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Backend")));
 		KURL url ( p->device() );
 		switch (ID)
 		{
@@ -91,7 +91,7 @@ void KMWEnd::initPrinter(KMPrinter *p)
 				if (url.hasUser()) txt.append(s.arg(i18n("Account")).arg(url.user()));
 				break;
 			default:
-				// double decoding in case the printer name tqcontains chars like '#' that are
+				// double decoding in case the printer name contains chars like '#' that are
 				// not decoded by "prettyURL".
 				txt.append(s.arg(i18n("URI")).arg(KURL( p->device()).prettyURL()));
 				break;
@@ -101,7 +101,7 @@ void KMWEnd::initPrinter(KMPrinter *p)
 		if (p->option("kde-driver") == "raw" || p->driver())
 		{
 			// driver information
-			txt.append(TQString::tqfromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Driver")));
+			txt.append(TQString::fromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Driver")));
 			if (p->option("kde-driver") == "raw")
 				txt.append(s.arg(i18n("Type")).arg(i18n("Raw printer")));
 			else

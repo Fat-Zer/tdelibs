@@ -75,7 +75,7 @@ KSharedConfig *Settings::sharedConfig() const
 void Settings::setDefaultLanguage( const TQString& lang )
 {
     TQStringList cs = d->broker->languages();
-    if ( cs.tqfind( lang ) != cs.end() &&
+    if ( cs.find( lang ) != cs.end() &&
          d->defaultLanguage != lang ) {
         d->defaultLanguage = lang;
         readIgnoreList();
@@ -94,7 +94,7 @@ void Settings::setDefaultClient( const TQString& client )
     //Different from setDefaultLanguage because
     //the number of clients can't be even close
     //as big as the number of languages
-    if ( d->broker->clients().tqcontains( client ) ) {
+    if ( d->broker->clients().contains( client ) ) {
         d->defaultClient = client;
         d->modified = true;
         d->broker->changed();
@@ -167,7 +167,7 @@ TQStringList Settings::currentIgnoreList() const
 
 void Settings::addWordToIgnore( const TQString& word )
 {
-    if ( !d->ignore.tqcontains( word ) ) {
+    if ( !d->ignore.contains( word ) ) {
         d->modified = true;
         d->ignore.insert( word, true );
     }
@@ -175,7 +175,7 @@ void Settings::addWordToIgnore( const TQString& word )
 
 bool Settings::ignore( const TQString& word )
 {
-    return d->ignore.tqcontains( word );
+    return d->ignore.contains( word );
 }
 
 void Settings::readIgnoreList()

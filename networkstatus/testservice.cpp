@@ -31,11 +31,11 @@ TestService::TestService() : TQObject(), DCOPObject("ProviderIface")
 {
 	kapp->dcopClient()->registerAs("testservice" );
 	m_service = new ServiceIface_stub( "kded", "networkstatus" );
-	m_status = NetworktqStatus::Offline;
-	NetworktqStatus::Properties nsp;
+	m_status = NetworkStatus::Offline;
+	NetworkStatus::Properties nsp;
 	nsp.internet = true;
 	nsp.name = "test_net";
-	nsp.onDemandPolicy = NetworktqStatus::All;
+	nsp.onDemandPolicy = NetworkStatus::All;
 	nsp.service = kapp->dcopClient()->appId();
 	nsp.status = m_status;
 	m_service->registerNetwork( "test_net", nsp );
@@ -55,39 +55,39 @@ int TestService::status( const TQString & network )
 int TestService::establish( const TQString & network )
 {
 	Q_UNUSED( network );
-	m_status = NetworktqStatus::Establishing;
-	m_service->setNetworktqStatus( "test_net", (int)m_status );
-	m_nexttqStatus = NetworktqStatus::Online;
-	TQTimer::singleShot( 5000, this, TQT_SLOT( slottqStatusChange() ) );
-	return (int)NetworktqStatus::RequestAccepted;
+	m_status = NetworkStatus::Establishing;
+	m_service->setNetworkStatus( "test_net", (int)m_status );
+	m_nextStatus = NetworkStatus::Online;
+	TQTimer::singleShot( 5000, this, TQT_SLOT( slotStatusChange() ) );
+	return (int)NetworkStatus::RequestAccepted;
 }
 
 int TestService::shutdown( const TQString & network )
 {
 	Q_UNUSED( network );
-	m_status = NetworktqStatus::ShuttingDown;
-	m_service->setNetworktqStatus( "test_net", (int)m_status );
-	m_nexttqStatus = NetworktqStatus::Offline;
-	TQTimer::singleShot( 5000, this, TQT_SLOT( slottqStatusChange() ) );
-	return (int)NetworktqStatus::RequestAccepted;
+	m_status = NetworkStatus::ShuttingDown;
+	m_service->setNetworkStatus( "test_net", (int)m_status );
+	m_nextStatus = NetworkStatus::Offline;
+	TQTimer::singleShot( 5000, this, TQT_SLOT( slotStatusChange() ) );
+	return (int)NetworkStatus::RequestAccepted;
 }
 
 void TestService::simulateFailure()
 {
-	m_status = NetworktqStatus::OfflineFailed;
-	m_service->setNetworktqStatus( "test_net", (int)m_status );
+	m_status = NetworkStatus::OfflineFailed;
+	m_service->setNetworkStatus( "test_net", (int)m_status );
 }
 
 void TestService::simulateDisconnect()
 {
-	m_status = NetworktqStatus::OfflineDisconnected;
-	m_service->setNetworktqStatus( "test_net", (int)m_status );
+	m_status = NetworkStatus::OfflineDisconnected;
+	m_service->setNetworkStatus( "test_net", (int)m_status );
 }
 
-void TestService::slottqStatusChange()
+void TestService::slotStatusChange()
 {
-	m_status = m_nexttqStatus;
-	m_service->setNetworktqStatus( "test_net", (int)m_status );
+	m_status = m_nextStatus;
+	m_service->setNetworkStatus( "test_net", (int)m_status );
 }
 
 int main( int argc, char** argv )

@@ -50,7 +50,7 @@ class DCOPObject;
  * Top level widget that provides toolbars, a status line and a frame.
  *
  * It should be used as a top level (parent-less) widget.
- * It manages the tqgeometry for all its children, including your
+ * It manages the geometry for all its children, including your
  * main widget.
  *
  * Normally, you will inherit from KMainWindow,
@@ -74,7 +74,7 @@ class DCOPObject;
 *
  * KMainWindow will set icon, mini icon and caption, which it gets
  * from KApplication. It provides full session management, and
- * will save its position, tqgeometry and positions of toolbars and
+ * will save its position, geometry and positions of toolbars and
  * menubar on logout. If you want to save additional data, reimplement
  * saveProperties() and (to read them again on next login)
  * readProperties(). To save special data about your data, reimplement
@@ -168,7 +168,7 @@ public:
     /**
      * Retrieve the standard help menu.
      *
-     * It tqcontains entires for the
+     * It contains entires for the
      * help system (activated by F1), an optional "What's This?" entry
      * (activated by Shift F1), an application specific dialog box,
      * and an "About KDE" dialog box.
@@ -195,7 +195,7 @@ public:
     /**
      * Returns the help menu. Creates a standard help menu if none exists yet.
      *
-     * It tqcontains entries for the
+     * It contains entries for the
      * help system (activated by F1), an optional "What's This?" entry
      * (activated by Shift F1), an application specific dialog box,
      * and an "About KDE" dialog box. You must create the application
@@ -325,7 +325,7 @@ public:
      * then it will try to construct a local XML filename like
      * appnameui.rc where 'appname' is your app's name.  If that file
      * does not exist, then the XML UI code will only use the global
-     * (standard) XML file for the tqlayout purposes.
+     * (standard) XML file for the layout purposes.
      *
      * Note that when passing true for the conserveMemory argument subsequent
      * calls to guiFactory()->addClient/removeClient may not work as expected.
@@ -384,7 +384,7 @@ public:
      */
     static TQPtrList<KMainWindow>* memberList;
 
-    //KDE4: tqreplace with memberList() and make memberList member private
+    //KDE4: replace with memberList() and make memberList member private
     /**
      * List of members of KMainWindow class.
      * @since 3.4
@@ -444,10 +444,10 @@ public:
      *   have been created and placed inside the main window (i.e. for 99% of
      *   apps setCentralWidget())
      * - Widgets that inherit from TQWidget (like game boards) should overload
-     *   "virtual TQSize tqsizeHint() const;" to specify a default size rather
+     *   "virtual TQSize sizeHint() const;" to specify a default size rather
      *   than letting TQWidget::adjust use the default size of 0x0.
      */
-    void setAutoSaveSettings( const TQString & groupName = TQString::tqfromLatin1("MainWindow"),
+    void setAutoSaveSettings( const TQString & groupName = TQString::fromLatin1("MainWindow"),
                               bool saveWindowSize = true );
 
     /**
@@ -576,7 +576,7 @@ public:
         Save = 8,
 
         /**
-         * calls createGUI() once ToolBar, Keys and tqStatusbar have been
+         * calls createGUI() once ToolBar, Keys and Statusbar have been
          * taken care of.  See createGUI
          */
         Create = 16
@@ -587,7 +587,7 @@ public:
      * fashion.  The options are all enabled by default but can be turned
      * off if desired through the params or if the prereqs don't exists.
      *
-     * Typically this function tqreplaces createGUI().
+     * Typically this function replaces createGUI().
      *
      * @see StandardWindowOptions
      *
@@ -602,7 +602,7 @@ public:
      *
      * @p defaultSize The default size of the window
      *
-     * Typically this function tqreplaces createGUI().
+     * Typically this function replaces createGUI().
      *
      * @see StandardWindowOptions
      *
@@ -632,7 +632,7 @@ public:
     void finalizeGUI( bool force );
 
     /**
-     * @return true if a -tqgeometry argument was given on the command line,
+     * @return true if a -geometry argument was given on the command line,
      * and this is the first window created (the one on which this option applies)
      */
     bool initialGeometrySet() const;
@@ -649,11 +649,11 @@ public:
      *
      * @deprecated You normally don't need this, the recommended way to achieve a
      *   certain central widget size is as follows:
-     *     @li Override tqsizeHint() in the central widget so that it
+     *     @li Override sizeHint() in the central widget so that it
      *      returns the desired size.
      *     @li Call updateGeometry() in the central widget whenever the
-     *      desired size changes. This ensures that the new tqsizeHint() is properly
-     *      propagated to any parent tqlayout.
+     *      desired size changes. This ensures that the new sizeHint() is properly
+     *      propagated to any parent layout.
      *     @li Now call adjustSize() in the mainwindow to resize the
      *      mainwindow such that the central widget will become the desired size.
      *
@@ -923,16 +923,16 @@ protected:
     /**
      * For inherited classes
      * Note that the group must be set before calling, and that
-     * a -tqgeometry on the command line has priority.
+     * a -geometry on the command line has priority.
      */
     void restoreWindowSize( KConfig * config );
 
-    /// parse the tqgeometry from the tqgeometry command line argument
+    /// parse the geometry from the geometry command line argument
     void parseGeometry(bool parsewidth);
 
 protected slots:
    /**
-    * Rebuilds the GUI after KEditToolbar changed the toolbar tqlayout.
+    * Rebuilds the GUI after KEditToolbar changed the toolbar layout.
     * @see configureToolbars()
     */
    void saveNewToolbarConfig(); // TODO KDE4: make virtual and reimplement in KParts::MainWindow
@@ -1016,7 +1016,7 @@ private:
 
 /**
  *  These global convenience functions (that come with a varying
- *  number of template arguments) are a tqreplacement for the RESTORE
+ *  number of template arguments) are a replacement for the RESTORE
  *  macro provided in earlier versions of KDE. The old RESTORE macro
  *  is still provided for backwards compatibility. See
  *  KMainWindow documentation for more.
@@ -1028,7 +1028,7 @@ template <typename T>
 inline void kRestoreMainWindows() {
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
     const TQString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == TQString::tqfromLatin1( T::staticMetaObject()->className() ) )
+    if ( className == TQString::fromLatin1( T::staticMetaObject()->className() ) )
       (new T)->restore( n );
   }
 }
@@ -1040,9 +1040,9 @@ inline void kRestoreMainWindows() {
   classNames[1] = T1::staticMetaObject()->className();
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
     const TQString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == TQString::tqfromLatin1( classNames[0] ) )
+    if ( className == TQString::fromLatin1( classNames[0] ) )
       (new T0)->restore( n );
-    else if ( className == TQString::tqfromLatin1( classNames[1] ) )
+    else if ( className == TQString::fromLatin1( classNames[1] ) )
       (new T1)->restore( n );
   }
 }
@@ -1055,11 +1055,11 @@ inline void kRestoreMainWindows() {
   classNames[2] = T2::staticMetaObject()->className();
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
     const TQString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == TQString::tqfromLatin1( classNames[0] ) )
+    if ( className == TQString::fromLatin1( classNames[0] ) )
       (new T0)->restore( n );
-    else if ( className == TQString::tqfromLatin1( classNames[1] ) )
+    else if ( className == TQString::fromLatin1( classNames[1] ) )
       (new T1)->restore( n );
-    else if ( className == TQString::tqfromLatin1( classNames[2] ) )
+    else if ( className == TQString::fromLatin1( classNames[2] ) )
       (new T2)->restore( n );
   }
 }

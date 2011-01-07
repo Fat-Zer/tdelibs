@@ -328,7 +328,7 @@ AC_DEFINE_UNQUOTED(X11_RGBFILE, "$rgb_file", [where rgb.txt is in])
 AC_MSG_CHECKING([for Compiler version])
 case "$CXX" in
 xlC*)
-  # The __IBMCPP__ macro tqcontains the C++ compiler version in decimal notation.
+  # The __IBMCPP__ macro contains the C++ compiler version in decimal notation.
   echo "__IBMCPP__" > conftest.C
 
   # Preprocess and at least make sure it's returned a number.

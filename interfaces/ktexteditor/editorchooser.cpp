@@ -55,7 +55,7 @@ EditorChooser::EditorChooser(TQWidget *parent,const char *name) :
 
 	for (KTrader::OfferList::Iterator it = offers.begin(); it != offers.end(); ++it)
 	{
-    		if ((*it)->desktopEntryName().tqcontains(editor))
+    		if ((*it)->desktopEntryName().contains(editor))
 		{
 			d->chooser->editorCombo->insertItem(i18n("System Default (%1)").arg((*it)->name()));
 			break;
@@ -82,7 +82,7 @@ void EditorChooser::readAppSetting(const TQString& postfix){
 	if (editor.isEmpty()) d->chooser->editorCombo->setCurrentItem(0);
 	else
 	{
-		int idx=d->elements.tqfindIndex(editor);
+		int idx=d->elements.findIndex(editor);
 		idx=idx+1;
 		d->chooser->editorCombo->setCurrentItem(idx);
 	}
@@ -130,7 +130,7 @@ KTextEditor::Document *EditorChooser::createDocument(TQObject *parent,const char
 	return 0;
 }
 
-KTextEditor::Editor *EditorChooser::createEditor(TQWidget *tqparentWidget,TQObject *parent,const char* widgetName,
+KTextEditor::Editor *EditorChooser::createEditor(TQWidget *parentWidget,TQObject *parent,const char* widgetName,
 	const char* name,const TQString& postfix,bool fallBackToKatePart){
 
         KTextEditor::Editor *tmpEd=0;
@@ -151,11 +151,11 @@ KTextEditor::Editor *EditorChooser::createEditor(TQWidget *tqparentWidget,TQObje
         KService::Ptr serv=KService::serviceByDesktopName(editor);
         if (serv)
         {
-                tmpEd=KTextEditor::createEditor(serv->library().latin1(),tqparentWidget,widgetName,parent,name);
+                tmpEd=KTextEditor::createEditor(serv->library().latin1(),parentWidget,widgetName,parent,name);
                 if (tmpEd) return tmpEd;
         }
         if (fallBackToKatePart)
-                return KTextEditor::createEditor("libkatepart",tqparentWidget,widgetName,parent,name);
+                return KTextEditor::createEditor("libkatepart",parentWidget,widgetName,parent,name);
 
         return 0;
 }

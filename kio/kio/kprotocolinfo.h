@@ -31,7 +31,7 @@
  * Information about I/O (Internet, etc.) protocols supported by KDE.
 
  * This class is useful if you want to know which protocols
- * KDE supports. In addition you can tqfind out lots of information
+ * KDE supports. In addition you can find out lots of information
  * about a certain protocol. A KProtocolInfo instance represents a
  * single protocol. Most of the functionality is provided by the static
  * methods that scan the *.protocol files of all installed kioslaves to get
@@ -545,7 +545,7 @@ public:
    * The following parsing modes are defined:
    * @li "url" for a standards compliant URL
    * @li "rawuri" for a non-conformant URI for which URL parsing would be meaningless
-   * @li "mailto" for a mailto style URI (the path part tqcontains only an email address)
+   * @li "mailto" for a mailto style URI (the path part contains only an email address)
    *
    * @param protocol the protocol to check
    * @return the suggested parsing mode, or KURL::Auto if unspecified

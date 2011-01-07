@@ -21,7 +21,7 @@
 
 <refsynopsisdiv>
 <cmdsynopsis>
-<command>checkXML</command> <arg><tqreplaceable>filename</tqreplaceable></arg>
+<command>checkXML</command> <arg><replaceable>filename</replaceable></arg>
 </cmdsynopsis>
 </refsynopsisdiv>
 

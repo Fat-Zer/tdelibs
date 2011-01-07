@@ -161,7 +161,7 @@ namespace Keramik
 
 		Note that the IDs and offsets are separated since we can reuse the same code in many
 		cases by splitting the widget identify from tile identity (as there are many
-		different widgets that have the same or similar tile tqlayout)
+		different widgets that have the same or similar tile layout)
 		*/
 		virtual int tileName( unsigned int, unsigned int ) const { return 0; }
 
@@ -364,4 +364,4 @@ namespace Keramik
 #endif
 
 // vim: ts=4 sw=4 noet
-// kate: indent-width 4; tqreplace-tabs off; tab-width 4;
+// kate: indent-width 4; replace-tabs off; tab-width 4;

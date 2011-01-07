@@ -60,7 +60,7 @@ public:
    * initially.
    **/
   KDatePicker(TQWidget *parent=0,
-	      QDate=TQDate::tqcurrentDate(),
+	      QDate=TQDate::currentDate(),
 	      const char *name=0);
 
   /** The usual constructor.  The given date will be displayed
@@ -90,7 +90,7 @@ public:
    *  size hint, try adding 28 to each of the reported numbers of
    *  pixels.
    **/
-  TQSize tqsizeHint() const;
+  TQSize sizeHint() const;
 
   /**
    * Sets the date.
@@ -136,7 +136,7 @@ public:
   /**
    * By calling this method with @p enable = true, KDatePicker will show
    * a little close-button in the upper button-row. Clicking the
-   * close-button will cause the KDatePicker's tqtopLevelWidget()'s close()
+   * close-button will cause the KDatePicker's topLevelWidget()'s close()
    * method being called. This is mostly useful for toplevel datepickers
    * without a window manager decoration.
    * @see hasCloseButton

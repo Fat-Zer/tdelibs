@@ -66,7 +66,7 @@ namespace KNetwork { namespace Internal
   {
   protected:
     mutable TQCString m_encodedName;
-    TQ_UINT16 port;
+    Q_UINT16 port;
     int scopeid;
     TQPtrList<KNetwork::KResolverResults> resultList;
 

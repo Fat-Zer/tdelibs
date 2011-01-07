@@ -66,7 +66,7 @@ typedef TQValueList<TQCString> QCStringList;
 /**
  * @internal
  */
-class DCOPConnection : public TQSocketNotifier
+class DCOPConnection : public QSocketNotifier
 {
 public:
     DCOPConnection( IceConn conn );
@@ -88,11 +88,11 @@ public:
     int notifyRegister;
     /**
      * When client A has called client B then for the duration of the call:
-     * A->waitingOnReply tqcontains B
+     * A->waitingOnReply contains B
      *   and either
-     * B->waitingForReply tqcontains A
+     * B->waitingForReply contains A
      *   or
-     * B->waitingForDelayedReply tqcontains A
+     * B->waitingForDelayedReply contains A
      *
      * This allows us to do proper bookkeeping in case client A, client B
      * or both unregister during the call.
@@ -112,7 +112,7 @@ public:
 /**
  * @internal
  */
-class DCOPServer : public TQObject
+class DCOPServer : public QObject
 {
     Q_OBJECT
 public:
@@ -128,9 +128,9 @@ public:
                  const TQCString &fun, const TQByteArray& data,
                  TQCString& replyType, TQByteArray &replyData, IceConn iceConn);
 
-    DCOPConnection *tqfindApp(const TQCString &appId);
-    DCOPConnection *tqfindConn(IceConn iceConn)
-       { return clients.tqfind(iceConn); }
+    DCOPConnection *findApp(const TQCString &appId);
+    DCOPConnection *findConn(IceConn iceConn)
+       { return clients.find(iceConn); }
 
     void sendMessage(DCOPConnection *conn, const TQCString &sApp,
                      const TQCString &rApp, const TQCString &rObj,

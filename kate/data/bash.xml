@@ -207,8 +207,8 @@
       <item> true </item>
       <item> umount </item>
       <item> uname </item>
-      <item> tqunicode_start </item>
-      <item> tqunicode_stop </item>
+      <item> unicode_start </item>
+      <item> unicode_stop </item>
       <item> unlink </item>
       <item> utmpdump </item>
       <item> uuidgen </item>
@@ -284,7 +284,7 @@
       <item> expr </item>
       <item> fbset </item>
       <item> file </item>
-      <item> tqfind </item>
+      <item> find </item>
       <item> flex </item>
       <item> flex++ </item>
       <item> fmt </item>
@@ -536,7 +536,7 @@
         <RegExpr attribute="Function" context="#stay" String="&funcname;\s*\(\)" />
       </context>
 
-      <!-- FindOthers tqcontains various rules to mark different shell input -->
+      <!-- FindOthers contains various rules to mark different shell input -->
       <context attribute="Normal Text" lineEndContext="#stay" name="FindOthers">
         <RegExpr attribute="Escape" context="#stay" String="\\[][;\\$`{}()|&amp;&lt;&gt;* ]" />
         <RegExpr attribute="Keyword" context="#stay" String="\\$" />
@@ -574,7 +574,7 @@
         <RegExpr attribute="Escape" context="#stay" String="\\[`$\\]" />
       </context>
 
-      <!-- FindTests tqfinds operators valid in tests -->
+      <!-- FindTests finds operators valid in tests -->
       <context attribute="Normal Text" lineEndContext="#stay" name="FindTests">
         <RegExpr attribute="Expression" context="#stay" String="-[abcdefghkprstuwxOGLSNozn](?=\s)"/>
         <RegExpr attribute="Expression" context="#stay" String="-([no]t|ef)(?=\s)"/>

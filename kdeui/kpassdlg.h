@@ -189,7 +189,7 @@ public:
     /**
      * Constructs a password dialog.
      *
-     * @param type: if NewPassword is given here, the dialog tqcontains two
+     * @param type: if NewPassword is given here, the dialog contains two
      *        input fields, so that the user must confirm his password
      *        and possible typos are detected immediately.
      * @param enableKeep: if true, a check box is shown in the dialog
@@ -215,7 +215,7 @@ public:
     /**
      * Construct a password dialog. Essentially the same as above but allows the
      * icon in the password dialog to be set via @p iconName.
-     * @param type if NewPassword is given here, the dialog tqcontains two
+     * @param type if NewPassword is given here, the dialog contains two
      * input fields, so that the user must confirm his password
      * and possible typos are detected immediately
      * @param enableKeep: if true, a check box is shown in the dialog

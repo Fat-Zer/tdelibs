@@ -56,7 +56,7 @@ void KMPropContainer::setWidget(KMPropWidget *w)
 		connect(m_button,TQT_SIGNAL(clicked()),m_widget,TQT_SLOT(slotChange()));
 		connect(m_widget,TQT_SIGNAL(enable(bool)),TQT_SIGNAL(enable(bool)));
 		connect(m_widget,TQT_SIGNAL(enableChange(bool)),TQT_SLOT(slotEnableChange(bool)));
-		QVBoxLayout	*lay = dynamic_cast<TQVBoxLayout*>(tqlayout());
+		QVBoxLayout	*lay = dynamic_cast<TQVBoxLayout*>(layout());
 		if (lay)
 		{
 			lay->insertWidget(0,m_widget,1);

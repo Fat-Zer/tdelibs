@@ -109,7 +109,7 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
   pw_ent = getpwuid(uid);
   if (!pw_ent)
   {
-     fprintf(stderr, "Error: Can not tqfind password entry for uid %d.\n", getuid());
+     fprintf(stderr, "Error: Can not find password entry for uid %d.\n", getuid());
      return 1;
   }
 

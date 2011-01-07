@@ -109,7 +109,7 @@ bool KMDBCreator::createDriverDB(const TQString& dirname, const TQString& filena
 	{
 		if (!m_dlg)
 		{
-			m_dlg = new TQProgressDialog(parent->tqtopLevelWidget(),"progress-dialog",true);
+			m_dlg = new TQProgressDialog(parent->topLevelWidget(),"progress-dialog",true);
 			m_dlg->setLabelText(i18n("Please wait while KDE rebuilds a driver database."));
 			m_dlg->setCaption(i18n("Driver Database"));
 			connect(m_dlg,TQT_SIGNAL(canceled()),TQT_SLOT(slotCancelled()));
@@ -133,7 +133,7 @@ void KMDBCreator::slotReceivedStdout(KProcess*, char *buf, int len)
 	// the toInt() will return 0. If that occurs for the first number,
 	// then the number of steps will be also 0.
 	bool	ok;
-	int	p = str.tqfind('\n');
+	int	p = str.find('\n');
 	int	n = str.mid(0, p).toInt(&ok);
 
 	// process the number received

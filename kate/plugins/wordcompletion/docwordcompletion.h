@@ -106,7 +106,7 @@ class DocWordCompletionPluginView
 
     TQString word();
     TQValueList<KTextEditor::CompletionEntry> allMatches( const TQString &word );
-    TQString tqfindLongestUnique(const TQValueList < KTextEditor::CompletionEntry > &matches);
+    TQString findLongestUnique(const TQValueList < KTextEditor::CompletionEntry > &matches);
     KTextEditor::View *m_view;
     struct DocWordCompletionPluginViewPrivate *d;
 };
@@ -130,4 +130,4 @@ class DocWordCompletionConfigPage : public KTextEditor::ConfigPage
 };
 
 #endif // _DocWordCompletionPlugin_h_
-// kate: space-indent on; indent-width 2; tqreplace-tabs on; mixed-indent off;
+// kate: space-indent on; indent-width 2; replace-tabs on; mixed-indent off;

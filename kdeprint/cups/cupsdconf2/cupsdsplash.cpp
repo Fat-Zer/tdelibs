@@ -39,11 +39,11 @@ CupsdSplash::CupsdSplash(TQWidget *parent, const char *name)
 	QLabel	*cupslogo_ = new TQLabel(this);
 	QString	logopath = locate("data", TQString("kdeprint/cups_logo.png"));
 	cupslogo_->setPixmap(logopath.isEmpty() ? TQPixmap() : TQPixmap(logopath));
-	cupslogo_->tqsetAlignment(Qt::AlignCenter);
+	cupslogo_->setAlignment(Qt::AlignCenter);
 	QLabel	*kupslogo_ = new TQLabel(this);
 	logopath = locate("data", TQString("kdeprint/kde_logo.png"));
 	kupslogo_->setPixmap(logopath.isEmpty() ? TQPixmap() : TQPixmap(logopath));
-	kupslogo_->tqsetAlignment(Qt::AlignCenter);
+	kupslogo_->setAlignment(Qt::AlignCenter);
 
 	QLabel	*helptxt_ = new TQLabel(this);
 	helptxt_->setText(i18n( "<p>This tool will help you to configure graphically the server of the CUPS printing system. "

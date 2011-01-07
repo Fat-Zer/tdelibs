@@ -66,7 +66,7 @@ public:
   IceIOErrorHandler oldIceIOErrorHandler;
   KCheckAccelerators* checkAccelerators;
   TQString overrideStyle;
-  TQString tqgeometry_arg;
+  TQString geometry_arg;
   TQCString startup_id;
   TQTimer* app_started_timer;
   KAppDCOPInterface *m_KAppDCOPInterface;

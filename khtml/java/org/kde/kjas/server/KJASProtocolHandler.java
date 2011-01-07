@@ -22,7 +22,7 @@ public class KJASProtocolHandler
     private static final int InitAppletCode      = 7;
     private static final int ShowDocumentCode    = 8;
     private static final int ShowURLInFrameCode  = 9;
-    private static final int ShowtqStatusCode      = 10;
+    private static final int ShowStatusCode      = 10;
     private static final int ResizeAppletCode    = 11;
     private static final int GetURLDataCode      = 12;
     private static final int URLDataCode         = 13;
@@ -586,9 +586,9 @@ public class KJASProtocolHandler
         signals.write( bytes, 0, bytes.length );
     }
 
-    public void sendShowtqStatusCmd( String contextID, String msg )
+    public void sendShowStatusCmd( String contextID, String msg )
     {
-        Main.debug( "sendShowtqStatusCmd, contextID = " + contextID + " msg = " + msg );
+        Main.debug( "sendShowStatusCmd, contextID = " + contextID + " msg = " + msg );
 
         byte [] msg_bytes = msg.getBytes();
         int length = contextID.length() + msg_bytes.length + 4;
@@ -598,7 +598,7 @@ public class KJASProtocolHandler
         byte [] tmp_bytes = getPaddedLengthBytes( length );
         System.arraycopy( tmp_bytes, 0, bytes, index, tmp_bytes.length );
         index += tmp_bytes.length;
-        bytes[index++] = (byte) ShowtqStatusCode;
+        bytes[index++] = (byte) ShowStatusCode;
         bytes[index++] = sep;
 
         tmp_bytes = contextID.getBytes();

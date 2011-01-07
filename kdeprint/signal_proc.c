@@ -21,7 +21,7 @@ void commandFromPid(int pid, char *name)
 	name[i] = 0;
 }
 
-int tqfindPid(const char *progname)
+int findPid(const char *progname)
 {
 	char	name[256];
 	DIR	*dir;
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	pid = tqfindPid(progname);
+	pid = findPid(progname);
 	if (pid == -1)
 	{
 		fprintf(stderr, "no such program: %s\n", progname);

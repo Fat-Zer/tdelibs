@@ -45,7 +45,7 @@ public:
     virtual const char *renderName() const { return "RenderImage"; }
     virtual void paint( PaintInfo& i, int tx, int ty );
 
-    virtual void tqlayout();
+    virtual void layout();
 
     virtual void setPixmap( const TQPixmap &, const TQRect&, CachedImage *);
 

@@ -228,7 +228,7 @@ void KOpenSSLProxy::destroy() {
 #include <tqstring.h>
 #include <tqstringlist.h>
 
-static TQString tqfindMostRecentLib(TQString dir, TQString name)
+static TQString findMostRecentLib(TQString dir, TQString name)
 {
        // Grab all shared libraries in the directory
        TQString filter = "lib"+name+".so.*";
@@ -245,7 +245,7 @@ static TQString tqfindMostRecentLib(TQString dir, TQString name)
        uint s = filter.length()-1;
        for (TQStringList::Iterator it = l.begin(); it != l.end(); ++it) {
                TQString numberpart = (*it).mid(s);
-               uint endmaj = numberpart.tqfind('.');
+               uint endmaj = numberpart.find('.');
                if (endmaj == -1)
                        continue;
                bool ok;
@@ -288,7 +288,7 @@ KConfig *cfg;
 
 #ifdef __OpenBSD__
    {
-   TQString libname = tqfindMostRecentLib("/usr/lib" KDELIBSUFF, "crypto");
+   TQString libname = findMostRecentLib("/usr/lib" KDELIBSUFF, "crypto");
    if (!libname.isNull())
          _cryptoLib = ll->globalLibrary(libname.latin1());
    }
@@ -369,7 +369,7 @@ KConfig *cfg;
             alib += "/";
          alib += *shit;
 	 TQString tmpStr(alib.latin1());
-	 tmpStr.tqreplace(TQRegExp("\\(.*\\)"), "");
+	 tmpStr.replace(TQRegExp("\\(.*\\)"), "");
 	 if (!access(tmpStr.latin1(), R_OK))
             _cryptoLib = ll->globalLibrary(alib.latin1());
          if (_cryptoLib) break;
@@ -511,7 +511,7 @@ KConfig *cfg;
 
 #ifdef __OpenBSD__
    {
-   TQString libname = tqfindMostRecentLib("/usr/lib", "ssl");
+   TQString libname = findMostRecentLib("/usr/lib", "ssl");
    if (!libname.isNull())
          _sslLib = ll->globalLibrary(libname.latin1());
    }
@@ -527,7 +527,7 @@ KConfig *cfg;
             alib += "/";
          alib += *shit;
 	 TQString tmpStr(alib.latin1());
-	 tmpStr.tqreplace(TQRegExp("\\(.*\\)"), "");
+	 tmpStr.replace(TQRegExp("\\(.*\\)"), "");
 	 if (!access(tmpStr.latin1(), R_OK))
          	_sslLib = ll->globalLibrary(alib.latin1());
          if (_sslLib) break;

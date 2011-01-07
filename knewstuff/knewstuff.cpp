@@ -39,14 +39,14 @@ KAction* KNS::standardAction(const TQString& what,
                        0, recvr, slot, parent, name);
 }
 
-KNewStuff::KNewStuff( const TQString &type, TQWidget *tqparentWidget )
+KNewStuff::KNewStuff( const TQString &type, TQWidget *parentWidget )
 {
-    mEngine = new Engine( this, type, tqparentWidget );
+    mEngine = new Engine( this, type, parentWidget );
 }
 
-KNewStuff::KNewStuff( const TQString &type, const TQString &providerList, TQWidget *tqparentWidget )
+KNewStuff::KNewStuff( const TQString &type, const TQString &providerList, TQWidget *parentWidget )
 {
-  mEngine = new Engine( this, type, providerList, tqparentWidget );
+  mEngine = new Engine( this, type, providerList, parentWidget );
 }
 
 TQString KNewStuff::type() const
@@ -54,9 +54,9 @@ TQString KNewStuff::type() const
   return mEngine->type();
 }
 
-TQWidget *KNewStuff::tqparentWidget() const
+TQWidget *KNewStuff::parentWidget() const
 {
-  return mEngine->tqparentWidget();
+  return mEngine->parentWidget();
 }
 
 KNewStuff::~KNewStuff()

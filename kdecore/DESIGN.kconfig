@@ -1,4 +1,4 @@
-kconfigdata.h tqcontains definitions of the data formats used by kconfig.
+kconfigdata.h contains definitions of the data formats used by kconfig.
 
 Configuration entries are stored as "KEntry". They are indexed with "KEntryKey".
 The primary store is a "KEntryMap" which is defined as a QMap from "KEntryKey"
@@ -10,7 +10,7 @@ are grouped in the QMap as well.
 
 The start of a group is indicated with a KEntryKey with an empty mKey and a 
 dummy KEntry. This allows us to search for the start of the group and then to 
-iterate until we end up in another group. That way we will tqfind all entries
+iterate until we end up in another group. That way we will find all entries
 of a certain group.
 
 Entries that are localised with the _current_ locale are stored with bLocal 

@@ -1,5 +1,5 @@
 /* ANSI-C code produced by gperf version 3.0.3 */
-/* Command-line: gperf -c -a -L ANSI-C -P -G -D -E -C -o -t -k '*' -NtqfindAttr -Hhash_attr -Wwordlist_attr -Qspool_attr -s 2 htmlattrs.gperf  */
+/* Command-line: gperf -c -a -L ANSI-C -P -G -D -E -C -o -t -k '*' -NfindAttr -Hhash_attr -Wwordlist_attr -Qspool_attr -s 2 htmlattrs.gperf  */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
       && ('%' == 37) && ('&' == 38) && ('\'' == 39) && ('(' == 40) \
@@ -188,7 +188,7 @@ struct spool_attr_t
     char spool_attr_str42[sizeof("rules")];
     char spool_attr_str43[sizeof("compact")];
     char spool_attr_str44[sizeof("rev")];
-    char spool_attr_str45[sizeof("tqshape")];
+    char spool_attr_str45[sizeof("shape")];
     char spool_attr_str46[sizeof("charset")];
     char spool_attr_str47[sizeof("charoff")];
     char spool_attr_str48[sizeof("lang")];
@@ -343,7 +343,7 @@ static const struct spool_attr_t spool_attr_contents =
     "rules",
     "compact",
     "rev",
-    "tqshape",
+    "shape",
     "charset",
     "charoff",
     "lang",
@@ -830,7 +830,7 @@ __attribute__ ((__gnu_inline__))
 #endif
 #endif
 const struct attrs *
-tqfindAttr (register const char *str, register unsigned int len)
+findAttr (register const char *str, register unsigned int len)
 {
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {

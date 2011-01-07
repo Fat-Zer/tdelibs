@@ -93,7 +93,7 @@ bool KMCupsJobManager::sendCommandSystemJob(const TQPtrList<KMJob>& jobs, int ac
 				if (argstr.isEmpty()) return false;
 				req.setOperation(CUPS_MOVE_JOB);
 				uri =
-				    TQString::tqfromLatin1("ipp://%1/printers/%2").arg(CupsInfos::self()->hostaddr(),
+				    TQString::fromLatin1("ipp://%1/printers/%2").arg(CupsInfos::self()->hostaddr(),
 					    argstr);
 				req.addURI(IPP_TAG_OPERATION, "job-printer-uri", uri);
 				break;
@@ -131,7 +131,7 @@ bool KMCupsJobManager::listJobs(const TQString& prname, KMJobManager::JobType ty
 	req.setOperation(IPP_GET_JOBS);
 
 	// add printer-uri
-	KMPrinter *mp = KMManager::self()->tqfindPrinter(prname);
+	KMPrinter *mp = KMManager::self()->findPrinter(prname);
 	if (!mp)
 		return false;
 
@@ -150,7 +150,7 @@ bool KMCupsJobManager::listJobs(const TQString& prname, KMJobManager::JobType ty
 	// other attributes
 	req.addKeyword(IPP_TAG_OPERATION, "requested-attributes", keys);
 	if (type == KMJobManager::CompletedJobs)
-		req.addKeyword(IPP_TAG_OPERATION,"which-jobs",TQString::tqfromLatin1("completed"));
+		req.addKeyword(IPP_TAG_OPERATION,"which-jobs",TQString::fromLatin1("completed"));
 	if (limit > 0)
 		req.addInteger(IPP_TAG_OPERATION,"limit",limit);
 
@@ -212,13 +212,13 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 		else if (name == "job-printer-uri" && !pr->isRemote())
 		{
 			QString	str(attr->values[0].string.text);
-			int	p = str.tqfindRev('/');
+			int	p = str.findRev('/');
 			if (p != -1)
 				job->setPrinter(str.mid(p+1));
 		}
 		else if (name == "job-priority")
 		{
-			job->setAttribute(0, TQString::tqfromLatin1("%1").arg(attr->values[0].integer, 3));
+			job->setAttribute(0, TQString::fromLatin1("%1").arg(attr->values[0].integer, 3));
 		}
 		else if (name == "job-billing")
 		{
@@ -356,7 +356,7 @@ static TQString processRange(const TQString& range)
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		s.append(*it);
-		if ((*it).tqfind('-') == -1)
+		if ((*it).find('-') == -1)
 			s.append("-").append(*it);
 		s.append(",");
 	}
@@ -387,22 +387,22 @@ bool KMCupsJobManager::editJobAttributes(KMJob *j)
 
 	TQMap<TQString,TQString>	opts = req.toMap(IPP_TAG_JOB);
 	// translate the "Copies" option to non-CUPS syntax
-	if (opts.tqcontains("copies"))
+	if (opts.contains("copies"))
 		opts["kde-copies"] = opts["copies"];
-	if (opts.tqcontains("page-set"))
+	if (opts.contains("page-set"))
 		opts["kde-pageset"] = (opts["page-set"] == "even" ? "2" : (opts["page-set"] == "odd" ? "1" : "0"));
-	if (opts.tqcontains("OutputOrder"))
+	if (opts.contains("OutputOrder"))
 		opts["kde-pageorder"] = opts["OutputOrder"];
-	if (opts.tqcontains("multiple-document-handling"))
+	if (opts.contains("multiple-document-handling"))
 		opts["kde-collate"] = (opts["multiple-document-handling"] == "separate-documents-collated-copies" ? "Collate" : "Uncollate");
-	if (opts.tqcontains("page-ranges"))
+	if (opts.contains("page-ranges"))
 		opts["kde-range"] = opts["page-ranges"];
 
-	// tqfind printer and construct dialog
-	KMPrinter	*prt = KMManager::self()->tqfindPrinter(j->printer());
+	// find printer and construct dialog
+	KMPrinter	*prt = KMManager::self()->findPrinter(j->printer());
 	if (!prt)
 	{
-		KMManager::self()->setErrorMsg(i18n("Unable to tqfind printer %1.").arg(j->printer()));
+		KMManager::self()->setErrorMsg(i18n("Unable to find printer %1.").arg(j->printer()));
 		return false;
 	}
 	KMManager::self()->completePrinterShort(prt);

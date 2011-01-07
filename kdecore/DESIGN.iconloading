@@ -55,7 +55,7 @@ can copy this pixmap:
    XGCValues values;
    GC gc = XCreateGC(qt_xdisplay(), src, 0, &values);
    XCopyArea(qt_xdisplay(), src, p.handle(), gc, 0, 0, 30, 30, 0, 0);
-   // p tqcontains now 30x30 pixels of test.png.
+   // p contains now 30x30 pixels of test.png.
 
 The only hard part is then to publish the icons in a way that applications 
 know what to copy. I'm thinking about a ksycoca-sort-of index that 

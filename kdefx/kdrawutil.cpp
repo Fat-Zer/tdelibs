@@ -228,7 +228,7 @@ KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int 
     int i;
     for(i=0; i < 6; ++i){
         if(bitmaps[i]){
-            if(!bitmaps[i]->tqmask())
+            if(!bitmaps[i]->mask())
                 bitmaps[i]->setMask(*bitmaps[i]);
             p->setPen(colors[i]);
             p->drawPixmap(x, y, *bitmaps[i]);

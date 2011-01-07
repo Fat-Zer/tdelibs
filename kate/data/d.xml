@@ -37,7 +37,7 @@
   2007.12.12 - D.XML 1.48 - D 1.024/2.008 - Adjusted existing contexts somewhat (mostly cleanup).
                                           - Implemented scope context to hightlight exit in scope(exit) etc.
                                           - Adjusted deprecated keyword highlighting.
-                                          - Changed tqlayout somewhat.
+                                          - Changed layout somewhat.
                                           - Implemented extra highlighting rules for expressions, attributes, etc.
                                           - Changed a lot of colours.
   2007.11.15 - D.XML 1.47 - D 1.023/2.007 - Fixed a few unapperent "bugs" found by checkdtd.

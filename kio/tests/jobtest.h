@@ -24,7 +24,7 @@
 #include <tqobject.h>
 #include <kio/job.h>
 
-class JobTest : public TQObject
+class JobTest : public QObject
 {
     Q_OBJECT
 

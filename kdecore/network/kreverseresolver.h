@@ -47,7 +47,7 @@ class KReverseResolverPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KReverseResolver: public TQObject
+class KDECORE_EXPORT KReverseResolver: public QObject
 {
   Q_OBJECT
 
@@ -144,7 +144,7 @@ signals:
   /**
    * This signal is emitted when the resolution has finished.
    *
-   * @param obj		this class, which tqcontains the results
+   * @param obj		this class, which contains the results
    */
   void finished(const KReverseResolver& obj);
 
@@ -183,7 +183,7 @@ public:
    * @return true if the resolution succeeded, false if not
    * @see ReverseFlags for the possible values for @p flags
    */
-  static bool resolve(const struct sockaddr* sa, TQ_UINT16 salen, 
+  static bool resolve(const struct sockaddr* sa, Q_UINT16 salen, 
 		      TQString& node, TQString& serv, int flags = 0);
 
 private:

@@ -38,7 +38,7 @@ class Job;
  *
  * @short This class implements synchronous mounting of devices.
  */
-class KIO_EXPORT KAutoMount : public TQObject
+class KIO_EXPORT KAutoMount : public QObject
 {
   Q_OBJECT
   friend class gcc_gives_a_warning_without_this;
@@ -83,14 +83,14 @@ private:
  *
  * @short This class implements synchronous unmounting of devices,
  */
-class KIO_EXPORT KAutoUnmount : public TQObject
+class KIO_EXPORT KAutoUnmount : public QObject
 {
   Q_OBJECT
   friend class gcc_gives_a_warning_without_this;
 public:
   /**
    * Unmounts a device.
-   * @param mountpoint the mount point - KAutoUnmount tqfinds the device from that
+   * @param mountpoint the mount point - KAutoUnmount finds the device from that
    * @param desktopFile the file the user clicked on - to notify KDirWatch of the fact that
    * it should emit fileDirty for it (to have the icon change)
    */

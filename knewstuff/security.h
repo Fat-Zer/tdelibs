@@ -41,7 +41,7 @@ It is a private class, not meant to be used by third party applications.
 
 namespace KNS {
 
-class Security : public TQObject
+class Security : public QObject
 {
 Q_OBJECT
 public:

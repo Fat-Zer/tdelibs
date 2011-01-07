@@ -27,7 +27,7 @@
 TQString Comment::comment()
 {
         TQString str = comment_;
-        str.tqreplace(TQRegExp("<[^>]*>"), "");
+        str.replace(TQRegExp("<[^>]*>"), "");
         str += ("#\n" + example_);
         return str;
 }
@@ -35,7 +35,7 @@ TQString Comment::comment()
 TQString Comment::toolTip()
 {
         TQString str = comment_;
-        str.tqreplace(TQRegExp("^#[\\s]*"), "").tqreplace(TQRegExp("\n#[\\s]*"), "\n");
+        str.replace(TQRegExp("^#[\\s]*"), "").replace(TQRegExp("\n#[\\s]*"), "\n");
         return i18n("Do not translate the keyword between brackets (e.g. ServerName, ServerAdmin, etc.)", str.utf8());
 }
 
@@ -92,7 +92,7 @@ TQString CupsdComment::comment(const TQString& key)
 {
         if (comments_.count() != 0 || loadComments())
 	{
-		Comment *comm = comments_.tqfind(key);
+		Comment *comm = comments_.find(key);
 		if (comm)
 			return comm->comment();
 	}
@@ -103,7 +103,7 @@ TQString CupsdComment::toolTip(const TQString& key)
 {
         if (comments_.count() != 0 || loadComments())
 	{
-		Comment *comm = comments_.tqfind(key);
+		Comment *comm = comments_.find(key);
 		if (comm)
 			return comm->toolTip();
 	}

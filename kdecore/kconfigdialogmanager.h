@@ -91,7 +91,7 @@ signals:
    * TODO: Verify
    * One or more of the settings have been changed.
    * @param widget - The widget group (pass in via addWidget()) that
-   * tqcontains the one or more modified setting.
+   * contains the one or more modified setting.
    * @see settingsChanged()
    */
   void settingsChanged( TQWidget *widget );
@@ -111,7 +111,7 @@ public:
   /**
    * Constructor.
    * @param parent  Dialog widget to manage
-   * @param conf Object that tqcontains settings
+   * @param conf Object that contains settings
    * @param name - Object name.
    */
    KConfigDialogManager(TQWidget *parent, KConfigSkeleton *conf, const char *name=0);
@@ -176,7 +176,7 @@ protected:
   void init(bool trackChanges);
 
   /**
-   * Recursive function that tqfinds all known children.
+   * Recursive function that finds all known children.
    * Goes through the children of widget and if any are known and not being
    * ignored, stores them in currentGroup.  Also checks if the widget
    * should be disabled because it is set immutable.

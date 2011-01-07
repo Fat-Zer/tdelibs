@@ -119,7 +119,7 @@ public:
    *
    * @param ip4addr		the IPv4 address
    */
-  inline KIpAddress(TQ_UINT32 ip4addr)
+  inline KIpAddress(Q_UINT32 ip4addr)
   { setAddress(&ip4addr, 4); }
 
   /**
@@ -232,7 +232,7 @@ public:
    * system's in_addr type.
    *
    */
-  inline TQ_UINT32 IPv4Addr(bool convertMapped = true) const
+  inline Q_UINT32 IPv4Addr(bool convertMapped = true) const
   {
     return (convertMapped && isV4Mapped()) ? m_data[3] : m_data[0];
   }
@@ -245,7 +245,7 @@ public:
    * valid. The address returned is in host byte order.
    *
    */
-  TQ_UINT32 hostIPv4Addr(bool convertMapped = true) const;
+  Q_UINT32 hostIPv4Addr(bool convertMapped = true) const;
 
 public:
   /*-- tests --*/
@@ -310,7 +310,7 @@ public:
   inline bool isMulticast() const
   {
     if (version() == 4) return isClassD();
-    if (version() == 6) return ((TQ_UINT8*)addr())[0] == 0xff;
+    if (version() == 6) return ((Q_UINT8*)addr())[0] == 0xff;
     return false;
   }
 
@@ -320,7 +320,7 @@ public:
   inline bool isLinkLocal() const
   { 
     if (version() != 6) return false;
-    TQ_UINT8* addr = (TQ_UINT8*)this->addr();
+    Q_UINT8* addr = (Q_UINT8*)this->addr();
     return (addr[0] & 0xff) == 0xfe &&
       (addr[1] & 0xc0) == 0x80;
   }
@@ -331,7 +331,7 @@ public:
   inline bool isSiteLocal() const
   {
     if (version() != 6) return false;
-    TQ_UINT8* addr = (TQ_UINT8*)this->addr();
+    Q_UINT8* addr = (Q_UINT8*)this->addr();
     return (addr[0] & 0xff) == 0xfe &&
       (addr[1] & 0xc0) == 0xc0;
   }
@@ -348,10 +348,10 @@ public:
   inline bool isV4Mapped() const
   {
     if (version() != 6) return false;
-    TQ_UINT32* addr = (TQ_UINT32*)this->addr();
+    Q_UINT32* addr = (Q_UINT32*)this->addr();
     return addr[0] == 0 && addr[1] == 0 &&
-      ((TQ_UINT16*)&addr[2])[0] == 0 &&
-      ((TQ_UINT16*)&addr[2])[1] == 0xffff;
+      ((Q_UINT16*)&addr[2])[0] == 0 &&
+      ((Q_UINT16*)&addr[2])[1] == 0xffff;
   }
 
   /**
@@ -360,7 +360,7 @@ public:
   inline bool isV4Compat() const
   {
     if (version() != 6 || isLocalhost()) return false;
-    TQ_UINT32* addr = (TQ_UINT32*)this->addr();
+    Q_UINT32* addr = (Q_UINT32*)this->addr();
     return addr[0] == 0 && addr[1] == 0 && addr[2] == 0 && addr[3] != 0;
   }
 
@@ -368,34 +368,34 @@ public:
    * Returns true if this is an IPv6 node-local multicast address.
    */
   inline bool isMulticastNodeLocal() const
-  { return version() == 6 && isMulticast() && (((TQ_UINT32*)addr())[0] & 0xf) == 0x1; }
+  { return version() == 6 && isMulticast() && (((Q_UINT32*)addr())[0] & 0xf) == 0x1; }
 
   /**
    * Returns true if this is an IPv6 link-local multicast address.
    */
   inline bool isMulticastLinkLocal() const
-  { return version() == 6 && isMulticast() && (((TQ_UINT32*)addr())[0] & 0xf) == 0x2; }
+  { return version() == 6 && isMulticast() && (((Q_UINT32*)addr())[0] & 0xf) == 0x2; }
       
   /**
    * Returns true if this is an IPv6 site-local multicast address.
    */
   inline bool isMulticastSiteLocal() const
-  { return version() == 6 && isMulticast() && (((TQ_UINT32*)addr())[0] & 0xf) == 0x5; }
+  { return version() == 6 && isMulticast() && (((Q_UINT32*)addr())[0] & 0xf) == 0x5; }
 
   /**
    * Returns true if this is an IPv6 organisational-local multicast address.
    */
   inline bool isMulticastOrgLocal() const
-  { return version() == 6 && isMulticast() && (((TQ_UINT32*)addr())[0] & 0xf) == 0x8; }
+  { return version() == 6 && isMulticast() && (((Q_UINT32*)addr())[0] & 0xf) == 0x8; }
 
   /**
    * Returns true if this is an IPv6 global multicast address.
    */
   inline bool isMulticastGlobal() const
-  { return version() == 6 && isMulticast() && (((TQ_UINT32*)addr())[0] & 0xf) == 0xe; }
+  { return version() == 6 && isMulticast() && (((Q_UINT32*)addr())[0] & 0xf) == 0xe; }
 
 protected:
-  TQ_UINT32 m_data[4];	       // 16 bytes, needed for an IPv6 address
+  Q_UINT32 m_data[4];	       // 16 bytes, needed for an IPv6 address
 
   char m_version;
 
@@ -437,7 +437,7 @@ public:
    * @param sa		the socket address structure
    * @param len		the socket address length
    */
-  KSocketAddress(const sockaddr* sa, TQ_UINT16 len);
+  KSocketAddress(const sockaddr* sa, Q_UINT16 len);
 
   /**
    * Copy constructor. This creates a copy of the other
@@ -490,7 +490,7 @@ public:
    * @param sa		the socket address structure
    * @param len		the socket address length
    */
-  KSocketAddress& setAddress(const sockaddr *sa, TQ_UINT16 len);
+  KSocketAddress& setAddress(const sockaddr *sa, Q_UINT16 len);
 
   /**
    * Returns the socket address structure, to be passed down to
@@ -502,7 +502,7 @@ public:
   /**
    * Returns the length of this socket address structure.
    */
-  TQ_UINT16 length() const;
+  Q_UINT16 length() const;
 
   /**
    * Sets the length of this socket structure.
@@ -511,7 +511,7 @@ public:
    * buffer to fit needs. This function should not be used except for handling
    * unknown socket address structures.
    *
-   * Also note that this function may tqinvalidate the socket if a known
+   * Also note that this function may invalidate the socket if a known
    * family is set (Internet or Unix socket) and the new length would be
    * too small to hold the system's sockaddr_* structure. If unsure, reset
    * the family:
@@ -524,7 +524,7 @@ public:
    *
    * @param len		the new length
    */
-  KSocketAddress& setLength(TQ_UINT16 len);
+  KSocketAddress& setLength(Q_UINT16 len);
 
   /**
    * Returns the family of this address.
@@ -535,7 +535,7 @@ public:
   /**
    * Sets the family of this object.
    *
-   * Note: setting the family will probably tqinvalidate any address data
+   * Note: setting the family will probably invalidate any address data
    * contained in this object. Use this function with care.
    *
    * @param family	the new family to set
@@ -666,7 +666,7 @@ public:
    * @param sa		the sockaddr structure
    * @param len		the structure's length
    */
-  KInetSocketAddress(const sockaddr* sa, TQ_UINT16 len);
+  KInetSocketAddress(const sockaddr* sa, Q_UINT16 len);
 
   /**
    * Creates an object from an IP address and port.
@@ -674,7 +674,7 @@ public:
    * @param host	the IP address
    * @param port	the port number
    */
-  KInetSocketAddress(const KIpAddress& host, TQ_UINT16 port);
+  KInetSocketAddress(const KIpAddress& host, Q_UINT16 port);
 
   /**
    * Copy constructor.
@@ -688,7 +688,7 @@ public:
   /**
    * Copy constructor.
    *
-   * If the other, generic socket address tqcontains an Internet address,
+   * If the other, generic socket address contains an Internet address,
    * it will be copied. Otherwise, this object will be empty.
    *
    * @param other	the other object
@@ -750,7 +750,7 @@ public:
    * @return a port number in the range 0 to 65535, inclusive. An empty or 
    * invalid object will have a port number of 0.
    */
-  TQ_UINT16 port() const;
+  Q_UINT16 port() const;
 
   /**
    * Sets the port number. If this object is empty, this function will default to
@@ -759,7 +759,7 @@ public:
    * @param port	the port number to set
    * @return a reference to itself
    */
-  KInetSocketAddress& setPort(TQ_UINT16 port);
+  KInetSocketAddress& setPort(Q_UINT16 port);
 
   /**
    * Converts this object to an IPv4 socket address. It has no effect if the object
@@ -787,7 +787,7 @@ public:
    *
    * @return the flowinfo information or 0 if this object is empty or IPv4
    */
-  TQ_UINT32 flowinfo() const;
+  Q_UINT32 flowinfo() const;
 
   /**
    * Sets the flowinfo information for an IPv6 socket address. If this is not
@@ -796,7 +796,7 @@ public:
    * @param flowinfo		the flowinfo to set
    * @return a reference to itself
    */
-  KInetSocketAddress& setFlowinfo(TQ_UINT32 flowinfo);
+  KInetSocketAddress& setFlowinfo(Q_UINT32 flowinfo);
 
   /**
    * Returns the scope id this IPv6 socket is bound to.
@@ -854,7 +854,7 @@ public:
    * @param sa		the socket address structure
    * @param len		the structure's length
    */
-  KUnixSocketAddress(const sockaddr* sa, TQ_UINT16 len);
+  KUnixSocketAddress(const sockaddr* sa, Q_UINT16 len);
 
   /**
    * Copy constructor. Creates a copy of the other object,

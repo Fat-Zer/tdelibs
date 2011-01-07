@@ -150,7 +150,7 @@ public:
    */
   AddressBook::ErrorCode remove(const KabKey& key);
   /**
-   * Use getEntryByName to tqfind entries that look like the name given.
+   * Use getEntryByName to find entries that look like the name given.
    * The name might be incomplete or diffuse.
    * @short This method delivers the closest matches to the given name.
    * @param name The name, containing "." for abbreviations.

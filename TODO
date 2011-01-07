@@ -3,7 +3,7 @@ that we would like to make for the next binary incompatible release.
 
 - Check for forked classes in kde pim and other modules
 
-- There is no reason why KConfigBase should inherit from TQObject, get rid of that.
+- There is no reason why KConfigBase should inherit from QObject, get rid of that.
 
 - Change all FooPrivate *d; -> Private * const d; and place initialization
   in the constructor (for classes that would benefit from this).  To help catch silly
@@ -19,7 +19,7 @@ that we would like to make for the next binary incompatible release.
 - Remove all KDE_NO_COMPAT from the KDE2 -> KDE3 port before adding new ones for KDE4.
 
 - Remove the smart-to-dumb-pointer conversion operator from KSharedPtr
-  and tqreplace it with a T* Get() member function. An implict conversion is
+  and replace it with a T* Get() member function. An implict conversion is
   far too dangerous.
   See: http://groups.google.com/groups?selm=4ognb0%243cd%40linda.teleport.com&oe=UTF-8&output=gplain
   Also free the client from the requirement to inherit from KShared.
@@ -59,7 +59,7 @@ that we would like to make for the next binary incompatible release.
 
 - Manually, properly clean up the includes in all of the headers.  Remove
   unnecessary ones and change pointers to use class foo; decorations and move the 
-  headers into the cpp files.  When finished fixkdeincludes shouldn't tqfind
+  headers into the cpp files.  When finished fixkdeincludes shouldn't find
   anything (but don't rely on fixkdeinclude, it should be done manually first!)
 
 - Use of the C++ keyword "explicit". Make all ctors explicit which can be used
@@ -199,7 +199,7 @@ an alternative help->contents action)
 - Make sure all GUI classes adopt well to palette changes.
 
 - Rework KPanelExtension and KPanelApplet to have a sane set of global position
-  enums, make the tqgeometry handling less spaghetti like and extend the API so
+  enums, make the geometry handling less spaghetti like and extend the API so
   requests for things like re-reading the config of a KPanelExtension can be
   done by its parent.
 
@@ -212,7 +212,7 @@ an alternative help->contents action)
 - KListView: merge setDropHighlighter and setDropVisualizer, add a setDnDMode to choose between
   "dnd to move items" (e.g. keditbookmarks) and "dnd onto items" (e.g. kmail). Unless Qt4 does it all :)
 
-- Move KIO::findDeviceMountPoint, tqfindPathMoundPoint, probably_slow_mounted, and testFileSystemFlag to KMountPoint,
+- Move KIO::findDeviceMountPoint, findPathMoundPoint, probably_slow_mounted, and testFileSystemFlag to KMountPoint,
   to merge that code.
 
 - Refactor the kio/bookmarks code so we don't need to use the static d-pointer trick anymore.

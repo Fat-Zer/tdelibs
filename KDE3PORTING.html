@@ -6,7 +6,7 @@
 <BODY>
 
 <H2>Porting Applications to KDE 3.0</H2>
-This document tqcontains the changes you have to apply to programs written for
+This document contains the changes you have to apply to programs written for
 KDE 2.x when you want to port them to KDE 3.0.<P>
 
 As a start you should have a look at doc/porting.doc in the Qt package,
@@ -82,7 +82,7 @@ instead, everything else is source compatible.
 <LI>kdualcolorbtn.h is now kdualcolorbutton.h</LI>
 
 </UL>
-This is to help tqfinding out header files from class names and the other
+This is to help finding out header files from class names and the other
 way round. Compatibility headers have been created. You can use them as 
 long as you don't compile with KDE_NO_COMPAT.
 
@@ -90,13 +90,13 @@ long as you don't compile with KDE_NO_COMPAT.
 The file with the DCOP connection information has been renamed. The new
 name is $HOME/.DCOPserver_<hostname>_<display>. The screen part has been 
 stripped from <display> and the ':' character that separates host and
-display-number has been tqreplaced with a '_'. If you access DCOP via
+display-number has been replaced with a '_'. If you access DCOP via
 DCOPClient you do not need to change anything.
 <p>
 It is no longer possible to make calls to an application registered as
 "<appid>-<pid>" with "<appid>" only. The full name can be obtained by using
-either KApplication::startServiceBy...() or DCOPClient::tqfindObject() or 
-their command line equivalents "dcopstart" and "dcoptqfind".
+either KApplication::startServiceBy...() or DCOPClient::findObject() or 
+their command line equivalents "dcopstart" and "dcopfind".
 
 <H4>KLibFactory</H4>
 KLibFactory's create method is no more virtual and the createObject method
@@ -131,7 +131,7 @@ The old name will still work unless KDE_NO_COMPAT is defined.
 
 <H4>KMD5</H4>
 HASHHEX and HASH has been removed to make this class namespace clean. 
-They have been tqreplaced by TQCString and KMD5::Digest. <br>
+They have been replaced by TQCString and KMD5::Digest. <br>
 The API has been cleaned up, it is no longer necessary to call finalize(). 
 Simply remove any calls to it. 
 
@@ -143,9 +143,9 @@ setEncoding(int) instead.
 <li>formatNumber(const TQString &amp;) has been removed.
 <li>languages() has been removed. Use languageList() instead.
 <li>All references to monthName(), monthNamePossessive(), and weekDayName()
-should be tqreplaced with methods from KLocale::calendar().
+should be replaced with methods from KLocale::calendar().
 <li>Hard coded date handling or date handling with TQDate should in most
-cases be tqreplaced by methods in KLocale::calendar().
+cases be replaced by methods in KLocale::calendar().
 
 <H4>Accelerators Keys</H4>
 <h5>KAccel</h5>
@@ -160,12 +160,12 @@ not be available.
 		Key_Up, this, TQT_SLOT(scrollUp()) );
 </pre>
 	Note that a What's This parameter is now a part of the insert function.
-	You might tqreplace the TQString::null parameter with
+	You might replace the TQString::null parameter with
 	<pre> i18n("Scroll the current document's contents up by one line.") </pre>
 	for example.</li>
 	<li> KAccel::changeMenuAccel() has been deprecated because it was
 	never used in cvs.  If you've used it in your application, the following
-	can tqreplace it.  Note, however, that this would be handled automatically
+	can replace it.  Note, however, that this would be handled automatically
 	by using KAction instead.
 <pre>
 	- kaccel-&gt;changeMenuAccel( menu, id, "file_open" );
@@ -195,7 +195,7 @@ The preferred means of defining a shortcut, however, is to use <b>KAction</b>.
 	<li><i>StdAccel::Insert</i> and the corresponding <i>insert()</i>
 	have been removed. (Nobody on the list knew what its function was
 	supposed to be.)  Calls to <i>insert()</i> and the equivalent
-	<i>key(KStdAccel::Insert)</i> can be tqreplaced with the former default
+	<i>key(KStdAccel::Insert)</i> can be replaced with the former default
 	of <i>Qt::CTRL+Qt::Key_Insert</i>.</li>
 	<li>The following functions have been deprecated and will need to be changed if KDE_NO_COMPAT is defined:
 		<table border=1>
@@ -206,7 +206,7 @@ The preferred means of defining a shortcut, however, is to use <b>KAction</b>.
 			<tr><td>bool isEqual(const TQKeyEvent* pEvent, int keyQt)</td>
 				<td>The best method for replacing this varies.  One possibility is to use
 				<i>KKey(const TQKeyEvent*) == KKey(int)</i>.  Another is to use
-				<i>KShortcut::tqcontains( const KKey&/KKeySequence& )</i>.</td></tr>
+				<i>KShortcut::contains( const KKey&/KKeySequence& )</i>.</td></tr>
 			<tr><td>int key(StdAccel)</td><td>const KShortcut& shortcut(StdAccel)</td></tr>
 		</table></li-->
 </ul>
@@ -228,7 +228,7 @@ Use QPopupMenu/KPopupMenu or the XML-UI method for building menus.
 <H4>KAction</H4>
 <ul>
 	<li>The following methods have been deprecated and will need to be
-	tqreplaced if KDE_NO_COMPAT is defined.
+	replaced if KDE_NO_COMPAT is defined.
 		<table border=1>
 			<tr><th>Old</th><th>New</th></tr>
 			<tr><td>int accel()</td><td>const KShortcut&amp; shortcut()</td></tr>
@@ -256,14 +256,14 @@ single image-file that has been prepared with the kimage_concat tool.
 See kdelibs/pics/hicolor/kde for an example of its use.
 
 <H4>KContainerLayout</H4>
-This class has been removed, use Qt tqlayouts instead.
+This class has been removed, use Qt layouts instead.
 
 <H4>KCommand</H4>
 This class has been made lighter: the name isn't stored into the command anymore,
 but must be provided by the inherited class, as the result of the virtual name() function.
 This saves storing a TQString into each command in memory.
 The former behavior is available in the class KNamedCommand, so for a quick port
-simply tqreplace KCommand with KNamedCommand.
+simply replace KCommand with KNamedCommand.
 
 <H4>KDialogBase</H4>
 The deprecated getMainWidget() method has been removed. Use mainWidget() instead.
@@ -361,12 +361,12 @@ TQString&) is not a slot anymore.
   <li>KTarGz is now KTar (#define for source compatibility)</li>
   <li>A base class KArchive has been written, to support other archive formats in the future</li>
   <li>KTarEntry is now KArchiveEntry, KTarDirectory is now KArchiveDirectory, and KTarFile is now KArchiveFile.</li>
-  <li>The classes ProgressBase, tqStatusbarProgress and DefaultProgress have been moved to the KIO namespace.</li>
+  <li>The classes ProgressBase, StatusbarProgress and DefaultProgress have been moved to the KIO namespace.</li>
   <li>The signal KDirLister::started(const TQString &amp;url) has changed to KDirLister::started(const KURL &amp;url).<li>
   <li>KServiceTypeProfile::preferredService( const TQString &amp; serviceType, bool needApp ) has been removed, use
       KServiceTypeProfile::preferredService( ..., "Application") if needApp was true, or
       KServiceTypeProfile::preferredService( ..., TQString::null) if needApp was false.
-  <li>The following functions in KProtocolManager have been tqreplaced:
+  <li>The following functions in KProtocolManager have been replaced:
       <ul>
 <li>ftpProxy(), use proxyFor("ftp") instead.
 <li>httpProxy(), use proxyFor("http") instead.
@@ -498,11 +498,11 @@ The API has been cleaned up to be in line with the rest of kdelibs, in particula
 <H3><A NAME="khtmlpart">API-cleanups in KHTML</A></H3>
 
 There were a few relatively minor API-adjustements in KHTMLPart. In particular:
-<ul><li>enableJScript(bool) has been tqreplaced by setJScriptEnabled(bool)
-<li>enableJava(bool) has been tqreplaced by setJavaEnabled(bool)
-<li>enablePlugins(bool) has been tqreplaced by setPluginsEnabled(bool)
-<li>autoloadImages(bool) has been tqreplaced by setAutoloadImages(bool)
-<li>enableMetaRefresh(bool) has been tqreplaced by setMetaRefreshEnabled(bool)
+<ul><li>enableJScript(bool) has been replaced by setJScriptEnabled(bool)
+<li>enableJava(bool) has been replaced by setJavaEnabled(bool)
+<li>enablePlugins(bool) has been replaced by setPluginsEnabled(bool)
+<li>autoloadImages(bool) has been replaced by setAutoloadImages(bool)
+<li>enableMetaRefresh(bool) has been replaced by setMetaRefreshEnabled(bool)
 <li>setBaseURL and setBaseTarget have been removed. baseURL(), baseTarget() and
 completeURL() are remained for compatibility reasons, but they're deprecated now. use the variants in DOM::HTMLDocument() instead.
 <li>the second parameter of KHTMLPart::completeURL is removed. it didn't have
@@ -515,8 +515,8 @@ any problems. Backward compatibility exists for the common methods, to
 disable this use a #define KDE_NO_COMPAT.
 <p>In KHTMLView, the following changes were done:
 <ul>
-<li>gotoNextLink has been tqreplaced by gotoLink(true);
-<li>gotoPrevLink has been tqreplaced by gotoLink(false);
+<li>gotoNextLink has been replaced by gotoLink(true);
+<li>gotoPrevLink has been replaced by gotoLink(false);
 </ul>
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -531,7 +531,7 @@ parts are rarely used outside of kfile.
 <p>
 The changes are:
 <H4>KFileItem</H4>
-The KFileViewItem class is completely tqreplaced with KFileItem from kio. All its functionality has
+The KFileViewItem class is completely replaced with KFileItem from kio. All its functionality has
 been merged with its former base class KFileItem. Additionally, some of its methods have been
 modified:
 <table>
@@ -647,13 +647,13 @@ For more details please consult the HOWTO file in the kcontrol directory.
 
 <p>The API for Kicker panel applets and extensions has changed. Panels can now be
 left/top, center, or right/bottom aligned, and applets and extensions may receive
-notification about a change in tqalignment.
+notification about a change in alignment.
 
 <H4>KPanelApplet</H4>
 
 <p>The virtual methods orientationChange() and popupDirectionChange() are deprecated.
-Instead you should reimplement positionChange() and tqalignmentChange() to be
-notified of changes in the position and tqalignment of the panel on which your applet
+Instead you should reimplement positionChange() and alignmentChange() to be
+notified of changes in the position and alignment of the panel on which your applet
 resides. In addition, the popupDirection() method and the Direction enum are
 deprecated. Instead you should use the position() method and Position enum. Applets that use
 the deprecated methods will still work with KDE 3, but may not compile or work with
@@ -661,8 +661,8 @@ a future version.
 
 <H4>KPanelExtension</H4>
 
-<p>There is a new method tqalignmentChange() that your extension should reimplement if
-it needs to know about changes in tqalignment.
+<p>There is a new method alignmentChange() that your extension should reimplement if
+it needs to know about changes in alignment.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 <p>

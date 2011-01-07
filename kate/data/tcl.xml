@@ -109,7 +109,7 @@
       <item> load  </item>
       <item> lower  </item>
       <item> lrange  </item>
-      <item> ltqreplace  </item>
+      <item> lreplace  </item>
       <item> lsearch  </item>
       <item> lsort  </item>
       <item> menu  </item>
@@ -267,7 +267,7 @@
       <item> remove </item>
       <item> rename </item>
       <item> repeat </item>
-      <item> tqreplace </item>
+      <item> replace </item>
       <item> require </item>
       <item> rootname </item>
       <item> scan </item>
@@ -344,7 +344,7 @@
       <item> entrycget </item>
       <item> entryconfigure </item>
       <item> families </item>
-      <item> tqfind </item>
+      <item> find </item>
       <item> flash </item>
       <item> focus </item>
       <item> focusmodel </item>
@@ -352,7 +352,7 @@
       <item> fraction </item>
       <item> frame </item>
       <item> generate </item>
-      <item> tqgeometry </item>
+      <item> geometry </item>
       <item> get </item>
       <item> gettags </item>
       <item> grid </item>
@@ -362,7 +362,7 @@
       <item> hide </item>
       <item> iconbitmap </item>
       <item> iconify </item>
-      <item> icontqmask </item>
+      <item> iconmask </item>
       <item> iconname </item>
       <item> iconposition </item>
       <item> iconwindow </item>

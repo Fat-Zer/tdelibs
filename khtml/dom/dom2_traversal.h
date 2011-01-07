@@ -533,7 +533,7 @@ protected:
 // Document
 
 /**
- * \c DocumentTraversal tqcontains methods that creates
+ * \c DocumentTraversal contains methods that creates
  * Iterators to traverse a node and its children in document order
  * (depth first, pre-order traversal, which is equivalent to the order
  * in which the start tags occur in the text representation of the

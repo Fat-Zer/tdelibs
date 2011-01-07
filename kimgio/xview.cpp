@@ -84,7 +84,7 @@ KDE_EXPORT void kimgio_xv_read( TQImageIO *_imageio )
 		r =  rg_255_7[((j >> 5) & 0x07)];
 		g =  rg_255_7[((j >> 2) & 0x07)];
 		b =  b_255_3[((j >> 0) & 0x03)];
-		image.setColor( j, tqRgb( r, g, b ) );
+		image.setColor( j, qRgb( r, g, b ) );
 	}
 
 	for ( int py = 0; py < y; py++ )
@@ -145,17 +145,17 @@ KDE_EXPORT void kimgio_xv_write( TQImageIO *imageio )
 			if ( image.depth() == 32 )
 			{
 				QRgb *data32 = (QRgb*) data;
-				r = tqRed( *data32 ) >> 5;
-				g = tqGreen( *data32 ) >> 5;		
-				b = tqBlue( *data32 ) >> 6;
+				r = qRed( *data32 ) >> 5;
+				g = qGreen( *data32 ) >> 5;		
+				b = qBlue( *data32 ) >> 6;
 				data += sizeof( QRgb );
 			}
 			else 
 			{
 				QRgb color = image.color( *data );
-				r = tqRed( color ) >> 5;
-				g = tqGreen( color ) >> 5;		
-				b = tqBlue( color ) >> 6;
+				r = qRed( color ) >> 5;
+				g = qGreen( color ) >> 5;		
+				b = qBlue( color ) >> 6;
 				data++;
 			}
 			buffer[ px ] = ( r << 5 ) | ( g << 2 ) | b;

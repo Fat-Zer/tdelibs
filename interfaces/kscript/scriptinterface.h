@@ -44,7 +44,7 @@ class KScriptClientInterface;
 	*	@author Ian Reinhart Geiser <geiseri@kde.org>
 	*
 	**/
-	class KDE_EXPORT KScriptInterface : public TQObject
+	class KDE_EXPORT KScriptInterface : public QObject
 	{
 	Q_OBJECT
 	public:

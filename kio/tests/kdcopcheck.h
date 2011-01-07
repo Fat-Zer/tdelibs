@@ -5,7 +5,7 @@
 #include <tqstring.h>
 #include <tqobject.h>
 
-class TestService : public TQObject
+class TestService : public QObject
 {
     Q_OBJECT
 public:

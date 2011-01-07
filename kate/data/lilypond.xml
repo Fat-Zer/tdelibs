@@ -12,7 +12,7 @@
   <!ENTITY markupwithtextargs "markup|bigger|bold|box|bracket|caps|(center|general|left|right)-align|circle|column|combine|concat|dir-column|dynamic|fill-line|finger|fontCaps|fontsize|fraction|halign|hbracket|hcenter-in|hcenter|hspace|huge|italic|justify|larger?|line|lower|magnify|medium|normal-size-(sub|super)|normal-text|normalsize|number|on-the-fly|override|pad-(around|markup|to-box|x)|page-ref|postscript|put-adjacent|raise|roman|rotate|sans|small(er)?|smallCaps|sub|super|teeny|text|tiny|translate(-scaled)?|transparent|typewriter|underline|upright|vcenter|whiteout|with-(color|dimensions|url)|wordwrap(-string)?|(markup|column-|justified-|override-|wordwrap-)lines">
   <!ENTITY headervars "dedication|(sub){,2}title|poet|composer|meter|opus|arranger|instrument|piece|breakbefore|copyright|tagline|mutopia(title|composer|poet|opus|instrument)|date|enteredby|source|style|maintainer(Email|Web)?|moreInfo|lastupdated|texidoc">
   <!ENTITY papervars "annotate-spacing|(print-)?first-page-number|print-page-number|paper-(width|height)|(top|bottom|left|right)-margin|line-width|(head|foot)-separation|page-top-space|ragged-(bottom|last-bottom|right)|page-count|between-system-(space|padding)|page-breaking-between-system-padding|horizontal-shift|(before|after|between)-title-space|printallheaders|indent|force-assignment|input-encoding|output-scale|blank(-after-score|-last)?-page-force|page-limit-inter-system-space(-factor)?|(systemSeparator|(even|odd)(Footer|Header)|(book|score|toc)Title|tocItem)Markup">
-  <!ENTITY tqlayoutvars "system-count|indent">
+  <!ENTITY layoutvars "system-count|indent">
   <!ENTITY performer "Beam|Control_track|Drum_note|Dynamic|Key|Lyric|Note|Piano_pedal|Slur|Staff|Swallow|Tempo|Tie|Time_signature">
   <!ENTITY translator "Note_swallow|Rest_swallow|Skip_event_swallow|Timing">
   <!ENTITY engraver "Accidental|Ambitus|Arpeggio|Auto_beam|Axis_group|Balloon|Bar|Bar_number|Beam|Bend|Break_align|Breathing_sign|Chord_name|Chord_tremolo|Clef|Cluster_spanner|Collision|Completion_heads|Custos|Default_bar_line|Dot_column|Dots|Drum_notes|Dynamic|Engraver|Extender|Figured_bass|Figured_bass_position|Fingering|Font_size|Forbid_line_break|Fretboard|Glissando|Grace_beam|Grace|Grace_spacing|Grid_line_span|Grid_point|Grob_pq|Hara_kiri|Horizontal_bracket|Hyphen|Instrument_name|Instrument_switch|Key|Laissez_vibrer|Ledger_line|Ligature_bracket|Lyric|Mark|Measure_grouping|Melody|Mensural_ligature|Metronome_mark|Multi_measure_rest|New_fingering|Note_head_line|Note_heads|Note_name|Note_spacing|Ottava_spanner|Output_property|Page_turn|Paper_column|Parenthesis|Part_combine|Percent_repeat|Phrasing_slur|Piano_pedal_align|Piano_pedal|Pitch_squash|Pitched_trill|Repeat_acknowledge|Repeat_tie|Rest_collision|Rest|Rhythmic_column|Script_column|Script|Script_row|Separating_line_group|Slash_repeat|Slur|Spacing|Span_arpeggio|Span_bar|Spanner_break_forbid|Staff_collecting|Staff_symbol|Stanza_number_align|Stanza_number|Stem|String_number|Swallow|System_start_delimiter|Tab_harmonic|Tab_note_heads|Tab_staff_symbol|Text|Text_spanner|Tie|Time_signature|Translator|Trill_spanner|Tuplet|Tweak|Vaticana_ligature|Vertical_align|Vertically_spaced_contexts|Volta">
@@ -31,7 +31,7 @@
     
     - correctly parse pitches, chords, durations, etc. marking often made mistakes as invalid
     - speed up by shortening contexts, e.g. branch out on a \, instead of RegExpr'ing all \commands
-    - recognize some contexts like \tqlayout, \with, \header to colorcode variables, engravers, etc. only there
+    - recognize some contexts like \layout, \with, \header to colorcode variables, engravers, etc. only there
     - recognize lilypond words like ChoirStaff etc. only in sections and after \set, \override etc.
     - highlight some standard Scheme function names
     - add \figuremode recognition
@@ -86,7 +86,7 @@
       <item> VaticanaVoice </item> 
       <item> Voice </item>
     </list>
-    <list name="tqlayoutobjects">
+    <list name="layoutobjects">
       <item> Accidental </item> 
       <item> AccidentalCautionary </item> 
       <item> AccidentalPlacement </item> 
@@ -325,7 +325,7 @@
       <item> repeatCommands </item>
       <item> restNumberThreshold </item>
       <item> scriptDefinitions </item>
-      <item> tqshapeNoteStyles </item>
+      <item> shapeNoteStyles </item>
       <item> shortInstrumentName </item>
       <item> shortVocalName </item>
       <item> skipBars </item>
@@ -666,7 +666,7 @@
         <RegExpr String="\\(lyric(mode|s)|addlyrics)&b;" context="lyricmode"/>
         <RegExpr String="\\lyricsto&b;" context="lyricsto"/>
         <RegExpr String="\\markup(lines)?&b;" attribute="Markup" context="markup"/>
-        <RegExpr String="\\(header|paper|tqlayout|midi|with)\b" context="section"/>
+        <RegExpr String="\\(header|paper|layout|midi|with)\b" context="section"/>
         <RegExpr String="\\(new|context|change)\b" attribute="Keyword" context="context"/>
         <RegExpr String="\\(un)?set\b" attribute="Keyword" context="set"/>
         <RegExpr String="\\(override(Property)?|revert)\b" attribute="Keyword" context="override"/>
@@ -759,7 +759,7 @@
         <Detect2Chars char="#" char1="{" attribute="Scheme Keyword" context="schemelily" beginRegion="schemelily"/>
         <keyword String="musicexpressions" attribute="Scheme Keyword"/>
         <keyword String="contexts" attribute="Context"/>
-        <keyword String="tqlayoutobjects" attribute="Layout Object"/>
+        <keyword String="layoutobjects" attribute="Layout Object"/>
         <RegExpr String="[-+]?(\d+(\.\d+)?|\.\d+)" attribute="Scheme Value"/>
         <RegExpr String="#(t|f|b[-+]?[01.]+|o[-+]?[0-7.]+|d[-+]?[0-9.]+|x[-+]?[0-9a-f.]+)"
                  insensitive="true" attribute="Scheme Value"/>
@@ -938,7 +938,7 @@
         <IncludeRules context="basic"/>
       </context>
       
-      <!-- \paper, \tqlayout, \midi, \header, \with -->
+      <!-- \paper, \layout, \midi, \header, \with -->
       <context name="section" attribute="Keyword" lineEndContext="#stay"
                fallthrough="true" fallthroughContext="#pop">
         <DetectChar char="{" attribute="Keyword" context="section2" beginRegion="section"/>
@@ -954,9 +954,9 @@
         <DetectChar char="}" attribute="Keyword" context="#pop" endRegion="section"/>
         <DetectChar char="{" attribute="Keyword" context="sectionrules" beginRegion="section"/>
         <keyword String="contexts" attribute="Context"/>
-        <keyword String="tqlayoutobjects" attribute="Layout Object"/>
+        <keyword String="layoutobjects" attribute="Layout Object"/>
         <keyword String="properties" attribute="Property"/>
-        <RegExpr String="\b(&headervars;|&papervars;|&tqlayoutvars;)\b" attribute="Variable"/>
+        <RegExpr String="\b(&headervars;|&papervars;|&layoutvars;)\b" attribute="Variable"/>
         <RegExpr String="(&quot;?)\b(&engravers;)\b\1" attribute="Engraver"/>
         <IncludeRules context="default"/>
       </context>
@@ -991,7 +991,7 @@
         <DetectSpaces/>
         <keyword String="contexts" attribute="Context"/>
         <DetectChar char="."/>
-        <keyword String="tqlayoutobjects" attribute="Layout Object" context="#pop"/>
+        <keyword String="layoutobjects" attribute="Layout Object" context="#pop"/>
         <RegExpr String="[A-Za-z]+(?=\s*\.)" attribute="User Command"/>
         <RegExpr String="[A-Za-z]+" attribute="User Command" context="#pop"/>
       </context>
@@ -1039,5 +1039,5 @@
   
 </language>
 <!--
-    // kate: space-indent on; indent-width 2; tqreplace-tabs on; dynamic-word-wrap off;
+    // kate: space-indent on; indent-width 2; replace-tabs on; dynamic-word-wrap off;
     -->

@@ -36,7 +36,7 @@ class TQSocketNotifier;
  *
  * This class takes care of the actual (UN*X) signal handling.
  */
-class KDECORE_EXPORT KProcessController : public TQObject
+class KDECORE_EXPORT KProcessController : public QObject
 {
   Q_OBJECT
 

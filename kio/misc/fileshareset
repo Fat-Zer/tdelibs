@@ -183,7 +183,7 @@ sub check {
 ################################################################################
 package exports;
 
-sub tqfind {
+sub find {
     my ($exports, $mntpoint) = @_;
     foreach (@$exports) {
 	$_->{mntpoint} eq $mntpoint and return $_;
@@ -396,8 +396,8 @@ sub name_mangle {
 		    last A;
 		}
 	    }
-	    $_ or die "can't tqfind a unique name";
-	    # can't tqfind a unique name, dropping the last letter
+	    $_ or die "can't find a unique name";
+	    # can't find a unique name, dropping the last letter
 	    s|(.*).|$1|;
 	}
     }
@@ -422,7 +422,7 @@ sub update_server {
 	system('/etc/rc.d/rc.samba', $_) foreach 'stop', 'start';
 	  }
       else {
-	print STDERR "Error: Can't tqfind the samba init script \n";
+	print STDERR "Error: Can't find the samba init script \n";
       }
     }
     exit 0;

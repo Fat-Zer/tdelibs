@@ -74,7 +74,7 @@ void KAnimWidget::stop()
 {
   d->current_frame = 0;
   d->timer.stop();
-  tqrepaint();
+  repaint();
 }
 
 void KAnimWidget::setSize( int size )
@@ -143,7 +143,7 @@ void KAnimWidget::mousePressEvent( TQMouseEvent *e )
 void KAnimWidget::mouseReleaseEvent( TQMouseEvent *e )
 {
   if ( e->button() == LeftButton &&
-       rect().tqcontains( e->pos() ) )
+       rect().contains( e->pos() ) )
     emit clicked();
 
   TQFrame::mouseReleaseEvent( e );
@@ -159,10 +159,10 @@ void KAnimWidget::slotTimerUpdate()
      d->current_frame = 0;
 
   // TODO
-  // We have to clear the widget when tqrepainting a transparent image
+  // We have to clear the widget when repainting a transparent image
   // By doing it like this we get a bit of flicker though. A better
   // way might be to merge it with the background in drawContents.
-  tqrepaint(d->transparent);
+  repaint(d->transparent);
 }
 
 void KAnimWidget::drawContents( TQPainter *p )

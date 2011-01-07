@@ -155,10 +155,10 @@ action/edit_copy
 action/edit_paste
 action/edit_select_all
 action/edit_deselect
-action/edit_tqfind
-action/edit_tqfind_next
-action/edit_tqfind_last
-action/edit_tqreplace
+action/edit_find
+action/edit_find_next
+action/edit_find_last
+action/edit_replace
 action/view_actual_size
 action/view_fit_to_page
 action/view_fit_to_width
@@ -267,9 +267,9 @@ action/add_bookmark
 action/edit_bookmarks
 action/clear_terminal
 action/reset_clear_terminal
-action/tqfind_history
-action/tqfind_next
-action/tqfind_previous
+action/find_history
+action/find_next
+action/find_previous
 action/save_history
 action/clear_history
 action/clear_all_histories
@@ -535,7 +535,7 @@ open     - This controls which files can be opened by the user in applications. 
               rule_3=open,,,,file,,$TMP,true
            Note that with the above, users would still be able to open files from 
            the internet. Note that the user is also given access to $TMP in order to
-           ensure correct operation of KDE applications. $TMP is tqreplaced with the 
+           ensure correct operation of KDE applications. $TMP is replaced with the 
            temporary directory that KDE uses for this user.
 
 Some remarks:
@@ -627,8 +627,8 @@ variables. In order to use this the entry must be marked with [$e].
 Example:
 Name[$e]=$USER
 
-When the "Name" entry is read $USER will be tqreplaced with the value of the
-$USER environment variable. Note that the application will tqreplace $USER
+When the "Name" entry is read $USER will be replaced with the value of the
+$USER environment variable. Note that the application will replace $USER
 with the value of the environment variable after saving. To prevent this
 combine the $e option with $i (immmutable) option.
 

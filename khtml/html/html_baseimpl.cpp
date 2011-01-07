@@ -382,7 +382,7 @@ void HTMLFrameElementImpl::setLocation( const DOMString& str )
     // load the frame contents
     KHTMLView *w = getDocument()->view();
     if (w) {
-	KHTMLPart *part = w->part()->tqfindFrame(  name.string() );
+	KHTMLPart *part = w->part()->findFrame(  name.string() );
 	if ( part ) {
 	    part->openURL( KURL( getDocument()->completeURL( url.string() ) ) );
 	} else {
@@ -570,7 +570,7 @@ void HTMLFrameSetElementImpl::recalcStyle( StyleChange ch )
 {
     if (changed() && m_render) {
         m_render->setNeedsLayout(true);
-//         m_render->tqlayout();
+//         m_render->layout();
         setChanged(false);
     }
     HTMLElementImpl::recalcStyle( ch );

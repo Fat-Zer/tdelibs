@@ -102,7 +102,7 @@ void KMdiTaskBarButton::fitText( const TQString& origStr, int newWidth )
 {
 	TQButton::setText( m_actualText );
 
-	int actualWidth = tqsizeHint().width();
+	int actualWidth = sizeHint().width();
 	int realLetterCount = origStr.length();
 	int newLetterCount = ( newWidth * realLetterCount ) / actualWidth;
 	int w = newWidth + 1;
@@ -144,7 +144,7 @@ KMdiTaskBar::KMdiTaskBar( KMdiMainFrm *parent, TQMainWindow::ToolBarDock dock )
 		: KToolBar( parent, "KMdiTaskBar",  /*honor_style*/ false,  /*readConfig*/ true )
 		, m_pCurrentFocusedWindow( 0 )
 		, m_pStretchSpace( 0 )
-		, m_tqlayoutIsPending( false )
+		, m_layoutIsPending( false )
 		, m_bSwitchedOn( false )
 {
 	m_pFrm = parent;
@@ -175,12 +175,12 @@ KMdiTaskBarButton * KMdiTaskBar::addWinButton( KMdiChildView *win_ptr )
 	TQObject::connect( b, TQT_SIGNAL( clicked( KMdiChildView* ) ), this, TQT_SLOT( setActiveButton( KMdiChildView* ) ) );
 	TQObject::connect( b, TQT_SIGNAL( leftMouseButtonClicked( KMdiChildView* ) ), m_pFrm, TQT_SLOT( activateView( KMdiChildView* ) ) );
 	TQObject::connect( b, TQT_SIGNAL( rightMouseButtonClicked( KMdiChildView* ) ), m_pFrm, TQT_SLOT( taskbarButtonRightClicked( KMdiChildView* ) ) );
-	TQObject::connect( b, TQT_SIGNAL( buttonTextChanged( int ) ), this, TQT_SLOT( tqlayoutTaskBar( int ) ) );
+	TQObject::connect( b, TQT_SIGNAL( buttonTextChanged( int ) ), this, TQT_SLOT( layoutTaskBar( int ) ) );
 	m_pButtonList->append( b );
 	b->setToggleButton( true );
 	b->setText( win_ptr->tabCaption() );
 
-	tqlayoutTaskBar();
+	layoutTaskBar();
 
 	m_pStretchSpace = new TQLabel( this, "empty" );
 	m_pStretchSpace->setText( "" );
@@ -202,7 +202,7 @@ void KMdiTaskBar::removeWinButton( KMdiChildView *win_ptr, bool haveToLayoutTask
 	{
 		m_pButtonList->removeRef( b );
 		if ( haveToLayoutTaskBar )
-			tqlayoutTaskBar();
+			layoutTaskBar();
 	}
 	if ( m_pButtonList->count() == 0 )
 	{
@@ -303,11 +303,11 @@ void KMdiTaskBar::setActiveButton( KMdiChildView *win_ptr )
 	}
 }
 
-void KMdiTaskBar::tqlayoutTaskBar( int taskBarWidth )
+void KMdiTaskBar::layoutTaskBar( int taskBarWidth )
 {
-	if ( m_tqlayoutIsPending )
+	if ( m_layoutIsPending )
 		return ;
-	m_tqlayoutIsPending = true;
+	m_layoutIsPending = true;
 
 	if ( !taskBarWidth )
 		// no width is given
@@ -337,16 +337,16 @@ void KMdiTaskBar::tqlayoutTaskBar( int taskBarWidth )
 	// if there's enough space, use actual width
 	int buttonCount = m_pButtonList->count();
 	int tbHandlePixel;
-	tbHandlePixel = style().tqpixelMetric( TQStyle::PM_DockWindowHandleExtent, this );
-	int buttonAreaWidth = taskBarWidth - tbHandlePixel - style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, this ) - 5;
-	if ( ( ( allButtonsWidthHint ) <= buttonAreaWidth ) || ( width() < tqparentWidget() ->width() ) )
+	tbHandlePixel = style().pixelMetric( TQStyle::PM_DockWindowHandleExtent, this );
+	int buttonAreaWidth = taskBarWidth - tbHandlePixel - style().pixelMetric( TQStyle::PM_DefaultFrameWidth, this ) - 5;
+	if ( ( ( allButtonsWidthHint ) <= buttonAreaWidth ) || ( width() < parentWidget() ->width() ) )
 	{
 		for ( b = m_pButtonList->first();b;b = m_pButtonList->next() )
 		{
 			b->setText( b->actualText() );
-			if ( b->width() != b->tqsizeHint().width() )
+			if ( b->width() != b->sizeHint().width() )
 			{
-				b->setFixedWidth( b->tqsizeHint().width() );
+				b->setFixedWidth( b->sizeHint().width() );
 				b->show();
 			}
 		}
@@ -372,19 +372,19 @@ void KMdiTaskBar::tqlayoutTaskBar( int taskBarWidth )
 				}
 			}
 	}
-	m_tqlayoutIsPending = false;
+	m_layoutIsPending = false;
 }
 
 void KMdiTaskBar::resizeEvent( TQResizeEvent* rse )
 {
-	if ( !m_tqlayoutIsPending )
+	if ( !m_layoutIsPending )
 	{
 		if ( m_pButtonList->count() != 0 )
 		{
-			tqlayoutTaskBar( rse->size().width() );
+			layoutTaskBar( rse->size().width() );
 		}
 	}
 	KToolBar::resizeEvent( rse );
 }
 
-// kate: space-indent off; tab-width 4; tqreplace-tabs off; indent-mode csands;
+// kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;

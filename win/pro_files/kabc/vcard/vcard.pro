@@ -10,7 +10,7 @@ LIBS += $$KDELIBDESTDIR\kdecore$$KDELIB_SUFFIX
 INCLUDEPATH += $(KDELIBS)/kabc/vcard/include $(KDELIBS)/kabc/vcard/include/generated \
 	$(KDELIBS)/kabc/vcardparser
 
-system( bash ktqmoc )
+system( bash kmoc )
 system( bash kdcopidl )
 
 TARGET		= kvcard$$KDEBUG

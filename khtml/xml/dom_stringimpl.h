@@ -79,7 +79,7 @@ public:
     DOMStringImpl *collapseWhiteSpace(bool preserveLF, bool preserveWS);
 
     const TQChar &operator [] (int pos) { return s[pos]; }
-    bool tqcontainsOnlyWhitespace() const;
+    bool containsOnlyWhitespace() const;
 
     // ignores trailing garbage, unlike QString
     int toInt(bool* ok = 0) const;
@@ -92,7 +92,7 @@ public:
     DOMStringImpl *capitalize(bool noFirstCap=false) const;
     DOMStringImpl *escapeHTML();
 
-    TQChar *tqunicode() const { return s; }
+    TQChar *unicode() const { return s; }
     uint length() const { return l; }
     TQString string() const;
 

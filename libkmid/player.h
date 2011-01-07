@@ -379,11 +379,11 @@ class KMID_EXPORT MidiPlayer
    * @param gotomsec the number of milliseconds to go to . A subsequent call to
    * play() will start playing the song from that moment, instead of the
    * beginning.
-   * @param midistat a MiditqStatus object that will contain the status in
+   * @param midistat a MidiStatus object that will contain the status in
    * which the MIDI device would be if it would have arrived to this situation by
    * a normal playing of the song.
    */
-  void setPos(ulong gotomsec, class MiditqStatus *midistat);
+  void setPos(ulong gotomsec, class MidiStatus *midistat);
 
   /**
    * Changes the speed at which a song is played. The song's tempo is multiplied

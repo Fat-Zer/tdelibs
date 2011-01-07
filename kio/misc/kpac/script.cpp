@@ -49,7 +49,7 @@ TQString UString::qstring() const
 UString::UString( const TQString &s )
 {
     UChar* data = new UChar[ s.length() ];
-    std::memcpy( data, s.tqunicode(), s.length() * sizeof( UChar ) );
+    std::memcpy( data, s.unicode(), s.length() * sizeof( UChar ) );
     rep = Rep::create( data, s.length() );
 }
 
@@ -98,7 +98,7 @@ namespace
 
         virtual bool implementsCall() const { return true; }
 
-        static int tqfindString( const UString& s, const char* const* values )
+        static int findString( const UString& s, const char* const* values )
         {
             int index = 0;
             UString lower = s.toLower();
@@ -123,13 +123,13 @@ namespace
     };
 
     // isPlainHostName( host )
-    // @returns true if @p host doesn't tqcontains a domain part
+    // @returns true if @p host doesn't contains a domain part
     struct IsPlainHostName : public Function
     {
         virtual Value call( ExecState* exec, Object&, const List& args )
         {
             if ( args.size() != 1 ) return Undefined();
-            return Boolean( args[ 0 ].toString( exec ).tqfind( "." ) == -1 );
+            return Boolean( args[ 0 ].toString( exec ).find( "." ) == -1 );
         }
     };
 
@@ -154,7 +154,7 @@ namespace
         {
             if ( args.size() != 2 ) return Undefined();
             UString host = args[ 0 ].toString( exec ).toLower();
-            if ( host.tqfind( "." ) == -1 ) return Boolean( true );
+            if ( host.find( "." ) == -1 ) return Boolean( true );
             UString fqdn = args[ 1 ].toString( exec ).toLower();
             return Boolean( host == fqdn );
         }
@@ -173,9 +173,9 @@ namespace
         }
     };
 
-    // isInNet( host, subnet, tqmask )
+    // isInNet( host, subnet, mask )
     // @returns true if @p host is within the IP subnet
-    //          specified via @p subnet and @p tqmask
+    //          specified via @p subnet and @p mask
     struct IsInNet : public Function
     {
         virtual Value call( ExecState* exec, Object&, const List& args )
@@ -185,8 +185,8 @@ namespace
             {
                 in_addr_t host = Address::resolve( args[ 0 ].toString( exec ) );
                 in_addr_t subnet = Address::parse( args[ 1 ].toString( exec ) );
-                in_addr_t tqmask = Address::parse( args[ 2 ].toString( exec ) );
-                return Boolean( ( host & tqmask ) == ( subnet & tqmask ) );
+                in_addr_t mask = Address::parse( args[ 2 ].toString( exec ) );
+                return Boolean( ( host & mask ) == ( subnet & mask ) );
             }
             catch ( const Address::Error& )
             {
@@ -259,10 +259,10 @@ namespace
             if ( args.size() < 1 || args.size() > 3 ) return Undefined();
             static const char* const days[] =
                 { "sun", "mon", "tue", "wed", "thu", "fri", "sat", 0 };
-            int d1 = tqfindString( args[ 0 ].toString( exec ), days );
+            int d1 = findString( args[ 0 ].toString( exec ), days );
             if ( d1 == -1 ) return Undefined();
 
-            int d2 = tqfindString( args[ 1 ].toString( exec ), days );
+            int d2 = findString( args[ 1 ].toString( exec ), days );
             if ( d2 == -1 ) d2 = d1;
             return checkRange( getTime( exec, args )->tm_wday, d1, d2 );
         }
@@ -293,7 +293,7 @@ namespace
                 int value = -1;
                 if ( args[ i ].isA( NumberType ) )
                     value = args[ i ].toInteger( exec );
-                else value = tqfindString( args[ i ].toString( exec ), months );
+                else value = findString( args[ i ].toString( exec ), months );
                 if ( value >= 0 ) values.push_back( value );
                 else break;
             }
@@ -441,16 +441,16 @@ namespace KPAC
     TQString Script::evaluate( const KURL& url )
     {
 	ExecState *exec = m_interpreter.globalExec();
-	Value tqfindFunc = m_interpreter.globalObject().get( exec, "FindProxyForURL" );
-	Object tqfindObj = Object::dynamicCast( tqfindFunc );
-	if (!tqfindObj.isValid() || !tqfindObj.implementsCall())
+	Value findFunc = m_interpreter.globalObject().get( exec, "FindProxyForURL" );
+	Object findObj = Object::dynamicCast( findFunc );
+	if (!findObj.isValid() || !findObj.implementsCall())
 	  throw Error( "No such function FindProxyForURL" );
 
 	Object thisObj;
 	List args;
 	args.append(String(url.url()));
 	args.append(String(url.host()));
-	Value retval = tqfindObj.call( exec, thisObj, args );
+	Value retval = findObj.call( exec, thisObj, args );
 
 	if ( exec->hadException() ) {
 	  Value ex = exec->exception();

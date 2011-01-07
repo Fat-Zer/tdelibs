@@ -18,7 +18,7 @@ class Test6 : public KConfigSkeleton
     */
     void setColor( const TQColor & v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "Color" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Color" ) ))
         mColor = v;
     }
 
@@ -35,7 +35,7 @@ class Test6 : public KConfigSkeleton
     */
     void setFooBar( const TQString & v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "FooBar" ) ))
+      if (!isImmutable( TQString::fromLatin1( "FooBar" ) ))
         mFooBar = v;
     }
 
@@ -64,7 +64,7 @@ class Test6 : public KConfigSkeleton
         v = 88;
       }
 
-      if (!isImmutable( TQString::tqfromLatin1( "Age" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Age" ) ))
         mAge = v;
     }
 

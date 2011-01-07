@@ -26,7 +26,7 @@
 #include "kcatalogue.h"
 #include "kstandarddirs.h"
 
-char *k_nl_tqfind_msg(struct kde_loaded_l10nfile *domain_file,
+char *k_nl_find_msg(struct kde_loaded_l10nfile *domain_file,
 	       const char *msgid);
 void k_nl_unload_domain (struct loaded_domain *domain);
 
@@ -57,12 +57,12 @@ KCatalogue::KCatalogue(const TQString & name, const TQString & language )
 {
   d->name = name;
   d->language = language;
-  // at the moment we do not know more. To tqfind out the plural type we first have to look into
+  // at the moment we do not know more. To find out the plural type we first have to look into
   // kdelibs.mo for the language. And for this we already need a catalog object. So this data
   // has to be set after we have the first catalog objects.
   d->pluralType = -1; 
 
-  TQString path = TQString::tqfromLatin1("%1/LC_MESSAGES/%2.mo")
+  TQString path = TQString::fromLatin1("%1/LC_MESSAGES/%2.mo")
     .arg( d->language )
     .arg( d->name );
 
@@ -143,7 +143,7 @@ TQString KCatalogue::fileName() const
 
 const char * KCatalogue::translate(const char * msgid) const
 {
-  return ::k_nl_tqfind_msg( &d->domain, msgid );
+  return ::k_nl_find_msg( &d->domain, msgid );
 }
 
 void KCatalogue::doUnload()

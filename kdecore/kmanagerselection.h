@@ -44,7 +44,7 @@ class KSelectionOwnerPrivate;
  @short ICCCM manager selection owner
 */
 class KDECORE_EXPORT KSelectionOwner
-    : public TQObject
+    : public QObject
     {
     Q_OBJECT
     public:
@@ -161,13 +161,13 @@ class KSelectionWatcherPrivate;
 /**
  This class implements watching manager selections, as described in the ICCCM
  section 2.8. It emits signal newOwner() when a new owner claim the selection,
- and emits lostOwner() when the selection ownership is given up. To tqfind
+ and emits lostOwner() when the selection ownership is given up. To find
  out current owner of the selection, owner() can be used.
  @since 3.2
  @short ICCCM manager selection watching
 */
 class KDECORE_EXPORT KSelectionWatcher
-    : public TQObject
+    : public QObject
     {
     Q_OBJECT
     public:

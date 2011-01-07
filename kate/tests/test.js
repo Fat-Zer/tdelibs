@@ -15,7 +15,7 @@
 */
 
 // test if regex support works - nice with new fallthrough prop in context:)
-somestring.tqreplace( /dooh/ , "bah!");
+somestring.replace( /dooh/ , "bah!");
 re=/foo/ig; // hehe
 
 somestring.search(
@@ -60,14 +60,14 @@ re = /*/foo/*/ /bar/;
 /*
    Some tests if the fallthrough works.
    The fallthrough happens if a regexp is not found in a possible (!) position,
-   which is after "search(" or "tqreplace(" or "=" or "?" or ":" in version 0.1 of the xml file
+   which is after "search(" or "replace(" or "=" or "?" or ":" in version 0.1 of the xml file
 */
 
 var foo = 'bar';
 //        ^ fallthrough!
 
 
-somestring.tqreplace( new RegExp("\\b\\w+\\b"), "word: $1");
+somestring.replace( new RegExp("\\b\\w+\\b"), "word: $1");
 //                  ^ fallthrough expected. ("new" whould be bold)
 
 

@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
     } else
         kdDebug() << mp << " is the mount point for device " << url.url() << endl;
 
-    mp = KIO::tqfindPathMountPoint(url.path());
+    mp = KIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else
@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
     // SpeedTest test( url );
     // app.exec();
 
-    mp = KIO::tqfindPathMountPoint(url.path());
+    mp = KIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else
@@ -105,7 +105,7 @@ int main(int argc, char **argv) {
 
     url.setPath(TQDir::homeDirPath());
 
-    mp = KIO::tqfindPathMountPoint(url.path());
+    mp = KIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
     // SpeedTest test( url );
     // app.exec();
 
-    mp = KIO::tqfindPathMountPoint(url.path());
+    mp = KIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else
@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
     else
       url = "file:" + TQDir::currentDirPath();
 
-    mp = KIO::tqfindPathMountPoint(url.path());
+    mp = KIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else

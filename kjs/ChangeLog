@@ -408,7 +408,7 @@
 
 2001-01-04  Harri Porten  <harri@trolltech.com>
 
-	* ustring.h: pack bytes to avoid tqalignment problems (ARM) reported
+	* ustring.h: pack bytes to avoid alignment problems (ARM) reported
 	by Stefan Hanske <sh990154@mail.uni-greifswald.de>
 	* nodes.cpp: typeof fix by Emmeran Seehuber <the_emmy@gmx.de>
 	* nodes.cpp: fixed order of function declaration proccessing

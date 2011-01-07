@@ -106,7 +106,7 @@
 			<item> eval </item>
 			<item> exec </item>
 			<item> exp </item>
-			<item> tqfind </item>
+			<item> find </item>
 			<item> floor </item>
 			<item> focus </item>
 			<item> forward </item>
@@ -160,7 +160,7 @@
 			<item> random </item>
 			<item> releaseEvents </item>
 			<item> reload </item>
-			<item> tqreplace </item>
+			<item> replace </item>
 			<item> reset </item>
 			<item> resizeBy </item>
 			<item> resizeTo </item>

@@ -67,7 +67,7 @@ class KConfigGroup;
  * @see KSimpleConfig
  * @see KSharedConfig
  */
-class KDECORE_EXPORT KConfigBase : public TQObject
+class KDECORE_EXPORT KConfigBase : public QObject
 {
   Q_OBJECT
 
@@ -461,7 +461,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  TQ_INT64 readNum64Entry( const TQString& pKey, TQ_INT64 nDefault = 0 ) const;
+  Q_INT64 readNum64Entry( const TQString& pKey, Q_INT64 nDefault = 0 ) const;
 
   /**
    * Reads a 64-bit numerical value.
@@ -474,7 +474,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  TQ_INT64 readNum64Entry( const char *pKey, TQ_INT64 nDefault = 0 ) const;
+  Q_INT64 readNum64Entry( const char *pKey, Q_INT64 nDefault = 0 ) const;
 
   /**
    * Read an 64-bit unsigned numerical value.
@@ -487,7 +487,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  TQ_UINT64 readUnsignedNum64Entry( const TQString& pKey, TQ_UINT64 nDefault = 0 ) const;
+  Q_UINT64 readUnsignedNum64Entry( const TQString& pKey, Q_UINT64 nDefault = 0 ) const;
 
   /**
    * Read an 64-bit unsigned numerical value.
@@ -500,7 +500,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  TQ_UINT64 readUnsignedNum64Entry( const char *pKey, TQ_UINT64 nDefault = 0 ) const;
+  Q_UINT64 readUnsignedNum64Entry( const char *pKey, Q_UINT64 nDefault = 0 ) const;
 
   /**
    * Reads a floating point value.
@@ -692,7 +692,7 @@ public:
    * and interpret it as a date and time.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value ( tqcurrentDateTime() by default)
+   * @param pDefault A default value ( currentDateTime() by default)
    * returned if the key was not found or if the read value cannot be
    * interpreted.
    * @return The value for this key.
@@ -706,7 +706,7 @@ public:
    * and interpret it as a date and time.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value ( tqcurrentDateTime() by default)
+   * @param pDefault A default value ( currentDateTime() by default)
    * returned if the key was not found or if the read value cannot be
    * interpreted.
    * @return The value for this key.
@@ -978,7 +978,7 @@ public:
   void writeEntry( const TQString& pKey, const char *pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false )
-    { writeEntry(pKey, TQString::tqfromLatin1(pValue), bPersistent, bGlobal, bNLS); }
+    { writeEntry(pKey, TQString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
   /**
    * Write a (key/value) pair.
    *
@@ -999,7 +999,7 @@ public:
   void writeEntry( const char *pKey, const char *pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false )
-    { writeEntry(pKey, TQString::tqfromLatin1(pValue), bPersistent, bGlobal, bNLS); }
+    { writeEntry(pKey, TQString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
 
   /**
    * Write a (key/value) pair.
@@ -1159,7 +1159,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const TQString& pKey, TQ_INT64 nValue,
+  void writeEntry( const TQString& pKey, Q_INT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1176,7 +1176,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, TQ_INT64 nValue,
+  void writeEntry( const char *pKey, Q_INT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
 
@@ -1194,7 +1194,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const TQString& pKey, TQ_UINT64 nValue,
+  void writeEntry( const TQString& pKey, Q_UINT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1211,7 +1211,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, TQ_UINT64 nValue,
+  void writeEntry( const char *pKey, Q_UINT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
 
@@ -1538,7 +1538,7 @@ public:
    * Writes a file path.
    *
    * It is checked whether the path is located under $HOME. If so the
-   * path is written out with the user's home-directory tqreplaced with
+   * path is written out with the user's home-directory replaced with
    * $HOME. The path should be read back with readPathEntry()
    *
    * @param pKey The key to write.
@@ -1558,7 +1558,7 @@ public:
    * Writes a file path.
    *
    * It is checked whether the path is located under $HOME. If so the
-   * path is written out with the user's home-directory tqreplaced with
+   * path is written out with the user's home-directory replaced with
    * $HOME. The path should be read back with readPathEntry()
    *
    * @param pKey The key to write.
@@ -1579,7 +1579,7 @@ public:
    * writePathEntry() overridden to accept a list of paths (strings).
    *
    * It is checked whether the paths are located under $HOME. If so each of
-   * the paths are written out with the user's home-directory tqreplaced with
+   * the paths are written out with the user's home-directory replaced with
    * $HOME. The paths should be read back with readPathListEntry()
    *
    * @param pKey The key to write
@@ -1604,7 +1604,7 @@ public:
    * writePathEntry() overridden to accept a list of paths (strings).
    *
    * It is checked whether the paths are located under $HOME. If so each of
-   * the paths are written out with the user's home-directory tqreplaced with
+   * the paths are written out with the user's home-directory replaced with
    * $HOME. The paths should be read back with readPathListEntry()
    *
    * @param pKey The key to write
@@ -1942,9 +1942,9 @@ protected:
    * Do not use this function, the implementation / return type are
    * subject to change.
    *
-   * @param _key The key to insert.  It tqcontains information both on
+   * @param _key The key to insert.  It contains information both on
    *        the group of the key and the key itself. If the key already
-   *        exists, the old value will be tqreplaced.
+   *        exists, the old value will be replaced.
    * @param _data the KEntry that is to be stored.
    * @param _checkGroup When false, assume that the group already exists.
    * @internal
@@ -1959,7 +1959,7 @@ protected:
    * Do not use this function, the implementation and return type are
    * subject to change.
    *
-   * @param _key The key to look up  It tqcontains information both on
+   * @param _key The key to look up  It contains information both on
    *        the group of the key and the entry's key itself.
    * @return The KEntry value (data) found for the key.  @p KEntry.aValue
    * will be the null string if nothing was located.

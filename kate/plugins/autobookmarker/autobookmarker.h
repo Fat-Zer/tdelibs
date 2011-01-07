@@ -41,8 +41,8 @@ class AutoBookmarkEnt
                   int flags=1 );
   ~AutoBookmarkEnt(){};
   TQString pattern;
-  TQStringList filetqmask;
-  TQStringList mimetqmask;
+  TQStringList filemask;
+  TQStringList mimemask;
   int flags;
 };
 

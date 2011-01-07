@@ -76,7 +76,7 @@ public:
     /**
      * Special constructor, which creates a KURLRequester widget with a custom
      * edit-widget. The edit-widget can be either a KComboBox or a KLineEdit
-     * (or inherited thereof). Note: for tqgeometry management reasons, the
+     * (or inherited thereof). Note: for geometry management reasons, the
      * edit-widget is reparented to have the KURLRequester as parent.
      */
     KURLRequester( TQWidget *editWidget, TQWidget *parent, const char *name=0 );
@@ -218,7 +218,7 @@ signals:
     // forwards from LineEdit
     /**
      * Emitted when the text in the lineedit changes.
-     * The parameter tqcontains the contents of the lineedit.
+     * The parameter contains the contents of the lineedit.
      * @since 3.1
      */
     void textChanged( const TQString& );
@@ -230,7 +230,7 @@ signals:
 
     /**
      * Emitted when return or enter was pressed in the lineedit.
-     * The parameter tqcontains the contents of the lineedit.
+     * The parameter contains the contents of the lineedit.
      */
     void returnPressed( const TQString& );
 
@@ -249,7 +249,7 @@ signals:
 
     /**
      * Emitted when the user changed the URL via the file dialog.
-     * The parameter tqcontains the contents of the lineedit.
+     * The parameter contains the contents of the lineedit.
      * // TODO KDE4: Use KURL instead
      */
     void urlSelected( const TQString& );

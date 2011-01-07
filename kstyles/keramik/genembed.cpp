@@ -146,7 +146,7 @@ int main(int argc, char** argv)
 		int readJustID = 0;
 
 
-		if ((pos = s.tqfindRev("-")) != -1)
+		if ((pos = s.findRev("-")) != -1)
 		{
 				int suffix = evalSuffix(s.mid(pos));
 				if (suffix !=-1 )
@@ -156,16 +156,16 @@ int main(int argc, char** argv)
 				}
 		}
 
-		if (!assignID.tqcontains(id))
+		if (!assignID.contains(id))
 		{
 			assignID[id] = nextID;
 			nextID += 256;
 		}
 
-		s.tqreplace("-","_");
+		s.replace("-","_");
 
 
-		if (s.tqcontains("button"))
+		if (s.contains("button"))
 			KImageEffect::contrastHSV(input);
 
 		int fullID = assignID[id] + readJustID;//Subwidget..
@@ -178,7 +178,7 @@ int main(int argc, char** argv)
 
 
 
-		if (s.tqcontains("toolbar") || s.tqcontains("tab-top-active") || s.tqcontains("menubar") )
+		if (s.contains("toolbar") || s.contains("tab-top-active") || s.contains("menubar") )
 		{
 //			highlights = false;
 			gamma    = 1/1.25f;
@@ -186,7 +186,7 @@ int main(int argc, char** argv)
 			shadows = false;
 		}
 
-		if (s.tqcontains("scrollbar") && s.tqcontains("groove"))
+		if (s.contains("scrollbar") && s.contains("groove"))
 		{
 			//highlights = false;
 			//gamma = 1.5;
@@ -194,7 +194,7 @@ int main(int argc, char** argv)
 		}
 			//brightAdj = -10;
 
-		if (s.tqcontains("scrollbar") && s.tqcontains("slider"))
+		if (s.contains("scrollbar") && s.contains("slider"))
 		{
 			//highlights = false;
 			gamma =1/0.7f;
@@ -202,7 +202,7 @@ int main(int argc, char** argv)
 		}
 
 
-		if (s.tqcontains("menuitem"))
+		if (s.contains("menuitem"))
 		{
 			//highlights = false;
 			gamma =1/0.6f;
@@ -222,14 +222,14 @@ int main(int argc, char** argv)
 
 		cout<<"static const unsigned char "<<s.latin1()<<"[]={\n";
 
-		TQ_UINT32* read  = reinterpret_cast< TQ_UINT32* >(input.bits() );
+		Q_UINT32* read  = reinterpret_cast< Q_UINT32* >(input.bits() );
 		int size = input.width()*input.height();
 
 		for (int pos=0; pos<size; pos++)
 		{
 			QRgb basePix = (QRgb)*read;
 
-			if (tqAlpha(basePix) != 255)
+			if (qAlpha(basePix) != 255)
 				reallySolid = false;
 			else
 				pixSolid++;
@@ -242,7 +242,7 @@ int main(int argc, char** argv)
 
 		images.push_back(image);
 
-		read  = reinterpret_cast< TQ_UINT32* >(input.bits() );
+		read  = reinterpret_cast< Q_UINT32* >(input.bits() );
 		for (int pos=0; pos<size; pos++)
 		{
 			QRgb basePix = (QRgb)*read;
@@ -252,10 +252,10 @@ int main(int argc, char** argv)
 			int h,s,v;
 			clr.hsv(&h,&s,&v);
 
-			v=tqGray(basePix);
+			v=qGray(basePix);
 
 			int targetColorAlpha = 0 , greyAdd = 0;
-			//int srcAlpha = tqAlpha(basePix);
+			//int srcAlpha = qAlpha(basePix);
 
 			if (s>0 || v > 128)
 			{ //Non-shadow
@@ -296,8 +296,8 @@ int main(int argc, char** argv)
 			if (reallySolid)
 				cout<<targetColorAlpha<<","<<greyAdd<<",";
 			else
-				cout<<targetColorAlpha<<","<<greyAdd<<","<<tqAlpha(basePix)<<",";
-			//cout<<tqRed(basePix)<<","<<tqGreen(basePix)<<","<<tqBlue(basePix)<<","<<tqAlpha(basePix)<<",";
+				cout<<targetColorAlpha<<","<<greyAdd<<","<<qAlpha(basePix)<<",";
+			//cout<<qRed(basePix)<<","<<qGreen(basePix)<<","<<qBlue(basePix)<<","<<qAlpha(basePix)<<",";
 
 			if (pos%8 == 7)
 				cout<<"\n";
@@ -373,7 +373,7 @@ int main(int argc, char** argv)
 	for (TQMap<TQString, int>::iterator i = assignID.begin(); i != assignID.end(); ++i)
 	{
 		TQString name = "keramik_"+i.key();
-		name.tqreplace("-","_");
+		name.replace("-","_");
 		ts<<"\t"<<name<<" = "<<i.data()<<",\n";
 	}
 	ts<<"\tkeramik_last\n";

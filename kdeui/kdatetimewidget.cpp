@@ -38,8 +38,8 @@ void KDateTimeWidget::init()
 {
   d = new KDateTimeWidgetPrivate;
 
-  TQHBoxLayout *tqlayout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
-  tqlayout->setAutoAdd(true);
+  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
+  layout->setAutoAdd(true);
 
   d->dateWidget = new KDateWidget(this);
   d->timeWidget = new KTimeWidget(this);

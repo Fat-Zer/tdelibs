@@ -432,19 +432,19 @@ KRuler::setRulerMetricStyle(KRuler::MetricStyle style)
   }
   switch (style) {
   case Pixel:
-    setEndLabel(TQString::tqfromLatin1("pixel"));
+    setEndLabel(TQString::fromLatin1("pixel"));
     break;
   case Inch:
-    setEndLabel(TQString::tqfromLatin1("inch"));
+    setEndLabel(TQString::fromLatin1("inch"));
     break;
   case Millimetres:
-    setEndLabel(TQString::tqfromLatin1("mm"));
+    setEndLabel(TQString::fromLatin1("mm"));
     break;
   case Centimetres:
-    setEndLabel(TQString::tqfromLatin1("cm"));
+    setEndLabel(TQString::fromLatin1("cm"));
     break;
   case Metres:
-    setEndLabel(TQString::tqfromLatin1("m"));
+    setEndLabel(TQString::fromLatin1("m"));
   default: /* never reached, see above switch */
     /* empty command */;
   }
@@ -550,16 +550,16 @@ KRuler::slotNewValue(int _value)
     return;
   }
   // get the rectangular of the old and the new ruler pointer
-  // and tqrepaint only him
+  // and repaint only him
   if (dir == Horizontal) {
     TQRect oldrec(-5+oldvalue,10, 11,6);
     TQRect newrec(-5+_value,10, 11,6);
-    tqrepaint( oldrec.unite(newrec) );
+    repaint( oldrec.unite(newrec) );
   }
   else {
     TQRect oldrec(10,-5+oldvalue, 6,11);
     TQRect newrec(10,-5+_value, 6,11);
-    tqrepaint( oldrec.unite(newrec) );
+    repaint( oldrec.unite(newrec) );
   }
 }
 
@@ -569,7 +569,7 @@ KRuler::slotNewOffset(int _offset)
   if (offset_ != _offset) {
     //setOffset(_offset);
     offset_ = _offset;
-    tqrepaint(contentsRect());
+    repaint(contentsRect());
   }
 }
 
@@ -586,7 +586,7 @@ KRuler::slotEndOffset(int offset)
   }
   if (d->endOffset_length != tmp) {
     d->endOffset_length = tmp;
-    tqrepaint(contentsRect());
+    repaint(contentsRect());
   }
 }
 

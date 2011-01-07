@@ -577,7 +577,7 @@ TQDate KCalendarSystemHijri::addYears( const TQDate & date, int nyears ) const
 
 TQString KCalendarSystemHijri::calendarName() const
 {
-  return TQString::tqfromLatin1("hijri");
+  return TQString::fromLatin1("hijri");
 }
 
 bool KCalendarSystemHijri::isLunar() const

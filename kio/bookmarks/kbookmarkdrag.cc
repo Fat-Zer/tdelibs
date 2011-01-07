@@ -54,8 +54,8 @@ KBookmarkDrag::KBookmarkDrag( const TQValueList<KBookmark> & bookmarks, const TQ
     : TQUriDrag( urls, dragSource, name ), m_bookmarks( bookmarks ), m_doc("xbel")
 {
     // We need to create the XML for this drag right now and not
-    // in tqencodedData because when cutting a folder, the children
-    // wouldn't be part of the bookmarks anymore, when tqencodedData
+    // in encodedData because when cutting a folder, the children
+    // wouldn't be part of the bookmarks anymore, when encodedData
     // is requested.
     TQDomElement elem = m_doc.createElement("xbel");
     m_doc.appendChild( elem );
@@ -76,16 +76,16 @@ const char* KBookmarkDrag::format( int i ) const
     else return 0;
 }
 
-TQByteArray KBookmarkDrag::tqencodedData( const char* mime ) const
+TQByteArray KBookmarkDrag::encodedData( const char* mime ) const
 {
     TQByteArray a;
     TQCString mimetype( mime );
     if ( mimetype == "text/uri-list" )
-        return TQUriDrag::tqencodedData( mime );
+        return TQUriDrag::encodedData( mime );
     else if ( mimetype == "application/x-xbel" )
     {
         a = m_doc.toCString();
-        //kdDebug(7043) << "KBookmarkDrag::tqencodedData " << m_doc.toCString() << endl;
+        //kdDebug(7043) << "KBookmarkDrag::encodedData " << m_doc.toCString() << endl;
     }
     else if ( mimetype == "text/plain" )
     {
@@ -117,7 +117,7 @@ TQValueList<KBookmark> KBookmarkDrag::decode( const TQMimeSource * e )
     TQValueList<KBookmark> bookmarks;
     if ( e->provides("application/x-xbel") )
     {
-        TQByteArray s( e->tqencodedData("application/x-xbel") );
+        TQByteArray s( e->encodedData("application/x-xbel") );
         //kdDebug(7043) << "KBookmarkDrag::decode s=" << TQCString(s) << endl;
         TQDomDocument doc;
         doc.setContent( s );

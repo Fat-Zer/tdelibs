@@ -68,7 +68,7 @@ GUIClient::GUIClient (KMDI::MainWindow* mdiMainFrm,const char* name)
 
   if ( domDocument().documentElement().isNull() )
   {
-    TQString completeDescription = TQString::tqfromLatin1( guiDescription ).arg( actionListName );
+    TQString completeDescription = TQString::fromLatin1( guiDescription ).arg( actionListName );
 
     setXML( completeDescription, false /*merge*/ );
   }
@@ -227,4 +227,4 @@ void ToggleToolViewAction::slotWidgetDestroyed()
 
 }
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

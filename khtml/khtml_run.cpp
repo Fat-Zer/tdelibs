@@ -30,7 +30,7 @@
 
 KHTMLRun::KHTMLRun( KHTMLPart *part, khtml::ChildFrame *child, const KURL &url,
                     const KParts::URLArgs &args, bool hideErrorDialog )
-    : KParts::BrowserRun( url, args, part, part->widget() ? part->widget()->tqtopLevelWidget() : 0,
+    : KParts::BrowserRun( url, args, part, part->widget() ? part->widget()->topLevelWidget() : 0,
                           false, false, hideErrorDialog ),
   m_child( child )
 {

@@ -86,7 +86,7 @@ bool KAr::openArchive( int mode )
 
     char magic[8];
     dev->readBlock (magic, 8);
-    if (tqstrncmp(magic, "!<arch>", 7) != 0) {
+    if (qstrncmp(magic, "!<arch>", 7) != 0) {
         kdWarning(7042) << "Invalid main magic" << endl;
         return false;
     }
@@ -140,13 +140,13 @@ bool KAr::openArchive( int mode )
                     return false;
                 }
                 name = &ar_longnames[name.mid(1, 15).toInt()];
-                name = name.left(name.tqfind("/"));
+                name = name.left(name.find("/"));
             }
         }
         if (skip_entry) continue;
 
         name = name.stripWhiteSpace(); // Process filename
-        name.tqreplace( "/", "" );
+        name.replace( "/", "" );
         kdDebug(7042) << "Filename: " << name << " Size: " << size << endl;
 
         KArchiveEntry* entry;

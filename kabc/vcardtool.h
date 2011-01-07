@@ -41,7 +41,7 @@ class KABC_EXPORT VCardTool
     ~VCardTool();
 
     /**
-      Creates a string that tqcontains the addressees from the list in
+      Creates a string that contains the addressees from the list in
       the vCard format.
      */
     TQString createVCards( Addressee::List list, VCard::Version version = VCard::v3_0 );
@@ -53,7 +53,7 @@ class KABC_EXPORT VCardTool
 
   private:
     /**
-      Split a string and tqreplaces escaped separators on the fly with
+      Split a string and replaces escaped separators on the fly with
       unescaped ones.
      */
     TQStringList splitString( const TQChar &sep, const TQString &value );

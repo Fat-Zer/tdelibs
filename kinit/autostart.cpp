@@ -82,10 +82,10 @@ void AutoStart::setPhaseDone()
 
 static TQString extractName(TQString path)
 {
-  int i = path.tqfindRev('/');
+  int i = path.findRev('/');
   if (i >= 0)
      path = path.mid(i+1);
-  i = path.tqfindRev('.');
+  i = path.findRev('.');
   if (i >= 0)
      path = path.left(i);
   return path;
@@ -141,14 +141,14 @@ AutoStart::loadAutoStartList()
                // Same local file name?
                TQString localOuter;
                TQString localInner;
-               int slashPos = (*it).tqfindRev( '/', -1, TRUE );
+               int slashPos = (*it).findRev( '/', -1, TRUE );
                if (slashPos == -1) {
                    localOuter = (*it);
                }
                else {
                    localOuter = (*it).mid(slashPos+1);
                }
-               slashPos = (*localit).tqfindRev( '/', -1, TRUE );
+               slashPos = (*localit).findRev( '/', -1, TRUE );
                if (slashPos == -1) {
                    localInner = (*localit);
                }
@@ -172,23 +172,23 @@ AutoStart::loadAutoStartList()
 
        if (config.hasKey("OnlyShowIn"))
        {
-          if (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
+          if (!config.readListEntry("OnlyShowIn", ';').contains("KDE"))
               continue;
        }
        if (config.hasKey("NotShowIn"))
        {
-           if (config.readListEntry("NotShowIn", ';').tqcontains("KDE"))
+           if (config.readListEntry("NotShowIn", ';').contains("KDE"))
                continue;
        }
        
        if (config.hasKey("OnlyShowIn"))
        {
-          if (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
+          if (!config.readListEntry("OnlyShowIn", ';').contains("KDE"))
               continue;
        }
        if (config.hasKey("NotShowIn"))
        {
-           if (config.readListEntry("NotShowIn", ';').tqcontains("KDE"))
+           if (config.readListEntry("NotShowIn", ';').contains("KDE"))
                continue;
        }
 

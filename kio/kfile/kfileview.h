@@ -34,7 +34,7 @@ class KActionCollection;
  * internal class to make easier to use signals possible
  * @internal
  **/
-class KIO_EXPORT KFileViewSignaler : public TQObject
+class KIO_EXPORT KFileViewSignaler : public QObject
 {
     Q_OBJECT
 
@@ -146,11 +146,11 @@ public:
     virtual void clear();
 
     /**
-      * does a tqrepaint of the view.
+      * does a repaint of the view.
       *
       * The default implementation calls
       * \code
-      * widget()->tqrepaint(f)
+      * widget()->repaint(f)
       * \endcode
       **/
     virtual void updateView(bool f = true);

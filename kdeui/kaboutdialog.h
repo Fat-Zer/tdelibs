@@ -22,7 +22,7 @@
 
 /*
  * This file declares a class for creating "About ..." dialogs
- * in a general way. It provides tqgeometry management and some
+ * in a general way. It provides geometry management and some
  * options to connect for, like emailing the author or maintainer.
  */
 
@@ -62,12 +62,12 @@ class KDEUI_EXPORT KAboutContainer : public QFrame
 		    const TQString &url, const TQString &task,
 		    bool showHeader = false, bool showframe = false,
 		    bool showBold = false );
-    void addTitle(  const TQString &title, int tqalignment=AlignLeft,
+    void addTitle(  const TQString &title, int alignment=AlignLeft,
 		    bool showframe = false, bool showBold = false );
-    void addImage( const TQString &fileName, int tqalignment=AlignLeft );
+    void addImage( const TQString &fileName, int alignment=AlignLeft );
 
-    virtual TQSize tqsizeHint( void ) const;
-    virtual TQSize tqminimumSizeHint( void ) const;
+    virtual TQSize sizeHint( void ) const;
+    virtual TQSize minimumSizeHint( void ) const;
 
   protected:
     virtual void childEvent( TQChildEvent *e );
@@ -115,7 +115,7 @@ class KDEUI_EXPORT KAboutContributor : public QFrame
     TQString getURL( void ) const;
     TQString getWork( void ) const;
 
-    virtual TQSize tqsizeHint( void ) const;
+    virtual TQSize sizeHint( void ) const;
 
   protected:
     virtual void fontChange( const TQFont &oldFont );
@@ -265,12 +265,12 @@ class KAboutDialogPrivate;
  * can be used to build the contents of the dialog. The first (Constructor I)
  * provides a number of easy to use methods. Basically it allows you
  * to add the components of choice, and the components are placed in a
- * predefined tqlayout. You do not have to plan the tqlayout. Everything is
+ * predefined layout. You do not have to plan the layout. Everything is
  * taken care of.
  *
  * The second constructor (Constructor II) works in quite the same manner
  * as the first, but you have better control on where the components
- * are postioned in the tqlayout and you have access to an extended number
+ * are postioned in the layout and you have access to an extended number
  * of components you can install such as titles, product information,
  * a tabbed pages (where you can display rich text with url links) and
  * a person (developer) information field. The "About KDE" dialog box is
@@ -321,7 +321,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
     * setImageFrame(), setProduct(), addTextPage(),
     * addContainerPage(), addContainer(), or addPage().
     *
-    * @param dialogLayout Use a tqmask of LayoutType flags.
+    * @param dialogLayout Use a mask of LayoutType flags.
     * @param caption The dialog caption. The text you specify is prepended
     *        by i18n("About").
     * @param buttonMask Specifies what buttons will be visible.
@@ -467,7 +467,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    * @param richText Set this to @p true if 'text' is rich text.
    * @param numLines The text area height will be adjusted so that this
    *        is the minimum number of lines of text that are visible.
-   * @return The frame that tqcontains the page.
+   * @return The frame that contains the page.
    */
   TQFrame *addTextPage( const TQString &title, const TQString &text,
                        bool richText=false, int numLines=10 );
@@ -480,7 +480,7 @@ class KDEUI_EXPORT KAboutDialog : public KDialogBase
    * @param text The text to display.
    * @param numLines The text area height will be adjusted so that this
    *        is the minimum number of lines of text that are visible.
-   * @return The frame that tqcontains the page.
+   * @return The frame that contains the page.
    */
   TQFrame *addLicensePage( const TQString &title, const TQString &text,
                           int numLines=10 );

@@ -30,7 +30,7 @@ class TQString;
 /**
  * KDE Accelerator manager.
  *
- * This class can be used to tqfind a valid and working set of
+ * This class can be used to find a valid and working set of
  * accelerators for any widget.
  *
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>

@@ -341,7 +341,7 @@ class HTMLInputElementImpl;
  * Form control. Note. Depending upon the environment the page is
  * being viewed, the value property may be read-only for the file
  * upload input type. For the "password" input type, the actual value
- * returned may be tqmasked to prevent unauthorized use. See the <a
+ * returned may be masked to prevent unauthorized use. See the <a
  * href="http://www.w3.org/TR/REC-html40/interact/forms.html#edef-INPUT">
  * INPUT element definition </a> in HTML 4.0.
  *
@@ -798,7 +798,7 @@ public:
     void setAccessKey( const DOMString & );
 
     /**
-     * Text tqalignment relative to \c FIELDSET . See the <a
+     * Text alignment relative to \c FIELDSET . See the <a
      * href="http://www.w3.org/TR/REC-html40/interact/forms.html#adef-align-LEGEND">
      * align attribute definition </a> in HTML 4.0. This attribute is
      * deprecated in HTML 4.0.

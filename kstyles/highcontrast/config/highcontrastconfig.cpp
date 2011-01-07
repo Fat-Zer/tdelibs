@@ -43,13 +43,13 @@ HighContrastStyleConfig::HighContrastStyleConfig(
         TQWidget* parent): TQWidget(parent)
 {
     // Should have no margins here, the dialog provides them
-    TQVBoxLayout* tqlayout = new TQVBoxLayout(this, 0, 0);
+    TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
     KGlobal::locale()->insertCatalogue("kstyle_highcontrast_config");
 
     wideLinesBox = new TQCheckBox(i18n("Use wider lines"), this);
 
-    tqlayout->add(wideLinesBox);
-    tqlayout->addStretch(1);
+    layout->add(wideLinesBox);
+    layout->addStretch(1);
 
     TQSettings s;
 

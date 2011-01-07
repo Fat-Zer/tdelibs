@@ -74,7 +74,7 @@ private slots:
 private:
 
   KRuler *hruler, *vruler;
-  TQGridLayout *tqlayout;
+  TQGridLayout *layout;
   TQFrame *miniwidget, *bigwidget;
   TQFrame *mainframe;
 

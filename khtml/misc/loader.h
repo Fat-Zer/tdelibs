@@ -91,7 +91,7 @@ namespace khtml
 	    Script
 	};
 
-	enum tqStatus {
+	enum Status {
 	    Unknown,      // let imagecache decide what to do with it
 	    New,          // inserting new image
             Pending,      // only partially loaded
@@ -127,8 +127,8 @@ namespace khtml
 	int count() const { return m_clients.count(); }
         int accessCount() const { return m_accessCount; }
 
-	void setStatus(tqStatus s) { m_status = s; }
-	tqStatus status() const { return m_status; }
+	void setStatus(Status s) { m_status = s; }
+	Status status() const { return m_status; }
 
         virtual void setCharset( const TQString& /*charset*/ ) {}
 
@@ -167,7 +167,7 @@ namespace khtml
         TQString m_accept;
         Request *m_request;
 	Type m_type;
-	tqStatus m_status;
+	Status m_status;
         int m_accessCount;
 	KIO::CacheControl m_cachePolicy;
 	time_t m_expireDate;
@@ -302,7 +302,7 @@ namespace khtml
 	 * gets called, whenever a TQMovie changes frame
 	 */
 	void movieUpdated( const TQRect &rect );
-        void movietqStatus(int);
+        void movieStatus(int);
         void movieResize(const TQSize&);
         void deleteMovie();
 
@@ -405,7 +405,7 @@ namespace khtml
     /**
      * @internal
      */
-    class Loader : public TQObject
+    class Loader : public QObject
     {
 	Q_OBJECT
 
@@ -486,7 +486,7 @@ namespace khtml
 	/**
 	 * clears the cache
 	 * Warning: call this only at the end of your program, to clean
-	 * up memory (useful for tqfinding memory holes)
+	 * up memory (useful for finding memory holes)
 	 */
 	KDE_EXPORT static void clear();
 

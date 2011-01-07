@@ -99,7 +99,7 @@ public:
     unsigned long length() const;
 
     /**
-     * The CSS rule that tqcontains this declaration block.
+     * The CSS rule that contains this declaration block.
      *
      */
     CSSRule parentRule() const;
@@ -633,7 +633,7 @@ class RectImpl;
 
 /**
  * The \c Rect interface is used to represent any <a
- * href="http://www.w3.org/TR/REC-CSS2/visufx.html#value-def-tqshape">
+ * href="http://www.w3.org/TR/REC-CSS2/visufx.html#value-def-shape">
  * rect </a> value. This interface reflects the values in the
  * underlying style property. Hence, modifications made through this
  * interface modify the style property.

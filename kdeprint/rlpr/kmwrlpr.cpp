@@ -32,7 +32,7 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
-static TQListViewItem* tqfindChild(TQListViewItem *c, const TQString& txt)
+static TQListViewItem* findChild(TQListViewItem *c, const TQString& txt)
 {
 	QListViewItem	*item(c);
 	while (item)
@@ -53,7 +53,7 @@ KMWRlpr::KMWRlpr(TQWidget *parent, const char *name)
 	m_view = new KListView(this);
 	m_view->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_view->setLineWidth(1);
-	m_view->addColumn(TQString::tqfromLatin1(""));
+	m_view->addColumn(TQString::fromLatin1(""));
 	m_view->header()->hide();
 	m_view->setRootIsDecorated(true);
 	m_view->setSorting(0);
@@ -94,10 +94,10 @@ void KMWRlpr::initPrinter(KMPrinter *p)
 {
 	m_host->setText(p->option("host"));
 	m_queue->setText(p->option("queue"));
-	QListViewItem	*item = tqfindChild(m_view->firstChild(),m_host->text());
+	QListViewItem	*item = findChild(m_view->firstChild(),m_host->text());
 	if (item)
 	{
-		item = tqfindChild(item->firstChild(),m_queue->text());
+		item = findChild(item->firstChild(),m_queue->text());
 		if (item)
 		{
 			item->parent()->setOpen(true);
@@ -109,7 +109,7 @@ void KMWRlpr::initPrinter(KMPrinter *p)
 
 void KMWRlpr::updatePrinter(KMPrinter *p)
 {
-	QString	uri = TQString::tqfromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
+	QString	uri = TQString::fromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
 	p->setDevice(uri);
 	p->setOption("host",m_host->text());
 	p->setOption("queue",m_queue->text());
@@ -140,7 +140,7 @@ void KMWRlpr::initialize()
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			if ((p=line.tqfind(':')) != -1)
+			if ((p=line.find(':')) != -1)
 			{
 				host = line.left(p).stripWhiteSpace();
 				QListViewItem	*hitem = new TQListViewItem(m_view,host);
@@ -180,7 +180,7 @@ void KMWRlpr::initialize()
 			}
 			if (buffer.isEmpty())
 				continue;
-			int	p = buffer.tqfind(':');
+			int	p = buffer.find(':');
 			if (p != -1)
 			{
 				QString	name = buffer.left(p);

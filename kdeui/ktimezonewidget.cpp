@@ -85,7 +85,7 @@ KTimezoneWidget::~KTimezoneWidget()
 
 TQString KTimezoneWidget::displayName(const KTimezone *zone)
 {
-    return i18n(zone->name().utf8()).tqreplace("_", " ");
+    return i18n(zone->name().utf8()).replace("_", " ");
 }
 
 TQStringList KTimezoneWidget::selection() const

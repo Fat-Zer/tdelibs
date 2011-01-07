@@ -75,7 +75,7 @@ public:
      */
     TQCString obj() const;
 
-    enum tqStatus{ CallSucceeded, CallFailed };
+    enum Status{ CallSucceeded, CallFailed };
     /**
      * Return the status of the last call, either @p CallSucceeded or
      * @p CallFailed.
@@ -83,7 +83,7 @@ public:
      * @return the status of the last call
      * @see ok();
      */
-    tqStatus status() const;
+    Status status() const;
 
 
     /**
@@ -101,7 +101,7 @@ protected:
        @param _status the new status
        @see status()
      */
-    void setStatus( tqStatus _status );
+    void setStatus( Status _status );
 
     /**
       Invoked whenever a call fails.  The default implementation
@@ -134,7 +134,7 @@ protected:
 private:
     TQCString m_app;
     TQCString m_obj;
-    tqStatus m_status;
+    Status m_status;
 
 protected:
     virtual	void virtual_hook( int id, void* data );

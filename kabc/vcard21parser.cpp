@@ -41,12 +41,12 @@ bool VCardLineX::isValid() const
   switch( name[0] ) {
     case 'a':
       if ( name == VCARD_ADR && qualified &&
-                   (qualifiers.tqcontains(VCARD_ADR_DOM)    ||
-                    qualifiers.tqcontains(VCARD_ADR_INTL)   ||
-                    qualifiers.tqcontains(VCARD_ADR_POSTAL) ||
-                    qualifiers.tqcontains(VCARD_ADR_HOME)   ||
-                    qualifiers.tqcontains(VCARD_ADR_WORK)   ||
-                    qualifiers.tqcontains(VCARD_ADR_PREF)
+                   (qualifiers.contains(VCARD_ADR_DOM)    ||
+                    qualifiers.contains(VCARD_ADR_INTL)   ||
+                    qualifiers.contains(VCARD_ADR_POSTAL) ||
+                    qualifiers.contains(VCARD_ADR_HOME)   ||
+                    qualifiers.contains(VCARD_ADR_WORK)   ||
+                    qualifiers.contains(VCARD_ADR_PREF)
          ) )
         return true;
 
@@ -63,18 +63,18 @@ bool VCardLineX::isValid() const
       if ( name == VCARD_CATEGORIES )
         return true;
       if ( name == VCARD_CLASS && qualified &&
-                   (qualifiers.tqcontains(VCARD_CLASS_PUBLIC)      ||
-                    qualifiers.tqcontains(VCARD_CLASS_PRIVATE)     ||
-                    qualifiers.tqcontains(VCARD_CLASS_CONFIDENTIAL)
+                   (qualifiers.contains(VCARD_CLASS_PUBLIC)      ||
+                    qualifiers.contains(VCARD_CLASS_PRIVATE)     ||
+                    qualifiers.contains(VCARD_CLASS_CONFIDENTIAL)
          ) )
         return true;
       break;
 
     case 'e':
       if ( name == VCARD_EMAIL && qualified &&
-                  (qualifiers.tqcontains(VCARD_EMAIL_INTERNET) ||
-                   qualifiers.tqcontains(VCARD_EMAIL_PREF)     ||
-                   qualifiers.tqcontains(VCARD_EMAIL_X400)
+                  (qualifiers.contains(VCARD_EMAIL_INTERNET) ||
+                   qualifiers.contains(VCARD_EMAIL_PREF)     ||
+                   qualifiers.contains(VCARD_EMAIL_X400)
          ) )
         return true;
       break;
@@ -91,8 +91,8 @@ bool VCardLineX::isValid() const
 
     case 'k':
       if ( name == VCARD_KEY && qualified &&
-                   (qualifiers.tqcontains(VCARD_KEY_X509) ||
-                    qualifiers.tqcontains(VCARD_KEY_PGP)
+                   (qualifiers.contains(VCARD_KEY_X509) ||
+                    qualifiers.contains(VCARD_KEY_PGP)
          ) )
         return true;
       break;
@@ -150,20 +150,20 @@ bool VCardLineX::isValid() const
 
     case 't':
       if ( name == VCARD_TEL && qualified &&
-                   (qualifiers.tqcontains(VCARD_TEL_HOME)  ||
-                    qualifiers.tqcontains(VCARD_TEL_WORK)  ||
-                    qualifiers.tqcontains(VCARD_TEL_PREF)  ||
-                    qualifiers.tqcontains(VCARD_TEL_VOICE) ||
-                    qualifiers.tqcontains(VCARD_TEL_FAX)   ||
-                    qualifiers.tqcontains(VCARD_TEL_MSG)   ||
-                    qualifiers.tqcontains(VCARD_TEL_CELL)  ||
-                    qualifiers.tqcontains(VCARD_TEL_PAGER) ||
-                    qualifiers.tqcontains(VCARD_TEL_BBS)   ||
-                    qualifiers.tqcontains(VCARD_TEL_MODEM) ||
-                    qualifiers.tqcontains(VCARD_TEL_CAR)   ||
-                    qualifiers.tqcontains(VCARD_TEL_ISDN)  ||
-                    qualifiers.tqcontains(VCARD_TEL_VIDEO) ||
-                    qualifiers.tqcontains(VCARD_TEL_PCS)
+                   (qualifiers.contains(VCARD_TEL_HOME)  ||
+                    qualifiers.contains(VCARD_TEL_WORK)  ||
+                    qualifiers.contains(VCARD_TEL_PREF)  ||
+                    qualifiers.contains(VCARD_TEL_VOICE) ||
+                    qualifiers.contains(VCARD_TEL_FAX)   ||
+                    qualifiers.contains(VCARD_TEL_MSG)   ||
+                    qualifiers.contains(VCARD_TEL_CELL)  ||
+                    qualifiers.contains(VCARD_TEL_PAGER) ||
+                    qualifiers.contains(VCARD_TEL_BBS)   ||
+                    qualifiers.contains(VCARD_TEL_MODEM) ||
+                    qualifiers.contains(VCARD_TEL_CAR)   ||
+                    qualifiers.contains(VCARD_TEL_ISDN)  ||
+                    qualifiers.contains(VCARD_TEL_VIDEO) ||
+                    qualifiers.contains(VCARD_TEL_PCS)
          ) )
         return true;
       if ( name == VCARD_TZ )
@@ -266,33 +266,33 @@ KABC::Addressee VCard21Parser::readFromString( const TQString &data)
     if ( (*i).name == VCARD_TEL ) {
       int type = 0;
       if ( (*i).qualified ) {
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_HOME ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_HOME ) )
           type |= PhoneNumber::Home;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_WORK ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_WORK ) )
           type |= PhoneNumber::Work;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_PREF ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_PREF ) )
           type |= PhoneNumber::Pref;
-        // if ( (*i).qualifiers.tqcontains( VCARD_TEL_VOICE ) )
+        // if ( (*i).qualifiers.contains( VCARD_TEL_VOICE ) )
         //  type |= PhoneNumber::Voice;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_FAX ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_FAX ) )
           type |= PhoneNumber::Fax;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_MSG ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_MSG ) )
           type |= PhoneNumber::Msg;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_CELL ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_CELL ) )
           type |= PhoneNumber::Cell;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_PAGER ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_PAGER ) )
           type |= PhoneNumber::Pager;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_BBS ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_BBS ) )
           type |= PhoneNumber::Bbs;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_MODEM ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_MODEM ) )
           type |= PhoneNumber::Modem;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_CAR ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_CAR ) )
           type |= PhoneNumber::Car;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_ISDN ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_ISDN ) )
           type |= PhoneNumber::Isdn;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_VIDEO ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_VIDEO ) )
           type |= PhoneNumber::Video;
-        if ( (*i).qualifiers.tqcontains( VCARD_TEL_PCS ) )
+        if ( (*i).qualifiers.contains( VCARD_TEL_PCS ) )
           type |= PhoneNumber::Pcs;
       }
       addressee.insertPhoneNumber( PhoneNumber( (*i).parameters[ 0 ], type ) );
@@ -304,19 +304,19 @@ KABC::Addressee VCard21Parser::readFromString( const TQString &data)
     if ( (*i).name == VCARD_ADR ) {
       int type = 0;
       if ( (*i).qualified ) {
-        if ( (*i).qualifiers.tqcontains( VCARD_ADR_DOM ) )
+        if ( (*i).qualifiers.contains( VCARD_ADR_DOM ) )
           type |= Address::Dom;
-        if ( (*i).qualifiers.tqcontains( VCARD_ADR_INTL ) )
+        if ( (*i).qualifiers.contains( VCARD_ADR_INTL ) )
           type |= Address::Intl;
-        if ( (*i).qualifiers.tqcontains( VCARD_ADR_POSTAL ) )
+        if ( (*i).qualifiers.contains( VCARD_ADR_POSTAL ) )
           type |= Address::Postal;
-        if ( (*i).qualifiers.tqcontains( VCARD_ADR_PARCEL ) )
+        if ( (*i).qualifiers.contains( VCARD_ADR_PARCEL ) )
           type |= Address::Parcel;
-        if ( (*i).qualifiers.tqcontains( VCARD_ADR_HOME ) )
+        if ( (*i).qualifiers.contains( VCARD_ADR_HOME ) )
           type |= Address::Home;
-        if ( (*i).qualifiers.tqcontains( VCARD_ADR_WORK ) )
+        if ( (*i).qualifiers.contains( VCARD_ADR_WORK ) )
           type |= Address::Work;
-        if ( (*i).qualifiers.tqcontains( VCARD_ADR_PREF ) )
+        if ( (*i).qualifiers.contains( VCARD_ADR_PREF ) )
           type |= Address::Pref;
       }
       addressee.insertAddress( readAddressFromQStringList( (*i).parameters, type ) );
@@ -326,7 +326,7 @@ KABC::Addressee VCard21Parser::readFromString( const TQString &data)
   //set the addressee's delivery label
   tmpStr = vCard->getValue(VCARD_LABEL);
   if (!tmpStr.isEmpty()) {
-    tmpStr.tqreplace("\r\n","\n");
+    tmpStr.replace("\r\n","\n");
     Address tmpAddress;
     tmpAddress.setLabel(tmpStr);
     addressee.insertAddress(tmpAddress);
@@ -334,7 +334,7 @@ KABC::Addressee VCard21Parser::readFromString( const TQString &data)
 
   //set the addressee's notes
   tmpStr = vCard->getValue(VCARD_NOTE);
-  tmpStr.tqreplace("\r\n","\n");
+  tmpStr.replace("\r\n","\n");
   addressee.setNote(tmpStr);
 
   //set the addressee's timezone
@@ -430,7 +430,7 @@ VCard21ParserImpl *VCard21ParserImpl::parseVCard( const TQString& vc, int *err )
       }
 
       // split into two tokens
-      int colon = (*j).tqfind( ':' );
+      int colon = (*j).find( ':' );
       if ( colon < 0 ) {
         _err = VC_ERR_INVALID_LINE;
         break;
@@ -556,7 +556,7 @@ TQString VCard21ParserImpl::getValue(const TQString& name, const TQString& quali
   const TQString lowqualifier = qualifier.lower();
 
   for (TQValueListIterator<VCardLineX> i = _vcdata->begin();i != _vcdata->end();++i) {
-   if ((*i).name == lowname && (*i).qualified && (*i).qualifiers.tqcontains(lowqualifier)) {
+   if ((*i).name == lowname && (*i).qualified && (*i).qualifiers.contains(lowqualifier)) {
     if ((*i).parameters.count() > 0)
      return (*i).parameters[0];
     else return failed;
@@ -598,7 +598,7 @@ TQStringList VCard21ParserImpl::getValues(const TQString& name, const TQString& 
   const TQString lowname = name.lower();
   const TQString lowqualifier = qualifier.lower();
   for (TQValueListIterator<VCardLineX> i = _vcdata->begin();i != _vcdata->end();++i) {
-    if ((*i).name == lowname && (*i).qualified && (*i).qualifiers.tqcontains(lowqualifier))
+    if ((*i).name == lowname && (*i).qualified && (*i).qualifiers.contains(lowqualifier))
        return (*i).parameters;
   }
   // failed.

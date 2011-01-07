@@ -152,7 +152,7 @@ const unsigned short KDE_NO_EXPORT DOM::tagPriority[] = {
     0, // ID_TEXT
 };
 
-const tagtqStatus DOM::endTag[] = {
+const tagStatus DOM::endTag[] = {
     REQUIRED,  // 0
     REQUIRED,  // ID_A == 1
     REQUIRED,  // ID_ABBR

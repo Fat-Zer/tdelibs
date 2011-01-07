@@ -541,7 +541,7 @@ int KCalendarSystemJalali::weekDayOfPray() const
 }
 TQString KCalendarSystemJalali::calendarName() const
 {
-  return TQString::tqfromLatin1("jalali");
+  return TQString::fromLatin1("jalali");
 }
 
 bool KCalendarSystemJalali::isLunar() const

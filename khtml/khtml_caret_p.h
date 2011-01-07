@@ -130,7 +130,7 @@ class CaretBoxLine;
  *
  * The caret box serves as a wrapper for inline boxes of all kind. It either
  * wraps an InlineBox, InlineTextBox, or InlineFlowBox, or if no such boxes
- * exist for a certain context, it tqcontains the relevant information directly.
+ * exist for a certain context, it contains the relevant information directly.
  *
  * This class will be constructed whenever a caret position has to be described.
  * @since 3.3
@@ -178,7 +178,7 @@ public:
    */
   RenderBlock *containingBlock() const { return _box ? static_cast<RenderBlock *>(cb) : cb->containingBlock(); }
 
-  /** returns the tqreplaced render object if this caret box represents one,
+  /** returns the replaced render object if this caret box represents one,
    * 0 otherwise.
    */
 
@@ -388,7 +388,7 @@ public:
 
   /** constructs a new caret box line for the given render block.
    * @param deleter deleter which handles alloc+dealloc of the object
-   * @param cb render block or render tqreplaced
+   * @param cb render block or render replaced
    * @param outside true when line is to be constructed outside
    * @param outsideEnd true when the ending outside is meant
    * @param iter returns the iterator to the caret box representing the given
@@ -409,7 +409,7 @@ public:
 #endif
 
 protected:
-  /** tqcontains the seek parameters */
+  /** contains the seek parameters */
   struct SeekBoxParams {
     InlineBox *box;
     bool outside;
@@ -656,10 +656,10 @@ public:
   virtual ~LinearDocument();
 
   /**
-   * Tells whether this list tqcontains any lines.
+   * Tells whether this list contains any lines.
    *
-   * @returns @p true if this document tqcontains lines, @p false otherwise. Note
-   *	that an empty document tqcontains at least one line, so this method
+   * @returns @p true if this document contains lines, @p false otherwise. Note
+   *	that an empty document contains at least one line, so this method
    *	only returns @p false if the document could not be initialised for
    *	some reason.
    */
@@ -796,7 +796,7 @@ public:
   void advance(bool toBegin);
 
 protected:
-  /** tqfinds out if the given box is editable.
+  /** finds out if the given box is editable.
    * @param boxit iterator to given caret box
    * @param fromEnd true when advancing towards the beginning
    * @return @p true if box is editable
@@ -860,7 +860,7 @@ public:
   void advance(bool toBegin);
 
 protected:
-  /** tqfinds out if the current line is editable.
+  /** finds out if the current line is editable.
    *
    * @param it check caret box line iterator points to
    * @return @p true if line is editable
@@ -1034,7 +1034,7 @@ public:
    */
   int chr() const { return _char; }
 
-  /** returns the current character as a tqunicode symbol, substituting
+  /** returns the current character as a unicode symbol, substituting
    * a blank for a non-text node.
    */
   TQChar operator *() const { return TQChar(_char >= 0 ? _char : ' '); }
@@ -1089,7 +1089,7 @@ protected:
     CaretBox *box = *copy;
     InlineBox *b = box->inlineBox();
     if (b && !box->isOutside() && b->isInlineTextBox())
-      _char = static_cast<RenderText *>(b->object())->str->s[b->minOffset()].tqunicode();
+      _char = static_cast<RenderText *>(b->object())->str->s[b->minOffset()].unicode();
     else
       _char = -1;
   }

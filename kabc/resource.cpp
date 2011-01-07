@@ -266,9 +266,9 @@ void Resource::removeAddressee( const Addressee &addr )
   mAddrMap.erase( addr.uid() );
 }
 
-Addressee Resource::tqfindByUid( const TQString &uid )
+Addressee Resource::findByUid( const TQString &uid )
 {
-  Addressee::Map::ConstIterator it = mAddrMap.tqfind( uid );
+  Addressee::Map::ConstIterator it = mAddrMap.find( uid );
 
   if ( it != mAddrMap.end() )
     return it.data();
@@ -276,7 +276,7 @@ Addressee Resource::tqfindByUid( const TQString &uid )
   return Addressee();
 }
 
-Addressee::List Resource::tqfindByName( const TQString &name )
+Addressee::List Resource::findByName( const TQString &name )
 {
   Addressee::List results;
 
@@ -289,7 +289,7 @@ Addressee::List Resource::tqfindByName( const TQString &name )
   return results;
 }
 
-Addressee::List Resource::tqfindByEmail( const TQString &email )
+Addressee::List Resource::findByEmail( const TQString &email )
 {
   Addressee::List results;
   const TQString lowerEmail = email.lower();
@@ -306,7 +306,7 @@ Addressee::List Resource::tqfindByEmail( const TQString &email )
   return results;
 }
 
-Addressee::List Resource::tqfindByCategory( const TQString &category )
+Addressee::List Resource::findByCategory( const TQString &category )
 {
   Addressee::List results;
 

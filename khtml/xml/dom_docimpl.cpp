@@ -128,7 +128,7 @@ DocumentTypeImpl *DOMImplementationImpl::createDocumentType( const DOMString &qu
         return 0;
     }
 
-    // INVALID_CHARACTER_ERR: Raised if the specified qualified name tqcontains an illegal character.
+    // INVALID_CHARACTER_ERR: Raised if the specified qualified name contains an illegal character.
     if (!Element::khtmlValidQualifiedName(qualifiedName)) {
         exceptioncode = DOMException::INVALID_CHARACTER_ERR;
         return 0;
@@ -232,7 +232,7 @@ void ElementMappingCache::add(const TQString& id, ElementImpl* nd)
 {
     if (id.isEmpty()) return;
 
-    ItemInfo* info = m_dict.tqfind(id);
+    ItemInfo* info = m_dict.find(id);
     if (info)
     {
         info->ref++;
@@ -251,7 +251,7 @@ void ElementMappingCache::set(const TQString& id, ElementImpl* nd)
 {
     if (id.isEmpty()) return;
 
-    ItemInfo* info = m_dict.tqfind(id);
+    ItemInfo* info = m_dict.find(id);
     info->nd = nd;
 }
 
@@ -259,7 +259,7 @@ void ElementMappingCache::remove(const TQString& id, ElementImpl* nd)
 {
     if (id.isEmpty()) return;
 
-    ItemInfo* info = m_dict.tqfind(id);
+    ItemInfo* info = m_dict.find(id);
     info->ref--;
     if (info->ref == 0)
     {
@@ -273,16 +273,16 @@ void ElementMappingCache::remove(const TQString& id, ElementImpl* nd)
     }
 }
 
-bool ElementMappingCache::tqcontains(const TQString& id)
+bool ElementMappingCache::contains(const TQString& id)
 {
     if (id.isEmpty()) return false;
-    return m_dict.tqfind(id);
+    return m_dict.find(id);
 }
 
 ElementMappingCache::ItemInfo* ElementMappingCache::get(const TQString& id)
 {
     if (id.isEmpty()) return 0;
-    return m_dict.tqfind(id);
+    return m_dict.find(id);
 }
 
 static KStaticDeleter< TQPtrList<DocumentImpl> > s_changedDocumentsDeleter;
@@ -337,7 +337,7 @@ DocumentImpl::DocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v)
     m_namespaceMap = new IdNameMapping(1);
     TQString xhtml(XHTML_NAMESPACE);
     m_namespaceMap->names.insert(emptyNamespace, new DOMStringImpl(""));
-    m_namespaceMap->names.insert(xhtmlNamespace, new DOMStringImpl(xhtml.tqunicode(), xhtml.length()));
+    m_namespaceMap->names.insert(xhtmlNamespace, new DOMStringImpl(xhtml.unicode(), xhtml.length()));
     m_namespaceMap->names[emptyNamespace]->ref();
     m_namespaceMap->names[xhtmlNamespace]->ref();
     m_namespaceMap->count+=2;
@@ -1165,7 +1165,7 @@ void DocumentImpl::recalcStyle( StyleChange change )
     //kdDebug( 6020 ) << "TIME: recalcStyle() dt=" << qt.elapsed() << endl;
 
     if (changed() && m_view)
-	m_view->tqlayout();
+	m_view->layout();
 
 bail_out:
     setChanged( false );
@@ -1219,9 +1219,9 @@ void DocumentImpl::updateLayout()
 
     updateRendering();
 
-    // Only do a tqlayout if changes have occurred that make it necessary.
+    // Only do a layout if changes have occurred that make it necessary.
     if (m_view && renderer() && renderer()->needsLayout())
-	m_view->tqlayout();
+	m_view->layout();
 
     m_ignorePendingStylesheets = oldIgnore;
 }
@@ -1387,7 +1387,7 @@ void DocumentImpl::write( const TQString &text )
         if (m_view)
             m_view->part()->resetFromScript();
         m_tokenizer->setAutoClose();
-        write(TQString::tqfromLatin1("<html>"));
+        write(TQString::fromLatin1("<html>"));
     }
     m_tokenizer->write(text, false);
 }
@@ -1461,7 +1461,7 @@ NodeImpl *DocumentImpl::nextFocusNode(NodeImpl *fromNode)
     }
 
     if (fromTabIndex == 0) {
-	// Just need to tqfind the next selectable node after fromNode (in document order) that doesn't have a tab index
+	// Just need to find the next selectable node after fromNode (in document order) that doesn't have a tab index
 	NodeImpl *n = fromNode->traverseNextNode();
 	while (n && !(n->isTabFocusable() && n->tabIndex() == 0))
 	    n = n->traverseNextNode();
@@ -1471,7 +1471,7 @@ NodeImpl *DocumentImpl::nextFocusNode(NodeImpl *fromNode)
 	// Find the lowest tab index out of all the nodes except fromNode, that is greater than or equal to fromNode's
 	// tab index. For nodes with the same tab index as fromNode, we are only interested in those that come after
 	// fromNode in document order.
-	// If we don't tqfind a suitable tab index, the next focus node will be one with a tab index of 0.
+	// If we don't find a suitable tab index, the next focus node will be one with a tab index of 0.
 	unsigned short lowestSuitableTabIndex = 65535;
 	NodeImpl *n;
 
@@ -1578,7 +1578,7 @@ NodeImpl *DocumentImpl::previousFocusNode(NodeImpl *fromNode)
 	    // Find the lowest tab index out of all the nodes except fromNode, that is less than or equal to fromNode's
 	    // tab index. For nodes with the same tab index as fromNode, we are only interested in those before
 	    // fromNode.
-	    // If we don't tqfind a suitable tab index, then there will be no previous focus node.
+	    // If we don't find a suitable tab index, then there will be no previous focus node.
 	    unsigned short highestSuitableTabIndex = 0;
 	    NodeImpl *n;
 
@@ -1622,7 +1622,7 @@ NodeImpl *DocumentImpl::previousFocusNode(NodeImpl *fromNode)
     }
 }
 
-ElementImpl* DocumentImpl::tqfindAccessKeyElement(TQChar c)
+ElementImpl* DocumentImpl::findAccessKeyElement(TQChar c)
 {
     c = c.upper();
     for( NodeImpl* n = this;
@@ -1668,9 +1668,9 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
     {
         // get delay and url
         TQString str = content.string().stripWhiteSpace();
-        int pos = str.tqfind(TQRegExp("[;,]"));
+        int pos = str.find(TQRegExp("[;,]"));
         if ( pos == -1 )
-            pos = str.tqfind(TQRegExp("[ \t]"));
+            pos = str.find(TQRegExp("[ \t]"));
 
         bool ok = false;
 	int delay = kMax( 0, content.implementation()->toInt(&ok) );
@@ -1685,7 +1685,7 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
             pos++;
             while(pos < (int)str.length() && str[pos].isSpace()) pos++;
             str = str.mid(pos);
-            if(str.tqfind("url", 0,  false ) == 0)  str = str.mid(3);
+            if(str.find("url", 0,  false ) == 0)  str = str.mid(3);
             str = str.stripWhiteSpace();
             if ( str.length() && str[0] == '=' ) str = str.mid( 1 ).stripWhiteSpace();
             while(str.length() &&
@@ -1881,17 +1881,17 @@ NodeImpl::Id DocumentImpl::getId( NodeImpl::IdType _type, DOMStringImpl* _nsURI,
     TQString name = cs ? n.string() : n.string().upper();
 
     if (!_nsURI) {
-        id = (NodeImpl::Id)(long) map->ids.tqfind( name );
+        id = (NodeImpl::Id)(long) map->ids.find( name );
         if (!id && _type != NodeImpl::NamespaceId) {
-            id = (NodeImpl::Id)(long) map->ids.tqfind( "aliases: " + name );
+            id = (NodeImpl::Id)(long) map->ids.find( "aliases: " + name );
 	}
     } else {
-        id = (NodeImpl::Id)(long) map->ids.tqfind( name );
+        id = (NodeImpl::Id)(long) map->ids.find( name );
         if (!readonly && id && _prefix && _prefix->l) {
             // we were called in registration mode... check if the alias exists
             TQConstString px( _prefix->s, _prefix->l );
             TQString qn("aliases: " + (cs ? px.string() : px.string().upper()) + ":" + name);
-            if (!map->ids.tqfind( qn )) {
+            if (!map->ids.find( qn )) {
                 map->ids.insert( qn, (void*)id );
             }
         }
@@ -2067,7 +2067,7 @@ void DocumentImpl::recalcStyleSelector()
 
     TQPtrList<StyleSheetImpl> oldStyleSheets = m_styleSheets->styleSheets;
     m_styleSheets->styleSheets.clear();
-    TQString sheetUsed = view() ? view()->part()->d->m_sheetUsed.tqreplace("&&", "&") : TQString();
+    TQString sheetUsed = view() ? view()->part()->d->m_sheetUsed.replace("&&", "&") : TQString();
     bool autoselect = sheetUsed.isEmpty();
     if (autoselect && !m_preferredStylesheetSet.isEmpty())
         sheetUsed = m_preferredStylesheetSet.string();
@@ -2141,9 +2141,9 @@ void DocumentImpl::recalcStyleSelector()
                     if ( title != sheetUsed )
                         sheet = 0; // don't use it
 
-                    title = title.tqreplace('&',  "&&");
+                    title = title.replace('&',  "&&");
 
-                    if ( !m_availableSheets.tqcontains( title ) )
+                    if ( !m_availableSheets.contains( title ) )
                         m_availableSheets.append( title );
                 }
             }
@@ -2170,7 +2170,7 @@ void DocumentImpl::recalcStyleSelector()
         // or we found the sheet we selected
         if (sheetUsed.isEmpty() ||
             (!canResetSheet && tokenizer()) ||
-            m_availableSheets.tqcontains(sheetUsed)) {
+            m_availableSheets.contains(sheetUsed)) {
             break;
         }
 
@@ -2280,7 +2280,7 @@ void DocumentImpl::setFocusNode(NodeImpl *newFocusNode)
             if (m_focusNode != newFocusNode) return;
 
             // eww, I suck. set the qt focus correctly
-            // ### tqfind a better place in the code for this
+            // ### find a better place in the code for this
             if (view()) {
                 if (!m_focusNode->renderer() || !m_focusNode->renderer()->isWidget())
                     view()->setFocus();
@@ -2690,7 +2690,7 @@ NodeListImpl::Cache* DOM::DocumentImpl::acquireCachedNodeListInfo(
 
     //Check to see if we have this sort of item cached.
     NodeListImpl::Cache* cached =
-        (type == NodeListImpl::UNCACHEABLE) ? 0 : m_nodeListCache.tqfind(key.hash());
+        (type == NodeListImpl::UNCACHEABLE) ? 0 : m_nodeListCache.find(key.hash());
 
     if (cached) {
         if (cached->key == key) {
@@ -2710,7 +2710,7 @@ NodeListImpl::Cache* DOM::DocumentImpl::acquireCachedNodeListInfo(
 
     if (type != NodeListImpl::UNCACHEABLE) {
         newInfo->ref(); //Add the cache's reference
-        m_nodeListCache.tqreplace(key.hash(), newInfo);
+        m_nodeListCache.replace(key.hash(), newInfo);
     }
 
     return newInfo;

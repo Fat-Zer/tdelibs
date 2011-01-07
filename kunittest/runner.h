@@ -94,7 +94,7 @@ namespace KUnitTest
      *
      * @see KUNITTEST_REGISTER_TESTER
      */
-    class KUNITTEST_EXPORT Runner : public TQObject
+    class KUNITTEST_EXPORT Runner : public QObject
     {
         Q_OBJECT
     

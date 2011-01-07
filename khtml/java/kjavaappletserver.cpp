@@ -448,7 +448,7 @@ void KJavaAppletServer::sendURLData( int loaderID, int code, const TQByteArray& 
 
 void KJavaAppletServer::removeDataJob( int loaderID )
 {
-    const KIOJobMap::iterator it = d->kiojobs.tqfind( loaderID );
+    const KIOJobMap::iterator it = d->kiojobs.find( loaderID );
     if (it != d->kiojobs.end()) {
         it.data()->deleteLater();
         d->kiojobs.erase( it );
@@ -502,7 +502,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
     if (cmd_code == KJAS_PUT_DATA) {
         // rest of the data is for kio put
         if (ok) {
-            KIOJobMap::iterator it = d->kiojobs.tqfind( ID_num );
+            KIOJobMap::iterator it = d->kiojobs.find( ID_num );
             if (ok && it != d->kiojobs.end()) {
                 TQByteArray qba;
                 qba.setRawData(qb.data() + index, qb.size() - index - 1);
@@ -517,7 +517,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
     //now parse out the arguments
     while( index < qb_size )
     {
-        int sep_pos = qb.tqfind( 0, index );
+        int sep_pos = qb.find( 0, index );
         if (sep_pos < 0) {
             kdError(6100) << "Missing separation byte" << endl;
             sep_pos = qb_size;
@@ -526,24 +526,24 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
         args.append( TQString::fromLocal8Bit( qb.data() + index, sep_pos - index ) );
         index = sep_pos + 1; //skip the sep
     }
-    //here I should tqfind the context and call the method directly
+    //here I should find the context and call the method directly
     //instead of emitting signals
     switch( cmd_code )
     {
         case KJAS_SHOW_DOCUMENT:
-            cmd = TQString::tqfromLatin1( "showdocument" );
+            cmd = TQString::fromLatin1( "showdocument" );
             break;
 
         case KJAS_SHOW_URLINFRAME:
-            cmd = TQString::tqfromLatin1( "showurlinframe" );
+            cmd = TQString::fromLatin1( "showurlinframe" );
             break;
 
         case KJAS_SHOW_STATUS:
-            cmd = TQString::tqfromLatin1( "showstatus" );
+            cmd = TQString::fromLatin1( "showstatus" );
             break;
 
         case KJAS_RESIZE_APPLET:
-            cmd = TQString::tqfromLatin1( "resizeapplet" );
+            cmd = TQString::fromLatin1( "resizeapplet" );
             break;
 
         case KJAS_GET_URLDATA:
@@ -565,7 +565,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
         case KJAS_DATA_COMMAND:
             if (ok && !args.empty()) {
                 const int cmd = args.first().toInt( &ok );
-                KIOJobMap::iterator it = d->kiojobs.tqfind( ID_num );
+                KIOJobMap::iterator it = d->kiojobs.find( ID_num );
                 if (ok && it != d->kiojobs.end())
                     it.data()->jobCommand( cmd );
                 kdDebug(6100) << "KIO Data command: " << ID_num << " " << args.first() << endl;
@@ -573,7 +573,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
                 kdError(6100) << "KIO Data command error " << ok << " args:" << args.size() << endl;
             return;
         case KJAS_JAVASCRIPT_EVENT:
-            cmd = TQString::tqfromLatin1( "JS_Event" );
+            cmd = TQString::fromLatin1( "JS_Event" );
             kdDebug(6100) << "Javascript request: "<< contextID
                           << " code: " << args[0] << endl;
             break;
@@ -581,7 +581,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
         case KJAS_PUT_MEMBER:
         case KJAS_CALL_MEMBER: {
             const int ticket = args[0].toInt();
-            JSStack::iterator it = d->jsstack.tqfind(ticket);
+            JSStack::iterator it = d->jsstack.find(ticket);
             if (it != d->jsstack.end()) {
                 kdDebug(6100) << "slotJavaRequest: " << ticket << endl;
                 args.pop_front();
@@ -593,24 +593,24 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
             return;
         }
         case KJAS_AUDIOCLIP_PLAY:
-            cmd = TQString::tqfromLatin1( "audioclip_play" );
+            cmd = TQString::fromLatin1( "audioclip_play" );
             kdDebug(6100) << "Audio Play: url=" << args[0] << endl;
             break;
         case KJAS_AUDIOCLIP_LOOP:
-            cmd = TQString::tqfromLatin1( "audioclip_loop" );
+            cmd = TQString::fromLatin1( "audioclip_loop" );
             kdDebug(6100) << "Audio Loop: url=" << args[0] << endl;
             break;
         case KJAS_AUDIOCLIP_STOP:
-            cmd = TQString::tqfromLatin1( "audioclip_stop" );
+            cmd = TQString::fromLatin1( "audioclip_stop" );
             kdDebug(6100) << "Audio Stop: url=" << args[0] << endl;
             break;
         case KJAS_APPLET_STATE:
             kdDebug(6100) << "Applet State Notification for Applet " << args[0] << ". New state=" << args[1] << endl;
-            cmd = TQString::tqfromLatin1( "AppletStateNotification" );
+            cmd = TQString::fromLatin1( "AppletStateNotification" );
             break;
         case KJAS_APPLET_FAILED:
             kdDebug(6100) << "Applet " << args[0] << " Failed: " << args[1] << endl;
-            cmd = TQString::tqfromLatin1( "AppletFailed" );
+            cmd = TQString::fromLatin1( "AppletFailed" );
             break;
         case KJAS_SECURITY_CONFIRM: {
             if (KSSL::doesSSLWork() && !d->kssl)
@@ -670,8 +670,8 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
                         TQString subject = cert->getSubject() + TQChar('\n');
                         TQRegExp reg(TQString("/[A-Z]+="));
                         int pos = 0;
-                        while ((pos = subject.tqfind(reg, pos)) > -1)
-                            subject.tqreplace(pos, 1, TQString("\n    "));
+                        while ((pos = subject.find(reg, pos)) > -1)
+                            subject.replace(pos, 1, TQString("\n    "));
                         text += subject.mid(1);
                     }
                 }
@@ -680,7 +680,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
                     KSSLCertChain chain;
                     chain.setChain( certs );
                     if ( chain.isValid() )
-                        answer = PermissionDialog( tqApp->activeWindow() ).exec( text, args[0] );
+                        answer = PermissionDialog( qApp->activeWindow() ).exec( text, args[0] );
                 }
             }
             sl.push_front( TQString(answer) );
@@ -779,7 +779,7 @@ PermissionDialog::PermissionDialog( TQWidget* parent )
 TQCString PermissionDialog::exec( const TQString & cert, const TQString & perm ) {
     TQGuardedPtr<TQDialog> dialog = new TQDialog( static_cast<TQWidget*>(parent()), "PermissionDialog");
 
-    dialog->tqsetSizePolicy( TQSizePolicy( (TQSizePolicy::SizeType)1, (TQSizePolicy::SizeType)1, 0, 0, dialog->sizePolicy().hasHeightForWidth() ) );
+    dialog->setSizePolicy( TQSizePolicy( (TQSizePolicy::SizeType)1, (TQSizePolicy::SizeType)1, 0, 0, dialog->sizePolicy().hasHeightForWidth() ) );
     dialog->setModal( true );
     dialog->setCaption( i18n("Security Alert") );
 
@@ -807,7 +807,7 @@ TQCString PermissionDialog::exec( const TQString & cert, const TQString & perm )
     TQPushButton* const grant = new TQPushButton( i18n("&Grant All"), dialog, "grant" );
     buttonLayout->addWidget( grant );
     dialogLayout->addLayout( buttonLayout );
-    dialog->resize( dialog->tqminimumSizeHint() );
+    dialog->resize( dialog->minimumSizeHint() );
     //clearWState( WState_Polished );
 
     connect( no, TQT_SIGNAL( clicked() ), this, TQT_SLOT( clicked() ) );
@@ -827,7 +827,7 @@ PermissionDialog::~PermissionDialog()
 void PermissionDialog::clicked()
 {
     m_button = sender()->name();
-    static_cast<const TQWidget*>(sender())->tqparentWidget()->close();
+    static_cast<const TQWidget*>(sender())->parentWidget()->close();
 }
 
 #include "kjavaappletserver.moc"

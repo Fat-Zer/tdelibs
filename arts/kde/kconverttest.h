@@ -24,7 +24,7 @@
 
 #include <tqobject.h>
 
-class KConvertTest : public TQObject
+class KConvertTest : public QObject
 {
 Q_OBJECT
 public:

@@ -31,7 +31,7 @@
 #include <cups/ipp.h>
 #include <cups/language.h>
 
-TQString tqfindDir(const TQStringList& list)
+TQString findDir(const TQStringList& list)
 {
 	for (TQStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
 		if (TQFile::exists(*it))
@@ -42,7 +42,7 @@ TQString tqfindDir(const TQStringList& list)
 
 void splitSizeSpec(const TQString& s, int& sz, int& suff)
 {
-	int	p = s.tqfind(TQRegExp("\\D"));
+	int	p = s.find(TQRegExp("\\D"));
 	sz = s.mid(0, p).toInt();
 	if (p != -1)
 	{
@@ -61,21 +61,21 @@ void splitSizeSpec(const TQString& s, int& sz, int& suff)
 
 CupsdConf::CupsdConf()
 {
-	// start by trying to tqfind CUPS directories (useful later)
-	datadir_ = tqfindDir(TQStringList("/usr/share/cups")
+	// start by trying to find CUPS directories (useful later)
+	datadir_ = findDir(TQStringList("/usr/share/cups")
 			<< "/usr/local/share/cups"
 			<< "/opt/share/cups"
 			<< "/opt/local/share/cups");
-	documentdir_ = tqfindDir(TQStringList(datadir_+"/doc-root")
+	documentdir_ = findDir(TQStringList(datadir_+"/doc-root")
 			<< datadir_.left(datadir_.length()-5)+"/doc/cups");
 	//fontpath_ << (datadir_+"/fonts");
-	requestdir_ = tqfindDir(TQStringList("/var/spool/cups")
+	requestdir_ = findDir(TQStringList("/var/spool/cups")
 			<< "/var/cups");
-	serverbin_ = tqfindDir(TQStringList("/usr/lib" KDELIBSUFF "/cups")
+	serverbin_ = findDir(TQStringList("/usr/lib" KDELIBSUFF "/cups")
 			<< "/usr/local/lib" KDELIBSUFF "/cups"
 			<< "/opt/lib" KDELIBSUFF "/cups"
 			<< "/opt/local/lib" KDELIBSUFF "/cups");
-	serverfiles_ = tqfindDir(TQStringList("/etc/cups")
+	serverfiles_ = findDir(TQStringList("/etc/cups")
 			<< "/usr/local/etc/cups");
 	tmpfiles_ = requestdir_+"/tmp";
 
@@ -100,7 +100,7 @@ CupsdConf::CupsdConf()
 	maxrequestsize_ = "0";
 	clienttimeout_ = 300;
 	// listenaddresses_
-	QString	logdir = tqfindDir(TQStringList("/var/log/cups")
+	QString	logdir = findDir(TQStringList("/var/log/cups")
 			<< "/var/spool/cups/log"
 			<< "/var/cups/log");
 	accesslog_ = logdir+"/access_log";
@@ -484,7 +484,7 @@ bool CupsdConf::parseOption(const TQString& line)
 	int p(-1);
 	TQString keyword, value, l(line.simplifyWhiteSpace());
 
-	if ((p=l.tqfind(' ')) != -1)
+	if ((p=l.find(' ')) != -1)
 	{
 		keyword = l.left(p).lower();
 		value = l.mid(p+1);
@@ -508,7 +508,7 @@ bool CupsdConf::parseOption(const TQString& line)
 	{
 		browseprotocols_.clear();
 		TQStringList prots = TQStringList::split(TQRegExp("\\s"), value, false);
-		if (prots.tqfind("all") != prots.end())
+		if (prots.find("all") != prots.end())
 			browseprotocols_ << "CUPS" << "SLP";
 		else
 			for (TQStringList::ConstIterator it=prots.begin(); it!=prots.end(); ++it)
@@ -718,7 +718,7 @@ CupsLocation::CupsLocation(const CupsLocation& loc)
 bool CupsLocation::parseResource(const TQString& line)
 {
 	QString	str = line.simplifyWhiteSpace();
-	int	p1 = line.tqfind(' '), p2 = line.tqfind('>');
+	int	p1 = line.find(' '), p2 = line.find('>');
 	if (p1 != -1 && p2 != -1)
 	{
 		resourcename_ = str.mid(p1+1,p2-p1-1);
@@ -732,7 +732,7 @@ bool CupsLocation::parseOption(const TQString& line)
 	int p(-1);
 	TQString keyword, value, l(line.simplifyWhiteSpace());
 
-	if ((p=l.tqfind(' ')) != -1)
+	if ((p=l.find(' ')) != -1)
 	{
 		keyword = l.left(p).lower();
 		value = l.mid(p+1);
@@ -760,7 +760,7 @@ bool CupsLocation::parseOption(const TQString& line)
 	else if (keyword == "authgroupname") authname_ = value;
 	else if (keyword == "require")
 	{
-		int p = value.tqfind(' ');
+		int p = value.find(' ');
 		if (p != -1)
 		{
 			authname_ = value.mid(p+1);
@@ -810,8 +810,8 @@ int CupsResource::typeFromText(const TQString& text)
 {
 	if (text == i18n("Base", "Root") || text == i18n("All printers") || text == i18n("All classes") || text == i18n("Print jobs")) return RESOURCE_GLOBAL;
 	else if (text == i18n("Administration")) return RESOURCE_ADMIN;
-	else if (text.tqfind(i18n("Class")) == 0) return RESOURCE_CLASS;
-	else if (text.tqfind(i18n("Printer")) == 0) return RESOURCE_PRINTER;
+	else if (text.find(i18n("Class")) == 0) return RESOURCE_CLASS;
+	else if (text.find(i18n("Printer")) == 0) return RESOURCE_PRINTER;
 	else return RESOURCE_PRINTER;
 }
 
@@ -832,12 +832,12 @@ TQString CupsResource::textToPath(const TQString& text)
 	else if (text == i18n("All classes")) path = "/classes";
 	else if (text == i18n("Print jobs")) path = "/jobs";
 	else if (text == i18n("Base", "Root")) path = "/";
-	else if (text.tqfind(i18n("Printer")) == 0)
+	else if (text.find(i18n("Printer")) == 0)
 	{
 		path = "/printers/";
 		path.append(text.right(text.length()-i18n("Printer").length()-1));
 	}
-	else if (text.tqfind(i18n("Class")) == 0)
+	else if (text.find(i18n("Class")) == 0)
 	{
 		path = "/classes/";
 		path.append(text.right(text.length()-i18n("Class").length()-1));
@@ -853,13 +853,13 @@ TQString CupsResource::pathToText(const TQString& path)
 	else if (path == "/classes") text = i18n("All classes");
 	else if (path == "/") text = i18n("Root");
 	else if (path == "/jobs") text = i18n("Print jobs");
-	else if (path.tqfind("/printers/") == 0)
+	else if (path.find("/printers/") == 0)
 	{
 		text = i18n("Printer");
 		text.append(" ");
 		text.append(path.right(path.length()-10));
 	}
-	else if (path.tqfind("/classes/") == 0)
+	else if (path.find("/classes/") == 0)
 	{
 		text = i18n("Class");
 		text.append(" ");

@@ -143,7 +143,7 @@ TQString KXMLGUIClient::localXMLFile() const
   if ( !TQDir::isRelativePath(d->m_xmlFile) )
       return TQString::null; // can't save anything here
 
-  return locateLocal( "data", TQString::tqfromLatin1( instance()->instanceName() + '/' ) + d->m_xmlFile );
+  return locateLocal( "data", TQString::fromLatin1( instance()->instanceName() + '/' ) + d->m_xmlFile );
 }
 
 
@@ -178,7 +178,7 @@ void KXMLGUIClient::setXMLFile( const TQString& _file, bool merge, bool setXMLDo
   {
     TQString doc;
 
-    TQString filter = TQString::tqfromLatin1( instance()->instanceName() + '/' ) + _file;
+    TQString filter = TQString::fromLatin1( instance()->instanceName() + '/' ) + _file;
 
     TQStringList allFiles = instance()->dirs()->findAllResources( "data", filter ) + instance()->dirs()->findAllResources( "data", _file );
 
@@ -190,10 +190,10 @@ void KXMLGUIClient::setXMLFile( const TQString& _file, bool merge, bool setXMLDo
       // let's treat this as if it isn't a problem and the user just
       // wants the global standards file
 
-      // however if a non-empty file gets passed and we can't tqfind it we might
+      // however if a non-empty file gets passed and we can't find it we might
       // inform the developer using some debug output
       if ( !_file.isEmpty() )
-          kdWarning() << "KXMLGUIClient::setXMLFile: cannot tqfind .rc file " << _file << endl;
+          kdWarning() << "KXMLGUIClient::setXMLFile: cannot find .rc file " << _file << endl;
 
       setXML( TQString::null, true );
       return;
@@ -263,13 +263,13 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
   static const TQString &attrOne = KGlobal::staticQString( "1" );
 
   // there is a possibility that we don't want to merge in the
-  // additive.. rather, we might want to *tqreplace* the base with the
+  // additive.. rather, we might want to *replace* the base with the
   // additive.  this can be for any container.. either at a file wide
   // level or a simple container level.  we look for the 'noMerge'
-  // tag, in any event and just tqreplace the old with the new
+  // tag, in any event and just replace the old with the new
   if ( additive.attribute(attrNoMerge) == attrOne ) // ### use toInt() instead? (Simon)
   {
-    base.parentNode().tqreplaceChild(additive, base);
+    base.parentNode().replaceChild(additive, base);
     return true;
   }
 
@@ -348,7 +348,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
           // first, see if this new element matches a standard one in
           // the global file.  if it does, then we skip it as it will
           // be merged in, later
-          TQDomElement matchingElement = tqfindMatchingElement( newChild, base );
+          TQDomElement matchingElement = findMatchingElement( newChild, base );
           if ( matchingElement.isNull() || newChild.tagName() == tagSeparator )
             base.insertBefore( newChild, e );
         }
@@ -368,7 +368,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
       if ( tag == tagText )
         continue;
 
-      TQDomElement matchingElement = tqfindMatchingElement( e, additive );
+      TQDomElement matchingElement = findMatchingElement( e, additive );
 
       if ( !matchingElement.isNull() )
       {
@@ -416,7 +416,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
     if (e.isNull())
        continue;
 
-    TQDomElement matchingElement = tqfindMatchingElement( e, base );
+    TQDomElement matchingElement = findMatchingElement( e, base );
 
     if ( matchingElement.isNull() )
     {
@@ -449,8 +449,8 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
 
     if ( tag == tagAction )
     {
-      // if base tqcontains an implemented action, then we must not get
-      // deleted (note that the actionCollection tqcontains both,
+      // if base contains an implemented action, then we must not get
+      // deleted (note that the actionCollection contains both,
       // "global" and "local" actions
       if ( actionCollection->action( e.attribute( attrName ).utf8() ) )
       {
@@ -499,7 +499,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
   return deleteMe;
 }
 
-TQDomElement KXMLGUIClient::tqfindMatchingElement( const TQDomElement &base, const TQDomElement &additive )
+TQDomElement KXMLGUIClient::findMatchingElement( const TQDomElement &base, const TQDomElement &additive )
 {
   static const TQString &tagAction = KGlobal::staticQString( "Action" );
   static const TQString &tagMergeLocal = KGlobal::staticQString( "MergeLocal" );
@@ -572,14 +572,14 @@ void KXMLGUIClient::insertChildClient( KXMLGUIClient *child )
 
 void KXMLGUIClient::removeChildClient( KXMLGUIClient *child )
 {
-  assert( d->m_children.tqcontainsRef( child ) );
+  assert( d->m_children.containsRef( child ) );
   d->m_children.removeRef( child );
   child->d->m_parent = 0;
 }
 
 /*bool KXMLGUIClient::addSuperClient( KXMLGUIClient *super )
 {
-  if ( d->m_supers.tqcontains( super ) )
+  if ( d->m_supers.contains( super ) )
     return false;
   d->m_supers.append( super );
   return true;
@@ -642,7 +642,7 @@ TQString KXMLGUIClient::findMostRecentXMLFile( const TQStringList &files, TQStri
   TQValueList<DocStruct>::Iterator docEnd = allDocuments.end();
   for (; docIt != docEnd; ++docIt )
   {
-    TQString versionStr = tqfindVersionNumber( (*docIt).data );
+    TQString versionStr = findVersionNumber( (*docIt).data );
     if ( versionStr.isEmpty() )
       continue;
 
@@ -699,7 +699,7 @@ TQString KXMLGUIClient::findMostRecentXMLFile( const TQStringList &files, TQStri
       else
       {
         TQString f = (*local).file;
-        TQString backup = f + TQString::tqfromLatin1( ".backup" );
+        TQString backup = f + TQString::fromLatin1( ".backup" );
         TQDir dir;
         dir.rename( f, backup );
       }
@@ -719,7 +719,7 @@ TQString KXMLGUIClient::findMostRecentXMLFile( const TQStringList &files, TQStri
 
 
 
-TQString KXMLGUIClient::tqfindVersionNumber( const TQString &xml )
+TQString KXMLGUIClient::findVersionNumber( const TQString &xml )
 {
   enum { ST_START, ST_AFTER_OPEN, ST_AFTER_GUI,
                ST_EXPECT_VERSION, ST_VERSION_NUM} state = ST_START;
@@ -734,7 +734,7 @@ TQString KXMLGUIClient::tqfindVersionNumber( const TQString &xml )
       case ST_AFTER_OPEN:
       {
         //Jump to gui..
-        int guipos = xml.tqfind("gui", pos, false /*case-insensitive*/);
+        int guipos = xml.find("gui", pos, false /*case-insensitive*/);
         if (guipos == -1)
           return TQString::null; //Reject
 
@@ -747,7 +747,7 @@ TQString KXMLGUIClient::tqfindVersionNumber( const TQString &xml )
         break;
       case ST_EXPECT_VERSION:
       {
-        int verpos =  xml.tqfind("version=\"", pos, false /*case-insensitive*/);
+        int verpos =  xml.find("version=\"", pos, false /*case-insensitive*/);
         if (verpos == -1)
           return TQString::null; //Reject
 
@@ -760,9 +760,9 @@ TQString KXMLGUIClient::tqfindVersionNumber( const TQString &xml )
         unsigned int endpos;
         for (endpos = pos; endpos <  xml.length(); endpos++)
         {
-          if (xml[endpos].tqunicode() >= '0' && xml[endpos].tqunicode() <= '9')
+          if (xml[endpos].unicode() >= '0' && xml[endpos].unicode() <= '9')
             continue; //Number..
-          if (xml[endpos].tqunicode() == '"') //End of parameter
+          if (xml[endpos].unicode() == '"') //End of parameter
             break;
           else //This shouldn't be here..
           {
@@ -810,7 +810,7 @@ KXMLGUIClient::ActionPropertiesMap KXMLGUIClient::extractActionProperties( const
     if ( actionName.isEmpty() )
       continue;
 
-    TQMap<TQString, TQMap<TQString, TQString> >::Iterator propIt = properties.tqfind( actionName );
+    TQMap<TQString, TQMap<TQString, TQString> >::Iterator propIt = properties.find( actionName );
     if ( propIt == properties.end() )
       propIt = properties.insert( actionName, TQMap<TQString, TQString>() );
 
@@ -874,7 +874,7 @@ void KXMLGUIClient::addStateActionEnabled(const TQString& state,
   stateChange.actionsToEnable.append( action );
   //kdDebug() << "KXMLGUIClient::addStateActionEnabled( " << state << ", " << action << ")" << endl;
 
-  m_actionsStateMap.tqreplace( state, stateChange );
+  m_actionsStateMap.replace( state, stateChange );
 }
 
 
@@ -886,7 +886,7 @@ void KXMLGUIClient::addStateActionDisabled(const TQString& state,
   stateChange.actionsToDisable.append( action );
   //kdDebug() << "KXMLGUIClient::addStateActionDisabled( " << state << ", " << action << ")" << endl;
 
-  m_actionsStateMap.tqreplace( state, stateChange );
+  m_actionsStateMap.replace( state, stateChange );
 }
 
 

@@ -46,7 +46,7 @@ namespace KIO {
      * It handles a queue of commands to be sent which makes it possible to
      * queue data before an actual connection has been established.
      */
-    class KIO_EXPORT Connection : public TQObject
+    class KIO_EXPORT Connection : public QObject
     {
 	Q_OBJECT
     public:

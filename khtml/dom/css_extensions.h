@@ -61,7 +61,7 @@ public:
 
     /**
      * If \c azimuthType is \c CSS_IDENT ,
-     * \c identifier tqcontains one of left-side, far-left,
+     * \c identifier contains one of left-side, far-left,
      * left, center-left, center, center-right, right, far-right,
      * right-side, leftwards, rightwards. The empty string if none is
      * set.
@@ -184,8 +184,8 @@ public:
 
     /**
      * If \c horizontalType is \c CSS_IDENT or
-     * \c CSS_INHERIT , this attribute tqcontains the string
-     * representation of the ident, otherwise it tqcontains an empty
+     * \c CSS_INHERIT , this attribute contains the string
+     * representation of the ident, otherwise it contains an empty
      * string.
      *
      */
@@ -193,8 +193,8 @@ public:
 
     /**
      * If \c verticalType is \c CSS_IDENT or
-     * \c CSS_INHERIT , this attribute tqcontains the string
-     * representation of the ident, otherwise it tqcontains an empty
+     * \c CSS_INHERIT , this attribute contains the string
+     * representation of the ident, otherwise it contains an empty
      * string. The value is \c "center" if only the
      * horizontalIdentifier has been set. The value is
      * \c "inherit" if the horizontalIdentifier is
@@ -572,8 +572,8 @@ public:
      * A code defining the type of the property. It would one of
      * \c CSS_UNKNOWN or \c CSS_INHERIT . If
      * the type is \c CSS_UNKNOWN , then \c uris
-     * tqcontains a list of URIs and \c predefinedCursor
-     * tqcontains an ident. Setting this attribute from
+     * contains a list of URIs and \c predefinedCursor
+     * contains an ident. Setting this attribute from
      * \c CSS_INHERIT to \c CSS_UNKNOWN will set the
      * \c predefinedCursor to \c "auto" .
      *
@@ -654,7 +654,7 @@ public:
     void setUri( const DOM::DOMString & );
 
     /**
-     * This attribute tqcontains a list of strings for the format CSS
+     * This attribute contains a list of strings for the format CSS
      * function.
      *
      */
@@ -776,8 +776,8 @@ public:
 
     /**
      * If \c width is \c CSS_IDENT or
-     * \c CSS_INHERIT , this attribute tqcontains the string
-     * representation of the ident, otherwise it tqcontains an empty
+     * \c CSS_INHERIT , this attribute contains the string
+     * representation of the ident, otherwise it contains an empty
      * string.
      *
      */
@@ -2424,8 +2424,8 @@ public:
 
     /**
      * See the <a
-     * href="http://www.w3.org/TR/REC-CSS2/tables.html#propdef-table-tqlayout">
-     * table-tqlayout property definition </a> in CSS2.
+     * href="http://www.w3.org/TR/REC-CSS2/tables.html#propdef-table-layout">
+     * table-layout property definition </a> in CSS2.
      *
      */
     DOM::DOMString tableLayout() const;
@@ -2515,14 +2515,14 @@ public:
 
     /**
      * See the <a
-     * href="http://www.w3.org/TR/REC-CSS2/visuren.html#propdef-tqunicode-bidi">
-     * tqunicode-bidi property definition </a> in CSS2.
+     * href="http://www.w3.org/TR/REC-CSS2/visuren.html#propdef-unicode-bidi">
+     * unicode-bidi property definition </a> in CSS2.
      *
      */
-    DOM::DOMString tqunicodeBidi() const;
+    DOM::DOMString unicodeBidi() const;
 
     /**
-     * see tqunicodeBidi
+     * see unicodeBidi
      */
     void setUnicodeBidi( const DOM::DOMString & );
 

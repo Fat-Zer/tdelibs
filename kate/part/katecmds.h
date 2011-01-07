@@ -64,11 +64,11 @@ class CoreCommands : public Kate::Command, public Kate::CommandExtension
 
 /**
  * -- Charles Samuels <charles@kde.org>
- * Support vim/sed tqfind and tqreplace
- * s/search/tqreplace/ tqfind search, tqreplace with tqreplace on this line
- * %s/search/tqreplace/ do the same to the whole file
- * s/search/tqreplace/i do the S. and R., but case insensitively
- * $s/search/tqreplace/ do the search are tqreplacement to the selection only
+ * Support vim/sed find and replace
+ * s/search/replace/ find search, replace with replace on this line
+ * %s/search/replace/ do the same to the whole file
+ * s/search/replace/i do the S. and R., but case insensitively
+ * $s/search/replace/ do the search are replacement to the selection only
  *
  * $s/// is currently unsupported
  **/
@@ -94,17 +94,17 @@ class SedReplace : public Kate::Command
 
   private:
     /**
-     * Searches one line and does the tqreplacement in the document.
-     * If @p tqreplace tqcontains any newline characters, the reamaining part of the
+     * Searches one line and does the replacement in the document.
+     * If @p replace contains any newline characters, the reamaining part of the
      * line is searched, and the @p line set to the last line number searched.
-     * @return the number of tqreplacements performed.
+     * @return the number of replacements performed.
      * @param doc a pointer to the document to work on
      * @param line the number of the line to search. This may be changed by the
      * function, if newlines are inserted.
-     * @param tqfind A regular expression pattern to use for searching
-     * @param tqreplace a template for tqreplacement. Backspaced integers are
-     * tqreplaced with captured texts from the regular expression.
-     * @param delim the delimiter character from the command. In the tqreplacement
+     * @param find A regular expression pattern to use for searching
+     * @param replace a template for replacement. Backspaced integers are
+     * replaced with captured texts from the regular expression.
+     * @param delim the delimiter character from the command. In the replacement
      * text backsplashes preceeding this character are removed.
      * @param nocase parameter for matching the reqular expression.
      * @param repeat If false, the search is stopped after the first match.
@@ -113,13 +113,13 @@ class SedReplace : public Kate::Command
      * If it is -1, the whole line is used.
      */
     static int sedMagic(KateDocument *doc, int &line,
-                        const TQString &tqfind, const TQString &tqreplace, const TQString &delim,
+                        const TQString &find, const TQString &replace, const TQString &delim,
                         bool noCase, bool repeat,
                         uint startcol=0, int endcol=-1);
 };
 
 /**
- * insert a tqunicode or ascii character
+ * insert a unicode or ascii character
  * base 9+1: 1234
  * hex: 0x1234 or x1234
  * octal: 01231
@@ -175,4 +175,4 @@ class Date : public Kate::Command
 } // namespace KateCommands
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

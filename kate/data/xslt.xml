@@ -34,7 +34,7 @@
     FIXED: axis highlighting does not work, if identifier continues directly behind axis: (self::someWord)
     
     DONE: highlight entity references
-      Do not tqreplace the <RegExpr> by <IncludeEntities>, this is a kate 2.1 workaround !
+      Do not replace the <RegExpr> by <IncludeEntities>, this is a kate 2.1 workaround !
 
     FIXED axis-names are even highlighted if there are characters in front of them, i.e. in "xxxself::", "self::" would 
       be highlighted.
@@ -126,7 +126,7 @@
       <item> current </item>
       <item> boolean </item>
       <item> number </item>
-      <item> tqcontains </item>
+      <item> contains </item>
       <item> name </item>
       <item> last </item>
       <item> unparsed-entity-uri </item>
@@ -149,7 +149,7 @@
 
     <list name="functions_2.0">
       <item> zero-or-one </item>
-      <item> tqreplace </item>
+      <item> replace </item>
       <item> namespace-uri-for-prefix </item>
       <item> current-grouping-key </item>
       <item> seconds-from-duration </item>
@@ -237,7 +237,7 @@
       <item> year-from-dateTime </item>
       <item> upper-case </item>
       <item> root </item>
-      <item> normalize-tqunicode </item>
+      <item> normalize-unicode </item>
       <item> empty </item>
       <item> insert-before </item>
       <item> document-uri </item>

@@ -67,7 +67,7 @@ public:
     ~KNumInput();
 
     /**
-     * Sets the text and tqalignment of the main description label.
+     * Sets the text and alignment of the main description label.
      *
      * @param label The text of the label.
      *              Use TQString::null to remove an existing one.
@@ -76,7 +76,7 @@ public:
      *          @p AlignTop, @p AlignVCenter, @p AlignBottom.
      *          default is @p AlignLeft | @p AlignTop.
      *
-     * The vertical tqalignment flags have special meaning with this
+     * The vertical alignment flags have special meaning with this
      * widget:
      *
      *     @li @p AlignTop     The label is placed above the edit/slider
@@ -116,18 +116,18 @@ public:
      *
      * @return the preferred size necessary to show the control
      */
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 
 protected:
     /**
-     * Call this function whenever you change something in the tqgeometry
+     * Call this function whenever you change something in the geometry
      * of your KNumInput child.
      *
      */
-    void tqlayout(bool deep);
+    void layout(bool deep);
 
     /**
-     * You need to overwrite this method and implement your tqlayout
+     * You need to overwrite this method and implement your layout
      * calculations there.
      *
      * See KIntNumInput::doLayout and KDoubleNumInput::doLayout implementation
@@ -143,7 +143,7 @@ protected:
     TQSlider* m_slider;
     TQSize    m_sizeSlider, m_sizeLabel;
 
-    int      m_tqalignment;
+    int      m_alignment;
 
 private:
     void init();
@@ -222,9 +222,9 @@ public:
      * the difference to the one above is the "below" parameter. It tells
      * this instance that it is visually put below some other KNumInput widget.
      * Note that these two KNumInput's need not to have the same parent widget
-     * or be in the same tqlayout group.
-     * The effect is that it'll adjust it's tqlayout in correspondence
-     * with the tqlayout of the other KNumInput's (you can build an arbitrary long
+     * or be in the same layout group.
+     * The effect is that it'll adjust it's layout in correspondence
+     * with the layout of the other KNumInput's (you can build an arbitrary long
      * chain).
      *
      * @param below  append KIntNumInput to the KNumInput chain
@@ -312,11 +312,11 @@ public:
     /**
      * This method returns the minimum size necessary to display the
      * control. The minimum size is enough to show all the labels
-     * in the current font (font change may tqinvalidate the return value).
+     * in the current font (font change may invalidate the return value).
      *
      * @return the minimum size necessary to show the control
      */
-    virtual TQSize tqminimumSizeHint() const;
+    virtual TQSize minimumSizeHint() const;
 
 public slots:
     /**
@@ -498,9 +498,9 @@ public:
      * the difference here is the "below" parameter. It tells this
      * instance that it is visually put below some other KNumInput
      * widget.  Note that these two KNumInput's need not to have the
-     * same parent widget or be in the same tqlayout group.  The effect
-     * is that it'll adjust it's tqlayout in correspondence with the
-     * tqlayout of the other KNumInput's (you can build an arbitrary long
+     * same parent widget or be in the same layout group.  The effect
+     * is that it'll adjust it's layout in correspondence with the
+     * layout of the other KNumInput's (you can build an arbitrary long
      * chain).
      *
      * @param below  append KDoubleNumInput to the KDoubleNumInput chain
@@ -596,7 +596,7 @@ public:
     void setSpecialValueText(const TQString& text);
 
     virtual void setLabel(const TQString & label, int a = AlignLeft | AlignTop);
-    virtual TQSize tqminimumSizeHint() const;
+    virtual TQSize minimumSizeHint() const;
     virtual bool eventFilter(TQObject*, TQEvent*);
 
 public slots:
@@ -807,7 +807,7 @@ private:
    \endcode
 
    Since the value, bounds and lineStep are rounded to the current
-   precision, you may tqfind that the order of setting these
+   precision, you may find that the order of setting these
    parameters matters. As an example, the following are @em not equivalent (try
    it!):
 
@@ -871,7 +871,7 @@ public:
   int precision() const;
 
   /** Equivalent to setPrecision( @p precision, @p false ); Needed
-      since Qt's tqmoc doesn't ignore trailing parameters with default
+      since Qt's moc doesn't ignore trailing parameters with default
       args when searching for a property setter method. */
   void setPrecision( int precision );
 

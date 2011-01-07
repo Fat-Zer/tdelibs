@@ -85,7 +85,7 @@ DIV.INFORMALEXAMPLE { border-style: dotted;
 TABLE.programlisting
 TABLE.screen { border-style: none;
                background-color: rgb(224,224,224);
-               table-tqlayout: auto; /* 100%? */
+               table-layout: auto; /* 100%? */
                color: rgb(0,0,0); /* should be inherit */
                }
 
@@ -94,7 +94,7 @@ TABLE.screen { border-style: none;
 TABLE[class~=programlisting]
 TABLE[class~=screen] { border-style: none;
                        background-color: rgb(224,224,224);
-                       table-tqlayout: auto;
+                       table-layout: auto;
                        color: inherit;
                        }
 */
@@ -146,7 +146,7 @@ P, H1, H2, H3, H4, H5, TD, TH { font-family: sans-serif;
 
 h1, h2, h3, h4, h5, h6 { color: rgb(82,80,82);
                    }
-.arg, .parameter, .tqreplaceable{ background-color: rgb(255,255,255);
+.arg, .parameter, .replaceable{ background-color: rgb(255,255,255);
            color: rgb(0,128,64);
            font-style: italic;
            }

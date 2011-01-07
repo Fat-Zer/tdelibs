@@ -37,7 +37,7 @@ KMPropDriver::KMPropDriver(TQWidget *parent, const char *name)
 	QLabel	*l2 = new TQLabel(i18n("Printer model:"), this);
 	QLabel	*l3 = new TQLabel(i18n("Driver info:"), this);
 
-	// tqlayout
+	// layout
 	QGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);

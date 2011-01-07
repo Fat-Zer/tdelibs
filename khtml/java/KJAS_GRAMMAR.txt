@@ -15,7 +15,7 @@ KJAS Grammar
                     <initApplet>     |
                     <showURLInFrame> |
                     <showDocument>   |
-                    <showtqStatus>     |
+                    <showStatus>     |
                     <resizeApplet>   |
                     <getURLData>     |
                     <URLData>        |
@@ -43,7 +43,7 @@ KJAS Grammar
                     <SEP><URL><END>
 <showURLInFrame> -> <1 byte equal to 9 when cast as int><SEP><ContextID>
                     <SEP><URL><SEP><targetFrame><END>
-<showtqStatus>     -> <1 byte equal to 10 when cast as int><SEP><ContextID>
+<showStatus>     -> <1 byte equal to 10 when cast as int><SEP><ContextID>
                     <SEP><string><END>
 <resizeApplet>   -> <1 byte equal to 11 when cast as int><SEP><ContextID>
                     <SEP><AppletID><SEP><Width><SEP><Height><END>

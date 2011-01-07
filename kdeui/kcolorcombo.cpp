@@ -21,10 +21,10 @@
 //
 // 1999-09-27 Espen Sand <espensa@online.no>
 // KColorDialog is now subclassed from KDialogBase. I have also extended
-// KColorDialog::getColor() so that in tqcontains a parent argument. This
+// KColorDialog::getColor() so that in contains a parent argument. This
 // improves centering capability.
 //
-// tqlayout management added Oct 1997 by Mario Weilguni
+// layout management added Oct 1997 by Mario Weilguni
 // <mweilguni@sime.com>
 //
 
@@ -175,7 +175,7 @@ void KColorCombo::slotActivated( int index )
 			TQRect rect( 0, 0, width(), TQFontMetrics(painter.font()).height()+4);
 			TQPixmap pixmap( rect.width(), rect.height() );
 
-			if ( tqGray( customColor.rgb() ) < 128 )
+			if ( qGray( customColor.rgb() ) < 128 )
 				pen.setColor( white );
 			else
 				pen.setColor( black );
@@ -228,7 +228,7 @@ void KColorCombo::addColors()
 	if ( i == STANDARD_PAL_SIZE )
 		customColor = internalcolor;
 
-	if ( tqGray( customColor.rgb() ) < 128 )
+	if ( qGray( customColor.rgb() ) < 128 )
 		pen.setColor( white );
 	else
 		pen.setColor( black );

@@ -239,7 +239,7 @@ void KHTMLParser::parseToken(Token *t)
         if(inBody && !skipMode() &&
            current->id() != ID_STYLE && current->id() != ID_TITLE &&
            current->id() != ID_SCRIPT &&
-           !t->text->tqcontainsOnlyWhitespace()) haveContent = true;
+           !t->text->containsOnlyWhitespace()) haveContent = true;
 #ifdef PARSER_DEBUG
         kdDebug(6035) << "length="<< t->text->l << " text='" << TQConstString(t->text->s, t->text->l).string() << "'" << endl;
 #endif
@@ -509,7 +509,7 @@ bool KHTMLParser::insertNode(NodeImpl *n, bool flat)
         {
             // Don't try to fit random white-space anywhere
             TextImpl *t = static_cast<TextImpl *>(n);
-            if (t->tqcontainsOnlyWhitespace())
+            if (t->containsOnlyWhitespace())
                 return false;
             // ignore text inside the following elements.
             switch(current->id())
@@ -617,7 +617,7 @@ bool KHTMLParser::insertNode(NodeImpl *n, bool flat)
                 break;
             case ID_TEXT: {
                 TextImpl *t = static_cast<TextImpl *>(n);
-                if (t->tqcontainsOnlyWhitespace())
+                if (t->containsOnlyWhitespace())
                     return false;
                 /* Fall through to default */
             }
@@ -1425,7 +1425,7 @@ void KHTMLParser::handleResidualStyleCloseTagAcrossBlocks(HTMLStackElem* elem)
         newNode->appendChild(currNode, exceptionCode);
         currNode = nextNode;
 
- // TODO - To be tqreplaced.
+ // TODO - To be replaced.
         // Re-register form elements with currently active form, step 1 will have removed them
         if (form && currNode && currNode->isGenericFormElement())
         {

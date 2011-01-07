@@ -324,7 +324,7 @@ protected:
     TQRect defaultArea() const;
 
     /**
-     * Updates the transparency tqmask. Unused if PopupStyle == Boxed
+     * Updates the transparency mask. Unused if PopupStyle == Boxed
      * @since 3.5
      */
     void updateMask();

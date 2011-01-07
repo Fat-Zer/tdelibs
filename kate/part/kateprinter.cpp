@@ -184,7 +184,7 @@ bool KatePrinter::print (KateDocument *doc)
          // This retrieves all tags, ued or not, but
          // none of theese operations should be expensive,
          // and searcing each tag in the format strings is avoided.
-         TQDateTime dt = TQDateTime::tqcurrentDateTime();
+         TQDateTime dt = TQDateTime::currentDateTime();
          TQMap<TQString,TQString> tags;
 
          KUser u (KUser::UseRealUserID);
@@ -221,7 +221,7 @@ bool KatePrinter::print (KateDocument *doc)
            while ( pos > -1 )
            {
              rep = tags[reTags.cap( 1 )];
-             headerTags.tqreplace( (uint)pos, 2, rep );
+             headerTags.replace( (uint)pos, 2, rep );
              pos += rep.length();
              pos = reTags.search( headerTags, pos );
            }
@@ -248,7 +248,7 @@ bool KatePrinter::print (KateDocument *doc)
            while ( pos > -1 )
            {
              rep = tags[reTags.cap( 1 )];
-             footerTags.tqreplace( (uint)pos, 2, rep );
+             footerTags.replace( (uint)pos, 2, rep );
              pos += rep.length();
              pos = reTags.search( footerTags, pos );
            }
@@ -339,7 +339,7 @@ bool KatePrinter::print (KateDocument *doc)
 
        // now that we know the vertical amount of space needed,
        // it is possible to calculate the total number of pages
-       // if needed, that is if any header/footer tag tqcontains "%P".
+       // if needed, that is if any header/footer tag contains "%P".
        if ( headerTagList.grep("%P").count() || footerTagList.grep("%P").count() )
        {
          kdDebug(13020)<<"'%P' found! calculating number of pages..."<<endl;
@@ -378,9 +378,9 @@ bool KatePrinter::print (KateDocument *doc)
          TQString re("%P");
          TQStringList::Iterator it;
          for ( it=headerTagList.begin(); it!=headerTagList.end(); ++it )
-           (*it).tqreplace( re, TQString( "%1" ).arg( _pages ) );
+           (*it).replace( re, TQString( "%1" ).arg( _pages ) );
          for ( it=footerTagList.begin(); it!=footerTagList.end(); ++it )
-           (*it).tqreplace( re, TQString( "%1" ).arg( _pages ) );
+           (*it).replace( re, TQString( "%1" ).arg( _pages ) );
        }
      } // end prepare block
 
@@ -425,7 +425,7 @@ bool KatePrinter::print (KateDocument *doc)
                for (int i=0; i<3; i++)
                {
                  s = headerTagList[i];
-                 if (s.tqfind("%p") != -1) s.tqreplace("%p", TQString::number(currentPage));
+                 if (s.find("%p") != -1) s.replace("%p", TQString::number(currentPage));
                  paint.drawText(marg, 0, headerWidth-(marg*2), headerHeight, align, s);
                  align = valign|(i == 0 ? Qt::AlignHCenter : Qt::AlignRight);
                }
@@ -453,7 +453,7 @@ bool KatePrinter::print (KateDocument *doc)
                for (int i=0; i<3; i++)
                {
                  s = footerTagList[i];
-                 if (s.tqfind("%p") != -1) s.tqreplace("%p", TQString::number(currentPage));
+                 if (s.find("%p") != -1) s.replace("%p", TQString::number(currentPage));
                  paint.drawText(marg, maxHeight+innerMargin, headerWidth-(marg*2), footerHeight, align, s);
                  align = Qt::AlignVCenter|(i == 0 ? Qt::AlignHCenter : Qt::AlignRight);
                }
@@ -1002,4 +1002,4 @@ void KatePrintLayout::setOptions( const TQMap<TQString,TQString>& opts )
 #include "kateprinter.moc"
 #endif //!Q_WS_WIN
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

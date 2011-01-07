@@ -105,10 +105,10 @@ int main()
                 {
                 TQString key = it.key();
                 TQString value = *it;
-                startupconfig << file.tqreplace( ' ', '_' ).lower()
-                    << "_" << group.tqreplace( ' ', '_' ).lower()
-                    << "_" << key.tqreplace( ' ', '_' ).lower()
-                    << "=\"" << value.tqreplace( "\"", "\\\"" ) << "\"\n";
+                startupconfig << file.replace( ' ', '_' ).lower()
+                    << "_" << group.replace( ' ', '_' ).lower()
+                    << "_" << key.replace( ' ', '_' ).lower()
+                    << "=\"" << value.replace( "\"", "\\\"" ) << "\"\n";
                 }
             }
         else
@@ -119,10 +119,10 @@ int main()
             cfg.setGroup( group );
             TQString value = cfg.readEntry( key, def );
             startupconfig << "# " << line << "\n";
-            startupconfig << file.tqreplace( ' ', '_' ).lower()
-                << "_" << group.tqreplace( ' ', '_' ).lower()
-                << "_" << key.tqreplace( ' ', '_' ).lower()
-                << "=\"" << value.tqreplace( "\"", "\\\"" ) << "\"\n";
+            startupconfig << file.replace( ' ', '_' ).lower()
+                << "_" << group.replace( ' ', '_' ).lower()
+                << "_" << key.replace( ' ', '_' ).lower()
+                << "=\"" << value.replace( "\"", "\\\"" ) << "\"\n";
             }
         startupconfigfiles << line << endl;
         // use even currently non-existing paths in $KDEDIRS

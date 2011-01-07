@@ -26,7 +26,7 @@ Author: Ralph Mor, X Consortium
 #include <KDE-ICE/ICElib.h>
 #include "KDE-ICE/ICElibint.h"
 
-tqStatus
+Status
 IcePing (iceConn, pingReplyProc, clientData)
 
 IceConn		 iceConn;

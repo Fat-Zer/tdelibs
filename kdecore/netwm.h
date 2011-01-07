@@ -86,7 +86,7 @@ public:
        [1]= NET::WindowTypeMask (not NET::WindowType!), [2]= NET::State,
        [3]= NET::Property2, [4]= NET::Action.
        In future versions, the list may be extended. In case you pass less elements,
-       the missing ones will be tqreplaced with default values.
+       the missing ones will be replaced with default values.
        
        @param properties_size The number of elements in the properties array.
 
@@ -251,7 +251,7 @@ public:
        to the first element of the properties argument, for the constructor
        for Clients, it's the properties argument.
        
-       Clients willing to tqfind out all properties and protocols supported
+       Clients willing to find out all properties and protocols supported
        by the WindowManager should use supportedProperties().
        
        @return an OR'ed list of protocols
@@ -316,7 +316,7 @@ public:
     int kdeSystemTrayWindowsCount() const;
 
     /**
-       Returns the desktop tqgeometry size.
+       Returns the desktop geometry size.
 
        The desktop argument is ignored. Early drafts of the NET WM
        Specification were unclear about the semantics of this property.
@@ -373,18 +373,18 @@ public:
     int virtualRootsCount() const;
 
     /**
-       Returns the desktop tqlayout orientation.
+       Returns the desktop layout orientation.
     **/
     NET::Orientation desktopLayoutOrientation() const;
 
     /**
-       Returns the desktop tqlayout number of columns and rows. Note that
+       Returns the desktop layout number of columns and rows. Note that
        either may be 0 (see _NET_DESKTOP_LAYOUT).
     **/
     TQSize desktopLayoutColumnsRows() const;
 
     /**
-       Returns the desktop tqlayout starting corner.
+       Returns the desktop layout starting corner.
     **/
     NET::DesktopLayoutCorner desktopLayoutCorner() const;
 
@@ -456,16 +456,16 @@ public:
     void setCurrentDesktop(int desktop);
 
     /**
-       Sets the desktop tqgeometry to the specified tqgeometry.
+       Sets the desktop geometry to the specified geometry.
 
        The desktop argument is ignored. Early drafts of the NET WM
        Specification were unclear about the semantics of this property.
 
        @param desktop the number of the desktop
 
-       @param tqgeometry the new size of the desktop
+       @param geometry the new size of the desktop
     **/
-    void setDesktopGeometry(int desktop, const NETSize &tqgeometry);
+    void setDesktopGeometry(int desktop, const NETSize &geometry);
 
     /**
        Sets the viewport for the current desktop to the specified point.
@@ -534,7 +534,7 @@ public:
     void setVirtualRoots(Window *windows, unsigned int count);
     
     /**
-       Sets the desktop tqlayout. This is set by the pager. When setting, the pager must
+       Sets the desktop layout. This is set by the pager. When setting, the pager must
        own the _NET_DESKTOP_LAYOUT_Sn manager selection. See _NET_DESKTOP_LAYOUT for details.
     **/
     void setDesktopLayout(NET::Orientation orientation, int columns, int rows,
@@ -633,7 +633,7 @@ public:
        This function takes the passed XEvent and returns an OR'ed list of
        NETRootInfo properties that have changed.  The new information will be
        read immediately by the class. This overloaded version returns
-       only a single tqmask, and therefore cannot check state of all properties
+       only a single mask, and therefore cannot check state of all properties
        like the other variant.
 
        @param event the event
@@ -690,7 +690,7 @@ protected:
     /**
        A Window Manager should subclass NETRootInfo and reimplement this function
        when it wants to know when a Client made a request to change the specified
-       desktop tqgeometry.
+       desktop geometry.
 
        @param desktop the number of the desktop
 
@@ -960,7 +960,7 @@ public:
        from the NET base class, in the following order: [0]= NET::Property,
        [1]= NET::Property2.
        In future versions, the list may be extended. In case you pass less elements,
-       the missing ones will be tqreplaced with default values.
+       the missing ones will be replaced with default values.
        
        @param properties_size The number of elements in the properties array.
 
@@ -1032,9 +1032,9 @@ public:
     unsigned long properties() const KDE_DEPRECATED;
 
     /**
-       Returns the icon tqgeometry.
+       Returns the icon geometry.
 
-       @return the tqgeometry of the icon
+       @return the geometry of the icon
     **/
     NETRect iconGeometry() const;
 
@@ -1067,7 +1067,7 @@ public:
        in order to support backwards compatibility and extensions
        not available in the NETWM spec, you should specify all
        window types you application supports (see the NET::WindowTypeMask
-       tqmask values for various window types). This method will
+       mask values for various window types). This method will
        return the first window type that is listed in the supported types,
        or NET::Unknown if none of the window types is supported.
 
@@ -1161,22 +1161,22 @@ public:
     MappingState mappingState() const;
 
     /**
-       Set icons for the application window.  If tqreplace is True, then
-       the specified icon is defined to be the only icon.  If tqreplace is False,
+       Set icons for the application window.  If replace is True, then
+       the specified icon is defined to be the only icon.  If replace is False,
        then the specified icon is added to a list of icons.
 
        @param icon the new icon
        
-       @param tqreplace true to tqreplace, false to append to the list of icons
+       @param replace true to replace, false to append to the list of icons
     **/
-    void setIcon(NETIcon icon, Bool tqreplace = True);
+    void setIcon(NETIcon icon, Bool replace = True);
 
     /**
-       Set the icon tqgeometry for the application window.
+       Set the icon geometry for the application window.
 
-       @param tqgeometry the new icon tqgeometry
+       @param geometry the new icon geometry
     **/
-    void setIconGeometry(NETRect tqgeometry);
+    void setIconGeometry(NETRect geometry);
 
     /**
        Set the extended (partial) strut for the application window.
@@ -1201,9 +1201,9 @@ public:
 
        @param state the name state
 
-       @param tqmask the tqmask for the state
+       @param mask the mask for the state
     **/
-    void setState(unsigned long state, unsigned long tqmask);
+    void setState(unsigned long state, unsigned long mask);
 
     /**
        Sets the window type for this client (see the NET base class
@@ -1291,7 +1291,7 @@ public:
 
     /**
        Returns an icon.  If width and height are passed, the icon returned will be
-       the closest it can tqfind (the next biggest).  If width and height are omitted,
+       the closest it can find (the next biggest).  If width and height are omitted,
        then the largest icon in the list is returned.
 
        @param width the preferred width for the icon, -1 to ignore
@@ -1382,12 +1382,12 @@ public:
     const char* clientMachine() const;
 
     /**
-       Places the window frame tqgeometry in frame, and the application window
-       tqgeometry in window.  Both geometries are relative to the root window.
+       Places the window frame geometry in frame, and the application window
+       geometry in window.  Both geometries are relative to the root window.
 
-       @param frame the tqgeometry for the frame
+       @param frame the geometry for the frame
 
-       @param window the tqgeometry for the window
+       @param window the geometry for the window
     **/
     void kdeGeometry(NETRect &frame, NETRect &window);
 
@@ -1412,7 +1412,7 @@ public:
        This function takes the pass XEvent and returns an OR'ed list of NETWinInfo
        properties that have changed.  The new information will be read
        immediately by the class. This overloaded version returns
-       only a single tqmask, and therefore cannot check state of all properties
+       only a single mask, and therefore cannot check state of all properties
        like the other variant.
 
        @param event the event
@@ -1447,14 +1447,14 @@ protected:
 
        @param state the new state
 
-       @param tqmask the tqmask for the state
+       @param mask the mask for the state
     **/
-    virtual void changeState(unsigned long state, unsigned long tqmask) { Q_UNUSED(state); Q_UNUSED(tqmask); }
+    virtual void changeState(unsigned long state, unsigned long mask) { Q_UNUSED(state); Q_UNUSED(mask); }
 
 private:
     void update( const unsigned long[] );
     void updateWMState();
-    void setIconInternal(NETRArray<NETIcon>& icons, int& icon_count, Atom property, NETIcon icon, Bool tqreplace);
+    void setIconInternal(NETRArray<NETIcon>& icons, int& icon_count, Atom property, NETIcon icon, Bool replace);
     NETIcon iconInternal(NETRArray<NETIcon>& icons, int icon_count, int width, int height) const;
     Role role;
 

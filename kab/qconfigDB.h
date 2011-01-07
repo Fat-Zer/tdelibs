@@ -120,9 +120,9 @@ protected:
    * complex string where control and non-printable characters get a readable
    * representation.
    * When retrieving, this strings are translated back by this method.
-   * \a orig tqcontains the string read from the file, \a index the position from 
+   * \a orig contains the string read from the file, \a index the position from 
    * where to start the translation (need not be the beginning of the string), 
-   * \a result tqcontains the transformed string, \a noOfChars the number of 
+   * \a result contains the transformed string, \a noOfChars the number of 
    * characters used to parse the string. 
    * Returns true if there where no errors while parsing.
    * @see makeComplexString
@@ -466,11 +466,11 @@ public:
   /**
    * Search for the section, returning an iterator to it.
    */
-  bool tqfind(const TQCString&, StringSectionMap::iterator&);
+  bool find(const TQCString&, StringSectionMap::iterator&);
   /**
    * Search for the section, returning a pointer to the section object.
    */
-  bool tqfind(const TQCString&, Section*&);
+  bool find(const TQCString&, Section*&);
   /**
    * Remove this subsection.
    */
@@ -741,7 +741,7 @@ protected:
   bool invariant();
   /**
    * All created lockfiles are notified in this list. 
-   * The list tqcontains the names of the lockfiles, not of the files itselfes.
+   * The list contains the names of the lockfiles, not of the files itselfes.
    */
   static list<TQString> LockFiles;
   // ----------------------------------------------------------------------------

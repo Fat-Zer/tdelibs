@@ -82,8 +82,8 @@ TQIODevice * KFilterDev::deviceForFile( const TQString & fileName, const TQStrin
                                        bool forceFilter )
 {
     TQFile * f = new TQFile( fileName );
-    KFilterBase * base = mimetype.isEmpty() ? KFilterBase::tqfindFilterByFileName( fileName )
-                         : KFilterBase::tqfindFilterByMimeType( mimetype );
+    KFilterBase * base = mimetype.isEmpty() ? KFilterBase::findFilterByFileName( fileName )
+                         : KFilterBase::findFilterByMimeType( mimetype );
     if ( base )
     {
         base->setDevice(f, true);
@@ -107,7 +107,7 @@ TQIODevice * KFilterDev::device( TQIODevice* inDevice, const TQString & mimetype
 {
    if (inDevice==0)
       return 0;
-   KFilterBase * base = KFilterBase::tqfindFilterByMimeType(mimetype);
+   KFilterBase * base = KFilterBase::findFilterByMimeType(mimetype);
    if ( base )
    {
       base->setDevice(inDevice, autoDeleteInDevice);
@@ -232,7 +232,7 @@ bool KFilterDev::atEnd() const
                                      && d->ungetchBuffer.isEmpty();
 }
 
-TQ_LONG KFilterDev::readBlock( char *data, TQ_ULONG maxlen )
+Q_LONG KFilterDev::readBlock( char *data, Q_ULONG maxlen )
 {
     Q_ASSERT ( filter->mode() == IO_ReadOnly );
     //kdDebug(7005) << "KFilterDev::readBlock maxlen=" << maxlen << endl;
@@ -268,7 +268,7 @@ TQ_LONG KFilterDev::readBlock( char *data, TQ_ULONG maxlen )
         return -1;
 
 
-    TQ_ULONG outBufferSize;
+    Q_ULONG outBufferSize;
     if ( d->bIgnoreData )
     {
         outBufferSize = QMIN( maxlen, 3*BUFFER_SIZE );
@@ -278,7 +278,7 @@ TQ_LONG KFilterDev::readBlock( char *data, TQ_ULONG maxlen )
         outBufferSize = maxlen;
     }
     outBufferSize -= dataReceived;
-    TQ_ULONG availOut = outBufferSize;
+    Q_ULONG availOut = outBufferSize;
     filter->setOutBuffer( data, outBufferSize );
 
     bool decompressedAll = false;
@@ -351,7 +351,7 @@ TQ_LONG KFilterDev::readBlock( char *data, TQ_ULONG maxlen )
     return dataReceived;
 }
 
-TQ_LONG KFilterDev::writeBlock( const char *data /*0 to finish*/, TQ_ULONG len )
+Q_LONG KFilterDev::writeBlock( const char *data /*0 to finish*/, Q_ULONG len )
 {
     Q_ASSERT ( filter->mode() == IO_WriteOnly );
     // If we had an error, return 0.

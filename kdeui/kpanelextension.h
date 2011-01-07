@@ -136,7 +136,7 @@ public:
      * location in the Window Manager Dock. Please note that the size can not be larger than the
      * maxsize given by the handler.
      **/
-    virtual TQSize tqsizeHint(Position /*p*/, TQSize maxsize) const { return maxsize; }
+    virtual TQSize sizeHint(Position /*p*/, TQSize maxsize) const { return maxsize; }
 
     /**
      * Always use this KConfig object to save/load your extensions configuration.
@@ -189,7 +189,7 @@ public:
     /**
      * @internal
      **/
-    void tqsetAlignment( Alignment a );
+    void setAlignment( Alignment a );
     /**
      * @internal
      * @since 3.1
@@ -216,7 +216,7 @@ public:
     TQPopupMenu* customMenu() const;
 
     /**
-     * @return whether or not to set a desktop tqgeometry claiming strut for this panel
+     * @return whether or not to set a desktop geometry claiming strut for this panel
      * defaults to true
      * @see setReservetrut(bool)
      * @since 3.4
@@ -225,9 +225,9 @@ public:
 
 signals:
     /**
-     * Emit this signal to make the panel retqlayout all extensions in the dock, when you want
+     * Emit this signal to make the panel relayout all extensions in the dock, when you want
      * to change the extensions size.
-     * The panel is going to retqlayout all extensions based on their preferred size.
+     * The panel is going to relayout all extensions based on their preferred size.
      **/
     void updateLayout();
 
@@ -282,9 +282,9 @@ protected:
     Position position() const { return _position; }
 
     /**
-     * @return the extension's tqalignment. (left/top, center, or right/bottom)
+     * @return the extension's alignment. (left/top, center, or right/bottom)
      **/
-    Alignment tqalignment() const { return _tqalignment; }
+    Alignment alignment() const { return _alignment; }
 
     /**
      * @return the extensions orientation. (horizontal or vertical)
@@ -305,11 +305,11 @@ protected:
     virtual void positionChange( Position ) {}
 
     /**
-     * This extension has changed its tqalignment.
+     * This extension has changed its alignment.
      * Reimplement this change handler in order to adjust the look of your
      * applet.
      **/
-    virtual void tqalignmentChange( Alignment ) {}
+    virtual void alignmentChange( Alignment ) {}
 
     /**
      * Use this method to set the custom menu for this extensions so that it can be shown
@@ -333,7 +333,7 @@ protected:
 private:
     Type         		_type;
     Position     		_position;
-    Alignment    		_tqalignment;
+    Alignment    		_alignment;
     KConfig*     		_config;
     int          		_actions;
 protected:

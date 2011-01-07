@@ -44,8 +44,8 @@ ImagePosition::ImagePosition(TQWidget *parent, const char *name)
 	: TQWidget(parent,name)
 {
 	position_ = Center;
-	setMinimumSize(tqsizeHint());
-	tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+	setMinimumSize(sizeHint());
+	setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
 	pix_.load(locate("data", "kdeprint/preview-mini.png"));
 }
 
@@ -147,7 +147,7 @@ void ImagePosition::paintEvent(TQPaintEvent*)
 	p.end();
 }
 
-TQSize ImagePosition::tqsizeHint() const
+TQSize ImagePosition::sizeHint() const
 {
 	return TQSize(60, 80);
 }

@@ -49,27 +49,27 @@ SocketConfig::SocketConfig(KMWSocketUtil *util, TQWidget *parent, const char *na
 	QWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
         KIntValidator *val = new KIntValidator( this );
-	QLabel	*tqmasklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
+	QLabel	*masklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
 	QLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
 	QLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
 	QLineEdit	*mm = new TQLineEdit(dummy);
-	mm->setText(TQString::tqfromLatin1(".[0-255]"));
+	mm->setText(TQString::fromLatin1(".[0-255]"));
 	mm->setReadOnly(true);
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
 
-	tqmask_ = new TQLineEdit(dummy);
-	tqmask_->tqsetAlignment(Qt::AlignRight);
+	mask_ = new TQLineEdit(dummy);
+	mask_->setAlignment(Qt::AlignRight);
 	port_ = new TQComboBox(true,dummy);
         if ( port_->lineEdit() )
             port_->lineEdit()->setValidator( val );
 	tout_ = new TQLineEdit(dummy);
         tout_->setValidator( val );
 
-	tqmasklabel->setBuddy(tqmask_);
+	masklabel->setBuddy(mask_);
 	portlabel->setBuddy(port_);
 	toutlabel->setBuddy(tout_);
 
-	tqmask_->setText(util->root_);
+	mask_->setText(util->root_);
 	port_->insertItem("631");
 	port_->insertItem("9100");
 	port_->insertItem("9101");
@@ -79,13 +79,13 @@ SocketConfig::SocketConfig(KMWSocketUtil *util, TQWidget *parent, const char *na
 
 	QGridLayout	*main_ = new TQGridLayout(dummy, 3, 2, 0, 10);
 	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 5);
-	main_->addWidget(tqmasklabel, 0, 0);
+	main_->addWidget(masklabel, 0, 0);
 	main_->addWidget(portlabel, 1, 0);
 	main_->addWidget(toutlabel, 2, 0);
 	main_->addLayout(lay1, 0, 1);
 	main_->addWidget(port_, 1, 1);
 	main_->addWidget(tout_, 2, 1);
-	lay1->addWidget(tqmask_,1);
+	lay1->addWidget(mask_,1);
 	lay1->addWidget(mm,0);
 
 	resize(250,130);
@@ -100,7 +100,7 @@ void SocketConfig::slotOk()
 {
 	QString	msg;
 	QRegExp	re("(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})");
-	if (!re.exactMatch(tqmask_->text()))
+	if (!re.exactMatch(mask_->text()))
 		msg = i18n("Wrong subnetwork specification.");
 	else
 	{
@@ -189,7 +189,7 @@ void KMWSocketUtil::configureScan(TQWidget *parent)
 	SocketConfig	*dlg = new SocketConfig(this,parent);
 	if (dlg->exec())
 	{
-		root_ = dlg->tqmask_->text();
+		root_ = dlg->mask_->text();
 		port_ = dlg->port_->currentText().toInt();
 		timeout_ = dlg->tout_->text().toInt();
 	}
@@ -209,7 +209,7 @@ TQString localRootIP()
 	if (infos.count() > 0)
 	{
 		QString	IPstr = infos.first()->address()->nodeName();
-		int	p = IPstr.tqfindRev('.');
+		int	p = IPstr.findRev('.');
 		IPstr.truncate(p);
 		return IPstr;
 	}

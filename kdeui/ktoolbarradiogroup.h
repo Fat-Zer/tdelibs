@@ -46,7 +46,7 @@ class KToolBarRadioGroupPrivate;
   *
   * @author Sven Radej <radej@kde.org>
   */
-class KDEUI_EXPORT KToolBarRadioGroup : public TQObject
+class KDEUI_EXPORT KToolBarRadioGroup : public QObject
 {
   Q_OBJECT
 

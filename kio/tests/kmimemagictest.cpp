@@ -34,14 +34,14 @@ int main( int argc, char** argv )
 
   TQString file = TQString::fromLocal8Bit( argv[1] );
 
-  KMimeMagicResult * result = KMimeMagic::self()->tqfindFileType( file );
+  KMimeMagicResult * result = KMimeMagic::self()->findFileType( file );
 
   if ( result->isValid() )
       printf( "Found %s, accuracy %d\n", result->mimeType().latin1(), result->accuracy() );
   else
       printf( "Invalid result\n");
 
-  KMimeType::Format f = KMimeType::tqfindFormatByFileContent( file );
+  KMimeType::Format f = KMimeType::findFormatByFileContent( file );
   if (f.text)
     printf("Text\n");
   else

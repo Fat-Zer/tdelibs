@@ -22,32 +22,32 @@
 #include "networkstatuscommon.h"
 #include <kdebug.h>
 
-TQDataStream & operator<< ( TQDataStream & s, const NetworktqStatus::Properties p )
+TQDataStream & operator<< ( TQDataStream & s, const NetworkStatus::Properties p )
 {
 	kdDebug() << k_funcinfo << "status is: " << (int)p.status << endl;
 	s << (int)p.status;
 	s << (int)p.onDemandPolicy;
 	s << p.service;
 	s << ( p.internet ? 1 : 0 );
-	s << p.nettqmasks;
+	s << p.netmasks;
 	return s;
 }
 
-TQDataStream & operator>> ( TQDataStream & s, NetworktqStatus::Properties &p )
+TQDataStream & operator>> ( TQDataStream & s, NetworkStatus::Properties &p )
 {
 	int status, onDemandPolicy, internet;
 	s >> status;
 	kdDebug() << k_funcinfo << "status is: " << status << endl;
-	p.status = ( NetworktqStatus::EnumtqStatus )status;
+	p.status = ( NetworkStatus::EnumStatus )status;
 	s >> onDemandPolicy;
-	p.onDemandPolicy = ( NetworktqStatus::EnumOnDemandPolicy )onDemandPolicy;
+	p.onDemandPolicy = ( NetworkStatus::EnumOnDemandPolicy )onDemandPolicy;
 	s >> p.service;
 	s >> internet;
 	if ( internet )
 		p.internet = true;
 	else
 		p.internet = false;
-	s >> p.nettqmasks;
+	s >> p.netmasks;
 	kdDebug() << k_funcinfo << "enum converted status is: " << p.status << endl;
 	return s;
 }

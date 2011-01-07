@@ -855,7 +855,7 @@ DOMString ElementImpl::toString() const
 
 	for (NodeImpl *child = firstChild(); child != NULL; child = child->nextSibling()) {
 	    DOMString kid = child->toString();
-	    result += TQConstString(kid.tqunicode(), kid.length()).string();
+	    result += TQConstString(kid.unicode(), kid.length()).string();
 	}
 
 	result += "</";
@@ -972,11 +972,11 @@ NodeImpl *NamedAttrMapImpl::getNamedItem ( NodeImpl::Id id, bool nsAware, DOMStr
 {
     if (!m_element)
 	return 0;
-    unsigned int tqmask = nsAware ? ~0L : NodeImpl_IdLocalMask;
-    id = (id & tqmask);
+    unsigned int mask = nsAware ? ~0L : NodeImpl_IdLocalMask;
+    id = (id & mask);
 
     for (unsigned long i = 0; i < m_attrCount; i++) {
-	if ((m_attrs[i].id() & tqmask) == id) {
+	if ((m_attrs[i].id() & mask) == id) {
             // if we are called with a qualified name, filter out NS-aware elements with non-matching name.
             if (qName && (namespacePart(m_attrs[i].id()) != defaultNamespace) &&
                 strcasecmp(m_attrs[i].name(), DOMString(qName)))
@@ -1000,11 +1000,11 @@ Node NamedAttrMapImpl::removeNamedItem ( NodeImpl::Id id, bool nsAware, DOMStrin
         exceptioncode = DOMException::NO_MODIFICATION_ALLOWED_ERR;
         return 0;
     }
-    unsigned int tqmask = nsAware ? ~0L : NodeImpl_IdLocalMask;
-    id = (id & tqmask);
+    unsigned int mask = nsAware ? ~0L : NodeImpl_IdLocalMask;
+    id = (id & mask);
 
     for (unsigned long i = 0; i < m_attrCount; i++) {
-	if ((m_attrs[i].id() & tqmask) == id) {
+	if ((m_attrs[i].id() & mask) == id) {
             // if we are called with a qualified name, filter out NS-aware elements with non-matching name.
             if (qName && (namespacePart(m_attrs[i].id()) != defaultNamespace) &&
                 strcasecmp(m_attrs[i].name(), DOMString(qName)))
@@ -1064,23 +1064,23 @@ Node NamedAttrMapImpl::setNamedItem ( NodeImpl* arg, bool nsAware, DOMStringImpl
 
     if (attr->ownerElement() == m_element) {
 	// Already have this attribute.
-	// DOMTS core-1 test "hc_elementtqreplaceattributewithself" says we should return it.
+	// DOMTS core-1 test "hc_elementreplaceattributewithself" says we should return it.
 	return attr;
     }
-    unsigned int tqmask = nsAware ? ~0L : NodeImpl_IdLocalMask;
-    NodeImpl::Id id = (attr->id() & tqmask);
+    unsigned int mask = nsAware ? ~0L : NodeImpl_IdLocalMask;
+    NodeImpl::Id id = (attr->id() & mask);
 
     for (unsigned long i = 0; i < m_attrCount; i++) {
-	if ((m_attrs[i].id() & tqmask) == id) {
+	if ((m_attrs[i].id() & mask) == id) {
             // if we are called with a qualified name, filter out NS-aware elements with non-matching name.
             if (qName && (namespacePart(m_attrs[i].id()) != defaultNamespace) &&
                 strcasecmp(m_attrs[i].name(), DOMString(qName)))
                 continue;
-	    // Attribute exists; tqreplace it
+	    // Attribute exists; replace it
 	    if (id == ATTR_ID)
 	       m_element->updateId(m_attrs[i].val(), attr->val());
 
-	    Node tqreplaced = m_attrs[i].createAttr(m_element,m_element->docPtr());
+	    Node replaced = m_attrs[i].createAttr(m_element,m_element->docPtr());
 	    m_attrs[i].free();
 	    m_attrs[i].m_attrId = 0; /* "has implementation" flag */
 	    m_attrs[i].m_data.attr = attr;
@@ -1089,7 +1089,7 @@ Node NamedAttrMapImpl::setNamedItem ( NodeImpl* arg, bool nsAware, DOMStringImpl
 	    m_element->parseAttribute(&m_attrs[i]);
 	    m_element->attributeChanged(m_attrs[i].id());
 	    // ### dispatch mutation events
-	    return tqreplaced;
+	    return replaced;
 	}
     }
 
@@ -1142,10 +1142,10 @@ DOMStringImpl *NamedAttrMapImpl::valueAt(unsigned long index) const
 
 DOMStringImpl *NamedAttrMapImpl::getValue(NodeImpl::Id id, bool nsAware, DOMStringImpl* qName) const
 {
-    unsigned int tqmask = nsAware ? ~0L : NodeImpl_IdLocalMask;
-    id = (id & tqmask);
+    unsigned int mask = nsAware ? ~0L : NodeImpl_IdLocalMask;
+    id = (id & mask);
     for (unsigned long i = 0; i < m_attrCount; i++)
-        if ((m_attrs[i].id() & tqmask) == id) {
+        if ((m_attrs[i].id() & mask) == id) {
             // if we are called with a qualified name, filter out NS-aware elements with non-matching name.
             if (qName && (namespacePart(m_attrs[i].id()) != defaultNamespace) &&
                 strcasecmp(m_attrs[i].name(), qName))
@@ -1167,12 +1167,12 @@ void NamedAttrMapImpl::setValue(NodeImpl::Id id, DOMStringImpl *value, DOMString
 	removeNamedItem(id, nsAware, qName, exceptioncode);
 	return;
     }
-    unsigned int tqmask = nsAware ? ~0L : NodeImpl_IdLocalMask;
-    NodeImpl::Id mid = (id & tqmask);
+    unsigned int mask = nsAware ? ~0L : NodeImpl_IdLocalMask;
+    NodeImpl::Id mid = (id & mask);
 
     // Check for an existing attribute.
     for (unsigned long i = 0; i < m_attrCount; i++) {
-	if ((m_attrs[i].id() & tqmask) == mid) {
+	if ((m_attrs[i].id() & mask) == mid) {
             // if we are called with a qualified name, filter out NS-aware elements with non-matching name.
             if (qName && (namespacePart(m_attrs[i].id()) != defaultNamespace) &&
                 strcasecmp(m_attrs[i].name(), DOMString(qName)))

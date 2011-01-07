@@ -28,7 +28,7 @@ class KTEXTEDITOR_EXPORT EditorChooser: public QWidget
     void writeAppSetting(const TQString& postfix=TQString::null);
 
     static KTextEditor::Document *createDocument(TQObject* parent=0,const char *name=0,const TQString& postfix=TQString::null, bool fallBackToKatePart=true);
-    static KTextEditor::Editor *createEditor(TQWidget *tqparentWidget,TQObject *parent,const char* widgetName=0,const char* name=0,const TQString& postfix=TQString::null,bool fallBackToKatePart=true);
+    static KTextEditor::Editor *createEditor(TQWidget *parentWidget,TQObject *parent,const char* widgetName=0,const char* name=0,const TQString& postfix=TQString::null,bool fallBackToKatePart=true);
   private:
     class PrivateEditorChooser *d;
 };

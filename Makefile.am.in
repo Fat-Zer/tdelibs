@@ -40,8 +40,8 @@ pot_DATA = kde.pot
 
 messages:
 	cd kabc/scripts && perl ./makeaddressee
-	tqfind . -type d | grep -v '\.svn' | sed -e 's,$$,/,' > dirs
-	mfs=`tqfind . -name Makefile.am | xargs egrep -l '^messages:'` ;\
+	find . -type d | grep -v '\.svn' | sed -e 's,$$,/,' > dirs
+	mfs=`find . -name Makefile.am | xargs egrep -l '^messages:'` ;\
 	for dir in $$mfs; do \
 	  if test "$$dir" != "./Makefile.am"; then \
 	    dir=`dirname $$dir` ;\
@@ -50,11 +50,11 @@ messages:
 	done
 	fgrep -v "/tests" dirs > dirs.new && mv dirs.new dirs ;\
 	dirs=`cat dirs` ;\
-	tqfind $$dirs -maxdepth 1 -name "*.cpp" -print > files ;\
-	tqfind $$dirs -maxdepth 1 -name "*.cc" -print >> files ;\
-	tqfind $$dirs -maxdepth 1 -name "*.h" -print >> files ;\
+	find $$dirs -maxdepth 1 -name "*.cpp" -print > files ;\
+	find $$dirs -maxdepth 1 -name "*.cc" -print >> files ;\
+	find $$dirs -maxdepth 1 -name "*.h" -print >> files ;\
 	echo ./kdecore/kde-config.cpp.in >> files ;\
-	$(EXTRACTRC) `tqfind $$dirs -maxdepth 1 \( -name "*.rc" -o -name "*.ui" \) ` ./dnssd/kcm_kdnssd.kcfg > rc.cpp; \
+	$(EXTRACTRC) `find $$dirs -maxdepth 1 \( -name "*.rc" -o -name "*.ui" \) ` ./dnssd/kcm_kdnssd.kcfg > rc.cpp; \
 	: > kde.pot ;\
 	$(XGETTEXT) -ktranslate -x qt-messages.pot rc.cpp `cat files` && cat messages.po qt-messages.pot > $(podir)/kdelibs.pot
 	$(XGETTEXT) common_texts.cpp -o kde.pot
@@ -81,7 +81,7 @@ qtmessages:
 	if test x$(top_srcdir) = x; then top_srcdir=. ; else top_srcdir=$(top_srcdir); fi ;\
 	cd $$top_srcdir/../qt-copy/src ;\
 	sed -e "s,#define,," xml/qxml.cpp  > qxml_clean.cpp ;\
-	tqfind . -name "*.cpp" | grep -v tqmoc_ > list ;\
+	find . -name "*.cpp" | grep -v moc_ > list ;\
 	for file in qfiledialog qcolordialog qprintdialog \
 		qurloperator qftp qhttp qlocal qerrormessage; do \
 		grep -v $$file list > list.new && mv list.new list ;\

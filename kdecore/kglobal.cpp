@@ -127,7 +127,7 @@ void KGlobal::setActiveInstance(KInstance *i)
 const TQString &
 KGlobal::staticQString(const char *str)
 {
-   return staticQString(TQString::tqfromLatin1(str));
+   return staticQString(TQString::fromLatin1(str));
 }
 
 class KStringDict : public TQDict<TQString>
@@ -150,7 +150,7 @@ KGlobal::staticQString(const TQString &str)
       _stringDict->setAutoDelete( true );
       kglobal_init();
     }
-   TQString *result = _stringDict->tqfind(str);
+   TQString *result = _stringDict->find(str);
    if (!result)
    {
       result = new TQString(str);
@@ -170,7 +170,7 @@ KGlobal::registerStaticDeleter(KStaticDeleterBase *obj)
 {
    if (!_staticDeleters)
       kglobal_init();
-   if (_staticDeleters->tqfind(obj) == -1)
+   if (_staticDeleters->find(obj) == -1)
       _staticDeleters->append(obj);
 }
 

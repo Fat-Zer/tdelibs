@@ -71,6 +71,6 @@ static const struct pagesizestruct
 	{ I18N_NOOP("US Legal"), KPrinter::Legal },
 	{ I18N_NOOP("US Letter"), KPrinter::Letter }
 };
-int tqfindIndex(int ID);
+int findIndex(int ID);
 
 #endif

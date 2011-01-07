@@ -39,7 +39,7 @@
 
 #include "autostart.h"
 
-class IdleSlave : public TQObject
+class IdleSlave : public QObject
 {
    Q_OBJECT
 public:
@@ -168,7 +168,7 @@ public slots:
    void slotDequeue();
    void slotKDEInitData(int);
    void slotAppRegistered(const TQCString &appId);
-   void slotSlavetqStatus(IdleSlave *);
+   void slotSlaveStatus(IdleSlave *);
    void acceptSlave( KSocket *);
    void slotSlaveGone();
    void idleTimeout();

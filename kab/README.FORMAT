@@ -12,7 +12,7 @@ kab handles address book entries. Each entry is meant to represent a
 person. Thus, for each entry, it is possible to store more than one
 address (like home or business addresses). 
 
-An addressbook database file tqcontains two sections, one to store the
+An addressbook database file contains two sections, one to store the
 users entries, called "entries", and one to store the configuration,
 called "config". Every subsection of the "entries" section is one
 entry, containing 

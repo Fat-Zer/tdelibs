@@ -34,8 +34,8 @@
 
 static KCmdLineOptions options[] = {
    { "utf8", I18N_NOOP("Output data in UTF-8 instead of local encoding"), 0 },
-   { "print-menu-id", I18N_NOOP("Print menu-id of the menu that tqcontains\nthe application"), 0 },
-   { "print-menu-name", I18N_NOOP("Print menu name (caption) of the menu that\ntqcontains the application"), 0 },
+   { "print-menu-id", I18N_NOOP("Print menu-id of the menu that contains\nthe application"), 0 },
+   { "print-menu-name", I18N_NOOP("Print menu name (caption) of the menu that\ncontains the application"), 0 },
    { "highlight", I18N_NOOP("Highlight the entry in the menu"), 0 },
    { "nocache-update", I18N_NOOP("Do not check if sycoca database is up to date"), 0 },
    { "+<application-id>", I18N_NOOP("The id of the menu entry to locate"), 0 },
@@ -64,7 +64,7 @@ static void error(int exitCode, const TQString &txt)
    exit(exitCode);
 }
 
-static void tqfindMenuEntry(KServiceGroup::Ptr parent, const TQString &name, const TQString &menuId)
+static void findMenuEntry(KServiceGroup::Ptr parent, const TQString &name, const TQString &menuId)
 {
    KServiceGroup::List list = parent->entries(true, true, false);
    KServiceGroup::List::ConstIterator it = list.begin();
@@ -76,7 +76,7 @@ static void tqfindMenuEntry(KServiceGroup::Ptr parent, const TQString &name, con
       {
          KServiceGroup::Ptr g(static_cast<KServiceGroup *>(e));
          
-         tqfindMenuEntry(g, name.isEmpty() ? g->caption() : name+"/"+g->caption(), menuId);
+         findMenuEntry(g, name.isEmpty() ? g->caption() : name+"/"+g->caption(), menuId);
       }
       else if (e->isType(KST_KService))
       {
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 {
    KLocale::setMainCatalogue("kdelibs");
    const char *description = I18N_NOOP("KDE Menu query tool.\n"
-   "This tool can be used to tqfind in which menu a specific application is shown.\n"
+   "This tool can be used to find in which menu a specific application is shown.\n"
    "The --highlight option can be used to visually indicate to the user where\n"
    "in the KDE menu a specific application is located.");
    
@@ -163,7 +163,7 @@ int main(int argc, char **argv)
    if (!s)
       error(1, i18n("No menu item '%1'.").arg(menuId));
 
-   tqfindMenuEntry(KServiceGroup::root(), "", menuId);
+   findMenuEntry(KServiceGroup::root(), "", menuId);
 
    error(2, i18n("Menu item '%1' not found in menu.").arg(menuId));
    return 2;

@@ -46,7 +46,7 @@
  * loader block size, load 256 kb at once per default
  * if file size is smaller, fall back to file size
  */
-static const TQ_ULONG KATE_FILE_LOADER_BS  = 256 * 1024;
+static const Q_ULONG KATE_FILE_LOADER_BS  = 256 * 1024;
 
 /**
  * KATE_AVG_BLOCK_SIZE is in characters !
@@ -54,8 +54,8 @@ static const TQ_ULONG KATE_FILE_LOADER_BS  = 256 * 1024;
  * block will max contain around BLOCK_SIZE chars or
  * BLOCK_LINES lines (after load, later that won't be tracked)
  */
-static const TQ_ULONG KATE_AVG_BLOCK_SIZE  = 2048 * 80;
-static const TQ_ULONG KATE_MAX_BLOCK_LINES = 2048;
+static const Q_ULONG KATE_AVG_BLOCK_SIZE  = 2048 * 80;
+static const Q_ULONG KATE_MAX_BLOCK_LINES = 2048;
 
 /**
  * hl will look at the next KATE_HL_LOOKAHEAD lines
@@ -172,10 +172,10 @@ class KateFileLoader
     // should spaces be ignored at end of line?
     inline bool removeTrailingSpaces () const { return m_removeTrailingSpaces; }
 
-    // internal tqunicode data array
-    inline const TQChar *tqunicode () const { return m_text.tqunicode(); }
+    // internal unicode data array
+    inline const TQChar *unicode () const { return m_text.unicode(); }
 
-    // read a line, return length + offset in tqunicode data
+    // read a line, return length + offset in unicode data
     void readLine (uint &offset, uint &length)
     {
       length = 0;
@@ -402,7 +402,7 @@ void KateBuffer::editEnd ()
 
       KateBufBlock *buf2 = 0;
       bool needContinue = false;
-      while ((buf2 = tqfindBlock(editTagLineStart)))
+      while ((buf2 = findBlock(editTagLineStart)))
       {
         needContinue = doHighlight (buf2,
           (editTagLineStart > buf2->startLine()) ? editTagLineStart : buf2->startLine(),
@@ -543,7 +543,7 @@ bool KateBuffer::canEncode ()
 
   kdDebug(13020) << "ENC NAME: " << codec->name() << endl;
 
-  // hardcode some tqunicode encodings which can encode all chars
+  // hardcode some unicode encodings which can encode all chars
   if ((TQString(codec->name()) == "UTF-8") || (TQString(codec->name()) == "ISO-10646-UCS-2"))
     return true;
 
@@ -618,7 +618,7 @@ KateTextLine::Ptr KateBuffer::line_internal (KateBufBlock *buf, uint i)
 {
   // update hl until this line + max KATE_HL_LOOKAHEAD
   KateBufBlock *buf2 = 0;
-  while ((i >= m_lineHighlighted) && (buf2 = tqfindBlock(m_lineHighlighted)))
+  while ((i >= m_lineHighlighted) && (buf2 = findBlock(m_lineHighlighted)))
   {
     uint end = kMin(i + KATE_HL_LOOKAHEAD, buf2->endLine());
 
@@ -637,7 +637,7 @@ KateTextLine::Ptr KateBuffer::line_internal (KateBufBlock *buf, uint i)
   return buf->line (i - buf->startLine());
 }
 
-KateBufBlock *KateBuffer::tqfindBlock_internal (uint i, uint *index)
+KateBufBlock *KateBuffer::findBlock_internal (uint i, uint *index)
 {
   uint lastLine = m_blocks[m_lastInSyncBlock]->endLine ();
 
@@ -701,7 +701,7 @@ KateBufBlock *KateBuffer::tqfindBlock_internal (uint i, uint *index)
 
 void KateBuffer::changeLine(uint i)
 {
-  KateBufBlock *buf = tqfindBlock(i);
+  KateBufBlock *buf = findBlock(i);
 
   if (!buf)
     return;
@@ -725,9 +725,9 @@ void KateBuffer::insertLine(uint i, KateTextLine::Ptr line)
   uint index = 0;
   KateBufBlock *buf;
   if (i == m_lines)
-    buf = tqfindBlock(i-1, &index);
+    buf = findBlock(i-1, &index);
   else
-    buf = tqfindBlock(i, &index);
+    buf = findBlock(i, &index);
 
   if (!buf)
     return;
@@ -772,7 +772,7 @@ void KateBuffer::insertLine(uint i, KateTextLine::Ptr line)
 void KateBuffer::removeLine(uint i)
 {
    uint index = 0;
-   KateBufBlock *buf = tqfindBlock(i, &index);
+   KateBufBlock *buf = findBlock(i, &index);
 
    if (!buf)
      return;
@@ -849,7 +849,7 @@ void KateBuffer::setTabWidth (uint w)
     m_tabWidth = w;
 
     if (m_highlight && m_highlight->foldingIndentationSensitive())
-      tqinvalidateHighlighting();
+      invalidateHighlighting();
   }
 }
 
@@ -860,12 +860,12 @@ void KateBuffer::setHighlight(uint hlMode)
    // aha, hl will change
   if (h != m_highlight)
   {
-    bool tqinvalidate = !h->noHighlighting();
+    bool invalidate = !h->noHighlighting();
 
     if (m_highlight)
     {
       m_highlight->release();
-      tqinvalidate = true;
+      invalidate = true;
     }
 
     h->use();
@@ -880,8 +880,8 @@ void KateBuffer::setHighlight(uint hlMode)
 
     m_highlight = h;
 
-    if (tqinvalidate)
-      tqinvalidateHighlighting();
+    if (invalidate)
+      invalidateHighlighting();
 
     // inform the document that the hl was really changed
     // needed to update attributes and more ;)
@@ -889,7 +889,7 @@ void KateBuffer::setHighlight(uint hlMode)
   }
 }
 
-void KateBuffer::tqinvalidateHighlighting()
+void KateBuffer::invalidateHighlighting()
 {
   m_lineHighlightedMax = 0;
   m_lineHighlighted = 0;
@@ -906,7 +906,7 @@ void KateBuffer::updatePreviousNotEmptyLine(KateBufBlock *blk,uint current_line,
       uint line=blk->startLine()+current_line;
       if (line==0) return;
       line--;
-      blk=tqfindBlock(line);
+      blk=findBlock(line);
       if (!blk) {
         kdDebug(13020)<<"updatePreviousNotEmptyLine: block not found, this must not happen"<<endl;
         return;
@@ -949,7 +949,7 @@ void KateBuffer::addIndentBasedFoldingInformation(TQMemArray<uint> &foldingList,
   }
 }
 
-bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, bool tqinvalidate)
+bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, bool invalidate)
 {
   // no hl around, no stuff to do
   if (!m_highlight)
@@ -971,13 +971,13 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
   //kdDebug (13020) << "HL UNTIL LINE: " << m_lineHighlighted << " MAX: " << m_lineHighlightedMax << endl;
   //kdDebug (13020) << "HL DYN COUNT: " << KateHlManager::self()->countDynamicCtxs() << " MAX: " << m_maxDynamicContexts << endl;
 
-  // see if there are too many dynamic contexts; if yes, tqinvalidate HL of all documents
+  // see if there are too many dynamic contexts; if yes, invalidate HL of all documents
   if (KateHlManager::self()->countDynamicCtxs() >= m_maxDynamicContexts)
   {
     {
       if (KateHlManager::self()->resetDynamicCtxs())
       {
-        kdDebug (13020) << "HL tqinvalidated - too many dynamic contexts ( >= " << m_maxDynamicContexts << ")" << endl;
+        kdDebug (13020) << "HL invalidated - too many dynamic contexts ( >= " << m_maxDynamicContexts << ")" << endl;
 
         // avoid recursive invalidation
         KateHlManager::self()->setForceNoDCReset(true);
@@ -988,7 +988,7 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
         // doHighlight *shall* do his work. After invalidation, some highlight has
         // been recalculated, but *maybe not* until endLine ! So we shall force it manually...
         KateBufBlock *buf = 0;
-        while ((endLine > m_lineHighlighted) && (buf = tqfindBlock(m_lineHighlighted)))
+        while ((endLine > m_lineHighlighted) && (buf = findBlock(m_lineHighlighted)))
         {
           uint end = kMin(endLine, buf->endLine());
 
@@ -1240,7 +1240,7 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
   buf->markDirty ();
 
   // tag the changed lines !
-  if (tqinvalidate)
+  if (invalidate)
     emit tagLines (startLine, current_line + buf->startLine());
 
   // emit that we have changed the folding
@@ -1353,14 +1353,14 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
   {
     uint offset = 0, length = 0;
     stream->readLine(offset, length);
-    const TQChar *tqunicodeData = stream->tqunicode () + offset;
+    const TQChar *unicodeData = stream->unicode () + offset;
 
     // strip spaces at end of line
     if ( stream->removeTrailingSpaces() )
     {
       while (length > 0)
       {
-        if (tqunicodeData[length-1].isSpace())
+        if (unicodeData[length-1].isSpace())
           --length;
         else
           break;
@@ -1391,13 +1391,13 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
       memcpy(buf+pos, (char *) &length, sizeof(uint));
       pos += sizeof(uint);
 
-      memcpy(buf+pos, (char *) tqunicodeData, sizeof(TQChar)*length);
+      memcpy(buf+pos, (char *) unicodeData, sizeof(TQChar)*length);
       pos += sizeof(TQChar)*length;
     }
     else
     {
       KateTextLine::Ptr textLine = new KateTextLine ();
-      textLine->insertText (0, length, tqunicodeData);
+      textLine->insertText (0, length, unicodeData);
       m_stringList.push_back (textLine);
     }
 
@@ -1657,4 +1657,4 @@ void KateBufBlockList::removeInternal (KateBufBlock *buf)
 
 //END KateBufBlockList
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

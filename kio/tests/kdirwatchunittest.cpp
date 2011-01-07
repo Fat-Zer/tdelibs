@@ -26,7 +26,7 @@ void KDirWatchTest::VERIFY_NOTHING()
 
     for (int i = 0; i < 20; ++i) {
       usleep(100*1000);
-      tqApp->processEvents();
+      qApp->processEvents();
     }
 
     bool nothing_failed = true;
@@ -47,7 +47,7 @@ void KDirWatchTest::VERIFY_DIRTY(const TQString& alert)
 
     for (int i = 0; i < 20; ++i) {
       usleep(100*1000);
-      tqApp->processEvents();
+      qApp->processEvents();
     }
 
     VERIFY (m_s[sigCreated] == m_signals[sigCreated] &&
@@ -64,7 +64,7 @@ void KDirWatchTest::VERIFY_CREATED(const TQString& alert)
 
     for (int i = 0; i < 20; ++i) {
       usleep(100*1000);
-      tqApp->processEvents();
+      qApp->processEvents();
     }
 
     VERIFY (m_s[sigDirty] == m_signals[sigDirty] &&
@@ -81,7 +81,7 @@ void KDirWatchTest::VERIFY_DELETED(const TQString& alert)
 
     for (int i = 0; i < 20; ++i) {
       usleep(100*1000);
-      tqApp->processEvents();
+      qApp->processEvents();
     }
 
     VERIFY (m_s[sigDirty] == m_signals[sigDirty] &&

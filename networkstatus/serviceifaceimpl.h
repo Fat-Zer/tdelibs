@@ -31,13 +31,13 @@
 class ServiceIfaceImpl : virtual public ServiceIface
 {
 public:
-	ServiceIfaceImpl( NetworktqStatusModule * module );
+	ServiceIfaceImpl( NetworkStatusModule * module );
 	void setStatus( TQString networkName, int status );
-	void registerNetwork( TQString networkName, NetworktqStatus::Properties properties );
+	void registerNetwork( TQString networkName, NetworkStatus::Properties properties );
 	void unregisterNetwork( TQString networkName );
 	void requestShutdown( TQString networkName );
 private:
-	NetworktqStatusModule * m_module;
+	NetworkStatusModule * m_module;
 };
 
 #endif

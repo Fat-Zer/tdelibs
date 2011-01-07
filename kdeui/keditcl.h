@@ -126,10 +126,10 @@ public:
     KHistoryCombo *searchCombo() const;
 
     /**
-     * @returns the combobox containing the history of tqreplaces. Can be used
+     * @returns the combobox containing the history of replaces. Can be used
      * to save and restore the history.
      */
-    KHistoryCombo *tqreplaceCombo() const;
+    KHistoryCombo *replaceCombo() const;
 
     bool 	case_sensitive();
     bool 	get_direction();
@@ -149,9 +149,9 @@ private:
 	virtual void done(int i ) { KDialogBase::done(i); }
 
 signals:
-    void tqreplace();
-    void tqfind();
-    void tqreplaceAll();
+    void replace();
+    void find();
+    void replaceAll();
     void done();
 protected:
   virtual void virtual_hook( int id, void* data );
@@ -194,7 +194,7 @@ public:
 
     /**
      * Save text from the edit widget to a text stream.
-     * If @p softWrap is false soft line wrappings are tqreplaced with line-feeds
+     * If @p softWrap is false soft line wrappings are replaced with line-feeds
      * If @p softWrap is true soft line wrappings are ignored.
      * @since 3.1
      **/
@@ -225,7 +225,7 @@ public:
     /**
      * Present a Search and Replace Dialog to the user.
      **/
-    void 	tqreplace();
+    void 	replace();
 
     /**
      * Present a "Goto Line" dialog to the user.
@@ -340,22 +340,22 @@ private slots:
       /**
        * @internal
        **/
-    void tqreplace_slot();
+    void replace_slot();
 
       /**
        * @internal
        **/
-    void tqreplace_all_slot();
+    void replace_all_slot();
 
       /**
        * @internal
        **/
-    void tqreplace_search_slot();
+    void replace_search_slot();
 
       /**
        * @internal
        **/
-    void tqreplacedone_slot();
+    void replacedone_slot();
 
       /**
        * Cursor moved...
@@ -368,7 +368,7 @@ protected:
 			 bool regex, bool forward,int line, int col);
 
     int 	doReplace(TQString s_pattern, bool case_sensitive,
-			  bool regex, bool forward,int line, int col,bool tqreplace);
+			  bool regex, bool forward,int line, int col,bool replace);
 
       /**
        * Sets line and col to the position pos, considering word wrap.
@@ -401,25 +401,25 @@ protected:
     void        contentsDropEvent(TQDropEvent* e);
 
 private:
-    TQTimer* tqrepaintTimer;
+    TQTimer* repaintTimer;
 
     QString	killbufferstring;
     TQWidget     *parent;
     KEdFind 	*srchdialog;
-    KEdReplace 	*tqreplace_dialog;
+    KEdReplace 	*replace_dialog;
     KEdGotoLine *gotodialog;
 
     TQString     pattern;
 
-    bool 	can_tqreplace;
+    bool 	can_replace;
     bool	killing;
     bool 	killtrue;
     bool 	lastwasanewline;
     bool        saved_readonlystate;
     int 	last_search;
-    int 	last_tqreplace;
-    int 	tqreplace_all_line;
-    int 	tqreplace_all_col;
+    int 	last_replace;
+    int 	replace_all_line;
+    int 	replace_all_col;
 
     int 	line_pos, col_pos;
     bool        fill_column_is_set;

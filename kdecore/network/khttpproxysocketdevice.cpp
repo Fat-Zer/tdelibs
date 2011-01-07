@@ -153,12 +153,12 @@ bool KHttpProxySocketDevice::connect(const TQString& node, const TQString& servi
       setState(0);		// unset open flag
 
       // prepare the request
-      TQString request = TQString::tqfromLatin1("CONNECT %1:%2 HTTP/1.1\r\n"
+      TQString request = TQString::fromLatin1("CONNECT %1:%2 HTTP/1.1\r\n"
 					    "Cache-Control: no-cache\r\n"
 					    "Host: \r\n"
 					    "\r\n");
       TQString node2 = node;
-      if (node.tqcontains(':'))
+      if (node.contains(':'))
 	node2 = '[' + node + ']';
 
       d->request = request.arg(node2).arg(service).latin1();
@@ -179,7 +179,7 @@ bool KHttpProxySocketDevice::parseServerReply()
   if (!d->request.isEmpty())
     {
       // send request
-      TQ_LONG written = writeBlock(d->request, d->request.length());
+      Q_LONG written = writeBlock(d->request, d->request.length());
       if (written < 0)
 	{
 	  qDebug("KHttpProxySocketDevice: would block writing request!");
@@ -205,7 +205,7 @@ bool KHttpProxySocketDevice::parseServerReply()
   int index;
   if (!blocking())
     {
-      TQ_LONG avail = bytesAvailable();
+      Q_LONG avail = bytesAvailable();
       qDebug("KHttpProxySocketDevice: %ld bytes available", avail);
       setState(0);
       if (avail == 0)
@@ -222,7 +222,7 @@ bool KHttpProxySocketDevice::parseServerReply()
 
       TQCString fullHeaders = d->reply + buf.data();
       // search for the end of the headers
-      index = fullHeaders.tqfind("\r\n\r\n");
+      index = fullHeaders.find("\r\n\r\n");
       if (index == -1)
 	{
 	  // no, headers not yet finished...
@@ -265,9 +265,9 @@ bool KHttpProxySocketDevice::parseServerReply()
 
   // now really parse the reply
   qDebug("KHttpProxySocketDevice: get reply: %s\n",
-	 d->reply.left(d->reply.tqfind('\r')).data());
+	 d->reply.left(d->reply.find('\r')).data());
   if (d->reply.left(7) != "HTTP/1." ||
-      (index = d->reply.tqfind(' ')) == -1 ||
+      (index = d->reply.find(' ')) == -1 ||
       d->reply[index + 1] != '2')
     {
       setError(IO_ConnectError, NetFailure);

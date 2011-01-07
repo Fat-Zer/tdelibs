@@ -134,7 +134,7 @@ static int statBufferSize = 0;
 
 UChar UChar::toLower() const
 {
-  // ### properly support tqunicode tolower
+  // ### properly support unicode tolower
   if (uc >= 256)
     return *this;
 
@@ -746,7 +746,7 @@ unsigned int UString::toStrictUInt32(bool *ok) const
   if (len == 0)
     return 0;
   const UChar *p = rep->dat;
-  unsigned short c = p->tqunicode();
+  unsigned short c = p->unicode();
 
   // If the first digit is 0, only 0 itself is OK.
   if (c == '0') {
@@ -782,7 +782,7 @@ unsigned int UString::toStrictUInt32(bool *ok) const
     }
 
     // Get next character.
-    c = (++p)->tqunicode();
+    c = (++p)->unicode();
   }
 }
 
@@ -796,7 +796,7 @@ unsigned UString::toArrayIndex(bool *ok) const
   return i;
 }
 
-int UString::tqfind(const UString &f, int pos) const
+int UString::find(const UString &f, int pos) const
 {
   int sz = size();
   int fsz = f.size();
@@ -818,7 +818,7 @@ int UString::tqfind(const UString &f, int pos) const
   return -1;
 }
 
-int UString::tqfind(UChar ch, int pos) const
+int UString::find(UChar ch, int pos) const
 {
   if (pos < 0)
     pos = 0;
@@ -830,7 +830,7 @@ int UString::tqfind(UChar ch, int pos) const
   return -1;
 }
 
-int UString::rtqfind(const UString &f, int pos) const
+int UString::rfind(const UString &f, int pos) const
 {
   int sz = size();
   int fsz = f.size();
@@ -852,7 +852,7 @@ int UString::rtqfind(const UString &f, int pos) const
   return -1;
 }
 
-int UString::rtqfind(UChar ch, int pos) const
+int UString::rfind(UChar ch, int pos) const
 {
   if (isEmpty())
     return -1;

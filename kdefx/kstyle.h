@@ -70,7 +70,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		 * internal menu transparency engine.
 		 * 
 		 * @li FilledFrameWorkaround - Enable this flag to facilitate 
-		 * proper tqrepaints of QMenuBars and QToolBars when the style chooses 
+		 * proper repaints of QMenuBars and QToolBars when the style chooses 
 		 * to paint the interior of a TQFrame. The style primitives in question 
 		 * are PE_PanelMenuBar and PE_PanelDockWindow. The HighColor style uses
 		 * this workaround to enable painting of gradients in menubars and 
@@ -171,7 +171,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		 * This virtual function defines the pixmap used to blend between the popup
 		 * menu and the background to create different menu transparency effects.
 		 * For example, you can fill the pixmap "pix" with a gradient based on the
-		 * popup's tqcolorGroup, a texture, or some other fancy painting routine.
+		 * popup's colorGroup, a texture, or some other fancy painting routine.
 		 * KStyle will then internally blend this pixmap with a snapshot of the
 		 * background behind the popupMenu to create the illusion of transparency.
 		 * 
@@ -243,7 +243,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		 *
 		 * @see KStyle::KStylePrimitive
 		 * @see TQStyle::drawPrimitive
-		 * @see TQStyle::tqdrawComplexControl
+		 * @see TQStyle::drawComplexControl
 		 */
 		virtual void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
@@ -292,7 +292,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 
 // #endif // USE_QT4
 
-		void tqdrawControl( ControlElement element,
+		void drawControl( ControlElement element,
 					TQPainter* p,
 					const TQWidget* widget,
 					const TQRect &r,
@@ -300,7 +300,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
-		void tqdrawComplexControl( ComplexControl control,
+		void drawComplexControl( ComplexControl control,
 					TQPainter *p,
 					const TQWidget* widget,
 					const TQRect &r,
@@ -320,7 +320,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					SubControl sc,
 					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
-		int tqpixelMetric( PixelMetric m, 
+		int pixelMetric( PixelMetric m, 
 					const TQWidget* widget = 0 ) const;
 
 		TQRect subRect( SubRect r, 
@@ -330,7 +330,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					const TQWidget* widget = 0,
 					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
 
-		int tqstyleHint( StyleHint sh, 
+		int styleHint( StyleHint sh, 
 					const TQWidget* w = 0,
 					const TQStyleOption &opt = TQStyleOption::TQSO_Default,
 					QStyleHintReturn* shr = 0 ) const;

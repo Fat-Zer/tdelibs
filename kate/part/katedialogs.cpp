@@ -147,7 +147,7 @@ const int KateIndentConfigTab::flags[] = {
 KateIndentConfigTab::KateIndentConfigTab(TQWidget *parent)
   : KateConfigPage(parent)
 {
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
   int configFlags = KateDocumentConfig::global()->configFlags();
 
   TQVGroupBox *gbAuto = new TQVGroupBox(i18n("Automatic Indentation"), this);
@@ -195,14 +195,14 @@ KateIndentConfigTab::KateIndentConfigTab(TQWidget *parent)
   opt[6]->setChecked(configFlags & flags[6]);
   opt[7]->setChecked(configFlags & flags[7]);
 
-  tqlayout->addWidget(gbAuto);
-  tqlayout->addWidget(gbSpaces);
-  tqlayout->addWidget(opt[1]);
-  tqlayout->addWidget(opt[2]);
-  tqlayout->addWidget(keys);
-  tqlayout->addWidget(m_tabs, 0);
+  layout->addWidget(gbAuto);
+  layout->addWidget(gbSpaces);
+  layout->addWidget(opt[1]);
+  layout->addWidget(opt[2]);
+  layout->addWidget(keys);
+  layout->addWidget(m_tabs, 0);
 
-  tqlayout->addStretch();
+  layout->addStretch();
 
   // What is this? help
   TQWhatsThis::add(opt[0], i18n(
@@ -352,7 +352,7 @@ KateSelectConfigTab::KateSelectConfigTab(TQWidget *parent)
 {
   int configFlags = KateDocumentConfig::global()->configFlags();
 
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
 
   TQVGroupBox *gbCursor = new TQVGroupBox(i18n("Text Cursor Movement"), this);
 
@@ -373,18 +373,18 @@ KateSelectConfigTab::KateSelectConfigTab(TQWidget *parent)
   e4->setLabel(i18n("Autocenter cursor (lines):"), AlignVCenter);
   connect(e4, TQT_SIGNAL(valueChanged(int)), this, TQT_SLOT(slotChanged()));
 
-  tqlayout->addWidget(gbCursor);
+  layout->addWidget(gbCursor);
 
   TQRadioButton *rb1, *rb2;
 
   m_tabs = new TQButtonGroup( 1, Qt::Horizontal, i18n("Selection Mode"), this );
-  tqlayout->add (m_tabs);
+  layout->add (m_tabs);
 
   m_tabs->setRadioButtonExclusive( true );
   m_tabs->insert( rb1=new TQRadioButton( i18n("&Normal"), m_tabs ), 0 );
   m_tabs->insert( rb2=new TQRadioButton( i18n("&Persistent"), m_tabs ), 1 );
 
-  tqlayout->addStretch();
+  layout->addStretch();
 
   TQWhatsThis::add(rb1, i18n(
         "Selections will be overwritten by typed text and will be lost on "
@@ -712,7 +712,7 @@ KateViewDefaultsConfig::KateViewDefaultsConfig(TQWidget *parent)
         "you to set a maximum width of the screen, as a percentage, after which "
         "dynamically wrapped lines will no longer be vertically aligned.  For "
         "example, at 50%, lines whose indentation levels are deeper than 50% of "
-        "the width of the screen will not have vertical tqalignment applied to "
+        "the width of the screen will not have vertical alignment applied to "
         "subsequent wrapped lines.</p>"));
   TQWhatsThis::add(m_line,i18n(
         "If this option is checked, every new view will display line numbers "
@@ -850,10 +850,10 @@ KateSaveConfigTab::KateSaveConfigTab( TQWidget *parent )
   : KateConfigPage( parent )
 {
   int configFlags = KateDocumentConfig::global()->configFlags();
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
 
   TQVGroupBox *gbEnc = new TQVGroupBox(i18n("File Format"), this);
-  tqlayout->addWidget( gbEnc );
+  layout->addWidget( gbEnc );
 
   TQHBox *e5Layout = new TQHBox(gbEnc);
   TQLabel *e5Label = new TQLabel(i18n("&Encoding:"), e5Layout);
@@ -872,7 +872,7 @@ KateSaveConfigTab::KateSaveConfigTab( TQWidget *parent )
   m_eol->insertItem (i18n("Macintosh"));
 
   TQVGroupBox *gbMem = new TQVGroupBox(i18n("Memory Usage"), this);
-  tqlayout->addWidget( gbMem );
+  layout->addWidget( gbMem );
 
   e5Layout = new TQHBox(gbMem);
   e5Layout->setSpacing (32);
@@ -883,13 +883,13 @@ KateSaveConfigTab::KateSaveConfigTab( TQWidget *parent )
   blockCountLabel->setBuddy(blockCount);
 
   TQVGroupBox *gbWhiteSpace = new TQVGroupBox(i18n("Automatic Cleanups on Load/Save"), this);
-  tqlayout->addWidget( gbWhiteSpace );
+  layout->addWidget( gbWhiteSpace );
 
   removeSpaces = new TQCheckBox(i18n("Re&move trailing spaces"), gbWhiteSpace);
   removeSpaces->setChecked(configFlags & KateDocument::cfRemoveSpaces);
 
   TQVGroupBox *dirConfigBox = new TQVGroupBox(i18n("Folder Config File"), this);
-  tqlayout->addWidget( dirConfigBox );
+  layout->addWidget( dirConfigBox );
 
   dirSearchDepth = new KIntNumInput(KateDocumentConfig::global()->searchDirConfigDepth(), dirConfigBox);
   dirSearchDepth->setRange(-1, 64, 1, false);
@@ -897,7 +897,7 @@ KateSaveConfigTab::KateSaveConfigTab( TQWidget *parent )
   dirSearchDepth->setLabel(i18n("Se&arch depth for config file:"), AlignVCenter);
 
   TQGroupBox *gb = new TQGroupBox( 1, Qt::Horizontal, i18n("Backup on Save"), this );
-  tqlayout->addWidget( gb );
+  layout->addWidget( gb );
   cbLocalFiles = new TQCheckBox( i18n("&Local files"), gb );
   cbRemoteFiles = new TQCheckBox( i18n("&Remote files"), gb );
 
@@ -911,7 +911,7 @@ KateSaveConfigTab::KateSaveConfigTab( TQWidget *parent )
   leBuSuffix = new TQLineEdit( hbBuSuffix );
   lBuSuffix->setBuddy( leBuSuffix );
 
-  tqlayout->addStretch();
+  layout->addStretch();
 
   TQWhatsThis::add(removeSpaces, i18n(
         "The editor will automatically eliminate extra spaces at the ends of "
@@ -1257,11 +1257,11 @@ KateHlConfigPage::KateHlConfigPage (TQWidget *parent, KateDocument *doc)
  , hlData (0)
  , m_doc (doc)
 {
-  TQVBoxLayout *tqlayout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout(this, 0, KDialog::spacingHint() );
 
   // hl chooser
   TQHBox *hbHl = new TQHBox( this );
-  tqlayout->add (hbHl);
+  layout->add (hbHl);
 
   hbHl->setSpacing( KDialog::spacingHint() );
   TQLabel *lHl = new TQLabel( i18n("H&ighlight:"), hbHl );
@@ -1278,7 +1278,7 @@ KateHlConfigPage::KateHlConfigPage (TQWidget *parent, KateDocument *doc)
   }
 
   TQGroupBox *gbInfo = new TQGroupBox( 1, Qt::Horizontal, i18n("Information"), this );
-  tqlayout->add (gbInfo);
+  layout->add (gbInfo);
 
   // author
   TQHBox *hb1 = new TQHBox( gbInfo);
@@ -1292,7 +1292,7 @@ KateHlConfigPage::KateHlConfigPage (TQWidget *parent, KateDocument *doc)
   license  = new TQLabel (hb2);
 
   TQGroupBox *gbProps = new TQGroupBox( 1, Qt::Horizontal, i18n("Properties"), this );
-  tqlayout->add (gbProps);
+  layout->add (gbProps);
 
   // file & mime types
   TQHBox *hbFE = new TQHBox( gbProps);
@@ -1317,9 +1317,9 @@ KateHlConfigPage::KateHlConfigPage (TQWidget *parent, KateDocument *doc)
 
   // download/new buttons
   TQHBox *hbBtns = new TQHBox( this );
-  tqlayout->add (hbBtns);
+  layout->add (hbBtns);
 
-  ((TQBoxLayout*)hbBtns->tqlayout())->addStretch(1); // hmm.
+  ((TQBoxLayout*)hbBtns->layout())->addStretch(1); // hmm.
   hbBtns->setSpacing( KDialog::spacingHint() );
   TQPushButton *btnDl = new TQPushButton(i18n("Do&wnload..."), hbBtns);
   connect( btnDl, TQT_SIGNAL(clicked()), this, TQT_SLOT(hlDownload()) );
@@ -1346,7 +1346,7 @@ KateHlConfigPage::KateHlConfigPage (TQWidget *parent, KateDocument *doc)
         "Click this button to download new or updated syntax highlight "
         "descriptions from the Kate website.") );
 
-  tqlayout->addStretch ();
+  layout->addStretch ();
 
   connect( wildcards, TQT_SIGNAL( textChanged ( const TQString & ) ), this, TQT_SLOT( slotChanged() ) );
   connect( mimetypes, TQT_SIGNAL( textChanged ( const TQString & ) ), this, TQT_SLOT( slotChanged() ) );
@@ -1388,10 +1388,10 @@ void KateHlConfigPage::hlChanged(int z)
     return;
   }
 
-  if ( !hlDataDict.tqfind( z ) )
+  if ( !hlDataDict.find( z ) )
     hlDataDict.insert( z, hl->getData() );
 
-  hlData = hlDataDict.tqfind( z );
+  hlData = hlDataDict.find( z );
   wildcards->setText(hlData->wildcards);
   mimetypes->setText(hlData->mimetypes);
   priority->setValue(hlData->priority);
@@ -1737,4 +1737,4 @@ void KateModOnHdPrompt::slotUser1()
 
 //END KateModOnHdPrompt
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

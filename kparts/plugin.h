@@ -111,7 +111,7 @@ public:
      * Plugin objects children of @p parent, and insert the plugin as a child GUI client
      * of @p parentGUIClient.
      *
-     * This method uses the KConfig object of the given instance, to tqfind out which
+     * This method uses the KConfig object of the given instance, to find out which
      * plugins are enabled and which are disabled. What happens by default (i.e.
      * for new plugins that are not in that config file) is controlled by
      * @p enableNewPluginsByDefault. It can be overridden by the plugin if it

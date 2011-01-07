@@ -32,8 +32,8 @@ struct KEncodingFileDialogPrivate;
  *
  *
  * The dialog has been designed to allow applications to customise it
- * by subclassing. It uses tqgeometry management to ensure that subclasses
- * can easily add children that will be incorporated into the tqlayout.
+ * by subclassing. It uses geometry management to ensure that subclasses
+ * can easily add children that will be incorporated into the layout.
  */
 
 class KIO_EXPORT KEncodingFileDialog : public KFileDialog

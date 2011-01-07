@@ -253,7 +253,7 @@ class KateSaveConfigTab : public KateConfigPage
   protected:
   KComboBox *m_encoding, *m_eol;
   TQCheckBox *cbLocalFiles, *cbRemoteFiles;
-  TQCheckBox *tqreplaceTabs, *removeSpaces, *allowEolDetection;
+  TQCheckBox *replaceTabs, *removeSpaces, *allowEolDetection;
   TQLineEdit *leBuPrefix;
   TQLineEdit *leBuSuffix;
   KIntNumInput *dirSearchDepth;
@@ -371,7 +371,7 @@ class KateModOnHdPrompt : public KDialogBase
 {
   Q_OBJECT
   public:
-    enum tqStatus {
+    enum Status {
       Reload=1, // 0 is KDialogBase::Cancel
       Save,
       Overwrite,

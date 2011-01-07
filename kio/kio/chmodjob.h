@@ -42,7 +42,7 @@ namespace KIO {
 	/**
 	 * Create new ChmodJobs using the KIO::chmod() function.
 	 */
-        ChmodJob( const KFileItemList & lstItems,  int permissions, int tqmask,
+        ChmodJob( const KFileItemList & lstItems,  int permissions, int mask,
                   int newOwner, int newGroup,
                   bool recursive, bool showProgressInfo );
 
@@ -63,7 +63,7 @@ namespace KIO {
         };
         enum { STATE_LISTING, STATE_CHMODING } state;
         int m_permissions;
-        int m_tqmask;
+        int m_mask;
         int m_newOwner;
         int m_newGroup;
         bool m_recursive;
@@ -91,8 +91,8 @@ namespace KIO {
      *
      * @param lstItems The file items representing several files or directories.
      * @param permissions the permissions we want to set
-     * @param tqmask the bits we are allowed to change.
-     * For instance, if tqmask is 0077, we don't change
+     * @param mask the bits we are allowed to change.
+     * For instance, if mask is 0077, we don't change
      * the "user" bits, only "group" and "others".
      * @param newOwner If non-empty, the new owner for the files
      * @param newGroup If non-empty, the new group for the files
@@ -100,7 +100,7 @@ namespace KIO {
      * @param showProgressInfo true to show progess information
      * @return The job handling the operation.
      */
-    KIO_EXPORT ChmodJob * chmod( const KFileItemList& lstItems, int permissions, int tqmask,
+    KIO_EXPORT ChmodJob * chmod( const KFileItemList& lstItems, int permissions, int mask,
                       TQString newOwner, TQString newGroup,
                       bool recursive, bool showProgressInfo = true );
 

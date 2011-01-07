@@ -26,7 +26,7 @@
 
 #include <tqobject.h>
 
-class TestDialog : public TQObject
+class TestDialog : public QObject
 {
     Q_OBJECT
 public:

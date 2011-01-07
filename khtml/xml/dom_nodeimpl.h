@@ -86,17 +86,17 @@ private:
 #define NodeImpl_IdNSMask    0xffff0000
 #define NodeImpl_IdLocalMask 0x0000ffff
 
-const TQ_UINT16 defaultNamespace = 0;
-const TQ_UINT16 xhtmlNamespace = 1;
-const TQ_UINT16 emptyNamespace = 2;
-const TQ_UINT16 anyNamespace = 0xffff;
-const TQ_UINT16 anyLocalName = 0xffff;
+const Q_UINT16 defaultNamespace = 0;
+const Q_UINT16 xhtmlNamespace = 1;
+const Q_UINT16 emptyNamespace = 2;
+const Q_UINT16 anyNamespace = 0xffff;
+const Q_UINT16 anyLocalName = 0xffff;
 
-inline TQ_UINT16 localNamePart(TQ_UINT32 id) { return id & NodeImpl_IdLocalMask; }
-inline TQ_UINT16 namespacePart(TQ_UINT32 id) { return (((unsigned int)id) & NodeImpl_IdNSMask) >> 16; }
-inline TQ_UINT32 makeId(TQ_UINT16 n, TQ_UINT16 l) { return (n << 16) | l; }
+inline Q_UINT16 localNamePart(Q_UINT32 id) { return id & NodeImpl_IdLocalMask; }
+inline Q_UINT16 namespacePart(Q_UINT32 id) { return (((unsigned int)id) & NodeImpl_IdNSMask) >> 16; }
+inline Q_UINT32 makeId(Q_UINT16 n, Q_UINT16 l) { return (n << 16) | l; }
 
-const TQ_UINT32 anyQName = makeId(anyNamespace, anyLocalName);
+const Q_UINT32 anyQName = makeId(anyNamespace, anyLocalName);
 
 class NodeImpl : public khtml::TreeShared<NodeImpl>
 {
@@ -116,12 +116,12 @@ public:
     virtual NodeListImpl *childNodes();
     virtual NodeImpl *firstChild() const;
     virtual NodeImpl *lastChild() const;
-    // insertBefore, tqreplaceChild and appendChild also close newChild
+    // insertBefore, replaceChild and appendChild also close newChild
     // unlike the speed optimized addChild (which is used by the parser)
     virtual NodeImpl *insertBefore ( NodeImpl *newChild, NodeImpl *refChild, int &exceptioncode );
     
     /* These two methods may delete the old node, so make sure to reference it if you need it */
-    virtual void tqreplaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode );
+    virtual void replaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode );
     virtual void removeChild ( NodeImpl *oldChild, int &exceptioncode );
     virtual NodeImpl *appendChild ( NodeImpl *newChild, int &exceptioncode );
     virtual bool hasChildNodes (  ) const;
@@ -140,7 +140,7 @@ public:
     virtual bool isDocumentNode() const { return false; }
     virtual bool isXMLElementNode() const { return false; }
     virtual bool isGenericFormElement() const { return false; }
-    virtual bool tqcontainsOnlyWhitespace() const { return false; }
+    virtual bool containsOnlyWhitespace() const { return false; }
     virtual bool contentEditable() const;
 
     // helper functions not being part of the DOM
@@ -155,7 +155,7 @@ public:
     // appendChild(), and returns the node into which will be parsed next.
     virtual NodeImpl *addChild(NodeImpl *newChild);
 
-    typedef TQ_UINT32 Id;
+    typedef Q_UINT32 Id;
     // id() is used to easily and exactly identify a node. It
     // is optimized for quick comparison and low memory consumption.
     // its value depends on the owner document of the node and is
@@ -299,7 +299,7 @@ public:
     virtual NodeImpl *childNode(unsigned long index);
 
     /**
-     * Does a pre-order traversal of the tree to tqfind the node next node after this one. This uses the same order that
+     * Does a pre-order traversal of the tree to find the node next node after this one. This uses the same order that
      * the tags appear in the source file.
      *
      * @param stayWithin If not null, the traversal will stop once the specified node is reached. This can be used to
@@ -312,7 +312,7 @@ public:
     NodeImpl *traverseNextNode(NodeImpl *stayWithin = 0) const;
 
     /**
-     * Does a reverse pre-order traversal to tqfind the node that comes before the current one in document order
+     * Does a reverse pre-order traversal to find the node that comes before the current one in document order
      *
      * see traverseNextNode()
      */
@@ -407,7 +407,7 @@ public:
 
     /**
      * Notifies the node that it has been inserted into the document. This is called during document parsing, and also
-     * when a node is added through the DOM methods insertBefore(), appendChild() or tqreplaceChild(). Note that this only
+     * when a node is added through the DOM methods insertBefore(), appendChild() or replaceChild(). Note that this only
      * happens when the node becomes part of the document tree, i.e. only when the document is actually an ancestor of
      * the node. The call happens _after_ the node has been added to the tree.
      *
@@ -497,7 +497,7 @@ public:
     virtual NodeImpl *firstChild() const;
     virtual NodeImpl *lastChild() const;
     virtual NodeImpl *insertBefore ( NodeImpl *newChild, NodeImpl *refChild, int &exceptioncode );
-    virtual void tqreplaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode );
+    virtual void replaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode );
     virtual void removeChild ( NodeImpl *oldChild, int &exceptioncode );
     virtual NodeImpl *appendChild ( NodeImpl *newChild, int &exceptioncode );
     virtual bool hasChildNodes (  ) const;
@@ -537,7 +537,7 @@ protected:
     bool checkIsChild( NodeImpl *oldchild, int &exceptioncode );
     // ###
 
-    // tqfind out if a node is allowed to be our child
+    // find out if a node is allowed to be our child
     void dispatchChildInsertedEvents( NodeImpl *child, int &exceptioncode );
     void dispatchChildRemovalEvents( NodeImpl *child, int &exceptioncode );
 };

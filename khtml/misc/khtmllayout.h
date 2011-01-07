@@ -18,22 +18,22 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 
-    This widget holds some useful definitions needed for tqlayouting Elements
+    This widget holds some useful definitions needed for layouting Elements
 */
 #ifndef HTML_LAYOUT_H
 #define HTML_LAYOUT_H
 
 
 /*
- * this namespace tqcontains definitions for various types needed for
- * tqlayouting.
+ * this namespace contains definitions for various types needed for
+ * layouting.
  */
 namespace khtml
 {
 
     const int UNDEFINED = -1;
 
-    // tqalignment
+    // alignment
     enum VAlign { VNone=0, Bottom, VCenter, Top, Baseline };
     enum HAlign { HDefault, Left, HCenter, Right, HNone = 0 };
 
@@ -103,7 +103,7 @@ namespace khtml
                 unsigned type : 3;
                 bool quirk : 1;
             } l;
-            TQ_UINT32 _length;
+            Q_UINT32 _length;
         };
     };
 

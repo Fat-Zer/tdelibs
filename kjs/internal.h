@@ -175,7 +175,7 @@ namespace KJS {
     /**
      * Is the id in the stack?
      */
-    bool tqcontains(const Identifier &id) const;
+    bool contains(const Identifier &id) const;
     /**
      * Removes from the stack the last pushed id (what else?)
      */
@@ -318,7 +318,7 @@ namespace KJS {
     Debugger *dbg;
 
     // Built-in properties of the object prototype. These are accessible
-    // from here even if they are tqreplaced by js code (e.g. assigning to
+    // from here even if they are replaced by js code (e.g. assigning to
     // Array.prototype)
 
     Object b_Object;

@@ -1,5 +1,5 @@
 /* ANSI-C code produced by gperf version 3.0.1 */
-/* Command-line: gperf -CEot -L ANSI-C -k '*' -N tqfindDoctypeEntry -F ,PubIDInfo::eAlmostStandards,PubIDInfo::eAlmostStandards /opt/src/kde/kdelibs/khtml/html/doctypes.gperf  */
+/* Command-line: gperf -CEot -L ANSI-C -k '*' -N findDoctypeEntry -F ,PubIDInfo::eAlmostStandards,PubIDInfo::eAlmostStandards /opt/src/kde/kdelibs/khtml/html/doctypes.gperf  */
 
 #if !((' ' == 32) && ('!' == 33) && ('"' == 34) && ('#' == 35) \
       && ('%' == 37) && ('&' == 38) && ('\'' == 39) && ('(' == 40) \
@@ -334,7 +334,7 @@ hash (register const char *str, register unsigned int len)
 __inline
 #endif
 const struct PubIDInfo *
-tqfindDoctypeEntry (register const char *str, register unsigned int len)
+findDoctypeEntry (register const char *str, register unsigned int len)
 {
   enum
     {

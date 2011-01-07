@@ -10,7 +10,7 @@
 
 #include <tqobject.h>
 
-class KFDTest : public TQObject
+class KFDTest : public QObject
 {
     Q_OBJECT
 

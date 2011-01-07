@@ -107,7 +107,7 @@ void SourceDisplay::setSource(SourceFile *sourceFile)
   }
 
   TQString code = sourceFile->getCode();
-  const TQChar *chars = code.tqunicode();
+  const TQChar *chars = code.unicode();
   uint len = code.length();
   TQChar newLine('\n');
   TQChar cr('\r');
@@ -861,7 +861,7 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
 
   if (dontShowAgain) {
     KConfig *config = kapp->config();
-    KConfigGroupSaver saver(config,TQString::tqfromLatin1("Java/JavaScript Settings"));
+    KConfigGroupSaver saver(config,TQString::fromLatin1("Java/JavaScript Settings"));
     config->writeEntry("ReportJavaScriptErrors",TQVariant(false,0));
     config->sync();
     TQByteArray data;
@@ -1020,7 +1020,7 @@ void KJSDebugWin::enterSession(ExecState *exec)
 
   updateContextList();
 
-  tqApp->enter_loop(); // won't return until leaveSession() is called
+  qApp->enter_loop(); // won't return until leaveSession() is called
 }
 
 void KJSDebugWin::leaveSession()
@@ -1043,7 +1043,7 @@ void KJSDebugWin::leaveSession()
     enableOtherWindows();
   }
 
-  tqApp->exit_loop();
+  qApp->exit_loop();
 }
 
 void KJSDebugWin::updateContextList()
@@ -1123,7 +1123,7 @@ bool KJSDebugWin::haveBreakpoint(SourceFile *sourceFile, int line0, int line1)
   for (int i = 0; i < m_breakpointCount; i++) {
     int sourceId = m_breakpoints[i].sourceId;
     int lineno = m_breakpoints[i].lineno;
-    if (m_sourceFragments.tqcontains(sourceId) &&
+    if (m_sourceFragments.contains(sourceId) &&
         m_sourceFragments[sourceId]->sourceFile == sourceFile) {
       int absLineno = m_sourceFragments[sourceId]->baseLine+lineno-1;
       if (absLineno >= line0 && absLineno <= line1)

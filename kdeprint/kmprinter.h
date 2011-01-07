@@ -147,7 +147,7 @@ public:
 	void setOwnSoftDefault(bool on)	{ m_ownsoftdefault = on; }
 	static int compare(KMPrinter *p1, KMPrinter *p2);
 	const TQString& option(const TQString& key) const 		{ return m_options[key]; }
-	bool hasOption(const TQString& key) const 			{ return m_options.tqcontains(key); }
+	bool hasOption(const TQString& key) const 			{ return m_options.contains(key); }
 	void setOption(const TQString& key, const TQString& value)	{ if (!key.isEmpty()) m_options[key] = value; }
 	void removeOption(const TQString& key) 				{ m_options.remove(key); }
 	TQMap<TQString,TQString> options() const 				{ return m_options; }

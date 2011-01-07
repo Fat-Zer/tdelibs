@@ -33,7 +33,7 @@
  * @since 3.1
  * @internal
  */
-class KDECORE_EXPORT KClipboardSynchronizer : public TQObject
+class KDECORE_EXPORT KClipboardSynchronizer : public QObject
 {
     Q_OBJECT
 

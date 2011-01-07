@@ -172,12 +172,12 @@ public:
 
 /**
  * \relates KGlobal
- * A typesafe function to tqfind the minimum of the two arguments.
+ * A typesafe function to find the minimum of the two arguments.
  */
 #define KMIN(a,b)	kMin(a,b)
 /**
  * \relates KGlobal
- * A typesafe function to tqfind the maximum of the two arguments.
+ * A typesafe function to find the maximum of the two arguments.
  */
 #define KMAX(a,b)	kMax(a,b)
 /**

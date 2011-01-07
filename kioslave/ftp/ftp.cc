@@ -71,9 +71,9 @@
 #endif
 
 // JPF: a remark on coding style (2004-03-06):
-// Some calls to TQString::tqfromLatin1() were removed from the code. In most places
+// Some calls to TQString::fromLatin1() were removed from the code. In most places
 // the KDE code relies on implicit creation of QStrings. Also Qt has a lot of
-// const char* overloads, so that using TQString::tqfromLatin1() can be ineffectient!
+// const char* overloads, so that using TQString::fromLatin1() can be ineffectient!
 
 #define FTP_LOGIN   "anonymous"
 #define FTP_PASSWD  "anonymous@"
@@ -81,7 +81,7 @@
 //#undef  kdDebug
 #define ENABLE_CAN_RESUME
 
-// JPF: somebody should tqfind a better solution for this or move this to KIO
+// JPF: somebody should find a better solution for this or move this to KIO
 // JPF: anyhow, in KDE 3.2.0 I found diffent MAX_IPC_SIZE definitions!
 namespace KIO {
     enum buffersizes
@@ -96,7 +96,7 @@ namespace KIO {
          */
         initialIpcSize =  2 * 1024,
         /**
-         * recommended size of a data block passed to tqfindBufferFileType()
+         * recommended size of a data block passed to findBufferFileType()
          */
         mimimumMimeSize =     1024
     };
@@ -279,7 +279,7 @@ void FtpSocket::closeSocket()
     ::close(m_server);
     m_server = -1;
   }
-  if(sockettqStatus() > nothing)
+  if(socketStatus() > nothing)
     reset();
   textClear();
 }
@@ -693,8 +693,8 @@ bool Ftp::ftpLogin()
   }
 
   TQString sTmp = remoteEncoding()->decode( ftpResponse(3) );
-  int iBeg = sTmp.tqfind('"');
-  int iEnd = sTmp.tqfindRev('"');
+  int iBeg = sTmp.find('"');
+  int iEnd = sTmp.findRev('"');
   if(iBeg > 0 && iBeg < iEnd)
   {
     m_initialPath = sTmp.mid(iBeg+1, iEnd-iBeg-1);
@@ -749,9 +749,9 @@ bool Ftp::ftpSendCmd( const TQCString& cmd, int maxretries )
 {
   assert(m_control != NULL);    // must have control connection socket
 
-  if ( cmd.tqfind( '\r' ) != -1 || cmd.tqfind( '\n' ) != -1)
+  if ( cmd.find( '\r' ) != -1 || cmd.find( '\n' ) != -1)
   {
-    kdWarning(7102) << "Invalid command received (tqcontains CR or LF):"
+    kdWarning(7102) << "Invalid command received (contains CR or LF):"
                     << cmd.data() << endl;
     error( ERR_UNSUPPORTED_ACTION, m_host );
     return false;
@@ -968,7 +968,7 @@ int Ftp::ftpOpenEPRTDataConnection()
   if (sin == NULL)
     return ERR_INTERNAL;
 
-  //  TQString command = TQString::tqfromLatin1("eprt |%1|%2|%3|").arg(sin->ianaFamily())
+  //  TQString command = TQString::fromLatin1("eprt |%1|%2|%3|").arg(sin->ianaFamily())
   //  .arg(sin->nodeName())
   //  .arg(sin->port());
   TQCString command;
@@ -991,7 +991,7 @@ int Ftp::ftpOpenEPRTDataConnection()
 /*
  * ftpOpenDataConnection - set up data connection
  *
- * The routine calls several ftpOpenXxxxConnection() helpers to tqfind
+ * The routine calls several ftpOpenXxxxConnection() helpers to find
  * the best connection mode. If a helper cannot connect if returns
  * ERR_INTERNAL - so this is not really an error! All other error
  * codes are treated as fatal, e.g. they are passed back to the caller
@@ -1111,10 +1111,10 @@ int Ftp::ftpAcceptConnect()
   struct sockaddr addr;
   for(;;)
   {
-    fd_set tqmask;
-    FD_ZERO(&tqmask);
-    FD_SET(sSock,&tqmask);
-    int r = KSocks::self()->select(sSock + 1, &tqmask, NULL, NULL, 0L);
+    fd_set mask;
+    FD_ZERO(&mask);
+    FD_SET(sSock,&mask);
+    int r = KSocks::self()->select(sSock + 1, &mask, NULL, NULL, 0L);
     if( r < 0 && errno != EINTR && errno != EAGAIN )
       continue;
     if( r > 0 )
@@ -1285,7 +1285,7 @@ bool Ftp::ftpRename( const TQString & src, const TQString & dst, bool overwrite 
       return false;
   }
 
-  int pos = src.tqfindRev("/");
+  int pos = src.findRev("/");
   if( !ftpFolder(src.left(pos+1), false) )
       return false;
 
@@ -1627,7 +1627,7 @@ void Ftp::stat( const KURL &url)
                     // Relative link (stat will take care of cleaning ../.. etc.)
                     linkURL.setPath( listarg ); // this is what we were listing (the link)
                     linkURL.setPath( linkURL.directory() ); // go up one dir
-                    linkURL.addPath( ftpEnt.link ); // tqreplace link by its destination
+                    linkURL.addPath( ftpEnt.link ); // replace link by its destination
                     kdDebug(7102) << "linkURL now " << linkURL.prettyURL() << endl;
                 }
                 // Re-add the filename we're looking for
@@ -1732,7 +1732,7 @@ void Ftp::listDir( const KURL &url )
 void Ftp::slave_status()
 {
   kdDebug(7102) << "Got slave_status host = " << (m_host.ascii() ? m_host.ascii() : "[None]") << " [" << (m_bLoggedOn ? "Connected" : "Not connected") << "]" << endl;
-  slavetqStatus( m_host, m_bLoggedOn );
+  slaveStatus( m_host, m_bLoggedOn );
 }
 
 bool Ftp::ftpOpenDir( const TQString & path )
@@ -1807,7 +1807,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
     // So we just ignore the number in front of the ",". Ok, its a hack :-)
     if ( strchr( p_size, ',' ) != 0L )
     {
-      //kdDebug(7102) << "Size tqcontains a ',' -> reading size again (/dev hack)" << endl;
+      //kdDebug(7102) << "Size contains a ',' -> reading size again (/dev hack)" << endl;
       if ((p_size = strtok(NULL," ")) == 0)
         continue;
     }
@@ -1838,7 +1838,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
         TQCString tmp( p_name );
         if ( p_access[0] == 'l' )
         {
-          int i = tmp.tqfindRev( " -> " );
+          int i = tmp.findRev( " -> " );
           if ( i != -1 ) {
             de.link = remoteEncoding()->decode(p_name + i + 4);
             tmp.truncate( i );
@@ -1852,7 +1852,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
         if ( tmp[0] == '/' ) // listing on ftp://ftp.gnupg.org/ starts with '/'
           tmp.remove( 0, 1 );
 
-        if (tmp.tqfind('/') != -1)
+        if (tmp.find('/') != -1)
           continue; // Don't trick us!
         // Some sites put more than one space between the date and the name
         // e.g. ftp://ftp.uni-marburg.de/mirror/
@@ -1953,7 +1953,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
         if ( tmptr->tm_mon > currentMonth + 1 )
           tmptr->tm_year--;
 
-        // and p_date_3 tqcontains probably a time
+        // and p_date_3 contains probably a time
         char * semicolon;
         if ( ( semicolon = (char*)strchr( p_date_3, ':' ) ) )
         {
@@ -1987,13 +1987,13 @@ void Ftp::get( const KURL & url )
   ftpCloseCommand();                        // must close command!
 }
 
-Ftp::tqStatusCode Ftp::ftpGet(int& iError, int iCopyFile, const KURL& url, KIO::fileoffset_t llOffset)
+Ftp::StatusCode Ftp::ftpGet(int& iError, int iCopyFile, const KURL& url, KIO::fileoffset_t llOffset)
 {
   // Calls error() by itself!
   if( !ftpOpenConnection(loginImplicit) )
     return statusServerError;
 
-  // Try to tqfind the size of the file (and check that it exists at
+  // Try to find the size of the file (and check that it exists at
   // the same time). If we get back a 550, "File does not exist"
   // or "not a plain file", check if it is a directory. If it is a
   // directory, return an error; otherwise simply try to retrieve
@@ -2082,16 +2082,16 @@ Ftp::tqStatusCode Ftp::ftpGet(int& iError, int iCopyFile, const KURL& url, KIO::
     {
       mimetypeEmitted = true;
 
-      // We need a KMimeType::tqfindByNameAndContent(data,filename)
-      // For now we do: tqfind by extension, and if not found (or extension not reliable)
-      // then tqfind by content.
+      // We need a KMimeType::findByNameAndContent(data,filename)
+      // For now we do: find by extension, and if not found (or extension not reliable)
+      // then find by content.
       bool accurate = false;
       KMimeType::Ptr mime = KMimeType::findByURL( url, 0, false, true, &accurate );
       if ( !mime || mime->name() == KMimeType::defaultMimeType()
            || !accurate )
       {
         array.setRawData(buffer, n);
-        KMimeMagicResult * result = KMimeMagic::self()->tqfindBufferFileType(array, url.fileName());
+        KMimeMagicResult * result = KMimeMagic::self()->findBufferFileType(array, url.fileName());
         array.resetRawData(buffer, n);
         if ( result->mimeType() != KMimeType::defaultMimeType() )
           mime = KMimeType::mimeType( result->mimeType() );
@@ -2204,7 +2204,7 @@ void Ftp::put(const KURL& url, int permissions, bool overwrite, bool resume)
   ftpCloseCommand();                        // must close command!
 }
 
-Ftp::tqStatusCode Ftp::ftpPut(int& iError, int iCopyFile, const KURL& dest_url,
+Ftp::StatusCode Ftp::ftpPut(int& iError, int iCopyFile, const KURL& dest_url,
                             int permissions, bool overwrite, bool resume)
 {
   if( !ftpOpenConnection(loginImplicit) )
@@ -2489,7 +2489,7 @@ void Ftp::copy( const KURL &src, const KURL &dest, int permissions, bool overwri
 {
   int iError = 0;
   int iCopyFile = -1;
-  tqStatusCode cs = statusSuccess;
+  StatusCode cs = statusSuccess;
   bool bSrcLocal = src.isLocalFile();
   bool bDestLocal = dest.isLocalFile();
   TQString  sCopyFile;
@@ -2522,7 +2522,7 @@ void Ftp::copy( const KURL &src, const KURL &dest, int permissions, bool overwri
 }
 
 
-Ftp::tqStatusCode Ftp::ftpCopyPut(int& iError, int& iCopyFile, TQString sCopyFile,
+Ftp::StatusCode Ftp::ftpCopyPut(int& iError, int& iCopyFile, TQString sCopyFile,
                                 const KURL& url, int permissions, bool overwrite)
 {
   // check if source is ok ...
@@ -2559,7 +2559,7 @@ Ftp::tqStatusCode Ftp::ftpCopyPut(int& iError, int& iCopyFile, TQString sCopyFil
 }
 
 
-Ftp::tqStatusCode Ftp::ftpCopyGet(int& iError, int& iCopyFile, const TQString sCopyFile,
+Ftp::StatusCode Ftp::ftpCopyGet(int& iError, int& iCopyFile, const TQString sCopyFile,
                                 const KURL& url, int permissions, bool overwrite)
 {
   // check if destination is ok ...
@@ -2645,7 +2645,7 @@ Ftp::tqStatusCode Ftp::ftpCopyGet(int& iError, int& iCopyFile, const TQString sC
   }
 
   // delegate the real work (iError gets status) ...
-  tqStatusCode iRes = ftpGet(iError, iCopyFile, url, hCopyOffset);
+  StatusCode iRes = ftpGet(iError, iCopyFile, url, hCopyOffset);
   if( ::close(iCopyFile) && iRes == statusSuccess )
   {
     iError = ERR_COULD_NOT_WRITE;

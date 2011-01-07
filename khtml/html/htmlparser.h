@@ -30,7 +30,7 @@
 #define HTMLPARSER_H
 
 // 0 all
-// 1 domtree + rendertree + styleForElement, no tqlayouting
+// 1 domtree + rendertree + styleForElement, no layouting
 // 2 domtree only
 #define SPEED_DEBUG 0
 

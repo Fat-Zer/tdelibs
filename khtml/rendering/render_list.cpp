@@ -178,13 +178,13 @@ short RenderListItem::marginRight() const
     return RenderBlock::marginRight();
 }*/
 
-void RenderListItem::tqlayout( )
+void RenderListItem::layout( )
 {
     KHTMLAssert( needsLayout() );
     KHTMLAssert( minMaxKnown() );
 
     updateMarkerLocation();
-    RenderBlock::tqlayout();
+    RenderBlock::layout();
 }
 
 // -----------------------------------------------------------
@@ -194,7 +194,7 @@ RenderListMarker::RenderListMarker(DOM::NodeImpl* node)
 {
     // init RenderObject attributes
     setInline(true);   // our object is Inline
-    setReplaced(true); // pretend to be tqreplaced
+    setReplaced(true); // pretend to be replaced
     // val = -1;
     // m_listImage = 0;
 }
@@ -344,21 +344,21 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
             	if( style()->direction() == LTR) {
                     p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, m_item);
                     p->drawText(_tx + fm.width(m_item), _ty, 0, 0, Qt::AlignLeft|Qt::DontClip,
-                                TQString::tqfromLatin1(". "));
+                                TQString::fromLatin1(". "));
                 }
             	else {
-                    const TQString& punct(TQString::tqfromLatin1(" ."));
+                    const TQString& punct(TQString::fromLatin1(" ."));
                     p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, punct);
             	    p->drawText(_tx + fm.width(punct), _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, m_item);
                 }
             } else {
                 if (style()->direction() == LTR) {
-                    const TQString& punct(TQString::tqfromLatin1(". "));
+                    const TQString& punct(TQString::fromLatin1(". "));
                     p->drawText(_tx-offset/2, _ty, 0, 0, Qt::AlignRight|Qt::DontClip, punct);
                     p->drawText(_tx-offset/2-fm.width(punct), _ty, 0, 0, Qt::AlignRight|Qt::DontClip, m_item);
                 }
             	else {
-                    const TQString& punct(TQString::tqfromLatin1(" ."));
+                    const TQString& punct(TQString::fromLatin1(" ."));
             	    p->drawText(_tx+offset/2, _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, punct);
                     p->drawText(_tx+offset/2+fm.width(punct), _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, m_item);
                 }
@@ -367,7 +367,7 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
     }
 }
 
-void RenderListMarker::tqlayout()
+void RenderListMarker::layout()
 {
     KHTMLAssert( needsLayout() );
 
@@ -387,7 +387,7 @@ void RenderListMarker::setPixmap( const TQPixmap &p, const TQRect& r, CachedImag
     if(m_width != m_listImage->pixmap_size().width() || m_height != m_listImage->pixmap_size().height())
         setNeedsLayoutAndMinMaxRecalc();
     else
-        tqrepaintRectangle(0, 0, m_width, m_height);
+        repaintRectangle(0, 0, m_width, m_height);
 }
 
 void RenderListMarker::calcMinMaxWidth()
@@ -543,7 +543,7 @@ void RenderListMarker::calcMinMaxWidth()
     default:
         KHTMLAssert(false);
     }
-    m_markerWidth = fm.width(m_item) + fm.width(TQString::tqfromLatin1(". "));
+    m_markerWidth = fm.width(m_item) + fm.width(TQString::fromLatin1(". "));
     }
 
 end:

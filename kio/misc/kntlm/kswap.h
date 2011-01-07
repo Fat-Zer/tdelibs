@@ -28,7 +28,7 @@
 
 /** 
  * \defgroup KSWAP Byte-swapping functions
- * kswap.h tqcontains functions that will help converting
+ * kswap.h contains functions that will help converting
  * 16, 32 and 64 bit length data between little-endian and
  * big-endian representations.
  *
@@ -47,52 +47,52 @@
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
 
-  inline TQ_UINT16 KSWAP_16( TQ_UINT16 b ) { return bswap_16( b ); }
-  inline TQ_INT16 KSWAP_16( TQ_INT16 b ) { return bswap_16( (TQ_UINT16)b ); }
-  inline TQ_UINT32 KSWAP_32( TQ_UINT32 b ) { return bswap_32( b ); }
-  inline TQ_INT32 KSWAP_32( TQ_INT32 b ) { return bswap_32( (TQ_UINT32)b ); }
-  inline TQ_UINT64 KSWAP_64( TQ_UINT64 b ) { return bswap_64( b ); }
-  inline TQ_INT64 KSWAP_64( TQ_INT64 b ) { return bswap_64( (TQ_UINT64)b ); }
+  inline Q_UINT16 KSWAP_16( Q_UINT16 b ) { return bswap_16( b ); }
+  inline Q_INT16 KSWAP_16( Q_INT16 b ) { return bswap_16( (Q_UINT16)b ); }
+  inline Q_UINT32 KSWAP_32( Q_UINT32 b ) { return bswap_32( b ); }
+  inline Q_INT32 KSWAP_32( Q_INT32 b ) { return bswap_32( (Q_UINT32)b ); }
+  inline Q_UINT64 KSWAP_64( Q_UINT64 b ) { return bswap_64( b ); }
+  inline Q_INT64 KSWAP_64( Q_INT64 b ) { return bswap_64( (Q_UINT64)b ); }
 
 #else /* HAVE_BYTESWAP_H */
 #ifdef WORDS_BIGENDIAN
-  inline TQ_UINT16 KSWAP_16( TQ_UINT16 b ) 
+  inline Q_UINT16 KSWAP_16( Q_UINT16 b ) 
   { 
     return (((b) & 0x00ff) << 8 | ((b) & 0xff00) >> 8); 
   }
 
-  inline TQ_INT16 KSWAP_16( TQ_INT16 b ) 
+  inline Q_INT16 KSWAP_16( Q_INT16 b ) 
   { 
-    return ((((TQ_UINT16)b) & 0x00ff) << 8 | (((TQ_UINT16)b) & 0xff00) >> 8); 
+    return ((((Q_UINT16)b) & 0x00ff) << 8 | (((Q_UINT16)b) & 0xff00) >> 8); 
   }
 
-  inline TQ_UINT32 KSWAP_32( TQ_UINT32 b ) 
+  inline Q_UINT32 KSWAP_32( Q_UINT32 b ) 
   {
     return
       ((((b) & 0xff000000) >> 24) | (((b) & 0x00ff0000) >>  8) | \
        (((b) & 0x0000ff00) <<  8) | (((b) & 0x000000ff) << 24)); 
   }
 
-  inline TQ_INT32 KSWAP_32( TQ_INT32 b ) 
+  inline Q_INT32 KSWAP_32( Q_INT32 b ) 
   {
     return 
-      (((((TQ_UINT32)b) & 0xff000000) >> 24) | ((((TQ_UINT32)b) & 0x00ff0000) >>  8) | \
-       ((((TQ_UINT32)b) & 0x0000ff00) <<  8) | ((((TQ_UINT32)b) & 0x000000ff) << 24)); 
+      (((((Q_UINT32)b) & 0xff000000) >> 24) | ((((Q_UINT32)b) & 0x00ff0000) >>  8) | \
+       ((((Q_UINT32)b) & 0x0000ff00) <<  8) | ((((Q_UINT32)b) & 0x000000ff) << 24)); 
   }
 #else /* WORDS_BIGENDIAN */
 #include <sys/types.h>
 #include <netinet/in.h>
 
-  inline TQ_UINT16 KSWAP_16( TQ_UINT16 b ) { return htons(b); }
-  inline TQ_INT16 KSWAP_16( TQ_INT16 b ) { return htons((TQ_UINT16)b); }
-  inline TQ_UINT32 KSWAP_32( TQ_UINT32 b ) { return htonl(b); }
-  inline TQ_INT32 KSWAP_32( TQ_INT32 b ) { return htonl((TQ_UINT32)b); }
+  inline Q_UINT16 KSWAP_16( Q_UINT16 b ) { return htons(b); }
+  inline Q_INT16 KSWAP_16( Q_INT16 b ) { return htons((Q_UINT16)b); }
+  inline Q_UINT32 KSWAP_32( Q_UINT32 b ) { return htonl(b); }
+  inline Q_INT32 KSWAP_32( Q_INT32 b ) { return htonl((Q_UINT32)b); }
 #endif
-  inline TQ_UINT64 KSWAP_64( TQ_UINT64 b ) 
+  inline Q_UINT64 KSWAP_64( Q_UINT64 b ) 
   {
     union { 
-        TQ_UINT64 ll;
-        TQ_UINT32 l[2]; 
+        Q_UINT64 ll;
+        Q_UINT32 l[2]; 
     } w, r;
     w.ll = b;
     r.l[0] = KSWAP_32( w.l[1] );
@@ -100,13 +100,13 @@
     return r.ll;
   }
 
-  inline TQ_INT64 KSWAP_64( TQ_INT64 b ) 
+  inline Q_INT64 KSWAP_64( Q_INT64 b ) 
   {
     union { 
-        TQ_UINT64 ll;
-        TQ_UINT32 l[2]; 
+        Q_UINT64 ll;
+        Q_UINT32 l[2]; 
     } w, r;
-    w.ll = (TQ_UINT64) b;
+    w.ll = (Q_UINT64) b;
     r.l[0] = KSWAP_32( w.l[1] );
     r.l[1] = KSWAP_32( w.l[0] );
     return r.ll;
@@ -117,7 +117,7 @@
  * \ingroup KSWAP
  * Converts a 16 bit unsigned value from/to big-endian byte order to/from the machine order.
  */
-inline TQ_UINT16 KFromToBigEndian( TQ_UINT16 b )
+inline Q_UINT16 KFromToBigEndian( Q_UINT16 b )
 {
 #ifdef WORDS_BIGENDIAN
   return b;
@@ -130,7 +130,7 @@ inline TQ_UINT16 KFromToBigEndian( TQ_UINT16 b )
  * \ingroup KSWAP
  * Converts a 16 bit unsigned array from/to big-endian byte order to/from the machine order.
  */
-inline void KFromToBigEndian( TQ_UINT16 *out, TQ_UINT16 *in, uint len )
+inline void KFromToBigEndian( Q_UINT16 *out, Q_UINT16 *in, uint len )
 {
 #ifdef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<1 ) ;
@@ -143,7 +143,7 @@ inline void KFromToBigEndian( TQ_UINT16 *out, TQ_UINT16 *in, uint len )
  * \ingroup KSWAP
  * Converts a 32 bit unsigned value from/to big-endian byte order to/from the machine order.
  */
-inline TQ_UINT32 KFromToBigEndian( TQ_UINT32 b )
+inline Q_UINT32 KFromToBigEndian( Q_UINT32 b )
 {
 #ifdef WORDS_BIGENDIAN
   return b;
@@ -156,7 +156,7 @@ inline TQ_UINT32 KFromToBigEndian( TQ_UINT32 b )
  * \ingroup KSWAP
  * Converts a 32 bit unsigned array from/to big-endian byte order to/from the machine order.
  */
-inline void KFromToBigEndian( TQ_UINT32 *out, TQ_UINT32 *in, uint len )
+inline void KFromToBigEndian( Q_UINT32 *out, Q_UINT32 *in, uint len )
 {
 #ifdef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<2 ) ;
@@ -169,7 +169,7 @@ inline void KFromToBigEndian( TQ_UINT32 *out, TQ_UINT32 *in, uint len )
  * \ingroup KSWAP
  * Converts a 64 bit unsigned value from/to big-endian byte order to/from the machine order.
  */
-inline TQ_UINT64 KFromToBigEndian( TQ_UINT64 b )
+inline Q_UINT64 KFromToBigEndian( Q_UINT64 b )
 {
 #ifdef WORDS_BIGENDIAN
   return b;
@@ -182,7 +182,7 @@ inline TQ_UINT64 KFromToBigEndian( TQ_UINT64 b )
  * \ingroup KSWAP
  * Converts a 64 bit unsigned array from/to big-endian byte order to/from the machine order.
  */
-inline void KFromToBigEndian( TQ_UINT64 *out, TQ_UINT64 *in, uint len )
+inline void KFromToBigEndian( Q_UINT64 *out, Q_UINT64 *in, uint len )
 {
 #ifdef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<3 ) ;
@@ -195,7 +195,7 @@ inline void KFromToBigEndian( TQ_UINT64 *out, TQ_UINT64 *in, uint len )
  * \ingroup KSWAP
  * Converts a 16 bit signed value from/to big-endian byte order to/from the machine order.
  */
-inline TQ_INT16 KFromToBigEndian( TQ_INT16 b )
+inline Q_INT16 KFromToBigEndian( Q_INT16 b )
 {
 #ifdef WORDS_BIGENDIAN
   return b;
@@ -208,7 +208,7 @@ inline TQ_INT16 KFromToBigEndian( TQ_INT16 b )
  * \ingroup KSWAP
  * Converts a 16 bit signed array from/to big-endian byte order to/from the machine order.
  */
-inline void KFromToBigEndian( TQ_INT16 *out, TQ_INT16 *in, uint len )
+inline void KFromToBigEndian( Q_INT16 *out, Q_INT16 *in, uint len )
 {
 #ifdef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<1 ) ;
@@ -221,7 +221,7 @@ inline void KFromToBigEndian( TQ_INT16 *out, TQ_INT16 *in, uint len )
  * \ingroup KSWAP
  * Converts a 32 bit signed value from/to big-endian byte order to/from the machine order.
  */
-inline TQ_INT32 KFromToBigEndian( TQ_INT32 b )
+inline Q_INT32 KFromToBigEndian( Q_INT32 b )
 {
 #ifdef WORDS_BIGENDIAN
   return b;
@@ -234,7 +234,7 @@ inline TQ_INT32 KFromToBigEndian( TQ_INT32 b )
  * \ingroup KSWAP
  * Converts a 32 bit signed array from/to big-endian byte order to/from the machine order.
  */
-inline void KFromToBigEndian( TQ_INT32 *out, TQ_INT32 *in, uint len )
+inline void KFromToBigEndian( Q_INT32 *out, Q_INT32 *in, uint len )
 {
 #ifdef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<2 ) ;
@@ -247,7 +247,7 @@ inline void KFromToBigEndian( TQ_INT32 *out, TQ_INT32 *in, uint len )
  * \ingroup KSWAP
  * Converts a 64 bit signed value from/to big-endian byte order to/from the machine order.
  */
-inline TQ_INT64 KFromToBigEndian( TQ_INT64 b )
+inline Q_INT64 KFromToBigEndian( Q_INT64 b )
 {
 #ifdef WORDS_BIGENDIAN
   return b;
@@ -260,7 +260,7 @@ inline TQ_INT64 KFromToBigEndian( TQ_INT64 b )
  * \ingroup KSWAP
  * Converts a 64 bit signed array from/to big-endian byte order to/from the machine order.
  */
-inline void KFromToBigEndian( TQ_INT64 *out, TQ_INT64 *in, uint len )
+inline void KFromToBigEndian( Q_INT64 *out, Q_INT64 *in, uint len )
 {
 #ifdef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<3 ) ;
@@ -273,7 +273,7 @@ inline void KFromToBigEndian( TQ_INT64 *out, TQ_INT64 *in, uint len )
  * \ingroup KSWAP
  * Converts a 16 bit unsigned value from/to little-endian byte order to/from the machine order.
  */
-inline TQ_UINT16 KFromToLittleEndian( TQ_UINT16 b )
+inline Q_UINT16 KFromToLittleEndian( Q_UINT16 b )
 {
 #ifndef WORDS_BIGENDIAN
   return b;
@@ -286,7 +286,7 @@ inline TQ_UINT16 KFromToLittleEndian( TQ_UINT16 b )
  * \ingroup KSWAP
  * Converts a 16 bit unsigned array from/to little-endian byte order to/from the machine order.
  */
-inline void KFromToLittleEndian( TQ_UINT16 *out, TQ_UINT16 *in, uint len )
+inline void KFromToLittleEndian( Q_UINT16 *out, Q_UINT16 *in, uint len )
 {
 #ifndef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<1 ) ;
@@ -299,7 +299,7 @@ inline void KFromToLittleEndian( TQ_UINT16 *out, TQ_UINT16 *in, uint len )
  * \ingroup KSWAP
  * Converts a 32 bit unsigned value from/to little-endian byte order to/from the machine order.
  */
-inline TQ_UINT32 KFromToLittleEndian( TQ_UINT32 b )
+inline Q_UINT32 KFromToLittleEndian( Q_UINT32 b )
 {
 #ifndef WORDS_BIGENDIAN
   return b;
@@ -312,7 +312,7 @@ inline TQ_UINT32 KFromToLittleEndian( TQ_UINT32 b )
  * \ingroup KSWAP
  * Converts a 32 bit unsigned array from/to little-endian byte order to/from the machine order.
  */
-inline void KFromToLittleEndian( TQ_UINT32 *out, TQ_UINT32 *in, uint len )
+inline void KFromToLittleEndian( Q_UINT32 *out, Q_UINT32 *in, uint len )
 {
 #ifndef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<2 ) ;
@@ -325,7 +325,7 @@ inline void KFromToLittleEndian( TQ_UINT32 *out, TQ_UINT32 *in, uint len )
  * \ingroup KSWAP
  * Converts a 64 bit unsigned value from/to little-endian byte order to/from the machine order.
  */
-inline TQ_UINT64 KFromToLittleEndian( TQ_UINT64 b )
+inline Q_UINT64 KFromToLittleEndian( Q_UINT64 b )
 {
 #ifndef WORDS_BIGENDIAN
   return b;
@@ -338,7 +338,7 @@ inline TQ_UINT64 KFromToLittleEndian( TQ_UINT64 b )
  * \ingroup KSWAP
  * Converts a 64 bit unsigned array from/to little-endian byte order to/from the machine order.
  */
-inline void KFromToLittleEndian( TQ_UINT64 *out, TQ_UINT64 *in, uint len )
+inline void KFromToLittleEndian( Q_UINT64 *out, Q_UINT64 *in, uint len )
 {
 #ifndef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<3 ) ;
@@ -351,7 +351,7 @@ inline void KFromToLittleEndian( TQ_UINT64 *out, TQ_UINT64 *in, uint len )
  * \ingroup KSWAP
  * Converts a 16 bit signed value from/to little-endian byte order to/from the machine order.
  */
-inline TQ_INT16 KFromToLittleEndian( TQ_INT16 b )
+inline Q_INT16 KFromToLittleEndian( Q_INT16 b )
 {
 #ifndef WORDS_BIGENDIAN
   return b;
@@ -364,7 +364,7 @@ inline TQ_INT16 KFromToLittleEndian( TQ_INT16 b )
  * \ingroup KSWAP
  * Converts a 16 bit signed array from/to little-endian byte order to/from the machine order.
  */
-inline void KFromToLittleEndian( TQ_INT16 *out, TQ_INT16 *in, uint len )
+inline void KFromToLittleEndian( Q_INT16 *out, Q_INT16 *in, uint len )
 {
 #ifndef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<1 ) ;
@@ -377,7 +377,7 @@ inline void KFromToLittleEndian( TQ_INT16 *out, TQ_INT16 *in, uint len )
  * \ingroup KSWAP
  * Converts a 32 bit signed value from/to little-endian byte order to/from the machine order.
  */
-inline TQ_INT32 KFromToLittleEndian( TQ_INT32 b )
+inline Q_INT32 KFromToLittleEndian( Q_INT32 b )
 {
 #ifndef WORDS_BIGENDIAN
   return b;
@@ -390,7 +390,7 @@ inline TQ_INT32 KFromToLittleEndian( TQ_INT32 b )
  * \ingroup KSWAP
  * Converts a 32 bit signed array from/to little-endian byte order to/from the machine order.
  */
-inline void KFromToLittleEndian( TQ_INT32 *out, TQ_INT32 *in, uint len )
+inline void KFromToLittleEndian( Q_INT32 *out, Q_INT32 *in, uint len )
 {
 #ifndef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<2 ) ;
@@ -403,7 +403,7 @@ inline void KFromToLittleEndian( TQ_INT32 *out, TQ_INT32 *in, uint len )
  * \ingroup KSWAP
  * Converts a 64 bit signed value from/to little-endian byte order to/from the machine order.
  */
-inline TQ_INT64 KFromToLittleEndian( TQ_INT64 b )
+inline Q_INT64 KFromToLittleEndian( Q_INT64 b )
 {
 #ifndef WORDS_BIGENDIAN
   return b;
@@ -416,7 +416,7 @@ inline TQ_INT64 KFromToLittleEndian( TQ_INT64 b )
  * \ingroup KSWAP
  * Converts a 64 bit signed array from/to little-endian byte order to/from the machine order.
  */
-inline void KFromToLittleEndian( TQ_INT64 *out, TQ_INT64 *in, uint len )
+inline void KFromToLittleEndian( Q_INT64 *out, Q_INT64 *in, uint len )
 {
 #ifndef WORDS_BIGENDIAN
   if ( out != in ) memcpy( out, in, len<<3 ) ;

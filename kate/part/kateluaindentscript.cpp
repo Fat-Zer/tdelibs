@@ -367,7 +367,7 @@ void KateLUAIndentScriptManager::collectScripts (bool force)
   if (!m_scripts.isEmpty())
     return;
 
-  kdDebug()<<"================================================="<<endl<<"Trying to tqfind Lua scripts"<<endl
+  kdDebug()<<"================================================="<<endl<<"Trying to find Lua scripts"<<endl
       <<"================================================="<<endl;
 
   // We'll store the scripts list in this config
@@ -525,4 +525,4 @@ void KateLUAIndentScriptManager::parseScriptHeader(const TQString &filePath,
 //END
 
 #endif
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

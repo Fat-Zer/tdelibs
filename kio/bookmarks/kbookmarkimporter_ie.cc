@@ -111,7 +111,7 @@ TQString KIEBookmarkImporter::IEBookmarksDir()
    static KIEBookmarkImporterImpl* p = 0;
    if (!p) 
        p = new KIEBookmarkImporterImpl;
-   return p->tqfindDefaultLocation();
+   return p->findDefaultLocation();
 }
 
 void KIEBookmarkImporterImpl::parse() {
@@ -120,7 +120,7 @@ void KIEBookmarkImporterImpl::parse() {
    importer.parseIEBookmarks();
 }
 
-TQString KIEBookmarkImporterImpl::tqfindDefaultLocation(bool) const
+TQString KIEBookmarkImporterImpl::findDefaultLocation(bool) const
 {
     // notify user that they must give a new dir such 
     // as "Favourites" as otherwise it'll just place
@@ -147,7 +147,7 @@ private:
 
 static TQString ieStyleQuote( const TQString &str ) {
     TQString s(str);
-    s.tqreplace(TQRegExp("[/\\:*?\"<>|]"), "_");
+    s.replace(TQRegExp("[/\\:*?\"<>|]"), "_");
     return s;
 }
 

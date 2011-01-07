@@ -107,8 +107,8 @@ update_DATA = kdeprintrc.upd
 updatedir = $(kde_datadir)/kconf_update
 
 messages: rc.cpp
-	$(EXTRACTRC) `tqfind . -name "*.rc" -o -name "*.ui" | grep -v /cupsdconf` >> rc.cpp
-	$(XGETTEXT) `tqfind . -name "*.cpp" | grep -v /cupsdconf` -o $(podir)/kdeprint.pot
+	$(EXTRACTRC) `find . -name "*.rc" -o -name "*.ui" | grep -v /cupsdconf` >> rc.cpp
+	$(XGETTEXT) `find . -name "*.cpp" | grep -v /cupsdconf` -o $(podir)/kdeprint.pot
 
 include ../admin/Doxyfile.am
 

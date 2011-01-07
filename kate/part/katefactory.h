@@ -71,7 +71,7 @@ class KateFactory
 
     /**
      * reimplemented create object method
-     * @param tqparentWidget parent widget
+     * @param parentWidget parent widget
      * @param widgetName widget name
      * @param parent TQObject parent
      * @param name object name
@@ -79,7 +79,7 @@ class KateFactory
      * @param args additional arguments
      * @return constructed part object
      */
-    KParts::Part *createPartObject ( TQWidget *tqparentWidget, const char *widgetName,
+    KParts::Part *createPartObject ( TQWidget *parentWidget, const char *widgetName,
                                      TQObject *parent, const char *name, const char *classname,
                                      const TQStringList &args );
 
@@ -309,4 +309,4 @@ class KateFactory
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

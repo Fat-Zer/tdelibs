@@ -47,11 +47,11 @@ static EntryPrivate *d(const Entry *e)
     d_ptr = new TQPtrDict<EntryPrivate>();
     d_ptr->setAutoDelete(true);
   }
-  EntryPrivate *ret = d_ptr->tqfind((void*)e);
+  EntryPrivate *ret = d_ptr->find((void*)e);
   if(!ret)
   {
     ret = new EntryPrivate();
-    d_ptr->tqreplace((void*)e, ret);
+    d_ptr->replace((void*)e, ret);
   }
   return ret;
 }
@@ -84,13 +84,13 @@ void Entry::setName( const TQString &name, const TQString &lang )
 {
   d(this)->mNameMap.insert( lang, name );
 
-  if ( mLangs.tqfind( lang ) == mLangs.end() ) mLangs.append( lang );
+  if ( mLangs.find( lang ) == mLangs.end() ) mLangs.append( lang );
 }
 
 // BCI part ends here
 
 Entry::Entry() :
-  mRelease( 0 ), mReleaseDate( TQDate::tqcurrentDate() ), mRating( 0 ),
+  mRelease( 0 ), mReleaseDate( TQDate::currentDate() ), mRating( 0 ),
   mDownloads( 0 )
 {
 }
@@ -105,7 +105,7 @@ Entry::~Entry()
 {
     if (d_ptr)
     {
-        EntryPrivate *p = d_ptr->tqfind(this);
+        EntryPrivate *p = d_ptr->find(this);
         if (p)
             d_ptr->remove(p);
 
@@ -166,7 +166,7 @@ void Entry::setSummary( const TQString &text, const TQString &lang )
 {
   mSummaryMap.insert( lang, text );
 
-  if ( mLangs.tqfind( lang ) == mLangs.end() ) mLangs.append( lang );
+  if ( mLangs.find( lang ) == mLangs.end() ) mLangs.append( lang );
 }
 
 TQString Entry::summary( const TQString &lang ) const
@@ -221,7 +221,7 @@ void Entry::setPayload( const KURL &url, const TQString &lang )
 {
   mPayloadMap.insert( lang, url );
 
-  if ( mLangs.tqfind( lang ) == mLangs.end() ) mLangs.append( lang );
+  if ( mLangs.find( lang ) == mLangs.end() ) mLangs.append( lang );
 }
 
 KURL Entry::payload( const TQString &lang ) const
@@ -244,7 +244,7 @@ void Entry::setPreview( const KURL &url, const TQString &lang )
 {
   mPreviewMap.insert( lang, url );
   
-  if ( mLangs.tqfind( lang ) == mLangs.end() ) mLangs.append( lang );
+  if ( mLangs.find( lang ) == mLangs.end() ) mLangs.append( lang );
 }
 
 KURL Entry::preview( const TQString &lang ) const

@@ -526,12 +526,12 @@ int KShortcut::compare( const KShortcut& cut ) const
 	return m_nSeqs - cut.m_nSeqs;
 }
 
-bool KShortcut::tqcontains( const KKey& key ) const
+bool KShortcut::contains( const KKey& key ) const
 {
-	return tqcontains( KKeySequence(key) );
+	return contains( KKeySequence(key) );
 }
 
-bool KShortcut::tqcontains( const KKeyNative& keyNative ) const
+bool KShortcut::contains( const KKeyNative& keyNative ) const
 {
 	KKey key = keyNative.key();
 	key.simplify();
@@ -545,7 +545,7 @@ bool KShortcut::tqcontains( const KKeyNative& keyNative ) const
 	return false;
 }
 
-bool KShortcut::tqcontains( const KKeySequence& seq ) const
+bool KShortcut::contains( const KKeySequence& seq ) const
 {
 	for( uint i = 0; i < count(); i++ ) {
 		if( !m_rgseq[i].isNull() && m_rgseq[i] == seq )
@@ -607,13 +607,13 @@ bool KShortcut::append( const KShortcut& cut )
 {
 	uint seqs = m_nSeqs, co = cut.count();
 	for( uint i=0; i<co; i++ ) {
-	    if (!tqcontains(cut.seq(i))) seqs++;
+	    if (!contains(cut.seq(i))) seqs++;
 	}
 	if( seqs > MAX_SEQUENCES ) return false;
 
 	for( uint i=0; i<co; i++ ) {
 		const KKeySequence& seq = cut.seq(i);
-		if(!tqcontains(seq)) {
+		if(!contains(seq)) {
 			m_rgseq[m_nSeqs] = seq;
 			m_nSeqs++;
 		}

@@ -148,7 +148,7 @@ void HTMLAnchorElement::setRev( const DOMString &value )
     if(impl) ((ElementImpl *)impl)->setAttribute(ATTR_REV, value);
 }
 
-DOMString HTMLAnchorElement::tqshape() const
+DOMString HTMLAnchorElement::shape() const
 {
     if(!impl) return DOMString();
     return ((ElementImpl *)impl)->getAttribute(ATTR_SHAPE);

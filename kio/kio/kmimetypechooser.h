@@ -177,4 +177,4 @@ class KIO_EXPORT KMimeTypeChooserDialog : public KDialogBase
     KMimeTypeChooser *m_chooser;
 };
 #endif // _KMIMETYPE_CHOOSER_H_
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

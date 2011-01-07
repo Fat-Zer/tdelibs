@@ -87,7 +87,7 @@ KURLDrag * KURLDrag::newDrag( const KURL::List &urls, const TQMap<TQString, TQSt
 bool KURLDrag::decode( const TQMimeSource *e, KURL::List &uris )
 {
     if ( e->provides( "application/x-kde-urilist" ) ) {
-        TQByteArray payload = e->tqencodedData( "application/x-kde-urilist" );
+        TQByteArray payload = e->encodedData( "application/x-kde-urilist" );
         if ( payload.size() ) {
             uint c=0;
             const char* d = payload.data();
@@ -128,7 +128,7 @@ bool KURLDrag::decode( const TQMimeSource *e, KURL::List &uris, TQMap<TQString,T
 {
     if ( decode( e, uris ) ) // first decode the URLs (see above)
     {
-        TQByteArray ba = e->tqencodedData( "application/x-kio-metadata" );
+        TQByteArray ba = e->encodedData( "application/x-kio-metadata" );
         if ( ba.size() )
         {
             TQString s = ba.data();
@@ -140,7 +140,7 @@ bool KURLDrag::decode( const TQMimeSource *e, KURL::List &uris, TQMap<TQString,T
                 if ( readingKey )
                     key = *it;
                 else
-                    metaData.tqreplace( key, *it );
+                    metaData.replace( key, *it );
                 readingKey = !readingKey;
             }
             Q_ASSERT( readingKey ); // an odd number of items would be, well, odd ;-)
@@ -187,12 +187,12 @@ const char * KURLDrag::format( int i ) const
     else return 0;
 }
 
-TQByteArray KURLDrag::tqencodedData( const char* mime ) const
+TQByteArray KURLDrag::encodedData( const char* mime ) const
 {
     TQByteArray a;
     TQCString mimetype( mime );
     if ( mimetype == "text/uri-list" )
-        return TQUriDrag::tqencodedData( mime );
+        return TQUriDrag::encodedData( mime );
     else if ( mimetype == "text/plain" )
     {
 	TQStringList uris;

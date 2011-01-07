@@ -67,7 +67,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
     d->actionCollection = new KActionCollection(this);
 
 #ifdef Q_WS_X11
-    KWin::setSystemTrayWindowFor( winId(), parent?parent->tqtopLevelWidget()->winId(): qt_xrootwin() );
+    KWin::setSystemTrayWindowFor( winId(), parent?parent->topLevelWidget()->winId(): qt_xrootwin() );
 #endif
     setBackgroundMode(X11ParentRelative);
     setBackgroundOrigin(WindowOrigin);
@@ -77,13 +77,13 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
     move( -1000, -1000 );
     KStdAction::quit(this, TQT_SLOT(maybeQuit()), d->actionCollection);
 
-    if (tqparentWidget())
+    if (parentWidget())
     {
         new KAction(i18n("Minimize"), KShortcut(),
                     this, TQT_SLOT( minimizeRestoreAction() ),
                     d->actionCollection, "minimizeRestore");
 #ifdef Q_WS_X11
-	KWin::WindowInfo info = KWin::windowInfo( tqparentWidget()->winId());
+	KWin::WindowInfo info = KWin::windowInfo( parentWidget()->winId());
 	d->on_all_desktops = info.onAllDesktops();
 #else
 	d->on_all_desktops = false;
@@ -94,7 +94,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
         d->on_all_desktops = false;
     }
     setCaption( KGlobal::instance()->aboutData()->programName());
-    tqsetAlignment( tqalignment() | Qt::AlignVCenter | Qt::AlignHCenter );
+    setAlignment( alignment() | Qt::AlignVCenter | Qt::AlignHCenter );
 
     // Handle the possibility that the requested system tray size is something other than 22x22 pixels, per the Free Desktop specifications
     setScaledContents(true);
@@ -142,7 +142,7 @@ KPopupMenu* KSystemTray::contextMenu() const
 
 void KSystemTray::mousePressEvent( TQMouseEvent *e )
 {
-    if ( !rect().tqcontains( e->pos() ) )
+    if ( !rect().contains( e->pos() ) )
 	return;
 
     switch ( e->button() ) {
@@ -152,9 +152,9 @@ void KSystemTray::mousePressEvent( TQMouseEvent *e )
     case MidButton:
 	// fall through
     case RightButton:
-	if ( tqparentWidget() ) {
+	if ( parentWidget() ) {
             KAction* action = d->actionCollection->action("minimizeRestore");
-	    if ( tqparentWidget()->isVisible() )
+	    if ( parentWidget()->isVisible() )
 		action->setText( i18n("&Minimize") );
 	    else
 		action->setText( i18n("&Restore") );
@@ -182,8 +182,8 @@ void KSystemTray::contextMenuAboutToShow( KPopupMenu* )
 // entry is "minimize", otherwise it's "restore"
 void KSystemTray::minimizeRestoreAction()
 {
-    if ( tqparentWidget() ) {
-        bool restore = !( tqparentWidget()->isVisible() );
+    if ( parentWidget() ) {
+        bool restore = !( parentWidget()->isVisible() );
 	minimizeRestore( restore );
     }
 }
@@ -207,13 +207,13 @@ void KSystemTray::maybeQuit()
     // KDE4: stop closing the parent widget? it results in complex application code
     //       instead make applications connect to the quitSelected() signal
 
-    if (tqparentWidget())
+    if (parentWidget())
     {
-        tqparentWidget()->close();
+        parentWidget()->close();
     }
     else
     {
-        tqApp->closeAllWindows();
+        qApp->closeAllWindows();
     }
 }
 
@@ -237,7 +237,7 @@ void KSystemTray::setInactive()
 // (just like taskbar); otherwise hide it
 void KSystemTray::activateOrHide()
 {
-    TQWidget *pw = tqparentWidget();
+    TQWidget *pw = parentWidget();
 
     if ( !pw )
 	return;
@@ -263,7 +263,7 @@ void KSystemTray::activateOrHide()
                 NET::WMGeometry | NET::XAWMState | NET::WMState | NET::WMWindowType );
             if( info2.mappingState() != NET::Visible )
                 continue; // not visible on current desktop -> ignore
-            if( !info2.tqgeometry().intersects( pw->tqgeometry()))
+            if( !info2.geometry().intersects( pw->geometry()))
                 continue; // not obscuring the window -> ignore
             if( !info1.hasState( NET::KeepAbove ) && info2.hasState( NET::KeepAbove ))
                 continue; // obscured by window kept above -> ignore
@@ -283,7 +283,7 @@ void KSystemTray::activateOrHide()
 
 void KSystemTray::minimizeRestore( bool restore )
 {
-    TQWidget* pw = tqparentWidget();
+    TQWidget* pw = parentWidget();
     if( !pw )
 	return;
 #ifdef Q_WS_X11
@@ -294,7 +294,7 @@ void KSystemTray::minimizeRestore( bool restore )
 	    KWin::setOnAllDesktops( pw->winId(), true );
 	else
 	    KWin::setCurrentDesktop( info.desktop() );
-        pw->move( info.tqgeometry().topLeft() ); // avoid placement policies
+        pw->move( info.geometry().topLeft() ); // avoid placement policies
         pw->show();
         pw->raise();
 	KWin::activateWindow( pw->winId() );

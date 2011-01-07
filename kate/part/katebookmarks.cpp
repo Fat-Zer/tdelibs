@@ -169,14 +169,14 @@ void KateBookmarks::insertBookmarks( TQPopupMenu& menu )
       TQString bText = KStringHandler::rEmSqueeze
                       ( m_view->getDoc()->textLine( (*it)->line ),
                         menu.fontMetrics(), 32 );
-      bText.tqreplace(re, "&&"); // kill undesired accellerators!
-      bText.tqreplace('\t', ' '); // kill tabs, as they are interpreted as shortcuts
+      bText.replace(re, "&&"); // kill undesired accellerators!
+      bText.replace('\t', ' '); // kill tabs, as they are interpreted as shortcuts
 
       if ( m_sorting == Position )
       {
         sortArray[i] = (*it)->line;
         ssort( sortArray, i );
-        idx = sortArray.tqfind( (*it)->line ) + 3;
+        idx = sortArray.find( (*it)->line ) + 3;
       }
 
       menu.insertItem(
@@ -284,4 +284,4 @@ void KateBookmarks::marksChanged ()
   m_bookmarkClear->setEnabled( !m_view->getDoc()->marks().isEmpty() );
 }
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

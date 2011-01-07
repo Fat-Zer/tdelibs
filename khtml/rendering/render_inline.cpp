@@ -57,7 +57,7 @@ void RenderInline::setStyle(RenderStyle* _style)
     }
 
     if (attached()) {
-        // Update tqreplaced content
+        // Update replaced content
         updateReplacedContent();
         // Update pseudos for ::before and ::after
         updatePseudoChildren();
@@ -864,7 +864,7 @@ void RenderInline::caretPos(int offset, int flags, int &_x, int &_y, int &width,
     RenderBlock *cb = containingBlock();
     bool rtl = cb->style()->direction() == RTL;
     bool outsideEnd = flags & CFOutsideEnd;
-    // I need to explain that: outsideEnd tqcontains a meaningful value if
+    // I need to explain that: outsideEnd contains a meaningful value if
     // and only if flags & CFOutside is set. If it is not, then randomly
     // either the first or the last line box is returned.
     // This doesn't matter because the only case this can happen is on an

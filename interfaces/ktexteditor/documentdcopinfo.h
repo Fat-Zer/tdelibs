@@ -25,7 +25,7 @@ namespace KTextEditor
 		Construct a new interface object for the text editor.
 		@param Parent the parent DocumentInfoInterface object
 		that will provide us with the functions for the interface.
-		@param name the TQObject's name
+		@param name the QObject's name
 		*/
 		DocumentInfoDCOPInterface( DocumentInfoInterface *Parent, const char *name );
 		/**

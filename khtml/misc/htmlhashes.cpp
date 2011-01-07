@@ -27,7 +27,7 @@
 
 int khtml::getTagID(const char *tagStr, int len)
 {
-    const struct tags *tagPtr = tqfindTag(tagStr, len);
+    const struct tags *tagPtr = findTag(tagStr, len);
     if (!tagPtr)
         return 0;
 
@@ -36,7 +36,7 @@ int khtml::getTagID(const char *tagStr, int len)
 
 int khtml::getAttrID(const char *tagStr, int len)
 {
-    const struct attrs *tagPtr = tqfindAttr(tagStr, len);
+    const struct attrs *tagPtr = findAttr(tagStr, len);
     if (!tagPtr)
         return 0;
 

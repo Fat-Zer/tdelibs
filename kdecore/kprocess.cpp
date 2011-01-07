@@ -809,7 +809,7 @@ KPty *KProcess::pty() const
 TQString KProcess::quote(const TQString &arg)
 {
     TQChar q('\'');
-    return TQString(arg).tqreplace(q, "'\\''").prepend(q).append(q);
+    return TQString(arg).replace(q, "'\\''").prepend(q).append(q);
 }
 
 

@@ -79,26 +79,26 @@ int main(int argc, char *argv[])
   s = "kedit --caption %n %f";
   check( "KMacroExpander::expandMacrosShellQuote", s, KMacroExpander::expandMacrosShellQuote(s, map), "kedit --caption 'Restaurant \"Chew It\"' 'filename.txt'");
 
-  map.tqreplace('n', "Restaurant 'Chew It'");
+  map.replace('n', "Restaurant 'Chew It'");
   s = "kedit --caption %n %f";
   check( "KMacroExpander::expandMacrosShellQuote", s, KMacroExpander::expandMacrosShellQuote(s, map), "kedit --caption 'Restaurant '\\''Chew It'\\''' 'filename.txt'");
 
   s = "kedit --caption \"%n\" %f";
   check( "KMacroExpander::expandMacrosShellQuote", s, KMacroExpander::expandMacrosShellQuote(s, map), "kedit --caption \"Restaurant 'Chew It'\" 'filename.txt'");
 
-  map.tqreplace('n', "Restaurant \"Chew It\"");
+  map.replace('n', "Restaurant \"Chew It\"");
   s = "kedit --caption \"%n\" %f";
   check( "KMacroExpander::expandMacrosShellQuote", s, KMacroExpander::expandMacrosShellQuote(s, map), "kedit --caption \"Restaurant \\\"Chew It\\\"\" 'filename.txt'");
 
-  map.tqreplace('n', "Restaurant $HOME");
+  map.replace('n', "Restaurant $HOME");
   s = "kedit --caption \"%n\" %f";
   check( "KMacroExpander::expandMacrosShellQuote", s, KMacroExpander::expandMacrosShellQuote(s, map), "kedit --caption \"Restaurant \\$HOME\" 'filename.txt'");
 
-  map.tqreplace('n', "Restaurant `echo hello`");
+  map.replace('n', "Restaurant `echo hello`");
   s = "kedit --caption \"%n\" %f";
   check( "KMacroExpander::expandMacrosShellQuote", s, KMacroExpander::expandMacrosShellQuote(s, map), "kedit --caption \"Restaurant \\`echo hello\\`\" 'filename.txt'");
 
-  map.tqreplace('n', "Restaurant `echo hello`");
+  map.replace('n', "Restaurant `echo hello`");
   s = "kedit --caption \"`echo %n`\" %f";
   check( "KMacroExpander::expandMacrosShellQuote", s, KMacroExpander::expandMacrosShellQuote(s, map), "kedit --caption \"$( echo 'Restaurant `echo hello`')\" 'filename.txt'");
 

@@ -14,16 +14,16 @@
 PreviewTest::PreviewTest()
     :TQWidget()
 {
-    TQGridLayout *tqlayout = new TQGridLayout(this, 2, 2);
+    TQGridLayout *layout = new TQGridLayout(this, 2, 2);
     m_url = new KLineEdit(this);
     m_url->setText("/home/malte/gore_bush.jpg");
-    tqlayout->addWidget(m_url, 0, 0);
+    layout->addWidget(m_url, 0, 0);
     TQPushButton *btn = new TQPushButton("Generate", this);
     connect(btn, TQT_SIGNAL(clicked()), TQT_SLOT(slotGenerate()));
-    tqlayout->addWidget(btn, 0, 1);
+    layout->addWidget(btn, 0, 1);
     m_preview = new TQLabel(this);
     m_preview->setMinimumSize(400, 300);
-    tqlayout->addMultiCellWidget(m_preview, 1, 1, 0, 1);
+    layout->addMultiCellWidget(m_preview, 1, 1, 0, 1);
 }
 
 void PreviewTest::slotGenerate()

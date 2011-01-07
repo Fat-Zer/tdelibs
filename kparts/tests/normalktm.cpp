@@ -74,7 +74,7 @@ void Shell::slotFileOpenRemote()
 
 void Shell::embedEditor()
 {
-  // tqreplace part2 with the editor part
+  // replace part2 with the editor part
   delete m_part2;
   m_part2 = 0L;
   m_editorpart = new NotepadPart( m_splitter, "editor", 

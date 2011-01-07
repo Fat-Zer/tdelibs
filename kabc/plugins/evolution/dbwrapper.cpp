@@ -145,7 +145,7 @@ DBIterator DBWrapper::end() {
 
     return it;
 }
-bool DBWrapper::tqfind( const TQString& _key,  TQString& _val ) {
+bool DBWrapper::find( const TQString& _key,  TQString& _val ) {
     DBT key, val;
     ::memset(&key, 0, sizeof(key) );
     ::memset(&val, 0, sizeof(val) );

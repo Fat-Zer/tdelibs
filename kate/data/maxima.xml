@@ -455,8 +455,8 @@
             <item> file_search </item>
             <item> file_type </item>
             <item> fillarray </item>
-            <item> tqfindde </item>
-            <item> tqfind_root </item>
+            <item> findde </item>
+            <item> find_root </item>
             <item> first </item>
             <item> fix </item>
             <item> flatten </item>
@@ -1610,9 +1610,9 @@
             <item> file_search_demo </item>
             <item> file_search_lisp </item>
             <item> file_search_maxima </item>
-            <item> tqfind_root_abs </item>
-            <item> tqfind_root_error </item>
-            <item> tqfind_root_rel </item>
+            <item> find_root_abs </item>
+            <item> find_root_error </item>
+            <item> find_root_rel </item>
             <item> flipflag </item>
             <item> float2bf </item>
             <item> fortindent </item>

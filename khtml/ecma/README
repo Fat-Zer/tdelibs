@@ -1,4 +1,4 @@
-This module tqcontains the ECMAScript a.k.a. JavaScript language bindings for
+This module contains the ECMAScript a.k.a. JavaScript language bindings for
 the KHTML Part.
 
 The module is loaded into KHTML's address space on demand.

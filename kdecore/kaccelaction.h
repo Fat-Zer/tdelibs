@@ -60,7 +60,7 @@ class KConfigBase;
  *				1) KKey = "Meta+X"
  *					1) Meta+X
  *				2) KKey = "Asterisk"
- *					1) Shift+8 (English tqlayout)
+ *					1) Shift+8 (English layout)
  *					2) Keypad_Asterisk
  * \endcode
  * @short An accelerator action
@@ -296,12 +296,12 @@ class KDECORE_EXPORT KAccelAction
 	void clearShortcut();
 	
 	/**
-	 * Checks whether the action's shortcut tqcontains the given key sequence.
+	 * Checks whether the action's shortcut contains the given key sequence.
 	 * @param keySeq the key sequence to check
-	 * @return true if the shortcut tqcontains the given sequence
-	 * @see KShortcut::tqcontains()
+	 * @return true if the shortcut contains the given sequence
+	 * @see KShortcut::contains()
 	 */
-	bool tqcontains( const KKeySequence &keySeq );
+	bool contains( const KKeySequence &keySeq );
 
 	/**
 	 * Returns the string representation of the action's shortcut.
@@ -333,8 +333,8 @@ class KDECORE_EXPORT KAccelAction
 	        m_sLabel /**< Label of accel. User-visible. */,
 	        m_sWhatsThis /**< WhatsThis help for accel. User-visible. */;
 	KShortcut m_cut /**< Shortcut actually assigned. */;
-	KShortcut m_cutDefault3 /**< Default shortcut in 3-modifier tqlayout */, 
-		  m_cutDefault4 /**< Default shortcur in 4-modifier tqlayout */;
+	KShortcut m_cutDefault3 /**< Default shortcut in 3-modifier layout */, 
+		  m_cutDefault4 /**< Default shortcur in 4-modifier layout */;
 	const TQObject* m_pObjSlot /**< Object we will send signals to. */;
 	const char* m_psMethodSlot /**< Slot we send signals to, in m_pObjSlot */;
 	bool m_bConfigurable /**< Can this accel be configured by the user? */,
@@ -405,7 +405,7 @@ class KDECORE_EXPORT KAccelActions
 	/**
 	 * Updates the shortcuts of all actions in this object
 	 * with the shortcuts from the given object.
-	 * @param shortcuts the collection that tqcontains the new
+	 * @param shortcuts the collection that contains the new
 	 *        shortcuts
 	 */
 	void updateShortcuts( KAccelActions &shortcuts );

@@ -66,7 +66,7 @@ sort <(show_labels) | sed 's/a/bg' > my_file.txt 2>&1
 # All substitutions also work in strings:
 echo "subst ${in}side string"  'not $inside this ofcourse'
 echo "The result is $(( $a + $b )). Thanks!"
-echo "Your homedir tqcontains `ls $HOME |wc -l` files."
+echo "Your homedir contains `ls $HOME |wc -l` files."
 
 
 # Escapes in strings:

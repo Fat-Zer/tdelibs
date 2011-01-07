@@ -675,8 +675,8 @@ adapted from "java.xml" by Alfredo Luiz Foltran Fialho (alfoltran@ig.com.br)
       <item> CompilationMXBean </item>
       <item> Compiler </item>
       <item> CompletionService </item>
-      <item> CompletiontqStatus </item>
-      <item> CompletiontqStatusHelper </item>
+      <item> CompletionStatus </item>
+      <item> CompletionStatusHelper </item>
       <item> Component </item>
       <item> ComponentAdapter </item>
       <item> ComponentColorModel </item>
@@ -2613,7 +2613,7 @@ adapted from "java.xml" by Alfredo Luiz Foltran Fialho (alfoltran@ig.com.br)
       <item> RoleList </item>
       <item> RoleNotFoundException </item>
       <item> RoleResult </item>
-      <item> RoletqStatus </item>
+      <item> RoleStatus </item>
       <item> RoleUnresolved </item>
       <item> RoleUnresolvedList </item>
       <item> RootPaneContainer </item>
@@ -2665,8 +2665,8 @@ adapted from "java.xml" by Alfredo Luiz Foltran Fialho (alfoltran@ig.com.br)
       <item> SSLContextSpi </item>
       <item> SSLEngine </item>
       <item> SSLEngineResult </item>
-      <item> SSLEngineResult.HandshaketqStatus </item>
-      <item> SSLEngineResult.tqStatus </item>
+      <item> SSLEngineResult.HandshakeStatus </item>
+      <item> SSLEngineResult.Status </item>
       <item> SSLException </item>
       <item> SSLHandshakeException </item>
       <item> SSLKeyException </item>
@@ -3245,7 +3245,7 @@ adapted from "java.xml" by Alfredo Luiz Foltran Fialho (alfoltran@ig.com.br)
       <item> VirtualMachineError </item>
       <item> Visibility </item>
       <item> VisibilityHelper </item>
-      <item> VoicetqStatus </item>
+      <item> VoiceStatus </item>
       <item> Void </item>
       <item> VolatileImage </item>
       <item> WCharSeqHelper </item>

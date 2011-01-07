@@ -94,7 +94,7 @@ public:
      * Returns the minimum size needed to display the widget and all its
      * controls.
      */
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 public slots:
     /**
      * Sets the foreground color.
@@ -128,7 +128,7 @@ signals:
 protected:
     /**
      * Sets the supplied rectangles to the proper size and position for the
-     * current widget size. You can reimplement this to change the tqlayout
+     * current widget size. You can reimplement this to change the layout
      * of the widget. Restrictions are that the swap control will always
      * be at the top right, the reset control will always be at the bottom
      * left, and you must leave at least a 14x14 space in those corners.

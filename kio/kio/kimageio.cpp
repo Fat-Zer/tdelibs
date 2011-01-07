@@ -68,7 +68,7 @@ KImageIOFormat::~KImageIOFormat()
 void
 KImageIOFormat::load( TQDataStream& _str)
 {
-   TQ_INT8 iRead, iWrite;
+   Q_INT8 iRead, iWrite;
    KSycocaEntry::read(_str, mType);
    KSycocaEntry::read(_str, mHeader);
    KSycocaEntry::read(_str, mFlags);
@@ -86,8 +86,8 @@ void
 KImageIOFormat::save( TQDataStream& _str)
 {
    KSycocaEntry::save( _str );
-   TQ_INT8 iRead = bRead ? 1 : 0;
-   TQ_INT8 iWrite = bWrite ? 1 : 0;
+   Q_INT8 iRead = bRead ? 1 : 0;
+   Q_INT8 iWrite = bWrite ? 1 : 0;
 
    _str << mType << mHeader << mFlags << iRead << iWrite
         << mSuffices << mMimetype << mLib << mPattern << rPaths;
@@ -124,7 +124,7 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
 
          if (func == NULL) {
             iio->setStatus(1); // error
-            kdWarning() << "couln't tqfind " << funcName << " (" << lt_dlerror() << ")" << endl;
+            kdWarning() << "couln't find " << funcName << " (" << lt_dlerror() << ")" << endl;
          }
          mReadFunc = (void (*)(TQImageIO *))func;
       }
@@ -135,7 +135,7 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
 
          if (func == NULL) {
             iio->setStatus(1); // error
-            kdWarning() << "couln't tqfind " << funcName << " (" << lt_dlerror() << ")" << endl;
+            kdWarning() << "couln't find " << funcName << " (" << lt_dlerror() << ")" << endl;
          }
          mWriteFunc = (void (*)(TQImageIO *))func;
       }
@@ -232,7 +232,7 @@ KImageIOFactory::createPattern( KImageIO::Mode _mode)
   patterns.sort();
   patterns.prepend(allPatterns);
 
-  TQString pattern = patterns.join(TQString::tqfromLatin1("\n"));
+  TQString pattern = patterns.join(TQString::fromLatin1("\n"));
   return pattern;
 }
 
@@ -489,7 +489,7 @@ TQString KImageIO::type(const TQString& filename)
 {
   KImageIOFormatList *formatList = KImageIOFactory::self()->formatList;
   TQString suffix = filename;
-  int dot = suffix.tqfindRev('.');
+  int dot = suffix.findRev('.');
   if (dot >= 0)
     suffix = suffix.mid(dot + 1);
 
@@ -500,7 +500,7 @@ TQString KImageIO::type(const TQString& filename)
            ++it )
       {
           KImageIOFormat *format = (*it);
-          if (format->mSuffices.tqcontains(suffix))
+          if (format->mSuffices.contains(suffix))
               return format->mType;
       }
   }

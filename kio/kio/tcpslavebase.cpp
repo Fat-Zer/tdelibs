@@ -223,7 +223,7 @@ if ((m_bIsSSL || d->usingTLS) && !d->useSSLTunneling) {       // SSL CASE
         return -1;
       }
 
-      bytes = rc;   // in case it tqcontains no \n
+      bytes = rc;   // in case it contains no \n
       for (int i = 0; i < rc; i++) {
         if (tmpbuf[i] == '\n') {
           bytes = i+1;
@@ -774,7 +774,7 @@ int TCPSlaveBase::verifyCertificate()
       }
 #endif
       if (!_IPmatchesCN && !d->militantSSL) { // force this if the user wants it
-         if (d->cc->getHostList(pc).tqcontains(ourHost)) {
+         if (d->cc->getHostList(pc).contains(ourHost)) {
             _IPmatchesCN = true;
          }
       }

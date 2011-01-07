@@ -40,7 +40,7 @@ KRlprPrinterImpl::~KRlprPrinterImpl()
 bool KRlprPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 {
 	// retrieve the KMPrinter object, to get host and queue name
-	KMPrinter	*rpr = KMFactory::self()->manager()->tqfindPrinter(printer->printerName());
+	KMPrinter	*rpr = KMFactory::self()->manager()->findPrinter(printer->printerName());
 	if (!rpr)
 		return false;
 
@@ -54,7 +54,7 @@ bool KRlprPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 			return false;
 		}
 
-		cmd = TQString::tqfromLatin1("%1 -H %2 -P %3 -\\#%4").arg(exestr).arg(quote(host)).arg(quote(queue)).arg(printer->numCopies());
+		cmd = TQString::fromLatin1("%1 -H %2 -P %3 -\\#%4").arg(exestr).arg(quote(host)).arg(quote(queue)).arg(printer->numCopies());
 
 		// proxy settings
 		KConfig	*conf = KMFactory::self()->printConfig();

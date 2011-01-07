@@ -110,7 +110,7 @@ void KMultiTabBarInternal::setStyle(enum KMultiTabBar::KMultiTabBarStyle style)
 		mainLayout->setAutoAdd(true);
 
 	}
-        viewport()->tqrepaint();
+        viewport()->repaint();
 }
 
 void KMultiTabBarInternal::drawContents ( TQPainter * paint, int clipx, int clipy, int clipw, int cliph )
@@ -120,9 +120,9 @@ void KMultiTabBarInternal::drawContents ( TQPainter * paint, int clipx, int clip
 	if (m_position==KMultiTabBar::Right)
 	{
 
-                paint->setPen(tqcolorGroup().shadow());
+                paint->setPen(colorGroup().shadow());
                 paint->drawLine(0,0,0,viewport()->height());
-                paint->setPen(tqcolorGroup().background().dark(120));
+                paint->setPen(colorGroup().background().dark(120));
                 paint->drawLine(1,0,1,viewport()->height());
 
 
@@ -130,28 +130,28 @@ void KMultiTabBarInternal::drawContents ( TQPainter * paint, int clipx, int clip
 	else
 	if (m_position==KMultiTabBar::Left)
 	{
-                paint->setPen(tqcolorGroup().light());
+                paint->setPen(colorGroup().light());
 		paint->drawLine(23,0,23,viewport()->height());
                 paint->drawLine(22,0,22,viewport()->height());
 
-                paint->setPen(tqcolorGroup().shadow());
+                paint->setPen(colorGroup().shadow());
                 paint->drawLine(0,0,0,viewport()->height());
 	}
 	else
 	if (m_position==KMultiTabBar::Bottom)
 	{
-		paint->setPen(tqcolorGroup().shadow());
+		paint->setPen(colorGroup().shadow());
 		paint->drawLine(0,0,viewport()->width(),0);
-                paint->setPen(tqcolorGroup().background().dark(120));
+                paint->setPen(colorGroup().background().dark(120));
                 paint->drawLine(0,1,viewport()->width(),1);
 	}
 	else
 	{
-	        paint->setPen(tqcolorGroup().light());
+	        paint->setPen(colorGroup().light());
 		paint->drawLine(0,23,viewport()->width(),23);
                 paint->drawLine(0,22,viewport()->width(),22);
 
-/*                paint->setPen(tqcolorGroup().shadow());
+/*                paint->setPen(colorGroup().shadow());
                 paint->drawLine(0,0,0,viewport()->height());*/
 
 	}
@@ -188,8 +188,8 @@ void KMultiTabBarInternal::mousePressEvent(TQMouseEvent *ev)
 
 void KMultiTabBarInternal::resizeEvent(TQResizeEvent *ev) {
 /*	kdDebug()<<"KMultiTabBarInternal::resizeEvent"<<endl;
-	kdDebug()<<"KMultiTabBarInternal::resizeEvent - box tqgeometry"<<box->tqgeometry()<<endl;
-	kdDebug()<<"KMultiTabBarInternal::resizeEvent - tqgeometry"<<tqgeometry()<<endl;*/
+	kdDebug()<<"KMultiTabBarInternal::resizeEvent - box geometry"<<box->geometry()<<endl;
+	kdDebug()<<"KMultiTabBarInternal::resizeEvent - geometry"<<geometry()<<endl;*/
 	if (ev) TQScrollView::resizeEvent(ev);
 
 	if ( (m_style==KMultiTabBar::KDEV3) ||
@@ -378,7 +378,7 @@ void KMultiTabBarInternal::setPosition(enum KMultiTabBar::KMultiTabBarPosition p
 	m_position=pos;
 	for (uint i=0;i<m_tabs.count();i++)
 		m_tabs.at(i)->setTabsPosition(m_position);
-	viewport()->tqrepaint();
+	viewport()->repaint();
 }
 
 KMultiTabBarButton::KMultiTabBarButton(const TQPixmap& pic,const TQString& text, TQPopupMenu *popup,
@@ -434,29 +434,29 @@ void KMultiTabBarButton::slotClicked()
 void KMultiTabBarButton::setPosition(KMultiTabBar::KMultiTabBarPosition pos)
 {
 	m_position=pos;
-	tqrepaint();
+	repaint();
 }
 
 void KMultiTabBarButton::setStyle(KMultiTabBar::KMultiTabBarStyle style)
 {
 	m_style=style;
-	tqrepaint();
+	repaint();
 }
 
 void KMultiTabBarButton::hideEvent( TQHideEvent* he) {
 	TQPushButton::hideEvent(he);
-	KMultiTabBar *tb=dynamic_cast<KMultiTabBar*>(tqparentWidget());
+	KMultiTabBar *tb=dynamic_cast<KMultiTabBar*>(parentWidget());
 	if (tb) tb->updateSeparator();
 }
 
 void KMultiTabBarButton::showEvent( TQShowEvent* he) {
 	TQPushButton::showEvent(he);
-	KMultiTabBar *tb=dynamic_cast<KMultiTabBar*>(tqparentWidget());
+	KMultiTabBar *tb=dynamic_cast<KMultiTabBar*>(parentWidget());
 	if (tb) tb->updateSeparator();
 }
 
 
-TQSize KMultiTabBarButton::tqsizeHint() const
+TQSize KMultiTabBarButton::sizeHint() const
 {
     constPolish();
 
@@ -472,7 +472,7 @@ TQSize KMultiTabBarButton::tqsizeHint() const
     }
 #endif
     if ( isMenuButton() )
-        w += style().tqpixelMetric(TQStyle::PM_MenuButtonIndicator, this);
+        w += style().pixelMetric(TQStyle::PM_MenuButtonIndicator, this);
 
     if ( pixmap() ) {
         TQPixmap *pm = (TQPixmap *)pixmap();
@@ -482,7 +482,7 @@ TQSize KMultiTabBarButton::tqsizeHint() const
         TQString s( text() );
         bool empty = s.isEmpty();
         if ( empty )
-            s = TQString::tqfromLatin1("XXXX");
+            s = TQString::fromLatin1("XXXX");
         TQFontMetrics fm = fontMetrics();
         TQSize sz = fm.size( ShowPrefix, s );
         if(!empty || !w)
@@ -525,7 +525,7 @@ void KMultiTabBarTab::setTabsPosition(KMultiTabBar::KMultiTabBarPosition pos)
 	}
 
 	setPosition(pos);
-//	tqrepaint();
+//	repaint();
 }
 
 void KMultiTabBarTab::setIcon(const TQString& icon)
@@ -577,12 +577,12 @@ void KMultiTabBarTab::updateState()
 		if ((m_position==KMultiTabBar::Right || m_position==KMultiTabBar::Left)) {
 			setFixedWidth(24);
 			if ((m_style==KMultiTabBar::KDEV3)  || (m_style==KMultiTabBar::KDEV3ICON) || (isOn())) {
-				setFixedHeight(KMultiTabBarButton::tqsizeHint().width());
+				setFixedHeight(KMultiTabBarButton::sizeHint().width());
 			} else setFixedHeight(36);
 		} else {
 			setFixedHeight(24);
 			if ((m_style==KMultiTabBar::KDEV3)  || (m_style==KMultiTabBar::KDEV3ICON) || (isOn())) {
-				setFixedWidth(KMultiTabBarButton::tqsizeHint().width());
+				setFixedWidth(KMultiTabBarButton::sizeHint().width());
 			} else setFixedWidth(36);
 		}
 	} else {
@@ -633,7 +633,7 @@ void KMultiTabBarTab::drawButtonStyled(TQPainter *paint) {
 	const int height = 24;
 	if ((m_style==KMultiTabBar::KDEV3) || (m_style==KMultiTabBar::KDEV3ICON) || (isOn())) {
 		 if ((m_position==KMultiTabBar::Left) || (m_position==KMultiTabBar::Right))
-			sh=TQSize(this->height(),this->width());//KMultiTabBarButton::tqsizeHint();
+			sh=TQSize(this->height(),this->width());//KMultiTabBarButton::sizeHint();
 			else sh=TQSize(this->width(),this->height());
 	}
 	else
@@ -650,8 +650,8 @@ void KMultiTabBarTab::drawButtonStyled(TQPainter *paint) {
 
 	if (isOn()) st|=TQStyle::Style_On;
 
-	style().tqdrawControl(TQStyle::CE_PushButton,&painter,this, TQRect(0,0,pixmap.width(),pixmap.height()), tqcolorGroup(),st);
-	style().tqdrawControl(TQStyle::CE_PushButtonLabel,&painter,this, TQRect(0,0,pixmap.width(),pixmap.height()), tqcolorGroup(),st);
+	style().drawControl(TQStyle::CE_PushButton,&painter,this, TQRect(0,0,pixmap.width(),pixmap.height()), colorGroup(),st);
+	style().drawControl(TQStyle::CE_PushButtonLabel,&painter,this, TQRect(0,0,pixmap.width(),pixmap.height()), colorGroup(),st);
 
 	switch (m_position) {
 		case KMultiTabBar::Left:
@@ -667,8 +667,8 @@ void KMultiTabBarTab::drawButtonStyled(TQPainter *paint) {
 			paint->drawPixmap(0,0,pixmap);
 			break;
 	}
-//	style().tqdrawControl(TQStyle::CE_PushButtonLabel,painter,this, TQRect(0,0,pixmap.width(),pixmap.height()),
-//		tqcolorGroup(),TQStyle::Style_Enabled);
+//	style().drawControl(TQStyle::CE_PushButtonLabel,painter,this, TQRect(0,0,pixmap.width(),pixmap.height()),
+//		colorGroup(),TQStyle::Style_Enabled);
 
 
 }
@@ -678,58 +678,58 @@ void KMultiTabBarTab::drawButtonClassic(TQPainter *paint)
         TQPixmap pixmap;
 	if ( iconSet())
         	pixmap = iconSet()->pixmap( TQIconSet::Small, TQIconSet::Normal );
-	paint->fillRect(0, 0, 24, 24, tqcolorGroup().background());
+	paint->fillRect(0, 0, 24, 24, colorGroup().background());
 
 	if (!isOn())
 	{
 
 		if (m_position==KMultiTabBar::Right)
 		{
-			paint->fillRect(0,0,21,21,TQBrush(tqcolorGroup().background()));
+			paint->fillRect(0,0,21,21,TQBrush(colorGroup().background()));
 
-			paint->setPen(tqcolorGroup().background().dark(150));
+			paint->setPen(colorGroup().background().dark(150));
 			paint->drawLine(0,22,23,22);
 
 			paint->drawPixmap(12-pixmap.width()/2,12-pixmap.height()/2,pixmap);
 
-			paint->setPen(tqcolorGroup().shadow());
+			paint->setPen(colorGroup().shadow());
 			paint->drawLine(0,0,0,23);
-			paint->setPen(tqcolorGroup().background().dark(120));
+			paint->setPen(colorGroup().background().dark(120));
 			paint->drawLine(1,0,1,23);
 
 		}
 		else
 		if ((m_position==KMultiTabBar::Bottom) || (m_position==KMultiTabBar::Top))
 		{
-                        paint->fillRect(0,1,23,22,TQBrush(tqcolorGroup().background()));
+                        paint->fillRect(0,1,23,22,TQBrush(colorGroup().background()));
 
                         paint->drawPixmap(12-pixmap.width()/2,12-pixmap.height()/2,pixmap);
 
-                        paint->setPen(tqcolorGroup().background().dark(120));
+                        paint->setPen(colorGroup().background().dark(120));
                         paint->drawLine(23,0,23,23);
 
 
-                        paint->setPen(tqcolorGroup().light());
+                        paint->setPen(colorGroup().light());
                         paint->drawLine(0,22,23,22);
                         paint->drawLine(0,23,23,23);
-                	paint->setPen(tqcolorGroup().shadow());
+                	paint->setPen(colorGroup().shadow());
                 	paint->drawLine(0,0,23,0);
-                        paint->setPen(tqcolorGroup().background().dark(120));
+                        paint->setPen(colorGroup().background().dark(120));
                         paint->drawLine(0,1,23,1);
 
 		}
 		else
 		{
-			paint->setPen(tqcolorGroup().background().dark(120));
+			paint->setPen(colorGroup().background().dark(120));
 			paint->drawLine(0,23,23,23);
-			paint->fillRect(0,0,23,21,TQBrush(tqcolorGroup().background()));
+			paint->fillRect(0,0,23,21,TQBrush(colorGroup().background()));
 			paint->drawPixmap(12-pixmap.width()/2,12-pixmap.height()/2,pixmap);
 
-			paint->setPen(tqcolorGroup().light());
+			paint->setPen(colorGroup().light());
 			paint->drawLine(23,0,23,23);
 			paint->drawLine(22,0,22,23);
 
-			paint->setPen(tqcolorGroup().shadow());
+			paint->setPen(colorGroup().shadow());
 			paint->drawLine(0,0,0,23);
 
 		}
@@ -740,12 +740,12 @@ void KMultiTabBarTab::drawButtonClassic(TQPainter *paint)
 	{
 		if (m_position==KMultiTabBar::Right)
 		{
-			paint->setPen(tqcolorGroup().shadow());
+			paint->setPen(colorGroup().shadow());
 			paint->drawLine(0,height()-1,23,height()-1);
 			paint->drawLine(0,height()-2,23,height()-2);
 			paint->drawLine(23,0,23,height()-1);
 			paint->drawLine(22,0,22,height()-1);
-			paint->fillRect(0,0,21,height()-3,TQBrush(tqcolorGroup().light()));
+			paint->fillRect(0,0,21,height()-3,TQBrush(colorGroup().light()));
 			paint->drawPixmap(10-pixmap.width()/2,10-pixmap.height()/2,pixmap);
 
 			if (m_showActiveTabText)
@@ -755,9 +755,9 @@ void KMultiTabBarTab::drawButtonClassic(TQPainter *paint)
 				TQPixmap tpixmap(height()-25-3, width()-2);
 				TQPainter painter(&tpixmap);
 
-				painter.fillRect(0,0,tpixmap.width(),tpixmap.height(),TQBrush(tqcolorGroup().light()));
+				painter.fillRect(0,0,tpixmap.width(),tpixmap.height(),TQBrush(colorGroup().light()));
 
-				painter.setPen(tqcolorGroup().text());
+				painter.setPen(colorGroup().text());
 				painter.drawText(0,+width()/2+TQFontMetrics(TQFont()).height()/2,m_text);
 
 				paint->rotate(90);
@@ -769,25 +769,25 @@ void KMultiTabBarTab::drawButtonClassic(TQPainter *paint)
 		else
 		if (m_position==KMultiTabBar::Top)
 		{
-			paint->fillRect(0,0,width()-1,23,TQBrush(tqcolorGroup().light()));
+			paint->fillRect(0,0,width()-1,23,TQBrush(colorGroup().light()));
 			paint->drawPixmap(10-pixmap.width()/2,10-pixmap.height()/2,pixmap);
 			if (m_showActiveTabText)
 			{
-				paint->setPen(tqcolorGroup().text());
+				paint->setPen(colorGroup().text());
 				paint->drawText(25,height()/2+TQFontMetrics(TQFont()).height()/2,m_text);
 			}
 		}
 		else
 		if (m_position==KMultiTabBar::Bottom)
 		{
-			paint->setPen(tqcolorGroup().shadow());
+			paint->setPen(colorGroup().shadow());
 			paint->drawLine(0,23,width()-1,23);
 			paint->drawLine(0,22,width()-1,22);
-			paint->fillRect(0,0,width()-1,21,TQBrush(tqcolorGroup().light()));
+			paint->fillRect(0,0,width()-1,21,TQBrush(colorGroup().light()));
 			paint->drawPixmap(10-pixmap.width()/2,10-pixmap.height()/2,pixmap);
 			if (m_showActiveTabText)
 			{
-				paint->setPen(tqcolorGroup().text());
+				paint->setPen(colorGroup().text());
 				paint->drawText(25,height()/2+TQFontMetrics(TQFont()).height()/2,m_text);
 			}
 
@@ -796,10 +796,10 @@ void KMultiTabBarTab::drawButtonClassic(TQPainter *paint)
 		{
 
 
-			paint->setPen(tqcolorGroup().shadow());
+			paint->setPen(colorGroup().shadow());
 			paint->drawLine(0,height()-1,23,height()-1);
 			paint->drawLine(0,height()-2,23,height()-2);
-			paint->fillRect(0,0,23,height()-3,TQBrush(tqcolorGroup().light()));
+			paint->fillRect(0,0,23,height()-3,TQBrush(colorGroup().light()));
 			paint->drawPixmap(10-pixmap.width()/2,10-pixmap.height()/2,pixmap);
 			if (m_showActiveTabText)
 			{
@@ -809,9 +809,9 @@ void KMultiTabBarTab::drawButtonClassic(TQPainter *paint)
                                 TQPixmap tpixmap(height()-25-3, width()-2);
                                 TQPainter painter(&tpixmap);
 
-                                painter.fillRect(0,0,tpixmap.width(),tpixmap.height(),TQBrush(tqcolorGroup().light()));
+                                painter.fillRect(0,0,tpixmap.width(),tpixmap.height(),TQBrush(colorGroup().light()));
 
-                                painter.setPen(tqcolorGroup().text());
+                                painter.setPen(colorGroup().text());
                                 painter.drawText(tpixmap.width()-TQFontMetrics(TQFont()).width(m_text),+width()/2+TQFontMetrics(TQFont()).height()/2,m_text);
 
                                 paint->rotate(-90);
@@ -838,13 +838,13 @@ KMultiTabBar::KMultiTabBar(KMultiTabBarMode bm, TQWidget *parent,const char *nam
 	if (bm==Vertical)
 	{
 		m_l=new TQVBoxLayout(this);
-		tqsetSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Expanding, true);
+		setSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Expanding, true);
 //		setFixedWidth(24);
 	}
 	else
 	{
 		m_l=new TQHBoxLayout(this);
-		tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Fixed, true);
+		setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Fixed, true);
 //		setFixedHeight(24);
 	}
 	m_l->setMargin(0);
@@ -989,7 +989,7 @@ void KMultiTabBar::fontChange(const TQFont& /* oldFont */)
 {
 	for (uint i=0;i<tabs()->count();i++)
 		tabs()->at(i)->resize();
-	tqrepaint();
+	repaint();
 }
 
 TQPtrList<KMultiTabBarTab>* KMultiTabBar::tabs() {return m_internal->tabs();}

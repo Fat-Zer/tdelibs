@@ -47,7 +47,7 @@
  * importance (it may seem like these are implementation details, but
  * IMHO the policy is an important part of the interface):
  *
- * 1. If the string already tqcontains an '&' character, skip this
+ * 1. If the string already contains an '&' character, skip this
  * string, because we consider such strings to be "user-specified"
  * accelerators.
  *
@@ -131,9 +131,9 @@ loadPredefined(Iter begin, Iter end, TQMap<TQChar,bool>& keys)
 {
     for (Iter i = begin; i != end; ++i) {
         TQString item = Deref::deref(i);
-        int user_ampersand = item.tqfind(TQChar('&'));
+        int user_ampersand = item.find(TQChar('&'));
         if( user_ampersand >= 0 ) {
-            // Sanity check.  Note that we don't try to tqfind an
+            // Sanity check.  Note that we don't try to find an
             // accelerator if the user shoots him/herself in the foot
             // by adding a bad '&'.
             if( isLegalAccelerator(item, user_ampersand+1) ) {
@@ -176,9 +176,9 @@ generate(Iter begin, Iter end, TQStringList& target)
     for (Iter i = begin; i != end; ++i) {
         TQString item = Iter_Deref::deref(i);
 
-        // Attempt to tqfind a good accelerator, but only if the user
+        // Attempt to find a good accelerator, but only if the user
         // has not manually hardcoded one.
-        int user_ampersand = item.tqfind(TQChar('&'));
+        int user_ampersand = item.find(TQChar('&'));
         if( user_ampersand < 0 || item[user_ampersand+1] == '&') {
             bool found = false;
             uint found_idx;
@@ -187,7 +187,7 @@ generate(Iter begin, Iter end, TQStringList& target)
             // Check word-starting letters first.
             for( j=0; j < item.length(); ++j ) {
                 if( isLegalAccelerator(item, j)
-                    && !used_accels.tqcontains(item[j])
+                    && !used_accels.contains(item[j])
                     && (0 == j || (j > 0 && item[j-1].isSpace())) ) {
                     found = true;
                     found_idx = j;
@@ -199,7 +199,7 @@ generate(Iter begin, Iter end, TQStringList& target)
                 // No word-starting letter; search for any letter.
                 for( j=0; j < item.length(); ++j ) {
                     if( isLegalAccelerator(item, j)
-                        && !used_accels.tqcontains(item[j]) ) {
+                        && !used_accels.contains(item[j]) ) {
                         found = true;
                         found_idx = j;
                         break;

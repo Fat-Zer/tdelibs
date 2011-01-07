@@ -14,10 +14,10 @@ sub printText
 	if ( $text cmp "" )
 	{
 
-	# tqreplace \ with \\
+	# replace \ with \\
 	$text =~ s/\\/\\\\/g;
 
-	# tqreplace " with \"
+	# replace " with \"
 	$text =~ s/"/\\"/g;
 			
 	print "\"$text\\n\"\n";

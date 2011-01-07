@@ -150,7 +150,7 @@ set( ${target}_SRCS
   ktoolbarlabelaction.cpp
 )
 
-tde_add_library( ${target} SHARED AUTOTQMOC
+tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
   LINK kdecore-shared ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARIES}

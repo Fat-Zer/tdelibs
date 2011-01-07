@@ -60,7 +60,7 @@ void KTextBrowser::setSource( const TQString& name )
     return;
   }
 
-  if( name.tqfind('@') > -1 )
+  if( name.find('@') > -1 )
   {
     if( !mNotifyClick )
     {
@@ -106,7 +106,7 @@ void KTextBrowser::viewportMouseMoveEvent( TQMouseEvent* e)
   // do this first so we get the right type of cursor
   TQTextBrowser::viewportMouseMoveEvent(e);
 
-  if ( viewport()->cursor().tqshape() == PointingHandCursor )
+  if ( viewport()->cursor().shape() == PointingHandCursor )
     viewport()->setCursor( KCursor::handCursor() );
 }
 

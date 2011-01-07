@@ -30,33 +30,33 @@ namespace KTextEditor
 /**
 *  This is an interface for retrieving status bar messages from the Document class.
 */
-class KTEXTEDITOR_EXPORT ViewtqStatusMsgInterface
+class KTEXTEDITOR_EXPORT ViewStatusMsgInterface
 {
-  friend class PrivateViewtqStatusMsgInterface;
+  friend class PrivateViewStatusMsgInterface;
 
   public:
-    ViewtqStatusMsgInterface();
-    virtual ~ViewtqStatusMsgInterface();
+    ViewStatusMsgInterface();
+    virtual ~ViewStatusMsgInterface();
 
-    unsigned int viewtqStatusMsgInterfaceNumber () const;
+    unsigned int viewStatusMsgInterfaceNumber () const;
     
   protected:  
-    void setViewtqStatusMsgInterfaceDCOPSuffix (const TQCString &suffix); 
+    void setViewStatusMsgInterfaceDCOPSuffix (const TQCString &suffix); 
 
   //
   // signals !!!
   //  
   public:
-    virtual void viewtqStatusMsg (const class TQString &msg) = 0;
+    virtual void viewStatusMsg (const class TQString &msg) = 0;
     
 
   private:
-    class PrivateViewtqStatusMsgInterface *d;
-    static unsigned int globalViewtqStatusMsgInterfaceNumber;
-    unsigned int myViewtqStatusMsgInterfaceNumber;
+    class PrivateViewStatusMsgInterface *d;
+    static unsigned int globalViewStatusMsgInterfaceNumber;
+    unsigned int myViewStatusMsgInterfaceNumber;
 };
                   
-KTEXTEDITOR_EXPORT ViewtqStatusMsgInterface *viewtqStatusMsgInterface (class View *view);
+KTEXTEDITOR_EXPORT ViewStatusMsgInterface *viewStatusMsgInterface (class View *view);
 
 }
 

@@ -33,7 +33,7 @@ class KTimezonePrivate;
 class KTimezonesPrivate;
 
 /**
- * The KTimezoneSource class tqcontains information source-dependent functions
+ * The KTimezoneSource class contains information source-dependent functions
  * related to a timezone. Create subclasses to implement custom sources of
  * timezone information.
  *
@@ -73,7 +73,7 @@ private:
 };
 
 /**
- * The KTimezone class tqcontains core functions related to a timezone. Instances
+ * The KTimezone class contains core functions related to a timezone. Instances
  * are created in the context of a {@link KTimezoneSource } which provides
  * extended functionality via {@link KTimezoneDetails }.
  *
@@ -201,7 +201,7 @@ private:
 };
 
 /**
- * The KTimezoneDetails class tqcontains extended functions related to a
+ * The KTimezoneDetails class contains extended functions related to a
  * timezone.
  *
  * The parser must be customised by overriding the given virtual callbacks:

@@ -187,7 +187,7 @@ struct KPARTS_EXPORT WindowArgs
     ~WindowArgs();
     WindowArgs( const WindowArgs &args );
     WindowArgs &operator=( const WindowArgs &args );
-    WindowArgs( const TQRect &_tqgeometry, bool _fullscreen, bool _menuBarVisible,
+    WindowArgs( const TQRect &_geometry, bool _fullscreen, bool _menuBarVisible,
                 bool _toolBarsVisible, bool _statusBarVisible, bool _resizable );
     WindowArgs( int _x, int _y, int _width, int _height, bool _fullscreen,
                 bool _menuBarVisible, bool _toolBarsVisible,
@@ -257,7 +257,7 @@ class BrowserExtensionPrivate;
   * to implement the virtual methods [and the standard-actions slots, see below].
   *
   * The way to associate the BrowserExtension with the part is to simply
-  * create the BrowserExtension as a child of the part (in TQObject's terms).
+  * create the BrowserExtension as a child of the part (in QObject's terms).
   * The hosting application will look for it automatically.
   *
   * Another aspect of the browser integration is that a set of standard
@@ -305,7 +305,7 @@ class BrowserExtensionPrivate;
   *                                       otherwise, they are saved globally.
   * @li @p disableScrolling: no scrollbars
   */
-class KPARTS_EXPORT BrowserExtension : public TQObject
+class KPARTS_EXPORT BrowserExtension : public QObject
 {
   Q_OBJECT
   Q_PROPERTY( bool urlDropHandling READ isURLDropHandlingEnabled WRITE setURLDropHandlingEnabled )
@@ -333,7 +333,7 @@ public:
    * ShowBookmark: show "add to bookmarks" (usually not done on the local filesystem)
    * ShowCreateDirectory: show "create directory" (usually only done on the background of the view, or
    *                      in hierarchical views like directory trees, where the new dir would be visible)
-   * ShowTextSelectionItems: set when selecting text, for a popup that only tqcontains text-related items.
+   * ShowTextSelectionItems: set when selecting text, for a popup that only contains text-related items.
    * NoDeletion: deletion, trashing and renaming not allowed (e.g. parent dir not writeable).
    *            (this is only needed if the protocol itself supports deletion, unlike e.g. HTTP)
    *
@@ -446,7 +446,7 @@ public:
    * Checking if the extension implements a certain slot can be done like this:
    *
    * \code
-   *   extension->tqmetaObject()->slotNames().tqcontains( actionName + "()" )
+   *   extension->metaObject()->slotNames().contains( actionName + "()" )
    * \endcode
    *
    * (note that @p actionName is the iterator's key value if already
@@ -721,7 +721,7 @@ private:
  * other parts.
  * For instance a KHTMLPart hosts one part per frame.
  */
-class KPARTS_EXPORT BrowserHostExtension : public TQObject
+class KPARTS_EXPORT BrowserHostExtension : public QObject
 {
   Q_OBJECT
 public:
@@ -745,11 +745,11 @@ public:
   virtual const TQPtrList<KParts::ReadOnlyPart> frames() const;
 
   /**
-   * Returns the part that tqcontains @p frame and that may be accessed
+   * Returns the part that contains @p frame and that may be accessed
    * by @p callingPart
    * @since 3.3
    */
-  BrowserHostExtension *tqfindFrameParent(KParts::ReadOnlyPart *callingPart, const TQString &frame);
+  BrowserHostExtension *findFrameParent(KParts::ReadOnlyPart *callingPart, const TQString &frame);
 
   /**
    * Opens the given url in a hosted child frame. The frame name is specified in the
@@ -789,7 +789,7 @@ private:
  * A part can have an object hierarchie by using objid as a reference
  * to an object.
  */
-class KPARTS_EXPORT LiveConnectExtension : public TQObject
+class KPARTS_EXPORT LiveConnectExtension : public QObject
 {
   Q_OBJECT
 public:

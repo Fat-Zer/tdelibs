@@ -231,7 +231,7 @@ int KProcIO::readln (TQString &line, bool autoAck, bool *partial)
 
   //need to reduce the size of recvbuffer at some point...
 
-  len=recvbuffer.tqfind ('\n',rbi)-rbi;
+  len=recvbuffer.find ('\n',rbi)-rbi;
 
   //kdDebug(174) << "KPIO::readln" << endl;
 

@@ -108,7 +108,7 @@ KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 	TQString whatsThisMarginsTextPage = i18n( " <qt> "
 			" <p><b>Margins</b></p> "
 			" <p>These settings control the margins of printouts on the paper. They are not valid for "
-			" jobs originating from applications which define their own page tqlayout internally and "
+			" jobs originating from applications which define their own page layout internally and "
 			" send PostScript to KDEPrint (such as KOffice or OpenOffice.org). </p> "
 			" <p>When printing from KDE applications, such as KMail and Konqueror, or printing an ASCII text "
 			" file through kprinter, you can choose your preferred margin settings here. </p> "
@@ -134,7 +134,7 @@ KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 	TQString whatsThisPrettyprintButtonOnTextPage = i18n( " <qt> "
 			" <p><b>Turn Text Printing with Syntax Highlighting (Prettyprint) On!</b></p> "
 			" <p>ASCII text file printouts can be 'prettyfied' by enabling this option. If you do so, "
-			" a header is printed at the top of each page. The header tqcontains "
+			" a header is printed at the top of each page. The header contains "
 			" the page number, job title (usually the filename), and the date. In addition, C and "
 			" C++ keywords are highlighted, and comment lines are italicized.</p>"
 			" <p>This prettyprint option is handled by CUPS.</p> "
@@ -167,7 +167,7 @@ KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 	TQString whatsThisPrettyprintFrameTextPage = i18n( " <qt> "
 			" <p><b>Print Text with Syntax Highlighting (Prettyprint)</b></p> "
 			" <p>ASCII file printouts can be 'prettyfied' by enabling this option. If you do so, "
-			" a header is printed at the top of each page. The header tqcontains "
+			" a header is printed at the top of each page. The header contains "
 			" the page number, job title (usually the filename), and the date. In addition, C and "
 			" C++ keywords are highlighted, and comment lines are italicized.</p>"
 			" <p>This prettyprint option is handled by CUPS.</p> "
@@ -212,7 +212,7 @@ KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 
 	m_prettypix = new TQLabel(prettybox);
 	  TQWhatsThis::add(m_prettypix, whatsThisPrettyprintPreviewIconTextPage);
-	m_prettypix->tqsetAlignment(Qt::AlignCenter);
+	m_prettypix->setAlignment(Qt::AlignCenter);
 	QRadioButton	*off = new TQRadioButton(i18n("&Disabled"), prettybox);
 	  TQWhatsThis::add(off, whatsThisPrettyprintButtonOffTextPage);
 	QRadioButton	*on = new TQRadioButton(i18n("&Enabled"), prettybox);
@@ -233,16 +233,16 @@ KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 	l0->addWidget(formatbox, 0, 0);
 	l0->addWidget(prettybox, 0, 1);
 	l0->addMultiCellWidget(marginbox, 1, 1, 0, 1);
-	QVBoxLayout	*l1 = new TQVBoxLayout(formatbox->tqlayout(), 5);
+	QVBoxLayout	*l1 = new TQVBoxLayout(formatbox->layout(), 5);
 	l1->addWidget(m_cpi);
 	l1->addWidget(m_lpi);
 	l1->addWidget(sep);
 	l1->addWidget(m_columns);
-	QGridLayout	*l2 = new TQGridLayout(prettybox->tqlayout(), 2, 2, 10);
+	QGridLayout	*l2 = new TQGridLayout(prettybox->layout(), 2, 2, 10);
 	l2->addWidget(off, 0, 0);
 	l2->addWidget(on, 1, 0);
 	l2->addMultiCellWidget(m_prettypix, 0, 1, 1, 1);
-	QVBoxLayout	*l3 = new TQVBoxLayout(marginbox->tqlayout(), 10);
+	QVBoxLayout	*l3 = new TQVBoxLayout(marginbox->layout(), 10);
 	l3->addWidget(m_margin);
 }
 
@@ -261,7 +261,7 @@ void KPTextPage::setOptions(const TQMap<TQString,TQString>& opts)
 	if (!(value=opts["columns"]).isEmpty())
 		m_columns->setValue(value.toInt());
 	int	ID(0);
-	if (opts.tqcontains("prettyprint") && (opts["prettyprint"].isEmpty() || opts["prettyprint"] == "true"))
+	if (opts.contains("prettyprint") && (opts["prettyprint"].isEmpty() || opts["prettyprint"] == "true"))
 		ID = 1;
 	m_prettyprint->setButton(ID);
 	slotPrettyChanged(ID);
@@ -348,13 +348,13 @@ void KPTextPage::initPageSize(bool landscape)
 	{
 		if (m_currentps.isEmpty())
 		{
-			DrListOption	*o = (DrListOption*)driver()->tqfindOption("PageSize");
+			DrListOption	*o = (DrListOption*)driver()->findOption("PageSize");
 			if (o)
 				m_currentps = o->get("default");
 		}
 		if (!m_currentps.isEmpty())
 		{
-			DrPageSize	*ps = driver()->tqfindPageSize(m_currentps);
+			DrPageSize	*ps = driver()->findPageSize(m_currentps);
 			if (ps)
 			{
 				w = ps->pageWidth();

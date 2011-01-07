@@ -48,7 +48,7 @@ KTabBar::KTabBar( TQWidget *parent, const char *name )
     mActivateDragSwitchTabTimer = new TQTimer( this );
     connect( mActivateDragSwitchTabTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( activateDragSwitchTab() ) );
 
-    connect(this, TQT_SIGNAL(tqlayoutChanged()), TQT_SLOT(onLayoutChange()));
+    connect(this, TQT_SIGNAL(layoutChanged()), TQT_SLOT(onLayoutChange()));
 }
 
 KTabBar::~KTabBar()
@@ -76,11 +76,11 @@ void KTabBar::setTabEnabled( int id, bool enabled )
 
                 if ( t->isEnabled() ) {
                     r = r.unite( t->rect() );
-                    tablist->append( tablist->take( tablist->tqfindRef( t ) ) );
+                    tablist->append( tablist->take( tablist->findRef( t ) ) );
                     emit selected( t->identifier() );
                 }
             }
-            tqrepaint( r );
+            repaint( r );
         }
     }
 }
@@ -170,10 +170,10 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
             TQRect rect( 0, 0, pixmap.width() + 4, pixmap.height() +4);
 
             int xoff = 0, yoff = 0;
-            // The additional offsets were found by try and error, TODO: tqfind the rational behind them
+            // The additional offsets were found by try and error, TODO: find the rational behind them
             if ( t == tab( currentTab() ) ) {
-                xoff = style().tqpixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this ) + 3;
-                yoff = style().tqpixelMetric( TQStyle::PM_TabBarTabShiftVertical, this ) - 4;
+                xoff = style().pixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this ) + 3;
+                yoff = style().pixelMetric( TQStyle::PM_TabBarTabShiftVertical, this ) - 4;
             }
             else {
                 xoff = 7;
@@ -181,7 +181,7 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
             }
             rect.moveLeft( t->rect().left() + 2 + xoff );
             rect.moveTop( t->rect().center().y()-pixmap.height()/2 + yoff );
-            if ( rect.tqcontains( e->pos() ) ) {
+            if ( rect.contains( e->pos() ) ) {
                 if ( mHoverCloseButton ) {
                     if ( mHoverCloseButtonTab == t )
                         return;
@@ -253,7 +253,7 @@ void KTabBar::dragMoveEvent( TQDragMoveEvent *e )
     TQTab *tab = selectTab( e->pos() );
     if( tab ) {
         bool accept = false;
-        // The tqreceivers of the testCanDecode() signal has to adjust
+        // The receivers of the testCanDecode() signal has to adjust
         // 'accept' accordingly.
         emit testCanDecode( e, accept);
         if ( accept && tab != TQTabBar::tab( currentTab() ) ) {
@@ -294,16 +294,16 @@ void KTabBar::setTabColor( int id, const TQColor& color )
     TQTab *t = tab( id );
     if ( t ) {
         mTabColors.insert( id, color );
-        tqrepaint( t->rect(), false );
+        repaint( t->rect(), false );
     }
 }
 
 const TQColor &KTabBar::tabColor( int id  ) const
 {
-    if ( mTabColors.tqcontains( id ) )
+    if ( mTabColors.contains( id ) )
         return mTabColors[id];
 
-    return tqcolorGroup().foreground();
+    return colorGroup().foreground();
 }
 
 int KTabBar::insertTab( TQTab *t, int index )
@@ -312,7 +312,7 @@ int KTabBar::insertTab( TQTab *t, int index )
 
     if ( mTabCloseActivatePrevious && count() > 2 ) {
         TQPtrList<TQTab> *tablist = tabList();
-        tablist->insert( count()-2, tablist->take( tablist->tqfindRef( t ) ) );
+        tablist->insert( count()-2, tablist->take( tablist->findRef( t ) ) );
     }
 
     return res;
@@ -341,8 +341,8 @@ void KTabBar::paintLabel( TQPainter *p, const TQRect& br,
         r.setLeft( r.left() + pixw + 4 );
         r.setRight( r.right() + 2 );
 
-        int inactiveXShift = style().tqpixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this );
-        int inactiveYShift = style().tqpixelMetric( TQStyle::PM_TabBarTabShiftVertical, this );
+        int inactiveXShift = style().pixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this );
+        int inactiveYShift = style().pixelMetric( TQStyle::PM_TabBarTabShiftVertical, this );
 
         int right = t->text().isEmpty() ? br.right() - pixw : br.left() + 2;
 
@@ -358,11 +358,11 @@ void KTabBar::paintLabel( TQPainter *p, const TQRect& br,
     if ( has_focus )
         flags |= TQStyle::Style_HasFocus;
 
-    TQColorGroup cg( tqcolorGroup() );
-    if ( mTabColors.tqcontains( t->identifier() ) )
+    TQColorGroup cg( colorGroup() );
+    if ( mTabColors.contains( t->identifier() ) )
         cg.setColor( TQColorGroup::Foreground, mTabColors[t->identifier()] );
 
-    style().tqdrawControl( TQStyle::CE_TabBarLabel, p, this, r,
+    style().drawControl( TQStyle::CE_TabBarLabel, p, this, r,
                              t->isEnabled() ? cg : palette().disabled(),
                              flags, TQStyleOption(t) );
 }

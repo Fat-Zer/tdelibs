@@ -329,7 +329,7 @@ static void processMetaDataOptions( const TQPtrList<FileProps> propList,
     for ( ; (props = it.current()); ++it )
     {
         TQString file = props->fileName() + " ";
-        TQString fileString = line.tqreplace( 3, file.length(), file );
+        TQString fileString = line.replace( 3, file.length(), file );
         cout << TQFile::encodeName( fileString ) << endl;
             
         if ( args->isSet( "listsupported" ) )

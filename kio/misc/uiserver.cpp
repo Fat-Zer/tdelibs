@@ -126,7 +126,7 @@ ProgressConfigDialog::ProgressConfigDialog(TQWidget *parent)
 :KDialogBase(KDialogBase::Plain,i18n("Configure Network Operation Window"),KDialogBase::Ok|KDialogBase::Apply|KDialogBase::Cancel,
              KDialogBase::Ok, parent, "configprog", false)
 {
-   TQVBoxLayout *tqlayout=new TQVBoxLayout(plainPage(),spacingHint());
+   TQVBoxLayout *layout=new TQVBoxLayout(plainPage(),spacingHint());
    m_showSystemTrayCb=new TQCheckBox(i18n("Show system tray icon"), plainPage());
    m_keepOpenCb=new TQCheckBox(i18n("Keep network operation window always open"), plainPage());
    m_headerCb=new TQCheckBox(i18n("Show column headers"), plainPage());
@@ -150,14 +150,14 @@ ProgressConfigDialog::ProgressConfigDialog(TQWidget *parent)
    m_items[ListProgress::TB_LOCAL_FILENAME] =new TQCheckListItem(m_columns, i18n("Local Filename"), TQCheckListItem::CheckBox);
    m_items[ListProgress::TB_OPERATION]      =new TQCheckListItem(m_columns, i18n("Operation"), TQCheckListItem::CheckBox);
 
-   tqlayout->addWidget(m_showSystemTrayCb);
-   tqlayout->addWidget(m_keepOpenCb);
-   tqlayout->addWidget(m_headerCb);
-   tqlayout->addWidget(m_toolBarCb);
-   tqlayout->addWidget(m_statusBarCb);
-   tqlayout->addWidget(m_fixedWidthCb);
-   tqlayout->addWidget(label);
-   tqlayout->addWidget(m_columns);
+   layout->addWidget(m_showSystemTrayCb);
+   layout->addWidget(m_keepOpenCb);
+   layout->addWidget(m_headerCb);
+   layout->addWidget(m_toolBarCb);
+   layout->addWidget(m_statusBarCb);
+   layout->addWidget(m_fixedWidthCb);
+   layout->addWidget(label);
+   layout->addWidget(m_columns);
 }
 
 void ProgressConfigDialog::setChecked(int i, bool on)
@@ -272,8 +272,8 @@ void ProgressItem::setPercent( unsigned long percent ) {
 
 void ProgressItem::setInfoMessage( const TQString & msg ) {
   TQString plainTextMsg(msg);
-  plainTextMsg.tqreplace( TQRegExp( "</?b>" ), TQString::null );
-  plainTextMsg.tqreplace( TQRegExp( "<img.*>" ), TQString::null );
+  plainTextMsg.replace( TQRegExp( "</?b>" ), TQString::null );
+  plainTextMsg.replace( TQRegExp( "<img.*>" ), TQString::null );
   setText( ListProgress::TB_PROGRESS, plainTextMsg );
 
   defaultProgress->slotInfoMessage( 0, msg );
@@ -529,7 +529,7 @@ void ListProgress::applySettings()
 void ListProgress::readSettings() {
   KConfig config("uiserverrc");
 
-  // read listview tqgeometry properties
+  // read listview geometry properties
   config.setGroup( "ProgressList" );
   for ( int i = 0; i < TB_MAX; i++ ) {
      TQString tmps="Col"+TQString::number(i);
@@ -562,7 +562,7 @@ void ListProgress::columnWidthChanged(int column)
 void ListProgress::writeSettings() {
    KConfig config("uiserverrc");
 
-   // write listview tqgeometry properties
+   // write listview geometry properties
    config.setGroup( "ProgressList" );
    for ( int i = 0; i < TB_MAX; i++ ) {
       if (!m_lpcc[i].enabled) {
@@ -750,7 +750,7 @@ int UIServer::newJob( TQCString observerAppId, bool showProgress )
 
   TQListViewItemIterator it( listProgress );
   for ( ; it.current(); ++it ) {
-    if ( it.current()->itemBelow() == 0L ) { // this will tqfind the end of list
+    if ( it.current()->itemBelow() == 0L ) { // this will find the end of list
       break;
     }
   }
@@ -773,7 +773,7 @@ int UIServer::newJob( TQCString observerAppId, bool showProgress )
 }
 
 
-ProgressItem* UIServer::tqfindItem( int id )
+ProgressItem* UIServer::findItem( int id )
 {
   TQListViewItemIterator it( listProgress );
 
@@ -806,7 +806,7 @@ void UIServer::setItemVisible( ProgressItem * item, bool visible )
 void UIServer::setJobVisible( int id, bool visible )
 {
   kdDebug(7024) << "UIServer::setJobVisible id=" << id << " visible=" << visible << endl;
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   Q_ASSERT( item );
   if ( item )
       setItemVisible( item, visible );
@@ -815,7 +815,7 @@ void UIServer::setJobVisible( int id, bool visible )
 void UIServer::jobFinished( int id )
 {
   kdDebug(7024) << "UIServer::jobFinished id=" << id << endl;
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
 
   // remove item from the list and delete the corresponding defaultprogress
   if ( item ) {
@@ -834,7 +834,7 @@ void UIServer::totalSize64( int id, KIO::filesize_t size )
 {
 //  kdDebug(7024) << "UIServer::totalSize " << id << " " << KIO::number(size) << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setTotalSize( size );
   }
@@ -844,7 +844,7 @@ void UIServer::totalFiles( int id, unsigned long files )
 {
   kdDebug(7024) << "UIServer::totalFiles " << id << " " << (unsigned int) files << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setTotalFiles( files );
   }
@@ -854,7 +854,7 @@ void UIServer::totalDirs( int id, unsigned long dirs )
 {
   kdDebug(7024) << "UIServer::totalDirs " << id << " " << (unsigned int) dirs << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setTotalDirs( dirs );
   }
@@ -867,7 +867,7 @@ void UIServer::processedSize64( int id, KIO::filesize_t size )
 {
   //kdDebug(7024) << "UIServer::processedSize " << id << " " << KIO::number(size) << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setProcessedSize( size );
   }
@@ -877,7 +877,7 @@ void UIServer::processedFiles( int id, unsigned long files )
 {
   //kdDebug(7024) << "UIServer::processedFiles " << id << " " << (unsigned int) files << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setProcessedFiles( files );
   }
@@ -887,7 +887,7 @@ void UIServer::processedDirs( int id, unsigned long dirs )
 {
   kdDebug(7024) << "UIServer::processedDirs " << id << " " << (unsigned int) dirs << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setProcessedDirs( dirs );
   }
@@ -897,7 +897,7 @@ void UIServer::percent( int id, unsigned long ipercent )
 {
   //kdDebug(7024) << "UIServer::percent " << id << " " << (unsigned int) ipercent << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setPercent( ipercent );
   }
@@ -907,7 +907,7 @@ void UIServer::speed( int id, unsigned long bytes_per_second )
 {
   //kdDebug(7024) << "UIServer::speed " << id << " " << (unsigned int) bytes_per_second << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setSpeed( bytes_per_second );
   }
@@ -917,7 +917,7 @@ void UIServer::infoMessage( int id, const TQString & msg )
 {
   //kdDebug(7024) << "UIServer::infoMessage " << id << " " << msg << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setInfoMessage( msg );
   }
@@ -930,7 +930,7 @@ void UIServer::canResume64( int id, KIO::filesize_t offset )
 {
   //kdDebug(7024) << "UIServer::canResume " << id << " " << offset << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setCanResume( offset );
   }
@@ -940,7 +940,7 @@ void UIServer::copying( int id, KURL from, KURL to )
 {
   //kdDebug(7024) << "UIServer::copying " << id << " " << from.url() << "  " << to.url() << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setCopying( from, to );
   }
@@ -950,7 +950,7 @@ void UIServer::moving( int id, KURL from, KURL to )
 {
   //kdDebug(7024) << "UIServer::moving " << id << " " << from.url() << "  " << to.url() << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setMoving( from, to );
   }
@@ -960,7 +960,7 @@ void UIServer::deleting( int id, KURL url )
 {
   //kdDebug(7024) << "UIServer::deleting " << id << " " << url.url() << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setDeleting( url );
   }
@@ -970,7 +970,7 @@ void UIServer::transferring( int id, KURL url )
 {
   //kdDebug(7024) << "UIServer::transferring " << id << " " << url.url() << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setTransferring( url );
   }
@@ -980,7 +980,7 @@ void UIServer::creatingDir( int id, KURL dir )
 {
   kdDebug(7024) << "UIServer::creatingDir " << id << " " << dir.url() << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setCreatingDir( dir );
   }
@@ -990,7 +990,7 @@ void UIServer::stating( int id, KURL url )
 {
   kdDebug(7024) << "UIServer::stating " << id << " " << url.url() << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setStating( url );
   }
@@ -1000,7 +1000,7 @@ void UIServer::mounting( int id, TQString dev, TQString point )
 {
   kdDebug(7024) << "UIServer::mounting " << id << " " << dev << " " << point << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setMounting( dev, point );
   }
@@ -1010,7 +1010,7 @@ void UIServer::unmounting( int id, TQString point )
 {
   kdDebug(7024) << "UIServer::unmounting " << id << " " << point << endl;
 
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item ) {
     item->setUnmounting( point );
   }
@@ -1195,7 +1195,7 @@ void UIServer::showSSLInfoDialog(const TQString &url, const KIO::MetaData &meta,
 
       kdDebug(7024) << "ssl_cert_errors=" << meta["ssl_cert_errors"] << endl;
       kid->setCertState(meta["ssl_cert_errors"]);
-      TQString ip = meta.tqcontains("ssl_proxied") ? "" : meta["ssl_peer_ip"];
+      TQString ip = meta.contains("ssl_proxied") ? "" : meta["ssl_peer_ip"];
       kid->setup( x,
                   ip,
                   url, // the URL
@@ -1278,7 +1278,7 @@ TQByteArray UIServer::open_RenameDlg64( int id,
                                      )
 {
   // Hide existing dialog box if any
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item )
     setItemVisible( item, false );
   TQString newDest;
@@ -1291,7 +1291,7 @@ TQByteArray UIServer::open_RenameDlg64( int id,
   kdDebug(7024) << "KIO::open_RenameDlg done" << endl;
   TQByteArray data;
   TQDataStream stream( data, IO_WriteOnly );
-  stream << TQ_UINT8(result) << newDest;
+  stream << Q_UINT8(result) << newDest;
   if ( item && result != KIO::R_CANCEL )
     setItemVisible( item, true );
   return data;
@@ -1302,7 +1302,7 @@ int UIServer::open_SkipDlg( int id,
                             const TQString & error_text )
 {
   // Hide existing dialog box if any
-  ProgressItem *item = tqfindItem( id );
+  ProgressItem *item = findItem( id );
   if ( item )
     setItemVisible( item, false );
   kdDebug(7024) << "Calling KIO::open_SkipDlg" << endl;

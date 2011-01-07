@@ -54,7 +54,7 @@ public:
     virtual void setStyle(RenderStyle* _style);
     virtual void attach();
 
-    virtual void tqlayout() {} // Do nothing for tqlayout()
+    virtual void layout() {} // Do nothing for layout()
 
     virtual void paint(PaintInfo&, int tx, int ty);
 

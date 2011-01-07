@@ -132,9 +132,9 @@ bool KProgress::setIndicator(TQString &indicator, int progress, int totalSteps)
     if (!totalSteps)
         return false;
     TQString newString(mFormat);
-    newString.tqreplace(TQString::tqfromLatin1("%v"),
+    newString.replace(TQString::fromLatin1("%v"),
                       TQString::number(progress));
-    newString.tqreplace(TQString::tqfromLatin1("%m"),
+    newString.replace(TQString::fromLatin1("%m"),
                       TQString::number(totalSteps));
 
     if (totalSteps > INT_MAX / 1000) {
@@ -142,7 +142,7 @@ bool KProgress::setIndicator(TQString &indicator, int progress, int totalSteps)
         totalSteps /= 1000;
     }
 
-    newString.tqreplace(TQString::tqfromLatin1("%p"),
+    newString.replace(TQString::fromLatin1("%p"),
                       TQString::number((progress * 100) / totalSteps)); 
 
     if (newString != indicator)
@@ -188,13 +188,13 @@ KProgressDialog::KProgressDialog(TQWidget* parent, const char* name,
     mCancelText = actionButton(KDialogBase::Cancel)->text();
 
     TQFrame* mainWidget = plainPage();
-    TQVBoxLayout* tqlayout = new TQVBoxLayout(mainWidget, 10);
+    TQVBoxLayout* layout = new TQVBoxLayout(mainWidget, 10);
 
     mLabel = new TQLabel(text, mainWidget);
-    tqlayout->addWidget(mLabel);
+    layout->addWidget(mLabel);
 
     mProgressBar = new KProgress(mainWidget);
-    tqlayout->addWidget(mProgressBar);
+    layout->addWidget(mProgressBar);
 
     connect(mProgressBar, TQT_SIGNAL(percentageChanged(int)),
             this, TQT_SLOT(slotAutoActions(int)));

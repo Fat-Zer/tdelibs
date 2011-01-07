@@ -39,7 +39,7 @@ class KateSuperRangeList;
 
 class KActionCollection;
 
-class KateSearch : public TQObject
+class KateSearch : public QObject
 {
   Q_OBJECT
 
@@ -55,7 +55,7 @@ class KateSearch : public TQObject
         bool backward          :1;
         bool selected          :1;
         bool prompt            :1;
-        bool tqreplace           :1;
+        bool replace           :1;
         bool finished          :1;
         bool regExp            :1;
         bool useBackRefs       :1;
@@ -66,7 +66,7 @@ class KateSearch : public TQObject
       public:
         SearchFlags flags;
         KateTextCursor cursor;
-        KateTextCursor wrappedEnd; // after wraping around, search/tqreplace until here
+        KateTextCursor wrappedEnd; // after wraping around, search/replace until here
         bool wrapped; // have we allready wrapped around ?
         bool showNotFound; // pop up annoying dialogs?
         uint matchedLength;
@@ -90,52 +90,52 @@ class KateSearch : public TQObject
     void createActions( KActionCollection* );
 
   public slots:
-    void tqfind();
+    void find();
     /**
      * Search for @p pattern given @p flags
-     * This is for the commandline "tqfind", and is forwarded by
+     * This is for the commandline "find", and is forwarded by
      * KateView.
      * @param pattern string or regex pattern to search for.
      * @param flags a OR'ed combination of KFindDialog::Options
      * @param add wether this string should be added to the recent search list
      * @param shownotfound wether to pop up "Not round: PATTERN" when that happens.
-     * That must now be explicitly required -- the tqfind dialog does, but the commandline
+     * That must now be explicitly required -- the find dialog does, but the commandline
      * incremental search does not.
      */
-    void tqfind( const TQString &pattern, long flags, bool add=true, bool shownotfound=false );
-    void tqreplace();
+    void find( const TQString &pattern, long flags, bool add=true, bool shownotfound=false );
+    void replace();
     /**
-     * Replace @p pattern with @p tqreplacement given @p flags.
-     * This is for the commandline "tqreplace" and is forwarded
+     * Replace @p pattern with @p replacement given @p flags.
+     * This is for the commandline "replace" and is forwarded
      * by KateView.
      * @param pattern string or regular expression to search for
-     * @param tqreplacement Replacement string.
+     * @param replacement Replacement string.
      * @param flags OR'd combination of KFindDialog::Options
      */
-    void tqreplace( const TQString &pattern, const TQString &tqreplacement, long flags );
-    void tqfindAgain( bool reverseDirection );
+    void replace( const TQString &pattern, const TQString &replacement, long flags );
+    void findAgain( bool reverseDirection );
 
   private slots:
-    void tqreplaceSlot();
-    void slotFindNext() { tqfindAgain( false ); }
-    void slotFindPrev() { tqfindAgain( true );  }
+    void replaceSlot();
+    void slotFindNext() { findAgain( false ); }
+    void slotFindPrev() { findAgain( true );  }
 
   private:
     static void addToList( TQStringList&, const TQString& );
     static void addToSearchList( const TQString& s )  { addToList( s_searchList, s ); }
-    static void addToReplaceList( const TQString& s ) { addToList( s_tqreplaceList, s ); }
+    static void addToReplaceList( const TQString& s ) { addToList( s_replaceList, s ); }
     static TQStringList s_searchList; ///< recent patterns
-    static TQStringList s_tqreplaceList; ///< recent tqreplacement strings
+    static TQStringList s_replaceList; ///< recent replacement strings
     static TQString s_pattern; ///< the string to search for
 
     void search( SearchFlags flags );
     void wrapSearch();
     bool askContinue();
 
-    void tqfindAgain();
+    void findAgain();
     void promptReplace();
-    void tqreplaceAll();
-    void tqreplaceOne();
+    void replaceAll();
+    void replaceOne();
     void skipOne();
 
     TQString getSearchText();
@@ -156,14 +156,14 @@ class KateSearch : public TQObject
     TQValueList<SConfig> m_searchResults;
     int                 m_resultIndex;
 
-    int           tqreplaces;
-    TQDialog*      tqreplacePrompt;
-    TQString m_tqreplacement;
+    int           replaces;
+    TQDialog*      replacePrompt;
+    TQString m_replacement;
     TQRegExp m_re;
 };
 
 /**
- * simple tqreplace prompt dialog
+ * simple replace prompt dialog
  */
 class KateReplacePrompt : public KDialogBase
 {
@@ -194,7 +194,7 @@ class KateReplacePrompt : public KDialogBase
     void slotClose ();
 
     /**
-     * tqreplace all pressed
+     * replace all pressed
      */
     void slotUser1 ();
 
@@ -218,7 +218,7 @@ class KateReplacePrompt : public KDialogBase
 class SearchCommand : public Kate::Command, public Kate::CommandExtension
 {
   public:
-    SearchCommand() : m_itqfindFlags(0) {;}
+    SearchCommand() : m_ifindFlags(0) {;}
     bool exec(class Kate::View *view, const TQString &cmd, TQString &errorMsg);
     bool help(class Kate::View *, const TQString &, TQString &);
     TQStringList cmds();
@@ -227,17 +227,17 @@ class SearchCommand : public Kate::Command, public Kate::CommandExtension
 
   private:
     /**
-     * set up properties for incremental tqfind
+     * set up properties for incremental find
      */
-    void itqfindInit( const TQString &cmd );
+    void ifindInit( const TQString &cmd );
     /**
-     * clear properties for incremental tqfind
+     * clear properties for incremental find
      */
-    void itqfindClear();
+    void ifindClear();
 
-    long m_itqfindFlags;
+    long m_ifindFlags;
 };
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

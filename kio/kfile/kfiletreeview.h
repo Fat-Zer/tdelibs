@@ -58,7 +58,7 @@ private:
  * KFileTreeBranch.
  *
  * Typical usage:
- * 1. create a KFileTreeView fitting in your tqlayout and add columns to it
+ * 1. create a KFileTreeView fitting in your layout and add columns to it
  * 2. call addBranch to create one or more branches
  * 3. retrieve the root item with KFileTreeBranch::root() and set it open
  *    if desired. That starts the listing.
@@ -133,18 +133,18 @@ public:
 
    /**
     * searches a branch for a KFileTreeViewItem identified by the relative url given as
-    * second parameter. The method adds the branches base url to the relative path and tqfinds
+    * second parameter. The method adds the branches base url to the relative path and finds
     * the item.
     * @returns a pointer to the item or zero if the item does not exist.
     * @param brnch  is a pointer to the branch to search in
     * @param relUrl is the branch relativ url
     */
-   KFileTreeViewItem *tqfindItem( KFileTreeBranch* brnch, const TQString& relUrl );
+   KFileTreeViewItem *findItem( KFileTreeBranch* brnch, const TQString& relUrl );
 
    /**
     * see method above, differs only in the first parameter. Finds the branch by its name.
     */
-   KFileTreeViewItem *tqfindItem( const TQString& branchName, const TQString& relUrl );
+   KFileTreeViewItem *findItem( const TQString& branchName, const TQString& relUrl );
 
    /**
     * @returns a flag indicating if extended folder pixmaps are displayed or not.

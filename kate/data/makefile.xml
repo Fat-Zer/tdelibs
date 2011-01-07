@@ -21,7 +21,7 @@
         <item> subst </item>
         <item> patsubst </item>
         <item> strip </item>
-        <item> tqfindstring </item>
+        <item> findstring </item>
         <item> filter </item>
         <item> filter-out </item>
         <item> sort </item>

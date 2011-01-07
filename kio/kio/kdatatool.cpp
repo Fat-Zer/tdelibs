@@ -47,7 +47,7 @@ KDataToolInfo::KDataToolInfo( const KService::Ptr& service, KInstance* instance 
     m_service = service;
     m_instance = instance;
 
-    if ( !!m_service && !m_service->serviceTypes().tqcontains( "KDataTool" ) )
+    if ( !!m_service && !m_service->serviceTypes().contains( "KDataTool" ) )
     {
         kdDebug(30003) << "The service " << m_service->name().latin1()
                        << " does not feature the service type KDataTool" << endl;
@@ -167,11 +167,11 @@ TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const
 
     if ( !datatype.isEmpty() )
     {
-        constr = TQString::tqfromLatin1( "DataType == '%1'" ).arg( datatype );
+        constr = TQString::fromLatin1( "DataType == '%1'" ).arg( datatype );
     }
     if ( !mimetype.isEmpty() )
     {
-        TQString tmp = TQString::tqfromLatin1( "'%1' in DataMimeTypes" ).arg( mimetype );
+        TQString tmp = TQString::fromLatin1( "'%1' in DataMimeTypes" ).arg( mimetype );
         if ( constr.isEmpty() )
             constr = tmp;
         else
@@ -180,7 +180,7 @@ TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const
 /* Bug in KTrader ? Test with HEAD-kdelibs!
     if ( instance )
     {
-        TQString tmp = TQString::tqfromLatin1( "not ('%1' in ExcludeFrom)" ).arg( instance->instanceName() );
+        TQString tmp = TQString::fromLatin1( "not ('%1' in ExcludeFrom)" ).arg( instance->instanceName() );
         if ( constr.isEmpty() )
             constr = tmp;
         else
@@ -194,9 +194,9 @@ TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const
     KTrader::OfferList::ConstIterator it = offers.begin();
     for( ; it != offers.end(); ++it )
     {
-        // Temporary tqreplacement for the non-working trader query above
+        // Temporary replacement for the non-working trader query above
         if ( !instance || !(*it)->property("ExcludeFrom").toStringList()
-             .tqcontains( instance->instanceName() ) )
+             .contains( instance->instanceName() ) )
             lst.append( KDataToolInfo( *it, instance ) );
         else
             kdDebug() << (*it)->entryPath() << " excluded." << endl;

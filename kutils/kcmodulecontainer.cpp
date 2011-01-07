@@ -143,7 +143,7 @@ void KCModuleContainer::addModule( const TQString& module )
 	d->tabWidget->addTab( proxy, TQIconSet(KGlobal::iconLoader()->loadIcon(
 					proxy->moduleInfo().icon(), KIcon::Desktop)),
 			/* QT eats ampersands for dinner. But not this time. */
-			proxy->moduleInfo().moduleName().tqreplace( "&", "&&" ));
+			proxy->moduleInfo().moduleName().replace( "&", "&&" ));
 
 	d->tabWidget->setTabToolTip( proxy, proxy->moduleInfo().comment() );
 

@@ -37,7 +37,7 @@ public:
   KDateWidgetSpinBox(int min, int max, TQWidget *parent)
     : TQSpinBox(min, max, 1, parent)
   {
-     editor()->tqsetAlignment(AlignRight);
+     editor()->setAlignment(AlignRight);
   }
 };
 
@@ -73,8 +73,8 @@ void KDateWidget::init()
 {
   d = new KDateWidgetPrivate;
   KLocale *locale = KGlobal::locale();
-  TQHBoxLayout *tqlayout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
-  tqlayout->setAutoAdd(true);
+  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
+  layout->setAutoAdd(true);
   d->m_day = new KDateWidgetSpinBox(1, 1, this);
   d->m_month = new TQComboBox(false, this);
   for (int i = 1; ; ++i)
@@ -97,8 +97,8 @@ void KDateWidget::init(const TQDate& date)
 {
   d = new KDateWidgetPrivate;
   KLocale *locale = KGlobal::locale();
-  TQHBoxLayout *tqlayout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
-  tqlayout->setAutoAdd(true);
+  TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
+  layout->setAutoAdd(true);
   d->m_day = new KDateWidgetSpinBox(1, 1, this);
   d->m_month = new TQComboBox(false, this);
   for (int i = 1; ; ++i)

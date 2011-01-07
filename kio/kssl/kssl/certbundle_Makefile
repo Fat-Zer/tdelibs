@@ -33,7 +33,7 @@ distclean: clean
 	-rm -f cert.*.der cert.index
 
 dist: distclean
-	gtar --no-recursion -cvf - `tqfind * -depth -print | sort` |\
+	gtar --no-recursion -cvf - `find * -depth -print | sort` |\
     tardy --user_number=1000  --user_name=rse \
           --group_number=1000 --group_name=en \
           --prefix=certbundle-$(V) - |\

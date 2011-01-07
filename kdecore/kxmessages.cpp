@@ -150,7 +150,7 @@ bool KXMessages::sendMessageX( Display* disp, WId w_P, const char* msg_type_P,
     return true;
     }
     
-void KXMessages::send_message_internal( WId w_P, const TQString& msg_P, long tqmask_P,
+void KXMessages::send_message_internal( WId w_P, const TQString& msg_P, long mask_P,
     Display* disp, Atom atom1_P, Atom atom2_P, Window handle_P )
     {
     unsigned int pos = 0;
@@ -169,7 +169,7 @@ void KXMessages::send_message_internal( WId w_P, const TQString& msg_P, long tqm
              i < 20 && i + pos <= len;
              ++i )
             e.xclient.data.b[ i ] = msg[ i + pos ];
-        XSendEvent( disp, w_P, false, tqmask_P, &e );
+        XSendEvent( disp, w_P, false, mask_P, &e );
         e.xclient.message_type = atom2_P; // following messages
         pos += i;
         } while( pos <= len );
@@ -189,7 +189,7 @@ bool KXMessages::x11Event( XEvent* ev_P )
          ++i )
         buf[ i ] = ev_P->xclient.data.b[ i ];
     buf[ i ] = '\0';
-    if( incoming_messages.tqcontains( ev_P->xclient.window ))
+    if( incoming_messages.contains( ev_P->xclient.window ))
         {
         if( ev_P->xclient.message_type == accept_atom1 && accept_atom1 != accept_atom2 )
             // two different messages on the same window at the same time shouldn't happen anyway

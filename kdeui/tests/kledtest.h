@@ -15,7 +15,7 @@ protected:
   const int LedWidth;
   const int LedHeight;
   const int Grid;
-  KLed::Shape tqshape;
+  KLed::Shape shape;
   KLed::Look look;
   KLed::State state;
   int x, y, index;

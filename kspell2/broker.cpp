@@ -65,7 +65,7 @@ Broker *Broker::openBroker( KSharedConfig *config )
         preventDeletion = config;
 
     if ( s_brokers ) {
-        Broker *broker = s_brokers->tqfind( preventDeletion );
+        Broker *broker = s_brokers->find( preventDeletion );
         if ( broker )
             return broker;
     }
@@ -189,8 +189,8 @@ void Broker::loadPlugin( const TQString& pluginId )
     kdDebug()<<"Loading plugin " << pluginId << endl;
 
     Client *client = KParts::ComponentFactory::createInstanceFromQuery<Client>(
-        TQString::tqfromLatin1( "KSpell/Client" ),
-        TQString::tqfromLatin1( "[X-KDE-PluginInfo-Name]=='%1'" ).arg( pluginId ),
+        TQString::fromLatin1( "KSpell/Client" ),
+        TQString::fromLatin1( "[X-KDE-PluginInfo-Name]=='%1'" ).arg( pluginId ),
         this, 0, TQStringList(), &error );
 
     if ( client )

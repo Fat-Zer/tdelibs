@@ -235,7 +235,7 @@ void CSSStyleSheetImpl::addNamespace(CSSParser* p, const DOM::DOMString& prefix,
     }
 }
 
-void CSSStyleSheetImpl::determineNamespace(TQ_UINT32& id, const DOM::DOMString& prefix)
+void CSSStyleSheetImpl::determineNamespace(Q_UINT32& id, const DOM::DOMString& prefix)
 {
     // If the stylesheet has no namespaces we can just return.  There won't be any need to ever check
     // namespace values in selectors.
@@ -253,7 +253,7 @@ void CSSStyleSheetImpl::determineNamespace(TQ_UINT32& id, const DOM::DOMString& 
             Q_ASSERT(m_doc != 0);
 
             // Look up the id for this namespace URI.
-            TQ_UINT16 nsid = m_doc->getId(NodeImpl::NamespaceId, 0, 0, ns->uri().implementation(), false, false, &exceptioncode);
+            Q_UINT16 nsid = m_doc->getId(NodeImpl::NamespaceId, 0, 0, ns->uri().implementation(), false, false, &exceptioncode);
             id = makeId(nsid, localNamePart(id));
         }
     }
@@ -324,7 +324,7 @@ StyleSheetListImpl::~StyleSheetListImpl()
 
 void StyleSheetListImpl::add( StyleSheetImpl* s )
 {
-    if ( !styleSheets.tqcontainsRef( s ) ) {
+    if ( !styleSheets.containsRef( s ) ) {
         s->ref();
         styleSheets.append( s );
     }
@@ -377,10 +377,10 @@ MediaListImpl::MediaListImpl( CSSRuleImpl *parentRule, const DOMString &media )
     setMediaText( media );
 }
 
-bool MediaListImpl::tqcontains( const DOMString &medium ) const
+bool MediaListImpl::contains( const DOMString &medium ) const
 {
-    return m_lstMedia.empty() || m_lstMedia.tqcontains( medium ) ||
-            m_lstMedia.tqcontains( "all" );
+    return m_lstMedia.empty() || m_lstMedia.contains( medium ) ||
+            m_lstMedia.contains( "all" );
 }
 
 CSSStyleSheetImpl *MediaListImpl::parentStyleSheet() const

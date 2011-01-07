@@ -640,7 +640,7 @@ public:
 
     /**
      * Detects edges in an image using pixel neighborhoods and an edge
-     * detection tqmask.
+     * detection mask.
      *
      * @param src The TQImage to process.
      * @param radius The radius of the gaussian not counting the
@@ -783,7 +783,7 @@ private:
     static unsigned int uHash(unsigned int c);
 
     /**
-     * Helper function to tqfind the nearest color to the RBG triplet
+     * Helper function to find the nearest color to the RBG triplet
      */
     static int nearestColor( int r, int g, int b, const TQColor *pal, int size );
 

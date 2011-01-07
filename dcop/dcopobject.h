@@ -299,16 +299,16 @@ public:
   static bool hasObject(const TQCString &objId);
 
   /**
-   * Try to tqfind a dcop object with the given id.
+   * Try to find a dcop object with the given id.
    * This function does not query the DCOPObjectProxy.
    * @param objId the object id to search
    * @return the  DCOPObject for the id @p objId.
    */
-  static DCOPObject *tqfind(const TQCString &objId);
+  static DCOPObject *find(const TQCString &objId);
 
 
   /**
-   * Tries to tqfind an object using a partial object id.
+   * Tries to find an object using a partial object id.
    * This function is used for multicasting a DCOP message to
    * several objects inside a single process.
    * 

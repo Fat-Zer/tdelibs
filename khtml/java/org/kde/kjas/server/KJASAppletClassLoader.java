@@ -109,7 +109,7 @@ public final class KJASAppletClassLoader
         if (security != null) {
             security.checkCreateClassLoader();
         }
-        if( loaders.tqcontainsKey( key ) )
+        if( loaders.containsKey( key ) )
             return (KJASAppletClassLoader) loaders.get( key );
         
         return null;
@@ -149,17 +149,17 @@ public final class KJASAppletClassLoader
         super.addURL(url);
     }
     
-    public void addtqStatusListener(tqStatusListener lsnr) {
+    public void addStatusListener(StatusListener lsnr) {
         statusListeners.add(lsnr);
     }
-    public void removetqStatusListener(tqStatusListener lsnr) {
+    public void removeStatusListener(StatusListener lsnr) {
         statusListeners.remove(lsnr);
     }
-    public void showtqStatus(String msg) {
+    public void showStatus(String msg) {
         Enumeration en = statusListeners.elements();
         while (en.hasMoreElements()) {
-            tqStatusListener lsnr = (tqStatusListener)en.nextElement();
-            lsnr.showtqStatus(msg);
+            StatusListener lsnr = (StatusListener)en.nextElement();
+            lsnr.showStatus(msg);
         }
     }
     
@@ -202,7 +202,7 @@ public final class KJASAppletClassLoader
 
     void addArchiveName( String jarname )
     {
-        if( !archives.tqcontains( jarname ) )
+        if( !archives.contains( jarname ) )
         {
             archives.add( jarname );
         }
@@ -225,19 +225,19 @@ public final class KJASAppletClassLoader
     /***************************************************************************
      **** Class Loading Methods
      **************************************************************************/
-    public synchronized Class tqfindClass( String name ) throws ClassNotFoundException
+    public synchronized Class findClass( String name ) throws ClassNotFoundException
     {
         Class rval = null;
         //check the loaded classes 
-        rval = tqfindLoadedClass( name );
+        rval = findLoadedClass( name );
         if( rval == null ) {
             try {
-                rval =  super.tqfindClass(name);
+                rval =  super.findClass(name);
             } catch (ClassFormatError cfe) {
                 Main.debug(name + ": Catched " + cfe + ". Trying to repair...");
                 rval = loadFixedClass( name );
             } catch (Exception ex) {
-                Main.debug("tqfindClass " + name + " " + ex.getMessage());
+                Main.debug("findClass " + name + " " + ex.getMessage());
             }
         }
         if (rval == null) {
@@ -256,7 +256,7 @@ public final class KJASAppletClassLoader
     private Hashtable loadedClasses = new Hashtable();
 
     private synchronized final Class loadFixedClass(String name) throws ClassNotFoundException {
-        final String fileName = name.tqreplace('.', '/') + ".class";
+        final String fileName = name.replace('.', '/') + ".class";
         try {
             // try to get the class as resource
             final URL u = getResource(fileName);
@@ -316,7 +316,7 @@ public final class KJASAppletClassLoader
             }
         } catch (Throwable e) {
         }
-        showtqStatus("Loading: " + displayName);
+        showStatus("Loading: " + displayName);
         URL url =  super.findResource( name );
         Main.debug("findResource for " + name + " returns " + url);
         return url;

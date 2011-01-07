@@ -2,7 +2,7 @@ include( ../common.pro )
 
 TARGET		= light$$KDEBUG
 
-system( bash ktqmoc )
+system( bash kmoc )
 
 SOURCES = \
 light.cpp \

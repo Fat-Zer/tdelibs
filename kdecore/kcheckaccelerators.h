@@ -54,7 +54,7 @@ class TQTextView;
  even if the GUI changed (in the latter case, use manual check ). Automatic
  checks can be anytime disabled by the checkbox in the dialog presenting
  the results of the check. If you set 'AlwaysShowCheckAccelerators' to true,
- the dialog will be shown even if the automatic check didn't tqfind any conflicts,
+ the dialog will be shown even if the automatic check didn't find any conflicts,
  and all submenus will be shown, even those without conflicts.
 
  The dialog first lists the name of the window, then all results for all menus
@@ -63,7 +63,7 @@ class TQTextView;
  there are shown all conflicts grouped by accelerator, and a list of all used
  accelerators.
 */
-class KDECORE_EXPORT KCheckAccelerators : public TQObject
+class KDECORE_EXPORT KCheckAccelerators : public QObject
 {
     Q_OBJECT
 public:

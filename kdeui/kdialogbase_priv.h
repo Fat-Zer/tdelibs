@@ -45,7 +45,7 @@ class KDEUI_EXPORT KDialogBaseButton : public KPushButton
  * Used internally by KDialogBase.
  * @internal
  */
-class KDEUI_EXPORT KDialogBaseTile : public TQObject
+class KDEUI_EXPORT KDialogBaseTile : public QObject
 {
   Q_OBJECT
 

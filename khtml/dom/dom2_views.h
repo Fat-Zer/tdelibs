@@ -69,7 +69,7 @@ public:
      * @param pseudoElt The pseudo-element or null if none.
      *
      * @return The computed style. The CSSStyleDeclaration is read-only and
-     * tqcontains only absolute values.
+     * contains only absolute values.
      */
     CSSStyleDeclaration getComputedStyle(const Element &elt, const DOMString &pseudoElt);
 

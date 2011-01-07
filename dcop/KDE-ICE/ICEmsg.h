@@ -39,7 +39,7 @@ Author: Ralph Mor, X Consortium
 
 #define _IceRead _kde_IceRead
 
-extern tqStatus _IceRead (
+extern Status _IceRead (
 #if NeedFunctionPrototypes
     IceConn		/* iceConn */,
     unsigned long	/* nbytes */,
@@ -221,7 +221,7 @@ extern void _IceErrorBadValue (
 
 
 /*
- * Write pad bytes.  Used to force 32 or 64 bit tqalignment.
+ * Write pad bytes.  Used to force 32 or 64 bit alignment.
  * A maxium of 7 pad bytes can be specified.
  */
 
@@ -306,7 +306,7 @@ extern void _IceErrorBadValue (
 
 
 /*
- * Read pad bytes (for 32 or 64 bit tqalignment).
+ * Read pad bytes (for 32 or 64 bit alignment).
  * A maxium of 7 pad bytes can be specified.
  */
 

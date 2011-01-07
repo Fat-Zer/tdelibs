@@ -113,7 +113,7 @@
       <item> Q_D </item>
       <item> Q_Q </item>
       <item> Q_DISABLE_COPY </item>
-      <item> TQ_INTERFACES </item>
+      <item> Q_INTERFACES </item>
       <item> Q_FLAGS </item>
       <item> Q_SCRIPTABLE </item>
       <item> Q_INVOKABLE </item>

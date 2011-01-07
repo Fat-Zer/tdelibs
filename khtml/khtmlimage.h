@@ -44,7 +44,7 @@ public:
     KHTMLImageFactory();
     virtual ~KHTMLImageFactory();
 
-    virtual KParts::Part *createPartObject( TQWidget *tqparentWidget, const char *widgetName,
+    virtual KParts::Part *createPartObject( TQWidget *parentWidget, const char *widgetName,
                                             TQObject *parent, const char *name,
                                             const char *className, const TQStringList &args );
 
@@ -61,7 +61,7 @@ class KHTMLImage : public KParts::ReadOnlyPart, public khtml::CachedObjectClient
 {
     Q_OBJECT
 public:
-    KHTMLImage( TQWidget *tqparentWidget, const char *widgetName,
+    KHTMLImage( TQWidget *parentWidget, const char *widgetName,
                 TQObject *parent, const char *name, KHTMLPart::GUIProfile prof );
     virtual ~KHTMLImage();
 

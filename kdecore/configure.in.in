@@ -1,7 +1,7 @@
-dnl Compile in the exec prefix to help kstddirs in tqfinding dynamic libs
+dnl Compile in the exec prefix to help kstddirs in finding dynamic libs
 AC_DEFINE_UNQUOTED(__KDE_EXECPREFIX, "$exec_prefix", [execprefix or NONE if not set, for libloading])
 
-dnl Compile in kde_bindir to safely tqfind kdesu_stub.
+dnl Compile in kde_bindir to safely find kdesu_stub.
 if test "$exec_prefix" = "NONE"; then
     bindir_str="\"$prefix/bin\""
 else
@@ -97,7 +97,7 @@ AC_CHECK_FUNCS([getaddrinfo],
     AC_CHECK_FUNCS([freeaddrinfo getnameinfo gai_strerror], : , 
     [
       kde_gai_ok=false
-      AC_DEFINE(HAVE_BROKEN_GETADDRINFO, 1, [Define if getaddrinfo is broken and should be tqreplaced])
+      AC_DEFINE(HAVE_BROKEN_GETADDRINFO, 1, [Define if getaddrinfo is broken and should be replaced])
       AC_DEFINE(GETADDRINFO_RETURNS_UNIX, 1, [Define if getaddrinfo returns AF_UNIX sockets])
       break
     ])
@@ -134,7 +134,7 @@ AC_CHECK_FUNCS([getaddrinfo],
     ],
     [
       AC_MSG_RESULT(no)
-      AC_DEFINE(HAVE_BROKEN_GETADDRINFO, 1, [Define if getaddrinfo is broken and should be tqreplaced])
+      AC_DEFINE(HAVE_BROKEN_GETADDRINFO, 1, [Define if getaddrinfo is broken and should be replaced])
     ],
     [
       AC_MSG_RESULT(cross compiling. We hope so)
@@ -180,7 +180,7 @@ AC_ARG_WITH(libart,
 
 if test "x$with_libart" != xno; then
   KDE_FIND_PATH(libart2-config, LIBART_CONFIG, [${prefix}/bin ${exec_prefix}/bin], [
-    AC_MSG_WARN([Could not tqfind libart anywhere, check http://www.levien.com/libart/])
+    AC_MSG_WARN([Could not find libart anywhere, check http://www.levien.com/libart/])
   ])
 
   if test -n "$LIBART_CONFIG"; then

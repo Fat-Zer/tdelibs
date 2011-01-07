@@ -11,12 +11,12 @@ Apple's developer documentation provides lots of information about Bonjour
 in its <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/NetServices/Articles/about.html#//apple_ref/doc/uid/TP40002458-SW1">Bonjour overview</a>.
 
 If you are writing an application that wants to discover services on the network,
-use DNSSD::ServiceBrowser.  You can also tqfind available service types using ServiceTypeBrowser.
+use DNSSD::ServiceBrowser.  You can also find available service types using ServiceTypeBrowser.
 
 If you want to announce the availability of a service provided by your application,
 use DNSSD::PublicService.
 
-DNSSD::DomainBrowser allows you to tqfind domains (other than the local one) recommended
+DNSSD::DomainBrowser allows you to find domains (other than the local one) recommended
 for browsing or publishing to.
 
 Note that DNSSD::ServiceBrowser::isAvailable() provides information about the availability

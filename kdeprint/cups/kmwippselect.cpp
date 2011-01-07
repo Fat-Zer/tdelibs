@@ -75,16 +75,16 @@ void KMWIppSelect::initPrinter(KMPrinter *p)
 	IppRequest	req;
 	QString		uri;
 	req.setOperation(CUPS_GET_PRINTERS);
-	uri = TQString::tqfromLatin1("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
+	uri = TQString::fromLatin1("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
 	req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
-	req.addKeyword(IPP_TAG_OPERATION,"requested-attributes",TQString::tqfromLatin1("printer-name"));
+	req.addKeyword(IPP_TAG_OPERATION,"requested-attributes",TQString::fromLatin1("printer-name"));
 	if (req.doRequest("/printers/"))
 	{
 		ipp_attribute_t	*attr = req.first();
 		while (attr)
 		{
 			if (attr->name && strcmp(attr->name,"printer-name") == 0)
-				m_list->insertItem(SmallIcon("kdeprint_printer"),TQString::tqfromLatin1(attr->values[0].string.text));
+				m_list->insertItem(SmallIcon("kdeprint_printer"),TQString::fromLatin1(attr->values[0].string.text));
 			attr = attr->next;
 		}
 		m_list->sort();

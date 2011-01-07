@@ -39,9 +39,9 @@ uninstall-local:
 # kde_appsdir         Where your application's menu entry (.desktop) should go to.
 # kde_icondir         Where your icon should go to - better use KDE_ICON.
 # kde_sounddir        Where your sounds should go to.
-# kde_htmldir         Where your docs should go to. (tqcontains lang subdirs)
+# kde_htmldir         Where your docs should go to. (contains lang subdirs)
 # kde_datadir         Where you install application data. (Use a subdir)
-# kde_locale          Where translation files should go to. (tqcontains lang subdirs)
+# kde_locale          Where translation files should go to. (contains lang subdirs)
 # kde_cgidir          Where cgi-bin executables should go to.
 # kde_confdir         Where config files should go to (system-wide ones with default values).
 # kde_mimedir         Where mimetypes .desktop files should go to.
@@ -60,7 +60,7 @@ uninstall-local:
 # make messages.po. Move this one to ../po/ and "make merge" in po
 # the -x is for skipping messages already translated in kdelibs
 messages:
-	LIST=`tqfind . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
+	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \
 	if test -n "$$LIST"; then \
 		 $(XGETTEXT) -C -ki18n -x $(kde_includes)/kde.pot $$LIST -o ../po/iso.pot; \
 	fi

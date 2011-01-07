@@ -44,7 +44,7 @@ KMConfigCupsDir::KMConfigCupsDir(TQWidget *parent)
 	TQVBoxLayout *lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	lay0->addWidget(m_dirbox);
 	lay0->addStretch(1);
-	TQVBoxLayout *lay1 = new TQVBoxLayout(m_dirbox->tqlayout(), 10);
+	TQVBoxLayout *lay1 = new TQVBoxLayout(m_dirbox->layout(), 10);
 	lay1->addWidget(m_stddir);
 	lay1->addWidget(m_installdir);
 

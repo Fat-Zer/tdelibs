@@ -82,7 +82,7 @@ class KExtendedSocketPrivate;
  *
  * @deprecated
  *	This class is now deprecated. Please use the classes in KNetwork for
- *	new programs. In particular, this class is tqreplaced by KNetwork::KStreamSocket
+ *	new programs. In particular, this class is replaced by KNetwork::KStreamSocket
  *	and @ref KNetwork::KServerSocket.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
@@ -128,7 +128,7 @@ public:
    * The status are sequential. If a change to one status is requested,
    * all the prior status will be passed and their actions, performed
    */
-  enum SocktqStatus
+  enum SockStatus
   {
     // the numbers are scattered so that we leave room for future expansion
     error = -1,			// invalid status!
@@ -220,9 +220,9 @@ public:
   /**
    * Returns the class status.
    * @return the class status
-   * @see ::SocktqStatus
+   * @see ::SockStatus
    */
-  int sockettqStatus() const;
+  int socketStatus() const;
 
   /**
    * Returns the related system error code
@@ -285,7 +285,7 @@ public:
   bool setPort(const TQString& port);
 
   /**
-   * Returns the port/service. If it is a port, the string tqcontains a number.
+   * Returns the port/service. If it is a port, the string contains a number.
    * @return the port or TQString::null if it has not been set.
    */
   TQString port() const;
@@ -450,7 +450,7 @@ public:
    * @param enable	if true, no IPv4 translation will be performed;
    *			this socket will be restricted to IPv6 communication
    * @returns true on success, false on failure.
-   * @see localAddress to tqfind out if this is an IPv6 socket
+   * @see localAddress to find out if this is an IPv6 socket
    */
   bool setIPv6Only(bool enable);
 
@@ -681,7 +681,7 @@ public:
    * @return the length of this socket, or 0 if unsupported
    */
 #ifdef USE_QT3
-  virtual inline TQ_ULONG size() const
+  virtual inline Q_ULONG size() const
 #endif // USE_QT3
 #ifdef USE_QT4
   virtual inline qint64 size() const
@@ -692,7 +692,7 @@ public:
    * Returns relative position from start. This call is not supported on sockets.
    * @return the relative position from the start, or 0 if unsupported
    */
-  virtual inline TQ_ULONG at() const
+  virtual inline Q_ULONG at() const
   { return 0; }
 
   /**
@@ -740,7 +740,7 @@ public:
    * This function returns 0, if the function detected end-of-file condition
    * (socket was closed)
    */
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen);
+  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen);
 
   /**
    * Writes a block of data to the socket.
@@ -765,7 +765,7 @@ public:
    * The return value might be less than @p len if the output buffers cannot
    * accommodate that many bytes and -1 in the case of an errro.
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len);
+  virtual Q_LONG writeBlock(const char *data, Q_ULONG len);
 
   /**
    * Peeks at a block of data from the socket.
@@ -929,7 +929,7 @@ protected:
   /**
    * Sets the socket status. For derived classes only.
    */
-  void setSockettqStatus(int status);
+  void setSocketStatus(int status);
 
 public:
   /**

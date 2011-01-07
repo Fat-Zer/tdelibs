@@ -35,7 +35,7 @@ namespace KParts
  * </code>
  *
  */
-class KPARTS_EXPORT BrowserInterface : public TQObject
+class KPARTS_EXPORT BrowserInterface : public QObject
 {
     Q_OBJECT
 public:

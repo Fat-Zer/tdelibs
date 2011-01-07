@@ -95,15 +95,15 @@ client_map_t *cliMap()
     return DCOPClient_CliMap;
 }
 
-DCOPClient *DCOPClient::tqfindLocalClient( const TQCString &_appId )
+DCOPClient *DCOPClient::findLocalClient( const TQCString &_appId )
 {
-    return cliMap()->tqfind(_appId.data());
+    return cliMap()->find(_appId.data());
 }
 
 static
 void registerLocalClient( const TQCString &_appId, DCOPClient *client )
 {
-    cliMap()->tqreplace(_appId.data(), client);
+    cliMap()->replace(_appId.data(), client);
 }
 
 static
@@ -141,7 +141,7 @@ public:
     TQCString* replyType;
     TQByteArray* replyData;
     int replyId;
-    TQ_INT32 transactionId;
+    Q_INT32 transactionId;
     TQCString calledApp;
     TQGuardedPtr<TQObject> replyObject;
     TQCString replySlot;
@@ -173,7 +173,7 @@ public:
     TQCString defaultObject;
     TQPtrList<DCOPClientTransaction> *transactionList;
     bool transaction;
-    TQ_INT32 transactionId;
+    Q_INT32 transactionId;
     int opcode;
 
     // Special key values:
@@ -205,7 +205,7 @@ public:
 class DCOPClientTransaction
 {
 public:
-    TQ_INT32 id;
+    Q_INT32 id;
     CARD32 key;
     TQCString senderId;
 };
@@ -263,12 +263,12 @@ static TQCString dcopServerFile(const TQCString &hostname, bool old)
         disp = "NODISPLAY";
 
     int i;
-    if((i = disp.tqfindRev('.')) > disp.tqfindRev(KPATH_SEPARATOR) && i >= 0)
+    if((i = disp.findRev('.')) > disp.findRev(KPATH_SEPARATOR) && i >= 0)
         disp.truncate(i);
 
     if (!old)
     {
-        while( (i = disp.tqfind(KPATH_SEPARATOR)) >= 0)
+        while( (i = disp.find(KPATH_SEPARATOR)) >= 0)
             disp[i] = '_';
     }
 
@@ -382,7 +382,7 @@ static void DCOPProcessMessage(IceConn iceConn, IcePointer clientObject,
     case DCOPReplyWait:
         if ( replyStruct ) {
             TQCString calledApp, app;
-            TQ_INT32 id;
+            Q_INT32 id;
             TQDataStream ds( dataReceived, IO_ReadOnly );
             ds >> calledApp >> app >> id;
             replyStruct->transactionId = id;
@@ -398,7 +398,7 @@ static void DCOPProcessMessage(IceConn iceConn, IcePointer clientObject,
         {
             TQDataStream ds( dataReceived, IO_ReadOnly );
             TQCString calledApp, app;
-            TQ_INT32 id;
+            Q_INT32 id;
 
             ds >> calledApp >> app >> id;
             if (replyStruct && (id == replyStruct->transactionId) && (calledApp == replyStruct->calledApp))
@@ -517,7 +517,7 @@ void DCOPProcessInternal( DCOPClientPrivate *d, int opcode, CARD32 key, const TQ
         d->currentKey = key;
 
     if ( opcode == DCOPFind )
-        b = c->tqfind(app, objId, fun, data, replyType, replyData );
+        b = c->find(app, objId, fun, data, replyType, replyData );
     else
         b = c->receive( app, objId, fun, data, replyType, replyData );
     // set notifier back to previous state
@@ -531,7 +531,7 @@ void DCOPProcessInternal( DCOPClientPrivate *d, int opcode, CARD32 key, const TQ
     TQByteArray reply;
     TQDataStream replyStream( reply, IO_WriteOnly );
 
-    TQ_INT32 id = c->transactionId();
+    Q_INT32 id = c->transactionId();
     if (id) {
         // Call delayed. Send back the transaction ID.
         replyStream << d->appId << fromApp << id;
@@ -672,9 +672,9 @@ bool DCOPClient::attach()
 
 void DCOPClient::bindToApp()
 {
-    // check if we have a tqApp instantiated.  If we do,
+    // check if we have a qApp instantiated.  If we do,
     // we can create a TQSocketNotifier and use it for receiving data.
-    if (tqApp) {
+    if (qApp) {
         if ( d->notifier )
             delete d->notifier;
         d->notifier = new TQSocketNotifier(socket(),
@@ -690,7 +690,7 @@ void DCOPClient::suspend()
     if (!d->notifier)
         return;
 #endif
-    assert(d->notifier); // Suspending makes no sense if we didn't had a tqApp yet
+    assert(d->notifier); // Suspending makes no sense if we didn't had a qApp yet
     d->notifier->setEnabled(false);
 }
 
@@ -764,7 +764,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
                                                       DCOPAuthCount,
                                                       const_cast<char **>(DCOPAuthNames),
                                                       DCOPClientAuthProcs, 0L)) < 0) {
-        emit attachFailed(TQString::tqfromLatin1( "Communications could not be established." ));
+        emit attachFailed(TQString::fromLatin1( "Communications could not be established." ));
         return false;
     }
 
@@ -779,7 +779,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
             TQCString fName = dcopServerFile();
             TQFile f(TQFile::decodeName(fName));
             if (!f.open(IO_ReadOnly)) {
-                emit attachFailed(TQString::tqfromLatin1( "Could not read network connection list.\n" )+TQFile::decodeName(fName));
+                emit attachFailed(TQString::fromLatin1( "Could not read network connection list.\n" )+TQFile::decodeName(fName));
                 return false;
             }
             int size = QMIN( (qint64)1024, f.size() ); // protection against a huge file
@@ -790,7 +790,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
                // Should we abort ?
             }
             contents[size] = '\0';
-            int pos = contents.tqfind('\n');
+            int pos = contents.find('\n');
             if ( pos == -1 ) // Shouldn't happen
             {
                 qDebug("Only one line in dcopserver file !: %s", contents.data());
@@ -819,7 +819,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
            delete [] d->serverAddr;
            d->serverAddr = 0;
         }
-        emit attachFailed(TQString::tqfromLatin1( errBuf ));
+        emit attachFailed(TQString::fromLatin1( errBuf ));
         return false;
     }
     fcntl(socket(), F_SETFL, FD_CLOEXEC);
@@ -845,7 +845,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
             delete [] d->serverAddr;
             d->serverAddr = 0;
         }
-        emit attachFailed(TQString::tqfromLatin1( errBuf ));
+        emit attachFailed(TQString::fromLatin1( errBuf ));
         return false;
     } else if (setupstat == IceProtocolAlreadyActive) {
         if (bClearServerAddr) {
@@ -853,7 +853,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
             d->serverAddr = 0;
         }
         /* should not happen because 3rd arg to IceOpenConnection was 0. */
-        emit attachFailed(TQString::tqfromLatin1( "internal error in IceOpenConnection" ));
+        emit attachFailed(TQString::fromLatin1( "internal error in IceOpenConnection" ));
         return false;
     }
 
@@ -863,7 +863,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
             delete [] d->serverAddr;
             d->serverAddr = 0;
         }
-        emit attachFailed(TQString::tqfromLatin1( "DCOP server did not accept the connection." ));
+        emit attachFailed(TQString::fromLatin1( "DCOP server did not accept the connection." ));
         return false;
     }
 
@@ -1017,7 +1017,7 @@ TQCString DCOPClient::normalizeFunctionSignature( const TQCString& fun ) {
     if ( fun.isEmpty() )                                // nothing to do
         return fun.copy();
     TQCString result( fun.size() );
-    char *from        = const_cast<TQCString&>(fun).data();
+    char *from        = fun.data();
     char *to        = result.data();
     char *first = to;
     char last = 0;
@@ -1052,11 +1052,11 @@ bool DCOPClient::send(const TQCString &remApp, const TQCString &remObjId,
 {
     if (remApp.isEmpty())
        return false;
-    DCOPClient *localClient = tqfindLocalClient( remApp );
+    DCOPClient *localClient = findLocalClient( remApp );
 
     if ( localClient  ) {
         bool saveTransaction = d->transaction;
-        TQ_INT32 saveTransactionId = d->transactionId;
+        Q_INT32 saveTransactionId = d->transactionId;
         TQCString saveSenderId = d->senderId;
 
         d->senderId = 0; // Local call
@@ -1110,15 +1110,15 @@ bool DCOPClient::send(const TQCString &remApp, const TQCString &remObjId,
     return send(remApp, remObjId, remFun, ba);
 }
 
-bool DCOPClient::tqfindObject(const TQCString &remApp, const TQCString &remObj,
+bool DCOPClient::findObject(const TQCString &remApp, const TQCString &remObj,
                             const TQCString &remFun, const TQByteArray &data,
                             TQCString &foundApp, TQCString &foundObj,
                             bool useEventLoop)
 {
-    return tqfindObject( remApp, remObj, remFun, data, foundApp, foundObj, useEventLoop, -1 );
+    return findObject( remApp, remObj, remFun, data, foundApp, foundObj, useEventLoop, -1 );
 }
 
-bool DCOPClient::tqfindObject(const TQCString &remApp, const TQCString &remObj,
+bool DCOPClient::findObject(const TQCString &remApp, const TQCString &remObj,
                             const TQCString &remFun, const TQByteArray &data,
                             TQCString &foundApp, TQCString &foundObj,
                             bool useEventLoop, int timeout)
@@ -1162,18 +1162,18 @@ bool DCOPClient::tqfindObject(const TQCString &remApp, const TQCString &remObj,
         TQCString replyType;
         TQByteArray replyData;
         bool result = false;
-        DCOPClient *localClient = tqfindLocalClient( remApp );
+        DCOPClient *localClient = findLocalClient( remApp );
 
         if ( (phase == 1) && localClient ) {
             // In phase 1 we do all local clients
             bool saveTransaction = d->transaction;
-            TQ_INT32 saveTransactionId = d->transactionId;
+            Q_INT32 saveTransactionId = d->transactionId;
             TQCString saveSenderId = d->senderId;
 
             d->senderId = 0; // Local call
-            result = localClient->tqfind(  remApp, remObj, remFun, data, replyType, replyData );
+            result = localClient->find(  remApp, remObj, remFun, data, replyType, replyData );
 
-            TQ_INT32 id = localClient->transactionId();
+            Q_INT32 id = localClient->transactionId();
             if (id) {
                 // Call delayed. We have to wait till it has been processed.
                 do {
@@ -1202,7 +1202,7 @@ bool DCOPClient::tqfindObject(const TQCString &remApp, const TQCString &remObj,
 
                 if (ref.app() == remApp) // Consistency check
                 {
-                    // replyType tqcontains objId.
+                    // replyType contains objId.
                     foundApp = ref.app();
                     foundObj = ref.object();
                     return true;
@@ -1298,7 +1298,7 @@ void DCOPClient::setNotifications(bool enabled)
 {
     TQByteArray data;
     TQDataStream ds(data, IO_WriteOnly);
-    ds << static_cast<TQ_INT8>(enabled);
+    ds << static_cast<Q_INT8>(enabled);
 
     TQCString replyType;
     TQByteArray reply;
@@ -1310,7 +1310,7 @@ void DCOPClient::setDaemonMode( bool daemonMode )
 {
     TQByteArray data;
     TQDataStream ds(data, IO_WriteOnly);
-    ds << static_cast<TQ_INT8>( daemonMode );
+    ds << static_cast<Q_INT8>( daemonMode );
 
     TQCString replyType;
     TQByteArray reply;
@@ -1331,9 +1331,9 @@ static void fillQtObjects( QCStringList& l, TQObject* o, TQCString path )
         path += '/';
 
     int unnamed = 0;
-    const TQObjectList list = o ? o->tqchildren() : TQObject::tqobjectTrees();
-    if ( !list.isEmpty() ) {
-        TQObjectListIt it( list );
+    const TQObjectList *list = o ? o->tqchildren() : TQObject::objectTrees();
+    if ( list ) {
+        TQObjectListIt it( *list );
         TQObject *obj;
         while ( (obj=it.current()) ) {
             ++it;
@@ -1341,11 +1341,11 @@ static void fillQtObjects( QCStringList& l, TQObject* o, TQCString path )
              if ( n == "unnamed" || n.isEmpty() )
              {
                  n.sprintf("%p", (void *) obj);
-                 n = TQString(TQString("unnamed%1(%2, %3)").arg(++unnamed).arg(obj->className()).arg(TQString(n))).latin1();
+                 n = TQString("unnamed%1(%2, %3)").arg(++unnamed).arg(obj->className()).arg(TQString(n)).latin1();
              }
              TQCString fn = path + n;
              l.append( fn );
-             if ( !obj->tqchildren().isEmpty() )
+             if ( obj->tqchildren() )
                  fillQtObjects( l, obj, fn );
         }
     }
@@ -1368,9 +1368,9 @@ static void fillQtObjectsEx( TQValueList<O>& l, TQObject* o, TQCString path )
         path += '/';
 
     int unnamed = 0;
-    const TQObjectList list = o ? o->tqchildren() : TQObject::tqobjectTrees();
-    if ( !list.isEmpty() ) {
-        TQObjectListIt it( list );
+    const TQObjectList *list = o ? o->tqchildren() : TQObject::objectTrees();
+    if ( list ) {
+        TQObjectListIt it( *list );
         TQObject *obj;
         while ( (obj=it.current()) ) {
             ++it;
@@ -1378,42 +1378,42 @@ static void fillQtObjectsEx( TQValueList<O>& l, TQObject* o, TQCString path )
             if ( n == "unnamed" || n.isEmpty() )
              {
                  n.sprintf("%p", (void *) obj);
-                 n = TQString(TQString("unnamed%1(%2, %3)").arg(++unnamed).arg(obj->className()).arg(TQString(n))).latin1();
+                 n = TQString("unnamed%1(%2, %3)").arg(++unnamed).arg(obj->className()).arg(TQString(n)).latin1();
              }
             TQCString fn = path + n;
             l.append( O( fn, obj ) );
-            if ( !obj->tqchildren().isEmpty() )
+            if ( obj->tqchildren() )
                 fillQtObjectsEx( l, obj, fn );
         }
     }
 }
 
 
-static TQObject* tqfindQtObject( TQCString id )
+static TQObject* findQtObject( TQCString id )
 {
     TQRegExp expr( id );
     TQValueList<O> l;
     fillQtObjectsEx( l, 0, "qt" );
-    // Prefer an exact match, but fall-back on the first that tqcontains the substring
+    // Prefer an exact match, but fall-back on the first that contains the substring
     TQObject* firstContains = 0L;
     for ( TQValueList<O>::ConstIterator it = l.begin(); it != l.end(); ++it ) {
         if ( (*it).s == id ) // exact match
             return (*it).o;
-        if ( !firstContains && (*it).s.tqcontains( expr ) ) {
+        if ( !firstContains && (*it).s.contains( expr ) ) {
             firstContains = (*it).o;
         }
     }
     return firstContains;
 }
 
-static QCStringList  tqfindQtObjects( TQCString id )
+static QCStringList  findQtObjects( TQCString id )
 {
     TQRegExp expr( id );
     TQValueList<O> l;
     fillQtObjectsEx( l, 0, "qt" );
     QCStringList result;
     for ( TQValueList<O>::ConstIterator it = l.begin(); it != l.end(); ++it ) {
-        if ( (*it).s.tqcontains( expr ) )
+        if ( (*it).s.contains( expr ) )
             result << (*it).s;
     }
     return result;
@@ -1438,7 +1438,7 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             l << "QCStringList functions()";
             l << "QCStringList interfaces()";
             l << "QCStringList objects()";
-            l << "QCStringList tqfind(TQCString)";
+            l << "QCStringList find(TQCString)";
             reply << l;
             return true;
         } else if ( fun == "objects()" ) {
@@ -1448,17 +1448,17 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             fillQtObjects( l, 0, "qt" );
             reply << l;
             return true;
-        } else if ( fun == "tqfind(TQCString)" ) {
+        } else if ( fun == "find(TQCString)" ) {
             TQDataStream ds( data, IO_ReadOnly );
             TQCString id;
             ds >> id ;
             replyType = "QCStringList";
             TQDataStream reply( replyData, IO_WriteOnly );
-            reply << tqfindQtObjects( id ) ;
+            reply << findQtObjects( id ) ;
             return true;
         }
     } else if ( objId.left(3) == "qt/" ) {
-        TQObject* o = tqfindQtObject( objId );
+        TQObject* o = findQtObject( objId );
         if ( !o )
             return false;
         if ( fun == "functions()" ) {
@@ -1470,13 +1470,13 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             l << "QCStringList properties()";
             l << "bool setProperty(TQCString,TQVariant)";
             l << "TQVariant property(TQCString)";
-            TQStrList lst = o->tqmetaObject()->slotNames( true );
+            TQStrList lst = o->metaObject()->slotNames( true );
             int i = 0;
             for ( TQPtrListIterator<char> it( lst ); it.current(); ++it ) {
-                if ( o->tqmetaObject()->slot( i++, true )->tqt_mo_access != TQMetaData::Public )
+                if ( o->metaObject()->slot( i++, true )->tqaccess != QMetaData::Public )
                     continue;
                 TQCString slot = it.current();
-                if ( slot.tqcontains( "()" ) ) {
+                if ( slot.contains( "()" ) ) {
                     slot.prepend("void ");
                     l <<  slot;
                 }
@@ -1487,10 +1487,10 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             replyType = "QCStringList";
             TQDataStream reply( replyData, IO_WriteOnly );
             QCStringList l;
-            TQMetaObject *meta = o->tqmetaObject();
+            TQMetaObject *meta = o->metaObject();
             while ( meta ) {
                 l.prepend( meta->className() );
-                meta = const_cast<TQMetaObject*>(TQT_TQMETAOBJECT_CONST(meta->superClass()));
+                meta = meta->superClass();
             }
             reply << l;
             return true;
@@ -1498,10 +1498,10 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             replyType = "QCStringList";
             TQDataStream reply( replyData, IO_WriteOnly );
             QCStringList l;
-            TQStrList lst = o->tqmetaObject()->propertyNames( true );
+            TQStrList lst = o->metaObject()->propertyNames( true );
             for ( TQPtrListIterator<char> it( lst ); it.current(); ++it ) {
-                TQMetaObject *mo = o->tqmetaObject();
-                const TQMetaProperty* p = mo->property( mo->tqfindProperty( it.current(), true ), true );
+                TQMetaObject *mo = o->metaObject();
+                const TQMetaProperty* p = mo->property( mo->findProperty( it.current(), true ), true );
                 if ( !p )
                     continue;
                 TQCString prop = p->type();
@@ -1529,13 +1529,13 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             ds >> name >> value;
             replyType = "bool";
             TQDataStream reply( replyData, IO_WriteOnly );
-            reply << (TQ_INT8) o->setProperty( name, value );
+            reply << (Q_INT8) o->setProperty( name, value );
             return true;
         } else {
-            int slot = o->tqmetaObject()->tqfindSlot( fun, true );
+            int slot = o->metaObject()->findSlot( fun, true );
             if ( slot != -1 ) {
                 replyType = "void";
-                TQUObject uo[ 1 ];
+                QUObject uo[ 1 ];
                 o->qt_invoke( slot, uo );
                 return true;
             }
@@ -1608,7 +1608,7 @@ bool DCOPClient::receive(const TQCString &/*app*/, const TQCString &objId,
 
     if ( objId.isEmpty() || objId == "default" ) {
         if ( !d->defaultObject.isEmpty() && DCOPObject::hasObject( d->defaultObject ) ) {
-            DCOPObject *objPtr = DCOPObject::tqfind( d->defaultObject );
+            DCOPObject *objPtr = DCOPObject::find( d->defaultObject );
             objPtr->setCallingDcopClient(this);
             if (objPtr->process(fun, data, replyType, replyData))
                 return true;
@@ -1640,7 +1640,7 @@ bool DCOPClient::receive(const TQCString &/*app*/, const TQCString &objId,
         return false;
 
     } else {
-        DCOPObject *objPtr = DCOPObject::tqfind(objId);
+        DCOPObject *objPtr = DCOPObject::find(objId);
         objPtr->setCallingDcopClient(this);
         if (!objPtr->process(fun, data, replyType, replyData)) {
             // obj doesn't understand function or some other error.
@@ -1654,9 +1654,9 @@ bool DCOPClient::receive(const TQCString &/*app*/, const TQCString &objId,
 // Check if the function result is a bool with the value "true"
 // If so set the function result to DCOPRef pointing to (app,objId) and
 // return true. Return false otherwise.
-static bool tqfindResultOk(TQCString &replyType, TQByteArray &replyData)
+static bool findResultOk(TQCString &replyType, TQByteArray &replyData)
 {
-    TQ_INT8 success; // Tsk.. why is there no operator>>(bool)?
+    Q_INT8 success; // Tsk.. why is there no operator>>(bool)?
     if (replyType != "bool") return false;
 
     TQDataStream reply( replyData, IO_ReadOnly );
@@ -1668,7 +1668,7 @@ static bool tqfindResultOk(TQCString &replyType, TQByteArray &replyData)
 
 // set the function result to DCOPRef pointing to (app,objId) and
 // return true.
-static bool tqfindSuccess(const TQCString &app, const TQCString objId, TQCString &replyType, TQByteArray &replyData)
+static bool findSuccess(const TQCString &app, const TQCString objId, TQCString &replyType, TQByteArray &replyData)
 {
     DCOPRef ref(app, objId);
     replyType = "DCOPRef";
@@ -1680,7 +1680,7 @@ static bool tqfindSuccess(const TQCString &app, const TQCString objId, TQCString
 }
 
 
-bool DCOPClient::tqfind(const TQCString &app, const TQCString &objId,
+bool DCOPClient::find(const TQCString &app, const TQCString &objId,
                       const TQCString &fun, const TQByteArray &data,
                       TQCString& replyType, TQByteArray &replyData)
 {
@@ -1695,14 +1695,14 @@ bool DCOPClient::tqfind(const TQCString &app, const TQCString &objId,
         if (fun.isEmpty())
         {
             if (objId.isEmpty() || DCOPObject::hasObject(objId))
-               return tqfindSuccess(app, objId, replyType, replyData);
+               return findSuccess(app, objId, replyType, replyData);
             return false;
         }
         // Message to application or single object...
         if (receive(app, objId, fun, data, replyType, replyData))
         {
-            if (tqfindResultOk(replyType, replyData))
-                return tqfindSuccess(app, objId, replyType, replyData);
+            if (findResultOk(replyType, replyData))
+                return findSuccess(app, objId, replyType, replyData);
         }
     }
     else {
@@ -1716,11 +1716,11 @@ bool DCOPClient::tqfind(const TQCString &app, const TQCString &objId,
             replyType = 0;
             replyData = TQByteArray();
             if (fun.isEmpty())
-                return tqfindSuccess(app, objPtr->objId(), replyType, replyData);
+                return findSuccess(app, objPtr->objId(), replyType, replyData);
             objPtr->setCallingDcopClient(this);
             if (objPtr->process(fun, data, replyType, replyData))
-                if (tqfindResultOk(replyType, replyData))
-                    return tqfindSuccess(app, objPtr->objId(), replyType, replyData);
+                if (findResultOk(replyType, replyData))
+                    return findSuccess(app, objPtr->objId(), replyType, replyData);
         }
     }
     return false;
@@ -1742,17 +1742,17 @@ bool DCOPClient::call(const TQCString &remApp, const TQCString &remObjId,
 {
     if (remApp.isEmpty())
         return false;
-    DCOPClient *localClient = tqfindLocalClient( remApp );
+    DCOPClient *localClient = findLocalClient( remApp );
 
     if ( localClient ) {
         bool saveTransaction = d->transaction;
-        TQ_INT32 saveTransactionId = d->transactionId;
+        Q_INT32 saveTransactionId = d->transactionId;
         TQCString saveSenderId = d->senderId;
 
         d->senderId = 0; // Local call
         bool b = localClient->receive(  remApp, remObjId, remFun, data, replyType, replyData );
         
-        TQ_INT32 id = localClient->transactionId();
+        Q_INT32 id = localClient->transactionId();
         if (id) {
            // Call delayed. We have to wait till it has been processed.
            do {
@@ -1882,7 +1882,7 @@ bool DCOPClient::callInternal(const TQCString &remApp, const TQCString &remObjId
     for(;;) {
         bool checkMessages = true;
         if ( useEventLoop
-             ? d->notifier != NULL  // useEventLoop needs a socket notifier and a tqApp
+             ? d->notifier != NULL  // useEventLoop needs a socket notifier and a qApp
              : timeout >= 0 ) {     // !useEventLoop doesn't block only for timeout >= 0
             const int guiTimeout = 100;
             checkMessages = false;
@@ -1907,7 +1907,7 @@ bool DCOPClient::callInternal(const TQCString &remApp, const TQCString &remObjId
                     }
                     if( timeout >= 0 )
                         d->eventLoopTimer.start(time_left - guiTimeout, true);
-                    tqApp->enter_loop();
+                    qApp->enter_loop();
                     d->eventLoopTimer.stop();
                     if ( !old_lock ) {
                         d->non_blocking_call_lock = false;
@@ -1974,7 +1974,7 @@ bool DCOPClient::callInternal(const TQCString &remApp, const TQCString &remObjId
 
     // Wake up parent call, maybe it's reply is available already.
     if ( d->non_blocking_call_lock ) {
-        tqApp->exit_loop();
+        qApp->exit_loop();
     }
 
     d->currentKey = oldCurrentKey;
@@ -1983,7 +1983,7 @@ bool DCOPClient::callInternal(const TQCString &remApp, const TQCString &remObjId
 
 void DCOPClient::eventLoopTimeout()
 {
-    tqApp->exit_loop();
+    qApp->exit_loop();
 }
 
 void DCOPClient::processSocketData(int fd)
@@ -2000,8 +2000,8 @@ void DCOPClient::processSocketData(int fd)
         return;
 
     if ( d->non_blocking_call_lock ) {
-        if( tqApp )
-            tqApp->exit_loop();
+        if( qApp )
+            qApp->exit_loop();
         return;
     }
 
@@ -2034,7 +2034,7 @@ TQCString DCOPClient::defaultObject() const
 }
 
 bool
-DCOPClient::isLocalTransactionFinished(TQ_INT32 id, TQCString &replyType, TQByteArray &replyData)
+DCOPClient::isLocalTransactionFinished(Q_INT32 id, TQCString &replyType, TQByteArray &replyData)
 {
     DCOPClientPrivate::LocalTransactionResult *result = d->localTransActionList.take(id);
     if (!result)
@@ -2068,7 +2068,7 @@ DCOPClient::beginTransaction()
     return trans;
 }
 
-TQ_INT32
+Q_INT32
 DCOPClient::transactionId() const
 {
     if (d->transaction)
@@ -2147,7 +2147,7 @@ DCOPClient::connectDCOPSignal( const TQCString &sender, const TQCString &senderO
 {
     TQCString replyType;
     TQByteArray data, replyData;
-    TQ_INT8 iVolatile = Volatile ? 1 : 0;
+    Q_INT8 iVolatile = Volatile ? 1 : 0;
 
     TQDataStream args(data, IO_WriteOnly );
     args << sender << senderObj << normalizeFunctionSignature(signal) << receiverObj << normalizeFunctionSignature(slot) << iVolatile;
@@ -2163,7 +2163,7 @@ DCOPClient::connectDCOPSignal( const TQCString &sender, const TQCString &senderO
         return false;
 
     TQDataStream reply(replyData, IO_ReadOnly );
-    TQ_INT8 result;
+    Q_INT8 result;
     reply >> result;
     return (result != 0);
 }
@@ -2197,7 +2197,7 @@ DCOPClient::disconnectDCOPSignal( const TQCString &sender, const TQCString &send
         return false;
 
     TQDataStream reply(replyData, IO_ReadOnly );
-    TQ_INT8 result;
+    Q_INT8 result;
     reply >> result;
     return (result != 0);
 }

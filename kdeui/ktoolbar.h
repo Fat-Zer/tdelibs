@@ -61,7 +61,7 @@ class KDEUI_EXPORT KToolBarSeparator : public QFrame
 public:
     KToolBarSeparator( Orientation, bool l, TQToolBar *parent, const char* name=0 );
 
-    TQSize tqsizeHint() const;
+    TQSize sizeHint() const;
     Orientation orientation() const { return orient; }
     TQSizePolicy sizePolicy() const;
     bool showLine() const { return line; }
@@ -90,7 +90,7 @@ private:
   * Once you have a KToolBar object, you can insert items into it with the
   * insert... methods, or remove them with the removeItem() method. This
   * can be done at any time; the toolbar will be automatically updated.
-  * There are also many methods to set per-child properties like tqalignment
+  * There are also many methods to set per-child properties like alignment
   * and toggle behavior.
   *
   * KToolBar uses a global config group to load toolbar settings on
@@ -116,7 +116,7 @@ public:
      * The state of the status bar.
      * @deprecated
      */
-    enum BartqStatus{Toggle, Show, Hide};
+    enum BarStatus{Toggle, Show, Hide};
     /**
    * Possible bar positions.
    */
@@ -655,7 +655,7 @@ public:
    * Only @p one item can be autosized, and it has to be
    * the last left-aligned item. Items that come after this must be right
    * aligned. Items that can be right aligned are Lineds, Frames, Widgets and
-   * Combos. An autosized item will resize itself whenever the toolbar tqgeometry
+   * Combos. An autosized item will resize itself whenever the toolbar geometry
    * changes to the last right-aligned item (or to end of toolbar if there
    * are no right-aligned items.)
    * @see setFullWidth()
@@ -750,10 +750,10 @@ public:
    *
    * This method is provided for compatibility only,
    * please use show() and/or hide() instead.
-   * @see BartqStatus
+   * @see BarStatus
    * @deprecated
    */
-    bool enable(BartqStatus stat) KDE_DEPRECATED;
+    bool enable(BarStatus stat) KDE_DEPRECATED;
 
   /**
    * Use setMaximumHeight() instead.
@@ -943,9 +943,9 @@ public:
     void setStretchableWidget( TQWidget *w );
     TQSizePolicy sizePolicy() const;
     bool highlight() const;
-    TQSize tqsizeHint() const;
-    TQSize tqminimumSizeHint() const;
-    TQSize tqminimumSize() const;
+    TQSize sizeHint() const;
+    TQSize minimumSizeHint() const;
+    TQSize minimumSize() const;
 
     void hide();
     void show();
@@ -1117,7 +1117,7 @@ private:
     Id2WidgetMap id2widget;
     KPopupMenu *context;
     TQPtrList<TQWidget> widgets;
-    TQTimer *tqlayoutTimer;
+    TQTimer *layoutTimer;
     TQGuardedPtr<TQWidget> stretchableWidget, rightAligned;
 protected:
     virtual void virtual_hook( int id, void* data );

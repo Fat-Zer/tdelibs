@@ -71,7 +71,7 @@ static void setComboItem(TQComboBox *cb, const TQString& txt)
 		}
 }
 
-static int tqfindOption(const char *strs[], int n, const TQString& txt)
+static int findOption(const char *strs[], int n, const TQString& txt)
 {
 	for (int i=0;i<n;i+=2)
 		if (txt == strs[i]) return (i/2);
@@ -122,7 +122,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 	//WhatsThis strings.... (added by pfeifle@kde.org)
 	TQString whatsThisPrintPropertiesGeneralPage = i18n( " <qt> "
 			" <p><b>\"General\"</b> </p> "
-			" <p>This dialog page tqcontains <em>general</em> print job settings."
+			" <p>This dialog page contains <em>general</em> print job settings."
 			" General settings are applicable to most printers, most jobs "
 			" and most job file types. "
                         " <p>To get more specific help, enable the \"WhatsThis\" cursor and click on any of the "
@@ -244,7 +244,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
                         " The page image does not get scaled if you print 1 page per sheet (the default setting.). "
                         " <p><b>Note 2:</b> If you select multiple pages per sheet here, the scaling and re-arranging is done "
                         " by your printing system. Be aware, that some printers can by themselves print multiple pages per sheet. "
-                        " In this case you tqfind the option in the printer driver settings. Be careful: if you enable multiple "
+                        " In this case you find the option in the printer driver settings. Be careful: if you enable multiple "
                         " pages per sheet in both places, your printout will not look as you intended. </p>"
                         " <br> "
                         " <hr> "
@@ -261,15 +261,15 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 
 	// widget creation
 	QLabel	*m_pagesizelabel = new TQLabel(i18n("Page s&ize:"), this);
-	m_pagesizelabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
+	m_pagesizelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
           TQWhatsThis::add(m_pagesizelabel, whatsThisGeneralPageSizeLabel);
 
 	QLabel	*m_papertypelabel = new TQLabel(i18n("Paper t&ype:"), this);
-	m_papertypelabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
+	m_papertypelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
           TQWhatsThis::add(m_papertypelabel, whatsThisGeneralPaperTypeLabel);
 
 	QLabel	*m_inputslotlabel = new TQLabel(i18n("Paper so&urce:"), this);
-	m_inputslotlabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
+	m_inputslotlabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
           TQWhatsThis::add(m_inputslotlabel, whatsThisGeneralPaperSourceLabel);
 
 	m_pagesize = new TQComboBox(this);
@@ -304,19 +304,19 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 
 	m_portrait->setChecked(true);
 	m_orientpix = new TQLabel(m_orientbox);
-	m_orientpix->tqsetAlignment(Qt::AlignCenter);
+	m_orientpix->setAlignment(Qt::AlignCenter);
 	QRadioButton	*m_dupnone = new TQRadioButton(i18n("duplex orientation", "&None"), m_duplexbox);
 	QRadioButton	*m_duplong = new TQRadioButton(i18n("duplex orientation", "Lon&g side"), m_duplexbox);
 	QRadioButton	*m_dupshort = new TQRadioButton(i18n("duplex orientation", "S&hort side"), m_duplexbox);
 	m_dupnone->setChecked(true);
 	m_duplexpix = new TQLabel(m_duplexbox);
-	m_duplexpix->tqsetAlignment(Qt::AlignCenter);
+	m_duplexpix->setAlignment(Qt::AlignCenter);
 	QRadioButton	*m_nup1 = new TQRadioButton("&1", m_nupbox);
 	QRadioButton	*m_nup2 = new TQRadioButton("&2", m_nupbox);
 	QRadioButton	*m_nup4 = new TQRadioButton("&4", m_nupbox);
 	m_nup1->setChecked(true);
 	m_nuppix = new TQLabel(m_nupbox);
-	m_nuppix->tqsetAlignment(Qt::AlignCenter);
+	m_nuppix->setAlignment(Qt::AlignCenter);
 	m_startbanner = new TQComboBox(m_bannerbox);
 	m_endbanner = new TQComboBox(m_bannerbox);
 	QLabel	*m_startbannerlabel = new TQLabel(i18n("S&tart:"), m_bannerbox);
@@ -324,7 +324,7 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 	m_startbannerlabel->setBuddy(m_startbanner);
 	m_endbannerlabel->setBuddy(m_endbanner);
 
-	// tqlayout creation
+	// layout creation
 	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
           TQWhatsThis::add(this, whatsThisPrintPropertiesGeneralPage);
 	QGridLayout	*lay1 = new TQGridLayout(0, 3, 2, 0, KDialog::spacingHint());
@@ -346,27 +346,27 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 	lay2->addWidget(m_nupbox, 1, 1);
 	lay2->setColStretch(0, 1);
 	lay2->setColStretch(1, 1);
-	QGridLayout	*lay3 = new TQGridLayout(m_orientbox->tqlayout(), 4, 2,
+	QGridLayout	*lay3 = new TQGridLayout(m_orientbox->layout(), 4, 2,
 		KDialog::spacingHint());
 	lay3->addWidget(m_portrait, 0, 0);
 	lay3->addWidget(m_landscape, 1, 0);
 	lay3->addWidget(m_revland, 2, 0);
 	lay3->addWidget(m_revport, 3, 0);
 	lay3->addMultiCellWidget(m_orientpix, 0, 3, 1, 1);
-	QGridLayout	*lay4 = new TQGridLayout(m_duplexbox->tqlayout(), 3, 2,
+	QGridLayout	*lay4 = new TQGridLayout(m_duplexbox->layout(), 3, 2,
 		KDialog::spacingHint());
 	lay4->addWidget(m_dupnone, 0, 0);
 	lay4->addWidget(m_duplong, 1, 0);
 	lay4->addWidget(m_dupshort, 2, 0);
 	lay4->addMultiCellWidget(m_duplexpix, 0, 2, 1, 1);
 	lay4->setRowStretch( 0, 1 );
-	QGridLayout	*lay5 = new TQGridLayout(m_nupbox->tqlayout(), 3, 2,
+	QGridLayout	*lay5 = new TQGridLayout(m_nupbox->layout(), 3, 2,
 		KDialog::spacingHint());
 	lay5->addWidget(m_nup1, 0, 0);
 	lay5->addWidget(m_nup2, 1, 0);
 	lay5->addWidget(m_nup4, 2, 0);
 	lay5->addMultiCellWidget(m_nuppix, 0, 2, 1, 1);
-	QGridLayout	*lay6 = new TQGridLayout(m_bannerbox->tqlayout(), 2, 2,
+	QGridLayout	*lay6 = new TQGridLayout(m_bannerbox->layout(), 2, 2,
 		KDialog::spacingHint());
 	lay6->addWidget(m_startbannerlabel, 0, 0);
 	lay6->addWidget(m_endbannerlabel, 1, 0);
@@ -392,28 +392,28 @@ void KPGeneralPage::initialize()
 	if (driver())
 	{
 		// Size, Type and Source
-		DrListOption	*opt = (DrListOption*)driver()->tqfindOption("PageSize");
+		DrListOption	*opt = (DrListOption*)driver()->findOption("PageSize");
 		if (opt) initCombo(m_pagesize,opt);
 		else m_pagesize->setEnabled(false);
-		opt = (DrListOption*)driver()->tqfindOption("MediaType");
+		opt = (DrListOption*)driver()->findOption("MediaType");
 		if (opt) initCombo(m_papertype,opt);
 		else m_papertype->setEnabled(false);
-		opt = (DrListOption*)driver()->tqfindOption("InputSlot");
+		opt = (DrListOption*)driver()->findOption("InputSlot");
 		if (opt) initCombo(m_inputslot,opt);
 		else m_inputslot->setEnabled(false);
 		// Duplex
-		opt = (DrListOption*)driver()->tqfindOption("Duplex");
+		opt = (DrListOption*)driver()->findOption("Duplex");
 		if (opt)
 		{
 			if ( opt->choices()->count() == 2 )
 			{
 				// probably a On/Off option instead of the standard PS one
-				TQButton *btn = m_duplexbox->tqfind( DUPLEX_SHORT_ID );
+				TQButton *btn = m_duplexbox->find( DUPLEX_SHORT_ID );
 				m_duplexbox->remove( btn );
 				btn->hide();
 				//delete btn;
-				m_duplexbox->tqfind( DUPLEX_NONE_ID )->setText( i18n( "Disabled" ) );
-				m_duplexbox->tqfind( DUPLEX_LONG_ID )->setText( i18n( "Enabled" ) );
+				m_duplexbox->find( DUPLEX_NONE_ID )->setText( i18n( "Disabled" ) );
+				m_duplexbox->find( DUPLEX_LONG_ID )->setText( i18n( "Enabled" ) );
 				m_duplexpix->hide();
 			}
 			if (opt->currentChoice())
@@ -440,7 +440,7 @@ void KPGeneralPage::initialize()
 				m_pagesize->insertItem(i18n(default_size[i]));
 		// set default page size using locale settings
 		QString	psname = pageSizeToPageName((KPrinter::PageSize)(KGlobal::locale()->pageSize()));
-		int index = tqfindOption(default_size, DEFAULT_SIZE, psname);
+		int index = findOption(default_size, DEFAULT_SIZE, psname);
 		if (index >= 0)
 			m_pagesize->setCurrentItem(index);
 		// MediaType
@@ -487,20 +487,20 @@ void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 		{
 			value = *it;
 			DrBase	*ch;
-			if ((ch = (driver()->tqfindOption("PageSize"))) &&
-                            (ch = (static_cast<DrListOption*>(ch))->tqfindChoice(value)))
+			if ((ch = (driver()->findOption("PageSize"))) &&
+                            (ch = (static_cast<DrListOption*>(ch))->findChoice(value)))
 			{
 				if (m_pagesize->isEnabled())
 					setComboItem(m_pagesize, ch->get("text"));
 			}
-			else if ((ch = (driver()->tqfindOption("MediaType"))) &&
-                                 (ch = (static_cast<DrListOption*>(ch))->tqfindChoice(value)))
+			else if ((ch = (driver()->findOption("MediaType"))) &&
+                                 (ch = (static_cast<DrListOption*>(ch))->findChoice(value)))
 			{
 				if (m_papertype->isEnabled())
 					setComboItem(m_papertype, ch->get("text"));
 			}
-			else if ((ch = (driver()->tqfindOption("InputSlot"))) &&
-                                 (ch = static_cast<DrListOption*>(ch)->tqfindChoice(value)))
+			else if ((ch = (driver()->findOption("InputSlot"))) &&
+                                 (ch = static_cast<DrListOption*>(ch)->findChoice(value)))
 			{
 				if (m_inputslot)
 					setComboItem(m_inputslot, ch->get("text"));
@@ -513,19 +513,19 @@ void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 		value = opts["PageSize"];
 		if (m_pagesize->isEnabled() && !value.isEmpty())
 		{
-			DrBase	*ch = ((DrListOption*)driver()->tqfindOption("PageSize"))->tqfindChoice(value);
+			DrBase	*ch = ((DrListOption*)driver()->findOption("PageSize"))->findChoice(value);
 			if (ch) setComboItem(m_pagesize, ch->get("text"));
 		}
 		value = opts["MediaType"];
 		if (m_papertype->isEnabled() && !value.isEmpty())
 		{
-			DrBase	*ch = ((DrListOption*)driver()->tqfindOption("MediaType"))->tqfindChoice(value);
+			DrBase	*ch = ((DrListOption*)driver()->findOption("MediaType"))->findChoice(value);
 			if (ch) setComboItem(m_papertype, ch->get("text"));
 		}
 		value = opts["InputSlot"];
 		if (m_inputslot && m_inputslot->isEnabled() && !value.isEmpty())
 		{
-			DrBase	*ch = ((DrListOption*)driver()->tqfindOption("InputSlot"))->tqfindChoice(value);
+			DrBase	*ch = ((DrListOption*)driver()->findOption("InputSlot"))->findChoice(value);
 			if (ch) setComboItem(m_inputslot, ch->get("text"));
 		}
 
@@ -541,7 +541,7 @@ void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 	}
 	else
 	{
-		// Try to tqfind "media" option
+		// Try to find "media" option
 		value = opts["media"];
 		if (!value.isEmpty())
 		{
@@ -551,18 +551,18 @@ void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 			{
 				value = *it;
 
-				if ((index=tqfindOption(default_size,DEFAULT_SIZE,value)) >= 0)
+				if ((index=findOption(default_size,DEFAULT_SIZE,value)) >= 0)
 					m_pagesize->setCurrentItem(index);
-				else if ((index=tqfindOption(default_type,DEFAULT_TYPE,value)) >= 0)
+				else if ((index=findOption(default_type,DEFAULT_TYPE,value)) >= 0)
 					m_papertype->setCurrentItem(index);
-				else if ((index=tqfindOption(default_source,DEFAULT_SOURCE,value)) >= 0)
+				else if ((index=findOption(default_source,DEFAULT_SOURCE,value)) >= 0)
 					m_inputslot->setCurrentItem(index);
 				else
 					kdWarning() << "media option '" << value << "' not handled." << endl;
 			}
 		}
 
-		// Try to tqfind "sides" option
+		// Try to find "sides" option
 		value = opts["sides"];
 		int	ID(0);
 		if (value == "two-sided-long-edge") ID = 1;
@@ -619,23 +619,23 @@ void KPGeneralPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 	if (driver())
 	{
 		DrListOption	*opt;
-		if ((opt=(DrListOption*)driver()->tqfindOption("PageSize")) != NULL)
+		if ((opt=(DrListOption*)driver()->findOption("PageSize")) != NULL)
 		{
 			DrBase	*ch = opt->choices()->at(m_pagesize->currentItem());
 			if (incldef || ch->name() != opt->get("default")) opts["PageSize"] = ch->name();
 		}
-		if ((opt=(DrListOption*)driver()->tqfindOption("MediaType")) != NULL)
+		if ((opt=(DrListOption*)driver()->findOption("MediaType")) != NULL)
 		{
 			DrBase	*ch = opt->choices()->at(m_papertype->currentItem());
 			if (incldef || ch->name() != opt->get("default")) opts["MediaType"] = ch->name();
 		}
-		if ((opt=(DrListOption*)driver()->tqfindOption("InputSlot")) != NULL)
+		if ((opt=(DrListOption*)driver()->findOption("InputSlot")) != NULL)
 		{
 			DrBase	*ch = opt->choices()->at(m_inputslot->currentItem());
 			if (incldef || ch->name() != opt->get("default")) opts["InputSlot"] = ch->name();
 		}
 
-		if (m_duplexbox->isEnabled() && (opt=(DrListOption*)driver()->tqfindOption("Duplex")) != NULL)
+		if (m_duplexbox->isEnabled() && (opt=(DrListOption*)driver()->findOption("Duplex")) != NULL)
 		{
 			bool twoChoices = ( m_duplexbox->count() == 2 );
 			switch (m_duplexbox->id(m_duplexbox->selected()))

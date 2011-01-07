@@ -277,7 +277,7 @@ public:
     // overrides
     virtual NodeImpl *addChild(NodeImpl *child);
     virtual NodeImpl *insertBefore ( NodeImpl *newChild, NodeImpl *refChild, int &exceptioncode );
-    virtual void      tqreplaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode );
+    virtual void      replaceChild ( NodeImpl *newChild, NodeImpl *oldChild, int &exceptioncode );
     virtual void      removeChild ( NodeImpl *oldChild, int &exceptioncode );
     virtual NodeImpl *appendChild ( NodeImpl *newChild, int &exceptioncode );
     
@@ -285,7 +285,7 @@ public:
     virtual void attach();
     virtual void close();
 
-    /* Tries to tqfind the section containing row number outIndex.
+    /* Tries to find the section containing row number outIndex.
        Returns whether it succeeded or not. negative outIndex values
        are interpreted as being infinite.
 
@@ -295,7 +295,7 @@ public:
        On failure, outSection points to the last section of the table, and
        index is the offset the row would have if there was an additional section.
     */
-    bool tqfindRowSection(long inIndex,
+    bool findRowSection(long inIndex,
                         HTMLTableSectionElementImpl*& outSection,
                         long&                         outIndex) const;
 protected:

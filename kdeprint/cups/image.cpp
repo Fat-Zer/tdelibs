@@ -267,9 +267,9 @@ TQImage convertImage(const TQImage& image, int hue, int saturation, int brightne
 	   for (int j=0;j<image.height();j++)
 	   {
 	   	c = image.pixel(i,j);
-	   	r = tqRed(c);
-	   	g = tqGreen(c);
-	   	b = tqBlue(c);
+	   	r = qRed(c);
+	   	g = qGreen(c);
+	   	b = qBlue(c);
 
 	   	v = lut[0][0][r] + lut[1][0][g] + lut[2][0][b];
 	   	if (gamma != 1000) v = (int)rint(pow(v,gam));
@@ -289,7 +289,7 @@ TQImage convertImage(const TQImage& image, int hue, int saturation, int brightne
 	   	else if (v > 255) b2 = 255;
 	   	else b2 = v;
 
-	   	img.setPixel(i,j,tqRgb(r2,g2,b2));
+	   	img.setPixel(i,j,qRgb(r2,g2,b2));
 	   }
 	return img;
 }

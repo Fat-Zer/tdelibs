@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-/* This file tqcontains several often used phrases to avoid double
+/* This file contains several often used phrases to avoid double
    work. If you think, that a phrase belongs here, contact me
 */
 
@@ -186,7 +186,7 @@ i18n( "&Tools");
 i18n( "&Spelling...");
 i18n( "Show &Menubar");
 i18n( "Show &Toolbar");
-i18n( "Show &tqStatusbar");
+i18n( "Show &Statusbar");
 i18n( "Configure &Key Bindings...");
 i18n( "&Preferences...");
 i18n( "&Settings");

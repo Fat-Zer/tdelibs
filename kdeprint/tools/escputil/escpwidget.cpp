@@ -97,20 +97,20 @@ EscpWidget::EscpWidget(TQWidget *parent, const char *name)
 	connect(identbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotButtonClicked()));
 
 	QLabel	*printerlab = new TQLabel(i18n("Printer:"), this);
-	printerlab->tqsetAlignment(AlignRight|AlignVCenter);
+	printerlab->setAlignment(AlignRight|AlignVCenter);
 	QLabel	*devicelab = new TQLabel(i18n("Device:"), this);
-	devicelab->tqsetAlignment(AlignRight|AlignVCenter);
+	devicelab->setAlignment(AlignRight|AlignVCenter);
 	QLabel	*cleanlab = new TQLabel(i18n("Clea&n print head"), this);
 	QLabel	*nozzlelab = new TQLabel(i18n("&Print a nozzle test pattern"), this);
 	QLabel	*alignlab = new TQLabel(i18n("&Align print head"), this);
 	QLabel	*inklab = new TQLabel(i18n("&Ink level"), this);
 	QLabel	*identlab = new TQLabel(i18n("P&rinter identification"), this);
 
-	cleanlab->tqsetAlignment(AlignLeft|AlignVCenter|ShowPrefix);
-	nozzlelab->tqsetAlignment(AlignLeft|AlignVCenter|ShowPrefix);
-	alignlab->tqsetAlignment(AlignLeft|AlignVCenter|ShowPrefix);
-	inklab->tqsetAlignment(AlignLeft|AlignVCenter|ShowPrefix);
-	identlab->tqsetAlignment(AlignLeft|AlignVCenter|ShowPrefix);
+	cleanlab->setAlignment(AlignLeft|AlignVCenter|ShowPrefix);
+	nozzlelab->setAlignment(AlignLeft|AlignVCenter|ShowPrefix);
+	alignlab->setAlignment(AlignLeft|AlignVCenter|ShowPrefix);
+	inklab->setAlignment(AlignLeft|AlignVCenter|ShowPrefix);
+	identlab->setAlignment(AlignLeft|AlignVCenter|ShowPrefix);
 
 	cleanbtn->setAccel(TQAccel::shortcutKey(cleanlab->text()));
 	nozzlebtn->setAccel(TQAccel::shortcutKey(nozzlelab->text()));

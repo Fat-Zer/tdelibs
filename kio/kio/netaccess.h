@@ -56,7 +56,7 @@ namespace KIO {
    *
    * @short Provides an easy, synchronous interface to KIO file operations.
    */
-class KIO_EXPORT NetAccess : public TQObject
+class KIO_EXPORT NetAccess : public QObject
 {
   Q_OBJECT
 
@@ -92,7 +92,7 @@ public:
      * }
      * \endcode
      *
-     * Of course, your user interface will still process exposure/tqrepaint
+     * Of course, your user interface will still process exposure/repaint
      * events during the download.
      *
      * If the download fails, lastError() and lastErrorString() will be set.

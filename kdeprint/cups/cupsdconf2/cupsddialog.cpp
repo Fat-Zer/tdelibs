@@ -202,7 +202,7 @@ bool CupsdDialog::restartServer(TQString& msg)
         msg.truncate(0);
 	if (serverPid <= 0)
 	{
-		msg = i18n("Unable to tqfind a running CUPS server");
+		msg = i18n("Unable to find a running CUPS server");
 	}
 	else
 	{
@@ -337,7 +337,7 @@ int CupsdDialog::serverOwner()
 			while (!t.eof())
 			{
 				str = t.readLine();
-				if (str.tqfind("Uid:",0,false) == 0)
+				if (str.find("Uid:",0,false) == 0)
 				{
 					QStringList	list = TQStringList::split('\t', str, false);
 					if (list.count() >= 2)

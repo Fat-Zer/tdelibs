@@ -80,7 +80,7 @@
 		<context attribute="Headline" lineEndContext="#pop" name="Headline"/>
 		<context attribute="Comment" lineEndContext="#pop" name="Comment"/>
 
-		<!-- This context is not really used, but tqcontains the common rules -->
+		<!-- This context is not really used, but contains the common rules -->
 		<context name="CommonRules" lineEndContext="#stay" attribute="Normal Text" >
 			<DetectChar attribute="String" context="string" char="&quot;"/>
 			<DetectChar attribute="String" context="string2" char="'"/>

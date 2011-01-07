@@ -68,7 +68,7 @@ protected:
 public:
  IconPath(const TQString &ip) : TQString (ip)
  {
-   int n = tqfindRev('/');
+   int n = findRev('/');
    m_iconName = (n==-1) ? static_cast<TQString>(*this) : mid(n+1);
  }
 
@@ -136,8 +136,8 @@ void KIconCanvas::slotLoadFiles()
     for (it=mFiles.begin(), i=0; it!=end; ++it, i++)
     {
 	// Calling kapp->processEvents() makes the iconview flicker like hell
-	// (it's being tqrepainted once for every new item), so we don't do this.
-	// Instead, we directly tqrepaint the progress bar without going through
+	// (it's being repainted once for every new item), so we don't do this.
+	// Instead, we directly repaint the progress bar without going through
 	// the event-loop. We do that just once for every 10th item so that
 	// the progress bar doesn't flicker in turn. (pfeiffer)
 	if ( emitProgress >= 10 ) {
@@ -259,7 +259,7 @@ void KIconDialog::init()
     mGroupOrSize = KIcon::Desktop;
     mContext = KIcon::Any;
     mType = 0;
-    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::tqfromLatin1("*.png"));
+    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::fromLatin1("*.png"));
 
     TQWidget *main = new TQWidget( this );
     setMainWidget(main);
@@ -268,11 +268,11 @@ void KIconDialog::init()
     top->setSpacing( spacingHint() );
 
     TQButtonGroup *bgroup = new TQButtonGroup(0, Qt::Vertical, i18n("Icon Source"), main);
-    bgroup->tqlayout()->setSpacing(KDialog::spacingHint());
-    bgroup->tqlayout()->setMargin(KDialog::marginHint());
+    bgroup->layout()->setSpacing(KDialog::spacingHint());
+    bgroup->layout()->setMargin(KDialog::marginHint());
     top->addWidget(bgroup);
     connect(bgroup, TQT_SIGNAL(clicked(int)), TQT_SLOT(slotButtonClicked(int)));
-    TQGridLayout *grid = new TQGridLayout(bgroup->tqlayout(), 3, 2);
+    TQGridLayout *grid = new TQGridLayout(bgroup->layout(), 3, 2);
     mpRb1 = new TQRadioButton(i18n("S&ystem icons:"), bgroup);
     grid->addWidget(mpRb1, 1, 0);
     mpCombo = new TQComboBox(bgroup);
@@ -338,7 +338,7 @@ void KIconDialog::init()
         I18N_NOOP( "International" ),
         I18N_NOOP( "Mimetypes" ),
         I18N_NOOP( "Places" ),
-        I18N_NOOP( "tqStatus" ) };
+        I18N_NOOP( "Status" ) };
     static const KIcon::Context context_id[] = {
         KIcon::Action,
         KIcon::Animation,
@@ -351,7 +351,7 @@ void KIconDialog::init()
         KIcon::International,
         KIcon::MimeType,
         KIcon::Place,
-        KIcon::tqStatusIcon };
+        KIcon::StatusIcon };
     mNumContext = 0;
     int cnt = sizeof( context_text ) / sizeof( context_text[ 0 ] );
     // check all 3 arrays have same sizes
@@ -367,7 +367,7 @@ void KIconDialog::init()
             mContextMap[ mNumContext++ ] = context_id[ i ];
         }
     }
-    mpCombo->setFixedSize(mpCombo->tqsizeHint());
+    mpCombo->setFixedSize(mpCombo->sizeHint());
 
     mpBrowseBut->setFixedWidth(mpCombo->width());
 
@@ -631,8 +631,8 @@ void KIconDialog::slotProgress(int p)
 {
     mpProgress->setProgress(p);
     // commented out the following since setProgress already paints ther
-    // progress bar. ->tqrepaint() only makes it flicker
-    //mpProgress->tqrepaint();
+    // progress bar. ->repaint() only makes it flicker
+    //mpProgress->repaint();
 }
 
 void KIconDialog::slotFinished()

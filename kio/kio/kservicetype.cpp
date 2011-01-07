@@ -82,7 +82,7 @@ KServiceType::init( KDesktopFile *config)
 
   for( ; gIt != tmpList.end(); ++gIt )
   {
-    if ( (*gIt).tqfind( "Property::" ) == 0 )
+    if ( (*gIt).find( "Property::" ) == 0 )
     {
       config->setGroup( *gIt );
       TQVariant v = config->readPropertyEntry( "Value",
@@ -95,7 +95,7 @@ KServiceType::init( KDesktopFile *config)
   gIt = tmpList.begin();
   for( ; gIt != tmpList.end(); ++gIt )
   {
-    if( (*gIt).tqfind( "PropertyDef::" ) == 0 )
+    if( (*gIt).find( "PropertyDef::" ) == 0 )
     {
       config->setGroup( *gIt );
       m_mapPropDefs.insert( (*gIt).mid( 13 ),
@@ -125,11 +125,11 @@ KServiceType::KServiceType( TQDataStream& _str, int offset )
 void
 KServiceType::load( TQDataStream& _str )
 {
-  TQ_INT8 b;
+  Q_INT8 b;
   _str >> m_strName >> m_strIcon >> m_strComment >> m_mapProps >> m_mapPropDefs
        >> b;
   m_bValid = b;
-  m_bDerived = m_mapProps.tqcontains("X-KDE-Derived");
+  m_bDerived = m_mapProps.contains("X-KDE-Derived");
 }
 
 void
@@ -140,7 +140,7 @@ KServiceType::save( TQDataStream& _str )
   // You may add new fields at the end. Make sure to update the version
   // number in ksycoca.h
   _str << m_strName << m_strIcon << m_strComment << m_mapProps << m_mapPropDefs
-       << (TQ_INT8)m_bValid;
+       << (Q_INT8)m_bValid;
 }
 
 KServiceType::~KServiceType()
@@ -182,7 +182,7 @@ KServiceType::property( const TQString& _name ) const
   else if ( _name == "Comment" )
     v = TQVariant( m_strComment );
   else {
-    TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.tqfind( _name );
+    TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( _name );
     if ( it != m_mapProps.end() )
       v = it.data();
   }
@@ -209,7 +209,7 @@ KServiceType::propertyNames() const
 TQVariant::Type
 KServiceType::propertyDef( const TQString& _name ) const
 {
-  TQMap<TQString,TQVariant::Type>::ConstIterator it = m_mapPropDefs.tqfind( _name );
+  TQMap<TQString,TQVariant::Type>::ConstIterator it = m_mapPropDefs.find( _name );
   if ( it == m_mapPropDefs.end() )
     return TQVariant::Invalid;
   return it.data();
@@ -229,7 +229,7 @@ KServiceType::propertyDefNames() const
 
 KServiceType::Ptr KServiceType::serviceType( const TQString& _name )
 {
-  KServiceType * p = KServiceTypeFactory::self()->tqfindServiceTypeByName( _name );
+  KServiceType * p = KServiceTypeFactory::self()->findServiceTypeByName( _name );
   return KServiceType::Ptr( p );
 }
 
@@ -239,7 +239,7 @@ static void addUnique(KService::List &lst, TQDict<KService> &dict, const KServic
   for( ; it != newLst.end(); ++it )
   {
      KService *service = static_cast<KService*>(*it);
-     if (dict.tqfind(service->desktopEntryPath()))
+     if (dict.find(service->desktopEntryPath()))
         continue;
      dict.insert(service->desktopEntryPath(), service);
      lst.append(service);
@@ -254,7 +254,7 @@ KService::List KServiceType::offers( const TQString& _servicetype )
   KService::List lst;
 
   // Services associated directly with this servicetype (the normal case)
-  KServiceType::Ptr serv = KServiceTypeFactory::self()->tqfindServiceTypeByName( _servicetype );
+  KServiceType::Ptr serv = KServiceTypeFactory::self()->findServiceTypeByName( _servicetype );
   if ( serv )
     addUnique(lst, dict, KServiceFactory::self()->offers( serv->offset() ), false);
   else
@@ -270,7 +270,7 @@ KService::List KServiceType::offers( const TQString& _servicetype )
         TQString parent = mime->parentMimeType();
         if (parent.isEmpty())
            break;
-        mime = dynamic_cast<KMimeType *>(KServiceTypeFactory::self()->tqfindServiceTypeByName( parent ));
+        mime = dynamic_cast<KMimeType *>(KServiceTypeFactory::self()->findServiceTypeByName( parent ));
         if (!mime)
            break;
         
@@ -291,7 +291,7 @@ KService::List KServiceType::offers( const TQString& _servicetype )
        && _servicetype.left(4) != "all/" )
   {
     // Support for services associated with "all"
-    KServiceType * servAll = KServiceTypeFactory::self()->tqfindServiceTypeByName( "all/all" );
+    KServiceType * servAll = KServiceTypeFactory::self()->findServiceTypeByName( "all/all" );
     if ( servAll )
     {
         addUnique(lst, dict, KServiceFactory::self()->offers( servAll->offset() ), true);
@@ -303,7 +303,7 @@ KService::List KServiceType::offers( const TQString& _servicetype )
     // Support for services associated with "allfiles"
     if ( _servicetype != "inode/directory" && _servicetype != "inode/directory-locked" )
     {
-      KServiceType * servAllFiles = KServiceTypeFactory::self()->tqfindServiceTypeByName( "all/allfiles" );
+      KServiceType * servAllFiles = KServiceTypeFactory::self()->findServiceTypeByName( "all/allfiles" );
       if ( servAllFiles )
       {
         addUnique(lst, dict, KServiceFactory::self()->offers( servAllFiles->offset() ), true);
@@ -333,7 +333,7 @@ KServiceType::Ptr KServiceType::parentType()
   TQString parentSt = parentServiceType();
   if (!parentSt.isEmpty())
   {
-    d->parentType = KServiceTypeFactory::self()->tqfindServiceTypeByName( parentSt );
+    d->parentType = KServiceTypeFactory::self()->findServiceTypeByName( parentSt );
     if (!d->parentType)
       kdWarning(7009) << "'" << desktopEntryPath() << "' specifies undefined mimetype/servicetype '"<< parentSt << "'" << endl;
   }

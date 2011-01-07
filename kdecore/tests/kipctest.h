@@ -3,7 +3,7 @@
 
 #include <tqobject.h>
 
-class MyObject: public TQObject
+class MyObject: public QObject
 {
     Q_OBJECT
 public:

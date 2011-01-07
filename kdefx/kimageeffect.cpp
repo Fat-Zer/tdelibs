@@ -84,9 +84,9 @@ inline const T& fxClamp( const T& x, const T& low, const T& high )
 
 static inline unsigned int intensityValue(unsigned int color)
 {
-    return((unsigned int)((0.299*tqRed(color) +
-                           0.587*tqGreen(color) +
-                           0.1140000000000001*tqBlue(color))));
+    return((unsigned int)((0.299*qRed(color) +
+                           0.587*qGreen(color) +
+                           0.1140000000000001*qBlue(color))));
 }
 
 template<typename T>
@@ -164,7 +164,7 @@ TQImage KImageEffect::gradient(const TQSize &size, const TQColor &ca,
                 gl += gcdelta;
                 bl += bcdelta;
 
-                rgb = tqRgb( (rl>>16), (gl>>16), (bl>>16) );
+                rgb = qRgb( (rl>>16), (gl>>16), (bl>>16) );
 
                 for( x = 0; x < size.width(); x++ ) {
                     *p = rgb;
@@ -188,7 +188,7 @@ TQImage KImageEffect::gradient(const TQSize &size, const TQColor &ca,
                 gl += gcdelta;
                 bl += bcdelta;
 
-                *src++ = tqRgb( (rl>>16), (gl>>16), (bl>>16));
+                *src++ = qRgb( (rl>>16), (gl>>16), (bl>>16));
             }
 
             src = o_src;
@@ -253,7 +253,7 @@ TQImage KImageEffect::gradient(const TQSize &size, const TQColor &ca,
             for (y = 0; y < size.height(); y++) {
                 unsigned int *scanline = (unsigned int *)image.scanLine(y);
                 for (x = 0; x < size.width(); x++) {
-                    scanline[x] = tqRgb(xtable[0][x] + ytable[0][y],
+                    scanline[x] = qRgb(xtable[0][x] + ytable[0][y],
                                        xtable[1][x] + ytable[1][y],
                                        xtable[2][x] + ytable[2][y]);
                 }
@@ -310,12 +310,12 @@ TQImage KImageEffect::gradient(const TQSize &size, const TQColor &ca,
                 for (x = 0; x < w; x++, x2--) {
 		    unsigned int rgb = 0;
                     if (eff == PyramidGradient) {
-                        rgb = tqRgb(rcb-rSign*(xtable[0][x]+ytable[0][y]),
+                        rgb = qRgb(rcb-rSign*(xtable[0][x]+ytable[0][y]),
                                    gcb-gSign*(xtable[1][x]+ytable[1][y]),
                                    bcb-bSign*(xtable[2][x]+ytable[2][y]));
                     }
                     if (eff == RectangleGradient) {
-                        rgb = tqRgb(rcb - rSign *
+                        rgb = qRgb(rcb - rSign *
                                    QMAX(xtable[0][x], ytable[0][y]) * 2,
                                    gcb - gSign *
                                    QMAX(xtable[1][x], ytable[1][y]) * 2,
@@ -323,7 +323,7 @@ TQImage KImageEffect::gradient(const TQSize &size, const TQColor &ca,
                                    QMAX(xtable[2][x], ytable[2][y]) * 2);
                     }
                     if (eff == PipeCrossGradient) {
-                        rgb = tqRgb(rcb - rSign *
+                        rgb = qRgb(rcb - rSign *
                                    QMIN(xtable[0][x], ytable[0][y]) * 2,
                                    gcb - gSign *
                                    QMIN(xtable[1][x], ytable[1][y]) * 2,
@@ -331,7 +331,7 @@ TQImage KImageEffect::gradient(const TQSize &size, const TQColor &ca,
                                    QMIN(xtable[2][x], ytable[2][y]) * 2);
                     }
                     if (eff == EllipticGradient) {
-                        rgb = tqRgb(rcb - rSign *
+                        rgb = qRgb(rcb - rSign *
                                    (int)sqrt((xtable[0][x]*xtable[0][x] +
                                               ytable[0][y]*ytable[0][y])*2.0),
                                    gcb - gSign *
@@ -463,7 +463,7 @@ TQImage KImageEffect::unbalancedGradient(const TQSize &size, const TQColor &ca,
 	      dir = _xanti ? x : size.width() - 1 - x;
 	      rat = 1 - exp( - (float)x  * xbal );
 
-              src[dir] = tqRgb(rcb - (int) ( rDiff * rat ),
+              src[dir] = qRgb(rcb - (int) ( rDiff * rat ),
                               gcb - (int) ( gDiff * rat ),
                               bcb - (int) ( bDiff * rat ));
           }
@@ -516,7 +516,7 @@ TQImage KImageEffect::unbalancedGradient(const TQSize &size, const TQColor &ca,
 	  for (y = 0; y < h; y++) {
               unsigned int *scanline = (unsigned int *)image.scanLine(y);
               for (x = 0; x < w; x++) {
-                  scanline[x] = tqRgb(rcb - (xtable[0][x] + ytable[0][y]),
+                  scanline[x] = qRgb(rcb - (xtable[0][x] + ytable[0][y]),
                                      gcb - (xtable[1][x] + ytable[1][y]),
                                      bcb - (xtable[2][x] + ytable[2][y]));
               }
@@ -558,13 +558,13 @@ TQImage KImageEffect::unbalancedGradient(const TQSize &size, const TQColor &ca,
               for (x = 0; x < w; x++) {
                   if (eff == PyramidGradient)
                   {
-                      scanline[x] = tqRgb(rcb-rSign*(xtable[0][x]+ytable[0][y]),
+                      scanline[x] = qRgb(rcb-rSign*(xtable[0][x]+ytable[0][y]),
                                          gcb-gSign*(xtable[1][x]+ytable[1][y]),
                                          bcb-bSign*(xtable[2][x]+ytable[2][y]));
                   }
                   else if (eff == RectangleGradient)
                   {
-                      scanline[x] = tqRgb(rcb - rSign *
+                      scanline[x] = qRgb(rcb - rSign *
                                          QMAX(xtable[0][x], ytable[0][y]) * 2,
                                          gcb - gSign *
                                          QMAX(xtable[1][x], ytable[1][y]) * 2,
@@ -573,7 +573,7 @@ TQImage KImageEffect::unbalancedGradient(const TQSize &size, const TQColor &ca,
                   }
                   else if (eff == PipeCrossGradient)
                   {
-                      scanline[x] = tqRgb(rcb - rSign *
+                      scanline[x] = qRgb(rcb - rSign *
                                          QMIN(xtable[0][x], ytable[0][y]) * 2,
                                          gcb - gSign *
                                          QMIN(xtable[1][x], ytable[1][y]) * 2,
@@ -582,7 +582,7 @@ TQImage KImageEffect::unbalancedGradient(const TQSize &size, const TQColor &ca,
                   }
                   else if (eff == EllipticGradient)
                   {
-                      scanline[x] = tqRgb(rcb - rSign *
+                      scanline[x] = qRgb(rcb - rSign *
                                          (int)sqrt((xtable[0][x]*xtable[0][x] +
                                                     ytable[0][y]*ytable[0][y])*2.0),
                                          gcb - gSign *
@@ -628,12 +628,12 @@ namespace {
 
 struct KIE4Pack
 {
-    TQ_UINT16 data[4];
+    Q_UINT16 data[4];
 };
 
 struct KIE8Pack
 {
-    TQ_UINT16 data[8];
+    Q_UINT16 data[8];
 };
 
 }
@@ -675,7 +675,7 @@ TQImage& KImageEffect::intensity(TQImage &image, float percent)
 
     if(haveMMX)
     {
-        TQ_UINT16 p = TQ_UINT16(256.0f*(percent));
+        Q_UINT16 p = Q_UINT16(256.0f*(percent));
         KIE4Pack mult = {{p,p,p,0}};
 
         __asm__ __volatile__(
@@ -685,7 +685,7 @@ TQImage& KImageEffect::intensity(TQImage &image, float percent)
 
         unsigned int rem = pixels % 4;
         pixels -= rem;
-        TQ_UINT32 *end = ( data + pixels );
+        Q_UINT32 *end = ( data + pixels );
 
         if (brighten)
         {
@@ -815,26 +815,26 @@ TQImage& KImageEffect::intensity(TQImage &image, float percent)
 
         if(brighten){ // same here
             for(int i=0; i < pixels; ++i){
-                int r = tqRed(data[i]);
-                int g = tqGreen(data[i]);
-                int b = tqBlue(data[i]);
-                int a = tqAlpha(data[i]);
+                int r = qRed(data[i]);
+                int g = qGreen(data[i]);
+                int b = qBlue(data[i]);
+                int a = qAlpha(data[i]);
                 r = r + segTbl[r] > 255 ? 255 : r + segTbl[r];
                 g = g + segTbl[g] > 255 ? 255 : g + segTbl[g];
                 b = b + segTbl[b] > 255 ? 255 : b + segTbl[b];
-                data[i] = tqRgba(r, g, b,a);
+                data[i] = qRgba(r, g, b,a);
             }
         }
         else{
             for(int i=0; i < pixels; ++i){
-                int r = tqRed(data[i]);
-                int g = tqGreen(data[i]);
-                int b = tqBlue(data[i]);
-                int a = tqAlpha(data[i]);
+                int r = qRed(data[i]);
+                int g = qGreen(data[i]);
+                int b = qBlue(data[i]);
+                int a = qAlpha(data[i]);
                 r = r - segTbl[r] < 0 ? 0 : r - segTbl[r];
                 g = g - segTbl[g] < 0 ? 0 : g - segTbl[g];
                 b = b - segTbl[b] < 0 ? 0 : b - segTbl[b];
-                data[i] = tqRgba(r, g, b, a);
+                data[i] = qRgba(r, g, b, a);
             }
         }
         delete [] segTbl;
@@ -883,23 +883,23 @@ TQImage& KImageEffect::channelIntensity(TQImage &image, float percent,
     if(brighten){ // same here
         if(channel == Red){ // and here ;-)
             for(int i=0; i < pixels; ++i){
-                int c = tqRed(data[i]);
+                int c = qRed(data[i]);
                 c = c + segTbl[c] > 255 ? 255 : c + segTbl[c];
-                data[i] = tqRgba(c, tqGreen(data[i]), tqBlue(data[i]), tqAlpha(data[i]));
+                data[i] = qRgba(c, qGreen(data[i]), qBlue(data[i]), qAlpha(data[i]));
             }
         }
         else if(channel == Green){
             for(int i=0; i < pixels; ++i){
-                int c = tqGreen(data[i]);
+                int c = qGreen(data[i]);
                 c = c + segTbl[c] > 255 ? 255 : c + segTbl[c];
-                data[i] = tqRgba(tqRed(data[i]), c, tqBlue(data[i]), tqAlpha(data[i]));
+                data[i] = qRgba(qRed(data[i]), c, qBlue(data[i]), qAlpha(data[i]));
             }
         }
         else{
             for(int i=0; i < pixels; ++i){
-                int c = tqBlue(data[i]);
+                int c = qBlue(data[i]);
                 c = c + segTbl[c] > 255 ? 255 : c + segTbl[c];
-                data[i] = tqRgba(tqRed(data[i]), tqGreen(data[i]), c, tqAlpha(data[i]));
+                data[i] = qRgba(qRed(data[i]), qGreen(data[i]), c, qAlpha(data[i]));
             }
         }
 
@@ -907,23 +907,23 @@ TQImage& KImageEffect::channelIntensity(TQImage &image, float percent,
     else{
         if(channel == Red){
             for(int i=0; i < pixels; ++i){
-                int c = tqRed(data[i]);
+                int c = qRed(data[i]);
                 c = c - segTbl[c] < 0 ? 0 : c - segTbl[c];
-                data[i] = tqRgba(c, tqGreen(data[i]), tqBlue(data[i]), tqAlpha(data[i]));
+                data[i] = qRgba(c, qGreen(data[i]), qBlue(data[i]), qAlpha(data[i]));
             }
         }
         else if(channel == Green){
             for(int i=0; i < pixels; ++i){
-                int c = tqGreen(data[i]);
+                int c = qGreen(data[i]);
                 c = c - segTbl[c] < 0 ? 0 : c - segTbl[c];
-                data[i] = tqRgba(tqRed(data[i]), c, tqBlue(data[i]), tqAlpha(data[i]));
+                data[i] = qRgba(qRed(data[i]), c, qBlue(data[i]), qAlpha(data[i]));
             }
         }
         else{
             for(int i=0; i < pixels; ++i){
-                int c = tqBlue(data[i]);
+                int c = qBlue(data[i]);
                 c = c - segTbl[c] < 0 ? 0 : c - segTbl[c];
-                data[i] = tqRgba(tqRed(data[i]), tqGreen(data[i]), c, tqAlpha(data[i]));
+                data[i] = qRgba(qRed(data[i]), qGreen(data[i]), c, qAlpha(data[i]));
             }
         }
     }
@@ -982,22 +982,22 @@ TQImage& KImageEffect::modulate(TQImage &image, TQImage &modImage, bool reverse,
 	      color1 = *data1;
 
 	  if (type == Intensity || type == Contrast) {
-              r = tqRed(color1);
-	      g = tqGreen(color1);
-	      b = tqBlue(color1);
+              r = qRed(color1);
+	      g = qGreen(color1);
+	      b = qBlue(color1);
 	      if (channel != All) {
-      	        mod = (channel == Red) ? tqRed(color2) :
-		    (channel == Green) ? tqGreen(color2) :
-	    	    (channel == Blue) ? tqBlue(color2) :
-		    (channel == Gray) ? tqGray(color2) : 0;
+      	        mod = (channel == Red) ? qRed(color2) :
+		    (channel == Green) ? qGreen(color2) :
+	    	    (channel == Blue) ? qBlue(color2) :
+		    (channel == Gray) ? qGray(color2) : 0;
 	        mod = mod*factor/50;
 	      }
 
 	      if (type == Intensity) {
 	        if (channel == All) {
-	          r += r * factor/50 * tqRed(color2)/256;
-	          g += g * factor/50 * tqGreen(color2)/256;
-	          b += b * factor/50 * tqBlue(color2)/256;
+	          r += r * factor/50 * qRed(color2)/256;
+	          g += g * factor/50 * qGreen(color2)/256;
+	          b += b * factor/50 * qBlue(color2)/256;
 	        }
 	        else {
 	          r += r * mod/256;
@@ -1007,9 +1007,9 @@ TQImage& KImageEffect::modulate(TQImage &image, TQImage &modImage, bool reverse,
 	      }
 	      else { // Contrast
 	        if (channel == All) {
-		  r += (r-128) * factor/50 * tqRed(color2)/128;
-	          g += (g-128) * factor/50 * tqGreen(color2)/128;
-	          b += (b-128) * factor/50 * tqBlue(color2)/128;
+		  r += (r-128) * factor/50 * qRed(color2)/128;
+	          g += (g-128) * factor/50 * qGreen(color2)/128;
+	          b += (b-128) * factor/50 * qBlue(color2)/128;
 	        }
 	        else {
 	          r += (r-128) * mod/128;
@@ -1021,16 +1021,16 @@ TQImage& KImageEffect::modulate(TQImage &image, TQImage &modImage, bool reverse,
 	      if (r<0) r=0; if (r>255) r=255;
 	      if (g<0) g=0; if (g>255) g=255;
 	      if (b<0) b=0; if (b>255) b=255;
-	      a = tqAlpha(*data1);
-	      *data1 = tqRgba(r, g, b, a);
+	      a = qAlpha(*data1);
+	      *data1 = qRgba(r, g, b, a);
 	  }
 	  else if (type == Saturation || type == HueShift) {
 	      clr.setRgb(color1);
 	      clr.hsv(&h, &s, &v);
-      	      mod = (channel == Red) ? tqRed(color2) :
-		    (channel == Green) ? tqGreen(color2) :
-	    	    (channel == Blue) ? tqBlue(color2) :
-		    (channel == Gray) ? tqGray(color2) : 0;
+      	      mod = (channel == Red) ? qRed(color2) :
+		    (channel == Green) ? qGreen(color2) :
+	    	    (channel == Blue) ? qBlue(color2) :
+		    (channel == Gray) ? qGray(color2) : 0;
 	      mod = mod*factor/50;
 
 	      if (type == Saturation) {
@@ -1044,7 +1044,7 @@ TQImage& KImageEffect::modulate(TQImage &image, TQImage &modImage, bool reverse,
 	      }
 
 	      clr.setHsv(h, s, v);
-	      a = tqAlpha(*data1);
+	      a = qAlpha(*data1);
 	      *data1 = clr.rgb() | ((uint)(a & 0xff) << 24);
 	  }
 	  data1++; data2++; data2b++; x++;
@@ -1083,14 +1083,14 @@ TQImage& KImageEffect::blend(const TQColor& clr, TQImage& dst, float opacity)
 
 #ifdef USE_SSE2_INLINE_ASM
     if ( KCPUInfo::haveExtension( KCPUInfo::IntelSSE2 ) && pixels > 16 ) {
-        TQ_UINT16 alpha = TQ_UINT16( ( 1.0 - opacity ) * 256.0 );
+        Q_UINT16 alpha = Q_UINT16( ( 1.0 - opacity ) * 256.0 );
 
         KIE8Pack packedalpha = { { alpha, alpha, alpha, 256,
                                    alpha, alpha, alpha, 256 } };
 
-        TQ_UINT16 red   = TQ_UINT16( clr.red()   * 256 * opacity );
-        TQ_UINT16 green = TQ_UINT16( clr.green() * 256 * opacity );
-        TQ_UINT16 blue  = TQ_UINT16( clr.blue()  * 256 * opacity );
+        Q_UINT16 red   = Q_UINT16( clr.red()   * 256 * opacity );
+        Q_UINT16 green = Q_UINT16( clr.green() * 256 * opacity );
+        Q_UINT16 blue  = Q_UINT16( clr.blue()  * 256 * opacity );
 
         KIE8Pack packedcolor = { { blue, green, red, 0,
                                    blue, green, red, 0 } };
@@ -1103,10 +1103,10 @@ TQImage& KImageEffect::blend(const TQColor& clr, TQImage& dst, float opacity)
         : : "r"(&packedalpha), "r"(&packedcolor),
             "m"(packedcolor),  "m"(packedalpha) );
 
-        TQ_UINT32 *data = reinterpret_cast<TQ_UINT32*>( dst.bits() );
+        Q_UINT32 *data = reinterpret_cast<Q_UINT32*>( dst.bits() );
 
-        // Check how many pixels we need to process to achieve 16 byte tqalignment
-        int offset = (16 - (TQ_UINT32( data ) & 0x0f)) / 4;
+        // Check how many pixels we need to process to achieve 16 byte alignment
+        int offset = (16 - (Q_UINT32( data ) & 0x0f)) / 4;
 
         // The main loop processes 8 pixels / iteration
         int remainder = (pixels - offset) % 8;
@@ -1188,12 +1188,12 @@ TQImage& KImageEffect::blend(const TQColor& clr, TQImage& dst, float opacity)
 
 #ifdef USE_MMX_INLINE_ASM
     if ( KCPUInfo::haveExtension( KCPUInfo::IntelMMX ) && pixels > 1 ) {
-        TQ_UINT16 alpha = TQ_UINT16( ( 1.0 - opacity ) * 256.0 );
+        Q_UINT16 alpha = Q_UINT16( ( 1.0 - opacity ) * 256.0 );
         KIE4Pack packedalpha = { { alpha, alpha, alpha, 256 } };
 
-        TQ_UINT16 red   = TQ_UINT16( clr.red()   * 256 * opacity );
-        TQ_UINT16 green = TQ_UINT16( clr.green() * 256 * opacity );
-        TQ_UINT16 blue  = TQ_UINT16( clr.blue()  * 256 * opacity );
+        Q_UINT16 red   = Q_UINT16( clr.red()   * 256 * opacity );
+        Q_UINT16 green = Q_UINT16( clr.green() * 256 * opacity );
+        Q_UINT16 blue  = Q_UINT16( clr.blue()  * 256 * opacity );
 
         KIE4Pack packedcolor = { { blue, green, red, 0 } };
 
@@ -1203,7 +1203,7 @@ TQImage& KImageEffect::blend(const TQColor& clr, TQImage& dst, float opacity)
         "movq         (%1),    %%mm5\n\t"       // Set up color * alpha * 256 in MM5
         : : "r"(&packedalpha), "r"(&packedcolor), "m"(packedcolor), "m"(packedalpha) );
 
-        TQ_UINT32 *data = reinterpret_cast<TQ_UINT32*>( dst.bits() );
+        Q_UINT32 *data = reinterpret_cast<Q_UINT32*>( dst.bits() );
 
         // The main loop processes 4 pixels / iteration
         int remainder = pixels % 4;
@@ -1333,7 +1333,7 @@ TQImage& KImageEffect::blend(TQImage& src, TQImage& dst, float opacity)
 
 #ifdef USE_SSE2_INLINE_ASM
     if ( KCPUInfo::haveExtension( KCPUInfo::IntelSSE2 ) && pixels > 16 ) {
-        TQ_UINT16 alpha = TQ_UINT16( opacity * 256.0 );
+        Q_UINT16 alpha = Q_UINT16( opacity * 256.0 );
         KIE8Pack packedalpha = { { alpha, alpha, alpha, 0,
                                    alpha, alpha, alpha, 0 } };
 
@@ -1343,11 +1343,11 @@ TQImage& KImageEffect::blend(TQImage& src, TQImage& dst, float opacity)
         "movdqu      (%0), %%xmm6\n\t" // Set up alpha * 256 in XMM6
         : : "r"(&packedalpha), "m"(packedalpha) );
 
-        TQ_UINT32 *data1 = reinterpret_cast<TQ_UINT32*>( src.bits() );
-        TQ_UINT32 *data2 = reinterpret_cast<TQ_UINT32*>( dst.bits() );
+        Q_UINT32 *data1 = reinterpret_cast<Q_UINT32*>( src.bits() );
+        Q_UINT32 *data2 = reinterpret_cast<Q_UINT32*>( dst.bits() );
 
-        // Check how many pixels we need to process to achieve 16 byte tqalignment
-        int offset = (16 - (TQ_UINT32( data2 ) & 0x0f)) / 4;
+        // Check how many pixels we need to process to achieve 16 byte alignment
+        int offset = (16 - (Q_UINT32( data2 ) & 0x0f)) / 4;
 
         // The main loop processes 4 pixels / iteration
         int remainder = (pixels - offset) % 4;
@@ -1428,7 +1428,7 @@ TQImage& KImageEffect::blend(TQImage& src, TQImage& dst, float opacity)
 
 #ifdef USE_MMX_INLINE_ASM
     if ( KCPUInfo::haveExtension( KCPUInfo::IntelMMX ) && pixels > 1 ) {
-        TQ_UINT16 alpha = TQ_UINT16( opacity * 256.0 );
+        Q_UINT16 alpha = Q_UINT16( opacity * 256.0 );
         KIE4Pack packedalpha = { { alpha, alpha, alpha, 0 } };
 
         // Prepare the MM6 and MM7 registers for blending and unpacking
@@ -1437,8 +1437,8 @@ TQImage& KImageEffect::blend(TQImage& src, TQImage& dst, float opacity)
         "movq        (%0),   %%mm6\n\t"      // Set up alpha * 256 in MM6
         : : "r"(&packedalpha), "m"(packedalpha) );
 
-        TQ_UINT32 *data1 = reinterpret_cast<TQ_UINT32*>( src.bits() );
-        TQ_UINT32 *data2 = reinterpret_cast<TQ_UINT32*>( dst.bits() );
+        Q_UINT32 *data1 = reinterpret_cast<Q_UINT32*>( src.bits() );
+        Q_UINT32 *data2 = reinterpret_cast<Q_UINT32*>( dst.bits() );
 
         // The main loop processes 2 pixels / iteration
         int remainder = pixels % 2;
@@ -1602,17 +1602,17 @@ TQImage& KImageEffect::blend(TQImage &image, float initial_intensity,
             for (x = xi; x < (int)xf ; x++) {
                 if (eff == HorizontalGradient) intensity += var;
                 ind = x + ind_base;
-                r = tqRed  (data[ind]) + (int)(intensity *
-                                              (r_bgnd - tqRed  (data[ind])));
-                g = tqGreen(data[ind]) + (int)(intensity *
-                                              (g_bgnd - tqGreen(data[ind])));
-                b = tqBlue (data[ind]) + (int)(intensity *
-                                              (b_bgnd - tqBlue (data[ind])));
+                r = qRed  (data[ind]) + (int)(intensity *
+                                              (r_bgnd - qRed  (data[ind])));
+                g = qGreen(data[ind]) + (int)(intensity *
+                                              (g_bgnd - qGreen(data[ind])));
+                b = qBlue (data[ind]) + (int)(intensity *
+                                              (b_bgnd - qBlue (data[ind])));
                 if (r > 255) r = 255; if (r < 0 ) r = 0;
                 if (g > 255) g = 255; if (g < 0 ) g = 0;
                 if (b > 255) b = 255; if (b < 0 ) b = 0;
-                a = tqAlpha(data[ind]);
-                data[ind] = tqRgba(r, g, b, a);
+                a = qAlpha(data[ind]);
+                data[ind] = qRgba(r, g, b, a);
             }
         }
     }
@@ -1627,17 +1627,17 @@ TQImage& KImageEffect::blend(TQImage &image, float initial_intensity,
             for (y = 0; y < image_height ; y++) {
                 intensity = initial_intensity + tmp + yvar * y;
 
-                r = tqRed  (data[ind]) + (int)(intensity *
-                                              (r_bgnd - tqRed  (data[ind])));
-                g = tqGreen(data[ind]) + (int)(intensity *
-                                              (g_bgnd - tqGreen(data[ind])));
-                b = tqBlue (data[ind]) + (int)(intensity *
-                                              (b_bgnd - tqBlue (data[ind])));
+                r = qRed  (data[ind]) + (int)(intensity *
+                                              (r_bgnd - qRed  (data[ind])));
+                g = qGreen(data[ind]) + (int)(intensity *
+                                              (g_bgnd - qGreen(data[ind])));
+                b = qBlue (data[ind]) + (int)(intensity *
+                                              (b_bgnd - qBlue (data[ind])));
                 if (r > 255) r = 255; if (r < 0 ) r = 0;
                 if (g > 255) g = 255; if (g < 0 ) g = 0;
                 if (b > 255) b = 255; if (b < 0 ) b = 0;
-                a = tqAlpha(data[ind]);
-                data[ind] = tqRgba(r, g, b, a);
+                a = qAlpha(data[ind]);
+                data[ind] = qRgba(r, g, b, a);
 
                 ind += image_width;
             }
@@ -1662,31 +1662,31 @@ TQImage& KImageEffect::blend(TQImage &image, float initial_intensity,
 
                 //NW
                 ind = x + image_width  * y ;
-                r = tqRed  (data[ind]) + (int)(intensity *
-                                              (r_bgnd - tqRed  (data[ind])));
-                g = tqGreen(data[ind]) + (int)(intensity *
-                                              (g_bgnd - tqGreen(data[ind])));
-                b = tqBlue (data[ind]) + (int)(intensity *
-                                              (b_bgnd - tqBlue (data[ind])));
+                r = qRed  (data[ind]) + (int)(intensity *
+                                              (r_bgnd - qRed  (data[ind])));
+                g = qGreen(data[ind]) + (int)(intensity *
+                                              (g_bgnd - qGreen(data[ind])));
+                b = qBlue (data[ind]) + (int)(intensity *
+                                              (b_bgnd - qBlue (data[ind])));
                 if (r > 255) r = 255; if (r < 0 ) r = 0;
                 if (g > 255) g = 255; if (g < 0 ) g = 0;
                 if (b > 255) b = 255; if (b < 0 ) b = 0;
-                a = tqAlpha(data[ind]);
-                data[ind] = tqRgba(r, g, b, a);
+                a = qAlpha(data[ind]);
+                data[ind] = qRgba(r, g, b, a);
 
                 //NE
                 ind = image_width - x - 1 + image_width  * y ;
-                r = tqRed  (data[ind]) + (int)(intensity *
-                                              (r_bgnd - tqRed  (data[ind])));
-                g = tqGreen(data[ind]) + (int)(intensity *
-                                              (g_bgnd - tqGreen(data[ind])));
-                b = tqBlue (data[ind]) + (int)(intensity *
-                                              (b_bgnd - tqBlue (data[ind])));
+                r = qRed  (data[ind]) + (int)(intensity *
+                                              (r_bgnd - qRed  (data[ind])));
+                g = qGreen(data[ind]) + (int)(intensity *
+                                              (g_bgnd - qGreen(data[ind])));
+                b = qBlue (data[ind]) + (int)(intensity *
+                                              (b_bgnd - qBlue (data[ind])));
                 if (r > 255) r = 255; if (r < 0 ) r = 0;
                 if (g > 255) g = 255; if (g < 0 ) g = 0;
                 if (b > 255) b = 255; if (b < 0 ) b = 0;
-                a = tqAlpha(data[ind]);
-                data[ind] = tqRgba(r, g, b, a);
+                a = qAlpha(data[ind]);
+                data[ind] = qRgba(r, g, b, a);
             }
         }
 
@@ -1706,31 +1706,31 @@ TQImage& KImageEffect::blend(TQImage &image, float initial_intensity,
 
                 //SW
                 ind = x + image_width  * (image_height - y -1) ;
-                r = tqRed  (data[ind]) + (int)(intensity *
-                                              (r_bgnd - tqRed  (data[ind])));
-                g = tqGreen(data[ind]) + (int)(intensity *
-                                              (g_bgnd - tqGreen(data[ind])));
-                b = tqBlue (data[ind]) + (int)(intensity *
-                                              (b_bgnd - tqBlue (data[ind])));
+                r = qRed  (data[ind]) + (int)(intensity *
+                                              (r_bgnd - qRed  (data[ind])));
+                g = qGreen(data[ind]) + (int)(intensity *
+                                              (g_bgnd - qGreen(data[ind])));
+                b = qBlue (data[ind]) + (int)(intensity *
+                                              (b_bgnd - qBlue (data[ind])));
                 if (r > 255) r = 255; if (r < 0 ) r = 0;
                 if (g > 255) g = 255; if (g < 0 ) g = 0;
                 if (b > 255) b = 255; if (b < 0 ) b = 0;
-                a = tqAlpha(data[ind]);
-                data[ind] = tqRgba(r, g, b, a);
+                a = qAlpha(data[ind]);
+                data[ind] = qRgba(r, g, b, a);
 
                 //SE
                 ind = image_width-x-1 + image_width * (image_height - y - 1) ;
-                r = tqRed  (data[ind]) + (int)(intensity *
-                                              (r_bgnd - tqRed  (data[ind])));
-                g = tqGreen(data[ind]) + (int)(intensity *
-                                              (g_bgnd - tqGreen(data[ind])));
-                b = tqBlue (data[ind]) + (int)(intensity *
-                                              (b_bgnd - tqBlue (data[ind])));
+                r = qRed  (data[ind]) + (int)(intensity *
+                                              (r_bgnd - qRed  (data[ind])));
+                g = qGreen(data[ind]) + (int)(intensity *
+                                              (g_bgnd - qGreen(data[ind])));
+                b = qBlue (data[ind]) + (int)(intensity *
+                                              (b_bgnd - qBlue (data[ind])));
                 if (r > 255) r = 255; if (r < 0 ) r = 0;
                 if (g > 255) g = 255; if (g < 0 ) g = 0;
                 if (b > 255) b = 255; if (b < 0 ) b = 0;
-                a = tqAlpha(data[ind]);
-                data[ind] = tqRgba(r, g, b, a);
+                a = qAlpha(data[ind]);
+                data[ind] = qRgba(r, g, b, a);
             }
         }
     }
@@ -1809,16 +1809,16 @@ TQImage& KImageEffect::blend(TQImage &image1, TQImage &image2,
 	while(x < (int)x1) {
 	  color3 = (colorTable3) ? colorTable3[data3b[ind3]] : data3[ind3];
 
-          a = (channel == Red) ? tqRed(color3) :
-              (channel == Green) ? tqGreen(color3) :
-	      (channel == Blue) ? tqBlue(color3) : tqGray(color3);
+          a = (channel == Red) ? qRed(color3) :
+              (channel == Green) ? qGreen(color3) :
+	      (channel == Blue) ? qBlue(color3) : qGray(color3);
 
-	  r = (a*tqRed(data1[ind1]) + (256-a)*tqRed(data2[ind2]))/256;
-	  g = (a*tqGreen(data1[ind1]) + (256-a)*tqGreen(data2[ind2]))/256;
-	  b = (a*tqBlue(data1[ind1]) + (256-a)*tqBlue(data2[ind2]))/256;
+	  r = (a*qRed(data1[ind1]) + (256-a)*qRed(data2[ind2]))/256;
+	  g = (a*qGreen(data1[ind1]) + (256-a)*qGreen(data2[ind2]))/256;
+	  b = (a*qBlue(data1[ind1]) + (256-a)*qBlue(data2[ind2]))/256;
 
-	  a = tqAlpha(data1[ind1]);
-	  data1[ind1] = tqRgba(r, g, b, a);
+	  a = qAlpha(data1[ind1]);
+	  data1[ind1] = qRgba(r, g, b, a);
 
 	  ind1++; ind2++; ind3++; x++;
 	  if ( (x%x2) ==0) ind2 -= x2;
@@ -1837,13 +1837,13 @@ TQImage& KImageEffect::blend(TQImage &image1, TQImage &image2,
 
 unsigned int KImageEffect::lHash(unsigned int c)
 {
-    unsigned char r = tqRed(c), g = tqGreen(c), b = tqBlue(c), a = tqAlpha(c);
+    unsigned char r = qRed(c), g = qGreen(c), b = qBlue(c), a = qAlpha(c);
     unsigned char nr, ng, nb;
     nr =(r >> 1) + (r >> 2); nr = nr > r ? 0 : nr;
     ng =(g >> 1) + (g >> 2); ng = ng > g ? 0 : ng;
     nb =(b >> 1) + (b >> 2); nb = nb > b ? 0 : nb;
 
-    return tqRgba(nr, ng, nb, a);
+    return qRgba(nr, ng, nb, a);
 }
 
 
@@ -1851,13 +1851,13 @@ unsigned int KImageEffect::lHash(unsigned int c)
 
 unsigned int KImageEffect::uHash(unsigned int c)
 {
-    unsigned char r = tqRed(c), g = tqGreen(c), b = tqBlue(c), a = tqAlpha(c);
+    unsigned char r = qRed(c), g = qGreen(c), b = qBlue(c), a = qAlpha(c);
     unsigned char nr, ng, nb;
     nr = r + (r >> 3); nr = nr < r ? ~0 : nr;
     ng = g + (g >> 3); ng = ng < g ? ~0 : ng;
     nb = b + (b >> 3); nb = nb < b ? ~0 : nb;
 
-    return tqRgba(nr, ng, nb, a);
+    return qRgba(nr, ng, nb, a);
 }
 
 
@@ -1969,7 +1969,7 @@ TQImage& KImageEffect::flatten(TQImage &img, const TQColor &ca,
 	// pseudocolor
 	for (int i = 0; i < img.numColors(); i++) {
 	    col = img.color(i);
-	    int mean = (tqRed(col) + tqGreen(col) + tqBlue(col)) / 3;
+	    int mean = (qRed(col) + qGreen(col) + qBlue(col)) / 3;
 	    min = QMIN(min, mean);
 	    max = QMAX(max, mean);
 	}
@@ -1978,7 +1978,7 @@ TQImage& KImageEffect::flatten(TQImage &img, const TQColor &ca,
 	for (int y=0; y < img.height(); y++)
 	    for (int x=0; x < img.width(); x++) {
 		col = img.pixel(x, y);
-		int mean = (tqRed(col) + tqGreen(col) + tqBlue(col)) / 3;
+		int mean = (qRed(col) + qGreen(col) + qBlue(col)) / 3;
 		min = QMIN(min, mean);
 		max = QMAX(max, mean);
 	    }
@@ -1994,21 +1994,21 @@ TQImage& KImageEffect::flatten(TQImage &img, const TQColor &ca,
     if (img.numColors()) {
 	for (int i=0; i < img.numColors(); i++) {
 	    col = img.color(i);
-	    int mean = (tqRed(col) + tqGreen(col) + tqBlue(col)) / 3;
+	    int mean = (qRed(col) + qGreen(col) + qBlue(col)) / 3;
 	    int r = (int) (sr * (mean - min) + r1 + 0.5);
 	    int g = (int) (sg * (mean - min) + g1 + 0.5);
 	    int b = (int) (sb * (mean - min) + b1 + 0.5);
-	    img.setColor(i, tqRgba(r, g, b, tqAlpha(col)));
+	    img.setColor(i, qRgba(r, g, b, qAlpha(col)));
 	}
     } else {
 	for (int y=0; y < img.height(); y++)
 	    for (int x=0; x < img.width(); x++) {
 		col = img.pixel(x, y);
-		int mean = (tqRed(col) + tqGreen(col) + tqBlue(col)) / 3;
+		int mean = (qRed(col) + qGreen(col) + qBlue(col)) / 3;
 		int r = (int) (sr * (mean - min) + r1 + 0.5);
 		int g = (int) (sg * (mean - min) + g1 + 0.5);
 		int b = (int) (sb * (mean - min) + b1 + 0.5);
-		img.setPixel(x, y, tqRgba(r, g, b, tqAlpha(col)));
+		img.setPixel(x, y, qRgba(r, g, b, qAlpha(col)));
 	    }
     }
 
@@ -2065,7 +2065,7 @@ TQImage& KImageEffect::fade(TQImage &img, float val, const TQColor &color)
 	// pseudo color
 	for (int i=0; i<img.numColors(); i++) {
 	    col = img.color(i);
-	    cr = tqRed(col); cg = tqGreen(col); cb = tqBlue(col);
+	    cr = qRed(col); cg = qGreen(col); cb = qBlue(col);
 	    if (cr > red)
 		r = cr - tbl[cr - red];
 	    else
@@ -2078,7 +2078,7 @@ TQImage& KImageEffect::fade(TQImage &img, float val, const TQColor &color)
 		b = cb - tbl[cb - blue];
 	    else
 		b = cb + tbl[blue - cb];
-	    img.setColor(i, tqRgba(r, g, b, tqAlpha(col)));
+	    img.setColor(i, qRgba(r, g, b, qAlpha(col)));
 	}
 
     } else {
@@ -2087,7 +2087,7 @@ TQImage& KImageEffect::fade(TQImage &img, float val, const TQColor &color)
             QRgb *data = (QRgb *) img.scanLine(y);
             for (int x=0; x<img.width(); x++) {
                 col = *data;
-                cr = tqRed(col); cg = tqGreen(col); cb = tqBlue(col);
+                cr = qRed(col); cg = qGreen(col); cb = qBlue(col);
                 if (cr > red)
                     r = cr - tbl[cr - red];
                 else
@@ -2100,7 +2100,7 @@ TQImage& KImageEffect::fade(TQImage &img, float val, const TQColor &color)
                     b = cb - tbl[cb - blue];
                 else
                     b = cb + tbl[blue - cb];
-                *data++ = tqRgba(r, g, b, tqAlpha(col));
+                *data++ = qRgba(r, g, b, qAlpha(col));
             }
         }
     }
@@ -2116,7 +2116,7 @@ TQImage& KImageEffect::fade(TQImage &img, float val, const TQColor &color)
 
 // This code is adapted from code (C) Rik Hemsley <rik@kde.org>
 //
-// The formula used (r + b + g) /3 is different from the tqGray formula
+// The formula used (r + b + g) /3 is different from the qGray formula
 // used by Qt.  This is because our formula is much much faster.  If,
 // however, it turns out that this is producing sub-optimal images,
 // then it will have to change (kurt)
@@ -2149,12 +2149,12 @@ TQImage& KImageEffect::toGray(TQImage &img, bool fast)
         {
             for (int i = 0; i < img.numColors(); i++)
             {
-                register uint r = tqRed(img.color(i));
-                register uint g = tqGreen(img.color(i));
-                register uint b = tqBlue(img.color(i));
+                register uint r = qRed(img.color(i));
+                register uint g = qGreen(img.color(i));
+                register uint b = qBlue(img.color(i));
 
                 register uint gray = (((r + g) >> 1) + b) >> 1;
-                img.setColor(i, tqRgba(gray, gray, gray, tqAlpha(img.color(i))));
+                img.setColor(i, qRgba(gray, gray, gray, qAlpha(img.color(i))));
             }
         }
     }
@@ -2165,8 +2165,8 @@ TQImage& KImageEffect::toGray(TQImage &img, bool fast)
             (unsigned int *)img.tqcolorTable();
         int val, i;
         for(i=0; i < pixels; ++i){
-            val = tqGray(data[i]);
-            data[i] = tqRgba(val, val, val, tqAlpha(data[i]));
+            val = qGray(data[i]);
+            data[i] = qRgba(val, val, val, qAlpha(data[i]));
         }
     }
     return img;
@@ -2211,10 +2211,10 @@ TQImage& KImageEffect::contrast(TQImage &img, int c)
         (unsigned int *)img.tqcolorTable();
     int i, r, g, b;
     for(i=0; i < pixels; ++i){
-        r = tqRed(data[i]);
-        g = tqGreen(data[i]);
-        b = tqBlue(data[i]);
-        if(tqGray(data[i]) <= 127){
+        r = qRed(data[i]);
+        g = qGreen(data[i]);
+        b = qBlue(data[i]);
+        if(qGray(data[i]) <= 127){
             if(r - c > 0)
                 r -= c;
             else
@@ -2242,7 +2242,7 @@ TQImage& KImageEffect::contrast(TQImage &img, int c)
             else
                 b = 255;
         }
-        data[i] = tqRgba(r, g, b, tqAlpha(data[i]));
+        data[i] = qRgba(r, g, b, qAlpha(data[i]));
     }
     return(img);
 }
@@ -2290,11 +2290,11 @@ TQImage& KImageEffect::dither(TQImage &img, const TQColor *palette, int size)
 
         for ( i = 0; i < img.width(); i++ )
         {
-            rerr1[i] = rerr2[i] + tqRed( *ip );
+            rerr1[i] = rerr2[i] + qRed( *ip );
             rerr2[i] = 0;
-            gerr1[i] = gerr2[i] + tqGreen( *ip );
+            gerr1[i] = gerr2[i] + qGreen( *ip );
             gerr2[i] = 0;
-            berr1[i] = berr2[i] + tqBlue( *ip );
+            berr1[i] = berr2[i] + qBlue( *ip );
             berr2[i] = 0;
             ip++;
         }
@@ -2492,7 +2492,7 @@ bool KImageEffect::blend(
     --b; --i; --o;
     do
     {
-      while ( !(a=tqAlpha(*i)) && k>0 )
+      while ( !(a=qAlpha(*i)) && k>0 )
       {
         i--;
 //	*o=0;
@@ -2501,9 +2501,9 @@ bool KImageEffect::blend(
 	k--;
       };
 //      *o=0xFF;
-      *o = tqRgb(tqRed(*b) + (((tqRed(*i) - tqRed(*b)) * a) >> 8),
-                tqGreen(*b) + (((tqGreen(*i) - tqGreen(*b)) * a) >> 8),
-                tqBlue(*b) + (((tqBlue(*i) - tqBlue(*b)) * a) >> 8));
+      *o = qRgb(qRed(*b) + (((qRed(*i) - qRed(*b)) * a) >> 8),
+                qGreen(*b) + (((qGreen(*i) - qGreen(*b)) * a) >> 8),
+                qBlue(*b) + (((qBlue(*i) - qBlue(*b)) * a) >> 8));
       --i; --o; --b;
     } while (k--);
   }
@@ -2595,10 +2595,10 @@ void KImageEffect::blendOnLower(const TQImage &upper, const TQPoint &upperOffset
         for (int x = 0; x < lr.width(); x++) {
             QRgb *b = reinterpret_cast<QRgb*>(lower.scanLine(lr.y() + y)+ (lr.x() + x) * sizeof(QRgb));
             QRgb *d = reinterpret_cast<QRgb*>(upper.scanLine(upperOffset.y() + y) + (upperOffset.x() + x) * sizeof(QRgb));
-            int a = tqAlpha(*d);
-            *b = tqRgb(tqRed(*b) - (((tqRed(*b) - tqRed(*d)) * a) >> 8),
-                      tqGreen(*b) - (((tqGreen(*b) - tqGreen(*d)) * a) >> 8),
-                      tqBlue(*b) - (((tqBlue(*b) - tqBlue(*d)) * a) >> 8));
+            int a = qAlpha(*d);
+            *b = qRgb(qRed(*b) - (((qRed(*b) - qRed(*d)) * a) >> 8),
+                      qGreen(*b) - (((qGreen(*b) - qGreen(*d)) * a) >> 8),
+                      qBlue(*b) - (((qBlue(*b) - qBlue(*d)) * a) >> 8));
         }
     }
 }
@@ -2617,10 +2617,10 @@ void KImageEffect::blendOnLower(const TQImage &upper, const TQPoint &upperOffset
         for (int x = 0; x < lr.width(); x++) {
             QRgb *b = reinterpret_cast<QRgb*>(lower.scanLine(lr.y() + y)+ (lr.x() + x) * sizeof(QRgb));
             QRgb *d = reinterpret_cast<QRgb*>(upper.scanLine(upperOffset.y() + y) + (upperOffset.x() + x) * sizeof(QRgb));
-            int a = tqRound(opacity * tqAlpha(*d));
-            *b = tqRgb(tqRed(*b) - (((tqRed(*b) - tqRed(*d)) * a) >> 8),
-                      tqGreen(*b) - (((tqGreen(*b) - tqGreen(*d)) * a) >> 8),
-                      tqBlue(*b) - (((tqBlue(*b) - tqBlue(*d)) * a) >> 8));
+            int a = qRound(opacity * qAlpha(*d));
+            *b = qRgb(qRed(*b) - (((qRed(*b) - qRed(*d)) * a) >> 8),
+                      qGreen(*b) - (((qGreen(*b) - qGreen(*d)) * a) >> 8),
+                      qBlue(*b) - (((qBlue(*b) - qBlue(*d)) * a) >> 8));
         }
     }
 }
@@ -2940,10 +2940,10 @@ TQImage KImageEffect::despeckle(TQImage &src)
             srcData = (unsigned int *)src.scanLine(y);
             ++j;
             for(x=0; x < src.width(); ++x){
-                red_channel[j] = tqRed(srcData[x]);
-                green_channel[j] = tqGreen(srcData[x]);
-                blue_channel[j] = tqBlue(srcData[x]);
-                alpha_channel[j] = tqAlpha(srcData[x]);
+                red_channel[j] = qRed(srcData[x]);
+                green_channel[j] = qGreen(srcData[x]);
+                blue_channel[j] = qBlue(srcData[x]);
+                alpha_channel[j] = qAlpha(srcData[x]);
                 ++j;
             }
             ++j;
@@ -2958,10 +2958,10 @@ TQImage KImageEffect::despeckle(TQImage &src)
             ++j;
             for(x=0; x < src.width(); ++x){
                 pixel = *(cTable+srcData[x]);
-                red_channel[j] = tqRed(pixel);
-                green_channel[j] = tqGreen(pixel);
-                blue_channel[j] = tqBlue(pixel);
-                alpha_channel[j] = tqAlpha(pixel);
+                red_channel[j] = qRed(pixel);
+                green_channel[j] = qGreen(pixel);
+                blue_channel[j] = qBlue(pixel);
+                alpha_channel[j] = qAlpha(pixel);
                 ++j;
             }
             ++j;
@@ -3000,7 +3000,7 @@ TQImage KImageEffect::despeckle(TQImage &src)
         ++j;
         for (x=0; x < dest.width(); ++x)
         {
-            destData[x] = tqRgba(red_channel[j], green_channel[j],
+            destData[x] = qRgba(red_channel[j], green_channel[j],
                                 blue_channel[j], alpha_channel[j]);
             ++j;
         }
@@ -3121,10 +3121,10 @@ TQImage KImageEffect::addNoise(TQImage &src, NoiseType noise_type)
             srcData = (unsigned int *)src.scanLine(y);
             destData = (unsigned int *)dest.scanLine(y);
             for(x=0; x < src.width(); ++x){
-                destData[x] = tqRgba(generateNoise(tqRed(srcData[x]), noise_type),
-                                    generateNoise(tqGreen(srcData[x]), noise_type),
-                                    generateNoise(tqBlue(srcData[x]), noise_type),
-                                    tqAlpha(srcData[x]));
+                destData[x] = qRgba(generateNoise(qRed(srcData[x]), noise_type),
+                                    generateNoise(qGreen(srcData[x]), noise_type),
+                                    generateNoise(qBlue(srcData[x]), noise_type),
+                                    qAlpha(srcData[x]));
             }
         }
     }
@@ -3137,10 +3137,10 @@ TQImage KImageEffect::addNoise(TQImage &src, NoiseType noise_type)
             destData = (unsigned int *)dest.scanLine(y);
             for(x=0; x < src.width(); ++x){
                 pixel = *(cTable+srcData[x]);
-                destData[x] = tqRgba(generateNoise(tqRed(pixel), noise_type),
-                                    generateNoise(tqGreen(pixel), noise_type),
-                                    generateNoise(tqBlue(pixel), noise_type),
-                                    tqAlpha(pixel));
+                destData[x] = qRgba(generateNoise(qRed(pixel), noise_type),
+                                    generateNoise(qGreen(pixel), noise_type),
+                                    generateNoise(qBlue(pixel), noise_type),
+                                    qAlpha(pixel));
             }
         }
 
@@ -3233,10 +3233,10 @@ unsigned int KImageEffect::interpolateColor(TQImage *image, double x_offset,
     alpha = 1.0-x_offset;
     beta = 1.0-y_offset;
 
-    return(tqRgba((unsigned char)(beta*(alpha*tqRed(p)+x_offset*tqRed(q))+y_offset*(alpha*tqRed(r)+x_offset*tqRed(s))),
-                 (unsigned char)(beta*(alpha*tqGreen(p)+x_offset*tqGreen(q))+y_offset*(alpha*tqGreen(r)+x_offset*tqGreen(s))),
-                 (unsigned char)(beta*(alpha*tqBlue(p)+x_offset*tqBlue(q))+y_offset*(alpha*tqBlue(r)+x_offset*tqBlue(s))),
-                 (unsigned char)(beta*(alpha*tqAlpha(p)+x_offset*tqAlpha(q))+y_offset*(alpha*tqAlpha(r)+x_offset*tqAlpha(s)))));
+    return(qRgba((unsigned char)(beta*(alpha*qRed(p)+x_offset*qRed(q))+y_offset*(alpha*qRed(r)+x_offset*qRed(s))),
+                 (unsigned char)(beta*(alpha*qGreen(p)+x_offset*qGreen(q))+y_offset*(alpha*qGreen(r)+x_offset*qGreen(s))),
+                 (unsigned char)(beta*(alpha*qBlue(p)+x_offset*qBlue(q))+y_offset*(alpha*qBlue(r)+x_offset*qBlue(s))),
+                 (unsigned char)(beta*(alpha*qAlpha(p)+x_offset*qAlpha(q))+y_offset*(alpha*qAlpha(r)+x_offset*qAlpha(s)))));
 }
 
 TQImage KImageEffect::implode(TQImage &src, double factor,
@@ -3434,10 +3434,10 @@ void KImageEffect::solarize(TQImage &img, double factor)
         count = img.width()*img.height();
     }
     for(i=0; i < count; ++i){
-        data[i] = tqRgba(tqRed(data[i]) > threshold ? MaxRGB-tqRed(data[i]) : tqRed(data[i]),
-                        tqGreen(data[i]) > threshold ? MaxRGB-tqGreen(data[i]) : tqGreen(data[i]),
-                        tqBlue(data[i]) > threshold ? MaxRGB-tqBlue(data[i]) : tqBlue(data[i]),
-                        tqAlpha(data[i]));
+        data[i] = qRgba(qRed(data[i]) > threshold ? MaxRGB-qRed(data[i]) : qRed(data[i]),
+                        qGreen(data[i]) > threshold ? MaxRGB-qGreen(data[i]) : qGreen(data[i]),
+                        qBlue(data[i]) > threshold ? MaxRGB-qBlue(data[i]) : qBlue(data[i]),
+                        qAlpha(data[i]));
     }
 }
 
@@ -3694,7 +3694,7 @@ void KImageEffect::normalize(TQImage &image)
 {
     struct double_packet high, low, intensity, *histogram;
     struct short_packet *normalize_map;
-    TQ_INT64 number_pixels;
+    Q_INT64 number_pixels;
     int x, y;
     unsigned int *p, *q;
     register long i;
@@ -3725,10 +3725,10 @@ void KImageEffect::normalize(TQImage &image)
     for(y=0; y < image.height(); ++y){
         p = (unsigned int *)image.scanLine(y);
         for(x=0; x < image.width(); ++x){
-            histogram[(unsigned char)(tqRed(*p))].red++;
-            histogram[(unsigned char)(tqGreen(*p))].green++;
-            histogram[(unsigned char)(tqBlue(*p))].blue++;
-            histogram[(unsigned char)(tqAlpha(*p))].alpha++;
+            histogram[(unsigned char)(qRed(*p))].red++;
+            histogram[(unsigned char)(qGreen(*p))].green++;
+            histogram[(unsigned char)(qBlue(*p))].blue++;
+            histogram[(unsigned char)(qAlpha(*p))].alpha++;
             p++;
         }
     }
@@ -3736,7 +3736,7 @@ void KImageEffect::normalize(TQImage &image)
     /*
     Find the histogram boundaries by locating the 0.1 percent levels.
     */
-    number_pixels = (TQ_INT64)image.width()*image.height();
+    number_pixels = (Q_INT64)image.width()*image.height();
     threshold_intensity = number_pixels/1000;
 
     /* red */
@@ -3879,22 +3879,22 @@ void KImageEffect::normalize(TQImage &image)
         q = (unsigned int *)image.scanLine(y);
         for(x=0; x < image.width(); ++x){
             if(low.red != high.red)
-                r = (normalize_map[(unsigned short)(tqRed(q[x]))].red)/257;
+                r = (normalize_map[(unsigned short)(qRed(q[x]))].red)/257;
             else
-                r = tqRed(q[x]);
+                r = qRed(q[x]);
             if(low.green != high.green)
-                g = (normalize_map[(unsigned short)(tqGreen(q[x]))].green)/257;
+                g = (normalize_map[(unsigned short)(qGreen(q[x]))].green)/257;
             else
-                g = tqGreen(q[x]);
+                g = qGreen(q[x]);
             if(low.blue != high.blue)
-                b = (normalize_map[(unsigned short)(tqBlue(q[x]))].blue)/257;
+                b = (normalize_map[(unsigned short)(qBlue(q[x]))].blue)/257;
             else
-                b = tqBlue(q[x]);
+                b = qBlue(q[x]);
             if(low.alpha != high.alpha)
-                a = (normalize_map[(unsigned short)(tqAlpha(q[x]))].alpha)/257;
+                a = (normalize_map[(unsigned short)(qAlpha(q[x]))].alpha)/257;
             else
-                a = tqAlpha(q[x]);
-            q[x] = tqRgba(r, g, b, a);
+                a = qAlpha(q[x]);
+            q[x] = qRgba(r, g, b, a);
         }
     }
     liberateMemory(&normalize_map);
@@ -3933,10 +3933,10 @@ void KImageEffect::equalize(TQImage &image)
     for(y=0; y < image.height(); ++y){
         p = (unsigned int *)image.scanLine(y);
         for(x=0; x < image.width(); ++x){
-            histogram[(unsigned char)(tqRed(*p))].red++;
-            histogram[(unsigned char)(tqGreen(*p))].green++;
-            histogram[(unsigned char)(tqBlue(*p))].blue++;
-            histogram[(unsigned char)(tqAlpha(*p))].alpha++;
+            histogram[(unsigned char)(qRed(*p))].red++;
+            histogram[(unsigned char)(qGreen(*p))].green++;
+            histogram[(unsigned char)(qBlue(*p))].blue++;
+            histogram[(unsigned char)(qAlpha(*p))].alpha++;
             p++;
         }
     }
@@ -3978,22 +3978,22 @@ void KImageEffect::equalize(TQImage &image)
         q = (unsigned int *)image.scanLine(y);
         for(x=0; x < image.width(); ++x){
             if(low.red != high.red)
-                r = (equalize_map[(unsigned short)(tqRed(q[x]))].red/257);
+                r = (equalize_map[(unsigned short)(qRed(q[x]))].red/257);
             else
-                r = tqRed(q[x]);
+                r = qRed(q[x]);
             if(low.green != high.green)
-                g = (equalize_map[(unsigned short)(tqGreen(q[x]))].green/257);
+                g = (equalize_map[(unsigned short)(qGreen(q[x]))].green/257);
             else
-                g = tqGreen(q[x]);
+                g = qGreen(q[x]);
             if(low.blue != high.blue)
-                b = (equalize_map[(unsigned short)(tqBlue(q[x]))].blue/257);
+                b = (equalize_map[(unsigned short)(qBlue(q[x]))].blue/257);
             else
-                b = tqBlue(q[x]);
+                b = qBlue(q[x]);
             if(low.alpha != high.alpha)
-                a = (equalize_map[(unsigned short)(tqAlpha(q[x]))].alpha/257);
+                a = (equalize_map[(unsigned short)(qAlpha(q[x]))].alpha/257);
             else
-                a = tqAlpha(q[x]);
-            q[x] = tqRgba(r, g, b, a);
+                a = qAlpha(q[x]);
+            q[x] = qRgba(r, g, b, a);
         }
     }
     liberateMemory(&equalize_map);
@@ -4102,10 +4102,10 @@ void KImageEffect::blurScanLine(double *kernel, int width,
             q = src;
             for(i=0; i < columns; ++i){
                 if((i >= (x-width/2)) && (i <= (x+width/2))){
-                    red += (*p)*(tqRed(*q)*257);
-                    green += (*p)*(tqGreen(*q)*257);
-                    blue += (*p)*(tqBlue(*q)*257);
-                    alpha += (*p)*(tqAlpha(*q)*257);
+                    red += (*p)*(qRed(*q)*257);
+                    green += (*p)*(qGreen(*q)*257);
+                    blue += (*p)*(qBlue(*q)*257);
+                    alpha += (*p)*(qAlpha(*q)*257);
                 }
                 if(((i+width/2-x) >= 0) && ((i+width/2-x) < width))
                     scale+=kernel[i+width/2-x];
@@ -4123,7 +4123,7 @@ void KImageEffect::blurScanLine(double *kernel, int width,
             blue = blue < 0 ? 0 : blue > 65535 ? 65535 : blue;
             alpha = alpha < 0 ? 0 : alpha > 65535 ? 65535 : alpha;
 
-            dest[x] = tqRgba((unsigned char)(red/257UL),
+            dest[x] = qRgba((unsigned char)(red/257UL),
                             (unsigned char)(green/257UL),
                             (unsigned char)(blue/257UL),
                             (unsigned char)(alpha/257UL));
@@ -4137,10 +4137,10 @@ void KImageEffect::blurScanLine(double *kernel, int width,
         p = kernel+width/2-x;
         q = src;
         for(i=width/2-x; i < width; ++i){
-            red += (*p)*(tqRed(*q)*257);
-            green += (*p)*(tqGreen(*q)*257);
-            blue += (*p)*(tqBlue(*q)*257);
-            alpha += (*p)*(tqAlpha(*q)*257);
+            red += (*p)*(qRed(*q)*257);
+            green += (*p)*(qGreen(*q)*257);
+            blue += (*p)*(qBlue(*q)*257);
+            alpha += (*p)*(qAlpha(*q)*257);
             scale += (*p);
             p++;
             q++;
@@ -4157,7 +4157,7 @@ void KImageEffect::blurScanLine(double *kernel, int width,
         blue = blue < 0 ? 0 : blue > 65535 ? 65535 : blue;
         alpha = alpha < 0 ? 0 : alpha > 65535 ? 65535 : alpha;
 
-        dest[x] = tqRgba((unsigned char)(red/257UL),
+        dest[x] = qRgba((unsigned char)(red/257UL),
                         (unsigned char)(green/257UL),
                         (unsigned char)(blue/257UL),
                         (unsigned char)(alpha/257UL));
@@ -4168,10 +4168,10 @@ void KImageEffect::blurScanLine(double *kernel, int width,
         p = kernel;
         q = src+(x-width/2);
         for (i=0; i < (long) width; ++i){
-            red += (*p)*(tqRed(*q)*257);
-            green += (*p)*(tqGreen(*q)*257);
-            blue += (*p)*(tqBlue(*q)*257);
-            alpha += (*p)*(tqAlpha(*q)*257);
+            red += (*p)*(qRed(*q)*257);
+            green += (*p)*(qGreen(*q)*257);
+            blue += (*p)*(qBlue(*q)*257);
+            alpha += (*p)*(qAlpha(*q)*257);
             p++;
             q++;
         }
@@ -4185,7 +4185,7 @@ void KImageEffect::blurScanLine(double *kernel, int width,
         blue = blue < 0 ? 0 : blue > 65535 ? 65535 : blue;
         alpha = alpha < 0 ? 0 : alpha > 65535 ? 65535 : alpha;
 
-        dest[x] = tqRgba((unsigned char)(red/257UL),
+        dest[x] = qRgba((unsigned char)(red/257UL),
                         (unsigned char)(green/257UL),
                         (unsigned char)(blue/257UL),
                         (unsigned char)(alpha/257UL));
@@ -4197,10 +4197,10 @@ void KImageEffect::blurScanLine(double *kernel, int width,
         p = kernel;
         q = src+(x-width/2);
         for(i=0; i < columns-x+width/2; ++i){
-            red += (*p)*(tqRed(*q)*257);
-            green += (*p)*(tqGreen(*q)*257);
-            blue += (*p)*(tqBlue(*q)*257);
-            alpha += (*p)*(tqAlpha(*q)*257);
+            red += (*p)*(qRed(*q)*257);
+            green += (*p)*(qGreen(*q)*257);
+            blue += (*p)*(qBlue(*q)*257);
+            alpha += (*p)*(qAlpha(*q)*257);
             scale += (*p);
             p++;
             q++;
@@ -4216,7 +4216,7 @@ void KImageEffect::blurScanLine(double *kernel, int width,
         blue = blue < 0 ? 0 : blue > 65535 ? 65535 : blue;
         alpha = alpha < 0 ? 0 : alpha > 65535 ? 65535 : alpha;
 
-        dest[x] = tqRgba((unsigned char)(red/257UL),
+        dest[x] = qRgba((unsigned char)(red/257UL),
                         (unsigned char)(green/257UL),
                         (unsigned char)(blue/257UL),
                         (unsigned char)(alpha/257UL));
@@ -4381,10 +4381,10 @@ bool KImageEffect::convolveImage(TQImage *image, TQImage *dest,
                 for(mcx=0; mcx < width; ++mcx, ++sx){
                     mx = sx < 0 ? 0 : sx > image->width()-1 ?
                         image->width()-1 : sx;
-                    red += (*k)*(tqRed(jumpTable[my][mx])*257);
-                    green += (*k)*(tqGreen(jumpTable[my][mx])*257);
-                    blue += (*k)*(tqBlue(jumpTable[my][mx])*257);
-                    alpha += (*k)*(tqAlpha(jumpTable[my][mx])*257);
+                    red += (*k)*(qRed(jumpTable[my][mx])*257);
+                    green += (*k)*(qGreen(jumpTable[my][mx])*257);
+                    blue += (*k)*(qBlue(jumpTable[my][mx])*257);
+                    alpha += (*k)*(qAlpha(jumpTable[my][mx])*257);
                     ++k;
                 }
             }
@@ -4394,7 +4394,7 @@ bool KImageEffect::convolveImage(TQImage *image, TQImage *dest,
             blue = blue < 0 ? 0 : blue > 65535 ? 65535 : blue+0.5;
             alpha = alpha < 0 ? 0 : alpha > 65535 ? 65535 : alpha+0.5;
 
-            *q++ = tqRgba((unsigned char)(red/257UL),
+            *q++ = qRgba((unsigned char)(red/257UL),
                          (unsigned char)(green/257UL),
                          (unsigned char)(blue/257UL),
                          (unsigned char)(alpha/257UL));
@@ -4528,16 +4528,16 @@ TQImage KImageEffect::shade(TQImage &src, bool color_shading, double azimuth,
                     }
                 }
                 if(!color_shading){
-                    *q = tqRgba((unsigned char)(shade),
+                    *q = qRgba((unsigned char)(shade),
                                (unsigned char)(shade),
                                (unsigned char)(shade),
-                               tqAlpha(*s1));
+                               qAlpha(*s1));
                 }
                 else{
-                    *q = tqRgba((unsigned char)((shade*tqRed(*s1))/(MaxRGB+1)),
-                               (unsigned char)((shade*tqGreen(*s1))/(MaxRGB+1)),
-                               (unsigned char)((shade*tqBlue(*s1))/(MaxRGB+1)),
-                               tqAlpha(*s1));
+                    *q = qRgba((unsigned char)((shade*qRed(*s1))/(MaxRGB+1)),
+                               (unsigned char)((shade*qGreen(*s1))/(MaxRGB+1)),
+                               (unsigned char)((shade*qBlue(*s1))/(MaxRGB+1)),
+                               qAlpha(*s1));
                 }
                 ++s0;
                 ++s1;
@@ -4585,16 +4585,16 @@ TQImage KImageEffect::shade(TQImage &src, bool color_shading, double azimuth,
                     }
                 }
                 if(!color_shading){
-                    *q = tqRgba((unsigned char)(shade),
+                    *q = qRgba((unsigned char)(shade),
                                (unsigned char)(shade),
                                (unsigned char)(shade),
-                               tqAlpha(*(cTable+(*s1))));
+                               qAlpha(*(cTable+(*s1))));
                 }
                 else{
-                    *q = tqRgba((unsigned char)((shade*tqRed(*(cTable+(*s1))))/(MaxRGB+1)),
-                               (unsigned char)((shade*tqGreen(*(cTable+(*s1))))/(MaxRGB+1)),
-                               (unsigned char)((shade*tqBlue(*(cTable+(*s1))))/(MaxRGB+1)),
-                               tqAlpha(*s1));
+                    *q = qRgba((unsigned char)((shade*qRed(*(cTable+(*s1))))/(MaxRGB+1)),
+                               (unsigned char)((shade*qGreen(*(cTable+(*s1))))/(MaxRGB+1)),
+                               (unsigned char)((shade*qBlue(*(cTable+(*s1))))/(MaxRGB+1)),
+                               qAlpha(*s1));
                 }
                 ++s0;
                 ++s1;
@@ -4643,7 +4643,7 @@ void KImageEffect::contrastHSV(TQImage &img, bool sharpen)
                 brightness=0.0;
         v = (int)(brightness*255);
         c.setHsv(h, s, v);
-        data[i] = tqRgba(c.red(), c.green(), c.blue(), tqAlpha(data[i]));
+        data[i] = qRgba(c.red(), c.green(), c.blue(), qAlpha(data[i]));
     }
 }
 
@@ -4726,7 +4726,7 @@ static void bumpmap_convert_row( uint *row,
               unsigned int idx = (unsigned int)(intensityValue( *row ) + 0.5);
               *p++ = lut[(unsigned int) ( waterlevel +
                                           ( ( idx -
-                                              waterlevel) * tqBlue( *row )) / 255.0 )];
+                                              waterlevel) * qBlue( *row )) / 255.0 )];
           } else {
               unsigned int idx = (unsigned int)(intensityValue( *row ) + 0.5);
               *p++ = lut[idx];
@@ -4807,19 +4807,19 @@ static void bumpmap_row( uint           *src,
          * also change
          */
         if (compensate) {
-            int red = (int)((tqRed( *src ) * shade) / (params->compensation * 255));
-            int green = (int)((tqGreen( *src ) * shade) / (params->compensation * 255));
-            int blue = (int)((tqBlue( *src ) * shade) / (params->compensation * 255));
-            int alpha = (int)((tqAlpha( *src ) * shade) / (params->compensation * 255));
+            int red = (int)((qRed( *src ) * shade) / (params->compensation * 255));
+            int green = (int)((qGreen( *src ) * shade) / (params->compensation * 255));
+            int blue = (int)((qBlue( *src ) * shade) / (params->compensation * 255));
+            int alpha = (int)((qAlpha( *src ) * shade) / (params->compensation * 255));
             ++src;
-            *dest++ = tqRgba( red, green, blue, alpha );
+            *dest++ = qRgba( red, green, blue, alpha );
         } else {
-            int red = tqRed( *src ) * shade / 255;
-            int green = tqGreen( *src ) * shade / 255;
-            int blue = tqBlue( *src ) * shade / 255;
-            int alpha = tqAlpha( *src ) * shade / 255;
+            int red = qRed( *src ) * shade / 255;
+            int green = qGreen( *src ) * shade / 255;
+            int blue = qBlue( *src ) * shade / 255;
+            int alpha = qAlpha( *src ) * shade / 255;
             ++src;
-            *dest++ = tqRgba( red, green, blue, alpha );
+            *dest++ = qRgba( red, green, blue, alpha );
         }
 
         /* Next pixel */

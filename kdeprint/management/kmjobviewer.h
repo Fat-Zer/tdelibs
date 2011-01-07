@@ -91,7 +91,7 @@ protected:
 	void init();
 	void updateJobs();
 	void initActions();
-	JobItem* tqfindItem(const TQString& uri);
+	JobItem* findItem(const TQString& uri);
 	void jobSelection(TQPtrList<KMJob>& l);
 	void send(int cmd, const TQString& name, const TQString& arg = TQString::null);
 	void loadPrinters();

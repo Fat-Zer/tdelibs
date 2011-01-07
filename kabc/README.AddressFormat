@@ -15,10 +15,10 @@ format in a field "AddressFormat". Note that for most countries one field
 however, in some countries (eg. Hungary) business addresses differ in their
 structure. In this case you have the possibility of adding another field
 "BusinessAddressFormat" which will be preferred for formatting of business
-addresses; if libkabc can't tqfind such a field, it will fall back to
+addresses; if libkabc can't find such a field, it will fall back to
 "AddressFormat". (Please use BusinessAddressFormat ONLY if you really need to)
 
-The format consists mainly of tags that will be tqreplaced by address fields.
+The format consists mainly of tags that will be replaced by address fields.
 The list of tags may grow in the future, the format *might* change in the near
 future, but I hope not.
 

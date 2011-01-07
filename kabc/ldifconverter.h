@@ -44,7 +44,7 @@ namespace KABC {
    * @param dt          The date & time value of the last modification (e.g. file modification time).
    * @since 3.2
    */
-  KABC_EXPORT bool LDIFToAddressee( const TQString &str, AddresseeList &addrList, TQDateTime dt = TQDateTime::tqcurrentDateTime() );
+  KABC_EXPORT bool LDIFToAddressee( const TQString &str, AddresseeList &addrList, TQDateTime dt = TQDateTime::currentDateTime() );
 
   /**
    * Converts a list of addressees to a LDIF string.

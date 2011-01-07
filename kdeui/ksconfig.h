@@ -34,7 +34,7 @@ class KSpellConfigPrivate;
 /**
  * @brief Encoding for the spell checker
  * @note In the identifier names LATIN means ISO-8859, not ECMA Latin
- * @todo Should be tqreplaced by the charset strings
+ * @todo Should be replaced by the charset strings
  * because the config file would be more stable 
  * when inserting entries in the list
  */
@@ -67,7 +67,7 @@ enum KSpellClients {
 /**
  * A configuration class/dialog for KSpell.
  *
- * It tqcontains all of the options settings.The options are set to default
+ * It contains all of the options settings.The options are set to default
  * values by the constructor and can be reset either by using the
  * public interface or by using KSpellConfig as a widget in a dialog
  * (or, preferably a tabbed dialog using KDialogBase) and letting
@@ -139,10 +139,10 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
 
     /**
      *
-     * The @p _ignorelist tqcontains words you'd like KSpell
+     * The @p _ignorelist contains words you'd like KSpell
      * to ignore when it is spellchecking.  When you get a KSpellConfig
      * object back from KSpell (using KSpell::kcConfig()),
-     * the @p _ignorelist tqcontains whatever was put in by you plus
+     * the @p _ignorelist contains whatever was put in by you plus
      * any words the user has chosen to ignore via the dialog box.
      * It may be useful to save this list with the document being
      * edited to facilitate quicker future spellchecking.
@@ -150,11 +150,11 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
     void setIgnoreList( TQStringList _ignorelist );
 
     /**
-     * The @p _tqreplaceAllList tqcontains word you like that tqreplace
-     * word. Be careful that this list tqcontains word which is tqreplaced
+     * The @p _replaceAllList contains word you like that replace
+     * word. Be careful that this list contains word which is replaced
      * and new word.
      */
-    void setReplaceAllList( TQStringList _tqreplaceAllList );
+    void setReplaceAllList( TQStringList _replaceAllList );
 
     /**
      * Set an ISpell option.
@@ -193,7 +193,7 @@ class KDEUI_EXPORT KSpellConfig : public QWidget
     //TQString personalDict () const;
     int encoding() const;
     TQStringList ignoreList() const;
-    TQStringList tqreplaceAllList() const;
+    TQStringList replaceAllList() const;
 
     int client() const; ///< Spell checker client, see KSpellClients
 

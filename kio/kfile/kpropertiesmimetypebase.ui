@@ -4,7 +4,7 @@
     <property name="name">
         <cstring>widget2</cstring>
     </property>
-    <property name="tqgeometry">
+    <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
@@ -66,5 +66,5 @@
 <includes>
     <include location="global" impldecl="in implementation">klistview.h</include>
 </includes>
-<tqlayoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="11"/>
 </UI>

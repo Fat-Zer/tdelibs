@@ -93,7 +93,7 @@ Data for the second and last object.
 */
 
 
-KMultiPart::KMultiPart( TQWidget *tqparentWidget, const char *widgetName,
+KMultiPart::KMultiPart( TQWidget *parentWidget, const char *widgetName,
                         TQObject *parent, const char *name, const TQStringList& )
     : KParts::ReadOnlyPart( parent, name )
 {
@@ -101,7 +101,7 @@ KMultiPart::KMultiPart( TQWidget *tqparentWidget, const char *widgetName,
 
     setInstance( KMultiPartFactory::instance() );
 
-    TQVBox *box = new TQVBox( tqparentWidget, widgetName );
+    TQVBox *box = new TQVBox( parentWidget, widgetName );
     setWidget( box );
 
     m_extension = new KParts::BrowserExtension( this );
@@ -234,7 +234,7 @@ void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
                 }
                 else if ( !qstrnicmp( line.data(), "Content-Encoding:", 17 ) )
                 {
-                    TQString encoding = TQString::tqfromLatin1(line.data()+17).stripWhiteSpace().lower();
+                    TQString encoding = TQString::fromLatin1(line.data()+17).stripWhiteSpace().lower();
                     if (encoding == "gzip" || encoding == "x-gzip") {
                         m_gzip = true;
                     } else {
@@ -245,8 +245,8 @@ void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
                 else if ( !qstrnicmp( line.data(), "Content-Type:", 13 ) )
                 {
                     Q_ASSERT( m_nextMimeType.isNull() );
-                    m_nextMimeType = TQString::tqfromLatin1( line.data() + 14 ).stripWhiteSpace();
-                    int semicolon = m_nextMimeType.tqfind( ';' );
+                    m_nextMimeType = TQString::fromLatin1( line.data() + 14 ).stripWhiteSpace();
+                    int semicolon = m_nextMimeType.find( ';' );
                     if ( semicolon != -1 )
                         m_nextMimeType = m_nextMimeType.left( semicolon );
                     kdDebug() << "m_nextMimeType=" << m_nextMimeType << endl;
@@ -266,14 +266,14 @@ void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
                 else if ( !line.isEmpty() ) // this happens with e.g. Set-Cookie:
                     kdDebug() << "Ignoring header " << line << endl;
             } else {
-                if ( !tqstrncmp( line, m_boundary, m_boundaryLength ) )
+                if ( !qstrncmp( line, m_boundary, m_boundaryLength ) )
                 {
 #ifdef DEBUG_PARSING
                     kdDebug() << "boundary found!" << endl;
                     kdDebug() << "after it is " << line.data() + m_boundaryLength << endl;
 #endif
                     // Was it the very last boundary ?
-                    if ( !tqstrncmp( line.data() + m_boundaryLength, "--", 2 ) )
+                    if ( !qstrncmp( line.data() + m_boundaryLength, "--", 2 ) )
                     {
 #ifdef DEBUG_PARSING
                         kdDebug() << "Completed!" << endl;
@@ -312,7 +312,7 @@ void KMultiPart::setPart( const TQString& mimeType )
         guiFactory->removeClient( this );
     kdDebug() << "KMultiPart::setPart " << mimeType << endl;
     delete m_part;
-    // Try to tqfind an appropriate viewer component
+    // Try to find an appropriate viewer component
     m_part = KParts::ComponentFactory::createPartInstanceFromQuery<KParts::ReadOnlyPart>
              ( m_mimeType, TQString::null, widget(), 0L, this, 0L );
     if ( !m_part ) {

@@ -53,7 +53,7 @@ static void FAIL(const TQString &msg)
 
 static void popArg(TQCString &command, TQCString & line)
 {
-   int i = line.tqfind(' ');
+   int i = line.find(' ');
    if (i != -1)
    {
       command = line.left(i);
@@ -69,15 +69,15 @@ static void popArg(TQCString &command, TQCString & line)
 
 static void popArg(TQString &command, TQCString & line)
 {
-   int i = line.tqfind(' ');
+   int i = line.find(' ');
    if (i != -1)
    {
-      command = TQString::tqfromLatin1(line.left(i));
+      command = TQString::fromLatin1(line.left(i));
       line = line.mid(i+1);
    }
    else
    {
-      command = TQString::tqfromLatin1(line);
+      command = TQString::fromLatin1(line);
       line = 0;
    }   
 }
@@ -128,8 +128,8 @@ static void processCookie(TQCString &line)
    if (url.isEmpty())
       FAIL(TQString("Missing URL"));
 
-   line.tqreplace("%LASTYEAR%", *lastYear);
-   line.tqreplace("%NEXTYEAR%", *nextYear);
+   line.replace("%LASTYEAR%", *lastYear);
+   line.replace("%NEXTYEAR%", *nextYear);
 
    KHttpCookieList list = jar->makeCookies(urlStr, line, 0);
    
@@ -158,9 +158,9 @@ static void processCheck(TQCString &line)
    if (url.isEmpty())
       FAIL(TQString("Missing URL"));
 
-   TQString expectedCookies = TQString::tqfromLatin1(line);
+   TQString expectedCookies = TQString::fromLatin1(line);
 
-   TQString cookies = jar->tqfindCookies(urlStr, false, 0, 0).stripWhiteSpace();
+   TQString cookies = jar->findCookies(urlStr, false, 0, 0).stripWhiteSpace();
    if (cookies != expectedCookies)
       FAIL(urlStr+TQString("\nGot '%1' expected '%2'")
               .arg(cookies, expectedCookies));
@@ -246,8 +246,8 @@ int main(int argc, char *argv[])
    TQCString arg2;
    TQString result;
 
-   lastYear = new TQCString(TQString("Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::tqcurrentDate().year()-1).utf8());
-   nextYear = new TQCString(TQString(" expires=Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::tqcurrentDate().year()+1).utf8());
+   lastYear = new TQCString(TQString("Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::currentDate().year()-1).utf8());
+   nextYear = new TQCString(TQString(" expires=Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::currentDate().year()+1).utf8());
 
    KAboutData about("kcookietest", "kcookietest", "1.0", description, KAboutData::License_GPL, "(C) 2004 Waldo Bastian");
    KCmdLineArgs::init( argc, argv, &about);

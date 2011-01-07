@@ -60,7 +60,7 @@ static void transformToMsDos(const TQDateTime& dt, char* buffer)
 {
     if ( dt.isValid() )
     {
-        const TQ_UINT16 time =
+        const Q_UINT16 time =
              ( dt.time().hour() << 11 )    // 5 bit hour
            | ( dt.time().minute() << 5 )   // 6 bit minute
            | ( dt.time().second() >> 1 );  // 5 bit double seconds
@@ -68,7 +68,7 @@ static void transformToMsDos(const TQDateTime& dt, char* buffer)
         buffer[0] = char(time);
         buffer[1] = char(time >> 8);
 
-        const TQ_UINT16 date =
+        const Q_UINT16 date =
              ( ( dt.date().year() - 1980 ) << 9 ) // 7 bit year 1980-based
            | ( dt.date().month() << 5 )           // 4 bit month
            | ( dt.date().day() );                 // 5 bit day
@@ -87,13 +87,13 @@ static void transformToMsDos(const TQDateTime& dt, char* buffer)
 
 static time_t transformFromMsDos(const char* buffer)
 {
-    TQ_UINT16 time = (uchar)buffer[0] | ( (uchar)buffer[1] << 8 );
+    Q_UINT16 time = (uchar)buffer[0] | ( (uchar)buffer[1] << 8 );
     int h = time >> 11;
     int m = ( time & 0x7ff ) >> 5;
     int s = ( time & 0x1f ) * 2 ;
     TQTime qt(h, m, s);
 
-    TQ_UINT16 date = (uchar)buffer[2] | ( (uchar)buffer[3] << 8 );
+    Q_UINT16 date = (uchar)buffer[2] | ( (uchar)buffer[3] << 8 );
     int y = ( date >> 9 ) + 1980;
     int o = ( date & 0x1ff ) >> 5;
     int d = ( date & 0x1f );
@@ -148,7 +148,7 @@ static bool parseExtTimestamp(const char *buffer, int size, bool islocal,
   buffer += 1;
   size -= 1;
 
-  if (flags & 1) {		// tqcontains modification time
+  if (flags & 1) {		// contains modification time
     if (size < 4) {
       kdDebug(7040) << "premature end of extended timestamp (#2)" << endl;
       return false;
@@ -165,7 +165,7 @@ static bool parseExtTimestamp(const char *buffer, int size, bool islocal,
     return true;
   }/*end if*/
 
-  if (flags & 2) {		// tqcontains last access time
+  if (flags & 2) {		// contains last access time
     if (size < 4) {
       kdDebug(7040) << "premature end of extended timestamp (#3)" << endl;
       return true;
@@ -176,7 +176,7 @@ static bool parseExtTimestamp(const char *buffer, int size, bool islocal,
     size -= 4;
   }/*end if*/
 
-  if (flags & 4) {		// tqcontains creation time
+  if (flags & 4) {		// contains creation time
     if (size < 4) {
       kdDebug(7040) << "premature end of extended timestamp (#4)" << endl;
       return true;
@@ -234,7 +234,7 @@ static bool parseInfoZipUnixOld(const char *buffer, int size, bool islocal,
   */
 static bool parseInfoZipUnixNew(const char *buffer, int size, bool islocal,
 			ParseFileInfo &pfi) {
-  if (!islocal) {	// tqcontains nothing in central field
+  if (!islocal) {	// contains nothing in central field
     pfi.newinfounix = true;
     return true;
   }/*end if*/
@@ -417,7 +417,7 @@ bool KZip::openArchive( int mode )
     uint offset = 0; // holds offset, where we read
     int n;
 
-    // tqcontains information gathered from the local file headers
+    // contains information gathered from the local file headers
     TQAsciiDict<ParseFileInfo> pfi_map(1009, true /*case sensitive */, true /*copy keys*/);
     pfi_map.setAutoDelete(true);
 
@@ -462,9 +462,9 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
 	    int compression_mode = (uchar)buffer[2] | (uchar)buffer[3] << 8;
 	    time_t mtime = transformFromMsDos( buffer+4 );
 
-	    TQ_LONG compr_size = (uchar)buffer[12] | (uchar)buffer[13] << 8
+	    Q_LONG compr_size = (uchar)buffer[12] | (uchar)buffer[13] << 8
 	    			| (uchar)buffer[14] << 16 | (uchar)buffer[15] << 24;
-	    TQ_LONG uncomp_size = (uchar)buffer[16] | (uchar)buffer[17] << 8
+	    Q_LONG uncomp_size = (uchar)buffer[16] | (uchar)buffer[17] << 8
 	    			| (uchar)buffer[18] << 16 | (uchar)buffer[19] << 24;
 	    int namelen = (uchar)buffer[20] | (uchar)buffer[21] << 8;
 	    int extralen = (uchar)buffer[22] | (uchar)buffer[23] << 8;
@@ -512,7 +512,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
             // the file and we look for the signature 'PK\7\8'.
             if ( gpf & 8 )
             {
-	    	// here we have to read through the compressed data to tqfind
+	    	// here we have to read through the compressed data to find
 		// the next PKxx
 	        kdDebug(7040) << "trying to seek for next PK78" << endl;
                 bool foundSignature = false;
@@ -563,7 +563,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
             else
             {
 	    	// here we skip the compressed data and jump to the next header
-	        kdDebug(7040) << "general purpose bit flag indicates, that local file header tqcontains valid size" << endl;
+	        kdDebug(7040) << "general purpose bit flag indicates, that local file header contains valid size" << endl;
 		// check if this could be a symbolic link
 		if (compression_mode == NoCompression
 	    		&& uncomp_size <= max_path_len
@@ -578,10 +578,10 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
 		    }
 		} else {
 
-	            if ( compr_size > (TQ_LONG)dev->size() )
+	            if ( compr_size > (Q_LONG)dev->size() )
 		    {
 		    	// here we cannot trust the compressed size, so scan through the compressed
-			// data to tqfind the next header
+			// data to find the next header
 			bool foundSignature = false;
 
 			while (!foundSignature)
@@ -736,7 +736,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
 		else Q_ASSERT(access & S_IFDIR);
             }
 
-            int pos = name.tqfindRev( '/' );
+            int pos = name.findRev( '/' );
             if ( pos == -1 )
                 entryName = name;
             else
@@ -782,10 +782,10 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
                 }
                 else
                 {
-                    // In some tar files we can tqfind dir/./file => call cleanDirPath
+                    // In some tar files we can find dir/./file => call cleanDirPath
                     TQString path = TQDir::cleanDirPath( name.left( pos ) );
                     // Ensure container directory exists, create otherwise
-                    KArchiveDirectory * tdir = tqfindOrCreate( path );
+                    KArchiveDirectory * tdir = findOrCreate( path );
                     tdir->addEntry(entry);
                 }
             }
@@ -800,7 +800,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
         else if ( startOfFile )
         {
             // The file does not start with any ZIP header (e.g. self-extractable ZIP files)
-            // Therefore we need to tqfind the first PK\003\004 (local header)
+            // Therefore we need to find the first PK\003\004 (local header)
             kdDebug(7040) << "Try to skip start of file" << endl;
             startOfFile = false;
             bool foundSignature = false;
@@ -871,9 +871,9 @@ bool KZip::closeArchive()
     char buffer[ 22 ]; // first used for 12, then for 22 at the end
     uLong crc = crc32(0L, Z_NULL, 0);
 
-    TQ_LONG centraldiroffset = device()->at();
+    Q_LONG centraldiroffset = device()->at();
     //kdDebug(7040) << "closearchive: centraldiroffset: " << centraldiroffset << endl;
-    TQ_LONG atbackup = centraldiroffset;
+    Q_LONG atbackup = centraldiroffset;
     TQPtrListIterator<KZipFileEntry> it( d->m_fileList );
 
     for ( ; it.current() ; ++it )
@@ -994,7 +994,7 @@ bool KZip::closeArchive()
         if ( !ok )
             return false;
     }
-    TQ_LONG centraldirendoffset = device()->at();
+    Q_LONG centraldirendoffset = device()->at();
     //kdDebug(7040) << "closearchive: centraldirendoffset: " << centraldirendoffset << endl;
     //kdDebug(7040) << "closearchive: device()->at(): " << device()->at() << endl;
 
@@ -1133,13 +1133,13 @@ bool KZip::prepareWriting_impl(const TQString &name, const TQString &user,
     // Find or create parent dir
     KArchiveDirectory* parentDir = rootDir();
     TQString fileName( name );
-    int i = name.tqfindRev( '/' );
+    int i = name.findRev( '/' );
     if ( i != -1 )
     {
         TQString dir = name.left( i );
         fileName = name.mid( i + 1 );
         //kdDebug(7040) << "KZip::prepareWriting ensuring " << dir << " exists. fileName=" << fileName << endl;
-        parentDir = tqfindOrCreate( dir );
+        parentDir = findOrCreate( dir );
     }
 
     // construct a KZipFileEntry and add it to list
@@ -1212,7 +1212,7 @@ bool KZip::prepareWriting_impl(const TQString &name, const TQString &user,
         extfield[1] = 'T';
         extfield[2] = 13; // data size
         extfield[3] = 0;
-        extfield[4] = 1 | 2 | 4;	// tqcontains mtime, atime, ctime
+        extfield[4] = 1 | 2 | 4;	// contains mtime, atime, ctime
 
         extfield[5] = char(mtime);
         extfield[6] = char(mtime >> 8);
@@ -1383,9 +1383,9 @@ bool KZip::writeData_impl(const char * c, uint i)
     // and they didn't mention it in their docs...
     d->m_crc = crc32(d->m_crc, (const Bytef *) c , i);
 
-    TQ_LONG written = d->m_currentDev->writeBlock( c, i );
+    Q_LONG written = d->m_currentDev->writeBlock( c, i );
     //kdDebug(7040) << "KZip::writeData wrote " << i << " bytes." << endl;
-    bool ok = written == (TQ_LONG)i;
+    bool ok = written == (Q_LONG)i;
     if ( !ok )
         abort();
     return ok;
@@ -1453,7 +1453,7 @@ TQIODevice* KZipFileEntry::device() const
         return filterDev;
     }
 
-    kdError() << "This zip file tqcontains files compressed with method "
+    kdError() << "This zip file contains files compressed with method "
               << encoding() <<", this method is currently not supported by KZip,"
               <<" please use a command-line tool to handle this file." << endl;
     return 0L;

@@ -99,7 +99,7 @@ public:
   TQString textData() const;
 
   /**
-   * Returns whether the key tqcontains binary or text data.
+   * Returns whether the key contains binary or text data.
    */
   bool isBinary() const;
 

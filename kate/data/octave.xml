@@ -304,8 +304,8 @@
       <item> file_in_loadpath </item>
       <item> file_in_path </item>
       <item> filter </item>
-      <item> tqfind </item>
-      <item> tqfind_first_of_in_loadpath </item>
+      <item> find </item>
+      <item> find_first_of_in_loadpath </item>
       <item> finite </item>
       <item> fix </item>
       <item> floor </item>
@@ -450,7 +450,7 @@
       <item> real </item>
       <item> rehash </item>
       <item> rename </item>
-      <item> retqshape </item>
+      <item> reshape </item>
       <item> reverse </item>
       <item> rmdir </item>
       <item> rmfield </item>
@@ -543,7 +543,7 @@
       <item> fftn </item>
       <item> fftw_wisdom </item>
       <item> filter </item>
-      <item> tqfind </item>
+      <item> find </item>
       <item> fsolve </item>
       <item> fsolve_options </item>
       <item> gammainc </item>
@@ -748,7 +748,7 @@
       <item> fftshift </item>
       <item> figure </item>
       <item> fileparts </item>
-      <item> tqfindstr </item>
+      <item> findstr </item>
       <item> f_inv </item>
       <item> fir2sys </item>
       <item> flipdim </item>
@@ -1079,7 +1079,7 @@
       <item> strerror </item>
       <item> strjust </item>
       <item> strrep </item>
-      <item> struct_tqcontains </item>
+      <item> struct_contains </item>
       <item> struct_elements </item>
       <item> studentize </item>
       <item> sub2ind </item>
@@ -1321,7 +1321,7 @@
       <item> flog10 </item>
       <item> fprod </item>
       <item> freal </item>
-      <item> fretqshape </item>
+      <item> freshape </item>
       <item> fround </item>
       <item> fsin </item>
       <item> fsinh </item>
@@ -1355,7 +1355,7 @@
       <item> __grcla__ </item>
       <item> __grclf__ </item>
       <item> __grcmd__ </item>
-      <item> gretqshape </item>
+      <item> greshape </item>
       <item> __grexit__ </item>
       <item> __grfigure__ </item>
       <item> __grgetstat__ </item>
@@ -1439,7 +1439,7 @@
       <item> sinc_gsl </item>
       <item> spabs </item>
       <item> sparse </item>
-      <item> sptqfind </item>
+      <item> spfind </item>
       <item> spimag </item>
       <item> spinv </item>
       <item> splu </item>
@@ -1642,7 +1642,7 @@
       <item> filter2 </item>
       <item> filtfilt </item>
       <item> filtic </item>
-      <item> tqfindsym </item>
+      <item> findsym </item>
       <item> fir1 </item>
       <item> fir2 </item>
       <item> fixedpoint </item>
@@ -1877,7 +1877,7 @@
       <item> poly2ac </item>
       <item> poly2ar </item>
       <item> poly_2_ex </item>
-      <item> poly2tqmask </item>
+      <item> poly2mask </item>
       <item> poly2rc </item>
       <item> poly2sym </item>
       <item> poly2th </item>
@@ -1988,7 +1988,7 @@
       <item> str2double </item>
       <item> strcmpi </item>
       <item> stretchlim </item>
-      <item> strtqfind </item>
+      <item> strfind </item>
       <item> strmatch </item>
       <item> strncmp </item>
       <item> strncmpi </item>
@@ -2216,4 +2216,4 @@
   </general>
 
 </language>
-<!-- kate: space-indent on; indent-width 2; tqreplace-tabs on; -->
+<!-- kate: space-indent on; indent-width 2; replace-tabs on; -->

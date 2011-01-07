@@ -30,9 +30,9 @@ class KButtonBoxPrivate;
 /**
  * Container widget for buttons.
  *
- * This class uses Qt tqlayout control to place the buttons; can handle
+ * This class uses Qt layout control to place the buttons; can handle
  * both vertical and horizontal button placement.  The default border
- * is now @p 0 (making it easier to deal with tqlayouts). The space
+ * is now @p 0 (making it easier to deal with layouts). The space
  * between buttons is now more Motif compliant.
  *
  * @author Mario Weilguni <mweilguni@sime.com>
@@ -65,7 +65,7 @@ public:
     * This size is
     * calculated by the width/height of all buttons plus border/autoborder.
     */
-  virtual TQSize tqsizeHint() const;
+  virtual TQSize sizeHint() const;
   virtual TQSizePolicy sizePolicy() const;
   virtual void resizeEvent(TQResizeEvent *);
 
@@ -146,9 +146,9 @@ public:
     * This function must be called @em once after all buttons have been
     * inserted.
     *
-    * It will start tqlayout control.
+    * It will start layout control.
     */
-  void tqlayout();
+  void layout();
 
 public: // as PrivateData needs Item, it has to be exported
   class Item;

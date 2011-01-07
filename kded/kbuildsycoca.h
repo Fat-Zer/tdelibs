@@ -47,7 +47,7 @@ public:
     */
    bool recreate();
 
-   static bool checkTimestamps( TQ_UINT32 timestamp, const TQStringList &dirs );
+   static bool checkTimestamps( Q_UINT32 timestamp, const TQStringList &dirs );
 
    static TQStringList existingResourceDirs();
    

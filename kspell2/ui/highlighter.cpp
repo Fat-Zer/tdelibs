@@ -110,7 +110,7 @@ TQString Highlighter::currentLanguage() const
 
 void Highlighter::setCurrentLanguage( const TQString& lang )
 {
-    if ( !d->dictCache.tqfind( lang ) ) {
+    if ( !d->dictCache.find( lang ) ) {
         Dictionary *dict = d->broker->dictionary( lang );
         if ( dict ) {
             d->dictCache.insert( lang, dict );

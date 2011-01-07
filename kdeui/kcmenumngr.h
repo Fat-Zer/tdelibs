@@ -75,7 +75,7 @@ If the popup menu is invoked with the keyboard shortcut, it's shown at
 the position of the micro focus hint of the widget ( TQWidget::microFocusHint() ).
 */
 
-class KDEUI_EXPORT KContextMenuManager : public TQObject
+class KDEUI_EXPORT KContextMenuManager : public QObject
 {
     Q_OBJECT
 public:

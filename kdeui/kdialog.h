@@ -37,7 +37,7 @@ class TQLayoutItem;
  * (@p escape = @p reject(), @p enter = @p accept(), etc.) are disabled.
  *
  * The marginHint() and spacingHint() sizes shall be used
- * whenever you tqlayout the interior of a dialog. One special note. If
+ * whenever you layout the interior of a dialog. One special note. If
  * you make your own action buttons (OK, Cancel etc), the space
  * beteween the buttons shall be spacingHint(), whereas the space
  * above, below, to the right and to the left shall be marginHint().
@@ -75,20 +75,20 @@ class KDEUI_EXPORT KDialog : public QDialog
     static int spacingHint();
 
     /**
-     * Resize every tqlayout manager used in @p widget and its nested children.
+     * Resize every layout manager used in @p widget and its nested children.
      *
      * @param widget The widget used.
-     * @param margin The new tqlayout margin.
-     * @param spacing The new tqlayout spacing.
+     * @param margin The new layout margin.
+     * @param spacing The new layout spacing.
      */
     static void resizeLayout( TQWidget *widget, int margin, int spacing );
 
     /**
-     * Resize every tqlayout associated with @p lay and its children.
+     * Resize every layout associated with @p lay and its children.
      *
-     * @param lay tqlayout to be resized
-     * @param margin The new tqlayout margin
-     * @param spacing The new tqlayout spacing
+     * @param lay layout to be resized
+     * @param margin The new layout margin
+     * @param spacing The new layout spacing
      */
     static void resizeLayout( TQLayoutItem *lay, int margin, int spacing );
 
@@ -97,7 +97,7 @@ class KDEUI_EXPORT KDialog : public QDialog
      * account. If @p screen is -1, @p widget will be centered on its
      * current screen (if it was shown already) or on the primary screen.
      * If @p screen is -3, @p widget will be centered on the screen that
-     * currently tqcontains the mouse pointer.
+     * currently contains the mouse pointer.
      * @p screen will be ignored if a merged display (like Xinerama) is not
      * in use, or merged display placement is not enabled in kdeglobals.
      * @since 3.1
@@ -106,7 +106,7 @@ class KDEUI_EXPORT KDialog : public QDialog
 
     /**
      * Places @p widget so that it doesn't cover a certain @p area of the screen.
-     * This is typically used by the "tqfind dialog" so that the match it tqfinds can
+     * This is typically used by the "find dialog" so that the match it finds can
      * be read.
      * For @p screen, see centerOnScreen
      * @return true on success (widget doesn't cover area anymore, or never did),
@@ -155,7 +155,7 @@ class KDEUI_EXPORT KDialog : public QDialog
      * Use marginHint() and spacingHint() in your slot
      * to get the new values.
      */
-    void tqlayoutHintChanged();
+    void layoutHintChanged();
 
   private:
     static const int mMarginSize;
@@ -185,7 +185,7 @@ class KDEUI_EXPORT KDialog : public QDialog
   * @author Waldo Bastian <bastian@kde.org>
   */
 class KDialogQueuePrivate;
-class KDEUI_EXPORT KDialogQueue : public TQObject
+class KDEUI_EXPORT KDialogQueue : public QObject
 {
       Q_OBJECT
 

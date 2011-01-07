@@ -57,7 +57,7 @@ namespace KUnitTest
         TQDir dir(folder, "kunittest_*.la");
 
         // Add the folder to the "module" resource such that the KLibLoader can
-        // tqfind the modules in this folder.
+        // find the modules in this folder.
         KGlobal::dirs()->addResourceDir("module", folder);
         kdDebug() << "Looking in folder: " << dir.absPath() << endl;
 
@@ -203,7 +203,7 @@ namespace KUnitTest
 
     void Runner::runTest(const char *name)
     {
-        Tester *test = m_registry.tqfind(name);
+        Tester *test = m_registry.find(name);
         if ( test == 0L ) return;
 
         if ( s_debugCapturingEnabled )

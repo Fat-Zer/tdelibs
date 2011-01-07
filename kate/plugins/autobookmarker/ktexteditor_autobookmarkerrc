@@ -1,18 +1,18 @@
 [autobookmark0]
-filetqmask=*.pl;*.pm
+filemask=*.pl;*.pm
 flags=1
-mimetqmask=text/x-perl
+mimemask=text/x-perl
 pattern=sub \\w+
 
 [autobookmark1]
-filetqmask=*.hh;*.h
+filemask=*.hh;*.h
 flags=1
-mimetqmask=text/x-c++hdr
+mimemask=text/x-c++hdr
 pattern=^class\\s+[^;]+$
 
 [autobookmark2]
-filetqmask=*.js;*.html;*.HTML;*.htm;*.HTM;*.xhtml;*.asp
+filemask=*.js;*.html;*.HTML;*.htm;*.HTM;*.xhtml;*.asp
 flags=1
-mimetqmask=application/x-javascript;text/html
+mimemask=application/x-javascript;text/html
 pattern=\\s*function\\s+\\w+
 

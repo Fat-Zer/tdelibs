@@ -103,7 +103,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 
 	TQWhatsThis::add(m_usefile,
 		i18n("<p>The command will use an output file. If checked, make sure the "
-		     "command tqcontains an output tag.</p>"));
+		     "command contains an output tag.</p>"));
 	TQWhatsThis::add(m_command,
 		i18n("<p>The command to execute when printing on this special printer. Either enter "
 			 "the command to execute directly, or associate/create a command object with/for "
@@ -122,7 +122,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	TQWhatsThis::add(m_extensionlabel, extensionWhatsThis);
 	TQWhatsThis::add(m_extension, extensionWhatsThis);
 
-	// tqlayout creation
+	// layout creation
 	QVBoxLayout	*l0 = new TQVBoxLayout(dummy, 0, 10);
 	QGridLayout	*l1 = new TQGridLayout(0, 3, 3, 0, 5);
 	l0->addLayout(l1);
@@ -138,7 +138,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	l0->addWidget(sep);
 	l0->addWidget(m_gb);
 	l0->addWidget(m_outfile_gb);
-	QGridLayout	*l6 = new TQGridLayout(m_outfile_gb->tqlayout(), 3, 2, 10);
+	QGridLayout	*l6 = new TQGridLayout(m_outfile_gb->layout(), 3, 2, 10);
 	l6->addMultiCellWidget( m_usefile, 0, 0, 0, 1 );
 	l6->addWidget(m_mimetypelabel, 1, 0);
 	l6->addWidget(m_mimetype, 1, 1);
@@ -186,7 +186,7 @@ void KMSpecialPrinterDlg::setPrinter(KMPrinter *printer)
 	{
 		m_command->setCommand(printer->option("kde-special-command"));
 		m_usefile->setChecked(printer->option("kde-special-file") == "1");
-		int	index = m_mimelist.tqfindIndex(printer->option("kde-special-mimetype"));
+		int	index = m_mimelist.findIndex(printer->option("kde-special-mimetype"));
 		m_mimetype->setCurrentItem(index == -1 ? 0 : index);
 		m_extension->setText(printer->option("kde-special-extension"));
 		m_name->setText(printer->name());

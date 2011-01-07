@@ -1,5 +1,5 @@
 KMultiPart implements "server push" for KHTML/Konqueror:
-it handles the multipart/mixed and multipart/x-mixed-tqreplace
+it handles the multipart/mixed and multipart/x-mixed-replace
 mimetype, embedding the appropriate component (part).
 
 Documentation at http://www.netscape.com/assist/net_sites/pushpull.html
@@ -12,5 +12,5 @@ Testcases:
 TODO:
 * Use the new streaming API of KParts to pipe data into the part,
 the current code does that for KHTML only.
-* Change KHTML so that it embeds KMultiPart for images which send multipart/x-mixed-tqreplace
+* Change KHTML so that it embeds KMultiPart for images which send multipart/x-mixed-replace
 data.

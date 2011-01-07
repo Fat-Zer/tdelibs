@@ -170,7 +170,7 @@ void KateScrollBar::recomputeMarksPositions(bool forceFullUpdate)
 
     if (tree)
     {
-      KateCodeFoldingNode *node = tree->tqfindNodeForLine(line);
+      KateCodeFoldingNode *node = tree->findNodeForLine(line);
 
       while (node)
       {
@@ -244,7 +244,7 @@ class KateCmdLnWhatsThis : public QWhatsThis
           Kate::Command *cmd = KateCmd::self()->queryCommand( name );
           if ( cmd )
           {
-            if ( cmd->help( (Kate::View*)m_parent->tqparentWidget(), name, s ) )
+            if ( cmd->help( (Kate::View*)m_parent->parentWidget(), name, s ) )
               return beg + name + mid + s + end;
             else
               return beg + name + mid + i18n("No help for '%1'").arg( name ) + end;
@@ -380,7 +380,7 @@ void KateCmdLine::slotReturnPressed ( const TQString& text )
 
 void KateCmdLine::hideMe () // unless i have focus ;)
 {
-  if ( isVisibleTo(tqparentWidget()) && ! hasFocus() ) {
+  if ( isVisibleTo(parentWidget()) && ! hasFocus() ) {
      m_view->toggleCmdLine ();
   }
 }
@@ -697,7 +697,7 @@ KateIconBorder::KateIconBorder ( KateViewInternal* internalView, TQWidget *paren
   , m_cachedLNWidth( 0 )
   , m_maxCharWidth( 0 )
 {
-  tqsetSizePolicy( TQSizePolicy(  TQSizePolicy::Fixed, TQSizePolicy::Minimum ) );
+  setSizePolicy( TQSizePolicy(  TQSizePolicy::Fixed, TQSizePolicy::Minimum ) );
 
   setBackgroundMode( NoBackground );
 
@@ -757,7 +757,7 @@ void KateIconBorder::setFoldingMarkersOn( bool enable )
   TQTimer::singleShot( 0, this, TQT_SLOT(update()) );
 }
 
-TQSize KateIconBorder::tqsizeHint() const
+TQSize KateIconBorder::sizeHint() const
 {
   int w = 0;
 
@@ -866,7 +866,7 @@ void KateIconBorder::paintBorder (int /*x*/, int y, int /*width*/, int height)
     {
       // we went from n0 ->n9 lines or vice verca
       // this causes an extra updateGeometry() first time the line numbers
-      // are displayed, but tqsizeHint() is supposed to be const so we can't set
+      // are displayed, but sizeHint() is supposed to be const so we can't set
       // the cached value there.
       m_cachedLNWidth = lnWidth;
       m_oldBackgroundColor = m_view->renderer()->config()->iconBarColor();
@@ -1202,4 +1202,4 @@ void KateViewEncodingAction::setMode (int mode)
   doc->reloadFile();
 }
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

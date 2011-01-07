@@ -55,7 +55,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 /**
- * puts the track tqlayout of the device 'fname' into 'tracks'
+ * puts the track layout of the device 'fname' into 'tracks'
  * tracks structure: start sector, track number, ...
  * tracks should be 100*2 entry long (this is the maximum in the CD-ROM standard)
  * currently it's linux only, porters are welcome
@@ -115,7 +115,7 @@ KIso::KIso( const TQString& filename, const TQString & _mimetype )
     bool forced = true;
     if ( mimetype.isEmpty() )
     {
-        mimetype = KMimeType::tqfindByFileContent( filename )->name();
+        mimetype = KMimeType::findByFileContent( filename )->name();
         kdDebug() << "KIso::KIso mimetype=" << mimetype << endl;
 
         // Don't move to prepareDevice - the other constructor theoretically allows ANY filter
@@ -359,7 +359,7 @@ bool KIso::openArchive( int mode )
         memset(&buf,0,sizeof(struct stat));
         buf.st_mode=0777;
     } else {
-        /* If it's a block device, try to query the track tqlayout (for multisession) */
+        /* If it's a block device, try to query the track layout (for multisession) */
         if (m_startsec == -1 && S_ISBLK(buf.st_mode))
             trackno=getTracks(m_filename.latin1(),(int*) &tracks);
     }

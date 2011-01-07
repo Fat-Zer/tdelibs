@@ -118,7 +118,7 @@ void CJanusWidget::CListBox::computeWidth()
 		item = item->next();
 	}
 	if (verticalScrollBar()->isVisible())
-		w += verticalScrollBar()->tqsizeHint().width();
+		w += verticalScrollBar()->sizeHint().width();
 	w += (frameWidth()*2);
 	setFixedWidth(w);
 }
@@ -169,7 +169,7 @@ void CJanusWidget::addPage(TQWidget *w, const TQString& text, const TQString& he
 	page->m_text = text;
 	page->m_header = header;
 	page->m_pixmap = pix;
-	page->m_item = new CListBoxItem(m_iconlist,tqfindPrevItem(page),pix,text);
+	page->m_item = new CListBoxItem(m_iconlist,findPrevItem(page),pix,text);
 	m_iconlist->computeWidth();
 	m_stack->addWidget(w,m_pages.count());
 
@@ -179,10 +179,10 @@ void CJanusWidget::addPage(TQWidget *w, const TQString& text, const TQString& he
 
 void CJanusWidget::enablePage(TQWidget *w)
 {
-	CPage	*page = tqfindPage(w);
+	CPage	*page = findPage(w);
 	if (page && !page->m_item)
 	{
-		page->m_item = new CListBoxItem(m_iconlist,tqfindPrevItem(page),page->m_pixmap,page->m_text);
+		page->m_item = new CListBoxItem(m_iconlist,findPrevItem(page),page->m_pixmap,page->m_text);
 		m_iconlist->computeWidth();
 		if (m_iconlist->count() == 1)
 			m_iconlist->setSelected(page->m_item,true);
@@ -191,7 +191,7 @@ void CJanusWidget::enablePage(TQWidget *w)
 
 void CJanusWidget::disablePage(TQWidget *w)
 {
-	CPage	*page = tqfindPage(w);
+	CPage	*page = findPage(w);
 	if (page && page->m_item)
 	{
 		bool	needReselect(m_iconlist->isSelected(page->m_item));
@@ -208,7 +208,7 @@ void CJanusWidget::disablePage(TQWidget *w)
 
 void CJanusWidget::slotSelected(TQListBoxItem *item)
 {
-	CPage	*page = tqfindPage(item);
+	CPage	*page = findPage(item);
 	if (page)
 	{
 		m_stack->raiseWidget(page->m_widget);
@@ -221,7 +221,7 @@ void CJanusWidget::slotSelected(TQListBoxItem *item)
 	}
 }
 
-CJanusWidget::CPage* CJanusWidget::tqfindPage(TQWidget *w)
+CJanusWidget::CPage* CJanusWidget::findPage(TQWidget *w)
 {
 	TQPtrListIterator<CPage>	it(m_pages);
 	for (;it.current();++it)
@@ -230,7 +230,7 @@ CJanusWidget::CPage* CJanusWidget::tqfindPage(TQWidget *w)
 	return 0;
 }
 
-CJanusWidget::CPage* CJanusWidget::tqfindPage(TQListBoxItem *i)
+CJanusWidget::CPage* CJanusWidget::findPage(TQListBoxItem *i)
 {
 	TQPtrListIterator<CPage>	it(m_pages);
 	for (;it.current();++it)
@@ -239,9 +239,9 @@ CJanusWidget::CPage* CJanusWidget::tqfindPage(TQListBoxItem *i)
 	return 0;
 }
 
-TQListBoxItem* CJanusWidget::tqfindPrevItem(CPage *p)
+TQListBoxItem* CJanusWidget::findPrevItem(CPage *p)
 {
-	if (m_pages.tqfindRef(p) == -1)
+	if (m_pages.findRef(p) == -1)
 		m_pages.last();
 	else
 		m_pages.prev();

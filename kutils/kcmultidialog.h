@@ -72,8 +72,8 @@ public:
 
 
    /**
-     * Constructor for the predefined tqlayout mode where you specify the
-     * kind of tqlayout (face) and also add buttons. Note that the User1 button
+     * Constructor for the predefined layout mode where you specify the
+     * kind of layout (face) and also add buttons. Note that the User1 button
      * of KDialogBase is already used to provide a "Reset" button so only
      * two more buttons are available to users of KCMultiDialog. When clicked 
      * they trigger slotUser2() and slotUser3(). 
@@ -212,7 +212,7 @@ protected slots:
     /**
      * This slot is called when the user presses the "Help" Button.
      * It reads the DocPath field of the currently selected KControl
-     * module's .desktop file to tqfind the path to the documentation,
+     * module's .desktop file to find the path to the documentation,
      * which it then attempts to load.
      * 
      * You can reimplement this slot if needed.

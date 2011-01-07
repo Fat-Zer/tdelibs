@@ -59,7 +59,7 @@ SelectDialog::SelectDialog( TQPtrList<Resource> list, TQWidget *parent,
   buttonBox->addStretch();
   buttonBox->addButton( KStdGuiItem::ok(), this, TQT_SLOT( accept() ) );
   buttonBox->addButton( KStdGuiItem::cancel(), this, TQT_SLOT( reject() ) );
-  buttonBox->tqlayout();
+  buttonBox->layout();
 
   mainLayout->addWidget( buttonBox );
 

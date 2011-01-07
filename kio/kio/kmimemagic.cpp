@@ -141,10 +141,10 @@ struct magic {
 #define LELONG    11
 #define LEDATE    12
 	VALUETYPE value;        /* either number or string */
-	unsigned long tqmask;     /* tqmask before comparison with value */
+	unsigned long mask;     /* mask before comparison with value */
 	char nospflag;          /* suppress space character */
 
-	/* NOTE: this string is suspected of overrunning - tqfind it! */
+	/* NOTE: this string is suspected of overrunning - find it! */
 	char desc[MAXDESC];     /* description */
 };
 
@@ -525,7 +525,7 @@ class KMimeMagicUtimeConf
 public:
     KMimeMagicUtimeConf()
     {
-        tmpDirs << TQString::tqfromLatin1("/tmp"); // default value
+        tmpDirs << TQString::fromLatin1("/tmp"); // default value
 
         // The trick is that we also don't want the user to override globally set
         // directories. So we have to misuse KStandardDirs :}
@@ -565,8 +565,8 @@ public:
 
     bool restoreAccessTime( const TQString & file ) const
     {
-        TQString dir = file.left( file.tqfindRev( '/' ) );
-        bool res = tmpDirs.tqcontains( dir );
+        TQString dir = file.left( file.findRev( '/' ) );
+        bool res = tmpDirs.contains( dir );
         //kdDebug(7018) << "restoreAccessTime " << file << " dir=" << dir << " result=" << res << endl;
         return res;
     }
@@ -909,9 +909,9 @@ int KMimeMagic::parse(char *l, int
 	/* New-style anding: "0 byte&0x80 =0x80 dynamically linked" */
 	if (*l == '&') {
 		++l;
-		m->tqmask = signextend(m, strtol(l, &l, 0));
+		m->mask = signextend(m, strtol(l, &l, 0));
 	} else
-		m->tqmask = (unsigned long) ~0L;
+		m->mask = (unsigned long) ~0L;
 	EATAB;
 
 	switch (*l) {
@@ -1297,7 +1297,7 @@ mcheck(union VALUETYPE *p, struct magic *m)
 #if 0
 	qDebug("Before signextend %08x", v);
 #endif
-	v = signextend(m, v) & m->tqmask;
+	v = signextend(m, v) & m->mask;
 #if 0
 	qDebug("After signextend %08x", v);
 #endif
@@ -1550,7 +1550,7 @@ fsmagic(struct config_rec* conf, const char *fn, KDE_struct_stat *sb)
 }
 
 /*
- * Go through the whole list, stopping if you tqfind a match.  Process all the
+ * Go through the whole list, stopping if you find a match.  Process all the
  * continuations of that match before returning.
  *
  * We support multi-level continuations:
@@ -2214,7 +2214,7 @@ KMimeMagic::setFollowLinks( bool _enable )
 }
 
 KMimeMagicResult *
-KMimeMagic::tqfindBufferType(const TQByteArray &array)
+KMimeMagic::findBufferType(const TQByteArray &array)
 {
 	unsigned char buf[HOWMANY + 1];	/* one extra for terminating '\0' */
 
@@ -2261,7 +2261,7 @@ refineResult(KMimeMagicResult *r, const TQString & _filename)
 		if ( _filename.endsWith(".h")
 		  || _filename.endsWith(".hh")
 		  || _filename.endsWith(".H")
-		  || !_filename.right(4).tqcontains('.'))
+		  || !_filename.right(4).contains('.'))
 			tmp += "hdr";
 		else
 			tmp += "src";
@@ -2270,7 +2270,7 @@ refineResult(KMimeMagicResult *r, const TQString & _filename)
 	else
 	if ( tmp == "application/x-sharedlib" )
 	{
-		if ( _filename.tqfind( ".so" ) == -1 ) 
+		if ( _filename.find( ".so" ) == -1 ) 
 		{
 			tmp = "application/x-executable";
 			r->setMimeType( tmp );
@@ -2279,10 +2279,10 @@ refineResult(KMimeMagicResult *r, const TQString & _filename)
 }
 
 KMimeMagicResult *
-KMimeMagic::tqfindBufferFileType( const TQByteArray &data,
+KMimeMagic::findBufferFileType( const TQByteArray &data,
 				const TQString &fn)
 {
-        KMimeMagicResult * r = tqfindBufferType( data );
+        KMimeMagicResult * r = findBufferType( data );
 	refineResult(r, fn);
         return r;
 }
@@ -2290,10 +2290,10 @@ KMimeMagic::tqfindBufferFileType( const TQByteArray &data,
 /*
  * Find the content-type of the given file.
  */
-KMimeMagicResult* KMimeMagic::tqfindFileType(const TQString & fn)
+KMimeMagicResult* KMimeMagic::findFileType(const TQString & fn)
 {
 #ifdef DEBUG_MIMEMAGIC
-    kdDebug(7018) << "KMimeMagic::tqfindFileType " << fn << endl;
+    kdDebug(7018) << "KMimeMagic::findFileType " << fn << endl;
 #endif
     conf->resultBuf = TQString::null;
 

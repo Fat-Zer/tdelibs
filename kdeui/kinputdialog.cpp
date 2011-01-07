@@ -52,30 +52,30 @@ KInputDialogPrivate::KInputDialogPrivate()
 
 KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     const TQString &value, TQWidget *parent, const char *name,
-    TQValidator *validator, const TQString &tqmask )
+    TQValidator *validator, const TQString &mask )
     : KDialogBase( parent, name, true, caption, Ok|Cancel|User1, Ok, true,
     KStdGuiItem::clear() ),
     d( new KInputDialogPrivate() )
 {
   TQFrame *frame = makeMainWidget();
-  TQVBoxLayout *tqlayout = new TQVBoxLayout( frame, 0, spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
   d->m_label = new TQLabel( label, frame );
-  tqlayout->addWidget( d->m_label );
+  layout->addWidget( d->m_label );
 
   d->m_lineEdit = new KLineEdit( value, frame );
-  tqlayout->addWidget( d->m_lineEdit );
+  layout->addWidget( d->m_lineEdit );
 
   d->m_lineEdit->setFocus();
   d->m_label->setBuddy( d->m_lineEdit );
 
-  tqlayout->addStretch();
+  layout->addStretch();
 
   if ( validator )
     d->m_lineEdit->setValidator( validator );
 
-  if ( !tqmask.isEmpty() )
-    d->m_lineEdit->setInputMask( tqmask );
+  if ( !mask.isEmpty() )
+    d->m_lineEdit->setInputMask( mask );
 
   connect( d->m_lineEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
       TQT_SLOT( slotEditTextChanged( const TQString & ) ) );
@@ -92,15 +92,15 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     d( new KInputDialogPrivate() )
 {
   TQFrame *frame = makeMainWidget();
-  TQVBoxLayout *tqlayout = new TQVBoxLayout( frame, 0, spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
   d->m_label = new TQLabel( label, frame );
-  tqlayout->addWidget( d->m_label );
+  layout->addWidget( d->m_label );
 
   d->m_textEdit = new KTextEdit( frame );
   d->m_textEdit->setTextFormat( PlainText );
   d->m_textEdit->setText( value );
-  tqlayout->addWidget( d->m_textEdit, 10 );
+  layout->addWidget( d->m_textEdit, 10 );
 
   d->m_textEdit->setFocus();
   d->m_label->setBuddy( d->m_textEdit );
@@ -117,16 +117,16 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     d( new KInputDialogPrivate() )
 {
   TQFrame *frame = makeMainWidget();
-  TQVBoxLayout *tqlayout = new TQVBoxLayout( frame, 0, spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
   d->m_label = new TQLabel( label, frame );
-  tqlayout->addWidget( d->m_label );
+  layout->addWidget( d->m_label );
 
   d->m_intSpinBox = new KIntSpinBox( minValue, maxValue, step, value,
       base, frame );
-  tqlayout->addWidget( d->m_intSpinBox );
+  layout->addWidget( d->m_intSpinBox );
 
-  tqlayout->addStretch();
+  layout->addStretch();
 
   d->m_intSpinBox->setFocus();
   setMinimumWidth( 300 );
@@ -139,16 +139,16 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     d( new KInputDialogPrivate() )
 {
   TQFrame *frame = makeMainWidget();
-  TQVBoxLayout *tqlayout = new TQVBoxLayout( frame, 0, spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
   d->m_label = new TQLabel( label, frame );
-  tqlayout->addWidget( d->m_label );
+  layout->addWidget( d->m_label );
 
   d->m_doubleSpinBox = new KDoubleSpinBox( minValue, maxValue, step, value,
       decimals, frame );
-  tqlayout->addWidget( d->m_doubleSpinBox );
+  layout->addWidget( d->m_doubleSpinBox );
 
-  tqlayout->addStretch();
+  layout->addStretch();
 
   d->m_doubleSpinBox->setFocus();
   setMinimumWidth( 300 );
@@ -164,17 +164,17 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
   showButton( User1, editable );
 
   TQFrame *frame = makeMainWidget();
-  TQVBoxLayout *tqlayout = new TQVBoxLayout( frame, 0, spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
   d->m_label = new TQLabel( label, frame );
-  tqlayout->addWidget( d->m_label );
+  layout->addWidget( d->m_label );
 
   if ( editable )
   {
     d->m_comboBox = new KComboBox( editable, frame );
     d->m_comboBox->insertStringList( list );
     d->m_comboBox->setCurrentItem( current );
-    tqlayout->addWidget( d->m_comboBox );
+    layout->addWidget( d->m_comboBox );
 
     connect( d->m_comboBox, TQT_SIGNAL( textChanged( const TQString & ) ),
       TQT_SLOT( slotUpdateButtons( const TQString & ) ) );
@@ -187,7 +187,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     d->m_listBox->insertStringList( list );
     d->m_listBox->setSelected( current, true );
     d->m_listBox->ensureCurrentVisible();
-    tqlayout->addWidget( d->m_listBox, 10 );
+    layout->addWidget( d->m_listBox, 10 );
     connect( d->m_listBox, TQT_SIGNAL( doubleClicked( TQListBoxItem * ) ),
       TQT_SLOT( slotOk() ) );
     connect( d->m_listBox, TQT_SIGNAL( returnPressed( TQListBoxItem * ) ),
@@ -196,7 +196,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     d->m_listBox->setFocus();
   }
 
-  tqlayout->addStretch();
+  layout->addStretch();
 
   setMinimumWidth( 320 );
 }
@@ -208,14 +208,14 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     d( new KInputDialogPrivate() )
 {
   TQFrame *frame = makeMainWidget();
-  TQVBoxLayout *tqlayout = new TQVBoxLayout( frame, 0, spacingHint() );
+  TQVBoxLayout *layout = new TQVBoxLayout( frame, 0, spacingHint() );
 
   d->m_label = new TQLabel( label, frame );
-  tqlayout->addWidget( d->m_label );
+  layout->addWidget( d->m_label );
 
   d->m_listBox = new KListBox( frame );
   d->m_listBox->insertStringList( list );
-  tqlayout->addWidget( d->m_listBox );
+  layout->addWidget( d->m_listBox );
 
   TQListBoxItem *item;
 
@@ -225,7 +225,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
 
     for ( TQStringList::ConstIterator it=select.begin(); it!=select.end(); ++it )
     {
-      item = d->m_listBox->tqfindItem( *it, CaseSensitive|ExactMatch );
+      item = d->m_listBox->findItem( *it, CaseSensitive|ExactMatch );
       if ( item )
         d->m_listBox->setSelected( item, true );
     }
@@ -238,7 +238,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
       TQT_SLOT( slotOk() ) );
 
     TQString text = select.first();
-    item = d->m_listBox->tqfindItem( text, CaseSensitive|ExactMatch );
+    item = d->m_listBox->findItem( text, CaseSensitive|ExactMatch );
     if ( item )
       d->m_listBox->setSelected( item, true );
   }
@@ -246,7 +246,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
   d->m_listBox->ensureCurrentVisible();
   d->m_listBox->setFocus();
 
-  tqlayout->addStretch();
+  layout->addStretch();
 
   setMinimumWidth( 320 );
 }
@@ -258,18 +258,18 @@ KInputDialog::~KInputDialog()
 
 TQString KInputDialog::getText( const TQString &caption, const TQString &label,
     const TQString &value, bool *ok, TQWidget *parent, const char *name,
-    TQValidator *validator, const TQString &tqmask )
+    TQValidator *validator, const TQString &mask )
 {
-  return text( caption, label, value, ok, parent, name, validator, tqmask,
+  return text( caption, label, value, ok, parent, name, validator, mask,
                TQString::null );
 }
 
 TQString KInputDialog::text( const TQString &caption,
     const TQString &label, const TQString &value, bool *ok, TQWidget *parent,
-    const char *name, TQValidator *validator, const TQString &tqmask,
+    const char *name, TQValidator *validator, const TQString &mask,
     const TQString &whatsThis )
 {
-  KInputDialog dlg( caption, label, value, parent, name, validator, tqmask );
+  KInputDialog dlg( caption, label, value, parent, name, validator, mask );
 
   if( !whatsThis.isEmpty() )
     TQWhatsThis::add( dlg.lineEdit(), whatsThis );

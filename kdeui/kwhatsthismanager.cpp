@@ -52,8 +52,8 @@ TQString KWhatsThisUndefined::text (const TQPoint &)
             " describe the widget, you are welcome to <a href=\"submit"
             "-whatsthis\">send us your own \"What's This?\" help</a> for it.");
     TQString parent;
-    if (m_widget -> tqparentWidget ())
-        parent = TQWhatsThis::textFor (m_widget -> tqparentWidget ());
+    if (m_widget -> parentWidget ())
+        parent = TQWhatsThis::textFor (m_widget -> parentWidget ());
         if (parent != txt)
             if (! parent . isEmpty ())
                 return parent;
@@ -68,11 +68,11 @@ bool KWhatsThisUndefined::clicked (const TQString& href)
         body . append ("Widget text: '" + (m_widget -> property ("text") . toString ()) + "'\n");
         TQString dsc = TQString ("current --> ") + m_widget -> name ();
         dsc . append (TQString (" (") + m_widget -> className () + ")\n");
-        for (w = m_widget; w && w != m_widget -> tqtopLevelWidget (); w = w -> tqparentWidget ()) {
+        for (w = m_widget; w && w != m_widget -> topLevelWidget (); w = w -> parentWidget ()) {
             dsc . append (w -> name ());
             dsc . append (TQString (" (") + w -> className () + ")\n");
         }
-        w = m_widget -> tqtopLevelWidget ();
+        w = m_widget -> topLevelWidget ();
         if (w) {
             dsc . append ("toplevel --> ");
             dsc . append (w -> name ());
@@ -80,7 +80,7 @@ bool KWhatsThisUndefined::clicked (const TQString& href)
         }
         body . append (dsc);
         TQString subj ("What's This submission: ");
-        subj . append (tqApp -> argv () [0]);
+        subj . append (qApp -> argv () [0]);
         body . append ("\nPlease type in your what's this help between these lines: "
                 "\n--%-----------------------------------------------------------------------\n"
                 "\n--%-----------------------------------------------------------------------");
@@ -99,7 +99,7 @@ void KWhatsThisManager::init ()
 KWhatsThisManager::KWhatsThisManager ()
 {
     // go away...
-    // tqApp -> installEventFilter (this);
+    // qApp -> installEventFilter (this);
 }
 
 bool KWhatsThisManager::eventFilter (TQObject * /*o*/, TQEvent *e)

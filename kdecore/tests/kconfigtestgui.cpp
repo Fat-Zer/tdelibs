@@ -121,7 +121,7 @@ KConfigTestView::KConfigTestView( TQWidget *parent, const char *name )
   pQuitButton = new TQPushButton( this, "quitbutton" );
   pQuitButton->setText( "Quit" );
   pQuitButton->setGeometry( 340, 60, 60, 60 );
-  connect( pQuitButton, TQT_SIGNAL(clicked()), tqApp, TQT_SLOT(quit()) );
+  connect( pQuitButton, TQT_SIGNAL(clicked()), qApp, TQT_SLOT(quit()) );
 
   // create a default KConfig object in order to be able to start right away
   pConfig = new KConfig( TQString::null );

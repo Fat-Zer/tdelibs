@@ -33,7 +33,7 @@ class KPrinterPropertyDialog;
 class KMConfigDialog;
 class TQListView;
 
-class KDEPRINT_EXPORT KMUiManager : public TQObject
+class KDEPRINT_EXPORT KMUiManager : public QObject
 {
 	Q_OBJECT
 public:

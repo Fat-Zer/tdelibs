@@ -50,7 +50,7 @@ protected slots:
 	void slotActionClicked();
 
 protected:
-	void checkActiontqStatus();
+	void checkActionStatus();
 	void nextAction();
 	bool startProcess();
 	bool doExport();

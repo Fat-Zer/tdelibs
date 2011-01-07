@@ -101,7 +101,7 @@ PrintcapEntry* PrintcapReader::nextEntry()
     // now parse the entry
     kdDebug() << "COMMENT: " << comment << endl;
     kdDebug() << "LINE: " << buf << endl;
-    int p = buf.tqfind(':');
+    int p = buf.find(':');
     if (p == -1)
         name = buf;
     else
@@ -132,14 +132,14 @@ PrintcapEntry* PrintcapReader::nextEntry()
             for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
             {
                 Field f;
-                int p = (*it).tqfind('=');
+                int p = (*it).find('=');
                 if (p == -1)
                 {
-                    p = (*it).tqfind('#');
+                    p = (*it).find('#');
                     if (p == -1)
                     {
                         f.type = Field::Boolean;
-			p = (*it).tqfind('@');
+			p = (*it).find('@');
 			if (p == -1)
 			{
 				f.name = (*it);

@@ -145,7 +145,7 @@ void KListViewSearchLine::updateSearch(const TQString &s)
             it.current() && !currentItem;
             ++it)
         {
-            if(d->listView->tqitemRect(it.current()).isValid())
+            if(d->listView->itemRect(it.current()).isValid())
                 currentItem = it.current();
         }
     }
@@ -214,14 +214,14 @@ bool KListViewSearchLine::itemMatches(const TQListViewItem *item, const TQString
         TQValueList<int>::ConstIterator it = d->searchColumns.begin();
         for(; it != d->searchColumns.end(); ++it) {
             if(*it < item->listView()->columns() &&
-               item->text(*it).tqfind(s, 0, d->caseSensitive) >= 0)
+               item->text(*it).find(s, 0, d->caseSensitive) >= 0)
                 return true;
         }
     }
     else {
         for(int i = 0; i < item->listView()->columns(); i++) {
             if(item->listView()->columnWidth(i) > 0 &&
-               item->text(i).tqfind(s, 0, d->caseSensitive) >= 0)
+               item->text(i).find(s, 0, d->caseSensitive) >= 0)
             {
                 return true;
             }
@@ -260,7 +260,7 @@ TQPopupMenu *KListViewSearchLine::createPopupMenu()
 		    columnText = i18n("Column number %1","Column No. %1").arg(visiblePosition);
 	        }
                 subMenu->insertItem(columnText, visibleColumns);
-	        if(d->searchColumns.isEmpty() || d->searchColumns.tqfind(i) != d->searchColumns.end())
+	        if(d->searchColumns.isEmpty() || d->searchColumns.find(i) != d->searchColumns.end())
 		    subMenu->setItemChecked(visibleColumns, true);
                 else
                     allColumnsAreSearchColumns = false;
@@ -320,7 +320,7 @@ void KListViewSearchLine::searchColumnsMenuActivated(int id)
             d->searchColumns.clear();
     }
     else {
-        if(d->searchColumns.tqfind(id) != d->searchColumns.end())
+        if(d->searchColumns.find(id) != d->searchColumns.end())
             d->searchColumns.remove(id);
         else {
             if(d->searchColumns.isEmpty()) {
@@ -475,7 +475,7 @@ void KListViewSearchLineWidget::positionInToolBar()
     if(toolBar) {
 
         // Here we have The Big Ugly.  Figure out how many widgets are in the
-        // and do a hack-ish iteration over them to tqfind this widget so that we
+        // and do a hack-ish iteration over them to find this widget so that we
         // can insert the clear button before it.
 
         int widgetCount = toolBar->count();

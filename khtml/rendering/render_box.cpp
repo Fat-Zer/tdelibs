@@ -117,9 +117,9 @@ void RenderBox::restructureParentFlow() {
 static inline bool overflowAppliesTo(RenderObject* o) 
 {
      // css 2.1-11.1.1
-     // 1) overflow only applies to non-tqreplaced block-level elements, table cells, and inline-block elements
+     // 1) overflow only applies to non-replaced block-level elements, table cells, and inline-block elements
      if (o->isRenderBlock() || o->isTableRow() || o->isTableSection())
-         // 2) overflow on root applies to the viewport (cf. KHTMLView::tqlayout)
+         // 2) overflow on root applies to the viewport (cf. KHTMLView::layout)
          if (!o->isRoot())
              // 3) overflow on body may apply to the viewport...
              if (!o->isBody()
@@ -490,7 +490,7 @@ void RenderBox::paintBackgroundExtended(TQPainter *p, const TQColor &c, const Ba
     TQColor bgColor = c;
 
     // Paint the color first underneath all images.
-    if (!bgLayer->next() && bgColor.isValid() && tqAlpha(bgColor.rgb()) > 0)
+    if (!bgLayer->next() && bgColor.isValid() && qAlpha(bgColor.rgb()) > 0)
         p->fillRect(_tx, clipy, w, cliph, bgColor);
 
     // no progressive loading of the background image
@@ -622,7 +622,7 @@ void RenderBox::paintBackgroundExtended(TQPainter *p, const TQColor &c, const Ba
             sy+=b.y()-cy;
             cx=b.x();cy=b.y();cw=b.width();ch=b.height();
         }
-        // restrict painting to tqrepaint-clip
+        // restrict painting to repaint-clip
         if (cy < clipy) {
             ch -= (clipy - cy);
             sy += (clipy - cy);
@@ -795,7 +795,7 @@ void RenderBox::position(InlineBox* box, int /*from*/, int /*len*/, bool /*rever
         setPos( box->xPos(), box->yPos() );
 }
 
-void RenderBox::tqrepaint(Priority prior)
+void RenderBox::repaint(Priority prior)
 {
     int ow = style() ? style()->outlineSize() : 0;
     if( isInline() && !isReplaced() )
@@ -806,17 +806,17 @@ void RenderBox::tqrepaint(Priority prior)
             p = p->parent();
         int xoff = p->hasOverflowClip() ? 0 : p->overflowLeft();
         int yoff = p->hasOverflowClip() ? 0 : p->overflowTop();
-        p->tqrepaintRectangle( -ow + xoff, -ow + yoff, p->effectiveWidth()+ow*2, p->effectiveHeight()+ow*2, prior);
+        p->repaintRectangle( -ow + xoff, -ow + yoff, p->effectiveWidth()+ow*2, p->effectiveHeight()+ow*2, prior);
     }
     else
     {
         int xoff = hasOverflowClip() ? 0 : overflowLeft();
         int yoff = hasOverflowClip() ? 0 : overflowTop();
-        tqrepaintRectangle( -ow + xoff, -ow + yoff, effectiveWidth()+ow*2, effectiveHeight()+ow*2, prior);
+        repaintRectangle( -ow + xoff, -ow + yoff, effectiveWidth()+ow*2, effectiveHeight()+ow*2, prior);
     }
 }
 
-void RenderBox::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
+void RenderBox::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 {
     x += m_x;
     y += m_y;
@@ -830,7 +830,7 @@ void RenderBox::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool 
 
     if (style()->position() == FIXED) f=true;
 
-    // kdDebug( 6040 ) << "RenderBox(" <<this << ", " << renderName() << ")::tqrepaintRectangle (" << x << "/" << y << ") (" << w << "/" << h << ")" << endl;
+    // kdDebug( 6040 ) << "RenderBox(" <<this << ", " << renderName() << ")::repaintRectangle (" << x << "/" << y << ") (" << w << "/" << h << ")" << endl;
     RenderObject *o = container();
     if( o ) {
          if (o->layer()) {
@@ -839,7 +839,7 @@ void RenderBox::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool 
              if (style()->position() == ABSOLUTE)
                  o->layer()->checkInlineRelOffset(this,x,y);
         }
-        o->tqrepaintRectangle(x, y, w, h, p, f);
+        o->repaintRectangle(x, y, w, h, p, f);
     }
 }
 
@@ -1364,8 +1364,8 @@ void RenderBox::calcAbsoluteHorizontal()
     // percentage issues.
 
     // The following is based off of the W3C Working Draft from April 11, 2006 of
-    // CSS 2.1: Section 10.3.7 "Absolutely positioned, non-tqreplaced elements"
-    // <http://www.w3.org/TR/CSS21/visudet.html#abs-non-tqreplaced-width>
+    // CSS 2.1: Section 10.3.7 "Absolutely positioned, non-replaced elements"
+    // <http://www.w3.org/TR/CSS21/visudet.html#abs-non-replaced-width>
     // (block-style-comments in this function and in calcAbsoluteHorizontalValues()
     // correspond to text from the spec)
 
@@ -1415,14 +1415,14 @@ void RenderBox::calcAbsoluteHorizontal()
     // Calculate the static distance if needed.
     if (left.isVariable() && right.isVariable()) {
         if (containerDirection == LTR) {
-            // 'm_staticX' should already have been set through tqlayout of the parent.
+            // 'm_staticX' should already have been set through layout of the parent.
             int staticPosition = m_staticX - containerBlock->borderLeft();
             for (RenderObject* po = parent(); po && po != containerBlock; po = po->parent())
                 staticPosition += po->xPos();
             left = Length(staticPosition, Fixed);
         } else {
             RenderObject* po = parent();
-            // 'm_staticX' should already have been set through tqlayout of the parent.
+            // 'm_staticX' should already have been set through layout of the parent.
             int staticPosition = m_staticX + containerWidth + containerBlock->borderRight() - po->width();
             for (; po && po != containerBlock; po = po->parent())
                 staticPosition -= po->xPos();
@@ -1575,7 +1575,7 @@ void RenderBox::calcAbsoluteHorizontalValues(Length width, const RenderObject* c
          *    for 'right'
          *
          * Calculation of the shrink-to-fit width is similar to calculating the
-         * width of a table cell using the automatic table tqlayout algorithm.
+         * width of a table cell using the automatic table layout algorithm.
          * Roughly: calculate the preferred width by formatting the content
          * without breaking lines other than where explicit line breaks occur,
          * and also calculate the preferred minimum width, e.g., by trying all
@@ -1596,7 +1596,7 @@ void RenderBox::calcAbsoluteHorizontalValues(Length width, const RenderObject* c
 
         const int availableSpace = containerWidth - (marginLeftValue + marginRightValue + bordersPlusPadding);
 
-        // FIXME: Is there a faster way to tqfind the correct case?
+        // FIXME: Is there a faster way to find the correct case?
         // Use rule/case that applies.
         if (leftIsAuto && widthIsAuto && !rightIsAuto) {
             // RULE 1: (use shrink-to-fit for width, and solve of left)
@@ -1645,8 +1645,8 @@ void RenderBox::calcAbsoluteVertical()
     }
 
     // The following is based off of the W3C Working Draft from April 11, 2006 of
-    // CSS 2.1: Section 10.6.4 "Absolutely positioned, non-tqreplaced elements"
-    // <http://www.w3.org/TR/2005/WD-CSS21-20050613/visudet.html#abs-non-tqreplaced-height>
+    // CSS 2.1: Section 10.6.4 "Absolutely positioned, non-replaced elements"
+    // <http://www.w3.org/TR/2005/WD-CSS21-20050613/visudet.html#abs-non-replaced-height>
     // (block-style-comments in this function and in calcAbsoluteVerticalValues()
     // correspond to text from the spec)
 
@@ -1680,7 +1680,7 @@ void RenderBox::calcAbsoluteVertical()
 
     // Calculate the static distance if needed.
     if (top.isVariable() && bottom.isVariable()) {
-        // m_staticY should already have been set through tqlayout of the parent()
+        // m_staticY should already have been set through layout of the parent()
         int staticTop = m_staticY - containerBlock->borderTop();
         for (RenderObject* po = parent(); po && po != containerBlock; po = po->parent()) {
             staticTop += po->yPos();
@@ -1876,8 +1876,8 @@ void RenderBox::calcAbsoluteVerticalValues(Length height, const RenderObject* co
 void RenderBox::calcAbsoluteHorizontalReplaced()
 {
     // The following is based off of the W3C Working Draft from April 11, 2006 of
-    // CSS 2.1: Section 10.3.8 "Absolutly positioned, tqreplaced elements"
-    // <http://www.w3.org/TR/2005/WD-CSS21-20050613/visudet.html#abs-tqreplaced-width>
+    // CSS 2.1: Section 10.3.8 "Absolutly positioned, replaced elements"
+    // <http://www.w3.org/TR/2005/WD-CSS21-20050613/visudet.html#abs-replaced-width>
     // (block-style-comments in this function correspond to text from the spec and
     // the numbers correspond to numbers in spec)
 
@@ -1900,12 +1900,12 @@ void RenderBox::calcAbsoluteHorizontalReplaced()
 
 
     /*-----------------------------------------------------------------------*\
-     * 1. The used value of 'width' is determined as for inline tqreplaced
+     * 1. The used value of 'width' is determined as for inline replaced
      *    elements.
     \*-----------------------------------------------------------------------*/
     // NOTE: This value of width is FINAL in that the min/max width calculations
     // are dealt with in calcReplacedWidth().  This means that the steps to produce
-    // correct max/min in the non-tqreplaced version, are not necessary.
+    // correct max/min in the non-replaced version, are not necessary.
     m_width = calcReplacedWidth() + borderLeft() + borderRight() + paddingLeft() + paddingRight();
     const int availableSpace = containerWidth - m_width;
 
@@ -1917,14 +1917,14 @@ void RenderBox::calcAbsoluteHorizontalReplaced()
     if (left.isVariable() && right.isVariable()) {
         // see FIXME 1
         if (containerDirection == LTR) {
-            // 'm_staticX' should already have been set through tqlayout of the parent.
+            // 'm_staticX' should already have been set through layout of the parent.
             int staticPosition = m_staticX - containerBlock->borderLeft();
             for (RenderObject* po = parent(); po && po != containerBlock; po = po->parent())
                 staticPosition += po->xPos();
             left.setValue(Fixed, staticPosition);
         } else {
             RenderObject* po = parent();
-            // 'm_staticX' should already have been set through tqlayout of the parent.
+            // 'm_staticX' should already have been set through layout of the parent.
             int staticPosition = m_staticX + containerWidth + containerBlock->borderRight() - po->width();
             for (; po && po != containerBlock; po = po->parent())
                 staticPosition -= po->xPos();
@@ -1933,7 +1933,7 @@ void RenderBox::calcAbsoluteHorizontalReplaced()
     }
 
     /*-----------------------------------------------------------------------*\
-     * 3. If 'left' or 'right' are 'auto', tqreplace any 'auto' on 'margin-left'
+     * 3. If 'left' or 'right' are 'auto', replace any 'auto' on 'margin-left'
      *    or 'margin-right' with '0'.
     \*-----------------------------------------------------------------------*/
     if (left.isVariable() || right.isVariable()) {
@@ -2040,8 +2040,8 @@ void RenderBox::calcAbsoluteHorizontalReplaced()
 void RenderBox::calcAbsoluteVerticalReplaced()
 {
     // The following is based off of the W3C Working Draft from April 11, 2006 of
-    // CSS 2.1: Section 10.6.5 "Absolutly positioned, tqreplaced elements"
-    // <http://www.w3.org/TR/2005/WD-CSS21-20050613/visudet.html#abs-tqreplaced-height>
+    // CSS 2.1: Section 10.6.5 "Absolutly positioned, replaced elements"
+    // <http://www.w3.org/TR/2005/WD-CSS21-20050613/visudet.html#abs-replaced-height>
     // (block-style-comments in this function correspond to text from the spec and
     // the numbers correspond to numbers in spec)
 
@@ -2057,21 +2057,21 @@ void RenderBox::calcAbsoluteVerticalReplaced()
 
 
     /*-----------------------------------------------------------------------*\
-     * 1. The used value of 'height' is determined as for inline tqreplaced
+     * 1. The used value of 'height' is determined as for inline replaced
      *    elements.
     \*-----------------------------------------------------------------------*/
     // NOTE: This value of height is FINAL in that the min/max height calculations
     // are dealt with in calcReplacedHeight().  This means that the steps to produce
-    // correct max/min in the non-tqreplaced version, are not necessary.
+    // correct max/min in the non-replaced version, are not necessary.
     m_height = calcReplacedHeight() + borderTop() + borderBottom() + paddingTop() + paddingBottom();
     const int availableSpace = containerHeight - m_height;
 
     /*-----------------------------------------------------------------------*\
-     * 2. If both 'top' and 'bottom' have the value 'auto', tqreplace 'top'
+     * 2. If both 'top' and 'bottom' have the value 'auto', replace 'top'
      *    with the element's static position.
     \*-----------------------------------------------------------------------*/
     if (top.isVariable() && bottom.isVariable()) {
-        // m_staticY should already have been set through tqlayout of the parent().
+        // m_staticY should already have been set through layout of the parent().
         int staticTop = m_staticY - containerBlock->borderTop();
         for (RenderObject* po = parent(); po && po != containerBlock; po = po->parent()) {
             staticTop += po->yPos();
@@ -2080,7 +2080,7 @@ void RenderBox::calcAbsoluteVerticalReplaced()
     }
 
     /*-----------------------------------------------------------------------*\
-     * 3. If 'bottom' is 'auto', tqreplace any 'auto' on 'margin-top' or
+     * 3. If 'bottom' is 'auto', replace any 'auto' on 'margin-top' or
      *    'margin-bottom' with '0'.
     \*-----------------------------------------------------------------------*/
     // FIXME: The spec. says that this step should only be taken when bottom is
@@ -2296,7 +2296,7 @@ void RenderBox::caretPos(int /*offset*/, int flags, int &_x, int &_y, int &width
 	switch (s->textAlign()) {
 	case LEFT:
 	case KHTML_LEFT:
-	case TAAUTO:	// ### tqfind out what this does
+	case TAAUTO:	// ### find out what this does
 	case JUSTIFY:
 	    break;
 	case CENTER:

@@ -33,7 +33,7 @@
 using namespace KNetwork;
 using namespace KNetwork::Internal;
 
-KSocketBuffer::KSocketBuffer(TQ_LONG size)
+KSocketBuffer::KSocketBuffer(Q_LONG size)
   : m_mutex(true), m_offset(0), m_size(size), m_length(0)
 {
 }
@@ -75,9 +75,9 @@ bool KSocketBuffer::canReadLine() const
   // walk the buffer
   for ( ; it != end; ++it)
     {
-      if ((*it).tqfind('\n', offset) != -1)
+      if ((*it).find('\n', offset) != -1)
 	return true;
-      if ((*it).tqfind('\r', offset) != -1)
+      if ((*it).find('\r', offset) != -1)
 	return true;
       offset = 0;
     }
@@ -92,7 +92,7 @@ TQCString KSocketBuffer::readLine()
 
   TQMutexLocker locker(&m_mutex);
 
-  // tqfind the offset of the newline in the buffer
+  // find the offset of the newline in the buffer
   int newline = 0;
   TQValueListConstIterator<TQByteArray> it = m_list.constBegin(),
     end = m_list.constEnd();
@@ -101,7 +101,7 @@ TQCString KSocketBuffer::readLine()
   // walk the buffer
   for ( ; it != end; ++it)
     {
-      int posnl = (*it).tqfind('\n', offset);
+      int posnl = (*it).find('\n', offset);
       if (posnl == -1)
 	{
 	  // not found in this one
@@ -120,17 +120,17 @@ TQCString KSocketBuffer::readLine()
   return result;
 }
 
-TQ_LONG KSocketBuffer::length() const
+Q_LONG KSocketBuffer::length() const
 {
   return m_length;
 }
 
-TQ_LONG KSocketBuffer::size() const
+Q_LONG KSocketBuffer::size() const
 {
   return m_size;
 }
 
-bool KSocketBuffer::setSize(TQ_LONG size)
+bool KSocketBuffer::setSize(Q_LONG size)
 {
   m_size = size;
   if (size == -1 || m_length < m_size)
@@ -147,7 +147,7 @@ bool KSocketBuffer::setSize(TQ_LONG size)
   return (m_length - m_size) == consumeBuffer(0L, m_length - m_size, true);
 }
 
-TQ_LONG KSocketBuffer::feedBuffer(const char *data, TQ_LONG len)
+Q_LONG KSocketBuffer::feedBuffer(const char *data, Q_LONG len)
 {
   if (data == 0L || len == 0)
     return 0;			// nothing to write
@@ -168,7 +168,7 @@ TQ_LONG KSocketBuffer::feedBuffer(const char *data, TQ_LONG len)
   return len;
 }
 
-TQ_LONG KSocketBuffer::consumeBuffer(char *destbuffer, TQ_LONG maxlen, bool discard)
+Q_LONG KSocketBuffer::consumeBuffer(char *destbuffer, Q_LONG maxlen, bool discard)
 {
   if (maxlen == 0 || isEmpty())
     return 0;
@@ -176,7 +176,7 @@ TQ_LONG KSocketBuffer::consumeBuffer(char *destbuffer, TQ_LONG maxlen, bool disc
   TQValueListIterator<TQByteArray> it = m_list.begin(),
     end = m_list.end();
   TQIODevice::Offset offset = m_offset;
-  TQ_LONG copied = 0;
+  Q_LONG copied = 0;
 
   // walk the buffer
   while (it != end && maxlen)
@@ -228,7 +228,7 @@ void KSocketBuffer::clear()
   m_length = 0;
 }
 
-TQ_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
+Q_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, Q_LONG len)
 {
   if (len == 0 || isEmpty())
     return 0;
@@ -238,7 +238,7 @@ TQ_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
   TQValueListIterator<TQByteArray> it = m_list.begin(),
     end = m_list.end();
   TQIODevice::Offset offset = m_offset;
-  TQ_LONG written = 0;
+  Q_LONG written = 0;
   
   // walk the buffer
   while (it != end && (len || len == -1))
@@ -248,11 +248,11 @@ TQ_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
       // better by concatenating a few of them into a big buffer
       // question is: how big should that buffer be? 2 kB should be enough
 
-      TQ_ULONG bufsize = 1460;
+      Q_ULONG bufsize = 1460;
       if (len != -1 && len < bufsize)
 	bufsize = len;
       TQByteArray buf(bufsize);
-      TQ_LONG count = 0;
+      Q_LONG count = 0;
 
       while (it != end && count + ((*it).size() - offset) <= bufsize)
 	{
@@ -273,7 +273,7 @@ TQ_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
 	}
 
       // now try to write those bytes
-      TQ_LONG wrote = dev->writeBlock(buf, count);
+      Q_LONG wrote = dev->writeBlock(buf, count);
 
       if (wrote == -1)
 	// error?
@@ -293,7 +293,7 @@ TQ_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
   return written;
 }
 
-TQ_LONG KSocketBuffer::receiveFrom(KActiveSocketBase* dev, TQ_LONG len)
+Q_LONG KSocketBuffer::receiveFrom(KActiveSocketBase* dev, Q_LONG len)
 {
   if (len == 0 || isFull())
     return 0;
@@ -310,7 +310,7 @@ TQ_LONG KSocketBuffer::receiveFrom(KActiveSocketBase* dev, TQ_LONG len)
   if (m_size != -1 && len > (m_size - m_length))
     len = m_size - m_length;
 
-  // here, len tqcontains just as many bytes as we're supposed to read
+  // here, len contains just as many bytes as we're supposed to read
 
   // now do the reading
   TQByteArray a(len);

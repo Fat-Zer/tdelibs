@@ -32,22 +32,22 @@
 
 /**
  * we need to insert the strings after the dialog is set
- * up, otherwise TQComboBox will deliver an aweful big tqsizeHint
- * for long tqreplacement texts.
+ * up, otherwise TQComboBox will deliver an aweful big sizeHint
+ * for long replacement texts.
  */
 class KReplaceDialog::KReplaceDialogPrivate {
   public:
     KReplaceDialogPrivate() : m_initialShowDone(false) {}
-    TQStringList tqreplaceStrings;
+    TQStringList replaceStrings;
     bool m_initialShowDone;
 };
 
-KReplaceDialog::KReplaceDialog(TQWidget *parent, const char *name, long options, const TQStringList &tqfindStrings, const TQStringList &tqreplaceStrings, bool hasSelection) :
+KReplaceDialog::KReplaceDialog(TQWidget *parent, const char *name, long options, const TQStringList &findStrings, const TQStringList &replaceStrings, bool hasSelection) :
     KFindDialog(parent, name, true)
 {
     d = new KReplaceDialogPrivate;
-    d->tqreplaceStrings = tqreplaceStrings;
-    init(true, tqfindStrings, hasSelection);
+    d->replaceStrings = replaceStrings;
+    init(true, findStrings, hasSelection);
     setOptions(options);
 }
 
@@ -62,10 +62,10 @@ void KReplaceDialog::showEvent( TQShowEvent *e )
     {
         d->m_initialShowDone = true; // only once
 
-        if (!d->tqreplaceStrings.isEmpty())
+        if (!d->replaceStrings.isEmpty())
         {
-          setReplacementHistory(d->tqreplaceStrings);
-          m_tqreplace->lineEdit()->setText( d->tqreplaceStrings[0] );
+          setReplacementHistory(d->replaceStrings);
+          m_replace->lineEdit()->setText( d->replaceStrings[0] );
         }
     }
 
@@ -84,27 +84,27 @@ long KReplaceDialog::options() const
     return options;
 }
 
-TQWidget *KReplaceDialog::tqreplaceExtension()
+TQWidget *KReplaceDialog::replaceExtension()
 {
-    if (!m_tqreplaceExtension)
+    if (!m_replaceExtension)
     {
-      m_tqreplaceExtension = new TQWidget(m_tqreplaceGrp);
-      m_tqreplaceLayout->addMultiCellWidget(m_tqreplaceExtension, 3, 3, 0, 1);
+      m_replaceExtension = new TQWidget(m_replaceGrp);
+      m_replaceLayout->addMultiCellWidget(m_replaceExtension, 3, 3, 0, 1);
     }
 
-    return m_tqreplaceExtension;
+    return m_replaceExtension;
 }
 
-TQString KReplaceDialog::tqreplacement() const
+TQString KReplaceDialog::replacement() const
 {
-    return m_tqreplace->currentText();
+    return m_replace->currentText();
 }
 
-TQStringList KReplaceDialog::tqreplacementHistory() const
+TQStringList KReplaceDialog::replacementHistory() const
 {
-    TQStringList lst = m_tqreplace->historyItems();
+    TQStringList lst = m_replace->historyItems();
     // historyItems() doesn't tell us about the case of replacing with an empty string
-    if ( m_tqreplace->lineEdit()->text().isEmpty() )
+    if ( m_replace->lineEdit()->text().isEmpty() )
         lst.prepend( TQString::null );
     return lst;
 }
@@ -119,9 +119,9 @@ void KReplaceDialog::setOptions(long options)
 void KReplaceDialog::setReplacementHistory(const TQStringList &strings)
 {
     if (strings.count() > 0)
-        m_tqreplace->setHistoryItems(strings, true);
+        m_replace->setHistoryItems(strings, true);
     else
-        m_tqreplace->clearHistory();
+        m_replace->clearHistory();
 }
 
 void KReplaceDialog::slotOk()
@@ -133,13 +133,13 @@ void KReplaceDialog::slotOk()
         int caps = r.numCaptures();
         TQRegExp check(TQString("((?:\\\\)+)(\\d+)"));
         int p = 0;
-        TQString rep = tqreplacement();
+        TQString rep = replacement();
         while ( (p = check.search( rep, p ) ) > -1 )
         {
             if ( check.cap(1).length()%2 && check.cap(2).toInt() > caps )
             {
                 KMessageBox::information( this, i18n(
-                        "Your tqreplacement string is referencing a capture greater than '\\%1', ").arg( caps ) +
+                        "Your replacement string is referencing a capture greater than '\\%1', ").arg( caps ) +
                     ( caps ?
                         i18n("but your pattern only defines 1 capture.",
                              "but your pattern only defines %n captures.", caps ) :
@@ -153,8 +153,8 @@ void KReplaceDialog::slotOk()
     }
 
     KFindDialog::slotOk();
-    m_tqreplace->addToHistory(tqreplacement());
+    m_replace->addToHistory(replacement());
 }
 
-// kate: space-indent on; indent-width 4; tqreplace-tabs on;
+// kate: space-indent on; indent-width 4; replace-tabs on;
 #include "kreplacedialog.moc"

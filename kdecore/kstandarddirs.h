@@ -61,7 +61,7 @@ class KStandardDirsPrivate;
  * So the search algorithm basically appends to each prefix each registered
  * suffix and tries to locate the file there.
  * To make the thing even more complex, it's also possible to register
- * absolute paths that KStandardDirs looks up after not tqfinding anything
+ * absolute paths that KStandardDirs looks up after not finding anything
  * in the former steps. They can be useful if the user wants to provide
  * specific directories that aren't in his $HOME/.kde directory for,
  * for example, icons.
@@ -205,7 +205,7 @@ public:
 			     const TQString& absdir);
 
 	/**
-	 * Tries to tqfind a resource in the following order:
+	 * Tries to find a resource in the following order:
 	 * @li All PREFIX/\<relativename> paths (most recent first).
 	 * @li All absolute paths (most recent first).
 	 *
@@ -214,7 +214,7 @@ public:
 	 * to findResource("lib", "libkdecore.la"). KStandardDirs will
 	 * then look into the subdir lib of all elements of all prefixes
 	 * ($KDEDIRS) for a file libkdecore.la and return the path to
-	 * the first one it tqfinds (e.g. /opt/kde/lib/libkdecore.la)
+	 * the first one it finds (e.g. /opt/kde/lib/libkdecore.la)
 	 *
 	 * @param type The type of the wanted resource
 	 * @param filename A relative filename of the resource.
@@ -255,11 +255,11 @@ public:
 	 * @return A number identifying the current version of the
 	 *          resource.
 	 */
-	TQ_UINT32 calcResourceHash( const char *type,
+	Q_UINT32 calcResourceHash( const char *type,
 			      const TQString& filename, bool deep) const;
 
 	/**
-	 * Tries to tqfind all directories whose names consist of the
+	 * Tries to find all directories whose names consist of the
 	 * specified type and a relative path. So would
 	 * findDirs("apps", "Settings") return
 	 * @li /opt/kde/share/applnk/Settings/
@@ -278,7 +278,7 @@ public:
                               const TQString& reldir ) const;
 
 	/**
-	 * Tries to tqfind the directory the file is in.
+	 * Tries to find the directory the file is in.
 	 * It works the same as findResource(), but it doesn't
 	 * return the filename but the name of the directory.
 	 *
@@ -302,7 +302,7 @@ public:
 
 
 	/**
-	 * Tries to tqfind all resources with the specified type.
+	 * Tries to find all resources with the specified type.
 	 *
 	 * The function will look into all specified directories
 	 * and return all filenames in these directories.
@@ -326,7 +326,7 @@ public:
 				       bool unique = false) const;
 
 	/**
-	 * Tries to tqfind all resources with the specified type.
+	 * Tries to find all resources with the specified type.
 	 *
 	 * The function will look into all specified directories
 	 * and return all filenames (full and relative paths) in
@@ -379,7 +379,7 @@ public:
 	 *
 	 * @return The path of the executable. If it was not found,
 	 *         it will return TQString::null.
-	 * @see tqfindAllExe()
+	 * @see findAllExe()
 	 */
 	static TQString findExe( const TQString& appname,
 				const TQString& pathstr=TQString::null,
@@ -403,7 +403,7 @@ public:
 	 *
 	 * @see	findExe()
 	 */
-	static int tqfindAllExe( TQStringList& list, const TQString& appname,
+	static int findAllExe( TQStringList& list, const TQString& appname,
 			       const TQString& pathstr=TQString::null,
 			       bool ignoreExecBit=false );
 
@@ -483,7 +483,7 @@ public:
          * @param absPath An absolute path to make relative.
          *
          * @return A relative path relative to resource @p type that
-         * will tqfind @p absPath. If no such relative path exists, absPath
+         * will find @p absPath. If no such relative path exists, absPath
          * will be returned unchanged.
          */
          TQString relativeLocation(const char *type, const TQString &absPath);

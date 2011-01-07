@@ -88,11 +88,11 @@ const TQChar base64_str[] = { 'b','a','s','e','6','4' };
   * @p c1 to @p c3 or buf.length() if none is contained.
   * @param buf buffer where to look for c
   * @param begin zero-indexed starting position
-  * @param c1 character to tqfind
-  * @param c2 alternative character to tqfind or '\0' to ignore
-  * @param c3 alternative character to tqfind or '\0' to ignore
+  * @param c1 character to find
+  * @param c2 alternative character to find or '\0' to ignore
+  * @param c3 alternative character to find or '\0' to ignore
   */
-static int tqfind(const TQString &buf, int begin, TQChar c1, TQChar c2 = '\0',
+static int find(const TQString &buf, int begin, TQChar c1, TQChar c2 = '\0',
 		TQChar c3 = '\0') {
   int pos = begin;
   int size = (int)buf.length();
@@ -113,15 +113,15 @@ static int tqfind(const TQString &buf, int begin, TQChar c1, TQChar c2 = '\0',
  * neither character occurred.
  * @param buf buffer where to look for
  * @param pos zero-indexed position within buffer
- * @param c1 character to tqfind
- * @param c2 alternative character to tqfind or 0 to ignore
- * @param c3 alternative character to tqfind or 0 to ignore
+ * @param c1 character to find
+ * @param c2 alternative character to find or 0 to ignore
+ * @param c3 alternative character to find or 0 to ignore
  */
 inline TQString extract(const TQString &buf, int &pos, TQChar c1,
 		TQChar c2 = '\0', TQChar c3 = '\0') {
   int oldpos = pos;
-  pos = tqfind(buf,oldpos,c1,c2,c3);
-  return TQString(buf.tqunicode() + oldpos, pos - oldpos);
+  pos = find(buf,oldpos,c1,c2,c3);
+  return TQString(buf.unicode() + oldpos, pos - oldpos);
 }
 
 /** ignores all whitespaces
@@ -186,11 +186,11 @@ static void parseDataHeader(const KURL &url, DataHeader &header_info) {
   header_info.is_base64 = false;
 
   // decode url and save it
-  TQString &raw_url = header_info.url = TQString::tqfromLatin1("data:") + url.path();
+  TQString &raw_url = header_info.url = TQString::fromLatin1("data:") + url.path();
   int raw_url_len = (int)raw_url.length();
 
   // jump over scheme part (must be "data:", we don't even check that)
-  header_info.data_offset = raw_url.tqfind(':');
+  header_info.data_offset = raw_url.find(':');
   header_info.data_offset++;	// jump over colon or to begin if scheme was missing
 
   // read mime type

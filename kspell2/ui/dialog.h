@@ -49,12 +49,12 @@ namespace KSpell2
     signals:
         void done( const TQString& newBuffer );
         void misspelling( const TQString& word, int start );
-        void tqreplace( const TQString& oldWord, int start,
+        void replace( const TQString& oldWord, int start,
                       const TQString& newWord );
 
         void stop();
         void cancel();
-        void autoCorrect( const TQString & currentWord, const TQString & tqreplaceWord );
+        void autoCorrect( const TQString & currentWord, const TQString & replaceWord );
     private slots:
         void slotMisspelling(const TQString& word, int start );
         void slotDone();

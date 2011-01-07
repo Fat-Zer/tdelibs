@@ -261,7 +261,7 @@ static const short yycheck[] = {     4,
 #endif
 
 /* Note: there must be only one dollar sign in this file.
-   It is tqreplaced by the list of actions, each action
+   It is replaced by the list of actions, each action
    as one case of the switch.  */
 
 #define yyerrok		(yyerrstatus = 0)

@@ -359,7 +359,7 @@ using namespace std;
  *
  * @code SKIP("Test skipped because of lack of foo support."); @endcode
  */
-#define SKIP( x ) skip( __FILE__, __LINE__, TQString::tqfromLatin1(#x))
+#define SKIP( x ) skip( __FILE__, __LINE__, TQString::fromLatin1(#x))
 
 /*!
  * A macro testing that @p expression throws an exception that is catched
@@ -512,14 +512,14 @@ namespace KUnitTest
     typedef TQAsciiDictIterator<TestResults> TestResultsListIteratorType;
 
     /*! The abstract Tester class forms the base class for all test cases. Users must
-     * implement the void Tester::allTests() method. This method tqcontains the actual test.
+     * implement the void Tester::allTests() method. This method contains the actual test.
      *
      * Use the CHECK(x,y), XFAIL(x,y) and SKIP(x) macros in the allTests() method
      * to perform the tests.
      *
      * @see CHECK, XFAIL, SKIP
      */
-    class KUNITTEST_EXPORT Tester : public TQObject
+    class KUNITTEST_EXPORT Tester : public QObject
     {
     public:
         Tester(const char *name = 0L)

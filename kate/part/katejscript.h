@@ -64,7 +64,7 @@ class KateJScript
 
     /**
      * creates a JS wrapper object for given KateDocument
-     * @param exec execution state, to tqfind out interpreter to use
+     * @param exec execution state, to find out interpreter to use
      * @param doc document object to wrap
      * @return new js wrapper object
      */
@@ -72,7 +72,7 @@ class KateJScript
 
     /**
      * creates a JS wrapper object for given KateView
-     * @param exec execution state, to tqfind out interpreter to use
+     * @param exec execution state, to find out interpreter to use
      * @param view view object to wrap
      * @return new js wrapper object
      */
@@ -230,4 +230,4 @@ class KateIndentJScriptManager: public KateIndentScriptManagerAbstract
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

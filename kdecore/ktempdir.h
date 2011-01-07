@@ -124,7 +124,7 @@ public:
     * @brief Remove a directory and all its contents
     *
     * Remove recursively a directory, even if it is not empty
-    * or tqcontains other directories.
+    * or contains other directories.
     *
     * However the function works too when the @p path given
     * is a non-directory file. In that case it simply remove that file.

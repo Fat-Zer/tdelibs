@@ -159,7 +159,7 @@ void myTopWidget::rebalance()
 
   if ((otime - itime )> 500)
     {
-      grds->tqrepaint(false);
+      grds->repaint(false);
       itime = time.elapsed();
     }
 }

@@ -358,23 +358,23 @@ void SlaveBase::disconnectSlave()
 
 void SlaveBase::setMetaData(const TQString &key, const TQString &value)
 {
-   mOutgoingMetaData.tqreplace(key, value);
+   mOutgoingMetaData.replace(key, value);
 }
 
 TQString SlaveBase::metaData(const TQString &key) const
 {
-   if (mIncomingMetaData.tqcontains(key))
+   if (mIncomingMetaData.contains(key))
       return mIncomingMetaData[key];
-   if (d->configData.tqcontains(key))
+   if (d->configData.contains(key))
       return d->configData[key];
    return TQString::null;
 }
 
 bool SlaveBase::hasMetaData(const TQString &key) const
 {
-   if (mIncomingMetaData.tqcontains(key))
+   if (mIncomingMetaData.contains(key))
       return true;
-   if (d->configData.tqcontains(key))
+   if (d->configData.contains(key))
       return true;
    return false;
 }
@@ -434,7 +434,7 @@ void SlaveBase::error( int _errid, const TQString &_text )
 {
     mIncomingMetaData.clear(); // Clear meta data
     mOutgoingMetaData.clear();
-    KIO_DATA << (TQ_INT32) _errid << _text;
+    KIO_DATA << (Q_INT32) _errid << _text;
 
     m_pConnection->send( MSG_ERROR, data );
     //reset
@@ -468,10 +468,10 @@ void SlaveBase::needSubURLData()
     m_pConnection->send( MSG_NEED_SUBURL_DATA );
 }
 
-void SlaveBase::slavetqStatus( const TQString &host, bool connected )
+void SlaveBase::slaveStatus( const TQString &host, bool connected )
 {
     pid_t pid = getpid();
-    TQ_INT8 b = connected ? 1 : 0;
+    Q_INT8 b = connected ? 1 : 0;
     KIO_DATA << pid << mProtocol << host << b;
     if (d->onHold)
        stream << d->onHoldUrl;
@@ -543,7 +543,7 @@ void SlaveBase::processedPercent( float /* percent */ )
 
 void SlaveBase::speed( unsigned long _bytes_per_second )
 {
-    KIO_DATA << (TQ_UINT32) _bytes_per_second;
+    KIO_DATA << (Q_UINT32) _bytes_per_second;
     slaveWriteError = false;
     m_pConnection->send( INF_SPEED, data );
     if (slaveWriteError) exit();
@@ -700,7 +700,7 @@ void SlaveBase::listEntry( const UDSEntry& entry, bool _ready )
 
 void SlaveBase::listEntries( const UDSEntryList& list )
 {
-    KIO_DATA << (TQ_UINT32)list.count();
+    KIO_DATA << (Q_UINT32)list.count();
     UDSEntryListConstIterator it = list.begin();
     UDSEntryListConstIterator end = list.end();
     for (; it != end; ++it)
@@ -801,7 +801,7 @@ void SlaveBase::multiGet(const TQByteArray &)
 
 
 void SlaveBase::slave_status()
-{ slavetqStatus( TQString::null, false ); }
+{ slaveStatus( TQString::null, false ); }
 
 void SlaveBase::reparseConfiguration()
 {
@@ -898,7 +898,7 @@ int SlaveBase::messageBox( const TQString &text, MessageBoxType type, const TQSt
                            const TQString &buttonYes, const TQString &buttonNo, const TQString &dontAskAgainName )
 {
     kdDebug(7019) << "messageBox " << type << " " << text << " - " << caption << buttonYes << buttonNo << endl;
-    KIO_DATA << (TQ_INT32)type << text << caption << buttonYes << buttonNo << dontAskAgainName;
+    KIO_DATA << (Q_INT32)type << text << caption << buttonYes << buttonNo << dontAskAgainName;
     m_pConnection->send( INF_MESSAGEBOX, data );
     if ( waitForAnswer( CMD_MESSAGEBOXANSWER, 0, data ) != -1 )
     {
@@ -1048,7 +1048,7 @@ void SlaveBase::dispatch( int command, const TQByteArray &data )
     case CMD_PUT:
     {
         int permissions;
-        TQ_INT8 iOverwrite, iResume;
+        Q_INT8 iOverwrite, iResume;
         stream >> url >> iOverwrite >> iResume >> permissions;
         bool overwrite = ( iOverwrite != 0 );
         bool resume = ( iResume != 0 );
@@ -1078,7 +1078,7 @@ void SlaveBase::dispatch( int command, const TQByteArray &data )
         break;
     case CMD_RENAME:
     {
-        TQ_INT8 iOverwrite;
+        Q_INT8 iOverwrite;
         KURL url2;
         stream >> url >> url2 >> iOverwrite;
         bool overwrite = (iOverwrite != 0);
@@ -1086,7 +1086,7 @@ void SlaveBase::dispatch( int command, const TQByteArray &data )
     } break;
     case CMD_SYMLINK:
     {
-        TQ_INT8 iOverwrite;
+        Q_INT8 iOverwrite;
         TQString target;
         stream >> target >> url >> iOverwrite;
         bool overwrite = (iOverwrite != 0);
@@ -1095,7 +1095,7 @@ void SlaveBase::dispatch( int command, const TQByteArray &data )
     case CMD_COPY:
     {
         int permissions;
-        TQ_INT8 iOverwrite;
+        Q_INT8 iOverwrite;
         KURL url2;
         stream >> url >> url2 >> permissions >> iOverwrite;
         bool overwrite = (iOverwrite != 0);
@@ -1103,7 +1103,7 @@ void SlaveBase::dispatch( int command, const TQByteArray &data )
     } break;
     case CMD_DEL:
     {
-        TQ_INT8 isFile;
+        Q_INT8 isFile;
         stream >> url >> isFile;
         del( url, isFile != 0);
     } break;

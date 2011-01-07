@@ -19,7 +19,7 @@
 //----------------------------------------------------------------------
 // KDE color selection dialog.
 
-// tqlayout management added Oct 1997 by Mario Weilguni
+// layout management added Oct 1997 by Mario Weilguni
 // <mweilguni@sime.com>
 
 #ifndef KDELIBS_KCOLORDIALOG_H

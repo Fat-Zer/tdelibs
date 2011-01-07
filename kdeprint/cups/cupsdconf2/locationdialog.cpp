@@ -141,7 +141,7 @@ void LocationDialog::fillLocation(CupsLocation *loc)
 
 void LocationDialog::setLocation(CupsLocation *loc)
 {
-	int	index = conf_->resources_.tqfindRef(loc->resource_);
+	int	index = conf_->resources_.findRef(loc->resource_);
 	resource_->setCurrentItem(index);
 	authtype_->setCurrentItem(loc->authtype_);
 	authclass_->setCurrentItem(loc->authclass_);

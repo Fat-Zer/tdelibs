@@ -51,7 +51,7 @@ void KRestrictedLine::keyPressEvent( TQKeyEvent *e )
 
   // do we have a list of valid chars &&
   // is the pressed key in the list of valid chars?
-  if (!qsValidChars.isEmpty() && !qsValidChars.tqcontains(e->ascii()))
+  if (!qsValidChars.isEmpty() && !qsValidChars.contains(e->ascii()))
     {
       // invalid char, emit signal and return
       emit (invalidChar(e->key()));

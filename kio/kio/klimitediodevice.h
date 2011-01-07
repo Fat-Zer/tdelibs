@@ -69,12 +69,12 @@ public:
 
     virtual Offset size() const { return m_length; }
 
-    virtual TQ_LONG readBlock ( char * data, TQ_ULONG maxlen )
+    virtual Q_LONG readBlock ( char * data, Q_ULONG maxlen )
     {
         maxlen = QMIN( maxlen, m_length - at() ); // Apply upper limit
         return m_dev->readBlock( data, maxlen );
     }
-    virtual TQ_LONG writeBlock ( const char *, TQ_ULONG ) { return -1; } // unsupported
+    virtual Q_LONG writeBlock ( const char *, Q_ULONG ) { return -1; } // unsupported
     virtual int putch( int ) { return -1; } // unsupported
 
     virtual int getch() {
@@ -94,8 +94,8 @@ public:
     virtual bool atEnd() const { return m_dev->atEnd() || m_dev->at() >= m_start + m_length; }
 private:
     TQIODevice* m_dev;
-    TQ_ULONG m_start;
-    TQ_ULONG m_length;
+    Q_ULONG m_start;
+    Q_ULONG m_length;
 };
 
 #endif

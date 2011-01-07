@@ -190,7 +190,7 @@ ScriptInterpreter::~ScriptInterpreter()
 #ifdef KJS_VERBOSE
   kdDebug(6070) << "ScriptInterpreter::~ScriptInterpreter " << this << " for part=" << m_frame << endl;
 #endif
-  assert( interpreterList && interpreterList->tqcontains( this ) );
+  assert( interpreterList && interpreterList->contains( this ) );
   interpreterList->remove( this );
   if ( interpreterList->isEmpty() ) {
     delete interpreterList;
@@ -261,7 +261,7 @@ UString::UString(const TQString &d)
 {
   unsigned int len = d.length();
   UChar *dat = new UChar[len];
-  memcpy(dat, d.tqunicode(), len * sizeof(UChar));
+  memcpy(dat, d.unicode(), len * sizeof(UChar));
   rep = UString::Rep::create(dat, len);
 }
 
@@ -277,7 +277,7 @@ UString::UString(const DOM::DOMString &d)
 
   unsigned int len = d.length();
   UChar *dat = new UChar[len];
-  memcpy(dat, d.tqunicode(), len * sizeof(UChar));
+  memcpy(dat, d.unicode(), len * sizeof(UChar));
   rep = UString::Rep::create(dat, len);
 }
 

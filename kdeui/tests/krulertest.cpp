@@ -55,7 +55,7 @@ KRulerTest::KRulerTest( const char *name )
 {
   mainframe = new TQFrame(this);
 
-  tqlayout = new TQGridLayout(mainframe, 2, 2);
+  layout = new TQGridLayout(mainframe, 2, 2);
 
   miniwidget = new TQFrame(mainframe);
   miniwidget->setFrameStyle(TQFrame::WinPanel | TQFrame::Raised);
@@ -85,10 +85,10 @@ KRulerTest::KRulerTest( const char *name )
   connect( bigwidget, TQT_SIGNAL(newHeight(int)),
 	   TQT_SLOT(slotNewHeight(int)) );
 
-  tqlayout->addWidget(miniwidget, 0, 0);
-  tqlayout->addWidget(hruler, 0, 1);
-  tqlayout->addWidget(vruler, 1, 0);
-  tqlayout->addWidget(bigwidget, 1, 1);
+  layout->addWidget(miniwidget, 0, 0);
+  layout->addWidget(hruler, 0, 1);
+  layout->addWidget(vruler, 1, 0);
+  layout->addWidget(bigwidget, 1, 1);
 
   mouse_message = new TQLabel("Press and hold mouse button\nfor pointer movement", bigwidget);
   mouse_message->adjustSize();
@@ -140,7 +140,7 @@ KRulerTest::KRulerTest( const char *name )
   beginMark = new KIntNumInput(0, lineEdit);
   beginMark->setRange(-1000, 1000, 1, false);
   beginMark->move(5, 15);
-  beginMark->setFixedSize(beginMark->tqsizeHint());
+  beginMark->setFixedSize(beginMark->sizeHint());
   connect(beginMark, TQT_SIGNAL(valueChanged(int)), 
 	  hruler, TQT_SLOT(slotNewOffset(int)) );
   connect(beginMark, TQT_SIGNAL(valueChanged(int)), 
@@ -148,7 +148,7 @@ KRulerTest::KRulerTest( const char *name )
   endMark = new KIntNumInput(0, lineEdit);
   endMark->setRange(-1000, 1000, 1, false);
   endMark->move(5, 35);
-  endMark->setFixedSize(endMark->tqsizeHint());
+  endMark->setFixedSize(endMark->sizeHint());
   connect(endMark, TQT_SIGNAL(valueChanged(int)), 
 	  hruler, TQT_SLOT(slotEndOffset(int)) );
   connect(endMark, TQT_SIGNAL(valueChanged(int)), 
@@ -156,7 +156,7 @@ KRulerTest::KRulerTest( const char *name )
   lengthInput = new KIntNumInput(0, lineEdit);
   lengthInput->setRange(-1000, 1000, 1, false);
   lengthInput->move(5, 55);
-  lengthInput->setFixedSize(lengthInput->tqsizeHint());
+  lengthInput->setFixedSize(lengthInput->sizeHint());
   connect(lengthInput, TQT_SIGNAL(valueChanged(int)), 
 	  hruler, TQT_SLOT(slotEndOffset(int)) );
   connect(lengthInput, TQT_SIGNAL(valueChanged(int)), 
@@ -169,21 +169,21 @@ KRulerTest::KRulerTest( const char *name )
   transX = new KDoubleNumInput(0.0, vertrot);
   transX->setRange(-1000, 1000, 1, false);
   transX->move(5, 15);
-  transX->setFixedSize(transX->tqsizeHint());
+  transX->setFixedSize(transX->sizeHint());
   //transX->setLabel("transx", AlignLeft);
   connect(transX, TQT_SIGNAL(valueChanged(double)), 
 	  TQT_SLOT(slotSetXTrans(double)) );
   transY = new KDoubleNumInput(-12.0, vertrot);
   transY->setRange(-1000, 1000, 1, false);
   transY->move(5, 35);
-  transY->setFixedSize(transY->tqsizeHint());
+  transY->setFixedSize(transY->sizeHint());
   //transY->setLabel("transy", AlignLeft);
   connect(transY, TQT_SIGNAL(valueChanged(double)), 
 	  TQT_SLOT(slotSetYTrans(double)) );
   rotV = new KDoubleNumInput(90.0, vertrot);
   rotV->setRange(-1000, 1000, 1, false);
   rotV->move(5, 55);
-  rotV->setFixedSize(rotV->tqsizeHint());
+  rotV->setFixedSize(rotV->sizeHint());
   //rotV->setLabel("rot", AlignLeft);
   connect(rotV, TQT_SIGNAL(valueChanged(double)), 
 	  TQT_SLOT(slotSetRotate(double)) );
@@ -221,7 +221,7 @@ KRulerTest::KRulerTest( const char *name )
 
 KRulerTest::~KRulerTest()
 {
-  delete tqlayout;
+  delete layout;
   delete hruler;
   delete vruler;
   delete miniwidget;

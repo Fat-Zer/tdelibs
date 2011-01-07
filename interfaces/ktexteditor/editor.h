@@ -32,7 +32,7 @@ namespace KTextEditor
  * Usage: Load it, merge it's gui + be happy
  * Extensibility: Use the Document / View classes if you want
  * advanced features, interfaces, etc. This class is just a good text editor
- * widget tqreplacement for applications which just need an embedded text edtor
+ * widget replacement for applications which just need an embedded text edtor
  * and are not interested in using advanced interfaces.
  */
 
@@ -57,7 +57,7 @@ class KTEXTEDITOR_EXPORT Editor : public KParts::ReadWritePart
     unsigned int myEditorNumber;
 };     
 
-KTEXTEDITOR_EXPORT Editor *createEditor ( const char* libname, TQWidget *tqparentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0 );
+KTEXTEDITOR_EXPORT Editor *createEditor ( const char* libname, TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0 );
 
 }
 

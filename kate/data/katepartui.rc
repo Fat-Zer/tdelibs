@@ -25,12 +25,12 @@
     <Separator group="edit_select_merge" />
     <Action name="set_insert" group="edit_select_merge" />
     <Separator group="edit_select_merge" />
-    <Action name="edit_tqfind" group="edit_tqfind_merge" />
-    <Action name="edit_tqfind_next" group="edit_tqfind_merge" />
-    <Action name="edit_tqfind_prev" group="edit_tqfind_merge" />
-    <Action name="edit_tqreplace" group="edit_tqfind_merge" />
-    <Separator group="edit_tqfind_merge" />
-    <Action name="go_goto_line" group="edit_tqfind_merge"/>
+    <Action name="edit_find" group="edit_find_merge" />
+    <Action name="edit_find_next" group="edit_find_merge" />
+    <Action name="edit_find_prev" group="edit_find_merge" />
+    <Action name="edit_replace" group="edit_find_merge" />
+    <Separator group="edit_find_merge" />
+    <Action name="go_goto_line" group="edit_find_merge"/>
   </Menu>
 
   <Menu name="view" noMerge="1"><text>&amp;View</text>
@@ -116,7 +116,7 @@
   <Action name="edit_cut" group="edit_operations" />
   <Action name="edit_copy" group="edit_operations" />
   <Action name="edit_paste" group="edit_operations" />
-  <Action name="edit_tqfind" group="tqfind_operations" />
+  <Action name="edit_find" group="find_operations" />
   <Action name="incFontSizes" group="zoom_operations" />
   <Action name="decFontSizes" group="zoom_operations" />
 </ToolBar>

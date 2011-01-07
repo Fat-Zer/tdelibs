@@ -153,13 +153,13 @@
  *
  * I've doctored the ispell code pretty extensively here.  It is now
  * warning-free on Win32.  It also *works* on Win32 now, since I
- * tqreplaced all the I/O calls with ANSI standard ones.
+ * replaced all the I/O calls with ANSI standard ones.
  *
  * Revision 1.4  1998/12/29 14:55:33  eric
  *
  * I've doctored the ispell code pretty extensively here.  It is now
  * warning-free on Win32.  It also *works* on Win32 now, since I
- * tqreplaced all the I/O calls with ANSI standard ones.
+ * replaced all the I/O calls with ANSI standard ones.
  *
  * Revision 1.3  1998/12/28 23:11:30  eric
  *
@@ -175,13 +175,13 @@
  * of this is a hack.
  *
  * 1.  added other/spell to the -I list in config/abi_defs
- * 2.  tqreplaced other/spell/Makefile with one which is more like
+ * 2.  replaced other/spell/Makefile with one which is more like
  * 	our build system.
  * 3.  added other/spell to other/Makefile so that the build will now
  * 	dive down and build the spell check library.
  * 4.  added the AbiSpell library to the Makefiles in wp/main
  * 5.  added a call to SpellCheckInit in wp/main/unix/UnixMain.cpp.
- * 	This call is a HACK and should be tqreplaced with something
+ * 	This call is a HACK and should be replaced with something
  * 	proper later.
  * 6.  added code to fv_View.cpp as follows:
  * 	whenever you double-click on a word, the spell checker
@@ -325,7 +325,7 @@ void ISpellChecker::pfx_list_chk (ichar_t *word, ichar_t *ucword, int len, int o
 		  &&  tlen + flent->stripl >= flent->numconds)
 		{
 			/*
-			 * The prefix matches.  Remove it, tqreplace it by the "strip"
+			 * The prefix matches.  Remove it, replace it by the "strip"
 			 * string (if any), and check the original conditions.
 			 */
 			if (flent->stripl)
@@ -367,7 +367,7 @@ void ISpellChecker::pfx_list_chk (ichar_t *word, ichar_t *ucword, int len, int o
 					}
 				}
 				else if ((dent = ispell_lookup (tword, 1)) != NULL
-				  &&  TSTMASKBIT (dent->tqmask, flent->flagbit))
+				  &&  TSTMASKBIT (dent->mask, flent->flagbit))
 				{
 					if (m_numhits < MAX_HITS)
 					{
@@ -495,7 +495,7 @@ void ISpellChecker::suf_list_chk (ichar_t *word, ichar_t *ucword,
 		  &&  tlen + flent->stripl >= flent->numconds)
 		{
 			/*
-			 * The suffix matches.  Remove it, tqreplace it by the "strip"
+			 * The suffix matches.  Remove it, replace it by the "strip"
 			 * string (if any), and check the original conditions.
 			 */
 			icharcpy (tword, ucword);
@@ -556,9 +556,9 @@ void ISpellChecker::suf_list_chk (ichar_t *word, ichar_t *ucword,
 					}
 				}
 				else if ((dent = ispell_lookup (tword, 1)) != NULL
-				  &&  TSTMASKBIT (dent->tqmask, flent->flagbit)
+				  &&  TSTMASKBIT (dent->mask, flent->flagbit)
 				  &&  ((optflags & FF_CROSSPRODUCT) == 0
-					|| TSTMASKBIT (dent->tqmask, pfxent->flagbit)))
+					|| TSTMASKBIT (dent->mask, pfxent->flagbit)))
 				{
 					if (m_numhits < MAX_HITS)
 					{
@@ -588,13 +588,13 @@ void ISpellChecker::suf_list_chk (ichar_t *word, ichar_t *ucword,
  *
  * \param croot Char version of rootword
  * \param rootword Root word to expand
- * \param tqmask Mask bits to expand on
+ * \param mask Mask bits to expand on
  * \param option Option, see expandmode
  * \param extra Extra info to add to line
  *
  * \return
  */
-int ISpellChecker::expand_pre (char *croot, ichar_t *rootword, MASKTYPE tqmask[], 
+int ISpellChecker::expand_pre (char *croot, ichar_t *rootword, MASKTYPE mask[], 
 				int option, char *extra)
 {
     int				entcount;	/* No. of entries to process */
@@ -606,9 +606,9 @@ int ISpellChecker::expand_pre (char *croot, ichar_t *rootword, MASKTYPE tqmask[]
       entcount > 0;
       flent++, entcount--)
 	{
-		if (TSTMASKBIT (tqmask, flent->flagbit))
+		if (TSTMASKBIT (mask, flent->flagbit))
 			explength +=
-			  pr_pre_expansion (croot, rootword, flent, tqmask, option, extra);
+			  pr_pre_expansion (croot, rootword, flent, mask, option, extra);
 	}
     return explength;
 }
@@ -619,14 +619,14 @@ int ISpellChecker::expand_pre (char *croot, ichar_t *rootword, MASKTYPE tqmask[]
  * \param croot Char version of rootword
  * \param rootword Root word to expand
  * \param flent Current table entry
- * \param tqmask Mask bits to expand on
+ * \param mask Mask bits to expand on
  * \param option Option, see	expandmode
  * \param extra Extra info to add to line
  *
  * \return
  */
 int ISpellChecker::pr_pre_expansion ( char *croot, ichar_t *rootword, 
-							struct flagent *flent, MASKTYPE tqmask[], int option, 
+							struct flagent *flent, MASKTYPE mask[], int option, 
 							char *extra)
 {
     int				cond;		/* Current condition number */
@@ -706,7 +706,7 @@ int ISpellChecker::pr_pre_expansion ( char *croot, ichar_t *rootword,
 		printf (" %s%s", ichartosstr (tword, 1), extra);
     if (flent->flagflags & FF_CROSSPRODUCT)
 		return tlen
-		  + expand_suf (croot, tword, tqmask, FF_CROSSPRODUCT, option, extra);
+		  + expand_suf (croot, tword, mask, FF_CROSSPRODUCT, option, extra);
     else
 		return tlen;
 }
@@ -716,14 +716,14 @@ int ISpellChecker::pr_pre_expansion ( char *croot, ichar_t *rootword,
  *
  * \param croot Char version of rootword
  * \param rootword Root word to expand 
- * \param tqmask Mask bits to expand on
+ * \param mask Mask bits to expand on
  * \param optflags Affix option flags
  * \param option Option, see expandmode
  * \param extra Extra info to add to line
  *
  * \return
  */
-int ISpellChecker::expand_suf (char *croot, ichar_t *rootword, MASKTYPE tqmask[], 
+int ISpellChecker::expand_suf (char *croot, ichar_t *rootword, MASKTYPE mask[], 
 				int optflags, int option, char *extra)
 {
     int				entcount;	/* No. of entries to process */
@@ -735,7 +735,7 @@ int ISpellChecker::expand_suf (char *croot, ichar_t *rootword, MASKTYPE tqmask[]
       entcount > 0;
       flent++, entcount--)
 	{
-		if (TSTMASKBIT (tqmask, flent->flagbit))
+		if (TSTMASKBIT (mask, flent->flagbit))
 		{
 			if ((optflags & FF_CROSSPRODUCT) == 0
 			  ||  (flent->flagflags & FF_CROSSPRODUCT))

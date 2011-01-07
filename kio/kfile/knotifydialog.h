@@ -64,7 +64,7 @@ public:
      * @param name The widget name
      * @param modal If true, this will be a modal dialog, otherwise non-modal.
      * @param aboutData A pointer to a KAboutData object. KAboutData::appName()
-     *                  will be used to tqfind the KNotify events (in the eventsrc file).
+     *                  will be used to find the KNotify events (in the eventsrc file).
      *                  Set this to 0L if you want to add all events yourself with
      * addApplicationEvents().
      */
@@ -83,7 +83,7 @@ public:
      * @param parent The parent widget for the dialog
      * @param name The widget name
      * @param aboutData A pointer to a KAboutData object. KAboutData::appName()
-     *                  will be used to tqfind the KNotify events (in the eventsrc file).
+     *                  will be used to find the KNotify events (in the eventsrc file).
      * @see exec for the return values.
      * @return The value of TQDialog::exec()
      */
@@ -169,7 +169,7 @@ namespace KNotify
         EventList *m_events;
 
         KConfig *kc; // The file that defines the events.
-        KConfig *config; // The file that tqcontains the settings for the events
+        KConfig *config; // The file that contains the settings for the events
     };
 
 

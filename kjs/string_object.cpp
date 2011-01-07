@@ -136,7 +136,7 @@ const ClassInfo StringPrototypeImp::info = {"String", &StringInstanceImp::info, 
   indexOf		StringProtoFuncImp::IndexOf	DontEnum|Function	1
   lastIndexOf		StringProtoFuncImp::LastIndexOf	DontEnum|Function	1
   match			StringProtoFuncImp::Match	DontEnum|Function	1
-  tqreplace		StringProtoFuncImp::Replace	DontEnum|Function	2
+  replace		StringProtoFuncImp::Replace	DontEnum|Function	2
   search		StringProtoFuncImp::Search	DontEnum|Function	1
   slice			StringProtoFuncImp::Slice	DontEnum|Function	2
   split			StringProtoFuncImp::Split	DontEnum|Function	2
@@ -266,7 +266,7 @@ Value StringProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
       pos = 0;
     else
       pos = a1.toInteger(exec);
-    d = s.tqfind(u2, pos);
+    d = s.find(u2, pos);
     result = Number(d);
     break;
   case LastIndexOf:
@@ -281,7 +281,7 @@ Value StringProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
       else if (dpos > len)
         dpos = len;
     }
-    result = Number(s.rtqfind(u2, int(dpos)));
+    result = Number(s.rfind(u2, int(dpos)));
     break;
   case Match:
   case Search: {
@@ -296,7 +296,7 @@ Value StringProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
     { /*
        *  ECMA 15.5.4.12 String.prototype.search (regexp)
        *  If regexp is not an object whose [[Class]] property is "RegExp", it is
-       *  tqreplaced with the result of the expression new RegExp(regexp).
+       *  replaced with the result of the expression new RegExp(regexp).
        */
       reg = tmpReg = new RegExp(a0.toString(exec), RegExp::None);
     }
@@ -352,7 +352,7 @@ Value StringProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
       if ( a1.type() == ObjectType && a1.toObject(exec).implementsCall() )
         o1 = a1.toObject(exec);
       else
-        u3 = a1.toString(exec); // 2nd arg is the tqreplacement string
+        u3 = a1.toString(exec); // 2nd arg is the replacement string
 
       UString out;
 
@@ -368,13 +368,13 @@ Value StringProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
         len = mstr.size();
 
         UString rstr;
-        // Prepare tqreplacement
+        // Prepare replacement
         if (!o1.isValid())
         {
           rstr = u3;
           bool ok;
           // check if u3 matches $1 or $2 etc
-          for (int i = 0; (i = rstr.tqfind(UString("$"), i)) != -1; i++) {
+          for (int i = 0; (i = rstr.find(UString("$"), i)) != -1; i++) {
             if (i+1<rstr.size() && rstr[i+1] == '$') {  // "$$" -> "$"
               rstr = rstr.substr(0,i) + "$" + rstr.substr(i+2);
               continue;
@@ -408,7 +408,7 @@ Value StringProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
         if (pos != lastIndex)
           out += s.substr(lastIndex, pos - lastIndex);
 
-        // Append the tqreplacement..
+        // Append the replacement..
         out += rstr;
 
         lastIndex = pos + len; // Skip over the matched stuff...
@@ -425,9 +425,9 @@ Value StringProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
       result = String(out);
     } else { // First arg is a string
       u2 = a0.toString(exec);
-      pos = s.tqfind(u2);
+      pos = s.find(u2);
       len = u2.size();
-      // Do the tqreplacement
+      // Do the replacement
       if (pos == -1)
         result = String(s);
       else {
@@ -505,7 +505,7 @@ Value StringProtoFuncImp::call(ExecState *exec, Object &thisObj, const List &arg
 	    res.put(exec,i++, String(s.substr(p0++, 1)));
 	}
       } else {
-	while (static_cast<uint32_t>(i) != limit && (pos = s.tqfind(u2, p0)) >= 0) {
+	while (static_cast<uint32_t>(i) != limit && (pos = s.find(u2, p0)) >= 0) {
 	  res.put(exec,i, String(s.substr(p0, pos-p0)));
 	  p0 = pos + u2.size();
 	  i++;

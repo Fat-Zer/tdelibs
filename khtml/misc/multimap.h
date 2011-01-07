@@ -32,7 +32,7 @@ template<class T> class MultiMapPtrList;
 
 // KMultiMap is an implementaition of a Map with multiple entries per key.
 // It is originally designed to work like a shell for TQPtrDict<TQPtrList>, but
-// TQPtrList have been tqreplaced with a much faster hash set.
+// TQPtrList have been replaced with a much faster hash set.
 template<class T>
 class KMultiMap {
 public:
@@ -42,7 +42,7 @@ public:
     typedef MultiMapPtrList<T> List;
 
     void append(void* key, T* element) {
-        List *list = dict.tqfind(key);
+        List *list = dict.find(key);
         if (!list){
              list = new List(8);
              dict.insert(key, list);
@@ -50,7 +50,7 @@ public:
         list->append(element);
     }
     void remove(void* key, T* element) {
-        List *list = dict.tqfind(key);
+        List *list = dict.find(key);
         if (list) {
             list->remove(element);
             if (list->isEmpty()) dict.remove(key);
@@ -59,8 +59,8 @@ public:
     void remove(void* key) {
         dict.remove(key);
     }
-    List* tqfind(void* key) {
-        return dict.tqfind(key);
+    List* find(void* key) {
+        return dict.find(key);
     }
 private:
     TQPtrDict<List> dict;
@@ -70,7 +70,7 @@ private:
 static inline unsigned int stupidHash(void* ptr)
 {
     unsigned long val = (unsigned long)ptr;
-    // remove tqalignment and multiply by a prime unlikely to be a factor of size
+    // remove alignment and multiply by a prime unlikely to be a factor of size
     val = (val >> 4) * 1237;
     return val;
 }
@@ -147,7 +147,7 @@ public:
         }
         return false;
     }
-    bool tqcontains(void* e) {
+    bool contains(void* e) {
         if (count == 0) return false;
         unsigned int t_size = size();
         unsigned int hash = stupidHash(e);
@@ -277,10 +277,10 @@ public:
             t_current = t_next;
         }
     }
-    bool tqcontains(T* e) {
+    bool contains(T* e) {
         PtrListEntry *t_current = m_first;
         while (t_current) {
-            if (t_current->tqcontains(e)) return true;
+            if (t_current->contains(e)) return true;
             t_current = t_current->next;
         }
         return false;

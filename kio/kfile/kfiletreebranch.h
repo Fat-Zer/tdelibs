@@ -166,9 +166,9 @@ protected:
 
 public:
    /**
-    * tqfind the according KFileTreeViewItem by an url
+    * find the according KFileTreeViewItem by an url
     */
-   virtual KFileTreeViewItem *tqfindTVIByURL( const KURL& );
+   virtual KFileTreeViewItem *findTVIByURL( const KURL& );
 
 signals:
    /**
@@ -213,7 +213,7 @@ private:
    KURL::List           m_openChildrenURLs;
 
 
-   /* The next two members are used for caching purposes in tqfindTVIByURL. */
+   /* The next two members are used for caching purposes in findTVIByURL. */
    KURL                 m_lastFoundURL;
    KFileTreeViewItem   *m_lastFoundItem;
 

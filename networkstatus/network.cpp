@@ -23,29 +23,29 @@
 
 #include "network.h"
 
-Network::Network( const TQString name, NetworktqStatus::Properties properties )
+Network::Network( const TQString name, NetworkStatus::Properties properties )
 	: m_name( name )
 {
 	kdDebug() << k_funcinfo << "constructing network '" << name << "', status: " << properties.status << endl;
 	m_status = properties.status;
-	m_nettqmasks = properties.nettqmasks;
+	m_netmasks = properties.netmasks;
 	m_internet = properties.internet;
 	m_service = properties.service;
 	m_onDemandPolicy = properties.onDemandPolicy;
 }
 
-NetworktqStatus::EnumtqStatus Network::reachabilityFor( const TQString & host )
+NetworkStatus::EnumStatus Network::reachabilityFor( const TQString & host )
 {
 	// initially assume all networks are internet
 	// TODO: compute reachability properly
 	Q_UNUSED( host );
 	if ( true /*nss.properties.internet && notPrivateNetwork( host )*/ )
 	{
-		NetworktqStatus::EnumtqStatus status;
-		if ( m_status == NetworktqStatus::Establishing || m_status == NetworktqStatus::Online )
-			status = NetworktqStatus::Online;
-		else if ( m_status == NetworktqStatus::ShuttingDown || m_status == NetworktqStatus::Offline )
-			status = NetworktqStatus::Offline;
+		NetworkStatus::EnumStatus status;
+		if ( m_status == NetworkStatus::Establishing || m_status == NetworkStatus::Online )
+			status = NetworkStatus::Online;
+		else if ( m_status == NetworkStatus::ShuttingDown || m_status == NetworkStatus::Offline )
+			status = NetworkStatus::Offline;
 		else
 			status = m_status;
 		
@@ -82,7 +82,7 @@ void Network::unregisterUsage( const TQCString appId, const TQString host )
 	}
 }
 
-void Network::setStatus( NetworktqStatus::EnumtqStatus status )
+void Network::setStatus( NetworkStatus::EnumStatus status )
 {
 	m_status = status;
 }

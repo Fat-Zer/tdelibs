@@ -53,7 +53,7 @@ public:
    *
    * @param size	the maximum size of the buffer
    */
-  KSocketBuffer(TQ_LONG size = -1);
+  KSocketBuffer(Q_LONG size = -1);
 
   /**
    * Copy constructor.
@@ -86,7 +86,7 @@ public:
    *
    * @sa size
    */
-  virtual TQ_LONG length() const;
+  virtual Q_LONG length() const;
 
   /**
    * Retrieves the buffer size. The value of -1 indicates that
@@ -94,7 +94,7 @@ public:
    *
    * @sa length for the length of the data stored
    */
-  virtual TQ_LONG size() const;
+  virtual Q_LONG size() const;
 
   /**
    * Sets the size of the buffer, if allowed.
@@ -103,7 +103,7 @@ public:
    * @returns true on success, false if an error occurred.
    * @note if the new size is less than length(), the buffer will be truncated
    */
-  virtual bool setSize(TQ_LONG size);
+  virtual bool setSize(Q_LONG size);
 
   /**
    * Adds data to the end of the buffer.
@@ -112,7 +112,7 @@ public:
    * @param len		the data length, in bytes
    * @returns the number of bytes added to the end of the buffer.
    */
-  virtual TQ_LONG feedBuffer(const char *data, TQ_LONG len);
+  virtual Q_LONG feedBuffer(const char *data, Q_LONG len);
 
   /**
    * Clears the buffer.
@@ -127,7 +127,7 @@ public:
    * @param discard	if true, the bytes copied will be discarded
    * @returns the number of bytes copied from the buffer
    */
-  virtual TQ_LONG consumeBuffer(char *data, TQ_LONG maxlen, bool discard = true);
+  virtual Q_LONG consumeBuffer(char *data, Q_LONG maxlen, bool discard = true);
 
   /**
    * Sends at most @p len bytes of data to the I/O Device.
@@ -137,7 +137,7 @@ public:
    * @returns the number of bytes sent and discarded from the buffer, -1
    *          indicates an error.
    */
-  virtual TQ_LONG sendTo(KActiveSocketBase* device, TQ_LONG len = -1);
+  virtual Q_LONG sendTo(KActiveSocketBase* device, Q_LONG len = -1);
 
   /**
    * Tries to receive @p len bytes of data from the I/O device.
@@ -148,15 +148,15 @@ public:
    * @returns the number of bytes received and copied into the buffer,
    *	      -1 indicates an error.
    */
-  virtual TQ_LONG receiveFrom(KActiveSocketBase* device, TQ_LONG len = -1);
+  virtual Q_LONG receiveFrom(KActiveSocketBase* device, Q_LONG len = -1);
 
 protected:
   mutable TQMutex m_mutex;
   TQValueList<TQByteArray> m_list;
   TQIODevice::Offset m_offset;	///< offset of the start of data in the first element
 
-  TQ_LONG m_size;		///< the maximum length of the buffer
-  mutable TQ_LONG m_length;
+  Q_LONG m_size;		///< the maximum length of the buffer
+  mutable Q_LONG m_length;
 };
 
 } }			// namespace KNetwork::Internal

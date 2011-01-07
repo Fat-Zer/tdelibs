@@ -123,7 +123,7 @@ KFileList::KFileList(TQWidget *parent, const char *name)
 	m_remove->setEnabled(false);
 
 	m_open = new TQToolButton(this);
-	m_open->setIconSet(SmallIconSet("filetqfind"));
+	m_open->setIconSet(SmallIconSet("filefind"));
 	connect(m_open, TQT_SIGNAL(clicked()), TQT_SLOT(slotOpenFile()));
 	TQToolTip::add(m_open, i18n("Open file"));
 	TQWhatsThis::add(m_open, whatsThisOpenFileButton);
@@ -263,7 +263,7 @@ void KFileList::slotOpenFile()
 	}
 }
 
-TQSize KFileList::tqsizeHint() const
+TQSize KFileList::sizeHint() const
 {
 	return TQSize(100, 100);
 }

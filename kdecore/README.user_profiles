@@ -26,7 +26,7 @@ Mapping profiles to individual users
 ====================================
 
 The mapping file can contain a [Users] section for mapping profiles to
-an individual user. The [Users] section tqcontains the user's account name
+an individual user. The [Users] section contains the user's account name
 followed by one or more profiles as follow:
 
 	[Users]
@@ -68,7 +68,7 @@ which profile(s) belongs to that group. This looks as follows:
 For each group that a user is part of, the corresponding profile(s) are used. The
 order in which the groups are listed in the "groups" entry, determines the resulting
 order of all the applicable profiles. If multiple profiles are applicable to a
-particular user and a profile tqcontains settings that conflict with settings in
+particular user and a profile contains settings that conflict with settings in
 another profile then the settings in the earlier listed profile take precedent.
 
 So if, based on the example above, a user is part of the "pkgs" group then the

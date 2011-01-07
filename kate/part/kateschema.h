@@ -198,7 +198,7 @@ class KateSchemaConfigColorTab : public QWidget
     void schemaChanged( int newSchema );
 
   signals:
-    void changed(); // connected to tqparentWidget()->tqparentWidget() TQT_SLOT(slotChanged)
+    void changed(); // connected to parentWidget()->parentWidget() TQT_SLOT(slotChanged)
 
   protected slots:
     void slotMarkerColorChanged(const TQColor&);
@@ -223,7 +223,7 @@ class KateSchemaConfigFontTab : public QWidget
     void schemaChanged( int newSchema );
 
   signals:
-    void changed(); // connected to tqparentWidget()->tqparentWidget() TQT_SLOT(slotChanged)
+    void changed(); // connected to parentWidget()->parentWidget() TQT_SLOT(slotChanged)
 
   private:
     class KFontChooser *m_fontchooser;
@@ -320,4 +320,4 @@ class KateSchemaConfigPage : public KateConfigPage
 
 #endif
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

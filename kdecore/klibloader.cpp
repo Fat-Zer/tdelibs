@@ -209,7 +209,7 @@ void KLibrary::slotObjectCreated( TQObject *obj )
   if ( m_timer && m_timer->isActive() )
     m_timer->stop();
 
-  if ( m_objs.tqcontainsRef( obj ) )
+  if ( m_objs.containsRef( obj ) )
       return; // we know this object already
 
   connect( obj, TQT_SIGNAL( destroyed() ),
@@ -320,7 +320,7 @@ KLibLoader::~KLibLoader()
     TQAsciiDictIterator<KLibWrapPrivate> it( m_libs );
     for (; it.current(); ++it )
     {
-      kdDebug(150) << "The KLibLoader tqcontains the library " << it.current()->name
+      kdDebug(150) << "The KLibLoader contains the library " << it.current()->name
         << " (" << it.current()->lib << ")" << endl;
       d->pending_close.append(it.current());
     }
@@ -337,10 +337,10 @@ static inline TQCString makeLibName( const char* name )
     // only append ".la" if there is no extension
     // this allows to load non-libtool libraries as well
     // (mhk, 20000228)
-    int pos = libname.tqfindRev('/');
+    int pos = libname.findRev('/');
     if (pos < 0)
       pos = 0;
-    if (libname.tqfind('.', pos) < 0)
+    if (libname.find('.', pos) < 0)
       libname += ".la";
     return libname;
 }
@@ -500,7 +500,7 @@ void KLibLoader::slotLibraryDestroyed()
 
 void KLibLoader::close_pending(KLibWrapPrivate *wrap)
 {
-  if (wrap && !d->pending_close.tqcontainsRef( wrap ))
+  if (wrap && !d->pending_close.containsRef( wrap ))
     d->pending_close.append( wrap );
 
   /* First delete all KLibrary objects in pending_close, but _don't_ unload
@@ -534,7 +534,7 @@ void KLibLoader::close_pending(KLibWrapPrivate *wrap)
 
     /* Now ensure, that the libs are only unloaded in the reverse direction
        they were loaded.  */
-    if (!d->pending_close.tqcontainsRef( wrap )) {
+    if (!d->pending_close.containsRef( wrap )) {
       if (!deleted_one)
         /* Only diagnose, if we really haven't deleted anything. */
 //        kdDebug(150) << "try to dlclose " << wrap->name << ": not yet" << endl;

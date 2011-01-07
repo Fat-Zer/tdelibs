@@ -56,7 +56,7 @@ void KMacroExpanderBase::expandMacros( TQString &str )
 
     for (pos = 0; pos < str.length(); ) {
         if (ec != (QChar)0) {
-            if (str.tqunicode()[pos] != ec)
+            if (str.unicode()[pos] != ec)
                 goto nohit;
             if (!(len = expandEscapedMacro( str, pos, rst )))
                 goto nohit;
@@ -70,7 +70,7 @@ void KMacroExpanderBase::expandMacros( TQString &str )
             }
             rsts = rst.join( " " );
             rst.clear();
-            str.tqreplace( pos, len, rsts );
+            str.replace( pos, len, rsts );
             pos += rsts.length();
             continue;
       nohit:
@@ -109,7 +109,7 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
     TQString rsts;
 
     while (pos < str.length()) {
-        TQChar cc( str.tqunicode()[pos] );
+        TQChar cc( str.unicode()[pos] );
         if (ec != (QChar)0) {
             if (cc != ec)
                 goto nohit;
@@ -125,13 +125,13 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
             }
             if (state.dquote) {
                 rsts = rst.join( " " );
-                rsts.tqreplace( TQRegExp("([$`\"\\\\])"), "\\\\1" );
+                rsts.replace( TQRegExp("([$`\"\\\\])"), "\\\\1" );
             } else if (state.current == dollarquote) {
                 rsts = rst.join( " " );
-                rsts.tqreplace( TQRegExp("(['\\\\])"), "\\\\1" );
+                rsts.replace( TQRegExp("(['\\\\])"), "\\\\1" );
             } else if (state.current == singlequote) {
                 rsts = rst.join( " " );
-                rsts.tqreplace( '\'', "'\\''");
+                rsts.replace( '\'', "'\\''");
             } else {
                 if (rst.isEmpty()) {
                     str.remove( pos, len );
@@ -140,14 +140,14 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
                     rsts = "'";
 #if 0 // this could pay off if join() would be cleverer and the strings were long
                     for (TQStringList::Iterator it = rst.begin(); it != rst.end(); ++it)
-                        (*it).tqreplace( '\'', "'\\''" );
+                        (*it).replace( '\'', "'\\''" );
                     rsts += rst.join( "' '" );
 #else
                     for (TQStringList::ConstIterator it = rst.begin(); it != rst.end(); ++it) {
                         if (it != rst.begin())
                             rsts += "' '";
                         TQString trsts( *it );
-                        trsts.tqreplace( '\'', "'\\''" );
+                        trsts.replace( '\'', "'\\''" );
                         rsts += trsts;
                     }
 #endif
@@ -155,7 +155,7 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
                 }
             }
             rst.clear();
-            str.tqreplace( pos, len, rsts );
+            str.replace( pos, len, rsts );
             pos += rsts.length();
             continue;
       nohit:
@@ -198,14 +198,14 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
             }
             // always swallow the char -> prevent anomalies due to expansion
         } else if (cc == (QChar)'`') {
-            str.tqreplace( pos, 1, "$( " ); // add space -> avoid creating $((
+            str.replace( pos, 1, "$( " ); // add space -> avoid creating $((
             pos2 = pos += 3;
             for (;;) {
                 if (pos2 >= str.length()) {
                     pos = pos2;
                     return false;
                 }
-                cc = str.tqunicode()[pos2];
+                cc = str.unicode()[pos2];
                 if (cc == (QChar)'`')
                     break;
                 if (cc == (QChar)'\\') {
@@ -339,7 +339,7 @@ template<class VT>
 int
 KMacroMapExpander<TQChar,VT>::expandPlainMacro( const TQString &str, uint pos, TQStringList &ret )
 {
-    TQMapConstIterator<TQChar,VT> it = macromap.tqfind(str[pos]);
+    TQMapConstIterator<TQChar,VT> it = macromap.find(str[pos]);
     if (it != macromap.end()) {
        ret += it.data();
        return 1;
@@ -355,7 +355,7 @@ KMacroMapExpander<TQChar,VT>::expandEscapedMacro( const TQString &str, uint pos,
         ret += TQString( escapeChar() );
         return 2;
     }
-    TQMapConstIterator<TQChar,VT> it = macromap.tqfind(str[pos+1]);
+    TQMapConstIterator<TQChar,VT> it = macromap.find(str[pos+1]);
     if (it != macromap.end()) {
        ret += it.data();
        return 2;
@@ -383,14 +383,14 @@ template<class VT>
 int
 KMacroMapExpander<TQString,VT>::expandPlainMacro( const TQString &str, uint pos, TQStringList &ret )
 {
-    if (isIdentifier( str[pos - 1].tqunicode() ))
+    if (isIdentifier( str[pos - 1].unicode() ))
         return 0;
     uint sl;
-    for (sl = 0; isIdentifier( str[pos + sl].tqunicode() ); sl++);
+    for (sl = 0; isIdentifier( str[pos + sl].unicode() ); sl++);
     if (!sl)
         return 0;
     TQMapConstIterator<TQString,VT> it =
-        macromap.tqfind( TQConstString( str.tqunicode() + pos, sl ).string() );
+        macromap.find( TQConstString( str.unicode() + pos, sl ).string() );
     if (it != macromap.end()) {
         ret += it.data();
         return sl;
@@ -415,13 +415,13 @@ KMacroMapExpander<TQString,VT>::expandEscapedMacro( const TQString &str, uint po
         rsl = sl + 3;
     } else {
         rpos = pos + 1;
-        for (sl = 0; isIdentifier( str[rpos + sl].tqunicode() ); sl++);
+        for (sl = 0; isIdentifier( str[rpos + sl].unicode() ); sl++);
         rsl = sl + 1;
     }
     if (!sl)
         return 0;
     TQMapConstIterator<TQString,VT> it =
-        macromap.tqfind( TQConstString( str.tqunicode() + rpos, sl ).string() );
+        macromap.find( TQConstString( str.unicode() + rpos, sl ).string() );
     if (it != macromap.end()) {
         ret += it.data();
         return rsl;
@@ -454,13 +454,13 @@ KCharMacroExpander::expandEscapedMacro( const TQString &str, uint pos, TQStringL
 int
 KWordMacroExpander::expandPlainMacro( const TQString &str, uint pos, TQStringList &ret )
 {
-    if (isIdentifier( str[pos - 1].tqunicode() ))
+    if (isIdentifier( str[pos - 1].unicode() ))
         return 0;
     uint sl;
-    for (sl = 0; isIdentifier( str[pos + sl].tqunicode() ); sl++);
+    for (sl = 0; isIdentifier( str[pos + sl].unicode() ); sl++);
     if (!sl)
         return 0;
-    if (expandMacro( TQConstString( str.tqunicode() + pos, sl ).string(), ret ))
+    if (expandMacro( TQConstString( str.unicode() + pos, sl ).string(), ret ))
         return sl;
     return 0;
 }
@@ -481,12 +481,12 @@ KWordMacroExpander::expandEscapedMacro( const TQString &str, uint pos, TQStringL
         rsl = sl + 3;
     } else {
         rpos = pos + 1;
-        for (sl = 0; isIdentifier( str[rpos + sl].tqunicode() ); sl++);
+        for (sl = 0; isIdentifier( str[rpos + sl].unicode() ); sl++);
         rsl = sl + 1;
     }
     if (!sl)
         return 0;
-    if (expandMacro( TQConstString( str.tqunicode() + rpos, sl ).string(), ret ))
+    if (expandMacro( TQConstString( str.unicode() + rpos, sl ).string(), ret ))
         return rsl;
     return 0;
 }

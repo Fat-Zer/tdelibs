@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
    KApplication k(argc,argv,"whatever",false/*noGUI*/); // KMessageBox needs KApp for makeStdCaption
 
    TQCString instname = "kword";
-   TQString desktopPath = TQString::tqfromLatin1( "Office/%1.desktop" ).arg( instname );
+   TQString desktopPath = TQString::fromLatin1( "Office/%1.desktop" ).arg( instname );
    qDebug( "Looking for %s", desktopPath.latin1() );
    KService::Ptr service = KService::serviceByDesktopPath( desktopPath );
    if ( service )

@@ -30,9 +30,9 @@ class TQCursor;
 class TQPixmap;
 
 /**
- * @short A drop-in tqreplacement for TQLabel that displays hyperlinks.
+ * @short A drop-in replacement for TQLabel that displays hyperlinks.
  *
- * KURLLabel is a drop-in tqreplacement for TQLabel that handles text
+ * KURLLabel is a drop-in replacement for TQLabel that handles text
  * in a fashion similar to how an HTML widget handles hyperlinks.  The
  * text can be underlined (or not) and set to different colors.  It
  * can also "glow" (cycle colors) when the mouse passes over it.
@@ -166,7 +166,7 @@ public:
   /**
    * Reimplemented for internal reasons, the API is not affected.
    */
-  virtual void tqsetSizePolicy ( TQSizePolicy );
+  virtual void setSizePolicy ( TQSizePolicy );
 
 public slots:
   /**

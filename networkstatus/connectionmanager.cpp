@@ -46,7 +46,7 @@ ConnectionManager::ConnectionManager( TQObject * parent, const char * name ) : D
 	
 	d->m_stub = new ClientIface_stub( kapp->dcopClient(), "kded", "networkstatus" );
 	
-	connectDCOPSignal( "kded", "networkstatus", "statusChange(TQString,int)", "slottqStatusChanged(TQString,int)", false );
+	connectDCOPSignal( "kded", "networkstatus", "statusChange(TQString,int)", "slotStatusChanged(TQString,int)", false );
 	d->m_userInitiatedOnly = false;
 	initialise();
 }
@@ -65,13 +65,13 @@ void ConnectionManager::initialise()
 {
 	// determine initial state and set the state object accordingly.
 	d->m_state = Offline;
-	updatetqStatus();
+	updateStatus();
 }
 
-void ConnectionManager::updatetqStatus()
+void ConnectionManager::updateStatus()
 {
-	/*NetworktqStatus::EnumtqStatus daemontqStatus = (NetworktqStatus::EnumtqStatus)d->m_stub->status( TQString::null );
-	switch ( daemontqStatus )
+	/*NetworkStatus::EnumStatus daemonStatus = (NetworkStatus::EnumStatus)d->m_stub->status( TQString::null );
+	switch ( daemonStatus )
 	{
 		case Offline:
 		case OfflineFailed:
@@ -98,30 +98,30 @@ ConnectionManager::~ConnectionManager()
 	delete d;
 }
 
-NetworktqStatus::EnumtqStatus ConnectionManager::status( const TQString & host )
+NetworkStatus::EnumStatus ConnectionManager::status( const TQString & host )
 {
 	if ( d->m_state == Inactive )
-		return NetworktqStatus::NoNetworks;
+		return NetworkStatus::NoNetworks;
 	else
-		return NetworktqStatus::Offline;
+		return NetworkStatus::Offline;
 }
-NetworktqStatus::EnumRequestResult ConnectionManager::requestConnection( TQWidget * mainWidget, const TQString & host, bool userInitiated )
+NetworkStatus::EnumRequestResult ConnectionManager::requestConnection( TQWidget * mainWidget, const TQString & host, bool userInitiated )
 {
-	NetworktqStatus::EnumRequestResult result;
+	NetworkStatus::EnumRequestResult result;
 	// if offline and the user has previously indicated they didn't want any new connections, suppress it
 	if ( d->m_state == Offline && !userInitiated && d->m_userInitiatedOnly )
-		result = NetworktqStatus::UserRefused;
+		result = NetworkStatus::UserRefused;
 	// if offline, ask the user whether this connection should be allowed
 	if ( d->m_state == Offline )
 	{
 		if ( askToConnect( mainWidget ) )
-			result = (NetworktqStatus::EnumRequestResult)d->m_stub->request( host, userInitiated );
+			result = (NetworkStatus::EnumRequestResult)d->m_stub->request( host, userInitiated );
 		else
-			result = NetworktqStatus::UserRefused;
+			result = NetworkStatus::UserRefused;
 	}
 	// otherwise, just ask for the connection
 	else
-		result = (NetworktqStatus::EnumRequestResult)d->m_stub->request( host, userInitiated );
+		result = (NetworkStatus::EnumRequestResult)d->m_stub->request( host, userInitiated );
 	
 	return result;
 }
@@ -131,26 +131,26 @@ void ConnectionManager::relinquishConnection( const TQString & host )
 	d->m_stub->relinquish( host );
 }
 
-void ConnectionManager::slottqStatusChanged( TQString host, int status )
+void ConnectionManager::slotStatusChanged( TQString host, int status )
 {
-	updatetqStatus();
+	updateStatus();
 	// reset user initiated only flag if we are now online
 	if ( d->m_state == Online )
 		d->m_userInitiatedOnly = false;
 
-	emit statusChanged( host, (NetworktqStatus::EnumtqStatus)status );
+	emit statusChanged( host, (NetworkStatus::EnumStatus)status );
 }
 
 bool ConnectionManager::askToConnect( TQWidget * mainWidget )
 {
 	i18n( "A network connection was disconnected.  The application is now in offline mode.  Do you want the application to resume network operations when the network is available again?" );
 	i18n( "This application is currently in offline mode.  Do you want to connect?" );
-	i18n( "Message shown when a network connection failed.  The placeholder tqcontains the concrete description of the operation eg 'while performing this operation", "A network connection failed %1.  Do you want to place the application in offline mode?" );
+	i18n( "Message shown when a network connection failed.  The placeholder contains the concrete description of the operation eg 'while performing this operation", "A network connection failed %1.  Do you want to place the application in offline mode?" );
 	return ( KMessageBox::questionYesNo( mainWidget,
 			 i18n("This application is currently in offline mode.  Do you want to connect in order to carry out this operation?"),
 																		i18n("Leave Offline Mode?"),
 																		i18n("Connect"), i18n("Do Not Connect"),
-																		TQString::tqfromLatin1("OfflineModeAlwaysGoOnline") ) == KMessageBox::Yes );
+																		TQString::fromLatin1("OfflineModeAlwaysGoOnline") ) == KMessageBox::Yes );
 }
 
 #include "connectionmanager.moc"

@@ -92,7 +92,7 @@ public:
     * Save the dictionary to the stream
     * A reasonable fast hash algorithm will be created.
     *
-    * Typically this will tqfind 90% of the entries directly.
+    * Typically this will find 90% of the entries directly.
     * Average hash table size: nrOfItems * 20 bytes.
     * Average duplicate list size: nrOfItms * avgKeyLength / 5.
     *
@@ -111,13 +111,13 @@ public:
    void save(TQDataStream &str);
 
 protected:
-   TQ_UINT32 hashKey( const TQString &);
+   Q_UINT32 hashKey( const TQString &);
 private:
    KSycocaDictStringList *d;
    TQDataStream *mStr;
-   TQ_INT32 mOffset;
-   TQ_UINT32 mHashTableSize;
-   TQValueList<TQ_INT32> mHashList;
+   Q_INT32 mOffset;
+   Q_UINT32 mHashTableSize;
+   TQValueList<Q_INT32> mHashList;
 };
 
 #endif

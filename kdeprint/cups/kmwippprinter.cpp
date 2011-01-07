@@ -59,7 +59,7 @@ KMWIppPrinter::KMWIppPrinter(TQWidget *parent, const char *name)
 	l1->setBuddy(m_uri);
 
 	m_info = new TQTextView(this);
-	m_info->setPaper(tqcolorGroup().background());
+	m_info->setPaper(colorGroup().background());
 	m_info->setMinimumHeight(100);
 	m_info->setText(i18n("<p>Either enter the printer URI directly, or use the network scanning facility.</p>"));
 	m_ippreport = new KPushButton(KGuiItem(i18n("&IPP Report"), "kdeprint_report"), this);
@@ -77,7 +77,7 @@ KMWIppPrinter::KMWIppPrinter(TQWidget *parent, const char *name)
 	connect( m_scanner, TQT_SIGNAL( scanFinished() ), parent, TQT_SLOT( enableWizard() ) );
 	connect(m_ippreport, TQT_SIGNAL(clicked()), TQT_SLOT(slotIppReport()));
 
-	// tqlayout
+	// layout
 	QHBoxLayout	*lay3 = new TQHBoxLayout(this, 0, 10);
 	QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 0);
 	QHBoxLayout	*lay4 = new TQHBoxLayout(0, 0, 0);
@@ -157,7 +157,7 @@ void KMWIppPrinter::slotPrinterSelected(TQListViewItem *item)
 	req.setOperation(IPP_GET_PRINTER_ATTRIBUTES);
 	req.setHost(item->text(1));
 	req.setPort(item->text(2).toInt());
-	uri = TQString::tqfromLatin1("ipp://%1:%2/ipp").arg(item->text(1)).arg(item->text(2));
+	uri = TQString::fromLatin1("ipp://%1:%2/ipp").arg(item->text(1)).arg(item->text(2));
 	req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
 	keys.append("printer-name");
 	keys.append("printer-state");
@@ -172,11 +172,11 @@ void KMWIppPrinter::slotPrinterSelected(TQListViewItem *item)
 		int 	state;
 		if (req.name("printer-name",value)) txt.append(i18n("<b>Name</b>: %1<br>").arg(value));
 		if (req.text("printer-location",value) && !value.isEmpty()) txt.append(i18n("<b>Location</b>: %1<br>").arg(value));
-		if (req.text("printer-info",value) && !value.isEmpty()) txt.append(i18n("<b>Description</b>: %1<br>").arg(value.tqreplace(TQRegExp(";"),"<br>")));
+		if (req.text("printer-info",value) && !value.isEmpty()) txt.append(i18n("<b>Description</b>: %1<br>").arg(value.replace(TQRegExp(";"),"<br>")));
 		if (req.uri("printer-uri-supported",value))
 		{
 			if (value[0] == '/')
-				value.prepend(TQString::tqfromLatin1("ipp://%1:%2").arg(item->text(1)).arg(item->text(2)));
+				value.prepend(TQString::fromLatin1("ipp://%1:%2").arg(item->text(1)).arg(item->text(2)));
 			m_uri->setText(value);
 		}
 		if (req.text("printer-make-and-model",value) && !value.isEmpty()) txt.append(i18n("<b>Model</b>: %1<br>").arg(value));

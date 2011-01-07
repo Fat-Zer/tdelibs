@@ -421,7 +421,7 @@ bool KInetSocketAddress::setHost(const TQString& addr, int family)
 
 #ifdef AF_INET6
       // IPv6 addresses MUST contain colons (:) and IPv4 addresses must not
-      if (addr.tqfind(':') != -1)
+      if (addr.find(':') != -1)
 	family = AF_INET6;
       else
 	family = AF_INET;
@@ -485,7 +485,7 @@ bool KInetSocketAddress::setFamily(int _family)
   return true;
 }
 
-bool KInetSocketAddress::setFlowinfo(TQ_UINT32 flowinfo)
+bool KInetSocketAddress::setFlowinfo(Q_UINT32 flowinfo)
 {
 #ifdef AF_INET6
   if (d->sockfamily == AF_INET6)
@@ -587,7 +587,7 @@ TQString KInetSocketAddress::nodeName() const
       return i18n("<empty>");
     }
 
-  return TQString::tqfromLatin1(buf); // FIXME! What's the encoding?
+  return TQString::fromLatin1(buf); // FIXME! What's the encoding?
 }
 
 TQString KInetSocketAddress::serviceName() const
@@ -605,11 +605,11 @@ unsigned short KInetSocketAddress::port() const
 #endif
 }
 
-TQ_UINT32 KInetSocketAddress::flowinfo() const
+Q_UINT32 KInetSocketAddress::flowinfo() const
 {
 #ifdef AF_INET6
   if (d->sockfamily == AF_INET6)
-    return (TQ_UINT32)d->sin6.sin6_flowinfo;
+    return (Q_UINT32)d->sin6.sin6_flowinfo;
 #endif
   return 0;
 }
@@ -677,9 +677,9 @@ void KInetSocketAddress::fromV4()
   d->sin6.sin6_port = d->sin.sin_port;
 
   // Make this a v4-mapped address
-  ((TQ_UINT32*)&d->sin6.sin6_addr)[0] = ((TQ_UINT32*)&d->sin6.sin6_addr)[1] = 0;
-  ((TQ_UINT32*)&d->sin6.sin6_addr)[2] = htonl(0xffff);
-  ((TQ_UINT32*)&d->sin6.sin6_addr)[3] = *(TQ_UINT32*)&d->sin.sin_addr;
+  ((Q_UINT32*)&d->sin6.sin6_addr)[0] = ((Q_UINT32*)&d->sin6.sin6_addr)[1] = 0;
+  ((Q_UINT32*)&d->sin6.sin6_addr)[2] = htonl(0xffff);
+  ((Q_UINT32*)&d->sin6.sin6_addr)[3] = *(Q_UINT32*)&d->sin.sin_addr;
 
   // Clear flowinfo and scopeid
   d->sin6.sin6_flowinfo = 0;
@@ -700,7 +700,7 @@ void KInetSocketAddress::fromV6()
   if (V6_CAN_CONVERT_TO_V4(&d->sin6.sin6_addr))
     {
       d->sin.sin_port = d->sin6.sin6_port;
-      *(TQ_UINT32*)&d->sin.sin_addr = ((TQ_UINT32*)&d->sin6.sin6_addr)[3];
+      *(Q_UINT32*)&d->sin.sin_addr = ((Q_UINT32*)&d->sin6.sin6_addr)[3];
     }
   else
     {
@@ -717,7 +717,7 @@ TQString KInetSocketAddress::addrToString(int family, const void* addr)
 {
   char buf[INET6_ADDRSTRLEN+1];
 
-  return TQString::tqfromLatin1(inet_ntop(family, addr, buf, INET6_ADDRSTRLEN));
+  return TQString::fromLatin1(inet_ntop(family, addr, buf, INET6_ADDRSTRLEN));
 }
 
 bool KInetSocketAddress::stringToAddr(int family, const char *text, void *dest)

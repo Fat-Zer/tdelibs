@@ -40,9 +40,9 @@ class KABC_EXPORT AddresseeHelper : public TQObject, public DCOPObject
   public:
     static AddresseeHelper *self();
 
-    bool tqcontainsTitle( const TQString& title ) const;
-    bool tqcontainsPrefix( const TQString& prefix ) const;
-    bool tqcontainsSuffix( const TQString& suffix ) const;
+    bool containsTitle( const TQString& title ) const;
+    bool containsPrefix( const TQString& prefix ) const;
+    bool containsSuffix( const TQString& suffix ) const;
     bool tradeAsFamilyName() const;
 
   k_dcop:

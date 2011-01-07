@@ -340,10 +340,10 @@ public:
     enum { AllTypesMask = 0LU-1 };
 
     /**
-     * Returns true if the given window type matches the tqmask given
+     * Returns true if the given window type matches the mask given
      * using WindowTypeMask flags.
      */    
-    static bool typeMatchesMask( WindowType type, unsigned long tqmask );
+    static bool typeMatchesMask( WindowType type, unsigned long mask );
 
     /**
        Window state.
@@ -643,7 +643,7 @@ public:
     };
     
     /**
-     Starting corner for desktop tqlayout.
+     Starting corner for desktop layout.
     **/
     enum DesktopLayoutCorner {
         DesktopLayoutCornerTopLeft = 0,

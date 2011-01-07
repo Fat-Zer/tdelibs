@@ -90,7 +90,7 @@ void KateArbitraryHighlight::addHighlightToView(KateSuperRangeList* list, KateVi
 }
 
 void KateArbitraryHighlight::slotRangeListDeleted(TQObject* obj) {
-   int id=m_docHLs.tqfindRef(static_cast<KateSuperRangeList*>(obj));
+   int id=m_docHLs.findRef(static_cast<KateSuperRangeList*>(obj));
    if (id>=0) m_docHLs.take(id);
    
    for (TQMap<KateView*, TQPtrList<KateSuperRangeList>* >::Iterator it = m_viewHLs.begin(); it != m_viewHLs.end(); ++it)
@@ -152,11 +152,11 @@ KateView* KateArbitraryHighlight::viewForRange(KateSuperRange* range)
 {
   for (TQMap<KateView*, TQPtrList<KateSuperRangeList>* >::Iterator it = m_viewHLs.begin(); it != m_viewHLs.end(); ++it)
     for (KateSuperRangeList* l = (*it)->first(); l; l = (*it)->next())
-      if (l->tqcontains(range))
+      if (l->contains(range))
         return it.key();
 
   // This must belong to a document-global highlight
   return 0L;
 }
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

@@ -57,7 +57,7 @@ KBuildServiceFactory::~KBuildServiceFactory()
    delete m_resourceList;
 }
 
-KService * KBuildServiceFactory::tqfindServiceByName(const TQString &_name)
+KService * KBuildServiceFactory::findServiceByName(const TQString &_name)
 {
    return m_serviceDict[_name];
 }
@@ -67,7 +67,7 @@ KSycocaEntry *
 KBuildServiceFactory::createEntry( const TQString& file, const char *resource )
 {
   TQString name = file;
-  int pos = name.tqfindRev('/');
+  int pos = name.findRev('/');
   if (pos != -1)
   {
      name = name.mid(pos+1);
@@ -101,11 +101,11 @@ KBuildServiceFactory::saveHeader(TQDataStream &str)
 {
    KSycocaFactory::saveHeader(str);
 
-   str << (TQ_INT32) m_nameDictOffset;
-   str << (TQ_INT32) m_relNameDictOffset;
-   str << (TQ_INT32) m_offerListOffset;
-   str << (TQ_INT32) m_initListOffset;
-   str << (TQ_INT32) m_menuIdDictOffset;
+   str << (Q_INT32) m_nameDictOffset;
+   str << (Q_INT32) m_relNameDictOffset;
+   str << (Q_INT32) m_offerListOffset;
+   str << (Q_INT32) m_initListOffset;
+   str << (Q_INT32) m_menuIdDictOffset;
 }
 
 void
@@ -190,12 +190,12 @@ KBuildServiceFactory::saveOfferList(TQDataStream &str)
           it2 != services.end(); ++it2)
       {
          KService *service = *it2;
-         str << (TQ_INT32) entry->offset();
-         str << (TQ_INT32) service->offset();
+         str << (Q_INT32) entry->offset();
+         str << (Q_INT32) service->offset();
       }
    }
 
-   str << (TQ_INT32) 0;               // End of list marker (0)
+   str << (Q_INT32) 0;               // End of list marker (0)
 }
 
 void
@@ -215,19 +215,19 @@ KBuildServiceFactory::saveInitList(TQDataStream &str)
           initList.append(service); 
       }
    }
-   str << (TQ_INT32) initList.count(); // Nr of init services.
+   str << (Q_INT32) initList.count(); // Nr of init services.
    for(KService::List::Iterator it = initList.begin();
        it != initList.end();
        ++it)
    {
-      str << (TQ_INT32) (*it)->offset();
+      str << (Q_INT32) (*it)->offset();
    }
 }
 
 void
 KBuildServiceFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
 {
-   if (m_dupeDict.tqfind(newEntry))
+   if (m_dupeDict.find(newEntry))
       return;
 
    KSycocaFactory::addEntry(newEntry, resource);
@@ -244,7 +244,7 @@ KBuildServiceFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
 
    TQString name = service->desktopEntryName();
    m_nameDict->add( name, newEntry );
-   m_serviceDict.tqreplace(name, service);
+   m_serviceDict.replace(name, service);
 
    TQString relName = service->desktopEntryPath();
    m_relNameDict->add( relName, newEntry );

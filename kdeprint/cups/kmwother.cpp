@@ -89,7 +89,7 @@ void KMWOther::initPrinter(KMPrinter *p)
 			TQString prt = *( ++it );
 			if ( !prt.isEmpty() )
 				desc.append( " [" + prt + "]" );
-			TQListViewItem *parent = parents.tqfind( cl );
+			TQListViewItem *parent = parents.find( cl );
 			if ( !parent )
 			{
 				parent = new TQListViewItem( root, lastparent, cl );
@@ -105,7 +105,7 @@ void KMWOther::initPrinter(KMPrinter *p)
 				lastparent = parent;
 				parents.insert( cl, parent );
 			}
-			item = new TQListViewItem( parent, last.tqfind( cl ), desc, uri);
+			item = new TQListViewItem( parent, last.find( cl ), desc, uri);
 			last.insert( cl, item );
 		}
 	}

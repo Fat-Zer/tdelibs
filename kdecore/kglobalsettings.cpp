@@ -35,7 +35,7 @@
 #include <win32_utils.h>
 static QRgb qt_colorref2qrgb(COLORREF col)
 {
-    return tqRgb(GetRValue(col),GetGValue(col),GetBValue(col));
+    return qRgb(GetRValue(col),GetGValue(col),GetBValue(col));
 }
 #endif
 
@@ -98,9 +98,9 @@ void readXdgUserDirs(TQString *desktop, TQString *documents)
 	while (!line.isNull())
 	{
 		if (line.startsWith("XDG_DESKTOP_DIR="))
-			*desktop = line.remove("XDG_DESKTOP_DIR=").remove("\"").tqreplace("$HOME", TQDir::homeDirPath());
+			*desktop = line.remove("XDG_DESKTOP_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 		else if (line.startsWith("XDG_DOCUMENTS_DIR="))
-			*documents = line.remove("XDG_DOCUMENTS_DIR=").remove("\"").tqreplace("$HOME", TQDir::homeDirPath());
+			*documents = line.remove("XDG_DOCUMENTS_DIR=").remove("\"").replace("$HOME", TQDir::homeDirPath());
 
 		line = s.readLine();
 	}
@@ -694,10 +694,10 @@ TQRect KGlobalSettings::splashScreenDesktopGeometry()
                 scr = dw->screenNumber(TQCursor::pos());
             return dw->screenGeometry(scr);
         } else {
-            return dw->tqgeometry();
+            return dw->geometry();
         }
     } else {
-        return dw->tqgeometry();
+        return dw->geometry();
     }
 }
 
@@ -711,10 +711,10 @@ TQRect KGlobalSettings::desktopGeometry(const TQPoint& point)
             group.readBoolEntry("XineramaPlacementEnabled", true)) {
             return dw->screenGeometry(dw->screenNumber(point));
         } else {
-            return dw->tqgeometry();
+            return dw->geometry();
         }
     } else {
-        return dw->tqgeometry();
+        return dw->geometry();
     }
 }
 
@@ -730,10 +730,10 @@ TQRect KGlobalSettings::desktopGeometry(TQWidget* w)
                 return dw->screenGeometry(dw->screenNumber(w));
             else return dw->screenGeometry(-1);
         } else {
-            return dw->tqgeometry();
+            return dw->geometry();
         }
     } else {
-        return dw->tqgeometry();
+        return dw->geometry();
     }
 }
 

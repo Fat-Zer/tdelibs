@@ -408,7 +408,7 @@ Reference ResolveNode::evaluateReference(ExecState *exec) const
 
   // identifier not found
 #ifdef KJS_VERBOSE
-  cerr << "Resolve::evaluateReference: didn't tqfind '" << ident.ustring().ascii() << "'" << endl;
+  cerr << "Resolve::evaluateReference: didn't find '" << ident.ustring().ascii() << "'" << endl;
 #endif
   return Reference(Null(), ident);
 }
@@ -2072,8 +2072,8 @@ Completion DoWhileNode::execute(ExecState *exec)
     exec->context().imp()->seenLabels()->pushIteration();
     c = statement->execute(exec);
     exec->context().imp()->seenLabels()->popIteration();
-    if (!((c.complType() == Continue) && ls.tqcontains(c.target()))) {
-      if ((c.complType() == Break) && ls.tqcontains(c.target()))
+    if (!((c.complType() == Continue) && ls.contains(c.target()))) {
+      if ((c.complType() == Break) && ls.contains(c.target()))
         return Completion(Normal, value);
       if (c.complType() != Normal)
         return c;
@@ -2134,9 +2134,9 @@ Completion WhileNode::execute(ExecState *exec)
     if (c.isValueCompletion())
       value = c.value();
 
-    if ((c.complType() == Continue) && ls.tqcontains(c.target()))
+    if ((c.complType() == Continue) && ls.contains(c.target()))
       continue;
-    if ((c.complType() == Break) && ls.tqcontains(c.target()))
+    if ((c.complType() == Break) && ls.contains(c.target()))
       return Completion(Normal, value);
     if (c.complType() != Normal)
       return c;
@@ -2200,8 +2200,8 @@ Completion ForNode::execute(ExecState *exec)
     exec->context().imp()->seenLabels()->popIteration();
     if (c.isValueCompletion())
       cval = c.value();
-    if (!((c.complType() == Continue) && ls.tqcontains(c.target()))) {
-      if ((c.complType() == Break) && ls.tqcontains(c.target()))
+    if (!((c.complType() == Continue) && ls.contains(c.target()))) {
+      if ((c.complType() == Break) && ls.contains(c.target()))
         return Completion(Normal, cval);
       if (c.complType() != Normal)
         return c;
@@ -2308,8 +2308,8 @@ Completion ForInNode::execute(ExecState *exec)
     if (c.isValueCompletion())
       retval = c.value();
 
-    if (!((c.complType() == Continue) && ls.tqcontains(c.target()))) {
-      if ((c.complType() == Break) && ls.tqcontains(c.target()))
+    if (!((c.complType() == Continue) && ls.contains(c.target()))) {
+      if ((c.complType() == Break) && ls.contains(c.target()))
         break;
       if (c.complType() != Normal) {
         return c;
@@ -2342,7 +2342,7 @@ Completion ContinueNode::execute(ExecState *exec)
   if (ident.isEmpty() && !exec->context().imp()->seenLabels()->inIteration())
     return Completion(Throw,
 		      throwError(exec, SyntaxError, "continue used outside of iteration statement"));
-  else if (!ident.isEmpty() && !exec->context().imp()->seenLabels()->tqcontains(ident))
+  else if (!ident.isEmpty() && !exec->context().imp()->seenLabels()->contains(ident))
     return Completion(Throw,
                       throwError(exec, SyntaxError, "Label %s not found in containing block. Can't continue.", ident));
   else
@@ -2362,7 +2362,7 @@ Completion BreakNode::execute(ExecState *exec)
       !exec->context().imp()->seenLabels()->inSwitch())
     return Completion(Throw,
 		      throwError(exec, SyntaxError, "break used outside of iteration or switch statement"));
-  else if (!ident.isEmpty() && !exec->context().imp()->seenLabels()->tqcontains(ident))
+  else if (!ident.isEmpty() && !exec->context().imp()->seenLabels()->contains(ident))
     return Completion(Throw,
                       throwError(exec, SyntaxError, "Label %s not found in containing block. Can't break.", ident));
   else
@@ -2680,7 +2680,7 @@ Completion SwitchNode::execute(ExecState *exec)
   Completion res = block->evalBlock(exec,v);
   exec->context().imp()->seenLabels()->popSwitch();
 
-  if ((res.complType() == Break) && ls.tqcontains(res.target()))
+  if ((res.complType() == Break) && ls.contains(res.target()))
     return Completion(Normal, res.value());
   else
     return res;
@@ -2998,7 +2998,7 @@ void FuncDeclNode::processFuncDecl(ExecState *exec)
 
   if (body) {
     // hack the scope so that the function gets put as a property of func, and it's scope
-    // tqcontains the func as well as our current scope
+    // contains the func as well as our current scope
     Object oldVar = ctx->variableObject();
     ctx->setVariableObject(func);
     ctx->pushScope(func);

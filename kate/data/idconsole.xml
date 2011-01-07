@@ -141,7 +141,7 @@
 <item> fullinfo </item>
 <item> fullserverinfo </item>
 <item> game </item>
-<item> gameCompletetqStatus </item>
+<item> gameCompleteStatus </item>
 <item> gamedir </item>
 <item> gamemap </item>
 <item> gameversion </item>
@@ -704,7 +704,7 @@
 <item> cg_drawRewards </item>
 <item> cg_drawSnapshot </item>
 <item> cg_drawSpreadScale </item>
-<item> cg_drawtqStatus </item>
+<item> cg_drawStatus </item>
 <item> cg_drawTeamOverlay </item>
 <item> cg_drawTimer </item>
 <item> cg_emptyswitch </item>
@@ -833,7 +833,7 @@
 <item> cl_rollspeed </item>
 <item> cl_run </item>
 <item> cl_running </item>
-<item> cl_servertqStatusResendTime </item>
+<item> cl_serverStatusResendTime </item>
 <item> cl_showfps </item>
 <item> cl_showSend </item>
 <item> cl_showServerCommands </item>
@@ -1699,7 +1699,7 @@
 <item> ui_prevClass </item>
 <item> ui_prevTeam </item>
 <item> ui_prevWeapon </item>
-<item> ui_servertqStatusTimeOut </item>
+<item> ui_serverStatusTimeOut </item>
 <item> ui_singlePlayerActive </item>
 <item> ui_smallFont </item>
 <item> ui_spSelection </item>

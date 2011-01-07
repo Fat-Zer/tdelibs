@@ -194,7 +194,7 @@ KPPosterPage::KPPosterPage( TQWidget *parent, const char *name )
 	m_lockbtn->setToggleButton( true );
 	m_lockbtn->setPixmap( SmallIcon( "encrypted" ) );
 	m_lockbtn->setOn( true );
-	m_lockbtn->setFixedSize( m_lockbtn->tqsizeHint() );
+	m_lockbtn->setFixedSize( m_lockbtn->sizeHint() );
 	TQToolTip::add( m_lockbtn, i18n( "Link/unlink poster and print size" ) );
 
 	for ( int i=0; i<KPrinter::NPageSize-1; i++ )
@@ -202,7 +202,7 @@ KPPosterPage::KPPosterPage( TQWidget *parent, const char *name )
 		m_postersize->insertItem( page_sizes[ i ].text );
 		m_printsize->insertItem( page_sizes[ i ].text );
 	}
-	m_postersize->setCurrentItem( tqfindIndex( KPrinter::A3 ) );
+	m_postersize->setCurrentItem( findIndex( KPrinter::A3 ) );
 	slotPosterSizeChanged( m_postersize->currentItem() );
 
 	connect( m_postercheck, TQT_SIGNAL( toggled( bool ) ), dummy, TQT_SLOT( setEnabled( bool ) ) );
@@ -265,18 +265,18 @@ void KPPosterPage::setOptions( const TQMap<TQString,TQString>& opts )
 		m_mediasize->setText( ps );
 	m_preview->setMediaSize( ps );
 
-	if ( opts[ "_kde-filters" ].tqfind( "poster" ) != -1 )
+	if ( opts[ "_kde-filters" ].find( "poster" ) != -1 )
 	{
 		m_postercheck->setChecked( true );
 		ps = opts[ "_kde-poster-size" ];
 		TQString prtsize = opts[ "kde-printsize" ];
 		if ( !ps.isEmpty() )
 		{
-			m_postersize->setCurrentItem( tqfindIndex( pageNameToPageSize( ps ) ) );
+			m_postersize->setCurrentItem( findIndex( pageNameToPageSize( ps ) ) );
 			m_lockbtn->setOn( !prtsize.isEmpty() && 
 					page_sizes[ m_postersize->currentItem() ].ID == prtsize.toInt() );
 			if ( !m_lockbtn->isOn() )
-				m_printsize->setCurrentItem( tqfindIndex( prtsize.toInt() ) );
+				m_printsize->setCurrentItem( findIndex( prtsize.toInt() ) );
 			slotPosterSizeChanged( m_postersize->currentItem() );
 		}
 		if ( !opts[ "_kde-poster-cut" ].isEmpty() )
@@ -302,7 +302,7 @@ void KPPosterPage::getOptions( TQMap<TQString,TQString>& opts, bool )
 	}
 	else
 	{
-		if ( !o.tqcontains( "poster" ) )
+		if ( !o.contains( "poster" ) )
 			o.append( "poster" );
 		opts[ "_kde-filters" ] = o.join( "," );
 		opts[ "_kde-poster-media" ] = m_mediasize->text();

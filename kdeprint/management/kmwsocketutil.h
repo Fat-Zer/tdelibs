@@ -48,7 +48,7 @@ protected slots:
 	void slotOk();
 
 private:
-	QLineEdit	*tqmask_, *tout_;
+	QLineEdit	*mask_, *tout_;
 	QComboBox	*port_;
 };
 

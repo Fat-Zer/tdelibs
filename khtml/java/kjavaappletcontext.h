@@ -42,7 +42,7 @@ class KJavaAppletServer;
 class KJavaApplet;
 class KJavaAppletContextPrivate;
 
-class KJavaAppletContext : public TQObject
+class KJavaAppletContext : public QObject
 {
 Q_OBJECT
 
@@ -109,7 +109,7 @@ signals:
     /**
      * Signals the KHMTL Part to show this as the status message.
      */
-    void showtqStatus  ( const TQString& txt );
+    void showStatus  ( const TQString& txt );
 
     /**
      * Signals the KHTML Part to show a url in a given target

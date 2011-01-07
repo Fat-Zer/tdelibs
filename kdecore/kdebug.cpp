@@ -86,7 +86,7 @@ static TQCString getDescrFromNum(unsigned int _num)
     KDebugCache->setAutoDelete(true);
   }
 
-  KDebugEntry *ent = KDebugCache->tqfind( _num );
+  KDebugEntry *ent = KDebugCache->find( _num );
   if ( ent )
     return ent->descr;
 
@@ -130,7 +130,7 @@ static TQCString getDescrFromNum(unsigned int _num)
           ch=line[++i];
       } while ( ch >= '0' && ch <= '9');
 
-      const TQ_ULONG number =line.mid(numStart,i).toULong();
+      const Q_ULONG number =line.mid(numStart,i).toULong();
 
       while (line[i] && line[i] <= ' ')
         i++;
@@ -139,7 +139,7 @@ static TQCString getDescrFromNum(unsigned int _num)
   }
   file.close();
 
-  ent = KDebugCache->tqfind( _num );
+  ent = KDebugCache->find( _num );
   if ( ent )
       return ent->descr;
 
@@ -373,7 +373,7 @@ kdbgstream& kdbgstream::operator << (TQChar ch)
 {
   if (!print) return *this;
   if (!ch.isPrint())
-    output += "\\x" + TQString::number( ch.tqunicode(), 16 ).rightJustify(2, '0');
+    output += "\\x" + TQString::number( ch.unicode(), 16 ).rightJustify(2, '0');
   else {
     output += ch;
     if (ch == (QChar)'\n') flush();
@@ -403,7 +403,7 @@ kdbgstream& kdbgstream::operator << (const TQWidget* widget)
 	} else {
 	  string += (TQString)" to widget " + widget->name() + ", ";
 	}
-      string += "tqgeometry="
+      string += "geometry="
 	+ TQString().setNum(widget->width())
 	+ "x"+TQString().setNum(widget->height())
 	+ "+"+TQString().setNum(widget->x())
@@ -567,8 +567,8 @@ TQString kdBacktrace(int levels)
 
     for (int i = 0; i < n; ++i)
         s += TQString::number(i) +
-             TQString::tqfromLatin1(": ") +
-             TQString::tqfromLatin1(strings[i]) + TQString::tqfromLatin1("\n");
+             TQString::fromLatin1(": ") +
+             TQString::fromLatin1(strings[i]) + TQString::fromLatin1("\n");
     s += "]\n";
     if (strings)
         free (strings);

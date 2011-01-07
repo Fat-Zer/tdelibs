@@ -1,16 +1,16 @@
 INCLUDES = $(all_includes)
 
-check_PROGRAMS = ktqfindtest ktqreplacetest
+check_PROGRAMS = kfindtest kreplacetest
 
-TESTS = ktqfindtest ktqreplacetest
+TESTS = kfindtest kreplacetest
 
-ktqfindtest_SOURCES = ktqfindtest.cpp
-ktqfindtest_LDADD = ../libkutils.la
-ktqfindtest_LDFLAGS = $(all_libraries)
+kfindtest_SOURCES = kfindtest.cpp
+kfindtest_LDADD = ../libkutils.la
+kfindtest_LDFLAGS = $(all_libraries)
 
-ktqreplacetest_SOURCES = ktqreplacetest.cpp
-ktqreplacetest_LDADD = ../libkutils.la
-ktqreplacetest_LDFLAGS = $(all_libraries)
+kreplacetest_SOURCES = kreplacetest.cpp
+kreplacetest_LDADD = ../libkutils.la
+kreplacetest_LDFLAGS = $(all_libraries)
 
 METASOURCES = AUTO
 

@@ -740,7 +740,7 @@ public:
   * or your user did something stupid.
   *
   * To be used for small problems like
-  * "Sorry, I can't tqfind the file you specified."
+  * "Sorry, I can't find the file you specified."
   *
   * The default button is "&OK". Pressing "Esc" selects the OK-button.
   *
@@ -778,7 +778,7 @@ public:
   * or your user did something stupid.
   *
   * To be used for small problems like
-  * "Sorry, I can't tqfind the file you specified."
+  * "Sorry, I can't find the file you specified."
   *
   * And then @p details can contain something like
   * "foobar.txt was not found in any of
@@ -1100,7 +1100,7 @@ public:
     static void setDontShowAskAgainConfig(KConfig* cfg);
 
     /**
-     * Create content and tqlayout of a standard dialog
+     * Create content and layout of a standard dialog
      *
      * @param dialog  The parent dialog base
      * @param icon    Which predefined icon the message box shall show.
@@ -1114,7 +1114,7 @@ public:
      * @param details Detailed message string.
      * @since 3.3
      * @return A KDialogBase button code, not a KMessageBox button code,
-     *         based on the buttontqmask given to the constructor of the
+     *         based on the buttonmask given to the constructor of the
      *         @p dialog (ie. will return KDialogBase::Yes [256] instead of 
      *         KMessageBox::Yes [3]). Will return KMessageBox::Cancel
      *         if the message box is queued for display instead of 
@@ -1128,7 +1128,7 @@ public:
                              int options, const TQString &details=TQString::null);
 
     /**
-     * Create content and tqlayout of a standard dialog
+     * Create content and layout of a standard dialog
      *
      * @param dialog  The parent dialog base
      * @param icon    A TQPixmap containing the icon to be displayed in the
@@ -1145,7 +1145,7 @@ public:
      *                is presentend.
      * @since 3.3
      * @return A KDialogBase button code, not a KMessageBox button code,
-     *         based on the buttontqmask given to the constructor of the
+     *         based on the buttonmask given to the constructor of the
      *         @p dialog (ie. will return KDialogBase::Yes [256] instead of 
      *         KMessageBox::Yes [3]). Will return KMessageBox::Cancel
      *         if the message box is queued for display instead of 

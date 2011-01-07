@@ -105,7 +105,7 @@ namespace KIO {
                                        bool clipboard = false );
 
   /**
-   * Checks whether the clipboard tqcontains any URLs.
+   * Checks whether the clipboard contains any URLs.
    * @return true if not
    * Not used anymore, wrong method name, so it will disappear in KDE4.
    */

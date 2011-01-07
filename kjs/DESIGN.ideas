@@ -31,7 +31,7 @@ Proposal for a new object model. Far from being complete.
               Garbage Collector
 
 Features:
-        - offers class static data (nice tqreplacement for pointers to member
+        - offers class static data (nice replacement for pointers to member
 	function objects in the prototype object)
 	- no more need to pass around ExecState pointers for the C++ user
 	(substituted with the need for Object* in the type implementation)

@@ -107,7 +107,7 @@ public:
     /* InlineMinMaxIterator is a class that will iterate over all render objects that contribute to
        inline min/max width calculations.  Note the following about the way it walks:
        (1) Positioned content is skipped (since it does not contribute to min/max width of a block)
-       (2) We do not drill into the children of floats or tqreplaced elements, since you can't break
+       (2) We do not drill into the children of floats or replaced elements, since you can't break
            in the middle of such an element.
        (3) Inline flows (e.g., <a>, <span>, <i>) are walked twice, since each side can have
            distinct borders/margin/padding that contribute to the min/max width.

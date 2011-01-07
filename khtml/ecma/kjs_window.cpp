@@ -225,9 +225,9 @@ const ClassInfo Window::info = { "Window", &DOMAbstractView::info, &WindowTable,
   btoa		Window::BToA		DontDelete|Function 1
   closed	Window::Closed		DontDelete|ReadOnly
   crypto	Window::Crypto		DontDelete|ReadOnly
-  defaulttqStatus	Window::DefaulttqStatus	DontDelete
-  defaultstatus	Window::DefaulttqStatus	DontDelete
-  status	Window::tqStatus		DontDelete
+  defaultStatus	Window::DefaultStatus	DontDelete
+  defaultstatus	Window::DefaultStatus	DontDelete
+  status	Window::Status		DontDelete
   document	Window::Document	DontDelete|ReadOnly
   frameElement		Window::FrameElement		DontDelete|ReadOnly
   frames	Window::Frames		DontDelete|ReadOnly
@@ -521,7 +521,7 @@ bool Window::hasProperty(ExecState *exec, const Identifier &p) const
       return false;
 
   TQString q = p.qstring();
-  if (part->tqfindFramePart(p.qstring()))
+  if (part->findFramePart(p.qstring()))
     return true;
   // allow window[1] or parent[1] etc. (#56983)
   bool ok;
@@ -655,9 +655,9 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     switch( entry->value ) {
     case Crypto:
       return Undefined(); // ###
-    case DefaulttqStatus:
+    case DefaultStatus:
       return String(UString(part->jsDefaultStatusBarText()));
-    case tqStatus:
+    case Status:
       return String(UString(part->jsStatusBarText()));
     case Document:
       if (part->document().isNull()) {
@@ -864,9 +864,9 @@ Value Window::get(ExecState *exec, const Identifier &p) const
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
       if (!part->widget())
         return Number(0);
-      KWin::WindowInfo inf = KWin::windowInfo(part->widget()->tqtopLevelWidget()->winId());
+      KWin::WindowInfo inf = KWin::windowInfo(part->widget()->topLevelWidget()->winId());
       return Number(entry->value == OuterHeight ?
-                    inf.tqgeometry().height() : inf.tqgeometry().width());
+                    inf.geometry().height() : inf.geometry().width());
 #else
       return Number(entry->value == OuterHeight ?  
 		    part->view()->height() : part->view()->width());
@@ -1002,7 +1002,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     return isSafeScript(exec) ? val2 : Undefined();
   }
 
-  KParts::ReadOnlyPart *rop = part->tqfindFramePart( p.qstring() );
+  KParts::ReadOnlyPart *rop = part->findFramePart( p.qstring() );
   if (rop)
     return retrieve(rop);
 
@@ -1088,17 +1088,17 @@ void Window::put(ExecState* exec, const Identifier &propertyName, const Value &v
     KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
     if (part) {
     switch( entry->value ) {
-    case tqStatus: {
-      if  (isSafeScript(exec) && part->settings()->windowtqStatusPolicy(part->url().host())
-		== KHTMLSettings::KJSWindowtqStatusAllow) {
+    case Status: {
+      if  (isSafeScript(exec) && part->settings()->windowStatusPolicy(part->url().host())
+		== KHTMLSettings::KJSWindowStatusAllow) {
       String s = value.toString(exec);
       part->setJSStatusBarText(s.value().qstring());
       }
       return;
     }
-    case DefaulttqStatus: {
-      if (isSafeScript(exec) && part->settings()->windowtqStatusPolicy(part->url().host())
-		== KHTMLSettings::KJSWindowtqStatusAllow) {
+    case DefaultStatus: {
+      if (isSafeScript(exec) && part->settings()->windowStatusPolicy(part->url().host())
+		== KHTMLSettings::KJSWindowStatusAllow) {
       String s = value.toString(exec);
       part->setJSDefaultStatusBarText(s.value().qstring());
       }
@@ -1245,7 +1245,7 @@ void Window::closeNow()
       kdDebug(6070) << "closeNow on non KHTML part" << endl;
     } else {
       //kdDebug(6070) << k_funcinfo << " -> closing window" << endl;
-      // We want to make sure that window.open won't tqfind this part by name.
+      // We want to make sure that window.open won't find this part by name.
       part->setName( 0 );
       part->deleteLater();
       part = 0;
@@ -1446,7 +1446,7 @@ void Window::goURL(ExecState* exec, const TQString& url, bool lockHistory)
       // check if we're allowed to inject javascript
       // SYNC check with khtml_part.cpp::slotRedirect!
       if ( isSafeScript(exec) ||
-            dstUrl.tqfind(TQString::tqfromLatin1("javascript:"), 0, false) != 0 )
+            dstUrl.find(TQString::fromLatin1("javascript:"), 0, false) != 0 )
         part->scheduleRedirection(-1,
                                   dstUrl,
                                   lockHistory);
@@ -1618,11 +1618,11 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
       while (it != flist.end()) {
         TQString s = *it++;
         TQString key, val;
-        int pos = s.tqfind('=');
+        int pos = s.find('=');
         if (pos >= 0) {
           key = s.left(pos).stripWhiteSpace().lower();
           val = s.mid(pos + 1).stripWhiteSpace().lower();
-          TQRect screen = KGlobalSettings::desktopGeometry(widget->tqtopLevelWidget());
+          TQRect screen = KGlobalSettings::desktopGeometry(widget->topLevelWidget());
 
           if (key == "left" || key == "screenx") {
             winargs.x = (int)val.toFloat() + screen.x();
@@ -1633,13 +1633,13 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
             if (winargs.y < screen.y() || winargs.y > screen.bottom())
               winargs.y = screen.y(); // only safe choice until size is determined
           } else if (key == "height") {
-            winargs.height = (int)val.toFloat() + 2*tqApp->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.height = (int)val.toFloat() + 2*qApp->style().pixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.height > screen.height())  // should actually check workspace
               winargs.height = screen.height();
             if (winargs.height < 100)
               winargs.height = 100;
           } else if (key == "width") {
-            winargs.width = (int)val.toFloat() + 2*tqApp->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.width = (int)val.toFloat() + 2*qApp->style().pixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.width > screen.width())    // should actually check workspace
               winargs.width = screen.width();
             if (winargs.width < 100)
@@ -1693,7 +1693,7 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
       Window::retrieveWindow(p)->goURL(exec, url.url(), false /*don't lock history*/);
       return Window::retrieve(p);
     }
-    if ( uargs.frameName.lower() == "tqreplace" )
+    if ( uargs.frameName.lower() == "replace" )
     {
       Window::retrieveWindow(p)->goURL(exec, url.url(), true /*lock history*/);
       return Window::retrieve(p);
@@ -1897,8 +1897,8 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     KHTMLSettings::KJSWindowFocusPolicy policy =
 		part->settings()->windowFocusPolicy(part->url().host());
     if(policy == KHTMLSettings::KJSWindowFocusAllow && widget) {
-      widget->tqtopLevelWidget()->raise();
-      KWin::deIconifyWindow( widget->tqtopLevelWidget()->winId() );
+      widget->topLevelWidget()->raise();
+      KWin::deIconifyWindow( widget->topLevelWidget()->winId() );
       widget->setActiveWindow();
       emit part->browserExtension()->requestFocus(part);
     }
@@ -1950,7 +1950,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
-        TQWidget * tl = widget->tqtopLevelWidget();
+        TQWidget * tl = widget->topLevelWidget();
         TQRect sg = KGlobalSettings::desktopGeometry(tl);
 
         TQPoint dest = tl->pos() + TQPoint( args[0].toInt32(exec), args[1].toInt32(exec) );
@@ -1970,7 +1970,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
-        TQWidget * tl = widget->tqtopLevelWidget();
+        TQWidget * tl = widget->topLevelWidget();
         TQRect sg = KGlobalSettings::desktopGeometry(tl);
 
         TQPoint dest( args[0].toInt32(exec)+sg.x(), args[1].toInt32(exec)+sg.y() );
@@ -1989,7 +1989,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     if(policy == KHTMLSettings::KJSWindowResizeAllow
     		&& args.size() == 2 && widget)
     {
-      TQWidget * tl = widget->tqtopLevelWidget();
+      TQWidget * tl = widget->topLevelWidget();
       TQRect geom = tl->frameGeometry();
       window->resizeTo( tl,
                         geom.width() + args[0].toInt32(exec),
@@ -2003,7 +2003,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     if(policy == KHTMLSettings::KJSWindowResizeAllow
                && args.size() == 2 && widget)
     {
-      TQWidget * tl = widget->tqtopLevelWidget();
+      TQWidget * tl = widget->topLevelWidget();
       window->resizeTo( tl, args[0].toInt32(exec), args[1].toInt32(exec) );
     }
     return Undefined();
@@ -2271,7 +2271,7 @@ void WindowQObject::timerEvent(TQTimerEvent *)
   it = TQPtrListIterator<ScheduledAction>(toExecute);
   for (; it.current(); ++it) {
     ScheduledAction *action = it.current();
-    if (!scheduledActions.tqcontainsRef(action)) // removed by clearTimeout()
+    if (!scheduledActions.containsRef(action)) // removed by clearTimeout()
       continue;
 
     action->executing = true; // prevent deletion in clearTimeout()
@@ -2288,7 +2288,7 @@ void WindowQObject::timerEvent(TQTimerEvent *)
 
     action->executing = false;
 
-    if (!scheduledActions.tqcontainsRef(action))
+    if (!scheduledActions.containsRef(action))
       delete action;
     else
       action->nextTime = action->nextTime.addMSecs(action->interval);
@@ -2353,10 +2353,10 @@ DateTimeMS DateTimeMS::now()
 {
   DateTimeMS t;
   TQTime before = TQTime::currentTime();
-  t.mDate = TQDate::tqcurrentDate();
+  t.mDate = TQDate::currentDate();
   t.mTime = TQTime::currentTime();
   if (t.mTime < before)
-    t.mDate = TQDate::tqcurrentDate(); // prevent race condition in hacky way :)
+    t.mDate = TQDate::currentDate(); // prevent race condition in hacky way :)
   return t;
 }
 
@@ -2407,7 +2407,7 @@ Value FrameArray::get(ExecState *exec, const Identifier &p) const
   }
 
   // check for the name or number
-  KParts::ReadOnlyPart *frame = part->tqfindFramePart(p.qstring());
+  KParts::ReadOnlyPart *frame = part->findFramePart(p.qstring());
   if (!frame) {
     bool ok;
     unsigned int i = p.toArrayIndex(&ok);
@@ -2423,7 +2423,7 @@ Value FrameArray::get(ExecState *exec, const Identifier &p) const
   }
 
   // Fun IE quirk: name lookup in there is actually done by document.all 
-  // hence, it can tqfind non-frame things (and even let them hide frame ones!)
+  // hence, it can find non-frame things (and even let them hide frame ones!)
   // We don't quite do that, but do this as a fallback.
   DOM::DocumentImpl* doc  = static_cast<DOM::DocumentImpl*>(part->document().handle());
   if (doc) {
@@ -2478,7 +2478,7 @@ const ClassInfo Location::info = { "Location", 0, &LocationTable, 0 };
   [[==]]	Location::EqualEqual	DontDelete|ReadOnly
   assign	Location::Assign	DontDelete|Function 1
   toString	Location::ToString	DontDelete|Function 0
-  tqreplace	Location::Replace	DontDelete|Function 1
+  replace	Location::Replace	DontDelete|Function 1
   reload	Location::Reload	DontDelete|Function 0
 @end
 */
@@ -2545,7 +2545,7 @@ Value Location::get(ExecState *exec, const Identifier &p) const
 	return String("");
       return String( url.path().isEmpty() ? TQString("/") : url.path() );
     case Port:
-      return String( url.port() ? TQString::number((int)url.port()) : TQString::tqfromLatin1("") );
+      return String( url.port() ? TQString::number((int)url.port()) : TQString::fromLatin1("") );
     case Protocol:
       return String( url.protocol()+":" );
     case Search:
@@ -2603,8 +2603,8 @@ void Location::put(ExecState *exec, const Identifier &p, const Value &v, int att
       url.setRef(str);
       break;
     case Host: {
-      TQString host = str.left(str.tqfind(":"));
-      TQString port = str.mid(str.tqfind(":")+1);
+      TQString host = str.left(str.find(":"));
+      TQString port = str.mid(str.find(":")+1);
       url.setHost(host);
       url.setPort(port.toUInt());
       break;

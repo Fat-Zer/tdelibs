@@ -83,7 +83,7 @@ public:
     /**
      * Sets the current url. This combo handles exactly one url additionally
      * to the default items and those set via setURLs(). So you can call
-     * setURL() as often as you want, it will always tqreplace the previous one
+     * setURL() as often as you want, it will always replace the previous one
      * set via setURL().
      * If @p url is already in the combo, the last item will stay there
      * and the existing item becomes the current item.
@@ -98,7 +98,7 @@ public:
      * Inserts @p urls into the combobox below the "default urls" (see
      * addDefaultURL).
      *
-     * If the list of urls tqcontains more items than maxItems, the first items
+     * If the list of urls contains more items than maxItems, the first items
      * will be stripped.
      */
     void setURLs( TQStringList urls );
@@ -107,13 +107,13 @@ public:
      * Inserts @p urls into the combobox below the "default urls" (see
      * addDefaultURL).
      *
-     * If the list of urls tqcontains more items than maxItems, the @p remove
+     * If the list of urls contains more items than maxItems, the @p remove
      * parameter determines whether the first or last items will be stripped.
      */
     void setURLs( TQStringList urls, OverLoadResolving remove );
 
     /**
-     * @returns a list of all urls currently handled. The list tqcontains at most
+     * @returns a list of all urls currently handled. The list contains at most
      * maxItems() items.
      * Use this to save the list of urls in a config-file and reinsert them
      * via setURLs() next time.

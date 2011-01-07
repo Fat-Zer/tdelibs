@@ -29,7 +29,7 @@ class KDEPRINT_EXPORT SidePixmap : public QFrame
 {
 public:
 	SidePixmap(TQWidget *parent = 0, const char *name = 0);
-	TQSize tqsizeHint() const;
+	TQSize sizeHint() const;
 	bool isValid();
 
 protected:

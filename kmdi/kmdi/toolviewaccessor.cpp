@@ -184,16 +184,16 @@ void ToolViewAccessor::place(KDockWidget::DockPosition pos, TQWidget* pTargetWnd
         // this is not inheriting TQWidget*, its plain impossible that this condition is true
         //if (pTargetWnd == this) DockToOurself = true;
         if (!DockToOurself) if(pTargetWnd != 0L) {
-            pTargetDock = mdiMainFrm->dockManager->tqfindWidgetParentDock( pTargetWnd);
+            pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd);
             if (!pTargetDock) {
-                if (pTargetWnd->tqparentWidget()) {
-                    pTargetDock = mdiMainFrm->dockManager->tqfindWidgetParentDock( pTargetWnd->tqparentWidget());
+                if (pTargetWnd->parentWidget()) {
+                    pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd->parentWidget());
                 }
             }
         }
       /*  if (!pTargetDock || pTargetWnd == mdiMainFrm->getMainDockWidget()) {
             if (mdiMainFrm->m_managedDockPositionMode && (mdiMainFrm->m_pMdi || mdiMainFrm->m_documentTabWidget)) {
-                KDockWidget *dw1=pTargetDock->tqfindNearestDockWidget(pos);
+                KDockWidget *dw1=pTargetDock->findNearestDockWidget(pos);
                 if (dw1)
                     pCover->manualDock(dw1,KDockWidget::DockCenter,percent);
                 else
@@ -220,4 +220,4 @@ void ToolViewAccessor::show() {
 
 }
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

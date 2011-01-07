@@ -22,10 +22,10 @@ old todo from David Sweet
 
 properly handle capitalization on "Replace All" (in parseOneResponse())
 
-ensure that KSpell is reusable with the same tqreplace/ignore lists
+ensure that KSpell is reusable with the same replace/ignore lists
  for multiple spellchecks in a single editing session
 
-allow saving of ignore/tqreplace lists for multiple spellchecks of a
+allow saving of ignore/replace lists for multiple spellchecks of a
   given document across multiple sessions
 
 add a "move()" function to move the dialog box (calling app should use this

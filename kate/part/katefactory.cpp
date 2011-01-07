@@ -48,7 +48,7 @@ class KateFactoryPublic : public KParts::Factory
   public:
     /**
      * reimplemented create object method
-     * @param tqparentWidget parent widget
+     * @param parentWidget parent widget
      * @param widgetName widget name
      * @param parent TQObject parent
      * @param name object name
@@ -56,9 +56,9 @@ class KateFactoryPublic : public KParts::Factory
      * @param args additional arguments
      * @return constructed part object
      */
-    KParts::Part *createPartObject ( TQWidget *tqparentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname, const TQStringList &args )
+    KParts::Part *createPartObject ( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname, const TQStringList &args )
     {
-      return KateFactory::self()->createPartObject (tqparentWidget, widgetName, parent, name, classname, args);
+      return KateFactory::self()->createPartObject (parentWidget, widgetName, parent, name, classname, args);
     }
 };
 
@@ -206,14 +206,14 @@ KateFactory *KateFactory::self ()
   return s_self;
 }
 
-KParts::Part *KateFactory::createPartObject ( TQWidget *tqparentWidget, const char *widgetName, TQObject *parent, const char *name, const char *_classname, const TQStringList & )
+KParts::Part *KateFactory::createPartObject ( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *_classname, const TQStringList & )
 {
   TQCString classname( _classname );
   bool bWantSingleView = ( classname != "KTextEditor::Document" && classname != "Kate::Document" );
   bool bWantBrowserView = ( classname == "Browser/View" );
   bool bWantReadOnly = (bWantBrowserView || ( classname == "KParts::ReadOnlyPart" ));
 
-  KParts::ReadWritePart *part = new KateDocument (bWantSingleView, bWantBrowserView, bWantReadOnly, tqparentWidget, widgetName, parent, name);
+  KParts::ReadWritePart *part = new KateDocument (bWantSingleView, bWantBrowserView, bWantReadOnly, parentWidget, widgetName, parent, name);
   part->setReadWrite( !bWantReadOnly );
 
   return part;
@@ -273,4 +273,4 @@ KateIndentScript KateFactory::indentScript (const TQString &scriptname)
   return result;
 }
 
-// kate: space-indent on; indent-width 2; tqreplace-tabs on;
+// kate: space-indent on; indent-width 2; replace-tabs on;

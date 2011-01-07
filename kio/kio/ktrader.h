@@ -27,7 +27,7 @@
  *
  * Basically, it provides a way for an application to query
  * all KDE services (that is, applications and components) that match
- * a specific set of requirements.  This allows you to tqfind an
+ * a specific set of requirements.  This allows you to find an
  * application in real-time without you having to hard-code the name
  * and/or path of the application.
  *
@@ -82,7 +82,7 @@
  *        applications or components.
  * @author Torben Weis <weis@kde.org>
  */
-class KIO_EXPORT KTrader : public TQObject
+class KIO_EXPORT KTrader : public QObject
 {
     Q_OBJECT
 public:

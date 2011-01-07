@@ -45,7 +45,7 @@
 TQString KRecentDocument::recentDocumentDirectory()
 {
     // need to change this path, not sure where
-    return locateLocal("data", TQString::tqfromLatin1("RecentDocuments/"));
+    return locateLocal("data", TQString::fromLatin1("RecentDocuments/"));
 }
 
 TQStringList KRecentDocument::recentDocuments()
@@ -74,7 +74,7 @@ TQStringList KRecentDocument::recentDocuments()
 
 void KRecentDocument::add(const KURL& url)
 {
-    KRecentDocument::add(url, tqApp->argv()[0]); // ### argv[0] might not match the service filename!
+    KRecentDocument::add(url, qApp->argv()[0]); // ### argv[0] might not match the service filename!
 }
 
 void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
@@ -83,14 +83,14 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
 		return;
 
     TQString openStr = url.url();
-    openStr.tqreplace( TQRegExp("\\$"), "$$" ); // Desktop files with type "Link" are $-variable expanded
+    openStr.replace( TQRegExp("\\$"), "$$" ); // Desktop files with type "Link" are $-variable expanded
 
     kdDebug(250) << "KRecentDocument::add for " << openStr << endl;
     KConfig *config = KGlobal::config();
     TQString oldGrp = config->group();
-    config->setGroup(TQString::tqfromLatin1("RecentDocuments"));
-    bool useRecent = config->readBoolEntry(TQString::tqfromLatin1("UseRecent"), true);
-    int maxEntries = config->readNumEntry(TQString::tqfromLatin1("MaxEntries"), 10);
+    config->setGroup(TQString::fromLatin1("RecentDocuments"));
+    bool useRecent = config->readBoolEntry(TQString::fromLatin1("UseRecent"), true);
+    int maxEntries = config->readNumEntry(TQString::fromLatin1("MaxEntries"), 10);
 
     config->setGroup(oldGrp);
     if(!useRecent)
@@ -100,7 +100,7 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
 
     TQString dStr = path + url.fileName();
 
-    TQString ddesktop = dStr + TQString::tqfromLatin1(".desktop");
+    TQString ddesktop = dStr + TQString::fromLatin1(".desktop");
 
     int i=1;
     // check for duplicates
@@ -108,7 +108,7 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
         // see if it points to the same file and application
         KSimpleConfig tmp(ddesktop);
         tmp.setDesktopGroup();
-        if(tmp.readEntry(TQString::tqfromLatin1("X-KDE-LastOpenedWith"))
+        if(tmp.readEntry(TQString::fromLatin1("X-KDE-LastOpenedWith"))
 	   == desktopEntryName)
 	{
             utime(TQFile::encodeName(ddesktop), NULL);
@@ -118,7 +118,7 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
         ++i;
         if ( i > maxEntries )
             break;
-        ddesktop = dStr + TQString::tqfromLatin1("[%1].desktop").arg(i);
+        ddesktop = dStr + TQString::fromLatin1("[%1].desktop").arg(i);
     }
 
     TQDir dir(path);
@@ -129,7 +129,7 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
         TQStringList::Iterator it;
         it = list.begin();
         while(i > maxEntries-1){
-            TQFile::remove(dir.absPath() + TQString::tqfromLatin1("/") + (*it));
+            TQFile::remove(dir.absPath() + TQString::fromLatin1("/") + (*it));
             --i, ++it;
         }
     }
@@ -137,15 +137,15 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
     // create the applnk
     KSimpleConfig conf(ddesktop);
     conf.setDesktopGroup();
-    conf.writeEntry( TQString::tqfromLatin1("Type"), TQString::tqfromLatin1("Link") );
-    conf.writePathEntry( TQString::tqfromLatin1("URL"), openStr );
+    conf.writeEntry( TQString::fromLatin1("Type"), TQString::fromLatin1("Link") );
+    conf.writePathEntry( TQString::fromLatin1("URL"), openStr );
     // If you change the line below, change the test in the above loop
-    conf.writeEntry( TQString::tqfromLatin1("X-KDE-LastOpenedWith"), desktopEntryName );
+    conf.writeEntry( TQString::fromLatin1("X-KDE-LastOpenedWith"), desktopEntryName );
     TQString name = url.fileName();
     if (name.isEmpty())
       name = openStr;
-    conf.writeEntry( TQString::tqfromLatin1("Name"), name );
-    conf.writeEntry( TQString::tqfromLatin1("Icon"), KMimeType::iconForURL( url ) );
+    conf.writeEntry( TQString::fromLatin1("Name"), name );
+    conf.writeEntry( TQString::fromLatin1("Icon"), KMimeType::iconForURL( url ) );
 }
 
 void KRecentDocument::add(const TQString &openStr, bool isUrl)
@@ -170,8 +170,8 @@ void KRecentDocument::clear()
 int KRecentDocument::maximumItems()
 {
     KConfig *config = KGlobal::config();
-    KConfigGroupSaver sa(config, TQString::tqfromLatin1("RecentDocuments"));
-    return config->readNumEntry(TQString::tqfromLatin1("MaxEntries"), 10);
+    KConfigGroupSaver sa(config, TQString::fromLatin1("RecentDocuments"));
+    return config->readNumEntry(TQString::fromLatin1("MaxEntries"), 10);
 }
 
 

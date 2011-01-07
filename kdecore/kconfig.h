@@ -136,7 +136,7 @@ public:
   bool forceGlobal() const { return bForceGlobal; }
 
   /**
-   * Checks whether the config file tqcontains the update @p id
+   * Checks whether the config file contains the update @p id
    * as contained in @p updateFile. If not, it runs kconf_update
    * to update the config file.
    *
@@ -215,9 +215,9 @@ protected:
    * Inserts a (key, value) pair into the internal storage mechanism of
    * the configuration object.
    *
-   * @param _key The key to insert.  It tqcontains information both on
+   * @param _key The key to insert.  It contains information both on
    *        the group of the key and the key itself. If the key already
-   *        exists, the old value will be tqreplaced.
+   *        exists, the old value will be replaced.
    * @param _data the KEntry that is to be stored.
    * @param _checkGroup When false, assume that the group already exists.
    */
@@ -226,7 +226,7 @@ protected:
   /**
    * Looks up an entry in the config object's internal structure.
    *
-   * @param _key The key to look up  It tqcontains information both on
+   * @param _key The key to look up  It contains information both on
    *        the group of the key and the entry's key itself.
    * @return the KEntry value (data) found for the key.  KEntry.aValue
    * will be the null string if nothing was located.

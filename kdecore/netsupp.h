@@ -66,63 +66,63 @@ struct kde_in6_addr
 struct kde_sockaddr_in6
 {
 #ifdef HAVE_STRUCT_SOCKADDR_SA_LEN
-  TQ_UINT8		sin6_len;
-  TQ_UINT8		sin6_family;
+  Q_UINT8		sin6_len;
+  Q_UINT8		sin6_family;
 #else  //HAVE_STRUCT_SOCKADDR_SA_LEN
-  TQ_UINT16		sin6_family;
+  Q_UINT16		sin6_family;
 #endif
   unsigned short       	sin6_port;	/* RFC says in_port_t */
-  TQ_UINT32		sin6_flowinfo;
+  Q_UINT32		sin6_flowinfo;
   struct kde_in6_addr	sin6_addr;
-  TQ_UINT32		sin6_scope_id;
+  Q_UINT32		sin6_scope_id;
 };
 
 /* IPv6 test macros that could be missing from some implementations */
 
 #define KDE_IN6_IS_ADDR_UNSPECIFIED(a) \
-	(((TQ_UINT32 *) (a))[0] == 0 && ((TQ_UINT32 *) (a))[1] == 0 && \
-	 ((TQ_UINT32 *) (a))[2] == 0 && ((TQ_UINT32 *) (a))[3] == 0)
+	(((Q_UINT32 *) (a))[0] == 0 && ((Q_UINT32 *) (a))[1] == 0 && \
+	 ((Q_UINT32 *) (a))[2] == 0 && ((Q_UINT32 *) (a))[3] == 0)
 
 #define KDE_IN6_IS_ADDR_LOOPBACK(a) \
-	(((TQ_UINT32 *) (a))[0] == 0 && ((TQ_UINT32 *) (a))[1] == 0 && \
-	 ((TQ_UINT32 *) (a))[2] == 0 && ((TQ_UINT32 *) (a))[3] == htonl (1))
+	(((Q_UINT32 *) (a))[0] == 0 && ((Q_UINT32 *) (a))[1] == 0 && \
+	 ((Q_UINT32 *) (a))[2] == 0 && ((Q_UINT32 *) (a))[3] == htonl (1))
 
 #define KDE_IN6_IS_ADDR_MULTICAST(a) (((u_int8_t *) (a))[0] == 0xff)
 
 #define KDE_IN6_IS_ADDR_LINKLOCAL(a) \
-	((((TQ_UINT32 *) (a))[0] & htonl (0xffc00000)) == htonl (0xfe800000))
+	((((Q_UINT32 *) (a))[0] & htonl (0xffc00000)) == htonl (0xfe800000))
 
 #define KDE_IN6_IS_ADDR_SITELOCAL(a) \
-	((((TQ_UINT32 *) (a))[0] & htonl (0xffc00000)) == htonl (0xfec00000))
+	((((Q_UINT32 *) (a))[0] & htonl (0xffc00000)) == htonl (0xfec00000))
 
 #define KDE_IN6_IS_ADDR_V4MAPPED(a) \
-	((((TQ_UINT32 *) (a))[0] == 0) && (((TQ_UINT32 *) (a))[1] == 0) && \
-	 (((TQ_UINT32 *) (a))[2] == htonl (0xffff)))
+	((((Q_UINT32 *) (a))[0] == 0) && (((Q_UINT32 *) (a))[1] == 0) && \
+	 (((Q_UINT32 *) (a))[2] == htonl (0xffff)))
 
 #define KDE_IN6_IS_ADDR_V4COMPAT(a) \
-	((((TQ_UINT32 *) (a))[0] == 0) && (((TQ_UINT32 *) (a))[1] == 0) && \
-	 (((TQ_UINT32 *) (a))[2] == 0) && (ntohl (((TQ_UINT32 *) (a))[3]) > 1))
+	((((Q_UINT32 *) (a))[0] == 0) && (((Q_UINT32 *) (a))[1] == 0) && \
+	 (((Q_UINT32 *) (a))[2] == 0) && (ntohl (((Q_UINT32 *) (a))[3]) > 1))
 
 #define KDE_IN6_ARE_ADDR_EQUAL(a,b) \
-	((((TQ_UINT32 *) (a))[0] == ((TQ_UINT32 *) (b))[0]) && \
-	 (((TQ_UINT32 *) (a))[1] == ((TQ_UINT32 *) (b))[1]) && \
-	 (((TQ_UINT32 *) (a))[2] == ((TQ_UINT32 *) (b))[2]) && \
-	 (((TQ_UINT32 *) (a))[3] == ((TQ_UINT32 *) (b))[3]))
+	((((Q_UINT32 *) (a))[0] == ((Q_UINT32 *) (b))[0]) && \
+	 (((Q_UINT32 *) (a))[1] == ((Q_UINT32 *) (b))[1]) && \
+	 (((Q_UINT32 *) (a))[2] == ((Q_UINT32 *) (b))[2]) && \
+	 (((Q_UINT32 *) (a))[3] == ((Q_UINT32 *) (b))[3]))
 
 #define KDE_IN6_IS_ADDR_MC_NODELOCAL(a) \
-	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((TQ_UINT8 *) (a))[1] & 0xf) == 0x1))
+	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((Q_UINT8 *) (a))[1] & 0xf) == 0x1))
 
 #define KDE_IN6_IS_ADDR_MC_LINKLOCAL(a) \
-	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((TQ_UINT8 *) (a))[1] & 0xf) == 0x2))
+	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((Q_UINT8 *) (a))[1] & 0xf) == 0x2))
 
 #define KDE_IN6_IS_ADDR_MC_SITELOCAL(a) \
-	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((TQ_UINT8 *) (a))[1] & 0xf) == 0x5))
+	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((Q_UINT8 *) (a))[1] & 0xf) == 0x5))
 
 #define KDE_IN6_IS_ADDR_MC_ORGLOCAL(a) \
-	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((TQ_UINT8 *) (a))[1] & 0xf) == 0x8))
+	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((Q_UINT8 *) (a))[1] & 0xf) == 0x8))
 
 #define KDE_IN6_IS_ADDR_MC_GLOBAL(a) \
-	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((TQ_UINT8 *) (a))[1] & 0xf) == 0xe))
+	(KDE_IN6_IS_ADDR_MULTICAST(a) && ((((Q_UINT8 *) (a))[1] & 0xf) == 0xe))
 
 #ifdef NEED_IN6_TESTS
 # define IN6_IS_ADDR_UNSPECIFIED	KDE_IN6_IS_ADDR_UNSPECIFIED
@@ -143,8 +143,8 @@ struct kde_sockaddr_in6
 /* Special internal structure */
 
 #define KAI_SYSTEM		0	/* data is all-system */
-#define KAI_LOCALUNIX		1	/* data tqcontains a Unix addrinfo allocated by us */
-#define KAI_QDNS		2	/* data tqcontains data derived from TQDns */
+#define KAI_LOCALUNIX		1	/* data contains a Unix addrinfo allocated by us */
+#define KAI_QDNS		2	/* data contains data derived from TQDns */
 
 struct addrinfo;		/* forward declaration; this could be needed */
 

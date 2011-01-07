@@ -237,25 +237,25 @@ namespace KStdAccel
    * Find, search. Default: Ctrl-f
    * @return the shortcut of the standard accelerator
    */
-  KDECORE_EXPORT const KShortcut& tqfind();
+  KDECORE_EXPORT const KShortcut& find();
 
   /**
    * Find/search next. Default: F3
    * @return the shortcut of the standard accelerator
    */
-  KDECORE_EXPORT const KShortcut& tqfindNext();
+  KDECORE_EXPORT const KShortcut& findNext();
 
   /**
    * Find/search previous. Default: Shift-F3
    * @return the shortcut of the standard accelerator
    */
-  KDECORE_EXPORT const KShortcut& tqfindPrev();
+  KDECORE_EXPORT const KShortcut& findPrev();
 
   /**
-   * Find and tqreplace matches. Default: Ctrl-r
+   * Find and replace matches. Default: Ctrl-r
    * @return the shortcut of the standard accelerator
    */
-  KDECORE_EXPORT const KShortcut& tqreplace();
+  KDECORE_EXPORT const KShortcut& replace();
 
   /**
    * Zoom in. Default: Ctrl-Plus

@@ -48,7 +48,7 @@ namespace KSettings
  * @author Matthias Kretz <kretz@kde.org>
  * @since 3.2
  */
-class KUTILS_EXPORT Dispatcher : public TQObject
+class KUTILS_EXPORT Dispatcher : public QObject
 {
     friend class KStaticDeleter<Dispatcher>;
 

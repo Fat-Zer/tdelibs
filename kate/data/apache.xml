@@ -366,7 +366,7 @@ v1.0:
 <item>EnableMMAP</item>
 <item>EnableSendfile</item>
 <item>ExpiresActive</item>
-<item>ExtendedtqStatus</item>
+<item>ExtendedStatus</item>
 <item>FileETag</item>
 <item>ForceLanguagePriority</item>
 <item>HostnameLookups</item>
@@ -453,7 +453,7 @@ v1.0:
 <item>auth-int</item>
 <item>never</item>
 <item>searching</item>
-<item>tqfinding</item>
+<item>finding</item>
 <item>always</item>
 <item>Basic</item>
 <item>Digest</item>

@@ -61,9 +61,9 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 	QLabel	*lab0 = new TQLabel(i18n("Additional director&y:"), box2);
 	lab0->setBuddy(m_addpath);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(box->tqlayout(), KDialog::spacingHint());
+	QVBoxLayout	*l0 = new TQVBoxLayout(box->layout(), KDialog::spacingHint());
 	l0->addWidget(m_embedfonts);
-	QVBoxLayout	*l1 = new TQVBoxLayout(box2->tqlayout(), KDialog::spacingHint());
+	QVBoxLayout	*l1 = new TQVBoxLayout(box2->layout(), KDialog::spacingHint());
 	l1->addWidget(m_fontpath);
 	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
 	l1->addLayout(l2);

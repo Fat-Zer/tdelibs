@@ -35,7 +35,7 @@ class KMDIGUIClient;
 }
 
 
-class KMDI_EXPORT KMdiToolViewAccessor : public TQObject
+class KMDI_EXPORT KMdiToolViewAccessor : public QObject
 {
 	Q_OBJECT
 
@@ -82,5 +82,5 @@ protected:
 
 
 #endif //_KMDITOOLVIEWACCESSOR_H_ 
-// kate: space-indent off; tab-width 4; tqreplace-tabs off; indent-mode csands;
+// kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
 

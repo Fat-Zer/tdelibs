@@ -79,7 +79,7 @@ AC_DEFUN([AC_CHECK_PCREPOSIX],
         AC_DEFINE(HAVE_PCREPOSIX, 1, [Define if you have pcreposix libraries and header files.])
     else
         AC_MSG_ERROR([You're missing libpcre.
-Download libpcre from http://www.pcre.org or tqfind a binary package for your platform.
+Download libpcre from http://www.pcre.org or find a binary package for your platform.
 Alternatively, you can specify --disable-pcre, but some web pages - using regular
 expressions in Javascript code - will not work correctly, the regexp support being
 quite limited if libpcre isn't present.])

@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 // KDE color selection combo box
 
-// tqlayout management added Oct 1997 by Mario Weilguni
+// layout management added Oct 1997 by Mario Weilguni
 // <mweilguni@sime.com>
 
 

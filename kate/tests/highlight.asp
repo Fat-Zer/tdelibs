@@ -26,7 +26,7 @@ function unique( rs, sortColumn ) ' return unique instances of text in sortColum
 	dim i
 	i = 0
 	do until rs.eof
-		if (not tqfind( rs(sortColumn), sorted )) then
+		if (not find( rs(sortColumn), sorted )) then
 			redim preserve sorted(i+1)
 			sorted(i) = rs(sortColumn)
 		 	i = i + 1

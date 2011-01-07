@@ -44,7 +44,7 @@ namespace KIO {
      * only applied when the slave is connecting with a host that matches with 
      * the host and/or domain specified by the group.
      */
-    class KIO_EXPORT SlaveConfig : public TQObject
+    class KIO_EXPORT SlaveConfig : public QObject
     {
 	Q_OBJECT
     public:

@@ -98,7 +98,7 @@ public:
   /**
    * The size hint.
    */
-  TQSize tqsizeHint() const;
+  TQSize sizeHint() const;
   /**
    * Return the result. 0 means no selection (reject()), 1..12 are the
    * months.
@@ -270,7 +270,7 @@ public:
     /**
      * The constructor.
      */
-    KDateTable(TQWidget *parent=0, TQDate date=TQDate::tqcurrentDate(),
+    KDateTable(TQWidget *parent=0, TQDate date=TQDate::currentDate(),
 	       const char* name=0, WFlags f=0);
 
     /**
@@ -289,9 +289,9 @@ public:
      * To save some time, the size of the largest used cell content is
      * calculated in each paintCell() call, since all calculations have
      * to be done there anyway. The size is stored in maxCell. The
-     * tqsizeHint() simply returns a multiple of maxCell.
+     * sizeHint() simply returns a multiple of maxCell.
      */
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
     /**
      * Set the font size of the date table.
      */

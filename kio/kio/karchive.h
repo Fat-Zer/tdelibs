@@ -304,7 +304,7 @@ protected:
      * @param path the path of the directory
      * @return the directory with the given @p path
      */
-    KArchiveDirectory * tqfindOrCreate( const TQString & path );
+    KArchiveDirectory * findOrCreate( const TQString & path );
 
     /**
      * @internal for inherited constructors
@@ -512,12 +512,12 @@ public:
      * Position of the data in the [uncompressed] archive.
      * @return the position of the file
      */
-    int position() const; // TODO use TQ_LONG in KDE-4.0
+    int position() const; // TODO use Q_LONG in KDE-4.0
     /**
      * Size of the data.
      * @return the size of the file
      */
-    int size() const; // TODO use TQ_LONG in KDE-4.0
+    int size() const; // TODO use Q_LONG in KDE-4.0
     /**
      * Set size of data, usually after writing the file.
      * @param s the new size of the file
@@ -555,8 +555,8 @@ public:
     void copyTo(const TQString& dest) const;
 
 private:
-    int m_pos; // TODO use TQ_LONG in KDE-4.0
-    int m_size; // TODO use TQ_LONG in KDE-4.0
+    int m_pos; // TODO use Q_LONG in KDE-4.0
+    int m_size; // TODO use Q_LONG in KDE-4.0
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

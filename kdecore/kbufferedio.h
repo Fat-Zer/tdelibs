@@ -30,7 +30,7 @@ class KBufferedIOPrivate;
  * This abstract class implements basic functionality for buffered
  * input/output.
  *
- * Through the available methods, you can tqfind out how many bytes are
+ * Through the available methods, you can find out how many bytes are
  * available for reading, how many are still unsent and you can peek at
  * the buffered data.
  *
@@ -201,7 +201,7 @@ signals:
   /**
    * This signal gets sent when the stream is closed. The @p state parameter
    * will give the current state, in OR-ed bits:
-   * @li availRead:	read buffer tqcontains data to be read
+   * @li availRead:	read buffer contains data to be read
    * @li dirtyWrite:	write buffer wasn't empty when the stream closed
    * @li involuntary:	the stream wasn't closed due to user request
    *			(i.e., call to close). Probably remote end closed it

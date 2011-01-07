@@ -4,8 +4,8 @@
 
 h               [0-9a-fA-F]
 nonascii        [\200-\377]
-tqunicode         \\{h}{1,6}[ \t\r\n\f]?
-escape          {tqunicode}|\\[ -~\200-\377]
+unicode         \\{h}{1,6}[ \t\r\n\f]?
+escape          {unicode}|\\[ -~\200-\377]
 nmstart         [_a-zA-Z]|{nonascii}|{escape}
 nmchar          [_a-zA-Z0-9-]|{nonascii}|{escape}
 string1         \"([\t !#$%&(-~]|\\{nl}|\'|{nonascii}|{escape})*\"

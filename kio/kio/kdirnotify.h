@@ -41,7 +41,7 @@ k_dcop:
   /**
    * Notify that files have been added in @p directory
    * Note: this is ASYNC so that it can be used with a broadcast.
-   * @param directory the directory that tqcontains the new files
+   * @param directory the directory that contains the new files
    */
   virtual ASYNC FilesAdded( const KURL & directory ) = 0;
 

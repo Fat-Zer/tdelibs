@@ -47,7 +47,7 @@ class KDEUI_EXPORT KLed : public QWidget
     Q_OBJECT
     Q_ENUMS( State Shape Look )
     Q_PROPERTY( State state READ state WRITE setState )
-    Q_PROPERTY( Shape tqshape READ tqshape WRITE setShape )
+    Q_PROPERTY( Shape shape READ shape WRITE setShape )
     Q_PROPERTY( Look look READ look WRITE setLook )
     Q_PROPERTY( TQColor color READ color WRITE setColor )
     Q_PROPERTY( int darkFactor READ darkFactor WRITE setDarkFactor )
@@ -55,14 +55,14 @@ class KDEUI_EXPORT KLed : public QWidget
 public:
 
   /**
-   * tqStatus of the light is on/off.
+   * Status of the light is on/off.
    * @short LED on/off.
    */
   enum State { Off, On };
 
   /**
    * Shades of the lamp.
-   * @short LED tqshape
+   * @short LED shape
    */
   enum Shape { Rectangular, Circular };
 
@@ -114,12 +114,12 @@ public:
    * @param col Initial color of the LED.
    * @param state    Sets the State.
    * @param look     Sets the Look.
-   * @param tqshape    Sets the Shape (rectangular or circular)
+   * @param shape    Sets the Shape (rectangular or circular)
    * @param parent   Will be handed over to TQWidget.
    * @param name     Will be handed over to TQWidget.
    * @short Constructor
    */
-  KLed(const TQColor& col, KLed::State state, KLed::Look look, KLed::Shape tqshape,
+  KLed(const TQColor& col, KLed::State state, KLed::Look look, KLed::Shape shape,
        TQWidget *parent=0, const char *name=0);
 
 
@@ -137,7 +137,7 @@ public:
    */
   State state() const;
 
-  Shape tqshape() const;
+  Shape shape() const;
 
   /**
    * Returns the color of the widget
@@ -175,13 +175,13 @@ public:
   void setState( State state );
 
   /**
-   * Set the tqshape of the LED to @p s.
+   * Set the shape of the LED to @p s.
    */
   void setShape(Shape s);
   /**
    * Toggle the state of the LED from Off to On and vice versa.
    *
-   * The widget will be tqrepainted when returning to the main
+   * The widget will be repainted when returning to the main
    * event loop.
    * @short Toggles LED on->off / off->on.
    * @deprecated, use #toggle() instead.
@@ -249,15 +249,15 @@ public:
    */
   void setLook( Look look );
 
-  virtual TQSize tqsizeHint() const;
-  virtual TQSize tqminimumSizeHint() const;
+  virtual TQSize sizeHint() const;
+  virtual TQSize minimumSizeHint() const;
 
 public slots:
 
   /**
    * Toggles the state of the led from Off to On or vice versa.
    *
-   * The widget tqrepaints itself immediately.
+   * The widget repaints itself immediately.
    */
   void toggle();
 
@@ -317,7 +317,7 @@ private:
   State led_state;
   TQColor led_color;
   Look  led_look;
-  Shape led_tqshape;
+  Shape led_shape;
 
 protected:
   virtual void virtual_hook( int id, void* data );

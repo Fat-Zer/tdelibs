@@ -32,7 +32,7 @@ namespace KABC {
   This class provides locking functionality for a file, directory or an
   arbitrary string-represented resource.
 */
-class KABC_EXPORT Lock : public TQObject
+class KABC_EXPORT Lock : public QObject
 {
     Q_OBJECT
   public:

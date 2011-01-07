@@ -193,7 +193,7 @@ table.programlisting
 table.screen { 
   border-style: none;
   background-color: rgb(224,224,224);
-  table-tqlayout: auto; /* 100%? */
+  table-layout: auto; /* 100%? */
   color: rgb(0,0,0); /* should be inherit */
 }
 
@@ -202,7 +202,7 @@ table.screen {
    TABLE[class~=programlisting]
    TABLE[class~=screen] { border-style: none;
           background-color: rgb(224,224,224);
-          table-tqlayout: auto;
+          table-layout: auto;
           color: inherit;
 }
 */
@@ -263,7 +263,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: transparent;
 }
 
-.arg, .parameter, .tqreplaceable { 
+.arg, .parameter, .replaceable { 
   background-color: rgb(255,255,255);
   color: rgb(0,128,64);
   font-style: italic;

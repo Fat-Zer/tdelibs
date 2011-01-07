@@ -72,6 +72,6 @@ bool KMWFile::isValid(TQString& msg)
 
 void KMWFile::updatePrinter(KMPrinter *p)
 {
-	QString	dev = TQString::tqfromLatin1("file:%1").arg(m_url->url());
+	QString	dev = TQString::fromLatin1("file:%1").arg(m_url->url());
 	p->setDevice(dev);
 }

@@ -67,7 +67,7 @@ public class BadApplet extends JApplet {
                 }
             });
 
-            //do tqlayout ***********************************************************
+            //do layout ***********************************************************
             getContentPane().setLayout( new BorderLayout() );
 
             FileSystemTests.setLayout( new FlowLayout( FlowLayout.LEFT ) );

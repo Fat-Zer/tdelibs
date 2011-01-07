@@ -74,7 +74,7 @@ class HighContrastStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawControl( ControlElement element,
+		void drawControl( ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -82,13 +82,13 @@ class HighContrastStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawControlMask( ControlElement element,
+		void drawControlMask( ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawComplexControl( ComplexControl control,
+		void drawComplexControl( ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -98,7 +98,7 @@ class HighContrastStyle : public KStyle
 					SCFlags active = SC_None,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawComplexControlMask( ComplexControl control,
+		void drawComplexControlMask( ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -120,7 +120,7 @@ class HighContrastStyle : public KStyle
 					int len = -1,
 					const TQColor *penColor = 0 ) const;
 
-		int tqpixelMetric( PixelMetric m,
+		int pixelMetric( PixelMetric m,
 					const TQWidget *widget = 0 ) const;
 
 		int kPixelMetric( KStylePixelMetric m,
@@ -157,6 +157,6 @@ class HighContrastStyle : public KStyle
 };
 
 // vim: set noet ts=4 sw=4:
-// kate: indent-width 4; tqreplace-tabs off; smart-indent on; tab-width 4;
+// kate: indent-width 4; replace-tabs off; smart-indent on; tab-width 4;
 
 #endif

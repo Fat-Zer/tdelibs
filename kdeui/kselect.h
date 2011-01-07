@@ -302,12 +302,12 @@ class KDEUI_EXPORT KGradientSelector : public KSelector
 public:
   /**
    * Constructs a horizontal color selector which
-   * tqcontains a gradient between white and black.
+   * contains a gradient between white and black.
    */
   KGradientSelector( TQWidget *parent=0, const char *name=0 );
   /**
    * Constructs a colors selector with orientation o which
-   * tqcontains a gradient between white and black.
+   * contains a gradient between white and black.
    */
   KGradientSelector( Orientation o, TQWidget *parent=0, const char *name=0 );
   /**
@@ -351,8 +351,8 @@ public:
 protected:
 
   virtual void drawContents( TQPainter * );
-  virtual TQSize tqminimumSize() const
-  { return tqsizeHint(); }
+  virtual TQSize minimumSize() const
+  { return sizeHint(); }
 
 private:
   void init();

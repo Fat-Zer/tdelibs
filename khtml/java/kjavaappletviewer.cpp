@@ -90,7 +90,7 @@ KJavaServerMaintainer::~KJavaServerMaintainer () {
 
 KJavaAppletContext * KJavaServerMaintainer::getContext (TQObject * w, const TQString & doc) {
     ContextMap::key_type key = qMakePair (w, doc);
-    ContextMap::iterator it = m_contextmap.tqfind (key);
+    ContextMap::iterator it = m_contextmap.find (key);
     if (it != m_contextmap.end ()) {
         ++((*it).second);
         return (*it).first;
@@ -101,7 +101,7 @@ KJavaAppletContext * KJavaServerMaintainer::getContext (TQObject * w, const TQSt
 }
 
 void KJavaServerMaintainer::releaseContext (TQObject * w, const TQString & doc) {
-    ContextMap::iterator it = m_contextmap.tqfind (qMakePair (w, doc));
+    ContextMap::iterator it = m_contextmap.find (qMakePair (w, doc));
     if (it != m_contextmap.end () && --(*it).second <= 0) {
         kdDebug(6100) << "KJavaServerMaintainer::releaseContext" << endl;
         (*it).first->deleteLater ();
@@ -230,7 +230,7 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
     TQStringList::const_iterator it = args.begin();
     const TQStringList::const_iterator itEnd = args.end();
     for ( ; it != itEnd; ++it) {
-        const int equalPos = (*it).tqfind("=");
+        const int equalPos = (*it).find("=");
         if (equalPos > 0) {
             const TQString name = (*it).left (equalPos).upper ();
             TQString value = (*it).right ((*it).length () - equalPos - 1);
@@ -245,27 +245,27 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
                     baseurl = KURL (KURL (value), TQString (".")).url ();
                 } else if (name == "__KHTML__CODEBASE")
                     khtml_codebase = value;
-                else if (name_lower == TQString::tqfromLatin1("codebase") ||
-                         name_lower == TQString::tqfromLatin1("java_codebase")) {
+                else if (name_lower == TQString::fromLatin1("codebase") ||
+                         name_lower == TQString::fromLatin1("java_codebase")) {
                     if (!value.isEmpty ())
                         codebase = value;
                 } else if (name == "__KHTML__CLASSID")
-                //else if (name.lower()==TQString::tqfromLatin1("classid"))
+                //else if (name.lower()==TQString::fromLatin1("classid"))
                     classid = value;
-                else if (name_lower == TQString::tqfromLatin1("code") ||
-                         name_lower == TQString::tqfromLatin1("java_code"))
+                else if (name_lower == TQString::fromLatin1("code") ||
+                         name_lower == TQString::fromLatin1("java_code"))
                     classname = value;
-                else if (name_lower == TQString::tqfromLatin1("src"))
+                else if (name_lower == TQString::fromLatin1("src"))
                     src_param = value;
-                else if (name_lower == TQString::tqfromLatin1("archive") ||
-                         name_lower == TQString::tqfromLatin1("java_archive") ||
+                else if (name_lower == TQString::fromLatin1("archive") ||
+                         name_lower == TQString::fromLatin1("java_archive") ||
                          name_lower.startsWith ("cache_archive"))
                     applet->setArchives (value);
-                else if (name_lower == TQString::tqfromLatin1("name"))
+                else if (name_lower == TQString::fromLatin1("name"))
                     applet->setAppletName (value);
-                else if (name_lower == TQString::tqfromLatin1("width"))
+                else if (name_lower == TQString::fromLatin1("width"))
                     width = value.toInt();
-                else if (name_lower == TQString::tqfromLatin1("height"))
+                else if (name_lower == TQString::fromLatin1("height"))
                     height = value.toInt();
                 if (!name.startsWith ("__KHTML__")) {
                     applet->setParameter (name, value);
@@ -277,7 +277,7 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
         applet->setParameter ("CLSID", classid);
         kdDebug(6100) << "classid=" << classid << classid.startsWith("clsid:")<< endl;
         if (classid.startsWith ("clsid:"))
-            // codeBase tqcontains the URL to the plugin page
+            // codeBase contains the URL to the plugin page
             khtml_codebase = baseurl;
         else if (classname.isEmpty () && classid.startsWith ("java:"))
             classname = classid.mid(5);
@@ -327,7 +327,7 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
         info.verifyPath = true;
 
         TQDataStream stream(params, IO_WriteOnly);
-        stream << info << m_view->tqtopLevelWidget()->winId();
+        stream << info << m_view->topLevelWidget()->winId();
 
         if (!kapp->dcopClient ()->call( "kded", "kpasswdserver", "checkAuthInfo(KIO::AuthInfo, long int)", params, replyType, reply ) ) {
             kdWarning() << "Can't communicate with kded_kpasswdserver!" << endl;
@@ -342,14 +342,14 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
 
     /* install event filter for close events */
     if (wparent)
-        wparent->tqtopLevelWidget ()->installEventFilter (this);
+        wparent->topLevelWidget ()->installEventFilter (this);
 
     setInstance (KJavaAppletViewerFactory::instance ());
     KParts::Part::setWidget (m_view);
 
     connect (applet->getContext(), TQT_SIGNAL(appletLoaded()), this, TQT_SLOT(appletLoaded()));
     connect (applet->getContext(), TQT_SIGNAL(showDocument(const TQString&, const TQString&)), m_browserextension, TQT_SLOT(showDocument(const TQString&, const TQString&)));
-    connect (applet->getContext(), TQT_SIGNAL(showtqStatus(const TQString &)), this, TQT_SLOT(infoMessage(const TQString &)));
+    connect (applet->getContext(), TQT_SIGNAL(showStatus(const TQString &)), this, TQT_SLOT(infoMessage(const TQString &)));
     connect (applet, TQT_SIGNAL(jsEvent (const TQStringList &)), m_liveconnect, TQT_SLOT(jsEvent (const TQStringList &)));
 }
 
@@ -391,7 +391,7 @@ bool KJavaAppletViewer::openURL (const KURL & url) {
         } else
             applet->setAppletClass (url.url ());
         AppletParameterDialog (w).exec ();
-        applet->setSize (w->tqsizeHint());
+        applet->setSize (w->sizeHint());
     }
     if (!m_statusbar_icon) {
         KStatusBar *sb = m_statusbar->statusBar();
@@ -500,7 +500,7 @@ void KJavaAppletViewerBrowserExtension::restoreState (TQDataStream & stream) {
         applet->setParameter (key, val);
         kdDebug(6100) << "restoreState key:" << key << " val:" << val << endl;
     }
-    applet->setSize (w->tqsizeHint ());
+    applet->setSize (w->sizeHint ());
     if (w->isVisible())
         w->showApplet ();
 }

@@ -335,7 +335,7 @@ protected:
   /**
    * Look for cookies in the cookiejar
    */
-  TQString tqfindCookies( const TQString &url);
+  TQString findCookies( const TQString &url);
 
   /**
    * Do a cache lookup for the current url. (m_state.url)
@@ -403,7 +403,7 @@ protected:
 
   /**
    * Resets any per connection settings.  These are different from
-   * per-session settings in that they must be tqinvalidates every time
+   * per-session settings in that they must be invalidates every time
    * a request is made, e.g. a retry to re-send the header to the
    * server, as compared to only when a new request arrives.
    */

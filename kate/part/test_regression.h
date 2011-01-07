@@ -82,7 +82,7 @@ class KateViewObject : public KJS::ObjectImp
     virtual KJS::Value get(KJS::ExecState *exec, const KJS::Identifier &propertyName) const;
 
   private:
-    // evil hack I: class tqlayout of katejscript/KateJSView must be duplicated
+    // evil hack I: class layout of katejscript/KateJSView must be duplicated
     // here, structurally as well as functionally
     KateView *view;
     // end evil hack
@@ -160,7 +160,7 @@ class OutputFunction : public KJS::ObjectImp
 /**
  * @internal
  */
-class RegressionTest : public TQObject
+class RegressionTest : public QObject
 {
   Q_OBJECT
 public:

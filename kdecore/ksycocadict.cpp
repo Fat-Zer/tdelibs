@@ -29,7 +29,7 @@ namespace
 {
 struct string_entry {
   string_entry(TQString _key, KSycocaEntry *_payload) 
-  { keyStr = _key; key = keyStr.tqunicode(); length = keyStr.length(); payload = _payload; hash = 0; }
+  { keyStr = _key; key = keyStr.unicode(); length = keyStr.length(); payload = _payload; hash = 0; }
   uint hash;
   int length;
   const TQChar *key;
@@ -59,7 +59,7 @@ KSycocaDict::KSycocaDict()
 KSycocaDict::KSycocaDict(TQDataStream *str, int offset)
   : d(0), mStr(str), mOffset(offset)
 {
-   TQ_UINT32 test1, test2;
+   Q_UINT32 test1, test2;
    str->device()->at(offset);
    (*str) >> test1 >> test2;
    if ((test1 > 0x000fffff) || (test2 > 1024))
@@ -123,17 +123,17 @@ KSycocaDict::find_string(const TQString &key )
    }
 
    if (mHashTableSize == 0)
-      return 0; // Unlikely to tqfind anything :-]
+      return 0; // Unlikely to find anything :-]
 
    // Read hash-table data 
    uint hash = hashKey(key) % mHashTableSize;
    //kdDebug(7011) << TQString("hash is %1").arg(hash) << endl;
 
-   uint off = mOffset+sizeof(TQ_INT32)*hash;
+   uint off = mOffset+sizeof(Q_INT32)*hash;
    //kdDebug(7011) << TQString("off is %1").arg(off,8,16) << endl;
    mStr->device()->at( off );
 
-   TQ_INT32 offset;
+   Q_INT32 offset;
    (*mStr) >> offset;
 
    //kdDebug(7011) << TQString("offset is %1").arg(offset,8,16) << endl;
@@ -411,13 +411,13 @@ KSycocaDict::save(TQDataStream &str)
       //kdDebug(7011) << TQString("Writing hash table (pass #%1)").arg(pass) << endl;
       for(uint i=0; i < mHashTableSize; i++)
       {
-         TQ_INT32 tmpid;
+         Q_INT32 tmpid;
          if (!hashTable[i].entry)
-            tmpid = (TQ_INT32) 0;
+            tmpid = (Q_INT32) 0;
          else if (!hashTable[i].duplicates)
-            tmpid = (TQ_INT32) hashTable[i].entry->payload->offset(); // Positive ID
+            tmpid = (Q_INT32) hashTable[i].entry->payload->offset(); // Positive ID
          else
-            tmpid = (TQ_INT32) -hashTable[i].duplicate_offset; // Negative ID
+            tmpid = (Q_INT32) -hashTable[i].duplicate_offset; // Negative ID
          str << tmpid;
          //kdDebug(7011) << TQString("Hash table : %1").arg(tmpid,8,16) << endl;
       }
@@ -435,10 +435,10 @@ KSycocaDict::save(TQDataStream &str)
 */
             for(string_entry *dup = dups->first(); dup; dup=dups->next())
             {
-               str << (TQ_INT32) dup->payload->offset(); // Positive ID
+               str << (Q_INT32) dup->payload->offset(); // Positive ID
                str << dup->keyStr;                      // Key (TQString)
             }
-            str << (TQ_INT32) 0;               // End of list marker (0)
+            str << (Q_INT32) 0;               // End of list marker (0)
          }
       }
       //kdDebug(7011) << TQString("End of Dict, offset = %1").arg(str.device()->at(),8,16) << endl;

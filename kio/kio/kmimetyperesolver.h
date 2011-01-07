@@ -42,11 +42,11 @@ protected:
 
 /**
  * @internal
- * This class is used by KMimeTypeResolver, because it can't be a TQObject
+ * This class is used by KMimeTypeResolver, because it can't be a QObject
  * itself. So an object of this class is used to handle signals, slots etc.
  * and forwards them to the KMimeTypeResolver instance.
  */
-class KIO_EXPORT KMimeTypeResolverHelper : public TQObject
+class KIO_EXPORT KMimeTypeResolverHelper : public QObject
 {
     Q_OBJECT
 
@@ -168,7 +168,7 @@ private:
      * (no more visible icon to process).
      * @return the file item that was just processed.
      */
-    IconItem * tqfindVisibleIcon();
+    IconItem * findVisibleIcon();
 
     Parent * m_parent;
     KMimeTypeResolverHelper *m_helper;
@@ -186,10 +186,10 @@ inline void KMimeTypeResolver<IconItem, Parent>::slotProcessMimeIcons()
 
     if ( m_lstPendingMimeIconItems.count() > 0 )
     {
-        // We only tqfind mimetypes for icons that are visible. When more
+        // We only find mimetypes for icons that are visible. When more
         // of our viewport is exposed, we'll get a signal and then get
         // the mimetypes for the newly visible icons. (Rikkus)
-        item = tqfindVisibleIcon();
+        item = findVisibleIcon();
     }
 
     // No more visible items.
@@ -217,7 +217,7 @@ template<class IconItem, class Parent>
 inline void KMimeTypeResolver<IconItem, Parent>::slotViewportAdjusted()
 {
     if (m_lstPendingMimeIconItems.isEmpty()) return;
-    IconItem * item = tqfindVisibleIcon();
+    IconItem * item = findVisibleIcon();
     if (item)
     {
         m_parent->determineIcon( item );
@@ -227,7 +227,7 @@ inline void KMimeTypeResolver<IconItem, Parent>::slotViewportAdjusted()
 }
 
 template<class IconItem, class Parent>
-inline IconItem * KMimeTypeResolver<IconItem, Parent>::tqfindVisibleIcon()
+inline IconItem * KMimeTypeResolver<IconItem, Parent>::findVisibleIcon()
 {
     // Find an icon that's visible and whose mimetype we don't know.
 

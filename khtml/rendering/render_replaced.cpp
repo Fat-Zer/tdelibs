@@ -183,7 +183,7 @@ bool RenderWidget::event( TQEvent *e )
             return true;
         QWidgetResizeEvent *re = static_cast<QWidgetResizeEvent *>(e);
         m_widget->resize( re->w,  re->h );
-        tqrepaint();
+        repaint();
     }
     // eat all events - except if this is a frame (in which case KHTMLView handles it all)
     if ( ::qt_cast<KHTMLView *>( m_widget ) )
@@ -217,7 +217,7 @@ void RenderWidget::setQWidget(TQWidget *widget)
 
             if (m_widget->focusPolicy() > TQWidget::StrongFocus)
                 m_widget->setFocusPolicy(TQWidget::StrongFocus);
-            // if we've already received a tqlayout, apply the calculated space to the
+            // if we've already received a layout, apply the calculated space to the
             // widget immediately, but we have to have really been full constructed (with a non-null
             // style pointer).
             if (!needsLayout() && style()) {
@@ -234,7 +234,7 @@ void RenderWidget::setQWidget(TQWidget *widget)
     }
 }
 
-void RenderWidget::tqlayout( )
+void RenderWidget::layout( )
 {
     KHTMLAssert( needsLayout() );
     KHTMLAssert( minMaxKnown() );
@@ -387,7 +387,7 @@ void RenderWidget::paint(PaintInfo& paintInfo, int _tx, int _ty)
     if (!m_widget || !m_view || paintInfo.phase != PaintActionForeground)
         return;
 
-    // not visible or not even once tqlayouted
+    // not visible or not even once layouted
     if (style()->visibility() != VISIBLE || m_y <= -500000 || m_resizePending )
         return;
 
@@ -449,7 +449,7 @@ void RenderWidget::paint(PaintInfo& paintInfo, int _tx, int _ty)
 // is still needed.  If not, it shrinks down to the biggest size < maxPixelBuffering
 // that was requested during the overflow lapse.
 
-class PaintBuffer: public TQObject
+class PaintBuffer: public QObject
 {
 public:
     static const int maxPixelBuffering = 320*200;
@@ -533,7 +533,7 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
         for (; it.current(); ++it) {
             TQWidget* const w = ::qt_cast<TQWidget *>(it.current());
 	    if ( w && !w->isTopLevel() && !w->isHidden()) {
-	        TQRect r2 = w->tqgeometry();
+	        TQRect r2 = w->geometry();
 	        blit -= r2;
 	        r2 = r2.intersect( r );
 	        r2.moveBy(-w->x(), -w->y());
@@ -557,7 +557,7 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
     if ( external ) {
 	// even hackier!
         TQPainter pt( pm );
-        const TQColor c = widget->tqcolorGroup().base();
+        const TQColor c = widget->colorGroup().base();
         for (int i = 0; i < cnt; ++i)
             pt.fillRect( br[i], c );
     } else {
@@ -667,11 +667,11 @@ bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
         break;
 
     case TQEvent::Wheel:
-        if (widget()->tqparentWidget() == view()->viewport()) {
+        if (widget()->parentWidget() == view()->viewport()) {
             // don't allow the widget to react to wheel event unless its
             // currently focused. this avoids accidentally changing a select box
             // or something while wheeling a webpage.
-            if (tqApp->tqfocusWidget() != widget() &&
+            if (qApp->focusWidget() != widget() &&
                 widget()->focusPolicy() <= TQWidget::StrongFocus)  {
                 static_cast<TQWheelEvent*>(e)->ignore();
                 TQApplication::sendEvent(view(), e);
@@ -908,14 +908,14 @@ FindSelectionResult RenderReplaced::checkSelectionPoint(int _x, int _y, int _tx,
     }
     if ( _x > _tx + xPos() + width() ) {
         // to the right
-        // ### how to regard bidi in tqreplaced elements? (LS)
+        // ### how to regard bidi in replaced elements? (LS)
         offset = 1;
         return SelectionPointAfterInLine;
     }
 
     // The Y matches, check if we're on the left
     if ( _x < _tx + xPos() ) {
-        // ### how to regard bidi in tqreplaced elements? (LS)
+        // ### how to regard bidi in replaced elements? (LS)
         return SelectionPointBeforeInLine;
     }
 

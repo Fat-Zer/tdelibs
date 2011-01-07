@@ -104,7 +104,7 @@ public:
   TQString exec() const { return m_strExec; }
   /**
    * Returns the name of the service's library.
-   * @return the name of the library that tqcontains the services
+   * @return the name of the library that contains the services
    *         implementation,
    *         or TQString::null if not set
    */
@@ -125,7 +125,7 @@ public:
   TQString icon() const { return m_strIcon; }
   /**
    * Returns the pixmap that represents the icon.
-   * @return a pixmap for this service (tqfinds and loads icon()),
+   * @return a pixmap for this service (finds and loads icon()),
    *         null if not set
    * @see icon()
    */
@@ -463,7 +463,7 @@ public:
 
   /**
    * Find a service by its storage-id or desktop-file path. This
-   * function will try very hard to tqfind a matching service.
+   * function will try very hard to find a matching service.
    *
    * @param _storageId the storage id or desktop-file path of the service
    * @return a pointer to the requested service or 0 if the service is

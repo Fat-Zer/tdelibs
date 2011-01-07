@@ -7,12 +7,12 @@ include( $(KDELIBS)/win/common.pro )
 
 DEFINES += KDECORE_EXPORT=
 
-TARGET		= dcoptqfind
+TARGET		= dcopfind
 
-#system( bash ktqmoc .. )
+#system( bash kmoc .. )
 
-#INCLUDEPATH += .. ../tqmoc
+#INCLUDEPATH += .. ../moc
 
 LIBS += $$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdeice$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX
 
-SOURCES	+= ../dcoptqfind.cpp
+SOURCES	+= ../dcopfind.cpp

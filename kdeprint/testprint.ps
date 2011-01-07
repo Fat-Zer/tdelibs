@@ -110,13 +110,13 @@
 /CUPSLOGO {			% Draw the CUPS logo
 				% height CUPSLOGO
   % Start with a big C...
-  /Helvetica tqfindfont 1 index scalefont setfont
+  /Helvetica findfont 1 index scalefont setfont
   0 setgray
   0 0 moveto
   (C) show
 
   % Then "UNIX Printing System" much smaller...
-  /Helvetica-Bold tqfindfont 1 index 9 div scalefont setfont
+  /Helvetica-Bold findfont 1 index 9 div scalefont setfont
   0.25 mul
   dup dup 2.0 mul moveto
   (UNIX) show
@@ -186,14 +186,14 @@
 
   0 setgray rectstroke
 
-  /Helvetica-BoldOblique tqfindfont 1 index 3 div scalefont setfont
+  /Helvetica-BoldOblique findfont 1 index 3 div scalefont setfont
   dup 40 div
 
   dup 4 mul 1 index 25 mul moveto (E) show
   dup 10 mul 1 index 15 mul moveto (S) show
   dup 16 mul 1 index 5 mul moveto (P) show
 
-  /Helvetica-BoldOblique tqfindfont 2 index 5 div scalefont setfont
+  /Helvetica-BoldOblique findfont 2 index 5 div scalefont setfont
   dup 14 mul 1 index 29 mul moveto (asy) show
   dup 20 mul 1 index 19 mul moveto (oftware) show
   dup 26 mul 1 index 9 mul moveto (roducts) show
@@ -231,13 +231,13 @@ gsave
   ifelse def
 
   % Create fonts...
-  /bigFont /Helvetica-Bold tqfindfont	% bigFont = Helvetica-Bold
+  /bigFont /Helvetica-Bold findfont	% bigFont = Helvetica-Bold
   pageHeight 3 mul scalefont def	% size = pageHeight * 3 (nominally 33)
 
-  /mediumFont /Helvetica tqfindfont	% mediumFont = Helvetica
+  /mediumFont /Helvetica findfont	% mediumFont = Helvetica
   pageHeight 1.5 mul scalefont def	% size = pageHeight * 1.5 (nominally 16.5)
 
-  /smallFont /Times-Roman tqfindfont	% smallFont = Times-Roman
+  /smallFont /Times-Roman findfont	% smallFont = Times-Roman
   pageHeight scalefont def		% size = pageHeight (nominally 11)
 
   % Offset page to account for lower-left margin...

@@ -70,7 +70,7 @@ short RenderApplet::intrinsicWidth() const
     int rval = 300;
 
     if( m_widget )
-        rval = ((KJavaAppletWidget*)(m_widget))->tqsizeHint().width();
+        rval = ((KJavaAppletWidget*)(m_widget))->sizeHint().width();
 
     return rval > 10 ? rval : 50;
 }
@@ -80,14 +80,14 @@ int RenderApplet::intrinsicHeight() const
     int rval = 150;
 
     if( m_widget )
-        rval = m_widget->tqsizeHint().height();
+        rval = m_widget->sizeHint().height();
 
     return rval > 10 ? rval : 50;
 }
 
-void RenderApplet::tqlayout()
+void RenderApplet::layout()
 {
-    //kdDebug(6100) << "RenderApplet::tqlayout" << endl;
+    //kdDebug(6100) << "RenderApplet::layout" << endl;
 
     KHTMLAssert( needsLayout() );
     KHTMLAssert( minMaxKnown() );
@@ -123,22 +123,22 @@ void RenderApplet::processArguments(const TQMap<TQString, TQString> &args)
     KJavaApplet* applet = w ? w->applet() : 0;
 
     if ( applet ) {
-        applet->setBaseURL( args[TQString::tqfromLatin1("baseURL") ] );
-        applet->setAppletClass( args[TQString::tqfromLatin1("code") ] );
+        applet->setBaseURL( args[TQString::fromLatin1("baseURL") ] );
+        applet->setAppletClass( args[TQString::fromLatin1("code") ] );
 
-	TQString str = args[TQString::tqfromLatin1("codeBase") ];
+	TQString str = args[TQString::fromLatin1("codeBase") ];
         if( !str.isEmpty() )
             applet->setCodeBase( str );
 
-	str = args[TQString::tqfromLatin1("name") ];
+	str = args[TQString::fromLatin1("name") ];
         if( !str.isNull() )
             applet->setAppletName( str );
         else
-            applet->setAppletName( args[TQString::tqfromLatin1("code") ] );
+            applet->setAppletName( args[TQString::fromLatin1("code") ] );
 
-	str = args[TQString::tqfromLatin1("archive") ];
+	str = args[TQString::fromLatin1("archive") ];
         if( !str.isEmpty() )
-            applet->setArchives( args[TQString::tqfromLatin1("archive") ] );
+            applet->setArchives( args[TQString::fromLatin1("archive") ] );
     }
 }
 

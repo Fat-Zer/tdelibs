@@ -44,7 +44,7 @@ KLineEditDlg::KLineEditDlg( const TQString&_text, const TQString& _value,
   topLayout->addWidget( label, 1 );
 
   edit = new KLineEdit( plainPage(), 0L );
-  edit->setMinimumWidth(edit->tqsizeHint().width() * 3);
+  edit->setMinimumWidth(edit->sizeHint().width() * 3);
   label->setBuddy(edit);  // please "scheck" style
   //  connect( edit, TQT_SIGNAL(returnPressed()), TQT_SLOT(accept()) );
   connect( edit, TQT_SIGNAL(textChanged(const TQString&)),
@@ -69,13 +69,13 @@ KLineEditDlg::KLineEditDlg( const TQString&_text, const TQString& _value,
 			    TQWidget *parent, bool _file_mode )
     : TQDialog( parent, 0L, true )
 {
-  TQGridLayout *tqlayout = new TQGridLayout(this, 4, 3, 10);
+  TQGridLayout *layout = new TQGridLayout(this, 4, 3, 10);
 
   TQLabel *label = new TQLabel(_text, this);
-  tqlayout->addWidget(label, 0, 0, AlignLeft);
+  layout->addWidget(label, 0, 0, AlignLeft);
 
   edit = new KLineEdit( this, 0L );
-  edit->setMinimumWidth(edit->tqsizeHint().width() * 3);
+  edit->setMinimumWidth(edit->sizeHint().width() * 3);
   connect( edit, TQT_SIGNAL(returnPressed()), TQT_SLOT(accept()) );
 
   if ( _file_mode ) {
@@ -85,22 +85,22 @@ KLineEditDlg::KLineEditDlg( const TQString&_text, const TQString& _value,
   } else
     completion = 0L;
 
-  tqlayout->addMultiCellWidget(edit, 1, 1, 0, _file_mode ? 1 : 2);
-  tqlayout->setColStretch(1, 1);
+  layout->addMultiCellWidget(edit, 1, 1, 0, _file_mode ? 1 : 2);
+  layout->setColStretch(1, 1);
 
   if (_file_mode) {
     TQPushButton *browse = new TQPushButton(i18n("&Browse..."), this);
-    tqlayout->addWidget(browse, 1, 2, AlignCenter);
+    layout->addWidget(browse, 1, 2, AlignCenter);
     connect(browse, TQT_SIGNAL(clicked()),
 	    TQT_SLOT(slotBrowse()));
   }
 
   TQFrame *hLine = new TQFrame(this);
   hLine->setFrameStyle(TQFrame::Sunken|TQFrame::HLine);
-  tqlayout->addMultiCellWidget(hLine, 2, 2, 0, 2);
+  layout->addMultiCellWidget(hLine, 2, 2, 0, 2);
 
   KButtonBox *bBox = new KButtonBox(this);
-  tqlayout->addMultiCellWidget(bBox, 3, 3, 0, 2);
+  layout->addMultiCellWidget(bBox, 3, 3, 0, 2);
 
   TQPushButton *ok = bBox->addButton(KStdGuiItem::ok());
   ok->setDefault(true);
@@ -116,9 +116,9 @@ KLineEditDlg::KLineEditDlg( const TQString&_text, const TQString& _value,
   TQPushButton *cancel = bBox->addButton(KStdGuiItem::cancel());
   connect( cancel, TQT_SIGNAL(clicked()), TQT_SLOT(reject()));
 
-  bBox->tqlayout();
+  bBox->layout();
 
-  tqlayout->activate();
+  layout->activate();
 
   edit->setText( _value );
   edit->setSelection(0, edit->text().length());

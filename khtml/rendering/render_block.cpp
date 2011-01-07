@@ -94,7 +94,7 @@ RenderBlock::RenderBlock(DOM::NodeImpl* node)
     m_positionedObjects = 0;
     m_firstLine = false;
     m_avoidPageBreak = false;
-    m_cleartqStatus = CNONE;
+    m_clearStatus = CNONE;
     m_maxTopPosMargin = m_maxTopNegMargin = m_maxBottomPosMargin = m_maxBottomNegMargin = 0;
     m_topMarginQuirk = m_bottomMarginQuirk = false;
     m_overflowHeight = m_overflowWidth = 0;
@@ -223,7 +223,7 @@ void RenderBlock::updateFirstLetter()
         // punctuation and white-space
         if(oldText->l >= 1) {
             oldText->ref();
-            // begin: we need skip leading whitespace so that RenderBlock::tqfindNextLineBreak
+            // begin: we need skip leading whitespace so that RenderBlock::findNextLineBreak
             // won't think we're continuing from a previous run
             unsigned int begin = 0; // the position that first-letter begins
             unsigned int length = 0; // the position that "the rest" begins
@@ -274,7 +274,7 @@ void RenderBlock::addChildToFlow(RenderObject* newChild, RenderObject* beforeChi
     bool madeBoxesNonInline = false;
 
     // If the requested beforeChild is not one of our children, then this is most likely because
-    // there is an anonymous block box within this object that tqcontains the beforeChild. So
+    // there is an anonymous block box within this object that contains the beforeChild. So
     // just insert the child into the anonymous block box instead of here. This may also be
     // needed in cases of things like anonymous tables.
     if (beforeChild && beforeChild->parent() != this) {
@@ -289,7 +289,7 @@ void RenderBlock::addChildToFlow(RenderObject* newChild, RenderObject* beforeChi
             beforeChild->parent()->firstChild() == beforeChild)
             return addChildToFlow(newChild, beforeChild->parent());
 
-        // Otherwise tqfind our kid inside which the beforeChild is, and delegate to it.
+        // Otherwise find our kid inside which the beforeChild is, and delegate to it.
         // This may be many levels deep due to anonymous tables, table sections, etc.
         RenderObject* responsible = beforeChild->parent();
         while (responsible->parent() != this)
@@ -298,7 +298,7 @@ void RenderBlock::addChildToFlow(RenderObject* newChild, RenderObject* beforeChi
         return responsible->addChild(newChild,beforeChild);
     }
 
-    // prevent elements that haven't received a tqlayout yet from getting painted by pushing
+    // prevent elements that haven't received a layout yet from getting painted by pushing
     // them far above the top of the page
     if (!newChild->isInline())
         newChild->setPos(newChild->xPos(), -500000);
@@ -376,7 +376,7 @@ static void getInlineRun(RenderObject* start, RenderObject* stop,
                          RenderObject*& inlineRunStart,
                          RenderObject*& inlineRunEnd)
 {
-    // Beginning at |start| we tqfind the largest contiguous run of inlines that
+    // Beginning at |start| we find the largest contiguous run of inlines that
     // we can.  We denote the run with start and end points, |inlineRunStart|
     // and |inlineRunEnd|.  Note that these two values may be the same if
     // we encounter only one inline.
@@ -565,7 +565,7 @@ void RenderBlock::removeChild(RenderObject *oldChild)
 bool RenderBlock::isSelfCollapsingBlock() const
 {
     // We are not self-collapsing if we
-    // (a) have a non-zero height according to tqlayout (an optimization to avoid wasting time)
+    // (a) have a non-zero height according to layout (an optimization to avoid wasting time)
     // (b) are a table,
     // (c) have border/padding,
     // (d) have a min-height
@@ -604,30 +604,30 @@ bool RenderBlock::isSelfCollapsingBlock() const
     return false;
 }
 
-void RenderBlock::tqlayout()
+void RenderBlock::layout()
 {
-    // Table cells call tqlayoutBlock directly, so don't add any logic here.  Put code into
-    // tqlayoutBlock().
-    tqlayoutBlock(false);
+    // Table cells call layoutBlock directly, so don't add any logic here.  Put code into
+    // layoutBlock().
+    layoutBlock(false);
 }
 
-void RenderBlock::tqlayoutBlock(bool retqlayoutChildren)
+void RenderBlock::layoutBlock(bool relayoutChildren)
 {
     if (isInline() && !isReplacedBlock()) {
         setNeedsLayout(false);
         return;
     }
-    //    kdDebug( 6040 ) << renderName() << " " << this << "::tqlayoutBlock() start" << endl;
+    //    kdDebug( 6040 ) << renderName() << " " << this << "::layoutBlock() start" << endl;
     //     TQTime t;
     //     t.start();
     KHTMLAssert( needsLayout() );
     KHTMLAssert( minMaxKnown() );
 
-    if (canvas()->pagedMode()) retqlayoutChildren = true;
+    if (canvas()->pagedMode()) relayoutChildren = true;
 
-    if (!retqlayoutChildren && posChildNeedsLayout() && !normalChildNeedsLayout() && !selfNeedsLayout()) {
+    if (!relayoutChildren && posChildNeedsLayout() && !normalChildNeedsLayout() && !selfNeedsLayout()) {
         // All we have to is lay out our positioned objects.
-        tqlayoutPositionedObjects(retqlayoutChildren);
+        layoutPositionedObjects(relayoutChildren);
         if (hasOverflowClip())
             m_layer->checkScrollbarsAfterLayout();
         setNeedsLayout(false);
@@ -635,7 +635,7 @@ void RenderBlock::tqlayoutBlock(bool retqlayoutChildren)
     }
 
     if (markedForRepaint()) {
-        tqrepaintDuringLayout();
+        repaintDuringLayout();
         setMarkedForRepaint(false);
     }
 
@@ -653,14 +653,14 @@ void RenderBlock::tqlayoutBlock(bool retqlayoutChildren)
     }
 
     if ( oldWidth != m_width )
-        retqlayoutChildren = true;
+        relayoutChildren = true;
 
     //     kdDebug( 6040 ) << floatingObjects << "," << oldWidth << ","
     //                     << m_width << ","<< needsLayout() << "," << isAnonymousBox() << ","
     //                     << overhangingContents() << "," << isPositioned() << endl;
 
 #ifdef DEBUG_LAYOUT
-    kdDebug( 6040 ) << renderName() << "(RenderBlock) " << this << " ::tqlayout() width=" << m_width << ", needsLayout=" << needsLayout() << endl;
+    kdDebug( 6040 ) << renderName() << "(RenderBlock) " << this << " ::layout() width=" << m_width << ", needsLayout=" << needsLayout() << endl;
     if(containingBlock() == static_cast<RenderObject *>(this))
         kdDebug( 6040 ) << renderName() << ": containingBlock == this" << endl;
 #endif
@@ -670,14 +670,14 @@ void RenderBlock::tqlayoutBlock(bool retqlayoutChildren)
     int previousHeight = m_height;
     m_height = 0;
     m_overflowHeight = 0;
-    m_cleartqStatus = CNONE;
+    m_clearStatus = CNONE;
 
     // We use four values, maxTopPos, maxPosNeg, maxBottomPos, and maxBottomNeg, to track
     // our current maximal positive and negative margins.  These values are used when we
     // are collapsed with adjacent blocks, so for example, if you have block A and B
     // collapsing together, then you'd take the maximal positive margin from both A and B
     // and subtract it from the maximal negative margin from both A and B to get the
-    // true collapsed margin.  This algorithm is recursive, so when we finish tqlayout()
+    // true collapsed margin.  This algorithm is recursive, so when we finish layout()
     // our block knows its current maximal positive/negative values.
     //
     // Start out by setting our margin values to our current margins.  Table cells have
@@ -705,9 +705,9 @@ void RenderBlock::tqlayoutBlock(bool retqlayoutChildren)
     setContainsPageBreak(false);
 
     if (childrenInline())
-        tqlayoutInlineChildren( retqlayoutChildren );
+        layoutInlineChildren( relayoutChildren );
     else
-        tqlayoutBlockChildren( retqlayoutChildren );
+        layoutBlockChildren( relayoutChildren );
 
     // Expand our intrinsic height to encompass floats.
     int toAdd = borderBottom() + paddingBottom();
@@ -729,7 +729,7 @@ void RenderBlock::tqlayoutBlock(bool retqlayoutChildren)
             m_overflowHeight = m_height;
     }
     if (previousHeight != m_height)
-        retqlayoutChildren = true;
+        relayoutChildren = true;
 
     if (isTableCell()) {
         // Table cells need to grow to accommodate both overhanging floats and
@@ -764,7 +764,7 @@ void RenderBlock::tqlayoutBlock(bool retqlayoutChildren)
             kdDebug( 6040 ) << renderName() << " crosses to page " << xpage << endl;
 #endif
         }
-        if (needsPageBreak && !tqcontainsPageBreak()) {
+        if (needsPageBreak && !containsPageBreak()) {
             setNeedsPageClear(true);
 #ifdef PAGE_DEBUG
             kdDebug( 6040 ) << renderName() << " marked for page-clear" << endl;
@@ -772,7 +772,7 @@ void RenderBlock::tqlayoutBlock(bool retqlayoutChildren)
         }
     }
 
-    tqlayoutPositionedObjects( retqlayoutChildren );
+    layoutPositionedObjects( relayoutChildren );
 
     // Always ensure our overflow width/height are at least as large as our width/height.
     m_overflowWidth = kMax(m_overflowWidth, (int)m_width);
@@ -881,7 +881,7 @@ static inline bool isAnonymousWhitespace( RenderObject* o ) {
         return false;
     RenderObject *fc = o->firstChild();
     return fc && fc == o->lastChild() && fc->isText() && static_cast<RenderText *>(fc)->stringLength() == 1 &&
-           static_cast<RenderText *>(fc)->text()[0].tqunicode() == ' ';
+           static_cast<RenderText *>(fc)->text()[0].unicode() == ' ';
 }
 
 RenderObject* RenderBlock::handleCompactChild(RenderObject* child, CompactInfo& compactInfo, const MarginInfo& marginInfo, bool& handled)
@@ -908,7 +908,7 @@ RenderObject* RenderBlock::handleCompactChild(RenderObject* child, CompactInfo& 
                 // The compact will fit in the margin.
                 handled = true;
                 compactInfo.set(child, curr);
-                child->tqlayoutIfNeeded();
+                child->layoutIfNeeded();
                 int off = marginInfo.margin();
                 m_height += off + curr->marginTop() < child->marginTop() ?
                             child->marginTop() - curr->marginTop() -off: 0;
@@ -967,7 +967,7 @@ void RenderBlock::insertCompactIfNeeded(RenderObject* child, CompactInfo& compac
         Length newLineHeight( kMax(compactChild->lineHeight(true)+adj, (int)child->lineHeight(true)), khtml::Fixed);
         child->style()->setLineHeight( newLineHeight );
         child->setNeedsLayout( true, false );
-        child->tqlayout();
+        child->layout();
 
         compactChild->setPos(compactXPos, compactYPos); // Set the x position.
         compactInfo.clear();
@@ -1110,7 +1110,7 @@ void RenderBlock::collapseMargins(RenderObject* child, MarginInfo& marginInfo, i
             child->markAllDescendantsWithFloatsForLayout();
 
         // Our guess was wrong. Make the child lay itself out again.
-        child->tqlayoutIfNeeded();
+        child->layoutIfNeeded();
     }
 }
 
@@ -1146,7 +1146,7 @@ void RenderBlock::clearFloatsIfNeeded(RenderObject* child, MarginInfo& marginInf
         }
 
         // If our value of clear caused us to be repositioned vertically to be
-        // underneath a float, we might have to do another tqlayout to take into account
+        // underneath a float, we might have to do another layout to take into account
         // the extra space we now have available.
         if (!selfCollapsing && !child->style()->width().isFixed() && child->usesLineWidth())
             // The child's width is a percentage of the line width.
@@ -1156,7 +1156,7 @@ void RenderBlock::clearFloatsIfNeeded(RenderObject* child, MarginInfo& marginInf
             child->setChildNeedsLayout(true);
         if (!child->flowAroundFloats() && child->hasFloats())
             child->markAllDescendantsWithFloatsForLayout();
-        child->tqlayoutIfNeeded();
+        child->layoutIfNeeded();
     }
 }
 
@@ -1215,7 +1215,7 @@ void RenderBlock::clearPageBreak(RenderObject* child, int pageBottom)
     // Increase our height by the amount we had to clear.
     m_height += heightIncrease;
 
-    // We might have to do another tqlayout to take into account
+    // We might have to do another layout to take into account
     // the extra space we now have available.
     if (!child->style()->width().isFixed()  && child->usesLineWidth())
         // The child's width is a percentage of the line width.
@@ -1225,9 +1225,9 @@ void RenderBlock::clearPageBreak(RenderObject* child, int pageBottom)
         child->setChildNeedsLayout(true);
     if (!child->flowAroundFloats() && child->hasFloats())
         child->markAllDescendantsWithFloatsForLayout();
-    if (child->tqcontainsPageBreak())
+    if (child->containsPageBreak())
         child->setNeedsLayout(true);
-    child->tqlayoutIfNeeded();
+    child->layoutIfNeeded();
 
     child->setAfterPageBreak(true);
 }
@@ -1235,7 +1235,7 @@ void RenderBlock::clearPageBreak(RenderObject* child, int pageBottom)
 int RenderBlock::estimateVerticalPosition(RenderObject* child, const MarginInfo& marginInfo)
 {
     // FIXME: We need to eliminate the estimation of vertical position, because
-    // when it's wrong we sometimes trigger a pathological retqlayout if there are
+    // when it's wrong we sometimes trigger a pathological relayout if there are
     // intruding floats.
     int yPosEstimate = m_height;
     if (!marginInfo.canCollapseWithTop()) {
@@ -1344,10 +1344,10 @@ void RenderBlock::handleBottomOfBlock(int top, int bottom, MarginInfo& marginInf
     setCollapsedBottomMargin(marginInfo);
 }
 
-void RenderBlock::tqlayoutBlockChildren( bool retqlayoutChildren )
+void RenderBlock::layoutBlockChildren( bool relayoutChildren )
 {
 #ifdef DEBUG_LAYOUT
-    kdDebug( 6040 ) << renderName() << " tqlayoutBlockChildren( " << this <<" ), retqlayoutChildren="<< retqlayoutChildren << endl;
+    kdDebug( 6040 ) << renderName() << " layoutBlockChildren( " << this <<" ), relayoutChildren="<< relayoutChildren << endl;
 #endif
 
     int top = borderTop() + paddingTop();
@@ -1362,9 +1362,9 @@ void RenderBlock::tqlayoutBlockChildren( bool retqlayoutChildren )
     MarginInfo marginInfo(this, top, bottom);
     CompactInfo compactInfo;
 
-    // Fieldsets need to tqfind their legend and position it inside the border of the object.
-    // The legend then gets skipped during normal tqlayout.
-    RenderObject* legend = tqlayoutLegend(retqlayoutChildren);
+    // Fieldsets need to find their legend and position it inside the border of the object.
+    // The legend then gets skipped during normal layout.
+    RenderObject* legend = layoutLegend(relayoutChildren);
 
     PageBreakInfo pageBreakInfo(pageTopAfter(0));
 
@@ -1379,8 +1379,8 @@ void RenderBlock::tqlayoutBlockChildren( bool retqlayoutChildren )
         int oldTopPosMargin = m_maxTopPosMargin;
         int oldTopNegMargin = m_maxTopNegMargin;
 
-        // make sure we retqlayout children if we need it.
-        if (!child->isPositioned() && (retqlayoutChildren ||
+        // make sure we relayout children if we need it.
+        if (!child->isPositioned() && (relayoutChildren ||
              (child->isReplaced() && (child->style()->width().isPercent() || child->style()->height().isPercent())) ||
              (child->isRenderBlock() && child->style()->height().isPercent()) ||
              (child->isBody() && child->style()->htmlHacks())))
@@ -1407,11 +1407,11 @@ void RenderBlock::tqlayoutBlockChildren( bool retqlayoutChildren )
 
         // Try to guess our correct y position.  In most cases this guess will
         // be correct.  Only if we're wrong (when we compute the real y position)
-        // will we have to potentially retqlayout.
+        // will we have to potentially relayout.
         int yPosEstimate = estimateVerticalPosition(child, marginInfo);
 
         // If an element might be affected by the presence of floats, then always mark it for
-        // tqlayout.
+        // layout.
         if ( !child->flowAroundFloats() || child->usesLineWidth() ) {
             int fb = floatBottom();
             if (fb > m_height || fb > yPosEstimate)
@@ -1420,7 +1420,7 @@ void RenderBlock::tqlayoutBlockChildren( bool retqlayoutChildren )
 
         // Go ahead and position the child as though it didn't collapse with the top.
         child->setPos(child->xPos(), yPosEstimate);
-        child->tqlayoutIfNeeded();
+        child->layoutIfNeeded();
 
         // Now determine the correct ypos based on examination of collapsing margin
         // values.
@@ -1501,9 +1501,9 @@ void RenderBlock::clearChildOfPageBreaks(RenderObject *child, PageBreakInfo &pag
     int xpage = crossesPageBreak(childTop, childBottom);
     if (xpage || forcePageBreak)
     {
-        if (!forcePageBreak && child->tqcontainsPageBreak() && !child->needsPageClear()) {
+        if (!forcePageBreak && child->containsPageBreak() && !child->needsPageClear()) {
 #ifdef PAGE_DEBUG
-            kdDebug(6040) << renderName() << " Child tqcontains page-break to page " << xpage << endl;
+            kdDebug(6040) << renderName() << " Child contains page-break to page " << xpage << endl;
 #endif
             // ### Actually this assumes floating children are breaking/clearing
             // nicely as well.
@@ -1572,24 +1572,24 @@ void RenderBlock::clearChildOfPageBreaks(RenderObject *child, PageBreakInfo &pag
         pageBreakInfo.setForcePageBreak(true);
 }
 
-void RenderBlock::tqlayoutPositionedObjects(bool retqlayoutChildren)
+void RenderBlock::layoutPositionedObjects(bool relayoutChildren)
 {
     if (m_positionedObjects) {
-        //kdDebug( 6040 ) << renderName() << " " << this << "::tqlayoutPositionedObjects() start" << endl;
+        //kdDebug( 6040 ) << renderName() << " " << this << "::layoutPositionedObjects() start" << endl;
         RenderObject* r;
         TQPtrListIterator<RenderObject> it(*m_positionedObjects);
         for ( ; (r = it.current()); ++it ) {
             //kdDebug(6040) << "   have a positioned object" << endl;
             if (r->markedForRepaint()) {
-                r->tqrepaintDuringLayout();
+                r->repaintDuringLayout();
                 r->setMarkedForRepaint(false);
             }
-            if ( retqlayoutChildren || r->style()->position() == FIXED ||
+            if ( relayoutChildren || r->style()->position() == FIXED ||
                    ((r->hasStaticY()||r->hasStaticX()) && r->parent() != this && r->parent()->isBlockFlow()) ) {
                 r->setChildNeedsLayout(true);
                 r->dirtyFormattingContext(false);
             }
-            r->tqlayoutIfNeeded();
+            r->layoutIfNeeded();
         }
     }
 }
@@ -1775,7 +1775,7 @@ void RenderBlock::insertFloatingObject(RenderObject *o)
     FloatingObject *newObj;
     if (o->isFloating()) {
         // floating object
-        o->tqlayoutIfNeeded();
+        o->layoutIfNeeded();
 
         if(o->style()->floating() & FLEFT)
             newObj = new FloatingObject(FloatingObject::FloatLeft);
@@ -1894,7 +1894,7 @@ void RenderBlock::positionNewFloats()
             if (ftQuirk && (rightRelOffset(y,ro, false)-fx < f->width)) {
                 o->setPos( o->xPos(), y + o->marginTop() );
                 o->setChildNeedsLayout(true, false);
-                o->tqlayoutIfNeeded();
+                o->layoutIfNeeded();
                 _height = o->height() + o->marginTop() + o->marginBottom();
                 f->width = o->width() + o->marginLeft() + o->marginRight();
             }
@@ -1918,7 +1918,7 @@ void RenderBlock::positionNewFloats()
             if (ftQuirk && (fx - leftRelOffset(y,lo, false) < f->width)) {
                 o->setPos( o->xPos(), y + o->marginTop() );
                 o->setChildNeedsLayout(true, false);
-                o->tqlayoutIfNeeded();
+                o->layoutIfNeeded();
                 _height = o->height() + o->marginTop() + o->marginBottom();
                 f->width = o->width() + o->marginLeft() + o->marginRight();
             }
@@ -1950,7 +1950,7 @@ void RenderBlock::newLine()
     positionNewFloats();
     // set y position
     int newY = 0;
-    switch(m_cleartqStatus)
+    switch(m_clearStatus)
     {
         case CLEFT:
             newY = leftBottom();
@@ -1968,7 +1968,7 @@ void RenderBlock::newLine()
         //      kdDebug( 6040 ) << "adjusting y position" << endl;
         m_height = newY;
     }
-    m_cleartqStatus = CNONE;
+    m_clearStatus = CNONE;
 }
 
 int
@@ -2315,7 +2315,7 @@ RenderBlock::clearFloats()
 
     RenderObject *prev = previousSibling();
 
-    // tqfind the element to copy the floats from
+    // find the element to copy the floats from
     // pass non-flows
     // pass fAF's
     bool parentHasFloats = false;
@@ -2438,7 +2438,7 @@ void RenderBlock::addOverHangingFloats( RenderBlock *flow, int xoff, int offset,
     }
 }
 
-bool RenderBlock::tqcontainsFloat(RenderObject* o) const
+bool RenderBlock::containsFloat(RenderObject* o) const
 {
     if (m_floatingObjects) {
         TQPtrListIterator<FloatingObject> it(*m_floatingObjects);
@@ -2463,7 +2463,7 @@ void RenderBlock::markAllDescendantsWithFloatsForLayout(RenderObject* floatToRem
     if (!childrenInline()) {
         for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
             if (isBlockFlow() && !child->isFloatingOrPositioned() &&
-                ((floatToRemove ? child->tqcontainsFloat(floatToRemove) : child->hasFloats()) || child->usesLineWidth()))
+                ((floatToRemove ? child->containsFloat(floatToRemove) : child->hasFloats()) || child->usesLineWidth()))
                 child->markAllDescendantsWithFloatsForLayout(floatToRemove);
         }
     }
@@ -2518,7 +2518,7 @@ bool RenderBlock::isPointInScrollbar(int _x, int _y, int _tx, int _ty)
                        _ty + borderTop() - borderTopExtra(),
                        m_layer->verticalScrollbarWidth(),
                        height() + borderTopExtra() + borderBottomExtra()-borderTop()-borderBottom());
-        if (vertRect.tqcontains(_x, _y)) {
+        if (vertRect.contains(_x, _y)) {
 #ifdef APPLE_CHANGES
             RenderLayer::gScrollBar = m_layer->verticalScrollbar();
 #endif
@@ -2531,7 +2531,7 @@ bool RenderBlock::isPointInScrollbar(int _x, int _y, int _tx, int _ty)
                         _ty + height() + borderTop() + borderBottomExtra() - borderBottom() - m_layer->horizontalScrollbarHeight(),
                         width()-borderLeft()-borderRight(),
                         m_layer->horizontalScrollbarHeight());
-        if (horizRect.tqcontains(_x, _y)) {
+        if (horizRect.contains(_x, _y)) {
 #ifdef APPLE_CHANGES
             RenderLayer::gScrollBar = m_layer->horizontalScrollbar();
 #endif
@@ -2705,7 +2705,7 @@ void RenderBlock::calcInlineMinMaxWidth()
             // and are included in the iteration solely so that their margins can
             // be added in.
             //
-            // (2) An inline non-text non-flow object, e.g., an inline tqreplaced element.
+            // (2) An inline non-text non-flow object, e.g., an inline replaced element.
             // These objects can always be on a line by themselves, so in this situation
             // we need to go ahead and break the current line, and then add in our own
             // margins and min/max width on its own line, and then terminate the line.
@@ -2735,7 +2735,7 @@ void RenderBlock::calcInlineMinMaxWidth()
             short childMax = 0;
 
             if (!child->isText()) {
-                // Case (1) and (2).  Inline tqreplaced and inline flow elements.
+                // Case (1) and (2).  Inline replaced and inline flow elements.
                 if (child->isInlineFlow()) {
                     // Add in padding/border/margin from the appropriate side of
                     // the element.
@@ -2747,7 +2747,7 @@ void RenderBlock::calcInlineMinMaxWidth()
                     inlineMax += childMax;
                 }
                 else {
-                    // Inline tqreplaced elements add in their margins to their min/max values.
+                    // Inline replaced elements add in their margins to their min/max values.
                     int margins = 0;
                     LengthType type = cstyle->marginLeft().type();
                     if ( type != Variable )
@@ -2763,7 +2763,7 @@ void RenderBlock::calcInlineMinMaxWidth()
             if (!child->isRenderInline() && !child->isText()) {
 
                 bool qBreak = isTcQuirk && !child->isFloatingOrPositioned();
-                // Case (2). Inline tqreplaced elements and floats.
+                // Case (2). Inline replaced elements and floats.
                 // Go ahead and terminate the current line as far as
                 // minwidth is concerned.
                 childMin += child->minWidth();
@@ -3143,7 +3143,7 @@ void RenderBlock::dump(TQTextStream &stream, const TQString &ind) const
         stream << ")";
     }
 
-    // ### EClear m_cleartqStatus
+    // ### EClear m_clearStatus
 }
 #endif
 

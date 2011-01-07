@@ -72,7 +72,7 @@
 /*
  * Messages header file.
  *
- * This file tqcontains all text strings that are written by any of the
+ * This file contains all text strings that are written by any of the
  * C programs in the ispell package.  The strings are collected here so that
  * you can have the option of translating them into your local language for
  * the benefit of your users.
@@ -120,7 +120,7 @@
  * The code resembles the ispell code as much as possible still.
  *
  * Revision 1.31  1994/12/27  23:08:57  geoff
- * Add a message to be issued if a word tqcontains illegal characters.
+ * Add a message to be issued if a word contains illegal characters.
  *
  * Revision 1.30  1994/10/25  05:46:40  geoff
  * Improve a couple of error messages relating to affix flags.
@@ -167,7 +167,7 @@
   "    Warning:  this language table may exceed the maximum total affix length\nof %d by up to %d bytes.  You should either increase MAXAFFIXLEN in config.X\nor shorten your largest affix/strip string difference.  (This is the\n", \
 				  max, excess
 #define BHASH_C_BAFF_2 \
-  "difference between the affix length and the strip length in a given\ntqreplacement rule, or the affix length if there is no strip string\nin that rule.)\n"
+  "difference between the affix length and the strip length in a given\nreplacement rule, or the affix length if there is no strip string\nin that rule.)\n"
 #define BHASH_C_OVERFLOW	"Hash table overflowed by %d words\n"
 #define BHASH_C_CANT_OPEN_DICT "Can't open dictionary\n"
 #define BHASH_C_NO_SPACE	"Couldn't allocate hash table\n"
@@ -181,7 +181,7 @@
  */
 #define CORR_C_HELP_1		"Whenever a word is found that is not in the dictionary,\r\n"
 #define CORR_C_HELP_2		"it is printed on the first line of the screen.  If the dictionary\r\n"
-#define CORR_C_HELP_3		"tqcontains any similar words, they are listed with a number\r\n"
+#define CORR_C_HELP_3		"contains any similar words, they are listed with a number\r\n"
 #define CORR_C_HELP_4		"next to each one.  You have the option of replacing the word\r\n"
 #define CORR_C_HELP_5		"completely, or choosing one of the suggested words.\r\n"
     /* You may add HELP_6 through HELP_9 if your language needs more lines */
@@ -274,7 +274,7 @@
  * The following strings are used in makedent.c:
  */
 #define MAKEDENT_C_NO_WORD_SPACE "\r\nCouldn't allocate space for word '%s'\r\n"
-#define MAKEDENT_C_BAD_WORD_CHAR "\r\nWord '%s' tqcontains illegal characters\r\n"
+#define MAKEDENT_C_BAD_WORD_CHAR "\r\nWord '%s' contains illegal characters\r\n"
 
 /*
  * The following strings are used in parse.y:

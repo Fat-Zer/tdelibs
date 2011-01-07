@@ -91,7 +91,7 @@ job. (This is a quite unlikely situation, but nevertheless possible))
 
 
 File Operations:
-listRecursive is implemented as listDir and tqfinding out if in the result
+listRecursive is implemented as listDir and finding out if in the result
  is a directory. If there is, another listDir job is issued. As listDir
  is a readonly operation it fails when a directory isn't readable
   .. but the main job goes on and discards the error, because
@@ -99,11 +99,11 @@ bIgnoreSubJobsError is true, which is what we want (David)
 
 del is implemented as listRecursive, removing all files and removing all
  empty directories. This basically means if one directory isn't readable
- we don't remove it as listRecursive didn't tqfind it. But the del will later
+ we don't remove it as listRecursive didn't find it. But the del will later
  on try to remove it's parent directory and fail. But there are cases when
  it would be possible to delete the dir in chmod the dir before. On the
  other hand del("/") shouldn't list the whole file system and remove all
- user owned files just to tqfind out it can't remove everything else (this
+ user owned files just to find out it can't remove everything else (this
  basically means we have to take care of things we can remove before we try)
 
  ... Well, rm -rf / refuses to do anything, so we should just do the same:
@@ -181,7 +181,7 @@ There will be two ways how the application can display progress :
     KMail  :
  - app creates Job
  - app creates a progress dialog : this should be a ProgressBase descendant
-    e.g. tqStatusProgress or custom progress dialog
+    e.g. StatusProgress or custom progress dialog
  - app calls progress->setJob( job ) in order to connect job's signals with
     progress dialog slots
 
@@ -197,7 +197,7 @@ B. customized progress dialogs
  - DefaultProgress ( former KIOSimpleProgressDialog ) that will be used for    
     regular progress dialogs created by GUI Progress Server
 
- - tqStatusProgress ( former KIOLittleProgressDialog ) that can be used for      
+ - StatusProgress ( former KIOLittleProgressDialog ) that can be used for      
     embedding in status bar
 
 C. GUI Progress Server

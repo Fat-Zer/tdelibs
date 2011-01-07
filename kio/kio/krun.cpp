@@ -237,7 +237,7 @@ void KRun::shellQuote( TQString &_str )
     if (_str.isEmpty()) // Don't create an explicit empty parameter
         return;
     TQChar q('\'');
-    _str.tqreplace(q, "'\\''").prepend(q).append(q);
+    _str.replace(q, "'\\''").prepend(q).append(q);
 }
 
 
@@ -260,16 +260,16 @@ KRunMX1::expandEscapedMacro( const TQString &str, uint pos, TQStringList &ret )
    uint option = str[pos + 1];
    switch( option ) {
    case 'c':
-      ret << service.name().tqreplace( '%', "%%" );
+      ret << service.name().replace( '%', "%%" );
       break;
    case 'k':
-      ret << service.desktopEntryPath().tqreplace( '%', "%%" );
+      ret << service.desktopEntryPath().replace( '%', "%%" );
       break;
    case 'i':
-      ret << "-icon" << service.icon().tqreplace( '%', "%%" );
+      ret << "-icon" << service.icon().replace( '%', "%%" );
       break;
    case 'm':
-      ret << "-miniicon" << service.icon().tqreplace( '%', "%%" );
+      ret << "-miniicon" << service.icon().replace( '%', "%%" );
       break;
    case 'u':
    case 'U':
@@ -388,13 +388,13 @@ TQStringList KRun::processDesktopExec(const KService &_service, const KURL::List
   if (!re.search( exec )) {
     exec = re.cap( 1 ).stripWhiteSpace();
     for (uint pos = 0; pos < exec.length(); ) {
-      TQChar c = exec.tqunicode()[pos];
+      TQChar c = exec.unicode()[pos];
       if (c != '\'' && c != '"')
         goto synerr; // what else can we do? after normal parsing the substs would be insecure
-      int pos2 = exec.tqfind( c, pos + 1 ) - 1;
+      int pos2 = exec.find( c, pos + 1 ) - 1;
       if (pos2 < 0)
         goto synerr; // quoting error
-      memcpy( (void *)(exec.tqunicode() + pos), exec.tqunicode() + pos + 1, (pos2 - pos) * sizeof(TQChar));
+      memcpy( (void *)(exec.unicode() + pos), exec.unicode() + pos + 1, (pos2 - pos) * sizeof(TQChar));
       pos = pos2;
       exec.remove( pos, 2 );
     }
@@ -543,9 +543,9 @@ TQString KRun::binaryName( const TQString & execLine, bool removePath )
   // Remove parameters and/or trailing spaces.
   TQStringList args = KShell::splitArgs( execLine );
   for (TQStringList::ConstIterator it = args.begin(); it != args.end(); ++it)
-    if (!(*it).tqcontains('='))
+    if (!(*it).contains('='))
       // Remove path if wanted
-      return removePath ? (*it).mid((*it).tqfindRev('/') + 1) : *it;
+      return removePath ? (*it).mid((*it).findRev('/') + 1) : *it;
   return TQString::null;
 }
 
@@ -708,7 +708,7 @@ static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service
     {
       // compat mode: assume KIO if not set and it's a KDE app
       TQStringList categories = _service.property("Categories").toStringList();
-      if ( categories.tqfind("KDE") != categories.end() )
+      if ( categories.find("KDE") != categories.end() )
          supportedProtocols.append( "KIO" );
       else { // if no KDE app, be a bit over-generic
          supportedProtocols.append( "http");
@@ -719,10 +719,10 @@ static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service
   kdDebug(7010) << "supportedProtocols:" << supportedProtocols << endl;
 
   KURL::List urls( _urls );
-  if ( supportedProtocols.tqfind( "KIO" ) == supportedProtocols.end() ) {
+  if ( supportedProtocols.find( "KIO" ) == supportedProtocols.end() ) {
     for( KURL::List::Iterator it = urls.begin(); it != urls.end(); ++it ) {
       const KURL url = *it;
-      bool supported = url.isLocalFile() || supportedProtocols.tqfind( url.protocol().lower() ) != supportedProtocols.end();
+      bool supported = url.isLocalFile() || supportedProtocols.find( url.protocol().lower() ) != supportedProtocols.end();
       kdDebug(7010) << "Looking at url=" << url << " supported=" << supported << endl;
       if ( !supported && KProtocolInfo::protocolClass(url.protocol()) == ":local" )
       {
@@ -861,7 +861,7 @@ pid_t KRun::runCommand( const TQString& cmd, const TQString &execName, const TQS
   *proc << cmd;
   KService::Ptr service = KService::serviceByDesktopName( binaryName( execName, true ) );
   TQString bin = binaryName( cmd, false );
-  int pos = bin.tqfindRev( '/' );
+  int pos = bin.findRev( '/' );
   if (pos != -1) {
     proc->setWorkingDirectory( bin.mid(0, pos) );
   }
@@ -927,7 +927,7 @@ void KRun::init()
   if (m_strURL.url().startsWith("$(")) {
       // check for environment variables and make necessary translations
       TQString aValue = m_strURL.url();
-      int nDollarPos = aValue.tqfind( '$' );
+      int nDollarPos = aValue.find( '$' );
 
       while( nDollarPos != -1 && nDollarPos+1 < static_cast<int>(aValue.length())) {
         // there is at least one $
@@ -949,7 +949,7 @@ void KRun::init()
              }
              pclose(fs);
           }
-          aValue.tqreplace( nDollarPos, nEndPos-nDollarPos, result );
+          aValue.replace( nDollarPos, nEndPos-nDollarPos, result );
         } else if( (aValue)[nDollarPos+1] != '$' ) {
           uint nEndPos = nDollarPos+1;
           // the next character is no $
@@ -975,7 +975,7 @@ void KRun::init()
             // !!! Sergey A. Sukiyazov <corwin@micom.don.ru> !!!
             // A environment variables may contain values in 8bit
             // locale cpecified encoding or in UTF8 encoding.
-            aValue.tqreplace( nDollarPos, nEndPos-nDollarPos, KStringHandler::from8Bit( pEnv ) );
+            aValue.replace( nDollarPos, nEndPos-nDollarPos, KStringHandler::from8Bit( pEnv ) );
           } else
             aValue.remove( nDollarPos, nEndPos-nDollarPos );
         } else {
@@ -983,7 +983,7 @@ void KRun::init()
           aValue.remove( nDollarPos, 1 );
           nDollarPos++;
         }
-        nDollarPos = aValue.tqfind( '$', nDollarPos );
+        nDollarPos = aValue.find( '$', nDollarPos );
       }
       m_strURL = KURL(aValue);
       bypassErrorMessage = true;
@@ -1280,7 +1280,7 @@ void KRun::slotStatResult( KIO::Job * job )
 void KRun::slotScanMimeType( KIO::Job *, const TQString &mimetype )
 {
   if ( mimetype.isEmpty() )
-    kdWarning(7010) << "KRun::slotScanFinished : MimetypeJob didn't tqfind a mimetype! Probably a kioslave bug." << endl;
+    kdWarning(7010) << "KRun::slotScanFinished : MimetypeJob didn't find a mimetype! Probably a kioslave bug." << endl;
   foundMimeType( mimetype );
   m_job = 0;
 }
@@ -1380,7 +1380,7 @@ void KRun::foundMimeType( const TQString& type )
           lst.append( m_strURL );
           m_bFinished = KRun::run( *serv, lst, d->m_window, d->m_asn );
           /// Note: the line above means that if that service failed, we'll
-          /// go to runURL to maybe tqfind another service, even though a dialog
+          /// go to runURL to maybe find another service, even though a dialog
           /// box was displayed. That's good if runURL tries another service,
           /// but it's not good if it tries the same one :}
       }
@@ -1547,12 +1547,12 @@ KProcessRunner::slotProcessExited(KProcess * p)
   {
     // Often we get 1 (zsh, csh) or 127 (ksh, bash) because the binary doesn't exist.
     // We can't just rely on that, but it's a good hint.
-    // Before assuming its really so, we'll try to tqfind the binName
+    // Before assuming its really so, we'll try to find the binName
     // relatively to current directory,  and then in the PATH.
     if ( !TQFile( binName ).exists() && KStandardDirs::findExe( binName ).isEmpty() )
     {
       kapp->ref();
-      KMessageBox::sorry( 0L, i18n("Could not tqfind the program '%1'").arg( binName ) );
+      KMessageBox::sorry( 0L, i18n("Could not find the program '%1'").arg( binName ) );
       kapp->deref();
     }
   }

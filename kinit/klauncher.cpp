@@ -102,7 +102,7 @@ IdleSlave::gotInput()
       pid_t pid;
       TQCString protocol;
       TQString host;
-      TQ_INT8 b;
+      Q_INT8 b;
       stream >> pid >> protocol >> host >> b;
 // Overload with (bool) onHold, (KURL) url.
       if (!stream.atEnd())
@@ -181,7 +181,7 @@ KLauncher::KLauncher(int _kdeinitSocket, bool new_startup)
                                     objId(), "terminateKDE()", false );
 
    TQString prefix = locateLocal("socket", "klauncher");
-   KTempFile domainname(prefix, TQString::tqfromLatin1(".slave-socket"));
+   KTempFile domainname(prefix, TQString::fromLatin1(".slave-socket"));
    if (domainname.status() != 0)
    {
       // Sever error!
@@ -722,7 +722,7 @@ KLauncher::slotAutoStart()
       s = new KService(service);
    }
    while (!start_service(s, TQStringList(), TQValueList<TQCString>(), "0", false, true));
-   // Loop till we tqfind a service that we can start.
+   // Loop till we find a service that we can start.
 }
 
 void
@@ -892,7 +892,7 @@ KLauncher::exec_blind( const TQCString &name, const TQValueList<TQCString> &arg_
    request->transaction = 0; // No confirmation is send
    request->envs = envs;
    // Find service, if any - strip path if needed
-   KService::Ptr service = KService::serviceByDesktopName( name.mid( name.tqfindRev( '/' ) + 1 ));
+   KService::Ptr service = KService::serviceByDesktopName( name.mid( name.findRev( '/' ) + 1 ));
    if (service != NULL)
        send_service_startup_info( request,  service,
            startup_id, TQValueList< TQCString >());
@@ -915,7 +915,7 @@ KLauncher::start_service_by_name(const TQString &serviceName, const TQStringList
    if (!service)
    {
       DCOPresult.result = ENOENT;
-      DCOPresult.error = i18n("Could not tqfind service '%1'.").arg(serviceName);
+      DCOPresult.error = i18n("Could not find service '%1'.").arg(serviceName);
       cancel_service_startup_info( NULL, startup_id, envs ); // cancel it if any
       return false;
    }
@@ -940,7 +940,7 @@ KLauncher::start_service_by_desktop_path(const TQString &serviceName, const TQSt
    if (!service)
    {
       DCOPresult.result = ENOENT;
-      DCOPresult.error = i18n("Could not tqfind service '%1'.").arg(serviceName);
+      DCOPresult.error = i18n("Could not find service '%1'.").arg(serviceName);
       cancel_service_startup_info( NULL, startup_id, envs ); // cancel it if any
       return false;
    }
@@ -957,7 +957,7 @@ KLauncher::start_service_by_desktop_name(const TQString &serviceName, const TQSt
    if (!service)
    {
       DCOPresult.result = ENOENT;
-      DCOPresult.error = i18n("Could not tqfind service '%1'.").arg(serviceName);
+      DCOPresult.error = i18n("Could not find service '%1'.").arg(serviceName);
       cancel_service_startup_info( NULL, startup_id, envs ); // cancel it if any
       return false;
    }
@@ -1164,7 +1164,7 @@ KLauncher::kdeinit_exec(const TQString &app, const TQStringList &args,
    if( app != "kbuildsycoca" ) // avoid stupid loop
    {
        // Find service, if any - strip path if needed
-       KService::Ptr service = KService::serviceByDesktopName( app.mid( app.tqfindRev( '/' ) + 1 ));
+       KService::Ptr service = KService::serviceByDesktopName( app.mid( app.findRev( '/' ) + 1 ));
        if (service != NULL)
            send_service_startup_info( request,  service,
                startup_id, TQValueList< TQCString >());
@@ -1359,7 +1359,7 @@ KLauncher::acceptSlave(KSocket *slaveSocket)
     mSlaveList.append(slave);
     connect(slave, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotSlaveGone()));
     connect(slave, TQT_SIGNAL(statusUpdate(IdleSlave *)),
-	    this, TQT_SLOT(slotSlavetqStatus(IdleSlave *)));
+	    this, TQT_SLOT(slotSlaveStatus(IdleSlave *)));
     if (!mTimer.isActive())
     {
        mTimer.start(1000*10);
@@ -1367,7 +1367,7 @@ KLauncher::acceptSlave(KSocket *slaveSocket)
 }
 
 void
-KLauncher::slotSlavetqStatus(IdleSlave *slave)
+KLauncher::slotSlaveStatus(IdleSlave *slave)
 {
     SlaveWaitRequest *waitRequest = mSlaveWaitRequest.first();
     while(waitRequest)

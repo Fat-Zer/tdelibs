@@ -52,7 +52,7 @@ public:
   };
 
   /**
-   * Creates an object that tqcontains information about the current user.
+   * Creates an object that contains information about the current user.
    * (as returned by getuid(2) or geteuid(2), taking $LOGNAME/$USER into
    * account).
    * @param mode if #UseEffectiveUID is passed the effective
@@ -76,7 +76,7 @@ public:
   KUser(long uid);
 
   /**
-   * Creates an object that tqcontains information about the user with the given
+   * Creates an object that contains information about the user with the given
    * name. If the user does not exist isValid() will return false.
    *
    * @param name the name of the user
@@ -85,7 +85,7 @@ public:
   KUser(const TQString& name);
 
   /**
-   * Creates an object that tqcontains information about the user with the given
+   * Creates an object that contains information about the user with the given
    * name. If the user does not exist isValid() will return false.
    *
    * @param name the name of the user

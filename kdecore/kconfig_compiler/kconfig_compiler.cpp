@@ -251,10 +251,10 @@ static void addQuotes( TQString &s )
 static TQString quoteString( const TQString &s )
 {
   TQString r = s;
-  r.tqreplace( "\\", "\\\\" );
-  r.tqreplace( "\"", "\\\"" );
-  r.tqreplace( "\r", "" );
-  r.tqreplace( "\n", "\\n\"\n\"" );
+  r.replace( "\\", "\\\\" );
+  r.replace( "\"", "\\\"" );
+  r.replace( "\r", "" );
+  r.replace( "\n", "\\n\"\n\"" );
   return "\"" + r + "\"";
 }
 
@@ -262,10 +262,10 @@ static TQString literalString( const TQString &s )
 {
   bool isAscii = true;
   for(int i = s.length(); i--;)
-     if (s[i].tqunicode() > 127) isAscii = false;
+     if (s[i].unicode() > 127) isAscii = false;
 
   if (isAscii)
-     return "TQString::tqfromLatin1( " + quoteString(s) + " )";
+     return "TQString::fromLatin1( " + quoteString(s) + " )";
   else
      return "TQString::fromUtf8( " + quoteString(s) + " )";
 }
@@ -284,7 +284,7 @@ static TQString dumpNode(const TQDomNode &node)
 
 static TQString filenameOnly(TQString path)
 {
-   int i = path.tqfindRev('/');
+   int i = path.findRev('/');
    if (i >= 0)
       return path.mid(i+1);
    return path;
@@ -480,13 +480,13 @@ CfgEntry *parseEntry( const TQString &group, const TQDomElement &element )
 
   if ( nameIsEmpty ) {
     name = key;
-    name.tqreplace( " ", TQString::null );
-  } else if ( name.tqcontains( ' ' ) ) {
-    kdWarning()<<"Entry '"<<name<<"' tqcontains spaces! <name> elements can't contain speces!"<<endl;
+    name.replace( " ", TQString::null );
+  } else if ( name.contains( ' ' ) ) {
+    kdWarning()<<"Entry '"<<name<<"' contains spaces! <name> elements can't contain speces!"<<endl;
     name.remove( ' ' );
   }
 
-  if (name.tqcontains("$("))
+  if (name.contains("$("))
   {
     if (param.isEmpty())
     {
@@ -513,7 +513,7 @@ CfgEntry *parseEntry( const TQString &group, const TQDomElement &element )
   {
     // Adjust name
     paramName = name;
-    name.tqreplace("$("+param+")", TQString::null);
+    name.replace("$("+param+")", TQString::null);
     // Lookup defaults for indexed entries
     for(int i = 0; i <= paramMax; i++)
     {
@@ -534,7 +534,7 @@ CfgEntry *parseEntry( const TQString &group, const TQDomElement &element )
         int i = index.toInt(&ok);
         if (!ok)
         {
-          i = paramValues.tqfindIndex(index);
+          i = paramValues.findIndex(index);
           if (i == -1)
           {
             kdError() << "Index '" << index << "' for default value is unknown." << endl;
@@ -568,7 +568,7 @@ CfgEntry *parseEntry( const TQString &group, const TQDomElement &element )
     return 0;
   }
 
-  if (allNames.tqcontains(name))
+  if (allNames.contains(name))
   {
     if (nameIsEmpty)
       kdError() << "The key '" << key << "' can not be used as name for the entry because "
@@ -619,8 +619,8 @@ TQString param( const TQString &type )
     else if ( type == "Bool" )        return "bool";
     else if ( type == "Double" )      return "double";
     else if ( type == "DateTime" )    return "const TQDateTime &";
-    else if ( type == "Int64" )       return "TQ_INT64";
-    else if ( type == "UInt64" )      return "TQ_UINT64";
+    else if ( type == "Int64" )       return "Q_INT64";
+    else if ( type == "UInt64" )      return "Q_UINT64";
     else if ( type == "IntList" )     return "const TQValueList<int> &";
     else if ( type == "Enum" )        return "int";
     else if ( type == "Path" )        return "const TQString &";
@@ -649,8 +649,8 @@ TQString cppType( const TQString &type )
     else if ( type == "Bool" )        return "bool";
     else if ( type == "Double" )      return "double";
     else if ( type == "DateTime" )    return "TQDateTime";
-    else if ( type == "Int64" )       return "TQ_INT64";
-    else if ( type == "UInt64" )      return "TQ_UINT64";
+    else if ( type == "Int64" )       return "Q_INT64";
+    else if ( type == "UInt64" )      return "Q_UINT64";
     else if ( type == "IntList" )     return "TQValueList<int>";
     else if ( type == "Enum" )        return "int";
     else if ( type == "Path" )        return "TQString";
@@ -694,7 +694,7 @@ TQString itemType( const TQString &type )
   TQString t;
 
   t = type;
-  t.tqreplace( 0, 1, t.left( 1 ).upper() );
+  t.replace( 0, 1, t.left( 1 ).upper() );
 
   return t;
 }
@@ -771,7 +771,7 @@ TQString paramString(const TQString &s, const CfgEntry *e, int i)
 {
   TQString result = s;
   TQString needle = "$("+e->param()+")";
-  if (result.tqcontains(needle))
+  if (result.contains(needle))
   {
     TQString tmp;
     if (e->paramType() == "Enum")
@@ -783,7 +783,7 @@ TQString paramString(const TQString &s, const CfgEntry *e, int i)
       tmp = TQString::number(i);
     }
 
-    result.tqreplace(needle, tmp);
+    result.replace(needle, tmp);
   }
   return result;
 }
@@ -796,18 +796,18 @@ TQString paramString(const TQString &group, const TQValueList<Param> &parameters
   for (TQValueList<Param>::ConstIterator it = parameters.begin();
        it != parameters.end(); ++it)
   {
-     if (paramString.tqcontains("$("+(*it).name+")"))
+     if (paramString.contains("$("+(*it).name+")"))
      {
        TQString tmp;
        tmp.sprintf("%%%d", i++);
-       paramString.tqreplace("$("+(*it).name+")", tmp);
+       paramString.replace("$("+(*it).name+")", tmp);
        arguments += ".arg( mParam"+(*it).name+" )";
      }
   }
   if (arguments.isEmpty())
-    return "TQString::tqfromLatin1( \""+group+"\" )";
+    return "TQString::fromLatin1( \""+group+"\" )";
 
-  return "TQString::tqfromLatin1( \""+paramString+"\" )"+arguments;
+  return "TQString::fromLatin1( \""+paramString+"\" )"+arguments;
 }
 
 /* int i is the value of the parameter */
@@ -818,7 +818,7 @@ TQString userTextsFunctions( CfgEntry *e, TQString itemVarStr=TQString::null, TQ
   if ( !e->label().isEmpty() ) {
     txt += "  " + itemVarStr + "->setLabel( i18n(";
     if ( !e->param().isEmpty() )
-      txt += quoteString(e->label().tqreplace("$("+e->param()+")", i));
+      txt += quoteString(e->label().replace("$("+e->param()+")", i));
     else
       txt+= quoteString(e->label());
     txt+= ") );\n";
@@ -826,7 +826,7 @@ TQString userTextsFunctions( CfgEntry *e, TQString itemVarStr=TQString::null, TQ
   if ( !e->whatsThis().isEmpty() ) {
     txt += "  " + itemVarStr + "->setWhatsThis( i18n(";
     if ( !e->param().isEmpty() )
-      txt += quoteString(e->whatsThis().tqreplace("$("+e->param()+")", i));
+      txt += quoteString(e->whatsThis().replace("$("+e->param()+")", i));
     else
       txt+= quoteString(e->whatsThis());
     txt+=") );\n";
@@ -883,12 +883,12 @@ TQString memberMutatorBody( CfgEntry *e )
     out << "}" << endl << endl;
   }
 
-  out << "if (!" << This << "isImmutable( TQString::tqfromLatin1( \"";
+  out << "if (!" << This << "isImmutable( TQString::fromLatin1( \"";
   if (!e->param().isEmpty())
   {
-    out << e->paramName().tqreplace("$("+e->param()+")", "%1") << "\" ).arg( ";
+    out << e->paramName().replace("$("+e->param()+")", "%1") << "\" ).arg( ";
     if ( e->paramType() == "Enum" ) {
-      out << "TQString::tqfromLatin1( ";
+      out << "TQString::fromLatin1( ";
 
       if (globalEnums)
         out << enumName(e->param()) << "ToString[i]";
@@ -1249,7 +1249,7 @@ int main( int argc, char **argv )
     TQString t = e->type();
 
     // Manipulator
-    if (allMutators || mutators.tqcontains(n))
+    if (allMutators || mutators.contains(n))
     {
       h << "    /**" << endl;
       h << "      Set " << e->label() << endl;
@@ -1518,7 +1518,7 @@ int main( int argc, char **argv )
   cpp << " )" << endl;
 
   cpp << "  : " << inherits << "(";
-  if ( !cfgFileName.isEmpty() ) cpp << " TQString::tqfromLatin1( \"" << cfgFileName << "\" ";
+  if ( !cfgFileName.isEmpty() ) cpp << " TQString::fromLatin1( \"" << cfgFileName << "\" ";
   if ( cfgFileNameArg ) cpp << " config ";
   if ( !cfgFileName.isEmpty() ) cpp << ") ";
   cpp << ")" << endl;
@@ -1560,7 +1560,7 @@ int main( int argc, char **argv )
       for( it = choices.begin(); it != choices.end(); ++it ) {
         cpp << "  {" << endl;
         cpp << "    KConfigSkeleton::ItemEnum::Choice choice;" << endl;
-        cpp << "    choice.name = TQString::tqfromLatin1( \"" << (*it).name << "\" );" << endl;
+        cpp << "    choice.name = TQString::fromLatin1( \"" << (*it).name << "\" );" << endl;
         if ( setUserTexts ) {
           if ( !(*it).label.isEmpty() )
             cpp << "    choice.label = i18n(" << quoteString((*it).label) << ");" << endl;
@@ -1592,7 +1592,7 @@ int main( int argc, char **argv )
       cpp << "  addItem( " << itemPath(e);
       TQString quotedName = e->name();
       addQuotes( quotedName );
-      if ( quotedName != key ) cpp << ", TQString::tqfromLatin1( \"" << e->name() << "\" )";
+      if ( quotedName != key ) cpp << ", TQString::fromLatin1( \"" << e->name() << "\" )";
       cpp << " );" << endl;
     }
     else
@@ -1617,15 +1617,15 @@ int main( int argc, char **argv )
         if ( setUserTexts )
           cpp << userTextsFunctions( e, itemVarStr, e->paramName() );
 
-        // Make mutators for enum parameters work by adding them with $(..) tqreplaced by the
+        // Make mutators for enum parameters work by adding them with $(..) replaced by the
         // param name. The check for isImmutable in the set* functions doesn't have the param
         // name available, just the corresponding enum value (int), so we need to store the
         // param names in a separate static list!.
-        cpp << "  addItem( " << itemVarStr << ", TQString::tqfromLatin1( \"";
+        cpp << "  addItem( " << itemVarStr << ", TQString::fromLatin1( \"";
         if ( e->paramType()=="Enum" )
-          cpp << e->paramName().tqreplace( "$("+e->param()+")", "%1").arg(e->paramValues()[i] );
+          cpp << e->paramName().replace( "$("+e->param()+")", "%1").arg(e->paramValues()[i] );
         else
-          cpp << e->paramName().tqreplace( "$("+e->param()+")", "%1").arg(i);
+          cpp << e->paramName().replace( "$("+e->param()+")", "%1").arg(i);
         cpp << "\" ) );" << endl;
       }
     }
@@ -1642,7 +1642,7 @@ int main( int argc, char **argv )
       TQString t = e->type();
   
       // Manipulator
-      if (allMutators || mutators.tqcontains(n))
+      if (allMutators || mutators.contains(n))
       {
         cpp << "void " << setFunction(n, className) << "( ";
         if (!e->param().isEmpty())

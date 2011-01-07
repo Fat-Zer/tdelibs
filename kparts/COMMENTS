@@ -11,7 +11,7 @@ the BarPosition of the toolbars is solved. Nice :-)
 
 (David) Not sure we want to save whether the statusbar is shown/hidden.
 
-(Simon) Another thought: Perhaps we should store the tqgeometry information of
+(Simon) Another thought: Perhaps we should store the geometry information of
 	the containers of the KPartHost in the KPart itself?
 	(something like KPart-Session Management ;-)
 (David) Sounds strange (the child taking care of its host's containers...)
@@ -44,7 +44,7 @@ I think what it wants is "really" activated, no ?
 gets activated", in this simple model (no Document/View). The Part gets activated when you can see
 its items in the menus/toolbars, there is no "in between" IMO ?
         2 - Remind me what konq does with the *bars when a part gets activated ?
-I couldn't tqfind anything with a quick grep in the sources...
+I couldn't find anything with a quick grep in the sources...
 I'm still looking for an example when it's useful :)
 
 (Simon) I think that's the whole idea of making KPartManager independent from
@@ -344,7 +344,7 @@ changes.
 
 --------------------------
 
-David wondering about tqStatus Bar
+David wondering about Status Bar
 --------------------------------
 Should the statusbar be a *bar like toolbar/menubar, handled by the XML GUI building
 (soon "KPartsMainWindow"), and shown/hidden depending on the
@@ -576,7 +576,7 @@ issue compared to what's above though.
          delegation.
          It works like this:
          We have KReadOnlyPart (short KROP) and KonqyViewerExtension (short KVE). KVE is just
-	 a child of KROP that you can query with the TQObject::child method.
+	 a child of KROP that you can query with the QObject::child method.
          Views which are konquy aware feature their own implementation of KVE and konquy is
          happy :-)
          If a KROP does not feature a KVE then Konqui installs a default KVE that just ignores

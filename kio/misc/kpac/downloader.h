@@ -29,7 +29,7 @@ namespace KIO { class Job; }
 
 namespace KPAC
 {
-    class Downloader : public TQObject
+    class Downloader : public QObject
     {
         Q_OBJECT
     public:

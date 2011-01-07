@@ -40,7 +40,7 @@ KServiceFactory::KServiceFactory()
    if (m_str)
    {
       // Read Header
-      TQ_INT32 i;
+      Q_INT32 i;
       (*m_str) >> i;
       m_nameDictOffset = i;
       (*m_str) >> i;
@@ -87,12 +87,12 @@ KServiceFactory * KServiceFactory::self()
     return _self;
 }
 
-KService * KServiceFactory::tqfindServiceByName(const TQString &_name)
+KService * KServiceFactory::findServiceByName(const TQString &_name)
 {
    if (!m_sycocaDict) return 0; // Error!
 
    // Warning : this assumes we're NOT building a database
-   // But since tqfindServiceByName isn't called in that case...
+   // But since findServiceByName isn't called in that case...
    // [ see KServiceTypeFactory for how to do it if needed ]
 
    int offset = m_sycocaDict->find_string( _name );
@@ -110,12 +110,12 @@ KService * KServiceFactory::tqfindServiceByName(const TQString &_name)
    return newService;
 }
 
-KService * KServiceFactory::tqfindServiceByDesktopName(const TQString &_name)
+KService * KServiceFactory::findServiceByDesktopName(const TQString &_name)
 {
    if (!m_nameDict) return 0; // Error!
 
    // Warning : this assumes we're NOT building a database
-   // But since tqfindServiceByName isn't called in that case...
+   // But since findServiceByName isn't called in that case...
    // [ see KServiceTypeFactory for how to do it if needed ]
 
    int offset = m_nameDict->find_string( _name );
@@ -133,12 +133,12 @@ KService * KServiceFactory::tqfindServiceByDesktopName(const TQString &_name)
    return newService;
 }
 
-KService * KServiceFactory::tqfindServiceByDesktopPath(const TQString &_name)
+KService * KServiceFactory::findServiceByDesktopPath(const TQString &_name)
 {
    if (!m_relNameDict) return 0; // Error!
 
    // Warning : this assumes we're NOT building a database
-   // But since tqfindServiceByName isn't called in that case...
+   // But since findServiceByName isn't called in that case...
    // [ see KServiceTypeFactory for how to do it if needed ]
 
    int offset = m_relNameDict->find_string( _name );
@@ -156,12 +156,12 @@ KService * KServiceFactory::tqfindServiceByDesktopPath(const TQString &_name)
    return newService;
 }
 
-KService * KServiceFactory::tqfindServiceByMenuId(const TQString &_menuId)
+KService * KServiceFactory::findServiceByMenuId(const TQString &_menuId)
 {
    if (!m_menuIdDict) return 0; // Error!
 
    // Warning : this assumes we're NOT building a database
-   // But since tqfindServiceByMenuId isn't called in that case...
+   // But since findServiceByMenuId isn't called in that case...
    // [ see KServiceTypeFactory for how to do it if needed ]
 
    int offset = m_menuIdDict->find_string( _menuId );
@@ -226,10 +226,10 @@ KService::List KServiceFactory::allInitServices()
    // Assume we're NOT building a database
 
    m_str->device()->at(m_initListOffset);
-   TQ_INT32 entryCount;
+   Q_INT32 entryCount;
    (*m_str) >> entryCount;
 
-   TQ_INT32 *offsetList = new TQ_INT32[entryCount];
+   Q_INT32 *offsetList = new Q_INT32[entryCount];
    for(int i = 0; i < entryCount; i++)
    {
       (*m_str) >> offsetList[i];
@@ -255,8 +255,8 @@ KService::List KServiceFactory::offers( int serviceTypeOffset )
    // Jump to the offer list
    str->device()->at( m_offerListOffset );
 
-   TQ_INT32 aServiceTypeOffset;
-   TQ_INT32 aServiceOffset;
+   Q_INT32 aServiceTypeOffset;
+   Q_INT32 aServiceOffset;
    // We might want to do a binary search instead of a linear search
    // since servicetype offsets are sorted. Bah.
    while (true)
@@ -275,7 +275,7 @@ KService::List KServiceFactory::offers( int serviceTypeOffset )
                 list.append( KService::Ptr( serv ) );
             // Restore position
             str->device()->at( savedPos );
-         } else if ( aServiceTypeOffset > (TQ_INT32)serviceTypeOffset )
+         } else if ( aServiceTypeOffset > (Q_INT32)serviceTypeOffset )
             break; // too far
       }
       else

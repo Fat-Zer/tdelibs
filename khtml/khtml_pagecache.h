@@ -38,7 +38,7 @@ class KHTMLPageCachePrivate;
  *
  * It operates completely independent from the kio_http cache.
  */
-class KHTMLPageCache : public TQObject
+class KHTMLPageCache : public QObject
 {
   Q_OBJECT
 public:
@@ -113,7 +113,7 @@ private:
   KHTMLPageCachePrivate *d;  
 };
 
-class KHTMLPageCacheDelivery : public TQObject
+class KHTMLPageCacheDelivery : public QObject
 {
    friend class KHTMLPageCache;
 Q_OBJECT

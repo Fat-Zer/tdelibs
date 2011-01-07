@@ -183,15 +183,15 @@ public:
      *
      * @param offset The offset from which to start replacing.
      *
-     * @param count The number of characters to tqreplace. If the sum of
+     * @param count The number of characters to replace. If the sum of
      * \c offset and \c count exceeds
      * \c length , then all characters to the end of the data are
-     * tqreplaced (i.e., the effect is the same as a \c remove
+     * replaced (i.e., the effect is the same as a \c remove
      * method call with the same range, followed by an
      * \c append method invocation).
      *
      * @param arg The \c DOMString with which the range
-     * must be tqreplaced.
+     * must be replaced.
      *
      * @return
      *
@@ -203,7 +203,7 @@ public:
      *  NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.
      *
      */
-    void tqreplaceData ( const unsigned long offset, const unsigned long count, const DOMString &arg );
+    void replaceData ( const unsigned long offset, const unsigned long count, const DOMString &arg );
 
 protected:
     CharacterData(CharacterDataImpl *i);
@@ -285,9 +285,9 @@ public:
     /**
      * Breaks this \c Text node into two Text nodes at the
      * specified offset, keeping both in the tree as siblings. This
-     * node then only tqcontains all the content up to the \c offset
+     * node then only contains all the content up to the \c offset
      * point. And a new \c Text node, which is
-     * inserted as the next sibling of this node, tqcontains all the
+     * inserted as the next sibling of this node, contains all the
      * content at and after the \c offset point.
      *
      * @param offset The offset at which to split, starting from 0.

@@ -13,14 +13,14 @@ LIBS += $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdeui$$KDELIB_SUF
 
 INCLUDEPATH += $(KDELIBS)/interfaces/kregexpeditor
 
-system( bash ktqmoc )
+system( bash kmoc )
 
 SOURCES = \
-ktqfind.cpp \
-ktqfinddialog.cpp \
+kfind.cpp \
+kfinddialog.cpp \
 kmultitabbar.cpp \
 kplugininfo.cpp \
-ktqreplace.cpp \
-ktqreplacedialog.cpp
+kreplace.cpp \
+kreplacedialog.cpp
 
 HEADERS		=

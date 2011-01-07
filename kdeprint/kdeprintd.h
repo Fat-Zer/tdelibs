@@ -29,7 +29,7 @@
 
 class KPrintProcess;
 class KProcess;
-class tqStatusWindow;
+class StatusWindow;
 
 class KDEPrintd : public KDEDModule
 {
@@ -59,7 +59,7 @@ protected:
 private:
 	class Request;
 	TQPtrList<KPrintProcess>	m_processpool;
-	TQIntDict<tqStatusWindow>	m_windows;
+	TQIntDict<StatusWindow>	m_windows;
 	TQPtrList<Request>       m_requestsPending;
 };
 

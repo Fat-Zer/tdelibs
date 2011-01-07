@@ -24,7 +24,7 @@ public:
         menu->insertItem("Item1");
         menu->insertItem("Item2");
         menu->insertSeparator();
-        menu->insertItem("Quit", tqApp, TQT_SLOT(quit()));
+        menu->insertItem("Quit", qApp, TQT_SLOT(quit()));
     }       
 };
 

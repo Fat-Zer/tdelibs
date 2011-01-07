@@ -9,7 +9,7 @@ libkmultipart_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/kio/httpfilter/libhttpfi
 libkmultipart_la_DEPENDENCIES = $(LIB_KPARTS)
 libkmultipart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
 
-# Automatically generate tqmoc files
+# Automatically generate moc files
 METASOURCES = AUTO
 
 # Install the .desktop file into the kde_services directory
