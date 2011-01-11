@@ -16,11 +16,6 @@ endif( BUILD_KDEUI_TESTS )
 add_subdirectory( about )
 add_subdirectory( kdetrayproxy )
 
-add_definitions(
-  ${TQT_CFLAGS_OTHER}
-  -include tqt.h
-)
-
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR}

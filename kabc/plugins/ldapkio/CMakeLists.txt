@@ -9,10 +9,6 @@
 #
 #################################################
 
-add_definitions(
-  ${TQT_CFLAGS_OTHER}
-)
-
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/kabc

@@ -27,6 +27,7 @@ include( CheckIncludeFile )
 include( CheckSymbolExists )
 include( CheckFunctionExists )
 include( CheckCSourceCompiles )
+include( CheckCXXSourceCompiles )
 include( CheckTypeSize )
 include( CheckCSourceRuns )
 include( CheckLibraryExists )
@@ -747,11 +748,7 @@ set( KDE3_KCFGC_EXECUTABLE ${CMAKE_BINARY_DIR}/kdecore/kconfig_compiler/kconfig_
 
 add_definitions(
   -DHAVE_CONFIG_H
-  -DQT_NO_ASCII_CAST
-  -DQT_CLEAN_NAMESPACE
-  -DQT_NO_STL
-  -DQT_NO_COMPAT
-  -DQT_NO_TRANSLATION
+  ${TQT_CFLAGS_OTHER}
 )
 
 set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include tqt.h" )

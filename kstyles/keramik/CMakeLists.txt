@@ -10,7 +10,6 @@
 #################################################
 
 add_definitions(
-  ${TQT_CFLAGS_OTHER}
   -UQT_NO_ASCII_CAST
   -DQT_PLUGIN
 )
@@ -66,6 +65,6 @@ set_source_files_properties( pixmaploader.cpp PROPERTIES OBJECT_DEPENDS ${CMAKE_
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdefx-shared
+  LINK kdefx-shared Xext
   DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/styles
 )

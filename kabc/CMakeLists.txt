@@ -14,11 +14,6 @@ add_subdirectory( vcardparser )
 add_subdirectory( formats )
 add_subdirectory( plugins )
 
-
-add_definitions(
-  ${TQT_CFLAGS_OTHER}
-)
-
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}

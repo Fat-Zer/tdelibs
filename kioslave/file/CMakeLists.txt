@@ -10,7 +10,6 @@
 #################################################
 
 add_definitions(
-  ${TQT_CFLAGS_OTHER}
   -D_LARGEFILE64_SOURCE
 )
 

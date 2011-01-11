@@ -10,7 +10,6 @@
 #################################################
 
 add_definitions(
-  ${TQT_CFLAGS_OTHER}
   -DQT_PLUGIN
 )
 
@@ -37,6 +36,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdefx-shared kdecore-shared
+  LINK kdefx-shared kdecore-shared dl
   DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/styles
 )

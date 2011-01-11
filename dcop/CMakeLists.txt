@@ -15,13 +15,6 @@ add_subdirectory( dcopidlng )
 add_subdirectory( dcopidl2cpp )
 add_subdirectory( client )
 
-
-include( KDE3Macros )
-
-add_definitions(
-  ${TQT_CFLAGS_OTHER}
-)
-
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}

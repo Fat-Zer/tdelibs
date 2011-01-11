@@ -9,10 +9,6 @@
 #
 #################################################
 
-add_definitions(
-  ${TQT_CFLAGS_OTHER}
-)
-
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${ARTS_INCLUDE_DIRS}

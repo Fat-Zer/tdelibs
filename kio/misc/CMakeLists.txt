@@ -19,8 +19,6 @@ add_subdirectory( kntlm )
 
 add_definitions(
   -D_LARGEFILE64_SOURCE
-  ${TQT_CFLAGS_OTHER}
-  -include tqt.h
 )
 
 include_directories(

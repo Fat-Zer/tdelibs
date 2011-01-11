@@ -10,9 +10,7 @@
 #################################################
 
 add_definitions(
-  ${TQT_CFLAGS_OTHER}
   -DKDE_NO_COMPAT
-  -DQT_NO_COMPAT
 )
 
 include_directories(

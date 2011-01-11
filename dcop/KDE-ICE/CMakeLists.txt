@@ -9,6 +9,8 @@
 #
 #################################################
 
+set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include tqt.h" )
+
 add_definitions(
   -DICE_t
   -DTRANS_SERVER
@@ -20,6 +22,7 @@ add_definitions(
 include_directories(
   ${CMAKE_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
+  ${TQT_INCLUDE_DIRS}
 )
 
 

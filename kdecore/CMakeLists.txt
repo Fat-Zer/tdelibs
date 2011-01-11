@@ -18,10 +18,6 @@ if( WITH_LIBART )
   set( KDESVGICONS kdesvgicons-static )
 endif( WITH_LIBART )
 
-add_definitions(
-  ${TQT_CFLAGS_OTHER}
-  -include tqt.h
-)
 
 include_directories(
   ${TQT_INCLUDE_DIRS}
@@ -133,7 +129,7 @@ tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
   EMBED kdecorenetwork-static
-  LINK ltdlc-static ${KDESVGICONS} DCOP-shared kdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES}
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared kdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ICE SM
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )

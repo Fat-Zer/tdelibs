@@ -17,10 +17,6 @@ add_subdirectory( emoticons )
 # ksvgtopng is compiled only if we have libart support
 if( WITH_LIBART )
 
-add_definitions(
-  ${TQT_CFLAGS_OTHER}
-)
-
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${LIBART_INCLUDE_DIRS}

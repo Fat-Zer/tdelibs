@@ -10,7 +10,6 @@
 #################################################
 
 add_definitions(
-  ${TQT_CFLAGS_OTHER}
   -D_KDEPRINT_COMPILE
 )
 

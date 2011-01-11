@@ -22,11 +22,6 @@ add_subdirectory( java )
 add_subdirectory( ecma )
 add_subdirectory( kmultipart )
 
-
-add_definitions(
-  ${TQT_CFLAGS_OTHER}
-)
-
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}

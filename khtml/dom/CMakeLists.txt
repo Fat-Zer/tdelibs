@@ -11,10 +11,6 @@
 
 set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${USE_EXCEPTIONS} )
 
-add_definitions(
-  ${TQT_CFLAGS_OTHER}
-)
-
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
