@@ -57,15 +57,18 @@ const XID None = XNone;
 
 // template --->
 // Affects: Should be without side effects.
+#ifndef _XTYPEDEF_BOOL
 #ifdef Bool
 #ifndef FIXX11H_Bool
 #define FIXX11H_Bool
 typedef Bool XBool;
 #undef Bool
+#define _XTYPEDEF_BOOL
 typedef XBool Bool;
 #endif
 #undef Bool
 #endif
+#endif // _XTYPEDEF_BOOL
 // template <---
 
 // Affects: Should be without side effects.
