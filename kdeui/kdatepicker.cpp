@@ -92,7 +92,7 @@ void KDatePicker::fillWeeksCombo(const TQDate &date)
     // make sure that the week of the lastDay is always inserted: in Chinese calendar
     // system, this is not always the case
     if(day < lastDay && day.daysTo(lastDay) < 7 && calendar->weekNumber(day) != calendar->weekNumber(lastDay))
-      day = lastDay.addDays(-7);
+      day = TQT_TQDATE_OBJECT(lastDay.addDays(-7));
   }
 }
 
@@ -175,17 +175,17 @@ void KDatePicker::init( const TQDate &dt )
   line->installEventFilter( this );
   if (  TQApplication::reverseLayout() )
   {
-      yearForward->setIconSet(BarIconSet(TQString::fromLatin1("2leftarrow")));
-      yearBackward->setIconSet(BarIconSet(TQString::fromLatin1("2rightarrow")));
-      monthForward->setIconSet(BarIconSet(TQString::fromLatin1("1leftarrow")));
-      monthBackward->setIconSet(BarIconSet(TQString::fromLatin1("1rightarrow")));
+      yearForward->setIconSet(BarIconSet(TQString::tqfromLatin1("2leftarrow")));
+      yearBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("2rightarrow")));
+      monthForward->setIconSet(BarIconSet(TQString::tqfromLatin1("1leftarrow")));
+      monthBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("1rightarrow")));
   }
   else
   {
-      yearForward->setIconSet(BarIconSet(TQString::fromLatin1("2rightarrow")));
-      yearBackward->setIconSet(BarIconSet(TQString::fromLatin1("2leftarrow")));
-      monthForward->setIconSet(BarIconSet(TQString::fromLatin1("1rightarrow")));
-      monthBackward->setIconSet(BarIconSet(TQString::fromLatin1("1leftarrow")));
+      yearForward->setIconSet(BarIconSet(TQString::tqfromLatin1("2rightarrow")));
+      yearBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("2leftarrow")));
+      monthForward->setIconSet(BarIconSet(TQString::tqfromLatin1("1rightarrow")));
+      monthBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("1leftarrow")));
   }
   connect(table, TQT_SIGNAL(dateChanged(TQDate)), TQT_SLOT(dateChangedSlot(TQDate)));
   connect(table, TQT_SIGNAL(tableClicked()), TQT_SLOT(tableClickedSlot()));
@@ -223,8 +223,8 @@ KDatePicker::eventFilter(TQObject *o, TQEvent *e )
    if ( e->type() == TQEvent::KeyPress ) {
       TQKeyEvent *k = (TQKeyEvent *)e;
 
-      if ( (k->key() == Qt::Key_Prior) ||
-           (k->key() == Qt::Key_Next)  ||
+      if ( (k->key() == TQt::Key_Prior) ||
+           (k->key() == TQt::Key_Next)  ||
            (k->key() == Qt::Key_Up)    ||
            (k->key() == Qt::Key_Down) )
        {
@@ -371,7 +371,7 @@ KDatePicker::selectMonthClicked()
   int day = calendar->day(date);
   // ----- construct a valid date in this month:
   calendar->setYMD(date, calendar->year(date), month, 1);
-  date = date.addDays(QMIN(day, calendar->daysInMonth(date)) - 1);
+  date = TQT_TQDATE_OBJECT(date.addDays(QMIN(day, calendar->daysInMonth(date)) - 1));
   // ----- set this month
   setDate(date);
 }
@@ -390,7 +390,7 @@ KDatePicker::selectYearClicked()
   KPopupFrame* popup = new KPopupFrame(this);
   KDateInternalYearSelector* picker = new KDateInternalYearSelector(popup);
   // -----
-  picker->resize(picker->sizeHint());
+  picker->resize(picker->tqsizeHint());
   picker->setYear( table->getDate().year() );
   picker->selectAll();
   popup->setMainWidget(picker);
@@ -466,10 +466,10 @@ KDatePicker::todayButtonClicked()
   setDate(TQDate::currentDate());
 }
 
-QSize
-KDatePicker::sizeHint() const
+TQSize
+KDatePicker::tqsizeHint() const
 {
-  return TQWidget::sizeHint();
+  return TQWidget::tqsizeHint();
 }
 
 void
@@ -507,7 +507,7 @@ KDatePicker::setFontSize(int s)
       maxMonthRect.setHeight(QMAX(r.height(),  maxMonthRect.height()));
     }
 
-  TQSize metricBound = style().sizeFromContents(TQStyle::CT_ToolButton,
+  TQSize metricBound = tqstyle().tqsizeFromContents(TQStyle::CT_ToolButton,
                                                selectMonth,
                                                maxMonthRect);
   selectMonth->setMinimumSize(metricBound);
@@ -529,7 +529,7 @@ KDatePicker::setCloseButton( bool enable )
         TQToolTip::add(d->closeButton, i18n("Close"));
         d->closeButton->setPixmap( SmallIcon("remove") );
         connect( d->closeButton, TQT_SIGNAL( clicked() ),
-                 topLevelWidget(), TQT_SLOT( close() ) );
+                 tqtopLevelWidget(), TQT_SLOT( close() ) );
     }
     else {
         delete d->closeButton;

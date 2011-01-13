@@ -66,7 +66,7 @@ typedef TQValueList<TQCString> QCStringList;
 /**
  * @internal
  */
-class DCOPConnection : public QSocketNotifier
+class DCOPConnection : public TQSocketNotifier
 {
 public:
     DCOPConnection( IceConn conn );
@@ -112,7 +112,7 @@ public:
 /**
  * @internal
  */
-class DCOPServer : public QObject
+class DCOPServer : public TQObject
 {
     Q_OBJECT
 public:
@@ -130,7 +130,7 @@ public:
 
     DCOPConnection *findApp(const TQCString &appId);
     DCOPConnection *findConn(IceConn iceConn)
-       { return clients.find(iceConn); }
+       { return clients.tqfind(iceConn); }
 
     void sendMessage(DCOPConnection *conn, const TQCString &sApp,
                      const TQCString &rApp, const TQCString &rObj,

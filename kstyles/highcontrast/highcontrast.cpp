@@ -44,6 +44,9 @@
 #include <tqlistview.h>
 #include <tqsettings.h>
 
+#include <tqimage.h>
+#include <tqapplication.h>
+
 #include <kdrawutil.h>
 #include <kpixmapeffect.h>
 
@@ -51,7 +54,7 @@
 #include "highcontrast.moc"
 
 // -- Style Plugin Interface -------------------------
-class HighContrastStylePlugin : public QStylePlugin
+class HighContrastStylePlugin : public TQStylePlugin
 {
 	public:
 		HighContrastStylePlugin() {}
@@ -630,7 +633,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 		}
 
 		default: {
-			KStyle::drawPrimitive( pe, p, r, cg, flags, opt );
+			KStyle::tqdrawPrimitive( pe, p, r, cg, flags, opt );
 		}
 	}
 }
@@ -702,13 +705,13 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 		}
 
 		case KPE_ListViewExpander: {
-			// TODO There is no pixelMetric associated with the
+			// TODO There is no tqpixelMetric associated with the
 			// ListViewExpander in KStyle.
 			// To have a properly large expander, the CC_ListView case of
-			// drawComplexControl should be handled.
+			// tqdrawComplexControl should be handled.
 			// Probably it would be better to add a KPM_ListViewExpander metric
 			// to the KStyle KStylePixelMetric enum, and have the KStyle
-			// drawComplexControl handle it.
+			// tqdrawComplexControl handle it.
 			PrimitiveElement direction;
 			if (flags & Style_On) { // Collapsed = On
 				direction = PE_ArrowRight;
@@ -729,7 +732,7 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 }
 
 
-void HighContrastStyle::drawControl (ControlElement element,
+void HighContrastStyle::tqdrawControl (ControlElement element,
 								TQPainter *p,
 								const TQWidget *widget,
 								const TQRect &r,
@@ -755,9 +758,9 @@ void HighContrastStyle::drawControl (ControlElement element,
 			drawRoundRect (p, r);
 			
 			const TQTabBar *tb = static_cast< const TQTabBar * >(widget);
-            TQTabBar::Shape shape = tb->shape();
-			if (shape == TQTabBar::TriangularBelow || 
-				shape == TQTabBar::RoundedBelow) {
+            TQTabBar::Shape tqshape = tb->tqshape();
+			if (tqshape == TQTabBar::TriangularBelow || 
+				tqshape == TQTabBar::RoundedBelow) {
 				p->fillRect (r.left(), r.top(), 
 							 r.width(), 2*basicLineWidth, 
 							 p->pen().color());
@@ -789,7 +792,7 @@ void HighContrastStyle::drawControl (ControlElement element,
 
 			if (( btnDefault || button->autoDefault() ) && (button->isEnabled())) {
 				// Compensate for default indicator
-				static int di = pixelMetric( PM_ButtonDefaultIndicator );
+				static int di = tqpixelMetric( PM_ButtonDefaultIndicator );
 				addOffset (&br, di);
 			}
 
@@ -860,7 +863,7 @@ void HighContrastStyle::drawControl (ControlElement element,
 
 			// Does the button have a popup menu?
 			if (popup) {
-				int dx = pixelMetric (PM_MenuButtonIndicator, widget);
+				int dx = tqpixelMetric (PM_MenuButtonIndicator, widget);
 				drawArrow (p, TQRect(x + w - dx - 2, y + 2, dx, h - 4), PE_ArrowDown);
 				w -= dx;
 			}
@@ -934,7 +937,7 @@ void HighContrastStyle::drawControl (ControlElement element,
 		// RADIOBUTTON
 		// -------------------------------------------------------------------
 		case CE_RadioButton: {
-			drawPrimitive (PE_ExclusiveIndicator, p, r, cg, flags);
+			tqdrawPrimitive (PE_ExclusiveIndicator, p, r, cg, flags);
 			break;
 		}
 
@@ -1009,7 +1012,7 @@ void HighContrastStyle::drawControl (ControlElement element,
 			// Do we have an icon?
 			if ( mi->iconSet() && !mi->iconSet()->isNull() ) {
 				TQIconSet::Mode mode;
-				TQRect cr = visualRect( TQRect(x, y, checkcol, h), r );
+				TQRect cr = tqvisualRect( TQRect(x, y, checkcol, h), r );
 
 				// Select the correct icon from the iconset
 				if (!(flags & Style_Enabled))
@@ -1075,7 +1078,7 @@ void HighContrastStyle::drawControl (ControlElement element,
 
 				// Does the menu item have a text label?
 				if ( !s.isNull() ) {
-					int t = s.find( '\t' );
+					int t = s.tqfind( '\t' );
 					int m = itemVMargin;
 					int text_flags = AlignVCenter | ShowPrefix | DontClip | SingleLine;
 					text_flags |= reverse ? AlignRight : AlignLeft;
@@ -1104,22 +1107,22 @@ void HighContrastStyle::drawControl (ControlElement element,
 
 					// Draw the pixmap
 					if ( pixmap->depth() == 1 )
-						p->setBackgroundMode( OpaqueMode );
+						p->setBackgroundMode( Qt::OpaqueMode );
 
 					int diffw = ( ( w - pixmap->width() ) / 2 )
 									+ ( ( w - pixmap->width() ) % 2 );
 					p->drawPixmap( x+diffw, y+itemFrame, *pixmap );
 
 					if ( pixmap->depth() == 1 )
-						p->setBackgroundMode( TransparentMode );
+						p->setBackgroundMode( Qt::TransparentMode );
 				}
 			}
 
 			// Does the menu item have a submenu?
 			if ( mi->popup() ) {
 				PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
-				int dim = pixelMetric(PM_MenuButtonIndicator);
-				TQRect vr = visualRect( TQRect( x + w - arrowHMargin - 2*itemFrame - dim,
+				int dim = tqpixelMetric(PM_MenuButtonIndicator);
+				TQRect vr = tqvisualRect( TQRect( x + w - arrowHMargin - 2*itemFrame - dim,
 							y + h / 2 - dim / 2, dim, dim), r );
 
 				// Draw an arrow at the far end of the menu item
@@ -1129,11 +1132,11 @@ void HighContrastStyle::drawControl (ControlElement element,
 		}
 
 		default:
-			KStyle::drawControl(element, p, widget, r, cg, flags, opt);
+			KStyle::tqdrawControl(element, p, widget, r, cg, flags, opt);
 	}
 }
 
-void HighContrastStyle::drawControlMask (ControlElement element,
+void HighContrastStyle::tqdrawControlMask (ControlElement element,
 										TQPainter *p,
 										const TQWidget *w,
 										const TQRect &r,
@@ -1157,7 +1160,7 @@ void HighContrastStyle::drawControlMask (ControlElement element,
 		}
 
 		default: {
-			KStyle::drawControlMask (element, p, w, r, opt);
+			KStyle::tqdrawControlMask (element, p, w, r, opt);
 		}
 	}
 }
@@ -1176,7 +1179,7 @@ static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
     return sibling;
 }
 
-void HighContrastStyle::drawComplexControl (ComplexControl control,
+void HighContrastStyle::tqdrawComplexControl (ComplexControl control,
 									TQPainter *p,
 									const TQWidget *widget,
 									const TQRect &r,
@@ -1197,7 +1200,7 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 			setColorsText (p, cg, flags);
 			drawRoundRect (p, r);
 			
-			TQRect r2 = TQStyle::visualRect (querySubControlMetrics (CC_ComboBox, widget, SC_ComboBoxArrow), widget);
+			TQRect r2 = TQStyle::tqvisualRect (querySubControlMetrics (CC_ComboBox, widget, SC_ComboBoxArrow), widget);
 			if (flags & Style_HasFocus) {
 				TQRect r3 (r);
 				if (r2.left() > 0)
@@ -1232,12 +1235,12 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 			setColorsButton (p, cg, flags);
 			// Draw arrows if required
 			if (controls & SC_SpinWidgetDown) {
-				TQRect r2 = TQStyle::visualRect (querySubControlMetrics (CC_SpinWidget, widget, SC_SpinWidgetDown), widget);
+				TQRect r2 = TQStyle::tqvisualRect (querySubControlMetrics ((QStyle::ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetDown), widget);
 				drawRoundRect (p, r2);
 				drawArrow (p, r2, PE_SpinWidgetDown, 2*basicLineWidth);
 			}
 			if (controls & SC_SpinWidgetUp) {
-				TQRect r2 = TQStyle::visualRect (querySubControlMetrics (CC_SpinWidget, widget, SC_SpinWidgetUp), widget);
+				TQRect r2 = TQStyle::tqvisualRect (querySubControlMetrics ((QStyle::ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetUp), widget);
 				drawRoundRect (p, r2);
 				drawArrow (p, r2, PE_SpinWidgetUp, 2*basicLineWidth);
 			}
@@ -1273,11 +1276,11 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 					drawPrimitive(PE_ButtonTool, p, button, cg, bflags, opt);
 
 				// Check whether to draw a background pixmap
-				else if ( toolbutton->parentWidget() &&
-						  toolbutton->parentWidget()->backgroundPixmap() &&
-						  !toolbutton->parentWidget()->backgroundPixmap()->isNull() )
+				else if ( toolbutton->tqparentWidget() &&
+						  toolbutton->tqparentWidget()->backgroundPixmap() &&
+						  !toolbutton->tqparentWidget()->backgroundPixmap()->isNull() )
 				{
-					TQPixmap pixmap = *(toolbutton->parentWidget()->backgroundPixmap());
+					TQPixmap pixmap = *(toolbutton->tqparentWidget()->backgroundPixmap());
 					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
 				}
 			}
@@ -1312,7 +1315,7 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 
 			// Paint the icon and text.
 			if ( controls & SC_ListView )
-				TQCommonStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
+				TQCommonStyle::tqdrawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
 
 			// If we're have a branch or are expanded...
 			if ( controls & (SC_ListViewBranch | SC_ListViewExpand) )
@@ -1458,13 +1461,13 @@ void HighContrastStyle::drawComplexControl (ComplexControl control,
 		}
 
 		default:
-			KStyle::drawComplexControl(control, p, widget,
+			KStyle::tqdrawComplexControl(control, p, widget,
 						r, cg, flags, controls, active, opt);
 			break;
 	}
 }
 
-void HighContrastStyle::drawComplexControlMask(ComplexControl c,
+void HighContrastStyle::tqdrawComplexControlMask(ComplexControl c,
 											   TQPainter *p,
 											   const TQWidget *w,
 											   const TQRect &r,
@@ -1478,7 +1481,7 @@ void HighContrastStyle::drawComplexControlMask(ComplexControl c,
 			break;
 		}
 		default: {
-			KStyle::drawComplexControlMask (c, p, w, r, o);
+			KStyle::tqdrawComplexControlMask (c, p, w, r, o);
 		}
 	}
 }
@@ -1515,7 +1518,7 @@ TQRect HighContrastStyle::querySubControlMetrics( ComplexControl control,
 	switch (control)
 	{
 		case CC_ComboBox : {
-			int arrow = pixelMetric (PM_ScrollBarExtent, widget);
+			int arrow = tqpixelMetric (PM_ScrollBarExtent, widget);
 			switch (subcontrol)
 			{
 				case SC_ComboBoxFrame:
@@ -1531,7 +1534,7 @@ TQRect HighContrastStyle::querySubControlMetrics( ComplexControl control,
 			break;
 		}
 		case CC_SpinWidget : {
-			int arrow = pixelMetric (PM_ScrollBarExtent, 0);
+			int arrow = tqpixelMetric (PM_ScrollBarExtent, 0);
 			switch (subcontrol)
 			{
 				case SC_SpinWidgetFrame:
@@ -1559,7 +1562,7 @@ TQRect HighContrastStyle::querySubControlMetrics( ComplexControl control,
 }
 
 
-int HighContrastStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
+int HighContrastStyle::tqpixelMetric(PixelMetric m, const TQWidget *widget) const
 {
 	//### TODO: Use the tab metrics changes from Ker.
 	switch(m)
@@ -1643,7 +1646,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
 		}
 
 		default:
-			return KStyle::pixelMetric(m, widget);
+			return KStyle::tqpixelMetric(m, widget);
 	}
 }
 
@@ -1672,8 +1675,8 @@ TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
 			const TQPushButton* button = (const TQPushButton*) widget;
 			int w  = contentSize.width();
 			int h  = contentSize.height();
-			int bm = pixelMetric( PM_ButtonMargin, widget );
-			int fw = pixelMetric( PM_DefaultFrameWidth, widget ) * 2;
+			int bm = tqpixelMetric( PM_ButtonMargin, widget );
+			int fw = tqpixelMetric( PM_DefaultFrameWidth, widget ) * 2;
 
 			w += bm + fw + 6;	// ### Add 6 to make way for bold font.
 			h += bm + fw;
@@ -1684,7 +1687,7 @@ TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
 					w = 80;
 
 				// Compensate for default indicator
-				int di = pixelMetric( PM_ButtonDefaultIndicator );
+				int di = tqpixelMetric( PM_ButtonDefaultIndicator );
 				w += di * 2;
 				h += di * 2;
 			}
@@ -1709,7 +1712,7 @@ TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
 		case CT_ComboBox: {
 			const TQComboBox *cb = static_cast< const TQComboBox* > (widget);
 			int borderSize =  (cb->editable() ? 4 : 2) * basicLineWidth;
-			int arrowSize = pixelMetric (PM_ScrollBarExtent, cb);
+			int arrowSize = tqpixelMetric (PM_ScrollBarExtent, cb);
 			return TQSize(borderSize + basicLineWidth + arrowSize, borderSize) + contentSize;
 		}
 
@@ -1726,8 +1729,8 @@ TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
 			int w = contentSize.width(), h = contentSize.height();
 
 			if ( mi->custom() ) {
-				w = mi->custom()->sizeHint().width();
-				h = mi->custom()->sizeHint().height();
+				w = mi->custom()->tqsizeHint().width();
+				h = mi->custom()->tqsizeHint().height();
 				if ( ! mi->custom()->fullSpan() )
 					h += 2*itemVMargin + 2*itemFrame;
 			}
@@ -1753,7 +1756,7 @@ TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
 								2 * itemFrame );
 			}
 
-			if ( ! mi->text().isNull() && mi->text().find('\t') >= 0 )
+			if ( ! mi->text().isNull() && mi->text().tqfind('\t') >= 0 )
 				w += 12;
 			else if ( mi->popup() )
 				w += 2 * arrowHMargin;
@@ -1779,7 +1782,7 @@ TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
 
 
 		default:
-			return KStyle::sizeFromContents( contents, widget, contentSize, opt );
+			return KStyle::tqsizeFromContents( contents, widget, contentSize, opt );
 	}
 }
 
@@ -1807,16 +1810,16 @@ bool HighContrastStyle::eventFilter (TQObject *object, TQEvent *event)
 					|| widget->inherits ("QSpinWidget")))
 		{
 			hoverWidget = widget;
-			widget->repaint (false);
+			widget->tqrepaint (false);
 		}
 		else if (event->type() == TQEvent::Leave
 					&& (widget->inherits ("QButton")
 						|| widget->inherits ("QComboBox")
 						|| widget->inherits ("QSpinWidget")))
 		{
-			if (object == hoverWidget)
+			if (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget))
 				hoverWidget = 0L;
-			widget->repaint (false);
+			widget->tqrepaint (false);
 		}
 		// Make sure the focus rectangle is shown correctly.
 		else if (event->type() == TQEvent::FocusIn || event->type() == TQEvent::FocusOut)
@@ -1830,9 +1833,9 @@ bool HighContrastStyle::eventFilter (TQObject *object, TQEvent *event)
 			}
 
 			if (widgetparent)
-				widgetparent->repaint (false);
+				widgetparent->tqrepaint (false);
 			else
-				widget->repaint (false);
+				widget->tqrepaint (false);
 		}
 	}
 	

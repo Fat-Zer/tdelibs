@@ -50,12 +50,12 @@ class KGuiItem;
  * This class provides KJanusWidget::TreeList, KJanusWidget::IconList,
  * KJanusWidget::Tabbed, KJanusWidget::Plain and KJanusWidget::Swallow layouts.
  *
- * For all modes it is important that you specify the TQWidget::minimumSize()
+ * For all modes it is important that you specify the TQWidget::tqminimumSize()
  * on the page, plain widget or the swallowed widget. If you use a QLayout
  * on the page, plain widget or the swallowed widget this will be taken care
  * of automatically. The size is used when the KJanusWidget determines its
  * own minimum size. You get the minimum size by using the
- * minimumSizeHint() or sizeHint() methods.
+ * tqminimumSizeHint() or tqsizeHint() methods.
  *
  * Pages that have been added in TreeList, IconList or Tabbed mode can be
  * removed by simply deleting the page. However, it would be preferable to use
@@ -64,7 +64,7 @@ class KGuiItem;
  *
  * @author Espen Sand (espen@kde.org)
  */
-class KDEUI_EXPORT KJanusWidget : public QWidget
+class KDEUI_EXPORT KJanusWidget : public TQWidget
 {
   Q_OBJECT
 
@@ -77,8 +77,8 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
         IconListBox( TQWidget *parent=0, const char *name=0, WFlags f=0 );
 	void updateMinimumHeight();
 	void updateWidth();
-	void invalidateHeight();
-	void invalidateWidth();
+	void tqinvalidateHeight();
+	void tqinvalidateWidth();
 	void setShowAll( bool showAll );
 
       protected:
@@ -186,7 +186,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *
      * @return The minimum size.
      */
-    virtual TQSize minimumSizeHint() const;
+    virtual TQSize tqminimumSizeHint() const;
 
     /**
      * Returns the recommended size for the widget in order to be displayed
@@ -194,7 +194,7 @@ class KDEUI_EXPORT KJanusWidget : public QWidget
      *
      * @return The recommended size.
      */
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 
     /**
      * Returns the empty widget that is available in Plain mode.

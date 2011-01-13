@@ -504,7 +504,11 @@ public:
    * This call is not supported on sockets. Reimplemented from TQIODevice.
    * This will always return 0.
    */
+#ifdef USE_QT4
+  virtual qint64 size() const
+#else // USE_QT4
   virtual Offset size() const
+#endif // USE_QT4
   { return 0; }
 
   /**
@@ -533,7 +537,7 @@ public:
    * blocking.
    */
 #ifdef USE_QT3
-  virtual Q_LONG bytesAvailable() const = 0;
+  virtual TQ_LONG bytesAvailable() const = 0;
 #endif
 #ifdef USE_QT4
   virtual qint64 bytesAvailable() const = 0;
@@ -550,7 +554,7 @@ public:
    *
    * @returns the number of bytes available
    */
-  virtual Q_LONG waitForMore(int msecs, bool *timeout = 0L) = 0;
+  virtual TQ_LONG waitForMore(int msecs, bool *timeout = 0L) = 0;
 
   /**
    * Reads data from the socket.
@@ -558,7 +562,7 @@ public:
    * Reimplemented from TQIODevice. See TQIODevice::readBlock for
    * more information.
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG len) = 0;
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG len) = 0;
 
   /** @overload
    * Receives data and the source address.
@@ -571,7 +575,7 @@ public:
    * @param from		the address of the sender will be stored here
    * @returns the actual number of bytes read
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen, KSocketAddress& from) = 0;
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from) = 0;
 
   /**
    * Peeks the data in the socket.
@@ -584,7 +588,7 @@ public:
    * @param maxlen		the maximum number of bytes to peek
    * @returns the actual number of bytes copied into @p data
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen) = 0;
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen) = 0;
 
   /** @overload
    * Peeks the data in the socket and the source address.
@@ -598,7 +602,7 @@ public:
    * @param from		the address of the sender will be stored here
    * @returns the actual number of bytes copied into @p data
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen, KSocketAddress& from) = 0;
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from) = 0;
 
   /**
    * Writes the given data to the socket.
@@ -606,7 +610,7 @@ public:
    * Reimplemented from TQIODevice. See TQIODevice::writeBlock for
    * more information.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len) = 0;
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len) = 0;
 
   /** @overload
    * Writes the given data to the destination address.
@@ -619,7 +623,7 @@ public:
    * @param to			the address to send to
    * @returns the number of bytes actually sent
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len, const KSocketAddress& to) = 0;
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to) = 0;
 
   /**
    * Reads one character from the socket.

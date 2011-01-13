@@ -39,7 +39,7 @@ class KJavaAppletContext;
 class KJavaAppletServerPrivate;
 class JSStackFrame;
 
-class KJavaAppletServer : public QObject
+class KJavaAppletServer : public TQObject
 {
 Q_OBJECT
 
@@ -161,7 +161,7 @@ private:
 };
 
 
-class PermissionDialog : public QObject
+class PermissionDialog : public TQObject
 {
     Q_OBJECT
 public:

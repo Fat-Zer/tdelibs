@@ -112,7 +112,7 @@ namespace KNotify
     };
 
     // Needed for displaying tooltips in the listview's QHeader
-    class KNotifyToolTip : public QToolTip
+    class KNotifyToolTip : public TQToolTip
     {
     public:
         KNotifyToolTip( TQHeader *header )
@@ -130,10 +130,10 @@ namespace KNotify
     protected:
         virtual void maybeTip ( const TQPoint& p )
         {
-            TQHeader *header = static_cast<TQHeader*>( parentWidget() );
+            TQHeader *header = static_cast<TQHeader*>( tqparentWidget() );
             int section = 0;
 
-            if ( header->orientation() == Horizontal )
+            if ( header->orientation() == Qt::Horizontal )
                 section= header->sectionAt( p.x() );
             else
                 section= header->sectionAt( p.y() );
@@ -181,7 +181,7 @@ KNotifyDialog::~KNotifyDialog()
 void KNotifyDialog::addApplicationEvents( const char *appName )
 {
     addApplicationEvents( TQString::fromUtf8( appName ) +
-                          TQString::fromLatin1( "/eventsrc" ) );
+                          TQString::tqfromLatin1( "/eventsrc" ) );
 }
 
 void KNotifyDialog::addApplicationEvents( const TQString& path )
@@ -514,7 +514,7 @@ void KNotifyWidget::updatePixmaps( ListViewItem *item )
 
 void KNotifyWidget::addVisibleApp( Application *app )
 {
-    if ( !app || (m_visibleApps.findRef( app ) != -1) )
+    if ( !app || (m_visibleApps.tqfindRef( app ) != -1) )
         return;
 
     m_visibleApps.append( app );
@@ -820,7 +820,7 @@ void KNotifyWidget::save()
     {
         if ( !kapp->dcopClient()->isAttached() )
             kapp->dcopClient()->attach();
-        kapp->dcopClient()->send("knotify", "", "reconfigure()", "");
+        kapp->dcopClient()->send("knotify", "", "reconfigure()", TQString(""));
     }
 
     emit changed( false );
@@ -830,8 +830,8 @@ void KNotifyWidget::save()
 // "/opt/kde3/share/apps/kwin/eventsrc"
 TQString KNotifyWidget::makeRelative( const TQString& fullPath )
 {
-    int slash = fullPath.findRev( '/' ) - 1;
-    slash = fullPath.findRev( '/', slash );
+    int slash = fullPath.tqfindRev( '/' ) - 1;
+    slash = fullPath.tqfindRev( '/', slash );
 
     if ( slash < 0 )
         return TQString::null;
@@ -1001,17 +1001,17 @@ void KNotifyWidget::enableAll( int what, bool enable )
 Application::Application( const TQString &path )
 {
     TQString config_file = path;
-    config_file[config_file.find('/')] = '.';
+    config_file[config_file.tqfind('/')] = '.';
     m_events = 0L;
     config = new KConfig(config_file, false, false);
     kc = new KConfig(path, true, false, "data");
-    kc->setGroup( TQString::fromLatin1("!Global!") );
-    m_icon = kc->readEntry(TQString::fromLatin1("IconName"),
-                           TQString::fromLatin1("misc"));
-    m_description = kc->readEntry( TQString::fromLatin1("Comment"),
+    kc->setGroup( TQString::tqfromLatin1("!Global!") );
+    m_icon = kc->readEntry(TQString::tqfromLatin1("IconName"),
+                           TQString::tqfromLatin1("misc"));
+    m_description = kc->readEntry( TQString::tqfromLatin1("Comment"),
                                    i18n("No description available") );
 
-    int index = path.find( '/' );
+    int index = path.tqfind( '/' );
     if ( index >= 0 )
         m_appname = path.left( index );
     else
@@ -1070,10 +1070,10 @@ void Application::reloadEvents( bool revertToDefaults )
 
     Event *e = 0L;
 
-    TQString global = TQString::fromLatin1("!Global!");
-    TQString default_group = TQString::fromLatin1("<default>");
-    TQString name = TQString::fromLatin1("Name");
-    TQString comment = TQString::fromLatin1("Comment");
+    TQString global = TQString::tqfromLatin1("!Global!");
+    TQString default_group = TQString::tqfromLatin1("<default>");
+    TQString name = TQString::tqfromLatin1("Name");
+    TQString comment = TQString::tqfromLatin1("Comment");
 
     TQStringList conflist = kc->groupList();
     TQStringList::ConstIterator it = conflist.begin();

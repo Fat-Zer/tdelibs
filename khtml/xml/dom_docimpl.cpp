@@ -232,7 +232,7 @@ void ElementMappingCache::add(const TQString& id, ElementImpl* nd)
 {
     if (id.isEmpty()) return;
 
-    ItemInfo* info = m_dict.find(id);
+    ItemInfo* info = m_dict.tqfind(id);
     if (info)
     {
         info->ref++;
@@ -251,7 +251,7 @@ void ElementMappingCache::set(const TQString& id, ElementImpl* nd)
 {
     if (id.isEmpty()) return;
 
-    ItemInfo* info = m_dict.find(id);
+    ItemInfo* info = m_dict.tqfind(id);
     info->nd = nd;
 }
 
@@ -259,7 +259,7 @@ void ElementMappingCache::remove(const TQString& id, ElementImpl* nd)
 {
     if (id.isEmpty()) return;
 
-    ItemInfo* info = m_dict.find(id);
+    ItemInfo* info = m_dict.tqfind(id);
     info->ref--;
     if (info->ref == 0)
     {
@@ -276,13 +276,13 @@ void ElementMappingCache::remove(const TQString& id, ElementImpl* nd)
 bool ElementMappingCache::contains(const TQString& id)
 {
     if (id.isEmpty()) return false;
-    return m_dict.find(id);
+    return m_dict.tqfind(id);
 }
 
 ElementMappingCache::ItemInfo* ElementMappingCache::get(const TQString& id)
 {
     if (id.isEmpty()) return 0;
-    return m_dict.find(id);
+    return m_dict.tqfind(id);
 }
 
 static KStaticDeleter< TQPtrList<DocumentImpl> > s_changedDocumentsDeleter;
@@ -337,7 +337,7 @@ DocumentImpl::DocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v)
     m_namespaceMap = new IdNameMapping(1);
     TQString xhtml(XHTML_NAMESPACE);
     m_namespaceMap->names.insert(emptyNamespace, new DOMStringImpl(""));
-    m_namespaceMap->names.insert(xhtmlNamespace, new DOMStringImpl(xhtml.unicode(), xhtml.length()));
+    m_namespaceMap->names.insert(xhtmlNamespace, new DOMStringImpl(xhtml.tqunicode(), xhtml.length()));
     m_namespaceMap->names[emptyNamespace]->ref();
     m_namespaceMap->names[xhtmlNamespace]->ref();
     m_namespaceMap->count+=2;
@@ -1387,7 +1387,7 @@ void DocumentImpl::write( const TQString &text )
         if (m_view)
             m_view->part()->resetFromScript();
         m_tokenizer->setAutoClose();
-        write(TQString::fromLatin1("<html>"));
+        write(TQString::tqfromLatin1("<html>"));
     }
     m_tokenizer->write(text, false);
 }
@@ -1668,9 +1668,9 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
     {
         // get delay and url
         TQString str = content.string().stripWhiteSpace();
-        int pos = str.find(TQRegExp("[;,]"));
+        int pos = str.tqfind(TQRegExp("[;,]"));
         if ( pos == -1 )
-            pos = str.find(TQRegExp("[ \t]"));
+            pos = str.tqfind(TQRegExp("[ \t]"));
 
         bool ok = false;
 	int delay = kMax( 0, content.implementation()->toInt(&ok) );
@@ -1685,7 +1685,7 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
             pos++;
             while(pos < (int)str.length() && str[pos].isSpace()) pos++;
             str = str.mid(pos);
-            if(str.find("url", 0,  false ) == 0)  str = str.mid(3);
+            if(str.tqfind("url", 0,  false ) == 0)  str = str.mid(3);
             str = str.stripWhiteSpace();
             if ( str.length() && str[0] == '=' ) str = str.mid( 1 ).stripWhiteSpace();
             while(str.length() &&
@@ -1881,17 +1881,17 @@ NodeImpl::Id DocumentImpl::getId( NodeImpl::IdType _type, DOMStringImpl* _nsURI,
     TQString name = cs ? n.string() : n.string().upper();
 
     if (!_nsURI) {
-        id = (NodeImpl::Id)(long) map->ids.find( name );
+        id = (NodeImpl::Id)(long) map->ids.tqfind( name );
         if (!id && _type != NodeImpl::NamespaceId) {
-            id = (NodeImpl::Id)(long) map->ids.find( "aliases: " + name );
+            id = (NodeImpl::Id)(long) map->ids.tqfind( "aliases: " + name );
 	}
     } else {
-        id = (NodeImpl::Id)(long) map->ids.find( name );
+        id = (NodeImpl::Id)(long) map->ids.tqfind( name );
         if (!readonly && id && _prefix && _prefix->l) {
             // we were called in registration mode... check if the alias exists
             TQConstString px( _prefix->s, _prefix->l );
             TQString qn("aliases: " + (cs ? px.string() : px.string().upper()) + ":" + name);
-            if (!map->ids.find( qn )) {
+            if (!map->ids.tqfind( qn )) {
                 map->ids.insert( qn, (void*)id );
             }
         }
@@ -2690,7 +2690,7 @@ NodeListImpl::Cache* DOM::DocumentImpl::acquireCachedNodeListInfo(
 
     //Check to see if we have this sort of item cached.
     NodeListImpl::Cache* cached =
-        (type == NodeListImpl::UNCACHEABLE) ? 0 : m_nodeListCache.find(key.hash());
+        (type == NodeListImpl::UNCACHEABLE) ? 0 : m_nodeListCache.tqfind(key.hash());
 
     if (cached) {
         if (cached->key == key) {

@@ -139,7 +139,7 @@ KabKey::setKey(const TQCString& text)
   // ###########################################################################
 }
 
-QCString
+TQCString
 KabKey::getKey() const
 {
   // ###########################################################################
@@ -1729,7 +1729,7 @@ AddressBook::makeEntryFromVCard(const TQString&, Entry&)
   // ###########################################################################
 }
 
-QString
+TQString
 AddressBook::getStandardFileName()
 {
   // ###########################################################################
@@ -1814,7 +1814,7 @@ AddressBook::ErrorCode AddressBook::Entry::get(const char* fieldname, TQVariant&
     }
   if(fieldname==Fields[dummy++])
     { // the birthday
-      field=birthday.toString();
+      field=TQString(birthday.toString());
       return NoError;
     }
   if(fieldname==Fields[dummy++])

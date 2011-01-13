@@ -32,7 +32,7 @@
 namespace VCARD
 {
 
-KVCARD_EXPORT Q_UINT32 RTokenise(const char * str, const char * delim, TQStrList & l);
+KVCARD_EXPORT TQ_UINT32 RTokenise(const char * str, const char * delim, TQStrList & l);
 
 }
 

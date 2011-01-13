@@ -177,7 +177,7 @@ void KStartupInfo::got_message( const TQString& msg_P )
 namespace
 {
 class DelayedWindowEvent
-    : public QCustomEvent
+    : public TQCustomEvent
     {
     public:
 	DelayedWindowEvent( WId w_P )
@@ -234,7 +234,7 @@ void KStartupInfo::new_startup_info_internal( const KStartupInfoId& id_P,
         return;
     if( id_P.none())
         return;
-    if( d->startups.contains( id_P ))
+    if( d->startups.tqcontains( id_P ))
         { // already reported, update
         d->startups[ id_P ].update( data_P );
         d->startups[ id_P ].age = 0; // CHECKME
@@ -250,7 +250,7 @@ void KStartupInfo::new_startup_info_internal( const KStartupInfoId& id_P,
         emit gotStartupChange( id_P, d->startups[ id_P ] );
         return;
         }
-    if( d->silent_startups.contains( id_P ))
+    if( d->silent_startups.tqcontains( id_P ))
         { // already reported, update
         d->silent_startups[ id_P ].update( data_P );
         d->silent_startups[ id_P ].age = 0; // CHECKME
@@ -265,7 +265,7 @@ void KStartupInfo::new_startup_info_internal( const KStartupInfoId& id_P,
         emit gotStartupChange( id_P, d->silent_startups[ id_P ] );
         return;
         }
-    if( d->uninited_startups.contains( id_P ))
+    if( d->uninited_startups.tqcontains( id_P ))
         {
         d->uninited_startups[ id_P ].update( data_P );
         kdDebug( 172 ) << "updating uninited" << endl;
@@ -317,18 +317,18 @@ void KStartupInfo::remove_startup_info_internal( const KStartupInfoId& id_P )
     {
     if( d == NULL )
         return;
-    if( d->startups.contains( id_P ))
+    if( d->startups.tqcontains( id_P ))
         {
 	kdDebug( 172 ) << "removing" << endl;
 	emit gotRemoveStartup( id_P, d->startups[ id_P ]);
 	d->startups.remove( id_P );
 	}
-    else if( d->silent_startups.contains( id_P ))
+    else if( d->silent_startups.tqcontains( id_P ))
 	{
 	kdDebug( 172 ) << "removing silent" << endl;
 	d->silent_startups.remove( id_P );
 	}
-    else if( d->uninited_startups.contains( id_P ))
+    else if( d->uninited_startups.tqcontains( id_P ))
 	{
 	kdDebug( 172 ) << "removing uninited" << endl;
 	d->uninited_startups.remove( id_P );
@@ -360,11 +360,11 @@ void KStartupInfo::remove_startup_pids( const KStartupInfoId& id_P,
         return;
     kdFatal( data_P.pids().count() == 0, 172 );
     Data* data = NULL;
-    if( d->startups.contains( id_P ))
+    if( d->startups.tqcontains( id_P ))
 	data = &d->startups[ id_P ];
-    else if( d->silent_startups.contains( id_P ))
+    else if( d->silent_startups.tqcontains( id_P ))
 	data = &d->silent_startups[ id_P ];
-    else if( d->uninited_startups.contains( id_P ))
+    else if( d->uninited_startups.tqcontains( id_P ))
         data = &d->uninited_startups[ id_P ];
     else
 	return;
@@ -381,7 +381,7 @@ bool KStartupInfo::sendStartup( const KStartupInfoId& id_P, const KStartupInfoDa
     if( id_P.none())
         return false;
     KXMessages msgs;
-    TQString msg = TQString::fromLatin1( "new: %1 %2" )
+    TQString msg = TQString::tqfromLatin1( "new: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
     msg = check_required_startup_fields( msg, data_P, qt_xscreen());
     kdDebug( 172 ) << "sending " << msg << endl;
@@ -394,7 +394,7 @@ bool KStartupInfo::sendStartupX( Display* disp_P, const KStartupInfoId& id_P,
     {
     if( id_P.none())
         return false;
-    TQString msg = TQString::fromLatin1( "new: %1 %2" )
+    TQString msg = TQString::tqfromLatin1( "new: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
     msg = check_required_startup_fields( msg, data_P, DefaultScreen( disp_P ));
 #ifdef KSTARTUPINFO_ALL_DEBUG
@@ -425,7 +425,7 @@ bool KStartupInfo::sendChange( const KStartupInfoId& id_P, const KStartupInfoDat
     if( id_P.none())
         return false;
     KXMessages msgs;
-    TQString msg = TQString::fromLatin1( "change: %1 %2" )
+    TQString msg = TQString::tqfromLatin1( "change: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
     kdDebug( 172 ) << "sending " << msg << endl;
     msgs.broadcastMessage( NET_STARTUP_MSG, msg, -1, false );
@@ -437,7 +437,7 @@ bool KStartupInfo::sendChangeX( Display* disp_P, const KStartupInfoId& id_P,
     {
     if( id_P.none())
         return false;
-    TQString msg = TQString::fromLatin1( "change: %1 %2" )
+    TQString msg = TQString::tqfromLatin1( "change: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
 #ifdef KSTARTUPINFO_ALL_DEBUG
     kdDebug( 172 ) << "sending " << msg << endl;
@@ -450,7 +450,7 @@ bool KStartupInfo::sendFinish( const KStartupInfoId& id_P )
     if( id_P.none())
         return false;
     KXMessages msgs;
-    TQString msg = TQString::fromLatin1( "remove: %1" ).arg( id_P.to_text());
+    TQString msg = TQString::tqfromLatin1( "remove: %1" ).arg( id_P.to_text());
     kdDebug( 172 ) << "sending " << msg << endl;
     msgs.broadcastMessage( NET_STARTUP_MSG, msg, -1, false );
     return true;
@@ -460,7 +460,7 @@ bool KStartupInfo::sendFinishX( Display* disp_P, const KStartupInfoId& id_P )
     {
     if( id_P.none())
         return false;
-    TQString msg = TQString::fromLatin1( "remove: %1" ).arg( id_P.to_text());
+    TQString msg = TQString::tqfromLatin1( "remove: %1" ).arg( id_P.to_text());
 #ifdef KSTARTUPINFO_ALL_DEBUG
     kdDebug( 172 ) << "sending " << msg << endl;
 #endif
@@ -472,7 +472,7 @@ bool KStartupInfo::sendFinish( const KStartupInfoId& id_P, const KStartupInfoDat
 //    if( id_P.none()) // id may be none, the pids and hostname matter then
 //        return false;
     KXMessages msgs;
-    TQString msg = TQString::fromLatin1( "remove: %1 %2" )
+    TQString msg = TQString::tqfromLatin1( "remove: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
     kdDebug( 172 ) << "sending " << msg << endl;
     msgs.broadcastMessage( NET_STARTUP_MSG, msg, -1, false );
@@ -484,7 +484,7 @@ bool KStartupInfo::sendFinishX( Display* disp_P, const KStartupInfoId& id_P,
     {
 //    if( id_P.none()) // id may be none, the pids and hostname matter then
 //        return false;
-    TQString msg = TQString::fromLatin1( "remove: %1 %2" )
+    TQString msg = TQString::tqfromLatin1( "remove: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
 #ifdef KSTARTUPINFO_ALL_DEBUG
     kdDebug( 172 ) << "sending " << msg << endl;
@@ -669,7 +669,7 @@ bool KStartupInfo::find_id( const TQCString& id_P, KStartupInfoId* id_O,
     kdDebug( 172 ) << "find_id:" << id_P << endl;
     KStartupInfoId id;
     id.initId( id_P );
-    if( d->startups.contains( id ))
+    if( d->startups.tqcontains( id ))
         {
         if( id_O != NULL )
             *id_O = id;
@@ -790,7 +790,7 @@ void KStartupInfo::setWindowStartupId( WId w_P, const TQCString& id_P )
     if( utf8_string_atom == None )
         utf8_string_atom = XInternAtom( qt_xdisplay(), "UTF8_STRING", False );
     XChangeProperty( qt_xdisplay(), w_P, net_startup_atom, utf8_string_atom, 8,
-        PropModeReplace, reinterpret_cast< unsigned char* >( id_P.data()), id_P.length());
+        PropModeReplace, reinterpret_cast< unsigned char* >( const_cast<TQCString&>(id_P).data()), id_P.length());
 #endif
     }
 
@@ -939,9 +939,9 @@ TQCString KStartupInfo::createNewStartupId()
 #else
     unsigned long qt_x_user_time = 0;
 #endif
-    TQCString id = TQString( "%1;%2;%3;%4_TIME%5" ).arg( hostname ).arg( tm.tv_sec )
-        .arg( tm.tv_usec ).arg( getpid()).arg( qt_x_user_time ).utf8();
-    kdDebug( 172 ) << "creating: " << id << ":" << qAppName() << endl;
+    TQCString id = TQString(TQString( "%1;%2;%3;%4_TIME%5" ).arg( hostname ).arg( tm.tv_sec )
+        .arg( tm.tv_usec ).arg( getpid()).arg( qt_x_user_time )).utf8();
+    kdDebug( 172 ) << "creating: " << id << ":" << tqAppName() << endl;
     return id;
     }
 
@@ -960,14 +960,14 @@ const TQCString& KStartupInfoId::id() const
 
 TQString KStartupInfoId::to_text() const
     {
-    return TQString::fromLatin1( " ID=\"%1\" " ).arg( escape_str( id()));
+    return TQString::tqfromLatin1( " ID=\"%1\" " ).arg( escape_str( id()));
     }
 
 KStartupInfoId::KStartupInfoId( const TQString& txt_P )
     {
     d = new KStartupInfoIdPrivate;
     TQStringList items = get_fields( txt_P );
-    const TQString id_str = TQString::fromLatin1( "ID=" );
+    const TQString id_str = TQString::tqfromLatin1( "ID=" );
     for( TQStringList::Iterator it = items.begin();
          it != items.end();
          ++it )
@@ -1074,7 +1074,7 @@ unsigned long KStartupInfoId::timestamp() const
     {
     if( none())
         return 0;
-    int pos = d->id.findRev( "_TIME" );
+    int pos = d->id.tqfindRev( "_TIME" );
     if( pos >= 0 )
         {
         bool ok;
@@ -1088,10 +1088,10 @@ unsigned long KStartupInfoId::timestamp() const
     // snprintf (s, len, "%s/%s/%lu/%d-%d-%s",
     //   canonicalized_launcher, canonicalized_launchee, (unsigned long) timestamp,
     //  (int) getpid (), (int) sequence_number, hostbuf);
-    int pos1 = d->id.findRev( '/' );
+    int pos1 = d->id.tqfindRev( '/' );
     if( pos1 > 0 )
         {
-        int pos2 = d->id.findRev( '/', pos1 - 1 );
+        int pos2 = d->id.tqfindRev( '/', pos1 - 1 );
         if( pos2 >= 0 )
             {
             bool ok;
@@ -1129,34 +1129,34 @@ TQString KStartupInfoData::to_text() const
     {
     TQString ret = "";
     if( !d->bin.isEmpty())
-        ret += TQString::fromLatin1( " BIN=\"%1\"" ).arg( escape_str( d->bin ));
+        ret += TQString::tqfromLatin1( " BIN=\"%1\"" ).arg( escape_str( d->bin ));
     if( !d->name.isEmpty())
-        ret += TQString::fromLatin1( " NAME=\"%1\"" ).arg( escape_str( d->name ));
+        ret += TQString::tqfromLatin1( " NAME=\"%1\"" ).arg( escape_str( d->name ));
     if( !d->description.isEmpty())
-        ret += TQString::fromLatin1( " DESCRIPTION=\"%1\"" ).arg( escape_str( d->description ));
+        ret += TQString::tqfromLatin1( " DESCRIPTION=\"%1\"" ).arg( escape_str( d->description ));
     if( !d->icon.isEmpty())
-        ret += TQString::fromLatin1( " ICON=%1" ).arg( d->icon );
+        ret += TQString::tqfromLatin1( " ICON=%1" ).arg( d->icon );
     if( d->desktop != 0 )
-        ret += TQString::fromLatin1( " DESKTOP=%1" )
+        ret += TQString::tqfromLatin1( " DESKTOP=%1" )
             .arg( d->desktop == NET::OnAllDesktops ? NET::OnAllDesktops : d->desktop - 1 ); // spec counts from 0
     if( !d->wmclass.isEmpty())
-        ret += TQString::fromLatin1( " WMCLASS=\"%1\"" ).arg( QString(d->wmclass) );
+        ret += TQString::tqfromLatin1( " WMCLASS=\"%1\"" ).arg( QString(d->wmclass) );
     if( !d->hostname.isEmpty())
-        ret += TQString::fromLatin1( " HOSTNAME=%1" ).arg( QString(d->hostname) );
+        ret += TQString::tqfromLatin1( " HOSTNAME=%1" ).arg( QString(d->hostname) );
     for( TQValueList< pid_t >::ConstIterator it = d->pids.begin();
          it != d->pids.end();
          ++it )
-        ret += TQString::fromLatin1( " PID=%1" ).arg( *it );
+        ret += TQString::tqfromLatin1( " PID=%1" ).arg( *it );
     if( d->silent != Unknown )
-	ret += TQString::fromLatin1( " SILENT=%1" ).arg( d->silent == Yes ? 1 : 0 );
+	ret += TQString::tqfromLatin1( " SILENT=%1" ).arg( d->silent == Yes ? 1 : 0 );
     if( d->timestamp != -1U )
-        ret += TQString::fromLatin1( " TIMESTAMP=%1" ).arg( d->timestamp );
+        ret += TQString::tqfromLatin1( " TIMESTAMP=%1" ).arg( d->timestamp );
     if( d->screen != -1 )
-        ret += TQString::fromLatin1( " SCREEN=%1" ).arg( d->screen );
+        ret += TQString::tqfromLatin1( " SCREEN=%1" ).arg( d->screen );
     if( d->xinerama != -1 )
-        ret += TQString::fromLatin1( " XINERAMA=%1" ).arg( d->xinerama );
+        ret += TQString::tqfromLatin1( " XINERAMA=%1" ).arg( d->xinerama );
     if( d->launched_by != 0 )
-        ret += TQString::fromLatin1( " LAUNCHED_BY=%1" ).arg( d->launched_by );
+        ret += TQString::tqfromLatin1( " LAUNCHED_BY=%1" ).arg( d->launched_by );
     return ret;
     }
 
@@ -1164,19 +1164,19 @@ KStartupInfoData::KStartupInfoData( const TQString& txt_P )
     {
     d = new KStartupInfoDataPrivate;
     TQStringList items = get_fields( txt_P );
-    const TQString bin_str = TQString::fromLatin1( "BIN=" );
-    const TQString name_str = TQString::fromLatin1( "NAME=" );
-    const TQString description_str = TQString::fromLatin1( "DESCRIPTION=" );
-    const TQString icon_str = TQString::fromLatin1( "ICON=" );
-    const TQString desktop_str = TQString::fromLatin1( "DESKTOP=" );
-    const TQString wmclass_str = TQString::fromLatin1( "WMCLASS=" );
-    const TQString hostname_str = TQString::fromLatin1( "HOSTNAME=" ); // SELI nonstd
-    const TQString pid_str = TQString::fromLatin1( "PID=" );  // SELI nonstd
-    const TQString silent_str = TQString::fromLatin1( "SILENT=" );
-    const TQString timestamp_str = TQString::fromLatin1( "TIMESTAMP=" );
-    const TQString screen_str = TQString::fromLatin1( "SCREEN=" );
-    const TQString xinerama_str = TQString::fromLatin1( "XINERAMA=" );
-    const TQString launched_by_str = TQString::fromLatin1( "LAUNCHED_BY=" );
+    const TQString bin_str = TQString::tqfromLatin1( "BIN=" );
+    const TQString name_str = TQString::tqfromLatin1( "NAME=" );
+    const TQString description_str = TQString::tqfromLatin1( "DESCRIPTION=" );
+    const TQString icon_str = TQString::tqfromLatin1( "ICON=" );
+    const TQString desktop_str = TQString::tqfromLatin1( "DESKTOP=" );
+    const TQString wmclass_str = TQString::tqfromLatin1( "WMCLASS=" );
+    const TQString hostname_str = TQString::tqfromLatin1( "HOSTNAME=" ); // SELI nonstd
+    const TQString pid_str = TQString::tqfromLatin1( "PID=" );  // SELI nonstd
+    const TQString silent_str = TQString::tqfromLatin1( "SILENT=" );
+    const TQString timestamp_str = TQString::tqfromLatin1( "TIMESTAMP=" );
+    const TQString screen_str = TQString::tqfromLatin1( "SCREEN=" );
+    const TQString xinerama_str = TQString::tqfromLatin1( "XINERAMA=" );
+    const TQString launched_by_str = TQString::tqfromLatin1( "LAUNCHED_BY=" );
     for( TQStringList::Iterator it = items.begin();
          it != items.end();
          ++it )
@@ -1379,7 +1379,7 @@ const TQCString& KStartupInfoData::hostname() const
 
 void KStartupInfoData::addPid( pid_t pid_P )
     {
-    if( !d->pids.contains( pid_P ))
+    if( !d->pids.tqcontains( pid_P ))
         d->pids.append( pid_P );
     }
 
@@ -1395,7 +1395,7 @@ const TQValueList< pid_t >& KStartupInfoData::pids() const
 
 bool KStartupInfoData::is_pid( pid_t pid_P ) const
     {
-    return d->pids.contains( pid_P );
+    return d->pids.tqcontains( pid_P );
     }
 
 void KStartupInfoData::setSilent( TriState state_P )
@@ -1451,24 +1451,24 @@ WId KStartupInfoData::launchedBy() const
 static
 long get_num( const TQString& item_P )
     {
-    unsigned int pos = item_P.find( '=' );
+    unsigned int pos = item_P.tqfind( '=' );
     return item_P.mid( pos + 1 ).toLong();
     }
 
 static
 unsigned long get_unum( const TQString& item_P )
     {
-    unsigned int pos = item_P.find( '=' );
+    unsigned int pos = item_P.tqfind( '=' );
     return item_P.mid( pos + 1 ).toULong();
     }
 
 static
 TQString get_str( const TQString& item_P )
     {
-    unsigned int pos = item_P.find( '=' );
+    unsigned int pos = item_P.tqfind( '=' );
     if( item_P.length() > pos + 2 && item_P[ pos + 1 ] == (QChar)'\"' )
         {
-        int pos2 = item_P.left( pos + 2 ).find( '\"' );
+        int pos2 = item_P.left( pos + 2 ).tqfind( '\"' );
         if( pos2 < 0 )
             return TQString::null;                      // 01234
         return item_P.mid( pos + 2, pos2 - 2 - pos );  // A="C"

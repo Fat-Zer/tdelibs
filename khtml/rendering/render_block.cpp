@@ -635,7 +635,7 @@ void RenderBlock::layoutBlock(bool relayoutChildren)
     }
 
     if (markedForRepaint()) {
-        repaintDuringLayout();
+        tqrepaintDuringLayout();
         setMarkedForRepaint(false);
     }
 
@@ -881,7 +881,7 @@ static inline bool isAnonymousWhitespace( RenderObject* o ) {
         return false;
     RenderObject *fc = o->firstChild();
     return fc && fc == o->lastChild() && fc->isText() && static_cast<RenderText *>(fc)->stringLength() == 1 &&
-           static_cast<RenderText *>(fc)->text()[0].unicode() == ' ';
+           static_cast<RenderText *>(fc)->text()[0].tqunicode() == ' ';
 }
 
 RenderObject* RenderBlock::handleCompactChild(RenderObject* child, CompactInfo& compactInfo, const MarginInfo& marginInfo, bool& handled)
@@ -1581,7 +1581,7 @@ void RenderBlock::layoutPositionedObjects(bool relayoutChildren)
         for ( ; (r = it.current()); ++it ) {
             //kdDebug(6040) << "   have a positioned object" << endl;
             if (r->markedForRepaint()) {
-                r->repaintDuringLayout();
+                r->tqrepaintDuringLayout();
                 r->setMarkedForRepaint(false);
             }
             if ( relayoutChildren || r->style()->position() == FIXED ||

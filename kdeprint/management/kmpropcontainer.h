@@ -26,7 +26,7 @@ class KMPropWidget;
 class TQPushButton;
 class KMPrinter;
 
-class KMPropContainer : public QWidget
+class KMPropContainer : public TQWidget
 {
 	Q_OBJECT
 public:

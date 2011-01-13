@@ -1391,7 +1391,7 @@ private:
  *  PreferredItems=Items,Size
  *  @endcode
  **/
-class KIO_EXPORT KFilePlugin : public QObject
+class KIO_EXPORT KFilePlugin : public TQObject
 {
     Q_OBJECT
 

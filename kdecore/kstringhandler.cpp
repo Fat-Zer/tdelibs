@@ -22,7 +22,7 @@
 
 static void parsePythonRange( const TQCString &range, uint &start, uint &end )
 {
-    const int colon = range.find( ':' );
+    const int colon = range.tqfind( ':' );
     if ( colon == -1 ) {
         start = range.toUInt();
         end = start;
@@ -178,7 +178,7 @@ TQString KStringHandler::remword( const TQString &text , const TQString &word )
     // Split words and add into list
     TQStringList list = TQStringList::split( " ", text, true );
 
-    TQStringList::Iterator it = list.find(word);
+    TQStringList::Iterator it = list.tqfind(word);
 
     if (it != list.end())
        list.remove( it );
@@ -422,11 +422,11 @@ bool KStringHandler::matchFileName( const TQString& filename, const TQString& pa
    if ( pattern[ pattern_len - 1 ] == (QChar)'*' && len + 1 >= pattern_len ) {
       if ( pattern[ 0 ] == (QChar)'*' )
       {
-         return filename.find(pattern.mid(1, pattern_len - 2)) != -1;
+         return filename.tqfind(pattern.mid(1, pattern_len - 2)) != -1;
       }
 
-      const TQChar *c1 = pattern.unicode();
-      const TQChar *c2 = filename.unicode();
+      const TQChar *c1 = pattern.tqunicode();
+      const TQChar *c2 = filename.tqunicode();
       int cnt = 1;
       while ( cnt < pattern_len && *c1++ == *c2++ )
          ++cnt;
@@ -436,8 +436,8 @@ bool KStringHandler::matchFileName( const TQString& filename, const TQString& pa
    // Patterns like "*~", "*.extension"
    if ( pattern[ 0 ] == (QChar)'*' && len + 1 >= pattern_len )
    {
-     const TQChar *c1 = pattern.unicode() + pattern_len - 1;
-     const TQChar *c2 = filename.unicode() + len - 1;
+     const TQChar *c1 = pattern.tqunicode() + pattern_len - 1;
+     const TQChar *c2 = filename.tqunicode() + len - 1;
      int cnt = 1;
      while ( cnt < pattern_len && *c1-- == *c2-- )
         ++cnt;
@@ -457,7 +457,7 @@ KStringHandler::perlSplit(const TQString & sep, const TQString & s, uint max)
 
   int searchStart = 0;
 
-  int tokenStart = s.find(sep, searchStart);
+  int tokenStart = s.tqfind(sep, searchStart);
 
   while (-1 != tokenStart && (ignoreMax || l.count() < max - 1))
   {
@@ -465,7 +465,7 @@ KStringHandler::perlSplit(const TQString & sep, const TQString & s, uint max)
       l << s.mid(searchStart, tokenStart - searchStart);
 
     searchStart = tokenStart + sep.length();
-    tokenStart = s.find(sep, searchStart);
+    tokenStart = s.tqfind(sep, searchStart);
   }
 
   if (!s.mid(searchStart, s.length() - searchStart).isEmpty())
@@ -483,7 +483,7 @@ KStringHandler::perlSplit(const TQChar & sep, const TQString & s, uint max)
 
   int searchStart = 0;
 
-  int tokenStart = s.find(sep, searchStart);
+  int tokenStart = s.tqfind(sep, searchStart);
 
   while (-1 != tokenStart && (ignoreMax || l.count() < max - 1))
   {
@@ -491,7 +491,7 @@ KStringHandler::perlSplit(const TQChar & sep, const TQString & s, uint max)
       l << s.mid(searchStart, tokenStart - searchStart);
 
     searchStart = tokenStart + 1;
-    tokenStart = s.find(sep, searchStart);
+    tokenStart = s.tqfind(sep, searchStart);
   }
 
   if (!s.mid(searchStart, s.length() - searchStart).isEmpty())
@@ -527,7 +527,7 @@ KStringHandler::perlSplit(const TQRegExp & sep, const TQString & s, uint max)
   return l;
 }
 
- QString
+TQString
 KStringHandler::tagURLs( const TQString& text )
 {
     /*static*/ TQRegExp urlEx("(www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)[\\d\\w\\./,:_~\\?=&;#@\\-\\+\\%\\$]+[\\d\\w/]");
@@ -556,10 +556,10 @@ KStringHandler::tagURLs( const TQString& text )
 TQString KStringHandler::obscure( const TQString &str )
 {
   TQString result;
-  const TQChar *unicode = str.unicode();
+  const TQChar *tqunicode = str.tqunicode();
   for ( uint i = 0; i < str.length(); ++i )
-    result += ( unicode[ i ].unicode() < 0x21 ) ? unicode[ i ] :
-        TQChar( 0x1001F - unicode[ i ].unicode() );
+    result += ( tqunicode[ i ].tqunicode() < 0x21 ) ? tqunicode[ i ] :
+        TQChar( 0x1001F - tqunicode[ i ].tqunicode() );
 
   return result;
 }

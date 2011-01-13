@@ -56,7 +56,7 @@ static bool kdither_32_to_8( const TQImage *src, TQImage *dst )
         for ( gc=0; gc<=MAX_G; gc++ )
 	    for ( bc=0; bc<=MAX_B; bc++ ) {
 		dst->setColor( INDEXOF(rc,gc,bc),
-		qRgb( rc*255/MAX_R, gc*255/MAX_G, bc*255/MAX_B ) );
+		tqRgb( rc*255/MAX_R, gc*255/MAX_G, bc*255/MAX_B ) );
 	    }	
 
     int sw = src->width();
@@ -79,8 +79,8 @@ static bool kdither_32_to_8( const TQImage *src, TQImage *dst )
 	b = dst->scanLine(y);
 	int endian = (TQImage::systemBitOrder() == TQImage::BigEndian);
 	int x;
-	uchar* q = src->scanLine(y);
-	uchar* q2 = src->scanLine(y+1 < src->height() ? y + 1 : 0);
+	uchar* q = const_cast<TQImage*>(src)->scanLine(y);
+	uchar* q2 = const_cast<TQImage*>(src)->scanLine(y+1 < src->height() ? y + 1 : 0);
 
 	for (int chan = 0; chan < 3; chan++) {
 	    b = dst->scanLine(y);
@@ -293,26 +293,26 @@ bool KPixmap::checkColorTable( const TQImage &image )
     int i = 0;
 
     if (kpixmap_iconPalette == 0) {
-	kpixmap_iconPalette = new QColor[40];
+	kpixmap_iconPalette = new TQColor[40];
 	
 	// Standard palette
-	kpixmap_iconPalette[i++] = tqred;
-	kpixmap_iconPalette[i++] = tqgreen;
-	kpixmap_iconPalette[i++] = tqblue;
-	kpixmap_iconPalette[i++] = tqcyan;
-	kpixmap_iconPalette[i++] = tqmagenta;
-	kpixmap_iconPalette[i++] = tqyellow;
-	kpixmap_iconPalette[i++] = tqdarkRed;
-	kpixmap_iconPalette[i++] = tqdarkGreen;
-	kpixmap_iconPalette[i++] = tqdarkBlue;
-	kpixmap_iconPalette[i++] = tqdarkCyan;
-	kpixmap_iconPalette[i++] = tqdarkMagenta;
-	kpixmap_iconPalette[i++] = tqdarkYellow;
-	kpixmap_iconPalette[i++] = tqwhite;
-	kpixmap_iconPalette[i++] = tqlightGray;
-	kpixmap_iconPalette[i++] = tqgray;
-	kpixmap_iconPalette[i++] = tqdarkGray;
-	kpixmap_iconPalette[i++] = tqblack;
+	kpixmap_iconPalette[i++] = red;
+	kpixmap_iconPalette[i++] = green;
+	kpixmap_iconPalette[i++] = blue;
+	kpixmap_iconPalette[i++] = cyan;
+	kpixmap_iconPalette[i++] = magenta;
+	kpixmap_iconPalette[i++] = yellow;
+	kpixmap_iconPalette[i++] = darkRed;
+	kpixmap_iconPalette[i++] = darkGreen;
+	kpixmap_iconPalette[i++] = darkBlue;
+	kpixmap_iconPalette[i++] = darkCyan;
+	kpixmap_iconPalette[i++] = darkMagenta;
+	kpixmap_iconPalette[i++] = darkYellow;
+	kpixmap_iconPalette[i++] = white;
+	kpixmap_iconPalette[i++] = lightGray;
+	kpixmap_iconPalette[i++] = gray;
+	kpixmap_iconPalette[i++] = darkGray;
+	kpixmap_iconPalette[i++] = black;
 	
 	// Pastels
 	kpixmap_iconPalette[i++] = TQColor( 255, 192, 192 );
@@ -367,9 +367,9 @@ bool KPixmap::checkColorTable( const TQImage &image )
 
     for ( i=0; i<ncols; i++ ) {
 	for ( j=0; j<40; j++ ) {
-	    if ( kpixmap_iconPalette[j].red() == qRed( ctable[i] ) &&
-		 kpixmap_iconPalette[j].green() == qGreen( ctable[i] ) &&
-		 kpixmap_iconPalette[j].blue() == qBlue( ctable[i] ) ) {
+	    if ( kpixmap_iconPalette[j].red() == tqRed( ctable[i] ) &&
+		 kpixmap_iconPalette[j].green() == tqGreen( ctable[i] ) &&
+		 kpixmap_iconPalette[j].blue() == tqBlue( ctable[i] ) ) {
 		break;
 	    }
 	}

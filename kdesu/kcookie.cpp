@@ -54,7 +54,7 @@ QCStringList KCookie::split(const TQCString &line, char ch)
     QCStringList result;
 
     int i=0, pos;
-    while ((pos = line.find(ch, i)) != -1) 
+    while ((pos = line.tqfind(ch, i)) != -1) 
     {
 	result += line.mid(i, pos-i);
 	i = pos+1;

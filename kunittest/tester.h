@@ -359,7 +359,7 @@ using namespace std;
  *
  * @code SKIP("Test skipped because of lack of foo support."); @endcode
  */
-#define SKIP( x ) skip( __FILE__, __LINE__, TQString::fromLatin1(#x))
+#define SKIP( x ) skip( __FILE__, __LINE__, TQString::tqfromLatin1(#x))
 
 /*!
  * A macro testing that @p expression throws an exception that is catched
@@ -519,7 +519,7 @@ namespace KUnitTest
      *
      * @see CHECK, XFAIL, SKIP
      */
-    class KUNITTEST_EXPORT Tester : public QObject
+    class KUNITTEST_EXPORT Tester : public TQObject
     {
     public:
         Tester(const char *name = 0L)

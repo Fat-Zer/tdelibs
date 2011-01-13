@@ -96,7 +96,7 @@ static void findMenuEntry(KServiceGroup::Ptr parent, const TQString &name, const
                DCOPRef kicker( "kicker", "kicker" );
                bool result = kicker.call( "highlightMenuItem", menuId );
                if (!result)
-                  error(3, i18n("Menu item '%1' could not be highlighted.").arg(menuId).local8Bit());
+                  error(3, TQString(i18n("Menu item '%1' could not be highlighted.").arg(menuId)).local8Bit());
             }
             exit(0);
          }

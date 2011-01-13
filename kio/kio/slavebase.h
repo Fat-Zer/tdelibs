@@ -618,10 +618,10 @@ public:
      * KIO::AuthInfo authInfo;
      * if ( openPassDlg( authInfo ) )
      * {
-     *    kdDebug() << TQString::fromLatin1("User: ")
+     *    kdDebug() << TQString::tqfromLatin1("User: ")
      *              << authInfo.username << endl;
-     *    kdDebug() << TQString::fromLatin1("Password: ")
-     *              << TQString::fromLatin1("Not displayed here!") << endl;
+     *    kdDebug() << TQString::tqfromLatin1("Password: ")
+     *              << TQString::tqfromLatin1("Not displayed here!") << endl;
      * }
      * \endcode
      *
@@ -635,10 +635,10 @@ public:
      * TQString errorMsg = "You entered an incorrect password.";
      * if ( openPassDlg( authInfo, errorMsg ) )
      * {
-     *    kdDebug() << TQString::fromLatin1("User: ")
+     *    kdDebug() << TQString::tqfromLatin1("User: ")
      *              << authInfo.username << endl;
-     *    kdDebug() << TQString::fromLatin1("Password: ")
-     *              << TQString::fromLatin1("Not displayed here!") << endl;
+     *    kdDebug() << TQString::tqfromLatin1("Password: ")
+     *              << TQString::tqfromLatin1("Not displayed here!") << endl;
      * }
      * \endcode
      *

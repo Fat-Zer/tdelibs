@@ -125,7 +125,7 @@ void ResourceLDAPKIO::enter_loop()
   TQWidget dummy(0,0,WType_Dialog | WShowModal);
   dummy.setFocusPolicy( TQWidget::NoFocus );
   qt_enter_modal(&dummy);
-  qApp->enter_loop();
+  tqApp->enter_loop();
   qt_leave_modal(&dummy);
 }
 
@@ -154,7 +154,7 @@ void ResourceLDAPKIO::listResult( KIO::Job *job)
     mErrorMsg = job->errorString();
   else 
     mErrorMsg = "";
-  qApp->exit_loop();
+  tqApp->exit_loop();
 }
 
 TQString ResourceLDAPKIO::findUid( const TQString &uid ) 
@@ -766,7 +766,7 @@ void ResourceLDAPKIO::syncLoadSaveResult( KIO::Job *job )
     mErrorMsg = "";
   activateCache();
   
-  qApp->exit_loop();
+  tqApp->exit_loop();
 }
 
 void ResourceLDAPKIO::saveResult( KIO::Job *job )

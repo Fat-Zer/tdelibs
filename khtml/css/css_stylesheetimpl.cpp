@@ -235,7 +235,7 @@ void CSSStyleSheetImpl::addNamespace(CSSParser* p, const DOM::DOMString& prefix,
     }
 }
 
-void CSSStyleSheetImpl::determineNamespace(Q_UINT32& id, const DOM::DOMString& prefix)
+void CSSStyleSheetImpl::determineNamespace(TQ_UINT32& id, const DOM::DOMString& prefix)
 {
     // If the stylesheet has no namespaces we can just return.  There won't be any need to ever check
     // namespace values in selectors.
@@ -253,7 +253,7 @@ void CSSStyleSheetImpl::determineNamespace(Q_UINT32& id, const DOM::DOMString& p
             Q_ASSERT(m_doc != 0);
 
             // Look up the id for this namespace URI.
-            Q_UINT16 nsid = m_doc->getId(NodeImpl::NamespaceId, 0, 0, ns->uri().implementation(), false, false, &exceptioncode);
+            TQ_UINT16 nsid = m_doc->getId(NodeImpl::NamespaceId, 0, 0, ns->uri().implementation(), false, false, &exceptioncode);
             id = makeId(nsid, localNamePart(id));
         }
     }

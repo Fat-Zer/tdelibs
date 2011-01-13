@@ -118,7 +118,7 @@ KPopupMenu* KHelpMenu::menu()
     // compatible.
     //
     const KAboutData *aboutData = d->mAboutData ? d->mAboutData : KGlobal::instance()->aboutData();
-    TQString appName = (aboutData)? aboutData->programName() : TQString::fromLatin1(qApp->name());
+    TQString appName = (aboutData)? aboutData->programName() : TQString::tqfromLatin1(tqApp->name());
 
     mMenu = new KPopupMenu();
     connect( mMenu, TQT_SIGNAL(destroyed()), this, TQT_SLOT(menuDestroyed()));
@@ -127,7 +127,7 @@ KPopupMenu* KHelpMenu::menu()
     if (kapp->authorizeKAction("help_contents"))
     {
       mMenu->insertItem( BarIcon( "contents", KIcon::SizeSmall),
-                     i18n( "%1 &Handbook" ).arg( appName) ,menuHelpContents );
+                     TQString(i18n( "%1 &Handbook" ).arg( appName)) ,menuHelpContents );
       mMenu->connectItem( menuHelpContents, this, TQT_SLOT(appHelpActivated()) );
       mMenu->setAccel( KStdAccel::shortcut(KStdAccel::Help), menuHelpContents );
       need_separator = true;
@@ -167,7 +167,7 @@ KPopupMenu* KHelpMenu::menu()
     if (kapp->authorizeKAction("help_about_app"))
     {
       mMenu->insertItem( kapp->miniIcon(),
-        i18n( "&About %1" ).arg(appName), menuAboutApp );
+        TQString(i18n( "&About %1" ).arg(appName)), menuAboutApp );
       mMenu->connectItem( menuAboutApp, this, TQT_SLOT( aboutApplication() ) );
     }
     
@@ -306,7 +306,7 @@ void KHelpMenu::contextHelpActivated()
   TQWhatsThis::enterWhatsThisMode();
   TQWidget* w = TQApplication::widgetAt( TQCursor::pos(), true );
   while ( w && !w->isTopLevel() && !w->inherits("QXEmbed")  )
-      w = w->parentWidget();
+      w = w->tqparentWidget();
 #ifdef Q_WS_X11
    if ( w && w->inherits("QXEmbed") )
 	  (( QXEmbed*) w )->enterWhatsThisMode();

@@ -124,7 +124,7 @@ KToolBarButton::KToolBarButton( const TQString& _icon, int _id,
             this,         TQT_SLOT( modeChange() ));
   }
 
-  setFocusPolicy( NoFocus );
+  setFocusPolicy( TQ_NoFocus );
 
   // connect all of our slots and start trapping events
   connect(this, TQT_SIGNAL( clicked() ),
@@ -157,7 +157,7 @@ KToolBarButton::KToolBarButton( const TQPixmap& pixmap, int _id,
             this,         TQT_SLOT( modeChange() ));
   }
 
-  setFocusPolicy( NoFocus );
+  setFocusPolicy( TQ_NoFocus );
 
   // connect all of our slots and start trapping events
   connect(this, TQT_SIGNAL( clicked() ),
@@ -246,7 +246,7 @@ void KToolBarButton::modeChange()
     break;
   }
 
-  mysize = style().sizeFromContents(TQStyle::CT_ToolButton, this, mysize).
+  mysize = tqstyle().tqsizeFromContents(TQStyle::CT_ToolButton, this, mysize).
                expandedTo(TQApplication::globalStrut());
 
   // make sure that this isn't taller then it is wide
@@ -263,7 +263,7 @@ void KToolBarButton::setTextLabel( const TQString& text, bool tipToo)
     return;
 
   TQString txt(text);
-  if (txt.endsWith(TQString::fromLatin1("...")))
+  if (txt.endsWith(TQString::tqfromLatin1("...")))
     txt.truncate(txt.length() - 3);
 
   TQToolButton::setTextLabel(txt, tipToo);
@@ -376,7 +376,7 @@ void KToolBarButton::leaveEvent(TQEvent *)
   {
     d->m_isRaised = false;
     d->m_isActive = false;
-    repaint(false);
+    tqrepaint(false);
   }
 
   emit highlighted(d->m_id, false);
@@ -398,7 +398,7 @@ void KToolBarButton::enterEvent(TQEvent *)
       d->m_isActive = false;
     }
 
-    repaint(false);
+    tqrepaint(false);
   }
   emit highlighted(d->m_id, true);
 }
@@ -414,12 +414,12 @@ bool KToolBarButton::eventFilter(TQObject *o, TQEvent *ev)
     {
       if (ev->type() == TQEvent::MouseButtonPress)
       {
-        TQMouseEvent* mev = static_cast<TQMouseEvent*>(ev);
+        TQMouseEvent* mev = TQT_TQMOUSEEVENT(ev);
         d->m_mousePressPos = mev->pos();
       }
       else if (ev->type() == TQEvent::MouseMove)
       {
-        TQMouseEvent* mev = static_cast<TQMouseEvent*>(ev);
+        TQMouseEvent* mev = TQT_TQMOUSEEVENT(ev);
         if ((mev->pos() - d->m_mousePressPos).manhattanLength()
               > KGlobalSettings::dndEventDelay())
         {
@@ -450,10 +450,10 @@ void KToolBarButton::mousePressEvent( TQMouseEvent * e )
 {
   d->m_buttonDown = true;
 
-  if ( e->button() == MidButton )
+  if ( e->button() == Qt::MidButton )
   {
     // Get TQToolButton to show the button being down while pressed
-    TQMouseEvent ev( TQEvent::MouseButtonPress, e->pos(), e->globalPos(), LeftButton, e->state() );
+    TQMouseEvent ev( TQEvent::MouseButtonPress, e->pos(), e->globalPos(), Qt::LeftButton, e->state() );
     TQToolButton::mousePressEvent(&ev);
     return;
   }
@@ -462,10 +462,10 @@ void KToolBarButton::mousePressEvent( TQMouseEvent * e )
 
 void KToolBarButton::mouseReleaseEvent( TQMouseEvent * e )
 {
-  Qt::ButtonState state = Qt::ButtonState(e->button() | (e->state() & KeyButtonMask));
-  if ( e->button() == MidButton )
+  TQt::ButtonState state = TQt::ButtonState(e->button() | (e->state() & KeyButtonMask));
+  if ( e->button() == Qt::MidButton )
   {
-    TQMouseEvent ev( TQEvent::MouseButtonRelease, e->pos(), e->globalPos(), LeftButton, e->state() );
+    TQMouseEvent ev( TQEvent::MouseButtonRelease, e->pos(), e->globalPos(), Qt::LeftButton, e->state() );
     TQToolButton::mouseReleaseEvent(&ev);
   }
   else
@@ -494,8 +494,8 @@ void KToolBarButton::drawButton( TQPainter *_painter )
   if (hasFocus())	flags |= TQStyle::Style_HasFocus;
 
   // Draw a styled toolbutton
-  style().drawComplexControl(TQStyle::CC_ToolButton, _painter, this, rect(),
-	colorGroup(), flags, TQStyle::SC_ToolButton, active, TQStyleOption());
+  tqstyle().tqdrawComplexControl(TQStyle::CC_ToolButton, _painter, this, rect(),
+	tqcolorGroup(), flags, TQStyle::SC_ToolButton, active, TQStyleOption());
 
   int dx, dy;
   TQFont tmp_font(KGlobalSettings::toolBarFont());
@@ -513,7 +513,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
     {
       dx = ( width() - pixmap.width() ) / 2;
       dy = ( height() - pixmap.height() ) / 2;
-      if ( isDown() && style().styleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
+      if ( isDown() && tqstyle().tqstyleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
       {
         ++dx;
         ++dy;
@@ -531,7 +531,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
     {
       dx = 4;
       dy = ( height() - pixmap.height() ) / 2;
-      if ( isDown() && style().styleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
+      if ( isDown() && tqstyle().tqstyleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
       {
         ++dx;
         ++dy;
@@ -547,7 +547,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
       else
         dx = 4;
       dy = 0;
-      if ( isDown() && style().styleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
+      if ( isDown() && tqstyle().tqstyleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
       {
         ++dx;
         ++dy;
@@ -562,7 +562,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
       textFlags = AlignVCenter|AlignLeft;
       dx = (width() - fm.width(textLabel())) / 2;
       dy = (height() - fm.lineSpacing()) / 2;
-      if ( isDown() && style().styleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
+      if ( isDown() && tqstyle().tqstyleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
       {
         ++dx;
         ++dy;
@@ -580,7 +580,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
     {
       dx = (width() - pixmap.width()) / 2;
       dy = (height() - fm.lineSpacing() - pixmap.height()) / 2;
-      if ( isDown() && style().styleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
+      if ( isDown() && tqstyle().tqstyleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
       {
         ++dx;
         ++dy;
@@ -594,7 +594,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
       dx = (width() - fm.width(textLabel())) / 2;
       dy = height() - fm.lineSpacing() - 4;
 
-      if ( isDown() && style().styleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
+      if ( isDown() && tqstyle().tqstyleHint(TQStyle::SH_GUIStyle) == WindowsStyle )
       {
         ++dx;
         ++dy;
@@ -608,11 +608,11 @@ void KToolBarButton::drawButton( TQPainter *_painter )
   {
       _painter->setFont(KGlobalSettings::toolBarFont());
       if (!isEnabled())
-        _painter->setPen(palette().disabled().dark());
+        _painter->setPen(tqpalette().disabled().dark());
       else if(d->m_isRaised)
         _painter->setPen(KGlobalSettings::toolBarHighlightColor());
       else
-	_painter->setPen( colorGroup().buttonText() );
+	_painter->setPen( tqcolorGroup().buttonText() );
       _painter->drawText(textRect, textFlags, textLabel());
   }
 
@@ -623,8 +623,8 @@ void KToolBarButton::drawButton( TQPainter *_painter )
     if (isDown())	arrowFlags |= TQStyle::Style_Down;
     if (isEnabled()) 	arrowFlags |= TQStyle::Style_Enabled;
 
-      style().drawPrimitive(TQStyle::PE_ArrowDown, _painter,
-          TQRect(width()-7, height()-7, 7, 7), colorGroup(),
+      tqstyle().tqdrawPrimitive(TQStyle::PE_ArrowDown, _painter,
+          TQRect(width()-7, height()-7, 7, 7), tqcolorGroup(),
 	  arrowFlags, TQStyleOption() );
   }
 }
@@ -634,7 +634,7 @@ void KToolBarButton::paletteChange(const TQPalette &)
   if(!d->m_isSeparator)
   {
     modeChange();
-    repaint(false); // no need to delete it first therefore only false
+    tqrepaint(false); // no need to delete it first therefore only false
   }
 }
 
@@ -671,8 +671,8 @@ void KToolBarButton::slotClicked()
   // emit buttonClicked when the button was clicked while being in an extension popupmenu
   if ( d->m_parent && !d->m_parent->rect().contains( geometry().center() ) ) {
     ButtonState state = KApplication::keyboardMouseState();
-    if ( ( state & MouseButtonMask ) == NoButton )
-      state = ButtonState( LeftButton | state );
+    if ( ( state & Qt::MouseButtonMask ) == Qt::NoButton )
+      state = ButtonState( Qt::LeftButton | state );
     emit buttonClicked( d->m_id, state ); // Doesn't work with MidButton
   }
 }
@@ -698,7 +698,7 @@ void KToolBarButton::setNoStyle(bool no_style)
 
     modeChange();
     d->m_iconText = KToolBar::IconTextRight;
-    repaint(false);
+    tqrepaint(false);
 }
 
 void KToolBarButton::setRadio (bool f)
@@ -716,13 +716,13 @@ void KToolBarButton::on(bool flag)
     setDown(flag);
     leaveEvent((TQEvent *) 0);
   }
-  repaint();
+  tqrepaint();
 }
 
 void KToolBarButton::toggle()
 {
   setOn(!isOn());
-  repaint();
+  tqrepaint();
 }
 
 void KToolBarButton::setToggle(bool flag)
@@ -734,17 +734,17 @@ void KToolBarButton::setToggle(bool flag)
     disconnect(this, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotToggled()));
 }
 
-TQSize KToolBarButton::sizeHint() const
+TQSize KToolBarButton::tqsizeHint() const
 {
    return d->size;
 }
 
-TQSize KToolBarButton::minimumSizeHint() const
+TQSize KToolBarButton::tqminimumSizeHint() const
 {
    return d->size;
 }
 
-TQSize KToolBarButton::minimumSize() const
+TQSize KToolBarButton::tqminimumSize() const
 {
    return d->size;
 }

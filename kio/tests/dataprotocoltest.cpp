@@ -47,7 +47,7 @@ public:
 //    meta_data[key] = value;
 //    cout << "§ " << key << " = " << value << endl;
     TQString prefix = "Metadata[\""+key+"\"]: ";
-    KIO::MetaData::Iterator it = attributes_expected.find(key);
+    KIO::MetaData::Iterator it = attributes_expected.tqfind(key);
     if (it != attributes_expected.end()) {
       testStrings(prefix,it.data(),value);
       // remove key from map

@@ -39,7 +39,7 @@ class KURLBar;
  * @see KURLBar
  * @see KURLBarListBox
  */
-class KIO_EXPORT KURLBarItem : public QListBoxPixmap
+class KIO_EXPORT KURLBarItem : public TQListBoxPixmap
 {
 public:
     /**
@@ -109,7 +109,7 @@ public:
      * returns the preferred size of this item
      * @since 3.1
      */
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
 
     /**
      * returns the width of this item.
@@ -227,7 +227,7 @@ class KURLBarListBox;
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  * @short A URL-bar widget, as used in the KFileDialog
  */
-class KIO_EXPORT KURLBar : public QFrame
+class KIO_EXPORT KURLBar : public TQFrame
 {
     Q_OBJECT
 
@@ -319,12 +319,12 @@ public:
      * @returns a proper sizehint, depending on the orientation and the number
      * of items available.
      */
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 
     /**
      * @returns a proper minimum size (reimplemented)
      */
-    virtual TQSize minimumSizeHint() const;
+    virtual TQSize tqminimumSizeHint() const;
 
     /**
      * Call this method to read a saved configuration from @p config,
@@ -382,7 +382,7 @@ public:
     /**
      * @returns true if the bar is in vertical mode.
      */
-    bool isVertical() const { return orientation() == Vertical; }
+    bool isVertical() const { return orientation() == Qt::Vertical; }
 
 public slots:
     /**

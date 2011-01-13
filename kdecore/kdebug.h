@@ -85,7 +85,7 @@ class KDECORE_EXPORT kdbgstream {
     kdbgstream(unsigned int _area, unsigned int _level, bool _print = true) :
       area(_area), level(_level),  print(_print) { }
     kdbgstream(const char * initialString, unsigned int _area, unsigned int _level, bool _print = true) :
-      output(TQString::fromLatin1(initialString)), area(_area), level(_level),  print(_print) { }
+      output(TQString::tqfromLatin1(initialString)), area(_area), level(_level),  print(_print) { }
     /// Copy constructor
     kdbgstream(kdbgstream &str);
     kdbgstream(const kdbgstream &str) :
@@ -98,7 +98,7 @@ class KDECORE_EXPORT kdbgstream {
      */
     kdbgstream &operator<<(bool i)  {
 	if (!print) return *this;
-	output += TQString::fromLatin1(i ? "true" : "false");
+	output += TQString::tqfromLatin1(i ? "true" : "false");
 	return *this;
     }
     /**
@@ -180,7 +180,7 @@ class KDECORE_EXPORT kdbgstream {
      * @param i the long long to print
      * @return this stream
      */
-    kdbgstream &operator<<(Q_LLONG i) {
+    kdbgstream &operator<<(TQ_LLONG i) {
         if (!print) return *this;
         TQString tmp; tmp.setNum(i); output += tmp;
         return *this;
@@ -190,7 +190,7 @@ class KDECORE_EXPORT kdbgstream {
      * @param i the unsigned long long to print
      * @return this stream
      */
-    kdbgstream &operator<<(Q_ULLONG i) {
+    kdbgstream &operator<<(TQ_ULLONG i) {
         if (!print) return *this;
         TQString tmp; tmp.setNum(i); output += tmp;
         return *this;
@@ -281,7 +281,7 @@ class KDECORE_EXPORT kdbgstream {
      ;
 
     /** Operator to print out basic information about a TQWidget.
-     *  Output of class names only works if the class is moc'ified.
+     *  Output of class names only works if the class is tqmoc'ified.
      * @param widget the widget to print
      * @return this stream
      */
@@ -533,12 +533,12 @@ class KDECORE_EXPORT kndbgstream {
      * Does nothing.
      * @return this stream
      */
-    kndbgstream& operator<<(Q_LLONG) { return *this; }
+    kndbgstream& operator<<(TQ_LLONG) { return *this; }
     /**
      * Does nothing.
      * @return this stream
      */
-    kndbgstream& operator<<(Q_ULLONG) { return *this; }
+    kndbgstream& operator<<(TQ_ULLONG) { return *this; }
     /**
      * Does nothing.
      * @return this stream

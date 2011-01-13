@@ -44,7 +44,7 @@ class KAuthIconPrivate;
  * @see KRootPermsIcon, KWritePermsIcon
  * @author Preston Brown <pbrown@kde.org>
  */
-class KDEUI_EXPORT KAuthIcon : public QWidget
+class KDEUI_EXPORT KAuthIcon : public TQWidget
 {
   Q_OBJECT
 
@@ -55,7 +55,7 @@ public:
   KAuthIcon(TQWidget *parent = 0, const char *name = 0);
   ~KAuthIcon();
 
-  virtual TQSize sizeHint() const;
+  virtual TQSize tqsizeHint() const;
   /**
    * return the status of whatever is being monitored.
    */

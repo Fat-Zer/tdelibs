@@ -78,7 +78,7 @@ static TQValueList<float> splitNumberString( const TQString& _s )
 	int p1 = 1, p2 = 0;
 	while ( true )
 	{
-		p2 = s.find( ' ', p1 );
+		p2 = s.tqfind( ' ', p1 );
 		if ( p2 != -1 )
 		{
 			l.append( s.mid( p1, p2-p1 ).toFloat() );
@@ -431,7 +431,7 @@ bool PPDLoader::putPaperDimension( const TQString& name, const TQString& s )
 {
 	TQValueList<float> l = splitNumberString( s );
 
-	PS_private *ps = m_ps.find( name );
+	PS_private *ps = m_ps.tqfind( name );
 	if ( !ps )
 	{
 		ps = new PS_private;
@@ -448,7 +448,7 @@ bool PPDLoader::putImageableArea( const TQString& name, const TQString& s )
 {
 	TQValueList<float> l = splitNumberString( s );
 
-	PS_private *ps = m_ps.find( name );
+	PS_private *ps = m_ps.tqfind( name );
 	if ( !ps )
 	{
 		ps = new PS_private;

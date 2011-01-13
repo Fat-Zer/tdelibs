@@ -105,7 +105,7 @@ class KMdiChildViewPrivate;
   *
   */
 
-class KMDI_EXPORT KMdiChildView : public QWidget
+class KMDI_EXPORT KMdiChildView : public TQWidget
 {
 	friend class KMdiMainFrm;
 	friend class KMdiChildFrm;
@@ -182,13 +182,13 @@ public:
 	/**
 	 * Constructor
 	 */
-	KMdiChildView( const TQString& caption, TQWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
+	KMdiChildView( const TQString& caption, TQWidget* tqparentWidget = 0L, const char* name = 0L, WFlags f = 0 );
 	
 	/**
 	 * Constructor 
 	 * sets "Unnamed" as default caption
 	 */
-	KMdiChildView( TQWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
+	KMdiChildView( TQWidget* tqparentWidget = 0L, const char* name = 0L, WFlags f = 0 );
 	
 	/**
 	 * Destructor
@@ -358,7 +358,7 @@ public:
 	 */
 	inline void updateTimeStamp()
 	{
-		m_time.setDate( TQDate::currentDate() );
+		m_time.setDate( TQDate::tqcurrentDate() );
 		m_time.setTime( TQTime::currentTime() );
 	}
 	
@@ -603,7 +603,7 @@ private:
 
 inline KMdiChildFrm *KMdiChildView::mdiParent() const
 {
-	TQWidget * pw = parentWidget();
+	TQWidget * pw = tqparentWidget();
 	if ( pw != 0L )
 		if ( pw->inherits( "KMdiChildFrm" ) )
 			return ( KMdiChildFrm * ) pw;

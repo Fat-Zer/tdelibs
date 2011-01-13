@@ -143,8 +143,8 @@ class BytesEditInterface
     virtual bool isModified() const = 0;
 
   public: // call for action
-    /** repaint the indizes from i1 to i2 */
-    virtual void repaintRange( int i1, int i2 ) = 0;
+    /** tqrepaint the indizes from i1 to i2 */
+    virtual void tqrepaintRange( int i1, int i2 ) = 0;
 };
 
 
@@ -159,7 +159,7 @@ inline BytesEditInterface *bytesEditInterface( T *t )
   if( !t )
     return 0;
 
-  return static_cast<BytesEditInterface*>( t->qt_cast("KHE::BytesEditInterface") );
+  return static_cast<BytesEditInterface*>( t->tqqt_cast("KHE::BytesEditInterface") );
 }
 
 /** tries to create an instance of a hexedit widget for arrays of chars (char[])
@@ -221,7 +221,7 @@ inline BytesEditInterface *bytesEditInterface( T *t )
 inline TQWidget *createBytesEditWidget( TQWidget *Parent = 0, const char *Name = 0 )
 {
   return KParts::ComponentFactory::createInstanceFromQuery<TQWidget>
-      ( TQString::fromLatin1("KHexEdit/KBytesEdit"), TQString::null, Parent, Name );
+      ( TQString::tqfromLatin1("KHexEdit/KBytesEdit"), TQString::null, Parent, Name );
 }
 
 }

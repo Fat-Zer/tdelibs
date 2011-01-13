@@ -204,7 +204,7 @@ int main(int argc, char **argv) {
     TQValueVector<const char *> params;
     if (args->isSet( "output" ) ) {
         params.append( qstrdup( "outputFile" ) );
-        params.append( qstrdup( TQFile::decodeName( args->getOption( "output" ) ).latin1() ) );
+        params.append( qstrdup( TQString(TQFile::decodeName( args->getOption( "output" ) )).latin1() ) );
     }
     {
         const QCStringList paramList = args->getOptionList( "param" );
@@ -212,7 +212,7 @@ int main(int argc, char **argv) {
         QCStringList::ConstIterator end = paramList.end();
         for ( ; it != end; ++it ) {
             const TQCString tuple = *it;
-            const int ch = tuple.find( '=' );
+            const int ch = tuple.tqfind( '=' );
             if ( ch == -1 ) {
                 kdError() << "Key-Value tuple '" << tuple << "' lacks a '='!" << endl;
                 return( 2 );
@@ -277,12 +277,12 @@ int main(int argc, char **argv) {
         TQString cache = args->getOption( "cache" );
         if ( !cache.isEmpty() ) {
             if ( !saveToCache( output, cache ) ) {
-                kdError() << i18n( "Could not write to cache file %1." ).arg( cache ) << endl;
+                kdError() << TQString(i18n( "Could not write to cache file %1." ).arg( cache )) << endl;
             }
             goto end;
         }
 
-        if (output.find( "<FILENAME " ) == -1 || args->isSet( "stdout" ) || args->isSet("output") )
+        if (output.tqfind( "<FILENAME " ) == -1 || args->isSet( "stdout" ) || args->isSet("output") )
         {
             TQFile file;
             if (args->isSet( "stdout" ) ) {
@@ -302,13 +302,13 @@ int main(int argc, char **argv) {
         } else {
             int index = 0;
             while (true) {
-                index = output.find("<FILENAME ", index);
+                index = output.tqfind("<FILENAME ", index);
                 if (index == -1)
                     break;
                 int filename_index = index + strlen("<FILENAME filename=\"");
 
                 TQString filename = output.mid(filename_index,
-                                              output.find("\"", filename_index) -
+                                              output.tqfind("\"", filename_index) -
                                               filename_index);
 
                 TQString filedata = splitOut(output, index);

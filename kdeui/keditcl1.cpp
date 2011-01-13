@@ -104,7 +104,7 @@ KEdit::insertText(TQTextStream *stream)
 
    // MS: read everything at once if file <= 1MB,
    // else read in 5000-line chunks to keep memory usage acceptable.
-   TQIODevice *dev=stream->device();
+   TQIODevice *dev=stream->tqdevice();
    if (dev && dev->size()>(1024*1024)) {
       while(1) {
         int i;
@@ -128,7 +128,7 @@ KEdit::insertText(TQTextStream *stream)
    setCursorPosition(saveline, savecol);
 //   setAutoUpdate(true);
 
-//   repaint();
+//   tqrepaint();
 
    setModified(true);
    setFocus();
@@ -140,7 +140,7 @@ KEdit::insertText(TQTextStream *stream)
 
    //   TQString str = text();
    //   for (int i = 0; i < (int) str.length(); i++)
-   //     printf("KEdit: U+%04X\n", str[i].unicode());
+   //     printf("KEdit: U+%04X\n", str[i].tqunicode());
 
 }
 
@@ -164,7 +164,7 @@ KEdit::cleanWhiteSpace()
       if (line.isEmpty())
       {
          if (addSpace)
-            newText += TQString::fromLatin1("\n\n");
+            newText += TQString::tqfromLatin1("\n\n");
          if (firstLine)
          {
             if (firstChar.isSpace())
@@ -200,7 +200,7 @@ KEdit::cleanWhiteSpace()
    {
       deselect();
       d->autoUpdate = true;
-      repaint();
+      tqrepaint();
       return;
    }
    if (wordWrap() == NoWrap)
@@ -225,7 +225,7 @@ KEdit::cleanWhiteSpace()
 
    insert(newText);
    d->autoUpdate = true;
-   repaint();
+   tqrepaint();
 
    setModified(true);
    setFocus();
@@ -359,7 +359,7 @@ void KEdit::computePosition()
 
 
   while(find >=0 && find <= coltemp- 1 ){
-    find = linetext.find('\t', find+start_of_line, true )-start_of_line;
+    find = linetext.tqfind('\t', find+start_of_line, true )-start_of_line;
     if( find >=0 && find <= coltemp - 1 ){
       found_one = true;
       pos = pos + find - mem;
@@ -471,7 +471,7 @@ void KEdit::keyPressEvent ( TQKeyEvent *e)
   else if ( isReadOnly() )
     TQMultiLineEdit::keyPressEvent( e );
   // If this is an unmodified printable key, send it directly to TQMultiLineEdit.
-  else if ( !(key.keyCodeQt() & (CTRL | ALT)) && !e->text().isEmpty() && e->text().unicode()->isPrint() )
+  else if ( !(key.keyCodeQt() & (CTRL | ALT)) && !e->text().isEmpty() && TQString(e->text()).tqunicode()->isPrint() )
     TQMultiLineEdit::keyPressEvent( e );
   else if ( KStdAccel::paste().contains( key ) ) {
     paste();

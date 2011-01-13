@@ -39,7 +39,7 @@ class KSpellConfig;
 /**
  * \brief Syntax sensitive text highlighter
  */
-class KDEUI_EXPORT KSyntaxHighlighter : public QSyntaxHighlighter
+class KDEUI_EXPORT KSyntaxHighlighter : public TQSyntaxHighlighter
 {
 public:
     enum SyntaxMode {

@@ -120,7 +120,7 @@ inline bool KThemePixmap::isOld()
  * @author Daniel M. Duley <mosfet@kde.org>
  *
  */
-class KThemeCache : public QObject
+class KThemeCache : public TQObject
 {
     Q_OBJECT
 public:
@@ -300,12 +300,12 @@ public:
      * If a color group is set in the theme configuration
      * that is used, otherwise defaultColor is returned.
      *
-     * @param defaultGroup The colorGroup to set if one is available.
+     * @param defaultGroup The tqcolorGroup to set if one is available.
      *
      * @param widget The widget whose color group to retrieve.
      *
      */
-    const TQColorGroup* colorGroup( const TQColorGroup &defaultGroup,
+    const TQColorGroup* tqcolorGroup( const TQColorGroup &defaultGroup,
                                    WidgetType widget ) const;
 
     TQBrush pixmapBrush( const TQColorGroup &group, TQColorGroup::ColorRole role,
@@ -473,7 +473,7 @@ protected:
      * calculated a little differently for Motif vs Windows styles. This
      * is obsolete.
      */
-    void readConfig( Qt::GUIStyle colorStyle = Qt::WindowsStyle );
+    void readConfig( TQt::GUIStyle colorStyle = TQt::WindowsStyle );
     void readWidgetConfig( int i, TQSettings *config, TQString *pixnames,
                            TQString *brdnames, bool *loadArray );
     void copyWidgetConfig( int sourceID, int destID, TQString *pixnames,
@@ -484,7 +484,7 @@ protected:
      * versions.
      */
     TQColorGroup* makeColorGroup( const TQColor &fg, const TQColor &bg,
-                                 Qt::GUIStyle style = Qt::WindowsStyle );
+                                 TQt::GUIStyle style = TQt::WindowsStyle );
     KThemePixmap* scale( int w, int h, WidgetType widget ) const;
     KThemePixmap* scaleBorder( int w, int h, WidgetType type ) const;
     KThemePixmap* gradient( int w, int h, WidgetType widget ) const ;
@@ -508,21 +508,21 @@ protected:
     /**
     These are included for fuuture extension purposes..
     */
-    virtual int pixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const
+    virtual int tqpixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const
     {
-        return KStyle::pixelMetric( metric, widget );
+        return KStyle::tqpixelMetric( metric, widget );
     }
 
     virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRect & r, const TQColorGroup & cg,
                                  SFlags flags = Style_Default,
                                  const TQStyleOption& option = TQStyleOption::Default ) const
     {
-        KStyle::drawPrimitive ( pe, p, r, cg,
+        KStyle::tqdrawPrimitive ( pe, p, r, cg,
                                 flags, option );
     }
 
 
-    virtual void drawControl( ControlElement element,
+    virtual void tqdrawControl( ControlElement element,
                               TQPainter *p,
                               const TQWidget *widget,
                               const TQRect &r,
@@ -530,21 +530,21 @@ protected:
                               SFlags how = Style_Default,
                               const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        KStyle::drawControl( element, p, widget,
+        KStyle::tqdrawControl( element, p, widget,
                              r, cg, how, opt );
     }
 
-    virtual void drawControlMask( ControlElement element,
+    virtual void tqdrawControlMask( ControlElement element,
                                   TQPainter *p,
                                   const TQWidget *widget,
                                   const TQRect &r,
                                   const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        KStyle::drawControlMask( element, p, widget, r, opt );
+        KStyle::tqdrawControlMask( element, p, widget, r, opt );
     }
 
 
-    virtual void drawComplexControl( ComplexControl control,
+    virtual void tqdrawComplexControl( ComplexControl control,
                                      TQPainter *p,
                                      const TQWidget* widget,
                                      const TQRect &r,
@@ -554,7 +554,7 @@ protected:
                                      SCFlags active = SC_None,
                                      const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        KStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
+        KStyle::tqdrawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
     }
 
 
@@ -572,12 +572,12 @@ protected:
     }
 
 
-    virtual int styleHint( StyleHint sh,
+    virtual int tqstyleHint( StyleHint sh,
                            const TQWidget *widget = 0,
                            const TQStyleOption& opt = TQStyleOption::Default,
                            QStyleHintReturn* returnData = 0 ) const
     {
-        return KStyle::styleHint( sh,
+        return KStyle::tqstyleHint( sh,
                                   widget,
                                   opt,
                                   returnData );
@@ -588,7 +588,7 @@ protected:
                                     const TQSize &contentsSize,
                                     const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        return KStyle::sizeFromContents( contents,
+        return KStyle::tqsizeFromContents( contents,
                                          widget, contentsSize, opt );
     }
 
@@ -731,7 +731,7 @@ inline TQBrush KThemeBase::pixmapBrush( const TQColorGroup &group,
         return ( group.color( role ) );
 }
 
-inline const TQColorGroup* KThemeBase::colorGroup( const TQColorGroup &defaultGroup,
+inline const TQColorGroup* KThemeBase::tqcolorGroup( const TQColorGroup &defaultGroup,
         WidgetType widget ) const
 {
     return ( ( colors[ widget ] ) ? colors[ widget ] : &defaultGroup );

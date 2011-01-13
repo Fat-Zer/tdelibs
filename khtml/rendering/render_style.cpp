@@ -726,7 +726,7 @@ bool RenderStyle::inheritedNotEqual( RenderStyle *other ) const
   CbLayout: The containing block of the object needs a relayout.
   Layout: the RenderObject needs a relayout after the style change
   Visible: The change is visible, but no relayout is needed
-  NonVisible: The object does need neither repaint nor relayout after
+  NonVisible: The object does need neither tqrepaint nor relayout after
        the change.
 
   ### TODO:
@@ -744,7 +744,7 @@ RenderStyle::Diff RenderStyle::diff( const RenderStyle *other ) const
 //	EUserInput _user_input : 2;	as long as :enabled is not impl'd
 
 // ### this needs work to know more exactly if we need a relayout
-//     or just a repaint
+//     or just a tqrepaint
 
 // non-inherited attributes
 //     DataRef<StyleBoxData> box;
@@ -786,7 +786,7 @@ RenderStyle::Diff RenderStyle::diff( const RenderStyle *other ) const
              !(noninherited_flags.f._position == other->noninherited_flags.f._position) ||
              !(noninherited_flags.f._floating == other->noninherited_flags.f._floating) ||
              !(noninherited_flags.f._flowAroundFloats == other->noninherited_flags.f._flowAroundFloats) ||
-             !(noninherited_flags.f._unicodeBidi == other->noninherited_flags.f._unicodeBidi) )
+             !(noninherited_flags.f._tqunicodeBidi == other->noninherited_flags.f._tqunicodeBidi) )
             return CbLayout;
     }
 

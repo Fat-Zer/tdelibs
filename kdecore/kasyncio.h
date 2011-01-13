@@ -25,6 +25,10 @@
 #include <tqiodevice.h>
 #include "kdelibs_export.h"
 
+#ifdef Q_MOC_RUN
+#define USE_QT4
+#endif // Q_MOC_RUN
+
 class KAsyncIOPrivate;
 /**
  * Asynchronous I/O Support
@@ -35,9 +39,15 @@ class KAsyncIOPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short Asynchronous I/O support
  */
-class KDECORE_EXPORT KAsyncIO: public TQObject, public QIODevice
+class KDECORE_EXPORT KAsyncIO:
+#ifdef USE_QT4
+#else // USE_QT4
+public TQObject,
+#endif // USE_QT4
+public TQIODevice
 {
   Q_OBJECT
+  TQ_OBJECT
 protected:
   KAsyncIO()			// cannot be accessed externally
   { }

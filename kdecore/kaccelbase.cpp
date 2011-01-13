@@ -77,7 +77,7 @@ const KAccelAction* KAccelBase::actionPtr( const TQString& sAction ) const
 
 KAccelAction* KAccelBase::actionPtr( const KKeyServer::Key& key )
 {
-	if( !m_mapKeyToAction.contains( key ) )
+	if( !m_mapKeyToAction.tqcontains( key ) )
 		return 0;
 	// Note: If more than one action is connected to a single key, nil will be returned.
 	return m_mapKeyToAction[key].pAction;
@@ -355,7 +355,7 @@ bool KAccelBase::updateConnections()
 
 		if( bNonUnique ) {
 			// Remove connection to single action if there is one
-			if( m_mapKeyToAction.contains( key ) ) {
+			if( m_mapKeyToAction.tqcontains( key ) ) {
 				KAccelAction* pAction = m_mapKeyToAction[key].pAction;
 				if( pAction ) {
 					m_mapKeyToAction.remove( key );
@@ -378,7 +378,7 @@ bool KAccelBase::updateConnections()
 		const KKeyServer::Key& key = it.key();
 		KAccelAction* pAction = (*it).pAction;
 		// If this key is longer used or it points to a different action now,
-		if( !mapKeyToAction.contains( key ) || mapKeyToAction[key].pAction != pAction ) {
+		if( !mapKeyToAction.tqcontains( key ) || mapKeyToAction[key].pAction != pAction ) {
 			if( pAction ) {
 				disconnectKey( *pAction, key );
 				pAction->decConnections();
@@ -393,7 +393,7 @@ bool KAccelBase::updateConnections()
 	for( KKeyToActionMap::iterator it = mapKeyToAction.begin(); it != mapKeyToAction.end(); ++it ) {
 		const KKeyServer::Key& key = it.key();
 		KAccelAction* pAction = (*it).pAction;
-		if( !m_mapKeyToAction.contains( key ) || m_mapKeyToAction[key].pAction != pAction ) {
+		if( !m_mapKeyToAction.tqcontains( key ) || m_mapKeyToAction[key].pAction != pAction ) {
 			// TODO: Decide what to do if connect fails.
 			//  Probably should remove this item from map.
 			if( pAction ) {
@@ -470,7 +470,7 @@ bool KAccelBase::insertConnection( KAccelAction* pAction )
 
 			//if( !key.isNull() ) {
 			if( key.sym() ) {
-				if( !m_mapKeyToAction.contains( key ) ) {
+				if( !m_mapKeyToAction.tqcontains( key ) ) {
 					// If this is a single-key shortcut,
 					if( pAction->shortcut().seq(iSeq).count() == 1 ) {
 						m_mapKeyToAction[key] = ActionInfo( pAction, iSeq, iVari );
@@ -481,7 +481,7 @@ bool KAccelBase::insertConnection( KAccelAction* pAction )
 					else {
 						m_mapKeyToAction[key] = ActionInfo( 0, 0, 0 );
 						// Insert into non-unique list if it's not already there.
-						if( m_rgActionsNonUnique.findIndex( pAction ) == -1 )
+						if( m_rgActionsNonUnique.tqfindIndex( pAction ) == -1 )
 							m_rgActionsNonUnique.append( pAction );
 						if( connectKey( key ) )
 							pAction->incConnections();
@@ -523,7 +523,7 @@ bool KAccelBase::removeConnection( KAccelAction* pAction )
 	//for( KKeyToActionMap::iterator it = m_mapKeyToAction.begin(); it != m_mapKeyToAction.end(); ++it )
 	//	kdDebug(125) << "\tKey: " << it.key().toString() << " => '" << (*it)->m_sName << "'" << " " << *it << endl;
 
-	if( m_rgActionsNonUnique.findIndex( pAction ) >= 0 ) {
+	if( m_rgActionsNonUnique.tqfindIndex( pAction ) >= 0 ) {
 		mtemp_pActionRemoving = pAction;
 		bool b = updateConnections();
 		mtemp_pActionRemoving = 0;
@@ -591,7 +591,7 @@ TQPopupMenu* KAccelBase::createPopupMenu( TQWidget* pParent, const KKeySequence&
 		// If an action has already been inserted into the menu
 		//  and we have a label instead of an action here,
 		//  then indicate that we should insert a separator before the next menu entry.
-		if( bActionInserted && !pAction->isConfigurable() && pAction->name().contains( ':' ) )
+		if( bActionInserted && !pAction->isConfigurable() && pAction->name().tqcontains( ':' ) )
 			bInsertSeparator = true;
 
 		for( uint iSeq = 0; iSeq < pAction->shortcut().count(); iSeq++ ) {

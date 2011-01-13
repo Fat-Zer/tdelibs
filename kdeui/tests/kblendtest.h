@@ -10,7 +10,7 @@
 #include <tqwidget.h>
 #include <tqimage.h>
 
-class KBlendWidget : public QWidget
+class KBlendWidget : public TQWidget
 {
 public:
     KBlendWidget(TQWidget *parent=0, const char *name=0);

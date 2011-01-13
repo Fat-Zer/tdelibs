@@ -34,7 +34,7 @@ namespace KABC {
 /**
   @short Special ListViewItem, that is used by the AddresseeDialog.
 */
-class KABC_EXPORT AddresseeItem : public QListViewItem
+class KABC_EXPORT AddresseeItem : public TQListViewItem
 {
   public:
 

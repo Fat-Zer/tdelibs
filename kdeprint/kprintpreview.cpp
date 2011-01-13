@@ -111,7 +111,7 @@ static KLibFactory* componentFactory()
 	factory = KLibLoader::self()->factory("libkghostviewpart");
         if( factory )
             return factory;
-	KTrader::OfferList	offers = KTrader::self()->query(TQString::fromLatin1("application/postscript"), TQString::fromLatin1("KParts/ReadOnlyPart"), TQString::null, TQString::null);
+	KTrader::OfferList	offers = KTrader::self()->query(TQString::tqfromLatin1("application/postscript"), TQString::tqfromLatin1("KParts/ReadOnlyPart"), TQString::null, TQString::null);
 	for (KTrader::OfferList::ConstIterator it = offers.begin(); it != offers.end(); ++it)
 	{
 		KService::Ptr	service = *it;

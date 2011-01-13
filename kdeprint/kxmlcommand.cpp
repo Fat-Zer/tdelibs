@@ -161,7 +161,7 @@ void KXmlCommand::setMimeType(const TQString& s)
 bool KXmlCommand::acceptMimeType(const TQString& s)
 {
 	check();
-	return (d->m_inputMime.find(s) != d->m_inputMime.end());
+	return (d->m_inputMime.tqfind(s) != d->m_inputMime.end());
 }
 
 TQStringList KXmlCommand::inputMimeTypes()
@@ -383,7 +383,7 @@ TQString KXmlCommand::buildCommand(const TQMap<TQString,TQString>& opts, bool pi
 			{
 				QString	format = dopt->get("format");
 				TQString value = dopt->valueText();
-				if ( format.find( quotedRe ) != -1 )
+				if ( format.tqfind( quotedRe ) != -1 )
 				{
 					if ( ( value.right( 1 ) == "'" && value.left( 1 ) == "'" )  ||
 					     ( value.right( 1 ) == "\"" && value.left( 1 ) == "\"" ) )
@@ -463,7 +463,7 @@ void KXmlCommand::saveXml()
 TQDomElement KXmlCommand::createIO(TQDomDocument& doc, int n, const TQString& tag)
 {
 	QDomElement	elem = doc.createElement(tag);
-	if (d->m_command.find("%"+tag) != -1)
+	if (d->m_command.tqfind("%"+tag) != -1)
 	{
 		for (int i=0; i<2; i++)
 		{
@@ -632,7 +632,7 @@ TQStringList KXmlCommandManager::commandList()
 			for (TQStringList::ConstIterator it2=list.begin(); it2!=list.end(); ++it2)
 			{
 				QString	cmdName = (*it2).left((*it2).length()-8);
-				if (d->m_cmdlist.find(cmdName) == d->m_cmdlist.end())
+				if (d->m_cmdlist.tqfind(cmdName) == d->m_cmdlist.end())
 					d->m_cmdlist.append(cmdName);
 			}
 		}
@@ -791,12 +791,12 @@ bool KXmlCommandManager::checkCommand(const TQString& xmlId, int inputCheck, int
 	QString	cmd = (xmlCmd ? xmlCmd->command() : xmlId);
 	if (status && !cmd.isEmpty() && (inputCheck > None || outputCheck > None))
 	{
-		if (inputCheck > None && (cmd.find("%in") == -1 || inputCheck == Advanced) && cmd.find("%filterinput") == -1)
+		if (inputCheck > None && (cmd.tqfind("%in") == -1 || inputCheck == Advanced) && cmd.tqfind("%filterinput") == -1)
 		{
 			status = false;
 			errmsg = i18n("The command does not contain the required tag %1.").arg(inputCheck == Advanced ? "%filterinput" : "{%in,%filterinput}");
 		}
-		if (status && outputCheck > None && (cmd.find("%out") == -1 || outputCheck == Advanced) && cmd.find("filteroutput") == -1)
+		if (status && outputCheck > None && (cmd.tqfind("%out") == -1 || outputCheck == Advanced) && cmd.tqfind("filteroutput") == -1)
 		{
 			status = false;
 			errmsg = i18n("The command does not contain the required tag %1.").arg(outputCheck == Advanced ? "%filteroutput" : "{%out,%filteroutput}");

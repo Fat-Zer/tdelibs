@@ -93,7 +93,7 @@ KPTagsPage::KPTagsPage(bool ro, TQWidget *parent, const char *name)
 		QFont	f = lab->font();
 		f.setBold(true);
 		lab->setFont(f);
-		lab->setAlignment(AlignVCenter|AlignRight);
+		lab->tqsetAlignment(AlignVCenter|AlignRight);
 		l0->addWidget(lab);
 	}
 }
@@ -110,7 +110,7 @@ bool KPTagsPage::isValid(TQString& msg)
 		QString	tag(m_tags->text(r, 0));
 		if (tag.isEmpty())
 			continue;
-		else if (tag.find(re) != -1)
+		else if (tag.tqfind(re) != -1)
 		{
 			msg = i18n("The tag name must not contain any spaces, tabs or quotes: <b>%1</b>.").arg(tag);
 			return false;
@@ -153,12 +153,12 @@ void KPTagsPage::getOptions(TQMap<TQString,TQString>& opts, bool)
 	}
 }
 
-TQSize KPTagsPage::sizeHint() const
+TQSize KPTagsPage::tqsizeHint() const
 {
 	return TQSize(-1, -1);
 }
 
-TQSize KPTagsPage::minimumSizeHint() const
+TQSize KPTagsPage::tqminimumSizeHint() const
 {
 	return TQSize(-1, -1);
 }

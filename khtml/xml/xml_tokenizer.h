@@ -48,7 +48,7 @@ namespace DOM {
 
 namespace khtml {
 
-class XMLHandler : public QXmlDefaultHandler
+class XMLHandler : public TQXmlDefaultHandler
 {
 public:
     XMLHandler(DOM::DocumentImpl *_doc, KHTMLView *_view);
@@ -116,7 +116,7 @@ private:
     State state;
 };
 
-class Tokenizer : public QObject
+class Tokenizer : public TQObject
 {
     Q_OBJECT
 public:
@@ -139,7 +139,7 @@ signals:
 
 };
 
-class XMLIncrementalSource : public QXmlInputSource
+class XMLIncrementalSource : public TQXmlInputSource
 {
 public:
     XMLIncrementalSource();
@@ -155,7 +155,7 @@ public:
 private:
     TQString      m_data;
     uint         m_pos;
-    const TQChar *m_unicode;
+    const TQChar *m_tqunicode;
     bool         m_finished;
 };
 

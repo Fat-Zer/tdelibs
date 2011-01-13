@@ -40,7 +40,7 @@ KServiceFactory::KServiceFactory()
    if (m_str)
    {
       // Read Header
-      Q_INT32 i;
+      TQ_INT32 i;
       (*m_str) >> i;
       m_nameDictOffset = i;
       (*m_str) >> i;
@@ -52,14 +52,14 @@ KServiceFactory::KServiceFactory()
       (*m_str) >> i;
       m_menuIdDictOffset = i;
 
-      int saveOffset = m_str->device()->at();
+      int saveOffset = m_str->tqdevice()->at();
       // Init index tables
       m_nameDict = new KSycocaDict(m_str, m_nameDictOffset);
       // Init index tables
       m_relNameDict = new KSycocaDict(m_str, m_relNameDictOffset);
       // Init index tables
       m_menuIdDict = new KSycocaDict(m_str, m_menuIdDictOffset);
-      saveOffset = m_str->device()->at(saveOffset);
+      saveOffset = m_str->tqdevice()->at(saveOffset);
    }
    else
    {
@@ -191,7 +191,7 @@ KService* KServiceFactory::createEntry(int offset)
         break;
 
      default:
-        kdError(7011) << TQString("KServiceFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type) << endl;
+        kdError(7011) << TQString(TQString("KServiceFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type)) << endl;
         return 0;
    }
    if (!newEntry->isValid())
@@ -225,11 +225,11 @@ KService::List KServiceFactory::allInitServices()
 
    // Assume we're NOT building a database
 
-   m_str->device()->at(m_initListOffset);
-   Q_INT32 entryCount;
+   m_str->tqdevice()->at(m_initListOffset);
+   TQ_INT32 entryCount;
    (*m_str) >> entryCount;
 
-   Q_INT32 *offsetList = new Q_INT32[entryCount];
+   TQ_INT32 *offsetList = new TQ_INT32[entryCount];
    for(int i = 0; i < entryCount; i++)
    {
       (*m_str) >> offsetList[i];
@@ -253,10 +253,10 @@ KService::List KServiceFactory::offers( int serviceTypeOffset )
 
    TQDataStream *str = m_str;
    // Jump to the offer list
-   str->device()->at( m_offerListOffset );
+   str->tqdevice()->at( m_offerListOffset );
 
-   Q_INT32 aServiceTypeOffset;
-   Q_INT32 aServiceOffset;
+   TQ_INT32 aServiceTypeOffset;
+   TQ_INT32 aServiceOffset;
    // We might want to do a binary search instead of a linear search
    // since servicetype offsets are sorted. Bah.
    while (true)
@@ -268,14 +268,14 @@ KService::List KServiceFactory::offers( int serviceTypeOffset )
          if ( aServiceTypeOffset == serviceTypeOffset )
          {
             // Save stream position !
-            int savedPos = str->device()->at();
+            int savedPos = str->tqdevice()->at();
             // Create Service
             KService * serv = createEntry( aServiceOffset );
             if (serv)
                 list.append( KService::Ptr( serv ) );
             // Restore position
-            str->device()->at( savedPos );
-         } else if ( aServiceTypeOffset > (Q_INT32)serviceTypeOffset )
+            str->tqdevice()->at( savedPos );
+         } else if ( aServiceTypeOffset > (TQ_INT32)serviceTypeOffset )
             break; // too far
       }
       else

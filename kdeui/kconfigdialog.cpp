@@ -52,7 +52,7 @@ KConfigDialog::KConfigDialog( TQWidget *parent, const char *name,
           int dialogButtons,
           ButtonCode defaultButton,
           bool modal ) :
-    KDialogBase( dialogType, Qt::WStyle_DialogBorder,
+    KDialogBase( dialogType, (WFlags)TQt::WStyle_DialogBorder,
           parent, name, modal, i18n("Configure"), dialogButtons, defaultButton ),
     d(new KConfigDialogPrivate(dialogType))
 {
@@ -160,7 +160,7 @@ void KConfigDialog::setupManagerConnections(KConfigDialogManager *manager)
 
 KConfigDialog* KConfigDialog::exists(const char* name)
 {
-  return openDialogs.find(name);
+  return openDialogs.tqfind(name);
 }
 
 bool KConfigDialog::showDialog(const char* name)

@@ -114,12 +114,12 @@ TQMap<TQString,TQString> readEntry(KTextBuffer& t)
 		if (l.count() > 0)
 		{
 			int 	p(-1);
-			if ((p=l[0].find('|')) != -1)
+			if ((p=l[0].tqfind('|')) != -1)
 				entry["printer-name"] = l[0].left(p);	// only keep first name (discard aliases
 			else
 				entry["printer-name"] = l[0];
 			for (uint i=1; i<l.count(); i++)
-				if ((p=l[i].find('=')) != -1)
+				if ((p=l[i].tqfind('=')) != -1)
 					entry[l[i].left(p).stripWhiteSpace()] = l[i].right(l[i].length()-p-1).stripWhiteSpace();
 				else
 					entry[l[i].stripWhiteSpace()] = TQString::null;
@@ -168,7 +168,7 @@ TQString getPrintcapFileName()
 				if (pcentry[0] == '|')
 				{ // printcap through pipe
 					printcap = locateLocal("tmp","printcap");
-					QString	cmd = TQString::fromLatin1("echo \"all\" | %1 > %2").arg(pcentry.mid(1)).arg(printcap);
+					QString	cmd = TQString::tqfromLatin1("echo \"all\" | %1 > %2").arg(pcentry.mid(1)).arg(printcap);
 					kdDebug() << "printcap obtained through pipe" << endl << "executing: " << cmd << endl;
 					::system(cmd.local8Bit());
 				}
@@ -199,7 +199,7 @@ void KMLpdUnixManager::parseEtcPrintcap()
 				if (entry.contains("all"))
 				{
 					// find separator
-					int	p = entry["all"].find(TQRegExp("[^a-zA-Z0-9_\\s-]"));
+					int	p = entry["all"].tqfind(TQRegExp("[^a-zA-Z0-9_\\s-]"));
 					if (p != -1)
 					{
 						QChar	c = entry["all"][p];
@@ -234,7 +234,7 @@ TQString getEtcPrintersConfName()
 	{
 		// standard file not found, try NIS
 		printersconf = locateLocal("tmp","printers.conf");
-		QString	cmd = TQString::fromLatin1("ypcat printers.conf.byname > %1").arg(printersconf);
+		QString	cmd = TQString::tqfromLatin1("ypcat printers.conf.byname > %1").arg(printersconf);
 		kdDebug() << "printers.conf obtained from NIS server: " << cmd << endl;
 		::system(TQFile::encodeName(cmd));
 	}

@@ -113,7 +113,7 @@ class KateCodeFoldingNode
     TQMemArray<KateCodeFoldingNode*> m_children;
 };
 
-class KateCodeFoldingTree : public QObject
+class KateCodeFoldingTree : public TQObject
 {
   friend class KateCodeFoldingNode;
 

@@ -396,7 +396,7 @@ public:
     // lie position to outside observers
     virtual int yPos() const { return m_y + _topExtra; }
 
-    virtual void repaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
+    virtual void tqrepaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
     virtual bool absolutePosition(int &xPos, int &yPos, bool f = false) const;
 
     virtual short baselinePosition( bool = false ) const;

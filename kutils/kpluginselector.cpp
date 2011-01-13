@@ -64,7 +64,7 @@
     QCheckListViewItem that holds a pointer to the KPluginInfo object.
     Used in the tooltip code to access additional fields
 */
-class KPluginInfoLVI : public QCheckListItem
+class KPluginInfoLVI : public TQCheckListItem
 {
 public:
     KPluginInfoLVI( KPluginInfo *pluginInfo, KListView *parent )
@@ -83,7 +83,7 @@ private:
 	The decision whether or not to show tooltips is taken in
 	maybeTip(). See also the TQListView sources from Qt itself.
 */
-class KPluginListViewToolTip : public QToolTip
+class KPluginListViewToolTip : public TQToolTip
 {
 public:
 	KPluginListViewToolTip( TQWidget *parent, KListView *lv );
@@ -101,7 +101,7 @@ KPluginListViewToolTip::KPluginListViewToolTip( TQWidget *parent, KListView *lv 
 
 void KPluginListViewToolTip::maybeTip( const TQPoint &pos )
 {
-    if ( !parentWidget() || !m_listView )
+    if ( !tqparentWidget() || !m_listView )
         return;
 
     KPluginInfoLVI *item = dynamic_cast<KPluginInfoLVI *>( m_listView->itemAt( pos ) );
@@ -115,8 +115,8 @@ void KPluginListViewToolTip::maybeTip( const TQPoint &pos )
         "<tr><td><b>License:</b></td><td>%4</td></tr></table></qt>" ).arg( item->pluginInfo()->comment(),
         item->pluginInfo()->author(), item->pluginInfo()->version(), item->pluginInfo()->license() );
 
-    //kdDebug( 702 ) << k_funcinfo << "Adding tooltip: itemRect: " << itemRect << ", tooltip:  " << toolTip << endl;
-    tip( m_listView->itemRect( item ), toolTip );
+    //kdDebug( 702 ) << k_funcinfo << "Adding tooltip: tqitemRect: " << tqitemRect << ", tooltip:  " << toolTip << endl;
+    tip( m_listView->tqitemRect( item ), toolTip );
 }
 
 struct KPluginSelectionWidget::KPluginSelectionWidgetPrivate
@@ -192,7 +192,7 @@ void KPluginSelectionWidget::init( const TQValueList<KPluginInfo*> & plugininfos
             TQT_SLOT( executed( TQListViewItem * ) ) );
     connect( listview, TQT_SIGNAL( selectionChanged( TQListViewItem * ) ), this,
             TQT_SLOT( executed( TQListViewItem * ) ) );
-    listview->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
+    listview->tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
     listview->setAcceptDrops( false );
     listview->setFullWidth( true );
     listview->setSelectionModeExt( KListView::Single );
@@ -246,7 +246,7 @@ TQWidget * KPluginSelectionWidget::insertKCM( TQWidget * parent,
     {
         //FIXME: not very verbose
         TQLabel * label = new TQLabel( i18n( "Error" ), parent );
-        label->setAlignment( Qt::AlignCenter );
+        label->tqsetAlignment( Qt::AlignCenter );
 
         return label;
     }
@@ -332,7 +332,7 @@ void KPluginSelectionWidget::updateConfigPage( KPluginInfo * plugininfo,
         d->kps->configPage( 1 );
     else
     {
-        if( !d->widgetIDs.contains( plugininfo->pluginName() ) )
+        if( !d->widgetIDs.tqcontains( plugininfo->pluginName() ) )
             // if no widget exists for the plugin create it
             embeddPluginKCMs( plugininfo, checked );
         else
@@ -464,7 +464,7 @@ void KPluginSelectionWidget::save()
                 names->append( TQString::null );
             for( TQStringList::ConstIterator nameit = names->begin();
                     nameit != names->end(); ++nameit )
-                if( updatedModules.find( *nameit ) == updatedModules.end() )
+                if( updatedModules.tqfind( *nameit ) == updatedModules.end() )
                     updatedModules.append( *nameit );
         }
     for( TQStringList::ConstIterator it = updatedModules.begin(); it != updatedModules.end(); ++it )
@@ -523,7 +523,7 @@ KPluginSelector::KPluginSelector( TQWidget * parent, const char * name )
     TQBoxLayout * hbox = new TQHBoxLayout( this, 0, KDialog::spacingHint() );
     hbox->setAutoAdd( true );
 
-    TQSplitter* splitter = new TQSplitter( TQSplitter::Horizontal, this );
+    TQSplitter* splitter = new TQSplitter( Qt::Horizontal, this );
     d->frame = new TQFrame( splitter, "KPluginSelector left frame" );
     d->frame->setFrameStyle( TQFrame::NoFrame );
     ( new TQVBoxLayout( d->frame, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
@@ -536,7 +536,7 @@ KPluginSelector::KPluginSelector( TQWidget * parent, const char * name )
     TQLabel * label = new TQLabel( i18n( "(This plugin is not configurable)" ),
             d->widgetstack );
     ( new TQVBoxLayout( label, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
-    label->setAlignment( Qt::AlignCenter );
+    label->tqsetAlignment( Qt::AlignCenter );
     label->setMinimumSize( 200, 200 );
 
     d->widgetstack->addWidget( label, 1 );
@@ -696,7 +696,7 @@ void KPluginSelector::defaults()
     // tabwidget - defaults() will be called for all of them)
 
     TQWidget * pluginconfig = d->widgetstack->visibleWidget();
-    KCModuleProxy * kcm = ( KCModuleProxy* )pluginconfig->qt_cast(
+    KCModuleProxy * kcm = ( KCModuleProxy* )pluginconfig->tqqt_cast(
             "KCModuleProxy" );
     if( kcm )
     {

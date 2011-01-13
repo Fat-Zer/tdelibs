@@ -208,7 +208,7 @@ void AddresseeList::sortByTrait()
     while( j1 != i2 ) {
       if ( !mReverseSorting && Trait::lt( *j2, *j1 )
            || mReverseSorting && Trait::lt( *j1, *j2 ) ) {
-        qSwap( *j1, *j2 );
+        tqSwap( *j1, *j2 );
       }
       ++j1;
       ++j2;

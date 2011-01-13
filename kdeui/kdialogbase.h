@@ -100,7 +100,7 @@ class KDialogBaseTile;
  * signals that are related to the standard action buttons will be used
  * when you don't use these buttons.
  *
- * <b>Dialog shapes:</b>\n
+ * <b>Dialog tqshapes:</b>\n
  *
  * You can either use one of the prebuilt, easy to use, faces or
  * define your own main widget. The dialog provides ready to use
@@ -426,8 +426,8 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * resized before showing it.
      **/
     virtual void adjustSize();
-    virtual TQSize sizeHint() const;
-    virtual TQSize minimumSizeHint() const;
+    virtual TQSize tqsizeHint() const;
+    virtual TQSize tqminimumSizeHint() const;
 
     /**
      * Retrieve the empty page when the predefined layout is used in @p Plain
@@ -733,7 +733,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * Sets the page with @p index to be displayed.
      *
      * This method will only
-     * work when the dialog is using the predefined shape of TreeList,
+     * work when the dialog is using the predefined tqshape of TreeList,
      * IconList or Tabbed.
      *
      * @param index Index of the page to be shown.
@@ -745,7 +745,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * Returns the index of the active page.
      *
      * This method will only work when the dialog is using the
-     * predefined shape of Tabbed, TreeList or IconList.
+     * predefined tqshape of Tabbed, TreeList or IconList.
      *
      * @return The page index or -1 if there is no active page.
      */
@@ -828,7 +828,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
    /**
     * read the dialogs size from the configuration according to the screen size.
-    * If no size is saved for one dimension of the screen, sizeHint() is returned.
+    * If no size is saved for one dimension of the screen, tqsizeHint() is returned.
     *
     * @param groupName Name of the group to read from. The old group
     *                  of KGlobal::config is preserved.
@@ -837,7 +837,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
 
    /**
     * read the dialogs size from the configuration according to the screen size.
-    * If no size is saved for one dimension of the screen, sizeHint() is returned.
+    * If no size is saved for one dimension of the screen, tqsizeHint() is returned.
     *
     * @param config The KConfig object to read from
     * @param groupName Name of the group to read from. The old group
@@ -1167,7 +1167,7 @@ class KDEUI_EXPORT KDialogBase : public KDialog
      * set it as a minimum size for the resulting dialog.
      *
      * You should not need to use this method and never if you use one of
-     * the predefined shapes.
+     * the predefined tqshapes.
      *
      * @param w The width of you special widget.
      * @param h The height of you special widget.

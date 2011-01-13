@@ -27,7 +27,7 @@
 class TQLabel;
 class TQCheckBox;
 
-class EscpWidget : public QWidget
+class EscpWidget : public TQWidget
 {
 	Q_OBJECT
 

@@ -60,11 +60,11 @@ StatusbarProgress::StatusbarProgress( TQWidget* parent, bool button )
   stack->addWidget( m_pProgressBar, 1 );
 
   m_pLabel = new TQLabel( "", this );
-  m_pLabel->setAlignment( AlignHCenter | AlignVCenter );
+  m_pLabel->tqsetAlignment( AlignHCenter | AlignVCenter );
   m_pLabel->installEventFilter( this );
   m_pLabel->setMinimumWidth( w );
   stack->addWidget( m_pLabel, 2 );
-  setMinimumSize( sizeHint() );
+  setMinimumSize( tqsizeHint() );
 
   mode = None;
   setMode();
@@ -144,7 +144,7 @@ bool StatusbarProgress::eventFilter( TQObject *, TQEvent *ev ) {
   if ( ev->type() == TQEvent::MouseButtonPress ) {
     TQMouseEvent *e = (TQMouseEvent*)ev;
 
-    if ( e->button() == LeftButton ) {    // toggle view on left mouse button
+    if ( e->button() == Qt::LeftButton ) {    // toggle view on left mouse button
       if ( mode == Label ) {
 	mode = Progress;
       } else if ( mode == Progress ) {

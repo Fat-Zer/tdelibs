@@ -194,12 +194,12 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
                     lib->unload();
                     continue;
                 }
-                TQObject *obj = factory->create( this, (*it)->name().latin1() );
+                TQObject *obj = factory->create( TQT_TQOBJECT(this), (*it)->name().latin1() );
                 if(!obj) {
                     lib->unload();
                     continue;
                 }
-                RenameDlgPlugin *plugin = static_cast<RenameDlgPlugin *>(obj);
+                RenameDlgPlugin *plugin = static_cast<RenameDlgPlugin *>(TQT_TQWIDGET(obj));
                 if(!plugin ){
                     delete obj;
                     continue;
@@ -223,7 +223,7 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
             // No plugin found, build default dialog
             TQGridLayout * gridLayout = new TQGridLayout( 0L, 9, 2, KDialog::marginHint(),
                                                         KDialog::spacingHint() );
-            pLayout->addLayout(gridLayout);
+            pLayout->addLayout(TQT_TQLAYOUT(gridLayout));
             gridLayout->setColStretch(0,0);
             gridLayout->setColStretch(1,10);
 
@@ -380,7 +380,7 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
     d->bCancel->setDefault( true );
     layout->addWidget( d->bCancel );
 
-    resize( sizeHint() );
+    resize( tqsizeHint() );
 }
 
 RenameDlg::~RenameDlg()
@@ -440,13 +440,13 @@ TQString RenameDlg::suggestName(const KURL& baseURL, const TQString& oldName)
   TQString dotSuffix, suggestedName;
   TQString basename = oldName;
 
-  int index = basename.find( '.' );
+  int index = basename.tqfind( '.' );
   if ( index != -1 ) {
     dotSuffix = basename.mid( index );
     basename.truncate( index );
   }
 
-  int pos = basename.findRev( '_' );
+  int pos = basename.tqfindRev( '_' );
   if(pos != -1 ){
     TQString tmp = basename.mid( pos+1 );
     bool ok;

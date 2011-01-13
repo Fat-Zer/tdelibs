@@ -29,7 +29,7 @@
 
 class KMDBCreator;
 
-class KMDriverDB : public QObject
+class KMDriverDB : public TQObject
 {
 	Q_OBJECT
 public:

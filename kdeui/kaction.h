@@ -199,7 +199,7 @@ class KMainWindow;
  *
  * @see KStdAction
  */
-class KDEUI_EXPORT KAction : public QObject
+class KDEUI_EXPORT KAction : public TQObject
 {
   friend class KActionCollection;
   Q_OBJECT
@@ -570,7 +570,7 @@ protected slots:
     /// @since 3.4
     void slotPopupActivated(); // KDE4: make virtual
     /// @since 3.4
-    void slotButtonClicked( int, Qt::ButtonState state ); // KDE4: make virtual
+    void slotButtonClicked( int, TQt::ButtonState state ); // KDE4: make virtual
 
 protected:
     KToolBar* toolBar( int index ) const;
@@ -620,7 +620,7 @@ signals:
      *
      * @since 3.4
      */
-    void activated( KAction::ActivationReason reason, Qt::ButtonState state );
+    void activated( KAction::ActivationReason reason, TQt::ButtonState state );
     void enabled( bool );
 
 private:

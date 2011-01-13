@@ -131,7 +131,7 @@ class TQPopupMenu;
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>
 */
 
-class KPopupAccelManager : public QObject
+class KPopupAccelManager : public TQObject
 {
   Q_OBJECT
 
@@ -164,7 +164,7 @@ private:
 };
 
 
-class QWidgetStackAccelManager : public QObject
+class QWidgetStackAccelManager : public TQObject
 {
   Q_OBJECT
 

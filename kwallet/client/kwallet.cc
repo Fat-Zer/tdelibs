@@ -179,7 +179,7 @@ Wallet *Wallet::openWallet(const TQString& name, WId w, OpenType ot) {
 	}
 
         // avoid deadlock if the app has some popup open (#65978/#71048)
-        while( TQWidget* widget = qApp->activePopupWidget())
+        while( TQWidget* widget = TQT_TQWIDGET(tqApp->activePopupWidget()))
             widget->close();
 
 	bool isPath = ot == Path;

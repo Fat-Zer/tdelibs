@@ -37,7 +37,7 @@ class KProcess;
  * This class parses the output of "df" to find the disk usage
  * information for a given partition (mount point).
  */
-class KIO_EXPORT KDiskFreeSp : public QObject
+class KIO_EXPORT KDiskFreeSp : public TQObject
 {  Q_OBJECT
 public:
    KDiskFreeSp( TQObject *parent=0, const char *name=0 );

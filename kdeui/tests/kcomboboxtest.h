@@ -9,7 +9,7 @@ class TQPushButton;
 
 class KComboBox;
 
-class KComboBoxTest : public QWidget
+class KComboBoxTest : public TQWidget
 {
   Q_OBJECT
     

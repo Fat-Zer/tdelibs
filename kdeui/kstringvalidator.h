@@ -116,7 +116,7 @@ private:
  *
  * @author Marc Mutz <mutz@kde.org>
  **/
-class KDEUI_EXPORT KMimeTypeValidator : public QValidator
+class KDEUI_EXPORT KMimeTypeValidator : public TQValidator
 {
   Q_OBJECT
 public:

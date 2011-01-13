@@ -81,7 +81,7 @@ typedef KCompTreeNodeList KCompTreeChildren;
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  * @internal
  */
-class KDECORE_EXPORT KCompTreeNode : public QChar
+class KDECORE_EXPORT KCompTreeNode : public TQChar
 {
 public:
     KCompTreeNode() : TQChar(), myWeight(0) {}
@@ -118,7 +118,7 @@ public:
     inline const KCompTreeChildren * children() const {
 	return &myChildren;
     }
-    inline const KCompTreeNode * childAt(int index) const {
+    inline const KCompTreeNode * tqchildAt(int index) const {
 	return myChildren.at(index);
     }
     inline const KCompTreeNode * firstChild() const {

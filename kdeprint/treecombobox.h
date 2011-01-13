@@ -27,7 +27,7 @@
 /**
  * Class that represents a single object in the tree
  */
-class TreeListBoxItem : public QListBoxPixmap
+class TreeListBoxItem : public TQListBoxPixmap
 {
 public:
 	TreeListBoxItem(TQListBox *lb, const TQPixmap& pix, const TQString& txt, bool oneBlock = false);
@@ -47,7 +47,7 @@ private:
 /**
  * Class for the listbox shown on popup
  */
-class TreeListBox : public QListBox
+class TreeListBox : public TQListBox
 {
 	friend class TreeListBoxItem;
 public:
@@ -63,7 +63,7 @@ private:
 /**
  * Main class.
  */
-class TreeComboBox : public QComboBox
+class TreeComboBox : public TQComboBox
 {
 public:
 	TreeComboBox(TQWidget *parent = 0, const char *name = 0);

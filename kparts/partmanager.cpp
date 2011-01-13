@@ -56,7 +56,7 @@ public:
     switch( ev->type() ) {
     case TQEvent::MouseButtonPress:
     case TQEvent::MouseButtonDblClick: {
-      TQMouseEvent* mev = static_cast<TQMouseEvent *>( ev );
+      TQMouseEvent* mev = TQT_TQMOUSEEVENT( ev );
       m_reason = mev->button() == Qt::LeftButton
                  ? PartManager::ReasonLeftClick
                  : ( mev->button() == Qt::MidButton
@@ -65,7 +65,7 @@ public:
       break;
     }
     case TQEvent::FocusIn:
-      m_reason = static_cast<TQFocusEvent *>( ev )->reason();
+      m_reason = TQT_TQFOCUSEVENT( ev )->reason();
       break;
     default:
       kdWarning(1000) << "PartManagerPrivate::setReason got unexpected ev type " << ev->type() << endl;
@@ -97,7 +97,7 @@ PartManager::PartManager( TQWidget * parent, const char * name )
 {
   d = new PartManagerPrivate;
 
-  qApp->installEventFilter( this );
+  tqApp->installEventFilter( this );
 
   d->m_policy = Direct;
 
@@ -109,7 +109,7 @@ PartManager::PartManager( TQWidget *topLevel, TQObject *parent, const char *name
 {
   d = new PartManagerPrivate;
 
-  qApp->installEventFilter( this );
+  tqApp->installEventFilter( this );
 
   d->m_policy = Direct;
 
@@ -129,7 +129,7 @@ PartManager::~PartManager()
   }
 
   // core dumps ... setActivePart( 0L );
-  qApp->removeEventFilter( this );
+  tqApp->removeEventFilter( this );
   delete d;
 }
 
@@ -184,7 +184,7 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
   if ( !obj->isWidgetType() )
     return false;
 
-  TQWidget *w = static_cast<TQWidget *>( obj );
+  TQWidget *w = TQT_TQWIDGET( obj );
 
   if ( ( w->testWFlags( WType_Dialog ) && w->isModal() ) ||
        w->testWFlags( WType_Popup ) || w->testWFlags( WStyle_Tool ) )
@@ -193,7 +193,7 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
   TQMouseEvent* mev = 0L;
   if ( ev->type() == TQEvent::MouseButtonPress || ev->type() == TQEvent::MouseButtonDblClick )
   {
-      mev = static_cast<TQMouseEvent *>( ev );
+      mev = TQT_TQMOUSEEVENT( ev );
 #ifdef DEBUG_PARTMANAGER
       kdDebug(1000) << "PartManager::eventFilter button: " << mev->button() << " " << "d->m_activationButtonMask=" << d->m_activationButtonMask << endl;
 #endif
@@ -206,7 +206,7 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
   {
     TQPoint pos;
 
-    if ( !d->m_managedTopLevelWidgets.containsRef( w->topLevelWidget() ) )
+    if ( !d->m_managedTopLevelWidgets.tqcontainsRef( w->tqtopLevelWidget() ) )
       return false;
 
     if ( d->m_bIgnoreScrollBars && w->inherits( "QScrollBar" ) )
@@ -288,7 +288,7 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
       return false;
     }
 
-    w = w->parentWidget();
+    w = w->tqparentWidget();
 
     if ( w && ( ( w->testWFlags( WType_Dialog ) && w->isModal() ) ||
                 w->testWFlags( WType_Popup ) || w->testWFlags( WStyle_Tool ) ) )
@@ -313,7 +313,7 @@ Part * PartManager::findPartFromWidget( TQWidget * widget, const TQPoint &pos )
   for ( ; it.current() ; ++it )
   {
     Part *part = it.current()->hitTest( widget, pos );
-    if ( part && d->m_parts.findRef( part ) != -1 )
+    if ( part && d->m_parts.tqfindRef( part ) != -1 )
       return part;
   }
   return 0L;
@@ -332,7 +332,7 @@ Part * PartManager::findPartFromWidget( TQWidget * widget )
 
 void PartManager::addPart( Part *part, bool setActive )
 {
-  if ( d->m_parts.findRef( part ) != -1 ) // don't add parts more than once :)
+  if ( d->m_parts.tqfindRef( part ) != -1 ) // don't add parts more than once :)
   {
 #ifdef DEBUG_PARTMANAGER
     kdWarning(1000) << k_funcinfo << part << " already added" << kdBacktrace(5) << endl;
@@ -352,11 +352,11 @@ void PartManager::addPart( Part *part, bool setActive )
   }
 
   // Prevent focus problems
-  if ( part->widget() && part->widget()->focusPolicy() == TQWidget::NoFocus )
+  if ( part->widget() && part->widget()->focusPolicy() == TQ_NoFocus )
   {
     kdWarning(1000) << "Part '" << part->name() << "' has a widget " << part->widget()->name() << " with a focus policy of NoFocus. It should have at least a ClickFocus policy, for part activation to work well." << endl;
   }
-  if ( part->widget() && part->widget()->focusPolicy() == TQWidget::TabFocus )
+  if ( part->widget() && part->widget()->focusPolicy() == TQ_TabFocus )
   {
     kdWarning(1000) << "Part '" << part->name() << "' has a widget " << part->widget()->name() << " with a focus policy of TabFocus. It should have at least a ClickFocus policy, for part activation to work well." << endl;
   }
@@ -368,9 +368,9 @@ void PartManager::addPart( Part *part, bool setActive )
 
 void PartManager::removePart( Part *part )
 {
-  if ( d->m_parts.findRef( part ) == -1 )
+  if ( d->m_parts.tqfindRef( part ) == -1 )
   {
-    kdFatal(1000) << TQString("Can't remove part %1, not in KPartManager's list.").arg(part->name()) << endl;
+    kdFatal(1000) << TQString(TQString("Can't remove part %1, not in KPartManager's list.").arg(part->name())) << endl;
     return;
   }
 
@@ -394,9 +394,9 @@ void PartManager::replacePart( Part * oldPart, Part * newPart, bool setActive )
 {
   //kdDebug(1000) << "replacePart " << oldPart->name() << "-> " << newPart->name() << " setActive=" << setActive << endl;
   // This methods does exactly removePart + addPart but without calling setActivePart(0) in between
-  if ( d->m_parts.findRef( oldPart ) == -1 )
+  if ( d->m_parts.tqfindRef( oldPart ) == -1 )
   {
-    kdFatal(1000) << TQString("Can't remove part %1, not in KPartManager's list.").arg(oldPart->name()) << endl;
+    kdFatal(1000) << TQString(TQString("Can't remove part %1, not in KPartManager's list.").arg(oldPart->name())) << endl;
     return;
   }
 
@@ -410,7 +410,7 @@ void PartManager::replacePart( Part * oldPart, Part * newPart, bool setActive )
 
 void PartManager::setActivePart( Part *part, TQWidget *widget )
 {
-  if ( part && d->m_parts.findRef( part ) == -1 )
+  if ( part && d->m_parts.tqfindRef( part ) == -1 )
   {
       kdWarning( 1000 ) << "PartManager::setActivePart : trying to activate a non-registered part! " << part->name() << endl;
       return; // don't allow someone call setActivePart with a part we don't know about
@@ -420,7 +420,7 @@ void PartManager::setActivePart( Part *part, TQWidget *widget )
   //tree recursively (Simon)
   if ( part && !d->m_bAllowNestedParts )
   {
-    TQObject *parentPart = part->parent(); // ### this relies on people using KParts::Factory!
+    TQObject *parentPart = TQT_TQOBJECT(part->parent()); // ### this relies on people using KParts::Factory!
     if ( parentPart && parentPart->inherits( "KParts::Part" ) )
     {
       KParts::Part *parPart = static_cast<KParts::Part *>( parentPart );
@@ -565,7 +565,7 @@ void PartManager::addManagedTopLevelWidget( const TQWidget *topLevel )
   if ( !topLevel->isTopLevel() )
     return;
 
-  if ( d->m_managedTopLevelWidgets.containsRef( topLevel ) )
+  if ( d->m_managedTopLevelWidgets.tqcontainsRef( topLevel ) )
     return;
 
   d->m_managedTopLevelWidgets.append( topLevel );
@@ -578,7 +578,7 @@ void PartManager::removeManagedTopLevelWidget( const TQWidget *topLevel )
   if ( !topLevel->isTopLevel() )
     return;
 
-  if ( d->m_managedTopLevelWidgets.findRef( topLevel ) == -1 )
+  if ( d->m_managedTopLevelWidgets.tqfindRef( topLevel ) == -1 )
     return;
 
   d->m_managedTopLevelWidgets.remove();

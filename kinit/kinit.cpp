@@ -535,7 +535,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
               ++it )
          {
              TQCString tmp( it.current());
-             int pos = tmp.find( '=' );
+             int pos = tmp.tqfind( '=' );
              if( pos >= 0 )
                  unsetenv( tmp.left( pos ));
          }

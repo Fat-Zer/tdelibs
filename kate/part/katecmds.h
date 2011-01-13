@@ -119,7 +119,7 @@ class SedReplace : public Kate::Command
 };
 
 /**
- * insert a unicode or ascii character
+ * insert a tqunicode or ascii character
  * base 9+1: 1234
  * hex: 0x1234 or x1234
  * octal: 01231

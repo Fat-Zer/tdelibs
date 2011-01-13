@@ -28,7 +28,7 @@
 class TQLabel;
 class TQListView;
 
-class KABC_EXPORT LockWidget : public QWidget
+class KABC_EXPORT LockWidget : public TQWidget
 {
     Q_OBJECT
   public:

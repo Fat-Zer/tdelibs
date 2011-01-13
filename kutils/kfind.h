@@ -101,9 +101,10 @@
  *  FindBackwards and call slotFindNext() - and reset the value afterwards.
  */
 class KUTILS_EXPORT KFind :
-    public QObject
+    public TQObject
 {
     Q_OBJECT
+    TQ_OBJECT
 
 public:
 
@@ -388,7 +389,7 @@ signals:
 
 protected:
 
-    TQWidget* parentWidget() const { return (TQWidget *)parent(); }
+    TQWidget* tqparentWidget() const { return (TQWidget *)parent(); }
     TQWidget* dialogsParent() const;
 
 protected slots:

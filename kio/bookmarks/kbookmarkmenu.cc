@@ -403,9 +403,9 @@ void RMB::slotRMBActionCopyLocation( int val )
 
   if ( !bookmark.isGroup() )
   {
-    kapp->clipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
+    kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
                                 QClipboard::Selection );
-    kapp->clipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
+    kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
                                 QClipboard::Clipboard );
   }
 }
@@ -537,7 +537,7 @@ void KBookmarkMenu::addNewFolder()
 
   TQString title = i18n( "&New Bookmark Folder..." );
   int p;
-  while ( ( p = title.find( '&' ) ) >= 0 )
+  while ( ( p = title.tqfind( '&' ) ) >= 0 )
     title.remove( p, 1 );
 
   KAction * paNewFolder = new KAction( title,
@@ -743,7 +743,7 @@ void KBookmarkMenu::slotNewFolder()
   }
 }
 
-void KBookmarkMenu::slotBookmarkSelected( KAction::ActivationReason /*reason*/, Qt::ButtonState state )
+void KBookmarkMenu::slotBookmarkSelected( KAction::ActivationReason /*reason*/, TQt::ButtonState state )
 {
   kdDebug(7043) << "KBookmarkMenu::slotBookmarkSelected()" << endl;
   if ( !m_pOwner ) return; // this view doesn't handle bookmarks...
@@ -1175,7 +1175,7 @@ void KBookmarkMenu::setDynamicBookmarks(const TQString &id, const DynMenuInfo &n
 
   // make sure list includes type
   config.setGroup("Bookmarks");
-  if (elist.contains(id) < 1) {
+  if (elist.tqcontains(id) < 1) {
     elist << id;
     config.writeEntry("DynamicMenus", elist);
   }

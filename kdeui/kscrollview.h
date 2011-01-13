@@ -27,7 +27,7 @@
  *
  *
  **/
-class KDEUI_EXPORT KScrollView : public QScrollView
+class KDEUI_EXPORT KScrollView : public TQScrollView
 {
   Q_OBJECT
 

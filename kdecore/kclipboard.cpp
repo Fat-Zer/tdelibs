@@ -38,7 +38,7 @@
  *  especially the second one.
  */
 
-class KClipboardSynchronizer::MimeSource : public QMimeSource
+class KClipboardSynchronizer::MimeSource : public TQMimeSource
 {
 public:
     MimeSource( const TQMimeSource * src )
@@ -56,7 +56,7 @@ public:
             while ( (format = src->format( i++ )) )
             {
                 byteArray = new TQByteArray();
-                *byteArray = src->encodedData( format ).copy();
+                *byteArray = src->tqencodedData( format ).copy();
                 m_data.append( byteArray );
                 m_formats.append( format );
             }
@@ -72,11 +72,11 @@ public:
             return 0L;
     }
     virtual bool provides( const char *mimeType ) const {
-        return ( m_formats.find( mimeType ) > -1 );
+        return ( m_formats.tqfind( mimeType ) > -1 );
     }
-    virtual TQByteArray encodedData( const char *format ) const
+    virtual TQByteArray tqencodedData( const char *format ) const
     {
-        int index = m_formats.find( format );
+        int index = m_formats.tqfind( format );
         if ( index > -1 )
             return *(m_data.at( index ));
 
@@ -97,7 +97,7 @@ bool KClipboardSynchronizer::s_blocked = false;
 KClipboardSynchronizer * KClipboardSynchronizer::self()
 {
     if ( !s_self )
-        s_self = new KClipboardSynchronizer( kapp, "KDE Clipboard" );
+        s_self = new KClipboardSynchronizer( TQT_TQOBJECT(kapp), "KDE Clipboard" );
 
     return s_self;
 }
@@ -123,7 +123,7 @@ KClipboardSynchronizer::~KClipboardSynchronizer()
 
 void KClipboardSynchronizer::setupSignals()
 {
-    QClipboard *clip = TQApplication::clipboard();
+    TQClipboard *clip = TQApplication::tqclipboard();
     disconnect( clip, NULL, this, NULL );
     if( s_sync )
         connect( clip, TQT_SIGNAL( selectionChanged() ),
@@ -135,43 +135,43 @@ void KClipboardSynchronizer::setupSignals()
 
 void KClipboardSynchronizer::slotSelectionChanged()
 {
-    QClipboard *clip = TQApplication::clipboard();
+    TQClipboard *clip = TQApplication::tqclipboard();
 
 //     qDebug("*** sel changed: %i", s_blocked);
     if ( s_blocked || !clip->ownsSelection() )
         return;
 
-    setClipboard( new MimeSource( clip->data( QClipboard::Selection) ),
-                  QClipboard::Clipboard );
+    setClipboard( new MimeSource( clip->data( TQClipboard::Selection) ),
+                  TQClipboard::Clipboard );
 }
 
 void KClipboardSynchronizer::slotClipboardChanged()
 {
-    QClipboard *clip = TQApplication::clipboard();
+    TQClipboard *clip = TQApplication::tqclipboard();
 
 //     qDebug("*** clip changed : %i (implicit: %i, ownz: clip: %i, selection: %i)", s_blocked, s_implicitSelection, clip->ownsClipboard(), clip->ownsSelection());
     if ( s_blocked || !clip->ownsClipboard() )
         return;
 
-    setClipboard( new MimeSource( clip->data( QClipboard::Clipboard ) ),
-                  QClipboard::Selection );
+    setClipboard( new MimeSource( clip->data( TQClipboard::Clipboard ) ),
+                  TQClipboard::Selection );
 }
 
-void KClipboardSynchronizer::setClipboard( TQMimeSource *data, QClipboard::Mode mode )
+void KClipboardSynchronizer::setClipboard( TQMimeSource *data, TQClipboard::Mode mode )
 {
 //     qDebug("---> setting clipboard: %p", data);
 
-    QClipboard *clip = TQApplication::clipboard();
+    TQClipboard *clip = TQApplication::tqclipboard();
 
     s_blocked = true;
 
-    if ( mode == QClipboard::Clipboard )
+    if ( mode == TQClipboard::Clipboard )
     {
-        clip->setData( data, QClipboard::Clipboard );
+        clip->setData( data, TQClipboard::Clipboard );
     }
-    else if ( mode == QClipboard::Selection )
+    else if ( mode == TQClipboard::Selection )
     {
-        clip->setData( data, QClipboard::Selection );
+        clip->setData( data, TQClipboard::Selection );
     }
 
     s_blocked = false;

@@ -88,10 +88,10 @@ bool KKey::init( const TQKeySequence& key )
 bool KKey::init( const TQKeyEvent* pEvent )
 {
 	int keyQt = pEvent->key();
-	if( pEvent->state() & Qt::ShiftButton )   keyQt |= Qt::SHIFT;
-	if( pEvent->state() & Qt::ControlButton ) keyQt |= Qt::CTRL;
-	if( pEvent->state() & Qt::AltButton )     keyQt |= Qt::ALT;
-	if( pEvent->state() & Qt::MetaButton )     keyQt |= Qt::META;
+	if( pEvent->state() & TQt::ShiftButton )   keyQt |= Qt::SHIFT;
+	if( pEvent->state() & TQt::ControlButton ) keyQt |= Qt::CTRL;
+	if( pEvent->state() & TQt::AltButton )     keyQt |= Qt::ALT;
+	if( pEvent->state() & TQt::MetaButton )     keyQt |= Qt::META;
 	return init( keyQt );
 }
 

@@ -46,8 +46,8 @@ struct Engine::Private
 };
 
 Engine::Engine( KNewStuff *newStuff, const TQString &type,
-                TQWidget *parentWidget ) :
-  mParentWidget( parentWidget ), mDownloadDialog( 0 ),
+                TQWidget *tqparentWidget ) :
+  mParentWidget( tqparentWidget ), mDownloadDialog( 0 ),
   mUploadDialog( 0 ), mProviderDialog( 0 ), mUploadProvider( 0 ),
   d(new Private), mType( type )
 {
@@ -57,8 +57,8 @@ Engine::Engine( KNewStuff *newStuff, const TQString &type,
 }
 
 Engine::Engine( KNewStuff *newStuff, const TQString &type,
-                const TQString &providerList, TQWidget *parentWidget ) :
-                mParentWidget( parentWidget ),
+                const TQString &providerList, TQWidget *tqparentWidget ) :
+                mParentWidget( tqparentWidget ),
 		mDownloadDialog( 0 ), mUploadDialog( 0 ),
 		mProviderDialog( 0 ), mUploadProvider( 0 ),
                 mProviderList( providerList ), d(new Private),
@@ -164,7 +164,7 @@ void Engine::slotNewStuffJobResult( KIO::Job *job )
 
           kdDebug() << "  SUMMARY: " << entry->summary() << endl;
           kdDebug() << "  VERSION: " << entry->version() << endl;
-          kdDebug() << "  RELEASEDATE: " << entry->releaseDate().toString() << endl;
+          kdDebug() << "  RELEASEDATE: " << TQString(entry->releaseDate().toString()) << endl;
           kdDebug() << "  RATING: " << entry->rating() << endl;
 
           kdDebug() << "  LANGS: " << entry->langs().join(", ") << endl;

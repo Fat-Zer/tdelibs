@@ -127,12 +127,12 @@ public:
 			TQColor qStopColor = m_engine->painter()->parseColor(parseColor);
 
 			// Convert in a libart suitable form
-			Q_UINT32 stopColor = m_engine->painter()->toArtColor(qStopColor);
+			TQ_UINT32 stopColor = m_engine->painter()->toArtColor(qStopColor);
 
 			int opacity = m_engine->painter()->parseOpacity(parseOpacity);
 
-			Q_UINT32 rgba = (stopColor << 8) | opacity;
-			Q_UINT32 r, g, b, a;
+			TQ_UINT32 rgba = (stopColor << 8) | opacity;
+			TQ_UINT32 r, g, b, a;
 
 			// Convert from separated to premultiplied alpha
 			a = rgba & 0xff;
@@ -174,8 +174,8 @@ public:
 			return TQPointArray();
 
 		points.replace(',', ' ');
-		points.replace('\r', TQString::null);
-		points.replace('\n', TQString::null);
+		points.replace('\r', TQString());
+		points.replace('\n', TQString());
 
 		points = points.simplifyWhiteSpace();
 
@@ -201,7 +201,7 @@ public:
 		// Combine new and old matrix
 		TQWMatrix matrix = m_engine->painter()->parseTransform(transform);
 
-		TQWMatrix *current = m_engine->painter()->worldMatrix();
+		TQWMatrix *current = m_engine->painter()->tqworldMatrix();
 		*current = matrix * *current;
 	}
 
@@ -221,9 +221,9 @@ public:
 		TQPtrList<TQDomNamedNodeMap> applyList;
 		applyList.setAutoDelete(true);
 
-		TQDomNode shape = node.parentNode();
-		for(; !shape.isNull() ; shape = shape.parentNode())
-			applyList.prepend(new TQDomNamedNodeMap(shape.attributes()));
+		TQDomNode tqshape = node.tqparentNode();
+		for(; !tqshape.isNull() ; tqshape = tqshape.tqparentNode())
+			applyList.prepend(new TQDomNamedNodeMap(tqshape.attributes()));
 
 		// Apply parent attributes
 		for(TQDomNamedNodeMap *map = applyList.first(); map != 0; map = applyList.next())
@@ -425,7 +425,7 @@ public:
 			if(href.startsWith("data:"))
 			{
 				// Get input
-				TQCString input = href.remove(TQRegExp("^data:image/.*;base64,")).utf8();
+				TQCString input = TQString(href.remove(TQRegExp("^data:image/.*;base64,"))).utf8();
 
 				// Decode into 'output'
 				TQByteArray output;
@@ -441,7 +441,7 @@ public:
 			{
 				// Scale, if needed
 				if(image.width() != (int) w || image.height() != (int) h)
-					image = image.smoothScale((int) w, (int) h, TQImage_ScaleFree);
+					image = image.smoothScale((int) w, (int) h, TQ_ScaleFree);
 
 				m_engine->painter()->drawImage(x, y, image);
 			}
@@ -622,7 +622,7 @@ bool KSVGIconEngine::load(int width, int height, const TQString &path)
 		d->width = w;
 		d->height = h;
 
-		d->painter->worldMatrix()->scale(vratiow, vratioh);
+		d->painter->tqworldMatrix()->scale(vratiow, vratioh);
 	}
 	else
 	{
@@ -631,10 +631,10 @@ bool KSVGIconEngine::load(int width, int height, const TQString &path)
 		double ratiow = width / d->width;
 		double ratioh = height / d->height;
 
-		d->painter->worldMatrix()->scale(ratiow, ratioh);
+		d->painter->tqworldMatrix()->scale(ratiow, ratioh);
 	}
 
-	TQWMatrix initialMatrix = *d->painter->worldMatrix();
+	TQWMatrix initialMatrix = *d->painter->tqworldMatrix();
 	d->helper->m_initialMatrix = initialMatrix;
 
 	// Apply transform

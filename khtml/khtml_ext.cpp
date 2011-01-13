@@ -315,7 +315,7 @@ void KHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
     if ( !m_extensionProxy )
         return;
 
-    int slot = m_extensionProxy->metaObject()->findSlot( method );
+    int slot = m_extensionProxy->tqmetaObject()->findSlot( method );
     if ( slot == -1 )
         return;
 
@@ -344,9 +344,9 @@ void KHTMLPartBrowserExtension::updateEditActions()
     bool hasSelection = false;
 
     if( m_editableFormWidget) {
-        if ( ::qt_cast<TQLineEdit*>(m_editableFormWidget))
+        if ( ::tqqt_cast<TQLineEdit*>(m_editableFormWidget))
             hasSelection = static_cast<TQLineEdit *>( &(*m_editableFormWidget) )->hasSelectedText();
-        else if(::qt_cast<TQTextEdit*>(m_editableFormWidget))
+        else if(::tqqt_cast<TQTextEdit*>(m_editableFormWidget))
             hasSelection = static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->hasSelectedText();
     }
 
@@ -809,7 +809,7 @@ void KHTMLPopupGUIClient::saveURL( TQWidget *parent, const TQString &caption,
                                    const TQString &filter, long cacheId,
                                    const TQString & suggestedFilename )
 {
-  TQString name = TQString::fromLatin1( "index.html" );
+  TQString name = TQString::tqfromLatin1( "index.html" );
   if ( !suggestedFilename.isEmpty() )
     name = suggestedFilename;
   else if ( !url.fileName().isEmpty() )

@@ -97,6 +97,7 @@ class KStreamSocketPrivate;
 class KDECORE_EXPORT KStreamSocket: public KClientSocketBase
 {
   Q_OBJECT
+  TQ_OBJECT
 
 public:
   /**

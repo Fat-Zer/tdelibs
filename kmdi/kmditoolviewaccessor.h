@@ -35,7 +35,7 @@ class KMDIGUIClient;
 }
 
 
-class KMDI_EXPORT KMdiToolViewAccessor : public QObject
+class KMDI_EXPORT KMdiToolViewAccessor : public TQObject
 {
 	Q_OBJECT
 

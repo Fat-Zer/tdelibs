@@ -26,7 +26,7 @@ class TQLineEdit;
 class TQCheckBox;
 class KConfig;
 
-class KMCupsConfigWidget : public QWidget
+class KMCupsConfigWidget : public TQWidget
 {
 public:
 	KMCupsConfigWidget(TQWidget *parent = 0, const char *name = 0);

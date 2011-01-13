@@ -27,7 +27,7 @@
 
 class TQLabel;
 
-class KDEPRINT_EXPORT MessageWindow : public QWidget
+class KDEPRINT_EXPORT MessageWindow : public TQWidget
 {
 	Q_OBJECT
 

@@ -48,7 +48,7 @@ class TQLayoutItem;
  * @see KDialogBase
  * @author Thomas Tanghus <tanghus@earthling.net>, Espen Sand <espensa@online.no>
  */
-class KDEUI_EXPORT KDialog : public QDialog
+class KDEUI_EXPORT KDialog : public TQDialog
 {
   Q_OBJECT
 
@@ -185,7 +185,7 @@ class KDEUI_EXPORT KDialog : public QDialog
   * @author Waldo Bastian <bastian@kde.org>
   */
 class KDialogQueuePrivate;
-class KDEUI_EXPORT KDialogQueue : public QObject
+class KDEUI_EXPORT KDialogQueue : public TQObject
 {
       Q_OBJECT
 

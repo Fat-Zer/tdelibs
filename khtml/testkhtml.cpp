@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
     TQObject::connect( doc, TQT_SIGNAL(completed()), dummy, TQT_SLOT(handleDone()) );
 
-    if (args->url(0).url().right(4).find(".xml", 0, false) == 0) {
+    if (args->url(0).url().right(4).tqfind(".xml", 0, false) == 0) {
         KParts::URLArgs ags(doc->browserExtension()->urlArgs());
         ags.serviceType = "text/xml";
         doc->browserExtension()->setURLArgs(ags);
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
     doc->setURLCursor(TQCursor(Qt::PointingHandCursor));
     a.setTopWidget(doc->widget());
     TQWidget::connect(doc, TQT_SIGNAL(setWindowCaption(const TQString &)),
-		     doc->widget()->topLevelWidget(), TQT_SLOT(setCaption(const TQString &)));
+		     doc->widget()->tqtopLevelWidget(), TQT_SLOT(setCaption(const TQString &)));
     doc->widget()->show();
     toplevel->show();
     ((TQScrollView *)doc->widget())->viewport()->show();
@@ -142,7 +142,7 @@ void Dummy::doBenchmark()
     results.clear();
 
     TQString directory = KFileDialog::getExistingDirectory(settings.readPathEntry("path"), m_part->view(), 
-            TQString::fromLatin1("Please select directory with tests"));
+            TQString::tqfromLatin1("Please select directory with tests"));
 
     if (!directory.isEmpty()) {
         settings.writePathEntry("path", directory);
@@ -184,14 +184,14 @@ void Dummy::nextRun()
             for (int pos = 0; pos < timings.size(); ++pos) {
                 int t = timings[pos];
                 if (pos < COLD_RUNS)
-		    m_part->write(TQString::fromLatin1("<td>(Cold):") + TQString::number(t) + "</td>");
+		    m_part->write(TQString::tqfromLatin1("<td>(Cold):") + TQString::number(t) + "</td>");
                 else {
                     total += t;
-                    m_part->write(TQString::fromLatin1("<td><i>") + TQString::number(t) + "</i></td>");
+                    m_part->write(TQString::tqfromLatin1("<td><i>") + TQString::number(t) + "</i></td>");
                 }
             }
 
-            m_part->write(TQString::fromLatin1("<td>Average:<b>") + TQString::number(double(total) / HOT_RUNS) + "</b></td>");
+            m_part->write(TQString::tqfromLatin1("<td>Average:<b>") + TQString::number(double(total) / HOT_RUNS) + "</b></td>");
 
             m_part->write("</tr>");
         }

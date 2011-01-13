@@ -84,7 +84,7 @@ public:
 
 
 KDateValidator::KDateValidator(TQWidget* parent, const char* name)
-    : TQValidator(parent, name)
+    : TQValidator(TQT_TQOBJECT(parent), name)
 {
 }
 
@@ -124,7 +124,7 @@ KDateTable::KDateTable(TQWidget *parent, TQDate date_, const char* name, WFlags 
       kdDebug() << "KDateTable ctor: WARNING: Given date is invalid, using current date." << endl;
       date_=TQDate::currentDate();
     }
-  setFocusPolicy( TQWidget::StrongFocus );
+  setFocusPolicy( TQ_StrongFocus );
   setNumRows(7); // 6 weeks max + headline
   setNumCols(7); // 7 days a week
   setHScrollBarMode(AlwaysOff);
@@ -140,7 +140,7 @@ KDateTable::KDateTable(TQWidget *parent, const char* name, WFlags f)
 {
   d = new KDateTablePrivate;
   setFontSize(10);
-  setFocusPolicy( TQWidget::StrongFocus );
+  setFocusPolicy( TQ_StrongFocus );
   setNumRows(7); // 6 weeks max + headline
   setNumCols(7); // 7 days a week
   setHScrollBarMode(AlwaysOff);
@@ -158,12 +158,12 @@ KDateTable::~KDateTable()
 void KDateTable::initAccels()
 {
   KAccel* accel = new KAccel(this, "date table accel");
-  accel->insert(KStdAccel::Next, this, TQT_SLOT(nextMonth()));
-  accel->insert(KStdAccel::Prior, this, TQT_SLOT(previousMonth()));
-  accel->insert(KStdAccel::Home, this, TQT_SLOT(beginningOfMonth()));
-  accel->insert(KStdAccel::End, this, TQT_SLOT(endOfMonth()));
-  accel->insert(KStdAccel::BeginningOfLine, this, TQT_SLOT(beginningOfWeek()));
-  accel->insert(KStdAccel::EndOfLine, this, TQT_SLOT(endOfWeek()));
+  accel->insert(KStdAccel::Next, TQT_TQOBJECT(this), TQT_SLOT(nextMonth()));
+  accel->insert(KStdAccel::Prior, TQT_TQOBJECT(this), TQT_SLOT(previousMonth()));
+  accel->insert(KStdAccel::Home, TQT_TQOBJECT(this), TQT_SLOT(beginningOfMonth()));
+  accel->insert(KStdAccel::End, TQT_TQOBJECT(this), TQT_SLOT(endOfMonth()));
+  accel->insert(KStdAccel::BeginningOfLine, TQT_TQOBJECT(this), TQT_SLOT(beginningOfWeek()));
+  accel->insert(KStdAccel::EndOfLine, TQT_TQOBJECT(this), TQT_SLOT(endOfWeek()));
   accel->readSettings();
 }
 
@@ -233,7 +233,7 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
          ( daynum == 6 && calendar->calendarName() == "gregorian" ) )
           normalday=false;
 
-			TQBrush brushInvertTitle(colorGroup().base());
+			TQBrush brushInvertTitle(tqcolorGroup().base());
 			TQColor titleColor(isEnabled()?( KGlobalSettings::activeTitleColor() ):( KGlobalSettings::inactiveTitleColor() ) );
 			TQColor textColor(isEnabled()?( KGlobalSettings::activeTextColor() ):( KGlobalSettings::inactiveTextColor() ) );
       if (!normalday)
@@ -250,7 +250,7 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
         }
       painter->drawText(0, 0, w, h-1, AlignCenter,
                         calendar->weekDayName(daynum, true), -1, &rect);
-      painter->setPen(colorGroup().text());
+      painter->setPen(tqcolorGroup().text());
       painter->moveTo(0, h-1);
       painter->lineTo(w-1, h-1);
       // ----- draw the weekday:
@@ -267,7 +267,7 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
           // ° painting a day of the previous month or
           // ° painting a day of the following month
           // TODO: don't hardcode gray here! Use a color with less contrast to the background than normal text.
-          painter->setPen( colorGroup().mid() );
+          painter->setPen( tqcolorGroup().mid() );
 //          painter->setPen(gray);
         } else { // paint a day of the current month
           if ( d->useCustomColors )
@@ -292,9 +292,9 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
               }
               painter->setPen( mode->fgColor );
             } else
-              painter->setPen(colorGroup().text());
+              painter->setPen(tqcolorGroup().text());
           } else //if ( firstWeekDay < 4 ) // <- this doesn' make sense at all!
-          painter->setPen(colorGroup().text());
+          painter->setPen(tqcolorGroup().text());
         }
 
       pen=painter->pen();
@@ -308,25 +308,25 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
            // draw the currently selected date
 	   if (isEnabled())
 	   {
-           painter->setPen(colorGroup().highlight());
-           painter->setBrush(colorGroup().highlight());
+           painter->setPen(tqcolorGroup().highlight());
+           painter->setBrush(tqcolorGroup().highlight());
 	   }
 	   else
 	   {
-	   painter->setPen(colorGroup().text());
-           painter->setBrush(colorGroup().text());
+	   painter->setPen(tqcolorGroup().text());
+           painter->setBrush(tqcolorGroup().text());
 	   }
-           pen=colorGroup().highlightedText();
+           pen=TQPen(tqcolorGroup().highlightedText());
         } else {
           painter->setBrush(paletteBackgroundColor());
           painter->setPen(paletteBackgroundColor());
-//          painter->setBrush(colorGroup().base());
-//          painter->setPen(colorGroup().base());
+//          painter->setBrush(tqcolorGroup().base());
+//          painter->setPen(tqcolorGroup().base());
         }
 
       if ( pCellDate == TQDate::currentDate() )
       {
-         painter->setPen(colorGroup().text());
+         painter->setPen(tqcolorGroup().text());
       }
 
       if ( paintRect ) painter->drawRect(0, 0, w, h);
@@ -351,22 +351,22 @@ void KDateTable::previousMonth()
 
 void KDateTable::beginningOfMonth()
 {
-  setDate(date.addDays(1 - date.day()));
+  setDate(TQT_TQDATE_OBJECT(date.addDays(1 - date.day())));
 }
 
 void KDateTable::endOfMonth()
 {
-  setDate(date.addDays(date.daysInMonth() - date.day()));
+  setDate(TQT_TQDATE_OBJECT(date.addDays(date.daysInMonth() - date.day())));
 }
 
 void KDateTable::beginningOfWeek()
 {
-  setDate(date.addDays(1 - date.dayOfWeek()));
+  setDate(TQT_TQDATE_OBJECT(date.addDays(1 - date.dayOfWeek())));
 }
 
 void KDateTable::endOfWeek()
 {
-  setDate(date.addDays(7 - date.dayOfWeek()));
+  setDate(TQT_TQDATE_OBJECT(date.addDays(7 - date.dayOfWeek())));
 }
 
 void
@@ -374,22 +374,22 @@ KDateTable::keyPressEvent( TQKeyEvent *e )
 {
     switch( e->key() ) {
     case Key_Up:
-            setDate(date.addDays(-7));
+            setDate(TQT_TQDATE_OBJECT(date.addDays(-7)));
         break;
     case Key_Down:
-            setDate(date.addDays(7));
+            setDate(TQT_TQDATE_OBJECT(date.addDays(7)));
         break;
     case Key_Left:
-            setDate(date.addDays(-1));
+            setDate(TQT_TQDATE_OBJECT(date.addDays(-1)));
         break;
     case Key_Right:
-            setDate(date.addDays(1));
+            setDate(TQT_TQDATE_OBJECT(date.addDays(1)));
         break;
     case Key_Minus:
-        setDate(date.addDays(-1));
+        setDate(TQT_TQDATE_OBJECT(date.addDays(-1)));
 	break;
     case Key_Plus:
-        setDate(date.addDays(1));
+        setDate(TQT_TQDATE_OBJECT(date.addDays(1)));
 	break;
     case Key_N:
         setDate(TQDate::currentDate());
@@ -439,7 +439,7 @@ KDateTable::setFontSize(int size)
       maxCell.setHeight(QMAX(maxCell.height(), rect.height()));
     }
   // ----- compare with a real wide number and add some space:
-  rect=metrics.boundingRect(TQString::fromLatin1("88"));
+  rect=metrics.boundingRect(TQString::tqfromLatin1("88"));
   maxCell.setWidth(QMAX(maxCell.width()+2, rect.width()));
   maxCell.setHeight(QMAX(maxCell.height()+4, rect.height()));
 }
@@ -447,7 +447,7 @@ KDateTable::setFontSize(int size)
 void
 KDateTable::wheelEvent ( TQWheelEvent * e )
 {
-    setDate(date.addMonths( -(int)(e->delta()/120)) );
+    setDate(TQT_TQDATE_OBJECT(date.addMonths( -(int)(e->delta()/120)) ));
     e->accept();
 }
 
@@ -536,7 +536,7 @@ KDateTable::setDate(const TQDate& date_)
   numDaysPrevMonth=calendar->daysInMonth(temp);
   if(changed)
     {
-      repaintContents(false);
+      tqrepaintContents(false);
     }
   return true;
 }
@@ -547,28 +547,28 @@ KDateTable::getDate() const
   return date;
 }
 
-// what are those repaintContents() good for? (pfeiffer)
+// what are those tqrepaintContents() good for? (pfeiffer)
 void KDateTable::focusInEvent( TQFocusEvent *e )
 {
-//    repaintContents(false);
+//    tqrepaintContents(false);
     TQGridView::focusInEvent( e );
 }
 
 void KDateTable::focusOutEvent( TQFocusEvent *e )
 {
-//    repaintContents(false);
+//    tqrepaintContents(false);
     TQGridView::focusOutEvent( e );
 }
 
-QSize
-KDateTable::sizeHint() const
+TQSize
+KDateTable::tqsizeHint() const
 {
   if(maxCell.height()>0 && maxCell.width()>0)
     {
       return TQSize(maxCell.width()*numCols()+2*frameWidth(),
              (maxCell.height()+2)*numRows()+2*frameWidth());
     } else {
-      kdDebug() << "KDateTable::sizeHint: obscure failure - " << endl;
+      kdDebug() << "KDateTable::tqsizeHint: obscure failure - " << endl;
       return TQSize(-1, -1);
     }
 }
@@ -596,7 +596,7 @@ void KDateTable::setCustomDatePainting(const TQDate &date, const TQColor &fgColo
     mode->fgColor=fgColor;
     mode->bgColor=bgColor;
 
-    d->customPaintingModes.replace( date.toString(), mode );
+    d->customPaintingModes.tqreplace( date.toString(), mode );
     d->useCustomColors=true;
     update();
 }
@@ -609,7 +609,7 @@ void KDateTable::unsetCustomDatePainting( const TQDate &date )
 KDateInternalWeekSelector::KDateInternalWeekSelector
 (TQWidget* parent, const char* name)
   : TQLineEdit(parent, name),
-    val(new TQIntValidator(this)),
+    val(new TQIntValidator(TQT_TQOBJECT(this))),
     result(0)
 {
   TQFont font;
@@ -712,8 +712,8 @@ KDateInternalMonthPicker::KDateInternalMonthPicker
     }
 }
 
-QSize
-KDateInternalMonthPicker::sizeHint() const
+TQSize
+KDateInternalMonthPicker::tqsizeHint() const
 {
   return TQSize((max.width()+6)*numCols()+2*frameWidth(),
          (max.height()+6)*numRows()+2*frameWidth());
@@ -756,7 +756,7 @@ KDateInternalMonthPicker::paintCell(TQPainter* painter, int row, int col)
 void
 KDateInternalMonthPicker::contentsMousePressEvent(TQMouseEvent *e)
 {
-  if(!isEnabled() || e->button() != LeftButton)
+  if(!isEnabled() || e->button() != Qt::LeftButton)
     {
       KNotifyClient::beep();
       return;
@@ -783,7 +783,7 @@ KDateInternalMonthPicker::contentsMousePressEvent(TQMouseEvent *e)
 void
 KDateInternalMonthPicker::contentsMouseMoveEvent(TQMouseEvent *e)
 {
-  if (e->state() & LeftButton)
+  if (e->state() & Qt::LeftButton)
     {
       int row, col;
       TQPoint mouseCoord;
@@ -815,7 +815,7 @@ KDateInternalMonthPicker::contentsMouseMoveEvent(TQMouseEvent *e)
               updateCell( row, col /*, false */ ); // mark the new active cell
             }
         }
-      if ( tmpRow > -1 ) // repaint the former active cell
+      if ( tmpRow > -1 ) // tqrepaint the former active cell
           updateCell( tmpRow, tmpCol /*, true */ );
     }
 }
@@ -850,7 +850,7 @@ KDateInternalMonthPicker::contentsMouseReleaseEvent(TQMouseEvent *e)
 KDateInternalYearSelector::KDateInternalYearSelector
 (TQWidget* parent, const char* name)
   : TQLineEdit(parent, name),
-    val(new TQIntValidator(this)),
+    val(new TQIntValidator(TQT_TQOBJECT(this))),
     result(0)
 {
   TQFont font;
@@ -914,7 +914,7 @@ class KPopupFrame::KPopupFramePrivate
 };
 
 KPopupFrame::KPopupFrame(TQWidget* parent, const char*  name)
-  : TQFrame(parent, name, WType_Popup),
+  : TQFrame(parent, name, (WFlags)WType_Popup),
     result(0), // rejected
     main(0),
     d(new KPopupFramePrivate)
@@ -935,7 +935,7 @@ KPopupFrame::keyPressEvent(TQKeyEvent* e)
     {
       result=0; // rejected
       d->exec = false;
-      qApp->exit_loop();
+      tqApp->exit_loop();
     }
 }
 
@@ -944,7 +944,7 @@ KPopupFrame::close(int r)
 {
   result=r;
   d->exec = false;
-  qApp->exit_loop();
+  tqApp->exit_loop();
 }
 
 void
@@ -954,7 +954,7 @@ KPopupFrame::hide()
     if (d->exec)
     {
         d->exec = false;
-        qApp->exit_loop();
+        tqApp->exit_loop();
     }
 }
 
@@ -1006,10 +1006,10 @@ int
 KPopupFrame::exec(TQPoint pos)
 {
   popup(pos);
-  repaint();
+  tqrepaint();
   d->exec = true;
-  const TQGuardedPtr<TQObject> that = this;
-  qApp->enter_loop();
+  const TQGuardedPtr<TQObject> that = TQT_TQOBJECT(this);
+  tqApp->enter_loop();
   if ( !that )
     return TQDialog::Rejected;
   hide();

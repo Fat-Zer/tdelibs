@@ -51,7 +51,7 @@ KLed::KLed(TQWidget *parent, const char *name)
   : TQWidget( parent, name),
     led_state(On),
     led_look(Raised),
-    led_shape(Circular)
+    led_tqshape(Circular)
 {
   TQColor col(green);
   d = new KLed::KLedPrivate;
@@ -68,7 +68,7 @@ KLed::KLed(const TQColor& col, TQWidget *parent, const char *name)
   : TQWidget( parent, name),
     led_state(On),
     led_look(Raised),
-    led_shape(Circular)
+    led_tqshape(Circular)
 {
   d = new KLed::KLedPrivate;
   d->dark_factor = 300;
@@ -81,11 +81,11 @@ KLed::KLed(const TQColor& col, TQWidget *parent, const char *name)
 }
 
 KLed::KLed(const TQColor& col, KLed::State state,
-	   KLed::Look look, KLed::Shape shape, TQWidget *parent, const char *name )
+	   KLed::Look look, KLed::Shape tqshape, TQWidget *parent, const char *name )
   : TQWidget(parent, name),
     led_state(state),
     led_look(look),
-    led_shape(shape)
+    led_tqshape(tqshape)
 {
   d = new KLed::KLedPrivate;
   d->dark_factor = 300;
@@ -93,7 +93,7 @@ KLed::KLed(const TQColor& col, KLed::State state,
   d->off_map = 0;
   d->on_map = 0;
 
-  //setShape(shape);
+  //setShape(tqshape);
   setColor(col);
 }
 
@@ -114,7 +114,7 @@ KLed::paintEvent(TQPaintEvent *)
   t.start();
   for (int i=0; i<rounds; i++) {
 #endif
-  switch(led_shape)
+  switch(led_tqshape)
     {
     case Rectangular:
       switch (led_look)
@@ -129,7 +129,7 @@ KLed::paintEvent(TQPaintEvent *)
 	  paintRect();
 	  break;
 	default  :
-	  qWarning("%s: in class KLed: no KLed::Look set",qApp->argv()[0]);
+	  qWarning("%s: in class KLed: no KLed::Look set",tqApp->argv()[0]);
 	}
       break;
     case Circular:
@@ -145,11 +145,11 @@ KLed::paintEvent(TQPaintEvent *)
 	  paintSunken();
 	  break;
 	default:
-	  qWarning("%s: in class KLed: no KLed::Look set",qApp->argv()[0]);
+	  qWarning("%s: in class KLed: no KLed::Look set",tqApp->argv()[0]);
 	}
       break;
     default:
-      qWarning("%s: in class KLed: no KLed::Shape set",qApp->argv()[0]);
+      qWarning("%s: in class KLed: no KLed::Shape set",tqApp->argv()[0]);
       break;
     }
 #ifdef PAINT_BENCH
@@ -225,11 +225,11 @@ KLed::paintFlat() // paint a ROUND FLAT led lamp
 
     // Set the brush to SolidPattern, this fills the entire area
     // of the ellipse which is drawn with a thin gray "border" (pen)
-    brush.setStyle( TQBrush::SolidPattern );
+    brush.setStyle( Qt::SolidPattern );
     brush.setColor( color );
 
     pen.setWidth( scale );
-    color = colorGroup().dark();
+    color = tqcolorGroup().dark();
     pen.setColor( color );			// Set the pen accordingly
 
     paint.setPen( pen );			// Select pen for drawing
@@ -280,7 +280,7 @@ KLed::paintRound() // paint a ROUND RAISED led lamp
 
     // Set the brush to SolidPattern, this fills the entire area
     // of the ellipse which is drawn first
-    brush.setStyle( TQBrush::SolidPattern );
+    brush.setStyle( Qt::SolidPattern );
     brush.setColor( color );
     paint.setBrush( brush );		// Assign the brush to the painter
 
@@ -325,10 +325,10 @@ KLed::paintRound() // paint a ROUND RAISED led lamp
     // avoid that the border can be erased by the bright spot of the LED
 
     pen.setWidth( 2 * scale + 1 );
-    color = colorGroup().dark();
+    color = tqcolorGroup().dark();
     pen.setColor( color );			// Set the pen accordingly
     paint.setPen( pen );			// Select pen for drawing
-    brush.setStyle( TQBrush::NoBrush );		// Switch off the brush
+    brush.setStyle( Qt::NoBrush );		// Switch off the brush
     paint.setBrush( brush );			// This avoids filling of the ellipse
 
     paint.drawEllipse( 2, 2, width, width );
@@ -376,7 +376,7 @@ KLed::paintSunken() // paint a ROUND SUNKEN led lamp
 
     // Set the brush to SolidPattern, this fills the entire area
     // of the ellipse which is drawn first
-    brush.setStyle( TQBrush::SolidPattern );
+    brush.setStyle( Qt::SolidPattern );
     brush.setColor( color );
     paint.setBrush( brush );                // Assign the brush to the painter
 
@@ -421,14 +421,14 @@ KLed::paintSunken() // paint a ROUND SUNKEN led lamp
     // from the upper left.
 
     pen.setWidth( 2 * scale + 1 ); // ### shouldn't this value be smaller for smaller LEDs?
-    brush.setStyle( TQBrush::NoBrush );              // Switch off the brush
+    brush.setStyle( (Qt::BrushStyle)NoBrush );              // Switch off the brush
     paint.setBrush( brush );                        // This avoids filling of the ellipse
 
     // Set the initial color value to colorGroup().light() (bright) and start
     // drawing the shadow border at 45° (45*16 = 720).
 
     int angle = -720;
-    color = colorGroup().light();
+    color = tqcolorGroup().light();
 
     for ( int arc = 120; arc < 2880; arc += 240 ) {
       pen.setColor( color );
@@ -525,12 +525,12 @@ KLed::state() const
 }
 
 KLed::Shape
-KLed::shape() const
+KLed::tqshape() const
 {
-  return led_shape;
+  return led_tqshape;
 }
 
-QColor
+TQColor
 KLed::color() const
 {
   return led_color;
@@ -561,9 +561,9 @@ KLed::toggleState()
 void
 KLed::setShape(KLed::Shape s)
 {
-  if(led_shape!=s)
+  if(led_tqshape!=s)
     {
-      led_shape = s;
+      led_tqshape = s;
       update();
     }
 }
@@ -626,14 +626,14 @@ KLed::off()
   setState(Off);
 }
 
-QSize
-KLed::sizeHint() const
+TQSize
+KLed::tqsizeHint() const
 {
   return TQSize(16, 16);
 }
 
-QSize
-KLed::minimumSizeHint() const
+TQSize
+KLed::tqminimumSizeHint() const
 {
   return TQSize(16, 16 );
 }

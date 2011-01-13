@@ -53,7 +53,7 @@ class KMultiTabBarInternal;
  * should be raisable is left to the "user".
  *@author Joseph Wenninger
  */
-class KUTILS_EXPORT KMultiTabBar: public QWidget
+class KUTILS_EXPORT KMultiTabBar: public TQWidget
 {
 	Q_OBJECT
 public:
@@ -202,7 +202,7 @@ private:
  * This class represents a tab bar button in a KMultiTabBarWidget.
  * This class should never be created except with the appendButton call of KMultiTabBar
  */
-class KUTILS_EXPORT KMultiTabBarButton: public QPushButton
+class KUTILS_EXPORT KMultiTabBarButton: public TQPushButton
 {
 	Q_OBJECT
 public:
@@ -239,7 +239,7 @@ public slots:
          */
 	void setText(const TQString &);
 
-	TQSize sizeHint() const;
+	TQSize tqsizeHint() const;
 
 protected:
 	KMultiTabBar::KMultiTabBarPosition m_position;

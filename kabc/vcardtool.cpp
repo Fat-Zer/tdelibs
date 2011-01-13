@@ -335,8 +335,8 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
     // X-
     const TQStringList customs = (*addrIt).customs();
     for ( strIt = customs.begin(); strIt != customs.end(); ++strIt ) {
-      TQString identifier = "X-" + (*strIt).left( (*strIt).find( ":" ) );
-      TQString value = (*strIt).mid( (*strIt).find( ":" ) + 1 );
+      TQString identifier = "X-" + (*strIt).left( (*strIt).tqfind( ":" ) );
+      TQString value = (*strIt).mid( (*strIt).tqfind( ":" ) + 1 );
       if ( value.isEmpty() )
         continue;
 
@@ -594,7 +594,7 @@ Addressee::List VCardTool::parseVCards( const TQString& vcard )
         // X-
         else if ( identifier.startsWith( "x-" ) ) {
           const TQString key = (*lineIt).identifier().mid( 2 );
-          int dash = key.find( "-" );
+          int dash = key.tqfind( "-" );
           addr.insertCustom( key.left( dash ), key.mid( dash + 1 ), (*lineIt).value().asString() );
         }
       }
@@ -610,11 +610,11 @@ TQDateTime VCardTool::parseDateTime( const TQString &str )
 {
   TQDateTime dateTime;
 
-  if ( str.find( '-' ) == -1 ) { // is base format (yyyymmdd)
+  if ( str.tqfind( '-' ) == -1 ) { // is base format (yyyymmdd)
     dateTime.setDate( TQDate( str.left( 4 ).toInt(), str.mid( 4, 2 ).toInt(),
                              str.mid( 6, 2 ).toInt() ) );
 
-    if ( str.find( 'T' ) ) // has time information yyyymmddThh:mm:ss
+    if ( str.tqfind( 'T' ) ) // has time information yyyymmddThh:mm:ss
       dateTime.setTime( TQTime( str.mid( 11, 2 ).toInt(), str.mid( 14, 2 ).toInt(),
                                str.mid( 17, 2 ).toInt() ) );
 
@@ -622,7 +622,7 @@ TQDateTime VCardTool::parseDateTime( const TQString &str )
     dateTime.setDate( TQDate( str.left( 4 ).toInt(), str.mid( 5, 2 ).toInt(),
                              str.mid( 8, 2 ).toInt() ) );
 
-    if ( str.find( 'T' ) ) // has time information yyyy-mm-ddThh:mm:ss
+    if ( str.tqfind( 'T' ) ) // has time information yyyy-mm-ddThh:mm:ss
       dateTime.setTime( TQTime( str.mid( 11, 2 ).toInt(), str.mid( 14, 2 ).toInt(),
                                str.mid( 17, 2 ).toInt() ) );
   }
@@ -866,7 +866,7 @@ TQStringList VCardTool::splitString( const TQChar &sep, const TQString &str )
   TQString value( str );
 
   int start = 0;
-  int pos = value.find( sep, start );
+  int pos = value.tqfind( sep, start );
 
   while ( pos != -1 ) {
     if ( value[ pos - 1 ] != '\\' ) {
@@ -876,13 +876,13 @@ TQStringList VCardTool::splitString( const TQChar &sep, const TQString &str )
         list << TQString::null;
 
       start = pos + 1;
-      pos = value.find( sep, start );
+      pos = value.tqfind( sep, start );
     } else {
       if ( pos != 0 ) {
         value.replace( pos - 1, 2, sep );
-        pos = value.find( sep, pos );
+        pos = value.tqfind( sep, pos );
       } else
-        pos = value.find( sep, pos + 1 );
+        pos = value.tqfind( sep, pos + 1 );
     }
   }
 

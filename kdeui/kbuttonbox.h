@@ -39,7 +39,7 @@ class KButtonBoxPrivate;
  * @version $Id$
  **/
 
-class KDEUI_EXPORT KButtonBox : public QWidget
+class KDEUI_EXPORT KButtonBox : public TQWidget
 {
   Q_OBJECT
 
@@ -51,7 +51,7 @@ public:
     * addButton() are laid out from top to bottom, otherwise they
     * are laid out from left to right.
     */
-  KButtonBox(TQWidget *parent, Orientation _orientation = Horizontal,
+  KButtonBox(TQWidget *parent, Orientation _orientation = Qt::Horizontal,
 	     int border = 0, int _autoborder = 6);
 
   /**
@@ -65,7 +65,7 @@ public:
     * This size is
     * calculated by the width/height of all buttons plus border/autoborder.
     */
-  virtual TQSize sizeHint() const;
+  virtual TQSize tqsizeHint() const;
   virtual TQSizePolicy sizePolicy() const;
   virtual void resizeEvent(TQResizeEvent *);
 

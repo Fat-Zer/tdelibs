@@ -1,7 +1,7 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KGWizardPage1</class>
 <author>George Staikos &lt;staikos@kde.org&gt;</author>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KGWizardPage1</cstring>
     </property>
@@ -17,7 +17,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel" row="0" column="0">
+        <widget class="TQLabel" row="0" column="0">
             <property name="name">
                 <cstring>TextLabel1</cstring>
             </property>
@@ -30,7 +30,7 @@
             <property name="scaledContents">
                 <bool>false</bool>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="wordwrap" stdset="0">

@@ -42,7 +42,7 @@ KDE_EXPORT void kimgio_xcf_read(TQImageIO *io)
 KDE_EXPORT void kimgio_xcf_write(TQImageIO *io)
 {
 	kdDebug(399) << "XCF: write support not implemented" << endl;
-	io->setStatus(-1);
+	io->setqStatus(-1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -78,9 +78,9 @@ const XCFImageFormat::LayerModes XCFImageFormat::layer_modes[] = {
 
 
 //! Change a QRgb value's alpha only.
-inline QRgb qRgba ( QRgb rgb, int a )
+inline QRgb tqRgba ( QRgb rgb, int a )
 {
-	return ((a & 0xff) << 24 | (rgb & RGB_MASK));
+	return ((a & 0xff) << 24 | (rgb & TQRGB_MASK));
 }
 
 
@@ -127,14 +127,14 @@ void XCFImageFormat::readXCF(TQImageIO *io)
 	char tag[14];
 	xcf_io.readRawBytes(tag, sizeof(tag));
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on header tag" << endl;
 		return;
 	}
 
 	xcf_io >> xcf_image.width >> xcf_image.height >> xcf_image.type;
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on image info" << endl;
 		return;
 	}
@@ -149,14 +149,14 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
 	// all the data of all layers before beginning to construct the
 	// merged image).
 
-	TQValueStack<Q_INT32> layer_offsets;
+	TQValueStack<TQ_INT32> layer_offsets;
 
 	while (true) {
-		Q_INT32 layer_offset;
+		TQ_INT32 layer_offset;
 
 		xcf_io >> layer_offset;
 
-		if (xcf_io.device()->status() != IO_Ok) {
+		if (xcf_io.tqdevice()->status() != IO_Ok) {
 			kdDebug(399) << "XCF: read failure on layer offsets" << endl;
 			return;
 		}
@@ -176,9 +176,9 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
 
 	// Load each layer and add it to the image
 	while (!layer_offsets.isEmpty()) {
-		Q_INT32 layer_offset = layer_offsets.pop();
+		TQ_INT32 layer_offset = layer_offsets.pop();
 
-		xcf_io.device()->at(layer_offset);
+		xcf_io.tqdevice()->at(layer_offset);
 
 		if (!loadLayer(xcf_io, xcf_image))
 			return;
@@ -190,7 +190,7 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
 	}
 
 	io->setImage(xcf_image.image);
-	io->setStatus(0);
+	io->setqStatus(0);
 }
 
 
@@ -233,11 +233,11 @@ bool XCFImageFormat::loadImageProperties(TQDataStream& xcf_io, XCFImage& xcf_ima
 			case PROP_PARASITES:
 				while (!property.atEnd()) {
 					char* tag;
-					Q_UINT32 size;
+					TQ_UINT32 size;
 
 					property.readBytes(tag, size);
 
-					Q_UINT32 flags;
+					TQ_UINT32 flags;
 					char* data=0;
 					property >> flags >> data;
 
@@ -269,7 +269,7 @@ bool XCFImageFormat::loadImageProperties(TQDataStream& xcf_io, XCFImage& xcf_ima
 					for (int i = 0; i < xcf_image.num_colors; i++) {
 						uchar r, g, b;
 						property >> r >> g >> b;
-						xcf_image.palette.push_back( qRgb(r,g,b) );
+						xcf_image.palette.push_back( tqRgb(r,g,b) );
 					}
 					break;
 
@@ -290,17 +290,17 @@ bool XCFImageFormat::loadImageProperties(TQDataStream& xcf_io, XCFImage& xcf_ima
  * \return true if there were no IO errors.  */
 bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteArray& bytes)
 {
-	Q_UINT32 foo;
+	TQ_UINT32 foo;
 	xcf_io >> foo;
 	type=PropType(foo);	// TODO urks
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on property type" << type << endl;
 		return false;
 	}
 
 	char* data;
-	Q_UINT32 size;
+	TQ_UINT32 size;
 
 	// The colormap property size is not the correct number of bytes:
 	// The GIMP source xcf.c has size = 4 + ncolors, but it should be
@@ -309,7 +309,7 @@ bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteAr
 	if (type == PROP_COLORMAP) {
 		xcf_io >> size;
 
-		if (xcf_io.device()->status() != IO_Ok) {
+		if (xcf_io.tqdevice()->status() != IO_Ok) {
 			kdDebug(399) << "XCF: read failure on property " << type << " size" << endl;
 			return false;
 		}
@@ -324,12 +324,12 @@ bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteAr
 	} else if (type == PROP_USER_UNIT) {
 		// The USER UNIT property size is not correct. I'm not sure why, though.
 		float factor;
-		Q_INT32 digits;
+		TQ_INT32 digits;
 		char* unit_strings;
 
 		xcf_io >> size >> factor >> digits;
 
-		if (xcf_io.device()->status() != IO_Ok) {
+		if (xcf_io.tqdevice()->status() != IO_Ok) {
 			kdDebug(399) << "XCF: read failure on property " << type << endl;
 			return false;
 		}
@@ -337,7 +337,7 @@ bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteAr
 		for (int i = 0; i < 5; i++) {
 			xcf_io >> unit_strings;
 
-			if (xcf_io.device()->status() != IO_Ok) {
+			if (xcf_io.tqdevice()->status() != IO_Ok) {
 				kdDebug(399) << "XCF: read failure on property " << type << endl;
 				return false;
 			}
@@ -354,7 +354,7 @@ bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteAr
 		xcf_io.readRawBytes(data, size);
         }
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on property " << type << " data, size " << size << endl;
 		return false;
 	}
@@ -382,7 +382,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 
 	xcf_io >> layer.width >> layer.height >> layer.type >> layer.name;
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on layer" << endl;
 		return false;
 	}
@@ -405,7 +405,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 	// If there are any more layers, merge them into the final TQImage.
 
 	xcf_io >> layer.hierarchy_offset >> layer.mask_offset;
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on layer image offsets" << endl;
 		return false;
 	}
@@ -415,7 +415,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 
 	if( !composeTiles(xcf_image))
 		return false;
-	xcf_io.device()->at(layer.hierarchy_offset);
+	xcf_io.tqdevice()->at(layer.hierarchy_offset);
 
 	// As tiles are loaded, they are copied into the layers tiles by
 	// this routine. (loadMask(), below, uses a slightly different
@@ -427,7 +427,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 		return false;
 
 	if (layer.mask_offset != 0) {
-		xcf_io.device()->at(layer.mask_offset);
+		xcf_io.tqdevice()->at(layer.mask_offset);
 
 		if (!loadMask(xcf_io, layer))
 			return false;
@@ -643,7 +643,7 @@ bool XCFImageFormat::composeTiles(XCFImage& xcf_image)
 void XCFImageFormat::setGrayPalette(TQImage& image)
 {
 	for (int i = 0; i < 256; i++)
-		image.setColor(i, qRgb(i, i, i));
+		image.setColor(i, tqRgb(i, i, i));
 }
 
 
@@ -675,7 +675,7 @@ void XCFImageFormat::assignImageBytes(Layer& layer, uint i, uint j)
 			for (int l = 0; l < layer.image_tiles[j][i].height(); l++) {
 				for (int k = 0; k < layer.image_tiles[j][i].width(); k++) {
 					layer.image_tiles[j][i].setPixel(k, l,
-							qRgb(tile[0], tile[1], tile[2]));
+							tqRgb(tile[0], tile[1], tile[2]));
 					tile += sizeof(QRgb);
 				}
 			}
@@ -685,7 +685,7 @@ void XCFImageFormat::assignImageBytes(Layer& layer, uint i, uint j)
 			for ( int l = 0; l < layer.image_tiles[j][i].height(); l++ ) {
 				for ( int k = 0; k < layer.image_tiles[j][i].width(); k++ ) {
 					layer.image_tiles[j][i].setPixel(k, l,
-							qRgba(tile[0], tile[1], tile[2], tile[3]));
+							tqRgba(tile[0], tile[1], tile[2], tile[3]));
 					tile += sizeof(QRgb);
 				}
 			}
@@ -732,14 +732,14 @@ void XCFImageFormat::assignImageBytes(Layer& layer, uint i, uint j)
  */
 bool XCFImageFormat::loadHierarchy(TQDataStream& xcf_io, Layer& layer)
 {
-	Q_INT32 width;
-	Q_INT32 height;
-	Q_INT32 bpp;
-	Q_UINT32 offset;
+	TQ_INT32 width;
+	TQ_INT32 height;
+	TQ_INT32 bpp;
+	TQ_UINT32 offset;
 
 	xcf_io >> width >> height >> bpp >> offset;
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on layer " << layer.name << " image header" << endl;
 		return false;
 	}
@@ -748,23 +748,23 @@ bool XCFImageFormat::loadHierarchy(TQDataStream& xcf_io, Layer& layer)
 	// increasingly lower resolution). Only the top level is used here,
 	// however.
 
-	Q_UINT32 junk;
+	TQ_UINT32 junk;
 	do {
 		xcf_io >> junk;
 
-		if (xcf_io.device()->status() != IO_Ok) {
+		if (xcf_io.tqdevice()->status() != IO_Ok) {
 			kdDebug(399) << "XCF: read failure on layer " << layer.name << " level offsets" << endl;
 			return false;
 		}
 	} while (junk != 0);
 
-	TQIODevice::Offset saved_pos = xcf_io.device()->at();
+	TQIODevice::Offset saved_pos = xcf_io.tqdevice()->at();
 
-	xcf_io.device()->at(offset);
+	xcf_io.tqdevice()->at(offset);
 	if (!loadLevel(xcf_io, layer, bpp))
 		return false;
 
-	xcf_io.device()->at(saved_pos);
+	xcf_io.tqdevice()->at(saved_pos);
 	return true;
 }
 
@@ -777,15 +777,15 @@ bool XCFImageFormat::loadHierarchy(TQDataStream& xcf_io, Layer& layer)
  * \return true if there were no I/O errors.
  * \sa loadTileRLE().
  */
-bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
+bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, TQ_INT32 bpp)
 {
-	Q_INT32 width;
-	Q_INT32 height;
-	Q_UINT32 offset;
+	TQ_INT32 width;
+	TQ_INT32 height;
+	TQ_UINT32 offset;
 
 	xcf_io >> width >> height >> offset;
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on layer " << layer.name << " level info" << endl;
 		return false;
 	}
@@ -801,11 +801,11 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
 				return false;
 			}
 
-			TQIODevice::Offset saved_pos = xcf_io.device()->at();
-			Q_UINT32 offset2;
+			TQIODevice::Offset saved_pos = xcf_io.tqdevice()->at();
+			TQ_UINT32 offset2;
 			xcf_io >> offset2;
 
-			if (xcf_io.device()->status() != IO_Ok) {
+			if (xcf_io.tqdevice()->status() != IO_Ok) {
 				kdDebug(399) << "XCF: read failure on layer " << layer.name << " level offset look-ahead" << endl;
 				return false;
 			}
@@ -815,7 +815,7 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
 			if (offset2 == 0)
 				offset2 = offset + (uint)(TILE_WIDTH * TILE_HEIGHT * 4 * 1.5);
 
-			xcf_io.device()->at(offset);
+			xcf_io.tqdevice()->at(offset);
 			int size = layer.image_tiles[j][i].width() * layer.image_tiles[j][i].height();
 
 			if (!loadTileRLE(xcf_io, layer.tile, size, offset2 - offset, bpp))
@@ -827,10 +827,10 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
 
 			layer.assignBytes(layer, i, j);
 
-			xcf_io.device()->at(saved_pos);
+			xcf_io.tqdevice()->at(saved_pos);
 			xcf_io >> offset;
 
-			if (xcf_io.device()->status() != IO_Ok) {
+			if (xcf_io.tqdevice()->status() != IO_Ok) {
 				kdDebug(399) << "XCF: read failure on layer " << layer.name << " level offset" << endl;
 				return false;
 			}
@@ -849,13 +849,13 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, Q_INT32 bpp)
  */
 bool XCFImageFormat::loadMask(TQDataStream& xcf_io, Layer& layer)
 {
-	Q_INT32 width;
-	Q_INT32 height;
+	TQ_INT32 width;
+	TQ_INT32 height;
 	char* name;
 
 	xcf_io >> width >> height >> name;
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on mask info" << endl;
 		return false;
 	}
@@ -865,15 +865,15 @@ bool XCFImageFormat::loadMask(TQDataStream& xcf_io, Layer& layer)
 	if (!loadChannelProperties(xcf_io, layer))
 		return false;
 
-	Q_UINT32 hierarchy_offset;
+	TQ_UINT32 hierarchy_offset;
 	xcf_io >> hierarchy_offset;
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on mask image offset" << endl;
 		return false;
 	}
 
-	xcf_io.device()->at(hierarchy_offset);
+	xcf_io.tqdevice()->at(hierarchy_offset);
 	layer.assignBytes = assignMaskBytes;
 
 	if (!loadHierarchy(xcf_io, layer))
@@ -907,7 +907,7 @@ bool XCFImageFormat::loadMask(TQDataStream& xcf_io, Layer& layer)
  * the RLE data.
  */
 bool XCFImageFormat::loadTileRLE(TQDataStream& xcf_io, uchar* tile, int image_size,
-		int data_length, Q_INT32 bpp)
+		int data_length, TQ_INT32 bpp)
 {
 	uchar* data;
 
@@ -919,7 +919,7 @@ bool XCFImageFormat::loadTileRLE(TQDataStream& xcf_io, uchar* tile, int image_si
 
 	xcf_io.readRawBytes((char*)xcfdata, data_length);
 
-	if (xcf_io.device()->status() != IO_Ok) {
+	if (xcf_io.tqdevice()->status() != IO_Ok) {
 		delete[] xcfodata;
 		kdDebug(399) << "XCF: read failure on tile" << endl;
 		return false;
@@ -1117,7 +1117,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 				image.create( xcf_image.width, xcf_image.height, 32);
 				if( image.isNull())
 					return false;
-				image.fill(qRgb(255, 255, 255));
+				image.fill(tqRgb(255, 255, 255));
 				break;
 			} // else, fall through to 32-bit representation
 
@@ -1125,7 +1125,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 			image.create(xcf_image.width, xcf_image.height, 32);
 			if( image.isNull())
 				return false;
-			image.fill(qRgba(255, 255, 255, 0));
+			image.fill(tqRgba(255, 255, 255, 0));
 			// Turning this on prevents fill() from affecting the alpha channel,
 			// by the way.
 			image.setAlphaBuffer(true);
@@ -1145,7 +1145,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 			image.create(xcf_image.width, xcf_image.height, 32);
 			if( image.isNull())
 				return false;
-			image.fill(qRgba(255, 255, 255, 0));
+			image.fill(tqRgba(255, 255, 255, 0));
 			image.setAlphaBuffer(true);
 			break;
 
@@ -1187,7 +1187,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 				xcf_image.num_colors++;
 				xcf_image.palette.resize(xcf_image.num_colors);
 				xcf_image.palette[1] = xcf_image.palette[0];
-				xcf_image.palette[0] = qRgba(255, 255, 255, 0);
+				xcf_image.palette[0] = tqRgba(255, 255, 255, 0);
 
 				image.create(xcf_image.width, xcf_image.height,
 						1, xcf_image.num_colors,
@@ -1204,7 +1204,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 				for (int c = xcf_image.num_colors - 1; c >= 1; c--)
 					xcf_image.palette[c] = xcf_image.palette[c - 1];
 
-				xcf_image.palette[0] = qRgba(255, 255, 255, 0);
+				xcf_image.palette[0] = tqRgba(255, 255, 255, 0);
 				image.create( xcf_image.width, xcf_image.height,
 						8, xcf_image.num_colors);
 				if( image.isNull())
@@ -1219,7 +1219,7 @@ bool XCFImageFormat::initializeImage(XCFImage& xcf_image)
 				image.create(xcf_image.width, xcf_image.height, 32);
 				if( image.isNull())
 					return false;
-				image.fill(qRgba(255, 255, 255, 0));
+				image.fill(tqRgba(255, 255, 255, 0));
 				image.setAlphaBuffer(true);
 			}
 			break;
@@ -1324,7 +1324,7 @@ void XCFImageFormat::copyRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
 	uchar src_a = layer.opacity;
 
 	if (layer.type == RGBA_GIMAGE)
-		src_a = INT_MULT(src_a, qAlpha(src));
+		src_a = INT_MULT(src_a, tqAlpha(src));
 
 	// Apply the mask (if any)
 
@@ -1332,7 +1332,7 @@ void XCFImageFormat::copyRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
 			layer.mask_tiles[j].size() > i)
 		src_a = INT_MULT(src_a, layer.mask_tiles[j][i].pixelIndex(k, l));
 
-	image.setPixel(m, n, qRgba(src, src_a));
+	image.setPixel(m, n, tqRgba(src, src_a));
 }
 
 
@@ -1373,7 +1373,7 @@ void XCFImageFormat::copyGrayToRGB(Layer& layer, uint i, uint j, int k, int l,
 {
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	uchar src_a = layer.opacity;
-	image.setPixel(m, n, qRgba(src, src_a));
+	image.setPixel(m, n, tqRgba(src, src_a));
 }
 
 
@@ -1403,7 +1403,7 @@ void XCFImageFormat::copyGrayAToRGB(Layer& layer, uint i, uint j, int k, int l,
 			layer.mask_tiles[j].size() > i)
 		src_a = INT_MULT(src_a, layer.mask_tiles[j][i].pixelIndex(k, l));
 
-	image.setPixel(m, n, qRgba(src, src_a));
+	image.setPixel(m, n, tqRgba(src, src_a));
 }
 
 
@@ -1489,7 +1489,7 @@ void XCFImageFormat::copyIndexedAToRGB(Layer& layer, uint i, uint j, int k, int 
 	else
 		src_a = OPAQUE_OPACITY;
 
-	image.setPixel(m, n, qRgba(src, src_a));
+	image.setPixel(m, n, tqRgba(src, src_a));
 }
 
 
@@ -1586,15 +1586,15 @@ void XCFImageFormat::mergeRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	QRgb dst = image.pixel(m, n);
 
-	uchar src_r = qRed(src);
-	uchar src_g = qGreen(src);
-	uchar src_b = qBlue(src);
-	uchar src_a = qAlpha(src);
+	uchar src_r = tqRed(src);
+	uchar src_g = tqGreen(src);
+	uchar src_b = tqBlue(src);
+	uchar src_a = tqAlpha(src);
 
-	uchar dst_r = qRed(dst);
-	uchar dst_g = qGreen(dst);
-	uchar dst_b = qBlue(dst);
-	uchar dst_a = qAlpha(dst);
+	uchar dst_r = tqRed(dst);
+	uchar dst_g = tqGreen(dst);
+	uchar dst_b = tqBlue(dst);
+	uchar dst_a = tqAlpha(dst);
 
 	switch (layer.mode) {
 		case MULTIPLY_MODE: {
@@ -1756,7 +1756,7 @@ void XCFImageFormat::mergeRGBToRGB(Layer& layer, uint i, uint j, int k, int l,
 	if (!layer_modes[layer.mode].affect_alpha)
 		new_a = dst_a;
 
-	image.setPixel(m, n, qRgba(new_r, new_g, new_b, new_a));
+	image.setPixel(m, n, tqRgba(new_r, new_g, new_b, new_a));
 }
 
 
@@ -1793,7 +1793,7 @@ void XCFImageFormat::mergeGrayToGray(Layer& layer, uint i, uint j, int k, int l,
 void XCFImageFormat::mergeGrayAToGray(Layer& layer, uint i, uint j, int k, int l,
 		TQImage& image, int m, int n)
 {
-	int src = qGray(layer.image_tiles[j][i].pixel(k, l));
+	int src = tqGray(layer.image_tiles[j][i].pixel(k, l));
 	int dst = image.pixelIndex(m, n);
 
 	uchar src_a = layer.alpha_tiles[j][i].pixelIndex(k, l);
@@ -1874,7 +1874,7 @@ void XCFImageFormat::mergeGrayToRGB(Layer& layer, uint i, uint j, int k, int l,
 {
 	QRgb src = layer.image_tiles[j][i].pixel(k, l);
 	uchar src_a = layer.opacity;
-	image.setPixel(m, n, qRgba(src, src_a));
+	image.setPixel(m, n, tqRgba(src, src_a));
 }
 
 
@@ -1894,11 +1894,11 @@ void XCFImageFormat::mergeGrayToRGB(Layer& layer, uint i, uint j, int k, int l,
 void XCFImageFormat::mergeGrayAToRGB(Layer& layer, uint i, uint j, int k, int l,
 		TQImage& image, int m, int n)
 {
-	int src = qGray(layer.image_tiles[j][i].pixel(k, l));
-	int dst = qGray(image.pixel(m, n));
+	int src = tqGray(layer.image_tiles[j][i].pixel(k, l));
+	int dst = tqGray(image.pixel(m, n));
 
 	uchar src_a = layer.alpha_tiles[j][i].pixelIndex(k, l);
-	uchar dst_a = qAlpha(image.pixel(m, n));
+	uchar dst_a = tqAlpha(image.pixel(m, n));
 
 	switch (layer.mode) {
 		case MULTIPLY_MODE: {
@@ -1965,7 +1965,7 @@ void XCFImageFormat::mergeGrayAToRGB(Layer& layer, uint i, uint j, int k, int l,
 	if (!layer_modes[layer.mode].affect_alpha)
 		new_a = dst_a;
 
-	image.setPixel(m, n, qRgba(new_g, new_g, new_g, new_a));
+	image.setPixel(m, n, tqRgba(new_g, new_g, new_g, new_a));
 }
 
 
@@ -2049,7 +2049,7 @@ void XCFImageFormat::mergeIndexedAToRGB(Layer& layer, uint i, uint j, int k, int
 	else
 		src_a = OPAQUE_OPACITY;
 
-	image.setPixel(m, n, qRgba(src, src_a));
+	image.setPixel(m, n, tqRgba(src, src_a));
 }
 
 
@@ -2075,8 +2075,8 @@ void XCFImageFormat::dissolveRGBPixels ( TQImage& image, int x, int y )
 			int rand_val = rand() & 0xff;
 			QRgb pixel = image.pixel(k, l);
 
-			if (rand_val > qAlpha(pixel)) {
-				image.setPixel(k, l, qRgba(pixel, 0));
+			if (rand_val > tqAlpha(pixel)) {
+				image.setPixel(k, l, tqRgba(pixel, 0));
 			}
 		}
 	}

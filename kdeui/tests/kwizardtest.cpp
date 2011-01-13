@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     TQString msg = TQString("This is page %1 out of 10").arg(i);
     TQLabel *label = new TQLabel(msg, p);
     TQHBoxLayout *layout = new TQHBoxLayout(p, 5);
-    label->setAlignment(Qt::AlignCenter);
+    label->tqsetAlignment(Qt::AlignCenter);
     label->setFixedSize(300, 200);
     layout->addWidget(label);
     TQString title = TQString("%1. page").arg(i);

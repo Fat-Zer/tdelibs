@@ -26,7 +26,7 @@ class KListView;
 class TQListViewItem;
 class TQPushButton;
 
-class QDirMultiLineEdit : public QWidget
+class QDirMultiLineEdit : public TQWidget
 {
 	Q_OBJECT
 

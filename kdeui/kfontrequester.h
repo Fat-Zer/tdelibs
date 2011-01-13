@@ -41,7 +41,7 @@ class TQPushButton;
  * @author Nadeem Hasan <nhasan@kde.org>
  *
  */
-class KDEUI_EXPORT KFontRequester : public QWidget
+class KDEUI_EXPORT KFontRequester : public TQWidget
 {
   Q_OBJECT
 

@@ -36,14 +36,14 @@ KServiceGroupFactory::KServiceGroupFactory()
    if (m_str)
    {
       // Read Header
-      Q_INT32 i;
+      TQ_INT32 i;
       (*m_str) >> i;
       m_baseGroupDictOffset = i;
 
-      int saveOffset = m_str->device()->at();
+      int saveOffset = m_str->tqdevice()->at();
       // Init index tables
       m_baseGroupDict = new KSycocaDict(m_str, m_baseGroupDictOffset);
-      m_str->device()->at(saveOffset);
+      m_str->tqdevice()->at(saveOffset);
    }
    else
    {
@@ -124,7 +124,7 @@ KServiceGroup* KServiceGroupFactory::createGroup(int offset, bool deep)
         break;
 
      default:
-        kdError(7011) << TQString("KServiceGroupFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type) << endl;
+        kdError(7011) << TQString(TQString("KServiceGroupFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type)) << endl;
         return 0;
    }
    if (!newEntry->isValid())

@@ -25,7 +25,7 @@
 
 class DrBase;
 
-class DriverItem : public QListViewItem
+class DriverItem : public TQListViewItem
 {
 public:
 	DriverItem(TQListView *parent, DrBase *item);

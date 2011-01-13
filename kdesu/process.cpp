@@ -179,7 +179,7 @@ TQCString PtyProcess::readLine(bool block)
 
     if (!m_Inbuf.isEmpty()) 
     {
-        pos = m_Inbuf.find('\n');
+        pos = m_Inbuf.tqfind('\n');
         if (pos == -1) 
         {
             ret = m_Inbuf;
@@ -228,7 +228,7 @@ TQCString PtyProcess::readLine(bool block)
         buf[nbytes] = '\000';
         m_Inbuf += buf;
 
-        pos = m_Inbuf.find('\n');
+        pos = m_Inbuf.tqfind('\n');
         if (pos == -1) 
         {
             ret = m_Inbuf;
@@ -356,7 +356,7 @@ int PtyProcess::exec(const TQCString &command, const QCStringList &args)
     for(QCStringList::ConstIterator it = d->env.begin();
         it != d->env.end(); it++)
     {
-        putenv((*it).data());
+        putenv(const_cast<TQCString&>(*it).data());
     }
     unsetenv("KDE_FULL_SESSION");
     
@@ -513,7 +513,7 @@ int PtyProcess::waitForChild()
                 if (!m_Exit.isEmpty())
                 {
                     // match exit string only at line starts
-                    int pos = output.find(m_Exit);
+                    int pos = output.tqfind(m_Exit.data());
                     if ((pos >= 0) && ((pos == 0 && lineStart) || (output.at (pos - 1) == '\n')))
                     {
                         kill(m_Pid, SIGTERM);

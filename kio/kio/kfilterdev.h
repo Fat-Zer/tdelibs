@@ -33,7 +33,7 @@ class KFilterBase;
  *
  * @author David Faure <faure@kde.org>
  */
-class KIO_EXPORT KFilterDev : public QIODevice
+class KIO_EXPORT KFilterDev : public TQIODevice
 {
 public:
     /**
@@ -77,7 +77,11 @@ public:
     void setSkipHeaders();
 
     // Not implemented
+#ifdef USE_QT4
+    virtual qint64 size() const;
+#else // USE_QT4
     virtual TQIODevice::Offset size() const;
+#endif // USE_QT4
 
     virtual TQIODevice::Offset at() const;
     /**
@@ -87,8 +91,8 @@ public:
 
     virtual bool atEnd() const;
 
-    virtual Q_LONG readBlock( char *data, Q_ULONG maxlen );
-    virtual Q_LONG writeBlock( const char *data, Q_ULONG len );
+    virtual TQ_LONG readBlock( char *data, TQ_ULONG maxlen );
+    virtual TQ_LONG writeBlock( const char *data, TQ_ULONG len );
     //int readLine( char *data, uint maxlen );
 
     virtual int getch();

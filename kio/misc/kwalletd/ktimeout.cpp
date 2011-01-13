@@ -39,7 +39,7 @@ void KTimeout::clear() {
 
 
 void KTimeout::removeTimer(int id) {
-	TQTimer *t = _timers.find(id);
+	TQTimer *t = _timers.tqfind(id);
 	if (t != 0L) {
 		_timers.remove(id); // autodeletes
 	}
@@ -47,7 +47,7 @@ void KTimeout::removeTimer(int id) {
 
 
 void KTimeout::addTimer(int id, int timeout) {
-	if (_timers.find(id) != 0L) {
+	if (_timers.tqfind(id) != 0L) {
 		return;
 	}
 
@@ -59,7 +59,7 @@ void KTimeout::addTimer(int id, int timeout) {
 
 
 void KTimeout::resetTimer(int id, int timeout) {
-	TQTimer *t = _timers.find(id);
+	TQTimer *t = _timers.tqfind(id);
 	if (t) {
 		t->changeInterval(timeout);
 	}

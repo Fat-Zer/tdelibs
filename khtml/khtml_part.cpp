@@ -178,7 +178,7 @@ void khtml::ChildFrame::liveConnectEvent(const unsigned long, const TQString & e
     script += ")";
     kdDebug(6050) << "khtml::ChildFrame::liveConnectEvent " << script << endl;
 
-    KHTMLPart * part = ::qt_cast<KHTMLPart *>(m_part->parent());
+    KHTMLPart * part = ::tqqt_cast<KHTMLPart *>(m_part->parent());
     if (!part)
         return;
     if (!m_jscript)
@@ -203,7 +203,7 @@ KHTMLFrameList::Iterator KHTMLFrameList::find( const TQString &name )
     return it;
 }
 
-KHTMLPart::KHTMLPart( TQWidget *parentWidget, const char *widgetname, TQObject *parent, const char *name, GUIProfile prof )
+KHTMLPart::KHTMLPart( TQWidget *tqparentWidget, const char *widgetname, TQObject *parent, const char *name, GUIProfile prof )
 : KParts::ReadOnlyPart( parent, name )
 {
     d = 0;
@@ -211,7 +211,7 @@ KHTMLPart::KHTMLPart( TQWidget *parentWidget, const char *widgetname, TQObject *
     setInstance(  KHTMLFactory::instance(), prof == BrowserViewGUI && !parentPart() );
     // TODO KDE4 - don't load plugins yet
     //setInstance( KHTMLFactory::instance(), false );
-    init( new KHTMLView( this, parentWidget, widgetname ), prof );
+    init( new KHTMLView( this, tqparentWidget, widgetname ), prof );
 }
 
 KHTMLPart::KHTMLPart( KHTMLView *view, TQObject *parent, const char *name, GUIProfile prof )
@@ -608,7 +608,7 @@ bool KHTMLPart::openURL( const KURL &url )
       if (!d->m_statusBarUALabel) {
         d->m_statusBarUALabel = new KURLLabel(d->m_statusBarExtension->statusBar());
         d->m_statusBarUALabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
-        d->m_statusBarUALabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+        d->m_statusBarUALabel->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
         d->m_statusBarUALabel->setUseCursor(false);
         d->m_statusBarExtension->addStatusBarItem(d->m_statusBarUALabel, 0, false);
         d->m_statusBarUALabel->setPixmap(SmallIcon("agent", instance()));
@@ -717,7 +717,7 @@ bool KHTMLPart::openURL( const KURL &url )
   }
 
   if (widget())
-     d->m_job->setWindow(widget()->topLevelWidget());
+     d->m_job->setWindow(widget()->tqtopLevelWidget());
   d->m_job->addMetaData(args.metaData());
 
   connect( d->m_job, TQT_SIGNAL( result( KIO::Job* ) ),
@@ -1075,7 +1075,7 @@ KJSErrorDlg *KHTMLPart::jsErrorExtension() {
   if (!d->m_statusBarJSErrorLabel) {
     d->m_statusBarJSErrorLabel = new KURLLabel(d->m_statusBarExtension->statusBar());
     d->m_statusBarJSErrorLabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
-    d->m_statusBarJSErrorLabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+    d->m_statusBarJSErrorLabel->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
     d->m_statusBarJSErrorLabel->setUseCursor(false);
     d->m_statusBarExtension->addStatusBarItem(d->m_statusBarJSErrorLabel, 0, false);
     TQToolTip::add(d->m_statusBarJSErrorLabel, i18n("This web page contains coding errors."));
@@ -1525,7 +1525,7 @@ void KHTMLPart::setPageSecurity( PageSecurity sec )
   if ( sec != NotCrypted && !d->m_statusBarIconLabel && !parentPart() ) {
     d->m_statusBarIconLabel = new KURLLabel( d->m_statusBarExtension->statusBar() );
     d->m_statusBarIconLabel->setFixedHeight( instance()->iconLoader()->currentSize(KIcon::Small) );
-    d->m_statusBarIconLabel->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+    d->m_statusBarIconLabel->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
     d->m_statusBarIconLabel->setUseCursor( false );
     d->m_statusBarExtension->addStatusBarItem( d->m_statusBarIconLabel, 0, false );
     connect( d->m_statusBarIconLabel, TQT_SIGNAL( leftClickedURL() ), TQT_SLOT( slotSecurity() ) );
@@ -1722,14 +1722,14 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   d->m_bJScriptForce = false;
   d->m_bJScriptOverride = true;
   begin();
-  TQString errText = TQString::fromLatin1( "<HTML dir=%1><HEAD><TITLE>" )
+  TQString errText = TQString::tqfromLatin1( "<HTML dir=%1><HEAD><TITLE>" )
                            .arg(TQApplication::reverseLayout() ? "rtl" : "ltr");
   errText += i18n( "Error while loading %1" ).arg( reqUrl.htmlURL() );
-  errText += TQString::fromLatin1( "</TITLE></HEAD><BODY><P>" );
+  errText += TQString::tqfromLatin1( "</TITLE></HEAD><BODY><P>" );
   errText += i18n( "An error occurred while loading <B>%1</B>:" ).arg( reqUrl.htmlURL() );
-  errText += TQString::fromLatin1( "</P>" );
+  errText += TQString::tqfromLatin1( "</P>" );
   errText += TQStyleSheet::convertFromPlainText( KIO::buildErrorString( errorCode, text ) );
-  errText += TQString::fromLatin1( "</BODY></HTML>" );
+  errText += TQString::tqfromLatin1( "</BODY></HTML>" );
   write(errText);
   end();
 
@@ -1757,56 +1757,56 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   TQString url, protocol, datetime;
   url = reqUrl.prettyURL();
   protocol = reqUrl.protocol();
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = KGlobal::locale()->formatDateTime( TQDateTime::tqcurrentDateTime(),
                                                 false );
 
-  TQString doc = TQString::fromLatin1( "<html><head><title>" );
+  TQString doc = TQString::tqfromLatin1( "<html><head><title>" );
   doc += i18n( "Error: " );
   doc += errorName;
-  doc += TQString::fromLatin1( " - %1</title></head><body><h1>" ).arg( url );
+  doc += TQString::tqfromLatin1( " - %1</title></head><body><h1>" ).arg( url );
   doc += i18n( "The requested operation could not be completed" );
-  doc += TQString::fromLatin1( "</h1><h2>" );
+  doc += TQString::tqfromLatin1( "</h1><h2>" );
   doc += errorName;
-  doc += TQString::fromLatin1( "</h2>" );
+  doc += TQString::tqfromLatin1( "</h2>" );
   if ( !techName.isNull() ) {
-    doc += TQString::fromLatin1( "<h2>" );
+    doc += TQString::tqfromLatin1( "<h2>" );
     doc += i18n( "Technical Reason: " );
     doc += techName;
-    doc += TQString::fromLatin1( "</h2>" );
+    doc += TQString::tqfromLatin1( "</h2>" );
   }
-  doc += TQString::fromLatin1( "<h3>" );
+  doc += TQString::tqfromLatin1( "<h3>" );
   doc += i18n( "Details of the Request:" );
-  doc += TQString::fromLatin1( "</h3><ul><li>" );
+  doc += TQString::tqfromLatin1( "</h3><ul><li>" );
   doc += i18n( "URL: %1" ).arg( url );
-  doc += TQString::fromLatin1( "</li><li>" );
+  doc += TQString::tqfromLatin1( "</li><li>" );
   if ( !protocol.isNull() ) {
     // uncomment for 3.1... i18n change
     // doc += i18n( "Protocol: %1" ).arg( protocol ).arg( protocol );
-    doc += TQString::fromLatin1( "</li><li>" );
+    doc += TQString::tqfromLatin1( "</li><li>" );
   }
   doc += i18n( "Date and Time: %1" ).arg( datetime );
-  doc += TQString::fromLatin1( "</li><li>" );
+  doc += TQString::tqfromLatin1( "</li><li>" );
   doc += i18n( "Additional Information: %1" ).arg( text );
-  doc += TQString::fromLatin1( "</li></ul><h3>" );
+  doc += TQString::tqfromLatin1( "</li></ul><h3>" );
   doc += i18n( "Description:" );
-  doc += TQString::fromLatin1( "</h3><p>" );
+  doc += TQString::tqfromLatin1( "</h3><p>" );
   doc += description;
-  doc += TQString::fromLatin1( "</p>" );
+  doc += TQString::tqfromLatin1( "</p>" );
   if ( causes.count() ) {
-    doc += TQString::fromLatin1( "<h3>" );
+    doc += TQString::tqfromLatin1( "<h3>" );
     doc += i18n( "Possible Causes:" );
-    doc += TQString::fromLatin1( "</h3><ul><li>" );
+    doc += TQString::tqfromLatin1( "</h3><ul><li>" );
     doc += causes.join( "</li><li>" );
-    doc += TQString::fromLatin1( "</li></ul>" );
+    doc += TQString::tqfromLatin1( "</li></ul>" );
   }
   if ( solutions.count() ) {
-    doc += TQString::fromLatin1( "<h3>" );
+    doc += TQString::tqfromLatin1( "<h3>" );
     doc += i18n( "Possible Solutions:" );
-    doc += TQString::fromLatin1( "</h3><ul><li>" );
+    doc += TQString::tqfromLatin1( "</h3><ul><li>" );
     doc += solutions.join( "</li><li>" );
-    doc += TQString::fromLatin1( "</li></ul>" );
+    doc += TQString::tqfromLatin1( "</li></ul>" );
   }
-  doc += TQString::fromLatin1( "</body></html>" );
+  doc += TQString::tqfromLatin1( "</body></html>" );
 
   write( doc );
   end();
@@ -1841,7 +1841,7 @@ void KHTMLPart::slotFinished( KIO::Job * job )
 
     return;
   }
-  KIO::TransferJob *tjob = ::qt_cast<KIO::TransferJob*>(job);
+  KIO::TransferJob *tjob = ::tqqt_cast<KIO::TransferJob*>(job);
   if (tjob && tjob->isErrorPage()) {
     khtml::RenderPart *renderPart = d->m_frame ? static_cast<khtml::RenderPart *>(d->m_frame->m_frame) : 0;
     if (renderPart) {
@@ -2286,7 +2286,7 @@ void KHTMLPart::checkCompleted()
   }
 
   // the view will emit completed on our behalf,
-  // either now or at next repaint if one is pending
+  // either now or at next tqrepaint if one is pending
 
   //kdDebug(6050) << this << " asks the view to emit completed. pendingAction=" << pendingAction << endl;
   d->m_view->complete( pendingAction );
@@ -2402,7 +2402,7 @@ void KHTMLPart::slotRedirect()
   d->m_redirectURL = TQString::null;
 
   // SYNC check with ecma/kjs_window.cpp::goURL !
-  if ( u.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( u.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     TQString script = KURL::decode_string( u.right( u.length() - 11 ) );
     kdDebug( 6050 ) << "KHTMLPart::slotRedirect script=" << script << endl;
@@ -2838,7 +2838,7 @@ bool KHTMLPart::findTextNext( const TQString &str, bool forward, bool caseSensit
                 matchLen = matcher.matchedLength();
             }
             else {
-              d->m_findPos = s.string().find(str, d->m_findPos+1, caseSensitive);
+              d->m_findPos = s.string().tqfind(str, d->m_findPos+1, caseSensitive);
               matchLen = str.length();
             }
 
@@ -3111,9 +3111,9 @@ bool KHTMLPart::findTextNext( bool reverse )
   if( d->m_lastFindState.last_dir != -1
       && bool( d->m_lastFindState.last_dir ) != bool( options & KFindDialog::FindBackwards ))
   {
-    qSwap( d->m_findNodeEnd, d->m_findNodeStart );
-    qSwap( d->m_findPosEnd, d->m_findPosStart );
-    qSwap( d->m_findNode, d->m_findNodePrevious );
+    tqSwap( d->m_findNodeEnd, d->m_findNodeStart );
+    tqSwap( d->m_findPosEnd, d->m_findPosStart );
+    tqSwap( d->m_findNode, d->m_findNodePrevious );
     // d->m_findNode now point at the end of the last searched line - advance one node
     khtml::RenderObject* obj = d->m_findNode ? d->m_findNode->renderer() : 0;
     khtml::RenderObject* end = d->m_findNodeEnd ? d->m_findNodeEnd->renderer() : 0;
@@ -3212,7 +3212,7 @@ bool KHTMLPart::findTextNext( bool reverse )
           s.truncate( d->m_findPosEnd );
         if ( !s.isEmpty() )
         {
-          newLine = s.find( '\n' ) != -1; // did we just get a newline?
+          newLine = s.tqfind( '\n' ) != -1; // did we just get a newline?
           if( !( options & KFindDialog::FindBackwards ))
           {
             //kdDebug(6050) << "StringPortion: " << index << "-" << index+s.length()-1 << " -> " << lastNode << endl;
@@ -3731,8 +3731,8 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
     return;
   }
 
-  if (url.find( TQString::fromLatin1( "javascript:" ),0, false ) == 0 ) {
-    TQString jscode = KURL::decode_string( url.mid( url.find( "javascript:", 0, false ) ) );
+  if (url.tqfind( TQString::tqfromLatin1( "javascript:" ),0, false ) == 0 ) {
+    TQString jscode = KURL::decode_string( url.mid( url.tqfind( "javascript:", 0, false ) ) );
     jscode = KStringHandler::rsqueeze( jscode, 80 ); // truncate if too long
     if (url.startsWith("javascript:window.open"))
       jscode += i18n(" (In new window)");
@@ -3838,18 +3838,18 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
         extra = i18n(" (In other frame)");
     }
 
-    if (u.protocol() == TQString::fromLatin1("mailto")) {
-      TQString mailtoMsg /* = TQString::fromLatin1("<img src=%1>").arg(locate("icon", TQString::fromLatin1("locolor/16x16/actions/mail_send.png")))*/;
+    if (u.protocol() == TQString::tqfromLatin1("mailto")) {
+      TQString mailtoMsg /* = TQString::tqfromLatin1("<img src=%1>").arg(locate("icon", TQString::tqfromLatin1("locolor/16x16/actions/mail_send.png")))*/;
       mailtoMsg += i18n("Email to: ") + KURL::decode_string(u.path());
       TQStringList queries = TQStringList::split('&', u.query().mid(1));
       TQStringList::Iterator it = queries.begin();
       const TQStringList::Iterator itEnd = queries.end();
       for (; it != itEnd; ++it)
-        if ((*it).startsWith(TQString::fromLatin1("subject=")))
+        if ((*it).startsWith(TQString::tqfromLatin1("subject=")))
           mailtoMsg += i18n(" - Subject: ") + KURL::decode_string((*it).mid(8));
-        else if ((*it).startsWith(TQString::fromLatin1("cc=")))
+        else if ((*it).startsWith(TQString::tqfromLatin1("cc=")))
           mailtoMsg += i18n(" - CC: ") + KURL::decode_string((*it).mid(3));
-        else if ((*it).startsWith(TQString::fromLatin1("bcc=")))
+        else if ((*it).startsWith(TQString::tqfromLatin1("bcc=")))
           mailtoMsg += i18n(" - BCC: ") + KURL::decode_string((*it).mid(4));
       mailtoMsg = TQStyleSheet::escape(mailtoMsg);
       mailtoMsg.replace(TQRegExp("([\n\r\t]|[ ]{10})"), TQString::null);
@@ -3858,9 +3858,9 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
     }
    // Is this check necessary at all? (Frerich)
 #if 0
-    else if (u.protocol() == TQString::fromLatin1("http")) {
+    else if (u.protocol() == TQString::tqfromLatin1("http")) {
         DOM::Node hrefNode = nodeUnderMouse().parentNode();
-        while (hrefNode.nodeName().string() != TQString::fromLatin1("A") && !hrefNode.isNull())
+        while (hrefNode.nodeName().string() != TQString::tqfromLatin1("A") && !hrefNode.isNull())
           hrefNode = hrefNode.parentNode();
 
         if (!hrefNode.isNull()) {
@@ -3868,12 +3868,12 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
           if (!hreflangNode.isNull()) {
             TQString countryCode = hreflangNode.nodeValue().string().lower();
             // Map the language code to an appropriate country code.
-            if (countryCode == TQString::fromLatin1("en"))
-              countryCode = TQString::fromLatin1("gb");
-            TQString flagImg = TQString::fromLatin1("<img src=%1>").arg(
-                locate("locale", TQString::fromLatin1("l10n/")
+            if (countryCode == TQString::tqfromLatin1("en"))
+              countryCode = TQString::tqfromLatin1("gb");
+            TQString flagImg = TQString::tqfromLatin1("<img src=%1>").arg(
+                locate("locale", TQString::tqfromLatin1("l10n/")
                 + countryCode
-                + TQString::fromLatin1("/flag.png")));
+                + TQString::tqfromLatin1("/flag.png")));
             emit setStatusBarText(flagImg + u.prettyURL() + extra);
           }
         }
@@ -3906,7 +3906,7 @@ bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, c
   if ( !target.isEmpty() )
       hasTarget = true;
 
-  if ( url.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( url.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     crossFrameExecuteScript( target, KURL::decode_string( url.mid( 11 ) ) );
     return false;
@@ -4027,7 +4027,7 @@ void KHTMLPart::slotViewDocumentSource()
      }
   }
 
-  (void) KRun::runURL( url, TQString::fromLatin1("text/plain"), isTempFile );
+  (void) KRun::runURL( url, TQString::tqfromLatin1("text/plain"), isTempFile );
 }
 
 void KHTMLPart::slotViewPageInfo()
@@ -4108,7 +4108,7 @@ void KHTMLPart::slotViewFrameSource()
      }
   }
 
-  (void) KRun::runURL( url, TQString::fromLatin1("text/plain"), isTempFile );
+  (void) KRun::runURL( url, TQString::tqfromLatin1("text/plain"), isTempFile );
 }
 
 KURL KHTMLPart::backgroundURL() const
@@ -4276,7 +4276,7 @@ void KHTMLPart::updateActions()
   {
     TQObject *ext = KParts::BrowserExtension::childObject( frame );
     if ( ext )
-      enablePrintFrame = ext->metaObject()->slotNames().contains( "print()" );
+      enablePrintFrame = ext->tqmetaObject()->slotNames().contains( "print()" );
   }
 
   d->m_paPrintFrame->setEnabled( enablePrintFrame );
@@ -4305,7 +4305,7 @@ bool KHTMLPart::requestFrame( khtml::RenderPart *frame, const TQString &url, con
                               const TQStringList &params, bool isIFrame )
 {
   //kdDebug( 6050 ) << this << " requestFrame( ..., " << url << ", " << frameName << " )" << endl;
-  FrameIt it = d->m_frames.find( frameName );
+  FrameIt it = d->m_frames.tqfind( frameName );
   if ( it == d->m_frames.end() )
   {
     khtml::ChildFrame * child = new khtml::ChildFrame;
@@ -4319,7 +4319,7 @@ bool KHTMLPart::requestFrame( khtml::RenderPart *frame, const TQString &url, con
   (*it)->m_params = params;
 
   // Support for <frame src="javascript:string">
-  if ( url.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( url.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     if ( processObjectRequest(*it, KURL("about:blank"), TQString("text/html") ) ) {
       KHTMLPart* p = static_cast<KHTMLPart*>(static_cast<KParts::ReadOnlyPart *>((*it)->m_part));
@@ -4341,7 +4341,7 @@ bool KHTMLPart::requestFrame( khtml::RenderPart *frame, const TQString &url, con
 
 TQString KHTMLPart::requestFrameName()
 {
-   return TQString::fromLatin1("<!--frame %1-->").arg(d->m_frameNameId++);
+   return TQString::tqfromLatin1("<!--frame %1-->").arg(d->m_frameNameId++);
 }
 
 bool KHTMLPart::requestObject( khtml::RenderPart *frame, const TQString &url, const TQString &serviceType,
@@ -4408,7 +4408,7 @@ bool KHTMLPart::requestObject( khtml::ChildFrame *child, const KURL &url, const 
 
   // We want a KHTMLPart if the HTML says <frame src=""> or <frame src="about:blank">
   if ((url.isEmpty() || url.url() == "about:blank") && args.serviceType.isEmpty())
-    args.serviceType = TQString::fromLatin1( "text/html" );
+    args.serviceType = TQString::tqfromLatin1( "text/html" );
 
   if ( args.serviceType.isEmpty() ) {
     kdDebug(6050) << "Running new KHTMLRun for " << this << " and child=" << child << endl;
@@ -4486,7 +4486,7 @@ bool KHTMLPart::processObjectRequest( khtml::ChildFrame *child, const KURL &_url
     //CRITICAL STUFF
     if ( child->m_part )
     {
-      if (!::qt_cast<KHTMLPart*>(child->m_part) && child->m_jscript)
+      if (!::tqqt_cast<KHTMLPart*>(child->m_part) && child->m_jscript)
           child->m_jscript->clear();
       partManager()->removePart( (KParts::ReadOnlyPart *)child->m_part );
       delete (KParts::ReadOnlyPart *)child->m_part;
@@ -4507,7 +4507,7 @@ bool KHTMLPart::processObjectRequest( khtml::ChildFrame *child, const KURL &_url
 
     child->m_part = part;
 
-    if (::qt_cast<KHTMLPart*>(part)) {
+    if (::tqqt_cast<KHTMLPart*>(part)) {
       static_cast<KHTMLPart*>(part)->d->m_frame = child;
     } else if (child->m_frame) {
       child->m_liveconnect = KParts::LiveConnectExtension::childObject(part);
@@ -4643,19 +4643,19 @@ bool KHTMLPart::processObjectRequest( khtml::ChildFrame *child, const KURL &_url
   }
 }
 
-KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char *widgetName,
+KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *tqparentWidget, const char *widgetName,
                                              TQObject *parent, const char *name, const TQString &mimetype,
                                              TQString &serviceName, TQStringList &serviceTypes,
                                              const TQStringList &params )
 {
   TQString constr;
   if ( !serviceName.isEmpty() )
-    constr.append( TQString::fromLatin1( "Name == '%1'" ).arg( serviceName ) );
+    constr.append( TQString::tqfromLatin1( "Name == '%1'" ).arg( serviceName ) );
 
   KTrader::OfferList offers = KTrader::self()->query( mimetype, "KParts/ReadOnlyPart", constr, TQString::null );
 
   if ( offers.isEmpty() ) {
-    int pos = mimetype.find( "-plugin" );
+    int pos = mimetype.tqfind( "-plugin" );
     if (pos < 0)
         return 0L;
     TQString stripped_mime = mimetype.left( pos );
@@ -4679,9 +4679,9 @@ KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char 
         className = "Browser/View";
 
       if ( factory->inherits( "KParts::Factory" ) )
-        res = static_cast<KParts::ReadOnlyPart *>(static_cast<KParts::Factory *>( factory )->createPart( parentWidget, widgetName, parent, name, className, params ));
+        res = static_cast<KParts::ReadOnlyPart *>(static_cast<KParts::Factory *>( factory )->createPart( tqparentWidget, widgetName, parent, name, className, params ));
       else
-        res = static_cast<KParts::ReadOnlyPart *>(factory->create( parentWidget, widgetName, className ));
+        res = static_cast<KParts::ReadOnlyPart *>(factory->create( tqparentWidget, widgetName, className ));
 
       if ( res ) {
         serviceTypes = service->serviceTypes();
@@ -4701,7 +4701,7 @@ KParts::PartManager *KHTMLPart::partManager()
 {
   if ( !d->m_manager && d->m_view )
   {
-    d->m_manager = new KParts::PartManager( d->m_view->topLevelWidget(), this, "khtml part manager" );
+    d->m_manager = new KParts::PartManager( d->m_view->tqtopLevelWidget(), this, "khtml part manager" );
     d->m_manager->setAllowNestedParts( true );
     connect( d->m_manager, TQT_SIGNAL( activePartChanged( KParts::Part * ) ),
              this, TQT_SLOT( slotActiveFrameChanged( KParts::Part * ) ) );
@@ -4777,7 +4777,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
                                                       "WarnOnUnencryptedForm");
           // Move this setting into KSSL instead
           KConfig *config = kapp->config();
-          TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
+          TQString grpNotifMsgs = TQString::tqfromLatin1("Notification Messages");
           KConfigGroupSaver saver( config, grpNotifMsgs );
 
           if (!config->readBoolEntry("WarnOnUnencryptedForm", true)) {
@@ -4811,7 +4811,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
 
   TQString urlstring = u.url();
 
-  if ( urlstring.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 ) {
+  if ( urlstring.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
     urlstring = KURL::decode_string(urlstring);
     crossFrameExecuteScript( _target, urlstring.right( urlstring.length() - 11) );
     return;
@@ -4873,18 +4873,18 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
       TQString bodyEnc;
       if (contentType.lower() == "multipart/form-data") {
          // FIXME: is this correct?  I suspect not
-         bodyEnc = KURL::encode_string(TQString::fromLatin1(formData.data(),
+         bodyEnc = KURL::encode_string(TQString::tqfromLatin1(formData.data(),
                                                            formData.size()));
       } else if (contentType.lower() == "text/plain") {
          // Convention seems to be to decode, and s/&/\n/
-         TQString tmpbody = TQString::fromLatin1(formData.data(),
+         TQString tmpbody = TQString::tqfromLatin1(formData.data(),
                                                formData.size());
          tmpbody.replace(TQRegExp("[&]"), "\n");
          tmpbody.replace(TQRegExp("[+]"), " ");
          tmpbody = KURL::decode_string(tmpbody);  // Decode the rest of it
          bodyEnc = KURL::encode_string(tmpbody);  // Recode for the URL
       } else {
-         bodyEnc = KURL::encode_string(TQString::fromLatin1(formData.data(),
+         bodyEnc = KURL::encode_string(TQString::tqfromLatin1(formData.data(),
                                                            formData.size()));
       }
 
@@ -4895,7 +4895,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
 
   if ( strcmp( action, "get" ) == 0 ) {
     if (u.protocol() != "mailto")
-       u.setQuery( TQString::fromLatin1( formData.data(), formData.size() ) );
+       u.setQuery( TQString::tqfromLatin1( formData.data(), formData.size() ) );
     args.setDoPost( false );
   }
   else {
@@ -4975,7 +4975,7 @@ void KHTMLPart::popupMenu( const TQString &linkUrl )
   KHTMLPopupGUIClient* client = new KHTMLPopupGUIClient( this, d->m_popupMenuXML, linkKURL );
   TQGuardedPtr<TQObject> guard( client );
 
-  TQString mimetype = TQString::fromLatin1( "text/html" );
+  TQString mimetype = TQString::tqfromLatin1( "text/html" );
   args.metaData()["referrer"] = referrer;
 
   if (!linkUrl.isEmpty())				// over a link
@@ -5095,7 +5095,7 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
 
   // TODO: handle child target correctly! currently the script are always executed fur the parent
   TQString urlStr = url.url();
-  if ( urlStr.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 ) {
+  if ( urlStr.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
       TQString script = KURL::decode_string( urlStr.right( urlStr.length() - 11 ) );
       executeScript( DOM::Node(), script );
       return;
@@ -5103,17 +5103,17 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
 
   TQString frameName = args.frameName.lower();
   if ( !frameName.isEmpty() ) {
-    if ( frameName == TQString::fromLatin1( "_top" ) )
+    if ( frameName == TQString::tqfromLatin1( "_top" ) )
     {
       emit d->m_extension->openURLRequest( url, args );
       return;
     }
-    else if ( frameName == TQString::fromLatin1( "_blank" ) )
+    else if ( frameName == TQString::tqfromLatin1( "_blank" ) )
     {
       emit d->m_extension->createNewWindow( url, args );
       return;
     }
-    else if ( frameName == TQString::fromLatin1( "_parent" ) )
+    else if ( frameName == TQString::tqfromLatin1( "_parent" ) )
     {
       KParts::URLArgs newArgs( args );
       newArgs.frameName = TQString::null;
@@ -5121,7 +5121,7 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
       emit d->m_extension->openURLRequest( url, newArgs );
       return;
     }
-    else if ( frameName != TQString::fromLatin1( "_self" ) )
+    else if ( frameName != TQString::tqfromLatin1( "_self" ) )
     {
       khtml::ChildFrame *_frame = recursiveFrameRequest( callingHtmlPart, url, args );
 
@@ -5224,7 +5224,7 @@ KHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f
   if (!childFrame && !parentPart() && (TQString::fromLocal8Bit(name()) == f))
      return this;
 
-  FrameIt it = d->m_frames.find( f );
+  FrameIt it = d->m_frames.tqfind( f );
   const FrameIt end = d->m_frames.end();
   if ( it != end )
   {
@@ -5287,7 +5287,7 @@ KParts::ReadOnlyPart *KHTMLPart::currentFrame() const
 
 bool KHTMLPart::frameExists( const TQString &frameName )
 {
-  ConstFrameIt it = d->m_frames.find( frameName );
+  ConstFrameIt it = d->m_frames.tqfind( frameName );
   if ( it == d->m_frames.end() )
     return false;
 
@@ -5299,7 +5299,7 @@ bool KHTMLPart::frameExists( const TQString &frameName )
 
 KJSProxy *KHTMLPart::framejScript(KParts::ReadOnlyPart *framePart)
 {
-  KHTMLPart* const kp = ::qt_cast<KHTMLPart*>(framePart);
+  KHTMLPart* const kp = ::tqqt_cast<KHTMLPart*>(framePart);
   if (kp)
     return kp->jScript();
 
@@ -5317,7 +5317,7 @@ KJSProxy *KHTMLPart::framejScript(KParts::ReadOnlyPart *framePart)
 
 KHTMLPart *KHTMLPart::parentPart()
 {
-  return ::qt_cast<KHTMLPart *>( parent() );
+  return ::tqqt_cast<KHTMLPart *>( parent() );
 }
 
 khtml::ChildFrame *KHTMLPart::recursiveFrameRequest( KHTMLPart *callingHtmlPart, const KURL &url,
@@ -5360,8 +5360,8 @@ void KHTMLPart::saveState( TQDataStream &stream )
   kdDebug( 6050 ) << indent << "saveState this=" << this << " '" << name() << "' saving URL " << m_url.url() << endl;
 #endif
 
-  stream << m_url << (Q_INT32)d->m_view->contentsX() << (Q_INT32)d->m_view->contentsY()
-         << (Q_INT32) d->m_view->contentsWidth() << (Q_INT32) d->m_view->contentsHeight() << (Q_INT32) d->m_view->marginWidth() << (Q_INT32) d->m_view->marginHeight();
+  stream << m_url << (TQ_INT32)d->m_view->contentsX() << (TQ_INT32)d->m_view->contentsY()
+         << (TQ_INT32) d->m_view->contentsWidth() << (TQ_INT32) d->m_view->contentsHeight() << (TQ_INT32) d->m_view->marginWidth() << (TQ_INT32) d->m_view->marginHeight();
 
   // save link cursor position
   int focusNodeNumber;
@@ -5431,7 +5431,7 @@ void KHTMLPart::saveState( TQDataStream &stream )
   }
 
   // Save frame data
-  stream << (Q_UINT32) frameNameLst.count();
+  stream << (TQ_UINT32) frameNameLst.count();
   stream << frameNameLst << frameServiceTypeLst << frameServiceNameLst << frameURLLst << frameStateBufferLst;
 #ifndef NDEBUG
   s_saveStateIndentLevel = indentLevel;
@@ -5441,8 +5441,8 @@ void KHTMLPart::saveState( TQDataStream &stream )
 void KHTMLPart::restoreState( TQDataStream &stream )
 {
   KURL u;
-  Q_INT32 xOffset, yOffset, wContents, hContents, mWidth, mHeight;
-  Q_UINT32 frameCount;
+  TQ_INT32 xOffset, yOffset, wContents, hContents, mWidth, mHeight;
+  TQ_UINT32 frameCount;
   TQStringList frameNames, frameServiceTypes, docState, frameServiceNames;
   KURL::List frameURLs;
   TQValueList<TQByteArray> frameStateBuffers;
@@ -5912,7 +5912,7 @@ TQPtrList<KParts::ReadOnlyPart> KHTMLPart::frames() const
 bool KHTMLPart::openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs )
 {
     kdDebug( 6050 ) << this << "KHTMLPart::openURLInFrame " << url << endl;
-  FrameIt it = d->m_frames.find( urlArgs.frameName );
+  FrameIt it = d->m_frames.tqfind( urlArgs.frameName );
 
   if ( it == d->m_frames.end() )
     return false;
@@ -6658,7 +6658,7 @@ void KHTMLPart::slotPrintFrame()
   if ( !ext )
     return;
 
-  TQMetaObject *mo = ext->metaObject();
+  TQMetaObject *mo = ext->tqmetaObject();
 
   int idx = mo->findSlot( "print()", true );
   if ( idx >= 0 ) {
@@ -6877,7 +6877,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         if (frame->frameStyle() != TQFrame::NoFrame)
         {
            frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken);
-           frame->repaint();
+           frame->tqrepaint();
         }
     }
 
@@ -6905,7 +6905,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         if (frame->frameStyle() != TQFrame::NoFrame)
         {
            frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Plain);
-           frame->repaint();
+           frame->tqrepaint();
         }
         kdDebug(6050) << "new active frame " << d->m_activeFrame << endl;
     }
@@ -7157,7 +7157,7 @@ void KHTMLPart::openWallet(DOM::HTMLFormElementImpl *form)
   }
 
   if (!d->m_wq) {
-    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
+    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->tqtopLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
     d->m_wq = new KHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));
@@ -7199,7 +7199,7 @@ void KHTMLPart::saveToWallet(const TQString& key, const TQMap<TQString,TQString>
   }
 
   if (!d->m_wq) {
-    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
+    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->tqtopLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
     d->m_wq = new KHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));
@@ -7249,7 +7249,7 @@ void KHTMLPart::walletOpened(KWallet::Wallet *wallet) {
   if (!d->m_statusBarWalletLabel) {
     d->m_statusBarWalletLabel = new KURLLabel(d->m_statusBarExtension->statusBar());
     d->m_statusBarWalletLabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
-    d->m_statusBarWalletLabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+    d->m_statusBarWalletLabel->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
     d->m_statusBarWalletLabel->setUseCursor(false);
     d->m_statusBarExtension->addStatusBarItem(d->m_statusBarWalletLabel, 0, false);
     d->m_statusBarWalletLabel->setPixmap(SmallIcon("wallet_open", instance()));
@@ -7386,7 +7386,7 @@ void KHTMLPart::setSuppressedPopupIndicator( bool enable, KHTMLPart *originPart 
     if ( enable && !d->m_statusBarPopupLabel ) {
         d->m_statusBarPopupLabel = new KURLLabel( d->m_statusBarExtension->statusBar() );
         d->m_statusBarPopupLabel->setFixedHeight( instance()->iconLoader()->currentSize( KIcon::Small) );
-        d->m_statusBarPopupLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+        d->m_statusBarPopupLabel->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
         d->m_statusBarPopupLabel->setUseCursor( false );
         d->m_statusBarExtension->addStatusBarItem( d->m_statusBarPopupLabel, 0, false );
         d->m_statusBarPopupLabel->setPixmap( SmallIcon( "window_suppressed", instance() ) );

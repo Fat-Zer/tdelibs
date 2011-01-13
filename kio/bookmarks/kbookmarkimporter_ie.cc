@@ -51,7 +51,7 @@ void KIEBookmarkImporter::parseIEBookmarks_url_file( TQString filename, TQString
             TQCString t = s.stripWhiteSpace();
             TQRegExp rx( "URL=(.*)" );
             if (rx.exactMatch(t)) {
-               emit newBookmark( name, rx.cap(1).latin1(), TQString("") );
+               emit newBookmark( name, TQString(rx.cap(1)).latin1(), TQString("") );
             }
         }
 
@@ -69,13 +69,13 @@ void KIEBookmarkImporter::parseIEBookmarks_dir( TQString dirname, TQString folde
    dir.setNameFilter("*.url"); // AK - possibly add ";index.ini" ?
    dir.setMatchAllDirs(true);
 
-   const QFileInfoList *list = dir.entryInfoList();
+   const TQFileInfoList *list = dir.entryInfoList();
    if (!list) return;
 
    if (dirname != m_fileName) 
       emit newFolder( foldername, false, "" );
 
-   QFileInfoListIterator it( *list );
+   TQFileInfoListIterator it( *list );
    TQFileInfo *fi;
 
    while ( (fi = it.current()) != 0 ) {

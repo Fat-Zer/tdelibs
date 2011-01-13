@@ -6,7 +6,7 @@
 // and a text in the table above.
 //
 
-class DrawView : public QWidget
+class DrawView : public TQWidget
 {
     Q_OBJECT
 public:

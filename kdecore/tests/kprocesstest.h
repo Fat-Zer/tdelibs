@@ -15,7 +15,7 @@
 #include <tqobject.h>
 #include "kprocess.h"
 
-class Dummy : public QObject
+class Dummy : public TQObject
 {
  Q_OBJECT
 

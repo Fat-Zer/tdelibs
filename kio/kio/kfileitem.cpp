@@ -973,12 +973,12 @@ void KFileItem::setExtraData( const void *key, void *value )
     if ( !key )
         return;
 
-    m_extra.replace( key, value );
+    m_extra.tqreplace( key, value );
 }
 
 const void * KFileItem::extraData( const void *key ) const
 {
-    TQMapConstIterator<const void*,void*> it = m_extra.find( key );
+    TQMapConstIterator<const void*,void*> it = m_extra.tqfind( key );
     if ( it != m_extra.end() )
         return it.data();
     return 0L;
@@ -986,7 +986,7 @@ const void * KFileItem::extraData( const void *key ) const
 
 void * KFileItem::extraData( const void *key )
 {
-    TQMapIterator<const void*,void*> it = m_extra.find( key );
+    TQMapIterator<const void*,void*> it = m_extra.tqfind( key );
     if ( it != m_extra.end() )
         return it.data();
     return 0L;
@@ -1041,7 +1041,7 @@ TQString KFileItem::parsePermissions(mode_t perm) const
     if (hasExtendedACL())
         p[10]='+';
 
-    return TQString::fromLatin1(p);
+    return TQString::tqfromLatin1(p);
 }
 
 // check if we need to cache this
@@ -1098,7 +1098,7 @@ void KFileItem::virtual_hook( int, void* )
 
 TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a )
 {
-    // We don't need to save/restore anything that refresh() invalidates,
+    // We don't need to save/restore anything that refresh() tqinvalidates,
     // since that means we can re-determine those by ourselves.
     s << a.m_url;
     s << a.m_strName;

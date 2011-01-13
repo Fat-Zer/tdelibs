@@ -10,7 +10,7 @@
 #include <tqwidget.h>
 #include <kpixmap.h>
 
-class KHashWidget : public QWidget
+class KHashWidget : public TQWidget
 {
     Q_OBJECT
 

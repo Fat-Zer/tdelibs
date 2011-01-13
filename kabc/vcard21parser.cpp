@@ -430,7 +430,7 @@ VCard21ParserImpl *VCard21ParserImpl::parseVCard( const TQString& vc, int *err )
       }
 
       // split into two tokens
-      int colon = (*j).find( ':' );
+      int colon = (*j).tqfind( ':' );
       if ( colon < 0 ) {
         _err = VC_ERR_INVALID_LINE;
         break;

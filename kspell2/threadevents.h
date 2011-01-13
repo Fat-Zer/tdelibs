@@ -30,7 +30,7 @@ namespace KSpell2
         FoundMisspelling = 2003,
         FinishedChecking  = 2004
     };
-    class MisspellingEvent : public QCustomEvent
+    class MisspellingEvent : public TQCustomEvent
     {
     public:
         MisspellingEvent( const TQString& word,
@@ -49,7 +49,7 @@ namespace KSpell2
         TQString m_word;
         int     m_position;
     };
-    class FinishedCheckingEvent : public QCustomEvent
+    class FinishedCheckingEvent : public TQCustomEvent
     {
     public:
         FinishedCheckingEvent()

@@ -60,7 +60,7 @@ class KIconCanvas::KIconCanvasPrivate
 /**
  * Helper class for sorting icon paths by icon name
  */
-class IconPath : public QString
+class IconPath : public TQString
 {
 protected:
  TQString m_iconName;
@@ -68,7 +68,7 @@ protected:
 public:
  IconPath(const TQString &ip) : TQString (ip)
  {
-   int n = findRev('/');
+   int n = tqfindRev('/');
    m_iconName = (n==-1) ? static_cast<TQString>(*this) : mid(n+1);
  }
 
@@ -119,7 +119,7 @@ void KIconCanvas::loadFiles(const TQStringList& files)
 void KIconCanvas::slotLoadFiles()
 {
     setResizeMode(Fixed);
-    TQApplication::setOverrideCursor(waitCursor);
+    TQApplication::setOverrideCursor(tqwaitCursor);
 
     // disable updates to not trigger paint events when adding child items
     setUpdatesEnabled( false );
@@ -136,8 +136,8 @@ void KIconCanvas::slotLoadFiles()
     for (it=mFiles.begin(), i=0; it!=end; ++it, i++)
     {
 	// Calling kapp->processEvents() makes the iconview flicker like hell
-	// (it's being repainted once for every new item), so we don't do this.
-	// Instead, we directly repaint the progress bar without going through
+	// (it's being tqrepainted once for every new item), so we don't do this.
+	// Instead, we directly tqrepaint the progress bar without going through
 	// the event-loop. We do that just once for every 10th item so that
 	// the progress bar doesn't flicker in turn. (pfeiffer)
 	if ( emitProgress >= 10 ) {
@@ -259,7 +259,7 @@ void KIconDialog::init()
     mGroupOrSize = KIcon::Desktop;
     mContext = KIcon::Any;
     mType = 0;
-    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::fromLatin1("*.png"));
+    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::tqfromLatin1("*.png"));
 
     TQWidget *main = new TQWidget( this );
     setMainWidget(main);
@@ -367,7 +367,7 @@ void KIconDialog::init()
             mContextMap[ mNumContext++ ] = context_id[ i ];
         }
     }
-    mpCombo->setFixedSize(mpCombo->sizeHint());
+    mpCombo->setFixedSize(mpCombo->tqsizeHint());
 
     mpBrowseBut->setFixedWidth(mpCombo->width());
 
@@ -631,8 +631,8 @@ void KIconDialog::slotProgress(int p)
 {
     mpProgress->setProgress(p);
     // commented out the following since setProgress already paints ther
-    // progress bar. ->repaint() only makes it flicker
-    //mpProgress->repaint();
+    // progress bar. ->tqrepaint() only makes it flicker
+    //mpProgress->tqrepaint();
 }
 
 void KIconDialog::slotFinished()

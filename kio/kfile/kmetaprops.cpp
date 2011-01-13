@@ -38,7 +38,7 @@
 
 #undef Bool
 
-class MetaPropsScrollView : public QScrollView
+class MetaPropsScrollView : public TQScrollView
 {
 public:
     MetaPropsScrollView(TQWidget* parent = 0, const char* name = 0)
@@ -56,8 +56,8 @@ protected:
     virtual void viewportResizeEvent(TQResizeEvent* ev)
     {
       TQScrollView::viewportResizeEvent(ev);
-      m_frame->resize( kMax(m_frame->sizeHint().width(), ev->size().width()),
-                       kMax(m_frame->sizeHint().height(), ev->size().height()));
+      m_frame->resize( kMax(m_frame->tqsizeHint().width(), ev->size().width()),
+                       kMax(m_frame->tqsizeHint().height(), ev->size().height()));
     };
 
 private:
@@ -179,7 +179,7 @@ void KFileMetaPropsPlugin::createLayout()
                 iit!=editItems.end(); ++iit)
         {
             TQLabel* l = new TQLabel((*iit).translatedKey() + ":", groupBox);
-            l->setAlignment( AlignAuto | AlignTop | ExpandTabs );
+            l->tqsetAlignment( AlignAuto | AlignTop | ExpandTabs );
             TQValidator* val = mtinfo->createValidator(*git, (*iit).key());
             if (!val) kdDebug(7033) << "didn't get a validator for " << *git << "/" << (*iit).key() << endl;
             w = new KFileMetaInfoWidget(*iit, val, groupBox);
@@ -192,7 +192,7 @@ void KFileMetaPropsPlugin::createLayout()
                 iit!=readItems.end(); ++iit)
         {
             TQLabel* l = new TQLabel((*iit).translatedKey() + ":", groupBox);
-            l->setAlignment( AlignAuto | AlignTop | ExpandTabs );
+            l->tqsetAlignment( AlignAuto | AlignTop | ExpandTabs );
             (new KFileMetaInfoWidget(*iit, KFileMetaInfoWidget::ReadOnly, 0L, groupBox));
         }
     }
@@ -201,7 +201,7 @@ void KFileMetaPropsPlugin::createLayout()
 
     // the add key (disabled until fully implemented)
 /*    d->m_add = new TQPushButton(i18n("&Add"), topframe);
-    d->m_add->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed,
+    d->m_add->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed,
                                         TQSizePolicy::Fixed));
     connect(d->m_add, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotAdd()));
     tmp->addWidget(d->m_add);
@@ -216,7 +216,7 @@ void KFileMetaPropsPlugin::createLayout()
         d->m_add->setEnabled(false);
         for (TQStringList::Iterator it = sk.begin(); it!=sk.end(); ++it)
         {
-                if ( l.find(*it)==l.end() )
+                if ( l.tqfind(*it)==l.end() )
                 {
                     d->m_add->setEnabled(true);
                     kdDebug(250) << "**first addable key is " << (*it).latin1() << "**" <<endl;

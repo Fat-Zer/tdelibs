@@ -68,7 +68,7 @@ class TQPixmap;
  * @version $Id$
  *
  */
-class KDEUI_EXPORT KURLLabel : public QLabel
+class KDEUI_EXPORT KURLLabel : public TQLabel
 {
   Q_OBJECT
   Q_PROPERTY (TQString url READ url WRITE setURL)
@@ -161,12 +161,12 @@ public:
   /**
    * Reimplemented for internal reasons, the API is not affected.
    */
-  virtual void setFocusPolicy ( FocusPolicy policy );
+  virtual void setFocusPolicy ( TQ_FocusPolicy policy );
 
   /**
    * Reimplemented for internal reasons, the API is not affected.
    */
-  virtual void setSizePolicy ( TQSizePolicy );
+  virtual void tqsetSizePolicy ( TQSizePolicy );
 
 public slots:
   /**

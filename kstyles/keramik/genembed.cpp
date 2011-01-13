@@ -146,7 +146,7 @@ int main(int argc, char** argv)
 		int readJustID = 0;
 
 
-		if ((pos = s.findRev("-")) != -1)
+		if ((pos = s.tqfindRev("-")) != -1)
 		{
 				int suffix = evalSuffix(s.mid(pos));
 				if (suffix !=-1 )
@@ -156,7 +156,7 @@ int main(int argc, char** argv)
 				}
 		}
 
-		if (!assignID.contains(id))
+		if (!assignID.tqcontains(id))
 		{
 			assignID[id] = nextID;
 			nextID += 256;
@@ -222,14 +222,14 @@ int main(int argc, char** argv)
 
 		cout<<"static const unsigned char "<<s.latin1()<<"[]={\n";
 
-		Q_UINT32* read  = reinterpret_cast< Q_UINT32* >(input.bits() );
+		TQ_UINT32* read  = reinterpret_cast< TQ_UINT32* >(input.bits() );
 		int size = input.width()*input.height();
 
 		for (int pos=0; pos<size; pos++)
 		{
 			QRgb basePix = (QRgb)*read;
 
-			if (qAlpha(basePix) != 255)
+			if (tqAlpha(basePix) != 255)
 				reallySolid = false;
 			else
 				pixSolid++;
@@ -242,7 +242,7 @@ int main(int argc, char** argv)
 
 		images.push_back(image);
 
-		read  = reinterpret_cast< Q_UINT32* >(input.bits() );
+		read  = reinterpret_cast< TQ_UINT32* >(input.bits() );
 		for (int pos=0; pos<size; pos++)
 		{
 			QRgb basePix = (QRgb)*read;
@@ -252,10 +252,10 @@ int main(int argc, char** argv)
 			int h,s,v;
 			clr.hsv(&h,&s,&v);
 
-			v=qGray(basePix);
+			v=tqGray(basePix);
 
 			int targetColorAlpha = 0 , greyAdd = 0;
-			//int srcAlpha = qAlpha(basePix);
+			//int srcAlpha = tqAlpha(basePix);
 
 			if (s>0 || v > 128)
 			{ //Non-shadow
@@ -296,8 +296,8 @@ int main(int argc, char** argv)
 			if (reallySolid)
 				cout<<targetColorAlpha<<","<<greyAdd<<",";
 			else
-				cout<<targetColorAlpha<<","<<greyAdd<<","<<qAlpha(basePix)<<",";
-			//cout<<qRed(basePix)<<","<<qGreen(basePix)<<","<<qBlue(basePix)<<","<<qAlpha(basePix)<<",";
+				cout<<targetColorAlpha<<","<<greyAdd<<","<<tqAlpha(basePix)<<",";
+			//cout<<tqRed(basePix)<<","<<tqGreen(basePix)<<","<<tqBlue(basePix)<<","<<tqAlpha(basePix)<<",";
 
 			if (pos%8 == 7)
 				cout<<"\n";
@@ -346,7 +346,7 @@ int main(int argc, char** argv)
 	cout<<"\t\t\timages.insert(image_db[c].id, &image_db[c]);\n";
 	cout<<"\t}\n";
 	cout<<"\tstatic KeramikImageDb* instance;\n";
-	cout<<"\tQIntDict<KeramikEmbedImage> images;\n";
+	cout<<"\tTQIntDict<KeramikEmbedImage> images;\n";
 	cout<<"};\n\n";
 	cout<<"KeramikImageDb* KeramikImageDb::instance = 0;\n\n";
 

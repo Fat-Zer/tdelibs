@@ -35,10 +35,10 @@ KContextMenuManager* KContextMenuManager::manager = 0;
 KContextMenuManager::KContextMenuManager( TQObject* parent, const char* name )
     : TQObject( parent, name)
 {
-    KConfigGroupSaver saver ( KGlobal::config(), TQString::fromLatin1("Shortcuts") ) ;
-    menuKey = KShortcut( saver.config()->readEntry(TQString::fromLatin1("PopupContextMenu"), TQString::fromLatin1("Menu") ) ).keyCodeQt();
-    saver.config()->setGroup( TQString::fromLatin1("ContextMenus") ) ;
-    showOnPress = saver.config()->readBoolEntry(TQString::fromLatin1("ShowOnPress"), true );
+    KConfigGroupSaver saver ( KGlobal::config(), TQString::tqfromLatin1("Shortcuts") ) ;
+    menuKey = KShortcut( saver.config()->readEntry(TQString::tqfromLatin1("PopupContextMenu"), TQString::tqfromLatin1("Menu") ) ).keyCodeQt();
+    saver.config()->setGroup( TQString::tqfromLatin1("ContextMenus") ) ;
+    showOnPress = saver.config()->readBoolEntry(TQString::tqfromLatin1("ShowOnPress"), true );
 }
 
 KContextMenuManager::~KContextMenuManager()
@@ -70,7 +70,7 @@ bool KContextMenuManager::eventFilter( TQObject *o, TQEvent * e)
     TQPoint pos;
     switch ( e->type() ) {
     case TQEvent::MouseButtonPress:
-	if (((TQMouseEvent*) e )->button() != RightButton )
+	if (((TQMouseEvent*) e )->button() != Qt::RightButton )
 	    break;
 	if ( !showOnPress )
 	    return true; // eat event for safety
@@ -78,7 +78,7 @@ bool KContextMenuManager::eventFilter( TQObject *o, TQEvent * e)
 	pos = ((TQMouseEvent*) e )->globalPos();
 	break;
     case TQEvent::MouseButtonRelease:
-	if ( showOnPress  || ((TQMouseEvent*) e )->button() != RightButton )
+	if ( showOnPress  || ((TQMouseEvent*) e )->button() != Qt::RightButton )
 	    break;
 	popup = menus[o];	
 	pos = ((TQMouseEvent*) e )->globalPos();
@@ -122,7 +122,7 @@ bool KContextMenuManager::eventFilter( TQObject *o, TQEvent * e)
 
 void KContextMenuManager::widgetDestroyed()
 {
-    if ( menus.find( (TQObject*)sender() ) )
+    if ( menus.tqfind( (TQObject*)sender() ) )
 	menus.remove( (TQObject*)sender() );
 }
 

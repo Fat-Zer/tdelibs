@@ -29,7 +29,7 @@ namespace
 {
 struct string_entry {
   string_entry(TQString _key, KSycocaEntry *_payload) 
-  { keyStr = _key; key = keyStr.unicode(); length = keyStr.length(); payload = _payload; hash = 0; }
+  { keyStr = _key; key = keyStr.tqunicode(); length = keyStr.length(); payload = _payload; hash = 0; }
   uint hash;
   int length;
   const TQChar *key;
@@ -59,8 +59,8 @@ KSycocaDict::KSycocaDict()
 KSycocaDict::KSycocaDict(TQDataStream *str, int offset)
   : d(0), mStr(str), mOffset(offset)
 {
-   Q_UINT32 test1, test2;
-   str->device()->at(offset);
+   TQ_UINT32 test1, test2;
+   str->tqdevice()->at(offset);
    (*str) >> test1 >> test2;
    if ((test1 > 0x000fffff) || (test2 > 1024))
    {
@@ -70,10 +70,10 @@ KSycocaDict::KSycocaDict(TQDataStream *str, int offset)
        return;
    }
 
-   str->device()->at(offset);
+   str->tqdevice()->at(offset);
    (*str) >> mHashTableSize;
    (*str) >> mHashList;
-   mOffset = str->device()->at(); // Start of hashtable
+   mOffset = str->tqdevice()->at(); // Start of hashtable
 }
 
 KSycocaDict::~KSycocaDict()
@@ -129,11 +129,11 @@ KSycocaDict::find_string(const TQString &key )
    uint hash = hashKey(key) % mHashTableSize;
    //kdDebug(7011) << TQString("hash is %1").arg(hash) << endl;
 
-   uint off = mOffset+sizeof(Q_INT32)*hash;
+   uint off = mOffset+sizeof(TQ_INT32)*hash;
    //kdDebug(7011) << TQString("off is %1").arg(off,8,16) << endl;
-   mStr->device()->at( off );
+   mStr->tqdevice()->at( off );
 
-   Q_INT32 offset;
+   TQ_INT32 offset;
    (*mStr) >> offset;
 
    //kdDebug(7011) << TQString("offset is %1").arg(offset,8,16) << endl;
@@ -146,7 +146,7 @@ KSycocaDict::find_string(const TQString &key )
    // Lookup duplicate list.
    offset = -offset;
 
-   mStr->device()->at(offset);
+   mStr->tqdevice()->at(offset);
    //kdDebug(7011) << TQString("Looking up duplicate list at %1").arg(offset,8,16) << endl;
    
    while(true)
@@ -286,7 +286,7 @@ KSycocaDict::save(TQDataStream &str)
       return;
    }
 
-   mOffset = str.device()->at();
+   mOffset = str.tqdevice()->at();
 
    //kdDebug(7011) << TQString("KSycocaDict: %1 entries.").arg(count()) << endl;
 
@@ -402,26 +402,26 @@ KSycocaDict::save(TQDataStream &str)
    str << mHashTableSize;
    str << mHashList;
 
-   mOffset = str.device()->at(); // mOffset points to start of hashTable
+   mOffset = str.tqdevice()->at(); // mOffset points to start of hashTable
    //kdDebug(7011) << TQString("Start of Hash Table, offset = %1").arg(mOffset,8,16) << endl;
 
    for(int pass = 1; pass <= 2; pass++)
    {
-      str.device()->at(mOffset);
+      str.tqdevice()->at(mOffset);
       //kdDebug(7011) << TQString("Writing hash table (pass #%1)").arg(pass) << endl;
       for(uint i=0; i < mHashTableSize; i++)
       {
-         Q_INT32 tmpid;
+         TQ_INT32 tmpid;
          if (!hashTable[i].entry)
-            tmpid = (Q_INT32) 0;
+            tmpid = (TQ_INT32) 0;
          else if (!hashTable[i].duplicates)
-            tmpid = (Q_INT32) hashTable[i].entry->payload->offset(); // Positive ID
+            tmpid = (TQ_INT32) hashTable[i].entry->payload->offset(); // Positive ID
          else
-            tmpid = (Q_INT32) -hashTable[i].duplicate_offset; // Negative ID
+            tmpid = (TQ_INT32) -hashTable[i].duplicate_offset; // Negative ID
          str << tmpid;
          //kdDebug(7011) << TQString("Hash table : %1").arg(tmpid,8,16) << endl;
       }
-      //kdDebug(7011) << TQString("End of Hash Table, offset = %1").arg(str.device()->at(),8,16) << endl;
+      //kdDebug(7011) << TQString("End of Hash Table, offset = %1").arg(str.tqdevice()->at(),8,16) << endl;
 
       //kdDebug(7011) << TQString("Writing duplicate lists (pass #%1)").arg(pass) << endl;
       for(uint i=0; i < mHashTableSize; i++)
@@ -429,19 +429,19 @@ KSycocaDict::save(TQDataStream &str)
          if (hashTable[i].duplicates)
          {
             TQPtrList<string_entry> *dups = hashTable[i].duplicates;
-            hashTable[i].duplicate_offset = str.device()->at();
+            hashTable[i].duplicate_offset = str.tqdevice()->at();
 
             /*kdDebug(7011) << TQString("Duplicate lists: Offset = %1 list_size = %2")                           .arg(hashTable[i].duplicate_offset,8,16).arg(dups->count()) << endl;
 */
             for(string_entry *dup = dups->first(); dup; dup=dups->next())
             {
-               str << (Q_INT32) dup->payload->offset(); // Positive ID
+               str << (TQ_INT32) dup->payload->offset(); // Positive ID
                str << dup->keyStr;                      // Key (TQString)
             }
-            str << (Q_INT32) 0;               // End of list marker (0)
+            str << (TQ_INT32) 0;               // End of list marker (0)
          }
       }
-      //kdDebug(7011) << TQString("End of Dict, offset = %1").arg(str.device()->at(),8,16) << endl;
+      //kdDebug(7011) << TQString("End of Dict, offset = %1").arg(str.tqdevice()->at(),8,16) << endl;
    }
 
    //kdDebug(7011) << "Cleaning up hash table." << endl;

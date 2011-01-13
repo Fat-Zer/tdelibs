@@ -86,7 +86,7 @@ void KNumInput::init()
 
     m_label = 0;
     m_slider = 0;
-    m_alignment = 0;
+    m_tqalignment = 0;
 }
 
 KNumInput::~KNumInput()
@@ -103,17 +103,17 @@ void KNumInput::setLabel(const TQString & label, int a)
     if(label.isEmpty()) {
         delete m_label;
         m_label = 0;
-        m_alignment = 0;
+        m_tqalignment = 0;
     }
     else {
         if (m_label) m_label->setText(label);
         else m_label = new TQLabel(label, this, "KNumInput::TQLabel");
-        m_label->setAlignment((a & (~(AlignTop|AlignBottom|AlignVCenter)))
+        m_label->tqsetAlignment((a & (~(AlignTop|AlignBottom|AlignVCenter)))
                               | AlignVCenter);
-        // if no vertical alignment set, use Top alignment
+        // if no vertical tqalignment set, use Top tqalignment
         if(!(a & (AlignTop|AlignBottom|AlignVCenter)))
            a |= AlignTop;
-        m_alignment = a;
+        m_tqalignment = a;
     }
 
     layout(true);
@@ -130,16 +130,16 @@ void KNumInput::layout(bool deep)
     int w1 = m_colw1;
     int w2 = m_colw2;
 
-    // label sizeHint
-    m_sizeLabel = (m_label ? m_label->sizeHint() : TQSize(0,0));
+    // label tqsizeHint
+    m_sizeLabel = (m_label ? m_label->tqsizeHint() : TQSize(0,0));
 
-    if(m_label && (m_alignment & AlignVCenter))
+    if(m_label && (m_tqalignment & AlignVCenter))
         m_colw1 = m_sizeLabel.width() + 4;
     else
         m_colw1 = 0;
 
-    // slider sizeHint
-    m_sizeSlider = (m_slider ? m_slider->sizeHint() : TQSize(0, 0));
+    // slider tqsizeHint
+    m_sizeSlider = (m_slider ? m_slider->tqsizeHint() : TQSize(0, 0));
 
     doLayout();
 
@@ -187,9 +187,9 @@ TQSizePolicy KNumInput::sizePolicy() const
     return TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
 }
 
-TQSize KNumInput::sizeHint() const
+TQSize KNumInput::tqsizeHint() const
 {
-    return minimumSizeHint();
+    return tqminimumSizeHint();
 }
 
 void KNumInput::setSteps(int minor, int major)
@@ -204,7 +204,7 @@ void KNumInput::setSteps(int minor, int major)
 KIntSpinBox::KIntSpinBox(TQWidget *parent, const char *name)
     : TQSpinBox(0, 99, 1, parent, name)
 {
-    editor()->setAlignment(AlignRight);
+    editor()->tqsetAlignment(AlignRight);
     val_base = 10;
     setValue(0);
 }
@@ -217,7 +217,7 @@ KIntSpinBox::KIntSpinBox(int lower, int upper, int step, int value, int base,
                          TQWidget* parent, const char* name)
     : TQSpinBox(lower, upper, step, parent, name)
 {
-    editor()->setAlignment(AlignRight);
+    editor()->tqsetAlignment(AlignRight);
     val_base = base;
     setValue(value);
 }
@@ -339,7 +339,7 @@ void KIntNumInput::setRange(int lower, int upper, int step, bool slider)
 	    m_slider->setRange(lower, upper);
 	else {
 	    m_slider = new TQSlider(lower, upper, step, m_spin->value(),
-				   TQSlider::Horizontal, this);
+				   Qt::Horizontal, this);
 	    m_slider->setTickmarks(TQSlider::Below);
 	    connect(m_slider, TQT_SIGNAL(valueChanged(int)),
 		    m_spin, TQT_SLOT(setValue(int)));
@@ -412,7 +412,7 @@ void KIntNumInput::setEditFocus(bool mark)
     m_spin->setEditFocus(mark);
 }
 
-TQSize KIntNumInput::minimumSizeHint() const
+TQSize KIntNumInput::tqminimumSizeHint() const
 {
     constPolish();
 
@@ -422,16 +422,16 @@ TQSize KIntNumInput::minimumSizeHint() const
     h = 2 + QMAX(m_sizeSpin.height(), m_sizeSlider.height());
 
     // if in extra row, then count it here
-    if(m_label && (m_alignment & (AlignBottom|AlignTop)))
+    if(m_label && (m_tqalignment & (AlignBottom|AlignTop)))
         h += 4 + m_sizeLabel.height();
     else
         // label is in the same row as the other widgets
         h = QMAX(h, m_sizeLabel.height() + 2);
 
-    w = m_slider ? m_slider->sizeHint().width() + 8 : 0;
+    w = m_slider ? m_slider->tqsizeHint().width() + 8 : 0;
     w += m_colw1 + m_colw2;
 
-    if(m_alignment & (AlignTop|AlignBottom))
+    if(m_tqalignment & (AlignTop|AlignBottom))
         w = QMAX(w, m_sizeLabel.width() + 4);
 
     return TQSize(w, h);
@@ -439,7 +439,7 @@ TQSize KIntNumInput::minimumSizeHint() const
 
 void KIntNumInput::doLayout()
 {
-    m_sizeSpin = m_spin->sizeHint();
+    m_sizeSpin = m_spin->tqsizeHint();
     m_colw2 = m_sizeSpin.width();
 
     if (m_label)
@@ -451,15 +451,15 @@ void KIntNumInput::resizeEvent(TQResizeEvent* e)
     int w = m_colw1;
     int h = 0;
 
-    if(m_label && (m_alignment & AlignTop)) {
+    if(m_label && (m_tqalignment & AlignTop)) {
         m_label->setGeometry(0, 0, e->size().width(), m_sizeLabel.height());
         h += m_sizeLabel.height() + KDialog::spacingHint();
     }
 
-    if(m_label && (m_alignment & AlignVCenter))
+    if(m_label && (m_tqalignment & AlignVCenter))
         m_label->setGeometry(0, 0, w, m_sizeSpin.height());
 
-    if (qApp->reverseLayout())
+    if (tqApp->reverseLayout())
     {
         m_spin->setGeometry(w, h, m_slider ? m_colw2 : QMAX(m_colw2, e->size().width() - w), m_sizeSpin.height());
         w += m_colw2 + 8;
@@ -477,7 +477,7 @@ void KIntNumInput::resizeEvent(TQResizeEvent* e)
 
     h += m_sizeSpin.height() + 2;
 
-    if(m_label && (m_alignment & AlignBottom))
+    if(m_label && (m_tqalignment & AlignBottom))
         m_label->setGeometry(0, h, m_sizeLabel.width(), m_sizeLabel.height());
 }
 
@@ -653,7 +653,7 @@ void KDoubleNumInput::slotEmitRelativeValueChanged( double value )
     emit relativeValueChanged( value / d->referencePoint );
 }
 
-TQSize KDoubleNumInput::minimumSizeHint() const
+TQSize KDoubleNumInput::tqminimumSizeHint() const
 {
     constPolish();
 
@@ -663,16 +663,16 @@ TQSize KDoubleNumInput::minimumSizeHint() const
     h = 2 + QMAX(m_sizeEdit.height(), m_sizeSlider.height());
 
     // if in extra row, then count it here
-    if(m_label && (m_alignment & (AlignBottom|AlignTop)))
+    if(m_label && (m_tqalignment & (AlignBottom|AlignTop)))
         h += 4 + m_sizeLabel.height();
     else
         // label is in the same row as the other widgets
 	h = QMAX(h, m_sizeLabel.height() + 2);
 
-    w = m_slider ? m_slider->sizeHint().width() + 8 : 0;
+    w = m_slider ? m_slider->tqsizeHint().width() + 8 : 0;
     w += m_colw1 + m_colw2;
 
-    if(m_alignment & (AlignTop|AlignBottom))
+    if(m_tqalignment & (AlignTop|AlignBottom))
         w = QMAX(w, m_sizeLabel.width() + 4);
 
     return TQSize(w, h);
@@ -683,15 +683,15 @@ void KDoubleNumInput::resizeEvent(TQResizeEvent* e)
     int w = m_colw1;
     int h = 0;
 
-    if(m_label && (m_alignment & AlignTop)) {
+    if(m_label && (m_tqalignment & AlignTop)) {
         m_label->setGeometry(0, 0, e->size().width(), m_sizeLabel.height());
         h += m_sizeLabel.height() + 4;
     }
 
-    if(m_label && (m_alignment & AlignVCenter))
+    if(m_label && (m_tqalignment & AlignVCenter))
         m_label->setGeometry(0, 0, w, m_sizeEdit.height());
 
-    if (qApp->reverseLayout())
+    if (tqApp->reverseLayout())
     {
         d->spin->setGeometry(w, h, m_slider ? m_colw2
                                             : e->size().width() - w, m_sizeEdit.height());
@@ -713,13 +713,13 @@ void KDoubleNumInput::resizeEvent(TQResizeEvent* e)
 
     h += m_sizeEdit.height() + 2;
 
-    if(m_label && (m_alignment & AlignBottom))
+    if(m_label && (m_tqalignment & AlignBottom))
         m_label->setGeometry(0, h, m_sizeLabel.width(), m_sizeLabel.height());
 }
 
 void KDoubleNumInput::doLayout()
 {
-    m_sizeEdit = d->spin->sizeHint();
+    m_sizeEdit = d->spin->tqsizeHint();
     m_colw2 = m_sizeEdit.width();
 }
 
@@ -767,7 +767,7 @@ void KDoubleNumInput::setRange(double lower, double upper, double step,
             m_slider->setValue(slvalue);
         } else {
             m_slider = new TQSlider(slmin, slmax, slstep, slvalue,
-                                   TQSlider::Horizontal, this);
+                                   Qt::Horizontal, this);
             m_slider->setTickmarks(TQSlider::Below);
 	    // feedback line: when one moves, the other moves, too:
             connect(m_slider, TQT_SIGNAL(valueChanged(int)),
@@ -886,7 +886,7 @@ class KDoubleSpinBoxValidator : public KDoubleValidator
 {
 public:
     KDoubleSpinBoxValidator( double bottom, double top, int decimals, KDoubleSpinBox* sb, const char *name )
-        : KDoubleValidator( bottom, top, decimals, sb, name ), spinBox( sb ) { }
+        : KDoubleValidator( bottom, top, decimals, TQT_TQOBJECT(sb), name ), spinBox( sb ) { }
 
     virtual State validate( TQString& str, int& pos ) const;
 
@@ -996,7 +996,7 @@ public:
 KDoubleSpinBox::KDoubleSpinBox( TQWidget * parent, const char * name )
   : TQSpinBox( parent, name )
 {
-  editor()->setAlignment( Qt::AlignRight );
+  editor()->tqsetAlignment( Qt::AlignRight );
   d = new Private();
   updateValidator();
   connect( this, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotValueChanged(int)) );
@@ -1007,7 +1007,7 @@ KDoubleSpinBox::KDoubleSpinBox( double lower, double upper, double step,
 				TQWidget * parent, const char * name )
   : TQSpinBox( parent, name )
 {
-  editor()->setAlignment( Qt::AlignRight );
+  editor()->tqsetAlignment( Qt::AlignRight );
   d = new Private();
   setRange( lower, upper, step, precision );
   setValue( value );

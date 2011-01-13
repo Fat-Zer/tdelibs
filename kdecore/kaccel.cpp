@@ -80,7 +80,7 @@
 
 bool kde_g_bKillAccelOverride = false;
 
-class KAccelEventHandler : public QWidget
+class KAccelEventHandler : public TQWidget
 {
  public:
 	static KAccelEventHandler* self()
@@ -111,7 +111,7 @@ KAccelEventHandler::KAccelEventHandler()
 {
 #	ifdef Q_WS_X11
 	if ( kapp )
-		kapp->installX11EventFilter( this );
+		kapp->installX11EventFilter( TQT_TQWIDGET(this) );
 #	endif
 }
 
@@ -120,10 +120,10 @@ bool	qt_try_modal( TQWidget *, XEvent * );
 
 bool KAccelEventHandler::x11Event( XEvent* pEvent )
 {
-	if( TQWidget::keyboardGrabber() || !kapp->focusWidget() )
+	if( TQWidget::keyboardGrabber() || !kapp->tqfocusWidget() )
 		return false;
 
-	if ( !qt_try_modal(kapp->focusWidget(), pEvent) )
+	if ( !qt_try_modal(kapp->tqfocusWidget(), pEvent) )
 	        return false;
 
 	if( pEvent->type == XKeyPress ) {
@@ -135,16 +135,16 @@ bool KAccelEventHandler::x11Event( XEvent* pEvent )
 		key.simplify();
 		int keyCodeQt = key.keyCodeQt();
 		int state = 0;
-		if( key.modFlags() & KKey::SHIFT ) state |= Qt::ShiftButton;
-		if( key.modFlags() & KKey::CTRL )  state |= Qt::ControlButton;
-		if( key.modFlags() & KKey::ALT )   state |= Qt::AltButton;
-		if( key.modFlags() & KKey::WIN )   state |= Qt::MetaButton;
+		if( key.modFlags() & KKey::SHIFT ) state |= TQt::ShiftButton;
+		if( key.modFlags() & KKey::CTRL )  state |= TQt::ControlButton;
+		if( key.modFlags() & KKey::ALT )   state |= TQt::AltButton;
+		if( key.modFlags() & KKey::WIN )   state |= TQt::MetaButton;
 
 		TQKeyEvent ke( TQEvent::AccelOverride, keyCodeQt, 0,  state );
 		ke.ignore();
 
 		g_bAccelActivated = false;
-		kapp->sendEvent( kapp->focusWidget(), &ke );
+		kapp->sendEvent( kapp->tqfocusWidget(), &ke );
 
 		// If the Override event was accepted from a non-KAccel widget,
 		//  then kill the next AccelOverride in KApplication::notify.
@@ -303,7 +303,7 @@ void KAccelPrivate::slotKeyPressed( int id )
 {
 	kdDebug(125) << "KAccelPrivate::slotKeyPressed( " << id << " )" << endl;
 
-	if( m_mapIDToKey.contains( id ) ) {
+	if( m_mapIDToKey.tqcontains( id ) ) {
 		KKey key = m_mapIDToKey[id];
 		KKeySequence seq( key );
 		TQPopupMenu* pMenu = createPopupMenu( m_pWatch, seq );
@@ -357,7 +357,7 @@ bool KAccelPrivate::eventFilter( TQObject* /*pWatched*/, TQEvent* pEvent )
 			if( (*it) == keyCodeQt ) {
 				int nID = it.key();
 				kdDebug(125) << "shortcut found!" << endl;
-				if( m_mapIDToAction.contains( nID ) ) {
+				if( m_mapIDToAction.tqcontains( nID ) ) {
 					// TODO: reduce duplication between here and slotMenuActivated
 					KAccelAction* pAction = m_mapIDToAction[nID];
 					if( !pAction->isEnabled() )
@@ -608,7 +608,7 @@ void KAccel::changeMenuAccel( TQPopupMenu *menu, int id, const TQString& action 
 	if( !pAction || s.isEmpty() )
 		return;
 
-	int i = s.find( '\t' );
+	int i = s.tqfind( '\t' );
 
 	TQString k = pAction->shortcut().seq(0).toString();
 	if( k.isEmpty() )

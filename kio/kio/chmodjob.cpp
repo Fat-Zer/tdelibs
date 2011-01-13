@@ -121,7 +121,7 @@ void ChmodJob::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
               break;
           }
         }
-        if ( !isLink && relativePath != TQString::fromLatin1("..") )
+        if ( !isLink && relativePath != TQString::tqfromLatin1("..") )
         {
             ChmodInfo info;
             info.url = m_lstItems.first()->url(); // base directory

@@ -25,7 +25,7 @@ static void permute_fp (unsigned char *inblock, DES_KEY * key, unsigned char *ou
 static void perminit_ip (DES_KEY * key);
 static void spinit (DES_KEY * key);
 static void perminit_fp (DES_KEY * key);
-static Q_UINT32 f (DES_KEY * key,  Q_UINT32 r,  char *subkey);
+static TQ_UINT32 f (DES_KEY * key,  TQ_UINT32 r,  char *subkey);
 
 
 /* Tables defined in the Data Encryption Standard documents */
@@ -240,9 +240,9 @@ ntlm_des_set_key (DES_KEY * dkey, char *user_key, int /*len*/)
 static void
 ntlm_des_encrypt (DES_KEY * key, unsigned char *block)
 {
-  Q_UINT32 left, right;
+  TQ_UINT32 left, right;
   char *knp;
-  Q_UINT32 work[2];		/* Working data storage */
+  TQ_UINT32 work[2];		/* Working data storage */
 
   permute_ip (block, key, (unsigned char *) work);	/* Initial Permutation */
   left = KFromToBigEndian(work[0]);
@@ -352,11 +352,11 @@ permute_fp (unsigned char *inblock, DES_KEY * key, unsigned char *outblock)
 }
 
 /* The nonlinear function f(r,k), the heart of DES */
-static Q_UINT32
-f (DES_KEY * key,  Q_UINT32 r,  char *subkey)
+static TQ_UINT32
+f (DES_KEY * key,  TQ_UINT32 r,  char *subkey)
 {
-   Q_UINT32 *spp;
-   Q_UINT32 rval, rt;
+   TQ_UINT32 *spp;
+   TQ_UINT32 rval, rt;
    int er;
 
 #ifdef	TRACE
@@ -377,7 +377,7 @@ f (DES_KEY * key,  Q_UINT32 r,  char *subkey)
   spp = &key->sp[7][0];
   rval = spp[(er ^ *subkey--) & 0x3f];
   spp -= 64;
-  rt = (Q_UINT32) r >> 3;
+  rt = (TQ_UINT32) r >> 3;
   rval |= spp[((int) rt ^ *subkey--) & 0x3f];
   spp -= 64;
   rt >>= 4;
@@ -457,7 +457,7 @@ spinit (DES_KEY * key)
 {
   char pbox[32];
   int p, i, s, j, rowcol;
-  Q_UINT32 val;
+  TQ_UINT32 val;
 
   /* Compute pbox, the inverse of p32i.
    * This is easier to work with

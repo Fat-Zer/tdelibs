@@ -27,7 +27,7 @@ class TQListBox;
 class TQCheckBox;
 class TQPushButton;
 
-class KMDriverDbWidget : public QWidget
+class KMDriverDbWidget : public TQWidget
 {
 	Q_OBJECT
 public:

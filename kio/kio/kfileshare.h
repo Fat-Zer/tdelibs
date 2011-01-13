@@ -29,7 +29,7 @@ class KDirWatch;
  * @internal
  * Do not use, ever.
  */
-class KFileSharePrivate : public QObject
+class KFileSharePrivate : public TQObject
 {
   Q_OBJECT
 

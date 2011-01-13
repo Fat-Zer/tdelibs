@@ -47,7 +47,7 @@ class PartManagerPrivate;
  * Parts know about the part manager to add nested parts to it.
  * See also KParts::Part::manager() and KParts::Part::setManager().
  */
-class KPARTS_EXPORT PartManager : public QObject
+class KPARTS_EXPORT PartManager : public TQObject
 {
   Q_OBJECT
   Q_ENUMS( SelectionPolicy )

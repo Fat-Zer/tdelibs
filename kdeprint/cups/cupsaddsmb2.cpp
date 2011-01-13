@@ -156,7 +156,7 @@ void CupsAddSmb::slotReceived(KProcess*, char *buf, int buflen)
 	while (1)
 	{
 		// read a line
-		line = TQString::fromLatin1("");
+		line = TQString::tqfromLatin1("");
 		partial = true;
 		while (index < buflen)
 		{
@@ -231,7 +231,7 @@ void CupsAddSmb::checkActionStatus()
 			m_status = (m_buffer.count() == 0);
 			break;
 		case MkDir:
-			m_status = (m_buffer.count() == 1 || m_buffer[1].find("ERRfilexists") != -1);
+			m_status = (m_buffer.count() == 1 || m_buffer[1].tqfind("ERRfilexists") != -1);
 			break;
 		case AddDriver:
 		case AddPrinter:
@@ -315,7 +315,7 @@ void CupsAddSmb::slotProcessExited(KProcess*)
 	if (m_proc.normalExit() && m_state != Start && m_status)
 	{
 		// last process went OK. If it was smbclient, then switch to rpcclient
-		if (qstrncmp(m_proc.args().first(), "smbclient", 9) == 0)
+		if (tqstrncmp(m_proc.args().first(), "smbclient", 9) == 0)
 		{
 			doInstall();
 			return;
@@ -433,7 +433,7 @@ bool CupsAddSmb::doExport()
 	m_actions << "quit";
 
 	m_proc.clearArguments();
-	m_proc << "smbclient" << TQString::fromLatin1("//")+m_servered->text()+"/print$";
+	m_proc << "smbclient" << TQString::tqfromLatin1("//")+m_servered->text()+"/print$";
 	return startProcess();
 }
 

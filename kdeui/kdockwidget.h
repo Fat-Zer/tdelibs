@@ -100,7 +100,7 @@ namespace KMDI
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockWidgetAbstractHeader : public QFrame
+class KDEUI_EXPORT KDockWidgetAbstractHeader : public TQFrame
 {
   Q_OBJECT
 public:
@@ -149,7 +149,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockWidgetAbstractHeaderDrag : public QFrame
+class KDEUI_EXPORT KDockWidgetAbstractHeaderDrag : public TQFrame
 {
   Q_OBJECT
 public:
@@ -360,7 +360,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockTabGroup : public QTabWidget
+class KDEUI_EXPORT KDockTabGroup : public TQTabWidget
 {
   Q_OBJECT
 public:
@@ -420,7 +420,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockWidget: public QWidget
+class KDEUI_EXPORT KDockWidget: public TQWidget
 {
   Q_OBJECT
 friend class KDockManager;
@@ -446,7 +446,7 @@ public:
    */
   KDockWidget( KDockManager* dockManager, const char* name,
                const TQPixmap &pixmap, TQWidget* parent = 0L, const TQString& strCaption = TQString::null,
-               const TQString& strTabPageLabel = TQString::fromLatin1( " " ), WFlags f = 0);
+               const TQString& strTabPageLabel = TQString::tqfromLatin1( " " ), WFlags f = 0);
 
   /**
    * Destructs a dockwidget.
@@ -906,7 +906,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockManager: public QObject
+class KDEUI_EXPORT KDockManager: public TQObject
 {
   Q_OBJECT
 friend class KDockWidget;
@@ -1324,7 +1324,7 @@ public:
    * @param name internal object name
    * @param f Qt::WidgetFlags widget flags
    */
-  KDockMainWindow( TQWidget* parent = 0L, const char *name = 0L, WFlags f = WType_TopLevel | WDestructiveClose );
+  KDockMainWindow( TQWidget* parent = 0L, const char *name = 0L, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
 
   /**
    * Destructs a dockmainwindow.
@@ -1365,7 +1365,7 @@ public:
    * @return    a pointer to the new created dockwidget
    */
   KDockWidget* createDockWidget( const TQString& name, const TQPixmap &pixmap, TQWidget* parent = 0L,
-    const TQString& strCaption = TQString::null, const TQString& strTabPageLabel = TQString::fromLatin1( " " ) );
+    const TQString& strCaption = TQString::null, const TQString& strTabPageLabel = TQString::tqfromLatin1( " " ) );
 
   /**
    * Saves the current dock window layout into a DOM tree below the given element.
@@ -1470,7 +1470,7 @@ private:
   KDockMainWindowPrivate *d;
 };
 
-class KDEUI_EXPORT KDockArea : public QWidget
+class KDEUI_EXPORT KDockArea : public TQWidget
 {
   Q_OBJECT
 
@@ -1490,7 +1490,7 @@ public:
   KDockWidget* getMainDockWidget(){ return mainDockWidget; }
 
   KDockWidget* createDockWidget( const TQString& name, const TQPixmap &pixmap, TQWidget* parent = 0L,
-    const TQString& strCaption = TQString::null, const TQString& strTabPageLabel = TQString::fromLatin1( " " ) );
+    const TQString& strCaption = TQString::null, const TQString& strTabPageLabel = TQString::tqfromLatin1( " " ) );
 
   void writeDockConfig(TQDomElement &base);
   void readDockConfig(TQDomElement &base);

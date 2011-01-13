@@ -175,7 +175,7 @@ void KColorCombo::slotActivated( int index )
 			TQRect rect( 0, 0, width(), TQFontMetrics(painter.font()).height()+4);
 			TQPixmap pixmap( rect.width(), rect.height() );
 
-			if ( qGray( customColor.rgb() ) < 128 )
+			if ( tqGray( customColor.rgb() ) < 128 )
 				pen.setColor( white );
 			else
 				pen.setColor( black );
@@ -228,7 +228,7 @@ void KColorCombo::addColors()
 	if ( i == STANDARD_PAL_SIZE )
 		customColor = internalcolor;
 
-	if ( qGray( customColor.rgb() ) < 128 )
+	if ( tqGray( customColor.rgb() ) < 128 )
 		pen.setColor( white );
 	else
 		pen.setColor( black );

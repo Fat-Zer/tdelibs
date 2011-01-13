@@ -28,7 +28,7 @@ class KMListView;
 class KMPrinter;
 class TQIconViewItem;
 
-class KMPrinterView : public QWidgetStack
+class KMPrinterView : public TQWidgetStack
 {
 	Q_OBJECT
 public:
@@ -42,7 +42,7 @@ public:
 	void setViewType(ViewType t);
 	ViewType viewType() const 	{ return m_type; }
 
-	TQSize minimumSizeHint() const;
+	TQSize tqminimumSizeHint() const;
 
 signals:
 	void printerSelected(const TQString&);

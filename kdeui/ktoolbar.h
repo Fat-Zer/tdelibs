@@ -55,13 +55,14 @@ class KXMLGUIClient;
 
 class KToolBarPrivate;
 
-class KDEUI_EXPORT KToolBarSeparator : public QFrame
+class KDEUI_EXPORT KToolBarSeparator : public TQFrame
 {
     Q_OBJECT
+    TQ_OBJECT
 public:
     KToolBarSeparator( Orientation, bool l, TQToolBar *parent, const char* name=0 );
 
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
     Orientation orientation() const { return orient; }
     TQSizePolicy sizePolicy() const;
     bool showLine() const { return line; }
@@ -90,7 +91,7 @@ private:
   * Once you have a KToolBar object, you can insert items into it with the
   * insert... methods, or remove them with the removeItem() method. This
   * can be done at any time; the toolbar will be automatically updated.
-  * There are also many methods to set per-child properties like alignment
+  * There are also many methods to set per-child properties like tqalignment
   * and toggle behavior.
   *
   * KToolBar uses a global config group to load toolbar settings on
@@ -100,9 +101,10 @@ private:
   * @author Reginald Stadlbauer <reggie@kde.org>, Stephan Kulow <coolo@kde.org>, Sven Radej <radej@kde.org>.
   */
 
-class KDEUI_EXPORT KToolBar : public QToolBar
+class KDEUI_EXPORT KToolBar : public TQToolBar
 {
     Q_OBJECT
+    TQ_OBJECT
     Q_ENUMS( IconText BarPosition )
     Q_PROPERTY( IconText iconText READ iconText WRITE setIconText )
     Q_PROPERTY( BarPosition barPos READ barPos WRITE setBarPos )
@@ -943,9 +945,9 @@ public:
     void setStretchableWidget( TQWidget *w );
     TQSizePolicy sizePolicy() const;
     bool highlight() const;
-    TQSize sizeHint() const;
-    TQSize minimumSizeHint() const;
-    TQSize minimumSize() const;
+    TQSize tqsizeHint() const;
+    TQSize tqminimumSizeHint() const;
+    TQSize tqminimumSize() const;
 
     void hide();
     void show();

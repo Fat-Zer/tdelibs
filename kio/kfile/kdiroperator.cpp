@@ -111,13 +111,13 @@ KDirOperator::KDirOperator(const KURL& _url,
         TQString strPath = TQDir::currentDirPath();
         strPath.append('/');
         currUrl = KURL();
-        currUrl.setProtocol(TQString::fromLatin1("file"));
+        currUrl.setProtocol(TQString::tqfromLatin1("file"));
         currUrl.setPath(strPath);
     }
     else {
         currUrl = _url;
         if ( currUrl.protocol().isEmpty() )
-            currUrl.setProtocol(TQString::fromLatin1("file"));
+            currUrl.setProtocol(TQString::tqfromLatin1("file"));
 
         currUrl.addPath("/"); // make sure we have a trailing slash!
     }
@@ -144,7 +144,7 @@ KDirOperator::KDirOperator(const KURL& _url,
     setupActions();
     setupMenu();
 
-    setFocusPolicy(TQWidget::WheelFocus);
+    setFocusPolicy(TQ_WheelFocus);
 }
 
 KDirOperator::~KDirOperator()
@@ -414,7 +414,7 @@ bool KDirOperator::mkdir( const TQString& directory, bool enterDirectory )
     {
         url.addPath( *it );
         exists = KIO::NetAccess::exists( url, false, 0 );
-        writeOk = !exists && KIO::NetAccess::mkdir( url, topLevelWidget() );
+        writeOk = !exists && KIO::NetAccess::mkdir( url, tqtopLevelWidget() );
     }
 
     if ( exists ) // url was already existant
@@ -484,7 +484,7 @@ KIO::DeleteJob * KDirOperator::del( const KFileItemList& items,
 
     if ( doIt ) {
         KIO::DeleteJob *job = KIO::del( urls, false, showProgress );
-        job->setWindow (topLevelWidget());
+        job->setWindow (tqtopLevelWidget());
         job->setAutoErrorHandlingEnabled( true, parent );
         return job;
     }
@@ -547,7 +547,7 @@ KIO::CopyJob * KDirOperator::trash( const KFileItemList& items,
 
     if ( doIt ) {
         KIO::CopyJob *job = KIO::trash( urls, showProgress );
-        job->setWindow (topLevelWidget());
+        job->setWindow (tqtopLevelWidget());
         job->setAutoErrorHandlingEnabled( true, parent );
         return job;
     }
@@ -555,12 +555,12 @@ KIO::CopyJob * KDirOperator::trash( const KFileItemList& items,
     return 0L;
 }
 
-void KDirOperator::trashSelected(KAction::ActivationReason reason, Qt::ButtonState state)
+void KDirOperator::trashSelected(KAction::ActivationReason reason, TQt::ButtonState state)
 {
     if ( !m_fileView )
         return;
 
-    if ( reason == KAction::PopupMenuActivation && ( state & Qt::ShiftButton ) ) {
+    if ( reason == KAction::PopupMenuActivation && ( state & ShiftButton ) ) {
         deleteSelected();
 	return;
     }
@@ -590,7 +590,7 @@ void KDirOperator::checkPath(const TQString &, bool /*takeFiles*/) // SLOT
     text = text.stripWhiteSpace();
     // if the argument is no URL (the check is quite fragil) and it's
     // no absolute path, we add the current directory to get a correct url
-    if (text.find(':') < 0 && text[0] != '/')
+    if (text.tqfind(':') < 0 && text[0] != '/')
         text.insert(0, currUrl);
 
     // in case we have a selection defined and someone patched the file-
@@ -651,7 +651,7 @@ void KDirOperator::setURL(const KURL& _newurl, bool clearforward)
 
     if ( !isReadable( newurl ) ) {
         // maybe newurl is a file? check its parent directory
-        newurl.cd(TQString::fromLatin1(".."));
+        newurl.cd(TQString::tqfromLatin1(".."));
         if ( !isReadable( newurl ) ) {
             resetCursor();
             KMessageBox::error(viewWidget(),
@@ -719,7 +719,7 @@ void KDirOperator::pathChanged()
     TQApplication::restoreOverrideCursor();
 
     // when KIO::Job emits finished, the slot will restore the cursor
-    TQApplication::setOverrideCursor( waitCursor );
+    TQApplication::setOverrideCursor( tqwaitCursor );
 
     if ( !isReadable( currUrl )) {
         KMessageBox::error(viewWidget(),
@@ -777,7 +777,7 @@ KURL KDirOperator::url() const
 void KDirOperator::cdUp()
 {
     KURL tmp(currUrl);
-    tmp.cd(TQString::fromLatin1(".."));
+    tmp.cd(TQString::tqfromLatin1(".."));
     setURL(tmp, true);
 }
 
@@ -825,7 +825,7 @@ bool KDirOperator::checkPreviewInternal() const
 {
     TQStringList supported = KIO::PreviewJob::supportedMimeTypes();
     // no preview support for directories?
-    if ( dirOnlyMode() && supported.findIndex( "inode/directory" ) == -1 )
+    if ( dirOnlyMode() && supported.tqfindIndex( "inode/directory" ) == -1 )
         return false;
 
     TQStringList mimeTypes = dir->mimeFilters();
@@ -1071,7 +1071,7 @@ void KDirOperator::connectView(KFileView *view)
     m_fileView->widget()->show();
 
     if ( listDir ) {
-        TQApplication::setOverrideCursor( waitCursor );
+        TQApplication::setOverrideCursor( tqwaitCursor );
         openURL( currUrl );
     }
     else
@@ -1120,7 +1120,7 @@ void KDirOperator::setDirLister( KDirLister *lister )
 
     dir->setAutoUpdate( true );
 
-    TQWidget* mainWidget = topLevelWidget();
+    TQWidget* mainWidget = tqtopLevelWidget();
     dir->setMainWindow (mainWidget);
     kdDebug (kfile_area) << "mainWidget=" << mainWidget << endl;
 
@@ -1253,27 +1253,27 @@ void KDirOperator::slotCompletionMatch(const TQString& match)
 
 void KDirOperator::setupActions()
 {
-    myActionCollection = new KActionCollection( topLevelWidget(), this, "KDirOperator::myActionCollection" );
+    myActionCollection = new KActionCollection( tqtopLevelWidget(), TQT_TQOBJECT(this), "KDirOperator::myActionCollection" );
 
     actionMenu = new KActionMenu( i18n("Menu"), myActionCollection, "popupMenu" );
-    upAction = KStdAction::up( this, TQT_SLOT( cdUp() ), myActionCollection, "up" );
+    upAction = KStdAction::up( TQT_TQOBJECT(this), TQT_SLOT( cdUp() ), myActionCollection, "up" );
     upAction->setText( i18n("Parent Folder") );
-    backAction = KStdAction::back( this, TQT_SLOT( back() ), myActionCollection, "back" );
-    forwardAction = KStdAction::forward( this, TQT_SLOT(forward()), myActionCollection, "forward" );
-    homeAction = KStdAction::home( this, TQT_SLOT( home() ), myActionCollection, "home" );
+    backAction = KStdAction::back( TQT_TQOBJECT(this), TQT_SLOT( back() ), myActionCollection, "back" );
+    forwardAction = KStdAction::forward( TQT_TQOBJECT(this), TQT_SLOT(forward()), myActionCollection, "forward" );
+    homeAction = KStdAction::home( TQT_TQOBJECT(this), TQT_SLOT( home() ), myActionCollection, "home" );
     homeAction->setText(i18n("Home Folder"));
-    reloadAction = KStdAction::redisplay( this, TQT_SLOT(rereadDir()), myActionCollection, "reload" );
+    reloadAction = KStdAction::redisplay( TQT_TQOBJECT(this), TQT_SLOT(rereadDir()), myActionCollection, "reload" );
     actionSeparator = new KActionSeparator( myActionCollection, "separator" );
     d->viewActionSeparator = new KActionSeparator( myActionCollection,
                                                    "viewActionSeparator" );
     mkdirAction = new KAction( i18n("New Folder..."), 0,
-                                 this, TQT_SLOT( mkdir() ), myActionCollection, "mkdir" );
+                                 TQT_TQOBJECT(this), TQT_SLOT( mkdir() ), myActionCollection, "mkdir" );
     KAction* trash = new KAction( i18n( "Move to Trash" ), "edittrash", Key_Delete, myActionCollection, "trash" );
     connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, Qt::ButtonState ) ),
 	     this, TQT_SLOT( trashSelected( KAction::ActivationReason, Qt::ButtonState ) ) );
-    new KAction( i18n( "Delete" ), "editdelete", SHIFT+Key_Delete, this,
+    new KAction( i18n( "Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this),
                   TQT_SLOT( deleteSelected() ), myActionCollection, "delete" );
-    mkdirAction->setIcon( TQString::fromLatin1("folder_new") );
+    mkdirAction->setIcon( TQString::tqfromLatin1("folder_new") );
     reloadAction->setText( i18n("Reload") );
     reloadAction->setShortcut( KStdAccel::shortcut( KStdAccel::Reload ));
 
@@ -1281,19 +1281,19 @@ void KDirOperator::setupActions()
     // the sort menu actions
     sortActionMenu = new KActionMenu( i18n("Sorting"), myActionCollection, "sorting menu");
     byNameAction = new KRadioAction( i18n("By Name"), 0,
-                                     this, TQT_SLOT( slotSortByName() ),
+                                     TQT_TQOBJECT(this), TQT_SLOT( slotSortByName() ),
                                      myActionCollection, "by name" );
     byDateAction = new KRadioAction( i18n("By Date"), 0,
-                                     this, TQT_SLOT( slotSortByDate() ),
+                                     TQT_TQOBJECT(this), TQT_SLOT( slotSortByDate() ),
                                      myActionCollection, "by date" );
     bySizeAction = new KRadioAction( i18n("By Size"), 0,
-                                     this, TQT_SLOT( slotSortBySize() ),
+                                     TQT_TQOBJECT(this), TQT_SLOT( slotSortBySize() ),
                                      myActionCollection, "by size" );
     reverseAction = new KToggleAction( i18n("Reverse"), 0,
-                                       this, TQT_SLOT( slotSortReversed() ),
+                                       TQT_TQOBJECT(this), TQT_SLOT( slotSortReversed() ),
                                        myActionCollection, "reversed" );
 
-    TQString sortGroup = TQString::fromLatin1("sort");
+    TQString sortGroup = TQString::tqfromLatin1("sort");
     byNameAction->setExclusiveGroup( sortGroup );
     byDateAction->setExclusiveGroup( sortGroup );
     bySizeAction->setExclusiveGroup( sortGroup );
@@ -1325,7 +1325,7 @@ void KDirOperator::setupActions()
                                           myActionCollection, "show hidden" );
 //    showHiddenAction->setCheckedState( i18n("Hide Hidden Files") );
     separateDirsAction = new KToggleAction( i18n("Separate Folders"), KShortcut(),
-                                            this,
+                                            TQT_TQOBJECT(this),
                                             TQT_SLOT(slotSeparateDirs()),
                                             myActionCollection, "separate dirs" );
     KToggleAction *previewAction = new KToggleAction(i18n("Show Preview"),
@@ -1337,7 +1337,7 @@ void KDirOperator::setupActions()
              TQT_SLOT( togglePreview( bool )));
 
 
-    TQString viewGroup = TQString::fromLatin1("view");
+    TQString viewGroup = TQString::tqfromLatin1("view");
     shortAction->setExclusiveGroup( viewGroup );
     detailedAction->setExclusiveGroup( viewGroup );
 
@@ -1348,7 +1348,7 @@ void KDirOperator::setupActions()
     connect( showHiddenAction, TQT_SIGNAL( toggled( bool ) ),
              TQT_SLOT( slotToggleHidden( bool ) ));
 
-    new KAction( i18n("Properties"), KShortcut(ALT+Key_Return), this,
+    new KAction( i18n("Properties"), KShortcut(ALT+Key_Return), TQT_TQOBJECT(this),
                  TQT_SLOT(slotProperties()), myActionCollection, "properties" );
 }
 
@@ -1383,11 +1383,11 @@ void KDirOperator::setupMenu(int whichActions)
     if (whichActions & FileActions)
     {
         actionMenu->insert( mkdirAction );
-        if (currUrl.isLocalFile() && !(KApplication::keyboardMouseState() & Qt::ShiftButton))
+        if (currUrl.isLocalFile() && !(KApplication::keyboardMouseState() & TQt::ShiftButton))
             actionMenu->insert( myActionCollection->action( "trash" ) );
         KConfig *globalconfig = KGlobal::config();
-        KConfigGroupSaver cs( globalconfig, TQString::fromLatin1("KDE") );
-        if (!currUrl.isLocalFile() || (KApplication::keyboardMouseState() & Qt::ShiftButton) ||
+        KConfigGroupSaver cs( globalconfig, TQString::tqfromLatin1("KDE") );
+        if (!currUrl.isLocalFile() || (KApplication::keyboardMouseState() & TQt::ShiftButton) ||
             globalconfig->readBoolEntry("ShowDeleteCommand", false))
             actionMenu->insert( myActionCollection->action( "delete" ) );
         actionMenu->insert( actionSeparator );
@@ -1450,45 +1450,45 @@ void KDirOperator::readConfig( KConfig *kc, const TQString& group )
     defaultView = 0;
     int sorting = 0;
 
-    TQString viewStyle = kc->readEntry( TQString::fromLatin1("View Style"),
-                                       TQString::fromLatin1("Simple") );
-    if ( viewStyle == TQString::fromLatin1("Detail") )
+    TQString viewStyle = kc->readEntry( TQString::tqfromLatin1("View Style"),
+                                       TQString::tqfromLatin1("Simple") );
+    if ( viewStyle == TQString::tqfromLatin1("Detail") )
         defaultView |= KFile::Detail;
     else
         defaultView |= KFile::Simple;
-    if ( kc->readBoolEntry( TQString::fromLatin1("Separate Directories"),
+    if ( kc->readBoolEntry( TQString::tqfromLatin1("Separate Directories"),
                             DefaultMixDirsAndFiles ) )
         defaultView |= KFile::SeparateDirs;
-    if ( kc->readBoolEntry(TQString::fromLatin1("Show Preview"), false))
+    if ( kc->readBoolEntry(TQString::tqfromLatin1("Show Preview"), false))
         defaultView |= KFile::PreviewContents;
 
-    if ( kc->readBoolEntry( TQString::fromLatin1("Sort case insensitively"),
+    if ( kc->readBoolEntry( TQString::tqfromLatin1("Sort case insensitively"),
                             DefaultCaseInsensitive ) )
         sorting |= TQDir::IgnoreCase;
-    if ( kc->readBoolEntry( TQString::fromLatin1("Sort directories first"),
+    if ( kc->readBoolEntry( TQString::tqfromLatin1("Sort directories first"),
                             DefaultDirsFirst ) )
         sorting |= TQDir::DirsFirst;
 
 
-    TQString name = TQString::fromLatin1("Name");
-    TQString sortBy = kc->readEntry( TQString::fromLatin1("Sort by"), name );
+    TQString name = TQString::tqfromLatin1("Name");
+    TQString sortBy = kc->readEntry( TQString::tqfromLatin1("Sort by"), name );
     if ( sortBy == name )
         sorting |= TQDir::Name;
-    else if ( sortBy == TQString::fromLatin1("Size") )
+    else if ( sortBy == TQString::tqfromLatin1("Size") )
         sorting |= TQDir::Size;
-    else if ( sortBy == TQString::fromLatin1("Date") )
+    else if ( sortBy == TQString::tqfromLatin1("Date") )
         sorting |= TQDir::Time;
 
     mySorting = static_cast<TQDir::SortSpec>( sorting );
     setSorting( mySorting );
 
 
-    if ( kc->readBoolEntry( TQString::fromLatin1("Show hidden files"),
+    if ( kc->readBoolEntry( TQString::tqfromLatin1("Show hidden files"),
                             DefaultShowHidden ) ) {
          showHiddenAction->setChecked( true );
          dir->setShowingDotFiles( true );
     }
-    if ( kc->readBoolEntry( TQString::fromLatin1("Sort reversed"),
+    if ( kc->readBoolEntry( TQString::tqfromLatin1("Sort reversed"),
                             DefaultSortReversed ) )
         reverseAction->setChecked( true );
 
@@ -1505,18 +1505,18 @@ void KDirOperator::writeConfig( KConfig *kc, const TQString& group )
     if ( !group.isEmpty() )
         kc->setGroup( group );
 
-    TQString sortBy = TQString::fromLatin1("Name");
+    TQString sortBy = TQString::tqfromLatin1("Name");
     if ( KFile::isSortBySize( mySorting ) )
-        sortBy = TQString::fromLatin1("Size");
+        sortBy = TQString::tqfromLatin1("Size");
     else if ( KFile::isSortByDate( mySorting ) )
-        sortBy = TQString::fromLatin1("Date");
-    kc->writeEntry( TQString::fromLatin1("Sort by"), sortBy );
+        sortBy = TQString::tqfromLatin1("Date");
+    kc->writeEntry( TQString::tqfromLatin1("Sort by"), sortBy );
 
-    kc->writeEntry( TQString::fromLatin1("Sort reversed"),
+    kc->writeEntry( TQString::tqfromLatin1("Sort reversed"),
                     reverseAction->isChecked() );
-    kc->writeEntry( TQString::fromLatin1("Sort case insensitively"),
+    kc->writeEntry( TQString::tqfromLatin1("Sort case insensitively"),
                     caseInsensitiveAction->isChecked() );
-    kc->writeEntry( TQString::fromLatin1("Sort directories first"),
+    kc->writeEntry( TQString::tqfromLatin1("Sort directories first"),
                     dirsFirstAction->isChecked() );
 
     // don't save the separate dirs or preview when an application specific
@@ -1530,26 +1530,26 @@ void KDirOperator::writeConfig( KConfig *kc, const TQString& group )
 
     if ( !appSpecificPreview ) {
         if ( separateDirsAction->isEnabled() )
-            kc->writeEntry( TQString::fromLatin1("Separate Directories"),
+            kc->writeEntry( TQString::tqfromLatin1("Separate Directories"),
                             separateDirsAction->isChecked() );
 
         KToggleAction *previewAction = static_cast<KToggleAction*>(myActionCollection->action("preview"));
         if ( previewAction->isEnabled() ) {
             bool hasPreview = previewAction->isChecked();
-            kc->writeEntry( TQString::fromLatin1("Show Preview"), hasPreview );
+            kc->writeEntry( TQString::tqfromLatin1("Show Preview"), hasPreview );
         }
     }
 
-    kc->writeEntry( TQString::fromLatin1("Show hidden files"),
+    kc->writeEntry( TQString::tqfromLatin1("Show hidden files"),
                     showHiddenAction->isChecked() );
 
     KFile::FileView fv = static_cast<KFile::FileView>( m_viewKind );
     TQString style;
     if ( KFile::isDetailView( fv ) )
-        style = TQString::fromLatin1("Detail");
+        style = TQString::tqfromLatin1("Detail");
     else if ( KFile::isSimpleView( fv ) )
-        style = TQString::fromLatin1("Simple");
-    kc->writeEntry( TQString::fromLatin1("View Style"), style );
+        style = TQString::tqfromLatin1("Simple");
+    kc->writeEntry( TQString::tqfromLatin1("View Style"), style );
 
     kc->setGroup( oldGroup );
 }

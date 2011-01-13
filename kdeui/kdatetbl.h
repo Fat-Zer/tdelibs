@@ -37,7 +37,7 @@ class KPopupMenu;
 * @version $Id$
 * @author Stephan Binner
 */
-class KDEUI_EXPORT KDateInternalWeekSelector : public QLineEdit
+class KDEUI_EXPORT KDateInternalWeekSelector : public TQLineEdit
 {
   Q_OBJECT
 protected:
@@ -64,7 +64,7 @@ private:
 * @version $Id$
 * @author Tim Gilman, Mirko Boehm
 */
-class KDEUI_EXPORT KDateInternalMonthPicker : public QGridView
+class KDEUI_EXPORT KDateInternalMonthPicker : public TQGridView
 {
   Q_OBJECT
 protected:
@@ -98,7 +98,7 @@ public:
   /**
    * The size hint.
    */
-  TQSize sizeHint() const;
+  TQSize tqsizeHint() const;
   /**
    * Return the result. 0 means no selection (reject()), 1..12 are the
    * months.
@@ -137,7 +137,7 @@ private:
 * @version $Id$
 * @author Tim Gilman, Mirko Boehm
 */
-class KDEUI_EXPORT KDateInternalYearSelector : public QLineEdit
+class KDEUI_EXPORT KDateInternalYearSelector : public TQLineEdit
 {
   Q_OBJECT
 protected:
@@ -163,7 +163,7 @@ private:
  * @author Tim Gilman, Mirko Boehm
  * @version $Id$
  */
-class KDEUI_EXPORT KPopupFrame : public QFrame
+class KDEUI_EXPORT KPopupFrame : public TQFrame
 {
   Q_OBJECT
 protected:
@@ -238,7 +238,7 @@ private:
 /**
 * Validates user-entered dates.
 */
-class KDEUI_EXPORT KDateValidator : public QValidator
+class KDEUI_EXPORT KDateValidator : public TQValidator
 {
 public:
     KDateValidator(TQWidget* parent=0, const char* name=0);
@@ -260,7 +260,7 @@ public:
  * @version $Id$
  * @author Tim Gilman, Mirko Boehm
  */
-class KDEUI_EXPORT KDateTable : public QGridView
+class KDEUI_EXPORT KDateTable : public TQGridView
 {
     Q_OBJECT
     Q_PROPERTY( TQDate date READ getDate WRITE setDate )
@@ -289,9 +289,9 @@ public:
      * To save some time, the size of the largest used cell content is
      * calculated in each paintCell() call, since all calculations have
      * to be done there anyway. The size is stored in maxCell. The
-     * sizeHint() simply returns a multiple of maxCell.
+     * tqsizeHint() simply returns a multiple of maxCell.
      */
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
     /**
      * Set the font size of the date table.
      */

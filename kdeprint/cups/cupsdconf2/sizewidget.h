@@ -25,7 +25,7 @@
 class TQSpinBox;
 class TQComboBox;
 
-class SizeWidget : public QWidget
+class SizeWidget : public TQWidget
 {
 public:
 	SizeWidget( TQWidget *parent = 0, const char *name = 0 );

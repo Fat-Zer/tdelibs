@@ -34,9 +34,9 @@
 namespace KIO
 {
   /// 64-bit file offset
-  typedef Q_LLONG fileoffset_t;
+  typedef TQ_LLONG fileoffset_t;
   /// 64-bit file size
-  typedef Q_ULLONG filesize_t;
+  typedef TQ_ULLONG filesize_t;
 
   /**
    * Converts @p size from bytes to the string representation.
@@ -536,7 +536,7 @@ public:
            it !=  metaData.end();
            ++it)
       {
-         replace(it.key(), it.data());
+         tqreplace(it.key(), it.data());
       }
       return *this;
    }

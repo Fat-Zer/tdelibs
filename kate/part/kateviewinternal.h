@@ -49,7 +49,7 @@ enum Bias
     right =  1
 };
 
-class KateViewInternal : public QWidget
+class KateViewInternal : public TQWidget
 {
     Q_OBJECT
 
@@ -221,7 +221,7 @@ class KateViewInternal : public QWidget
     int scrollX;
     int scrollY;
 
-    Qt::CursorShape m_mouseCursor;
+    Qt::tqCursorShape m_mouseCursor;
 
     KateSuperCursor cursor;
     KateTextCursor displayCursor;

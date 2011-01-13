@@ -25,7 +25,7 @@
 
 class KFind;
 
-class KFindTest : public QObject
+class KFindTest : public TQObject
 {
 	Q_OBJECT
 

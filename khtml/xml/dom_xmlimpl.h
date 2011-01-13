@@ -163,7 +163,7 @@ protected:
     CSSStyleSheetImpl *m_sheet;
 };
 
-class XMLAttributeReader : public QXmlDefaultHandler
+class XMLAttributeReader : public TQXmlDefaultHandler
 {
 public:
     XMLAttributeReader(const TQString& _attrString);

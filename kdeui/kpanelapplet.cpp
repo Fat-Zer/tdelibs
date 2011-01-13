@@ -47,7 +47,7 @@ KPanelApplet::KPanelApplet(const TQString& configFile, Type type,
   : TQFrame(parent, name, f)
   , _type(type)
   , _position( pBottom )
-  , _alignment( LeftTop )
+  , _tqalignment( LeftTop )
   , _config(0)
   , _actions(actions)
   , d(new KPanelApplet::KPanelAppletPrivate())
@@ -78,11 +78,11 @@ void KPanelApplet::setPosition( Position p )
   positionChange( p );
 }
 
-void KPanelApplet::setAlignment( Alignment a )
+void KPanelApplet::tqsetAlignment( Alignment a )
 {
-  if( _alignment == a ) return;
-  _alignment = a;
-  alignmentChange( a );
+  if( _tqalignment == a ) return;
+  _tqalignment = a;
+  tqalignmentChange( a );
 }
 
 // FIXME: Remove implementation for KDE 4
@@ -97,9 +97,9 @@ void KPanelApplet::positionChange( Position )
 Qt::Orientation KPanelApplet::orientation() const
 {
   if( _position == pTop || _position == pBottom ) {
-    return Horizontal;
+    return Qt::Horizontal;
   } else {
-    return Vertical;
+    return Qt::Vertical;
   }
 }
 
@@ -146,15 +146,15 @@ void KPanelApplet::watchForFocus(TQWidget* widget, bool watch)
 
     if (watch)
     {
-        if (d->watchedForFocus.find(widget) == -1)
+        if (d->watchedForFocus.tqfind(TQT_TQOBJECT(widget)) == -1)
         {
-            d->watchedForFocus.append(widget);
+            d->watchedForFocus.append(TQT_TQOBJECT(widget));
             widget->installEventFilter(this);
         }
     }
-    else if (d->watchedForFocus.find(widget) != -1)
+    else if (d->watchedForFocus.tqfind(TQT_TQOBJECT(widget)) != -1)
     {
-        d->watchedForFocus.remove(widget);
+        d->watchedForFocus.remove(TQT_TQOBJECT(widget));
         widget->removeEventFilter(this);
     }
 }
@@ -172,7 +172,7 @@ void KPanelApplet::needsFocus(bool focus)
 
 bool KPanelApplet::eventFilter(TQObject *o, TQEvent * e)
 {
-    if (d->watchedForFocus.find(o) != -1)
+    if (d->watchedForFocus.tqfind(o) != -1)
     {
         if (e->type() == TQEvent::MouseButtonRelease ||
             e->type() == TQEvent::FocusIn)

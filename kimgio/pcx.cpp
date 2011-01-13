@@ -45,8 +45,8 @@ static TQDataStream &operator>>( TQDataStream &s, PCXHEADER &ph )
   s >> ph.VScreenSize;
 
   // Skip the rest of the header
-  Q_UINT8 byte;
-  while ( s.device()->at() < 128 )
+  TQ_UINT8 byte;
+  while ( s.tqdevice()->at() < 128 )
     s >> byte;
 
   return s;
@@ -83,7 +83,7 @@ static TQDataStream &operator<<( TQDataStream &s, const PCXHEADER &ph )
   s << ph.HScreenSize;
   s << ph.VScreenSize;
 
-  Q_UINT8 byte = 0;
+  TQ_UINT8 byte = 0;
   for ( int i=0; i<54; ++i )
     s << byte;
 
@@ -101,9 +101,9 @@ PCXHEADER::PCXHEADER()
 
 static void readLine( TQDataStream &s, TQByteArray &buf, const PCXHEADER &header )
 {
-  Q_UINT32 i=0;
-  Q_UINT32 size = buf.size();
-  Q_UINT8 byte, count;
+  TQ_UINT32 i=0;
+  TQ_UINT32 size = buf.size();
+  TQ_UINT8 byte, count;
 
   if ( header.isCompressed() )
   {
@@ -149,14 +149,14 @@ static void readImage1( TQImage &img, TQDataStream &s, const PCXHEADER &header )
 
     readLine( s, buf, header );
     uchar *p = img.scanLine( y );
-    unsigned int bpl = QMIN((header.width()+7)/8, header.BytesPerLine);
+    unsigned int bpl = TQMIN((header.width()+7)/8, header.BytesPerLine);
     for ( unsigned int x=0; x< bpl; ++x )
       p[ x ] = buf[x];
   }
 
   // Set the color palette
-  img.setColor( 0, qRgb( 0, 0, 0 ) );
-  img.setColor( 1, qRgb( 255, 255, 255 ) );
+  img.setColor( 0, tqRgb( 0, 0, 0 ) );
+  img.setColor( 1, tqRgb( 255, 255, 255 ) );
 }
 
 static void readImage4( TQImage &img, TQDataStream &s, const PCXHEADER &header )
@@ -180,10 +180,10 @@ static void readImage4( TQImage &img, TQDataStream &s, const PCXHEADER &header )
 
     for ( int i=0; i<4; i++ )
     {
-      Q_UINT32 offset = i*header.BytesPerLine;
+      TQ_UINT32 offset = i*header.BytesPerLine;
       for ( unsigned int x=0; x<header.width(); ++x )
         if ( buf[ offset + ( x/8 ) ] & ( 128 >> ( x%8 ) ) )
-          pixbuf[ x ] += ( 1 << i );
+          pixbuf[ x ] = pixbuf.at(x) + ( 1 << i );
     }
 
     uchar *p = img.scanLine( y );
@@ -214,23 +214,23 @@ static void readImage8( TQImage &img, TQDataStream &s, const PCXHEADER &header )
     readLine( s, buf, header );
 
     uchar *p = img.scanLine( y );
-    unsigned int bpl = QMIN(header.BytesPerLine, header.width());
+    unsigned int bpl = TQMIN(header.BytesPerLine, header.width());
     for ( unsigned int x=0; x<bpl; ++x )
       p[ x ] = buf[ x ];
   }
 
-  Q_UINT8 flag;
+  TQ_UINT8 flag;
   s >> flag;
   kdDebug( 399 ) << "Palette Flag: " << flag << endl;
 
   if ( flag == 12 && ( header.Version == 5 || header.Version == 2 ) )
   {
     // Read the palette
-    Q_UINT8 r, g, b;
+    TQ_UINT8 r, g, b;
     for ( int i=0; i<256; ++i )
     {
       s >> r >> g >> b;
-      img.setColor( i, qRgb( r, g, b ) );
+      img.setColor( i, tqRgb( r, g, b ) );
     }
   }
 }
@@ -258,7 +258,7 @@ static void readImage24( TQImage &img, TQDataStream &s, const PCXHEADER &header 
 
     uint *p = ( uint * )img.scanLine( y );
     for ( unsigned int x=0; x<header.width(); ++x )
-      p[ x ] = qRgb( r_buf[ x ], g_buf[ x ], b_buf[ x ] );
+      p[ x ] = tqRgb( r_buf[ x ], g_buf[ x ], b_buf[ x ] );
   }
 }
 
@@ -267,9 +267,9 @@ KDE_EXPORT void kimgio_pcx_read( TQImageIO *io )
   TQDataStream s( io->ioDevice() );
   s.setByteOrder( TQDataStream::LittleEndian );
 
-  if ( s.device()->size() < 128 )
+  if ( s.tqdevice()->size() < 128 )
   {
-    io->setStatus( -1 );
+    io->setqStatus( -1 );
     return;
   }
 
@@ -279,7 +279,7 @@ KDE_EXPORT void kimgio_pcx_read( TQImageIO *io )
 
   if ( header.Manufacturer != 10 || s.atEnd())
   {
-    io->setStatus( -1 );
+    io->setqStatus( -1 );
     return;
   }
 
@@ -323,19 +323,19 @@ KDE_EXPORT void kimgio_pcx_read( TQImageIO *io )
   if ( !img.isNull() )
   {
     io->setImage( img );
-    io->setStatus( 0 );
+    io->setqStatus( 0 );
   }
   else
   {
-    io->setStatus( -1 );
+    io->setqStatus( -1 );
   }
 }
 
 static void writeLine( TQDataStream &s, TQByteArray &buf )
 {
-  Q_UINT32 i = 0;
-  Q_UINT32 size = buf.size();
-  Q_UINT8 count, data;
+  TQ_UINT32 i = 0;
+  TQ_UINT32 size = buf.size();
+  TQ_UINT8 count, data;
   char byte;
 
   while ( i < size )
@@ -343,7 +343,7 @@ static void writeLine( TQDataStream &s, TQByteArray &buf )
     count = 1;
     byte = buf[ i++ ];
 
-    while ( ( i < size ) && ( byte == buf[ i ] ) && ( count < 63 ) )
+    while ( ( i < size ) && ( byte == buf.at(i) ) && ( count < 63 ) )
     {
       ++i;
       ++count;
@@ -375,7 +375,7 @@ static void writeImage1( TQImage &img, TQDataStream &s, PCXHEADER &header )
 
   for ( int y=0; y<header.height(); ++y )
   {
-    Q_UINT8 *p = img.scanLine( y );
+    TQ_UINT8 *p = img.scanLine( y );
 
     // Invert as TQImage uses reverse palette for monochrome images?
     for ( int i=0; i<header.BytesPerLine; ++i )
@@ -403,7 +403,7 @@ static void writeImage4( TQImage &img, TQDataStream &s, PCXHEADER &header )
 
   for ( int y=0; y<header.height(); ++y )
   {
-    Q_UINT8 *p = img.scanLine( y );
+    TQ_UINT8 *p = img.scanLine( y );
 
     for ( int i=0; i<4; ++i )
       buf[ i ].fill( 0 );
@@ -412,7 +412,7 @@ static void writeImage4( TQImage &img, TQDataStream &s, PCXHEADER &header )
     {
       for ( int i=0; i<4; ++i )
         if ( *( p+x ) & ( 1 << i ) )
-          buf[ i ][ x/8 ] |= 1 << ( 7-x%8 );
+          buf[ i ][ x/8 ] = buf[ i ].at(x/8) | 1 << ( 7-x%8 );
     }
 
     for ( int i=0; i<4; ++i )
@@ -432,7 +432,7 @@ static void writeImage8( TQImage &img, TQDataStream &s, PCXHEADER &header )
 
   for ( int y=0; y<header.height(); ++y )
   {
-    Q_UINT8 *p = img.scanLine( y );
+    TQ_UINT8 *p = img.scanLine( y );
 
     for ( int i=0; i<header.BytesPerLine; ++i )
       buf[ i ] = p[ i ];
@@ -441,7 +441,7 @@ static void writeImage8( TQImage &img, TQDataStream &s, PCXHEADER &header )
   }
 
   // Write palette flag
-  Q_UINT8 byte = 12;
+  TQ_UINT8 byte = 12;
   s << byte;
 
   // Write palette
@@ -468,9 +468,9 @@ static void writeImage24( TQImage &img, TQDataStream &s, PCXHEADER &header )
     for ( unsigned int x=0; x<header.width(); ++x )
     {
       QRgb rgb = *p++;
-      r_buf[ x ] = qRed( rgb );
-      g_buf[ x ] = qGreen( rgb );
-      b_buf[ x ] = qBlue( rgb );
+      r_buf[ x ] = tqRed( rgb );
+      g_buf[ x ] = tqGreen( rgb );
+      b_buf[ x ] = tqBlue( rgb );
     }
 
     writeLine( s, r_buf );
@@ -526,7 +526,7 @@ KDE_EXPORT void kimgio_pcx_write( TQImageIO *io )
     writeImage24( img, s, header );
   }
 
-  io->setStatus( 0 );
+  io->setqStatus( 0 );
 }
 
 /* vim: et sw=2 ts=2

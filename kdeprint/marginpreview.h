@@ -22,7 +22,7 @@
 
 #include <tqwidget.h>
 
-class MarginPreview : public QWidget
+class MarginPreview : public TQWidget
 {
 	Q_OBJECT
 

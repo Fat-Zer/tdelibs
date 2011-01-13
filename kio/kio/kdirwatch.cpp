@@ -23,7 +23,7 @@
 // Februar 2002 - Add file watching and remote mount check for STAT
 // Mar 30, 2001 - Native support for Linux dir change notification.
 // Jan 28, 2000 - Usage of FAM service on IRIX (Josef.Weidendorfer@in.tum.de)
-// May 24. 1998 - List of times introduced, and some bugs are fixed. (sven)
+// May 24. 1998 - List of times introduced, and some bugs are fixed. (sven)1
 // May 23. 1998 - Removed static pointer - you can have more instances.
 // It was Needed for KRegistry. KDirWatch now emits signals and doesn't
 // call (or need) KFM. No more URL's - just plain paths. (sven)
@@ -123,7 +123,7 @@ static int dnotify_signal = 0;
  *
  * As this is called asynchronously, only a flag is set and
  * a rescan is requested.
- * This is done by writing into a pipe to trigger a QSocketNotifier
+ * This is done by writing into a pipe to trigger a TQSocketNotifier
  * watching on this pipe: a timer is started and after a timeout,
  * the rescan is done.
  */
@@ -135,7 +135,7 @@ void KDirWatchPrivate::dnotify_handler(int, siginfo_t *si, void *)
   // (Richard Stevens, Advanced programming in the Unix Environment)
   int saved_errno = errno;
 
-  Entry* e = dwp_self->fd_Entry.find(si->si_fd);
+  Entry* e = dwp_self->fd_Entry.tqfind(si->si_fd);
 
 //  kdDebug(7001) << "DNOTIFY Handler: fd " << si->si_fd << " path "
 //		<< TQString(e ? e->path:"unknown") << endl;
@@ -551,7 +551,7 @@ KDirWatchPrivate::Entry* KDirWatchPrivate::entry(const TQString& _path)
   if ( path.length() > 1 && path.right(1) == "/" )
     path.truncate( path.length() - 1 );
 
-  EntryMap::Iterator it = m_mapEntries.find( path );
+  EntryMap::Iterator it = m_mapEntries.tqfind( path );
   if ( it == m_mapEntries.end() )
     return 0;
   else
@@ -684,7 +684,7 @@ bool KDirWatchPrivate::useDNotify(Entry* e)
 	return false;
       }
 
-      fd_Entry.replace(fd, e);
+      fd_Entry.tqreplace(fd, e);
       e->dn_fd = fd;
 
       kdDebug(7001) << " Setup DNotify (fd " << fd
@@ -782,7 +782,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
   if ( path.length() > 1 && path.right(1) == "/" )
     path.truncate( path.length() - 1 );
 
-  EntryMap::Iterator it = m_mapEntries.find( path );
+  EntryMap::Iterator it = m_mapEntries.tqfind( path );
   if ( it != m_mapEntries.end() )
   {
     if (sub_entry) {
@@ -830,7 +830,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
        (*it).addClient(instance);
        kdDebug(7001) << "Added already watched Entry " << path
 		     << " (now " <<  (*it).clients() << " clients)"
-		     << TQString(" [%1]").arg(instance->name()) << endl;
+		     << TQString(TQString(" [%1]").arg(instance->name())) << endl;
     }
     return;
   }
@@ -873,8 +873,8 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
 
   kdDebug(7001) << "Added " << (e->isDir ? "Dir ":"File ") << path
 		<< (e->m_status == NonExistent ? " NotExisting" : "")
-		<< (sub_entry ? TQString(" for %1").arg(sub_entry->path) : TQString(""))
-		<< (instance ? TQString(" [%1]").arg(instance->name()) : TQString(""))
+		<< (sub_entry ? TQString(TQString(" for %1").arg(sub_entry->path)) : TQString(""))
+		<< (instance ? TQString(TQString(" [%1]").arg(instance->name())) : TQString(""))
 		<< endl;
 
 
@@ -923,7 +923,7 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
 
   if (delayRemove) {
     // removeList is allowed to contain any entry at most once
-    if (removeList.findRef(e)==-1)
+    if (removeList.tqfindRef(e)==-1)
       removeList.append(e);
     // now e->isValid() is false
     return;
@@ -998,8 +998,8 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
   }
 
   kdDebug(7001) << "Removed " << (e->isDir ? "Dir ":"File ") << e->path
-		<< (sub_entry ? TQString(" for %1").arg(sub_entry->path) : TQString(""))
-		<< (instance ? TQString(" [%1]").arg(instance->name()) : TQString(""))
+		<< (sub_entry ? TQString(TQString(" for %1").arg(sub_entry->path)) : TQString(""))
+		<< (instance ? TQString(TQString(" [%1]").arg(instance->name())) : TQString(""))
 		<< endl;
   m_mapEntries.remove( e->path ); // <e> not valid any more
 }
@@ -1611,7 +1611,7 @@ KDirWatch::KDirWatch (TQObject* parent, const char* name)
     static int nameCounter = 0;
 
     nameCounter++;
-    setName(TQString("KDirWatch-%1").arg(nameCounter).ascii());
+    setName(TQString(TQString("KDirWatch-%1").arg(nameCounter)).ascii());
   }
 
   if (!dwp_self)

@@ -244,7 +244,7 @@ void KIOExec::slotRunApp()
                                                  i18n( "The file\n%1\nhas been modified.\nDo you want to upload the changes?" ).arg(dest.prettyURL()),
                                                  i18n( "File Changed" ), i18n("Upload"), i18n("Do Not Upload") ) == KMessageBox::Yes )
                 {
-                    kdDebug() << TQString("src='%1'  dest='%2'").arg(src).arg(dest.url()).ascii() << endl;
+                    kdDebug() << TQString(TQString("src='%1'  dest='%2'").arg(src).arg(dest.url())).ascii() << endl;
                     // Do it the synchronous way.
                     if ( !KIO::NetAccess::upload( src, dest, 0 ) )
                     {

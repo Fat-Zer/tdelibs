@@ -41,7 +41,7 @@ KScanDialog * KScanDialog::getScanDialog( TQWidget *parent, const char *name,
     TQStringList args;
     args << TQString::number( (int)modal );
 
-    TQObject *res = factory->create( parent, name, "KScanDialog", args );
+    TQObject *res = factory->create( TQT_TQOBJECT(parent), name, "KScanDialog", args );
 
     return dynamic_cast<KScanDialog *>( res );
 }
@@ -84,7 +84,7 @@ KOCRDialog * KOCRDialog::getOCRDialog( TQWidget *parent, const char *name,
     TQStringList args;
     args << TQString::number( (int)modal );
 
-    TQObject *res = factory->create( parent, name, "KOCRDialog", args );
+    TQObject *res = factory->create( TQT_TQOBJECT(parent), name, "KOCRDialog", args );
 
     return dynamic_cast<KOCRDialog *>( res );
 }
@@ -133,7 +133,7 @@ TQObject *KScanDialogFactory::createObject( TQObject *parent, const char *name,
     if ( args.count() == 1 )
         modal = (bool)args[ 0 ].toInt();
 
-    return createDialog( static_cast<TQWidget *>( parent ), name, modal );
+    return TQT_TQOBJECT(createDialog( TQT_TQWIDGET( parent ), name, modal ));
 }
 
 
@@ -166,7 +166,7 @@ TQObject *KOCRDialogFactory::createObject( TQObject *parent, const char *name,
     if ( args.count() == 1 )
         modal = (bool)args[ 0 ].toInt();
 
-    return createDialog( static_cast<TQWidget *>( parent ), name, modal );
+    return TQT_TQOBJECT(createDialog( TQT_TQWIDGET( parent ), name, modal ));
 }
 
 void KScanDialog::virtual_hook( int id, void* data )

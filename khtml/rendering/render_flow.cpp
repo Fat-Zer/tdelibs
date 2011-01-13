@@ -267,7 +267,7 @@ bool RenderFlow::hitTestLines(NodeInfo& i, int x, int y, int tx, int ty, HitTest
 }
 
 
-void RenderFlow::repaint(Priority prior)
+void RenderFlow::tqrepaint(Priority prior)
 {
     if (isInlineFlow()) {
         // Find our leftmost position.
@@ -280,7 +280,7 @@ void RenderFlow::repaint(Priority prior)
             if (curr == firstLineBox() || curr->xPos() < left)
                 left = curr->xPos();
 
-        // Now invalidate a rectangle.
+        // Now tqinvalidate a rectangle.
         int ow = style() ? style()->outlineSize() : 0;
 
         // We need to add in the relative position offsets of any inlines (including us) up to our
@@ -295,18 +295,18 @@ void RenderFlow::repaint(Priority prior)
         }
 
         RootInlineBox *lastRoot = lastLineBox() && !needsLayout() ? lastLineBox()->root() : 0;
-        containingBlock()->repaintRectangle(-ow+left, -ow+top,
+        containingBlock()->tqrepaintRectangle(-ow+left, -ow+top,
                                             width()+ow*2,
 					    (lastRoot ? lastRoot->bottomOverflow() - top : height())+ow*2, prior);
     }
     else {
         if (firstLineBox() && firstLineBox()->topOverflow() < 0) {
             int ow = style() ? style()->outlineSize() : 0;
-            repaintRectangle(-ow, -ow+firstLineBox()->topOverflow(),
+            tqrepaintRectangle(-ow, -ow+firstLineBox()->topOverflow(),
                              effectiveWidth()+ow*2, effectiveHeight()+ow*2, prior);
         }
         else
-            return RenderBox::repaint(prior);
+            return RenderBox::tqrepaint(prior);
     }
 }
 

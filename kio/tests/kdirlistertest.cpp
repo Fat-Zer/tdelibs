@@ -47,7 +47,7 @@ KDirListerTest::KDirListerTest( TQWidget *parent, const char *name )
   layout->addWidget( startR );
   layout->addWidget( startT );
   layout->addWidget( test );
-  resize( layout->sizeHint() );
+  resize( layout->tqsizeHint() );
 
   connect( startR, TQT_SIGNAL( clicked() ), TQT_SLOT( startRoot() ) );
   connect( startH, TQT_SIGNAL( clicked() ), TQT_SLOT( startHome() ) );

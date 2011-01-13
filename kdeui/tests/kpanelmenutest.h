@@ -4,7 +4,7 @@
 #include <kpanelappmenu.h>
 #include <tqlabel.h>
 
-class TestWidget : public QLabel
+class TestWidget : public TQLabel
 {
     Q_OBJECT
 public:

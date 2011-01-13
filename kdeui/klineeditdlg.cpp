@@ -44,7 +44,7 @@ KLineEditDlg::KLineEditDlg( const TQString&_text, const TQString& _value,
   topLayout->addWidget( label, 1 );
 
   edit = new KLineEdit( plainPage(), 0L );
-  edit->setMinimumWidth(edit->sizeHint().width() * 3);
+  edit->setMinimumWidth(edit->tqsizeHint().width() * 3);
   label->setBuddy(edit);  // please "scheck" style
   //  connect( edit, TQT_SIGNAL(returnPressed()), TQT_SLOT(accept()) );
   connect( edit, TQT_SIGNAL(textChanged(const TQString&)),
@@ -75,7 +75,7 @@ KLineEditDlg::KLineEditDlg( const TQString&_text, const TQString& _value,
   layout->addWidget(label, 0, 0, AlignLeft);
 
   edit = new KLineEdit( this, 0L );
-  edit->setMinimumWidth(edit->sizeHint().width() * 3);
+  edit->setMinimumWidth(edit->tqsizeHint().width() * 3);
   connect( edit, TQT_SIGNAL(returnPressed()), TQT_SLOT(accept()) );
 
   if ( _file_mode ) {

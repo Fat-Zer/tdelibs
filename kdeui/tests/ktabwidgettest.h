@@ -13,7 +13,7 @@
 #include <tqcheckbox.h>
 #include <tqtoolbutton.h>
 
-class Test : public QVBox
+class Test : public TQVBox
 {
   Q_OBJECT
 public:

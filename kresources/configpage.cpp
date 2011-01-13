@@ -58,7 +58,7 @@ ResourcePageInfo::~ResourcePageInfo() {
 }
 
 
-class ConfigViewItem : public QCheckListItem
+class ConfigViewItem : public TQCheckListItem
 {
   public:
     ConfigViewItem( TQListView *parent, Resource* resource ) :
@@ -122,13 +122,13 @@ ConfigPage::ConfigPage( TQWidget *parent, const char *name )
 
   groupBoxLayout->addWidget( mListView, 1, 0 );
   connect(  mListView, TQT_SIGNAL( doubleClicked( TQListViewItem *, const TQPoint &, int ) ), this, TQT_SLOT( slotEdit() ) );
-  KButtonBox *buttonBox = new KButtonBox( groupBox, Vertical );
-  mAddButton = buttonBox->addButton( i18n( "&Add..." ), this, TQT_SLOT(slotAdd()) );
-  mRemoveButton = buttonBox->addButton( i18n( "&Remove" ), this, TQT_SLOT(slotRemove()) );
+  KButtonBox *buttonBox = new KButtonBox( groupBox, Qt::Vertical );
+  mAddButton = buttonBox->addButton( i18n( "&Add..." ), TQT_TQOBJECT(this), TQT_SLOT(slotAdd()) );
+  mRemoveButton = buttonBox->addButton( i18n( "&Remove" ), TQT_TQOBJECT(this), TQT_SLOT(slotRemove()) );
   mRemoveButton->setEnabled( false );
-  mEditButton = buttonBox->addButton( i18n( "&Edit..." ), this, TQT_SLOT(slotEdit()) );
+  mEditButton = buttonBox->addButton( i18n( "&Edit..." ), TQT_TQOBJECT(this), TQT_SLOT(slotEdit()) );
   mEditButton->setEnabled( false );
-  mStandardButton = buttonBox->addButton( i18n( "&Use as Standard" ), this, TQT_SLOT(slotStandard()) );
+  mStandardButton = buttonBox->addButton( i18n( "&Use as Standard" ), TQT_TQOBJECT(this), TQT_SLOT(slotStandard()) );
   mStandardButton->setEnabled( false );
   buttonBox->layout();
 
@@ -179,7 +179,7 @@ void ConfigPage::load()
   KTrader::OfferList::ConstIterator end = plugins.end();
   for ( ; it != end; ++it ) {
     const TQString family = (*it)->property( "X-KDE-ResourceFamily" ).toString();
-    if ( compatFamilyNames.find( family ) == compatFamilyNames.end() )
+    if ( compatFamilyNames.tqfind( family ) == compatFamilyNames.end() )
         compatFamilyNames.append( family );
   }
 
@@ -300,7 +300,7 @@ void ConfigPage::slotAdd()
   if ( !ok )
     return;
 
-  TQString type = types[ descs.findIndex( desc ) ];
+  TQString type = types[ descs.tqfindIndex( desc ) ];
 
   // Create new resource
   Resource *resource = mCurrentManager->createResource( type );

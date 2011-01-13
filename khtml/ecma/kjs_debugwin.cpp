@@ -107,7 +107,7 @@ void SourceDisplay::setSource(SourceFile *sourceFile)
   }
 
   TQString code = sourceFile->getCode();
-  const TQChar *chars = code.unicode();
+  const TQChar *chars = code.tqunicode();
   uint len = code.length();
   TQChar newLine('\n');
   TQChar cr('\r');
@@ -249,7 +249,7 @@ KJSDebugWin * KJSDebugWin::kjs_html_debugger = 0;
 TQString SourceFile::getCode()
 {
   if (interpreter) {
-    KHTMLPart *part = ::qt_cast<KHTMLPart*>(static_cast<ScriptInterpreter*>(interpreter)->part());
+    KHTMLPart *part = ::tqqt_cast<KHTMLPart*>(static_cast<ScriptInterpreter*>(interpreter)->part());
     if (part && url == part->url().url() && KHTMLPageCache::self()->isValid(part->cacheId())) {
       Decoder *decoder = part->createDecoder();
       TQByteArray data;
@@ -805,7 +805,7 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
     return true;
 
   KParts::ReadOnlyPart *part = static_cast<ScriptInterpreter*>(exec->interpreter())->part();
-  KHTMLPart *khtmlpart = ::qt_cast<KHTMLPart*>(part);
+  KHTMLPart *khtmlpart = ::tqqt_cast<KHTMLPart*>(part);
   if (khtmlpart && !khtmlpart->settings()->isJavaScriptErrorReportingEnabled())
     return true;
 
@@ -861,7 +861,7 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
 
   if (dontShowAgain) {
     KConfig *config = kapp->config();
-    KConfigGroupSaver saver(config,TQString::fromLatin1("Java/JavaScript Settings"));
+    KConfigGroupSaver saver(config,TQString::tqfromLatin1("Java/JavaScript Settings"));
     config->writeEntry("ReportJavaScriptErrors",TQVariant(false,0));
     config->sync();
     TQByteArray data;
@@ -1020,7 +1020,7 @@ void KJSDebugWin::enterSession(ExecState *exec)
 
   updateContextList();
 
-  qApp->enter_loop(); // won't return until leaveSession() is called
+  tqApp->enter_loop(); // won't return until leaveSession() is called
 }
 
 void KJSDebugWin::leaveSession()
@@ -1043,7 +1043,7 @@ void KJSDebugWin::leaveSession()
     enableOtherWindows();
   }
 
-  qApp->exit_loop();
+  tqApp->exit_loop();
 }
 
 void KJSDebugWin::updateContextList()

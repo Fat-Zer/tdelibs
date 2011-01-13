@@ -57,7 +57,7 @@ HTMLObjectBaseElementImpl::HTMLObjectBaseElementImpl(DocumentImpl *doc)
 
 void HTMLObjectBaseElementImpl::setServiceType(const TQString & val) {
     serviceType = val.lower();
-    int pos = serviceType.find( ";" );
+    int pos = serviceType.tqfind( ";" );
     if ( pos!=-1 )
         serviceType.truncate( pos );
 }
@@ -160,9 +160,9 @@ void HTMLObjectBaseElementImpl::attach() {
 
     if (serviceType.isEmpty() && url.startsWith("data:")) {
         // Extract the MIME type from the data URL.
-        int index = url.find(';');
+        int index = url.tqfind(';');
         if (index == -1)
-            index = url.find(',');
+            index = url.tqfind(',');
         if (index != -1) {
             int len = index - 5;
             if (len > 0)
@@ -422,7 +422,7 @@ DocumentImpl* HTMLObjectElementImpl::contentDocument() const
     if ( !m_render ) return 0;
     if ( !m_render->isWidget() ) return 0;
     TQWidget* widget = static_cast<RenderWidget*>( m_render )->widget();
-    if( widget && ::qt_cast<KHTMLView*>( widget ) )
+    if( widget && ::tqqt_cast<KHTMLView*>( widget ) )
         return static_cast<KHTMLView*>( widget )->part()->xmlDocImpl();
     return 0;
 }

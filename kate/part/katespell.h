@@ -30,7 +30,7 @@ class KateView;
 class KAction;
 class KSpell;
 
-class KateSpell : public QObject
+class KateSpell : public TQObject
 {
   Q_OBJECT
 

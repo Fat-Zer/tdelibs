@@ -145,72 +145,72 @@ TQCursor KCursor::workingCursor()
  */
 TQCursor KCursor::arrowCursor()
 {
-    return Qt::arrowCursor;
+    return tqarrowCursor;
 }
 
 
 TQCursor KCursor::upArrowCursor()
 {
-    return Qt::upArrowCursor;
+    return tqupArrowCursor;
 }
 
 
 TQCursor KCursor::crossCursor()
 {
-    return Qt::crossCursor;
+    return tqcrossCursor;
 }
 
 
 TQCursor KCursor::waitCursor()
 {
-    return Qt::waitCursor;
+    return tqwaitCursor;
 }
 
 
 TQCursor KCursor::ibeamCursor()
 {
-    return Qt::ibeamCursor;
+    return tqibeamCursor;
 }
 
 
 TQCursor KCursor::sizeVerCursor()
 {
-    return Qt::sizeVerCursor;
+    return tqsizeVerCursor;
 }
 
 
 TQCursor KCursor::sizeHorCursor()
 {
-    return Qt::sizeHorCursor;
+    return tqsizeHorCursor;
 }
 
 
 TQCursor KCursor::sizeBDiagCursor()
 {
-    return Qt::sizeBDiagCursor;
+    return tqsizeBDiagCursor;
 }
 
 
 TQCursor KCursor::sizeFDiagCursor()
 {
-    return Qt::sizeFDiagCursor;
+    return tqsizeFDiagCursor;
 }
 
 
 TQCursor KCursor::sizeAllCursor()
 {
-    return Qt::sizeAllCursor;
+    return tqsizeAllCursor;
 }
 
 
 TQCursor KCursor::blankCursor()
 {
-    return Qt::blankCursor;
+    return tqblankCursor;
 }
 
 TQCursor KCursor::whatsThisCursor()
 {
-    return Qt::whatsThisCursor;
+    return tqwhatsThisCursor;
 }
 
 // auto-hide cursor stuff
@@ -317,7 +317,7 @@ TQWidget* KCursorPrivateAutoHideEventFilter::actualWidget() const
 
 bool KCursorPrivateAutoHideEventFilter::eventFilter( TQObject *o, TQEvent *e )
 {
-    Q_ASSERT( o == m_widget );
+    Q_ASSERT( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(m_widget) );
 
     switch ( e->type() )
     {
@@ -370,9 +370,9 @@ KCursorPrivate::KCursorPrivate()
     hideCursorDelay = 5000; // 5s default value
 
     KConfig *kc = KGlobal::config();
-    KConfigGroupSaver ks( kc, TQString::fromLatin1("KDE") );
+    KConfigGroupSaver ks( kc, TQString::tqfromLatin1("KDE") );
     enabled = kc->readBoolEntry(
-		  TQString::fromLatin1("Autohiding cursor enabled"), true );
+		  TQString::tqfromLatin1("Autohiding cursor enabled"), true );
 }
 
 KCursorPrivate::~KCursorPrivate()
@@ -386,7 +386,7 @@ void KCursorPrivate::setAutoHideCursor( TQWidget *w, bool enable, bool customEve
 
     if ( enable )
     {
-        if ( m_eventFilters.find( w ) != NULL )
+        if ( m_eventFilters.tqfind( w ) != NULL )
             return;
         KCursorPrivateAutoHideEventFilter* filter = new KCursorPrivateAutoHideEventFilter( w );
         m_eventFilters.insert( w, filter );
@@ -412,7 +412,7 @@ bool KCursorPrivate::eventFilter( TQObject *o, TQEvent *e )
     if ( !enabled )
         return false;
 
-    KCursorPrivateAutoHideEventFilter* filter = m_eventFilters.find( o );
+    KCursorPrivateAutoHideEventFilter* filter = m_eventFilters.tqfind( o );
 
     Q_ASSERT( filter != NULL );
     if ( filter == NULL )

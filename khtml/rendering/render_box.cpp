@@ -490,7 +490,7 @@ void RenderBox::paintBackgroundExtended(TQPainter *p, const TQColor &c, const Ba
     TQColor bgColor = c;
 
     // Paint the color first underneath all images.
-    if (!bgLayer->next() && bgColor.isValid() && qAlpha(bgColor.rgb()) > 0)
+    if (!bgLayer->next() && bgColor.isValid() && tqAlpha(bgColor.rgb()) > 0)
         p->fillRect(_tx, clipy, w, cliph, bgColor);
 
     // no progressive loading of the background image
@@ -622,7 +622,7 @@ void RenderBox::paintBackgroundExtended(TQPainter *p, const TQColor &c, const Ba
             sy+=b.y()-cy;
             cx=b.x();cy=b.y();cw=b.width();ch=b.height();
         }
-        // restrict painting to repaint-clip
+        // restrict painting to tqrepaint-clip
         if (cy < clipy) {
             ch -= (clipy - cy);
             sy += (clipy - cy);
@@ -795,7 +795,7 @@ void RenderBox::position(InlineBox* box, int /*from*/, int /*len*/, bool /*rever
         setPos( box->xPos(), box->yPos() );
 }
 
-void RenderBox::repaint(Priority prior)
+void RenderBox::tqrepaint(Priority prior)
 {
     int ow = style() ? style()->outlineSize() : 0;
     if( isInline() && !isReplaced() )
@@ -806,17 +806,17 @@ void RenderBox::repaint(Priority prior)
             p = p->parent();
         int xoff = p->hasOverflowClip() ? 0 : p->overflowLeft();
         int yoff = p->hasOverflowClip() ? 0 : p->overflowTop();
-        p->repaintRectangle( -ow + xoff, -ow + yoff, p->effectiveWidth()+ow*2, p->effectiveHeight()+ow*2, prior);
+        p->tqrepaintRectangle( -ow + xoff, -ow + yoff, p->effectiveWidth()+ow*2, p->effectiveHeight()+ow*2, prior);
     }
     else
     {
         int xoff = hasOverflowClip() ? 0 : overflowLeft();
         int yoff = hasOverflowClip() ? 0 : overflowTop();
-        repaintRectangle( -ow + xoff, -ow + yoff, effectiveWidth()+ow*2, effectiveHeight()+ow*2, prior);
+        tqrepaintRectangle( -ow + xoff, -ow + yoff, effectiveWidth()+ow*2, effectiveHeight()+ow*2, prior);
     }
 }
 
-void RenderBox::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
+void RenderBox::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 {
     x += m_x;
     y += m_y;
@@ -830,7 +830,7 @@ void RenderBox::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 
     if (style()->position() == FIXED) f=true;
 
-    // kdDebug( 6040 ) << "RenderBox(" <<this << ", " << renderName() << ")::repaintRectangle (" << x << "/" << y << ") (" << w << "/" << h << ")" << endl;
+    // kdDebug( 6040 ) << "RenderBox(" <<this << ", " << renderName() << ")::tqrepaintRectangle (" << x << "/" << y << ") (" << w << "/" << h << ")" << endl;
     RenderObject *o = container();
     if( o ) {
          if (o->layer()) {
@@ -839,7 +839,7 @@ void RenderBox::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
              if (style()->position() == ABSOLUTE)
                  o->layer()->checkInlineRelOffset(this,x,y);
         }
-        o->repaintRectangle(x, y, w, h, p, f);
+        o->tqrepaintRectangle(x, y, w, h, p, f);
     }
 }
 

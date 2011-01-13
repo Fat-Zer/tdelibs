@@ -89,7 +89,7 @@ public:
     time_t  expireDate(void) { return mExpireDate; }
     int     protocolVersion(void) { return mProtocolVersion; }
     bool    isSecure(void) { return mSecure; }
-    bool    isExpired(time_t currentDate);
+    bool    isExpired(time_t tqcurrentDate);
     bool    isCrossDomain(void) { return mCrossDomain; }
     bool    isHttpOnly(void) { return mHttpOnly; }
     bool    hasExplicitPath(void) { return mExplicitPath; }

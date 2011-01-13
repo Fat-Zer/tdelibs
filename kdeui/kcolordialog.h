@@ -161,7 +161,7 @@ private:
  *
  * @author Waldo Bastian <bastian@kde.org>
  **/
-class KDEUI_EXPORT KColor : public QColor
+class KDEUI_EXPORT KColor : public TQColor
 {
 public:
   KColor();
@@ -195,7 +195,7 @@ private:
  *
  * @author Waldo Bastian <bastian@kde.org>
  **/
-class KDEUI_EXPORT KPaletteTable : public QWidget
+class KDEUI_EXPORT KPaletteTable : public TQWidget
 {
   Q_OBJECT
 public:
@@ -250,7 +250,7 @@ private:
 *
 * @author Martin Jones <mjones@kde.org>
 */
-class KDEUI_EXPORT KColorCells : public QGridView
+class KDEUI_EXPORT KColorCells : public TQGridView
 {
   Q_OBJECT
 public:
@@ -308,7 +308,7 @@ private:
  * automatically handles drag and drop from and on the widget.
  *
  */
-class KDEUI_EXPORT KColorPatch : public QFrame
+class KDEUI_EXPORT KColorPatch : public TQFrame
 {
   Q_OBJECT
 public:

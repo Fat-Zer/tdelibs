@@ -364,7 +364,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
 	client->attach();
 
     TQString prefix = locateLocal("socket", KGlobal::instance()->instanceName());
-    KTempFile socketfile(prefix, TQString::fromLatin1(".slave-socket"));
+    KTempFile socketfile(prefix, TQString::tqfromLatin1(".slave-socket"));
     if ( socketfile.status() != 0 )
     {
 	error_text = i18n("Unable to create io-slave: %1").arg(strerror(errno));
@@ -377,7 +377,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
 #endif
     
 #ifndef Q_WS_WIN
-    KServerSocket *kss = new KServerSocket(TQFile::encodeName(socketfile.name()));
+    KServerSocket *kss = new KServerSocket(TQFile::encodeName(socketfile.name()).data());
 
     Slave *slave = new Slave(kss, protocol, socketfile.name());
 #else
@@ -469,7 +469,7 @@ Slave* Slave::holdSlave( const TQString &protocol, const KURL& url )
 	client->attach();
 
     TQString prefix = locateLocal("socket", KGlobal::instance()->instanceName());
-    KTempFile socketfile(prefix, TQString::fromLatin1(".slave-socket"));
+    KTempFile socketfile(prefix, TQString::tqfromLatin1(".slave-socket"));
     if ( socketfile.status() != 0 )
 	return 0;
 
@@ -479,7 +479,7 @@ Slave* Slave::holdSlave( const TQString &protocol, const KURL& url )
 #endif
 
 #ifndef Q_WS_WIN
-    KServerSocket *kss = new KServerSocket(TQFile::encodeName(socketfile.name()));
+    KServerSocket *kss = new KServerSocket(TQFile::encodeName(socketfile.name()).data());
 
     Slave *slave = new Slave(kss, protocol, socketfile.name());
 #else

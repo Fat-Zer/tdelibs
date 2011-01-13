@@ -527,7 +527,7 @@ void AddressBook::insertAddressee( const Addressee &a )
   Addressee addr( a );
   if ( !fAddr.isEmpty() ) {
     if ( fAddr != a )
-      addr.setRevision( TQDateTime::currentDateTime() );
+      addr.setRevision( TQDateTime::tqcurrentDateTime() );
     else {
       if ( fAddr.resource() == 0 ) {
         fAddr.setResource( resource );

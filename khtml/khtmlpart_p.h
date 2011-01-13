@@ -72,7 +72,7 @@ namespace KParts
 
 namespace khtml
 {
-  class KDE_EXPORT ChildFrame : public QObject
+  class KDE_EXPORT ChildFrame : public TQObject
   {
       Q_OBJECT
   public:
@@ -127,7 +127,7 @@ typedef KHTMLFrameList::Iterator FrameIt;
 static int khtml_part_dcop_counter = 0;
 
 
-class KHTMLWalletQueue : public QObject
+class KHTMLWalletQueue : public TQObject
 {
   Q_OBJECT
   public:

@@ -122,11 +122,11 @@ KDirSelectDialog::KDirSelectDialog(const TQString &startDir, bool localOnly,
              TQT_SLOT( slotComboTextChanged( const TQString& ) ));
 
     m_contextMenu = new TQPopupMenu( this );
-    KAction* newFolder = new KAction( i18n("New Folder..."), "folder_new", 0, this, TQT_SLOT( slotMkdir() ), this);
+    KAction* newFolder = new KAction( i18n("New Folder..."), "folder_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotMkdir() ), TQT_TQOBJECT(this));
     newFolder->plug(m_contextMenu);
     m_contextMenu->insertSeparator();
-    m_showHiddenFolders = new KToggleAction ( i18n( "Show Hidden Folders" ), 0, this,
-                                        TQT_SLOT( slotShowHiddenFoldersToggled() ), this);
+    m_showHiddenFolders = new KToggleAction ( i18n( "Show Hidden Folders" ), 0, TQT_TQOBJECT(this),
+                                        TQT_SLOT( slotShowHiddenFoldersToggled() ), TQT_TQOBJECT(this));
     m_showHiddenFolders->plug(m_contextMenu);
 
     d->startURL = KFileDialog::getStartURL( startDir, d->recentDirClass );
@@ -211,7 +211,7 @@ void KDirSelectDialog::setCurrentURL( const KURL& url )
     {
         while ( pos > 0 )
         {
-            pos = path.findRev( '/', pos -1 );
+            pos = path.tqfindRev( '/', pos -1 );
             if ( pos >= 0 )
             {
                 dirToList.setPath( path.left( pos +1 ) );
@@ -248,7 +248,7 @@ void KDirSelectDialog::slotNextDirToList( KFileTreeViewItem *item )
 {
     // scroll to make item the topmost item
     view()->ensureItemVisible( item );
-    TQRect r = view()->itemRect( item );
+    TQRect r = view()->tqitemRect( item );
     if ( r.isValid() )
     {
         int x, y;
@@ -390,8 +390,8 @@ void KDirSelectDialog::slotComboTextChanged( const TQString& text )
     if ( item )
     {
         item->setSelected( false );
-        // 2002/12/27, deselected item is not repainted, so force it
-        item->repaint();
+        // 2002/12/27, deselected item is not tqrepainted, so force it
+        item->tqrepaint();
     }
 }
 
@@ -426,7 +426,7 @@ void KDirSelectDialog::slotMkdir()
     {
         folderurl.addPath( *it );
         exists = KIO::NetAccess::exists( folderurl, false, 0 );
-        writeOk = !exists && KIO::NetAccess::mkdir( folderurl, topLevelWidget() );
+        writeOk = !exists && KIO::NetAccess::mkdir( folderurl, tqtopLevelWidget() );
     }
 
     if ( exists ) // url was already existant

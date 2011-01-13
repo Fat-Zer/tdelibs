@@ -72,7 +72,7 @@ KCModule* KCModuleLoader::load(const KCModuleInfo &mod, const TQString &libname,
       KLibFactory *factory = lib->factory();
       if ( factory )
       {
-        KCModule *module = KParts::ComponentFactory::createInstanceFromFactory<KCModule>( factory, parent, name ? name : mod.handle().latin1(), args );
+        KCModule *module = KParts::ComponentFactory::createInstanceFromFactory<KCModule>( factory, TQT_TQOBJECT(parent), name ? name : mod.handle().latin1(), args );
         if (module)
           return module;
       }
@@ -257,7 +257,7 @@ bool KCModuleLoader::testModule( const KCModuleInfo& module )
     KLibrary* library = loader->library( TQFile::encodeName((TQString("kcm_%1").arg(module.library()))) );
     if( library )
     {
-      void *test_func = library->symbol( TQString("test_%1").arg(module.factoryName()).utf8() );
+      void *test_func = library->symbol( TQString(TQString("test_%1").arg(module.factoryName())).utf8() );
       if( test_func )
       {
         bool (*func)() = (bool(*)())test_func;

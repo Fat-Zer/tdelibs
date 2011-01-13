@@ -6,7 +6,7 @@ class KLineEdit;
 class TQLabel;
 class KFileItem;
 
-class PreviewTest : public QWidget
+class PreviewTest : public TQWidget
 {
     Q_OBJECT
 public:

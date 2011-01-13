@@ -6,7 +6,7 @@
 class KIntNumInput;
 class KDoubleNumInput;
 
-class TopLevel : public QWidget
+class TopLevel : public TQWidget
 {
     Q_OBJECT
 public:

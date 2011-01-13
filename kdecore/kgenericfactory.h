@@ -62,7 +62,7 @@ protected:
     {
         if ( m_aboutData )
             return new KInstance( m_aboutData );
-        if ( !m_instanceName ) {
+        if ( m_instanceName.isEmpty() ) {
             kdWarning() << "KGenericFactory: instance requested but no instance name or about data passed to the constructor!" << endl;
             return 0;
         }
@@ -133,7 +133,7 @@ KInstance *KGenericFactoryBase<T>::instance()
  *                         const TQStringList &args);</code>
  *     <li>If the class is derived from KParts::Part then it needs to have
  *         a constructor like:
- *         <code>MyPart( TQWidget *parentWidget, const char *widgetName,
+ *         <code>MyPart( TQWidget *tqparentWidget, const char *widgetName,
  *                       TQObject *parent, const char *name,
  *                       const TQStringList &args );</code>
  * </ul>
@@ -190,8 +190,8 @@ protected:
                                   const char *className, const TQStringList &args )
     {
         KGenericFactoryBase<Product>::initializeMessageCatalogue();
-        return KDEPrivate::ConcreteFactory<Product, ParentType>
-            ::create( 0, 0, parent, name, className, args );
+        return TQT_TQOBJECT((KDEPrivate::ConcreteFactory<Product, ParentType>
+            ::create( 0, 0, parent, name, className, args )));
     }
 };
 
@@ -216,7 +216,7 @@ protected:
  *                         const TQStringList &args);</code>
  *     <li>If the class is derived from KParts::Part then it needs to have
  *         a constructor like:
- *         <code>MyPart( TQWidget *parentWidget, const char *widgetName,
+ *         <code>MyPart( TQWidget *tqparentWidget, const char *widgetName,
  *                       TQObject *parent, const char *name,
  *                       const TQStringList &args );</code>
  * </ul>
@@ -253,7 +253,7 @@ protected:
  *     {
  *         Q_ OBJECT
  *     public:
- *         MyDialogComponent( TQWidget *parentWidget, const char *name,
+ *         MyDialogComponent( TQWidget *tqparentWidget, const char *name,
  *                            const TQStringList &args );
  *         ...
  *     };
@@ -311,7 +311,7 @@ protected:
  *                         const TQStringList &args);</code>
  *     <li>If the class is derived from KParts::Part then it needs to have
  *         a constructor like:
- *         <code>MyPart( TQWidget *parentWidget, const char *widgetName,
+ *         <code>MyPart( TQWidget *tqparentWidget, const char *widgetName,
  *                       TQObject *parent, const char *name,
  *                       const TQStringList &args );</code>
  * </ul>
@@ -348,7 +348,7 @@ protected:
  *     {
  *         Q_ OBJECT
  *     public:
- *         MyDialogComponent( TQWidget *parentWidget, const char *name,
+ *         MyDialogComponent( TQWidget *tqparentWidget, const char *name,
  *                            const TQStringList &args );
  *         ...
  *     };

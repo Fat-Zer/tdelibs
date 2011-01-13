@@ -347,9 +347,10 @@ private:
  *
  * @short Abstract class for URI filter plugins.
  */
-class KIO_EXPORT KURIFilterPlugin : public QObject
+class KIO_EXPORT KURIFilterPlugin : public TQObject
 {
     Q_OBJECT
+    TQ_OBJECT
 
 public:
 

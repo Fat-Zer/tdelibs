@@ -27,7 +27,7 @@
 #include <kurl.h>
 #include <tqobject.h>
 
-class KDE_EXPORT KPlayObject : public QObject
+class KDE_EXPORT KPlayObject : public TQObject
 {
 Q_OBJECT
 public:
@@ -185,7 +185,7 @@ class PlayObjectFactory;
   * internal state until the real Arts::PlayObject got created, afterwards
   * the state of the Arts::PlayObject will be returned.
   */
-class KDE_EXPORT PlayObject : public QObject
+class KDE_EXPORT PlayObject : public TQObject
 {
 Q_OBJECT
 public:

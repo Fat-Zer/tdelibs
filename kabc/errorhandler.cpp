@@ -50,6 +50,6 @@ GuiErrorHandler::GuiErrorHandler( TQWidget *parent )
 
 void GuiErrorHandler::error( const TQString &msg )
 {
-  if (qApp)
+  if (tqApp)
     KMessageBox::error( mParent, msg );
 }

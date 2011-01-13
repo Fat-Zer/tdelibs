@@ -126,7 +126,7 @@ namespace KPAC
             return;
         }
 
-        int dot = m_hostname.find( '.' );
+        int dot = m_hostname.tqfind( '.' );
         if ( dot >= 0 )
         {
             m_hostname.remove( 0, dot + 1 ); // remove one domain level

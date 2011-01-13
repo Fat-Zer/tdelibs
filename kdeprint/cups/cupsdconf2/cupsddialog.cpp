@@ -337,7 +337,7 @@ int CupsdDialog::serverOwner()
 			while (!t.eof())
 			{
 				str = t.readLine();
-				if (str.find("Uid:",0,false) == 0)
+				if (str.tqfind("Uid:",0,false) == 0)
 				{
 					QStringList	list = TQStringList::split('\t', str, false);
 					if (list.count() >= 2)

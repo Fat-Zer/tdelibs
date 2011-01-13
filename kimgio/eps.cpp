@@ -15,7 +15,7 @@
 #define BBOX "%%BoundingBox:"
 #define BBOX_LEN strlen(BBOX)
 
-static bool seekToCodeStart( TQIODevice * io, Q_UINT32 & ps_offset, Q_UINT32 & ps_size )
+static bool seekToCodeStart( TQIODevice * io, TQ_UINT32 & ps_offset, TQ_UINT32 & ps_size )
 {
     char buf[4]; // We at most need to read 4 bytes at a time
     ps_offset=0L;
@@ -134,7 +134,7 @@ KDE_EXPORT void kimgio_eps_read (TQImageIO *image)
         TQString tmp;
 
         TQIODevice* io = image->ioDevice();
-        Q_UINT32 ps_offset, ps_size;
+        TQ_UINT32 ps_offset, ps_size;
 
         // find start of PostScript code
         if ( !seekToCodeStart(io, ps_offset, ps_size) )
@@ -210,7 +210,7 @@ KDE_EXPORT void kimgio_eps_read (TQImageIO *image)
             return;
         }
 
-        fprintf (ghostfd, "\n%d %d translate\n", -qRound(x1*xScale), -qRound(y1*yScale));
+        fprintf (ghostfd, "\n%d %d translate\n", -tqRound(x1*xScale), -tqRound(y1*yScale));
         if ( needsScaling )
             fprintf (ghostfd, "%g %g scale\n", xScale, yScale);
 
@@ -234,7 +234,7 @@ KDE_EXPORT void kimgio_eps_read (TQImageIO *image)
         TQImage myimage;
         if( myimage.load (tmpFile.name()) ) {
                 image->setImage (myimage);
-                image->setStatus (0);
+                image->setqStatus (0);
                 kdDebug(399) << "kimgio EPS: success!" << endl;
         }
         else
@@ -290,5 +290,5 @@ KDE_EXPORT void kimgio_eps_write( TQImageIO *imageio )
 
   inFile.close();
 
-  imageio->setStatus(0);
+  imageio->setqStatus(0);
 }

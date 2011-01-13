@@ -37,7 +37,7 @@ class TQPushButton;
 class TQVButtonGroup;
 class KURLLabel;
 
-class KCookieDetail : public QGroupBox
+class KCookieDetail : public TQGroupBox
 {
     Q_OBJECT
 

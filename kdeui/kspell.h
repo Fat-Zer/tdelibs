@@ -43,7 +43,7 @@ class KSpellDlg;
  * @see KSpellConfig, KSyntaxHighlighter
  */
 
-class KDEUI_EXPORT KSpell : public QObject
+class KDEUI_EXPORT KSpell : public TQObject
 {
   Q_OBJECT
 

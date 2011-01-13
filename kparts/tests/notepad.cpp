@@ -16,14 +16,14 @@
 #include <kstatusbar.h>
 #include <kstandarddirs.h>
 
-NotepadPart::NotepadPart( TQWidget* parentWidget, const char*,
+NotepadPart::NotepadPart( TQWidget* tqparentWidget, const char*,
                           TQObject* parent, const char* name,
                           const TQStringList& )
  : KParts::ReadWritePart( parent, name )
 {
   setInstance( NotepadFactory::instance() );
 
-  m_edit = new TQMultiLineEdit( parentWidget, "NotepadPart's multiline edit" );
+  m_edit = new TQMultiLineEdit( tqparentWidget, "NotepadPart's multiline edit" );
   setWidget( m_edit );
 
   (void)new KAction( "Search and replace", 0, this, TQT_SLOT( slotSearchReplace() ), actionCollection(), "searchreplace" );

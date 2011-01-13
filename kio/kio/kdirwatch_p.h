@@ -1,6 +1,6 @@
 /* Private Header for class of KDirWatchPrivate
  *
- * this separate header file is needed for MOC processing
+ * this separate header file is needed for TQMOC processing
  * because KDirWatchPrivate has signals and slots
  */
 
@@ -18,7 +18,7 @@
 /* KDirWatchPrivate is a singleton and does the watching
  * for every KDirWatch instance in the application.
  */
-class KDirWatchPrivate : public QObject
+class KDirWatchPrivate : public TQObject
 {
   Q_OBJECT
 public:

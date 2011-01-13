@@ -293,7 +293,7 @@ void NetAccess::removeTempFile(const TQString& name)
 {
   if (!tmpfiles)
     return;
-  if (tmpfiles->contains(name))
+  if (tmpfiles->tqcontains(name))
   {
     unlink(TQFile::encodeName(name));
     tmpfiles->remove(name);
@@ -373,7 +373,7 @@ bool NetAccess::mkdirInternal( const KURL & url, int permissions,
 TQString NetAccess::mimetypeInternal( const KURL & url, TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
-  m_mimetype = TQString::fromLatin1("unknown");
+  m_mimetype = TQString::tqfromLatin1("unknown");
   KIO::Job * job = KIO::mimetype( url );
   job->setWindow (window);
   connect( job, TQT_SIGNAL( result (KIO::Job *) ),
@@ -403,7 +403,7 @@ TQString NetAccess::fish_executeInternal(const KURL & url, const TQString comman
     remoteTempFileName = tmpFile.name();
     // only need the filename KTempFile adds some KDE specific dirs
     // that probably does not exist on the remote side
-    int pos = remoteTempFileName.findRev('/');
+    int pos = remoteTempFileName.tqfindRev('/');
     remoteTempFileName = "/tmp/fishexec_" + remoteTempFileName.mid(pos + 1);
     tempPathUrl.setPath( remoteTempFileName );
     bJobOK = true; // success unless further error occurs
@@ -462,16 +462,16 @@ bool NetAccess::synchronousRunInternal( Job* job, TQWidget* window, TQByteArray*
   connect( job, TQT_SIGNAL( result (KIO::Job *) ),
            this, TQT_SLOT( slotResult (KIO::Job *) ) );
 
-  TQMetaObject *meta = job->metaObject();
+  TQMetaObject *meta = job->tqmetaObject();
 
   static const char dataSignal[] = "data(KIO::Job*,const TQByteArray&)";
-  if ( meta->findSignal( dataSignal ) != -1 ) {
+  if ( meta->tqfindSignal( dataSignal ) != -1 ) {
       connect( job, TQT_SIGNAL(data(KIO::Job*,const TQByteArray&)),
                this, TQT_SLOT(slotData(KIO::Job*,const TQByteArray&)) );
   }
 
   static const char redirSignal[] = "redirection(KIO::Job*,const KURL&)";
-  if ( meta->findSignal( redirSignal ) != -1 ) {
+  if ( meta->tqfindSignal( redirSignal ) != -1 ) {
       connect( job, TQT_SIGNAL(redirection(KIO::Job*,const KURL&)),
                this, TQT_SLOT(slotRedirection(KIO::Job*, const KURL&)) );
   }
@@ -492,10 +492,10 @@ void qt_leave_modal( TQWidget *widget );
 
 void NetAccess::enter_loop()
 {
-  TQWidget dummy(0,0,WType_Dialog | WShowModal);
-  dummy.setFocusPolicy( TQWidget::NoFocus );
+  TQWidget dummy(0,0,(WFlags)(WType_Dialog | WShowModal));
+  dummy.setFocusPolicy( TQ_NoFocus );
   qt_enter_modal(&dummy);
-  qApp->enter_loop();
+  tqApp->enter_loop();
   qt_leave_modal(&dummy);
 }
 
@@ -515,7 +515,7 @@ void NetAccess::slotResult( KIO::Job * job )
   if ( m_metaData )
     *m_metaData = job->metaData();
 
-  qApp->exit_loop();
+  tqApp->exit_loop();
 }
 
 void NetAccess::slotData( KIO::Job*, const TQByteArray& data )

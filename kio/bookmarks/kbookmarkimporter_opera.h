@@ -32,7 +32,7 @@
  * A class for importing Opera bookmarks
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KOperaBookmarkImporter : public QObject
+class KIO_EXPORT_DEPRECATED KOperaBookmarkImporter : public TQObject
 {
     Q_OBJECT
 public:

@@ -60,12 +60,12 @@ static void checkInsertPos( TQPopupMenu *popup, const TQString & str,
 static TQPopupMenu * checkInsertIndex( TQPopupMenu *popup,
                                       const TQStringList *tags, const TQString &submenu )
 {
-  int pos = tags->findIndex( submenu );
+  int pos = tags->tqfindIndex( submenu );
 
   TQPopupMenu *pi = 0;
   if ( pos != -1 )
   {
-    TQMenuItem *p = popup->findItem( pos );
+    TQMenuItem *p = popup->tqfindItem( pos );
     pi = p ? p->popup() : 0;
   }
   if ( !pi )
@@ -131,12 +131,12 @@ KLanguageButton::~KLanguageButton()
 void KLanguageButton::insertLanguage( const TQString& path, const TQString& name,
                         const TQString&, const TQString &submenu, int index )
 {
-  TQString output = name + TQString::fromLatin1( " (" ) + path +
-                   TQString::fromLatin1( ")" );
+  TQString output = name + TQString::tqfromLatin1( " (" ) + path +
+                   TQString::tqfromLatin1( ")" );
 #if 0
   // Nooooo ! Country != language
   TQPixmap flag( locate( "locale", sub + path +
-                TQString::fromLatin1( "/flag.png" ) ) );
+                TQString::tqfromLatin1( "/flag.png" ) ) );
 #endif
   insertItem( output, path, submenu, index );
 }
@@ -232,7 +232,7 @@ void KLanguageButton::clear()
 
 bool KLanguageButton::contains( const TQString & id ) const
 {
-  return m_ids->contains( id ) > 0;
+  return m_ids->tqcontains( id ) > 0;
 }
 
 TQString KLanguageButton::current() const
@@ -276,7 +276,7 @@ void KLanguageButton::setCurrentItem( int i )
 
 void KLanguageButton::setCurrentItem( const TQString & id )
 {
-  int i = m_ids->findIndex( id );
+  int i = m_ids->tqfindIndex( id );
   if ( id.isNull() )
     i = 0;
   if ( i != -1 )

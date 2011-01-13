@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>KNotifyWidgetBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KNotifyWidgetBase</cstring>
     </property>
@@ -109,7 +109,7 @@
                 </sizepolicy>
             </property>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>m_controlsBox</cstring>
             </property>
@@ -120,7 +120,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="4">
+                <widget class="TQCheckBox" row="0" column="0" rowspan="1" colspan="4">
                     <property name="name">
                         <cstring>m_affectAllApps</cstring>
                     </property>
@@ -138,7 +138,7 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>20</height>
@@ -155,14 +155,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>318</width>
                             <height>16</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton" row="2" column="1">
+                <widget class="TQPushButton" row="2" column="1">
                     <property name="name">
                         <cstring>m_buttonDisable</cstring>
                     </property>
@@ -173,7 +173,7 @@
                         <string>Allows you to change the behavior for all events at once</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="1" column="1">
+                <widget class="TQPushButton" row="1" column="1">
                     <property name="name">
                         <cstring>m_buttonEnable</cstring>
                     </property>
@@ -196,7 +196,7 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="TQGroupBox">
             <property name="name">
                 <cstring>m_actionsBox</cstring>
             </property>
@@ -207,7 +207,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="5" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>m_stderr</cstring>
                     </property>
@@ -215,7 +215,7 @@
                         <string>Print a message to standard &amp;error output</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="3" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>m_messageBox</cstring>
                     </property>
@@ -223,7 +223,7 @@
                         <string>Show a &amp;message in a pop-up window</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="2" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>m_execute</cstring>
                     </property>
@@ -231,7 +231,7 @@
                         <string>E&amp;xecute a program:</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="TQLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>Layout25</cstring>
                     </property>
@@ -239,7 +239,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QCheckBox">
+                        <widget class="TQCheckBox">
                             <property name="name">
                                 <cstring>m_playSound</cstring>
                             </property>
@@ -247,7 +247,7 @@
                                 <string>Play a &amp;sound:</string>
                             </property>
                         </widget>
-                        <widget class="QPushButton">
+                        <widget class="TQPushButton">
                             <property name="name">
                                 <cstring>m_playButton</cstring>
                             </property>
@@ -260,7 +260,7 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="3">
+                <widget class="TQCheckBox" row="6" column="0" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>m_taskbar</cstring>
                     </property>
@@ -268,7 +268,7 @@
                         <string>Mark &amp;taskbar entry</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>m_logToFile</cstring>
                     </property>
@@ -286,7 +286,7 @@
                     <property name="sizeType">
                         <enum>Fixed</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>30</width>
                             <height>20</height>
@@ -341,7 +341,7 @@
                         </sizepolicy>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="1" rowspan="1" colspan="2">
+                <widget class="TQCheckBox" row="4" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>m_passivePopup</cstring>
                     </property>
@@ -354,7 +354,7 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="TQLayoutWidget">
             <property name="name">
                 <cstring>Layout8</cstring>
             </property>
@@ -362,7 +362,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>m_extension</cstring>
                     </property>
@@ -391,14 +391,14 @@
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>0</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QPushButton">
+                <widget class="TQPushButton">
                     <property name="name">
                         <cstring>m_playerButton</cstring>
                     </property>

@@ -34,10 +34,10 @@ public:
             d_ptr = new TQPtrDict<PrivateData>;
             qAddPostRoutine( cleanup_d_ptr );
         }
-        PrivateData* ret = d_ptr->find( (void*) instance );
+        PrivateData* ret = d_ptr->tqfind( (void*) instance );
         if ( ! ret ) {
             ret = new PrivateData;
-            d_ptr->replace( (void*) instance, ret );
+            d_ptr->tqreplace( (void*) instance, ret );
         }
         return ret;
     }

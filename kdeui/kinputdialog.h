@@ -20,7 +20,7 @@
 #ifndef KINPUTDIALOG_H
 #define KINPUTDIALOG_H
 
-#include <tqt.h>
+// #include <tqt.h>
 
 #include <kdialogbase.h>
 

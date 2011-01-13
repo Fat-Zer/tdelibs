@@ -39,9 +39,10 @@ class TQPopupMenu;
  * identical to using KBookmarkMenu so follow the directions
  * there.
  */
-class KIO_EXPORT KBookmarkBar : public QObject
+class KIO_EXPORT KBookmarkBar : public TQObject
 {
     Q_OBJECT
+    TQ_OBJECT
     friend class RMB;
 public:
     /**
@@ -86,7 +87,7 @@ signals:
     /**
      * @since 3.4
      */
-    void openBookmark( const TQString& url, Qt::ButtonState state );
+    void openBookmark( const TQString& url, TQt::ButtonState state );
 
 public slots:
     void clear();
@@ -97,7 +98,7 @@ public slots:
     /**
      * @since 3.4
      */
-    void slotBookmarkSelected( KAction::ActivationReason reason, Qt::ButtonState state );
+    void slotBookmarkSelected( KAction::ActivationReason reason, TQt::ButtonState state );
     
     /// @since 3.2
     void slotRMBActionRemove( int );

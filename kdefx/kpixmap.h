@@ -54,7 +54,7 @@ class KPixmapPrivate;
  * @author Mark Donohoe (donohoe@kde.org)
  * @version $Id$
  */
-class KDEFX_EXPORT KPixmap : public QPixmap
+class KDEFX_EXPORT KPixmap : public TQPixmap
 {
 public:
 	/**

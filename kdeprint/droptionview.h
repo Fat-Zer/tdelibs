@@ -35,7 +35,7 @@ class TQListViewItem;
 class DrBase;
 class DriverItem;
 
-class OptionBaseView : public QWidget
+class OptionBaseView : public TQWidget
 {
 	Q_OBJECT
 public:
@@ -112,7 +112,7 @@ private:
 	QStringList	m_choices;
 };
 
-class DrOptionView : public QGroupBox
+class DrOptionView : public TQGroupBox
 {
 	Q_OBJECT
 public:

@@ -75,7 +75,7 @@ typedef TQValueList<KAction *> KActionPtrList;
  *           statusBar(), TQT_SLOT( clear() ) );
  * \endcode
  */
-class KDEUI_EXPORT KActionCollection : public QObject
+class KDEUI_EXPORT KActionCollection : public TQObject
 {
   friend class KAction;
   friend class KXMLGUIClient;

@@ -183,10 +183,10 @@ bool RenderWidget::event( TQEvent *e )
             return true;
         QWidgetResizeEvent *re = static_cast<QWidgetResizeEvent *>(e);
         m_widget->resize( re->w,  re->h );
-        repaint();
+        tqrepaint();
     }
     // eat all events - except if this is a frame (in which case KHTMLView handles it all)
-    if ( ::qt_cast<KHTMLView *>( m_widget ) )
+    if ( ::tqqt_cast<KHTMLView *>( m_widget ) )
         return TQObject::event( e );
     return true;
 }
@@ -212,7 +212,7 @@ void RenderWidget::setQWidget(TQWidget *widget)
             connect( m_widget, TQT_SIGNAL( destroyed()), this, TQT_SLOT( slotWidgetDestructed()));
             m_widget->installEventFilter(this);
 
-            if ( (m_isKHTMLWidget = !strcmp(m_widget->name(), "__khtml")) && !::qt_cast<TQFrame*>(m_widget))
+            if ( (m_isKHTMLWidget = !strcmp(m_widget->name(), "__khtml")) && !::tqqt_cast<TQFrame*>(m_widget))
                 m_widget->setBackgroundMode( TQWidget::NoBackground );
 
             if (m_widget->focusPolicy() > TQWidget::StrongFocus)
@@ -330,7 +330,7 @@ void RenderWidget::updateFromElement()
         else
             m_widget->unsetPalette();
         // Border:
-        TQFrame* frame = ::qt_cast<TQFrame*>(m_widget);
+        TQFrame* frame = ::tqqt_cast<TQFrame*>(m_widget);
         if (frame) {
             if (shouldPaintBackgroundOrBorder())
             {
@@ -531,7 +531,7 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
         // build region
         TQObjectListIterator it = *widget->children();
         for (; it.current(); ++it) {
-            TQWidget* const w = ::qt_cast<TQWidget *>(it.current());
+            TQWidget* const w = ::tqqt_cast<TQWidget *>(it.current());
 	    if ( w && !w->isTopLevel() && !w->isHidden()) {
 	        TQRect r2 = w->geometry();
 	        blit -= r2;
@@ -557,7 +557,7 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
     if ( external ) {
 	// even hackier!
         TQPainter pt( pm );
-        const TQColor c = widget->colorGroup().base();
+        const TQColor c = widget->tqcolorGroup().base();
         for (int i = 0; i < cnt; ++i)
             pt.fillRect( br[i], c );
     } else {
@@ -612,7 +612,7 @@ void RenderWidget::paintWidget(PaintInfo& pI, TQWidget *widget, int tx, int ty)
 bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
 {
     // no special event processing if this is a frame (in which case KHTMLView handles it all)
-    if ( ::qt_cast<KHTMLView *>( m_widget ) )
+    if ( ::tqqt_cast<KHTMLView *>( m_widget ) )
         return false;
     if ( !element() ) return true;
 
@@ -667,11 +667,11 @@ bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
         break;
 
     case TQEvent::Wheel:
-        if (widget()->parentWidget() == view()->viewport()) {
+        if (widget()->tqparentWidget() == view()->viewport()) {
             // don't allow the widget to react to wheel event unless its
             // currently focused. this avoids accidentally changing a select box
             // or something while wheeling a webpage.
-            if (qApp->focusWidget() != widget() &&
+            if (tqApp->tqfocusWidget() != widget() &&
                 widget()->focusPolicy() <= TQWidget::StrongFocus)  {
                 static_cast<TQWheelEvent*>(e)->ignore();
                 TQApplication::sendEvent(view(), e);
@@ -808,8 +808,8 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
 //                   << " pos=" << p << " type=" << type
 //                   << " button=" << button << " state=" << state << endl;
         TQMouseEvent e(type, p, button, state);
-        TQScrollView * sc = ::qt_cast<TQScrollView*>(m_widget);
-        if (sc && !::qt_cast<TQListBox*>(m_widget))
+        TQScrollView * sc = ::tqqt_cast<TQScrollView*>(m_widget);
+        if (sc && !::tqqt_cast<TQListBox*>(m_widget))
             static_cast<ScrollViewEventPropagator *>(sc)->sendEvent(&e);
         else
             static_cast<EventPropagator *>(m_widget)->sendEvent(&e);

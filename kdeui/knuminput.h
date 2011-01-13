@@ -46,7 +46,7 @@ class KIntSpinBox;
  * for a different variable type
  *
  */
-class KDEUI_EXPORT KNumInput : public QWidget
+class KDEUI_EXPORT KNumInput : public TQWidget
 {
     Q_OBJECT
     Q_PROPERTY( TQString label READ label WRITE setLabel )
@@ -67,7 +67,7 @@ public:
     ~KNumInput();
 
     /**
-     * Sets the text and alignment of the main description label.
+     * Sets the text and tqalignment of the main description label.
      *
      * @param label The text of the label.
      *              Use TQString::null to remove an existing one.
@@ -76,7 +76,7 @@ public:
      *          @p AlignTop, @p AlignVCenter, @p AlignBottom.
      *          default is @p AlignLeft | @p AlignTop.
      *
-     * The vertical alignment flags have special meaning with this
+     * The vertical tqalignment flags have special meaning with this
      * widget:
      *
      *     @li @p AlignTop     The label is placed above the edit/slider
@@ -116,7 +116,7 @@ public:
      *
      * @return the preferred size necessary to show the control
      */
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 
 protected:
     /**
@@ -143,7 +143,7 @@ protected:
     TQSlider* m_slider;
     TQSize    m_sizeSlider, m_sizeLabel;
 
-    int      m_alignment;
+    int      m_tqalignment;
 
 private:
     void init();
@@ -312,11 +312,11 @@ public:
     /**
      * This method returns the minimum size necessary to display the
      * control. The minimum size is enough to show all the labels
-     * in the current font (font change may invalidate the return value).
+     * in the current font (font change may tqinvalidate the return value).
      *
      * @return the minimum size necessary to show the control
      */
-    virtual TQSize minimumSizeHint() const;
+    virtual TQSize tqminimumSizeHint() const;
 
 public slots:
     /**
@@ -596,7 +596,7 @@ public:
     void setSpecialValueText(const TQString& text);
 
     virtual void setLabel(const TQString & label, int a = AlignLeft | AlignTop);
-    virtual TQSize minimumSizeHint() const;
+    virtual TQSize tqminimumSizeHint() const;
     virtual bool eventFilter(TQObject*, TQEvent*);
 
 public slots:
@@ -701,7 +701,7 @@ private:
  *  The class provides an easy interface to use other
  *  numeric systems than the decimal.
  */
-class KDEUI_EXPORT KIntSpinBox : public QSpinBox
+class KDEUI_EXPORT KIntSpinBox : public TQSpinBox
 {
     Q_OBJECT
     Q_PROPERTY( int base READ base WRITE setBase )
@@ -871,7 +871,7 @@ public:
   int precision() const;
 
   /** Equivalent to setPrecision( @p precision, @p false ); Needed
-      since Qt's moc doesn't ignore trailing parameters with default
+      since Qt's tqmoc doesn't ignore trailing parameters with default
       args when searching for a property setter method. */
   void setPrecision( int precision );
 

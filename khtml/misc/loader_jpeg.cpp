@@ -358,7 +358,7 @@ int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* 
             } else if ( cinfo.output_components == 1 ) {
                 image.create( cinfo.output_width, cinfo.output_height, 8, 256 );
                 for (int i=0; i<256; i++)
-                    image.setColor(i, qRgb(i,i,i));
+                    image.setColor(i, tqRgb(i,i,i));
             }
 
 #ifdef JPEG_DEBUG
@@ -431,7 +431,7 @@ again:
 
 		for (uint i=cinfo.output_width; i--; ) {
 		    in-=3;
-		    out[i] = qRgb(in[0], in[1], in[2]);
+		    out[i] = tqRgb(in[0], in[1], in[2]);
 		}
 	    }
 	}

@@ -43,7 +43,7 @@ class TQTextEdit;
  * @see QWhatsThis
  * @author Peter Rockai (mornfall) <mornfall@danill.sk>
  **/
-class KDEUI_EXPORT KWhatsThisManager : public QObject
+class KDEUI_EXPORT KWhatsThisManager : public TQObject
 {
     Q_OBJECT
     public:

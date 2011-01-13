@@ -793,7 +793,7 @@ void KateView::contextMenuEvent( TQContextMenuEvent *ev )
   if ( !m_doc || !m_doc->browserExtension()  )
     return;
   emit m_doc->browserExtension()->popupMenu( /*this, */ev->globalPos(), m_doc->url(),
-                                        TQString::fromLatin1( "text/plain" ) );
+                                        TQString::tqfromLatin1( "text/plain" ) );
   ev->accept();
 }
 
@@ -1233,11 +1233,11 @@ void KateView::updateRendererConfig()
 
   // update the text area
   m_viewInternal->updateView (true);
-  m_viewInternal->repaint ();
+  m_viewInternal->tqrepaint ();
 
   // update the left border right, for example linenumbers
   m_viewInternal->leftBorder->updateFont();
-  m_viewInternal->leftBorder->repaint ();
+  m_viewInternal->leftBorder->tqrepaint ();
 
 // @@ showIndentLines is not cached anymore.
 //  m_renderer->setShowIndentLines (m_renderer->config()->showIndentationLines());
@@ -1305,7 +1305,7 @@ void KateView::clear ()
   m_viewInternal->clear ();
 }
 
-void KateView::repaintText (bool paintOnlyDirty)
+void KateView::tqrepaintText (bool paintOnlyDirty)
 {
   m_viewInternal->paintText(0,0,m_viewInternal->width(),m_viewInternal->height(), paintOnlyDirty);
 }
@@ -1360,7 +1360,7 @@ bool KateView::setSelection( const KateTextCursor& start, const KateTextCursor& 
 
   tagSelection(oldSelectStart, oldSelectEnd);
 
-  repaintText(true);
+  tqrepaintText(true);
 
   emit selectionChanged ();
   emit m_doc->selectionChanged ();
@@ -1405,7 +1405,7 @@ bool KateView::clearSelection(bool redraw, bool finishedChangingSelection)
   oldSelectEnd = selectEnd;
 
   if (redraw)
-    repaintText(true);
+    tqrepaintText(true);
 
   if (finishedChangingSelection)
   {
@@ -1596,7 +1596,7 @@ void KateView::paste()
 {
   m_doc->paste( this );
   emit selectionChanged();
-  m_viewInternal->repaint();
+  m_viewInternal->tqrepaint();
 }
 
 void KateView::cut()

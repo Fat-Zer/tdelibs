@@ -304,7 +304,7 @@ TQDate KCalendarSystemJalali::addMonths( const TQDate & date, int nmonths ) cons
 
 TQDate KCalendarSystemJalali::addDays( const TQDate & date, int ndays ) const
 {
-  return date.addDays( ndays );
+  return TQT_TQDATE_OBJECT(date.addDays( ndays ));
 }
 
 int KCalendarSystemJalali::monthsInYear( const TQDate & date ) const
@@ -541,7 +541,7 @@ int KCalendarSystemJalali::weekDayOfPray() const
 }
 TQString KCalendarSystemJalali::calendarName() const
 {
-  return TQString::fromLatin1("jalali");
+  return TQString::tqfromLatin1("jalali");
 }
 
 bool KCalendarSystemJalali::isLunar() const

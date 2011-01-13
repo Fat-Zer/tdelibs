@@ -28,6 +28,10 @@ DEALINGS IN THE SOFTWARE.
 #include <sys/types.h>
 #include <tqobject.h>
 
+#ifdef Q_MOC_RUN
+#define Q_WS_X11
+#endif // Q_MOC_RUN
+
 #ifdef Q_WS_X11 // FIXME(E): Redo in a less X11-specific way
 
 #include <tqcstring.h>
@@ -61,9 +65,10 @@ class KStartupInfoPrivate;
  * @author Lubos Lunak <l.lunak@kde.org>
  */
 class KDECORE_EXPORT KStartupInfo
-    : public QObject
+    : public TQObject
     {
     Q_OBJECT
+    TQ_OBJECT
     public:
         /**
          * By default, the startup notification is ended for the application

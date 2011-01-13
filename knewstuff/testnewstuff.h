@@ -40,7 +40,7 @@ class TestNewStuff : public KNewStuff
     bool createUploadFile( const TQString &fileName );
 };
 
-class MyWidget : public QWidget
+class MyWidget : public TQWidget
 {
     Q_OBJECT
   public:

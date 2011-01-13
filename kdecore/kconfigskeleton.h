@@ -376,7 +376,7 @@ public:
 
     ItemString(const TQString & group, const TQString & key,
                TQString & reference,
-               const TQString & defaultValue = TQString::fromLatin1(""), // NOT TQString::null !!
+               const TQString & defaultValue = TQString::tqfromLatin1(""), // NOT TQString::null !!
                Type type = Normal);
 
     void writeConfig(KConfig * config);
@@ -396,7 +396,7 @@ public:
   public:
     ItemPassword(const TQString & group, const TQString & key,
                TQString & reference,
-               const TQString & defaultValue = TQString::fromLatin1("")); // NOT TQString::null !!
+               const TQString & defaultValue = TQString::tqfromLatin1("")); // NOT TQString::null !!
   };
 
   /**
@@ -469,11 +469,11 @@ public:
   /**
    * Class for handling an 64-bit integer preferences item.
    */
-  class KDECORE_EXPORT ItemInt64:public KConfigSkeletonGenericItem < Q_INT64 >
+  class KDECORE_EXPORT ItemInt64:public KConfigSkeletonGenericItem < TQ_INT64 >
   {
   public:
-    ItemInt64(const TQString & group, const TQString & key, Q_INT64 &reference,
-            Q_INT64 defaultValue = 0);
+    ItemInt64(const TQString & group, const TQString & key, TQ_INT64 &reference,
+            TQ_INT64 defaultValue = 0);
 
     void readConfig(KConfig * config);
     void setProperty(const TQVariant & p);
@@ -482,14 +482,14 @@ public:
     TQVariant minValue() const;
     TQVariant maxValue() const;
 
-    void setMinValue(Q_INT64);
-    void setMaxValue(Q_INT64);
+    void setMinValue(TQ_INT64);
+    void setMaxValue(TQ_INT64);
     
   private:  
     bool mHasMin : 1;
     bool mHasMax : 1;
-    Q_INT64 mMin;
-    Q_INT64 mMax;
+    TQ_INT64 mMin;
+    TQ_INT64 mMax;
   };
 
   /**
@@ -598,11 +598,11 @@ public:
   /**
    * Class for handling unsigned 64-bit integer preferences item.
    */
-  class KDECORE_EXPORT ItemUInt64:public KConfigSkeletonGenericItem < Q_UINT64 >
+  class KDECORE_EXPORT ItemUInt64:public KConfigSkeletonGenericItem < TQ_UINT64 >
   {
   public:
-    ItemUInt64(const TQString & group, const TQString & key, Q_UINT64 &reference,
-            Q_UINT64 defaultValue = 0);
+    ItemUInt64(const TQString & group, const TQString & key, TQ_UINT64 &reference,
+            TQ_UINT64 defaultValue = 0);
 
     void readConfig(KConfig * config);
     void setProperty(const TQVariant & p);
@@ -611,14 +611,14 @@ public:
     TQVariant minValue() const;
     TQVariant maxValue() const;
 
-    void setMinValue(Q_UINT64);
-    void setMaxValue(Q_UINT64);
+    void setMinValue(TQ_UINT64);
+    void setMaxValue(TQ_UINT64);
     
   private:  
     bool mHasMin : 1;
     bool mHasMax : 1;
-    Q_UINT64 mMin;
-    Q_UINT64 mMax;
+    TQ_UINT64 mMin;
+    TQ_UINT64 mMax;
   };
 
   /**
@@ -859,7 +859,7 @@ public:
    * @return The created item
    */
   ItemString *addItemString(const TQString & name, TQString & reference,
-                            const TQString & defaultValue = TQString::fromLatin1(""), // NOT TQString::null !!
+                            const TQString & defaultValue = TQString::tqfromLatin1(""), // NOT TQString::null !!
                             const TQString & key = TQString::null);
 
   /**
@@ -876,7 +876,7 @@ public:
    * @return The created item
    */
   ItemPassword *addItemPassword(const TQString & name, TQString & reference,
-                              const TQString & defaultValue = TQString::fromLatin1(""),
+                              const TQString & defaultValue = TQString::tqfromLatin1(""),
                               const TQString & key = TQString::null);
 
   /**
@@ -893,7 +893,7 @@ public:
    * @return The created item
    */
   ItemPath *addItemPath(const TQString & name, TQString & reference,
-                          const TQString & defaultValue = TQString::fromLatin1(""),
+                          const TQString & defaultValue = TQString::tqfromLatin1(""),
                           const TQString & key = TQString::null);
 
   /**
@@ -987,7 +987,7 @@ public:
                           const TQString & key = TQString::null);
 
   /**
-   * Register an item of type Q_INT64.
+   * Register an item of type TQ_INT64.
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -997,12 +997,12 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemInt64 *addItemInt64(const TQString & name, Q_INT64 &reference,
-                          Q_INT64 defaultValue = 0,
+  ItemInt64 *addItemInt64(const TQString & name, TQ_INT64 &reference,
+                          TQ_INT64 defaultValue = 0,
                           const TQString & key = TQString::null);
 
   /**
-   * Register an item of type Q_UINT64
+   * Register an item of type TQ_UINT64
    * 
    * @param name Name used to indentify this setting. Names must be unique.
    * @param reference Pointer to the variable, which is set by readConfig()
@@ -1012,8 +1012,8 @@ public:
    * @param key Key used in config file. If key is null, name is used as key.
    * @return The created item
    */
-  ItemUInt64 *addItemUInt64(const TQString & name, Q_UINT64 &reference,
-                            Q_UINT64 defaultValue = 0,
+  ItemUInt64 *addItemUInt64(const TQString & name, TQ_UINT64 &reference,
+                            TQ_UINT64 defaultValue = 0,
                             const TQString & key = TQString::null);
 
   /**

@@ -58,6 +58,7 @@ class KBufferedSocketPrivate;
 class KDECORE_EXPORT KBufferedSocket: public KStreamSocket
 {
   Q_OBJECT
+  TQ_OBJECT
 public:
   /**
    * Default constructor.
@@ -99,7 +100,7 @@ public:
    * Make use of the buffers.
    */
 #ifdef USE_QT3
-  virtual Q_LONG bytesAvailable() const;
+  virtual TQ_LONG bytesAvailable() const;
 #endif
 #ifdef USE_QT4
   virtual qint64 bytesAvailable() const;
@@ -108,12 +109,12 @@ public:
   /**
    * Make use of buffers.
    */
-  virtual Q_LONG waitForMore(int msecs, bool *timeout = 0L);
+  virtual TQ_LONG waitForMore(int msecs, bool *timeout = 0L);
 
   /**
    * Reads data from the socket. Make use of buffers.
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen);
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen);
 
   /**
    * @overload
@@ -121,12 +122,12 @@ public:
    *
    * The @p from parameter is always set to @ref peerAddress()
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen, KSocketAddress& from);
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
 
   /**
    * Peeks data from the socket.
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen);
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen);
 
   /**
    * @overload
@@ -134,12 +135,12 @@ public:
    *
    * The @p from parameter is always set to @ref peerAddress()
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen, KSocketAddress &from);
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress &from);
 
   /**
    * Writes data to the socket.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len);
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len);
 
   /**
    * @overload
@@ -147,7 +148,7 @@ public:
    *
    * The @p to parameter is discarded.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len, const KSocketAddress& to);
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
 
   /**
    * Catch changes.
@@ -183,7 +184,7 @@ public:
    * Returns the length of the output buffer.
    */
 #ifdef USE_QT3
-  virtual Q_ULONG bytesToWrite() const;
+  virtual TQ_ULONG bytesToWrite() const;
 #endif
 #ifdef USE_QT4
   virtual qint64 bytesToWrite() const;

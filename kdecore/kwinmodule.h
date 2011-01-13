@@ -27,6 +27,10 @@
 #include <tqvaluelist.h>
 #include "kdelibs_export.h"
 
+#ifdef Q_MOC_RUN
+#define Q_OS_UNIX
+#endif // Q_MOC_RUN
+
 #ifdef Q_OS_UNIX
 
 class KWinModulePrivate;
@@ -49,7 +53,7 @@ class KWinModulePrivate;
  * @short Base class for KDE Window Manager modules.
  * @author Matthias Ettrich (ettrich@kde.org)
  */
-class KDECORE_EXPORT KWinModule : public QObject
+class KDECORE_EXPORT KWinModule : public TQObject
 {
     Q_OBJECT
 

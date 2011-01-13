@@ -363,12 +363,12 @@ KRFCDate::parseDateISO8601( const TQString& input_ )
   TQString input = input_;
 
   // First find the 'T' separator, if any.
-  int tPos = input.find('T');
+  int tPos = input.tqfind('T');
 
   // If there is no time, no month or no day specified, fill those missing
   // fields so that 'input' matches YYYY-MM-DDTHH:MM:SS
   if (-1 == tPos) {
-    const int dashes = input.contains('-');
+    const int dashes = input.tqcontains('-');
     if (0 == dashes) {
       input += "-01-01";
     } else if (1 == dashes) {
@@ -400,7 +400,7 @@ KRFCDate::parseDateISO8601( const TQString& input_ )
 
   // +zone or -zone suffix (offset from UTC).
 
-  int plusPos = timeString.findRev('+');
+  int plusPos = timeString.tqfindRev('+');
 
   if (-1 != plusPos) {
     TQString offsetString = timeString.mid(plusPos + 1);
@@ -409,7 +409,7 @@ KRFCDate::parseDateISO8601( const TQString& input_ )
 
     timeString = timeString.left(plusPos);
   } else {
-    int minusPos = timeString.findRev('-');
+    int minusPos = timeString.tqfindRev('-');
 
     if (-1 != minusPos) {
       TQString offsetString = timeString.mid(minusPos + 1);
@@ -421,7 +421,7 @@ KRFCDate::parseDateISO8601( const TQString& input_ )
   }
 
   // secfrac suffix.
-  int dotPos = timeString.findRev('.');
+  int dotPos = timeString.tqfindRev('.');
 
   if (-1 != dotPos) {
     timeString = timeString.left(dotPos);

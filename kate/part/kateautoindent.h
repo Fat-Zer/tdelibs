@@ -41,7 +41,7 @@ class KateDocument;
  * - Return @p true in @p KateAutoIndent::hasConfigPage() for the
  *   corresponding indenter id.
  */
-class IndenterConfigPage : public QWidget
+class IndenterConfigPage : public TQWidget
 {
   Q_OBJECT
 
@@ -67,7 +67,7 @@ class IndenterConfigPage : public QWidget
  * This baseclass is a real dummy, does nothing beside remembering the document it belongs too,
  * only to have the object around
  */
-class KateAutoIndent : public QObject
+class KateAutoIndent : public TQObject
 {
   Q_OBJECT
 

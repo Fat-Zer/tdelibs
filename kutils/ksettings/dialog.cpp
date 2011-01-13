@@ -108,7 +108,7 @@ class PageNode
 					if( **i < **j )
 					{
 						finished = false;
-						qSwap( *i, *j );
+						tqSwap( *i, *j );
 						lastswapped = j;
 					}
 					--i;
@@ -225,7 +225,7 @@ class PageNode
 				TQVBox * page = dlg->addVBoxPage( m_value.group->name,
 						TQString::null, icon );
 				TQLabel * comment = new TQLabel( m_value.group->comment, page );
-				comment->setTextFormat( Qt::RichText );
+				comment->setTextFormat( TQt::RichText );
 				m_value.group->page = page;
 			}
 			List::Iterator end = m_children.end();
@@ -484,12 +484,12 @@ bool Dialog::isPluginForKCMEnabled( KCModuleInfo * moduleinfo ) const
 			pcit != parentComponents.end(); ++pcit )
 	{
 		// if the parentComponent is not registered ignore it
-		if( d->registeredComponents.find( *pcit ) ==
+		if( d->registeredComponents.tqfind( *pcit ) ==
 				d->registeredComponents.end() )
 			continue;
 
 		// we check if the parent component is a plugin
-		if( ! d->plugininfomap.contains( *pcit ) )
+		if( ! d->plugininfomap.tqcontains( *pcit ) )
 		{
 			// if not the KCModule must be enabled
 			enabled = true;

@@ -44,5 +44,5 @@ VariableInterface *KTextEditor::variableInterface( Document *doc )
   if ( ! doc )
     return 0;
 
-  return static_cast<VariableInterface*>(doc->qt_cast("KTextEditor::VariableInterface"));
+  return static_cast<VariableInterface*>(doc->tqqt_cast("KTextEditor::VariableInterface"));
 }

@@ -133,7 +133,7 @@ public:
      * KMainWindow *kmw = new KMainWindow (...);
      * \endcode
      **/
-    KMainWindow( TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
+    KMainWindow( TQWidget* parent = 0, const char *name = 0, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
 
     /**
      * Flags that can be passed in an argument to the constructor to
@@ -155,7 +155,7 @@ public:
      *
      * @since 3.2
      */
-    KMainWindow( int cflags, TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
+    KMainWindow( int cflags, TQWidget* parent = 0, const char *name = 0, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
 
     /**
      * \brief Destructor.
@@ -444,10 +444,10 @@ public:
      *   have been created and placed inside the main window (i.e. for 99% of
      *   apps setCentralWidget())
      * - Widgets that inherit from TQWidget (like game boards) should overload
-     *   "virtual TQSize sizeHint() const;" to specify a default size rather
+     *   "virtual TQSize tqsizeHint() const;" to specify a default size rather
      *   than letting TQWidget::adjust use the default size of 0x0.
      */
-    void setAutoSaveSettings( const TQString & groupName = TQString::fromLatin1("MainWindow"),
+    void setAutoSaveSettings( const TQString & groupName = TQString::tqfromLatin1("MainWindow"),
                               bool saveWindowSize = true );
 
     /**
@@ -649,10 +649,10 @@ public:
      *
      * @deprecated You normally don't need this, the recommended way to achieve a
      *   certain central widget size is as follows:
-     *     @li Override sizeHint() in the central widget so that it
+     *     @li Override tqsizeHint() in the central widget so that it
      *      returns the desired size.
      *     @li Call updateGeometry() in the central widget whenever the
-     *      desired size changes. This ensures that the new sizeHint() is properly
+     *      desired size changes. This ensures that the new tqsizeHint() is properly
      *      propagated to any parent layout.
      *     @li Now call adjustSize() in the mainwindow to resize the
      *      mainwindow such that the central widget will become the desired size.
@@ -1028,7 +1028,7 @@ template <typename T>
 inline void kRestoreMainWindows() {
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
     const TQString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == TQString::fromLatin1( T::staticMetaObject()->className() ) )
+    if ( className == TQString::tqfromLatin1( T::staticMetaObject()->className() ) )
       (new T)->restore( n );
   }
 }
@@ -1040,9 +1040,9 @@ inline void kRestoreMainWindows() {
   classNames[1] = T1::staticMetaObject()->className();
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
     const TQString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == TQString::fromLatin1( classNames[0] ) )
+    if ( className == TQString::tqfromLatin1( classNames[0] ) )
       (new T0)->restore( n );
-    else if ( className == TQString::fromLatin1( classNames[1] ) )
+    else if ( className == TQString::tqfromLatin1( classNames[1] ) )
       (new T1)->restore( n );
   }
 }
@@ -1055,11 +1055,11 @@ inline void kRestoreMainWindows() {
   classNames[2] = T2::staticMetaObject()->className();
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
     const TQString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == TQString::fromLatin1( classNames[0] ) )
+    if ( className == TQString::tqfromLatin1( classNames[0] ) )
       (new T0)->restore( n );
-    else if ( className == TQString::fromLatin1( classNames[1] ) )
+    else if ( className == TQString::tqfromLatin1( classNames[1] ) )
       (new T1)->restore( n );
-    else if ( className == TQString::fromLatin1( classNames[2] ) )
+    else if ( className == TQString::tqfromLatin1( classNames[2] ) )
       (new T2)->restore( n );
   }
 }

@@ -91,7 +91,7 @@ class KatePartPluginItem
 // KateDocument Constructor
 //
 KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
-                             bool bReadOnly, TQWidget *parentWidget,
+                             bool bReadOnly, TQWidget *tqparentWidget,
                              const char *widgetName, TQObject *parent, const char *name)
 : Kate::Document(parent, name),
   m_plugins (KateFactory::self()->plugins().count()),
@@ -214,7 +214,7 @@ KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
   // if single view mode, like in the konqui embedding, create a default view ;)
   if ( m_bSingleViewMode )
   {
-    KTextEditor::View *view = createView( parentWidget, widgetName );
+    KTextEditor::View *view = createView( tqparentWidget, widgetName );
     insertChildClient( view );
     view->show();
     setWidget( view );
@@ -1176,7 +1176,7 @@ bool KateDocument::editInsertText ( uint line, uint col, const TQString &str )
       uint tw = config()->tabWidth();
       int pos = 0;
       uint l = 0;
-      while ( (pos = s.find('\t')) > -1 )
+      while ( (pos = s.tqfind('\t')) > -1 )
       {
         l = tw - ( (col + pos)%tw );
         s.replace( pos, 1, TQString().fill( ' ', l ) );
@@ -1187,7 +1187,7 @@ bool KateDocument::editInsertText ( uint line, uint col, const TQString &str )
 
   editAddUndo (KateUndoGroup::editInsertText, line, col, s.length(), s);
 
-  l->insertText (col, s.length(), s.unicode());
+  l->insertText (col, s.length(), s.tqunicode());
 //   removeTrailingSpace(line); // ### nessecary?
 
   m_buffer->changeLine(line);
@@ -1410,7 +1410,7 @@ bool KateDocument::editInsertLine ( uint line, const TQString &s )
   removeTrailingSpace( line ); // old line
 
   KateTextLine::Ptr tl = new KateTextLine();
-  tl->insertText (0, s.length(), s.unicode(), 0);
+  tl->insertText (0, s.length(), s.tqunicode(), 0);
   m_buffer->insertLine(line, tl);
   m_buffer->changeLine(line);
 
@@ -2050,7 +2050,7 @@ void KateDocument::clearMark( uint line )
   emit marksChanged();
   delete mark;
   tagLines( line, line );
-  repaintViews(true);
+  tqrepaintViews(true);
 }
 
 void KateDocument::addMark( uint line, uint markType )
@@ -2087,7 +2087,7 @@ void KateDocument::addMark( uint line, uint markType )
 
   emit marksChanged();
   tagLines( line, line );
-  repaintViews(true);
+  tqrepaintViews(true);
 }
 
 void KateDocument::removeMark( uint line, uint markType )
@@ -2119,7 +2119,7 @@ void KateDocument::removeMark( uint line, uint markType )
 
   emit marksChanged();
   tagLines( line, line );
-  repaintViews(true);
+  tqrepaintViews(true);
 }
 
 TQPtrList<KTextEditor::Mark> KateDocument::marks()
@@ -2146,7 +2146,7 @@ void KateDocument::clearMarks()
   m_marks.clear();
 
   emit marksChanged();
-  repaintViews(true);
+  tqrepaintViews(true);
 }
 
 void KateDocument::setPixmap( MarkInterface::MarkTypes type, const TQPixmap& pixmap )
@@ -2316,7 +2316,7 @@ bool KateDocument::openURL( const KURL &url )
       w = m_views.first();
 
     if (w)
-      m_job->setWindow (w->topLevelWidget());
+      m_job->setWindow (w->tqtopLevelWidget());
 
     emit started( m_job );
 
@@ -2395,7 +2395,7 @@ bool KateDocument::openFile(KIO::Job * job)
   // service type magic to get encoding right
   //
   TQString serviceType = m_extension->urlArgs().serviceType.simplifyWhiteSpace();
-  int pos = serviceType.find(';');
+  int pos = serviceType.tqfind(';');
   if (pos != -1)
     setEncoding (serviceType.mid(pos+1));
 
@@ -2589,7 +2589,7 @@ bool KateDocument::saveFile()
   //
   if (!m_buffer->canEncode ()
        && (KMessageBox::warningContinueCancel(0,
-           i18n("The selected encoding cannot encode every unicode character in this document. Do you really want to save it? There could be some data lost."),i18n("Possible Data Loss"),i18n("Save Nevertheless")) != KMessageBox::Continue))
+           i18n("The selected encoding cannot encode every tqunicode character in this document. Do you really want to save it? There could be some data lost."),i18n("Possible Data Loss"),i18n("Save Nevertheless")) != KMessageBox::Continue))
   {
     return false;
   }
@@ -2872,7 +2872,7 @@ void KateDocument::makeAttribs(bool needInvalidate)
     m_views.at(z)->renderer()->updateAttributes ();
 
   if (needInvalidate)
-    m_buffer->invalidateHighlighting();
+    m_buffer->tqinvalidateHighlighting();
 
   tagAll ();
 }
@@ -3195,7 +3195,7 @@ void KateDocument::backspace( KateView *view, const KateTextCursor& c )
       if (!textLine)
         return;
 
-      if (config()->wordWrap() && textLine->endingWith(TQString::fromLatin1(" ")))
+      if (config()->wordWrap() && textLine->endingWith(TQString::tqfromLatin1(" ")))
       {
         // gg: in hard wordwrap mode, backspace must also eat the trailing space
         removeText (line-1, textLine->length()-1, line, 0);
@@ -4112,10 +4112,10 @@ void KateDocument::tagLines(KateTextCursor start, KateTextCursor end)
     m_views.at(z)->tagLines(start, end, true);
 }
 
-void KateDocument::repaintViews(bool paintOnlyDirty)
+void KateDocument::tqrepaintViews(bool paintOnlyDirty)
 {
   for (uint z = 0; z < m_views.count(); z++)
-    m_views.at(z)->repaintText(paintOnlyDirty);
+    m_views.at(z)->tqrepaintText(paintOnlyDirty);
 }
 
 void KateDocument::tagAll()
@@ -4634,7 +4634,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
 {
   // simple check first, no regex
   // no kate inside, no vars, simple...
-  if (t.find("kate") < 0)
+  if (t.tqfind("kate") < 0)
     return;
 
   // found vars, if any

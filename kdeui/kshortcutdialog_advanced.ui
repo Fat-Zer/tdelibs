@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>KShortcutDialogAdvanced</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KShortcutDialogAdvanced</cstring>
     </property>
@@ -27,7 +27,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QButtonGroup">
+        <widget class="TQButtonGroup">
             <property name="name">
                 <cstring>m_frameMore</cstring>
             </property>
@@ -47,7 +47,7 @@
                 <property name="margin">
                     <number>0</number>
                 </property>
-                <widget class="QRadioButton" row="1" column="0">
+                <widget class="TQRadioButton" row="1" column="0">
                     <property name="name">
                         <cstring>m_btnAlternate</cstring>
                     </property>
@@ -58,7 +58,7 @@
                         <string>Alternate shortcut:</string>
                     </property>
                 </widget>
-                <widget class="QRadioButton" row="0" column="0">
+                <widget class="TQRadioButton" row="0" column="0">
                     <property name="name">
                         <cstring>m_btnPrimary</cstring>
                     </property>
@@ -69,7 +69,7 @@
                         <string>Primary shortcut:</string>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="1" column="2">
+                <widget class="TQLayoutWidget" row="1" column="2">
                     <property name="name">
                         <cstring>layout6</cstring>
                     </property>
@@ -111,7 +111,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>21</width>
                                     <height>20</height>
@@ -120,7 +120,7 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QLayoutWidget" row="0" column="2">
+                <widget class="TQLayoutWidget" row="0" column="2">
                     <property name="name">
                         <cstring>layout7</cstring>
                     </property>
@@ -165,7 +165,7 @@
                             <property name="sizeType">
                                 <enum>Expanding</enum>
                             </property>
-                            <property name="sizeHint">
+                            <property name="tqsizeHint">
                                 <size>
                                     <width>21</width>
                                     <height>20</height>
@@ -174,7 +174,7 @@
                         </spacer>
                     </hbox>
                 </widget>
-                <widget class="QPushButton" row="0" column="1">
+                <widget class="TQPushButton" row="0" column="1">
                     <property name="name">
                         <cstring>m_btnClearPrimary</cstring>
                     </property>
@@ -188,7 +188,7 @@
                         <string>Clear shortcut</string>
                     </property>
                 </widget>
-                <widget class="QPushButton" row="1" column="1">
+                <widget class="TQPushButton" row="1" column="1">
                     <property name="name">
                         <cstring>m_btnClearAlternate</cstring>
                     </property>
@@ -202,7 +202,7 @@
                         <string>Clear shortcut</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0">
+                <widget class="TQCheckBox" row="2" column="0">
                     <property name="name">
                         <cstring>m_btnMultiKey</cstring>
                     </property>

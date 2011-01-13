@@ -94,7 +94,7 @@ class KPanelExtensionPrivate;
  *
  * @author Matthias Elter <elter@kde.org>
  **/
-class KDEUI_EXPORT KPanelExtension : public QFrame
+class KDEUI_EXPORT KPanelExtension : public TQFrame
 {
     Q_OBJECT
 
@@ -136,7 +136,7 @@ public:
      * location in the Window Manager Dock. Please note that the size can not be larger than the
      * maxsize given by the handler.
      **/
-    virtual TQSize sizeHint(Position /*p*/, TQSize maxsize) const { return maxsize; }
+    virtual TQSize tqsizeHint(Position /*p*/, TQSize maxsize) const { return maxsize; }
 
     /**
      * Always use this KConfig object to save/load your extensions configuration.
@@ -189,7 +189,7 @@ public:
     /**
      * @internal
      **/
-    void setAlignment( Alignment a );
+    void tqsetAlignment( Alignment a );
     /**
      * @internal
      * @since 3.1
@@ -282,9 +282,9 @@ protected:
     Position position() const { return _position; }
 
     /**
-     * @return the extension's alignment. (left/top, center, or right/bottom)
+     * @return the extension's tqalignment. (left/top, center, or right/bottom)
      **/
-    Alignment alignment() const { return _alignment; }
+    Alignment tqalignment() const { return _tqalignment; }
 
     /**
      * @return the extensions orientation. (horizontal or vertical)
@@ -305,11 +305,11 @@ protected:
     virtual void positionChange( Position ) {}
 
     /**
-     * This extension has changed its alignment.
+     * This extension has changed its tqalignment.
      * Reimplement this change handler in order to adjust the look of your
      * applet.
      **/
-    virtual void alignmentChange( Alignment ) {}
+    virtual void tqalignmentChange( Alignment ) {}
 
     /**
      * Use this method to set the custom menu for this extensions so that it can be shown
@@ -333,7 +333,7 @@ protected:
 private:
     Type         		_type;
     Position     		_position;
-    Alignment    		_alignment;
+    Alignment    		_tqalignment;
     KConfig*     		_config;
     int          		_actions;
 protected:

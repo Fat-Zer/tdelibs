@@ -76,8 +76,8 @@ namespace khtml {
         {
             DOMStringImpl *value = 0;
             NodeImpl::Id tid = 0;
-            if(buffer->unicode()) {
-		tid = buffer->unicode();
+            if(buffer->tqunicode()) {
+		tid = buffer->tqunicode();
 		value = v.implementation();
             }
             else if ( !attrName.isEmpty() && attrName != "/" ) {

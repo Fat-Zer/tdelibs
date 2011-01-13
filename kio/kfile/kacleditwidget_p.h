@@ -24,6 +24,10 @@
 #include <config.h>
 #endif
 
+#ifdef Q_MOC_RUN
+#define USE_POSIX_ACL
+#endif // Q_MOC_RUN
+
 #ifdef USE_POSIX_ACL
 #include <klistview.h>
 #include <sys/acl.h>
@@ -45,7 +49,8 @@ class TQCheckBox;
 */
 class KACLListView : public KListView
 {
-Q_OBJECT
+    Q_OBJECT
+    TQ_OBJECT
     friend class KACLListViewItem;
 public:
     enum Types
@@ -129,6 +134,7 @@ private:
 class EditACLEntryDialog : public KDialogBase
 {
     Q_OBJECT
+    TQ_OBJECT
 public:
     EditACLEntryDialog( KACLListView *listView, KACLListViewItem *item,
                         const TQStringList &users,
@@ -180,10 +186,10 @@ public:
     void togglePerm( acl_perm_t perm );
 
     virtual void paintCell( TQPainter *p, const TQColorGroup &cg,
-                            int column, int width, int alignment );
+                            int column, int width, int tqalignment );
 
     void updatePermPixmaps();
-    void repaint();
+    void tqrepaint();
 
     KACLListView::EntryType type;
     unsigned short value;

@@ -84,7 +84,7 @@ KDE_EXPORT void kimgio_xv_read( TQImageIO *_imageio )
 		r =  rg_255_7[((j >> 5) & 0x07)];
 		g =  rg_255_7[((j >> 2) & 0x07)];
 		b =  b_255_3[((j >> 0) & 0x03)];
-		image.setColor( j, qRgb( r, g, b ) );
+		image.setColor( j, tqRgb( r, g, b ) );
 	}
 
 	for ( int py = 0; py < y; py++ )
@@ -94,7 +94,7 @@ KDE_EXPORT void kimgio_xv_read( TQImageIO *_imageio )
 	}
 
 	_imageio->setImage( image );
-	_imageio->setStatus( 0 );
+	_imageio->setqStatus( 0 );
 
 	free(block);
 	return;
@@ -138,24 +138,24 @@ KDE_EXPORT void kimgio_xv_write( TQImageIO *imageio )
 
 	for ( int py = 0; py < h; py++ )
 	{
-		uchar *data = image.scanLine( py );
+		uchar *data = const_cast<TQImage&>(image).scanLine( py );
 		for ( int px = 0; px < w; px++ )
 		{
 			int r, g, b;
 			if ( image.depth() == 32 )
 			{
 				QRgb *data32 = (QRgb*) data;
-				r = qRed( *data32 ) >> 5;
-				g = qGreen( *data32 ) >> 5;		
-				b = qBlue( *data32 ) >> 6;
+				r = tqRed( *data32 ) >> 5;
+				g = tqGreen( *data32 ) >> 5;		
+				b = tqBlue( *data32 ) >> 6;
 				data += sizeof( QRgb );
 			}
 			else 
 			{
 				QRgb color = image.color( *data );
-				r = qRed( color ) >> 5;
-				g = qGreen( color ) >> 5;		
-				b = qBlue( color ) >> 6;
+				r = tqRed( color ) >> 5;
+				g = tqGreen( color ) >> 5;		
+				b = tqBlue( color ) >> 6;
 				data++;
 			}
 			buffer[ px ] = ( r << 5 ) | ( g << 2 ) | b;
@@ -164,6 +164,6 @@ KDE_EXPORT void kimgio_xv_write( TQImageIO *imageio )
 	}
         delete[] buffer;
 
-	imageio->setStatus( 0 );
+	imageio->setqStatus( 0 );
 }
 

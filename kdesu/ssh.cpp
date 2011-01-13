@@ -156,12 +156,12 @@ TQCString SshProcess::dcopForward()
     if (srv.isEmpty())
         return result;
 
-    int i = srv.find('/');
+    int i = srv.tqfind('/');
     if (i == -1)
         return result;
     if (srv.left(i) != "tcp")
         return result;
-    int j = srv.find(':', ++i);
+    int j = srv.tqfind(':', ++i);
     if (j == -1)
         return result;
     TQCString host = srv.mid(i, j-i);

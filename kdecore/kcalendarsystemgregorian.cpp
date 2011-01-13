@@ -58,7 +58,7 @@ int KCalendarSystemGregorian::weeksInYear(int year) const
   // If the last day of the year is in the first week, we have to check the
   // week before
   if ( temp.weekNumber() == 1 )
-    temp = temp.addDays(-7);
+    temp = TQT_TQDATE_OBJECT(temp.addDays(-7));
 
   return temp.weekNumber();
 }
@@ -221,17 +221,17 @@ bool KCalendarSystemGregorian::setYMD(TQDate & date, int y, int m, int d) const
 
 TQDate KCalendarSystemGregorian::addYears(const TQDate & date, int nyears) const
 {
-  return date.addYears(nyears);
+  return TQT_TQDATE_OBJECT(date.addYears(nyears));
 }
 
 TQDate KCalendarSystemGregorian::addMonths(const TQDate & date, int nmonths) const
 {
-  return date.addMonths(nmonths);
+  return TQT_TQDATE_OBJECT(date.addMonths(nmonths));
 }
 
 TQDate KCalendarSystemGregorian::addDays(const TQDate & date, int ndays) const
 {
-  return date.addDays(ndays);
+  return TQT_TQDATE_OBJECT(date.addDays(ndays));
 }
 
 TQString KCalendarSystemGregorian::weekDayName(int col, bool shortName) const
@@ -295,7 +295,7 @@ int KCalendarSystemGregorian::weekDayOfPray() const
 
 TQString KCalendarSystemGregorian::calendarName() const
 {
-  return TQString::fromLatin1("gregorian");
+  return TQString::tqfromLatin1("gregorian");
 }
 
 bool KCalendarSystemGregorian::isLunar() const

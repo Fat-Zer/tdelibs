@@ -144,7 +144,7 @@ bool KAcceleratorManagerPrivate::standardName(const TQString &str)
 {
     if (!kaccmp_sns)
         kaccmp_sns_d.setObject(kaccmp_sns, new TQStringList(KStdAction::internal_stdNames()));
-        return kaccmp_sns->contains(str);
+        return kaccmp_sns->tqcontains(str);
 }
 
 KAcceleratorManagerPrivate::Item::~Item()
@@ -223,7 +223,7 @@ void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &use
         {
             if (it->m_index >= 0)
             {
-                TQMenuItem *mitem = menuBar->findItem(menuBar->idAt(it->m_index));
+                TQMenuItem *mitem = menuBar->tqfindItem(menuBar->idAt(it->m_index));
                 if (mitem)
                 {
                     checkChange(contents[cnt]);
@@ -239,12 +239,12 @@ void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &use
         if ( dynamic_cast<TQLabel*>( it->m_widget ) && it->m_widget->inherits("KURLLabel") )
              continue;
 
-        int tprop = it->m_widget->metaObject()->findProperty("text", true);
+        int tprop = it->m_widget->tqmetaObject()->tqfindProperty("text", true);
         if (tprop != -1)  {
             if (checkChange(contents[cnt]))
                 it->m_widget->setProperty("text", contents[cnt].accelerated());
         } else {
-            tprop = it->m_widget->metaObject()->findProperty("title", true);
+            tprop = it->m_widget->tqmetaObject()->tqfindProperty("title", true);
             if (tprop != -1 && checkChange(contents[cnt]))
                 it->m_widget->setProperty("title", contents[cnt].accelerated());
         }
@@ -265,12 +265,12 @@ void KAcceleratorManagerPrivate::traverseChildren(TQWidget *widget, Item *item)
   TQObjectList *childList = widget->queryList("TQWidget", 0, false, false);
   for ( TQObject *it = childList->first(); it; it = childList->next() )
   {
-    TQWidget *w = static_cast<TQWidget*>(it);
+    TQWidget *w = TQT_TQWIDGET(it);
 
     if ( !w->isVisibleTo( widget ) || ( w->isTopLevel() && dynamic_cast<TQPopupMenu*>(w) == NULL ) )
         continue;
 
-    if ( KAcceleratorManagerPrivate::ignored_widgets.find( w ) != KAcceleratorManagerPrivate::ignored_widgets.end() )
+    if ( KAcceleratorManagerPrivate::ignored_widgets.tqfind( w ) != KAcceleratorManagerPrivate::ignored_widgets.end() )
         continue;
 
     manageWidget(w, item);
@@ -320,7 +320,7 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
 
   if (dynamic_cast<TQComboBox*>(w) || dynamic_cast<TQLineEdit*>(w) ||
       dynamic_cast<TQTextEdit*>(w) || dynamic_cast<TQTextView*>(w) ||
-      dynamic_cast<TQSpinBox*>(w) || w->qt_cast( "KMultiTabBar" ))
+      dynamic_cast<TQSpinBox*>(w) || w->tqqt_cast( "KMultiTabBar" ))
       return;
 
   // now treat 'ordinary' widgets
@@ -340,9 +340,9 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
   {
     TQString content;
     TQVariant variant;
-    int tprop = w->metaObject()->findProperty("text", true);
+    int tprop = w->tqmetaObject()->tqfindProperty("text", true);
     if (tprop != -1)  {
-        const TQMetaProperty* p = w->metaObject()->property( tprop, true );
+        const TQMetaProperty* p = w->tqmetaObject()->property( tprop, true );
         if ( p && p->isValid() )
             w->qt_property( tprop, 1, &variant );
         else
@@ -350,9 +350,9 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
     }
 
     if (tprop == -1)  {
-        tprop = w->metaObject()->findProperty("title", true);
+        tprop = w->tqmetaObject()->tqfindProperty("title", true);
         if (tprop != -1)  {
-            const TQMetaProperty* p = w->metaObject()->property( tprop, true );
+            const TQMetaProperty* p = w->tqmetaObject()->property( tprop, true );
             if ( p && p->isValid() )
                 w->qt_property( tprop, 1, &variant );
         }
@@ -409,7 +409,7 @@ void KAcceleratorManagerPrivate::manageMenuBar(TQMenuBar *mbar, Item *item)
 
     for (uint i=0; i<mbar->count(); ++i)
     {
-        mitem = mbar->findItem(mbar->idAt(i));
+        mitem = mbar->tqfindItem(mbar->idAt(i));
         if (!mitem)
             continue;
 
@@ -478,18 +478,18 @@ void KAcceleratorManager::last_manage(TQString &added,  TQString &changed, TQStr
 KAccelString::KAccelString(const TQString &input, int initialWeight)
   : m_pureText(input), m_weight()
 {
-    m_orig_accel = m_pureText.find("(!)&");
+    m_orig_accel = m_pureText.tqfind("(!)&");
     if (m_orig_accel != -1)
 	m_pureText.remove(m_orig_accel, 4);
 
-    m_orig_accel = m_pureText.find("(&&)");
+    m_orig_accel = m_pureText.tqfind("(&&)");
     if (m_orig_accel != -1)
         m_pureText.replace(m_orig_accel, 4, "&");
 
     m_origText = m_pureText;
 
     if (m_pureText.contains('\t'))
-        m_pureText = m_pureText.left(m_pureText.find('\t'));
+        m_pureText = m_pureText.left(m_pureText.tqfind('\t'));
 
     m_orig_accel = m_accel = stripAccelerator(m_pureText);
 
@@ -598,7 +598,7 @@ int KAccelString::stripAccelerator(TQString &text)
 
   while (p >= 0)
   {
-    p = text.find('&', p)+1;
+    p = text.tqfind('&', p)+1;
 
     if (p <= 0 || p >= (int)text.length())
       return -1;
@@ -626,7 +626,7 @@ int KAccelString::maxWeight(int &index, const TQString &used)
   index = -1;
 
   for (uint pos=0; pos<m_pureText.length(); ++pos)
-    if (used.find(m_pureText[pos], 0, FALSE) == -1 && m_pureText[pos].latin1() != 0)
+    if (used.tqfind(m_pureText[pos], 0, FALSE) == -1 && m_pureText[pos].latin1() != 0)
       if (m_weight[pos] > max)
       {
         max = m_weight[pos];
@@ -785,7 +785,7 @@ void KPopupAccelManager::findMenuEntries(KAccelStringList &list)
   // read out the menu entries
   for (uint i=0; i<m_popup->count(); i++)
   {
-    mitem = m_popup->findItem(m_popup->idAt(i));
+    mitem = m_popup->tqfindItem(m_popup->idAt(i));
     if (mitem->isSeparator())
       continue;
 
@@ -812,7 +812,7 @@ void KPopupAccelManager::setMenuEntries(const KAccelStringList &list)
   uint cnt = 0;
   for (uint i=0; i<m_popup->count(); i++)
   {
-    mitem = m_popup->findItem(m_popup->idAt(i));
+    mitem = m_popup->tqfindItem(m_popup->idAt(i));
     if (mitem->isSeparator())
       continue;
 
@@ -845,8 +845,8 @@ QWidgetStackAccelManager::QWidgetStackAccelManager(TQWidgetStack *stack)
 
 bool QWidgetStackAccelManager::eventFilter ( TQObject * watched, TQEvent * e )
 {
-    if ( e->type() == TQEvent::Show && qApp->activeWindow() ) {
-        KAcceleratorManager::manage( qApp->activeWindow() );
+    if ( e->type() == TQEvent::Show && tqApp->activeWindow() ) {
+        KAcceleratorManager::manage( TQT_TQWIDGET(tqApp->activeWindow()) );
         watched->removeEventFilter( this );
     }
     return false;

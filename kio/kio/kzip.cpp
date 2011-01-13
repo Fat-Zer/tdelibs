@@ -60,7 +60,7 @@ static void transformToMsDos(const TQDateTime& dt, char* buffer)
 {
     if ( dt.isValid() )
     {
-        const Q_UINT16 time =
+        const TQ_UINT16 time =
              ( dt.time().hour() << 11 )    // 5 bit hour
            | ( dt.time().minute() << 5 )   // 6 bit minute
            | ( dt.time().second() >> 1 );  // 5 bit double seconds
@@ -68,7 +68,7 @@ static void transformToMsDos(const TQDateTime& dt, char* buffer)
         buffer[0] = char(time);
         buffer[1] = char(time >> 8);
 
-        const Q_UINT16 date =
+        const TQ_UINT16 date =
              ( ( dt.date().year() - 1980 ) << 9 ) // 7 bit year 1980-based
            | ( dt.date().month() << 5 )           // 4 bit month
            | ( dt.date().day() );                 // 5 bit day
@@ -87,13 +87,13 @@ static void transformToMsDos(const TQDateTime& dt, char* buffer)
 
 static time_t transformFromMsDos(const char* buffer)
 {
-    Q_UINT16 time = (uchar)buffer[0] | ( (uchar)buffer[1] << 8 );
+    TQ_UINT16 time = (uchar)buffer[0] | ( (uchar)buffer[1] << 8 );
     int h = time >> 11;
     int m = ( time & 0x7ff ) >> 5;
     int s = ( time & 0x1f ) * 2 ;
     TQTime qt(h, m, s);
 
-    Q_UINT16 date = (uchar)buffer[2] | ( (uchar)buffer[3] << 8 );
+    TQ_UINT16 date = (uchar)buffer[2] | ( (uchar)buffer[3] << 8 );
     int y = ( date >> 9 ) + 1980;
     int o = ( date & 0x1ff ) >> 5;
     int d = ( date & 0x1f );
@@ -385,7 +385,7 @@ bool KZip::openArchive( int mode )
                 return false;
             }
             Q_ASSERT( d->m_saveFile->file() );
-            setDevice( d->m_saveFile->file() );
+            setDevice( TQT_TQIODEVICE(d->m_saveFile->file()) );
         }
         return true;
     case IO_ReadOnly:
@@ -393,8 +393,8 @@ bool KZip::openArchive( int mode )
     {
         // ReadWrite mode still uses TQFile for now; we'd need to copy to the tempfile, in fact.
         if ( !m_filename.isEmpty() ) {
-            setDevice( new TQFile( m_filename ) );
-            if ( !device()->open( mode ) )
+            setDevice( TQT_TQIODEVICE(new TQFile( m_filename )) );
+            if ( !device()->tqopen( mode ) )
                 return false;
         }
         break; // continued below
@@ -462,9 +462,9 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
 	    int compression_mode = (uchar)buffer[2] | (uchar)buffer[3] << 8;
 	    time_t mtime = transformFromMsDos( buffer+4 );
 
-	    Q_LONG compr_size = (uchar)buffer[12] | (uchar)buffer[13] << 8
+	    TQ_LONG compr_size = (uchar)buffer[12] | (uchar)buffer[13] << 8
 	    			| (uchar)buffer[14] << 16 | (uchar)buffer[15] << 24;
-	    Q_LONG uncomp_size = (uchar)buffer[16] | (uchar)buffer[17] << 8
+	    TQ_LONG uncomp_size = (uchar)buffer[16] | (uchar)buffer[17] << 8
 	    			| (uchar)buffer[18] << 16 | (uchar)buffer[19] << 24;
 	    int namelen = (uchar)buffer[20] | (uchar)buffer[21] << 8;
 	    int extralen = (uchar)buffer[22] | (uchar)buffer[23] << 8;
@@ -578,7 +578,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
 		    }
 		} else {
 
-	            if ( compr_size > (Q_LONG)dev->size() )
+	            if ( compr_size > (TQ_LONG)dev->size() )
 		    {
 		    	// here we cannot trust the compressed size, so scan through the compressed
 			// data to find the next header
@@ -736,7 +736,7 @@ kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
 		else Q_ASSERT(access & S_IFDIR);
             }
 
-            int pos = name.findRev( '/' );
+            int pos = name.tqfindRev( '/' );
             if ( pos == -1 )
                 entryName = name;
             else
@@ -871,9 +871,9 @@ bool KZip::closeArchive()
     char buffer[ 22 ]; // first used for 12, then for 22 at the end
     uLong crc = crc32(0L, Z_NULL, 0);
 
-    Q_LONG centraldiroffset = device()->at();
+    TQ_LONG centraldiroffset = device()->at();
     //kdDebug(7040) << "closearchive: centraldiroffset: " << centraldiroffset << endl;
-    Q_LONG atbackup = centraldiroffset;
+    TQ_LONG atbackup = centraldiroffset;
     TQPtrListIterator<KZipFileEntry> it( d->m_fileList );
 
     for ( ; it.current() ; ++it )
@@ -994,7 +994,7 @@ bool KZip::closeArchive()
         if ( !ok )
             return false;
     }
-    Q_LONG centraldirendoffset = device()->at();
+    TQ_LONG centraldirendoffset = device()->at();
     //kdDebug(7040) << "closearchive: centraldirendoffset: " << centraldirendoffset << endl;
     //kdDebug(7040) << "closearchive: device()->at(): " << device()->at() << endl;
 
@@ -1133,7 +1133,7 @@ bool KZip::prepareWriting_impl(const TQString &name, const TQString &user,
     // Find or create parent dir
     KArchiveDirectory* parentDir = rootDir();
     TQString fileName( name );
-    int i = name.findRev( '/' );
+    int i = name.tqfindRev( '/' );
     if ( i != -1 )
     {
         TQString dir = name.left( i );
@@ -1383,9 +1383,9 @@ bool KZip::writeData_impl(const char * c, uint i)
     // and they didn't mention it in their docs...
     d->m_crc = crc32(d->m_crc, (const Bytef *) c , i);
 
-    Q_LONG written = d->m_currentDev->writeBlock( c, i );
+    TQ_LONG written = d->m_currentDev->writeBlock( c, i );
     //kdDebug(7040) << "KZip::writeData wrote " << i << " bytes." << endl;
-    bool ok = written == (Q_LONG)i;
+    bool ok = written == (TQ_LONG)i;
     if ( !ok )
         abort();
     return ok;

@@ -28,7 +28,7 @@ class CustomFileDialog;
 class Preview;
 class DirectoryView;
 
-class SFileDialog : public QDialog
+class SFileDialog : public TQDialog
 {Q_OBJECT
 
 public:
@@ -67,7 +67,7 @@ private:
   TQToolButton *b_preview;
 };
 /******************************************************************************************************/
-class Directory : public QListViewItem
+class Directory : public TQListViewItem
 {
 public:
     Directory( TQListView * parent, const TQString& filename );
@@ -86,7 +86,7 @@ private:
     bool readable;
 };
 
-class DirectoryView : public QListView
+class DirectoryView : public TQListView
 {Q_OBJECT
 public:
   DirectoryView( TQWidget *parent = 0, const char *name = 0 );
@@ -107,7 +107,7 @@ private:
   TQString fullPath(TQListViewItem* item);
 };
 /******************************************************************************************************/
-class PixmapView : public QScrollView
+class PixmapView : public TQScrollView
 {Q_OBJECT
 public:
   PixmapView( TQWidget *parent );
@@ -118,7 +118,7 @@ private:
   TQPixmap pixmap;
 };
 
-class Preview : public QWidgetStack
+class Preview : public TQWidgetStack
 {Q_OBJECT
 public:
   Preview( TQWidget *parent );
@@ -132,7 +132,7 @@ private:
   PixmapView *pixmap;
 };
 
-class CustomFileDialog : public QFileDialog
+class CustomFileDialog : public TQFileDialog
 {Q_OBJECT
 public:
   CustomFileDialog( TQWidget* parent );

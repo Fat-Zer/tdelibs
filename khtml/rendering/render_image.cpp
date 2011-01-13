@@ -196,10 +196,10 @@ void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
         resizeCache = TQPixmap(); // for resized animations
 
         if(completeRepaint)
-            repaintRectangle(borderLeft()+paddingLeft(), borderTop()+paddingTop(), contentWidth(), contentHeight());
+            tqrepaintRectangle(borderLeft()+paddingLeft(), borderTop()+paddingTop(), contentWidth(), contentHeight());
         else
         {
-            repaintRectangle(r.x() + borderLeft() + paddingLeft(), r.y() + borderTop() + paddingTop(),
+            tqrepaintRectangle(r.x() + borderLeft() + paddingLeft(), r.y() + borderTop() + paddingTop(),
                              r.width(), r.height());
         }
     }
@@ -416,7 +416,7 @@ void RenderImage::notifyFinished(CachedObject *finishedObj)
     if ( ( m_cachedImage == finishedObj || m_oldImage == finishedObj ) && m_oldImage ) {
         m_oldImage->deref( this );
         m_oldImage = 0;
-        repaint();
+        tqrepaint();
     }
 
     RenderReplaced::notifyFinished(finishedObj);

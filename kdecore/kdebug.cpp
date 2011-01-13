@@ -86,7 +86,7 @@ static TQCString getDescrFromNum(unsigned int _num)
     KDebugCache->setAutoDelete(true);
   }
 
-  KDebugEntry *ent = KDebugCache->find( _num );
+  KDebugEntry *ent = KDebugCache->tqfind( _num );
   if ( ent )
     return ent->descr;
 
@@ -130,7 +130,7 @@ static TQCString getDescrFromNum(unsigned int _num)
           ch=line[++i];
       } while ( ch >= '0' && ch <= '9');
 
-      const Q_ULONG number =line.mid(numStart,i).toULong();
+      const TQ_ULONG number =line.mid(numStart,i).toULong();
 
       while (line[i] && line[i] <= ' ')
         i++;
@@ -139,7 +139,7 @@ static TQCString getDescrFromNum(unsigned int _num)
   }
   file.close();
 
-  ent = KDebugCache->find( _num );
+  ent = KDebugCache->tqfind( _num );
   if ( ent )
       return ent->descr;
 
@@ -314,7 +314,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
         abort();
 }
 
-kdbgstream &perror( kdbgstream &s) { return s << TQString::fromLocal8Bit(strerror(errno)); }
+kdbgstream &perror( kdbgstream &s) { return s << TQString(TQString::fromLocal8Bit(strerror(errno))); }
 kdbgstream kdDebug(int area) { return kdbgstream(area, KDEBUG_INFO); }
 kdbgstream kdDebug(bool cond, int area) { if (cond) return kdbgstream(area, KDEBUG_INFO); else return kdbgstream(0, 0, false); }
 
@@ -373,7 +373,7 @@ kdbgstream& kdbgstream::operator << (TQChar ch)
 {
   if (!print) return *this;
   if (!ch.isPrint())
-    output += "\\x" + TQString::number( ch.unicode(), 16 ).rightJustify(2, '0');
+    output += "\\x" + TQString::number( ch.tqunicode(), 16 ).rightJustify(2, '0');
   else {
     output += ch;
     if (ch == (QChar)'\n') flush();
@@ -431,12 +431,12 @@ kdbgstream& kdbgstream::operator<<( const TQDateTime& time) {
     return *this;
 }
 kdbgstream& kdbgstream::operator<<( const TQDate& date) {
-    *this << date.toString();
+    *this << TQString(date.toString());
 
     return *this;
 }
 kdbgstream& kdbgstream::operator<<( const TQTime& time ) {
-    *this << time.toString();
+    *this << TQString(time.toString());
     return *this;
 }
 kdbgstream& kdbgstream::operator<<( const TQPoint& p ) {
@@ -454,9 +454,9 @@ kdbgstream& kdbgstream::operator<<( const TQRect& r ) {
 kdbgstream& kdbgstream::operator<<( const TQRegion& reg ) {
     *this<< "[ ";
 
-    TQMemArray<TQRect>rs=reg.rects();
+    TQMemArray<TQRect>rs=reg.tqrects();
     for (uint i=0;i<rs.size();++i)
-        *this << TQString("[%1,%2 - %3x%4] ").arg(rs[i].x()).arg(rs[i].y()).arg(rs[i].width()).arg(rs[i].height() ) ;
+        *this << TQString(TQString("[%1,%2 - %3x%4] ").arg(rs[i].x()).arg(rs[i].y()).arg(rs[i].width()).arg(rs[i].height() )) ;
 
     *this <<"]";
     return *this;
@@ -474,7 +474,7 @@ kdbgstream& kdbgstream::operator<<( const TQStringList& l ) {
 }
 kdbgstream& kdbgstream::operator<<( const TQColor& c ) {
     if ( c.isValid() )
-        *this <<c.name();
+        *this << TQString(c.name());
     else
         *this << "(invalid/default)";
     return *this;
@@ -491,7 +491,7 @@ kdbgstream& kdbgstream::operator<<( const TQPen& p ) {
     *this << p.width();
     *this << " color:";
     if ( p.color().isValid() )
-        *this << p.color().name();
+        *this << TQString(p.color().name());
     else
         *this <<"(invalid/default)";
     if ( p.width() > 0 ) // cap style doesn't matter, otherwise
@@ -515,7 +515,7 @@ kdbgstream& kdbgstream::operator<<( const TQBrush& b) {
     *this <<" color: ";
     // can't use operator<<(str, b.color()) because that terminates a kdbgstream (flushes)
     if ( b.color().isValid() )
-        *this <<b.color().name() ;
+        *this << TQString(b.color().name()) ;
     else
         *this <<"(invalid/default)";
     if ( b.pixmap() )
@@ -567,8 +567,8 @@ TQString kdBacktrace(int levels)
 
     for (int i = 0; i < n; ++i)
         s += TQString::number(i) +
-             TQString::fromLatin1(": ") +
-             TQString::fromLatin1(strings[i]) + TQString::fromLatin1("\n");
+             TQString::tqfromLatin1(": ") +
+             TQString::tqfromLatin1(strings[i]) + TQString::tqfromLatin1("\n");
     s += "]\n";
     if (strings)
         free (strings);

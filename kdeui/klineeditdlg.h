@@ -20,7 +20,7 @@
 #ifndef __klineeditdlg_h__
 #define __klineeditdlg_h__
 
-#include <tqt.h>
+// #include <tqt.h>
 
 #include <kdialogbase.h>
 

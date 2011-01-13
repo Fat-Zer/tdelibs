@@ -434,7 +434,7 @@ private:
  * You can also include X-KDE-Protocol=file if you want that plugin
  * to be loaded only for local files, for instance.
  */
-class KIO_EXPORT KPropsDlgPlugin : public QObject
+class KIO_EXPORT KPropsDlgPlugin : public TQObject
 {
   Q_OBJECT
 public:

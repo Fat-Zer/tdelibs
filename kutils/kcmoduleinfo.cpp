@@ -179,7 +179,7 @@ KCModuleInfo::loadAll()
   setNeedsTest( tmp.isValid() ? tmp.asBool() : false );
 }
 
-QString
+TQString
 KCModuleInfo::docPath() const
 {
   if (!_allLoaded) 
@@ -188,7 +188,7 @@ KCModuleInfo::docPath() const
   return _doc;
 }
 
-QString
+TQString
 KCModuleInfo::handle() const
 {
   if (!_allLoaded) 

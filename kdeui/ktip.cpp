@@ -59,7 +59,7 @@ KTipDatabase::KTipDatabase(const TQString &_tipFile)
 {
     TQString tipFile = _tipFile;
     if (tipFile.isEmpty())
-	tipFile = TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips";
+	tipFile = TQString::tqfromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips";
 
     loadTips(tipFile);
 
@@ -72,7 +72,7 @@ KTipDatabase::KTipDatabase( const TQStringList& tipsFiles )
 {
    if ( tipsFiles.isEmpty() || ( ( tipsFiles.count() == 1 ) && tipsFiles.first().isEmpty() ) )
    {
-       addTips(TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips");
+       addTips(TQString::tqfromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips");
    }
    else
    {
@@ -115,12 +115,12 @@ void KTipDatabase::addTips(const TQString& tipFile )
     const TQRegExp rx("\\n+");
 
     int pos = -1;
-    while ((pos = content.find("<html>", pos + 1, false)) != -1)
+    while ((pos = content.tqfind("<html>", pos + 1, false)) != -1)
     {
        // to make translations work, tip extraction here must exactly 
        // match what is done by the preparetips script 
        TQString tip = content 
-           .mid(pos + 6, content.find("</html>", pos, false) - pos - 6)
+           .mid(pos + 6, content.tqfind("</html>", pos, false) - pos - 6)
            .replace(rx, "\n");
        if (!tip.endsWith("\n"))
            tip += "\n";
@@ -191,7 +191,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	KIconEffect::colorize(img, mBlendedColor, 1.0);
 	QRgb colPixel( img.pixel(0,0) );
 
-	mBlendedColor = TQColor(qRed(colPixel),qGreen(colPixel),qBlue(colPixel));
+	mBlendedColor = TQColor(tqRed(colPixel),tqGreen(colPixel),tqBlue(colPixel));
     }
 
     mBaseColor = KGlobalSettings::alternateBackgroundColor();
@@ -223,7 +223,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	titlePane->setBackgroundPixmap(locate("data", "kdeui/pics/ktip-background.png"));
 	titlePane->setText(i18n("Did you know...?\n"));
 	titlePane->setFont(TQFont(KGlobalSettings::generalFont().family(), 20, TQFont::Bold));
-	titlePane->setAlignment(TQLabel::AlignCenter);
+	titlePane->tqsetAlignment(TQLabel::AlignCenter);
 	pl->addWidget(titlePane, 100);
     }
 
@@ -268,7 +268,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	TQLabel *l = new TQLabel(hbox);
 	l->setPixmap(img);
 	l->setBackgroundColor(mBlendedColor);
-	l->setAlignment(Qt::AlignRight | Qt::AlignBottom);
+	l->tqsetAlignment(Qt::AlignRight | Qt::AlignBottom);
 
 	resize(550, 230);
         TQSize sh = size();
@@ -347,10 +347,10 @@ void KTipDialog::showMultiTip(TQWidget *parent, const TQStringList &tipFiles, bo
            const int oneDay = 24*60*60;
            TQDateTime lastShown = configGroup.readDateTimeEntry("TipLastShown");
            // Show tip roughly once a week
-           if (lastShown.secsTo(TQDateTime::currentDateTime()) < (oneDay + (kapp->random() % (10*oneDay))))
+           if (lastShown.secsTo(TQDateTime::tqcurrentDateTime()) < (oneDay + (kapp->random() % (10*oneDay))))
                return;
         }
-        configGroup.writeEntry("TipLastShown", TQDateTime::currentDateTime());
+        configGroup.writeEntry("TipLastShown", TQDateTime::tqcurrentDateTime());
         kapp->config()->sync();
         if (!hasLastShown)
            return; // Don't show tip on first start
@@ -384,7 +384,7 @@ static TQString fixTip(TQString tip)
   void KTipDialog::prevTip()
   {
       mDatabase->prevTip();
-      TQString currentTip = TQString::fromLatin1(
+      TQString currentTip = TQString::tqfromLatin1(
      "<qt text=\"%1\" bgcolor=\"%2\">%3</qt>")
      .arg(mTextColor.name())
      .arg(mBaseColor.name())
@@ -399,7 +399,7 @@ static TQString fixTip(TQString tip)
   void KTipDialog::nextTip()
   {
       mDatabase->nextTip();
-      TQString currentTip = TQString::fromLatin1(
+      TQString currentTip = TQString::tqfromLatin1(
         "<qt text=\"%1\" bgcolor=\"%2\">%3</qt>")
         .arg(mTextColor.name())
         .arg(mBaseColor.name())
@@ -425,7 +425,7 @@ static TQString fixTip(TQString tip)
 
   bool KTipDialog::eventFilter(TQObject *o, TQEvent *e)
   {
-    if (o == mTipText && e->type()== TQEvent::KeyPress &&
+    if (TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(mTipText) && e->type()== TQEvent::KeyPress &&
 		(((TQKeyEvent *)e)->key() == Key_Return ||
 		((TQKeyEvent *)e)->key() == Key_Space ))
 		accept();

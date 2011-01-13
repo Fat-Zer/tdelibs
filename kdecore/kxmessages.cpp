@@ -189,7 +189,7 @@ bool KXMessages::x11Event( XEvent* ev_P )
          ++i )
         buf[ i ] = ev_P->xclient.data.b[ i ];
     buf[ i ] = '\0';
-    if( incoming_messages.contains( ev_P->xclient.window ))
+    if( incoming_messages.tqcontains( ev_P->xclient.window ))
         {
         if( ev_P->xclient.message_type == accept_atom1 && accept_atom1 != accept_atom2 )
             // two different messages on the same window at the same time shouldn't happen anyway

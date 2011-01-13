@@ -54,9 +54,10 @@ struct KStylePrivate;
  * @author Karol Szwed (gallium@kde.org)
  * @version $Id$
  */
-class KDEFX_EXPORT KStyle: public QCommonStyle
+class KDEFX_EXPORT KStyle: public TQCommonStyle
 {
 	Q_OBJECT
+	TQ_OBJECT
 
 	public:
 
@@ -70,7 +71,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		 * internal menu transparency engine.
 		 * 
 		 * @li FilledFrameWorkaround - Enable this flag to facilitate 
-		 * proper repaints of QMenuBars and QToolBars when the style chooses 
+		 * proper tqrepaints of QMenuBars and QToolBars when the style chooses 
 		 * to paint the interior of a TQFrame. The style primitives in question 
 		 * are PE_PanelMenuBar and PE_PanelDockWindow. The HighColor style uses
 		 * this workaround to enable painting of gradients in menubars and 
@@ -171,7 +172,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		 * This virtual function defines the pixmap used to blend between the popup
 		 * menu and the background to create different menu transparency effects.
 		 * For example, you can fill the pixmap "pix" with a gradient based on the
-		 * popup's colorGroup, a texture, or some other fancy painting routine.
+		 * popup's tqcolorGroup, a texture, or some other fancy painting routine.
 		 * KStyle will then internally blend this pixmap with a snapshot of the
 		 * background behind the popupMenu to create the illusion of transparency.
 		 * 
@@ -237,13 +238,13 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		};
 
 		/**
-		 * This function is identical to Qt's TQStyle::drawPrimitive(), except that 
+		 * This function is identical to Qt's TQStyle::tqdrawPrimitive(), except that 
 		 * it adds one further parameter, 'widget', that can be used to determine 
 		 * the widget state of the KStylePrimitive in question.
 		 *
 		 * @see KStyle::KStylePrimitive
-		 * @see TQStyle::drawPrimitive
-		 * @see TQStyle::drawComplexControl
+		 * @see TQStyle::tqdrawPrimitive
+		 * @see TQStyle::tqdrawComplexControl
 		 */
 		virtual void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
@@ -251,7 +252,7 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
+					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
 
 		enum KStylePixelMetric {
@@ -274,33 +275,33 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 		void unPolish( TQWidget* widget );
 		void polishPopupMenu( TQPopupMenu* );
 
-		void drawPrimitive( PrimitiveElement pe,
+		void tqdrawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
+					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
 // #ifdef USE_QT4 // kdebindings / smoke needs this function declaration available at all times.  Furthermore I don't think it would hurt to have the declaration available at all times...so leave these commented out for now
 
-		void drawPrimitive( ControlElement pe,
-					TQPainter* p,
-					const TQRect &r,
-					const TQColorGroup &cg,
-					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
+//		void tqdrawPrimitive( ControlElement pe,
+//					TQPainter* p,
+//					const TQRect &r,
+//					const TQColorGroup &cg,
+//					SFlags flags = Style_Default,
+//					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
 // #endif // USE_QT4
 
-		void drawControl( ControlElement element,
+		void tqdrawControl( ControlElement element,
 					TQPainter* p,
 					const TQWidget* widget,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
+					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		void drawComplexControl( ComplexControl control,
+		void tqdrawComplexControl( ComplexControl control,
 					TQPainter *p,
 					const TQWidget* widget,
 					const TQRect &r,
@@ -308,19 +309,19 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 					SFlags flags = Style_Default,
 					SCFlags controls = SC_All,
 					SCFlags active = SC_None,
-					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
+					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
 		SubControl querySubControl( ComplexControl control,
 					const TQWidget* widget,
 					const TQPoint &pos,
-					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
+					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
 		TQRect querySubControlMetrics( ComplexControl control,
 					const TQWidget* widget,
 					SubControl sc,
-					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
+					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		int pixelMetric( PixelMetric m, 
+		int tqpixelMetric( PixelMetric m, 
 					const TQWidget* widget = 0 ) const;
 
 		TQRect subRect( SubRect r, 
@@ -328,11 +329,11 @@ class KDEFX_EXPORT KStyle: public QCommonStyle
 
 		TQPixmap stylePixmap( StylePixmap stylepixmap,
 					const TQWidget* widget = 0,
-					const TQStyleOption& = TQStyleOption::TQSO_Default ) const;
+					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		int styleHint( StyleHint sh, 
+		int tqstyleHint( StyleHint sh, 
 					const TQWidget* w = 0,
-					const TQStyleOption &opt = TQStyleOption::TQSO_Default,
+					const TQStyleOption &opt = TQStyleOption::SO_Default,
 					QStyleHintReturn* shr = 0 ) const;
 
 	protected:

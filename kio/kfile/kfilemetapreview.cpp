@@ -43,7 +43,7 @@ void KFileMetaPreview::initPreviewProviders()
     KImageFilePreview *imagePreview = new KImageFilePreview( m_stack );
     (void) m_stack->addWidget( imagePreview );
     m_stack->raiseWidget( imagePreview );
-    resize( imagePreview->sizeHint() );
+    resize( imagePreview->tqsizeHint() );
 
     TQStringList mimeTypes = imagePreview->supportedMimeTypes();
     TQStringList::ConstIterator it = mimeTypes.begin();
@@ -62,7 +62,7 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeT
     if ( mimeType == "inode/directory" ) 
         return 0L;
 
-    KPreviewWidgetBase *provider = m_previewProviders.find( mimeType );
+    KPreviewWidgetBase *provider = m_previewProviders.tqfind( mimeType );
     if ( provider )
         return provider;
 
@@ -87,15 +87,15 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeT
     }
 
     // with the new mimetypes from the audio-preview, try again
-    provider = m_previewProviders.find( mimeType );
+    provider = m_previewProviders.tqfind( mimeType );
     if ( provider )
         return provider;
 
     // ### mimetype may be image/* for example, try that
-    int index = mimeType.find( '/' );
+    int index = mimeType.tqfind( '/' );
     if ( index > 0 )
     {
-        provider = m_previewProviders.find( mimeType.left( index + 1 ) + "*" );
+        provider = m_previewProviders.tqfind( mimeType.left( index + 1 ) + "*" );
         if ( provider )
             return provider;
     }
@@ -107,7 +107,7 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeT
         TQString parentMimeType = mimeInfo->parentMimeType();
         while ( !parentMimeType.isEmpty() )
         {
-            provider = m_previewProviders.find( parentMimeType );
+            provider = m_previewProviders.tqfind( parentMimeType );
             if ( provider )
                 return provider;
 
@@ -123,11 +123,11 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeT
         {
             if ( textProperty.toBool() )
             {
-                provider = m_previewProviders.find( "text/plain" );
+                provider = m_previewProviders.tqfind( "text/plain" );
                 if ( provider )
                     return provider;
 
-                provider = m_previewProviders.find( "text/*" );
+                provider = m_previewProviders.tqfind( "text/*" );
                 if ( provider )
                     return provider;
             }
@@ -188,7 +188,7 @@ KPreviewWidgetBase * KFileMetaPreview::createAudioPreview( TQWidget *parent )
         return 0L;
     }
 
-    return dynamic_cast<KPreviewWidgetBase*>( factory->create( parent, "kfileaudiopreview" ));
+    return dynamic_cast<KPreviewWidgetBase*>( factory->create( TQT_TQOBJECT(parent), "kfileaudiopreview" ));
 }
 
 void KFileMetaPreview::virtual_hook( int, void* ) {}

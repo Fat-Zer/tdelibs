@@ -68,13 +68,13 @@
 typedef TQDict<KSycocaEntry> KBSEntryDict;
 typedef TQValueList<KSycocaEntry::List> KSycocaEntryListList;
 
-static Q_UINT32 newTimestamp = 0;
+static TQ_UINT32 newTimestamp = 0;
 
 static KBuildServiceFactory *g_bsf = 0;
 static KBuildServiceGroupFactory *g_bsgf = 0;
 static KSycocaFactory *g_factory = 0;
 static KCTimeInfo *g_ctimeInfo = 0;
-static TQDict<Q_UINT32> *g_ctimeDict = 0;
+static TQDict<TQ_UINT32> *g_ctimeDict = 0;
 static const char *g_resource = 0;
 static KBSEntryDict *g_entryDict = 0;
 static KBSEntryDict *g_serviceGroupEntryDict = 0;
@@ -160,12 +160,12 @@ void KBuildSycoca::processGnomeVfs()
 
       if (line[0] != '\t')
       {
-          app = TQString::fromLatin1(line);
+          app = TQString::tqfromLatin1(line);
           app.truncate(app.length()-1);
       }
       else if (strncmp(line+1, "mime_types=", 11) == 0)
       {
-          TQString mimetypes = TQString::fromLatin1(line+12);
+          TQString mimetypes = TQString::tqfromLatin1(line+12);
           mimetypes.truncate(mimetypes.length()-1);
           mimetypes.replace(TQRegExp("\\*"), "all");
           KService *s = g_bsf->findServiceByName(app);
@@ -186,7 +186,7 @@ void KBuildSycoca::processGnomeVfs()
 
 KSycocaEntry *KBuildSycoca::createEntry(const TQString &file, bool addToFactory)
 {
-   Q_UINT32 timeStamp = g_ctimeInfo->ctime(file);
+   TQ_UINT32 timeStamp = g_ctimeInfo->ctime(file);
    if (!timeStamp)
    {
       timeStamp = KGlobal::dirs()->calcResourceHash( g_resource, file, true);
@@ -195,23 +195,23 @@ KSycocaEntry *KBuildSycoca::createEntry(const TQString &file, bool addToFactory)
    if (g_allEntries)
    {
       assert(g_ctimeDict);
-      Q_UINT32 *timeP = (*g_ctimeDict)[file];
-      Q_UINT32 oldTimestamp = timeP ? *timeP : 0;
+      TQ_UINT32 *timeP = (*g_ctimeDict)[file];
+      TQ_UINT32 oldTimestamp = timeP ? *timeP : 0;
 
       if (timeStamp && (timeStamp == oldTimestamp))
       {
          // Re-use old entry
          if (g_factory == g_bsgf) // Strip .directory from service-group entries
          {
-            entry = g_entryDict->find(file.left(file.length()-10));
+            entry = g_entryDict->tqfind(file.left(file.length()-10));
          }
          else if (g_factory == g_bsf)
          {
-            entry = g_entryDict->find(file);
+            entry = g_entryDict->tqfind(file);
          }
          else
          {
-            entry = g_entryDict->find(file);
+            entry = g_entryDict->tqfind(file);
          }
          // remove from g_ctimeDict; if g_ctimeDict is not empty
          // after all files have been processed, it means
@@ -300,7 +300,7 @@ bool KBuildSycoca::build()
          ++it1 )
     {
       KSycocaResource res = (*it1);
-      if (!allResources.contains(res.resource))
+      if (!allResources.tqcontains(res.resource))
          allResources.append(res.resource);
     }
   }
@@ -414,7 +414,7 @@ void KBuildSycoca::createMenu(TQString caption, TQString name, VFolderMenu::SubM
      TQString directoryFile = subMenu->directoryFile;
      if (directoryFile.isEmpty())
         directoryFile = subName+".directory";
-     Q_UINT32 timeStamp = g_ctimeInfo->ctime(directoryFile);
+     TQ_UINT32 timeStamp = g_ctimeInfo->ctime(directoryFile);
      if (!timeStamp)
      {
         timeStamp = KGlobal::dirs()->calcResourceHash( g_resource, directoryFile, true);
@@ -423,12 +423,12 @@ void KBuildSycoca::createMenu(TQString caption, TQString name, VFolderMenu::SubM
      KServiceGroup* entry = 0;
      if (g_allEntries)
      {
-        Q_UINT32 *timeP = (*g_ctimeDict)[directoryFile];
-        Q_UINT32 oldTimestamp = timeP ? *timeP : 0;
+        TQ_UINT32 *timeP = (*g_ctimeDict)[directoryFile];
+        TQ_UINT32 oldTimestamp = timeP ? *timeP : 0;
 
         if (timeStamp && (timeStamp == oldTimestamp))
         {
-            entry = dynamic_cast<KServiceGroup *> (g_serviceGroupEntryDict->find(subName));
+            entry = dynamic_cast<KServiceGroup *> (g_serviceGroupEntryDict->tqfind(subName));
             if (entry && (entry->directoryEntryPath() != directoryFile))
                 entry = 0; // Can't reuse this one!
         }
@@ -500,7 +500,7 @@ bool KBuildSycoca::recreate()
   if( build()) // Parse dirs
   {
     save(); // Save database
-    if (m_str->device()->status())
+    if (m_str->tqdevice()->status())
       database->abort(); // Error
     m_str = 0L;
     if (!database->close())
@@ -541,17 +541,17 @@ bool KBuildSycoca::recreate()
 void KBuildSycoca::save()
 {
    // Write header (#pass 1)
-   m_str->device()->at(0);
+   m_str->tqdevice()->at(0);
 
-   (*m_str) << (Q_INT32) KSycoca::version();
+   (*m_str) << (TQ_INT32) KSycoca::version();
    KSycocaFactory * servicetypeFactory = 0L;
    KSycocaFactory * serviceFactory = 0L;
    for(KSycocaFactory *factory = m_lstFactories->first();
        factory;
        factory = m_lstFactories->next())
    {
-      Q_INT32 aId;
-      Q_INT32 aOffset;
+      TQ_INT32 aId;
+      TQ_INT32 aOffset;
       aId = factory->factoryId();
       if ( aId == KST_KServiceTypeFactory )
          servicetypeFactory = factory;
@@ -561,7 +561,7 @@ void KBuildSycoca::save()
       (*m_str) << aId;
       (*m_str) << aOffset;
    }
-   (*m_str) << (Q_INT32) 0; // No more factories.
+   (*m_str) << (TQ_INT32) 0; // No more factories.
    // Write KDEDIRS
    (*m_str) << KGlobal::dirs()->kfsstnd_prefixes();
    (*m_str) << newTimestamp;
@@ -575,31 +575,31 @@ void KBuildSycoca::save()
        factory = m_lstFactories->next())
    {
       factory->save(*m_str);
-      if (m_str->device()->status())
+      if (m_str->tqdevice()->status())
          return; // error
    }
 
-   int endOfData = m_str->device()->at();
+   int endOfData = m_str->tqdevice()->at();
 
    // Write header (#pass 2)
-   m_str->device()->at(0);
+   m_str->tqdevice()->at(0);
 
-   (*m_str) << (Q_INT32) KSycoca::version();
+   (*m_str) << (TQ_INT32) KSycoca::version();
    for(KSycocaFactory *factory = m_lstFactories->first();
        factory;
        factory = m_lstFactories->next())
    {
-      Q_INT32 aId;
-      Q_INT32 aOffset;
+      TQ_INT32 aId;
+      TQ_INT32 aOffset;
       aId = factory->factoryId();
       aOffset = factory->offset();
       (*m_str) << aId;
       (*m_str) << aOffset;
    }
-   (*m_str) << (Q_INT32) 0; // No more factories.
+   (*m_str) << (TQ_INT32) 0; // No more factories.
 
    // Jump to end of database
-   m_str->device()->at(endOfData);
+   m_str->tqdevice()->at(endOfData);
 }
 
 bool KBuildSycoca::checkDirTimestamps( const TQString& dirname, const TQDateTime& stamp, bool top )
@@ -614,11 +614,11 @@ bool KBuildSycoca::checkDirTimestamps( const TQString& dirname, const TQDateTime
          }
    }
    TQDir dir( dirname );
-   const QFileInfoList *list = dir.entryInfoList( TQDir::DefaultFilter, TQDir::Unsorted );
+   const TQFileInfoList *list = dir.entryInfoList( TQDir::DefaultFilter, TQDir::Unsorted );
    if (!list)
       return true;
 
-   for( QFileInfoListIterator it( *list );
+   for( TQFileInfoListIterator it( *list );
         it.current() != NULL;
         ++it )
    {
@@ -640,7 +640,7 @@ bool KBuildSycoca::checkDirTimestamps( const TQString& dirname, const TQDateTime
 // and also their directories
 // if all of them all older than the timestamp in file ksycocastamp, this
 // means that there's no need to rebuild ksycoca
-bool KBuildSycoca::checkTimestamps( Q_UINT32 timestamp, const TQStringList &dirs )
+bool KBuildSycoca::checkTimestamps( TQ_UINT32 timestamp, const TQStringList &dirs )
 {
    kdDebug( 7021 ) << "checking file timestamps" << endl;
    TQDateTime stamp;
@@ -806,8 +806,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
      KSycoca::self()->disableAutoRebuild(); // Prevent deadlock
      TQString current_language = KGlobal::locale()->language();
      TQString ksycoca_language = KSycoca::self()->language();
-     Q_UINT32 current_update_sig = KGlobal::dirs()->calcResourceHash("services", "update_ksycoca", true);
-     Q_UINT32 ksycoca_update_sig = KSycoca::self()->updateSignature();
+     TQ_UINT32 current_update_sig = KGlobal::dirs()->calcResourceHash("services", "update_ksycoca", true);
+     TQ_UINT32 ksycoca_update_sig = KSycoca::self()->updateSignature();
 
      if ((current_update_sig != ksycoca_update_sig) ||
          (current_language != ksycoca_language) ||
@@ -822,7 +822,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    g_changeList = new TQStringList;
 
    bool checkstamps = incremental && args->isSet("checkstamps") && checkfiles;
-   Q_UINT32 filestamp = 0;
+   TQ_UINT32 filestamp = 0;
    TQStringList oldresourcedirs;
    if( checkstamps && incremental )
    {
@@ -859,7 +859,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
        cSycocaPath = 0;
    }
 
-   newTimestamp = (Q_UINT32) time(0);
+   newTimestamp = (TQ_UINT32) time(0);
 
    if( checkfiles && ( !checkstamps || !KBuildSycoca::checkTimestamps( filestamp, oldresourcedirs )))
    {
@@ -874,7 +874,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
          KSycoca *oldSycoca = KSycoca::self();
          KSycocaFactoryList *factories = new KSycocaFactoryList;
          g_allEntries = new KSycocaEntryListList;
-         g_ctimeDict = new TQDict<Q_UINT32>(523);
+         g_ctimeDict = new TQDict<TQ_UINT32>(523);
 
          // Must be in same order as in KBuildSycoca::recreate()!
          factories->append( new KServiceTypeFactory );

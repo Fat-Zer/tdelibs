@@ -26,7 +26,7 @@
 
 KWhatsThisManager *KWhatsThisManager::s_instance = 0;
 
-class KWhatsThisUndefined : public QWhatsThis
+class KWhatsThisUndefined : public TQWhatsThis
 {
     public:
         KWhatsThisUndefined (TQWidget *);
@@ -52,8 +52,8 @@ TQString KWhatsThisUndefined::text (const TQPoint &)
             " describe the widget, you are welcome to <a href=\"submit"
             "-whatsthis\">send us your own \"What's This?\" help</a> for it.");
     TQString parent;
-    if (m_widget -> parentWidget ())
-        parent = TQWhatsThis::textFor (m_widget -> parentWidget ());
+    if (m_widget -> tqparentWidget ())
+        parent = TQWhatsThis::textFor (m_widget -> tqparentWidget ());
         if (parent != txt)
             if (! parent . isEmpty ())
                 return parent;
@@ -68,11 +68,11 @@ bool KWhatsThisUndefined::clicked (const TQString& href)
         body . append ("Widget text: '" + (m_widget -> property ("text") . toString ()) + "'\n");
         TQString dsc = TQString ("current --> ") + m_widget -> name ();
         dsc . append (TQString (" (") + m_widget -> className () + ")\n");
-        for (w = m_widget; w && w != m_widget -> topLevelWidget (); w = w -> parentWidget ()) {
+        for (w = m_widget; w && w != m_widget -> tqtopLevelWidget (); w = w -> tqparentWidget ()) {
             dsc . append (w -> name ());
             dsc . append (TQString (" (") + w -> className () + ")\n");
         }
-        w = m_widget -> topLevelWidget ();
+        w = m_widget -> tqtopLevelWidget ();
         if (w) {
             dsc . append ("toplevel --> ");
             dsc . append (w -> name ());
@@ -80,7 +80,7 @@ bool KWhatsThisUndefined::clicked (const TQString& href)
         }
         body . append (dsc);
         TQString subj ("What's This submission: ");
-        subj . append (qApp -> argv () [0]);
+        subj . append (tqApp -> argv () [0]);
         body . append ("\nPlease type in your what's this help between these lines: "
                 "\n--%-----------------------------------------------------------------------\n"
                 "\n--%-----------------------------------------------------------------------");
@@ -99,7 +99,7 @@ void KWhatsThisManager::init ()
 KWhatsThisManager::KWhatsThisManager ()
 {
     // go away...
-    // qApp -> installEventFilter (this);
+    // tqApp -> installEventFilter (this);
 }
 
 bool KWhatsThisManager::eventFilter (TQObject * /*o*/, TQEvent *e)

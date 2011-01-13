@@ -154,7 +154,7 @@ KPixmap& KPixmapEffect::blend(KPixmap &pixmap, float initial_intensity,
     if(pixmap.depth() <= 8 ) {
         if ( ncols < 2 || ncols > 256 )
             ncols = 3;
-        TQColor *dPal = new QColor[ncols];
+        TQColor *dPal = new TQColor[ncols];
         for (int i=0; i<ncols; i++) {
             tmp = 0 + 255 * i / ( ncols - 1 );
             dPal[i].setRgb ( tmp, tmp, tmp );
@@ -187,7 +187,7 @@ KPixmap& KPixmapEffect::hash(KPixmap &pixmap, Lighting lite,
     if(pixmap.depth() <= 8 ) {
         if ( ncols < 2 || ncols > 256 )
             ncols = 3;
-        TQColor *dPal = new QColor[ncols];
+        TQColor *dPal = new TQColor[ncols];
         for (int i=0; i<ncols; i++) {
             tmp = 0 + 255 * i / ( ncols - 1 );
             dPal[i].setRgb ( tmp, tmp, tmp );

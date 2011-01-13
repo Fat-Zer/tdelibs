@@ -118,7 +118,7 @@ KTempDir::status() const
    return mError;
 }
 
-QString
+TQString
 KTempDir::name() const
 {
    return mTmpName;
@@ -177,7 +177,7 @@ rmtree(const TQCString& name)
              *
              * Potential problems:
              * - opendir/readdir/closedir is not re-entrant
-             * - unlink and rmdir invalidates a opendir/readdir/closedir
+             * - unlink and rmdir tqinvalidates a opendir/readdir/closedir
              * - limited number of file descriptors for opendir/readdir/closedir
              */
             if ( ::closedir( dp ) )

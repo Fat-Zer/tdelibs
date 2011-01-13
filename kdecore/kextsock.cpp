@@ -248,7 +248,7 @@ void KExtendedSocket::setSocketStatus(int newstatus)
 
 void KExtendedSocket::setError(int errorcode, int syserror)
 {
-  setStatus(errorcode);
+  setqStatus(errorcode);
   d->syserror = syserror;
 }
 
@@ -1233,7 +1233,7 @@ int KExtendedSocket::startAsyncConnect()
   // here we have d->status >= lookupDone and <= connecting
   // we can do our connection
   d->status = connecting;
-  TQGuardedPtr<TQObject> p = this;
+  TQGuardedPtr<TQObject> p = TQT_TQOBJECT(this);
   connectionEvent();
   if (!p) 
     return -1; // We have been deleted.
@@ -1436,7 +1436,7 @@ void KExtendedSocket::flush()
 }
 
 
-Q_LONG KExtendedSocket::readBlock(char *data, Q_ULONG maxlen)
+TQ_LONG KExtendedSocket::readBlock(char *data, TQ_ULONG maxlen)
 {
   cleanError();
   if (d->status < connected || d->flags & passiveSocket)
@@ -1481,7 +1481,7 @@ Q_LONG KExtendedSocket::readBlock(char *data, Q_ULONG maxlen)
   return retval;
 }
 
-Q_LONG KExtendedSocket::writeBlock(const char *data, Q_ULONG len)
+TQ_LONG KExtendedSocket::writeBlock(const char *data, TQ_ULONG len)
 {
   cleanError();
   if (d->status < connected || d->status >= closing || d->flags & passiveSocket)

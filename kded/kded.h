@@ -173,7 +173,7 @@ private:
    static Kded *_self;
 };
 
-class KUpdateD : public QObject
+class KUpdateD : public TQObject
 {
    Q_OBJECT
 public:
@@ -200,7 +200,7 @@ private:
    TQTimer* m_pTimer;
 };
 
-class KHostnameD : public QObject
+class KHostnameD : public TQObject
 {
    Q_OBJECT
 public:

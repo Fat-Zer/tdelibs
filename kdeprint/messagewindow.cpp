@@ -55,13 +55,13 @@ MessageWindow::MessageWindow( const TQString& txt, int delay, TQWidget *parent, 
 
 MessageWindow::~MessageWindow()
 {
-	m_windows.remove( parentWidget() );
+	m_windows.remove( tqparentWidget() );
 }
 
 void MessageWindow::slotTimer()
 {
-	TQSize psz = parentWidget()->size(), sz = sizeHint();
-	move( parentWidget()->mapToGlobal( TQPoint( (psz.width()-sz.width())/2, (psz.height()-sz.height())/2 ) ) );
+	TQSize psz = tqparentWidget()->size(), sz = tqsizeHint();
+	move( tqparentWidget()->mapToGlobal( TQPoint( (psz.width()-sz.width())/2, (psz.height()-sz.height())/2 ) ) );
 	if ( !isVisible() )
 	{
 		show();
@@ -85,7 +85,7 @@ void MessageWindow::add( TQWidget *parent, const TQString& txt, int delay )
 		kdWarning( 500 ) << "Cannot add a message window to a null parent" << endl;
 	else
 	{
-		MessageWindow *w = m_windows.find( parent );
+		MessageWindow *w = m_windows.tqfind( parent );
 		if ( w )
 			w->setText( txt );
 		else
@@ -96,14 +96,14 @@ void MessageWindow::add( TQWidget *parent, const TQString& txt, int delay )
 void MessageWindow::remove( TQWidget *parent )
 {
 	if ( parent )
-		delete m_windows.find( parent );
+		delete m_windows.tqfind( parent );
 }
 
 void MessageWindow::change( TQWidget *parent, const TQString& txt )
 {
 	if ( parent )
 	{
-		MessageWindow *w = m_windows.find( parent );
+		MessageWindow *w = m_windows.tqfind( parent );
 		if ( w )
 			w->setText( txt );
 		else

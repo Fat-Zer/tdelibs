@@ -72,7 +72,7 @@ Responder& Responder::self()
 
 void Responder::process()
 {
-    qApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
+    tqApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
 }
 
 #ifdef HAVE_DNSSD
@@ -88,7 +88,7 @@ AvahiClientState Responder::state() const
 
 bool domainIsLocal(const TQString& domain)
 {
-	return domain.section('.',-1,-1).lower()=="local";
+	return TQString(domain.section('.',-1,-1)).lower()=="local";
 }
 
 TQCString domainToDNS(const TQString &domain)

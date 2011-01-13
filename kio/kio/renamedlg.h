@@ -45,7 +45,7 @@ enum RenameDlg_Result { R_RESUME = 6, R_RESUME_ALL = 7, R_OVERWRITE = 4, R_OVERW
  * @short A dialog for renaming files.
  * @since 3.1
  */
-class KIO_EXPORT RenameDlg : public QDialog
+class KIO_EXPORT RenameDlg : public TQDialog
 {
   Q_OBJECT
 public:

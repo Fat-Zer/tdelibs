@@ -50,11 +50,12 @@ class KLineEdit;
  * Reimplement dragObject() and (possibly) startDrag(),
  * and setDragEnabled(true).
  */
-class KDEUI_EXPORT KListView : public QListView
+class KDEUI_EXPORT KListView : public TQListView
 {
   friend class KListViewItem;
 
   Q_OBJECT
+  TQ_OBJECT
   Q_ENUMS( SelectionModeExt )
   Q_PROPERTY( bool fullWidth READ fullWidth WRITE setFullWidth )
   Q_PROPERTY( bool itemsMovable READ itemsMovable WRITE setItemsMovable )
@@ -684,7 +685,7 @@ protected:
    */
   inline bool below (TQListViewItem* i, const TQPoint& p)
   {
-	return below (itemRect(i), contentsToViewport(p));
+	return below (tqitemRect(i), contentsToViewport(p));
   }
 
   /**
@@ -1006,7 +1007,7 @@ private:
  *
  * @short listview item with alternate background color support
  */
-class KDEUI_EXPORT KListViewItem : public QListViewItem
+class KDEUI_EXPORT KListViewItem : public TQListViewItem
 {
   friend class KListView;
 public:
@@ -1069,7 +1070,7 @@ public:
   TQColor backgroundColor(int column);
 
   virtual void paintCell(TQPainter *p, const TQColorGroup &cg,
-    int column, int width, int alignment);
+    int column, int width, int tqalignment);
 
 private:
   void init();

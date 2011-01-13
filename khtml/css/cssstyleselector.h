@@ -290,7 +290,7 @@ public:
 	unsigned int selector;
 	unsigned int position;
 
-	Q_UINT32 priority;
+	TQ_UINT32 priority;
     };
 
     /*

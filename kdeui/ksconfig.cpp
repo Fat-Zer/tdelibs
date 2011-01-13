@@ -266,7 +266,7 @@ KSpellConfig::interpret( TQString &fname, TQString &lname,
 
   TQString extension;
 
-  int i = dname.find('-');
+  int i = dname.tqfind('-');
   if ( i != -1 )
   {
     extension = dname.mid(i+1);
@@ -363,8 +363,8 @@ KSpellConfig::interpret( TQString &fname, TQString &lname,
   }
 
   //We have explicitly chosen English as the default here.
-  if ( ( KGlobal::locale()->language() == TQString::fromLatin1("C") &&
-         lname==TQString::fromLatin1("en") ) ||
+  if ( ( KGlobal::locale()->language() == TQString::tqfromLatin1("C") &&
+         lname==TQString::tqfromLatin1("en") ) ||
        KGlobal::locale()->language() == lname )
     return true;
 
@@ -406,9 +406,9 @@ KSpellConfig::fillInDialog ()
   int whichelement=-1;
 
   if ( dictFromList() )
-    whichelement = langfnames.findIndex(dictionary());
+    whichelement = langfnames.tqfindIndex(dictionary());
 
-  dictcombo->setMinimumWidth (dictcombo->sizeHint().width());
+  dictcombo->setMinimumWidth (dictcombo->tqsizeHint().width());
 
   if (dictionary().isEmpty() ||  whichelement!=-1)
   {
@@ -742,7 +742,7 @@ KSpellConfig::fillDicts( TQComboBox* box, TQStringList* dictionaries )
         }
       }
     }
-    int whichelement = langfnames.findIndex(qsdict);
+    int whichelement = langfnames.tqfindIndex(qsdict);
     if ( whichelement >= 0 ) {
       box->setCurrentItem( whichelement );
     }
@@ -788,7 +788,7 @@ KSpellConfig::setDictionary (const TQString s)
   qsdict=s; //.copy();
 
   if (qsdict.length()>5)
-    if ((signed)qsdict.find(".hash")==(signed)qsdict.length()-5)
+    if ((signed)qsdict.tqfind(".hash")==(signed)qsdict.length()-5)
       qsdict.remove (qsdict.length()-5,5);
 
 
@@ -797,7 +797,7 @@ KSpellConfig::setDictionary (const TQString s)
     int whichelement=-1;
     if (dictFromList())
     {
-      whichelement = langfnames.findIndex(s);
+      whichelement = langfnames.tqfindIndex(s);
 
       if(whichelement >= 0)
       {
@@ -1003,7 +1003,7 @@ KSpellConfig::setIgnoreList (TQStringList _ignorelist)
   ignorelist=_ignorelist;
 }
 
-QStringList
+TQStringList
 KSpellConfig::ignoreList () const
 {
   return ignorelist;
@@ -1016,7 +1016,7 @@ KSpellConfig::setReplaceAllList (TQStringList _replacelist)
   d->replacelist=_replacelist;
 }
 
-QStringList
+TQStringList
 KSpellConfig::replaceAllList() const
 {
   return d->replacelist;

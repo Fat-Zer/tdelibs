@@ -45,7 +45,7 @@ public:
 };
 
 KCompletionBox::KCompletionBox( TQWidget *parent, const char *name )
- :KListBox( parent, name, WType_Popup ), d(new KCompletionBoxPrivate)
+ :KListBox( parent, name, (WFlags)WType_Popup ), d(new KCompletionBoxPrivate)
 {
 
     d->m_parent        = parent;
@@ -61,7 +61,7 @@ KCompletionBox::KCompletionBox( TQWidget *parent, const char *name )
     if ( parent )
         setFocusProxy( parent );
     else
-        setFocusPolicy( NoFocus );
+        setFocusPolicy( TQ_NoFocus );
 
     setVScrollBarMode( Auto );
     setHScrollBarMode( AlwaysOff );
@@ -109,13 +109,13 @@ bool KCompletionBox::eventFilter( TQObject *o, TQEvent *e )
 {
     int type = e->type();
 
-    if ( o == d->m_parent ) {
+    if ( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(d->m_parent) ) {
         if ( isVisible() ) {
             if ( type == TQEvent::KeyPress ) {
-                TQKeyEvent *ev = static_cast<TQKeyEvent *>( e );
+                TQKeyEvent *ev = TQT_TQKEYEVENT( e );
                 switch ( ev->key() ) {
                     case Key_BackTab:
-                        if ( d->tabHandling && (ev->state() == NoButton ||
+                        if ( d->tabHandling && (ev->state() == Qt::NoButton ||
                              (ev->state() & ShiftButton)) ) {
                             up();
                             ev->accept();
@@ -123,7 +123,7 @@ bool KCompletionBox::eventFilter( TQObject *o, TQEvent *e )
                         }
                         break;
                     case Key_Tab:
-                        if ( d->tabHandling && (ev->state() == NoButton) ) {
+                        if ( d->tabHandling && (ev->state() == Qt::NoButton) ) {
                             down(); // Only on TAB!!
                             ev->accept();
                             return true;
@@ -185,7 +185,7 @@ bool KCompletionBox::eventFilter( TQObject *o, TQEvent *e )
             else if ( type == TQEvent::AccelOverride ) {
                 // Override any acceleartors that match
                 // the key sequences we use here...
-                TQKeyEvent *ev = static_cast<TQKeyEvent *>( e );
+                TQKeyEvent *ev = TQT_TQKEYEVENT( e );
                 switch ( ev->key() ) {
                     case Key_Down:
                     case Key_Up:
@@ -199,7 +199,7 @@ bool KCompletionBox::eventFilter( TQObject *o, TQEvent *e )
                       break;
                     case Key_Tab:
                     case Key_BackTab:
-                        if ( ev->state() == NoButton ||
+                        if ( ev->state() == Qt::NoButton ||
                             (ev->state() & ShiftButton))
                         {
                             ev->accept();
@@ -230,11 +230,11 @@ bool KCompletionBox::eventFilter( TQObject *o, TQEvent *e )
 
     // any mouse-click on something else than "this" makes us hide
     else if ( type == TQEvent::MouseButtonPress ) {
-        TQMouseEvent *ev = static_cast<TQMouseEvent *>( e );
+        TQMouseEvent *ev = TQT_TQMOUSEEVENT( e );
         if ( !rect().contains( ev->pos() )) // this widget
             hide();
 
-        if ( !d->emitSelected && currentItem() && !::qt_cast<TQScrollBar*>(o) )
+        if ( !d->emitSelected && currentItem() && !::tqqt_cast<TQScrollBar*>(o) )
         {
           emit highlighted( currentText() );
           hide();
@@ -260,7 +260,7 @@ void KCompletionBox::popup()
         clearSelection();
         if ( !isVisible() )
             show();
-        else if ( size().height() != sizeHint().height() )
+        else if ( size().height() != tqsizeHint().height() )
             sizeAndPosition();
     }
 }
@@ -302,7 +302,7 @@ void KCompletionBox::show()
     d->upwardBox = false;
     if ( d->m_parent ) {
         sizeAndPosition();
-        qApp->installEventFilter( this );
+        tqApp->installEventFilter( this );
     }
 
     // ### we shouldn't need to call this, but without this, the scrollbars
@@ -317,14 +317,14 @@ void KCompletionBox::show()
     // The problem is, KCompletionBox::eventFilter() detects resizing
     // of the parent, and calls hide() - and this hide() happen in the middle
     // of show(), causing inconsistent state. I'll try to submit a Qt patch too.
-    qApp->sendPostedEvents();
+    tqApp->sendPostedEvents();
     KListBox::show();
 }
 
 void KCompletionBox::hide()
 {
     if ( d->m_parent )
-        qApp->removeEventFilter( this );
+        tqApp->removeEventFilter( this );
     d->cancelText = TQString::null;
     KListBox::hide();
 }
@@ -335,17 +335,17 @@ TQRect KCompletionBox::calculateGeometry() const
     int ih = itemHeight();
     int h = QMIN( 15 * ih, (int) count() * ih ) + 2*frameWidth();
 
-    int w = (d->m_parent) ? d->m_parent->width() : KListBox::minimumSizeHint().width();
-    w = QMAX( KListBox::minimumSizeHint().width(), w );
+    int w = (d->m_parent) ? d->m_parent->width() : KListBox::tqminimumSizeHint().width();
+    w = QMAX( KListBox::tqminimumSizeHint().width(), w );
 
     //If we're inside a combox, Qt by default makes the dropdown
     // as wide as the combo, and gives the style a chance
     // to adjust it. Do that here as well, for consistency
     const TQObject* combo;
-    if ( d->m_parent && (combo = d->m_parent->parent() ) &&
+    if ( d->m_parent && (combo = d->m_parent->tqparent() ) &&
         combo->inherits("QComboBox") )
     {
-        const TQComboBox* cb = static_cast<const TQComboBox*>(combo);
+        const TQComboBox* cb = static_cast<const TQComboBox*>(TQT_TQWIDGET_CONST(combo));
 
         //Expand to the combo width
         w = QMAX( w, cb->width() );
@@ -361,7 +361,7 @@ TQRect KCompletionBox::calculateGeometry() const
              comboCorner.y() - parentCorner.y();
 
         //Ask the style to refine this a bit
-        TQRect styleAdj = style().querySubControlMetrics(TQStyle::CC_ComboBox,
+        TQRect styleAdj = tqstyle().querySubControlMetrics(TQStyle::CC_ComboBox,
                                     cb, TQStyle::SC_ComboBoxListBoxPopup,
                                     TQStyleOption(x, y, w, h));
         //TQCommonStyle returns TQRect() by default, so this is what we get if the
@@ -373,7 +373,7 @@ TQRect KCompletionBox::calculateGeometry() const
     return TQRect(x, y, w, h);
 }
 
-TQSize KCompletionBox::sizeHint() const
+TQSize KCompletionBox::tqsizeHint() const
 {
     return calculateGeometry().size();
 }
@@ -451,7 +451,7 @@ void KCompletionBox::canceled()
         hide();
 }
 
-class KCompletionBoxItem : public QListBoxItem
+class KCompletionBoxItem : public TQListBoxItem
 {
 public:
     //Returns true if dirty.
@@ -485,7 +485,7 @@ void KCompletionBox::setItems( const TQStringList& items )
     }
     else {
         //Keep track of whether we need to change anything,
-        //so we can avoid a repaint for identical updates,
+        //so we can avoid a tqrepaint for identical updates,
         //to reduce flicker
         bool dirty = false;
 
@@ -520,7 +520,7 @@ void KCompletionBox::setItems( const TQStringList& items )
             triggerUpdate( false );
     }
 
-    if ( isVisible() && size().height() != sizeHint().height() )
+    if ( isVisible() && size().height() != tqsizeHint().height() )
         sizeAndPosition();
 
     blockSignals( block );

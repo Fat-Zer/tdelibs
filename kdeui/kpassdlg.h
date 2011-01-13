@@ -37,7 +37,7 @@ class TQWidget;
  */
 
 class KDEUI_EXPORT KPasswordEdit
-    : public QLineEdit
+    : public TQLineEdit
 {
     Q_OBJECT
 

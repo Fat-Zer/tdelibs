@@ -111,13 +111,13 @@ public:
    void save(TQDataStream &str);
 
 protected:
-   Q_UINT32 hashKey( const TQString &);
+   TQ_UINT32 hashKey( const TQString &);
 private:
    KSycocaDictStringList *d;
    TQDataStream *mStr;
-   Q_INT32 mOffset;
-   Q_UINT32 mHashTableSize;
-   TQValueList<Q_INT32> mHashList;
+   TQ_INT32 mOffset;
+   TQ_UINT32 mHashTableSize;
+   TQValueList<TQ_INT32> mHashList;
 };
 
 #endif

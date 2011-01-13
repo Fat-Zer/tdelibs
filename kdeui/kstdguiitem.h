@@ -141,7 +141,7 @@ public:
      * locales. If you have a reason for wanting the 'Western' back/forward
      * buttons, please use the back() and forward() items instead.
      */
-    static QPair<KGuiItem, KGuiItem> backAndForward();
+    static TQPair<KGuiItem, KGuiItem> backAndForward();
 
     static KGuiItem quit();
 

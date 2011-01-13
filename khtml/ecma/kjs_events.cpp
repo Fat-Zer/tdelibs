@@ -63,7 +63,7 @@ void JSEventListener::handleEvent(DOM::Event &evt)
   if (KJSDebugWin::debugWindow() && KJSDebugWin::debugWindow()->inSession())
     return;
 #endif
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(static_cast<Window*>(win.imp())->part());
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(static_cast<Window*>(win.imp())->part());
   KJSProxy *proxy = 0L;
   if (part)
     proxy = part->jScript();
@@ -163,7 +163,7 @@ Object JSLazyEventListener::listenerObj() const
 void JSLazyEventListener::parseCode() const
 {
   if (!parsed) {
-    KHTMLPart *part = ::qt_cast<KHTMLPart *>(static_cast<Window*>(win.imp())->part());
+    KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(static_cast<Window*>(win.imp())->part());
     KJSProxy *proxy = 0L;
     if (part)
       proxy = part->jScript();

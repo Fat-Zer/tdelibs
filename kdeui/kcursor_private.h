@@ -36,7 +36,7 @@ class TQWidget;
  * @author John Firebaugh <jfirebaugh@kde.org>
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
 */
-class KCursorPrivateAutoHideEventFilter : public QObject
+class KCursorPrivateAutoHideEventFilter : public TQObject
 {
     Q_OBJECT
 
@@ -68,7 +68,7 @@ private:
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  * @author John Firebaugh <jfirebaugh@kde.org>
 */
-class KCursorPrivate : public QObject
+class KCursorPrivate : public TQObject
 {
     friend class KCursor; // to shut up the compiler
     Q_OBJECT

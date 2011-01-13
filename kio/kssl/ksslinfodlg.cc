@@ -73,7 +73,7 @@ class KSSLInfoDlg::KSSLInfoDlgPrivate {
 
 
 KSSLInfoDlg::KSSLInfoDlg(bool secureConnection, TQWidget *parent, const char *name, bool modal)
-    : KDialog(parent, name, modal, Qt::WDestructiveClose), d(new KSSLInfoDlgPrivate) {
+    : KDialog(parent, name, modal, (WFlags)TQt::WDestructiveClose), d(new KSSLInfoDlgPrivate) {
         TQVBoxLayout *topLayout = new TQVBoxLayout(this, KDialog::marginHint(), KDialog::spacingHint());
         d->m_secCon = secureConnection;
         d->m_layout = new TQGridLayout(topLayout, 3, 3, KDialog::spacingHint());
@@ -273,14 +273,14 @@ void KSSLInfoDlg::displayCert(KSSLCertificate *x) {
     d->_serialNum->setText(x->getSerialNumber());
 
     cspl = d->_validFrom->palette();
-    if (x->getQDTNotBefore() > TQDateTime::currentDateTime(Qt::UTC))
+    if (x->getQDTNotBefore() > TQDateTime::tqcurrentDateTime(Qt::UTC))
         cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
     else cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
     d->_validFrom->setPalette(cspl);
     d->_validFrom->setText(x->getNotBefore());
 
     cspl = d->_validUntil->palette();
-    if (x->getQDTNotAfter() < TQDateTime::currentDateTime(Qt::UTC))
+    if (x->getQDTNotAfter() < TQDateTime::tqcurrentDateTime(Qt::UTC))
         cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
     else cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
     d->_validUntil->setPalette(cspl);
@@ -305,8 +305,8 @@ void KSSLInfoDlg::displayCert(KSSLCertificate *x) {
         ksv = ksvl.first();
 
         if (ksv == KSSLCertificate::SelfSigned) {
-            if (x->getQDTNotAfter() > TQDateTime::currentDateTime(Qt::UTC) &&
-                    x->getQDTNotBefore() < TQDateTime::currentDateTime(Qt::UTC)) {
+            if (x->getQDTNotAfter() > TQDateTime::tqcurrentDateTime(Qt::UTC) &&
+                    x->getQDTNotBefore() < TQDateTime::tqcurrentDateTime(Qt::UTC)) {
                 if (KSSLSigners().useForSSL(*x))
                     ksv = KSSLCertificate::Ok;
             } else {
@@ -331,7 +331,7 @@ void KSSLInfoDlg::displayCert(KSSLCertificate *x) {
     }
 
     d->_csl->setText(errorStr);
-    d->_csl->setMinimumSize(d->_csl->sizeHint());
+    d->_csl->setMinimumSize(d->_csl->tqsizeHint());
 
     d->_subject->setValues(x->getSubject());
     d->_issuer->setValues(x->getIssuer());
@@ -399,37 +399,37 @@ void KSSLCertBox::setValues(TQString certName, TQWidget *mailCatcher) {
     TQLabel *label = 0L;
     if (!(tmp = cert.getValue("O")).isEmpty()) {
         label = new TQLabel(i18n("Organization:"), _frame);
-        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("OU")).isEmpty()) {
         label = new TQLabel(i18n("Organizational unit:"), _frame);
-        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("L")).isEmpty()) {
         label = new TQLabel(i18n("Locality:"), _frame);
-        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("ST")).isEmpty()) {
         label = new TQLabel(i18n("Federal State","State:"), _frame);
-        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("C")).isEmpty()) {
         label = new TQLabel(i18n("Country:"), _frame);
-        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("CN")).isEmpty()) {
         label = new TQLabel(i18n("Common name:"), _frame);
-        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("Email")).isEmpty()) {
         label = new TQLabel(i18n("Email:"), _frame);
-        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
         if (mailCatcher) {
             KURLLabel *mail = new KURLLabel(tmp, tmp, _frame);
             connect(mail, TQT_SIGNAL(leftClickedURL(const TQString &)), mailCatcher, TQT_SLOT(mailClicked(const TQString &)));

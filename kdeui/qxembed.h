@@ -25,6 +25,10 @@
 #include <tqwidget.h>
 #include <kdelibs_export.h>
 
+#ifdef Q_MOC_RUN
+#define Q_WS_X11
+#endif // Q_MOC_RUN
+
 #ifdef Q_WS_X11
 
 class QXEmbedData;
@@ -55,9 +59,10 @@ class QXEmbedData;
  *
  * @short The QXEmbed widget is a graphical socket that can embed an external X-Window.
 */
-class KDEUI_EXPORT QXEmbed : public QWidget
+class KDEUI_EXPORT QXEmbed : public TQWidget
 {
     Q_OBJECT
+    TQ_OBJECT
 
 public:
 
@@ -183,8 +188,8 @@ public:
     bool autoDelete() const;
 
     /* Reimp */
-    TQSize sizeHint() const;
-    TQSize minimumSizeHint() const;
+    TQSize tqsizeHint() const;
+    TQSize tqminimumSizeHint() const;
     TQSizePolicy sizePolicy() const;
     bool eventFilter( TQObject *, TQEvent * );
     bool customWhatsThis() const;

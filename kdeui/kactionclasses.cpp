@@ -137,7 +137,7 @@ KToggleAction::~KToggleAction()
 
 int KToggleAction::plug( TQWidget* widget, int index )
 {
-  if ( !::qt_cast<TQPopupMenu *>( widget ) && !::qt_cast<KToolBar *>( widget ) )
+  if ( !::tqqt_cast<TQPopupMenu *>( widget ) && !::tqqt_cast<KToolBar *>( widget ) )
   {
     kdWarning() << "Can not plug KToggleAction in " << widget->className() << endl;
     return -1;
@@ -149,7 +149,7 @@ int KToggleAction::plug( TQWidget* widget, int index )
   if ( _index == -1 )
     return _index;
 
-  if ( ::qt_cast<KToolBar *>( widget ) ) {
+  if ( ::tqqt_cast<KToolBar *>( widget ) ) {
     KToolBar *bar = static_cast<KToolBar *>( widget );
 
     bar->setToggle( itemId( _index ), true );
@@ -176,11 +176,11 @@ void KToggleAction::setChecked( bool c )
     updateChecked( i );
 
   if ( c && parent() && !exclusiveGroup().isEmpty() ) {
-    const TQObjectList *list = parent()->children();
-    if ( list ) {
-      TQObjectListIt it( *list );
+    const TQObjectList list = tqparent()->childrenListObject();
+    if ( !list.isEmpty() ) {
+      TQObjectListIt it( list );
       for( ; it.current(); ++it ) {
-          if ( ::qt_cast<KToggleAction *>( it.current() ) && it.current() != this &&
+          if ( ::tqqt_cast<KToggleAction *>( it.current() ) && it.current() != this &&
             static_cast<KToggleAction*>(it.current())->exclusiveGroup() == exclusiveGroup() ) {
 	  KToggleAction *a = static_cast<KToggleAction*>(it.current());
 	  if( a->isChecked() ) {
@@ -197,7 +197,7 @@ void KToggleAction::updateChecked( int id )
 {
   TQWidget *w = container( id );
 
-  if ( ::qt_cast<TQPopupMenu *>( w ) ) {
+  if ( ::tqqt_cast<TQPopupMenu *>( w ) ) {
     TQPopupMenu* pm = static_cast<TQPopupMenu*>(w);
     int itemId_ = itemId( id );
     if ( !d->m_checkedGuiItem )
@@ -215,16 +215,16 @@ void KToggleAction::updateChecked( int id )
            pm->setItemChecked( itemId_, d->m_checked );
 
       if ( !d->m_checkedGuiItem->whatsThis().isEmpty() ) // if empty, we keep the initial one
-          pm->setWhatsThis( itemId_, gui->whatsThis() );
+          pm->TQMenuData::setWhatsThis( itemId_, gui->whatsThis() );
       updateShortcut( pm, itemId_ );
     }
   }
-  else if ( ::qt_cast<TQMenuBar *>( w ) ) // not handled in plug...
+  else if ( ::tqqt_cast<TQMenuBar *>( w ) ) // not handled in plug...
     static_cast<TQMenuBar*>(w)->setItemChecked( itemId( id ), d->m_checked );
-  else if ( ::qt_cast<KToolBar *>( w ) )
+  else if ( ::tqqt_cast<KToolBar *>( w ) )
   {
     TQWidget* r = static_cast<KToolBar*>( w )->getButton( itemId( id ) );
-    if ( r && ::qt_cast<KToolBarButton *>( r ) ) {
+    if ( r && ::tqqt_cast<KToolBarButton *>( r ) ) {
       static_cast<KToolBar*>( w )->setButton( itemId( id ), d->m_checked );
       if ( d->m_checkedGuiItem && d->m_checkedGuiItem->hasIcon() ) {
         const KGuiItem* gui = d->m_checked ? d->m_checkedGuiItem : &guiItem();
@@ -322,12 +322,12 @@ void KRadioAction::slotActivated()
 {
   if ( isChecked() )
   {
-    const TQObject *senderObj = sender();
+    const TQObject *senderObj = TQT_TQOBJECT_CONST(sender());
 
-    if ( !senderObj || !::qt_cast<const KToolBarButton *>( senderObj ) )
+    if ( !senderObj || !::tqqt_cast<const KToolBarButton *>( senderObj ) )
       return;
 
-    const_cast<KToolBarButton *>( static_cast<const KToolBarButton *>( senderObj ) )->on( true );
+    const_cast<KToolBarButton *>( static_cast<const KToolBarButton *>( TQT_TQWIDGET_CONST(senderObj) ) )->on( true );
 
     return;
   }
@@ -537,10 +537,10 @@ void KSelectAction::changeItem( int id, int index, const TQString& text)
         return;
 
   TQWidget* w = container( id );
-  if ( ::qt_cast<KToolBar *>( w ) )
+  if ( ::tqqt_cast<KToolBar *>( w ) )
   {
      TQWidget* r = (static_cast<KToolBar*>( w ))->getWidget( itemId( id ) );
-     if ( ::qt_cast<TQComboBox *>( r ) )
+     if ( ::tqqt_cast<TQComboBox *>( r ) )
      {
         TQComboBox *b = static_cast<TQComboBox*>( r );
         b->changeItem(text, index );
@@ -587,9 +587,9 @@ void KSelectAction::updateCurrentItem( int id )
         return;
 
   TQWidget* w = container( id );
-  if ( ::qt_cast<KToolBar *>( w ) ) {
+  if ( ::tqqt_cast<KToolBar *>( w ) ) {
     TQWidget* r = static_cast<KToolBar*>( w )->getWidget( itemId( id ) );
-    if ( ::qt_cast<TQComboBox *>( r ) ) {
+    if ( ::tqqt_cast<TQComboBox *>( r ) ) {
       TQComboBox *b = static_cast<TQComboBox*>( r );
       b->setCurrentItem( d->m_current );
     }
@@ -604,9 +604,9 @@ int KSelectAction::comboWidth() const
 void KSelectAction::updateComboWidth( int id )
 {
   TQWidget* w = container( id );
-  if ( ::qt_cast<KToolBar *>( w ) ) {
+  if ( ::tqqt_cast<KToolBar *>( w ) ) {
     TQWidget* r = static_cast<KToolBar*>( w )->getWidget( itemId( id ) );
-    if ( ::qt_cast<TQComboBox *>( r ) ) {
+    if ( ::tqqt_cast<TQComboBox *>( r ) ) {
       TQComboBox *cb = static_cast<TQComboBox*>( r );
       cb->setMinimumWidth( d->m_comboWidth );
       cb->setMaximumWidth( d->m_comboWidth );
@@ -618,17 +618,17 @@ void KSelectAction::updateItems( int id )
 {
   kdDebug(129) << "KAction::updateItems( " << id << ", lst )" << endl; // remove -- ellis
   TQWidget* w = container( id );
-  if ( ::qt_cast<KToolBar *>( w ) ) {
+  if ( ::tqqt_cast<KToolBar *>( w ) ) {
     TQWidget* r = static_cast<KToolBar*>( w )->getWidget( itemId( id ) );
-    if ( ::qt_cast<TQComboBox *>( r ) ) {
+    if ( ::tqqt_cast<TQComboBox *>( r ) ) {
       TQComboBox *cb = static_cast<TQComboBox*>( r );
       cb->clear();
       TQStringList lst = comboItems();
       TQStringList::ConstIterator it = lst.begin();
       for( ; it != lst.end(); ++it )
         cb->insertItem( *it );
-      // qt caches and never recalculates the sizeHint()
-      // qcombobox.cpp recommends calling setFont to invalidate the sizeHint
+      // qt caches and never recalculates the tqsizeHint()
+      // qcombobox.cpp recommends calling setFont to tqinvalidate the tqsizeHint
       // setFont sets own_font = True, so we're a bit mean and calll
       // unsetFont which calls setFont and then overwrites the own_font
       cb->unsetFont();
@@ -641,7 +641,7 @@ int KSelectAction::plug( TQWidget *widget, int index )
   if (kapp && !kapp->authorizeKAction(name()))
     return -1;
   kdDebug(129) << "KSelectAction::plug( " << widget << ", " << index << " )" << endl; // remove -- ellis
-  if ( ::qt_cast<TQPopupMenu *>( widget) )
+  if ( ::tqqt_cast<TQPopupMenu *>( widget) )
   {
     // Create the PopupMenu and store it in m_menu
     (void)popupMenu();
@@ -658,14 +658,14 @@ int KSelectAction::plug( TQWidget *widget, int index )
 
     TQString wth = whatsThis();
     if ( !wth.isEmpty() )
-        menu->setWhatsThis( id, wth );
+        menu->TQMenuData::setWhatsThis( id, wth );
 
     addContainer( menu, id );
     connect( menu, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotDestroyed() ) );
 
     return containerCount() - 1;
   }
-  else if ( ::qt_cast<KToolBar *>( widget ) )
+  else if ( ::tqqt_cast<KToolBar *>( widget ) )
   {
     KToolBar* bar = static_cast<KToolBar*>( widget );
     int id_ = KAction::getToolButtonID();
@@ -677,8 +677,8 @@ int KSelectAction::plug( TQWidget *widget, int index )
     TQComboBox *cb = bar->getCombo( id_ );
     if ( cb )
     {
-      if (!isEditable()) cb->setFocusPolicy(TQWidget::NoFocus);
-      cb->setMinimumWidth( cb->sizeHint().width() );
+      if (!isEditable()) cb->setFocusPolicy(TQ_NoFocus);
+      cb->setMinimumWidth( cb->tqsizeHint().width() );
       if ( d->m_comboWidth > 0 )
       {
         cb->setMinimumWidth( d->m_comboWidth );
@@ -697,7 +697,7 @@ int KSelectAction::plug( TQWidget *widget, int index )
 
     return containerCount() - 1;
   }
-  else if ( ::qt_cast<TQMenuBar *>( widget ) )
+  else if ( ::tqqt_cast<TQMenuBar *>( widget ) )
   {
     // Create the PopupMenu and store it in m_menu
     (void)popupMenu();
@@ -710,7 +710,7 @@ int KSelectAction::plug( TQWidget *widget, int index )
 
     TQString wth = whatsThis();
     if ( !wth.isEmpty() )
-        menu->setWhatsThis( id, wth );
+        menu->TQMenuData::setWhatsThis( id, wth );
 
     addContainer( menu, id );
     connect( menu, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotDestroyed() ) );
@@ -730,7 +730,7 @@ TQStringList KSelectAction::comboItems() const
     for( ; it != d->m_list.end(); ++it )
     {
       TQString item = *it;
-      int i = item.find( '&' );
+      int i = item.tqfind( '&' );
       if ( i > -1 )
         item = item.remove( i, 1 );
       lst.append( item );
@@ -754,9 +754,9 @@ void KSelectAction::clear()
 void KSelectAction::updateClear( int id )
 {
   TQWidget* w = container( id );
-  if ( ::qt_cast<KToolBar *>( w ) ) {
+  if ( ::tqqt_cast<KToolBar *>( w ) ) {
     TQWidget* r = static_cast<KToolBar*>( w )->getWidget( itemId( id ) );
-    if ( ::qt_cast<TQComboBox *>( r ) ) {
+    if ( ::tqqt_cast<TQComboBox *>( r ) ) {
       TQComboBox *b = static_cast<TQComboBox*>( r );
       b->clear();
     }
@@ -779,18 +779,18 @@ void KSelectAction::slotActivated( const TQString &text )
   if ( isEditable() )
   {
     TQStringList lst = d->m_list;
-    if(!lst.contains(text))
+    if(!lst.tqcontains(text))
     {
       lst.append( text );
       setItems( lst );
     }
   }
 
-  int i = d->m_list.findIndex( text );
+  int i = d->m_list.tqfindIndex( text );
   if ( i > -1 )
       setCurrentItem( i );
   else
-      setCurrentItem( comboItems().findIndex( text ) );
+      setCurrentItem( comboItems().tqfindIndex( text ) );
   // Delay this. Especially useful when the slot connected to activated() will re-create
   // the menu, e.g. in the recent files action. This prevents a crash.
   TQTimer::singleShot( 0, this, TQT_SLOT( slotActivated() ) );
@@ -1272,7 +1272,7 @@ int KRecentFilesAction::plug( TQWidget *widget, int index )
     return -1;
   // This is very related to KActionMenu::plug.
   // In fact this class could be an interesting base class for KActionMenu
-  if ( ::qt_cast<KToolBar *>( widget ) )
+  if ( ::tqqt_cast<KToolBar *>( widget ) )
   {
     KToolBar *bar = (KToolBar *)widget;
 
@@ -1476,7 +1476,7 @@ void KFontAction::setFont( const TQString &family )
           return;
        }
     }
-    i = lowerName.find(" [");
+    i = lowerName.tqfind(" [");
     if (i>-1)
     {
        lowerName = lowerName.left(i);
@@ -1513,7 +1513,7 @@ void KFontAction::setFont( const TQString &family )
     FcConfigSubstitute (config, pattern, FcMatchPattern);
     pattern = FcFontMatch(NULL, pattern, NULL);
     realFamily = (char*)FcNameUnparse(pattern);
-    realFamily.remove(realFamily.find(regExp), realFamily.length());
+    realFamily.remove(realFamily.tqfind(regExp), realFamily.length());
 
     if ( !realFamily.isEmpty() && realFamily != family )
        setFont( realFamily );
@@ -1525,7 +1525,7 @@ int KFontAction::plug( TQWidget *w, int index )
 {
   if (kapp && !kapp->authorizeKAction(name()))
     return -1;
-  if ( ::qt_cast<KToolBar *>( w ) )
+  if ( ::tqqt_cast<KToolBar *>( w ) )
   {
     KToolBar* bar = static_cast<KToolBar*>( w );
     int id_ = KAction::getToolButtonID();
@@ -1534,7 +1534,7 @@ int KFontAction::plug( TQWidget *w, int index )
              TQT_SLOT( slotActivated( const TQString & ) ) );
     cb->setEnabled( isEnabled() );
     bar->insertWidget( id_, comboWidth(), cb, index );
-    cb->setMinimumWidth( cb->sizeHint().width() );
+    cb->setMinimumWidth( cb->tqsizeHint().width() );
 
     addContainer( bar, id_ );
 
@@ -1626,7 +1626,7 @@ void KFontSizeAction::init()
 
     setEditable( true );
     TQFontDatabase fontDB;
-    TQValueList<int> sizes = fontDB.standardSizes();
+    TQValueList<int> sizes = fontDB.tqstandardSizes();
     TQStringList lst;
     for ( TQValueList<int>::Iterator it = sizes.begin(); it != sizes.end(); ++it )
         lst.append( TQString::number( *it ) );
@@ -1637,7 +1637,7 @@ void KFontSizeAction::init()
 void KFontSizeAction::setFontSize( int size )
 {
     if ( size == fontSize() ) {
-        setCurrentItem( items().findIndex( TQString::number( size ) ) );
+        setCurrentItem( items().tqfindIndex( TQString::number( size ) ) );
         return;
     }
 
@@ -1646,7 +1646,7 @@ void KFontSizeAction::setFontSize( int size )
         return;
     }
 
-    int index = items().findIndex( TQString::number( size ) );
+    int index = items().tqfindIndex( TQString::number( size ) );
     if ( index == -1 ) {
         // Insert at the correct position in the list (to keep sorting)
         TQValueList<int> lst;
@@ -1664,7 +1664,7 @@ void KFontSizeAction::setFontSize( int size )
             strLst.append( TQString::number(*it) );
         KSelectAction::setItems( strLst );
         // Find new current item
-        index = lst.findIndex( size );
+        index = lst.tqfindIndex( size );
         setCurrentItem( index );
     }
     else
@@ -1795,7 +1795,7 @@ int KActionMenu::plug( TQWidget* widget, int index )
   if (kapp && !kapp->authorizeKAction(name()))
     return -1;
   kdDebug(129) << "KActionMenu::plug( " << widget << ", " << index << " )" << endl; // remove -- ellis
-  if ( ::qt_cast<TQPopupMenu *>( widget ) )
+  if ( ::tqqt_cast<TQPopupMenu *>( widget ) )
   {
     TQPopupMenu* menu = static_cast<TQPopupMenu*>( widget );
     int id;
@@ -1815,7 +1815,7 @@ int KActionMenu::plug( TQWidget* widget, int index )
 
     return containerCount() - 1;
   }
-  else if ( ::qt_cast<KToolBar *>( widget ) )
+  else if ( ::tqqt_cast<KToolBar *>( widget ) )
   {
     KToolBar *bar = static_cast<KToolBar *>( widget );
 
@@ -1857,7 +1857,7 @@ int KActionMenu::plug( TQWidget* widget, int index )
 
     return containerCount() - 1;
   }
-  else if ( ::qt_cast<TQMenuBar *>( widget ) )
+  else if ( ::tqqt_cast<TQMenuBar *>( widget ) )
   {
     TQMenuBar *bar = static_cast<TQMenuBar *>( widget );
 
@@ -1942,7 +1942,7 @@ int KToolBarPopupAction::plug( TQWidget *widget, int index )
     return -1;
   // This is very related to KActionMenu::plug.
   // In fact this class could be an interesting base class for KActionMenu
-  if ( ::qt_cast<KToolBar *>( widget ) )
+  if ( ::tqqt_cast<KToolBar *>( widget ) )
   {
     KToolBar *bar = (KToolBar *)widget;
 
@@ -2021,10 +2021,10 @@ int KToggleToolBarAction::plug( TQWidget* w, int index )
       return -1;
 
   if ( !m_toolBar ) {
-    // Note: topLevelWidget() stops too early, we can't use it.
+    // Note: tqtopLevelWidget() stops too early, we can't use it.
     TQWidget * tl = w;
     TQWidget * n;
-    while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
+    while ( !tl->isDialog() && ( n = tl->tqparentWidget() ) ) // lookup parent and store
       tl = n;
 
     KMainWindow * mw = dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow
@@ -2054,7 +2054,7 @@ void KToggleToolBarAction::setChecked( bool c )
       m_toolBar->hide();
     }
     TQMainWindow* mw = m_toolBar->mainWindow();
-    if ( mw && ::qt_cast<KMainWindow *>( mw ) )
+    if ( mw && ::tqqt_cast<KMainWindow *>( mw ) )
       static_cast<KMainWindow *>( mw )->setSettingsDirty();
   }
   KToggleAction::setChecked( c );
@@ -2102,7 +2102,7 @@ void KToggleFullScreenAction::setChecked( bool c )
 
 bool KToggleFullScreenAction::eventFilter( TQObject* o, TQEvent* e )
 {
-    if( o == window )
+    if( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(window) )
         if( e->type() == TQEvent::WindowStateChange )
             {
             if( window->isFullScreen() != isChecked())
@@ -2152,7 +2152,7 @@ int KWidgetAction::plug( TQWidget* w, int index )
   if (kapp && !kapp->authorizeKAction(name()))
       return -1;
 
-  if ( !::qt_cast<KToolBar *>( w ) ) {
+  if ( !::tqqt_cast<KToolBar *>( w ) ) {
     kdError() << "KWidgetAction::plug: KWidgetAction must be plugged into KToolBar." << endl;
     return -1;
   }
@@ -2216,7 +2216,7 @@ KActionSeparator::~KActionSeparator()
 
 int KActionSeparator::plug( TQWidget *widget, int index )
 {
-  if ( ::qt_cast<TQPopupMenu *>( widget) )
+  if ( ::tqqt_cast<TQPopupMenu *>( widget) )
   {
     TQPopupMenu* menu = static_cast<TQPopupMenu*>( widget );
 
@@ -2227,7 +2227,7 @@ int KActionSeparator::plug( TQWidget *widget, int index )
 
     return containerCount() - 1;
   }
-  else if ( ::qt_cast<TQMenuBar *>( widget ) )
+  else if ( ::tqqt_cast<TQMenuBar *>( widget ) )
   {
     TQMenuBar *menuBar = static_cast<TQMenuBar *>( widget );
 
@@ -2239,7 +2239,7 @@ int KActionSeparator::plug( TQWidget *widget, int index )
 
     return containerCount() - 1;
   }
-  else if ( ::qt_cast<KToolBar *>( widget ) )
+  else if ( ::tqqt_cast<KToolBar *>( widget ) )
   {
     KToolBar *toolBar = static_cast<KToolBar *>( widget );
 
@@ -2284,7 +2284,7 @@ int KPasteTextAction::plug( TQWidget *widget, int index )
 {
   if (kapp && !kapp->authorizeKAction(name()))
     return -1;
-  if ( ::qt_cast<KToolBar *>( widget ) )
+  if ( ::tqqt_cast<KToolBar *>( widget ) )
   {
     KToolBar *bar = (KToolBar *)widget;
 
@@ -2326,7 +2326,7 @@ void KPasteTextAction::menuAboutToShow()
       if (reply.isValid())
         list = reply;
     }
-    TQString clipboardText = qApp->clipboard()->text(QClipboard::Clipboard);
+    TQString clipboardText = tqApp->clipboard()->text(TQClipboard::Clipboard);
     if (list.isEmpty())
         list << clipboardText;
     bool found = false;
@@ -2354,7 +2354,7 @@ void KPasteTextAction::menuItemActivated( int id)
       TQString clipboardText = reply;
       reply = klipper.call("setClipboardContents(TQString)", clipboardText);
       if (reply.isValid())
-        kdDebug(129) << "Clipboard: " << qApp->clipboard()->text(QClipboard::Clipboard) << endl;
+        kdDebug(129) << "Clipboard: " << TQString(tqApp->clipboard()->text(TQClipboard::Clipboard)) << endl;
     }
     TQTimer::singleShot(20, this, TQT_SLOT(slotActivated()));
 }
@@ -2362,8 +2362,8 @@ void KPasteTextAction::menuItemActivated( int id)
 void KPasteTextAction::slotActivated()
 {
   if (!m_mixedMode) {
-    TQWidget *w = qApp->widgetAt(TQCursor::pos(), true);
-    TQMimeSource *data = TQApplication::clipboard()->data();
+    TQWidget *w = tqApp->widgetAt(TQCursor::pos(), true);
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
     if (!data->provides("text/plain") && w) {
       m_popup->popup(w->mapToGlobal(TQPoint(0, w->height())));
     } else

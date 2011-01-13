@@ -99,7 +99,7 @@ class UIServerSystemTray:public KSystemTray
          pop->insertItem(i18n("Remove"), uis, TQT_SLOT(slotRemoveSystemTrayIcon()));
          setPixmap(loadIcon("filesave"));
          //actionCollection()->action("file_quit")->setEnabled(true);
-         KStdAction::quit(uis, TQT_SLOT(slotQuit()), actionCollection());
+         KStdAction::quit(TQT_TQOBJECT(uis), TQT_SLOT(slotQuit()), actionCollection());
       }
 };
 
@@ -272,8 +272,8 @@ void ProgressItem::setPercent( unsigned long percent ) {
 
 void ProgressItem::setInfoMessage( const TQString & msg ) {
   TQString plainTextMsg(msg);
-  plainTextMsg.replace( TQRegExp( "</?b>" ), TQString::null );
-  plainTextMsg.replace( TQRegExp( "<img.*>" ), TQString::null );
+  plainTextMsg.tqreplace( TQRegExp( "</?b>" ), TQString() );
+  plainTextMsg.tqreplace( TQRegExp( "<img.*>" ), TQString() );
   setText( ListProgress::TB_PROGRESS, plainTextMsg );
 
   defaultProgress->slotInfoMessage( 0, msg );
@@ -596,10 +596,10 @@ UIServer::UIServer()
 
   // setup toolbar
   toolBar()->insertButton("editdelete", TOOL_CANCEL,
-                          TQT_SIGNAL(clicked()), this,
+                          TQT_SIGNAL(clicked()), TQT_TQOBJECT(this),
                           TQT_SLOT(slotCancelCurrent()), FALSE, i18n("Cancel"));
   toolBar()->insertButton("configure", TOOL_CONFIGURE,
-                          TQT_SIGNAL(clicked()), this,
+                          TQT_SIGNAL(clicked()), TQT_TQOBJECT(this),
                           TQT_SLOT(slotConfigure()), true, i18n("Settings..."));
 
   toolBar()->setBarPos( KToolBar::Left );
@@ -1195,7 +1195,7 @@ void UIServer::showSSLInfoDialog(const TQString &url, const KIO::MetaData &meta,
 
       kdDebug(7024) << "ssl_cert_errors=" << meta["ssl_cert_errors"] << endl;
       kid->setCertState(meta["ssl_cert_errors"]);
-      TQString ip = meta.contains("ssl_proxied") ? "" : meta["ssl_peer_ip"];
+      TQString ip = meta.tqcontains("ssl_proxied") ? "" : meta["ssl_peer_ip"];
       kid->setup( x,
                   ip,
                   url, // the URL
@@ -1291,7 +1291,7 @@ TQByteArray UIServer::open_RenameDlg64( int id,
   kdDebug(7024) << "KIO::open_RenameDlg done" << endl;
   TQByteArray data;
   TQDataStream stream( data, IO_WriteOnly );
-  stream << Q_UINT8(result) << newDest;
+  stream << TQ_UINT8(result) << newDest;
   if ( item && result != KIO::R_CANCEL )
     setItemVisible( item, true );
   return data;

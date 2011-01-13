@@ -252,7 +252,7 @@ service_DATA = resourceexample.desktop
   data. Subclasses of ResourceCalendar would implement this API for local files,
   remote files, specific calendar servers etc.
 */
-class KRESOURCES_EXPORT Resource : public QObject
+class KRESOURCES_EXPORT Resource : public TQObject
 {
     friend class Factory;
     friend class ManagerImpl;

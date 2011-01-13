@@ -50,8 +50,8 @@ bool ApsHandler::validate(PrintcapEntry *entry)
 
 KMPrinter* ApsHandler::createPrinter(PrintcapEntry *entry)
 {
-	entry->comment = TQString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
-	entry->postcomment = TQString::fromLatin1("# APS%1_END - don't delete this").arg(m_counter);
+	entry->comment = TQString::tqfromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
+	entry->postcomment = TQString::tqfromLatin1("# APS%1_END - don't delete this").arg(m_counter);
 	m_counter++;
 	return LprHandler::createPrinter(entry);
 }
@@ -148,7 +148,7 @@ TQMap<TQString,TQString> ApsHandler::loadVarFile(const TQString& filename)
 		while (!t.atEnd())
 		{
 			line = t.readLine().stripWhiteSpace();
-			if (line.isEmpty() || line[0] == '#' || (p = line.find('=')) == -1)
+			if (line.isEmpty() || line[0] == '#' || (p = line.tqfind('=')) == -1)
 				continue;
 			QString	variable = line.left(p).stripWhiteSpace();
 			QString	value = line.mid(p+1).stripWhiteSpace();
@@ -187,7 +187,7 @@ DrMain* ApsHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool config
 
 DrMain* ApsHandler::loadDbDriver(const TQString& s)
 {
-	int	p = s.find('/');
+	int	p = s.tqfind('/');
 	DrMain	*driver = loadApsDriver(true);
 	if (driver)
 		driver->set("gsdriver", s.mid(p+1));
@@ -309,8 +309,8 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 	entry->addField("af", Field::String, sd + "/acct");
 	entry->addField("lf", Field::String, sd + "/log");
 	entry->addField("if", Field::String, sysconfDir() + "/basedir/bin/apsfilter");
-	entry->comment = TQString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
-	entry->postcomment = TQString::fromLatin1("# APS%1_END").arg(m_counter);
+	entry->comment = TQString::tqfromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
+	entry->postcomment = TQString::tqfromLatin1("# APS%1_END").arg(m_counter);
 	m_counter++;
 	return entry;
 }

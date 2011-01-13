@@ -20,7 +20,7 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
-    <property name="minimumSize">
+    <property name="tqminimumSize">
         <size>
             <width>430</width>
             <height>300</height>
@@ -87,7 +87,7 @@
             <property name="text">
                 <string>... the &lt;b&gt;misspelled&lt;/b&gt; word shown in context ...</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignCenter</set>
             </property>
             <property name="toolTip" stdset="0">
@@ -123,7 +123,7 @@ Click here if you consider that the unknown word is not misspelled and you want 
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>74</width>
                     <height>20</height>
@@ -204,7 +204,7 @@ Click here if you consider that the unknown word is not misspelled and you want 
 &lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget" row="2" column="5" rowspan="3" colspan="1">
+        <widget class="TQLayoutWidget" row="2" column="5" rowspan="3" colspan="1">
             <property name="name">
                 <cstring>layout1</cstring>
             </property>
@@ -298,7 +298,7 @@ Click here if you consider that the unknown word is not misspelled and you want 
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
+                    <property name="tqsizeHint">
                         <size>
                             <width>20</width>
                             <height>20</height>

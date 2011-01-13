@@ -34,7 +34,7 @@ class KActiveLabelPrivate;
   * @author Waldo Bastian (bastian@kde.org)
   * @version $Id$
   */
-class KDEUI_EXPORT KActiveLabel : public QTextBrowser
+class KDEUI_EXPORT KActiveLabel : public TQTextBrowser
 {
     Q_OBJECT
 public:
@@ -56,8 +56,8 @@ public:
      */
     KActiveLabel(const TQString & text, TQWidget * parent, const char * name = 0);
 
-    TQSize minimumSizeHint() const;
-    TQSize sizeHint() const;
+    TQSize tqminimumSizeHint() const;
+    TQSize tqsizeHint() const;
 
 public slots:
     /**

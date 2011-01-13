@@ -130,13 +130,13 @@ public:
      * @return address of parent
      */
     static TQString parentAddress( const TQString & address )
-    { return address.left( address.findRev('/') ); }
+    { return address.left( address.tqfindRev('/') ); }
 
     /**
      * @return position in parent (e.g. /4/5/2 -> 2)
      */
     static uint positionInParent( const TQString & address )
-    { return address.mid( address.findRev('/') + 1 ).toInt(); }
+    { return address.mid( address.tqfindRev('/') + 1 ).toInt(); }
 
     /**
      * @return address of previous sibling (e.g. /4/5/2 -> /4/5/1)

@@ -60,7 +60,7 @@ class KSystemTrayPrivate;
  *
  * @author Matthias Ettrich <ettrich@kde.org>
  **/
-class KDEUI_EXPORT KSystemTray : public QLabel
+class KDEUI_EXPORT KSystemTray : public TQLabel
 {
     Q_OBJECT
 public:
@@ -163,7 +163,7 @@ protected:
 
     /**
        Reimplemented to provide the standard show/raise behavior
-       for the parentWidget() and the context menu.
+       for the tqparentWidget() and the context menu.
 
        Feel free to reimplement this if you need something special.
      */
@@ -171,7 +171,7 @@ protected:
 
     /**
        Reimplemented to provide the standard show/raise behavior
-       for the parentWidget() and the context menu.
+       for the tqparentWidget() and the context menu.
 
        Feel free to reimplement this if you need something special.
      */

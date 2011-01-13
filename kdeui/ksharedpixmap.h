@@ -16,6 +16,10 @@
 
 #include <kpixmap.h>
 
+#ifdef Q_MOC_RUN
+#define Q_WS_X11
+#endif // Q_MOC_RUN
+
 #ifdef Q_WS_X11
 
 #include <tqstring.h>

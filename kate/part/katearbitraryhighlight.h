@@ -57,7 +57,7 @@ public:
  * - identical highlight for whole list
  * - signals for view movement
  */
-class KateArbitraryHighlight : public QObject
+class KateArbitraryHighlight : public TQObject
 {
   Q_OBJECT
 

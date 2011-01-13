@@ -30,6 +30,8 @@ class KCharsets;
 class DCOPClient;
 class DCOPObject;
 
+#include <tqtglobaldefines.h>
+
 typedef unsigned long Atom;
 #if !defined(Q_WS_X11)
 typedef void Display;
@@ -214,7 +216,7 @@ public:
   /**
    * Returns the current application object.
    *
-   * This is similar to the global TQApplication pointer qApp. It
+   * This is similar to the global TQApplication pointer tqApp. It
    * allows access to the single global KApplication object, since
    * more than one cannot be created in the same application. It
    * saves you the trouble of having to pass the pointer explicitly
@@ -364,14 +366,14 @@ public:
      *  handling of session management with KSessionManaged.
      * @internal
      */
-  void commitData( QSessionManager& sm );
+  void commitData( TQSessionManager& sm );
 
     /**
      * Reimplemented for internal purposes, mainly the highlevel
      *  handling of session management with KSessionManaged.
      * @internal
      */
-  void saveState( QSessionManager& sm );
+  void saveState( TQSessionManager& sm );
 
   /**
    * Returns true if the application is currently saving its session
@@ -1467,7 +1469,7 @@ public:
        indicate a problem and to halt the shutdown process (will
        implicitly call sm.cancel() ).
      */
-  virtual bool saveState( QSessionManager& sm );
+  virtual bool saveState( TQSessionManager& sm );
     /**
        See TQApplication::commitData() for documentation.
 
@@ -1477,7 +1479,7 @@ public:
        indicate a problem and to halt the shutdown process (will
        implicitly call sm.cancel() ).
      */
-  virtual bool commitData( QSessionManager& sm );
+  virtual bool commitData( TQSessionManager& sm );
 
 protected:
   virtual void virtual_hook( int id, void* data );

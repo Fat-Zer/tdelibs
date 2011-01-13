@@ -49,7 +49,7 @@ void TestDialog::check( const TQString& buffer )
 void TestDialog::doneChecking( const TQString& buf )
 {
     kdDebug()<<"Done with :"<<buf<<endl;
-    qApp->quit();
+    tqApp->quit();
 }
 
 int main( int argc, char** argv )

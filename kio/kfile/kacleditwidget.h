@@ -24,6 +24,10 @@
 #include <config.h>
 #endif
 
+#ifdef Q_MOC_RUN
+#define USE_POSIX_ACL
+#endif // Q_MOC_RUN
+
 #ifdef USE_POSIX_ACL
 
 #include <klistview.h>
@@ -34,9 +38,10 @@ class KACLListViewItem;
 class KACLListView;
 class TQPushButton;
 
-class KACLEditWidget : QWidget
+class KACLEditWidget : TQWidget
 {
   Q_OBJECT
+  TQ_OBJECT
 public:
   KACLEditWidget( TQWidget *parent = 0, const char *name = 0 );
   KACL getACL() const;

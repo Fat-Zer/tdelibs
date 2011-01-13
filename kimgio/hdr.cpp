@@ -16,7 +16,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
-typedef Q_UINT8 uchar;
+typedef TQ_UINT8 uchar;
 
 namespace {	// Private.
 
@@ -85,7 +85,7 @@ namespace {	// Private.
 				v = 1.0f / float(1 << -e);
 			}
 			
-			scanline[j] = qRgb( ClipToByte(float(image[0]) * v),
+			scanline[j] = tqRgb( ClipToByte(float(image[0]) * v),
 								ClipToByte(float(image[1]) * v),
 								ClipToByte(float(image[2]) * v) );
 
@@ -127,7 +127,7 @@ namespace {	// Private.
 
 			if (val != 2)
 			{
-				s.device()->at( s.device()->at() - 1 );
+				s.tqdevice()->at( s.tqdevice()->at() - 1 );
 				Read_Old_Line(image.data(), width, s);
 				RGBE_To_QRgbLine(image.data(), scanline, width);
 				continue;
@@ -224,8 +224,8 @@ KDE_EXPORT void kimgio_hdr_read( TQImageIO * io )
 	if( /*!validHeader ||*/ !validFormat )
 	{
 		kdDebug(399) << "Unknown HDR format." << endl;
-		io->setImage( 0 );
-		io->setStatus( -1 );
+		io->setImage( TQImage() );
+		io->setqStatus( -1 );
 		return;
 	}
 	
@@ -237,8 +237,8 @@ KDE_EXPORT void kimgio_hdr_read( TQImageIO * io )
 	//if( sscanf(line, "-Y %d +X %d", &height, &width) < 2 )
 	{
 		kdDebug(399) << "Invalid HDR file." << endl;
-		io->setImage( 0 );
-		io->setStatus( -1 );
+		io->setImage( TQImage() );
+		io->setqStatus( -1 );
 		return;
 	}
 	
@@ -248,13 +248,13 @@ KDE_EXPORT void kimgio_hdr_read( TQImageIO * io )
 	if( !LoadHDR(s, width, height, img) ) 
 	{
 		kdDebug(399) << "Error loading HDR file." << endl;
-		io->setImage( 0 );
-		io->setStatus( -1 );
+		io->setImage( TQImage() );
+		io->setqStatus( -1 );
 		return;
 	}
 
 	io->setImage( img );
-	io->setStatus( 0 );
+	io->setqStatus( 0 );
 }
 
 

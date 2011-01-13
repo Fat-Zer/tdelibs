@@ -94,7 +94,7 @@ public:
 KRuler::KRuler(TQWidget *parent, const char *name)
   : TQFrame(parent, name),
     range(INIT_MIN_VALUE, INIT_MAX_VALUE, 1, 10, INIT_VALUE),
-    dir(Horizontal)
+    dir(Qt::Horizontal)
 {
   init();
   setFixedHeight(FIX_WIDTH);
@@ -108,7 +108,7 @@ KRuler::KRuler(Orientation orient,
     dir(orient)
 {
   init();
-  if (orient == Horizontal)
+  if (orient == Qt::Horizontal)
     setFixedHeight(FIX_WIDTH);
   else
     setFixedWidth(FIX_WIDTH);
@@ -123,7 +123,7 @@ KRuler::KRuler(Orientation orient, int widgetWidth,
 {
   init();
 
-  if (orient == Horizontal)
+  if (orient == Qt::Horizontal)
     setFixedHeight(widgetWidth);
   else
     setFixedWidth(widgetWidth);
@@ -362,7 +362,7 @@ KRuler::setEndLabel(const TQString& label)
   endlabel = label;
 
   // premeasure the fontwidth and save it
-  if (dir == Vertical) {
+  if (dir == Qt::Vertical) {
     TQFont font = this->font();
     font.setPointSize(LABEL_SIZE);
     TQFontMetrics fm(font);
@@ -432,19 +432,19 @@ KRuler::setRulerMetricStyle(KRuler::MetricStyle style)
   }
   switch (style) {
   case Pixel:
-    setEndLabel(TQString::fromLatin1("pixel"));
+    setEndLabel(TQString::tqfromLatin1("pixel"));
     break;
   case Inch:
-    setEndLabel(TQString::fromLatin1("inch"));
+    setEndLabel(TQString::tqfromLatin1("inch"));
     break;
   case Millimetres:
-    setEndLabel(TQString::fromLatin1("mm"));
+    setEndLabel(TQString::tqfromLatin1("mm"));
     break;
   case Centimetres:
-    setEndLabel(TQString::fromLatin1("cm"));
+    setEndLabel(TQString::tqfromLatin1("cm"));
     break;
   case Metres:
-    setEndLabel(TQString::fromLatin1("m"));
+    setEndLabel(TQString::tqfromLatin1("m"));
   default: /* never reached, see above switch */
     /* empty command */;
   }
@@ -550,16 +550,16 @@ KRuler::slotNewValue(int _value)
     return;
   }
   // get the rectangular of the old and the new ruler pointer
-  // and repaint only him
-  if (dir == Horizontal) {
+  // and tqrepaint only him
+  if (dir == Qt::Horizontal) {
     TQRect oldrec(-5+oldvalue,10, 11,6);
     TQRect newrec(-5+_value,10, 11,6);
-    repaint( oldrec.unite(newrec) );
+    tqrepaint( oldrec.unite(newrec) );
   }
   else {
     TQRect oldrec(10,-5+oldvalue, 6,11);
     TQRect newrec(10,-5+_value, 6,11);
-    repaint( oldrec.unite(newrec) );
+    tqrepaint( oldrec.unite(newrec) );
   }
 }
 
@@ -569,7 +569,7 @@ KRuler::slotNewOffset(int _offset)
   if (offset_ != _offset) {
     //setOffset(_offset);
     offset_ = _offset;
-    repaint(contentsRect());
+    tqrepaint(contentsRect());
   }
 }
 
@@ -586,7 +586,7 @@ KRuler::slotEndOffset(int offset)
   }
   if (d->endOffset_length != tmp) {
     d->endOffset_length = tmp;
-    repaint(contentsRect());
+    tqrepaint(contentsRect());
   }
 }
 
@@ -604,7 +604,7 @@ KRuler::drawContents(TQPainter *p)
   int value  = range.value(),
     minval = range.minValue(),
     maxval;
-    if (dir == Horizontal) {
+    if (dir == Qt::Horizontal) {
     maxval = range.maxValue()
     + offset_
     - (d->lengthFix?(height()-d->endOffset_length):d->endOffset_length);
@@ -636,7 +636,7 @@ KRuler::drawContents(TQPainter *p)
 
   // draw endlabel
   if (d->showEndL) {
-    if (dir == Horizontal) {
+    if (dir == Qt::Horizontal) {
       p->translate( fontOffset, 0 );
       p->drawText( END_LABEL_X, END_LABEL_Y, endlabel );
     }
@@ -659,7 +659,7 @@ KRuler::drawContents(TQPainter *p)
   if (showtm) {
     fend = ppm*tmDist;
     for ( f=offsetmin; f<offsetmax; f+=fend ) {
-      if (dir == Horizontal) {
+      if (dir == Qt::Horizontal) {
         p->drawLine((int)f, BASE_MARK_X1, (int)f, BASE_MARK_X2);
       }
       else {
@@ -671,7 +671,7 @@ KRuler::drawContents(TQPainter *p)
     // draw the little marks
     fend = ppm*lmDist;
     for ( f=offsetmin; f<offsetmax; f+=fend ) {
-      if (dir == Horizontal) {
+      if (dir == Qt::Horizontal) {
         p->drawLine((int)f, LITTLE_MARK_X1, (int)f, LITTLE_MARK_X2);
       }
       else {
@@ -683,7 +683,7 @@ KRuler::drawContents(TQPainter *p)
     // draw medium marks
     fend = ppm*mmDist;
     for ( f=offsetmin; f<offsetmax; f+=fend ) {
-      if (dir == Horizontal) {
+      if (dir == Qt::Horizontal) {
         p->drawLine((int)f, MIDDLE_MARK_X1, (int)f, MIDDLE_MARK_X2);
       }
       else {
@@ -695,7 +695,7 @@ KRuler::drawContents(TQPainter *p)
     // draw big marks
     fend = ppm*bmDist;
     for ( f=offsetmin; f<offsetmax; f+=fend ) {
-      if (dir == Horizontal) {
+      if (dir == Qt::Horizontal) {
         p->drawLine((int)f, BIG_MARK_X1, (int)f, BIG_MARK_X2);
       }
       else {
@@ -705,7 +705,7 @@ KRuler::drawContents(TQPainter *p)
   }
   if (showem) {
     // draw end marks
-    if (dir == Horizontal) {
+    if (dir == Qt::Horizontal) {
       p->drawLine(minval-offset_, END_MARK_X1, minval-offset_, END_MARK_X2);
       p->drawLine(maxval-offset_, END_MARK_X1, maxval-offset_, END_MARK_X2);
     }
@@ -718,7 +718,7 @@ KRuler::drawContents(TQPainter *p)
   // draw pointer
   if (d->showpointer) {
     TQPointArray pa(4);
-    if (dir == Horizontal) {
+    if (dir == Qt::Horizontal) {
       pa.setPoints(3, value-5, 10, value+5, 10, value/*+0*/,15);
     }
     else {

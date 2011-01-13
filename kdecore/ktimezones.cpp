@@ -285,12 +285,12 @@ int KTimezone::offset(Qt::TimeSpec basisSpec) const
     char *originalZone = ::getenv("TZ");
 
     // Get the time in the current timezone.
-    TQDateTime basisTime = TQDateTime::currentDateTime(basisSpec);
+    TQDateTime basisTime = TQDateTime::tqcurrentDateTime(basisSpec);
 
     // Set the timezone and find out what time it is there compared to the basis.
     ::setenv("TZ", m_name.utf8(), 1);
     tzset();
-    TQDateTime remoteTime = TQDateTime::currentDateTime(Qt::LocalTime);
+    TQDateTime remoteTime = TQDateTime::tqcurrentDateTime(Qt::LocalTime);
     int offset = remoteTime.secsTo(basisTime);
 
     // Now restore things
@@ -507,7 +507,7 @@ const KTimezone *KTimezones::local()
         // Compute the MD5 sum of /etc/localtime.
         KMD5 context("");
         context.reset();
-        context.update(f);
+        context.update(TQT_TQIODEVICE_OBJECT(f));
         TQIODevice::Offset referenceSize = f.size();
         TQString referenceMd5Sum = context.hexDigest();
         f.close();
@@ -526,7 +526,7 @@ const KTimezone *KTimezones::local()
                     {
                         // Only do the heavy lifting for file sizes which match.
                         context.reset();
-                        context.update(f);
+                        context.update(TQT_TQIODEVICE_OBJECT(f));
                         candidateMd5Sum = context.hexDigest();
                     }
                     f.close();
@@ -695,28 +695,28 @@ bool KTimezoneSource::parse(const TQString &zone, KTimezoneDetails &dataReceiver
     }
 
     // Structures that represent the zoneinfo file.
-    Q_UINT8 T, z, i_, f_;
+    TQ_UINT8 T, z, i_, f_;
     struct
     {
-        Q_UINT32 ttisgmtcnt;
-        Q_UINT32 ttisstdcnt;
-        Q_UINT32 leapcnt;
-        Q_UINT32 timecnt;
-        Q_UINT32 typecnt;
-        Q_UINT32 charcnt;
+        TQ_UINT32 ttisgmtcnt;
+        TQ_UINT32 ttisstdcnt;
+        TQ_UINT32 leapcnt;
+        TQ_UINT32 timecnt;
+        TQ_UINT32 typecnt;
+        TQ_UINT32 charcnt;
     } tzh;
-    Q_UINT32 transitionTime;
-    Q_UINT8 localTimeIndex;
+    TQ_UINT32 transitionTime;
+    TQ_UINT8 localTimeIndex;
     struct
     {
-        Q_INT32 gmtoff;
-        Q_INT8 isdst;
-        Q_UINT8 abbrind;
+        TQ_INT32 gmtoff;
+        TQ_INT8 isdst;
+        TQ_UINT8 abbrind;
     } tt;
-    Q_UINT32 leapTime;
-    Q_UINT32 leapSeconds;
-    Q_UINT8 isStandard;
-    Q_UINT8 isUTC;
+    TQ_UINT32 leapTime;
+    TQ_UINT32 leapSeconds;
+    TQ_UINT8 isStandard;
+    TQ_UINT8 isUTC;
 
     TQDataStream str(&f);
     str >> T >> z >> i_ >> f_;

@@ -40,7 +40,7 @@ namespace KIO {
 class KJavaDownloaderPrivate;
 class KJavaUploaderPrivate;
 
-class KJavaKIOJob : public QObject
+class KJavaKIOJob : public TQObject
 {
 Q_OBJECT
 public:

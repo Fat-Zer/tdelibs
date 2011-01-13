@@ -72,5 +72,5 @@ ViewStatusMsgInterface *KTextEditor::viewStatusMsgInterface (View *view)
   if (!view)
     return 0;
 
-  return static_cast<ViewStatusMsgInterface*>(view->qt_cast("KTextEditor::ViewStatusMsgInterface"));
+  return static_cast<ViewStatusMsgInterface*>(view->tqqt_cast("KTextEditor::ViewStatusMsgInterface"));
 }

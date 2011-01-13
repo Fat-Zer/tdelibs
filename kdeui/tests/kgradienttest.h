@@ -10,7 +10,7 @@
 #include <tqwidget.h>
 #include <kpixmap.h>
 
-class KGradientWidget : public QWidget
+class KGradientWidget : public TQWidget
 {
 public:
     KGradientWidget(TQWidget *parent=0, const char *name=0)

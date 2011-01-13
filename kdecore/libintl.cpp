@@ -77,7 +77,7 @@ Boston, MA 02110-1301, USA.  */
 # define W(flag, data) ((flag) ? SWAP (data) : (data))
 #endif
 
-typedef Q_UINT32 nls_uint32;
+typedef TQ_UINT32 nls_uint32;
 
 struct loaded_domain
 {

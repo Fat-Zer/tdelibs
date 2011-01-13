@@ -62,7 +62,7 @@ KCatalogue::KCatalogue(const TQString & name, const TQString & language )
   // has to be set after we have the first catalog objects.
   d->pluralType = -1; 
 
-  TQString path = TQString::fromLatin1("%1/LC_MESSAGES/%2.mo")
+  TQString path = TQString::tqfromLatin1("%1/LC_MESSAGES/%2.mo")
     .arg( d->language )
     .arg( d->name );
 

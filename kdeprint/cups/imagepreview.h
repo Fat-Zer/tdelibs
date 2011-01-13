@@ -23,7 +23,7 @@
 #include <tqwidget.h>
 #include <tqimage.h>
 
-class ImagePreview : public QWidget
+class ImagePreview : public TQWidget
 {
 public:
 	ImagePreview(TQWidget *parent=0, const char *name=0);
@@ -32,7 +32,7 @@ public:
 	void setParameters(int brightness, int hue, int saturation, int gamma);
 	void setImage(const TQImage& image);
 	void setBlackAndWhite(bool on);
-	TQSize minimumSizeHint() const;
+	TQSize tqminimumSizeHint() const;
 
 private: // Private attributes
 	int brightness_;

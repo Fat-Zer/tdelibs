@@ -100,7 +100,7 @@ KSwitchLanguageDialog::KSwitchLanguageDialog(
     topLayout->addLayout(languageHorizontalLayout);
     
     d->languagesLayout = new TQGridLayout(0 , 2);
-    languageHorizontalLayout->addLayout(d->languagesLayout);
+    languageHorizontalLayout->addLayout(TQT_TQLAYOUT(d->languagesLayout));
     languageHorizontalLayout->addStretch();
     
     TQStringList defaultLanguages = d->applicationLanguageList();
@@ -142,7 +142,7 @@ void KSwitchLanguageDialog::slotAddLanguageButton()
 
 void KSwitchLanguageDialog::removeButtonClicked()
 {
-    TQObject const *signalSender = sender();
+    TQObject const *signalSender = TQT_TQOBJECT_CONST(sender());
     
     if (signalSender == NULL)
     {
@@ -150,7 +150,7 @@ void KSwitchLanguageDialog::removeButtonClicked()
         return;
     }
     
-    KPushButton *removeButton = const_cast<KPushButton*>(::qt_cast<const KPushButton*>(signalSender));
+    KPushButton *removeButton = const_cast<KPushButton*>(::tqqt_cast<const KPushButton*>(signalSender));
     
     if (removeButton == NULL)
     {
@@ -158,7 +158,7 @@ void KSwitchLanguageDialog::removeButtonClicked()
         return;
     }
     
-    TQMap<KPushButton *, LanguageRowData>::iterator it = d->languageRows.find(removeButton);
+    TQMap<KPushButton *, LanguageRowData>::iterator it = d->languageRows.tqfind(removeButton);
     
     if (it == d->languageRows.end())
     {
@@ -323,12 +323,12 @@ void KSwitchLanguageDialogPrivate::addLanguageButton(const TQString & languageCo
     int numRows = languagesLayout->numRows();
     
     TQLabel *languageLabel = new TQLabel(labelText, page);
-    languagesLayout->addWidget( languageLabel, numRows + 1, 1, Qt::AlignAuto );
-    languagesLayout->addWidget( languageButton, numRows + 1, 2, Qt::AlignAuto );
+    languagesLayout->addWidget( languageLabel, numRows + 1, 1, (TQ_Alignment)TQt::AlignAuto );
+    languagesLayout->addWidget( languageButton, numRows + 1, 2, (TQ_Alignment)TQt::AlignAuto );
     
     if (primaryLanguage == false)
     {
-        languagesLayout->addWidget( removeButton, numRows + 1, 3, Qt::AlignAuto );
+        languagesLayout->addWidget( removeButton, numRows + 1, 3, (TQ_Alignment)TQt::AlignAuto );
         
         languageRowData.setRowWidgets(
             languageLabel,

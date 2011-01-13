@@ -252,7 +252,7 @@ bool KPrinterImpl::startPrinting(const TQString& cmd, KPrinter *printer, const T
 
 	QString	command(cmd), filestr;
 	QStringList	printfiles;
-	if (command.find("%in") == -1) command.append(" %in");
+	if (command.tqfind("%in") == -1) command.append(" %in");
 
 	for (TQStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
 		if (TQFile::exists(*it))
@@ -379,7 +379,7 @@ int KPrinterImpl::doFilterFiles(KPrinter *printer, TQStringList& files, const TQ
 	for (TQStringList::Iterator it=files.begin(); it!=files.end(); ++it)
 	{
 		QString	mime = KMimeMagic::self()->findFileType(*it)->mimeType();
-		if (inputMimeTypes.find(mime) == inputMimeTypes.end())
+		if (inputMimeTypes.tqfind(mime) == inputMimeTypes.end())
 		{
 			if (KMessageBox::warningContinueCancel(0,
 				"<p>" + i18n("The MIME type %1 is not supported as input of the filter chain "
@@ -508,7 +508,7 @@ int KPrinterImpl::autoConvertFiles(KPrinter *printer, TQStringList& files, bool 
 					       TQString::null,
 					       i18n("Convert"),
 					       i18n("Keep"),
-					       TQString::fromLatin1("kdeprintAutoConvert"))) == KMessageBox::Yes)
+					       TQString::tqfromLatin1("kdeprintAutoConvert"))) == KMessageBox::Yes)
 			{
 				// find the filter chain
 				QStringList	flist = KXmlCommandManager::self()->autoConvert(mime, primaryMimeType);

@@ -31,8 +31,8 @@ void openWallet()
 	_out << "Got sync wallet: " << (wallet != 0) << endl;
 	_out << "About to start 30 second event loop" << endl;
 
-	TQTimer::singleShot( 30000, qApp, TQT_SLOT( quit() ) );
-	int ret = qApp->exec();
+	TQTimer::singleShot( 30000, tqApp, TQT_SLOT( quit() ) );
+	int ret = tqApp->exec();
 
 
 	if ( ret == 0 )
@@ -60,7 +60,7 @@ void openWallet()
 void WalletReceiver::walletOpened( bool got )
 {
 	_out << "Got async wallet: " << got << endl;
-	qApp->exit( 1 );
+	tqApp->exit( 1 );
 }
 
 int main( int argc, char *argv[] )

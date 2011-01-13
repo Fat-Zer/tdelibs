@@ -150,7 +150,7 @@ void KCompletion::addWeightedItem( const TQString& item )
     uint weight = 0;
 
     // find out the weighting of this item (appended to the string as ":num")
-    int index = item.findRev(':');
+    int index = item.tqfindRev(':');
     if ( index > 0 ) {
         bool ok;
         weight = item.mid( index + 1 ).toUInt( &ok );
@@ -274,7 +274,7 @@ TQStringList KCompletion::substringCompletion( const TQString& string ) const
 
     for( ; it != list.end(); ++it ) {
         TQString item = *it;
-        if ( item.find( string, 0, false ) != -1 ) { // always case insensitive
+        if ( item.tqfind( string, 0, false ) != -1 ) { // always case insensitive
             matches.append( item );
         }
     }
@@ -463,7 +463,7 @@ TQString KCompletion::findCompletion( const TQString& string )
                     uint weight = temp_node->weight();
                     const KCompTreeNode* hit = temp_node;
                     for( int i = 1; i < count; i++ ) {
-                        temp_node = node->childAt(i);
+                        temp_node = node->tqchildAt(i);
                         if( temp_node->weight() > weight ) {
                             hit = temp_node;
                             weight = hit->weight();
@@ -628,19 +628,19 @@ void KCompletion::doBeep( BeepMode mode ) const
 
     switch ( mode ) {
         case Rotation:
-            event = TQString::fromLatin1("Textcompletion: rotation");
+            event = TQString::tqfromLatin1("Textcompletion: rotation");
             text = i18n("You reached the end of the list\nof matching items.\n");
             break;
         case PartialMatch:
             if ( myCompletionMode == KGlobalSettings::CompletionShell ||
                  myCompletionMode == KGlobalSettings::CompletionMan ) {
-                event = TQString::fromLatin1("Textcompletion: partial match");
+                event = TQString::tqfromLatin1("Textcompletion: partial match");
                 text = i18n("The completion is ambiguous, more than one\nmatch is available.\n");
             }
             break;
         case NoMatch:
             if ( myCompletionMode == KGlobalSettings::CompletionShell ) {
-                event = TQString::fromLatin1("Textcompletion: no match");
+                event = TQString::tqfromLatin1("Textcompletion: no match");
                 text = i18n("There is no matching item available.\n");
             }
             break;

@@ -67,7 +67,7 @@ KSycocaEntry *
 KBuildServiceFactory::createEntry( const TQString& file, const char *resource )
 {
   TQString name = file;
-  int pos = name.findRev('/');
+  int pos = name.tqfindRev('/');
   if (pos != -1)
   {
      name = name.mid(pos+1);
@@ -101,11 +101,11 @@ KBuildServiceFactory::saveHeader(TQDataStream &str)
 {
    KSycocaFactory::saveHeader(str);
 
-   str << (Q_INT32) m_nameDictOffset;
-   str << (Q_INT32) m_relNameDictOffset;
-   str << (Q_INT32) m_offerListOffset;
-   str << (Q_INT32) m_initListOffset;
-   str << (Q_INT32) m_menuIdDictOffset;
+   str << (TQ_INT32) m_nameDictOffset;
+   str << (TQ_INT32) m_relNameDictOffset;
+   str << (TQ_INT32) m_offerListOffset;
+   str << (TQ_INT32) m_initListOffset;
+   str << (TQ_INT32) m_menuIdDictOffset;
 }
 
 void
@@ -113,32 +113,32 @@ KBuildServiceFactory::save(TQDataStream &str)
 {
    KSycocaFactory::save(str);
 
-   m_nameDictOffset = str.device()->at();
+   m_nameDictOffset = str.tqdevice()->at();
    m_nameDict->save(str);
 
-   m_relNameDictOffset = str.device()->at();
+   m_relNameDictOffset = str.tqdevice()->at();
    m_relNameDict->save(str);
 
    saveOfferList(str);
    saveInitList(str);
 
-   m_menuIdDictOffset = str.device()->at();
+   m_menuIdDictOffset = str.tqdevice()->at();
    m_menuIdDict->save(str);
 
-   int endOfFactoryData = str.device()->at();
+   int endOfFactoryData = str.tqdevice()->at();
 
    // Update header (pass #3)
    saveHeader(str);
 
 
    // Seek to end.
-   str.device()->at(endOfFactoryData);
+   str.tqdevice()->at(endOfFactoryData);
 }
 
 void
 KBuildServiceFactory::saveOfferList(TQDataStream &str)
 {
-   m_offerListOffset = str.device()->at();
+   m_offerListOffset = str.tqdevice()->at();
 
    bool isNumber;
    for(TQDictIterator<KSycocaEntry::Ptr> itserv ( *m_entryDict );
@@ -190,18 +190,18 @@ KBuildServiceFactory::saveOfferList(TQDataStream &str)
           it2 != services.end(); ++it2)
       {
          KService *service = *it2;
-         str << (Q_INT32) entry->offset();
-         str << (Q_INT32) service->offset();
+         str << (TQ_INT32) entry->offset();
+         str << (TQ_INT32) service->offset();
       }
    }
 
-   str << (Q_INT32) 0;               // End of list marker (0)
+   str << (TQ_INT32) 0;               // End of list marker (0)
 }
 
 void
 KBuildServiceFactory::saveInitList(TQDataStream &str)
 {
-   m_initListOffset = str.device()->at();
+   m_initListOffset = str.tqdevice()->at();
 
    KService::List initList;
 
@@ -215,19 +215,19 @@ KBuildServiceFactory::saveInitList(TQDataStream &str)
           initList.append(service); 
       }
    }
-   str << (Q_INT32) initList.count(); // Nr of init services.
+   str << (TQ_INT32) initList.count(); // Nr of init services.
    for(KService::List::Iterator it = initList.begin();
        it != initList.end();
        ++it)
    {
-      str << (Q_INT32) (*it)->offset();
+      str << (TQ_INT32) (*it)->offset();
    }
 }
 
 void
 KBuildServiceFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
 {
-   if (m_dupeDict.find(newEntry))
+   if (m_dupeDict.tqfind(newEntry))
       return;
 
    KSycocaFactory::addEntry(newEntry, resource);
@@ -244,7 +244,7 @@ KBuildServiceFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
 
    TQString name = service->desktopEntryName();
    m_nameDict->add( name, newEntry );
-   m_serviceDict.replace(name, service);
+   m_serviceDict.tqreplace(name, service);
 
    TQString relName = service->desktopEntryPath();
    m_relNameDict->add( relName, newEntry );

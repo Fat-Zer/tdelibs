@@ -169,16 +169,16 @@ class KDE_EXPORT Provider
  * the main provider database for this specific application.
  * It should probably not be used directly by the application.
  */
-class KDE_EXPORT ProviderLoader : public QObject
+class KDE_EXPORT ProviderLoader : public TQObject
 {
     Q_OBJECT
   public:
     /**
      * Constructor.
      *
-     * @param parentWidget the parent widget
+     * @param tqparentWidget the parent widget
      */
-    ProviderLoader( TQWidget *parentWidget );
+    ProviderLoader( TQWidget *tqparentWidget );
 
     /**
      * Starts asynchronously loading the list of providers of the

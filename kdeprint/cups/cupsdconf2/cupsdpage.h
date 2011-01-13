@@ -24,7 +24,7 @@
 
 struct CupsdConf;
 
-class CupsdPage : public QWidget
+class CupsdPage : public TQWidget
 {
 	Q_OBJECT
 public:

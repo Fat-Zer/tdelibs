@@ -89,7 +89,7 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   // cursor
   cursor.setMoveOnInsert (true);
 
-  // invalidate selStartCached, or keyb selection is screwed initially
+  // tqinvalidate selStartCached, or keyb selection is screwed initially
   selStartCached.setLine( -1 );
   //
   // scrollbar for lines
@@ -2759,7 +2759,7 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
         }
         else
         {
-          selStartCached.setLine( -1 ); // invalidate
+          selStartCached.setLine( -1 ); // tqinvalidate
         }
 
         if( !( e->state() & Qt::ShiftButton ) && isTargetSelected( e->pos() ) )

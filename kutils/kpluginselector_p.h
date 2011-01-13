@@ -39,7 +39,7 @@ class KCModuleInfo;
  * @author Matthias Kretz <kretz@kde.org>
  * @since 3.2
  */
-class KPluginSelectionWidget : public QWidget
+class KPluginSelectionWidget : public TQWidget
 {
     Q_OBJECT
     public:

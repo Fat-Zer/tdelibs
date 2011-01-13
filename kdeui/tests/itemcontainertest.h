@@ -9,7 +9,7 @@ class KListBox;
 class TQButtonGroup;
 class TQLabel;
 
-class TopLevel : public QWidget
+class TopLevel : public TQWidget
 {
     Q_OBJECT
 public:

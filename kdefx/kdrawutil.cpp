@@ -143,21 +143,21 @@ KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
     kDrawRoundButton(p, r, g, sunken);
 }
 
-#define QCOORDARRLEN(x) sizeof(x)/(sizeof(QCOORD)*2)
+#define QCOORDARRLEN(x) sizeof(x)/(sizeof(TQCOORD)*2)
 
 KDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool clear)
 {
     // round edge fills
-    static const QCOORD btm_left_fill[]={ 0,0,1,0,2,0,3,0,4,0,0,1,1,1,2,1,3,1,4,1,
+    static const TQCOORD btm_left_fill[]={ 0,0,1,0,2,0,3,0,4,0,0,1,1,1,2,1,3,1,4,1,
     1,2,2,2,3,2,4,2,2,3,3,3,4,3,3,4,4,4 };
 
-    static const QCOORD btm_right_fill[]={ 0,0,1,0,2,0,3,0,4,0,0,1,1,1,2,1,3,1,4,
+    static const TQCOORD btm_right_fill[]={ 0,0,1,0,2,0,3,0,4,0,0,1,1,1,2,1,3,1,4,
     1,0,2,1,2,2,2,3,2,0,3,1,3,2,3,0,4,1,4 };
 
-    static const QCOORD top_left_fill[]={ 3,0,4,0,2,1,3,1,4,1,1,2,2,2,3,2,4,2,0,3,
+    static const TQCOORD top_left_fill[]={ 3,0,4,0,2,1,3,1,4,1,1,2,2,2,3,2,4,2,0,3,
     1,3,2,3,3,3,4,3,0,4,1,4,2,4,3,4,4,4 };
 
-    static const QCOORD top_right_fill[]={ 0,0,1,0,0,1,1,1,2,1,0,2,1,2,2,2,3,2,0,
+    static const TQCOORD top_right_fill[]={ 0,0,1,0,0,1,1,1,2,1,0,2,1,2,2,2,3,2,0,
     3,1,3,2,3,3,3,4,3,0,4,1,4,2,4,3,4,4,4 };
 
     if(clear)

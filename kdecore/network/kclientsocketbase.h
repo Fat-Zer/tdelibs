@@ -32,6 +32,10 @@
 #include "kresolver.h"
 #include <kdelibs_export.h>
 
+#ifdef Q_MOC_RUN
+#define USE_QT4
+#endif // Q_MOC_RUN
+
 namespace KNetwork {
 
 class KClientSocketBasePrivate;
@@ -46,9 +50,15 @@ class KClientSocketBasePrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KClientSocketBase : public TQObject, public KActiveSocketBase
+class KDECORE_EXPORT KClientSocketBase :
+#ifdef USE_QT4
+#else // USE_QT4
+public TQObject,
+#endif // USE_QT4
+public KActiveSocketBase
 {
   Q_OBJECT
+  TQ_OBJECT
 
 public:
   /**
@@ -257,7 +267,7 @@ public:
    * This is a convenience function provided to ease migrating from
    * Qt 3.x's TQSocket class.
    */
-  inline void connectToHost(const TQString& host, Q_UINT16 port)
+  inline void connectToHost(const TQString& host, TQ_UINT16 port)
   { connect(host, TQString::number(port)); }
 
   /**
@@ -293,7 +303,7 @@ public:
    * Reimplemented from KSocketBase.
    */
 #ifdef USE_QT3
-  virtual Q_LONG bytesAvailable() const;
+  virtual TQ_LONG bytesAvailable() const;
 #endif
 #ifdef USE_QT4
   virtual qint64 bytesAvailable() const;
@@ -302,40 +312,40 @@ public:
   /**
    * Waits for more data. Reimplemented from KSocketBase.
    */
-  virtual Q_LONG waitForMore(int msecs, bool *timeout = 0L);
+  virtual TQ_LONG waitForMore(int msecs, bool *timeout = 0L);
 
   /**
    * Reads data from a socket. Reimplemented from KSocketBase.
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen);
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen);
 
   /**
    * @overload
    * Reads data from a socket. Reimplemented from KSocketBase.
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen, KSocketAddress& from);
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
 
   /**
    * Peeks data from the socket. Reimplemented from KSocketBase.
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen);
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen);
 
   /**
    * @overload
    * Peeks data from the socket. Reimplemented from KSocketBase.
    */
-  virtual Q_LONG peekBlock(char *data, Q_ULONG maxlen, KSocketAddress &from);
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress &from);
 
   /**
    * Writes data to the socket. Reimplemented from KSocketBase.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len);
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len);
 
   /**
    * @overload
    * Writes data to the socket. Reimplemented from KSocketBase.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len, const KSocketAddress& to);
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
 
   /**
    * Returns the local socket address. Reimplemented from KSocketBase.

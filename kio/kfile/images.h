@@ -248,7 +248,7 @@ static struct EmbedImage {
 static const TQImage& qembed_findImage( const TQString& name )
 {
     static TQDict<TQImage> dict;
-    TQImage* img = dict.find( name );
+    TQImage* img = dict.tqfind( name );
     if ( !img ) {
 	for ( int i = 0; embed_image_vec[i].data; i++ ) {
 	    if ( strcmp(embed_image_vec[i].name, name.latin1()) == 0 ) {

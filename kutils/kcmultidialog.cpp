@@ -148,7 +148,7 @@ void KCMultiDialog::apply()
             TQStringList * names = moduleParentComponents[ m ];
             kdDebug(710) << k_funcinfo << *names << " saved and added to the list" << endl;
             for( TQStringList::ConstIterator it = names->begin(); it != names->end(); ++it )
-                if( updatedModules.find( *it ) == updatedModules.end() )
+                if( updatedModules.tqfind( *it ) == updatedModules.end() )
                     updatedModules.append( *it );
         }
     }
@@ -275,7 +275,7 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
         return;
     }
     KCModuleProxy * module;
-    if( m_orphanModules.contains( moduleinfo.service() ) )
+    if( m_orphanModules.tqcontains( moduleinfo.service() ) )
     {
         // the KCModule already exists - it was removed from the dialog in
         // removeAllModules
@@ -328,7 +328,7 @@ void KCMultiDialog::removeAllModules()
     {
         kdDebug( 710 ) << "remove 2" << endl;
         KCModuleProxy * kcm = ( *it ).kcm;
-        TQObject * page = kcm->parent();
+        TQObject * page = TQT_TQOBJECT(kcm->parent());
         kcm->hide();
         if( page )
         {
@@ -358,7 +358,7 @@ void KCMultiDialog::slotAboutToShow(TQWidget *page)
     if( ! obj )
         return;
 
-    KCModuleProxy * module = ( KCModuleProxy* )obj->qt_cast(
+    KCModuleProxy * module = ( KCModuleProxy* )obj->tqqt_cast(
             "KCModuleProxy" );
     if( ! module )
         return;

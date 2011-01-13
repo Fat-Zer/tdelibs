@@ -74,7 +74,7 @@ bool TemplateInterface::expandMacros( TQMap<TQString, TQString> &map, TQWidget *
 {
   KABC::StdAddressBook *addrBook = 0;
   KABC::Addressee userAddress;
-  TQDateTime datetime = TQDateTime::currentDateTime();
+  TQDateTime datetime = TQDateTime::tqcurrentDateTime();
   TQDate date = datetime.date();
   TQTime time = datetime.time();
 
@@ -192,6 +192,6 @@ TemplateInterface *KTextEditor::templateInterface ( KTextEditor::Document *doc )
   if ( !doc )
     return 0;
 
-  return static_cast<TemplateInterface*>( doc->qt_cast( "KTextEditor::TemplateInterface" ) );
+  return static_cast<TemplateInterface*>( doc->tqqt_cast( "KTextEditor::TemplateInterface" ) );
 }
 

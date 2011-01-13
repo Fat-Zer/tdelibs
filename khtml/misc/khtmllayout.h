@@ -33,7 +33,7 @@ namespace khtml
 
     const int UNDEFINED = -1;
 
-    // alignment
+    // tqalignment
     enum VAlign { VNone=0, Bottom, VCenter, Top, Baseline };
     enum HAlign { HDefault, Left, HCenter, Right, HNone = 0 };
 
@@ -103,7 +103,7 @@ namespace khtml
                 unsigned type : 3;
                 bool quirk : 1;
             } l;
-            Q_UINT32 _length;
+            TQ_UINT32 _length;
         };
     };
 

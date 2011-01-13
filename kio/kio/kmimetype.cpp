@@ -265,7 +265,7 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
       {
           // Assume inode/directory, if the protocol supports listing.
           if ( KProtocolInfo::supportsListing( _url ) )
-              return mimeType( TQString::fromLatin1("inode/directory") );
+              return mimeType( TQString::tqfromLatin1("inode/directory") );
           else
               return defaultMimeTypePtr(); // == 'no idea', e.g. for "data:,foo/"
       }
@@ -382,15 +382,15 @@ void KMimeType::init( KDesktopFile * config )
   m_lstPatterns = config->readListEntry( "Patterns", ';' );
 
   // Read the X-KDE-AutoEmbed setting and store it in the properties map
-  TQString XKDEAutoEmbed = TQString::fromLatin1("X-KDE-AutoEmbed");
+  TQString XKDEAutoEmbed = TQString::tqfromLatin1("X-KDE-AutoEmbed");
   if ( config->hasKey( XKDEAutoEmbed ) )
     m_mapProps.insert( XKDEAutoEmbed, TQVariant( config->readBoolEntry( XKDEAutoEmbed ), 0 ) );
 
-  TQString XKDEText = TQString::fromLatin1("X-KDE-text");
+  TQString XKDEText = TQString::tqfromLatin1("X-KDE-text");
   if ( config->hasKey( XKDEText ) )
     m_mapProps.insert( XKDEText, config->readBoolEntry( XKDEText ) );
 
-  TQString XKDEIsAlso = TQString::fromLatin1("X-KDE-IsAlso");
+  TQString XKDEIsAlso = TQString::tqfromLatin1("X-KDE-IsAlso");
   if ( config->hasKey( XKDEIsAlso ) ) {
     TQString inherits = config->readEntry( XKDEIsAlso );
     if ( inherits != name() )
@@ -399,7 +399,7 @@ void KMimeType::init( KDesktopFile * config )
         kdWarning(7009) << "Error: " << inherits << " inherits from itself!!!!" << endl;
   }
 
-  TQString XKDEPatternsAccuracy = TQString::fromLatin1("X-KDE-PatternsAccuracy");
+  TQString XKDEPatternsAccuracy = TQString::tqfromLatin1("X-KDE-PatternsAccuracy");
   if ( config->hasKey( XKDEPatternsAccuracy ) )
     m_mapProps.insert( XKDEPatternsAccuracy, config->readEntry( XKDEPatternsAccuracy ) );
 
@@ -632,9 +632,9 @@ TQString KFolderType::icon( const KURL& _url, bool _is_local ) const
           entries.append( ep->d_name );
           if ( readdir( dp ) == 0 ) { // only three
             // check if we got "." ".." and ".directory"
-            isempty = entries.find( "." ) != entries.end() &&
-                      entries.find( ".." ) != entries.end() &&
-                      entries.find( ".directory" ) != entries.end();
+            isempty = entries.tqfind( "." ) != entries.end() &&
+                      entries.tqfind( ".." ) != entries.end() &&
+                      entries.tqfind( ".directory" ) != entries.end();
           }
         }
         if (!isempty && !strcmp(ep->d_name, ".directory"))
@@ -838,7 +838,7 @@ pid_t KDEDesktopMimeType::runFSDevice( const KURL& _url, const KSimpleConfig &cf
     KURL mpURL;
     mpURL.setPath( mp );
     // Open a new window
-    retval = KRun::runURL( mpURL, TQString::fromLatin1("inode/directory") );
+    retval = KRun::runURL( mpURL, TQString::tqfromLatin1("inode/directory") );
   }
   else
   {
@@ -995,15 +995,15 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices
 
   if( cfg.hasKey( "X-KDE-GetActionMenu" )) {
     TQString dcopcall = cfg.readEntry( "X-KDE-GetActionMenu" );
-    const TQCString app = dcopcall.section(' ', 0,0).utf8();
+    const TQCString app = TQString(dcopcall.section(' ', 0,0)).utf8();
 
     TQByteArray dataToSend;
     TQDataStream dataStream(dataToSend, IO_WriteOnly);
     dataStream << file_list;
     TQCString replyType;
     TQByteArray replyData;
-    TQCString object =    dcopcall.section(' ', 1,-2).utf8();
-    TQString function =  dcopcall.section(' ', -1);
+    TQCString object = TQString(dcopcall.section(' ', 1,-2)).utf8();
+    TQString function = dcopcall.section(' ', -1);
     if(!function.endsWith("(KURL::List)")) {
       kdWarning() << "Desktop file " << path << " contains an invalid X-KDE-ShowIfDcopCall - the function must take the exact parameter (KURL::List) and must be specified." << endl;
     } else {

@@ -300,7 +300,7 @@ void KCombiView::slotSortingChanged( TQDir::SortSpec sorting )
 
 KFileView *KCombiView::focusView( KFileView *preferred ) const
 {
-    TQWidget *w = focusWidget();
+    TQWidget *w = tqfocusWidget();
     KFileView *other = (right == preferred) ? left : right;
     return (preferred && w == preferred->widget()) ? preferred : other;
 }
@@ -358,9 +358,9 @@ bool KCombiView::eventFilter( TQObject *o, TQEvent *e )
     // only the focused view may have a selection
     if ( type == TQEvent::FocusIn )
     {
-        if ( o == left )
+        if ( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(left) )
             right->clearSelection();
-        else if ( o == right->widget() )
+        else if ( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(right->widget()) )
             left->clearSelection();
     }
     

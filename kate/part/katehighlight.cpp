@@ -65,10 +65,10 @@ static const int KATE_DYNAMIC_CONTEXTS_RESET_DELAY = 30 * 1000;
 
 inline bool kateInsideString (const TQString &str, TQChar ch)
 {
-  const TQChar *unicode = str.unicode();
+  const TQChar *tqunicode = str.tqunicode();
   const uint len = str.length();
   for (uint i=0; i < len; i++)
-    if (unicode[i] == ch)
+    if (tqunicode[i] == ch)
       return true;
 
   return false;
@@ -661,7 +661,7 @@ int KateHlKeyword::checkHgl(const TQString& text, int offset, int len)
 
   if (wordLen < minLen) return 0;
 
-  if ( dict[wordLen] && dict[wordLen]->find(TQConstString(text.unicode() + offset, wordLen).string()) )
+  if ( dict[wordLen] && dict[wordLen]->find(TQConstString(text.tqunicode() + offset, wordLen).string()) )
     return offset2;
 
   return 0;
@@ -2088,14 +2088,14 @@ TQString KateHighlighting::hlKeyForAttrib( int i ) const
 
 bool KateHighlighting::isInWord( TQChar c, int attrib ) const
 {
-  return m_additionalData[ hlKeyForAttrib( attrib ) ]->deliminator.find(c) < 0
+  return m_additionalData[ hlKeyForAttrib( attrib ) ]->deliminator.tqfind(c) < 0
       && !c.isSpace() && c != '"' && c != '\'';
 }
 
 bool KateHighlighting::canBreakAt( TQChar c, int attrib ) const
 {
   static const TQString& sq = KGlobal::staticQString("\"'");
-  return (m_additionalData[ hlKeyForAttrib( attrib ) ]->wordWrapDeliminator.find(c) != -1) && (sq.find(c) == -1);
+  return (m_additionalData[ hlKeyForAttrib( attrib ) ]->wordWrapDeliminator.tqfind(c) != -1) && (sq.tqfind(c) == -1);
 }
 
 signed char KateHighlighting::commentRegion(int attr) const {
@@ -2367,7 +2367,7 @@ int KateHighlighting::getIdFromString(TQStringList *ContextNameList, TQString tm
 
   else if ( tmpLineEndContext.contains("##"))
   {
-    int o = tmpLineEndContext.find("##");
+    int o = tmpLineEndContext.tqfind("##");
     // FIXME at least with 'foo##bar'-style contexts the rules are picked up
     // but the default attribute is not
     TQString tmp=tmpLineEndContext.mid(o+2);
@@ -2477,7 +2477,7 @@ void KateHighlighting::makeContextList()
       kdDebug(13010)<<"Looking up context0 for ruleset "<<incCtx<<endl;
       incCtx = incCtx.left(incCtx.length()-1);
       //try to find the context0 id for a given unresolvedReference
-      KateEmbeddedHlInfos::const_iterator hlIt=embeddedHls.find(incCtx);
+      KateEmbeddedHlInfos::const_iterator hlIt=embeddedHls.tqfind(incCtx);
       if (hlIt!=embeddedHls.end())
         *(unresIt.key())=hlIt.data().context0;
     }
@@ -2765,7 +2765,7 @@ int KateHighlighting::addToContextList(const TQString &ident, int ctx0)
         // only context refernces of type Name, ##Name, and Subname##Name are allowed
         if (incCtx.startsWith("##") || (!incCtx.startsWith("#")))
         {
-          int incCtxi = incCtx.find("##");
+          int incCtxi = incCtx.tqfind("##");
           //#stay, #pop is not interesting here
           if (incCtxi >= 0)
           {

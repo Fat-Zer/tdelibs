@@ -68,11 +68,11 @@ void KFileFilterCombo::setFilter(const TQString& filter)
 
     if (!filter.isEmpty()) {
 	TQString tmp = filter;
-	int index = tmp.find('\n');
+	int index = tmp.tqfind('\n');
 	while (index > 0) {
 	    filters.append(tmp.left(index));
 	    tmp = tmp.mid(index + 1);
-	    index = tmp.find('\n');
+	    index = tmp.tqfind('\n');
 	}
 	filters.append(tmp);
     } 
@@ -82,7 +82,7 @@ void KFileFilterCombo::setFilter(const TQString& filter)
     TQStringList::ConstIterator it;
 	TQStringList::ConstIterator end(filters.end());
     for (it = filters.begin(); it != end; ++it) {
-	int tab = (*it).find('|');
+	int tab = (*it).tqfind('|');
 	insertItem((tab < 0) ? *it :
 		   (*it).mid(tab + 1));
     }
@@ -101,7 +101,7 @@ TQString KFileFilterCombo::currentFilter() const
         }
     }
 
-    int tab = f.find('|');
+    int tab = f.tqfind('|');
     if (tab < 0)
 	return f;
     else
@@ -129,7 +129,7 @@ void KFileFilterCombo::setMimeFilter( const TQStringList& types,
 {
     clear();
     filters.clear();
-    TQString delim = TQString::fromLatin1(", ");
+    TQString delim = TQString::tqfromLatin1(", ");
     d->hasAllSupportedFiles = false;
 
     m_allTypes = defaultType.isEmpty() && (types.count() > 1);
@@ -179,7 +179,7 @@ void KFileFilterCombo::slotFilterChanged()
 
 bool KFileFilterCombo::eventFilter( TQObject *o, TQEvent *e )
 {
-    if ( o == lineEdit() && e->type() == TQEvent::FocusOut ) {
+    if ( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(lineEdit()) && e->type() == TQEvent::FocusOut ) {
         if ( currentText() != d->lastFilter )
             emit filterChanged();
     }

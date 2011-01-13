@@ -35,7 +35,7 @@
 #include <win32_utils.h>
 static QRgb qt_colorref2qrgb(COLORREF col)
 {
-    return qRgb(GetRValue(col),GetGValue(col),GetBValue(col));
+    return tqRgb(GetRValue(col),GetGValue(col),GetBValue(col));
 }
 #endif
 
@@ -451,7 +451,7 @@ TQFont KGlobalSettings::taskbarFont()
 TQFont KGlobalSettings::largeFont(const TQString &text)
 {
     TQFontDatabase db;
-    TQStringList fam = db.families();
+    TQStringList fam = db.tqfamilies();
 
     // Move a bunch of preferred fonts to the front.
     if (fam.remove("Arial"))
@@ -522,7 +522,7 @@ void KGlobalSettings::initStatic() // should be called initPaths(). Don't put an
 	readXdgUserDirs(s_desktopPath, s_documentPath);
 	
     if (s_desktopPath->isEmpty() == true) {
-      *s_desktopPath = QDir::homeDirPath() + "/Desktop/";
+      *s_desktopPath = TQDir::homeDirPath() + "/Desktop/";
     }
     *s_desktopPath = TQDir::cleanDirPath( *s_desktopPath );
     if ( !s_desktopPath->endsWith("/") )

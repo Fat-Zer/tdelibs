@@ -186,8 +186,8 @@ void ToolViewAccessor::place(KDockWidget::DockPosition pos, TQWidget* pTargetWnd
         if (!DockToOurself) if(pTargetWnd != 0L) {
             pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd);
             if (!pTargetDock) {
-                if (pTargetWnd->parentWidget()) {
-                    pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd->parentWidget());
+                if (pTargetWnd->tqparentWidget()) {
+                    pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd->tqparentWidget());
                 }
             }
         }

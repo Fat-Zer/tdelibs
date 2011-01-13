@@ -102,7 +102,7 @@ void TreeListBoxItem::paint(TQPainter *p)
 	if (m_depth > 0)
 	{
 		QPen	oldPen = p->pen();
-		p->setPen(listBox()->colorGroup().mid());
+		p->setPen(listBox()->tqcolorGroup().mid());
 
 		TreeListBoxItem	*item = this;
 		int	s = xo-stepSize()/2;

@@ -36,7 +36,7 @@ public:
     bool isNormalSize();
     bool isDoubleSize();
 
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
 
     virtual int heightForWidth ( int w ) const;
 

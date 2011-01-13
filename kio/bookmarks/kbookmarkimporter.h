@@ -34,7 +34,7 @@
  * and KActionMenu uses it to create actions directly.
  * @since 3.2
  */
-class KIO_EXPORT KBookmarkImporterBase : public QObject
+class KIO_EXPORT KBookmarkImporterBase : public TQObject
 {
     Q_OBJECT
 public:

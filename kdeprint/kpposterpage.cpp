@@ -194,7 +194,7 @@ KPPosterPage::KPPosterPage( TQWidget *parent, const char *name )
 	m_lockbtn->setToggleButton( true );
 	m_lockbtn->setPixmap( SmallIcon( "encrypted" ) );
 	m_lockbtn->setOn( true );
-	m_lockbtn->setFixedSize( m_lockbtn->sizeHint() );
+	m_lockbtn->setFixedSize( m_lockbtn->tqsizeHint() );
 	TQToolTip::add( m_lockbtn, i18n( "Link/unlink poster and print size" ) );
 
 	for ( int i=0; i<KPrinter::NPageSize-1; i++ )
@@ -265,7 +265,7 @@ void KPPosterPage::setOptions( const TQMap<TQString,TQString>& opts )
 		m_mediasize->setText( ps );
 	m_preview->setMediaSize( ps );
 
-	if ( opts[ "_kde-filters" ].find( "poster" ) != -1 )
+	if ( opts[ "_kde-filters" ].tqfind( "poster" ) != -1 )
 	{
 		m_postercheck->setChecked( true );
 		ps = opts[ "_kde-poster-size" ];

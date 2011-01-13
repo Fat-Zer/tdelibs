@@ -134,15 +134,15 @@ void KMimeTypeChooser::loadMimeTypes( const TQStringList &_selectedMimeTypes )
   for (; it != mimetypes.end(); ++it)
   {
     TQString mimetype = (*it)->name();
-    int index = mimetype.find("/");
+    int index = mimetype.tqfind("/");
     TQString maj = mimetype.left(index);
 
-    if ( d->groups.count() && !d->groups.contains( maj ) )
+    if ( d->groups.count() && !d->groups.tqcontains( maj ) )
       continue;
 
     TQString min = mimetype.right(mimetype.length() - (index+1));
 
-    TQMapIterator<TQString,TQListViewItem*> mit = groups.find( maj );
+    TQMapIterator<TQString,TQListViewItem*> mit = groups.tqfind( maj );
     if ( mit == groups.end() )
     {
       groupItem = new TQListViewItem( d->lvMimeTypes, maj );
@@ -167,7 +167,7 @@ void KMimeTypeChooser::loadMimeTypes( const TQStringList &_selectedMimeTypes )
     if ( d->visuals & Patterns )
       item->setText( cl, (*it)->patterns().join("; ") );
 
-    if ( selMimeTypes.contains(mimetype) )
+    if ( selMimeTypes.tqcontains(mimetype) )
     {
       item->setOn( true );
       groupItem->setOpen( true );
@@ -189,15 +189,15 @@ void KMimeTypeChooser::loadMimeTypes( const TQStringList &_selectedMimeTypes )
 
 void KMimeTypeChooser::editMimeType()
 {
-  if ( !(d->lvMimeTypes->currentItem() && (d->lvMimeTypes->currentItem())->parent()) )
+  if ( !(d->lvMimeTypes->currentItem() && (d->lvMimeTypes->currentItem())->tqparent()) )
     return;
-  TQString mt = (d->lvMimeTypes->currentItem()->parent())->text( 0 ) + "/" + (d->lvMimeTypes->currentItem())->text( 0 );
+  TQString mt = (d->lvMimeTypes->currentItem()->tqparent())->text( 0 ) + "/" + (d->lvMimeTypes->currentItem())->text( 0 );
   // thanks to libkonq/konq_operations.cc
   connect( KSycoca::self(), TQT_SIGNAL(databaseChanged()),
            this, TQT_SLOT(slotSycocaDatabaseChanged()) );
-  TQString keditfiletype = TQString::fromLatin1("keditfiletype");
+  TQString keditfiletype = TQString::tqfromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype
-                    + " --parent " + TQString::number( (ulong)topLevelWidget()->winId())
+                    + " --parent " + TQString::number( (ulong)tqtopLevelWidget()->winId())
                     + " " + KProcess::quote(mt),
                     keditfiletype, keditfiletype /*unused*/);
 }
@@ -205,7 +205,7 @@ void KMimeTypeChooser::editMimeType()
 void KMimeTypeChooser::slotCurrentChanged(TQListViewItem* i)
 {
   if ( d->btnEditMimeType )
-    d->btnEditMimeType->setEnabled( i->parent() );
+    d->btnEditMimeType->setEnabled( i->tqparent() );
 }
 
 void KMimeTypeChooser::slotSycocaDatabaseChanged()
@@ -220,8 +220,8 @@ TQStringList KMimeTypeChooser::mimeTypes() const
   TQListViewItemIterator it( d->lvMimeTypes );
   for (; it.current(); ++it)
   {
-    if ( it.current()->parent() && ((TQCheckListItem*)it.current())->isOn() )
-      l << it.current()->parent()->text(0) + "/" + it.current()->text(0); // FIXME uncecked, should be Ok unless someone changes mimetypes during this!
+    if ( it.current()->tqparent() && ((TQCheckListItem*)it.current())->isOn() )
+      l << it.current()->tqparent()->text(0) + "/" + it.current()->text(0); // FIXME uncecked, should be Ok unless someone changes mimetypes during this!
   }
   return l;
 }
@@ -234,9 +234,9 @@ TQStringList KMimeTypeChooser::patterns() const
   TQListViewItemIterator it( d->lvMimeTypes );
   for (; it.current(); ++it)
   {
-    if ( it.current()->parent() && ((TQCheckListItem*)it.current())->isOn() )
+    if ( it.current()->tqparent() && ((TQCheckListItem*)it.current())->isOn() )
     {
-      p = KMimeType::mimeType( it.current()->parent()->text(0) + "/" + it.current()->text(0) );
+      p = KMimeType::mimeType( it.current()->tqparent()->text(0) + "/" + it.current()->text(0) );
       if ( p->name() != defMT )
         l += p->patterns();
     }

@@ -125,7 +125,7 @@ class KateViewSchemaAction : public KActionMenu
     popup menu and a slot to edit a style using the keyboard.
     Added by anders, jan 23 2002.
 */
-class KateStyleListView : public QListView
+class KateStyleListView : public TQListView
 {
   Q_OBJECT
 
@@ -160,7 +160,7 @@ class KateStyleListView : public QListView
     TQFont docfont;
 };
 
-class KateSchemaConfigColorTab : public QWidget
+class KateSchemaConfigColorTab : public TQWidget
 {
   Q_OBJECT
 
@@ -198,7 +198,7 @@ class KateSchemaConfigColorTab : public QWidget
     void schemaChanged( int newSchema );
 
   signals:
-    void changed(); // connected to parentWidget()->parentWidget() TQT_SLOT(slotChanged)
+    void changed(); // connected to tqparentWidget()->tqparentWidget() TQT_SLOT(slotChanged)
 
   protected slots:
     void slotMarkerColorChanged(const TQColor&);
@@ -207,7 +207,7 @@ class KateSchemaConfigColorTab : public QWidget
 
 typedef TQMap<int,TQFont> FontMap; // ### remove it
 
-class KateSchemaConfigFontTab : public QWidget
+class KateSchemaConfigFontTab : public TQWidget
 {
   Q_OBJECT
 
@@ -223,7 +223,7 @@ class KateSchemaConfigFontTab : public QWidget
     void schemaChanged( int newSchema );
 
   signals:
-    void changed(); // connected to parentWidget()->parentWidget() TQT_SLOT(slotChanged)
+    void changed(); // connected to tqparentWidget()->tqparentWidget() TQT_SLOT(slotChanged)
 
   private:
     class KFontChooser *m_fontchooser;
@@ -234,7 +234,7 @@ class KateSchemaConfigFontTab : public QWidget
     void slotFontSelected( const TQFont &font );
 };
 
-class KateSchemaConfigFontColorTab : public QWidget
+class KateSchemaConfigFontColorTab : public TQWidget
 {
   Q_OBJECT
 
@@ -254,7 +254,7 @@ class KateSchemaConfigFontColorTab : public QWidget
     TQIntDict<KateAttributeList> m_defaultStyleLists;
 };
 
-class KateSchemaConfigHighlightTab : public QWidget
+class KateSchemaConfigHighlightTab : public TQWidget
 {
   Q_OBJECT
 

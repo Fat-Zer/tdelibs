@@ -63,7 +63,7 @@ void KDirSize::processList()
     }
     kdDebug(kfile_area) << "KDirSize::processList finished" << endl;
     if ( !m_bAsync )
-        qApp->exit_loop();
+        tqApp->exit_loop();
     emitResult();
 }
 
@@ -139,7 +139,7 @@ KIO::filesize_t KDirSize::dirSize( const KURL & directory )
 {
     KDirSize * dirSize = dirSizeJob( directory );
     dirSize->setSync();
-    qApp->enter_loop();
+    tqApp->enter_loop();
     return dirSize->totalSize();
 }
 
@@ -155,7 +155,7 @@ void KDirSize::slotResult( KIO::Job * job )
     else
     {
         if ( !m_bAsync )
-            qApp->exit_loop();
+            tqApp->exit_loop();
         KIO::Job::slotResult( job );
     }
 }

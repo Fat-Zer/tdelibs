@@ -249,14 +249,14 @@ void KListBox::contentsMouseDoubleClickEvent ( TQMouseEvent * e )
   if( item ) {
     emit doubleClicked( item, e->globalPos() );
 
-    if( (e->button() == LeftButton) && !m_bUseSingle )
+    if( (e->button() == Qt::LeftButton) && !m_bUseSingle )
       emitExecute( item, e->globalPos() );
   }
 }
 
 void KListBox::slotMouseButtonClicked( int btn, TQListBoxItem *item, const TQPoint &pos )
 {
-  if( (btn == LeftButton) && item )
+  if( (btn == Qt::LeftButton) && item )
     emitExecute( item, pos );
 }
 

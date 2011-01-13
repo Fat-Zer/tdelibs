@@ -173,7 +173,7 @@ void KMWLocal::initialize()
 		++it;
 
 		QString	uri = *it;
-		int p = uri.find( ':' );
+		int p = uri.tqfind( ':' );
 		QString	desc = *(++it), prot = ( p != -1 ? uri.left( p ) : TQString::null );
 		QString	printer = *(++it);
 		int	index(-1);

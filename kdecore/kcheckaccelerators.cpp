@@ -99,11 +99,11 @@ bool KCheckAccelerators::eventFilter( TQObject * , TQEvent * e)
 
     switch ( e->type() ) { // just simplify debuggin
     case TQEvent::Accel:
-        if ( key && (static_cast<TQKeyEvent *>(e)->key() == key) ) {
+        if ( key && (TQT_TQKEYEVENT(e)->key() == key) ) {
     	    block = true;
 	    checkAccelerators( false );
 	    block = false;
-	    static_cast<TQKeyEvent *>(e)->accept();
+	    TQT_TQKEYEVENT(e)->accept();
 	    return true;
 	}
         break;
@@ -144,7 +144,7 @@ void KCheckAccelerators::createDialog(TQWidget *actWin, bool automatic)
     if ( drklash )
         return;
 
-    drklash = new TQDialog( actWin, "kapp_accel_check_dlg", false, Qt::WDestructiveClose);
+    drklash = new TQDialog( actWin, "kapp_accel_check_dlg", false, (WFlags)TQt::WDestructiveClose);
     drklash->setCaption( i18n( "Dr. Klash' Accelerator Diagnosis" ));
     drklash->resize( 500, 460 );
     TQVBoxLayout* layout = new TQVBoxLayout( drklash, 11, 6 );
@@ -173,7 +173,7 @@ void KCheckAccelerators::slotDisableCheck(bool on)
 
 void KCheckAccelerators::checkAccelerators( bool automatic )
 {
-    TQWidget* actWin = qApp->activeWindow();
+    TQWidget* actWin = TQT_TQWIDGET(tqApp->activeWindow());
     if ( !actWin )
         return;
 

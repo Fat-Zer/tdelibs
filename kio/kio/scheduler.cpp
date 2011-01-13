@@ -110,7 +110,7 @@ class KIO::Scheduler::ProtocolInfoDict : public TQDict<KIO::Scheduler::ProtocolI
 KIO::Scheduler::ProtocolInfo *
 KIO::Scheduler::ProtocolInfoDict::get(const TQString &protocol)
 {
-    ProtocolInfo *info = find(protocol);
+    ProtocolInfo *info = tqfind(protocol);
     if (!info)
     {
         info = new ProtocolInfo;
@@ -206,7 +206,7 @@ void Scheduler::_doJob(SimpleJob *job) {
        jobData->checkOnHold = checkOnHold;
        checkOnHold = false;
     }
-    extraJobData->replace(job, jobData);
+    extraJobData->tqreplace(job, jobData);
     newJobs.append(job);
     slaveTimer.start(0, true);
 #ifndef NDEBUG
@@ -217,7 +217,7 @@ void Scheduler::_doJob(SimpleJob *job) {
 
 void Scheduler::_scheduleJob(SimpleJob *job) {
     newJobs.removeRef(job);
-    JobData *jobData = extraJobData->find(job);
+    JobData *jobData = extraJobData->tqfind(job);
     if (!jobData)
 {
     kdFatal(7006) << "BUG! _ScheduleJob(): No extraJobData for job!" << endl;
@@ -237,7 +237,7 @@ void Scheduler::_cancelJob(SimpleJob *job) {
     if ( !slave  )
     {
         // was not yet running (don't call this on a finished job!)
-        JobData *jobData = extraJobData->find(job);
+        JobData *jobData = extraJobData->tqfind(job);
         if (!jobData)
            return; // I said: "Don't call this on a finished job!"
 
@@ -249,7 +249,7 @@ void Scheduler::_cancelJob(SimpleJob *job) {
         slave = slaveList->first();
         for(; slave; slave = slaveList->next())
         {
-           JobList *list = coSlaves.find(slave);
+           JobList *list = coSlaves.tqfind(slave);
            if (list && list->removeRef(job))
               break; // Job was found and removed.
                      // Fall through to kill the slave as well!
@@ -402,7 +402,7 @@ bool Scheduler::startJobScheduled(ProtocolInfo *protInfo)
 //       kdDebug(7006) << "scheduler: job started " << job << endl;
 
 
-    JobData *jobData = extraJobData->find(job);
+    JobData *jobData = extraJobData->tqfind(job);
     setupSlave(slave, job->url(), jobData->protocol, jobData->proxy, newSlave);
     job->start(slave);
 
@@ -414,7 +414,7 @@ bool Scheduler::startJobDirect()
 {
     debug_info();
     SimpleJob *job = newJobs.take(0);
-    JobData *jobData = extraJobData->find(job);
+    JobData *jobData = extraJobData->tqfind(job);
     if (!jobData)
     {
         kdFatal(7006) << "BUG! startjobDirect(): No extraJobData for job!"
@@ -481,7 +481,7 @@ static Slave *searchIdleList(SlaveList *idleSlaves, const KURL &url, const TQStr
 Slave *Scheduler::findIdleSlave(ProtocolInfo *, SimpleJob *job, bool &exact)
 {
     Slave *slave = 0;
-    JobData *jobData = extraJobData->find(job);
+    JobData *jobData = extraJobData->tqfind(job);
     if (!jobData)
     {
         kdFatal(7006) << "BUG! findIdleSlave(): No extraJobData for job!" << endl;
@@ -504,7 +504,7 @@ Slave *Scheduler::findIdleSlave(ProtocolInfo *, SimpleJob *job, bool &exact)
           if ( bCanReuse )
           {
             KIO::MetaData outgoing = tJob->outgoingMetaData();
-            TQString resume = (!outgoing.contains("resume")) ? TQString::null : outgoing["resume"];
+            TQString resume = (!outgoing.tqcontains("resume")) ? TQString() : outgoing["resume"];
             kdDebug(7006) << "Resume metadata is '" << resume << "'" << endl;
             bCanReuse = (resume.isEmpty() || resume == "0");
           }
@@ -582,7 +582,7 @@ void Scheduler::_jobFinished(SimpleJob *job, Slave *slave)
     protInfo->activeSlaves.removeRef(slave);
     if (slave->isAlive())
     {
-       JobList *list = coSlaves.find(slave);
+       JobList *list = coSlaves.tqfind(slave);
        if (list)
        {
           assert(slave->isConnected());
@@ -618,7 +618,7 @@ void Scheduler::slotSlaveDied(KIO::Slave *slave)
        urlOnHold = KURL();
     }
     idleSlaves->removeRef(slave);
-    JobList *list = coSlaves.find(slave);
+    JobList *list = coSlaves.tqfind(slave);
     if (list)
     {
        // coSlave dies, kill jobs waiting in queue
@@ -733,7 +733,7 @@ Scheduler::slotScheduleCoSlave()
         slave = nextSlave)
     {
         nextSlave = coIdleSlaves->next();
-        JobList *list = coSlaves.find(slave);
+        JobList *list = coSlaves.tqfind(slave);
         assert(list);
         if (list && !list->isEmpty())
         {
@@ -784,7 +784,7 @@ void
 Scheduler::slotSlaveError(int errorNr, const TQString &errorMsg)
 {
     Slave *slave = (Slave *)sender();
-    if (!slave->isConnected() || (coIdleSlaves->find(slave) != -1))
+    if (!slave->isConnected() || (coIdleSlaves->tqfind(slave) != -1))
     {
        // Only forward to application if slave is idle or still connecting.
        emit slaveError(slave, errorNr, errorMsg);
@@ -805,7 +805,7 @@ Scheduler::_assignJobToSlave(KIO::Slave *slave, SimpleJob *job)
         return false;
     }
 
-    JobList *list = coSlaves.find(slave);
+    JobList *list = coSlaves.tqfind(slave);
     assert(list);
     if (!list)
     {
@@ -865,15 +865,15 @@ Scheduler::_registerWindow(TQWidget *wid)
    if (!wid)
       return;
 
-   TQObject *obj = static_cast<TQObject *>(wid);
-   if (!m_windowList.contains(obj))
+   TQObject *obj = TQT_TQOBJECT(wid);
+   if (!m_windowList.tqcontains(obj))
    {
       // We must store the window Id because by the time
       // the destroyed signal is emitted we can no longer
       // access TQWidget::winId() (already destructed)
       WId windowId = wid->winId();
       m_windowList.insert(obj, windowId);
-      connect(wid, TQT_SIGNAL(destroyed(TQObject *)),
+      connect(TQT_TQOBJECT(wid), TQT_SIGNAL(destroyed(TQObject *)),
               this, TQT_SLOT(slotUnregisterWindow(TQObject*)));
       TQByteArray params;
       TQDataStream stream(params, IO_WriteOnly);
@@ -890,7 +890,7 @@ Scheduler::slotUnregisterWindow(TQObject *obj)
    if (!obj)
       return;
 
-   TQMap<TQObject *, WId>::Iterator it = m_windowList.find(obj);
+   TQMap<TQObject *, WId>::Iterator it = m_windowList.tqfind(obj);
    if (it == m_windowList.end())
       return;
    WId windowId = it.data();

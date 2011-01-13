@@ -135,7 +135,7 @@ TQString KNewStuffGeneric::downloadDestination( KNS::Entry *entry )
   TQString file = destinationPath(entry);
 
   if ( KStandardDirs::exists( file ) ) {
-    int result = KMessageBox::warningContinueCancel( parentWidget(),
+    int result = KMessageBox::warningContinueCancel( tqparentWidget(),
         i18n("The file '%1' already exists. Do you want to overwrite it?")
         .arg( file ),
         TQString::null, i18n("Overwrite") );

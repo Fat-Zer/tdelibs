@@ -414,7 +414,7 @@ DocumentImpl* HTMLFrameElementImpl::contentDocument() const
 
     RenderPart* render = static_cast<RenderPart*>( m_render );
 
-    if(render->widget() && ::qt_cast<KHTMLView*>( render->widget()) )
+    if(render->widget() && ::tqqt_cast<KHTMLView*>( render->widget()) )
         return static_cast<KHTMLView*>( render->widget() )->part()->xmlDocImpl();
 
     return 0;
@@ -426,7 +426,7 @@ KHTMLPart*   HTMLFrameElementImpl::contentPart() const
 
     RenderPart* render = static_cast<RenderPart*>( m_render );
 
-    if(render->widget() && ::qt_cast<KHTMLView*>( render->widget()) )
+    if(render->widget() && ::tqqt_cast<KHTMLView*>( render->widget()) )
         return static_cast<KHTMLView*>( render->widget() )->part();
 
     return 0;

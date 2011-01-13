@@ -2515,14 +2515,14 @@ public:
 
     /**
      * See the <a
-     * href="http://www.w3.org/TR/REC-CSS2/visuren.html#propdef-unicode-bidi">
-     * unicode-bidi property definition </a> in CSS2.
+     * href="http://www.w3.org/TR/REC-CSS2/visuren.html#propdef-tqunicode-bidi">
+     * tqunicode-bidi property definition </a> in CSS2.
      *
      */
-    DOM::DOMString unicodeBidi() const;
+    DOM::DOMString tqunicodeBidi() const;
 
     /**
-     * see unicodeBidi
+     * see tqunicodeBidi
      */
     void setUnicodeBidi( const DOM::DOMString & );
 

@@ -26,7 +26,7 @@
 class KMJob;
 class KMJobManager;
 
-class KMThreadJob : public QObject
+class KMThreadJob : public TQObject
 {
 public:
 	KMThreadJob(TQObject *parent = 0, const char *name = 0);

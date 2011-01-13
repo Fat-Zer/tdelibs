@@ -98,7 +98,7 @@ class KABC_EXPORT EmailSelector : public KDialogBase
 /**
   @short Helper class
 */
-class KABC_EXPORT DistributionListEditorWidget : public QWidget
+class KABC_EXPORT DistributionListEditorWidget : public TQWidget
 {
     Q_OBJECT
 

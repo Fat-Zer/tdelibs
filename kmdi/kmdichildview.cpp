@@ -44,8 +44,8 @@
 
 //============ KMdiChildView ============//
 
-KMdiChildView::KMdiChildView( const TQString& caption, TQWidget* parentWidget, const char* name, WFlags f )
-	: TQWidget( parentWidget, name, f )
+KMdiChildView::KMdiChildView( const TQString& caption, TQWidget* tqparentWidget, const char* name, WFlags f )
+	: TQWidget( tqparentWidget, name, f )
 	, m_focusedChildWidget( 0L )
 	, m_firstFocusableChildWidget( 0L )
 	, m_lastFocusableChildWidget( 0L )
@@ -73,8 +73,8 @@ KMdiChildView::KMdiChildView( const TQString& caption, TQWidget* parentWidget, c
 
 //============ KMdiChildView ============//
 
-KMdiChildView::KMdiChildView( TQWidget* parentWidget, const char* name, WFlags f )
-	: TQWidget( parentWidget, name, f )
+KMdiChildView::KMdiChildView( TQWidget* tqparentWidget, const char* name, WFlags f )
+	: TQWidget( tqparentWidget, name, f )
 	, m_focusedChildWidget( 0L )
 	, m_firstFocusableChildWidget( 0L )
 	, m_lastFocusableChildWidget( 0L )

@@ -35,7 +35,7 @@
 //
 
 KIntValidator::KIntValidator ( TQWidget * parent, int base, const char * name )
-  : TQValidator(parent, name)
+  : TQValidator(TQT_TQOBJECT(parent), name)
 {
   _base = base;
   if (_base < 2) _base = 2;
@@ -45,7 +45,7 @@ KIntValidator::KIntValidator ( TQWidget * parent, int base, const char * name )
 }
 
 KIntValidator::KIntValidator ( int bottom, int top, TQWidget * parent, int base, const char * name )
-  : TQValidator(parent, name)
+  : TQValidator(TQT_TQOBJECT(parent), name)
 {
   _base = base;
   if (_base > 36) _base = 36;
@@ -67,7 +67,7 @@ TQValidator::State KIntValidator::validate ( TQString &str, int & ) const
   if (_base > 10)
     newStr = newStr.upper();
 
-  if (newStr == TQString::fromLatin1("-")) // a special case
+  if (newStr == TQString::tqfromLatin1("-")) // a special case
     if ((_min || _max) && _min >= 0)
       ok = false;
     else
@@ -162,7 +162,7 @@ public:
 
 
 KFloatValidator::KFloatValidator ( TQWidget * parent, const char * name )
-  : TQValidator(parent, name)
+  : TQValidator(TQT_TQOBJECT(parent), name)
 {
     d = new KFloatValidatorPrivate;
     d->acceptLocalizedNumbers=false;
@@ -170,7 +170,7 @@ KFloatValidator::KFloatValidator ( TQWidget * parent, const char * name )
 }
 
 KFloatValidator::KFloatValidator ( double bottom, double top, TQWidget * parent, const char * name )
-  : TQValidator(parent, name)
+  : TQValidator(TQT_TQOBJECT(parent), name)
 {
     d = new KFloatValidatorPrivate;
     d->acceptLocalizedNumbers=false;
@@ -179,7 +179,7 @@ KFloatValidator::KFloatValidator ( double bottom, double top, TQWidget * parent,
 }
 
 KFloatValidator::KFloatValidator ( double bottom, double top, bool localeAware, TQWidget * parent, const char * name )
-  : TQValidator(parent, name)
+  : TQValidator(TQT_TQOBJECT(parent), name)
 {
     d = new KFloatValidatorPrivate;
     d->acceptLocalizedNumbers = localeAware;
@@ -209,12 +209,12 @@ TQValidator::State KFloatValidator::validate ( TQString &str, int & ) const
   TQString newStr;
   newStr = str.stripWhiteSpace();
 
-  if (newStr == TQString::fromLatin1("-")) // a special case
+  if (newStr == TQString::tqfromLatin1("-")) // a special case
     if ((_min || _max) && _min >= 0)
       ok = false;
     else
       return TQValidator::Acceptable;
-  else if (newStr == TQString::fromLatin1(".") || (d->acceptLocalizedNumbers && newStr==KGlobal::locale()->decimalSymbol())) // another special case
+  else if (newStr == TQString::tqfromLatin1(".") || (d->acceptLocalizedNumbers && newStr==KGlobal::locale()->decimalSymbol())) // another special case
     return TQValidator::Acceptable;
   else if (newStr.length())
   {
@@ -339,17 +339,17 @@ TQValidator::State KDoubleValidator::validate( TQString & input, int & p ) const
             t = l->thousandsSeparator();
     // first, delete p's and t's:
     if ( !p.isEmpty() )
-      for ( int idx = s.find( p ) ; idx >= 0 ; idx = s.find( p, idx ) )
+      for ( int idx = s.tqfind( p ) ; idx >= 0 ; idx = s.tqfind( p, idx ) )
 	s.remove( idx, p.length() );
 
 
     if ( !t.isEmpty() )
-      for ( int idx = s.find( t ) ; idx >= 0 ; idx = s.find( t, idx ) )
+      for ( int idx = s.tqfind( t ) ; idx >= 0 ; idx = s.tqfind( t, idx ) )
 	s.remove( idx, t.length() );
 
     // then, replace the d's and n's
-    if ( ( !n.isEmpty() && n.find('.') != -1 ) ||
-	 ( !d.isEmpty() && d.find('-') != -1 ) ) {
+    if ( ( !n.isEmpty() && n.tqfind('.') != -1 ) ||
+	 ( !d.isEmpty() && d.tqfind('-') != -1 ) ) {
       // make sure we don't replace something twice:
       kdWarning() << "KDoubleValidator: decimal symbol contains '-' or "
 		     "negative sign contains '.' -> improve algorithm" << endl;
@@ -357,11 +357,11 @@ TQValidator::State KDoubleValidator::validate( TQString & input, int & p ) const
     }
 
     if ( !d.isEmpty() && d != "." )
-      for ( int idx = s.find( d ) ; idx >= 0 ; idx = s.find( d, idx + 1 ) )
+      for ( int idx = s.tqfind( d ) ; idx >= 0 ; idx = s.tqfind( d, idx + 1 ) )
 	s.replace( idx, d.length(), '.');
 
     if ( !n.isEmpty() && n != "-" )
-      for ( int idx = s.find( n ) ; idx >= 0 ; idx = s.find( n, idx + 1 ) )
+      for ( int idx = s.tqfind( n ) ; idx >= 0 ; idx = s.tqfind( n, idx + 1 ) )
 	s.replace( idx, n.length(), '-' );
   }
 

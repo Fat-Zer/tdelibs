@@ -54,7 +54,7 @@ bool KRlprPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 			return false;
 		}
 
-		cmd = TQString::fromLatin1("%1 -H %2 -P %3 -\\#%4").arg(exestr).arg(quote(host)).arg(quote(queue)).arg(printer->numCopies());
+		cmd = TQString::tqfromLatin1("%1 -H %2 -P %3 -\\#%4").arg(exestr).arg(quote(host)).arg(quote(queue)).arg(printer->numCopies());
 
 		// proxy settings
 		KConfig	*conf = KMFactory::self()->printConfig();

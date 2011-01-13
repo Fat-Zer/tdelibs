@@ -116,7 +116,7 @@ void KPQtPage::init()
 	m_pagesize = new TQComboBox(this);
           TQWhatsThis::add(m_pagesize, whatsThisPageSizeOtPageLabel);
 	QLabel	*m_pagesizelabel = new TQLabel(i18n("Page s&ize:"), this);
-	m_pagesizelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
+	m_pagesizelabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
 	m_pagesizelabel->setBuddy(m_pagesize);
 	m_orientbox = new TQButtonGroup(0, Qt::Vertical, i18n("Orientation"), this);
           TQWhatsThis::add(m_orientbox, whatsThisOrientationOtPageLabel);
@@ -129,7 +129,7 @@ void KPQtPage::init()
           TQWhatsThis::add(m_landscape, whatsThisOrientationOtPageLabel);
 
 	m_orientpix = new TQLabel(m_orientbox);
-	m_orientpix->setAlignment(Qt::AlignCenter);
+	m_orientpix->tqsetAlignment(Qt::AlignCenter);
           TQWhatsThis::add(m_orientpix, whatsThisOrientationOtPageLabel);
 
 	QRadioButton	*m_color = new TQRadioButton(i18n("Colo&r"), m_colorbox);
@@ -137,7 +137,7 @@ void KPQtPage::init()
 
 	QRadioButton	*m_grayscale = new TQRadioButton(i18n("&Grayscale"), m_colorbox);
 	m_colorpix = new TQLabel(m_colorbox);
-	m_colorpix->setAlignment(Qt::AlignCenter);
+	m_colorpix->tqsetAlignment(Qt::AlignCenter);
           TQWhatsThis::add(m_colorpix, whatsThisColorModeOtPageLabel);
 
 	m_nupbox = new TQButtonGroup(0, Qt::Vertical, i18n("Pages per Sheet"), this);
@@ -152,7 +152,7 @@ void KPQtPage::init()
           TQWhatsThis::add(m_nupother, whatsThisPagesPerSheetOtPageLabel);
 
 	m_nuppix = new TQLabel(m_nupbox);
-	m_nuppix->setAlignment(Qt::AlignCenter);
+	m_nuppix->tqsetAlignment(Qt::AlignCenter);
           TQWhatsThis::add(m_nuppix, whatsThisPagesPerSheetOtPageLabel);
 
 	// layout creation
@@ -268,7 +268,7 @@ void KPQtPage::setOptions(const TQMap<TQString,TQString>& opts)
 	else if (!opts["kde-pagesize"].isEmpty())
 		m_pagesize->setCurrentItem(findIndex(opts["kde-pagesize"].toInt()));
 	ID = NUP_1;
-	if (opts["_kde-filters"].find("psnup") != -1)
+	if (opts["_kde-filters"].tqfind("psnup") != -1)
 	{
                if (opts.contains("_kde-psnup-nup")) {
                        ID = opts["_kde-psnup-nup"].toInt();
@@ -323,7 +323,7 @@ void KPQtPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 	else if (ID != NUP_OTHER)
 	{
 		int	nup(ID == NUP_2 ? 2 : 4);
-		if (s.find("psnup") == -1)
+		if (s.tqfind("psnup") == -1)
 		{
 			QStringList	fl = TQStringList::split(',', s, false);
 			KXmlCommandManager::self()->insertCommand(fl, "psnup");

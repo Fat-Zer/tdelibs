@@ -29,7 +29,7 @@
 
 #include <kservice.h>
 
-class VFolderMenu : public QObject
+class VFolderMenu : public TQObject
 {
   Q_OBJECT
 public:

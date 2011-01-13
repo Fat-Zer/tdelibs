@@ -139,7 +139,7 @@ KTempFile::status() const
    return mError;
 }
 
-QString
+TQString
 KTempFile::name() const
 {
    return mTmpName;

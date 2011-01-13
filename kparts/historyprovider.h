@@ -38,7 +38,7 @@ namespace KParts {
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KPARTS_EXPORT HistoryProvider : public QObject
+class KPARTS_EXPORT HistoryProvider : public TQObject
 {
     Q_OBJECT
 

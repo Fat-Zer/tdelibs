@@ -59,23 +59,23 @@ public:
 
 private:
 	enum { NORMAL, DITHERED, SCREEN, COLORMAP };		// colormap
-	QImageIO		*m_io;
-	QIODevice		*m_dev;
-	QDataStream		m_stream;
+	TQImageIO		*m_io;
+	TQIODevice		*m_dev;
+	TQDataStream		m_stream;
 
-	Q_UINT8			m_rle;
-	Q_UINT8			m_bpc;
-	Q_UINT16		m_dim;
-	Q_UINT16		m_xsize;
-	Q_UINT16		m_ysize;
-	Q_UINT16		m_zsize;
-	Q_UINT32		m_pixmin;
-	Q_UINT32		m_pixmax;
+	TQ_UINT8			m_rle;
+	TQ_UINT8			m_bpc;
+	TQ_UINT16		m_dim;
+	TQ_UINT16		m_xsize;
+	TQ_UINT16		m_ysize;
+	TQ_UINT16		m_zsize;
+	TQ_UINT32		m_pixmin;
+	TQ_UINT32		m_pixmax;
 	char			m_imagename[80];
-	Q_UINT32		m_colormap;
+	TQ_UINT32		m_colormap;
 
-	Q_UINT32		*m_starttab;
-	Q_UINT32		*m_lengthtab;
+	TQ_UINT32		*m_starttab;
+	TQ_UINT32		*m_lengthtab;
 	QByteArray		m_data;
 	TQByteArray::Iterator	m_pos;
 	RLEMap			m_rlemap;

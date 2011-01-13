@@ -271,7 +271,7 @@ bool KBookmark::isSeparator() const
 
 bool KBookmark::hasParent() const
 {
-    TQDomElement parent = element.parentNode().toElement();
+    TQDomElement parent = element.tqparentNode().toElement();
     return !parent.isNull();
 }
 
@@ -311,7 +311,7 @@ TQString KBookmark::icon() const
 
 KBookmarkGroup KBookmark::parentGroup() const
 {
-    return KBookmarkGroup( element.parentNode().toElement() );
+    return KBookmarkGroup( element.tqparentNode().toElement() );
 }
 
 KBookmarkGroup KBookmark::toGroup() const
@@ -447,7 +447,7 @@ void KBookmark::updateAccessMetadata()
 {
     kdDebug(7043) << "KBookmark::updateAccessMetadata " << address() << " " << url().prettyURL() << endl;
 
-    const uint timet = TQDateTime::currentDateTime().toTime_t();
+    const uint timet = TQDateTime::tqcurrentDateTime().toTime_t();
     setMetaDataItem( "time_added", TQString::number( timet ), DontOverwriteMetaData );
     setMetaDataItem( "time_visited", TQString::number( timet ) );
 

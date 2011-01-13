@@ -110,7 +110,7 @@ TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_nu
         xml_file = filename;
     else
     {
-        xml_file = locate("data", TQString::fromLatin1(instance->instanceName() + '/' ) + filename);
+        xml_file = locate("data", TQString::tqfromLatin1(instance->instanceName() + '/' ) + filename);
         if ( !TQFile::exists( xml_file ) )
           xml_file = locate( "data", filename );
     }
@@ -120,7 +120,7 @@ TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_nu
     {
         kdError(240) << "No such XML file " << filename << endl;
         if ( never_null )
-            return TQString::fromLatin1( "<!DOCTYPE kpartgui>\n<kpartgui name=\"empty\">\n</kpartgui>" );
+            return TQString::tqfromLatin1( "<!DOCTYPE kpartgui>\n<kpartgui name=\"empty\">\n</kpartgui>" );
         else
             return TQString::null;
     }
@@ -146,7 +146,7 @@ bool KXMLGUIFactory::saveConfigFile( const TQDomDocument& doc,
     TQString xml_file(filename);
 
     if (TQDir::isRelativePath(xml_file))
-        xml_file = locateLocal("data", TQString::fromLatin1( instance->instanceName() + '/' )
+        xml_file = locateLocal("data", TQString::tqfromLatin1( instance->instanceName() + '/' )
                                + filename);
 
     TQFile file( xml_file );
@@ -240,7 +240,7 @@ void KXMLGUIFactory::addClient( KXMLGUIClient *client )
     d->guiClient = client;
 
     // add this client to our client list
-    if ( !d->m_clients.containsRef( client ) )
+    if ( !d->m_clients.tqcontainsRef( client ) )
         d->m_clients.append( client );
     else
         kdDebug(1002) << "XMLGUI client already added " << client << endl;
@@ -566,7 +566,7 @@ int KXMLGUIFactory::configureShortcuts(bool bAllowLetterShortcuts , bool bSaveSe
 
 TQDomElement KXMLGUIFactory::actionPropertiesElement( TQDomDocument& doc )
 {
-	const TQString tagActionProp = TQString::fromLatin1("ActionProperties");
+	const TQString tagActionProp = TQString::tqfromLatin1("ActionProperties");
 	// first, lets see if we have existing properties
 	TQDomElement elem;
 	TQDomNode it = doc.documentElement().firstChild();

@@ -393,7 +393,7 @@ bool KSpell::addPersonal( const TQString & word )
   TQString qs = word.simplifyWhiteSpace();
 
   //we'll let ispell do the work here b/c we can
-  if ( qs.find(' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
+  if ( qs.tqfind(' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
     return false;
 
   qs.prepend( "*" );
@@ -404,7 +404,7 @@ bool KSpell::addPersonal( const TQString & word )
 
 bool KSpell::writePersonalDictionary()
 {
-  return proc->writeStdin("#");
+  return proc->writeStdin(TQString("#"));
 }
 
 bool KSpell::ignore( const TQString & word )
@@ -412,7 +412,7 @@ bool KSpell::ignore( const TQString & word )
   TQString qs = word.simplifyWhiteSpace();
 
   //we'll let ispell do the work here b/c we can
-  if ( qs.find (' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
+  if ( qs.tqfind (' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
     return false;
 
   qs.prepend( "@" );
@@ -483,7 +483,7 @@ bool KSpell::checkWord( const TQString & buffer, bool _usedialog )
   d->checking = true;
   TQString qs = buffer.simplifyWhiteSpace();
 
-  if ( qs.find (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
+  if ( qs.tqfind (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
     d->checkNextTimer->start( 0, true );
     return false;
   }
@@ -505,7 +505,7 @@ bool KSpell::checkWord( const TQString & buffer, bool _usedialog )
   OUTPUT(checkWord2);
   //  connect (this, TQT_SIGNAL (dialog3()), this, TQT_SLOT (checkWord3()));
 
-  proc->writeStdin( "%" ); // turn off terse mode
+  proc->writeStdin(TQString("%")); // turn off terse mode
   proc->writeStdin( buffer ); // send the word to ispell
 
   return true;
@@ -525,7 +525,7 @@ bool KSpell::checkWord( const TQString & buffer, bool _usedialog, bool suggest )
   d->checking = true;
   TQString qs = buffer.simplifyWhiteSpace();
 
-  if ( qs.find (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
+  if ( qs.tqfind (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
     d->checkNextTimer->start( 0, true );
     return false;
   }
@@ -549,7 +549,7 @@ bool KSpell::checkWord( const TQString & buffer, bool _usedialog, bool suggest )
   OUTPUT(checkWord2);
   //  connect (this, TQT_SIGNAL (dialog3()), this, TQT_SLOT (checkWord3()));
 
-  proc->writeStdin( "%" ); // turn off terse mode
+  proc->writeStdin(TQString("%")); // turn off terse mode
   proc->writeStdin( buffer ); // send the word to ispell
 
   return true;
@@ -660,7 +660,7 @@ TQString KSpell::funnyWord( const TQString & word )
 
       i = j-1;
 
-      if ( !( k = qs.findRev(shorty) ) || k != -1 )
+      if ( !( k = qs.tqfindRev(shorty) ) || k != -1 )
         qs.remove( k, shorty.length() );
       else
       {
@@ -699,7 +699,7 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
     int i,j;
 
 
-    word = buffer.mid( 2, buffer.find( ' ', 3 ) -2 );
+    word = buffer.mid( 2, buffer.tqfind( ' ', 3 ) -2 );
     //check() needs this
     orig=word;
 
@@ -717,18 +717,18 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
     //We don't take advantage of ispell's ignore function because
     //we can't interrupt ispell's output (when checking a large
     //buffer) to add a word to _it's_ ignore-list.
-    if ( ignorelist.findIndex( word.lower() ) != -1 )
+    if ( ignorelist.tqfindIndex( word.lower() ) != -1 )
       return IGNORE;
 
     //// Position in line ///
     TQString qs2;
 
-    if ( buffer.find( ':' ) != -1 )
-      qs2 = buffer.left( buffer.find(':') );
+    if ( buffer.tqfind( ':' ) != -1 )
+      qs2 = buffer.left( buffer.tqfind(':') );
     else
       qs2 = buffer;
 
-    posinline = qs2.right( qs2.length()-qs2.findRev(' ') ).toInt()-1;
+    posinline = qs2.right( qs2.length()-qs2.tqfindRev(' ') ).toInt()-1;
 
     ///// Replace-list stuff ////
     TQStringList::Iterator it = replacelist.begin();
@@ -745,14 +745,14 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
     /////// Suggestions //////
     if ( buffer[0] != '#' )
     {
-      TQString qs = buffer.mid( buffer.find(':')+2, buffer.length() );
+      TQString qs = buffer.mid( buffer.tqfind(':')+2, buffer.length() );
       qs += ',';
       sugg.clear();
       i = j = 0;
 
       while( (unsigned int)i < qs.length() )
       {
-        TQString temp = qs.mid( i, (j=qs.find (',',i)) - i );
+        TQString temp = qs.mid( i, (j=qs.tqfind (',',i)) - i );
         sugg.append( funnyWord(temp) );
 
         i=j+2;
@@ -794,7 +794,7 @@ bool KSpell::checkList (TQStringList *_wordlist, bool _usedialog)
   //set the dialog signal handler
   dialog3slot = TQT_SLOT (checkList4 ());
 
-  proc->writeStdin ("%"); // turn off terse mode & check one word at a time
+  proc->writeStdin (TQString("%")); // turn off terse mode & check one word at a time
 
   //lastpos now counts which *word number* we are at in checkListReplaceCurrent()
   lastpos = -1;
@@ -1008,7 +1008,7 @@ bool KSpell::check( const TQString &_buffer, bool _usedialog )
 
   // KProcIO calls check2 when read from ispell
   OUTPUT( check2 );
-  proc->writeStdin( "!" );
+  proc->writeStdin(TQString("!"));
 
   //lastpos is a position in newbuffer (it has offset in it)
   offset = lastlastline = lastpos = lastline = 0;
@@ -1016,7 +1016,7 @@ bool KSpell::check( const TQString &_buffer, bool _usedialog )
   emitProgress();
 
   // send first buffer line
-  int i = origbuffer.find( '\n', 0 ) + 1;
+  int i = origbuffer.tqfind( '\n', 0 ) + 1;
   qs = origbuffer.mid( 0, i );
   cleanFputs( qs, false );
 
@@ -1130,7 +1130,7 @@ void KSpell::check2( KProcIO * )
     //kdDebug(750) << "[EOL](" << tempe << ")[" << temp << "]" << endl;
 
     lastpos = (lastlastline=lastline) + offset; //do we really want this?
-    i = origbuffer.find('\n', lastline) + 1;
+    i = origbuffer.tqfind('\n', lastline) + 1;
     qs = origbuffer.mid( lastline, i-lastline );
     cleanFputs( qs, false );
     lastline = i;
@@ -1220,10 +1220,10 @@ void KSpell::dialog( const TQString & word, TQStringList & sugg, const char *_sl
   TQString marker( "_MARKER_" );
   tmpBuf.replace( lastpos, word.length(), marker );
   TQString context = tmpBuf.mid(QMAX(lastpos-18,0), 2*18+marker.length());
-  context.replace( '\n',TQString::fromLatin1(" "));
-  context.replace( '<', TQString::fromLatin1("&lt;") );
-  context.replace( '>', TQString::fromLatin1("&gt;") );
-  context.replace( marker, TQString::fromLatin1("<b>%1</b>").arg( word ) );
+  context.replace( '\n',TQString::tqfromLatin1(" "));
+  context.replace( '<', TQString::tqfromLatin1("&lt;") );
+  context.replace( '>', TQString::tqfromLatin1("&gt;") );
+  context.replace( marker, TQString::tqfromLatin1("<b>%1</b>").arg( word ) );
   context = "<qt>" + context + "</qt>";
 
   ksdlg->init( word, &sugg, context );
@@ -1419,7 +1419,7 @@ void KSpell::slotSpellCheckerCorrected( const TQString & oldText, const TQString
 
 void KSpell::slotModalReady()
 {
-  //kdDebug() << qApp->loopLevel() << endl;
+  //kdDebug() << tqApp->loopLevel() << endl;
   //kdDebug(750) << "MODAL READY------------------" << endl;
 
   Q_ASSERT( m_status == Running );
@@ -1439,7 +1439,7 @@ void KSpell::slotModalDone( const TQString &/*_buffer*/ )
   cleanUp();
 
   //kdDebug() << "ABOUT TO EXIT LOOP" << endl;
-  //qApp->exit_loop();
+  //tqApp->exit_loop();
 
   //modalWidgetHack->close(true);
   slotModalSpellCheckerFinished();

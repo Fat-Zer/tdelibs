@@ -40,7 +40,7 @@ KArrowButton::~KArrowButton()
 	delete d;
 }
 
-TQSize KArrowButton::sizeHint() const
+TQSize KArrowButton::tqsizeHint() const
 {
 	return TQSize( 12, 12 );
 }
@@ -49,7 +49,7 @@ void KArrowButton::setArrowType(Qt::ArrowType a)
 {
 	if (d->arrow != a) {
 		d->arrow = a;
-		repaint();
+		tqrepaint();
 	}
 }
 Qt::ArrowType KArrowButton::arrowType() const
@@ -62,9 +62,9 @@ void KArrowButton::drawButton(TQPainter *p)
 	const unsigned int arrowSize = 8;
 	const unsigned int margin = 2;
 	
-        p->fillRect( rect(), colorGroup().brush( TQColorGroup::Background ) );
-	style().drawPrimitive( TQStyle::PE_Panel, p, TQRect( 0, 0, width(), height() ),
-			       colorGroup(), 
+        p->fillRect( rect(), tqcolorGroup().brush( TQColorGroup::Background ) );
+	tqstyle().tqdrawPrimitive( TQStyle::PE_Panel, p, TQRect( 0, 0, width(), height() ),
+			       tqcolorGroup(), 
 			       isDown() ? TQStyle::Style_Sunken : TQStyle::Style_Default,
 			       TQStyleOption( 2, 0 ) );
 
@@ -103,8 +103,8 @@ void KArrowButton::drawButton(TQPainter *p)
 	int flags = TQStyle::Style_Enabled;
 	if ( isDown() )
 		flags |= TQStyle::Style_Down;
-	style().drawPrimitive( e, p, TQRect( TQPoint( x, y ), TQSize( arrowSize, arrowSize ) ),
-			       colorGroup(), flags );
+	tqstyle().tqdrawPrimitive( e, p, TQRect( TQPoint( x, y ), TQSize( arrowSize, arrowSize ) ),
+			       tqcolorGroup(), flags );
 }
 
 void KArrowButton::virtual_hook( int, void* )

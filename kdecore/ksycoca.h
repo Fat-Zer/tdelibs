@@ -93,7 +93,7 @@ public:
     * The database contains all changes made _before_ this time and
     * _might_ contain changes made after that.
     */
-   Q_UINT32 timeStamp();
+   TQ_UINT32 timeStamp();
 
    /**
     * @internal - returns update signature of database
@@ -104,7 +104,7 @@ public:
     * Touching this file causes the database to be recreated
     * from scratch.
     */
-   Q_UINT32 updateSignature();
+   TQ_UINT32 updateSignature();
 
    /**
     * @internal - returns all directories with information
@@ -172,7 +172,7 @@ protected:
    bool bNoDatabase;
    size_t m_sycoca_size;
    const char *m_sycoca_mmap;
-   Q_UINT32 m_timeStamp;
+   TQ_UINT32 m_timeStamp;
 
 public:
    static KSycoca *_self; // Internal use only.

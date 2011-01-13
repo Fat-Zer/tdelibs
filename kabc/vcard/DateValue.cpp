@@ -152,7 +152,7 @@ DateValue::_parse()
 	// time = time-hour [":"] time-minute [":"] time-second [":"]
 	// [time-secfrac] [time-zone]
 	
-	int timeSep = strRep_.find('T');
+	int timeSep = strRep_.tqfind('T');
 	
 	TQCString dateStr;
 	TQCString timeStr;
@@ -192,7 +192,7 @@ DateValue::_parse()
 
 	/////////////////////////////////////////////////////////////// ZONE
 	
-	int zoneSep = timeStr.find('Z');
+	int zoneSep = timeStr.tqfind('Z');
 	
 	if (zoneSep != -1 && timeStr.length() - zoneSep > 3) {
 		

@@ -70,9 +70,9 @@ public:
 
   typedef struct
   {
-    Q_UINT16 len;
-    Q_UINT16 maxlen;
-    Q_UINT32 offset;
+    TQ_UINT16 len;
+    TQ_UINT16 maxlen;
+    TQ_UINT32 offset;
   } SecBuf;
 
   /**
@@ -81,8 +81,8 @@ public:
   typedef struct
   {
     char signature[8]; /* "NTLMSSP\0" */
-    Q_UINT32 msgType; /* 1 */
-    Q_UINT32 flags;
+    TQ_UINT32 msgType; /* 1 */
+    TQ_UINT32 flags;
     SecBuf domain;
     SecBuf workstation;
   } Negotiate;
@@ -93,11 +93,11 @@ public:
   typedef struct
   {
     char signature[8];
-    Q_UINT32 msgType; /* 2 */
+    TQ_UINT32 msgType; /* 2 */
     SecBuf targetName;
-    Q_UINT32 flags;
-    Q_UINT8 challengeData[8];
-    Q_UINT32 context[2];
+    TQ_UINT32 flags;
+    TQ_UINT8 challengeData[8];
+    TQ_UINT32 context[2];
     SecBuf targetInfo;
   } Challenge;
 
@@ -107,23 +107,23 @@ public:
   typedef struct
   {
     char signature[8];
-    Q_UINT32 msgType; /* 3 */
+    TQ_UINT32 msgType; /* 3 */
     SecBuf lmResponse;
     SecBuf ntResponse;
     SecBuf domain;
     SecBuf user;
     SecBuf workstation;
     SecBuf sessionKey;
-    Q_UINT32 flags;
+    TQ_UINT32 flags;
   } Auth;
   
   typedef struct
   {
-    Q_UINT32 signature;
-    Q_UINT32 reserved;
-    Q_UINT64 timestamp;
-    Q_UINT8  challenge[8];
-    Q_UINT8  unknown[4];
+    TQ_UINT32 signature;
+    TQ_UINT32 reserved;
+    TQ_UINT64 timestamp;
+    TQ_UINT8  challenge[8];
+    TQ_UINT8  unknown[4];
     //Target info block - variable length
   } Blob;
 
@@ -139,7 +139,7 @@ public:
    */
   static bool getNegotiate( TQByteArray &negotiate, const TQString &domain = TQString::null, 
     const TQString &workstation = TQString::null,
-    Q_UINT32 flags = Negotiate_Unicode | Request_Target | Negotiate_NTLM );
+    TQ_UINT32 flags = Negotiate_Unicode | Request_Target | Negotiate_NTLM );
   /**
    * Creates the type 3 message which should be sent to the server after 
    * the challenge (type 2) received.
@@ -212,7 +212,7 @@ public:
   /**
    * Extracts a string field from an NTLM structure.
    */
-  static TQString getString( const TQByteArray &buf, const SecBuf &secbuf, bool unicode );
+  static TQString getString( const TQByteArray &buf, const SecBuf &secbuf, bool tqunicode );
   /**
    * Extracts a byte array from an NTLM structure.
    */
@@ -226,7 +226,7 @@ private:
   static TQString UnicodeLE2TQString( const TQChar* data, uint len );
 
   static void addBuf( TQByteArray &buf, SecBuf &secbuf, TQByteArray &data );
-  static void addString( TQByteArray &buf, SecBuf &secbuf, const TQString &str, bool unicode = false );
+  static void addString( TQByteArray &buf, SecBuf &secbuf, const TQString &str, bool tqunicode = false );
   static void convertKey( unsigned char *key_56, void* ks );
 };
 

@@ -220,7 +220,7 @@ public:
 #ifdef DEBUG_PIXEL
         timer.start();
         pixelbooth = 0;
-        repaintbooth = 0;
+        tqrepaintbooth = 0;
 #endif
         scrollBarMoved = false;
         contentsMoving = false;
@@ -238,7 +238,7 @@ public:
         delete postponed_autorepeat;
         postponed_autorepeat = NULL;
 	layoutTimerId = 0;
-        repaintTimerId = 0;
+        tqrepaintTimerId = 0;
         scrollTimerId = 0;
         scrollSuspended = false;
         scrollSuspendPreActivate = false;
@@ -324,7 +324,7 @@ public:
 #ifdef DEBUG_PIXEL
     TQTime timer;
     unsigned int pixelbooth;
-    unsigned int repaintbooth;
+    unsigned int tqrepaintbooth;
 #endif
 
     TQPainter *tp;
@@ -359,7 +359,7 @@ public:
     int layoutTimerId;
     TQKeyEvent* postponed_autorepeat;
 
-    int repaintTimerId;
+    int tqrepaintTimerId;
     int scrollTimerId;
     int scrollTiming;
     int scrollBy;
@@ -650,14 +650,14 @@ void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
 #ifdef DEBUG_PIXEL
 
     if ( d->timer.elapsed() > 5000 ) {
-        qDebug( "drawed %d pixels in %d repaints the last %d milliseconds",
-                d->pixelbooth, d->repaintbooth,  d->timer.elapsed() );
+        qDebug( "drawed %d pixels in %d tqrepaints the last %d milliseconds",
+                d->pixelbooth, d->tqrepaintbooth,  d->timer.elapsed() );
         d->timer.restart();
         d->pixelbooth = 0;
-        d->repaintbooth = 0;
+        d->tqrepaintbooth = 0;
     }
     d->pixelbooth += ew*eh;
-    d->repaintbooth++;
+    d->tqrepaintbooth++;
 #endif
 
     //kdDebug( 6000 ) << "drawContents this="<< this <<" x=" << ex << ",y=" << ey << ",w=" << ew << ",h=" << eh << endl;
@@ -867,7 +867,7 @@ void KHTMLView::layout()
         }
 #if 0
     ElementImpl *listitem = m_part->xmlDocImpl()->getElementById("__test_element__");
-    if (listitem) kdDebug(6000) << "after layout, before repaint" << endl;
+    if (listitem) kdDebug(6000) << "after layout, before tqrepaint" << endl;
     if (listitem) dumpLineBoxes(static_cast<RenderFlow *>(listitem->renderer()));
 #endif
 #ifndef KHTML_NO_CARET
@@ -972,7 +972,7 @@ void KHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
         if ( !d->m_mouseScrollIndicator ) {
             TQPixmap pixmap, icon;
             pixmap.resize( 48, 48 );
-            pixmap.fill( TQColor( qRgba( 127, 127, 127, 127 ) ) );
+            pixmap.fill( TQColor( tqRgba( 127, 127, 127, 127 ) ) );
 
             TQPainter p( &pixmap );
             icon = KGlobal::iconLoader()->loadIcon( "1uparrow", KIcon::Small );
@@ -1112,8 +1112,8 @@ static inline void forwardPeripheralEvent(khtml::RenderWidget* r, TQMouseEvent* 
     TQPoint p(x-absx, y-absy);
     TQMouseEvent fw(me->type(), p, me->button(), me->state());
     TQWidget* w = r->widget();
-    TQScrollView* sc = ::qt_cast<TQScrollView*>(w);
-    if (sc && !::qt_cast<TQListBox*>(w))
+    TQScrollView* sc = ::tqqt_cast<TQScrollView*>(w);
+    if (sc && !::tqqt_cast<TQListBox*>(w))
         static_cast<khtml::RenderWidget::ScrollViewEventPropagator*>(sc)->sendEvent(&fw);
     else if(w)
         static_cast<khtml::RenderWidget::EventPropagator*>(w)->sendEvent(&fw);
@@ -1179,7 +1179,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
 
     if (d->clickCount > 0 &&
         TQPoint(d->clickX-xm,d->clickY-ym).manhattanLength() > TQApplication::startDragDistance()) {
-	d->clickCount = 0;  // moving the mouse outside the threshold invalidates the click
+	d->clickCount = 0;  // moving the mouse outside the threshold tqinvalidates the click
     }
 
     // execute the scheduled script. This is to make sure the mouseover events come after the mouseout events
@@ -1202,7 +1202,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
             c = KCursor::ibeamCursor();
         if ( mev.url.length() && m_part->settings()->changeCursor() ) {
             c = m_part->urlCursor();
-	    if (mev.url.string().startsWith("mailto:") && mev.url.string().find('@')>0)
+	    if (mev.url.string().startsWith("mailto:") && mev.url.string().tqfind('@')>0)
                 mailtoCursor = true;
             else
                 newWindowCursor = targetOpensNewWindow( m_part, mev.target.string() );
@@ -1217,7 +1217,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
         break;
     case CURSOR_POINTER:
         c = m_part->urlCursor();
-	if (mev.url.string().startsWith("mailto:") && mev.url.string().find('@')>0)
+	if (mev.url.string().startsWith("mailto:") && mev.url.string().tqfind('@')>0)
             mailtoCursor = true;
         else
             newWindowCursor = targetOpensNewWindow( m_part, mev.target.string() );
@@ -1903,19 +1903,19 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    if (c->isWidgetType()) {
 		TQWidget *w = static_cast<TQWidget *>(c);
 		// don't install the event filter on toplevels
-		if (w->parentWidget(true) == view) {
+		if (w->tqparentWidget(true) == view) {
 		    if (!strcmp(w->name(), "__khtml")) {
 			w->installEventFilter(this);
 			w->unsetCursor();
-			if (!::qt_cast<TQFrame*>(w))
+			if (!::tqqt_cast<TQFrame*>(w))
 			    w->setBackgroundMode( TQWidget::NoBackground );
 			static_cast<HackWidget *>(w)->setNoErase();
 			if (w->children()) {
 			    TQObjectListIterator it(*w->children());
 			    for (; it.current(); ++it) {
-				TQWidget *widget = ::qt_cast<TQWidget *>(it.current());
+				TQWidget *widget = ::tqqt_cast<TQWidget *>(it.current());
 				if (widget && !widget->isTopLevel()) {
-				    if (!::qt_cast<TQFrame*>(w))
+				    if (!::tqqt_cast<TQFrame*>(w))
 				        widget->setBackgroundMode( TQWidget::NoBackground );
 				    static_cast<HackWidget *>(widget)->setNoErase();
 				    widget->installEventFilter(this);
@@ -1931,7 +1931,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
         TQWidget *c = v;
 	while (v && v != view) {
             c = v;
-	    v = v->parentWidget(true);
+	    v = v->tqparentWidget(true);
 	}
 
 	if (v && !strcmp(c->name(), "__khtml")) {
@@ -1941,23 +1941,23 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    case TQEvent::Paint:
 		if (!allowWidgetPaintEvents) {
 		    // eat the event. Like this we can control exactly when the widget
-		    // get's repainted.
+		    // get's tqrepainted.
 		    block = true;
 		    int x = 0, y = 0;
 		    TQWidget *v = w;
 		    while (v && v != view) {
 			x += v->x();
 			y += v->y();
-			v = v->parentWidget();
+			v = v->tqparentWidget();
 		    }
 		    viewportToContents( x, y, x, y );
 		    TQPaintEvent *pe = static_cast<TQPaintEvent *>(e);
-		    bool asap = !d->contentsMoving && ::qt_cast<TQScrollView *>(c);
+		    bool asap = !d->contentsMoving && ::tqqt_cast<TQScrollView *>(c);
 
-		    // TQScrollView needs fast repaints
+		    // TQScrollView needs fast tqrepaints
 		    if ( asap && !d->painting && m_part->xmlDocImpl() && m_part->xmlDocImpl()->renderer() &&
 		         !static_cast<khtml::RenderCanvas *>(m_part->xmlDocImpl()->renderer())->needsLayout() ) {
-		        repaintContents(x + pe->rect().x(), y + pe->rect().y(),
+		        tqrepaintContents(x + pe->rect().x(), y + pe->rect().y(),
 	                                        pe->rect().width(), pe->rect().height(), true);
                     } else {
  		        scheduleRepaint(x + pe->rect().x(), y + pe->rect().y(),
@@ -1969,7 +1969,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    case TQEvent::MouseButtonPress:
 	    case TQEvent::MouseButtonRelease:
 	    case TQEvent::MouseButtonDblClick: {
-		if ( (w->parentWidget() == view || ::qt_cast<TQScrollView*>(c)) && !::qt_cast<TQScrollBar *>(w)) {
+		if ( (w->tqparentWidget() == view || ::tqqt_cast<TQScrollView*>(c)) && !::tqqt_cast<TQScrollBar *>(w)) {
 		    TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
 		    TQPoint pt = w->mapTo( view, me->pos());
 		    TQMouseEvent me2(me->type(), pt, me->button(), me->state());
@@ -1988,7 +1988,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    }
 	    case TQEvent::KeyPress:
 	    case TQEvent::KeyRelease:
-		if (w->parentWidget() == view && !::qt_cast<TQScrollBar *>(w)) {
+		if (w->tqparentWidget() == view && !::tqqt_cast<TQScrollBar *>(w)) {
 		    TQKeyEvent *ke = static_cast<TQKeyEvent *>(e);
 		    if (e->type() == TQEvent::KeyPress)
 			keyPressEvent(ke);
@@ -2272,19 +2272,19 @@ void KHTMLView::displayAccessKeys( KHTMLView* caller, KHTMLView* origview, TQVal
             TQString accesskey;
             if( s.length() == 1 ) {
                 TQChar a = s.string()[ 0 ].upper();
-                if( qFind( taken.begin(), taken.end(), a ) == taken.end()) // !contains
+                if( tqFind( taken.begin(), taken.end(), a ) == taken.end()) // !contains
                     accesskey = a;
             }
             if( accesskey.isNull() && fallbacks.contains( en )) {
                 TQChar a = fallbacks[ en ].upper();
-                if( qFind( taken.begin(), taken.end(), a ) == taken.end()) // !contains
+                if( tqFind( taken.begin(), taken.end(), a ) == taken.end()) // !contains
                     accesskey = TQString( "<qt><i>" ) + a + "</i></qt>";
             }
             if( !accesskey.isNull()) {
 	        TQRect rec=en->getRect();
 	        TQLabel *lab=new TQLabel(accesskey,viewport(),0,Qt::WDestructiveClose);
 	        connect( origview, TQT_SIGNAL(hideAccessKeys()), lab, TQT_SLOT(close()) );
-	        connect( this, TQT_SIGNAL(repaintAccessKeys()), lab, TQT_SLOT(repaint()));
+	        connect( this, TQT_SIGNAL(tqrepaintAccessKeys()), lab, TQT_SLOT(tqrepaint()));
 	        lab->setPalette(TQToolTip::palette());
 	        lab->setLineWidth(2);
 	        lab->setFrameStyle(TQFrame::Box | TQFrame::Plain);
@@ -2835,7 +2835,7 @@ void KHTMLView::print(bool quick)
         int headerHeight = 0;
         TQFont headerFont("Sans Serif", 8);
 
-        TQString headerLeft = KGlobal::locale()->formatDate(TQDate::currentDate(),true);
+        TQString headerLeft = KGlobal::locale()->formatDate(TQDate::tqcurrentDate(),true);
         TQString headerMid = docname;
         TQString headerRight;
 
@@ -2933,7 +2933,7 @@ void KHTMLView::print(bool quick)
 
             root->layer()->paint(p, TQRect(0, top, pageWidth, pageHeight));
 //             m_part->xmlDocImpl()->renderer()->layer()->paint(p, TQRect(0, top, pageWidth, pageHeight));
-//             root->repaint();
+//             root->tqrepaint();
 //             p->flush();
             kdDebug(6000) << "printed: page " << page <<" bottom At = " << bottom << endl;
 
@@ -3121,7 +3121,7 @@ bool KHTMLView::nonPasswordStorableSite(const TQString& host) const
     TQStringList sites =  d->formCompletions->readListEntry("Sites");
     d->formCompletions->setGroup(TQString::null);//reset
 
-    return (sites.find(host) != sites.end());
+    return (sites.tqfind(host) != sites.end());
 }
 
 // returns true if event should be swallowed
@@ -3497,8 +3497,8 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
 	khtml::RenderCanvas* root = static_cast<khtml::RenderCanvas *>(document->renderer());
 
 	if ( root && root->needsLayout() ) {
-	    killTimer(d->repaintTimerId);
-	    d->repaintTimerId = 0;
+	    killTimer(d->tqrepaintTimerId);
+	    d->tqrepaintTimerId = 0;
 	    scheduleRelayout();
 	    return;
 	}
@@ -3506,9 +3506,9 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
 
     setStaticBackground(d->useSlowRepaints);
 
-//        kdDebug() << "scheduled repaint "<< d->repaintTimerId  << endl;
-    killTimer(d->repaintTimerId);
-    d->repaintTimerId = 0;
+//        kdDebug() << "scheduled tqrepaint "<< d->tqrepaintTimerId  << endl;
+    killTimer(d->tqrepaintTimerId);
+    d->tqrepaintTimerId = 0;
 
     TQRect updateRegion;
     TQMemArray<TQRect> rects = d->updateRegion.rects();
@@ -3522,7 +3522,7 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
         TQRect newRegion = updateRegion.unite(rects[i]);
         if (2*newRegion.height() > 3*updateRegion.height() )
         {
-            repaintContents( updateRegion );
+            tqrepaintContents( updateRegion );
             updateRegion = rects[i];
         }
         else
@@ -3530,11 +3530,11 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
     }
 
     if ( !updateRegion.isNull() )
-        repaintContents( updateRegion );
+        tqrepaintContents( updateRegion );
 
     // As widgets can only be accurately positioned during painting, every layout might
     // dissociate a widget from its RenderWidget. E.g: if a RenderWidget was visible before layout, but the layout
-    // pushed it out of the viewport, it will not be repainted, and consequently it's assocoated widget won't be repositioned!
+    // pushed it out of the viewport, it will not be tqrepainted, and consequently it's assocoated widget won't be repositioned!
     // Thus we need to check each supposedly 'visible' widget at the end of each layout, and remove it in case it's no more in sight.
 
     if (d->dirtyLayout && !d->visibleWidgets.isEmpty()) {
@@ -3556,7 +3556,7 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
                 addChild(w, 0, -500000);
     }
 
-    emit repaintAccessKeys();
+    emit tqrepaintAccessKeys();
     if (d->emitCompletedAfterRepaint) {
         bool full = d->emitCompletedAfterRepaint == KHTMLViewPrivate::CSFull;
         d->emitCompletedAfterRepaint = KHTMLViewPrivate::CSNone;
@@ -3587,11 +3587,11 @@ void KHTMLView::unscheduleRelayout()
 
 void KHTMLView::unscheduleRepaint()
 {
-    if (!d->repaintTimerId)
+    if (!d->tqrepaintTimerId)
         return;
 
-    killTimer(d->repaintTimerId);
-    d->repaintTimerId = 0;
+    killTimer(d->tqrepaintTimerId);
+    d->tqrepaintTimerId = 0;
 }
 
 void KHTMLView::scheduleRepaint(int x, int y, int w, int h, bool asap)
@@ -3618,8 +3618,8 @@ void KHTMLView::scheduleRepaint(int x, int y, int w, int h, bool asap)
     if (asap && !parsing)
         unscheduleRepaint();
 
-    if ( !d->repaintTimerId )
-        d->repaintTimerId = startTimer( time );
+    if ( !d->tqrepaintTimerId )
+        d->tqrepaintTimerId = startTimer( time );
 
 //     kdDebug() << "starting timer " << time << endl;
 }
@@ -3641,13 +3641,13 @@ void KHTMLView::complete( bool pendingAction )
             KHTMLViewPrivate::CSActionPending : KHTMLViewPrivate::CSFull;
     }
 
-    // is there a repaint pending?
-    if (d->repaintTimerId)
+    // is there a tqrepaint pending?
+    if (d->tqrepaintTimerId)
     {
-//         kdDebug() << "requesting repaint now" << endl;
+//         kdDebug() << "requesting tqrepaint now" << endl;
         // do it now
-        killTimer(d->repaintTimerId);
-        d->repaintTimerId = startTimer( 20 );
+        killTimer(d->tqrepaintTimerId);
+        d->tqrepaintTimerId = startTimer( 20 );
         d->emitCompletedAfterRepaint = pendingAction ?
             KHTMLViewPrivate::CSActionPending : KHTMLViewPrivate::CSFull;
     }
@@ -3698,7 +3698,7 @@ void KHTMLView::initCaret(bool keepSelection)
     }/*end if*/
 //    kdDebug(6200) << "d->m_selectionStart " << m_part->d->m_selectionStart.handle()
 //    		<< " d->m_selectionEnd " << m_part->d->m_selectionEnd.handle() << endl;
-    // ### does not repaint the selection on keepSelection!=false
+    // ### does not tqrepaint the selection on keepSelection!=false
     moveCaretTo(m_part->d->caretNode().handle(), m_part->d->caretOffset(), !keepSelection);
 //    kdDebug(6200) << "d->m_selectionStart " << m_part->d->m_selectionStart.handle()
 //    		<< " d->m_selectionEnd " << m_part->d->m_selectionEnd.handle() << endl;
@@ -3841,7 +3841,7 @@ void KHTMLView::showCaret(bool forceRepaint)
 	    		d->m_caretViewContext->width,
 			d->m_caretViewContext->height);
             } else {
-	    	repaintContents(d->m_caretViewContext->x, d->m_caretViewContext->y,
+	    	tqrepaintContents(d->m_caretViewContext->x, d->m_caretViewContext->y,
 	    		d->m_caretViewContext->width,
 	    		d->m_caretViewContext->height);
 	    }/*end if*/
@@ -3873,9 +3873,9 @@ void KHTMLView::hideCaret()
         if (d->m_caretViewContext->visible) {
 //            kdDebug(6200) << "redraw caret hidden" << endl;
 	    d->m_caretViewContext->visible = false;
-	    // force repaint, otherwise the event won't be handled
+	    // force tqrepaint, otherwise the event won't be handled
 	    // before the focus leaves the window
-	    repaintContents(d->m_caretViewContext->x, d->m_caretViewContext->y,
+	    tqrepaintContents(d->m_caretViewContext->x, d->m_caretViewContext->y,
 	    		d->m_caretViewContext->width,
 	    		d->m_caretViewContext->height);
 	    d->m_caretViewContext->visible = true;
@@ -4426,7 +4426,7 @@ void KHTMLView::placeCaretOnChar(CaretBox *hintBox)
   d->m_caretViewContext->origX = d->m_caretViewContext->x;
   d->scrollBarMoved = false;
 #if DEBUG_CARETMODE > 3
-  //if (caretNode->isTextNode())  kdDebug(6200) << "text[0] = " << (int)*((TextImpl *)caretNode)->data().unicode() << " text :\"" << ((TextImpl *)caretNode)->data().string() << "\"" << endl;
+  //if (caretNode->isTextNode())  kdDebug(6200) << "text[0] = " << (int)*((TextImpl *)caretNode)->data().tqunicode() << " text :\"" << ((TextImpl *)caretNode)->data().string() << "\"" << endl;
 #endif
   ensureNodeHasFocus(m_part->d->caretNode().handle());
   caretOn();

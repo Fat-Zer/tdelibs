@@ -68,7 +68,7 @@ KToolBarLabelAction::KToolBarLabelAction(TQLabel* label,
   : KWidgetAction(label, label->text(), cut, receiver, slot, parent, name),
     d(new KToolBarLabelActionPrivate)
 {
-  Q_ASSERT(TQString::fromLatin1("kde toolbar widget") == label->name());
+  Q_ASSERT(TQString::tqfromLatin1("kde toolbar widget") == label->name());
   init();
 }
 
@@ -83,10 +83,10 @@ void KToolBarLabelAction::init()
   d->m_label = static_cast<TQLabel*>(widget());
   /* these lines were copied from Konqueror's KonqDraggableLabel class in
      konq_misc.cc */
-  d->m_label->setBackgroundMode(Qt::PaletteButton);
-  d->m_label->setAlignment((TQApplication::reverseLayout()
+  d->m_label->setBackgroundMode(TQt::PaletteButton);
+  d->m_label->tqsetAlignment((TQApplication::reverseLayout()
 			 ? Qt::AlignRight : Qt::AlignLeft) |
- 			Qt::AlignVCenter | Qt::ShowPrefix );
+ 			Qt::AlignVCenter | TQt::ShowPrefix );
   d->m_label->adjustSize();
 }
 

@@ -93,12 +93,12 @@ TQString PortDialog::editListen(const TQString& s, TQWidget *parent, CupsdConf *
 {
 	PortDialog	dlg(parent);
 	dlg.setInfos(conf);
-	int	p = s.find(' ');
+	int	p = s.tqfind(' ');
 	if (p != -1)
 	{
 		dlg.usessl_->setChecked(s.left(p).startsWith("SSL"));
 		QString	addr = s.mid(p+1).stripWhiteSpace();
-		int p1 = addr.find(':');
+		int p1 = addr.tqfind(':');
 		if (p1 == -1)
 		{
 			dlg.address_->setText(addr);

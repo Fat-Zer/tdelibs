@@ -41,25 +41,25 @@
 #include <kaboutdialog_private.h>
 #include <kdebug.h>
 
-//MOC_SKIP_BEGIN
+//TQMOC_SKIP_BEGIN
 template class TQPtrList<KAboutContributor>;
-//MOC_SKIP_END
+//TQMOC_SKIP_END
 
 #define WORKTEXT_IDENTATION 16
 #define Grid 3
 
 // ##############################################################
-// MOC OUTPUT FILES:
+// TQMOC OUTPUT FILES:
 #include "kaboutdialog.moc"
 #include "kaboutdialog_private.moc"
 // ##############################################################
 
-class KAboutTabWidget : public QTabWidget
+class KAboutTabWidget : public TQTabWidget
 {
 public:
     KAboutTabWidget( TQWidget* parent ) : TQTabWidget( parent ) {}
-    TQSize sizeHint() const {
-	return TQTabWidget::sizeHint().expandedTo( tabBar()->sizeHint() + TQSize(4,4) );
+    TQSize tqsizeHint() const {
+	return TQTabWidget::tqsizeHint().expandedTo( tabBar()->tqsizeHint() + TQSize(4,4) );
     }
 };
 
@@ -106,7 +106,7 @@ KAboutContributor::KAboutContributor( TQWidget *_parent, const char *wname,
   connect(kurl, TQT_SIGNAL(leftClickedURL(const TQString &)),
 	  TQT_SLOT(urlClickedSlot(const TQString &)));
 
-  mLabel[3]->setAlignment( AlignTop );
+  mLabel[3]->tqsetAlignment( AlignTop );
 
   fontChange( font() );
   updateLayout();
@@ -227,8 +227,8 @@ void KAboutContributor::updateLayout( void )
       {
 	if( mShowHeader )
 	{
-	  gbox->addWidget( mLabel[i], r, 0, AlignLeft );
-	  gbox->addWidget( mText[i], r, 1, AlignLeft  );
+	  gbox->addWidget( TQT_TQWIDGET(mLabel[i]), r, 0, (TQ_Alignment)AlignLeft );
+	  gbox->addWidget( TQT_TQWIDGET(mText[i]), r, 1, (TQ_Alignment)AlignLeft  );
 	  mLabel[i]->show();
 	  mText[i]->show();
 	}
@@ -237,11 +237,11 @@ void KAboutContributor::updateLayout( void )
 	  mLabel[i]->hide();
 	  if( !i )
 	  {
-	    gbox->addMultiCellWidget( mText[i], r, r, 0, 1, AlignLeft );
+	    gbox->addMultiCellWidget( TQT_TQWIDGET(mText[i]), r, r, 0, 1, (TQ_Alignment)AlignLeft );
 	  }
 	  else
 	  {
-	    gbox->addWidget( mText[i], r, 1, AlignLeft  );
+	    gbox->addWidget( TQT_TQWIDGET(mText[i]), r, 1, (TQ_Alignment)AlignLeft  );
 	  }
 	  mText[i]->show();
 	}
@@ -256,7 +256,7 @@ void KAboutContributor::updateLayout( void )
   }
 
   gbox->activate();
-  setMinimumSize( sizeHint() );
+  setMinimumSize( tqsizeHint() );
 }
 
 
@@ -272,9 +272,9 @@ void KAboutContributor::fontChange( const TQFont &/*oldFont*/ )
 }
 
 
-TQSize KAboutContributor::sizeHint( void ) const
+TQSize KAboutContributor::tqsizeHint( void ) const
 {
-  return minimumSizeHint();
+  return tqminimumSizeHint();
 }
 
 
@@ -314,7 +314,7 @@ KAboutContainerBase::KAboutContainerBase( int layoutType, TQWidget *_parent,
   if( layoutType & AbtTitle )
   {
     mTitleLabel = new TQLabel( this, "title" );
-    mTitleLabel->setAlignment(AlignCenter);
+    mTitleLabel->tqsetAlignment(AlignCenter);
     mTopLayout->addWidget( mTitleLabel );
     mTopLayout->addSpacing( KDialog::spacingHint() );
   }
@@ -427,9 +427,9 @@ void KAboutContainerBase::show( void )
     TQWidget::show();
 }
 
-TQSize KAboutContainerBase::sizeHint( void ) const
+TQSize KAboutContainerBase::tqsizeHint( void ) const
 {
-    return minimumSize().expandedTo( TQSize( TQWidget::sizeHint().width(), 0 ) );
+    return tqminimumSize().expandedTo( TQSize( TQWidget::tqsizeHint().width(), 0 ) );
 }
 
 void KAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
@@ -451,7 +451,7 @@ void KAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
     f.setBold( true );
     mVersionLabel->setFont(f);
     mAuthorLabel->setFont(f);
-    mVersionLabel->parentWidget()->layout()->activate();
+    mVersionLabel->tqparentWidget()->layout()->activate();
   }
 
   update();
@@ -716,7 +716,7 @@ void KAboutContainerBase::setProduct( const TQString &appName,
     mAuthorLabel->hide();
   }
 
-  mIconLabel->parentWidget()->layout()->activate();
+  mIconLabel->tqparentWidget()->layout()->activate();
 }
 
 
@@ -790,26 +790,26 @@ void KAboutContainer::childEvent( TQChildEvent *e )
 
   TQWidget* const w = static_cast<TQWidget *>(e->child());
   mVbox->addWidget( w, 0, mAlignment );
-  const TQSize s( sizeHint() );
+  const TQSize s( tqsizeHint() );
   setMinimumSize( s );
 
-  TQObjectList* const l = const_cast<TQObjectList *>(children()); // silence please
-  TQObjectListIterator itr( *l );
+  TQObjectList const l = childrenListObject(); // silence please
+  TQObjectListIterator itr( l );
   TQObject * o;
   while ( (o = itr.current()) ) {
     ++itr;
     if( o->isWidgetType() )
     {
-        static_cast<TQWidget *>(o)->setMinimumWidth( s.width() );
+        TQT_TQWIDGET(o)->setMinimumWidth( s.width() );
     }
   }
 }
 
 
-TQSize KAboutContainer::sizeHint( void ) const
+TQSize KAboutContainer::tqsizeHint( void ) const
 {
   //
-  // The size is computed by adding the sizeHint().height() of all
+  // The size is computed by adding the tqsizeHint().height() of all
   // widget children and taking the width of the widest child and adding
   // layout()->margin() and layout()->spacing()
   //
@@ -817,24 +817,24 @@ TQSize KAboutContainer::sizeHint( void ) const
   TQSize total_size;
 
   int numChild = 0;
-  TQObjectList* const l = const_cast<TQObjectList *>(children()); // silence please
+  TQObjectList const l = childrenListObject(); // silence please
 
-  TQObjectListIterator itr( *l );
+  TQObjectListIterator itr( l );
   TQObject * o;
   while ( (o = itr.current()) ) {
     ++itr;
     if( o->isWidgetType() )
     {
       ++numChild;
-      TQWidget* const w= static_cast<TQWidget *>(o);
+      TQWidget* const w= TQT_TQWIDGET(o);
 
-      TQSize s = w->minimumSize();
+      TQSize s = w->tqminimumSize();
       if( s.isEmpty() )
       {
-	s = w->minimumSizeHint();
+	s = w->tqminimumSizeHint();
 	if( s.isEmpty() )
 	{
-	  s = w->sizeHint();
+	  s = w->tqsizeHint();
 	  if( s.isEmpty() )
 	  {
 	    s = TQSize( 100, 100 ); // Default size
@@ -864,9 +864,9 @@ TQSize KAboutContainer::sizeHint( void ) const
 }
 
 
-TQSize KAboutContainer::minimumSizeHint( void ) const
+TQSize KAboutContainer::tqminimumSizeHint( void ) const
 {
-  return sizeHint();
+  return tqsizeHint();
 }
 
 
@@ -890,7 +890,7 @@ void KAboutContainer::addPerson( const TQString &_name, const TQString &_email,
 }
 
 
-void KAboutContainer::addTitle( const TQString &title, int alignment,
+void KAboutContainer::addTitle( const TQString &title, int tqalignment,
 				bool showFrame, bool showBold )
 {
 
@@ -905,11 +905,11 @@ void KAboutContainer::addTitle( const TQString &title, int alignment,
   {
     label->setFrameStyle(TQFrame::Panel | TQFrame::Raised);
   }
-  label->setAlignment( alignment );
+  label->tqsetAlignment( tqalignment );
 }
 
 
-void KAboutContainer::addImage( const TQString &fileName, int alignment )
+void KAboutContainer::addImage( const TQString &fileName, int tqalignment )
 {
   if( fileName.isNull() )
   {
@@ -924,11 +924,11 @@ void KAboutContainer::addImage( const TQString &fileName, int alignment )
     pix = logo;
     label->setPixmap( pix );
   }
-  label->setAlignment( alignment );
+  label->tqsetAlignment( tqalignment );
 }
 
 #if 0
-//MOC_SKIP_BEGIN
+//TQMOC_SKIP_BEGIN
 
 /** Every person displayed is stored in a KAboutContributor object.
  *  Every contributor, the author and/or the maintainer of the application are
@@ -960,8 +960,8 @@ public:
   void setWork(const TQString&);
   /** The size hint. Very important here, since KAboutWidget relies on it for
    *  geometry management. */
-  TQSize sizeHint();
-  TQSize minimumSizeHint(void);
+  TQSize tqsizeHint();
+  TQSize tqminimumSizeHint(void);
   virtual void show( void );
 
   // ----------------------------------------------------------------------------
@@ -1007,7 +1007,7 @@ KAboutContributor::KAboutContributor(TQWidget* parent, const char* n)
   if(name==0 || email==0)
     { // this will nearly never happen (out of memory in about box?)
       kdDebug() << "KAboutContributor::KAboutContributor: Out of memory." << endl;
-      qApp->quit();
+      tqApp->quit();
     }
   setFrameStyle(TQFrame::Panel | TQFrame::Raised);
   // -----
@@ -1096,7 +1096,7 @@ KAboutContributor::setWork(const TQString& w)
 
 #if 0
 QSize
-KAboutContributor::sizeHint()
+KAboutContributor::tqsizeHint()
 {
   // ############################################################################
   const int FrameWidth=frameWidth();
@@ -1104,8 +1104,8 @@ KAboutContributor::sizeHint()
   int maxx, maxy;
   TQRect rect;
   // ----- first calculate name and email width:
-  maxx=name->sizeHint().width();
-  maxx=QMAX(maxx, email->sizeHint().width()+WORKTEXT_IDENTATION);
+  maxx=name->tqsizeHint().width();
+  maxx=QMAX(maxx, email->tqsizeHint().width()+WORKTEXT_IDENTATION);
   // ----- now determine "work" text rectangle:
   if(!work.isEmpty()) // save time
     {
@@ -1116,10 +1116,10 @@ KAboutContributor::sizeHint()
   {
     maxx=WorkTextWidth+WORKTEXT_IDENTATION;
   }
-  maxx=QMAX(maxx, url->sizeHint().width()+WORKTEXT_IDENTATION);
+  maxx=QMAX(maxx, url->tqsizeHint().width()+WORKTEXT_IDENTATION);
   // -----
-  maxy=2*(name->sizeHint().height()+Grid); // need a space above the KURLLabels
-  maxy+=/* email */ name->sizeHint().height();
+  maxy=2*(name->tqsizeHint().height()+Grid); // need a space above the KURLLabels
+  maxy+=/* email */ name->tqsizeHint().height();
   maxy+=rect.height();
   // -----
   maxx+=2*FrameWidth;
@@ -1128,16 +1128,16 @@ KAboutContributor::sizeHint()
   // ############################################################################
 }
 
-TQSize KAboutContributor::minimumSizeHint(void)
+TQSize KAboutContributor::tqminimumSizeHint(void)
 {
-  return( sizeHint() );
+  return( tqsizeHint() );
 }
 
 
 void KAboutContributor::show( void )
 {
   TQFrame::show();
-  setMinimumSize( sizeHint() );
+  setMinimumSize( tqsizeHint() );
 }
 
 
@@ -1151,15 +1151,15 @@ KAboutContributor::resizeEvent(TQResizeEvent*)
   int cy=framewidth;
   // -----
   name->setGeometry
-    (framewidth, framewidth, childwidth, name->sizeHint().height());
+    (framewidth, framewidth, childwidth, name->tqsizeHint().height());
   cy=name->height()+Grid;
   email->setGeometry
     (framewidth+WORKTEXT_IDENTATION, cy,
-     childwidth-WORKTEXT_IDENTATION, /* email */ name->sizeHint().height());
+     childwidth-WORKTEXT_IDENTATION, /* email */ name->tqsizeHint().height());
   cy+=name->height()+Grid;
   url->setGeometry
     (framewidth+WORKTEXT_IDENTATION, cy,
-     childwidth-WORKTEXT_IDENTATION, /* url */ name->sizeHint().height());
+     childwidth-WORKTEXT_IDENTATION, /* url */ name->tqsizeHint().height());
   // the work text is drawn in the paint event
   // ############################################################################
 }
@@ -1181,20 +1181,20 @@ KAboutContributor::paintEvent(TQPaintEvent* e)
   paint.drawText(WORKTEXT_IDENTATION, cy, w, h, AlignLeft | WordBreak, work);
   // ############################################################################
 }
-// MOC_SKIP_END
+// TQMOC_SKIP_END
 #endif
 
 
 #if 0
-TQSize KAboutContributor::sizeHint( void )
+TQSize KAboutContributor::tqsizeHint( void )
 {
   int s = KDialog::spacingHint();
   int h = fontMetrics().lineSpacing()*3 + 2*s;
   int m = frameWidth();
 
-  int w = name->sizeHint().width();
-  w = QMAX( w, email->sizeHint().width()+s);
-  w = QMAX( w, url->sizeHint().width()+s);
+  int w = name->tqsizeHint().width();
+  w = QMAX( w, email->tqsizeHint().width()+s);
+  w = QMAX( w, url->tqsizeHint().width()+s);
 
   if( work.isEmpty() == false )
   {
@@ -1214,10 +1214,10 @@ TQSize KAboutContributor::sizeHint( void )
   int s = 3;
   int m = frameWidth() + KDialog::spacingHint();
   int h = ls * 3 + s * 2;
-  int w = name->sizeHint().width();
+  int w = name->tqsizeHint().width();
 
-  w = QMAX( w, email->sizeHint().width()+WORKTEXT_IDENTATION);
-  w = QMAX( w, url->sizeHint().width()+WORKTEXT_IDENTATION);
+  w = QMAX( w, email->tqsizeHint().width()+WORKTEXT_IDENTATION);
+  w = QMAX( w, url->tqsizeHint().width()+WORKTEXT_IDENTATION);
   if( work.isEmpty() == false )
   {
     const int WorkTextWidth=200;
@@ -1257,7 +1257,7 @@ void KAboutContributor::resizeEvent(TQResizeEvent*)
   int x = frameWidth() + KDialog::spacingHint();
   int y = x;
   int w = width() - 2*x;
-  int h = name->sizeHint().height();
+  int h = name->tqsizeHint().height();
   int s = 3;
 
   name->setGeometry( x, y, w, h );
@@ -1291,7 +1291,7 @@ void KAboutContributor::paintEvent( TQPaintEvent *e )
   int s = 3;
   int x = frameWidth() + KDialog::spacingHint() + WORKTEXT_IDENTATION;
   int w = width()-WORKTEXT_IDENTATION-2*(frameWidth()+KDialog::spacingHint());
-  int y = frameWidth()+KDialog::spacingHint()+(name->sizeHint().height()+s)*3;
+  int y = frameWidth()+KDialog::spacingHint()+(name->tqsizeHint().height()+s)*3;
   int h = height()-y-frameWidth();
 
   TQPainter paint( this );
@@ -1320,13 +1320,13 @@ KAboutWidget::KAboutWidget(TQWidget *_parent, const char *_name)
   {
     // this will nearly never happen (out of memory in about box?)
     kdDebug() << "KAboutWidget::KAboutWidget: Out of memory." << endl;
-    qApp->quit();
+    tqApp->quit();
   }
   // -----
   cont->setText(i18n("Other Contributors:"));
   logo->setText(i18n("(No logo available)"));
   logo->setFrameStyle(TQFrame::Panel | TQFrame::Raised);
-  version->setAlignment(AlignCenter);
+  version->tqsetAlignment(AlignCenter);
   // -----
   connect(author, TQT_SIGNAL(sendEmail(const TQString&, const TQString&)),
 	  TQT_SLOT(sendEmailSlot(const TQString&, const TQString&)));
@@ -1350,33 +1350,33 @@ KAboutWidget::adjust()
   // -----
   if(showMaintainer)
     {
-      total_size=maintainer->sizeHint();
+      total_size=maintainer->tqsizeHint();
       maintWidth=total_size.width();
       maintHeight=total_size.height();
     } else {
       maintWidth=0;
       maintHeight=0;
     }
-  total_size=author->sizeHint();
+  total_size=author->tqsizeHint();
   logo->adjustSize();
-  cy=version->sizeHint().height()+Grid;
+  cy=version->tqsizeHint().height()+Grid;
   cx=logo->width();
   tempx=QMAX(total_size.width(), maintWidth);
   cx+=Grid+tempx;
-  cx=QMAX(cx, version->sizeHint().width());
+  cx=QMAX(cx, version->tqsizeHint().width());
   cy+=QMAX(logo->height(),
 	   total_size.height()+(showMaintainer ? Grid+maintHeight : 0));
   // -----
   if(!contributors.isEmpty())
     {
-      cx=QMAX(cx, cont->sizeHint().width());
-      cy+=cont->sizeHint().height()+Grid;
+      cx=QMAX(cx, cont->tqsizeHint().width());
+      cy+=cont->tqsizeHint().height()+Grid;
       TQPtrListIterator<KAboutContributor> _pos(contributors);
       KAboutContributor* currEntry;
       while ( (currEntry = _pos.current()) )
 	{
 	  ++_pos;
-	  cy+=currEntry->sizeHint().height();
+	  cy+=currEntry->tqsizeHint().height();
 	}
     }
   // -----
@@ -1459,7 +1459,7 @@ KAboutWidget::resizeEvent(TQResizeEvent*)
   // ############################################################################
   int _x=0, _y, cx, tempx, tempy;
   // ----- set version label geometry:
-  version->setGeometry(0, 0, width(), version->sizeHint().height());
+  version->setGeometry(0, 0, width(), version->tqsizeHint().height());
   _y=version->height()+Grid;
   // ----- move logo to correct position:
   logo->adjustSize();
@@ -1468,16 +1468,16 @@ KAboutWidget::resizeEvent(TQResizeEvent*)
   tempx=logo->width()+Grid;
   cx=width()-tempx;
   author->setGeometry
-    (tempx, _y, cx, author->sizeHint().height());
+    (tempx, _y, cx, author->tqsizeHint().height());
   maintainer->setGeometry
-    (tempx, _y+author->height()+Grid, cx, maintainer->sizeHint().height());
+    (tempx, _y+author->height()+Grid, cx, maintainer->tqsizeHint().height());
 
   _y+=QMAX(logo->height(),
 	  author->height()+(showMaintainer ? Grid+maintainer->height() : 0));
   // -----
   if(!contributors.isEmpty())
     {
-      tempy=cont->sizeHint().height();
+      tempy=cont->tqsizeHint().height();
       cont->setGeometry(0, _y, width(), tempy);
       cont->show();
       _y+=tempy+Grid;
@@ -1489,7 +1489,7 @@ KAboutWidget::resizeEvent(TQResizeEvent*)
   while( (currEntry = _pos.current()) )
     {
       ++_pos;
-      tempy=currEntry->sizeHint().height();
+      tempy=currEntry->tqsizeHint().height();
       // y+=Grid;
       currEntry->setGeometry(_x, _y, width(), tempy);
       _y+=tempy;
@@ -1512,7 +1512,7 @@ KAboutDialog::KAboutDialog(TQWidget *_parent, const char *_name, bool modal)
   {
     // this will nearly never happen (out of memory in about box?)
     kdDebug() << "KAboutDialog::KAboutDialog: Out of memory." << endl;
-    qApp->quit();
+    tqApp->quit();
   }
   setMainWidget(about);
   connect(about, TQT_SIGNAL(sendEmail(const TQString&, const TQString&)),
@@ -1567,7 +1567,7 @@ void KAboutDialog::adjust()
   if( !about ) { return; }
   about->adjust();
   //initializeGeometry();
-  resize( sizeHint() );
+  resize( tqsizeHint() );
 }
 
 

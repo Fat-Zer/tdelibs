@@ -305,7 +305,7 @@ class BrowserExtensionPrivate;
   *                                       otherwise, they are saved globally.
   * @li @p disableScrolling: no scrollbars
   */
-class KPARTS_EXPORT BrowserExtension : public QObject
+class KPARTS_EXPORT BrowserExtension : public TQObject
 {
   Q_OBJECT
   Q_PROPERTY( bool urlDropHandling READ isURLDropHandlingEnabled WRITE setURLDropHandlingEnabled )
@@ -446,7 +446,7 @@ public:
    * Checking if the extension implements a certain slot can be done like this:
    *
    * \code
-   *   extension->metaObject()->slotNames().contains( actionName + "()" )
+   *   extension->tqmetaObject()->slotNames().contains( actionName + "()" )
    * \endcode
    *
    * (note that @p actionName is the iterator's key value if already
@@ -721,7 +721,7 @@ private:
  * other parts.
  * For instance a KHTMLPart hosts one part per frame.
  */
-class KPARTS_EXPORT BrowserHostExtension : public QObject
+class KPARTS_EXPORT BrowserHostExtension : public TQObject
 {
   Q_OBJECT
 public:
@@ -789,7 +789,7 @@ private:
  * A part can have an object hierarchie by using objid as a reference
  * to an object.
  */
-class KPARTS_EXPORT LiveConnectExtension : public QObject
+class KPARTS_EXPORT LiveConnectExtension : public TQObject
 {
   Q_OBJECT
 public:

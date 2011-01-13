@@ -31,7 +31,7 @@
  *
  * @author Anders Lund (anders at alweb dk), jan 23, 2002
  */
-class KIO_EXPORT KMimeTypeChooser : public QVBox
+class KIO_EXPORT KMimeTypeChooser : public TQVBox
 {
   Q_OBJECT
 

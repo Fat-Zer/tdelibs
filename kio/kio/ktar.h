@@ -139,9 +139,9 @@ private:
     void writeLonglink(char *buffer, const TQCString &name, char typeflag,
 			const char *uname, const char *gname);
 
-    Q_LONG readRawHeader(char *buffer);
+    TQ_LONG readRawHeader(char *buffer);
     bool readLonglink(char *buffer,TQCString &longlink);
-    Q_LONG readHeader(char *buffer,TQString &name,TQString &symlink);
+    TQ_LONG readHeader(char *buffer,TQString &name,TQString &symlink);
 
     TQString m_filename;
 protected:

@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 class TQCheckBox;
 
-class PlastikStyleConfig: public QWidget
+class PlastikStyleConfig: public TQWidget
 {
 	Q_OBJECT
 public:

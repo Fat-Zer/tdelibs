@@ -130,7 +130,7 @@ bool kio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int star
         fullPath += '/';
 
     kdDebug()   << "the full path is " << fullPath << endl;
-    while ( (pos=fullPath.find( '/', pos+1 )) != -1 )
+    while ( (pos=fullPath.tqfind( '/', pos+1 )) != -1 )
     {
         TQString tryPath = fullPath.left( pos );
         kdDebug()   << fullPath << "  trying " << tryPath << endl;
@@ -150,7 +150,7 @@ bool kio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int star
                     path.truncate( len - 1 );
             }
             else
-                path = TQString::fromLatin1("/");
+                path = TQString::tqfromLatin1("/");
             kdDebug()   << "Found. isoFile=" << isoFile << " path=" << path << endl;
             break;
         }
@@ -259,10 +259,10 @@ void kio_isoProtocol::listDir( const KURL & url )
 
     if ( path.isEmpty() )
     {
-        KURL redir( TQString::fromLatin1( "iso:/") );
+        KURL redir( TQString::tqfromLatin1( "iso:/") );
         kdDebug() << "url.path()==" << url.path() << endl;
         if (url.hasRef()) redir.setRef(url.htmlRef());
-        redir.setPath( url.path() + TQString::fromLatin1("/") );
+        redir.setPath( url.path() + TQString::tqfromLatin1("/") );
         kdDebug() << "kio_isoProtocol::listDir: redirection " << redir.url() << endl;
         redirection( redir );
         finished();
@@ -274,7 +274,7 @@ void kio_isoProtocol::listDir( const KURL & url )
     const KArchiveDirectory* dir;
     if (!path.isEmpty() && path != "/")
     {
-        kdDebug()   << TQString("Looking for entry %1").arg(path) << endl;
+        kdDebug()   << TQString(TQString("Looking for entry %1").arg(path)) << endl;
         const KArchiveEntry* e = root->entry( path );
         if ( !e )
         {
@@ -356,7 +356,7 @@ void kio_isoProtocol::stat( const KURL & url )
     const KArchiveEntry* isoEntry;
     if ( path.isEmpty() )
     {
-        path = TQString::fromLatin1( "/" );
+        path = TQString::tqfromLatin1( "/" );
         isoEntry = root;
     } else {
         isoEntry = root->entry( path );
@@ -407,8 +407,8 @@ void kio_isoProtocol::getFile( const KIsoFile *isoFileEntry, const TQString &pat
             ptrblock_bytes = (nblocks+1) * 4;
             pointer_block=isoFileEntry->data( hdr->header_size << 2, ptrblock_bytes );
             if (pointer_block.size() == ptrblock_bytes &&
-                inbuf.resize(block_size2) &&
-                outbuf.resize(block_size)) {
+                inbuf.tqresize(block_size2) &&
+                outbuf.tqresize(block_size)) {
                     
                 pptr = pointer_block.data();
             } else {

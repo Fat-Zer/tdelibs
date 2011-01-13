@@ -124,9 +124,9 @@ void DCOPIceWriteChar(register IceConn iceConn, unsigned long nbytes, char *ptr)
 static TQCString readQCString(TQDataStream &ds)
 {
    TQCString result;
-   Q_UINT32 len;
+   TQ_UINT32 len;
    ds >> len;
-   TQIODevice *device = ds.device();
+   TQIODevice *device = ds.tqdevice();
    int bytesLeft = device->size()-device->at();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
@@ -142,9 +142,9 @@ static TQCString readQCString(TQDataStream &ds)
 static TQByteArray readQByteArray(TQDataStream &ds)
 {
    TQByteArray result;
-   Q_UINT32 len;
+   TQ_UINT32 len;
    ds >> len;
-   TQIODevice *device = ds.device();
+   TQIODevice *device = ds.tqdevice();
    int bytesLeft = device->size()-device->at();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
@@ -287,7 +287,7 @@ qWarning("DCOPServer: DCOPIceWrite() outputBlocked. Queuing %d bytes.", _data.si
        // assert(conn->outputBuffer.isEmpty());
     }
 
-    unsigned long nleft = writeIceData(iceConn, _data.size(), _data.data());
+    unsigned long nleft = writeIceData(iceConn, _data.size(), const_cast<TQByteArray&>(_data).data());
     if ((nleft > 0) && conn)
     {
         conn->waitForOutputReady(_data, _data.size() - nleft);
@@ -319,7 +319,7 @@ void DCOPServer::slotOutputReady(int socket)
 qWarning("DCOPServer: slotOutputReady fd = %d", socket);
 #endif
    // Find out connection.
-   DCOPConnection *conn = fd_clients.find(socket);
+   DCOPConnection *conn = fd_clients.tqfind(socket);
    //assert(conn);
    //assert(conn->outputBlocked);
    //assert(conn->socket() == socket);
@@ -396,7 +396,7 @@ qWarning("DCOPServer: Flushing data, fd = %d", IceConnectionNumber(_iceConn));
    DCOPIceWrite(_iceConn, _data);
 }
 
-class DCOPListener : public QSocketNotifier
+class DCOPListener : public TQSocketNotifier
 {
 public:
     DCOPListener( IceListenObj obj )
@@ -710,7 +710,7 @@ void DCOPProcessMessage( IceConn iceConn, IcePointer /*clientData*/,
 void DCOPServer::processMessage( IceConn iceConn, int opcode,
 				 unsigned long length, Bool /*swap*/)
 {
-    DCOPConnection* conn = clients.find( iceConn );
+    DCOPConnection* conn = clients.tqfind( iceConn );
     if ( !conn ) {
 	qWarning("DCOPServer::processMessage message from unknown connection. [opcode = %d]", opcode);
 	return;
@@ -1109,7 +1109,7 @@ DCOPConnection* DCOPServer::findApp( const TQCString& appId )
 {
     if ( appId.isNull() )
 	return 0;
-    DCOPConnection* conn = appIds.find( appId );
+    DCOPConnection* conn = appIds.tqfind( appId );
     return conn;
 }
 
@@ -1204,7 +1204,7 @@ void DCOPServer::removeConnection( void* data )
     while (!conn->waitingForReply.isEmpty()) {
 	IceConn iceConn = conn->waitingForReply.take(0);
 	if (iceConn) {
-	    DCOPConnection* target = clients.find( iceConn );
+	    DCOPConnection* target = clients.tqfind( iceConn );
 	    qWarning("DCOP aborting call from '%s' to '%s'", target ? target->appId.data() : "<unknown>" , conn->appId.data() );
 	    TQByteArray reply;
 	    DCOPMsg *pMsg;
@@ -1226,7 +1226,7 @@ void DCOPServer::removeConnection( void* data )
     while (!conn->waitingForDelayedReply.isEmpty()) {
 	IceConn iceConn = conn->waitingForDelayedReply.take(0);
 	if (iceConn) {
-	    DCOPConnection* target = clients.find( iceConn );
+	    DCOPConnection* target = clients.tqfind( iceConn );
 	    qWarning("DCOP aborting (delayed) call from '%s' to '%s'", target ? target->appId.data() : "<unknown>", conn->appId.data() );
 	    TQByteArray reply;
 	    DCOPMsg *pMsg;
@@ -1247,7 +1247,7 @@ void DCOPServer::removeConnection( void* data )
     {
 	IceConn iceConn = conn->waitingOnReply.take(0);
         if (iceConn) {
-           DCOPConnection* target = clients.find( iceConn );
+           DCOPConnection* target = clients.tqfind( iceConn );
            if (!target)
            {
                qWarning("DCOP Error: still waiting for answer from non-existing client.");
@@ -1359,7 +1359,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 
     if ( obj == "emit")
     {
-        DCOPConnection* conn = clients.find( iceConn );
+        DCOPConnection* conn = clients.tqfind( iceConn );
         if (conn) {
 	    //qDebug("DCOPServer: %s emits %s", conn->appId.data(), fun.data());
 	    dcopSignals->emitSignal(conn, fun, data, false);
@@ -1370,13 +1370,13 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
     if ( fun == "setDaemonMode(bool)" ) {
         TQDataStream args( data, IO_ReadOnly );
         if ( !args.atEnd() ) {
-            Q_INT8 iDaemon;
+            TQ_INT8 iDaemon;
             bool daemon;
             args >> iDaemon;
 
             daemon = static_cast<bool>( iDaemon );
 
-	    DCOPConnection* conn = clients.find( iceConn );
+	    DCOPConnection* conn = clients.tqfind( iceConn );
             if ( conn && !conn->appId.isNull() ) {
                 if ( daemon ) {
                     if ( !conn->daemon )
@@ -1414,10 +1414,10 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 	if (!args.atEnd()) {
 	    TQCString app2 = readQCString(args);
 	    TQDataStream reply( replyData, IO_WriteOnly );
-	    DCOPConnection* conn = clients.find( iceConn );
+	    DCOPConnection* conn = clients.tqfind( iceConn );
 	    if ( conn && !app2.isEmpty() ) {
 		if ( !conn->appId.isNull() &&
-		     appIds.find( conn->appId ) == conn ) {
+		     appIds.tqfind( conn->appId ) == conn ) {
 		    appIds.remove( conn->appId );
 
 		}
@@ -1440,7 +1440,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 #endif
 
 		conn->appId = app2;
-		if ( appIds.find( app2 ) != 0 ) {
+		if ( appIds.tqfind( app2 ) != 0 ) {
 		    // we already have this application, unify
 		    int n = 1;
 		    TQCString tmp;
@@ -1449,12 +1449,12 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 			tmp.setNum( n );
 			tmp.prepend("-");
 			tmp.prepend( app2 );
-		    } while ( appIds.find( tmp ) != 0 );
+		    } while ( appIds.tqfind( tmp ) != 0 );
 		    conn->appId = tmp;
 		}
 		appIds.insert( conn->appId, conn );
 
-		int c = conn->appId.find( '-' );
+		int c = conn->appId.tqfind( '-' );
 		if ( c > 0 )
 		    conn->plainAppId = conn->appId.left( c );
 		else
@@ -1494,9 +1494,9 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
     } else if ( fun == "setNotifications(bool)" ) {
 	TQDataStream args( data, IO_ReadOnly );
 	if (!args.atEnd()) {
-	    Q_INT8 notifyActive;
+	    TQ_INT8 notifyActive;
 	    args >> notifyActive;
-	    DCOPConnection* conn = clients.find( iceConn );
+	    DCOPConnection* conn = clients.tqfind( iceConn );
 	    if ( conn ) {
 		if ( notifyActive )
 		    conn->notifyRegister++;
@@ -1507,7 +1507,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 	    return true;
 	}
     } else if ( fun == "connectSignal(TQCString,TQCString,TQCString,TQCString,TQCString,bool)") {
-        DCOPConnection* conn = clients.find( iceConn );
+        DCOPConnection* conn = clients.tqfind( iceConn );
         if (!conn) return false;
         TQDataStream args(data, IO_ReadOnly );
         if (args.atEnd()) return false;
@@ -1516,16 +1516,16 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
         TQCString signal = readQCString(args);
         TQCString receiverObj = readQCString(args);
         TQCString slot = readQCString(args);
-        Q_INT8 Volatile;
+        TQ_INT8 Volatile;
         args >> Volatile;
         //qDebug("DCOPServer: connectSignal(sender = %s senderObj = %s signal = %s recvObj = %s slot = %s)", sender.data(), senderObj.data(), signal.data(), receiverObj.data(), slot.data());
         bool b = dcopSignals->connectSignal(sender, senderObj, signal, conn, receiverObj, slot, (Volatile != 0));
         replyType = "bool";
         TQDataStream reply( replyData, IO_WriteOnly );
-        reply << (Q_INT8) (b?1:0);
+        reply << (TQ_INT8) (b?1:0);
         return true;
     } else if ( fun == "disconnectSignal(TQCString,TQCString,TQCString,TQCString,TQCString)") {
-        DCOPConnection* conn = clients.find( iceConn );
+        DCOPConnection* conn = clients.tqfind( iceConn );
         if (!conn) return false;
         TQDataStream args(data, IO_ReadOnly );
         if (args.atEnd()) return false;
@@ -1538,7 +1538,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
         bool b = dcopSignals->disconnectSignal(sender, senderObj, signal, conn, receiverObj, slot);
         replyType = "bool";
         TQDataStream reply( replyData, IO_WriteOnly );
-        reply << (Q_INT8) (b?1:0);
+        reply << (TQ_INT8) (b?1:0);
         return true;
     }
 
@@ -1618,7 +1618,7 @@ static bool isRunning(const TQCString &fName, bool printNetworkId = false)
 	TQCString contents( size+1 );
 	bool ok = f.readBlock( contents.data(), size ) == size;
 	contents[size] = '\0';
-	int pos = contents.find('\n');
+	int pos = contents.tqfind('\n');
 	ok = ok && ( pos != -1 );
 	pid_t pid = ok ? contents.mid(pos+1).toUInt(&ok) : 0;
 	f.close();

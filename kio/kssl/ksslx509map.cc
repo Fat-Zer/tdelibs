@@ -33,12 +33,12 @@ KSSLX509Map::~KSSLX509Map() {
 
 
 void KSSLX509Map::setValue(const TQString& key, const TQString& value) {
-	m_pairs.replace(key, value);
+	m_pairs.tqreplace(key, value);
 }
 
 
 TQString KSSLX509Map::getValue(const TQString& key) const {
-	if (!m_pairs.contains(key)) {
+	if (!m_pairs.tqcontains(key)) {
 		return TQString::null;
 	}
 
@@ -63,7 +63,7 @@ unsigned int length = str.length();
 	for(head = 0, tail = 0; tail < length-1; head = tail+1) {
 		TQString thisline;
 
-		tail = str.find(tok, head);
+		tail = str.tqfind(tok, head);
 
 		if (tail > length)           // last token - none at end
 			tail = length;
@@ -85,11 +85,11 @@ TQStringList vl = tokenizeBy(name, TQRegExp("/[A-Za-z]+="), false);
 
 	for (TQStringList::Iterator j = vl.begin(); j != vl.end(); ++j) {
 		TQStringList apair = tokenizeBy(*j, TQRegExp("="), false);
-		if (m_pairs.contains(apair[0])) {
+		if (m_pairs.tqcontains(apair[0])) {
 			TQString oldValue = m_pairs[apair[0]];
 			oldValue += "\n";
 			oldValue += apair[1];
-			m_pairs.replace(apair[0], oldValue);
+			m_pairs.tqreplace(apair[0], oldValue);
 		} else {
 			m_pairs.insert(apair[0], apair[1]);
 		}

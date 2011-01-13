@@ -73,7 +73,7 @@ static void tokenize(list<TQCString>& res, const TQCString& text, char tr, bool 
   while(zwei!=-1)
     {
       teil="";
-      zwei=text.find(tr, eins);
+      zwei=text.tqfind(tr, eins);
       if(zwei!=-1)
 	{
 	  teil=text.mid(eins, zwei-eins);
@@ -412,7 +412,7 @@ KeyValueMap::parseComplexString
   return true;
 }
 
-QCString
+TQCString
 KeyValueMap::makeComplexString(const TQCString& orig)
 {
   register bool GUARD; GUARD=false;
@@ -573,7 +573,7 @@ KeyValueMap::insertLine(TQCString line, bool force, bool relax, bool encode)
       return false;
     }
   // -----
-  index=line.find('=');
+  index=line.tqfind('=');
   if(index==-1)  // not found
       {
 	  kdDebug() << "KeyValueMap::insertLine: no \"=\" found in \""<<line<<"\".\n";
@@ -1015,7 +1015,7 @@ KeyValueMap::get(const TQCString& key, list<TQCString>& values) const
       second=first;
       for(;;)
 	{
-	  second=raw.find('\\', second);
+	  second=raw.tqfind('\\', second);
 	  // ----- this may never be the last and also not the second last
 	  //       character in a complex string:
 	  if(second!=-1)
@@ -1124,7 +1124,7 @@ KeyValueMap::get(const TQCString& key, TQStrList& values) const
       second=first;
       for(;;)
 	{
-	  second=raw.find('\\', second);
+	  second=raw.tqfind('\\', second);
 	  // ----- this may never be the last and also not the second last
 	  //       character in a complex string:
 	  if(second!=-1)
@@ -1725,7 +1725,7 @@ Section::isEndOfSection(TQCString line)
   // ###########################################################################
 }
 
-QCString
+TQCString
 Section::nameOfSection(const TQCString& line)
 {
   register bool GUARD; GUARD=false;
@@ -1975,7 +1975,7 @@ QConfigDB::stringToKeylist(const TQCString& desc)
     }
   for(;;)
     {
-      second=desc.find('/', first);
+      second=desc.tqfind('/', first);
       if(second==-1)
 	{
 	  if((unsigned)first<desc.length()+1)
@@ -2432,7 +2432,7 @@ QConfigDB::setFileName(const TQString& filename_, bool mustexist, bool readonly_
   // ############################################################################
 }
 
-QString
+TQString
 QConfigDB::fileName()
 {
   // ############################################################################

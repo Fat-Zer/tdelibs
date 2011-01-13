@@ -37,7 +37,7 @@ class TQTimer;
 
 
 
-class KIO_EXPORT KFileTreeViewToolTip : public QToolTip
+class KIO_EXPORT KFileTreeViewToolTip : public TQToolTip
 {
 public:
     KFileTreeViewToolTip( TQListView *view ) : TQToolTip( view ), m_view( view ) {}

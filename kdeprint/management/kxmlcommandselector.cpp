@@ -275,7 +275,7 @@ void KXmlCommandSelector::slotHelpCommand()
 {
 	KPopupFrame *pop = new KPopupFrame( m_helpbtn );
 	KActiveLabel *lab = new KActiveLabel( m_help, pop );
-	lab->resize( lab->sizeHint() );
+	lab->resize( lab->tqsizeHint() );
 	pop->setMainWidget( lab );
 	pop->exec( m_helpbtn->mapToGlobal( TQPoint( m_helpbtn->width(), 0 ) ) );
 	pop->close( 0 );

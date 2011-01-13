@@ -245,7 +245,7 @@ static TQString findMostRecentLib(TQString dir, TQString name)
        uint s = filter.length()-1;
        for (TQStringList::Iterator it = l.begin(); it != l.end(); ++it) {
                TQString numberpart = (*it).mid(s);
-               uint endmaj = numberpart.find('.');
+               uint endmaj = numberpart.tqfind('.');
                if (endmaj == -1)
                        continue;
                bool ok;

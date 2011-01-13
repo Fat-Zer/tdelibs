@@ -10,8 +10,8 @@ KDualColorWidget::KDualColorWidget(TQWidget *parent, const char *name)
 {
     lbl = new TQLabel("Testing, testing, 1, 2, 3...", this);
     KDualColorButton *colorBtn =
-        new KDualColorButton(lbl->colorGroup().text(),
-                             lbl->colorGroup().background(), this);
+        new KDualColorButton(lbl->tqcolorGroup().text(),
+                             lbl->tqcolorGroup().background(), this);
     connect(colorBtn, TQT_SIGNAL(fgChanged(const TQColor &)),
             TQT_SLOT(slotFgChanged(const TQColor &)));
     connect(colorBtn, TQT_SIGNAL(bgChanged(const TQColor &)),
@@ -23,7 +23,7 @@ KDualColorWidget::KDualColorWidget(TQWidget *parent, const char *name)
     layout->addWidget(colorBtn, 0);
     layout->addWidget(lbl, 1);
     layout->activate();
-    resize(sizeHint());
+    resize(tqsizeHint());
 }
 
 void KDualColorWidget::slotFgChanged(const TQColor &c)

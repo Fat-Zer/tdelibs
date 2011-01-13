@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>KPropertiesDesktopBase</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KPropertiesDesktopBase</cstring>
     </property>
@@ -29,14 +29,14 @@
             <property name="sizeType">
                 <enum>Minimum</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>20</width>
                     <height>16</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel" row="6" column="0" rowspan="1" colspan="7">
+        <widget class="TQLabel" row="6" column="0" rowspan="1" colspan="7">
             <property name="name">
                 <cstring>textLabel7</cstring>
             </property>
@@ -95,7 +95,7 @@
 &lt;p&gt;If you want to associate this application with one or more mimetypes that are not in this list, click on the button &lt;b&gt;Add&lt;/b&gt; below. If there are one or more filetypes that this application cannot handle, you may want to remove them from the list clicking on the button &lt;b&gt;Remove&lt;/b&gt; below.&lt;/p&gt;&lt;/qt&gt;</string>
             </property>
         </widget>
-        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="TQLabel" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>nameLabel</cstring>
             </property>
@@ -117,7 +117,7 @@
                 <string>Type the name you want to give to this application here. This application will appear under this name in the applications menu and in the panel.</string>
             </property>
         </widget>
-        <widget class="QLabel" row="1" column="0" rowspan="1" colspan="2">
+        <widget class="TQLabel" row="1" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>textLabel2</cstring>
             </property>
@@ -139,7 +139,7 @@
                 <string>Type the description of this application, based on its use, here. Examples: a dial up application (KPPP) would be "Dial up tool".</string>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="0" rowspan="1" colspan="2">
+        <widget class="TQLabel" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>textLabel3</cstring>
             </property>
@@ -161,7 +161,7 @@
                 <string>Type any comment you think is useful here.</string>
             </property>
         </widget>
-        <widget class="QLabel" row="3" column="0" rowspan="1" colspan="2">
+        <widget class="TQLabel" row="3" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>textLabel4</cstring>
             </property>
@@ -205,7 +205,7 @@ Following the command, you can have several place holders which will be replaced
 %c - the caption</string>
             </property>
         </widget>
-        <widget class="QPushButton" row="3" column="6">
+        <widget class="TQPushButton" row="3" column="6">
             <property name="name">
                 <cstring>browseButton</cstring>
             </property>
@@ -216,7 +216,7 @@ Following the command, you can have several place holders which will be replaced
                 <string>Click here to browse your file system in order to find the desired executable.</string>
             </property>
         </widget>
-        <widget class="QLabel" row="4" column="0" rowspan="1" colspan="2">
+        <widget class="TQLabel" row="4" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>textLabel5</cstring>
             </property>
@@ -238,7 +238,7 @@ Following the command, you can have several place holders which will be replaced
                 <string>Sets the working directory for your application.</string>
             </property>
         </widget>
-        <widget class="QPushButton" row="8" column="0">
+        <widget class="TQPushButton" row="8" column="0">
             <property name="name">
                 <cstring>addFiletypeButton</cstring>
             </property>
@@ -259,14 +259,14 @@ Following the command, you can have several place holders which will be replaced
             <property name="sizeType">
                 <enum>MinimumExpanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>53</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QPushButton" row="8" column="3">
+        <widget class="TQPushButton" row="8" column="3">
             <property name="name">
                 <cstring>delFiletypeButton</cstring>
             </property>
@@ -287,14 +287,14 @@ Following the command, you can have several place holders which will be replaced
             <property name="sizeType">
                 <enum>MinimumExpanding</enum>
             </property>
-            <property name="sizeHint">
+            <property name="tqsizeHint">
                 <size>
                     <width>53</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QPushButton" row="8" column="5" rowspan="1" colspan="2">
+        <widget class="TQPushButton" row="8" column="5" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>advancedButton</cstring>
             </property>

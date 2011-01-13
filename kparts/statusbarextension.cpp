@@ -88,13 +88,13 @@ StatusBarExtension::~StatusBarExtension()
 
 StatusBarExtension *StatusBarExtension::childObject( TQObject *obj )
 {
-    if ( !obj || !obj->children() )
+    if ( !obj || obj->childrenListObject().isEmpty() )
         return 0L;
 
     // we try to do it on our own, in hope that we are faster than
     // queryList, which looks kind of big :-)
-    const TQObjectList *children = obj->children();
-    TQObjectListIt it( *children );
+    const TQObjectList children = obj->childrenListObject();
+    TQObjectListIt it( children );
     for (; it.current(); ++it )
         if ( it.current()->inherits( "KParts::StatusBarExtension" ) )
             return static_cast<KParts::StatusBarExtension *>( it.current() );
@@ -135,7 +135,7 @@ KStatusBar * StatusBarExtension::statusBar() const
 {
   if ( !m_statusBar )  {
     TQWidget* w = static_cast<KParts::ReadOnlyPart*>(parent())->widget();
-    KMainWindow* mw = dynamic_cast<KMainWindow *>( w->topLevelWidget() );
+    KMainWindow* mw = dynamic_cast<KMainWindow *>( w->tqtopLevelWidget() );
     if ( mw )
       m_statusBar = mw->statusBar();
   }

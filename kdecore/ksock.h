@@ -22,6 +22,10 @@
 
 #include "kdelibs_export.h"
 
+#ifdef Q_MOC_RUN
+#define Q_OS_UNIX
+#endif // Q_MOC_RUN
+
 #ifdef Q_OS_UNIX
 
 #include <tqobject.h>
@@ -84,7 +88,7 @@ class KServerSocketPrivate;
  * @author Torben Weis <weis@uni-frankfurt.de>
  * @short A TCP/IP client socket.
  */
-class KDECORE_EXPORT KSocket : public QObject
+class KDECORE_EXPORT KSocket : public TQObject
 {
     Q_OBJECT
 public:
@@ -247,7 +251,7 @@ private:
  *
  * @author Torben Weis <weis@stud.uni-frankfurt.de>
 */
-class KDECORE_EXPORT KServerSocket : public QObject
+class KDECORE_EXPORT KServerSocket : public TQObject
 {
     Q_OBJECT
 public:

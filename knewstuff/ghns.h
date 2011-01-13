@@ -30,7 +30,7 @@
 
 #include "knewstuff.h"
 
-class GhnsWidget : public QWidget
+class GhnsWidget : public TQWidget
 {
     Q_OBJECT
   public:

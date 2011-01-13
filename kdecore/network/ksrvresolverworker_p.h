@@ -42,13 +42,14 @@ namespace KNetwork
 			      public KNetwork::KResolverWorkerBase
     {
       Q_OBJECT
+      TQ_OBJECT
 
     public:
       struct Entry
       {
 	TQString name;
-	Q_UINT16 port;
-	Q_UINT16 weight;
+	TQ_UINT16 port;
+	TQ_UINT16 weight;
 	KNetwork::KResolver* resolver;
       };
 
@@ -57,7 +58,7 @@ namespace KNetwork
 	PriorityClass() : totalWeight(0) { }
 
 	TQValueList<Entry> entries;
-	Q_UINT16 totalWeight;
+	TQ_UINT16 totalWeight;
       };
 
     private:
@@ -66,7 +67,7 @@ namespace KNetwork
       TQCString encodedName;
       TQSemaphore *sem;
 
-      typedef TQMap<Q_UINT16, PriorityClass> Results;
+      typedef TQMap<TQ_UINT16, PriorityClass> Results;
       Results myResults;
 
     public:

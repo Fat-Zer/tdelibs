@@ -52,8 +52,8 @@ void KDateTimeWidget::init()
 
 void KDateTimeWidget::setDateTime(const TQDateTime & datetime)
 {
-  d->dateWidget->setDate(datetime.date());
-  d->timeWidget->setTime(datetime.time());
+  d->dateWidget->setDate(TQT_TQDATE_OBJECT(datetime.date()));
+  d->timeWidget->setTime(TQT_TQTIME_OBJECT(datetime.time()));
 }
 
 TQDateTime KDateTimeWidget::dateTime() const

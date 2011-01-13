@@ -254,7 +254,7 @@ private:
  * @see KIconDialog
  * @short A push button that allows selection of an icon.
  */
-class KIO_EXPORT KIconButton: public QPushButton
+class KIO_EXPORT KIconButton: public TQPushButton
 {
     Q_OBJECT
     Q_PROPERTY( TQString icon READ icon WRITE setIcon RESET resetIcon )

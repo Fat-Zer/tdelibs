@@ -52,8 +52,8 @@
 TQString generateId(const TQMap<TQString, DrBase*>& map)
 {
 	int	index(-1);
-	while (map.contains(TQString::fromLatin1("item%1").arg(++index))) ;
-	return TQString::fromLatin1("item%1").arg(index);
+	while (map.contains(TQString::tqfromLatin1("item%1").arg(++index))) ;
+	return TQString::tqfromLatin1("item%1").arg(index);
 }
 
 TQListViewItem* findPrev(TQListViewItem *item)
@@ -735,10 +735,10 @@ void KXmlCommandAdvancedDlg::slotMoveDown()
 
 void KXmlCommandAdvancedDlg::slotCommandChanged(const TQString& cmd)
 {
-	m_inputfile->parentWidget()->setEnabled(cmd.find("%filterinput") != -1);
-	m_outputfile->parentWidget()->setEnabled(cmd.find("%filteroutput") != -1);
-	m_view->setEnabled(cmd.find("%filterargs") != -1);
-	m_name->parentWidget()->setEnabled(m_view->isEnabled());
+	m_inputfile->tqparentWidget()->setEnabled(cmd.tqfind("%filterinput") != -1);
+	m_outputfile->tqparentWidget()->setEnabled(cmd.tqfind("%filteroutput") != -1);
+	m_view->setEnabled(cmd.tqfind("%filterargs") != -1);
+	m_name->tqparentWidget()->setEnabled(m_view->isEnabled());
 	slotSelectionChanged((m_view->isEnabled() ? m_view->currentItem() : 0));
 	m_view->setOpen(m_view->firstChild(), m_view->isEnabled());
 }
@@ -1025,7 +1025,7 @@ void KXmlCommandDlg::slotRemoveMime()
 
 void KXmlCommandDlg::slotEditCommand()
 {
-	KXmlCommandAdvancedDlg::editCommand(m_cmd, parentWidget());
+	KXmlCommandAdvancedDlg::editCommand(m_cmd, tqparentWidget());
 }
 
 void KXmlCommandDlg::slotAddReq()

@@ -78,7 +78,7 @@ namespace
     bool success;
   };
 
-  class KReverseResolverEvent: public QEvent
+  class KReverseResolverEvent: public TQEvent
   {
   public:
     static const int myType = TQEvent::User + 63; // arbitrary value
@@ -203,7 +203,7 @@ bool KReverseResolver::resolve(const KSocketAddress& addr, TQString& node,
   return false;
 }
 
-bool KReverseResolver::resolve(const struct sockaddr* sa, Q_UINT16 salen,
+bool KReverseResolver::resolve(const struct sockaddr* sa, TQ_UINT16 salen,
 			       TQString& node, TQString& serv, int flags)
 {
   return resolve(KSocketAddress(sa, salen), node, serv, flags);
@@ -238,8 +238,8 @@ bool ReverseThread::run()
 
   if (err == 0)
     {
-      node = KResolver::domainToUnicode(TQString::fromLatin1(h));
-      service = TQString::fromLatin1(s);
+      node = KResolver::domainToUnicode(TQString::tqfromLatin1(h));
+      service = TQString::tqfromLatin1(s);
       success = true;
     }
   else

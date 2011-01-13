@@ -255,7 +255,7 @@ public:
 	 * @return A number identifying the current version of the
 	 *          resource.
 	 */
-	Q_UINT32 calcResourceHash( const char *type,
+	TQ_UINT32 calcResourceHash( const char *type,
 			      const TQString& filename, bool deep) const;
 
 	/**

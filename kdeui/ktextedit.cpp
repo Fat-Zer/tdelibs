@@ -182,7 +182,7 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
     // ignore Ctrl-Return so that KDialogs can close the dialog
     else if ( e->state() == ControlButton &&
               (e->key() == Key_Return || e->key() == Key_Enter) &&
-              topLevelWidget()->inherits( "KDialog" ) )
+              tqtopLevelWidget()->inherits( "KDialog" ) )
     {
         e->ignore();
         return;
@@ -351,7 +351,7 @@ void KTextEdit::checkSpelling()
 {
     delete d->spell;
     d->spell = new KSpell( this, i18n( "Spell Checking" ),
-                          this, TQT_SLOT( slotSpellCheckReady( KSpell *) ), 0, true, true);
+                          TQT_TQOBJECT(this), TQT_SLOT( slotSpellCheckReady( KSpell *) ), 0, true, true);
 
     connect( d->spell, TQT_SIGNAL( death() ),
              this, TQT_SLOT( spellCheckerFinished() ) );

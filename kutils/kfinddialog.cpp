@@ -423,13 +423,13 @@ void KFindDialog::showPatterns()
 {
     if ( !d->m_regexpDialogQueryDone )
     {
-        d->m_regexpDialog = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor", TQString::null, this );
+        d->m_regexpDialog = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor", TQString(), TQT_TQOBJECT(this) );
         d->m_regexpDialogQueryDone = true;
     }
 
     if ( d->m_regexpDialog )
     {
-        KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( d->m_regexpDialog->qt_cast( "KRegExpEditorInterface" ) );
+        KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( d->m_regexpDialog->tqqt_cast( "KRegExpEditorInterface" ) );
         assert( iface );
 
         iface->setRegExp( pattern() );

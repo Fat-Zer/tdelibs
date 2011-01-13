@@ -66,7 +66,7 @@ KPalette::KPalette(const TQString &name)
   // Read first line
   // Expected "GIMP Palette"
   if (paletteFile.readLine(line, maxLength) == -1) return;
-  if (line.find(" Palette") == -1) return;
+  if (line.tqfind(" Palette") == -1) return;
 
   while( paletteFile.readLine(line, maxLength) != -1)
   {
@@ -170,7 +170,7 @@ KPalette::operator=( const KPalette &p)
   return *this;
 }
 
-QColor
+TQColor
 KPalette::color(int index) 
 {
   if ((index < 0) || (index >= nrColors()))
@@ -196,7 +196,7 @@ KPalette::findColor(const TQColor &color) const
   return -1;
 }
 
-QString
+TQString
 KPalette::colorName(int index) 
 {
   if ((index < 0) || (index >= nrColors()))

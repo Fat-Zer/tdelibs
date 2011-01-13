@@ -48,7 +48,7 @@ bool KMWName::isValid(TQString& msg)
 		msg = i18n("You must supply at least a name.");
 		return false;
 	}
-	else if (text(0).find(TQRegExp("\\s")) != -1)
+	else if (text(0).tqfind(TQRegExp("\\s")) != -1)
 	{
 		QString	conv = text(0);
 		conv.replace(TQRegExp("\\s"), "");

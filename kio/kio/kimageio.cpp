@@ -68,7 +68,7 @@ KImageIOFormat::~KImageIOFormat()
 void
 KImageIOFormat::load( TQDataStream& _str)
 {
-   Q_INT8 iRead, iWrite;
+   TQ_INT8 iRead, iWrite;
    KSycocaEntry::read(_str, mType);
    KSycocaEntry::read(_str, mHeader);
    KSycocaEntry::read(_str, mFlags);
@@ -86,8 +86,8 @@ void
 KImageIOFormat::save( TQDataStream& _str)
 {
    KSycocaEntry::save( _str );
-   Q_INT8 iRead = bRead ? 1 : 0;
-   Q_INT8 iWrite = bWrite ? 1 : 0;
+   TQ_INT8 iRead = bRead ? 1 : 0;
+   TQ_INT8 iWrite = bWrite ? 1 : 0;
 
    _str << mType << mHeader << mFlags << iRead << iWrite
         << mSuffices << mMimetype << mLib << mPattern << rPaths;
@@ -100,18 +100,18 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
    {
       if (mLib.isEmpty())
       {
-         iio->setStatus(1); // Error
+         iio->setqStatus(1); // Error
          return;
       }
       TQString libpath = KLibLoader::findLibrary(mLib.ascii());
       if ( libpath.isEmpty())
       {
-         iio->setStatus(1); // Error
+         iio->setqStatus(1); // Error
          return;
       }
       lt_dlhandle libhandle = lt_dlopen( TQFile::encodeName(libpath) );
       if (libhandle == 0) {
-         iio->setStatus(1); // error
+         iio->setqStatus(1); // error
          kdWarning() << "KImageIOFormat::callLibFunc: couldn't dlopen " << mLib << "(" << lt_dlerror() << ")" << endl;
          return;
       }
@@ -123,7 +123,7 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
          lt_ptr func = lt_dlsym(libhandle, funcName.ascii());
 
          if (func == NULL) {
-            iio->setStatus(1); // error
+            iio->setqStatus(1); // error
             kdWarning() << "couln't find " << funcName << " (" << lt_dlerror() << ")" << endl;
          }
          mReadFunc = (void (*)(TQImageIO *))func;
@@ -134,7 +134,7 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
          lt_ptr func = lt_dlsym(libhandle, funcName.ascii());
 
          if (func == NULL) {
-            iio->setStatus(1); // error
+            iio->setqStatus(1); // error
             kdWarning() << "couln't find " << funcName << " (" << lt_dlerror() << ")" << endl;
          }
          mWriteFunc = (void (*)(TQImageIO *))func;
@@ -145,12 +145,12 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
       if (mReadFunc)
          mReadFunc(iio);
       else
-         iio->setStatus(1); // Error
+         iio->setqStatus(1); // Error
    else
       if (mWriteFunc)
          mWriteFunc(iio);
       else
-         iio->setStatus(1); // Error
+         iio->setqStatus(1); // Error
 }
 
 
@@ -193,7 +193,7 @@ KImageIOFactory::KImageIOFactory() : KSycocaFactory( KST_KImageIO )
     }
 }
 
-QString
+TQString
 KImageIOFactory::createPattern( KImageIO::Mode _mode)
 {
   TQStringList patterns;
@@ -232,7 +232,7 @@ KImageIOFactory::createPattern( KImageIO::Mode _mode)
   patterns.sort();
   patterns.prepend(allPatterns);
 
-  TQString pattern = patterns.join(TQString::fromLatin1("\n"));
+  TQString pattern = patterns.join(TQString::tqfromLatin1("\n"));
   return pattern;
 }
 
@@ -256,7 +256,7 @@ KImageIOFactory::readImage( TQImageIO *iio)
    }
    if (!format || !format->bRead)
    {
-      iio->setStatus(1); // error
+      iio->setqStatus(1); // error
       return;
    }
 
@@ -283,7 +283,7 @@ KImageIOFactory::writeImage( TQImageIO *iio)
    }
    if (!format || !format->bWrite)
    {
-      iio->setStatus(1); // error
+      iio->setqStatus(1); // error
       return;
    }
 
@@ -380,7 +380,7 @@ void KImageIO::registerFormats()
    (void) KImageIOFactory::self();
 }
 
-QString
+TQString
 KImageIO::pattern(Mode _mode)
 {
   if (_mode == Reading)
@@ -489,7 +489,7 @@ TQString KImageIO::type(const TQString& filename)
 {
   KImageIOFormatList *formatList = KImageIOFactory::self()->formatList;
   TQString suffix = filename;
-  int dot = suffix.findRev('.');
+  int dot = suffix.tqfindRev('.');
   if (dot >= 0)
     suffix = suffix.mid(dot + 1);
 
@@ -500,7 +500,7 @@ TQString KImageIO::type(const TQString& filename)
            ++it )
       {
           KImageIOFormat *format = (*it);
-          if (format->mSuffices.contains(suffix))
+          if (format->mSuffices.tqcontains(suffix))
               return format->mType;
       }
   }

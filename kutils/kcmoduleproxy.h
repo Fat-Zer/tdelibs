@@ -65,7 +65,7 @@ class KProcess;
  * @author Matthias Kretz <kretz@kde.org>
  *
  */
-class KUTILS_EXPORT KCModuleProxy : public QWidget
+class KUTILS_EXPORT KCModuleProxy : public TQWidget
 {
 Q_OBJECT
 

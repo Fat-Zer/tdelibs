@@ -41,7 +41,7 @@ class TQPainter;
  * KToolBar methods instead.
  * @internal
  */
-class KDEUI_EXPORT KToolBarButton : public QToolButton
+class KDEUI_EXPORT KToolBarButton : public TQToolButton
 {
   Q_OBJECT
 
@@ -263,7 +263,7 @@ signals:
    * and whether any keyboard modifiers were held.
    * @since 3.4
    */
-  void buttonClicked(int, Qt::ButtonState state);
+  void buttonClicked(int, TQt::ButtonState state);
   void doubleClicked(int);
   void pressed(int);
   void released(int);
@@ -291,9 +291,9 @@ protected:
   /// @since 3.4
   void mouseReleaseEvent( TQMouseEvent * );
   void showMenu();
-  TQSize sizeHint() const;
-  TQSize minimumSizeHint() const;
-  TQSize minimumSize() const;
+  TQSize tqsizeHint() const;
+  TQSize tqminimumSizeHint() const;
+  TQSize tqminimumSize() const;
 
   /// @since 3.1
   bool isRaised() const;

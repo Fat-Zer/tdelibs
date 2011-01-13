@@ -140,8 +140,8 @@ TQString splitOut(const TQString &parsed, int index)
     TQString filedata;
 
     while (true) {
-        int endindex = parsed.find("</FILENAME>", index);
-        int startindex = parsed.find("<FILENAME ", index) + 1;
+        int endindex = parsed.tqfind("</FILENAME>", index);
+        int startindex = parsed.tqfind("<FILENAME ", index) + 1;
 
 //        kdDebug() << "FILENAME " << startindex << " " << endindex << " " << inside << " " << parsed.mid(startindex + 18, 15)<< " " << parsed.length() << endl;
 
@@ -166,10 +166,10 @@ TQString splitOut(const TQString &parsed, int index)
 
     }
 
-    index = filedata.find("<FILENAME ");
+    index = filedata.tqfind("<FILENAME ");
 
     if (index > 0) {
-        int endindex = filedata.findRev("</FILENAME>");
+        int endindex = filedata.tqfindRev("</FILENAME>");
         while (filedata.at(endindex) != '>') endindex++;
         endindex++;
         filedata = filedata.left(index) + filedata.mid(endindex);
@@ -205,7 +205,7 @@ static TQIODevice *getBZip2device(const TQString &fileName )
 
     if ( base )
     {
-        base->setDevice(f, true);
+        base->setDevice(TQT_TQIODEVICE(f), true);
         return new KFilterDev(base, true);
     }
     return 0;
@@ -336,7 +336,7 @@ TQCString fromUnicode( const TQString &data )
                 buffer_len += test.length();
             } else {
                 TQString res;
-                res.sprintf( "&#%d;", part.at( i ).unicode() );
+                res.sprintf( "&#%d;", TQChar(part.at( i )).tqunicode() );
                 test = locale->fromUnicode( res );
                 if (buffer_len + test.length() + 1 > sizeof(buffer))
                    break;

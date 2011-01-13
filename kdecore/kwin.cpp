@@ -158,7 +158,7 @@ bool KWin::compositingActive()
 #ifdef Q_WS_X11
 namespace
 {
-class ContextWidget : public QWidget
+class ContextWidget : public TQWidget
 {
 public:
     ContextWidget();
@@ -179,7 +179,7 @@ ContextWidget::ContextWidget()
 			      LeaveWindowMask ),
 		      GrabModeAsync, GrabModeAsync,
 		      None, c.handle(), CurrentTime );
-	qApp->enter_loop();
+	tqApp->enter_loop();
     }
 
 
@@ -205,7 +205,7 @@ bool ContextWidget::x11Event( XEvent * ev)
 	    e.xbutton.x = lx;
 	    e.xbutton.y = ly;
 	    XSendEvent( qt_xdisplay(), w, true, ButtonPressMask, &e );
-	    qApp->exit_loop();
+	    tqApp->exit_loop();
 	    return true;
 	}
 	return false;
@@ -313,7 +313,7 @@ void KWin::setMainWindow( TQWidget* subwindow, WId mainwindow )
          Grmbl. See TQDialog::show(). That should get fixed in Qt somehow.
         */
         if( tqqt_cast< TQDialog* >( subwindow ) != NULL
-            && subwindow->parentWidget() == NULL
+            && subwindow->tqparentWidget() == NULL
             && kapp->mainWidget() != NULL )
         {
             kdWarning() << "KWin::setMainWindow(): There either mustn't be kapp->mainWidget(),"
@@ -412,7 +412,7 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
     	    TQImage img( (uchar*) ni.data, (int) ni.size.width, (int) ni.size.height, 32, 0, 0, TQImage::IgnoreEndian );
 	    img.setAlphaBuffer( true );
 	    if ( scale && width > 0 && height > 0 &&img.size() != TQSize( width, height ) && !img.isNull() )
-	        img = img.smoothScale( width, height );
+	        img = TQImage(img).smoothScale( width, height );
 	    if ( !img.isNull() )
 	        result.convertFromImage( img );
 	    return result;
@@ -457,7 +457,7 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
 	        }
 	        if ( scale && width > 0 && height > 0 && !pm.isNull() &&
 		     ( (int) w != width || (int) h != height) ){
-		    result.convertFromImage( pm.convertToImage().smoothScale( width, height ) );
+		    result.convertFromImage( TQImage(pm.convertToImage()).smoothScale( width, height ) );
 	        } else {
 		    result = pm;
 	        }
@@ -488,7 +488,7 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
 	        TQPixmap pm = KGlobal::instance()->iconLoader()->loadIcon( className.lower(), KIcon::Small, iconWidth,
 								          KIcon::DefaultState, 0, true );
 	        if( scale && !pm.isNull() )
-		    result.convertFromImage( pm.convertToImage().smoothScale( width, height ) );
+		    result.convertFromImage( TQImage(pm.convertToImage()).smoothScale( width, height ) );
 	        else
 		    result = pm;
 
@@ -505,7 +505,7 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
 	    TQPixmap pm = KGlobal::instance()->iconLoader()->loadIcon(  "xapp", KIcon::Small, iconWidth,
 								       KIcon::DefaultState, 0, true );
 	    if( scale && !pm.isNull() )
-		result.convertFromImage( pm.convertToImage().smoothScale( width, height ) );
+		result.convertFromImage( TQImage(pm.convertToImage()).smoothScale( width, height ) );
 	    else
 		result = pm;
 	}
@@ -520,7 +520,7 @@ void KWin::setIcons( WId win, const TQPixmap& icon, const TQPixmap& miniIcon )
     if ( icon.isNull() )
 	return;
     NETWinInfo info( qt_xdisplay(), win, qt_xrootwin(), 0 );
-    TQImage img = icon.convertToImage().convertDepth( 32 );
+    TQImage img = TQImage(icon.convertToImage()).convertDepth( 32 );
     NETIcon ni;
     ni.size.width = img.size().width();
     ni.size.height = img.size().height();
@@ -528,7 +528,7 @@ void KWin::setIcons( WId win, const TQPixmap& icon, const TQPixmap& miniIcon )
     info.setIcon( ni, true );
     if ( miniIcon.isNull() )
 	return;
-    img = miniIcon.convertToImage().convertDepth( 32 );
+    img = TQImage(miniIcon.convertToImage()).convertDepth( 32 );
     ni.size.width = img.size().width();
     ni.size.height = img.size().height();
     ni.data = (unsigned char *) img.bits();

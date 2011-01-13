@@ -29,6 +29,11 @@ DEALINGS IN THE SOFTWARE.
 #include <tqcstring.h>
 #include <tqmap.h>
 #include <kdelibs_export.h>
+
+#ifdef Q_MOC_RUN
+#define Q_WS_X11
+#endif // Q_MOC_RUN
+
 #ifdef Q_WS_X11
 #include <X11/X.h>
 
@@ -45,7 +50,7 @@ class KXMessagesPrivate;
  */
 // KDE4 - make this internal for KStartupInfo only?
 class KDECORE_EXPORT KXMessages
-    : public QWidget
+    : public TQWidget
     {
     Q_OBJECT
     public:

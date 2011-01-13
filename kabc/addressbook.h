@@ -40,7 +40,7 @@ class Ticket;
 
   This class provides access to a collection of address book entries.
  */
-class KABC_EXPORT AddressBook : public QObject
+class KABC_EXPORT AddressBook : public TQObject
 {
   Q_OBJECT
 

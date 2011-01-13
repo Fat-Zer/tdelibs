@@ -27,7 +27,7 @@
 
 class KMJob;
 
-class LpcHelper : public QObject
+class LpcHelper : public TQObject
 {
 public:
 	LpcHelper(TQObject *parent = 0, const char *name = 0);

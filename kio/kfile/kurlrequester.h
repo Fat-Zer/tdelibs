@@ -53,7 +53,7 @@ class TQTimer;
  * @short A widget to request a filename/url from the user
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KIO_EXPORT KURLRequester : public QHBox
+class KIO_EXPORT KURLRequester : public TQHBox
 {
     Q_OBJECT
     Q_PROPERTY( TQString url READ url WRITE setURL )

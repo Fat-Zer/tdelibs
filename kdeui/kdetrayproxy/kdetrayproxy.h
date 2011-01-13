@@ -26,7 +26,7 @@
 #include <tqwidget.h>
 
 class KDETrayProxy
-    : public QWidget
+    : public TQWidget
     {
     Q_OBJECT
     public:

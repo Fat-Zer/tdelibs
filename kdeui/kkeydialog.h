@@ -55,7 +55,7 @@ class KKeyChooserItem;
  * @see KKeyDialog
  * @author Nicolas Hadacek <hadacek@via.ecp.fr>
  */
-class KDEUI_EXPORT KKeyChooser : public QWidget
+class KDEUI_EXPORT KKeyChooser : public TQWidget
 {
 	Q_OBJECT
  public:

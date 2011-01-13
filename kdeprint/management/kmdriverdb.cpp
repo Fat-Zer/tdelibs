@@ -60,7 +60,7 @@ KMDriverDB::~KMDriverDB()
 TQString KMDriverDB::dbFile()
 {
 	// this calls insure missing directories creation
-	QString	filename = locateLocal("data",TQString::fromLatin1("kdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
+	QString	filename = locateLocal("data",TQString::tqfromLatin1("kdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
 	return filename;
 }
 
@@ -110,7 +110,7 @@ void KMDriverDB::slotDbCreated()
 
 KMDBEntryList* KMDriverDB::findEntry(const TQString& manu, const TQString& model)
 {
-	TQDict<KMDBEntryList>	*models = m_entries.find(manu);
+	TQDict<KMDBEntryList>	*models = m_entries.tqfind(manu);
 	if (models)
 		return models->find(model);
 	return 0;
@@ -118,7 +118,7 @@ KMDBEntryList* KMDriverDB::findEntry(const TQString& manu, const TQString& model
 
 KMDBEntryList* KMDriverDB::findPnpEntry(const TQString& manu, const TQString& model)
 {
-	TQDict<KMDBEntryList>	*models = m_pnpentries.find(manu);
+	TQDict<KMDBEntryList>	*models = m_pnpentries.tqfind(manu);
 	if (models)
 		return models->find(model);
 	return 0;
@@ -126,7 +126,7 @@ KMDBEntryList* KMDriverDB::findPnpEntry(const TQString& manu, const TQString& mo
 
 TQDict<KMDBEntryList>* KMDriverDB::findModels(const TQString& manu)
 {
-	return m_entries.find(manu);
+	return m_entries.tqfind(manu);
 }
 
 void KMDriverDB::insertEntry(KMDBEntry *entry)
@@ -140,7 +140,7 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 	}
 
 	// insert it in normal entries
-	TQDict<KMDBEntryList>	*models = m_entries.find(entry->manufacturer);
+	TQDict<KMDBEntryList>	*models = m_entries.tqfind(entry->manufacturer);
 	if (!models)
 	{
 		models = new TQDict<KMDBEntryList>(17,false);
@@ -159,7 +159,7 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 	if (!entry->pnpmanufacturer.isEmpty() && !entry->pnpmodel.isEmpty())
 	{
 		// insert it in PNP entries
-		models = m_pnpentries.find(entry->manufacturer);
+		models = m_pnpentries.tqfind(entry->manufacturer);
 		if (!models)
 		{
 			models = new TQDict<KMDBEntryList>(17,false);
@@ -209,7 +209,7 @@ void KMDriverDB::loadDbFile()
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			int	p = line.find('=');
+			int	p = line.tqfind('=');
 			if (p == -1)
 				continue;
 			words.clear();

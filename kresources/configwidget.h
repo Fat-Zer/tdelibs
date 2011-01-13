@@ -30,7 +30,7 @@
 
 namespace KRES {
 
-class KRESOURCES_EXPORT ConfigWidget : public QWidget
+class KRESOURCES_EXPORT ConfigWidget : public TQWidget
 {
     Q_OBJECT
   public:

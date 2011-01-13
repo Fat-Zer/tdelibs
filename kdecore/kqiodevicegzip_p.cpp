@@ -78,7 +78,11 @@ void KQIODeviceGZip::flush(void)
     }
 }
 
+#ifdef USE_QT4
+qint64 KQIODeviceGZip::size(void) const
+#else // USE_QT4
 TQIODevice::Offset KQIODeviceGZip::size(void) const
+#endif // USE_QT4
 {
     return 0; // You cannot determine size!
 }
@@ -111,9 +115,9 @@ bool KQIODeviceGZip::reset(void)
     return (gzrewind(m_gzfile)>=0);
 }
 
-Q_LONG KQIODeviceGZip::readBlock( char *data, Q_ULONG maxlen )
+TQ_LONG KQIODeviceGZip::readBlock( char *data, TQ_ULONG maxlen )
 {
-    Q_LONG result=0;
+    TQ_LONG result=0;
     if (m_gzfile)
     {
         result=gzread(m_gzfile,data,maxlen);
@@ -122,9 +126,9 @@ Q_LONG KQIODeviceGZip::readBlock( char *data, Q_ULONG maxlen )
     return result;
 }
 
-Q_LONG KQIODeviceGZip::writeBlock( const char *data, Q_ULONG len )
+TQ_LONG KQIODeviceGZip::writeBlock( const char *data, TQ_ULONG len )
 {
-    Q_ULONG result=0;
+    TQ_ULONG result=0;
     if (m_gzfile)
     {
         result=gzwrite(m_gzfile,(char*)data,len);

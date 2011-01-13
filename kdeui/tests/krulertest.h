@@ -19,7 +19,7 @@ class TQCheckBox;
 class TQGroupBox;
 
 
-class MouseWidget : public QFrame
+class MouseWidget : public TQFrame
 {
 Q_OBJECT
 public:

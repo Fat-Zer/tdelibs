@@ -51,7 +51,7 @@ class KPARTS_EXPORT DockMainWindow : public KDockMainWindow, virtual public Part
   /**
    * Constructor, same signature as KDockMainWindow.
    */
-  DockMainWindow( TQWidget* parent = 0L, const char *name = 0L, WFlags f = WDestructiveClose );
+  DockMainWindow( TQWidget* parent = 0L, const char *name = 0L, WFlags f = (WFlags)WDestructiveClose );
   /**
    * Destructor.
    */

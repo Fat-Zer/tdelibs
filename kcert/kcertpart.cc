@@ -127,7 +127,7 @@ class KCertPartPrivate {
 };
 
 
-KCertPart::KCertPart(TQWidget *parentWidget, const char *widgetName,
+KCertPart::KCertPart(TQWidget *tqparentWidget, const char *widgetName,
                      TQObject *parent, const char *name,
 		     const TQStringList & /*args*/ ) 
           : KParts::ReadWritePart(parent, name) {
@@ -149,7 +149,7 @@ _silentImport = false;
 d = new KCertPartPrivate;
 d->browserExtension = new KParts::BrowserExtension(this);
 
-_frame = new TQFrame(parentWidget, widgetName);
+_frame = new TQFrame(tqparentWidget, widgetName);
 setWidget(_frame);
 
 _baseGrid = new TQGridLayout(_frame, 15, 9, KDialog::marginHint(),
@@ -524,7 +524,7 @@ if (whatType == "application/x-pkcs12") {
 
 		const char *signature = "-----BEGIN CERTIFICATE-----";
 		theFile[(uint)(qf.size()-1)] = 0;
-		isPEM = (TQCString(theFile.data()).find(signature) >= 0);
+		isPEM = (TQCString(theFile.data()).tqfind(signature) >= 0);
 	}
 
 	fp = fopen(m_file.local8Bit(), "r");
@@ -636,7 +636,7 @@ void KCertPart::displayCACert(KSSLCertificate *c) {
 
 	// Set the valid period
 	TQPalette cspl = _ca_validFrom->palette();
-	if (TQDateTime::currentDateTime() < c->getQDTNotBefore()) {
+	if (TQDateTime::tqcurrentDateTime() < c->getQDTNotBefore()) {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
 	} else {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -645,7 +645,7 @@ void KCertPart::displayCACert(KSSLCertificate *c) {
 	_ca_validFrom->setText(c->getNotBefore());
 
 	cspl = _ca_validUntil->palette();
-	if (TQDateTime::currentDateTime() > c->getQDTNotAfter()) {
+	if (TQDateTime::tqcurrentDateTime() > c->getQDTNotAfter()) {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
 	} else {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -677,7 +677,7 @@ void KCertPart::displayPKCS12Cert(KSSLCertificate *c) {
 
 	// Set the valid period
 	TQPalette cspl = _p12_validFrom->palette();
-	if (TQDateTime::currentDateTime() < c->getQDTNotBefore()) {
+	if (TQDateTime::tqcurrentDateTime() < c->getQDTNotBefore()) {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
 	} else {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
@@ -686,7 +686,7 @@ void KCertPart::displayPKCS12Cert(KSSLCertificate *c) {
 	_p12_validFrom->setText(c->getNotBefore());
 
 	cspl = _p12_validUntil->palette();
-	if (TQDateTime::currentDateTime() > c->getQDTNotAfter()) {
+	if (TQDateTime::tqcurrentDateTime() > c->getQDTNotAfter()) {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
 	} else {
 		cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));

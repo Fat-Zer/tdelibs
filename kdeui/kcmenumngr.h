@@ -20,7 +20,7 @@
 #ifndef KCMENUMNGR_H
 #define KCMENUMNGR_H
 
-#include <tqt.h>
+// #include <tqt.h>
 
 #include <tqobject.h>
 #include <tqptrdict.h>
@@ -75,7 +75,7 @@ If the popup menu is invoked with the keyboard shortcut, it's shown at
 the position of the micro focus hint of the widget ( TQWidget::microFocusHint() ).
 */
 
-class KDEUI_EXPORT KContextMenuManager : public QObject
+class KDEUI_EXPORT KContextMenuManager : public TQObject
 {
     Q_OBJECT
 public:

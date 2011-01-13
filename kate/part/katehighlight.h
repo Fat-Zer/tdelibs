@@ -213,7 +213,7 @@ class KateHighlighting
 
     inline bool noHighlighting () const { return noHl; };
 
-    // be carefull: all documents hl should be invalidated after calling this method!
+    // be carefull: all documents hl should be tqinvalidated after calling this method!
     void dropDynamicContexts();
 
     TQString indentation () { return m_indentation; }
@@ -338,7 +338,7 @@ class KateHighlighting
     inline bool allowsFolding(){return folding;}
 };
 
-class KateHlManager : public QObject
+class KateHlManager : public TQObject
 {
   Q_OBJECT
 
@@ -357,7 +357,7 @@ class KateHlManager : public QObject
 
     int detectHighlighting (class KateDocument *doc);
 
-    int findHl(KateHighlighting *h) {return hlList.find(h);}
+    int findHl(KateHighlighting *h) {return hlList.tqfind(h);}
     TQString identifierForName(const TQString&);
 
     // methodes to get the default style count + names
@@ -377,7 +377,7 @@ class KateHlManager : public QObject
     uint countDynamicCtxs() { return dynamicCtxsCount; };
     void setForceNoDCReset(bool b) { forceNoDCReset = b; };
 
-    // be carefull: all documents hl should be invalidated after having successfully called this method!
+    // be carefull: all documents hl should be tqinvalidated after having successfully called this method!
     bool resetDynamicCtxs();
 
   signals:

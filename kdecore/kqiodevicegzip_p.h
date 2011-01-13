@@ -32,7 +32,7 @@
  * \internal This class is internal to KDE. 
  * The class KFilterDev should be used instead.
  */
-class KQIODeviceGZip : public QIODevice
+class KQIODeviceGZip : public TQIODevice
 {
 public:
     KQIODeviceGZip(const TQString& filename);
@@ -42,14 +42,18 @@ public:
     void close(void);
     void flush(void);
 
+#ifdef USE_QT4
+    qint64 size(void) const;
+#else // USE_QT4
     Offset size(void) const;
+#endif // USE_QT4
     Offset  at(void) const;
     bool at(Offset pos);
     bool atEnd(void) const;
     bool reset (void);
 
-    Q_LONG readBlock( char *data, Q_ULONG maxlen );
-    Q_LONG writeBlock( const char *data, Q_ULONG len );
+    TQ_LONG readBlock( char *data, TQ_ULONG maxlen );
+    TQ_LONG writeBlock( const char *data, TQ_ULONG len );
 
     int getch(void);
     int putch(int ch);

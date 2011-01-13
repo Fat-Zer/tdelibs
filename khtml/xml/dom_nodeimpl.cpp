@@ -588,7 +588,7 @@ void NodeImpl::handleLocalEvents(EventImpl *evt, bool useCapture)
 
     Event ev = evt;
     // removeEventListener (e.g. called from a JS event listener) might
-    // invalidate the item after the current iterator (which "it" is pointing to).
+    // tqinvalidate the item after the current iterator (which "it" is pointing to).
     // So we make a copy of the list.
     TQValueList<RegisteredEventListener> listeners = *m_regdListeners.listeners;
     TQValueList<RegisteredEventListener>::iterator it;
@@ -989,7 +989,7 @@ DOMStringImpl* NodeImpl::textContent() const
       delete kidText;
     }
   }
-  return new DOMStringImpl(out.unicode(), out.length());
+  return new DOMStringImpl(out.tqunicode(), out.length());
 }
 
 //-------------------------------------------------------------------------

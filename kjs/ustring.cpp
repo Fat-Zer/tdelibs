@@ -134,7 +134,7 @@ static int statBufferSize = 0;
 
 UChar UChar::toLower() const
 {
-  // ### properly support unicode tolower
+  // ### properly support tqunicode tolower
   if (uc >= 256)
     return *this;
 
@@ -746,7 +746,7 @@ unsigned int UString::toStrictUInt32(bool *ok) const
   if (len == 0)
     return 0;
   const UChar *p = rep->dat;
-  unsigned short c = p->unicode();
+  unsigned short c = p->tqunicode();
 
   // If the first digit is 0, only 0 itself is OK.
   if (c == '0') {
@@ -782,7 +782,7 @@ unsigned int UString::toStrictUInt32(bool *ok) const
     }
 
     // Get next character.
-    c = (++p)->unicode();
+    c = (++p)->tqunicode();
   }
 }
 

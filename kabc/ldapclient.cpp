@@ -50,7 +50,7 @@ public:
 
 TQString LdapObject::toString() const
 {
-  TQString result = TQString::fromLatin1( "\ndn: %1\n" ).arg( dn );
+  TQString result = TQString::tqfromLatin1( "\ndn: %1\n" ).arg( dn );
   for ( LdapAttrMap::ConstIterator it = attrs.begin(); it != attrs.end(); ++it ) {
     TQString attr = it.key();
     for ( LdapAttrValue::ConstIterator it2 = (*it).begin(); it2 != (*it).end(); ++it2 ) {
@@ -306,11 +306,11 @@ void LdapSearch::startSearch( const TQString& txt )
 
   cancelSearch();
 
-  int pos = txt.find( '\"' );
+  int pos = txt.tqfind( '\"' );
   if( pos >= 0 )
   {
     ++pos;
-    int pos2 = txt.find( '\"', pos );
+    int pos2 = txt.tqfind( '\"', pos );
     if( pos2 >= 0 )
         mSearchText = txt.mid( pos , pos2 - pos );
     else

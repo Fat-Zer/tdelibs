@@ -108,7 +108,7 @@ const DomainBrowser* ServiceBrowser::browsedDomains() const
 
 void ServiceBrowser::serviceResolved(bool success)
 {
-	TQObject* sender_obj = const_cast<TQObject*>(sender());
+	TQObject* sender_obj = const_cast<TQObject*>(TQT_TQOBJECT_CONST(sender()));
 	RemoteService* svr = static_cast<RemoteService*>(sender_obj);
 	disconnect(svr,TQT_SIGNAL(resolved(bool)),this,TQT_SLOT(serviceResolved(bool)));
 	TQValueList<RemoteService::Ptr>::Iterator it = d->m_duringResolve.begin();

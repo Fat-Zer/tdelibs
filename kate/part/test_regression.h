@@ -160,7 +160,7 @@ class OutputFunction : public KJS::ObjectImp
 /**
  * @internal
  */
-class RegressionTest : public QObject
+class RegressionTest : public TQObject
 {
   Q_OBJECT
 public:

@@ -55,7 +55,7 @@ KSaveFile::KSaveFile(const TQString &filename, int mode)
       return;
    }
 
-   if (mTempFile.create(real_filename, TQString::fromLatin1(".new"), mode))
+   if (mTempFile.create(real_filename, TQString::tqfromLatin1(".new"), mode))
    {
       mFileName = real_filename; // Set filename upon success
 
@@ -90,7 +90,7 @@ KSaveFile::~KSaveFile()
       close(); // Close if we were still open
 }
 
-QString
+TQString
 KSaveFile::name() const
 {
    return mFileName;
@@ -165,7 +165,7 @@ bool KSaveFile::backupFile( const TQString& qFilename, const TQString& backupDir
    else
    {
        TQCString nameOnly;
-       int slash = cFilename.findRev('/');
+       int slash = cFilename.tqfindRev('/');
        if (slash < 0)
 	   nameOnly = cFilename;
        else

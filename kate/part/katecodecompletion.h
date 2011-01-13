@@ -44,7 +44,7 @@ class KateCCListBox;
 class TQLayout;
 class TQVBox;
 
-class KateCodeCompletionCommentLabel : public QLabel
+class KateCodeCompletionCommentLabel : public TQLabel
 {
   Q_OBJECT
 
@@ -57,14 +57,14 @@ class KateCodeCompletionCommentLabel : public QLabel
         setAutoMask( false );
         setFrameStyle( TQFrame::Plain | TQFrame::Box );
         setLineWidth( 1 );
-        setAlignment( AlignAuto | AlignTop );
+        tqsetAlignment( AlignAuto | AlignTop );
         polish();
         setText(text);
         adjustSize();
     }
 };
 
-class KateCodeCompletion : public QObject
+class KateCodeCompletion : public TQObject
 {
   Q_OBJECT
 
@@ -114,7 +114,7 @@ class KateCodeCompletion : public QObject
     KateCodeCompletionCommentLabel* m_commentLabel;
 };
 
-class KateArgHint: public QFrame
+class KateArgHint: public TQFrame
 {
   Q_OBJECT
 

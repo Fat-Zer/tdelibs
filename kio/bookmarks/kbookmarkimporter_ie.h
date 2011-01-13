@@ -33,7 +33,7 @@
  * A class for importing IE bookmarks
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KIEBookmarkImporter : public QObject
+class KIO_EXPORT_DEPRECATED KIEBookmarkImporter : public TQObject
 {
     Q_OBJECT
 public:

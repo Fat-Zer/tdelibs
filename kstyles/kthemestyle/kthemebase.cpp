@@ -78,7 +78,7 @@ static TQColor readColorEntry( TQSettings* s, const char *pKey,
         {
             bool bOK;
             // find first part (red)
-            int nIndex = aValue.find( ',' );
+            int nIndex = aValue.tqfind( ',' );
             if ( nIndex == -1 )
             {
                 // return a sensible default -- Bernd
@@ -91,7 +91,7 @@ static TQColor readColorEntry( TQSettings* s, const char *pKey,
 
             // find second part (green)
             int nOldIndex = nIndex;
-            nIndex = aValue.find( ',', nOldIndex + 1 );
+            nIndex = aValue.tqfind( ',', nOldIndex + 1 );
 
             if ( nIndex == -1 )
             {
@@ -176,7 +176,7 @@ public:
     */
     TQColor pixmapAveColor( const TQPixmap* p )
     {
-        if ( colorCache.contains( p ) )
+        if ( colorCache.tqcontains( p ) )
             return colorCache[ p ];
 
         TQImage to_ave = p->convertToImage();
@@ -231,104 +231,106 @@ union kthemeKey{
     unsigned int cacheKey;
 };
 
+#define KDE_TQBITMAP_TO_TQPAINTDEVICE(x) static_cast<const TQPaintDevice*>(static_cast<const QPaintDevice*>(static_cast<const QPixmap*>(static_cast<const QBitmap*>(x))))
+
 void KThemeBase::generateBorderPix( int i )
 {
     // separate pixmap into separate components
     if ( pbPixmaps[ i ] )
     {
         // evidently I have to do masks manually...
-        const TQBitmap * srcMask = pbPixmaps[ i ] ->mask();
+        const TQBitmap * srcMask = pbPixmaps[ i ] ->tqmask();
         TQBitmap destMask( pbWidth[ i ], pbWidth[ i ] );
         TQPixmap tmp( pbWidth[ i ], pbWidth[ i ] );
 
-        bitBlt( &tmp, 0, 0, pbPixmaps[ i ], 0, 0, pbWidth[ i ], pbWidth[ i ],
-                Qt::CopyROP, false );
+        bitBlt( TQT_TQPAINTDEVICE(&tmp), 0, 0, TQT_TQPAINTDEVICE(pbPixmaps[ i ]), 0, 0, pbWidth[ i ], pbWidth[ i ],
+                TQt::CopyROP, false );
         if ( srcMask )
         {
-            bitBlt( &destMask, 0, 0, srcMask, 0, 0, pbWidth[ i ], pbWidth[ i ],
-                    Qt::CopyROP, false );
+            bitBlt( TQT_TQPAINTDEVICE(&destMask), 0, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0, pbWidth[ i ], pbWidth[ i ],
+                    TQt::CopyROP, false );
             tmp.setMask( destMask );
         }
         pbPixmaps[ i ] ->setBorder( KThemePixmap::TopLeft, tmp );
 
-        bitBlt( &tmp, 0, 0, pbPixmaps[ i ], pbPixmaps[ i ] ->width() - pbWidth[ i ], 0,
-                pbWidth[ i ], pbWidth[ i ], Qt::CopyROP, false );
+        bitBlt( TQT_TQPAINTDEVICE(&tmp), 0, 0, TQT_TQPAINTDEVICE(pbPixmaps[ i ]), pbPixmaps[ i ] ->width() - pbWidth[ i ], 0,
+                pbWidth[ i ], pbWidth[ i ], TQt::CopyROP, false );
         if ( srcMask )
         {
-            bitBlt( &destMask, 0, 0, srcMask, pbPixmaps[ i ] ->width() - pbWidth[ i ],
-                    0, pbWidth[ i ], pbWidth[ i ], Qt::CopyROP, false );
+            bitBlt( TQT_TQPAINTDEVICE(&destMask), 0, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), pbPixmaps[ i ] ->width() - pbWidth[ i ],
+                    0, pbWidth[ i ], pbWidth[ i ], TQt::CopyROP, false );
             tmp.setMask( destMask );
         }
         pbPixmaps[ i ] ->setBorder( KThemePixmap::TopRight, tmp );
 
-        bitBlt( &tmp, 0, 0, pbPixmaps[ i ], 0, pbPixmaps[ i ] ->height() - pbWidth[ i ],
-                pbWidth[ i ], pbWidth[ i ], Qt::CopyROP, false );
+        bitBlt( TQT_TQPAINTDEVICE(&tmp), 0, 0, TQT_TQPAINTDEVICE(pbPixmaps[ i ]), 0, pbPixmaps[ i ] ->height() - pbWidth[ i ],
+                pbWidth[ i ], pbWidth[ i ], TQt::CopyROP, false );
         if ( srcMask )
         {
-            bitBlt( &destMask, 0, 0, srcMask, 0, pbPixmaps[ i ] ->height() - pbWidth[ i ],
-                    pbWidth[ i ], pbWidth[ i ], Qt::CopyROP, false );
+            bitBlt( TQT_TQPAINTDEVICE(&destMask), 0, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, pbPixmaps[ i ] ->height() - pbWidth[ i ],
+                    pbWidth[ i ], pbWidth[ i ], TQt::CopyROP, false );
             tmp.setMask( destMask );
         }
         pbPixmaps[ i ] ->setBorder( KThemePixmap::BottomLeft, tmp );
 
-        bitBlt( &tmp, 0, 0, pbPixmaps[ i ], pbPixmaps[ i ] ->width() - pbWidth[ i ],
+        bitBlt( TQT_TQPAINTDEVICE(&tmp), 0, 0, TQT_TQPAINTDEVICE(pbPixmaps[ i ]), pbPixmaps[ i ] ->width() - pbWidth[ i ],
                 pbPixmaps[ i ] ->height() - pbWidth[ i ], pbWidth[ i ], pbWidth[ i ],
-                Qt::CopyROP, false );
+                TQt::CopyROP, false );
         if ( srcMask )
         {
-            bitBlt( &destMask, 0, 0, srcMask, pbPixmaps[ i ] ->width() - pbWidth[ i ],
+            bitBlt( TQT_TQPAINTDEVICE(&destMask), 0, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), pbPixmaps[ i ] ->width() - pbWidth[ i ],
                     pbPixmaps[ i ] ->height() - pbWidth[ i ], pbWidth[ i ], pbWidth[ i ],
-                    Qt::CopyROP, false );
+                    TQt::CopyROP, false );
             tmp.setMask( destMask );
         }
         pbPixmaps[ i ] ->setBorder( KThemePixmap::BottomRight, tmp );
 
         tmp.resize( pbPixmaps[ i ] ->width() - pbWidth[ i ] * 2, pbWidth[ i ] );
         destMask.resize( pbPixmaps[ i ] ->width() - pbWidth[ i ] * 2, pbWidth[ i ] );
-        bitBlt( &tmp, 0, 0, pbPixmaps[ i ], pbWidth[ i ], 0,
-                pbPixmaps[ i ] ->width() - pbWidth[ i ] * 2, pbWidth[ i ], Qt::CopyROP, false );
+        bitBlt( TQT_TQPAINTDEVICE(&tmp), 0, 0, TQT_TQPAINTDEVICE(pbPixmaps[ i ]), pbWidth[ i ], 0,
+                pbPixmaps[ i ] ->width() - pbWidth[ i ] * 2, pbWidth[ i ], TQt::CopyROP, false );
         if ( srcMask )
         {
-            bitBlt( &destMask, 0, 0, srcMask, pbWidth[ i ], 0,
+            bitBlt( TQT_TQPAINTDEVICE(&destMask), 0, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), pbWidth[ i ], 0,
                     pbPixmaps[ i ] ->width() - pbWidth[ i ] * 2, pbWidth[ i ],
-                    Qt::CopyROP, false );
+                    TQt::CopyROP, false );
             tmp.setMask( destMask );
         }
         pbPixmaps[ i ] ->setBorder( KThemePixmap::Top, tmp );
 
-        bitBlt( &tmp, 0, 0, pbPixmaps[ i ], pbWidth[ i ],
+        bitBlt( TQT_TQPAINTDEVICE(&tmp), 0, 0, TQT_TQPAINTDEVICE(pbPixmaps[ i ]), pbWidth[ i ],
                 pbPixmaps[ i ] ->height() - pbWidth[ i ],
-                pbPixmaps[ i ] ->width() - pbWidth[ i ] * 2, pbWidth[ i ], Qt::CopyROP, false );
+                pbPixmaps[ i ] ->width() - pbWidth[ i ] * 2, pbWidth[ i ], TQt::CopyROP, false );
         if ( srcMask )
         {
-            bitBlt( &destMask, 0, 0, srcMask, pbWidth[ i ],
+            bitBlt( TQT_TQPAINTDEVICE(&destMask), 0, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), pbWidth[ i ],
                     pbPixmaps[ i ] ->height() - pbWidth[ i ],
-                    pbPixmaps[ i ] ->width() - pbWidth[ i ] * 2, pbWidth[ i ], Qt::CopyROP, false );
+                    pbPixmaps[ i ] ->width() - pbWidth[ i ] * 2, pbWidth[ i ], TQt::CopyROP, false );
             tmp.setMask( destMask );
         }
         pbPixmaps[ i ] ->setBorder( KThemePixmap::Bottom, tmp );
 
         tmp.resize( pbWidth[ i ], pbPixmaps[ i ] ->height() - pbWidth[ i ] * 2 );
         destMask.resize( pbWidth[ i ], pbPixmaps[ i ] ->height() - pbWidth[ i ] * 2 );
-        bitBlt( &tmp, 0, 0, pbPixmaps[ i ], 0, pbWidth[ i ], pbWidth[ i ],
-                pbPixmaps[ i ] ->height() - pbWidth[ i ] * 2, Qt::CopyROP, false );
+        bitBlt( TQT_TQPAINTDEVICE(&tmp), 0, 0, TQT_TQPAINTDEVICE(pbPixmaps[ i ]), 0, pbWidth[ i ], pbWidth[ i ],
+                pbPixmaps[ i ] ->height() - pbWidth[ i ] * 2, TQt::CopyROP, false );
         if ( srcMask )
         {
-            bitBlt( &destMask, 0, 0, srcMask, 0, pbWidth[ i ], pbWidth[ i ],
-                    pbPixmaps[ i ] ->height() - pbWidth[ i ] * 2, Qt::CopyROP, false );
+            bitBlt( TQT_TQPAINTDEVICE(&destMask), 0, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, pbWidth[ i ], pbWidth[ i ],
+                    pbPixmaps[ i ] ->height() - pbWidth[ i ] * 2, TQt::CopyROP, false );
             tmp.setMask( destMask );
         }
 
         pbPixmaps[ i ] ->setBorder( KThemePixmap::Left, tmp );
 
-        bitBlt( &tmp, 0, 0, pbPixmaps[ i ], pbPixmaps[ i ] ->width() - pbWidth[ i ],
+        bitBlt( TQT_TQPAINTDEVICE(&tmp), 0, 0, TQT_TQPAINTDEVICE(pbPixmaps[ i ]), pbPixmaps[ i ] ->width() - pbWidth[ i ],
                 pbWidth[ i ], pbWidth[ i ], pbPixmaps[ i ] ->height() - pbWidth[ i ] * 2,
-                Qt::CopyROP, false );
+                TQt::CopyROP, false );
         if ( srcMask )
         {
-            bitBlt( &destMask, 0, 0, srcMask, pbPixmaps[ i ] ->width() - pbWidth[ i ],
+            bitBlt( TQT_TQPAINTDEVICE(&destMask), 0, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), pbPixmaps[ i ] ->width() - pbWidth[ i ],
                     pbWidth[ i ], pbWidth[ i ], pbPixmaps[ i ] ->height() - pbWidth[ i ] * 2,
-                    Qt::CopyROP, false );
+                    TQt::CopyROP, false );
             tmp.setMask( destMask );
         }
         pbPixmaps[ i ] ->setBorder( KThemePixmap::Right, tmp );
@@ -402,7 +404,7 @@ void KThemeBase::copyWidgetConfig( int sourceID, int destID, TQString *pixnames,
         iTabLine = aTabLine;
 }
 
-void KThemeBase::readConfig( Qt::GUIStyle /*style*/ )
+void KThemeBase::readConfig( TQt::GUIStyle /*style*/ )
 {
 #define PREBLEND_ITEMS 12
     static const WidgetType preBlend[] =
@@ -541,7 +543,7 @@ KThemeBase::KThemeBase( const TQString& dir, const TQString & configFile )
 
     configFileName = "/" + configFileName + "/";
 
-    readConfig( Qt::WindowsStyle );
+    readConfig( TQt::WindowsStyle );
     cache = new KThemeCache( cacheSize );
 
     switch ( scrollBarLayout() )
@@ -563,7 +565,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
 {
     TQStringList keys = config.entryList( configFileName );
 
-    if ( keys.contains( "foreground" ) )
+    if ( keys.tqcontains( "foreground" ) )
     {
         d->overrideForeground = true;
         d->overrideForegroundCol = readColorEntry( &config, ( configFileName + "foreground" ).latin1(), 0 );
@@ -571,7 +573,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
     else
         d->overrideForeground = false;
 
-    if ( keys.contains( "background" ) )
+    if ( keys.tqcontains( "background" ) )
     {
         d->overrideBackground = true;
         d->overrideBackgroundCol = readColorEntry( &config, ( configFileName + "background" ).latin1(), 0 );
@@ -581,7 +583,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
 
 
 
-    if ( keys.contains( "selectForeground" ) )
+    if ( keys.tqcontains( "selectForeground" ) )
     {
         d->overrideSelectForeground = true;
         d->overrideSelectForegroundCol = readColorEntry( &config, ( configFileName + "selectForeground" ).latin1(), 0 );
@@ -589,7 +591,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
     else
         d->overrideSelectForeground = false;
 
-    if ( keys.contains( "selectBackground" ) )
+    if ( keys.tqcontains( "selectBackground" ) )
     {
         d->overrideSelectBackground = true;
         d->overrideSelectBackgroundCol = readColorEntry( &config, ( configFileName + "selectBackground" ).latin1(), 0 );
@@ -597,7 +599,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
     else
         d->overrideSelectBackground = false;
 
-    if ( keys.contains( "windowBackground" ) )
+    if ( keys.tqcontains( "windowBackground" ) )
     {
         d->overrideWindowBackground = true;
         d->overrideWindowBackgroundCol = readColorEntry( &config, ( configFileName + "windowBackground" ).latin1(), 0 );
@@ -606,7 +608,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
         d->overrideWindowBackground = false;
 
 
-    if ( keys.contains( "windowForeground" ) )
+    if ( keys.tqcontains( "windowForeground" ) )
     {
         d->overrideWindowForeground = true;
         d->overrideWindowForegroundCol = readColorEntry( &config, ( configFileName + "windowForeground" ).latin1(), 0 );
@@ -808,45 +810,45 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
         mPainter.begin( &mask );
 
         TQPixmap *tmp = borderPixmap( widget ) ->border( KThemePixmap::TopLeft );
-        const TQBitmap *srcMask = tmp->mask();
+        const TQBitmap *srcMask = tmp->tqmask();
         int bdWidth = tmp->width();
 
-        bitBlt( pixmap, 0, 0, tmp, 0, 0, bdWidth, bdWidth,
-                Qt::CopyROP, false );
+        bitBlt( TQT_TQPAINTDEVICE(pixmap), 0, 0, TQT_TQPAINTDEVICE(tmp), 0, 0, bdWidth, bdWidth,
+                TQt::CopyROP, false );
         if ( srcMask )
-            bitBlt( &mask, 0, 0, srcMask, 0, 0, bdWidth, bdWidth,
-                    Qt::CopyROP, false );
+            bitBlt( TQT_TQPAINTDEVICE(&mask), 0, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0, bdWidth, bdWidth,
+                    TQt::CopyROP, false );
         else
             mPainter.fillRect( 0, 0, bdWidth, bdWidth, color1 );
 
 
         tmp = borderPixmap( widget ) ->border( KThemePixmap::TopRight );
-        srcMask = tmp->mask();
-        bitBlt( pixmap, w - bdWidth, 0, tmp, 0, 0, bdWidth,
-                bdWidth, Qt::CopyROP, false );
+        srcMask = tmp->tqmask();
+        bitBlt( TQT_TQPAINTDEVICE(pixmap), w - bdWidth, 0, TQT_TQPAINTDEVICE(tmp), 0, 0, bdWidth,
+                bdWidth, TQt::CopyROP, false );
         if ( srcMask )
-            bitBlt( &mask, w - bdWidth, 0, srcMask, 0, 0, bdWidth,
-                    bdWidth, Qt::CopyROP, false );
+            bitBlt( TQT_TQPAINTDEVICE(&mask), w - bdWidth, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0, bdWidth,
+                    bdWidth, TQt::CopyROP, false );
         else
             mPainter.fillRect( w - bdWidth, 0, bdWidth, bdWidth, color1 );
 
         tmp = borderPixmap( widget ) ->border( KThemePixmap::BottomLeft );
-        srcMask = tmp->mask();
-        bitBlt( pixmap, 0, h - bdWidth, tmp, 0, 0, bdWidth,
-                bdWidth, Qt::CopyROP, false );
+        srcMask = tmp->tqmask();
+        bitBlt( TQT_TQPAINTDEVICE(pixmap), 0, h - bdWidth, TQT_TQPAINTDEVICE(tmp), 0, 0, bdWidth,
+                bdWidth, TQt::CopyROP, false );
         if ( srcMask )
-            bitBlt( &mask, 0, h - bdWidth, srcMask, 0, 0, bdWidth,
-                    bdWidth, Qt::CopyROP, false );
+            bitBlt( TQT_TQPAINTDEVICE(&mask), 0, h - bdWidth, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0, bdWidth,
+                    bdWidth, TQt::CopyROP, false );
         else
             mPainter.fillRect( 0, h - bdWidth, bdWidth, bdWidth, color1 );
 
         tmp = borderPixmap( widget ) ->border( KThemePixmap::BottomRight );
-        srcMask = tmp->mask();
-        bitBlt( pixmap, w - bdWidth, h - bdWidth, tmp, 0, 0,
-                bdWidth, bdWidth, Qt::CopyROP, false );
+        srcMask = tmp->tqmask();
+        bitBlt( TQT_TQPAINTDEVICE(pixmap), w - bdWidth, h - bdWidth, TQT_TQPAINTDEVICE(tmp), 0, 0,
+                bdWidth, bdWidth, TQt::CopyROP, false );
         if ( srcMask )
-            bitBlt( &mask, w - bdWidth, h - bdWidth, srcMask, 0, 0,
-                    bdWidth, bdWidth, Qt::CopyROP, false );
+            bitBlt( TQT_TQPAINTDEVICE(&mask), w - bdWidth, h - bdWidth, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0,
+                    bdWidth, bdWidth, TQt::CopyROP, false );
         else
             mPainter.fillRect( w - bdWidth, h - bdWidth, bdWidth, bdWidth, color1 );
 
@@ -855,21 +857,21 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
         if ( w - bdWidth * 2 > 0 )
         {
             tmp = borderPixmap( widget ) ->border( KThemePixmap::Top );
-            srcMask = tmp->mask();
+            srcMask = tmp->tqmask();
             p.drawTiledPixmap( bdWidth, 0, w - bdWidth * 2, bdWidth, *tmp );
             if ( srcMask )
-                bitBlt( &mask, bdWidth, 0, srcMask, 0, 0,
-                        w - bdWidth * 2, bdWidth, Qt::CopyROP, false );
+                bitBlt( TQT_TQPAINTDEVICE(&mask), bdWidth, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0,
+                        w - bdWidth * 2, bdWidth, TQt::CopyROP, false );
             else
                 mPainter.fillRect( bdWidth, 0, w - bdWidth * 2, bdWidth, color1 );
 
             tmp = borderPixmap( widget ) ->border( KThemePixmap::Bottom );
-            srcMask = tmp->mask();
+            srcMask = tmp->tqmask();
             p.drawTiledPixmap( bdWidth, h - bdWidth, w - bdWidth * 2, bdWidth,
                                *tmp );
             if ( srcMask )
-                bitBlt( &mask, bdWidth, h - bdWidth, srcMask, 0, 0,
-                        w - bdWidth * 2, bdWidth, Qt::CopyROP, false );
+                bitBlt( TQT_TQPAINTDEVICE(&mask), bdWidth, h - bdWidth, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0,
+                        w - bdWidth * 2, bdWidth, TQt::CopyROP, false );
             else
                 mPainter.fillRect( bdWidth, h - bdWidth, w - bdWidth * 2, bdWidth,
                                    color1 );
@@ -877,21 +879,21 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
         if ( h - bdWidth * 2 > 0 )
         {
             tmp = borderPixmap( widget ) ->border( KThemePixmap::Left );
-            srcMask = tmp->mask();
+            srcMask = tmp->tqmask();
             p.drawTiledPixmap( 0, bdWidth, bdWidth, h - bdWidth * 2, *tmp );
             if ( srcMask )
-                bitBlt( &mask, 0, bdWidth, srcMask, 0, 0,
-                        bdWidth, h - bdWidth * 2, Qt::CopyROP, false );
+                bitBlt( TQT_TQPAINTDEVICE(&mask), 0, bdWidth, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0,
+                        bdWidth, h - bdWidth * 2, TQt::CopyROP, false );
             else
                 mPainter.fillRect( 0, bdWidth, bdWidth, h - bdWidth * 2, color1 );
 
             tmp = borderPixmap( widget ) ->border( KThemePixmap::Right );
-            srcMask = tmp->mask();
+            srcMask = tmp->tqmask();
             p.drawTiledPixmap( w - bdWidth, bdWidth, bdWidth, h - bdWidth * 2,
                                *tmp );
             if ( srcMask )
-                bitBlt( &mask, w - bdWidth, bdWidth, srcMask, 0, 0,
-                        bdWidth, h - bdWidth * 2, Qt::CopyROP, false );
+                bitBlt( TQT_TQPAINTDEVICE(&mask), w - bdWidth, bdWidth, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0,
+                        bdWidth, h - bdWidth * 2, TQt::CopyROP, false );
             else
                 mPainter.fillRect( w - bdWidth, bdWidth, bdWidth, h - bdWidth * 2, color1 );
         }
@@ -1030,7 +1032,7 @@ KThemePixmap* KThemeBase::gradient( int w, int h, WidgetType widget ) const
                                          *grLowColors[ widget ],
                                          KPixmapEffect::DiagonalGradient );
                 bitBlt( pixmaps[ widget ], offset, offset, &s, 0, 0, w - offset * 2,
-                        h - offset * 2, Qt::CopyROP );
+                        h - offset * 2, TQt::CopyROP );
             }
         }
     }
@@ -1089,7 +1091,7 @@ KThemePixmap* KThemeBase::scalePixmap( int w, int h, WidgetType widget ) const
 }
 
 TQColorGroup* KThemeBase::makeColorGroup( const TQColor &fg, const TQColor &bg,
-        Qt::GUIStyle )
+        TQt::GUIStyle )
 {
     if ( shading == Motif )
     {
@@ -1098,12 +1100,12 @@ TQColorGroup* KThemeBase::makeColorGroup( const TQColor &fg, const TQColor &bg,
         lowlightVal = 100 + ( ( 2 * d->contrast + 4 ) * 10 );
         return ( new TQColorGroup( fg, bg, bg.light( highlightVal ),
                                   bg.dark( lowlightVal ), bg.dark( 120 ),
-                                  fg, TQApplication::palette().active().base() ) );
+                                  fg, TQApplication::tqpalette().active().base() ) );
     }
     else
         return ( new TQColorGroup( fg, bg, bg.light( 150 ), bg.dark(),
                                   bg.dark( 120 ), fg,
-                                  TQApplication::palette().active().base() ) );
+                                  TQApplication::tqpalette().active().base() ) );
 }
 
 
@@ -1269,22 +1271,22 @@ void KThemeBase::applyResourceGroup( TQSettings *config, int i )
     TQStringList keys = config->entryList( base );
 
     // Gradient low color or blend background
-    if ( keys.contains( "GradientLow" ) )
+    if ( keys.tqcontains( "GradientLow" ) )
         prop[ "GrLow" ] = readColorEntry( config, TQString( base + "GradientLow" ).latin1(),
-                                          &TQApplication::palette().active().background() ).name();
+                                          &TQApplication::tqpalette().active().background() ).name();
 
     // Gradient high color
-    if ( keys.contains( "GradientHigh" ) )
+    if ( keys.tqcontains( "GradientHigh" ) )
         prop[ "GrHigh" ] = readColorEntry( config, TQString( base + "GradientHigh" ).latin1(),
-                                           &TQApplication::palette().active().foreground() ).name();
+                                           &TQApplication::tqpalette().active().foreground() ).name();
 
     // Extended color attributes
-    if ( keys.contains( "Foreground" ) || keys.contains( "Background" ) )
+    if ( keys.tqcontains( "Foreground" ) || keys.tqcontains( "Background" ) )
     {
         TQColor fg, bg;
-        if ( keys.contains( "Background" ) )
+        if ( keys.tqcontains( "Background" ) )
             bg = readColorEntry( config, TQString( base + "Background" ).latin1(), &bg );
-        if ( keys.contains( "Foreground" ) )
+        if ( keys.tqcontains( "Foreground" ) )
             fg = readColorEntry( config, TQString( base + "Foreground" ).latin1(), &fg );
         prop[ "Foreground" ] = fg.name();
         prop[ "Background" ] = bg.name();
@@ -1318,7 +1320,7 @@ void KThemeBase::applyResourceGroup( TQSettings *config, int i )
         prop[ "Width" ] = TQString::number( config->readNumEntry( base + "Width", 10 ) );
     else if ( i == ComboBox || i == ComboBoxDown )
     {
-        if ( keys.contains( "Round" ) )
+        if ( keys.tqcontains( "Round" ) )
             prop[ "Round" ] = TQString::number( config->readBoolEntry( base + "Round", false ) );
         else
             prop[ "Round" ] = "5000"; // invalid, used w/multiple groups
@@ -1326,25 +1328,25 @@ void KThemeBase::applyResourceGroup( TQSettings *config, int i )
     }
     else if ( i == PushButton || i == PushButtonDown )
     {
-        if ( keys.contains( "XShift" ) )
+        if ( keys.tqcontains( "XShift" ) )
             prop[ "XShift" ] = TQString::number( config->readNumEntry( base + "XShift", 0 ) );
         else
             prop[ "XShift" ] = "5000";
-        if ( keys.contains( "YShift" ) )
+        if ( keys.tqcontains( "YShift" ) )
             prop[ "YShift" ] = TQString::number( config->readNumEntry( base + "YShift", 0 ) );
         else
             prop[ "YShift" ] = "5000";
-        if ( keys.contains( "3DFocusRect" ) )
+        if ( keys.tqcontains( "3DFocusRect" ) )
             prop[ "3DFRect" ] = TQString::number( config->
                                                  readBoolEntry(  base + "3DFocusRect", false ) );
         else
             prop[ "3DFRect" ] = "5000";
-        if ( keys.contains( "3DFocusOffset" ) )
+        if ( keys.tqcontains( "3DFocusOffset" ) )
             prop[ "3DFOffset" ] = TQString::number( config->
                                                    readBoolEntry(  base + "3DFocusOffset", 0 ) );
         else
             prop[ "3DFOffset" ] = "5000";
-        if ( keys.contains( "Round" ) )
+        if ( keys.tqcontains( "Round" ) )
             prop[ "Round" ] = TQString::number( config->readBoolEntry( base + "Round", false ) );
         else
             prop[ "Round" ] = "5000";
@@ -1411,7 +1413,7 @@ void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdname
     // Blend intensity
     tmpStr = prop[ "Blend" ];
     if ( tmpStr.isEmpty() )
-        tmpStr = TQString::fromLatin1( "0.0" );
+        tmpStr = TQString::tqfromLatin1( "0.0" );
     blends[ i ] = tmpStr.toFloat();
 
     // Bevel contrast
@@ -1427,7 +1429,7 @@ void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdname
     if ( gradients[ i ] != GrNone || blends[ i ] != 0.0 )
         grLowColors[ i ] =
             new TQColor( readColorEntry( prop, "GrLow",
-                                        TQApplication::palette().active().
+                                        TQApplication::tqpalette().active().
                                         background() ) );
     else
         grLowColors[ i ] = NULL;
@@ -1436,7 +1438,7 @@ void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdname
     if ( gradients[ i ] != GrNone )
         grHighColors[ i ] =
             new TQColor( readColorEntry( prop, "GrHigh",
-                                        TQApplication::palette().active().
+                                        TQApplication::tqpalette().active().
                                         background() ) );
     else
         grHighColors[ i ] = NULL;
@@ -1448,10 +1450,10 @@ void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdname
     if ( fg.isValid() || bg.isValid() )
     {
         if ( !fg.isValid() )
-            fg = TQApplication::palette().active().foreground();
+            fg = TQApplication::tqpalette().active().foreground();
         if ( !bg.isValid() )
-            bg = TQApplication::palette().active().background();
-        colors[ i ] = makeColorGroup( fg, bg, Qt::WindowsStyle );
+            bg = TQApplication::tqpalette().active().background();
+        colors[ i ] = makeColorGroup( fg, bg, TQt::WindowsStyle );
     }
     else
         colors[ i ] = NULL;
@@ -1607,7 +1609,7 @@ TQPalette KThemeBase::overridePalette( const TQPalette& pal )
     {
         if ( isColor( Background ) )
         {
-            background = colorGroup( pal.active(), Background )
+            background = tqcolorGroup( pal.active(), Background )
                          ->background();
         }
         if ( isPixmap( Background ) )
@@ -1620,7 +1622,7 @@ TQPalette KThemeBase::overridePalette( const TQPalette& pal )
                             background.dark( lowlightVal ), background.dark( 120 ),
                             baseText, buttonText /*CHECKME: BrightText*/, base, background );
 
-        buttonText = colorGroup( pre, PushButton ) ->foreground();
+        buttonText = tqcolorGroup( pre, PushButton ) ->foreground();
     }
 
     TQColor disfg = foreground;
@@ -1763,7 +1765,7 @@ KThemePixmap* KThemeCache::pixmap( int w, int h, int widgetID, bool border,
     key.data.border = border;
     key.data.mask = mask;
 
-    KThemePixmap *pix = cache.find( ( unsigned long ) key.cacheKey );
+    KThemePixmap *pix = cache.tqfind( ( unsigned long ) key.cacheKey );
     if ( pix )
         pix->updateAccessed();
     return ( pix );
@@ -1778,7 +1780,7 @@ KThemePixmap* KThemeCache::horizontalPixmap( int w, int widgetID )
     key.data.height = 0;
     key.data.border = false;
     key.data.mask = false;
-    KThemePixmap *pix = cache.find( ( unsigned long ) key.cacheKey );
+    KThemePixmap *pix = cache.tqfind( ( unsigned long ) key.cacheKey );
     if ( pix )
         pix->updateAccessed();
     return ( pix );
@@ -1793,7 +1795,7 @@ KThemePixmap* KThemeCache::verticalPixmap( int h, int widgetID )
     key.data.height = h;
     key.data.border = false;
     key.data.mask = false;
-    KThemePixmap *pix = cache.find( ( unsigned long ) key.cacheKey );
+    KThemePixmap *pix = cache.tqfind( ( unsigned long ) key.cacheKey );
     if ( pix )
         pix->updateAccessed();
     return ( pix );
@@ -1812,7 +1814,7 @@ bool KThemeCache::insert( KThemePixmap *pixmap, ScaleHint scale, int widgetID,
     key.data.border = border;
     key.data.mask = mask;
 
-    if ( cache.find( ( unsigned long ) key.cacheKey, true ) != NULL )
+    if ( cache.tqfind( ( unsigned long ) key.cacheKey, true ) != NULL )
     {
         return ( true ); // a pixmap of this scale is already in there
     }

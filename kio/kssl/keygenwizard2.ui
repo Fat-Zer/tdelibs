@@ -1,7 +1,7 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>KGWizardPage2</class>
 <author>George Staikos &lt;staikos@kde.org&gt;</author>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>KGWizardPage2</cstring>
     </property>
@@ -17,20 +17,20 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="TQLabel" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>TextLabel4</cstring>
             </property>
             <property name="text">
                 <string>You must now provide a password for the certificate request. Please choose a very secure password as this will be used to encrypt your private key.</string>
             </property>
-            <property name="alignment">
+            <property name="tqalignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="wordwrap" stdset="0">
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="0">
+        <widget class="TQLabel" row="2" column="0">
             <property name="name">
                 <cstring>TextLabel6</cstring>
             </property>
@@ -41,7 +41,7 @@
                 <cstring>_password2</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="1" column="0">
+        <widget class="TQLabel" row="1" column="0">
             <property name="name">
                 <cstring>TextLabel5</cstring>
             </property>
@@ -52,7 +52,7 @@
                 <cstring>_password1</cstring>
             </property>
         </widget>
-        <widget class="QLineEdit" row="1" column="1">
+        <widget class="TQLineEdit" row="1" column="1">
             <property name="name">
                 <cstring>_password1</cstring>
             </property>
@@ -60,7 +60,7 @@
                 <enum>Password</enum>
             </property>
         </widget>
-        <widget class="QLineEdit" row="2" column="1">
+        <widget class="TQLineEdit" row="2" column="1">
             <property name="name">
                 <cstring>_password2</cstring>
             </property>

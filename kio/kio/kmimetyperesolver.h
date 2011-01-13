@@ -46,7 +46,7 @@ protected:
  * itself. So an object of this class is used to handle signals, slots etc.
  * and forwards them to the KMimeTypeResolver instance.
  */
-class KIO_EXPORT KMimeTypeResolverHelper : public QObject
+class KIO_EXPORT KMimeTypeResolverHelper : public TQObject
 {
     Q_OBJECT
 

@@ -90,18 +90,18 @@ class KCModuleProxy::KCModuleProxyPrivate
 			delete kcm;
 		}
 
-		QStringList							args;
+		TQStringList							args;
 		KCModule							*kcm;
 		QXEmbed								*embedWidget;
 		KProcess							*rootProcess;
-		QVBox								*embedFrame;
-		KCModuleProxyIfaceImpl  			*dcopObject;
+		TQVBox								*embedFrame;
+		KCModuleProxyIfaceImpl  					*dcopObject;
 		DCOPClient							*dcopClient;
-		QVBoxLayout							*topLayout; /* Contains TQScrollView view, and root stuff */
-		KCModuleProxyRootCommunicatorImpl	*rootCommunicator;
-		QLabel								*rootInfo;
-		QCString							dcopName;
-		KCModuleInfo 						modInfo;
+		TQVBoxLayout							*topLayout; /* Contains TQScrollView view, and root stuff */
+		KCModuleProxyRootCommunicatorImpl				*rootCommunicator;
+		TQLabel								*rootInfo;
+		TQCString							dcopName;
+		KCModuleInfo 							modInfo;
 		bool 								withFallback;
 		bool 								changed;
 		bool 								rootMode;
@@ -161,7 +161,7 @@ KCModule * KCModuleProxy::realModule() const
 
 	if( !d->isInitialized )
 	{
-  		d->dcopName = moduleInfo().handle().prepend("KCModuleProxy-").utf8();
+  		d->dcopName = TQString(moduleInfo().handle().prepend("KCModuleProxy-")).utf8();
 		d->topLayout = new TQVBoxLayout( that, 0, 0, "topLayout" );
 
 		d->isInitialized = true;
@@ -311,7 +311,7 @@ void KCModuleProxy::runAsRoot()
 
 	TQPalette pal( red );
 	pal.setColor( TQColorGroup::Background, 
-		colorGroup().background() );
+		tqcolorGroup().background() );
 	d->embedFrame->setPalette( pal );
 	d->embedFrame->setLineWidth( 2 );
 	d->embedFrame->setMidLineWidth( 2 );
@@ -323,7 +323,7 @@ void KCModuleProxy::runAsRoot()
 
 	TQLabel *lblBusy = new TQLabel(i18n("<big>Loading...</big>"), d->embedWidget, "lblBusy" );
 	lblBusy->setTextFormat(RichText);
-	lblBusy->setAlignment(AlignCenter);
+	lblBusy->tqsetAlignment(AlignCenter);
 	lblBusy->setGeometry(0,0, d->kcm->width(), d->kcm->height());
 	lblBusy->show();
 
@@ -343,15 +343,15 @@ void KCModuleProxy::runAsRoot()
 	TQString cmd = moduleInfo().service()->exec().stripWhiteSpace();
 	if (cmd.left(5) == "kdesu")
 	{
-		cmd = cmd.remove(0,5).stripWhiteSpace();
+		cmd = TQString(cmd.remove(0,5)).stripWhiteSpace();
 
 		/* Remove all kdesu switches */
 		while( cmd.length() > 1 && cmd[ 0 ] == '-' )
-			cmd = cmd.remove( 0, cmd.find( ' ' ) ).stripWhiteSpace();
+			cmd = TQString(cmd.remove( 0, cmd.tqfind( ' ' ) )).stripWhiteSpace();
 	}
 
 	if (cmd.left(8) == "kcmshell")
-		cmd = cmd.remove(0,8).stripWhiteSpace();
+		cmd = TQString(cmd.remove(0,8)).stripWhiteSpace();
 
 	/* Run the process */
 	TQString kdesu = KStandardDirs::findExe("kdesu");
@@ -416,7 +416,7 @@ void KCModuleProxy::rootExited()
 	/* Such that the "ordinary" module loads again */
 	d->rootMode = false;
 
-	d->topLayout->invalidate();
+	d->topLayout->tqinvalidate();
 
 	TQShowEvent ev;
 	showEvent( &ev ); 

@@ -119,9 +119,9 @@ void CupsInfos::load()
 {
 	KConfig	*conf_ = KMFactory::self()->printConfig();
 	conf_->setGroup("CUPS");
-	host_ = conf_->readEntry("Host",TQString::fromLatin1(cupsServer()));
+	host_ = conf_->readEntry("Host",TQString::tqfromLatin1(cupsServer()));
 	port_ = conf_->readNumEntry("Port",ippPort());
-	login_ = conf_->readEntry("Login",TQString::fromLatin1(cupsUser()));
+	login_ = conf_->readEntry("Login",TQString::tqfromLatin1(cupsUser()));
 	savepwd_ = conf_->readBoolEntry( "SavePassword", false );
 	if ( savepwd_ )
 	{

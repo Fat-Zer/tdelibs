@@ -179,9 +179,9 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 
 #ifndef __osf__
 // this crashes under Tru64 so .....
-	kdDebug(125) << TQString( "grabKey( key: '%1', bGrab: %2 ): keyCodeX: %3 keyModX: %4\n" )
+	kdDebug(125) << TQString(TQString( "grabKey( key: '%1', bGrab: %2 ): keyCodeX: %3 keyModX: %4\n" )
 		.arg( key.key().toStringInternal() ).arg( bGrab )
-		.arg( keyCodeX, 0, 16 ).arg( keyModX, 0, 16 );
+		.arg( keyCodeX, 0, 16 ).arg( keyModX, 0, 16 ));
 #endif
 	if( !keyCodeX )
 		return false;
@@ -278,11 +278,11 @@ void KGlobalAccelPrivate::fakeKeyPressed(unsigned int keyCode) {
 	KKey key = (keyCode, 0);
 
 	kdDebug(125) << "fakeKeyPressed: seek " << key.toStringInternal()
-		<< TQString( " keyCodeX: %1 keyCode: %2 keyModX: %3" )
-			.arg( codemod.code, 0, 16 ).arg( keyCode, 0, 16 ).arg( codemod.mod, 0, 16 ) << endl;
+		<< TQString(TQString( " keyCodeX: %1 keyCode: %2 keyModX: %3" )
+			.arg( codemod.code, 0, 16 ).arg( keyCode, 0, 16 ).arg( codemod.mod, 0, 16 )) << endl;
 
 	// Search for which accelerator activated this event:
-	if( !m_rgCodeModToAction.contains( codemod ) ) {
+	if( !m_rgCodeModToAction.tqcontains( codemod ) ) {
 #ifndef NDEBUG
 		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
 			KAccelAction* pAction = *it;
@@ -356,11 +356,11 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 	KKey key = keyNative;
 
 	kdDebug(125) << "x11KeyPress: seek " << key.toStringInternal()
-		<< TQString( " keyCodeX: %1 state: %2 keyModX: %3" )
-			.arg( codemod.code, 0, 16 ).arg( pEvent->xkey.state, 0, 16 ).arg( codemod.mod, 0, 16 ) << endl;
+		<< TQString(TQString( " keyCodeX: %1 state: %2 keyModX: %3" )
+			.arg( codemod.code, 0, 16 ).arg( pEvent->xkey.state, 0, 16 ).arg( codemod.mod, 0, 16 )) << endl;
 
 	// Search for which accelerator activated this event:
-	if( !m_rgCodeModToAction.contains( codemod ) ) {
+	if( !m_rgCodeModToAction.tqcontains( codemod ) ) {
 #ifndef NDEBUG
 		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
 			KAccelAction* pAction = *it;
@@ -407,23 +407,23 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
 	if( rexPassIndex.search( pAction->methodSlotPtr() ) >= 0 && rexIndex.search( pAction->name() ) >= 0 ) {
 		int n = rexIndex.cap(1).toInt();
 		kdDebug(125) << "Calling " << pAction->methodSlotPtr() << " int = " << n << endl;
-                int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
+                int slot_id = pAction->objSlotPtr()->tqmetaObject()->tqfindSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 ) {
-                    QUObject o[2];
-                    static_QUType_int.set(o+1,n);
+                    TQUObject o[2];
+                    static_TQUType_int.set(o+1,n);
                     const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
                 }
 	} else if( rexPassInfo.search( pAction->methodSlotPtr() ) ) {
-                int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
+                int slot_id = pAction->objSlotPtr()->tqmetaObject()->tqfindSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 ) {
-                    QUObject o[4];
-                    static_QUType_QString.set(o+1,pAction->name());
-                    static_QUType_QString.set(o+2,pAction->label());
-                    static_QUType_ptr.set(o+3,&seq);
+                    TQUObject o[4];
+                    static_TQUType_TQString.set(o+1,pAction->name());
+                    static_TQUType_TQString.set(o+2,pAction->label());
+                    static_TQUType_ptr.set(o+3,&seq);
                     const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
                 }
 	} else {
-                int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
+                int slot_id = pAction->objSlotPtr()->tqmetaObject()->tqfindSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 )
                     const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, 0 );
 	}

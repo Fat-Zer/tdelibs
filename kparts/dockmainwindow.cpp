@@ -62,7 +62,7 @@ DockMainWindow::DockMainWindow( TQWidget* parent, const char *name, WFlags f )
   : KDockMainWindow( parent, name, f )
 {
   d = new DockMainWindowPrivate();
-  PartBase::setPartObject( this );
+  PartBase::setPartObject( TQT_TQOBJECT(this) );
 }
 
 DockMainWindow::~DockMainWindow()
@@ -72,7 +72,7 @@ DockMainWindow::~DockMainWindow()
 
 void DockMainWindow::createGUI( Part * part )
 {
-  kdDebug(1000) << TQString("DockMainWindow::createGUI for %1").arg(part?part->name():"0L") << endl;
+  kdDebug(1000) << TQString(TQString("DockMainWindow::createGUI for %1").arg(part?part->name():"0L")) << endl;
 
   KXMLGUIFactory *factory = guiFactory();
 
@@ -82,7 +82,7 @@ void DockMainWindow::createGUI( Part * part )
 
   if ( d->m_activePart )
   {
-    kdDebug(1000) << TQString("deactivating GUI for %1").arg(d->m_activePart->name()) << endl;
+    kdDebug(1000) << TQString(TQString("deactivating GUI for %1").arg(d->m_activePart->name())) << endl;
 
     GUIActivateEvent ev( false );
     TQApplication::sendEvent( d->m_activePart, &ev );
@@ -97,7 +97,7 @@ void DockMainWindow::createGUI( Part * part )
 
   if ( !d->m_bShellGUIActivated )
   {
-    loadPlugins( this, this, KGlobal::instance() );
+    loadPlugins( TQT_TQOBJECT(this), this, KGlobal::instance() );
     createShellGUI();
     d->m_bShellGUIActivated = true;
   }

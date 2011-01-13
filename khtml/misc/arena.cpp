@@ -143,7 +143,7 @@ void* ArenaAllocate(ArenaPool *pool, unsigned int nb)
     assert((nb & pool->mask) == 0);
 #endif
 
-    nb = (uword)ARENA_ALIGN(pool, nb); /* force alignment */
+    nb = (uword)ARENA_ALIGN(pool, nb); /* force tqalignment */
 
     /* attempt to allocate from arenas at pool->current */
     {
@@ -197,7 +197,7 @@ void* ArenaAllocate(ArenaPool *pool, unsigned int nb)
         } else
 #endif
            sz = pool->arenasize > nb ? pool->arenasize : nb;
-        sz += sizeof *a + pool->mask;  /* header and alignment slop */
+        sz += sizeof *a + pool->mask;  /* header and tqalignment slop */
         pool->cumul += sz;
 #ifdef DEBUG_ARENA_MALLOC
         i++;

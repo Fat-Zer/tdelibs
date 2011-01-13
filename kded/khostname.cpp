@@ -82,7 +82,7 @@ KHostName::KHostName()
 
    display = ::getenv("DISPLAY");
    // strip the screen number from the display
-   display.replace(TQRegExp("\\.[0-9]+$"), "");
+   display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
    if (display.isEmpty())
    {
       fprintf(stderr, "%s", i18n("Error: DISPLAY environment variable not set.\n").local8Bit().data());
@@ -145,14 +145,14 @@ void KHostName::changeX()
       TQCString authName = entries[1];
       TQCString authKey = entries[2];
 
-      int i = netId.findRev(':');
+      int i = netId.tqfindRev(':');
       if (i == -1)
          continue;
       TQCString netDisplay = netId.mid(i);
       if (netDisplay != display)
          continue;
 
-      i = netId.find('/');
+      i = netId.tqfind('/');
       if (i == -1)
          continue;
 
@@ -208,7 +208,7 @@ void KHostName::changeDcop()
 
    if (!newName.isEmpty())
    {
-      int i = line1.findRev(':');
+      int i = line1.tqfindRev(':');
       if (i == -1)
       {
          fprintf(stderr, "Warning: File '%s' has unexpected format.\n", fname.data());
@@ -299,8 +299,8 @@ void KHostName::changeDcop()
 void KHostName::changeStdDirs(const TQCString &type)
 {
    // We make links to the old dirs cause we can't delete the old dirs.
-   TQCString oldDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localkdedir()).arg(type).arg(oldName));
-   TQCString newDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localkdedir()).arg(type).arg(newName));
+   TQCString oldDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localkdedir()).arg(type.data()).arg(oldName.data()));
+   TQCString newDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localkdedir()).arg(type.data()).arg(newName.data()));
 
    KDE_struct_stat st_buf;
 
@@ -340,7 +340,7 @@ void KHostName::changeSessionManager()
       fprintf(stderr, "Warning: No session management specified.\n");
       return;
    }
-   int i = sm.findRev(':');
+   int i = sm.tqfindRev(':');
    if ((i == -1) || (sm.left(6) != "local/"))
    {
       fprintf(stderr, "Warning: Session Management socket '%s' has unexpected format.\n", sm.data());

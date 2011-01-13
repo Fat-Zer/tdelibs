@@ -4,7 +4,7 @@
 #include <tqlabel.h>
 #include <kdualcolorbutton.h>
 
-class KDualColorWidget : public QWidget
+class KDualColorWidget : public TQWidget
 {
     Q_OBJECT
 public:

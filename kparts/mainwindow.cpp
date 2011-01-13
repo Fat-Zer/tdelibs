@@ -61,21 +61,21 @@ MainWindow::MainWindow( TQWidget* parent,  const char *name, WFlags f )
     : KMainWindow( parent, name, f )
 {
   d = new MainWindowPrivate();
-  PartBase::setPartObject( this );
+  PartBase::setPartObject( TQT_TQOBJECT(this) );
 }
 
 MainWindow::MainWindow( const char *name, WFlags f )
   : KMainWindow( 0L, name, f )
 {
   d = new MainWindowPrivate();
-  PartBase::setPartObject( this );
+  PartBase::setPartObject( TQT_TQOBJECT(this) );
 }
 
 MainWindow::MainWindow( int cflags, TQWidget* parent,  const char *name, WFlags f )
     : KMainWindow( cflags, parent, name, f )
 {
   d = new MainWindowPrivate();
-  PartBase::setPartObject( this );
+  PartBase::setPartObject( TQT_TQOBJECT(this) );
 }
 
 MainWindow::~MainWindow()
@@ -115,7 +115,7 @@ void MainWindow::createGUI( Part * part )
 
   if ( !d->m_bShellGUIActivated )
   {
-    loadPlugins( this, this, KGlobal::instance() );
+    loadPlugins( TQT_TQOBJECT(this), this, KGlobal::instance() );
     createShellGUI();
     d->m_bShellGUIActivated = true;
   }

@@ -76,17 +76,17 @@ TQDataStream& KIO::operator<< (TQDataStream& s, const AuthInfo& a)
 {
     s << a.url << a.username << a.password << a.prompt << a.caption
       << a.comment << a.commentLabel << a.realmValue << a.digestInfo
-      << Q_UINT8(a.verifyPath ? 1:0) << Q_UINT8(a.readOnly ? 1:0)
-      << Q_UINT8(a.keepPassword ? 1:0) << Q_UINT8(a.modified ? 1:0);
+      << TQ_UINT8(a.verifyPath ? 1:0) << TQ_UINT8(a.readOnly ? 1:0)
+      << TQ_UINT8(a.keepPassword ? 1:0) << TQ_UINT8(a.modified ? 1:0);
     return s;
 }
 
 TQDataStream& KIO::operator>> (TQDataStream& s, AuthInfo& a)
 {
-    Q_UINT8 verify = 0;
-    Q_UINT8 ro = 0;
-    Q_UINT8 keep = 0;
-    Q_UINT8 mod  = 0;
+    TQ_UINT8 verify = 0;
+    TQ_UINT8 ro = 0;
+    TQ_UINT8 keep = 0;
+    TQ_UINT8 mod  = 0;
 
     s >> a.url >> a.username >> a.password >> a.prompt >> a.caption
       >> a.comment >> a.commentLabel >> a.realmValue >> a.digestInfo
@@ -146,7 +146,7 @@ bool NetRC::lookup( const KURL& url, AutoLogin& login, bool userealnetrc,
       return false;
   }
 
-  if ( !loginMap.contains( type ) )
+  if ( !loginMap.tqcontains( type ) )
     return false;
 
   LoginList l = loginMap[type];
@@ -158,7 +158,7 @@ bool NetRC::lookup( const KURL& url, AutoLogin& login, bool userealnetrc,
     AutoLogin &log = *it;
 
     if ( (mode & defaultOnly) == defaultOnly &&
-          log.machine == TQString::fromLatin1("default") &&
+          log.machine == TQString::tqfromLatin1("default") &&
           (login.login.isEmpty() || login.login == log.login) )
     {
       login.type = log.type;
@@ -169,7 +169,7 @@ bool NetRC::lookup( const KURL& url, AutoLogin& login, bool userealnetrc,
     }
 
     if ( (mode & presetOnly) == presetOnly &&
-          log.machine == TQString::fromLatin1("preset") &&
+          log.machine == TQString::tqfromLatin1("preset") &&
           (login.login.isEmpty() || login.login == log.login) )
     {
       login.type = log.type;
@@ -237,7 +237,7 @@ TQString NetRC::extract( const char* buf, const char* key, int& pos )
       if ( idx > start )
       {
         pos = idx;
-        return TQString::fromLatin1( buf+start, idx-start);
+        return TQString::tqfromLatin1( buf+start, idx-start);
       }
     }
   }
@@ -280,7 +280,7 @@ bool NetRC::parse( int fd )
       while( buf[tail-1] == '\n' || buf[tail-1] =='\r' )
         tail--;
 
-      TQString mac = TQString::fromLatin1(buf, tail).stripWhiteSpace();
+      TQString mac = TQString::tqfromLatin1(buf, tail).stripWhiteSpace();
       if ( !mac.isEmpty() )
         loginMap[type][index].macdef[macro].append( mac );
 
@@ -294,12 +294,12 @@ bool NetRC::parse( int fd )
       if (strncasecmp(buf+pos, "default", 7) == 0 )
       {
         pos += 7;
-        l.machine = TQString::fromLatin1("default");
+        l.machine = TQString::tqfromLatin1("default");
       }
       else if (strncasecmp(buf+pos, "preset", 6) == 0 )
       {
         pos += 6;
-        l.machine = TQString::fromLatin1("preset");
+        l.machine = TQString::tqfromLatin1("preset");
       }
     }
     // kdDebug() << "Machine: " << l.machine << endl;
@@ -314,7 +314,7 @@ bool NetRC::parse( int fd )
 
     type = l.type = extract( buf, "type", pos );
     if ( l.type.isEmpty() && !l.machine.isEmpty() )
-      type = l.type = TQString::fromLatin1("ftp");
+      type = l.type = TQString::tqfromLatin1("ftp");
     // kdDebug() << "Type: " << l.type << endl;
 
     macro = extract( buf, "macdef", pos );

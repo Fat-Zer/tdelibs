@@ -300,7 +300,7 @@ bool KJavaProcess::invokeJVM()
     TQString argStr;
     TQTextOStream stream( &argStr );
     const TQValueList<TQCString> args = javaProcess->args();
-    qCopy( args.begin(), args.end(), TQTextOStreamIterator<TQCString>( stream, " " ) );
+    tqCopy( args.begin(), args.end(), TQTextOStreamIterator<TQCString>( stream, " " ) );
     kdDebug(6100) << argStr << endl;
 
     KProcess::Communication flags =  (KProcess::Communication)

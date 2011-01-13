@@ -49,7 +49,7 @@ class TQToolButton;
   * @short Internal class, only used on Win32.
   * This class provides a label widget that can process mouse click events.
   */
-class KMDI_EXPORT KMdiWin32IconButton : public QLabel
+class KMDI_EXPORT KMdiWin32IconButton : public TQLabel
 {
 	Q_OBJECT
 public:
@@ -68,7 +68,7 @@ signals:
  * @short a TQCustomEvent for move
  * This special event will be useful, to inform view about child frame event.
  */
-class KMDI_EXPORT KMdiChildFrmMoveEvent : public QCustomEvent
+class KMDI_EXPORT KMdiChildFrmMoveEvent : public TQCustomEvent
 {
 public:
 	KMdiChildFrmMoveEvent( TQMoveEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_Move ) ), e ) {}
@@ -80,7 +80,7 @@ public:
  * @short a TQCustomEvent for begin of dragging
  * This special event will be useful, to inform view about child frame event.
  */
-class KMDI_EXPORT KMdiChildFrmDragBeginEvent : public QCustomEvent
+class KMDI_EXPORT KMdiChildFrmDragBeginEvent : public TQCustomEvent
 {
 public:
 	KMdiChildFrmDragBeginEvent( TQMouseEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_DragBegin ) ), e ) {}
@@ -91,7 +91,7 @@ public:
  * @short a TQCustomEvent for end of dragging
  * This special event will be useful, to inform view about child frame event.
  */
-class KMDI_EXPORT KMdiChildFrmDragEndEvent : public QCustomEvent
+class KMDI_EXPORT KMdiChildFrmDragEndEvent : public TQCustomEvent
 {
 public:
 	KMdiChildFrmDragEndEvent( TQMouseEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_DragEnd ) ), e ) {}
@@ -102,7 +102,7 @@ public:
  * @short a TQCustomEvent for begin of resizing
  * This special event will be useful, to inform view about child frame event.
  */
-class KMDI_EXPORT KMdiChildFrmResizeBeginEvent : public QCustomEvent
+class KMDI_EXPORT KMdiChildFrmResizeBeginEvent : public TQCustomEvent
 {
 public:
 	KMdiChildFrmResizeBeginEvent( TQMouseEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_ResizeBegin ) ), e ) {}
@@ -113,7 +113,7 @@ public:
  * @short a TQCustomEvent for end of resizing
  * This special event will be useful, to inform view about child frame event.
  */
-class KMDI_EXPORT KMdiChildFrmResizeEndEvent : public QCustomEvent
+class KMDI_EXPORT KMdiChildFrmResizeEndEvent : public TQCustomEvent
 {
 public:
 	KMdiChildFrmResizeEndEvent( TQMouseEvent *e ) : TQCustomEvent( TQEvent::Type( TQEvent::User + int( KMdi::EV_ResizeEnd ) ), e ) {}
@@ -127,7 +127,7 @@ class KMdiChildFrmPrivate;
   * It's an MDI child frame widget. It contains a view widget and a frame caption. Usually you derive from its view.
   */ 
 //------------------------------------------------------------------------------
-class KMDI_EXPORT KMdiChildFrm : public QFrame
+class KMDI_EXPORT KMdiChildFrm : public TQFrame
 {
 	friend class KMdiChildArea;
 	friend class KMdiChildFrmCaption;

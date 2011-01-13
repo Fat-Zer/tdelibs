@@ -113,7 +113,7 @@ protected:
 
 private:
   TQStringList m_patterns;
-  TQValueVector<Q_INT32> m_pattern_offsets;
+  TQValueVector<TQ_INT32> m_pattern_offsets;
 protected:
   virtual void virtual_hook( int id, void* data );
 private:

@@ -303,7 +303,7 @@ static void replace(TQString &s, const TQString &needle, const TQString &with)
   int pos=0;
   while (1)
   {
-    pos=s.find(needle, pos);
+    pos=s.tqfind(needle, pos);
     if (pos==-1) break;
     s.replace(pos, needle.length(), with);
     pos+=with.length();
@@ -578,7 +578,7 @@ bool KateCommands::Character::exec (Kate::View *view, const TQString &_cmd, TQSt
     view->insertText(TQString(buf));
   }
   else
-  { // do the unicode thing
+  { // do the tqunicode thing
     TQChar c(number);
     view->insertText(TQString(&c, 1));
   }
@@ -593,10 +593,10 @@ bool KateCommands::Date::exec (Kate::View *view, const TQString &cmd, TQString &
   if (cmd.left(4) != "date")
     return false;
 
-  if (TQDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)).length() > 0)
-    view->insertText(TQDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)));
+  if (TQDateTime::tqcurrentDateTime().toString(cmd.mid(5, cmd.length()-5)).length() > 0)
+    view->insertText(TQDateTime::tqcurrentDateTime().toString(cmd.mid(5, cmd.length()-5)));
   else
-    view->insertText(TQDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    view->insertText(TQDateTime::tqcurrentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
 
   return true;
 }

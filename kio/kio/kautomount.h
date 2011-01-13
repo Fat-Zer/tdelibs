@@ -24,6 +24,10 @@
 
 #include <kdelibs_export.h>
 
+#ifdef Q_MOC_RUN
+#define Q_OS_UNIX
+#endif // Q_MOC_RUN
+
 #ifdef Q_OS_UNIX
 
 namespace KIO {
@@ -38,7 +42,7 @@ class Job;
  *
  * @short This class implements synchronous mounting of devices.
  */
-class KIO_EXPORT KAutoMount : public QObject
+class KIO_EXPORT KAutoMount : public TQObject
 {
   Q_OBJECT
   friend class gcc_gives_a_warning_without_this;
@@ -83,7 +87,7 @@ private:
  *
  * @short This class implements synchronous unmounting of devices,
  */
-class KIO_EXPORT KAutoUnmount : public QObject
+class KIO_EXPORT KAutoUnmount : public TQObject
 {
   Q_OBJECT
   friend class gcc_gives_a_warning_without_this;

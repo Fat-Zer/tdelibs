@@ -163,7 +163,7 @@ void KComboBox::makeCompletion( const TQString& text )
         if( text.isNull() || !listBox() )
             return;
 
-        const int index = listBox()->index( listBox()->findItem( text ) );
+        const int index = listBox()->index( listBox()->tqfindItem( text ) );
         if( index >= 0 )
             setCurrentItem( index );
     }
@@ -764,14 +764,14 @@ KHistoryComboEditor::KHistoryComboEditor( const TQStringList& entries, TQWidget 
         new TQListViewItem( m_pListView, *it );
     }
 
-    m_pListView->setMinimumSize( m_pListView->sizeHint() );
+    m_pListView->setMinimumSize( m_pListView->tqsizeHint() );
 
     connect( m_pListView, TQT_SIGNAL( selectionChanged( TQListViewItem * ) ),
              this, TQT_SLOT( slotSelectionChanged( TQListViewItem * ) ) );
 
     enableButton( KDialogBase::User1, false );
 
-    resize( sizeHint() );
+    resize( tqsizeHint() );
 }
 
 KHistoryComboEditor::~KHistoryComboEditor()

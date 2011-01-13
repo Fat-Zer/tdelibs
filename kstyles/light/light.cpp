@@ -21,10 +21,13 @@
 */
 
 #include <tqstyleplugin.h>
+#include <tqimage.h>
+#include <tqapplication.h>
+
 #include "lightstyle-v2.h"
 #include "lightstyle-v3.h"
 
-class LightStylePlugin : public QStylePlugin
+class LightStylePlugin : public TQStylePlugin
 {
 public:
     LightStylePlugin();

@@ -94,7 +94,7 @@ class TQPopupMenu;
  *
  * @author Matthias Elter <elter@kde.org>
  **/
-class KDEUI_EXPORT KPanelApplet : public QFrame
+class KDEUI_EXPORT KPanelApplet : public TQFrame
 {
     Q_OBJECT
 
@@ -224,7 +224,7 @@ public:
     /**
      * @internal
      **/
-    void setAlignment( Alignment a );
+    void tqsetAlignment( Alignment a );
 
 signals:
     /**
@@ -308,9 +308,9 @@ protected:
      **/
     Position position() const { return _position; }
     /**
-     * @return the applet's alignment. (top/left, center, or bottom/right)
+     * @return the applet's tqalignment. (top/left, center, or bottom/right)
      **/
-    Alignment alignment() const { return _alignment; }
+    Alignment tqalignment() const { return _tqalignment; }
 
     /**
      * The panel on which this applet resides has changed its position.
@@ -320,11 +320,11 @@ protected:
     virtual void positionChange( Position p );
 
     /**
-     * The panel on which this applet resides has changed its alignment.
+     * The panel on which this applet resides has changed its tqalignment.
      * Reimplement this change handler in order to adjust the look of your
      * applet.
      **/
-    virtual void alignmentChange( Alignment /*a*/ ) {}
+    virtual void tqalignmentChange( Alignment /*a*/ ) {}
 
     /**
      * Use this method to set the custom menu for this applet so that it can be shown
@@ -383,7 +383,7 @@ protected:
 private:
     Type         _type;
     Position     _position;
-    Alignment    _alignment;
+    Alignment    _tqalignment;
     KConfig*     _config;
     int          _actions;
 protected:

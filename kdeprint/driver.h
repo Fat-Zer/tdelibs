@@ -159,7 +159,7 @@ public:
 	DriverItem* createTreeView(TQListView *parent);
 	void addConstraint(DrConstraint *c)		{ m_constraints.append(c); }
 	int checkConstraints();
-	DrPageSize* findPageSize(const TQString& name)	{ return m_pagesizes.find(name); }
+	DrPageSize* findPageSize(const TQString& name)	{ return m_pagesizes.tqfind(name); }
 	void addPageSize(DrPageSize *sz);
 	void removeOptionGlobally(const TQString& name);
 	void removeGroupGlobally(DrGroup *grp);

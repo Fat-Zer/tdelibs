@@ -28,14 +28,14 @@ class KArrowButtonPrivate;
  * @short Draws a button with an arrow.
  *
  * Draws a button which shows an arrow pointing into a certain direction. The
- * arrow's alignment on the button depends on the direction it's pointing to,
+ * arrow's tqalignment on the button depends on the direction it's pointing to,
  * e.g. a left arrow is aligned at the left border, a upwards arrow at the top
  * border. This class honors the currently configured KStyle when drawing
  * the arrow.
  *
  * @author Frerich Raabe
  */
-class KDEUI_EXPORT KArrowButton : public QPushButton
+class KDEUI_EXPORT KArrowButton : public TQPushButton
 {
 	Q_OBJECT
 	Q_PROPERTY( int arrowType READ arrowTp WRITE setArrowTp )
@@ -59,7 +59,7 @@ class KDEUI_EXPORT KArrowButton : public QPushButton
 		/**
 		 * Reimplemented from TQPushButton.
 		 */
-		virtual TQSize sizeHint() const;
+		virtual TQSize tqsizeHint() const;
 
 		/**
 		* Returns the arrow type
@@ -67,12 +67,12 @@ class KDEUI_EXPORT KArrowButton : public QPushButton
 		*/
 		Qt::ArrowType arrowType() const;
 
-		// hacks for moc braindamages with enums
+		// hacks for tqmoc braindamages with enums
 		int arrowTp() const { return (int) arrowType(); }
 		void setArrowTp( int tp ) { setArrowType( (Qt::ArrowType) tp ); }
 	public slots:
 		/**
-		 * Defines in what direction the arrow is pointing to. Will repaint the
+		 * Defines in what direction the arrow is pointing to. Will tqrepaint the
 		 * button if necessary.
 		 *
 		 * @param a The direction this arrow should be pointing in

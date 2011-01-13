@@ -62,7 +62,7 @@ void VCard::addLine( const VCardLine& line )
 
 VCardLine::List VCard::lines( const TQString& identifier ) const
 {
-  LineMap::ConstIterator it = mLineMap.find( identifier );
+  LineMap::ConstIterator it = mLineMap.tqfind( identifier );
   if ( it == mLineMap.end() )
     return VCardLine::List();
 
@@ -71,7 +71,7 @@ VCardLine::List VCard::lines( const TQString& identifier ) const
 
 VCardLine VCard::line( const TQString& identifier ) const
 {
-  LineMap::ConstIterator it = mLineMap.find( identifier );
+  LineMap::ConstIterator it = mLineMap.tqfind( identifier );
   if ( it == mLineMap.end() )
     return VCardLine();
 
@@ -97,7 +97,7 @@ void VCard::setVersion( Version version )
 
 VCard::Version VCard::version() const
 {
-  LineMap::ConstIterator versionEntry = mLineMap.find( "VERSION" );
+  LineMap::ConstIterator versionEntry = mLineMap.tqfind( "VERSION" );
   if ( versionEntry == mLineMap.end() )
     return v3_0;
 

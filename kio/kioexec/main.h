@@ -8,7 +8,7 @@
 
 namespace KIO { class Job; }
 
-class KIOExec : public QObject
+class KIOExec : public TQObject
 {
     Q_OBJECT
 public:

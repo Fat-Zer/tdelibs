@@ -62,7 +62,7 @@ bool KSambaSharePrivate::load() {
  * @return wether a smb.conf was found.
  **/
 bool KSambaSharePrivate::findSmbConf() {
-  KSimpleConfig config(TQString::fromLatin1(FILESHARECONF),true);
+  KSimpleConfig config(TQString::tqfromLatin1(FILESHARECONF),true);
   smbConf = config.readEntry("SMBCONF");
 
   if ( TQFile::exists(smbConf) )
@@ -144,7 +144,7 @@ bool KSambaSharePrivate::readSmbConf() {
     }
 
     // parameter
-    int i = completeLine.find('=');
+    int i = completeLine.tqfind('=');
 
     if (i>-1)
     {
@@ -203,7 +203,7 @@ bool KSambaShare::isDirectoryShared( const TQString & path ) const {
   if ( path[path.length()-1] != '/' )
        fixedPath += '/';
   
-  return d->sharedPaths.find(fixedPath) != 0;
+  return d->sharedPaths.tqfind(fixedPath) != 0;
 }
 
 TQStringList KSambaShare::sharedDirectories() const {

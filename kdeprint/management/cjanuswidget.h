@@ -28,7 +28,7 @@ class TQWidgetStack;
 class TQLabel;
 class TQListBoxItem;
 
-class CJanusWidget : public QWidget
+class CJanusWidget : public TQWidget
 {
 	Q_OBJECT
 public:

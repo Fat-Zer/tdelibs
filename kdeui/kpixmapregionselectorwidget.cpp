@@ -47,7 +47,7 @@ KPixmapRegionSelectorWidget::KPixmapRegionSelectorWidget( TQWidget *parent,
 
    vboxLayout->addStretch();
    m_label = new TQLabel(this, "pixmapHolder");
-   m_label->setBackgroundMode( Qt::NoBackground );
+   m_label->setBackgroundMode( TQt::NoBackground );
    m_label->installEventFilter( this );
 
    vboxLayout->addWidget(m_label);
@@ -108,7 +108,7 @@ void KPixmapRegionSelectorWidget::updatePixmap()
      m_linedPixmap = m_originalPixmap;
 
      painter.begin(&m_linedPixmap);
-     painter.setRasterOp( Qt::XorROP );
+     painter.setRasterOp( TQt::XorROP );
      painter.fillRect(0,0,m_linedPixmap.width(), m_linedPixmap.height(), 
                   TQBrush( TQColor(255,255,255), Qt::BDiagPattern) );
      painter.end();
@@ -125,7 +125,7 @@ void KPixmapRegionSelectorWidget::updatePixmap()
         m_originalPixmap, m_selectedRegion );
 
    painter.setPen( TQColor(255,255,255) );
-   painter.setRasterOp( Qt::XorROP );
+   painter.setRasterOp( TQt::XorROP );
 
    painter.drawRect( m_selectedRegion );
 
@@ -141,13 +141,13 @@ KPopupMenu *KPixmapRegionSelectorWidget::createPopupMenu()
    popup->insertTitle(i18n("Image Operations"));
    
    KAction *action = new KAction(i18n("&Rotate Clockwise"), "rotate_cw",
-                                0, this, TQT_SLOT(rotateClockwise()),
-                                popup, "rotateclockwise");
+                                0, TQT_TQOBJECT(this), TQT_SLOT(rotateClockwise()),
+                                TQT_TQOBJECT(popup), "rotateclockwise");
    action->plug(popup);
 
    action = new KAction(i18n("Rotate &Counterclockwise"), "rotate_ccw",
-                                0, this, TQT_SLOT(rotateCounterclockwise()),
-                                popup, "rotatecounterclockwise");
+                                0, TQT_TQOBJECT(this), TQT_SLOT(rotateCounterclockwise()),
+                                TQT_TQOBJECT(popup), "rotatecounterclockwise");
    action->plug(popup);
  
 /*
@@ -213,7 +213,7 @@ bool KPixmapRegionSelectorWidget::eventFilter(TQObject *obj, TQEvent *ev)
       TQMouseEvent *mev= (TQMouseEvent *)(ev);
       //kdDebug() << TQString("click at  %1,%2").arg( mev->x() ).arg( mev->y() ) << endl;
 
-      if ( mev->button() == RightButton )
+      if ( mev->button() == Qt::RightButton )
       {
          KPopupMenu *popup = createPopupMenu( );
          popup->exec( mev->globalPos() );
@@ -426,7 +426,7 @@ void KPixmapRegionSelectorWidget::setMaximumWidgetSize(int width, int height)
    {
          /* We have to resize the pixmap to get it complete on the screen */
          TQImage image=m_originalPixmap.convertToImage();
-         m_originalPixmap.convertFromImage( image.smoothScale( width, height, TQImage::ScaleMin ) );
+         m_originalPixmap.convertFromImage( image.smoothScale( width, height, TQ_ScaleMin ) );
          double oldZoomFactor = m_zoomFactor;
          m_zoomFactor=m_originalPixmap.width()/(double)m_unzoomedPixmap.width();
 

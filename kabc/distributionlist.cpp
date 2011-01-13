@@ -250,7 +250,7 @@ bool DistributionListManager::save()
       value.append( (*it).email );
     }
 
-    if ( d->mMissingEntries.find( list->name() ) != d->mMissingEntries.end() ) {
+    if ( d->mMissingEntries.tqfind( list->name() ) != d->mMissingEntries.end() ) {
       const MissingEntryList missList = d->mMissingEntries[ list->name() ];
       MissingEntryList::ConstIterator missIt;
       for ( missIt = missList.begin(); missIt != missList.end(); ++missIt ) {
@@ -270,7 +270,7 @@ bool DistributionListManager::save()
 DistributionListWatcher* DistributionListWatcher::mSelf = 0;
 
 DistributionListWatcher::DistributionListWatcher()
- : TQObject( qApp, "DistributionListWatcher" )
+ : TQObject( tqApp, "DistributionListWatcher" )
 {
   mDirWatch = new KDirWatch;
   mDirWatch->addFile( locateLocal( "data", "kabc/distlists" ) );
@@ -287,7 +287,7 @@ DistributionListWatcher::~DistributionListWatcher()
 
 DistributionListWatcher *DistributionListWatcher::self()
 {
-  kdWarning( !qApp ) << "No TQApplication object available, you'll get a memleak!" << endl;
+  kdWarning( !tqApp ) << "No TQApplication object available, you'll get a memleak!" << endl;
 
   if ( !mSelf )
     mSelf = new DistributionListWatcher();

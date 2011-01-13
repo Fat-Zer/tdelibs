@@ -116,7 +116,7 @@ void KMRlprManager::loadPrintersConf(const TQString& filename)
 				if (w.count() > 4) printer->setLocation(w[4]);
 			}
 			printer->setState(KMPrinter::Idle);
-			printer->setDevice(TQString::fromLatin1("lpd://%1/%2").arg(w[1]).arg(w[2]));
+			printer->setDevice(TQString::tqfromLatin1("lpd://%1/%2").arg(w[1]).arg(w[2]));
 
 			addPrinter(printer);
 		}

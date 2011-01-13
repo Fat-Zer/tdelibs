@@ -62,7 +62,7 @@ static void crashHandler( int  )
 
 //----------------------------------------------------------------------------
 
-class DemoWindow : public QWidget
+class DemoWindow : public TQWidget
 {
 public:
     DemoWindow() : TQWidget()

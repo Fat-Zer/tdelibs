@@ -144,7 +144,7 @@ void CachedObject::deref(CachedObjectClient *c)
     assert( c );
     assert( m_clients.count() );
     assert( !canDelete() );
-    assert( m_clients.find( c ) );
+    assert( m_clients.tqfind( c ) );
 
     Cache::flush();
 
@@ -213,7 +213,7 @@ CachedCSSStyleSheet::CachedCSSStyleSheet(DocLoader* dl, const DOMString &url, KI
     : CachedObject(url, CSSStyleSheet, _cachePolicy, 0)
 {
     // Set the type we want (probably css or xml)
-    TQString ah = TQString::fromLatin1( accept );
+    TQString ah = TQString::tqfromLatin1( accept );
     if ( !ah.isEmpty() )
         ah += ",";
     ah += "*/*;q=0.1";
@@ -327,7 +327,7 @@ CachedScript::CachedScript(DocLoader* dl, const DOMString &url, KIO::CacheContro
     // It's javascript we want.
     // But some websites think their scripts are <some wrong mimetype here>
     // and refuse to serve them if we only accept application/x-javascript.
-    setAccept( TQString::fromLatin1("*/*") );
+    setAccept( TQString::tqfromLatin1("*/*") );
     // load the file
     Cache::loader()->load(dl, this, false);
     m_loading = true;
@@ -476,7 +476,7 @@ CachedImage::CachedImage(DocLoader* dl, const DOMString &url, KIO::CacheControl 
     pixPart = 0;
     bg = 0;
     scaled = 0;
-    bgColor = qRgba( 0, 0, 0, 0xFF );
+    bgColor = tqRgba( 0, 0, 0, 0xFF );
     typeChecked = false;
     isFullyTransparent = false;
     monochrome = false;
@@ -526,7 +526,7 @@ void CachedImage::deref( CachedObjectClient *c )
 
 const TQPixmap &CachedImage::tiled_pixmap(const TQColor& newc, int xWidth, int xHeight)
 {
-    static QRgb bgTransparent = qRgba( 0, 0, 0, 0xFF );
+    static QRgb bgTransparent = tqRgba( 0, 0, 0, 0xFF );
 
     TQSize s(pixmap_size());
     int w = xWidth;
@@ -709,8 +709,8 @@ void CachedImage::movieStatus(int status)
         const TQImage& im = m->frameImage();
         monochrome = ( ( im.depth() <= 8 ) && ( im.numColors() - int( im.hasAlphaBuffer() ) <= 2 ) );
         for (int i = 0; monochrome && i < im.numColors(); ++i)
-            if (im.colorTable()[i] != qRgb(0xff, 0xff, 0xff) &&
-                im.colorTable()[i] != qRgb(0x00, 0x00, 0x00))
+            if (im.colorTable()[i] != tqRgb(0xff, 0xff, 0xff) &&
+                im.colorTable()[i] != tqRgb(0x00, 0x00, 0x00))
                 monochrome = false;
         if( (im.width() < 5 || im.height() < 5) && im.hasAlphaBuffer()) // only evaluate for small images
         {
@@ -816,7 +816,7 @@ void CachedImage::clear()
     delete p;   p = 0;
     delete bg;  bg = 0;
     delete scaled;  scaled = 0;
-    bgColor = qRgba( 0, 0, 0, 0xff );
+    bgColor = tqRgba( 0, 0, 0, 0xff );
     bgSize = TQSize(-1,-1);
     delete pixPart; pixPart = 0;
 
@@ -981,7 +981,7 @@ void DocLoader::setExpireDate(time_t _expireDate, bool relative)
 
 void DocLoader::insertCachedObject( CachedObject* o ) const
 {
-    if ( m_docObjects.find(o) )
+    if ( m_docObjects.tqfind(o) )
         return;
     m_docObjects.insert( o, o );
     if ( m_docObjects.count() > 3 * m_docObjects.size() )
@@ -1167,7 +1167,7 @@ void Loader::servePendingRequests()
             {
                 job->addMetaData( "cross-domain", part->toplevelURL().url() );
                 if (part->widget())
-                    job->setWindow (part->widget()->topLevelWidget());
+                    job->setWindow (part->widget()->tqtopLevelWidget());
             }
         }
 

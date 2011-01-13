@@ -106,7 +106,7 @@ class KKeyChooserItem : public KListViewItem
 };
 
 // WhatsThis on KKeyChooserItems
-class KKeyChooserWhatsThis : public QWhatsThis
+class KKeyChooserWhatsThis : public TQWhatsThis
 {
 public:
     KKeyChooserWhatsThis( TQListView* listview )
@@ -340,7 +340,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   // fill up the split list box with the action/key pairs.
   //
   TQGridLayout *stackLayout = new TQGridLayout(2, 2, 2);
-  topLayout->addLayout( stackLayout, 10 );
+  topLayout->addLayout( TQT_TQLAYOUT(stackLayout), 10 );
   stackLayout->setRowStretch( 1, 10 ); // Only list will stretch
 
   d->pList = new KListView( this );
@@ -423,7 +423,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   d->pbtnShortcut = new KKeyButton(d->fCArea, "key");
   d->pbtnShortcut->setEnabled( false );
   connect( d->pbtnShortcut, TQT_SIGNAL(capturedShortcut(const KShortcut&)), TQT_SLOT(capturedShortcut(const KShortcut&)) );
-  grid->addRowSpacing( 1, d->pbtnShortcut->sizeHint().height() + 5 );
+  grid->addRowSpacing( 1, d->pbtnShortcut->tqsizeHint().height() + 5 );
 
   wtstr = i18n("Use this button to choose a new shortcut key. Once you click it, "
   		"you can press the key-combination which you would like to be assigned "
@@ -439,7 +439,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
 
   d->lInfo = new TQLabel(d->fCArea);
   //resize(0,0);
-  //d->lInfo->setAlignment( AlignCenter );
+  //d->lInfo->tqsetAlignment( AlignCenter );
   //d->lInfo->setEnabled( false );
   //d->lInfo->hide();
   grid->addMultiCellWidget( d->lInfo, 2, 2, 0, 3 );
@@ -532,7 +532,7 @@ void KKeyChooser::updateButtons()
 
 		d->pbtnShortcut->setShortcut( pItem->shortcut(), bQtShortcut );
 		//item->setText( 1, keyStrCfg );
-		pItem->repaint();
+		pItem->tqrepaint();
 		d->lInfo->setText( i18n("Default key:") + TQString(" %1").arg(keyStrDef.isEmpty() ? i18n("None") : keyStrDef) );
 
 		// Select the appropriate radio button.
@@ -601,7 +601,7 @@ void KKeyChooser::slotSettingsChanged( int category )
 
 void KKeyChooser::fontChange( const TQFont & )
 {
-        d->fCArea->setMinimumHeight( 4*d->pbtnShortcut->sizeHint().height() );
+        d->fCArea->setMinimumHeight( 4*d->pbtnShortcut->tqsizeHint().height() );
 
         int widget_width = 0;
 
@@ -1010,7 +1010,7 @@ void KKeyChooserItem::setShortcut( const KShortcut& cut )
 {
 	m_cut = cut;
 	m_bModified = (m_cut != m_pList->shortcut(m_iAction));
-	listView()->repaintItem( this );
+	listView()->tqrepaintItem( this );
 }
 
 void KKeyChooserItem::commitChanges()

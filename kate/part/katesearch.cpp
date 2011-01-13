@@ -81,7 +81,7 @@ void KateSearch::createActions( KActionCollection* ac )
 void KateSearch::addToList( TQStringList& list, const TQString& s )
 {
   if( list.count() > 0 ) {
-    TQStringList::Iterator it = list.find( s );
+    TQStringList::Iterator it = list.tqfind( s );
     if( *it != 0L )
       list.remove( it );
     if( list.count() >= 16 )
@@ -110,7 +110,7 @@ void KateSearch::find()
   }
 
   delete findDialog;
-  m_view->repaintText ();
+  m_view->tqrepaintText ();
 }
 
 void KateSearch::find( const TQString &pattern, long flags, bool add, bool shownotfound )
@@ -851,7 +851,7 @@ bool SearchCommand::exec(class Kate::View *view, const TQString &cmd, TQString &
     // Else, it's just one or two (space separated) words
     TQRegExp re_rep2("replace(?::([bceprsw]*))?\\s+(\\S+)(.*)");
 #define unbackslash(s) p=0;\
-while ( (p = pattern.find( '\\' + delim, p )) > -1 )\
+while ( (p = pattern.tqfind( '\\' + delim, p )) > -1 )\
 {\
   if ( !p || pattern[p-1] != '\\' )\
     pattern.remove( p, 1 );\

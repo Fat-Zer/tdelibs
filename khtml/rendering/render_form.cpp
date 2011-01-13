@@ -99,7 +99,7 @@ void RenderFormElement::layout()
     setNeedsLayout(false);
 }
 
-Qt::AlignmentFlags RenderFormElement::textAlignment() const
+TQ_Alignment RenderFormElement::textAlignment() const
 {
     switch (style()->textAlign()) {
         case LEFT:
@@ -155,8 +155,8 @@ void RenderCheckBox::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQCheckBox *cb = static_cast<TQCheckBox *>( m_widget );
-    TQSize s( cb->style().pixelMetric( TQStyle::PM_IndicatorWidth ),
-             cb->style().pixelMetric( TQStyle::PM_IndicatorHeight ) );
+    TQSize s( cb->style().tqpixelMetric( TQStyle::PM_IndicatorWidth ),
+             cb->style().tqpixelMetric( TQStyle::PM_IndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -207,8 +207,8 @@ void RenderRadioButton::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQRadioButton *rb = static_cast<TQRadioButton *>( m_widget );
-    TQSize s( rb->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
-             rb->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
+    TQSize s( rb->style().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
+             rb->style().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -260,17 +260,17 @@ void RenderSubmitButton::calcMinMaxWidth()
 
     bool empty = raw.isEmpty();
     if ( empty )
-        raw = TQString::fromLatin1("X");
+        raw = TQString::tqfromLatin1("X");
     TQFontMetrics fm = pb->fontMetrics();
     TQSize ts = fm.size( ShowPrefix, raw);
     TQSize s(pb->style().sizeFromContents( TQStyle::CT_PushButton, pb, ts )
             .expandedTo(TQApplication::globalStrut()));
-    int margin = pb->style().pixelMetric( TQStyle::PM_ButtonMargin, pb) +
-		 pb->style().pixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
+    int margin = pb->style().tqpixelMetric( TQStyle::PM_ButtonMargin, pb) +
+		 pb->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
     int w = ts.width() + margin;
     int h = s.height();
     if (pb->isDefault() || pb->autoDefault()) {
-	int dbw = pb->style().pixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
+	int dbw = pb->style().tqpixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
 	w += dbw;
     }
 
@@ -491,7 +491,7 @@ void RenderLineEdit::setStyle(RenderStyle* _style)
 {
     RenderFormElement::setStyle( _style );
 
-    widget()->setAlignment(textAlignment());
+    widget()->tqsetAlignment(textAlignment());
 }
 
 void RenderLineEdit::highLightWord( unsigned int length, unsigned int pos )
@@ -809,7 +809,7 @@ void RenderFileButton::calcMinMaxWidth()
                                              edit,
           TQSize(w + 2 + 2*edit->frameWidth(), kMax(h, 14) + 2 + 2*edit->frameWidth()))
         .expandedTo(TQApplication::globalStrut());
-    TQSize bs = static_cast<KURLRequester*>( m_widget )->minimumSizeHint() - edit->minimumSizeHint();
+    TQSize bs = static_cast<KURLRequester*>( m_widget )->tqminimumSizeHint() - edit->tqminimumSizeHint();
 
     setIntrinsicWidth( s.width() + bs.width() );
     setIntrinsicHeight( kMax(s.height(), bs.height()) );
@@ -1018,7 +1018,7 @@ void RenderSelect::updateFromElement()
                     DOMString label = optElem->getAttribute(ATTR_LABEL);
                     if (!label.isEmpty())
                         text = label.string();
-                    text = TQString::fromLatin1("    ")+text;
+                    text = TQString::tqfromLatin1("    ")+text;
                 }
 
                 if(m_useListBox) {
@@ -1107,14 +1107,14 @@ void RenderSelect::layout( )
         if(size < 1)
             size = kMin(static_cast<KListBox*>(m_widget)->count(), 10u);
 
-        width += 2*w->frameWidth() + w->verticalScrollBar()->sizeHint().width();
+        width += 2*w->frameWidth() + w->verticalScrollBar()->tqsizeHint().width();
         height = size*height + 2*w->frameWidth();
 
         setIntrinsicWidth( width );
         setIntrinsicHeight( height );
     }
     else {
-        TQSize s(m_widget->sizeHint());
+        TQSize s(m_widget->tqsizeHint());
         setIntrinsicWidth( s.width() );
         setIntrinsicHeight( s.height() );
     }
@@ -1450,7 +1450,7 @@ void TextAreaWidget::slotReplaceNext()
 
     if (!(m_replace->options() & KReplaceDialog::PromptOnReplace)) {
         viewport()->setUpdatesEnabled(true);
-        repaintChanged();
+        tqrepaintChanged();
     }
 
     if (res == KFind::NoMatch) { // at end
@@ -1651,10 +1651,10 @@ void RenderTextArea::calcMinMaxWidth()
     const TQFontMetrics &m = style()->fontMetrics();
     w->setTabStopWidth(8 * m.width(" "));
     TQSize size( kMax(element()->cols(), 1L)*m.width('x') + w->frameWidth() +
-                w->verticalScrollBar()->sizeHint().width(),
+                w->verticalScrollBar()->tqsizeHint().width(),
                 kMax(element()->rows(), 1L)*m.lineSpacing() + w->frameWidth()*4 +
                 (w->wordWrap() == TQTextEdit::NoWrap ?
-                 w->horizontalScrollBar()->sizeHint().height() : 0)
+                 w->horizontalScrollBar()->tqsizeHint().height() : 0)
         );
 
     setIntrinsicWidth( size.width() );
@@ -1670,7 +1670,7 @@ void RenderTextArea::setStyle(RenderStyle* _style)
     RenderFormElement::setStyle(_style);
 
     widget()->blockSignals(true);
-    widget()->setAlignment(textAlignment());
+    widget()->tqsetAlignment(textAlignment());
     widget()->blockSignals(false);
 
     scrollbarsStyled = false;
@@ -1738,13 +1738,13 @@ TQString RenderTextArea::text()
             paragraphText = paragraphText.left(pl); //Snip invented space.
             for (int l = 0; l < pl; ++l) {
                 if (lindex != w->lineOfChar(p, l)) {
-                    paragraphText.insert(l+ll++, TQString::fromLatin1("\n"));
+                    paragraphText.insert(l+ll++, TQString::tqfromLatin1("\n"));
                     lindex = w->lineOfChar(p, l);
                 }
             }
             txt += paragraphText;
             if (p < w->paragraphs() - 1)
-                txt += TQString::fromLatin1("\n");
+                txt += TQString::tqfromLatin1("\n");
         }
     }
     else

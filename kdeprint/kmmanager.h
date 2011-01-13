@@ -45,7 +45,7 @@ class PrinterFilter;
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT KMManager : public QObject
+class KDEPRINT_EXPORT KMManager : public TQObject
 {
 	Q_OBJECT
 

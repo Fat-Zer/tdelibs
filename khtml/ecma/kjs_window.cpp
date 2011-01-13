@@ -421,7 +421,7 @@ Window *Window::retrieveWindow(KParts::ReadOnlyPart *p)
   Object obj = Object::dynamicCast( retrieve( p ) );
 #ifndef NDEBUG
   // obj should never be null, except when javascript has been disabled in that part.
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(p);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(p);
   if ( part && part->jScriptEnabled() )
   {
     assert( obj.isValid() );
@@ -448,10 +448,10 @@ Window *Window::retrieveActive(ExecState *exec)
 Value Window::retrieve(KParts::ReadOnlyPart *p)
 {
   assert(p);
-  KHTMLPart * part = ::qt_cast<KHTMLPart *>(p);
+  KHTMLPart * part = ::tqqt_cast<KHTMLPart *>(p);
   KJSProxy *proxy = 0L;
   if (!part) {
-    part = ::qt_cast<KHTMLPart *>(p->parent());
+    part = ::tqqt_cast<KHTMLPart *>(p->parent());
     if (part)
       proxy = part->framejScript(p);
   } else
@@ -478,7 +478,7 @@ Location *Window::location() const
 
 ObjectImp* Window::frames( ExecState* exec ) const
 {
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if (part)
     return m_frames ? m_frames :
       (const_cast<Window*>(this)->m_frames = new FrameArray(exec, part));
@@ -516,7 +516,7 @@ bool Window::hasProperty(ExecState *exec, const Identifier &p) const
   if (Lookup::findEntry(&WindowTable, p))
     return true;
 
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if (!part)
       return false;
 
@@ -585,7 +585,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
   }
 
   const HashEntry* entry = Lookup::findEntry(&WindowTable, p);
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
 
   // properties that work on all windows
   if (entry) {
@@ -864,7 +864,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
       if (!part->widget())
         return Number(0);
-      KWin::WindowInfo inf = KWin::windowInfo(part->widget()->topLevelWidget()->winId());
+      KWin::WindowInfo inf = KWin::windowInfo(part->widget()->tqtopLevelWidget()->winId());
       return Number(entry->value == OuterHeight ?
                     inf.geometry().height() : inf.geometry().width());
 #else
@@ -1085,7 +1085,7 @@ void Window::put(ExecState* exec, const Identifier &propertyName, const Value &v
     default:
       break;
     }
-    KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+    KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
     if (part) {
     switch( entry->value ) {
     case Status: {
@@ -1222,7 +1222,7 @@ bool Window::toBoolean(ExecState *) const
 
 DOM::AbstractView Window::toAbstractView() const
 {
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if (!part)
     return DOM::AbstractView();
   return part->document().defaultView();
@@ -1240,7 +1240,7 @@ void Window::closeNow()
   if (m_frame.isNull() || m_frame->m_part.isNull()) {
     kdDebug(6070) << k_funcinfo << "part is deleted already" << endl;
   } else {
-    KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+    KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
     if (!part) {
       kdDebug(6070) << "closeNow on non KHTML part" << endl;
     } else {
@@ -1288,7 +1288,7 @@ bool Window::checkIsSafeScript(KParts::ReadOnlyPart *activePart) const
    if ( activePart == m_frame->m_part ) // Not calling from another frame, no problem.
      return true;
 
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if (!part)
     return true; // not a KHTMLPart
 
@@ -1301,7 +1301,7 @@ bool Window::checkIsSafeScript(KParts::ReadOnlyPart *activePart) const
     return false;
   }
 
-  KHTMLPart *activeKHTMLPart = ::qt_cast<KHTMLPart *>(activePart);
+  KHTMLPart *activeKHTMLPart = ::tqqt_cast<KHTMLPart *>(activePart);
   if (!activeKHTMLPart)
     return true; // not a KHTMLPart
 
@@ -1327,7 +1327,7 @@ bool Window::checkIsSafeScript(KParts::ReadOnlyPart *activePart) const
 
 void Window::setListener(ExecState *exec, int eventId, Value func)
 {
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if (!part || !isSafeScript(exec))
     return;
   DOM::DocumentImpl *doc = static_cast<DOM::DocumentImpl*>(part->htmlDocument().handle());
@@ -1339,7 +1339,7 @@ void Window::setListener(ExecState *exec, int eventId, Value func)
 
 Value Window::getListener(ExecState *exec, int eventId) const
 {
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if (!part || !isSafeScript(exec))
     return Undefined();
   DOM::DocumentImpl *doc = static_cast<DOM::DocumentImpl*>(part->htmlDocument().handle());
@@ -1357,7 +1357,7 @@ Value Window::getListener(ExecState *exec, int eventId) const
 JSEventListener *Window::getJSEventListener(const Value& val, bool html)
 {
   // This function is so hot that it's worth coding it directly with imps.
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if (!part || val.type() != ObjectType)
     return 0;
 
@@ -1433,8 +1433,8 @@ void Window::setCurrentEvent( DOM::Event *evt )
 void Window::goURL(ExecState* exec, const TQString& url, bool lockHistory)
 {
   Window* active = Window::retrieveActive(exec);
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
-  KHTMLPart *active_part = ::qt_cast<KHTMLPart *>(active->part());
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *active_part = ::tqqt_cast<KHTMLPart *>(active->part());
   // Complete the URL using the "active part" (running interpreter)
   if (active_part && part) {
     if (url[0] == TQChar('#')) {
@@ -1446,7 +1446,7 @@ void Window::goURL(ExecState* exec, const TQString& url, bool lockHistory)
       // check if we're allowed to inject javascript
       // SYNC check with khtml_part.cpp::slotRedirect!
       if ( isSafeScript(exec) ||
-            dstUrl.find(TQString::fromLatin1("javascript:"), 0, false) != 0 )
+            dstUrl.tqfind(TQString::tqfromLatin1("javascript:"), 0, false) != 0 )
         part->scheduleRedirection(-1,
                                   dstUrl,
                                   lockHistory);
@@ -1470,7 +1470,7 @@ void Window::delayedGoHistory( int steps )
 
 void Window::goHistory( int steps )
 {
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if(!part)
       // TODO history readonlypart
     return;
@@ -1488,7 +1488,7 @@ void Window::goHistory( int steps )
 
 void KJS::Window::resizeTo(TQWidget* tl, int width, int height)
 {
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if(!part)
       // TODO resizeTo readonlypart
     return;
@@ -1531,7 +1531,7 @@ void KJS::Window::resizeTo(TQWidget* tl, int width, int height)
 
 Value Window::openWindow(ExecState *exec, const List& args)
 {
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
   if (!part)
     return Undefined();
   KHTMLView *widget = part->view();
@@ -1544,7 +1544,7 @@ Value Window::openWindow(ExecState *exec, const List& args)
   KURL url;
   if (!str.isEmpty())
   {
-    KHTMLPart* p = ::qt_cast<KHTMLPart *>(Window::retrieveActive(exec)->m_frame->m_part);
+    KHTMLPart* p = ::tqqt_cast<KHTMLPart *>(Window::retrieveActive(exec)->m_frame->m_part);
     if ( p )
       url = p->htmlDocument().completeURL(str).string();
     if ( !p ||
@@ -1602,7 +1602,7 @@ Value Window::openWindow(ExecState *exec, const List& args)
 
 Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString& frameName, const TQString& features)
 {
-    KHTMLPart *p = ::qt_cast<KHTMLPart *>(m_frame->m_part);
+    KHTMLPart *p = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
     KHTMLView *widget = p->view();
     KParts::WindowArgs winargs;
 
@@ -1618,11 +1618,11 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
       while (it != flist.end()) {
         TQString s = *it++;
         TQString key, val;
-        int pos = s.find('=');
+        int pos = s.tqfind('=');
         if (pos >= 0) {
           key = s.left(pos).stripWhiteSpace().lower();
           val = s.mid(pos + 1).stripWhiteSpace().lower();
-          TQRect screen = KGlobalSettings::desktopGeometry(widget->topLevelWidget());
+          TQRect screen = KGlobalSettings::desktopGeometry(widget->tqtopLevelWidget());
 
           if (key == "left" || key == "screenx") {
             winargs.x = (int)val.toFloat() + screen.x();
@@ -1633,13 +1633,13 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
             if (winargs.y < screen.y() || winargs.y > screen.bottom())
               winargs.y = screen.y(); // only safe choice until size is determined
           } else if (key == "height") {
-            winargs.height = (int)val.toFloat() + 2*qApp->style().pixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.height = (int)val.toFloat() + 2*tqApp->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.height > screen.height())  // should actually check workspace
               winargs.height = screen.height();
             if (winargs.height < 100)
               winargs.height = 100;
           } else if (key == "width") {
-            winargs.width = (int)val.toFloat() + 2*qApp->style().pixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.width = (int)val.toFloat() + 2*tqApp->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.width > screen.width())    // should actually check workspace
               winargs.width = screen.width();
             if (winargs.width < 100)
@@ -1703,7 +1703,7 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
     // request window (new or existing if framename is set)
     KParts::ReadOnlyPart *newPart = 0L;
     emit p->browserExtension()->createNewWindow(KURL(), uargs,winargs,newPart);
-    if (newPart && ::qt_cast<KHTMLPart*>(newPart)) {
+    if (newPart && ::tqqt_cast<KHTMLPart*>(newPart)) {
       KHTMLPart *khtmlpart = static_cast<KHTMLPart*>(newPart);
       //qDebug("opener set to %p (this Window's part) in new Window %p  (this Window=%p)",part,win,window);
       khtmlpart->setOpener(p);
@@ -1735,7 +1735,7 @@ void Window::forgetSuppressedWindows()
 
 void Window::showSuppressedWindows()
 {
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>( m_frame->m_part );
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>( m_frame->m_part );
   KJS::Interpreter *interpreter = part->jScript()->interpreter();
   ExecState *exec = interpreter->globalExec();
 
@@ -1760,7 +1760,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
   Window *window = static_cast<Window *>(thisObj.imp());
   TQString str, str2;
 
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(window->m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(window->m_frame->m_part);
   if (!part)
     return Undefined();
 
@@ -1897,8 +1897,8 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     KHTMLSettings::KJSWindowFocusPolicy policy =
 		part->settings()->windowFocusPolicy(part->url().host());
     if(policy == KHTMLSettings::KJSWindowFocusAllow && widget) {
-      widget->topLevelWidget()->raise();
-      KWin::deIconifyWindow( widget->topLevelWidget()->winId() );
+      widget->tqtopLevelWidget()->raise();
+      KWin::deIconifyWindow( widget->tqtopLevelWidget()->winId() );
       widget->setActiveWindow();
       emit part->browserExtension()->requestFocus(part);
     }
@@ -1950,7 +1950,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
-        TQWidget * tl = widget->topLevelWidget();
+        TQWidget * tl = widget->tqtopLevelWidget();
         TQRect sg = KGlobalSettings::desktopGeometry(tl);
 
         TQPoint dest = tl->pos() + TQPoint( args[0].toInt32(exec), args[1].toInt32(exec) );
@@ -1970,7 +1970,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
-        TQWidget * tl = widget->topLevelWidget();
+        TQWidget * tl = widget->tqtopLevelWidget();
         TQRect sg = KGlobalSettings::desktopGeometry(tl);
 
         TQPoint dest( args[0].toInt32(exec)+sg.x(), args[1].toInt32(exec)+sg.y() );
@@ -1989,7 +1989,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     if(policy == KHTMLSettings::KJSWindowResizeAllow
     		&& args.size() == 2 && widget)
     {
-      TQWidget * tl = widget->topLevelWidget();
+      TQWidget * tl = widget->tqtopLevelWidget();
       TQRect geom = tl->frameGeometry();
       window->resizeTo( tl,
                         geom.width() + args[0].toInt32(exec),
@@ -2003,7 +2003,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     if(policy == KHTMLSettings::KJSWindowResizeAllow
                && args.size() == 2 && widget)
     {
-      TQWidget * tl = widget->topLevelWidget();
+      TQWidget * tl = widget->tqtopLevelWidget();
       window->resizeTo( tl, args[0].toInt32(exec), args[1].toInt32(exec) );
     }
     return Undefined();
@@ -2114,7 +2114,7 @@ ScheduledAction::ScheduledAction(TQString _code, DateTimeMS _nextTime, int _inte
 
 bool ScheduledAction::execute(Window *window)
 {
-  KHTMLPart *part = ::qt_cast<KHTMLPart *>(window->m_frame->m_part);
+  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(window->m_frame->m_part);
   if (!part || !part->jScriptEnabled())
     return false;
   ScriptInterpreter *interpreter = static_cast<ScriptInterpreter *>(part->jScript()->interpreter());
@@ -2353,10 +2353,10 @@ DateTimeMS DateTimeMS::now()
 {
   DateTimeMS t;
   TQTime before = TQTime::currentTime();
-  t.mDate = TQDate::currentDate();
+  t.mDate = TQDate::tqcurrentDate();
   t.mTime = TQTime::currentTime();
   if (t.mTime < before)
-    t.mDate = TQDate::currentDate(); // prevent race condition in hacky way :)
+    t.mDate = TQDate::tqcurrentDate(); // prevent race condition in hacky way :)
   return t;
 }
 
@@ -2545,7 +2545,7 @@ Value Location::get(ExecState *exec, const Identifier &p) const
 	return String("");
       return String( url.path().isEmpty() ? TQString("/") : url.path() );
     case Port:
-      return String( url.port() ? TQString::number((int)url.port()) : TQString::fromLatin1("") );
+      return String( url.port() ? TQString::number((int)url.port()) : TQString::tqfromLatin1("") );
     case Protocol:
       return String( url.protocol()+":" );
     case Search:
@@ -2590,7 +2590,7 @@ void Location::put(ExecState *exec, const Identifier &p, const Value &v, int att
     TQString str = v.toString(exec).qstring();
     switch (entry->value) {
     case Href: {
-      KHTMLPart* p =::qt_cast<KHTMLPart*>(Window::retrieveActive(exec)->part());
+      KHTMLPart* p =::tqqt_cast<KHTMLPart*>(Window::retrieveActive(exec)->part());
       if ( p )
         url = p->htmlDocument().completeURL( str ).string();
       else
@@ -2603,8 +2603,8 @@ void Location::put(ExecState *exec, const Identifier &p, const Value &v, int att
       url.setRef(str);
       break;
     case Host: {
-      TQString host = str.left(str.find(":"));
-      TQString port = str.mid(str.find(":")+1);
+      TQString host = str.left(str.tqfind(":"));
+      TQString port = str.mid(str.tqfind(":")+1);
       url.setHost(host);
       url.setPort(port.toUInt());
       break;
@@ -2681,7 +2681,7 @@ Value LocationFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
             id == Location::Replace);
     break;
   case Location::Reload: {
-    KHTMLPart *khtmlpart = ::qt_cast<KHTMLPart *>(part);
+    KHTMLPart *khtmlpart = ::tqqt_cast<KHTMLPart *>(part);
     if (khtmlpart)
       khtmlpart->scheduleRedirection(-1, part->url().url(), true/*lock history*/);
     else

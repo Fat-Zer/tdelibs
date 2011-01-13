@@ -168,7 +168,7 @@ private:
  * @author Bernd Johannes Wuebben <wuebben@math.cornell.edu>, Waldo Bastian <bastian@kde.org>
  **/
 
-class KDEUI_EXPORT_DEPRECATED KEdit : public QMultiLineEdit
+class KDEUI_EXPORT_DEPRECATED KEdit : public TQMultiLineEdit
 {
     Q_OBJECT
 
@@ -401,7 +401,7 @@ protected:
     void        contentsDropEvent(TQDropEvent* e);
 
 private:
-    TQTimer* repaintTimer;
+    TQTimer* tqrepaintTimer;
 
     QString	killbufferstring;
     TQWidget     *parent;

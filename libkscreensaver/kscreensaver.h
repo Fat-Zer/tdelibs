@@ -56,7 +56,7 @@ class KBlankEffectPrivate;
 * @short Provides a TQWidget for a screensaver to draw into.
 * @author Martin R. Jones <mjones@kde.org>
 */
-class KDE_EXPORT KScreenSaver : public QWidget
+class KDE_EXPORT KScreenSaver : public TQWidget
 {
 	Q_OBJECT
 public:
@@ -91,7 +91,7 @@ private:
 * @short Blanks a widget using various effects.
 * @author Martin R. Jones <mjones@kde.org>
 */
-class KBlankEffect : public QObject
+class KBlankEffect : public TQObject
 {
 	Q_OBJECT
 public:

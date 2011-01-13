@@ -66,11 +66,11 @@ StatusWindow::StatusWindow(int pid)
 : TQWidget(NULL, "StatusWindow", WType_TopLevel|WStyle_DialogBorder|WStyle_StaysOnTop|WDestructiveClose), m_pid(pid)
 {
 	m_label = new TQLabel(this);
-	m_label->setAlignment(AlignCenter);
+	m_label->tqsetAlignment(AlignCenter);
 	m_button = new KPushButton(KStdGuiItem::close(), this);
 	m_icon = new TQLabel(this);
 	m_icon->setPixmap(DesktopIcon("fileprint"));
-	m_icon->setAlignment(AlignCenter);
+	m_icon->tqsetAlignment(AlignCenter);
 	KWin::setIcons(winId(), *(m_icon->pixmap()), SmallIcon("fileprint"));
 	QGridLayout	*l0 = new TQGridLayout(this, 2, 3, 10, 10);
 	l0->setRowStretch(0, 1);
@@ -86,8 +86,8 @@ void StatusWindow::setMessage(const TQString& msg)
 {
 	//QSize	oldSz = size();
 	m_label->setText(msg);
-	//QSize	sz = m_label->sizeHint();
-	//sz += TQSize(layout()->margin()*2, layout()->margin()*2+layout()->spacing()+m_button->sizeHint().height());
+	//QSize	sz = m_label->tqsizeHint();
+	//sz += TQSize(layout()->margin()*2, layout()->margin()*2+layout()->spacing()+m_button->tqsizeHint().height());
 	// dialog will never be smaller
 	//sz = sz.expandedTo(oldSz);
 	//resize(sz);
@@ -192,7 +192,7 @@ bool KDEPrintd::checkFiles(TQString& cmd, const TQStringList& files)
 
 void KDEPrintd::statusMessage(const TQString& msg, int pid, const TQString& appName)
 {
-	StatusWindow	*w = m_windows.find(pid);
+	StatusWindow	*w = m_windows.tqfind(pid);
 	if (!w && !msg.isEmpty())
 	{
 		w = new StatusWindow(pid);

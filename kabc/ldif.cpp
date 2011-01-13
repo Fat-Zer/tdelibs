@@ -112,7 +112,7 @@ bool LDIF::splitLine( const TQCString &line, TQString &fieldname, TQByteArray &v
 
 //  kdDebug(5700) << "splitLine line: " << TQString::fromUtf8(line) << endl;
 
-  position = line.find( ":" );
+  position = line.tqfind( ":" );
   if ( position == -1 ) {
     // strange: we did not find a fieldname
     fieldname = "";

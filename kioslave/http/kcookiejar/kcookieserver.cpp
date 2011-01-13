@@ -368,14 +368,14 @@ bool KCookieServer::cookieMatches( KHttpCookiePtr c,
 }
 
 // DCOP function
-QString
+TQString
 KCookieServer::findCookies(TQString url)
 {
   return findCookies(url, 0);
 }
 
 // DCOP function
-QString
+TQString
 KCookieServer::findCookies(TQString url, long windowId)
 {
    if (cookiesPending(url))
@@ -399,7 +399,7 @@ KCookieServer::findCookies(TQString url, long windowId)
 }
 
 // DCOP function
-QStringList
+TQStringList
 KCookieServer::findDomains()
 {
    TQStringList result;
@@ -417,7 +417,7 @@ KCookieServer::findDomains()
 }
 
 // DCOP function
-QStringList
+TQStringList
 KCookieServer::findCookies(TQValueList<int> fields,
                            TQString domain,
                            TQString fqdn,
@@ -449,14 +449,14 @@ KCookieServer::findCookies(TQValueList<int> fields,
 }
 
 // DCOP function
-QString
+TQString
 KCookieServer::findDOMCookies(TQString url)
 {
    return findDOMCookies(url, 0);
 }
 
 // DCOP function
-QString
+TQString
 KCookieServer::findDOMCookies(TQString url, long windowId)
 {
    // We don't wait for pending cookies because it locks up konqueror 
@@ -561,7 +561,7 @@ KCookieServer::setDomainAdvice(TQString url, TQString advice)
 }
 
 // DCOP function
-QString
+TQString
 KCookieServer::getDomainAdvice(TQString url)
 {
    KCookieAdvice advice = KCookieDunno;

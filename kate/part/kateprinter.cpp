@@ -184,7 +184,7 @@ bool KatePrinter::print (KateDocument *doc)
          // This retrieves all tags, ued or not, but
          // none of theese operations should be expensive,
          // and searcing each tag in the format strings is avoided.
-         TQDateTime dt = TQDateTime::currentDateTime();
+         TQDateTime dt = TQDateTime::tqcurrentDateTime();
          TQMap<TQString,TQString> tags;
 
          KUser u (KUser::UseRealUserID);
@@ -425,7 +425,7 @@ bool KatePrinter::print (KateDocument *doc)
                for (int i=0; i<3; i++)
                {
                  s = headerTagList[i];
-                 if (s.find("%p") != -1) s.replace("%p", TQString::number(currentPage));
+                 if (s.tqfind("%p") != -1) s.replace("%p", TQString::number(currentPage));
                  paint.drawText(marg, 0, headerWidth-(marg*2), headerHeight, align, s);
                  align = valign|(i == 0 ? Qt::AlignHCenter : Qt::AlignRight);
                }
@@ -453,7 +453,7 @@ bool KatePrinter::print (KateDocument *doc)
                for (int i=0; i<3; i++)
                {
                  s = footerTagList[i];
-                 if (s.find("%p") != -1) s.replace("%p", TQString::number(currentPage));
+                 if (s.tqfind("%p") != -1) s.replace("%p", TQString::number(currentPage));
                  paint.drawText(marg, maxHeight+innerMargin, headerWidth-(marg*2), footerHeight, align, s);
                  align = Qt::AlignVCenter|(i == 0 ? Qt::AlignHCenter : Qt::AlignRight);
                }

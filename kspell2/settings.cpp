@@ -75,7 +75,7 @@ KSharedConfig *Settings::sharedConfig() const
 void Settings::setDefaultLanguage( const TQString& lang )
 {
     TQStringList cs = d->broker->languages();
-    if ( cs.find( lang ) != cs.end() &&
+    if ( cs.tqfind( lang ) != cs.end() &&
          d->defaultLanguage != lang ) {
         d->defaultLanguage = lang;
         readIgnoreList();

@@ -40,7 +40,7 @@
  * A custom drawing routine for the widget surface has
  * to be provided by the subclass.
  */
-class KDEUI_EXPORT KXYSelector : public QWidget
+class KDEUI_EXPORT KXYSelector : public TQWidget
 {
   Q_OBJECT
   Q_PROPERTY( int xValue READ xValue WRITE setXValue )
@@ -156,7 +156,7 @@ private:
  * A custom drawing routine for the widget surface has
  * to be provided by the subclass.
  */
-class KDEUI_EXPORT KSelector : public TQWidget, public QRangeControl
+class KDEUI_EXPORT KSelector : public TQWidget, public TQRangeControl
 {
   Q_OBJECT
   Q_PROPERTY( int value READ value WRITE setValue )
@@ -351,8 +351,8 @@ public:
 protected:
 
   virtual void drawContents( TQPainter * );
-  virtual TQSize minimumSize() const
-  { return sizeHint(); }
+  virtual TQSize tqminimumSize() const
+  { return tqsizeHint(); }
 
 private:
   void init();

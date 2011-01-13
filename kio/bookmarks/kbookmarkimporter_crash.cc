@@ -104,7 +104,7 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
     {
         TQCString &clientId = *it;
 
-        if ( qstrncmp(clientId, "konqueror", 9) != 0 ) 
+        if ( tqstrncmp(clientId, "konqueror", 9) != 0 ) 
             continue;
 
         TQByteArray data, replyData;
@@ -132,8 +132,8 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
     d.setFilter( TQDir::Files );
     d.setNameFilter( "konqueror-crash-*.log" );
 
-    const QFileInfoList *list = d.entryInfoList();
-    QFileInfoListIterator it( *list );
+    const TQFileInfoList *list = d.entryInfoList();
+    TQFileInfoListIterator it( *list );
 
     TQFileInfo *fi;
     TQStringList crashFiles;
@@ -141,7 +141,7 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
     int count = 0;
     for ( ; (( fi = it.current() ) != 0) && (count < 20); ++it, ++count ) 
     {
-        bool stillAlive = activeLogs.contains( fi->absFilePath() );
+        bool stillAlive = activeLogs.tqcontains( fi->absFilePath() );
         if ( !stillAlive )
             crashFiles << fi->absFilePath();
     }

@@ -54,7 +54,7 @@ KEncodingFileDialog::KEncodingFileDialog(const TQString& startDir, const TQStrin
   d->encoding->clear ();
   TQString sEncoding = encoding;
   if (sEncoding.isEmpty())
-     sEncoding = TQString::fromLatin1(KGlobal::locale()->encoding());
+     sEncoding = TQString::tqfromLatin1(KGlobal::locale()->encoding());
   
   TQStringList encodings (KGlobal::charsets()->availableEncodingNames());
   int insert = 0;

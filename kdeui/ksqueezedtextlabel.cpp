@@ -22,30 +22,30 @@
 
 KSqueezedTextLabel::KSqueezedTextLabel( const TQString &text , TQWidget *parent, const char *name )
  : TQLabel ( parent, name ) {
-  setSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+  tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
   fullText = text;
   squeezeTextToLabel();
 }
 
 KSqueezedTextLabel::KSqueezedTextLabel( TQWidget *parent, const char *name )
  : TQLabel ( parent, name ) {
-  setSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+  tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
 }
 
 void KSqueezedTextLabel::resizeEvent( TQResizeEvent * ) {
   squeezeTextToLabel();
 }
 
-TQSize KSqueezedTextLabel::minimumSizeHint() const
+TQSize KSqueezedTextLabel::tqminimumSizeHint() const
 {
-  TQSize sh = TQLabel::minimumSizeHint();
+  TQSize sh = TQLabel::tqminimumSizeHint();
   sh.setWidth(-1);
   return sh;
 }
 
-TQSize KSqueezedTextLabel::sizeHint() const
+TQSize KSqueezedTextLabel::tqsizeHint() const
 {
-  return TQSize(contentsRect().width(), TQLabel::sizeHint().height());
+  return TQSize(contentsRect().width(), TQLabel::tqsizeHint().height());
 }
 
 void KSqueezedTextLabel::setText( const TQString &text ) {
@@ -73,11 +73,11 @@ void KSqueezedTextLabel::squeezeTextToLabel() {
   }
 }
 
-void KSqueezedTextLabel::setAlignment( int alignment )
+void KSqueezedTextLabel::tqsetAlignment( int tqalignment )
 {
   // save fullText and restore it
   TQString tmpFull(fullText);
-  TQLabel::setAlignment(alignment);
+  TQLabel::tqsetAlignment(tqalignment);
   fullText = tmpFull;
 }
 

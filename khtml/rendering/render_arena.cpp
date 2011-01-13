@@ -88,7 +88,7 @@ void* RenderArena::allocate(size_t size)
 #else
     void* result = 0;
 
-    // Ensure we have correct alignment for pointers.  Important for Tru64
+    // Ensure we have correct tqalignment for pointers.  Important for Tru64
     size = KHTML_ROUNDUP(size, sizeof(void*));
 
     // Check recyclers first
@@ -130,7 +130,7 @@ void RenderArena::free(size_t size, void* ptr)
     VALGRIND_MEMPOOL_FREE(findContainingArena(&m_pool, ptr)->base, ptr);
 #endif
 
-    // Ensure we have correct alignment for pointers.  Important for Tru64
+    // Ensure we have correct tqalignment for pointers.  Important for Tru64
     size = KHTML_ROUNDUP(size, sizeof(void*));
 
     // See if it's a size that we recycle

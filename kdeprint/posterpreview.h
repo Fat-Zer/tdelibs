@@ -25,7 +25,7 @@
 
 class KProcess;
 
-class PosterPreview : public QFrame
+class PosterPreview : public TQFrame
 {
 	Q_OBJECT
 public:

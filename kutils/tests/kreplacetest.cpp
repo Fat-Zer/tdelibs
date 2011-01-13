@@ -60,7 +60,7 @@ void KReplaceTest::replace( const TQString &pattern, const TQString &replacement
     slotReplaceNext();
 
     if ( m_needEventLoop )
-        qApp->eventLoop()->enterLoop();
+        tqApp->eventLoop()->enterLoop();
 }
 
 void KReplaceTest::slotHighlight( const TQString &str, int matchingIndex, int matchedLength )
@@ -115,7 +115,7 @@ void KReplaceTest::slotReplaceNext()
         }
 #endif
     if ( res == KFind::NoMatch && m_needEventLoop )
-        qApp->eventLoop()->exitLoop();
+        tqApp->eventLoop()->exitLoop();
 }
 
 void KReplaceTest::print()

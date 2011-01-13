@@ -53,7 +53,7 @@ KMWRlpr::KMWRlpr(TQWidget *parent, const char *name)
 	m_view = new KListView(this);
 	m_view->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_view->setLineWidth(1);
-	m_view->addColumn(TQString::fromLatin1(""));
+	m_view->addColumn(TQString::tqfromLatin1(""));
 	m_view->header()->hide();
 	m_view->setRootIsDecorated(true);
 	m_view->setSorting(0);
@@ -109,7 +109,7 @@ void KMWRlpr::initPrinter(KMPrinter *p)
 
 void KMWRlpr::updatePrinter(KMPrinter *p)
 {
-	QString	uri = TQString::fromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
+	QString	uri = TQString::tqfromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
 	p->setDevice(uri);
 	p->setOption("host",m_host->text());
 	p->setOption("queue",m_queue->text());
@@ -140,7 +140,7 @@ void KMWRlpr::initialize()
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			if ((p=line.find(':')) != -1)
+			if ((p=line.tqfind(':')) != -1)
 			{
 				host = line.left(p).stripWhiteSpace();
 				QListViewItem	*hitem = new TQListViewItem(m_view,host);
@@ -180,7 +180,7 @@ void KMWRlpr::initialize()
 			}
 			if (buffer.isEmpty())
 				continue;
-			int	p = buffer.find(':');
+			int	p = buffer.tqfind(':');
 			if (p != -1)
 			{
 				QString	name = buffer.left(p);

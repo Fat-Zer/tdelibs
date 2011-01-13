@@ -273,7 +273,7 @@ void KLineEdit::setReadOnly(bool readOnly)
     if (readOnly)
     {
         d->bgMode = backgroundMode ();
-        setBackgroundMode (Qt::PaletteBackground);
+        setBackgroundMode (TQt::PaletteBackground);
         if (d->enableSqueezedText && d->squeezedText.isEmpty())
         {
             d->squeezedText = text();
@@ -526,9 +526,9 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
     {
         KeyBindingMap keys = getKeyBindings();
         KGlobalSettings::Completion mode = completionMode();
-        bool noModifier = (e->state() == NoButton ||
-                           e->state() == ShiftButton ||
-                           e->state() == Keypad);
+        bool noModifier = (e->state() == Qt::NoButton ||
+                           e->state() == TQt::ShiftButton ||
+                           e->state() == TQt::Keypad);
 
         if ( (mode == KGlobalSettings::CompletionAuto ||
               mode == KGlobalSettings::CompletionPopupAuto ||
@@ -536,7 +536,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         {
             if ( !d->userSelection && hasSelectedText() &&
                  ( e->key() == Key_Right || e->key() == Key_Left ) &&
-                 e->state()==NoButton )
+                 e->state()== Qt::NoButton )
             {
                 TQString old_txt = text();
                 d->disableRestoreSelection = true;
@@ -575,7 +575,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
               mode == KGlobalSettings::CompletionMan) && noModifier )
         {
             TQString keycode = e->text();
-            if ( !keycode.isEmpty() && (keycode.unicode()->isPrint() ||
+            if ( !keycode.isEmpty() && (keycode.tqunicode()->isPrint() ||
                 e->key() == Key_Backspace || e->key() == Key_Delete ) )
             {
                 bool hasUserSelection=d->userSelection;
@@ -658,7 +658,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             // as if there was no selection. After processing the key event, we
             // can set the new autocompletion again.
             if (hadSelection && !hasUserSelection && start>cPos &&
-               ( (!keycode.isEmpty() && keycode.unicode()->isPrint()) ||
+               ( (!keycode.isEmpty() && keycode.tqunicode()->isPrint()) ||
                  e->key() == Key_Backspace || e->key() == Key_Delete ) )
             {
                 del();
@@ -679,7 +679,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             int len = txt.length();
 
             if ( txt != old_txt && len/* && ( cursorPosition() == len || force )*/ &&
-                 ( (!keycode.isEmpty() && keycode.unicode()->isPrint()) ||
+                 ( (!keycode.isEmpty() && keycode.tqunicode()->isPrint()) ||
                    e->key() == Key_Backspace || e->key() == Key_Delete) )
             {
                 if ( e->key() == Key_Backspace )
@@ -841,7 +841,7 @@ void KLineEdit::mouseReleaseEvent( TQMouseEvent* e )
 {
     TQLineEdit::mouseReleaseEvent( e );
     if (TQApplication::clipboard()->supportsSelection() ) {
-        if ( e->button() == LeftButton ) {
+        if ( e->button() == Qt::LeftButton ) {
             // Fix copying of squeezed text if needed
             copySqueezedText( false );
         }
@@ -1006,12 +1006,12 @@ void KLineEdit::dropEvent(TQDropEvent *e)
 
 bool KLineEdit::eventFilter( TQObject* o, TQEvent* ev )
 {
-    if( o == this )
+    if( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(this) )
     {
-        KCursor::autoHideEventFilter( this, ev );
+        KCursor::autoHideEventFilter( TQT_TQOBJECT(this), ev );
         if ( ev->type() == TQEvent::AccelOverride )
         {
-            TQKeyEvent *e = static_cast<TQKeyEvent *>( ev );
+            TQKeyEvent *e = TQT_TQKEYEVENT( ev );
             if (overrideAccel (e))
             {
                 e->accept();
@@ -1020,15 +1020,15 @@ bool KLineEdit::eventFilter( TQObject* o, TQEvent* ev )
         }
         else if( ev->type() == TQEvent::KeyPress )
         {
-            TQKeyEvent *e = static_cast<TQKeyEvent *>( ev );
+            TQKeyEvent *e = TQT_TQKEYEVENT( ev );
 
             if( e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter )
             {
                 bool trap = d->completionBox && d->completionBox->isVisible();
 
                 bool stopEvent = trap || (d->grabReturnKeyEvents &&
-                                          (e->state() == NoButton ||
-                                           e->state() == Keypad));
+                                          (e->state() == Qt::NoButton ||
+                                           e->state() == TQt::Keypad));
 
                 // Qt will emit returnPressed() itself if we return false
                 if ( stopEvent )
@@ -1182,7 +1182,7 @@ bool KLineEdit::overrideAccel (const TQKeyEvent* e)
         int key = e->key();
         ButtonState state = e->state();
         if ((key == Key_Backtab || key == Key_Tab) &&
-            (state == NoButton || (state & ShiftButton)))
+            (state == Qt::NoButton || (state & TQt::ShiftButton)))
         {
             return true;
         }
@@ -1219,7 +1219,7 @@ void KLineEdit::setCompletedItems( const TQStringList& items, bool autoSuggest )
             bool wasSelected = d->completionBox->isSelected( d->completionBox->currentItem() );
             const TQString currentSelection = d->completionBox->currentText();
             d->completionBox->setItems( items );
-            TQListBoxItem* item = d->completionBox->findItem( currentSelection, Qt::ExactMatch );
+            TQListBoxItem* item = d->completionBox->tqfindItem( currentSelection, TQt::ExactMatch );
             // If no item is selected, that means the listbox hasn't been manipulated by the user yet,
             // because it's not possible otherwise to have no selected item. In such case make
             // always the first item current and unselected, so that the current item doesn't jump.
@@ -1246,7 +1246,7 @@ void KLineEdit::setCompletedItems( const TQStringList& items, bool autoSuggest )
 
         if ( d->autoSuggest && autoSuggest )
         {
-            int index = items.first().find( txt );
+            int index = items.first().tqfind( txt );
             TQString newText = items.first().mid( index );
             setUserSelection(false);
             setCompletedText(newText,true);

@@ -39,9 +39,9 @@ Factory::~Factory()
 {
 }
 
-Part *Factory::createPart( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname, const TQStringList &args )
+Part *Factory::createPart( TQWidget *tqparentWidget, const char *widgetName, TQObject *parent, const char *name, const char *classname, const TQStringList &args )
 {
-    Part* part = createPartObject( parentWidget, widgetName, parent, name, classname, args );
+    Part* part = createPartObject( tqparentWidget, widgetName, parent, name, classname, args );
     if ( part )
 	emit objectCreated( part );
     return part;
@@ -77,6 +77,6 @@ Part *Factory::createPartObject( TQWidget *, const char *, TQObject *, const cha
 TQObject *Factory::createObject( TQObject *parent, const char *name, const char *classname, const TQStringList &args )
 {
   assert( !parent || parent->isWidgetType() );
-  return createPart( static_cast<TQWidget *>( parent ), name, parent, name, classname, args );
+  return createPart( TQT_TQWIDGET( parent ), name, parent, name, classname, args );
 }
 #include "factory.moc"

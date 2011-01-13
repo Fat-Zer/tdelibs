@@ -9,7 +9,7 @@
 class KTimeWidget::KTimeWidgetPrivate
 {
 public:
-  QTimeEdit * timeWidget;
+  TQTimeEdit * timeWidget;
 };
 
 KTimeWidget::KTimeWidget(TQWidget * parent, const char * name)
@@ -39,7 +39,7 @@ void KTimeWidget::init()
   TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
 
-  d->timeWidget = new QTimeEdit(this);
+  d->timeWidget = new TQTimeEdit(this);
 
   connect(d->timeWidget, TQT_SIGNAL(valueChanged(const TQTime &)),
           TQT_SIGNAL(valueChanged(const TQTime &)));

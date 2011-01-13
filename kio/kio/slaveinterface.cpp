@@ -43,7 +43,7 @@ TQDataStream &operator <<(TQDataStream &s, const KIO::UDSEntry &e )
     // We do the same on 64-bit platforms in case we run in a mixed 32/64bit
     // environment.
 
-    Q_UINT32 size = 0;
+    TQ_UINT32 size = 0;
     KIO::UDSEntry::ConstIterator it = e.begin();
     for( ; it != e.end(); ++it )
     {
@@ -70,7 +70,7 @@ TQDataStream &operator <<(TQDataStream &s, const KIO::UDSEntry &e )
 TQDataStream &operator >>(TQDataStream &s, KIO::UDSEntry &e )
 {
     e.clear();
-    Q_UINT32 size;
+    TQ_UINT32 size;
     s >> size;
 
     // On 32-bit platforms we send UDS_SIZE with UDS_SIZE_LARGE in front
@@ -78,8 +78,8 @@ TQDataStream &operator >>(TQDataStream &s, KIO::UDSEntry &e )
     // that would break the compatibility of the wire-protocol with KDE 2.
     // We do the same on 64-bit platforms in case we run in a mixed 32/64bit
     // environment.
-    Q_LLONG msb = 0;
-    for(Q_UINT32 i = 0; i < size; i++)
+    TQ_LLONG msb = 0;
+    for(TQ_UINT32 i = 0; i < size; i++)
     {
        KIO::UDSAtom a;
        s >> a;
@@ -92,7 +92,7 @@ TQDataStream &operator >>(TQDataStream &s, KIO::UDSEntry &e )
           if (a.m_uds == KIO::UDS_SIZE)
           {
              if (a.m_long < 0)
-                a.m_long += (Q_LLONG) 1 << 32;
+                a.m_long += (TQ_LLONG) 1 << 32;
              a.m_long += msb << 32;
           }
           e.append(a);
@@ -225,9 +225,9 @@ bool SlaveInterface::dispatch( int _cmd, const TQByteArray &rawdata )
     TQDataStream stream( rawdata, IO_ReadOnly );
 
     TQString str1;
-    Q_INT32 i;
-    Q_INT8 b;
-    Q_UINT32 ul;
+    TQ_INT32 i;
+    TQ_INT8 b;
+    TQ_UINT32 ul;
 
     switch( _cmd ) {
     case MSG_DATA:
@@ -251,7 +251,7 @@ bool SlaveInterface::dispatch( int _cmd, const TQByteArray &rawdata )
 	break;
     case MSG_LIST_ENTRIES:
 	{
-	    Q_UINT32 count;
+	    TQ_UINT32 count;
 	    stream >> count;
 
 	    UDSEntryList list;

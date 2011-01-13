@@ -326,7 +326,7 @@ namespace KNetwork
      * This class is a worker thread in the resolver system.
      * This class must be thread-safe.
      */
-    class KResolverThread: public QThread
+    class KResolverThread: public TQThread
     {
     private:
       // private constructor. Only the manager can create worker threads

@@ -136,7 +136,7 @@ public:
      * @param withfallback Try harder to load the module. Might result
      *                     in the module appearing outside the dialog.
      **/
-    void addModule(const KCModuleInfo& moduleinfo, QStringList
+    void addModule(const KCModuleInfo& moduleinfo, TQStringList
             parentmodulenames = TQStringList(), bool withfallback=false);
 
     /**

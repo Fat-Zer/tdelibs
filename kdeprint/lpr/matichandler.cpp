@@ -85,7 +85,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 	{
 		prt->setLocation(i18n("Local printer on %1").arg(val));
 		KURL	url(val);
-		if (val.find("usb") != -1)
+		if (val.tqfind("usb") != -1)
 			url.setProtocol("usb");
 		else
 			url.setProtocol("parallel");
@@ -104,7 +104,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 				KURL	url ( parsePostpipe(postpipe) );
 				if (!url.isEmpty())
 				{
-					QString	ds = TQString::fromLatin1("%1 (%2)").arg(prt->location()).arg(url.protocol());
+					QString	ds = TQString::tqfromLatin1("%1 (%2)").arg(prt->location()).arg(url.protocol());
 					prt->setDevice(url.url());
 					prt->setLocation(ds);
 				}
@@ -115,7 +115,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 			{
 				prt->setManufacturer(m["make"].toString());
 				prt->setModel(m["model"].toString());
-				prt->setDriverInfo(TQString::fromLatin1("%1 %2 (%3)").arg(prt->manufacturer()).arg(prt->model()).arg(m["driver"].toString()));
+				prt->setDriverInfo(TQString::tqfromLatin1("%1 %2 (%3)").arg(prt->manufacturer()).arg(prt->model()).arg(m["driver"].toString()));
 			}
 		}
 	}
@@ -167,7 +167,7 @@ TQString MaticHandler::parsePostpipe(const TQString& s)
 				else
 				{
 					QString	host = (args[i].length() == 2 ? args[i+1] : args[i].right(args[i].length()-2));
-					int	p = host.find("\\@");
+					int	p = host.tqfind("\\@");
 					if (p != -1)
 					{
 						url = "lpd://" + host.right(host.length()-p-2) + "/" + host.left(p);
@@ -247,7 +247,7 @@ DrMain* MaticHandler::loadDbDriver(const TQString& path)
 	}
 
 	QString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-	QString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	QString	PATH = getenv("PATH") + TQString::tqfromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 	QString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
@@ -309,13 +309,13 @@ bool MaticHandler::savePrinterDriver(KMPrinter *prt, PrintcapEntry *entry, DrMai
 			line = tin.readLine();
 			if (line.stripWhiteSpace().startsWith("$postpipe"))
 				continue;
-			else if ((p = line.find("'name'")) != -1)
+			else if ((p = line.tqfind("'name'")) != -1)
 			{
-				p = line.find('\'', p+6)+1;
-				q = line.find('\'', p);
+				p = line.tqfind('\'', p+6)+1;
+				q = line.tqfind('\'', p);
 				optname = line.mid(p, q-p);
 			}
-			else if ((p = line.find("'default'")) != -1)
+			else if ((p = line.tqfind("'default'")) != -1)
 			{
 				DrBase	*opt = driver->findOption(optname);
 				if (opt)
@@ -351,7 +351,7 @@ bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 	if (mdriver.isEmpty() || mprinter.isEmpty())
 		return true;
 
-	QString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	QString	PATH = getenv("PATH") + TQString::tqfromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 	QString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
@@ -372,7 +372,7 @@ bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 			line = tin.readLine();
 			if (line.startsWith("*% COMDATA #"))
 			{
-				if (line.find("'default'") != -1)
+				if (line.tqfind("'default'") != -1)
 				{
 					DrBase	*opt = (optname.isEmpty() ? NULL : driver->findOption(optname));
 					if (opt)

@@ -102,7 +102,7 @@ bool KSharedPixmap::loadFromShared(const TQString & name, const TQRect & rect)
 	// already active
 	return false;
 
-    TQPixmap::resize(0, 0); // invalidate
+    TQPixmap::resize(0, 0); // tqinvalidate
 
     TQString str = TQString("KDESHPIXMAP:%1").arg(name);
     d->selection = XInternAtom(qt_xdisplay(), str.latin1(), true);

@@ -43,7 +43,7 @@
  *
  * @author Aaron Seigo
  */
-class KDEUI_EXPORT KProgress : public QProgressBar
+class KDEUI_EXPORT KProgress : public TQProgressBar
 {
   Q_OBJECT
 

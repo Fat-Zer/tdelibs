@@ -712,7 +712,7 @@ KateViewDefaultsConfig::KateViewDefaultsConfig(TQWidget *parent)
         "you to set a maximum width of the screen, as a percentage, after which "
         "dynamically wrapped lines will no longer be vertically aligned.  For "
         "example, at 50%, lines whose indentation levels are deeper than 50% of "
-        "the width of the screen will not have vertical alignment applied to "
+        "the width of the screen will not have vertical tqalignment applied to "
         "subsequent wrapped lines.</p>"));
   TQWhatsThis::add(m_line,i18n(
         "If this option is checked, every new view will display line numbers "
@@ -1388,10 +1388,10 @@ void KateHlConfigPage::hlChanged(int z)
     return;
   }
 
-  if ( !hlDataDict.find( z ) )
+  if ( !hlDataDict.tqfind( z ) )
     hlDataDict.insert( z, hl->getData() );
 
-  hlData = hlDataDict.find( z );
+  hlData = hlDataDict.tqfind( z );
   wildcards->setText(hlData->wildcards);
   mimetypes->setText(hlData->mimetypes);
   priority->setValue(hlData->priority);

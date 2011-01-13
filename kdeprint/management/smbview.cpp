@@ -216,7 +216,7 @@ void SmbView::processGroups()
 	clear();
 	for (TQStringList::ConstIterator it=grps.begin(); it!=grps.end(); ++it)
 	{
-		int	p = (*it).find("<1d>");
+		int	p = (*it).tqfind("<1d>");
 		if (p == -1)
 			continue;
 		QListViewItem	*item = new TQListViewItem(this,(*it).left(p).stripWhiteSpace());

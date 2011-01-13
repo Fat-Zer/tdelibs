@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <kdebug.h>
 
-time_t currentDate;
+time_t tqcurrentDate;
 int m_maxCacheAge;
 int m_maxCacheSize;
 
@@ -109,7 +109,7 @@ FileInfo *readEntry( const TQString &filename)
    if (ok)
    {
       creationDate = (time_t) strtoul(buffer, 0, 10);
-      age = (int) difftime(currentDate, creationDate);
+      age = (int) difftime(tqcurrentDate, creationDate);
       if ( m_maxCacheAge && ( age > m_maxCacheAge))
       {
          ok = false; // Expired
@@ -125,7 +125,7 @@ FileInfo *readEntry( const TQString &filename)
 #if 0
       time_t expireDate;
       expireDate = (time_t) strtoul(buffer, 0, 10);
-      if (expireDate && (expireDate < currentDate))
+      if (expireDate && (expireDate < tqcurrentDate))
          ok = false; // Expired
 #endif
    }
@@ -166,7 +166,7 @@ void scanDirectory(FileInfoList &fileEntries, const TQString &name, const TQStri
    TQDir dir(strDir);
    if (!dir.exists()) return;
 
-   QFileInfoList *newEntries = (QFileInfoList *) dir.entryInfoList();
+   TQFileInfoList *newEntries = (TQFileInfoList *) dir.entryInfoList();
 
    if (!newEntries) return; // Directory not accessible ??
 
@@ -213,7 +213,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
       }
    }
 
-   currentDate = time(0);
+   tqcurrentDate = time(0);
    m_maxCacheAge = KProtocolManager::maxCacheAge();
    m_maxCacheSize = KProtocolManager::maxCacheSize();
 

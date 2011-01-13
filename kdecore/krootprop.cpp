@@ -118,7 +118,7 @@ void KRootProp::setProp( const TQString& rProp )
   {
     // parse the string for first key-value pair separator '\n'
 
-    i = s.find("\n");
+    i = s.tqfind("\n");
     if(i == -1)
       i = s.length();
 
@@ -131,7 +131,7 @@ void KRootProp::setProp( const TQString& rProp )
 
     keypair.simplifyWhiteSpace();
 
-    i = keypair.find( "=" );
+    i = keypair.tqfind( "=" );
     if( i != -1 )
     {
       key = keypair.left( i );
@@ -160,7 +160,7 @@ void KRootProp::destroy()
 TQString KRootProp::readEntry( const TQString& rKey,
 			    const TQString& pDefault ) const
 {
-  if( propDict.contains( rKey ) )
+  if( propDict.tqcontains( rKey ) )
       return propDict[ rKey ];
   else
       return pDefault;
@@ -217,18 +217,18 @@ TQColor KRootProp::readColorEntry( const TQString& rKey,
 
   // Support #ffffff style color naming.
   // Help ease transistion from legacy KDE setups
-  if( aValue.find("#") == 0 ) {
+  if( aValue.tqfind("#") == 0 ) {
     aRetColor.setNamedColor( aValue );
     return aRetColor;
   }
 
   // Parse "red,green,blue"
   // find first comma
-  int nIndex1 = aValue.find( ',' );
+  int nIndex1 = aValue.tqfind( ',' );
   if( nIndex1 == -1 )
     return aRetColor;
   // find second comma
-  int nIndex2 = aValue.find( ',', nIndex1+1 );
+  int nIndex2 = aValue.tqfind( ',', nIndex1+1 );
   if( nIndex2 == -1 )
     return aRetColor;
 
@@ -246,9 +246,9 @@ TQColor KRootProp::readColorEntry( const TQString& rKey,
 TQString KRootProp::writeEntry( const TQString& rKey, const TQString& rValue )
 {
     dirty = true;
-    if ( propDict.contains( rKey ) ) {
+    if ( propDict.tqcontains( rKey ) ) {
 	TQString aValue = propDict[ rKey ];
-	propDict.replace( rKey, rValue );
+	propDict.tqreplace( rKey, rValue );
 	return aValue;
     }
     else {
@@ -268,7 +268,7 @@ TQString KRootProp::writeEntry( const TQString& rKey, int nValue )
 
 TQString KRootProp::writeEntry( const TQString& rKey, const TQFont& rFont )
 {
-  return writeEntry( rKey, rFont.toString() );
+  return writeEntry( rKey, TQString(rFont.toString()) );
 }
 
 TQString KRootProp::writeEntry( const TQString& rKey, const TQColor& rColor )
@@ -280,7 +280,7 @@ TQString KRootProp::writeEntry( const TQString& rKey, const TQColor& rColor )
 
 TQString KRootProp::removeEntry(const TQString& rKey)
 {
-    if (propDict.contains(rKey)) {
+    if (propDict.tqcontains(rKey)) {
 	dirty = true;
 	TQString aValue = propDict[rKey];
 	propDict.remove(rKey);

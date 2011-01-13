@@ -19,7 +19,7 @@ class Test8a : public KConfigSkeleton
     */
     void setFont( const TQFont & v )
     {
-      if (!isImmutable( TQString::fromLatin1( "Font" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "Font" ) ))
         mFont = v;
     }
 
@@ -36,7 +36,7 @@ class Test8a : public KConfigSkeleton
     */
     void setTitleFont( const TQFont & v )
     {
-      if (!isImmutable( TQString::fromLatin1( "TitleFont" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "TitleFont" ) ))
         mTitleFont = v;
     }
 

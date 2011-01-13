@@ -65,9 +65,10 @@ typedef TQValueList<TQCString> QCStringList;
  * @see KApplication::dcopClient()
  * @author Preston Brown <pbrown@kde.org>, Matthias Ettrich <ettrich@kde.org>
  */
-class DCOP_EXPORT DCOPClient : public QObject
+class DCOP_EXPORT DCOPClient : public TQObject
 {
   Q_OBJECT
+  TQ_OBJECT
 
  public:
   /**
@@ -511,7 +512,7 @@ class DCOP_EXPORT DCOPClient : public QObject
    * @see process()
    * @see beginTransaction()
    */
-  Q_INT32 transactionId() const;
+  TQ_INT32 transactionId() const;
 
   /**
    * Checks whether @p remApp is registered with the DCOP server.
@@ -816,7 +817,7 @@ public:
 
 private:
 
-  bool isLocalTransactionFinished(Q_INT32 id, TQCString &replyType, TQByteArray &replyData);
+  bool isLocalTransactionFinished(TQ_INT32 id, TQCString &replyType, TQByteArray &replyData);
 
   bool attachInternal( bool registerAsAnonymous = true );
 

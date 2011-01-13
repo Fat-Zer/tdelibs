@@ -26,7 +26,7 @@
 class KMPrinter;
 class KMPrinterPage;
 
-class KMPages : public QTabWidget
+class KMPages : public TQTabWidget
 {
 public:
 	KMPages(TQWidget *parent = 0, const char *name = 0);

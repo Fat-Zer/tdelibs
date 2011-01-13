@@ -113,7 +113,7 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
     lister->d->rootFileItem = 0;
   }
-  else if ( lister->d->lstDirs.find( _url ) != lister->d->lstDirs.end() )
+  else if ( lister->d->lstDirs.tqfind( _url ) != lister->d->lstDirs.end() )
   {
     // stop the job listing _url for this lister
     stop( lister, _url );
@@ -311,7 +311,7 @@ void KDirListerCache::stop( KDirLister *lister )
   TQPtrList<KDirLister> *listers;
   while ( (listers = it.current()) )
   {
-    if ( listers->findRef( lister ) > -1 )
+    if ( listers->tqfindRef( lister ) > -1 )
     {
       // lister is listing url
       TQString url = it.currentKey();
@@ -457,7 +457,7 @@ void KDirListerCache::forgetDirs( KDirLister *lister, const KURL& _url, bool not
   // that itemsInUse doesn't. When emitting the canceled signals lstDirs must
   // not contain anything that itemsInUse does not contain. (otherwise it 
   // might crash in findByName()).
-  lister->d->lstDirs.remove( lister->d->lstDirs.find( url ) );
+  lister->d->lstDirs.remove( lister->d->lstDirs.tqfind( url ) );
 
   DirItem *item = itemsInUse[urlStr];
 
@@ -670,7 +670,7 @@ KFileItem *KDirListerCache::findByURL( const KDirLister *lister, const KURL& _u 
   parentDir.setPath( parentDir.directory() );
 
   // If lister is set, check that it contains this dir
-  if ( lister && !lister->d->lstDirs.contains( parentDir ) )
+  if ( lister && !lister->d->lstDirs.tqcontains( parentDir ) )
       return 0L;
 
   KFileItemList *itemList = itemsForDir( parentDir );
@@ -760,7 +760,7 @@ void KDirListerCache::FilesChanged( const KURL::List &fileList )
       // Let's update the dir.
       KURL dir( *it );
       dir.setPath( dir.directory( true ) );
-      if ( dirsToUpdate.find( dir ) == dirsToUpdate.end() )
+      if ( dirsToUpdate.tqfind( dir ) == dirsToUpdate.end() )
         dirsToUpdate.prepend( dir );
     }
   }
@@ -890,7 +890,7 @@ void KDirListerCache::slotFileDirty( const TQString& _file )
 // delayed updating of files, FAM is flooding us with events
 void KDirListerCache::slotFileDirtyDelayed()
 {
-  TQString file = TQString::fromUtf8( sender()->name() );
+  TQString file = TQString::fromUtf8( TQT_TQOBJECT_CONST(sender())->name() );
 
   kdDebug(7004) << k_funcinfo << file << endl;
 
@@ -1110,7 +1110,7 @@ void KDirListerCache::slotRedirection( KIO::Job *j, const KURL& url )
       kdl->d->url = newUrl;
     }
 
-    *kdl->d->lstDirs.find( oldUrl ) = newUrl;
+    *kdl->d->lstDirs.tqfind( oldUrl ) = newUrl;
 
     if ( kdl->d->lstDirs.count() == 1 )
     {
@@ -1147,7 +1147,7 @@ void KDirListerCache::slotRedirection( KIO::Job *j, const KURL& url )
         kdl->d->url = newUrl;
       }
 
-      *kdl->d->lstDirs.find( oldUrl ) = newUrl;
+      *kdl->d->lstDirs.tqfind( oldUrl ) = newUrl;
 
       if ( kdl->d->lstDirs.count() == 1 )
       {
@@ -1429,7 +1429,7 @@ void KDirListerCache::emitRedirections( const KURL &oldUrl, const KURL &url )
     // And notify the dirlisters of the redirection
     for ( KDirLister *kdl = holders->first(); kdl; kdl = holders->next() )
     {
-      *kdl->d->lstDirs.find( oldUrl ) = url;
+      *kdl->d->lstDirs.tqfind( oldUrl ) = url;
 
       if ( kdl->d->lstDirs.count() == 1 )
         emit kdl->redirection( url );
@@ -1478,7 +1478,7 @@ void KDirListerCache::slotUpdateResult( KIO::Job * j )
     if ( listers )
       for ( kdl = tmpLst->first(); kdl; kdl = tmpLst->next() )
       {
-        Q_ASSERT( listers->containsRef( kdl ) == 0 );
+        Q_ASSERT( listers->tqcontainsRef( kdl ) == 0 );
         listers->append( kdl );
       }
     else
@@ -2095,8 +2095,8 @@ void KDirLister::setMimeFilter( const TQStringList& mimeFilter )
   if ( !(d->changes & MIME_FILTER) )
     d->oldMimeFilter = d->mimeFilter;
 
-  if ( mimeFilter.find("all/allfiles") != mimeFilter.end() || 
-       mimeFilter.find("all/all") != mimeFilter.end() )
+  if ( mimeFilter.tqfind("all/allfiles") != mimeFilter.end() || 
+       mimeFilter.tqfind("all/all") != mimeFilter.end() )
     d->mimeFilter.clear();
   else
     d->mimeFilter = mimeFilter;

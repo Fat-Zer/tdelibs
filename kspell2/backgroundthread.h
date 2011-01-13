@@ -33,7 +33,7 @@ namespace KSpell2
     class Filter;
     class Broker;
     class Dictionary;
-    class BackgroundThread : public QThread
+    class BackgroundThread : public TQThread
     {
     public:
         BackgroundThread();

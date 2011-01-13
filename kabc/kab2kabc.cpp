@@ -180,7 +180,7 @@ void readKAddressBookEntries( const TQString &dataString, Addressee &a )
 
   TQStringList::ConstIterator it;
   for ( it = entries.begin(); it != entries.end(); ++it ) {
-    int pos = (*it).find( "\n" );
+    int pos = (*it).tqfind( "\n" );
     TQString fieldName = (*it).left( pos );
     TQString fieldValue = (*it).mid( pos + 2 );
 
@@ -325,7 +325,7 @@ void importKab( KABC::AddressBook *ab, bool override, bool quiet )
     TQStringList::ConstIterator customIt;
     for ( customIt = entry.custom.begin(); customIt != entry.custom.end(); ++customIt ) {
       if ( (*customIt).startsWith( "X-KABC-UID:" ) ) {
-        a.setUid( (*customIt).mid( (*customIt).find( ":" ) + 1 ) );
+        a.setUid( (*customIt).mid( (*customIt).tqfind( ":" ) + 1 ) );
         idFound = true;
       } else if ( (*customIt).startsWith( "KMail:1.0\n" ) ) {
         readKAddressBookEntries( *customIt, a );

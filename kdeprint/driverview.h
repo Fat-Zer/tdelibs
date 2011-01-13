@@ -36,7 +36,7 @@ public:
 	DrListView(TQWidget *parent = 0, const char *name = 0);
 };
 
-class KDEPRINT_EXPORT DriverView : public QWidget
+class KDEPRINT_EXPORT DriverView : public TQWidget
 {
 	Q_OBJECT
 public:

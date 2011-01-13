@@ -69,7 +69,7 @@ class KMdiMainFrmPrivate;
  *
  * This special event is needed because the view has to inform the main frame that it`s being closed.
  */
-class KMDI_EXPORT KMdiViewCloseEvent : public QCustomEvent
+class KMDI_EXPORT KMdiViewCloseEvent : public TQCustomEvent
 {
 public:
 	KMdiViewCloseEvent( KMdiChildView* pWnd ) : TQCustomEvent( TQEvent::User, pWnd ) {}
@@ -98,7 +98,7 @@ public:
  *
  * \code
  *		MyMainWindow mainframe;
- *		qApp->setMainWidget(&mainframe);
+ *		tqApp->setMainWidget(&mainframe);
  *		mainframe->addWindow(view1); // put it under MDI control
  *		mainframe->addWindow(view2);
  * \endcode
@@ -142,7 +142,7 @@ public:
  * use fakeSDIApplication() to fake it and isFakingSDIApplication() to query whether or not an SDI
  * interface is being faked.
  *
- * You can dynamically change the shape of the attached MDI views using setFrameDecorOfAttachedViews().
+ * You can dynamically change the tqshape of the attached MDI views using setFrameDecorOfAttachedViews().
  *
  * Additionally, here's a hint how to restore the mainframe's settings from config file:
  * \code
@@ -296,7 +296,7 @@ private:
 
 	// methods
 public:
-	KMdiMainFrm( TQWidget* parentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = WType_TopLevel | WDestructiveClose );
+	KMdiMainFrm( TQWidget* tqparentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = WType_TopLevel | WDestructiveClose );
 	virtual ~KMdiMainFrm();
 
 	/**

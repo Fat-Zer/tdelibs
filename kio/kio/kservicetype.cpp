@@ -82,7 +82,7 @@ KServiceType::init( KDesktopFile *config)
 
   for( ; gIt != tmpList.end(); ++gIt )
   {
-    if ( (*gIt).find( "Property::" ) == 0 )
+    if ( (*gIt).tqfind( "Property::" ) == 0 )
     {
       config->setGroup( *gIt );
       TQVariant v = config->readPropertyEntry( "Value",
@@ -95,7 +95,7 @@ KServiceType::init( KDesktopFile *config)
   gIt = tmpList.begin();
   for( ; gIt != tmpList.end(); ++gIt )
   {
-    if( (*gIt).find( "PropertyDef::" ) == 0 )
+    if( (*gIt).tqfind( "PropertyDef::" ) == 0 )
     {
       config->setGroup( *gIt );
       m_mapPropDefs.insert( (*gIt).mid( 13 ),
@@ -125,11 +125,11 @@ KServiceType::KServiceType( TQDataStream& _str, int offset )
 void
 KServiceType::load( TQDataStream& _str )
 {
-  Q_INT8 b;
+  TQ_INT8 b;
   _str >> m_strName >> m_strIcon >> m_strComment >> m_mapProps >> m_mapPropDefs
        >> b;
   m_bValid = b;
-  m_bDerived = m_mapProps.contains("X-KDE-Derived");
+  m_bDerived = m_mapProps.tqcontains("X-KDE-Derived");
 }
 
 void
@@ -140,7 +140,7 @@ KServiceType::save( TQDataStream& _str )
   // You may add new fields at the end. Make sure to update the version
   // number in ksycoca.h
   _str << m_strName << m_strIcon << m_strComment << m_mapProps << m_mapPropDefs
-       << (Q_INT8)m_bValid;
+       << (TQ_INT8)m_bValid;
 }
 
 KServiceType::~KServiceType()
@@ -170,7 +170,7 @@ bool KServiceType::inherits( const TQString& servTypeName ) const
   return false;
 }
 
-QVariant
+TQVariant
 KServiceType::property( const TQString& _name ) const
 {
   TQVariant v;
@@ -182,7 +182,7 @@ KServiceType::property( const TQString& _name ) const
   else if ( _name == "Comment" )
     v = TQVariant( m_strComment );
   else {
-    TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( _name );
+    TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.tqfind( _name );
     if ( it != m_mapProps.end() )
       v = it.data();
   }
@@ -190,7 +190,7 @@ KServiceType::property( const TQString& _name ) const
   return v;
 }
 
-QStringList
+TQStringList
 KServiceType::propertyNames() const
 {
   TQStringList res;
@@ -209,13 +209,13 @@ KServiceType::propertyNames() const
 TQVariant::Type
 KServiceType::propertyDef( const TQString& _name ) const
 {
-  TQMap<TQString,TQVariant::Type>::ConstIterator it = m_mapPropDefs.find( _name );
+  TQMap<TQString,TQVariant::Type>::ConstIterator it = m_mapPropDefs.tqfind( _name );
   if ( it == m_mapPropDefs.end() )
     return TQVariant::Invalid;
   return it.data();
 }
 
-QStringList
+TQStringList
 KServiceType::propertyDefNames() const
 {
   TQStringList l;
@@ -239,7 +239,7 @@ static void addUnique(KService::List &lst, TQDict<KService> &dict, const KServic
   for( ; it != newLst.end(); ++it )
   {
      KService *service = static_cast<KService*>(*it);
-     if (dict.find(service->desktopEntryPath()))
+     if (dict.tqfind(service->desktopEntryPath()))
         continue;
      dict.insert(service->desktopEntryPath(), service);
      lst.append(service);

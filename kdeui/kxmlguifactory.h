@@ -59,7 +59,7 @@ class BuildHelper;
  * according to the XML and the merging rules of previously inserted clients. Container widgets
  * are built via a KXMLGUIBuilder , which has to be provided with the KXMLGUIFactory constructor.
  */
-class KDEUI_EXPORT KXMLGUIFactory : public QObject
+class KDEUI_EXPORT KXMLGUIFactory : public TQObject
 {
   friend class KXMLGUI::BuildHelper;
   Q_OBJECT

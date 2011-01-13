@@ -54,7 +54,7 @@ void generateStub( const TQString& idl, const TQString& filename, TQDomElement d
     str << endl;
 
     TQString ifdefstring = idl.upper();
-    int pos = idl.findRev( '.' );
+    int pos = idl.tqfindRev( '.' );
     if ( pos != -1 )
 	ifdefstring = ifdefstring.left( pos );
 
@@ -107,13 +107,13 @@ void generateStub( const TQString& idl, const TQString& filename, TQDomElement d
 	}
 
 	if( DCOPParent != "DCOPObject" ) { // we need to include the .h file for the base stub
-	    if( all_includes.contains( DCOPParent + ".h" ))
+	    if( all_includes.tqcontains( DCOPParent + ".h" ))
 		str << "#include <" << DCOPParent << "_stub.h>" << endl;
-	    else if( all_includes.contains( DCOPParent.lower() + ".h" ))
+	    else if( all_includes.tqcontains( DCOPParent.lower() + ".h" ))
 		str << "#include <" << DCOPParent.lower() << "_stub.h>" << endl;
 	    else {// damn ... let's assume it's the last include
 		TQString stub_h = all_includes.last();
-		unsigned int pos = stub_h.find( ".h" );
+		unsigned int pos = stub_h.tqfind( ".h" );
 		if( pos > 0 ) {
 		    stub_h = stub_h.remove( pos, 100000 );
 		    str << "#include <" << stub_h << "_stub.h>" << endl;
@@ -128,7 +128,7 @@ void generateStub( const TQString& idl, const TQString& filename, TQDomElement d
 	int namespace_count = 0;
 	TQString namespace_tmp = className;
 	for(;;) {
-	    int pos = namespace_tmp.find( "::" );
+	    int pos = namespace_tmp.tqfind( "::" );
 	    if( pos < 0 ) {
 		className = namespace_tmp;
 		break;

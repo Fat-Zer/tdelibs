@@ -30,13 +30,13 @@ namespace DNSSD
 
 enum Operation { SD_ERROR = 101,SD_ADDREMOVE, SD_PUBLISH, SD_RESOLVE};
 
-class ErrorEvent : public QCustomEvent
+class ErrorEvent : public TQCustomEvent
 {
 public:
 	ErrorEvent() : TQCustomEvent(TQEvent::User+SD_ERROR) 
 	{}
 };
-class AddRemoveEvent : public QCustomEvent
+class AddRemoveEvent : public TQCustomEvent
 {
 public:
 	enum Operation { Add, Remove };
@@ -51,7 +51,7 @@ public:
 	const TQString m_domain;
 };
 
-class PublishEvent : public QCustomEvent
+class PublishEvent : public TQCustomEvent
 {
 public:
 	PublishEvent(bool ok) : TQCustomEvent(TQEvent::User+SD_PUBLISH), m_ok(ok)
@@ -60,7 +60,7 @@ public:
 	bool m_ok;
 };
 
-class ResolveEvent : public QCustomEvent
+class ResolveEvent : public TQCustomEvent
 {
 public:
 	ResolveEvent(const TQString& hostname, unsigned short port,

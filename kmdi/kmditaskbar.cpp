@@ -102,7 +102,7 @@ void KMdiTaskBarButton::fitText( const TQString& origStr, int newWidth )
 {
 	TQButton::setText( m_actualText );
 
-	int actualWidth = sizeHint().width();
+	int actualWidth = tqsizeHint().width();
 	int realLetterCount = origStr.length();
 	int newLetterCount = ( newWidth * realLetterCount ) / actualWidth;
 	int w = newWidth + 1;
@@ -337,16 +337,16 @@ void KMdiTaskBar::layoutTaskBar( int taskBarWidth )
 	// if there's enough space, use actual width
 	int buttonCount = m_pButtonList->count();
 	int tbHandlePixel;
-	tbHandlePixel = style().pixelMetric( TQStyle::PM_DockWindowHandleExtent, this );
-	int buttonAreaWidth = taskBarWidth - tbHandlePixel - style().pixelMetric( TQStyle::PM_DefaultFrameWidth, this ) - 5;
-	if ( ( ( allButtonsWidthHint ) <= buttonAreaWidth ) || ( width() < parentWidget() ->width() ) )
+	tbHandlePixel = style().tqpixelMetric( TQStyle::PM_DockWindowHandleExtent, this );
+	int buttonAreaWidth = taskBarWidth - tbHandlePixel - style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, this ) - 5;
+	if ( ( ( allButtonsWidthHint ) <= buttonAreaWidth ) || ( width() < tqparentWidget() ->width() ) )
 	{
 		for ( b = m_pButtonList->first();b;b = m_pButtonList->next() )
 		{
 			b->setText( b->actualText() );
-			if ( b->width() != b->sizeHint().width() )
+			if ( b->width() != b->tqsizeHint().width() )
 			{
-				b->setFixedWidth( b->sizeHint().width() );
+				b->setFixedWidth( b->tqsizeHint().width() );
 				b->show();
 			}
 		}

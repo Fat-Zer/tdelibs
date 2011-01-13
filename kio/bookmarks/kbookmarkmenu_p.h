@@ -165,7 +165,7 @@ private:
   TQString m_address;
 };
 
-class KBookmarkFolderTreeItem : public QListViewItem
+class KBookmarkFolderTreeItem : public TQListViewItem
 {
   // make this an accessor
   friend class KBookmarkFolderTree;

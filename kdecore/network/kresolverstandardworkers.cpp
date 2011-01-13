@@ -140,7 +140,7 @@ bool KBlacklistWorker::isBlacklisted(const TQString& host)
     return false;
 
   // KDE4: QLatin1String
-  TQString ascii = TQString::fromLatin1(KResolver::domainToAscii(host));
+  TQString ascii = TQString::tqfromLatin1(KResolver::domainToAscii(host));
 
   TQMutexLocker locker(&blacklistMutex);
 
@@ -208,12 +208,12 @@ namespace
   {
   public:
     TQCString m_hostname;	// might be different!
-    Q_UINT16 m_port;
+    TQ_UINT16 m_port;
     int m_scopeid;
     int m_af;
     KResolverResults& results;
 
-    GetHostByNameThread(const char * hostname, Q_UINT16 port,
+    GetHostByNameThread(const char * hostname, TQ_UINT16 port,
 			int scopeid, int af, KResolverResults* res) :
       m_hostname(hostname), m_port(port), m_scopeid(scopeid), m_af(af),
       results(*res)
@@ -251,7 +251,7 @@ namespace
 
 	// check blacklist
 	if (m_af != AF_INET && 
-	    KBlacklistWorker::isBlacklisted(TQString::fromLatin1(m_hostname)))
+	    KBlacklistWorker::isBlacklisted(TQString::tqfromLatin1(m_hostname)))
 	  break;
 
 # ifdef USE_GETHOSTBYNAME2_R
@@ -358,7 +358,7 @@ namespace
     if (socktype == 0)
       socktype = SOCK_STREAM;	// default
 
-    TQString canon = KResolver::domainToUnicode(TQString::fromLatin1(he->h_name));
+    TQString canon = KResolver::domainToUnicode(TQString::tqfromLatin1(he->h_name));
     KInetSocketAddress sa;
     sa.setPort(m_port);
     if (he->h_addrtype != AF_INET)
@@ -404,7 +404,7 @@ namespace
   {
     // check blacklist
     if ((m_af != AF_INET && m_af != AF_UNSPEC) && 
-	KBlacklistWorker::isBlacklisted(TQString::fromLatin1(m_node)))
+	KBlacklistWorker::isBlacklisted(TQString::tqfromLatin1(m_node)))
       {
 	results.setError(KResolver::NoName);
 	finished();
@@ -547,11 +547,11 @@ bool KStandardWorker::sanityCheck()
   if (!nodeName().isEmpty())
     {
       TQString node = nodeName();
-      if (node.find('%') != -1)
-	node.truncate(node.find('%'));
+      if (node.tqfind('%') != -1)
+	node.truncate(node.tqfind('%'));
 
-      if (node.isEmpty() || node == TQString::fromLatin1("*") ||
-	  node == TQString::fromLatin1("localhost"))
+      if (node.isEmpty() || node == TQString::tqfromLatin1("*") ||
+	  node == TQString::tqfromLatin1("localhost"))
 	m_encodedName.truncate(0);
       else
 	{
@@ -584,7 +584,7 @@ bool KStandardWorker::resolveScopeId()
 {
   // we must test the original name, not the encoded one
   scopeid = 0;
-  int pos = nodeName().findRev('%');
+  int pos = nodeName().tqfindRev('%');
   if (pos == -1)
     return true;
 
@@ -616,7 +616,7 @@ bool KStandardWorker::resolveService()
       // service name does not contain a port number
       // must be a name
 
-      if (serviceName().isEmpty() || serviceName().compare(TQString::fromLatin1("*")) == 0)
+      if (serviceName().isEmpty() || serviceName().compare(TQString::tqfromLatin1("*")) == 0)
 	port = 0;
       else
 	{
@@ -648,7 +648,7 @@ bool KStandardWorker::resolveService()
 	    }
 
 	  // it worked, we have a port number
-	  port = (Q_UINT16)result;
+	  port = (TQ_UINT16)result;
 	}
     }
 
@@ -667,7 +667,7 @@ KResolver::ErrorCodes KStandardWorker::addUnix()
   if (!m_encodedName.isEmpty())
     return KResolver::AddrFamily; // non local hostname
 
-  if (protocol() || protocolName())
+  if (protocol() || static_cast<const char *>(protocolName()))
     return KResolver::BadFlags;	// cannot have Unix sockets with protocols
 
   TQString pathname = serviceName();
@@ -712,7 +712,7 @@ bool KStandardWorker::resolveNumerically()
   // now try to resolve the hostname numerically
   KInetSocketAddress sa;
   setError(KResolver::NoError);
-  sa.setHost(KIpAddress(TQString::fromLatin1(m_encodedName)));
+  sa.setHost(KIpAddress(TQString::tqfromLatin1(m_encodedName)));
   
   // if it failed, the length was reset to 0
   bool ok = sa.length() != 0;

@@ -79,7 +79,7 @@ void KEditListBox::init( bool checkAtEntering, int buttons,
     d->m_checkAtEntering = checkAtEntering;
 
     servNewButton = servRemoveButton = servUpButton = servDownButton = 0L;
-    setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding,
+    tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding,
                               TQSizePolicy::MinimumExpanding));
 
     TQGridLayout * grid = new TQGridLayout(this, 7, 2,
@@ -195,7 +195,7 @@ void KEditListBox::typedSomething(const TQString& text)
         else
         {
             StringComparisonMode mode = (StringComparisonMode) (ExactMatch | CaseSensitive );
-            bool enable = (!m_listBox->findItem( text, mode ));
+            bool enable = (!m_listBox->tqfindItem( text, mode ));
             servNewButton->setEnabled( enable );
         }
     }
@@ -266,7 +266,7 @@ void KEditListBox::addItem()
         else
         {
             StringComparisonMode mode = (StringComparisonMode) (ExactMatch | CaseSensitive );
-            alreadyInList =(m_listBox->findItem(currentTextLE, mode) );
+            alreadyInList =(m_listBox->tqfindItem(currentTextLE, mode) );
         }
     }
 

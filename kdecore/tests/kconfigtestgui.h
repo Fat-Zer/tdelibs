@@ -39,7 +39,7 @@
 // KConfigTestView contains lots of Qt widgets.
 //
 
-class KConfigTestView : public QDialog
+class KConfigTestView : public TQDialog
 {
   Q_OBJECT
 public:

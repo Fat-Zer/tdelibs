@@ -25,13 +25,13 @@
 #include <tqfile.h>
 #include <tqtextstream.h>
 
-QString
+TQString
 KAboutPerson::name() const
 {
    return TQString::fromUtf8(mName);
 }
 
-QString
+TQString
 KAboutPerson::task() const
 {
    if (mTask && *mTask)
@@ -40,14 +40,14 @@ KAboutPerson::task() const
       return TQString::null;
 }
 
-QString
+TQString
 KAboutPerson::emailAddress() const
 {
    return TQString::fromUtf8(mEmailAddress);
 }
 
 
-QString
+TQString
 KAboutPerson::webAddress() const
 {
    return TQString::fromUtf8(mWebAddress);
@@ -248,7 +248,7 @@ KAboutData::productName() const
       return appName();
 }
 
-QString
+TQString
 KAboutData::programName() const
 {
    if (mProgramName && *mProgramName)
@@ -278,7 +278,7 @@ KAboutData::translateInternalProgramName() const
       d->mTranslatedProgramName = qstrdup( programName().utf8());
 }
 
-QImage
+TQImage
 KAboutData::programLogo() const
 {
     return d->programLogo ? (*d->programLogo) : TQImage();
@@ -293,13 +293,13 @@ KAboutData::setProgramLogo(const TQImage& image)
        *d->programLogo = image;
 }
 
-QString
+TQString
 KAboutData::version() const
 {
-   return TQString::fromLatin1(mVersion);
+   return TQString::tqfromLatin1(mVersion);
 }
 
-QString
+TQString
 KAboutData::shortDescription() const
 {
    if (mShortDescription && *mShortDescription)
@@ -308,16 +308,16 @@ KAboutData::shortDescription() const
       return TQString::null;
 }
 
-QString
+TQString
 KAboutData::homepage() const
 {
-   return TQString::fromLatin1(mHomepageAddress);
+   return TQString::tqfromLatin1(mHomepageAddress);
 }
 
-QString
+TQString
 KAboutData::bugAddress() const
 {
-   return TQString::fromLatin1(mBugEmailAddress);
+   return TQString::tqfromLatin1(mBugEmailAddress);
 }
 
 const TQValueList<KAboutPerson>
@@ -381,7 +381,7 @@ KAboutData::translators() const
     return personList;
 }
 
-QString
+TQString
 KAboutData::aboutTranslationTeam()
 {
     return i18n("replace this with information about your translation team",
@@ -392,7 +392,7 @@ KAboutData::aboutTranslationTeam()
             );
 }
 
-QString
+TQString
 KAboutData::otherText() const
 {
    if (mOtherText && *mOtherText)
@@ -402,7 +402,7 @@ KAboutData::otherText() const
 }
 
 
-QString
+TQString
 KAboutData::license() const
 {
   TQString result;
@@ -465,7 +465,7 @@ KAboutData::license() const
   return result;
 }
 
-QString
+TQString
 KAboutData::copyrightStatement() const
 {
   if (mCopyrightStatement && *mCopyrightStatement)
@@ -474,13 +474,13 @@ KAboutData::copyrightStatement() const
      return TQString::null;
 }
 
-QString
+TQString
 KAboutData::customAuthorPlainText() const
 {
   return d->customAuthorPlainText;
 }
 
-QString
+TQString
 KAboutData::customAuthorRichText() const
 {
   return d->customAuthorRichText;

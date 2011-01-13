@@ -27,7 +27,7 @@
 #include <tqscrollview.h>
 #include <kmultitabbar.h>
 
-class KMultiTabBarInternal: public QScrollView
+class KMultiTabBarInternal: public TQScrollView
 {
         Q_OBJECT
 public:

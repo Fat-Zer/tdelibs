@@ -29,7 +29,7 @@
 class KTimerDialog;
 class RandRScreenPrivate;
 
-class RandRScreen : public QObject
+class RandRScreen : public TQObject
 {
 	Q_OBJECT
 

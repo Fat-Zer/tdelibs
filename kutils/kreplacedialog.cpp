@@ -32,7 +32,7 @@
 
 /**
  * we need to insert the strings after the dialog is set
- * up, otherwise TQComboBox will deliver an aweful big sizeHint
+ * up, otherwise TQComboBox will deliver an aweful big tqsizeHint
  * for long replacement texts.
  */
 class KReplaceDialog::KReplaceDialogPrivate {

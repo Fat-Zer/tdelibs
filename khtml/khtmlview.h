@@ -75,7 +75,7 @@ class KHTMLViewPrivate;
  *
  * Suitable for use as an application's main view.
  **/
-class KHTML_EXPORT KHTMLView : public QScrollView
+class KHTML_EXPORT KHTMLView : public TQScrollView
 {
     Q_OBJECT
 
@@ -179,7 +179,7 @@ signals:
     void cleared();
     void zoomView( int );
     void hideAccessKeys();
-    void repaintAccessKeys();
+    void tqrepaintAccessKeys();
     void findAheadActive( bool );
 //#define NO_SMOOTH_SCROLL_HACK
 #ifndef NO_SMOOTH_SCROLL_HACK
@@ -231,7 +231,7 @@ protected slots:
 #ifndef NO_SMOOTH_SCROLL_HACK
     void scrollTick();
 #else
-    void scrollTick() {}; // moc cannot handle #if
+    void scrollTick() {}; // tqmoc cannot handle #if
 #endif
 
 private slots:
@@ -384,8 +384,8 @@ private:
      *
      * These operations are executed unconditionally, regardless of the
      * focus, and the caret display policy.
-     * @param forceRepaint @p true to force an immediate repaint, otherwise
-     *		do a scheduled repaint
+     * @param forceRepaint @p true to force an immediate tqrepaint, otherwise
+     *		do a scheduled tqrepaint
      */
     void showCaret(bool forceRepaint = false);
     /** makes the caret invisible, but does not influence the frequency timer.

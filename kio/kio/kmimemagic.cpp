@@ -525,7 +525,7 @@ class KMimeMagicUtimeConf
 public:
     KMimeMagicUtimeConf()
     {
-        tmpDirs << TQString::fromLatin1("/tmp"); // default value
+        tmpDirs << TQString::tqfromLatin1("/tmp"); // default value
 
         // The trick is that we also don't want the user to override globally set
         // directories. So we have to misuse KStandardDirs :}
@@ -565,8 +565,8 @@ public:
 
     bool restoreAccessTime( const TQString & file ) const
     {
-        TQString dir = file.left( file.findRev( '/' ) );
-        bool res = tmpDirs.contains( dir );
+        TQString dir = file.left( file.tqfindRev( '/' ) );
+        bool res = tmpDirs.tqcontains( dir );
         //kdDebug(7018) << "restoreAccessTime " << file << " dir=" << dir << " result=" << res << endl;
         return res;
     }
@@ -2270,7 +2270,7 @@ refineResult(KMimeMagicResult *r, const TQString & _filename)
 	else
 	if ( tmp == "application/x-sharedlib" )
 	{
-		if ( _filename.find( ".so" ) == -1 ) 
+		if ( _filename.tqfind( ".so" ) == -1 ) 
 		{
 			tmp = "application/x-executable";
 			r->setMimeType( tmp );

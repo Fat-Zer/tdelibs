@@ -290,7 +290,7 @@ TQValueList<NodeImpl*> HTMLCollectionImpl::namedItems( const DOMString &name ) c
     //remember stuff about elements we were asked for.
     m_cache->updateNodeListInfo(m_refNode->getDocument());
     CollectionCache* cache = static_cast<CollectionCache*>(m_cache);
-    if (TQValueList<NodeImpl*>* info = cache->nameCache.find(key)) {
+    if (TQValueList<NodeImpl*>* info = cache->nameCache.tqfind(key)) {
         return *info;
     }
     else {

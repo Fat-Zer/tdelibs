@@ -45,7 +45,7 @@ class TQBitmap;
  *
  * @author Daniel M. Duley <mosfet@kde.org>
  */
-class KDEUI_EXPORT KDualColorButton : public QWidget
+class KDEUI_EXPORT KDualColorButton : public TQWidget
 {
     Q_OBJECT
     Q_ENUMS( DualColor )
@@ -94,7 +94,7 @@ public:
      * Returns the minimum size needed to display the widget and all its
      * controls.
      */
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 public slots:
     /**
      * Sets the foreground color.

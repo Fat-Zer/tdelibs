@@ -31,7 +31,7 @@
 
 using namespace std;
 
-class PrintSignals : public QObject
+class PrintSignals : public TQObject
 {
    Q_OBJECT
 public:
@@ -98,7 +98,7 @@ public slots:
    { cout << "*** speed: " << bytes_per_second << endl; }
 };
 
-class KDirListerTest : public QWidget
+class KDirListerTest : public TQWidget
 {
    Q_OBJECT
 public:

@@ -45,7 +45,7 @@ KAr::KAr( const TQString& filename )
     //kdDebug(7042) << "KAr(filename) reached." << endl;
     m_filename = filename;
     d = new KArPrivate;
-    setDevice( new TQFile( filename ) );
+    setDevice( TQT_TQIODEVICE(new TQFile( filename )) );
 }
 
 KAr::KAr( TQIODevice * dev )
@@ -86,7 +86,7 @@ bool KAr::openArchive( int mode )
 
     char magic[8];
     dev->readBlock (magic, 8);
-    if (qstrncmp(magic, "!<arch>", 7) != 0) {
+    if (tqstrncmp(magic, "!<arch>", 7) != 0) {
         kdWarning(7042) << "Invalid main magic" << endl;
         return false;
     }
@@ -140,7 +140,7 @@ bool KAr::openArchive( int mode )
                     return false;
                 }
                 name = &ar_longnames[name.mid(1, 15).toInt()];
-                name = name.left(name.find("/"));
+                name = name.left(name.tqfind("/"));
             }
         }
         if (skip_entry) continue;

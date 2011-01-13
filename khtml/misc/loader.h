@@ -405,7 +405,7 @@ namespace khtml
     /**
      * @internal
      */
-    class Loader : public QObject
+    class Loader : public TQObject
     {
 	Q_OBJECT
 

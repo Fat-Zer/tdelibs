@@ -101,7 +101,7 @@ public:
    * @param canonName	the canonical name of the resolved hostname
    * @param encodedName	the ASCII-compatible encoding of the hostname
    */
-  KResolverEntry(const struct sockaddr *sa, Q_UINT16 salen, int socktype,
+  KResolverEntry(const struct sockaddr *sa, TQ_UINT16 salen, int socktype,
 		int protocol, const TQString& canonName = TQString::null,
 		const TQCString& encodedName = TQCString());
 
@@ -128,7 +128,7 @@ public:
   /**
    * Retrieves the length of the socket address structure.
    */
-  Q_UINT16 length() const;
+  TQ_UINT16 length() const;
 
   /**
    * Retrieves the family associated with this socket address.
@@ -292,9 +292,10 @@ class KResolverPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KResolver: public QObject
+class KDECORE_EXPORT KResolver: public TQObject
 {
   Q_OBJECT
+  TQ_OBJECT
 
 public:
 
@@ -795,11 +796,11 @@ public:
    * Note that the encoding is illegible and, thus, should not be presented
    * to the user, except if requested.
    *
-   * @param unicodeDomain	the domain name to be encoded
+   * @param tqunicodeDomain	the domain name to be encoded
    * @return the ACE-encoded suitable for DNS queries if successful, a null
    *	     TQCString if failure.
    */
-  static TQCString domainToAscii(const TQString& unicodeDomain);
+  static TQCString domainToAscii(const TQString& tqunicodeDomain);
 
   /**
    * Does the inverse of @ref domainToAscii and return an Unicode domain

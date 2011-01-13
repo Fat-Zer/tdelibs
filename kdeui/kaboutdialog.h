@@ -47,7 +47,7 @@ class KAboutContainerPrivate;
 /**
  *  KAboutContainer can be used to make a application specific AboutDialog.
  */
-class KDEUI_EXPORT KAboutContainer : public QFrame
+class KDEUI_EXPORT KAboutContainer : public TQFrame
 {
   Q_OBJECT
 
@@ -62,12 +62,12 @@ class KDEUI_EXPORT KAboutContainer : public QFrame
 		    const TQString &url, const TQString &task,
 		    bool showHeader = false, bool showframe = false,
 		    bool showBold = false );
-    void addTitle(  const TQString &title, int alignment=AlignLeft,
+    void addTitle(  const TQString &title, int tqalignment=AlignLeft,
 		    bool showframe = false, bool showBold = false );
-    void addImage( const TQString &fileName, int alignment=AlignLeft );
+    void addImage( const TQString &fileName, int tqalignment=AlignLeft );
 
-    virtual TQSize sizeHint( void ) const;
-    virtual TQSize minimumSizeHint( void ) const;
+    virtual TQSize tqsizeHint( void ) const;
+    virtual TQSize tqminimumSizeHint( void ) const;
 
   protected:
     virtual void childEvent( TQChildEvent *e );
@@ -89,7 +89,7 @@ class KAboutContributorPrivate;
  * Used internally by KAboutWidget
  * @internal
  */
-class KDEUI_EXPORT KAboutContributor : public QFrame
+class KDEUI_EXPORT KAboutContributor : public TQFrame
 {
   Q_OBJECT
 
@@ -115,7 +115,7 @@ class KDEUI_EXPORT KAboutContributor : public QFrame
     TQString getURL( void ) const;
     TQString getWork( void ) const;
 
-    virtual TQSize sizeHint( void ) const;
+    virtual TQSize tqsizeHint( void ) const;
 
   protected:
     virtual void fontChange( const TQFont &oldFont );
@@ -147,7 +147,7 @@ class KDEUI_EXPORT KAboutContributor : public QFrame
  *
  * It has a minimum size set.
  */
-class KDEUI_EXPORT KAboutWidget : public QWidget
+class KDEUI_EXPORT KAboutWidget : public TQWidget
 {
   Q_OBJECT
 

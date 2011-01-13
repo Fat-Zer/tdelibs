@@ -50,7 +50,7 @@ KReplaceNextDialog::KReplaceNextDialog(TQWidget *parent) :
 {
     m_mainLabel = new TQLabel( this );
     setMainWidget( m_mainLabel );
-    resize(minimumSize());
+    resize(tqminimumSize());
 }
 
 void KReplaceNextDialog::setLabel( const TQString& pattern, const TQString& replacement )
@@ -90,7 +90,7 @@ KReplaceNextDialog* KReplace::dialog()
 {
     if ( !m_dialog )
     {
-        m_dialog = new KReplaceNextDialog( parentWidget() );
+        m_dialog = new KReplaceNextDialog( tqparentWidget() );
         connect( m_dialog, TQT_SIGNAL( user1Clicked() ), this, TQT_SLOT( slotReplaceAll() ) );
         connect( m_dialog, TQT_SIGNAL( user2Clicked() ), this, TQT_SLOT( slotSkip() ) );
         connect( m_dialog, TQT_SIGNAL( user3Clicked() ), this, TQT_SLOT( slotReplace() ) );
@@ -102,9 +102,9 @@ KReplaceNextDialog* KReplace::dialog()
 void KReplace::displayFinalDialog() const
 {
     if ( !m_replacements )
-        KMessageBox::information(parentWidget(), i18n("No text was replaced."));
+        KMessageBox::information(tqparentWidget(), i18n("No text was replaced."));
     else
-        KMessageBox::information(parentWidget(), i18n("1 replacement done.", "%n replacements done.", m_replacements ) );
+        KMessageBox::information(tqparentWidget(), i18n("1 replacement done.", "%n replacements done.", m_replacements ) );
 }
 
 KFind::Result KReplace::replace()
@@ -316,7 +316,7 @@ bool KReplace::shouldRestart( bool forceAsking, bool showNumMatches ) const
         i18n("Do you want to restart search from the end?")
         : i18n("Do you want to restart search at the beginning?");
 
-    int ret = KMessageBox::questionYesNo( parentWidget(), message, TQString::null, i18n("Restart"), i18n("Stop") );
+    int ret = KMessageBox::questionYesNo( tqparentWidget(), message, TQString::null, i18n("Restart"), i18n("Stop") );
     return( ret == KMessageBox::Yes );
 }
 

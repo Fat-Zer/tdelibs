@@ -70,7 +70,7 @@ TQString mapBanner( const TQString& ban )
 	if ( map.size() == 0 )
 		for ( int i=0; bannermap[ i ].banner; i++ )
 			map[ bannermap[ i ].banner ] = bannermap[ i ].name;
-	TQMap<TQString,TQString>::ConstIterator it = map.find( ban );
+	TQMap<TQString,TQString>::ConstIterator it = map.tqfind( ban );
 	if ( it == map.end() )
 		return ban;
 	else
@@ -120,7 +120,7 @@ void KMWBanners::initPrinter(KMPrinter *p)
 			m_bans = TQStringList::split(',',p->option("kde-banners-supported"),false);
 			if (m_bans.count() == 0)
 				m_bans = defaultBanners();
-			if (m_bans.find("none") == m_bans.end())
+			if (m_bans.tqfind("none") == m_bans.end())
 				m_bans.prepend("none");
 			for ( TQStringList::Iterator it=m_bans.begin(); it!=m_bans.end(); ++it )
 			{

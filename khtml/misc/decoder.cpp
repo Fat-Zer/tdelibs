@@ -170,7 +170,7 @@ static int findXMLEncoding(const TQCString &str, int &encodingLength)
 {
     int len = str.length();
 
-    int pos = str.find("encoding");
+    int pos = str.tqfind("encoding");
     if (pos == -1)
         return -1;
     pos += 8;
@@ -365,10 +365,10 @@ TQString Decoder::decode(const char *data, int len)
                         TQCString str( ptr, (end-ptr)+1);
                         str = str.lower();
                         int pos = 0;
-                        //if( (pos = str.find("http-equiv", pos)) == -1) break;
-                        //if( (pos = str.find("content-type", pos)) == -1) break;
+                        //if( (pos = str.tqfind("http-equiv", pos)) == -1) break;
+                        //if( (pos = str.tqfind("content-type", pos)) == -1) break;
 			while( pos < ( int ) str.length() ) {
-			    if( (pos = str.find("charset", pos)) == -1) break;
+			    if( (pos = str.tqfind("charset", pos)) == -1) break;
 			    pos += 7;
                             // skip whitespace..
 			    while(  pos < (int)str.length() && str[pos] <= ' ' ) pos++;

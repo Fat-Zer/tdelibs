@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 
 class TQCheckBox;
 
-class HighContrastStyleConfig: public QWidget
+class HighContrastStyleConfig: public TQWidget
 {
 	Q_OBJECT
 public:

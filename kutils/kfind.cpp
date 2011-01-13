@@ -211,7 +211,7 @@ KDialogBase* KFind::findNextDialog( bool create )
 {
     if ( !m_dialog && create )
     {
-        m_dialog = new KFindNextDialog( m_pattern, parentWidget() );
+        m_dialog = new KFindNextDialog( m_pattern, tqparentWidget() );
         connect( m_dialog, TQT_SIGNAL( user1Clicked() ), this, TQT_SLOT( slotFindNext() ) );
         connect( m_dialog, TQT_SIGNAL( finished() ), this, TQT_SLOT( slotDialogClosed() ) );
     }
@@ -368,7 +368,7 @@ KFind::Result KFind::find()
                         delete d->emptyMatch;
                         d->emptyMatch = new Private::Match( d->currentId, m_index, m_matchedLength );
                     } else
-                        d->incrementalPath.replace(m_pattern, new Private::Match(d->currentId, m_index, m_matchedLength));
+                        d->incrementalPath.tqreplace(m_pattern, new Private::Match(d->currentId, m_index, m_matchedLength));
 
                     if ( m_pattern.length() < d->matchedPattern.length() )
                     {
@@ -471,7 +471,7 @@ int KFind::find(const TQString &text, const TQString &pattern, int index, long o
             while (index >= 0)
             {
                 // ...find the next match.
-                index = text.findRev(pattern, index, caseSensitive);
+                index = text.tqfindRev(pattern, index, caseSensitive);
                 if (index == -1)
                     break;
 
@@ -488,7 +488,7 @@ int KFind::find(const TQString &text, const TQString &pattern, int index, long o
             while (index < (int)text.length())
             {
                 // ...find the next match.
-                index = text.find(pattern, index, caseSensitive);
+                index = text.tqfind(pattern, index, caseSensitive);
                 if (index == -1)
                     break;
 
@@ -507,11 +507,11 @@ int KFind::find(const TQString &text, const TQString &pattern, int index, long o
         // Non-whole-word search.
         if (options & KFindDialog::FindBackwards)
         {
-            index = text.findRev(pattern, index, caseSensitive);
+            index = text.tqfindRev(pattern, index, caseSensitive);
         }
         else
         {
-            index = text.find(pattern, index, caseSensitive);
+            index = text.tqfind(pattern, index, caseSensitive);
         }
         if (index != -1)
         {
@@ -532,7 +532,7 @@ int KFind::find(const TQString &text, const TQRegExp &pattern, int index, long o
             while (index >= 0)
             {
                 // ...find the next match.
-                index = text.findRev(pattern, index);
+                index = text.tqfindRev(pattern, index);
                 if (index == -1)
                     break;
 
@@ -551,7 +551,7 @@ int KFind::find(const TQString &text, const TQRegExp &pattern, int index, long o
             while (index < (int)text.length())
             {
                 // ...find the next match.
-                index = text.find(pattern, index);
+                index = text.tqfind(pattern, index);
                 if (index == -1)
                     break;
 
@@ -572,11 +572,11 @@ int KFind::find(const TQString &text, const TQRegExp &pattern, int index, long o
         // Non-whole-word search.
         if (options & KFindDialog::FindBackwards)
         {
-            index = text.findRev(pattern, index);
+            index = text.tqfindRev(pattern, index);
         }
         else
         {
-            index = text.find(pattern, index);
+            index = text.tqfind(pattern, index);
         }
         if (index != -1)
         {
@@ -704,7 +704,7 @@ TQWidget* KFind::dialogsParent() const
     // If the find dialog is still up, it should get the focus when closing a message box
     // Otherwise, maybe the "find next?" dialog is up
     // Otherwise, the "view" is the parent.
-    return d->findDialog ? (TQWidget*)d->findDialog : ( m_dialog ? m_dialog : parentWidget() );
+    return d->findDialog ? (TQWidget*)d->findDialog : ( m_dialog ? m_dialog : tqparentWidget() );
 }
 
 #include "kfind.moc"

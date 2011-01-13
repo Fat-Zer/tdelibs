@@ -38,7 +38,7 @@ namespace Arts { class StereoEffectStack; }
  * @author Matthias Kretz <kretz@kde.org>
  * @since 3.2
 */
-class KDE_ARTS_EXPORT KAudioRecordStream : public QObject
+class KDE_ARTS_EXPORT KAudioRecordStream : public TQObject
 {
 	Q_OBJECT
 

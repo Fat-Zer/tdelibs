@@ -49,7 +49,7 @@ void KSeparator::setOrientation(int orientation)
 {
    switch(orientation)
    {
-      case Vertical:
+      case Qt::Vertical:
       case VLine:
          setFrameStyle( TQFrame::VLine | TQFrame::Sunken );
          setMinimumSize(2, 0);
@@ -58,7 +58,7 @@ void KSeparator::setOrientation(int orientation)
       default:
          kdWarning() << "KSeparator::setOrientation(): invalid orientation, using default orientation HLine" << endl;
          
-      case Horizontal:
+      case Qt::Horizontal:
       case HLine:
          setFrameStyle( TQFrame::HLine | TQFrame::Sunken );
          setMinimumSize(0, 2);
@@ -83,7 +83,7 @@ void KSeparator::drawFrame(TQPainter *p)
 {
    QPoint	p1, p2;
    QRect	r     = frameRect();
-   const TQColorGroup & g = colorGroup();
+   const TQColorGroup & g = tqcolorGroup();
 
    if ( frameStyle() & HLine ) {
       p1 = TQPoint( r.x(), r.height()/2 );
@@ -95,12 +95,12 @@ void KSeparator::drawFrame(TQPainter *p)
    }
 
    TQStyleOption opt( lineWidth(), midLineWidth() );
-   style().drawPrimitive( TQStyle::PE_Separator, p, TQRect( p1, p2 ), g,
+   tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, p, TQRect( p1, p2 ), g,
 		          TQStyle::Style_Sunken, opt );
 }
 
 
-TQSize KSeparator::sizeHint() const
+TQSize KSeparator::tqsizeHint() const
 {
    if ( frameStyle() & VLine )
       return TQSize(2, 0);

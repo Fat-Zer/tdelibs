@@ -5,7 +5,7 @@
 #include <tqimage.h>
 #include <kpixmap.h>
 
-class KColorWidget : public QWidget
+class KColorWidget : public TQWidget
 {
 public:
     KColorWidget(TQWidget *parent=0, const char *name=0);

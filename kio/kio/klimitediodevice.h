@@ -28,7 +28,7 @@
  * @author David Faure <david@mandrakesoft.com>
  * @since 3.1
  */
-class KIO_EXPORT KLimitedIODevice : public QIODevice
+class KIO_EXPORT KLimitedIODevice : public TQIODevice
 {
 public:
     /**
@@ -67,14 +67,18 @@ public:
     virtual void close() {}
     virtual void flush() {}
 
+#ifdef USE_QT4
+    virtual qint64 size() const { return m_length; }
+#else // USE_QT4
     virtual Offset size() const { return m_length; }
+#endif // USE_QT4
 
-    virtual Q_LONG readBlock ( char * data, Q_ULONG maxlen )
+    virtual TQ_LONG readBlock ( char * data, TQ_ULONG maxlen )
     {
         maxlen = QMIN( maxlen, m_length - at() ); // Apply upper limit
         return m_dev->readBlock( data, maxlen );
     }
-    virtual Q_LONG writeBlock ( const char *, Q_ULONG ) { return -1; } // unsupported
+    virtual TQ_LONG writeBlock ( const char *, TQ_ULONG ) { return -1; } // unsupported
     virtual int putch( int ) { return -1; } // unsupported
 
     virtual int getch() {
@@ -94,8 +98,8 @@ public:
     virtual bool atEnd() const { return m_dev->atEnd() || m_dev->at() >= m_start + m_length; }
 private:
     TQIODevice* m_dev;
-    Q_ULONG m_start;
-    Q_ULONG m_length;
+    TQ_ULONG m_start;
+    TQ_ULONG m_length;
 };
 
 #endif

@@ -224,7 +224,7 @@ bool KIconViewSearchLine::itemMatches( const TQIconViewItem *item,
     return false;
 
   TQString itemtext = item->text();
-  return ( itemtext.find( s, 0, caseSensitive() ) >= 0 );
+  return ( itemtext.tqfind( s, 0, caseSensitive() ) >= 0 );
 }
 
 void KIconViewSearchLine::init( TQIconView *iconView )

@@ -48,7 +48,7 @@ class KCharSelectPrivate;
  * @author Reginald Stadlbauer <reggie@kde.org>
  */
 
-class KDEUI_EXPORT KCharSelectTable : public QGridView
+class KDEUI_EXPORT KCharSelectTable : public TQGridView
 {
     Q_OBJECT
 
@@ -56,7 +56,7 @@ public:
     KCharSelectTable( TQWidget *parent, const char *name, const TQString &_font,
 		      const TQChar &_chr, int _tableNum );
 
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
     virtual void resizeEvent( TQResizeEvent * );
 
     virtual void setFont( const TQString &_font );
@@ -137,7 +137,7 @@ private:
  * @author Reginald Stadlbauer <reggie@kde.org>
  */
 
-class KDEUI_EXPORT KCharSelect : public QVBox
+class KDEUI_EXPORT KCharSelect : public TQVBox
 {
     Q_OBJECT
     Q_PROPERTY( TQString fontFamily READ font WRITE setFont )
@@ -157,7 +157,7 @@ public:
     /**
      * Reimplemented.
      */
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 
     /**
      * Sets the font which is displayed to @p font

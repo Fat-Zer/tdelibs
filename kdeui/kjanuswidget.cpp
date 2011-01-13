@@ -45,7 +45,7 @@
 #include "kpushbutton.h"
 #include "kguiitem.h"
 
-class KJanusWidget::IconListItem : public QListBoxItem
+class KJanusWidget::IconListItem : public TQListBoxItem
 {
   public:
     IconListItem( TQListBox *listbox, const TQPixmap &pixmap,
@@ -254,7 +254,7 @@ TQFrame *KJanusWidget::addPage( const TQStringList &items, const TQString &heade
 
 void KJanusWidget::pageGone( TQObject *obj )
 {
-  removePage( static_cast<TQWidget*>( obj ) );
+  removePage( TQT_TQWIDGET( obj ) );
 }
 
 void KJanusWidget::slotReopen( TQListViewItem * item )
@@ -413,7 +413,7 @@ void KJanusWidget::InsertTreeListItem(const TQStringList &items, const TQPixmap 
       curPath << name;
 
       TQString key = curPath.join("_/_");
-      if (mFolderIconMap.contains(key)) {
+      if (mFolderIconMap.tqcontains(key)) {
         TQPixmap p = mFolderIconMap[key];
         newChild->setPixmap(0,p);
       }
@@ -459,8 +459,8 @@ void KJanusWidget::addPageWidget( TQFrame *page, const TQStringList &items,
       TQString itemName = items.last();
       IconListItem *item = new IconListItem( mIconList, pixmap, itemName );
       mIconListToPageStack.insert(item, page);
-      mIconList->invalidateHeight();
-      mIconList->invalidateWidth();
+      mIconList->tqinvalidateHeight();
+      mIconList->tqinvalidateWidth();
 
       if (mIconList->isVisible())
         mIconList->updateWidth();
@@ -515,10 +515,10 @@ bool KJanusWidget::setSwallowedWidget( TQWidget *widget )
   //
   // Hide old children
   //
-  TQObjectList *l = (TQObjectList*)mSwallowPage->children(); // silence please
-  for( uint i=0; i < l->count(); i++ )
+  TQObjectList l = mSwallowPage->childrenListObject(); // silence please
+  for( uint i=0; i < l.count(); i++ )
   {
-    TQObject *o = l->at(i);
+    TQObject *o = l.at(i);
     if( o->isWidgetType() )
     {
       ((TQWidget*)o)->hide();
@@ -542,7 +542,7 @@ bool KJanusWidget::setSwallowedWidget( TQWidget *widget )
     }
     gbox->addWidget(widget, 0, 0 );
     gbox->activate();
-    mSwallowPage->setMinimumSize( widget->minimumSize() );
+    mSwallowPage->setMinimumSize( widget->tqminimumSize() );
   }
 
   return true;
@@ -686,7 +686,7 @@ int KJanusWidget::pageIndex( TQWidget *widget ) const
     //
     if( widget->isA("TQFrame") )
     {
-      return d->mPageToInt[widget->parentWidget()];
+      return d->mPageToInt[widget->tqparentWidget()];
     }
     else
     {
@@ -714,8 +714,8 @@ void KJanusWidget::slotFontChanged()
     TQFont listFont( mIconList->font() );
     listFont.setBold( true );
     mIconList->setFont( listFont );
-    mIconList->invalidateHeight();
-    mIconList->invalidateWidth();
+    mIconList->tqinvalidateHeight();
+    mIconList->tqinvalidateWidth();
   }
 }
 
@@ -758,31 +758,31 @@ void KJanusWidget::setFocus()
 }
 
 
-TQSize KJanusWidget::minimumSizeHint() const
+TQSize KJanusWidget::tqminimumSizeHint() const
 {
   if( mFace == TreeList || mFace == IconList )
   {
     TQSize s1( KDialog::spacingHint(), KDialog::spacingHint()*2 );
     TQSize s2(0,0);
     TQSize s3(0,0);
-    TQSize s4( mPageStack->sizeHint() );
+    TQSize s4( mPageStack->tqsizeHint() );
 
     if( mFace == TreeList )
     {
-      s1.rwidth() += style().pixelMetric( TQStyle::PM_SplitterWidth );
-      s2 = mTreeList->minimumSize();
+      s1.rwidth() += tqstyle().tqpixelMetric( TQStyle::PM_SplitterWidth );
+      s2 = mTreeList->tqminimumSize();
     }
     else
     {
       mIconList->updateMinimumHeight();
       mIconList->updateWidth();
-      s2 = mIconList->minimumSize();
+      s2 = mIconList->tqminimumSize();
     }
 
     if( mTitleLabel->isVisible() )
     {
-      s3 += mTitleLabel->sizeHint();
-      s3.rheight() += mTitleSep->minimumSize().height();
+      s3 += mTitleLabel->tqsizeHint();
+      s3.rheight() += mTitleSep->tqminimumSize().height();
     }
 
     //
@@ -795,15 +795,15 @@ TQSize KJanusWidget::minimumSizeHint() const
   }
   else if( mFace == Tabbed )
   {
-    return mTabControl->sizeHint();
+    return mTabControl->tqsizeHint();
   }
   else if( mFace == Swallow )
   {
-    return mSwallowPage->minimumSize();
+    return mSwallowPage->tqminimumSize();
   }
   else if( mFace == Plain )
   {
-    return mPlainPage->sizeHint();
+    return mPlainPage->tqsizeHint();
   }
   else
   {
@@ -813,9 +813,9 @@ TQSize KJanusWidget::minimumSizeHint() const
 }
 
 
-TQSize KJanusWidget::sizeHint() const
+TQSize KJanusWidget::tqsizeHint() const
 {
-  return minimumSizeHint();
+  return tqminimumSizeHint();
 }
 
 
@@ -914,7 +914,7 @@ bool KJanusWidget::eventFilter( TQObject *o, TQEvent *e )
     if( item )
     {
       int lw = item->width( mIconList );
-      int sw = mIconList->verticalScrollBar()->sizeHint().width();
+      int sw = mIconList->verticalScrollBar()->tqsizeHint().width();
       mIconList->setFixedWidth( lw+sw+mIconList->frameWidth()*2 );
     }
   }
@@ -978,7 +978,7 @@ void KJanusWidget::IconListBox::updateWidth()
 
     if( verticalScrollBar()->isVisible() )
     {
-      maxWidth += verticalScrollBar()->sizeHint().width();
+      maxWidth += verticalScrollBar()->tqsizeHint().width();
     }
 
     setFixedWidth( maxWidth + frameWidth()*2 );
@@ -987,13 +987,13 @@ void KJanusWidget::IconListBox::updateWidth()
 }
 
 
-void KJanusWidget::IconListBox::invalidateHeight()
+void KJanusWidget::IconListBox::tqinvalidateHeight()
 {
   mHeightValid = false;
 }
 
 
-void KJanusWidget::IconListBox::invalidateWidth()
+void KJanusWidget::IconListBox::tqinvalidateWidth()
 {
   mWidthValid = false;
 }
@@ -1074,13 +1074,13 @@ void KJanusWidget::IconListItem::highlight( bool erase )
    // For now, always disable highlighting
    erase = true;
 
-   TQRect r = listBox()->itemRect( this );
+   TQRect r = listBox()->tqitemRect( this );
    r.addCoords( 1, 1, -1, -1 );
 
    TQPainter p( listBox()->viewport() );
    p.setClipRegion( r );
 
-   const TQColorGroup &cg = listBox()->colorGroup();
+   const TQColorGroup &cg = listBox()->tqcolorGroup();
    if ( erase )
    {
       p.setPen( cg.base() );
@@ -1129,7 +1129,7 @@ const TQPixmap &KJanusWidget::IconListItem::defaultPixmap()
 
 void KJanusWidget::IconListItem::paint( TQPainter *painter )
 {
-  TQRect itemPaintRegion( listBox()->itemRect( this ) );
+  TQRect itemPaintRegion( listBox()->tqitemRect( this ) );
   TQRect r( 1, 1, itemPaintRegion.width() - 2, itemPaintRegion.height() - 2);
 
   if ( isSelected() )
@@ -1137,7 +1137,7 @@ void KJanusWidget::IconListItem::paint( TQPainter *painter )
     painter->eraseRect( r );
 
     painter->save();
-    painter->setPen( listBox()->colorGroup().highlight().dark( 160 ) );
+    painter->setPen( listBox()->tqcolorGroup().highlight().dark( 160 ) );
     painter->drawRect( r );
     painter->restore();
   }
@@ -1191,7 +1191,7 @@ void KJanusWidget::virtual_hook( int, void* )
 // delete the node.
 void KJanusWidget::removePage( TQWidget *page )
 {
-  if (!d || !d->mPageToInt.contains(page))
+  if (!d || !d->mPageToInt.tqcontains(page))
     return;
 
   int index = d->mPageToInt[page];
@@ -1237,7 +1237,7 @@ void KJanusWidget::removePage( TQWidget *page )
 
 TQString KJanusWidget::pageTitle(int index) const
 {
-  if (!d || !d->mIntToTitle.contains(index))
+  if (!d || !d->mIntToTitle.tqcontains(index))
     return TQString::null;
   else
     return d->mIntToTitle[index];
@@ -1246,7 +1246,7 @@ TQString KJanusWidget::pageTitle(int index) const
 
 TQWidget *KJanusWidget::pageWidget(int index) const
 {
-  if (!d || !d->mIntToPage.contains(index))
+  if (!d || !d->mIntToPage.tqcontains(index))
     return 0;
   else
     return d->mIntToPage[index];

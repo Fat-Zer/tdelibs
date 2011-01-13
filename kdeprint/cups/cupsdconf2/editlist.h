@@ -26,7 +26,7 @@
 class KListBox;
 class TQPushButton;
 
-class EditList : public QWidget
+class EditList : public TQWidget
 {
 	Q_OBJECT
 

@@ -195,17 +195,17 @@ TQRegion RenderLayer::paintedRegion(RenderLayer* rootLayer)
     return r;
 }
 
-void RenderLayer::repaint( Priority p, bool markForRepaint )
+void RenderLayer::tqrepaint( Priority p, bool markForRepaint )
 {
     if (markForRepaint && m_markedForRepaint)
         return;
     for (RenderLayer* child = firstChild(); child; child = child->nextSibling())
-        child->repaint( p, markForRepaint );
+        child->tqrepaint( p, markForRepaint );
     TQRect layerBounds, damageRect, fgrect;
     calculateRects(renderer()->canvas()->layer(), renderer()->viewRect(), layerBounds, damageRect, fgrect);
     m_visibleRect = damageRect.intersect( layerBounds );
     if (m_visibleRect.isValid())
-        renderer()->canvas()->repaintViewRectangle( m_visibleRect.x(), m_visibleRect.y(), m_visibleRect.width(), m_visibleRect.height(), (p > NormalPriority) );
+        renderer()->canvas()->tqrepaintViewRectangle( m_visibleRect.x(), m_visibleRect.y(), m_visibleRect.width(), m_visibleRect.height(), (p > NormalPriority) );
     if (markForRepaint)
         m_markedForRepaint = true;
 }
@@ -213,7 +213,7 @@ void RenderLayer::repaint( Priority p, bool markForRepaint )
 void RenderLayer::updateLayerPositions(RenderLayer* rootLayer, bool doFullRepaint, bool checkForRepaint)
 {
     if (doFullRepaint) {
-        m_object->repaint();
+        m_object->tqrepaint();
         checkForRepaint = doFullRepaint = false;
     }
 
@@ -233,14 +233,14 @@ void RenderLayer::updateLayerPositions(RenderLayer* rootLayer, bool doFullRepain
 #ifdef APPLE_CHANGES
     // FIXME: Child object could override visibility.
     if (checkForRepaint && (m_object->style()->visibility() == VISIBLE))
-        m_object->repaintAfterLayoutIfNeeded(m_repaintRect, m_fullRepaintRect);
+        m_object->tqrepaintAfterLayoutIfNeeded(m_tqrepaintRect, m_fullRepaintRect);
 #else
     if (checkForRepaint && m_markedForRepaint) {
         TQRect layerBounds, damageRect, fgrect;
         calculateRects(rootLayer, renderer()->viewRect(), layerBounds, damageRect, fgrect);
         TQRect vr = damageRect.intersect( layerBounds );
         if (vr != m_visibleRect && vr.isValid()) {
-            renderer()->canvas()->repaintViewRectangle( vr.x(), vr.y(), vr.width(), vr.height() );
+            renderer()->canvas()->tqrepaintViewRectangle( vr.x(), vr.y(), vr.width(), vr.height() );
             m_visibleRect = vr;
         }
     }
@@ -537,7 +537,7 @@ void RenderLayer::checkInlineRelOffset(const RenderObject* o, int& x, int& y)
         y += sy;
 }
 
-void RenderLayer::scrollToOffset(int x, int y, bool updateScrollbars, bool repaint)
+void RenderLayer::scrollToOffset(int x, int y, bool updateScrollbars, bool tqrepaint)
 {
     if (renderer()->style()->overflowX() != OMARQUEE || !renderer()->hasOverflowClip()) {
         if (x < 0) x = 0;
@@ -569,9 +569,9 @@ void RenderLayer::scrollToOffset(int x, int y, bool updateScrollbars, bool repai
     // Fire the scroll DOM event.
     m_object->element()->dispatchHTMLEvent(EventImpl::SCROLL_EVENT, true, false);
 
-    // Just schedule a full repaint of our object.
-    if (repaint)
-        m_object->repaint(RealtimePriority);
+    // Just schedule a full tqrepaint of our object.
+    if (tqrepaint)
+        m_object->tqrepaint(RealtimePriority);
 
     if (updateScrollbars) {
         if (m_hBar)
@@ -637,7 +637,7 @@ int RenderLayer::verticalScrollbarWidth()
 #ifdef APPLE_CHANGES
     return m_vBar->width();
 #else
-    return m_vBar->style().pixelMetric(TQStyle::PM_ScrollBarExtent);
+    return m_vBar->style().tqpixelMetric(TQStyle::PM_ScrollBarExtent);
 #endif
 
 }
@@ -650,7 +650,7 @@ int RenderLayer::horizontalScrollbarHeight()
 #ifdef APPLE_CHANGES
     return m_hBar->height();
 #else
-    return m_hBar->style().pixelMetric(TQStyle::PM_ScrollBarExtent);
+    return m_hBar->style().tqpixelMetric(TQStyle::PM_ScrollBarExtent);
 #endif
 
 }
@@ -691,7 +691,7 @@ void RenderLayer::positionScrollbars(const TQRect& absBounds)
     TQScrollBar *b = m_hBar;
     if (!m_hBar)
 	b = m_vBar;
-    int sw = b->style().pixelMetric(TQStyle::PM_ScrollBarExtent);
+    int sw = b->style().tqpixelMetric(TQStyle::PM_ScrollBarExtent);
 
     if (m_vBar) {
 	TQRect vBarRect = TQRect(tx + w - sw + 1, ty, sw, h - (m_hBar ? sw : 0) + 1);

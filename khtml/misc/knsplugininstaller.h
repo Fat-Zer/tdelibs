@@ -87,7 +87,7 @@ private:
  * This class contain all the the methods used to perform a plugin installation
  *
  */
-class KNSPluginInstallEngine : public QObject
+class KNSPluginInstallEngine : public TQObject
 {
     Q_OBJECT
 public:

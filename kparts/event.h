@@ -33,7 +33,7 @@ class Part;
 /**
  * Base class for all KParts events.
  */
-class KPARTS_EXPORT Event : public QCustomEvent
+class KPARTS_EXPORT Event : public TQCustomEvent
 {
 public:
   Event( const char *eventName );

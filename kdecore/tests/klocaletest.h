@@ -9,7 +9,7 @@ class TQLabel;
 
 /** test: a small test program for KLocale
     */
-class Test : public QWidget
+class Test : public TQWidget
 {
   Q_OBJECT
   

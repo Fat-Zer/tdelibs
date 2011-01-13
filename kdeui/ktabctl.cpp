@@ -56,8 +56,8 @@ void KTabCtl::resizeEvent(TQResizeEvent *)
         for (i=0; i<(int)pages.size(); i++) {
             pages[i]->setGeometry(r);
         }
-        if( ( tabs->shape() == TQTabBar::RoundedBelow ) ||
-            ( tabs->shape() == TQTabBar::TriangularBelow ) ) {
+        if( ( tabs->tqshape() == TQTabBar::RoundedBelow ) ||
+            ( tabs->tqshape() == TQTabBar::TriangularBelow ) ) {
             tabs->move( 0, height()-tabs->height()-4 );
         }
     }
@@ -104,7 +104,7 @@ bool KTabCtl::isTabEnabled(const TQString& name)
     unsigned int i;
 
     for(i = 0; i < pages.size(); i++)
-	if (TQString::fromLatin1(pages[i]->name()) == name)
+	if (TQString::tqfromLatin1(pages[i]->name()) == name)
 	    return tabs->isTabEnabled(i);   /* return the enabled status */
     return false;     /* tab does not exist */
 }
@@ -117,7 +117,7 @@ void KTabCtl::setTabEnabled(const TQString& name, bool state)
         return;
 
     for (i = 0; i < pages.size(); i++)
-	if (TQString::fromLatin1(pages[i]->name()) == name)
+	if (TQString::tqfromLatin1(pages[i]->name()) == name)
 	    tabs->setTabEnabled(i, state);
 }
 
@@ -125,11 +125,11 @@ void KTabCtl::setSizes()
 {
     unsigned i;
 
-    TQSize min(tabs->sizeHint());    /* the minimum required size for the tabbar */
+    TQSize min(tabs->tqsizeHint());    /* the minimum required size for the tabbar */
     tabs->resize(min);         /* make sure that the tabbar does not require more space than actually needed. */
 
 
-    TQSize max(QCOORD_MAX,QCOORD_MAX);
+    TQSize max(TQCOORD_MAX,TQCOORD_MAX);
     //int th = min.height();          /* the height of the tabbar itself (without pages and stuff) */
 
     for (i = 0; i < pages.size(); i++) {
@@ -138,14 +138,14 @@ void KTabCtl::setSizes()
          * check the actual minimum and maximum sizes
          */
 
-	if (pages[i]->maximumSize().height() < max.height())
-	    max.setHeight(pages[i]->maximumSize().height());
-	if (pages[i]->maximumSize().width() < max.width())
-	    max.setWidth( pages[i]->maximumSize().width());
-	if ( pages[i]->minimumSize().height() > min.height())
-	    min.setHeight( pages[i]->minimumSize().height());
-	if ( pages[i]->minimumSize().width() > min.width())
-	    min.setWidth( pages[i]->minimumSize().width());
+	if (pages[i]->tqmaximumSize().height() < max.height())
+	    max.setHeight(pages[i]->tqmaximumSize().height());
+	if (pages[i]->tqmaximumSize().width() < max.width())
+	    max.setWidth( pages[i]->tqmaximumSize().width());
+	if ( pages[i]->tqminimumSize().height() > min.height())
+	    min.setHeight( pages[i]->tqminimumSize().height());
+	if ( pages[i]->tqminimumSize().width() > min.width())
+	    min.setWidth( pages[i]->tqminimumSize().width());
     }
 
     // BL: min and max are sizes of children, not tabcontrol
@@ -184,22 +184,22 @@ void KTabCtl::setBorder( bool state )
     blBorder = state;
 }
 
-void KTabCtl::setShape( TQTabBar::Shape shape )
+void KTabCtl::setShape( TQTabBar::Shape tqshape )
 {
-    tabs->setShape( shape );
+    tabs->setShape( tqshape );
 }
 
-QSize
-KTabCtl::sizeHint() const
+TQSize
+KTabCtl::tqsizeHint() const
 {
 	/* desired size of the tabbar */
-	TQSize hint(tabs->sizeHint());
+	TQSize hint(tabs->tqsizeHint());
 
 	/* overall desired size of all pages */
 	TQSize pageHint;
 	for (unsigned int i = 0; i < pages.size(); i++)
 	{
-		TQSize sizeI(pages[i]->sizeHint());
+		TQSize sizeI(pages[i]->tqsizeHint());
 
 		if (sizeI.isValid())
 		{
@@ -229,7 +229,7 @@ KTabCtl::sizeHint() const
 	}
 
 	/*
-	 * If not at least a one page has a valid sizeHint we have to return
+	 * If not at least a one page has a valid tqsizeHint we have to return
 	 * an invalid size as well.
 	 */
 	return (pageHint);
@@ -251,16 +251,16 @@ void KTabCtl::paintEvent(TQPaintEvent *)
     int x1 = getChildRect().right() + 2;
     int x0 = getChildRect().left() - 1;
 
-    p.setPen(colorGroup().light());
+    p.setPen(tqcolorGroup().light());
     p.drawLine(x0, y0 - 1, x1 - 1, y0 - 1);      /* 1st top line */
-    p.setPen(colorGroup().midlight());
+    p.setPen(tqcolorGroup().midlight());
     p.drawLine(x0, y0, x1 - 1, y0);      /* 2nd top line */
-    p.setPen(colorGroup().light());
+    p.setPen(tqcolorGroup().light());
     p.drawLine(x0, y0 + 1, x0, y1);      /* left line */
     p.setPen(black);
     p.drawLine(x1, y1, x0, y1);          /* bottom line */
     p.drawLine(x1, y1 - 1, x1, y0);
-    p.setPen(colorGroup().dark());
+    p.setPen(tqcolorGroup().dark());
     p.drawLine(x0 + 1, y1 - 1, x1 - 1, y1 - 1);  /* bottom */
     p.drawLine(x1 - 1, y1 - 2, x1 - 1, y0 + 1);
     p.end();
@@ -273,8 +273,8 @@ void KTabCtl::paintEvent(TQPaintEvent *)
 
 TQRect KTabCtl::getChildRect() const
 {
-    if( ( tabs->shape() == TQTabBar::RoundedBelow ) ||
-        ( tabs->shape() == TQTabBar::TriangularBelow ) ) {
+    if( ( tabs->tqshape() == TQTabBar::RoundedBelow ) ||
+        ( tabs->tqshape() == TQTabBar::TriangularBelow ) ) {
     	return TQRect(2, 1, width() - 4,
 		     height() - tabs->height() - 4);
     } else {

@@ -85,7 +85,7 @@ void KColorButton::setColor( const TQColor &c )
 {
   if ( col != c ) {
     col = c;
-    repaint( false );
+    tqrepaint( false );
     emit changed( col );
   }
 }
@@ -105,34 +105,34 @@ void KColorButton::setDefaultColor( const TQColor &c )
 void KColorButton::drawButtonLabel( TQPainter *painter )
 {
   int x, y, w, h;
-  TQRect r = style().subRect( TQStyle::SR_PushButtonContents, this );
+  TQRect r = tqstyle().subRect( TQStyle::SR_PushButtonContents, this );
   r.rect(&x, &y, &w, &h);
 
-  int margin = style().pixelMetric( TQStyle::PM_ButtonMargin, this );
+  int margin = tqstyle().tqpixelMetric( TQStyle::PM_ButtonMargin, this );
   x += margin;
   y += margin;
   w -= 2*margin;
   h -= 2*margin;
 
   if (isOn() || isDown()) {
-    x += style().pixelMetric( TQStyle::PM_ButtonShiftHorizontal, this );
-    y += style().pixelMetric( TQStyle::PM_ButtonShiftVertical, this );
+    x += tqstyle().tqpixelMetric( TQStyle::PM_ButtonShiftHorizontal, this );
+    y += tqstyle().tqpixelMetric( TQStyle::PM_ButtonShiftVertical, this );
   }
 
   TQColor fillCol = isEnabled() ? col : backgroundColor();
-  qDrawShadePanel( painter, x, y, w, h, colorGroup(), true, 1, NULL);
+  qDrawShadePanel( painter, x, y, w, h, tqcolorGroup(), true, 1, NULL);
   if ( fillCol.isValid() )
     painter->fillRect( x+1, y+1, w-2, h-2, fillCol );
 
   if ( hasFocus() ) {
-    TQRect focusRect = style().subRect( TQStyle::SR_PushButtonFocusRect, this );
-    style().drawPrimitive( TQStyle::PE_FocusRect, painter, focusRect, colorGroup() );
+    TQRect focusRect = tqstyle().subRect( TQStyle::SR_PushButtonFocusRect, this );
+    tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, painter, focusRect, tqcolorGroup() );
   }
 }
 
-TQSize KColorButton::sizeHint() const
+TQSize KColorButton::tqsizeHint() const
 {
-  return style().sizeFromContents(TQStyle::CT_PushButton, this, TQSize(40, 15)).
+  return tqstyle().tqsizeFromContents(TQStyle::CT_PushButton, this, TQSize(40, 15)).
 	  	expandedTo(TQApplication::globalStrut());
 }
 
@@ -155,11 +155,11 @@ void KColorButton::keyPressEvent( TQKeyEvent *e )
 
   if ( KStdAccel::copy().contains( key ) ) {
     TQMimeSource* mime = new KColorDrag( color() );
-    TQApplication::clipboard()->setData( mime, QClipboard::Clipboard );
+    TQApplication::tqclipboard()->setData( mime, TQClipboard::Clipboard );
   }
   else if ( KStdAccel::paste().contains( key ) ) {
     TQColor color;
-    KColorDrag::decode( TQApplication::clipboard()->data( QClipboard::Clipboard ), color );
+    KColorDrag::decode( TQApplication::tqclipboard()->data( QClipboard::Clipboard ), color );
     setColor( color );
   }
   else
@@ -174,7 +174,7 @@ void KColorButton::mousePressEvent( TQMouseEvent *e)
 
 void KColorButton::mouseMoveEvent( TQMouseEvent *e)
 {
-  if( (e->state() & LeftButton) &&
+  if( (e->state() & Qt::LeftButton) &&
     (e->pos()-mPos).manhattanLength() > KGlobalSettings::dndEventDelay() )
   {
     // Drag color object

@@ -63,7 +63,7 @@ namespace khtml {
     class RenderObject;
     class RenderScrollMediator;
 
-class RenderScrollMediator: public QObject
+class RenderScrollMediator: public TQObject
 {
     Q_OBJECT
 public:
@@ -78,7 +78,7 @@ private:
 };
 
 // This class handles the auto-scrolling of layers with overflow: marquee.
-class Marquee: public QObject
+class Marquee: public TQObject
 {
     Q_OBJECT
 
@@ -190,7 +190,7 @@ public:
     void checkInlineRelOffset(const RenderObject* o, int& x, int& y);
     short scrollXOffset() { return m_scrollX; }
     int scrollYOffset() { return m_scrollY; }
-    void scrollToOffset(int x, int y, bool updateScrollbars = true, bool repaint = true);
+    void scrollToOffset(int x, int y, bool updateScrollbars = true, bool tqrepaint = true);
     void scrollToXOffset(int x) { scrollToOffset(x, m_scrollY); }
     void scrollToYOffset(int y) { scrollToOffset(m_scrollX, y); }
     void showScrollbar(Qt::Orientation, bool);
@@ -202,7 +202,7 @@ public:
     void paintScrollbars(RenderObject::PaintInfo& pI);
     void checkScrollbarsAfterLayout();
     void slotValueChanged(int);
-    void repaint(Priority p=NormalPriority, bool markForRepaint = false);
+    void tqrepaint(Priority p=NormalPriority, bool markForRepaint = false);
     void updateScrollPositionFromScrollbars();
 
     void updateLayerPosition();

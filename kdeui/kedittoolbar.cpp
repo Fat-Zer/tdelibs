@@ -85,7 +85,7 @@ public:
 
 typedef TQValueList<XmlData> XmlDataList;
 
-class ToolbarItem : public QListViewItem
+class ToolbarItem : public TQListViewItem
 {
 public:
   ToolbarItem(KListView *parent, const TQString& tag = TQString::null, const TQString& name = TQString::null, const TQString& statusText = TQString::null)
@@ -127,7 +127,7 @@ private:
 };
 
 #define TOOLBARITEMMIMETYPE "data/x-kde.toolbar.item"
-class ToolbarItemDrag : public QStoredDrag
+class ToolbarItemDrag : public TQStoredDrag
 {
 public:
   ToolbarItemDrag(ToolbarItem *toolbarItem,
@@ -155,7 +155,7 @@ public:
     if (!e)
       return false;
 
-    TQByteArray data = e->encodedData(TOOLBARITEMMIMETYPE);
+    TQByteArray data = e->tqencodedData(TOOLBARITEMMIMETYPE);
     if ( data.isEmpty() )
       return false;
 
@@ -378,7 +378,7 @@ const char *KEditToolbar::s_defaultToolbar = 0L;
 KEditToolbar::KEditToolbar(KActionCollection *collection, const TQString& file,
                            bool global, TQWidget* parent, const char* name)
   : KDialogBase(Swallow, i18n("Configure Toolbars"), Default|Ok|Apply|Cancel, Ok, parent, name),
-    m_widget(new KEditToolbarWidget(TQString::fromLatin1(s_defaultToolbar), collection, file, global, this))
+    m_widget(new KEditToolbarWidget(TQString::tqfromLatin1(s_defaultToolbar), collection, file, global, this))
 {
     init();
     d->m_global = global;
@@ -400,7 +400,7 @@ KEditToolbar::KEditToolbar(const TQString& defaultToolbar, KActionCollection *co
 
 KEditToolbar::KEditToolbar(KXMLGUIFactory* factory, TQWidget* parent, const char* name)
     : KDialogBase(Swallow, i18n("Configure Toolbars"), Default|Ok|Apply|Cancel, Ok, parent, name),
-      m_widget(new KEditToolbarWidget(TQString::fromLatin1(s_defaultToolbar), factory, this))
+      m_widget(new KEditToolbarWidget(TQString::tqfromLatin1(s_defaultToolbar), factory, this))
 {
     init();
     d->m_factory = factory;
@@ -427,7 +427,7 @@ void KEditToolbar::init()
     connect(m_widget, TQT_SIGNAL(enableOk(bool)), TQT_SLOT(enableButtonApply(bool)));
     enableButtonApply(false);
 
-    setMinimumSize(sizeHint());
+    setMinimumSize(tqsizeHint());
     s_defaultToolbar = 0L;
 }
 
@@ -467,7 +467,7 @@ void KEditToolbar::slotDefault()
             if (TQDir::isRelativePath(file))
             {
                 const KInstance *instance = client->instance() ? client->instance() : KGlobal::instance();
-                file = locateLocal("data", TQString::fromLatin1( instance->instanceName() + '/' ) + file);
+                file = locateLocal("data", TQString::tqfromLatin1( instance->instanceName() + '/' ) + file);
             }
             else
             {
@@ -485,10 +485,10 @@ void KEditToolbar::slotDefault()
     }
     else
     {
-        int slash = d->m_file.findRev('/')+1;
+        int slash = d->m_file.tqfindRev('/')+1;
         if (slash)
             d->m_file = d->m_file.mid(slash);
-        TQString xml_file = locateLocal("data", TQString::fromLatin1( KGlobal::instance()->instanceName() + '/' ) + d->m_file);
+        TQString xml_file = locateLocal("data", TQString::tqfromLatin1( KGlobal::instance()->instanceName() + '/' ) + d->m_file);
 
         if ( TQFile::exists( xml_file ) )
             if ( !TQFile::remove( xml_file ) )
@@ -547,7 +547,7 @@ KEditToolbarWidget::KEditToolbarWidget(KActionCollection *collection,
   // now load in our toolbar combo box
   loadToolbarCombo();
   adjustSize();
-  setMinimumSize(sizeHint());
+  setMinimumSize(tqsizeHint());
 }
 
 KEditToolbarWidget::KEditToolbarWidget(const TQString& defaultToolbar,
@@ -561,7 +561,7 @@ KEditToolbarWidget::KEditToolbarWidget(const TQString& defaultToolbar,
   // now load in our toolbar combo box
   loadToolbarCombo(defaultToolbar);
   adjustSize();
-  setMinimumSize(sizeHint());
+  setMinimumSize(tqsizeHint());
 }
 
 KEditToolbarWidget::KEditToolbarWidget( KXMLGUIFactory* factory,
@@ -573,7 +573,7 @@ KEditToolbarWidget::KEditToolbarWidget( KXMLGUIFactory* factory,
   // now load in our toolbar combo box
   loadToolbarCombo();
   adjustSize();
-  setMinimumSize(sizeHint());
+  setMinimumSize(tqsizeHint());
 }
 
 KEditToolbarWidget::KEditToolbarWidget( const TQString& defaultToolbar,
@@ -586,7 +586,7 @@ KEditToolbarWidget::KEditToolbarWidget( const TQString& defaultToolbar,
   // now load in our toolbar combo box
   loadToolbarCombo(defaultToolbar);
   adjustSize();
-  setMinimumSize(sizeHint());
+  setMinimumSize(tqsizeHint());
 }
 
 KEditToolbarWidget::~KEditToolbarWidget()
@@ -816,7 +816,7 @@ void KEditToolbarWidget::setupLayout()
 
   // "change icon" button
   d->m_changeIcon = new KPushButton( i18n( "Change &Icon..." ), this );
-  TQString kdialogExe = KStandardDirs::findExe(TQString::fromLatin1("kdialog"));
+  TQString kdialogExe = KStandardDirs::findExe(TQString::tqfromLatin1("kdialog"));
   d->m_hasKDialog = !kdialogExe.isEmpty();
   d->m_changeIcon->setEnabled( d->m_hasKDialog );
 
@@ -853,7 +853,7 @@ void KEditToolbarWidget::setupLayout()
   connect(m_downAction, TQT_SIGNAL(clicked()), TQT_SLOT(slotDownButton()));
 
   d->m_helpArea = new TQLabel(this);
-  d->m_helpArea->setAlignment( Qt::WordBreak );
+  d->m_helpArea->tqsetAlignment( TQt::WordBreak );
 
   // now start with our layouts
   TQVBoxLayout *top_layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());
@@ -891,7 +891,7 @@ void KEditToolbarWidget::setupLayout()
   changeIcon_layout->addStretch( 1 );
 
   list_layout->addLayout(inactive_layout);
-  list_layout->addLayout(button_layout);
+  list_layout->addLayout(TQT_TQLAYOUT(button_layout));
   list_layout->addLayout(active_layout);
 
   top_layout->addLayout(name_layout);
@@ -975,7 +975,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
     if (it.tagName() == tagSeparator)
     {
       ToolbarItem *act = new ToolbarItem(m_activeList, tagSeparator, sep_name.arg(sep_num++), TQString::null);
-      bool isLineSep = ( it.attribute(attrLineSeparator, "true").lower() == TQString::fromLatin1("true") );
+      bool isLineSep = ( it.attribute(attrLineSeparator, "true").lower() == TQString::tqfromLatin1("true") );
       if(isLineSep)
         act->setText(1, LINESEPARATORSTRING);
       else
@@ -1034,7 +1034,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
     KAction *action = actionCollection->action( i );
 
     // skip our active ones
-    if (active_list.contains(action->name()))
+    if (active_list.tqcontains(action->name()))
       continue;
 
     ToolbarItem *act = new ToolbarItem(m_inactiveList, tagActionList, action->name(), action->toolTip());
@@ -1361,7 +1361,7 @@ void KEditToolbarWidget::updateLocal(TQDomElement& elem)
         continue;
 
       TQDomElement toolbar = (*xit).m_document.documentElement().toElement();
-      toolbar.replaceChild(elem, (*it));
+      toolbar.tqreplaceChild(elem, (*it));
       return;
     }
 
@@ -1382,10 +1382,10 @@ void KEditToolbarWidget::slotChangeIcon()
         return;
   
   d->m_kdialogProcess = new KProcIO;
-  TQString kdialogExe = KStandardDirs::findExe(TQString::fromLatin1("kdialog"));
+  TQString kdialogExe = KStandardDirs::findExe(TQString::tqfromLatin1("kdialog"));
   (*d->m_kdialogProcess) << kdialogExe;
   (*d->m_kdialogProcess) << "--embed";
-  (*d->m_kdialogProcess) << TQString::number( (ulong)topLevelWidget()->winId() );
+  (*d->m_kdialogProcess) << TQString::number( (ulong)tqtopLevelWidget()->winId() );
   (*d->m_kdialogProcess) << "--geticon";
   (*d->m_kdialogProcess) << "Toolbar";
   (*d->m_kdialogProcess) << "Actions";

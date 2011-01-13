@@ -222,9 +222,9 @@ void KMdiToolViewAccessor::place( KDockWidget::DockPosition pos, TQWidget* pTarg
 				pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd );
 				if ( !pTargetDock )
 				{
-					if ( pTargetWnd->parentWidget() )
+					if ( pTargetWnd->tqparentWidget() )
 					{
-						pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd->parentWidget() );
+						pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd->tqparentWidget() );
 					}
 				}
 			}
@@ -262,7 +262,7 @@ void KMdiToolViewAccessor::show()
 }
 
 
-#ifndef NO_INCLUDE_MOCFILES
+#ifndef NO_INCLUDE_TQMOCFILES
 #include "kmditoolviewaccessor.moc"
 #endif 
 // kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;

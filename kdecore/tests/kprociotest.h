@@ -15,7 +15,7 @@
 #include <tqobject.h>
 #include "kprocio.h"
 
-class Dummy : public QObject
+class Dummy : public TQObject
 {
  Q_OBJECT
 

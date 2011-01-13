@@ -47,7 +47,7 @@ int main( int argc, char** argv )
         return -1;
     }
 
-    TQByteArray arr = file.readAll();
+    TQByteArray arr = TQByteArray(file.readAll());
     uint len = arr.size();
     uint j = 1;
     for (uint i = 1; i<len; i++, j++) {

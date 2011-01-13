@@ -92,8 +92,8 @@ KVideoWidget::KVideoWidget( TQWidget *parent, const char *name, WFlags f )
 void KVideoWidget::init(void)
 {
     setMinimumSize(0, 0);
-    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
-    setFocusPolicy( ClickFocus );
+    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+    setFocusPolicy( TQ_ClickFocus );
 
     fullscreenWidget = 0;
     poVideo	     = Arts::VideoPlayObject::null();
@@ -102,16 +102,16 @@ void KVideoWidget::init(void)
 
     // Setup actions
     new KToggleAction( i18n("Fullscreen &Mode"), "window_fullscreen",
-		       CTRL+SHIFT+Key_F, this, TQT_SLOT(fullscreenActivated()),
+		       CTRL+SHIFT+Key_F, TQT_TQOBJECT(this), TQT_SLOT(fullscreenActivated()),
 		       actionCollection(), "fullscreen_mode" );
     new KRadioAction( i18n("&Half Size"), ALT+Key_0,
-		      this, TQT_SLOT(halfSizeActivated()),
+		      TQT_TQOBJECT(this), TQT_SLOT(halfSizeActivated()),
 		      actionCollection(), "half_size" );
     new KRadioAction( i18n("&Normal Size"), ALT+Key_1,
-		      this, TQT_SLOT(normalSizeActivated()),
+		      TQT_TQOBJECT(this), TQT_SLOT(normalSizeActivated()),
 		      actionCollection(), "normal_size" );
     new KRadioAction( i18n("&Double Size"), ALT+Key_2,
-		      this, TQT_SLOT(doubleSizeActivated()),
+		      TQT_TQOBJECT(this), TQT_SLOT(doubleSizeActivated()),
 		      actionCollection(), "double_size" );
 
     ((KToggleAction *)action( "half_size" ))->setExclusiveGroup( "KVideoWidget::zoom" );
@@ -147,7 +147,7 @@ void KVideoWidget::embed( Arts::VideoPlayObject vpo )
 	}
 
 	setBackgroundMode( PaletteBackground );
-	repaint();
+	tqrepaint();
 
 	// Resize GUI
 	videoWidth  = 0;
@@ -286,7 +286,7 @@ void KVideoWidget::setDoubleSize()
     doubleSizeActivated();
 }
 
-TQSize KVideoWidget::sizeHint() const
+TQSize KVideoWidget::tqsizeHint() const
 {
     return TQSize( videoWidth, videoHeight );
 }
@@ -306,7 +306,7 @@ void KVideoWidget::mousePressEvent( TQMouseEvent *event )
 	emit mouseButtonPressed( event->button(), pos, event->state() );
 
 	// ### Remove in KDE4
-	if ( event->button() == RightButton )
+	if ( event->button() == Qt::RightButton )
 		emit rightButtonPressed( pos );
 }
 

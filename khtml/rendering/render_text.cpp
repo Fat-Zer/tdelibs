@@ -230,7 +230,7 @@ void InlineTextBox::paintSelection(const Font *f, RenderText *text, TQPainter *p
 	// In this case, simply swap the colors, thus in compliance with
 	// NN4 (win32 only), IE, and Mozilla.
 	if (!khtml::hasSufficientContrast(hbg, bg))
-	    qSwap(hc, hbg);
+	    tqSwap(hc, hbg);
     }
 
     p->setPen(hc);
@@ -319,9 +319,9 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
         const int w = m_width+2*thickness;
         const int h = m_height+2*thickness;
         const QRgb color = shadow->color.rgb();
-        const int gray = qGray(color);
+        const int gray = tqGray(color);
         const bool inverse = (gray < 100);
-        const QRgb bgColor = (inverse) ? qRgb(255,255,255) : qRgb(0,0,0);
+        const QRgb bgColor = (inverse) ? tqRgb(255,255,255) : tqRgb(0,0,0);
         TQPixmap pixmap(w, h);
         pixmap.fill(bgColor);
         TQPainter p;
@@ -365,7 +365,7 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
             for(int i=thickness; i<w-thickness; i++) {
                 QRgb col= img.pixel(i,j);
                 if (col == bgColor) continue;
-                float g = qGray(col);
+                float g = tqGray(col);
                 if (inverse)
                     g = (255-g)/(255-gray);
                 else
@@ -383,9 +383,9 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
 
         TQImage res(w,h,32);
         res.setAlphaBuffer(true);
-        int r = qRed(color);
-        int g = qGreen(color);
-        int b = qBlue(color);
+        int r = tqRed(color);
+        int g = tqGreen(color);
+        int b = tqBlue(color);
 
         // divide by factor
         factor = 1.0/factor;
@@ -394,7 +394,7 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
             for(int i=0; i<w; i++) {
                 int a = (int)(amap[i+j*w] * factor * 255.0);
                 if (a > 255) a = 255;
-                res.setPixel(i,j, qRgba(r,g,b,a));
+                res.setPixel(i,j, tqRgba(r,g,b,a));
             }
         }
 
@@ -1036,7 +1036,7 @@ void RenderText::calcMinMaxWidth()
     bool firstLine = true;
     for(int i = 0; i < len; i++)
     {
-        unsigned short c = str->s[i].unicode();
+        unsigned short c = str->s[i].tqunicode();
         bool isNewline = false;
 
         // If line-breaks survive to here they are preserved
@@ -1056,7 +1056,7 @@ void RenderText::calcMinMaxWidth()
             continue;
 
         int wordlen = 0;
-        while( i+wordlen < len && (i+wordlen == 0 || str->s[i+wordlen].unicode() != SOFT_HYPHEN) &&
+        while( i+wordlen < len && (i+wordlen == 0 || str->s[i+wordlen].tqunicode() != SOFT_HYPHEN) &&
                !(isBreakable( str->s, i+wordlen, str->l )) )
             wordlen++;
 
@@ -1328,11 +1328,11 @@ short RenderText::width() const
     return w;
 }
 
-void RenderText::repaint(Priority p)
+void RenderText::tqrepaint(Priority p)
 {
     RenderObject *cb = containingBlock();
     if(cb)
-        cb->repaint(p);
+        cb->tqrepaint(p);
 }
 
 bool RenderText::isFixedWidthFont() const
@@ -1470,7 +1470,7 @@ static TQString quoteAndEscapeNonPrintables(const TQString &s)
         } else if (c == '"') {
             result += "\\\"";
         } else {
-            ushort u = c.unicode();
+            ushort u = c.tqunicode();
             if (u >= 0x20 && u < 0x7F) {
                 result += c;
             } else {

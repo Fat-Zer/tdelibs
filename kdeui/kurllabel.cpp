@@ -87,7 +87,7 @@ KURLLabel::KURLLabel (const TQString& url, const TQString& text,
   setFont (font());
   setUseCursor (true);
   setLinkColor (d->LinkColor);
-  setFocusPolicy( TQWidget::StrongFocus ); //better accessibility
+  setFocusPolicy( TQ_StrongFocus ); //better accessibility
   setMouseTracking (true);
 }
 
@@ -98,7 +98,7 @@ KURLLabel::KURLLabel (TQWidget* parent, const char* name)
   setFont (font());
   setUseCursor (true);
   setLinkColor (d->LinkColor);
-  setFocusPolicy( TQWidget::StrongFocus ); //better accessibility
+  setFocusPolicy( TQ_StrongFocus ); //better accessibility
   setMouseTracking (true);
 }
 
@@ -122,17 +122,17 @@ void KURLLabel::mouseReleaseEvent (TQMouseEvent* e)
 
   switch (e->button())
     {
-    case LeftButton:
+    case Qt::LeftButton:
       emit leftClickedURL ();
       emit leftClickedURL (d->URL);
       break;
 
-    case MidButton:
+    case Qt::MidButton:
       emit middleClickedURL ();
       emit middleClickedURL (d->URL);
       break;
 
-    case RightButton:
+    case Qt::RightButton:
       emit rightClickedURL ();
       emit rightClickedURL (d->URL);
       break;
@@ -308,7 +308,7 @@ void KURLLabel::enterEvent (TQEvent* e)
   TQLabel::enterEvent (e);
 
   TQRect r( activeRect() );
-  if (!r.contains( static_cast<TQMouseEvent*>(e)->pos() ))
+  if (!r.contains( TQT_TQMOUSEEVENT(e)->pos() ))
     return;
 
   if (!d->AltPixmap.isNull() && pixmap())
@@ -353,10 +353,10 @@ bool KURLLabel::event (TQEvent *e)
 {
   if (e && e->type() == TQEvent::ParentPaletteChange)
   {
-    // use parentWidget() unless you are a toplevel widget, then try qAapp
-    TQPalette p = parentWidget() ? parentWidget()->palette() : qApp->palette();
+    // use tqparentWidget() unless you are a toplevel widget, then try qAapp
+    TQPalette p = tqparentWidget() ? tqparentWidget()->palette() : tqApp->palette();
     p.setBrush(TQColorGroup::Base, p.brush(TQPalette::Normal, TQColorGroup::Background));
-    p.setColor(TQColorGroup::Foreground, palette().active().foreground());
+    p.setColor(TQColorGroup::Foreground, tqpalette().active().foreground());
     setPalette(p);
     d->LinkColor = KGlobalSettings::linkColor();
     setLinkColor(d->LinkColor);
@@ -367,12 +367,12 @@ bool KURLLabel::event (TQEvent *e)
     if (result && hasFocus()) {
         TQPainter p(this);
         TQRect r( activeRect() );
-        style().drawPrimitive( TQStyle::PE_FocusRect, &p, r, colorGroup() );
+        tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, &p, r, tqcolorGroup() );
     }
     return result;
   }
   else if (e->type() == TQEvent::KeyPress) {
-    TQKeyEvent* ke = static_cast<TQKeyEvent*>(e);
+    TQKeyEvent* ke = TQT_TQKEYEVENT(e);
     if (ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return) {
       setLinkColor (d->HighlightedLinkColor);
       d->Timer->start (300);
@@ -384,12 +384,12 @@ bool KURLLabel::event (TQEvent *e)
   }
   else if (e->type() == TQEvent::MouseButtonPress) {
     TQRect r( activeRect() );
-    d->MousePressed = r.contains(static_cast<TQMouseEvent*>(e)->pos());
+    d->MousePressed = r.contains(TQT_TQMOUSEEVENT(e)->pos());
   }
   else if (e->type() == TQEvent::MouseMove) {
     if (d->Cursor) {
       TQRect r( activeRect() );
-      bool inside = r.contains(static_cast<TQMouseEvent*>(e)->pos());
+      bool inside = r.contains(TQT_TQMOUSEEVENT(e)->pos());
       if (d->WasInsideRect != inside) {
         if (inside)
           TQLabel::setCursor(*d->Cursor);
@@ -407,7 +407,7 @@ TQRect KURLLabel::activeRect() const
   TQRect r( contentsRect() );
   if (text().isEmpty() || (!d->MarginAltered && sizePolicy() == TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed)))
       return r; //fixed size is sometimes used with pixmap
-  int hAlign = TQApplication::horizontalAlignment( alignment() );
+  int hAlign = TQApplication::horizontalAlignment( tqalignment() );
   int indentX = (hAlign && indent()>0) ? indent() : 0;
   TQFontMetrics fm(font());
   r.setWidth( QMIN(fm.width(text()), r.width()));
@@ -428,17 +428,17 @@ void KURLLabel::setMargin( int margin )
   d->MarginAltered = true;
 }
 
-void KURLLabel::setFocusPolicy( FocusPolicy policy )
+void KURLLabel::setFocusPolicy( TQ_FocusPolicy policy )
 {
   TQLabel::setFocusPolicy(policy);
   if (!d->MarginAltered) {
-      TQLabel::setMargin(policy == NoFocus ? 0 : 3); //better default : better look when focused
+      TQLabel::setMargin(policy == TQ_NoFocus ? 0 : 3); //better default : better look when focused
   }
 }
 
-void KURLLabel::setSizePolicy ( TQSizePolicy policy )
+void KURLLabel::tqsetSizePolicy ( TQSizePolicy policy )
 {
-  TQLabel::setSizePolicy(policy);
+  TQLabel::tqsetSizePolicy(policy);
   if (!d->MarginAltered && policy.horData()==TQSizePolicy::Fixed && policy.verData()==TQSizePolicy::Fixed) {
       TQLabel::setMargin(0); //better default : better look when fixed size
   }

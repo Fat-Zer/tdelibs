@@ -32,7 +32,7 @@ class KStatusBar;
  *  Internal label class for use in KStatusBar
  *  @internal
  */
-class KDEUI_EXPORT KStatusBarLabel : public QLabel
+class KDEUI_EXPORT KStatusBarLabel : public TQLabel
 {
   Q_OBJECT
 
@@ -84,7 +84,7 @@ signals:
 
  *  @see KActionCollection
  */
-class KDEUI_EXPORT KStatusBar : public QStatusBar
+class KDEUI_EXPORT KStatusBar : public TQStatusBar
 {
   Q_OBJECT
 
@@ -167,8 +167,8 @@ public:
   void changeItem( const TQString& text, int id );
 
   /**
-   * Sets the alignment of item @p id. By default all fields are aligned
-   * @p AlignHCenter | @p AlignVCenter. See TQLabel::setAlignment for details.
+   * Sets the tqalignment of item @p id. By default all fields are aligned
+   * @p AlignHCenter | @p AlignVCenter. See TQLabel::tqsetAlignment for details.
    *
   */
   void setItemAlignment(int id, int align);

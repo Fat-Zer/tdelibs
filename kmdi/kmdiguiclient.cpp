@@ -84,7 +84,7 @@ void ToggleToolViewAction::anDWChanged()
 		setChecked( true );
 	else if ( isChecked() && ( m_dw->parentDockTabGroup() &&
 	                           ( ( static_cast<KDockWidget*>( m_dw->parentDockTabGroup() ->
-	                                                          parent() ->qt_cast( "KDockWidget" ) ) ) ->mayBeShow() ) ) )
+	                                                          parent() ->tqqt_cast( "KDockWidget" ) ) ) ->mayBeShow() ) ) )
 		setChecked( false );
 }
 
@@ -128,7 +128,7 @@ KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, c
 	if ( domDocument().documentElement().isNull() )
 	{
 
-		TQString completeDescription = TQString::fromLatin1( guiDescription )
+		TQString completeDescription = TQString::tqfromLatin1( guiDescription )
 		                              .arg( actionListName );
 
 		setXML( completeDescription, false /*merge*/ );

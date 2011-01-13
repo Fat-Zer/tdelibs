@@ -60,7 +60,7 @@ read_image( const TQImageIO* io )
         TQFile* out = tempf->file();
         // 4096 (=4k) is a common page size.
         TQByteArray b( 4096 );
-        Q_LONG size;
+        TQ_LONG size;
         // 0 or -1 is EOF / error
         while( ( size = io->ioDevice()->readBlock( b.data(), 4096 ) ) > 0 ) {
             // in case of a write error, still give the decoder a try
@@ -139,7 +139,7 @@ render_view( gs_t& gs, TQImage& qti )
                 else if( v[k] > 255 ) v[k] = 255;
             } // for k
 
-            *data++ = qRgb( v[0], v[1], v[2] );
+            *data++ = tqRgb( v[0], v[1], v[2] );
         } // for x
     } // for y
     return true;
@@ -163,7 +163,7 @@ kimgio_jp2_read( TQImageIO* io )
 	if( gs.altimage ) jas_image_destroy( gs.altimage );
 
 	io->setImage( image );
-	io->setStatus( 0 );
+	io->setqStatus( 0 );
 } // kimgio_jp2_read
 
 
@@ -211,19 +211,19 @@ write_components( jas_image_t* ji, const TQImage& qi )
     jas_image_setcmpttype( ji, 0, JAS_IMAGE_CT_RGB_R );
     for( uint y = 0; y < height; ++y )
         for( uint x = 0; x < width; ++x )
-            jas_matrix_set( m, y, x, qRed( qi.pixel( x, y ) ) );
+            jas_matrix_set( m, y, x, tqRed( qi.pixel( x, y ) ) );
     jas_image_writecmpt( ji, 0, 0, 0, width, height, m );
 
     jas_image_setcmpttype( ji, 1, JAS_IMAGE_CT_RGB_G );
     for( uint y = 0; y < height; ++y )
         for( uint x = 0; x < width; ++x )
-            jas_matrix_set( m, y, x, qGreen( qi.pixel( x, y ) ) );
+            jas_matrix_set( m, y, x, tqGreen( qi.pixel( x, y ) ) );
     jas_image_writecmpt( ji, 1, 0, 0, width, height, m );
 
     jas_image_setcmpttype( ji, 2, JAS_IMAGE_CT_RGB_B );
     for( uint y = 0; y < height; ++y )
         for( uint x = 0; x < width; ++x )
-            jas_matrix_set( m, y, x, qBlue( qi.pixel( x, y ) ) );
+            jas_matrix_set( m, y, x, tqBlue( qi.pixel( x, y ) ) );
     jas_image_writecmpt( ji, 2, 0, 0, width, height, m );
     jas_matrix_destroy( m );
 
@@ -288,7 +288,7 @@ kimgio_jp2_write( TQImageIO* io )
 		TQFile* in = ktempf->file();
 
 		TQByteArray b( 4096 );
-		Q_LONG size;
+		TQ_LONG size;
 
 		// seek to the beginning of the file.
 		if( !in->at( 0 ) ) { delete ktempf; return; }
@@ -309,7 +309,7 @@ kimgio_jp2_write( TQImageIO* io )
 
 
 	// everything went fine
-	io->setStatus( IO_Ok );
+	io->setqStatus( IO_Ok );
 } // kimgio_jp2_write
 
 #endif // HAVE_JASPER

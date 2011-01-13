@@ -57,7 +57,7 @@ class KTEXTEDITOR_EXPORT Editor : public KParts::ReadWritePart
     unsigned int myEditorNumber;
 };     
 
-KTEXTEDITOR_EXPORT Editor *createEditor ( const char* libname, TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0 );
+KTEXTEDITOR_EXPORT Editor *createEditor ( const char* libname, TQWidget *tqparentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0 );
 
 }
 

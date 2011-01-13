@@ -65,7 +65,7 @@ class KSelectionOwnerPrivate
 KSelectionOwnerPrivate::KSelectionOwnerPrivate( KSelectionOwner* owner_P )
     :   owner( owner_P )
     {
-    kapp->installX11EventFilter( this );
+    kapp->installX11EventFilter( TQT_TQWIDGET(this) );
     }
     
 bool KSelectionOwnerPrivate::x11Event( XEvent* ev_P )
@@ -380,7 +380,7 @@ class KSelectionWatcherPrivate
 KSelectionWatcherPrivate::KSelectionWatcherPrivate( KSelectionWatcher* watcher_P )
     :   watcher( watcher_P )
     {
-    kapp->installX11EventFilter( this );
+    kapp->installX11EventFilter( TQT_TQWIDGET(this) );
     }
     
 bool KSelectionWatcherPrivate::x11Event( XEvent* ev_P )

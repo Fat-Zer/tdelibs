@@ -42,7 +42,7 @@ public:
     typedef MultiMapPtrList<T> List;
 
     void append(void* key, T* element) {
-        List *list = dict.find(key);
+        List *list = dict.tqfind(key);
         if (!list){
              list = new List(8);
              dict.insert(key, list);
@@ -50,7 +50,7 @@ public:
         list->append(element);
     }
     void remove(void* key, T* element) {
-        List *list = dict.find(key);
+        List *list = dict.tqfind(key);
         if (list) {
             list->remove(element);
             if (list->isEmpty()) dict.remove(key);
@@ -60,7 +60,7 @@ public:
         dict.remove(key);
     }
     List* find(void* key) {
-        return dict.find(key);
+        return dict.tqfind(key);
     }
 private:
     TQPtrDict<List> dict;
@@ -70,7 +70,7 @@ private:
 static inline unsigned int stupidHash(void* ptr)
 {
     unsigned long val = (unsigned long)ptr;
-    // remove alignment and multiply by a prime unlikely to be a factor of size
+    // remove tqalignment and multiply by a prime unlikely to be a factor of size
     val = (val >> 4) * 1237;
     return val;
 }

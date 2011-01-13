@@ -122,7 +122,7 @@ ContentLine::operator == (ContentLine & x)
 	
 	TQPtrListIterator<Param> it(x.paramList());
 	
-	if (!paramList_.find(it.current()))
+	if (!paramList_.tqfind(it.current()))
 		return false;
 
 	return true;
@@ -142,7 +142,7 @@ ContentLine::_parse()
 	// Unqote newlines
 	strRep_ = strRep_.replace( TQRegExp( "\\\\n" ), "\n" );
 	
-	int split = strRep_.find(':');
+	int split = strRep_.tqfind(':');
 	
 	if (split == -1) { // invalid content line
 		vDebug("No ':'");
@@ -152,7 +152,7 @@ ContentLine::_parse()
 	TQCString firstPart(strRep_.left(split));
 	TQCString valuePart(strRep_.mid(split + 1));
 	
-	split = firstPart.find('.');
+	split = firstPart.tqfind('.');
 	
 	if (split != -1) {
 		group_		= firstPart.left(split);
@@ -193,7 +193,7 @@ ContentLine::_parse()
 
 		TQCString str = *it;
 
-		split = str.find("=");
+		split = str.tqfind("=");
 		if (split < 0 ) {
 			vDebug("No '=' in parameter.");
 			continue;

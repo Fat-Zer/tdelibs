@@ -45,7 +45,7 @@ namespace Kate {
  *
  * Also, it adds some usefull indicators on the scrollbar.
  */
-class KateScrollBar : public QScrollBar
+class KateScrollBar : public TQScrollBar
 {
   Q_OBJECT
 
@@ -119,7 +119,7 @@ class KateCmdLine : public KLineEdit
     class KateCmdLnWhatsThis *m_help;
 };
 
-class KateIconBorder : public QWidget
+class KateIconBorder : public TQWidget
 {
   Q_OBJECT
 
@@ -127,7 +127,7 @@ class KateIconBorder : public QWidget
     KateIconBorder( KateViewInternal* internalView, TQWidget *parent );
 
     // VERY IMPORTANT ;)
-    virtual TQSize sizeHint() const;
+    virtual TQSize tqsizeHint() const;
 
     void updateFont();
     int lineNumberWidth() const;

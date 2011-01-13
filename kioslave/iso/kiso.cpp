@@ -157,7 +157,7 @@ void KIso::prepareDevice( const TQString & filename,
 {
   /* 'hack' for Qt's false assumption that only S_ISREG is seekable */
   if( "inode/blockdevice" == mimetype )
-      setDevice( new QFileHack( filename ) );
+      setDevice( TQT_TQIODEVICE(new QFileHack( filename )) );
   else
   {
     if( "application/x-gzip" == mimetype

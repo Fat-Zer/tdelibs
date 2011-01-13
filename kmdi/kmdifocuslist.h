@@ -23,7 +23,7 @@
 #include <tqwidget.h>
 #include <kdelibs_export.h>
 
-class KMDI_EXPORT KMdiFocusList: public QObject
+class KMDI_EXPORT KMdiFocusList: public TQObject
 {
 	Q_OBJECT
 public:

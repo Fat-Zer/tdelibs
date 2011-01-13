@@ -26,7 +26,7 @@
 namespace KTextEditor
 {
 
-class KTEXTEDITOR_EXPORT ConfigPage : public QWidget
+class KTEXTEDITOR_EXPORT ConfigPage : public TQWidget
 {
   Q_OBJECT
 

@@ -55,7 +55,7 @@ namespace KIO {
  *
  * @short Opens files with their associated applications in KDE
  */
-class KIO_EXPORT KRun : public QObject
+class KIO_EXPORT KRun : public TQObject
 {
   Q_OBJECT
 public:
@@ -475,7 +475,7 @@ public:
  * It sends a notification when the process exits (for the taskbar)
  * and it will show an error message if necessary (e.g. "program not found").
  */
-class KIO_EXPORT KProcessRunner : public QObject
+class KIO_EXPORT KProcessRunner : public TQObject
 {
   Q_OBJECT
 

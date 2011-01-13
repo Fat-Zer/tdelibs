@@ -41,7 +41,7 @@ class KMdiChildFrmCaptionPrivate;
 *
 * It's the caption bar of a child frame widget.
 */
-class KMDI_EXPORT KMdiChildFrmCaption : public QWidget
+class KMDI_EXPORT KMdiChildFrmCaption : public TQWidget
 {
 	Q_OBJECT
 public:

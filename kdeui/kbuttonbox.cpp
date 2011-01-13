@@ -39,7 +39,7 @@
  * which makes the buttons look better.
  *
  * 01/17/98  Mario Weilguni <mweilguni@sime.com>
- * Fixed a bug in sizeHint()
+ * Fixed a bug in tqsizeHint()
  * Improved the handling of Motif default buttons
  *
  * 01/09/98  Mario Weilguni <mweilguni@sime.com>
@@ -178,12 +178,12 @@ void KButtonBox::layout() {
     ++itr;
   }
 
-  setMinimumSize(sizeHint());
+  setMinimumSize(tqsizeHint());
 }
 
 void KButtonBox::placeButtons() {
 
-  if(data->orientation == Horizontal) {
+  if(data->orientation == Qt::Horizontal) {
     // calculate free size and stretches
     int fs = width() - 2 * data->border;
     int stretch = 0;
@@ -300,7 +300,7 @@ TQSize KButtonBox::bestButtonSize() const {
   return s;
 }
 
-TQSize KButtonBox::sizeHint() const {
+TQSize KButtonBox::tqsizeHint() const {
   unsigned int dw;
 
   if(data->buttons.isEmpty())
@@ -323,7 +323,7 @@ TQSize KButtonBox::sizeHint() const {
 	else
 	  s = bs;
 
-	if(data->orientation == Horizontal)
+	if(data->orientation == Qt::Horizontal)
 	  dw += s.width();
 	else
 	  dw += s.height();
@@ -335,7 +335,7 @@ TQSize KButtonBox::sizeHint() const {
       ++itr;
     }
 
-    if(data->orientation == Horizontal)
+    if(data->orientation == Qt::Horizontal)
 	return TQSize(dw, bs.height() + 2 * data->border);
     else
 	return TQSize(bs.width() + 2 * data->border, dw);
@@ -344,7 +344,7 @@ TQSize KButtonBox::sizeHint() const {
 
 TQSizePolicy KButtonBox::sizePolicy() const
 {
-    return data->orientation == Horizontal?
+    return data->orientation == Qt::Horizontal?
         TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed ) :
         TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Minimum );
 }
@@ -355,8 +355,8 @@ TQSizePolicy KButtonBox::sizePolicy() const
  * as minimum width
  */
 TQSize KButtonBox::buttonSizeHint(TQPushButton *b) const {
-  TQSize s = b->sizeHint();
-  const TQSize ms = b->minimumSize();
+  TQSize s = b->tqsizeHint();
+  const TQSize ms = b->tqminimumSize();
   if(s.width() < minButtonWidth)
     s.setWidth(minButtonWidth);
 

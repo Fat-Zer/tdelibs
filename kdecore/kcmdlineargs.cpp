@@ -393,7 +393,7 @@ findOption(const KCmdLineOptions *options, TQCString &opt,
                if (!options->name)
                   return result+0;
                TQCString nextOption = options->name;
-               int p = nextOption.find(' ');
+               int p = nextOption.tqfind(' ');
                if (p > 0)
                   nextOption = nextOption.left(p);
                if (nextOption[0] == '!')
@@ -432,7 +432,7 @@ KCmdLineArgs::findOption(const char *_opt, TQCString opt, int &i, bool _enabled,
    const char *opt_name;
    const char *def;
    TQCString argument;
-   int j = opt.find('=');
+   int j = opt.tqfind('=');
    if (j != -1)
    {
       argument = opt.mid(j+1);
@@ -858,7 +858,7 @@ KCmdLineArgs::usage(const char *id)
      bool hasOptions = false;
      TQString optionsHeader;
      if (args->name)
-        optionsHeader = optionHeaderString.arg(i18n("%1 options").arg(TQString::fromLatin1(args->name)));
+        optionsHeader = optionHeaderString.arg(i18n("%1 options").arg(TQString::tqfromLatin1(args->name)));
      else
         optionsHeader = i18n("\nOptions:\n");
 
@@ -1081,9 +1081,9 @@ KCmdLineArgs::setOption(const TQCString &opt, bool enabled)
    }
 
    if (enabled)
-      parsedOptionList->replace( opt, new TQCString("t") );
+      parsedOptionList->tqreplace( opt, new TQCString("t") );
    else
-      parsedOptionList->replace( opt, new TQCString("f") );
+      parsedOptionList->tqreplace( opt, new TQCString("f") );
 }
 
 void
@@ -1119,7 +1119,7 @@ KCmdLineArgs::getOption(const char *_opt) const
    TQCString *value = 0;
    if (parsedOptionList)
    {
-      value = parsedOptionList->find(_opt);
+      value = parsedOptionList->tqfind(_opt);
    }
 
    if (value)
@@ -1199,7 +1199,7 @@ KCmdLineArgs::isSet(const char *_opt) const
    TQCString *value = 0;
    if (parsedOptionList)
    {
-      value = parsedOptionList->find(opt);
+      value = parsedOptionList->tqfind(opt);
    }
 
    if (value)

@@ -29,7 +29,7 @@
 
 namespace KDE {
 
-class PlayObjectCreator : public QObject
+class PlayObjectCreator : public TQObject
 {
 Q_OBJECT
 public:

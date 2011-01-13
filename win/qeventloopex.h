@@ -28,7 +28,7 @@
 
 class QEventLoopExPrivate;
 
-class QEventLoopEx : public QEventLoop
+class QEventLoopEx : public TQEventLoop
 {
 	Q_OBJECT
 

@@ -67,9 +67,10 @@ class KConfigGroup;
  * @see KSimpleConfig
  * @see KSharedConfig
  */
-class KDECORE_EXPORT KConfigBase : public QObject
+class KDECORE_EXPORT KConfigBase : public TQObject
 {
   Q_OBJECT
+  TQ_OBJECT
 
   friend class KConfigBackEnd;
   friend class KConfigINIBackEnd;
@@ -461,7 +462,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  Q_INT64 readNum64Entry( const TQString& pKey, Q_INT64 nDefault = 0 ) const;
+  TQ_INT64 readNum64Entry( const TQString& pKey, TQ_INT64 nDefault = 0 ) const;
 
   /**
    * Reads a 64-bit numerical value.
@@ -474,7 +475,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  Q_INT64 readNum64Entry( const char *pKey, Q_INT64 nDefault = 0 ) const;
+  TQ_INT64 readNum64Entry( const char *pKey, TQ_INT64 nDefault = 0 ) const;
 
   /**
    * Read an 64-bit unsigned numerical value.
@@ -487,7 +488,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  Q_UINT64 readUnsignedNum64Entry( const TQString& pKey, Q_UINT64 nDefault = 0 ) const;
+  TQ_UINT64 readUnsignedNum64Entry( const TQString& pKey, TQ_UINT64 nDefault = 0 ) const;
 
   /**
    * Read an 64-bit unsigned numerical value.
@@ -500,7 +501,7 @@ public:
    * the read value cannot be interpreted.
    * @return The value for this key.
    */
-  Q_UINT64 readUnsignedNum64Entry( const char *pKey, Q_UINT64 nDefault = 0 ) const;
+  TQ_UINT64 readUnsignedNum64Entry( const char *pKey, TQ_UINT64 nDefault = 0 ) const;
 
   /**
    * Reads a floating point value.
@@ -692,7 +693,7 @@ public:
    * and interpret it as a date and time.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value ( currentDateTime() by default)
+   * @param pDefault A default value ( tqcurrentDateTime() by default)
    * returned if the key was not found or if the read value cannot be
    * interpreted.
    * @return The value for this key.
@@ -706,7 +707,7 @@ public:
    * and interpret it as a date and time.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value ( currentDateTime() by default)
+   * @param pDefault A default value ( tqcurrentDateTime() by default)
    * returned if the key was not found or if the read value cannot be
    * interpreted.
    * @return The value for this key.
@@ -978,7 +979,7 @@ public:
   void writeEntry( const TQString& pKey, const char *pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false )
-    { writeEntry(pKey, TQString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
+    { writeEntry(pKey, TQString::tqfromLatin1(pValue), bPersistent, bGlobal, bNLS); }
   /**
    * Write a (key/value) pair.
    *
@@ -999,7 +1000,7 @@ public:
   void writeEntry( const char *pKey, const char *pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false )
-    { writeEntry(pKey, TQString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
+    { writeEntry(pKey, TQString::tqfromLatin1(pValue), bPersistent, bGlobal, bNLS); }
 
   /**
    * Write a (key/value) pair.
@@ -1159,7 +1160,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const TQString& pKey, Q_INT64 nValue,
+  void writeEntry( const TQString& pKey, TQ_INT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1176,7 +1177,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, Q_INT64 nValue,
+  void writeEntry( const char *pKey, TQ_INT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
 
@@ -1194,7 +1195,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const TQString& pKey, Q_UINT64 nValue,
+  void writeEntry( const TQString& pKey, TQ_UINT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
   /**
@@ -1211,7 +1212,7 @@ public:
    * @param bNLS        If @p bNLS is true, the locale tag is added to the key
    *  when writing it back.
    */
-  void writeEntry( const char *pKey, Q_UINT64 nValue,
+  void writeEntry( const char *pKey, TQ_UINT64 nValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false );
 

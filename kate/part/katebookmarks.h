@@ -35,7 +35,7 @@ class KActionCollection;
 class TQPopupMenu;
 class TQMenuData;
 
-class KateBookmarks : public QObject
+class KateBookmarks : public TQObject
 {
   Q_OBJECT
 

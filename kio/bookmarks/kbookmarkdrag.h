@@ -25,7 +25,7 @@
 #include <kbookmark.h>
 
 // Clipboard/dnd data : URLs + XML for bookmarks
-class KIO_EXPORT KBookmarkDrag : public QUriDrag
+class KIO_EXPORT KBookmarkDrag : public TQUriDrag
 {
 public:
     static KBookmarkDrag * newDrag( const TQValueList<KBookmark> & bookmarks,
@@ -43,7 +43,7 @@ public:
     virtual ~KBookmarkDrag() {}
 
     virtual const char* format( int i ) const;
-    virtual TQByteArray encodedData( const char* mime ) const;
+    virtual TQByteArray tqencodedData( const char* mime ) const;
 
     static bool canDecode( const TQMimeSource * e );
     static TQValueList<KBookmark> decode( const TQMimeSource * e );

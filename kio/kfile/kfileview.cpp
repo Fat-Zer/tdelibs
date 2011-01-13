@@ -258,7 +258,7 @@ sort_by_name:
 
 void  KFileView::updateView(bool f)
 {
-    widget()->repaint(f);
+    widget()->tqrepaint(f);
 }
 
 void KFileView::updateView(const KFileItem *)

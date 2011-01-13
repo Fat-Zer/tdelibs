@@ -35,7 +35,7 @@ namespace khtml
      *
      * An incremental loader factory for JPEG's.
      */
-    class KJPEGFormatType : public QImageFormatType
+    class KJPEGFormatType : public TQImageFormatType
     {
     public:
         TQImageFormat* decoderFor(const uchar* buffer, int length);

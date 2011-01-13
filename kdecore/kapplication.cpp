@@ -450,7 +450,7 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
        // Indicate that the accelerator has been overridden.
        if (t == TQEvent::AccelOverride)
        {
-          static_cast<TQKeyEvent *>(event)->accept();
+          TQT_TQKEYEVENT(event)->accept();
           return true;
        }
        else
@@ -460,11 +460,11 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
     if ((t == TQEvent::AccelOverride) || (t == TQEvent::KeyPress))
     {
        static const KShortcut& _selectAll = KStdAccel::selectAll();
-       TQLineEdit *edit = tqqt_cast<TQLineEdit *>(receiver);
+       TQLineEdit *edit = ::tqqt_cast<TQLineEdit *>(receiver);
        if (edit)
        {
           // We have a keypress for a lineedit...
-          TQKeyEvent *kevent = static_cast<TQKeyEvent *>(event);
+          TQKeyEvent *kevent = TQT_TQKEYEVENT(event);
           KKey key(kevent);
           if (_selectAll.contains(key))
           {
@@ -498,11 +498,11 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
 
           }
        }
-       TQTextEdit *medit = tqqt_cast<TQTextEdit *>(receiver);
+       TQTextEdit *medit = ::tqqt_cast<TQTextEdit *>(receiver);
        if (medit)
        {
           // We have a keypress for a multilineedit...
-          TQKeyEvent *kevent = static_cast<TQKeyEvent *>(event);
+          TQKeyEvent *kevent = TQT_TQKEYEVENT(event);
           if (_selectAll.contains(KKey(kevent)))
           {
              if (t == TQEvent::KeyPress)
@@ -519,9 +519,9 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
     }
     if( t == TQEvent::Show && receiver->isWidgetType())
     {
-        TQWidget* w = static_cast< TQWidget* >( receiver );
+        TQWidget* w = TQT_TQWIDGET( receiver );
 #if defined Q_WS_X11
-        if( w->isTopLevel() && !startupId().isEmpty() && !static_cast<TQShowEvent*>(event)->spontaneous()) // TODO better done using window group leader?
+        if( w->isTopLevel() && !startupId().isEmpty() && !TQT_TQSHOWEVENT(event)->spontaneous()) // TODO better done using window group leader?
             KStartupInfo::setWindowStartupId( w->winId(), startupId());
 #endif
         if( w->isTopLevel() && !w->testWFlags( WX11BypassWM ) && !w->isPopup() && !event->spontaneous())
@@ -901,7 +901,7 @@ void KApplication::init(bool GUIenabled)
         TQMimeSourceFactory::addFactory( oldDefaultFactory );
     }
 
-    d->checkAccelerators = new KCheckAccelerators( this );
+    d->checkAccelerators = new KCheckAccelerators( TQT_TQOBJECT(this) );
   }
 
 #ifdef Q_WS_MACX
@@ -934,7 +934,7 @@ void KApplication::init(bool GUIenabled)
   // save and restore the RTL setting, as installTranslator calls qt_detectRTLLanguage,
   // which makes it impossible to use the -reverse cmdline switch with KDE apps
   bool rtl = reverseLayout();
-  installTranslator(new KDETranslator(this));
+  installTranslator(new KDETranslator(TQT_TQOBJECT(this)));
   setReverseLayout( rtl );
   if (i18n( "_: Dear Translator! Translate this string to the string 'LTR' in "
 	 "left-to-right languages (as english) or to 'RTL' in right-to-left "
@@ -943,7 +943,7 @@ void KApplication::init(bool GUIenabled)
 
   // install appdata resource type
   KGlobal::dirs()->addResourceType("appdata", KStandardDirs::kde_default("data")
-                                   + TQString::fromLatin1(name()) + '/');
+                                   + TQString::tqfromLatin1(name()) + '/');
   pSessionConfig = 0L;
   bSessionManagement = true;
 
@@ -1071,12 +1071,12 @@ KSessionManaged::~KSessionManaged()
     sessionClients()->remove( this );
 }
 
-bool KSessionManaged::saveState(QSessionManager&)
+bool KSessionManaged::saveState(TQSessionManager&)
 {
     return true;
 }
 
-bool KSessionManaged::commitData(QSessionManager&)
+bool KSessionManaged::commitData(TQSessionManager&)
 {
     return true;
 }
@@ -1179,9 +1179,9 @@ void KApplication::propagateSessionManager()
     TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
     TQCString display = ::getenv(DISPLAY);
     // strip the screen number from the display
-    display.replace(TQRegExp("\\.[0-9]+$"), "");
+    display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
     int i;
-    while( (i = display.find(':')) >= 0)
+    while( (i = display.tqfind(':')) >= 0)
        display[i] = '_';
 
     fName += "_"+display;
@@ -1189,7 +1189,7 @@ void KApplication::propagateSessionManager()
     bool check = smEnv.isEmpty();
     if ( !check && smModificationTime ) {
          TQFileInfo info( fName );
-         TQTime current = info.lastModified().time();
+         TQTime current = TQT_TQTIME_OBJECT(info.lastModified().time());
          check = current > *smModificationTime;
     }
     if ( check ) {
@@ -1198,7 +1198,7 @@ void KApplication::propagateSessionManager()
         if ( !f.open( IO_ReadOnly ) )
             return;
         TQFileInfo info ( f );
-        smModificationTime = new TQTime( info.lastModified().time() );
+        smModificationTime = new TQTime( TQT_TQTIME_OBJECT(info.lastModified().time()) );
         TQTextStream t(&f);
         t.setEncoding( TQTextStream::Latin1 );
         TQString s = t.readLine();
@@ -1208,7 +1208,7 @@ void KApplication::propagateSessionManager()
 #endif
 }
 
-void KApplication::commitData( QSessionManager& sm )
+void KApplication::commitData( TQSessionManager& sm )
 {
     d->session_save = true;
     bool canceled = false;
@@ -1222,7 +1222,7 @@ void KApplication::commitData( QSessionManager& sm )
 
     if ( sm.allowsInteraction() ) {
         TQWidgetList done;
-        TQWidgetList *list = TQApplication::topLevelWidgets();
+        TQWidgetList *list = TQApplication::tqtopLevelWidgets();
         bool canceled = false;
         TQWidget* w = list->first();
         while ( !canceled && w ) {
@@ -1233,12 +1233,12 @@ void KApplication::commitData( QSessionManager& sm )
                 if ( !canceled )
                     done.append( w );
                 delete list; // one never knows...
-                list = TQApplication::topLevelWidgets();
+                list = TQApplication::tqtopLevelWidgets();
                 w = list->first();
             } else {
                 w = list->next();
             }
-            while ( w && done.containsRef( w ) )
+            while ( w && done.tqcontainsRef( w ) )
                 w = list->next();
         }
         delete list;
@@ -1246,13 +1246,13 @@ void KApplication::commitData( QSessionManager& sm )
 
 
     if ( !bSessionManagement )
-        sm.setRestartHint( QSessionManager::RestartNever );
+        sm.setRestartHint( TQSessionManager::RestartNever );
     else
-	sm.setRestartHint( QSessionManager::RestartIfRunning );
+	sm.setRestartHint( TQSessionManager::RestartIfRunning );
     d->session_save = false;
 }
 
-static void checkRestartVersion( QSessionManager& sm )
+static void checkRestartVersion( TQSessionManager& sm )
 {
     Display* dpy = qt_xdisplay();
     Atom type;
@@ -1281,7 +1281,7 @@ static void checkRestartVersion( QSessionManager& sm )
     sm.setRestartCommand( restartCommand );
 }
 
-void KApplication::saveState( QSessionManager& sm )
+void KApplication::saveState( TQSessionManager& sm )
 {
     d->session_save = true;
 #ifdef Q_WS_X11
@@ -1289,12 +1289,12 @@ void KApplication::saveState( QSessionManager& sm )
     mySmcConnection = (SmcConn) sm.handle();
 
     if ( !bSessionManagement ) {
-        sm.setRestartHint( QSessionManager::RestartNever );
+        sm.setRestartHint( TQSessionManager::RestartNever );
 	d->session_save = false;
         return;
     }
     else
-	sm.setRestartHint( QSessionManager::RestartIfRunning );
+	sm.setRestartHint( TQSessionManager::RestartIfRunning );
 
     if ( firstTime ) {
         firstTime = false;
@@ -1352,7 +1352,7 @@ void KApplication::saveState( QSessionManager& sm )
         discard  << "rm" << locateLocal("config", sessionConfigName());
         sm.setDiscardCommand( discard );
     } else {
-	sm.setDiscardCommand( QStringList("") );
+	sm.setDiscardCommand( TQStringList("") );
     }
 
     if ( canceled )
@@ -1380,13 +1380,13 @@ void KApplication::startKdeinit()
          return; // whoever held the lock has already started dcopserver
   }
   // Try to launch kdeinit.
-  TQString srv = KStandardDirs::findExe(TQString::fromLatin1("kdeinit"));
+  TQString srv = KStandardDirs::findExe(TQString::tqfromLatin1("kdeinit"));
   if (srv.isEmpty())
-     srv = KStandardDirs::findExe(TQString::fromLatin1("kdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
+     srv = KStandardDirs::findExe(TQString::tqfromLatin1("kdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
   if (srv.isEmpty())
      return;
   if (kapp && (Tty != kapp->type()))
-    setOverrideCursor( Qt::waitCursor );
+    setOverrideCursor( tqwaitCursor );
   my_system(TQFile::encodeName(srv)+" --suicide"+" --new-startup");
   if (kapp && (Tty != kapp->type()))
     restoreOverrideCursor();
@@ -1521,7 +1521,7 @@ void KApplication::parseCommandLine( )
 		   }
 
        if (d->overrideStyle.isEmpty())
-          fprintf(stderr, "%s", i18n("The style %1 was not found\n").arg(reqStyle).local8Bit().data());
+          fprintf(stderr, "%s", TQString(i18n("The style %1 was not found\n").arg(reqStyle)).local8Bit().data());
     }
 
     if (args->isSet("caption"))
@@ -1883,13 +1883,13 @@ void KApplication::updateRemoteUserTimestamp( const TQCString& dcopId, unsigned 
 
 void KApplication::invokeEditSlot( const char *slot )
 {
-  TQObject *object = focusWidget();
+  TQObject *object = TQT_TQOBJECT(tqfocusWidget());
   if( !object )
     return;
 
-  TQMetaObject *meta = object->metaObject();
+  TQMetaObject *meta = object->tqmetaObject();
 
-  int idx = meta->findSlot( slot + 1, true );
+  int idx = meta->tqfindSlot( slot + 1, true );
   if( idx < 0 )
     return;
 
@@ -2105,7 +2105,7 @@ void KApplication::kdisplaySetPalette()
             return;
     }
 #endif
-    TQApplication::setPalette( createApplicationPalette(), true);
+    TQApplication::tqsetPalette( createApplicationPalette(), true);
     emit kdisplayPaletteChanged();
     emit appearanceChanged();
 }
@@ -2113,10 +2113,10 @@ void KApplication::kdisplaySetPalette()
 
 void KApplication::kdisplaySetFont()
 {
-    TQApplication::setFont(KGlobalSettings::generalFont(), true);
-    TQApplication::setFont(KGlobalSettings::menuFont(), true, "TQMenuBar");
-    TQApplication::setFont(KGlobalSettings::menuFont(), true, "TQPopupMenu");
-    TQApplication::setFont(KGlobalSettings::menuFont(), true, "KPopupTitle");
+    TQApplication::tqsetFont(KGlobalSettings::generalFont(), true);
+    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, "TQMenuBar");
+    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, "TQPopupMenu");
+    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, "KPopupTitle");
 
     // "patch" standard TQStyleSheet to follow our fonts
     TQStyleSheet* sheet = TQStyleSheet::defaultSheet();
@@ -2452,10 +2452,10 @@ void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const 
    TQString command = config.readPathEntry("EmailClient");
 
    TQString to, cc, bcc;
-   if (command.isEmpty() || command == TQString::fromLatin1("kmail")
+   if (command.isEmpty() || command == TQString::tqfromLatin1("kmail")
        || command.endsWith("/kmail"))
    {
-     command = TQString::fromLatin1("kmail --composer -s %s -c %c -b %b --body %B --attach %A -- %t");
+     command = TQString::tqfromLatin1("kmail --composer -s %s -c %c -b %b --body %B --attach %A -- %t");
      if ( !_to.isEmpty() )
      {
        // put the whole address lists into RFC2047 encoded blobs; technically
@@ -2826,7 +2826,7 @@ TQString KApplication::tempSaveName( const TQString& pFilename ) const
         }
     }
 
-  aFilename.replace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
+  aFilename.tqreplace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
 
   return aFilename;
 }
@@ -2855,7 +2855,7 @@ TQString KApplication::checkRecoverFile( const TQString& pFilename,
         }
     }
 
-  aFilename.replace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
+  aFilename.tqreplace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
 
   if( TQFile( aFilename ).exists() )
     {
@@ -2888,7 +2888,7 @@ bool checkAccess(const TQString& pathname, int mode)
 
   //strip the filename (everything until '/' from the end
   TQString dirName(pathname);
-  int pos = dirName.findRev('/');
+  int pos = dirName.tqfindRev('/');
   if ( pos == -1 )
     return false;   // No path in argument. This is evil, we won't allow this
   else if ( pos == 0 ) // don't turn e.g. /root into an empty string
@@ -3103,18 +3103,18 @@ void KApplication::initUrlActionRestrictions()
     bool bEnabled = (strEnabled == "true");
 
     if (refPath.startsWith("$HOME"))
-       refPath.replace(0, 5, TQDir::homeDirPath());
+       refPath.tqreplace(0, 5, TQDir::homeDirPath());
     else if (refPath.startsWith("~"))
-       refPath.replace(0, 1, TQDir::homeDirPath());
+       refPath.tqreplace(0, 1, TQDir::homeDirPath());
     if (urlPath.startsWith("$HOME"))
-       urlPath.replace(0, 5, TQDir::homeDirPath());
+       urlPath.tqreplace(0, 5, TQDir::homeDirPath());
     else if (urlPath.startsWith("~"))
-       urlPath.replace(0, 1, TQDir::homeDirPath());
+       urlPath.tqreplace(0, 1, TQDir::homeDirPath());
 
     if (refPath.startsWith("$TMP"))
-       refPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
+       refPath.tqreplace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
     if (urlPath.startsWith("$TMP"))
-       urlPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
+       urlPath.tqreplace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
 
     d->urlActionRestrictions.append(new KApplicationPrivate::URLActionRule
     	( action, refProt, refHost, refPath, urlProt, urlHost, urlPath, bEnabled));

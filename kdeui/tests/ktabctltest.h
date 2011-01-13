@@ -10,7 +10,7 @@ class KTabCtl;
 class TQPushButton;
 class TQMultiLineEdit;
 
-class TopLevel : public QWidget
+class TopLevel : public TQWidget
 {
     Q_OBJECT
 public:

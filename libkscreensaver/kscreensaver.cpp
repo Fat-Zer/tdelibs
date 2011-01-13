@@ -48,7 +48,7 @@ KScreenSaver::KScreenSaver( WId id ) : TQWidget()
     unsigned int h = 0;
 
     d = new KScreenSaverPrivate;
-    d->owner = find( id );
+    d->owner = TQT_TQWIDGET(find( id ));
     if ( d->owner )
 	installEventFilter( this );
 
@@ -88,7 +88,7 @@ void KScreenSaver::embed( TQWidget *w )
 bool KScreenSaver::eventFilter( TQObject *o, TQEvent *e )
 {
     // make sure events get to the original window owner
-    if ( d->owner && o == this ) {
+    if ( d->owner && TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(this) ) {
 	TQApplication::sendEvent( d->owner, e );
 	return false;
     }

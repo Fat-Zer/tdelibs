@@ -215,7 +215,7 @@ Value RegTestFunction::call(ExecState *exec, Object &/*thisObj*/, const List &ar
     switch (id) {
 	case Print: {
 	    UString str = args[0].toString(exec);
-            if ( str.qstring().lower().find( "failed!" ) >= 0 )
+            if ( str.qstring().lower().tqfind( "failed!" ) >= 0 )
                 m_regTest->saw_failure = true;
             TQString res = str.qstring().replace('\007', "");
             m_regTest->m_currentOutput += res + "\n";
@@ -943,7 +943,7 @@ TQString RegressionTest::getPartOutput( OutputType type)
         getPartDOMOutput( outputStream, m_part, 0 );
     }
 
-    dump.replace( m_baseDir + "/tests", TQString::fromLatin1( "REGRESSION_SRCDIR" ) );
+    dump.replace( m_baseDir + "/tests", TQString::tqfromLatin1( "REGRESSION_SRCDIR" ) );
     return dump;
 }
 
@@ -1000,9 +1000,9 @@ bool RegressionTest::imageEqual( const TQImage &lhsi, const TQImage &rhsi )
             for ( int x = 0; x < w; ++x ) {
                 QRgb l = ls[x];
                 QRgb r = rs[x];
-                if ( ( abs( qRed( l ) - qRed(r ) ) < 20 ) &&
-                     ( abs( qGreen( l ) - qGreen(r ) ) < 20 ) &&
-                     ( abs( qBlue( l ) - qBlue(r ) ) < 20 ) )
+                if ( ( abs( tqRed( l ) - tqRed(r ) ) < 20 ) &&
+                     ( abs( tqGreen( l ) - tqGreen(r ) ) < 20 ) &&
+                     ( abs( tqBlue( l ) - tqBlue(r ) ) < 20 ) )
                     continue;
                  kdDebug() << "pixel (" << x << ", " << y << ") is different " << TQColor(  lhsi.pixel (  x, y ) ) << " " << TQColor(  rhsi.pixel (  x, y ) ) << endl;
                 return false;
@@ -1077,10 +1077,10 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
     int pos = 0;
     do {
         pos++;
-        int newpos = absBase.find('/', pos);
+        int newpos = absBase.tqfind('/', pos);
         if (newpos == -1) newpos = absBase.length();
-        TQConstString cmpPathComp(absPath.unicode() + pos, newpos - pos);
-        TQConstString cmpBaseComp(absBase.unicode() + pos, newpos - pos);
+        TQConstString cmpPathComp(absPath.tqunicode() + pos, newpos - pos);
+        TQConstString cmpBaseComp(absBase.tqunicode() + pos, newpos - pos);
 //         kdDebug() << "cmpPathComp: \"" << cmpPathComp.string() << "\"" << endl;
 //         kdDebug() << "cmpBaseComp: \"" << cmpBaseComp.string() << "\"" << endl;
 //         kdDebug() << "pos: " << pos << " newpos: " << newpos << endl;
@@ -1094,8 +1094,8 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
 
     TQString rel;
     {
-        TQConstString relBase(absBase.unicode() + basepos, absBase.length() - basepos);
-        TQConstString relPath(absPath.unicode() + pathpos, absPath.length() - pathpos);
+        TQConstString relBase(absBase.tqunicode() + basepos, absBase.length() - basepos);
+        TQConstString relPath(absPath.tqunicode() + pathpos, absPath.length() - pathpos);
         // generate as many .. as there are path elements in relBase
         if (relBase.string().length() > 0) {
             for (int i = relBase.string().contains('/'); i > 0; --i)
@@ -1138,7 +1138,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & RenderFailure ) {
         renderDiff += "<pre>";
-        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-render %3/%2-render" )
+        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-render %3/%2-render" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {
@@ -1154,7 +1154,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & DomFailure ) {
         domDiff += "<pre>";
-        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-dom %3/%2-dom" )
+        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-dom %3/%2-dom" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {
@@ -1254,7 +1254,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
 void RegressionTest::testStaticFile(const TQString & filename)
 {
-    qApp->mainWidget()->resize( 800, 600); // restore size
+    tqApp->mainWidget()->resize( 800, 600); // restore size
 
     // Set arguments
     KParts::URLArgs args;
@@ -1400,7 +1400,7 @@ public:
 
 void RegressionTest::testJSFile(const TQString & filename )
 {
-    qApp->mainWidget()->resize( 800, 600); // restore size
+    tqApp->mainWidget()->resize( 800, 600); // restore size
 
     // create interpreter
     // note: this is different from the interpreter used by the part,
@@ -1636,7 +1636,7 @@ bool RegressionTest::svnIgnored( const TQString &filename )
 
 void RegressionTest::resizeTopLevelWidget( int w, int h )
 {
-    qApp->mainWidget()->resize( w, h );
+    tqApp->mainWidget()->resize( w, h );
     // Since we're not visible, this doesn't have an immediate effect, TQWidget posts the event
     TQApplication::sendPostedEvents( 0, TQEvent::Resize );
 }

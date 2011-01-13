@@ -216,7 +216,7 @@ private:
  *
  * @since 3.4
  */
-class KDEUI_EXPORT KListViewSearchLineWidget : public QHBox
+class KDEUI_EXPORT KListViewSearchLineWidget : public TQHBox
 {
     Q_OBJECT
 

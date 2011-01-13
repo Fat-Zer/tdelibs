@@ -13,7 +13,7 @@
 #include <tqlabel.h>
 #include <tqdatetime.h>
 
-class KGradientWidget : public QWidget
+class KGradientWidget : public TQWidget
 {
 public:
     KGradientWidget(TQWidget *parent=0, const char *name=0);
@@ -28,7 +28,7 @@ private:
  
 };
 
-class myTopWidget: public QWidget
+class myTopWidget: public TQWidget
 {
   Q_OBJECT
 public:

@@ -152,7 +152,7 @@ void AddresseeDialog::selectItem( const TQString &str )
 {
   if ( str.isEmpty() ) return;
 
-  TQListViewItem *item = mItemDict.find( str );
+  TQListViewItem *item = mItemDict.tqfind( str );
   if ( item ) {
     mAddresseeList->blockSignals( true );
     mAddresseeList->setSelected( item, true );
@@ -174,7 +174,7 @@ void AddresseeDialog::addSelected( TQListViewItem *item )
 
   Addressee a = addrItem->addressee();
 
-  TQListViewItem *selectedItem = mSelectedDict.find( a.uid() );
+  TQListViewItem *selectedItem = mSelectedDict.tqfind( a.uid() );
   if ( !selectedItem ) {
     selectedItem = new AddresseeItem( mSelectedList, a );
     mSelectedDict.insert( a.uid(), selectedItem );

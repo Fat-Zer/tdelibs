@@ -37,7 +37,7 @@ namespace KMDI {
 
 class MainWindow;
 
-class ToolViewAccessor : public QObject
+class ToolViewAccessor : public TQObject
 {
    Q_OBJECT
 

@@ -243,10 +243,10 @@ public:
    * rendered in. You can specify two different parent objects for a
    * KHTMLPart, one parent for the KHTMLPart document and on parent
    * for the KHTMLView. If the second @p parent argument is 0L, then
-   * @p parentWidget is used as parent for both objects, the part and
+   * @p tqparentWidget is used as parent for both objects, the part and
    * the view.
    */
-  KHTMLPart( TQWidget *parentWidget = 0, const char *widgetname = 0,
+  KHTMLPart( TQWidget *tqparentWidget = 0, const char *widgetname = 0,
              TQObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
 
   KHTMLPart( KHTMLView *view, TQObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
@@ -1168,7 +1168,7 @@ protected:
    * to be a object of your derived type, in which case you should return a new instance for
    * the mimetype 'text/html' .
    */
-  virtual KParts::ReadOnlyPart *createPart( TQWidget *parentWidget, const char *widgetName,
+  virtual KParts::ReadOnlyPart *createPart( TQWidget *tqparentWidget, const char *widgetName,
                                             TQObject *parent, const char *name,
                                             const TQString &mimetype, TQString &serviceName,
                                             TQStringList &serviceTypes, const TQStringList &params);

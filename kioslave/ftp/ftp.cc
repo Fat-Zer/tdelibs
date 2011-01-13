@@ -71,9 +71,9 @@
 #endif
 
 // JPF: a remark on coding style (2004-03-06):
-// Some calls to TQString::fromLatin1() were removed from the code. In most places
+// Some calls to TQString::tqfromLatin1() were removed from the code. In most places
 // the KDE code relies on implicit creation of QStrings. Also Qt has a lot of
-// const char* overloads, so that using TQString::fromLatin1() can be ineffectient!
+// const char* overloads, so that using TQString::tqfromLatin1() can be ineffectient!
 
 #define FTP_LOGIN   "anonymous"
 #define FTP_PASSWD  "anonymous@"
@@ -249,7 +249,7 @@ int FtpSocket::connectSocket(int iTimeOutSec, bool bControl)
                    ? ERR_UNKNOWN_HOST : ERR_COULD_NOT_CONNECT;
     TQString strMsg = KExtendedSocket::strError(status(), systemError());
     strMsg.prepend("connect failed (code %1): ");
-    return errorMessage(iErrorCode, strMsg.arg(iCon).latin1());
+    return errorMessage(iErrorCode, TQString(strMsg.arg(iCon)).latin1());
   }
   if( !setAddressReusable(true) )
     return errorMessage(ERR_COULD_NOT_CREATE_SOCKET, "setAddressReusable failed");
@@ -693,8 +693,8 @@ bool Ftp::ftpLogin()
   }
 
   TQString sTmp = remoteEncoding()->decode( ftpResponse(3) );
-  int iBeg = sTmp.find('"');
-  int iEnd = sTmp.findRev('"');
+  int iBeg = sTmp.tqfind('"');
+  int iEnd = sTmp.tqfindRev('"');
   if(iBeg > 0 && iBeg < iEnd)
   {
     m_initialPath = sTmp.mid(iBeg+1, iEnd-iBeg-1);
@@ -749,7 +749,7 @@ bool Ftp::ftpSendCmd( const TQCString& cmd, int maxretries )
 {
   assert(m_control != NULL);    // must have control connection socket
 
-  if ( cmd.find( '\r' ) != -1 || cmd.find( '\n' ) != -1)
+  if ( cmd.tqfind( '\r' ) != -1 || cmd.tqfind( '\n' ) != -1)
   {
     kdWarning(7102) << "Invalid command received (contains CR or LF):"
                     << cmd.data() << endl;
@@ -968,7 +968,7 @@ int Ftp::ftpOpenEPRTDataConnection()
   if (sin == NULL)
     return ERR_INTERNAL;
 
-  //  TQString command = TQString::fromLatin1("eprt |%1|%2|%3|").arg(sin->ianaFamily())
+  //  TQString command = TQString::tqfromLatin1("eprt |%1|%2|%3|").arg(sin->ianaFamily())
   //  .arg(sin->nodeName())
   //  .arg(sin->port());
   TQCString command;
@@ -1285,7 +1285,7 @@ bool Ftp::ftpRename( const TQString & src, const TQString & dst, bool overwrite 
       return false;
   }
 
-  int pos = src.findRev("/");
+  int pos = src.tqfindRev("/");
   if( !ftpFolder(src.left(pos+1), false) )
       return false;
 
@@ -1838,7 +1838,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
         TQCString tmp( p_name );
         if ( p_access[0] == 'l' )
         {
-          int i = tmp.findRev( " -> " );
+          int i = tmp.tqfindRev( " -> " );
           if ( i != -1 ) {
             de.link = remoteEncoding()->decode(p_name + i + 4);
             tmp.truncate( i );
@@ -1852,7 +1852,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
         if ( tmp[0] == '/' ) // listing on ftp://ftp.gnupg.org/ starts with '/'
           tmp.remove( 0, 1 );
 
-        if (tmp.find('/') != -1)
+        if (tmp.tqfind('/') != -1)
           continue; // Don't trick us!
         // Some sites put more than one space between the date and the name
         // e.g. ftp://ftp.uni-marburg.de/mirror/

@@ -69,7 +69,7 @@ KSycocaEntry *
 KBuildServiceTypeFactory::createEntry(const TQString &file, const char *resource)
 {
   TQString name = file;
-  int pos = name.findRev('/');
+  int pos = name.tqfindRev('/');
   if (pos != -1)
   {
      name = name.mid(pos+1);
@@ -133,14 +133,14 @@ void
 KBuildServiceTypeFactory::saveHeader(TQDataStream &str)
 {
    KSycocaFactory::saveHeader(str);
-   str << (Q_INT32) m_fastPatternOffset;
-   str << (Q_INT32) m_otherPatternOffset;
-   str << (Q_INT32) m_propertyTypeDict.count();
+   str << (TQ_INT32) m_fastPatternOffset;
+   str << (TQ_INT32) m_otherPatternOffset;
+   str << (TQ_INT32) m_propertyTypeDict.count();
 
    TQMapIterator<TQString, int> it;
    for (it = m_propertyTypeDict.begin(); it != m_propertyTypeDict.end(); ++it)
    {
-     str << it.key() << (Q_INT32)it.data();
+     str << it.key() << (TQ_INT32)it.data();
    }
 
 }
@@ -152,13 +152,13 @@ KBuildServiceTypeFactory::save(TQDataStream &str)
 
    savePatternLists(str);
 
-   int endOfFactoryData = str.device()->at();
+   int endOfFactoryData = str.tqdevice()->at();
 
    // Update header (pass #3)
    saveHeader(str);
 
    // Seek to end.
-   str.device()->at(endOfFactoryData);
+   str.tqdevice()->at(endOfFactoryData);
 }
 
 void
@@ -183,8 +183,8 @@ KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
         for ( ; patit != pat.end() ; ++patit )
         {
            const TQString &pattern = *patit;
-           if ( pattern.findRev('*') == 0
-                && pattern.findRev('.') == 1
+           if ( pattern.tqfindRev('*') == 0
+                && pattern.tqfindRev('.') == 1
                 && pattern.length() <= 6 )
               // it starts with "*.", has no other '*' and no other '.', and is max 6 chars
               // => fast patttern
@@ -193,20 +193,20 @@ KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
               otherPatterns.append( pattern );
            // Assumption : there is only one mimetype for that pattern
            // It doesn't really make sense otherwise, anyway.
-           dict.replace( pattern, mimeType );
+           dict.tqreplace( pattern, mimeType );
         }
       }
    }
    // Sort the list - the fast one, useless for the other one
    fastPatterns.sort();
 
-   Q_INT32 entrySize = 0;
-   Q_INT32 nrOfEntries = 0;
+   TQ_INT32 entrySize = 0;
+   TQ_INT32 nrOfEntries = 0;
 
-   m_fastPatternOffset = str.device()->at();
+   m_fastPatternOffset = str.tqdevice()->at();
 
    // Write out fastPatternHeader (Pass #1)
-   str.device()->at(m_fastPatternOffset);
+   str.tqdevice()->at(m_fastPatternOffset);
    str << nrOfEntries;
    str << entrySize;
 
@@ -214,27 +214,27 @@ KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
    TQStringList::ConstIterator it = fastPatterns.begin();
    for ( ; it != fastPatterns.end() ; ++it )
    {
-     int start = str.device()->at();
+     int start = str.tqdevice()->at();
      // Justify to 6 chars with spaces, so that the size remains constant
      // in the database file.
      TQString paddedPattern = (*it).leftJustify(6).right(4); // remove leading "*."
      //kdDebug(7021) << TQString("FAST : '%1' '%2'").arg(paddedPattern).arg(dict[(*it)]->name()) << endl;
      str << paddedPattern;
      str << dict[(*it)]->offset();
-     entrySize = str.device()->at() - start;
+     entrySize = str.tqdevice()->at() - start;
      nrOfEntries++;
    }
 
    // store position
-   m_otherPatternOffset = str.device()->at();
+   m_otherPatternOffset = str.tqdevice()->at();
 
    // Write out fastPatternHeader (Pass #2)
-   str.device()->at(m_fastPatternOffset);
+   str.tqdevice()->at(m_fastPatternOffset);
    str << nrOfEntries;
    str << entrySize;
 
    // For the other patterns
-   str.device()->at(m_otherPatternOffset);
+   str.tqdevice()->at(m_otherPatternOffset);
 
    it = otherPatterns.begin();
    for ( ; it != otherPatterns.end() ; ++it )
@@ -267,7 +267,7 @@ KBuildServiceTypeFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
    TQMap<TQString,TQVariant::Type>::ConstIterator pit = pd.begin();
    for( ; pit != pd.end(); ++pit )
    {
-     if (!m_propertyTypeDict.contains(pit.key()))
+     if (!m_propertyTypeDict.tqcontains(pit.key()))
        m_propertyTypeDict.insert(pit.key(), pit.data());
      else if (m_propertyTypeDict[pit.key()] != pit.data())
        kdWarning(7021) << "Property '"<< pit.key() << "' is defined multiple times ("<< serviceType->name() <<")" <<endl;

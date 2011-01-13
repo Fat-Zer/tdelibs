@@ -53,7 +53,7 @@ KXYSelector::~KXYSelector()
 
 void KXYSelector::setRange( int _minX, int _minY, int _maxX, int _maxY )
 {
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	px = w;
 	py = w;
 	minX = _minX;
@@ -74,7 +74,7 @@ void KXYSelector::setYValue( int _yPos )
 
 void KXYSelector::setValues( int _xPos, int _yPos )
 {
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) w = 5;
 
 	xPos = _xPos;
@@ -98,7 +98,7 @@ void KXYSelector::setValues( int _xPos, int _yPos )
 
 TQRect KXYSelector::contentsRect() const
 {
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) {
 		w = 5;
 	}
@@ -113,7 +113,7 @@ void KXYSelector::paintEvent( TQPaintEvent *ev )
 	TQRect paintRect = ev->rect();
 	TQRect borderRect = rect();
 
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) {
 		w = 5 - w;
 	}
@@ -122,8 +122,8 @@ void KXYSelector::paintEvent( TQPaintEvent *ev )
 	TQPainter painter;
 	painter.begin( this );
 
-	style().drawPrimitive(TQStyle::PE_Panel, &painter, 
-			      borderRect, colorGroup(), 
+	tqstyle().tqdrawPrimitive(TQStyle::PE_Panel, &painter, 
+			      borderRect, tqcolorGroup(), 
 			      TQStyle::Style_Sunken);
 
 	drawContents( &painter );
@@ -135,7 +135,7 @@ void KXYSelector::paintEvent( TQPaintEvent *ev )
         }
         else if (paintRect.intersects(cursorRect))
         {
-           repaint( cursorRect, false);
+           tqrepaint( cursorRect, false);
         }
 
 	painter.end();
@@ -150,7 +150,7 @@ void KXYSelector::mouseMoveEvent( TQMouseEvent *e )
 {
 	int xVal, yVal;
 
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	valuesFromPosition( e->pos().x() - w, e->pos().y() - w, xVal, yVal );
 	
 	setValues( xVal, yVal );
@@ -170,7 +170,7 @@ void KXYSelector::wheelEvent( TQWheelEvent *e )
 
 void KXYSelector::valuesFromPosition( int x, int y, int &xVal, int &yVal ) const
 {
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) w = 5;
 	xVal = ( (maxX-minX) * (x-w) ) / ( width()-2*w );
 	yVal = maxY - ( ( (maxY-minY) * (y-w) ) / ( height()-2*w ) );
@@ -188,7 +188,7 @@ void KXYSelector::valuesFromPosition( int x, int y, int &xVal, int &yVal ) const
 
 void KXYSelector::setPosition( int xp, int yp )
 {
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) w = 5;
 	if ( xp < w )
 		xp = w;
@@ -238,7 +238,7 @@ void KXYSelector::drawCursor( TQPainter *p, int xp, int yp )
 KSelector::KSelector( TQWidget *parent, const char *name )
 	: TQWidget( parent, name ), TQRangeControl()
 {
-	_orientation = Horizontal;
+	_orientation = Qt::Horizontal;
 	_indent = true;
 }
 
@@ -256,9 +256,9 @@ KSelector::~KSelector()
 
 TQRect KSelector::contentsRect() const
 {
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	int iw = (w < 5) ? 5 : w;
-	if ( orientation() == Vertical )
+	if ( orientation() == Qt::Vertical )
 		return TQRect( w, iw, width() - w * 2 - 5, height() - 2 * iw );
 	else
 		return TQRect( iw, w, width() - 2 * iw, height() - w * 2 - 5 );
@@ -267,7 +267,7 @@ TQRect KSelector::contentsRect() const
 void KSelector::paintEvent( TQPaintEvent * )
 {
 	TQPainter painter;
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	int iw = (w < 5) ? 5 : w;
 
 	painter.begin( this );
@@ -277,12 +277,12 @@ void KSelector::paintEvent( TQPaintEvent * )
 	if ( indent() )
 	{
 		TQRect r = rect();
-		if ( orientation() == Vertical )
+		if ( orientation() == Qt::Vertical )
 			r.addCoords(0, iw - w, -iw, w - iw);
 		else
 			r.addCoords(iw - w, 0, w - iw, -iw);
-		style().drawPrimitive(TQStyle::PE_Panel, &painter, 
-			r, colorGroup(), 
+		tqstyle().tqdrawPrimitive(TQStyle::PE_Panel, &painter, 
+			r, tqcolorGroup(), 
 			TQStyle::Style_Sunken);
 	}
 
@@ -329,10 +329,10 @@ void KSelector::valueChange()
 void KSelector::moveArrow( const TQPoint &pos )
 {
 	int val;
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	int iw = (w < 5) ? 5 : w;
 
-	if ( orientation() == Vertical )
+	if ( orientation() == Qt::Vertical )
 		val = ( maxValue() - minValue() ) * (height()-pos.y()-5+w)
 				/ (height()-iw*2) + minValue();
 	else
@@ -346,9 +346,9 @@ TQPoint KSelector::calcArrowPos( int val )
 {
 	TQPoint p;
 
-	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
 	int iw = (w < 5) ? 5 : w;
-	if ( orientation() == Vertical )
+	if ( orientation() == Qt::Vertical )
 	{
 		p.setY( height() - ( (height()-2*iw) * val
 				/ ( maxValue() - minValue() ) + 5 ) );
@@ -374,10 +374,10 @@ void KSelector::drawArrow( TQPainter *painter, bool show, const TQPoint &pos )
     TQPointArray array(3);
 
     painter->setPen( TQPen() );
-    painter->setBrush( TQBrush( colorGroup().buttonText() ) );
+    painter->setBrush( TQBrush( tqcolorGroup().buttonText() ) );
     array.setPoint( 0, pos.x()+0, pos.y()+0 );
     array.setPoint( 1, pos.x()+5, pos.y()+5 );
-    if ( orientation() == Vertical )
+    if ( orientation() == Qt::Vertical )
     {
       array.setPoint( 2, pos.x()+5, pos.y()-5 );
     }
@@ -390,13 +390,13 @@ void KSelector::drawArrow( TQPainter *painter, bool show, const TQPoint &pos )
   } 
   else 
   {
-    if ( orientation() == Vertical )
+    if ( orientation() == Qt::Vertical )
     {
-       repaint(pos.x(), pos.y()-5, 6, 11, true);
+       tqrepaint(pos.x(), pos.y()-5, 6, 11, true);
     }
     else
     {
-       repaint(pos.x()-5, pos.y(), 11, 6, true);
+       tqrepaint(pos.x()-5, pos.y(), 11, 6, true);
     }
   }
 }
@@ -442,7 +442,7 @@ void KGradientSelector::drawContents( TQPainter *painter )
 	int greenDiff = color2.green() - color1.green();
 	int blueDiff  = color2.blue() - color1.blue();
 
-	if ( orientation() == Vertical )
+	if ( orientation() == Qt::Vertical )
 	{
 		for ( int y = 0; y < image.height(); y++ )
 		{
@@ -488,7 +488,7 @@ void KGradientSelector::drawContents( TQPainter *painter )
 
 	painter->drawPixmap( contentsRect().x(), contentsRect().y(), p );
 
-	if ( orientation() == Vertical )
+	if ( orientation() == Qt::Vertical )
 	{
 		int yPos = contentsRect().top() + painter->fontMetrics().ascent() + 2;
 		int xPos = contentsRect().left() + (contentsRect().width() -

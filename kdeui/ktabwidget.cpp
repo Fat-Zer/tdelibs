@@ -163,8 +163,8 @@ bool KTabWidget::tabCloseActivatePrevious() const
 unsigned int KTabWidget::tabBarWidthForMaxChars( uint maxLength )
 {
     int hframe, overlap;
-    hframe  = tabBar()->style().pixelMetric( TQStyle::PM_TabBarTabHSpace, tabBar() );
-    overlap = tabBar()->style().pixelMetric( TQStyle::PM_TabBarTabOverlap, tabBar() );
+    hframe  = tabBar()->tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabHSpace, tabBar() );
+    overlap = tabBar()->tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabOverlap, tabBar() );
 
     TQFontMetrics fm = tabBar()->fontMetrics();
     int x = 0;
@@ -177,7 +177,7 @@ unsigned int KTabWidget::tabBarWidthForMaxChars( uint maxLength )
         int iw = 0;
         if ( tab->iconSet() )
           iw = tab->iconSet()->pixmap( TQIconSet::Small, TQIconSet::Normal ).width() + 4;
-        x += ( tabBar()->style().sizeFromContents( TQStyle::CT_TabBarTab, this,
+        x += ( tabBar()->tqstyle().tqsizeFromContents( TQStyle::CT_TabBarTab, this,
                    TQSize( QMAX( lw + hframe + iw, TQApplication::globalStrut().width() ), 0 ),
                    TQStyleOption( tab ) ) ).width();
     }
@@ -253,7 +253,7 @@ void KTabWidget::resizeTabs( int changeTabIndex )
         newMaxLength=d->m_maxLength;
         uint lcw=0, rcw=0;
 
-        int tabBarHeight = tabBar()->sizeHint().height();
+        int tabBarHeight = tabBar()->tqsizeHint().height();
         if ( cornerWidget( TopLeft ) && cornerWidget( TopLeft )->isVisible() )
             lcw = QMAX( cornerWidget( TopLeft )->width(), tabBarHeight );
         if ( cornerWidget( TopRight ) && cornerWidget( TopRight )->isVisible() )
@@ -301,7 +301,7 @@ void KTabWidget::dragMoveEvent( TQDragMoveEvent *e )
 {
     if ( isEmptyTabbarSpace( e->pos() ) ) {
         bool accept = false;
-        // The receivers of the testCanDecode() signal has to adjust
+        // The tqreceivers of the testCanDecode() signal has to adjust
         // 'accept' accordingly.
         emit testCanDecode( e, accept);
         e->accept( accept );
@@ -323,7 +323,7 @@ void KTabWidget::dropEvent( TQDropEvent *e )
 #ifndef QT_NO_WHEELEVENT
 void KTabWidget::wheelEvent( TQWheelEvent *e )
 {
-    if ( e->orientation() == Horizontal )
+    if ( e->orientation() == Qt::Horizontal )
         return;
 
     if ( isEmptyTabbarSpace( e->pos() ) )
@@ -351,7 +351,7 @@ void KTabWidget::wheelDelta( int delta )
 
 void KTabWidget::mouseDoubleClickEvent( TQMouseEvent *e )
 {
-    if( e->button() != LeftButton )
+    if( e->button() != Qt::LeftButton )
         return;
 
     if ( isEmptyTabbarSpace( e->pos() ) ) {
@@ -363,12 +363,12 @@ void KTabWidget::mouseDoubleClickEvent( TQMouseEvent *e )
 
 void KTabWidget::mousePressEvent( TQMouseEvent *e )
 {
-    if ( e->button() == RightButton ) {
+    if ( e->button() == Qt::RightButton ) {
         if ( isEmptyTabbarSpace( e->pos() ) ) {
             emit( contextMenu( mapToGlobal( e->pos() ) ) );
             return;
         }
-    } else if ( e->button() == MidButton ) {
+    } else if ( e->button() == Qt::MidButton ) {
         if ( isEmptyTabbarSpace( e->pos() ) ) {
             emit( mouseMiddleClick() );
             return;
@@ -451,7 +451,7 @@ void KTabWidget::removePage( TQWidget * w ) {
 
 bool KTabWidget::isEmptyTabbarSpace( const TQPoint &point ) const
 {
-    TQSize size( tabBar()->sizeHint() );
+    TQSize size( tabBar()->tqsizeHint() );
     if ( ( tabPosition()==Top && point.y()< size.height() ) || ( tabPosition()==Bottom && point.y()>(height()-size.height() ) ) ) {
         TQWidget *rightcorner = cornerWidget( TopRight );
         if ( rightcorner ) {

@@ -224,7 +224,7 @@ void DrGroup::addObject(DrBase *optgrp)
 
 void DrGroup::removeOption(const TQString& name)
 {
-	DrBase	*opt = m_options.find(name);
+	DrBase	*opt = m_options.tqfind(name);
 	if (opt)
 	{
 		m_listoptions.removeRef(opt);
@@ -264,7 +264,7 @@ void DrGroup::createTree(DriverItem *parent)
 
 DrBase* DrGroup::findOption(const TQString& name, DrGroup **parentGroup)
 {
-	DrBase	*opt = m_options.find(name);
+	DrBase	*opt = m_options.tqfind(name);
 	if (!opt)
 	{
 		TQPtrListIterator<DrGroup>	it(m_subgroups);
@@ -334,7 +334,7 @@ void DrGroup::flattenGroup(TQMap<TQString, DrBase*>& optmap, int& index)
 		optmap[oit.current()->name()] = oit.current();
 
 	if (name().isEmpty())
-		optmap[TQString::fromLatin1("group%1").arg(index++)] = this;
+		optmap[TQString::tqfromLatin1("group%1").arg(index++)] = this;
 	else
 		optmap[name()] = this;
 

@@ -31,13 +31,13 @@
 
 #include "kdatewidget.h"
 
-class KDateWidgetSpinBox : public QSpinBox
+class KDateWidgetSpinBox : public TQSpinBox
 {
 public:
   KDateWidgetSpinBox(int min, int max, TQWidget *parent)
     : TQSpinBox(min, max, 1, parent)
   {
-     editor()->setAlignment(AlignRight);
+     editor()->tqsetAlignment(TQt::AlignRight);
   }
 };
 

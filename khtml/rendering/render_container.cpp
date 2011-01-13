@@ -170,11 +170,11 @@ RenderObject* RenderContainer::removeChildNode(RenderObject* oldChild)
     KHTMLAssert(oldChild->parent() == this);
 
     // So that we'll get the appropriate dirty bit set (either that a normal flow child got yanked or
-    // that a positioned child got yanked).  We also repaint, so that the area exposed when the child
-    // disappears gets repainted properly.
+    // that a positioned child got yanked).  We also tqrepaint, so that the area exposed when the child
+    // disappears gets tqrepainted properly.
     if ( document()->renderer() ) {
         oldChild->setNeedsLayoutAndMinMaxRecalc();
-        oldChild->repaint();
+        oldChild->tqrepaint();
 
         // Keep our layer hierarchy updated.
         oldChild->removeLayers(enclosingLayer());

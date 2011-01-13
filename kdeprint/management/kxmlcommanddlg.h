@@ -40,7 +40,7 @@ class DrGroup;
 class DrBase;
 class KXmlCommand;
 
-class KXmlCommandAdvancedDlg : public QWidget
+class KXmlCommandAdvancedDlg : public TQWidget
 {
 	Q_OBJECT
 public:

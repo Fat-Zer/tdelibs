@@ -98,7 +98,7 @@ void KPushButton::init( const KGuiItem &item )
 
     setIconSet( d->item.iconSet() );
 
-    setSizePolicy( TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum ) );
+    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Minimum ) );
 
     TQToolTip::add( this, item.toolTip() );
 
@@ -193,7 +193,7 @@ void KPushButton::mouseMoveEvent( TQMouseEvent *e )
         return;
     }
 
-    if ( (e->state() & LeftButton) &&
+    if ( (e->state() & Qt::LeftButton) &&
          (e->pos() - startPos).manhattanLength() >
          KGlobalSettings::dndEventDelay() )
     {

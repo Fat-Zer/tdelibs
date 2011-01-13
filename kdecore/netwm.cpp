@@ -4626,18 +4626,18 @@ Time NET::timestampDiff( Time time1, Time time2 ) // returns time2 - time1
 #else
 int NET::timestampCompare( unsigned long time1_, unsigned long time2_ ) // like strcmp()
     {
-    Q_UINT32 time1 = time1_;
-    Q_UINT32 time2 = time2_;
+    TQ_UINT32 time1 = time1_;
+    TQ_UINT32 time2 = time2_;
     if( time1 == time2 )
         return 0;
-    return Q_UINT32( time1 - time2 ) < 0x7fffffffU ? 1 : -1; // time1 > time2 -> 1, handle wrapping
+    return TQ_UINT32( time1 - time2 ) < 0x7fffffffU ? 1 : -1; // time1 > time2 -> 1, handle wrapping
     }
 
 int NET::timestampDiff( unsigned long time1_, unsigned long time2_ ) // returns time2 - time1
     { // no need to handle wrapping?
-    Q_UINT32 time1 = time1_;
-    Q_UINT32 time2 = time2_;
-    return Q_UINT32( time2 - time1 );
+    TQ_UINT32 time1 = time1_;
+    TQ_UINT32 time2 = time2_;
+    return TQ_UINT32( time2 - time1 );
     }
 #endif
 

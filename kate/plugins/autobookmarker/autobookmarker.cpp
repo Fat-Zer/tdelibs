@@ -114,7 +114,7 @@ void AutoBookmarker::slotCompleted()
   // get the document info
   KTextEditor::DocumentInfoInterface *di =
       static_cast<KTextEditor::DocumentInfoInterface*>(document()->
-          qt_cast("KTextEditor::DocumentInfoInterface"));
+          tqqt_cast("KTextEditor::DocumentInfoInterface"));
   TQString mt;
   if ( di ) // we can still try match the URL otherwise
     mt = di->mimeType();

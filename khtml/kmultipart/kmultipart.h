@@ -40,7 +40,7 @@ class KMultiPart : public KParts::ReadOnlyPart
 {
     Q_OBJECT
 public:
-    KMultiPart( TQWidget *parentWidget, const char *widgetName,
+    KMultiPart( TQWidget *tqparentWidget, const char *widgetName,
                 TQObject *parent, const char *name, const TQStringList& );
     virtual ~KMultiPart();
 

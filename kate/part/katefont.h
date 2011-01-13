@@ -29,7 +29,7 @@
 // KateFontMetrics implementation
 //
 
-class KateFontMetrics : public QFontMetrics
+class KateFontMetrics : public TQFontMetrics
 {
   public:
     KateFontMetrics(const TQFont& f);

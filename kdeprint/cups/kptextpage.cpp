@@ -212,7 +212,7 @@ KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 
 	m_prettypix = new TQLabel(prettybox);
 	  TQWhatsThis::add(m_prettypix, whatsThisPrettyprintPreviewIconTextPage);
-	m_prettypix->setAlignment(Qt::AlignCenter);
+	m_prettypix->tqsetAlignment(Qt::AlignCenter);
 	QRadioButton	*off = new TQRadioButton(i18n("&Disabled"), prettybox);
 	  TQWhatsThis::add(off, whatsThisPrettyprintButtonOffTextPage);
 	QRadioButton	*on = new TQRadioButton(i18n("&Enabled"), prettybox);

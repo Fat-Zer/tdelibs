@@ -548,7 +548,7 @@ public:
  *  See the code examples provided with the library for details.
  */
 
-class QConfigDB : public QWidget
+class QConfigDB : public TQWidget
 {
   // ############################################################################
   Q_OBJECT

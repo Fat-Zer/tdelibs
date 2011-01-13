@@ -17,6 +17,10 @@
   Boston, MA 02110-1301, USA.
 */
 
+#ifdef USE_QT4
+#undef Status
+#endif // USE_QT4
+
 #include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqvalidator.h>
@@ -225,7 +229,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
 
     for ( TQStringList::ConstIterator it=select.begin(); it!=select.end(); ++it )
     {
-      item = d->m_listBox->findItem( *it, CaseSensitive|ExactMatch );
+      item = d->m_listBox->tqfindItem( *it, CaseSensitive|ExactMatch );
       if ( item )
         d->m_listBox->setSelected( item, true );
     }
@@ -238,7 +242,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
       TQT_SLOT( slotOk() ) );
 
     TQString text = select.first();
-    item = d->m_listBox->findItem( text, CaseSensitive|ExactMatch );
+    item = d->m_listBox->tqfindItem( text, CaseSensitive|ExactMatch );
     if ( item )
       d->m_listBox->setSelected( item, true );
   }

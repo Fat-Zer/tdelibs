@@ -46,13 +46,13 @@ KDualColorButton::KDualColorButton(TQWidget *parent, const char *name, TQWidget*
                               (const unsigned char *)dcolorarrow_bits, true);
     arrowBitmap->setMask(*arrowBitmap); // heh
     resetPixmap = new TQPixmap((const char **)dcolorreset_xpm);
-    fg = TQBrush(Qt::black, SolidPattern);
-    bg = TQBrush(Qt::white, SolidPattern);
+    fg = TQBrush(Qt::black, Qt::SolidPattern);
+    bg = TQBrush(Qt::white, Qt::SolidPattern);
     curColor = Foreground;
     dragFlag = false;
     miniCtlFlag = false;
-    if(sizeHint().isValid())
-        setMinimumSize(sizeHint());
+    if(tqsizeHint().isValid())
+        setMinimumSize(tqsizeHint());
     setAcceptDrops(true);
 }
 
@@ -67,13 +67,13 @@ KDualColorButton::KDualColorButton(const TQColor &fgColor, const TQColor &bgColo
                               (const unsigned char *)dcolorarrow_bits, true);
     arrowBitmap->setMask(*arrowBitmap);
     resetPixmap = new TQPixmap((const char **)dcolorreset_xpm);
-    fg = TQBrush(fgColor, SolidPattern);
-    bg = TQBrush(bgColor, SolidPattern);
+    fg = TQBrush(fgColor, Qt::SolidPattern);
+    bg = TQBrush(bgColor, Qt::SolidPattern);
     curColor = Foreground;
     dragFlag = false;
     miniCtlFlag = false;
-    if(sizeHint().isValid())
-        setMinimumSize(sizeHint());
+    if(tqsizeHint().isValid())
+        setMinimumSize(tqsizeHint());
     setAcceptDrops(true);
 }
 
@@ -104,23 +104,23 @@ TQColor KDualColorButton::currentColor() const
     return (curColor == Background ? bg.color() : fg.color());
 }
 
-TQSize KDualColorButton::sizeHint() const
+TQSize KDualColorButton::tqsizeHint() const
 {
     return TQSize(34, 34);
 }
 
 void KDualColorButton::setForeground(const TQColor &c)
 {
-    fg = TQBrush(c, SolidPattern);
-    repaint(false);
+    fg = TQBrush(c, Qt::SolidPattern);
+    tqrepaint(false);
 
     emit fgChanged(fg.color());
 }
 
 void KDualColorButton::setBackground(const TQColor &c)
 {
-    bg = TQBrush(c, SolidPattern);
-    repaint(false);
+    bg = TQBrush(c, Qt::SolidPattern);
+    tqrepaint(false);
 
     emit bgChanged(bg.color());
 }
@@ -128,16 +128,16 @@ void KDualColorButton::setBackground(const TQColor &c)
 void KDualColorButton::setCurrentColor(const TQColor &c)
 {
     if(curColor == Background)
-        bg = TQBrush(c, SolidPattern);
+        bg = TQBrush(c, Qt::SolidPattern);
     else
-        fg = TQBrush(c, SolidPattern);
-    repaint(false);
+        fg = TQBrush(c, Qt::SolidPattern);
+    tqrepaint(false);
 }
 
 void KDualColorButton::setCurrent(DualColor s)
 {
     curColor = s;
-    repaint(false);
+    tqrepaint(false);
 }
 
 void KDualColorButton::metrics(TQRect &fgRect, TQRect &bgRect)
@@ -152,13 +152,13 @@ void KDualColorButton::paintEvent(TQPaintEvent *)
     TQPainter p(this);
 
     metrics(fgRect, bgRect);
-    TQBrush defBrush = colorGroup().brush(TQColorGroup::Button);
+    TQBrush defBrush = tqcolorGroup().brush(TQColorGroup::Button);
 
-    qDrawShadeRect(&p, bgRect, colorGroup(), curColor == Background, 2, 0,
+    qDrawShadeRect(&p, bgRect, tqcolorGroup(), curColor == Background, 2, 0,
                    isEnabled() ? &bg : &defBrush);
-    qDrawShadeRect(&p, fgRect, colorGroup(), curColor == Foreground, 2, 0,
+    qDrawShadeRect(&p, fgRect, tqcolorGroup(), curColor == Foreground, 2, 0,
                    isEnabled() ? &fg : &defBrush);
-    p.setPen(colorGroup().shadow());
+    p.setPen(tqcolorGroup().shadow());
     p.drawPixmap(fgRect.right()+2, 0, *arrowBitmap);
     p.drawPixmap(0, fgRect.bottom()+2, *resetPixmap);
 
@@ -181,7 +181,7 @@ void KDualColorButton::dropEvent(TQDropEvent *ev)
             bg.setColor(c);
             emit(bgChanged(c));
         }
-        repaint(false);
+        tqrepaint(false);
     }
 }
 
@@ -217,7 +217,7 @@ void KDualColorButton::mousePressEvent(TQMouseEvent *ev)
         emit bgChanged(bg.color());
         miniCtlFlag = true;
     }
-    repaint(false);
+    tqrepaint(false);
 }
 
 
@@ -270,7 +270,7 @@ void KDualColorButton::mouseReleaseEvent(TQMouseEvent *ev)
                 }
             }
         }
-        repaint(false);
+        tqrepaint(false);
         dragFlag = false;
     }
     else

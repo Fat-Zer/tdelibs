@@ -112,9 +112,9 @@ public:
     void connectSignals( TQObject *receiver ) {
 	TQObject *sender;
 	if ( combo )
-	    sender = combo;
+	    sender = TQT_TQOBJECT(combo);
 	else
-	    sender = edit;
+	    sender = TQT_TQOBJECT(edit);
 
 	connect( sender, TQT_SIGNAL( textChanged( const TQString& )),
 		 receiver, TQT_SIGNAL( textChanged( const TQString& )));
@@ -206,7 +206,7 @@ void KURLRequester::init()
 	d->edit = new KLineEdit( this, "line edit" );
 
     myButton = new KURLDragPushButton( this, "kfile button");
-    TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("fileopen"));
+    TQIconSet iconSet = SmallIconSet(TQString::tqfromLatin1("fileopen"));
     TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
     myButton->setIconSet( iconSet );
     myButton->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
@@ -220,14 +220,14 @@ void KURLRequester::init()
     widget->installEventFilter( this );
     setFocusProxy( widget );
 
-    d->connectSignals( this );
+    d->connectSignals( TQT_TQOBJECT(this) );
     connect( myButton, TQT_SIGNAL( clicked() ), this, TQT_SLOT( slotOpenDialog() ));
 
     myCompletion = new KURLCompletion();
     d->setCompletionObject( myCompletion );
 
     KAccel *accel = new KAccel( this );
-    accel->insert( KStdAccel::Open, this, TQT_SLOT( slotOpenDialog() ));
+    accel->insert( KStdAccel::Open, TQT_TQOBJECT(this), TQT_SLOT( slotOpenDialog() ));
     accel->readSettings();
 }
 
@@ -340,7 +340,7 @@ TQString KURLRequester::filter( ) const
 KFileDialog * KURLRequester::fileDialog() const
 {
     if ( !myFileDialog ) {
-        TQWidget *p = parentWidget();
+        TQWidget *p = tqparentWidget();
         myFileDialog = new KFileDialog( TQString::null, d->fileDialogFilter, p,
                                         "file dialog", true );
 
@@ -386,7 +386,7 @@ void KURLRequester::slotUpdateURL()
 
 bool KURLRequester::eventFilter( TQObject *obj, TQEvent *ev )
 {
-    if ( ( d->edit == obj ) || ( d->combo == obj ) )
+    if ( ( TQT_BASE_OBJECT(d->edit) == TQT_BASE_OBJECT(obj) ) || ( TQT_BASE_OBJECT(d->combo) == TQT_BASE_OBJECT(obj) ) )
     {
         if (( ev->type() == TQEvent::FocusIn ) || ( ev->type() == TQEvent::FocusOut ))
             // Forward focusin/focusout events to the urlrequester; needed by file form element in khtml
@@ -402,7 +402,7 @@ KPushButton * KURLRequester::button() const
 
 KEditListBox::CustomEditor KURLRequester::customEditor()
 {
-    setSizePolicy(TQSizePolicy( TQSizePolicy::Preferred,
+    tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Preferred,
                                TQSizePolicy::Fixed));
 
     KLineEdit *edit = d->edit;

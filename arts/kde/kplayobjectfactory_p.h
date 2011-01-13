@@ -29,7 +29,7 @@ namespace KDE
 /**
  * @internal
  */
-class POFHelper : public QObject
+class POFHelper : public TQObject
 {
 	friend class PlayObjectFactory;
 	Q_OBJECT

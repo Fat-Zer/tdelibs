@@ -102,7 +102,7 @@ IdleSlave::gotInput()
       pid_t pid;
       TQCString protocol;
       TQString host;
-      Q_INT8 b;
+      TQ_INT8 b;
       stream >> pid >> protocol >> host >> b;
 // Overload with (bool) onHold, (KURL) url.
       if (!stream.atEnd())
@@ -181,7 +181,7 @@ KLauncher::KLauncher(int _kdeinitSocket, bool new_startup)
                                     objId(), "terminateKDE()", false );
 
    TQString prefix = locateLocal("socket", "klauncher");
-   KTempFile domainname(prefix, TQString::fromLatin1(".slave-socket"));
+   KTempFile domainname(prefix, TQString::tqfromLatin1(".slave-socket"));
    if (domainname.status() != 0)
    {
       // Sever error!

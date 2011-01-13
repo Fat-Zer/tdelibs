@@ -7,7 +7,7 @@ int main (int argc,char **argv)
     KApplication app( argc, argv, "kcharselecttest" );
 
     KCharSelect selector( 0, "char selector" );
-    selector.resize( selector.sizeHint() );
+    selector.resize( selector.tqsizeHint() );
     selector.show();
     selector.setCaption( "KCharSelect Test" );
 

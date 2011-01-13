@@ -186,7 +186,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	m_order = new TQCheckBox(i18n("Re&verse"), m_copybox);
 	TQWhatsThis::add(m_order, whatsThisReverseLabel);
 	m_collatepix = new TQLabel(m_copybox);
-	m_collatepix->setAlignment(Qt::AlignCenter);
+	m_collatepix->tqsetAlignment(Qt::AlignCenter);
 	m_collatepix->setMinimumHeight(70);
 	QLabel	*m_copieslabel = new TQLabel(i18n("Cop&ies:"), m_copybox);
 	m_copies = new TQSpinBox(m_copybox);
@@ -336,7 +336,7 @@ void KPCopiesPage::getOptions(TQMap<TQString,TQString>& options, bool incldef)
 	options["kde-collate"] = (m_collate->isChecked() ? "Collate" : "Uncollate");
 	// ranges
 	options["kde-current"] = (m_current->isChecked() ? "1" : "0");
-	options["kde-range"] = (m_range->isChecked() ? m_rangeedit->text() : (incldef ? TQString::fromLatin1("1-") : TQString::fromLatin1("")));
+	options["kde-range"] = (m_range->isChecked() ? m_rangeedit->text() : (incldef ? TQString::tqfromLatin1("1-") : TQString::tqfromLatin1("")));
 	// page set
 	options["kde-pageset"] = TQString::number(m_pageset->currentItem());
 }

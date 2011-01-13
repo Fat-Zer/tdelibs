@@ -39,7 +39,7 @@ KServiceTypeFactory::KServiceTypeFactory()
    if (m_str)
    {
       // Read Header
-      Q_INT32 i,n;
+      TQ_INT32 i,n;
       (*m_str) >> i;
       m_fastPatternOffset = i;
       (*m_str) >> i;
@@ -102,7 +102,7 @@ TQVariant::Type KServiceTypeFactory::findPropertyTypeByName(const TQString &_nam
 
    assert (!KSycoca::self()->isBuilding());
 
-   TQMapConstIterator<TQString,int> it = m_propertyTypeDict.find(_name);
+   TQMapConstIterator<TQString,int> it = m_propertyTypeDict.tqfind(_name);
    if (it != m_propertyTypeDict.end()) {
      return (TQVariant::Type)it.data();
    }
@@ -118,23 +118,23 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
    // Get stream to the header
    TQDataStream *str = m_str;
 
-   str->device()->at( m_fastPatternOffset );
+   str->tqdevice()->at( m_fastPatternOffset );
 
-   Q_INT32 nrOfEntries;
+   TQ_INT32 nrOfEntries;
    (*str) >> nrOfEntries;
-   Q_INT32 entrySize;
+   TQ_INT32 entrySize;
    (*str) >> entrySize;
 
-   Q_INT32 fastOffset =  str->device()->at( );
+   TQ_INT32 fastOffset =  str->tqdevice()->at( );
 
-   Q_INT32 matchingOffset = 0;
+   TQ_INT32 matchingOffset = 0;
 
    // Let's go for a binary search in the "fast" pattern index
-   Q_INT32 left = 0;
-   Q_INT32 right = nrOfEntries - 1;
-   Q_INT32 middle;
+   TQ_INT32 left = 0;
+   TQ_INT32 right = nrOfEntries - 1;
+   TQ_INT32 middle;
    // Extract extension
-   int lastDot = _filename.findRev('.');
+   int lastDot = _filename.tqfindRev('.');
    int ext_len = _filename.length() - lastDot - 1;
    if (lastDot != -1 && ext_len <= 4) // if no '.', skip the extension lookup
    {
@@ -145,7 +145,7 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
       while (left <= right) {
          middle = (left + right) / 2;
          // read pattern at position "middle"
-         str->device()->at( middle * entrySize + fastOffset );
+         str->tqdevice()->at( middle * entrySize + fastOffset );
          KSycocaEntry::read(*str, pattern);
          int cmp = pattern.compare( extension );
          if (cmp < 0)
@@ -166,10 +166,10 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
 
    // Now try the "other" Pattern table
    if ( m_patterns.isEmpty() ) {
-      str->device()->at( m_otherPatternOffset );
+      str->tqdevice()->at( m_otherPatternOffset );
 
       TQString pattern;
-      Q_INT32 mimetypeOffset;
+      TQ_INT32 mimetypeOffset;
 
       while (true)
       {
@@ -186,7 +186,7 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
 
    TQStringList::const_iterator it = m_patterns.begin();
    TQStringList::const_iterator end = m_patterns.end();
-   TQValueVector<Q_INT32>::const_iterator it_offset = m_pattern_offsets.begin();
+   TQValueVector<TQ_INT32>::const_iterator it_offset = m_pattern_offsets.begin();
 
   for ( ; it != end; ++it, ++it_offset )
    {
@@ -280,7 +280,7 @@ KServiceType * KServiceTypeFactory::createEntry(int offset)
         break;
 
      default:
-        kdError(7011) << TQString("KServiceTypeFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type) << endl;
+        kdError(7011) << TQString(TQString("KServiceTypeFactory: unexpected object entry in KSycoca database (type = %1)").arg((int)type)) << endl;
         break;
    }
    if (newEntry && !newEntry->isValid())

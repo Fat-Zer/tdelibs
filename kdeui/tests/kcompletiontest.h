@@ -25,7 +25,7 @@ class KHistoryCombo;
 class KLineEdit;
 
 
-class Form1 : public QWidget
+class Form1 : public TQWidget
 {
     Q_OBJECT
 

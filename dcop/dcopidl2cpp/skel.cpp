@@ -177,7 +177,7 @@ void generateSkel( const TQString& idl, const TQString& filename, TQDomElement d
 	TQString namespace_tmp = className;
 	str << endl;
 	for(;;) {
-	    int pos = namespace_tmp.find( "::" );
+	    int pos = namespace_tmp.tqfind( "::" );
 	    if( pos < 0 ) {
 		className = namespace_tmp;
 		break;
@@ -223,7 +223,7 @@ void generateSkel( const TQString& idl, const TQString& filename, TQDomElement d
 	    str << "\t    fdict->insert( " << className << "_ftable[i][1],  new int( i ) );" << endl;
 	    str << "    }" << endl;
     
-	    str << "    int* fp = fdict->find( fun );" << endl;
+	    str << "    int* fp = fdict->tqfind( fun );" << endl;
 	    str << "    switch ( fp?*fp:-1) {" << endl;
 	}
 	s = n.nextSibling().toElement();

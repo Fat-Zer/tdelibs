@@ -33,7 +33,7 @@ using namespace KNetwork::Internal;
 
 namespace 
 {
-  struct KSrvStartEvent: public QCustomEvent
+  struct KSrvStartEvent: public TQCustomEvent
   {
     inline KSrvStartEvent() : TQCustomEvent(TQEvent::User) { }
   };
@@ -51,11 +51,11 @@ bool KSrvResolverWorker::preprocess()
     return false;
 
   TQString node = nodeName();
-  if (node.find('%') != -1)
-    node.truncate(node.find('%'));
+  if (node.tqfind('%') != -1)
+    node.truncate(node.tqfind('%'));
 
-  if (node.isEmpty() || node == TQString::fromLatin1("*") ||
-      node == TQString::fromLatin1("localhost"))
+  if (node.isEmpty() || node == TQString::tqfromLatin1("*") ||
+      node == TQString::tqfromLatin1("localhost"))
     return false;		// empty == localhost
 
   encodedName = KResolver::domainToAscii(node);
@@ -225,7 +225,7 @@ bool KSrvResolverWorker::postprocess()
 
 void KSrvResolverWorker::customEvent(TQCustomEvent*)
 {
-  dns = new TQDns(TQString::fromLatin1(encodedName), TQDns::Srv);
+  dns = new TQDns(TQString::tqfromLatin1(encodedName), TQDns::Srv);
   TQObject::connect(dns, TQT_SIGNAL(resultsReady()), this, TQT_SLOT(dnsResultsReady()));
 }
 

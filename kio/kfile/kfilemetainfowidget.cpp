@@ -272,7 +272,7 @@ TQWidget* KFileMetaInfoWidget::makeStringWidget()
 
 TQWidget* KFileMetaInfoWidget::makeDateWidget()
 {
-  TQWidget *e = new QDateEdit(m_item.value().toDate(), this);
+  TQWidget *e = new TQDateEdit(m_item.value().toDate(), this);
   connect(e,    TQT_SIGNAL(valueChanged(const TQDate&)),
           this, TQT_SLOT(slotDateChanged(const TQDate&)));
   return e;
@@ -280,12 +280,12 @@ TQWidget* KFileMetaInfoWidget::makeDateWidget()
 
 TQWidget* KFileMetaInfoWidget::makeTimeWidget()
 {
-  return new QTimeEdit(m_item.value().toTime(), this);
+  return new TQTimeEdit(m_item.value().toTime(), this);
 }
 
 TQWidget* KFileMetaInfoWidget::makeDateTimeWidget()
 {
-  return new QDateTimeEdit(m_item.value().toDateTime(), this);
+  return new TQDateTimeEdit(m_item.value().toDateTime(), this);
 }
 
 void KFileMetaInfoWidget::reparentValidator( TQWidget *widget,

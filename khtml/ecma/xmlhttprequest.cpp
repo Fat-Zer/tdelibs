@@ -395,7 +395,7 @@ void XMLHttpRequest::send(const TQString& _body)
   // through setRequestHeader. NOTE: the user can still disable
   // this feature at the protocol level (kio_http).
   // ### does find() ever succeed? the headers are stored in lower case!
-  if (requestHeaders.find("Referer") == requestHeaders.end()) {
+  if (requestHeaders.tqfind("Referer") == requestHeaders.end()) {
     KURL documentURL(doc->URL());
     documentURL.setPass(TQString::null);
     documentURL.setUser(TQString::null);
@@ -487,7 +487,7 @@ void XMLHttpRequest::setRequestHeader(const TQString& _name, const TQString &val
   // Reject all banned headers. See BANNED_HTTP_HEADERS above.
   // kdDebug() << "Banned HTTP Headers: " << BANNED_HTTP_HEADERS << endl;
   TQStringList bannedHeaders = TQStringList::split(',',
-                                  TQString::fromLatin1(BANNED_HTTP_HEADERS));
+                                  TQString::tqfromLatin1(BANNED_HTTP_HEADERS));
 
   if (bannedHeaders.contains(name))
     return;   // Denied
@@ -501,7 +501,7 @@ Value XMLHttpRequest::getAllResponseHeaders() const
     return Undefined();
   }
 
-  int endOfLine = responseHeaders.find("\n");
+  int endOfLine = responseHeaders.tqfind("\n");
 
   if (endOfLine == -1) {
     return Undefined();
@@ -535,7 +535,7 @@ Value XMLHttpRequest::getResponseHeader(const TQString& name) const
     return Undefined();
   }
 
-  int endOfLine = responseHeaders.find("\n", headerLinePos + matchLength);
+  int endOfLine = responseHeaders.tqfind("\n", headerLinePos + matchLength);
 
   return String(responseHeaders.mid(headerLinePos + matchLength, endOfLine - (headerLinePos + matchLength)).stripWhiteSpace());
 }
@@ -546,10 +546,10 @@ static Value httpStatus(const TQString& response, bool textStatus = false)
     return Undefined();
   }
 
-  int endOfLine = response.find("\n");
+  int endOfLine = response.tqfind("\n");
   TQString firstLine = (endOfLine == -1) ? response : response.left(endOfLine);
-  int codeStart = firstLine.find(" ");
-  int codeEnd = firstLine.find(" ", codeStart + 1);
+  int codeStart = firstLine.tqfind(" ");
+  int codeEnd = firstLine.tqfind(" ", codeStart + 1);
 
   if (codeStart == -1 || codeEnd == -1) {
     return Undefined();
@@ -643,9 +643,9 @@ void XMLHttpRequest::slotData(KIO::Job*, const TQByteArray &_data)
 
     // NOTE: Replace a 304 response with a 200! Both IE and Mozilla do this.
     // Problem first reported through bug# 110272.
-    int codeStart = responseHeaders.find("304");
+    int codeStart = responseHeaders.tqfind("304");
     if ( codeStart != -1) {
-      int codeEnd = responseHeaders.find("\n", codeStart+3);
+      int codeEnd = responseHeaders.tqfind("\n", codeStart+3);
       if (codeEnd != -1)
         responseHeaders.replace(codeStart, (codeEnd-codeStart), "200 OK");
     }
@@ -659,11 +659,11 @@ void XMLHttpRequest::slotData(KIO::Job*, const TQByteArray &_data)
 #endif
 
   if ( decoder == NULL ) {
-    int pos = responseHeaders.find("content-type:", 0, false);
+    int pos = responseHeaders.tqfind("content-type:", 0, false);
 
     if ( pos > -1 ) {
       pos += 13;
-      int index = responseHeaders.find('\n', pos);
+      int index = responseHeaders.tqfind('\n', pos);
       TQString type = responseHeaders.mid(pos, (index-pos));
       index = type.find (';');
       if (index > -1)
@@ -725,7 +725,7 @@ Value XMLHttpRequestProtoFunc::tryCall(ExecState *exec, Object &thisObj, const L
       }
 
       TQString method = args[0].toString(exec).qstring();
-      KHTMLPart *part = ::qt_cast<KHTMLPart *>(Window::retrieveActive(exec)->part());
+      KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(Window::retrieveActive(exec)->part());
       if (!part)
         return Undefined();
       KURL url = KURL(part->document().completeURL(args[1].toString(exec).qstring()).string());

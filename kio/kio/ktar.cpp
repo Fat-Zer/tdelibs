@@ -129,7 +129,7 @@ void KTar::prepareDevice( const TQString & filename,
                             const TQString & mimetype, bool /*forced*/ )
 {
   if( "application/x-tar" == mimetype )
-      setDevice( new TQFile( filename ) );
+      setDevice( TQT_TQIODEVICE(new TQFile( filename )) );
   else
   {
     // The compression filters are very slow with random access.
@@ -149,7 +149,7 @@ void KTar::prepareDevice( const TQString & filename,
     // the device must be closed, however, for KArchive.setDevice()
     TQFile* file = d->tmpFile->file();
     file->close();
-    setDevice(file);
+    setDevice(TQT_TQIODEVICE(file));
   }
 }
 
@@ -185,9 +185,9 @@ void KTar::setOrigFileName( const TQCString & fileName )
     d->origFileName = fileName;
 }
 
-Q_LONG KTar::readRawHeader(char *buffer) {
+TQ_LONG KTar::readRawHeader(char *buffer) {
   // Read header
-  Q_LONG n = device()->readBlock( buffer, 0x200 );
+  TQ_LONG n = device()->readBlock( buffer, 0x200 );
   if ( n == 0x200 && buffer[0] != 0 ) {
     // Make sure this is actually a tar header
     if (strncmp(buffer + 257, "ustar", 5)) {
@@ -223,7 +223,7 @@ Q_LONG KTar::readRawHeader(char *buffer) {
 }
 
 bool KTar::readLonglink(char *buffer,TQCString &longlink) {
-  Q_LONG n = 0;
+  TQ_LONG n = 0;
   TQIODevice *dev = device();
   // read size of longlink from size field in header
   // size is in bytes including the trailing null (which we ignore)
@@ -252,11 +252,11 @@ bool KTar::readLonglink(char *buffer,TQCString &longlink) {
   return true;
 }
 
-Q_LONG KTar::readHeader(char *buffer,TQString &name,TQString &symlink) {
+TQ_LONG KTar::readHeader(char *buffer,TQString &name,TQString &symlink) {
   name.truncate(0);
   symlink.truncate(0);
   while (true) {
-    Q_LONG n = readRawHeader(buffer);
+    TQ_LONG n = readRawHeader(buffer);
     if (n != 0x200) return n;
 
     // is it a longlink?
@@ -320,7 +320,7 @@ bool KTar::KTarPrivate::fillTempFile( const TQString & filename) {
             delete filterDev;
             return false;
         }
-        Q_LONG len = -1;
+        TQ_LONG len = -1;
         while ( !filterDev->atEnd() && len != 0) {
             len = filterDev->readBlock(buffer.data(),buffer.size());
             if ( len < 0 ) { // corrupted archive
@@ -372,7 +372,7 @@ bool KTar::openArchive( int mode )
         TQString symlink;
 
         // Read header
-        Q_LONG n = readHeader(buffer,name,symlink);
+        TQ_LONG n = readHeader(buffer,name,symlink);
         if (n < 0) return false;
         if (n == 0x200)
         {
@@ -385,7 +385,7 @@ bool KTar::openArchive( int mode )
                 name = name.left( name.length() - 1 );
             }
 
-            int pos = name.findRev( '/' );
+            int pos = name.tqfindRev( '/' );
             if ( pos == -1 )
                 nm = name;
             else
@@ -534,7 +534,7 @@ bool KTar::KTarPrivate::writeBackTempFile( const TQString & filename ) {
         if ( forced )
             static_cast<KFilterDev *>(dev)->setOrigFileName( origFileName );
         TQByteArray buffer(8*1024);
-        Q_LONG len;
+        TQ_LONG len;
         while ( ! file->atEnd()) {
             len = file->readBlock(buffer.data(),buffer.size());
             dev->writeBlock(buffer.data(),len);
@@ -633,7 +633,7 @@ bool KTar::prepareWriting( const TQString& name, const TQString& user, const TQS
 
 bool KTar::doneWriting( uint size )
 {
-    // Write alignment
+    // Write tqalignment
     int rest = size % 0x200;
     if ( mode() & IO_ReadWrite )
         d->tarEnd = device()->at() + (rest ? 0x200 - rest : 0); // Record our new end of archive
@@ -642,7 +642,7 @@ bool KTar::doneWriting( uint size )
         char buffer[ 0x201 ];
         for( uint i = 0; i < 0x200; ++i )
             buffer[i] = 0;
-        Q_LONG nwritten = device()->writeBlock( buffer, 0x200 - rest );
+        TQ_LONG nwritten = device()->writeBlock( buffer, 0x200 - rest );
         return nwritten == 0x200 - rest;
     }
     return true;
@@ -853,7 +853,7 @@ bool KTar::writeDir_impl(const TQString &name, const TQString &user,
     if ( dirName.right(1) != "/" )
         dirName += "/";
 
-    if ( d->dirList.contains( dirName ) )
+    if ( d->dirList.tqcontains( dirName ) )
         return true; // already there
 
     char buffer[ 0x201 ];

@@ -28,7 +28,7 @@ class KListView;
 class TQToolButton;
 class TQListViewItem;
 
-class KFileList : public QWidget
+class KFileList : public TQWidget
 {
 	Q_OBJECT
 public:
@@ -37,7 +37,7 @@ public:
 
 	void setFileList(const TQStringList&);
 	TQStringList fileList() const;
-	TQSize sizeHint() const;
+	TQSize tqsizeHint() const;
 
 protected slots:
 	void slotAddFile();

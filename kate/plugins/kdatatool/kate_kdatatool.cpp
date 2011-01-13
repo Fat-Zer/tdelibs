@@ -108,7 +108,7 @@ void KDataToolPluginView::aboutToShow()
 	if ( selectionInterface(m_view->document())->hasSelection() )
 	{
 		word = selectionInterface(m_view->document())->selection();
-		if ( word.find(' ') == -1 && word.find('\t') == -1 && word.find('\n') == -1 )
+		if ( word.tqfind(' ') == -1 && word.tqfind('\t') == -1 && word.tqfind('\n') == -1 )
 			m_singleWord = true;
 		else
 			m_singleWord = false;

@@ -33,7 +33,7 @@ KMainWindowInterface::KMainWindowInterface(KMainWindow * mainWindow)
 {
 	m_MainWindow = mainWindow;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
-	m_dcopPropertyProxy = new KDCOPPropertyProxy(m_MainWindow);
+	m_dcopPropertyProxy = new KDCOPPropertyProxy(TQT_TQOBJECT(m_MainWindow));
 }
 
 KMainWindowInterface::~KMainWindowInterface()

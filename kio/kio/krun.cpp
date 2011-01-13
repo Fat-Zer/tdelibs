@@ -386,15 +386,15 @@ TQStringList KRun::processDesktopExec(const KService &_service, const KURL::List
   /// compatibility hack -- KDE 4: remove
   TQRegExp re("^\\s*(?:/bin/)?sh\\s+-c\\s+(.*)$");
   if (!re.search( exec )) {
-    exec = re.cap( 1 ).stripWhiteSpace();
+    exec = TQString(re.cap( 1 )).stripWhiteSpace();
     for (uint pos = 0; pos < exec.length(); ) {
-      TQChar c = exec.unicode()[pos];
+      TQChar c = exec.tqunicode()[pos];
       if (c != '\'' && c != '"')
         goto synerr; // what else can we do? after normal parsing the substs would be insecure
-      int pos2 = exec.find( c, pos + 1 ) - 1;
+      int pos2 = exec.tqfind( c, pos + 1 ) - 1;
       if (pos2 < 0)
         goto synerr; // quoting error
-      memcpy( (void *)(exec.unicode() + pos), exec.unicode() + pos + 1, (pos2 - pos) * sizeof(TQChar));
+      memcpy( (void *)(exec.tqunicode() + pos), exec.tqunicode() + pos + 1, (pos2 - pos) * sizeof(TQChar));
       pos = pos2;
       exec.remove( pos, 2 );
     }
@@ -545,8 +545,8 @@ TQString KRun::binaryName( const TQString & execLine, bool removePath )
   for (TQStringList::ConstIterator it = args.begin(); it != args.end(); ++it)
     if (!(*it).contains('='))
       // Remove path if wanted
-      return removePath ? (*it).mid((*it).findRev('/') + 1) : *it;
-  return TQString::null;
+  return removePath ? (*it).mid(TQString(*it).tqfindRev('/') + 1) : *it; 
+  return TQString();
 }
 
 static pid_t runCommandInternal( KProcess* proc, const KService* service, const TQString& binName,
@@ -708,7 +708,7 @@ static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service
     {
       // compat mode: assume KIO if not set and it's a KDE app
       TQStringList categories = _service.property("Categories").toStringList();
-      if ( categories.find("KDE") != categories.end() )
+      if ( categories.tqfind("KDE") != categories.end() )
          supportedProtocols.append( "KIO" );
       else { // if no KDE app, be a bit over-generic
          supportedProtocols.append( "http");
@@ -719,10 +719,10 @@ static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service
   kdDebug(7010) << "supportedProtocols:" << supportedProtocols << endl;
 
   KURL::List urls( _urls );
-  if ( supportedProtocols.find( "KIO" ) == supportedProtocols.end() ) {
+  if ( supportedProtocols.tqfind( "KIO" ) == supportedProtocols.end() ) {
     for( KURL::List::Iterator it = urls.begin(); it != urls.end(); ++it ) {
       const KURL url = *it;
-      bool supported = url.isLocalFile() || supportedProtocols.find( url.protocol().lower() ) != supportedProtocols.end();
+      bool supported = url.isLocalFile() || supportedProtocols.tqfind( url.protocol().lower() ) != supportedProtocols.end();
       kdDebug(7010) << "Looking at url=" << url << " supported=" << supported << endl;
       if ( !supported && KProtocolInfo::protocolClass(url.protocol()) == ":local" )
       {
@@ -861,7 +861,7 @@ pid_t KRun::runCommand( const TQString& cmd, const TQString &execName, const TQS
   *proc << cmd;
   KService::Ptr service = KService::serviceByDesktopName( binaryName( execName, true ) );
   TQString bin = binaryName( cmd, false );
-  int pos = bin.findRev( '/' );
+  int pos = bin.tqfindRev( '/' );
   if (pos != -1) {
     proc->setWorkingDirectory( bin.mid(0, pos) );
   }
@@ -927,7 +927,7 @@ void KRun::init()
   if (m_strURL.url().startsWith("$(")) {
       // check for environment variables and make necessary translations
       TQString aValue = m_strURL.url();
-      int nDollarPos = aValue.find( '$' );
+      int nDollarPos = aValue.tqfind( '$' );
 
       while( nDollarPos != -1 && nDollarPos+1 < static_cast<int>(aValue.length())) {
         // there is at least one $
@@ -983,7 +983,7 @@ void KRun::init()
           aValue.remove( nDollarPos, 1 );
           nDollarPos++;
         }
-        nDollarPos = aValue.find( '$', nDollarPos );
+        nDollarPos = aValue.tqfind( '$', nDollarPos );
       }
       m_strURL = KURL(aValue);
       bypassErrorMessage = true;
@@ -1360,7 +1360,7 @@ void KRun::foundMimeType( const TQString& type )
     return;
   }
 */
-  KIO::TransferJob *job = ::qt_cast<KIO::TransferJob *>( m_job );
+  KIO::TransferJob *job = ::tqqt_cast<KIO::TransferJob *>( m_job );
   if ( job )
   {
      job->putOnHold();

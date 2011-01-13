@@ -715,9 +715,9 @@ static int make_inet(const char *name, int portnum, int protonum, struct addrinf
 # endif
 	  sin->sin_port = portnum;
 	  if (hint->ai_flags & AI_PASSIVE)
-	    *(Q_UINT32*)&sin->sin_addr = INADDR_ANY;
+	    *(TQ_UINT32*)&sin->sin_addr = INADDR_ANY;
 	  else
-	    *(Q_UINT32*)&sin->sin_addr = htonl(INADDR_LOOPBACK);
+	    *(TQ_UINT32*)&sin->sin_addr = htonl(INADDR_LOOPBACK);
 	  q->ai_flags = 0;
 	  q->ai_family = AF_INET;
 	  q->ai_socktype = hint->ai_socktype;
@@ -1016,7 +1016,7 @@ int getnameinfo(const struct sockaddr *sa, ksocklen_t salen,
 
 #define KRF_inet_ntop	KRF_USING_OWN_INET_NTOP
 
-static void add_dwords(char *buf, Q_UINT16 *dw, int count)
+static void add_dwords(char *buf, TQ_UINT16 *dw, int count)
 {
   int i = 1;
   sprintf(buf + strlen(buf), "%x", ntohs(dw[0]));
@@ -1027,7 +1027,7 @@ static void add_dwords(char *buf, Q_UINT16 *dw, int count)
 const char* inet_ntop(int af, const void *cp, char *buf, size_t len)
 {
   char buf2[sizeof "1234:5678:9abc:def0:1234:5678:255.255.255.255" + 1];
-  Q_UINT8 *data = (Q_UINT8*)cp;
+  TQ_UINT8 *data = (TQ_UINT8*)cp;
 
   if (af == AF_INET)
     {
@@ -1046,8 +1046,8 @@ const char* inet_ntop(int af, const void *cp, char *buf, size_t len)
 # ifdef AF_INET6
   if (af == AF_INET6)
     {
-      Q_UINT16 *p = (Q_UINT16*)data;
-      Q_UINT16 *longest = NULL, *cur = NULL;
+      TQ_UINT16 *p = (TQ_UINT16*)data;
+      TQ_UINT16 *longest = NULL, *cur = NULL;
       int longest_length = 0, cur_length;
       int i;
 
@@ -1150,7 +1150,7 @@ int inet_pton(int af, const char *cp, void *buf)
 # ifdef AF_INET6
   else if (af == AF_INET6)
     {
-      Q_UINT16 addr[8];
+      TQ_UINT16 addr[8];
       const char *p = cp;
       int n = 0, start = 8;
       bool has_v4 = strchr(p, '.') != NULL;
@@ -1200,8 +1200,8 @@ int inet_pton(int af, const char *cp, void *buf)
       // n < 8 means that we have to move n - start words 8 - n words to the right
       if (start == 8 && n != 8)
 	return 0;		// bad conversion
-      memmove(addr + start + (8 - n), addr + start, (n - start) * sizeof(Q_UINT16));
-      memset(addr + start, 0, (8 - n) * sizeof(Q_UINT16));
+      memmove(addr + start + (8 - n), addr + start, (n - start) * sizeof(TQ_UINT16));
+      memset(addr + start, 0, (8 - n) * sizeof(TQ_UINT16));
 
       // check the byte order
       // The compiler should optimise this out in big endian machines

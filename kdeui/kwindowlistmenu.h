@@ -28,6 +28,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kpopupmenu.h>
 #include <tqmap.h>
 
+#ifdef Q_MOC_RUN
+#define Q_WS_X11
+#endif // Q_MOC_RUN
+
 #ifdef Q_WS_X11 // not yet available for non-X11
 
 class KWinModule;

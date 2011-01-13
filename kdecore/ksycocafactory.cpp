@@ -38,7 +38,7 @@ KSycocaFactory::KSycocaFactory(KSycocaFactoryId factory_id)
       if (m_str) // Can be 0 in case of errors
       {
           // Read position of index tables....
-          Q_INT32 i;
+          TQ_INT32 i;
           (*m_str) >> i;
           m_sycocaDictOffset = i;
           (*m_str) >> i;
@@ -46,10 +46,10 @@ KSycocaFactory::KSycocaFactory(KSycocaFactoryId factory_id)
           (*m_str) >> i;
           m_endEntryOffset = i;
 
-          int saveOffset = m_str->device()->at();
+          int saveOffset = m_str->tqdevice()->at();
           // Init index tables
           m_sycocaDict = new KSycocaDict(m_str, m_sycocaDictOffset);   
-          saveOffset = m_str->device()->at(saveOffset);
+          saveOffset = m_str->tqdevice()->at(saveOffset);
       }
    }
    else
@@ -78,10 +78,10 @@ void
 KSycocaFactory::saveHeader(TQDataStream &str)
 {
    // Write header 
-   str.device()->at(mOffset);
-   str << (Q_INT32) m_sycocaDictOffset;
-   str << (Q_INT32) m_beginEntryOffset;
-   str << (Q_INT32) m_endEntryOffset;
+   str.tqdevice()->at(mOffset);
+   str << (TQ_INT32) m_sycocaDictOffset;
+   str << (TQ_INT32) m_beginEntryOffset;
+   str << (TQ_INT32) m_endEntryOffset;
 }
 
 void
@@ -91,13 +91,13 @@ KSycocaFactory::save(TQDataStream &str)
                              // building database
    if (!m_sycocaDict) return; // Error!
 
-   mOffset = str.device()->at(); // store position in member variable
+   mOffset = str.tqdevice()->at(); // store position in member variable
    m_sycocaDictOffset = 0;
 
    // Write header (pass #1)
    saveHeader(str);
 
-   m_beginEntryOffset = str.device()->at();
+   m_beginEntryOffset = str.tqdevice()->at();
 
    // Write all entries.
    int entryCount = 0;
@@ -110,30 +110,30 @@ KSycocaFactory::save(TQDataStream &str)
       entryCount++;
    }
 
-   m_endEntryOffset = str.device()->at();
+   m_endEntryOffset = str.tqdevice()->at();
 
    // Write indices...
    // Linear index
-   str << (Q_INT32) entryCount;
+   str << (TQ_INT32) entryCount;
    for(TQDictIterator<KSycocaEntry::Ptr> it ( *m_entryDict ); 
        it.current(); 
        ++it)
    {
       KSycocaEntry *entry = (*it.current());
-      str << (Q_INT32) entry->offset(); 
+      str << (TQ_INT32) entry->offset(); 
    }
 
    // Dictionary index
-   m_sycocaDictOffset = str.device()->at();      
+   m_sycocaDictOffset = str.tqdevice()->at();      
    m_sycocaDict->save(str);
 
-   int endOfFactoryData = str.device()->at();
+   int endOfFactoryData = str.tqdevice()->at();
 
    // Update header (pass #2)
    saveHeader(str);
 
    // Seek to end.
-   str.device()->at(endOfFactoryData);
+   str.tqdevice()->at(endOfFactoryData);
 }
 
 void 
@@ -169,8 +169,8 @@ KSycocaEntry::List KSycocaFactory::allEntries()
 
    // Assume we're NOT building a database
 
-   m_str->device()->at(m_endEntryOffset);
-   Q_INT32 entryCount;
+   m_str->tqdevice()->at(m_endEntryOffset);
+   TQ_INT32 entryCount;
    (*m_str) >> entryCount;
    
    if (entryCount > 8192)
@@ -179,7 +179,7 @@ KSycocaEntry::List KSycocaFactory::allEntries()
       return list;
    }
 
-   Q_INT32 *offsetList = new Q_INT32[entryCount];
+   TQ_INT32 *offsetList = new TQ_INT32[entryCount];
    for(int i = 0; i < entryCount; i++)
    {
       (*m_str) >> offsetList[i];

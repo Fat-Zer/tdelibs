@@ -50,7 +50,7 @@ KJavaAppletWidget::KJavaAppletWidget( TQWidget* parent, const char* name )
 
     d->tmplabel = new TQLabel( this );
     d->tmplabel->setText( KJavaAppletServer::getAppletLabel() );
-    d->tmplabel->setAlignment( Qt::AlignCenter | Qt::WordBreak );
+    d->tmplabel->tqsetAlignment( Qt::AlignCenter | Qt::WordBreak );
     d->tmplabel->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken );
     d->tmplabel->show();
 
@@ -98,10 +98,10 @@ void KJavaAppletWidget::setWindow( WId w )
     }
 }
 
-TQSize KJavaAppletWidget::sizeHint() const
+TQSize KJavaAppletWidget::tqsizeHint() const
 {
-    kdDebug(6100) << "KJavaAppletWidget::sizeHint()" << endl;
-    TQSize rval = QXEmbed::sizeHint();
+    kdDebug(6100) << "KJavaAppletWidget::tqsizeHint()" << endl;
+    TQSize rval = QXEmbed::tqsizeHint();
 
     if( rval.width() == 0 || rval.height() == 0 )
     {
@@ -132,7 +132,7 @@ void KJavaAppletWidget::showEvent (TQShowEvent * e) {
     if (!applet()->isCreated() && !applet()->appletClass().isEmpty()) {
         // delayed showApplet
         if (applet()->size().width() <= 0)
-            applet()->setSize (sizeHint());
+            applet()->setSize (tqsizeHint());
         showApplet();
     }
 }

@@ -102,8 +102,8 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
     hBox->setSpacing( KDialog::spacingHint() );
     TQLabel* icon = new TQLabel( hBox );
     icon->setPixmap( TQMessageBox::standardIcon(TQMessageBox::Warning) );
-    icon->setAlignment( Qt::AlignCenter );
-    icon->setFixedSize( 2*icon->sizeHint() );
+    icon->tqsetAlignment( Qt::AlignCenter );
+    icon->setFixedSize( 2*icon->tqsizeHint() );
 
     int count = cookieList.count();
 
@@ -111,11 +111,11 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
     TQString txt = i18n("You received a cookie from",
                        "You received %n cookies from", count);
     TQLabel* lbl = new TQLabel( txt, vBox );
-    lbl->setAlignment( Qt::AlignCenter );
+    lbl->tqsetAlignment( Qt::AlignCenter );
     KHttpCookiePtr cookie = cookieList.first();
 
     TQString host (cookie->host());
-    int pos = host.find(':');
+    int pos = host.tqfind(':');
     if ( pos > 0 )
     {
       TQString portNum = host.left(pos);
@@ -128,9 +128,9 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
     if (cookie->isCrossDomain())
        txt += i18n(" <b>[Cross Domain!]</b>");
     lbl = new TQLabel( txt, vBox );
-    lbl->setAlignment( Qt::AlignCenter );
+    lbl->tqsetAlignment( Qt::AlignCenter );
     lbl = new TQLabel( i18n("Do you want to accept or reject?"), vBox );
-    lbl->setAlignment( Qt::AlignCenter );
+    lbl->tqsetAlignment( Qt::AlignCenter );
     vlayout->addWidget( hBox, 0, Qt::AlignLeft );
 
     // Cookie Details dialog...
@@ -203,7 +203,7 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
 
 
     vlayout->addWidget( bbox );
-    setFixedSize( sizeHint() );
+    setFixedSize( tqsizeHint() );
 }
 
 KCookieWin::~KCookieWin()
@@ -313,7 +313,7 @@ KCookieDetail::KCookieDetail( KHttpCookieList cookieList, int cookieCount,
     if ( cookieCount > 1 )
     {
         TQPushButton* btnNext = new TQPushButton( i18n("Next cookie","&Next >>"), this );
-        btnNext->setFixedSize( btnNext->sizeHint() );
+        btnNext->setFixedSize( btnNext->tqsizeHint() );
         grid->addMultiCellWidget( btnNext, 8, 8, 0, 1 );
         connect( btnNext, TQT_SIGNAL(clicked()), TQT_SLOT(slotNextCookie()) );
 #ifndef QT_NO_TOOLTIP

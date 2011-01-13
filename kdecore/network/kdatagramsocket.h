@@ -180,6 +180,7 @@ class KDatagramSocketPrivate;
 class KDECORE_EXPORT KDatagramSocket: public KClientSocketBase
 {
   Q_OBJECT
+  TQ_OBJECT
 
 public:
   /**
@@ -222,7 +223,7 @@ public:
    *
    * Connecting means only to designate the given address as the default
    * destination address for datagrams sent without destination addresses
-   * ( writeBlock(const char *, Q_ULONG) ).
+   * ( writeBlock(const char *, TQ_ULONG) ).
    *
    * @note Calling connect will not cause the socket to be bound. You have
    *       to call @ref bind explicitly.
@@ -240,7 +241,7 @@ public:
   /**
    * Writes data to the socket. Reimplemented from KClientSocketBase.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len, const KSocketAddress& to);
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
 
   /**
    * Receives one datagram from the stream. The reading process is guaranteed
@@ -260,7 +261,7 @@ public:
    *
    * @returns the number of bytes written or -1 in case of error.
    */
-  virtual Q_LONG send(const KDatagramPacket& packet);
+  virtual TQ_LONG send(const KDatagramPacket& packet);
 
 private slots:
   void lookupFinishedLocal();

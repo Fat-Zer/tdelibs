@@ -85,7 +85,7 @@ int NameSortedInfoList::compareItems( TQPtrCollection::Item s1, TQPtrCollection:
 KWindowListMenu::KWindowListMenu(TQWidget *parent, const char *name)
   : KPopupMenu(parent, name)
 {
-    kwin_module = new KWinModule(this);
+    kwin_module = new KWinModule(TQT_TQOBJECT(this));
 
     connect(this, TQT_SIGNAL(activated(int)), TQT_SLOT(slotExec(int)));
 }
@@ -186,7 +186,7 @@ void KWindowListMenu::init()
                 }
 
                 // Avoid creating unwanted accelerators.
-                itemText.replace('&', TQString::fromLatin1("&&"));
+                itemText.replace('&', TQString::tqfromLatin1("&&"));
                 insertItem( pm, itemText, i);
                 map.insert(i, info->win());
                 if (info->win() == active_window)
@@ -242,12 +242,12 @@ void KWindowListMenu::selectActiveWindow()
 
 void KWindowListMenu::slotUnclutterWindows()
 {
-    kapp->dcopClient()->send(kwinName(), "KWinInterface", "unclutterDesktop()", "");
+    kapp->dcopClient()->send(kwinName(), "KWinInterface", "unclutterDesktop()", TQString(""));
 }
 
 void KWindowListMenu::slotCascadeWindows()
 {
-    kapp->dcopClient()->send(kwinName(), "KWinInterface", "cascadeDesktop()", "");
+    kapp->dcopClient()->send(kwinName(), "KWinInterface", "cascadeDesktop()", TQString(""));
 }
 
 void KWindowListMenu::virtual_hook( int id, void* data )

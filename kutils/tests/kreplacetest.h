@@ -25,7 +25,7 @@
 
 class KReplace;
 
-class KReplaceTest : public QObject
+class KReplaceTest : public TQObject
 {
     Q_OBJECT
 public:

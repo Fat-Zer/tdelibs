@@ -20,6 +20,11 @@
 #include <tqpainter.h>
 #include <tqtimer.h>
 #include <tqfontmetrics.h>
+
+#ifdef USE_QT4
+#undef None
+#endif // USE_QT4
+
 #include <tqstyle.h>
 
 #include "kpopupmenu.h"
@@ -85,14 +90,14 @@ void KPopupTitle::paintEvent(TQPaintEvent *)
 {
     TQRect r(rect());
     TQPainter p(this);
-    kapp->style().drawPrimitive(TQStyle::PE_HeaderSection, &p, r, palette().active());
+    kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSection, &p, r, tqpalette().active());
 
     if (!miniicon.isNull())
         p.drawPixmap(4, (r.height()-miniicon.height())/2, miniicon);
 
     if (!titleStr.isNull())
     {
-        p.setPen(palette().active().text());
+        p.setPen(tqpalette().active().text());
         TQFont f = p.font();
         f.setBold(true);
         p.setFont(f);
@@ -110,9 +115,9 @@ void KPopupTitle::paintEvent(TQPaintEvent *)
     }
 }
 
-TQSize KPopupTitle::sizeHint() const
+TQSize KPopupTitle::tqsizeHint() const
 {
-    return minimumSize();
+    return tqminimumSize();
 }
 
 class KPopupMenu::KPopupMenuPrivate
@@ -145,7 +150,7 @@ public:
     TQString originalText;
 
     int lastHitIndex;
-    Qt::ButtonState state;
+    TQt::ButtonState state;
 
     // support for RMB menus on menus
     TQPopupMenu* m_ctxMenu;
@@ -198,7 +203,7 @@ int KPopupMenu::insertTitle(const TQPixmap &icon, const TQString &text, int id,
 
 void KPopupMenu::changeTitle(int id, const TQString &text)
 {
-    TQMenuItem *item = findItem(id);
+    TQMenuItem *item = tqfindItem(id);
     if(item){
         if(item->widget())
             ((KPopupTitle *)item->widget())->setTitle(text);
@@ -215,7 +220,7 @@ void KPopupMenu::changeTitle(int id, const TQString &text)
 
 void KPopupMenu::changeTitle(int id, const TQPixmap &icon, const TQString &text)
 {
-    TQMenuItem *item = findItem(id);
+    TQMenuItem *item = tqfindItem(id);
     if(item){
         if(item->widget())
             ((KPopupTitle *)item->widget())->setTitle(text, &icon);
@@ -234,7 +239,7 @@ TQString KPopupMenu::title(int id) const
 {
     if(id == -1) // obsolete
         return d->m_lastTitle;
-    TQMenuItem *item = findItem(id);
+    TQMenuItem *item = tqfindItem(id);
     if(item){
         if(item->widget())
             return ((KPopupTitle *)item->widget())->title();
@@ -248,7 +253,7 @@ TQString KPopupMenu::title(int id) const
 
 TQPixmap KPopupMenu::titlePixmap(int id) const
 {
-    TQMenuItem *item = findItem(id);
+    TQMenuItem *item = tqfindItem(id);
     if(item){
         if(item->widget())
             return ((KPopupTitle *)item->widget())->icon();
@@ -277,7 +282,7 @@ void KPopupMenu::activateItemAt(int index)
     TQPopupMenu::activateItemAt(index);
 }
 
-Qt::ButtonState KPopupMenu::state() const
+TQt::ButtonState KPopupMenu::state() const
 {
     return d->state;
 }
@@ -348,7 +353,7 @@ void KPopupMenu::keyPressEvent(TQKeyEvent* e)
             // therefore the lastHitIndex is valid
             i = d->lastHitIndex;
         }
-    } else if (key == Key_Backspace && parentMenu) {
+    } else if (key == Key_Backspace && tqparentMenu) {
         // backspace with no chars in the buffer... go back a menu.
         hide();
         resetKeyboardVars();
@@ -377,13 +382,13 @@ void KPopupMenu::keyPressEvent(TQKeyEvent* e)
 
         // if there is an accelerator present, remove it
         if ((int)accel(j) != 0)
-            thisText = thisText.replace("&", TQString::null);
+            thisText = thisText.tqreplace("&", TQString());
 
         // chop text to the search length
         thisText = thisText.left(seqLen);
 
         // do the search
-        if (!thisText.find(d->keySeq, 0, false)) {
+        if (!thisText.tqfind(d->keySeq, 0, false)) {
 
             if (firstpass) {
                 // match
@@ -424,8 +429,8 @@ void KPopupMenu::keyPressEvent(TQKeyEvent* e)
             activateItemAt(d->lastHitIndex);
             resetKeyboardVars();
 
-        } else if (findItem(idAt(d->lastHitIndex)) &&
-                 findItem(idAt(d->lastHitIndex))->popup()) {
+        } else if (tqfindItem(idAt(d->lastHitIndex)) &&
+                 tqfindItem(idAt(d->lastHitIndex))->popup()) {
             // only activate sub-menus
             activateItemAt(d->lastHitIndex);
             resetKeyboardVars();
@@ -502,7 +507,7 @@ void KPopupMenu::mousePressEvent(TQMouseEvent* e)
 void KPopupMenu::mouseReleaseEvent(TQMouseEvent* e)
 {
     // Save the button, and the modifiers from state()
-    d->state = Qt::ButtonState(e->button() | (e->state() & KeyButtonMask));
+    d->state = TQt::ButtonState(e->button() | (e->state() & KeyButtonMask));
     
     if ( !d->m_ctxMenu || !d->m_ctxMenu->isVisible() )
 	TQPopupMenu::mouseReleaseEvent(e);
@@ -552,7 +557,7 @@ void KPopupMenu::itemHighlighted(int /* whichItem */)
 
 void KPopupMenu::showCtxMenu(TQPoint pos)
 {
-    TQMenuItem* item = findItem(KPopupMenuPrivate::s_highlightedItem);
+    TQMenuItem* item = tqfindItem(KPopupMenuPrivate::s_highlightedItem);
     if (item)
     {
         TQPopupMenu* subMenu = item->popup();
@@ -572,7 +577,7 @@ void KPopupMenu::showCtxMenu(TQPoint pos)
 
     emit aboutToShowContextMenu(this, KPopupMenuPrivate::s_highlightedItem, d->m_ctxMenu);
 
-    TQPopupMenu* subMenu = findItem(KPopupMenuPrivate::s_highlightedItem)->popup();
+    TQPopupMenu* subMenu = tqfindItem(KPopupMenuPrivate::s_highlightedItem)->popup();
     if (subMenu)
     {
         connect(subMenu, TQT_SIGNAL(aboutToShow()), TQT_SLOT(ctxMenuHideShowingMenu()));
@@ -596,7 +601,7 @@ void KPopupMenu::showCtxMenu(TQPoint pos)
  */
 void KPopupMenu::ctxMenuHideShowingMenu()
 {
-    TQMenuItem* item = findItem(KPopupMenuPrivate::s_highlightedItem);
+    TQMenuItem* item = tqfindItem(KPopupMenuPrivate::s_highlightedItem);
     if (item)
     {
         TQPopupMenu* subMenu = item->popup();
@@ -611,7 +616,7 @@ void KPopupMenu::ctxMenuHiding()
 {
     if (KPopupMenuPrivate::s_highlightedItem)
     {
-        TQPopupMenu* subMenu = findItem(KPopupMenuPrivate::s_highlightedItem)->popup();
+        TQPopupMenu* subMenu = tqfindItem(KPopupMenuPrivate::s_highlightedItem)->popup();
         if (subMenu)
         {
             disconnect(subMenu, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(ctxMenuHideShowingMenu()));

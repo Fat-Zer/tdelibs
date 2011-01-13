@@ -25,11 +25,11 @@
 
 #include <kdelibs_export.h>
 
-class KDEPRINT_EXPORT SidePixmap : public QFrame
+class KDEPRINT_EXPORT SidePixmap : public TQFrame
 {
 public:
 	SidePixmap(TQWidget *parent = 0, const char *name = 0);
-	TQSize sizeHint() const;
+	TQSize tqsizeHint() const;
 	bool isValid();
 
 protected:

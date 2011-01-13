@@ -33,7 +33,7 @@ public:
     KIconTheme *theme;
 };
 
-class KIconLoaderPrivate : public QObject
+class KIconLoaderPrivate : public TQObject
 {
     Q_OBJECT
 public:

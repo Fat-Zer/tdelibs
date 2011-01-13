@@ -37,7 +37,7 @@ class TQStringList;
 /**
  * @internal
  */
-class KAppTreeListItem : public QListViewItem
+class KAppTreeListItem : public TQListViewItem
 {
     bool parsed;
     bool directory;

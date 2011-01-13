@@ -39,7 +39,7 @@ class KateSuperRangeList;
 
 class KActionCollection;
 
-class KateSearch : public QObject
+class KateSearch : public TQObject
 {
   Q_OBJECT
 

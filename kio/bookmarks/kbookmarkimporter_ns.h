@@ -34,7 +34,7 @@
  * A class for importing NS bookmarks
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KNSBookmarkImporter : public QObject
+class KIO_EXPORT_DEPRECATED KNSBookmarkImporter : public TQObject
 {
     Q_OBJECT
 public:

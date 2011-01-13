@@ -75,7 +75,7 @@
 
 class KJavaAppletWidgetPrivate;
 
-class KJavaAppletWidget : public QXEmbed
+class KJavaAppletWidget : public TQXEmbed
 {
     Q_OBJECT
 public:
@@ -96,7 +96,7 @@ public:
      */
     void showApplet();
 
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
     void resize( int, int );
 
 protected slots:

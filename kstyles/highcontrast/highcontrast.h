@@ -74,7 +74,7 @@ class HighContrastStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void drawControl( ControlElement element,
+		void tqdrawControl( ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -82,13 +82,13 @@ class HighContrastStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void drawControlMask( ControlElement element,
+		void tqdrawControlMask( ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void drawComplexControl( ComplexControl control,
+		void tqdrawComplexControl( ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -98,7 +98,7 @@ class HighContrastStyle : public KStyle
 					SCFlags active = SC_None,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void drawComplexControlMask( ComplexControl control,
+		void tqdrawComplexControlMask( ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -120,7 +120,7 @@ class HighContrastStyle : public KStyle
 					int len = -1,
 					const TQColor *penColor = 0 ) const;
 
-		int pixelMetric( PixelMetric m,
+		int tqpixelMetric( PixelMetric m,
 					const TQWidget *widget = 0 ) const;
 
 		int kPixelMetric( KStylePixelMetric m,

@@ -62,7 +62,7 @@ void KDialog::keyPressEvent(TQKeyEvent *e)
       case Key_Enter:
       case Key_Return:
       {
-        if(testWFlags(WType_Dialog | WShowModal))
+        if(testWFlags((WFlags)(WType_Dialog | WShowModal)))
 	{
           TQDialog::keyPressEvent(e);
 	}
@@ -134,13 +134,13 @@ void KDialog::resizeLayout( TQWidget *w, int margin, int spacing )
 {
   if( w->layout() )
   {
-    resizeLayout( w->layout(), margin, spacing );
+    resizeLayout( TQT_TQLAYOUTITEM(w->layout()), margin, spacing );
   }
 
-  if( w->children() )
+  if( !w->childrenListObject().isEmpty() )
   {
-    const TQObjectList * const l = w->children();
-    TQObjectListIterator itr(*l);
+    const TQObjectList l = w->childrenListObject();
+    TQObjectListIterator itr(l);
     TQObject *o;
     while ((o = itr.current()) != 0) {
       if( o->isWidgetType() )

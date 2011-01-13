@@ -121,7 +121,7 @@ static KPerDomainSettings &setup_per_domain_policy(
     kdWarning() << "setup_per_domain_policy: domain is empty" << endl;
   }
   const TQString ldomain = domain.lower();
-  PolicyMap::iterator it = d->domainPolicy.find(ldomain);
+  PolicyMap::iterator it = d->domainPolicy.tqfind(ldomain);
   if (it == d->domainPolicy.end()) {
     // simply copy global domain settings (they should have been initialized
     // by this time)
@@ -138,9 +138,9 @@ KHTMLSettings::KJavaScriptAdvice KHTMLSettings::strToAdvice(const TQString& _str
   if (!_str)
         ret = KJavaScriptDunno;
 
-  if (_str.lower() == TQString::fromLatin1("accept"))
+  if (_str.lower() == TQString::tqfromLatin1("accept"))
         ret = KJavaScriptAccept;
-  else if (_str.lower() == TQString::fromLatin1("reject"))
+  else if (_str.lower() == TQString::tqfromLatin1("reject"))
         ret = KJavaScriptReject;
 
   return ret;
@@ -161,7 +161,7 @@ void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domai
                                       KJavaScriptAdvice &javaAdvice, KJavaScriptAdvice& javaScriptAdvice)
 {
     TQString tmp(configStr);
-    int splitIndex = tmp.find(':');
+    int splitIndex = tmp.tqfind(':');
     if ( splitIndex == -1)
     {
         domain = configStr.lower();
@@ -172,7 +172,7 @@ void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domai
     {
         domain = tmp.left(splitIndex).lower();
         TQString adviceString = tmp.mid( splitIndex+1, tmp.length() );
-        int splitIndex2 = adviceString.find( ':' );
+        int splitIndex2 = adviceString.tqfind( ':' );
         if( splitIndex2 == -1 ) {
             // Java advice only
             javaAdvice = strToAdvice( adviceString );
@@ -189,63 +189,63 @@ void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domai
 void KHTMLSettings::readDomainSettings(KConfig *config, bool reset,
 	bool global, KPerDomainSettings &pd_settings) {
   TQString jsPrefix = global ? TQString::null
-  				: TQString::fromLatin1("javascript.");
+  				: TQString::tqfromLatin1("javascript.");
   TQString javaPrefix = global ? TQString::null
-  				: TQString::fromLatin1("java.");
+  				: TQString::tqfromLatin1("java.");
   TQString pluginsPrefix = global ? TQString::null
-  				: TQString::fromLatin1("plugins.");
+  				: TQString::tqfromLatin1("plugins.");
 
   // The setting for Java
-  TQString key = javaPrefix + TQString::fromLatin1("EnableJava");
+  TQString key = javaPrefix + TQString::tqfromLatin1("EnableJava");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_bEnableJava = config->readBoolEntry( key, false );
   else if ( !global )
     pd_settings.m_bEnableJava = d->global.m_bEnableJava;
 
   // The setting for Plugins
-  key = pluginsPrefix + TQString::fromLatin1("EnablePlugins");
+  key = pluginsPrefix + TQString::tqfromLatin1("EnablePlugins");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_bEnablePlugins = config->readBoolEntry( key, true );
   else if ( !global )
     pd_settings.m_bEnablePlugins = d->global.m_bEnablePlugins;
 
   // The setting for JavaScript
-  key = jsPrefix + TQString::fromLatin1("EnableJavaScript");
+  key = jsPrefix + TQString::tqfromLatin1("EnableJavaScript");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_bEnableJavaScript = config->readBoolEntry( key, true );
   else if ( !global )
     pd_settings.m_bEnableJavaScript = d->global.m_bEnableJavaScript;
 
   // window property policies
-  key = jsPrefix + TQString::fromLatin1("WindowOpenPolicy");
+  key = jsPrefix + TQString::tqfromLatin1("WindowOpenPolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowOpenPolicy = (KJSWindowOpenPolicy)
     		config->readUnsignedNumEntry( key, KJSWindowOpenSmart );
   else if ( !global )
     pd_settings.m_windowOpenPolicy = d->global.m_windowOpenPolicy;
 
-  key = jsPrefix + TQString::fromLatin1("WindowMovePolicy");
+  key = jsPrefix + TQString::tqfromLatin1("WindowMovePolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowMovePolicy = (KJSWindowMovePolicy)
     		config->readUnsignedNumEntry( key, KJSWindowMoveAllow );
   else if ( !global )
     pd_settings.m_windowMovePolicy = d->global.m_windowMovePolicy;
 
-  key = jsPrefix + TQString::fromLatin1("WindowResizePolicy");
+  key = jsPrefix + TQString::tqfromLatin1("WindowResizePolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowResizePolicy = (KJSWindowResizePolicy)
     		config->readUnsignedNumEntry( key, KJSWindowResizeAllow );
   else if ( !global )
     pd_settings.m_windowResizePolicy = d->global.m_windowResizePolicy;
 
-  key = jsPrefix + TQString::fromLatin1("WindowStatusPolicy");
+  key = jsPrefix + TQString::tqfromLatin1("WindowStatusPolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowStatusPolicy = (KJSWindowStatusPolicy)
     		config->readUnsignedNumEntry( key, KJSWindowStatusAllow );
   else if ( !global )
     pd_settings.m_windowStatusPolicy = d->global.m_windowStatusPolicy;
 
-  key = jsPrefix + TQString::fromLatin1("WindowFocusPolicy");
+  key = jsPrefix + TQString::tqfromLatin1("WindowFocusPolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowFocusPolicy = (KJSWindowFocusPolicy)
     		config->readUnsignedNumEntry( key, KJSWindowFocusAllow );
@@ -508,7 +508,7 @@ void KHTMLSettings::init( KConfig * config, bool reset )
 	const TQStringList::ConstIterator itEnd = dl.end();
 	for (; it != itEnd; ++it) {
 	  const TQString domain = (*it).lower();
-	  TQMap<TQString,int>::Iterator pos = domainList.find(domain);
+	  TQMap<TQString,int>::Iterator pos = domainList.tqfind(domain);
 	  if (pos == notfound) domainList.insert(domain,0);
 	}/*next it*/
       }
@@ -611,7 +611,7 @@ void KHTMLSettings::init( KConfig * config, bool reset )
         {
           TQCString javaPolicy = adviceToStr( it.data() );
           TQCString javaScriptPolicy = adviceToStr( KJavaScriptDunno );
-          domainConfig.append(TQString::fromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
+          domainConfig.append(TQString::tqfromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
         }
         config->writeEntry( "JavaDomainSettings", domainConfig );
       }
@@ -624,7 +624,7 @@ void KHTMLSettings::init( KConfig * config, bool reset )
         {
           TQCString javaPolicy = adviceToStr( KJavaScriptDunno );
           TQCString javaScriptPolicy = adviceToStr( it.data() );
-          domainConfig.append(TQString::fromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
+          domainConfig.append(TQString::tqfromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
         }
         config->writeEntry( "ECMADomainSettings", domainConfig );
       }
@@ -656,7 +656,7 @@ static const KPerDomainSettings &lookup_hostname_policy(
   const PolicyMap::const_iterator notfound = d->domainPolicy.end();
 
   // First check whether there is a perfect match.
-  PolicyMap::const_iterator it = d->domainPolicy.find(hostname);
+  PolicyMap::const_iterator it = d->domainPolicy.tqfind(hostname);
   if( it != notfound ) {
 #ifdef DEBUG_SETTINGS
     kdDebug() << "perfect match" << endl;
@@ -670,9 +670,9 @@ static const KPerDomainSettings &lookup_hostname_policy(
   // there's no dots left.
   TQString host_part = hostname;
   int dot_idx = -1;
-  while( (dot_idx = host_part.find(TQChar('.'))) >= 0 ) {
+  while( (dot_idx = host_part.tqfind(TQChar('.'))) >= 0 ) {
     host_part.remove(0,dot_idx);
-    it = d->domainPolicy.find(host_part);
+    it = d->domainPolicy.tqfind(host_part);
     Q_ASSERT(notfound == d->domainPolicy.end());
     if( it != notfound ) {
 #ifdef DEBUG_SETTINGS

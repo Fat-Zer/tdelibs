@@ -116,7 +116,7 @@ class KateBufBlock
     void removeLine(uint i);
 
     /**
-     * mark this block as dirty, will invalidate the swap data
+     * mark this block as dirty, will tqinvalidate the swap data
      * insert/removeLine will mark the block dirty itself
      */
     void markDirty ();
@@ -338,7 +338,7 @@ class KateBufBlockList
  * @author Waldo Bastian <bastian@kde.org>
  * @author Christoph Cullmann <cullmann@kde.org>
  */
-class KateBuffer : public QObject
+class KateBuffer : public TQObject
 {
   Q_OBJECT
 
@@ -591,7 +591,7 @@ class KateBuffer : public QObject
     /**
      * Invalidate highlighting of whole buffer.
      */
-    void invalidateHighlighting();
+    void tqinvalidateHighlighting();
 
     KateCodeFoldingTree *foldingTree () { return &m_regionTree; };
 
@@ -611,7 +611,7 @@ class KateBuffer : public QObject
      * @returns true when the highlighting in the next block needs to be updated,
      * false otherwise.
      */
-    bool doHighlight (KateBufBlock *buf, uint from, uint to, bool invalidate);
+    bool doHighlight (KateBufBlock *buf, uint from, uint to, bool tqinvalidate);
 
   signals:
     /**

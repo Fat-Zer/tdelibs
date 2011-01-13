@@ -87,12 +87,12 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
     {
         lbl = new TQLabel( main );
         lbl->setPixmap( pix );
-        lbl->setAlignment( Qt::AlignLeft|Qt::AlignVCenter );
-        lbl->setFixedSize( lbl->sizeHint() );
+        lbl->tqsetAlignment( Qt::AlignLeft|Qt::AlignVCenter );
+        lbl->setFixedSize( lbl->tqsizeHint() );
         d->layout->addWidget( lbl, 0, 0, Qt::AlignLeft );
     }
     d->prompt = new TQLabel( main );
-    d->prompt->setAlignment( Qt::AlignLeft|Qt::AlignVCenter|Qt::WordBreak );
+    d->prompt->tqsetAlignment( Qt::AlignLeft|Qt::AlignVCenter|TQt::WordBreak );
     d->layout->addWidget( d->prompt, 0, 2, Qt::AlignLeft );
     if ( prompt.isEmpty() )
         setPrompt( i18n( "You need to supply a username and a password" ) );
@@ -106,12 +106,12 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
 
     // Row 4: Username field
     d->userNameLabel = new TQLabel( i18n("&Username:"), main );
-    d->userNameLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    d->userNameLabel->setFixedSize( d->userNameLabel->sizeHint() );
+    d->userNameLabel->tqsetAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+    d->userNameLabel->setFixedSize( d->userNameLabel->tqsizeHint() );
     d->userNameHBox = new TQHBox( main );
 
     d->userEdit = new KLineEdit( d->userNameHBox );
-    TQSize s = d->userEdit->sizeHint();
+    TQSize s = d->userEdit->tqsizeHint();
     d->userEdit->setFixedHeight( s.height() );
     d->userEdit->setMinimumWidth( s.width() );
     d->userNameLabel->setBuddy( d->userEdit );
@@ -123,15 +123,15 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
 
     // Row 6: Password field
     lbl = new TQLabel( i18n("&Password:"), main );
-    lbl->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    lbl->setFixedSize( lbl->sizeHint() );
+    lbl->tqsetAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+    lbl->setFixedSize( lbl->tqsizeHint() );
     TQHBox* hbox = new TQHBox( main );
     d->passEdit = new KLineEdit( hbox );
     if ( cfg->readEntry("EchoMode", "OneStar") == "NoEcho" )
         d->passEdit->setEchoMode( TQLineEdit::NoEcho );
     else
         d->passEdit->setEchoMode( TQLineEdit::Password );
-    s = d->passEdit->sizeHint();
+    s = d->passEdit->tqsizeHint();
     d->passEdit->setFixedHeight( s.height() );
     d->passEdit->setMinimumWidth( s.width() );
     lbl->setBuddy( d->passEdit );
@@ -145,7 +145,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
         // Row 8: Keep Password
         hbox = new TQHBox( main );
         d->keepCheckBox = new TQCheckBox( i18n("&Keep password"), hbox );
-        d->keepCheckBox->setFixedSize( d->keepCheckBox->sizeHint() );
+        d->keepCheckBox->setFixedSize( d->keepCheckBox->tqsizeHint() );
         d->keep = cfg->readBoolEntry("Keep", false );
         d->keepCheckBox->setChecked( d->keep );
         connect(d->keepCheckBox, TQT_SIGNAL(toggled( bool )), TQT_SLOT(slotKeep( bool )));
@@ -165,7 +165,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
         d->userEdit->setFocus();
 
     d->userEditCombo = 0;
-//    setFixedSize( sizeHint() );
+//    setFixedSize( tqsizeHint() );
 }
 
 TQString PasswordDialog::username() const
@@ -198,7 +198,7 @@ static void calculateLabelSize(TQLabel *label)
    // Calculate a proper size for the text.
    {
        TQSimpleRichText rt(qt_text, label->font());
-       TQRect d = KGlobalSettings::desktopGeometry(label->topLevelWidget());
+       TQRect d = KGlobalSettings::desktopGeometry(label->tqtopLevelWidget());
 
        pref_width = d.width() / 4;
        rt.setWidth(pref_width-10);
@@ -239,11 +239,11 @@ void PasswordDialog::addCommentLine( const TQString& label,
     TQWidget *main = mainWidget();
 
     TQLabel* lbl = new TQLabel( label, main);
-    lbl->setAlignment( Qt::AlignVCenter|Qt::AlignRight );
-    lbl->setFixedSize( lbl->sizeHint() );
+    lbl->tqsetAlignment( Qt::AlignVCenter|Qt::AlignRight );
+    lbl->setFixedSize( lbl->tqsizeHint() );
     d->layout->addWidget( lbl, d->nRow+2, 0, Qt::AlignLeft );
     lbl = new TQLabel( comment, main);
-    lbl->setAlignment( Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak );
+    lbl->tqsetAlignment( Qt::AlignVCenter|Qt::AlignLeft|TQt::WordBreak );
     calculateLabelSize(lbl);
     d->layout->addWidget( lbl, d->nRow+2, 2, Qt::AlignLeft );
     d->layout->addRowSpacing( 3, 10 ); // Add a spacer
@@ -304,7 +304,7 @@ void PasswordDialog::setKnownLogins( const TQMap<TQString, TQString>& knownLogin
         delete d->userEdit;
         d->userEditCombo = new KComboBox( true, d->userNameHBox );
         d->userEdit = d->userEditCombo->lineEdit();
-        TQSize s = d->userEditCombo->sizeHint();
+        TQSize s = d->userEditCombo->tqsizeHint();
         d->userEditCombo->setFixedHeight( s.height() );
         d->userEditCombo->setMinimumWidth( s.width() );
         d->userNameLabel->setBuddy( d->userEditCombo );
@@ -321,7 +321,7 @@ void PasswordDialog::setKnownLogins( const TQMap<TQString, TQString>& knownLogin
 
 void PasswordDialog::slotActivated( const TQString& userName )
 {
-    TQMap<TQString, TQString>::ConstIterator it = d->knownLogins.find( userName );
+    TQMap<TQString, TQString>::ConstIterator it = d->knownLogins.tqfind( userName );
     if ( it != d->knownLogins.end() )
         setPassword( it.data() );
 }

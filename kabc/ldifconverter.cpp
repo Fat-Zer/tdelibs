@@ -175,7 +175,7 @@ bool LDIFConverter::LDIFToAddressee( const TQString &str, AddresseeList &addrLis
   LDIF ldif;
   LDIF::ParseVal ret;
   const char *latinstr = str.latin1();
-  int latinstrlen = qstrlen( latinstr );
+  int latinstrlen = tqstrlen( latinstr );
   TQByteArray data;
   Addressee a;
   Address homeAddr, workAddr;
@@ -183,7 +183,7 @@ bool LDIFConverter::LDIFToAddressee( const TQString &str, AddresseeList &addrLis
   data.setRawData( latinstr, latinstrlen );
   ldif.setLDIF( data );
   if (!dt.isValid())
-    dt = TQDateTime::currentDateTime();
+    dt = TQDateTime::tqcurrentDateTime();
   a.setRevision(dt);
   homeAddr = Address( Address::Home );
   workAddr = Address( Address::Work );
@@ -235,7 +235,7 @@ bool LDIFConverter::evaluatePair( Addressee &a, Address &homeAddr,
                                   Address &workAddr,
                                   TQString &fieldname, TQString &value )
 {
-  if ( fieldname == TQString::fromLatin1( "dn" ) ) // ignore & return false!
+  if ( fieldname == TQString::tqfromLatin1( "dn" ) ) // ignore & return false!
     return false;
 
   if ( fieldname.startsWith("#") ) {
@@ -249,56 +249,56 @@ bool LDIFConverter::evaluatePair( Addressee &a, Address &homeAddr,
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "givenname" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "givenname" ) ) {
     a.setGivenName( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "xmozillanickname") ||
-       fieldname == TQString::fromLatin1( "nickname") ) {
+  if ( fieldname == TQString::tqfromLatin1( "xmozillanickname") ||
+       fieldname == TQString::tqfromLatin1( "nickname") ) {
     a.setNickName( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "sn" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "sn" ) ) {
     a.setFamilyName( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "uid" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "uid" ) ) {
     a.setUid( value );
     return true;
   }
-  if ( fieldname == TQString::fromLatin1( "mail" ) ||
-       fieldname == TQString::fromLatin1( "mozillasecondemail" ) ) { // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "mail" ) ||
+       fieldname == TQString::tqfromLatin1( "mozillasecondemail" ) ) { // mozilla
     if ( a.emails().findIndex( value ) == -1 )
       a.insertEmail( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "title" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "title" ) ) {
     a.setTitle( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "vocation" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "vocation" ) ) {
     a.setPrefix( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "cn" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "cn" ) ) {
     a.setFormattedName( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "o" ) ||
-       fieldname == TQString::fromLatin1( "organization" ) ||      // Exchange
-       fieldname == TQString::fromLatin1( "organizationname" ) ) { // Exchange
+  if ( fieldname == TQString::tqfromLatin1( "o" ) ||
+       fieldname == TQString::tqfromLatin1( "organization" ) ||      // Exchange
+       fieldname == TQString::tqfromLatin1( "organizationname" ) ) { // Exchange
     a.setOrganization( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "description" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "description" ) ) {
 addComment:
     if ( !a.note().isEmpty() )
       a.setNote( a.note() + "\n" );
@@ -306,15 +306,15 @@ addComment:
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "custom1" ) ||
-       fieldname == TQString::fromLatin1( "custom2" ) ||
-       fieldname == TQString::fromLatin1( "custom3" ) ||
-       fieldname == TQString::fromLatin1( "custom4" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "custom1" ) ||
+       fieldname == TQString::tqfromLatin1( "custom2" ) ||
+       fieldname == TQString::tqfromLatin1( "custom3" ) ||
+       fieldname == TQString::tqfromLatin1( "custom4" ) ) {
     goto addComment;
   }
 
-  if ( fieldname == TQString::fromLatin1( "homeurl" ) ||
-       fieldname == TQString::fromLatin1( "workurl" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "homeurl" ) ||
+       fieldname == TQString::tqfromLatin1( "workurl" ) ) {
     if (a.url().isEmpty()) {
       a.setUrl( KURL( value ) );
       return true;
@@ -325,139 +325,139 @@ addComment:
     // TODO: change this with KDE 4
   }
 
-  if ( fieldname == TQString::fromLatin1( "homephone" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "homephone" ) ) {
     a.insertPhoneNumber( PhoneNumber( value, PhoneNumber::Home ) );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "telephonenumber" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "telephonenumber" ) ) {
     a.insertPhoneNumber( PhoneNumber( value, PhoneNumber::Work ) );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "mobile" ) ) { 	// mozilla/Netscape 7
+  if ( fieldname == TQString::tqfromLatin1( "mobile" ) ) { 	// mozilla/Netscape 7
     a.insertPhoneNumber( PhoneNumber( value, PhoneNumber::Cell ) );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "cellphone" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "cellphone" ) ) {
     a.insertPhoneNumber( PhoneNumber( value, PhoneNumber::Cell ) );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "pager" )  ||       // mozilla
-       fieldname == TQString::fromLatin1( "pagerphone" ) ) {  // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "pager" )  ||       // mozilla
+       fieldname == TQString::tqfromLatin1( "pagerphone" ) ) {  // mozilla
     a.insertPhoneNumber( PhoneNumber( value, PhoneNumber::Pager ) );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "facsimiletelephonenumber" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "facsimiletelephonenumber" ) ) {
     a.insertPhoneNumber( PhoneNumber( value, PhoneNumber::Fax ) );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "xmozillaanyphone" ) ) { // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "xmozillaanyphone" ) ) { // mozilla
     a.insertPhoneNumber( PhoneNumber( value, PhoneNumber::Work ) );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "street" ) ||
-       fieldname == TQString::fromLatin1( "streethomeaddress" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "street" ) ||
+       fieldname == TQString::tqfromLatin1( "streethomeaddress" ) ) {
     homeAddr.setStreet( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "postaladdress" ) ) {  // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "postaladdress" ) ) {  // mozilla
     workAddr.setStreet( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "mozillapostaladdress2" ) ) {  // mozilla
-    workAddr.setStreet( workAddr.street() + TQString::fromLatin1( "\n" ) + value );
+  if ( fieldname == TQString::tqfromLatin1( "mozillapostaladdress2" ) ) {  // mozilla
+    workAddr.setStreet( workAddr.street() + TQString::tqfromLatin1( "\n" ) + value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "postalcode" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "postalcode" ) ) {
     workAddr.setPostalCode( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "postofficebox" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "postofficebox" ) ) {
     workAddr.setPostOfficeBox( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "homepostaladdress" ) ) {  // Netscape 7
+  if ( fieldname == TQString::tqfromLatin1( "homepostaladdress" ) ) {  // Netscape 7
     homeAddr.setStreet( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "mozillahomepostaladdress2" ) ) {  // mozilla
-    homeAddr.setStreet( homeAddr.street() + TQString::fromLatin1( "\n" ) + value );
+  if ( fieldname == TQString::tqfromLatin1( "mozillahomepostaladdress2" ) ) {  // mozilla
+    homeAddr.setStreet( homeAddr.street() + TQString::tqfromLatin1( "\n" ) + value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "mozillahomelocalityname" ) ) {  // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "mozillahomelocalityname" ) ) {  // mozilla
     homeAddr.setLocality( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "mozillahomestate" )	) { // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "mozillahomestate" )	) { // mozilla
     homeAddr.setRegion( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "mozillahomepostalcode" ) ) {  // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "mozillahomepostalcode" ) ) {  // mozilla
     homeAddr.setPostalCode( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "mozillahomecountryname" ) ) { // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "mozillahomecountryname" ) ) { // mozilla
     if ( value.length() <= 2 )
       value = Address::ISOtoCountry(value);
     homeAddr.setCountry( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "locality" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "locality" ) ) {
     workAddr.setLocality( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "streetaddress" ) ) { // Netscape 4.x
+  if ( fieldname == TQString::tqfromLatin1( "streetaddress" ) ) { // Netscape 4.x
     workAddr.setStreet( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "countryname" ) ||
-       fieldname == TQString::fromLatin1( "c" ) ) {  // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "countryname" ) ||
+       fieldname == TQString::tqfromLatin1( "c" ) ) {  // mozilla
     if ( value.length() <= 2 )
       value = Address::ISOtoCountry(value);
     workAddr.setCountry( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "l" ) ) {  // mozilla
+  if ( fieldname == TQString::tqfromLatin1( "l" ) ) {  // mozilla
     workAddr.setLocality( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "st" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "st" ) ) {
     workAddr.setRegion( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "ou" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "ou" ) ) {
     a.setRole( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "department" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "department" ) ) {
     a.setDepartment( value );
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "member" ) ) {
+  if ( fieldname == TQString::tqfromLatin1( "member" ) ) {
     // this is a mozilla list member (cn=xxx, mail=yyy)
     TQStringList list( TQStringList::split( ',', value ) );
     TQString name, email;
@@ -476,8 +476,8 @@ addComment:
     return true;
   }
 
-  if ( fieldname == TQString::fromLatin1( "modifytimestamp" ) ) {
-    if (value == TQString::fromLatin1("0Z")) // ignore
+  if ( fieldname == TQString::tqfromLatin1( "modifytimestamp" ) ) {
+    if (value == TQString::tqfromLatin1("0Z")) // ignore
       return true;
     TQDateTime dt = VCardStringToDate( value );
     if ( dt.isValid() ) {
@@ -486,7 +486,7 @@ addComment:
     }
   }
 
-  if ( fieldname == TQString::fromLatin1( "objectclass" ) ) // ignore
+  if ( fieldname == TQString::tqfromLatin1( "objectclass" ) ) // ignore
     return true;
 
   kdWarning() << TQString("LDIFConverter: Unknown field for '%1': '%2=%3'\n")
@@ -528,7 +528,7 @@ TQString LDIFConverter::makeLDIFfieldString( TQString formatStr, TQString value,
     return TQString();
 
   // append format if not given
-  if (formatStr.find(':') == -1)
+  if (formatStr.tqfind(':') == -1)
     formatStr.append(": %1\n");
 
   // check if base64-encoding is needed
@@ -543,12 +543,12 @@ TQString LDIFConverter::makeLDIFfieldString( TQString formatStr, TQString value,
   }
 
   if (printable) // always encode if we find special chars...
-    printable = (value.find('\n') == -1);
+    printable = (value.tqfind('\n') == -1);
 
   if (!printable && allowEncode) {
     // encode to base64
     value = KCodecs::base64Encode( value.utf8() );
-    int p = formatStr.find(':');
+    int p = formatStr.tqfind(':');
     if (p>=0)
       formatStr.insert(p, ':');
   }

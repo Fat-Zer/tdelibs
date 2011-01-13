@@ -97,8 +97,8 @@ namespace KMDI
 {
 
 //============ constructor ============//
-MainWindow::MainWindow(TQWidget* parentWidget, const char* name)
- : KParts::DockMainWindow( parentWidget, name)
+MainWindow::MainWindow(TQWidget* tqparentWidget, const char* name)
+ : KParts::DockMainWindow( tqparentWidget, name)
  , m_toolViews (new TQMap<TQWidget*,KMDI::ToolViewAccessor*>)
  , d(new KMDIPrivate::MainWindowPrivate())
 {
@@ -156,19 +156,19 @@ void MainWindow::setupToolViews ()
     w=static_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
   }
 
-  TQPtrList<KDockWidget> leftReparentWidgets;
-  TQPtrList<KDockWidget> rightReparentWidgets;
-  TQPtrList<KDockWidget> bottomReparentWidgets;
-  TQPtrList<KDockWidget> topReparentWidgets;
+  TQPtrList<KDockWidget> leftRetqparentWidgets;
+  TQPtrList<KDockWidget> rightRetqparentWidgets;
+  TQPtrList<KDockWidget> bottomRetqparentWidgets;
+  TQPtrList<KDockWidget> topRetqparentWidgets;
 
   if (mainDock->parentDockTabGroup()) {
     mainDock=static_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
   }
 
-  findToolViewsDockedToMain(&leftReparentWidgets,KDockWidget::DockLeft);
-  findToolViewsDockedToMain(&rightReparentWidgets,KDockWidget::DockRight);
-  findToolViewsDockedToMain(&bottomReparentWidgets,KDockWidget::DockBottom);
-  findToolViewsDockedToMain(&topReparentWidgets,KDockWidget::DockTop);
+  findToolViewsDockedToMain(&leftRetqparentWidgets,KDockWidget::DockLeft);
+  findToolViewsDockedToMain(&rightRetqparentWidgets,KDockWidget::DockRight);
+  findToolViewsDockedToMain(&bottomRetqparentWidgets,KDockWidget::DockBottom);
+  findToolViewsDockedToMain(&topRetqparentWidgets,KDockWidget::DockTop);
 
   mainDock->setEnableDocking(KDockWidget::DockNone); //::DockCorner);
   mainDock->setDockSite(KDockWidget::DockCorner);
@@ -220,10 +220,10 @@ void MainWindow::setupToolViews ()
   m_topContainer->setDockSite( KDockWidget::DockCenter );
   m_bottomContainer->setDockSite( KDockWidget::DockCenter );
 
-  dockToolViewsIntoContainers(leftReparentWidgets,m_leftContainer);
-  dockToolViewsIntoContainers(rightReparentWidgets,m_rightContainer);
-  dockToolViewsIntoContainers(bottomReparentWidgets,m_bottomContainer);
-  dockToolViewsIntoContainers(topReparentWidgets,m_topContainer);
+  dockToolViewsIntoContainers(leftRetqparentWidgets,m_leftContainer);
+  dockToolViewsIntoContainers(rightRetqparentWidgets,m_rightContainer);
+  dockToolViewsIntoContainers(bottomRetqparentWidgets,m_bottomContainer);
+  dockToolViewsIntoContainers(topRetqparentWidgets,m_topContainer);
 
   dockManager->setSpecialLeftDockContainer(m_leftContainer);
   dockManager->setSpecialRightDockContainer(m_rightContainer);
@@ -311,16 +311,16 @@ void MainWindow::setToolViewStyle(int flag)
 {
   d->m_styleIDEAlMode = flag; // see KMultiTabBar for the first 3 bits
 
-  DockContainer *tmpL=(DockContainer*) (m_leftContainer->getWidget()->qt_cast("KMDI::DockContainer"));
+  DockContainer *tmpL=(DockContainer*) (m_leftContainer->getWidget()->tqqt_cast("KMDI::DockContainer"));
   if (tmpL) tmpL->setStyle(flag);
 
-  DockContainer *tmpR=(DockContainer*) (m_rightContainer->getWidget()->qt_cast("KMDI::DockContainer"));
+  DockContainer *tmpR=(DockContainer*) (m_rightContainer->getWidget()->tqqt_cast("KMDI::DockContainer"));
   if (tmpR) tmpR->setStyle(flag);
 
-  DockContainer *tmpT=(DockContainer*) (m_topContainer->getWidget()->qt_cast("KMDI::DockContainer"));
+  DockContainer *tmpT=(DockContainer*) (m_topContainer->getWidget()->tqqt_cast("KMDI::DockContainer"));
   if (tmpT) tmpT->setStyle(flag);
 
-  DockContainer *tmpB=(DockContainer*) (m_bottomContainer->getWidget()->qt_cast("KMDI::DockContainer"));
+  DockContainer *tmpB=(DockContainer*) (m_bottomContainer->getWidget()->tqqt_cast("KMDI::DockContainer"));
   if (tmpB) tmpB->setStyle(flag);
 
   d->m_toolviewStyle = flag;

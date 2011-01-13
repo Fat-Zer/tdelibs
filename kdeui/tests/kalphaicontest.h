@@ -5,7 +5,7 @@
 #include <kimageeffect.h>
 #include <kalphapainter.h>
 
-class KAlphaTest : public QWidget
+class KAlphaTest : public TQWidget
 {
   public:
     KAlphaTest();

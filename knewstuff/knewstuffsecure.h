@@ -46,10 +46,10 @@ public:
 
       @param type type of data to be handled, should be something like
              korganizer/calendar, kword/template, kdesktop/wallpaper
-      @param parentWidget parent widget of dialogs opened by the KNewStuff
+      @param tqparentWidget parent widget of dialogs opened by the KNewStuff
               engine
      */
-    KNewStuffSecure(const TQString &type,  TQWidget *parentWidget=0);
+    KNewStuffSecure(const TQString &type,  TQWidget *tqparentWidget=0);
     virtual ~KNewStuffSecure();
 
     /** Installs the downloaded resource. Do not call or reimplement directly. 

@@ -35,7 +35,7 @@
 
 #include "kcustommenueditor.h"
 
-class KCustomMenuEditor::Item : public QListViewItem
+class KCustomMenuEditor::Item : public TQListViewItem
 {
 public:
    Item(TQListView *parent, KService::Ptr service)
@@ -94,11 +94,11 @@ KCustomMenuEditor::KCustomMenuEditor(TQWidget *parent)
    m_listView->addColumn(i18n("Menu"));
    m_listView->setFullWidth(true);
    m_listView->setSorting(-1);
-   KButtonBox *buttonBox = new KButtonBox(page, Vertical);
-   buttonBox->addButton(i18n("New..."), this, TQT_SLOT(slotNewItem()));
-   d->pbRemove=buttonBox->addButton(i18n("Remove"), this, TQT_SLOT(slotRemoveItem()));
-   d->pbMoveUp=buttonBox->addButton(i18n("Move Up"), this, TQT_SLOT(slotMoveUp()));
-   d->pbMoveDown=buttonBox->addButton(i18n("Move Down"), this, TQT_SLOT(slotMoveDown()));
+   KButtonBox *buttonBox = new KButtonBox(page, Qt::Vertical);
+   buttonBox->addButton(i18n("New..."), TQT_TQOBJECT(this), TQT_SLOT(slotNewItem()));
+   d->pbRemove=buttonBox->addButton(i18n("Remove"), TQT_TQOBJECT(this), TQT_SLOT(slotRemoveItem()));
+   d->pbMoveUp=buttonBox->addButton(i18n("Move Up"), TQT_TQOBJECT(this), TQT_SLOT(slotMoveUp()));
+   d->pbMoveDown=buttonBox->addButton(i18n("Move Down"), TQT_TQOBJECT(this), TQT_SLOT(slotMoveDown()));
    buttonBox->layout();
    connect( m_listView, TQT_SIGNAL( selectionChanged () ), this, TQT_SLOT( refreshButton() ) );
    refreshButton();

@@ -48,7 +48,7 @@ KMWFax::KMWFax(TQWidget *parent, const char *name)
 	// initialize
 	IppRequest	req;
 	req.setOperation(CUPS_GET_DEVICES);
-	QString	uri = TQString::fromLatin1("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
+	QString	uri = TQString::tqfromLatin1("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
 	req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
 	if (req.doRequest("/"))
 	{
@@ -57,7 +57,7 @@ KMWFax::KMWFax(TQWidget *parent, const char *name)
 		{
 			if (attr->name && strcmp(attr->name,"device-uri") == 0 && strncmp(attr->values[0].string.text,"fax",3) == 0)
 			{
-				m_list->insertItem(SmallIcon("blockdevice"),TQString::fromLatin1(attr->values[0].string.text));
+				m_list->insertItem(SmallIcon("blockdevice"),TQString::tqfromLatin1(attr->values[0].string.text));
 			}
 			attr = attr->next;
 		}

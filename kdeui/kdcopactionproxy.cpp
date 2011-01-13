@@ -132,7 +132,7 @@ bool KDCOPActionProxy::processAction( const TQCString &, const TQCString &fun, c
   {
     replyType = "bool";
     TQDataStream reply( replyData, IO_WriteOnly );
-    reply << (Q_INT8)action->isPlugged();
+    reply << (TQ_INT8)action->isPlugged();
     return true;
   }
 

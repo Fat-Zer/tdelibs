@@ -186,12 +186,12 @@ public:
 
 
 struct KLegacyImageDataKeyField {
-    Q_INT8 function       : 8;
-    Q_INT8 state          : 8;
-    Q_INT8 shadow         : 4;
-    Q_INT8 orientation    : 4;
-    Q_INT8 arrowDirection : 4;
-    Q_INT8 gapSide        : 4;
+    TQ_INT8 function       : 8;
+    TQ_INT8 state          : 8;
+    TQ_INT8 shadow         : 4;
+    TQ_INT8 orientation    : 4;
+    TQ_INT8 arrowDirection : 4;
+    TQ_INT8 gapSide        : 4;
 };
 
 
@@ -866,7 +866,7 @@ GtkObject *GtkObject::find(TQRegExp &r) const {
     while ((o = ot.current()) != 0) {
 	++ot;
 
-	// this would be nice if moc could parse this file :/
+	// this would be nice if tqmoc could parse this file :/
 	//
 	// if (o->className() != "GtkObject") {
 	//     qDebug("object is not a GtkObject (className = '%s')",
@@ -1156,7 +1156,7 @@ bool KLegacyStylePrivate::parseClass() {
 	return false;
     }
 
-    KLegacyStyleData *styledata = styleDict.find(stylename);
+    KLegacyStyleData *styledata = styleDict.tqfind(stylename);
 
     if (! styledata) {
 	qWarning("no such style '%s' for class '%s' (%p)", stylename.latin1(),
@@ -1227,10 +1227,10 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 	    TQString border =filestream.readLine();
 
 	    int lp, rp, tp, bp, l, r, t, b;
-	    lp = border.find(',');
-	    rp = border.find(',', lp + 1);
-	    tp = border.find(',', rp + 1);
-	    bp = border.find('}', tp + 1);
+	    lp = border.tqfind(',');
+	    rp = border.tqfind(',', lp + 1);
+	    tp = border.tqfind(',', rp + 1);
+	    bp = border.tqfind('}', tp + 1);
 
 	    l = border.left(lp).toUInt();
 	    r = border.mid(lp + 1, rp - lp - 1).toUInt();
@@ -1336,10 +1336,10 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 	    TQString border = filestream.readLine();
 
 	    int lp, rp, tp, bp, l, r, t, b;
-	    lp = border.find(',');
-	    rp = border.find(',', lp + 1);
-	    tp = border.find(',', rp + 1);
-	    bp = border.find('}', tp + 1);
+	    lp = border.tqfind(',');
+	    rp = border.tqfind(',', lp + 1);
+	    tp = border.tqfind(',', rp + 1);
+	    bp = border.tqfind('}', tp + 1);
 
 	    l = border.left(lp).toUInt();
 	    r = border.mid(lp + 1, rp - lp - 1).toUInt();
@@ -1486,7 +1486,7 @@ bool KLegacyStylePrivate::parsePixmapPath() {
 
     next = next.mid(1, next.length() - 2);
 
-    int start = 0, end = next.find(":");
+    int start = 0, end = next.tqfind(":");
     while (end != -1) {
 	TQString path(next.mid(start, end - start));
 
@@ -1500,7 +1500,7 @@ bool KLegacyStylePrivate::parsePixmapPath() {
 	}
 
 	start = end + 1;
-	end = next.find(":", start);
+	end = next.tqfind(":", start);
     }
 
     // get the straggler
@@ -1543,7 +1543,7 @@ bool KLegacyStylePrivate::parseStyle() {
 
 	newstylename = newstylename.mid(1, newstylename.length() - 2);
 
-	KLegacyStyleData *styledata = styleDict.find(stylename);
+	KLegacyStyleData *styledata = styleDict.tqfind(stylename);
 
 	if (! styledata) return false;
 
@@ -1573,7 +1573,7 @@ bool KLegacyStylePrivate::parseStyle() {
 	}
 
 	if (next.left(5) == "base[") {
-	    int l = next.find('['), r = next.find(']'), state;
+	    int l = next.tqfind('['), r = next.tqfind(']'), state;
 
 	    if (l < 1 || r < 1 || r < l) continue;
 
@@ -1605,9 +1605,9 @@ bool KLegacyStylePrivate::parseStyle() {
 		int rp, gp, bp;
 		float ri, gi, bi;
 
-		rp = color.find(',');
-		gp = color.find(',', rp + 1);
-		bp = color.find('}', gp + 1);
+		rp = color.tqfind(',');
+		gp = color.tqfind(',', rp + 1);
+		bp = color.tqfind('}', gp + 1);
 
 		ri = color.left(rp).toFloat();
 		gi = color.mid(rp + 1, gp - rp - 1).toFloat();
@@ -1619,7 +1619,7 @@ bool KLegacyStylePrivate::parseStyle() {
 		styledata->base[state].setRgb(red, green, blue);
 	    }
 	} else if (next.left(3) == "bg[") {
-	    int l = next.find('['), r = next.find(']'), state;
+	    int l = next.tqfind('['), r = next.tqfind(']'), state;
 
 	    if (l < 1 || r < 1 || r < l) continue;
 
@@ -1651,9 +1651,9 @@ bool KLegacyStylePrivate::parseStyle() {
 		int rp, gp, bp;
 		float ri, gi, bi;
 
-		rp = color.find(',');
-		gp = color.find(',', rp + 1);
-		bp = color.find('}', gp + 1);
+		rp = color.tqfind(',');
+		gp = color.tqfind(',', rp + 1);
+		bp = color.tqfind('}', gp + 1);
 
 		ri = color.left(rp).toFloat();
 		gi = color.mid(rp + 1, gp - rp - 1).toFloat();
@@ -1668,7 +1668,7 @@ bool KLegacyStylePrivate::parseStyle() {
 	    if (! parseEngine(styledata))
 		fprintf(stderr, "engine parse error\n");
 	} else if (next.left(3) == "fg[") {
-	    int l = next.find('['), r = next.find(']'), state;
+	    int l = next.tqfind('['), r = next.tqfind(']'), state;
 
 	    if (l < 1 || r < 1 || r < l) continue;
 
@@ -1700,9 +1700,9 @@ bool KLegacyStylePrivate::parseStyle() {
 		int rp, gp, bp;
 		float ri, gi, bi;
 
-		rp = color.find(',');
-		gp = color.find(',', rp + 1);
-		bp = color.find('}', gp + 1);
+		rp = color.tqfind(',');
+		gp = color.tqfind(',', rp + 1);
+		bp = color.tqfind('}', gp + 1);
 
 		ri = color.left(rp).toFloat();
 		gi = color.mid(rp + 1, gp - rp - 1).toFloat();
@@ -1767,7 +1767,7 @@ void KLegacyStyle::polish(TQApplication *app) {
     priv->oldfont = app->font();
     priv->oldpalette = app->palette();
 
-    GtkObject *gobj = priv->gtkDict.find(TQMainWindow::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQMainWindow::staticMetaObject());
 
     if (gobj) {
 	if (gobj->font()) {
@@ -1974,8 +1974,8 @@ void KLegacyStyle::polish(TQWidget *widget) {
 	widget->setBackgroundMode(TQWidget::PaletteBackground);
     }
 
-    GtkObject *gobj = gobj = priv->gtkDict.find(((metaobject) ? metaobject :
-						 widget->metaObject()));
+    GtkObject *gobj = gobj = priv->gtkDict.tqfind(((metaobject) ? metaobject :
+						 widget->tqmetaObject()));
 
     if (gobj) {
 	if (gobj->font() && (*gobj->font() != TQApplication::font()))
@@ -2115,7 +2115,7 @@ void KLegacyStyle::drawMenuBarItem(TQPainter *p, int x, int y, int w, int h, TQM
 				   TQColorGroup &g, bool enabled, bool active)
 {
     if (enabled && active) {
-	GtkObject *gobj = priv->gtkDict.find(&menuitem_ptr);
+	GtkObject *gobj = priv->gtkDict.tqfind(&menuitem_ptr);
 
 	if (gobj) {
 	    KLegacyImageDataKey key;
@@ -2147,7 +2147,7 @@ void KLegacyStyle::drawBevelButton(TQPainter *p, int x, int y, int w, int h,
 				const TQColorGroup & g, bool sunken,
 				const TQBrush *fill)
 {
-    GtkObject *gobj = priv->gtkDict.find(TQButton::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQButton::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawBevelButton(p, x, y, w, h, g, sunken, fill);
@@ -2170,7 +2170,7 @@ void KLegacyStyle::drawBevelButton(TQPainter *p, int x, int y, int w, int h,
 
 
 void KLegacyStyle::drawPushButton(TQPushButton *btn, TQPainter *p) {
-    GtkObject *gobj = priv->gtkDict.find(TQPushButton::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQPushButton::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawPushButton(btn, p);
@@ -2181,7 +2181,7 @@ void KLegacyStyle::drawPushButton(TQPushButton *btn, TQPainter *p) {
     key.cachekey = 0;
     key.data.function = KLegacy::Box;
 
-    TQColorGroup g = btn->colorGroup();
+    TQColorGroup g = btn->tqcolorGroup();
     TQBrush fill = g.brush(TQColorGroup::Button);
     int x1, y1, x2, y2;
     btn->rect().coords(&x1, &y1, &x2, &y2);
@@ -2237,7 +2237,7 @@ void KLegacyStyle::drawIndicator(TQPainter *p, int x, int y, int w, int h,
 			      const TQColorGroup &g, int state,
 			      bool down, bool enabled)
 {
-    GtkObject *gobj = priv->gtkDict.find(TQCheckBox::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQCheckBox::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawIndicator(p, x, y, w, h, g, state, down, enabled);
@@ -2260,7 +2260,7 @@ void KLegacyStyle::drawIndicator(TQPainter *p, int x, int y, int w, int h,
 
 
 void KLegacyStyle::drawIndicatorMask(TQPainter *p, int x, int y, int w, int h, int state) {
-    GtkObject *gobj = priv->gtkDict.find(TQCheckBox::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQCheckBox::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawIndicatorMask(p, x, y, w, h, state);
@@ -2283,7 +2283,7 @@ void KLegacyStyle::drawIndicatorMask(TQPainter *p, int x, int y, int w, int h, i
 
 
 TQSize KLegacyStyle::indicatorSize(void) const {
-    GtkObject *gobj = priv->gtkDict.find(TQCheckBox::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQCheckBox::staticMetaObject());
 
     if (! gobj)	return KStyle::indicatorSize();
 
@@ -2320,7 +2320,7 @@ void KLegacyStyle::drawExclusiveIndicator(TQPainter *p, int x, int y, int w, int
 				      const TQColorGroup &g, bool on,
 				       bool down, bool enabled)
 {
-    GtkObject *gobj = priv->gtkDict.find(TQRadioButton::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQRadioButton::staticMetaObject());
 
     if (! gobj) {
 	drawExclusiveIndicator(p, x, y, w, h, g, on, down, enabled);
@@ -2345,7 +2345,7 @@ void KLegacyStyle::drawExclusiveIndicator(TQPainter *p, int x, int y, int w, int
 void KLegacyStyle::drawExclusiveIndicatorMask(TQPainter *p, int x, int y, int w, int h,
 					   bool on)
 {
-    GtkObject *gobj = priv->gtkDict.find(TQRadioButton::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQRadioButton::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawExclusiveIndicatorMask(p, x, y, w, h, on);
@@ -2368,7 +2368,7 @@ void KLegacyStyle::drawExclusiveIndicatorMask(TQPainter *p, int x, int y, int w,
 
 
 TQSize KLegacyStyle::exclusiveIndicatorSize(void) const {
-    GtkObject *gobj = priv->gtkDict.find(TQRadioButton::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQRadioButton::staticMetaObject());
 
     if (! gobj) {
 	return KStyle::indicatorSize();
@@ -2427,7 +2427,7 @@ void KLegacyStyle::drawPopupMenuItem(TQPainter *p, bool checkable, int maxpmw, i
     }
 
     if ( act && enabled ) {
-	GtkObject *gobj = priv->gtkDict.find(&menuitem_ptr);
+	GtkObject *gobj = priv->gtkDict.tqfind(&menuitem_ptr);
 
 	if (gobj) {
 	    KLegacyImageDataKey key;
@@ -2501,7 +2501,7 @@ void KLegacyStyle::drawPopupMenuItem(TQPainter *p, bool checkable, int maxpmw, i
 
     TQString s = mi->text();
     if ( !s.isNull() ) {			// draw text
-	int t = s.find( '\t' );
+	int t = s.tqfind( '\t' );
 	int m = 2;
 	const int text_flags = AlignVCenter|ShowPrefix | DontClip | SingleLine;
 	if ( t >= 0 ) {				// draw tab text
@@ -2531,7 +2531,7 @@ void KLegacyStyle::drawComboButton(TQPainter *p, int x, int y, int w, int h,
 				const TQColorGroup &g, bool sunken, bool editable,
 				bool enabled, const TQBrush *b)
 {
-    GtkObject *gobj = priv->gtkDict.find(TQComboBox::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQComboBox::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawComboButton(p, x, y, w, h, g, sunken, editable, enabled, b);
@@ -2571,7 +2571,7 @@ void KLegacyStyle::drawComboButton(TQPainter *p, int x, int y, int w, int h,
 
 
 TQRect KLegacyStyle::comboButtonRect(int x, int y, int w, int h) {
-    GtkObject *gobj = priv->gtkDict.find(TQComboBox::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQComboBox::staticMetaObject());
 
     if (! gobj) {
 	return KStyle::comboButtonRect(x, y, w, h);
@@ -2648,7 +2648,7 @@ void KLegacyStyle::drawScrollBarControls(TQPainter *p, const TQScrollBar *scroll
 {
     if (! scrollbar->isVisible()) return;
 
-    GtkObject *gobj = priv->gtkDict.find(TQScrollBar::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQScrollBar::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawScrollBarControls(p, scrollbar, start, controls, active);
@@ -2741,7 +2741,7 @@ void KLegacyStyle::drawScrollBarControls(TQPainter *p, const TQScrollBar *scroll
 		  (active & SubLine), x, y,
 		  buttonDim,
 		  buttonDim,
-		  scrollbar->colorGroup(), true);
+		  scrollbar->tqcolorGroup(), true);
 
 	if  (scrollbar->orientation() == Vertical)
 	    y = scrollbar->height() - buttonDim - defaultFrameWidth();
@@ -2753,7 +2753,7 @@ void KLegacyStyle::drawScrollBarControls(TQPainter *p, const TQScrollBar *scroll
 		  (active & AddLine), x, y,
 		  buttonDim,
 		  buttonDim,
-		  scrollbar->colorGroup(), true);
+		  scrollbar->tqcolorGroup(), true);
     }
     p->drawPixmap(0, 0, buf);
 }
@@ -2762,7 +2762,7 @@ void KLegacyStyle::drawScrollBarControls(TQPainter *p, const TQScrollBar *scroll
 void KLegacyStyle::drawSlider(TQPainter *p, int x, int y, int w, int h, const TQColorGroup &g,
 			   Orientation orientation, bool tickAbove, bool tickBelow)
 {
-    GtkObject *gobj = priv->gtkDict.find(TQSlider::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQSlider::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawSlider(p, x, y, w, h, g, orientation, tickAbove, tickBelow);
@@ -2789,7 +2789,7 @@ void KLegacyStyle::drawSlider(TQPainter *p, int x, int y, int w, int h, const TQ
 void KLegacyStyle::drawSliderGroove(TQPainter *p, int x, int y, int w, int h,
 				const TQColorGroup &g, QCOORD c, Orientation o)
 {
-    GtkObject *gobj = priv->gtkDict.find(TQSlider::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQSlider::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawSliderGroove(p, x, y, w, h, g, c, o);
@@ -2816,7 +2816,7 @@ void KLegacyStyle::drawArrow(TQPainter *p, ArrowType type, bool down,
 			 int x, int y, int w, int h,
 			 const TQColorGroup &g, bool enabled, const TQBrush *b)
 {
-    GtkObject *gobj = priv->gtkDict.find(&arrow_ptr);
+    GtkObject *gobj = priv->gtkDict.tqfind(&arrow_ptr);
 
     if (! gobj) {
 	KStyle::drawArrow(p, type, down, x, y, w, h, g, enabled, b);
@@ -2848,7 +2848,7 @@ void KLegacyStyle::drawMenuArrow(TQPainter *p, ArrowType type, bool down,
 			 int x, int y, int w, int h,
 			 const TQColorGroup &g, bool enabled, const TQBrush *b)
 {
-    GtkObject *gobj = priv->gtkDict.find(&menuitem_ptr);
+    GtkObject *gobj = priv->gtkDict.tqfind(&menuitem_ptr);
 
     if (! gobj) {
 	KStyle::drawArrow(p, type, down, x, y, w, h, g, enabled, b);
@@ -2891,7 +2891,7 @@ void KLegacyStyle::drawPopupPanel(TQPainter *p, int x, int y, int w, int h,
 void KLegacyStyle::drawCheckMark(TQPainter *p, int x, int y, int w, int h,
 			      const TQColorGroup &g, bool activated, bool disabled)
 {
-    GtkObject *gobj = priv->gtkDict.find(&checkmenuitem_ptr);
+    GtkObject *gobj = priv->gtkDict.tqfind(&checkmenuitem_ptr);
 
     if (! gobj) {
 	KStyle::drawCheckMark(p, x, y, w, h, g, activated, disabled);
@@ -2942,7 +2942,7 @@ void KLegacyStyle::drawSplitter(TQPainter *p, int x, int y, int w, int h,
 
 void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, bool selected)
 {
-    GtkObject *gobj = priv->gtkDict.find(TQTabBar::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQTabBar::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawTab(p, tabbar, tab, selected);
@@ -2954,8 +2954,8 @@ void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, boo
     key.data.function = KLegacy::Extension;
     key.data.state = (! selected) ? KLegacy::Active : KLegacy::Normal;
     key.data.shadow = KLegacy::Out;
-    key.data.gapSide = (tabbar->shape() == TQTabBar::RoundedAbove ||
-			tabbar->shape() == TQTabBar::TriangularAbove) ?
+    key.data.gapSide = (tabbar->tqshape() == TQTabBar::RoundedAbove ||
+			tabbar->tqshape() == TQTabBar::TriangularAbove) ?
 		       KLegacy::Bottom : KLegacy::Top;
 
     int ry = tab->r.top(), rh = tab->r.height();
@@ -2963,8 +2963,8 @@ void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, boo
     if (! selected) {
 	rh -= 2;
 
-	if (tabbar->shape() == TQTabBar::RoundedAbove ||
-	    tabbar->shape() == TQTabBar::TriangularAbove)
+	if (tabbar->tqshape() == TQTabBar::RoundedAbove ||
+	    tabbar->tqshape() == TQTabBar::TriangularAbove)
 	    ry += 2;
     }
 
@@ -2981,7 +2981,7 @@ void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, boo
 void KLegacyStyle::drawKBarHandle(TQPainter *p, int x, int y, int w, int h,
 				  const TQColorGroup &g, KToolBarPos type, TQBrush *fill)
 {
-    GtkObject *gobj = priv->gtkDict.find(TQToolBar::staticMetaObject());
+    GtkObject *gobj = priv->gtkDict.tqfind(TQToolBar::staticMetaObject());
 
     if (! gobj) {
 	KStyle::drawKBarHandle(p, x, y, w, h, g, type, fill);
@@ -3043,7 +3043,7 @@ void KLegacyStyle::drawKickerTaskButton(TQPainter *p, int x, int y, int w, int h
     static const TQString &modStr = KGlobal::staticQString(
         TQString::fromUtf8("[") + i18n("modified") + TQString::fromUtf8("]"));
 
-    int modStrPos = s.find(modStr);
+    int modStrPos = s.tqfind(modStr);
 
     if (modStrPos != -1) {
         s.remove(modStrPos, modStr.length()+1);
@@ -3082,7 +3082,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	    TQWidget *w = (TQWidget *) obj;
 
 	    if (w->inherits("QPopupMenu") && w->width() < 700) {
-		GtkObject *gobj = priv->gtkDict.find(TQPopupMenu::staticMetaObject());
+		GtkObject *gobj = priv->gtkDict.tqfind(TQPopupMenu::staticMetaObject());
 
 		if (gobj) {
 		    KLegacyImageDataKey key;
@@ -3139,7 +3139,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		    }
 		}
 	    } else if (w->isTopLevel() || w->inherits("QWorkspaceChild")) {
-		GtkObject *gobj = priv->gtkDict.find(TQMainWindow::staticMetaObject());
+		GtkObject *gobj = priv->gtkDict.tqfind(TQMainWindow::staticMetaObject());
 
 		if (gobj) {
 		    KLegacyImageDataKey key;
@@ -3152,7 +3152,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 			w->setBackgroundPixmap(*p);
 		}
 	    } else if (w->inherits("QLineEdit")) {
-		GtkObject *gobj = priv->gtkDict.find(TQLineEdit::staticMetaObject());
+		GtkObject *gobj = priv->gtkDict.tqfind(TQLineEdit::staticMetaObject());
 
 		if (gobj) {
 		    KLegacyImageDataKey key;
@@ -3193,7 +3193,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		}
 	    } else if (w->inherits("QMenuBar") ||
 		       w->inherits("QToolBar")) {
-		GtkObject *gobj = priv->gtkDict.find(TQMenuBar::staticMetaObject());
+		GtkObject *gobj = priv->gtkDict.tqfind(TQMenuBar::staticMetaObject());
 
 		if (gobj) {
 		    KLegacyImageDataKey key;
@@ -3261,12 +3261,12 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		obj->inherits("QSlider") ||
 		obj->inherits("QScrollbar")) {
 		priv->lastWidget = (TQWidget *) obj;
-		priv->lastWidget->repaint(false);
+		priv->lastWidget->tqrepaint(false);
 	    } else if (obj->inherits("QRadioButton")) {
 		TQWidget *w = (TQWidget *) obj;
 
 		if (! w->isTopLevel() && w->isEnabled()) {
-		    GtkObject *gobj = priv->gtkDict.find(TQRadioButton::staticMetaObject());
+		    GtkObject *gobj = priv->gtkDict.tqfind(TQRadioButton::staticMetaObject());
 
 		    if (gobj) {
 			KLegacyImageDataKey key;
@@ -3294,7 +3294,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		TQWidget *w = (TQWidget *) obj;
 
 		if (! w->isTopLevel() && w->isEnabled()) {
-		    GtkObject *gobj = priv->gtkDict.find(TQCheckBox::staticMetaObject());
+		    GtkObject *gobj = priv->gtkDict.tqfind(TQCheckBox::staticMetaObject());
 
 		    if (gobj) {
 			KLegacyImageDataKey key;
@@ -3327,7 +3327,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	{
 	    if (obj == priv->lastWidget) {
 		priv->lastWidget = 0;
-		((TQWidget *) obj)->repaint(false);
+		((TQWidget *) obj)->tqrepaint(false);
 	    } else if (obj->inherits("QRadioButton") ||
 		       obj->inherits("QCheckBox")) {
 		TQWidget *w = (TQWidget *) obj;
@@ -3335,7 +3335,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		if (! w->isTopLevel()) {
 		    w->setBackgroundMode(TQWidget::X11ParentRelative);
 		    w->setBackgroundOrigin(TQWidget::WidgetOrigin);
-		    w->repaint(true);
+		    w->tqrepaint(true);
 		}
 	    }
 
@@ -3349,7 +3349,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	    if (obj->inherits("QScrollBar") &&
 		(! (me->state() & (LeftButton | MidButton | RightButton)))) {
 		priv->hovering = true;
-		((TQWidget *) obj)->repaint(false);
+		((TQWidget *) obj)->tqrepaint(false);
 		priv->hovering = false;
 	    }
 

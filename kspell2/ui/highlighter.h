@@ -29,7 +29,7 @@ class TQTextEdit;
 
 namespace KSpell2
 {
-    class Highlighter : public QSyntaxHighlighter
+    class Highlighter : public TQSyntaxHighlighter
     {
     public:
         Highlighter( TQTextEdit *textEdit,

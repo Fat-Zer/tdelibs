@@ -39,7 +39,7 @@
 
 #include "autostart.h"
 
-class IdleSlave : public QObject
+class IdleSlave : public TQObject
 {
    Q_OBJECT
 public:

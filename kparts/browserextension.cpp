@@ -370,11 +370,11 @@ BrowserExtension::BrowserExtension( KParts::ReadOnlyPart *parent,
   // they're supported or not
   ActionSlotMap::ConstIterator it = s_actionSlotMap->begin();
   ActionSlotMap::ConstIterator itEnd = s_actionSlotMap->end();
-  TQStrList slotNames = metaObject()->slotNames();
+  TQStrList slotNames = tqmetaObject()->slotNames();
   for ( int i=0 ; it != itEnd ; ++it, ++i )
   {
       // Does the extension have a slot with the name of this action ?
-      d->m_actionStatus.setBit( i, slotNames.contains( it.key()+"()" ) );
+      d->m_actionStatus.setBit( i, slotNames.tqcontains( it.key()+"()" ) );
   }
 
   connect( m_part, TQT_SIGNAL( completed() ),
@@ -415,13 +415,13 @@ int BrowserExtension::yOffset()
 
 void BrowserExtension::saveState( TQDataStream &stream )
 {
-  stream << m_part->url() << (Q_INT32)xOffset() << (Q_INT32)yOffset();
+  stream << m_part->url() << (TQ_INT32)xOffset() << (TQ_INT32)yOffset();
 }
 
 void BrowserExtension::restoreState( TQDataStream &stream )
 {
   KURL u;
-  Q_INT32 xOfs, yOfs;
+  TQ_INT32 xOfs, yOfs;
   stream >> u >> xOfs >> yOfs;
 
   URLArgs args( urlArgs() );
@@ -452,7 +452,7 @@ void BrowserExtension::slotCompleted()
 void BrowserExtension::pasteRequest()
 {
     TQCString plain( "plain" );
-    TQString url = TQApplication::clipboard()->text(plain, QClipboard::Selection).stripWhiteSpace();
+    TQString url = TQApplication::tqclipboard()->tqtext(plain, TQClipboard::Selection).stripWhiteSpace();
     // Remove linefeeds and any whitespace surrounding it.
     url.remove(TQRegExp("[\\ ]*\\n+[\\ ]*"));
 
@@ -552,7 +552,7 @@ void BrowserExtension::slotSetActionText( const char * name, const TQString& tex
 TQString BrowserExtension::actionText( const char * name ) const
 {
     int actionNumber = (*s_actionNumberMap)[ name ];
-    TQMap<int, TQString>::ConstIterator it = d->m_actionText.find( actionNumber );
+    TQMap<int, TQString>::ConstIterator it = d->m_actionText.tqfind( actionNumber );
     if ( it != d->m_actionText.end() )
         return *it;
     return TQString::null;
@@ -605,13 +605,13 @@ void BrowserExtension::createActionSlotMap()
 
 BrowserExtension *BrowserExtension::childObject( TQObject *obj )
 {
-    if ( !obj || !obj->children() )
+    if ( !obj || obj->childrenListObject().isEmpty() )
         return 0L;
 
     // we try to do it on our own, in hope that we are faster than
     // queryList, which looks kind of big :-)
-    const TQObjectList *children = obj->children();
-    TQObjectListIt it( *children );
+    const TQObjectList children = obj->childrenListObject();
+    TQObjectListIt it( children );
     for (; it.current(); ++it )
         if ( it.current()->inherits( "KParts::BrowserExtension" ) )
             return static_cast<KParts::BrowserExtension *>( it.current() );
@@ -666,13 +666,13 @@ bool BrowserHostExtension::openURLInFrame( const KURL &, const KParts::URLArgs &
 
 BrowserHostExtension *BrowserHostExtension::childObject( TQObject *obj )
 {
-    if ( !obj || !obj->children() )
+    if ( !obj || obj->childrenListObject().isEmpty() )
         return 0L;
 
     // we try to do it on our own, in hope that we are faster than
     // queryList, which looks kind of big :-)
-    const TQObjectList *children = obj->children();
-    TQObjectListIt it( *children );
+    const TQObjectList children = obj->childrenListObject();
+    TQObjectListIt it( children );
     for (; it.current(); ++it )
         if ( it.current()->inherits( "KParts::BrowserHostExtension" ) )
             return static_cast<KParts::BrowserHostExtension *>( it.current() );
@@ -715,13 +715,13 @@ void LiveConnectExtension::unregister( const unsigned long ) {}
 
 LiveConnectExtension *LiveConnectExtension::childObject( TQObject *obj )
 {
-    if ( !obj || !obj->children() )
+    if ( !obj || obj->childrenListObject().isEmpty() )
         return 0L;
 
     // we try to do it on our own, in hope that we are faster than
     // queryList, which looks kind of big :-)
-    const TQObjectList *children = obj->children();
-    TQObjectListIt it( *children );
+    const TQObjectList children = obj->childrenListObject();
+    TQObjectListIt it( children );
     for (; it.current(); ++it )
         if ( it.current()->inherits( "KParts::LiveConnectExtension" ) )
             return static_cast<KParts::LiveConnectExtension *>( it.current() );

@@ -26,7 +26,7 @@
 
 class KConfig;
 
-class KDEPRINT_EXPORT KMConfigPage : public QWidget
+class KDEPRINT_EXPORT KMConfigPage : public TQWidget
 {
 	Q_OBJECT
 public:

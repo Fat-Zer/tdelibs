@@ -33,7 +33,7 @@
 #include <tqobject.h>
 #include <kmdcodec.h>
 
-class HTTPFilterBase : public QObject
+class HTTPFilterBase : public TQObject
 {
     Q_OBJECT
 public:

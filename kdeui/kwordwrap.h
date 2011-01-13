@@ -91,17 +91,17 @@ public:
 
     /**
      * Draw the text that has been previously wrapped, at position x,y.
-     * Flags are for alignment, e.g. Qt::AlignHCenter. Default is
+     * Flags are for tqalignment, e.g. Qt::AlignHCenter. Default is
      * Qt::AlignAuto.
      * @param painter the TQPainter to use.
      * @param x the horizontal position of the text
      * @param y the vertical position of the text
-     * @param flags the ORed text alignment flags from the Qt namespace,
+     * @param flags the ORed text tqalignment flags from the Qt namespace,
      *              ORed with FadeOut if you want the text to fade out if it
      *              does not fit (the @p painter's background must be set
      *              accordingly)
      */
-    void drawText( TQPainter *painter, int x, int y, int flags = Qt::AlignAuto ) const;
+    void drawText( TQPainter *painter, int x, int y, int flags = TQt::AlignAuto ) const;
 
     /**
      * Destructor.

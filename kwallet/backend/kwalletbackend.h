@@ -72,7 +72,7 @@ class KDE_EXPORT Backend {
 		const TQString& folder() const { return _folder; }
 
 		// Does it have this folder?
-		bool hasFolder(const TQString& f) const { return _entries.contains(f); }
+		bool hasFolder(const TQString& f) const { return _entries.tqcontains(f); }
 
 		// Look up an entry.  Returns null if it doesn't exist.
 		Entry *readEntry(const TQString& key);

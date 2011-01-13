@@ -35,7 +35,7 @@ KWordWrap* KWordWrap::formatText( TQFontMetrics &fm, const TQRect & r, int /*fla
 {
     KWordWrap* kw = new KWordWrap( r );
     // The wordwrap algorithm
-    // The variable names and the global shape of the algorithm are inspired
+    // The variable names and the global tqshape of the algorithm are inspired
     // from QTextFormatterBreakWords::format().
     //kdDebug() << "KWordWrap::formatText " << str << " r=" << r.x() << "," << r.y() << " " << r.width() << "x" << r.height() << endl;
     int height = fm.height();
@@ -198,7 +198,7 @@ void KWordWrap::drawFadeoutText(TQPainter *p, int x, int y, int maxW,
             p->drawText( x, y, t.left( tl - 3 ) );
             x += fm.width( t.left( tl - 3 ) );
         }
-        int n = QMIN( tl, 3);
+        int n = TQMIN( tl, 3);
         for (int i = 0; i < n; i++) {
             p->setPen( mixColors( 0.70 - i * 0.25, textColor, bgColor ) );
             TQString s( t.at( tl - n + i ) );

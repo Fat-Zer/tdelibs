@@ -110,8 +110,8 @@ DOMString HTMLDocumentImpl::cookie() const
     long windowId = 0;
     KHTMLView *v = view ();
 
-    if ( v && v->topLevelWidget() )
-      windowId = v->topLevelWidget()->winId();
+    if ( v && v->tqtopLevelWidget() )
+      windowId = v->tqtopLevelWidget()->winId();
 
     TQCString replyType;
     TQByteArray params, reply;
@@ -142,8 +142,8 @@ void HTMLDocumentImpl::setCookie( const DOMString & value )
     long windowId = 0;
     KHTMLView *v = view ();
 
-    if ( v && v->topLevelWidget() )
-      windowId = v->topLevelWidget()->winId();
+    if ( v && v->tqtopLevelWidget() )
+      windowId = v->tqtopLevelWidget()->winId();
 
     TQByteArray params;
     TQDataStream stream(params, IO_WriteOnly);
@@ -226,18 +226,18 @@ void HTMLDocumentImpl::slotHistoryChanged()
         return;
 
     recalcStyle( Force );
-    m_render->repaint();
+    m_render->tqrepaint();
 }
 
 HTMLMapElementImpl* HTMLDocumentImpl::getMap(const DOMString& _url)
 {
     TQString url = _url.string();
     TQString s;
-    int pos = url.find('#');
+    int pos = url.tqfind('#');
     //kdDebug(0) << "map pos of #:" << pos << endl;
-    s = TQString(_url.unicode() + pos + 1, _url.length() - pos - 1);
+    s = TQString(_url.tqunicode() + pos + 1, _url.length() - pos - 1);
 
-    TQMapConstIterator<TQString,HTMLMapElementImpl*> it = mapMap.find(s);
+    TQMapConstIterator<TQString,HTMLMapElementImpl*> it = mapMap.tqfind(s);
 
     if (it != mapMap.end())
         return *it;
@@ -297,7 +297,7 @@ static int parseDocTypePart(const TQString& buffer, int index)
         else if (ch == '-') {
             int tmpIndex=index;
             if (buffer[index+1] == '-' &&
-                ((tmpIndex=buffer.find("--", index+2)) != -1))
+                ((tmpIndex=buffer.tqfind("--", index+2)) != -1))
                 index = tmpIndex+2;
             else
                 return index;
@@ -330,7 +330,7 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
     // Skip through any comments and processing instructions.
     int index = 0;
     do {
-        index = buffer.find('<', index);
+        index = buffer.tqfind('<', index);
         if (index == -1) break;
         TQChar nextChar = buffer[index+1];
         if (nextChar == '!') {
@@ -340,10 +340,10 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
                 break;
             }
             index = parseDocTypePart(buffer,index);
-            index = buffer.find('>', index);
+            index = buffer.tqfind('>', index);
         }
         else if (nextChar == '?')
-            index = buffer.find('>', index);
+            index = buffer.tqfind('>', index);
         else
             break;
     } while (index != -1);
@@ -371,7 +371,7 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
         // |start| is the first character (after the quote) and |end|
         // is the final quote, so there are |end|-|start| characters.
         int publicIDStart = index+1;
-        int publicIDEnd = buffer.find(theChar, publicIDStart);
+        int publicIDEnd = buffer.tqfind(theChar, publicIDStart);
         if (publicIDEnd == -1)
             return false;
         index = parseDocTypePart(buffer, publicIDEnd+1);
@@ -385,7 +385,7 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
             // We have a system identifier.
             *resultFlags |= PARSEMODE_HAVE_SYSTEM_ID;
             int systemIDStart = index+1;
-            int systemIDEnd = buffer.find(next, systemIDStart);
+            int systemIDEnd = buffer.tqfind(next, systemIDStart);
             if (systemIDEnd == -1)
                 return false;
             systemID = buffer.mid(systemIDStart, systemIDEnd - systemIDStart);
@@ -410,7 +410,7 @@ static bool parseDocTypeDeclaration(const TQString& buffer,
             if (next != '\"' && next != '\'')
                 return false;
             int systemIDStart = index+1;
-            int systemIDEnd = buffer.find(next, systemIDStart);
+            int systemIDEnd = buffer.tqfind(next, systemIDStart);
             if (systemIDEnd == -1)
                 return false;
             systemID = buffer.mid(systemIDStart, systemIDEnd - systemIDStart);

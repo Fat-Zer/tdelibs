@@ -39,7 +39,7 @@ KPanelAppMenu::KPanelAppMenu(const TQString &title, TQObject *parent,
                        const char *name)
     : TQObject(parent, name), DCOPObject()
 {
-    init(TQString::null, title);
+    init(TQString(), title);
 }
 
 KPanelAppMenu::KPanelAppMenu(const TQPixmap &icon, const TQString &title,

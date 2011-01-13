@@ -23,6 +23,11 @@
 #define _KWALLET_H
 
 #include <tqglobal.h>
+
+#ifdef Q_MOC_RUN
+#define Q_OS_UNIX
+#endif // Q_MOC_RUN
+
 #ifdef Q_OS_UNIX
 
 #include <tqstring.h>

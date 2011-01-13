@@ -539,7 +539,7 @@ int KCalendarSystemHijri::weekDayOfPray() const
 
 TQDate KCalendarSystemHijri::addDays( const TQDate & date, int ndays ) const
 {
-  return date.addDays( ndays );
+  return TQT_TQDATE_OBJECT(date.addDays( ndays ));
 }
 
 TQDate KCalendarSystemHijri::addMonths( const TQDate & date, int nmonths ) const
@@ -577,7 +577,7 @@ TQDate KCalendarSystemHijri::addYears( const TQDate & date, int nyears ) const
 
 TQString KCalendarSystemHijri::calendarName() const
 {
-  return TQString::fromLatin1("hijri");
+  return TQString::tqfromLatin1("hijri");
 }
 
 bool KCalendarSystemHijri::isLunar() const

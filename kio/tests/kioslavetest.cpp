@@ -144,24 +144,24 @@ KioslaveTest::KioslaveTest( TQString src, TQString dest, uint op, uint pr )
   hbLayout = new TQHBoxLayout( topLayout, 15 );
 
   pbStart = new TQPushButton( "&Start", main_widget );
-  pbStart->setFixedSize( pbStart->sizeHint() );
+  pbStart->setFixedSize( pbStart->tqsizeHint() );
   connect( pbStart, TQT_SIGNAL(clicked()), TQT_SLOT(startJob()) );
   hbLayout->addWidget( pbStart, 5 );
 
   pbStop = new TQPushButton( "Sto&p", main_widget );
-  pbStop->setFixedSize( pbStop->sizeHint() );
+  pbStop->setFixedSize( pbStop->tqsizeHint() );
   pbStop->setEnabled( false );
   connect( pbStop, TQT_SIGNAL(clicked()), TQT_SLOT(stopJob()) );
   hbLayout->addWidget( pbStop, 5 );
 
   // close button
   close = new TQPushButton( "&Close", main_widget );
-  close->setFixedSize( close->sizeHint() );
+  close->setFixedSize( close->tqsizeHint() );
   connect(close, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotQuit()));
 
   topLayout->addWidget( close, 5 );
 
-  main_widget->setMinimumSize( main_widget->sizeHint() );
+  main_widget->setMinimumSize( main_widget->tqsizeHint() );
   setCentralWidget( main_widget );
 
   slave = 0;
@@ -545,7 +545,7 @@ int main(int argc, char **argv) {
   KioslaveTest test( src, dest, op, pr );
   test.show();
   // Bug in KTMW / Qt / layouts ?
-  test.resize( test.sizeHint() );
+  test.resize( test.tqsizeHint() );
 
   app.setMainWidget(&test);
   app.exec();

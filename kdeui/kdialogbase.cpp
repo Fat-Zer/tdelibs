@@ -60,7 +60,7 @@ template class TQPtrList<KDialogBaseButton>;
  */
 namespace
 {
-struct SButton : public Qt
+struct SButton : public TQt
 {
   SButton()
   {
@@ -101,10 +101,10 @@ KDialogBase::KDialogBase( TQWidget *parent, const char *name, bool modal,
 			  ButtonCode defaultButton, bool separator,
 			  const KGuiItem &user1, const KGuiItem &user2,
 			  const KGuiItem &user3 )
-  :KDialog( parent, name, modal, WStyle_DialogBorder ),
+  :KDialog( parent, name, modal, (WFlags)WStyle_DialogBorder ),
    mTopLayout(0), mMainWidget(0), mUrlHelp(0), mJanus(0), mActionSep(0),
    mIsActivated(false), mShowTile(false), mMessageBoxMode(false),
-   mButtonOrientation(Horizontal), d(new KDialogBasePrivate)
+   mButtonOrientation(Qt::Horizontal), d(new KDialogBasePrivate)
 {
   setCaption( caption );
 
@@ -123,10 +123,10 @@ KDialogBase::KDialogBase( int dialogFace, const TQString &caption,
 			  TQWidget *parent, const char *name, bool modal,
 			  bool separator, const KGuiItem &user1,
 			  const KGuiItem &user2, const KGuiItem &user3 )
-  :KDialog( parent, name, modal, WStyle_DialogBorder ),
+  :KDialog( parent, name, modal, (WFlags)WStyle_DialogBorder ),
    mTopLayout(0), mMainWidget(0), mUrlHelp(0), mJanus(0), mActionSep(0),
    mIsActivated(false), mShowTile(false), mMessageBoxMode(false),
-   mButtonOrientation(Horizontal), d(new KDialogBasePrivate)
+   mButtonOrientation(Qt::Horizontal), d(new KDialogBasePrivate)
 {
   setCaption( caption );
 
@@ -155,7 +155,7 @@ KDialogBase::KDialogBase(  KDialogBase::DialogType dialogFace, WFlags f, TQWidge
   :KDialog( parent, name, modal, f ),
    mTopLayout(0), mMainWidget(0), mUrlHelp(0), mJanus(0), mActionSep(0),
    mIsActivated(false), mShowTile(false), mMessageBoxMode(false),
-   mButtonOrientation(Horizontal), d(new KDialogBasePrivate)
+   mButtonOrientation(Qt::Horizontal), d(new KDialogBasePrivate)
 {
   setCaption( caption );
 
@@ -180,10 +180,10 @@ KDialogBase::KDialogBase( const TQString &caption, int buttonMask,
 			  TQWidget *parent, const char *name, bool modal,
 			  bool separator, const KGuiItem &yes,
 			  const KGuiItem &no, const KGuiItem &cancel )
-  :KDialog( parent, name, modal, WStyle_DialogBorder ),
+  :KDialog( parent, name, modal, (WFlags)WStyle_DialogBorder ),
    mTopLayout(0), mMainWidget(0), mUrlHelp(0), mJanus(0), mActionSep(0),
    mIsActivated(false), mShowTile(false), mMessageBoxMode(true),
-   mButtonOrientation(Horizontal),mEscapeButton(escapeButton),
+   mButtonOrientation(Qt::Horizontal),mEscapeButton(escapeButton),
    d(new KDialogBasePrivate)
 {
   setCaption( caption );
@@ -230,16 +230,16 @@ void SButton::resize( bool sameWidth, int margin,
 
   for( p = list.first(); p; p =  list.next() )
   {
-    const TQSize s( p->sizeHint() );
+    const TQSize s( p->tqsizeHint() );
     if( s.height() > h ) { h = s.height(); }
     if( s.width() > w ) { w = s.width(); }
   }
 
-  if( orientation == Horizontal )
+  if( orientation == Qt::Horizontal )
   {
     for( p = list.first(); p; p =  list.next() )
     {
-      TQSize s( p->sizeHint() );
+      TQSize s( p->tqsizeHint() );
       if( sameWidth ) { s.setWidth( w ); }
       p->setFixedWidth( s.width() );
       t += s.width() + spacing;
@@ -253,7 +253,7 @@ void SButton::resize( bool sameWidth, int margin,
     // sameWidth has no effect here
     for( p = list.first(); p; p =  list.next() )
     {
-      TQSize s( p->sizeHint() );
+      TQSize s( p->tqsizeHint() );
       s.setWidth( w );
       p->setFixedSize( s );
       t += s.height() + spacing;
@@ -299,7 +299,7 @@ void KDialogBase::setupLayout()
   // mTopLayout = new TQVBoxLayout( this, marginHint(), spacingHint() );
 
 
-  if( mButtonOrientation == Horizontal )
+  if( mButtonOrientation == Qt::Horizontal )
   {
     mTopLayout = new TQBoxLayout( this, TQBoxLayout::TopToBottom,
 				 marginHint(), spacingHint() );
@@ -349,10 +349,10 @@ void KDialogBase::setButtonBoxOrientation( int orientation )
     mButtonOrientation = orientation;
     if( mActionSep )
     {
-      mActionSep->setOrientation( mButtonOrientation == Horizontal ?
+      mActionSep->setOrientation( mButtonOrientation == Qt::Horizontal ?
 				  TQFrame::HLine : TQFrame::VLine );
     }
-    if( mButtonOrientation == Vertical )
+    if( mButtonOrientation == Qt::Vertical )
     {
       enableLinkedHelp(false); // 2000-06-18 Espen: No support for this yet.
     }
@@ -381,7 +381,7 @@ void KDialogBase::makeRelay()
   if( mTile )
   {
     connect( mTile, TQT_SIGNAL(pixmapChanged()), TQT_SLOT(updateBackground()) );
-    connect( qApp, TQT_SIGNAL(aboutToQuit()), mTile, TQT_SLOT(cleanup()) );
+    connect( tqApp, TQT_SIGNAL(aboutToQuit()), mTile, TQT_SLOT(cleanup()) );
   }
 }
 
@@ -395,8 +395,8 @@ void KDialogBase::enableButtonSeparator( bool state )
       return;
     }
     mActionSep = new KSeparator( this );
-    mActionSep->setFocusPolicy(TQWidget::NoFocus);
-    mActionSep->setOrientation( mButtonOrientation == Horizontal ?
+    mActionSep->setFocusPolicy(TQ_NoFocus);
+    mActionSep->setOrientation( mButtonOrientation == Qt::Horizontal ?
 				TQFrame::HLine : TQFrame::VLine );
     mActionSep->show();
   }
@@ -429,17 +429,17 @@ void KDialogBase::adjustSize()
 //  if (layout())
 //     layout()->activate();
   if( d->bFixed )
-    setFixedSize( sizeHint() );
+    setFixedSize( tqsizeHint() );
   else
-    resize( sizeHint() );
+    resize( tqsizeHint() );
 }
 
-TQSize KDialogBase::sizeHint() const
+TQSize KDialogBase::tqsizeHint() const
 {
-   return d->minSize.expandedTo( minimumSizeHint() ) + d->incSize;
+   return d->minSize.expandedTo( tqminimumSizeHint() ) + d->incSize;
 }
 
-TQSize KDialogBase::minimumSizeHint() const
+TQSize KDialogBase::tqminimumSizeHint() const
 {
   const int m = marginHint();
   const int s = spacingHint();
@@ -454,7 +454,7 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( mUrlHelp )
   {
-    s2 = mUrlHelp->minimumSize() + zeroByS;
+    s2 = mUrlHelp->tqminimumSize() + zeroByS;
   }
   s1.rwidth()   = QMAX( s1.rwidth(), s2.rwidth() );
   s1.rheight() += s2.rheight();
@@ -464,13 +464,13 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( mJanus )
   {
-    s2 = mJanus->minimumSizeHint() + zeroByS;
+    s2 = mJanus->tqminimumSizeHint() + zeroByS;
   }
   else if( mMainWidget )
   {
-    s2 = mMainWidget->sizeHint() + zeroByS;
-    s2 = s2.expandedTo( mMainWidget->minimumSize() );
-    s2 = s2.expandedTo( mMainWidget->minimumSizeHint() );
+    s2 = mMainWidget->tqsizeHint() + zeroByS;
+    s2 = s2.expandedTo( mMainWidget->tqminimumSize() );
+    s2 = s2.expandedTo( mMainWidget->tqminimumSizeHint() );
     if( s2.isEmpty() )
     {
       s2 = TQSize( 100, 100+s );
@@ -485,9 +485,9 @@ TQSize KDialogBase::minimumSizeHint() const
 
   if (d->detailsWidget && d->bDetails)
   {
-    s2 = d->detailsWidget->sizeHint() + zeroByS;
-    s2 = s2.expandedTo( d->detailsWidget->minimumSize() );
-    s2 = s2.expandedTo( d->detailsWidget->minimumSizeHint() );
+    s2 = d->detailsWidget->tqsizeHint() + zeroByS;
+    s2 = s2.expandedTo( d->detailsWidget->tqminimumSize() );
+    s2 = s2.expandedTo( d->detailsWidget->tqminimumSizeHint() );
     s1.rwidth()  = QMAX( s1.rwidth(), s2.rwidth() );
     s1.rheight() += s2.rheight();
   }
@@ -497,7 +497,7 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( mActionSep )
   {
-    s1.rheight() += mActionSep->minimumSize().height() + s;
+    s1.rheight() += mActionSep->tqminimumSize().height() + s;
   }
 
   //
@@ -505,8 +505,8 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( d->mButton.box )
   {
-    s2 = d->mButton.box->minimumSize();
-    if( mButtonOrientation == Horizontal )
+    s2 = d->mButton.box->tqminimumSize();
+    if( mButtonOrientation == Qt::Horizontal )
     {
       s1.rwidth()   = QMAX( s1.rwidth(), s2.rwidth() );
       s1.rheight() += s2.rheight();
@@ -530,7 +530,7 @@ TQSize KDialogBase::minimumSizeHint() const
 
 void KDialogBase::disableResize()
 {
-  setFixedSize( sizeHint() );
+  setFixedSize( tqsizeHint() );
 }
 
 
@@ -586,7 +586,7 @@ void KDialogBase::makeButtonBox( int buttonMask, ButtonCode defaultButton,
   }
   if( d->mButton.mask & Details )
   {
-    KPushButton *pb = d->mButton.append( Details, TQString::null );
+    KPushButton *pb = d->mButton.append( Details, TQString() );
     connect( pb, TQT_SIGNAL(clicked()), TQT_SLOT(slotDetails()) );
     setDetails(false);
   }
@@ -686,7 +686,7 @@ void KDialogBase::setButtonStyle( int style )
     layoutMax = 6;
     layout = layoutRule[ d->mButton.style ];
   }
-  else if (mButtonOrientation == Horizontal)
+  else if (mButtonOrientation == Qt::Horizontal)
   {
     static const int layoutRule[5][10] =
     {
@@ -720,7 +720,7 @@ void KDialogBase::setButtonStyle( int style )
   }
 
   TQBoxLayout *lay;
-  if( mButtonOrientation == Horizontal )
+  if( mButtonOrientation == Qt::Horizontal )
   {
     lay = new TQBoxLayout( d->mButton.box, TQBoxLayout::LeftToRight, 0,
 			  spacingHint());
@@ -748,7 +748,7 @@ void KDialogBase::setButtonStyle( int style )
       {
         newButton = actionButton( (ButtonCode) (layout[i] & ~(Stretch | Filler)));
         if (newButton)
-           lay->addSpacing(newButton->sizeHint().width());
+           lay->addSpacing(newButton->tqsizeHint().width());
       }
       continue;
     }
@@ -1113,7 +1113,7 @@ void KDialogBase::setDetailsWidget(TQWidget *detailsWidget)
 {
   delete d->detailsWidget;
   d->detailsWidget = detailsWidget;
-  if (d->detailsWidget->parentWidget() != this)
+  if (d->detailsWidget->tqparentWidget() != this)
      d->detailsWidget->reparent(this, TQPoint(0,0));
   d->detailsWidget->hide();
   if( mIsActivated )
@@ -1492,10 +1492,10 @@ TQRect KDialogBase::getContentsRect() const
   r.setLeft( marginHint() );
   r.setTop( marginHint() + (mUrlHelp ? mUrlHelp->height() : 0) );
   r.setRight( width() - marginHint() );
-  int h = (!mActionSep ? 0 : mActionSep->minimumSize().height()+marginHint());
+  int h = (!mActionSep ? 0 : mActionSep->tqminimumSize().height()+marginHint());
   if( d->mButton.box )
   {
-    r.setBottom( height() - d->mButton.box->minimumSize().height() - h );
+    r.setBottom( height() - d->mButton.box->tqminimumSize().height() - h );
   }
   else
   {
@@ -1513,14 +1513,14 @@ void KDialogBase::getBorderWidths(int& ulx, int& uly, int& lrx, int& lry) const
   uly = marginHint();
   if( mUrlHelp  )
   {
-    uly += mUrlHelp->minimumSize().height();
+    uly += mUrlHelp->tqminimumSize().height();
   }
 
   lrx = marginHint();
-  lry = d->mButton.box ? d->mButton.box->minimumSize().height() : 0;
+  lry = d->mButton.box ? d->mButton.box->tqminimumSize().height() : 0;
   if( mActionSep )
   {
-    lry += mActionSep->minimumSize().height() + marginHint();
+    lry += mActionSep->tqminimumSize().height() + marginHint();
   }
 }
 
@@ -1748,15 +1748,15 @@ TQSize KDialogBase::configDialogSize( KConfig& config,
 				      const TQString& groupName ) const
 {
    int w, h;
-   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+   int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
    TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
-   w = sizeHint().width();
-   h = sizeHint().height();
+   w = tqsizeHint().width();
+   h = tqsizeHint().height();
 
    KConfigGroupSaver cs(&config, groupName);
-   w = config.readNumEntry( TQString::fromLatin1("Width %1").arg( desk.width()), w );
-   h = config.readNumEntry( TQString::fromLatin1("Height %1").arg( desk.height()), h );
+   w = config.readNumEntry( TQString::tqfromLatin1("Width %1").arg( desk.width()), w );
+   h = config.readNumEntry( TQString::tqfromLatin1("Height %1").arg( desk.height()), h );
 
    return TQSize( w, h );
 }
@@ -1771,15 +1771,15 @@ void KDialogBase::saveDialogSize( const TQString& groupName, bool global )
 void KDialogBase::saveDialogSize( KConfig& config, const TQString& groupName,
 				      bool global ) const
 {
-   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
+   int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
    TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
    KConfigGroupSaver cs(&config, groupName);
    TQSize sizeToSave = size();
 
-   config.writeEntry( TQString::fromLatin1("Width %1").arg( desk.width()),
+   config.writeEntry( TQString::tqfromLatin1("Width %1").arg( desk.width()),
 		      TQString::number( sizeToSave.width()), true, global);
-   config.writeEntry( TQString::fromLatin1("Height %1").arg( desk.height()),
+   config.writeEntry( TQString::tqfromLatin1("Height %1").arg( desk.height()),
 		      TQString::number( sizeToSave.height()), true, global);
 }
 

@@ -131,7 +131,7 @@ loadPredefined(Iter begin, Iter end, TQMap<TQChar,bool>& keys)
 {
     for (Iter i = begin; i != end; ++i) {
         TQString item = Deref::deref(i);
-        int user_ampersand = item.find(TQChar('&'));
+        int user_ampersand = item.tqfind(TQChar('&'));
         if( user_ampersand >= 0 ) {
             // Sanity check.  Note that we don't try to find an
             // accelerator if the user shoots him/herself in the foot
@@ -178,7 +178,7 @@ generate(Iter begin, Iter end, TQStringList& target)
 
         // Attempt to find a good accelerator, but only if the user
         // has not manually hardcoded one.
-        int user_ampersand = item.find(TQChar('&'));
+        int user_ampersand = item.tqfind(TQChar('&'));
         if( user_ampersand < 0 || item[user_ampersand+1] == '&') {
             bool found = false;
             uint found_idx;

@@ -236,6 +236,7 @@ FALSE			return T_FALSE;
 typedef			return T_TYPEDEF;
 K_DCOP			return T_DCOP;
 Q_OBJECT		;
+TQ_OBJECT		;
 ("0"|"0L")		return T_NULL;
 "extern "[A-Za-z0-9_ \t*]+	return T_EXTERN;
 "extern \"C\""			return T_EXTERN_C;

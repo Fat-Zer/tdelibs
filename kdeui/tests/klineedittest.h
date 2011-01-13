@@ -9,7 +9,7 @@ class TQPushButton;
 
 class KLineEdit;
 
-class KLineEditTest : public QWidget
+class KLineEditTest : public TQWidget
 {
     Q_OBJECT
 

@@ -83,7 +83,7 @@ KFileAudioPreview::KFileAudioPreview( TQWidget *parent, const char *name )
         {
             TQHBox *frame = new TQHBox( box );
             frame->setFrameStyle( TQFrame::Panel | TQFrame::Sunken );
-            frame->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+            frame->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
             view->videoWidget()->reparent( frame, TQPoint(0,0) );
         }
 
@@ -110,7 +110,7 @@ void KFileAudioPreview::showPreview( const KURL &url )
         return;
 
     KMimeType::Ptr mt = KMimeType::findByURL( url );
-    bool supported = m_supportedFormats.find( mt->name() );
+    bool supported = m_supportedFormats.tqfind( mt->name() );
     d->player->view()->setEnabled( supported );
     if ( !supported )
         return;

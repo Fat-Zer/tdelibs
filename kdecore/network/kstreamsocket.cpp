@@ -130,7 +130,7 @@ bool KStreamSocket::connect(const TQString& node, const TQString& service)
       // connection hasn't started yet
       if (!blocking())
 	{
-	  TQObject::connect(this, TQT_SIGNAL(hostFound()), TQT_SLOT(hostFoundSlot()));
+	  QObject::connect(this, TQT_SIGNAL(hostFound()), TQT_SLOT(hostFoundSlot()));
 	  return lookup();
 	}
 
@@ -196,7 +196,7 @@ bool KStreamSocket::connect(const KResolverEntry& entry)
 
 void KStreamSocket::hostFoundSlot()
 {
-  TQObject::disconnect(this, TQT_SLOT(hostFoundSlot()));
+  QObject::disconnect(this, TQT_SLOT(hostFoundSlot()));
   if (timeout() > 0)
     d->timer.start(timeout(), true);
   TQTimer::singleShot(0, this, TQT_SLOT(connectionEvent()));

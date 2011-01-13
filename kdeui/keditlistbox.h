@@ -41,12 +41,13 @@ class KEditListBoxPrivate;
  * \image html keditlistbox.png "KDE Edit List Box Widget"
  *
  */
-class KDEUI_EXPORT KEditListBox : public QGroupBox
+class KDEUI_EXPORT KEditListBox : public TQGroupBox
 {
    Q_OBJECT
+   TQ_OBJECT
 
-   Q_SETS( Button )
-   Q_PROPERTY( Button buttons READ buttons WRITE setButtons )
+   TQ_SETS( Button )
+   TQ_PROPERTY( Button buttons READ buttons WRITE setButtons )
    Q_PROPERTY( TQStringList items READ items WRITE setItems )
 
 public:

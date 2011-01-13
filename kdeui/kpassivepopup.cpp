@@ -43,11 +43,11 @@ public:
 
 static const int DEFAULT_POPUP_TYPE = KPassivePopup::Boxed;
 static const int DEFAULT_POPUP_TIME = 6*1000;
-static const int POPUP_FLAGS = Qt::WStyle_Customize | Qt::WDestructiveClose | Qt::WX11BypassWM
-                             | Qt::WStyle_StaysOnTop | Qt::WStyle_Tool | Qt::WStyle_NoBorder;
+static const int POPUP_FLAGS = TQt::WStyle_Customize | TQt::WDestructiveClose | TQt::WX11BypassWM
+                             | TQt::WStyle_StaysOnTop | TQt::WStyle_Tool | TQt::WStyle_NoBorder;
 
 KPassivePopup::KPassivePopup( TQWidget *parent, const char *name, WFlags f )
-    : TQFrame( 0, name, f ? f : POPUP_FLAGS ),
+    : TQFrame( 0, name, (WFlags)(f ? (int)f : POPUP_FLAGS) ),
       window( parent ? parent->winId() : 0L ), msgView( 0 ), topLayout( 0 ),
       hideDelay( DEFAULT_POPUP_TIME ), hideTimer( new TQTimer( this, "hide_timer" ) ),
       m_autoDelete( false )
@@ -56,7 +56,7 @@ KPassivePopup::KPassivePopup( TQWidget *parent, const char *name, WFlags f )
 }
 
 KPassivePopup::KPassivePopup( WId win, const char *name, WFlags f )
-    : TQFrame( 0, name, f ? f : POPUP_FLAGS ),
+    : TQFrame( 0, name, (WFlags)(f ? (int)f : POPUP_FLAGS) ),
       window( win ), msgView( 0 ), topLayout( 0 ),
       hideDelay( DEFAULT_POPUP_TIME ), hideTimer( new TQTimer( this, "hide_timer" ) ),
       m_autoDelete( false )
@@ -65,7 +65,7 @@ KPassivePopup::KPassivePopup( WId win, const char *name, WFlags f )
 }
 
 KPassivePopup::KPassivePopup( int popupStyle, TQWidget *parent, const char *name, WFlags f )
-    : TQFrame( 0, name, f ? f : POPUP_FLAGS ),
+    : TQFrame( 0, name, (WFlags)(f ? (int)f : POPUP_FLAGS) ),
       window( parent ? parent->winId() : 0L ), msgView( 0 ), topLayout( 0 ),
       hideDelay( DEFAULT_POPUP_TIME ), hideTimer( new TQTimer( this, "hide_timer" ) ),
       m_autoDelete( false )
@@ -74,7 +74,7 @@ KPassivePopup::KPassivePopup( int popupStyle, TQWidget *parent, const char *name
 }
 
 KPassivePopup::KPassivePopup( int popupStyle, WId win, const char *name, WFlags f )
-    : TQFrame( 0, name, f ? f : POPUP_FLAGS ),
+    : TQFrame( 0, name, (WFlags)(f ? (int)f : POPUP_FLAGS) ),
       window( win ), msgView( 0 ), topLayout( 0 ),
       hideDelay( DEFAULT_POPUP_TIME ), hideTimer( new TQTimer( this, "hide_timer" ) ),
       m_autoDelete( false )
@@ -138,7 +138,7 @@ TQVBox * KPassivePopup::standardView( const TQString& caption,
 	hb->setSpacing( KDialog::spacingHint() );
 	ttlIcon = new TQLabel( hb, "title_icon" );
 	ttlIcon->setPixmap( icon );
-        ttlIcon->setAlignment( AlignLeft );
+        ttlIcon->tqsetAlignment( AlignLeft );
     }
 
     if ( !caption.isEmpty() ) {
@@ -146,14 +146,14 @@ TQVBox * KPassivePopup::standardView( const TQString& caption,
 	TQFont fnt = ttl->font();
 	fnt.setBold( true );
 	ttl->setFont( fnt );
-	ttl->setAlignment( Qt::AlignHCenter );
+	ttl->tqsetAlignment( Qt::AlignHCenter );
         if ( hb )
             hb->setStretchFactor( ttl, 10 ); // enforce centering
     }
 
     if ( !text.isEmpty() ) {
         msg = new TQLabel( text, vb, "msg_label" );
-        msg->setAlignment( AlignLeft );
+        msg->tqsetAlignment( AlignLeft );
     }
 
     return vb;
@@ -194,8 +194,8 @@ void KPassivePopup::mouseReleaseEvent( TQMouseEvent *e )
 
 void KPassivePopup::show()
 {
-    if ( size() != sizeHint() )
-	resize( sizeHint() );
+    if ( size() != tqsizeHint() )
+	resize( tqsizeHint() );
 
     if ( d->fixedPosition.isNull() )
 	positionSelf();

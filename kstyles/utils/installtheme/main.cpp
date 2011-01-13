@@ -57,7 +57,7 @@ int main(int argc, char **argv)
         if (config.readEntry( "widgetStyle" ) == "basicstyle.la")
         {
             //OK, emit a style entry...
-            if (!themes.contains(name)) //Only add first occurrence, i.e. user local one.
+            if (!themes.tqcontains(name)) //Only add first occurrence, i.e. user local one.
                 themes[name] = file;
         }
     }

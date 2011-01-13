@@ -323,7 +323,7 @@ namespace KNotify
     /**
      * @internal
      */
-    class ListViewItem : public QListViewItem
+    class ListViewItem : public TQListViewItem
     {
     public:
         ListViewItem( TQListView *view, Event *event );

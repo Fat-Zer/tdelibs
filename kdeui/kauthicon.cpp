@@ -102,7 +102,7 @@ KAuthIcon::KAuthIcon(TQWidget *parent, const char *name)
   lockBox = new TQLabel(this);
   lockBox->setFrameStyle(TQFrame::WinPanel|TQFrame::Raised);
   lockBox->setPixmap(lockPM);
-  lockBox->setFixedSize(lockBox->sizeHint());
+  lockBox->setFixedSize(lockBox->tqsizeHint());
 
   lockLabel = new TQLabel(this);
   lockLabel->setFrameStyle(TQFrame::NoFrame);
@@ -113,8 +113,8 @@ KAuthIcon::KAuthIcon(TQWidget *parent, const char *name)
     lockLabel->setText(lockText);
   else
     lockLabel->setText(openLockText);
-  lockLabel->setAlignment(AlignCenter);
-  lockLabel->setMinimumSize(lockLabel->sizeHint());
+  lockLabel->tqsetAlignment(AlignCenter);
+  lockLabel->setMinimumSize(lockLabel->tqsizeHint());
   lockLabel->setText(lockText);
 
   layout = new TQHBoxLayout(this);
@@ -124,7 +124,7 @@ KAuthIcon::KAuthIcon(TQWidget *parent, const char *name)
   layout->addWidget(lockLabel, 0, AlignRight|AlignVCenter);
 
   layout->activate();
-  resize(sizeHint());
+  resize(tqsizeHint());
 }
 
 KAuthIcon::~KAuthIcon()
@@ -132,9 +132,9 @@ KAuthIcon::~KAuthIcon()
 }
 
 
-TQSize KAuthIcon::sizeHint() const
+TQSize KAuthIcon::tqsizeHint() const
 {
-  return layout->minimumSize();
+  return layout->tqminimumSize();
 }
 
 

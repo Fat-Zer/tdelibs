@@ -40,7 +40,7 @@ class KMultipleDragPrivate;
  * Sample code for this:
  *
  * \code
- * KMultipleDrag *drag = new KMultipleDrag( parentWidget );
+ * KMultipleDrag *drag = new KMultipleDrag( tqparentWidget );
  * drag->addDragObject( new TQImageDrag( someQImage, 0 ) );
  * drag->addDragObject( new KURLDrag( someKURL, 0 ) );
  * drag->drag();
@@ -80,7 +80,7 @@ public:
      * @return the data, or a null byte array if not found
      * @reimp
      */
-    virtual TQByteArray encodedData( const char *mime ) const;
+    virtual TQByteArray tqencodedData( const char *mime ) const;
 
     /**
      * Returns the @p i'th supported format, or 0.

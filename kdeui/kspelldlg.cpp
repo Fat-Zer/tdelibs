@@ -100,7 +100,7 @@ KSpellDlg::KSpellDlg( TQWidget * parent, const char * name, bool _progressbar, b
            TQT_SLOT(slotConfigChanged()) );
 
   setHelp( "spelldlg", "kspell" );
-  setMinimumSize( sizeHint() );
+  setMinimumSize( tqsizeHint() );
   emit ready( false );
 }
 

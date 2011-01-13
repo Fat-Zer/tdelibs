@@ -74,22 +74,22 @@ void SMTP::setTimeOut(int timeout)
 void SMTP::setSenderAddress(const TQString& sender)
 {
     senderAddress = sender;
-    int index = senderAddress.find('<');
+    int index = senderAddress.tqfind('<');
     if (index == -1)
         return;
     senderAddress = senderAddress.mid(index + 1);
-    index =  senderAddress.find('>');
+    index =  senderAddress.tqfind('>');
     if (index != -1)
         senderAddress = senderAddress.left(index);
     senderAddress = senderAddress.simplifyWhiteSpace();
     while (1) {
-        index =  senderAddress.find(' ');
+        index =  senderAddress.tqfind(' ');
         if (index != -1)
             senderAddress = senderAddress.mid(index + 1); // take one side
         else
             break;
     }
-    index = senderAddress.find('@');
+    index = senderAddress.tqfind('@');
     if (index == -1)
         senderAddress.append("@localhost"); // won't go through without a local mail system
 
@@ -134,7 +134,7 @@ void SMTP::sendMessage(void)
         kdDebug() << "state was == FINISHED\n" << endl;
         finished = false;
         state = IN;
-        writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
+        writeString = TQString::tqfromLatin1("helo %1\r\n").arg(domainName);
         write(sock->socket(), writeString.ascii(), writeString.length());
     }
     if(connected){
@@ -218,7 +218,7 @@ void SMTP::socketRead(KSocket *socket)
 
     readBuffer[n] = '\0';
     lineBuffer += readBuffer;
-    nl = lineBuffer.find('\n');
+    nl = lineBuffer.tqfind('\n');
     if(nl == -1)
         return;
     lastLine = lineBuffer.left(nl);
@@ -249,7 +249,7 @@ void SMTP::processLine(TQString *line)
     int i, stat;
     TQString tmpstr;
 
-    i = line->find(' ');
+    i = line->tqfind(' ');
     tmpstr = line->left(i);
     if(i > 3)
         kdDebug() << "warning: SMTP status code longer then 3 digits: " << tmpstr << endl;
@@ -262,7 +262,7 @@ void SMTP::processLine(TQString *line)
     switch(stat){
     case GREET:     //220
         state = IN;
-        writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
+        writeString = TQString::tqfromLatin1("helo %1\r\n").arg(domainName);
         kdDebug() << "out: " << writeString << endl;
 	write(sock->socket(), writeString.ascii(), writeString.length());
         break;
@@ -273,19 +273,19 @@ void SMTP::processLine(TQString *line)
         switch(state){
         case IN:
             state = READY;
-            writeString = TQString::fromLatin1("mail from: %1\r\n").arg(senderAddress);
+            writeString = TQString::tqfromLatin1("mail from: %1\r\n").arg(senderAddress);
             kdDebug() << "out: " << writeString << endl;
             write(sock->socket(), writeString.ascii(), writeString.length());
             break;
         case READY:
             state = SENTFROM;
-            writeString = TQString::fromLatin1("rcpt to: %1\r\n").arg(recipientAddress);
+            writeString = TQString::tqfromLatin1("rcpt to: %1\r\n").arg(recipientAddress);
              kdDebug() << "out: " << writeString << endl;
             write(sock->socket(), writeString.ascii(), writeString.length());
             break;
         case SENTFROM:
             state = SENTTO;
-            writeString = TQString::fromLatin1("data\r\n");
+            writeString = TQString::tqfromLatin1("data\r\n");
              kdDebug() << "out: " << writeString << endl;
             write(sock->socket(), writeString.ascii(), writeString.length());
             break;
@@ -305,11 +305,11 @@ void SMTP::processLine(TQString *line)
         break;
     case READYDATA: //354
         state = DATA;
-        writeString = TQString::fromLatin1("Subject: %1\r\n").arg(messageSubject);
+        writeString = TQString::tqfromLatin1("Subject: %1\r\n").arg(messageSubject);
         writeString += messageHeader;
         writeString += "\r\n";
         writeString += messageBody;
-        writeString += TQString::fromLatin1(".\r\n");
+        writeString += TQString::tqfromLatin1(".\r\n");
         kdDebug() << "out: " << writeString;
         write(sock->socket(), writeString.ascii(), writeString.length());
         break;

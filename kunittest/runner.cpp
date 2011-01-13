@@ -187,7 +187,7 @@ namespace KUnitTest
                 str = TQString( "%1 of %2 tests did not behave as expected (%1 unexpected passes)" ).arg( globalFails ).arg( numTests ).arg( globalXPasses );
         if ( globalSkipped )
             str += TQString( " (%1 tests skipped)" ).arg( globalSkipped );
-        cout << str.local8Bit() << endl;
+        cout << str.local8Bit().data() << endl;
 #endif
 
         return m_registry.count();
@@ -203,7 +203,7 @@ namespace KUnitTest
 
     void Runner::runTest(const char *name)
     {
-        Tester *test = m_registry.find(name);
+        Tester *test = m_registry.tqfind(name);
         if ( test == 0L ) return;
 
         if ( s_debugCapturingEnabled )

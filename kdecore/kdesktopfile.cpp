@@ -42,7 +42,7 @@
 
 KDesktopFile::KDesktopFile(const TQString &fileName, bool bReadOnly,
 			   const char * resType)
-  : KConfig(TQString::fromLatin1(""), bReadOnly, false)
+  : KConfig(TQString::tqfromLatin1(""), bReadOnly, false)
 {
   // KConfigBackEnd will try to locate the filename that is provided
   // based on the resource type specified, _only_ if the filename
@@ -83,7 +83,7 @@ TQString KDesktopFile::locateLocal(const TQString &path)
       {
         // Hm, that didn't work...
         // What now? Use filename only and hope for the best.
-        local = path.mid(path.findRev('/')+1);
+        local = path.mid(path.tqfindRev('/')+1);
       }
       local = ::locateLocal("xdgdata-dirs", local);
     }
@@ -102,7 +102,7 @@ TQString KDesktopFile::locateLocal(const TQString &path)
       if (!TQDir::isRelativePath(local))
       {
         // What now? Use filename only and hope for the best.
-        local = path.mid(path.findRev('/')+1);
+        local = path.mid(path.tqfindRev('/')+1);
       }
       local = ::locateLocal("xdgdata-apps", local);
     }
@@ -114,9 +114,9 @@ bool KDesktopFile::isDesktopFile(const TQString& path)
 {
   int len = path.length();
 
-  if(len > 8 && path.right(8) == TQString::fromLatin1(".desktop"))
+  if(len > 8 && path.right(8) == TQString::tqfromLatin1(".desktop"))
     return true;
-  else if(len > 7 && path.right(7) == TQString::fromLatin1(".kdelnk"))
+  else if(len > 7 && path.right(7) == TQString::tqfromLatin1(".kdelnk"))
     return true;
   else
     return false;
@@ -155,8 +155,8 @@ TQString KDesktopFile::translatedEntry(const char* key) const
   if (hasKey(key)) {
     TQString value = readEntryUntranslated(key);
     TQString fName = fileName();
-    fName = fName.mid(fName.findRev('/')+1);
-    TQString po_lookup_key = TQString::fromLatin1(key) + "(" + fName + "): " + value;
+    fName = fName.mid(fName.tqfindRev('/')+1);
+    TQString po_lookup_key = TQString::tqfromLatin1(key) + "(" + fName + "): " + value;
     TQString po_value = KGlobal::locale()->translate(po_lookup_key.utf8().data());
 
     if (po_value == po_lookup_key)
@@ -241,33 +241,33 @@ TQStringList KDesktopFile::readActions() const
 
 void KDesktopFile::setActionGroup(const TQString &group)
 {
-    setGroup(TQString::fromLatin1("Desktop Action ") + group);
+    setGroup(TQString::tqfromLatin1("Desktop Action ") + group);
 }
 
 bool KDesktopFile::hasActionGroup(const TQString &group) const
 {
-  return hasGroup(TQString::fromLatin1("Desktop Action ") + group);
+  return hasGroup(TQString::tqfromLatin1("Desktop Action ") + group);
 }
 
 bool KDesktopFile::hasLinkType() const
 {
-  return readEntry("Type") == TQString::fromLatin1("Link");
+  return readEntry("Type") == TQString::tqfromLatin1("Link");
 }
 
 bool KDesktopFile::hasApplicationType() const
 {
-  return readEntry("Type") == TQString::fromLatin1("Application");
+  return readEntry("Type") == TQString::tqfromLatin1("Application");
 }
 
 bool KDesktopFile::hasMimeTypeType() const
 {
-  return readEntry("Type") == TQString::fromLatin1("MimeType");
+  return readEntry("Type") == TQString::tqfromLatin1("MimeType");
 }
 
 bool KDesktopFile::hasDeviceType() const
 {
-  return readEntry("Type") == TQString::fromLatin1("FSDev") ||
-         readEntry("Type") == TQString::fromLatin1("FSDevice");
+  return readEntry("Type") == TQString::tqfromLatin1("FSDev") ||
+         readEntry("Type") == TQString::tqfromLatin1("FSDevice");
 }
 
 bool KDesktopFile::tryExec() const
@@ -330,13 +330,13 @@ bool KDesktopFile::tryExec() const
 /**
  * @return the filename as passed to the constructor.
  */
-QString
+TQString
 KDesktopFile::fileName() const { return backEnd->fileName(); }
 
 /**
  * @return the resource type as passed to the constructor.
  */
-QString
+TQString
 KDesktopFile::resource() const { return backEnd->resource(); }
 
 TQStringList

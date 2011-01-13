@@ -89,7 +89,7 @@ void KMListViewItem::updatePrinter(KMPrinter *p)
 	}
 	setDiscarded(false);
 	if (update)
-		repaint();
+		tqrepaint();
 }
 
 void KMListViewItem::paintCell(TQPainter *p, const TQColorGroup& cg, int c, int w, int a)

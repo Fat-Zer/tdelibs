@@ -71,8 +71,8 @@ SkipDlg::SkipDlg(TQWidget *parent, bool _multi, const TQString& _error_text, boo
   // vlayout->addStrut( 360 );	makes dlg at least that wide
 
   TQLabel * lb = new TQLabel( _error_text, this );
-  lb->setFixedHeight( lb->sizeHint().height() );
-  lb->setMinimumWidth( lb->sizeHint().width() );
+  lb->setFixedHeight( lb->tqsizeHint().height() );
+  lb->setMinimumWidth( lb->tqsizeHint().width() );
   vlayout->addWidget( lb );
 
   vlayout->addSpacing( 10 );
@@ -82,26 +82,26 @@ SkipDlg::SkipDlg(TQWidget *parent, bool _multi, const TQString& _error_text, boo
   if ( b0 )
   {
     b0->setDefault( true );
-    b0->setFixedSize( b0->sizeHint() );
+    b0->setFixedSize( b0->tqsizeHint() );
     layout->addWidget( b0 );
     layout->addSpacing( 5 );
   }
   if ( b1 )
   {
-    b1->setFixedSize( b1->sizeHint() );
+    b1->setFixedSize( b1->tqsizeHint() );
     layout->addWidget( b1 );
     layout->addSpacing( 5 );
   }
   if ( b2 )
   {
-    b2->setFixedSize( b2->sizeHint() );
+    b2->setFixedSize( b2->tqsizeHint() );
     layout->addWidget( b2 );
     layout->addSpacing( 5 );
   }
 
   vlayout->addStretch( 10 );
   vlayout->activate();
-  resize( sizeHint() );
+  resize( tqsizeHint() );
 }
 
 SkipDlg::~SkipDlg()

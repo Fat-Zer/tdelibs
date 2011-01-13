@@ -47,7 +47,7 @@ class KJavaAppletContext;
 class KJavaAppletPrivate;
 
 
-class KJavaApplet : public QObject
+class KJavaApplet : public TQObject
 {
 Q_OBJECT
 

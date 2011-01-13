@@ -336,7 +336,7 @@ int Backend::open(const TQByteArray& password) {
 	_hashes.clear();
 	// Read in the hashes
 	TQDataStream hds(&db);
-	Q_UINT32 n;
+	TQ_UINT32 n;
 	hds >> n;
 	if (n > 0xffff) { // sanity check
 		return -43;
@@ -346,7 +346,7 @@ int Backend::open(const TQByteArray& password) {
 		KMD5::Digest d, d2; // judgment day
 		MD5Digest ba;
 		TQMap<MD5Digest,TQValueList<MD5Digest> >::iterator it;
-		Q_UINT32 fsz;
+		TQ_UINT32 fsz;
 		if (hds.atEnd()) return -43;
 		hds.readRawBytes(reinterpret_cast<char *>(d), 16);
 		hds >> fsz;
@@ -422,7 +422,7 @@ int Backend::open(const TQByteArray& password) {
 	// compare hashes
 	int sz = encrypted.size();
 	for (int i = 0; i < 20; i++) {
-		if (testhash[i] != encrypted[sz - 20 + i]) {
+		if (testhash[i] != encrypted.at(sz - 20 + i)) {
 			encrypted.fill(0);
 			sha.reset();
 			return -8;         // hash error.
@@ -443,7 +443,7 @@ int Backend::open(const TQByteArray& password) {
 
 	while (!eStream.atEnd()) {
 		TQString folder;
-		Q_UINT32 n;
+		TQ_UINT32 n;
 
 		eStream >> folder;
 		eStream >> n;
@@ -456,7 +456,7 @@ int Backend::open(const TQByteArray& password) {
 			KWallet::Wallet::EntryType et = KWallet::Wallet::Unknown;
 			Entry *e = new Entry;
 			eStream >> key;
-			Q_INT32 x = 0; // necessary to read properly
+			TQ_INT32 x = 0; // necessary to read properly
 			eStream >> x;
 			et = static_cast<KWallet::Wallet::EntryType>(x);
 
@@ -511,7 +511,7 @@ int Backend::sync(const TQByteArray& password) {
 	TQByteArray hashes;
 	TQDataStream hashStream(hashes, IO_WriteOnly);
 	KMD5 md5;
-	hashStream << static_cast<Q_UINT32>(_entries.count());
+	hashStream << static_cast<TQ_UINT32>(_entries.count());
 
 	// Holds decrypted data prior to encryption
 	TQByteArray decrypted;
@@ -524,16 +524,16 @@ int Backend::sync(const TQByteArray& password) {
 	TQDataStream dStream(decrypted, IO_WriteOnly);
 	for (FolderMap::ConstIterator i = _entries.begin(); i != _entries.end(); ++i) {
 		dStream << i.key();
-		dStream << static_cast<Q_UINT32>(i.data().count());
+		dStream << static_cast<TQ_UINT32>(i.data().count());
 
 		md5.reset();
 		md5.update(i.key().utf8());
 		hashStream.writeRawBytes(reinterpret_cast<const char*>(&(md5.rawDigest()[0])), 16);
-		hashStream << static_cast<Q_UINT32>(i.data().count());
+		hashStream << static_cast<TQ_UINT32>(i.data().count());
 
 		for (EntryMap::ConstIterator j = i.data().begin(); j != i.data().end(); ++j) {
 			dStream << j.key();
-			dStream << static_cast<Q_INT32>(j.data()->type());
+			dStream << static_cast<TQ_INT32>(j.data()->type());
 			dStream << j.data()->value();
 
 			md5.reset();
@@ -693,7 +693,7 @@ TQPtrList<Entry> Backend::readEntryList(const TQString& key) {
 
 
 bool Backend::createFolder(const TQString& f) {
-	if (_entries.contains(f)) {
+	if (_entries.tqcontains(f)) {
 		return false;
 	}
 
@@ -709,8 +709,8 @@ return true;
 
 int Backend::renameEntry(const TQString& oldName, const TQString& newName) {
 EntryMap& emap = _entries[_folder];
-EntryMap::Iterator oi = emap.find(oldName);
-EntryMap::Iterator ni = emap.find(newName);
+EntryMap::Iterator oi = emap.tqfind(oldName);
+EntryMap::Iterator ni = emap.tqfind(newName);
 
 	if (oi != emap.end() && ni == emap.end()) {
 		Entry *e = oi.data();
@@ -720,7 +720,7 @@ EntryMap::Iterator ni = emap.find(newName);
 		KMD5 folderMd5;
 		folderMd5.update(_folder.utf8());
 
-		HashMap::iterator i = _hashes.find(MD5Digest(folderMd5.rawDigest()));
+		HashMap::iterator i = _hashes.tqfind(MD5Digest(folderMd5.rawDigest()));
 		if (i != _hashes.end()) {
 			KMD5 oldMd5, newMd5;
 			oldMd5.update(oldName.utf8());
@@ -747,7 +747,7 @@ void Backend::writeEntry(Entry *e) {
 	KMD5 folderMd5;
 	folderMd5.update(_folder.utf8());
 
-	HashMap::iterator i = _hashes.find(MD5Digest(folderMd5.rawDigest()));
+	HashMap::iterator i = _hashes.tqfind(MD5Digest(folderMd5.rawDigest()));
 	if (i != _hashes.end()) {
 		KMD5 md5;
 		md5.update(e->key().utf8());
@@ -757,7 +757,7 @@ void Backend::writeEntry(Entry *e) {
 
 
 bool Backend::hasEntry(const TQString& key) const {
-	return _entries.contains(_folder) && _entries[_folder].contains(key);
+	return _entries.tqcontains(_folder) && _entries[_folder].tqcontains(key);
 }
 
 
@@ -766,8 +766,8 @@ bool Backend::removeEntry(const TQString& key) {
 		return false;
 	}
 
-	FolderMap::Iterator fi = _entries.find(_folder);
-	EntryMap::Iterator ei = fi.data().find(key);
+	FolderMap::Iterator fi = _entries.tqfind(_folder);
+	EntryMap::Iterator ei = fi.data().tqfind(key);
 
 	if (fi != _entries.end() && ei != fi.data().end()) {
 		delete ei.data();
@@ -775,7 +775,7 @@ bool Backend::removeEntry(const TQString& key) {
 		KMD5 folderMd5;
 		folderMd5.update(_folder.utf8());
 
-		HashMap::iterator i = _hashes.find(MD5Digest(folderMd5.rawDigest()));
+		HashMap::iterator i = _hashes.tqfind(MD5Digest(folderMd5.rawDigest()));
 		if (i != _hashes.end()) {
 			KMD5 md5;
 			md5.update(key.utf8());
@@ -793,7 +793,7 @@ bool Backend::removeFolder(const TQString& f) {
 		return false;
 	}
 
-	FolderMap::Iterator fi = _entries.find(f);
+	FolderMap::Iterator fi = _entries.tqfind(f);
 
 	if (fi != _entries.end()) {
 		if (_folder == f) {
@@ -819,18 +819,18 @@ return false;
 bool Backend::folderDoesNotExist(const TQString& folder) const {
 	KMD5 md5;
 	md5.update(folder.utf8());
-	return !_hashes.contains(MD5Digest(md5.rawDigest()));
+	return !_hashes.tqcontains(MD5Digest(md5.rawDigest()));
 }
 
 
 bool Backend::entryDoesNotExist(const TQString& folder, const TQString& entry) const {
 	KMD5 md5;
 	md5.update(folder.utf8());
-	HashMap::const_iterator i = _hashes.find(MD5Digest(md5.rawDigest()));
+	HashMap::const_iterator i = _hashes.tqfind(MD5Digest(md5.rawDigest()));
 	if (i != _hashes.end()) {
 		md5.reset();
 		md5.update(entry.utf8());
-		return !i.data().contains(MD5Digest(md5.rawDigest()));
+		return !i.data().tqcontains(MD5Digest(md5.rawDigest()));
 	}
 	return true;
 }

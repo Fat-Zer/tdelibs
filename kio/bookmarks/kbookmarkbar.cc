@@ -252,7 +252,7 @@ bool KBookmarkBar::isReadOnly() const
     return dptr()->m_readOnly;
 }
 
-void KBookmarkBar::slotBookmarkSelected( KAction::ActivationReason /*reason*/, Qt::ButtonState state )
+void KBookmarkBar::slotBookmarkSelected( KAction::ActivationReason /*reason*/, TQt::ButtonState state )
 {
     if (!m_pOwner) return; // this view doesn't handle bookmarks...
 
@@ -313,7 +313,7 @@ static TQString handleToolbarDragMoveEvent(
     int index = 0;
     KToolBarButton* b;
 
-    b = dynamic_cast<KToolBarButton*>(tb->childAt(pos));
+    b = dynamic_cast<KToolBarButton*>(tb->tqchildAt(pos));
     KAction *a = 0;
     TQString address;
     atFirst = false;
@@ -394,7 +394,7 @@ static KAction* handleToolbarMouseButton(TQPoint pos, TQPtrList<KAction> actions
     Q_ASSERT(tb);
 
     KToolBarButton *b;
-    b = dynamic_cast<KToolBarButton*>(tb->childAt(pos));
+    b = dynamic_cast<KToolBarButton*>(tb->tqchildAt(pos));
     if (!b)
         return 0;
 

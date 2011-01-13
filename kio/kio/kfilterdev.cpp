@@ -70,9 +70,9 @@ TQIODevice* KFilterDev::createFilterDevice(KFilterBase* base, TQFile* file)
 
    //we don't need a filter
    if (base==0)
-       return new TQFile(file->name()); // A bit strange IMHO. We ask for a TQFile but we create another one !?! (DF)
+       return TQT_TQIODEVICE(new TQFile(file->name())); // A bit strange IMHO. We ask for a TQFile but we create another one !?! (DF)
 
-   base->setDevice(file);
+   base->setDevice(TQT_TQIODEVICE(file));
    return new KFilterDev(base);
 }
 #endif
@@ -86,11 +86,11 @@ TQIODevice * KFilterDev::deviceForFile( const TQString & fileName, const TQStrin
                          : KFilterBase::findFilterByMimeType( mimetype );
     if ( base )
     {
-        base->setDevice(f, true);
+        base->setDevice(TQT_TQIODEVICE(f), true);
         return new KFilterDev(base, true);
     }
     if(!forceFilter)
-        return f;
+        return TQT_TQIODEVICE(f);
     else
     {
         delete f;
@@ -132,7 +132,7 @@ bool KFilterDev::open( int mode )
     d->bNeedHeader = !d->bSkipHeaders;
     filter->init( mode );
     d->bOpenedUnderlyingDevice = !filter->device()->isOpen();
-    bool ret = d->bOpenedUnderlyingDevice ? filter->device()->open( mode ) : true;
+    bool ret = d->bOpenedUnderlyingDevice ? filter->device()->open( (TQIODevice_OpenModeFlag)mode ) : true;
     d->result = KFilterBase::OK;
 
     if ( !ret )
@@ -142,7 +142,7 @@ bool KFilterDev::open( int mode )
         setState( IO_Open );
         setMode( mode );
     }
-    ioIndex = 0;
+    TQIODevice::at(0);
     return ret;
 }
 
@@ -169,7 +169,11 @@ void KFilterDev::flush()
     // Hmm, might not be enough...
 }
 
+#ifdef USE_QT4
+qint64 KFilterDev::size() const
+#else // USE_QT4
 TQIODevice::Offset KFilterDev::size() const
+#endif // USE_QT4
 {
     // Well, hmm, Houston, we have a problem.
     // We can't know the size of the uncompressed data
@@ -184,21 +188,21 @@ TQIODevice::Offset KFilterDev::size() const
 
 TQIODevice::Offset KFilterDev::at() const
 {
-    return ioIndex;
+    return TQIODevice::at();
 }
 
 bool KFilterDev::at( TQIODevice::Offset pos )
 {
-    //kdDebug(7005) << "KFilterDev::at " << pos << "  currently at " << ioIndex << endl;
+    //kdDebug(7005) << "KFilterDev::at " << pos << "  currently at " << TQIODevice::at() << endl;
 
-    if ( ioIndex == pos )
+    if ( TQIODevice::at() == pos )
         return true;
 
     Q_ASSERT ( filter->mode() == IO_ReadOnly );
 
     if ( pos == 0 )
     {
-        ioIndex = 0;
+        TQIODevice::at(0);
         // We can forget about the cached data
         d->ungetchBuffer.resize(0);
         d->bNeedHeader = !d->bSkipHeaders;
@@ -208,8 +212,8 @@ bool KFilterDev::at( TQIODevice::Offset pos )
         return filter->device()->reset();
     }
 
-    if ( ioIndex < pos ) // we can start from here
-        pos = pos - ioIndex;
+    if ( TQIODevice::at() < pos ) // we can start from here
+        pos = pos - TQIODevice::at();
     else
     {
         // we have to start from 0 ! Ugly and slow, but better than the previous
@@ -219,7 +223,7 @@ bool KFilterDev::at( TQIODevice::Offset pos )
     }
 
     //kdDebug(7005) << "KFilterDev::at : reading " << pos << " dummy bytes" << endl;
-    TQByteArray dummy( QMIN( pos, 3*BUFFER_SIZE ) );
+    TQByteArray dummy( TQMIN( pos, 3*BUFFER_SIZE ) );
     d->bIgnoreData = true;
     bool result = ( (TQIODevice::Offset)readBlock( dummy.data(), pos ) == pos );
     d->bIgnoreData = false;
@@ -232,7 +236,7 @@ bool KFilterDev::atEnd() const
                                      && d->ungetchBuffer.isEmpty();
 }
 
-Q_LONG KFilterDev::readBlock( char *data, Q_ULONG maxlen )
+TQ_LONG KFilterDev::readBlock( char *data, TQ_ULONG maxlen )
 {
     Q_ASSERT ( filter->mode() == IO_ReadOnly );
     //kdDebug(7005) << "KFilterDev::readBlock maxlen=" << maxlen << endl;
@@ -252,10 +256,10 @@ Q_LONG KFilterDev::readBlock( char *data, Q_ULONG maxlen )
         }
         else
         {
-            dataReceived = QMIN( len, maxlen );
+            dataReceived = TQMIN( len, maxlen );
         }
         d->ungetchBuffer.truncate( len - dataReceived );
-        ioIndex += dataReceived;
+        TQIODevice::at(TQIODevice::at() + dataReceived);
     }
 
     // If we came to the end of the stream
@@ -268,17 +272,17 @@ Q_LONG KFilterDev::readBlock( char *data, Q_ULONG maxlen )
         return -1;
 
 
-    Q_ULONG outBufferSize;
+    TQ_ULONG outBufferSize;
     if ( d->bIgnoreData )
     {
-        outBufferSize = QMIN( maxlen, 3*BUFFER_SIZE );
+        outBufferSize = TQMIN( maxlen, 3*BUFFER_SIZE );
     }
     else
     {
         outBufferSize = maxlen;
     }
     outBufferSize -= dataReceived;
-    Q_ULONG availOut = outBufferSize;
+    TQ_ULONG availOut = outBufferSize;
     filter->setOutBuffer( data, outBufferSize );
 
     bool decompressedAll = false;
@@ -335,7 +339,7 @@ Q_LONG KFilterDev::readBlock( char *data, Q_ULONG maxlen )
         {
             availOut = maxlen - dataReceived;
         }
-        ioIndex += outReceived;
+        TQIODevice::at(TQIODevice::at() + outReceived);
         if (d->result == KFilterBase::END)
         {
             //kdDebug(7005) << "KFilterDev::readBlock got END. dataReceived=" << dataReceived << endl;
@@ -351,7 +355,7 @@ Q_LONG KFilterDev::readBlock( char *data, Q_ULONG maxlen )
     return dataReceived;
 }
 
-Q_LONG KFilterDev::writeBlock( const char *data /*0 to finish*/, Q_ULONG len )
+TQ_LONG KFilterDev::writeBlock( const char *data /*0 to finish*/, TQ_ULONG len )
 {
     Q_ASSERT ( filter->mode() == IO_WriteOnly );
     // If we had an error, return 0.
@@ -394,7 +398,7 @@ Q_LONG KFilterDev::writeBlock( const char *data /*0 to finish*/, Q_ULONG len )
             // Move on in the input buffer
             data += wrote;
             dataWritten += wrote;
-            ioIndex += wrote;
+            TQIODevice::at(TQIODevice::at() + wrote);
 
             availIn = len - dataWritten;
             //kdDebug(7005) << " KFilterDev::writeBlock availIn=" << availIn << " dataWritten=" << dataWritten << " ioIndex=" << ioIndex << endl;
@@ -439,7 +443,7 @@ int KFilterDev::getch()
         int len = d->ungetchBuffer.length();
         int ch = d->ungetchBuffer[ len-1 ];
         d->ungetchBuffer.truncate( len - 1 );
-        ioIndex++;
+        TQIODevice::at(TQIODevice::at() + 1);
         //kdDebug(7005) << "KFilterDev::getch from ungetch: " << TQString(TQChar(ch)) << endl;
         return ch;
     }
@@ -465,7 +469,7 @@ int KFilterDev::ungetch( int ch )
 
     // pipe or similar => we cannot ungetch, so do it manually
     d->ungetchBuffer +=ch;
-    ioIndex--;
+    TQIODevice::at(TQIODevice::at() - 1);
     return ch;
 }
 

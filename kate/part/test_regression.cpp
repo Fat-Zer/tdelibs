@@ -515,7 +515,7 @@ int main(int argc, char *argv[])
     KateDocument *part = new KateDocument(/*bSingleViewMode*/true,
                                           /*bBrowserView*/false,
                                           /*bReadOnly*/false,
-                                          /*parentWidget*/toplevel,
+                                          /*tqparentWidget*/toplevel,
                                           /*widgetName*/"testkate");
     part->readConfig(&cfg);
 
@@ -869,10 +869,10 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
     int pos = 0;
     do {
         pos++;
-        int newpos = absBase.find('/', pos);
+        int newpos = absBase.tqfind('/', pos);
         if (newpos == -1) newpos = absBase.length();
-        TQConstString cmpPathComp(absPath.unicode() + pos, newpos - pos);
-        TQConstString cmpBaseComp(absBase.unicode() + pos, newpos - pos);
+        TQConstString cmpPathComp(absPath.tqunicode() + pos, newpos - pos);
+        TQConstString cmpBaseComp(absBase.tqunicode() + pos, newpos - pos);
 //         kdDebug() << "cmpPathComp: \"" << cmpPathComp.string() << "\"" << endl;
 //         kdDebug() << "cmpBaseComp: \"" << cmpBaseComp.string() << "\"" << endl;
 //         kdDebug() << "pos: " << pos << " newpos: " << newpos << endl;
@@ -886,8 +886,8 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
 
     TQString rel;
     {
-        TQConstString relBase(absBase.unicode() + basepos, absBase.length() - basepos);
-        TQConstString relPath(absPath.unicode() + pathpos, absPath.length() - pathpos);
+        TQConstString relBase(absBase.tqunicode() + basepos, absBase.length() - basepos);
+        TQConstString relPath(absPath.tqunicode() + pathpos, absPath.length() - pathpos);
         // generate as many .. as there are path elements in relBase
         if (relBase.string().length() > 0) {
             for (int i = relBase.string().contains('/'); i > 0; --i)
@@ -935,7 +935,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & ResultFailure ) {
         domDiff += "<pre>";
-        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-result %3/%2-result" )
+        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-result %3/%2-result" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {
@@ -1026,7 +1026,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
 void RegressionTest::testStaticFile(const TQString & filename, const TQStringList &commands)
 {
-    qApp->mainWidget()->resize( 800, 600); // restore size
+    tqApp->mainWidget()->resize( 800, 600); // restore size
 
     // Set arguments
     KParts::URLArgs args;
@@ -1334,7 +1334,7 @@ bool RegressionTest::svnIgnored( const TQString &filename )
 
 void RegressionTest::resizeTopLevelWidget( int w, int h )
 {
-    qApp->mainWidget()->resize( w, h );
+    tqApp->mainWidget()->resize( w, h );
     // Since we're not visible, this doesn't have an immediate effect, TQWidget posts the event
     TQApplication::sendPostedEvents( 0, TQEvent::Resize );
 }

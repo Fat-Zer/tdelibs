@@ -49,7 +49,7 @@ class KMdiChildAreaPrivate;
   * and manages the frame widgets of attached MDI views.
   * All actions and stuff concerning only to childframes are handled here.
   */
-class KMDI_EXPORT KMdiChildArea : public QFrame
+class KMDI_EXPORT KMdiChildArea : public TQFrame
 {
 	friend class KMdiChildFrmCaption;
 	friend class KMdiChildFrm;

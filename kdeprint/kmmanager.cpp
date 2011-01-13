@@ -268,7 +268,7 @@ TQPtrList<KMPrinter>* KMManager::printerList(bool reload)
 		//   - use the PRINTER variable
 		if (!softDefault())
 		{
-			KMPrinter	*defprinter = findPrinter(TQString::fromLatin1(getenv("PRINTER")));
+			KMPrinter	*defprinter = findPrinter(TQString::tqfromLatin1(getenv("PRINTER")));
 			if (defprinter)
 				setSoftDefault(defprinter);
 		}
@@ -475,7 +475,7 @@ TQStringList KMManager::detectLocalPrinters()
 {
 	QStringList	list;
 	for (int i=0; i<3; i++)
-		list << TQString::null << TQString::fromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << TQString::null;
+		list << TQString::null << TQString::tqfromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << TQString::null;
 	return list;
 }
 

@@ -93,7 +93,7 @@ bool KMCupsJobManager::sendCommandSystemJob(const TQPtrList<KMJob>& jobs, int ac
 				if (argstr.isEmpty()) return false;
 				req.setOperation(CUPS_MOVE_JOB);
 				uri =
-				    TQString::fromLatin1("ipp://%1/printers/%2").arg(CupsInfos::self()->hostaddr(),
+				    TQString::tqfromLatin1("ipp://%1/printers/%2").arg(CupsInfos::self()->hostaddr(),
 					    argstr);
 				req.addURI(IPP_TAG_OPERATION, "job-printer-uri", uri);
 				break;
@@ -150,7 +150,7 @@ bool KMCupsJobManager::listJobs(const TQString& prname, KMJobManager::JobType ty
 	// other attributes
 	req.addKeyword(IPP_TAG_OPERATION, "requested-attributes", keys);
 	if (type == KMJobManager::CompletedJobs)
-		req.addKeyword(IPP_TAG_OPERATION,"which-jobs",TQString::fromLatin1("completed"));
+		req.addKeyword(IPP_TAG_OPERATION,"which-jobs",TQString::tqfromLatin1("completed"));
 	if (limit > 0)
 		req.addInteger(IPP_TAG_OPERATION,"limit",limit);
 
@@ -218,7 +218,7 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 		}
 		else if (name == "job-priority")
 		{
-			job->setAttribute(0, TQString::fromLatin1("%1").arg(attr->values[0].integer, 3));
+			job->setAttribute(0, TQString::tqfromLatin1("%1").arg(attr->values[0].integer, 3));
 		}
 		else if (name == "job-billing")
 		{
@@ -356,7 +356,7 @@ static TQString processRange(const TQString& range)
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		s.append(*it);
-		if ((*it).find('-') == -1)
+		if ((*it).tqfind('-') == -1)
 			s.append("-").append(*it);
 		s.append(",");
 	}

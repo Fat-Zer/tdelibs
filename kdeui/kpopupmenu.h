@@ -35,7 +35,7 @@
  *
  * @author Daniel M. Duley <mosfet@kde.org>
  */
-class KDEUI_EXPORT KPopupTitle : public QWidget
+class KDEUI_EXPORT KPopupTitle : public TQWidget
 {
     Q_OBJECT
 
@@ -74,7 +74,7 @@ public:
      */
     TQPixmap icon() const { return miniicon; }
 
-    TQSize sizeHint() const;
+    TQSize tqsizeHint() const;
 
 public slots:
     /// @since 3.1
@@ -239,7 +239,7 @@ public:
      * when the last menuitem was activated.
      * @since 3.4
      */
-    Qt::ButtonState state() const;
+    TQt::ButtonState state() const;
 
 signals:
     /**

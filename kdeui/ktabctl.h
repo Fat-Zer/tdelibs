@@ -45,7 +45,7 @@
  * @author Alexander Sanda (alex@darkstar.ping.at)
  * @version $Id$
 */
-class KDEUI_EXPORT KTabCtl : public QWidget
+class KDEUI_EXPORT KTabCtl : public TQWidget
 {
     Q_OBJECT
 
@@ -61,8 +61,8 @@ public:
     bool isTabEnabled(const TQString& );
     void setTabEnabled(const TQString&, bool);
     void setBorder(bool);
-    void setShape( TQTabBar::Shape shape );
-    virtual TQSize sizeHint() const;
+    void setShape( TQTabBar::Shape tqshape );
+    virtual TQSize tqsizeHint() const;
 
 protected:
     void paintEvent(TQPaintEvent *);

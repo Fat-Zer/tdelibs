@@ -127,7 +127,7 @@ class CategoriesMap : public TQMap<int, TQString>
  *  keys). Of course, in different files a key might be used twice. <BR>
  *  The keys are objects of the type KabKey and define the section in the 
  *  addressbook database where the entry is stored (see QConfigDB
- *  reference). Keys invalidate on file changes, so keep track of the
+ *  reference). Keys tqinvalidate on file changes, so keep track of the
  *  signal ::changed. <BR>
  *  kab watches file changes. If the opened file changes on disk, it is
  *  automatically reloaded and ::changed() is emitted. 
@@ -180,7 +180,7 @@ class CategoriesMap : public TQMap<int, TQString>
  *  displayed as transparent KURLLabels that react when the user clicks on it.
  *  These interactive parts have to be enabled by calling setInteractiveMode().
  */
-class AddressBook : public QFrame
+class AddressBook : public TQFrame
 {
   // ############################################################################
   Q_OBJECT
@@ -572,7 +572,7 @@ public:
   ErrorCode createConfigFile();
   ErrorCode loadConfigFile(); /**< Load the local configuration file. */
   // ErrorCode configureKab(); /**< Open the configuration dialog for the KabAPI. */
-  // TQSize sizeHint();  /**< The preferred (minimal) size of the view. */ // ni
+  // TQSize tqsizeHint();  /**< The preferred (minimal) size of the view. */ // ni
   /**
    * This method parses a vCard and creates an Entry object from it.
    */

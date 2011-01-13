@@ -53,12 +53,12 @@ SocketConfig::SocketConfig(KMWSocketUtil *util, TQWidget *parent, const char *na
 	QLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
 	QLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
 	QLineEdit	*mm = new TQLineEdit(dummy);
-	mm->setText(TQString::fromLatin1(".[0-255]"));
+	mm->setText(TQString::tqfromLatin1(".[0-255]"));
 	mm->setReadOnly(true);
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
 
 	mask_ = new TQLineEdit(dummy);
-	mask_->setAlignment(Qt::AlignRight);
+	mask_->tqsetAlignment(Qt::AlignRight);
 	port_ = new TQComboBox(true,dummy);
         if ( port_->lineEdit() )
             port_->lineEdit()->setValidator( val );

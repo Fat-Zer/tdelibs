@@ -267,16 +267,16 @@ static void printSupportedMimeTypes()
     if ( allMimeTypes.isEmpty() )
     {
         cout <<
-            i18n("No support for metadata extraction found.").local8Bit()
+            i18n("No support for metadata extraction found.").local8Bit().data()
              << endl;
         return;
     }
 
-    cout << i18n("Supported MimeTypes:").local8Bit() << endl;
+    cout << i18n("Supported MimeTypes:").local8Bit().data() << endl;
 
     TQStringList::ConstIterator it = allMimeTypes.begin();
     for ( ; it != allMimeTypes.end(); it++ )
-        cout << (*it).local8Bit() << endl;
+        cout << (*it).local8Bit().data() << endl;
 }
 
 // caller needs to delete the returned list!
@@ -304,8 +304,8 @@ static void printMimeTypes( const KCmdLineArgs *args )
     {
         KURL url = args->url( i );
         KMimeType::Ptr mt = KMimeType::findByURL( url );
-        cout << args->arg(i) << ": " << mt->comment().local8Bit() << " ("
-             << mt->name().local8Bit() << ")" << endl;
+        cout << args->arg(i) << ": " << mt->comment().local8Bit().data() << " ("
+             << mt->name().local8Bit().data() << ")" << endl;
     }
 }
 
@@ -313,7 +313,7 @@ static void printList( const TQStringList& list )
 {
     TQStringList::ConstIterator it = list.begin();
     for ( ; it != list.end(); ++it )
-        cout << (*it).local8Bit() << endl;
+        cout << (*it).local8Bit().data() << endl;
     cout << endl;
 }
 
@@ -330,7 +330,7 @@ static void processMetaDataOptions( const TQPtrList<FileProps> propList,
     {
         TQString file = props->fileName() + " ";
         TQString fileString = line.replace( 3, file.length(), file );
-        cout << TQFile::encodeName( fileString ) << endl;
+        cout << TQFile::encodeName( fileString ).data() << endl;
             
         if ( args->isSet( "listsupported" ) )
         {
@@ -349,7 +349,7 @@ static void processMetaDataOptions( const TQPtrList<FileProps> propList,
             TQStringList::ConstIterator git = groups.begin();
             for ( ; git != groups.end(); ++git )
             {
-                cout << "Group: " << (*git).local8Bit() << endl;
+                cout << "Group: " << (*git).local8Bit().data() << endl;
                 printList( props->availableKeys( *git ) );
             }
         }
@@ -363,7 +363,7 @@ static void processMetaDataOptions( const TQPtrList<FileProps> propList,
             TQString key = TQString::fromLocal8Bit( args->getOption("getValue"));
             TQStringList::ConstIterator git = props->groupsToUse().begin();
             for ( ; git != props->groupsToUse().end(); ++git )
-                cout << props->getValue( *git, key ).local8Bit() << endl;
+                cout << props->getValue( *git, key ).local8Bit().data() << endl;
         }
 
         if ( args->isSet( "setValue" ) )
@@ -464,7 +464,7 @@ int main( int argc, char **argv )
             if ( !quiet )
             {
                 cerr << args->arg(i) << ": " <<
-                i18n("Cannot determine metadata").local8Bit() << endl;
+                i18n("Cannot determine metadata").local8Bit().data() << endl;
             }
             delete props;
         }

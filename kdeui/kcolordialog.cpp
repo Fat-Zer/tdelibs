@@ -93,7 +93,7 @@ const ColorPaletteNameType colorPaletteName[]=
 const int recentColorIndex = 0;
 const int customColorIndex = 1;
 
-class KColorSpinBox : public QSpinBox
+class KColorSpinBox : public TQSpinBox
 {
 public:
   KColorSpinBox(int minValue, int maxValue, int step, TQWidget* parent)
@@ -260,7 +260,7 @@ void KHSSelector::drawPalette( TQPixmap *pixmap )
 //-----------------------------------------------------------------------------
 
 KValueSelector::KValueSelector( TQWidget *parent, const char *name )
-	: KSelector( KSelector::Vertical, parent, name ), _hue(0), _sat(0)
+	: KSelector( Qt::Vertical, parent, name ), _hue(0), _sat(0)
 {
 	setRange( 0, 255 );
 	pixmap.setOptimization( TQPixmap::BestOptim );
@@ -297,7 +297,7 @@ void KValueSelector::drawPalette( TQPixmap *pixmap )
 	uint *p;
 	QRgb rgb;
 
-	if ( orientation() == KSelector::Horizontal )
+	if ( orientation() == Qt::Horizontal )
 	{
 		for ( int v = 0; v < ySize; v++ )
 		{
@@ -312,7 +312,7 @@ void KValueSelector::drawPalette( TQPixmap *pixmap )
 		}
 	}
 
-	if( orientation() == KSelector::Vertical )
+	if( orientation() == Qt::Vertical )
 	{
 		for ( int v = 0; v < ySize; v++ )
 		{
@@ -376,7 +376,7 @@ void KColorCells::paintCell( TQPainter *painter, int row, int col )
 	if (shade)
         {
 		qDrawShadePanel( painter, 1, 1, cellWidth()-2,
-		    cellHeight()-2, colorGroup(), true, 1, &brush );
+		    cellHeight()-2, tqcolorGroup(), true, 1, &brush );
 		w = 2;
         }
         TQColor color = colors[ row * numCols() + col ];
@@ -426,7 +426,7 @@ int KColorCells::posToCell(const TQPoint &pos, bool ignoreBorders)
 
 void KColorCells::mouseMoveEvent( TQMouseEvent *e )
 {
-    if( !(e->state() & LeftButton)) return;
+    if( !(e->state() & Qt::LeftButton)) return;
 
     if(inMouse) {
         int delay = KGlobalSettings::dndEventDelay();
@@ -530,7 +530,7 @@ void KColorPatch::drawContents( TQPainter *painter )
 void KColorPatch::mouseMoveEvent( TQMouseEvent *e )
 {
         // Drag color object
-        if( !(e->state() & LeftButton)) return;
+        if( !(e->state() & Qt::LeftButton)) return;
 	KColorDrag *d = new KColorDrag( color, this);
 	d->dragCopy();
 }
@@ -597,7 +597,7 @@ KPaletteTable::KPaletteTable( TQWidget *parent, int minWidth, int cols)
   connect( mNamedColorList, TQT_SIGNAL(highlighted( const TQString & )),
 	   this, TQT_SLOT( slotColorTextSelected( const TQString & )) );
 
-  setFixedSize( sizeHint());
+  setFixedSize( tqsizeHint());
   connect( combo, TQT_SIGNAL(activated(const TQString &)),
 	this, TQT_SLOT(slotSetPalette( const TQString &)));
 }
@@ -608,7 +608,7 @@ KPaletteTable::~KPaletteTable()
    delete d;
 }
 
-QString
+TQString
 KPaletteTable::palette() const
 {
   return combo->currentText();
@@ -674,8 +674,8 @@ KPaletteTable::readNamedColor( void )
 	// that start with "gray".
 	//
 	TQString name = line.mid(pos).stripWhiteSpace();
-	if( name.isNull() || name.find(' ') != -1 ||
-	    name.find( "gray" ) != -1 ||  name.find( "grey" ) != -1 )
+	if( name.isNull() || name.tqfind(' ') != -1 ||
+	    name.tqfind( "gray" ) != -1 ||  name.tqfind( "grey" ) != -1 )
 	{
 	  continue;
 	}
@@ -981,7 +981,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   l_left->addSpacing(10);
 
   TQGridLayout *l_lbot = new TQGridLayout(3, 6);
-  l_left->addLayout(l_lbot);
+  l_left->addLayout(TQT_TQLAYOUT(l_lbot));
 
   //
   // the palette and value selector go into the H-box
@@ -1003,28 +1003,28 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   // add the HSV fields
   //
   label = new TQLabel( i18n("H:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 0, 2);
   d->hedit = new KColorSpinBox( 0, 359, 1, page );
-  d->hedit->setValidator( new TQIntValidator( d->hedit ) );
+  d->hedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->hedit) ) );
   l_lbot->addWidget(d->hedit, 0, 3);
   connect( d->hedit, TQT_SIGNAL( valueChanged(int) ),
   	TQT_SLOT( slotHSVChanged() ) );
 
   label = new TQLabel( i18n("S:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 1, 2);
   d->sedit = new KColorSpinBox( 0, 255, 1, page );
-  d->sedit->setValidator( new TQIntValidator( d->sedit ) );
+  d->sedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->sedit) ) );
   l_lbot->addWidget(d->sedit, 1, 3);
   connect( d->sedit, TQT_SIGNAL( valueChanged(int) ),
   	TQT_SLOT( slotHSVChanged() ) );
 
   label = new TQLabel( i18n("V:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 2, 2);
   d->vedit = new KColorSpinBox( 0, 255, 1, page );
-  d->vedit->setValidator( new TQIntValidator( d->vedit ) );
+  d->vedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->vedit) ) );
   l_lbot->addWidget(d->vedit, 2, 3);
   connect( d->vedit, TQT_SIGNAL( valueChanged(int) ),
   	TQT_SLOT( slotHSVChanged() ) );
@@ -1033,28 +1033,28 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   // add the RGB fields
   //
   label = new TQLabel( i18n("R:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 0, 4);
   d->redit = new KColorSpinBox( 0, 255, 1, page );
-  d->redit->setValidator( new TQIntValidator( d->redit ) );
+  d->redit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->redit) ) );
   l_lbot->addWidget(d->redit, 0, 5);
   connect( d->redit, TQT_SIGNAL( valueChanged(int) ),
   	TQT_SLOT( slotRGBChanged() ) );
 
   label = new TQLabel( i18n("G:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget( label, 1, 4);
   d->gedit = new KColorSpinBox( 0, 255,1, page );
-  d->gedit->setValidator( new TQIntValidator( d->gedit ) );
+  d->gedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->gedit) ) );
   l_lbot->addWidget(d->gedit, 1, 5);
   connect( d->gedit, TQT_SIGNAL( valueChanged(int) ),
   	TQT_SLOT( slotRGBChanged() ) );
 
   label = new TQLabel( i18n("B:"), page );
-  label->setAlignment(AlignRight | AlignVCenter);
+  label->tqsetAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 2, 4);
   d->bedit = new KColorSpinBox( 0, 255, 1, page );
-  d->bedit->setValidator( new TQIntValidator( d->bedit ) );
+  d->bedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->bedit) ) );
   l_lbot->addWidget(d->bedit, 2, 5);
   connect( d->bedit, TQT_SIGNAL( valueChanged(int) ),
   	TQT_SLOT( slotRGBChanged() ) );
@@ -1131,33 +1131,33 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
 
   label = new TQLabel( page );
   label->setText(i18n("Name:"));
-  l_grid->addWidget(label, 0, 1, AlignLeft);
+  l_grid->addWidget(TQT_TQWIDGET(label), 0, 1, Qt::AlignLeft);
 
   d->colorName = new TQLabel( page );
-  l_grid->addWidget(d->colorName, 0, 2, AlignLeft);
+  l_grid->addWidget(TQT_TQWIDGET(d->colorName), 0, 2, Qt::AlignLeft);
 
   label = new TQLabel( page );
   label->setText(i18n("HTML:"));
-  l_grid->addWidget(label, 1, 1, AlignLeft);
+  l_grid->addWidget(TQT_TQWIDGET(label), 1, 1, Qt::AlignLeft);
 
   d->htmlName = new KLineEdit( page );
   d->htmlName->setMaxLength( 13 ); // Qt's TQColor allows 12 hexa-digits
   d->htmlName->setText("#FFFFFF"); // But HTML uses only 6, so do not worry about the size
-  w = d->htmlName->fontMetrics().width(TQString::fromLatin1("#DDDDDDD"));
+  w = d->htmlName->fontMetrics().width(TQString::tqfromLatin1("#DDDDDDD"));
   d->htmlName->setFixedWidth(w);
-  l_grid->addWidget(d->htmlName, 1, 2, AlignLeft);
+  l_grid->addWidget(TQT_TQWIDGET(d->htmlName), 1, 2, Qt::AlignLeft);
 
   connect( d->htmlName, TQT_SIGNAL( textChanged(const TQString &) ),
       TQT_SLOT( slotHtmlChanged() ) );
 
   d->patch = new KColorPatch( page );
   d->patch->setFixedSize(48, 48);
-  l_grid->addMultiCellWidget(d->patch, 0, 1, 0, 0, AlignHCenter | AlignVCenter);
+  l_grid->addMultiCellWidget(TQT_TQWIDGET(d->patch), 0, 1, 0, 0, Qt::AlignHCenter | Qt::AlignVCenter);
   connect( d->patch, TQT_SIGNAL( colorChanged( const TQColor&)),
 	   TQT_SLOT( setColor( const TQColor&)));
 
   tl_layout->activate();
-  page->setMinimumSize( page->sizeHint() );
+  page->setMinimumSize( page->tqsizeHint() );
 
   readSettings();
   d->bRecursion = false;
@@ -1187,7 +1187,7 @@ KColorDialog::~KColorDialog()
 bool
 KColorDialog::eventFilter( TQObject *obj, TQEvent *ev )
 {
-    if ((obj == d->htmlName) || (obj == d->hsSelector))
+    if ((TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(d->htmlName)) || (TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(d->hsSelector)))
     switch(ev->type())
     {
       case TQEvent::DragEnter:
@@ -1195,7 +1195,7 @@ KColorDialog::eventFilter( TQObject *obj, TQEvent *ev )
       case TQEvent::DragLeave:
       case TQEvent::Drop:
       case TQEvent::DragResponse:
-            qApp->sendEvent(d->patch, ev);
+            tqApp->sendEvent(d->patch, ev);
             return true;
       default:
             break;
@@ -1223,7 +1223,7 @@ KColorDialog::setDefaultColor( const TQColor& col )
 
         mainWidget()->setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX ); // cancel setFixedSize()
         d->tl_layout->activate();
-        mainWidget()->setMinimumSize( mainWidget()->sizeHint() );
+        mainWidget()->setMinimumSize( mainWidget()->tqsizeHint() );
         disableResize();
 
         connect( d->cbDefaultColor, TQT_SIGNAL( clicked() ), TQT_SLOT( slotDefaultColorClicked() ) );
@@ -1277,7 +1277,7 @@ KColorDialog::slotWriteSettings()
   }
 }
 
-QColor
+TQColor
 KColorDialog::color() const
 {
   if ( d->cbDefaultColor && d->cbDefaultColor->isChecked() )
@@ -1479,7 +1479,7 @@ void KColorDialog::showColor( const KColor &color, const TQString &name )
   d->valuePal->setValue( v );
   d->valuePal->updateContents();
   d->valuePal->blockSignals(false);
-  d->valuePal->repaint( false );
+  d->valuePal->tqrepaint( false );
   d->bRecursion = false;
 }
 
@@ -1507,7 +1507,7 @@ KColorDialog::slotColorPicker()
     d->oldfilter = qt_set_x11_event_filter(kde_color_dlg_handler);
 #endif
     kde_color_dlg_widget = this;
-    grabMouse( crossCursor );
+    grabMouse( tqcrossCursor );
     grabKeyboard();
 }
 
@@ -1529,10 +1529,10 @@ KColorDialog::mouseReleaseEvent( TQMouseEvent *e )
   KDialogBase::mouseReleaseEvent( e );
 }
 
-QColor
+TQColor
 KColorDialog::grabColor(const TQPoint &p)
 {
-    TQWidget *desktop = TQApplication::desktop();
+    TQWidget *desktop = TQT_TQWIDGET(TQApplication::desktop());
     TQPixmap pm = TQPixmap::grabWindow( desktop->winId(), p.x(), p.y(), 1, 1);
     TQImage i = pm.convertToImage();
     return i.pixel(0,0);

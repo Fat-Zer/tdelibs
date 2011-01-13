@@ -26,7 +26,7 @@
 class TQLineEdit;
 class TQPushButton;
 
-class QDirLineEdit : public QWidget
+class QDirLineEdit : public TQWidget
 {
 	Q_OBJECT
 public:

@@ -91,7 +91,7 @@ class KateDocument : public Kate::Document,
 
   public:
     KateDocument (bool bSingleViewMode=false, bool bBrowserView=false, bool bReadOnly=false,
-        TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject * = 0, const char * = 0);
+        TQWidget *tqparentWidget = 0, const char *widgetName = 0, TQObject * = 0, const char * = 0);
     ~KateDocument ();
 
     bool closeURL();
@@ -608,7 +608,7 @@ class KateDocument : public Kate::Document,
     void setConfigFlags (uint flags);
 
     // Repaint all of all of the views
-    void repaintViews(bool paintOnlyDirty = true);
+    void tqrepaintViews(bool paintOnlyDirty = true);
 
     inline KateHighlighting *highlight () { return m_buffer->highlight(); }
 

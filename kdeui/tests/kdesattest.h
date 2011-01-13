@@ -11,7 +11,7 @@
 #include <tqimage.h>
 #include <knuminput.h>
 
-class KDesatWidget : public QWidget
+class KDesatWidget : public TQWidget
 {
 Q_OBJECT
 public:

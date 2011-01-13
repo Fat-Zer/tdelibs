@@ -24,9 +24,9 @@
 
 #include <kdebug.h>
 
-typedef Q_UINT32 uint;
-typedef Q_UINT16 ushort;
-typedef Q_UINT8 uchar;
+typedef TQ_UINT32 uint;
+typedef TQ_UINT16 ushort;
+typedef TQ_UINT8 uchar;
 
 namespace {	// Private.
 
@@ -119,15 +119,15 @@ namespace {	// Private.
 
 		// Skip mode data.
 		s >> tmp;
-		s.device()->at( s.device()->at() + tmp );
+		s.tqdevice()->at( s.tqdevice()->at() + tmp );
 
 		// Skip image resources.
 		s >> tmp;
-		s.device()->at( s.device()->at() + tmp );
+		s.tqdevice()->at( s.tqdevice()->at() + tmp );
 
 		// Skip the reserved data.
 		s >> tmp;
-		s.device()->at( s.device()->at() + tmp );
+		s.tqdevice()->at( s.tqdevice()->at() + tmp );
 		
 		// Find out if the data is compressed.
 		// Known values:
@@ -145,7 +145,7 @@ namespace {	// Private.
 		
 		// Clear the image.
 		if( channel_num < 4 ) {
-			img.fill(qRgba(0, 0, 0, 0xFF));
+			img.fill(tqRgba(0, 0, 0, 0xFF));
 		}
 		else {
 			// Enable alpha.		
@@ -249,29 +249,29 @@ void kimgio_psd_read( TQImageIO *io )
 	// Check image file format.
 	if( s.atEnd() || !IsValid( header ) ) {
 		kdDebug(399) << "This PSD file is not valid." << endl;
-		io->setImage( 0 );
-		io->setStatus( -1 );
+		io->setImage( TQImage() );
+		io->setqStatus( -1 );
 		return;
 	}
 
 	// Check if it's a supported format.
 	if( !IsSupported( header ) ) {
 		kdDebug(399) << "This PSD file is not supported." << endl;
-		io->setImage( 0 );
-		io->setStatus( -1 );
+		io->setImage( TQImage() );
+		io->setqStatus( -1 );
 		return;
 	}
 
 	TQImage img;
 	if( !LoadPSD(s, header, img) ) {
 		kdDebug(399) << "Error loading PSD file." << endl;
-		io->setImage( 0 );
-		io->setStatus( -1 );
+		io->setImage( TQImage() );
+		io->setqStatus( -1 );
 		return;
 	}
 
     io->setImage( img );
-    io->setStatus( 0 );
+    io->setqStatus( 0 );
 }
 
 

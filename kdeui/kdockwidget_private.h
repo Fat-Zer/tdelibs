@@ -41,7 +41,7 @@ class KDockContainer;
  *
  * @author Max Judin.
  */
-class KDEUI_EXPORT KDockSplitter : public QWidget
+class KDEUI_EXPORT KDockSplitter : public TQWidget
 {
   // NOTE: in theory the KDEUI_EXPORT above shouldn't be there, but it's needed for kexi,
   // which copies the whole definition of the class to be able to access separatorPosInPercent etc. 
@@ -56,7 +56,7 @@ public:
    * @param orient orientation. Either @p Vertical or @p Horizontal
    * @param pos procentual position of the splitter. Must be int [0...100].
    */
-  KDockSplitter(TQWidget *parent= 0, const char *name= 0, Orientation orient= Vertical, int pos= 50);
+  KDockSplitter(TQWidget *parent= 0, const char *name= 0, Orientation orient= Qt::Vertical, int pos= 50);
   virtual ~KDockSplitter(){}
 
   /**
@@ -245,7 +245,7 @@ private:
  *
  * @author Max Judin.
 */
-class KDEUI_EXPORT KDockButton_Private : public QPushButton
+class KDEUI_EXPORT KDockButton_Private : public TQPushButton
 {
   Q_OBJECT
 public:
@@ -270,7 +270,7 @@ private:
 /**
  * additional KDockWidget stuff (private)
 */
-class KDockWidgetPrivate : public QObject
+class KDockWidgetPrivate : public TQObject
 {
   Q_OBJECT
 public:
@@ -311,7 +311,7 @@ public:
 };
 
 class KDockWidgetHeaderPrivate
-   : public QObject
+   : public TQObject
 {
 public:
   KDockWidgetHeaderPrivate( TQObject* parent )

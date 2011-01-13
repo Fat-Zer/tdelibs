@@ -30,7 +30,7 @@
  * @author Michael Roth <mroth@wirlweb.de>
  * @version $Id$
 */
-class KDEUI_EXPORT KSeparator : public QFrame
+class KDEUI_EXPORT KSeparator : public TQFrame
 {
   Q_OBJECT
   Q_PROPERTY( int orientation READ orientation WRITE setOrientation )
@@ -70,7 +70,7 @@ class KDEUI_EXPORT KSeparator : public QFrame
   /**
    * The recommended height (width) for a horizontal (vertical) separator.
    **/
-  virtual TQSize sizeHint() const;
+  virtual TQSize tqsizeHint() const;
 
 protected:
   /**

@@ -98,7 +98,7 @@ void DefaultProgress::init()
   topLayout->addStrut( 360 );   // makes dlg at least that wide
 
   TQGridLayout *grid = new TQGridLayout( 2, 3 );
-  topLayout->addLayout(grid);
+  topLayout->addLayout(TQT_TQLAYOUT(grid));
   grid->addColSpacing(1, KDialog::spacingHint());
   // filenames or action name
   grid->addWidget(new TQLabel(i18n("Source:"), this), 0, 0);
@@ -130,9 +130,9 @@ void DefaultProgress::init()
   hBox->addWidget(resumeLabel);
 
   progressLabel = new TQLabel( this );
-/*  progressLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::MinimumExpanding,
+/*  progressLabel->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::MinimumExpanding,
                                              TQSizePolicy::Preferred ) );*/
-  progressLabel->setAlignment( TQLabel::AlignRight );
+  progressLabel->tqsetAlignment( TQLabel::AlignRight );
   hBox->addWidget( progressLabel );
 
   hBox = new TQHBoxLayout();
@@ -171,8 +171,8 @@ void DefaultProgress::init()
   connect( d->cancelClose, TQT_SIGNAL( clicked() ), TQT_SLOT( slotStop() ) );
   hBox->addWidget( d->cancelClose );
 
-  resize( sizeHint() );
-  setMaximumHeight(sizeHint().height());
+  resize( tqsizeHint() );
+  setMaximumHeight(tqsizeHint().height());
 
   d->keepOpenChecked = false;
   d->noCaptionYet = true;
@@ -273,7 +273,7 @@ void DefaultProgress::slotPercent( KIO::Job*, unsigned long percent )
 void DefaultProgress::slotInfoMessage( KIO::Job*, const TQString & msg )
 {
   speedLabel->setText( msg );
-  speedLabel->setAlignment( speedLabel->alignment() & ~Qt::WordBreak );
+  speedLabel->tqsetAlignment( speedLabel->tqalignment() & ~TQt::WordBreak );
 }
 
 

@@ -51,7 +51,7 @@ class KIntNumInput;
  * @author Preston Brown <pbrown@kde.org>, Bernd Wuebben <wuebben@kde.org>
  * @version $Id$
  */
-class KDEUI_EXPORT KFontChooser : public QWidget
+class KDEUI_EXPORT KFontChooser : public TQWidget
 {
   Q_OBJECT
   Q_PROPERTY( TQFont font READ font WRITE setFont )
@@ -252,7 +252,7 @@ public:
   /**
    * Reimplemented for internal reasons.
    */
-  virtual TQSize sizeHint( void ) const;
+  virtual TQSize tqsizeHint( void ) const;
 
 signals:
   /**

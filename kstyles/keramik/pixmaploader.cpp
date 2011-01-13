@@ -69,13 +69,13 @@ TQImage* PixmapLoader::getDisabled(int name, const TQColor& color, const TQColor
 
 
 	//OK, now, fill it in, using the color..
-	Q_UINT32 r, g,b;
-	Q_UINT32 i = qGray(color.rgb());
+	TQ_UINT32 r, g,b;
+	TQ_UINT32 i = tqGray(color.rgb());
 	r = (3*color.red()+i)>>2;
 	g = (3*color.green()+i)>>2;
 	b = (3*color.blue()+i)>>2;
 
-	Q_UINT32 br = back.red(), bg = back.green(), bb = back.blue();
+	TQ_UINT32 br = back.red(), bg = back.green(), bb = back.blue();
 
 
 	if (edata->haveAlpha)
@@ -83,21 +83,21 @@ TQImage* PixmapLoader::getDisabled(int name, const TQColor& color, const TQColor
 		if (blend)
 		{
 			img->setAlphaBuffer(false);
-			Q_UINT32* write = reinterpret_cast< Q_UINT32* >(img->bits() );
+			TQ_UINT32* write = reinterpret_cast< TQ_UINT32* >(img->bits() );
 			int size = img->width()*img->height() * 3;
 
 			for (int pos = 0; pos < size; pos+=3)
 			{
-				Q_UINT32 scale  = edata->data[pos];
-				Q_UINT32 add    = (edata->data[pos+1]*i+127)>>8;
-				Q_UINT32 alpha = edata->data[pos+2];
-				Q_UINT32 destAlpha = 256 - alpha;
+				TQ_UINT32 scale  = edata->data[pos];
+				TQ_UINT32 add    = (edata->data[pos+1]*i+127)>>8;
+				TQ_UINT32 alpha = edata->data[pos+2];
+				TQ_UINT32 destAlpha = 256 - alpha;
 
-				Q_UINT32 rr = clamp[((r*scale+127)>>8) + add];
-				Q_UINT32 rg = clamp[((g*scale+127)>>8) + add];
-				Q_UINT32 rb = clamp[((b*scale+127)>>8) + add];
+				TQ_UINT32 rr = clamp[((r*scale+127)>>8) + add];
+				TQ_UINT32 rg = clamp[((g*scale+127)>>8) + add];
+				TQ_UINT32 rb = clamp[((b*scale+127)>>8) + add];
 
-				*write =qRgb(((rr*alpha+127)>>8) + ((br*destAlpha+127)>>8),
+				*write =tqRgb(((rr*alpha+127)>>8) + ((br*destAlpha+127)>>8),
 									((rg*alpha+127)>>8) + ((bg*destAlpha+127)>>8),
 									((rb*alpha+127)>>8) + ((bb*destAlpha+127)>>8));
 
@@ -107,20 +107,20 @@ TQImage* PixmapLoader::getDisabled(int name, const TQColor& color, const TQColor
 		else
 		{
 			img->setAlphaBuffer(true);
-			Q_UINT32* write = reinterpret_cast< Q_UINT32* >(img->bits() );
+			TQ_UINT32* write = reinterpret_cast< TQ_UINT32* >(img->bits() );
 			int size = img->width()*img->height() * 3;
 
 			for (int pos = 0; pos < size; pos+=3)
 			{
-				Q_UINT32 scale  = edata->data[pos];
-				Q_UINT32 add    = (edata->data[pos+1]*i+127)>>8;
-				Q_UINT32 alpha = edata->data[pos+2];
+				TQ_UINT32 scale  = edata->data[pos];
+				TQ_UINT32 add    = (edata->data[pos+1]*i+127)>>8;
+				TQ_UINT32 alpha = edata->data[pos+2];
 
-				Q_UINT32 rr = clamp[((r*scale+127)>>8) + add];
-				Q_UINT32 rg = clamp[((g*scale+127)>>8) + add];
-				Q_UINT32 rb = clamp[((b*scale+127)>>8) + add];
+				TQ_UINT32 rr = clamp[((r*scale+127)>>8) + add];
+				TQ_UINT32 rg = clamp[((g*scale+127)>>8) + add];
+				TQ_UINT32 rb = clamp[((b*scale+127)>>8) + add];
 
-				*write =qRgba(rr, rg, rb, alpha);
+				*write =tqRgba(rr, rg, rb, alpha);
 
 				write++;
 			}
@@ -130,17 +130,17 @@ TQImage* PixmapLoader::getDisabled(int name, const TQColor& color, const TQColor
 	else
 	{
 		img->setAlphaBuffer(false);
-		Q_UINT32* write = reinterpret_cast< Q_UINT32* >(img->bits() );
+		TQ_UINT32* write = reinterpret_cast< TQ_UINT32* >(img->bits() );
 		int size = img->width()*img->height() * 2;
 
 		for (int pos = 0; pos < size; pos+=2)
 		{
-			Q_UINT32 scale  = edata->data[pos];
-			Q_UINT32 add    = (edata->data[pos+1]*i+127)>>8;
-			Q_UINT32 rr = clamp[((r*scale+127)>>8) + add];
-			Q_UINT32 rg = clamp[((g*scale+127)>>8) + add];
-			Q_UINT32 rb = clamp[((b*scale+127)>>8) + add];
-			*write =qRgb(rr, rg, rb);
+			TQ_UINT32 scale  = edata->data[pos];
+			TQ_UINT32 add    = (edata->data[pos+1]*i+127)>>8;
+			TQ_UINT32 rr = clamp[((r*scale+127)>>8) + add];
+			TQ_UINT32 rg = clamp[((g*scale+127)>>8) + add];
+			TQ_UINT32 rb = clamp[((b*scale+127)>>8) + add];
+			*write =tqRgb(rr, rg, rb);
 			write++;
 		}
 	}
@@ -158,14 +158,14 @@ TQImage* PixmapLoader::getColored(int name, const TQColor& color, const TQColor&
 	TQImage* img = new TQImage(edata->width, edata->height, 32);
 
 	//OK, now, fill it in, using the color..
-	Q_UINT32 r, g,b;
+	TQ_UINT32 r, g,b;
 	r = color.red() + 2;
 	g = color.green() + 2;
 	b = color.blue() + 2;
 
-//	int i = qGray(color.rgb());
+//	int i = tqGray(color.rgb());
 
-	Q_UINT32 br = back.red(), bg = back.green(), bb = back.blue();
+	TQ_UINT32 br = back.red(), bg = back.green(), bb = back.blue();
 
 	if (edata->haveAlpha)
 	{
@@ -173,23 +173,23 @@ TQImage* PixmapLoader::getColored(int name, const TQColor& color, const TQColor&
 		{
 			img->setAlphaBuffer(false);
 
-			Q_UINT32* write = reinterpret_cast< Q_UINT32* >(img->bits() );
+			TQ_UINT32* write = reinterpret_cast< TQ_UINT32* >(img->bits() );
 			int size = img->width()*img->height() * 3;
 			for (int pos = 0; pos < size; pos+=3)
 			{
-				Q_UINT32 scale  = edata->data[pos];
-				Q_UINT32 add    = edata->data[pos+1];
-				Q_UINT32 alpha = edata->data[pos+2];
-				Q_UINT32 destAlpha = 256 - alpha;
+				TQ_UINT32 scale  = edata->data[pos];
+				TQ_UINT32 add    = edata->data[pos+1];
+				TQ_UINT32 alpha = edata->data[pos+2];
+				TQ_UINT32 destAlpha = 256 - alpha;
 
 				if (scale != 0)
 					add = add*5/4;
 
-				Q_UINT32 rr = clamp[((r*scale+127)>>8) + add];
-				Q_UINT32 rg = clamp[((g*scale+127)>>8) + add];
-				Q_UINT32 rb = clamp[((b*scale+127)>>8) + add];
+				TQ_UINT32 rr = clamp[((r*scale+127)>>8) + add];
+				TQ_UINT32 rg = clamp[((g*scale+127)>>8) + add];
+				TQ_UINT32 rb = clamp[((b*scale+127)>>8) + add];
 
-				*write =qRgb(((rr*alpha+127)>>8) + ((br*destAlpha+127)>>8),
+				*write =tqRgb(((rr*alpha+127)>>8) + ((br*destAlpha+127)>>8),
 									((rg*alpha+127)>>8) + ((bg*destAlpha+127)>>8),
 									((rb*alpha+127)>>8) + ((bb*destAlpha+127)>>8));
 
@@ -200,22 +200,22 @@ TQImage* PixmapLoader::getColored(int name, const TQColor& color, const TQColor&
 		{
 			img->setAlphaBuffer(true);
 
-			Q_UINT32* write = reinterpret_cast< Q_UINT32* >(img->bits() );
+			TQ_UINT32* write = reinterpret_cast< TQ_UINT32* >(img->bits() );
 			int size = img->width()*img->height() * 3;
 
 			for (int pos = 0; pos < size; pos+=3)
 			{
-				Q_UINT32 scale  = edata->data[pos];
-				Q_UINT32 add    = edata->data[pos+1];
-				Q_UINT32 alpha = edata->data[pos+2];
+				TQ_UINT32 scale  = edata->data[pos];
+				TQ_UINT32 add    = edata->data[pos+1];
+				TQ_UINT32 alpha = edata->data[pos+2];
 				if (scale != 0)
 					add = add*5/4;
 
-				Q_UINT32 rr = clamp[((r*scale+127)>>8) + add];
-				Q_UINT32 rg = clamp[((g*scale+127)>>8) + add];
-				Q_UINT32 rb = clamp[((b*scale+127)>>8) + add];
+				TQ_UINT32 rr = clamp[((r*scale+127)>>8) + add];
+				TQ_UINT32 rg = clamp[((g*scale+127)>>8) + add];
+				TQ_UINT32 rb = clamp[((b*scale+127)>>8) + add];
 
-				*write =qRgba(rr, rg, rb, alpha);
+				*write =tqRgba(rr, rg, rb, alpha);
 				write++;
 			}
 		}
@@ -224,22 +224,22 @@ TQImage* PixmapLoader::getColored(int name, const TQColor& color, const TQColor&
 	{
 		img->setAlphaBuffer(false);
 
-		Q_UINT32* write = reinterpret_cast< Q_UINT32* >(img->bits() );
+		TQ_UINT32* write = reinterpret_cast< TQ_UINT32* >(img->bits() );
 		int size = img->width()*img->height() * 2;
 
 		for (int pos = 0; pos < size; pos+=2)
 		{
-			Q_UINT32 scale  = edata->data[pos];
-			Q_UINT32 add    = edata->data[pos+1];
+			TQ_UINT32 scale  = edata->data[pos];
+			TQ_UINT32 add    = edata->data[pos+1];
 			if (scale != 0)
 				add = add*5/4;
 
-			Q_UINT32 rr = clamp[((r*scale+127)>>8) + add];
-			Q_UINT32 rg = clamp[((g*scale+127)>>8) + add];
-			Q_UINT32 rb = clamp[((b*scale+127)>>8) + add];
+			TQ_UINT32 rr = clamp[((r*scale+127)>>8) + add];
+			TQ_UINT32 rg = clamp[((g*scale+127)>>8) + add];
+			TQ_UINT32 rb = clamp[((b*scale+127)>>8) + add];
 
 
-			*write =qRgb(rr, rg, rb);
+			*write =tqRgb(rr, rg, rb);
 			write++;
 		}
 	}
@@ -260,7 +260,7 @@ TQPixmap PixmapLoader::scale( int name, int width, int height, const TQColor& co
 
 	int key = entry.key();
 
-	if ((cacheEntry = m_pixmapCache.find(key, true)))
+	if ((cacheEntry = m_pixmapCache.tqfind(key, true)))
 	{
 		if (entry == *cacheEntry) //True match!
 			return *cacheEntry->m_pixmap;
@@ -422,7 +422,7 @@ void TilePainter::draw( TQPainter *p, int x, int y, int width, int height, const
 					}
 					else
 					{
-						const TQBitmap* mask  = scale( col, row, w, h, color,  bg, disabled, false ).mask();
+						const TQBitmap* mask  = scale( col, row, w, h, color,  bg, disabled, false ).tqmask();
 						if (mask)
 						{
 							p->setBackgroundColor(Qt::color0);
@@ -442,7 +442,7 @@ void TilePainter::draw( TQPainter *p, int x, int y, int width, int height, const
 					}
 					else
 					{
-						const TQBitmap* mask = tile( col, row, color, bg, disabled, false ).mask();
+						const TQBitmap* mask = tile( col, row, color, bg, disabled, false ).tqmask();
 						if (mask)
 						{
 							p->setBackgroundColor(Qt::color0);

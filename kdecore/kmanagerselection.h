@@ -28,6 +28,10 @@ DEALINGS IN THE SOFTWARE.
 #include <tqobject.h>
 #include <kdelibs_export.h>
 
+#ifdef Q_MOC_RUN
+#define Q_WS_X11
+#endif // Q_MOC_RUN
+
 #ifdef Q_WS_X11 // FIXME(E)
 
 #include <X11/Xlib.h>
@@ -44,7 +48,7 @@ class KSelectionOwnerPrivate;
  @short ICCCM manager selection owner
 */
 class KDECORE_EXPORT KSelectionOwner
-    : public QObject
+    : public TQObject
     {
     Q_OBJECT
     public:
@@ -167,7 +171,7 @@ class KSelectionWatcherPrivate;
  @short ICCCM manager selection watching
 */
 class KDECORE_EXPORT KSelectionWatcher
-    : public QObject
+    : public TQObject
     {
     Q_OBJECT
     public:

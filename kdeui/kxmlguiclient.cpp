@@ -143,7 +143,7 @@ TQString KXMLGUIClient::localXMLFile() const
   if ( !TQDir::isRelativePath(d->m_xmlFile) )
       return TQString::null; // can't save anything here
 
-  return locateLocal( "data", TQString::fromLatin1( instance()->instanceName() + '/' ) + d->m_xmlFile );
+  return locateLocal( "data", TQString::tqfromLatin1( instance()->instanceName() + '/' ) + d->m_xmlFile );
 }
 
 
@@ -178,7 +178,7 @@ void KXMLGUIClient::setXMLFile( const TQString& _file, bool merge, bool setXMLDo
   {
     TQString doc;
 
-    TQString filter = TQString::fromLatin1( instance()->instanceName() + '/' ) + _file;
+    TQString filter = TQString::tqfromLatin1( instance()->instanceName() + '/' ) + _file;
 
     TQStringList allFiles = instance()->dirs()->findAllResources( "data", filter ) + instance()->dirs()->findAllResources( "data", _file );
 
@@ -269,7 +269,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
   // tag, in any event and just replace the old with the new
   if ( additive.attribute(attrNoMerge) == attrOne ) // ### use toInt() instead? (Simon)
   {
-    base.parentNode().replaceChild(additive, base);
+    base.tqparentNode().tqreplaceChild(additive, base);
     return true;
   }
 
@@ -291,7 +291,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
     if ( tag == tagAction )
     {
       TQCString name =  e.attribute( attrName ).utf8(); // WABA
-      if ( !actionCollection->action( name ) ||
+      if ( !actionCollection->action( name.data() ) ||
            (kapp && !kapp->authorizeKAction(name)))
       {
         // remove this child as we aren't using it
@@ -452,7 +452,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
       // if base contains an implemented action, then we must not get
       // deleted (note that the actionCollection contains both,
       // "global" and "local" actions
-      if ( actionCollection->action( e.attribute( attrName ).utf8() ) )
+      if ( actionCollection->action( e.attribute( attrName ).utf8().data() ) )
       {
         deleteMe = false;
         break;
@@ -699,7 +699,7 @@ TQString KXMLGUIClient::findMostRecentXMLFile( const TQStringList &files, TQStri
       else
       {
         TQString f = (*local).file;
-        TQString backup = f + TQString::fromLatin1( ".backup" );
+        TQString backup = f + TQString::tqfromLatin1( ".backup" );
         TQDir dir;
         dir.rename( f, backup );
       }
@@ -734,7 +734,7 @@ TQString KXMLGUIClient::findVersionNumber( const TQString &xml )
       case ST_AFTER_OPEN:
       {
         //Jump to gui..
-        int guipos = xml.find("gui", pos, false /*case-insensitive*/);
+        int guipos = xml.tqfind("gui", pos, false /*case-insensitive*/);
         if (guipos == -1)
           return TQString::null; //Reject
 
@@ -747,7 +747,7 @@ TQString KXMLGUIClient::findVersionNumber( const TQString &xml )
         break;
       case ST_EXPECT_VERSION:
       {
-        int verpos =  xml.find("version=\"", pos, false /*case-insensitive*/);
+        int verpos =  xml.tqfind("version=\"", pos, false /*case-insensitive*/);
         if (verpos == -1)
           return TQString::null; //Reject
 
@@ -760,9 +760,9 @@ TQString KXMLGUIClient::findVersionNumber( const TQString &xml )
         unsigned int endpos;
         for (endpos = pos; endpos <  xml.length(); endpos++)
         {
-          if (xml[endpos].unicode() >= '0' && xml[endpos].unicode() <= '9')
+          if (xml[endpos].tqunicode() >= '0' && xml[endpos].tqunicode() <= '9')
             continue; //Number..
-          if (xml[endpos].unicode() == '"') //End of parameter
+          if (xml[endpos].tqunicode() == '"') //End of parameter
             break;
           else //This shouldn't be here..
           {
@@ -810,7 +810,7 @@ KXMLGUIClient::ActionPropertiesMap KXMLGUIClient::extractActionProperties( const
     if ( actionName.isEmpty() )
       continue;
 
-    TQMap<TQString, TQMap<TQString, TQString> >::Iterator propIt = properties.find( actionName );
+    TQMap<TQString, TQMap<TQString, TQString> >::Iterator propIt = properties.tqfind( actionName );
     if ( propIt == properties.end() )
       propIt = properties.insert( actionName, TQMap<TQString, TQString>() );
 
@@ -874,7 +874,7 @@ void KXMLGUIClient::addStateActionEnabled(const TQString& state,
   stateChange.actionsToEnable.append( action );
   //kdDebug() << "KXMLGUIClient::addStateActionEnabled( " << state << ", " << action << ")" << endl;
 
-  m_actionsStateMap.replace( state, stateChange );
+  m_actionsStateMap.tqreplace( state, stateChange );
 }
 
 
@@ -886,7 +886,7 @@ void KXMLGUIClient::addStateActionDisabled(const TQString& state,
   stateChange.actionsToDisable.append( action );
   //kdDebug() << "KXMLGUIClient::addStateActionDisabled( " << state << ", " << action << ")" << endl;
 
-  m_actionsStateMap.replace( state, stateChange );
+  m_actionsStateMap.tqreplace( state, stateChange );
 }
 
 

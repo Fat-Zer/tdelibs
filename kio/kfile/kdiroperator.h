@@ -94,7 +94,7 @@ namespace KIO {
  * @short A widget for displaying files and browsing directories.
  * @author Stephan Kulow <coolo@kde.org>, Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KIO_EXPORT KDirOperator : public QWidget
+class KIO_EXPORT KDirOperator : public TQWidget
 {
     Q_OBJECT
 
@@ -710,7 +710,7 @@ public slots:
      * @since 3.4
      */
 	// ### KDE4: make virtual
-    void trashSelected(KAction::ActivationReason, Qt::ButtonState);
+    void trashSelected(KAction::ActivationReason, TQt::ButtonState);
 
 protected slots:
     /**

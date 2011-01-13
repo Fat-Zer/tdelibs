@@ -351,13 +351,13 @@ void KNotify::notify(const TQString &event, const TQString &fromApp,
     if ( !event.isEmpty() ) {
 
         // get config file
-        if ( d->events.contains( fromApp ) ) {
+        if ( d->events.tqcontains( fromApp ) ) {
             eventsFile = d->events[fromApp];
         } else {
             eventsFile=new KConfig(locate("data", fromApp+"/eventsrc"),true,false);
             d->events.insert( fromApp, eventsFile );
         }
-        if ( d->configs.contains( fromApp) ) {
+        if ( d->configs.tqcontains( fromApp) ) {
             configFile = d->configs[fromApp];
         } else {
             configFile=new KConfig(fromApp+".eventsrc",true,false);
@@ -550,7 +550,7 @@ bool KNotify::notifyBySound( const TQString &sound, const TQString &appname, int
            return false; // Skip
         }
         proc->clearArguments();
-        (*proc) << d->externalPlayer << TQFile::encodeName( soundFile );
+        (*proc) << d->externalPlayer << TQFile::encodeName( soundFile ).data();
         d->externalPlayerEventId = eventId;
         proc->start(KProcess::NotifyOnExit);
         return true;
@@ -642,7 +642,7 @@ bool KNotify::notifyByLogfile(const TQString &text, const TQString &file)
 
     // append msg
     TQTextStream strm( &logFile );
-    strm << "- KNotify " << TQDateTime::currentDateTime().toString() << ": ";
+    strm << "- KNotify " << TQDateTime::tqcurrentDateTime().toString() << ": ";
     strm << text << endl;
 
     // close file
@@ -660,7 +660,7 @@ bool KNotify::notifyByStderr(const TQString &text)
     TQTextStream strm( stderr, IO_WriteOnly );
 
     // output msg
-    strm << "KNotify " << TQDateTime::currentDateTime().toString() << ": ";
+    strm << "KNotify " << TQDateTime::tqcurrentDateTime().toString() << ": ";
     strm << text << endl;
 
     return true;
@@ -695,7 +695,7 @@ void KNotify::playTimeout()
         ++it;
         if ( (*current)->state() != Arts::posPlaying )
         {
-            TQMap<KDE::PlayObject*,int>::Iterator eit = d->playObjectEventMap.find( *current );
+            TQMap<KDE::PlayObject*,int>::Iterator eit = d->playObjectEventMap.tqfind( *current );
             if ( eit != d->playObjectEventMap.end() )
             {
                 soundFinished( *eit, PlayedOK );
@@ -730,7 +730,7 @@ void KNotify::slotPlayerProcessExited( KProcess *proc )
 void KNotify::abortFirstPlayObject()
 {
 #ifndef WITHOUT_ARTS
-    TQMap<KDE::PlayObject*,int>::Iterator it = d->playObjectEventMap.find( d->playObjects.getFirst() );
+    TQMap<KDE::PlayObject*,int>::Iterator it = d->playObjectEventMap.tqfind( d->playObjects.getFirst() );
     if ( it != d->playObjectEventMap.end() )
     {
         soundFinished( it.data(), Aborted );

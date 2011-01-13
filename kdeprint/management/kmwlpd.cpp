@@ -66,7 +66,7 @@ bool KMWLpd::isValid(TQString& msg)
 
 void KMWLpd::updatePrinter(KMPrinter *p)
 {
-	QString	dev = TQString::fromLatin1("lpd://%1/%2").arg(text(0)).arg(text(1));
+	QString	dev = TQString::tqfromLatin1("lpd://%1/%2").arg(text(0)).arg(text(1));
 	p->setDevice(dev);
 }
 
@@ -81,7 +81,7 @@ bool checkLpdQueue(const char *host, const char *queue)
 
 	char	res[64] = {0};
 	snprintf(res,64,"%c%s\n",(char)4,queue);
-	if (sock.writeBlock(res, strlen(res)) != (Q_LONG)(strlen(res)))
+	if (sock.writeBlock(res, strlen(res)) != (TQ_LONG)(strlen(res)))
 		return false;
 
 	char	buf[1024] = {0};

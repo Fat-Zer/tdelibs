@@ -32,7 +32,7 @@ class KTabBarPrivate;
 /**
  * @since 3.2
  */
-class KDEUI_EXPORT KTabBar: public QTabBar
+class KDEUI_EXPORT KTabBar: public TQTabBar
 {
     Q_OBJECT
 

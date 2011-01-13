@@ -219,7 +219,7 @@ TQValueList<KUserGroup> KUser::groups() const {
   TQValueList<KUserGroup>::const_iterator it;
   for ( it = allGroups.begin(); it != allGroups.end(); ++it ) {
     TQValueList<KUser> users = (*it).users();
-    if ( users.find( *this ) != users.end()) {
+    if ( users.tqfind( *this ) != users.end()) {
        result.append(*it);
     }
   }
@@ -232,7 +232,7 @@ TQStringList KUser::groupNames() const {
   TQValueList<KUserGroup>::const_iterator it;
   for ( it = allGroups.begin(); it != allGroups.end(); ++it ) {
     TQValueList<KUser> users = (*it).users();
-    if ( users.find( *this ) != users.end()) {
+    if ( users.tqfind( *this ) != users.end()) {
        result.append((*it).name());
     }
   }

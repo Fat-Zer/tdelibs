@@ -76,18 +76,18 @@ void KTabBar::setTabEnabled( int id, bool enabled )
 
                 if ( t->isEnabled() ) {
                     r = r.unite( t->rect() );
-                    tablist->append( tablist->take( tablist->findRef( t ) ) );
+                    tablist->append( tablist->take( tablist->tqfindRef( t ) ) );
                     emit selected( t->identifier() );
                 }
             }
-            repaint( r );
+            tqrepaint( r );
         }
     }
 }
 
 void KTabBar::mouseDoubleClickEvent( TQMouseEvent *e )
 {
-    if( e->button() != LeftButton )
+    if( e->button() != Qt::LeftButton )
         return;
 
     TQTab *tab = selectTab( e->pos() );
@@ -100,11 +100,11 @@ void KTabBar::mouseDoubleClickEvent( TQMouseEvent *e )
 
 void KTabBar::mousePressEvent( TQMouseEvent *e )
 {
-    if( e->button() == LeftButton ) {
+    if( e->button() == Qt::LeftButton ) {
         mEnableCloseButtonTimer->stop();
         mDragStart = e->pos();
     }
-    else if( e->button() == RightButton ) {
+    else if( e->button() == Qt::RightButton ) {
         TQTab *tab = selectTab( e->pos() );
         if( tab ) {
             emit( contextMenu( indexOf( tab->identifier() ), mapToGlobal( e->pos() ) ) );
@@ -116,7 +116,7 @@ void KTabBar::mousePressEvent( TQMouseEvent *e )
 
 void KTabBar::mouseMoveEvent( TQMouseEvent *e )
 {
-    if ( e->state() == LeftButton ) {
+    if ( e->state() == Qt::LeftButton ) {
         TQTab *tab = selectTab( e->pos() );
         if ( mDragSwitchTab && tab != mDragSwitchTab ) {
           mActivateDragSwitchTabTimer->stop();
@@ -134,7 +134,7 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
            }
        }
     }
-    else if ( e->state() == MidButton ) {
+    else if ( e->state() == Qt::MidButton ) {
         if (mReorderStartTab==-1) {
             int delay = KGlobalSettings::dndEventDelay();
             TQPoint newPos = e->pos();
@@ -144,7 +144,7 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
                 TQTab *tab = selectTab( e->pos() );
                 if( tab && mTabReorderingEnabled ) {
                     mReorderStartTab = indexOf( tab->identifier() );
-                    grabMouse( sizeAllCursor );
+                    grabMouse( tqsizeAllCursor );
                     return;
                 }
             }
@@ -172,8 +172,8 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
             int xoff = 0, yoff = 0;
             // The additional offsets were found by try and error, TODO: find the rational behind them
             if ( t == tab( currentTab() ) ) {
-                xoff = style().pixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this ) + 3;
-                yoff = style().pixelMetric( TQStyle::PM_TabBarTabShiftVertical, this ) - 4;
+                xoff = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this ) + 3;
+                yoff = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftVertical, this ) - 4;
             }
             else {
                 xoff = 7;
@@ -181,7 +181,7 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
             }
             rect.moveLeft( t->rect().left() + 2 + xoff );
             rect.moveTop( t->rect().center().y()-pixmap.height()/2 + yoff );
-            if ( rect.contains( e->pos() ) ) {
+            if ( rect.tqcontains( e->pos() ) ) {
                 if ( mHoverCloseButton ) {
                     if ( mHoverCloseButtonTab == t )
                         return;
@@ -230,7 +230,7 @@ void KTabBar::activateDragSwitchTab()
 
 void KTabBar::mouseReleaseEvent( TQMouseEvent *e )
 {
-    if( e->button() == MidButton ) {
+    if( e->button() == Qt::MidButton ) {
         if ( mReorderStartTab==-1 ) {
             TQTab *tab = selectTab( e->pos() );
             if( tab ) {
@@ -240,7 +240,7 @@ void KTabBar::mouseReleaseEvent( TQMouseEvent *e )
         }
         else {
             releaseMouse();
-            setCursor( arrowCursor );
+            setCursor( tqarrowCursor );
             mReorderStartTab=-1;
             mReorderPreviousTab=-1;
         }
@@ -253,7 +253,7 @@ void KTabBar::dragMoveEvent( TQDragMoveEvent *e )
     TQTab *tab = selectTab( e->pos() );
     if( tab ) {
         bool accept = false;
-        // The receivers of the testCanDecode() signal has to adjust
+        // The tqreceivers of the testCanDecode() signal has to adjust
         // 'accept' accordingly.
         emit testCanDecode( e, accept);
         if ( accept && tab != TQTabBar::tab( currentTab() ) ) {
@@ -282,7 +282,7 @@ void KTabBar::dropEvent( TQDropEvent *e )
 #ifndef QT_NO_WHEELEVENT
 void KTabBar::wheelEvent( TQWheelEvent *e )
 {
-    if ( e->orientation() == Horizontal )
+    if ( e->orientation() == Qt::Horizontal )
         return;
 
     emit( wheelDelta( e->delta() ) );
@@ -294,16 +294,16 @@ void KTabBar::setTabColor( int id, const TQColor& color )
     TQTab *t = tab( id );
     if ( t ) {
         mTabColors.insert( id, color );
-        repaint( t->rect(), false );
+        tqrepaint( t->rect(), false );
     }
 }
 
 const TQColor &KTabBar::tabColor( int id  ) const
 {
-    if ( mTabColors.contains( id ) )
+    if ( mTabColors.tqcontains( id ) )
         return mTabColors[id];
 
-    return colorGroup().foreground();
+    return tqcolorGroup().foreground();
 }
 
 int KTabBar::insertTab( TQTab *t, int index )
@@ -312,7 +312,7 @@ int KTabBar::insertTab( TQTab *t, int index )
 
     if ( mTabCloseActivatePrevious && count() > 2 ) {
         TQPtrList<TQTab> *tablist = tabList();
-        tablist->insert( count()-2, tablist->take( tablist->findRef( t ) ) );
+        tablist->insert( count()-2, tablist->take( tablist->tqfindRef( t ) ) );
     }
 
     return res;
@@ -341,8 +341,8 @@ void KTabBar::paintLabel( TQPainter *p, const TQRect& br,
         r.setLeft( r.left() + pixw + 4 );
         r.setRight( r.right() + 2 );
 
-        int inactiveXShift = style().pixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this );
-        int inactiveYShift = style().pixelMetric( TQStyle::PM_TabBarTabShiftVertical, this );
+        int inactiveXShift = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this );
+        int inactiveYShift = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftVertical, this );
 
         int right = t->text().isEmpty() ? br.right() - pixw : br.left() + 2;
 
@@ -358,12 +358,12 @@ void KTabBar::paintLabel( TQPainter *p, const TQRect& br,
     if ( has_focus )
         flags |= TQStyle::Style_HasFocus;
 
-    TQColorGroup cg( colorGroup() );
-    if ( mTabColors.contains( t->identifier() ) )
+    TQColorGroup cg( tqcolorGroup() );
+    if ( mTabColors.tqcontains( t->identifier() ) )
         cg.setColor( TQColorGroup::Foreground, mTabColors[t->identifier()] );
 
-    style().drawControl( TQStyle::CE_TabBarLabel, p, this, r,
-                             t->isEnabled() ? cg : palette().disabled(),
+    tqstyle().tqdrawControl( TQStyle::CE_TabBarLabel, p, this, r,
+                             t->isEnabled() ? cg : tqpalette().disabled(),
                              flags, TQStyleOption(t) );
 }
 

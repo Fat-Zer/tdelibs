@@ -39,7 +39,7 @@
  * TQIconView::selectionChanged() signal.
  *
  **/
-class KDEUI_EXPORT KIconView : public QIconView
+class KDEUI_EXPORT KIconView : public TQIconView
 {
   friend class KIconViewItem;
   Q_OBJECT
@@ -223,7 +223,7 @@ class KWordWrap;
  *
  * @author David Faure <david@mandrakesoft.com>
  */
-class KDEUI_EXPORT KIconViewItem : public QIconViewItem
+class KDEUI_EXPORT KIconViewItem : public TQIconViewItem
 {
 public:
     // Need to redefine all the constructors - I want Java !

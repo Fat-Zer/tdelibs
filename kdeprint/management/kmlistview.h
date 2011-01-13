@@ -26,7 +26,7 @@
 class KMListViewItem;
 class KMPrinter;
 
-class KMListView : public QListView
+class KMListView : public TQListView
 {
 	Q_OBJECT
 public:

@@ -22,6 +22,10 @@
 
 #include "kdelibs_export.h"
 
+#ifdef Q_MOC_RUN
+#define Q_OS_UNIX
+#endif // Q_MOC_RUN
+
 #ifdef Q_OS_UNIX
 
 #include <sys/time.h>
@@ -91,6 +95,7 @@ class KExtendedSocketPrivate;
 class KDECORE_EXPORT KExtendedSocket: public KBufferedIO // public TQObject, public QIODevice
 {
   Q_OBJECT
+  TQ_OBJECT
 
 public:
   /**
@@ -681,7 +686,7 @@ public:
    * @return the length of this socket, or 0 if unsupported
    */
 #ifdef USE_QT3
-  virtual inline Q_ULONG size() const
+  virtual inline TQ_ULONG size() const
 #endif // USE_QT3
 #ifdef USE_QT4
   virtual inline qint64 size() const
@@ -692,7 +697,7 @@ public:
    * Returns relative position from start. This call is not supported on sockets.
    * @return the relative position from the start, or 0 if unsupported
    */
-  virtual inline Q_ULONG at() const
+  virtual inline TQ_ULONG at() const
   { return 0; }
 
   /**
@@ -740,7 +745,7 @@ public:
    * This function returns 0, if the function detected end-of-file condition
    * (socket was closed)
    */
-  virtual Q_LONG readBlock(char *data, Q_ULONG maxlen);
+  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen);
 
   /**
    * Writes a block of data to the socket.
@@ -765,7 +770,7 @@ public:
    * The return value might be less than @p len if the output buffers cannot
    * accommodate that many bytes and -1 in the case of an errro.
    */
-  virtual Q_LONG writeBlock(const char *data, Q_ULONG len);
+  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len);
 
   /**
    * Peeks at a block of data from the socket.

@@ -76,7 +76,7 @@ namespace KIO { class Job; }
  * 1a) Reimplement your own KBookmarkOwner
  * 1b) Reimplement and instantiate your own KBookmarkManager
  */
-class KIO_EXPORT KBookmarkMenu : public QObject
+class KIO_EXPORT KBookmarkMenu : public TQObject
 {
   Q_OBJECT
   friend class KBookmarkMenuNSImporter;
@@ -162,7 +162,7 @@ signals:
   /**
    * @since 3.4
    */
-  void openBookmark( const TQString& url, Qt::ButtonState state );
+  void openBookmark( const TQString& url, TQt::ButtonState state );
 
 public slots: // public for bookmark bar
   void slotBookmarksChanged( const TQString & );
@@ -182,7 +182,7 @@ protected slots:
   /**
    * @ since 3.4
    */
-  void slotBookmarkSelected( KAction::ActivationReason reason, Qt::ButtonState state );
+  void slotBookmarkSelected( KAction::ActivationReason reason, TQt::ButtonState state );
   void slotAddBookmarksList();
   void slotAddBookmark();
   void slotNewFolder();
@@ -238,7 +238,7 @@ protected:
 /**
  * A class connected to KNSBookmarkImporter, to fill KActionMenus.
  */
-class KIO_EXPORT KBookmarkMenuNSImporter : public QObject
+class KIO_EXPORT KBookmarkMenuNSImporter : public TQObject
 {
   Q_OBJECT
 public:

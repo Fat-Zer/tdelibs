@@ -272,7 +272,7 @@ TQString KConfigBase::readEntry( const char *pKey,
   if( expand || bExpand )
     {
       // check for environment variables and make necessary translations
-      int nDollarPos = aValue.find( '$' );
+      int nDollarPos = aValue.tqfind( '$' );
 
       while( nDollarPos != -1 && nDollarPos+1 < static_cast<int>(aValue.length())) {
         // there is at least one $
@@ -328,7 +328,7 @@ TQString KConfigBase::readEntry( const char *pKey,
           aValue.remove( nDollarPos, 1 );
           nDollarPos++;
         }
-        nDollarPos = aValue.find( '$', nDollarPos );
+        nDollarPos = aValue.tqfind( '$', nDollarPos );
       }
     }
 
@@ -423,7 +423,7 @@ TQVariant KConfigBase::readPropertyEntry( const char *pKey,
       case TQVariant::DateTime:
           return TQVariant( readDateTimeEntry( pKey, &tmp.asDateTime() ) );
       case TQVariant::Date:
-          return TQVariant(readDateTimeEntry( pKey, &tmp.asDateTime() ).date());
+          return TQVariant(TQT_TQDATE_OBJECT(readDateTimeEntry( pKey, &tmp.asDateTime() ).date()));
 
       case TQVariant::Pixmap:
       case TQVariant::Image:
@@ -457,7 +457,7 @@ TQVariant KConfigBase::readPropertyEntry( const char *pKey,
       case TQVariant::RegExp:
       case TQVariant::Hash:
       case TQVariant::TextLength:
-      case TQVariant::TextFormat:
+      case QVariant::TextFormat:
       case TQVariant::Matrix:
       case TQVariant::Transform:
       case TQVariant::Matrix4x4:
@@ -697,12 +697,12 @@ unsigned long KConfigBase::readUnsignedLongNumEntry( const char *pKey, unsigned 
     }
 }
 
-Q_INT64 KConfigBase::readNum64Entry( const TQString& pKey, Q_INT64 nDefault) const
+TQ_INT64 KConfigBase::readNum64Entry( const TQString& pKey, TQ_INT64 nDefault) const
 {
   return readNum64Entry(pKey.utf8().data(), nDefault);
 }
 
-Q_INT64 KConfigBase::readNum64Entry( const char *pKey, Q_INT64 nDefault) const
+TQ_INT64 KConfigBase::readNum64Entry( const char *pKey, TQ_INT64 nDefault) const
 {
   // Note that TQCString::toLongLong() is missing, we muse use a TQString instead.
   TQString aValue = readEntry( pKey );
@@ -711,18 +711,18 @@ Q_INT64 KConfigBase::readNum64Entry( const char *pKey, Q_INT64 nDefault) const
   else
     {
       bool ok;
-      Q_INT64 rc = aValue.toLongLong( &ok );
+      TQ_INT64 rc = aValue.toLongLong( &ok );
       return( ok ? rc : nDefault );
     }
 }
 
 
-Q_UINT64 KConfigBase::readUnsignedNum64Entry( const TQString& pKey, Q_UINT64 nDefault) const
+TQ_UINT64 KConfigBase::readUnsignedNum64Entry( const TQString& pKey, TQ_UINT64 nDefault) const
 {
   return readUnsignedNum64Entry(pKey.utf8().data(), nDefault);
 }
 
-Q_UINT64 KConfigBase::readUnsignedNum64Entry( const char *pKey, Q_UINT64 nDefault) const
+TQ_UINT64 KConfigBase::readUnsignedNum64Entry( const char *pKey, TQ_UINT64 nDefault) const
 {
   // Note that TQCString::toULongLong() is missing, we muse use a TQString instead.
   TQString aValue = readEntry( pKey );
@@ -731,7 +731,7 @@ Q_UINT64 KConfigBase::readUnsignedNum64Entry( const char *pKey, Q_UINT64 nDefaul
   else
     {
       bool ok;
-      Q_UINT64 rc = aValue.toULongLong( &ok );
+      TQ_UINT64 rc = aValue.toULongLong( &ok );
       return( ok ? rc : nDefault );
     }
 }
@@ -793,7 +793,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
 
   TQString aValue = readEntry( pKey );
   if( !aValue.isNull() ) {
-    if ( aValue.contains( ',' ) > 5 ) {
+    if ( aValue.tqcontains( ',' ) > 5 ) {
       // KDE3 and upwards entry
       if ( !aRetFont.fromString( aValue ) && pDefault )
         aRetFont = *pDefault;
@@ -802,7 +802,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
       // backward compatibility with older font formats
       // ### remove KDE 3.1 ?
       // find first part (font family)
-      int nIndex = aValue.find( ',' );
+      int nIndex = aValue.tqfind( ',' );
       if( nIndex == -1 ){
         if( pDefault )
           aRetFont = *pDefault;
@@ -812,7 +812,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
 
       // find second part (point size)
       int nOldIndex = nIndex;
-      nIndex = aValue.find( ',', nOldIndex+1 );
+      nIndex = aValue.tqfind( ',', nOldIndex+1 );
       if( nIndex == -1 ){
         if( pDefault )
           aRetFont = *pDefault;
@@ -824,7 +824,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
 
       // find third part (style hint)
       nOldIndex = nIndex;
-      nIndex = aValue.find( ',', nOldIndex+1 );
+      nIndex = aValue.tqfind( ',', nOldIndex+1 );
 
       if( nIndex == -1 ){
         if( pDefault )
@@ -836,7 +836,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
 
       // find fourth part (char set)
       nOldIndex = nIndex;
-      nIndex = aValue.find( ',', nOldIndex+1 );
+      nIndex = aValue.tqfind( ',', nOldIndex+1 );
 
       if( nIndex == -1 ){
         if( pDefault )
@@ -848,7 +848,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
                                 nIndex-nOldIndex-1 );
       // find fifth part (weight)
       nOldIndex = nIndex;
-      nIndex = aValue.find( ',', nOldIndex+1 );
+      nIndex = aValue.tqfind( ',', nOldIndex+1 );
 
       if( nIndex == -1 ){
         if( pDefault )
@@ -979,7 +979,7 @@ TQColor KConfigBase::readColorEntry( const char *pKey,
           bool bOK;
 
           // find first part (red)
-          int nIndex = aValue.find( ',' );
+          int nIndex = aValue.tqfind( ',' );
 
           if( nIndex == -1 ){
             // return a sensible default -- Bernd
@@ -992,7 +992,7 @@ TQColor KConfigBase::readColorEntry( const char *pKey,
 
           // find second part (green)
           int nOldIndex = nIndex;
-          nIndex = aValue.find( ',', nOldIndex+1 );
+          nIndex = aValue.tqfind( ',', nOldIndex+1 );
 
           if( nIndex == -1 ){
             // return a sensible default -- Bernd
@@ -1025,7 +1025,7 @@ TQDateTime KConfigBase::readDateTimeEntry( const TQString& pKey,
   return readDateTimeEntry(pKey.utf8().data(), pDefault);
 }
 
-// ### currentDateTime() as fallback ? (Harri)
+// ### tqcurrentDateTime() as fallback ? (Harri)
 TQDateTime KConfigBase::readDateTimeEntry( const char *pKey,
                                           const TQDateTime* pDefault ) const
 {
@@ -1034,7 +1034,7 @@ TQDateTime KConfigBase::readDateTimeEntry( const char *pKey,
       if( pDefault )
         return *pDefault;
       else
-        return TQDateTime::currentDateTime();
+        return TQDateTime::tqcurrentDateTime();
     }
 
   TQStrList list;
@@ -1048,7 +1048,7 @@ TQDateTime KConfigBase::readDateTimeEntry( const char *pKey,
     return TQDateTime( date, time );
   }
 
-  return TQDateTime::currentDateTime();
+  return TQDateTime::tqcurrentDateTime();
 }
 
 void KConfigBase::writeEntry( const TQString& pKey, const TQString& value,
@@ -1121,7 +1121,7 @@ static bool cleanHomeDirPath( TQString &path, const TQString &homeDir )
    unsigned int len = homeDir.length();
    // replace by "$HOME" if possible
    if (len && (path.length() == len || path[len] == '/')) {
-        path.replace(0, len, TQString::fromLatin1("$HOME"));
+        path.replace(0, len, TQString::tqfromLatin1("$HOME"));
         return true;
    } else
         return false;
@@ -1135,7 +1135,7 @@ static TQString translatePath( TQString path )
    // only "our" $HOME should be interpreted
    path.replace('$', "$$");
 
-   bool startsWithFile = path.startsWith("file:", false);
+   bool startsWithFile = path.tqstartsWith("file:", false);
 
    // return original path, if it refers to another type of URL (e.g. http:/), or
    // if the path is already relative to another directory
@@ -1189,7 +1189,7 @@ void KConfigBase::writePathEntry ( const char *pKey, const TQStringList &list,
 {
   if( list.isEmpty() )
     {
-      writeEntry( pKey, TQString::fromLatin1(""), bPersistent );
+      writeEntry( pKey, TQString::tqfromLatin1(""), bPersistent );
       return;
     }
   TQStringList new_list;
@@ -1373,7 +1373,7 @@ void KConfigBase::writeEntry ( const char *pKey, const TQVariant &prop,
     case TQVariant::RegExp:
     case TQVariant::Hash:
     case TQVariant::TextLength:
-    case TQVariant::TextFormat:
+    case QVariant::TextFormat:
     case TQVariant::Matrix:
     case TQVariant::Transform:
     case TQVariant::Matrix4x4:
@@ -1402,7 +1402,7 @@ void KConfigBase::writeEntry ( const char *pKey, const TQStrList &list,
 {
   if( list.isEmpty() )
     {
-      writeEntry( pKey, TQString::fromLatin1(""), bPersistent );
+      writeEntry( pKey, TQString::tqfromLatin1(""), bPersistent );
       return;
     }
   TQString str_list;
@@ -1449,7 +1449,7 @@ void KConfigBase::writeEntry ( const char *pKey, const TQStringList &list,
 {
   if( list.isEmpty() )
     {
-      writeEntry( pKey, TQString::fromLatin1(""), bPersistent );
+      writeEntry( pKey, TQString::tqfromLatin1(""), bPersistent );
       return;
     }
   TQString str_list;
@@ -1548,14 +1548,14 @@ void KConfigBase::writeEntry( const char *pKey, unsigned long nValue,
   writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const TQString& pKey, Q_INT64 nValue,
+void KConfigBase::writeEntry( const TQString& pKey, TQ_INT64 nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
   writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const char *pKey, Q_INT64 nValue,
+void KConfigBase::writeEntry( const char *pKey, TQ_INT64 nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
@@ -1563,14 +1563,14 @@ void KConfigBase::writeEntry( const char *pKey, Q_INT64 nValue,
 }
 
 
-void KConfigBase::writeEntry( const TQString& pKey, Q_UINT64 nValue,
+void KConfigBase::writeEntry( const TQString& pKey, TQ_UINT64 nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
   writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const char *pKey, Q_UINT64 nValue,
+void KConfigBase::writeEntry( const char *pKey, TQ_UINT64 nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
@@ -1631,7 +1631,7 @@ void KConfigBase::writeEntry( const char *pKey, const TQFont& rFont,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
-  writeEntry( pKey, rFont.toString(), bPersistent, bGlobal, bNLS );
+  writeEntry( pKey, TQString(rFont.toString()), bPersistent, bGlobal, bNLS );
 }
 
 
@@ -1732,8 +1732,8 @@ void KConfigBase::writeEntry( const char *pKey, const TQDateTime& rDateTime,
   TQStrList list;
   TQCString tempstr;
 
-  TQTime time = rDateTime.time();
-  TQDate date = rDateTime.date();
+  TQTime time = TQT_TQTIME_OBJECT(rDateTime.time());
+  TQDate date = TQT_TQDATE_OBJECT(rDateTime.date());
 
   list.insert( 0, tempstr.setNum( date.year() ) );
   list.insert( 1, tempstr.setNum( date.month() ) );

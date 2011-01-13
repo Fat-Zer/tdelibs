@@ -61,7 +61,7 @@ class KateSyntaxContextData
 /**
  * Store and manage the information about Syntax Highlighting.
  */
-class KateSyntaxDocument : public QDomDocument
+class KateSyntaxDocument : public TQDomDocument
 {
   public:
     /**

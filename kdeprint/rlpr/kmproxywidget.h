@@ -26,7 +26,7 @@ class KConfig;
 class TQLineEdit;
 class TQCheckBox;
 
-class KMProxyWidget : public QGroupBox
+class KMProxyWidget : public TQGroupBox
 {
 public:
 	KMProxyWidget(TQWidget *parent = 0, const char *name = 0);

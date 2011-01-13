@@ -80,7 +80,7 @@ SourceParam::~SourceParam()
 	void
 SourceParam::_parse()
 {
-	int i = strRep_.find('=');
+	int i = strRep_.tqfind('=');
 	if (i == -1) // Invalid
 		return;
 	

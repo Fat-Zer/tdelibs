@@ -58,7 +58,7 @@ DCOPObject::DCOPObject(TQObject *obj)
     while (currentObj != 0L) {
         ident.prepend( currentObj->name() );
         ident.prepend("/");
-        currentObj = currentObj->parent();
+        currentObj = TQT_TQOBJECT(currentObj->parent());
     }
     if ( ident[0] == '/' )
         ident = ident.mid(1);
@@ -116,7 +116,7 @@ TQCString DCOPObject::objId() const
 
 bool DCOPObject::hasObject(const TQCString &_objId)
 {
-  if (objMap()->contains(_objId))
+  if (objMap()->tqcontains(_objId))
     return true;
   else
     return false;
@@ -155,7 +155,7 @@ TQCString DCOPObject::objectName( TQObject* obj )
     {
 	identity.prepend( currentObj->name() );
 	identity.prepend("/");
-	currentObj = currentObj->parent();
+	currentObj = TQT_TQOBJECT(currentObj->parent());
     }
     if ( identity[0] == '/' )
 	identity = identity.mid(1);

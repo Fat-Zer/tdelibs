@@ -73,9 +73,9 @@ Test::Test( TQWidget* parent, const char *name )
   gridlayout->addWidget( mTabsBottom, 3, 0 );
   connect( mTabsBottom, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleTabPosition(bool) ) );
 
-  TQCheckBox * tabshape = new TQCheckBox( "Triangular tab shape", grid );
-  gridlayout->addWidget( tabshape, 3, 1 );
-  connect( tabshape, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleTabShape(bool) ) );
+  TQCheckBox * tabtqshape = new TQCheckBox( "Triangular tab tqshape", grid );
+  gridlayout->addWidget( tabtqshape, 3, 1 );
+  connect( tabtqshape, TQT_SIGNAL( toggled(bool) ), TQT_SLOT( toggleTabShape(bool) ) );
 
   TQCheckBox *tabClose = new TQCheckBox( "Close button on icon hover", grid );
   gridlayout->addWidget( tabClose, 4, 0 );

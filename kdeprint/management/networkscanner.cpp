@@ -157,7 +157,7 @@ void NetworkScanner::slotScanClicked()
 	if ( !d->scanning )
 	{
 		if ( d->localPrefix() == d->prefixaddress ||
-				KMessageBox::warningContinueCancel( this->parentWidget(),
+				KMessageBox::warningContinueCancel( this->tqparentWidget(),
 					i18n( "You are about to scan a subnet (%1.*) that does not "
 						  "correspond to the current subnet of this computer (%2.*). Do you want "
 						  "to scan the specified subnet anyway?" ).arg( d->prefixaddress ).arg( d->localPrefix() ),
@@ -339,12 +339,12 @@ NetworkScannerConfig::NetworkScannerConfig(NetworkScanner *scanner, const char *
 	QLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
 	QLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
 	QLineEdit	*mm = new TQLineEdit(dummy);
-	mm->setText(TQString::fromLatin1(".[0-255]"));
+	mm->setText(TQString::tqfromLatin1(".[0-255]"));
 	mm->setReadOnly(true);
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
 
 	mask_ = new TQLineEdit(dummy);
-	mask_->setAlignment(Qt::AlignRight);
+	mask_->tqsetAlignment(Qt::AlignRight);
 	port_ = new TQComboBox(true,dummy);
         if ( port_->lineEdit() )
             port_->lineEdit()->setValidator( val );

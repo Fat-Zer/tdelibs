@@ -101,8 +101,8 @@ public: // KDoc seems to barf on those typedefs and generates no docs after them
     */
    virtual void save(TQDataStream &s)
      {
-       mOffset = s.device()->at(); // store position in member variable
-       s << (Q_INT32) sycocaType() << mPath;
+       mOffset = s.tqdevice()->at(); // store position in member variable
+       s << (TQ_INT32) sycocaType() << mPath;
      }
 
    /**

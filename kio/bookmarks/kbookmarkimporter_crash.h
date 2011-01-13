@@ -34,7 +34,7 @@
  * A class for importing all crash sessions as bookmarks
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KCrashBookmarkImporter : public QObject
+class KIO_EXPORT_DEPRECATED KCrashBookmarkImporter : public TQObject
 {
     Q_OBJECT
 public:

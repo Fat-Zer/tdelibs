@@ -76,7 +76,7 @@ public:
     TQString language;
     bool readError;
     bool autoRebuild;
-    Q_UINT32 updateSig;
+    TQ_UINT32 updateSig;
     TQStringList allResourceDirs;
 };
 
@@ -179,8 +179,8 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
         TQBuffer *buffer = new TQBuffer( TQByteArray() );
         buffer->open(IO_ReadWrite);
         m_str = new TQDataStream( buffer);
-        (*m_str) << (Q_INT32) KSYCOCA_VERSION;
-        (*m_str) << (Q_INT32) 0;
+        (*m_str) << (TQ_INT32) KSYCOCA_VERSION;
+        (*m_str) << (TQ_INT32) 0;
      }
      else
      {
@@ -228,12 +228,15 @@ void KSycoca::closeDatabase()
 {
    TQIODevice *device = 0;
    if (m_str)
-      device = m_str->device();
+      device = m_str->tqdevice();
 #ifdef HAVE_MMAP
    if (device && m_sycoca_mmap)
    {
       TQBuffer *buf = (TQBuffer *) device;
-      buf->buffer().resetRawData(m_sycoca_mmap, m_sycoca_size);
+#ifdef USE_QT4
+      static_cast<TQByteArray&>
+#endif // USE_QT4
+      (buf->buffer()).resetRawData(m_sycoca_mmap, m_sycoca_size);
       // Solaris has munmap(char*, size_t) and everything else should
       // be happy with a char* for munmap(void*, size_t)
       munmap((char*) m_sycoca_mmap, m_sycoca_size);
@@ -244,7 +247,7 @@ void KSycoca::closeDatabase()
    delete m_str;
    m_str = 0;
    delete device;
-   if (d->database != device)
+   if (TQT_TQIODEVICE(d->database) != device)
       delete d->database;
    device = 0;
    d->database = 0;
@@ -262,7 +265,7 @@ void KSycoca::addFactory( KSycocaFactory *factory )
 
 bool KSycoca::isChanged(const char *type)
 {
-    return self()->d->changeList.contains(type);
+    return self()->d->changeList.tqcontains(type);
 }
 
 void KSycoca::notifyDatabaseChanged(const TQStringList &changeList)
@@ -284,8 +287,8 @@ TQDataStream * KSycoca::findEntry(int offset, KSycocaType &type)
    if ( !m_str )
       openDatabase();
    //kdDebug(7011) << TQString("KSycoca::_findEntry(offset=%1)").arg(offset,8,16) << endl;
-   m_str->device()->at(offset);
-   Q_INT32 aType;
+   m_str->tqdevice()->at(offset);
+   TQ_INT32 aType;
    (*m_str) >> aType;
    type = (KSycocaType) aType;
    //kdDebug(7011) << TQString("KSycoca::found type %1").arg(aType) << endl;
@@ -302,8 +305,8 @@ bool KSycoca::checkVersion(bool abortOnError)
       // We should never get here... if a database was found then m_str shouldn't be 0L.
       assert(m_str);
    }
-   m_str->device()->at(0);
-   Q_INT32 aVersion;
+   m_str->tqdevice()->at(0);
+   TQ_INT32 aVersion;
    (*m_str) >> aVersion;
    if ( aVersion < KSYCOCA_VERSION )
    {
@@ -342,8 +345,8 @@ TQDataStream * KSycoca::findFactory(KSycocaFactoryId id)
      kdWarning(7011) << "Outdated database found" << endl;
      return 0L;
    }
-   Q_INT32 aId;
-   Q_INT32 aOffset;
+   TQ_INT32 aId;
+   TQ_INT32 aOffset;
    while(true)
    {
       (*m_str) >> aId;
@@ -357,7 +360,7 @@ TQDataStream * KSycoca::findFactory(KSycocaFactoryId id)
       if (aId == id)
       {
          //kdDebug(7011) << TQString("KSycoca::findFactory(%1) offset %2").arg((int)id).arg(aOffset) << endl;
-         m_str->device()->at(aOffset);
+         m_str->tqdevice()->at(aOffset);
          return m_str;
       }
    }
@@ -368,8 +371,8 @@ TQString KSycoca::kfsstnd_prefixes()
 {
    if (bNoDatabase) return "";
    if (!checkVersion(false)) return "";
-   Q_INT32 aId;
-   Q_INT32 aOffset;
+   TQ_INT32 aId;
+   TQ_INT32 aOffset;
    // skip factories offsets
    while(true)
    {
@@ -389,14 +392,14 @@ TQString KSycoca::kfsstnd_prefixes()
    return prefixes;
 }
 
-Q_UINT32 KSycoca::timeStamp()
+TQ_UINT32 KSycoca::timeStamp()
 {
    if (!m_timeStamp)
       (void) kfsstnd_prefixes();
    return m_timeStamp;
 }
 
-Q_UINT32 KSycoca::updateSignature()
+TQ_UINT32 KSycoca::updateSignature()
 {
    if (!m_timeStamp)
       (void) kfsstnd_prefixes();
@@ -424,11 +427,11 @@ TQString KSycoca::determineRelativePath( const TQString & _fullpath, const char 
   TQStringList::ConstIterator dirsit = dirs.begin();
   for ( ; dirsit != dirs.end() && sRelativeFilePath.isEmpty(); ++dirsit ) {
     // might need canonicalPath() ...
-    if ( _fullpath.find( *dirsit ) == 0 ) // path is dirs + relativePath
+    if ( _fullpath.tqfind( *dirsit ) == 0 ) // path is dirs + relativePath
       sRelativeFilePath = _fullpath.mid( (*dirsit).length() ); // skip appsdirs
   }
   if ( sRelativeFilePath.isEmpty() )
-    kdFatal(7011) << TQString("Couldn't find %1 in any %2 dir !!!").arg( _fullpath ).arg( _resource) << endl;
+    kdFatal(7011) << TQString(TQString("Couldn't find %1 in any %2 dir !!!").arg( _fullpath ).arg( _resource)) << endl;
   //else
     // debug code
     //kdDebug(7011) << sRelativeFilePath << endl;
@@ -469,7 +472,7 @@ bool KSycoca::readError()
 
 void KSycocaEntry::read( TQDataStream &s, TQString &str )
 {
-  Q_UINT32 bytes;
+  TQ_UINT32 bytes;
   s >> bytes;                          // read size of string
   if ( bytes > 8192 ) {                // null string or too big
       if (bytes != 0xffffffff)
@@ -479,7 +482,7 @@ void KSycocaEntry::read( TQDataStream &s, TQString &str )
   else if ( bytes > 0 ) {              // not empty
       int bt = bytes/2;
       str.setLength( bt );
-      TQChar* ch = (TQChar *) str.unicode();
+      TQChar* ch = (TQChar *) str.tqunicode();
       char t[8192];
       char *b = t;
       s.readRawBytes( b, bytes );
@@ -495,14 +498,14 @@ void KSycocaEntry::read( TQDataStream &s, TQString &str )
 void KSycocaEntry::read( TQDataStream &s, TQStringList &list )
 {
   list.clear();
-  Q_UINT32 count;
+  TQ_UINT32 count;
   s >> count;                          // read size of list
   if (count >= 1024)
   {
      KSycoca::flagError();
      return;
   }
-  for(Q_UINT32 i = 0; i < count; i++)
+  for(TQ_UINT32 i = 0; i < count; i++)
   {
      TQString str;
      read(s, str);

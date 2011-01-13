@@ -515,11 +515,11 @@ void KAction::updateShortcut( int i )
   int id = itemId( i );
 
   TQWidget* w = container( i );
-  if ( ::qt_cast<TQPopupMenu *>( w ) ) {
+  if ( ::tqqt_cast<TQPopupMenu *>( w ) ) {
     TQPopupMenu* menu = static_cast<TQPopupMenu*>(w);
     updateShortcut( menu, id );
   }
-  else if ( ::qt_cast<TQMenuBar *>( w ) )
+  else if ( ::tqqt_cast<TQMenuBar *>( w ) )
     static_cast<TQMenuBar*>(w)->setAccel( d->m_cut.keyCodeQt(), id );
 }
 
@@ -530,7 +530,7 @@ void KAction::updateShortcut( TQPopupMenu* menu, int id )
   //  show the string representation of its shortcut.
   if ( d->m_kaccel || d->m_kaccelList.count() ) {
     TQString s = menu->text( id );
-    int i = s.find( '\t' );
+    int i = s.tqfind( '\t' );
     if ( i >= 0 )
       s.replace( i+1, s.length()-i, d->m_cut.seq(0).toString() );
     else
@@ -616,7 +616,7 @@ void KAction::updateToolTip( int i )
 {
   TQWidget *w = container( i );
 
-  if ( ::qt_cast<KToolBar *>( w ) )
+  if ( ::tqqt_cast<KToolBar *>( w ) )
     TQToolTip::add( static_cast<KToolBar*>(w)->getWidget( itemId( i ) ), d->toolTip() );
 }
 
@@ -649,7 +649,7 @@ int KAction::plug( TQWidget *w, int index )
 
   plugShortcut();
 
-  if ( ::qt_cast<TQPopupMenu *>( w ) )
+  if ( ::tqqt_cast<TQPopupMenu *>( w ) )
   {
     TQPopupMenu* menu = static_cast<TQPopupMenu*>( w );
     int id;
@@ -683,7 +683,7 @@ int KAction::plug( TQWidget *w, int index )
         menu->setItemEnabled( id, false );
 
     if ( !d->whatsThis().isEmpty() )
-        menu->setWhatsThis( id, whatsThisWithIcon() );
+        menu->TQMenuData::setWhatsThis( id, whatsThisWithIcon() );
 
     addContainer( menu, id );
     connect( menu, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slotDestroyed() ) );
@@ -693,7 +693,7 @@ int KAction::plug( TQWidget *w, int index )
 
     return d->m_containers.count() - 1;
   }
-  else if ( ::qt_cast<KToolBar *>( w ) )
+  else if ( ::tqqt_cast<KToolBar *>( w ) )
   {
     KToolBar *bar = static_cast<KToolBar *>( w );
 
@@ -706,8 +706,8 @@ int KAction::plug( TQWidget *w, int index )
 
     if ( icon().isEmpty() && !iconSet().pixmap().isNull() ) // old code using TQIconSet directly
     {
-        bar->insertButton( iconSet().pixmap(), id_, TQT_SIGNAL( buttonClicked(int, Qt::ButtonState) ), this,
-                           TQT_SLOT( slotButtonClicked(int, Qt::ButtonState) ),
+        bar->insertButton( iconSet().pixmap(), id_, TQT_SIGNAL( buttonClicked(int, TQt::ButtonState) ), this,
+                           TQT_SLOT( slotButtonClicked(int, TQt::ButtonState) ),
                            d->isEnabled(), d->plainText(), index );
     }
     else
@@ -715,8 +715,8 @@ int KAction::plug( TQWidget *w, int index )
         TQString icon = d->iconName();
         if ( icon.isEmpty() )
             icon = "unknown";
-        bar->insertButton( icon, id_, TQT_SIGNAL( buttonClicked(int, Qt::ButtonState) ), this,
-                           TQT_SLOT( slotButtonClicked(int, Qt::ButtonState) ),
+        bar->insertButton( icon, id_, TQT_SIGNAL( buttonClicked(int, TQt::ButtonState) ), this,
+                           TQT_SLOT( slotButtonClicked(int, TQt::ButtonState) ),
                            d->isEnabled(), d->plainText(), index, instance );
     }
 
@@ -749,17 +749,17 @@ void KAction::unplug( TQWidget *w )
     return;
   int id = itemId( i );
 
-  if ( ::qt_cast<TQPopupMenu *>( w ) )
+  if ( ::tqqt_cast<TQPopupMenu *>( w ) )
   {
     TQPopupMenu *menu = static_cast<TQPopupMenu *>( w );
     menu->removeItem( id );
   }
-  else if ( ::qt_cast<KToolBar *>( w ) )
+  else if ( ::tqqt_cast<KToolBar *>( w ) )
   {
     KToolBar *bar = static_cast<KToolBar *>( w );
     bar->removeItemDelayed( id );
   }
-  else if ( ::qt_cast<TQMenuBar *>( w ) )
+  else if ( ::tqqt_cast<TQMenuBar *>( w ) )
   {
     TQMenuBar *bar = static_cast<TQMenuBar *>( w );
     bar->removeItem( id );
@@ -810,10 +810,10 @@ void KAction::unplugAccel()
 
 void KAction::plugMainWindowAccel( TQWidget *w )
 {
-  // Note: topLevelWidget() stops too early, we can't use it.
+  // Note: tqtopLevelWidget() stops too early, we can't use it.
   TQWidget * tl = w;
   TQWidget * n;
-  while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
+  while ( !tl->isDialog() && ( n = tl->tqparentWidget() ) ) // lookup parent and store
     tl = n;
 
   KMainWindow * mw = dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow
@@ -857,11 +857,11 @@ void KAction::updateEnabled( int i )
 {
     TQWidget *w = container( i );
 
-    if ( ::qt_cast<TQPopupMenu *>( w ) )
+    if ( ::tqqt_cast<TQPopupMenu *>( w ) )
       static_cast<TQPopupMenu*>(w)->setItemEnabled( itemId( i ), d->isEnabled() );
-    else if ( ::qt_cast<TQMenuBar *>( w ) )
+    else if ( ::tqqt_cast<TQMenuBar *>( w ) )
       static_cast<TQMenuBar*>(w)->setItemEnabled( itemId( i ), d->isEnabled() );
-    else if ( ::qt_cast<KToolBar *>( w ) )
+    else if ( ::tqqt_cast<KToolBar *>( w ) )
       static_cast<KToolBar*>(w)->setItemEnabled( itemId( i ), d->isEnabled() );
 }
 
@@ -903,18 +903,18 @@ void KAction::updateText( int i )
 {
   TQWidget *w = container( i );
 
-  if ( ::qt_cast<TQPopupMenu *>( w ) ) {
+  if ( ::tqqt_cast<TQPopupMenu *>( w ) ) {
     int id = itemId( i );
     static_cast<TQPopupMenu*>(w)->changeItem( id, d->text() );
     if (!d->m_cut.isNull())
       updateShortcut( static_cast<TQPopupMenu*>(w), id );
   }
-  else if ( ::qt_cast<TQMenuBar *>( w ) )
+  else if ( ::tqqt_cast<TQMenuBar *>( w ) )
     static_cast<TQMenuBar*>(w)->changeItem( itemId( i ), d->text() );
-  else if ( ::qt_cast<KToolBar *>( w ) )
+  else if ( ::tqqt_cast<KToolBar *>( w ) )
   {
     TQWidget *button = static_cast<KToolBar *>(w)->getWidget( itemId( i ) );
-    if ( ::qt_cast<KToolBarButton *>( button ) )
+    if ( ::tqqt_cast<KToolBarButton *>( button ) )
       static_cast<KToolBarButton *>(button)->setText( d->plainText() );
   }
 }
@@ -943,15 +943,15 @@ void KAction::updateIcon( int id )
 {
   TQWidget* w = container( id );
 
-  if ( ::qt_cast<TQPopupMenu *>( w ) ) {
+  if ( ::tqqt_cast<TQPopupMenu *>( w ) ) {
     int itemId_ = itemId( id );
     static_cast<TQPopupMenu*>(w)->changeItem( itemId_, d->iconSet( KIcon::Small ), d->text() );
     if (!d->m_cut.isNull())
       updateShortcut( static_cast<TQPopupMenu*>(w), itemId_ );
   }
-  else if ( ::qt_cast<TQMenuBar *>( w ) )
+  else if ( ::tqqt_cast<TQMenuBar *>( w ) )
     static_cast<TQMenuBar*>(w)->changeItem( itemId( id ), d->iconSet( KIcon::Small ), d->text() );
-  else if ( ::qt_cast<KToolBar *>( w ) )
+  else if ( ::tqqt_cast<KToolBar *>( w ) )
     static_cast<KToolBar *>(w)->setButtonIcon( itemId( id ), d->iconName() );
 }
 
@@ -974,16 +974,16 @@ void KAction::updateIconSet( int id )
 {
   TQWidget *w = container( id );
 
-  if ( ::qt_cast<TQPopupMenu *>( w ) )
+  if ( ::tqqt_cast<TQPopupMenu *>( w ) )
   {
     int itemId_ = itemId( id );
     static_cast<TQPopupMenu*>(w)->changeItem( itemId_, d->iconSet(), d->text() );
     if (!d->m_cut.isNull())
       updateShortcut( static_cast<TQPopupMenu*>(w), itemId_ );
   }
-  else if ( ::qt_cast<TQMenuBar *>( w ) )
+  else if ( ::tqqt_cast<TQMenuBar *>( w ) )
     static_cast<TQMenuBar*>(w)->changeItem( itemId( id ), d->iconSet(), d->text() );
-  else if ( ::qt_cast<KToolBar *>( w ) )
+  else if ( ::tqqt_cast<KToolBar *>( w ) )
   {
     if ( icon().isEmpty() && d->hasIcon() ) // only if there is no named icon ( scales better )
       static_cast<KToolBar *>(w)->setButtonIconSet( itemId( id ), d->iconSet() );
@@ -1016,7 +1016,7 @@ void KAction::updateWhatsThis( int i )
   TQPopupMenu* pm = popupMenu( i );
   if ( pm )
   {
-    pm->setWhatsThis( itemId( i ), d->whatsThis() );
+    pm->TQMenuData::setWhatsThis( itemId( i ), d->whatsThis() );
     return;
   }
 
@@ -1039,7 +1039,7 @@ TQString KAction::whatsThisWithIcon() const
 {
     TQString text = whatsThis();
     if (!d->iconName().isEmpty())
-      return TQString::fromLatin1("<img source=\"small|%1\"> %2").arg(d->iconName() ).arg(text);
+      return TQString::tqfromLatin1("<img source=\"small|%1\"> %2").arg(d->iconName() ).arg(text);
     return text;
 }
 
@@ -1103,10 +1103,10 @@ void KAction::activate()
 
 void KAction::slotActivated()
 {
-  const TQObject *senderObj = sender();
+  const TQObject *senderObj = TQT_TQOBJECT_CONST(sender());
   if ( senderObj )
   {
-    if ( ::qt_cast<KAccelPrivate *>( senderObj ) )
+    if ( ::tqqt_cast<KAccelPrivate *>( senderObj ) )
         emit activated( KAction::AccelActivation, Qt::NoButton );
   }
   emit activated();
@@ -1118,7 +1118,7 @@ void KAction::slotActivated()
 // only called by QPopupMenus, we plugged us in.
 void KAction::slotPopupActivated()
 {
-  if( ::qt_cast<TQSignal *>(sender()))
+  if( ::tqqt_cast<TQSignal *>(sender()))
   {
     int id = dynamic_cast<const TQSignal *>(sender())->value().toInt();
     int pos = findContainer(id);
@@ -1128,7 +1128,7 @@ void KAction::slotPopupActivated()
       if(qpm)
       {
         KPopupMenu* kpm = dynamic_cast<KPopupMenu *>( qpm );
-        Qt::ButtonState state;
+        TQt::ButtonState state;
         if ( kpm ) // KPopupMenu? Nice, it stores the state.
             state = kpm->state();
         else { // just a QPopupMenu? We'll ask for the state now then (small race condition?)
@@ -1147,13 +1147,13 @@ void KAction::slotPopupActivated()
   slotActivated();
 }
 
-void KAction::slotButtonClicked( int, Qt::ButtonState state )
+void KAction::slotButtonClicked( int, TQt::ButtonState state )
 {
   kdDebug(129) << "slotButtonClicked() state=" << state << endl;
   emit activated( KAction::ToolBarActivation, state );
 
   // RightButton isn't really an activation
-  if ( ( state & LeftButton ) || ( state & MidButton ) )
+  if ( ( state & Qt::LeftButton ) || ( state & Qt::MidButton ) )
     slotActivated();
 }
 
@@ -1161,7 +1161,7 @@ void KAction::slotButtonClicked( int, Qt::ButtonState state )
 void KAction::slotDestroyed()
 {
   kdDebug(129) << "KAction::slotDestroyed(): this = " << this << ", name = \"" << name() << "\", sender = " << sender() << endl;
-  const TQObject* const o = sender();
+  const TQObject* const o = TQT_TQOBJECT_CONST(sender());
 
 #ifndef KDE_NO_COMPAT  // KDE 4: remove
   if ( o == d->m_kaccel )
@@ -1187,7 +1187,7 @@ void KAction::slotDestroyed()
   int i;
   do
   {
-    i = findContainer( static_cast<const TQWidget*>( o ) );
+    i = findContainer( TQT_TQWIDGET_CONST( static_cast<const QObject*>(o) ) );
     if ( i != -1 )
       removeContainer( i );
   } while ( i != -1 );

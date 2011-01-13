@@ -426,7 +426,7 @@ TQStringList KActionCollection::groups() const
 
   TQAsciiDictIterator<KAction> it( d->m_actionDict );
   for( ; it.current(); ++it )
-    if ( !it.current()->group().isEmpty() && !lst.contains( it.current()->group() ) )
+    if ( !it.current()->group().isEmpty() && !lst.tqcontains( it.current()->group() ) )
       lst.append( it.current()->group() );
 
   return lst;
@@ -501,14 +501,14 @@ void KActionCollection::connectHighlight( TQWidget *container, KAction *action )
   {
     actionList = new TQPtrList<KAction>;
 
-    if ( ::qt_cast<TQPopupMenu *>( container ) )
+    if ( ::tqqt_cast<TQPopupMenu *>( container ) )
     {
       connect( container, TQT_SIGNAL( highlighted( int ) ),
                this, TQT_SLOT( slotMenuItemHighlighted( int ) ) );
       connect( container, TQT_SIGNAL( aboutToHide() ),
                this, TQT_SLOT( slotMenuAboutToHide() ) );
     }
-    else if ( ::qt_cast<KToolBar *>( container ) )
+    else if ( ::tqqt_cast<KToolBar *>( container ) )
     {
       connect( container, TQT_SIGNAL( highlighted( int, bool ) ),
                this, TQT_SLOT( slotToolBarButtonHighlighted( int, bool ) ) );
@@ -547,7 +547,7 @@ void KActionCollection::slotMenuItemHighlighted( int id )
   if ( d->m_currentHighlightAction )
     emit actionHighlighted( d->m_currentHighlightAction, false );
 
-  TQWidget *container = static_cast<TQWidget *>( const_cast<TQObject *>( sender() ) );
+  TQWidget *container = const_cast<TQWidget*>(TQT_TQWIDGET_CONST( sender() ));
 
   d->m_currentHighlightAction = findAction( container, id );
 
@@ -581,7 +581,7 @@ void KActionCollection::slotToolBarButtonHighlighted( int id, bool highlight )
   if ( !d->m_highlight )
     return;
 
-  TQWidget *container = static_cast<TQWidget *>( const_cast<TQObject *>( sender() ) );
+  TQWidget *container = const_cast<TQWidget*>(TQT_TQWIDGET_CONST( sender() ));
 
   KAction *action = findAction( container, id );
 
@@ -606,7 +606,7 @@ void KActionCollection::slotToolBarButtonHighlighted( int id, bool highlight )
 
 void KActionCollection::slotDestroyed()
 {
-    d->m_dctHighlightContainers.remove( reinterpret_cast<void *>( const_cast<TQObject *>(sender()) ) );
+    d->m_dctHighlightContainers.remove( reinterpret_cast<void *>( const_cast<TQObject*>(TQT_TQOBJECT_CONST(sender())) ) );
 }
 
 KAction *KActionCollection::findAction( TQWidget *container, int id )
@@ -713,8 +713,8 @@ bool KActionShortcutList::save() const
 	if( m_actions.xmlFile().isEmpty() )
 		return writeSettings();
 
-	TQString attrShortcut  = TQString::fromLatin1("shortcut");
-	TQString attrAccel     = TQString::fromLatin1("accel"); // Depricated attribute
+	TQString attrShortcut  = TQString::tqfromLatin1("shortcut");
+	TQString attrAccel     = TQString::tqfromLatin1("accel"); // Depricated attribute
 
 	// Read XML file
 	TQString sXml( KXMLGUIFactory::readConfigFile( xmlFile, false, instance() ) );
