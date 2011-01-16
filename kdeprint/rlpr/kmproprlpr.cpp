@@ -31,11 +31,11 @@ KMPropRlpr::KMPropRlpr(TQWidget *parent, const char *name)
 	m_host = new TQLabel("",this);
 	m_queue = new TQLabel("",this);
 
-	QLabel	*l1 = new TQLabel(i18n("Host:"), this);
-	QLabel	*l2 = new TQLabel(i18n("Queue:"), this);
+	TQLabel	*l1 = new TQLabel(i18n("Host:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("Queue:"), this);
 
 	// layout
-	QGridLayout	*main_ = new TQGridLayout(this, 3, 2, 10, 7);
+	TQGridLayout	*main_ = new TQGridLayout(this, 3, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(2,1);

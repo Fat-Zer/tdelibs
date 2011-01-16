@@ -149,15 +149,15 @@ KMdiChildFrm::KMdiChildFrm( KMdiChildArea *parent )
 
 	redecorateButtons();
 
-	m_pWinIcon->setFocusPolicy( NoFocus );
-	m_pUnixIcon->setFocusPolicy( NoFocus );
-	m_pClose->setFocusPolicy( NoFocus );
-	m_pMinimize->setFocusPolicy( NoFocus );
-	m_pMaximize->setFocusPolicy( NoFocus );
-	m_pUndock->setFocusPolicy( NoFocus );
+	m_pWinIcon->setFocusPolicy( TQ_NoFocus );
+	m_pUnixIcon->setFocusPolicy( TQ_NoFocus );
+	m_pClose->setFocusPolicy( TQ_NoFocus );
+	m_pMinimize->setFocusPolicy( TQ_NoFocus );
+	m_pMaximize->setFocusPolicy( TQ_NoFocus );
+	m_pUndock->setFocusPolicy( TQ_NoFocus );
 
 	setFrameStyle( TQFrame::WinPanel | TQFrame::Raised );
-	setFocusPolicy( NoFocus );
+	setFocusPolicy( TQ_NoFocus );
 
 	setMouseTracking( true );
 
@@ -238,19 +238,19 @@ void KMdiChildFrm::setResizeCursor( int resizeCorner )
 		break;
 	case KMDI_RESIZE_LEFT:
 	case KMDI_RESIZE_RIGHT:
-		TQApplication::setOverrideCursor( Qt::sizeHorCursor, true );
+		TQApplication::setOverrideCursor( tqsizeHorCursor, true );
 		break;
 	case KMDI_RESIZE_TOP:
 	case KMDI_RESIZE_BOTTOM:
-		TQApplication::setOverrideCursor( Qt::sizeVerCursor, true );
+		TQApplication::setOverrideCursor( tqsizeVerCursor, true );
 		break;
 	case KMDI_RESIZE_TOPLEFT:
 	case KMDI_RESIZE_BOTTOMRIGHT:
-		TQApplication::setOverrideCursor( Qt::sizeFDiagCursor, true );
+		TQApplication::setOverrideCursor( tqsizeFDiagCursor, true );
 		break;
 	case KMDI_RESIZE_BOTTOMLEFT:
 	case KMDI_RESIZE_TOPRIGHT:
-		TQApplication::setOverrideCursor( Qt::sizeBDiagCursor, true );
+		TQApplication::setOverrideCursor( tqsizeBDiagCursor, true );
 		break;
 	}
 }
@@ -283,7 +283,7 @@ void KMdiChildFrm::mouseMoveEvent( TQMouseEvent *e )
 
 	if ( m_bResizing )
 	{
-		if ( !( e->state() & RightButton ) && !( e->state() & MidButton ) )
+		if ( !( e->state() & Qt::RightButton ) && !( e->state() & Qt::MidButton ) )
 		{
 			// same as: if no button or left button pressed
 			TQPoint p = tqparentWidget()->mapFromGlobal( e->globalPos() );
@@ -534,9 +534,9 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			// restore client min / max size / layout behavior
 			m_pClient->setMinimumSize( m_oldClientMinSize.width(), m_oldClientMinSize.height() );
 			m_pClient->setMaximumSize( m_oldClientMaxSize.width(), m_oldClientMaxSize.height() );
-			if ( m_pClient->layout() != 0L )
+			if ( m_pClient->tqlayout() != 0L )
 			{
-				m_pClient->layout() ->setResizeMode( m_oldLayoutResizeMode );
+				m_pClient->tqlayout() ->setResizeMode( m_oldLayoutResizeMode );
 			}
 			m_pMinimize->setPixmap( *m_pMinButtonPixmap );
 			m_pMaximize->setPixmap( *m_pMaxButtonPixmap );
@@ -558,9 +558,9 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 				// restore client min / max size / layout behavior
 				m_pClient->setMinimumSize( m_oldClientMinSize.width(), m_oldClientMinSize.height() );
 				m_pClient->setMaximumSize( m_oldClientMaxSize.width(), m_oldClientMaxSize.height() );
-				if ( m_pClient->layout() != 0L )
+				if ( m_pClient->tqlayout() != 0L )
 				{
-					m_pClient->layout() ->setResizeMode( m_oldLayoutResizeMode );
+					m_pClient->tqlayout() ->setResizeMode( m_oldLayoutResizeMode );
 				}
 				setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX );
 				// reset to maximize-captionbar
@@ -610,15 +610,15 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			// save client min / max size / layout behavior
 			m_oldClientMinSize = m_pClient->tqminimumSize();
 			m_oldClientMaxSize = m_pClient->tqmaximumSize();
-			if ( m_pClient->layout() != 0L )
+			if ( m_pClient->tqlayout() != 0L )
 			{
-				m_oldLayoutResizeMode = m_pClient->layout() ->resizeMode();
+				m_oldLayoutResizeMode = m_pClient->tqlayout() ->tqresizeMode();
 			}
 			m_pClient->setMinimumSize( 0, 0 );
 			m_pClient->setMaximumSize( 0, 0 );
-			if ( m_pClient->layout() != 0L )
+			if ( m_pClient->tqlayout() != 0L )
 			{
-				m_pClient->layout() ->setResizeMode( TQLayout::FreeResize );
+				m_pClient->tqlayout() ->setResizeMode( TQLayout::FreeResize );
 			}
 			switchToMinimizeLayout();
 			m_pManager->childMinimized( this, true );
@@ -629,16 +629,16 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			// save client min / max size / layout behavior
 			m_oldClientMinSize = m_pClient->tqminimumSize();
 			m_oldClientMaxSize = m_pClient->tqmaximumSize();
-			if ( m_pClient->layout() != 0L )
+			if ( m_pClient->tqlayout() != 0L )
 			{
-				m_oldLayoutResizeMode = m_pClient->layout() ->resizeMode();
+				m_oldLayoutResizeMode = m_pClient->tqlayout() ->tqresizeMode();
 			}
 			m_restoredRect = geometry();
 			m_pClient->setMinimumSize( 0, 0 );
 			m_pClient->setMaximumSize( 0, 0 );
-			if ( m_pClient->layout() != 0L )
+			if ( m_pClient->tqlayout() != 0L )
 			{
-				m_pClient->layout() ->setResizeMode( TQLayout::FreeResize );
+				m_pClient->tqlayout() ->setResizeMode( TQLayout::FreeResize );
 			}
 			switchToMinimizeLayout();
 			m_pManager->childMinimized( this, false );
@@ -705,7 +705,7 @@ void KMdiChildFrm::setIcon( const TQPixmap& pxm )
 	if ( p.width() != 18 || p.height() != 18 )
 	{
 		TQImage img = p.convertToImage();
-		p = img.smoothScale( 18, 18, TQImage::ScaleMin );
+		p = img.smoothScale( 18, 18, TQ_ScaleMin );
 	}
 	const bool do_resize = m_pIconButtonPixmap->size() != p.size();
 	*m_pIconButtonPixmap = p;
@@ -750,7 +750,7 @@ void KMdiChildFrm::setClient( KMdiChildView *w, bool bAutomaticResize )
 	}
 
 	// memorize the focuses in a dictionary because they will get lost during reparenting
-	TQDict<FocusPolicy>* pFocPolDict = new TQDict<FocusPolicy>;
+	TQDict<TQ_FocusPolicy>* pFocPolDict = new TQDict<TQ_FocusPolicy>;
 	pFocPolDict->setAutoDelete( true );
 	TQObjectList *list = m_pClient->queryList( "TQWidget" );
 	TQObjectListIt it( *list );          // iterate over the buttons
@@ -768,7 +768,7 @@ void KMdiChildFrm::setClient( KMdiChildView *w, bool bAutomaticResize )
 			widg->setName( tmpStr.latin1() );
 			i++;
 		}
-		FocusPolicy* pFocPol = new FocusPolicy;
+		TQ_FocusPolicy* pFocPol = new TQ_FocusPolicy;
 		*pFocPol = widg->focusPolicy();
 		pFocPolDict->insert( widg->name(), pFocPol );
 	}
@@ -817,7 +817,7 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 	TQObject::disconnect( m_pClient, TQT_SIGNAL( mdiParentNowMaximized( bool ) ), m_pManager, TQT_SIGNAL( nowMaximized( bool ) ) );
 
 	//reparent to desktop widget , no flags , point , show it
-	TQDict<FocusPolicy>* pFocPolDict;
+	TQDict<TQ_FocusPolicy>* pFocPolDict;
 	pFocPolDict = unlinkChildren();
 
 	// get name of focused child widget
@@ -842,7 +842,7 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 	{ // for each found object...
 		TQWidget * widg = ( TQWidget* ) obj;
 		++it;
-		FocusPolicy* pFocPol = pFocPolDict->find( widg->name() ); // remember the focus policy from before the reparent
+		TQ_FocusPolicy* pFocPol = pFocPolDict->tqfind( widg->name() ); // remember the focus policy from before the reparent
 		if ( pFocPol )
 			widg->setFocusPolicy( *pFocPol );
 		
@@ -851,7 +851,7 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 			widg->setFocus();
 
 		// get first and last focusable widget
-		if ( ( widg->focusPolicy() == TQWidget::StrongFocus ) || ( widg->focusPolicy() == TQWidget::TabFocus ) )
+		if ( ( widg->focusPolicy() == TQ_StrongFocus ) || ( widg->focusPolicy() == TQ_TabFocus ) )
 		{
 			if ( firstFocusableChildWidget == 0 )
 				firstFocusableChildWidget = widg;  // first widget
@@ -860,7 +860,7 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 		}
 		else
 		{
-			if ( widg->focusPolicy() == TQWidget::WheelFocus )
+			if ( widg->focusPolicy() == TQ_WheelFocus )
 			{
 				if ( firstFocusableChildWidget == 0 )
 					firstFocusableChildWidget = widg;  // first widget
@@ -877,14 +877,14 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 	m_pClient->setLastFocusableChildWidget( lastFocusableChildWidget );
 
 	// reset the focus policy of the view
-	m_pClient->setFocusPolicy( TQWidget::ClickFocus );
+	m_pClient->setFocusPolicy( TQ_ClickFocus );
 
 	// lose information about the view (because it's undocked now)
 	m_pClient = 0;
 }
 
 //============== linkChildren =============//
-void KMdiChildFrm::linkChildren( TQDict<FocusPolicy>* pFocPolDict )
+void KMdiChildFrm::linkChildren( TQDict<TQ_FocusPolicy>* pFocPolDict )
 {
 	// reset the focus policies for all widgets in the view (take them from the dictionary)
 	TQObjectList* list = m_pClient->queryList( "TQWidget" );
@@ -894,7 +894,7 @@ void KMdiChildFrm::linkChildren( TQDict<FocusPolicy>* pFocPolDict )
 	{ // for each found object...
 		TQWidget* widg = ( TQWidget* ) obj;
 		++it;
-		FocusPolicy* pFocPol = pFocPolDict->find( widg->name() ); // remember the focus policy from before the reparent
+		TQ_FocusPolicy* pFocPol = pFocPolDict->tqfind( widg->name() ); // remember the focus policy from before the reparent
 		
 		if ( pFocPol != 0 )
 			widg->setFocusPolicy( *pFocPol );
@@ -907,14 +907,14 @@ void KMdiChildFrm::linkChildren( TQDict<FocusPolicy>* pFocPolDict )
 	delete pFocPolDict;
 
 	// reset the focus policies for the rest
-	m_pWinIcon->setFocusPolicy( TQWidget::NoFocus );
-	m_pUnixIcon->setFocusPolicy( TQWidget::NoFocus );
-	m_pClient->setFocusPolicy( TQWidget::ClickFocus );
-	m_pCaption->setFocusPolicy( TQWidget::NoFocus );
-	m_pUndock->setFocusPolicy( TQWidget::NoFocus );
-	m_pMinimize->setFocusPolicy( TQWidget::NoFocus );
-	m_pMaximize->setFocusPolicy( TQWidget::NoFocus );
-	m_pClose->setFocusPolicy( TQWidget::NoFocus );
+	m_pWinIcon->setFocusPolicy( TQ_NoFocus );
+	m_pUnixIcon->setFocusPolicy( TQ_NoFocus );
+	m_pClient->setFocusPolicy( TQ_ClickFocus );
+	m_pCaption->setFocusPolicy( TQ_NoFocus );
+	m_pUndock->setFocusPolicy( TQ_NoFocus );
+	m_pMinimize->setFocusPolicy( TQ_NoFocus );
+	m_pMaximize->setFocusPolicy( TQ_NoFocus );
+	m_pClose->setFocusPolicy( TQ_NoFocus );
 
 	// install the event filter (catch mouse clicks) for the rest
 	m_pWinIcon->installEventFilter( this );
@@ -930,10 +930,10 @@ void KMdiChildFrm::linkChildren( TQDict<FocusPolicy>* pFocPolDict )
 
 //============== unlinkChildren =============//
 
-TQDict<TQWidget::FocusPolicy>* KMdiChildFrm::unlinkChildren()
+TQDict<TQ_FocusPolicy>* KMdiChildFrm::unlinkChildren()
 {
 	// memorize the focuses in a dictionary because they will get lost during reparenting
-	TQDict<FocusPolicy>* pFocPolDict = new TQDict<FocusPolicy>;
+	TQDict<TQ_FocusPolicy>* pFocPolDict = new TQDict<TQ_FocusPolicy>;
 	pFocPolDict->setAutoDelete( true );
 
 	TQObjectList *list = m_pClient->queryList( "TQWidget" );
@@ -953,7 +953,7 @@ TQDict<TQWidget::FocusPolicy>* KMdiChildFrm::unlinkChildren()
 			w->setName( tmpStr.latin1() );
 			i++;
 		}
-		FocusPolicy* pFocPol = new FocusPolicy;
+		TQ_FocusPolicy* pFocPol = new TQ_FocusPolicy;
 		*pFocPol = w->focusPolicy();
 		// memorize focus policy
 		pFocPolDict->insert( w->name(), pFocPol );
@@ -1068,7 +1068,7 @@ void KMdiChildFrm::doResize( bool captionOnly )
 static bool hasParent( TQObject* par, TQObject* o )
 {
 	while ( o && o != par )
-		o = o->parent();
+		o = o->tqparent();
 	return o == par;
 }
 
@@ -1085,8 +1085,8 @@ bool KMdiChildFrm::eventFilter( TQObject *obj, TQEvent *e )
 			TQObject* pObj = obj;
 			while ( ( pObj != 0L ) && !bIsChild )
 			{
-				bIsChild = ( pObj == this );
-				pObj = pObj->parent();
+				bIsChild = ( TQT_BASE_OBJECT(pObj) == TQT_BASE_OBJECT(this) );
+				pObj = pObj->tqparent();
 			}
 			// unset the resize cursor if the cursor moved from the frame into a inner widget
 			if ( bIsChild )
@@ -1095,13 +1095,13 @@ bool KMdiChildFrm::eventFilter( TQObject *obj, TQEvent *e )
 		break;
 	case TQEvent::MouseButtonPress:
 		{
-			if ( !hasParent( m_pClient, obj ) )
+			if ( !hasParent( TQT_TQOBJECT(m_pClient), obj ) )
 			{
 				bool bIsSecondClick = false;
 				if ( m_timeMeasure.elapsed() <= TQApplication::doubleClickInterval() )
 					bIsSecondClick = true;  // of a possible double click
 
-				if ( !( ( ( obj == m_pWinIcon ) || ( obj == m_pUnixIcon ) ) && bIsSecondClick ) )
+				if ( !( ( ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(m_pWinIcon) ) || ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(m_pUnixIcon) ) ) && bIsSecondClick ) )
 				{
 					// in case we didn't click on the icon button
 					TQFocusEvent focusEvent( TQFocusEvent::FocusIn );
@@ -1112,16 +1112,16 @@ bool KMdiChildFrm::eventFilter( TQObject *obj, TQEvent *e )
 						m_pClient->activate();
 					}
 					
-					if ( ( obj->parent() != m_pCaption ) && ( obj != m_pCaption ) )
+					if ( ( TQT_BASE_OBJECT(obj->tqparent()) != TQT_BASE_OBJECT(m_pCaption) ) && ( TQT_BASE_OBJECT(obj) != TQT_BASE_OBJECT(m_pCaption) ) )
 					{
 						TQWidget* w = ( TQWidget* ) obj;
-						if ( ( w->focusPolicy() == TQWidget::ClickFocus ) || ( w->focusPolicy() == TQWidget::StrongFocus ) )
+						if ( ( w->focusPolicy() == TQ_ClickFocus ) || ( w->focusPolicy() == TQ_StrongFocus ) )
 						{
 							w->setFocus();
 						}
 					}
 				}
-				if ( ( obj == m_pWinIcon ) || ( obj == m_pUnixIcon ) )
+				if ( ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(m_pWinIcon) ) || ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(m_pUnixIcon) ) )
 				{
 					// in case we clicked on the icon button
 					if ( m_timeMeasure.elapsed() > TQApplication::doubleClickInterval() )
@@ -1154,7 +1154,7 @@ bool KMdiChildFrm::eventFilter( TQObject *obj, TQEvent *e )
 		{
 			// if we lost a child we uninstall ourself as event filter for the lost
 			// child and its children
-			TQObject* pLostChild = ( ( TQChildEvent* ) e )->child();
+			TQObject* pLostChild = TQT_TQOBJECT(( ( TQChildEvent* ) e )->child());
 			if ( ( pLostChild != 0L )   /*&& (pLostChild->inherits("QWidget"))*/ )
 			{
 				TQObjectList* list = pLostChild->queryList();
@@ -1176,10 +1176,10 @@ bool KMdiChildFrm::eventFilter( TQObject *obj, TQEvent *e )
 			// if we got a new child we install ourself as event filter for the new
 			// child and its children (as we did when we got our client).
 			// XXX see linkChildren() and focus policy stuff
-			TQObject* pNewChild = ( ( TQChildEvent* ) e ) ->child();
+			TQObject* pNewChild = TQT_TQOBJECT(( ( TQChildEvent* ) e ) ->child());
 			if ( ( pNewChild != 0L ) && ::tqqt_cast<TQWidget*>( pNewChild ) )
 			{
-				TQWidget * pNewWidget = static_cast<TQWidget*>( pNewChild );
+				TQWidget * pNewWidget = TQT_TQWIDGET( pNewChild );
 				TQObjectList *list = pNewWidget->queryList( "TQWidget" );
 				list->insert( 0, pNewChild );         // add the new child to the list too, just to save code
 				TQObjectListIt it( *list );          // iterate over all new child widgets

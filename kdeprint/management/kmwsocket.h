@@ -45,7 +45,7 @@ protected slots:
 private:
 	KListView	*m_list;
 	NetworkScanner *m_scanner;
-	QLineEdit	*m_printer, *m_port;
+	TQLineEdit	*m_printer, *m_port;
 };
 
 #endif

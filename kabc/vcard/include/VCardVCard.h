@@ -54,7 +54,7 @@ class KVCARD_EXPORT VCard : public Entity
 	
 	private:
 
-	QCString		group_;
+	TQCString		group_;
 	TQPtrList<ContentLine>	contentLineList_;
 };
 

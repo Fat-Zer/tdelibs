@@ -27,7 +27,7 @@ void PrintcapReader::setPrintcapFile(TQFile *f)
 {
     if (f->isOpen())
     {
-        m_stream.setDevice(f);
+        m_stream.setDevice(TQT_TQIODEVICE(f));
         m_buffer = TQString::null;
     }
 }
@@ -56,7 +56,7 @@ void PrintcapReader::unputLine(const TQString& s)
 
 PrintcapEntry* PrintcapReader::nextEntry()
 {
-    if (!m_stream.device())
+    if (!m_stream.tqdevice())
         return NULL;
 
     TQString line, comment, name, fields, buf;

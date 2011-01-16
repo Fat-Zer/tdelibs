@@ -41,13 +41,13 @@ KMWUsers::KMWUsers(TQWidget *parent, const char *name)
 	m_type->insertItem(i18n("Allowed Users"));
 	m_type->insertItem(i18n("Denied Users"));
 
-	QLabel	*lab1 = new TQLabel(i18n("Define here a group of allowed/denied users for this printer."), this);
-	QLabel	*lab2 = new TQLabel(i18n("&Type:"), this);
+	TQLabel	*lab1 = new TQLabel(i18n("Define here a group of allowed/denied users for this printer."), this);
+	TQLabel	*lab2 = new TQLabel(i18n("&Type:"), this);
 
 	lab2->setBuddy(m_type);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
-	QHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
+	TQHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
 	l0->addWidget(lab1, 0);
 	l0->addLayout(l1, 0);
 	l1->addWidget(lab2, 0);
@@ -61,7 +61,7 @@ KMWUsers::~KMWUsers()
 
 void KMWUsers::initPrinter(KMPrinter *p)
 {
-	QStringList	l;
+	TQStringList	l;
 	int		i(1);
 	if (!p->option("requesting-user-name-denied").isEmpty())
 	{
@@ -85,12 +85,12 @@ void KMWUsers::updatePrinter(KMPrinter *p)
 	p->removeOption("requesting-user-name-denied");
 	p->removeOption("requesting-user-name-allowed");
 
-	QString	str;
+	TQString	str;
 	if (m_users->count() > 0)
 		str = m_users->items().join(",");
 	else
 		str = (m_type->currentItem() == 0 ? "all" : "none");
-	QString	optname = (m_type->currentItem() == 0 ? "requesting-user-name-allowed" : "requesting-user-name-denied");
+	TQString	optname = (m_type->currentItem() == 0 ? "requesting-user-name-allowed" : "requesting-user-name-denied");
 	p->setOption(optname, str);
 }
 #include "kmwusers.moc"

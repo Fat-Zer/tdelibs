@@ -363,9 +363,9 @@ void KateCodeFoldingTree::debugDump()
 void KateCodeFoldingTree::dumpNode(KateCodeFoldingNode *node, const TQString &prefix)
 {
   //output node properties
-  kdDebug(13000)<<prefix<<TQString("Type: %1, startLineValid %2, startLineRel %3, endLineValid %4, endLineRel %5, visible %6").
+  kdDebug(13000)<<prefix<<TQString(TQString("Type: %1, startLineValid %2, startLineRel %3, endLineValid %4, endLineRel %5, visible %6").
       arg(node->type).arg(node->startLineValid).arg(node->startLineRel).arg(node->endLineValid).
-      arg(node->endLineRel).arg(node->visible)<<endl;
+      arg(node->endLineRel).arg(node->visible))<<endl;
 
   //output child node properties recursive
   if (node->noChildren())
@@ -1330,7 +1330,7 @@ void KateCodeFoldingTree::toggleRegionVisibility(unsigned int line)
 
   lineMapping.clear();
   hiddenLinesCountCacheValid = false;
-  kdDebug(13000)<<TQString("KateCodeFoldingTree::toggleRegionVisibility() %1").arg(line)<<endl;
+  kdDebug(13000)<<TQString(TQString("KateCodeFoldingTree::toggleRegionVisibility() %1").arg(line))<<endl;
 
   findAllNodesOpenedOrClosedAt(line);
   for (int i=0; i<(int)nodesForLine.count(); i++)

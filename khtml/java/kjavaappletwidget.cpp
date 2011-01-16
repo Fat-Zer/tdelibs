@@ -46,11 +46,11 @@ KJavaAppletWidget::KJavaAppletWidget( TQWidget* parent, const char* name )
 
     m_applet = new KJavaApplet( this );
     d        = new KJavaAppletWidgetPrivate;
-    m_kwm    = new KWinModule( this );
+    m_kwm    = new KWinModule( TQT_TQOBJECT(this) );
 
     d->tmplabel = new TQLabel( this );
     d->tmplabel->setText( KJavaAppletServer::getAppletLabel() );
-    d->tmplabel->tqsetAlignment( Qt::AlignCenter | Qt::WordBreak );
+    d->tmplabel->tqsetAlignment( Qt::AlignCenter | TQt::WordBreak );
     d->tmplabel->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken );
     d->tmplabel->show();
 

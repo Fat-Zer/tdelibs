@@ -46,7 +46,7 @@ protected slots:
 	void slotDeleted(int);
 
 private:
-	QLineEdit	*remoteroot_, *systemgroup_;
+	TQLineEdit	*remoteroot_, *systemgroup_;
 	QDirLineEdit	*encryptcert_, *encryptkey_;
 	EditList	*locations_;
 

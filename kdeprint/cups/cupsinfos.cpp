@@ -58,9 +58,9 @@ CupsInfos::CupsInfos()
 	load();
 /*	host_ = cupsServer();
 	login_ = cupsUser();
-	if (login_.isEmpty()) login_ = TQString::null;
+	if (login_.isEmpty()) login_ = TQString();
 	port_ = ippPort();
-	password_ = TQString::null;*/
+	password_ = TQString();*/
 
 	cupsSetPasswordCB(cupsGetPasswordCB);
 }
@@ -106,7 +106,7 @@ void CupsInfos::setSavePassword( bool on )
 
 const char* CupsInfos::getPasswordCB()
 {
-	QPair<TQString,TQString> pwd = KMFactory::self()->requestPassword( count_, login_, host_, port_ );
+	TQPair<TQString,TQString> pwd = KMFactory::self()->requestPassword( count_, login_, host_, port_ );
 
 	if ( pwd.first.isEmpty() && pwd.second.isEmpty() )
 		return NULL;
@@ -129,8 +129,8 @@ void CupsInfos::load()
 		KMFactory::self()->initPassword( login_, password_, host_, port_ );
 	}
 	else
-		password_ = TQString::null;
-	if (login_.isEmpty()) login_ = TQString::null;
+		password_ = TQString();
+	if (login_.isEmpty()) login_ = TQString();
 	reallogin_ = cupsUser();
 
 	// synchronize with CUPS

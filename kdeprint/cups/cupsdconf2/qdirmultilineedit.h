@@ -47,7 +47,7 @@ private slots:
 
 private:
 	KListView	*m_view;
-	QPushButton	*m_add, *m_remove;
+	TQPushButton	*m_add, *m_remove;
 };
 
 #endif

@@ -80,7 +80,7 @@ SourceDisplay::SourceDisplay(KJSDebugWin *debugWin, TQWidget *parent, const char
     m_font(KGlobalSettings::fixedFont())
 {
   verticalScrollBar()->setLineStep(TQFontMetrics(m_font).height());
-  viewport()->setBackgroundMode(Qt::NoBackground);
+  viewport()->setBackgroundMode(TQt::NoBackground);
   m_breakpointIcon = KGlobal::iconLoader()->loadIcon("stop",KIcon::Small);
 }
 
@@ -182,7 +182,7 @@ void SourceDisplay::showEvent(TQShowEvent *)
 void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, int cliph)
 {
   if (!m_sourceFile) {
-    p->fillRect(clipx,clipy,clipw,cliph,palette().active().base());
+    p->fillRect(clipx,clipy,clipw,cliph,tqpalette().active().base());
     return;
   }
 
@@ -207,26 +207,26 @@ void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, 
     TQString linenoStr = TQString().sprintf("%d",lineno+1);
 
 
-    p->fillRect(0,height*lineno,linenoWidth,height,palette().active().mid());
+    p->fillRect(0,height*lineno,linenoWidth,height,tqpalette().active().mid());
 
-    p->setPen(palette().active().text());
+    p->setPen(tqpalette().active().text());
     p->drawText(0,height*lineno,linenoWidth,height,Qt::AlignRight,linenoStr);
 
     TQColor bgColor;
     TQColor textColor;
 
     if (lineno == m_currentLine) {
-      bgColor = palette().active().highlight();
-      textColor = palette().active().highlightedText();
+      bgColor = tqpalette().active().highlight();
+      textColor = tqpalette().active().highlightedText();
     }
     else if (m_debugWin->haveBreakpoint(m_sourceFile,lineno+1,lineno+1)) {
-      bgColor = palette().active().text();
-      textColor = palette().active().base();
+      bgColor = tqpalette().active().text();
+      textColor = tqpalette().active().base();
       p->drawPixmap(2,height*lineno+height/2-m_breakpointIcon.height()/2,m_breakpointIcon);
     }
     else {
-      bgColor = palette().active().base();
-      textColor = palette().active().text();
+      bgColor = tqpalette().active().base();
+      textColor = tqpalette().active().text();
     }
 
     p->fillRect(linenoWidth,height*lineno,right-linenoWidth,height,bgColor);
@@ -236,10 +236,10 @@ void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, 
   }
 
   int remainingTop = height*(lastLine+1);
-  p->fillRect(0,remainingTop,linenoWidth,bottom-remainingTop,palette().active().mid());
+  p->fillRect(0,remainingTop,linenoWidth,bottom-remainingTop,tqpalette().active().mid());
 
   p->fillRect(linenoWidth,remainingTop,
-	      right-linenoWidth,bottom-remainingTop,palette().active().base());
+	      right-linenoWidth,bottom-remainingTop,tqpalette().active().base());
 }
 
 //-------------------------------------------------------------------------
@@ -347,7 +347,7 @@ void EvalMultiLineEdit::keyPressEvent(TQKeyEvent * e)
 }
 //-------------------------------------------------------------------------
 KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
-  : KMainWindow(parent, name, WType_TopLevel), KInstance("kjs_debugger")
+  : KMainWindow(parent, name, (WFlags)WType_TopLevel), KInstance("kjs_debugger")
 {
   m_breakpoints = 0;
   m_breakpointCount = 0;
@@ -445,18 +445,18 @@ KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
   // Venkman use F12, KDevelop F10
   KShortcut scNext = KShortcut(KKeySequence(KKey(Qt::Key_F12)));
   scNext.append(KKeySequence(KKey(Qt::Key_F10)));
-  m_nextAction       = new KAction(i18n("Next breakpoint","&Next"),"dbgnext",scNext,this,TQT_SLOT(slotNext()),
+  m_nextAction       = new KAction(i18n("Next breakpoint","&Next"),"dbgnext",scNext,TQT_TQOBJECT(this),TQT_SLOT(slotNext()),
 				   m_actionCollection,"next");
-  m_stepAction       = new KAction(i18n("&Step"),"dbgstep",KShortcut(Qt::Key_F11),this,TQT_SLOT(slotStep()),
+  m_stepAction       = new KAction(i18n("&Step"),"dbgstep",KShortcut(Qt::Key_F11),TQT_TQOBJECT(this),TQT_SLOT(slotStep()),
 				   m_actionCollection,"step");
   // Venkman use F5, Kdevelop F9
   KShortcut scCont = KShortcut(KKeySequence(KKey(Qt::Key_F5)));
   scCont.append(KKeySequence(KKey(Qt::Key_F9)));
-  m_continueAction   = new KAction(i18n("&Continue"),"dbgrun",scCont,this,TQT_SLOT(slotContinue()),
+  m_continueAction   = new KAction(i18n("&Continue"),"dbgrun",scCont,TQT_TQOBJECT(this),TQT_SLOT(slotContinue()),
 				   m_actionCollection,"cont");
-  m_stopAction       = new KAction(i18n("St&op"),"stop",KShortcut(Qt::Key_F4),this,TQT_SLOT(slotStop()),
+  m_stopAction       = new KAction(i18n("St&op"),"stop",KShortcut(Qt::Key_F4),TQT_TQOBJECT(this),TQT_SLOT(slotStop()),
 				   m_actionCollection,"stop");
-  m_breakAction      = new KAction(i18n("&Break at Next Statement"),"dbgrunto",KShortcut(Qt::Key_F8),this,TQT_SLOT(slotBreakNext()),
+  m_breakAction      = new KAction(i18n("&Break at Next Statement"),"dbgrunto",KShortcut(Qt::Key_F8),TQT_TQOBJECT(this),TQT_SLOT(slotBreakNext()),
 				   m_actionCollection,"breaknext");
 
 
@@ -677,8 +677,8 @@ bool KJSDebugWin::eventFilter(TQObject *o, TQEvent *e)
   case TQEvent::Close:
   case TQEvent::Quit:
     while (o->parent())
-      o = o->parent();
-    if (o == this)
+      o = TQT_TQOBJECT(o->parent());
+    if (TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(this))
       return TQWidget::eventFilter(o,e);
     else
       return true;
@@ -690,7 +690,7 @@ bool KJSDebugWin::eventFilter(TQObject *o, TQEvent *e)
 
 void KJSDebugWin::disableOtherWindows()
 {
-  TQWidgetList *widgets = TQApplication::allWidgets();
+  TQWidgetList *widgets = TQApplication::tqallWidgets();
   TQWidgetListIt it(*widgets);
   for (; it.current(); ++it)
     it.current()->installEventFilter(this);
@@ -698,7 +698,7 @@ void KJSDebugWin::disableOtherWindows()
 
 void KJSDebugWin::enableOtherWindows()
 {
-  TQWidgetList *widgets = TQApplication::allWidgets();
+  TQWidgetList *widgets = TQApplication::tqallWidgets();
   TQWidgetListIt it(*widgets);
   for (; it.current(); ++it)
     it.current()->removeEventFilter(this);
@@ -1123,7 +1123,7 @@ bool KJSDebugWin::haveBreakpoint(SourceFile *sourceFile, int line0, int line1)
   for (int i = 0; i < m_breakpointCount; i++) {
     int sourceId = m_breakpoints[i].sourceId;
     int lineno = m_breakpoints[i].lineno;
-    if (m_sourceFragments.contains(sourceId) &&
+    if (m_sourceFragments.tqcontains(sourceId) &&
         m_sourceFragments[sourceId]->sourceFile == sourceFile) {
       int absLineno = m_sourceFragments[sourceId]->baseLine+lineno-1;
       if (absLineno >= line0 && absLineno <= line1)

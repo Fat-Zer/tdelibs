@@ -19,10 +19,10 @@
 */
 
 // browser window color defaults -- Bernd
-#define HTML_DEFAULT_LNK_COLOR Qt::blue
-#define HTML_DEFAULT_TXT_COLOR Qt::black
-#define HTML_DEFAULT_VLNK_COLOR Qt::magenta
-#define HTML_DEFAULT_BASE_COLOR Qt::white
+#define HTML_DEFAULT_LNK_COLOR TQt::blue
+#define HTML_DEFAULT_TXT_COLOR TQt::black
+#define HTML_DEFAULT_VLNK_COLOR TQt::magenta
+#define HTML_DEFAULT_BASE_COLOR TQt::white
 
 #define HTML_DEFAULT_VIEW_FONT "Sans Serif"
 #define HTML_DEFAULT_VIEW_FIXED_FONT "Monospace"

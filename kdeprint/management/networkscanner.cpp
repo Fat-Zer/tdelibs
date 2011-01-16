@@ -79,8 +79,8 @@ TQString NetworkScanner::NetworkScannerPrivate::localPrefix()
 	infos.setAutoDelete(true);
 	if (infos.count() > 0)
 	{
-		QString	IPstr = infos.first()->address()->nodeName();
-		int	p = IPstr.findRev('.');
+		TQString	IPstr = infos.first()->address()->nodeName();
+		int	p = IPstr.tqfindRev('.');
 		IPstr.truncate(p);
 		return IPstr;
 	}
@@ -104,7 +104,7 @@ NetworkScanner::NetworkScanner( int port, TQWidget *parent, const char *name )
 	d->scan = new KPushButton( KGuiItem( i18n( "Sc&an" ), "viewmag" ), this );
 	d->timer = new TQTimer( this );
 #ifdef USE_QSOCKET
-	d->socket = new TQSocket( this );
+	d->socket = new TQSocket( TQT_TQOBJECT(this) );
 #else
 	d->socket = new KExtendedSocket();
 #endif
@@ -332,13 +332,13 @@ NetworkScannerConfig::NetworkScannerConfig(NetworkScanner *scanner, const char *
 	: KDialogBase(scanner, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
 	scanner_ = scanner;
-	QWidget	*dummy = new TQWidget(this);
+	TQWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
         KIntValidator *val = new KIntValidator( this );
-	QLabel	*masklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
-	QLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
-	QLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
-	QLineEdit	*mm = new TQLineEdit(dummy);
+	TQLabel	*masklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
+	TQLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
+	TQLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
+	TQLineEdit	*mm = new TQLineEdit(dummy);
 	mm->setText(TQString::tqfromLatin1(".[0-255]"));
 	mm->setReadOnly(true);
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
@@ -363,8 +363,8 @@ NetworkScannerConfig::NetworkScannerConfig(NetworkScanner *scanner, const char *
 	port_->setEditText(TQString::number(scanner_->port()));
 	tout_->setText(TQString::number(scanner_->timeout()));
 
-	QGridLayout	*main_ = new TQGridLayout(dummy, 3, 2, 0, 10);
-	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 5);
+	TQGridLayout	*main_ = new TQGridLayout(dummy, 3, 2, 0, 10);
+	TQHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 5);
 	main_->addWidget(masklabel, 0, 0);
 	main_->addWidget(portlabel, 1, 0);
 	main_->addWidget(toutlabel, 2, 0);
@@ -384,8 +384,8 @@ NetworkScannerConfig::~NetworkScannerConfig()
 
 void NetworkScannerConfig::slotOk()
 {
-	QString	msg;
-	QRegExp	re("(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})");
+	TQString	msg;
+	TQRegExp	re("(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})");
 	if (!re.exactMatch(mask_->text()))
 		msg = i18n("Wrong subnetwork specification.");
 	else

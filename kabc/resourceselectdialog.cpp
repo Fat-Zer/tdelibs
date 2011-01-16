@@ -54,8 +54,8 @@ ResourceSelectDialog::ResourceSelectDialog( AddressBook *ab, TQWidget *parent, c
   KButtonBox *buttonBox = new KButtonBox( this );
 
   buttonBox->addStretch();
-  buttonBox->addButton(  KStdGuiItem::ok(), this, TQT_SLOT( accept() ) );
-  buttonBox->addButton(  KStdGuiItem::cancel(), this, TQT_SLOT( reject() ) );
+  buttonBox->addButton(  KStdGuiItem::ok(), TQT_TQOBJECT(this), TQT_SLOT( accept() ) );
+  buttonBox->addButton(  KStdGuiItem::cancel(), TQT_TQOBJECT(this), TQT_SLOT( reject() ) );
   buttonBox->layout();
 
   mainLayout->addWidget( buttonBox );

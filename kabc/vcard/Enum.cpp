@@ -31,7 +31,7 @@ using namespace VCARD;
 // There are 31 possible types, not including extensions.
 // URI is a custom field designed to store the upstream URI for each contact
 // in order to handle certain limited CardDAV systems such as Zimbra
-	const QCString
+	const TQCString
 VCARD::paramNames [] =
 {
 	"NAME",
@@ -228,7 +228,7 @@ VCARD::EntityTypeToValueType(EntityType e)
 	return t;
 }
 
-	QCString
+	TQCString
 VCARD::EntityTypeToParamName(EntityType e)
 {
 	if ( e > EntityUnknown ) e = EntityUnknown;

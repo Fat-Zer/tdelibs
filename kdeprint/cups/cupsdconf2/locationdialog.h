@@ -49,8 +49,8 @@ protected slots:
 	void slotDefaultList();
 
 private:
-	QComboBox	*resource_, *authtype_, *authclass_, *encryption_, *satisfy_, *order_;
-	QLineEdit	*authname_;
+	TQComboBox	*resource_, *authtype_, *authclass_, *encryption_, *satisfy_, *order_;
+	TQLineEdit	*authname_;
 	EditList	*addresses_;
 	CupsdConf	*conf_;
 };

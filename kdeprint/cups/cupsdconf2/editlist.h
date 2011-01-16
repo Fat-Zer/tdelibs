@@ -54,7 +54,7 @@ protected slots:
 
 private:
 	KListBox	*list_;
-	QPushButton	*addbtn_, *editbtn_, *delbtn_, *defbtn_;
+	TQPushButton	*addbtn_, *editbtn_, *delbtn_, *defbtn_;
 };
 
 #endif

@@ -38,7 +38,7 @@ LpqHelper::~LpqHelper()
 
 KMJob* LpqHelper::parseLineLpr(const TQString& line)
 {
-	QString	rank = line.left(7);
+	TQString	rank = line.left(7);
 	if (!rank[0].isDigit() && rank != "active")
 		return NULL;
 	KMJob	*job = new KMJob;
@@ -56,13 +56,13 @@ KMJob* LpqHelper::parseLineLpr(const TQString& line)
 
 KMJob* LpqHelper::parseLineLPRng(const TQString& line)
 {
-	QString	rank = line.left(7).stripWhiteSpace();
+	TQString	rank = line.left(7).stripWhiteSpace();
 	if (!rank[0].isDigit() && rank != "active" && rank != "hold")
 		return NULL;
 	KMJob	*job = new KMJob;
 	job->setState((rank[0].isDigit() ? KMJob::Queued : (rank == "hold" ? KMJob::Held : KMJob::Printing)));
 	int	p = line.tqfind('@', 7), q = line.tqfind(' ', 7);
-	job->setOwner(line.mid(7, QMIN(p,q)-7));
+	job->setOwner(line.mid(7, TQMIN(p,q)-7));
 	while (line[q].isSpace())
 		q++;
 	q++;
@@ -85,8 +85,8 @@ void LpqHelper::listJobs(TQPtrList<KMJob>& jobs, const TQString& prname, int lim
 	KPipeProcess	proc;
 	if (!m_exepath.isEmpty() && proc.open(m_exepath + " -P " + KProcess::quote(prname)))
 	{
-		QTextStream	t(&proc);
-		QString		line;
+		TQTextStream	t(&proc);
+		TQString		line;
 		bool	lprng = (LprSettings::self()->mode() == LprSettings::LPRng);
 		int count = 0;
 

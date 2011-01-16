@@ -36,7 +36,7 @@ static bool needsEncoding( const TQString &value )
 {
   uint length = value.length();
   for ( uint i = 0; i < length; ++i ) {
-    char c = value.at( i ).latin1();
+    char c = value.tqat( i ).latin1();
     if ( (c < 33 || c > 126) && c != ' ' && c != '=' )
       return true;
   }
@@ -138,7 +138,7 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
     card.addLine( createAgent( version, (*addrIt).agent() ) );
 
     // BDAY
-    card.addLine( VCardLine( "BDAY", createDateTime( (*addrIt).birthday() ) ) );
+    card.addLine( VCardLine( "BDAY", createDateTime( TQT_TQDATETIME_OBJECT((*addrIt).birthday()) ) ) );
 
     // CATEGORIES
     if ( version == VCard::v3_0 ) {
@@ -174,7 +174,7 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
     }
 
     // FN
-    VCardLine fnLine( "FN", (*addrIt).formattedName() );
+    VCardLine fnLine( "FN", TQString((*addrIt).formattedName()) );
     if ( version == VCard::v2_1 && needsEncoding( (*addrIt).formattedName() ) ) {
       fnLine.addParameter( "charset", "UTF-8" );
       fnLine.addParameter( "encoding", "QUOTED-PRINTABLE" );
@@ -199,7 +199,7 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
     card.addLine( createPicture( "LOGO", (*addrIt).logo() ) );
 
     // MAILER
-    VCardLine mailerLine( "MAILER", (*addrIt).mailer() );
+    VCardLine mailerLine( "MAILER", TQString((*addrIt).mailer()) );
     if ( version == VCard::v2_1 && needsEncoding( (*addrIt).mailer() ) ) {
       mailerLine.addParameter( "charset", "UTF-8" );
       mailerLine.addParameter( "encoding", "QUOTED-PRINTABLE" );
@@ -222,7 +222,7 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
     card.addLine( nLine );
 
     // NAME
-    VCardLine nameLine( "NAME", (*addrIt).name() );
+    VCardLine nameLine( "NAME", TQString((*addrIt).name()) );
     if ( version == VCard::v2_1 && needsEncoding( (*addrIt).name() ) ) {
       nameLine.addParameter( "charset", "UTF-8" );
       nameLine.addParameter( "encoding", "QUOTED-PRINTABLE" );
@@ -231,10 +231,10 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
 
     // NICKNAME
     if ( version == VCard::v3_0 )
-      card.addLine( VCardLine( "NICKNAME", (*addrIt).nickName() ) );
+      card.addLine( VCardLine( "NICKNAME", TQString((*addrIt).nickName()) ) );
 
     // NOTE
-    VCardLine noteLine( "NOTE", (*addrIt).note() );
+    VCardLine noteLine( "NOTE", TQString((*addrIt).note()) );
     if ( version == VCard::v2_1 && needsEncoding( (*addrIt).note() ) ) {
       noteLine.addParameter( "charset", "UTF-8" );
       noteLine.addParameter( "encoding", "QUOTED-PRINTABLE" );
@@ -258,13 +258,13 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
 
     // PROID
     if ( version == VCard::v3_0 )
-      card.addLine( VCardLine( "PRODID", (*addrIt).productId() ) );
+      card.addLine( VCardLine( "PRODID", TQString((*addrIt).productId()) ) );
 
     // REV
-    card.addLine( VCardLine( "REV", createDateTime( (*addrIt).revision() ) ) );
+    card.addLine( VCardLine( "REV", createDateTime( TQT_TQDATETIME_OBJECT((*addrIt).revision()) ) ) );
 
     // ROLE
-    VCardLine roleLine( "ROLE", (*addrIt).role() );
+    VCardLine roleLine( "ROLE", TQString((*addrIt).role()) );
     if ( version == VCard::v2_1 && needsEncoding( (*addrIt).role() ) ) {
       roleLine.addParameter( "charset", "UTF-8" );
       roleLine.addParameter( "encoding", "QUOTED-PRINTABLE" );
@@ -273,7 +273,7 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
 
     // SORT-STRING
     if ( version == VCard::v3_0 )
-      card.addLine( VCardLine( "SORT-STRING", (*addrIt).sortString() ) );
+      card.addLine( VCardLine( "SORT-STRING", TQString((*addrIt).sortString()) ) );
 
     // SOUND
     card.addLine( createSound( (*addrIt).sound() ) );
@@ -294,7 +294,7 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
     }
 
     // TITLE
-    VCardLine titleLine( "TITLE", (*addrIt).title() );
+    VCardLine titleLine( "TITLE", TQString((*addrIt).title()) );
     if ( version == VCard::v2_1 && needsEncoding( (*addrIt).title() ) ) {
       titleLine.addParameter( "charset", "UTF-8" );
       titleLine.addParameter( "encoding", "QUOTED-PRINTABLE" );
@@ -428,7 +428,7 @@ Addressee::List VCardTool::parseVCards( const TQString& vcard )
         // EMAIL
         else if ( identifier == "email" ) {
           const TQStringList types = (*lineIt).parameters( "type" );
-          addr.insertEmail( (*lineIt).value().asString(), types.findIndex( "PREF" ) != -1 );
+          addr.insertEmail( (*lineIt).value().asString(), types.tqfindIndex( "PREF" ) != -1 );
         }
 
         // FN
@@ -653,16 +653,16 @@ Picture VCardTool::parsePicture( const VCardLine &line )
   Picture pic;
 
   const TQStringList params = line.parameterList();
-  if ( params.findIndex( "encoding" ) != -1 ) {
+  if ( params.tqfindIndex( "encoding" ) != -1 ) {
     TQImage img;
     img.loadFromData( line.value().asByteArray() );
     pic.setData( img );
-  } else if ( params.findIndex( "value" ) != -1 ) {
+  } else if ( params.tqfindIndex( "value" ) != -1 ) {
     if ( line.parameter( "value" ).lower() == "uri" )
       pic.setUrl( line.value().asString() );
   }
 
-  if ( params.findIndex( "type" ) != -1 )
+  if ( params.tqfindIndex( "type" ) != -1 )
     pic.setType( line.parameter( "type" ) );
 
   return pic;
@@ -700,9 +700,9 @@ Sound VCardTool::parseSound( const VCardLine &line )
   Sound snd;
 
   const TQStringList params = line.parameterList();
-  if ( params.findIndex( "encoding" ) != -1 )
+  if ( params.tqfindIndex( "encoding" ) != -1 )
     snd.setData( line.value().asByteArray() );
-  else if ( params.findIndex( "value" ) != -1 ) {
+  else if ( params.tqfindIndex( "value" ) != -1 ) {
     if ( line.parameter( "value" ).lower() == "uri" )
       snd.setUrl( line.value().asString() );
   }
@@ -738,12 +738,12 @@ Key VCardTool::parseKey( const VCardLine &line )
   Key key;
 
   const TQStringList params = line.parameterList();
-  if ( params.findIndex( "encoding" ) != -1 )
+  if ( params.tqfindIndex( "encoding" ) != -1 )
     key.setBinaryData( line.value().asByteArray() );
   else
     key.setTextData( line.value().asString() );
 
-  if ( params.findIndex( "type" ) != -1 ) {
+  if ( params.tqfindIndex( "type" ) != -1 ) {
     if ( line.parameter( "type" ).lower() == "x509" )
       key.setType( Key::X509 );
     else if ( line.parameter( "type" ).lower() == "pgp" )
@@ -814,7 +814,7 @@ Agent VCardTool::parseAgent( const VCardLine &line )
   Agent agent;
 
   const TQStringList params = line.parameterList();
-  if ( params.findIndex( "value" ) != -1 ) {
+  if ( params.tqfindIndex( "value" ) != -1 ) {
     if ( line.parameter( "value" ).lower() == "uri" )
       agent.setUrl( line.value().asString() );
   } else {

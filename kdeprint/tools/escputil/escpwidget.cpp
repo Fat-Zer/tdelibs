@@ -42,14 +42,14 @@ protected:
 	TQObject* createObject(TQObject *parent = 0, const char *name = 0, const char * className = "TQObject", const TQStringList& args = TQStringList())
 	{
                Q_UNUSED(className);
-		KDialogBase	*dlg = new KDialogBase(static_cast<TQWidget*>(parent), name, true, i18n("EPSON InkJet Printer Utilities"), KDialogBase::Close);
+		KDialogBase	*dlg = new KDialogBase(TQT_TQWIDGET(parent), name, true, i18n("EPSON InkJet Printer Utilities"), KDialogBase::Close);
 		EscpWidget	*w = new EscpWidget(dlg);
 		if (args.count() > 0)
 			w->setDevice(args[0]);
 		if (args.count() > 1)
 			w->setPrinterName(args[1]);
 		dlg->setMainWidget(w);
-		return dlg;
+		return TQT_TQOBJECT(dlg);
 	}
 };
 
@@ -71,18 +71,18 @@ EscpWidget::EscpWidget(TQWidget *parent, const char *name)
 	connect(&m_proc, TQT_SIGNAL(receivedStdout(KProcess*,char*,int)), TQT_SLOT(slotReceivedStdout(KProcess*,char*,int)));
 	connect(&m_proc, TQT_SIGNAL(receivedStderr(KProcess*,char*,int)), TQT_SLOT(slotReceivedStderr(KProcess*,char*,int)));
 
-	QPushButton	*cleanbtn = new TQPushButton(this, "-c");
+	TQPushButton	*cleanbtn = new TQPushButton(this, "-c");
 	cleanbtn->setPixmap(DesktopIcon("exec"));
-	QPushButton	*nozzlebtn = new TQPushButton(this, "-n");
+	TQPushButton	*nozzlebtn = new TQPushButton(this, "-n");
 	nozzlebtn->setPixmap(DesktopIcon("exec"));
-	QPushButton	*alignbtn = new TQPushButton(this, "-a");
+	TQPushButton	*alignbtn = new TQPushButton(this, "-a");
 	alignbtn->setPixmap(DesktopIcon("exec"));
-	QPushButton	*inkbtn = new TQPushButton(this, "-i");
+	TQPushButton	*inkbtn = new TQPushButton(this, "-i");
 	inkbtn->setPixmap(DesktopIcon("kdeprint_inklevel"));
-	QPushButton	*identbtn = new TQPushButton(this, "-d");
+	TQPushButton	*identbtn = new TQPushButton(this, "-d");
 	identbtn->setPixmap(DesktopIcon("exec"));
 
-	QFont	f(font());
+	TQFont	f(font());
 	f.setBold(true);
 	m_printer = new TQLabel(this);
 	m_printer->setFont(f);
@@ -96,15 +96,15 @@ EscpWidget::EscpWidget(TQWidget *parent, const char *name)
 	connect(inkbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotButtonClicked()));
 	connect(identbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotButtonClicked()));
 
-	QLabel	*printerlab = new TQLabel(i18n("Printer:"), this);
+	TQLabel	*printerlab = new TQLabel(i18n("Printer:"), this);
 	printerlab->tqsetAlignment(AlignRight|AlignVCenter);
-	QLabel	*devicelab = new TQLabel(i18n("Device:"), this);
+	TQLabel	*devicelab = new TQLabel(i18n("Device:"), this);
 	devicelab->tqsetAlignment(AlignRight|AlignVCenter);
-	QLabel	*cleanlab = new TQLabel(i18n("Clea&n print head"), this);
-	QLabel	*nozzlelab = new TQLabel(i18n("&Print a nozzle test pattern"), this);
-	QLabel	*alignlab = new TQLabel(i18n("&Align print head"), this);
-	QLabel	*inklab = new TQLabel(i18n("&Ink level"), this);
-	QLabel	*identlab = new TQLabel(i18n("P&rinter identification"), this);
+	TQLabel	*cleanlab = new TQLabel(i18n("Clea&n print head"), this);
+	TQLabel	*nozzlelab = new TQLabel(i18n("&Print a nozzle test pattern"), this);
+	TQLabel	*alignlab = new TQLabel(i18n("&Align print head"), this);
+	TQLabel	*inklab = new TQLabel(i18n("&Ink level"), this);
+	TQLabel	*identlab = new TQLabel(i18n("P&rinter identification"), this);
 
 	cleanlab->tqsetAlignment(AlignLeft|AlignVCenter|ShowPrefix);
 	nozzlelab->tqsetAlignment(AlignLeft|AlignVCenter|ShowPrefix);
@@ -121,8 +121,8 @@ EscpWidget::EscpWidget(TQWidget *parent, const char *name)
 	KSeparator	*sep = new KSeparator(this);
 	sep->setFixedHeight(10);
 
-	QGridLayout	*l0 = new TQGridLayout(this, 8, 2, 10, 10);
-	QGridLayout	*l1 = new TQGridLayout(0, 2, 2, 0, 5);
+	TQGridLayout	*l0 = new TQGridLayout(this, 8, 2, 10, 10);
+	TQGridLayout	*l1 = new TQGridLayout(0, 2, 2, 0, 5);
 	l0->addMultiCellLayout(l1, 0, 0, 0, 1);
 	l1->addWidget(printerlab, 0, 0);
 	l1->addWidget(devicelab, 1, 0);
@@ -155,7 +155,7 @@ void EscpWidget::startCommand(const TQString& arg)
 	}
 	else
 	{
-		QString	protocol = m_deviceURL.protocol();
+		TQString	protocol = m_deviceURL.protocol();
 		if (protocol == "usb")
 			useUSB = true;
 		else if (protocol != "file" && protocol != "parallel" && protocol != "serial" && !protocol.isEmpty())
@@ -173,7 +173,7 @@ void EscpWidget::startCommand(const TQString& arg)
 		return;
 	}
 
-	QString	exestr = KStandardDirs::findExe("escputil");
+	TQString	exestr = KStandardDirs::findExe("escputil");
 	if (exestr.isEmpty())
 	{
 		KMessageBox::error(this, i18n("The executable escputil cannot be found in your "
@@ -211,8 +211,8 @@ void EscpWidget::slotProcessExited(KProcess*)
 	setEnabled(true);
 	if (!m_proc.normalExit() || m_proc.exitStatus() != 0)
 	{
-		QString	msg1 = "<qt>"+i18n("Operation terminated with errors.")+"</qt>";
-		QString	msg2;
+		TQString	msg1 = "<qt>"+i18n("Operation terminated with errors.")+"</qt>";
+		TQString	msg2;
 		if (!m_outbuffer.isEmpty())
 			msg2 += "<p><b><u>"+i18n("Output")+"</u></b></p><p>"+m_outbuffer+"</p>";
 		if (!m_errorbuffer.isEmpty())
@@ -231,19 +231,19 @@ void EscpWidget::slotProcessExited(KProcess*)
 
 void EscpWidget::slotReceivedStdout(KProcess*, char *buf, int len)
 {
-	QString	bufstr = TQCString(buf, len);
+	TQString	bufstr = TQCString(buf, len);
 	m_outbuffer.append(bufstr);
 }
 
 void EscpWidget::slotReceivedStderr(KProcess*, char *buf, int len)
 {
-	QString	bufstr = TQCString(buf, len);
+	TQString	bufstr = TQCString(buf, len);
 	m_errorbuffer.append(bufstr);
 }
 
 void EscpWidget::slotButtonClicked()
 {
-	QString	arg = sender()->name();
+	TQString	arg = TQT_TQOBJECT_CONST(sender())->name();
 	startCommand(arg);
 }
 

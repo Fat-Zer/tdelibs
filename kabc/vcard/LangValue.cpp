@@ -97,14 +97,14 @@ LangValue::_assemble()
 		strRep_ += TQCString('-') + it.current();
 }
 
-	QCString
+	TQCString
 LangValue::primary()
 {
 	parse();
 	return primary_;
 }
 	
-	QStrList
+	TQStrList
 LangValue::subtags()
 {
 	parse();

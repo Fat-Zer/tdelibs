@@ -1633,13 +1633,13 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
             if (winargs.y < screen.y() || winargs.y > screen.bottom())
               winargs.y = screen.y(); // only safe choice until size is determined
           } else if (key == "height") {
-            winargs.height = (int)val.toFloat() + 2*tqApp->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.height = (int)val.toFloat() + 2*tqApp->tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.height > screen.height())  // should actually check workspace
               winargs.height = screen.height();
             if (winargs.height < 100)
               winargs.height = 100;
           } else if (key == "width") {
-            winargs.width = (int)val.toFloat() + 2*tqApp->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.width = (int)val.toFloat() + 2*tqApp->tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.width > screen.width())    // should actually check workspace
               winargs.width = screen.width();
             if (winargs.width < 100)
@@ -2271,7 +2271,7 @@ void WindowQObject::timerEvent(TQTimerEvent *)
   it = TQPtrListIterator<ScheduledAction>(toExecute);
   for (; it.current(); ++it) {
     ScheduledAction *action = it.current();
-    if (!scheduledActions.containsRef(action)) // removed by clearTimeout()
+    if (!scheduledActions.tqcontainsRef(action)) // removed by clearTimeout()
       continue;
 
     action->executing = true; // prevent deletion in clearTimeout()
@@ -2288,7 +2288,7 @@ void WindowQObject::timerEvent(TQTimerEvent *)
 
     action->executing = false;
 
-    if (!scheduledActions.containsRef(action))
+    if (!scheduledActions.tqcontainsRef(action))
       delete action;
     else
       action->nextTime = action->nextTime.addMSecs(action->interval);
@@ -2305,16 +2305,16 @@ void WindowQObject::timerEvent(TQTimerEvent *)
 DateTimeMS DateTimeMS::addMSecs(int s) const
 {
   DateTimeMS c = *this;
-  c.mTime = mTime.addMSecs(s);
+  c.mTime = TQT_TQTIME_OBJECT(mTime.addMSecs(s));
   if (s > 0)
   {
     if (c.mTime < mTime)
-      c.mDate = mDate.addDays(1);
+      c.mDate = TQT_TQDATE_OBJECT(mDate.addDays(1));
   }
   else
   {
     if (c.mTime > mTime)
-      c.mDate = mDate.addDays(-1);
+      c.mDate = TQT_TQDATE_OBJECT(mDate.addDays(-1));
   }
   return c;
 }
@@ -2353,10 +2353,10 @@ DateTimeMS DateTimeMS::now()
 {
   DateTimeMS t;
   TQTime before = TQTime::currentTime();
-  t.mDate = TQDate::tqcurrentDate();
+  t.mDate = TQDate::currentDate();
   t.mTime = TQTime::currentTime();
   if (t.mTime < before)
-    t.mDate = TQDate::tqcurrentDate(); // prevent race condition in hacky way :)
+    t.mDate = TQDate::currentDate(); // prevent race condition in hacky way :)
   return t;
 }
 

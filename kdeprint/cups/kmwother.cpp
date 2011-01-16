@@ -42,21 +42,21 @@ KMWOther::KMWOther(TQWidget *parent, const char *name)
 	m_nextpage = KMWizard::Driver;
 
 	m_uri = new TQLineEdit(this);
-	QLabel	*l1 = new TQLabel(this);
+	TQLabel	*l1 = new TQLabel(this);
 	l1->setText(i18n("<p>Enter the URI corresponding to the printer to be installed. "
 	                 "Examples:</p><ul>"
 					 "<li>smb://[login[:passwd]@]server/printer</li>"
 					 "<li>lpd://server/queue</li>"
 					 "<li>parallel:/dev/lp0</li></ul>"));
-	QLabel	*l2 = new TQLabel(i18n("URI:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("URI:"), this);
 	m_uriview = new KListView( this );
 	m_uriview->addColumn( "" );
 	m_uriview->header()->hide();
 	m_uriview->setSorting( -1 );
 	connect( m_uriview, TQT_SIGNAL( pressed( TQListViewItem* ) ), TQT_SLOT( slotPressed( TQListViewItem* ) ) );
 
-	QVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 15);
-	QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 5);
+	TQVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 15);
+	TQVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 5);
 	lay1->addWidget(l1);
 	lay1->addLayout(lay2);
 	lay1->addWidget( m_uriview );

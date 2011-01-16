@@ -51,7 +51,7 @@
  *@short Listbox showing codecompletion
  *@author Jonas B. Jacobi <j.jacobi@gmx.de>
  */
-class KateCCListBox : public QListBox
+class KateCCListBox : public TQListBox
 {
   public:
     /**
@@ -90,7 +90,7 @@ class KateCCListBox : public QListBox
     }
 };
 
-class KateCompletionItem : public QListBoxText
+class KateCompletionItem : public TQListBoxText
 {
   public:
     KateCompletionItem( TQListBox* lb, KTextEditor::CompletionEntry entry )
@@ -113,7 +113,7 @@ KateCodeCompletion::KateCodeCompletion( KateView* view )
   , m_view( view )
   , m_commentLabel( 0 )
 {
-  m_completionPopup = new TQVBox( 0, 0, WType_Popup );
+  m_completionPopup = new TQVBox( 0, 0, (WFlags)WType_Popup );
   m_completionPopup->setFrameStyle( TQFrame::Box | TQFrame::Plain );
   m_completionPopup->setLineWidth( 1 );
 
@@ -163,9 +163,9 @@ void KateCodeCompletion::showCompletionBox(
 
 bool KateCodeCompletion::eventFilter( TQObject *o, TQEvent *e )
 {
-  if ( o != m_completionPopup &&
-       o != m_completionListBox &&
-       o != m_completionListBox->viewport() )
+  if ( TQT_BASE_OBJECT(o) != TQT_BASE_OBJECT(m_completionPopup) &&
+       TQT_BASE_OBJECT(o) != TQT_BASE_OBJECT(m_completionListBox) &&
+       TQT_BASE_OBJECT(o) != TQT_BASE_OBJECT(m_completionListBox->viewport()) )
     return false;
 
    if( e->type() == TQEvent::Hide )
@@ -392,7 +392,7 @@ void KateCodeCompletion::showComment()
 }
 
 KateArgHint::KateArgHint( KateView* parent, const char* name )
-    : TQFrame( parent, name, WType_Popup )
+    : TQFrame( parent, name, (WFlags)WType_Popup )
 {
     setBackgroundColor( black );
     setPaletteForegroundColor( Qt::black );
@@ -404,7 +404,7 @@ KateArgHint::KateArgHint( KateView* parent, const char* name )
 
     m_markCurrentFunction = true;
 
-    setFocusPolicy( StrongFocus );
+    setFocusPolicy( TQ_StrongFocus );
     setFocusProxy( parent );
 
     reset( -1, -1 );
@@ -533,7 +533,7 @@ void KateArgHint::show()
 bool KateArgHint::eventFilter( TQObject*, TQEvent* e )
 {
     if( isVisible() && e->type() == TQEvent::KeyPress ){
-        TQKeyEvent* ke = static_cast<TQKeyEvent*>( e );
+        TQKeyEvent* ke = TQT_TQKEYEVENT( e );
         if( (ke->state() & ControlButton) && ke->key() == Key_Left ){
             setCurrentFunction( currentFunction() - 1 );
             ke->accept();

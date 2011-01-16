@@ -144,7 +144,7 @@ KPSchedulePage::KPSchedulePage(TQWidget *parent, const char *name)
 	m_time->insertItem(i18n("Third Shift (12 am - 8 am)"));
 	m_time->insertItem(i18n("Specified Time"));
         TQWhatsThis::add(m_time, whatsThisScheduledPrinting);
-	m_tedit = new QTimeEdit(this);
+	m_tedit = new TQTimeEdit(this);
 	m_tedit->setAutoAdvance(true);
 	m_tedit->setTime(TQTime::currentTime());
 	m_tedit->setEnabled(false);
@@ -157,13 +157,13 @@ KPSchedulePage::KPSchedulePage(TQWidget *parent, const char *name)
         TQWhatsThis::add(m_priority, whatsThisJobPriority);
 	m_priority->setRange(1, 100, 10, true);
 
-	QLabel	*lab = new TQLabel(i18n("&Scheduled printing:"), this);
+	TQLabel	*lab = new TQLabel(i18n("&Scheduled printing:"), this);
 	lab->setBuddy(m_time);
         TQWhatsThis::add(lab, whatsThisScheduledPrinting);
-	QLabel	*lab1 = new TQLabel(i18n("&Billing information:"), this);
+	TQLabel	*lab1 = new TQLabel(i18n("&Billing information:"), this);
         TQWhatsThis::add(lab1, whatsThisBillingInfo);
 	lab1->setBuddy(m_billing);
-	QLabel	*lab2 = new TQLabel(i18n("T&op/Bottom page label:"), this);
+	TQLabel	*lab2 = new TQLabel(i18n("T&op/Bottom page label:"), this);
         TQWhatsThis::add(lab2, whatsThisPageLabel);
 	lab2->setBuddy(m_pagelabel);
 	m_priority->setLabel(i18n("&Job priority:"), Qt::AlignVCenter|Qt::AlignLeft);
@@ -172,9 +172,9 @@ KPSchedulePage::KPSchedulePage(TQWidget *parent, const char *name)
 	KSeparator	*sep0 = new KSeparator(this);
 	sep0->setFixedHeight(10);
 
-	QGridLayout	*l0 = new TQGridLayout(this, 6, 2, 0, 7);
+	TQGridLayout	*l0 = new TQGridLayout(this, 6, 2, 0, 7);
 	l0->addWidget(lab, 0, 0);
-	QHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 5);
+	TQHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 5);
 	l0->addLayout(l1, 0, 1);
 	l1->addWidget(m_time);
 	l1->addWidget(m_tedit);
@@ -205,7 +205,7 @@ bool KPSchedulePage::isValid(TQString& msg)
 
 void KPSchedulePage::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	QString	t = opts["job-hold-until"];
+	TQString	t = opts["job-hold-until"];
 	if (!t.isEmpty())
 	{
 		int	item(-1);
@@ -220,8 +220,8 @@ void KPSchedulePage::setOptions(const TQMap<TQString,TQString>& opts)
 		else if (t == "third-shift") item = 7;
 		else
 		{
-			QTime	qt = TQTime::fromString(t);
-			m_tedit->setTime(qt.addSecs(-3600 * m_gmtdiff));
+			TQTime	qt = TQT_TQTIME_OBJECT(TQTime::fromString(t));
+			m_tedit->setTime(TQT_TQTIME_OBJECT(qt.addSecs(-3600 * m_gmtdiff)));
 			item = 8;
 		}
 
@@ -231,7 +231,7 @@ void KPSchedulePage::setOptions(const TQMap<TQString,TQString>& opts)
 			slotTimeChanged();
 		}
 	}
-	QRegExp	re("^\"|\"$");
+	TQRegExp	re("^\"|\"$");
 	t = opts["job-billing"].stripWhiteSpace();
 	t.replace(re, "");
 	m_billing->setText(t);
@@ -247,7 +247,7 @@ void KPSchedulePage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
 	if (incldef || m_time->currentItem() != 0)
 	{
-		QString	t;
+		TQString	t;
 		switch (m_time->currentItem())
 		{
 			case 0: t = "no-hold"; break;

@@ -32,20 +32,20 @@ CupsdSplash::CupsdSplash(TQWidget *parent, const char *name)
 	setPageLabel(i18n("Welcome"));
 	setPixmap("go");
 
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 10, 10);
-	QHBoxLayout	*sub_ = new TQHBoxLayout(0, 0, 10);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 10, 10);
+	TQHBoxLayout	*sub_ = new TQHBoxLayout(0, 0, 10);
 	main_->addLayout(sub_);
 
-	QLabel	*cupslogo_ = new TQLabel(this);
-	QString	logopath = locate("data", TQString("kdeprint/cups_logo.png"));
+	TQLabel	*cupslogo_ = new TQLabel(this);
+	TQString	logopath = locate("data", TQString("kdeprint/cups_logo.png"));
 	cupslogo_->setPixmap(logopath.isEmpty() ? TQPixmap() : TQPixmap(logopath));
 	cupslogo_->tqsetAlignment(Qt::AlignCenter);
-	QLabel	*kupslogo_ = new TQLabel(this);
+	TQLabel	*kupslogo_ = new TQLabel(this);
 	logopath = locate("data", TQString("kdeprint/kde_logo.png"));
 	kupslogo_->setPixmap(logopath.isEmpty() ? TQPixmap() : TQPixmap(logopath));
 	kupslogo_->tqsetAlignment(Qt::AlignCenter);
 
-	QLabel	*helptxt_ = new TQLabel(this);
+	TQLabel	*helptxt_ = new TQLabel(this);
 	helptxt_->setText(i18n( "<p>This tool will help you to configure graphically the server of the CUPS printing system. "
 				"The available options are grouped into sets of related topics and can be accessed "
 				"quickly through the icon view located on the left. Each option has a default value that is "

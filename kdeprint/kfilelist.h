@@ -55,7 +55,7 @@ protected:
 
 private:
 	KListView	*m_files;
-	QToolButton	*m_add, *m_remove, *m_open, *m_up, *m_down;
+	TQToolButton	*m_add, *m_remove, *m_open, *m_up, *m_down;
 	bool		m_block;
 };
 

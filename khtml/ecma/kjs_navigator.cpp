@@ -255,9 +255,9 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
         struct utsname name;
         int ret = uname(&name);
         if ( ret >= 0 )
-            return String(TQString::tqfromLatin1("%1 %1 X11").arg(name.sysname).arg(name.machine));
+            return String(TQString(TQString::tqfromLatin1("%1 %1 X11").arg(name.sysname).arg(name.machine)));
         else // can't happen
-            return String(TQString::tqfromLatin1("Unix X11"));
+            return String(TQString(TQString::tqfromLatin1("Unix X11")));
     }
   case CpuClass:
   {

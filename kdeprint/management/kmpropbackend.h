@@ -38,8 +38,8 @@ protected:
 	void configureWizard(KMWizard*);
 
 private:
-	QLabel	*m_type;
-	QLabel	*m_uri;
+	TQLabel	*m_type;
+	TQLabel	*m_uri;
 };
 
 #endif

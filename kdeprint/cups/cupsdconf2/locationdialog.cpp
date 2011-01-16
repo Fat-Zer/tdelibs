@@ -35,7 +35,7 @@
 LocationDialog::LocationDialog(TQWidget *parent, const char *name)
 	: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
-	QWidget	*dummy = new TQWidget(this);
+	TQWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
 	resource_ = new TQComboBox(dummy);
 	authtype_ = new TQComboBox(dummy);
@@ -69,16 +69,16 @@ LocationDialog::LocationDialog(TQWidget *parent, const char *name)
 	connect(authclass_, TQT_SIGNAL(activated(int)), TQT_SLOT(slotClassChanged(int)));
 	connect(authtype_, TQT_SIGNAL(activated(int)), TQT_SLOT(slotTypeChanged(int)));
 
-	QLabel	*l1 = new TQLabel(i18n("Resource:"), dummy);
-	QLabel	*l2 = new TQLabel(i18n("Authentication:"), dummy);
-	QLabel	*l3 = new TQLabel(i18n("Class:"), dummy);
-	QLabel	*l4 = new TQLabel(i18n("Names:"), dummy);
-	QLabel	*l5 = new TQLabel(i18n("Encryption:"), dummy);
-	QLabel	*l6 = new TQLabel(i18n("Satisfy:"), dummy);
-	QLabel	*l7 = new TQLabel(i18n("ACL order:"), dummy);
-	QLabel	*l8 = new TQLabel(i18n("ACL addresses:"),dummy);
+	TQLabel	*l1 = new TQLabel(i18n("Resource:"), dummy);
+	TQLabel	*l2 = new TQLabel(i18n("Authentication:"), dummy);
+	TQLabel	*l3 = new TQLabel(i18n("Class:"), dummy);
+	TQLabel	*l4 = new TQLabel(i18n("Names:"), dummy);
+	TQLabel	*l5 = new TQLabel(i18n("Encryption:"), dummy);
+	TQLabel	*l6 = new TQLabel(i18n("Satisfy:"), dummy);
+	TQLabel	*l7 = new TQLabel(i18n("ACL order:"), dummy);
+	TQLabel	*l8 = new TQLabel(i18n("ACL addresses:"),dummy);
 
-	QGridLayout	*m1 = new TQGridLayout(dummy, 8, 2, 0, 5);
+	TQGridLayout	*m1 = new TQGridLayout(dummy, 8, 2, 0, 5);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
 	m1->addWidget(l2, 1, 0, Qt::AlignRight);
@@ -141,7 +141,7 @@ void LocationDialog::fillLocation(CupsLocation *loc)
 
 void LocationDialog::setLocation(CupsLocation *loc)
 {
-	int	index = conf_->resources_.findRef(loc->resource_);
+	int	index = conf_->resources_.tqfindRef(loc->resource_);
 	resource_->setCurrentItem(index);
 	authtype_->setCurrentItem(loc->authtype_);
 	authclass_->setCurrentItem(loc->authclass_);

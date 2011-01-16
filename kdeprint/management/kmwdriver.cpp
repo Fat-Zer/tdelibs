@@ -35,7 +35,7 @@ KMWDriver::KMWDriver(TQWidget *parent, const char *name)
 
 	m_widget = new KMDriverDbWidget(this);
 
-	QVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 0);
+	TQVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 0);
 	lay1->addWidget(m_widget);
 }
 

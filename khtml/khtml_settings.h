@@ -214,7 +214,7 @@ public:
     // Meta refresh/redirect (http-equiv)
     bool isAutoDelayedActionsEnabled () const;
 
-    TQValueList< QPair< TQString, TQChar > > fallbackAccessKeysAssignments() const;
+    TQValueList< TQPair< TQString, TQChar > > fallbackAccessKeysAssignments() const;
 
     // Whether to show passive popup when windows are blocked
     // @since 3.5

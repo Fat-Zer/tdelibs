@@ -52,13 +52,13 @@
 TQString generateId(const TQMap<TQString, DrBase*>& map)
 {
 	int	index(-1);
-	while (map.contains(TQString::tqfromLatin1("item%1").arg(++index))) ;
+	while (map.tqcontains(TQString::tqfromLatin1("item%1").arg(++index))) ;
 	return TQString::tqfromLatin1("item%1").arg(index);
 }
 
 TQListViewItem* findPrev(TQListViewItem *item)
 {
-	QListViewItem	*prev = item->itemAbove();
+	TQListViewItem	*prev = item->itemAbove();
 	while (prev && prev->depth() > item->depth())
 		prev = prev->itemAbove();
 	if (prev && prev->depth() == item->depth())
@@ -69,7 +69,7 @@ TQListViewItem* findPrev(TQListViewItem *item)
 
 TQListViewItem* findNext(TQListViewItem *item)
 {
-	QListViewItem	*next = item->itemBelow();
+	TQListViewItem	*next = item->itemBelow();
 	while (next && next->depth() > item->depth())
 		next = next->itemBelow();
 	if (next && next->depth() == item->depth())
@@ -111,12 +111,12 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	m_type->insertItem(i18n("Boolean"));
 	m_format = new TQLineEdit(m_dummy);
 	m_default = new TQLineEdit(m_dummy);
-	QLabel	*m_namelab = new TQLabel(i18n("&Name:"), m_dummy);
-	QLabel	*m_desclab = new TQLabel(i18n("&Description:"), m_dummy);
-	QLabel	*m_formatlab = new TQLabel(i18n("&Format:"), m_dummy);
-	QLabel	*m_typelab = new TQLabel(i18n("&Type:"), m_dummy);
-	QLabel	*m_defaultlab = new TQLabel(i18n("Default &value:"), m_dummy);
-	QLabel	*m_commandlab = new TQLabel(i18n("Co&mmand:"), this);
+	TQLabel	*m_namelab = new TQLabel(i18n("&Name:"), m_dummy);
+	TQLabel	*m_desclab = new TQLabel(i18n("&Description:"), m_dummy);
+	TQLabel	*m_formatlab = new TQLabel(i18n("&Format:"), m_dummy);
+	TQLabel	*m_typelab = new TQLabel(i18n("&Type:"), m_dummy);
+	TQLabel	*m_defaultlab = new TQLabel(i18n("Default &value:"), m_dummy);
+	TQLabel	*m_commandlab = new TQLabel(i18n("Co&mmand:"), this);
 	m_namelab->setBuddy(m_name);
 	m_desclab->setBuddy(m_desc);
 	m_formatlab->setBuddy(m_format);
@@ -125,16 +125,16 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	m_commandlab->setBuddy(m_command);
 	m_persistent = new TQCheckBox( i18n( "&Persistent option" ), m_dummy );
 
-	QGroupBox	*gb = new TQGroupBox(0, Qt::Horizontal, i18n("Va&lues"), m_dummy);
+	TQGroupBox	*gb = new TQGroupBox(0, Qt::Horizontal, i18n("Va&lues"), m_dummy);
 	m_stack = new TQWidgetStack(gb);
-	QWidget	*w1 = new TQWidget(m_stack), *w2 = new TQWidget(m_stack), *w3 = new TQWidget(m_stack);
+	TQWidget	*w1 = new TQWidget(m_stack), *w2 = new TQWidget(m_stack), *w3 = new TQWidget(m_stack);
 	m_stack->addWidget(w1, 1);
 	m_stack->addWidget(w2, 2);
 	m_stack->addWidget(w3, 3);
 	m_edit1 = new TQLineEdit(w1);
 	m_edit2 = new TQLineEdit(w1);
-	QLabel	*m_editlab1 = new TQLabel(i18n("Minimum v&alue:"), w1);
-	QLabel	*m_editlab2 = new TQLabel(i18n("Ma&ximum value:"), w1);
+	TQLabel	*m_editlab1 = new TQLabel(i18n("Minimum v&alue:"), w1);
+	TQLabel	*m_editlab2 = new TQLabel(i18n("Ma&ximum value:"), w1);
 	m_editlab1->setBuddy(m_edit1);
 	m_editlab2->setBuddy(m_edit2);
 	m_values = new KListView(w2);
@@ -159,32 +159,32 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 
 	KSeparator	*sep1 = new KSeparator(KSeparator::HLine, m_dummy);
 
-	QGroupBox	*gb_input = new TQGroupBox(0, Qt::Horizontal, i18n("&Input From"), this);
-	QGroupBox	*gb_output = new TQGroupBox(0, Qt::Horizontal, i18n("O&utput To"), this);
-	QLabel	*m_inputfilelab = new TQLabel(i18n("File:"), gb_input);
-	QLabel	*m_inputpipelab = new TQLabel(i18n("Pipe:"), gb_input);
-	QLabel	*m_outputfilelab = new TQLabel(i18n("File:"), gb_output);
-	QLabel	*m_outputpipelab = new TQLabel(i18n("Pipe:"), gb_output);
+	TQGroupBox	*gb_input = new TQGroupBox(0, Qt::Horizontal, i18n("&Input From"), this);
+	TQGroupBox	*gb_output = new TQGroupBox(0, Qt::Horizontal, i18n("O&utput To"), this);
+	TQLabel	*m_inputfilelab = new TQLabel(i18n("File:"), gb_input);
+	TQLabel	*m_inputpipelab = new TQLabel(i18n("Pipe:"), gb_input);
+	TQLabel	*m_outputfilelab = new TQLabel(i18n("File:"), gb_output);
+	TQLabel	*m_outputpipelab = new TQLabel(i18n("Pipe:"), gb_output);
 	m_inputfile = new TQLineEdit(gb_input);
 	m_inputpipe = new TQLineEdit(gb_input);
 	m_outputfile = new TQLineEdit(gb_output);
 	m_outputpipe = new TQLineEdit(gb_output);
 
 	m_comment = new KTextEdit( this );
-	m_comment->setTextFormat(Qt::RichText );
+	m_comment->setTextFormat(TQt::RichText );
 	m_comment->setReadOnly(true);
 	TQLabel *m_commentlab = new TQLabel( i18n( "Comment:" ), this );
 
-	QVBoxLayout	*l2 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
-	QHBoxLayout	*l3 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
-	QVBoxLayout	*l7 = new TQVBoxLayout(0, 0, 0);
+	TQVBoxLayout	*l2 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQHBoxLayout	*l3 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
+	TQVBoxLayout	*l7 = new TQVBoxLayout(0, 0, 0);
 	l2->addLayout(l3, 0);
 	l3->addWidget(m_commandlab);
 	l3->addWidget(m_command);
-	QHBoxLayout	*l0 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
-	QGridLayout	*l10 = new TQGridLayout(0, 2, 2, 0, KDialog::spacingHint());
+	TQHBoxLayout	*l0 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
+	TQGridLayout	*l10 = new TQGridLayout(0, 2, 2, 0, KDialog::spacingHint());
 	l2->addLayout(l0, 1);
-	l0->addLayout(l10);
+	l0->addLayout(TQT_TQLAYOUT(l10));
 	l10->addMultiCellWidget(m_view, 0, 0, 0, 1);
 	l10->addWidget(gb_input, 1, 0);
 	l10->addWidget(gb_output, 1, 1);
@@ -200,7 +200,7 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	l7->addWidget(m_down);
 	l7->addStretch(1);
 	l0->addWidget(m_dummy, 1);
-	QGridLayout	*l1 = new TQGridLayout(m_dummy, 9, 2, 0, KDialog::spacingHint());
+	TQGridLayout	*l1 = new TQGridLayout(m_dummy, 9, 2, 0, KDialog::spacingHint());
 	l1->addWidget(m_desclab, 0, 0, Qt::AlignRight|Qt::AlignVCenter);
 	l1->addWidget(m_desc, 0, 1);
 	l1->addMultiCellWidget(sep1, 1, 1, 0, 1);
@@ -216,23 +216,23 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	l1->addMultiCellWidget(gb, 7, 7, 0, 1);
 	l1->setRowStretch(8, 1);
 
-	QHBoxLayout	*l4 = new TQHBoxLayout(w2, 0, KDialog::spacingHint());
+	TQHBoxLayout	*l4 = new TQHBoxLayout(w2, 0, KDialog::spacingHint());
 	l4->addWidget(m_values);
-	QVBoxLayout	*l6 = new TQVBoxLayout(0, 0, 0);
+	TQVBoxLayout	*l6 = new TQVBoxLayout(0, 0, 0);
 	l4->addLayout(l6);
 	l6->addWidget(m_addval);
 	l6->addWidget(m_delval);
 	l6->addStretch(1);
-	QGridLayout	*l5 = new TQGridLayout(w1, 3, 2, 0, KDialog::spacingHint());
+	TQGridLayout	*l5 = new TQGridLayout(w1, 3, 2, 0, KDialog::spacingHint());
 	l5->setRowStretch(2, 1);
 	l5->addWidget(m_editlab1, 0, 0, Qt::AlignRight|Qt::AlignVCenter);
 	l5->addWidget(m_editlab2, 1, 0, Qt::AlignRight|Qt::AlignVCenter);
 	l5->addWidget(m_edit1, 0, 1);
 	l5->addWidget(m_edit2, 1, 1);
 
-	QGridLayout	*l8 = new TQGridLayout(gb_input->layout(), 2, 2,
+	TQGridLayout	*l8 = new TQGridLayout(gb_input->layout(), 2, 2,
 		KDialog::spacingHint());
-	QGridLayout	*l9 = new TQGridLayout(gb_output->layout(), 2, 2,
+	TQGridLayout	*l9 = new TQGridLayout(gb_output->layout(), 2, 2,
 		KDialog::spacingHint());
 	l8->addWidget(m_inputfilelab, 0, 0);
 	l8->addWidget(m_inputpipelab, 1, 0);
@@ -243,7 +243,7 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	l9->addWidget(m_outputfile, 0, 1);
 	l9->addWidget(m_outputpipe, 1, 1);
 
-	QVBoxLayout	*l11 = new TQVBoxLayout(gb->layout());
+	TQVBoxLayout	*l11 = new TQVBoxLayout(TQT_TQLAYOUT(gb->layout()));
 	l11->addWidget(m_stack);
 
 	TQVBoxLayout *l12 = new TQVBoxLayout( 0, 0, 0 );
@@ -367,7 +367,7 @@ void KXmlCommandAdvancedDlg::setCommand(KXmlCommand *xmlcmd)
 void KXmlCommandAdvancedDlg::parseXmlCommand(KXmlCommand *xmlcmd)
 {
 	m_view->clear();
-	QListViewItem	*root = new TQListViewItem(m_view, xmlcmd->name(), xmlcmd->name());
+	TQListViewItem	*root = new TQListViewItem(m_view, xmlcmd->name(), xmlcmd->name());
 	DrMain	*driver = xmlcmd->driver();
 
 	root->setPixmap(0, SmallIcon("fileprint"));
@@ -395,12 +395,12 @@ void KXmlCommandAdvancedDlg::parseXmlCommand(KXmlCommand *xmlcmd)
 
 void KXmlCommandAdvancedDlg::parseGroupItem(DrGroup *grp, TQListViewItem *parent)
 {
-	QListViewItem	*item(0);
+	TQListViewItem	*item(0);
 
 	TQPtrListIterator<DrGroup>	git(grp->groups());
 	for (; git.current(); ++git)
 	{
-		QString	namestr = git.current()->name();
+		TQString	namestr = git.current()->name();
 		if (namestr.isEmpty())
 		{
 			namestr = "group_"+kapp->randomString(4);
@@ -417,7 +417,7 @@ void KXmlCommandAdvancedDlg::parseGroupItem(DrGroup *grp, TQListViewItem *parent
 	TQPtrListIterator<DrBase>	oit(grp->options());
 	for (; oit.current(); ++oit)
 	{
-		QString	namestr = oit.current()->name().mid(m_xmlcmd->name().length()+6);
+		TQString	namestr = oit.current()->name().mid(m_xmlcmd->name().length()+6);
 		if (namestr.isEmpty())
 		{
 			namestr = "option_"+kapp->randomString(4);
@@ -454,7 +454,7 @@ void KXmlCommandAdvancedDlg::viewItem(TQListViewItem *item)
 		m_name->setText(item->text(1));
 		m_desc->setText(item->text(0));
 
-		DrBase	*opt = (m_opts.contains(item->text(1)) ? m_opts[item->text(1)] : 0);
+		DrBase	*opt = (m_opts.tqcontains(item->text(1)) ? m_opts[item->text(1)] : 0);
 		if (opt)
 		{
 			bool	isgroup = (opt->type() < DrBase::String);
@@ -481,7 +481,7 @@ void KXmlCommandAdvancedDlg::viewItem(TQListViewItem *item)
 				case DrBase::List:
 					{
 						TQPtrListIterator<DrBase>	it(*(static_cast<DrListOption*>(opt)->choices()));
-						QListViewItem	*item(0);
+						TQListViewItem	*item(0);
 						for (; it.current(); ++it)
 						{
 							item = new TQListViewItem(m_values, item, it.current()->name(), it.current()->get("text"));
@@ -497,9 +497,9 @@ void KXmlCommandAdvancedDlg::viewItem(TQListViewItem *item)
 			m_addgrp->setEnabled(isgroup);
 			m_addopt->setEnabled(isgroup);
 
-			QListViewItem	*prevItem = findPrev(item), *nextItem = findNext(item);
-			DrBase	*prevOpt = (prevItem && m_opts.contains(prevItem->text(1)) ? m_opts[prevItem->text(1)] : 0);
-			DrBase	*nextOpt = (nextItem && m_opts.contains(nextItem->text(1)) ? m_opts[nextItem->text(1)] : 0);
+			TQListViewItem	*prevItem = findPrev(item), *nextItem = findNext(item);
+			DrBase	*prevOpt = (prevItem && m_opts.tqcontains(prevItem->text(1)) ? m_opts[prevItem->text(1)] : 0);
+			DrBase	*nextOpt = (nextItem && m_opts.tqcontains(nextItem->text(1)) ? m_opts[nextItem->text(1)] : 0);
 			m_up->setEnabled(prevOpt && !(prevOpt->type() < DrBase::String && opt->type() >= DrBase::String));
 			m_down->setEnabled(nextOpt && !(isgroup && nextOpt->type() >= DrBase::String));
 
@@ -542,7 +542,7 @@ void KXmlCommandAdvancedDlg::slotTypeChanged(int ID)
 
 void KXmlCommandAdvancedDlg::slotAddValue()
 {
-	QListViewItem	*item = new TQListViewItem(m_values, m_values->lastItem(), i18n("Name"), i18n("Description"));
+	TQListViewItem	*item = new TQListViewItem(m_values, m_values->lastItem(), i18n("Name"), i18n("Description"));
 	item->setRenameEnabled(0, true);
 	item->setRenameEnabled(1, true);
 	m_values->ensureItemVisible(item);
@@ -552,7 +552,7 @@ void KXmlCommandAdvancedDlg::slotAddValue()
 
 void KXmlCommandAdvancedDlg::slotRemoveValue()
 {
-	QListViewItem	*item = m_values->currentItem();
+	TQListViewItem	*item = m_values->currentItem();
 	if (item)
 		delete item;
 	slotValueSelected(m_values->currentItem());
@@ -560,7 +560,7 @@ void KXmlCommandAdvancedDlg::slotRemoveValue()
 
 void KXmlCommandAdvancedDlg::slotApplyChanges()
 {
-	QListViewItem	*item = m_view->currentItem();
+	TQListViewItem	*item = m_view->currentItem();
 	if (item)
 	{
 		if (m_name->text().isEmpty() || m_name->text() == "__root__")
@@ -571,7 +571,7 @@ void KXmlCommandAdvancedDlg::slotApplyChanges()
 
 		m_apply->setEnabled(false);
 
-		DrBase	*opt = (m_opts.contains(item->text(1)) ? m_opts[item->text(1)] : 0);
+		DrBase	*opt = (m_opts.tqcontains(item->text(1)) ? m_opts[item->text(1)] : 0);
 		m_opts.remove(item->text(1));
 		delete opt;
 
@@ -602,7 +602,7 @@ void KXmlCommandAdvancedDlg::slotApplyChanges()
 						else
 							opt = new DrBooleanOption;
 						DrListOption	*lopt = static_cast<DrListOption*>(opt);
-						QListViewItem	*item = m_values->firstChild();
+						TQListViewItem	*item = m_values->firstChild();
 						while (item)
 						{
 							DrBase	*choice = new DrBase;
@@ -642,14 +642,14 @@ void KXmlCommandAdvancedDlg::slotAddGroup()
 {
 	if (m_view->currentItem())
 	{
-		QString	ID = generateId(m_opts);
+		TQString	ID = generateId(m_opts);
 
 		DrGroup	*grp = new DrGroup;
 		grp->setName(ID);
 		grp->set("text", i18n("New Group"));
 		m_opts[ID] = grp;
 
-		QListViewItem	*item = new TQListViewItem(m_view->currentItem(), i18n("New Group"), ID);
+		TQListViewItem	*item = new TQListViewItem(m_view->currentItem(), i18n("New Group"), ID);
 		item->setRenameEnabled(0, true);
 		item->setPixmap(0, SmallIcon("folder"));
 		m_view->ensureItemVisible(item);
@@ -661,14 +661,14 @@ void KXmlCommandAdvancedDlg::slotAddOption()
 {
 	if (m_view->currentItem())
 	{
-		QString	ID = generateId(m_opts);
+		TQString	ID = generateId(m_opts);
 
 		DrBase	*opt = new DrStringOption;
 		opt->setName(ID);
 		opt->set("text", i18n("New Option"));
 		m_opts[ID] = opt;
 
-		QListViewItem	*item = new TQListViewItem(m_view->currentItem(), i18n("New Option"), ID);
+		TQListViewItem	*item = new TQListViewItem(m_view->currentItem(), i18n("New Option"), ID);
 		item->setRenameEnabled(0, true);
 		item->setPixmap(0, SmallIcon("document"));
 		m_view->ensureItemVisible(item);
@@ -678,12 +678,12 @@ void KXmlCommandAdvancedDlg::slotAddOption()
 
 void KXmlCommandAdvancedDlg::slotRemoveItem()
 {
-	QListViewItem	*item = m_view->currentItem();
+	TQListViewItem	*item = m_view->currentItem();
 	if (item)
 	{
-		QListViewItem	*newCurrent(item->nextSibling());
+		TQListViewItem	*newCurrent(item->nextSibling());
 		if (!newCurrent)
-			newCurrent = item->parent();
+			newCurrent = item->tqparent();
 		removeItem(item);
 		delete item;
 		m_view->setSelected(newCurrent, true);
@@ -694,7 +694,7 @@ void KXmlCommandAdvancedDlg::removeItem(TQListViewItem *item)
 {
 	delete m_opts[item->text(1)];
 	m_opts.remove(item->text(1));
-	QListViewItem	*child = item->firstChild();
+	TQListViewItem	*child = item->firstChild();
 	while (child && item)
 	{
 		removeItem(child);
@@ -705,15 +705,15 @@ void KXmlCommandAdvancedDlg::removeItem(TQListViewItem *item)
 
 void KXmlCommandAdvancedDlg::slotMoveUp()
 {
-	QListViewItem	*item = m_view->currentItem(), *prev = 0;
+	TQListViewItem	*item = m_view->currentItem(), *prev = 0;
 	if (item && (prev=findPrev(item)))
 	{
-		QListViewItem	*after(0);
+		TQListViewItem	*after(0);
 		if ((after=findPrev(prev)) != 0)
 			item->moveItem(after);
 		else
 		{
-			QListViewItem	*parent = item->parent();
+			TQListViewItem	*parent = item->tqparent();
 			parent->takeItem(item);
 			parent->insertItem(item);
 		}
@@ -724,7 +724,7 @@ void KXmlCommandAdvancedDlg::slotMoveUp()
 
 void KXmlCommandAdvancedDlg::slotMoveDown()
 {
-	QListViewItem	*item = m_view->currentItem(), *next = 0;
+	TQListViewItem	*item = m_view->currentItem(), *next = 0;
 	if (item && (next=findNext(item)))
 	{
 		item->moveItem(next);
@@ -751,7 +751,7 @@ void KXmlCommandAdvancedDlg::slotValueSelected(TQListViewItem *item)
 
 void KXmlCommandAdvancedDlg::slotOptionRenamed(TQListViewItem *item, int)
 {
-	if (item && m_opts.contains(item->text(1)))
+	if (item && m_opts.tqcontains(item->text(1)))
 	{
 		DrBase	*opt = m_opts[item->text(1)];
 		opt->set("text", item->text(0));
@@ -764,10 +764,10 @@ void KXmlCommandAdvancedDlg::recreateGroup(TQListViewItem *item, DrGroup *grp)
 	if (!item)
 		return;
 
-	QListViewItem	*child = item->firstChild();
+	TQListViewItem	*child = item->firstChild();
 	while (child)
 	{
-		DrBase	*opt = (m_opts.contains(child->text(1)) ? m_opts[child->text(1)] : 0);
+		DrBase	*opt = (m_opts.tqcontains(child->text(1)) ? m_opts[child->text(1)] : 0);
 		if (opt)
 		{
 			if (opt->type() == DrBase::Group)
@@ -807,7 +807,7 @@ bool KXmlCommandAdvancedDlg::editCommand(KXmlCommand *xmlcmd, TQWidget *parent)
 		xmlcmd->setComment( xmldlg->m_comment->text().replace( TQRegExp( "\n" ), " " ) );
 
 		// need to recreate the driver tree structure
-		DrMain	*driver = (xmldlg->m_opts.contains("__root__") ? static_cast<DrMain*>(xmldlg->m_opts["__root__"]) : 0);
+		DrMain	*driver = (xmldlg->m_opts.tqcontains("__root__") ? static_cast<DrMain*>(xmldlg->m_opts["__root__"]) : 0);
 		if (!driver && xmldlg->m_opts.count() > 0)
 		{
 			kdDebug() << "KXmlCommandAdvancedDlg: driver structure not found, creating one" << endl;
@@ -833,11 +833,11 @@ KXmlCommandDlg::KXmlCommandDlg(TQWidget *parent, const char *name)
 	setButtonText(Details, i18n("&Mime Type Settings"));
 	m_cmd = 0;
 
-	QWidget	*dummy = new TQWidget(this, "TopDetail");
-	QWidget	*topmain = new TQWidget(this, "TopMain");
+	TQWidget	*dummy = new TQWidget(this, "TopDetail");
+	TQWidget	*topmain = new TQWidget(this, "TopMain");
 
-	QGroupBox	*m_gb1 = new TQGroupBox(0, Qt::Horizontal, i18n("Supported &Input Formats"), dummy);
-	QGroupBox	*m_gb2 = new TQGroupBox(0, Qt::Horizontal, i18n("Requirements"), topmain);
+	TQGroupBox	*m_gb1 = new TQGroupBox(0, Qt::Horizontal, i18n("Supported &Input Formats"), dummy);
+	TQGroupBox	*m_gb2 = new TQGroupBox(0, Qt::Horizontal, i18n("Requirements"), topmain);
 
 	m_description = new TQLineEdit(topmain);
 	m_idname = new TQLabel(topmain);
@@ -848,7 +848,7 @@ KXmlCommandDlg::KXmlCommandDlg(TQWidget *parent, const char *name)
 	m_addreq->setIconSet(SmallIconSet("filenew"));
 	m_removereq = new TQToolButton(m_gb2);
 	m_removereq->setIconSet(SmallIconSet("editdelete"));
-	QPushButton	*m_edit = new KPushButton(KGuiItem(i18n("&Edit Command..."), "edit"), topmain);
+	TQPushButton	*m_edit = new KPushButton(KGuiItem(i18n("&Edit Command..."), "edit"), topmain);
 	m_mimetype = new TQComboBox(dummy);
 	m_availablemime = new KListBox(m_gb1);
 	m_selectedmime = new KListBox(m_gb1);
@@ -863,48 +863,48 @@ KXmlCommandDlg::KXmlCommandDlg(TQWidget *parent, const char *name)
 	m_addmime->setEnabled(false);
 	m_removemime->setEnabled(false);
 
-	QLabel	*m_desclab = new TQLabel(i18n("&Description:"), topmain);
+	TQLabel	*m_desclab = new TQLabel(i18n("&Description:"), topmain);
 	m_desclab->setBuddy(m_description);
-	QLabel	*m_mimetypelab = new TQLabel(i18n("Output &format:"), dummy);
+	TQLabel	*m_mimetypelab = new TQLabel(i18n("Output &format:"), dummy);
 	m_mimetypelab->setBuddy(m_mimetype);
-	QLabel	*m_idnamelab = new TQLabel(i18n("ID name:"), topmain);
+	TQLabel	*m_idnamelab = new TQLabel(i18n("ID name:"), topmain);
 
-	QFont	f(m_idname->font());
+	TQFont	f(m_idname->font());
 	f.setBold(true);
 	m_idname->setFont(f);
 
 	KSeparator	*sep1 = new KSeparator(TQFrame::HLine, dummy);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(topmain, 0, 10);
-	QGridLayout	*l5 = new TQGridLayout(0, 2, 2, 0, 5);
-	l0->addLayout(l5);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(topmain, 0, 10);
+	TQGridLayout	*l5 = new TQGridLayout(0, 2, 2, 0, 5);
+	l0->addLayout(TQT_TQLAYOUT(l5));
 	l5->addWidget(m_idnamelab, 0, 0);
 	l5->addWidget(m_idname, 0, 1);
 	l5->addWidget(m_desclab, 1, 0);
 	l5->addWidget(m_description, 1, 1);
 	l0->addWidget(m_gb2);
-	QHBoxLayout	*l3 = new TQHBoxLayout(0, 0, 0);
+	TQHBoxLayout	*l3 = new TQHBoxLayout(0, 0, 0);
 	l0->addLayout(l3);
 	l3->addWidget(m_edit);
 	l3->addStretch(1);
 
-	QVBoxLayout	*l7 = new TQVBoxLayout(dummy, 0, 10);
-	QHBoxLayout	*l6 = new TQHBoxLayout(0, 0, 5);
+	TQVBoxLayout	*l7 = new TQVBoxLayout(dummy, 0, 10);
+	TQHBoxLayout	*l6 = new TQHBoxLayout(0, 0, 5);
 	l7->addWidget(sep1);
 	l7->addLayout(l6);
 	l6->addWidget(m_mimetypelab, 0);
 	l6->addWidget(m_mimetype, 1);
 	l7->addWidget(m_gb1);
-	QGridLayout	*l2 = new TQGridLayout(m_gb1->layout(), 4, 3, 10);
+	TQGridLayout	*l2 = new TQGridLayout(TQT_TQLAYOUT(m_gb1->layout()), 4, 3, 10);
 	l2->addMultiCellWidget(m_availablemime, 0, 3, 2, 2);
 	l2->addMultiCellWidget(m_selectedmime, 0, 3, 0, 0);
 	l2->addWidget(m_addmime, 1, 1);
 	l2->addWidget(m_removemime, 2, 1);
 	l2->setRowStretch(0, 1);
 	l2->setRowStretch(3, 1);
-	QHBoxLayout	*l4 = new TQHBoxLayout(m_gb2->layout(), 10);
+	TQHBoxLayout	*l4 = new TQHBoxLayout(TQT_TQLAYOUT(m_gb2->layout()), 10);
 	l4->addWidget(m_requirements);
-	QVBoxLayout	*l8 = new TQVBoxLayout(0, 0, 0);
+	TQVBoxLayout	*l8 = new TQVBoxLayout(0, 0, 0);
 	l4->addLayout(l8);
 	l8->addWidget(m_addreq);
 	l8->addWidget(m_removereq);
@@ -922,7 +922,7 @@ KXmlCommandDlg::KXmlCommandDlg(TQWidget *parent, const char *name)
 	KMimeType::List	list = KMimeType::allMimeTypes();
 	for (TQValueList<KMimeType::Ptr>::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
-		QString	mimetype = (*it)->name();
+		TQString	mimetype = (*it)->name();
 		m_mimelist << mimetype;
 	}
 
@@ -943,15 +943,15 @@ void KXmlCommandDlg::setCommand(KXmlCommand *xmlCmd)
 	m_idname->setText(xmlCmd->name());
 
 	m_requirements->clear();
-	QStringList	list = xmlCmd->requirements();
-	QListViewItem	*item(0);
+	TQStringList	list = xmlCmd->requirements();
+	TQListViewItem	*item(0);
 	for (TQStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
 		item = new TQListViewItem(m_requirements, item, *it);
 		item->setRenameEnabled(0, true);
 	}
 
-	int	index = m_mimelist.findIndex(xmlCmd->mimeType());
+	int	index = m_mimelist.tqfindIndex(xmlCmd->mimeType());
 	if (index != -1)
 		m_mimetype->setCurrentItem(index);
 	else
@@ -964,7 +964,7 @@ void KXmlCommandDlg::setCommand(KXmlCommand *xmlCmd)
 	for (TQStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
 		m_selectedmime->insertItem(*it);
-		delete m_availablemime->findItem(*it, Qt::ExactMatch);
+		delete m_availablemime->tqfindItem(*it, TQt::ExactMatch);
 	}
 }
 
@@ -974,8 +974,8 @@ void KXmlCommandDlg::slotOk()
 	{
 		m_cmd->setMimeType((m_mimetype->currentText() == "all/all" ? TQString::null : m_mimetype->currentText()));
 		m_cmd->setDescription(m_description->text());
-		QStringList	l;
-		QListViewItem	*item = m_requirements->firstChild();
+		TQStringList	l;
+		TQListViewItem	*item = m_requirements->firstChild();
 		while (item)
 		{
 			l << item->text(0);
@@ -1030,7 +1030,7 @@ void KXmlCommandDlg::slotEditCommand()
 
 void KXmlCommandDlg::slotAddReq()
 {
-	QListViewItem	*item = new TQListViewItem(m_requirements, m_requirements->lastItem(), i18n("exec:/"));
+	TQListViewItem	*item = new TQListViewItem(m_requirements, m_requirements->lastItem(), i18n("exec:/"));
 	item->setRenameEnabled(0, true);
 	m_requirements->ensureItemVisible(item);
 	item->startRename(0);

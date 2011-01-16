@@ -88,9 +88,9 @@ GUIClient::GUIClient (KMDI::MainWindow* mdiMainFrm,const char* name)
   m_gotoToolDockMenu->insert(new KAction(i18n("Switch Bottom Dock"),ALT+CTRL+SHIFT+Key_B,this,TQT_SIGNAL(toggleBottom()),
   actionCollection(),"kmdi_activate_bottom"));
   m_gotoToolDockMenu->insert(new KActionSeparator(actionCollection(),"kmdi_goto_menu_separator"));
-  m_gotoToolDockMenu->insert(new KAction(i18n("Previous Tool View"),ALT+CTRL+Key_Left,m_mdiMainFrm,TQT_SLOT(prevToolViewInDock()),
+  m_gotoToolDockMenu->insert(new KAction(i18n("Previous Tool View"),ALT+CTRL+Key_Left,TQT_TQOBJECT(m_mdiMainFrm),TQT_SLOT(prevToolViewInDock()),
   actionCollection(),"kmdi_prev_toolview"));
-  m_gotoToolDockMenu->insert(new KAction(i18n("Next Tool View"),ALT+CTRL+Key_Right,m_mdiMainFrm,TQT_SLOT(nextToolViewInDock()),
+  m_gotoToolDockMenu->insert(new KAction(i18n("Next Tool View"),ALT+CTRL+Key_Right,TQT_TQOBJECT(m_mdiMainFrm),TQT_SLOT(nextToolViewInDock()),
   actionCollection(),"kmdi_next_toolview"));
 
   actionCollection()->readShortcutSettings( "Shortcuts", kapp->config() );
@@ -149,7 +149,7 @@ void GUIClient::addToolView(KMDI::ToolViewAccessor* mtva)
     /*TQString::null*/sc,dynamic_cast<KDockWidget*>(mtva->wrapperWidget()),
     m_mdiMainFrm,actionCollection(), aname.latin1() );
 
-  ((ToggleToolViewAction*)a)->setCheckedState(i18n("Hide %1").arg(mtva->wrappedWidget()->caption()));
+  ((ToggleToolViewAction*)a)->setCheckedState(TQString(i18n("Hide %1").arg(mtva->wrappedWidget()->caption())));
 
   connect(a,TQT_SIGNAL(destroyed(TQObject*)),this,TQT_SLOT(actionDeleted(TQObject*)));
 
@@ -202,7 +202,7 @@ void ToggleToolViewAction::anDWChanged()
     setChecked(true);
   else if (isChecked() && (m_dw->parentDockTabGroup() &&
           ((static_cast<KDockWidget*>(m_dw->parentDockTabGroup()->
-                  parent()->tqqt_cast("KDockWidget")))->mayBeShow())))
+                  tqparent()->tqqt_cast("KDockWidget")))->mayBeShow())))
     setChecked(false);
 }
 

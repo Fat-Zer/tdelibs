@@ -94,7 +94,7 @@ CupsdServerPage::CupsdServerPage(TQWidget *parent, const char *name)
 	printcapformat_->setCurrentItem(0);
 	classChanged(0);
 
-	QGridLayout	*m1 = new TQGridLayout(this, 9, 2, 10, 7);
+	TQGridLayout	*m1 = new TQGridLayout(this, 9, 2, 10, 7);
 	m1->setRowStretch(8, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
@@ -110,13 +110,13 @@ CupsdServerPage::CupsdServerPage(TQWidget *parent, const char *name)
 	m1->addWidget(language_, 5, 1);
 	m1->addWidget(printcap_, 6, 1);
 	m1->addWidget(printcapformat_, 7, 1);
-	QHBoxLayout	*m2 = new TQHBoxLayout(0, 0, 5);
+	TQHBoxLayout	*m2 = new TQHBoxLayout(0, 0, 5);
 	m1->addLayout(m2, 2, 1);
 	m2->addWidget(classification_);
 	m2->addWidget(otherclassname_);
-	QWidget	*w = new TQWidget(this);
+	TQWidget	*w = new TQWidget(this);
 	w->setFixedWidth(20);
-	QHBoxLayout	*m3 = new TQHBoxLayout(0, 0, 0);
+	TQHBoxLayout	*m3 = new TQHBoxLayout(0, 0, 0);
 	m1->addLayout(m3, 3, 1);
 	m3->addWidget(w);
 	m3->addWidget(classoverride_);

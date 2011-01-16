@@ -28,19 +28,19 @@
 struct KDEPRINT_EXPORT KMDBEntry
 {
 	// the file location of the driver
-	QString	file;
+	TQString	file;
 	// normal information
-	QString	manufacturer;
-	QString	model;
-	QString	modelname;
+	TQString	manufacturer;
+	TQString	model;
+	TQString	modelname;
 	// information used for auto-detection
-	QString	pnpmanufacturer;
-	QString	pnpmodel;
+	TQString	pnpmanufacturer;
+	TQString	pnpmodel;
 	// short driver description (if any)
-	QString	description;
+	TQString	description;
 	// tell whether this is the recommended driver
-	bool recommended;
-	QString	drivercomment;
+	bool		recommended;
+	TQString	drivercomment;
 
 	KMDBEntry();
 	bool validate(bool checkIt = true);

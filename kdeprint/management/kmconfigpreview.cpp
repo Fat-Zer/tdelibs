@@ -40,17 +40,17 @@ KMConfigPreview::KMConfigPreview(TQWidget *parent, const char *name)
 
 	m_useext = new TQCheckBox(i18n("&Use external preview program"), box);
 	m_program = new KURLRequester(box);
-	QLabel	*lab = new TQLabel(box);
+	TQLabel	*lab = new TQLabel(box);
 	lab->setText(i18n("You can use an external preview program (PS viewer) instead of the "
 					  "KDE built-in preview system. Note that if the KDE default PS viewer "
 					  "(KGhostView) cannot be found, KDE tries automatically to find another "
 					  "external PostScript viewer"));
-	lab->setTextFormat(Qt::RichText);
+	lab->setTextFormat(TQt::RichText);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l0->addWidget(box);
 	l0->addStretch(1);
-	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), KDialog::spacingHint());
+	TQVBoxLayout	*l1 = new TQVBoxLayout(TQT_TQLAYOUT(box->layout()), KDialog::spacingHint());
 	l1->addWidget(lab);
 	l1->addWidget(m_useext);
 	l1->addWidget(m_program);

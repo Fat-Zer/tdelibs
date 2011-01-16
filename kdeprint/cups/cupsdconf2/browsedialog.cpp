@@ -33,7 +33,7 @@
 BrowseDialog::BrowseDialog(TQWidget *parent, const char *name)
 	: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
-	QWidget	*dummy = new TQWidget(this);
+	TQWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
 	type_ = new TQComboBox(dummy);
 	from_ = new TQLineEdit(dummy);
@@ -44,11 +44,11 @@ BrowseDialog::BrowseDialog(TQWidget *parent, const char *name)
 	type_->insertItem(i18n("Relay"));
 	type_->insertItem(i18n("Poll"));
 
-	QLabel	*l1 = new TQLabel(i18n("Type:"), dummy);
-	QLabel	*l2 = new TQLabel(i18n("From:"), dummy);
-	QLabel	*l3 = new TQLabel(i18n("To:"), dummy);
+	TQLabel	*l1 = new TQLabel(i18n("Type:"), dummy);
+	TQLabel	*l2 = new TQLabel(i18n("From:"), dummy);
+	TQLabel	*l3 = new TQLabel(i18n("To:"), dummy);
 
-	QGridLayout	*m1 = new TQGridLayout(dummy, 3, 2, 0, 5);
+	TQGridLayout	*m1 = new TQGridLayout(dummy, 3, 2, 0, 5);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
 	m1->addWidget(l2, 1, 0, Qt::AlignRight);
 	m1->addWidget(l3, 2, 0, Qt::AlignRight);
@@ -111,7 +111,7 @@ TQString BrowseDialog::editAddress(const TQString& s, TQWidget *parent, CupsdCon
 {
 	BrowseDialog	dlg(parent);
 	dlg.setInfos(conf);
-	QStringList	l = TQStringList::split(TQRegExp("\\s"), s, false);
+	TQStringList	l = TQStringList::split(TQRegExp("\\s"), s, false);
 	if (l.count() > 1)
 	{
 		if (l[0] == "Send") dlg.type_->setCurrentItem(0);

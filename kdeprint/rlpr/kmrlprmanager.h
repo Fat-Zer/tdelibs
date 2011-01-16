@@ -42,7 +42,7 @@ protected:
 	TQString printerFile();
 
 private:
-	QDateTime	m_checktime;
+	TQDateTime	m_checktime;
 };
 
 #endif

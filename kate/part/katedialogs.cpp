@@ -1062,7 +1062,7 @@ void KateSaveConfigTab::defaults()
 //END KateSaveConfigTab
 
 //BEGIN PluginListItem
-class KatePartPluginListItem : public QCheckListItem
+class KatePartPluginListItem : public TQCheckListItem
 {
   public:
     KatePartPluginListItem(bool checked, uint i, const TQString &name, TQListView *parent);
@@ -1284,7 +1284,7 @@ KateHlConfigPage::KateHlConfigPage (TQWidget *parent, KateDocument *doc)
   TQHBox *hb1 = new TQHBox( gbInfo);
   new TQLabel( i18n("Author:"), hb1 );
   author  = new TQLabel (hb1);
-  author->setTextFormat (Qt::RichText);
+  author->setTextFormat (TQt::RichText);
 
   // license
   TQHBox *hb2 = new TQHBox( gbInfo);
@@ -1476,8 +1476,8 @@ void KateHlDownloadDialog::listDataReceived(KIO::Job *, const TQByteArray &data)
 
   listData+=TQString(data);
   kdDebug(13000)<<TQString("CurrentListData: ")<<listData<<endl<<endl;
-  kdDebug(13000)<<TQString("Data length: %1").arg(data.size())<<endl;
-  kdDebug(13000)<<TQString("listData length: %1").arg(listData.length())<<endl;
+  kdDebug(13000)<<TQString(TQString("Data length: %1").arg(data.size()))<<endl;
+  kdDebug(13000)<<TQString(TQString("listData length: %1").arg(listData.length()))<<endl;
   if (data.size()==0)
   {
     if (listData.length()>0)

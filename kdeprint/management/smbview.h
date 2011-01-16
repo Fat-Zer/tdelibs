@@ -56,12 +56,12 @@ protected slots:
 private:
 	enum State { GroupListing, ServerListing, ShareListing, Idle };
 	int 		m_state;
-	QListViewItem	*m_current;
+	TQListViewItem	*m_current;
 	KProcess	*m_proc;
-	QString		m_buffer;
-	QString		m_login, m_password;
+	TQString	m_buffer;
+	TQString	m_login, m_password;
 	KTempFile	*m_passwdFile;
-	QString		m_wins_server;
+	TQString	m_wins_server;
 };
 
 #endif

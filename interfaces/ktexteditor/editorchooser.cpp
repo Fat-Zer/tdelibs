@@ -57,7 +57,7 @@ EditorChooser::EditorChooser(TQWidget *parent,const char *name) :
 	{
     		if ((*it)->desktopEntryName().contains(editor))
 		{
-			d->chooser->editorCombo->insertItem(i18n("System Default (%1)").arg((*it)->name()));
+			d->chooser->editorCombo->insertItem(TQString(i18n("System Default (%1)").arg((*it)->name())));
 			break;
 		}
   	}
@@ -82,7 +82,7 @@ void EditorChooser::readAppSetting(const TQString& postfix){
 	if (editor.isEmpty()) d->chooser->editorCombo->setCurrentItem(0);
 	else
 	{
-		int idx=d->elements.findIndex(editor);
+		int idx=d->elements.tqfindIndex(editor);
 		idx=idx+1;
 		d->chooser->editorCombo->setCurrentItem(idx);
 	}

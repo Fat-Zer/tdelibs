@@ -89,7 +89,7 @@ bool TabWidget::eventFilter(TQObject *obj, TQEvent *e )
   {
     // if we lost a child we uninstall ourself as event filter for the lost
     // child and its children
-    TQObject* pLostChild = ((TQChildEvent*)e)->child();
+    TQObject* pLostChild = TQT_TQOBJECT(((TQChildEvent*)e)->child());
     if ((pLostChild != 0L) && (pLostChild->isWidgetType())) {
        TQObjectList *list = pLostChild->queryList( "TQWidget" );
        list->insert(0, pLostChild);        // add the lost child to the list too, just to save code
@@ -108,11 +108,11 @@ bool TabWidget::eventFilter(TQObject *obj, TQEvent *e )
     // if we got a new child and we are attached to the MDI system we
     // install ourself as event filter for the new child and its children
     // (as we did when we were added to the MDI system).
-    TQObject* pNewChild = ((TQChildEvent*)e)->child();
+    TQObject* pNewChild = TQT_TQOBJECT(((TQChildEvent*)e)->child());
     if ((pNewChild != 0L) && (pNewChild->isWidgetType()))
     {
        TQWidget* pNewWidget = (TQWidget*)pNewChild;
-       if (pNewWidget->testWFlags(Qt::WType_Dialog | Qt::WShowModal))
+       if (pNewWidget->testWFlags((WFlags)(WType_Dialog | WShowModal)))
            return false;
        TQObjectList *list = pNewWidget->queryList( "TQWidget" );
        list->insert(0, pNewChild);         // add the new child to the list too, just to save code
@@ -135,7 +135,7 @@ void TabWidget::childDestroyed()
 {
   // if we lost a child we uninstall ourself as event filter for the lost
   // child and its children
-  const TQObject* pLostChild = TQObject::sender();
+  const TQObject* pLostChild = TQT_TQOBJECT_CONST(sender());
   if ((pLostChild != 0L) && (pLostChild->isWidgetType()))
   {
      TQObjectList *list = ((TQObject*)(pLostChild))->queryList("TQWidget");
@@ -253,18 +253,18 @@ void TabWidget::maybeShow()
 void TabWidget::setCornerWidgetVisibility(bool visible) {
   // there are two corner widgets: on TopLeft and on TopTight!
 
-  if (cornerWidget(Qt::TopLeft) ) {
+  if (cornerWidget(TQt::TopLeft) ) {
     if (visible)
-      cornerWidget(Qt::TopLeft)->show();
+      cornerWidget(TQt::TopLeft)->show();
     else
-      cornerWidget(Qt::TopLeft)->hide();
+      cornerWidget(TQt::TopLeft)->hide();
   }
 
-  if (cornerWidget(Qt::TopRight) ) {
+  if (cornerWidget(TQt::TopRight) ) {
     if (visible)
-      cornerWidget(Qt::TopRight)->show();
+      cornerWidget(TQt::TopRight)->show();
     else
-      cornerWidget(Qt::TopRight)->hide();
+      cornerWidget(TQt::TopRight)->hide();
   }
 }
 

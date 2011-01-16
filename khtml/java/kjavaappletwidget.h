@@ -75,7 +75,7 @@
 
 class KJavaAppletWidgetPrivate;
 
-class KJavaAppletWidget : public TQXEmbed
+class KJavaAppletWidget : public QXEmbed
 {
     Q_OBJECT
 public:

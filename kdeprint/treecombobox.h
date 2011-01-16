@@ -39,7 +39,7 @@ protected:
 	int stepSize() const { return 16; }
 
 private:
-	QStringList	m_path;
+	TQStringList	m_path;
 	int		m_depth;
 	TreeListBoxItem	*m_child, *m_next, *m_parent;
 };
@@ -70,7 +70,7 @@ public:
 	void insertItem(const TQPixmap& pix, const TQString& txt, bool oneBlock = false);
 
 private:
-	QListBox	*m_listbox;
+	TQListBox	*m_listbox;
 };
 
 #endif

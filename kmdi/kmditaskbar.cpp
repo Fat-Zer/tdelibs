@@ -26,6 +26,10 @@
 //
 //----------------------------------------------------------------------------
 
+#ifdef None
+#undef None
+#endif
+
 #include "kmditaskbar.h"
 #include "kmditaskbar.moc"
 
@@ -63,7 +67,7 @@ KMdiTaskBarButton::KMdiTaskBarButton( KMdiTaskBar *pTaskBar, KMdiChildView *win_
 	m_pWindow = win_ptr;
 	TQToolTip::add
 		( this, win_ptr->caption() );
-	setFocusPolicy( NoFocus );
+	setFocusPolicy( TQ_NoFocus );
 }
 
 KMdiTaskBarButton::~KMdiTaskBarButton()
@@ -73,10 +77,10 @@ void KMdiTaskBarButton::mousePressEvent( TQMouseEvent* e )
 {
 	switch ( e->button() )
 	{
-	case TQMouseEvent::LeftButton:
+	case Qt::LeftButton:
 		emit leftMouseButtonClicked( m_pWindow );
 		break;
-	case TQMouseEvent::RightButton:
+	case Qt::RightButton:
 		emit rightMouseButtonClicked( m_pWindow );
 		break;
 	default:
@@ -152,7 +156,7 @@ KMdiTaskBar::KMdiTaskBar( KMdiMainFrm *parent, TQMainWindow::ToolBarDock dock )
 	m_pButtonList->setAutoDelete( true );
 	//QT30   setFontPropagation(TQWidget::SameFont);
 	setMinimumWidth( 1 );
-	setFocusPolicy( NoFocus );
+	setFocusPolicy( TQ_NoFocus );
 	parent->moveToolBar( this, dock ); //XXX obsolete!
 }
 
@@ -337,8 +341,8 @@ void KMdiTaskBar::layoutTaskBar( int taskBarWidth )
 	// if there's enough space, use actual width
 	int buttonCount = m_pButtonList->count();
 	int tbHandlePixel;
-	tbHandlePixel = style().tqpixelMetric( TQStyle::PM_DockWindowHandleExtent, this );
-	int buttonAreaWidth = taskBarWidth - tbHandlePixel - style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, this ) - 5;
+	tbHandlePixel = tqstyle().tqpixelMetric( TQStyle::PM_DockWindowHandleExtent, this );
+	int buttonAreaWidth = taskBarWidth - tbHandlePixel - tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, this ) - 5;
 	if ( ( ( allButtonsWidthHint ) <= buttonAreaWidth ) || ( width() < tqparentWidget() ->width() ) )
 	{
 		for ( b = m_pButtonList->first();b;b = m_pButtonList->next() )

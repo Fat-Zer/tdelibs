@@ -51,7 +51,7 @@ CupsdFilterPage::CupsdFilterPage(TQWidget *parent, const char *name)
 	TQLabel *l3 = new TQLabel(i18n("RIP cache:"), this);
 	TQLabel *l4 = new TQLabel(i18n("Filter limit:"), this);
 
-	QGridLayout	*m1 = new TQGridLayout(this, 5, 2, 10, 7);
+	TQGridLayout	*m1 = new TQGridLayout(this, 5, 2, 10, 7);
 	m1->setRowStretch(4, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);

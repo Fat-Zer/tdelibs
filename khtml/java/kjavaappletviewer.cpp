@@ -369,7 +369,7 @@ bool KJavaAppletViewer::eventFilter (TQObject *o, TQEvent *e) {
 
 KJavaAppletViewer::~KJavaAppletViewer () {
     m_view = 0L;
-    serverMaintainer->releaseContext (parent(), baseurl);
+    serverMaintainer->releaseContext (TQT_TQOBJECT(parent()), baseurl);
     if (m_statusbar_icon) {
         m_statusbar->removeStatusBarItem (m_statusbar_icon);
         delete m_statusbar_icon;

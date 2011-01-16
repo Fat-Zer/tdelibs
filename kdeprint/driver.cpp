@@ -61,7 +61,7 @@ DriverItem* DrBase::createItem(DriverItem *parent, DriverItem *after)
 
 void DrBase::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	if (opts.contains(name())) setValueText(opts[name()]);
+	if (opts.tqcontains(name())) setValueText(opts[name()]);
 }
 
 void DrBase::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
@@ -278,7 +278,7 @@ DrBase* DrGroup::findOption(const TQString& name, DrGroup **parentGroup)
 
 DrGroup* DrGroup::findGroup(DrGroup *grp, DrGroup ** parentGroup)
 {
-	DrGroup	*group = (m_subgroups.findRef(grp) == -1 ? 0 : grp);
+	DrGroup	*group = (m_subgroups.tqfindRef(grp) == -1 ? 0 : grp);
 	if (!group)
 	{
 		TQPtrListIterator<DrGroup>	it(m_subgroups);
@@ -464,11 +464,11 @@ void DrIntegerOption::setValueText(const TQString& s)
 
 TQString DrIntegerOption::fixedVal()
 {
-	QStringList	vals = TQStringList::split("|", get("fixedvals"), false);
+	TQStringList	vals = TQStringList::split("|", get("fixedvals"), false);
 	if (vals.count() == 0)
 		return valueText();
 	int	d(0);
-	QString	val;
+	TQString	val;
 	for (TQStringList::Iterator it=vals.begin(); it!=vals.end(); ++it)
 	{
 		int	thisVal = (*it).toInt();
@@ -514,11 +514,11 @@ void DrFloatOption::setValueText(const TQString& s)
 
 TQString DrFloatOption::fixedVal()
 {
-	QStringList	vals = TQStringList::split("|", get("fixedvals"), false);
+	TQStringList	vals = TQStringList::split("|", get("fixedvals"), false);
 	if (vals.count() == 0)
 		return valueText();
 	float	d(0);
-	QString	val;
+	TQString	val;
 	for (TQStringList::Iterator it=vals.begin(); it!=vals.end(); ++it)
 	{
 		float	thisVal = (*it).toFloat();

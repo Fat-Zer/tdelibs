@@ -63,7 +63,7 @@ KMdiChildView::KMdiChildView( const TQString& caption, TQWidget* tqparentWidget,
 		m_szCaption = i18n( "Unnamed" );
 	
 	m_sTabCaption = m_szCaption;
-	setFocusPolicy( ClickFocus );
+	setFocusPolicy( TQ_ClickFocus );
 	installEventFilter( this );
 	
 	// store the current time
@@ -88,7 +88,7 @@ KMdiChildView::KMdiChildView( TQWidget* tqparentWidget, const char* name, WFlags
 	setGeometry( 0, 0, 0, 0 );  // reset
 	m_szCaption = i18n( "Unnamed" );
 	m_sTabCaption = m_szCaption;
-	setFocusPolicy( ClickFocus );
+	setFocusPolicy( TQ_ClickFocus );
 	installEventFilter( this );
 
 	// store the current time
@@ -363,7 +363,7 @@ void KMdiChildView::youAreDetached()
 	if ( myIconPtr() )
 		setIcon( *( myIconPtr() ) );
 	
-	setFocusPolicy( TQWidget::StrongFocus );
+	setFocusPolicy( TQ_StrongFocus );
 
 	emit isDetachedNow();
 }
@@ -493,7 +493,7 @@ void KMdiChildView::slot_childDestroyed()
 
 	// if we lost a child we uninstall ourself as event filter for the lost
 	// child and its children
-	const TQObject * pLostChild = TQObject::sender();
+	const TQObject * pLostChild = TQT_TQOBJECT_CONST(sender());
 	if ( pLostChild && ( pLostChild->isWidgetType() ) )
 	{
 		TQObjectList* list = ( ( TQObject* ) ( pLostChild ) ) ->queryList( "TQWidget" );
@@ -527,8 +527,8 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 		if ( ke->key() == Qt::Key_Tab )
 		{
 			TQWidget* w = ( TQWidget* ) obj;
-			FocusPolicy wfp = w->focusPolicy();
-			if ( wfp == TQWidget::StrongFocus || wfp == TQWidget::TabFocus || w->focusPolicy() == TQWidget::WheelFocus )
+			TQ_FocusPolicy wfp = w->focusPolicy();
+			if ( wfp == TQ_StrongFocus || wfp == TQ_TabFocus || w->focusPolicy() == TQ_WheelFocus )
 			{
 				if ( m_lastFocusableChildWidget != 0 )
 				{
@@ -546,7 +546,7 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 		if ( obj->isWidgetType() )
 		{
 			TQObjectList * list = queryList( "TQWidget" );
-			if ( list->find( obj ) != -1 )
+			if ( list->tqfind( obj ) != -1 )
 				m_focusedChildWidget = ( TQWidget* ) obj;
 
 			delete list;   // delete the list, not the objects
@@ -566,7 +566,7 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 	{
 		// if we lost a child we uninstall ourself as event filter for the lost
 		// child and its children
-		TQObject * pLostChild = ( ( TQChildEvent* ) e ) ->child();
+		TQObject * pLostChild = TQT_TQOBJECT(( ( TQChildEvent* ) e ) ->child());
 		if ( ( pLostChild != 0L ) && ( pLostChild->isWidgetType() ) )
 		{
 			TQObjectList * list = pLostChild->queryList( "TQWidget" );
@@ -578,8 +578,8 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 				TQWidget * widg = ( TQWidget* ) o;
 				++it;
 				widg->removeEventFilter( this );
-				FocusPolicy wfp = widg->focusPolicy();
-				if ( wfp == TQWidget::StrongFocus || wfp == TQWidget::TabFocus || widg->focusPolicy() == TQWidget::WheelFocus )
+				TQ_FocusPolicy wfp = widg->focusPolicy();
+				if ( wfp == TQ_StrongFocus || wfp == TQ_TabFocus || widg->focusPolicy() == TQ_WheelFocus )
 				{
 					if ( m_firstFocusableChildWidget == widg )
 						m_firstFocusableChildWidget = 0L;   // reset first widget
@@ -596,11 +596,11 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 		// if we got a new child and we are attached to the MDI system we
 		// install ourself as event filter for the new child and its children
 		// (as we did when we were added to the MDI system).
-		TQObject * pNewChild = ( ( TQChildEvent* ) e ) ->child();
+		TQObject * pNewChild = TQT_TQOBJECT(( ( TQChildEvent* ) e ) ->child());
 		if ( ( pNewChild != 0L ) && ( pNewChild->isWidgetType() ) )
 		{
 			TQWidget * pNewWidget = ( TQWidget* ) pNewChild;
-			if ( pNewWidget->testWFlags( Qt::WType_Dialog | Qt::WShowModal ) )
+			if ( pNewWidget->testWFlags( (WFlags)(WType_Dialog | WShowModal) ) )
 				return false;
 			TQObjectList *list = pNewWidget->queryList( "TQWidget" );
 			list->insert( 0, pNewChild );         // add the new child to the list too, just to save code
@@ -612,8 +612,8 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 				++it;
 				widg->installEventFilter( this );
 				connect( widg, TQT_SIGNAL( destroyed() ), this, TQT_SLOT( slot_childDestroyed() ) );
-				FocusPolicy wfp = widg->focusPolicy();
-				if ( wfp == TQWidget::StrongFocus || wfp == TQWidget::TabFocus || widg->focusPolicy() == TQWidget::WheelFocus )
+				TQ_FocusPolicy wfp = widg->focusPolicy();
+				if ( wfp == TQ_StrongFocus || wfp == TQ_TabFocus || widg->focusPolicy() == TQ_WheelFocus )
 				{
 					if ( m_firstFocusableChildWidget == 0 )
 						m_firstFocusableChildWidget = widg;  // first widge
@@ -629,14 +629,14 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 		if ( e->type() == TQEvent::IconChange )
 		{
 			//            qDebug("KMDiChildView:: TQEvent:IconChange intercepted\n");
-			if ( obj == this )
+			if ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(this) )
 				iconUpdated( this, icon() ? ( *icon() ) : TQPixmap() );
-			else if ( obj == m_trackChanges )
+			else if ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(m_trackChanges) )
 				setIcon( m_trackChanges->icon() ? ( *( m_trackChanges->icon() ) ) : TQPixmap() );
 		}
 		if ( e->type() == TQEvent::CaptionChange )
 		{
-			if ( obj == this )
+			if ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(this) )
 				captionUpdated( this, caption() );
 		}
 	}

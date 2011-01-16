@@ -34,13 +34,13 @@ KMConfigLpr::KMConfigLpr(TQWidget *parent, const char *name)
 	setPageHeader(i18n("Spooler Settings"));
 	setPagePixmap("gear");
 
-	QGroupBox	*m_modebox = new TQGroupBox(1, Qt::Vertical, i18n("Spooler"), this);
+	TQGroupBox	*m_modebox = new TQGroupBox(1, Qt::Vertical, i18n("Spooler"), this);
 
 	m_mode = new TQComboBox(m_modebox);
 	m_mode->insertItem("LPR (BSD compatible)");
 	m_mode->insertItem("LPRng");
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 5, 10);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 5, 10);
 	l0->addWidget(m_modebox);
 	l0->addStretch(1);
 }
@@ -54,7 +54,7 @@ void KMConfigLpr::saveConfig(KConfig *conf)
 {
 	LprSettings::self()->setMode((LprSettings::Mode)(m_mode->currentItem()));
 
-	QString	modestr;
+	TQString	modestr;
 	switch (m_mode->currentItem())
 	{
 		default:

@@ -41,6 +41,7 @@ class KTEXTEDITOR_EXPORT Editor : public KParts::ReadWritePart
   friend class PrivateEditor;
 
   Q_OBJECT
+  TQ_OBJECT
 
   public:
     /**

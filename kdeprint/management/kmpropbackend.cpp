@@ -31,11 +31,11 @@ KMPropBackend::KMPropBackend(TQWidget *parent, const char *name)
 	m_uri = new TQLabel("",this);
 	m_type = new TQLabel("",this);
 
-	QLabel	*l1 = new TQLabel(i18n("Printer type:"), this);
-	QLabel	*l2 = new TQLabel(i18n("URI:"), this);
+	TQLabel	*l1 = new TQLabel(i18n("Printer type:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("URI:"), this);
 
 	// layout
-	QGridLayout	*main_ = new TQGridLayout(this, 3, 2, 10, 7);
+	TQGridLayout	*main_ = new TQGridLayout(this, 3, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(2,1);
@@ -58,7 +58,7 @@ void KMPropBackend::setPrinter(KMPrinter *p)
 	if (p && p->isPrinter())
 	{
 		m_uri->setText(KURL(p->device()).prettyURL());
-		QString	prot = p->deviceProtocol();
+		TQString	prot = p->deviceProtocol();
 		if (prot == "ipp" || prot == "http") m_type->setText(i18n("IPP Printer"));
 		else if (prot == "usb") m_type->setText(i18n("Local USB Printer"));
 		else if (prot == "parallel") m_type->setText(i18n("Local Parallel Printer"));

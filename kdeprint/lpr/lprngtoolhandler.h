@@ -41,14 +41,14 @@ public:
 protected:
 	TQMap<TQString,TQString> parseXferOptions(const TQString&);
 	void loadAuthFile(const TQString&, TQString&, TQString&);
-	TQValueList< QPair<TQString,TQStringList> > loadChoiceDict(const TQString&);
+	TQValueList< TQPair<TQString,TQStringList> > loadChoiceDict(const TQString&);
 	TQMap<TQString,TQString> parseZOptions(const TQString&);
 	TQString filterDir();
 	TQString driverDirInternal();
 
 
 private:
-	TQValueList< QPair<TQString,TQStringList> >	m_dict;
+	TQValueList< TQPair<TQString,TQStringList> >	m_dict;
 };
 
 #endif

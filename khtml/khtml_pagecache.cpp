@@ -95,8 +95,8 @@ KHTMLPageCacheEntry::endData()
 {
   m_complete = true;
   if ( m_file->status() == 0) {
-    m_file->dataStream()->device()->flush();
-    m_file->dataStream()->device()->at(0);
+    m_file->dataStream()->tqdevice()->flush();
+    m_file->dataStream()->tqdevice()->at(0);
   }
 }
 

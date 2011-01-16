@@ -67,7 +67,7 @@ KMLprManager::KMLprManager(TQObject *parent, const char *name, const TQStringLis
 
 void KMLprManager::listPrinters()
 {
-	QFileInfo	fi(LprSettings::self()->printcapFile());
+	TQFileInfo	fi(LprSettings::self()->printcapFile());
 
 	if (m_lpchelper)
 		m_lpchelper->updateStates();
@@ -84,7 +84,7 @@ void KMLprManager::listPrinters()
 
 		// try to open the printcap file and parse it
 		PrintcapReader	reader;
-		QFile	f(fi.absFilePath());
+		TQFile	f(fi.absFilePath());
 		PrintcapEntry	*entry;
 		if (f.exists() && f.open(IO_ReadOnly))
 		{
@@ -137,7 +137,7 @@ void KMLprManager::initHandlers()
 	insertHandler(new LPRngToolHandler(this));
 
 	// now load external handlers
-	QStringList	l = KGlobal::dirs()->findAllResources("data", "kdeprint/lpr/*.la");
+	TQStringList	l = KGlobal::dirs()->findAllResources("data", "kdeprint/lpr/*.la");
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		KLibrary	*library = KLibLoader::self()->library(TQFile::encodeName(*it));
@@ -158,7 +158,7 @@ void KMLprManager::initHandlers()
 
 LprHandler* KMLprManager::findHandler(KMPrinter *prt)
 {
-	QString	handlerstr(prt->option("kde-lpr-handler"));
+	TQString	handlerstr(prt->option("kde-lpr-handler"));
 	LprHandler	*handler(0);
 	if (handlerstr.isEmpty() || (handler = m_handlers.tqfind(handlerstr)) == NULL)
 	{
@@ -231,7 +231,7 @@ DrMain* KMLprManager::loadPrinterDriver(KMPrinter *prt, bool config)
 DrMain* KMLprManager::loadFileDriver(const TQString& filename)
 {
 	int	p = filename.tqfind('/');
-	QString	handler_str = (p != -1 ? filename.left(p) : TQString::tqfromLatin1("default"));
+	TQString	handler_str = (p != -1 ? filename.left(p) : TQString::tqfromLatin1("default"));
 	LprHandler	*handler = m_handlers.tqfind(handler_str);
 	if (handler)
 	{
@@ -245,7 +245,7 @@ DrMain* KMLprManager::loadFileDriver(const TQString& filename)
 
 bool KMLprManager::enablePrinter(KMPrinter *prt, bool state)
 {
-	QString	msg;
+	TQString	msg;
 	if (!m_lpchelper->enable(prt, state, msg))
 	{
 		setErrorMsg(msg);
@@ -256,7 +256,7 @@ bool KMLprManager::enablePrinter(KMPrinter *prt, bool state)
 
 bool KMLprManager::startPrinter(KMPrinter *prt, bool state)
 {
-	QString	msg;
+	TQString	msg;
 	if (!m_lpchelper->start(prt, state, msg))
 	{
 		setErrorMsg(msg);
@@ -289,10 +289,10 @@ bool KMLprManager::savePrintcapFile()
 		setErrorMsg(i18n("The printcap file is a remote file (NIS). It cannot be written."));
 		return false;
 	}
-	QFile	f(LprSettings::self()->printcapFile());
+	TQFile	f(LprSettings::self()->printcapFile());
 	if (f.open(IO_WriteOnly))
 	{
-		QTextStream	t(&f);
+		TQTextStream	t(&f);
 		TQDictIterator<PrintcapEntry>	it(m_entries);
 		for (; it.current(); ++it)
 		{
@@ -338,7 +338,7 @@ bool KMLprManager::createPrinter(KMPrinter *prt)
 	if (!prt->driver() && oldEntry)
 		prt->setDriver(handler->loadDriver(prt, oldEntry, true));
 
-	QString	sd = LprSettings::self()->baseSpoolDir();
+	TQString	sd = LprSettings::self()->baseSpoolDir();
 	if (sd.isEmpty())
 	{
 		setErrorMsg(i18n("Couldn't determine spool directory. See options dialog."));
@@ -376,7 +376,7 @@ bool KMLprManager::createPrinter(KMPrinter *prt)
 		// in case of LPRng, we need to tell the daemon about new printer
 		if (LprSettings::self()->mode() == LprSettings::LPRng)
 		{
-			QString	msg;
+			TQString	msg;
 			if (!m_lpchelper->restart(msg))
 			{
 				setErrorMsg(i18n("The printer has been created but the print daemon "
@@ -396,7 +396,7 @@ bool KMLprManager::removePrinter(KMPrinter *prt)
 	{
 		if (handler->removePrinter(prt, entry))
 		{
-			QString	sd = entry->field("sd");
+			TQString	sd = entry->field("sd");
 			// first try to save the printcap file, and if
 			// successful, remove the spool directory
 			m_entries.take(prt->printerName());
@@ -428,10 +428,10 @@ TQString KMLprManager::driverDbCreationProgram()
 TQString KMLprManager::driverDirectory()
 {
 	TQPtrListIterator<LprHandler>	it(m_handlerlist);
-	QString	dbDirs;
+	TQString	dbDirs;
 	for (; it.current(); ++it)
 	{
-		QString	dir = it.current()->driverDirectory();
+		TQString	dir = it.current()->driverDirectory();
 		if (!dir.isEmpty())
 			dbDirs.append(dir).append(":");
 	}
@@ -443,7 +443,7 @@ TQString KMLprManager::driverDirectory()
 TQString KMLprManager::printOptions(KPrinter *prt)
 {
 	KMPrinter	*mprt = findPrinter(prt->printerName());
-	QString	opts;
+	TQString	opts;
 	if (mprt)
 	{
 		LprHandler	*handler = findHandler(mprt);

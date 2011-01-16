@@ -23,7 +23,7 @@
 #include <kprintdialogpage.h>
 
 class TQComboBox;
-class QTimeEdit;
+class TQTimeEdit;
 class TQLineEdit;
 class KIntNumInput;
 
@@ -42,9 +42,9 @@ protected slots:
 	void slotTimeChanged();
 
 private:
-	QComboBox	*m_time;
-	QTimeEdit	*m_tedit;
-	QLineEdit	*m_billing, *m_pagelabel;
+	TQComboBox	*m_time;
+	TQTimeEdit	*m_tedit;
+	TQLineEdit	*m_billing, *m_pagelabel;
 	KIntNumInput	*m_priority;
 	int	m_gmtdiff;
 };

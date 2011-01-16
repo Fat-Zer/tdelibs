@@ -38,20 +38,20 @@ KMWSmb::KMWSmb(TQWidget *parent, const char *name)
 
 	m_view = new SmbView(this,"SmbView");
 	m_loginlabel = new TQLabel( this );
-	QPushButton	*m_scan = new KPushButton(KGuiItem(i18n("Scan"), "viewmag"), this);
-	QPushButton	*m_abort = new KPushButton(KGuiItem(i18n("Abort"), "stop"), this);
+	TQPushButton	*m_scan = new KPushButton(KGuiItem(i18n("Scan"), "viewmag"), this);
+	TQPushButton	*m_abort = new KPushButton(KGuiItem(i18n("Abort"), "stop"), this);
 	m_abort->setEnabled(false);
-	QLabel		*m_worklabel = new TQLabel(i18n("Workgroup:"), this);
-	QLabel		*m_serverlabel = new TQLabel(i18n("Server:"), this);
-	QLabel		*m_printerlabel = new TQLabel(i18n("Printer:"), this);
+	TQLabel		*m_worklabel = new TQLabel(i18n("Workgroup:"), this);
+	TQLabel		*m_serverlabel = new TQLabel(i18n("Server:"), this);
+	TQLabel		*m_printerlabel = new TQLabel(i18n("Printer:"), this);
 	m_work = new TQLineEdit(this);
 	m_server = new TQLineEdit(this);
 	m_printer = new TQLineEdit(this);
 
-	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
-	QGridLayout	*lay1 = new TQGridLayout(0, 3, 2, 0, 10);
-	QHBoxLayout	*lay3 = new TQHBoxLayout(0, 0, 10);
-	lay0->addLayout(lay1,0);
+	TQVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
+	TQGridLayout	*lay1 = new TQGridLayout(0, 3, 2, 0, 10);
+	TQHBoxLayout	*lay3 = new TQHBoxLayout(0, 0, 10);
+	lay0->addLayout(TQT_TQLAYOUT(lay1),0);
 	lay0->addWidget(m_view,1);
 	lay0->addLayout(lay3,0);
 	lay0->addSpacing(10);

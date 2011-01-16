@@ -35,9 +35,9 @@ public:
 	void saveConfig(KConfig*);
 
 private:
-	QLineEdit	*m_proxyhost;
-	QLineEdit	*m_proxyport;
-	QCheckBox	*m_useproxy;
+	TQLineEdit	*m_proxyhost;
+	TQLineEdit	*m_proxyport;
+	TQCheckBox	*m_useproxy;
 };
 
 #endif

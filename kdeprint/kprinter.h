@@ -748,7 +748,7 @@ public:
 	TQString docDirectory() const;
 
 protected:
-	virtual bool cmd(int, TQPainter*, QPDevCmdParam*);
+	virtual bool cmd(int, TQPainter*, TQPDevCmdParam*);
 	virtual int metric(int) const;
 	void translateQtOptions();
 	void loadSettings();

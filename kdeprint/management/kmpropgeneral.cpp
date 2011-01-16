@@ -34,12 +34,12 @@ KMPropGeneral::KMPropGeneral(TQWidget *parent, const char *name)
 	m_location = new TQLabel("",this);
 	m_description = new TQLabel("",this);
 
-	QLabel	*l1 = new TQLabel(i18n("Printer name:"), this);
-	QLabel	*l2 = new TQLabel(i18n("Physical Location", "Location:"), this);
-	QLabel	*l3 = new TQLabel(i18n("Description:"), this);
+	TQLabel	*l1 = new TQLabel(i18n("Printer name:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("Physical Location", "Location:"), this);
+	TQLabel	*l3 = new TQLabel(i18n("Description:"), this);
 
 	// layout
-	QGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 7);
+	TQGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(3,1);

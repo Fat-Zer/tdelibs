@@ -64,15 +64,15 @@ KMWizard::KMWizard(TQWidget *parent, const char *name)
 	m_next = new KPushButton(i18n("&Next >"), this);
 	m_next->setDefault(true);
 	m_prev = new KPushButton(i18n("< &Back"), this);
-	QPushButton	*m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
+	TQPushButton	*m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
 	m_title = new TQLabel(this);
-	QFont	f(m_title->font());
+	TQFont	f(m_title->font());
 	f.setBold(true);
 	m_title->setFont(f);
 	KSeparator* sep = new KSeparator( KSeparator::HLine, this);
 	sep->setFixedHeight(5);
 	KSeparator* sep2 = new KSeparator( KSeparator::HLine, this);
-	QPushButton	*m_help = new KPushButton(KStdGuiItem::help(), this);
+	TQPushButton	*m_help = new KPushButton(KStdGuiItem::help(), this);
 
 	connect(m_cancel,TQT_SIGNAL(clicked()),TQT_SLOT(reject()));
 	connect(m_next,TQT_SIGNAL(clicked()),TQT_SLOT(slotNext()));
@@ -88,9 +88,9 @@ KMWizard::KMWizard(TQWidget *parent, const char *name)
 
 	// layout
 	TQVBoxLayout *main0_ = new TQVBoxLayout(this, 10, 10);
-	QVBoxLayout	*main_ = new TQVBoxLayout(0, 0, 0);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(0, 0, 0);
 	TQHBoxLayout *main1_ = new TQHBoxLayout(0, 0, 10);
-	QHBoxLayout	*btn_ = new TQHBoxLayout(0, 0, 10);
+	TQHBoxLayout	*btn_ = new TQHBoxLayout(0, 0, 10);
 	main0_->addLayout(main1_);
 	if (m_side)
 		main1_->addWidget(m_side);
@@ -222,7 +222,7 @@ void KMWizard::slotNext()
 	KMWizardPage	*page = (KMWizardPage*)m_stack->visibleWidget();
 	if (page)
 	{
-		QString	msg;
+		TQString	msg;
 		if (!page->isValid(msg))
 		{
 			if (!msg.isEmpty())

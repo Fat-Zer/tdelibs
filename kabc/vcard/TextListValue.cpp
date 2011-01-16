@@ -98,7 +98,7 @@ TextListValue::numValues()
 	return valueList_.count();
 }
 
-	QCString
+	TQCString
 TextListValue::value(unsigned int i)
 {
 	parse();

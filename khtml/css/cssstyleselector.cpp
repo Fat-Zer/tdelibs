@@ -257,7 +257,7 @@ CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, TQString userStyleSheet, 
     u.setQuery( TQString::null );
     u.setRef( TQString::null );
     encodedurl.file = u.url();
-    int pos = encodedurl.file.findRev('/');
+    int pos = encodedurl.file.tqfindRev('/');
     encodedurl.path = encodedurl.file;
     if ( pos > 0 ) {
 	encodedurl.path.truncate( pos );
@@ -831,9 +831,9 @@ static void cleanpath(TQString &path)
     while ( (pos = path.tqfind( "/../" )) != -1 ) {
         int prev = 0;
         if ( pos > 0 )
-            prev = path.findRev( "/", pos -1 );
+            prev = path.tqfindRev( "/", pos -1 );
         // don't remove the host, i.e. http://foo.org/../foo.html
-        if (prev < 0 || (prev > 3 && path.findRev("://", prev-1) == prev-2))
+        if (prev < 0 || (prev > 3 && path.tqfindRev("://", prev-1) == prev-2))
             path.remove( pos, 3);
         else
             // matching directory found ?
@@ -1158,7 +1158,7 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             // Be smart compare on length first
             if (sel_len > val_len) return false;
             // Selector string may not contain spaces
-            if ((sel->attr != ATTR_CLASS || e->hasClassList()) && sel->value.tqfind(' ') != -1) return false;
+            if ((sel->attr != ATTR_CLASS || e->hasClassList()) && sel->value.find(' ') != -1) return false;
             if (sel_len == val_len)
                 return (caseSensitive && !strcmp(sel->value, value)) ||
 		       (!caseSensitive && !strcasecmp(sel->value, value));
@@ -1189,21 +1189,21 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             //kdDebug( 6080 ) << "checking for contains match" << endl;
             TQConstString val_str(value->tqunicode(), value->length());
             TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
-            return val_str.string().contains(sel_str.string(), caseSensitive);
+            return val_str.string().tqcontains(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Begin:
         {
             //kdDebug( 6080 ) << "checking for beginswith match" << endl;
             TQConstString val_str(value->tqunicode(), value->length());
             TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
-            return val_str.string().startsWith(sel_str.string(), caseSensitive);
+            return val_str.string().tqstartsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::End:
         {
             //kdDebug( 6080 ) << "checking for endswith match" << endl;
             TQConstString val_str(value->tqunicode(), value->length());
             TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
-            return val_str.string().endsWith(sel_str.string(), caseSensitive);
+            return val_str.string().tqendsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Hyphen:
         {
@@ -2079,7 +2079,7 @@ static TQColor colorForCSSValue( int css_value )
 	    KConfig bckgrConfig("kdesktoprc", true, false); // No multi-screen support
 	    bckgrConfig.setGroup("Desktop0");
 	    // Desktop background.
-	    return bckgrConfig.readColorEntry("Color1", &tqApp->palette().disabled().background());
+	    return bckgrConfig.readColorEntry("Color1", &tqApp->tqpalette().disabled().background());
 	}
 	return TQColor();
     }

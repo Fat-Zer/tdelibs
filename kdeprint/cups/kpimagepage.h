@@ -46,9 +46,9 @@ protected slots:
 
 private:
 	KIntNumInput	*m_brightness, *m_hue, *m_saturation, *m_gamma;
-	QComboBox		*m_sizetype;
+	TQComboBox		*m_sizetype;
 	KIntNumInput	*m_size;
-	QButtonGroup	*m_vertgrp, *m_horizgrp;
+	TQButtonGroup	*m_vertgrp, *m_horizgrp;
 	ImagePreview	*m_preview;
 	ImagePosition	*m_position;
 };

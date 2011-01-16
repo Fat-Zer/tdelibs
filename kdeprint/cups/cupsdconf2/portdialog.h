@@ -38,9 +38,9 @@ public:
 	static TQString editListen(const TQString& s, TQWidget *parent = 0, CupsdConf *conf = 0);
 
 private:
-	QLineEdit	*address_;
-	QSpinBox	*port_;
-	QCheckBox	*usessl_;
+	TQLineEdit	*address_;
+	TQSpinBox	*port_;
+	TQCheckBox	*usessl_;
 };
 
 #endif

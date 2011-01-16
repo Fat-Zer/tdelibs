@@ -48,9 +48,9 @@ protected slots:
 private:
 	KListView	*m_list;
 	NetworkScanner *m_scanner;
-	QLineEdit	*m_uri;
-	QTextView	*m_info;
-	QPushButton	*m_ippreport;
+	TQLineEdit	*m_uri;
+	TQTextView	*m_info;
+	TQPushButton	*m_ippreport;
 };
 
 #endif

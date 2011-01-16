@@ -48,20 +48,20 @@ void IppReportDlg::slotUser1()
 	printer.setDocName(caption());
 	if (printer.setup(this))
 	{
-		QPainter	painter(&printer);
-		QPaintDeviceMetrics	metrics(&printer);
+		TQPainter	painter(&printer);
+		TQPaintDeviceMetrics	metrics(&printer);
 
-		// report is printed using QSimpleRichText
-		QSimpleRichText	rich(m_edit->text(), font());
+		// report is printed using TQSimpleRichText
+		TQSimpleRichText	rich(m_edit->text(), font());
 		rich.setWidth(&painter, metrics.width());
 		int	margin = (int)(1.5 / 2.54 * metrics.logicalDpiY());	// 1.5 cm
-		QRect	r(margin, margin, metrics.width()-2*margin, metrics.height()-2*margin);
+		TQRect	r(margin, margin, metrics.width()-2*margin, metrics.height()-2*margin);
 		int	hh = rich.height(), page(1);
 		while (1)
 		{
 			rich.draw(&painter, margin, margin, r, tqcolorGroup());
-			QString	s = caption() + ": " + TQString::number(page);
-			QRect	br = painter.fontMetrics().boundingRect(s);
+			TQString	s = caption() + ": " + TQString::number(page);
+			TQRect	br = painter.fontMetrics().boundingRect(s);
 			painter.drawText(r.right()-br.width()-5, r.top()-br.height()-4, br.width()+5, br.height()+4, Qt::AlignRight|Qt::AlignTop, s);
 			r.moveBy(0, r.height()-10);
 			painter.translate(0, -(r.height()-10));
@@ -78,8 +78,8 @@ void IppReportDlg::slotUser1()
 
 void IppReportDlg::report(IppRequest *req, int group, const TQString& caption)
 {
-	QString	str_report;
-	QTextStream	t(&str_report, IO_WriteOnly);
+	TQString	str_report;
+	TQTextStream	t(&str_report, IO_WriteOnly);
 
 	if (req->htmlReport(group, t))
 	{

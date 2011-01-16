@@ -21,7 +21,7 @@
 
 TQString Field::toString() const
 {
-	QString	s = name;
+	TQString	s = name;
 	switch (type)
 	{
 		case String:

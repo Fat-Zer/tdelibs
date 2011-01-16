@@ -47,25 +47,25 @@ KMWDriverTest::KMWDriverTest(TQWidget *parent, const char *name)
 	m_manufacturer = new TQLabel(this);
 	m_model = new TQLabel(this);
 	m_driverinfo = new TQLabel(this);
-	m_driverinfo->setTextFormat(Qt::RichText);
-	QLabel	*l1 = new TQLabel(i18n("<b>Manufacturer:</b>"), this);
-	QLabel	*l2 = new TQLabel(i18n("<b>Model:</b>"), this);
-	QLabel	*l3 = new TQLabel(i18n("<b>Description:</b>"), this);
+	m_driverinfo->setTextFormat(TQt::RichText);
+	TQLabel	*l1 = new TQLabel(i18n("<b>Manufacturer:</b>"), this);
+	TQLabel	*l2 = new TQLabel(i18n("<b>Model:</b>"), this);
+	TQLabel	*l3 = new TQLabel(i18n("<b>Description:</b>"), this);
 
 	m_test = new KPushButton(KGuiItem(i18n("&Test"), "kdeprint_testprinter"), this);
 	m_settings = new KPushButton(KGuiItem(i18n("&Settings"), "configure"), this);
 
-	QLabel	*l0 = new TQLabel(this);
+	TQLabel	*l0 = new TQLabel(this);
 	l0->setText(i18n("<p>Now you can test the printer before finishing installation. "
 			 "Use the <b>Settings</b> button to configure the printer driver and "
 			 "the <b>Test</b> button to test your configuration. Use the <b>Back</b> "
 			 "button to change the driver (your current configuration will be discarded).</p>"));
 
-	QVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 15);
-	QGridLayout	*lay2 = new TQGridLayout(0, 3, 3, 0, 0);
-	QHBoxLayout	*lay3 = new TQHBoxLayout(0, 0, 10);
+	TQVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 15);
+	TQGridLayout	*lay2 = new TQGridLayout(0, 3, 3, 0, 0);
+	TQHBoxLayout	*lay3 = new TQHBoxLayout(0, 0, 10);
 	lay1->addWidget(l0,0);
-	lay1->addLayout(lay2,0);
+	lay1->addLayout(TQT_TQLAYOUT(lay2),0);
 	lay1->addLayout(lay3,0);
 	lay1->addStretch(1);
 	lay2->setColStretch(2,1);
@@ -99,7 +99,7 @@ void KMWDriverTest::initPrinter(KMPrinter *p)
 	delete m_driver;
 	m_driver = 0;
 
-	QString	drfile = p->option("kde-driver");
+	TQString	drfile = p->option("kde-driver");
 	bool	checkDriver(true);
 	if (!drfile.isEmpty() && drfile != "raw")
 	{
@@ -133,9 +133,9 @@ void KMWDriverTest::slotTest()
 {
 	if (!m_printer) return;
 
-	QString	name = "tmpprinter_"+KApplication::randomString(8);
+	TQString	name = "tmpprinter_"+KApplication::randomString(8);
 	// save printer name (can be non empty when modifying a printer)
-	QString	oldname = m_printer->name();
+	TQString	oldname = m_printer->name();
 
 	m_printer->setName(name);
 	m_printer->setPrinterName(name);

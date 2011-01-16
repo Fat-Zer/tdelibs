@@ -113,7 +113,7 @@ void BinaryFormat::saveAll( AddressBook*, Resource *resource, TQFile *file )
   }
 
   // set real number of entries
-  stream.device()->at( 2 * sizeof( TQ_UINT32 ) );
+  stream.tqdevice()->at( 2 * sizeof( TQ_UINT32 ) );
   stream << counter;
 }
 
@@ -140,12 +140,12 @@ bool BinaryFormat::checkHeader( TQDataStream &stream ) const
   }
 
   if ( magic != 0x2e93e ) {
-    kdError() << i18n("File '%1' is not binary format.").arg( file->name() ) << endl;
+    kdError() << TQString(i18n("File '%1' is not binary format.").arg( file->name() )) << endl;
     return false;
   }
 
   if ( version != BINARY_FORMAT_VERSION ) {
-    kdError() << i18n("File '%1' is the wrong version.").arg( file->name() ) << endl;
+    kdError() << TQString(i18n("File '%1' is the wrong version.").arg( file->name() )) << endl;
     return false;
   }
 

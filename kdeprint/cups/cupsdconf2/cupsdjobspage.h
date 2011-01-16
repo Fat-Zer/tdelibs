@@ -41,7 +41,7 @@ protected slots:
 
 private:
 	KIntNumInput	*maxjobs_, *maxjobsperprinter_, *maxjobsperuser_;
-	QCheckBox	*keepjobhistory_, *keepjobfiles_, *autopurgejobs_;
+	TQCheckBox	*keepjobhistory_, *keepjobfiles_, *autopurgejobs_;
 };
 
 #endif

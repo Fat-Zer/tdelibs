@@ -50,7 +50,7 @@ class KateCodeCompletionCommentLabel : public TQLabel
 
   public:
     KateCodeCompletionCommentLabel( TQWidget* parent, const TQString& text) : TQLabel( parent, "toolTipTip",
-             WStyle_StaysOnTop | WStyle_Customize | WStyle_NoBorder | WStyle_Tool | WX11BypassWM )
+             (WFlags)(WStyle_StaysOnTop | WStyle_Customize | WStyle_NoBorder | WStyle_Tool | WX11BypassWM) )
     {
         setMargin(1);
         setIndent(0);

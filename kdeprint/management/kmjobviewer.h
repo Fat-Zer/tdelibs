@@ -111,13 +111,13 @@ private:
 	KListView		*m_view;
 	TQPtrList<KMJob>		m_jobs;
 	TQPtrList<JobItem>		m_items;
-	QPopupMenu		*m_pop;
+	TQPopupMenu		*m_pop;
 	TQPtrList<KMPrinter>	m_printers;
-	QString	m_prname;
+	TQString	m_prname;
 	int	m_type;
-	QString	m_username;
-	QLineEdit	*m_userfield;
-	QCheckBox	*m_stickybox;
+	TQString	m_username;
+	TQLineEdit	*m_userfield;
+	TQCheckBox	*m_stickybox;
 	bool m_standalone;
 };
 

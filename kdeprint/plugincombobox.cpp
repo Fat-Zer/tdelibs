@@ -42,19 +42,19 @@ PluginComboBox::PluginComboBox(TQWidget *parent, const char *name)
 
 	m_combo = new TQComboBox(this, "PluginCombo");
         TQWhatsThis::add(m_combo, whatsThisCurrentPrintsystem);
-	QLabel	*m_label = new TQLabel(i18n("Print s&ystem currently used:"), this);
+	TQLabel	*m_label = new TQLabel(i18n("Print s&ystem currently used:"), this);
         TQWhatsThis::add(m_label, whatsThisCurrentPrintsystem);
 	m_label->tqsetAlignment(AlignVCenter|AlignRight);
 	m_label->setBuddy(m_combo);
 	m_plugininfo = new TQLabel("Plugin information", this);
-	QGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 5);
+	TQGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 5);
 	l0->setColStretch(0, 1);
 	l0->addWidget(m_label, 0, 0);
 	l0->addWidget(m_combo, 0, 1);
 	l0->addWidget(m_plugininfo, 1, 1);
 
 	TQValueList<KMFactory::PluginInfo>	list = KMFactory::self()->pluginList();
-	QString			currentPlugin = KMFactory::self()->printSystem();
+	TQString			currentPlugin = KMFactory::self()->printSystem();
 	for (TQValueList<KMFactory::PluginInfo>::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
 		m_combo->insertItem((*it).comment);
@@ -69,7 +69,7 @@ PluginComboBox::PluginComboBox(TQWidget *parent, const char *name)
 
 void PluginComboBox::slotActivated(int index)
 {
-	QString	plugin = m_pluginlist[index];
+	TQString	plugin = m_pluginlist[index];
 	if (!plugin.isEmpty())
 	{
 		// the factory will notify all registered objects of the change
@@ -79,9 +79,9 @@ void PluginComboBox::slotActivated(int index)
 
 void PluginComboBox::reload()
 {
-	QString	syst = KMFactory::self()->printSystem();
+	TQString	syst = KMFactory::self()->printSystem();
 	int	index(-1);
-	if ((index=m_pluginlist.findIndex(syst)) != -1)
+	if ((index=m_pluginlist.tqfindIndex(syst)) != -1)
 		m_combo->setCurrentItem(index);
 	configChanged();
 }

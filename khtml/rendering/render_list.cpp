@@ -333,7 +333,7 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
         diamond[2] = TQPoint(x+s,   y+2*s);
         diamond[3] = TQPoint(x,     y+s);
         p->setBrush( color );
-        p->drawConvexPolygon( diamond, 0, 4 );
+        p->tqdrawConvexPolygon( diamond, 0, 4 );
         return;
     }
     case LNONE:
@@ -342,25 +342,25 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
         if (!m_item.isEmpty()) {
             if(listPositionInside()) {
             	if( style()->direction() == LTR) {
-                    p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, m_item);
-                    p->drawText(_tx + fm.width(m_item), _ty, 0, 0, Qt::AlignLeft|Qt::DontClip,
+                    p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, m_item);
+                    p->drawText(_tx + fm.width(m_item), _ty, 0, 0, Qt::AlignLeft|TQt::DontClip,
                                 TQString::tqfromLatin1(". "));
                 }
             	else {
                     const TQString& punct(TQString::tqfromLatin1(" ."));
-                    p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, punct);
-            	    p->drawText(_tx + fm.width(punct), _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, m_item);
+                    p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, punct);
+            	    p->drawText(_tx + fm.width(punct), _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, m_item);
                 }
             } else {
                 if (style()->direction() == LTR) {
                     const TQString& punct(TQString::tqfromLatin1(". "));
-                    p->drawText(_tx-offset/2, _ty, 0, 0, Qt::AlignRight|Qt::DontClip, punct);
-                    p->drawText(_tx-offset/2-fm.width(punct), _ty, 0, 0, Qt::AlignRight|Qt::DontClip, m_item);
+                    p->drawText(_tx-offset/2, _ty, 0, 0, Qt::AlignRight|TQt::DontClip, punct);
+                    p->drawText(_tx-offset/2-fm.width(punct), _ty, 0, 0, Qt::AlignRight|TQt::DontClip, m_item);
                 }
             	else {
                     const TQString& punct(TQString::tqfromLatin1(" ."));
-            	    p->drawText(_tx+offset/2, _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, punct);
-                    p->drawText(_tx+offset/2+fm.width(punct), _ty, 0, 0, Qt::AlignLeft|Qt::DontClip, m_item);
+            	    p->drawText(_tx+offset/2, _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, punct);
+                    p->drawText(_tx+offset/2+fm.width(punct), _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, m_item);
                 }
 	    }
         }

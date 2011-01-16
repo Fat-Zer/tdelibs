@@ -45,7 +45,7 @@ KMConfigGeneral::KMConfigGeneral(TQWidget *parent)
 	setPageHeader(i18n("General Settings"));
 	setPagePixmap("fileprint");
 
-	QGroupBox	*m_timerbox = new TQGroupBox(0, Qt::Vertical, i18n("Refresh Interval"), this);
+	TQGroupBox	*m_timerbox = new TQGroupBox(0, Qt::Vertical, i18n("Refresh Interval"), this);
 	m_timer = new KIntNumInput(m_timerbox,"Timer");
 	m_timer->setRange(0,30);
     m_timer->setSuffix( i18n( " sec" ) );
@@ -54,7 +54,7 @@ KMConfigGeneral::KMConfigGeneral(TQWidget *parent)
 			              "<b>KDE Print</b> components like the print manager "
 				      "and the job viewer."));
 
-	QGroupBox	*m_testpagebox = new TQGroupBox(0, Qt::Vertical, i18n("Test Page"), this);
+	TQGroupBox	*m_testpagebox = new TQGroupBox(0, Qt::Vertical, i18n("Test Page"), this);
 	m_defaulttestpage = new TQCheckBox(i18n("&Specify personal test page"), m_testpagebox, "TestPageCheck");
 	m_testpage = new KURLRequester(m_testpagebox,"TestPage");
 	m_preview = new KPushButton(KGuiItem(i18n("Preview..."), "filefind"), m_testpagebox);
@@ -66,28 +66,28 @@ KMConfigGeneral::KMConfigGeneral(TQWidget *parent)
 	m_preview->setDisabled(true);
 	m_defaulttestpage->setCursor(KCursor::handCursor());
 
-	QGroupBox	*m_statusbox = new TQGroupBox(0, Qt::Vertical, i18n("Miscellaneous"), this);
+	TQGroupBox	*m_statusbox = new TQGroupBox(0, Qt::Vertical, i18n("Miscellaneous"), this);
 	m_statusmsg = new TQCheckBox(i18n("Sho&w printing status message box"), m_statusbox);
 	m_uselast = new TQCheckBox(i18n("De&faults to the last printer used in the application"), m_statusbox);
 
 	//layout
-	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	lay0->addWidget(m_timerbox);
 	lay0->addWidget(m_testpagebox);
 	lay0->addWidget(m_statusbox);
 	lay0->addStretch(1);
-	QVBoxLayout	*lay1 = new TQVBoxLayout(m_timerbox->layout(),
+	TQVBoxLayout	*lay1 = new TQVBoxLayout(TQT_TQLAYOUT(m_timerbox->layout()),
 		KDialog::spacingHint());
 	lay1->addWidget(m_timer);
-	QVBoxLayout	*lay2 = new TQVBoxLayout(m_testpagebox->layout(),
+	TQVBoxLayout	*lay2 = new TQVBoxLayout(TQT_TQLAYOUT(m_testpagebox->layout()),
 		KDialog::spacingHint());
-	QHBoxLayout	*lay3 = new TQHBoxLayout(0, 0, 0);
+	TQHBoxLayout	*lay3 = new TQHBoxLayout(0, 0, 0);
 	lay2->addWidget(m_defaulttestpage);
 	lay2->addWidget(m_testpage);
 	lay2->addLayout(lay3);
 	lay3->addStretch(1);
 	lay3->addWidget(m_preview);
-	QVBoxLayout	*lay4 = new TQVBoxLayout(m_statusbox->layout(),
+	TQVBoxLayout	*lay4 = new TQVBoxLayout(TQT_TQLAYOUT(m_statusbox->layout()),
 		KDialog::spacingHint());
 	lay4->addWidget(m_statusmsg);
 	lay4->addWidget(m_uselast);
@@ -108,7 +108,7 @@ void KMConfigGeneral::loadConfig(KConfig *conf)
 {
 	conf->setGroup("General");
 	m_timer->setValue(conf->readNumEntry("TimerDelay",5));
-	QString	tpage = conf->readPathEntry("TestPage");
+	TQString	tpage = conf->readPathEntry("TestPage");
 	if (!tpage.isEmpty())
 	{
 		m_defaulttestpage->setChecked(true);
@@ -132,7 +132,7 @@ void KMConfigGeneral::saveConfig(KConfig *conf)
 
 void KMConfigGeneral::slotTestPagePreview()
 {
-	QString	tpage = m_testpage->url();
+	TQString	tpage = m_testpage->url();
 	if (tpage.isEmpty())
 		KMessageBox::error(this, i18n("Empty file name."));
 	else

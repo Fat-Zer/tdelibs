@@ -114,15 +114,15 @@ protected:
 private:
 	KMPrinterView	*m_printerview;
 	KMPages		*m_printerpages;
-	QPopupMenu	*m_pop;
+	TQPopupMenu	*m_pop;
 	KActionCollection	*m_actions;
 	KMPrinter	*m_current;
 	KToolBar	*m_toolbar;
 	PluginComboBox	*m_plugin;
 	int		m_pactionsindex;
-	QStringList	m_toollist;
+	TQStringList	m_toollist;
 	bool		m_first;
-	QBoxLayout	*m_boxlayout;
+	TQBoxLayout	*m_boxlayout;
 	class KMainWindowPrivate;
 	KMainWindowPrivate *d;
 	KToolBar *m_menubar;

@@ -192,9 +192,9 @@ bool KatePrinter::print (KateDocument *doc)
 
          tags["d"] = KGlobal::locale()->formatDateTime(dt, true, false);
          tags["D"] =  KGlobal::locale()->formatDateTime(dt, false, false);
-         tags["h"] =  KGlobal::locale()->formatTime(dt.time(), false);
-         tags["y"] =  KGlobal::locale()->formatDate(dt.date(), true);
-         tags["Y"] =  KGlobal::locale()->formatDate(dt.date(), false);
+         tags["h"] =  KGlobal::locale()->formatTime(TQT_TQTIME_OBJECT(dt.time()), false);
+         tags["y"] =  KGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), true);
+         tags["Y"] =  KGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), false);
          tags["f"] =  doc->url().fileName();
          tags["U"] =  doc->url().prettyURL();
          if ( selectionOnly )

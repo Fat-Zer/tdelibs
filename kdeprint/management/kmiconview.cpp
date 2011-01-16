@@ -29,7 +29,7 @@ KMIconViewItem::KMIconViewItem(TQIconView *parent, KMPrinter *p)
 {
 	m_state = 0;
 	m_mode = parent->itemTextPos();
-	m_pixmap = TQString::null;
+	m_pixmap = TQString();
 	m_isclass = false;
 	updatePrinter(p, m_mode);
 }

@@ -41,8 +41,8 @@ private slots:
 	void buttonClicked();
 
 private:
-	QLineEdit	*edit_;
-	QPushButton	*button_;
+	TQLineEdit	*edit_;
+	TQPushButton	*button_;
 	bool		fileedit_;
 };
 

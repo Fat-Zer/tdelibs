@@ -317,10 +317,10 @@ public:
                          unsigned long virtKeyVal,
                          unsigned long modifiers);
 
-  bool ctrlKey()  const { return m_modifier & Qt::ControlButton; }
-  bool shiftKey() const { return m_modifier & Qt::ShiftButton; }
-  bool altKey()   const { return m_modifier & Qt::AltButton; }
-  bool metaKey()  const { return m_modifier & Qt::MetaButton; }
+  bool ctrlKey()  const { return m_modifier & TQt::ControlButton; }
+  bool shiftKey() const { return m_modifier & TQt::ShiftButton; }
+  bool altKey()   const { return m_modifier & TQt::AltButton; }
+  bool metaKey()  const { return m_modifier & TQt::MetaButton; }
 
   bool             inputGenerated() const { return m_virtKeyVal == 0; }
   unsigned long    keyVal() const     { return m_keyVal; }

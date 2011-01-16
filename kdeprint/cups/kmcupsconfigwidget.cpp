@@ -33,7 +33,7 @@
 #include <kconfig.h>
 #include <kstringhandler.h>
 
-class PortValidator : public QIntValidator
+class PortValidator : public TQIntValidator
 {
 public:
 	PortValidator(TQWidget *parent, const char *name = 0);
@@ -41,7 +41,7 @@ public:
 };
 
 PortValidator::PortValidator(TQWidget *parent, const char *name)
-: TQIntValidator(1, 65535, parent, name)
+: TQIntValidator(1, 65535, TQT_TQOBJECT(parent), name)
 {
 }
 
@@ -62,18 +62,18 @@ KMCupsConfigWidget::KMCupsConfigWidget(TQWidget *parent, const char *name)
 : TQWidget(parent,name)
 {
 	// widget creation
-	QGroupBox	*m_hostbox = new TQGroupBox(0, Qt::Vertical, i18n("Server Information"), this);
-	QGroupBox	*m_loginbox = new TQGroupBox(0, Qt::Vertical, i18n("Account Information"), this);
-	QLabel	*m_hostlabel = new TQLabel(i18n("&Host:"), m_hostbox);
-	QLabel	*m_portlabel = new TQLabel(i18n("&Port:"), m_hostbox);
+	TQGroupBox	*m_hostbox = new TQGroupBox(0, Qt::Vertical, i18n("Server Information"), this);
+	TQGroupBox	*m_loginbox = new TQGroupBox(0, Qt::Vertical, i18n("Account Information"), this);
+	TQLabel	*m_hostlabel = new TQLabel(i18n("&Host:"), m_hostbox);
+	TQLabel	*m_portlabel = new TQLabel(i18n("&Port:"), m_hostbox);
 	m_host = new TQLineEdit(m_hostbox);
 	m_port = new TQLineEdit(m_hostbox);
 	m_hostlabel->setBuddy(m_host);
 	m_portlabel->setBuddy(m_port);
 	m_port->setValidator(new PortValidator(m_port));
 	m_login = new TQLineEdit(m_loginbox);
-	QLabel	*m_loginlabel = new TQLabel(i18n("&User:"), m_loginbox);
-	QLabel	*m_passwordlabel = new TQLabel(i18n("Pass&word:"), m_loginbox);
+	TQLabel	*m_loginlabel = new TQLabel(i18n("&User:"), m_loginbox);
+	TQLabel	*m_passwordlabel = new TQLabel(i18n("Pass&word:"), m_loginbox);
 	m_password = new TQLineEdit(m_loginbox);
 	m_password->setEchoMode(TQLineEdit::Password);
 	m_savepwd = new TQCheckBox( i18n( "&Store password in configuration file" ), m_loginbox );
@@ -84,16 +84,16 @@ KMCupsConfigWidget::KMCupsConfigWidget(TQWidget *parent, const char *name)
 	m_passwordlabel->setBuddy(m_password);
 
 	// layout creation
-	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
+	TQVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
 	lay0->addWidget(m_hostbox,1);
 	lay0->addWidget(m_loginbox,1);
-	QGridLayout	*lay2 = new TQGridLayout(m_hostbox->layout(), 2, 2, 10);
+	TQGridLayout	*lay2 = new TQGridLayout(m_hostbox->layout(), 2, 2, 10);
 	lay2->setColStretch(1,1);
 	lay2->addWidget(m_hostlabel,0,0);
 	lay2->addWidget(m_portlabel,1,0);
 	lay2->addWidget(m_host,0,1);
 	lay2->addWidget(m_port,1,1);
-	QGridLayout	*lay3 = new TQGridLayout(m_loginbox->layout(), 4, 2, 10);
+	TQGridLayout	*lay3 = new TQGridLayout(m_loginbox->layout(), 4, 2, 10);
 	lay3->setColStretch(1,1);
 	lay3->addWidget(m_loginlabel,0,0);
 	lay3->addWidget(m_passwordlabel,1,0);

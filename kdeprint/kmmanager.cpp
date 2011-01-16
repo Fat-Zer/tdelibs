@@ -163,7 +163,7 @@ bool KMManager::setDefaultPrinter(const TQString& name)
 bool KMManager::testPrinter(KMPrinter *prt)
 {
 	// standard Test mechanism
-	QString	testpage = testPage();
+	TQString	testpage = testPage();
 	if (testpage.isEmpty())
 	{
 		setErrorMsg(i18n("Unable to locate test page."));
@@ -352,7 +352,7 @@ bool KMManager::savePrinterDriver(KMPrinter*,DrMain*)
 
 bool KMManager::uncompressFile(const TQString& filename, TQString& destname)
 {
-	QFile	f(filename);
+	TQFile	f(filename);
 	bool	result(true);
 	destname = TQString::null;
 	if (f.exists() && f.open(IO_ReadOnly))
@@ -458,7 +458,7 @@ bool KMManager::createSpecialPrinter(KMPrinter *p)
 
 bool KMManager::removeSpecialPrinter(KMPrinter *p)
 {
-	if (p && p->isSpecial() && m_printers.findRef(p) != -1)
+	if (p && p->isSpecial() && m_printers.tqfindRef(p) != -1)
 	{
 		m_printers.removeRef(p);
 		return m_specialmgr->savePrinters();
@@ -473,9 +473,9 @@ bool KMManager::removeSpecialPrinter(KMPrinter *p)
 */
 TQStringList KMManager::detectLocalPrinters()
 {
-	QStringList	list;
+	TQStringList	list;
 	for (int i=0; i<3; i++)
-		list << TQString::null << TQString::tqfromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << TQString::null;
+		list << TQString() << TQString::tqfromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << TQString();
 	return list;
 }
 

@@ -25,7 +25,7 @@ protected:
     {
         Q_UNUSED(className);
         Q_UNUSED(args);
-        return new KFileAudioPreview( dynamic_cast<TQWidget*>( parent ), name );
+        return TQT_TQOBJECT(new KFileAudioPreview( dynamic_cast<TQWidget*>( parent ), name ));
     }
 };
 
@@ -41,7 +41,7 @@ class KFileAudioPreview::KFileAudioPreviewPrivate
 public:
     KFileAudioPreviewPrivate( TQWidget *parent )
     {
-        player = KParts::ComponentFactory::createInstanceFromQuery<KMediaPlayer::Player>( "KMediaPlayer/Player", TQString::null, parent );
+        player = KParts::ComponentFactory::createInstanceFromQuery<KMediaPlayer::Player>( "KMediaPlayer/Player", TQString(), TQT_TQOBJECT(parent) );
     }
 
     ~KFileAudioPreviewPrivate()

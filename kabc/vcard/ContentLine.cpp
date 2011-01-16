@@ -140,7 +140,7 @@ ContentLine::_parse()
 	vDebug("parse");
 	
 	// Unqote newlines
-	strRep_ = strRep_.replace( TQRegExp( "\\\\n" ), "\n" );
+	strRep_ = strRep_.tqreplace( TQRegExp( "\\\\n" ), "\n" );
 	
 	int split = strRep_.tqfind(':');
 	
@@ -275,7 +275,7 @@ ContentLine::_assemble()
         }
 
 	// Quote newlines
-	line = line.replace( TQRegExp( "\n" ), "\\n" );
+	line = line.tqreplace( TQRegExp( "\n" ), "\\n" );
 		
 	// Fold lines longer than 72 chars
 	const int maxLen = 72;

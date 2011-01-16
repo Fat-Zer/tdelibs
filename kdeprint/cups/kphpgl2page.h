@@ -36,7 +36,7 @@ public:
 
 private:
 	KIntNumInput	*m_penwidth;
-	QCheckBox		*m_blackplot, *m_fitplot;
+	TQCheckBox		*m_blackplot, *m_fitplot;
 };
 
 #endif

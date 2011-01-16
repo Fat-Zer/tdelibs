@@ -52,12 +52,12 @@
 #include <tqvbox.h>
 
 KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
-  : TQWidget (view, "", Qt::WStaticContents | Qt::WRepaintNoErase | Qt::WResizeNoErase )
+  : TQWidget (view, "", (WFlags)(WStaticContents | WRepaintNoErase | WResizeNoErase) )
   , editSessionNumber (0)
   , editIsRunning (false)
   , m_view (view)
   , m_doc (doc)
-  , cursor (doc, true, 0, 0, this)
+  , cursor (doc, true, 0, 0, TQT_TQOBJECT(this))
   , possibleTripleClick (false)
   , m_dummy (0)
   , m_startPos(doc, true, 0,0)
@@ -94,7 +94,7 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   //
   // scrollbar for lines
   //
-  m_lineScroll = new KateScrollBar(TQScrollBar::Vertical, this);
+  m_lineScroll = new KateScrollBar(Qt::Vertical, this);
   m_lineScroll->show();
   m_lineScroll->setTracking (true);
 
@@ -106,7 +106,7 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
 
   // bottom corner box
   m_dummy = new TQWidget(m_view);
-  m_dummy->setFixedHeight(style().scrollBarExtent().width());
+  m_dummy->setFixedHeight(tqstyle().scrollBarExtent().width());
 
   if (m_view->dynWordWrap())
     m_dummy->hide();
@@ -131,7 +131,7 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   //
   // scrollbar for columns
   //
-  m_columnScroll = new TQScrollBar(TQScrollBar::Horizontal,m_view);
+  m_columnScroll = new TQScrollBar(Qt::Horizontal,m_view);
 
   // hide the column scrollbar in the dynamic word wrap mode
   if (m_view->dynWordWrap())
@@ -174,7 +174,7 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
 
   // set initial cursor
   setCursor( KCursor::ibeamCursor() );
-  m_mouseCursor = IbeamCursor;
+  m_mouseCursor = TQt::IbeamCursor;
 
   // call mouseMoveEvent also if no mouse button is pressed
   setMouseTracking(true);
@@ -425,7 +425,7 @@ void KateViewInternal::scrollPos(KateTextCursor& c, bool force, bool calledExter
       updateView(false, viewLinesScrolled);
 
       int scrollHeight = -(viewLinesScrolled * (int)m_view->renderer()->fontHeight());
-      int scrollbarWidth = style().scrollBarExtent().width();
+      int scrollbarWidth = tqstyle().scrollBarExtent().width();
 
       //
       // updates are for working around the scrollbar leaving blocks in the view
@@ -2438,7 +2438,7 @@ bool KateViewInternal::isTargetSelected( const TQPoint& p )
 
 bool KateViewInternal::eventFilter( TQObject *obj, TQEvent *e )
 {
-  if (obj == m_lineScroll)
+  if (TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(m_lineScroll))
   {
     // the second condition is to make sure a scroll on the vertical bar doesn't cause a horizontal scroll ;)
     if (e->type() == TQEvent::Wheel && m_lineScroll->minValue() != m_lineScroll->maxValue())
@@ -2649,9 +2649,9 @@ void KateViewInternal::keyReleaseEvent( TQKeyEvent* e )
 
       if (m_selChangedByUser)
       {
-        TQApplication::clipboard()->setSelectionMode( true );
+        TQApplication::tqclipboard()->setSelectionMode( true );
         m_view->copy();
-        TQApplication::clipboard()->setSelectionMode( false );
+        TQApplication::tqclipboard()->setSelectionMode( false );
 
         m_selChangedByUser = false;
       }
@@ -2693,7 +2693,7 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
 {
   switch (e->button())
   {
-    case LeftButton:
+    case Qt::LeftButton:
         m_selChangedByUser = false;
 
         if (possibleTripleClick)
@@ -2702,7 +2702,7 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
 
           m_selectionMode = Line;
 
-          if ( e->state() & Qt::ShiftButton )
+          if ( e->state() & TQt::ShiftButton )
           {
             updateSelection( cursor, true );
           }
@@ -2711,9 +2711,9 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
             m_view->selectLine( cursor );
           }
 
-          TQApplication::clipboard()->setSelectionMode( true );
+          TQApplication::tqclipboard()->setSelectionMode( true );
           m_view->copy();
-          TQApplication::clipboard()->setSelectionMode( false );
+          TQApplication::tqclipboard()->setSelectionMode( false );
 
           // Keep the line at the select anchor selected during further
           // mouse selection
@@ -2752,7 +2752,7 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
           m_selectionMode = Mouse;
         }
 
-        if ( e->state() & Qt::ShiftButton )
+        if ( e->state() & TQt::ShiftButton )
         {
           if (selectAnchor.line() < 0)
             selectAnchor = cursor;
@@ -2762,7 +2762,7 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
           selStartCached.setLine( -1 ); // tqinvalidate
         }
 
-        if( !( e->state() & Qt::ShiftButton ) && isTargetSelected( e->pos() ) )
+        if( !( e->state() & TQt::ShiftButton ) && isTargetSelected( e->pos() ) )
         {
           dragInfo.state = diPending;
           dragInfo.start = e->pos();
@@ -2771,7 +2771,7 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
         {
           dragInfo.state = diNone;
 
-          if ( e->state() & Qt::ShiftButton )
+          if ( e->state() & TQt::ShiftButton )
           {
             placeCursor( e->pos(), true, false );
             if ( selStartCached.line() >= 0 )
@@ -2820,10 +2820,10 @@ void KateViewInternal::mouseDoubleClickEvent(TQMouseEvent *e)
 {
   switch (e->button())
   {
-    case LeftButton:
+    case Qt::LeftButton:
       m_selectionMode = Word;
 
-      if ( e->state() & Qt::ShiftButton )
+      if ( e->state() & TQt::ShiftButton )
       {
         KateTextCursor oldSelectStart = m_view->selectStart;
         KateTextCursor oldSelectEnd = m_view->selectEnd;
@@ -2889,9 +2889,9 @@ void KateViewInternal::mouseDoubleClickEvent(TQMouseEvent *e)
       // Move cursor to end (or beginning) of selected word
       if (m_view->hasSelection())
       {
-        TQApplication::clipboard()->setSelectionMode( true );
+        TQApplication::tqclipboard()->setSelectionMode( true );
         m_view->copy();
-        TQApplication::clipboard()->setSelectionMode( false );
+        TQApplication::tqclipboard()->setSelectionMode( false );
 
         // Shift+DC before the "cached" word should move the cursor to the
         // beginning of the selection, not the end
@@ -2927,15 +2927,15 @@ void KateViewInternal::mouseReleaseEvent( TQMouseEvent* e )
 {
   switch (e->button())
   {
-    case LeftButton:
+    case Qt::LeftButton:
       m_selectionMode = Default;
 //       selStartCached.setLine( -1 );
 
       if (m_selChangedByUser)
       {
-        TQApplication::clipboard()->setSelectionMode( true );
+        TQApplication::tqclipboard()->setSelectionMode( true );
         m_view->copy();
-        TQApplication::clipboard()->setSelectionMode( false );
+        TQApplication::tqclipboard()->setSelectionMode( false );
         // Set cursor to edge of selection... which edge depends on what
         // "direction" the selection was made in
         if ( m_view->selectStart < selectAnchor )
@@ -2956,14 +2956,14 @@ void KateViewInternal::mouseReleaseEvent( TQMouseEvent* e )
       e->accept ();
       break;
 
-    case MidButton:
+    case Qt::MidButton:
       placeCursor( e->pos() );
 
       if( m_doc->isReadWrite() )
       {
-        TQApplication::clipboard()->setSelectionMode( true );
+        TQApplication::tqclipboard()->setSelectionMode( true );
         m_view->paste ();
-        TQApplication::clipboard()->setSelectionMode( false );
+        TQApplication::tqclipboard()->setSelectionMode( false );
       }
 
       e->accept ();
@@ -2977,7 +2977,7 @@ void KateViewInternal::mouseReleaseEvent( TQMouseEvent* e )
 
 void KateViewInternal::mouseMoveEvent( TQMouseEvent* e )
 {
-  if( e->state() & LeftButton )
+  if( e->state() & Qt::LeftButton )
   {
     if (dragInfo.state == diPending)
     {
@@ -3033,13 +3033,13 @@ void KateViewInternal::mouseMoveEvent( TQMouseEvent* e )
       // the arrow cursor as other Qt text editing widgets do
       if (m_mouseCursor != ArrowCursor) {
         setCursor( KCursor::arrowCursor() );
-        m_mouseCursor = ArrowCursor;
+        m_mouseCursor = TQt::ArrowCursor;
       }
     } else {
       // normal text cursor
       if (m_mouseCursor != IbeamCursor) {
         setCursor( KCursor::ibeamCursor() );
-        m_mouseCursor = IbeamCursor;
+        m_mouseCursor = TQt::IbeamCursor;
       }
     }
 

@@ -103,14 +103,14 @@ URIValue::_assemble()
 	strRep_ = scheme_ + ':' + schemeSpecificPart_;
 }
 
-	QCString
+	TQCString
 URIValue::scheme()
 {
 	parse();
 	return scheme_;
 }
 
-	QCString
+	TQCString
 URIValue::schemeSpecificPart()
 {
 	parse();

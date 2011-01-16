@@ -35,7 +35,7 @@ KPFileSelectPage::KPFileSelectPage(TQWidget *parent, const char *name)
 
 	m_files = new KFileList(this);
 
-	QHBoxLayout	*l0 = new TQHBoxLayout(this, 0, 10);
+	TQHBoxLayout	*l0 = new TQHBoxLayout(this, 0, 10);
 	l0->addWidget(m_files);
 
 	resize(100, 100);
@@ -47,7 +47,7 @@ void KPFileSelectPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 	// and we want to do it only once
 	if (!incldef)
 	{
-		QStringList	l = m_files->fileList();
+		TQStringList	l = m_files->fileList();
 		opts["kde-filelist"] = l.join("@@");
 	}
 }
@@ -57,7 +57,7 @@ void KPFileSelectPage::setOptions(const TQMap<TQString,TQString>& opts)
 	// do it only once as files will only be selected there
 	if (m_first)
 	{
-		QStringList	l = TQStringList::split("@@", opts["kde-filelist"], false);
+		TQStringList	l = TQStringList::split("@@", opts["kde-filelist"], false);
 		m_files->setFileList(l);
 
 		m_first = false;

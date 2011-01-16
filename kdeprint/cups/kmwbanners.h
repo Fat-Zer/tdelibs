@@ -34,8 +34,8 @@ public:
 	void updatePrinter(KMPrinter*);
 
 private:
-	QComboBox	*m_start, *m_end;
-	QStringList	m_bans;
+	TQComboBox	*m_start, *m_end;
+	TQStringList	m_bans;
 };
 
 TQString mapBanner( const TQString& );

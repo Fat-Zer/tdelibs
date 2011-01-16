@@ -36,9 +36,9 @@ protected:
 	void configureWizard(KMWizard*);
 
 private:
-	QLabel	*m_period;
-	QLabel	*m_sizelimit;
-	QLabel	*m_pagelimit;
+	TQLabel	*m_period;
+	TQLabel	*m_sizelimit;
+	TQLabel	*m_pagelimit;
 };
 
 #endif

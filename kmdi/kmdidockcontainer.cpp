@@ -138,7 +138,7 @@ KMdiDockContainer::~KMdiDockContainer()
 	{
 		it = m_map.begin();
 		KDockWidget *w = it.key();
-		if ( m_overlapButtons.contains( w ) )
+		if ( m_overlapButtons.tqcontains( w ) )
 		{
 			( static_cast<KDockWidgetHeader*>( w->getHeader()->tqqt_cast( "KDockWidgetHeader" ) ) )->removeButton( m_overlapButtons[w] );
 			m_overlapButtons.remove( w );
@@ -170,9 +170,9 @@ void KMdiDockContainer::init()
 	if (!overlap) deactivateOverlapMode();
 
 	// try to restore splitter size
-	if ( parentDockWidget() && parentDockWidget()->parent() )
+	if ( parentDockWidget() && parentDockWidget()->tqparent() )
 	{
-		KDockSplitter * sp = static_cast<KDockSplitter*>( parentDockWidget()->parent()->tqqt_cast( "KDockSplitter" ) );
+		KDockSplitter * sp = static_cast<KDockSplitter*>( parentDockWidget()->tqparent()->tqqt_cast( "KDockSplitter" ) );
 		if ( sp )
 			sp->setSeparatorPosX( m_separatorPos );
 	}
@@ -188,7 +188,7 @@ void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, TQPixmap pixmap, const
 	kdDebug( 760 ) << k_funcinfo << "Adding a dockwidget to the dock container" << endl;
 	KDockWidget* w = dwdg;
 	int tab;
-	bool alreadyThere = m_map.contains( w );
+	bool alreadyThere = m_map.tqcontains( w );
 
 	if ( alreadyThere )
 	{
@@ -280,7 +280,7 @@ bool KMdiDockContainer::eventFilter( TQObject *obj, TQEvent *event )
 		}
 
 		m_dockManager = w->dockManager();
-		m_dragPanel = hdr->dragPanel();
+		m_dragPanel = TQT_TQOBJECT(hdr->dragPanel());
 
 		if ( m_dragPanel )
 			m_movingState = WaitingForMoveStart;
@@ -303,7 +303,7 @@ bool KMdiDockContainer::eventFilter( TQObject *obj, TQEvent *event )
 			TQPoint p( ( ( TQMouseEvent* ) event )->pos() - m_startEvent->pos() );
 			if ( p.manhattanLength() > KGlobalSettings::dndEventDelay() )
 			{
-				m_dockManager->eventFilter( m_dragPanel, m_startEvent );
+				m_dockManager->eventFilter( m_dragPanel, TQT_TQEVENT(m_startEvent) );
 				m_dockManager->eventFilter( m_dragPanel, event );
 				m_movingState = Moving;
 			}
@@ -322,7 +322,7 @@ bool KMdiDockContainer::eventFilter( TQObject *obj, TQEvent *event )
 
 void KMdiDockContainer::showWidget( KDockWidget *w )
 {
-	if ( !m_map.contains( w ) )
+	if ( !m_map.tqcontains( w ) )
 		return ;
 
 	int id = m_map[ w ];
@@ -369,7 +369,7 @@ void KMdiDockContainer::hideIfNeeded()
 void KMdiDockContainer::removeWidget( KDockWidget* dwdg )
 {
 	KDockWidget * w = dwdg;
-	if ( !m_map.contains( w ) )
+	if ( !m_map.tqcontains( w ) )
 		return; //we don't have this widget in our container
 
 	kdDebug( 760 ) << k_funcinfo << endl;
@@ -385,7 +385,7 @@ void KMdiDockContainer::removeWidget( KDockWidget* dwdg )
 	m_ws->removeWidget( w );
 	m_map.remove( w );
 	m_revMap.remove( id );
-	if ( m_overlapButtons.contains( w ) )
+	if ( m_overlapButtons.tqcontains( w ) )
 	{
 		( static_cast<KDockWidgetHeader*>( w->getHeader() ->tqqt_cast( "KDockWidgetHeader" ) ) )->removeButton( m_overlapButtons[ w ] );
 		m_overlapButtons.remove( w );
@@ -401,7 +401,7 @@ void KMdiDockContainer::undockWidget( KDockWidget *dwdg )
 {
 	KDockWidget * w = dwdg;
 
-	if ( !m_map.contains( w ) )
+	if ( !m_map.tqcontains( w ) )
 		return ;
 
 	int id = m_map[ w ];
@@ -465,9 +465,9 @@ void KMdiDockContainer::tabClicked( int t )
 	{
 		kdDebug( 760 ) << k_funcinfo << "Tab " << t << " was just deactiviated" << endl;
 		// try save splitter position
-		if ( parentDockWidget() && parentDockWidget()->parent() )
+		if ( parentDockWidget() && parentDockWidget()->tqparent() )
 		{
-			KDockSplitter * sp = static_cast<KDockSplitter*>( parentDockWidget()->parent()->tqqt_cast( "KDockSplitter" ) );
+			KDockSplitter * sp = static_cast<KDockSplitter*>( parentDockWidget()->tqparent()->tqqt_cast( "KDockSplitter" ) );
 			if ( sp )
 				m_separatorPos = sp->separatorPos();
 		}
@@ -517,7 +517,7 @@ void KMdiDockContainer::save( TQDomElement& dockEl )
 	TQDomDocument doc = dockEl.ownerDocument();
 	TQDomElement el;
 	el = doc.createElement( "name" );
-	el.appendChild( doc.createTextNode( TQString( "%1" ).arg( parent() ->name() ) ) );
+	el.appendChild( doc.createTextNode( TQString( "%1" ).arg( tqparent() ->name() ) ) );
 	dockEl.appendChild( el );
 	el = doc.createElement( "overlapMode" );
 	el.appendChild( doc.createTextNode( isOverlapMode() ? "true" : "false" ) );
@@ -627,8 +627,8 @@ void KMdiDockContainer::load( TQDomElement& dockEl )
 void KMdiDockContainer::save( KConfig* cfg, const TQString& group_or_prefix )
 {
 	TQString grp = cfg->group();
-	cfg->deleteGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
-	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
+	cfg->deleteGroup( group_or_prefix + TQString( "::%1" ).arg( tqparent() ->name() ) );
+	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( tqparent() ->name() ) );
 
 	if ( isOverlapMode() )
 		cfg->writeEntry( "overlapMode", "true" );
@@ -636,10 +636,10 @@ void KMdiDockContainer::save( KConfig* cfg, const TQString& group_or_prefix )
 		cfg->writeEntry( "overlapMode", "false" );
 
 	// try to save the splitter position
-	if ( parentDockWidget() && parentDockWidget() ->parent() )
+	if ( parentDockWidget() && parentDockWidget() ->tqparent() )
 	{
 		KDockSplitter * sp = static_cast<KDockSplitter*>( parentDockWidget() ->
-		                     parent() ->tqqt_cast( "KDockSplitter" ) );
+		                     tqparent() ->tqqt_cast( "KDockSplitter" ) );
 		if ( sp )
 			cfg->writeEntry( "separatorPosition", m_separatorPos );
 	}
@@ -675,7 +675,7 @@ void KMdiDockContainer::save( KConfig* cfg, const TQString& group_or_prefix )
 void KMdiDockContainer::load( KConfig* cfg, const TQString& group_or_prefix )
 {
 	TQString grp = cfg->group();
-	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
+	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( tqparent() ->name() ) );
 
 	if ( cfg->readEntry( "overlapMode" ) != "false" )
 		activateOverlapMode( m_horizontal?m_tb->height():m_tb->width() );
@@ -818,7 +818,7 @@ void KMdiDockContainer::prevToolView()
 {
 	kdDebug( 760 ) << k_funcinfo << endl;
 	TQPtrList<KMultiTabBarTab>* tabs = m_tb->tabs();
-	int pos = tabs->findRef( m_tb->tab( oldtab ) );
+	int pos = tabs->tqfindRef( m_tb->tab( oldtab ) );
 
 	if ( pos == -1 )
 		return ;
@@ -839,7 +839,7 @@ void KMdiDockContainer::nextToolView()
 {
 	kdDebug( 760 ) << k_funcinfo << endl;
 	TQPtrList<KMultiTabBarTab>* tabs = m_tb->tabs();
-	int pos = tabs->findRef( m_tb->tab( oldtab ) );
+	int pos = tabs->tqfindRef( m_tb->tab( oldtab ) );
 
 	if ( pos == -1 )
 		return ;

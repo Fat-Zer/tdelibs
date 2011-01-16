@@ -2800,7 +2800,7 @@ public:
 
 static void addBorderStyle(TQValueList<CollapsedBorderValue>& borderStyles, CollapsedBorderValue borderValue)
 {
-    if (!borderValue.exists() || borderStyles.contains(borderValue))
+    if (!borderValue.exists() || borderStyles.tqcontains(borderValue))
         return;
 
     TQValueListIterator<CollapsedBorderValue> it = borderStyles.begin();

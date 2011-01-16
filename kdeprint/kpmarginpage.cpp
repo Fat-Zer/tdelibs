@@ -42,13 +42,13 @@ KPMarginPage::KPMarginPage(KPrinter *prt, DrMain *driver, TQWidget *parent, cons
 	setTitle(i18n("Margins"));
 	m_usedriver = true;
 
-	QGroupBox	*box = new TQGroupBox(1, Qt::Vertical, i18n("Margins"), this);
+	TQGroupBox	*box = new TQGroupBox(1, Qt::Vertical, i18n("Margins"), this);
 	m_margin = new MarginWidget(box, "MarginWidget", (m_printer != 0));
 	//m_margin->setSymetricMargins(true);
 	//if (m_printer)
 	//	m_margin->setResolution(m_printer->resolution());
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
 	l0->addWidget(box);
 	l0->addStretch(1);
 }
@@ -60,10 +60,10 @@ KPMarginPage::~KPMarginPage()
 void KPMarginPage::initPageSize(const TQString& ps, bool landscape)
 {
 	// first retrieve the Qt values for page size and margins
-	QPrinter	prt(TQPrinter::PrinterResolution);
+	TQPrinter	prt(TQPrinter::PrinterResolution);
 	prt.setFullPage(true);
 	prt.setPageSize((TQPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : ps.toInt()));
-	QPaintDeviceMetrics	metrics(&prt);
+	TQPaintDeviceMetrics	metrics(&prt);
 	float	w = metrics.width();
 	float	h = metrics.height();
 	unsigned int	it, il, ib, ir;

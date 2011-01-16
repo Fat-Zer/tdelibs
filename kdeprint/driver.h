@@ -71,7 +71,7 @@ public:
 
 	const TQString& get(const TQString& key) const 		{ return m_map[key]; }
 	void set(const TQString& key, const TQString& val)	{ m_map[key] = val; }
-	bool has(const TQString& key) const 			{ return m_map.contains(key); }
+	bool has(const TQString& key) const 			{ return m_map.tqcontains(key); }
 	const TQString& name() const				{ return m_name; }
 	void setName(const TQString& s)				{ m_name = s; }
 	bool conflict() const 					{ return m_conflict; }

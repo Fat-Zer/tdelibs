@@ -87,11 +87,11 @@ bool LDIFConverter::addresseeToLDIF( const Addressee &addr, TQString &str )
   const Address workAddr = addr.address( Address::Work );
 
   ldif_out( t, "dn", TQString( "cn=%1,mail=%2" )
-            .arg( addr.formattedName().simplifyWhiteSpace() )
+            .arg( TQString(addr.formattedName()).simplifyWhiteSpace() )
             .arg( addr.preferredEmail() ) );
   ldif_out( t, "givenname", addr.givenName() );
   ldif_out( t, "sn", addr.familyName() );
-  ldif_out( t, "cn", addr.formattedName().simplifyWhiteSpace() );
+  ldif_out( t, "cn", TQString(addr.formattedName()).simplifyWhiteSpace() );
   ldif_out( t, "uid", addr.uid() );
   ldif_out( t, "nickname", addr.nickName() );
   ldif_out( t, "xmozillanickname", addr.nickName() );
@@ -152,7 +152,7 @@ bool LDIFConverter::addresseeToLDIF( const Addressee &addr, TQString &str )
   ldif_out( t, "homeurl", addr.url().prettyURL() );
   ldif_out( t, "description", addr.note() );
   if (addr.revision().isValid())
-    ldif_out(t, "modifytimestamp", dateToVCardString( addr.revision()) );
+    ldif_out(t, "modifytimestamp", dateToVCardString( TQT_TQDATETIME_OBJECT(addr.revision())) );
 
   t << "objectclass: top\n";
   t << "objectclass: person\n";
@@ -271,7 +271,7 @@ bool LDIFConverter::evaluatePair( Addressee &a, Address &homeAddr,
   }
   if ( fieldname == TQString::tqfromLatin1( "mail" ) ||
        fieldname == TQString::tqfromLatin1( "mozillasecondemail" ) ) { // mozilla
-    if ( a.emails().findIndex( value ) == -1 )
+    if ( a.emails().tqfindIndex( value ) == -1 )
       a.insertEmail( value );
     return true;
   }
@@ -489,8 +489,8 @@ addComment:
   if ( fieldname == TQString::tqfromLatin1( "objectclass" ) ) // ignore
     return true;
 
-  kdWarning() << TQString("LDIFConverter: Unknown field for '%1': '%2=%3'\n")
-                             .arg(a.formattedName()).arg(fieldname).arg(value);
+  kdWarning() << TQString(TQString("LDIFConverter: Unknown field for '%1': '%2=%3'\n")
+                             .arg(a.formattedName()).arg(fieldname).arg(value));
 
   return true;
 }
@@ -554,7 +554,7 @@ TQString LDIFConverter::makeLDIFfieldString( TQString formatStr, TQString value,
   }
 
   // generate the new string and split it to 72 chars/line
-  TQCString txt = (formatStr.arg(value)).utf8();
+  TQCString txt = TQString(formatStr.arg(value)).utf8();
 
   if (allowEncode) {
     len = txt.length();

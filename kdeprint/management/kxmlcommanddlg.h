@@ -75,15 +75,15 @@ protected slots:
 
 private:
 	KListView	*m_view;
-	QLineEdit	*m_name, *m_desc, *m_format, *m_default, *m_command;
-	QComboBox	*m_type;
-	QWidget		*m_dummy;
+	TQLineEdit	*m_name, *m_desc, *m_format, *m_default, *m_command;
+	TQComboBox	*m_type;
+	TQWidget		*m_dummy;
 	KListView	*m_values;
-	QLineEdit	*m_edit1, *m_edit2;
-	QWidgetStack	*m_stack;
-	QToolButton	*m_apply, *m_addgrp, *m_addopt, *m_delopt, *m_up, *m_down;
-	QLineEdit	*m_inputfile, *m_inputpipe, *m_outputfile, *m_outputpipe;
-	QToolButton	*m_addval, *m_delval;
+	TQLineEdit	*m_edit1, *m_edit2;
+	TQWidgetStack	*m_stack;
+	TQToolButton	*m_apply, *m_addgrp, *m_addopt, *m_delopt, *m_up, *m_down;
+	TQLineEdit	*m_inputfile, *m_inputpipe, *m_outputfile, *m_outputpipe;
+	TQToolButton	*m_addval, *m_delval;
 	TQTextEdit *m_comment;
 	TQCheckBox *m_persistent;
 
@@ -112,15 +112,15 @@ protected slots:
 	void slotOk();
 
 private:
-	QLineEdit	*m_description;
-	QLabel		*m_idname;
-	QComboBox	*m_mimetype;
+	TQLineEdit	*m_description;
+	TQLabel		*m_idname;
+	TQComboBox	*m_mimetype;
 	KListBox	*m_availablemime, *m_selectedmime;
-	QToolButton	*m_addmime, *m_removemime;
+	TQToolButton	*m_addmime, *m_removemime;
 	KListView	*m_requirements;
-	QToolButton	*m_removereq, *m_addreq;
+	TQToolButton	*m_removereq, *m_addreq;
 
-	QStringList	m_mimelist;
+	TQStringList	m_mimelist;
 	KXmlCommand	*m_cmd;
 };
 

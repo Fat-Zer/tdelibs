@@ -225,7 +225,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
 
     if (args->isSet("list"))
     {
-        cout << i18n("The following modules are available:").local8Bit() << endl;
+        cout << static_cast<const char *>(i18n("The following modules are available:").local8Bit()) << endl;
 
         listModules( "Settings/" );
 
@@ -246,7 +246,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
                          .arg(!(*it)->comment().isEmpty() ? (*it)->comment() 
                                  : i18n("No description available"));
 
-            cout << entry.local8Bit() << endl;
+            cout << static_cast<const char *>(entry.local8Bit()) << endl;
         }
         return 0;
     }

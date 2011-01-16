@@ -31,7 +31,7 @@ void KMdiFocusList::addWidgetTree( TQWidget* w )
 {
 	//this method should never be called twice on the same hierarchy
 	m_list.insert( w, w->focusPolicy() );
-	w->setFocusPolicy( TQWidget::ClickFocus );
+	w->setFocusPolicy( TQ_ClickFocus );
 	kdDebug( 760 ) << "KMdiFocusList::addWidgetTree: adding toplevel" << endl;
 	connect( w, TQT_SIGNAL( destroyed( TQObject * ) ), this, TQT_SLOT( objectHasBeenDestroyed( TQObject* ) ) );
 	TQObjectList *l = w->queryList( "TQWidget" );
@@ -41,7 +41,7 @@ void KMdiFocusList::addWidgetTree( TQWidget* w )
 	{
 		TQWidget * wid = ( TQWidget* ) obj;
 		m_list.insert( wid, wid->focusPolicy() );
-		wid->setFocusPolicy( TQWidget::ClickFocus );
+		wid->setFocusPolicy( TQ_ClickFocus );
 		kdDebug( 760 ) << "KMdiFocusList::addWidgetTree: adding widget" << endl;
 		connect( wid, TQT_SIGNAL( destroyed( TQObject * ) ), this, TQT_SLOT( objectHasBeenDestroyed( TQObject* ) ) );
 		++it;
@@ -51,7 +51,7 @@ void KMdiFocusList::addWidgetTree( TQWidget* w )
 
 void KMdiFocusList::restore()
 {
-	for ( TQMap<TQWidget*, TQWidget::FocusPolicy>::const_iterator it = m_list.constBegin();it != m_list.constEnd();++it )
+	for ( TQMap<TQWidget*, TQ_FocusPolicy>::const_iterator it = m_list.constBegin();it != m_list.constEnd();++it )
 	{
 		it.key() ->setFocusPolicy( it.data() );
 	}

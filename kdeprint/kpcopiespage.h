@@ -50,12 +50,12 @@ protected:
 	void reload();
 
 protected:
-	QRadioButton	*m_all, *m_current, *m_range;
-	QLineEdit	*m_rangeedit;
-	QComboBox	*m_pageset;
-	QCheckBox	*m_collate, *m_order;
-	QSpinBox	*m_copies;
-	QLabel		*m_collatepix;
+	TQRadioButton	*m_all, *m_current, *m_range;
+	TQLineEdit	*m_rangeedit;
+	TQComboBox	*m_pageset;
+	TQCheckBox	*m_collate, *m_order;
+	TQSpinBox	*m_copies;
+	TQLabel		*m_collatepix;
 	bool		m_useplugin;
 
 	KPrinter	*m_printer;

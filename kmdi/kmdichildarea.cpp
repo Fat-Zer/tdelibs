@@ -58,7 +58,7 @@ KMdiChildArea::KMdiChildArea( TQWidget *parent )
 	m_captionInactiveForeColor = KGlobalSettings::inactiveTextColor();
 	m_pZ = new TQPtrList<KMdiChildFrm>;
 	m_pZ->setAutoDelete( true );
-	setFocusPolicy( ClickFocus );
+	setFocusPolicy( TQ_ClickFocus );
 	m_defaultChildFrmSize = TQSize( 400, 300 );
 }
 
@@ -75,11 +75,11 @@ void KMdiChildArea::manageChild( KMdiChildFrm* child, bool show, bool cascade )
 	KMdiChildFrm* top = topChild();
 	
 	//remove old references. There can be more than one so we remove them all
-	if ( m_pZ->findRef( child ) != -1 )
+	if ( m_pZ->tqfindRef( child ) != -1 )
 	{
 		//TQPtrList::find* moves current() to the found item
 		m_pZ->take(); 
-		while ( m_pZ->findNextRef( child ) != -1 )
+		while ( m_pZ->tqfindNextRef( child ) != -1 )
 			m_pZ->take();
 	}
 
@@ -112,7 +112,7 @@ void KMdiChildArea::destroyChild( KMdiChildFrm *child, bool focusTop )
 	bool wasMaximized = ( child->state() == KMdiChildFrm::Maximized );
 
 	// destroy the old one
-	TQObject::disconnect( child );
+	disconnect( child );
 	child->blockSignals( true );
 	m_pZ->setAutoDelete( false );
 	m_pZ->removeRef( child );
@@ -144,7 +144,7 @@ void KMdiChildArea::destroyChildButNotItsView( KMdiChildFrm* child, bool focusTo
 	bool wasMaximized = ( child->state() == KMdiChildFrm::Maximized );
 
 	// destroy the old one
-	TQObject::disconnect( child );
+	disconnect( child );
 	child->unsetClient();
 	m_pZ->setAutoDelete( false );
 	m_pZ->removeRef( child );
@@ -218,8 +218,12 @@ void KMdiChildArea::setTopChild( KMdiChildFrm* child, bool /* bSetFocus */ )
 		else
 			child->raise();
 		
+#ifdef USE_QT4
+		child->m_pClient->setFocus();
+#else // USE_QT4
 		TQFocusEvent::setReason( TQFocusEvent::Other );
 		child->m_pClient->setFocus();
+#endif // USE_QT4
 	}
 }
 
@@ -249,7 +253,7 @@ void KMdiChildArea::resizeEvent( TQResizeEvent* e )
 void KMdiChildArea::mousePressEvent( TQMouseEvent *e )
 {
 	//Popup the window menu
-	if ( e->button() & RightButton )
+	if ( e->button() & Qt::RightButton )
 		emit popupWindowMenu( mapToGlobal( e->pos() ) );
 }
 
@@ -319,7 +323,7 @@ TQPoint KMdiChildArea::getCascadePoint( int indexOfWindow )
 void KMdiChildArea::childMinimized( KMdiChildFrm *minimizedChild, bool wasMaximized )
 {
 	//can't find the child in our list, so we don't care.
-	if ( m_pZ->findRef( minimizedChild ) == -1 )
+	if ( m_pZ->tqfindRef( minimizedChild ) == -1 )
 	{
 		kdDebug( 760 ) << k_funcinfo << "child was minimized but wasn't in our list!" << endl;
 		return;

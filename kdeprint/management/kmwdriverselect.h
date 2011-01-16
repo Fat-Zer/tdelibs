@@ -42,7 +42,7 @@ protected slots:
 private:
 	KListBox	*m_list;
 	KMDBEntryList	*m_entries;
-	QPushButton	*m_drivercomment;
+	TQPushButton	*m_drivercomment;
 };
 
 #endif

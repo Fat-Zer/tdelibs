@@ -71,7 +71,7 @@ CupsdNetworkPage::CupsdNetworkPage(TQWidget *parent, const char *name)
 	TQLabel *l5 = new TQLabel(i18n("Client timeout:"), this);
 	TQLabel *l6 = new TQLabel(i18n("Listen to:"), this);
 
-	QGridLayout	*m1 = new TQGridLayout(this, 8, 2, 10, 7);
+	TQGridLayout	*m1 = new TQGridLayout(this, 8, 2, 10, 7);
 	m1->setRowStretch(7, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
@@ -135,7 +135,7 @@ void CupsdNetworkPage::setInfos(CupsdConf *conf)
 
 void CupsdNetworkPage::slotAdd()
 {
-	QString	s = PortDialog::newListen(this, conf_);
+	TQString	s = PortDialog::newListen(this, conf_);
 	if (!s.isEmpty())
 		listen_->insertItem(s);
 }
@@ -151,7 +151,7 @@ void CupsdNetworkPage::slotEdit(int index)
 void CupsdNetworkPage::slotDefaultList()
 {
 	listen_->clear();
-	QStringList	l;
+	TQStringList	l;
 	l << "Listen *:631";
 	listen_->insertItems(l);
 }

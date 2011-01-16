@@ -52,8 +52,8 @@ public:
 	TQString toString() const;
 
 	Type	type;
-	QString	name;
-	QString	value;
+	TQString	name;
+	TQString	value;
 };
 
 /**
@@ -66,13 +66,13 @@ public:
 class PrintcapEntry
 {
 public:
-	QString			name;
-	QStringList		aliases;
-	QString			comment;
+	TQString			name;
+	TQStringList		aliases;
+	TQString			comment;
 	TQMap<TQString,Field>	fields;
-	QString			postcomment;
+	TQString			postcomment;
 
-	bool has(const TQString& f) const	{ return fields.contains(f); }
+	bool has(const TQString& f) const	{ return fields.tqcontains(f); }
 	TQString field(const TQString& f) const	{ return fields[f].value; }
 	bool writeEntry(TQTextStream&);
 	void addField(const TQString& name, Field::Type type = Field::Boolean, const TQString& value = TQString::null);

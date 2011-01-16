@@ -105,9 +105,9 @@ int main()
                 {
                 TQString key = it.key();
                 TQString value = *it;
-                startupconfig << file.replace( ' ', '_' ).lower()
-                    << "_" << group.replace( ' ', '_' ).lower()
-                    << "_" << key.replace( ' ', '_' ).lower()
+                startupconfig << TQString(file.replace( ' ', '_' )).lower()
+                    << "_" << TQString(group.replace( ' ', '_' )).lower()
+                    << "_" << TQString(key.replace( ' ', '_' )).lower()
                     << "=\"" << value.replace( "\"", "\\\"" ) << "\"\n";
                 }
             }
@@ -119,9 +119,9 @@ int main()
             cfg.setGroup( group );
             TQString value = cfg.readEntry( key, def );
             startupconfig << "# " << line << "\n";
-            startupconfig << file.replace( ' ', '_' ).lower()
-                << "_" << group.replace( ' ', '_' ).lower()
-                << "_" << key.replace( ' ', '_' ).lower()
+            startupconfig << TQString(file.replace( ' ', '_' )).lower()
+                << "_" << TQString(group.replace( ' ', '_' )).lower()
+                << "_" <<TQString( key.replace( ' ', '_' )).lower()
                 << "=\"" << value.replace( "\"", "\\\"" ) << "\"\n";
             }
         startupconfigfiles << line << endl;

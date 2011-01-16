@@ -51,7 +51,7 @@ CupsdDirPage::CupsdDirPage(TQWidget *parent, const char *name)
 	TQLabel *l6 = new TQLabel(i18n("Server files:"), this);
 	TQLabel *l7 = new TQLabel(i18n("Temporary files:"), this);
 
-	QGridLayout	*m1 = new TQGridLayout(this, 8, 2, 10, 7);
+	TQGridLayout	*m1 = new TQGridLayout(this, 8, 2, 10, 7);
 	m1->setRowStretch(7, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);

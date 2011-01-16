@@ -43,13 +43,13 @@ public:
 	TQString readLine();
 	void unreadLine(const TQString& l) { m_linebuf = l; }
 private:
-	QTextStream	m_stream;
-	QString		m_linebuf;
+	TQTextStream	m_stream;
+	TQString		m_linebuf;
 };
 
 TQString KTextBuffer::readLine()
 {
-	QString	line;
+	TQString	line;
 	if (!m_linebuf.isEmpty())
 	{
 		line = m_linebuf;
@@ -73,7 +73,7 @@ TQString KTextBuffer::readLine()
 // '#', '|', ':'. The line is then put back in the IODevice.
 TQString readLine(KTextBuffer& t)
 {
-	QString	line, buffer;
+	TQString	line, buffer;
 	bool	lineContinue(false);
 
 	while (!t.eof())
@@ -105,12 +105,12 @@ TQString readLine(KTextBuffer& t)
 // extact an entry (printcap-like)
 TQMap<TQString,TQString> readEntry(KTextBuffer& t)
 {
-	QString	line = readLine(t);
+	TQString	line = readLine(t);
 	TQMap<TQString,TQString>	entry;
 
 	if (!line.isEmpty())
 	{
-		QStringList	l = TQStringList::split(':',line,false);
+		TQStringList	l = TQStringList::split(':',line,false);
 		if (l.count() > 0)
 		{
 			int 	p(-1);
@@ -150,25 +150,25 @@ KMPrinter* createPrinter(const TQString& prname)
 TQString getPrintcapFileName()
 {
 	// check if LPRng system
-	QString	printcap("/etc/printcap");
-	QFile	f("/etc/lpd.conf");
+	TQString	printcap("/etc/printcap");
+	TQFile	f("/etc/lpd.conf");
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
 		kdDebug() << "/etc/lpd.conf found: probably LPRng system" << endl;
-		QTextStream	t(&f);
-		QString		line;
+		TQTextStream	t(&f);
+		TQString		line;
 		while (!t.eof())
 		{
 			line = t.readLine().stripWhiteSpace();
 			if (line.startsWith("printcap_path="))
 			{
 				kdDebug() << "printcap_path entry found: " << line << endl;
-				QString	pcentry = line.mid(14).stripWhiteSpace();
+				TQString	pcentry = line.mid(14).stripWhiteSpace();
 				kdDebug() << "printcap_path value: " << pcentry << endl;
 				if (pcentry[0] == '|')
 				{ // printcap through pipe
 					printcap = locateLocal("tmp","printcap");
-					QString	cmd = TQString::tqfromLatin1("echo \"all\" | %1 > %2").arg(pcentry.mid(1)).arg(printcap);
+					TQString	cmd = TQString::tqfromLatin1("echo \"all\" | %1 > %2").arg(pcentry.mid(1)).arg(printcap);
 					kdDebug() << "printcap obtained through pipe" << endl << "executing: " << cmd << endl;
 					::system(cmd.local8Bit());
 				}
@@ -183,27 +183,27 @@ TQString getPrintcapFileName()
 // "/etc/printcap" file parsing (Linux/LPR)
 void KMLpdUnixManager::parseEtcPrintcap()
 {
-	QFile	f(getPrintcapFileName());
+	TQFile	f(getPrintcapFileName());
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
-		KTextBuffer	t(&f);
+		KTextBuffer	t(TQT_TQIODEVICE(&f));
 		TQMap<TQString,TQString>	entry;
 
 		while (!t.eof())
 		{
 			entry = readEntry(t);
-			if (entry.isEmpty() || !entry.contains("printer-name") || entry.contains("server"))
+			if (entry.isEmpty() || !entry.tqcontains("printer-name") || entry.tqcontains("server"))
 				continue;
 			if (entry["printer-name"] == "all")
 			{
-				if (entry.contains("all"))
+				if (entry.tqcontains("all"))
 				{
 					// find separator
 					int	p = entry["all"].tqfind(TQRegExp("[^a-zA-Z0-9_\\s-]"));
 					if (p != -1)
 					{
-						QChar	c = entry["all"][p];
-						QStringList	prs = TQStringList::split(c,entry["all"],false);
+						TQChar	c = entry["all"][p];
+						TQStringList	prs = TQStringList::split(c,entry["all"],false);
 						for (TQStringList::ConstIterator it=prs.begin(); it!=prs.end(); ++it)
 						{
 							KMPrinter	*printer = ::createPrinter(*it);
@@ -216,7 +216,7 @@ void KMLpdUnixManager::parseEtcPrintcap()
 			else
 			{
 				KMPrinter	*printer = ::createPrinter(entry);
-				if (entry.contains("rm"))
+				if (entry.tqcontains("rm"))
 					printer->setDescription(i18n("Remote printer queue on %1").arg(entry["rm"]));
 				else
 					printer->setDescription(i18n("Local printer"));
@@ -229,12 +229,12 @@ void KMLpdUnixManager::parseEtcPrintcap()
 // helper function for NIS support in Solaris-2.6 (use "ypcat printers.conf.byname")
 TQString getEtcPrintersConfName()
 {
-	QString	printersconf("/etc/printers.conf");
+	TQString	printersconf("/etc/printers.conf");
 	if (!TQFile::exists(printersconf) && !KStandardDirs::findExe( "ypcat" ).isEmpty())
 	{
 		// standard file not found, try NIS
 		printersconf = locateLocal("tmp","printers.conf");
-		QString	cmd = TQString::tqfromLatin1("ypcat printers.conf.byname > %1").arg(printersconf);
+		TQString	cmd = TQString::tqfromLatin1("ypcat printers.conf.byname > %1").arg(printersconf);
 		kdDebug() << "printers.conf obtained from NIS server: " << cmd << endl;
 		::system(TQFile::encodeName(cmd));
 	}
@@ -244,30 +244,30 @@ TQString getEtcPrintersConfName()
 // "/etc/printers.conf" file parsing (Solaris 2.6)
 void KMLpdUnixManager::parseEtcPrintersConf()
 {
-	QFile	f(getEtcPrintersConfName());
+	TQFile	f(getEtcPrintersConfName());
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
-		KTextBuffer	t(&f);
+		KTextBuffer	t(TQT_TQIODEVICE(&f));
 		TQMap<TQString,TQString>	entry;
-		QString		default_printer;
+		TQString		default_printer;
 
 		while (!t.eof())
 		{
 			entry = readEntry(t);
-			if (entry.isEmpty() || !entry.contains("printer-name"))
+			if (entry.isEmpty() || !entry.tqcontains("printer-name"))
 				continue;
-			QString	prname = entry["printer-name"];
+			TQString	prname = entry["printer-name"];
 			if (prname == "_default")
 			{
-				if (entry.contains("use"))
+				if (entry.tqcontains("use"))
 					default_printer = entry["use"];
 			}
 			else if (prname != "_all")
 			{
 				KMPrinter	*printer = ::createPrinter(entry);
-				if (entry.contains("bsdaddr"))
+				if (entry.tqcontains("bsdaddr"))
 				{
-					QStringList	l = TQStringList::split(',',entry["bsdaddr"],false);
+					TQStringList	l = TQStringList::split(',',entry["bsdaddr"],false);
 					printer->setDescription(i18n("Remote printer queue on %1").arg(l[0]));
 				}
 				else
@@ -284,28 +284,28 @@ void KMLpdUnixManager::parseEtcPrintersConf()
 // "/etc/lp/printers/" directory parsing (Solaris non-2.6)
 void KMLpdUnixManager::parseEtcLpPrinters()
 {
-	QDir	d("/etc/lp/printers");
-	const QFileInfoList	*prlist = d.entryInfoList(TQDir::Dirs);
+	TQDir	d("/etc/lp/printers");
+	const TQFileInfoList	*prlist = d.entryInfoList(TQDir::Dirs);
 	if (!prlist)
 		return;
 
-	QFileInfoListIterator	it(*prlist);
+	TQFileInfoListIterator	it(*prlist);
 	for (;it.current();++it)
 	{
 		if (it.current()->fileName() == "." || it.current()->fileName() == "..")
 			continue;
-		QFile	f(it.current()->absFilePath() + "/configuration");
+		TQFile	f(it.current()->absFilePath() + "/configuration");
 		if (f.exists() && f.open(IO_ReadOnly))
 		{
-			KTextBuffer	t(&f);
-			QString		line, remote;
+			KTextBuffer	t(TQT_TQIODEVICE(&f));
+			TQString		line, remote;
 			while (!t.eof())
 			{
 				line = readLine(t);
 				if (line.isEmpty()) continue;
 				if (line.startsWith("Remote:"))
 				{
-					QStringList	l = TQStringList::split(':',line,false);
+					TQStringList	l = TQStringList::split(':',line,false);
 					if (l.count() > 1) remote = l[1];
 				}
 			}
@@ -326,12 +326,12 @@ void KMLpdUnixManager::parseEtcLpPrinters()
 // "/etc/lp/member/" directory parsing (HP-UX)
 void KMLpdUnixManager::parseEtcLpMember()
 {
-	QDir	d("/etc/lp/member");
-	const QFileInfoList	*prlist = d.entryInfoList(TQDir::Files);
+	TQDir	d("/etc/lp/member");
+	const TQFileInfoList	*prlist = d.entryInfoList(TQDir::Files);
 	if (!prlist)
 		return;
 
-	QFileInfoListIterator	it(*prlist);
+	TQFileInfoListIterator	it(*prlist);
 	for (;it.current();++it)
 	{
 		KMPrinter	*printer = new KMPrinter;
@@ -347,26 +347,26 @@ void KMLpdUnixManager::parseEtcLpMember()
 // "/usr/spool/lp/interfaces/" directory parsing (IRIX 6.x)
 void KMLpdUnixManager::parseSpoolInterface()
 {
-	QDir	d("/usr/spool/interfaces/lp");
-	const QFileInfoList	*prlist = d.entryInfoList(TQDir::Files);
+	TQDir	d("/usr/spool/interfaces/lp");
+	const TQFileInfoList	*prlist = d.entryInfoList(TQDir::Files);
 	if (!prlist)
 		return;
 
-	QFileInfoListIterator	it(*prlist);
+	TQFileInfoListIterator	it(*prlist);
 	for (;it.current();++it)
 	{
-		QFile	f(it.current()->absFilePath());
+		TQFile	f(it.current()->absFilePath());
 		if (f.exists() && f.open(IO_ReadOnly))
 		{
-			KTextBuffer	t(&f);
-			QString		line, remote;
+			KTextBuffer	t(TQT_TQIODEVICE(&f));
+			TQString		line, remote;
 
 			while (!t.eof())
 			{
 				line = t.readLine().stripWhiteSpace();
 				if (line.startsWith("HOSTNAME"))
 				{
-					QStringList	l = TQStringList::split('=',line,false);
+					TQStringList	l = TQStringList::split('=',line,false);
 					if (l.count() > 1) remote = l[1];
 				}
 			}

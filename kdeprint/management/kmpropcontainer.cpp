@@ -35,8 +35,8 @@ KMPropContainer::KMPropContainer(TQWidget *parent, const char *name)
 	m_button = new KPushButton(KGuiItem(i18n("Change..."), "edit"), this);
 	m_widget = 0;
 
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
-	QHBoxLayout	*btn_ = new TQHBoxLayout(0, 0, 0);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
+	TQHBoxLayout	*btn_ = new TQHBoxLayout(0, 0, 0);
 	main_->addWidget(sep,0);
 	main_->addLayout(btn_,0);
 	btn_->addStretch(1);
@@ -56,7 +56,7 @@ void KMPropContainer::setWidget(KMPropWidget *w)
 		connect(m_button,TQT_SIGNAL(clicked()),m_widget,TQT_SLOT(slotChange()));
 		connect(m_widget,TQT_SIGNAL(enable(bool)),TQT_SIGNAL(enable(bool)));
 		connect(m_widget,TQT_SIGNAL(enableChange(bool)),TQT_SLOT(slotEnableChange(bool)));
-		QVBoxLayout	*lay = dynamic_cast<TQVBoxLayout*>(layout());
+		TQVBoxLayout	*lay = dynamic_cast<TQVBoxLayout*>(layout());
 		if (lay)
 		{
 			lay->insertWidget(0,m_widget,1);

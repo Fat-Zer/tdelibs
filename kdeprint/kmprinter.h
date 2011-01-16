@@ -147,7 +147,7 @@ public:
 	void setOwnSoftDefault(bool on)	{ m_ownsoftdefault = on; }
 	static int compare(KMPrinter *p1, KMPrinter *p2);
 	const TQString& option(const TQString& key) const 		{ return m_options[key]; }
-	bool hasOption(const TQString& key) const 			{ return m_options.contains(key); }
+	bool hasOption(const TQString& key) const 			{ return m_options.tqcontains(key); }
 	void setOption(const TQString& key, const TQString& value)	{ if (!key.isEmpty()) m_options[key] = value; }
 	void removeOption(const TQString& key) 				{ m_options.remove(key); }
 	TQMap<TQString,TQString> options() const 				{ return m_options; }
@@ -176,33 +176,33 @@ public:
 
 protected:
 	// mandantory information
-	QString		m_name;		// identification name
-	QString		m_printername;	// real printer name
-	QString		m_instancename;	// instance name (human-readable)
-	int		m_type;		// printer type (any PrinterType flag OR-ed together)
-	PrinterState	m_state;	// printer state
+	TQString		m_name;		// identification name
+	TQString		m_printername;	// real printer name
+	TQString		m_instancename;	// instance name (human-readable)
+	int			m_type;		// printer type (any PrinterType flag OR-ed together)
+	PrinterState		m_state;	// printer state
 	/**
 	 * Represent the device as a string, to provide native
 	 * support for exotic devices. Conversion to URL is done
 	 * only when really needed
 	 */
-	QString		m_device;	// printer device
+	TQString		m_device;	// printer device
 
 	// class specific information
-	QStringList	m_members;	// members of the class
+	TQStringList		m_members;	// members of the class
 
 	// other useful information that should be completed by manager on demand
-	QString		m_description;	// short description, comment
-	QString		m_location;	// printer location
-	KURL		m_uri;		// URI printer identification
-	QString		m_manufacturer;	// printer manufacturer (driver)
-	QString		m_model;	// printer model (driver)
-	QString		m_driverinfo;	// short driver info (ex: nick name in PPD)
+	TQString		m_description;	// short description, comment
+	TQString		m_location;	// printer location
+	KURL			m_uri;		// URI printer identification
+	TQString		m_manufacturer;	// printer manufacturer (driver)
+	TQString		m_model;	// printer model (driver)
+	TQString		m_driverinfo;	// short driver info (ex: nick name in PPD)
 
 	// DB driver entry (used when creating a printer). Internal use only !!!
-	KMDBEntry	*m_dbentry;
-	DrMain		*m_driver;
-	QString		m_pixmap;
+	KMDBEntry		*m_dbentry;
+	DrMain			*m_driver;
+	TQString		m_pixmap;
 
 	// default flags
 	bool		m_harddefault;

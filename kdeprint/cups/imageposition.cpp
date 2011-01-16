@@ -114,7 +114,7 @@ void ImagePosition::paintEvent(TQPaintEvent*)
 		ph = (pw * 4) / 3;
 		py = (height() - ph) / 2;
 	}
-	QRect	page(px, py, pw, ph), img(0, 0, pix_.width(), pix_.height());
+	TQRect	page(px, py, pw, ph), img(0, 0, pix_.width(), pix_.height());
 
 	// compute img position
 	horiz = position_%3;
@@ -134,7 +134,7 @@ void ImagePosition::paintEvent(TQPaintEvent*)
 	img.moveTopLeft(TQPoint(x,y));
 
 	// draw page
-	QPainter	p(this);
+	TQPainter	p(this);
 	draw3DPage(&p,page);
 
 	// draw img

@@ -26,7 +26,7 @@
 
 class KMPrinter;
 
-class PrinterFilter : QObject
+class PrinterFilter : TQObject
 {
 public:
 	PrinterFilter(TQObject *parent = 0, const char *name = 0);
@@ -38,8 +38,8 @@ public:
 	bool isEnabled() const;
 
 private:
-	QRegExp		m_locationRe;
-	QStringList	m_printers;
+	TQRegExp	m_locationRe;
+	TQStringList	m_printers;
 	bool		m_enabled;
 };
 

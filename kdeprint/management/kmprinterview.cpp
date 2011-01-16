@@ -36,7 +36,7 @@ KMPrinterView::KMPrinterView(TQWidget *parent, const char *name)
 	addWidget(m_iconview,0);
 	m_listview = new KMListView(this);
 	addWidget(m_listview,1);
-	m_current = TQString::null;
+	m_current = TQString();
 	m_listset = false;
 
 	connect(m_iconview,TQT_SIGNAL(rightButtonClicked(const TQString&,const TQPoint&)),TQT_SIGNAL(rightButtonClicked(const TQString&,const TQPoint&)));

@@ -38,7 +38,7 @@ KMWIppSelect::KMWIppSelect(TQWidget *parent, const char *name)
 
 	m_list = new KListBox(this);
 
-	QVBoxLayout	*lay = new TQVBoxLayout(this, 0, 0);
+	TQVBoxLayout	*lay = new TQVBoxLayout(this, 0, 0);
 	lay->addWidget(m_list);
 }
 
@@ -55,7 +55,7 @@ bool KMWIppSelect::isValid(TQString& msg)
 void KMWIppSelect::initPrinter(KMPrinter *p)
 {
 	// storage variables
-	QString	host, login, password;
+	TQString	host, login, password;
 	int	port;
 
 	// save config
@@ -73,7 +73,7 @@ void KMWIppSelect::initPrinter(KMPrinter *p)
 	CupsInfos::self()->setPassword(url.pass());
 	CupsInfos::self()->setPort(url.port());
 	IppRequest	req;
-	QString		uri;
+	TQString		uri;
 	req.setOperation(CUPS_GET_PRINTERS);
 	uri = TQString::tqfromLatin1("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
 	req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
@@ -100,7 +100,7 @@ void KMWIppSelect::initPrinter(KMPrinter *p)
 void KMWIppSelect::updatePrinter(KMPrinter *p)
 {
 	KURL	url = p->device();
-	QString	path = m_list->currentText();
+	TQString	path = m_list->currentText();
 	path.prepend("/printers/");
 	url.setPath(path);
 	p->setDevice(url.url());

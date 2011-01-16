@@ -87,8 +87,8 @@ protected slots:
 	void slotOk();
 
 private:
-	QLineEdit	*mask_, *tout_;
-	QComboBox	*port_;
+	TQLineEdit	*mask_, *tout_;
+	TQComboBox	*port_;
 	NetworkScanner *scanner_;
 };
 

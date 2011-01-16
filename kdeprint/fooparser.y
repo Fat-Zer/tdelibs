@@ -18,12 +18,12 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#define YYSTYPE QVariant
+#define YYSTYPE TQVariant
 #define YYPARSE_PARAM fooloader
 #define YYDEBUG 1
 
 #include <stdlib.h>
-#include <qvariant.h>
+#include <tqvariant.h>
 #include "foomatic2loader.h"
 
 void yyerror(const char*) {}
@@ -48,7 +48,7 @@ foodata:   VAR '=' '{' fieldlist '}' ';'  { static_cast<Foomatic2Loader*>(fooloa
 ;
 
 fieldlist:   assignment                 { $$ = $1; }
-		   | fieldlist ',' assignment   { QMap<QString,QVariant>::ConstIterator it = $3.mapBegin(); $1.asMap().insert(it.key(), it.data()); $$ = $1; }
+		   | fieldlist ',' assignment   { TQMap<TQString,TQVariant>::ConstIterator it = $3.mapBegin(); $1.asMap().insert(it.key(), it.data()); $$ = $1; }
 ;
 
 assignment:   STRING '=' '>' value              { $$.asMap().insert($1.toString(), $4); }
@@ -58,13 +58,13 @@ valuelist:   value                { $$.asList().append($1); }
 		   | valuelist ',' value  { $1.asList().append($3); $$ = $1; }
 ;
 
-value:   UNDEF             { $$ = QVariant(); }
+value:   UNDEF             { $$ = TQVariant(); }
 	   | STRING            { $$ = $1; }
 	   | NUMBER            { $$ = $1; }
 	   | '[' valuelist ']' { $$ = $2; }
 	   | '{' fieldlist '}' { $$ = $2; }
-	   | '[' ']'           { $$ = QVariant(); }
-	   | '{' '}'           { $$ = QVariant(); }
+	   | '[' ']'           { $$ = TQVariant(); }
+	   | '{' '}'           { $$ = TQVariant(); }
 ;
 
 %%

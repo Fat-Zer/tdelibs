@@ -54,11 +54,11 @@ private:
 	TQListBoxItem* findPrevItem(CPage*);
 
 private:
-	TQPtrList<CPage>		m_pages;
+	TQPtrList<CPage>	m_pages;
 	CListBox		*m_iconlist;
-	QLabel			*m_header;
-	QWidgetStack		*m_stack;
-	QWidget			*m_empty;
+	TQLabel			*m_header;
+	TQWidgetStack		*m_stack;
+	TQWidget		*m_empty;
 };
 
 #endif

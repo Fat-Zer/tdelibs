@@ -55,7 +55,7 @@ void LprSettings::init()
 	// LPR/LPRng mode
 	KConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("LPR");
-	QString	modestr = conf->readEntry("Mode");
+	TQString	modestr = conf->readEntry("Mode");
 	if (modestr == "LPRng")
 		m_mode = LPRng;
 	else if (modestr == "LPR")
@@ -70,7 +70,7 @@ void LprSettings::init()
 	}
 
 	// Printcap file
-	m_printcapfile = TQString::null;
+	m_printcapfile = TQString();
 	m_local = true;
 
 	// Spool directory
@@ -89,14 +89,14 @@ TQString LprSettings::printcapFile()
 			TQFile cf(LPDCONF);
 			if (cf.open(IO_ReadOnly))
 			{
-				QTextStream	t(&cf);
-				QString	line;
+				TQTextStream	t(&cf);
+				TQString	line;
 				while (!t.atEnd())
 				{
 					line = t.readLine().stripWhiteSpace();
 					if (line.startsWith("printcap_path"))
 					{
-						QString	filename = line.mid(14).stripWhiteSpace();
+						TQString	filename = line.mid(14).stripWhiteSpace();
 						if (filename[0] != '|')
 							m_printcapfile = filename;
 						else
@@ -120,14 +120,14 @@ TQString LprSettings::defaultRemoteHost()
 		TQFile cf(LPDCONF);
 		if (cf.open(IO_ReadOnly))
 		{
-			QTextStream	t(&cf);
-			QString	line;
+			TQTextStream	t(&cf);
+			TQString	line;
 			while (!t.atEnd())
 			{
 				line = t.readLine().stripWhiteSpace();
 				if (line.startsWith("default_remote_host"))
 				{
-					QString	hostname = line.mid(20).stripWhiteSpace();
+					TQString	hostname = line.mid(20).stripWhiteSpace();
 					m_defaultremotehost = hostname;
 				}
 			}

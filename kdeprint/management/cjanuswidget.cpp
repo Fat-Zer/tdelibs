@@ -29,16 +29,16 @@
 class CJanusWidget::CPage
 {
 public:
-	QWidget		*m_widget;
-	QString		m_text;
-	QString		m_header;
-	QPixmap		m_pixmap;
+	TQWidget	*m_widget;
+	TQString	m_text;
+	TQString	m_header;
+	TQPixmap	m_pixmap;
 	CListBoxItem	*m_item;
 };
 
 //***********************************************************************************
 
-class CJanusWidget::CListBoxItem : public QListBoxItem
+class CJanusWidget::CListBoxItem : public TQListBoxItem
 {
 public:
 	CListBoxItem(TQListBox *lb, TQListBoxItem *after, const TQPixmap& pix, const TQString& text);
@@ -49,7 +49,7 @@ protected:
 	void paint(TQPainter*);
 
 private:
-	QPixmap	m_pix;
+	TQPixmap	m_pix;
 };
 
 CJanusWidget::CListBoxItem::CListBoxItem(TQListBox *lb, TQListBoxItem *after, const TQPixmap& pix, const TQString& text)
@@ -65,7 +65,7 @@ int CJanusWidget::CListBoxItem::height(const TQListBox *lb) const
 
 int CJanusWidget::CListBoxItem::width(const TQListBox *lb) const
 {
-	int	w = QMAX(lb->fontMetrics().width(text()),m_pix.width());
+	int	w = TQMAX(lb->fontMetrics().width(text()),m_pix.width());
 	return (w + 10);
 }
 
@@ -110,11 +110,11 @@ bool CJanusWidget::CListBox::eventFilter(TQObject *o, TQEvent *e)
 
 void CJanusWidget::CListBox::computeWidth()
 {
-	QListBoxItem	*item = firstItem();
+	TQListBoxItem	*item = firstItem();
 	int	w(40);
 	while (item)
 	{
-		w = QMAX(w,item->width(this));
+		w = TQMAX(w,item->width(this));
 		item = item->next();
 	}
 	if (verticalScrollBar()->isVisible())
@@ -132,7 +132,7 @@ CJanusWidget::CJanusWidget(TQWidget *parent, const char *name)
 
 	m_stack = new TQWidgetStack(this);
 	m_header = new TQLabel(this);
-	QFont	f(m_header->font());
+	TQFont	f(m_header->font());
 	f.setBold(true);
 	m_header->setFont(f);
 
@@ -148,8 +148,8 @@ CJanusWidget::CJanusWidget(TQWidget *parent, const char *name)
 	m_empty = new TQWidget(this, "Empty");
 	m_stack->addWidget(m_empty,0);
 
-	QHBoxLayout	*main_ = new TQHBoxLayout(this, 0, 10);
-	QVBoxLayout	*sub_ = new TQVBoxLayout(0, 0, 5);
+	TQHBoxLayout	*main_ = new TQHBoxLayout(this, 0, 10);
+	TQVBoxLayout	*sub_ = new TQVBoxLayout(0, 0, 5);
 	main_->addWidget(m_iconlist,0);
 	main_->addLayout(sub_,1);
 	sub_->addWidget(m_header,0);
@@ -241,7 +241,7 @@ CJanusWidget::CPage* CJanusWidget::findPage(TQListBoxItem *i)
 
 TQListBoxItem* CJanusWidget::findPrevItem(CPage *p)
 {
-	if (m_pages.findRef(p) == -1)
+	if (m_pages.tqfindRef(p) == -1)
 		m_pages.last();
 	else
 		m_pages.prev();

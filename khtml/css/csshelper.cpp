@@ -49,8 +49,8 @@ DOMString khtml::parseURL(const DOMString &url)
 
     int o = 0;
     int l = i->l;
-    while(o < l && (i->s[o] <= ' ')) { o++; l--; }
-    while(l > 0 && (i->s[o+l-1] <= ' ')) l--;
+    while(o < l && (i->s[o] <= TQChar(' '))) { o++; l--; }
+    while(l > 0 && (i->s[o+l-1] <= TQChar(' '))) l--;
 
     if(l >= 5 &&
        (i->s[o].lower() == 'u') &&
@@ -62,8 +62,8 @@ DOMString khtml::parseURL(const DOMString &url)
         l -= 5;
     }
 
-    while(o < l && (i->s[o] <= ' ')) { o++; l--; }
-    while(l > 0 && (i->s[o+l-1] <= ' ')) l--;
+    while(o < l && (i->s[o] <= TQChar(' '))) { o++; l--; }
+    while(l > 0 && (i->s[o+l-1] <= TQChar(' '))) l--;
 
     if(l >= 2 && i->s[o] == i->s[o+l-1] &&
        (i->s[o].latin1() == '\'' || i->s[o].latin1() == '\"')) {
@@ -71,8 +71,8 @@ DOMString khtml::parseURL(const DOMString &url)
         l -= 2;
     }
 
-    while(o < l && (i->s[o] <= ' ')) { o++; l--; }
-    while(l > 0 && (i->s[o+l-1] <= ' ')) l--;
+    while(o < l && (i->s[o] <= TQChar(' '))) { o++; l--; }
+    while(l > 0 && (i->s[o+l-1] <= TQChar(' '))) l--;
 
     DOMStringImpl* j = new DOMStringImpl(i->s+o,l);
 

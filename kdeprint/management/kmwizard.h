@@ -84,9 +84,9 @@ private:
 	TQIntDict<KMWizardPage>	m_pagepool;
 	TQValueStack<int>	m_pagestack;
 
-	QWidgetStack		*m_stack;
-	QLabel			*m_title;
-	QPushButton		*m_next, *m_prev;
+	TQWidgetStack		*m_stack;
+	TQLabel			*m_title;
+	TQPushButton		*m_next, *m_prev;
 	int			m_start, m_end;
 	bool			m_inclusive;
 	KMPrinter		*m_printer;

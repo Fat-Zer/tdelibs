@@ -32,9 +32,9 @@
 #include <klocale.h>
 #include <kiconloader.h>
 
-static TQListViewItem* findChild(TQListViewItem *c, const TQString& txt)
+static TQListViewItem* rlpr_findChild(TQListViewItem *c, const TQString& txt)
 {
-	QListViewItem	*item(c);
+	TQListViewItem	*item(c);
 	while (item)
 		if (item->text(0) == txt) return item;
 		else item = item->nextSibling();
@@ -59,14 +59,14 @@ KMWRlpr::KMWRlpr(TQWidget *parent, const char *name)
 	m_view->setSorting(0);
 	m_host = new TQLineEdit(this);
 	m_queue = new TQLineEdit(this);
-	QLabel	*m_hostlabel = new TQLabel(i18n("Host:"), this);
-	QLabel	*m_queuelabel = new TQLabel(i18n("Queue:"), this);
+	TQLabel	*m_hostlabel = new TQLabel(i18n("Host:"), this);
+	TQLabel	*m_queuelabel = new TQLabel(i18n("Queue:"), this);
 	m_hostlabel->setBuddy(m_host);
 	m_queuelabel->setBuddy(m_queue);
 	connect(m_view,TQT_SIGNAL(selectionChanged(TQListViewItem*)),TQT_SLOT(slotPrinterSelected(TQListViewItem*)));
 
-	QHBoxLayout	*lay0 = new TQHBoxLayout(this, 0, 10);
-	QVBoxLayout	*lay1 = new TQVBoxLayout(0, 0, 5);
+	TQHBoxLayout	*lay0 = new TQHBoxLayout(this, 0, 10);
+	TQVBoxLayout	*lay1 = new TQVBoxLayout(0, 0, 5);
 	lay0->addWidget(m_view,1);
 	lay0->addLayout(lay1,1);
 	lay1->addWidget(m_hostlabel);
@@ -94,13 +94,13 @@ void KMWRlpr::initPrinter(KMPrinter *p)
 {
 	m_host->setText(p->option("host"));
 	m_queue->setText(p->option("queue"));
-	QListViewItem	*item = findChild(m_view->firstChild(),m_host->text());
+	TQListViewItem	*item = rlpr_findChild(m_view->firstChild(),m_host->text());
 	if (item)
 	{
-		item = findChild(item->firstChild(),m_queue->text());
+		item = rlpr_findChild(item->firstChild(),m_queue->text());
 		if (item)
 		{
-			item->parent()->setOpen(true);
+			item->tqparent()->setOpen(true);
 			m_view->setCurrentItem(item);
 			m_view->ensureItemVisible(item);
 		}
@@ -109,7 +109,7 @@ void KMWRlpr::initPrinter(KMPrinter *p)
 
 void KMWRlpr::updatePrinter(KMPrinter *p)
 {
-	QString	uri = TQString::tqfromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
+	TQString	uri = TQString::tqfromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
 	p->setDevice(uri);
 	p->setOption("host",m_host->text());
 	p->setOption("queue",m_queue->text());
@@ -128,12 +128,12 @@ void KMWRlpr::updatePrinter(KMPrinter *p)
 void KMWRlpr::initialize()
 {
 	m_view->clear();
-	QFile	f(TQDir::homeDirPath()+"/.rlprrc");
+	TQFile	f(TQDir::homeDirPath()+"/.rlprrc");
 	if (!f.exists()) f.setName("/etc/rlprrc");
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
-		QTextStream	t(&f);
-		QString		line, host;
+		TQTextStream	t(&f);
+		TQString		line, host;
 		int 		p(-1);
 		while (!t.eof())
 		{
@@ -143,12 +143,12 @@ void KMWRlpr::initialize()
 			if ((p=line.tqfind(':')) != -1)
 			{
 				host = line.left(p).stripWhiteSpace();
-				QListViewItem	*hitem = new TQListViewItem(m_view,host);
+				TQListViewItem	*hitem = new TQListViewItem(m_view,host);
 				hitem->setPixmap(0,SmallIcon("kdeprint_computer"));
-				QStringList	prs = TQStringList::split(' ',line.right(line.length()-p-1),false);
+				TQStringList	prs = TQStringList::split(' ',line.right(line.length()-p-1),false);
 				for (TQStringList::ConstIterator it=prs.begin(); it!=prs.end(); ++it)
 				{
-					QListViewItem	*pitem = new TQListViewItem(hitem,*it);
+					TQListViewItem	*pitem = new TQListViewItem(hitem,*it);
 					pitem->setPixmap(0,SmallIcon("kdeprint_printer"));
 				}
 			}
@@ -160,9 +160,9 @@ void KMWRlpr::initialize()
 	f.setName("/etc/printcap");
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
-		QTextStream	t(&f);
-		QString		line, buffer;
-		QListViewItem	*hitem(m_view->firstChild());
+		TQTextStream	t(&f);
+		TQString		line, buffer;
+		TQListViewItem	*hitem(m_view->firstChild());
 		while (hitem) if (hitem->text(0) == "localhost") break; else hitem = hitem->nextSibling();
 		while (!t.eof())
 		{
@@ -183,13 +183,13 @@ void KMWRlpr::initialize()
 			int	p = buffer.tqfind(':');
 			if (p != -1)
 			{
-				QString	name = buffer.left(p);
+				TQString	name = buffer.left(p);
 				if (!hitem)
 				{
 					hitem = new TQListViewItem(m_view,"localhost");
 					hitem->setPixmap(0,SmallIcon("kdeprint_computer"));
 				}
-				QListViewItem	*pitem = new TQListViewItem(hitem,name);
+				TQListViewItem	*pitem = new TQListViewItem(hitem,name);
 				pitem->setPixmap(0,SmallIcon("kdeprint_printer"));
 			}
 		}
@@ -203,7 +203,7 @@ void KMWRlpr::slotPrinterSelected(TQListViewItem *item)
 {
 	if (item && item->depth() == 1)
 	{
-		m_host->setText(item->parent()->text(0));
+		m_host->setText(item->tqparent()->text(0));
 		m_queue->setText(item->text(0));
 	}
 }

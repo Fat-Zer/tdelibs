@@ -68,9 +68,9 @@ protected:
 	virtual TQString driverDirInternal();
 
 protected:
-	QString	m_name;
+	TQString	m_name;
 	KMManager	*m_manager;
-	QString	m_cacheddriverdir;
+	TQString	m_cacheddriverdir;
 };
 
 inline TQString LprHandler::name() const

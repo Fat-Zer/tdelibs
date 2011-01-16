@@ -103,7 +103,7 @@ void dumpRequest(ipp_t *req, bool answer = false, const TQString& s = TQString::
 
 TQString errorString(int status)
 {
-	QString	str;
+	TQString	str;
 	switch (status)
 	{
 		case IPP_FORBIDDEN:
@@ -134,7 +134,7 @@ IppRequest::IppRequest()
 {
 	request_ = 0;
 	port_ = -1;
-	host_ = TQString::null;
+	host_ = TQString();
 	dump_ = 0;
 	init();
 }
@@ -226,7 +226,7 @@ int IppRequest::status()
 
 TQString IppRequest::statusMessage()
 {
-	QString	msg;
+	TQString	msg;
 	switch (status())
 	{
 		case -2:
@@ -294,7 +294,7 @@ bool IppRequest::boolean(const TQString& name, bool& value)
 
 bool IppRequest::doFileRequest(const TQString& res, const TQString& filename)
 {
-	QString	myHost = host_;
+	TQString	myHost = host_;
 	int 	myPort = port_;
 	if (myHost.isEmpty()) myHost = CupsInfos::self()->host();
 	if (myPort <= 0) myPort = CupsInfos::self()->port();
@@ -361,8 +361,8 @@ bool IppRequest::htmlReport(int group, TQTextStream& output)
 		attr = attr->next;
 	// print each attribute
 	ipp_uchar_t	*d;
-	QCString	dateStr;
-	QDateTime	dt;
+	TQCString	dateStr;
+	TQDateTime	dt;
 	bool	bg(false);
 	while (attr && attr->group_tag == group)
 	{
@@ -443,7 +443,7 @@ TQMap<TQString,TQString> IppRequest::toMap(int group)
 				attr = attr->next;
 				continue;
 			}
-			QString	value;
+			TQString	value;
 			for (int i=0; i<attr->num_values; i++)
 			{
 				switch (attr->value_tag)
@@ -496,14 +496,14 @@ void IppRequest::setMap(const TQMap<TQString,TQString>& opts)
 	if (!request_)
 		return;
 
-	QRegExp	re("^\"|\"$");
+	TQRegExp	re("^\"|\"$");
 	cups_option_t	*options = NULL;
 	int	n = 0;
 	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 	{
 		if (it.key().startsWith("kde-") || it.key().startsWith("app-"))
 			continue;
-		QString	value = it.data().stripWhiteSpace(), lovalue;
+		TQString	value = it.data().stripWhiteSpace(), lovalue;
 		value.replace(re, "");
 		lovalue = value.lower();
 

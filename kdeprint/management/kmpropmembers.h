@@ -36,7 +36,7 @@ protected:
 	void configureWizard(KMWizard*);
 
 private:
-	QTextView	*m_members;
+	TQTextView	*m_members;
 };
 
 #endif

@@ -62,8 +62,8 @@ protected:
 	TQPtrList<KPrintDialogPage>	m_pages;
 	KPrintDialogPage	*m_current;
 	TQMap<TQString,TQString>	m_options;
-	QTabWidget		*m_tw;
-	QPushButton		*m_save;
+	TQTabWidget		*m_tw;
+	TQPushButton		*m_save;
 };
 
 #endif

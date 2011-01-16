@@ -33,19 +33,19 @@
 PortDialog::PortDialog(TQWidget *parent, const char *name)
 	: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
-	QWidget	*dummy = new TQWidget(this);
+	TQWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
 	address_ = new TQLineEdit(dummy);
 	port_ = new TQSpinBox(0, 9999, 1, dummy);
 	port_->setValue(631);
 	usessl_ = new TQCheckBox(i18n("Use SSL encryption"), dummy);
 
-	QLabel	*l1 = new TQLabel(i18n("Address:"), dummy);
-	QLabel	*l2 = new TQLabel(i18n("Port:"), dummy);
+	TQLabel	*l1 = new TQLabel(i18n("Address:"), dummy);
+	TQLabel	*l2 = new TQLabel(i18n("Port:"), dummy);
 
-	QVBoxLayout	*m1 = new TQVBoxLayout(dummy, 0, 10);
-	QGridLayout	*m2 = new TQGridLayout(0, 3, 2, 0, 5);
-	m1->addLayout(m2);
+	TQVBoxLayout	*m1 = new TQVBoxLayout(dummy, 0, 10);
+	TQGridLayout	*m2 = new TQGridLayout(0, 3, 2, 0, 5);
+	m1->addLayout(TQT_TQLAYOUT(m2));
 	m2->addWidget(l1, 0, 0, Qt::AlignRight);
 	m2->addWidget(l2, 1, 0, Qt::AlignRight);
 	m2->addMultiCellWidget(usessl_, 2, 2, 0, 1);
@@ -97,7 +97,7 @@ TQString PortDialog::editListen(const TQString& s, TQWidget *parent, CupsdConf *
 	if (p != -1)
 	{
 		dlg.usessl_->setChecked(s.left(p).startsWith("SSL"));
-		QString	addr = s.mid(p+1).stripWhiteSpace();
+		TQString	addr = s.mid(p+1).stripWhiteSpace();
 		int p1 = addr.tqfind(':');
 		if (p1 == -1)
 		{

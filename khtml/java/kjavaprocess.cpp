@@ -168,7 +168,7 @@ void KJavaProcess::storeSize( TQByteArray* buff )
 
     const char* size_ptr = size_str.latin1();
     for( int i = 0; i < 8; ++i )
-        buff->at(i) = size_ptr[i];
+        buff->tqat(i) = size_ptr[i];
 }
 
 void KJavaProcess::sendBuffer( TQByteArray* buff )

@@ -302,7 +302,7 @@ void KPPosterPage::getOptions( TQMap<TQString,TQString>& opts, bool )
 	}
 	else
 	{
-		if ( !o.contains( "poster" ) )
+		if ( !o.tqcontains( "poster" ) )
 			o.append( "poster" );
 		opts[ "_kde-filters" ] = o.join( "," );
 		opts[ "_kde-poster-media" ] = m_mediasize->text();

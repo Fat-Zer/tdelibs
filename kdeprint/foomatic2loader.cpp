@@ -53,7 +53,7 @@ bool Foomatic2Loader::readFromFile( const TQString& filename )
 	TQFile f( filename );
 	m_foodata.clear();
 	if ( f.open( IO_ReadOnly ) )
-		return read( &f );
+		return read( TQT_TQIODEVICE(&f) );
 	return false;
 }
 
@@ -63,7 +63,7 @@ bool Foomatic2Loader::readFromBuffer( const TQString& buffer )
 	TQBuffer d( buf );
 	m_foodata.clear();
 	if ( d.open( IO_ReadOnly ) )
-		return read( &d );
+		return read( TQT_TQIODEVICE(&d) );
 	return false;
 }
 
@@ -151,7 +151,7 @@ DrMain* Foomatic2Loader::buildDriver() const
 		driver->set( "matic_printer", v.mapFind( "id" ).data().toString() );
 		driver->set( "matic_driver", v.mapFind( "driver" ).data().toString() );
 		driver->set( "text", TQString( "%1 %2 (%3)" ).arg( driver->get( "manufacturer" ) ).arg( driver->get( "model" ) ).arg( driver->get( "matic_driver" ) ) );
-		if ( m_foodata.contains( "POSTPIPE" ) )
+		if ( m_foodata.tqcontains( "POSTPIPE" ) )
 			driver->set( "postpipe", m_foodata.tqfind( "POSTPIPE" ).data().toString() );
 		v = v.mapFind( "args" ).data();
 		if ( !v.isNull() && v.type() == TQVariant::List )
@@ -166,7 +166,7 @@ DrMain* Foomatic2Loader::buildDriver() const
 				{
 					TQString group = DrGroup::groupForOption( opt->name() );
 					DrGroup *grp = NULL;
-					if ( !groups.contains( group ) )
+					if ( !groups.tqcontains( group ) )
 					{
 						grp = new DrGroup;
 						grp->set( "text", group );

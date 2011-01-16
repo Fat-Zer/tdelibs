@@ -103,7 +103,7 @@ namespace KJS {
       m_domObjects.insert( objectHandle, obj );
     }
     void customizedDOMObject( DOMObject* obj ) {
-      m_customizedDomObjects.replace( obj, this );
+      m_customizedDomObjects.tqreplace( obj, this );
     }
     bool deleteDOMObject( void* objectHandle ) {
       DOMObject* obj = m_domObjects.take( objectHandle );

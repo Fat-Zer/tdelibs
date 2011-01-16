@@ -45,8 +45,8 @@ protected:
 
 private:
 	KListBox	*m_list1, *m_list2;
-	QToolButton	*m_add, *m_remove;
-	QLineEdit	*m_locationre;
+	TQToolButton	*m_add, *m_remove;
+	TQLineEdit	*m_locationre;
 };
 
 #endif

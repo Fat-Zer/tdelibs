@@ -139,11 +139,11 @@ RenderWidget::~RenderWidget()
     }
 }
 
-class QWidgetResizeEvent : public QEvent
+class TQWidgetResizeEvent : public TQEvent
 {
 public:
     enum { Type = TQEvent::User + 0xbee };
-    QWidgetResizeEvent( int _w,  int _h ) :
+    TQWidgetResizeEvent( int _w,  int _h ) :
         TQEvent( ( TQEvent::Type ) Type ),  w( _w ), h( _h ) {}
     int w;
     int h;
@@ -160,7 +160,7 @@ void  RenderWidget::resizeWidget( int w, int h )
         m_resizePending = isKHTMLWidget();
         ref();
         element()->ref();
-        TQApplication::postEvent( this, new QWidgetResizeEvent( w, h ) );
+        TQApplication::postEvent( this, new TQWidgetResizeEvent( w, h ) );
         element()->deref();
         deref();
     }
@@ -171,17 +171,17 @@ void RenderWidget::cancelPendingResize()
     if (!m_widget)
         return;
     m_discardResizes = true;
-    TQApplication::sendPostedEvents(this, QWidgetResizeEvent::Type);
+    TQApplication::sendPostedEvents(this, TQWidgetResizeEvent::Type);
     m_discardResizes = false;
 }
 
 bool RenderWidget::event( TQEvent *e )
 {
-    if ( m_widget && (e->type() == (TQEvent::Type)QWidgetResizeEvent::Type) ) {
+    if ( m_widget && (e->type() == (TQEvent::Type)TQWidgetResizeEvent::Type) ) {
         m_resizePending = false;
         if (m_discardResizes)
             return true;
-        QWidgetResizeEvent *re = static_cast<QWidgetResizeEvent *>(e);
+        TQWidgetResizeEvent *re = static_cast<TQWidgetResizeEvent *>(e);
         m_widget->resize( re->w,  re->h );
         tqrepaint();
     }
@@ -193,7 +193,7 @@ bool RenderWidget::event( TQEvent *e )
 
 void RenderWidget::flushWidgetResizes() //static
 {
-    TQApplication::sendPostedEvents( 0, QWidgetResizeEvent::Type );
+    TQApplication::sendPostedEvents( 0, TQWidgetResizeEvent::Type );
 }
 
 void RenderWidget::setQWidget(TQWidget *widget)
@@ -215,8 +215,8 @@ void RenderWidget::setQWidget(TQWidget *widget)
             if ( (m_isKHTMLWidget = !strcmp(m_widget->name(), "__khtml")) && !::tqqt_cast<TQFrame*>(m_widget))
                 m_widget->setBackgroundMode( TQWidget::NoBackground );
 
-            if (m_widget->focusPolicy() > TQWidget::StrongFocus)
-                m_widget->setFocusPolicy(TQWidget::StrongFocus);
+            if (m_widget->focusPolicy() > TQ_StrongFocus)
+                m_widget->setFocusPolicy(TQ_StrongFocus);
             // if we've already received a layout, apply the calculated space to the
             // widget immediately, but we have to have really been full constructed (with a non-null
             // style pointer).
@@ -439,7 +439,7 @@ void RenderWidget::paint(PaintInfo& paintInfo, int _tx, int _ty)
         paintWidget(paintInfo, m_widget, xPos, yPos);
 }
 
-#include <private/qinternal_p.h>
+#include <tqinternal_p.h>
 
 // The PaintBuffer class provides a shared buffer for widget painting.
 //
@@ -449,7 +449,7 @@ void RenderWidget::paint(PaintInfo& paintInfo, int _tx, int _ty)
 // is still needed.  If not, it shrinks down to the biggest size < maxPixelBuffering
 // that was requested during the overflow lapse.
 
-class PaintBuffer: public QObject
+class PaintBuffer: public TQObject
 {
 public:
     static const int maxPixelBuffering = 320*200;
@@ -527,9 +527,9 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
     TQValueVector<TQWidget*> cw;
     TQValueVector<TQRect> cr;
 
-    if (widget->children()) {
+    if (!widget->childrenListObject().isEmpty()) {
         // build region
-        TQObjectListIterator it = *widget->children();
+        TQObjectListIterator it = widget->childrenListObject();
         for (; it.current(); ++it) {
             TQWidget* const w = ::tqqt_cast<TQWidget *>(it.current());
 	    if ( w && !w->isTopLevel() && !w->isHidden()) {
@@ -542,10 +542,10 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
             }
         }
     }
-    TQMemArray<TQRect> br = blit.rects();
+    TQMemArray<TQRect> br = blit.tqrects();
 
     const int cnt = br.size();
-    const bool external = p->device()->isExtDev();
+    const bool external = p->tqdevice()->isExtDev();
     TQPixmap* const pm = PaintBuffer::grab( widget->size() );
     if (!pm)
     {
@@ -598,13 +598,13 @@ void RenderWidget::paintWidget(PaintInfo& pI, TQWidget *widget, int tx, int ty)
     TQPainter* const p = pI.p;
     allowWidgetPaintEvents = true;
 
-    const bool dsbld = QSharedDoubleBuffer::isDisabled();
-    QSharedDoubleBuffer::setDisabled(true);
+    const bool dsbld = TQSharedDoubleBuffer::isDisabled();
+    TQSharedDoubleBuffer::setDisabled(true);
     TQRect rr = pI.r;
     rr.moveBy(-tx, -ty);
     const TQRect r = widget->rect().intersect( rr );
     copyWidget(r, p, widget, tx, ty);
-    QSharedDoubleBuffer::setDisabled(dsbld);
+    TQSharedDoubleBuffer::setDisabled(dsbld);
 
     allowWidgetPaintEvents = false;
 }
@@ -641,7 +641,7 @@ bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
         
         // Don't count popup as a valid reason for losing the focus
         // (example: opening the options of a select combobox shouldn't emit onblur)
-        if ( TQFocusEvent::reason() != TQFocusEvent::Popup )
+        if ( TQT_TQFOCUSEVENT(e)->reason() != TQFocusEvent::Popup )
             handleFocusOut();
         break;
     case TQEvent::FocusIn:
@@ -662,7 +662,7 @@ bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
     case TQEvent::KeyRelease:
     // TODO this seems wrong - Qt events are not correctly translated to DOM ones,
     // like in KHTMLView::dispatchKeyEvent()
-        if (element()->dispatchKeyEvent(static_cast<TQKeyEvent*>(e),false))
+        if (element()->dispatchKeyEvent(TQT_TQKEYEVENT(e),false))
             filtered = true;
         break;
 
@@ -672,8 +672,8 @@ bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
             // currently focused. this avoids accidentally changing a select box
             // or something while wheeling a webpage.
             if (tqApp->tqfocusWidget() != widget() &&
-                widget()->focusPolicy() <= TQWidget::StrongFocus)  {
-                static_cast<TQWheelEvent*>(e)->ignore();
+                widget()->focusPolicy() <= TQ_StrongFocus)  {
+                TQT_TQWHEELEVENT(e)->ignore();
                 TQApplication::sendEvent(view(), e);
                 filtered = true;
             }
@@ -696,22 +696,22 @@ bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
 void RenderWidget::EventPropagator::sendEvent(TQEvent *e) {
     switch(e->type()) {
     case TQEvent::MouseButtonPress:
-        mousePressEvent(static_cast<TQMouseEvent *>(e));
+        mousePressEvent(TQT_TQMOUSEEVENT(e));
         break;
     case TQEvent::MouseButtonRelease:
-        mouseReleaseEvent(static_cast<TQMouseEvent *>(e));
+        mouseReleaseEvent(TQT_TQMOUSEEVENT(e));
         break;
     case TQEvent::MouseButtonDblClick:
-        mouseDoubleClickEvent(static_cast<TQMouseEvent *>(e));
+        mouseDoubleClickEvent(TQT_TQMOUSEEVENT(e));
         break;
     case TQEvent::MouseMove:
-        mouseMoveEvent(static_cast<TQMouseEvent *>(e));
+        mouseMoveEvent(TQT_TQMOUSEEVENT(e));
         break;
     case TQEvent::KeyPress:
-        keyPressEvent(static_cast<TQKeyEvent *>(e));
+        keyPressEvent(TQT_TQKEYEVENT(e));
         break;
     case TQEvent::KeyRelease:
-        keyReleaseEvent(static_cast<TQKeyEvent *>(e));
+        keyReleaseEvent(TQT_TQKEYEVENT(e));
         break;
     default:
         break;
@@ -721,22 +721,22 @@ void RenderWidget::EventPropagator::sendEvent(TQEvent *e) {
 void RenderWidget::ScrollViewEventPropagator::sendEvent(TQEvent *e) {
     switch(e->type()) {
     case TQEvent::MouseButtonPress:
-        viewportMousePressEvent(static_cast<TQMouseEvent *>(e));
+        viewportMousePressEvent(TQT_TQMOUSEEVENT(e));
         break;
     case TQEvent::MouseButtonRelease:
-        viewportMouseReleaseEvent(static_cast<TQMouseEvent *>(e));
+        viewportMouseReleaseEvent(TQT_TQMOUSEEVENT(e));
         break;
     case TQEvent::MouseButtonDblClick:
-        viewportMouseDoubleClickEvent(static_cast<TQMouseEvent *>(e));
+        viewportMouseDoubleClickEvent(TQT_TQMOUSEEVENT(e));
         break;
     case TQEvent::MouseMove:
-        viewportMouseMoveEvent(static_cast<TQMouseEvent *>(e));
+        viewportMouseMoveEvent(TQT_TQMOUSEEVENT(e));
         break;
     case TQEvent::KeyPress:
-        keyPressEvent(static_cast<TQKeyEvent *>(e));
+        keyPressEvent(TQT_TQKEYEVENT(e));
         break;
     case TQEvent::KeyRelease:
-        keyReleaseEvent(static_cast<TQKeyEvent *>(e));
+        keyReleaseEvent(TQT_TQKEYEVENT(e));
         break;
     default:
         break;
@@ -783,13 +783,13 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
             }
             switch (me.button()) {
             case 0:
-                button = LeftButton;
+                button = Qt::LeftButton;
                 break;
             case 1:
-                button = MidButton;
+                button = Qt::MidButton;
                 break;
             case 2:
-                button = RightButton;
+                button = Qt::RightButton;
                 break;
             default:
                 break;
@@ -810,9 +810,9 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
         TQMouseEvent e(type, p, button, state);
         TQScrollView * sc = ::tqqt_cast<TQScrollView*>(m_widget);
         if (sc && !::tqqt_cast<TQListBox*>(m_widget))
-            static_cast<ScrollViewEventPropagator *>(sc)->sendEvent(&e);
+            static_cast<ScrollViewEventPropagator *>(sc)->sendEvent(TQT_TQEVENT(&e));
         else
-            static_cast<EventPropagator *>(m_widget)->sendEvent(&e);
+            static_cast<EventPropagator *>(m_widget)->sendEvent(TQT_TQEVENT(&e));
         ret = e.isAccepted();
         break;
     }
@@ -826,7 +826,7 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
         if (domKeyEv.isSynthetic() && !acceptsSyntheticEvents()) break;
 
         TQKeyEvent* const ke = domKeyEv.qKeyEvent();
-        static_cast<EventPropagator *>(m_widget)->sendEvent(ke);
+        static_cast<EventPropagator *>(m_widget)->sendEvent(TQT_TQEVENT(ke));
         ret = ke->isAccepted();
         break;
     }
@@ -853,9 +853,9 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
         if (ke->isAutoRepeat()) {
             TQKeyEvent releaseEv( TQEvent::KeyRelease, ke->key(), ke->ascii(), ke->state(),
                                ke->text(), ke->isAutoRepeat(), ke->count() );
-            static_cast<EventPropagator *>(m_widget)->sendEvent(&releaseEv);
+            static_cast<EventPropagator *>(m_widget)->sendEvent(TQT_TQEVENT(&releaseEv));
         }
-        static_cast<EventPropagator *>(m_widget)->sendEvent(ke);
+        static_cast<EventPropagator *>(m_widget)->sendEvent(TQT_TQEVENT(ke));
         ret = ke->isAccepted();
 	break;
     }

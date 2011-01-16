@@ -50,7 +50,7 @@ signals:
 
 private:
 	KProcess	m_proc;
-	QProgressDialog	*m_dlg;
+	TQProgressDialog	*m_dlg;
 	bool		m_status;
 	bool		m_firstflag;
 };

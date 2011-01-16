@@ -188,11 +188,11 @@ KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 	setTitle(i18n("Text"));
 	m_block = false;
 
-	QGroupBox	*formatbox = new TQGroupBox(0, Qt::Vertical, i18n("Text Format"), this);
+	TQGroupBox	*formatbox = new TQGroupBox(0, Qt::Vertical, i18n("Text Format"), this);
 	  TQWhatsThis::add(formatbox, whatsThisFormatTextPage);
-	QGroupBox	*prettybox = new TQGroupBox(0, Qt::Vertical, i18n("Syntax Highlighting"), this);
+	TQGroupBox	*prettybox = new TQGroupBox(0, Qt::Vertical, i18n("Syntax Highlighting"), this);
 	  TQWhatsThis::add(prettybox, whatsThisPrettyprintFrameTextPage);
-	QGroupBox	*marginbox = new TQGroupBox(0, Qt::Vertical, i18n("Margins"), this);
+	TQGroupBox	*marginbox = new TQGroupBox(0, Qt::Vertical, i18n("Margins"), this);
 	  TQWhatsThis::add(marginbox, whatsThisMarginsTextPage);
 
 	m_cpi = new KIntNumInput(10, formatbox);
@@ -213,9 +213,9 @@ KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 	m_prettypix = new TQLabel(prettybox);
 	  TQWhatsThis::add(m_prettypix, whatsThisPrettyprintPreviewIconTextPage);
 	m_prettypix->tqsetAlignment(Qt::AlignCenter);
-	QRadioButton	*off = new TQRadioButton(i18n("&Disabled"), prettybox);
+	TQRadioButton	*off = new TQRadioButton(i18n("&Disabled"), prettybox);
 	  TQWhatsThis::add(off, whatsThisPrettyprintButtonOffTextPage);
-	QRadioButton	*on = new TQRadioButton(i18n("&Enabled"), prettybox);
+	TQRadioButton	*on = new TQRadioButton(i18n("&Enabled"), prettybox);
 	  TQWhatsThis::add(on, whatsThisPrettyprintButtonOnTextPage);
 	m_prettyprint = new TQButtonGroup(prettybox);
 	m_prettyprint->hide();
@@ -229,20 +229,20 @@ KPTextPage::KPTextPage(DrMain *driver, TQWidget *parent, const char *name)
 	  TQWhatsThis::add(m_margin, whatsThisMarginsTextPage);
 	m_margin->setPageSize(595, 842);
 
-	QGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 10);
+	TQGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 10);
 	l0->addWidget(formatbox, 0, 0);
 	l0->addWidget(prettybox, 0, 1);
 	l0->addMultiCellWidget(marginbox, 1, 1, 0, 1);
-	QVBoxLayout	*l1 = new TQVBoxLayout(formatbox->layout(), 5);
+	TQVBoxLayout	*l1 = new TQVBoxLayout(TQT_TQLAYOUT(formatbox->layout()), 5);
 	l1->addWidget(m_cpi);
 	l1->addWidget(m_lpi);
 	l1->addWidget(sep);
 	l1->addWidget(m_columns);
-	QGridLayout	*l2 = new TQGridLayout(prettybox->layout(), 2, 2, 10);
+	TQGridLayout	*l2 = new TQGridLayout(TQT_TQLAYOUT(prettybox->layout()), 2, 2, 10);
 	l2->addWidget(off, 0, 0);
 	l2->addWidget(on, 1, 0);
 	l2->addMultiCellWidget(m_prettypix, 0, 1, 1, 1);
-	QVBoxLayout	*l3 = new TQVBoxLayout(marginbox->layout(), 10);
+	TQVBoxLayout	*l3 = new TQVBoxLayout(TQT_TQLAYOUT(marginbox->layout()), 10);
 	l3->addWidget(m_margin);
 }
 
@@ -252,7 +252,7 @@ KPTextPage::~KPTextPage()
 
 void KPTextPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	QString	value;
+	TQString	value;
 
 	if (!(value=opts["cpi"]).isEmpty())
 		m_cpi->setValue(value.toInt());
@@ -261,14 +261,14 @@ void KPTextPage::setOptions(const TQMap<TQString,TQString>& opts)
 	if (!(value=opts["columns"]).isEmpty())
 		m_columns->setValue(value.toInt());
 	int	ID(0);
-	if (opts.contains("prettyprint") && (opts["prettyprint"].isEmpty() || opts["prettyprint"] == "true"))
+	if (opts.tqcontains("prettyprint") && (opts["prettyprint"].isEmpty() || opts["prettyprint"] == "true"))
 		ID = 1;
 	m_prettyprint->setButton(ID);
 	slotPrettyChanged(ID);
 
 	// get default margins
 	m_currentps = opts["PageSize"];
-	QString	orient = opts["orientation-requested"];
+	TQString	orient = opts["orientation-requested"];
 	bool	landscape = (orient == "4" || orient == "5");
 	initPageSize(landscape);
 
@@ -331,7 +331,7 @@ void KPTextPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 
 void KPTextPage::slotPrettyChanged(int ID)
 {
-	QString	iconstr = (ID == 0 ? "kdeprint_nup1" : "kdeprint_prettyprint");
+	TQString	iconstr = (ID == 0 ? "kdeprint_nup1" : "kdeprint_prettyprint");
 	m_prettypix->setPixmap(UserIcon(iconstr));
 }
 

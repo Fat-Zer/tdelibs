@@ -72,7 +72,7 @@ KMdiChildFrmCaption::KMdiChildFrmCaption( KMdiChildFrm *parent )
 	m_bActive = false;
 	m_pParent = parent;
 	setBackgroundMode( NoBackground );
-	setFocusPolicy( NoFocus );
+	setFocusPolicy( TQ_NoFocus );
 	m_bChildInDrag = false;
 }
 
@@ -85,17 +85,17 @@ KMdiChildFrmCaption::~KMdiChildFrmCaption()
 
 void KMdiChildFrmCaption::mousePressEvent( TQMouseEvent *e )
 {
-	if ( e->button() == LeftButton )
+	if ( e->button() == Qt::LeftButton )
 	{
 		setMouseTracking( false );
 		if ( KMdiMainFrm::frameDecorOfAttachedViews() != KMdi::Win95Look )
 		{
-			TQApplication::setOverrideCursor( Qt::sizeAllCursor, true );
+			TQApplication::setOverrideCursor( tqsizeAllCursor, true );
 		}
 		m_pParent->m_bDragging = true;
 		m_offset = mapToParent( e->pos() );
 	}
-	else if ( e->button() == RightButton )
+	else if ( e->button() == Qt::RightButton )
 	{
 		m_pParent->systemMenu()->popup( mapToGlobal( e->pos() ) );
 	}
@@ -105,7 +105,7 @@ void KMdiChildFrmCaption::mousePressEvent( TQMouseEvent *e )
 
 void KMdiChildFrmCaption::mouseReleaseEvent( TQMouseEvent *e )
 {
-	if ( e->button() == LeftButton )
+	if ( e->button() == Qt::LeftButton )
 	{
 		if ( KMdiMainFrm::frameDecorOfAttachedViews() != KMdi::Win95Look )
 			TQApplication::restoreOverrideCursor();
@@ -313,7 +313,7 @@ void KMdiChildFrmCaption::slot_moveViaSystemMenu()
 	grabMouse();
 	
 	if ( KMdiMainFrm::frameDecorOfAttachedViews() != KMdi::Win95Look )
-		TQApplication::setOverrideCursor( Qt::sizeAllCursor, true );
+		TQApplication::setOverrideCursor( tqsizeAllCursor, true );
 	
 	m_pParent->m_bDragging = true;
 	m_offset = mapFromGlobal( TQCursor::pos() );

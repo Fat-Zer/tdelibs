@@ -42,9 +42,9 @@ protected slots:
 private:
 	KIntNumInput	*m_timer;
 	KURLRequester	*m_testpage;
-	QCheckBox	*m_defaulttestpage;
-	QPushButton	*m_preview;
-	QCheckBox	*m_statusmsg, *m_uselast;
+	TQCheckBox	*m_defaulttestpage;
+	TQPushButton	*m_preview;
+	TQCheckBox	*m_statusmsg, *m_uselast;
 };
 
 #endif

@@ -607,8 +607,8 @@ void LdapConfigWidget::setFlags( int flags )
 
   // First delete all the child widgets.
   // FIXME: I hope it's correct
-  const TQObjectList *ch = children();
-  TQObjectList ch2 = *ch;
+  const TQObjectList ch = childrenListObject();
+  TQObjectList ch2 = ch;
   TQObject *obj;
   TQWidget *widget;
 

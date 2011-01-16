@@ -38,7 +38,7 @@ Group=Input (KDE)
 [KDatePicker]
 ToolTip=A date selection widget (KDE)
 WhatsThis=Provides a widget for calendar date input
-ConstructorArgs=(parent, QDate::currentDate(), name)
+ConstructorArgs=(parent, TQDate::currentDate(), name)
 Group=Input (KDE)
 
 [KDialog]
@@ -57,7 +57,7 @@ Group=Views (KDE)
 
 [KFontCombo]
 ToolTip=Font Combo Box (KDE)
-WhatsThis=A QCombo Box showing the installed system fonts (with preview)
+WhatsThis=A TQCombo Box showing the installed system fonts (with preview)
 Group=Input (KDE)
 
 [KFontChooser]
@@ -96,12 +96,12 @@ Group=Display (KDE)
 
 [KListBox]
 ToolTip=Extended List Box (KDE)
-WhatsThis=An improved version of the QListBox that follows KDE settings
+WhatsThis=An improved version of the TQListBox that follows KDE settings
 Group=Views (KDE)
 
 [KListView]
 ToolTip=Extended List View (KDE)
-WhatsThis=An improved version of the QListView that allows certain KDE extensions
+WhatsThis=An improved version of the TQListView that allows certain KDE extensions
 Group=Views (KDE)
 
 [KLineEdit]
@@ -127,12 +127,12 @@ Group=Input (KDE)
 
 [KProgress]
 ToolTip=Progress Bar (KDE)
-WhatsThis=An improved progress bar for KDE that uses QFrame and QRangeControl
+WhatsThis=An improved progress bar for KDE that uses TQFrame and TQRangeControl
 Group=Display (KDE)
 
 [KPushButton]
-ToolTip=Improved QPushButton (KDE)
-WhatsThis=An improved QPushButton to follow KDE settings
+ToolTip=Improved TQPushButton (KDE)
+WhatsThis=An improved TQPushButton to follow KDE settings
 Group=Buttons (KDE)
 
 [KKeyButton]
@@ -153,7 +153,7 @@ Group=Buttons (KDE)
 [KIconView]
 IncludeFile=kiconview.h
 ToolTip=Extended Icon View (KDE)
-WhatsThis=An improved version of the QIconView that allows certain KDE extensions
+WhatsThis=An improved version of the TQIconView that allows certain KDE extensions
 Group=Views (KDE)
 
 [KIntSpinBox]
@@ -167,24 +167,24 @@ WhatsThis=A measuring ruler widget as seen in KWord for page widths and heights
 Group=Display (KDE)
 
 [KSqueezedTextLabel]
-ToolTip=A QLabel that squeezes its text (KDE)
+ToolTip=A TQLabel that squeezes its text (KDE)
 WhatsThis=If the text is too long to fit into the label it is divided into remaining left and right parts which are separated by three dots
 ConstructorArgs=("KSqueezedTextLabel", parent, name)
 Group=Display (KDE)
 
 [KTextBrowser]
-ToolTip=Improved QTextBrowser (KDE)
-WhatsThis=An improved version of the QTextBrowser with mail or system browser invocation support
+ToolTip=Improved TQTextBrowser (KDE)
+WhatsThis=An improved version of the TQTextBrowser with mail or system browser invocation support
 Group=Display (KDE)
 
 [KTextEdit]
-ToolTip=Improved QTextEdit (KDE)
-WhatsThis=An improved version of the QTextEdit with mail or system browser invocation support
+ToolTip=Improved TQTextEdit (KDE)
+WhatsThis=An improved version of the TQTextEdit with mail or system browser invocation support
 Group=Input (KDE)
 
 [KURLLabel]
 ToolTip=URL Label (KDE)
-ConstructorArgs=("KURLLabel", QString::null, parent, name)
+ConstructorArgs=("KURLLabel", TQString(), parent, name)
 Group=Display (KDE)
 
 [KURLComboRequester]
@@ -229,7 +229,7 @@ Group=Input (KDE)
 [KDateTable]
 IncludeFile=kdatetbl.h
 Group=Input (KDE)
-ConstructorArgs=(parent, QDate::currentDate(), name)
+ConstructorArgs=(parent, TQDate::currentDate(), name)
 
 [KLanguageButton]
 IncludeFile=klanguagebutton.h

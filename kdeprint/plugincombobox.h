@@ -42,9 +42,9 @@ protected:
 	void configChanged();
 
 private:
-	QComboBox	*m_combo;
-	QLabel		*m_plugininfo;
-	QStringList	m_pluginlist;
+	TQComboBox	*m_combo;
+	TQLabel		*m_plugininfo;
+	TQStringList	m_pluginlist;
 };
 
 #endif

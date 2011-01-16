@@ -34,10 +34,10 @@
 EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, TQWidget *parent, const char *name)
 : KDialogBase(parent, name, true, TQString::null, Ok|Cancel)
 {
-	QWidget	*w = new TQWidget(this);
+	TQWidget	*w = new TQWidget(this);
 	setMainWidget(w);
 
-	QLabel	*lab0 = new TQLabel(i18n("Aliases:"), w);
+	TQLabel	*lab0 = new TQLabel(i18n("Aliases:"), w);
 	m_aliases = new TQLineEdit(w);
 	m_view = new KListView(w);
 	m_view->addColumn("");
@@ -55,9 +55,9 @@ EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, TQWidget *parent, const c
 	m_stack->addWidget(m_number, 1);
 	m_name = new TQLineEdit(w);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(w, 0, 10);
-	QHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
-	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 5);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(w, 0, 10);
+	TQHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
+	TQHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 5);
 	l0->addLayout(l1);
 	l1->addWidget(lab0);
 	l1->addWidget(m_aliases);
@@ -72,7 +72,7 @@ EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, TQWidget *parent, const c
 		setCaption(i18n("Printcap Entry: %1").arg(entry->name));
 		m_fields = entry->fields;
 		m_aliases->setText(entry->aliases.join("|"));
-		QListViewItem	*root = new TQListViewItem(m_view, entry->name), *item = 0;
+		TQListViewItem	*root = new TQListViewItem(m_view, entry->name), *item = 0;
 		root->setSelectable(false);
 		root->setOpen(true);
 		root->setPixmap(0, SmallIcon("fileprint"));

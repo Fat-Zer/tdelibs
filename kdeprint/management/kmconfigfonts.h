@@ -45,10 +45,10 @@ protected slots:
 	void slotTextChanged(const TQString&);
 
 private:
-	QCheckBox	*m_embedfonts;
+	TQCheckBox	*m_embedfonts;
 	KListView	*m_fontpath;
 	KURLRequester	*m_addpath;
-	QPushButton	*m_up, *m_down, *m_add, *m_remove;
+	TQPushButton	*m_up, *m_down, *m_add, *m_remove;
 };
 
 #endif

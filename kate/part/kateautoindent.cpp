@@ -1411,7 +1411,7 @@ void KateXmlIndent::getLineInfo (uint line, uint &prevIndent, int &numTags,
   uint pos, len = text.length();
   bool seenOpen = false;
   for(pos = 0; pos < len; ++pos) {
-    int ch = text.at(pos).tqunicode();
+    int ch = text.tqat(pos).tqunicode();
     switch(ch) {
       case '<':
         seenOpen = true;
@@ -1467,11 +1467,11 @@ void KateXmlIndent::getLineInfo (uint line, uint &prevIndent, int &numTags,
   if(unclosedTag) {
     // find the start of the next attribute, so we can align with it
     do {
-      lastCh = text.at(++attrCol).tqunicode();
+      lastCh = text.tqat(++attrCol).tqunicode();
     }while(lastCh && lastCh != ' ' && lastCh != '\t');
 
     while(lastCh == ' ' || lastCh == '\t') {
-      lastCh = text.at(++attrCol).tqunicode();
+      lastCh = text.tqat(++attrCol).tqunicode();
     }
 
     attrCol = prevLine->cursorX(attrCol, tabWidth);
@@ -1606,7 +1606,7 @@ TQString KateCSAndSIndent::findOpeningCommentIndentation(const KateDocCursor &st
   {
     KateTextLine::Ptr textLine = doc->plainKateTextLine(cur.line());
 
-    int pos = textLine->string().findRev("/*");
+    int pos = textLine->string().tqfindRev("/*");
     // FIXME: /* inside /* is possible. This screws up in that case...
     if (pos >= 0)
       return initialWhitespace(textLine, pos);
@@ -2372,9 +2372,9 @@ void KateVarIndent::slotVariableChanged( const TQString &var, const TQString &va
   {
     d->couples = 0;
     TQStringList l = TQStringList::split( " ", val );
-    if ( l.contains("parens") ) d->couples |= Parens;
-    if ( l.contains("braces") ) d->couples |= Braces;
-    if ( l.contains("brackets") ) d->couples |= Brackets;
+    if ( l.tqcontains("parens") ) d->couples |= Parens;
+    if ( l.tqcontains("braces") ) d->couples |= Braces;
+    if ( l.tqcontains("brackets") ) d->couples |= Brackets;
   }
   else if ( var == "var-indent-couple-attribute" )
   {

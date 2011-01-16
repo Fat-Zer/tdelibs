@@ -34,8 +34,8 @@ KMConfigCommand::KMConfigCommand(TQWidget *parent, const char *name)
 	setPageHeader(i18n("Command Settings"));
 	setPagePixmap("exec");
 
-	QGroupBox	*gb = new TQGroupBox(0, Qt::Horizontal, i18n("Edit/Create Commands"), this);
-	QLabel	*lab = new TQLabel(i18n(
+	TQGroupBox	*gb = new TQGroupBox(0, Qt::Horizontal, i18n("Edit/Create Commands"), this);
+	TQLabel	*lab = new TQLabel(i18n(
 				"<p>Command objects perform a conversion from input to output.<br>"
                 "They are used as the basis to build both print filters "
 				"and special printers. They are described by a command string, a "
@@ -44,10 +44,10 @@ KMConfigCommand::KMConfigCommand(TQWidget *parent, const char *name)
 				"changes will only be effective for you."), gb);
 	KXmlCommandSelector	*sel = new KXmlCommandSelector(false, gb);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l0->addWidget(gb);
 	l0->addStretch(1);
-	QVBoxLayout	*l2 = new TQVBoxLayout(gb->layout(), KDialog::spacingHint());
+	TQVBoxLayout	*l2 = new TQVBoxLayout(TQT_TQLAYOUT(gb->layout()), KDialog::spacingHint());
 	l2->addWidget(lab);
 	l2->addWidget(sel);
 }

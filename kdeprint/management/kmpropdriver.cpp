@@ -31,14 +31,14 @@ KMPropDriver::KMPropDriver(TQWidget *parent, const char *name)
 	m_manufacturer = new TQLabel("",this);
 	m_model = new TQLabel("",this);
 	m_driverinfo = new TQLabel("",this);
-	m_driverinfo->setTextFormat(Qt::RichText);
+	m_driverinfo->setTextFormat(TQt::RichText);
 
-	QLabel	*l1 = new TQLabel(i18n("Manufacturer:"), this);
-	QLabel	*l2 = new TQLabel(i18n("Printer model:"), this);
-	QLabel	*l3 = new TQLabel(i18n("Driver info:"), this);
+	TQLabel	*l1 = new TQLabel(i18n("Manufacturer:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("Printer model:"), this);
+	TQLabel	*l3 = new TQLabel(i18n("Driver info:"), this);
 
 	// layout
-	QGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 7);
+	TQGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 7);
 	main_->setColStretch(0,0);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(3,1);

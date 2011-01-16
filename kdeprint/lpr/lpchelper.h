@@ -53,7 +53,7 @@ protected:
 
 private:
 	TQMap<TQString, KMPrinter::PrinterState>	m_state;
-	QString	m_exepath, m_lprmpath, m_checkpcpath;
+	TQString	m_exepath, m_lprmpath, m_checkpcpath;
 };
 
 #endif

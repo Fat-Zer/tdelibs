@@ -520,9 +520,9 @@ void NodeImpl::dispatchMouseEvent(TQMouseEvent *_mouse, int overrideId, int over
         default:
             break;
     }
-    bool ctrlKey = (_mouse->state() & Qt::ControlButton);
-    bool altKey = (_mouse->state() & Qt::AltButton);
-    bool shiftKey = (_mouse->state() & Qt::ShiftButton);
+    bool ctrlKey = (_mouse->state() & TQt::ControlButton);
+    bool altKey = (_mouse->state() & TQt::AltButton);
+    bool shiftKey = (_mouse->state() & TQt::ShiftButton);
     bool metaKey = false; // ### qt support?
 
     EventImpl* const evt = new MouseEventImpl(evtId,true,cancelable,getDocument()->defaultView(),
@@ -2060,7 +2060,7 @@ bool RegisteredListenerList::stillContainsListener(const RegisteredEventListener
 {
     if (!listeners)
         return false;
-    return listeners->find(listener) != listeners->end();
+    return listeners->tqfind(listener) != listeners->end();
 }
 
 RegisteredListenerList::~RegisteredListenerList() {

@@ -59,19 +59,19 @@ protected:
 
 private:
 	KProcess	m_proc;
-	QStringList	m_buffer;
+	TQStringList	m_buffer;
 	int			m_state;
-	QStringList	m_actions;
+	TQStringList	m_actions;
 	int			m_actionindex;
 	bool		m_status;
-	QProgressBar	*m_bar;
-	QString		m_dest;
+	TQProgressBar	*m_bar;
+	TQString		m_dest;
 	SidePixmap	*m_side;
-	QPushButton	*m_doit, *m_cancel;
+	TQPushButton	*m_doit, *m_cancel;
 	KActiveLabel	*m_text;
 	TQLabel *m_textinfo;
 	TQLineEdit *m_logined, *m_passwded, *m_servered;
-	QString	m_datadir;
+	TQString	m_datadir;
 };
 
 #endif

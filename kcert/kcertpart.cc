@@ -784,7 +784,7 @@ void KCertPart::slotSelectionChanged(TQListViewItem *x) {
 	KPKCS12Item *p12i = dynamic_cast<KPKCS12Item*>(x);
 	_p12 = NULL;
 	_ca = NULL;
-	if (x && x->parent() == _parentCA) {
+	if (x && x->tqparent() == _parentCA) {
 		if (!x5i) {
 			return;
 		}
@@ -797,7 +797,7 @@ void KCertPart::slotSelectionChanged(TQListViewItem *x) {
 		_save->setEnabled(true);
 		_curName = x5i->_prettyName;
 		displayCACert(_ca);
-	} else if (x && x->parent() == NULL && x->rtti() == 1) {
+	} else if (x && x->tqparent() == NULL && x->rtti() == 1) {
 		if (!x5i) {
 			return;
 		}
@@ -810,7 +810,7 @@ void KCertPart::slotSelectionChanged(TQListViewItem *x) {
 		_save->setEnabled(false);
 		_curName = x5i->_prettyName;
 		displayCACert(_ca);
-	} else if (x && x->parent() == _parentP12) {
+	} else if (x && x->tqparent() == _parentP12) {
 		if (!p12i) {
 			return;
 		}

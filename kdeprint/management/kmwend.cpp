@@ -35,14 +35,14 @@ KMWEnd::KMWEnd(TQWidget *parent, const char *name)
 
 	m_view = new TQTextView(this);
 
-	QVBoxLayout	*lay = new TQVBoxLayout(this, 0, 0);
+	TQVBoxLayout	*lay = new TQVBoxLayout(this, 0, 0);
 	lay->addWidget(m_view,1);
 }
 
 void KMWEnd::initPrinter(KMPrinter *p)
 {
-	QString	txt;
-	QString	s(TQString::tqfromLatin1("<li><u>%1</u>: %2</li>"));
+	TQString	txt;
+	TQString	s(TQString::tqfromLatin1("<li><u>%1</u>: %2</li>"));
 	int	ID = p->option("kde-backend").toInt();
 
 	// general information
@@ -57,8 +57,8 @@ void KMWEnd::initPrinter(KMPrinter *p)
 	{
 		// class members
 		txt.append(TQString::tqfromLatin1("<b>%1</b><ul type=circle>").arg(i18n("Members")));
-		QStringList	m(p->members());
-		QString		s1(TQString::tqfromLatin1("<li>%1</li>"));
+		TQStringList	m(p->members());
+		TQString		s1(TQString::tqfromLatin1("<li>%1</li>"));
 		for (TQStringList::ConstIterator it=m.begin(); it!=m.end(); ++it)
 			txt.append(s1.arg(*it));
 		txt.append("</ul><br>");

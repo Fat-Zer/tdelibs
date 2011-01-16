@@ -32,7 +32,7 @@ public:
 	{
 		m_menu = 0;
 	}
-	QStringList	m_iconlst;
+	TQStringList	m_iconlst;
 	TQPopupMenu*	m_menu;
 };
 
@@ -51,7 +51,7 @@ void KIconSelectAction::updateIcons()
 {
 	if (d->m_menu)
 	{
-		QStringList	lst = items();
+		TQStringList	lst = items();
 		for (uint id=0; id<lst.count(); ++id)
 			d->m_menu->changeItem(id, SmallIconSet(d->m_iconlst[id]), lst[id]);
 	}
@@ -87,7 +87,7 @@ int KIconSelectAction::plug(TQWidget* widget, int index)
 		int id = KAction::getToolButtonID();
 		// To have a correct layout in the toolbar, a non
 		// empty icon has to be used. Use "unknown" by default.
-		QString	iconName = (currentItem() != -1 ? d->m_iconlst[currentItem()] : "unknown");
+		TQString	iconName = (currentItem() != -1 ? d->m_iconlst[currentItem()] : "unknown");
 
 		createPopupMenu();
 		bar->insertButton(iconName, id, true, plainText(), index);

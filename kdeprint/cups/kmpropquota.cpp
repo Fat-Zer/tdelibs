@@ -36,15 +36,15 @@ KMPropQuota::KMPropQuota(TQWidget *parent, const char *name)
 	m_sizelimit = new TQLabel(this);
 	m_pagelimit = new TQLabel(this);
 
-	QLabel	*l1 = new TQLabel(i18n("&Period:"), this);
-	QLabel	*l2 = new TQLabel(i18n("&Size limit (KB):"), this);
-	QLabel	*l3 = new TQLabel(i18n("&Page limit:"), this);
+	TQLabel	*l1 = new TQLabel(i18n("&Period:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("&Size limit (KB):"), this);
+	TQLabel	*l3 = new TQLabel(i18n("&Page limit:"), this);
 
 	l1->setBuddy(m_period);
 	l2->setBuddy(m_sizelimit);
 	l3->setBuddy(m_pagelimit);
 
-	QGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 10);
+	TQGridLayout	*main_ = new TQGridLayout(this, 4, 2, 10, 10);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(3,1);
 	main_->addWidget(l1,0,0);

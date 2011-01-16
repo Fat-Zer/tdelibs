@@ -36,8 +36,8 @@ protected:
 	void configureWizard(KMWizard*);
 
 private:
-	QLabel	*m_host;
-	QLabel	*m_queue;
+	TQLabel	*m_host;
+	TQLabel	*m_queue;
 };
 
 #endif

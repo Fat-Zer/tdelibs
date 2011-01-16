@@ -92,7 +92,7 @@ AddresseeDialog::AddresseeDialog( TQWidget *parent, bool multiple ) :
     topLayout->addLayout( selectedLayout );
     topLayout->setSpacing( spacingHint() );
 
-    TQGroupBox *selectedGroup = new TQGroupBox( 1, Horizontal, i18n("Selected"),
+    TQGroupBox *selectedGroup = new TQGroupBox( 1, Qt::Horizontal, i18n("Selected"),
                                               topWidget );
     selectedLayout->addWidget( selectedGroup );
 

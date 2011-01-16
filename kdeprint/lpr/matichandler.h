@@ -50,8 +50,8 @@ private:
 	bool savePpdFile(DrMain*, const TQString&);
 
 private:
-	QString	m_exematicpath;
-	QString	m_ncpath, m_smbpath, m_rlprpath;
+	TQString	m_exematicpath;
+	TQString	m_ncpath, m_smbpath, m_rlprpath;
 };
 
 #endif

@@ -63,9 +63,9 @@ protected slots:
 	void slotEditChanged(const TQString&);
 
 private:
-	QLineEdit	*m_edit;
-	QSlider		*m_slider;
-	QLabel		*m_minval, *m_maxval;
+	TQLineEdit	*m_edit;
+	TQSlider	*m_slider;
+	TQLabel		*m_minval, *m_maxval;
 	bool		m_integer;
 };
 
@@ -77,7 +77,7 @@ public:
 	void setValue(const TQString& val);
 
 private:
-	QLineEdit	*m_edit;
+	TQLineEdit	*m_edit;
 };
 
 class OptionListView : public OptionBaseView
@@ -93,7 +93,7 @@ protected slots:
 
 private:
 	KListBox	*m_list;
-	QStringList	m_choices;
+	TQStringList	m_choices;
 };
 
 class OptionBooleanView : public OptionBaseView
@@ -108,8 +108,8 @@ protected slots:
 	void slotSelected(int);
 
 private:
-	QVButtonGroup	*m_group;
-	QStringList	m_choices;
+	TQVButtonGroup	*m_group;
+	TQStringList	m_choices;
 };
 
 class DrOptionView : public TQGroupBox
@@ -127,7 +127,7 @@ public slots:
 	void slotItemSelected(TQListViewItem*);
 
 private:
-	QWidgetStack	*m_stack;
+	TQWidgetStack	*m_stack;
 	DriverItem	*m_item;
 	bool		m_block;
 	bool		m_allowfixed;

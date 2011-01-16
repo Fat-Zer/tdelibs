@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>EditorChooser_UI</class>
-<widget class="QWidget">
+<widget class="TQWidget">
     <property name="name">
         <cstring>EditorChooser</cstring>
     </property>
@@ -27,7 +27,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="TQLabel">
                     <property name="name">
                         <cstring>TextLabel1</cstring>
                     </property>
@@ -44,7 +44,7 @@
                         <set>WordBreak|AlignVCenter|AlignLeft</set>
                     </property>
                 </widget>
-                <widget class="QComboBox">
+                <widget class="TQComboBox">
                     <property name="name">
                         <cstring>editorCombo</cstring>
                     </property>

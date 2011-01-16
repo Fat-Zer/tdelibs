@@ -37,14 +37,14 @@ KMWFile::KMWFile(TQWidget *parent, const char *name)
 
 	m_url = new KURLRequester(this);
 	m_url->setMode((KFile::Mode)(KFile::File|KFile::LocalOnly));
-	QLabel	*l1 = new TQLabel(this);
+	TQLabel	*l1 = new TQLabel(this);
 	l1->setText(i18n("<p>The printing will be redirected to a file. Enter here the path "
 			 "of the file you want to use for redirection. Use an absolute path or "
 			 "the browse button for graphical selection.</p>"));
-	QLabel	*l2 = new TQLabel(i18n("Print to file:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("Print to file:"), this);
 
-	QVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 30);
-	QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 5);
+	TQVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 30);
+	TQVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 5);
 	lay1->addWidget(l1);
 	lay1->addLayout(lay2);
 	lay1->addStretch(1);
@@ -54,7 +54,7 @@ KMWFile::KMWFile(TQWidget *parent, const char *name)
 
 bool KMWFile::isValid(TQString& msg)
 {
-	QFileInfo	fi(m_url->url());
+	TQFileInfo	fi(m_url->url());
 	if (fi.fileName().isEmpty())
 	{
 		msg = i18n("Empty file name.");
@@ -72,6 +72,6 @@ bool KMWFile::isValid(TQString& msg)
 
 void KMWFile::updatePrinter(KMPrinter *p)
 {
-	QString	dev = TQString::tqfromLatin1("file:%1").arg(m_url->url());
+	TQString	dev = TQString::tqfromLatin1("file:%1").arg(m_url->url());
 	p->setDevice(dev);
 }

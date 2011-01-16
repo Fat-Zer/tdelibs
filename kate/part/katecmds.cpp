@@ -157,7 +157,7 @@ bool KateCommands::CoreCommands::exec(Kate::View *view,
   }
   else if ( cmd == "set-highlight" )
   {
-    TQString val = _cmd.section( ' ', 1 ).lower();
+    TQString val = TQString(_cmd.section( ' ', 1 )).lower();
     for ( uint i=0; i < v->doc()->hlModeCount(); i++ )
     {
       if ( v->doc()->hlModeName( i ).lower() == val )
@@ -408,7 +408,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
     TQString rep=repOld;
 
     // now set the backreferences in the replacement
-    TQStringList backrefs=matcher.capturedTexts();
+    TQStringList backrefs=matcher.tqcapturedTexts();
     int refnum=1;
 
     TQStringList::Iterator i = backrefs.begin();
@@ -442,7 +442,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
     // TODO if replace contains \n,
     // change the line number and
     // check for text that needs be searched behind the last inserted newline.
-    int lns = rep.contains('\n');
+    int lns = rep.tqcontains('\n');
     if ( lns )
     {
       line += lns;
@@ -451,7 +451,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
       {
       //  if ( endcol  >= startcol + len )
           endcol -= (startcol + len);
-          uint sc = rep.length() - rep.findRev('\n') - 1;
+          uint sc = rep.length() - rep.tqfindRev('\n') - 1;
         matches += sedMagic( doc, line, find, repOld, delim, noCase, repeat, sc, endcol );
       }
     }

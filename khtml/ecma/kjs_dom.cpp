@@ -524,7 +524,7 @@ UString DOMNode::toString(ExecState *) const
 
   DOM::Element e = node;
   if ( !e.isNull() ) {
-    s = e.nodeName().string();
+    s = static_cast<UString>(e.nodeName().string());
   } else
     s = className(); // fallback
 

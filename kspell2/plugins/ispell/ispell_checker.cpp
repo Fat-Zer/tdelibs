@@ -260,7 +260,7 @@ ISpellChecker::checkWord( const TQString& utf8Word )
 	return retVal;
 }
 
-QStringList
+TQStringList
 ISpellChecker::suggestWord(const TQString& utf8Word)
 {
 	ichar_t  iWord[INPUTWORDLEN + MAXAFFIXLEN];
@@ -358,7 +358,7 @@ ISpellChecker::allDics()
 	return ispell_dict_map.keys();
 }
 
-QString
+TQString
 ISpellChecker::loadDictionary (const char * szdict)
 {
 	std::vector<std::string> dict_names;

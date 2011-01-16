@@ -157,7 +157,7 @@ KMListViewItem* KMListView::findItem(KMPrinter *p)
 			if (isVirtual)
 			{
 				if (it.current()->depth() == 3 && it.current()->text(0) == p->instanceName()
-						&& it.current()->parent()->text(0) == p->printerName())
+						&& it.current()->tqparent()->text(0) == p->printerName())
 					return it.current();
 			}
 			else

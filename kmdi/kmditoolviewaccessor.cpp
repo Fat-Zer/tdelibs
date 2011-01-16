@@ -186,7 +186,7 @@ void KMdiToolViewAccessor::place( KDockWidget::DockPosition pos, TQWidget* pTarg
 	if ( pos == KDockWidget::DockNone )
 	{
 		d->widgetContainer->setEnableDocking( KDockWidget::DockNone );
-		d->widgetContainer->reparent( mdiMainFrm, Qt::WType_TopLevel | Qt::WType_Dialog, TQPoint( 0, 0 ), true ); //pToolView->isVisible());
+		d->widgetContainer->reparent( mdiMainFrm, (WFlags)(WType_TopLevel | WType_Dialog), TQPoint( 0, 0 ), true ); //pToolView->isVisible());
 	}
 	else
 	{   // add (and dock) the toolview as DockWidget view

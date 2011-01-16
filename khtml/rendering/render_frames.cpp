@@ -550,7 +550,7 @@ bool RenderFrameSet::userResize( MouseEventImpl *evt )
       TQPainter paint( view );
       paint.setPen( Qt::gray );
       paint.setBrush( Qt::gray );
-      paint.setRasterOp( Qt::XorROP );
+      paint.setRasterOp( TQt::XorROP );
       TQRect r(xPos(), yPos(), width(), height());
       const int rBord = 3;
       int sw = element()->border();
@@ -634,7 +634,7 @@ void RenderPart::setWidget( TQWidget *widget )
 #endif
 
     setQWidget( widget );
-    widget->setFocusPolicy(TQWidget::WheelFocus);
+    widget->setFocusPolicy(TQ_WheelFocus);
     if(widget->inherits("KHTMLView"))
         connect( widget, TQT_SIGNAL( cleared() ), this, TQT_SLOT( slotViewCleared() ) );
 

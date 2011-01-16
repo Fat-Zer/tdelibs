@@ -37,10 +37,10 @@ public:
 	void updatePrinter(KMPrinter*);
 
 private:
-	QSpinBox	*m_period;
-	QSpinBox	*m_sizelimit;
-	QSpinBox	*m_pagelimit;
-	QComboBox	*m_timeunit;
+	TQSpinBox	*m_period;
+	TQSpinBox	*m_sizelimit;
+	TQSpinBox	*m_pagelimit;
+	TQComboBox	*m_timeunit;
 };
 
 #endif

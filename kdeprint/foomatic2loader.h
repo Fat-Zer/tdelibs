@@ -20,6 +20,7 @@
 #ifndef FOOMATIC2LOADER_H
 #define FOOMATIC2LOADER_H
 
+#include <tqmap.h>
 #include <tqvariant.h>
 
 #include <kdelibs_export.h>

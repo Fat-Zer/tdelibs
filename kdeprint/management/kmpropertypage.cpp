@@ -68,7 +68,7 @@ void KMPropertyPage::addPropPage(KMPropWidget *w)
 
 void KMPropertyPage::slotEnable(bool on)
 {
-	QWidget	*w = (TQWidget*)(sender());
+	TQWidget	*w = (TQWidget*)(sender());
 	if (on)
 		enablePage(w);
 	else

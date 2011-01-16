@@ -47,10 +47,10 @@ bool LPRngToolHandler::validate(PrintcapEntry *entry)
 
 bool LPRngToolHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool shortmode)
 {
-	QString	str, lp;
+	TQString	str, lp;
 
 	// look for type in comment
-	QStringList	l = TQStringList::split(' ', entry->comment, false);
+	TQStringList	l = TQStringList::split(' ', entry->comment, false);
 	lp = entry->field("lp");
 	if (l.count() < 1)
 		return false;
@@ -60,7 +60,7 @@ bool LPRngToolHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, boo
 	else if (l[1] == "SMB")
 	{
 		TQMap<TQString,TQString>	opts = parseXferOptions(entry->field("xfer_options"));
-		QString	user, pass;
+		TQString	user, pass;
 		loadAuthFile(LprSettings::self()->baseSpoolDir() + "/" + entry->name + "/" + opts["authfile"], user, pass);
 		TQString uri = buildSmbURI(
 				opts[ "workgroup" ],
@@ -81,7 +81,7 @@ bool LPRngToolHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, boo
 	//{
 		if (!(str=entry->field("ifhp")).isEmpty())
 		{
-			QString	model;
+			TQString	model;
 			int	p = str.tqfind("model");
 			if (p != -1)
 			{
@@ -107,7 +107,7 @@ TQMap<TQString,TQString> LPRngToolHandler::parseXferOptions(const TQString& str)
 {
 	uint	p(0), q;
 	TQMap<TQString,TQString>	opts;
-	QString	key, val;
+	TQString	key, val;
 
 	while (p < str.length())
 	{
@@ -132,11 +132,11 @@ TQMap<TQString,TQString> LPRngToolHandler::parseXferOptions(const TQString& str)
 
 void LPRngToolHandler::loadAuthFile(const TQString& filename, TQString& user, TQString& pass)
 {
-	QFile	f(filename);
+	TQFile	f(filename);
 	if (f.open(IO_ReadOnly))
 	{
-		QTextStream	t(&f);
-		QString	line;
+		TQTextStream	t(&f);
+		TQString	line;
 		while (!t.atEnd())
 		{
 			line = t.readLine().stripWhiteSpace();
@@ -145,7 +145,7 @@ void LPRngToolHandler::loadAuthFile(const TQString& filename, TQString& user, TQ
 			int	p = line.tqfind('=');
 			if (p != -1)
 			{
-				QString	key = line.left(p);
+				TQString	key = line.left(p);
 				if (key == "username")
 					user = line.mid(p+1);
 				else if (key == "password")
@@ -166,7 +166,7 @@ DrMain* LPRngToolHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool 
 	DrMain*	driver = loadToolDriver(locate("data", "kdeprint/lprngtooldriver1"));
 	if (driver)
 	{
-		QString	model = prt->option("driverID");
+		TQString	model = prt->option("driverID");
 		driver->set("text", i18n("LPRngTool Common Driver (%1)").arg((model.isEmpty() ? i18n("unknown") : model)));
 		if (!model.isEmpty())
 			driver->set("driverID", model);
@@ -189,22 +189,22 @@ DrMain* LPRngToolHandler::loadDbDriver(const TQString& s)
 	return driver;
 }
 
-TQValueList< QPair<TQString,TQStringList> > LPRngToolHandler::loadChoiceDict(const TQString& filename)
+TQValueList< TQPair<TQString,TQStringList> > LPRngToolHandler::loadChoiceDict(const TQString& filename)
 {
-	QFile	f(filename);
-	TQValueList< QPair<TQString,TQStringList> >	dict;
+	TQFile	f(filename);
+	TQValueList< TQPair<TQString,TQStringList> >	dict;
 	if (f.open(IO_ReadOnly))
 	{
-		QTextStream	t(&f);
-		QString	line, key;
-		QStringList	l;
+		TQTextStream	t(&f);
+		TQString	line, key;
+		TQStringList	l;
 		while (!t.atEnd())
 		{
 			line = t.readLine().stripWhiteSpace();
 			if (line.startsWith("OPTION"))
 			{
 				if (l.count() > 0 && !key.isEmpty())
-					dict << QPair<TQString,TQStringList>(key, l);
+					dict << TQPair<TQString,TQStringList>(key, l);
 				l.clear();
 				key = TQString::null;
 				if (line.contains('|') == 2 || line.right(7) == "BOOLEAN")
@@ -226,18 +226,18 @@ TQValueList< QPair<TQString,TQStringList> > LPRngToolHandler::loadChoiceDict(con
 TQMap<TQString,TQString> LPRngToolHandler::parseZOptions(const TQString& optstr)
 {
 	TQMap<TQString,TQString>	opts;
-	QStringList	l = TQStringList::split(',', optstr, false);
+	TQStringList	l = TQStringList::split(',', optstr, false);
 	if (l.count() == 0)
 		return opts;
 	
 	if (m_dict.count() == 0)
 		m_dict = loadChoiceDict(locate("data", "kdeprint/lprngtooldriver1"));
 
-	QString	unknown;
+	TQString	unknown;
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		bool	found(false);
-		for (TQValueList< QPair<TQString,TQStringList> >::ConstIterator p=m_dict.begin(); p!=m_dict.end() && !found; ++p)
+		for (TQValueList< TQPair<TQString,TQStringList> >::ConstIterator p=m_dict.begin(); p!=m_dict.end() && !found; ++p)
 		{
 			if ((*p).second.tqfind(*it) != (*p).second.end())
 			{
@@ -270,7 +270,7 @@ TQString LPRngToolHandler::driverDirInternal()
 
 PrintcapEntry* LPRngToolHandler::createEntry(KMPrinter *prt)
 {
-	QString	prot = prt->deviceProtocol();
+	TQString	prot = prt->deviceProtocol();
 	if (prot != "parallel" && prot != "lpd" && prot != "smb" && prot != "socket")
 	{
 		manager()->setErrorMsg(i18n("Unsupported backend: %1.").arg(prot));
@@ -278,7 +278,7 @@ PrintcapEntry* LPRngToolHandler::createEntry(KMPrinter *prt)
 	}
 	PrintcapEntry	*entry = new PrintcapEntry;
 	entry->addField("cm", Field::String, prt->description());
-	QString	lp, comment("##LPRNGTOOL## ");
+	TQString	lp, comment("##LPRNGTOOL## ");
 	if (prot == "parallel")
 	{
 		comment.append("DEVICE ");
@@ -305,14 +305,14 @@ PrintcapEntry* LPRngToolHandler::createEntry(KMPrinter *prt)
 	{
 		comment.append("SMB ");
 		lp = "| " + filterDir() + "/smbprint";
-		QString	work, server, printer, user, passwd;
+		TQString	work, server, printer, user, passwd;
 		if ( splitSmbURI( prt->device(), work, server, printer, user, passwd ) )
 		{
 			entry->addField("xfer_options", Field::String, TQString::tqfromLatin1("authfile=\"auth\" crlf=\"0\" hostip=\"\" host=\"%1\" printer=\"%2\" remote_mode=\"SMB\" share=\"//%3/%4\" workgroup=\"%5\"").arg(server).arg(printer).arg(server).arg(printer).arg(work));
-			QFile	authfile(LprSettings::self()->baseSpoolDir() + "/" + prt->printerName() + "/auth");
+			TQFile	authfile(LprSettings::self()->baseSpoolDir() + "/" + prt->printerName() + "/auth");
 			if (authfile.open(IO_WriteOnly))
 			{
-				QTextStream	t(&authfile);
+				TQTextStream	t(&authfile);
 				t << "username=" << user << endl;
 				t << "password=" << passwd << endl;
 				authfile.close();
@@ -334,7 +334,7 @@ PrintcapEntry* LPRngToolHandler::createEntry(KMPrinter *prt)
 		entry->addField("ifhp", Field::String, TQString::tqfromLatin1("model=%1,status@,sync@,pagecount@,waitend@").arg(driver->get("driverID")));
 		entry->addField("lprngtooloptions", Field::String, TQString::tqfromLatin1("FILTERTYPE=\"IFHP\" IFHP_OPTIONS=\"status@,sync@,pagecount@,waitend@\" PRINTERDB_ENTRY=\"%1\"").arg(driver->get("driverID")));
 		TQMap<TQString,TQString>	opts;
-		QString	optstr;
+		TQString	optstr;
 		driver->getOptions(opts, false);
 		for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 			if (it.key() != "lpr")
@@ -358,7 +358,7 @@ bool LPRngToolHandler::savePrinterDriver(KMPrinter*, PrintcapEntry *entry, DrMai
 {
 	// save options in the "prefix_z" field and tell the manager to save the printcap file
 	TQMap<TQString,TQString>	opts;
-	QString	optstr;
+	TQString	optstr;
 	driver->getOptions(opts, false);
 	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 		if (it.key() != "lpr")
@@ -376,7 +376,7 @@ bool LPRngToolHandler::savePrinterDriver(KMPrinter*, PrintcapEntry *entry, DrMai
 
 TQString LPRngToolHandler::printOptions(KPrinter *printer)
 {
-	QString	optstr;
+	TQString	optstr;
 	TQMap<TQString,TQString>	opts = printer->options();
 	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 	{

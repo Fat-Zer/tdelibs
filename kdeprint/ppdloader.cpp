@@ -220,7 +220,7 @@ bool PPDLoader::endUi( const TQString& name )
 			else
 				grp = m_groups.top();
 			grp->addOption( m_option );
-			if ( grp->get( "text" ).contains( "install", false ) )
+			if ( grp->get( "text" ).tqcontains( "install", false ) )
 				m_option->set( "fixed", "1" );
 		}
 		m_option = 0;

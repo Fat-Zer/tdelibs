@@ -54,18 +54,18 @@ bool KMDBCreator::checkDriverDB(const TQString& dirname, const TQDateTime& d)
 	kapp->processEvents();
 
 	// first check current directory
-	QFileInfo	dfi(dirname);
+	TQFileInfo	dfi(dirname);
 	if (dfi.lastModified() > d)
 		return false;
 
 	// then check most recent file in current directory
-	QDir	dir(dirname);
-	const QFileInfoList	*list = dir.entryInfoList(TQDir::Files,TQDir::Time);
+	TQDir	dir(dirname);
+	const TQFileInfoList	*list = dir.entryInfoList(TQDir::Files,TQDir::Time);
 	if (list && list->count() > 0 && list->getFirst()->lastModified() > d)
 		return false;
 
 	// then loop into subdirs
-	QStringList	slist = dir.entryList(TQDir::Dirs,TQDir::Time);
+	TQStringList	slist = dir.entryList(TQDir::Dirs,TQDir::Time);
 	for (TQStringList::ConstIterator it=slist.begin(); it!=slist.end(); ++it)
 		if ((*it) != "." && (*it) != ".." && !checkDriverDB(dir.absFilePath(*it),d))
 			return false;
@@ -84,10 +84,10 @@ bool KMDBCreator::createDriverDB(const TQString& dirname, const TQString& filena
 
 	// start the child process
 	m_proc.clearArguments();
-	QString	exestr = KMFactory::self()->manager()->driverDbCreationProgram();
+	TQString	exestr = KMFactory::self()->manager()->driverDbCreationProgram();
 	m_proc << exestr << dirname << filename;
 	kdDebug() << "executing : " << exestr << " " << dirname << " " << filename << endl;
-	QString	msg;
+	TQString	msg;
 	if (exestr.isEmpty())
 		msg = i18n("No executable defined for the creation of the "
 		           "driver database. This operation is not implemented.");
@@ -127,7 +127,7 @@ bool KMDBCreator::createDriverDB(const TQString& dirname, const TQString& filena
 void KMDBCreator::slotReceivedStdout(KProcess*, char *buf, int len)
 {
 	// save buffer
-	QString	str( TQCString(buf, len) );
+	TQString	str( TQCString(buf, len) );
 
 	// get the number, cut the string at the first '\n' otherwise
 	// the toInt() will return 0. If that occurs for the first number,

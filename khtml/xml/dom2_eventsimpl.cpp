@@ -546,8 +546,8 @@ IDTranslator<unsigned, unsigned, unsigned>::Info virtKeyToQtKeyTable[] =
     {KeyEventBaseImpl::DOM_VK_RIGHT,        Qt::Key_Right},
     {KeyEventBaseImpl::DOM_VK_UP,           Qt::Key_Up},
     {KeyEventBaseImpl::DOM_VK_DOWN,         Qt::Key_Down},
-    {KeyEventBaseImpl::DOM_VK_PAGE_DOWN,    Qt::Key_Next},
-    {KeyEventBaseImpl::DOM_VK_PAGE_UP,      Qt::Key_Prior},
+    {KeyEventBaseImpl::DOM_VK_PAGE_DOWN,    TQt::Key_Next},
+    {KeyEventBaseImpl::DOM_VK_PAGE_UP,      TQt::Key_Prior},
     {KeyEventBaseImpl::DOM_VK_F1,           Qt::Key_F1},
     {KeyEventBaseImpl::DOM_VK_F2,           Qt::Key_F2},
     {KeyEventBaseImpl::DOM_VK_F3,           Qt::Key_F3},
@@ -593,7 +593,7 @@ KeyEventBaseImpl::KeyEventBaseImpl(EventId id, bool canBubbleArg, bool cancelabl
     // m_keyVal should contain the tqunicode value
     // of the pressed key if available.
     if (m_virtKeyVal == DOM_VK_UNDEFINED && !key->text().isEmpty())
-        m_keyVal = key->text().tqunicode()[0];
+        m_keyVal = TQString(key->text()).tqunicode()[0];
 
     // key->state returns enum ButtonState, which is ShiftButton, ControlButton and AltButton or'ed together.
     m_modifier = key->state();
@@ -723,10 +723,10 @@ MAKE_TRANSLATOR(keyIdentifiersToVirtKeys, TQCString, unsigned, const char*, keyI
 
 /** These are the modifiers we currently support */
 static const IDTranslator<TQCString, unsigned, const char*>::Info keyModifiersToCodeTable[] = {
-    {"Alt",         Qt::AltButton},
-    {"Control",     Qt::ControlButton},
-    {"Shift",       Qt::ShiftButton},
-    {"Meta",        Qt::MetaButton},
+    {"Alt",         TQt::AltButton},
+    {"Control",     TQt::ControlButton},
+    {"Shift",       TQt::ShiftButton},
+    {"Meta",        TQt::MetaButton},
     {0,             0}
 };
 
@@ -842,7 +842,7 @@ bool TextEventImpl::isTextInputEvent() const
 TextEventImpl::TextEventImpl(TQKeyEvent* key, DOM::AbstractViewImpl* view) :
     KeyEventBaseImpl(KEYPRESS_EVENT, true, true, view, key)
 {
-    m_outputString = key->text();
+    m_outputString = TQString(key->text());
 }
 
 void TextEventImpl::initTextEvent(const DOMString &typeArg,

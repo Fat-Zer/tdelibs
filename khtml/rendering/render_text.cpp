@@ -318,10 +318,10 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
         const int thickness = shadow->blur;
         const int w = m_width+2*thickness;
         const int h = m_height+2*thickness;
-        const QRgb color = shadow->color.rgb();
+        const TQRgb color = shadow->color.rgb();
         const int gray = tqGray(color);
         const bool inverse = (gray < 100);
-        const QRgb bgColor = (inverse) ? tqRgb(255,255,255) : tqRgb(0,0,0);
+        const TQRgb bgColor = (inverse) ? tqRgb(255,255,255) : tqRgb(0,0,0);
         TQPixmap pixmap(w, h);
         pixmap.fill(bgColor);
         TQPainter p;
@@ -334,7 +334,7 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
                     m_reversed ? TQPainter::RTL : TQPainter::LTR);
 
         p.end();
-        TQImage img = pixmap.convertToImage().convertDepth(32);
+        TQImage img = TQT_TQIMAGE_OBJECT(pixmap.convertToImage()).convertDepth(32);
 
         int md = thickness*thickness; // max-dist^2
 
@@ -363,7 +363,7 @@ void InlineTextBox::paintShadow(TQPainter *pt, const Font *f, int _tx, int _ty, 
         memset(amap, 0, h*w*(sizeof(float)));
         for(int j=thickness; j<h-thickness; j++) {
             for(int i=thickness; i<w-thickness; i++) {
-                QRgb col= img.pixel(i,j);
+                TQRgb col= img.pixel(i,j);
                 if (col == bgColor) continue;
                 float g = tqGray(col);
                 if (inverse)
@@ -642,7 +642,7 @@ int InlineTextBoxArray::compareItems( Item d1, Item d2 )
     return static_cast<InlineTextBox*>(d1)->m_y - static_cast<InlineTextBox*>(d2)->m_y;
 }
 
-// remove this once QVector::bsearch is fixed
+// remove this once TQVector::bsearch is fixed
 int InlineTextBoxArray::findFirstMatching(Item d) const
 {
     int len = count();
@@ -729,7 +729,7 @@ RenderText::~RenderText()
 
 void RenderText::deleteInlineBoxes(RenderArena* arena)
 {
-    // this is a slight variant of QArray::clear().
+    // this is a slight variant of TQArray::clear().
     // We don't delete the array itself here because its
     // likely to be used in the same size later again, saves
     // us resize() calls

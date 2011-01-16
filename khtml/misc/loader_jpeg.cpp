@@ -186,7 +186,7 @@ khtml_jpeg_source_mgr::khtml_jpeg_source_mgr()
 
 // -----------------------------------------------------------------------------
 
-class KJPEGFormat : public QImageFormat
+class KJPEGFormat : public TQImageFormat
 {
 public:
     KJPEGFormat();
@@ -312,7 +312,7 @@ int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* 
     {
         if(jpeg_read_header(&cinfo, true) != JPEG_SUSPENDED) {
             // do some simple memory requirements limitations
-            // as long as we use that stupid Qt stuff
+            // as long as we use that stupid TQt stuff
             int s = cinfo.image_width * cinfo.image_height;
             if ( s > 16384 * 12388 )
                 cinfo.scale_denom = 8;
@@ -427,7 +427,7 @@ again:
 	    // Expand 24->32 bpp.
 	    for (int j=oldoutput_scanline; j<oldoutput_scanline+completed_scanlines; j++) {
 		uchar *in = image.scanLine(j) + cinfo.output_width * 3;
-		QRgb *out = (QRgb*)image.scanLine(j);
+		TQRgb *out = (TQRgb*)image.scanLine(j);
 
 		for (uint i=cinfo.output_width; i--; ) {
 		    in-=3;
@@ -519,7 +519,7 @@ again:
 }
 
 // -----------------------------------------------------------------------------
-// This is the factory that teaches Qt about progressive JPEG's
+// This is the factory that teaches TQt about progressive JPEG's
 
 TQImageFormat* khtml::KJPEGFormatType::decoderFor(const unsigned char* buffer, int length)
 {

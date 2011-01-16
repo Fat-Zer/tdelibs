@@ -193,7 +193,7 @@ KLauncher::KLauncher(int _kdeinitSocket, bool new_startup)
    domainname.close();
    domainname.unlink();
 #endif
-   mPoolSocket = new KServerSocket(TQFile::encodeName(mPoolSocketName));
+   mPoolSocket = new KServerSocket(static_cast<const char*>(TQFile::encodeName(mPoolSocketName)));
    connect(mPoolSocket, TQT_SIGNAL(accepted( KSocket *)),
            TQT_SLOT(acceptSlave(KSocket *)));
 
@@ -740,7 +740,7 @@ KLauncher::requestDone(KLaunchRequest *request)
    {
       DCOPresult.result = 1;
       DCOPresult.dcopName = "";
-      DCOPresult.error = i18n("KDEInit could not launch '%1'.").arg(request->name);
+      DCOPresult.error = i18n("KDEInit could not launch '%1'.").arg(TQString(request->name));
       if (!request->errorMsg.isEmpty())
          DCOPresult.error += ":\n" + request->errorMsg;
       DCOPresult.pid = 0;
@@ -892,7 +892,7 @@ KLauncher::exec_blind( const TQCString &name, const TQValueList<TQCString> &arg_
    request->transaction = 0; // No confirmation is send
    request->envs = envs;
    // Find service, if any - strip path if needed
-   KService::Ptr service = KService::serviceByDesktopName( name.mid( name.findRev( '/' ) + 1 ));
+   KService::Ptr service = KService::serviceByDesktopName( name.mid( name.tqfindRev( '/' ) + 1 ));
    if (service != NULL)
        send_service_startup_info( request,  service,
            startup_id, TQValueList< TQCString >());
@@ -1164,7 +1164,7 @@ KLauncher::kdeinit_exec(const TQString &app, const TQStringList &args,
    if( app != "kbuildsycoca" ) // avoid stupid loop
    {
        // Find service, if any - strip path if needed
-       KService::Ptr service = KService::serviceByDesktopName( app.mid( app.findRev( '/' ) + 1 ));
+       KService::Ptr service = KService::serviceByDesktopName( app.mid( app.tqfindRev( '/' ) + 1 ));
        if (service != NULL)
            send_service_startup_info( request,  service,
                startup_id, TQValueList< TQCString >());
@@ -1331,7 +1331,7 @@ KLauncher::requestSlave(const TQString &protocol,
     requestDone(request);
     if (!pid)
     {
-       error = i18n("Error loading '%1'.\n").arg(name);
+       error = i18n("Error loading '%1'.\n").arg(TQString(name));
     }
     return pid;
 }

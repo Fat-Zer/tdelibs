@@ -37,7 +37,7 @@ public:
 
 private:
 	QDirLineEdit	*accesslog_, *errorlog_, *pagelog_;
-	QComboBox	*loglevel_;
+	TQComboBox	*loglevel_;
 	SizeWidget	*maxlogsize_;
 };
 

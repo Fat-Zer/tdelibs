@@ -236,11 +236,11 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 
 	setTitle(i18n("Image"));
 
-	QGroupBox	*colorbox = new TQGroupBox(0, Qt::Vertical, i18n("Color Settings"), this);
+	TQGroupBox	*colorbox = new TQGroupBox(0, Qt::Vertical, i18n("Color Settings"), this);
 	  TQWhatsThis::add(this, whatsThisImagePage);
-	QGroupBox	*sizebox = new TQGroupBox(0, Qt::Vertical, i18n("Image Size"), this);
+	TQGroupBox	*sizebox = new TQGroupBox(0, Qt::Vertical, i18n("Image Size"), this);
 	  TQWhatsThis::add(sizebox, whatsThisSizeImagePage);
-	QGroupBox	*positionbox = new TQGroupBox(0, Qt::Vertical, i18n("Image Position"), this);
+	TQGroupBox	*positionbox = new TQGroupBox(0, Qt::Vertical, i18n("Image Position"), this);
 	  TQWhatsThis::add(positionbox, whatsThisPositionImagePage);
 
 	m_brightness = new KIntNumInput(100, colorbox);
@@ -275,12 +275,12 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 
 	m_hue->setEnabled(useColor);
 	m_saturation->setEnabled(useColor);
-	QImage	img(locate("data", "kdeprint/preview.png"));
+	TQImage	img(locate("data", "kdeprint/preview.png"));
 	m_preview->setImage(img);
 
 	KSeparator	*sep = new KSeparator(Qt::Horizontal, colorbox);
 
-	QPushButton	*defbtn = new TQPushButton(i18n("&Default Settings"), colorbox);
+	TQPushButton	*defbtn = new TQPushButton(i18n("&Default Settings"), colorbox);
 	  TQWhatsThis::add(defbtn, whatsThisResetButtonImagePage);
 	connect(defbtn, TQT_SIGNAL(clicked()), TQT_SLOT(slotDefaultClicked()));
 	slotDefaultClicked();
@@ -301,19 +301,19 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 	m_sizetype->setCurrentItem(0);
 	slotSizeTypeChanged(0);
 
-	QLabel	*lab = new TQLabel(i18n("&Image size type:"), sizebox);
+	TQLabel	*lab = new TQLabel(i18n("&Image size type:"), sizebox);
 	lab->setBuddy(m_sizetype);
 
 	m_position = new ImagePosition(positionbox);
 	  TQWhatsThis::add(m_position, whatsThisPreviewPositionImagePage);
 
-	QRadioButton	*bottom = new TQRadioButton(positionbox);
-	QRadioButton	*top = new TQRadioButton(positionbox);
-	QRadioButton	*vcenter = new TQRadioButton(positionbox);
-	QRadioButton	*left = new TQRadioButton(positionbox);
-	QRadioButton	*right = new TQRadioButton(positionbox);
-	QRadioButton	*hcenter = new TQRadioButton(positionbox);
-	QSize	sz = bottom->tqsizeHint();
+	TQRadioButton	*bottom = new TQRadioButton(positionbox);
+	TQRadioButton	*top = new TQRadioButton(positionbox);
+	TQRadioButton	*vcenter = new TQRadioButton(positionbox);
+	TQRadioButton	*left = new TQRadioButton(positionbox);
+	TQRadioButton	*right = new TQRadioButton(positionbox);
+	TQRadioButton	*hcenter = new TQRadioButton(positionbox);
+	TQSize	sz = bottom->tqsizeHint();
 	bottom->setFixedSize(sz);
 	vcenter->setFixedSize(sz);
 	top->setFixedSize(sz);
@@ -348,12 +348,12 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 	m_horizgrp->setButton(1);
 	slotPositionChanged();
 
-	QGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 10);
+	TQGridLayout	*l0 = new TQGridLayout(this, 2, 2, 0, 10);
 	l0->addMultiCellWidget(colorbox, 0, 0, 0, 1);
 	l0->addWidget(sizebox, 1, 0);
 	l0->addWidget(positionbox, 1, 1);
 	l0->setColStretch(0, 1);
-	QGridLayout	*l1 = new TQGridLayout(colorbox->layout(), 5, 2, 10);
+	TQGridLayout	*l1 = new TQGridLayout(colorbox->layout(), 5, 2, 10);
 	l1->addWidget(m_brightness, 0, 0);
 	l1->addWidget(m_hue, 1, 0);
 	l1->addWidget(m_saturation, 2, 0);
@@ -361,16 +361,16 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 	l1->addWidget(m_gamma, 4, 0);
 	l1->addMultiCellWidget(m_preview, 0, 3, 1, 1);
 	l1->addWidget(defbtn, 4, 1);
-	QVBoxLayout	*l2 = new TQVBoxLayout(sizebox->layout(), 3);
+	TQVBoxLayout	*l2 = new TQVBoxLayout(TQT_TQLAYOUT(sizebox->layout()), 3);
 	l2->addStretch(1);
 	l2->addWidget(lab);
 	l2->addWidget(m_sizetype);
 	l2->addSpacing(10);
 	l2->addWidget(m_size);
 	l2->addStretch(1);
-	QGridLayout	*l3 = new TQGridLayout(positionbox->layout(), 2, 2, 10);
-	QHBoxLayout	*l4 = new TQHBoxLayout(0, 0, 10);
-	QVBoxLayout	*l5 = new TQVBoxLayout(0, 0, 10);
+	TQGridLayout	*l3 = new TQGridLayout(positionbox->layout(), 2, 2, 10);
+	TQHBoxLayout	*l4 = new TQHBoxLayout(0, 0, 10);
+	TQVBoxLayout	*l5 = new TQVBoxLayout(0, 0, 10);
 	l3->addLayout(l4, 0, 1);
 	l3->addLayout(l5, 1, 0);
 	l3->addWidget(m_position, 1, 1);
@@ -388,7 +388,7 @@ KPImagePage::~KPImagePage()
 
 void KPImagePage::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	QString	value;
+	TQString	value;
 	if (!(value=opts["brightness"]).isEmpty())
 		m_brightness->setValue(value.toInt());
 	if (!(value=opts["hue"]).isEmpty())
@@ -434,7 +434,7 @@ void KPImagePage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 	if (incldef || m_gamma->value() != 1000)
 		opts["gamma"] = TQString::number(m_gamma->value());
 
-	QString	name;
+	TQString	name;
 	if (incldef)
 	{
 		opts["ppi"] = "0";

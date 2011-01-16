@@ -204,7 +204,7 @@ void ISearchPluginView::setAutoWrap( bool autoWrap )
 
 bool ISearchPluginView::eventFilter( TQObject* o, TQEvent* e )
 {
-	if( o != m_combo->lineEdit() )
+	if( TQT_BASE_OBJECT(o) != TQT_BASE_OBJECT(m_combo->lineEdit()) )
 		return false;
 
 	if( e->type() == TQEvent::FocusIn ) {

@@ -53,7 +53,7 @@ int KMCupsJobManager::actions()
 bool KMCupsJobManager::sendCommandSystemJob(const TQPtrList<KMJob>& jobs, int action, const TQString& argstr)
 {
 	IppRequest	req;
-	QString		uri;
+	TQString		uri;
 	bool		value(true);
 
 	TQPtrListIterator<KMJob>	it(jobs);
@@ -65,7 +65,7 @@ bool KMCupsJobManager::sendCommandSystemJob(const TQPtrList<KMJob>& jobs, int ac
 		req.addURI(IPP_TAG_OPERATION,"job-uri",it.current()->uri());
 		req.addName(IPP_TAG_OPERATION,"requesting-user-name",CupsInfos::self()->login());
 		/*
-		QString	jobHost;
+		TQString	jobHost;
 		if (!it.current()->uri().isEmpty())
 		{
 			KURL	url(it.current()->uri());
@@ -111,7 +111,7 @@ bool KMCupsJobManager::sendCommandSystemJob(const TQPtrList<KMJob>& jobs, int ac
 bool KMCupsJobManager::listJobs(const TQString& prname, KMJobManager::JobType type, int limit)
 {
 	IppRequest	req;
-	QStringList	keys;
+	TQStringList	keys;
 	CupsInfos	*infos = CupsInfos::self();
 
 	// wanted attributes
@@ -167,10 +167,10 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 {
 	ipp_attribute_t	*attr = req.first();
 	KMJob		*job = new KMJob();
-	QString		uri;
+	TQString		uri;
 	while (attr)
 	{
-		QString	name(attr->name);
+		TQString	name(attr->name);
 		if (name == "job-id") job->setId(attr->values[0].integer);
 		else if (name == "job-uri") job->setUri(TQString::fromLocal8Bit(attr->values[0].string.text));
 		else if (name == "job-name") job->setName(TQString::fromLocal8Bit(attr->values[0].string.text));
@@ -211,8 +211,8 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 		else if (name == "job-media-sheets-completed") job->setProcessedPages(attr->values[0].integer);
 		else if (name == "job-printer-uri" && !pr->isRemote())
 		{
-			QString	str(attr->values[0].string.text);
-			int	p = str.findRev('/');
+			TQString	str(attr->values[0].string.text);
+			int	p = str.tqfindRev('/');
 			if (p != -1)
 				job->setPrinter(str.mid(p+1));
 		}
@@ -326,8 +326,8 @@ bool KMCupsJobManager::changePriority(const TQPtrList<KMJob>& jobs, bool up)
 	for (; it.current() && result; ++it)
 	{
 		int	value = it.current()->attribute(0).toInt();
-		if (up) value = QMIN(value+10, 100);
-		else value = QMAX(value-10, 1);
+		if (up) value = TQMIN(value+10, 100);
+		else value = TQMAX(value-10, 1);
 
 		IppRequest	req;
 		/*
@@ -351,8 +351,8 @@ bool KMCupsJobManager::changePriority(const TQPtrList<KMJob>& jobs, bool up)
 
 static TQString processRange(const TQString& range)
 {
-	QStringList	l = TQStringList::split(',', range, false);
-	QString	s;
+	TQStringList	l = TQStringList::split(',', range, false);
+	TQString	s;
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		s.append(*it);
@@ -387,15 +387,15 @@ bool KMCupsJobManager::editJobAttributes(KMJob *j)
 
 	TQMap<TQString,TQString>	opts = req.toMap(IPP_TAG_JOB);
 	// translate the "Copies" option to non-CUPS syntax
-	if (opts.contains("copies"))
+	if (opts.tqcontains("copies"))
 		opts["kde-copies"] = opts["copies"];
-	if (opts.contains("page-set"))
+	if (opts.tqcontains("page-set"))
 		opts["kde-pageset"] = (opts["page-set"] == "even" ? "2" : (opts["page-set"] == "odd" ? "1" : "0"));
-	if (opts.contains("OutputOrder"))
+	if (opts.tqcontains("OutputOrder"))
 		opts["kde-pageorder"] = opts["OutputOrder"];
-	if (opts.contains("multiple-document-handling"))
+	if (opts.tqcontains("multiple-document-handling"))
 		opts["kde-collate"] = (opts["multiple-document-handling"] == "separate-documents-collated-copies" ? "Collate" : "Uncollate");
-	if (opts.contains("page-ranges"))
+	if (opts.tqcontains("page-ranges"))
 		opts["kde-range"] = opts["page-ranges"];
 
 	// find printer and construct dialog

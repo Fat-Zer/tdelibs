@@ -65,16 +65,16 @@ public slots:
 	bool		confirm();
 
 public:
-	QString		changedMessage() const;
+	TQString		changedMessage() const;
 
 	bool		changedFromOriginal() const;
 	void		proposeOriginal();
 
 	bool		proposedChanged() const;
 
-	static QString	rotationName(int rotation, bool pastTense = false, bool capitalised = true);
-	QPixmap	        rotationIcon(int rotation) const;
-	QString			currentRotationDescription() const;
+	static TQString	rotationName(int rotation, bool pastTense = false, bool capitalised = true);
+	TQPixmap	        rotationIcon(int rotation) const;
+	TQString			currentRotationDescription() const;
 
 	int				rotationIndexToDegree(int rotation) const;
 	int				rotationDegreeToIndex(int degree) const;
@@ -84,12 +84,12 @@ public:
 	 */
 	TQStringList refreshRates(int size) const;
 
-	QString		refreshRateDirectDescription(int rate) const;
-	QString		refreshRateIndirectDescription(int size, int index) const;
-	QString		refreshRateDescription(int size, int index) const;
+	TQString		refreshRateDirectDescription(int rate) const;
+	TQString		refreshRateIndirectDescription(int size, int index) const;
+	TQString		refreshRateDescription(int size, int index) const;
 
 	int			currentRefreshRate() const;
-	QString		currentRefreshRateDescription() const;
+	TQString		currentRefreshRateDescription() const;
 
 	// Refresh rate hz <==> index conversion
 	int			refreshRateHzToIndex(int size, int hz) const;

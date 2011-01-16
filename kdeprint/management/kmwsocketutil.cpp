@@ -46,13 +46,13 @@ TQString localRootIP();
 SocketConfig::SocketConfig(KMWSocketUtil *util, TQWidget *parent, const char *name)
 : KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)
 {
-	QWidget	*dummy = new TQWidget(this);
+	TQWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
         KIntValidator *val = new KIntValidator( this );
-	QLabel	*masklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
-	QLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
-	QLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
-	QLineEdit	*mm = new TQLineEdit(dummy);
+	TQLabel	*masklabel = new TQLabel(i18n("&Subnetwork:"),dummy);
+	TQLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
+	TQLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
+	TQLineEdit	*mm = new TQLineEdit(dummy);
 	mm->setText(TQString::tqfromLatin1(".[0-255]"));
 	mm->setReadOnly(true);
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
@@ -77,8 +77,8 @@ SocketConfig::SocketConfig(KMWSocketUtil *util, TQWidget *parent, const char *na
 	port_->setEditText(TQString::number(util->port_));
 	tout_->setText(TQString::number(util->timeout_));
 
-	QGridLayout	*main_ = new TQGridLayout(dummy, 3, 2, 0, 10);
-	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 5);
+	TQGridLayout	*main_ = new TQGridLayout(dummy, 3, 2, 0, 10);
+	TQHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 5);
 	main_->addWidget(masklabel, 0, 0);
 	main_->addWidget(portlabel, 1, 0);
 	main_->addWidget(toutlabel, 2, 0);
@@ -98,8 +98,8 @@ SocketConfig::~SocketConfig()
 
 void SocketConfig::slotOk()
 {
-	QString	msg;
-	QRegExp	re("(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})");
+	TQString	msg;
+	TQRegExp	re("(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})");
 	if (!re.exactMatch(mask_->text()))
 		msg = i18n("Wrong subnetwork specification.");
 	else
@@ -147,7 +147,7 @@ bool KMWSocketUtil::checkPrinter(const TQString& IPstr, int port, TQString* host
 	{
 		if (hostname)
 		{
-			QString	portname;
+			TQString	portname;
 			KExtendedSocket::resolve((KSocketAddress*)(sock.peerAddress()), *hostname, portname);
 		}
 		result = true;
@@ -165,8 +165,8 @@ bool KMWSocketUtil::scanNetwork(TQProgressBar *bar)
 		bar->setTotalSteps(n);
 	for (int i=0; i<n; i++)
 	{
-		QString	IPstr = root_ + "." + TQString::number(i);
-		QString	hostname;
+		TQString	IPstr = root_ + "." + TQString::number(i);
+		TQString	hostname;
 		if (checkPrinter(IPstr, port_, &hostname))
 		{ // we found a printer at this address, create SocketInfo entry in printer list
 			SocketInfo	*info = new SocketInfo;
@@ -208,8 +208,8 @@ TQString localRootIP()
 	infos.setAutoDelete(true);
 	if (infos.count() > 0)
 	{
-		QString	IPstr = infos.first()->address()->nodeName();
-		int	p = IPstr.findRev('.');
+		TQString	IPstr = infos.first()->address()->nodeName();
+		int	p = IPstr.tqfindRev('.');
 		IPstr.truncate(p);
 		return IPstr;
 	}

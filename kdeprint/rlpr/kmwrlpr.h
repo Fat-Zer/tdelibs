@@ -44,7 +44,7 @@ protected:
 
 private:
 	KListView	*m_view;
-	QLineEdit	*m_host, *m_queue;
+	TQLineEdit	*m_host, *m_queue;
 };
 
 #endif

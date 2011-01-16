@@ -178,7 +178,7 @@ bool LDIF::splitControl( const TQCString &line, TQString &oid, bool &critical,
   critical = false;
   bool url = splitLine( line, tmp, value );
   
-  kdDebug(5700) << "splitControl: value: " << TQString::fromUtf8(value, value.size()) << endl;
+  kdDebug(5700) << "splitControl: value: " << TQString(TQString::fromUtf8(value, value.size())) << endl;
   if ( tmp.isEmpty() ) {
     tmp = TQString::fromUtf8( value, value.size() );
     value.resize( 0 );
@@ -211,7 +211,7 @@ LDIF::ParseVal LDIF::processLine()
       if ( attrLower == "version" ) {
         if ( !mDn.isEmpty() ) retval = Err;
       } else if ( attrLower == "dn" ) {
-        kdDebug(5700) << "ldapentry dn: " << TQString::fromUtf8( mVal, mVal.size() ) << endl;
+        kdDebug(5700) << "ldapentry dn: " << TQString(TQString::fromUtf8( mVal, mVal.size() )) << endl;
         mDn = TQString::fromUtf8( mVal, mVal.size() );
         mModType = Mod_None;
         retval = NewEntry;

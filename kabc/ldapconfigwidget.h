@@ -50,7 +50,8 @@ namespace KABC {
   class KABC_EXPORT LdapConfigWidget : public TQWidget
   {
     Q_OBJECT
-    Q_PROPERTY( LCW_Flags flags READ flags WRITE setFlags )
+    TQ_OBJECT
+    TQ_PROPERTY( LCW_Flags flags READ flags WRITE setFlags )
     Q_PROPERTY( TQString user READ user WRITE setUser )
     Q_PROPERTY( TQString password READ password WRITE setPassword )
     Q_PROPERTY( TQString bindDN READ bindDN WRITE setBindDN )
@@ -69,7 +70,7 @@ namespace KABC {
     Q_PROPERTY( bool authSASL READ isAuthSASL WRITE setAuthSASL )
     Q_PROPERTY( int sizeLimit READ sizeLimit WRITE setSizeLimit )
     Q_PROPERTY( int timeLimit READ timeLimit WRITE setTimeLimit )
-    Q_SETS ( LCW_Flags )
+    TQ_SETS ( LCW_Flags )
         
     public:
     

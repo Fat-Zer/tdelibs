@@ -23,13 +23,13 @@
 
 TQString maticFile(PrintcapEntry *entry)
 {
-	QString	s(entry->field("af"));
+	TQString	s(entry->field("af"));
 	if (s.isEmpty())
 	{
 		s = entry->field("filter_options");
 		if (!s.isEmpty())
 		{
-			int	p = s.findRev(' ');
+			int	p = s.tqfindRev(' ');
 			if (p != -1)
 				s = s.mid(p+1);
 		}

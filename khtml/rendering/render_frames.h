@@ -61,7 +61,7 @@ public:
     bool canResize( int _x, int _y);
     void setResizing(bool e);
 
-    Qt::tqCursorShape cursorShape() const { return m_cursor; }
+    Qt::CursorShape cursorShape() const { return m_cursor; }
 
     bool nodeAtPoint(NodeInfo& info, int x, int y, int tx, int ty, HitTestAction hitTestAction, bool inside);
 
@@ -73,7 +73,7 @@ public:
 #endif
 
 private:
-    Qt::tqCursorShape m_cursor;
+    Qt::CursorShape m_cursor;
     int m_oldpos;
     int m_gridLen[2];
     int* m_gridDelta[2];

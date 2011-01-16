@@ -126,9 +126,9 @@ void MarginPreview::resizeEvent(TQResizeEvent *)
 
 void MarginPreview::paintEvent(TQPaintEvent *)
 {
-	QPainter	p(this);
+	TQPainter	p(this);
 
-	QRect	pagebox(TQPoint(box_.left()-1,box_.top()-1),TQPoint(box_.right()+2,box_.bottom()+2));
+	TQRect	pagebox(TQPoint(box_.left()-1,box_.top()-1),TQPoint(box_.right()+2,box_.bottom()+2));
 
 	if (nopreview_)
 	{
@@ -212,22 +212,22 @@ void MarginPreview::mouseMoveEvent(TQMouseEvent *e)
 		switch (state_)
 		{
 			case TMoving:
-				newpos = QMIN(QMAX(e->pos().y(), box_.top()), (symetric_ ? (box_.top()+box_.bottom())/2 : margbox_.bottom()+1));
+				newpos = TQMIN(TQMAX(e->pos().y(), box_.top()), (symetric_ ? (box_.top()+box_.bottom())/2 : margbox_.bottom()+1));
 				break;
 			case BMoving:
-				newpos = QMIN(QMAX(e->pos().y(), (symetric_? (box_.top()+box_.bottom()+1)/2 : margbox_.top()-1)), box_.bottom());
+				newpos = TQMIN(TQMAX(e->pos().y(), (symetric_? (box_.top()+box_.bottom()+1)/2 : margbox_.top()-1)), box_.bottom());
 				break;
 			case LMoving:
-				newpos = QMIN(QMAX(e->pos().x(), box_.left()), (symetric_ ? (box_.left()+box_.right())/2 : margbox_.right()+1));
+				newpos = TQMIN(TQMAX(e->pos().x(), box_.left()), (symetric_ ? (box_.left()+box_.right())/2 : margbox_.right()+1));
 				break;
 			case RMoving:
-				newpos = QMIN(QMAX(e->pos().x(), (symetric_ ? (box_.left()+box_.right()+1)/2 : margbox_.left()-1)), box_.right());
+				newpos = TQMIN(TQMAX(e->pos().x(), (symetric_ ? (box_.left()+box_.right()+1)/2 : margbox_.left()-1)), box_.right());
 				break;
 		}
 		if (newpos != oldpos_)
 		{
-			QPainter	p(this);
-			p.setRasterOp(Qt::XorROP);
+			TQPainter	p(this);
+			p.setRasterOp(TQt::XorROP);
 			p.setPen(gray);
 			for (int i=0; i<2; i++, oldpos_ = newpos)
 			{
@@ -275,8 +275,8 @@ void MarginPreview::mouseReleaseEvent(TQMouseEvent *e)
 {
 	if (state_ > None)
 	{
-		QPainter	p(this);
-		p.setRasterOp(Qt::XorROP);
+		TQPainter	p(this);
+		p.setRasterOp(TQt::XorROP);
 		p.setPen(gray);
 		if (oldpos_ >= 0)
 		{

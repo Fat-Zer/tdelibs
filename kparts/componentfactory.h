@@ -101,7 +101,7 @@ namespace KParts
         {
             KParts::Part *object = factory->createPart( tqparentWidget, widgetName,
                                                         parent, name,
-                                                        T::staticMetaObject()->className(),
+                                                        T::tqstaticMetaObject()->className(),
                                                         args );
 
             T *result = dynamic_cast<T *>( object );

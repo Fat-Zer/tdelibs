@@ -370,7 +370,7 @@ TQCString execpath_avoid_loops( const TQCString& exec, int envc, const char* env
          s_instance->dirs()->findExe( exec, paths.join( TQString( ":" ))));
      if( avoid_loops && !execpath.isEmpty())
      {
-         int pos = execpath.findRev( '/' );
+         int pos = execpath.tqfindRev( '/' );
          TQString bin_path = execpath.left( pos );
          for( TQStringList::Iterator it = paths.begin();
               it != paths.end();
@@ -456,7 +456,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
   {
      lib = _name;
      name = _name;
-     name = name.mid( name.findRev('/') + 1);
+     name = name.mid( name.tqfindRev('/') + 1);
      exec = _name;
      if (lib.right(3) == ".la")
         libpath = lib;
@@ -645,7 +645,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
            {
               const char * ltdlError = lt_dlerror();
               fprintf(stderr, "Could not find kdemain: %s\n", ltdlError != 0 ? ltdlError : "(null)" );
-              TQString errorMsg = i18n("Could not find 'kdemain' in '%1'.\n%2").arg(libpath)
+              TQString errorMsg = i18n("Could not find 'kdemain' in '%1'.\n%2").arg(TQString(libpath))
                  .arg(ltdlError ? TQFile::decodeName(ltdlError) : i18n("Unknown error"));
               exitWithErrorMsg(errorMsg);
            }
@@ -1477,16 +1477,16 @@ static void kdeinit_library_path()
         it++)
    {
       TQString d = *it;
-      if (ltdl_library_path.contains(d))
+      if (ltdl_library_path.tqcontains(d))
           continue;
-      if (ld_library_path.contains(d))
+      if (ld_library_path.tqcontains(d))
           continue;
       if (d[d.length()-1] == '/')
       {
          d.truncate(d.length()-1);
-         if (ltdl_library_path.contains(d))
+         if (ltdl_library_path.tqcontains(d))
             continue;
-         if (ld_library_path.contains(d))
+         if (ld_library_path.tqcontains(d))
             continue;
       }
       if ((d == "/lib") || (d == "/usr/lib"))
@@ -1517,10 +1517,10 @@ static void kdeinit_library_path()
      exit(255);
    }
    int i;
-   if((i = display.findRev('.')) > display.findRev(':') && i >= 0)
+   if((i = display.tqfindRev('.')) > display.tqfindRev(':') && i >= 0)
      display.truncate(i);
 
-   TQCString socketName = TQFile::encodeName(locateLocal("socket", TQString("kdeinit-%1").arg(display), s_instance));
+   TQCString socketName = TQFile::encodeName(locateLocal("socket", TQString("kdeinit-%1").arg(TQString(display)), s_instance));
    if (socketName.length() >= MAX_SOCK_FILE)
    {
      fprintf(stderr, "kdeinit: Aborting. Socket name will be too long:\n");
@@ -1530,7 +1530,7 @@ static void kdeinit_library_path()
    strcpy(sock_file_old, socketName.data());
 
    display.replace(":","_");
-   socketName = TQFile::encodeName(locateLocal("socket", TQString("kdeinit_%1").arg(display), s_instance));
+   socketName = TQFile::encodeName(locateLocal("socket", TQString("kdeinit_%1").arg(TQString(display)), s_instance));
    if (socketName.length() >= MAX_SOCK_FILE)
    {
      fprintf(stderr, "kdeinit: Aborting. Socket name will be too long:\n");

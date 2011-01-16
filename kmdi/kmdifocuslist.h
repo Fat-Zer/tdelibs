@@ -34,7 +34,7 @@ public:
 protected slots:
 	void objectHasBeenDestroyed( TQObject* );
 private:
-	TQMap<TQWidget*, TQWidget::FocusPolicy> m_list;
+	TQMap<TQWidget*, TQ_FocusPolicy> m_list;
 
 };
 

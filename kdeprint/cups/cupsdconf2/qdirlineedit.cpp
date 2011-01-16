@@ -33,7 +33,7 @@ QDirLineEdit::QDirLineEdit(bool file, TQWidget *parent, const char *name)
 	button_->setPixmap(SmallIcon("fileopen"));
 	connect(button_,TQT_SIGNAL(clicked()),TQT_SLOT(buttonClicked()));
 
-	QHBoxLayout	*main_ = new TQHBoxLayout(this, 0, 3);
+	TQHBoxLayout	*main_ = new TQHBoxLayout(this, 0, 3);
 	main_->addWidget(edit_);
 	main_->addWidget(button_);
 
@@ -56,7 +56,7 @@ TQString QDirLineEdit::url()
 
 void QDirLineEdit::buttonClicked()
 {
-	QString	dirname;
+	TQString	dirname;
 	if (!fileedit_)
 		dirname = KFileDialog::getExistingDirectory(edit_->text(), this);
 	else

@@ -41,7 +41,7 @@ KMConfigFilter::KMConfigFilter(TQWidget *parent, const char *name)
 	setPageHeader(i18n("Printer Filtering Settings"));
 	setPagePixmap("filter");
 
-	QGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("Printer Filter"), this);
+	TQGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("Printer Filter"), this);
 
 	m_list1 = new KListBox(box);
 	m_list1->setSelectionMode(KListBox::Extended);
@@ -52,21 +52,21 @@ KMConfigFilter::KMConfigFilter(TQWidget *parent, const char *name)
 	m_remove = new TQToolButton( box );
 	m_remove->setIconSet(TQApplication::reverseLayout() ? SmallIconSet( "forward" ) : SmallIconSet( "back" ));
 	m_locationre = new TQLineEdit(box);
-	QLabel	*lab = new TQLabel(box);
+	TQLabel	*lab = new TQLabel(box);
 	lab->setText(i18n("The printer filtering allows you to view only a specific set of "
 	                  "printers instead of all of them. This may be useful when there are a "
 			  "lot of printers available but you only use a few ones. Select the "
 			  "printers you want to see from the list on the left or enter a <b>Location</b> "
 			  "filter (ex: Group_1*). Both are cumulative and ignored if empty."));
-	lab->setTextFormat(Qt::RichText);
-	QLabel	*lab1 = new TQLabel(i18n("Location filter:"), box);
+	lab->setTextFormat(TQt::RichText);
+	TQLabel	*lab1 = new TQLabel(i18n("Location filter:"), box);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l0->addWidget(box, 1);
-	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), KDialog::spacingHint());
+	TQVBoxLayout	*l1 = new TQVBoxLayout(TQT_TQLAYOUT(box->layout()), KDialog::spacingHint());
 	l1->addWidget(lab);
-	QGridLayout	*l2 = new TQGridLayout(0, 4, 3, 0, KDialog::spacingHint());
-	l1->addLayout(l2);
+	TQGridLayout	*l2 = new TQGridLayout(0, 4, 3, 0, KDialog::spacingHint());
+	l1->addLayout(TQT_TQLAYOUT(l2));
 	l2->setRowStretch(0, 1);
 	l2->setRowStretch(3, 1);
 	l2->setColStretch(0, 1);
@@ -75,7 +75,7 @@ KMConfigFilter::KMConfigFilter(TQWidget *parent, const char *name)
 	l2->addMultiCellWidget(m_list2, 0, 3, 2, 2);
 	l2->addWidget(m_add, 1, 1);
 	l2->addWidget(m_remove, 2, 1);
-	QHBoxLayout	*l3 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
+	TQHBoxLayout	*l3 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
 	l1->addLayout(l3, 0);
 	l3->addWidget(lab1, 0);
 	l3->addWidget(m_locationre, 1);
@@ -91,7 +91,7 @@ KMConfigFilter::KMConfigFilter(TQWidget *parent, const char *name)
 void KMConfigFilter::loadConfig(KConfig *conf)
 {
 	conf->setGroup("Filter");
-	QStringList	m_plist = conf->readListEntry("Printers");
+	TQStringList	m_plist = conf->readListEntry("Printers");
 	TQPtrListIterator<KMPrinter>	it(*(KMManager::self()->printerListComplete(false)));
 	for (; it.current(); ++it)
 	{
@@ -109,7 +109,7 @@ void KMConfigFilter::loadConfig(KConfig *conf)
 void KMConfigFilter::saveConfig(KConfig *conf)
 {
 	conf->setGroup("Filter");
-	QStringList	plist;
+	TQStringList	plist;
 	for (uint i=0; i<m_list2->count(); i++)
 		plist << m_list2->text(i);
 	conf->writeEntry("Printers", plist);
@@ -146,7 +146,7 @@ void KMConfigFilter::slotSelectionChanged()
 	const KListBox	*lb = static_cast<const KListBox*>(sender());
 	if (!lb)
 		return;
-	QToolButton	*pb = (lb == m_list1 ? m_add : m_remove);
+	TQToolButton	*pb = (lb == m_list1 ? m_add : m_remove);
 	for (uint i=0; i<lb->count(); i++)
 		if (lb->isSelected(i))
 		{

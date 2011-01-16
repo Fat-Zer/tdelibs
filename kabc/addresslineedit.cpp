@@ -190,7 +190,7 @@ void AddressLineEdit::keyPressEvent(TQKeyEvent *e)
 
 void AddressLineEdit::mouseReleaseEvent( TQMouseEvent * e )
 {
-   if (m_useCompletion && (e->button() == MidButton))
+   if (m_useCompletion && (e->button() == Qt::MidButton))
    {
       m_smartPaste = true;
       KLineEdit::mouseReleaseEvent(e);
@@ -293,7 +293,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
     TQString prevAddr;    
     
     TQString s(text());    
-    int n = s.findRev(',');
+    int n = s.tqfindRev(',');
         
     if (n >= 0)
     {
@@ -465,7 +465,7 @@ void AddressLineEdit::startLoadingLDAPEntries()
     TQString s( *s_LDAPText );
     // TODO cache last?
     TQString prevAddr;
-    int n = s.findRev(',');
+    int n = s.tqfindRev(',');
     if (n>= 0)
     {
         prevAddr = s.left(n+1) + ' ';

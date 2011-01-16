@@ -47,9 +47,9 @@ protected slots:
 private:
 	KIntNumInput	*browseport_, *browseinterval_, *browsetimeout_;
 	EditList	*browseaddresses_;
-	QComboBox	*browseorder_;
-	QCheckBox	*browsing_, *cups_, *slp_;
-	QCheckBox	*useimplicitclasses_, *hideimplicitmembers_, *useshortnames_, *useanyclasses_;
+	TQComboBox	*browseorder_;
+	TQCheckBox	*browsing_, *cups_, *slp_;
+	TQCheckBox	*useimplicitclasses_, *hideimplicitmembers_, *useshortnames_, *useanyclasses_;
 };
 
 #endif

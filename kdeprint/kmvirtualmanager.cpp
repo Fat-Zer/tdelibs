@@ -179,8 +179,8 @@ void KMVirtualManager::setAsDefault(KMPrinter *p, const TQString& name, TQWidget
 
 void KMVirtualManager::refresh()
 {
-	QFileInfo	fi(TQDir::homeDirPath() + TQFile::decodeName("/.cups/.lpoptions"));
-	QFileInfo	fi2(TQFile::decodeName("/etc/cups/lpoptions"));
+	TQFileInfo	fi(TQDir::homeDirPath() + TQFile::decodeName("/.cups/.lpoptions"));
+	TQFileInfo	fi2(TQFile::decodeName("/etc/cups/lpoptions"));
 
 	// if root, then only use global file: trick -> use twice the same file
 	if (getuid() == 0)
@@ -246,14 +246,14 @@ void KMVirtualManager::virtualList(TQPtrList<KMPrinter>& list, const TQString& p
 
 void KMVirtualManager::loadFile(const TQString& filename)
 {
-	QFile	f(filename);
+	TQFile	f(filename);
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
-		QTextStream	t(&f);
+		TQTextStream	t(&f);
 
-		QString		line;
-		QStringList	words;
-		QStringList	pair;
+		TQString		line;
+		TQStringList	words;
+		TQStringList	pair;
 		KMPrinter	*printer, *realprinter;
 
 		while (!t.eof())
@@ -317,10 +317,10 @@ void KMVirtualManager::triggerSave()
 
 void KMVirtualManager::saveFile(const TQString& filename)
 {
-	QFile	f(filename);
+	TQFile	f(filename);
 	if (f.open(IO_WriteOnly))
 	{
-		QTextStream	t(&f);
+		TQTextStream	t(&f);
 		TQPtrListIterator<KMPrinter>	it(m_manager->m_printers);
 		for (;it.current();++it)
 		{
@@ -347,7 +347,7 @@ void KMVirtualManager::saveFile(const TQString& filename)
 
 bool KMVirtualManager::testInstance(KMPrinter *p)
 {
-	QString	testpage = KMManager::self()->testPage();
+	TQString	testpage = KMManager::self()->testPage();
 	if (testpage.isEmpty())
 		return false;
 	else

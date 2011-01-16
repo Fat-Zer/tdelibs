@@ -54,7 +54,7 @@ KURL smbToUrl(const TQString& s)
 	else
 	{
 		// assumes URL starts with "smb://"
-		QString	username = s.mid(6, p-6);
+		TQString	username = s.mid(6, p-6);
 		url = KURL("smb://" + KURL::encode_string(s.mid(p+1)));
 		int	q = username.tqfind(':');
 		if (q == -1)

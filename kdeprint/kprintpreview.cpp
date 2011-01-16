@@ -99,7 +99,7 @@ public:
 	KParts::ReadOnlyPart	*gvpart_;
 	KToolBar		*toolbar_;
 	KActionCollection	*actions_;
-	QWidget			*mainwidget_;
+	TQWidget		*mainwidget_;
 	KAccel			*accel_;
 	bool			previewonly_;
 };
@@ -154,11 +154,11 @@ KPrintPreview::KPrintPreview(TQWidget *parent, bool previewOnly)
 	// create main view and actions
 	setMainWidget(d->mainwidget_);
 	if (previewOnly)
-		KStdAction::close(this, TQT_SLOT(reject()), d->actions_, "close_print");
+		KStdAction::close(TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "close_print");
 	else
 	{
-		new KAction(i18n("Print"), "fileprint", Qt::Key_Return, this, TQT_SLOT(accept()), d->actions_, "continue_print");
-		new KAction(i18n("Cancel"), "stop", Qt::Key_Escape, this, TQT_SLOT(reject()), d->actions_, "stop_print");
+		new KAction(i18n("Print"), "fileprint", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(accept()), d->actions_, "continue_print");
+		new KAction(i18n("Cancel"), "stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "stop_print");
 	}
 
 }
@@ -171,7 +171,7 @@ KPrintPreview::~KPrintPreview()
 void KPrintPreview::initView(KLibFactory *factory)
 {
 	// load the component
-	d->gvpart_ = (KParts::ReadOnlyPart*)factory->create(d->mainwidget_, "gvpart", "KParts::ReadOnlyPart");
+	d->gvpart_ = (KParts::ReadOnlyPart*)factory->create(TQT_TQOBJECT(d->mainwidget_), "gvpart", "KParts::ReadOnlyPart");
 
 	// populate the toolbar
 	if (d->previewonly_)
@@ -218,7 +218,7 @@ void KPrintPreview::initView(KLibFactory *factory)
 	//d->adjustSize();
 
 	// construct the layout
-	QVBoxLayout	*l0 = new TQVBoxLayout(d->mainwidget_, 0, 0);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(d->mainwidget_, 0, 0);
 	l0->addWidget(d->toolbar_, AlignTop);
 	if (d->gvpart_)
 		l0->addWidget(d->gvpart_->widget());
@@ -248,8 +248,8 @@ bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId
 	conf->setGroup("General");
 	KLibFactory	*factory(0);
 	bool	externalPreview = conf->readBoolEntry("ExternalPreview", false);
-	QWidget	*parentW = TQWidget::find(parentId);
-	QString	exe;
+	TQWidget	*parentW = TQT_TQWIDGET(TQWidget::find(parentId));
+	TQString	exe;
 	if (!externalPreview && isPS && (factory = componentFactory()) != 0)
 	{
 		KPrintPreview	dlg(parentW, previewOnly);

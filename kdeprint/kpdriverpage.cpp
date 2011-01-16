@@ -33,7 +33,7 @@ KPDriverPage::KPDriverPage(KMPrinter *p, DrMain *d, TQWidget *parent, const char
 	m_view->setAllowFixed(false);
 	if (driver()) m_view->setDriver(driver());
 
-	QVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 0);
+	TQVBoxLayout	*lay1 = new TQVBoxLayout(this, 0, 0);
 	lay1->addWidget(m_view);
 }
 

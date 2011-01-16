@@ -48,8 +48,8 @@ protected slots:
 	void slotOk();
 
 private:
-	QLineEdit	*mask_, *tout_;
-	QComboBox	*port_;
+	TQLineEdit	*mask_, *tout_;
+	TQComboBox	*port_;
 };
 
 class KMWSocketUtil
@@ -68,7 +68,7 @@ public:
 
 private:
 	TQPtrList<SocketInfo>	printerlist_;
-	QString			root_;
+	TQString			root_;
 	int			port_;
 	int			timeout_;	// in milliseconds
 };

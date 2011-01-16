@@ -66,9 +66,9 @@ void KMConfigDialog::addConfigPage(KMConfigPage *page)
                         	                                           KIcon::SizeMedium
 		                                                          );
 
-		QFrame	*frame = addPage(page->pageName(),page->pageHeader(),icon);
+		TQFrame	*frame = addPage(page->pageName(),page->pageHeader(),icon);
 		page->reparent(frame,TQPoint(0,0));
-		QVBoxLayout	*lay = new TQVBoxLayout(frame, 0, 0);
+		TQVBoxLayout	*lay = new TQVBoxLayout(frame, 0, 0);
 		lay->addWidget(page);
 		m_pages.append(page);
 	}

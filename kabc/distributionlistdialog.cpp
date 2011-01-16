@@ -66,7 +66,7 @@ EmailSelector::EmailSelector( const TQStringList &emails, const TQString &curren
   TQFrame *topFrame = plainPage();
   TQBoxLayout *topLayout = new TQVBoxLayout( topFrame );
 
-  mButtonGroup = new TQButtonGroup( 1, Horizontal, i18n("Email Addresses"),
+  mButtonGroup = new TQButtonGroup( 1, Qt::Horizontal, i18n("Email Addresses"),
                                    topFrame );
   topLayout->addWidget( mButtonGroup );
 
@@ -100,7 +100,7 @@ TQString EmailSelector::getEmail( const TQStringList &emails, const TQString &cu
   return result;
 }
 
-class EntryItem : public QListViewItem
+class EntryItem : public TQListViewItem
 {
   public:
     EntryItem( TQListView *parent, const Addressee &addressee,

@@ -64,8 +64,8 @@ struct CupsdConf
 	static CupsdConf	*unique_;
 
 	// Server
-	QString	servername_;
-	QString	serveradmin_;
+	TQString	servername_;
+	TQString	serveradmin_;
 	int classification_;
 	TQString otherclassname_;
 	bool classoverride_;
@@ -138,7 +138,7 @@ struct CupsdConf
 	CupsdComment	comments_;
 	
 	// unrecognized options
-	TQValueList< QPair<TQString,TQString> >	unknown_;
+	TQValueList< TQPair<TQString,TQString> >	unknown_;
 };
 
 struct CupsLocation
@@ -150,14 +150,14 @@ struct CupsLocation
 	bool parseResource(const TQString& line);
 
 	CupsResource	*resource_;
-	QString	resourcename_;
+	TQString	resourcename_;
 	int	authtype_;
 	int	authclass_;
-	QString	authname_;
+	TQString	authname_;
 	int	encryption_;
 	int	satisfy_;
 	int	order_;
-	QStringList	addresses_;
+	TQStringList	addresses_;
 };
 
 struct CupsResource
@@ -168,8 +168,8 @@ struct CupsResource
 	void setPath(const TQString& path);
 
 	int	type_;
-	QString	path_;
-	QString	text_;
+	TQString	path_;
+	TQString	text_;
 
 	static TQString textToPath(const TQString& text);
 	static TQString pathToText(const TQString& path);

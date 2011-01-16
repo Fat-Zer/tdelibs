@@ -48,7 +48,7 @@ extern "C"
 	}
 }
 
-class StatusWindow : public QWidget
+class StatusWindow : public TQWidget
 {
 public:
 	StatusWindow(int pid = -1);
@@ -56,14 +56,14 @@ public:
 	int pid() const { return m_pid; }
 
 private:
-	QLabel		*m_label;
-	QPushButton	*m_button;
+	TQLabel		*m_label;
+	TQPushButton	*m_button;
 	int		m_pid;
-	QLabel		*m_icon;
+	TQLabel		*m_icon;
 };
 
 StatusWindow::StatusWindow(int pid)
-: TQWidget(NULL, "StatusWindow", WType_TopLevel|WStyle_DialogBorder|WStyle_StaysOnTop|WDestructiveClose), m_pid(pid)
+: TQWidget(NULL, "StatusWindow", (WFlags)(WType_TopLevel|WStyle_DialogBorder|WStyle_StaysOnTop|WDestructiveClose)), m_pid(pid)
 {
 	m_label = new TQLabel(this);
 	m_label->tqsetAlignment(AlignCenter);
@@ -72,7 +72,7 @@ StatusWindow::StatusWindow(int pid)
 	m_icon->setPixmap(DesktopIcon("fileprint"));
 	m_icon->tqsetAlignment(AlignCenter);
 	KWin::setIcons(winId(), *(m_icon->pixmap()), SmallIcon("fileprint"));
-	QGridLayout	*l0 = new TQGridLayout(this, 2, 3, 10, 10);
+	TQGridLayout	*l0 = new TQGridLayout(this, 2, 3, 10, 10);
 	l0->setRowStretch(0, 1);
 	l0->setColStretch(1, 1);
 	l0->addMultiCellWidget(m_label, 0, 0, 1, 2);
@@ -112,7 +112,7 @@ KDEPrintd::~KDEPrintd()
 int KDEPrintd::print(const TQString& cmd, const TQStringList& files, bool remflag)
 {
 	KPrintProcess *proc = new KPrintProcess;
-	QString	command(cmd);
+	TQString	command(cmd);
 	TQRegExp re( "\\$out\\{([^}]*)\\}" );
 
 	connect(proc,TQT_SIGNAL(printTerminated(KPrintProcess*)),TQT_SLOT(slotPrintTerminated(KPrintProcess*)));
@@ -161,7 +161,7 @@ void KDEPrintd::slotPrintError( KPrintProcess *proc, const TQString& msg )
 
 TQString KDEPrintd::openPassDlg(const TQString& user)
 {
-	QString	user_(user), pass_, result;
+	TQString	user_(user), pass_, result;
 	if (KIO::PasswordDialog::getNameAndPassword(user_, pass_, NULL) == KDialog::Accepted)
 		result.append(user_).append(":").append(pass_);
 	return result;
@@ -263,7 +263,7 @@ void KDEPrintd::processRequest()
 	info.comment = i18n( "Printing system" );
 
 	TQDataStream input( params, IO_WriteOnly );
-	input << info << i18n( "Authentication failed (user name=%1)" ).arg( info.username ) << 0L << (long int) req->seqNbr;
+	input << info << TQString(i18n( "Authentication failed (user name=%1)" ).arg( info.username )) << 0L << (long int) req->seqNbr;
 	if ( callingDcopClient()->call( "kded", "kpasswdserver", "queryAuthInfo(KIO::AuthInfo,TQString,long int,long int)",
 				params, replyType, reply ) )
 	{

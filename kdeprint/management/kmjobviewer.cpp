@@ -145,7 +145,7 @@ void KMJobViewer::updateCaption()
 	if (!m_standalone)
 		return;
 
-	QString	pixname("fileprint");
+	TQString	pixname("fileprint");
 	if (!m_prname.isEmpty())
 	{
 		setCaption(i18n("Print Jobs for %1").arg(m_prname));
@@ -259,10 +259,10 @@ void KMJobViewer::init()
 void KMJobViewer::initActions()
 {
 	// job actions
-	KAction	*hact = new KAction(i18n("&Hold"),"stop",0,this,TQT_SLOT(slotHold()),actionCollection(),"job_hold");
-	KAction	*ract = new KAction(i18n("&Resume"),"run",0,this,TQT_SLOT(slotResume()),actionCollection(),"job_resume");
-	KAction	*dact = new KAction(i18n("Remo&ve"),"edittrash",Qt::Key_Delete,this,TQT_SLOT(slotRemove()),actionCollection(),"job_remove");
-	KAction *sact = new KAction(i18n("Res&tart"),"redo",0,this,TQT_SLOT(slotRestart()),actionCollection(),"job_restart");
+	KAction	*hact = new KAction(i18n("&Hold"),"stop",0,TQT_TQOBJECT(this),TQT_SLOT(slotHold()),actionCollection(),"job_hold");
+	KAction	*ract = new KAction(i18n("&Resume"),"run",0,TQT_TQOBJECT(this),TQT_SLOT(slotResume()),actionCollection(),"job_resume");
+	KAction	*dact = new KAction(i18n("Remo&ve"),"edittrash",Qt::Key_Delete,TQT_TQOBJECT(this),TQT_SLOT(slotRemove()),actionCollection(),"job_remove");
+	KAction *sact = new KAction(i18n("Res&tart"),"redo",0,TQT_TQOBJECT(this),TQT_SLOT(slotRestart()),actionCollection(),"job_restart");
 	KActionMenu *mact = new KActionMenu(i18n("&Move to Printer"),"fileprint",actionCollection(),"job_move");
 	mact->setDelayed(false);
 	connect(mact->popupMenu(),TQT_SIGNAL(activated(int)),TQT_SLOT(slotMove(int)));
@@ -322,12 +322,12 @@ void KMJobViewer::initActions()
 	}
 	else
 	{// stand-alone application
-		KStdAction::quit(kapp,TQT_SLOT(quit()),actionCollection());
-		KStdAction::close(this,TQT_SLOT(slotClose()),actionCollection());
-		KStdAction::preferences(this, TQT_SLOT(slotConfigure()), actionCollection());
+		KStdAction::quit(TQT_TQOBJECT(kapp),TQT_SLOT(quit()),actionCollection());
+		KStdAction::close(TQT_TQOBJECT(this),TQT_SLOT(slotClose()),actionCollection());
+		KStdAction::preferences(TQT_TQOBJECT(this), TQT_SLOT(slotConfigure()), actionCollection());
 
 		// refresh action
-		new KAction(i18n("Refresh"),"reload",0,this,TQT_SLOT(slotRefresh()),actionCollection(),"refresh");
+		new KAction(i18n("Refresh"),"reload",0,TQT_TQOBJECT(this),TQT_SLOT(slotRefresh()),actionCollection(),"refresh");
 
 		// create status bar
 		KStatusBar	*statusbar = statusBar();
@@ -367,13 +367,13 @@ void KMJobViewer::buildPrinterMenu(TQPopupMenu *menu, bool use_all, bool use_spe
 
 void KMJobViewer::slotShowMoveMenu()
 {
-	QPopupMenu	*menu = static_cast<KActionMenu*>(actionCollection()->action("job_move"))->popupMenu();
+	TQPopupMenu	*menu = static_cast<KActionMenu*>(actionCollection()->action("job_move"))->popupMenu();
 	buildPrinterMenu(menu, false, false);
 }
 
 void KMJobViewer::slotShowPrinterMenu()
 {
-	QPopupMenu	*menu = static_cast<KActionMenu*>(actionCollection()->action("filter_modify"))->popupMenu();
+	TQPopupMenu	*menu = static_cast<KActionMenu*>(actionCollection()->action("filter_modify"))->popupMenu();
 	buildPrinterMenu(menu, true, true);
 }
 
@@ -540,7 +540,7 @@ void KMJobViewer::slotPrinterSelected(int prID)
 {
 	if (prID >= 0 && prID < (int)(m_printers.count()+1))
 	{
-		QString	prname = (prID == 0 ? i18n("All Printers") : m_printers.at(prID-1)->printerName());
+		TQString	prname = (prID == 0 ? i18n("All Printers") : m_printers.at(prID-1)->printerName());
 		emit printerChanged(this, prname);
 	}
 }
@@ -578,7 +578,7 @@ void KMJobViewer::slotClose()
 void KMJobViewer::loadPluginActions()
 {
 	int	mpopindex(7), toolbarindex(!m_standalone?7:8), menuindex(7);
-	QMenuData	*menu(0);
+	TQMenuData	*menu(0);
 
 	if (m_standalone)
 	{
@@ -586,7 +586,7 @@ void KMJobViewer::loadPluginActions()
 		KAction	*act = actionCollection()->action("job_restart");
 		for (int i=0;i<act->containerCount();i++)
 		{
-			if (menuBar()->findItem(act->itemId(i), &menu))
+			if (menuBar()->tqfindItem(act->itemId(i), &menu))
 			{
 				menuindex = mpopindex = menu->indexOf(act->itemId(i))+1;
 				break;

@@ -49,7 +49,7 @@
 /*
  * Utility class to associate a list item with a pluginInfo object
  */
-class PluginListItem : public QListViewItem
+class PluginListItem : public TQListViewItem
 {
 
 public:

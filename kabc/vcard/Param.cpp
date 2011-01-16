@@ -116,13 +116,13 @@ Param::setValue(const TQCString & value)
         assembled_ = false;
 }
 
-	QCString
+	TQCString
 Param::name()
 {
 	return name_;
 }
 
-	QCString
+	TQCString
 Param::value()
 {
 	return value_;

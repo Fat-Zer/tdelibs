@@ -100,7 +100,7 @@ CupsdConf::CupsdConf()
 	maxrequestsize_ = "0";
 	clienttimeout_ = 300;
 	// listenaddresses_
-	QString	logdir = findDir(TQStringList("/var/log/cups")
+	TQString	logdir = findDir(TQStringList("/var/log/cups")
 			<< "/var/spool/cups/log"
 			<< "/var/cups/log");
 	accesslog_ = logdir+"/access_log";
@@ -139,12 +139,12 @@ CupsdConf::~CupsdConf()
 
 bool CupsdConf::loadFromFile(const TQString& filename)
 {
-	QFile	f(filename);
+	TQFile	f(filename);
 	if (!f.exists() || !f.open(IO_ReadOnly)) return false;
 	else
 	{
-		QTextStream	t(&f);
-		QString	line;
+		TQTextStream	t(&f);
+		TQString	line;
 		bool	done(false), value(true);
 		while (!done && value)
 		{
@@ -175,12 +175,12 @@ bool CupsdConf::loadFromFile(const TQString& filename)
 
 bool CupsdConf::saveToFile(const TQString& filename)
 {
-	QFile	f(filename);
+	TQFile	f(filename);
 	if (!f.open(IO_WriteOnly))
 		return false;
 	else
 	{
-		QTextStream	t(&f);
+		TQTextStream	t(&f);
 		t << comments_["header"] << endl;
 		t << "# Server" << endl << endl;
 
@@ -448,7 +448,7 @@ bool CupsdConf::saveToFile(const TQString& filename)
 		if (browsing_) t << "BrowseShortNames " << (useshortnames_ ? "Yes" : "No") << endl;
 		
 		t << endl << "# Unknown" << endl;
-		for (TQValueList< QPair<TQString,TQString> >::ConstIterator it=unknown_.begin(); it!=unknown_.end(); ++it)
+		for (TQValueList< TQPair<TQString,TQString> >::ConstIterator it=unknown_.begin(); it!=unknown_.end(); ++it)
 			t << (*it).first << " " << (*it).second << endl;
 
 		return true;
@@ -457,7 +457,7 @@ bool CupsdConf::saveToFile(const TQString& filename)
 
 bool CupsdConf::parseLocation(CupsLocation *location, TQTextStream& file)
 {
-	QString	line;
+	TQString	line;
 	bool	done(false);
 	bool	value(true);
 	while (!done && value)
@@ -520,7 +520,7 @@ bool CupsdConf::parseOption(const TQString& line)
 	else if (keyword == "browsing") browsing_ = (value.lower() != "off");
 	else if (keyword == "classification")
 	{
-		QString	cl = value.lower();
+		TQString	cl = value.lower();
 		if (cl == "none") classification_ = CLASS_NONE;
 		else if (cl == "classified") classification_ = CLASS_CLASSIFIED;
 		else if (cl == "confidential") classification_ = CLASS_CONFIDENTIAL;
@@ -600,7 +600,7 @@ bool CupsdConf::parseOption(const TQString& line)
 	else
 	{
 		// unrecognized option
-		unknown_ << QPair<TQString,TQString>(keyword, value);
+		unknown_ << TQPair<TQString,TQString>(keyword, value);
 	}
 	return true;
 }
@@ -609,7 +609,7 @@ bool CupsdConf::loadAvailableResources()
 {
 	KConfig	conf("kdeprintrc");
 	conf.setGroup("CUPS");
-	QString	host = conf.readEntry("Host",cupsServer());
+	TQString	host = conf.readEntry("Host",cupsServer());
 	int 	port = conf.readNumEntry("Port",ippPort());
 	http_t	*http_ = httpConnect(host.local8Bit(),port);
 
@@ -633,7 +633,7 @@ bool CupsdConf::loadAvailableResources()
 	request_ = cupsDoRequest(http_, request_, "/printers/");
 	if (request_)
 	{
-		QString	name;
+		TQString	name;
 		int	type(0);
 		ipp_attribute_t	*attr = request_->attrs;
 		while (attr)
@@ -662,7 +662,7 @@ bool CupsdConf::loadAvailableResources()
 	request_ = cupsDoRequest(http_, request_, "/classes/");
 	if (request_)
 	{
-		QString	name;
+		TQString	name;
 		int	type(0);
 		ipp_attribute_t	*attr = request_->attrs;
 		while (attr)
@@ -717,7 +717,7 @@ CupsLocation::CupsLocation(const CupsLocation& loc)
 
 bool CupsLocation::parseResource(const TQString& line)
 {
-	QString	str = line.simplifyWhiteSpace();
+	TQString	str = line.simplifyWhiteSpace();
 	int	p1 = line.tqfind(' '), p2 = line.tqfind('>');
 	if (p1 != -1 && p2 != -1)
 	{
@@ -826,7 +826,7 @@ int CupsResource::typeFromPath(const TQString& path)
 
 TQString CupsResource::textToPath(const TQString& text)
 {
-	QString	path("/");
+	TQString	path("/");
 	if (text == i18n("Administration")) path = "/admin";
 	else if (text == i18n("All printers")) path = "/printers";
 	else if (text == i18n("All classes")) path = "/classes";
@@ -847,7 +847,7 @@ TQString CupsResource::textToPath(const TQString& text)
 
 TQString CupsResource::pathToText(const TQString& path)
 {
-	QString	text(i18n("Base", "Root"));
+	TQString	text(i18n("Base", "Root"));
 	if (path == "/admin") text = i18n("Administration");
 	else if (path == "/printers") text = i18n("All printers");
 	else if (path == "/classes") text = i18n("All classes");

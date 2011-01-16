@@ -50,7 +50,7 @@
 #include <cups/cups.h>
 
 static bool	dynamically_loaded = false;
-static QString	pass_string;
+static TQString	pass_string;
 
 extern "C"
 {
@@ -70,15 +70,15 @@ extern "C"
 
 int getServerPid()
 {
-	QDir	dir("/proc",TQString::null,TQDir::Name,TQDir::Dirs);
+	TQDir	dir("/proc",TQString::null,TQDir::Name,TQDir::Dirs);
 	for (uint i=0;i<dir.count();i++)
 	{
 		if (dir[i] == "." || dir[i] == ".." || dir[i] == "self") continue;
-		QFile	f("/proc/" + dir[i] + "/cmdline");
+		TQFile	f("/proc/" + dir[i] + "/cmdline");
 		if (f.exists() && f.open(IO_ReadOnly))
 		{
-			QTextStream	t(&f);
-			QString	line;
+			TQTextStream	t(&f);
+			TQString	line;
 			t >> line;
 			f.close();
 			if (line.right(5) == "cupsd" ||
@@ -92,8 +92,8 @@ int getServerPid()
 
 const char* getPassword(const char*)
 {
-	QString	user(cupsUser());
-	QString	pass;
+	TQString	user(cupsUser());
+	TQString	pass;
 
 	if (KIO::PasswordDialog::getNameAndPassword(user, pass, NULL) == TQDialog::Accepted)
 	{
@@ -142,7 +142,7 @@ void CupsdDialog::addConfPage(CupsdPage *page)
                                                                    KIcon::SizeMedium
 	                                                          );
 
-	QVBox	*box = addVBoxPage(page->pageLabel(), page->header(), icon);
+	TQVBox	*box = addVBoxPage(page->pageLabel(), page->header(), icon);
 	page->reparent(box, TQPoint(0,0));
 	pagelist_.append(page);
 }
@@ -177,15 +177,15 @@ bool CupsdDialog::setConfigFile(const TQString& filename)
 	if (conf_->unknown_.count() > 0)
 	{
 		// there were some unknown options, warn the user
-		QString	msg;
-		for (TQValueList< QPair<TQString,TQString> >::ConstIterator it=conf_->unknown_.begin(); it!=conf_->unknown_.end(); ++it)
+		TQString	msg;
+		for (TQValueList< TQPair<TQString,TQString> >::ConstIterator it=conf_->unknown_.begin(); it!=conf_->unknown_.end(); ++it)
 			msg += ((*it).first + " = " + (*it).second + "<br>");
 		msg.prepend("<p>" + i18n("Some options were not recognized by this configuration tool. "
 		                          "They will be left untouched and you won't be able to change them.") + "</p>");
 		KMessageBox::sorry(this, msg, i18n("Unrecognized Options"));
 	}
 	bool	ok(true);
-	QString	msg;
+	TQString	msg;
 	for (pagelist_.first();pagelist_.current() && ok;pagelist_.next())
 		ok = pagelist_.current()->loadConfig(conf_, msg);
 	if (!ok)
@@ -227,7 +227,7 @@ bool CupsdDialog::configure(const TQString& filename, TQWidget *parent, TQString
 		cupsSetPasswordCB(getPassword);
 
 	// load config file from server
-	QString	fn(filename);
+	TQString	fn(filename);
 	if (fn.isEmpty())
 	{
 		fn = cupsGetConf();
@@ -240,7 +240,7 @@ bool CupsdDialog::configure(const TQString& filename, TQWidget *parent, TQString
 	// check read state (only if needed)
 	if (!fn.isEmpty())
 	{
-		QFileInfo	fi(fn);
+		TQFileInfo	fi(fn);
 		if (!fi.exists() || !fi.isReadable() || !fi.isWritable())
 			errormsg = i18n("Internal error: file '%1' not readable/writable!").arg(fn);
 		// check file size
@@ -260,7 +260,7 @@ bool CupsdDialog::configure(const TQString& filename, TQWidget *parent, TQString
 		CupsdDialog	dlg(parent);
 		if (dlg.setConfigFile(fn) && dlg.exec())
 		{
-			QCString	encodedFn = TQFile::encodeName(fn);
+			TQCString	encodedFn = TQFile::encodeName(fn);
 			if (!needUpload)
 				KMessageBox::information(parent,
 					i18n("The config file has not been uploaded to the "
@@ -289,7 +289,7 @@ void CupsdDialog::slotOk()
 	if (conf_ && !filename_.isEmpty())
 	{ // try to save the file
 		bool	ok(true);
-		QString	msg;
+		TQString	msg;
 		CupsdConf	newconf_;
 		for (pagelist_.first();pagelist_.current() && ok;pagelist_.next())
 			ok = pagelist_.current()->saveConfig(&newconf_, msg);
@@ -328,18 +328,18 @@ int CupsdDialog::serverOwner()
 	int	pid = getServerPid();
 	if (pid > 0)
 	{
-		QString	str;
+		TQString	str;
 		str.sprintf("/proc/%d/status",pid);
-		QFile	f(str);
+		TQFile	f(str);
 		if (f.exists() && f.open(IO_ReadOnly))
 		{
-			QTextStream	t(&f);
+			TQTextStream	t(&f);
 			while (!t.eof())
 			{
 				str = t.readLine();
 				if (str.tqfind("Uid:",0,false) == 0)
 				{
-					QStringList	list = TQStringList::split('\t', str, false);
+					TQStringList	list = TQStringList::split('\t', str, false);
 					if (list.count() >= 2)
 					{
 						bool	ok;

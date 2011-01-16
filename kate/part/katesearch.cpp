@@ -393,7 +393,7 @@ void KateSearch::replaceOne()
         if (ccap <= ncaps ) {
           substitute = m_re.cap( ccap );
         } else {
-          kdDebug()<<"KateSearch::replaceOne(): you don't have "<<ccap<<" backreferences in regexp '"<<m_re.pattern()<<"'"<<endl;
+          kdDebug()<<"KateSearch::replaceOne(): you don't have "<<ccap<<" backreferences in regexp '"<<TQString(m_re.pattern())<<"'"<<endl;
           break;
         }
       } else if ( argument == 'n' ) {
@@ -418,13 +418,13 @@ void KateSearch::replaceOne()
   replaces++;
 
   // if we inserted newlines, we better adjust.
-  uint newlines = replaceWith.contains('\n');
+  uint newlines = replaceWith.tqcontains('\n');
   if ( newlines )
   {
     if ( ! s.flags.backward )
     {
       s.cursor.setLine( s.cursor.line() + newlines );
-      s.cursor.setCol( replaceWith.length() - replaceWith.findRev('\n') );
+      s.cursor.setCol( replaceWith.length() - replaceWith.tqfindRev('\n') );
     }
     // selection?
     if ( s.flags.selected )
@@ -885,7 +885,7 @@ while ( (p = pattern.tqfind( '\\' + delim, p )) > -1 )\
     {
       flags = re_rep2.cap( 1 );
       pattern = re_rep2.cap( 2 );
-      replacement = re_rep2.cap( 3 ).stripWhiteSpace();
+      replacement = TQString(re_rep2.cap( 3 )).stripWhiteSpace();
     }
     else
     {

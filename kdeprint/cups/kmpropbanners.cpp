@@ -32,13 +32,13 @@ KMPropBanners::KMPropBanners(TQWidget *parent, const char *name)
 	m_startbanner = new TQLabel(this);
 	m_stopbanner = new TQLabel(this);
 
-	QLabel	*l1 = new TQLabel(i18n("&Starting banner:"), this);
-	QLabel	*l2 = new TQLabel(i18n("&Ending banner:"), this);
+	TQLabel	*l1 = new TQLabel(i18n("&Starting banner:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("&Ending banner:"), this);
 
 	l1->setBuddy(m_startbanner);
 	l2->setBuddy(m_stopbanner);
 
-	QGridLayout	*main_ = new TQGridLayout(this, 3, 2, 10, 10);
+	TQGridLayout	*main_ = new TQGridLayout(this, 3, 2, 10, 10);
 	main_->setColStretch(1,1);
 	main_->setRowStretch(2,1);
 	main_->addWidget(l1,0,0);
@@ -59,7 +59,7 @@ void KMPropBanners::setPrinter(KMPrinter *p)
 {
 	if (p && p->isPrinter())
 	{
-		QStringList	l = TQStringList::split(',',p->option("kde-banners"),false);
+		TQStringList	l = TQStringList::split(',',p->option("kde-banners"),false);
 		while ( l.count() < 2 )
 			l.append( "none" );
 		m_startbanner->setText(i18n(mapBanner(l[0]).utf8()));

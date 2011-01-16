@@ -74,7 +74,7 @@ private:
 	TQDict<LprHandler>	m_handlers;
 	TQPtrList<LprHandler>    m_handlerlist;
 	TQDict<PrintcapEntry>	m_entries;
-	QDateTime		m_updtime;
+	TQDateTime		m_updtime;
 	LpcHelper		*m_lpchelper;
 	KMPrinter		*m_currentprinter;
 };

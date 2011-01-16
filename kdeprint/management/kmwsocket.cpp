@@ -45,8 +45,8 @@ KMWSocket::KMWSocket(TQWidget *parent, const char *name)
 	m_list->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_list->setLineWidth(1);
 
-	QLabel	*l1 = new TQLabel(i18n("&Printer address:"),this);
-	QLabel	*l2 = new TQLabel(i18n("P&ort:"),this);
+	TQLabel	*l1 = new TQLabel(i18n("&Printer address:"),this);
+	TQLabel	*l2 = new TQLabel(i18n("P&ort:"),this);
 
 	m_printer = new TQLineEdit(this);
 	m_port = new TQLineEdit(this);
@@ -67,8 +67,8 @@ KMWSocket::KMWSocket(TQWidget *parent, const char *name)
 	connect( m_scanner, TQT_SIGNAL( scanFinished() ), parent, TQT_SLOT( enableWizard() ) );
 
 	// layout
-	QHBoxLayout	*lay3 = new TQHBoxLayout(this, 0, 10);
-	QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 0);
+	TQHBoxLayout	*lay3 = new TQHBoxLayout(this, 0, 10);
+	TQVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 0);
 
 	lay3->addWidget(m_list,1);
 	lay3->addLayout(lay2,1);
@@ -88,7 +88,7 @@ KMWSocket::~KMWSocket()
 
 void KMWSocket::updatePrinter(KMPrinter *p)
 {
-	QString	dev = TQString::tqfromLatin1("socket://%1:%2").arg(m_printer->text()).arg(m_port->text());
+	TQString	dev = TQString::tqfromLatin1("socket://%1:%2").arg(m_printer->text()).arg(m_port->text());
 	p->setDevice(dev);
 }
 
@@ -99,7 +99,7 @@ bool KMWSocket::isValid(TQString& msg)
 		msg = i18n("You must enter a printer address.");
 		return false;
 	}
-	QString	port(m_port->text());
+	TQString	port(m_port->text());
 	int	p(9100);
 	if (!port.isEmpty())
 	{
@@ -131,12 +131,12 @@ void KMWSocket::slotScanFinished()
 	TQPtrListIterator<NetworkScanner::SocketInfo>	it(*list);
 	for (;it.current();++it)
 	{
-		QString	name;
+		TQString	name;
 		if (it.current()->Name.isEmpty())
 			name = i18n("Unknown host - 1 is the IP", "<Unknown> (%1)").arg(it.current()->IP);
 		else
 			name = it.current()->Name;
-		QListViewItem	*item = new TQListViewItem(m_list,name,it.current()->IP,TQString::number(it.current()->Port));
+		TQListViewItem	*item = new TQListViewItem(m_list,name,it.current()->IP,TQString::number(it.current()->Port));
 		item->setPixmap(0,SmallIcon("kdeprint_printer"));
 	}
 }

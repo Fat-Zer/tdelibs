@@ -748,7 +748,7 @@ void RenderObject::drawBorder(TQPainter *p, int x1, int y1, int x2, int y2,
     if(!c.isValid()) {
         if(invalidisInvert)
         {
-            p->setRasterOp(Qt::XorROP);
+            p->setRasterOp(TQt::XorROP);
             c = Qt::white;
         }
         else {
@@ -766,8 +766,8 @@ void RenderObject::drawBorder(TQPainter *p, int x1, int y1, int x2, int y2,
     case BNONE:
     case BHIDDEN:
         // should not happen
-        if(invalidisInvert && p->rasterOp() == Qt::XorROP)
-            p->setRasterOp(Qt::CopyROP);
+        if(invalidisInvert && p->rasterOp() == TQt::XorROP)
+            p->setRasterOp(TQt::CopyROP);
 
         return;
     case DOTTED:
@@ -964,8 +964,8 @@ void RenderObject::drawBorder(TQPainter *p, int x1, int y1, int x2, int y2,
         break;
     }
 
-    if(invalidisInvert && p->rasterOp() == Qt::XorROP)
-        p->setRasterOp(Qt::CopyROP);
+    if(invalidisInvert && p->rasterOp() == TQt::XorROP)
+        p->setRasterOp(TQt::CopyROP);
 }
 
 void RenderObject::paintBorder(TQPainter *p, int _tx, int _ty, int w, int h, const RenderStyle* style, bool begin, bool end)
@@ -2223,7 +2223,7 @@ CounterNode* RenderObject::lookupCounter(const TQString& counter) const
 {
     TQDict<khtml::CounterNode>* counters = document()->counters(this);
     if (counters)
-        return counters->find(counter);
+        return counters->tqfind(counter);
     else
         return 0;
 }

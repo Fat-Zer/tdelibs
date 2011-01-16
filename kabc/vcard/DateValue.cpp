@@ -173,7 +173,7 @@ DateValue::_parse()
 	
 	/////////////////////////////////////////////////////////////// DATE
 	
-	dateStr.replace(TQRegExp("-"), "");
+	dateStr.tqreplace(TQRegExp("-"), "");
 
 	kdDebug(5710) << "dateStr: " << dateStr << endl;
 
@@ -208,7 +208,7 @@ DateValue::_parse()
 
 	//////////////////////////////////////////////////// SECOND FRACTION
 	
-	int secFracSep = timeStr.findRev(',');
+	int secFracSep = timeStr.tqfindRev(',');
 	
 	if (secFracSep != -1 && zoneSep != -1) { // zoneSep checked to avoid errors.
 		TQCString quirkafleeg = "0." + timeStr.mid(secFracSep + 1, zoneSep);
@@ -217,7 +217,7 @@ DateValue::_parse()
 	
 	/////////////////////////////////////////////////////////////// HMS
 
-	timeStr.replace(TQRegExp(":"), "");
+	timeStr.tqreplace(TQRegExp(":"), "");
 	
 	hour_	= timeStr.left(2).toInt();
 	minute_	= timeStr.mid(2, 2).toInt();
@@ -398,7 +398,7 @@ DateValue::setZoneMinute(unsigned int i)
 	assembled_ = false;
 }
 
-	QDate
+	TQDate
 DateValue::qdate()
 {
 	parse();
@@ -406,7 +406,7 @@ DateValue::qdate()
 	return d;
 }
 
-	QTime
+	TQTime
 DateValue::qtime()
 {
 	parse();
@@ -415,7 +415,7 @@ DateValue::qtime()
 	return t;
 }
 
-	QDateTime
+	TQDateTime
 DateValue::qdt()
 {
 	parse();

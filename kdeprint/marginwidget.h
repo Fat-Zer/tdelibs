@@ -64,8 +64,8 @@ protected:
 private:
 	MarginValueWidget	*m_top, *m_bottom, *m_left, *m_right;
 	MarginPreview		*m_preview;
-	QComboBox		*m_units;
-	QCheckBox		*m_custom;
+	TQComboBox		*m_units;
+	TQCheckBox		*m_custom;
 	bool			m_symetric, m_block;
 	TQValueVector<float>	m_default;
 	TQValueVector<float>	m_pagesize;

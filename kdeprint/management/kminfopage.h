@@ -34,9 +34,9 @@ public:
 	void setPrinter(KMPrinter *p);
 
 protected:
-	QLabel	*m_title, *m_titlepixmap;
-	QLabel	*m_location, *m_description, *m_uri, *m_model, *m_type, *m_state, *m_device;
-	QLabel	*m_devlabel;
+	TQLabel	*m_title, *m_titlepixmap;
+	TQLabel	*m_location, *m_description, *m_uri, *m_model, *m_type, *m_state, *m_device;
+	TQLabel	*m_devlabel;
 };
 
 #endif

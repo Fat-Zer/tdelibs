@@ -100,7 +100,7 @@ KMMainView::KMMainView(TQWidget *parent, const char *name, KActionCollection *co
 	m_menubar->setMovingEnabled( false );
 
 	// layout
-	QVBoxLayout	*m_layout = new TQVBoxLayout(this, 0, 0);
+	TQVBoxLayout	*m_layout = new TQVBoxLayout(this, 0, 0);
 	m_layout->addWidget(m_toolbar);
 	m_layout->addWidget( m_menubar );
 	m_boxlayout = new TQBoxLayout(TQBoxLayout::TopToBottom, 0, 0);
@@ -175,7 +175,7 @@ void KMMainView::saveSettings()
 void KMMainView::initActions()
 {
 	KIconSelectAction	*vact = new KIconSelectAction(i18n("&View"),0,m_actions,"view_change");
-	QStringList	iconlst;
+	TQStringList	iconlst;
 	iconlst << "view_icon" << "view_detailed" << "view_tree";
 	vact->setItems(TQStringList::split(',',i18n("&Icons,&List,&Tree"),false), iconlst);
 	vact->setCurrentItem(0);
@@ -183,23 +183,23 @@ void KMMainView::initActions()
 
 	KActionMenu	*stateAct = new KActionMenu(i18n("Start/Stop Printer"), "kdeprint_printstate", m_actions, "printer_state_change");
 	stateAct->setDelayed(false);
-	stateAct->insert(new KAction(i18n("&Start Printer"),"kdeprint_enableprinter",0,this,TQT_SLOT(slotChangePrinterState()),m_actions,"printer_start"));
-	stateAct->insert(new KAction(i18n("Sto&p Printer"),"kdeprint_stopprinter",0,this,TQT_SLOT(slotChangePrinterState()),m_actions,"printer_stop"));
+	stateAct->insert(new KAction(i18n("&Start Printer"),"kdeprint_enableprinter",0,TQT_TQOBJECT(this),TQT_SLOT(slotChangePrinterState()),m_actions,"printer_start"));
+	stateAct->insert(new KAction(i18n("Sto&p Printer"),"kdeprint_stopprinter",0,TQT_TQOBJECT(this),TQT_SLOT(slotChangePrinterState()),m_actions,"printer_stop"));
 
 	stateAct = new KActionMenu(i18n("Enable/Disable Job Spooling"), "kdeprint_queuestate", m_actions, "printer_spool_change");
 	stateAct->setDelayed(false);
-	stateAct->insert(new KAction(i18n("&Enable Job Spooling"),"kdeprint_enableprinter",0,this,TQT_SLOT(slotChangePrinterState()),m_actions,"printer_enable"));
-	stateAct->insert(new KAction(i18n("&Disable Job Spooling"),"kdeprint_stopprinter",0,this,TQT_SLOT(slotChangePrinterState()),m_actions,"printer_disable"));
+	stateAct->insert(new KAction(i18n("&Enable Job Spooling"),"kdeprint_enableprinter",0,TQT_TQOBJECT(this),TQT_SLOT(slotChangePrinterState()),m_actions,"printer_enable"));
+	stateAct->insert(new KAction(i18n("&Disable Job Spooling"),"kdeprint_stopprinter",0,TQT_TQOBJECT(this),TQT_SLOT(slotChangePrinterState()),m_actions,"printer_disable"));
 
-	new KAction(i18n("&Remove"),"edittrash",0,this,TQT_SLOT(slotRemove()),m_actions,"printer_remove");
-	new KAction(i18n("&Configure..."),"configure",0,this,TQT_SLOT(slotConfigure()),m_actions,"printer_configure");
-	new KAction(i18n("Add &Printer/Class..."),"kdeprint_addprinter",0,this,TQT_SLOT(slotAdd()),m_actions,"printer_add");
-	new KAction(i18n("Add &Special (pseudo) Printer..."),"kdeprint_addpseudo",0,this,TQT_SLOT(slotAddSpecial()),m_actions,"printer_add_special");
-	new KAction(i18n("Set as &Local Default"),"kdeprint_defaulthard",0,this,TQT_SLOT(slotHardDefault()),m_actions,"printer_hard_default");
-	new KAction(i18n("Set as &User Default"),"kdeprint_defaultsoft",0,this,TQT_SLOT(slotSoftDefault()),m_actions,"printer_soft_default");
-	new KAction(i18n("&Test Printer..."),"kdeprint_testprinter",0,this,TQT_SLOT(slotTest()),m_actions,"printer_test");
-	new KAction(i18n("Configure &Manager..."),"kdeprint_configmgr",0,this,TQT_SLOT(slotManagerConfigure()),m_actions,"manager_configure");
-	new KAction(i18n("Initialize Manager/&View"),"reload",0,this,TQT_SLOT(slotInit()),m_actions,"view_refresh");
+	new KAction(i18n("&Remove"),"edittrash",0,TQT_TQOBJECT(this),TQT_SLOT(slotRemove()),m_actions,"printer_remove");
+	new KAction(i18n("&Configure..."),"configure",0,TQT_TQOBJECT(this),TQT_SLOT(slotConfigure()),m_actions,"printer_configure");
+	new KAction(i18n("Add &Printer/Class..."),"kdeprint_addprinter",0,TQT_TQOBJECT(this),TQT_SLOT(slotAdd()),m_actions,"printer_add");
+	new KAction(i18n("Add &Special (pseudo) Printer..."),"kdeprint_addpseudo",0,TQT_TQOBJECT(this),TQT_SLOT(slotAddSpecial()),m_actions,"printer_add_special");
+	new KAction(i18n("Set as &Local Default"),"kdeprint_defaulthard",0,TQT_TQOBJECT(this),TQT_SLOT(slotHardDefault()),m_actions,"printer_hard_default");
+	new KAction(i18n("Set as &User Default"),"kdeprint_defaultsoft",0,TQT_TQOBJECT(this),TQT_SLOT(slotSoftDefault()),m_actions,"printer_soft_default");
+	new KAction(i18n("&Test Printer..."),"kdeprint_testprinter",0,TQT_TQOBJECT(this),TQT_SLOT(slotTest()),m_actions,"printer_test");
+	new KAction(i18n("Configure &Manager..."),"kdeprint_configmgr",0,TQT_TQOBJECT(this),TQT_SLOT(slotManagerConfigure()),m_actions,"manager_configure");
+	new KAction(i18n("Initialize Manager/&View"),"reload",0,TQT_TQOBJECT(this),TQT_SLOT(slotInit()),m_actions,"view_refresh");
 
 	KIconSelectAction	*dact = new KIconSelectAction(i18n("&Orientation"),0,m_actions,"orientation_change");
 	iconlst.clear();
@@ -208,9 +208,9 @@ void KMMainView::initActions()
 	dact->setCurrentItem(0);
 	connect(dact,TQT_SIGNAL(activated(int)),TQT_SLOT(slotChangeDirection(int)));
 
-	new KAction(i18n("R&estart Server"),"kdeprint_restartsrv",0,this,TQT_SLOT(slotServerRestart()),m_actions,"server_restart");
-	new KAction(i18n("Configure &Server..."),"kdeprint_configsrv",0,this,TQT_SLOT(slotServerConfigure()),m_actions,"server_configure");
-	new KAction(i18n("Configure Server Access..."),"kdeprint_configsrv",0,this,TQT_SLOT(slotServerAccessConfigure()),m_actions,"server_access_configure");
+	new KAction(i18n("R&estart Server"),"kdeprint_restartsrv",0,TQT_TQOBJECT(this),TQT_SLOT(slotServerRestart()),m_actions,"server_restart");
+	new KAction(i18n("Configure &Server..."),"kdeprint_configsrv",0,TQT_TQOBJECT(this),TQT_SLOT(slotServerConfigure()),m_actions,"server_configure");
+	new KAction(i18n("Configure Server Access..."),"kdeprint_configsrv",0,TQT_TQOBJECT(this),TQT_SLOT(slotServerAccessConfigure()),m_actions,"server_access_configure");
 
 	KToggleAction	*tact = new KToggleAction(i18n("Show &Toolbar"),0,m_actions,"view_toolbar");
 	tact->setCheckedState(i18n("Hide &Toolbar"));
@@ -227,13 +227,13 @@ void KMMainView::initActions()
 	tact->setChecked(KMManager::self()->isFilterEnabled());
 	connect(tact, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotToggleFilter(bool)));
 
-	new KAction( i18n( "%1 &Handbook" ).arg( "KDEPrint" ), "contents", 0, this, TQT_SLOT( slotHelp() ), m_actions, "invoke_help" );
-	new KAction( i18n( "%1 &Web Site" ).arg( "KDEPrint" ), "network", 0, this, TQT_SLOT( slotHelp() ), m_actions, "invoke_web" );
+	new KAction( i18n( "%1 &Handbook" ).arg( "KDEPrint" ), "contents", 0, TQT_TQOBJECT(this), TQT_SLOT( slotHelp() ), m_actions, "invoke_help" );
+	new KAction( i18n( "%1 &Web Site" ).arg( "KDEPrint" ), "network", 0, TQT_TQOBJECT(this), TQT_SLOT( slotHelp() ), m_actions, "invoke_web" );
 
 	KActionMenu	*mact = new KActionMenu(i18n("Pri&nter Tools"), "package_utilities", m_actions, "printer_tool");
 	mact->setDelayed(false);
 	connect(mact->popupMenu(), TQT_SIGNAL(activated(int)), TQT_SLOT(slotToolSelected(int)));
-	QStringList	files = KGlobal::dirs()->findAllResources("data", "kdeprint/tools/*.desktop");
+	TQStringList	files = KGlobal::dirs()->findAllResources("data", "kdeprint/tools/*.desktop");
 	for (TQStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
 	{
 		KSimpleConfig	conf(*it);
@@ -501,7 +501,7 @@ void KMMainView::slotRightButtonClicked(const TQString& prname, const TQPoint& p
 
 void KMMainView::slotChangePrinterState()
 {
-	QString	opname = sender()->name();
+	TQString	opname = TQT_TQOBJECT_CONST(sender())->name();
 	if (m_current && opname.startsWith("printer_"))
 	{
 		opname = opname.mid(8);
@@ -647,7 +647,7 @@ void KMMainView::slotTest()
 
 void KMMainView::showErrorMsg(const TQString& msg, bool usemgr)
 {
-	QString	s(msg);
+	TQString	s(msg);
 	if (usemgr)
 	{
 		s.prepend("<p>");
@@ -830,16 +830,16 @@ void KMMainView::slotToolSelected(int ID)
 {
 	KMTimer::self()->hold();
 
-	QString	libname = m_toollist[ID];
+	TQString	libname = m_toollist[ID];
 	libname.prepend("kdeprint_tool_");
 	if (m_current && !m_current->device().isEmpty() && !libname.isEmpty())
 	{
 		KLibFactory	*factory = KLibLoader::self()->factory(libname.local8Bit());
 		if (factory)
 		{
-			QStringList	args;
+			TQStringList	args;
 			args << m_current->device() << m_current->printerName();
-			KDialogBase	*dlg = static_cast<KDialogBase*>(factory->create(this, "Tool", 0, args));
+			KDialogBase	*dlg = static_cast<KDialogBase*>(TQT_TQWIDGET(factory->create(TQT_TQOBJECT(this), "Tool", 0, args)));
 			if (dlg)
 				dlg->exec();
 			delete dlg;
@@ -904,7 +904,7 @@ void KMMainView::reset( const TQString& msg, bool useDelay, bool holdTimer )
 
 void KMMainView::slotHelp()
 {
-	TQString s = sender()->name();
+	TQString s = TQT_TQOBJECT_CONST(sender())->name();
 	if ( s == "invoke_help" )
 		kapp->invokeHelp( TQString::null, "kdeprint" );
 	else if ( s == "invoke_web" )

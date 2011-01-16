@@ -61,7 +61,7 @@ void PosterPreview::init()
 	m_dirty = false;
 	setDirty();
 	setMouseTracking( true );
-	setBackgroundMode( Qt::NoBackground );
+	setBackgroundMode( TQt::NoBackground );
 }
 
 void PosterPreview::parseBuffer()
@@ -144,7 +144,7 @@ void PosterPreview::drawContents( TQPainter *painter )
 					p->drawRect( x, y, m_pw, m_ph );
 					if ( pw > 0 && ph > 0 )
 						p->fillRect( x+m_mw+px, y+m_mh+py, QMIN( pw, m_pw-2*m_mw-px ), QMIN( ph, m_ph-2*m_mh-py ),
-								( selected ? KGlobalSettings::highlightColor().dark( 160 ) : lightGray ) );
+								( selected ? TQColor(KGlobalSettings::highlightColor().dark( 160 )) : lightGray ) );
 					p->setPen( Qt::DotLine );
 					p->drawRect( x+m_mw, y+m_mh, m_pw-2*m_mw, m_ph-2*m_mh );
 					p->setPen( Qt::SolidLine );
@@ -188,9 +188,9 @@ void PosterPreview::mousePressEvent( TQMouseEvent *e )
 			int pagenum = ( r-1 )*m_cols+c;
 
 			if ( m_selectedpages.tqfind( pagenum ) == m_selectedpages.end() ||
-					!( e->state() & Qt::ShiftButton ) )
+					!( e->state() & TQt::ShiftButton ) )
 			{
-				if ( !( e->state() & Qt::ShiftButton ) )
+				if ( !( e->state() & TQt::ShiftButton ) )
 					m_selectedpages.clear();
 				m_selectedpages.append( pagenum );
 				update();

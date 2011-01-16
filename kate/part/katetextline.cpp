@@ -238,7 +238,7 @@ int KateTextLine::cursorX(uint pos, uint tabChars) const
 {
   uint x = 0;
 
-  const uint n = kMin (pos, m_text.length());
+  const uint n = kMin (pos, (uint)m_text.length());
   const TQChar *tqunicode = m_text.tqunicode();
 
   for ( uint z = 0; z < n; z++)
@@ -282,12 +282,12 @@ bool KateTextLine::searchText (uint startCol, const TQString &text, uint *foundA
     if ( col == (int) m_text.length() ) ++startCol;
 
     do {
-      index = m_text.findRev( text, col, casesensitive );
+      index = m_text.tqfindRev( text, col, casesensitive );
       col--;
     } while ( col >= 0 && l + index >= startCol );
   }
   else
-    index = m_text.find (text, startCol, casesensitive);
+    index = m_text.tqfind (text, startCol, casesensitive);
 
   if (index > -1)
   {

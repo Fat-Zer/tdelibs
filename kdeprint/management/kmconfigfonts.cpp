@@ -43,8 +43,8 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 	setPageHeader(i18n("Font Settings"));
 	setPagePixmap("fonts");
 
-	QGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("Fonts Embedding"), this);
-	QGroupBox	*box2 = new TQGroupBox(0, Qt::Vertical, i18n("Fonts Path"), this);
+	TQGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("Fonts Embedding"), this);
+	TQGroupBox	*box2 = new TQGroupBox(0, Qt::Vertical, i18n("Fonts Path"), this);
 
 	m_embedfonts = new TQCheckBox(i18n("&Embed fonts in PostScript data when printing"), box);
 	m_fontpath = new KListView(box2);
@@ -58,14 +58,14 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 	m_down = new KPushButton(KGuiItem(i18n("&Down"), "down"), box2);
 	m_add = new KPushButton(KGuiItem(i18n("&Add"), "add"), box2);
 	m_remove = new KPushButton(KGuiItem(i18n("&Remove"), "editdelete"), box2);
-	QLabel	*lab0 = new TQLabel(i18n("Additional director&y:"), box2);
+	TQLabel	*lab0 = new TQLabel(i18n("Additional director&y:"), box2);
 	lab0->setBuddy(m_addpath);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(box->layout(), KDialog::spacingHint());
+	TQVBoxLayout	*l0 = new TQVBoxLayout(TQT_TQLAYOUT(box->layout()), KDialog::spacingHint());
 	l0->addWidget(m_embedfonts);
-	QVBoxLayout	*l1 = new TQVBoxLayout(box2->layout(), KDialog::spacingHint());
+	TQVBoxLayout	*l1 = new TQVBoxLayout(TQT_TQLAYOUT(box2->layout()), KDialog::spacingHint());
 	l1->addWidget(m_fontpath);
-	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
+	TQHBoxLayout	*l2 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
 	l1->addLayout(l2);
 	l2->addWidget(m_up);
 	l2->addWidget(m_down);
@@ -73,11 +73,11 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 	l1->addSpacing(10);
 	l1->addWidget(lab0);
 	l1->addWidget(m_addpath);
-	QHBoxLayout	*l3 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
+	TQHBoxLayout	*l3 = new TQHBoxLayout(0, 0, KDialog::spacingHint());
 	l1->addLayout(l3);
 	l3->addStretch(1);
 	l3->addWidget(m_add);
-	QVBoxLayout	*l4 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout	*l4 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l4->addWidget(box);
 	l4->addWidget(box2);
 
@@ -105,20 +105,20 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 
 void KMConfigFonts::loadConfig(KConfig *)
 {
-	QSettings	settings;
+	TQSettings	settings;
 	m_embedfonts->setChecked(settings.readBoolEntry("/qt/embedFonts", true));
-	QStringList	paths = settings.readListEntry("/qt/fontPath", ':');
-	QListViewItem	*item(0);
+	TQStringList	paths = settings.readListEntry("/qt/fontPath", ':');
+	TQListViewItem	*item(0);
 	for (TQStringList::ConstIterator it=paths.begin(); it!=paths.end(); ++it)
 		item = new TQListViewItem(m_fontpath, item, *it);
 }
 
 void KMConfigFonts::saveConfig(KConfig *)
 {
-	QSettings	settings;
+	TQSettings	settings;
 	settings.writeEntry("/qt/embedFonts", m_embedfonts->isChecked());
-	QStringList	l;
-	QListViewItem	*item = m_fontpath->firstChild();
+	TQStringList	l;
+	TQListViewItem	*item = m_fontpath->firstChild();
 	while (item)
 	{
 		l << item->text(0);
@@ -129,7 +129,7 @@ void KMConfigFonts::saveConfig(KConfig *)
 
 void KMConfigFonts::slotSelected()
 {
-	QListViewItem	*item = m_fontpath->selectedItem();
+	TQListViewItem	*item = m_fontpath->selectedItem();
 	m_remove->setEnabled(item);
 	m_up->setEnabled(item && item->itemAbove());
 	m_down->setEnabled(item && item->itemBelow());
@@ -139,10 +139,10 @@ void KMConfigFonts::slotAdd()
 {
 	if (m_addpath->url().isEmpty())
 		return;
-	QListViewItem	*lastItem(m_fontpath->firstChild());
+	TQListViewItem	*lastItem(m_fontpath->firstChild());
 	while (lastItem && lastItem->nextSibling())
 		lastItem = lastItem->nextSibling();
-	QListViewItem	*item = new TQListViewItem(m_fontpath, lastItem, m_addpath->url());
+	TQListViewItem	*item = new TQListViewItem(m_fontpath, lastItem, m_addpath->url());
 	m_fontpath->setSelected(item, true);
 }
 
@@ -156,7 +156,7 @@ void KMConfigFonts::slotRemove()
 
 void KMConfigFonts::slotUp()
 {
-	QListViewItem	*citem = m_fontpath->selectedItem(), *nitem = 0;
+	TQListViewItem	*citem = m_fontpath->selectedItem(), *nitem = 0;
 	if (!citem || !citem->itemAbove())
 		return;
 	nitem = new TQListViewItem(m_fontpath, citem->itemAbove()->itemAbove(), citem->text(0));
@@ -166,7 +166,7 @@ void KMConfigFonts::slotUp()
 
 void KMConfigFonts::slotDown()
 {
-	QListViewItem	*citem = m_fontpath->selectedItem(), *nitem = 0;
+	TQListViewItem	*citem = m_fontpath->selectedItem(), *nitem = 0;
 	if (!citem || !citem->itemBelow())
 		return;
 	nitem = new TQListViewItem(m_fontpath, citem->itemBelow(), citem->text(0));

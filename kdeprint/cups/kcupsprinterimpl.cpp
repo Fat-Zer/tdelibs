@@ -33,7 +33,7 @@ static void mapToCupsOptions(const TQMap<TQString,TQString>& opts, TQString& cmd
 
 TQSize rangeToSize(const TQString& s)
 {
-	QString	range = s;
+	TQString	range = s;
 	int	p(-1);
 	int	from, to;
 
@@ -67,11 +67,11 @@ bool KCupsPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 	// check printer object
 	if (!printer) return false;
 
-	QString	hoststr = TQString::tqfromLatin1("%1:%2").arg(CupsInfos::self()->host()).arg(CupsInfos::self()->port());
+	TQString	hoststr = TQString::tqfromLatin1("%1:%2").arg(CupsInfos::self()->host()).arg(CupsInfos::self()->port());
 	cmd = TQString::tqfromLatin1("cupsdoprint -P %1 -J %3 -H %2").arg(quote(printer->printerName())).arg(quote(hoststr)).arg(quote(printer->docName()));
 	if (!CupsInfos::self()->login().isEmpty())
 	{
-		QString	userstr(CupsInfos::self()->login());
+		TQString	userstr(CupsInfos::self()->login());
 		//if (!CupsInfos::self()->password().isEmpty())
 		//	userstr += (":" + CupsInfos::self()->password());
 		cmd.append(" -U ").append(quote(userstr));
@@ -83,9 +83,9 @@ bool KCupsPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 void KCupsPrinterImpl::preparePrinting(KPrinter *printer)
 {
 	// process orientation
-	QString	o = printer->option("orientation-requested");
+	TQString	o = printer->option("orientation-requested");
 	printer->setOption("kde-orientation",(o == "4" || o == "5" ? "Landscape" : "Portrait"));
-	// if it's a Qt application, then convert orientation as it will be handled by Qt directly
+	// if it's a TQt application, then convert orientation as it will be handled by TQt directly
 	if (printer->applicationType() == KPrinter::Dialog)
 		printer->setOption("orientation-requested",(o == "5" || o == "6" ? "6" : "3"));
 
@@ -94,7 +94,7 @@ void KCupsPrinterImpl::preparePrinting(KPrinter *printer)
 
 	// page ranges are handled by CUPS, so application should print all pages
 	if (printer->pageSelection() == KPrinter::SystemSide)
-	{ // Qt => CUPS
+	{ // TQt => CUPS
 		// translations
 		if (!printer->option("kde-range").isEmpty())
 			printer->setOption("page-ranges",printer->option("kde-range"));
@@ -110,7 +110,7 @@ void KCupsPrinterImpl::preparePrinting(KPrinter *printer)
 		TQString range = printer->option("kde-range");
 		if (!range.isEmpty())
 		{
-			QSize	s = rangeToSize(range);
+			TQSize	s = rangeToSize(range);
 			printer->setOption("kde-from",TQString::number(s.width()));
 			printer->setOption("kde-to",TQString::number(s.height()));
 		}
@@ -127,7 +127,7 @@ void KCupsPrinterImpl::broadcastOption(const TQString& key, const TQString& valu
 		KPrinterImpl::broadcastOption("orientation-requested",(value == "Landscape" ? "4" : "3"));
 	else if (key == "kde-pagesize")
 	{
-		QString	pagename = TQString::tqfromLatin1(pageSizeToPageName((KPrinter::PageSize)value.toInt()));
+		TQString	pagename = TQString::tqfromLatin1(pageSizeToPageName((KPrinter::PageSize)value.toInt()));
 		KPrinterImpl::broadcastOption("PageSize",pagename);
 		// simple hack for classes
 		KPrinterImpl::broadcastOption("media",pagename);
@@ -138,7 +138,7 @@ void KCupsPrinterImpl::broadcastOption(const TQString& key, const TQString& valu
 
 static void mapToCupsOptions(const TQMap<TQString,TQString>& opts, TQString& cmd)
 {
-	QString	optstr;
+	TQString	optstr;
 	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end(); ++it)
 	{
 		// only encode those options that doesn't start with "kde-" or "app-".

@@ -31,13 +31,13 @@
 KMProxyWidget::KMProxyWidget(TQWidget *parent, const char *name)
 : TQGroupBox(0, Qt::Vertical, i18n("Proxy Settings"), parent, name)
 {
-	QLabel	*m_hostlabel = new TQLabel(i18n("&Host:"), this);
-	QLabel	*m_portlabel = new TQLabel(i18n("&Port:"), this);
+	TQLabel	*m_hostlabel = new TQLabel(i18n("&Host:"), this);
+	TQLabel	*m_portlabel = new TQLabel(i18n("&Port:"), this);
 	m_useproxy = new TQCheckBox(i18n("&Use proxy server"), this);
 	m_useproxy->setCursor(KCursor::handCursor());
 	m_proxyhost = new TQLineEdit(this);
 	m_proxyport = new TQLineEdit(this);
-	m_proxyport->setValidator(new TQIntValidator(m_proxyport));
+	m_proxyport->setValidator(new TQIntValidator(TQT_TQOBJECT(m_proxyport)));
 	m_hostlabel->setBuddy(m_proxyhost);
 	m_portlabel->setBuddy(m_proxyport);
 	
@@ -46,7 +46,7 @@ KMProxyWidget::KMProxyWidget(TQWidget *parent, const char *name)
 	m_proxyhost->setEnabled(false);
 	m_proxyport->setEnabled(false);
 
-	QGridLayout	*lay0 = new TQGridLayout(layout(), 3, 2, 10);
+	TQGridLayout	*lay0 = new TQGridLayout(layout(), 3, 2, 10);
 	lay0->setColStretch(1,1);
 	lay0->addMultiCellWidget(m_useproxy,0,0,0,1);
 	lay0->addWidget(m_hostlabel,1,0);

@@ -49,9 +49,9 @@ protected:
 	void init();
 
 protected:
-	QButtonGroup	*m_orientbox, *m_colorbox, *m_nupbox;
-	QComboBox	*m_pagesize;
-	QLabel		*m_orientpix, *m_colorpix, *m_nuppix;
+	TQButtonGroup	*m_orientbox, *m_colorbox, *m_nupbox;
+	TQComboBox	*m_pagesize;
+	TQLabel		*m_orientpix, *m_colorpix, *m_nuppix;
 };
 
 #endif

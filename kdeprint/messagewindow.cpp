@@ -31,7 +31,7 @@
 TQPtrDict<MessageWindow> MessageWindow::m_windows;
 
 MessageWindow::MessageWindow( const TQString& txt, int delay, TQWidget *parent, const char *name )
-	: TQWidget( parent, name, WStyle_Customize|WStyle_NoBorder|WShowModal|WType_Dialog|WDestructiveClose )
+	: TQWidget( parent, name, (WFlags)(WStyle_Customize|WStyle_NoBorder|WShowModal|WType_Dialog|WDestructiveClose) )
 {
 	TQHBox *box = new TQHBox( this );
 	box->setFrameStyle( TQFrame::Panel|TQFrame::Raised );

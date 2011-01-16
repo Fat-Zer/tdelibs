@@ -118,7 +118,7 @@ DockContainer::~DockContainer()
   while (m_map.count()) {
     it = m_map.begin();
     KDockWidget *w=it.key();
-      if (m_overlapButtons.contains(w)) {
+      if (m_overlapButtons.tqcontains(w)) {
         (static_cast<KDockWidgetHeader*>(w->getHeader()->tqqt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
         m_overlapButtons.remove(w);
       }
@@ -149,7 +149,7 @@ void DockContainer::init()
   if ( parentDockWidget() && parentDockWidget()->parent() )
   {
     KDockSplitter *sp= static_cast<KDockSplitter*>(parentDockWidget()->
-                parent()->tqqt_cast("KDockSplitter"));
+                tqparent()->tqqt_cast("KDockSplitter"));
     if ( sp )
       sp->setSeparatorPosX( m_separatorPos );
   }
@@ -164,7 +164,7 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
 {
   KDockWidget* w = (KDockWidget*) dwdg;
   int tab;
-  bool alreadyThere=m_map.contains(w);
+  bool alreadyThere=m_map.tqcontains(w);
 
   if (alreadyThere)
   {
@@ -234,7 +234,7 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
 
 bool DockContainer::eventFilter( TQObject *obj, TQEvent *event )
 {
-    if (obj==m_tb) {
+    if (TQT_BASE_OBJECT(obj)==TQT_BASE_OBJECT(m_tb)) {
 	if ( (event->type()==TQEvent::Resize)  && (m_ws->isHidden()) ) {
 		TQSize size=((TQResizeEvent*)event)->size();
 		  if (m_vertical)
@@ -263,7 +263,7 @@ bool DockContainer::eventFilter( TQObject *obj, TQEvent *event )
 				break;
 			}
 			m_dockManager=w->dockManager();
-			m_dragPanel=hdr->dragPanel();
+			m_dragPanel=TQT_TQOBJECT(hdr->dragPanel());
 			if (m_dragPanel) m_movingState=WaitingForMoveStart;
 			delete m_startEvent;
 			m_startEvent=new TQMouseEvent(* ((TQMouseEvent*)event));
@@ -281,7 +281,7 @@ bool DockContainer::eventFilter( TQObject *obj, TQEvent *event )
 		if (m_movingState==WaitingForMoveStart) {
 			TQPoint p( ((TQMouseEvent*)event)->pos() - m_startEvent->pos() );
 		        if( p.manhattanLength() > KGlobalSettings::dndEventDelay()) {
-				m_dockManager->eventFilter(m_dragPanel,m_startEvent);
+				m_dockManager->eventFilter(m_dragPanel,TQT_TQEVENT(m_startEvent));
 				m_dockManager->eventFilter(m_dragPanel,event);
 				m_movingState=Moving;
 			}
@@ -298,7 +298,7 @@ bool DockContainer::eventFilter( TQObject *obj, TQEvent *event )
 }
 
 void DockContainer::showWidget(KDockWidget *w) {
-    if (!m_map.contains(w)) return;
+    if (!m_map.tqcontains(w)) return;
 
     kdDebug()<<"KMDI::DockContainer::<showWidget"<<endl;
     int id=m_map[w];
@@ -343,7 +343,7 @@ void DockContainer::hideIfNeeded() {
 void DockContainer::removeWidget(KDockWidget* dwdg)
 {
     KDockWidget* w = (KDockWidget*) dwdg;
-  if (!m_map.contains(w)) return;
+  if (!m_map.tqcontains(w)) return;
   int id=m_map[w];
   if (m_tb->isTabRaised(id)) {
     //why do we hide the tab if we're just going
@@ -356,7 +356,7 @@ void DockContainer::removeWidget(KDockWidget* dwdg)
   m_ws->removeWidget(w);
   m_map.remove(w);
   m_revMap.remove(id);
-  if (m_overlapButtons.contains(w)) {
+  if (m_overlapButtons.tqcontains(w)) {
     (static_cast<KDockWidgetHeader*>(w->getHeader()->tqqt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
     m_overlapButtons.remove(w);
   }
@@ -372,7 +372,7 @@ void DockContainer::undockWidget(KDockWidget *dwdg)
 {
   KDockWidget* w = (KDockWidget*) dwdg;
 
-  if (!m_map.contains(w))
+  if (!m_map.tqcontains(w))
     return;
 
   int id=m_map[w];
@@ -423,7 +423,7 @@ void DockContainer::tabClicked(int t)
       if ( parentDockWidget() && parentDockWidget()->parent() )
       {
         KDockSplitter *sp= static_cast<KDockSplitter*>(parentDockWidget()->
-                    parent()->tqqt_cast("KDockSplitter"));
+                    tqparent()->tqqt_cast("KDockSplitter"));
         if ( sp )
           m_separatorPos = sp->separatorPos();
       }
@@ -466,8 +466,8 @@ void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
 {
   // group name
   TQString grp=cfg->group();
-  cfg->deleteGroup(group_or_prefix+TQString("::%1").arg(parent()->name()));
-  cfg->setGroup(group_or_prefix+TQString("::%1").arg(parent()->name()));
+  cfg->deleteGroup(group_or_prefix+TQString("::%1").arg(tqparent()->name()));
+  cfg->setGroup(group_or_prefix+TQString("::%1").arg(tqparent()->name()));
 
   // save overlap mode
   cfg->writeEntry("overlapMode",isOverlapMode());
@@ -476,7 +476,7 @@ void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
   if ( parentDockWidget() && parentDockWidget()->parent() )
   {
     KDockSplitter *sp= static_cast<KDockSplitter*>(parentDockWidget()->
-                parent()->tqqt_cast("KDockSplitter"));
+                tqparent()->tqqt_cast("KDockSplitter"));
     if ( sp )
       cfg->writeEntry( "separatorPosition", m_separatorPos );
   }
@@ -509,7 +509,7 @@ void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
 void DockContainer::load(KConfig* cfg,const TQString& group_or_prefix)
 {
   TQString grp=cfg->group();
-  cfg->setGroup(group_or_prefix+TQString("::%1").arg(parent()->name()));
+  cfg->setGroup(group_or_prefix+TQString("::%1").arg(tqparent()->name()));
 
   if (cfg->readBoolEntry("overlapMode"))
     activateOverlapMode( m_vertical?m_tb->width():m_tb->height() );
@@ -631,7 +631,7 @@ void DockContainer::toggle() {
 
 void DockContainer::prevToolView() {
     TQPtrList<KMultiTabBarTab>* tabs=m_tb->tabs();
-    int pos=tabs->findRef(m_tb->tab(oldtab));
+    int pos=tabs->tqfindRef(m_tb->tab(oldtab));
     if (pos==-1) return;
     pos--;
     if (pos<0) pos=tabs->count()-1;
@@ -643,7 +643,7 @@ void DockContainer::prevToolView() {
 
 void DockContainer::nextToolView() {
     TQPtrList<KMultiTabBarTab>* tabs=m_tb->tabs();
-    int pos=tabs->findRef(m_tb->tab(oldtab));
+    int pos=tabs->tqfindRef(m_tb->tab(oldtab));
     if (pos==-1) return;
     pos++;
     if (pos>=(int)tabs->count()) pos=0;

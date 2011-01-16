@@ -80,7 +80,7 @@ KHTMLPrintSettings::KHTMLPrintSettings(TQWidget *parent, const char *name)
 	TQWhatsThis::add(m_printheader, whatsThisPrintHeader);
 	m_printheader->setChecked(true);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
 	l0->addWidget(m_printfriendly);
 	l0->addWidget(m_printimages);
 	l0->addWidget(m_printheader);

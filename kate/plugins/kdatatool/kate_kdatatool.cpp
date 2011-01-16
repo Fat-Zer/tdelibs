@@ -206,7 +206,7 @@ void KDataToolPluginView::slotToolActivated( const KDataToolInfo &info, const TQ
 	TQString datatype = "TQString";
 
 	// If unsupported (and if we have a single word indeed), try application/x-singleword
-	if ( !info.mimeTypes().contains( mimetype ) && m_singleWord )
+	if ( !info.mimeTypes().tqcontains( mimetype ) && m_singleWord )
 		mimetype = "application/x-singleword";
 	
 	kdDebug() << "Running tool with datatype=" << datatype << " mimetype=" << mimetype << endl;

@@ -47,11 +47,11 @@ KMWLocal::KMWLocal(TQWidget *parent, const char *name)
 	m_ports->header()->hide();
 	m_ports->addColumn("");
 	m_ports->setSorting(-1);
-	QListViewItem	*root = new TQListViewItem(m_ports, i18n("Local System"));
+	TQListViewItem	*root = new TQListViewItem(m_ports, i18n("Local System"));
 	root->setPixmap(0, SmallIcon("kdeprint_computer"));
 	root->setOpen(true);
 	connect(m_ports, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(slotPortSelected(TQListViewItem*)));
-	QLabel	*l1 = new TQLabel(i18n("URI:"), this);
+	TQLabel	*l1 = new TQLabel(i18n("URI:"), this);
 	m_localuri = new TQLineEdit(this);
 	connect( m_localuri, TQT_SIGNAL( textChanged( const TQString& ) ), TQT_SLOT( slotTextChanged( const TQString& ) ) );
 	m_parents[0] = new TQListViewItem(root, i18n("Parallel"));
@@ -60,10 +60,10 @@ KMWLocal::KMWLocal(TQWidget *parent, const char *name)
 	m_parents[3] = new TQListViewItem(root, m_parents[2], i18n("Others"));
 	for (int i=0;i<4;i++)
 		m_parents[i]->setPixmap(0, SmallIcon("input_devices_settings"));
-	QLabel	*l2 = new TQLabel(i18n("<p>Select a valid detected port, or enter directly the corresponding URI in the bottom edit field.</p>"), this);
+	TQLabel	*l2 = new TQLabel(i18n("<p>Select a valid detected port, or enter directly the corresponding URI in the bottom edit field.</p>"), this);
 
-	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
-	QHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 10);
+	TQVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
+	TQHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 10);
 	lay0->addWidget(l2, 0);
 	lay0->addWidget(m_ports, 1);
 	lay0->addLayout(lay1, 0);
@@ -78,7 +78,7 @@ bool KMWLocal::isValid(TQString& msg)
 		msg = i18n("The URI is empty","Empty URI.");
 		return false;
 	}
-	else if (m_uris.findIndex(m_localuri->text()) == -1)
+	else if (m_uris.tqfindIndex(m_localuri->text()) == -1)
 	{
 		if (KMessageBox::warningContinueCancel(this, i18n("The local URI doesn't correspond to a detected port. Continue?")) == KMessageBox::Cancel)
 		{
@@ -98,7 +98,7 @@ void KMWLocal::slotPortSelected(TQListViewItem *item)
 	if (!item || item->depth() <= 1 || item->depth() > 3)
 		uri = TQString::null;
 	else if (item->depth() == 3)
-		uri = item->parent()->text( 1 );
+		uri = item->tqparent()->text( 1 );
 	else
 		uri = item->text( 1 );
 	m_block = true;
@@ -160,22 +160,22 @@ void KMWLocal::slotTextChanged( const TQString& txt )
 
 void KMWLocal::initialize()
 {
-	QStringList	list = KMFactory::self()->manager()->detectLocalPrinters();
+	TQStringList	list = KMFactory::self()->manager()->detectLocalPrinters();
 	if (list.isEmpty() || (list.count() % 4) != 0)
 	{
 		KMessageBox::error(this, i18n("Unable to detect local ports."));
 		return;
 	}
-	QListViewItem	*last[4] = {0, 0, 0, 0};
+	TQListViewItem	*last[4] = {0, 0, 0, 0};
 	for (TQStringList::Iterator it=list.begin(); it!=list.end(); ++it)
 	{
 		TQString cl = *it;
 		++it;
 
-		QString	uri = *it;
+		TQString	uri = *it;
 		int p = uri.tqfind( ':' );
-		QString	desc = *(++it), prot = ( p != -1 ? uri.left( p ) : TQString::null );
-		QString	printer = *(++it);
+		TQString	desc = *(++it), prot = ( p != -1 ? uri.left( p ) : TQString::null );
+		TQString	printer = *(++it);
 		int	index(-1);
 		if (desc.isEmpty())
 			desc = uri;
@@ -195,7 +195,7 @@ void KMWLocal::initialize()
 		m_uris << uri;
 		if (!printer.isEmpty())
 		{
-			QListViewItem	*pItem = new TQListViewItem(last[index], printer);
+			TQListViewItem	*pItem = new TQListViewItem(last[index], printer);
 			last[index]->setOpen(true);
 			pItem->setPixmap(0, SmallIcon("kdeprint_printer"));
 		}

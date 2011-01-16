@@ -47,10 +47,10 @@ protected:
 
 private:
 	KIntNumInput	*m_cpi, *m_lpi, *m_columns;
-	QButtonGroup	*m_prettyprint;
+	TQButtonGroup	*m_prettyprint;
 	MarginWidget	*m_margin;
-	QLabel			*m_prettypix;
-	QString		m_currentps;
+	TQLabel			*m_prettypix;
+	TQString		m_currentps;
 	bool		m_block;
 };
 

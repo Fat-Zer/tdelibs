@@ -680,7 +680,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
                     KSSLCertChain chain;
                     chain.setChain( certs );
                     if ( chain.isValid() )
-                        answer = PermissionDialog( tqApp->activeWindow() ).exec( text, args[0] );
+                        answer = PermissionDialog( TQT_TQWIDGET(tqApp->activeWindow()) ).exec( text, args[0] );
                 }
             }
             sl.push_front( TQString(answer) );
@@ -826,7 +826,7 @@ PermissionDialog::~PermissionDialog()
 
 void PermissionDialog::clicked()
 {
-    m_button = sender()->name();
+    m_button = TQT_TQOBJECT_CONST(sender())->name();
     static_cast<const TQWidget*>(sender())->tqparentWidget()->close();
 }
 

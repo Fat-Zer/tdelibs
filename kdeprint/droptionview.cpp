@@ -58,15 +58,15 @@ OptionNumericView::OptionNumericView(TQWidget *parent, const char *name)
 	m_edit = new TQLineEdit(this);
 	m_slider = new TQSlider(Qt::Horizontal,this);
 	m_slider->setTickmarks(TQSlider::Below);
-	QLabel	*lab = new TQLabel(i18n("Value:"),this);
+	TQLabel	*lab = new TQLabel(i18n("Value:"),this);
 	m_minval = new TQLabel(this);
 	m_maxval = new TQLabel(this);
 
 	m_integer = true;
 
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
-	QHBoxLayout	*sub_ = new TQHBoxLayout(0, 0, 10);
-	QHBoxLayout	*sub2_ = new TQHBoxLayout(0, 0, 5);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
+	TQHBoxLayout	*sub_ = new TQHBoxLayout(0, 0, 10);
+	TQHBoxLayout	*sub2_ = new TQHBoxLayout(0, 0, 5);
 	main_->addStretch(1);
 	main_->addLayout(sub_,0);
 	main_->addLayout(sub2_,0);
@@ -164,9 +164,9 @@ OptionStringView::OptionStringView(TQWidget *parent, const char *name)
 : OptionBaseView(parent,name)
 {
 	m_edit = new TQLineEdit(this);
-	QLabel	*lab = new TQLabel(i18n("String value:"),this);
+	TQLabel	*lab = new TQLabel(i18n("String value:"),this);
 
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 5);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 5);
 	main_->addStretch(1);
 	main_->addWidget(lab,0);
 	main_->addWidget(m_edit,0);
@@ -193,7 +193,7 @@ OptionListView::OptionListView(TQWidget *parent, const char *name)
 {
 	m_list = new KListBox(this);
 
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
 	main_->addWidget(m_list);
 
 	connect(m_list,TQT_SIGNAL(selectionChanged()),TQT_SLOT(slotSelectionChanged()));
@@ -219,7 +219,7 @@ void OptionListView::setOption(DrBase *opt)
 
 void OptionListView::setValue(const TQString& val)
 {
-	m_list->setCurrentItem(m_choices.findIndex(val));
+	m_list->setCurrentItem(m_choices.tqfindIndex(val));
 }
 
 void OptionListView::slotSelectionChanged()
@@ -238,12 +238,12 @@ OptionBooleanView::OptionBooleanView(TQWidget *parent, const char *name)
 	m_group = new TQVButtonGroup(this);
 	m_group->setFrameStyle(TQFrame::NoFrame);
 
-	QRadioButton	*btn = new TQRadioButton(m_group);
+	TQRadioButton	*btn = new TQRadioButton(m_group);
 	btn->setCursor(KCursor::handCursor());
 	btn = new TQRadioButton(m_group);
 	btn->setCursor(KCursor::handCursor());
 
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
 	main_->addWidget(m_group);
 
 	connect(m_group,TQT_SIGNAL(clicked(int)),TQT_SLOT(slotSelected(int)));
@@ -255,9 +255,9 @@ void OptionBooleanView::setOption(DrBase *opt)
 	{
 		TQPtrListIterator<DrBase>	it(*(((DrBooleanOption*)opt)->choices()));
 		m_choices.clear();
-		m_group->find(0)->setText(it.toFirst()->get("text"));
+		static_cast<TQButton*>(m_group->find(0))->setText(it.toFirst()->get("text"));
 		m_choices.append(it.toFirst()->name());
-		m_group->find(1)->setText(it.toLast()->get("text"));
+		static_cast<TQButton*>(m_group->find(1))->setText(it.toLast()->get("text"));
 		m_choices.append(it.toLast()->name());
 		setValue(opt->valueText());
 	}
@@ -265,13 +265,13 @@ void OptionBooleanView::setOption(DrBase *opt)
 
 void OptionBooleanView::setValue(const TQString& val)
 {
-	int	ID = m_choices.findIndex(val);
+	int	ID = m_choices.tqfindIndex(val);
 	m_group->setButton(ID);
 }
 
 void OptionBooleanView::slotSelected(int ID)
 {
-	QString	s = m_choices[ID];
+	TQString	s = m_choices[ID];
 	emit valueChanged(s);
 }
 
@@ -308,7 +308,7 @@ DrOptionView::DrOptionView(TQWidget *parent, const char *name)
 	setColumnLayout(0, Qt::Vertical );
 	layout()->setSpacing( KDialog::spacingHint() );
 	layout()->setMargin( KDialog::marginHint() );
-	QVBoxLayout	*main_ = new TQVBoxLayout(layout(), KDialog::marginHint());
+	TQVBoxLayout	*main_ = new TQVBoxLayout(TQT_TQLAYOUT(layout()), KDialog::marginHint());
 	main_->addWidget(m_stack);
 
 	m_item = 0;

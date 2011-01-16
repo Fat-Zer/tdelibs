@@ -39,15 +39,15 @@ KMWPassword::KMWPassword(TQWidget *parent, const char *name)
 	m_nextpage = KMWizard::SMB;
 
 	// create widgets
-	QLabel	*infotext_ = new TQLabel(this);
+	TQLabel	*infotext_ = new TQLabel(this);
 	infotext_->setText(i18n("<p>This backend may require a login/password to work properly. "
 				"Select the type of access to use and fill in the login and password entries if needed.</p>"));
 	m_login = new TQLineEdit(this);
 	m_login->setText(TQString::fromLocal8Bit(getenv("USER")));
 	m_password = new TQLineEdit(this);
 	m_password->setEchoMode(TQLineEdit::Password);
-	QLabel	*loginlabel_ = new TQLabel(i18n("&Login:"),this);
-	QLabel	*passwdlabel_ = new TQLabel(i18n("&Password:"),this);
+	TQLabel	*loginlabel_ = new TQLabel(i18n("&Login:"),this);
+	TQLabel	*passwdlabel_ = new TQLabel(i18n("&Password:"),this);
 	m_btngroup = new TQVButtonGroup( this );
 	m_btngroup->setFrameStyle( TQFrame::NoFrame );
 	TQRadioButton *btn1 = new TQRadioButton( i18n( "&Anonymous (no login/password)" ), m_btngroup );
@@ -72,7 +72,7 @@ KMWPassword::KMWPassword(TQWidget *parent, const char *name)
 	main_->addSpacing( 10 );
 	main_->addWidget( m_btngroup );
 	TQGridLayout *l1 = new TQGridLayout( 0, 2, 3 );
-	main_->addLayout( l1 );
+	main_->addLayout( TQT_TQLAYOUT(l1) );
 	main_->addStretch( 1 );
 	l1->setColSpacing( 0, 35 );
 	l1->setColStretch( 2, 1 );
@@ -109,7 +109,7 @@ void KMWPassword::initPrinter( KMPrinter* p )
 
 void KMWPassword::updatePrinter(KMPrinter *p)
 {
-	QString	s = p->option("kde-backend");
+	TQString	s = p->option("kde-backend");
 	if (!s.isEmpty())
 		setNextPage(s.toInt());
 	else

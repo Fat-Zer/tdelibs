@@ -57,11 +57,11 @@ protected:
 private:
 	static CupsInfos	*unique_;
 
-	QString	host_;
+	TQString	host_;
 	int	port_;
-	QString	login_;
-	QString	password_;
-	QString	reallogin_;
+	TQString	login_;
+	TQString	password_;
+	TQString	reallogin_;
 	bool savepwd_;
 
 	int	count_;

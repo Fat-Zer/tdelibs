@@ -46,8 +46,8 @@ protected slots:
 
 private:
 	KIntNumInput	*keepalivetimeout_, *maxclients_, *clienttimeout_;
-	QComboBox	*hostnamelookup_;
-	QCheckBox	*keepalive_;
+	TQComboBox	*hostnamelookup_;
+	TQCheckBox	*keepalive_;
 	EditList	*listen_;
 	SizeWidget *maxrequestsize_;
 };

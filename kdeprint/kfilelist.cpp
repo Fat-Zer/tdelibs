@@ -149,8 +149,8 @@ KFileList::KFileList(TQWidget *parent, const char *name)
 		"Drag file(s) here or use the button to open a file dialog. "
 		"Leave empty for <b>&lt;STDIN&gt;</b>."));
 
-	QHBoxLayout	*l0 = new TQHBoxLayout(this, 0, KDialog::spacingHint());
-	QVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 1);
+	TQHBoxLayout	*l0 = new TQHBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 1);
 	l0->addWidget(m_files);
 	l0->addLayout(l1);
 	l1->addWidget(m_add);
@@ -185,7 +185,7 @@ void KFileList::addFiles(const KURL::List& files)
 	if (files.count() > 0)
 	{
 		// search last item in current list, to add new ones at the end
-		QListViewItem	*item = m_files->firstChild();
+		TQListViewItem	*item = m_files->firstChild();
 		while (item && item->nextSibling())
 			item = item->nextSibling();
 
@@ -225,8 +225,8 @@ void KFileList::setFileList(const TQStringList& files)
 
 TQStringList KFileList::fileList() const
 {
-	QStringList	l;
-	QListViewItem	*item = m_files->firstChild();
+	TQStringList	l;
+	TQListViewItem	*item = m_files->firstChild();
 	while (item)
 	{
 		l << item->text(2);
@@ -255,7 +255,7 @@ void KFileList::slotRemoveFile()
 
 void KFileList::slotOpenFile()
 {
-	QListViewItem	*item = m_files->currentItem();
+	TQListViewItem	*item = m_files->currentItem();
 	if (item)
 	{
 		KURL url( item->text( 2 ) );
@@ -271,7 +271,7 @@ TQSize KFileList::tqsizeHint() const
 void KFileList::selection(TQPtrList<TQListViewItem>& l)
 {
 	l.setAutoDelete(false);
-	QListViewItem	*item = m_files->firstChild();
+	TQListViewItem	*item = m_files->firstChild();
 	while (item)
 	{
 		if (item->isSelected())
@@ -299,7 +299,7 @@ void KFileList::slotUp()
 	selection(l);
 	if (l.count() == 1 && l.first()->itemAbove())
 	{
-		QListViewItem	*item(l.first()), *clone;
+		TQListViewItem	*item(l.first()), *clone;
 		clone = new TQListViewItem(m_files, item->itemAbove()->itemAbove(), item->text(0), item->text(1), item->text(2));
 		clone->setPixmap(0, *(item->pixmap(0)));
 		delete item;
@@ -314,7 +314,7 @@ void KFileList::slotDown()
 	selection(l);
 	if (l.count() == 1 && l.first()->itemBelow())
 	{
-		QListViewItem	*item(l.first()), *clone;
+		TQListViewItem	*item(l.first()), *clone;
 		clone = new TQListViewItem(m_files, item->itemBelow(), item->text(0), item->text(1), item->text(2));
 		clone->setPixmap(0, *(item->pixmap(0)));
 		delete item;

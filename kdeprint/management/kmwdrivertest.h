@@ -41,11 +41,11 @@ protected slots:
 	void slotSettings();
 
 private:
-	QLabel	*m_manufacturer;
-	QLabel	*m_model;
-	QLabel	*m_driverinfo;
-	QPushButton	*m_test;
-	QPushButton	*m_settings;
+	TQLabel	*m_manufacturer;
+	TQLabel	*m_model;
+	TQLabel	*m_driverinfo;
+	TQPushButton	*m_test;
+	TQPushButton	*m_settings;
 	DrMain		*m_driver;
 	KMPrinter	*m_printer;
 };

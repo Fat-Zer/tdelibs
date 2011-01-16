@@ -114,7 +114,7 @@ class KHTMLToolTip;
 
 #ifndef QT_NO_TOOLTIP
 
-class KHTMLToolTip : public QToolTip
+class KHTMLToolTip : public TQToolTip
 {
 public:
     KHTMLToolTip(KHTMLView *view,  KHTMLViewPrivate* vp) : TQToolTip(view->viewport())
@@ -485,7 +485,7 @@ void KHTMLToolTip::maybeTip(const TQPoint& p)
 #endif
 
 KHTMLView::KHTMLView( KHTMLPart *part, TQWidget *parent, const char *name)
-    : TQScrollView( parent, name, WResizeNoErase | WRepaintNoErase )
+    : TQScrollView( parent, name, (WFlags)(WResizeNoErase | WRepaintNoErase) )
 {
     m_medium = "screen";
 
@@ -499,7 +499,7 @@ KHTMLView::KHTMLView( KHTMLPart *part, TQWidget *parent, const char *name)
     // initialize QScrollView
     enableClipper(true);
     // hack to get unclipped painting on the viewport.
-    static_cast<KHTMLView *>(static_cast<TQWidget *>(viewport()))->setWFlags(WPaintUnclipped);
+    static_cast<KHTMLView *>(TQT_TQWIDGET(viewport()))->setWFlags(WPaintUnclipped);
 
     setResizePolicy(Manual);
     viewport()->setMouseTracking(true);
@@ -546,7 +546,7 @@ void KHTMLView::init()
         d->vertPaintBuffer = new TQPixmap(10, PAINT_BUFFER_HEIGHT);
     if(!d->tp) d->tp = new TQPainter();
 
-    setFocusPolicy(TQWidget::StrongFocus);
+    setFocusPolicy(TQ_StrongFocus);
     viewport()->setFocusProxy(this);
 
     _marginWidth = -1; // undefined
@@ -579,7 +579,7 @@ void KHTMLView::clear()
     if ( d->cursor_icon_widget )
         d->cursor_icon_widget->hide();
     d->reset();
-    killTimers();
+    TQT_TQOBJECT(this)->killTimers();
     emit cleared();
 
     TQScrollView::setHScrollBarMode(d->hmode);
@@ -662,7 +662,7 @@ void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
 
     //kdDebug( 6000 ) << "drawContents this="<< this <<" x=" << ex << ",y=" << ey << ",w=" << ew << ",h=" << eh << endl;
     if(!m_part || !m_part->xmlDocImpl() || !m_part->xmlDocImpl()->renderer()) {
-        p->fillRect(ex, ey, ew, eh, palette().active().brush(TQColorGroup::Base));
+        p->fillRect(ex, ey, ew, eh, tqpalette().active().brush(TQColorGroup::Base));
         return;
     } else if ( d->complete && static_cast<RenderCanvas*>(m_part->xmlDocImpl()->renderer())->needsLayout() ) {
         // an external update request happens while we have a layout scheduled
@@ -726,7 +726,7 @@ void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
             d->vertPaintBuffer->resize(10, visibleHeight());
         d->tp->begin(d->vertPaintBuffer);
         d->tp->translate(-ex, -ey);
-        d->tp->fillRect(ex, ey, ew, eh, palette().active().brush(TQColorGroup::Base));
+        d->tp->fillRect(ex, ey, ew, eh, tqpalette().active().brush(TQColorGroup::Base));
         m_part->xmlDocImpl()->renderer()->layer()->paint(d->tp, TQRect(ex, ey, ew, eh));
         d->tp->end();
 	p->drawPixmap(ex, ey, *d->vertPaintBuffer, 0, 0, ew, eh);
@@ -740,7 +740,7 @@ void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
             int ph = eh-py < PAINT_BUFFER_HEIGHT ? eh-py : PAINT_BUFFER_HEIGHT;
             d->tp->begin(d->paintBuffer);
             d->tp->translate(-ex, -ey-py);
-            d->tp->fillRect(ex, ey+py, ew, ph, palette().active().brush(TQColorGroup::Base));
+            d->tp->fillRect(ex, ey+py, ew, ph, tqpalette().active().brush(TQColorGroup::Base));
             m_part->xmlDocImpl()->renderer()->layer()->paint(d->tp, TQRect(ex, ey+py, ew, ph));
             d->tp->end();
 
@@ -756,7 +756,7 @@ static int cnt=0;
 	kdDebug() << "[" << ++cnt << "]" << " clip region: " << pr << endl;
 //	p->setClipRegion(TQRect(0,0,ew,eh));
 //        p->translate(-ex, -ey);
-        p->fillRect(ex, ey, ew, eh, palette().active().brush(TQColorGroup::Base));
+        p->fillRect(ex, ey, ew, eh, tqpalette().active().brush(TQColorGroup::Base));
         m_part->xmlDocImpl()->renderer()->layer()->paint(p, pr);
 #endif // DEBUG_NO_PAINT_BUFFER
 
@@ -911,8 +911,8 @@ void KHTMLView::closeChildDialogs()
         }
         else
         {
-            kdWarning() << "closeChildDialogs: not a KDialogBase! Don't use QDialogs in KDE! " << static_cast<TQWidget*>(dlg) << endl;
-            static_cast<TQWidget*>(dlg)->hide();
+            kdWarning() << "closeChildDialogs: not a KDialogBase! Don't use QDialogs in KDE! " << TQT_TQWIDGET(dlg) << endl;
+            TQT_TQWIDGET(dlg)->hide();
         }
     }
     delete dlgs;
@@ -941,7 +941,7 @@ void KHTMLView::closeEvent( TQCloseEvent* ev )
 void KHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
 {
     if (!m_part->xmlDocImpl()) return;
-    if (d->possibleTripleClick && ( _mouse->button() & MouseButtonMask ) == LeftButton)
+    if (d->possibleTripleClick && ( _mouse->button() & Qt::MouseButtonMask ) == Qt::LeftButton)
     {
         viewportMouseDoubleClickEvent( _mouse ); // it handles triple clicks too
         return;
@@ -958,7 +958,7 @@ void KHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
 
     //kdDebug(6000) << "innerNode="<<mev.innerNode.nodeName().string()<<endl;
 
-    if ( (_mouse->button() == MidButton) &&
+    if ( (_mouse->button() == Qt::MidButton) &&
           !m_part->d->m_bOpenMiddleClick && !d->m_mouseScrollTimer &&
           mev.url.isNull() && (mev.innerNode.elementId() != ID_INPUT) ) {
         TQPoint point = mapFromGlobal( _mouse->globalPos() );
@@ -1114,9 +1114,9 @@ static inline void forwardPeripheralEvent(khtml::RenderWidget* r, TQMouseEvent* 
     TQWidget* w = r->widget();
     TQScrollView* sc = ::tqqt_cast<TQScrollView*>(w);
     if (sc && !::tqqt_cast<TQListBox*>(w))
-        static_cast<khtml::RenderWidget::ScrollViewEventPropagator*>(sc)->sendEvent(&fw);
+        static_cast<khtml::RenderWidget::ScrollViewEventPropagator*>(sc)->sendEvent(TQT_TQEVENT(&fw));
     else if(w)
-        static_cast<khtml::RenderWidget::EventPropagator*>(w)->sendEvent(&fw);
+        static_cast<khtml::RenderWidget::EventPropagator*>(w)->sendEvent(TQT_TQEVENT(&fw));
 }
 
 
@@ -1147,8 +1147,8 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
         (deltaX > 0) ? d->m_mouseScroll_byX = 1 : d->m_mouseScroll_byX = -1;
         (deltaY > 0) ? d->m_mouseScroll_byY = 1 : d->m_mouseScroll_byY = -1;
 
-        double adX = QABS(deltaX)/30.0;
-        double adY = QABS(deltaY)/30.0;
+        double adX = TQABS(deltaX)/30.0;
+        double adY = TQABS(deltaY)/30.0;
 
         d->m_mouseScroll_byX = kMax(kMin(d->m_mouseScroll_byX * int(adX*adX), SHRT_MAX), SHRT_MIN);
         d->m_mouseScroll_byY = kMax(kMin(d->m_mouseScroll_byY * int(adY*adY), SHRT_MAX), SHRT_MIN);
@@ -1285,8 +1285,8 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
             attr.save_under = True;
             XChangeWindowAttributes( qt_xdisplay(), d->cursor_icon_widget->winId(), CWSaveUnder, &attr );
             d->cursor_icon_widget->resize( icon_pixmap.width(), icon_pixmap.height());
-            if( icon_pixmap.mask() )
-                d->cursor_icon_widget->setMask( *icon_pixmap.mask());
+            if( icon_pixmap.tqmask() )
+                d->cursor_icon_widget->setMask( *icon_pixmap.tqmask());
             else
                 d->cursor_icon_widget->clearMask();
             d->cursor_icon_widget->setBackgroundPixmap( icon_pixmap );
@@ -1341,7 +1341,7 @@ void KHTMLView::viewportMouseReleaseEvent( TQMouseEvent * _mouse )
         DOM::NodeImpl* fn = m_part->xmlDocImpl()->focusNode();
         if (fn && fn != mev.innerNode.handle() &&
             fn->renderer() && fn->renderer()->isWidget() &&
-            _mouse->button() != MidButton) {
+            _mouse->button() != Qt::MidButton) {
             forwardPeripheralEvent(static_cast<khtml::RenderWidget*>(fn->renderer()), _mouse, xm, ym);
         }
 
@@ -1472,7 +1472,7 @@ void KHTMLView::keyPressEvent( TQKeyEvent *_ke )
 			_ke->accept();
 			return;
 		}
-		else if(_ke->key() == Key_Space || !_ke->text().stripWhiteSpace().isEmpty())
+		else if(_ke->key() == Key_Space || !TQString(_ke->text()).stripWhiteSpace().isEmpty())
 		{
 			d->findString += _ke->text();
 
@@ -1528,7 +1528,7 @@ void KHTMLView::keyPressEvent( TQKeyEvent *_ke )
     }
 
     int offs = (clipper()->height() < 30) ? clipper()->height() : 30;
-    if (_ke->state() & Qt::ShiftButton)
+    if (_ke->state() & TQt::ShiftButton)
       switch(_ke->key())
         {
         case Key_Space:
@@ -1729,8 +1729,8 @@ void KHTMLView::keyReleaseEvent(TQKeyEvent *_ke)
 
     if( d->scrollSuspendPreActivate && _ke->key() != Key_Shift )
         d->scrollSuspendPreActivate = false;
-    if( _ke->key() == Key_Shift && d->scrollSuspendPreActivate && _ke->state() == Qt::ShiftButton
-        && !(KApplication::keyboardMouseState() & Qt::ShiftButton))
+    if( _ke->key() == Key_Shift && d->scrollSuspendPreActivate && _ke->state() == TQt::ShiftButton
+        && !(KApplication::keyboardMouseState() & TQt::ShiftButton))
     {
         if (d->scrollTimerId)
         {
@@ -1746,7 +1746,7 @@ void KHTMLView::keyReleaseEvent(TQKeyEvent *_ke)
     {
         if (d->accessKeysPreActivate && _ke->key() != Key_Control)
             d->accessKeysPreActivate=false;
-        if (d->accessKeysPreActivate && _ke->state() == Qt::ControlButton && !(KApplication::keyboardMouseState() & Qt::ControlButton))
+        if (d->accessKeysPreActivate && _ke->state() == TQt::ControlButton && !(KApplication::keyboardMouseState() & TQt::ControlButton))
         {
 	    displayAccessKeys();
 	    m_part->setStatusBarText(i18n("Access Keys activated"),KHTMLPart::BarOverrideText);
@@ -1854,7 +1854,7 @@ void KHTMLView::doAutoScroll()
 }
 
 
-class HackWidget : public QWidget
+class HackWidget : public TQWidget
 {
  public:
     inline void setNoErase() { setWFlags(getWFlags()|WRepaintNoErase); }
@@ -1895,13 +1895,13 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 
     TQWidget *view = viewport();
 
-    if (o == view) {
+    if (TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(view)) {
 	// we need to install an event filter on all children of the viewport to
 	// be able to get correct stacking of children within the document.
 	if(e->type() == TQEvent::ChildInserted) {
-	    TQObject *c = static_cast<TQChildEvent *>(e)->child();
+	    TQObject *c = TQT_TQOBJECT(TQT_TQCHILDEVENT(e)->child());
 	    if (c->isWidgetType()) {
-		TQWidget *w = static_cast<TQWidget *>(c);
+		TQWidget *w = TQT_TQWIDGET(c);
 		// don't install the event filter on toplevels
 		if (w->tqparentWidget(true) == view) {
 		    if (!strcmp(w->name(), "__khtml")) {
@@ -1910,8 +1910,8 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 			if (!::tqqt_cast<TQFrame*>(w))
 			    w->setBackgroundMode( TQWidget::NoBackground );
 			static_cast<HackWidget *>(w)->setNoErase();
-			if (w->children()) {
-			    TQObjectListIterator it(*w->children());
+			if (!w->childrenListObject().isEmpty()) {
+			    TQObjectListIterator it(w->childrenListObject());
 			    for (; it.current(); ++it) {
 				TQWidget *widget = ::tqqt_cast<TQWidget *>(it.current());
 				if (widget && !widget->isTopLevel()) {
@@ -1927,7 +1927,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    }
 	}
     } else if (o->isWidgetType()) {
-	TQWidget *v = static_cast<TQWidget *>(o);
+	TQWidget *v = TQT_TQWIDGET(o);
         TQWidget *c = v;
 	while (v && v != view) {
             c = v;
@@ -1936,7 +1936,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 
 	if (v && !strcmp(c->name(), "__khtml")) {
 	    bool block = false;
-	    TQWidget *w = static_cast<TQWidget *>(o);
+	    TQWidget *w = TQT_TQWIDGET(o);
 	    switch(e->type()) {
 	    case TQEvent::Paint:
 		if (!allowWidgetPaintEvents) {
@@ -1951,7 +1951,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 			v = v->tqparentWidget();
 		    }
 		    viewportToContents( x, y, x, y );
-		    TQPaintEvent *pe = static_cast<TQPaintEvent *>(e);
+		    TQPaintEvent *pe = TQT_TQPAINTEVENT(e);
 		    bool asap = !d->contentsMoving && ::tqqt_cast<TQScrollView *>(c);
 
 		    // TQScrollView needs fast tqrepaints
@@ -1970,7 +1970,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    case TQEvent::MouseButtonRelease:
 	    case TQEvent::MouseButtonDblClick: {
 		if ( (w->tqparentWidget() == view || ::tqqt_cast<TQScrollView*>(c)) && !::tqqt_cast<TQScrollBar *>(w)) {
-		    TQMouseEvent *me = static_cast<TQMouseEvent *>(e);
+		    TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
 		    TQPoint pt = w->mapTo( view, me->pos());
 		    TQMouseEvent me2(me->type(), pt, me->button(), me->state());
 
@@ -1989,7 +1989,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    case TQEvent::KeyPress:
 	    case TQEvent::KeyRelease:
 		if (w->tqparentWidget() == view && !::tqqt_cast<TQScrollBar *>(w)) {
-		    TQKeyEvent *ke = static_cast<TQKeyEvent *>(e);
+		    TQKeyEvent *ke = TQT_TQKEYEVENT(e);
 		    if (e->type() == TQEvent::KeyPress)
 			keyPressEvent(ke);
 		    else
@@ -2275,14 +2275,14 @@ void KHTMLView::displayAccessKeys( KHTMLView* caller, KHTMLView* origview, TQVal
                 if( tqFind( taken.begin(), taken.end(), a ) == taken.end()) // !contains
                     accesskey = a;
             }
-            if( accesskey.isNull() && fallbacks.contains( en )) {
+            if( accesskey.isNull() && fallbacks.tqcontains( en )) {
                 TQChar a = fallbacks[ en ].upper();
                 if( tqFind( taken.begin(), taken.end(), a ) == taken.end()) // !contains
                     accesskey = TQString( "<qt><i>" ) + a + "</i></qt>";
             }
             if( !accesskey.isNull()) {
 	        TQRect rec=en->getRect();
-	        TQLabel *lab=new TQLabel(accesskey,viewport(),0,Qt::WDestructiveClose);
+	        TQLabel *lab=new TQLabel(accesskey,viewport(),0,(WFlags)WDestructiveClose);
 	        connect( origview, TQT_SIGNAL(hideAccessKeys()), lab, TQT_SLOT(close()) );
 	        connect( this, TQT_SIGNAL(tqrepaintAccessKeys()), lab, TQT_SLOT(tqrepaint()));
 	        lab->setPalette(TQToolTip::palette());
@@ -2409,9 +2409,13 @@ bool KHTMLView::focusNodeWithAccessKey( TQChar c, KHTMLView* caller )
             guard = node;
 	}
         // Set focus node on the document
+#ifdef USE_QT4
+        m_part->xmlDocImpl()->setFocusNode(node);
+#else // USE_QT4
         TQFocusEvent::setReason( TQFocusEvent::Shortcut );
         m_part->xmlDocImpl()->setFocusNode(node);
         TQFocusEvent::resetReason();
+#endif // USE_QT4
         if( node != NULL && node->hasOneRef()) // deleted, only held by guard
             return true;
         emit m_part->nodeActivated(Node(node));
@@ -2621,7 +2625,7 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
             }
             if( ignore )
                 continue;
-            if( text.isNull() && labels.contains( element ))
+            if( text.isNull() && labels.tqcontains( element ))
                 text = labels[ element ];
             if( text.isNull() && text_before )
                 text = getElementText( element, false );
@@ -2629,9 +2633,9 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
                 text = getElementText( element, true );
             text = text.stripWhiteSpace();
             // increase priority of items which have explicitly specified accesskeys in the config
-            TQValueList< QPair< TQString, TQChar > > priorities
+            TQValueList< TQPair< TQString, TQChar > > priorities
                 = m_part->settings()->fallbackAccessKeysAssignments();
-            for( TQValueList< QPair< TQString, TQChar > >::ConstIterator it = priorities.begin();
+            for( TQValueList< TQPair< TQString, TQChar > >::ConstIterator it = priorities.begin();
                  it != priorities.end();
                  ++it ) {
                 if( text == (*it).first )
@@ -2676,12 +2680,12 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
             TQString text = (*it).text;
             TQChar key;
             if( key.isNull() && !text.isEmpty()) {
-                TQValueList< QPair< TQString, TQChar > > priorities
+                TQValueList< TQPair< TQString, TQChar > > priorities
                     = m_part->settings()->fallbackAccessKeysAssignments();
-                for( TQValueList< QPair< TQString, TQChar > >::ConstIterator it = priorities.begin();
+                for( TQValueList< TQPair< TQString, TQChar > >::ConstIterator it = priorities.begin();
                      it != priorities.end();
                      ++it )
-                    if( text == (*it).first && keys.contains( (*it).second )) {
+                    if( text == (*it).first && keys.tqcontains( (*it).second )) {
                         key = (*it).second;
                         break;
                     }
@@ -2694,7 +2698,7 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
                 for( TQStringList::ConstIterator it = words.begin();
                      it != words.end();
                      ++it ) {
-                    if( keys.contains( (*it)[ 0 ].upper())) {
+                    if( keys.tqcontains( (*it)[ 0 ].upper())) {
                         key = (*it)[ 0 ].upper();
                         break;
                     }
@@ -2704,7 +2708,7 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
                 for( unsigned int i = 0;
                      i < text.length();
                      ++i ) {
-                    if( keys.contains( text[ i ].upper())) {
+                    if( keys.tqcontains( text[ i ].upper())) {
                         key = text[ i ].upper();
                         break;
                     }
@@ -2717,7 +2721,7 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
             TQString url = (*it).url;
             it = data.remove( it );
             // assign the same accesskey also to other elements pointing to the same url
-            if( !url.isEmpty() && !url.startsWith( "javascript:", false )) {
+            if( !url.isEmpty() && !url.tqstartsWith( "javascript:", false )) {
                 for( TQValueList< AccessKeyData >::Iterator it2 = data.begin();
                      it2 != data.end();
                      ) {
@@ -2753,7 +2757,7 @@ bool KHTMLView::pagedMode() const
 void KHTMLView::setWidgetVisible(RenderWidget* w, bool vis)
 {
     if (vis) {
-        d->visibleWidgets.replace(w, w->widget());
+        d->visibleWidgets.tqreplace(w, w->widget());
     }
     else
         d->visibleWidgets.remove(w);
@@ -2781,7 +2785,7 @@ void KHTMLView::print(bool quick)
     if ( !docname.isEmpty() )
         docname = KStringHandler::csqueeze(docname, 80);
     if(quick || printer->setup(this, i18n("Print %1").arg(docname))) {
-        viewport()->setCursor( waitCursor ); // only viewport(), no TQApplication::, otherwise we get the busy cursor in kdeprint's dialogs
+        viewport()->setCursor( tqwaitCursor ); // only viewport(), no TQApplication::, otherwise we get the busy cursor in kdeprint's dialogs
         // set up KPrinter
         printer->setFullPage(false);
         printer->setCreator(TQString("KDE %1.%2.%3 HTML Library").arg(KDE_VERSION_MAJOR).arg(KDE_VERSION_MINOR).arg(KDE_VERSION_RELEASE));
@@ -2835,7 +2839,7 @@ void KHTMLView::print(bool quick)
         int headerHeight = 0;
         TQFont headerFont("Sans Serif", 8);
 
-        TQString headerLeft = KGlobal::locale()->formatDate(TQDate::tqcurrentDate(),true);
+        TQString headerLeft = KGlobal::locale()->formatDate(TQDate::currentDate(),true);
         TQString headerMid = docname;
         TQString headerRight;
 
@@ -2951,7 +2955,7 @@ void KHTMLView::print(bool quick)
         d->paged = false;
         khtml::setPrintPainter( 0 );
         setMediaType( oldMediaType );
-        m_part->xmlDocImpl()->setPaintDevice( this );
+        m_part->xmlDocImpl()->setPaintDevice( TQT_TQPAINTDEVICE(this) );
         m_part->xmlDocImpl()->styleSelector()->computeFontSizes(m_part->xmlDocImpl()->paintDeviceMetrics(), m_part->zoomFactor());
         m_part->xmlDocImpl()->updateStyleSelector();
         viewport()->unsetCursor();
@@ -2979,7 +2983,7 @@ void KHTMLView::paint(TQPainter *p, const TQRect &rc, int yOff, bool *more)
     khtml::RenderCanvas *root = static_cast<khtml::RenderCanvas *>(m_part->xmlDocImpl()->renderer());
     if(!root) return;
 
-    m_part->xmlDocImpl()->setPaintDevice(p->device());
+    m_part->xmlDocImpl()->setPaintDevice(p->tqdevice());
     root->setPagedMode(true);
     root->setStaticMode(true);
     root->setWidth(rc.width());
@@ -3002,7 +3006,7 @@ void KHTMLView::paint(TQPainter *p, const TQRect &rc, int yOff, bool *more)
 
     root->setPagedMode(false);
     root->setStaticMode(false);
-    m_part->xmlDocImpl()->setPaintDevice( this );
+    m_part->xmlDocImpl()->setPaintDevice( TQT_TQPAINTDEVICE(this) );
 }
 
 
@@ -3081,7 +3085,7 @@ void KHTMLView::addFormCompletionItem(const TQString &name, const TQString &valu
     if (cc_number)
       return;
     TQStringList items = formCompletionItems(name);
-    if (!items.contains(value))
+    if (!items.tqcontains(value))
         items.prepend(value);
     while ((int)items.count() > m_part->settings()->maxFormCompletionItems())
         items.remove(items.fromLast());
@@ -3156,13 +3160,13 @@ bool KHTMLView::dispatchMouseEvent(int eventId, DOM::NodeImpl *targetNode,
     int screenY = _mouse->globalY();
     int button = -1;
     switch (_mouse->button()) {
-	case LeftButton:
+	case Qt::LeftButton:
 	    button = 0;
 	    break;
-	case MidButton:
+	case Qt::MidButton:
 	    button = 1;
 	    break;
-	case RightButton:
+	case Qt::RightButton:
 	    button = 2;
 	    break;
 	default:
@@ -3278,12 +3282,12 @@ void KHTMLView::viewportWheelEvent(TQWheelEvent* e)
     {
         e->accept();
     }
-    else if( (   (e->orientation() == Vertical &&
+    else if( (   (e->orientation() == Qt::Vertical &&
                    ((d->ignoreWheelEvents && !verticalScrollBar()->isVisible())
                      || e->delta() > 0 && contentsY() <= 0
                      || e->delta() < 0 && contentsY() >= contentsHeight() - visibleHeight()))
               ||
-                 (e->orientation() == Horizontal &&
+                 (e->orientation() == Qt::Horizontal &&
                     ((d->ignoreWheelEvents && !horizontalScrollBar()->isVisible())
                      || e->delta() > 0 && contentsX() <=0
                      || e->delta() < 0 && contentsX() >= contentsWidth() - visibleWidth())))
@@ -3511,7 +3515,7 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
     d->tqrepaintTimerId = 0;
 
     TQRect updateRegion;
-    TQMemArray<TQRect> rects = d->updateRegion.rects();
+    TQMemArray<TQRect> rects = d->updateRegion.tqrects();
 
     d->updateRegion = TQRegion();
 
@@ -3609,7 +3613,7 @@ void KHTMLView::scheduleRepaint(int x, int y, int w, int h, bool asap)
 
     int vx, vy;
     contentsToViewport( x, y, vx, vy );
-    p.fillRect( vx, vy, w, h, Qt::red );
+    p.fillRect( vx, vy, w, h, TQt::red );
     p.end();
 #endif
 
@@ -4600,13 +4604,13 @@ void KHTMLView::scrollViewWheelEvent( TQWheelEvent *e )
 {
     int pageStep = verticalScrollBar()->pageStep();
     int lineStep = verticalScrollBar()->lineStep();
-    int step = QMIN( TQApplication::wheelScrollLines()*lineStep, pageStep );
+    int step = TQMIN( TQApplication::wheelScrollLines()*lineStep, pageStep );
     if ( ( e->state() & ControlButton ) || ( e->state() & ShiftButton ) )
         step = pageStep;
 
-    if(e->orientation() == Horizontal)
+    if(e->orientation() == Qt::Horizontal)
         scrollBy(-((e->delta()*step)/120), 0);
-    else if(e->orientation() == Vertical)
+    else if(e->orientation() == Qt::Vertical)
         scrollBy(0,-((e->delta()*step)/120));
 
     e->accept();

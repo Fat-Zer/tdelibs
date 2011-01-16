@@ -1,7 +1,7 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>KJSErrorDlg</class>
 <author>George Staikos &lt;staikos@kde.org&gt;</author>
-<widget class="QDialog">
+<widget class="TQDialog">
     <property name="name">
         <cstring>KJSErrorDlg</cstring>
     </property>
@@ -23,7 +23,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QPushButton" row="4" column="2">
+        <widget class="TQPushButton" row="4" column="2">
             <property name="name">
                 <cstring>_close</cstring>
             </property>
@@ -31,7 +31,7 @@
                 <string>&amp;Close</string>
             </property>
         </widget>
-        <widget class="QPushButton" row="4" column="1">
+        <widget class="TQPushButton" row="4" column="1">
             <property name="name">
                 <cstring>_clear</cstring>
             </property>
@@ -70,7 +70,7 @@
                 </size>
             </property>
         </spacer>
-        <widget class="QTextBrowser" row="1" column="0" rowspan="1" colspan="3">
+        <widget class="TQTextBrowser" row="1" column="0" rowspan="1" colspan="3">
             <property name="name">
                 <cstring>_errorText</cstring>
             </property>
@@ -119,12 +119,12 @@
     <include location="global" impldecl="in declaration">kdialog.h</include>
     <include location="global" impldecl="in declaration">ksqueezedtextlabel.h</include>
 </includes>
-<slots>
+<Q_SLOTS>
     <slot>init()</slot>
-    <slot>addError( const QString &amp; error )</slot>
-    <slot>setURL( const QString &amp; url )</slot>
+    <slot>addError( const TQString &amp; error )</slot>
+    <slot>setURL( const TQString &amp; url )</slot>
     <slot>clear()</slot>
-</slots>
+</Q_SLOTS>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

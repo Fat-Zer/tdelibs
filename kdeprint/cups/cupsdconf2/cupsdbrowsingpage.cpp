@@ -70,10 +70,10 @@ CupsdBrowsingPage::CupsdBrowsingPage(TQWidget *parent, const char *name)
 	TQLabel *l5 = new TQLabel(i18n("Browse order:"), this);
 	TQLabel *l6 = new TQLabel(i18n("Browse options:"), this);
 
-	QGridLayout	*m1 = new TQGridLayout(this, 8, 2, 10, 7);
+	TQGridLayout	*m1 = new TQGridLayout(this, 8, 2, 10, 7);
 	m1->setRowStretch(7, 1);
 	m1->setColStretch(1, 1);
-	QHBoxLayout	*m2 = new TQHBoxLayout(0, 0, 10);
+	TQHBoxLayout	*m2 = new TQHBoxLayout(0, 0, 10);
 	m1->addMultiCellLayout(m2, 0, 0, 0, 1);
 	m2->addWidget(browsing_);
 	m2->addWidget(cups_);
@@ -90,7 +90,7 @@ CupsdBrowsingPage::CupsdBrowsingPage(TQWidget *parent, const char *name)
 	m1->addWidget(browsetimeout_, 3, 1);
 	m1->addWidget(browseaddresses_, 4, 1);
 	m1->addWidget(browseorder_, 5, 1);
-	QGridLayout	*m3 = new TQGridLayout(0, 2, 2, 0, 5);
+	TQGridLayout	*m3 = new TQGridLayout(0, 2, 2, 0, 5);
 	m1->addLayout(m3, 6, 1);
 	m3->addWidget(useimplicitclasses_, 0, 0);
 	m3->addWidget(useanyclasses_, 0, 1);
@@ -127,8 +127,8 @@ bool CupsdBrowsingPage::loadConfig(CupsdConf *conf, TQString&)
 {
 	conf_ = conf;
 	browsing_->setChecked(conf_->browsing_);
-	cups_->setChecked(conf_->browseprotocols_.findIndex("CUPS") != -1);
-	slp_->setChecked(conf_->browseprotocols_.findIndex("SLP") != -1);
+	cups_->setChecked(conf_->browseprotocols_.tqfindIndex("CUPS") != -1);
+	slp_->setChecked(conf_->browseprotocols_.tqfindIndex("SLP") != -1);
 	browseport_->setValue(conf_->browseport_);
 	browseinterval_->setValue(conf_->browseinterval_);
 	browsetimeout_->setValue(conf_->browsetimeout_);
@@ -145,7 +145,7 @@ bool CupsdBrowsingPage::loadConfig(CupsdConf *conf, TQString&)
 bool CupsdBrowsingPage::saveConfig(CupsdConf *conf, TQString&)
 {
 	conf->browsing_ = browsing_->isChecked();
-	QStringList	l;
+	TQStringList	l;
 	if (cups_->isChecked()) l << "CUPS";
 	if (slp_->isChecked()) l << "SLP";
 	conf->browseprotocols_ = l;
@@ -196,7 +196,7 @@ void CupsdBrowsingPage::slotEdit(int index)
 void CupsdBrowsingPage::slotDefaultList()
 {
 	browseaddresses_->clear();
-	QStringList	l;
+	TQStringList	l;
 	l << "Send 255.255.255.255";
 	browseaddresses_->insertItems(l);
 }

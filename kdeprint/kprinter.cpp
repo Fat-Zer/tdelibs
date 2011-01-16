@@ -52,14 +52,14 @@ static void reportError(KPrinter*);
 // KPrinterWrapper class
 //**************************************************************************************
 
-class KPrinterWrapper : public QPrinter
+class KPrinterWrapper : public TQPrinter
 {
 friend class KPrinter;
 public:
 	KPrinterWrapper(KPrinter*, PrinterMode m = ScreenResolution);
 	~KPrinterWrapper();
 protected:
-	virtual bool cmd(int, TQPainter*, QPDevCmdParam*);
+	virtual bool cmd(int, TQPainter*, TQPDevCmdParam*);
 	virtual int metric(int) const;
 	int qprinterMetric(int) const;
 private:
@@ -75,7 +75,7 @@ KPrinterWrapper::~KPrinterWrapper()
 {
 }
 
-bool KPrinterWrapper::cmd(int c, TQPainter *painter, QPDevCmdParam *p)
+bool KPrinterWrapper::cmd(int c, TQPainter *painter, TQPDevCmdParam *p)
 {
 	return TQPrinter::cmd(c,painter,p);
 }
@@ -272,7 +272,7 @@ KPrinter::ApplicationType KPrinter::applicationType()
 	return (ApplicationType)KMFactory::self()->settings()->application;
 }
 
-bool KPrinter::cmd(int c, TQPainter *painter, QPDevCmdParam *p)
+bool KPrinter::cmd(int c, TQPainter *painter, TQPDevCmdParam *p)
 {
 	bool value(true);
 	if (c == TQPaintDevice::PdcBegin)
@@ -357,7 +357,7 @@ void KPrinter::translateQtOptions()
 
 bool KPrinter::printFiles(const TQStringList& l, bool flag, bool startviewer)
 {
-	QStringList	files(l);
+	TQStringList	files(l);
 	bool		status(true);
 
 	// First apply possible filters, and update "remove" flag if filters has
@@ -483,7 +483,7 @@ TQValueList<int> KPrinter::pageList() const
 			// process range specification
 			if (!option("kde-range").isEmpty())
 			{
-				QStringList	ranges = TQStringList::split(',',option("kde-range"),false);
+				TQStringList	ranges = TQStringList::split(',',option("kde-range"),false);
 				for (TQStringList::ConstIterator it=ranges.begin();it!=ranges.end();++it)
 				{
 					int	p = (*it).tqfind('-');
@@ -638,7 +638,7 @@ void KPrinter::setOptions(const TQMap<TQString,TQString>& opts)
 	tmpset.remove( "kde-resolution" );
 	tmpset.remove( "kde-fonts" );
 	for (TQMap<TQString,TQString>::ConstIterator it=tmpset.begin();it!=tmpset.end();++it)
-		if (it.key().left(4) == "kde-" && !(d->m_options.contains(it.key())))
+		if (it.key().left(4) == "kde-" && !(d->m_options.tqcontains(it.key())))
 			d->m_options[it.key()] = it.data();
 }
 
@@ -879,7 +879,7 @@ void KPrinter::setPrintProgram(const TQString& prg)
 	}
 	else
 	{
-		QString	s(prg);
+		TQString	s(prg);
 		if (s.tqfind("%in") == -1)
 			s.append(" %in");
 		setOutputToFile( s.tqfind( "%out" ) != -1 );

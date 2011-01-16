@@ -113,7 +113,7 @@ void KateSpell::spellcheck( const KateTextCursor &from, const KateTextCursor &to
       << "ISO 8859-9" << "ISO 8859-13" << "ISO 8859-15" << "UTF-8"
       << "KOI8-R" << "KOI8-U" << "CP1251" << "CP1255";
 
-  int enc = ksEncodings.findIndex( m_view->doc()->encoding() );
+  int enc = ksEncodings.tqfindIndex( m_view->doc()->encoding() );
   if ( enc > -1 )
   {
     ksc->setEncoding( enc );

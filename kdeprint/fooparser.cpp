@@ -39,7 +39,7 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#define YYSTYPE QVariant
+#define YYSTYPE TQVariant
 #define YYPARSE_PARAM fooloader
 #define YYDEBUG 1
 

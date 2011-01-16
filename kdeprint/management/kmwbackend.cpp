@@ -33,7 +33,7 @@
 #include <kdialog.h>
 #include <kdebug.h>
 
-class KRadioButton : public QRadioButton
+class KRadioButton : public TQRadioButton
 {
 public:
 	KRadioButton(const TQString& txt, TQWidget *parent = 0, const char *name = 0);
@@ -73,7 +73,7 @@ bool KMWBackend::isValid(TQString& msg)
 
 void KMWBackend::initPrinter(KMPrinter *p)
 {
-	QString	s = p->option("kde-backend");
+	TQString	s = p->option("kde-backend");
 	int	ID(-1);
 
 	if (!s.isEmpty())
@@ -101,10 +101,10 @@ void KMWBackend::updatePrinter(KMPrinter *p)
 	if (ID == KMWizard::Class) p->setType(KMPrinter::Class);
 	else p->setType(KMPrinter::Printer);
 	p->setOption("kde-backend",TQString::number(ID));
-	QString	s = m_buttons->selected()->text();
+	TQString	s = m_buttons->selected()->text();
 	s.replace(TQRegExp("&(?=\\w)"), TQString::tqfromLatin1(""));
 	p->setOption("kde-backend-description",s);
-	setNextPage((m_map.contains(ID) ? m_map[ID] : KMWizard::Error));
+	setNextPage((m_map.tqcontains(ID) ? m_map[ID] : KMWizard::Error));
 }
 
 void KMWBackend::addBackend( int ID, bool on, int nextpage )
@@ -171,7 +171,7 @@ void KMWBackend::addBackend(int ID, const TQString& txt, bool on, const TQString
 
 void KMWBackend::enableBackend(int ID, bool on)
 {
-	QButton	*btn = m_buttons->find(ID);
+	TQButton	*btn = static_cast<TQButton*>(m_buttons->find(ID));
 	if (btn)
 		btn->setEnabled(on);
 }

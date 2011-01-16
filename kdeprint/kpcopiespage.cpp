@@ -164,7 +164,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	setId(KPrinter::CopiesPage);
 
 	// widget creation
-	QButtonGroup	*m_pagebox = new TQButtonGroup(0, Qt::Vertical, i18n("Page Selection"), this);
+	TQButtonGroup	*m_pagebox = new TQButtonGroup(0, Qt::Vertical, i18n("Page Selection"), this);
 	TQWhatsThis::add(m_pagebox, whatsThisPageSelectionLabel);
 	m_all = new TQRadioButton(i18n("&All"), m_pagebox);
 	TQWhatsThis::add(m_all, whatsThisAllPagesLabel);
@@ -177,9 +177,9 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	connect(m_range, TQT_SIGNAL(clicked()), m_rangeedit, TQT_SLOT(setFocus()));
 	TQToolTip::add(m_rangeedit, i18n("<p>Enter pages or group of pages to print separated by commas (1,2-5,8).</p>"));
 //	TQWhatsThis::add(m_rangeedit, i18n("<p>Enter pages or group of pages to print separated by commas (1,2-5,8).</p>"));
-	//QLabel	*m_rangeexpl = new TQLabel(m_pagebox);
+	//TQLabel	*m_rangeexpl = new TQLabel(m_pagebox);
 	//m_rangeexpl->setText(i18n("<p>Enter pages or group of pages to print separated by commas (1,2-5,8).</p>"));
-	QGroupBox	*m_copybox = new TQGroupBox(0, Qt::Vertical, i18n("Output Settings"), this);
+	TQGroupBox	*m_copybox = new TQGroupBox(0, Qt::Vertical, i18n("Output Settings"), this);
 	TQWhatsThis::add(m_copybox, whatsThisCopiesLabel);
 	m_collate = new TQCheckBox(i18n("Co&llate"), m_copybox);
 	TQWhatsThis::add(m_collate, whatsThisCollateLabel);
@@ -188,7 +188,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	m_collatepix = new TQLabel(m_copybox);
 	m_collatepix->tqsetAlignment(Qt::AlignCenter);
 	m_collatepix->setMinimumHeight(70);
-	QLabel	*m_copieslabel = new TQLabel(i18n("Cop&ies:"), m_copybox);
+	TQLabel	*m_copieslabel = new TQLabel(i18n("Cop&ies:"), m_copybox);
 	m_copies = new TQSpinBox(m_copybox);
 	m_copies->setRange(1,999);
 	TQWhatsThis::add(m_copies, whatsThisNumberOfCopiesLabel);
@@ -199,10 +199,10 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	m_pageset->insertItem(i18n("Odd Pages"));
 	m_pageset->insertItem(i18n("Even Pages"));
 	TQWhatsThis::add(m_pageset, whatsThisPageSetLabel);
-	QLabel	*m_pagesetlabel = new TQLabel(i18n("Page &set:"), m_pagebox);
+	TQLabel	*m_pagesetlabel = new TQLabel(i18n("Page &set:"), m_pagebox);
 	m_pagesetlabel->setBuddy(m_pageset);
 	TQWhatsThis::add(m_pagesetlabel, whatsThisPageSetLabel);
-	KSeparator	*sepline = new KSeparator(Horizontal, m_pagebox);
+	KSeparator	*sepline = new KSeparator(Qt::Horizontal, m_pagebox);
 	sepline->setMinimumHeight(10);
 
 	TQWidget::setTabOrder( m_all, m_current );
@@ -214,26 +214,26 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	TQWidget::setTabOrder( m_collate, m_order );
 
 	// layout creation
-	QGridLayout	*l1 = new TQGridLayout(this, 2, 2, 0, 5);
+	TQGridLayout	*l1 = new TQGridLayout(this, 2, 2, 0, 5);
 	l1->setRowStretch(1,1);
 	l1->setColStretch(0,1);
 	l1->setColStretch(1,1);
 	l1->addWidget(m_pagebox,0,0);
 	l1->addWidget(m_copybox,0,1);
-	QVBoxLayout	*l3 = new TQVBoxLayout(m_pagebox->layout(), 5);
+	TQVBoxLayout	*l3 = new TQVBoxLayout(TQT_TQLAYOUT(m_pagebox->layout()), 5);
 	l3->addWidget(m_all);
 	l3->addWidget(m_current);
-	QHBoxLayout	*l4 = new TQHBoxLayout(0, 0, 5);
+	TQHBoxLayout	*l4 = new TQHBoxLayout(0, 0, 5);
 	l3->addLayout(l4);
 	l4->addWidget(m_range,0);
 	l4->addWidget(m_rangeedit,1);
 	//l3->addWidget(m_rangeexpl);
 	l3->addWidget(sepline);
-	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 5);
+	TQHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 5);
 	l3->addLayout(l2);
 	l2->addWidget(m_pagesetlabel,0);
 	l2->addWidget(m_pageset,1);
-	QGridLayout	*l5 = new TQGridLayout(m_copybox->layout(), 4, 2, 10);
+	TQGridLayout	*l5 = new TQGridLayout(m_copybox->layout(), 4, 2, 10);
 	l5->setRowStretch(4,1);
 	l5->addWidget(m_copieslabel,0,0);
 	l5->addWidget(m_copies,0,1);
@@ -270,7 +270,7 @@ void KPCopiesPage::slotRangeEntered()
 
 void KPCopiesPage::slotCollateClicked()
 {
-	QString	s("kdeprint_");
+	TQString	s("kdeprint_");
 	s.append((m_collate->isChecked() ? "collate" : "uncollate"));
 	if (m_order->isChecked()) s.append("_reverse");
 	m_collatepix->setPixmap(UserIcon(s));
@@ -295,7 +295,7 @@ void KPCopiesPage::initialize(bool usePlugin)
 
 void KPCopiesPage::setOptions(const TQMap<TQString,TQString>& options)
 {
-	QString	value;
+	TQString	value;
 	// copies
 	value = options["kde-copies"];
 	if (!value.isEmpty()) m_copies->setValue(value.toInt());

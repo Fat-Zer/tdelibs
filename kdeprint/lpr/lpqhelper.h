@@ -38,7 +38,7 @@ protected:
 	KMJob* parseLineLPRng(const TQString&);
 
 private:
-	QString		m_exepath;
+	TQString		m_exepath;
 };
 
 #endif

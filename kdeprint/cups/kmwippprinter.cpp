@@ -52,7 +52,7 @@ KMWIppPrinter::KMWIppPrinter(TQWidget *parent, const char *name)
 	m_list->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_list->setLineWidth(1);
 
-	QLabel	*l1 = new TQLabel(i18n("&Printer URI:"),this);
+	TQLabel	*l1 = new TQLabel(i18n("&Printer URI:"),this);
 
 	m_uri = new TQLineEdit(this);
 
@@ -78,9 +78,9 @@ KMWIppPrinter::KMWIppPrinter(TQWidget *parent, const char *name)
 	connect(m_ippreport, TQT_SIGNAL(clicked()), TQT_SLOT(slotIppReport()));
 
 	// layout
-	QHBoxLayout	*lay3 = new TQHBoxLayout(this, 0, 10);
-	QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 0);
-	QHBoxLayout	*lay4 = new TQHBoxLayout(0, 0, 0);
+	TQHBoxLayout	*lay3 = new TQHBoxLayout(this, 0, 10);
+	TQVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 0);
+	TQHBoxLayout	*lay4 = new TQHBoxLayout(0, 0, 0);
 
 	lay3->addWidget(m_list,1);
 	lay3->addLayout(lay2,1);
@@ -134,12 +134,12 @@ void KMWIppPrinter::slotScanFinished()
 	TQPtrListIterator<NetworkScanner::SocketInfo>	it(*list);
 	for (;it.current();++it)
 	{
-		QString	name;
+		TQString	name;
 		if (it.current()->Name.isEmpty())
 			name = i18n("Unknown host - 1 is the IP", "<Unknown> (%1)").arg(it.current()->IP);
 		else
 		name = it.current()->Name;
-		QListViewItem	*item = new TQListViewItem(m_list,name,it.current()->IP,TQString::number(it.current()->Port));
+		TQListViewItem	*item = new TQListViewItem(m_list,name,it.current()->IP,TQString::number(it.current()->Port));
 		item->setPixmap(0,SmallIcon("kdeprint_printer"));
 	}
 }
@@ -151,8 +151,8 @@ void KMWIppPrinter::slotPrinterSelected(TQListViewItem *item)
 
 	// trying to get printer attributes
 	IppRequest	req;
-	QString		uri;
-	QStringList	keys;
+	TQString		uri;
+	TQStringList	keys;
 
 	req.setOperation(IPP_GET_PRINTER_ATTRIBUTES);
 	req.setHost(item->text(1));
@@ -168,7 +168,7 @@ void KMWIppPrinter::slotPrinterSelected(TQListViewItem *item)
 	req.addKeyword(IPP_TAG_OPERATION,"requested-attributes",keys);
 	if (req.doRequest("/ipp/") && (req.status() == IPP_OK || req.status() == IPP_OK_SUBST || req.status() == IPP_OK_CONFLICT))
 	{
-		QString	value, txt;
+		TQString	value, txt;
 		int 	state;
 		if (req.name("printer-name",value)) txt.append(i18n("<b>Name</b>: %1<br>").arg(value));
 		if (req.text("printer-location",value) && !value.isEmpty()) txt.append(i18n("<b>Location</b>: %1<br>").arg(value));
@@ -203,8 +203,8 @@ void KMWIppPrinter::slotPrinterSelected(TQListViewItem *item)
 void KMWIppPrinter::slotIppReport()
 {
 	IppRequest	req;
-	QString	uri("ipp://%1:%2/ipp");
-	QListViewItem	*item = m_list->currentItem();
+	TQString	uri("ipp://%1:%2/ipp");
+	TQListViewItem	*item = m_list->currentItem();
 
 	if (item)
 	{
@@ -215,7 +215,7 @@ void KMWIppPrinter::slotIppReport()
 		req.addURI(IPP_TAG_OPERATION, "printer-uri", uri);
 		if (req.doRequest("/ipp/"))
 		{
-			QString	caption = i18n("IPP Report for %1").arg(item->text(0));
+			TQString	caption = i18n("IPP Report for %1").arg(item->text(0));
 			static_cast<KMCupsManager*>(KMManager::self())->ippReport(req, IPP_TAG_PRINTER, caption);
 		}
 		else

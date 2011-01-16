@@ -54,7 +54,7 @@ protected:
 private:
 	float	width_, height_;
 	float	top_, bottom_, left_, right_;
-	QRect	box_, margbox_;
+	TQRect	box_, margbox_;
 	float	zoom_;
 	bool	nopreview_;
 	int	state_;

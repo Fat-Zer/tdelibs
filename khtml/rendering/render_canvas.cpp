@@ -329,7 +329,7 @@ void RenderCanvas::paintBoxDecorations(PaintInfo& paintInfo, int /*_tx*/, int /*
     if ((firstChild() && firstChild()->style()->visibility() == VISIBLE) || !view())
         return;
 
-    paintInfo.p->fillRect(paintInfo.r, view()->palette().active().color(TQColorGroup::Base));
+    paintInfo.p->fillRect(paintInfo.r, view()->tqpalette().active().color(TQColorGroup::Base));
 }
 
 void RenderCanvas::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
@@ -492,7 +492,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
                     no = no->nextSibling();
             }
         }
-        if (os->selectionState() == SelectionInside && !oldSelectedInside.containsRef(os))
+        if (os->selectionState() == SelectionInside && !oldSelectedInside.tqcontainsRef(os))
             oldSelectedInside.append(os);
 
         os = no;
@@ -550,7 +550,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
                 if (no)
                     no = no->nextSibling();
             }
-        if (o->selectionState() == SelectionInside && !newSelectedInside.containsRef(o))
+        if (o->selectionState() == SelectionInside && !newSelectedInside.tqcontainsRef(o))
             newSelectedInside.append(o);
 
         o=no;
@@ -581,7 +581,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     TQPtrListIterator<RenderObject> oldIterator(oldSelectedInside);
     bool firstRect = true;
     for (; oldIterator.current(); ++oldIterator){
-        if (!newSelectedInside.containsRef(oldIterator.current())){
+        if (!newSelectedInside.tqcontainsRef(oldIterator.current())){
             if (firstRect){
                 updateRect = enclosingPositionedRect(oldIterator.current());
                 firstRect = false;
@@ -601,7 +601,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     TQPtrListIterator<RenderObject> newIterator(newSelectedInside);
     firstRect = true;
     for (; newIterator.current(); ++newIterator){
-        if (!oldSelectedInside.containsRef(newIterator.current())){
+        if (!oldSelectedInside.tqcontainsRef(newIterator.current())){
             if (firstRect){
                 updateRect = enclosingPositionedRect(newIterator.current());
                 firstRect = false;

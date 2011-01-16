@@ -146,7 +146,7 @@ void KHTMLFactory::registerPart( KHTMLPart *part )
     if ( !s_parts )
         s_parts = new TQPtrList<KHTMLPart>;
 
-    if ( !s_parts->containsRef( part ) )
+    if ( !s_parts->tqcontainsRef( part ) )
     {
         s_parts->append( part );
         ref();

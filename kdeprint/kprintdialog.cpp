@@ -71,16 +71,16 @@
 class KPrintDialog::KPrintDialogPrivate
 {
 public:
-	QLabel	*m_type, *m_state, *m_comment, *m_location, *m_cmdlabel, *m_filelabel;
+	TQLabel	*m_type, *m_state, *m_comment, *m_location, *m_cmdlabel, *m_filelabel;
 	KPushButton	*m_properties, *m_default, *m_options, *m_ok, *m_extbtn;
-	QPushButton	*m_wizard, *m_filter;
-	QCheckBox	*m_preview;
-	QLineEdit	*m_cmd;
+	TQPushButton	*m_wizard, *m_filter;
+	TQCheckBox	*m_preview;
+	TQLineEdit	*m_cmd;
 	TreeComboBox	*m_printers;
-	QVBox		*m_dummy;
+	TQVBox		*m_dummy;
 	PluginComboBox	*m_plugin;
 	KURLRequester	*m_file;
-	QCheckBox	*m_persistent;
+	TQCheckBox	*m_persistent;
 	bool	m_reduced;
 
 	TQPtrList<KPrintDialogPage>	m_pages;
@@ -262,7 +262,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	setCaption(i18n("Print"));
 
 	// widget creation
-	QGroupBox	*m_pbox = new TQGroupBox(0,Qt::Vertical,i18n("Printer"), this);
+	TQGroupBox	*m_pbox = new TQGroupBox(0,Qt::Vertical,i18n("Printer"), this);
 	d->m_type = new TQLabel(m_pbox);
 	TQWhatsThis::add(d->m_type, whatsThisPrinterType);
 	d->m_state = new TQLabel(m_pbox);
@@ -275,15 +275,15 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	d->m_printers = new TreeComboBox(m_pbox);
 	TQWhatsThis::add(d->m_printers, whatsThisPrinterSelect);
 	d->m_printers->setMinimumHeight(25);
-	QLabel	*m_printerlabel = new TQLabel(i18n("&Name:"), m_pbox);
+	TQLabel	*m_printerlabel = new TQLabel(i18n("&Name:"), m_pbox);
 	TQWhatsThis::add(m_printerlabel, whatsThisPrinterSelect);
-	QLabel	*m_statelabel = new TQLabel(i18n("Status", "State:"), m_pbox);
+	TQLabel	*m_statelabel = new TQLabel(i18n("Status", "State:"), m_pbox);
 	TQWhatsThis::add(m_statelabel, whatsThisPrinterState);
-	QLabel	*m_typelabel = new TQLabel(i18n("Type:"), m_pbox);
+	TQLabel	*m_typelabel = new TQLabel(i18n("Type:"), m_pbox);
 	TQWhatsThis::add(m_typelabel, whatsThisPrinterType);
-	QLabel	*m_locationlabel = new TQLabel(i18n("Location:"), m_pbox);
+	TQLabel	*m_locationlabel = new TQLabel(i18n("Location:"), m_pbox);
 	TQWhatsThis::add(m_locationlabel, whatsThisLocationLabel);
-	QLabel	*m_commentlabel = new TQLabel(i18n("Comment:"), m_pbox);
+	TQLabel	*m_commentlabel = new TQLabel(i18n("Comment:"), m_pbox);
 	TQWhatsThis::add(m_commentlabel, whatsThisPrinterComment);
 	m_printerlabel->setBuddy(d->m_printers);
 	d->m_properties = new KPushButton(KGuiItem(i18n("P&roperties"), "edit"), m_pbox);
@@ -308,7 +308,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
         TQWhatsThis::add( d->m_ok, whatsThisPrintButton);
 	d->m_ok->setDefault(true);
 	d->m_ok->setEnabled( false );
-	QPushButton	*m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
+	TQPushButton	*m_cancel = new KPushButton(KStdGuiItem::cancel(), this);
         TQWhatsThis::add(m_cancel, whatsThisCancelButton);
 	d->m_preview = new TQCheckBox(i18n("Previe&w"), m_pbox);
 	TQWhatsThis::add(d->m_preview, whatsThisPreviewCheckBox);
@@ -331,7 +331,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	TQWhatsThis::add(d->m_extbtn, whatsThisOptions);
 	d->m_persistent = new TQCheckBox(i18n("&Keep this dialog open after printing"), this);
         TQWhatsThis::add( d->m_persistent, whatsThisKeepDialogOpenCheckbox);
-	QPushButton	*m_help = new KPushButton(KStdGuiItem::help(), this);
+	TQPushButton	*m_help = new KPushButton(KStdGuiItem::help(), this);
         TQWhatsThis::add( m_help, whatsThisHelpButton);
 
 	TQWidget::setTabOrder( d->m_printers, d->m_filter );
@@ -348,12 +348,12 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	TQWidget::setTabOrder( d->m_ok, m_cancel );
 
 	// layout creation
-	QVBoxLayout	*l1 = new TQVBoxLayout(this, 10, 10);
+	TQVBoxLayout	*l1 = new TQVBoxLayout(this, 10, 10);
 	l1->addWidget(m_pbox,0);
 	l1->addWidget(d->m_dummy,1);
 	l1->addWidget(d->m_plugin,0);
 	l1->addWidget(d->m_persistent);
-	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 10);
+	TQHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 10);
 	l1->addLayout(l2);
 	l2->addWidget(d->m_extbtn,0);
 	l2->addWidget(d->m_options,0);
@@ -361,17 +361,17 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	l2->addStretch(1);
 	l2->addWidget(d->m_ok,0);
 	l2->addWidget(m_cancel,0);
-	QGridLayout	*l3 = new TQGridLayout(m_pbox->layout(),3,3,7);
+	TQGridLayout	*l3 = new TQGridLayout(m_pbox->layout(),3,3,7);
 	l3->setColStretch(1,1);
 	l3->setRowStretch(0,1);
-	QGridLayout	*l4 = new TQGridLayout(0, 5, 2, 0, 5);
+	TQGridLayout	*l4 = new TQGridLayout(0, 5, 2, 0, 5);
 	l3->addMultiCellLayout(l4,0,0,0,1);
 	l4->addWidget(m_printerlabel,0,0);
 	l4->addWidget(m_statelabel,1,0);
 	l4->addWidget(m_typelabel,2,0);
 	l4->addWidget(m_locationlabel,3,0);
 	l4->addWidget(m_commentlabel,4,0);
-	QHBoxLayout	*ll4 = new TQHBoxLayout(0, 0, 3);
+	TQHBoxLayout	*ll4 = new TQHBoxLayout(0, 0, 3);
 	l4->addLayout(ll4,0,1);
 	ll4->addWidget(d->m_printers,1);
 	ll4->addWidget(d->m_filter,0);
@@ -382,7 +382,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	l4->addWidget(d->m_location,3,1);
 	l4->addWidget(d->m_comment,4,1);
 	l4->setColStretch(1,1);
-	QVBoxLayout	*l5 = new TQVBoxLayout(0, 0, 10);
+	TQVBoxLayout	*l5 = new TQVBoxLayout(0, 0, 10);
 	l3->addLayout(l5,0,2);
 	l5->addWidget(d->m_properties,0);
 	l5->addWidget(d->m_default,0);
@@ -489,7 +489,7 @@ void KPrintDialog::setDialogPages(TQPtrList<KPrintDialogPage> *pages)
 	else
 	{
 		// more than one page.
-		QTabWidget	*tabs = static_cast<TQTabWidget*>(d->m_dummy->child("TabWidget", "TQTabWidget"));
+		TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", "TQTabWidget")));
 		if (!tabs)
 		{
 			// TQTabWidget doesn't exist. Create it and reparent all
@@ -658,7 +658,7 @@ void KPrintDialog::done(int result)
 		KMPrinter		*prt(0);
 
 		// get options from global pages
-		QString	msg;
+		TQString	msg;
 		TQPtrListIterator<KPrintDialogPage>	it(d->m_pages);
 		for (;it.current();++it)
 			if (it.current()->isEnabled())
@@ -723,7 +723,7 @@ bool KPrintDialog::checkOutputFile()
 		do
 		{
 		anotherCheck = false;
-		QFileInfo	f(url.path());
+		TQFileInfo	f(url.path());
 		if (f.exists())
 		{
 			if (f.isWritable())
@@ -800,7 +800,7 @@ void KPrintDialog::setOutputFileExtension(const TQString& ext)
 	{
 		KURL url( d->m_file->url() );
 		TQString f( url.fileName() );
-		int p = f.findRev( '.' );
+		int p = f.tqfindRev( '.' );
 		// change "file.ext"; don't change "file", "file." or ".file" but do change ".file.ext"
 		if ( p > 0 && p != int (f.length () - 1) )
 		{
@@ -822,7 +822,7 @@ void KPrintDialog::slotWizard()
 void KPrintDialog::reload()
 {
 	// remove printer dependent pages (usually from plugin)
-	QTabWidget	*tabs = static_cast<TQTabWidget*>(d->m_dummy->child("TabWidget", "TQTabWidget"));
+	TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", "TQTabWidget")));
 	for (uint i=0; i<d->m_pages.count(); i++)
 		if (d->m_pages.at(i)->onlyRealPrinters())
 		{
@@ -951,7 +951,7 @@ void KPrintDialog::enableDialogPage( int index, bool flag )
 
 	if ( d->m_pages.count() > 1 )
 	{
-		QTabWidget	*tabs = static_cast<TQTabWidget*>(d->m_dummy->child("TabWidget", "TQTabWidget"));
+		TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", "TQTabWidget")));
 		tabs->setTabEnabled( d->m_pages.at( index ), flag );
 	}
 	else

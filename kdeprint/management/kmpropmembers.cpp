@@ -32,7 +32,7 @@ KMPropMembers::KMPropMembers(TQWidget *parent, const char *name)
 	m_members->setPaper(tqcolorGroup().background());
 	m_members->setFrameStyle(TQFrame::NoFrame);
 
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 10, 0);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 10, 0);
 	main_->addWidget(m_members);
 
 	m_pixmap = "kdeprint_printer_class";
@@ -48,8 +48,8 @@ void KMPropMembers::setPrinter(KMPrinter *p)
 {
 	if (p && ((p->isClass(false) && p->isLocal()) || p->isImplicit()))
 	{
-		QStringList	l = p->members();
-		QString		txt("<ul>");
+		TQStringList	l = p->members();
+		TQString		txt("<ul>");
 		for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 			txt.append("<li>" + (*it) + "</li>");
 		txt.append("</ul>");

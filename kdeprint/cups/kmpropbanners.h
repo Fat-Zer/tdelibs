@@ -36,8 +36,8 @@ protected:
 	void configureWizard(KMWizard*);
 
 private:
-	QLabel	*m_startbanner;
-	QLabel	*m_stopbanner;
+	TQLabel	*m_startbanner;
+	TQLabel	*m_stopbanner;
 };
 
 #endif

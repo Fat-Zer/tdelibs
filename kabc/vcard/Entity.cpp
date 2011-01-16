@@ -99,7 +99,7 @@ Entity::~Entity()
 	// empty
 }
 		
-	QCString
+	TQCString
 Entity::asString()
 {
 //	vDebug("Entity::asString()");

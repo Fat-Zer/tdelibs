@@ -123,13 +123,13 @@ void HTMLAnchorElementImpl::defaultEventHandler(EventImpl *evt)
 
             if ( e ) {
                 if ( e->ctrlKey() )
-                    state |= Qt::ControlButton;
+                    state |= TQt::ControlButton;
                 if ( e->shiftKey() )
-                    state |= Qt::ShiftButton;
+                    state |= TQt::ShiftButton;
                 if ( e->altKey() )
-                    state |= Qt::AltButton;
+                    state |= TQt::AltButton;
                 if ( e->metaKey() )
-                    state |= Qt::MetaButton;
+                    state |= TQt::MetaButton;
 
                 if ( e->button() == 0 )
                     button = Qt::LeftButton;
@@ -140,12 +140,12 @@ void HTMLAnchorElementImpl::defaultEventHandler(EventImpl *evt)
             }
 	    else if ( k )
 	    {
-	      if ( k->checkModifier(Qt::ShiftButton) )
-                state |= Qt::ShiftButton;
-	      if ( k->checkModifier(Qt::AltButton) )
-                state |= Qt::AltButton;
-	      if ( k->checkModifier(Qt::ControlButton) )
-                state |= Qt::ControlButton;
+	      if ( k->checkModifier(TQt::ShiftButton) )
+                state |= TQt::ShiftButton;
+	      if ( k->checkModifier(TQt::AltButton) )
+                state |= TQt::AltButton;
+	      if ( k->checkModifier(TQt::ControlButton) )
+                state |= TQt::ControlButton;
 	    }
 
 	    // ### also check if focused node is editable if not in designmode,

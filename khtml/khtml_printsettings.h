@@ -35,9 +35,9 @@ public:
 	void setOptions(const TQMap<TQString,TQString>& opts);
 
 private:
-	QCheckBox	*m_printfriendly;
-	QCheckBox	*m_printimages;
-	QCheckBox	*m_printheader;
+	TQCheckBox	*m_printfriendly;
+	TQCheckBox	*m_printimages;
+	TQCheckBox	*m_printheader;
 };
 
 #endif

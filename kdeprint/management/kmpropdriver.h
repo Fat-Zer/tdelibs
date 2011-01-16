@@ -38,9 +38,9 @@ protected:
 	void configureWizard(KMWizard*);
 
 private:
-	QLabel	*m_manufacturer;
-	QLabel	*m_model;
-	QLabel	*m_driverinfo;
+	TQLabel	*m_manufacturer;
+	TQLabel	*m_model;
+	TQLabel	*m_driverinfo;
 };
 
 #endif

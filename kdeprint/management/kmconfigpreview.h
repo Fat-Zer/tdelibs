@@ -34,7 +34,7 @@ public:
 	void saveConfig(KConfig*);
 
 private:
-	QCheckBox	*m_useext;
+	TQCheckBox	*m_useext;
 	KURLRequester	*m_program;
 };
 

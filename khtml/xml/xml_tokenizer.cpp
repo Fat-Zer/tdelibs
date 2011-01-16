@@ -156,7 +156,7 @@ void XMLHandler::fixUpNSURI(TQString& uri, const TQString& qname)
         TQXmlNamespaceSupport ns;
         TQString localName, prefix;
         ns.splitName(qname, prefix, localName);
-        if (namespaceInfo.contains(prefix)) {
+        if (namespaceInfo.tqcontains(prefix)) {
             uri = namespaceInfo[prefix].top();
         }
     }

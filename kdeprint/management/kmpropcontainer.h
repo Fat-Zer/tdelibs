@@ -44,7 +44,7 @@ protected slots:
 
 private:
 	KMPropWidget	*m_widget;
-	QPushButton	*m_button;
+	TQPushButton	*m_button;
 };
 
 #endif

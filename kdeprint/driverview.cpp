@@ -94,8 +94,8 @@ DriverView::DriverView(TQWidget *parent, const char *name)
 
 	m_driver = 0;
 
-	QSplitter	*splitter = new TQSplitter(this);
-	splitter->setOrientation(TQSplitter::Vertical);
+	TQSplitter	*splitter = new TQSplitter(this);
+	splitter->setOrientation(Qt::Vertical);
 
 	TQVBoxLayout     *vbox = new TQVBoxLayout(this, 0, 10);
 	vbox->addWidget(splitter);

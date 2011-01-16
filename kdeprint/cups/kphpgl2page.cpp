@@ -110,7 +110,7 @@ KPHpgl2Page::KPHpgl2Page(TQWidget *parent, const char *name)
 
 	setTitle("HP-GL/2");
 
-	QGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("HP-GL/2 Options"), this);
+	TQGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("HP-GL/2 Options"), this);
 
 	m_blackplot = new TQCheckBox(i18n("&Use only black pen"), box);
 	  TQWhatsThis::add(m_blackplot, whatsThisBlackplotHpgl2Page);
@@ -124,11 +124,11 @@ KPHpgl2Page::KPHpgl2Page(TQWidget *parent, const char *name)
 	m_penwidth->setRange(0, 10000, 100, true);
 	  TQWhatsThis::add(m_penwidth, whatsThisPenwidthHpgl2Page);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
 	l0->addWidget(box);
 	l0->addStretch(1);
 
-	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), 10);
+	TQVBoxLayout	*l1 = new TQVBoxLayout(TQT_TQLAYOUT(box->layout()), 10);
 	l1->addWidget(m_blackplot);
 	l1->addWidget(m_fitplot);
 	l1->addWidget(m_penwidth);
@@ -141,10 +141,10 @@ KPHpgl2Page::~KPHpgl2Page()
 
 void KPHpgl2Page::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	QString	value;
-	if (opts.contains("blackplot") && ((value=opts["blackplot"]).isEmpty() || value == "true"))
+	TQString	value;
+	if (opts.tqcontains("blackplot") && ((value=opts["blackplot"]).isEmpty() || value == "true"))
 		m_blackplot->setChecked(true);
-	if (opts.contains("fitplot") && ((value=opts["fitplot"]).isEmpty() || value == "true"))
+	if (opts.tqcontains("fitplot") && ((value=opts["fitplot"]).isEmpty() || value == "true"))
 		m_fitplot->setChecked(true);
 	if (!(value=opts["penwidth"]).isEmpty())
 		m_penwidth->setValue(value.toInt());

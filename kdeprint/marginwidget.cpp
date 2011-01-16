@@ -194,7 +194,7 @@ MarginWidget::MarginWidget(TQWidget *parent, const char* name, bool allowMetricU
 	m_right->setEnabled(false);
 	//m_units->setEnabled(false);
 
-	QGridLayout	*l3 = new TQGridLayout(this, 7, 2, 0, 10);
+	TQGridLayout	*l3 = new TQGridLayout(this, 7, 2, 0, 10);
 	l3->addWidget(m_custom, 0, 0);
 	l3->addWidget(m_top, 1, 0);
 	l3->addWidget(m_bottom, 2, 0);

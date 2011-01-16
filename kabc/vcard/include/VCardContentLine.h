@@ -39,8 +39,8 @@ class KVCARD_EXPORT ContentLine : public Entity
 
 #include "ContentLine-generated.h"
 	
-	QCString	group()		{ parse(); return group_;	}
-	QCString	name()		{ parse(); return name_;	}
+	TQCString	group()		{ parse(); return group_;	}
+	TQCString	name()		{ parse(); return name_;	}
 	Value	*	value()		{ parse(); return value_;	}
 	ParamList	paramList()	{ parse(); return paramList_;	}
 	ParamType	paramType()	{ parse(); return paramType_;	}
@@ -63,8 +63,8 @@ class KVCARD_EXPORT ContentLine : public Entity
 	
 	private:
 		
-		QCString		group_;
-		QCString		name_;
+		TQCString		group_;
+		TQCString		name_;
 		TQPtrList<Param>		paramList_;
 		Value			* value_;
 		

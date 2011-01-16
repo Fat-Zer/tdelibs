@@ -174,9 +174,9 @@ KPFilterPage::KPFilterPage(TQWidget *parent, const char *name)
 	m_info->setFrameStyle( TQFrame::Panel|TQFrame::Sunken );
 	m_info->setMinimumSize( TQSize( 240, 100 ) );
 
-	QGridLayout	*l1 = new TQGridLayout(this, 2, 2, 0, KDialog::spacingHint());
+	TQGridLayout	*l1 = new TQGridLayout(this, 2, 2, 0, KDialog::spacingHint());
 	l1->setColStretch(0, 1);
-	QVBoxLayout	*l2 = new TQVBoxLayout(0, 0, 1);
+	TQVBoxLayout	*l2 = new TQVBoxLayout(0, 0, 1);
 	l1->addWidget(m_view, 0, 0);
 	l1->addLayout(l2, 0, 1);
 	l2->addWidget(m_add);
@@ -199,7 +199,7 @@ KPFilterPage::~KPFilterPage()
 
 void KPFilterPage::updateButton()
 {
-/*  QListViewItem	*item = m_view->currentItem();
+/*  TQListViewItem	*item = m_view->currentItem();
   bool state=(item!=0);
   m_remove->setEnabled(state);
   m_up->setEnabled((state && item->itemAbove() != 0));
@@ -216,9 +216,9 @@ void KPFilterPage::slotAddClicked()
 	{
 		KXmlCommand	*cmd = KXmlCommandManager::self()->loadCommand(choice);
 		if (!cmd) return; // Error
-		QStringList	filters = activeList();
+		TQStringList	filters = activeList();
 		int		pos = KXmlCommandManager::self()->insertCommand(filters, cmd->name());
-		QListViewItem	*prev(0);
+		TQListViewItem	*prev(0);
 		if (pos > 0)
 		{
 			prev = m_view->firstChild();
@@ -226,7 +226,7 @@ void KPFilterPage::slotAddClicked()
 				prev = prev->nextSibling();
 		}
 		m_activefilters.insert(cmd->name(), cmd);
-		QListViewItem	*item = new TQListViewItem(m_view, prev, cmd->description(), cmd->name());
+		TQListViewItem	*item = new TQListViewItem(m_view, prev, cmd->description(), cmd->name());
 		item->setPixmap(0, SmallIcon("filter"));
 		checkFilterChain();
 	}
@@ -236,7 +236,7 @@ void KPFilterPage::slotRemoveClicked()
 {
 	if (m_view->selectedItem())
 	{
-		QString	idname = m_view->selectedItem()->text(1);
+		TQString	idname = m_view->selectedItem()->text(1);
 		delete m_view->selectedItem();
 		m_activefilters.remove(idname);
 		checkFilterChain();
@@ -248,10 +248,10 @@ void KPFilterPage::slotRemoveClicked()
 
 void KPFilterPage::slotUpClicked()
 {
-	QListViewItem	*item = m_view->selectedItem();
+	TQListViewItem	*item = m_view->selectedItem();
 	if (item && item->itemAbove())
 	{
-		QListViewItem	*clone = new TQListViewItem(m_view,item->itemAbove()->itemAbove(),item->text(0),item->text(1));
+		TQListViewItem	*clone = new TQListViewItem(m_view,item->itemAbove()->itemAbove(),item->text(0),item->text(1));
 		clone->setPixmap(0, SmallIcon("filter"));
 		delete item;
 		m_view->setSelected(clone, true);
@@ -261,10 +261,10 @@ void KPFilterPage::slotUpClicked()
 
 void KPFilterPage::slotDownClicked()
 {
-	QListViewItem	*item = m_view->selectedItem();
+	TQListViewItem	*item = m_view->selectedItem();
 	if (item && item->itemBelow())
 	{
-		QListViewItem	*clone = new TQListViewItem(m_view,item->itemBelow(),item->text(0),item->text(1));
+		TQListViewItem	*clone = new TQListViewItem(m_view,item->itemBelow(),item->text(0),item->text(1));
 		clone->setPixmap(0, SmallIcon("filter"));
 		delete item;
 		m_view->setSelected(clone, true);
@@ -290,7 +290,7 @@ void KPFilterPage::slotItemSelected(TQListViewItem *item)
 
 void KPFilterPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	QStringList	filters = TQStringList::split(',',opts["_kde-filters"],false);
+	TQStringList	filters = TQStringList::split(',',opts["_kde-filters"],false);
 	// remove unneeded filters
 	TQDictIterator<KXmlCommand>	dit(m_activefilters);
 	for (;dit.current();)
@@ -305,7 +305,7 @@ void KPFilterPage::setOptions(const TQMap<TQString,TQString>& opts)
 	}
 	// add needed filters
 	m_view->clear();
-	QListViewItem	*item(0);
+	TQListViewItem	*item(0);
 	for (TQStringList::ConstIterator sit=filters.begin(); sit!=filters.end(); ++sit)
 	{
 		KXmlCommand	*f(0);
@@ -326,7 +326,7 @@ void KPFilterPage::setOptions(const TQMap<TQString,TQString>& opts)
 
 void KPFilterPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
-	QStringList	filters = activeList();
+	TQStringList	filters = activeList();
 	for (TQStringList::ConstIterator it=filters.begin(); it!=filters.end(); ++it)
 	{
 		KXmlCommand	*f = m_activefilters.tqfind(*it);
@@ -341,8 +341,8 @@ void KPFilterPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 
 TQStringList KPFilterPage::activeList()
 {
-	QStringList	list;
-	QListViewItem	*item = m_view->firstChild();
+	TQStringList	list;
+	TQListViewItem	*item = m_view->firstChild();
 	while (item)
 	{
 		list.append(item->text(1));
@@ -361,7 +361,7 @@ KXmlCommand* KPFilterPage::currentFilter()
 
 void KPFilterPage::checkFilterChain()
 {
-	QListViewItem	*item = m_view->firstChild();
+	TQListViewItem	*item = m_view->firstChild();
 	bool		ok(true);
 	m_valid = true;
 	while (item)
@@ -398,11 +398,11 @@ bool KPFilterPage::isValid(TQString& msg)
 
 void KPFilterPage::updateInfo()
 {
-	QString	txt;
+	TQString	txt;
 	KXmlCommand	*f = currentFilter();
 	if (f)
 	{
-		QString	templ("<b>%1:</b> %2<br>");
+		TQString	templ("<b>%1:</b> %2<br>");
 		txt.append(templ.arg(i18n("Name")).arg(f->name()));
 		txt.append(templ.arg(i18n("Requirements")).arg(f->requirements().join(", ")));
 		txt.append(templ.arg(i18n("Input")).arg(f->inputMimeTypes().join(", ")));

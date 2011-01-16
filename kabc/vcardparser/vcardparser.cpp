@@ -134,7 +134,7 @@ VCard::List VCardParser::parseVCards( const TQString& text )
         bool wasBase64Encoded = false;
 
         params = vCardLine.parameterList();
-        if ( params.findIndex( "encoding" ) != -1 ) { // have to decode the data
+        if ( params.tqfindIndex( "encoding" ) != -1 ) { // have to decode the data
           TQByteArray input;
           input = TQCString(value.latin1());
           if ( vCardLine.parameter( "encoding" ).lower() == "b" ||
@@ -155,18 +155,18 @@ VCard::List VCardParser::parseVCards( const TQString& text )
           output = TQCString(value.latin1());
         }
 
-        if ( params.findIndex( "charset" ) != -1 ) { // have to convert the data
+        if ( params.tqfindIndex( "charset" ) != -1 ) { // have to convert the data
           TQTextCodec *codec =
             TQTextCodec::codecForName( vCardLine.parameter( "charset" ).latin1() );
           if ( codec ) {
             vCardLine.setValue( codec->toUnicode( output ) );
           } else {
-            vCardLine.setValue( TQString::fromUtf8( output ) );
+            vCardLine.setValue( TQString(TQString::fromUtf8( output )) );
           }
         } else if ( wasBase64Encoded ) {
             vCardLine.setValue( output );
         } else {  // if charset not given, assume it's in UTF-8 (as used in previous KDE versions)
-            vCardLine.setValue( TQString::fromUtf8( output ) );
+            vCardLine.setValue( TQString(TQString::fromUtf8( output )) );
         }
 
         currentVCard.addLine( vCardLine );

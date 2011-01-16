@@ -58,9 +58,9 @@ CupsAddSmb::CupsAddSmb(TQWidget *parent, const char *name)
 	connect(m_doit, TQT_SIGNAL(clicked()), TQT_SLOT(slotActionClicked()));
 	m_bar = new TQProgressBar(this);
 	m_text = new KActiveLabel(this);
-	QLabel	*m_title = new TQLabel(i18n("Export Printer Driver to Windows Clients"), this);
+	TQLabel	*m_title = new TQLabel(i18n("Export Printer Driver to Windows Clients"), this);
 	setCaption(m_title->text());
-	QFont	f(m_title->font());
+	TQFont	f(m_title->font());
 	f.setBold(true);
 	m_title->setFont(f);
 	KSeparator	*m_sep = new KSeparator(Qt::Horizontal, this);
@@ -100,15 +100,15 @@ CupsAddSmb::CupsAddSmb(TQWidget *parent, const char *name)
 	TQWhatsThis::add( m_passwdlab, txt );
 	TQWhatsThis::add( m_passwded, txt );
 
-	QHBoxLayout	*l0 = new TQHBoxLayout(this, 10, 10);
-	QVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 10);
+	TQHBoxLayout	*l0 = new TQHBoxLayout(this, 10, 10);
+	TQVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 10);
 	l0->addWidget(m_side);
 	l0->addLayout(l1);
 	l1->addWidget(m_title);
 	l1->addWidget(m_sep);
 	l1->addWidget(m_text);
 	TQGridLayout *l3 = new TQGridLayout( 0, 3, 2, 0, 10 );
-	l1->addLayout( l3 );
+	l1->addLayout( TQT_TQLAYOUT(l3) );
 	l3->addWidget( m_loginlab, 1, 0 );
 	l3->addWidget( m_passwdlab, 2, 0 );
 	l3->addWidget( m_serverlab, 0, 0 );
@@ -120,7 +120,7 @@ CupsAddSmb::CupsAddSmb(TQWidget *parent, const char *name)
 	l1->addWidget(m_bar);
 	l1->addWidget( m_textinfo );
 	l1->addSpacing(30);
-	QHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 10);
+	TQHBoxLayout	*l2 = new TQHBoxLayout(0, 0, 10);
 	l1->addLayout(l2);
 	l2->addStretch(1);
 	l2->addWidget(m_doit);
@@ -147,7 +147,7 @@ void CupsAddSmb::slotActionClicked()
 
 void CupsAddSmb::slotReceived(KProcess*, char *buf, int buflen)
 {
-	QString	line;
+	TQString	line;
 	int		index(0);
 	bool	partial(false);
 	static bool incomplete(false);
@@ -160,7 +160,7 @@ void CupsAddSmb::slotReceived(KProcess*, char *buf, int buflen)
 		partial = true;
 		while (index < buflen)
 		{
-			QChar	c(buf[index++]);
+			TQChar	c(buf[index++]);
 			if (c == '\n')
 			{
 				partial = false;
@@ -253,7 +253,7 @@ void CupsAddSmb::doNextAction()
 	m_state = None;
 	if (m_proc.isRunning())
 	{
-		QCString	s = m_actions[m_actionindex++].latin1();
+		TQCString	s = m_actions[m_actionindex++].latin1();
 		m_bar->setProgress(m_bar->progress()+1);
 		kdDebug(500) << "NEXT ACTION = " << s << endl;
 		if (s == "quit")
@@ -289,7 +289,7 @@ void CupsAddSmb::doNextAction()
 			m_state = AddPrinter;
 			//m_text->setText(i18n("Installing printer %1").arg(m_actions[m_actionindex]));
 			m_textinfo->setText(i18n("Installing printer %1").arg(m_actions[m_actionindex]));
-			QCString	dest = m_actions[m_actionindex].local8Bit();
+			TQCString	dest = m_actions[m_actionindex].local8Bit();
 			if (s == "addprinter")
 				s.append(" ").append(dest).append(" ").append(dest).append(" \"").append(dest).append("\" \"\"");
 			else

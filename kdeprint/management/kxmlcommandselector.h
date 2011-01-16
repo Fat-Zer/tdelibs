@@ -56,11 +56,11 @@ signals:
 	void commandValid( bool );
 
 private:
-	QComboBox	*m_cmd;
-	QLineEdit	*m_line;
-	QCheckBox	*m_usefilter;
-	QStringList	m_cmdlist;
-	QLabel		*m_shortinfo;
+	TQComboBox	*m_cmd;
+	TQLineEdit	*m_line;
+	TQCheckBox	*m_usefilter;
+	TQStringList	m_cmdlist;
+	TQLabel		*m_shortinfo;
 	TQPushButton *m_helpbtn;
 	TQString m_help;
 };

@@ -42,19 +42,19 @@ KMWClass::KMWClass(TQWidget *parent, const char *name)
 	m_list2 = new KListBox(this);
 	m_list2->setSelectionMode(TQListBox::Extended);
 
-	QToolButton	*add = new TQToolButton(this);
-	QToolButton	*remove = new TQToolButton(this);
+	TQToolButton	*add = new TQToolButton(this);
+	TQToolButton	*remove = new TQToolButton(this);
 	add->setIconSet(BarIcon("forward"));
 	remove->setIconSet(BarIcon("back"));
 	connect(add,TQT_SIGNAL(clicked()),TQT_SLOT(slotAdd()));
 	connect(remove,TQT_SIGNAL(clicked()),TQT_SLOT(slotRemove()));
 
-	QLabel	*l1 = new TQLabel(i18n("Available printers:"), this);
-	QLabel	*l2 = new TQLabel(i18n("Class printers:"), this);
+	TQLabel	*l1 = new TQLabel(i18n("Available printers:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("Class printers:"), this);
 
-        QHBoxLayout	*lay1 = new TQHBoxLayout(this, 0, 15);
-        QVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 20);
-        QVBoxLayout	*lay3 = new TQVBoxLayout(0, 0, 0), *lay4 = new TQVBoxLayout(0, 0, 0);
+        TQHBoxLayout	*lay1 = new TQHBoxLayout(this, 0, 15);
+        TQVBoxLayout	*lay2 = new TQVBoxLayout(0, 0, 20);
+        TQVBoxLayout	*lay3 = new TQVBoxLayout(0, 0, 0), *lay4 = new TQVBoxLayout(0, 0, 0);
         lay1->addLayout(lay3, 1);
         lay1->addLayout(lay2, 0);
 	lay1->addLayout(lay4, 1);
@@ -84,7 +84,7 @@ bool KMWClass::isValid(TQString& msg)
 
 void KMWClass::initPrinter(KMPrinter *p)
 {
-	QStringList	members = p->members();
+	TQStringList	members = p->members();
 	KMManager	*mgr = KMFactory::self()->manager();
 
 	// first load available printers
@@ -94,7 +94,7 @@ void KMWClass::initPrinter(KMPrinter *p)
 	{
 		TQPtrListIterator<KMPrinter>	it(*list);
 		for (;it.current();++it)
-			if (it.current()->instanceName().isEmpty() && !it.current()->isClass(true) && !it.current()->isSpecial() && !members.contains(it.current()->name()))
+			if (it.current()->instanceName().isEmpty() && !it.current()->isClass(true) && !it.current()->isSpecial() && !members.tqcontains(it.current()->name()))
 				m_list1->insertItem(SmallIcon(it.current()->pixmap()), it.current()->name());
 		m_list1->sort();
 	}
@@ -111,7 +111,7 @@ void KMWClass::initPrinter(KMPrinter *p)
 
 void KMWClass::updatePrinter(KMPrinter *p)
 {
-	QStringList	members;
+	TQStringList	members;
 	for (uint i=0; i<m_list2->count(); i++)
 		members.append(m_list2->item(i)->text());
 	p->setMembers(members);

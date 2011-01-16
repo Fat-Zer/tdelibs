@@ -32,7 +32,7 @@ KMPropUsers::KMPropUsers(TQWidget *parent, const char *name)
 	m_text->setPaper(tqcolorGroup().background());
 	m_text->setFrameStyle(TQFrame::NoFrame);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 10, 0);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 10, 0);
 	l0->addWidget(m_text, 1);
 
 	m_title = i18n("Users");
@@ -48,8 +48,8 @@ void KMPropUsers::setPrinter(KMPrinter *p)
 {
 	if (p && p->isPrinter())
 	{
-		QString	txt("<p>%1:<ul>%1</ul></p>");
-		QStringList	users;
+		TQString	txt("<p>%1:<ul>%1</ul></p>");
+		TQStringList	users;
 		if (!p->option("requesting-user-name-denied").isEmpty())
 		{
 			txt = txt.arg(i18n("Denied users"));
@@ -66,7 +66,7 @@ void KMPropUsers::setPrinter(KMPrinter *p)
 		}
 		if (users.count() > 0)
 		{
-			QString	s;
+			TQString	s;
 			for (TQStringList::ConstIterator it=users.begin(); it!=users.end(); ++it)
 				s.append("<li>").append(*it).append("</li>");
 			txt = txt.arg(s);

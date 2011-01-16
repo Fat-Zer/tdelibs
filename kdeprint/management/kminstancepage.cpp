@@ -46,9 +46,9 @@ KMInstancePage::KMInstancePage(TQWidget *parent, const char *name)
 
 	initActions();
 
-	QHBoxLayout	*main_ = new TQHBoxLayout(this, 0, 0);
+	TQHBoxLayout	*main_ = new TQHBoxLayout(this, 0, 0);
 	main_->addWidget(m_view);
-	QVBoxLayout	*sub_ = new TQVBoxLayout(0, 0, 0);
+	TQVBoxLayout	*sub_ = new TQVBoxLayout(0, 0, 0);
 	main_->addLayout(sub_);
 	for (TQValueList<TQButton*>::Iterator it=m_buttons.begin(); it!=m_buttons.end(); ++it)
 		if (*it)
@@ -74,7 +74,7 @@ KMInstancePage::~KMInstancePage()
 
 void KMInstancePage::addButton(const TQString& txt, const TQString& pixmap, const char *receiver)
 {
-	QPushButton	*btn = new TQPushButton(this, 0L);
+	TQPushButton	*btn = new TQPushButton(this, 0L);
 	btn->setText(txt);
 	btn->setIconSet(BarIconSet(pixmap));
 	btn->setFlat(true);
@@ -96,7 +96,7 @@ void KMInstancePage::initActions()
 
 void KMInstancePage::setPrinter(KMPrinter *p)
 {
-	QString	oldText = m_view->currentText();
+	TQString	oldText = m_view->currentText();
 
 	m_view->clear();
 	m_printer = p;
@@ -109,7 +109,7 @@ void KMInstancePage::setPrinter(KMPrinter *p)
 		TQPtrListIterator<KMPrinter>	it(list);
 		for (;it.current();++it)
 		{
-			QStringList	pair = TQStringList::split('/',it.current()->name(),false);
+			TQStringList	pair = TQStringList::split('/',it.current()->name(),false);
 			m_view->insertItem(SmallIcon((it.current()->isSoftDefault() ? "exec" : "fileprint")),(pair.count() > 1 ? pair[1] : i18n("(Default)")));
 		}
 		m_view->sort();
@@ -121,9 +121,9 @@ void KMInstancePage::setPrinter(KMPrinter *p)
 
 	//iif (!oldText.isEmpty())
 	//{
-		QListBoxItem	*item = m_view->findItem(oldText);
+		TQListBoxItem	*item = m_view->tqfindItem(oldText);
 		if (!item)
-			item = m_view->findItem(i18n("(Default)"));
+			item = m_view->tqfindItem(i18n("(Default)"));
 		if (item)
 			m_view->setSelected(item,true);
 	//}
@@ -134,7 +134,7 @@ void KMInstancePage::slotNew()
 	KMTimer::self()->hold();
 
 	bool	ok(false);
-	QString	name = KInputDialog::getText(i18n("Instance Name"),i18n("Enter name for new instance (leave untouched for default):"),
+	TQString	name = KInputDialog::getText(i18n("Instance Name"),i18n("Enter name for new instance (leave untouched for default):"),
 			                     i18n("(Default)"),&ok,this);
 	if (ok)
 	{
@@ -143,7 +143,7 @@ void KMInstancePage::slotNew()
 		else
 		{
 			if (name == i18n("(Default)"))
-				name = TQString::null;
+				name = TQString();
 			KMFactory::self()->virtualManager()->create(m_printer,name);
 			setPrinter(m_printer);
 		}
@@ -157,12 +157,12 @@ void KMInstancePage::slotRemove()
 	KMTimer::self()->hold();
 	bool	reload(false);
 
-	QString	src = m_view->currentText();
+	TQString	src = m_view->currentText();
         TQString msg = (src != i18n("(Default)") ? i18n("Do you really want to remove instance %1?") : i18n("You can't remove the default instance. However all settings of %1 will be discarded. Continue?"));
-	if (!src.isEmpty() && KMessageBox::warningContinueCancel(this,msg.arg(src),TQString::null,KStdGuiItem::del()) == KMessageBox::Continue)
+	if (!src.isEmpty() && KMessageBox::warningContinueCancel(this,msg.arg(src),TQString(),KStdGuiItem::del()) == KMessageBox::Continue)
 	{
 		if (src == i18n("(Default)"))
-			src = TQString::null;
+			src = TQString();
 		reload = KMFactory::self()->virtualManager()->isDefault(m_printer,src);
 		KMFactory::self()->virtualManager()->remove(m_printer,src);
 		setPrinter(m_printer);
@@ -175,11 +175,11 @@ void KMInstancePage::slotCopy()
 {
 	KMTimer::self()->hold();
 
-	QString	src = m_view->currentText();
+	TQString	src = m_view->currentText();
 	if (!src.isEmpty())
 	{
 		bool	ok(false);
-		QString	name = KInputDialog::getText(i18n("Instance Name"),i18n("Enter name for new instance (leave untouched for default):"),
+		TQString	name = KInputDialog::getText(i18n("Instance Name"),i18n("Enter name for new instance (leave untouched for default):"),
 				                     i18n("(Default)"),&ok,this);
 		if (ok)
 		{
@@ -188,9 +188,9 @@ void KMInstancePage::slotCopy()
 			else
 			{
 				if (src == i18n("(Default)"))
-					src = TQString::null;
+					src = TQString();
 				if (name == i18n("(Default)"))
-					name = TQString::null;
+					name = TQString();
 				KMFactory::self()->virtualManager()->copy(m_printer,src,name);
 				setPrinter(m_printer);
 			}
@@ -204,10 +204,10 @@ void KMInstancePage::slotSettings()
 {
 	KMTimer::self()->hold();
 
-	QString	src = m_view->currentText();
+	TQString	src = m_view->currentText();
 	if (!src.isEmpty())
 	{
-		if (src == i18n("(Default)")) src = TQString::null;
+		if (src == i18n("(Default)")) src = TQString();
 		KMPrinter	*pr = KMFactory::self()->virtualManager()->findInstance(m_printer,src);
 		if ( !pr )
 			KMessageBox::error( this, i18n( "Unable to find instance %1." ).arg( m_view->currentText() ) );
@@ -238,11 +238,11 @@ void KMInstancePage::slotDefault()
 {
 	KMTimer::self()->hold();
 
-	QString	src = m_view->currentText();
+	TQString	src = m_view->currentText();
 	if (!src.isEmpty())
 	{
 		if (src == i18n("(Default)"))
-			src = TQString::null;
+			src = TQString();
 		KMFactory::self()->virtualManager()->setAsDefault(m_printer,src);
 		setPrinter(m_printer);
 	}
@@ -254,15 +254,15 @@ void KMInstancePage::slotTest()
 {
 	KMTimer::self()->hold();
 
-	QString	src = m_view->currentText();
+	TQString	src = m_view->currentText();
 	if (!src.isEmpty())
 	{
 		if (src == i18n("(Default)"))
-			src = TQString::null;
+			src = TQString();
 		KMPrinter	*mpr = KMFactory::self()->virtualManager()->findInstance(m_printer,src);
 		if (!mpr)
 			KMessageBox::error(this,i18n("Internal error: printer not found."));
-		else if (KMessageBox::warningContinueCancel(this, i18n("You are about to print a test page on %1. Do you want to continue?").arg(mpr->printerName()), TQString::null, i18n("Print Test Page"), "printTestPage") == KMessageBox::Continue)
+		else if (KMessageBox::warningContinueCancel(this, i18n("You are about to print a test page on %1. Do you want to continue?").arg(mpr->printerName()), TQString(), i18n("Print Test Page"), "printTestPage") == KMessageBox::Continue)
 		{
 			if (!KMFactory::self()->virtualManager()->testInstance(mpr))
 				KMessageBox::error(this, i18n("Unable to send test page to %1.").arg(mpr->printerName()));

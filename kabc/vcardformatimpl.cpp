@@ -331,8 +331,8 @@ void VCardFormatImpl::saveAddressee( const Addressee &addressee, VCARD::VCard *v
 
   addTextValue( v, EntityCategories, addressee.categories().join(",") );
 
-  addDateValue( v, EntityBirthday, addressee.birthday().date() );
-  addDateTimeValue( v, EntityRevision, addressee.revision() );
+  addDateValue( v, EntityBirthday, TQT_TQDATE_OBJECT(addressee.birthday().date()) );
+  addDateTimeValue( v, EntityRevision, TQT_TQDATETIME_OBJECT(addressee.revision()) );
   addGeoValue( v, addressee.geo() );
   addUTCValue( v, addressee.timeZone() );
 
@@ -540,11 +540,11 @@ void VCardFormatImpl::addNValue( VCARD::VCard *vcard, const Addressee &a )
   ContentLine cl;
   cl.setName(EntityTypeToParamName( EntityN ) );
   NValue *v = new NValue;
-  v->setFamily( a.familyName().utf8() );
-  v->setGiven( a.givenName().utf8() );
-  v->setMiddle( a.additionalName().utf8() );
-  v->setPrefix( a.prefix().utf8() );
-  v->setSuffix( a.suffix().utf8() );
+  v->setFamily( TQString(a.familyName()).utf8() );
+  v->setGiven( TQString(a.givenName()).utf8() );
+  v->setMiddle( TQString(a.additionalName()).utf8() );
+  v->setPrefix( TQString(a.prefix()).utf8() );
+  v->setSuffix( TQString(a.suffix()).utf8() );
 
   cl.setValue( v );
   vcard->add(cl);

@@ -24,6 +24,7 @@
 
 #include <tqcombobox.h>
 #include <tqlabel.h>
+#include <tqbutton.h>
 #include <tqbuttongroup.h>
 #include <tqlayout.h>
 #include <tqradiobutton.h>
@@ -260,15 +261,15 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 	setTitle(i18n("General"));
 
 	// widget creation
-	QLabel	*m_pagesizelabel = new TQLabel(i18n("Page s&ize:"), this);
+	TQLabel	*m_pagesizelabel = new TQLabel(i18n("Page s&ize:"), this);
 	m_pagesizelabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
           TQWhatsThis::add(m_pagesizelabel, whatsThisGeneralPageSizeLabel);
 
-	QLabel	*m_papertypelabel = new TQLabel(i18n("Paper t&ype:"), this);
+	TQLabel	*m_papertypelabel = new TQLabel(i18n("Paper t&ype:"), this);
 	m_papertypelabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
           TQWhatsThis::add(m_papertypelabel, whatsThisGeneralPaperTypeLabel);
 
-	QLabel	*m_inputslotlabel = new TQLabel(i18n("Paper so&urce:"), this);
+	TQLabel	*m_inputslotlabel = new TQLabel(i18n("Paper so&urce:"), this);
 	m_inputslotlabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
           TQWhatsThis::add(m_inputslotlabel, whatsThisGeneralPaperSourceLabel);
 
@@ -297,42 +298,42 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 	m_bannerbox = new TQGroupBox(0, Qt::Vertical, i18n("Banners"), this);
           TQWhatsThis::add(m_bannerbox, whatsThisGeneralBannersLabel);
 
-	QRadioButton	*m_portrait = new TQRadioButton(i18n("&Portrait"), m_orientbox);
-	QRadioButton	*m_landscape = new TQRadioButton(i18n("&Landscape"), m_orientbox);
-	QRadioButton	*m_revland = new TQRadioButton(i18n("&Reverse landscape"), m_orientbox);
-	QRadioButton	*m_revport = new TQRadioButton(i18n("R&everse portrait"), m_orientbox);
+	TQRadioButton	*m_portrait = new TQRadioButton(i18n("&Portrait"), m_orientbox);
+	TQRadioButton	*m_landscape = new TQRadioButton(i18n("&Landscape"), m_orientbox);
+	TQRadioButton	*m_revland = new TQRadioButton(i18n("&Reverse landscape"), m_orientbox);
+	TQRadioButton	*m_revport = new TQRadioButton(i18n("R&everse portrait"), m_orientbox);
 
 	m_portrait->setChecked(true);
 	m_orientpix = new TQLabel(m_orientbox);
 	m_orientpix->tqsetAlignment(Qt::AlignCenter);
-	QRadioButton	*m_dupnone = new TQRadioButton(i18n("duplex orientation", "&None"), m_duplexbox);
-	QRadioButton	*m_duplong = new TQRadioButton(i18n("duplex orientation", "Lon&g side"), m_duplexbox);
-	QRadioButton	*m_dupshort = new TQRadioButton(i18n("duplex orientation", "S&hort side"), m_duplexbox);
+	TQRadioButton	*m_dupnone = new TQRadioButton(i18n("duplex orientation", "&None"), m_duplexbox);
+	TQRadioButton	*m_duplong = new TQRadioButton(i18n("duplex orientation", "Lon&g side"), m_duplexbox);
+	TQRadioButton	*m_dupshort = new TQRadioButton(i18n("duplex orientation", "S&hort side"), m_duplexbox);
 	m_dupnone->setChecked(true);
 	m_duplexpix = new TQLabel(m_duplexbox);
 	m_duplexpix->tqsetAlignment(Qt::AlignCenter);
-	QRadioButton	*m_nup1 = new TQRadioButton("&1", m_nupbox);
-	QRadioButton	*m_nup2 = new TQRadioButton("&2", m_nupbox);
-	QRadioButton	*m_nup4 = new TQRadioButton("&4", m_nupbox);
+	TQRadioButton	*m_nup1 = new TQRadioButton("&1", m_nupbox);
+	TQRadioButton	*m_nup2 = new TQRadioButton("&2", m_nupbox);
+	TQRadioButton	*m_nup4 = new TQRadioButton("&4", m_nupbox);
 	m_nup1->setChecked(true);
 	m_nuppix = new TQLabel(m_nupbox);
 	m_nuppix->tqsetAlignment(Qt::AlignCenter);
 	m_startbanner = new TQComboBox(m_bannerbox);
 	m_endbanner = new TQComboBox(m_bannerbox);
-	QLabel	*m_startbannerlabel = new TQLabel(i18n("S&tart:"), m_bannerbox);
-	QLabel	*m_endbannerlabel = new TQLabel(i18n("En&d:"), m_bannerbox);
+	TQLabel	*m_startbannerlabel = new TQLabel(i18n("S&tart:"), m_bannerbox);
+	TQLabel	*m_endbannerlabel = new TQLabel(i18n("En&d:"), m_bannerbox);
 	m_startbannerlabel->setBuddy(m_startbanner);
 	m_endbannerlabel->setBuddy(m_endbanner);
 
 	// layout creation
-	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
           TQWhatsThis::add(this, whatsThisPrintPropertiesGeneralPage);
-	QGridLayout	*lay1 = new TQGridLayout(0, 3, 2, 0, KDialog::spacingHint());
-	QGridLayout	*lay2 = new TQGridLayout(0, 2, 2, 0, KDialog::spacingHint());
+	TQGridLayout	*lay1 = new TQGridLayout(0, 3, 2, 0, KDialog::spacingHint());
+	TQGridLayout	*lay2 = new TQGridLayout(0, 2, 2, 0, KDialog::spacingHint());
 	lay0->addStretch(1);
-	lay0->addLayout(lay1);
+	lay0->addLayout(TQT_TQLAYOUT(lay1));
 	lay0->addStretch(1);
-	lay0->addLayout(lay2);
+	lay0->addLayout(TQT_TQLAYOUT(lay2));
 	lay0->addStretch(2);
 	lay1->addWidget(m_pagesizelabel, 0, 0);
 	lay1->addWidget(m_papertypelabel, 1, 0);
@@ -346,27 +347,27 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 	lay2->addWidget(m_nupbox, 1, 1);
 	lay2->setColStretch(0, 1);
 	lay2->setColStretch(1, 1);
-	QGridLayout	*lay3 = new TQGridLayout(m_orientbox->layout(), 4, 2,
+	TQGridLayout	*lay3 = new TQGridLayout(m_orientbox->layout(), 4, 2,
 		KDialog::spacingHint());
 	lay3->addWidget(m_portrait, 0, 0);
 	lay3->addWidget(m_landscape, 1, 0);
 	lay3->addWidget(m_revland, 2, 0);
 	lay3->addWidget(m_revport, 3, 0);
 	lay3->addMultiCellWidget(m_orientpix, 0, 3, 1, 1);
-	QGridLayout	*lay4 = new TQGridLayout(m_duplexbox->layout(), 3, 2,
+	TQGridLayout	*lay4 = new TQGridLayout(m_duplexbox->layout(), 3, 2,
 		KDialog::spacingHint());
 	lay4->addWidget(m_dupnone, 0, 0);
 	lay4->addWidget(m_duplong, 1, 0);
 	lay4->addWidget(m_dupshort, 2, 0);
 	lay4->addMultiCellWidget(m_duplexpix, 0, 2, 1, 1);
 	lay4->setRowStretch( 0, 1 );
-	QGridLayout	*lay5 = new TQGridLayout(m_nupbox->layout(), 3, 2,
+	TQGridLayout	*lay5 = new TQGridLayout(m_nupbox->layout(), 3, 2,
 		KDialog::spacingHint());
 	lay5->addWidget(m_nup1, 0, 0);
 	lay5->addWidget(m_nup2, 1, 0);
 	lay5->addWidget(m_nup4, 2, 0);
 	lay5->addMultiCellWidget(m_nuppix, 0, 2, 1, 1);
-	QGridLayout	*lay6 = new TQGridLayout(m_bannerbox->layout(), 2, 2,
+	TQGridLayout	*lay6 = new TQGridLayout(m_bannerbox->layout(), 2, 2,
 		KDialog::spacingHint());
 	lay6->addWidget(m_startbannerlabel, 0, 0);
 	lay6->addWidget(m_endbannerlabel, 1, 0);
@@ -408,12 +409,12 @@ void KPGeneralPage::initialize()
 			if ( opt->choices()->count() == 2 )
 			{
 				// probably a On/Off option instead of the standard PS one
-				TQButton *btn = m_duplexbox->find( DUPLEX_SHORT_ID );
+				TQButton *btn = static_cast<TQButton*>(m_duplexbox->find( DUPLEX_SHORT_ID ));
 				m_duplexbox->remove( btn );
 				btn->hide();
 				//delete btn;
-				m_duplexbox->find( DUPLEX_NONE_ID )->setText( i18n( "Disabled" ) );
-				m_duplexbox->find( DUPLEX_LONG_ID )->setText( i18n( "Enabled" ) );
+				static_cast<TQButton*>(m_duplexbox->find( DUPLEX_NONE_ID ))->setText( i18n( "Disabled" ) );
+				static_cast<TQButton*>(m_duplexbox->find( DUPLEX_LONG_ID ))->setText( i18n( "Enabled" ) );
 				m_duplexpix->hide();
 			}
 			if (opt->currentChoice())
@@ -439,7 +440,7 @@ void KPGeneralPage::initialize()
 			for ( int i=HIGHSIZE_BEGIN+1; i<DEFAULT_SIZE; i+=2 )
 				m_pagesize->insertItem(i18n(default_size[i]));
 		// set default page size using locale settings
-		QString	psname = pageSizeToPageName((KPrinter::PageSize)(KGlobal::locale()->pageSize()));
+		TQString	psname = pageSizeToPageName((KPrinter::PageSize)(KGlobal::locale()->pageSize()));
 		int index = findOption(default_size, DEFAULT_SIZE, psname);
 		if (index >= 0)
 			m_pagesize->setCurrentItem(index);
@@ -455,7 +456,7 @@ void KPGeneralPage::initialize()
 	}
 
 	// Banners
-	QStringList	values = TQStringList::split(',',printer()->option("kde-banners-supported"),false);
+	TQStringList	values = TQStringList::split(',',printer()->option("kde-banners-supported"),false);
 	if (values.count() > 0)
 	{
 		for (TQStringList::ConstIterator it = values.begin(); it != values.end(); ++it)
@@ -477,12 +478,12 @@ void KPGeneralPage::initialize()
 
 void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	QString	value;
+	TQString	value;
 
 	if (driver())
 	{
 		value = opts["media"];
-		QStringList	l = TQStringList::split(',',value,false);
+		TQStringList	l = TQStringList::split(',',value,false);
 		for(TQStringList::ConstIterator it = l.begin(); it != l.end(); ++it)
 		{
 			value = *it;
@@ -546,7 +547,7 @@ void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 		if (!value.isEmpty())
 		{
 			int	index(-1);
-			QStringList	l = TQStringList::split(',',value,false);
+			TQStringList	l = TQStringList::split(',',value,false);
 			for(TQStringList::ConstIterator it = l.begin(); it != l.end(); ++it)
 			{
 				value = *it;
@@ -575,7 +576,7 @@ void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 	value = opts["job-sheets"];
 	if (!value.isEmpty())
 	{
-		QStringList	l = TQStringList::split(',',value,false);
+		TQStringList	l = TQStringList::split(',',value,false);
 		if (l.count() > 0) setComboItem(m_startbanner,l[0]);
 		if (l.count() > 1) setComboItem(m_endbanner,l[1]);
 	}
@@ -598,7 +599,7 @@ void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 	if (!value.isEmpty())
 	{
 		bool	ok;
-		int	ID = QMIN(value.toInt(&ok)-1,2);
+		int	ID = TQMIN(value.toInt(&ok)-1,2);
 		if (ok)
 		{
 			m_nupbox->setButton(ID);
@@ -614,7 +615,7 @@ void KPGeneralPage::setOptions(const TQMap<TQString,TQString>& opts)
 
 void KPGeneralPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 {
-	QString	value;
+	TQString	value;
 
 	if (driver())
 	{
@@ -680,7 +681,7 @@ void KPGeneralPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 
 	if (m_bannerbox->isEnabled())
 	{
-		QStringList	l = TQStringList::split(',',printer()->option("kde-banners"),false);
+		TQStringList	l = TQStringList::split(',',printer()->option("kde-banners"),false);
 		if (incldef || (l.count() == 2 && (l[0] != m_startbanner->currentText() || l[1] != m_endbanner->currentText()))
 		    || (l.count() == 0 && (m_startbanner->currentText() != "none" || m_endbanner->currentText() != "none")))
 		{
@@ -692,7 +693,7 @@ void KPGeneralPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 
 void KPGeneralPage::slotOrientationChanged(int ID)
 {
-	QString	iconstr;
+	TQString	iconstr;
 	switch (ID)
 	{
 		case ORIENT_PORTRAIT_ID: iconstr = "kdeprint_portrait"; break;
@@ -706,7 +707,7 @@ void KPGeneralPage::slotOrientationChanged(int ID)
 
 void KPGeneralPage::slotNupChanged(int ID)
 {
-	QString	iconstr;
+	TQString	iconstr;
 	switch (ID)
 	{
 		case NUP_1_ID: iconstr = "kdeprint_nup1"; break;
@@ -721,7 +722,7 @@ void KPGeneralPage::slotDuplexChanged(int ID)
 {
 	if (m_duplexbox->isEnabled())
 	{
-		QString	iconstr;
+		TQString	iconstr;
 		switch (ID)
 		{
 			case DUPLEX_NONE_ID: iconstr = "kdeprint_duplex_none"; break;

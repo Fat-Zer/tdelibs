@@ -408,7 +408,7 @@ void LdapSearch::makeSearchData( TQStringList& ret, LdapResultList& resList )
     }
 
     LdapResult sr;
-    sr.clientNumber = mClients.findIndex( (*it1).client );
+    sr.clientNumber = mClients.tqfindIndex( (*it1).client );
     sr.name = name;
     sr.email = mail;
     resList.append( sr );

@@ -35,7 +35,7 @@ public:
 
 private:
 	KURLRequester		*m_installdir;
-	QCheckBox		*m_stddir;
+	TQCheckBox		*m_stddir;
 };
 
 #endif

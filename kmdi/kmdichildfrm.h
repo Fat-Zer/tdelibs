@@ -422,13 +422,13 @@ protected:
 	 * Restore the focus policies for _all_ widgets in the view using the list given as parameter.
 	 * Install the event filter for all direct child widgets of this. (See KMdiChildFrm::eventFilter)
 	 */
-	void linkChildren( TQDict<FocusPolicy>* pFocPolDict );
+	void linkChildren( TQDict<TQ_FocusPolicy>* pFocPolDict );
 
 	/**
 	 * Backups all focus policies of _all_ child widgets in the MDI childview since they get lost during a reparent.
 	 * Remove all event filters for all direct child widgets of this. (See KMdiChildFrm::eventFilter)
 	 */
-	TQDict<TQWidget::FocusPolicy>* unlinkChildren();
+	TQDict<TQ_FocusPolicy>* unlinkChildren();
 	
 	/**
 	 * Calculates the corner id for the resize cursor. The return value can be tested for:

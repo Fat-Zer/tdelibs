@@ -73,7 +73,7 @@ KateScrollBar::KateScrollBar (Orientation orientation, KateViewInternal* parent,
 
 void KateScrollBar::mousePressEvent(TQMouseEvent* e)
 {
-  if (e->button() == MidButton)
+  if (e->button() == Qt::MidButton)
     m_middleMouseDown = true;
 
   TQScrollBar::mousePressEvent(e);
@@ -94,7 +94,7 @@ void KateScrollBar::mouseMoveEvent(TQMouseEvent* e)
 {
   TQScrollBar::mouseMoveEvent(e);
 
-  if (e->state() | LeftButton)
+  if (e->state() | Qt::LeftButton)
     redrawMarks();
 }
 
@@ -212,7 +212,7 @@ void KateScrollBar::sliderMaybeMoved(int value)
 //END
 
 //BEGIN KateCmdLnWhatsThis
-class KateCmdLnWhatsThis : public QWhatsThis
+class KateCmdLnWhatsThis : public TQWhatsThis
 {
   public:
     KateCmdLnWhatsThis( KateCmdLine *parent )
@@ -685,7 +685,7 @@ const int iconPaneWidth = 16;
 const int halfIPW = 8;
 
 KateIconBorder::KateIconBorder ( KateViewInternal* internalView, TQWidget *parent )
-  : TQWidget(parent, "", Qt::WStaticContents | Qt::WRepaintNoErase | Qt::WResizeNoErase )
+  : TQWidget(parent, "", (WFlags)(WStaticContents | WRepaintNoErase | WResizeNoErase) )
   , m_view( internalView->m_view )
   , m_doc( internalView->m_doc )
   , m_viewInternal( internalView )
@@ -795,10 +795,10 @@ int KateIconBorder::lineNumberWidth() const
   int width = m_lineNumbersOn ? ((int)log10((double)(m_view->doc()->numLines())) + 1) * m_maxCharWidth + 4 : 0;
 
   if (m_view->dynWordWrap() && m_dynWrapIndicatorsOn) {
-    width = kMax(style().scrollBarExtent().width() + 4, width);
+    width = kMax(tqstyle().scrollBarExtent().width() + 4, width);
 
     if (m_cachedLNWidth != width || m_oldBackgroundColor != m_view->renderer()->config()->iconBarColor()) {
-      int w = style().scrollBarExtent().width();
+      int w = tqstyle().scrollBarExtent().width();
       int h = m_view->renderer()->config()->fontMetrics()->height();
 
       TQSize newSize(w, h);
@@ -1069,7 +1069,7 @@ void KateIconBorder::mouseReleaseEvent( TQMouseEvent* e )
   {
     BorderArea area = positionToArea( e->pos() );
     if( area == IconBorder) {
-      if (e->button() == LeftButton) {
+      if (e->button() == Qt::LeftButton) {
         if( m_doc->editableMarks() & KateViewConfig::global()->defaultMarkType() ) {
           if( m_doc->mark( cursorOnLine ) & KateViewConfig::global()->defaultMarkType() )
             m_doc->removeMark( cursorOnLine, KateViewConfig::global()->defaultMarkType() );
@@ -1080,7 +1080,7 @@ void KateIconBorder::mouseReleaseEvent( TQMouseEvent* e )
           }
         }
         else
-        if (e->button() == RightButton) {
+        if (e->button() == Qt::RightButton) {
           showMarkMenu( cursorOnLine, TQCursor::pos() );
         }
     }

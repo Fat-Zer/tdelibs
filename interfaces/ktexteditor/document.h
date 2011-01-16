@@ -33,6 +33,7 @@ class KTEXTEDITOR_EXPORT Document : public KTextEditor::Editor
   friend class PrivateDocument;
 
   Q_OBJECT
+  TQ_OBJECT
 
   public:
     Document ( TQObject *parent = 0, const char *name = 0 );

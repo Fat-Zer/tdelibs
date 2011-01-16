@@ -358,7 +358,7 @@ public:
 	 */
 	inline void updateTimeStamp()
 	{
-		m_time.setDate( TQDate::tqcurrentDate() );
+		m_time.setDate( TQDate::currentDate() );
 		m_time.setTime( TQTime::currentTime() );
 	}
 	

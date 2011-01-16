@@ -56,8 +56,8 @@ class KVCARD_EXPORT AdrParam : public Param
 	
 	private:
 		
-		QStrList	adrTypeList_;
-		QCString	textParam_;
+		TQStrList	adrTypeList_;
+		TQCString	textParam_;
 };
 }
 

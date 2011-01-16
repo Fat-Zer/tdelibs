@@ -55,13 +55,13 @@ protected slots:
 	void slotError(const TQString&);
 
 private:
-	QListBox	*m_manu;
-	QListBox	*m_model;
-	QCheckBox	*m_postscript;
-	QCheckBox	*m_raw;
-	QPushButton	*m_other;
-	QString		m_external;
-	QString		m_desc;
+	TQListBox	*m_manu;
+	TQListBox	*m_model;
+	TQCheckBox	*m_postscript;
+	TQCheckBox	*m_raw;
+	TQPushButton	*m_other;
+	TQString		m_external;
+	TQString		m_desc;
 	bool		m_valid;
 };
 

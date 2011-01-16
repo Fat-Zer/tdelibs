@@ -35,8 +35,8 @@ public:
 	static TQString editAddress(const TQString& s, TQWidget *parent = 0);
 
 private:
-	QComboBox	*type_;
-	QLineEdit	*address_;
+	TQComboBox	*type_;
+	TQLineEdit	*address_;
 };
 
 #endif

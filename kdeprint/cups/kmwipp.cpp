@@ -34,7 +34,7 @@ KMWIpp::KMWIpp(TQWidget *parent, const char *name)
 	m_ID = KMWizard::IPP;
 	m_title = i18n("Remote IPP server");
 	m_nextpage = KMWizard::IPPSelect;
-	lineEdit( 1 )->setValidator( new TQIntValidator( this ) );
+	lineEdit( 1 )->setValidator( new TQIntValidator( TQT_TQOBJECT(this) ) );
 
 	setInfo(i18n("<p>Enter the information concerning the remote IPP server "
 		     "owning the targeted printer. This wizard will poll the server "

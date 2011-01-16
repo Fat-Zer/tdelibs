@@ -56,7 +56,7 @@ CupsdJobsPage::CupsdJobsPage(TQWidget *parent, const char *name)
 	TQLabel *l2 = new TQLabel(i18n("Max jobs per printer:"), this);
 	TQLabel *l3 = new TQLabel(i18n("Max jobs per user:"), this);
 
-	QGridLayout	*m1 = new TQGridLayout(this, 7, 2, 10, 7);
+	TQGridLayout	*m1 = new TQGridLayout(this, 7, 2, 10, 7);
 	m1->setRowStretch(6, 1);
 	m1->setColStretch(1, 1);
 	m1->addWidget(keepjobhistory_, 0, 1);

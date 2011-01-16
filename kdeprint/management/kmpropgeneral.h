@@ -36,9 +36,9 @@ protected:
 	void configureWizard(KMWizard*);
 
 private:
-	QLabel	*m_name;
-	QLabel	*m_location;
-	QLabel	*m_description;
+	TQLabel	*m_name;
+	TQLabel	*m_location;
+	TQLabel	*m_description;
 };
 
 #endif

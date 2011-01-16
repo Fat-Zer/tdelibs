@@ -46,10 +46,10 @@ protected slots:
 	void slotTextChanged(const TQString &);
 
 private:
-	QLineEdit	*m_name, *m_description, *m_location, *m_extension;
-	QComboBox	*m_mimetype;
-	QCheckBox	*m_usefile;
-	QStringList	m_mimelist;
+	TQLineEdit	*m_name, *m_description, *m_location, *m_extension;
+	TQComboBox	*m_mimetype;
+	TQCheckBox	*m_usefile;
+	TQStringList	m_mimelist;
 	KIconButton	*m_icon;
 	KXmlCommandSelector	*m_command;
 };

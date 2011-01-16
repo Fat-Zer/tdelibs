@@ -45,8 +45,8 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, TQWidget *parent, const
 {
 	m_cmd = new TQComboBox(this);
 	connect(m_cmd, TQT_SIGNAL(activated(int)), TQT_SLOT(slotCommandSelected(int)));
-	QPushButton	*m_add = new KPushButton(this);
-	QPushButton	*m_edit = new KPushButton(this);
+	TQPushButton	*m_add = new KPushButton(this);
+	TQPushButton	*m_edit = new KPushButton(this);
 	m_add->setPixmap(SmallIcon("filenew"));
 	m_edit->setPixmap(SmallIcon("configure"));
 	connect(m_add, TQT_SIGNAL(clicked()), TQT_SLOT(slotAddCommand()));
@@ -62,9 +62,9 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, TQWidget *parent, const
 
 	m_line = 0;
 	m_usefilter = 0;
-	QPushButton	*m_browse = 0;
+	TQPushButton	*m_browse = 0;
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 10);
 
 	if (canBeNull)
 	{
@@ -86,7 +86,7 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, TQWidget *parent, const
 		setTabOrder(m_cmd, m_add);
 		setTabOrder(m_add, m_edit);
 
-		QHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
+		TQHBoxLayout	*l1 = new TQHBoxLayout(0, 0, 10);
 		l0->addLayout(l1);
 		l1->addWidget(m_line);
 		l1->addWidget(m_browse);
@@ -97,9 +97,9 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, TQWidget *parent, const
 	else
 		setFocusProxy(m_cmd);
 
-	QGridLayout	*l2 = new TQGridLayout(0, 2, (m_usefilter?3:2), 0, 5);
+	TQGridLayout	*l2 = new TQGridLayout(0, 2, (m_usefilter?3:2), 0, 5);
 	int	c(0);
-	l0->addLayout(l2);
+	l0->addLayout(TQT_TQLAYOUT(l2));
 	if (m_usefilter)
 	{
 		l2->addWidget(m_usefilter, 0, c++);
@@ -109,7 +109,7 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, TQWidget *parent, const
 	l2->addLayout( l4, 1, c );
 	l4->addWidget( m_helpbtn, 0 );
 	l4->addWidget( m_shortinfo, 1 );
-	QHBoxLayout	*l3 = new TQHBoxLayout(0, 0, 0);
+	TQHBoxLayout	*l3 = new TQHBoxLayout(0, 0, 0);
 	l2->addLayout(l3, 0, c+1);
 	l3->addWidget(m_add);
 	l3->addWidget(m_edit);
@@ -122,13 +122,13 @@ KXmlCommandSelector::KXmlCommandSelector(bool canBeNull, TQWidget *parent, const
 
 void KXmlCommandSelector::loadCommands()
 {
-	QString	thisCmd = (m_cmd->currentItem() != -1 ? m_cmdlist[m_cmd->currentItem()] : TQString::null);
+	TQString	thisCmd = (m_cmd->currentItem() != -1 ? m_cmdlist[m_cmd->currentItem()] : TQString::null);
 
 	m_cmd->clear();
 	m_cmdlist.clear();
 
-	QStringList	list = KXmlCommandManager::self()->commandListWithDescription();
-	QStringList	desclist;
+	TQStringList	list = KXmlCommandManager::self()->commandListWithDescription();
+	TQStringList	desclist;
 	for (TQStringList::Iterator it=list.begin(); it!=list.end(); ++it)
 	{
 		m_cmdlist << (*it);
@@ -137,7 +137,7 @@ void KXmlCommandSelector::loadCommands()
 	}
 	m_cmd->insertStringList(desclist);
 
-	int	index = m_cmdlist.findIndex(thisCmd);
+	int	index = m_cmdlist.tqfindIndex(thisCmd);
 	if (index != -1)
 		m_cmd->setCurrentItem(index);
 	if (m_cmd->currentItem() != -1 && m_cmd->isEnabled())
@@ -146,7 +146,7 @@ void KXmlCommandSelector::loadCommands()
 
 TQString KXmlCommandSelector::command() const
 {
-	QString	cmd;
+	TQString	cmd;
 	if (m_line && !m_usefilter->isChecked())
 		cmd = m_line->text();
 	else
@@ -156,7 +156,7 @@ TQString KXmlCommandSelector::command() const
 
 void KXmlCommandSelector::setCommand(const TQString& cmd)
 {
-	int	index = m_cmdlist.findIndex(cmd);
+	int	index = m_cmdlist.tqfindIndex(cmd);
 
 	if (m_usefilter)
 		m_usefilter->setChecked(index != -1);
@@ -171,12 +171,12 @@ void KXmlCommandSelector::setCommand(const TQString& cmd)
 void KXmlCommandSelector::slotAddCommand()
 {
 	bool	ok(false);
-	QString	cmdId = KInputDialog::getText(i18n("Command Name"), i18n("Enter an identification name for the new command:"), TQString::null, &ok, this);
+	TQString	cmdId = KInputDialog::getText(i18n("Command Name"), i18n("Enter an identification name for the new command:"), TQString::null, &ok, this);
 	if (ok)
 	{
 		bool	added(true);
 
-		if (m_cmdlist.findIndex(cmdId) != -1)
+		if (m_cmdlist.tqfindIndex(cmdId) != -1)
 		{
 			if (KMessageBox::warningContinueCancel(
 				this,
@@ -202,7 +202,7 @@ void KXmlCommandSelector::slotAddCommand()
 
 void KXmlCommandSelector::slotEditCommand()
 {
-	QString	xmlId = m_cmdlist[m_cmd->currentItem()];
+	TQString	xmlId = m_cmdlist[m_cmd->currentItem()];
 	KXmlCommand	*xmlCmd = KXmlCommandManager::self()->loadCommand(xmlId);
 	if (xmlCmd)
 	{
@@ -222,7 +222,7 @@ void KXmlCommandSelector::slotEditCommand()
 
 void KXmlCommandSelector::slotBrowse()
 {
-	QString	filename = KFileDialog::getOpenFileName(TQString::null, TQString::null, this);
+	TQString	filename = KFileDialog::getOpenFileName(TQString::null, TQString::null, this);
 	if (!filename.isEmpty() && m_line)
 		m_line->setText(filename);
 }

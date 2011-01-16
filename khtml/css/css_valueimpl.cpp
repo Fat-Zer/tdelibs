@@ -766,7 +766,7 @@ DOM::DOMString CSSPrimitiveValueImpl::cssText() const
 				   + TQString::number(tqGreen(m_value.rgbcolor)) + "," 
 				   + TQString::number(tqAlpha(m_value.rgbcolor)/255.0) + ")";
 	    } else {
-		text = TQColor(m_value.rgbcolor).name();
+		text = TQString(TQColor(m_value.rgbcolor).name());
 	    }
 	    break;
         case CSSPrimitiveValue::CSS_PAIR:
@@ -886,9 +886,9 @@ FontFamilyValueImpl::FontFamilyValueImpl( const TQString &string)
 
     parsedFontName = string;
     // a language tag is often added in braces at the end. Remove it.
-    parsedFontName.replace(parenReg, TQString::null);
+    parsedFontName.replace(parenReg, TQString());
     // remove [Xft] qualifiers
-    parsedFontName.replace(braceReg, TQString::null);
+    parsedFontName.replace(braceReg, TQString());
 
 #ifndef APPLE_CHANGES
     const TQString &available = KHTMLSettings::availableFamilies();

@@ -47,11 +47,11 @@ protected slots:
 	void slotNupChanged(int);
 
 protected:
-	QComboBox	*m_pagesize, *m_papertype, *m_inputslot;
-	QComboBox	*m_startbanner, *m_endbanner;
-	QButtonGroup	*m_orientbox, *m_duplexbox, *m_nupbox;
-	QGroupBox	*m_bannerbox;
-	QLabel		*m_orientpix, *m_duplexpix, *m_nuppix;
+	TQComboBox	*m_pagesize, *m_papertype, *m_inputslot;
+	TQComboBox	*m_startbanner, *m_endbanner;
+	TQButtonGroup	*m_orientbox, *m_duplexbox, *m_nupbox;
+	TQGroupBox	*m_bannerbox;
+	TQLabel		*m_orientpix, *m_duplexpix, *m_nuppix;
 };
 
 #endif

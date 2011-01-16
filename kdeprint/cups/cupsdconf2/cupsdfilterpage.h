@@ -37,7 +37,7 @@ public:
 	void setInfos(CupsdConf*);
 
 private:
-	QLineEdit	*user_, *group_;
+	TQLineEdit	*user_, *group_;
 	KIntNumInput	*filterlimit_;
 	SizeWidget	*ripcache_;
 };

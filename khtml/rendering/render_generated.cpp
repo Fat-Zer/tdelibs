@@ -379,7 +379,7 @@ void RenderGlyph::paint(PaintInfo& paintInfo, int _tx, int _ty)
         diamond[2] = TQPoint(x+s,   y+2*s);
         diamond[3] = TQPoint(x,     y+s);
         p->setBrush( color );
-        p->drawConvexPolygon( diamond, 0, 4 );
+        p->tqdrawConvexPolygon( diamond, 0, 4 );
         return;
     }
     case LNONE:

@@ -30,13 +30,13 @@ KMWInfoBase::KMWInfoBase(int n, TQWidget *parent, const char *name)
 	m_edits.setAutoDelete(false);
 
 	m_nlines = n;
-	QGridLayout	*lay1 = new TQGridLayout(this, m_nlines+3, 2, 0, 10);
+	TQGridLayout	*lay1 = new TQGridLayout(this, m_nlines+3, 2, 0, 10);
 	lay1->addRowSpacing(1,10);
 	lay1->setRowStretch(m_nlines+2,1);
 	lay1->setColStretch(1,1);
 
 	m_info = new TQLabel(this);
-	m_info->setTextFormat(Qt::RichText);
+	m_info->setTextFormat(TQt::RichText);
 	lay1->addMultiCellWidget(m_info,0,0,0,1);
 
 	for (int i=0;i<m_nlines;i++)

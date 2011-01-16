@@ -84,13 +84,13 @@ KPTagsPage::KPTagsPage(bool ro, TQWidget *parent, const char *name)
 	m_tags->setReadOnly(ro);
 	TQWhatsThis::add(m_tags, whatsThisAdditionalTagsTable);
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 5);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, 5);
 	l0->addWidget(m_tags);
 
 	if (ro)
 	{
-		QLabel	*lab = new TQLabel(i18n("Read-Only"), this);
-		QFont	f = lab->font();
+		TQLabel	*lab = new TQLabel(i18n("Read-Only"), this);
+		TQFont	f = lab->font();
 		f.setBold(true);
 		lab->setFont(f);
 		lab->tqsetAlignment(AlignVCenter|AlignRight);
@@ -104,10 +104,10 @@ KPTagsPage::~KPTagsPage()
 
 bool KPTagsPage::isValid(TQString& msg)
 {
-	QRegExp	re("\\s");
+	TQRegExp	re("\\s");
 	for (int r=0; r<m_tags->numCols(); r++)
 	{
-		QString	tag(m_tags->text(r, 0));
+		TQString	tag(m_tags->text(r, 0));
 		if (tag.isEmpty())
 			continue;
 		else if (tag.tqfind(re) != -1)
@@ -122,13 +122,13 @@ bool KPTagsPage::isValid(TQString& msg)
 void KPTagsPage::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	int	r(0);
-	QRegExp	re("^\"|\"$");
+	TQRegExp	re("^\"|\"$");
 	for (TQMap<TQString,TQString>::ConstIterator it=opts.begin(); it!=opts.end() && r<m_tags->numRows(); ++it)
 	{
 		if (it.key().startsWith("KDEPrint-"))
 		{
 			m_tags->setText(r, 0, it.key().mid(9));
-			QString	data = it.data();
+			TQString	data = it.data();
 			m_tags->setText(r, 1, data.replace(re, ""));
 			r++;
 		}
@@ -144,7 +144,7 @@ void KPTagsPage::getOptions(TQMap<TQString,TQString>& opts, bool)
 {
 	for (int r=0; r<m_tags->numRows(); r++)
 	{
-		QString	tag(m_tags->text(r, 0)), val(m_tags->text(r, 1));
+		TQString	tag(m_tags->text(r, 0)), val(m_tags->text(r, 1));
 		if (!tag.isEmpty())
 		{
 			tag.prepend("KDEPrint-");

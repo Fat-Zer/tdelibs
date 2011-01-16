@@ -98,7 +98,7 @@ OrgValue::numValues()
 	return valueList_.count();
 }
 
-	QCString
+	TQCString
 OrgValue::value(unsigned int i)
 {
 	parse();

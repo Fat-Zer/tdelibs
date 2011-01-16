@@ -94,7 +94,7 @@ void Settings::setDefaultClient( const TQString& client )
     //Different from setDefaultLanguage because
     //the number of clients can't be even close
     //as big as the number of languages
-    if ( d->broker->clients().contains( client ) ) {
+    if ( d->broker->clients().tqcontains( client ) ) {
         d->defaultClient = client;
         d->modified = true;
         d->broker->changed();
@@ -167,7 +167,7 @@ TQStringList Settings::currentIgnoreList() const
 
 void Settings::addWordToIgnore( const TQString& word )
 {
-    if ( !d->ignore.contains( word ) ) {
+    if ( !d->ignore.tqcontains( word ) ) {
         d->modified = true;
         d->ignore.insert( word, true );
     }
@@ -175,7 +175,7 @@ void Settings::addWordToIgnore( const TQString& word )
 
 bool Settings::ignore( const TQString& word )
 {
-    return d->ignore.contains( word );
+    return d->ignore.tqcontains( word );
 }
 
 void Settings::readIgnoreList()

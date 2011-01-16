@@ -131,7 +131,7 @@ KateView::KateView( KateDocument *doc, TQWidget *parent, const char * name )
   doc->addView( this );
 
   setFocusProxy( m_viewInternal );
-  setFocusPolicy( StrongFocus );
+  setFocusPolicy( TQ_StrongFocus );
 
   if (!doc->singleViewMode()) {
     setXMLFile( "katepartui.rc" );
@@ -187,21 +187,21 @@ KateView::~KateView()
 void KateView::setupConnections()
 {
   connect( m_doc, TQT_SIGNAL(undoChanged()),
-           this, TQT_SLOT(slotNewUndo()) );
+           TQT_TQOBJECT(this), TQT_SLOT(slotNewUndo()) );
   connect( m_doc, TQT_SIGNAL(hlChanged()),
-           this, TQT_SLOT(slotHlChanged()) );
+           TQT_TQOBJECT(this), TQT_SLOT(slotHlChanged()) );
   connect( m_doc, TQT_SIGNAL(canceled(const TQString&)),
-           this, TQT_SLOT(slotSaveCanceled(const TQString&)) );
+           TQT_TQOBJECT(this), TQT_SLOT(slotSaveCanceled(const TQString&)) );
   connect( m_viewInternal, TQT_SIGNAL(dropEventPass(TQDropEvent*)),
-           this,           TQT_SIGNAL(dropEventPass(TQDropEvent*)) );
+           TQT_TQOBJECT(this),           TQT_SIGNAL(dropEventPass(TQDropEvent*)) );
   connect(this,TQT_SIGNAL(cursorPositionChanged()),this,TQT_SLOT(slotStatusMsg()));
   connect(this,TQT_SIGNAL(newStatus()),this,TQT_SLOT(slotStatusMsg()));
-  connect(m_doc, TQT_SIGNAL(undoChanged()), this, TQT_SLOT(slotStatusMsg()));
+  connect(m_doc, TQT_SIGNAL(undoChanged()), TQT_TQOBJECT(this), TQT_SLOT(slotStatusMsg()));
 
   if ( m_doc->browserView() )
   {
     connect( this, TQT_SIGNAL(dropEventPass(TQDropEvent*)),
-             this, TQT_SLOT(slotDropEventPass(TQDropEvent*)) );
+             TQT_TQOBJECT(this), TQT_SLOT(slotDropEventPass(TQDropEvent*)) );
   }
 }
 
@@ -212,21 +212,21 @@ void KateView::setupActions()
 
   m_toggleWriteLock = 0;
 
-  m_cut = a=KStdAction::cut(this, TQT_SLOT(cut()), ac);
+  m_cut = a=KStdAction::cut(TQT_TQOBJECT(this), TQT_SLOT(cut()), ac);
   a->setWhatsThis(i18n("Cut the selected text and move it to the clipboard"));
 
-  m_paste = a=KStdAction::pasteText(this, TQT_SLOT(paste()), ac);
+  m_paste = a=KStdAction::pasteText(TQT_TQOBJECT(this), TQT_SLOT(paste()), ac);
   a->setWhatsThis(i18n("Paste previously copied or cut clipboard contents"));
 
-  m_copy = a=KStdAction::copy(this, TQT_SLOT(copy()), ac);
+  m_copy = a=KStdAction::copy(TQT_TQOBJECT(this), TQT_SLOT(copy()), ac);
   a->setWhatsThis(i18n( "Use this command to copy the currently selected text to the system clipboard."));
 
-  m_copyHTML = a = new KAction(i18n("Copy as &HTML"), "editcopy", 0, this, TQT_SLOT(copyHTML()), ac, "edit_copy_html");
+  m_copyHTML = a = new KAction(i18n("Copy as &HTML"), "editcopy", 0, TQT_TQOBJECT(this), TQT_SLOT(copyHTML()), ac, "edit_copy_html");
   a->setWhatsThis(i18n( "Use this command to copy the currently selected text as HTML to the system clipboard."));
 
   if (!m_doc->readOnly())
   {
-    a=KStdAction::save(this, TQT_SLOT(save()), ac);
+    a=KStdAction::save(TQT_TQOBJECT(this), TQT_SLOT(save()), ac);
     a->setWhatsThis(i18n("Save the current document"));
 
     a=m_editUndo = KStdAction::undo(m_doc, TQT_SLOT(undo()), ac);
@@ -235,56 +235,56 @@ void KateView::setupActions()
     a=m_editRedo = KStdAction::redo(m_doc, TQT_SLOT(redo()), ac);
     a->setWhatsThis(i18n("Revert the most recent undo operation"));
 
-    (new KAction(i18n("&Word Wrap Document"), "", 0, this, TQT_SLOT(applyWordWrap()), ac, "tools_apply_wordwrap"))->setWhatsThis(
+    (new KAction(i18n("&Word Wrap Document"), "", 0, TQT_TQOBJECT(this), TQT_SLOT(applyWordWrap()), ac, "tools_apply_wordwrap"))->setWhatsThis(
   i18n("Use this command to wrap all lines of the current document which are longer than the width of the"
     " current view, to fit into this view.<br><br> This is a static word wrap, meaning it is not updated"
     " when the view is resized."));
 
     // setup Tools menu
-    a=new KAction(i18n("&Indent"), "indent", Qt::CTRL+Qt::Key_I, this, TQT_SLOT(indent()), ac, "tools_indent");
+    a=new KAction(i18n("&Indent"), "indent", Qt::CTRL+Qt::Key_I, TQT_TQOBJECT(this), TQT_SLOT(indent()), ac, "tools_indent");
     a->setWhatsThis(i18n("Use this to indent a selected block of text.<br><br>"
         "You can configure whether tabs should be honored and used or replaced with spaces, in the configuration dialog."));
-    a=new KAction(i18n("&Unindent"), "unindent", Qt::CTRL+Qt::SHIFT+Qt::Key_I, this, TQT_SLOT(unIndent()), ac, "tools_unindent");
+    a=new KAction(i18n("&Unindent"), "unindent", Qt::CTRL+Qt::SHIFT+Qt::Key_I, TQT_TQOBJECT(this), TQT_SLOT(unIndent()), ac, "tools_unindent");
     a->setWhatsThis(i18n("Use this to unindent a selected block of text."));
 
-    a=new KAction(i18n("&Clean Indentation"), 0, this, TQT_SLOT(cleanIndent()), ac, "tools_cleanIndent");
+    a=new KAction(i18n("&Clean Indentation"), 0, TQT_TQOBJECT(this), TQT_SLOT(cleanIndent()), ac, "tools_cleanIndent");
     a->setWhatsThis(i18n("Use this to clean the indentation of a selected block of text (only tabs/only spaces)<br><br>"
         "You can configure whether tabs should be honored and used or replaced with spaces, in the configuration dialog."));
 
-    a=new KAction(i18n("&Align"), 0, this, TQT_SLOT(align()), ac, "tools_align");
+    a=new KAction(i18n("&Align"), 0, TQT_TQOBJECT(this), TQT_SLOT(align()), ac, "tools_align");
     a->setWhatsThis(i18n("Use this to align the current line or block of text to its proper indent level."));
 
-    a=new KAction(i18n("C&omment"), CTRL+Qt::Key_D, this, TQT_SLOT(comment()),
+    a=new KAction(i18n("C&omment"), CTRL+Qt::Key_D, TQT_TQOBJECT(this), TQT_SLOT(comment()),
         ac, "tools_comment");
     a->setWhatsThis(i18n("This command comments out the current line or a selected block of text.<BR><BR>"
         "The characters for single/multiple line comments are defined within the language's highlighting."));
 
-    a=new KAction(i18n("Unco&mment"), CTRL+SHIFT+Qt::Key_D, this, TQT_SLOT(uncomment()),
+    a=new KAction(i18n("Unco&mment"), CTRL+SHIFT+Qt::Key_D, TQT_TQOBJECT(this), TQT_SLOT(uncomment()),
                                  ac, "tools_uncomment");
     a->setWhatsThis(i18n("This command removes comments from the current line or a selected block of text.<BR><BR>"
     "The characters for single/multiple line comments are defined within the language's highlighting."));
     a = m_toggleWriteLock = new KToggleAction(
                 i18n("&Read Only Mode"), 0, 0,
-                this, TQT_SLOT( toggleWriteLock() ),
+                TQT_TQOBJECT(this), TQT_SLOT( toggleWriteLock() ),
                 ac, "tools_toggle_write_lock" );
     a->setWhatsThis( i18n("Lock/unlock the document for writing") );
 
-    a = new KAction( i18n("Uppercase"), CTRL + Qt::Key_U, this,
+    a = new KAction( i18n("Uppercase"), CTRL + Qt::Key_U, TQT_TQOBJECT(this),
       TQT_SLOT(uppercase()), ac, "tools_uppercase" );
     a->setWhatsThis( i18n("Convert the selection to uppercase, or the character to the "
       "right of the cursor if no text is selected.") );
 
-    a = new KAction( i18n("Lowercase"), CTRL + SHIFT + Qt::Key_U, this,
+    a = new KAction( i18n("Lowercase"), CTRL + SHIFT + Qt::Key_U, TQT_TQOBJECT(this),
       TQT_SLOT(lowercase()), ac, "tools_lowercase" );
     a->setWhatsThis( i18n("Convert the selection to lowercase, or the character to the "
       "right of the cursor if no text is selected.") );
 
-    a = new KAction( i18n("Capitalize"), CTRL + ALT + Qt::Key_U, this,
+    a = new KAction( i18n("Capitalize"), CTRL + ALT + Qt::Key_U, TQT_TQOBJECT(this),
       TQT_SLOT(capitalize()), ac, "tools_capitalize" );
     a->setWhatsThis( i18n("Capitalize the selection, or the word under the "
       "cursor if no text is selected.") );
 
-    a = new KAction( i18n("Join Lines"), CTRL + Qt::Key_J, this,
+    a = new KAction( i18n("Join Lines"), CTRL + Qt::Key_J, TQT_TQOBJECT(this),
       TQT_SLOT( joinLines() ), ac, "tools_join_lines" );
   }
   else
@@ -298,13 +298,13 @@ void KateView::setupActions()
   a=KStdAction::print( m_doc, TQT_SLOT(print()), ac );
   a->setWhatsThis(i18n("Print the current document."));
 
-  a=new KAction(i18n("Reloa&d"), "reload", KStdAccel::reload(), this, TQT_SLOT(reloadFile()), ac, "file_reload");
+  a=new KAction(i18n("Reloa&d"), "reload", KStdAccel::reload(), TQT_TQOBJECT(this), TQT_SLOT(reloadFile()), ac, "file_reload");
   a->setWhatsThis(i18n("Reload the current document from disk."));
 
-  a=KStdAction::saveAs(this, TQT_SLOT(saveAs()), ac);
+  a=KStdAction::saveAs(TQT_TQOBJECT(this), TQT_SLOT(saveAs()), ac);
   a->setWhatsThis(i18n("Save the current document to disk, with a name of your choice."));
 
-  a=KStdAction::gotoLine(this, TQT_SLOT(gotoLine()), ac);
+  a=KStdAction::gotoLine(TQT_TQOBJECT(this), TQT_SLOT(gotoLine()), ac);
   a->setWhatsThis(i18n("This command opens a dialog and lets you choose a line that you want the cursor to move to."));
 
   a=new KAction(i18n("&Configure Editor..."), 0, m_doc, TQT_SLOT(configDialog()),ac, "set_confdlg");
@@ -324,45 +324,45 @@ void KateView::setupActions()
   new KateViewIndentationAction (m_doc, i18n("&Indentation"),ac,"tools_indentation");
 
   // html export
-  a = new KAction(i18n("E&xport as HTML..."), 0, 0, this, TQT_SLOT(exportAsHTML()), ac, "file_export_html");
+  a = new KAction(i18n("E&xport as HTML..."), 0, 0, TQT_TQOBJECT(this), TQT_SLOT(exportAsHTML()), ac, "file_export_html");
   a->setWhatsThis(i18n("This command allows you to export the current document"
                       " with all highlighting information into a HTML document."));
 
-  m_selectAll = a=KStdAction::selectAll(this, TQT_SLOT(selectAll()), ac);
+  m_selectAll = a=KStdAction::selectAll(TQT_TQOBJECT(this), TQT_SLOT(selectAll()), ac);
   a->setWhatsThis(i18n("Select the entire text of the current document."));
 
-  m_deSelect = a=KStdAction::deselect(this, TQT_SLOT(clearSelection()), ac);
+  m_deSelect = a=KStdAction::deselect(TQT_TQOBJECT(this), TQT_SLOT(clearSelection()), ac);
   a->setWhatsThis(i18n("If you have selected something within the current document, this will no longer be selected."));
 
-  a=new KAction(i18n("Enlarge Font"), "viewmag+", 0, m_viewInternal, TQT_SLOT(slotIncFontSizes()), ac, "incFontSizes");
+  a=new KAction(i18n("Enlarge Font"), "viewmag+", 0, TQT_TQOBJECT(m_viewInternal), TQT_SLOT(slotIncFontSizes()), ac, "incFontSizes");
   a->setWhatsThis(i18n("This increases the display font size."));
 
-  a=new KAction(i18n("Shrink Font"), "viewmag-", 0, m_viewInternal, TQT_SLOT(slotDecFontSizes()), ac, "decFontSizes");
+  a=new KAction(i18n("Shrink Font"), "viewmag-", 0, TQT_TQOBJECT(m_viewInternal), TQT_SLOT(slotDecFontSizes()), ac, "decFontSizes");
   a->setWhatsThis(i18n("This decreases the display font size."));
 
   a= m_toggleBlockSelection = new KToggleAction(
     i18n("Bl&ock Selection Mode"), CTRL + SHIFT + Key_B,
-    this, TQT_SLOT(toggleBlockSelectionMode()),
+    TQT_TQOBJECT(this), TQT_SLOT(toggleBlockSelectionMode()),
     ac, "set_verticalSelect");
   a->setWhatsThis(i18n("This command allows switching between the normal (line based) selection mode and the block selection mode."));
 
   a= m_toggleInsert = new KToggleAction(
     i18n("Overwr&ite Mode"), Key_Insert,
-    this, TQT_SLOT(toggleInsert()),
+    TQT_TQOBJECT(this), TQT_SLOT(toggleInsert()),
     ac, "set_insert" );
   a->setWhatsThis(i18n("Choose whether you want the text you type to be inserted or to overwrite existing text."));
 
   KToggleAction *toggleAction;
    a= m_toggleDynWrap = toggleAction = new KToggleAction(
     i18n("&Dynamic Word Wrap"), Key_F10,
-    this, TQT_SLOT(toggleDynWordWrap()),
+    TQT_TQOBJECT(this), TQT_SLOT(toggleDynWordWrap()),
     ac, "view_dynamic_word_wrap" );
   a->setWhatsThis(i18n("If this option is checked, the text lines will be wrapped at the view border on the screen."));
 
   a= m_setDynWrapIndicators = new KSelectAction(i18n("Dynamic Word Wrap Indicators"), 0, ac, "dynamic_word_wrap_indicators");
   a->setWhatsThis(i18n("Choose when the Dynamic Word Wrap Indicators should be displayed"));
 
-  connect(m_setDynWrapIndicators, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setDynWrapIndicators(int)));
+  connect(m_setDynWrapIndicators, TQT_SIGNAL(activated(int)), TQT_TQOBJECT(this), TQT_SLOT(setDynWrapIndicators(int)));
   TQStringList list2;
   list2.append(i18n("&Off"));
   list2.append(i18n("Follow &Line Numbers"));
@@ -371,14 +371,14 @@ void KateView::setupActions()
 
   a= toggleAction=m_toggleFoldingMarkers = new KToggleAction(
     i18n("Show Folding &Markers"), Key_F9,
-    this, TQT_SLOT(toggleFoldingMarkers()),
+    TQT_TQOBJECT(this), TQT_SLOT(toggleFoldingMarkers()),
     ac, "view_folding_markers" );
   a->setWhatsThis(i18n("You can choose if the codefolding marks should be shown, if codefolding is possible."));
   toggleAction->setCheckedState(i18n("Hide Folding &Markers"));
 
    a= m_toggleIconBar = toggleAction = new KToggleAction(
     i18n("Show &Icon Border"), Key_F6,
-    this, TQT_SLOT(toggleIconBorder()),
+    TQT_TQOBJECT(this), TQT_SLOT(toggleIconBorder()),
     ac, "view_border");
   a=toggleAction;
   a->setWhatsThis(i18n("Show/hide the icon border.<BR><BR> The icon border shows bookmark symbols, for instance."));
@@ -386,21 +386,21 @@ void KateView::setupActions()
 
   a= toggleAction=m_toggleLineNumbers = new KToggleAction(
      i18n("Show &Line Numbers"), Key_F11,
-     this, TQT_SLOT(toggleLineNumbersOn()),
+     TQT_TQOBJECT(this), TQT_SLOT(toggleLineNumbersOn()),
      ac, "view_line_numbers" );
   a->setWhatsThis(i18n("Show/hide the line numbers on the left hand side of the view."));
   toggleAction->setCheckedState(i18n("Hide &Line Numbers"));
 
   a= m_toggleScrollBarMarks = toggleAction = new KToggleAction(
      i18n("Show Scroll&bar Marks"), 0,
-     this, TQT_SLOT(toggleScrollBarMarks()),
+     TQT_TQOBJECT(this), TQT_SLOT(toggleScrollBarMarks()),
      ac, "view_scrollbar_marks");
   a->setWhatsThis(i18n("Show/hide the marks on the vertical scrollbar.<BR><BR>The marks, for instance, show bookmarks."));
   toggleAction->setCheckedState(i18n("Hide Scroll&bar Marks"));
 
   a = toggleAction = m_toggleWWMarker = new KToggleAction(
         i18n("Show Static &Word Wrap Marker"), 0,
-        this, TQT_SLOT( toggleWWMarker() ),
+        TQT_TQOBJECT(this), TQT_SLOT( toggleWWMarker() ),
         ac, "view_word_wrap_marker" );
   a->setWhatsThis( i18n(
         "Show/hide the Word Wrap Marker, a vertical line drawn at the word "
@@ -409,7 +409,7 @@ void KateView::setupActions()
 
   a= m_switchCmdLine = new KAction(
      i18n("Switch to Command Line"), Key_F7,
-     this, TQT_SLOT(switchToCmdLine()),
+     TQT_TQOBJECT(this), TQT_SLOT(switchToCmdLine()),
      ac, "switch_to_cmd_line" );
   a->setWhatsThis(i18n("Show/hide the command line on the bottom of the view."));
 
@@ -421,10 +421,10 @@ void KateView::setupActions()
   list.append("&Macintosh");
   m_setEndOfLine->setItems(list);
   m_setEndOfLine->setCurrentItem (m_doc->config()->eol());
-  connect(m_setEndOfLine, TQT_SIGNAL(activated(int)), this, TQT_SLOT(setEol(int)));
+  connect(m_setEndOfLine, TQT_SIGNAL(activated(int)), TQT_TQOBJECT(this), TQT_SLOT(setEol(int)));
 
   // encoding menu
-  new KateViewEncodingAction (m_doc, this, i18n("E&ncoding"), ac, "set_encoding");
+  new KateViewEncodingAction (m_doc, this, i18n("E&ncoding"), TQT_TQOBJECT(ac), "set_encoding");
 
   m_search->createActions( ac );
   m_spell->createActions( ac );
@@ -432,144 +432,144 @@ void KateView::setupActions()
 
   slotSelectionChanged ();
 
-  connect (this, TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotSelectionChanged()));
+  connect (this, TQT_SIGNAL(selectionChanged()), TQT_TQOBJECT(this), TQT_SLOT(slotSelectionChanged()));
 }
 
 void KateView::setupEditActions()
 {
-  m_editActions = new KActionCollection( m_viewInternal, this, "edit_actions" );
+  m_editActions = new KActionCollection( m_viewInternal, TQT_TQOBJECT(this), "edit_actions" );
   KActionCollection* ac = m_editActions;
 
   new KAction(
     i18n("Move Word Left"),                         CTRL + Key_Left,
-    this,TQT_SLOT(wordLeft()),
+    TQT_TQOBJECT(this),TQT_SLOT(wordLeft()),
     ac, "word_left" );
   new KAction(
     i18n("Select Character Left"),          SHIFT +        Key_Left,
-    this,TQT_SLOT(shiftCursorLeft()),
+    TQT_TQOBJECT(this),TQT_SLOT(shiftCursorLeft()),
     ac, "select_char_left" );
   new KAction(
     i18n("Select Word Left"),               SHIFT + CTRL + Key_Left,
-    this, TQT_SLOT(shiftWordLeft()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftWordLeft()),
     ac, "select_word_left" );
 
   new KAction(
     i18n("Move Word Right"),                        CTRL + Key_Right,
-    this, TQT_SLOT(wordRight()),
+    TQT_TQOBJECT(this), TQT_SLOT(wordRight()),
     ac, "word_right" );
   new KAction(
     i18n("Select Character Right"),         SHIFT        + Key_Right,
-    this, TQT_SLOT(shiftCursorRight()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftCursorRight()),
     ac, "select_char_right" );
   new KAction(
     i18n("Select Word Right"),              SHIFT + CTRL + Key_Right,
-    this,TQT_SLOT(shiftWordRight()),
+    TQT_TQOBJECT(this),TQT_SLOT(shiftWordRight()),
     ac, "select_word_right" );
 
   new KAction(
     i18n("Move to Beginning of Line"),                      Key_Home,
-    this, TQT_SLOT(home()),
+    TQT_TQOBJECT(this), TQT_SLOT(home()),
     ac, "beginning_of_line" );
   new KAction(
     i18n("Move to Beginning of Document"),           KStdAccel::home(),
-    this, TQT_SLOT(top()),
+    TQT_TQOBJECT(this), TQT_SLOT(top()),
     ac, "beginning_of_document" );
   new KAction(
     i18n("Select to Beginning of Line"),     SHIFT +        Key_Home,
-    this, TQT_SLOT(shiftHome()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftHome()),
     ac, "select_beginning_of_line" );
   new KAction(
     i18n("Select to Beginning of Document"), SHIFT + CTRL + Key_Home,
-    this, TQT_SLOT(shiftTop()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftTop()),
     ac, "select_beginning_of_document" );
 
   new KAction(
     i18n("Move to End of Line"),                            Key_End,
-    this, TQT_SLOT(end()),
+    TQT_TQOBJECT(this), TQT_SLOT(end()),
     ac, "end_of_line" );
   new KAction(
     i18n("Move to End of Document"),                 KStdAccel::end(),
-    this, TQT_SLOT(bottom()),
+    TQT_TQOBJECT(this), TQT_SLOT(bottom()),
     ac, "end_of_document" );
   new KAction(
     i18n("Select to End of Line"),           SHIFT +        Key_End,
-    this, TQT_SLOT(shiftEnd()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftEnd()),
     ac, "select_end_of_line" );
   new KAction(
     i18n("Select to End of Document"),       SHIFT + CTRL + Key_End,
-    this, TQT_SLOT(shiftBottom()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftBottom()),
     ac, "select_end_of_document" );
 
   new KAction(
     i18n("Select to Previous Line"),                SHIFT + Key_Up,
-    this, TQT_SLOT(shiftUp()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftUp()),
     ac, "select_line_up" );
   new KAction(
     i18n("Scroll Line Up"),"",              CTRL +          Key_Up,
-    this, TQT_SLOT(scrollUp()),
+    TQT_TQOBJECT(this), TQT_SLOT(scrollUp()),
     ac, "scroll_line_up" );
 
-  new KAction(i18n("Move to Next Line"), Key_Down, this, TQT_SLOT(down()),
+  new KAction(i18n("Move to Next Line"), Key_Down, TQT_TQOBJECT(this), TQT_SLOT(down()),
 	      ac, "move_line_down");
 
-  new KAction(i18n("Move to Previous Line"), Key_Up, this, TQT_SLOT(up()),
+  new KAction(i18n("Move to Previous Line"), Key_Up, TQT_TQOBJECT(this), TQT_SLOT(up()),
 	      ac, "move_line_up");
 
-  new KAction(i18n("Move Character Right"), Key_Right, this,
+  new KAction(i18n("Move Character Right"), Key_Right, TQT_TQOBJECT(this),
 	      TQT_SLOT(cursorRight()), ac, "move_cursor_right");
 
-  new KAction(i18n("Move Character Left"), Key_Left, this, TQT_SLOT(cursorLeft()),
+  new KAction(i18n("Move Character Left"), Key_Left, TQT_TQOBJECT(this), TQT_SLOT(cursorLeft()),
 	      ac, "move_cusor_left");
 
   new KAction(
     i18n("Select to Next Line"),                    SHIFT + Key_Down,
-    this, TQT_SLOT(shiftDown()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftDown()),
     ac, "select_line_down" );
   new KAction(
     i18n("Scroll Line Down"),               CTRL +          Key_Down,
-    this, TQT_SLOT(scrollDown()),
+    TQT_TQOBJECT(this), TQT_SLOT(scrollDown()),
     ac, "scroll_line_down" );
 
   new KAction(
     i18n("Scroll Page Up"),                         KStdAccel::prior(),
-    this, TQT_SLOT(pageUp()),
+    TQT_TQOBJECT(this), TQT_SLOT(pageUp()),
     ac, "scroll_page_up" );
   new KAction(
     i18n("Select Page Up"),                         SHIFT + Key_PageUp,
-    this, TQT_SLOT(shiftPageUp()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftPageUp()),
     ac, "select_page_up" );
   new KAction(
     i18n("Move to Top of View"),             CTRL +         Key_PageUp,
-    this, TQT_SLOT(topOfView()),
+    TQT_TQOBJECT(this), TQT_SLOT(topOfView()),
     ac, "move_top_of_view" );
   new KAction(
     i18n("Select to Top of View"),             CTRL + SHIFT +  Key_PageUp,
-    this, TQT_SLOT(shiftTopOfView()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftTopOfView()),
     ac, "select_top_of_view" );
 
   new KAction(
     i18n("Scroll Page Down"),                          KStdAccel::next(),
-    this, TQT_SLOT(pageDown()),
+    TQT_TQOBJECT(this), TQT_SLOT(pageDown()),
     ac, "scroll_page_down" );
   new KAction(
     i18n("Select Page Down"),                       SHIFT + Key_PageDown,
-    this, TQT_SLOT(shiftPageDown()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftPageDown()),
     ac, "select_page_down" );
   new KAction(
     i18n("Move to Bottom of View"),          CTRL +         Key_PageDown,
-    this, TQT_SLOT(bottomOfView()),
+    TQT_TQOBJECT(this), TQT_SLOT(bottomOfView()),
     ac, "move_bottom_of_view" );
   new KAction(
     i18n("Select to Bottom of View"),         CTRL + SHIFT + Key_PageDown,
-    this, TQT_SLOT(shiftBottomOfView()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftBottomOfView()),
     ac, "select_bottom_of_view" );
   new KAction(
     i18n("Move to Matching Bracket"),               CTRL + Key_6,
-    this, TQT_SLOT(toMatchingBracket()),
+    TQT_TQOBJECT(this), TQT_SLOT(toMatchingBracket()),
     ac, "to_matching_bracket" );
   new KAction(
     i18n("Select to Matching Bracket"),      SHIFT + CTRL + Key_6,
-    this, TQT_SLOT(shiftToMatchingBracket()),
+    TQT_TQOBJECT(this), TQT_SLOT(shiftToMatchingBracket()),
     ac, "select_matching_bracket" );
 
   // anders: shortcuts doing any changes should not be created in browserextension
@@ -577,30 +577,30 @@ void KateView::setupEditActions()
   {
     new KAction(
       i18n("Transpose Characters"),           CTRL + Key_T,
-      this, TQT_SLOT(transpose()),
+      TQT_TQOBJECT(this), TQT_SLOT(transpose()),
       ac, "transpose_char" );
 
     new KAction(
       i18n("Delete Line"),                    CTRL + Key_K,
-      this, TQT_SLOT(killLine()),
+      TQT_TQOBJECT(this), TQT_SLOT(killLine()),
       ac, "delete_line" );
 
     new KAction(
       i18n("Delete Word Left"),               KStdAccel::deleteWordBack(),
-      this, TQT_SLOT(deleteWordLeft()),
+      TQT_TQOBJECT(this), TQT_SLOT(deleteWordLeft()),
       ac, "delete_word_left" );
 
     new KAction(
       i18n("Delete Word Right"),              KStdAccel::deleteWordForward(),
-      this, TQT_SLOT(deleteWordRight()),
+      TQT_TQOBJECT(this), TQT_SLOT(deleteWordRight()),
       ac, "delete_word_right" );
 
     new KAction(i18n("Delete Next Character"), Key_Delete,
-                this, TQT_SLOT(keyDelete()),
+                TQT_TQOBJECT(this), TQT_SLOT(keyDelete()),
                 ac, "delete_next_character");
 
     KAction *a = new KAction(i18n("Backspace"), Key_Backspace,
-                this, TQT_SLOT(backspace()),
+                TQT_TQOBJECT(this), TQT_SLOT(backspace()),
                 ac, "backspace");
     KShortcut cut = a->shortcut();
     cut.append( KKey( SHIFT + Key_Backspace ) );
@@ -608,9 +608,9 @@ void KateView::setupEditActions()
   }
 
   connect( this, TQT_SIGNAL(gotFocus(Kate::View*)),
-           this, TQT_SLOT(slotGotFocus()) );
+           TQT_TQOBJECT(this), TQT_SLOT(slotGotFocus()) );
   connect( this, TQT_SIGNAL(lostFocus(Kate::View*)),
-           this, TQT_SLOT(slotLostFocus()) );
+           TQT_TQOBJECT(this), TQT_SLOT(slotLostFocus()) );
 
   m_editActions->readShortcutSettings( "Katepart Shortcuts" );
 
@@ -628,14 +628,14 @@ void KateView::setupCodeFolding()
   new KAction( i18n("Collapse Toplevel"), CTRL+SHIFT+Key_Minus,
        m_doc->foldingTree(),TQT_SLOT(collapseToplevelNodes()),ac,"folding_toplevel");
   new KAction( i18n("Expand Toplevel"), CTRL+SHIFT+Key_Plus,
-       this,TQT_SLOT(slotExpandToplevel()),ac,"folding_expandtoplevel");
+       TQT_TQOBJECT(this),TQT_SLOT(slotExpandToplevel()),ac,"folding_expandtoplevel");
   new KAction( i18n("Collapse One Local Level"), CTRL+Key_Minus,
-       this,TQT_SLOT(slotCollapseLocal()),ac,"folding_collapselocal");
+       TQT_TQOBJECT(this),TQT_SLOT(slotCollapseLocal()),ac,"folding_collapselocal");
   new KAction( i18n("Expand One Local Level"), CTRL+Key_Plus,
-       this,TQT_SLOT(slotExpandLocal()),ac,"folding_expandlocal");
+       TQT_TQOBJECT(this),TQT_SLOT(slotExpandLocal()),ac,"folding_expandlocal");
 
 #ifdef DEBUGACCELS
-  KAccel* debugAccels = new KAccel(this,this);
+  KAccel* debugAccels = new KAccel(this,TQT_TQOBJECT(this));
   debugAccels->insert("KATE_DUMP_REGION_TREE",i18n("Show the code folding region tree"),"","Ctrl+Shift+Alt+D",m_doc,TQT_SLOT(dumpRegionTree()));
   debugAccels->insert("KATE_TEMPLATE_TEST",i18n("Basic template code test"),"","Ctrl+Shift+Alt+T",m_doc,TQT_SLOT(testTemplateCode()));
   debugAccels->setEnabled(true);
@@ -665,15 +665,15 @@ void KateView::setupCodeCompletion()
 {
   m_codeCompletion = new KateCodeCompletion(this);
   connect( m_codeCompletion, TQT_SIGNAL(completionAborted()),
-           this,             TQT_SIGNAL(completionAborted()));
+           TQT_TQOBJECT(this),             TQT_SIGNAL(completionAborted()));
   connect( m_codeCompletion, TQT_SIGNAL(completionDone()),
-           this,             TQT_SIGNAL(completionDone()));
+           TQT_TQOBJECT(this),             TQT_SIGNAL(completionDone()));
   connect( m_codeCompletion, TQT_SIGNAL(argHintHidden()),
-           this,             TQT_SIGNAL(argHintHidden()));
+           TQT_TQOBJECT(this),             TQT_SIGNAL(argHintHidden()));
   connect( m_codeCompletion, TQT_SIGNAL(completionDone(KTextEditor::CompletionEntry)),
-           this,             TQT_SIGNAL(completionDone(KTextEditor::CompletionEntry)));
+           TQT_TQOBJECT(this),             TQT_SIGNAL(completionDone(KTextEditor::CompletionEntry)));
   connect( m_codeCompletion, TQT_SIGNAL(filterInsertString(KTextEditor::CompletionEntry*,TQString*)),
-           this,             TQT_SIGNAL(filterInsertString(KTextEditor::CompletionEntry*,TQString*)));
+           TQT_TQOBJECT(this),             TQT_SIGNAL(filterInsertString(KTextEditor::CompletionEntry*,TQString*)));
 }
 
 void KateView::slotGotFocus()
@@ -1613,7 +1613,7 @@ void KateView::copy() const
   if (!hasSelection())
     return;
 
-  TQApplication::clipboard()->setText(selection ());
+  TQApplication::tqclipboard()->setText(selection ());
 }
 
 void KateView::copyHTML()
@@ -1629,7 +1629,7 @@ void KateView::copyHTML()
   drag->addDragObject( htmltextdrag);
   drag->addDragObject( new TQTextDrag( selection()));
 
-  TQApplication::clipboard()->setData(drag);
+  TQApplication::tqclipboard()->setData(drag);
 }
 
 TQString KateView::selectionAsHtml()
@@ -1748,7 +1748,7 @@ void KateView::lineAsHTML (KateTextLine::Ptr line, uint startCol, uint length, T
 
       charAttributes = m_renderer->attribute(line->attribute(curPos));
 
-      if ( ! stylecache.contains( line->attribute(curPos) ) )
+      if ( ! stylecache.tqcontains( line->attribute(curPos) ) )
       {
         TQString textdecoration;
         TQString style;

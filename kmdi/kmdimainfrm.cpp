@@ -184,7 +184,7 @@ KMdiMainFrm::KMdiMainFrm( TQWidget* tqparentWidget, const char* name, KMdi::MdiM
 	m_pToolViews = new TQMap<TQWidget*, KMdiToolViewAccessor*>;
 
 	// This seems to be needed (re-check it after Qt2.0 comed out)
-	setFocusPolicy( ClickFocus );
+	setFocusPolicy( TQ_ClickFocus );
 
 	// create the central widget
 	createMdiManager();
@@ -218,7 +218,7 @@ KMdiMainFrm::KMdiMainFrm( TQWidget* tqparentWidget, const char* name, KMdi::MdiM
 	m_pPlacingMenu = new TQPopupMenu( this, "placing_menu" );
 
 	d->closeWindowAction = new KAction(i18n("&Close"), KStdAccel::close(),
-		this, TQT_SLOT(closeActiveView()), actionCollection(), "window_close");
+	                                   TQT_TQOBJECT(this), TQT_SLOT(closeActiveView()), actionCollection(), "window_close");
 
 	// the MDI view taskbar
 	createTaskBar();
@@ -553,7 +553,7 @@ KMdiToolViewAccessor *KMdiMainFrm::createToolWindow()
 
 void KMdiMainFrm::deleteToolWindow( TQWidget* pWnd )
 {
-	if ( m_pToolViews->contains( pWnd ) )
+	if ( m_pToolViews->tqcontains( pWnd ) )
 		deleteToolWindow( ( *m_pToolViews ) [ pWnd ] );
 }
 
@@ -590,7 +590,7 @@ KMdiToolViewAccessor *KMdiMainFrm::addToolWindow( TQWidget* pWnd, KDockWidget::D
 	if ( pos == KDockWidget::DockNone )
 	{
 		mtva->d->widgetContainer->setEnableDocking( KDockWidget::DockNone );
-		mtva->d->widgetContainer->reparent( this, Qt::WType_TopLevel | Qt::WType_Dialog, r.topLeft(), true ); //pToolView->isVisible());
+		mtva->d->widgetContainer->reparent( this, (WFlags)(WType_TopLevel | WType_Dialog), r.topLeft(), true ); //pToolView->isVisible());
 	}
 	else //add and dock the toolview as a dockwidget view
 		mtva->place( pos, pTargetWnd, percent );
@@ -959,13 +959,13 @@ bool KMdiMainFrm::windowExists( KMdiChildView *pWnd, ExistsAs as )
 {
 	if ( ( as == ToolView ) || ( as == AnyView ) )
 	{
-		if ( m_pToolViews->contains( pWnd ) )
+		if ( m_pToolViews->tqcontains( pWnd ) )
 			return true;
 		if ( as == ToolView )
 			return false;
 	}
 	
-	if ( m_pDocumentViews->findRef( pWnd ) != -1  )
+	if ( m_pDocumentViews->tqfindRef( pWnd ) != -1  )
 		return true;
 
 	return false;
@@ -1211,9 +1211,9 @@ bool KMdiMainFrm::eventFilter( TQObject * /*obj*/, TQEvent *e )
 				 *   The WIN button in KDE is the meta button in Qt
 				 **/
 				if ( state != ( ( TQKeyEvent * ) e ) ->stateAfter() &&
-				        ( ( modFlags & KKey::CTRL ) > 0 ) == ( ( state & Qt::ControlButton ) > 0 ) &&
-				        ( ( modFlags & KKey::ALT ) > 0 ) == ( ( state & Qt::AltButton ) > 0 ) &&
-				        ( ( modFlags & KKey::WIN ) > 0 ) == ( ( state & Qt::MetaButton ) > 0 ) )
+				        ( ( modFlags & KKey::CTRL ) > 0 ) == ( ( state & TQt::ControlButton ) > 0 ) &&
+				        ( ( modFlags & KKey::ALT ) > 0 ) == ( ( state & TQt::AltButton ) > 0 ) &&
+				        ( ( modFlags & KKey::WIN ) > 0 ) == ( ( state & TQt::MetaButton ) > 0 ) )
 				{
 					activeWindow() ->updateTimeStamp();
 					setSwitching( false );
@@ -1291,7 +1291,7 @@ void KMdiMainFrm::findRootDockWidgets( TQPtrList<KDockWidget>* rootDockWidgetLis
 		KDockWidget* dockWindow = 0L; /* pDockW */
 		KDockWidget* rootDockWindow = 0L; /* pRootDockWindow */
 		KDockWidget* undockCandidate = 0L; /* pUndockCandidate */
-		TQWidget* pW = static_cast<TQWidget*>( ( *it ) );
+		TQWidget* pW = TQT_TQWIDGET( ( *it ) );
 		
 		// find the oldest ancestor of the current dockwidget that can be undocked
 		while ( !pW->isTopLevel() )

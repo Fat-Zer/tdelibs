@@ -115,7 +115,7 @@ void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
         // we have an alt and the user meant it (its not a text we invented)
         if ( element() && !alt.isEmpty() && !element()->getAttribute( ATTR_ALT ).isNull()) {
             const TQFontMetrics &fm = style()->fontMetrics();
-            TQRect br = fm.boundingRect (  0, 0, 1024, 256, Qt::AlignAuto|Qt::WordBreak, alt.string() );
+            TQRect br = fm.boundingRect (  0, 0, 1024, 256, TQt::AlignAuto|TQt::WordBreak, alt.string() );
             if ( br.width() > iw )
                 iw = br.width();
             if ( br.height() > ih )
@@ -266,7 +266,7 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
             if ( !berrorPic ) {
                 //qDebug("qDrawShadePanel %d/%d/%d/%d", _tx + leftBorder, _ty + topBorder, cWidth, cHeight);
                 qDrawShadePanel( paintInfo.p, _tx + leftBorder + leftPad, _ty + topBorder + topPad, cWidth, cHeight,
-                                 KApplication::palette().inactive(), true, 1 );
+                                 KApplication::tqpalette().inactive(), true, 1 );
             }
             TQPixmap const* pix = i ? &i->pixmap() : 0;
             if(berrorPic && pix && (cWidth >= pix->width()+4) && (cHeight >= pix->height()+4) )
@@ -283,7 +283,7 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
                 int ay = _ty + topBorder + topPad + 2;
                 const TQFontMetrics &fm = style()->fontMetrics();
                 if (cWidth>5 && cHeight>=fm.height())
-                    paintInfo.p->drawText(ax, ay+1, cWidth - 4, cHeight - 4, Qt::WordBreak, text );
+                    paintInfo.p->drawText(ax, ay+1, cWidth - 4, cHeight - 4, TQt::WordBreak, text );
             }
         }
     }

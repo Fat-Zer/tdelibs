@@ -281,12 +281,12 @@ khtml::Length* DOMStringImpl::toCoordsArray(int& len) const
     TQString str(s, l);
     for(unsigned int i=0; i < l; i++) {
         TQChar cc = s[i];
-        if (cc > '9' || (cc < '0' && cc != '-' && cc != '*' && cc != '.'))
+        if (cc > TQChar('9') || (cc < TQChar('0') && cc != '-' && cc != '*' && cc != '.'))
             str[i] = ' ';
     }
     str = str.simplifyWhiteSpace();
 
-    len = str.contains(' ') + 1;
+    len = str.tqcontains(' ') + 1;
     khtml::Length* r = new khtml::Length[len];
 
     int i = 0;
@@ -307,7 +307,7 @@ khtml::Length* DOMStringImpl::toLengthArray(int& len) const
     TQString str(s, l);
     str = str.simplifyWhiteSpace();
 
-    len = str.contains(',') + 1;
+    len = str.tqcontains(',') + 1;
 
     // If we have no commas, we have no array.
     if( len == 1 )

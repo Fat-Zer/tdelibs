@@ -209,11 +209,11 @@ void KMFactory::loadFactory(const TQString& syst)
 {
 	if (!m_factory)
 	{
-		QString	sys(syst);
+		TQString	sys(syst);
 		if (sys.isEmpty())
 			// load default configured print plugin
 			sys = printSystem();
-		QString	libname = TQString::tqfromLatin1("kdeprint_%1").arg(sys);
+		TQString	libname = TQString::tqfromLatin1("kdeprint_%1").arg(sys);
 		m_factory = KLibLoader::self()->factory(TQFile::encodeName(libname));
                 if (!m_factory)
                 {
@@ -240,7 +240,7 @@ TQString KMFactory::printSystem()
 {
 	KConfig	*conf = printConfig();
 	conf->setGroup("General");
-	QString	sys = conf->readEntry("PrintSystem");
+	TQString	sys = conf->readEntry("PrintSystem");
 	if (sys.isEmpty())
 	{
 		// perform auto-detection (will at least return "lpdunix")
@@ -295,7 +295,7 @@ void KMFactory::reload(const TQString& syst, bool saveSyst)
 
 TQValueList<KMFactory::PluginInfo> KMFactory::pluginList()
 {
-	QDir	d(locate("data", "kdeprint/plugins/"), "*.print", TQDir::Name, TQDir::Files);
+	TQDir	d(locate("data", "kdeprint/plugins/"), "*.print", TQDir::Name, TQDir::Files);
 	TQValueList<PluginInfo>	list;
 	for (uint i=0; i<d.count(); i++)
 	{
@@ -309,7 +309,7 @@ TQValueList<KMFactory::PluginInfo> KMFactory::pluginList()
 
 KMFactory::PluginInfo KMFactory::pluginInfo(const TQString& name)
 {
-	QString	path(name);
+	TQString	path(name);
 	if (path[0] != '/')
 		path = locate("data", TQString::tqfromLatin1("kdeprint/plugins/%1.print").arg(name));
 	KSimpleConfig	conf(path);
@@ -333,7 +333,7 @@ KMFactory::PluginInfo KMFactory::pluginInfo(const TQString& name)
 void KMFactory::registerObject(KPReloadObject *obj, bool priority)
 {
 	// check if object already registered, then add it
-	if (m_objects.findRef(obj) == -1)
+	if (m_objects.tqfindRef(obj) == -1)
 	{
 		if (priority)
 			m_objects.prepend(obj);
@@ -376,7 +376,7 @@ void KMFactory::slot_pluginChanged(pid_t pid)
 		UNLOAD_OBJECT(m_printconfig);
 		// Then reload everything and notified registered objects.
 		// Do NOT re-save the new print system.
-		QString	syst = printSystem();
+		TQString	syst = printSystem();
 		reload(syst, false);
 	}
 }
@@ -412,7 +412,7 @@ void KMFactory::saveConfig()
 	// need to reload the config file.
 }
 
-QPair<TQString,TQString> KMFactory::requestPassword( int& seqNbr, const TQString& user, const TQString& host, int port )
+TQPair<TQString,TQString> KMFactory::requestPassword( int& seqNbr, const TQString& user, const TQString& host, int port )
 {
 	DCOPRef kdeprintd( "kded", "kdeprintd" );
 	/**
@@ -431,11 +431,11 @@ QPair<TQString,TQString> KMFactory::requestPassword( int& seqNbr, const TQString
 			if ( l.count() == 3 )
 			{
 				seqNbr = l[ 2 ].toInt();
-				return QPair<TQString,TQString>( l[ 0 ], l[ 1 ] );
+				return TQPair<TQString,TQString>( l[ 0 ], l[ 1 ] );
 			}
 		}
 	}
-	return QPair<TQString,TQString>( TQString::null, TQString::null );
+	return TQPair<TQString,TQString>( TQString::null, TQString::null );
 }
 
 void KMFactory::initPassword( const TQString& user, const TQString& password, const TQString& host, int port )

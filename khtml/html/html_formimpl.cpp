@@ -122,8 +122,8 @@ static TQCString encodeCString(const TQCString& e)
     // http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1
     // safe characters like NS handles them for compatibility
     static const char *safe = "-._*";
-    TQCString encoded(( e.length()+e.contains( '\n' ) )*3
-                     +e.contains('\r') * 3 + 1);
+    TQCString encoded(( e.length()+e.tqcontains( '\n' ) )*3
+                     +e.tqcontains('\r') * 3 + 1);
     int enclen = 0;
     bool crmissing = false;
     unsigned char oldc;
@@ -457,7 +457,7 @@ void HTMLFormElementImpl::walletOpened(KWallet::Wallet *w) {
             if ((current->inputType() == HTMLInputElementImpl::PASSWORD ||
                     current->inputType() == HTMLInputElementImpl::TEXT) &&
                     !current->readOnly() &&
-                    map.contains(current->name().string())) {
+                    map.tqcontains(current->name().string())) {
                 getDocument()->setFocusNode(current);
                 current->setValue(map[current->name().string()]);
             }
@@ -957,10 +957,10 @@ bool HTMLGenericFormElementImpl::isFocusable() const
 	return false;
 
     TQWidget* widget = static_cast<RenderWidget*>(m_render)->widget();
-    return widget && widget->focusPolicy() >= TQWidget::TabFocus;
+    return widget && widget->focusPolicy() >= TQ_TabFocus;
 }
 
-class FocusHandleWidget : public QWidget
+class FocusHandleWidget : public TQWidget
 {
 public:
     void focusNextPrev(bool n) {
@@ -1018,13 +1018,19 @@ void HTMLGenericFormElementImpl::defaultEventHandler(EventImpl *evt)
 	    // handle tabbing out, either from a single or repeated key event.
 	    if ( evt->id() == EventImpl::KEYPRESS_EVENT && evt->isKeyRelatedEvent() ) {
 	        TQKeyEvent* const k = static_cast<KeyEventBaseImpl *>(evt)->qKeyEvent();
-	        if ( k && (k->key() == Qt::Key_Tab || k->key() == Qt::Key_BackTab) ) {
+	        if ( k && (k->key() == Qt::Key_Tab || k->key() == TQt::Key_BackTab) ) {
 		    TQWidget* const widget = static_cast<RenderWidget*>(m_render)->widget();
+#ifdef USE_QT4
+		    if (widget)
+                        static_cast<FocusHandleWidget *>(widget)
+			    ->focusNextPrev(k->key() == Qt::Key_Tab);
+#else // USE_QT4
 		    TQFocusEvent::setReason( k->key() == Qt::Key_Tab ? TQFocusEvent::Tab : TQFocusEvent::Backtab );
 		    if (widget)
                         static_cast<FocusHandleWidget *>(widget)
 			    ->focusNextPrev(k->key() == Qt::Key_Tab);
 		    TQFocusEvent::resetReason();
+#endif // USE_QT4
                     evt->setDefaultHandled();
 	        }
             }
@@ -1452,7 +1458,7 @@ void HTMLInputElementImpl::attach()
             TQString nvalue;
             unsigned int valueLength = value.length();
             for (unsigned int i = 0; i < valueLength; ++i)
-                if (value[i] >= ' ')
+                if (value[i] >= TQChar(' '))
                     nvalue += value[i];
             m_value = nvalue;
         }
@@ -2745,7 +2751,7 @@ void HTMLTextAreaElementImpl::attach()
 static TQString expandLF(const TQString& s)
 {
     // LF -> CRLF
-    unsigned crs = s.contains( '\n' );
+    unsigned crs = s.tqcontains( '\n' );
     if (crs == 0)
 	return s;
     unsigned len = s.length();

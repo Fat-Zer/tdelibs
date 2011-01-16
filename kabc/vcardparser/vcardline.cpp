@@ -124,7 +124,7 @@ TQStringList VCardLine::parameterList() const
 void VCardLine::addParameter( const TQString& param, const TQString& value )
 {
   TQStringList &list = mParamMap[ param ];
-  if ( list.findIndex( value ) == -1 ) // not included yet
+  if ( list.tqfindIndex( value ) == -1 ) // not included yet
     list.append( value );
 }
 

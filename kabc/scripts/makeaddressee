@@ -55,7 +55,7 @@ if (!open( H_OUT, ">../addressee.h" ) ) {
         print H_OUT "    /**\n";
         print H_OUT "      Return translated label for $entryNames[$i] field.\n";
         print H_OUT "     */\n";
-        print H_OUT "    static QString $entryNames[$i]Label();\n\n";
+        print H_OUT "    static TQString $entryNames[$i]Label();\n\n";
       }
     } else {
       print H_OUT;
@@ -100,7 +100,7 @@ if (!open( CPP_OUT, ">../addressee.cpp" ) ) {
           $labelwords[$j] = ucfirst $labelwords[$j];
         }
         $label = join ' ', @labelwords;
-        print CPP_OUT "QString Addressee::$entryNames[$i]Label()\n{\n";
+        print CPP_OUT "TQString Addressee::$entryNames[$i]Label()\n{\n";
         if ( $entryComments[$i] ) {
           print CPP_OUT "  return i18n(\"$entryComments[$i]\",\"$label\");\n";
         } else {
@@ -112,7 +112,7 @@ if (!open( CPP_OUT, ">../addressee.cpp" ) ) {
       for( $i=0; $i<@entryNames; ++$i ) {
         if ( $entryCtrl[$i] =~ /E/ ) {
           if ( $entryNames[$i] !~ "revision" ) {
-            if ( $entryTypes[$i] =~ "QString" ) {
+            if ( $entryTypes[$i] =~ "TQString" ) {
               print CPP_OUT "  if ( mData->$entryNames[$i] != a.mData->$entryNames[$i] &&\n";
               print CPP_OUT "     !( mData->$entryNames[$i].isEmpty() && a.mData->$entryNames[$i].isEmpty() ) ) {\n";
               print CPP_OUT "    kdDebug(5700) << \"$entryNames[$i] differs\" << endl;\n";
@@ -184,7 +184,7 @@ if (!open( CPP_OUT, ">../field.cpp" ) ) {
       for( $i=0; $i<@entryNames; ++$i ) {
         if ( $entryCtrl[$i] !~ /A/ ) { next; }
         if ( $entryCtrl[$i] !~ /F/ ) { next; }
-        if ( $entryTypes[$i] ne "QString" ) { next; }
+        if ( $entryTypes[$i] ne "TQString" ) { next; }
         print CPP_OUT "    case FieldImpl::" . ucfirst($entryNames[$i]) . ":\n";
         print CPP_OUT "      return a.$entryNames[$i]();\n";
       }
@@ -192,7 +192,7 @@ if (!open( CPP_OUT, ">../field.cpp" ) ) {
       for( $i=0; $i<@entryNames; ++$i ) {
         if ( $entryCtrl[$i] !~ /A/ ) { next; }
         if ( $entryCtrl[$i] !~ /F/ ) { next; }
-        if ( $entryTypes[$i] ne "QString" ) { next; }
+        if ( $entryTypes[$i] ne "TQString" ) { next; }
         print CPP_OUT "    case FieldImpl::" . ucfirst($entryNames[$i]) . ":\n";
         print CPP_OUT "      a.set" . ucfirst($entryNames[$i]) . "( value );\n";
         print CPP_OUT "      return true;\n";

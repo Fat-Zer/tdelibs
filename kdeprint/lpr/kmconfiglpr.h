@@ -33,7 +33,7 @@ public:
 	void saveConfig(KConfig*);
 
 private:
-	QComboBox	*m_mode;
+	TQComboBox	*m_mode;
 };
 
 #endif

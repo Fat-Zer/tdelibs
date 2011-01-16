@@ -410,8 +410,8 @@ bool KateSuperRange::owns(const KateTextCursor& cursor) const
 {
   if (!includes(cursor)) return false;
 
-  if (children())
-    for (TQObjectListIt it(*children()); *it; ++it)
+  if (!childrenListObject().isEmpty())
+    for (TQObjectListIt it(childrenListObject()); *it; ++it)
       if ((*it)->inherits("KateSuperRange"))
         if (static_cast<KateSuperRange*>(*it)->owns(cursor))
           return false;
@@ -636,7 +636,7 @@ bool KateSuperRangeList::rangesInclude(const KateTextCursor& cursor)
 void KateSuperRangeList::slotEliminated()
 {
   if (sender()) {
-    KateSuperRange* range = static_cast<KateSuperRange*>(const_cast<TQObject*>(sender()));
+    KateSuperRange* range = static_cast<KateSuperRange*>(const_cast<TQObject*>(TQT_TQOBJECT_CONST(sender())));
     emit rangeEliminated(range);
 
     if (m_trackingBoundaries) {
@@ -662,7 +662,7 @@ void KateSuperRangeList::slotDeleted(TQObject* range)
       m_columnBoundaries.removeRef(r->m_end);
   }
 
-  int index = findRef(r);
+  int index = tqfindRef(r);
   if (index != -1)
     take(index);
   //else kdDebug(13020)<<"Range not found in list"<<endl;

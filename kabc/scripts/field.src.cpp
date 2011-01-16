@@ -344,7 +344,7 @@ bool Field::setValue( KABC::Addressee &a, const TQString &value )
         return true;
       }
     case FieldImpl::Birthday:
-      a.setBirthday( TQDate::fromString( value, Qt::ISODate ) );
+      a.setBirthday( TQT_TQDATE_OBJECT(TQDate::fromString( value, Qt::ISODate )) );
       return true;
     case FieldImpl::CustomField:
       a.insertCustom( mImpl->app(), mImpl->key(), value );
@@ -360,7 +360,7 @@ TQString Field::sortKey( const KABC::Addressee &a )
     --CASEVALUE--
     case FieldImpl::Birthday:
       if ( a.birthday().isValid() ) {
-        TQDate date = a.birthday().date();
+        TQDate date = TQT_TQDATE_OBJECT(a.birthday().date());
         TQString key;
         key.sprintf( "%02d-%02d", date.month(), date.day() );
         return key;

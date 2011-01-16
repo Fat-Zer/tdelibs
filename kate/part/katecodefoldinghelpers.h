@@ -79,7 +79,7 @@ class KateCodeFoldingNode
 
     inline KateCodeFoldingNode *child (uint index) const { return m_children[index]; }
 
-    inline int findChild (KateCodeFoldingNode *node, uint start = 0) const { return m_children.find (node, start); }
+    inline int findChild (KateCodeFoldingNode *node, uint start = 0) const { return m_children.tqfind (node, start); }
 
     inline void appendChild (KateCodeFoldingNode *node) { m_children.resize(m_children.size()+1); m_children[m_children.size()-1] = node; }
 

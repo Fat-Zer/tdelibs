@@ -33,10 +33,10 @@
 static TQString execute(const TQString& cmd)
 {
 	KPipeProcess	proc;
-	QString		output;
+	TQString		output;
 	if (proc.open(cmd))
 	{
-		QTextStream	t(&proc);
+		TQTextStream	t(&proc);
 		while (!t.atEnd())
 			output.append(t.readLine()).append("\n");
 		proc.close();
@@ -49,7 +49,7 @@ LpcHelper::LpcHelper(TQObject *parent, const char *name)
 {
 	// look for the "lpc" executable. Use the PATH variable and
 	// add some specific dirs.
-	QString	PATH = getenv("PATH");
+	TQString	PATH = getenv("PATH");
 	PATH.append(":/usr/sbin:/usr/local/sbin:/sbin:/opt/sbin:/opt/local/sbin");
 	m_exepath = KStandardDirs::findExe("lpc", PATH);
 	m_checkpcpath = KStandardDirs::findExe("checkpc", PATH);
@@ -62,7 +62,7 @@ LpcHelper::~LpcHelper()
 
 KMPrinter::PrinterState LpcHelper::state(const TQString& prname) const
 {
-	if (m_state.contains(prname))
+	if (m_state.tqcontains(prname))
 		return m_state[prname];
 	return KMPrinter::Unknown;
 }
@@ -74,7 +74,7 @@ KMPrinter::PrinterState LpcHelper::state(KMPrinter *prt) const
 
 void LpcHelper::parseStatusLPR(TQTextStream &t)
 {
-	QString		printer, line;
+	TQString		printer, line;
 	int		p(-1);
 
 	while (!t.atEnd())
@@ -109,9 +109,9 @@ void LpcHelper::parseStatusLPR(TQTextStream &t)
 
 void LpcHelper::parseStatusLPRng(TQTextStream& t)
 {
-	QStringList	l;
+	TQStringList	l;
 	int	p(-1);
-	QString	printer;
+	TQString	printer;
 
 	while (!t.atEnd())
 		if (t.readLine().stripWhiteSpace().startsWith("Printer"))
@@ -146,7 +146,7 @@ void LpcHelper::updateStates()
 	m_state.clear();
 	if (!m_exepath.isEmpty() && proc.open(m_exepath + " status all"))
 	{
-		QTextStream	t(&proc);
+		TQTextStream	t(&proc);
 
 		switch (LprSettings::self()->mode())
 		{
@@ -211,7 +211,7 @@ static TQString lprngAnswer(const TQString& result, const TQString& printer)
 	{
 		q = result.tqfind(':', p)+2;
 		p = result.tqfind('\n', q);
-		QString	answer = result.mid(q, p-q).stripWhiteSpace();
+		TQString	answer = result.mid(q, p-q).stripWhiteSpace();
 		return answer;
 	}
 	return TQString::null;
@@ -219,7 +219,7 @@ static TQString lprngAnswer(const TQString& result, const TQString& printer)
 
 int LpcHelper::parseStateChangeLPRng(const TQString& result, const TQString& printer)
 {
-	QString	answer = lprngAnswer(result, printer);
+	TQString	answer = lprngAnswer(result, printer);
 	if (answer == "no")
 		return -1;
 	else if (answer == "disabled" || answer == "enabled" || answer == "started" || answer == "stopped")
@@ -235,7 +235,7 @@ bool LpcHelper::changeState(const TQString& printer, const TQString& op, TQStrin
 		msg = i18n("The executable %1 couldn't be found in your PATH.").arg("lpc");
 		return false;
 	}
-	QString	result = execute(m_exepath + " " + op + " " + KProcess::quote(printer));
+	TQString	result = execute(m_exepath + " " + op + " " + KProcess::quote(printer));
 	int	status;
 
 	switch (LprSettings::self()->mode())
@@ -273,7 +273,7 @@ bool LpcHelper::removeJob(KMJob *job, TQString& msg)
 		msg = i18n("The executable %1 couldn't be found in your PATH.").arg("lprm");
 		return false;
 	}
-	QString	result = execute(m_lprmpath + " -P " + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
+	TQString	result = execute(m_lprmpath + " -P " + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
 	if (result.tqfind("dequeued") != -1)
 		return true;
 	else if (result.tqfind("Permission denied") != -1 || result.tqfind("no permissions") != -1)
@@ -291,8 +291,8 @@ bool LpcHelper::changeJobState(KMJob *job, int state, TQString& msg)
 		msg = i18n("The executable %1 couldn't be found in your PATH.").arg("lpc");
 		return false;
 	}
-	QString	result = execute(m_exepath + (state == KMJob::Held ? " hold " : " release ") + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
-	QString	answer = lprngAnswer(result, job->printer());
+	TQString	result = execute(m_exepath + (state == KMJob::Held ? " hold " : " release ") + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
+	TQString	answer = lprngAnswer(result, job->printer());
 	if (answer == "no")
 	{
 		msg = i18n("Permission denied.");
@@ -304,7 +304,7 @@ bool LpcHelper::changeJobState(KMJob *job, int state, TQString& msg)
 
 bool LpcHelper::restart(TQString& msg)
 {
-	QString	s;
+	TQString	s;
 	if (m_exepath.isEmpty())
 		s = "lpc";
 	else if (m_checkpcpath.isEmpty())

@@ -45,7 +45,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 {
 	setCaption(i18n("Add Special Printer"));
 
-	QWidget	*dummy = new TQWidget(this);
+	TQWidget	*dummy = new TQWidget(this);
 	setMainWidget(dummy);
 
 	// widget creation
@@ -53,9 +53,9 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	connect(m_name, TQT_SIGNAL(textChanged ( const TQString & )),this,TQT_SLOT(slotTextChanged(const TQString & )));
 	m_description = new TQLineEdit(dummy);
 	m_location = new TQLineEdit(dummy);
-	QLabel	*m_namelabel = new TQLabel(i18n("&Name:"), dummy);
-	QLabel	*m_desclabel = new TQLabel(i18n("&Description:"), dummy);
-	QLabel	*m_loclabel = new TQLabel(i18n("&Location:"), dummy);
+	TQLabel	*m_namelabel = new TQLabel(i18n("&Name:"), dummy);
+	TQLabel	*m_desclabel = new TQLabel(i18n("&Description:"), dummy);
+	TQLabel	*m_loclabel = new TQLabel(i18n("&Location:"), dummy);
 	m_namelabel->setBuddy(m_name);
 	m_desclabel->setBuddy(m_description);
 	m_loclabel->setBuddy(m_location);
@@ -63,7 +63,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	KSeparator* sep = new KSeparator( KSeparator::HLine, dummy);
 
 	sep->setFixedHeight(10);
-	QGroupBox	*m_gb = new TQGroupBox(1, Qt::Horizontal, i18n("Command &Settings"), dummy);
+	TQGroupBox	*m_gb = new TQGroupBox(1, Qt::Horizontal, i18n("Command &Settings"), dummy);
 	m_command = new KXmlCommandSelector(true, m_gb, "CommandSelector", this);
 
 	TQGroupBox *m_outfile_gb = new TQGroupBox( 0, Qt::Horizontal, i18n( "Outp&ut File" ), dummy );
@@ -74,18 +74,18 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	KMimeType::List	list = KMimeType::allMimeTypes();
 	for (TQValueList<KMimeType::Ptr>::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
-		QString	mimetype = (*it)->name();
+		TQString	mimetype = (*it)->name();
 		m_mimelist << mimetype;
 	}
 	m_mimelist.sort();
 	m_mimetype->insertStringList(m_mimelist);
 
-	QLabel	*m_mimetypelabel = new TQLabel(i18n("&Format:"), m_outfile_gb);
+	TQLabel	*m_mimetypelabel = new TQLabel(i18n("&Format:"), m_outfile_gb);
 	m_mimetypelabel->setBuddy (m_mimetype);
 
 	m_extension = new TQLineEdit(m_outfile_gb);
 
-	QLabel	*m_extensionlabel = new TQLabel(i18n("Filename e&xtension:"), m_outfile_gb);
+	TQLabel	*m_extensionlabel = new TQLabel(i18n("Filename e&xtension:"), m_outfile_gb);
 	m_extensionlabel->setBuddy(m_extension);
 
 	m_icon = new KIconButton(dummy);
@@ -123,9 +123,9 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	TQWhatsThis::add(m_extension, extensionWhatsThis);
 
 	// layout creation
-	QVBoxLayout	*l0 = new TQVBoxLayout(dummy, 0, 10);
-	QGridLayout	*l1 = new TQGridLayout(0, 3, 3, 0, 5);
-	l0->addLayout(l1);
+	TQVBoxLayout	*l0 = new TQVBoxLayout(dummy, 0, 10);
+	TQGridLayout	*l1 = new TQGridLayout(0, 3, 3, 0, 5);
+	l0->addLayout(TQT_TQLAYOUT(l1));
 	l1->setColStretch(2,1);
 	l1->addColSpacing(0,60);
 	l1->addMultiCellWidget(m_icon, 0, 2, 0, 0, Qt::AlignCenter);
@@ -138,7 +138,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	l0->addWidget(sep);
 	l0->addWidget(m_gb);
 	l0->addWidget(m_outfile_gb);
-	QGridLayout	*l6 = new TQGridLayout(m_outfile_gb->layout(), 3, 2, 10);
+	TQGridLayout	*l6 = new TQGridLayout(m_outfile_gb->layout(), 3, 2, 10);
 	l6->addMultiCellWidget( m_usefile, 0, 0, 0, 1 );
 	l6->addWidget(m_mimetypelabel, 1, 0);
 	l6->addWidget(m_mimetype, 1, 1);
@@ -165,7 +165,7 @@ void KMSpecialPrinterDlg::slotOk()
 
 bool KMSpecialPrinterDlg::checkSettings()
 {
-	QString	msg;
+	TQString	msg;
 	if (m_name->text().isEmpty())
 		msg = i18n("You must provide a non-empty name.");
 	else
@@ -186,7 +186,7 @@ void KMSpecialPrinterDlg::setPrinter(KMPrinter *printer)
 	{
 		m_command->setCommand(printer->option("kde-special-command"));
 		m_usefile->setChecked(printer->option("kde-special-file") == "1");
-		int	index = m_mimelist.findIndex(printer->option("kde-special-mimetype"));
+		int	index = m_mimelist.tqfindIndex(printer->option("kde-special-mimetype"));
 		m_mimetype->setCurrentItem(index == -1 ? 0 : index);
 		m_extension->setText(printer->option("kde-special-extension"));
 		m_name->setText(printer->name());

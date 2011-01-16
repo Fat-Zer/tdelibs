@@ -68,7 +68,7 @@ void KPrinterPropertyDialog::addPage(KPrintDialogPage *page)
 bool KPrinterPropertyDialog::synchronize()
 {
 	if (m_current) m_current->getOptions(m_options,true);
-	QString	msg;
+	TQString	msg;
 	TQPtrListIterator<KPrintDialogPage>	it(m_pages);
 	for (;it.current();++it)
 	{

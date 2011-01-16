@@ -545,8 +545,8 @@ void KateRenderer::paintTextLine(TQPainter& paint, const KateLineRange* range, i
               // input method edit area
               const TQColorGroup& cg = m_view->tqcolorGroup();
               int h1, s1, v1, h2, s2, v2;
-              cg.color( TQColorGroup::Base ).hsv( &h1, &s1, &v1 );
-              cg.color( TQColorGroup::Background ).hsv( &h2, &s2, &v2 );
+              TQColor(cg.color( TQColorGroup::Base )).hsv( &h1, &s1, &v1 );
+              TQColor(cg.color( TQColorGroup::Background )).hsv( &h2, &s2, &v2 );
               fillColor.setHsv( h1, s1, ( v1 + v2 ) / 2 );
             }
             else if (!selectionPainted && (isSel || currentHL.itemSet(KateAttribute::BGColor)))

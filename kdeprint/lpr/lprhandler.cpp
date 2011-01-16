@@ -121,7 +121,7 @@ PrintcapEntry* LprHandler::createEntry(KMPrinter *prt)
 {
 	// this default handler only supports local parallel and remote lpd URIs
 	KURL	uri ( prt->device() );
-	QString	prot = uri.protocol();
+	TQString	prot = uri.protocol();
 	if (!prot.isEmpty() && prot != "parallel" && prot != "file" && prot != "lpd" && prot != "socket")
 	{
 		manager()->setErrorMsg(i18n("Unsupported backend: %1.").arg(prot));
@@ -132,7 +132,7 @@ PrintcapEntry* LprHandler::createEntry(KMPrinter *prt)
 	if (prot == "lpd")
 	{
 		entry->addField("rm", Field::String, uri.host());
-		QString	rp = uri.path();
+		TQString	rp = uri.path();
 		if (rp[0] == '/')
 			rp = rp.mid(1);
 		entry->addField("rp", Field::String, rp);
@@ -172,13 +172,13 @@ void LprHandler::reset()
 
 DrMain* LprHandler::loadToolDriver(const TQString& filename)
 {
-	QFile	f(filename);
+	TQFile	f(filename);
 	if (f.open(IO_ReadOnly))
 	{
 		DrMain	*driver = new DrMain;
 		TQValueStack<DrGroup*>	groups;
-		QTextStream	t(&f);
-		QStringList	l;
+		TQTextStream	t(&f);
+		TQStringList	l;
 		DrListOption	*lopt(0);
 		DrBase	*opt(0);
 
@@ -259,10 +259,10 @@ TQString LprHandler::driverDirInternal()
 
 TQString LprHandler::locateDir(const TQString& dirname, const TQString& paths)
 {
-	QStringList	pathlist = TQStringList::split(':', paths, false);
+	TQStringList	pathlist = TQStringList::split(':', paths, false);
 	for (TQStringList::ConstIterator it=pathlist.begin(); it!=pathlist.end(); ++it)
 	{
-		QString	testpath = *it + "/" + dirname;
+		TQString	testpath = *it + "/" + dirname;
 		if (::access(TQFile::encodeName(testpath), F_OK) == 0)
 			return testpath;
 	}

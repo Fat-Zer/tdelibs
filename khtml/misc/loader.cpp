@@ -264,7 +264,7 @@ void CachedCSSStyleSheet::data( TQBuffer &buffer, bool eof )
         m_charset = c->name();
     }
     TQString data = c->toUnicode( buffer.buffer().data(), m_size );
-    // workaround Qt bugs
+    // workaround TQt bugs
     m_sheet = static_cast<TQChar>(data[0]) == TQChar::byteOrderMark ? DOMString(data.mid( 1 ) ) : DOMString(data);
     m_loading = false;
 
@@ -380,7 +380,7 @@ void CachedScript::error( int /*err*/, const char* /*text*/ )
 namespace khtml
 {
 
-class ImageSource : public QDataSource
+class ImageSource : public TQDataSource
 {
 public:
     ImageSource(TQByteArray buf)
@@ -397,7 +397,7 @@ public:
 
     void sendTo(TQDataSink* sink, int n)
     {
-        sink->receive((const uchar*)&buffer.at(pos), n);
+        sink->receive((const uchar*)&buffer.tqat(pos), n);
 
         pos += n;
 
@@ -526,7 +526,7 @@ void CachedImage::deref( CachedObjectClient *c )
 
 const TQPixmap &CachedImage::tiled_pixmap(const TQColor& newc, int xWidth, int xHeight)
 {
-    static QRgb bgTransparent = tqRgba( 0, 0, 0, 0xFF );
+    static TQRgb bgTransparent = tqRgba( 0, 0, 0, 0xFF );
 
     TQSize s(pixmap_size());
     int w = xWidth;
@@ -564,7 +564,7 @@ const TQPixmap &CachedImage::tiled_pixmap(const TQColor& newc, int xWidth, int x
     bgSize = TQSize(xWidth, xHeight);
 
     //See whether we can - and should - pre-blend
-    if (isvalid && (r.hasAlphaChannel() || r.mask() )) {
+    if (isvalid && (r.hasAlphaChannel() || r.tqmask() )) {
         bg = new TQPixmap(xWidth, xHeight, r.depth());
         bg->fill(newc);
         bitBlt(bg, 0, 0, src);
@@ -618,7 +618,7 @@ const TQPixmap &CachedImage::scaled_pixmap( int xWidth, int xHeight )
 
 //     kdDebug() << "scaling " << r.width() << "," << r.height() << " to " << xWidth << "," << xHeight << endl;
 
-    TQImage image = r.convertToImage().smoothScale(xWidth, xHeight);
+    TQImage image = TQImage(r.convertToImage()).smoothScale(xWidth, xHeight);
 
     scaled = new TQPixmap(xWidth, xHeight, r.depth());
     scaled->convertFromImage(image);
@@ -671,7 +671,7 @@ TQSize CachedImage::pixmap_size() const
 TQRect CachedImage::valid_rect() const
 {
     if (m_wasBlocked) return Cache::blockedPixmap->rect();
-    return (m_hadError ? Cache::brokenPixmap->rect() : m ? m->getValidRect() : ( p ? p->rect() : TQRect()) );
+    return (m_hadError ? Cache::brokenPixmap->rect() : m ? TQRect(m->getValidRect()) : ( p ? TQRect(p->rect()) : TQRect()) );
 }
 
 
@@ -702,7 +702,7 @@ void CachedImage::movieStatus(int status)
     // netscape). We have a problem though where an image is present, and js code creates a new Image object,
     // which uses the same CachedImage, the one in the document is not supposed to be notified
 
-    // just another Qt 2.2.0 bug. we cannot call
+    // just another TQt 2.2.0 bug. we cannot call
     // TQMovie::frameImage if we're after TQMovie::EndOfMovie
     if(status == TQMovie::EndOfFrame)
     {
@@ -748,9 +748,9 @@ void CachedImage::movieStatus(int status)
             if (p && monochrome && p->depth() > 1)
             {
                 TQPixmap* pix = new TQPixmap;
-                pix->convertFromImage( p->convertToImage().convertDepth( 1 ), MonoOnly|AvoidDither );
-                if ( p->mask() )
-                    pix->setMask( *p->mask() );
+                pix->convertFromImage( TQImage(p->convertToImage()).convertDepth( 1 ), MonoOnly|AvoidDither );
+                if ( p->tqmask() )
+                    pix->setMask( *p->tqmask() );
                 delete p;
                 p = pix;
                 monochrome = false;
@@ -787,7 +787,7 @@ void CachedImage::setShowAnimations( KHTMLSettings::KAnimationAdvice showAnimati
         delete p;
         p = new TQPixmap(m->framePixmap());
         m->disconnectUpdate( this, TQT_SLOT( movieUpdated( const TQRect &) ));
-        m->disconnectStatus( this, TQT_SLOT( movieStatus( int ) ));
+        m->disconnectqStatus( this, TQT_SLOT( movieStatus( int ) ));
         m->disconnectResize( this, TQT_SLOT( movieResize( const TQSize& ) ) );
         TQTimer::singleShot(0, this, TQT_SLOT( deleteMovie()));
         imgSource = 0;
@@ -850,7 +850,7 @@ void CachedImage::data ( TQBuffer &_buffer, bool eof )
             imgSource = new ImageSource( _buffer.buffer());
             m = new TQMovie( imgSource, 8192 );
             m->connectUpdate( this, TQT_SLOT( movieUpdated( const TQRect &) ));
-            m->connectStatus( this, TQT_SLOT( movieStatus(int)));
+            m->connectqStatus( this, TQT_SLOT( movieStatus(int)));
             m->connectResize( this, TQT_SLOT( movieResize( const TQSize& ) ) );
         }
     }
@@ -993,7 +993,7 @@ bool DocLoader::needReload(CachedObject *existing, const TQString& fullURL)
     bool reload = false;
     if (m_cachePolicy == KIO::CC_Verify)
     {
-       if (!m_reloadedURLs.contains(fullURL))
+       if (!m_reloadedURLs.tqcontains(fullURL))
        {
           if (existing && existing->isExpired())
           {
@@ -1005,7 +1005,7 @@ bool DocLoader::needReload(CachedObject *existing, const TQString& fullURL)
     }
     else if ((m_cachePolicy == KIO::CC_Reload) || (m_cachePolicy == KIO::CC_Refresh))
     {
-       if (!m_reloadedURLs.contains(fullURL))
+       if (!m_reloadedURLs.tqcontains(fullURL))
        {
           if (existing)
           {
@@ -1427,7 +1427,7 @@ CachedObjectType* Cache::requestObject( DocLoader* dl, const KURL& kurl, const c
     KIO::CacheControl cachePolicy = dl ? dl->cachePolicy() : KIO::CC_Verify;
 
     TQString url = kurl.url();
-    CachedObject* o = cache->find(url);
+    CachedObject* o = cache->tqfind(url);
 
     if ( o && o->type() != CachedType ) {
         removeCacheEntry( o );
@@ -1464,7 +1464,7 @@ CachedObjectType* Cache::requestObject( DocLoader* dl, const KURL& kurl, const c
 
 void Cache::preloadStyleSheet( const TQString &url, const TQString &stylesheet_data)
 {
-    CachedObject *o = cache->find(url);
+    CachedObject *o = cache->tqfind(url);
     if(o)
         removeCacheEntry(o);
 
@@ -1474,7 +1474,7 @@ void Cache::preloadStyleSheet( const TQString &url, const TQString &stylesheet_d
 
 void Cache::preloadScript( const TQString &url, const TQString &script_data)
 {
-    CachedObject *o = cache->find(url);
+    CachedObject *o = cache->tqfind(url);
     if(o)
         removeCacheEntry(o);
 

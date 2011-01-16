@@ -42,8 +42,8 @@ protected slots:
 	void slotTypeChanged(int);
 
 private:
-	QComboBox	*type_;
-	QLineEdit	*from_, *to_;
+	TQComboBox	*type_;
+	TQLineEdit	*from_, *to_;
 };
 
 #endif

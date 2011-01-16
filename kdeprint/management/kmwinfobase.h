@@ -44,7 +44,7 @@ protected:
 private:
 	TQPtrList<TQLabel>		m_labels;
 	TQPtrList<TQLineEdit>	m_edits;
-	QLabel			*m_info;
+	TQLabel			*m_info;
 	int			m_nlines;
 };
 

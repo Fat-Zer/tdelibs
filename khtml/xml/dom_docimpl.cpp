@@ -308,7 +308,7 @@ DocumentImpl::DocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v)
 
     if ( v ) {
         m_docLoader = new DocLoader(v->part(), this );
-        setPaintDevice( m_view );
+        setPaintDevice( TQT_TQPAINTDEVICE(m_view) );
     }
     else
         m_docLoader = new DocLoader( 0, this );
@@ -1231,7 +1231,7 @@ void DocumentImpl::attach()
     assert(!attached());
 
     if ( m_view )
-        setPaintDevice( m_view );
+        setPaintDevice( TQT_TQPAINTDEVICE(m_view) );
 
     if (!m_renderArena)
 	m_renderArena.reset(new RenderArena());
@@ -2143,7 +2143,7 @@ void DocumentImpl::recalcStyleSelector()
 
                     title = title.replace('&',  "&&");
 
-                    if ( !m_availableSheets.contains( title ) )
+                    if ( !m_availableSheets.tqcontains( title ) )
                         m_availableSheets.append( title );
                 }
             }
@@ -2170,7 +2170,7 @@ void DocumentImpl::recalcStyleSelector()
         // or we found the sheet we selected
         if (sheetUsed.isEmpty() ||
             (!canResetSheet && tokenizer()) ||
-            m_availableSheets.contains(sheetUsed)) {
+            m_availableSheets.tqcontains(sheetUsed)) {
             break;
         }
 
@@ -2710,7 +2710,7 @@ NodeListImpl::Cache* DOM::DocumentImpl::acquireCachedNodeListInfo(
 
     if (type != NodeListImpl::UNCACHEABLE) {
         newInfo->ref(); //Add the cache's reference
-        m_nodeListCache.replace(key.hash(), newInfo);
+        m_nodeListCache.tqreplace(key.hash(), newInfo);
     }
 
     return newInfo;

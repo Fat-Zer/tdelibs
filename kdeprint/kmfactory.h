@@ -50,12 +50,12 @@ class KDEPRINT_EXPORT KMFactory : public TQObject, public DCOPObject
 public:
 	struct PluginInfo
 	{
-		QString		name;
-		QString		comment;
-		QStringList	detectUris;
-		int		detectPrecedence;
-		QStringList	mimeTypes;
-		QString		primaryMimeType;
+		TQString		name;
+		TQString		comment;
+		TQStringList		detectUris;
+		int			detectPrecedence;
+		TQStringList		mimeTypes;
+		TQString		primaryMimeType;
 	};
 
 	static KMFactory* self();
@@ -92,7 +92,7 @@ public:
 	};
 	Settings* settings() const	{ return m_settings; }
 
-	QPair<TQString,TQString> requestPassword( int& seqNbr, const TQString& user, const TQString& host = "localhost", int port = 0 );
+	TQPair<TQString,TQString> requestPassword( int& seqNbr, const TQString& user, const TQString& host = "localhost", int port = 0 );
 	void initPassword( const TQString& user, const TQString& password, const TQString& host = "localhsot", int port = 0 );
 
 k_dcop:

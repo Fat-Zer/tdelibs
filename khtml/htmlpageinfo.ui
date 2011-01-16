@@ -2,7 +2,7 @@
 <class>KHTMLInfoDlg</class>
 <comment>A dialog to display the HTTP headers for a given page.</comment>
 <author>George Staikos &lt;staikos@kde.org&gt;</author>
-<widget class="QDialog">
+<widget class="TQDialog">
     <property name="name">
         <cstring>HTMLPageInfo</cstring>
     </property>
@@ -29,7 +29,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QGroupBox" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="TQGroupBox" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>groupBox2</cstring>
             </property>
@@ -48,7 +48,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="QLabel" row="1" column="0">
+                        <widget class="TQLabel" row="1" column="0">
                             <property name="name">
                                 <cstring>urlLabel</cstring>
                             </property>
@@ -93,7 +93,7 @@
                                 </sizepolicy>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="2" column="1">
+                        <widget class="TQLabel" row="2" column="1">
                             <property name="name">
                                 <cstring>_lastModified</cstring>
                             </property>
@@ -106,7 +106,7 @@
                                 </sizepolicy>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="0" column="0">
+                        <widget class="TQLabel" row="0" column="0">
                             <property name="name">
                                 <cstring>titleLabel</cstring>
                             </property>
@@ -125,7 +125,7 @@
                                 <cstring>_title</cstring>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="2" column="0">
+                        <widget class="TQLabel" row="2" column="0">
                             <property name="name">
                                 <cstring>_lmLabel</cstring>
                             </property>
@@ -144,7 +144,7 @@
                                 <cstring>_lastModified</cstring>
                             </property>
                         </widget>
-                        <widget class="QLabel" row="3" column="0">
+                        <widget class="TQLabel" row="3" column="0">
                             <property name="name">
                                 <cstring>_eLabel</cstring>
                             </property>
@@ -180,7 +180,7 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QGroupBox" row="1" column="0" rowspan="1" colspan="2">
+        <widget class="TQGroupBox" row="1" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>groupBox1</cstring>
             </property>
@@ -191,7 +191,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QListView">
+                <widget class="TQListView">
                     <column>
                         <property name="text">
                             <string>Property</string>
@@ -287,9 +287,9 @@
 </tabstops>
 <includes>
     <include location="global" impldecl="in declaration">kpushbutton.h</include>
-    <include location="global" impldecl="in declaration">qlabel.h</include>
+    <include location="global" impldecl="in declaration">tqlabel.h</include>
     <include location="global" impldecl="in declaration">kactivelabel.h</include>
-    <include location="global" impldecl="in declaration">qlistview.h</include>
+    <include location="global" impldecl="in declaration">tqlistview.h</include>
     <include location="global" impldecl="in implementation">kdialog.h</include>
 </includes>
 <layoutdefaults spacing="6" margin="11"/>

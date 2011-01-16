@@ -43,7 +43,7 @@ protected slots:
 
 protected:
 	SmbView	*m_view;
-	QLineEdit	*m_work, *m_server, *m_printer;
+	TQLineEdit	*m_work, *m_server, *m_printer;
 	TQLabel *m_loginlabel;
 };
 

@@ -28,7 +28,7 @@ class TQCheckBox;
 class TQSpinBox;
 class TQComboBox;
 class TQListView;
-class QListviewItem;
+class TQListviewItem;
 class TQWidgetStack;
 
 class EditEntryDialog : public KDialogBase
@@ -49,13 +49,13 @@ protected:
 
 private:
 	TQMap<TQString,Field>	m_fields;
-	QLineEdit	*m_name, *m_string, *m_aliases;
-	QCheckBox	*m_boolean;
-	QComboBox	*m_type;
-	QSpinBox	*m_number;
-	QListView	*m_view;
-	QWidgetStack	*m_stack;
-	QString		m_current;
+	TQLineEdit	*m_name, *m_string, *m_aliases;
+	TQCheckBox	*m_boolean;
+	TQComboBox	*m_type;
+	TQSpinBox	*m_number;
+	TQListView	*m_view;
+	TQWidgetStack	*m_stack;
+	TQString		m_current;
 	bool		m_block;
 };
 

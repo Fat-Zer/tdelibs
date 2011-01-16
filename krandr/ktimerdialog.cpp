@@ -98,7 +98,7 @@ void KTimerDialog::setMainWidget( TQWidget *widget )
     if ( widget->tqparentWidget() != mainWidget ) {
         widget->reparent( newWidget, 0, TQPoint(0,0) );
     } else {
-        newWidget->insertChild( widget );
+        newWidget->insertChild( TQT_TQOBJECT(widget) );
     }
 
     timerWidget->reparent( newWidget, 0, TQPoint(0, 0) );

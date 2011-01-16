@@ -41,9 +41,9 @@ protected slots:
 	void classChanged(int);
 
 private:
-	QLineEdit	*servername_, *serveradmin_, *language_, *printcap_, *otherclassname_;
-	QComboBox	*classification_, *charset_, *printcapformat_;
-	QCheckBox	*classoverride_;
+	TQLineEdit	*servername_, *serveradmin_, *language_, *printcap_, *otherclassname_;
+	TQComboBox	*classification_, *charset_, *printcapformat_;
+	TQCheckBox	*classoverride_;
 };
 
 #endif

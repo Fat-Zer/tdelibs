@@ -1179,7 +1179,7 @@ bool KateDocument::editInsertText ( uint line, uint col, const TQString &str )
       while ( (pos = s.tqfind('\t')) > -1 )
       {
         l = tw - ( (col + pos)%tw );
-        s.replace( pos, 1, TQString().fill( ' ', l ) );
+        s.tqreplace( pos, 1, TQString().fill( ' ', l ) );
       }
     }
 
@@ -1734,7 +1734,7 @@ bool KateDocument::searchText (unsigned int startLine, unsigned int startCol, co
 
 bool KateDocument::searchText (unsigned int startLine, unsigned int startCol, const TQRegExp &regexp, unsigned int *foundAtLine, unsigned int *foundAtCol, unsigned int *matchLen, bool backwards)
 {
-  kdDebug(13020)<<"KateDocument::searchText( "<<startLine<<", "<<startCol<<", "<<regexp.pattern()<<", "<<backwards<<" )"<<endl;
+  kdDebug(13020)<<"KateDocument::searchText( "<<startLine<<", "<<startCol<<", "<<TQString(regexp.pattern())<<", "<<backwards<<" )"<<endl;
   if (regexp.isEmpty() || !regexp.isValid())
     return false;
 
@@ -2151,12 +2151,12 @@ void KateDocument::clearMarks()
 
 void KateDocument::setPixmap( MarkInterface::MarkTypes type, const TQPixmap& pixmap )
 {
-  m_markPixmaps.replace( type, new TQPixmap( pixmap ) );
+  m_markPixmaps.tqreplace( type, new TQPixmap( pixmap ) );
 }
 
 void KateDocument::setDescription( MarkInterface::MarkTypes type, const TQString& description )
 {
-  m_markDescriptions.replace( type, new TQString( description ) );
+  m_markDescriptions.tqreplace( type, new TQString( description ) );
 }
 
 TQPixmap *KateDocument::markPixmap( MarkInterface::MarkTypes type )
@@ -2934,7 +2934,7 @@ void KateDocument::removeSuperCursor(KateSuperCursor *cursor, bool privateC) {
 
 bool KateDocument::ownedView(KateView *view) {
   // do we own the given view?
-  return (m_views.containsRef(view) > 0);
+  return (m_views.tqcontainsRef(view) > 0);
 }
 
 bool KateDocument::isLastView(int numViews) {
@@ -3232,7 +3232,7 @@ void KateDocument::paste ( KateView* view )
   if (s.isEmpty())
     return;
 
-  uint lines = s.contains (TQChar ('\n'));
+  uint lines = s.tqcontains (TQChar ('\n'));
 
   m_undoDontMerge = true;
 
@@ -3983,7 +3983,7 @@ void KateDocument::transform( KateView *v, const KateTextCursor &c,
                    ! p && ! highlight()->isInWord( l->getChar( start - 1 )) ) ||
                    ( p && ! highlight()->isInWord( s.at( p-1 ) ) )
              )
-            s[p] = s.at(p).upper();
+            s[p] = s.tqat(p).upper();
           p++;
         }
       }
@@ -4672,7 +4672,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
     TQStringList types (TQStringList::split(';', kvLineMime.cap(1)));
 
     // no matching type found
-    if (!types.contains (mimeType ()))
+    if (!types.tqcontains (mimeType ()))
       return;
 
     s = kvLineMime.cap(2);
@@ -4701,14 +4701,14 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
   {
     p += kvVar.matchedLength();
     var = kvVar.cap( 1 );
-    val = kvVar.cap( 2 ).stripWhiteSpace();
+    val = TQString(kvVar.cap( 2 )).stripWhiteSpace();
     bool state; // store booleans here
     int n; // store ints here
 
     // only apply view & renderer config stuff
     if (onlyViewAndRenderer)
     {
-      if ( vvl.contains( var ) ) // FIXME define above
+      if ( vvl.tqcontains( var ) ) // FIXME define above
         setViewVariable( var, val );
     }
     else
@@ -4773,7 +4773,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
       {
         TQStringList l;
         l << "unix" << "dos" << "mac";
-        if ( (n = l.findIndex( val.lower() )) != -1 )
+        if ( (n = l.tqfindIndex( val.lower() )) != -1 )
           m_config->setEol( n );
       }
       else if ( var == "encoding" )
@@ -4791,7 +4791,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
       }
 
       // VIEW SETTINGS
-      else if ( vvl.contains( var ) )
+      else if ( vvl.tqcontains( var ) )
         setViewVariable( var, val );
       else
       {
@@ -4862,14 +4862,14 @@ bool KateDocument::checkBoolValue( TQString val, bool *result )
   val = val.stripWhiteSpace().lower();
   TQStringList l;
   l << "1" << "on" << "true";
-  if ( l.contains( val ) )
+  if ( l.tqcontains( val ) )
   {
     *result = true;
     return true;
   }
   l.clear();
   l << "0" << "off" << "false";
-  if ( l.contains( val ) )
+  if ( l.tqcontains( val ) )
   {
     *result = false;
     return true;
@@ -4893,7 +4893,7 @@ bool KateDocument::checkColorValue( TQString val, TQColor &c )
 // KTextEditor::variable
 TQString KateDocument::variable( const TQString &name ) const
 {
-  if ( m_storedVariables.contains( name ) )
+  if ( m_storedVariables.tqcontains( name ) )
     return m_storedVariables[ name ];
 
   return "";
@@ -4964,7 +4964,7 @@ bool KateDocument::createDigest( TQCString &result )
     if ( f.open( IO_ReadOnly) )
     {
       KMD5 md5;
-      ret = md5.update( f );
+      ret = md5.update( TQT_TQIODEVICE_OBJECT(f) );
       md5.hexDigest( result );
       f.close();
       ret = true;

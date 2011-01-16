@@ -489,7 +489,7 @@ void XMLHttpRequest::setRequestHeader(const TQString& _name, const TQString &val
   TQStringList bannedHeaders = TQStringList::split(',',
                                   TQString::tqfromLatin1(BANNED_HTTP_HEADERS));
 
-  if (bannedHeaders.contains(name))
+  if (bannedHeaders.tqcontains(name))
     return;   // Denied
 
   requestHeaders[name] = value.stripWhiteSpace();
@@ -665,9 +665,9 @@ void XMLHttpRequest::slotData(KIO::Job*, const TQByteArray &_data)
       pos += 13;
       int index = responseHeaders.tqfind('\n', pos);
       TQString type = responseHeaders.mid(pos, (index-pos));
-      index = type.find (';');
+      index = type.tqfind (';');
       if (index > -1)
-        encoding = type.mid( index+1 ).remove(TQRegExp("charset[ ]*=[ ]*", false)).stripWhiteSpace();
+        encoding = TQString(type.mid( index+1 ).remove(TQRegExp("charset[ ]*=[ ]*", false))).stripWhiteSpace();
     }
 
     decoder = new Decoder;

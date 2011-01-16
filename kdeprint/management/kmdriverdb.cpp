@@ -60,15 +60,15 @@ KMDriverDB::~KMDriverDB()
 TQString KMDriverDB::dbFile()
 {
 	// this calls insure missing directories creation
-	QString	filename = locateLocal("data",TQString::tqfromLatin1("kdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
+	TQString	filename = locateLocal("data",TQString::tqfromLatin1("kdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
 	return filename;
 }
 
 void KMDriverDB::init(TQWidget *parent)
 {
-	QFileInfo	dbfi(dbFile());
-	QString		dirname = KMFactory::self()->manager()->driverDirectory();
-	QStringList	dbDirs = TQStringList::split(':', dirname, false);
+	TQFileInfo	dbfi(dbFile());
+	TQString		dirname = KMFactory::self()->manager()->driverDirectory();
+	TQStringList	dbDirs = TQStringList::split(':', dirname, false);
 	bool	createflag(false);
 
 	for (TQStringList::ConstIterator it=dbDirs.begin(); it!=dbDirs.end() && !createflag; ++it)
@@ -112,7 +112,7 @@ KMDBEntryList* KMDriverDB::findEntry(const TQString& manu, const TQString& model
 {
 	TQDict<KMDBEntryList>	*models = m_entries.tqfind(manu);
 	if (models)
-		return models->find(model);
+		return models->tqfind(model);
 	return 0;
 }
 
@@ -120,7 +120,7 @@ KMDBEntryList* KMDriverDB::findPnpEntry(const TQString& manu, const TQString& mo
 {
 	TQDict<KMDBEntryList>	*models = m_pnpentries.tqfind(manu);
 	if (models)
-		return models->find(model);
+		return models->tqfind(model);
 	return 0;
 }
 
@@ -147,7 +147,7 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 		models->setAutoDelete(true);
 		m_entries.insert(entry->manufacturer,models);
 	}
-	KMDBEntryList	*list = models->find(entry->model);
+	KMDBEntryList	*list = models->tqfind(entry->model);
 	if (!list)
 	{
 		list = new KMDBEntryList;
@@ -166,7 +166,7 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 			models->setAutoDelete(true);
 			m_pnpentries.insert(entry->manufacturer,models);
 		}
-		list = models->find(entry->model);
+		list = models->tqfind(entry->model);
 		if (!list)
 		{
 			list = new KMDBEntryList;
@@ -196,12 +196,12 @@ void KMDriverDB::loadDbFile()
 	m_entries.clear();
 	m_pnpentries.clear();
 
-	QFile	f(dbFile());
+	TQFile	f(dbFile());
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
-		QTextStream	t(&f);
-		QString		line;
-		QStringList	words;
+		TQTextStream	t(&f);
+		TQString		line;
+		TQStringList	words;
 		KMDBEntry	*entry(0);
 
 		while (!t.eof())

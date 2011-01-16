@@ -36,7 +36,7 @@ class KVCARD_EXPORT EmailParam : public Param
 	
 #include "EmailParam-generated.h"
 	
-	QCString	emailType() { parse(); return emailType_;	}
+	TQCString	emailType() { parse(); return emailType_;	}
 	bool		pref()		{ parse(); return pref_;		}
 	
 	void setEmailType(const TQCString & s)
@@ -47,7 +47,7 @@ class KVCARD_EXPORT EmailParam : public Param
 	
 	private:
 	
-		QCString	emailType_;
+		TQCString	emailType_;
 		bool		pref_;
 };
 

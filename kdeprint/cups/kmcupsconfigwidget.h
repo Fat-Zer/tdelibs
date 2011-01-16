@@ -36,8 +36,8 @@ public:
 	void saveConfig(KConfig*);
 
 protected:
-	QLineEdit	*m_host, *m_port, *m_login, *m_password;
-	QCheckBox	*m_anonymous, *m_savepwd;
+	TQLineEdit	*m_host, *m_port, *m_login, *m_password;
+	TQCheckBox	*m_anonymous, *m_savepwd;
 };
 
 #endif

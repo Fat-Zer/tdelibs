@@ -58,7 +58,7 @@ void LDAPUrl::setDn( const TQString &dn)
 
 bool LDAPUrl::hasExtension( const TQString &key ) const
 {
-  return m_extensions.contains( key );
+  return m_extensions.tqcontains( key );
 }
 
 LDAPUrl::Extension LDAPUrl::extension( const TQString &key ) const

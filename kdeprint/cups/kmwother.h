@@ -39,7 +39,7 @@ protected slots:
 	void slotPressed( TQListViewItem* );
 
 private:
-	QLineEdit	*m_uri;
+	TQLineEdit	*m_uri;
 	KListView *m_uriview;
 };
 

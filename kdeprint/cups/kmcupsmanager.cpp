@@ -100,7 +100,7 @@ TQString KMCupsManager::driverDbCreationProgram()
 
 TQString KMCupsManager::driverDirectory()
 {
-	QString	d = cupsInstallDir();
+	TQString	d = cupsInstallDir();
 	if (d.isEmpty())
 		d = "/usr";
 	d.append("/share/cups/model");
@@ -113,7 +113,7 @@ TQString KMCupsManager::cupsInstallDir()
 {
 	KConfig	*conf=  KMFactory::self()->printConfig();
 	conf->setGroup("CUPS");
-	QString	dir = conf->readPathEntry("InstallDir");
+	TQString	dir = conf->readPathEntry("InstallDir");
 	return dir;
 }
 
@@ -126,7 +126,7 @@ bool KMCupsManager::createPrinter(KMPrinter *p)
 {
 	bool isclass = p->isClass(false), result(false);
 	IppRequest	req;
-	QString		uri;
+	TQString		uri;
 
 	uri = printerURI(p,false);
 	req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
@@ -136,8 +136,8 @@ bool KMCupsManager::createPrinter(KMPrinter *p)
 	if (isclass)
 	{
 		req.setOperation(CUPS_ADD_CLASS);
-		QStringList	members = p->members(), uris;
-		QString		s;
+		TQStringList	members = p->members(), uris;
+		TQString		s;
                 s = TQString::fromLocal8Bit("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
 		for (TQStringList::ConstIterator it=members.begin(); it!=members.end(); ++it)
 			uris.append(s+(*it));
@@ -160,7 +160,7 @@ bool KMCupsManager::createPrinter(KMPrinter *p)
 		}
 		if (!p->option("kde-banners").isEmpty())
 		{
-			QStringList	bans = TQStringList::split(',',p->option("kde-banners"),false);
+			TQStringList	bans = TQStringList::split(',',p->option("kde-banners"),false);
 			while (bans.count() < 2)
 				bans.append("none");
 			req.addName(IPP_TAG_PRINTER,"job-sheets-default",bans);
@@ -215,7 +215,7 @@ bool KMCupsManager::setDefaultPrinter(KMPrinter *p)
 bool KMCupsManager::setPrinterState(KMPrinter *p, int state)
 {
 	IppRequest	req;
-	QString		uri;
+	TQString		uri;
 
 	req.setOperation(state);
 	uri = printerURI(p, true);
@@ -231,7 +231,7 @@ bool KMCupsManager::completePrinter(KMPrinter *p)
 	if (completePrinterShort(p))
 	{
 		// driver informations
-		QString	ppdname = downloadDriver(p);
+		TQString	ppdname = downloadDriver(p);
 		ppd_file_t	*ppd = (ppdname.isEmpty() ? NULL : ppdOpenFile(ppdname.local8Bit()));
 		if (ppd)
 		{
@@ -261,8 +261,8 @@ bool KMCupsManager::completePrinter(KMPrinter *p)
 bool KMCupsManager::completePrinterShort(KMPrinter *p)
 {
 	IppRequest	req;
-	QStringList	keys;
-	QString		uri;
+	TQStringList	keys;
+	TQString		uri;
 
 	req.setOperation(IPP_GET_PRINTER_ATTRIBUTES);
 	uri = printerURI(p, true);
@@ -328,7 +328,7 @@ bool KMCupsManager::completePrinterShort(KMPrinter *p)
 
 	if (req.doRequest("/printers/"))
 	{
-		QString	value;
+		TQString	value;
 		if (req.text("printer-info",value)) p->setDescription(value);
 		// disabled location
 		//if (req.text("printer-location",value)) p->setLocation(value);
@@ -341,10 +341,10 @@ bool KMCupsManager::completePrinterShort(KMPrinter *p)
 			 */
 			p->setDevice( value );
 		}
-		QStringList	values;
+		TQStringList	values;
 		/*		if (req.uri("member-uris",values))
 				{
-				QStringList	members;
+				TQStringList	members;
 				for (TQStringList::ConstIterator it=values.begin(); it!=values.end(); ++it)
 				{
 				int	p = (*it).findRev('/');
@@ -390,7 +390,7 @@ bool KMCupsManager::testPrinter(KMPrinter *p)
 {
 	return KMManager::testPrinter(p);
 	/*
-	   QString	testpage = testPage();
+	   TQString	testpage = testPage();
 	   if (testpage.isEmpty())
 	   {
 	   setErrorMsg(i18n("Unable to locate test page."));
@@ -398,7 +398,7 @@ bool KMCupsManager::testPrinter(KMPrinter *p)
 	   }
 
 	   IppRequest	req;
-	   QString		uri;
+	   TQString		uri;
 
 	   req.setOperation(IPP_PRINT_JOB);
 	   uri = printerURI(p);
@@ -421,7 +421,7 @@ void KMCupsManager::listPrinters()
 void KMCupsManager::loadServerPrinters()
 {
 	IppRequest	req;
-	QStringList	keys;
+	TQStringList	keys;
 
 	// get printers
 	req.setOperation(CUPS_GET_PRINTERS);
@@ -456,7 +456,7 @@ void KMCupsManager::loadServerPrinters()
 			req.addKeyword(IPP_TAG_OPERATION,"requested-attributes",TQString::tqfromLatin1("printer-name"));
 			if (req.doRequest("/printers/"))
 			{
-				QString	s = TQString::null;
+				TQString	s = TQString::null;
 				req.name("printer-name",s);
 				setHardDefault(findPrinter(s));
 			}
@@ -479,10 +479,10 @@ void KMCupsManager::processRequest(IppRequest* req)
 	KMPrinter	*printer = new KMPrinter();
 	while (attr)
 	{
-		QString	attrname(attr->name);
+		TQString	attrname(attr->name);
 		if (attrname == "printer-name")
 		{
-			QString	value = TQString::fromLocal8Bit(attr->values[0].string.text);
+			TQString	value = TQString::fromLocal8Bit(attr->values[0].string.text);
 			printer->setName(value);
 			printer->setPrinterName(value);
 		}
@@ -550,7 +550,7 @@ DrMain* KMCupsManager::loadPrinterDriver(KMPrinter *p, bool)
 		}
 	}
 
-	QString	fname = downloadDriver(p);
+	TQString	fname = downloadDriver(p);
 	DrMain	*driver(0);
 	if (!fname.isEmpty())
 	{
@@ -574,10 +574,10 @@ DrMain* KMCupsManager::loadFileDriver(const TQString& filename)
 
 DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 {
-	QStringList	comps = TQStringList::split('/', drname, false);
-	QString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-	QString	PATH = getenv("PATH") + TQString::tqfromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
-	QString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
+	TQStringList	comps = TQStringList::split('/', drname, false);
+	TQString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
+	TQString	PATH = getenv("PATH") + TQString::tqfromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
 		setErrorMsg(i18n("Unable to find the executable foomatic-datafile "
@@ -586,7 +586,7 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 	}
 
 	KPipeProcess	in;
-	QFile		out(tmpFile);
+	TQFile		out(tmpFile);
 	TQString cmd = KProcess::quote(exe);
 	cmd += " -t cups -d ";
 	cmd += KProcess::quote(comps[2]);
@@ -594,8 +594,8 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 	cmd += KProcess::quote(comps[1]);
 	if (in.open(cmd) && out.open(IO_WriteOnly))
 	{
-		QTextStream	tin(&in), tout(&out);
-		QString	line;
+		TQTextStream	tin(&in), tout(&out);
+		TQString	line;
 		while (!tin.atEnd())
 		{
 			line = tin.readLine();
@@ -641,11 +641,11 @@ void KMCupsManager::saveDriverFile(DrMain *driver, const TQString& filename)
 {
 	kdDebug( 500 ) << "Saving PPD file with template=" << driver->get( "template" ) << endl;
 	TQIODevice *in = KFilterDev::deviceForFile( driver->get( "template" ) );
-	QFile	out(filename);
+	TQFile	out(filename);
 	if (in && in->open(IO_ReadOnly) && out.open(IO_WriteOnly))
 	{
-		QTextStream	tin(in), tout(&out);
-		QString		line, keyword;
+		TQTextStream	tin(in), tout(&out);
+		TQString		line, keyword;
 		bool 		isnumeric(false);
 		DrBase		*opt(0);
 
@@ -676,7 +676,7 @@ void KMCupsManager::saveDriverFile(DrMain *driver, const TQString& filename)
 				}*/
 				else if ((p=line.tqfind("'default'")) != -1 && !keyword.isEmpty() && opt && isnumeric)
 				{
-					QString	prefix = line.left(p+9);
+					TQString	prefix = line.left(p+9);
 					tout << prefix << " => '" << opt->valueText() << '\'';
 					if (line.tqfind(',',p) != -1)
 						tout << ',';
@@ -735,14 +735,14 @@ void KMCupsManager::saveDriverFile(DrMain *driver, const TQString& filename)
 
 bool KMCupsManager::savePrinterDriver(KMPrinter *p, DrMain *d)
 {
-	QString	tmpfilename = locateLocal("tmp","print_") + kapp->randomString(8);
+	TQString	tmpfilename = locateLocal("tmp","print_") + kapp->randomString(8);
 
 	// first save the driver in a temporary file
 	saveDriverFile(d,tmpfilename);
 
 	// then send a request
 	IppRequest	req;
-	QString		uri;
+	TQString		uri;
 	bool		result(false);
 
 	req.setOperation(CUPS_ADD_PRINTER);
@@ -786,7 +786,7 @@ void KMCupsManager::unloadCupsdConf()
 
 bool KMCupsManager::restartServer()
 {
-	QString	msg;
+	TQString	msg;
 	bool (*f1)(TQString&) = (bool(*)(TQString&))loadCupsdConfFunction("restartServer");
 	bool 	result(false);
 	if (f1)
@@ -815,16 +815,16 @@ bool KMCupsManager::configureServer(TQWidget *parent)
 
 TQStringList KMCupsManager::detectLocalPrinters()
 {
-	QStringList	list;
+	TQStringList	list;
 	IppRequest	req;
 	req.setOperation(CUPS_GET_DEVICES);
 	if (req.doRequest("/"))
 	{
-		QString	desc, uri, printer, cl;
+		TQString	desc, uri, printer, cl;
 		ipp_attribute_t	*attr = req.first();
 		while (attr)
 		{
-			QString	attrname(attr->name);
+			TQString	attrname(attr->name);
 			if (attrname == "device-info") desc = attr->values[0].string.text;
 			else if (attrname == "device-make-and-model") printer = attr->values[0].string.text;
 			else if (attrname == "device-uri") uri = attr->values[0].string.text;
@@ -865,7 +865,7 @@ void KMCupsManager::exportDriver()
 	if (m_currentprinter && m_currentprinter->isLocal() &&
 	    !m_currentprinter->isClass(true) && !m_currentprinter->isSpecial())
 	{
-		QString	path = cupsInstallDir();
+		TQString	path = cupsInstallDir();
 		if (path.isEmpty())
 			path = "/usr/share/cups";
 		else
@@ -879,7 +879,7 @@ void KMCupsManager::printerIppReport()
 	if (m_currentprinter && !m_currentprinter->isSpecial())
 	{
 		IppRequest	req;
-		QString	uri;
+		TQString	uri;
 
 		req.setOperation(IPP_GET_PRINTER_ATTRIBUTES);
 		uri = printerURI(m_currentprinter, true);
@@ -913,7 +913,7 @@ TQString KMCupsManager::stateInformation()
 	return TQString("%1: %2")
 		.arg(i18n("Server"))
 		.arg(CupsInfos::self()->host()[0] != '/' ?
-			TQString("%1:%2").arg(CupsInfos::self()->host()).arg(CupsInfos::self()->port())
+			TQString(TQString("%1:%2").arg(CupsInfos::self()->host()).arg(CupsInfos::self()->port()))
 			: CupsInfos::self()->host());
 }
 
@@ -1016,11 +1016,11 @@ void KMCupsManager::hostPingFailedSlot() {
 
 static void extractMaticData(TQString& buf, const TQString& filename)
 {
-	QFile	f(filename);
+	TQFile	f(filename);
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
-		QTextStream	t(&f);
-		QString		line;
+		TQTextStream	t(&f);
+		TQString		line;
 		while (!t.eof())
 		{
 			line = t.readLine();
@@ -1032,7 +1032,7 @@ static void extractMaticData(TQString& buf, const TQString& filename)
 
 static TQString printerURI(KMPrinter *p, bool use)
 {
-	QString	uri;
+	TQString	uri;
 	if (use && !p->uri().isEmpty())
 		uri = p->uri().prettyURL();
 	else
@@ -1042,7 +1042,7 @@ static TQString printerURI(KMPrinter *p, bool use)
 
 static TQString downloadDriver(KMPrinter *p)
 {
-	QString	driverfile, prname = p->printerName();
+	TQString	driverfile, prname = p->printerName();
 	bool	changed(false);
 
 	/*

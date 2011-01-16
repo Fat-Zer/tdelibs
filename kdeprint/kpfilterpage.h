@@ -58,11 +58,11 @@ protected:
     void updateButton();
 private:
 	KListView		*m_view;
-	QStringList		m_filters;	// <idname,description> pairs
+	TQStringList		m_filters;	// <idname,description> pairs
 	TQDict<KXmlCommand>	m_activefilters;
-	QToolButton		*m_add, *m_remove, *m_up, *m_down, *m_configure;
+	TQToolButton		*m_add, *m_remove, *m_up, *m_down, *m_configure;
 	bool			m_valid;
-	QTextBrowser		*m_info;
+	TQTextBrowser		*m_info;
 };
 
 #endif

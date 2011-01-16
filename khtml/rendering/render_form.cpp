@@ -104,20 +104,20 @@ TQ_Alignment RenderFormElement::textAlignment() const
     switch (style()->textAlign()) {
         case LEFT:
         case KHTML_LEFT:
-            return AlignLeft;
+            return Qt::AlignLeft;
         case RIGHT:
         case KHTML_RIGHT:
-            return AlignRight;
+            return Qt::AlignRight;
         case CENTER:
         case KHTML_CENTER:
-            return AlignHCenter;
+            return Qt::AlignHCenter;
         case JUSTIFY:
             // Just fall into the auto code for justify.
         case TAAUTO:
-            return style()->direction() == RTL ? AlignRight : AlignLeft;
+            return style()->direction() == RTL ? Qt::AlignRight : Qt::AlignLeft;
     }
     assert(false); // Should never be reached.
-    return AlignLeft;
+    return Qt::AlignLeft;
 }
 
 // -------------------------------------------------------------------------
@@ -155,8 +155,8 @@ void RenderCheckBox::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQCheckBox *cb = static_cast<TQCheckBox *>( m_widget );
-    TQSize s( cb->style().tqpixelMetric( TQStyle::PM_IndicatorWidth ),
-             cb->style().tqpixelMetric( TQStyle::PM_IndicatorHeight ) );
+    TQSize s( cb->tqstyle().tqpixelMetric( TQStyle::PM_IndicatorWidth ),
+             cb->tqstyle().tqpixelMetric( TQStyle::PM_IndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -207,8 +207,8 @@ void RenderRadioButton::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQRadioButton *rb = static_cast<TQRadioButton *>( m_widget );
-    TQSize s( rb->style().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
-             rb->style().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
+    TQSize s( rb->tqstyle().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
+             rb->tqstyle().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -263,14 +263,14 @@ void RenderSubmitButton::calcMinMaxWidth()
         raw = TQString::tqfromLatin1("X");
     TQFontMetrics fm = pb->fontMetrics();
     TQSize ts = fm.size( ShowPrefix, raw);
-    TQSize s(pb->style().sizeFromContents( TQStyle::CT_PushButton, pb, ts )
+    TQSize s(pb->tqstyle().tqsizeFromContents( TQStyle::CT_PushButton, pb, ts )
             .expandedTo(TQApplication::globalStrut()));
-    int margin = pb->style().tqpixelMetric( TQStyle::PM_ButtonMargin, pb) +
-		 pb->style().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
+    int margin = pb->tqstyle().tqpixelMetric( TQStyle::PM_ButtonMargin, pb) +
+		 pb->tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
     int w = ts.width() + margin;
     int h = s.height();
     if (pb->isDefault() || pb->autoDefault()) {
-	int dbw = pb->style().tqpixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
+	int dbw = pb->tqstyle().tqpixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
 	w += dbw;
     }
 
@@ -312,7 +312,7 @@ LineEditWidget::LineEditWidget(DOM::HTMLInputElementImpl* input, KHTMLView* view
 {
     setMouseTracking(true);
     KActionCollection *ac = new KActionCollection(this);
-    m_spellAction = KStdAction::spelling( this, TQT_SLOT( slotCheckSpelling() ), ac );
+    m_spellAction = KStdAction::spelling( TQT_TQOBJECT(this), TQT_SLOT( slotCheckSpelling() ), ac );
 }
 
 LineEditWidget::~LineEditWidget()
@@ -328,7 +328,7 @@ void LineEditWidget::slotCheckSpelling()
     }
 
     delete m_spell;
-    m_spell = new KSpell( this, i18n( "Spell Checking" ), this, TQT_SLOT( slotSpellCheckReady( KSpell *) ), 0, true, true);
+    m_spell = new KSpell( this, i18n( "Spell Checking" ), TQT_TQOBJECT(this), TQT_SLOT( slotSpellCheckReady( KSpell *) ), 0, true, true);
 
     connect( m_spell, TQT_SIGNAL( death() ),this, TQT_SLOT( spellCheckerFinished() ) );
     connect( m_spell, TQT_SIGNAL( misspelling( const TQString &, const TQStringList &, unsigned int ) ),this, TQT_SLOT( spellCheckerMisspelling( const TQString &, const TQStringList &, unsigned int ) ) );
@@ -805,7 +805,7 @@ void RenderFileButton::calcMinMaxWidth()
     int h = fm.lineSpacing();
     int w = fm.width( 'x' ) * (size > 0 ? size+1 : 17); // "some"
     KLineEdit* edit = static_cast<KURLRequester*>( m_widget )->lineEdit();
-    TQSize s = edit->style().sizeFromContents(TQStyle::CT_LineEdit,
+    TQSize s = edit->tqstyle().tqsizeFromContents(TQStyle::CT_LineEdit,
                                              edit,
           TQSize(w + 2 + 2*edit->frameWidth(), kMax(h, 14) + 2 + 2*edit->frameWidth()))
         .expandedTo(TQApplication::globalStrut());
@@ -890,7 +890,7 @@ bool ComboBoxWidget::event(TQEvent *e)
 	return true;
     if (e->type()==TQEvent::KeyPress)
     {
-	TQKeyEvent *ke = static_cast<TQKeyEvent *>(e);
+	TQKeyEvent *ke = TQT_TQKEYEVENT(e);
 	switch(ke->key())
 	{
 	case Key_Return:
@@ -907,9 +907,9 @@ bool ComboBoxWidget::event(TQEvent *e)
 
 bool ComboBoxWidget::eventFilter(TQObject *dest, TQEvent *e)
 {
-    if (dest==listBox() &&  e->type()==TQEvent::KeyPress)
+    if (TQT_BASE_OBJECT(dest)==TQT_BASE_OBJECT(listBox()) &&  e->type()==TQEvent::KeyPress)
     {
-	TQKeyEvent *ke = static_cast<TQKeyEvent *>(e);
+	TQKeyEvent *ke = TQT_TQKEYEVENT(e);
 	bool forward = false;
 	switch(ke->key())
 	{
@@ -1295,9 +1295,9 @@ TextAreaWidget::TextAreaWidget(int wrap, TQWidget* parent)
     setMouseTracking(true);
 
     KActionCollection *ac = new KActionCollection(this);
-    m_findAction = KStdAction::find( this, TQT_SLOT( slotFind() ), ac );
-    m_findNextAction = KStdAction::findNext( this, TQT_SLOT( slotFindNext() ), ac );
-    m_replaceAction = KStdAction::replace( this, TQT_SLOT( slotReplace() ), ac );
+    m_findAction = KStdAction::find( TQT_TQOBJECT(this), TQT_SLOT( slotFind() ), ac );
+    m_findNextAction = KStdAction::findNext( TQT_TQOBJECT(this), TQT_SLOT( slotFindNext() ), ac );
+    m_replaceAction = KStdAction::replace( TQT_TQOBJECT(this), TQT_SLOT( slotReplace() ), ac );
 }
 
 

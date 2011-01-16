@@ -37,7 +37,7 @@ public:
 
 private:
 	KEditListBox	*m_users;
-	QComboBox	*m_type;
+	TQComboBox	*m_type;
 };
 
 #endif

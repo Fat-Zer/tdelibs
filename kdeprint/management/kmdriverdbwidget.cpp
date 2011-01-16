@@ -53,16 +53,16 @@ KMDriverDbWidget::KMDriverDbWidget(TQWidget *parent, const char *name)
 	m_postscript->setCursor(KCursor::handCursor());
 	m_raw->setCursor(KCursor::handCursor());
 	m_other = new KPushButton(KGuiItem(i18n("&Other..."), "fileopen"), this);
-	QLabel	*l1 = new TQLabel(i18n("&Manufacturer:"), this);
-	QLabel	*l2 = new TQLabel(i18n("Mo&del:"), this);
+	TQLabel	*l1 = new TQLabel(i18n("&Manufacturer:"), this);
+	TQLabel	*l2 = new TQLabel(i18n("Mo&del:"), this);
 	l1->setBuddy(m_manu);
 	l2->setBuddy(m_model);
 
 	// build layout
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
-	QGridLayout	*sub1_ = new TQGridLayout(0, 2, 3, 0, 0);
-	QHBoxLayout	*sub2_ = new TQHBoxLayout(0, 0, 10);
-	main_->addLayout(sub1_);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
+	TQGridLayout	*sub1_ = new TQGridLayout(0, 2, 3, 0, 0);
+	TQHBoxLayout	*sub2_ = new TQHBoxLayout(0, 0, 10);
+	main_->addLayout(TQT_TQLAYOUT(sub1_));
 	main_->addLayout(sub2_);
 	main_->addWidget(m_raw);
 	sub1_->addWidget(l1,0,0);
@@ -95,17 +95,17 @@ KMDriverDbWidget::~KMDriverDbWidget()
 
 void KMDriverDbWidget::setDriver(const TQString& manu, const TQString& model)
 {
-	QListBoxItem	*item = m_manu->findItem(manu);
-	QString		model_(model);
+	TQListBoxItem	*item = m_manu->tqfindItem(manu);
+	TQString		model_(model);
 	if (item)
 	{
 		m_manu->setCurrentItem(item);
-		item = m_model->findItem(model_);
+		item = m_model->tqfindItem(model_);
 		if (!item)
 			// try by stripping the manufacturer name from
 			// the beginning of the model string. This is
 			// often the case with PPD files
-			item = m_model->findItem(model_.replace(0,manu.length()+1,TQString::tqfromLatin1("")));
+			item = m_model->tqfindItem(model_.replace(0,manu.length()+1,TQString::tqfromLatin1("")));
 		if (item)
 			m_model->setCurrentItem(item);
 	}
@@ -189,7 +189,7 @@ void KMDriverDbWidget::slotManufacturerSelected(const TQString& name)
 	TQDict<KMDBEntryList>	*models = KMDriverDB::self()->findModels(name);
 	if (models)
 	{
-		QStrIList	ilist(true);
+		TQStrIList	ilist(true);
 		TQDictIterator<KMDBEntryList>	it(*models);
 		for (;it.current();++it)
 			ilist.append(it.currentKey().latin1());
@@ -203,11 +203,11 @@ void KMDriverDbWidget::slotPostscriptToggled(bool on)
 {
 	if (on)
 	{
-		QListBoxItem	*item = m_manu->findItem("GENERIC");
+		TQListBoxItem	*item = m_manu->tqfindItem("GENERIC");
 		if (item)
 		{
 			m_manu->setCurrentItem(item);
-			item = m_model->findItem( "POSTSCRIPT PRINTER" );
+			item = m_model->tqfindItem( "POSTSCRIPT PRINTER" );
 			if ( item )
 			{
 				m_model->setCurrentItem( item );
@@ -243,7 +243,7 @@ void KMDriverDbWidget::slotOtherClicked()
 					disconnect(m_manu,TQT_SIGNAL(highlighted(const TQString&)),this,TQT_SLOT(slotManufacturerSelected(const TQString&)));
 					m_manu->clear();
 					m_model->clear();
-					QString	s = driver->get("manufacturer");
+					TQString	s = driver->get("manufacturer");
 					m_manu->insertItem((s.isEmpty() ? i18n("<Unknown>") : s));
 					s = driver->get("model");
 					m_model->insertItem((s.isEmpty() ? i18n("<Unknown>") : s));

@@ -69,7 +69,7 @@ Dialog::Dialog( BackgroundChecker *checker,
 
     initGui();
     initConnections();
-    setMainWidget( d->ui );
+    setMainWidget( TQT_TQWIDGET(d->ui) );
 }
 
 Dialog::~Dialog()
@@ -79,27 +79,27 @@ Dialog::~Dialog()
 
 void Dialog::initConnections()
 {
-    connect( d->ui->m_addBtn, TQT_SIGNAL(clicked()),
+    connect( TQT_TQOBJECT(d->ui->m_addBtn), TQT_SIGNAL(clicked()),
              TQT_SLOT(slotAddWord()) );
-    connect( d->ui->m_replaceBtn, TQT_SIGNAL(clicked()),
+    connect( TQT_TQOBJECT(d->ui->m_replaceBtn), TQT_SIGNAL(clicked()),
              TQT_SLOT(slotReplaceWord()) );
-    connect( d->ui->m_replaceAllBtn, TQT_SIGNAL(clicked()),
+    connect( TQT_TQOBJECT(d->ui->m_replaceAllBtn), TQT_SIGNAL(clicked()),
              TQT_SLOT(slotReplaceAll()) );
-    connect( d->ui->m_skipBtn, TQT_SIGNAL(clicked()),
+    connect( TQT_TQOBJECT(d->ui->m_skipBtn), TQT_SIGNAL(clicked()),
              TQT_SLOT(slotSkip()) );
-    connect( d->ui->m_skipAllBtn, TQT_SIGNAL(clicked()),
+    connect( TQT_TQOBJECT(d->ui->m_skipAllBtn), TQT_SIGNAL(clicked()),
              TQT_SLOT(slotSkipAll()) );
-    connect( d->ui->m_suggestBtn, TQT_SIGNAL(clicked()),
+    connect( TQT_TQOBJECT(d->ui->m_suggestBtn), TQT_SIGNAL(clicked()),
              TQT_SLOT(slotSuggest()) );
-    connect( d->ui->m_language, TQT_SIGNAL(activated(const TQString&)),
+    connect( TQT_TQOBJECT(d->ui->m_language), TQT_SIGNAL(activated(const TQString&)),
              TQT_SLOT(slotChangeLanguage(const TQString&)) );
-    connect( d->ui->m_suggestions, TQT_SIGNAL(selectionChanged(TQListViewItem*)),
+    connect( TQT_TQOBJECT(d->ui->m_suggestions), TQT_SIGNAL(selectionChanged(TQListViewItem*)),
              TQT_SLOT(slotSelectionChanged(TQListViewItem*)) );
-    connect( d->checker, TQT_SIGNAL(misspelling(const TQString&, int)),
+    connect( TQT_TQOBJECT(d->checker), TQT_SIGNAL(misspelling(const TQString&, int)),
              TQT_SIGNAL(misspelling(const TQString&, int)) );
-    connect( d->checker, TQT_SIGNAL(misspelling(const TQString&, int)),
+    connect( TQT_TQOBJECT(d->checker), TQT_SIGNAL(misspelling(const TQString&, int)),
              TQT_SLOT(slotMisspelling(const TQString&, int)) );
-    connect( d->checker, TQT_SIGNAL(done()),
+    connect( TQT_TQOBJECT(d->checker), TQT_SIGNAL(done()),
              TQT_SLOT(slotDone()) );
     connect( d->ui->m_suggestions, TQT_SIGNAL(doubleClicked(TQListViewItem*, const TQPoint&, int)),
              TQT_SLOT( slotReplaceWord() ) );
@@ -261,7 +261,7 @@ void Dialog::slotMisspelling(const TQString& word, int start )
 {
     kdDebug()<<"Dialog misspelling!!"<<endl;
     d->currentWord = Word( word, start );
-    if ( d->replaceAllMap.contains( word ) ) {
+    if ( d->replaceAllMap.tqcontains( word ) ) {
         d->ui->m_replacement->setText( d->replaceAllMap[ word ] );
         slotReplaceWord();
     } else {

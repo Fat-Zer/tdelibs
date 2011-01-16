@@ -212,11 +212,11 @@ void Addressee::setNameFromString( const TQString &s )
   setName( str );
 
   // clear all name parts
-  setPrefix( TQString::null );
-  setGivenName( TQString::null );
-  setAdditionalName( TQString::null );
-  setFamilyName( TQString::null );
-  setSuffix( TQString::null );
+  setPrefix( TQString() );
+  setGivenName( TQString() );
+  setAdditionalName( TQString() );
+  setFamilyName( TQString() );
+  setSuffix( TQString() );
 
   if ( str.isEmpty() )
     return;
@@ -391,7 +391,7 @@ TQString Addressee::fullEmail( const TQString &email ) const
   } else {
     e = email;
   }
-  if ( e.isEmpty() ) return TQString::null;
+  if ( e.isEmpty() ) return TQString();
 
   TQString text;
   if ( realName().isEmpty() )
@@ -444,7 +444,7 @@ void Addressee::removeEmail( const TQString &email )
 
 TQString Addressee::preferredEmail() const
 {
-  if ( mData->emails.count() == 0 ) return TQString::null;
+  if ( mData->emails.count() == 0 ) return TQString();
   else return mData->emails.first();
 }
 
@@ -755,7 +755,7 @@ void Addressee::insertCategory( const TQString &c )
   detach();
   mData->empty = false;
 
-  if ( mData->categories.findIndex( c ) != -1 ) return;
+  if ( mData->categories.tqfindIndex( c ) != -1 ) return;
 
   mData->categories.append( c );
 }
@@ -772,7 +772,7 @@ void Addressee::removeCategory( const TQString &c )
 
 bool Addressee::hasCategory( const TQString &c ) const
 {
-  return ( mData->categories.findIndex( c ) != -1 );
+  return ( mData->categories.tqfindIndex( c ) != -1 );
 }
 
 void Addressee::setCategories( const TQStringList &c )

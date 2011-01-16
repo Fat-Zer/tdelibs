@@ -39,17 +39,17 @@ KMWDriverSelect::KMWDriverSelect(TQWidget *parent, const char *name)
 	m_entries = NULL;
 
 	m_list = new KListBox(this);
-	QLabel	*l1 = new TQLabel(this);
+	TQLabel	*l1 = new TQLabel(this);
 	l1->setText(i18n("<p>Several drivers have been detected for this model. Select the driver "
 			 "you want to use. You will have the opportunity to test it as well as to "
 			 "change it if necessary.</p>"));
 	m_drivercomment = new KPushButton(i18n("Driver Information"), this);
 	connect(m_drivercomment, TQT_SIGNAL(clicked()), TQT_SLOT(slotDriverComment()));
 
-	QVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
+	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
 	main_->addWidget(l1,0);
 	main_->addWidget(m_list,1);
-	QHBoxLayout	*lay0 = new TQHBoxLayout(0, 0, 0);
+	TQHBoxLayout	*lay0 = new TQHBoxLayout(0, 0, 0);
 	main_->addLayout(lay0,0);
 	lay0->addStretch(1);
 	lay0->addWidget(m_drivercomment);
@@ -75,7 +75,7 @@ void KMWDriverSelect::initPrinter(KMPrinter *p)
 		int	recomm(0);
 		for (;it.current();++it)
 		{
-			QString	s(it.current()->description);
+			TQString	s(it.current()->description);
 			if (it.current()->recommended)
 			{
 				recomm = m_list->count();

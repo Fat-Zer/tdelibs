@@ -36,10 +36,10 @@ AddressDialog::AddressDialog(TQWidget *parent, const char *name)
 	type_->insertItem(i18n("Allow"));
 	type_->insertItem(i18n("Deny"));
 
-	QLabel	*l1 = new TQLabel(i18n("Type:"), w);
-	QLabel	*l2 = new TQLabel(i18n("Address:"), w);
+	TQLabel	*l1 = new TQLabel(i18n("Type:"), w);
+	TQLabel	*l2 = new TQLabel(i18n("Address:"), w);
 
-	QGridLayout	*m1 = new TQGridLayout(w, 2, 2, 0, 5);
+	TQGridLayout	*m1 = new TQGridLayout(w, 2, 2, 0, 5);
 	m1->setColStretch(1, 1);
 	m1->addWidget(l1, 0, 0, Qt::AlignRight);
 	m1->addWidget(l2, 1, 0, Qt::AlignRight);

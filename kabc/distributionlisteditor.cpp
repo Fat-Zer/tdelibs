@@ -46,7 +46,7 @@ EmailSelectDialog::EmailSelectDialog( const TQStringList &emails, const TQString
   TQFrame *topFrame = plainPage();
   TQBoxLayout *topLayout = new TQVBoxLayout( topFrame );
 
-  mButtonGroup = new TQButtonGroup( 1, Horizontal, i18n("Email Addresses"),
+  mButtonGroup = new TQButtonGroup( 1, Qt::Horizontal, i18n("Email Addresses"),
                                    topFrame );
   mButtonGroup->setRadioButtonExclusive( true );
   topLayout->addWidget( mButtonGroup );
@@ -80,7 +80,7 @@ TQString EmailSelectDialog::getEmail( const TQStringList &emails, const TQString
   return result;
 }
 
-class EditEntryItem : public QListViewItem
+class EditEntryItem : public TQListViewItem
 {
   public:
     EditEntryItem( TQListView *parent, const Addressee &addressee,

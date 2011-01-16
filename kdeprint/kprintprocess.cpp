@@ -48,7 +48,7 @@ TQString KPrintProcess::errorMessage() const
 
 bool KPrintProcess::print()
 {
-	m_buffer = TQString::null;
+	m_buffer = TQString();
 	m_state = Printing;
 	return start(NotifyOnExit,All);
 }
@@ -57,7 +57,7 @@ void KPrintProcess::slotReceivedStderr(KProcess *proc, char *buf, int len)
 {
 	if (proc == this)
 	{
-		QCString	str = TQCString(buf,len).stripWhiteSpace();
+		TQCString	str = TQCString(buf,len).stripWhiteSpace();
 		m_buffer.append(str.append("\n"));
 	}
 }

@@ -31,7 +31,7 @@ KMConfigProxy::KMConfigProxy(TQWidget *parent)
 	setPagePixmap("proxy");
 
 	m_widget = new KMProxyWidget(this);
-	QVBoxLayout	*lay0 = new TQVBoxLayout(this, 5, 0);
+	TQVBoxLayout	*lay0 = new TQVBoxLayout(this, 5, 0);
 	lay0->addWidget(m_widget);
 	lay0->addStretch(1);
 }

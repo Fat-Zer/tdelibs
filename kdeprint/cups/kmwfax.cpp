@@ -37,18 +37,18 @@ KMWFax::KMWFax(TQWidget *parent, const char *name)
 	m_title = i18n("Fax Serial Device");
 	m_nextpage = KMWizard::Driver;
 
-	QLabel	*lab = new TQLabel(this);
+	TQLabel	*lab = new TQLabel(this);
 	lab->setText(i18n("<p>Select the device which your serial Fax/Modem is connected to.</p>"));
 	m_list = new KListBox(this);
 
-	QVBoxLayout	*l1 = new TQVBoxLayout(this,0,10);
+	TQVBoxLayout	*l1 = new TQVBoxLayout(this,0,10);
 	l1->addWidget(lab,0);
 	l1->addWidget(m_list,1);
 
 	// initialize
 	IppRequest	req;
 	req.setOperation(CUPS_GET_DEVICES);
-	QString	uri = TQString::tqfromLatin1("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
+	TQString	uri = TQString::tqfromLatin1("ipp://%1/printers/").arg(CupsInfos::self()->hostaddr());
 	req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
 	if (req.doRequest("/"))
 	{
@@ -76,6 +76,6 @@ bool KMWFax::isValid(TQString& msg)
 
 void KMWFax::updatePrinter(KMPrinter *printer)
 {
-	QString	uri = m_list->currentText();
+	TQString	uri = m_list->currentText();
 	printer->setDevice(uri);
 }

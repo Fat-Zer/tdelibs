@@ -33,6 +33,7 @@
 #include <tqpoint.h>
 #include <tqtimer.h>
 #include <tqintdict.h>
+#include <tqdragobject.h>
 
 class KateView;
 class KateIconBorder;
@@ -221,7 +222,7 @@ class KateViewInternal : public TQWidget
     int scrollX;
     int scrollY;
 
-    Qt::tqCursorShape m_mouseCursor;
+    Qt::CursorShape m_mouseCursor;
 
     KateSuperCursor cursor;
     KateTextCursor displayCursor;

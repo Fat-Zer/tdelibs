@@ -32,7 +32,7 @@ public:
 	void initPrinter(KMPrinter*);
 
 private:
-	QTextView	*m_view;
+	TQTextView	*m_view;
 };
 
 #endif

@@ -38,7 +38,7 @@ public:
 	TQSize tqminimumSizeHint() const;
 
 private:
-	QTable	*m_tags;
+	TQTable	*m_tags;
 };
 
 #endif

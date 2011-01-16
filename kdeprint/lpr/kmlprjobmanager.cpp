@@ -60,7 +60,7 @@ int KMLprJobManager::actions()
 
 bool KMLprJobManager::sendCommandSystemJob(const TQPtrList<KMJob>& jobs, int action, const TQString& arg)
 {
-	QString	msg;
+	TQString	msg;
 	TQPtrListIterator<KMJob>	it(jobs);
 	bool	status(true);
 	LpcHelper	*helper = lpcHelper();

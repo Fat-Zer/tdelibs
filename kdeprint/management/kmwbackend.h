@@ -41,8 +41,8 @@ public:
 	void enableBackend(int ID, bool on = true);
 
 private:
-	QButtonGroup	*m_buttons;
-	QVBoxLayout	*m_layout;
+	TQButtonGroup	*m_buttons;
+	TQVBoxLayout	*m_layout;
 	// keep a map between button ID and the real next page to switch to. This enables
 	// to have different backends switching to the same page (like backends requiring
 	// a password). If the next page is not given when adding the backend, the ID is

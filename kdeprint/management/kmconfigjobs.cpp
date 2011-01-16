@@ -34,17 +34,17 @@ KMConfigJobs::KMConfigJobs(TQWidget *parent, const char *name)
 	setPageHeader(i18n("Print Job Settings"));
 	setPagePixmap("exec");
 
-	QGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("Jobs Shown"), this);
+	TQGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("Jobs Shown"), this);
 
 	m_limit = new KIntNumInput(box);
 	m_limit->setRange(0, 9999, 1, true);
 	m_limit->setSpecialValueText(i18n("Unlimited"));
 	m_limit->setLabel(i18n("Maximum number of jobs shown:"));
 
-	QVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
+	TQVBoxLayout	*l0 = new TQVBoxLayout(this, 0, KDialog::spacingHint());
 	l0->addWidget(box, 0);
 	l0->addStretch(1);
-	QVBoxLayout	*l1 = new TQVBoxLayout(box->layout(), KDialog::spacingHint());
+	TQVBoxLayout	*l1 = new TQVBoxLayout(TQT_TQLAYOUT(box->layout()), KDialog::spacingHint());
 	l1->addWidget(m_limit);
 }
 

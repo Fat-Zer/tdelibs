@@ -31,7 +31,7 @@
 
 TQStringList defaultBanners()
 {
-	QStringList	bans;
+	TQStringList	bans;
 	TQPtrList<KMPrinter>	*list = KMFactory::self()->manager()->printerList(false);
 	if (list && list->count() > 0)
 	{
@@ -39,7 +39,7 @@ TQStringList defaultBanners()
 		for (;it.current() && !it.current()->isPrinter(); ++it) ;
 		if (it.current() && KMFactory::self()->manager()->completePrinter(it.current()))
 		{
-			QString	s = list->getFirst()->option("kde-banners-supported");
+			TQString	s = list->getFirst()->option("kde-banners-supported");
 			bans = TQStringList::split(',',s,false);
 		}
 	}
@@ -89,18 +89,18 @@ KMWBanners::KMWBanners(TQWidget *parent, const char *name)
 	m_start = new TQComboBox(this);
 	m_end = new TQComboBox(this);
 
-	QLabel	*l1 = new TQLabel(i18n("&Starting banner:"),this);
-	QLabel	*l2 = new TQLabel(i18n("&Ending banner:"),this);
+	TQLabel	*l1 = new TQLabel(i18n("&Starting banner:"),this);
+	TQLabel	*l2 = new TQLabel(i18n("&Ending banner:"),this);
 
 	l1->setBuddy(m_start);
 	l2->setBuddy(m_end);
 
-	QLabel	*l0 = new TQLabel(this);
+	TQLabel	*l0 = new TQLabel(this);
 	l0->setText(i18n("<p>Select the default banners associated with this printer. These "
 			 "banners will be inserted before and/or after each print job sent "
 			 "to the printer. If you don't want to use banners, select <b>No Banner</b>.</p>"));
 
-	QGridLayout	*lay = new TQGridLayout(this, 5, 2, 0, 10);
+	TQGridLayout	*lay = new TQGridLayout(this, 5, 2, 0, 10);
 	lay->setColStretch(1,1);
 	lay->addRowSpacing(1,20);
 	lay->setRowStretch(4,1);
@@ -128,11 +128,11 @@ void KMWBanners::initPrinter(KMPrinter *p)
 				m_end->insertItem( i18n( mapBanner(*it).utf8() ) );
 			}
 		}
-		QStringList	l = TQStringList::split(',',p->option("kde-banners"),false);
+		TQStringList	l = TQStringList::split(',',p->option("kde-banners"),false);
 		while (l.count() < 2)
 			l.append("none");
-		m_start->setCurrentItem(m_bans.findIndex(l[0]));
-		m_end->setCurrentItem(m_bans.findIndex(l[1]));
+		m_start->setCurrentItem(m_bans.tqfindIndex(l[0]));
+		m_end->setCurrentItem(m_bans.tqfindIndex(l[1]));
 	}
 }
 

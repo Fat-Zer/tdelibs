@@ -136,7 +136,7 @@ public:
     bool m_reversed : 1;
     unsigned m_toAdd : 14; // for justified text
 private:
-    // this is just for QVector::bsearch. Don't use it otherwise
+    // this is just for TQVector::bsearch. Don't use it otherwise
     InlineTextBox(int _x, int _y)
         :InlineBox(0)
     {

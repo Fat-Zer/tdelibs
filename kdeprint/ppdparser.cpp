@@ -120,7 +120,7 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#define YYSTYPE QStringList
+#define YYSTYPE TQStringList
 #define YYPARSE_PARAM ppdloader
 #define YYDEBUG 1
 #define YYERROR_VERBOSE 1

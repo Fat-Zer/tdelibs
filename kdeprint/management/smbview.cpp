@@ -140,7 +140,7 @@ void SmbView::init()
 		while (!smb_stream.atEnd ())
 		{
 			TQString smb_line = smb_stream.readLine ();
-			if (smb_line.contains (wins_keyword, FALSE) > 0)
+			if (smb_line.tqcontains (wins_keyword, FALSE) > 0)
 			{
 				TQString key = smb_line.section ('=', 0, 0);
 				key = key.stripWhiteSpace();
@@ -196,7 +196,7 @@ void SmbView::setOpen(TQListViewItem *item, bool on)
 			}
 			*m_proc << KProcess::quote (item->text (0));
 			*m_proc << " -W ";
-			*m_proc << KProcess::quote (item->parent ()->
+			*m_proc << KProcess::quote (item->tqparent ()->
 							text (0));
 			if (!krb5ccname)
 			{
@@ -212,14 +212,14 @@ void SmbView::setOpen(TQListViewItem *item, bool on)
 
 void SmbView::processGroups()
 {
-	QStringList	grps = TQStringList::split('\n',m_buffer,false);
+	TQStringList	grps = TQStringList::split('\n',m_buffer,false);
 	clear();
 	for (TQStringList::ConstIterator it=grps.begin(); it!=grps.end(); ++it)
 	{
 		int	p = (*it).tqfind("<1d>");
 		if (p == -1)
 			continue;
-		QListViewItem	*item = new TQListViewItem(this,(*it).left(p).stripWhiteSpace());
+		TQListViewItem	*item = new TQListViewItem(this,(*it).left(p).stripWhiteSpace());
 		item->setExpandable(true);
 		item->setPixmap(0,SmallIcon("network"));
 	}
@@ -227,18 +227,18 @@ void SmbView::processGroups()
 
 void SmbView::processServers()
 {
-	QStringList	lines = TQStringList::split('\n',m_buffer,true);
-	QString		line;
+	TQStringList	lines = TQStringList::split('\n',m_buffer,true);
+	TQString		line;
 	uint 		index(0);
 	while (index < lines.count())
 	{
 		line = lines[index++].stripWhiteSpace();
 		if (line.isEmpty())
 			break;
-		QStringList	words = TQStringList::split(' ',line,false);
+		TQStringList	words = TQStringList::split(' ',line,false);
 		if (words[1] != "<00>" || words[3] == "<GROUP>")
 			continue;
-		QListViewItem	*item = new TQListViewItem(m_current,words[0]);
+		TQListViewItem	*item = new TQListViewItem(m_current,words[0]);
 		item->setExpandable(true);
 		item->setPixmap(0,SmallIcon("kdeprint_computer"));
 	}
@@ -246,8 +246,8 @@ void SmbView::processServers()
 
 void SmbView::processShares()
 {
-	QStringList	lines = TQStringList::split('\n',m_buffer,true);
-	QString		line;
+	TQStringList	lines = TQStringList::split('\n',m_buffer,true);
+	TQString		line;
 	uint 		index(0);
 	for (;index < lines.count();index++)
 		if (lines[index].stripWhiteSpace().startsWith("Sharename"))
@@ -263,16 +263,16 @@ void SmbView::processShares()
 			KMessageBox::error( this, line );
 			break;
 		}
-		QString	typestr(line.mid(15, 10).stripWhiteSpace());
-		//QStringList	words = TQStringList::split(' ',line,false);
+		TQString	typestr(line.mid(15, 10).stripWhiteSpace());
+		//TQStringList	words = TQStringList::split(' ',line,false);
 		//if (words[1] == "Printer")
 		if (typestr == "Printer")
 		{
-			QString	comm(line.mid(25).stripWhiteSpace()), sharen(line.mid(0, 15).stripWhiteSpace());
+			TQString	comm(line.mid(25).stripWhiteSpace()), sharen(line.mid(0, 15).stripWhiteSpace());
 			//for (uint i=2; i<words.count(); i++)
 			//	comm += (words[i]+" ");
-			//QListViewItem	*item = new TQListViewItem(m_current,words[0],comm);
-			QListViewItem	*item = new TQListViewItem(m_current,sharen,comm);
+			//TQListViewItem	*item = new TQListViewItem(m_current,words[0],comm);
+			TQListViewItem	*item = new TQListViewItem(m_current,sharen,comm);
 			item->setPixmap(0,SmallIcon("kdeprint_printer"));
 		}
 	}
@@ -281,7 +281,7 @@ void SmbView::processShares()
 void SmbView::slotSelectionChanged(TQListViewItem *item)
 {
 	if (item && item->depth() == 2)
-		emit printerSelected(item->parent()->parent()->text(0),item->parent()->text(0),item->text(0));
+		emit printerSelected(item->tqparent()->tqparent()->text(0),item->tqparent()->text(0),item->text(0));
 }
 
 void SmbView::abort()

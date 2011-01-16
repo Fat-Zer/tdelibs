@@ -50,10 +50,10 @@ TQString KMThreadJob::jobFile()
 
 bool KMThreadJob::saveJobs()
 {
-	QFile	f(jobFile());
+	TQFile	f(jobFile());
 	if (f.open(IO_WriteOnly))
 	{
-		QTextStream	t(&f);
+		TQTextStream	t(&f);
 		TQIntDictIterator<KMJob>	it(m_jobs);
 		for (;it.current();++it)
 			t << it.current()->id() << CHARSEP << it.current()->name() << CHARSEP << it.current()->printer() << CHARSEP << it.current()->owner() << CHARSEP << it.current()->size() << endl;
@@ -64,11 +64,11 @@ bool KMThreadJob::saveJobs()
 
 bool KMThreadJob::loadJobs()
 {
-	QFile	f(jobFile());
+	TQFile	f(jobFile());
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
-		QTextStream	t(&f);
-		QString		line;
+		TQTextStream	t(&f);
+		TQString		line;
 
 		m_jobs.clear();
 		while (!t.eof())

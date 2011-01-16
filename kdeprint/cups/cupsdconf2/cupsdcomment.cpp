@@ -114,7 +114,7 @@ bool CupsdComment::loadComments()
 {
         comments_.setAutoDelete(true);
         comments_.clear();
-        QFile	f(locate("data", "kdeprint/cupsd.conf.template"));
+        TQFile	f(locate("data", "kdeprint/cupsd.conf.template"));
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
                 Comment         *comm;

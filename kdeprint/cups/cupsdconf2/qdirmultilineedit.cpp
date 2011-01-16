@@ -44,10 +44,10 @@ QDirMultiLineEdit::QDirMultiLineEdit(TQWidget *parent, const char *name)
 	connect(m_remove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveClicked()));
 	m_remove->setEnabled(false);
 
-	m_view->setFixedHeight(QMAX(m_view->fontMetrics().lineSpacing()*3+m_view->lineWidth()*2, m_add->tqsizeHint().height()*2));
+	m_view->setFixedHeight(TQMAX(m_view->fontMetrics().lineSpacing()*3+m_view->lineWidth()*2, m_add->tqsizeHint().height()*2));
 
-	QHBoxLayout	*l0 = new TQHBoxLayout(this, 0, 3);
-	QVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 0);
+	TQHBoxLayout	*l0 = new TQHBoxLayout(this, 0, 3);
+	TQVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 0);
 	l0->addWidget(m_view);
 	l0->addLayout(l1);
 	l1->addWidget(m_add);
@@ -68,8 +68,8 @@ void QDirMultiLineEdit::setURLs(const TQStringList& urls)
 
 TQStringList QDirMultiLineEdit::urls()
 {
-	QListViewItem	*item = m_view->firstChild();
-	QStringList	l;
+	TQListViewItem	*item = m_view->firstChild();
+	TQStringList	l;
 	while (item)
 	{
 		l << item->text(0);
@@ -80,20 +80,20 @@ TQStringList QDirMultiLineEdit::urls()
 
 void QDirMultiLineEdit::addURL(const TQString& url)
 {
-	QListViewItem	*item = new TQListViewItem(m_view, url);
+	TQListViewItem	*item = new TQListViewItem(m_view, url);
 	item->setRenameEnabled(0, true);
 }
 
 void QDirMultiLineEdit::slotAddClicked()
 {
-	QString	dirname = KFileDialog::getExistingDirectory(TQString::null, this);
+	TQString	dirname = KFileDialog::getExistingDirectory(TQString::null, this);
 	if (!dirname.isEmpty())
 		addURL(dirname);
 }
 
 void QDirMultiLineEdit::slotRemoveClicked()
 {
-	QListViewItem	*item = m_view->currentItem();
+	TQListViewItem	*item = m_view->currentItem();
 	if (item)
 	{
 		delete item;
