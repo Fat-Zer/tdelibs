@@ -4518,7 +4518,7 @@ static const int SCROLL_TICK = 20;
 void KHTMLView::scrollBy(int dx, int dy)
 {
     KConfigGroup cfg( KGlobal::config(), "KDE" );
-    if( !cfg.readBoolEntry( "SmoothScrolling", true )) {
+    if( !cfg.readBoolEntry( "SmoothScrolling", false )) {
         TQScrollView::scrollBy( dx, dy );
         return;
     }
