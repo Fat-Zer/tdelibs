@@ -73,17 +73,17 @@ public:
     virtual Offset size() const { return m_length; }
 #endif // USE_QT4
 
-    virtual TQ_LONG readBlock ( char * data, TQ_ULONG maxlen )
+    virtual TQT_TQIO_LONG tqreadBlock ( char * data, TQT_TQIO_ULONG maxlen )
     {
-        maxlen = QMIN( maxlen, m_length - at() ); // Apply upper limit
+        maxlen = TQMIN( maxlen, m_length - at() ); // Apply upper limit
         return m_dev->readBlock( data, maxlen );
     }
-    virtual TQ_LONG writeBlock ( const char *, TQ_ULONG ) { return -1; } // unsupported
+    virtual TQT_TQIO_LONG tqwriteBlock ( const char *, TQT_TQIO_ULONG ) { return -1; } // unsupported
     virtual int putch( int ) { return -1; } // unsupported
 
     virtual int getch() {
         char c[2];
-        if ( readBlock(c, 1) == -1)
+        if ( tqreadBlock(c, 1) == -1)
             return -1;
         else
             return c[0];

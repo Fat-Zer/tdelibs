@@ -81,12 +81,12 @@ bool checkLpdQueue(const char *host, const char *queue)
 
 	char	res[64] = {0};
 	snprintf(res,64,"%c%s\n",(char)4,queue);
-	if (sock.writeBlock(res, strlen(res)) != (TQ_LONG)(strlen(res)))
+	if (sock.tqwriteBlock(res, strlen(res)) != (TQ_LONG)(strlen(res)))
 		return false;
 
 	char	buf[1024] = {0};
 	int	n, tot(1);
-	while ((n = sock.readBlock(res, 63)) > 0)
+	while ((n = sock.tqreadBlock(res, 63)) > 0)
 	{
 		res[n] = 0;
 		tot += n;

@@ -118,7 +118,7 @@ TQ_LONG KBufferedSocket::waitForMore(int msecs, bool *timeout)
   return retval;
 }
 
-TQ_LONG KBufferedSocket::readBlock(char *data, TQ_ULONG maxlen)
+TQT_TQIO_LONG KBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
 {
   if (d->input)
     {
@@ -131,13 +131,13 @@ TQ_LONG KBufferedSocket::readBlock(char *data, TQ_ULONG maxlen)
       resetError();
       return d->input->consumeBuffer(data, maxlen);
     }
-  return KStreamSocket::readBlock(data, maxlen);
+  return KStreamSocket::tqreadBlock(data, maxlen);
 }
 
-TQ_LONG KBufferedSocket::readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from)
+TQT_TQIO_LONG KBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from)
 {
   from = peerAddress();
-  return readBlock(data, maxlen);
+  return tqreadBlock(data, maxlen);
 }
 
 TQ_LONG KBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen)
@@ -162,7 +162,7 @@ TQ_LONG KBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& 
   return peekBlock(data, maxlen);
 }
 
-TQ_LONG KBufferedSocket::writeBlock(const char *data, TQ_ULONG len)
+TQT_TQIO_LONG KBufferedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG len)
 {
   if (state() != Connected)
     {
@@ -189,14 +189,14 @@ TQ_LONG KBufferedSocket::writeBlock(const char *data, TQ_ULONG len)
       return d->output->feedBuffer(data, len);
     }
 
-  return KStreamSocket::writeBlock(data, len);
+  return KStreamSocket::tqwriteBlock(data, len);
 }
 
-TQ_LONG KBufferedSocket::writeBlock(const char *data, TQ_ULONG maxlen,
+TQT_TQIO_LONG KBufferedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG maxlen,
 				   const KSocketAddress&)
 {
   // ignore the third parameter
-  return writeBlock(data, maxlen);
+  return tqwriteBlock(data, maxlen);
 }
 
 void KBufferedSocket::enableRead(bool enable)

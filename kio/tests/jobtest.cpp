@@ -160,7 +160,7 @@ static void createTestFile( const TQString& path )
     TQFile f( path );
     if ( !f.open( IO_WriteOnly ) )
         kdFatal() << "Can't create " << path << endl;
-    f.writeBlock( "Hello world", 11 );
+    f.tqwriteBlock( "Hello world", 11 );
     f.close();
     setTimeStamp( path );
 }

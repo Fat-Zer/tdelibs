@@ -1436,7 +1436,7 @@ void KExtendedSocket::flush()
 }
 
 
-TQ_LONG KExtendedSocket::readBlock(char *data, TQ_ULONG maxlen)
+TQT_TQIO_LONG KExtendedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
 {
   cleanError();
   if (d->status < connected || d->flags & passiveSocket)
@@ -1481,7 +1481,7 @@ TQ_LONG KExtendedSocket::readBlock(char *data, TQ_ULONG maxlen)
   return retval;
 }
 
-TQ_LONG KExtendedSocket::writeBlock(const char *data, TQ_ULONG len)
+TQT_TQIO_LONG KExtendedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG len)
 {
   cleanError();
   if (d->status < connected || d->status >= closing || d->flags & passiveSocket)
@@ -1606,7 +1606,7 @@ int KExtendedSocket::getch()
 {
   unsigned char c;
   int retval;
-  retval = readBlock((char*)&c, sizeof(c));
+  retval = tqreadBlock((char*)&c, sizeof(c));
 
   if (retval < 0)
     return retval;
@@ -1616,7 +1616,7 @@ int KExtendedSocket::getch()
 int KExtendedSocket::putch(int ch)
 {
   unsigned char c = (char)ch;
-  return writeBlock((char*)&c, sizeof(c));
+  return tqwriteBlock((char*)&c, sizeof(c));
 }
 
 // sets the emission of the readyRead signal

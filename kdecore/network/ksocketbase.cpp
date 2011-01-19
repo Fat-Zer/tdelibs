@@ -291,7 +291,7 @@ KActiveSocketBase::~KActiveSocketBase()
 int KActiveSocketBase::getch()
 {
   unsigned char c;
-  if (readBlock((char*)&c, 1) != 1)
+  if (tqreadBlock((char*)&c, 1) != 1)
     return -1;
 
   return c;
@@ -300,7 +300,7 @@ int KActiveSocketBase::getch()
 int KActiveSocketBase::putch(int ch)
 {
   unsigned char c = (unsigned char)ch;
-  if (writeBlock((char*)&c, 1) != 1)
+  if (tqwriteBlock((char*)&c, 1) != 1)
     return -1;
 
   return c;

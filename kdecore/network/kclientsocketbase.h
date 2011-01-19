@@ -317,13 +317,13 @@ public:
   /**
    * Reads data from a socket. Reimplemented from KSocketBase.
    */
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen);
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen);
 
   /**
    * @overload
    * Reads data from a socket. Reimplemented from KSocketBase.
    */
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from);
 
   /**
    * Peeks data from the socket. Reimplemented from KSocketBase.
@@ -339,13 +339,13 @@ public:
   /**
    * Writes data to the socket. Reimplemented from KSocketBase.
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len);
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len);
 
   /**
    * @overload
    * Writes data to the socket. Reimplemented from KSocketBase.
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const KSocketAddress& to);
 
   /**
    * Returns the local socket address. Reimplemented from KSocketBase.

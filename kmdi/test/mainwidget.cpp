@@ -90,7 +90,7 @@ MainWidget::~MainWidget()
     TQString s = doc.toString();
     TQFile f("/tmp/dc.txt");
     f.open(IO_ReadWrite);
-    f.writeBlock(s.latin1(), s.length());
+    f.tqwriteBlock(s.latin1(), s.length());
     f.close();
 }
 

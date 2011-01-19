@@ -156,7 +156,7 @@ KDatagramPacket KDatagramSocket::receive()
   KSocketAddress address;
   
   // now do the reading
-  size = readBlock(data.data(), size, address);
+  size = tqreadBlock(data.data(), size, address);
   if (size < 0)
     // error has been set
     return KDatagramPacket();
@@ -167,10 +167,10 @@ KDatagramPacket KDatagramSocket::receive()
 
 TQ_LONG KDatagramSocket::send(const KDatagramPacket& packet)
 {
-  return writeBlock(packet.data(), packet.size(), packet.address());
+  return tqwriteBlock(packet.data(), packet.size(), packet.address());
 }
 
-TQ_LONG KDatagramSocket::writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to)
+TQ_LONG KDatagramSocket::tqwriteBlock(const char *data, TQ_ULONG len, const KSocketAddress& to)
 {
   if (to.family() != AF_UNSPEC)
     {
@@ -179,7 +179,7 @@ TQ_LONG KDatagramSocket::writeBlock(const char *data, TQ_ULONG len, const KSocke
 	// error handling will happen below
 	socketDevice()->create(to.family(), SOCK_DGRAM, 0);
     }
-  return KClientSocketBase::writeBlock(data, len, to);
+  return KClientSocketBase::tqwriteBlock(data, len, to);
 }
 
 void KDatagramSocket::lookupFinishedLocal()

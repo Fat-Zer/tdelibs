@@ -216,12 +216,12 @@ public:
   /**
    * Reads data from this socket.
    */
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen);
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen);
 
   /**
    * Reads data and the source address from this socket.
    */
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from);
 
   /**
    * Peeks data in the socket.
@@ -236,12 +236,12 @@ public:
   /**
    * Writes data to the socket.
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len);
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len);
 
   /**
    * Writes the given data to the given destination address.
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const KSocketAddress& to);
 
   /**
    * Returns this socket's local address.

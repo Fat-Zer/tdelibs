@@ -107,7 +107,7 @@ public:
     TQStringList defaultFonts;
 
     TQValueVector<TQRegExp> adFilters;
-    TQValueList< QPair< TQString, TQChar > > m_fallbackAccessKeysAssignments;
+    TQValueList< TQPair< TQString, TQChar > > m_fallbackAccessKeysAssignments;
 };
 
 
@@ -442,7 +442,7 @@ void KHTMLSettings::init( KConfig * config, bool reset )
     d->m_fallbackAccessKeysAssignments.clear();
     for( TQStringList::ConstIterator it = accesskeys.begin(); it != accesskeys.end(); ++it )
         if( (*it).length() > 2 && (*it)[ 1 ] == ':' )
-            d->m_fallbackAccessKeysAssignments.append( qMakePair( (*it).mid( 2 ), (*it)[ 0 ] ));
+            d->m_fallbackAccessKeysAssignments.append( tqMakePair( (*it).mid( 2 ), (*it)[ 0 ] ));
   }
 
   // Colors
@@ -1043,7 +1043,7 @@ bool KHTMLSettings::autoSpellCheck() const
     return d->m_autoSpellCheck;
 }
 
-TQValueList< QPair< TQString, TQChar > > KHTMLSettings::fallbackAccessKeysAssignments() const
+TQValueList< TQPair< TQString, TQChar > > KHTMLSettings::fallbackAccessKeysAssignments() const
 {
     return d->m_fallbackAccessKeysAssignments;
 }

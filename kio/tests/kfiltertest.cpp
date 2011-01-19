@@ -35,7 +35,7 @@ void test_block( const TQString & fileName )
 
     TQByteArray array(1024);
     int n;
-    while ( ( n = dev->readBlock( array.data(), array.size() ) ) )
+    while ( ( n = dev->tqreadBlock( array.data(), array.size() ) ) )
     {
         kdDebug() << "readBlock returned " << n << endl << endl;
         // TQCString s(array,n+1); // Terminate with 0 before printing
@@ -55,9 +55,9 @@ void test_block_write( const TQString & fileName )
     if ( !dev->open( IO_WriteOnly ) ) { kdWarning() << "open failed " << endl; return; }
 
     TQCString s("hello\n");
-    int ret = dev->writeBlock( s, s.size()-1 );
+    int ret = dev->tqwriteBlock( s, s.size()-1 );
     kdDebug() << "writeBlock ret=" << ret << endl;
-    //ret = dev->writeBlock( s, s.size()-1 );
+    //ret = dev->tqwriteBlock( s, s.size()-1 );
     //kdDebug() << "writeBlock ret=" << ret << endl;
     dev->close();
     delete dev;

@@ -115,7 +115,7 @@ bool KQIODeviceGZip::reset(void)
     return (gzrewind(m_gzfile)>=0);
 }
 
-TQ_LONG KQIODeviceGZip::readBlock( char *data, TQ_ULONG maxlen )
+TQT_TQIO_LONG KQIODeviceGZip::tqreadBlock( char *data, TQT_TQIO_ULONG maxlen )
 {
     TQ_LONG result=0;
     if (m_gzfile)
@@ -126,7 +126,7 @@ TQ_LONG KQIODeviceGZip::readBlock( char *data, TQ_ULONG maxlen )
     return result;
 }
 
-TQ_LONG KQIODeviceGZip::writeBlock( const char *data, TQ_ULONG len )
+TQT_TQIO_LONG KQIODeviceGZip::tqwriteBlock( const char *data, TQT_TQIO_ULONG len )
 {
     TQ_ULONG result=0;
     if (m_gzfile)

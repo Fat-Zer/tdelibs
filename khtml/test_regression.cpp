@@ -350,7 +350,7 @@ Value KHTMLPartFunction::call(ExecState *exec, Object &/*thisObj*/, const List &
 		char buf[1024];
 		int bytesread;
 		while (!file.atEnd()) {
-		    bytesread = file.readBlock(buf,1024);
+		    bytesread = file.tqreadBlock(buf,1024);
 		    stream.writeRawBytes(buf,bytesread);
 		}
 		file.close();
@@ -642,7 +642,7 @@ int main(int argc, char *argv[])
             link = TQString( "<hr>%1 failures. (%2 expected failures)" )
                    .arg(regressionTest->m_failures_work )
                    .arg( regressionTest->m_failures_fail );
-            list.writeBlock( link.latin1(), link.length() );
+            list.tqwriteBlock( link.latin1(), link.length() );
             list.close();
 	}
     }
@@ -697,12 +697,12 @@ RegressionTest::RegressionTest(KHTMLPart *part, const TQString &baseDir, const T
     TQString s;
     f.open( IO_WriteOnly | IO_Truncate );
     s = "<html><body>Follow the white rabbit";
-    f.writeBlock( s.latin1(), s.length() );
+    f.tqwriteBlock( s.latin1(), s.length() );
     f.close();
     f.setName( m_outputDir + "/index.html" );
     f.open( IO_WriteOnly | IO_Truncate );
     s = "<html><frameset cols=150,*><frame src=links.html><frame name=content src=empty.html>";
-    f.writeBlock( s.latin1(), s.length() );
+    f.tqwriteBlock( s.latin1(), s.length() );
     f.close();
 
     m_paintBuffer = 0;
@@ -1032,7 +1032,7 @@ void RegressionTest::createLink( const TQString& test, int failures )
     if ( failures & PaintFailure )
         link += "P";
     link += "]<br>\n";
-    list.writeBlock( link.latin1(), link.length() );
+    list.tqwriteBlock( link.latin1(), link.length() );
     list.close();
 }
 
@@ -1056,7 +1056,7 @@ void RegressionTest::doJavascriptReport( const TQString &test )
     text.replace( '\n', "<br>\n" );
     cl += text;
     cl += "</tt></body></html>";
-    compare.writeBlock( cl.latin1(), cl.length() );
+    compare.tqwriteBlock( cl.latin1(), cl.length() );
     compare.close();
 }
 
@@ -1248,7 +1248,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
     cl += "<div id='dom' class='diff'>" + domDiff + "</div>";
 
     cl += "</body></html>";
-    compare.writeBlock( cl.latin1(), cl.length() );
+    compare.tqwriteBlock( cl.latin1(), cl.length() );
     compare.close();
 }
 

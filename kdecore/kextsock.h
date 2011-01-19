@@ -67,7 +67,7 @@ class KExtendedSocketPrivate;
  * only difference is that the passiveSocket flag must be passed either to
  * the constructor or to setSocketFlags(). If passiveSocket is used, the class will
  * enable functions listen() and accept() and related signals, and will
- * also disable readBlock() and writeBlock().
+ * also disable tqreadBlock() and tqwriteBlock().
  *
  * To create a Unix socket, one would pass flag unixSocket to the constructor
  * or setSocketFlags(). The hostname and service/port can be set to whatever is
@@ -677,7 +677,7 @@ public:
    * ready to receive data, it will block, unless this is a non-blocking socket.
    *
    * This function does not touch the read buffer. You can empty it by calling
-   * readBlock() with a null destination buffer.
+   * tqreadBlock() with a null destination buffer.
    */
   virtual void flush();
 
@@ -745,7 +745,7 @@ public:
    * This function returns 0, if the function detected end-of-file condition
    * (socket was closed)
    */
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen);
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen);
 
   /**
    * Writes a block of data to the socket.
@@ -770,7 +770,7 @@ public:
    * The return value might be less than @p len if the output buffers cannot
    * accommodate that many bytes and -1 in the case of an errro.
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len);
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len);
 
   /**
    * Peeks at a block of data from the socket.

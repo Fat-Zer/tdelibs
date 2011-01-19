@@ -52,8 +52,8 @@ public:
     bool atEnd(void) const;
     bool reset (void);
 
-    TQ_LONG readBlock( char *data, TQ_ULONG maxlen );
-    TQ_LONG writeBlock( const char *data, TQ_ULONG len );
+    TQT_TQIO_LONG tqreadBlock( char *data, TQT_TQIO_ULONG maxlen );
+    TQT_TQIO_LONG tqwriteBlock( const char *data, TQT_TQIO_ULONG len );
 
     int getch(void);
     int putch(int ch);

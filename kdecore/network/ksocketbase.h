@@ -562,7 +562,7 @@ public:
    * Reimplemented from TQIODevice. See TQIODevice::readBlock for
    * more information.
    */
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG len) = 0;
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG len) = 0;
 
   /** @overload
    * Receives data and the source address.
@@ -575,7 +575,7 @@ public:
    * @param from		the address of the sender will be stored here
    * @returns the actual number of bytes read
    */
-  virtual TQ_LONG readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from) = 0;
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from) = 0;
 
   /**
    * Peeks the data in the socket.
@@ -610,7 +610,7 @@ public:
    * Reimplemented from TQIODevice. See TQIODevice::writeBlock for
    * more information.
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len) = 0;
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len) = 0;
 
   /** @overload
    * Writes the given data to the destination address.
@@ -623,7 +623,7 @@ public:
    * @param to			the address to send to
    * @returns the number of bytes actually sent
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to) = 0;
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const KSocketAddress& to) = 0;
 
   /**
    * Reads one character from the socket.

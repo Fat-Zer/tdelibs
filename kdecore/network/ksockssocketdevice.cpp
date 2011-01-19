@@ -214,7 +214,7 @@ static int socks_read_common(int sockfd, char *data, TQ_ULONG maxlen, KSocketAdd
   return 0;
 }
 
-TQ_LONG KSocksSocketDevice::readBlock(char *data, TQ_ULONG maxlen)
+TQ_LONG KSocksSocketDevice::tqreadBlock(char *data, TQ_ULONG maxlen)
 {
   resetError();
   if (m_sockfd == -1)
@@ -235,7 +235,7 @@ TQ_LONG KSocksSocketDevice::readBlock(char *data, TQ_ULONG maxlen)
   return retval;
 }
 
-TQ_LONG KSocksSocketDevice::readBlock(char *data, TQ_ULONG maxlen, KSocketAddress &from)
+TQ_LONG KSocksSocketDevice::tqreadBlock(char *data, TQ_ULONG maxlen, KSocketAddress &from)
 {
   resetError();
   if (m_sockfd == -1)
@@ -298,12 +298,12 @@ TQ_LONG KSocksSocketDevice::peekBlock(char *data, TQ_ULONG maxlen, KSocketAddres
   return retval;
 }
 
-TQ_LONG KSocksSocketDevice::writeBlock(const char *data, TQ_ULONG len)
+TQ_LONG KSocksSocketDevice::tqwriteBlock(const char *data, TQ_ULONG len)
 {
-  return writeBlock(data, len, KSocketAddress());
+  return tqwriteBlock(data, len, KSocketAddress());
 }
 
-TQ_LONG KSocksSocketDevice::writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to)
+TQ_LONG KSocksSocketDevice::tqwriteBlock(const char *data, TQ_ULONG len, const KSocketAddress& to)
 {
   resetError();
   if (m_sockfd == -1)

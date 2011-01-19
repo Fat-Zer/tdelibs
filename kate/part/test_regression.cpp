@@ -628,7 +628,7 @@ int main(int argc, char *argv[])
                 link += TQString(" <p style=\"color:green;font-weight:bold\">%1 new passes since %2</p>")
                         .arg(regressionTest->m_passes_new)
                         .arg(regressionTest->m_failureComp->group());
-            list.writeBlock( link.latin1(), link.length() );
+            list.tqwriteBlock( link.latin1(), link.length() );
             list.close();
 	}
     }
@@ -681,12 +681,12 @@ RegressionTest::RegressionTest(KateDocument *part, KConfig *baseConfig,
     TQString s;
     f.open( IO_WriteOnly | IO_Truncate );
     s = "<html><body>Follow the white rabbit";
-    f.writeBlock( s.latin1(), s.length() );
+    f.tqwriteBlock( s.latin1(), s.length() );
     f.close();
     f.setName( m_outputDir + "/index.html" );
     f.open( IO_WriteOnly | IO_Truncate );
     s = "<html><frameset cols=150,*><frame src=links.html><frame name=content src=empty.html>";
-    f.writeBlock( s.latin1(), s.length() );
+    f.tqwriteBlock( s.latin1(), s.length() );
     f.close();
 
     curr = this;
@@ -848,7 +848,7 @@ void RegressionTest::createLink( const TQString& test, int failures )
     if (failures & NewFailure)
         link += "</span>";
     link += "<br>\n";
-    list.writeBlock( link.latin1(), link.length() );
+    list.tqwriteBlock( link.latin1(), link.length() );
     list.close();
 }
 
@@ -1020,7 +1020,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
     cl += "<div id='dom' class='diff'>" + domDiff + "</div>";
 
     cl += "</body></html>";
-    compare.writeBlock( cl.latin1(), cl.length() );
+    compare.tqwriteBlock( cl.latin1(), cl.length() );
     compare.close();
 }
 

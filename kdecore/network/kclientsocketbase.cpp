@@ -311,10 +311,10 @@ TQ_LONG KClientSocketBase::waitForMore(int msecs, bool *timeout)
   return retval;
 }
 
-TQ_LONG KClientSocketBase::readBlock(char *data, TQ_ULONG maxlen)
+TQT_TQIO_LONG KClientSocketBase::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
 {
   resetError();
-  TQ_LONG retval = socketDevice()->readBlock(data, maxlen);
+  TQ_LONG retval = socketDevice()->tqreadBlock(data, maxlen);
   if (retval == -1)
     {
       copyError();
@@ -323,10 +323,10 @@ TQ_LONG KClientSocketBase::readBlock(char *data, TQ_ULONG maxlen)
   return retval;
 }
 
-TQ_LONG KClientSocketBase::readBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from)
+TQT_TQIO_LONG KClientSocketBase::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from)
 {
   resetError();
-  TQ_LONG retval = socketDevice()->readBlock(data, maxlen, from);
+  TQ_LONG retval = socketDevice()->tqreadBlock(data, maxlen, from);
   if (retval == -1)
     {
       copyError();
@@ -359,10 +359,10 @@ TQ_LONG KClientSocketBase::peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress
   return retval;
 }
 
-TQ_LONG KClientSocketBase::writeBlock(const char *data, TQ_ULONG len)
+TQT_TQIO_LONG KClientSocketBase::tqwriteBlock(const char *data, TQT_TQIO_ULONG len)
 {
   resetError();
-  TQ_LONG retval = socketDevice()->writeBlock(data, len);
+  TQ_LONG retval = socketDevice()->tqwriteBlock(data, len);
   if (retval == -1)
     {
       copyError();
@@ -371,10 +371,10 @@ TQ_LONG KClientSocketBase::writeBlock(const char *data, TQ_ULONG len)
   return retval;
 }
 
-TQ_LONG KClientSocketBase::writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to)
+TQT_TQIO_LONG KClientSocketBase::tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const KSocketAddress& to)
 {
   resetError();
-  TQ_LONG retval = socketDevice()->writeBlock(data, len, to);
+  TQ_LONG retval = socketDevice()->tqwriteBlock(data, len, to);
   if (retval == -1)
     {
       copyError();

@@ -1114,7 +1114,7 @@ bool KZip::prepareWriting_impl(const TQString &name, const TQString &user,
     }
 
     // delete entries in the filelist with the same filename as the one we want
-    // to save, so that we don´t have duplicate file entries when viewing the zip
+    // to save, so that we donï¿½t have duplicate file entries when viewing the zip
     // with konqi...
     // CAUTION: the old file itself is still in the zip and won't be removed !!!
     TQPtrListIterator<KZipFileEntry> it( d->m_fileList );

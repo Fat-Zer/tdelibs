@@ -236,7 +236,7 @@ bool KFilterDev::atEnd() const
                                      && d->ungetchBuffer.isEmpty();
 }
 
-TQ_LONG KFilterDev::readBlock( char *data, TQ_ULONG maxlen )
+TQT_TQIO_LONG KFilterDev::tqreadBlock( char *data, TQT_TQIO_ULONG maxlen )
 {
     Q_ASSERT ( filter->mode() == IO_ReadOnly );
     //kdDebug(7005) << "KFilterDev::readBlock maxlen=" << maxlen << endl;
@@ -355,7 +355,7 @@ TQ_LONG KFilterDev::readBlock( char *data, TQ_ULONG maxlen )
     return dataReceived;
 }
 
-TQ_LONG KFilterDev::writeBlock( const char *data /*0 to finish*/, TQ_ULONG len )
+TQT_TQIO_LONG KFilterDev::tqwriteBlock( const char *data /*0 to finish*/, TQT_TQIO_ULONG len )
 {
     Q_ASSERT ( filter->mode() == IO_WriteOnly );
     // If we had an error, return 0.

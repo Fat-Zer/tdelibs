@@ -179,7 +179,7 @@ bool KHttpProxySocketDevice::parseServerReply()
   if (!d->request.isEmpty())
     {
       // send request
-      TQ_LONG written = writeBlock(d->request, d->request.length());
+      TQ_LONG written = tqwriteBlock(d->request, d->request.length());
       if (written < 0)
 	{
 	  qDebug("KHttpProxySocketDevice: would block writing request!");
@@ -227,7 +227,7 @@ bool KHttpProxySocketDevice::parseServerReply()
 	{
 	  // no, headers not yet finished...
 	  // consume data from socket
-	  readBlock(buf.data(), avail);
+	  tqreadBlock(buf.data(), avail);
 	  d->reply += buf.data();
 	  setError(IO_ConnectError, InProgress);
 	  return true;
@@ -238,7 +238,7 @@ bool KHttpProxySocketDevice::parseServerReply()
       d->reply += fullHeaders.mid(d->reply.length(), index + 4);
 
       // consume from socket
-      readBlock(buf.data(), index + 4);
+      tqreadBlock(buf.data(), index + 4);
     }
   else
     {

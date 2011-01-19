@@ -347,17 +347,17 @@ void HTMLElementImpl::addCSSLength(int id, const DOMString &value, bool numOnly,
 }
 
 static inline bool isHexDigit( const TQChar &c ) {
-    return ( c >= '0' && c <= '9' ) ||
-	   ( c >= 'a' && c <= 'f' ) ||
-	   ( c >= 'A' && c <= 'F' );
+    return ( c >= TQChar('0') && c <= TQChar('9') ) ||
+	   ( c >= TQChar('a') && c <= TQChar('f') ) ||
+	   ( c >= TQChar('A') && c <= TQChar('F') );
 }
 
 static inline int toHex( const TQChar &c ) {
-    return ( (c >= '0' && c <= '9')
+    return ( (c >= TQChar('0') && c <= TQChar('9'))
 	     ? (c.tqunicode() - '0')
-	     : ( ( c >= 'a' && c <= 'f' )
+	     : ( ( c >= TQChar('a') && c <= TQChar('f') )
 		 ? (c.tqunicode() - 'a' + 10)
-		 : ( ( c >= 'A' && c <= 'F' )
+		 : ( ( c >= TQChar('A') && c <= TQChar('F') )
 		     ? (c.tqunicode() - 'A' + 10)
 		     : -1 ) ) );
 }

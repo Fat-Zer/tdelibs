@@ -223,7 +223,7 @@ public:
    *
    * Connecting means only to designate the given address as the default
    * destination address for datagrams sent without destination addresses
-   * ( writeBlock(const char *, TQ_ULONG) ).
+   * ( tqwriteBlock(const char *, TQ_ULONG) ).
    *
    * @note Calling connect will not cause the socket to be bound. You have
    *       to call @ref bind explicitly.
@@ -241,7 +241,7 @@ public:
   /**
    * Writes data to the socket. Reimplemented from KClientSocketBase.
    */
-  virtual TQ_LONG writeBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
+  virtual TQ_LONG tqwriteBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
 
   /**
    * Receives one datagram from the stream. The reading process is guaranteed

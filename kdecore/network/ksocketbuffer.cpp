@@ -273,7 +273,7 @@ TQ_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
 	}
 
       // now try to write those bytes
-      TQ_LONG wrote = dev->writeBlock(buf, count);
+      TQ_LONG wrote = dev->tqwriteBlock(buf, count);
 
       if (wrote == -1)
 	// error?
@@ -314,7 +314,7 @@ TQ_LONG KSocketBuffer::receiveFrom(KActiveSocketBase* dev, TQ_LONG len)
 
   // now do the reading
   TQByteArray a(len);
-  len = dev->readBlock(a.data(), len);
+  len = dev->tqreadBlock(a.data(), len);
 
   if (len == -1)
     // error?
