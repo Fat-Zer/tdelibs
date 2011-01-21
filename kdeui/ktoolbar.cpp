@@ -1220,7 +1220,7 @@ void KToolBar::doModeChange()
 }
 
 void KToolBar::rebuildLayout()
-{
+{ 
     for(TQWidget *w=d->idleButtons.first(); w; w=d->idleButtons.next())
        w->blockSignals(false);
     d->idleButtons.clear();

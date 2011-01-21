@@ -103,6 +103,7 @@ namespace KMDI
 class KDEUI_EXPORT KDockWidgetAbstractHeader : public TQFrame
 {
   Q_OBJECT
+  TQ_OBJECT
 public:
 
   /**
@@ -152,6 +153,7 @@ private:
 class KDEUI_EXPORT KDockWidgetAbstractHeaderDrag : public TQFrame
 {
   Q_OBJECT
+  TQ_OBJECT
 public:
 
   /**
@@ -197,6 +199,7 @@ private:
 class KDEUI_EXPORT KDockWidgetHeaderDrag : public KDockWidgetAbstractHeaderDrag
 {
   Q_OBJECT
+  TQ_OBJECT
 public:
 
   /**
@@ -238,6 +241,7 @@ private:
 class KDEUI_EXPORT KDockWidgetHeader : public KDockWidgetAbstractHeader
 {
   Q_OBJECT
+  TQ_OBJECT
 public:
 
   /**
@@ -363,6 +367,7 @@ private:
 class KDEUI_EXPORT KDockTabGroup : public TQTabWidget
 {
   Q_OBJECT
+  TQ_OBJECT
 public:
   /**
    * Constructs this. It just calls the method of the base class.
@@ -423,6 +428,7 @@ private:
 class KDEUI_EXPORT KDockWidget: public TQWidget
 {
   Q_OBJECT
+  TQ_OBJECT
 friend class KDockManager;
 friend class KDockSplitter;
 friend class KDockMainWindow;
@@ -909,6 +915,7 @@ private:
 class KDEUI_EXPORT KDockManager: public TQObject
 {
   Q_OBJECT
+  TQ_OBJECT
 friend class KDockWidget;
 friend class KDockMainWindow;
 
@@ -1307,6 +1314,7 @@ private:
 class KDEUI_EXPORT KDockMainWindow : public KMainWindow
 {
   Q_OBJECT
+  TQ_OBJECT
 
 friend class KDockManager;
 
@@ -1473,6 +1481,7 @@ private:
 class KDEUI_EXPORT KDockArea : public TQWidget
 {
   Q_OBJECT
+  TQ_OBJECT
 
 friend class KDockManager;
 
