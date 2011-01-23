@@ -522,7 +522,7 @@ protected:
     }
 
 
-    virtual void tqdrawControl( ControlElement element,
+    virtual void tqdrawControl( TQ_ControlElement element,
                               TQPainter *p,
                               const TQWidget *widget,
                               const TQRect &r,
@@ -534,7 +534,7 @@ protected:
                              r, cg, how, opt );
     }
 
-    virtual void tqdrawControlMask( ControlElement element,
+    virtual void tqdrawControlMask( TQ_ControlElement element,
                                   TQPainter *p,
                                   const TQWidget *widget,
                                   const TQRect &r,
@@ -544,7 +544,7 @@ protected:
     }
 
 
-    virtual void tqdrawComplexControl( ComplexControl control,
+    virtual void tqdrawComplexControl( TQ_ComplexControl control,
                                      TQPainter *p,
                                      const TQWidget* widget,
                                      const TQRect &r,

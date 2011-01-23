@@ -274,7 +274,7 @@ void HighContrastStyle::drawEllipse (TQPainter* p, TQRect r, int offset, bool fi
 	p->drawRoundRect (r, 99, 99);
 }
 
-void HighContrastStyle::drawArrow (TQPainter* p, TQRect r, PrimitiveElement arrow, int offset) const
+void HighContrastStyle::drawArrow (TQPainter* p, TQRect r, TQ_PrimitiveElement arrow, int offset) const
 {
 	p->save();
 	addOffset (&r, offset);
@@ -325,7 +325,7 @@ void HighContrastStyle::drawArrow (TQPainter* p, TQRect r, PrimitiveElement arro
 }
 
 // This function draws primitive elements
-void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
+void HighContrastStyle::tqdrawPrimitive (TQ_PrimitiveElement pe,
 								TQPainter *p,
 								const TQRect &r,
 								const TQColorGroup &cg,
@@ -573,7 +573,7 @@ void HighContrastStyle::drawPrimitive (PrimitiveElement pe,
 			setColorsText (p, cg, flags, 0);
 			drawRoundRect (p, r);
 			if (flags & (Style_HasFocus | Style_Active))
-				drawPrimitive (PE_FocusRect, p, r, cg, flags, TQStyleOption (p->backgroundColor()));
+				tqdrawPrimitive (PE_FocusRect, p, r, cg, flags, TQStyleOption (p->backgroundColor()));
 			break;
 		}
 		case PE_PanelTabWidget:
@@ -712,7 +712,7 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 			// Probably it would be better to add a KPM_ListViewExpander metric
 			// to the KStyle KStylePixelMetric enum, and have the KStyle
 			// tqdrawComplexControl handle it.
-			PrimitiveElement direction;
+			TQ_PrimitiveElement direction;
 			if (flags & Style_On) { // Collapsed = On
 				direction = PE_ArrowRight;
 
@@ -732,7 +732,7 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 }
 
 
-void HighContrastStyle::tqdrawControl (ControlElement element,
+void HighContrastStyle::tqdrawControl (TQ_ControlElement element,
 								TQPainter *p,
 								const TQWidget *widget,
 								const TQRect &r,
@@ -797,9 +797,9 @@ void HighContrastStyle::tqdrawControl (ControlElement element,
 			}
 
 			if ( btnDefault && (button->isEnabled()))
-				drawPrimitive( PE_ButtonDefault, p, r, cg, flags );
+				tqdrawPrimitive( PE_ButtonDefault, p, r, cg, flags );
 
-			drawPrimitive( PE_ButtonCommand, p, br, cg, flags );
+			tqdrawPrimitive( PE_ButtonCommand, p, br, cg, flags );
 
 			break;
 		}
@@ -885,7 +885,7 @@ void HighContrastStyle::tqdrawControl (ControlElement element,
 
 			// Draw a focus rect if the button has focus
 			if (flags & Style_HasFocus)
-				drawPrimitive (PE_FocusRect, p, r, cg, flags, TQStyleOption (p->backgroundColor()));
+				tqdrawPrimitive (PE_FocusRect, p, r, cg, flags, TQStyleOption (p->backgroundColor()));
 
 			// Draw the label itself
 			TQColor color = p->pen().color();
@@ -930,7 +930,7 @@ void HighContrastStyle::tqdrawControl (ControlElement element,
 		// CHECKBOX
 		// -------------------------------------------------------------------
 		case CE_CheckBox: {
-			drawPrimitive (PE_Indicator, p, r, cg, flags);
+			tqdrawPrimitive (PE_Indicator, p, r, cg, flags);
 			break;
 		}
 
@@ -1120,7 +1120,7 @@ void HighContrastStyle::tqdrawControl (ControlElement element,
 
 			// Does the menu item have a submenu?
 			if ( mi->popup() ) {
-				PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
+				TQ_PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
 				int dim = tqpixelMetric(PM_MenuButtonIndicator);
 				TQRect vr = tqvisualRect( TQRect( x + w - arrowHMargin - 2*itemFrame - dim,
 							y + h / 2 - dim / 2, dim, dim), r );
@@ -1136,7 +1136,7 @@ void HighContrastStyle::tqdrawControl (ControlElement element,
 	}
 }
 
-void HighContrastStyle::tqdrawControlMask (ControlElement element,
+void HighContrastStyle::tqdrawControlMask (TQ_ControlElement element,
 										TQPainter *p,
 										const TQWidget *w,
 										const TQRect &r,
@@ -1179,7 +1179,7 @@ static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
     return sibling;
 }
 
-void HighContrastStyle::tqdrawComplexControl (ComplexControl control,
+void HighContrastStyle::tqdrawComplexControl (TQ_ComplexControl control,
 									TQPainter *p,
 									const TQWidget *widget,
 									const TQRect &r,
@@ -1208,7 +1208,7 @@ void HighContrastStyle::tqdrawComplexControl (ComplexControl control,
 				else
 					r3.setLeft (r2.right()-basicLineWidth+1);
 
-				drawPrimitive (PE_FocusRect, p, r3, cg, flags, TQStyleOption (p->backgroundColor()));
+				tqdrawPrimitive (PE_FocusRect, p, r3, cg, flags, TQStyleOption (p->backgroundColor()));
 			}
 			
 			setColorsButton (p, cg, flags);
@@ -1229,18 +1229,18 @@ void HighContrastStyle::tqdrawComplexControl (ComplexControl control,
 				setColorsText (p, cg, flags);
 				drawRoundRect (p, r);
 				if (flags & Style_HasFocus)
-					drawPrimitive(PE_FocusRect, p, r, cg, flags, TQStyleOption (p->backgroundColor()));
+					tqdrawPrimitive(PE_FocusRect, p, r, cg, flags, TQStyleOption (p->backgroundColor()));
 			}
 			
 			setColorsButton (p, cg, flags);
 			// Draw arrows if required
 			if (controls & SC_SpinWidgetDown) {
-				TQRect r2 = TQStyle::tqvisualRect (querySubControlMetrics ((QStyle::ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetDown), widget);
+				TQRect r2 = TQStyle::tqvisualRect (querySubControlMetrics ((TQ_ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetDown), widget);
 				drawRoundRect (p, r2);
 				drawArrow (p, r2, PE_SpinWidgetDown, 2*basicLineWidth);
 			}
 			if (controls & SC_SpinWidgetUp) {
-				TQRect r2 = TQStyle::tqvisualRect (querySubControlMetrics ((QStyle::ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetUp), widget);
+				TQRect r2 = TQStyle::tqvisualRect (querySubControlMetrics ((TQ_ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetUp), widget);
 				drawRoundRect (p, r2);
 				drawArrow (p, r2, PE_SpinWidgetUp, 2*basicLineWidth);
 			}
@@ -1273,7 +1273,7 @@ void HighContrastStyle::tqdrawComplexControl (ComplexControl control,
 			{
 				// If we're pressed, on, or raised...
 				if (bflags & (Style_Down | Style_On | Style_Raised))
-					drawPrimitive(PE_ButtonTool, p, button, cg, bflags, opt);
+					tqdrawPrimitive(PE_ButtonTool, p, button, cg, bflags, opt);
 
 				// Check whether to draw a background pixmap
 				else if ( toolbutton->tqparentWidget() &&
@@ -1289,14 +1289,14 @@ void HighContrastStyle::tqdrawComplexControl (ComplexControl control,
 			if (controls & SC_ToolButtonMenu)
 			{
 				if (mflags & (Style_Down | Style_On | Style_Raised))
-					drawPrimitive(PE_ButtonDropDown, p, menuarea, cg, mflags, opt);
+					tqdrawPrimitive(PE_ButtonDropDown, p, menuarea, cg, mflags, opt);
 				drawArrow (p, menuarea, PE_ArrowDown);
 			}
 
 			if (toolbutton->hasFocus() && !toolbutton->focusProxy()) {
 				TQRect fr = toolbutton->rect();
 				addOffset (&fr, 3);
-				drawPrimitive(PE_FocusRect, p, fr, cg, flags, TQStyleOption (p->backgroundColor()));
+				tqdrawPrimitive(PE_FocusRect, p, fr, cg, flags, TQStyleOption (p->backgroundColor()));
 			}
 
 			break;
@@ -1467,7 +1467,7 @@ void HighContrastStyle::tqdrawComplexControl (ComplexControl control,
 	}
 }
 
-void HighContrastStyle::tqdrawComplexControlMask(ComplexControl c,
+void HighContrastStyle::tqdrawComplexControlMask(TQ_ComplexControl c,
 											   TQPainter *p,
 											   const TQWidget *w,
 											   const TQRect &r,
@@ -1510,7 +1510,7 @@ void HighContrastStyle::drawItem( TQPainter *p,
 	p->restore();
 }
 
-TQRect HighContrastStyle::querySubControlMetrics( ComplexControl control,
+TQRect HighContrastStyle::querySubControlMetrics( TQ_ComplexControl control,
 									const TQWidget* widget,
 								  SubControl subcontrol,
 								  const TQStyleOption& opt ) const
@@ -1662,7 +1662,7 @@ int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget *widg
 	}
 }
 
-TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
+TQSize HighContrastStyle::tqsizeFromContents( ContentsType contents,
 										const TQWidget* widget,
 										const TQSize &contentSize,
 										const TQStyleOption& opt ) const

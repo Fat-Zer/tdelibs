@@ -129,7 +129,7 @@ static void drawLightBevel(TQPainter *p, const TQRect &r, const TQColorGroup &cg
     if (fill) p->fillRect(br, *fill);
 }
 
-void LightStyleV2::drawPrimitive( PrimitiveElement pe,
+void LightStyleV2::tqdrawPrimitive( TQ_PrimitiveElement pe,
 				TQPainter *p,
 				const TQRect &r,
 				const TQColorGroup &cg,
@@ -444,7 +444,7 @@ void LightStyleV2::drawPrimitive( PrimitiveElement pe,
     case PE_ScrollBarSubLine:
 	{
 	    TQRect fr = r, ar = r;
-	    PrimitiveElement pe;
+	    TQ_PrimitiveElement pe;
 
 	    p->setPen(cg.dark());
 	    if (flags & Style_Horizontal) {
@@ -469,7 +469,7 @@ void LightStyleV2::drawPrimitive( PrimitiveElement pe,
     case PE_ScrollBarAddLine:
 	{
 	    TQRect fr = r, ar = r;
-	    PrimitiveElement pe;
+	    TQ_PrimitiveElement pe;
 
 	    p->setPen(cg.dark());
 	    if (flags & Style_Horizontal) {
@@ -612,7 +612,7 @@ void LightStyleV2::drawPrimitive( PrimitiveElement pe,
     }
 }
 
-void LightStyleV2::tqdrawControl( ControlElement control,
+void LightStyleV2::tqdrawControl( TQ_ControlElement control,
 			      TQPainter *p,
 			      const TQWidget *widget,
 			      const TQRect &r,
@@ -970,7 +970,7 @@ void LightStyleV2::tqdrawControl( ControlElement control,
     }
 }
 
-void LightStyleV2::tqdrawControlMask( ControlElement control,
+void LightStyleV2::tqdrawControlMask( TQ_ControlElement control,
 				  TQPainter *p,
 				  const TQWidget *widget,
 				  const TQRect &r,
@@ -1015,7 +1015,7 @@ TQRect LightStyleV2::subRect(SubRect subrect, const TQWidget *widget) const
     return rect;
 }
 
-void LightStyleV2::tqdrawComplexControl( ComplexControl control,
+void LightStyleV2::tqdrawComplexControl( TQ_ComplexControl control,
 				     TQPainter* p,
 				     const TQWidget* widget,
 				     const TQRect& r,
@@ -1087,7 +1087,7 @@ void LightStyleV2::tqdrawComplexControl( ComplexControl control,
 	    const TQSpinWidget *spinwidget = (const TQSpinWidget *) widget;
 	    TQRect frame, up, down;
 
-	    frame = querySubControlMetrics((QStyle::ComplexControl)CC_SpinWidget, widget,
+	    frame = querySubControlMetrics((TQ_ComplexControl)CC_SpinWidget, widget,
 					   SC_SpinWidgetFrame, data);
 	    up = spinwidget->upRect();
 	    down = spinwidget->downRect();
@@ -1097,7 +1097,7 @@ void LightStyleV2::tqdrawComplexControl( ComplexControl control,
 			       &cg.tqbrush(TQColorGroup::Base));
 
 	    if ((controls & SC_SpinWidgetUp) && up.isValid()) {
-		PrimitiveElement pe = PE_SpinWidgetUp;
+		TQ_PrimitiveElement pe = PE_SpinWidgetUp;
 		if ( spinwidget->buttonSymbols() == TQSpinWidget::PlusMinus )
 		    pe = PE_SpinWidgetPlus;
 
@@ -1130,7 +1130,7 @@ void LightStyleV2::tqdrawComplexControl( ComplexControl control,
 	    }
 
 	    if ((controls & SC_SpinWidgetDown) && down.isValid()) {
-		PrimitiveElement pe = PE_SpinWidgetDown;
+		TQ_PrimitiveElement pe = PE_SpinWidgetDown;
 		if ( spinwidget->buttonSymbols() == TQSpinWidget::PlusMinus )
 		    pe = PE_SpinWidgetMinus;
 
@@ -1299,7 +1299,7 @@ void LightStyleV2::tqdrawComplexControl( ComplexControl control,
     }
 }
 
-TQRect LightStyleV2::querySubControlMetrics( ComplexControl control,
+TQRect LightStyleV2::querySubControlMetrics( TQ_ComplexControl control,
 					  const TQWidget *widget,
 					  SubControl sc,
 					  const TQStyleOption &data ) const
@@ -1393,7 +1393,7 @@ TQRect LightStyleV2::querySubControlMetrics( ComplexControl control,
     return ret;
 }
 
-TQStyle::SubControl LightStyleV2::querySubControl( ComplexControl control,
+TQStyle::SubControl LightStyleV2::querySubControl( TQ_ComplexControl control,
 						const TQWidget *widget,
 						const TQPoint &pos,
 						const TQStyleOption &data ) const
@@ -1479,7 +1479,7 @@ int LightStyleV2::tqpixelMetric( PixelMetric metric,
     return ret;
 }
 
-TQSize LightStyleV2::sizeFromContents( ContentsType contents,
+TQSize LightStyleV2::tqsizeFromContents( ContentsType contents,
 				    const TQWidget *widget,
 				    const TQSize &contentsSize,
 				    const TQStyleOption &data ) const

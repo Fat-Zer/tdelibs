@@ -44,32 +44,32 @@ public:
 
     void polishPopupMenu( TQPopupMenu * );
 
-    void drawPrimitive(PrimitiveElement, TQPainter *, const TQRect &, const TQColorGroup &,
+    void tqdrawPrimitive(TQ_PrimitiveElement, TQPainter *, const TQRect &, const TQColorGroup &,
 		       SFlags = Style_Default,
 		       const TQStyleOption & = TQStyleOption::Default ) const;
 
-    void tqdrawControl(ControlElement, TQPainter *, const TQWidget *, const TQRect &,
+    void tqdrawControl(TQ_ControlElement, TQPainter *, const TQWidget *, const TQRect &,
 		     const TQColorGroup &, SFlags = Style_Default,
 		     const TQStyleOption & = TQStyleOption::Default ) const;
-    void tqdrawControlMask(ControlElement, TQPainter *, const TQWidget *, const TQRect &,
+    void tqdrawControlMask(TQ_ControlElement, TQPainter *, const TQWidget *, const TQRect &,
 			 const TQStyleOption & = TQStyleOption::Default) const;
 
     TQRect subRect(SubRect, const TQWidget *) const;
 
-    void tqdrawComplexControl(ComplexControl, TQPainter *, const TQWidget *, const TQRect &,
+    void tqdrawComplexControl(TQ_ComplexControl, TQPainter *, const TQWidget *, const TQRect &,
 			    const TQColorGroup &, SFlags = Style_Default,
 			    SCFlags = SC_All, SCFlags = SC_None,
 			    const TQStyleOption & = TQStyleOption::Default ) const;
 
-    TQRect querySubControlMetrics(ComplexControl, const TQWidget *, SubControl,
+    TQRect querySubControlMetrics(TQ_ComplexControl, const TQWidget *, SubControl,
 				 const TQStyleOption & = TQStyleOption::Default ) const;
 
-    SubControl querySubControl(ComplexControl, const TQWidget *, const TQPoint &,
+    SubControl querySubControl(TQ_ComplexControl, const TQWidget *, const TQPoint &,
 			       const TQStyleOption &data = TQStyleOption::Default ) const;
 
     int tqpixelMetric(PixelMetric, const TQWidget * = 0 ) const;
 
-    TQSize sizeFromContents(ContentsType, const TQWidget *, const TQSize &,
+    TQSize tqsizeFromContents(ContentsType, const TQWidget *, const TQSize &,
 			   const TQStyleOption & = TQStyleOption::Default ) const;
 
     int tqstyleHint(StyleHint, const TQWidget * = 0,

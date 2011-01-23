@@ -3,7 +3,7 @@
  *
  * KDE3 HighColor Style (version 1.0)
  * Copyright (C) 2001-2002 Karol Szwed      <gallium@kde.org>
- *           (C) 2001-2002 Fredrik Höglund  <fredrik@kde.org> 
+ *           (C) 2001-2002 Fredrik Hï¿½glund  <fredrik@kde.org> 
  *
  * Drawing routines adapted from the KDE2 HCStyle,
  * Copyright (C) 2000 Daniel M. Duley       <mosfet@kde.org>
@@ -79,14 +79,14 @@ class HighColorStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 		
-		void drawPrimitive( PrimitiveElement pe,
+		void tqdrawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawControl( ControlElement element,
+		void tqdrawControl( TQ_ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -94,13 +94,13 @@ class HighColorStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawControlMask( ControlElement element,
+		void tqdrawControlMask( TQ_ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 		
-		void tqdrawComplexControl( ComplexControl control,
+		void tqdrawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -110,7 +110,7 @@ class HighColorStyle : public KStyle
 					SCFlags active = SC_None,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawComplexControlMask( ComplexControl control,
+		void tqdrawComplexControlMask( TQ_ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -129,7 +129,7 @@ class HighColorStyle : public KStyle
 		int tqpixelMetric( PixelMetric m, 
 					const TQWidget *widget = 0 ) const;
 
-		TQSize sizeFromContents( ContentsType contents,
+		TQSize tqsizeFromContents( ContentsType contents,
 					const TQWidget *widget,
 					const TQSize &contentSize,
 					const TQStyleOption& opt ) const;

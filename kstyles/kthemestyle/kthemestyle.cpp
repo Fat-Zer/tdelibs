@@ -1950,7 +1950,7 @@ void KThemeStyle::drawKStylePrimitive( KStylePrimitive kpe,
 
 
 
-void KThemeStyle::tqdrawComplexControl ( ComplexControl control, TQPainter * p, const TQWidget * widget,
+void KThemeStyle::tqdrawComplexControl ( TQ_ComplexControl control, TQPainter * p, const TQWidget * widget,
                                        const TQRect & r, const TQColorGroup & g, SFlags how ,
                                        SCFlags controls, SCFlags active,
                                        const TQStyleOption & opt ) const

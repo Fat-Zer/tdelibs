@@ -4,7 +4,7 @@
    based on the KDE3 HighColor Style
 
    Copyright (C) 2001-2002 Karol Szwed      <gallium@kde.org>
-             (C) 2001-2002 Fredrik Höglund  <fredrik@kde.org>
+             (C) 2001-2002 Fredrik Hï¿½glund  <fredrik@kde.org>
 
    Drawing routines adapted from the KDE2 HCStyle,
    Copyright (C) 2000 Daniel M. Duley       <mosfet@kde.org>
@@ -63,14 +63,14 @@ public:
 	                          SFlags flags = Style_Default,
 	                          const TQStyleOption& = TQStyleOption::Default ) const;
 
-	void drawPrimitive( PrimitiveElement pe,
+	void tqdrawPrimitive( TQ_PrimitiveElement pe,
 	                    TQPainter* p,
 	                    const TQRect& r,
 	                    const TQColorGroup& cg,
 	                    SFlags flags = Style_Default,
 	                    const TQStyleOption& = TQStyleOption::Default ) const;
 
-	void tqdrawControl( ControlElement element,
+	void tqdrawControl( TQ_ControlElement element,
 	                  TQPainter* p,
 	                  const TQWidget* widget,
 	                  const TQRect& r,
@@ -78,13 +78,13 @@ public:
 	                  SFlags flags = Style_Default,
 	                  const TQStyleOption& opt = TQStyleOption::Default ) const;
 
-	void tqdrawControlMask( ControlElement element,
+	void tqdrawControlMask( TQ_ControlElement element,
 	                      TQPainter* p,
 	                      const TQWidget* widget,
 	                      const TQRect& r,
 	                      const TQStyleOption& opt = TQStyleOption::Default ) const;
 
-	void tqdrawComplexControl( ComplexControl control,
+	void tqdrawComplexControl( TQ_ComplexControl control,
 	                         TQPainter* p,
 	                         const TQWidget* widget,
 	                         const TQRect& r,
@@ -94,7 +94,7 @@ public:
 	                         SCFlags active = SC_None,
 	                         const TQStyleOption& = TQStyleOption::Default ) const;
 
-	void tqdrawComplexControlMask( ComplexControl control,
+	void tqdrawComplexControlMask( TQ_ComplexControl control,
 	                             TQPainter* p,
 	                             const TQWidget* widget,
 	                             const TQRect& r,
@@ -102,17 +102,17 @@ public:
 
 	int tqpixelMetric( PixelMetric m, const TQWidget* widget = 0 ) const;
 
-	TQSize sizeFromContents( ContentsType contents,
+	TQSize tqsizeFromContents( ContentsType contents,
 	                        const TQWidget* widget,
 	                        const TQSize& contentSize,
 	                        const TQStyleOption& opt ) const;
 
-	SubControl querySubControl( ComplexControl control,
+	SubControl querySubControl( TQ_ComplexControl control,
 	                            const TQWidget* widget,
 	                            const TQPoint& point,
 						        const TQStyleOption& opt = TQStyleOption::Default ) const;
 
-	TQRect querySubControlMetrics( ComplexControl control,
+	TQRect querySubControlMetrics( TQ_ComplexControl control,
 	                              const TQWidget* widget,
 	                              SubControl subcontrol,
 	                              const TQStyleOption& opt = TQStyleOption::Default ) const;

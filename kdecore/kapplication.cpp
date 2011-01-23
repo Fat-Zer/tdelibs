@@ -1510,15 +1510,29 @@ void KApplication::parseCommandLine( )
     if (args->isSet("style"))
     {
 
+        TQStringList plugins = KGlobal::dirs()->resourceDirs( "qtplugins" );
+        TQStringList::Iterator itp = plugins.begin();
+        while (itp != plugins.end()) {
+            addLibraryPath( *itp );
+            ++itp;
+        }
+
        TQStringList styles = TQStyleFactory::keys();
        TQString reqStyle(args->getOption("style").lower());
 
-	   for (TQStringList::ConstIterator it = styles.begin(); it != styles.end(); ++it)
+    TQStringList list = libraryPaths();
+    TQStringList::Iterator it = list.begin();
+    while( it != list.end() ) {
+        ++it;
+    }
+
+	   for (TQStringList::ConstIterator it = styles.begin(); it != styles.end(); ++it) {
 		   if ((*it).lower() == reqStyle)
 		   {
 			   d->overrideStyle = *it;
 			   break;
 		   }
+	   }
 
        if (d->overrideStyle.isEmpty())
           fprintf(stderr, "%s", TQString(i18n("The style %1 was not found\n").arg(reqStyle)).local8Bit().data());

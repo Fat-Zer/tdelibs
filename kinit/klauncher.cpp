@@ -163,7 +163,8 @@ IdleSlave::age(time_t now)
 }
 
 KLauncher::KLauncher(int _kdeinitSocket, bool new_startup)
-  : KApplication( false, false ), // No Styles, No GUI
+//  : KApplication( false, false ), // No Styles, No GUI
+  : KApplication( false, true ),	// QClipboard tries to construct a QWidget so a GUI is technically needed, even though it is not used
     DCOPObject("klauncher"),
     kdeinitSocket(_kdeinitSocket), mAutoStart( new_startup ),
     dontBlockReading(false), newStartup( new_startup )

@@ -13,7 +13,7 @@
              (c) 2002,2003 Maksim Orlovich <mo002j@mail.rochester.edu>
    based on the KDE3 HighColor Style
    Copyright (C) 2001-2002 Karol Szwed      <gallium@kde.org>
-             (C) 2001-2002 Fredrik Höglund  <fredrik@kde.org>
+             (C) 2001-2002 Fredrik Hï¿½glund  <fredrik@kde.org>
    Drawing routines adapted from the KDE2 HCStyle,
    Copyright (C) 2000 Daniel M. Duley       <mosfet@kde.org>
              (C) 2000 Dirk Mueller          <mueller@kde.org>
@@ -74,14 +74,14 @@ public:
                              SFlags flags = Style_Default,
                              const TQStyleOption& = TQStyleOption::Default ) const;
 
-    void drawPrimitive(PrimitiveElement pe,
+    void tqdrawPrimitive(TQ_PrimitiveElement pe,
                        TQPainter *p,
                        const TQRect &r,
                        const TQColorGroup &cg,
                        SFlags flags = Style_Default,
                        const TQStyleOption &opt = TQStyleOption::Default ) const;
 
-    void tqdrawControl(ControlElement element,
+    void tqdrawControl(TQ_ControlElement element,
                      TQPainter *p,
                      const TQWidget *widget,
                      const TQRect &r,
@@ -89,9 +89,9 @@ public:
                      SFlags flags = Style_Default,
                      const TQStyleOption& = TQStyleOption::Default ) const;
 
-    void tqdrawControlMask( ControlElement, TQPainter *, const TQWidget *, const TQRect &, const TQStyleOption &) const;
+    void tqdrawControlMask( TQ_ControlElement, TQPainter *, const TQWidget *, const TQRect &, const TQStyleOption &) const;
 
-    void tqdrawComplexControl(ComplexControl control,
+    void tqdrawComplexControl(TQ_ComplexControl control,
                             TQPainter *p,
                             const TQWidget *widget,
                             const TQRect &r,
@@ -107,18 +107,18 @@ public:
     TQRect subRect(SubRect r,
                   const TQWidget *widget ) const;
 
-    TQRect querySubControlMetrics(ComplexControl control,
+    TQRect querySubControlMetrics(TQ_ComplexControl control,
                                  const TQWidget *widget,
                                  SubControl subcontrol,
                                  const TQStyleOption &opt = TQStyleOption::Default ) const;
 
-    void tqdrawComplexControlMask(TQStyle::ComplexControl c,
+    void tqdrawComplexControlMask(TQStyle::TQ_ComplexControl c,
                                 TQPainter *p,
                                 const TQWidget *w,
                                 const TQRect &r,
                                 const TQStyleOption &o=TQStyleOption::Default) const;
 
-    TQSize sizeFromContents(TQStyle::ContentsType t,
+    TQSize tqsizeFromContents(TQStyle::ContentsType t,
                            const TQWidget *w,
                            const TQSize &s,
                            const TQStyleOption &o) const;

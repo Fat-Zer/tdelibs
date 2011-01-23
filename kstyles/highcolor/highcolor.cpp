@@ -246,7 +246,7 @@ void HighColorStyle::renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg
 
 
 // This function draws primitive elements as well as their masks.
-void HighColorStyle::drawPrimitive( PrimitiveElement pe,
+void HighColorStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 									TQPainter *p,
 									const TQRect &r,
 									const TQColorGroup &cg,
@@ -457,7 +457,7 @@ void HighColorStyle::drawPrimitive( PrimitiveElement pe,
 			// Small hack to ensure scrollbar gradients are drawn the right way.
 			flags ^= Style_Horizontal;
 
-			drawPrimitive(PE_ButtonBevel, p, r, cg, flags | Style_Enabled | Style_Raised);
+			tqdrawPrimitive(PE_ButtonBevel, p, r, cg, flags | Style_Enabled | Style_Raised);
 
 			// Draw a scrollbar riffle (note direction after above changes)
 			if ( type != B3 ) {
@@ -596,20 +596,20 @@ void HighColorStyle::drawPrimitive( PrimitiveElement pe,
 
 
 		case PE_ScrollBarAddLine: {
-			drawPrimitive( PE_ButtonBevel, p, r, cg, (flags & Style_Enabled) |
+			tqdrawPrimitive( PE_ButtonBevel, p, r, cg, (flags & Style_Enabled) |
 					((flags & Style_Down) ? Style_Down : Style_Raised) );
 
-			drawPrimitive( ((flags & Style_Horizontal) ? PE_ArrowRight : PE_ArrowDown),
+			tqdrawPrimitive( ((flags & Style_Horizontal) ? PE_ArrowRight : PE_ArrowDown),
 					p, r, cg, flags );
 			break;
 		}
 
 
 		case PE_ScrollBarSubLine: {
-			drawPrimitive( PE_ButtonBevel, p, r, cg, (flags & Style_Enabled) |
+			tqdrawPrimitive( PE_ButtonBevel, p, r, cg, (flags & Style_Enabled) |
 					((flags & Style_Down) ? Style_Down : Style_Raised) );
 
-			drawPrimitive( ((flags & Style_Horizontal) ? PE_ArrowLeft : PE_ArrowUp),
+			tqdrawPrimitive( ((flags & Style_Horizontal) ? PE_ArrowLeft : PE_ArrowUp),
 					p, r, cg, flags );
 			break;
 		}
@@ -1095,7 +1095,7 @@ void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
 }
 
 
-void HighColorStyle::tqdrawControl( ControlElement element,
+void HighColorStyle::tqdrawControl( TQ_ControlElement element,
 								  TQPainter *p,
 								  const TQWidget *widget,
 								  const TQRect &r,
@@ -1123,12 +1123,12 @@ void HighColorStyle::tqdrawControl( ControlElement element,
 				}
 
 				if ( btnDefault )
-					drawPrimitive( PE_ButtonDefault, p, r, cg, flags );
+					tqdrawPrimitive( PE_ButtonDefault, p, r, cg, flags );
 				
-				drawPrimitive( PE_ButtonCommand, p, br, cg, flags );
+				tqdrawPrimitive( PE_ButtonCommand, p, br, cg, flags );
 				
 			} else
-				drawPrimitive( PE_ButtonCommand, p, r, cg, flags );
+				tqdrawPrimitive( PE_ButtonCommand, p, r, cg, flags );
 			
 			break;
 		}
@@ -1152,7 +1152,7 @@ void HighColorStyle::tqdrawControl( ControlElement element,
 			// Does the button have a popup menu?
 			if ( button->isMenuButton() ) {
 				int dx = tqpixelMetric( PM_MenuButtonIndicator, widget );
-				drawPrimitive( PE_ArrowDown, p, TQRect(x + w - dx - 2, y + 2, dx, h - 4),
+				tqdrawPrimitive( PE_ArrowDown, p, TQRect(x + w - dx - 2, y + 2, dx, h - 4),
 							   cg, flags, opt );
 				w -= dx;
 			}
@@ -1209,7 +1209,7 @@ void HighColorStyle::tqdrawControl( ControlElement element,
 
 			// Draw a focus rect if the button has focus
 			if ( flags & Style_HasFocus )
-				drawPrimitive( PE_FocusRect, p,
+				tqdrawPrimitive( PE_FocusRect, p,
 						TQStyle::tqvisualRect(subRect(SR_PushButtonFocusRect, widget), widget),
 						cg, flags );
 			break;
@@ -1361,7 +1361,7 @@ void HighColorStyle::tqdrawControl( ControlElement element,
 				SFlags cflags = Style_Default;
 				cflags |= active ? Style_Enabled : Style_On;
 
-				drawPrimitive( PE_CheckMark, p, TQRect( cx + itemFrame, y + itemFrame,
+				tqdrawPrimitive( PE_CheckMark, p, TQRect( cx + itemFrame, y + itemFrame,
 								checkcol - itemFrame*2, h - itemFrame*2), cg, cflags );
 			}
 
@@ -1461,7 +1461,7 @@ void HighColorStyle::tqdrawControl( ControlElement element,
 
 			// Does the menu item have a submenu?
 			if ( mi->popup() ) {
-				PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
+				TQ_PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
 				int dim = tqpixelMetric(PM_MenuButtonIndicator);
 				TQRect vr = tqvisualRect( TQRect( x + w - arrowHMargin - 2*itemFrame - dim,
 							y + h / 2 - dim / 2, dim, dim), r );
@@ -1474,9 +1474,9 @@ void HighColorStyle::tqdrawControl( ControlElement element,
 					TQColorGroup g2( discol, cg.highlight(), white, white,
 									enabled ? white : discol, discol, white );
 
-					drawPrimitive( arrow, p, vr, g2, Style_Enabled );
+					tqdrawPrimitive( arrow, p, vr, g2, Style_Enabled );
 				} else
-					drawPrimitive( arrow, p, vr, cg,
+					tqdrawPrimitive( arrow, p, vr, cg,
 							enabled ? Style_Enabled : Style_Default );
 			}
 			break;
@@ -1488,7 +1488,7 @@ void HighColorStyle::tqdrawControl( ControlElement element,
 }
 
 
-void HighColorStyle::tqdrawControlMask( ControlElement element,
+void HighColorStyle::tqdrawControlMask( TQ_ControlElement element,
 								  	  TQPainter *p,
 								  	  const TQWidget *widget,
 								  	  const TQRect &r,
@@ -1514,7 +1514,7 @@ void HighColorStyle::tqdrawControlMask( ControlElement element,
 }
 
 
-void HighColorStyle::tqdrawComplexControl( ComplexControl control,
+void HighColorStyle::tqdrawComplexControl( TQ_ComplexControl control,
                                          TQPainter *p,
                                          const TQWidget *widget,
                                          const TQRect &r,
@@ -1577,7 +1577,7 @@ void HighColorStyle::tqdrawComplexControl( ComplexControl control,
 				if ( active & Style_Sunken )
 					flags |= Style_Sunken;
 
-				drawPrimitive(PE_ArrowDown, p, ar, cg, flags);
+				tqdrawPrimitive(PE_ArrowDown, p, ar, cg, flags);
 			}
 
 			// Draw an edit field if required
@@ -1611,7 +1611,7 @@ void HighColorStyle::tqdrawComplexControl( ComplexControl control,
 					TQRect re = TQStyle::tqvisualRect( 
 								subRect(SR_ComboBoxFocusRect, cb), widget);
 
-					drawPrimitive( PE_FocusRect, p, re, cg,
+					tqdrawPrimitive( PE_FocusRect, p, re, cg,
 								   Style_FocusAtBorder, TQStyleOption(cg.highlight()));
 				}
 			}
@@ -1639,7 +1639,7 @@ void HighColorStyle::tqdrawComplexControl( ComplexControl control,
 			{
 				// If we're pressed, on, or raised...
 				if (bflags & (Style_Down | Style_On | Style_Raised))
-					drawPrimitive(PE_ButtonTool, p, button, cg, bflags, opt);
+					tqdrawPrimitive(PE_ButtonTool, p, button, cg, bflags, opt);
 
 				// Check whether to draw a background pixmap
 				else if ( toolbutton->tqparentWidget() &&
@@ -1681,14 +1681,14 @@ void HighColorStyle::tqdrawComplexControl( ComplexControl control,
 			if (controls & SC_ToolButtonMenu)
 			{
 				if (mflags & (Style_Down | Style_On | Style_Raised))
-					drawPrimitive(PE_ButtonDropDown, p, menuarea, cg, mflags, opt);
-				drawPrimitive(PE_ArrowDown, p, menuarea, cg, mflags, opt);
+					tqdrawPrimitive(PE_ButtonDropDown, p, menuarea, cg, mflags, opt);
+				tqdrawPrimitive(PE_ArrowDown, p, menuarea, cg, mflags, opt);
 			}
 
 			if (toolbutton->hasFocus() && !toolbutton->focusProxy()) {
 				TQRect fr = toolbutton->rect();
 				fr.addCoords(3, 3, -3, -3);
-				drawPrimitive(PE_FocusRect, p, fr, cg);
+				tqdrawPrimitive(PE_FocusRect, p, fr, cg);
 			}
 
 			break;
@@ -1703,7 +1703,7 @@ void HighColorStyle::tqdrawComplexControl( ComplexControl control,
 }
 
 
-void HighColorStyle::tqdrawComplexControlMask( ComplexControl control,
+void HighColorStyle::tqdrawComplexControlMask( TQ_ComplexControl control,
 											 TQPainter *p,
 											 const TQWidget *widget,
 											 const TQRect &r,
@@ -1822,7 +1822,7 @@ int HighColorStyle::tqpixelMetric(PixelMetric m, const TQWidget *widget) const
 }
 
 
-TQSize HighColorStyle::sizeFromContents( ContentsType contents,
+TQSize HighColorStyle::tqsizeFromContents( ContentsType contents,
 										const TQWidget* widget,
 										const TQSize &contentSize,
 										const TQStyleOption& opt ) const

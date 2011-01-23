@@ -535,7 +535,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) c
 
 // #ifdef USE_QT4 // kdebindings / smoke needs this function declaration available at all times.  Furthermore I don't think it would hurt to have the declaration available at all times...so leave these commented out for now
 
-//void KStyle::tqdrawPrimitive( ControlElement pe,
+//void KStyle::tqdrawPrimitive( TQ_ControlElement pe,
 //							TQPainter* p,
 //							const TQRect &r,
 //							const TQColorGroup &cg,
@@ -646,7 +646,7 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 
 
-void KStyle::tqdrawControl( ControlElement element,
+void KStyle::tqdrawControl( TQ_ControlElement element,
 						  TQPainter* p,
 						  const TQWidget* widget,
 						  const TQRect &r,
@@ -1096,7 +1096,7 @@ static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
     return sibling;
 }
 
-void KStyle::tqdrawComplexControl( ComplexControl control,
+void KStyle::tqdrawComplexControl( TQ_ComplexControl control,
 								 TQPainter* p,
 								 const TQWidget* widget,
 								 const TQRect &r,
@@ -1392,7 +1392,7 @@ void KStyle::tqdrawComplexControl( ComplexControl control,
 }
 
 
-TQStyle::SubControl KStyle::querySubControl( ComplexControl control,
+TQStyle::SubControl KStyle::querySubControl( TQ_ComplexControl control,
 											const TQWidget* widget,
 											const TQPoint &pos,
 											const TQStyleOption &opt ) const
@@ -1408,7 +1408,7 @@ TQStyle::SubControl KStyle::querySubControl( ComplexControl control,
 }
 
 
-TQRect KStyle::querySubControlMetrics( ComplexControl control,
+TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 									  const TQWidget* widget,
 									  SubControl sc,
 									  const TQStyleOption &opt ) const

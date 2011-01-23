@@ -67,14 +67,14 @@ class HighContrastStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void drawPrimitive( PrimitiveElement pe,
+		void tqdrawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawControl( ControlElement element,
+		void tqdrawControl( TQ_ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -82,13 +82,13 @@ class HighContrastStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawControlMask( ControlElement element,
+		void tqdrawControlMask( TQ_ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawComplexControl( ComplexControl control,
+		void tqdrawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -98,13 +98,13 @@ class HighContrastStyle : public KStyle
 					SCFlags active = SC_None,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawComplexControlMask( ComplexControl control,
+		void tqdrawComplexControlMask( TQ_ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		TQRect querySubControlMetrics( ComplexControl control,
+		TQRect querySubControlMetrics( TQ_ComplexControl control,
 					const TQWidget* widget,
 					SubControl subcontrol,
 					const TQStyleOption& opt = TQStyleOption::Default ) const;
@@ -126,7 +126,7 @@ class HighContrastStyle : public KStyle
 		int kPixelMetric( KStylePixelMetric m,
 					const TQWidget *widget = 0 ) const;
 
-		TQSize sizeFromContents( ContentsType contents,
+		TQSize tqsizeFromContents( ContentsType contents,
 					const TQWidget *widget,
 					const TQSize &contentSize,
 					const TQStyleOption& opt ) const;
@@ -148,7 +148,7 @@ class HighContrastStyle : public KStyle
 		void drawRect (TQPainter* p, TQRect r, int offset = 0, bool filled = true) const;
 		void drawRoundRect (TQPainter* p, TQRect r, int offset = 0, bool filled = true) const;
 		void drawEllipse (TQPainter* p, TQRect r, int offset = 0, bool filled = true) const;
-		void drawArrow (TQPainter* p, TQRect r, PrimitiveElement arrow, int offset = 0) const;
+		void drawArrow (TQPainter* p, TQRect r, TQ_PrimitiveElement arrow, int offset = 0) const;
 
 		int basicLineWidth;
 		// Disable copy constructor and = operator

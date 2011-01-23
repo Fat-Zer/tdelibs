@@ -929,7 +929,7 @@ bool KZip::closeArchive()
 
 	// I do not know why memcpy is not working here
         //memcpy(buffer, head, sizeof(head));
-        qmemmove(buffer, head, sizeof(head));
+        tqmemmove(buffer, head, sizeof(head));
 
         buffer[ 10 ] = char(it.current()->encoding()); // compression method
         buffer[ 11 ] = char(it.current()->encoding() >> 8);

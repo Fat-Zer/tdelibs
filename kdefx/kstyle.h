@@ -284,7 +284,7 @@ class KDEFX_EXPORT KStyle: public TQCommonStyle
 
 // #ifdef USE_QT4 // kdebindings / smoke needs this function declaration available at all times.  Furthermore I don't think it would hurt to have the declaration available at all times...so leave these commented out for now
 
-//		void tqdrawPrimitive( ControlElement pe,
+//		void tqdrawPrimitive( TQ_ControlElement pe,
 //					TQPainter* p,
 //					const TQRect &r,
 //					const TQColorGroup &cg,
@@ -293,7 +293,7 @@ class KDEFX_EXPORT KStyle: public TQCommonStyle
 
 // #endif // USE_QT4
 
-		void tqdrawControl( ControlElement element,
+		void tqdrawControl( TQ_ControlElement element,
 					TQPainter* p,
 					const TQWidget* widget,
 					const TQRect &r,
@@ -301,7 +301,7 @@ class KDEFX_EXPORT KStyle: public TQCommonStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		void tqdrawComplexControl( ComplexControl control,
+		void tqdrawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
 					const TQWidget* widget,
 					const TQRect &r,
@@ -311,12 +311,12 @@ class KDEFX_EXPORT KStyle: public TQCommonStyle
 					SCFlags active = SC_None,
 					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		SubControl querySubControl( ComplexControl control,
+		SubControl querySubControl( TQ_ComplexControl control,
 					const TQWidget* widget,
 					const TQPoint &pos,
 					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		TQRect querySubControlMetrics( ComplexControl control,
+		TQRect querySubControlMetrics( TQ_ComplexControl control,
 					const TQWidget* widget,
 					SubControl sc,
 					const TQStyleOption& = TQStyleOption::SO_Default ) const;

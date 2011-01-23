@@ -123,7 +123,7 @@ namespace
 
 namespace
 {
-	void drawKeramikArrow(TQPainter* p, TQColorGroup cg, TQRect r, TQStyle::PrimitiveElement pe, bool down, bool enabled)
+	void drawKeramikArrow(TQPainter* p, TQColorGroup cg, TQRect r, TQStyle::TQ_PrimitiveElement pe, bool down, bool enabled)
 	{
 		TQPointArray a;
 
@@ -533,7 +533,7 @@ static void renderToolbarWidgetBackground(TQPainter* painter, const TQWidget* wi
 }
 
 // This function draws primitive elements as well as their masks.
-void KeramikStyle::drawPrimitive( PrimitiveElement pe,
+void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 									TQPainter *p,
 									const TQRect &r,
 									const TQColorGroup &cg,
@@ -1324,7 +1324,7 @@ bool KeramikStyle::isFormWidget(const TQWidget* widget) const
 	return true;
 }
 
-void KeramikStyle::tqdrawControl( ControlElement element,
+void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 								  TQPainter *p,
 								  const TQWidget *widget,
 								  const TQRect &r,
@@ -1552,7 +1552,7 @@ void KeramikStyle::tqdrawControl( ControlElement element,
 										 tb->orientation() == Qt::Horizontal);
 			}
 			else
-				KStyle::tqdrawControl( (QStyle::ControlElement)CE_DockWindowEmptyArea, p, 
+				KStyle::tqdrawControl( (TQ_ControlElement)CE_DockWindowEmptyArea, p, 
 					widget, r, cg, flags, opt );
 			break;
 		}
@@ -1787,7 +1787,7 @@ void KeramikStyle::tqdrawControl( ControlElement element,
 
 			// Does the menu item have a submenu?
 			if ( mi->popup() ) {
-				PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
+				TQ_PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
 				int dim = tqpixelMetric(PM_MenuButtonIndicator) - itemFrame;
 				TQRect vr = tqvisualRect( TQRect( x + w - arrowHMargin - itemFrame - dim,
 							y + h / 2 - dim / 2, dim, dim), r );
@@ -1919,7 +1919,7 @@ void KeramikStyle::tqdrawControl( ControlElement element,
 	}
 }
 
-void KeramikStyle::tqdrawControlMask( ControlElement element,
+void KeramikStyle::tqdrawControlMask( TQ_ControlElement element,
 								    TQPainter *p,
 								    const TQWidget *widget,
 								    const TQRect &r,
@@ -1943,7 +1943,7 @@ bool KeramikStyle::isSizeConstrainedCombo(const TQComboBox* combo) const
 	return false;
 }
 
-void KeramikStyle::tqdrawComplexControl( ComplexControl control,
+void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
                                          TQPainter *p,
                                          const TQWidget *widget,
                                          const TQRect &r,
@@ -2114,7 +2114,7 @@ void KeramikStyle::tqdrawComplexControl( ComplexControl control,
 		case CC_SpinWidget:
 		{
 			const TQSpinWidget* sw = static_cast< const TQSpinWidget* >( widget );
-			TQRect br = tqvisualRect( querySubControlMetrics( (QStyle::ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetButtonField ), widget );
+			TQRect br = tqvisualRect( querySubControlMetrics( (TQ_ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetButtonField ), widget );
 			if ( controls & SC_SpinWidgetButtonField )
 			{
 				Keramik::SpinBoxPainter().draw( p, br, cg.button(), cg.background(), !sw->isEnabled() );
@@ -2319,7 +2319,7 @@ void KeramikStyle::tqdrawComplexControl( ComplexControl control,
 	}
 }
 
-void KeramikStyle::tqdrawComplexControlMask( ComplexControl control,
+void KeramikStyle::tqdrawComplexControlMask( TQ_ComplexControl control,
                                          TQPainter *p,
                                          const TQWidget *widget,
                                          const TQRect &r,
@@ -2414,7 +2414,7 @@ int KeramikStyle::tqpixelMetric(PixelMetric m, const TQWidget *widget) const
 }
 
 
-TQSize KeramikStyle::sizeFromContents( ContentsType contents,
+TQSize KeramikStyle::tqsizeFromContents( ContentsType contents,
 										const TQWidget* widget,
 										const TQSize &contentSize,
 										const TQStyleOption& opt ) const
@@ -2524,7 +2524,7 @@ TQSize KeramikStyle::sizeFromContents( ContentsType contents,
 }
 
 
-TQStyle::SubControl KeramikStyle::querySubControl( ComplexControl control,
+TQStyle::SubControl KeramikStyle::querySubControl( TQ_ComplexControl control,
 	                                              const TQWidget* widget,
                                                   const TQPoint& point,
                                                   const TQStyleOption& opt ) const
@@ -2542,7 +2542,7 @@ TQStyle::SubControl KeramikStyle::querySubControl( ComplexControl control,
 	return result;
 }
 
-TQRect KeramikStyle::querySubControlMetrics( ComplexControl control,
+TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 									const TQWidget* widget,
 	                              SubControl subcontrol,
 	                              const TQStyleOption& opt ) const
