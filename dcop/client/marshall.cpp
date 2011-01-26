@@ -177,7 +177,7 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         TQBuffer buf( ba );
         buf.open( IO_WriteOnly );
         i.save( &buf, "XPM" );
-        result = ba;
+        result = buf.buffer();
     } else if ( type == "TQPoint" )
     {
         TQPoint p;

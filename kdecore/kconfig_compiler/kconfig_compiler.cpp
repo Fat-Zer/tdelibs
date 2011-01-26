@@ -933,7 +933,7 @@ TQString itemAccessorBody( CfgEntry *e )
 
 //indents text adding X spaces per line
 TQString indent(TQString text, int spaces)
-{    
+{
     TQString result;
     TQTextStream out(&result, IO_WriteOnly);
     TQTextStream in(&text, IO_ReadOnly);

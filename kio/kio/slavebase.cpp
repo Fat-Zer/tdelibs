@@ -334,6 +334,8 @@ void SlaveBase::dispatchLoop()
           return;
        }
     }
+#else
+#error The KIO slave system only works under UNIX
 #endif
 }
 

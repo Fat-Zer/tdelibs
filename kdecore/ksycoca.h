@@ -169,6 +169,7 @@ protected:
    void closeDatabase();
    KSycocaFactoryList *m_lstFactories;
    TQDataStream *m_str;
+   TQByteArray *m_barray;
    bool bNoDatabase;
    size_t m_sycoca_size;
    const char *m_sycoca_mmap;

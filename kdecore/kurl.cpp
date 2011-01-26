@@ -83,7 +83,7 @@ static TQString encode( const TQString& segment, int encoding_offset, int encodi
 
   int old_length = isRawURI ? local.size() - 1 : local.length();
 
-  if ( !old_length )
+  if ( old_length < 1 )
     return segment.isNull() ? TQString::null : TQString(""); // differentiate null and empty
 
   // a worst case approximation

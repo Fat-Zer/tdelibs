@@ -131,6 +131,7 @@ static TQCString readQCString(TQDataStream &ds)
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
       qWarning("Corrupt data!\n");
+      printf("bytesLeft: %d, len: %d\n", bytesLeft, len);
       return result;
    }
    result.TQByteArray::resize( (uint)len );
@@ -240,7 +241,7 @@ void DCOPIceWriteChar(register IceConn iceConn, unsigned long nbytes, char *ptr)
 {
     DCOPConnection* conn = the_server->findConn( iceConn );
 #ifdef DCOP_DEBUG
-qWarning("DCOPServer: DCOPIceWriteChar() Writing %d bytes to %d [%s]", nbytes, fd, conn ? conn->appId.data() : "<unknown>");
+qWarning("DCOPServer: DCOPIceWriteChar() Writing %d bytes [%s]", nbytes, conn ? conn->appId.data() : "<unknown>");
 #endif
 
     if (conn)
@@ -272,7 +273,7 @@ static void DCOPIceWrite(IceConn iceConn, const TQByteArray &_data)
 {
     DCOPConnection* conn = the_server->findConn( iceConn );
 #ifdef DCOP_DEBUG
-qWarning("DCOPServer: DCOPIceWrite() Writing %d bytes to %d [%s]", _data.size(), fd, conn ? conn->appId.data() : "<unknown>");
+qWarning("DCOPServer: DCOPIceWrite() Writing %d bytes [%s]", _data.size(), conn ? conn->appId.data() : "<unknown>");
 #endif
     if (conn)
     {
@@ -1518,7 +1519,9 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
         TQCString slot = readQCString(args);
         TQ_INT8 Volatile;
         args >> Volatile;
-        //qDebug("DCOPServer: connectSignal(sender = %s senderObj = %s signal = %s recvObj = %s slot = %s)", sender.data(), senderObj.data(), signal.data(), receiverObj.data(), slot.data());
+#ifdef DCOP_DEBUG
+        qDebug("DCOPServer: connectSignal(sender = %s senderObj = %s signal = %s recvObj = %s slot = %s)", sender.data(), senderObj.data(), signal.data(), receiverObj.data(), slot.data());
+#endif
         bool b = dcopSignals->connectSignal(sender, senderObj, signal, conn, receiverObj, slot, (Volatile != 0));
         replyType = "bool";
         TQDataStream reply( replyData, IO_WriteOnly );
@@ -1534,7 +1537,9 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
         TQCString signal = readQCString(args);
         TQCString receiverObj = readQCString(args);
         TQCString slot = readQCString(args);
-        //qDebug("DCOPServer: disconnectSignal(sender = %s senderObj = %s signal = %s recvObj = %s slot = %s)", sender.data(), senderObj.data(), signal.data(), receiverObj.data(), slot.data());
+#ifdef DCOP_DEBUG
+        qDebug("DCOPServer: disconnectSignal(sender = %s senderObj = %s signal = %s recvObj = %s slot = %s)", sender.data(), senderObj.data(), signal.data(), receiverObj.data(), slot.data());
+#endif
         bool b = dcopSignals->disconnectSignal(sender, senderObj, signal, conn, receiverObj, slot);
         replyType = "bool";
         TQDataStream reply( replyData, IO_WriteOnly );

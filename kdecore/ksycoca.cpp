@@ -87,7 +87,7 @@ int KSycoca::version()
 
 // Read-only constructor
 KSycoca::KSycoca()
-  : DCOPObject("ksycoca"), m_lstFactories(0), m_str(0), bNoDatabase(false),
+  : DCOPObject("ksycoca"), m_lstFactories(0), m_str(0), m_barray(0), bNoDatabase(false),
     m_sycoca_size(0), m_sycoca_mmap(0), m_timeStamp(0)
 {
    d = new KSycocaPrivate;
@@ -110,6 +110,7 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
   
    m_sycoca_mmap = 0;
    m_str = 0;
+   m_barray = 0;
    TQString path;
    TQCString ksycoca_env = getenv("KDESYCOCA");
    if (ksycoca_env.isEmpty())
@@ -154,9 +155,9 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
 #ifdef HAVE_MADVISE
 	(void) madvise((char*)m_sycoca_mmap, m_sycoca_size, MADV_WILLNEED);
 #endif
-        TQByteArray b_array;
-        b_array.setRawData(m_sycoca_mmap, m_sycoca_size);
-        TQBuffer *buffer = new TQBuffer( b_array );
+        m_barray = new TQByteArray();
+        m_barray->setRawData(m_sycoca_mmap, m_sycoca_size);
+        TQBuffer *buffer = new TQBuffer( *m_barray );
         buffer->open(IO_ReadWrite);
         m_str = new TQDataStream( buffer);
      }
@@ -195,7 +196,7 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
 
 // Read-write constructor - only for KBuildSycoca
 KSycoca::KSycoca( bool /* dummy */ )
-  : DCOPObject("ksycoca_building"), m_lstFactories(0), m_str(0), bNoDatabase(false),
+  : DCOPObject("ksycoca_building"), m_lstFactories(0), m_str(0), m_barray(0), bNoDatabase(false),
     m_sycoca_size(0), m_sycoca_mmap(0)
 {
    d = new KSycocaPrivate;
@@ -226,13 +227,13 @@ KSycoca::~KSycoca()
 
 void KSycoca::closeDatabase()
 {
-   TQIODevice *device = 0;
+   QIODevice *device = 0;
    if (m_str)
-      device = m_str->tqdevice();
+      device = m_str->device();
 #ifdef HAVE_MMAP
    if (device && m_sycoca_mmap)
    {
-      TQBuffer *buf = (TQBuffer *) device;
+      TQBuffer *buf = static_cast<TQBuffer*>(device);
       buf->buffer().resetRawData(m_sycoca_mmap, m_sycoca_size);
       // Solaris has munmap(char*, size_t) and everything else should
       // be happy with a char* for munmap(void*, size_t)
@@ -246,6 +247,7 @@ void KSycoca::closeDatabase()
    delete device;
    if (TQT_TQIODEVICE(d->database) != device)
       delete d->database;
+   if (m_barray) delete m_barray;
    device = 0;
    d->database = 0;
    // It is very important to delete all factories here

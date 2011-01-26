@@ -55,7 +55,7 @@ class TQTimer;
 // If you enable the following define DCOP will create
 // $HOME/.dcop.log file which will list all signals passing
 // through it.
-//#define DCOP_LOG
+// #define DCOP_LOG
 #ifdef DCOP_LOG
 class TQTextStream;
 class TQFile;
