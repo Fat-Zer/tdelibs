@@ -565,6 +565,20 @@ if( NOT LIBXSLT_FOUND )
 endif( NOT LIBXSLT_FOUND )
 
 
+##### check for glib-2.0 & friends ##############
+
+pkg_search_module( GLIB2 glib-2.0 )
+if( NOT GLIB2_FOUND )
+  tde_message_fatal( "glib-2.0 are required, but not found on your system" )
+endif( )
+
+pkg_search_module( GOBJECT2 gobject-2.0 )
+if( NOT GLIB2_FOUND )
+  tde_message_fatal( "gobject-2.0 are required, but not found on your system" )
+endif( )
+
+
+
 ##### check for Qt3 #############################
 
 # find_package( Qt3 )
@@ -767,6 +781,7 @@ install( FILES
 
 add_subdirectory( dcop )
 add_subdirectory( libltdl )
+add_subdirectory( kglib )
 add_subdirectory( kdefx )
 add_subdirectory( kdecore )
 add_subdirectory( kunittest )
