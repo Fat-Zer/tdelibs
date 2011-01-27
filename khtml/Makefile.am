@@ -67,7 +67,7 @@ dummy.cpp: $(srcdir)/Makefile.am
 
 libkhtmlpart_la_SOURCES = dummy.cpp
 libkhtmlpart_la_LDFLAGS = -no-undefined -module $(KDE_PLUGIN) $(all_libraries)
-libkhtmlpart_la_LIBADD = libkhtml.la
+libkhtmlpart_la_LIBADD = libkhtml.la $(LIB_QT)
 
 # init_khtmlimagefactory is in libkhtml.so; init_khtmlimagepart needs to be in the part
 imgdummy.cpp: $(srcdir)/Makefile.am
@@ -77,7 +77,7 @@ imgdummy.cpp: $(srcdir)/Makefile.am
 
 khtmlimagepart_la_SOURCES = imgdummy.cpp
 khtmlimagepart_la_LDFLAGS = -no-undefined -module $(KDE_PLUGIN) $(all_libraries)
-khtmlimagepart_la_LIBADD = libkhtml.la 
+khtmlimagepart_la_LIBADD = libkhtml.la $(LIB_QT)
 
 INCLUDES = -I$(top_srcdir)/kjs -I$(top_builddir)/kjs -I$(top_srcdir)/kimgio \
 	-I$(srcdir)/java -I$(top_srcdir)/dcop -I$(srcdir)/misc \

@@ -33,7 +33,7 @@ AM_LDFLAGS = $(LDFLAGS_AS_NEEDED) $(LDFLAGS_NEW_DTAGS)
 
 kdeinit_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                   $(KDE_RPATH)
-kdeinit_LDADD = $(LIB_KPARTS) 
+kdeinit_LDADD = $(LIB_KPARTS) -lXft $(LIB_QT)
 
 kioslave_SOURCES = kioslave.cpp
 kioslave_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
@@ -60,7 +60,7 @@ klauncher_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_KDECORE) $(top_builddir)/dcop/l
 klauncher_la_SOURCES = klauncher.cpp klauncher_main.cpp autostart.cpp
 
 kstartupconfig_SOURCES  = kstartupconfig.cpp
-kstartupconfig_LDADD  = $(top_builddir)/kdecore/libkdefakes.la
+kstartupconfig_LDADD  = $(top_builddir)/kdecore/libkdefakes.la $(LIB_QT)
 kdostartupconfig_SOURCES = kdostartupconfig.cpp
 kdostartupconfig_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                            $(KDE_RPATH)

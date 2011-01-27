@@ -976,17 +976,17 @@ public:
   }
 
   void toEdge( Bias bias ) {
-    if( bias == left ) m_col = 0;
-    else if( bias == right ) m_col = m_vi->m_doc->lineLength( line() );
+    if( bias == left_b ) m_col = 0;
+    else if( bias == right_b ) m_col = m_vi->m_doc->lineLength( line() );
   }
 
-  bool atEdge() const { return atEdge( left ) || atEdge( right ); }
+  bool atEdge() const { return atEdge( left_b ) || atEdge( right_b ); }
 
   bool atEdge( Bias bias ) const {
     switch( bias ) {
-    case left:  return col() == 0;
-    case none:  return atEdge();
-    case right: return col() == m_vi->m_doc->lineLength( line() );
+    case left_b:  return col() == 0;
+    case none:    return atEdge();
+    case right_b: return col() == m_vi->m_doc->lineLength( line() );
     default: Q_ASSERT(false); return false;
     }
   }
@@ -1107,7 +1107,7 @@ void KateViewInternal::cursorLeft(  bool sel )
   if ( ! m_view->wrapCursor() && cursor.col() == 0 )
     return;
 
-  moveChar( left, sel );
+  moveChar( left_b, sel );
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
     m_view->m_codeCompletion->updateBox();
   }
@@ -1115,7 +1115,7 @@ void KateViewInternal::cursorLeft(  bool sel )
 
 void KateViewInternal::cursorRight( bool sel )
 {
-  moveChar( right, sel );
+  moveChar( right_b, sel );
   if (m_view->m_codeCompletion->codeCompletionVisible()) {
     m_view->m_codeCompletion->updateBox();
   }
@@ -1134,23 +1134,23 @@ void KateViewInternal::wordLeft ( bool sel )
   // The code assumes that space is never part of the word character class.
 
   KateHighlighting* h = m_doc->highlight();
-  if( !c.atEdge( left ) ) {
+  if( !c.atEdge( left_b ) ) {
 
-    while( !c.atEdge( left ) && m_doc->textLine( c.line() )[ c.col() - 1 ].isSpace() )
+    while( !c.atEdge( left_b ) && m_doc->textLine( c.line() )[ c.col() - 1 ].isSpace() )
       --c;
   }
-  if( c.atEdge( left ) )
+  if( c.atEdge( left_b ) )
   {
     --c;
   }
   else if( h->isInWord( m_doc->textLine( c.line() )[ c.col() - 1 ] ) )
   {
-    while( !c.atEdge( left ) && h->isInWord( m_doc->textLine( c.line() )[ c.col() - 1 ] ) )
+    while( !c.atEdge( left_b ) && h->isInWord( m_doc->textLine( c.line() )[ c.col() - 1 ] ) )
       --c;
   }
   else
   {
-    while( !c.atEdge( left )
+    while( !c.atEdge( left_b )
            && !h->isInWord( m_doc->textLine( c.line() )[ c.col() - 1 ] )
            // in order to stay symmetric to wordLeft()
            // we must not skip space preceding a non-word sequence
@@ -1177,18 +1177,18 @@ void KateViewInternal::wordRight( bool sel )
   // The code assumes that space is never part of the word character class.
 
   KateHighlighting* h = m_doc->highlight();
-  if( c.atEdge( right ) )
+  if( c.atEdge( right_b ) )
   {
     ++c;
   }
   else if( h->isInWord( m_doc->textLine( c.line() )[ c.col() ] ) )
   {
-    while( !c.atEdge( right ) && h->isInWord( m_doc->textLine( c.line() )[ c.col() ] ) )
+    while( !c.atEdge( right_b ) && h->isInWord( m_doc->textLine( c.line() )[ c.col() ] ) )
       ++c;
   }
   else
   {
-    while( !c.atEdge( right )
+    while( !c.atEdge( right_b )
            && !h->isInWord( m_doc->textLine( c.line() )[ c.col() ] )
            // we must not skip space, because if that space is followed
            // by more non-word characters, we would skip them, too
@@ -1198,7 +1198,7 @@ void KateViewInternal::wordRight( bool sel )
     }
   }
 
-  while( !c.atEdge( right ) && m_doc->textLine( c.line() )[ c.col() ].isSpace() )
+  while( !c.atEdge( right_b ) && m_doc->textLine( c.line() )[ c.col() ].isSpace() )
     ++c;
 
   updateSelection( c, sel );
@@ -1232,7 +1232,7 @@ void KateViewInternal::home( bool sel )
   }
 
   if( !(m_doc->configFlags() & KateDocument::cfSmartHome) ) {
-    moveEdge( left, sel );
+    moveEdge( left_b, sel );
     return;
   }
 
@@ -1275,7 +1275,7 @@ void KateViewInternal::end( bool sel )
   }
 
   if( !(m_doc->configFlags() & KateDocument::cfSmartHome) ) {
-    moveEdge( right, sel );
+    moveEdge( right_b, sel );
     return;
   }
 
@@ -1294,7 +1294,7 @@ void KateViewInternal::end( bool sel )
     updateSelection(c, sel);
     updateCursor(c, true);
   } else {
-    moveEdge(right, sel);
+    moveEdge(right_b, sel);
   }
 }
 

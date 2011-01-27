@@ -45,9 +45,9 @@ class TQScrollBar;
 
 enum Bias
 {
-    left  = -1,
-    none  =  0,
-    right =  1
+    left_b  = -1,
+    none    =  0,
+    right_b =  1
 };
 
 class KateViewInternal : public TQWidget

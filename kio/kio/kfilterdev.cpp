@@ -116,7 +116,7 @@ TQIODevice * KFilterDev::device( TQIODevice* inDevice, const TQString & mimetype
    return 0;
 }
 
-bool KFilterDev::open( int mode )
+bool KFilterDev::open( OpenMode mode )
 {
     //kdDebug(7005) << "KFilterDev::open " << mode << endl;
     if ( mode == IO_ReadOnly )
@@ -132,7 +132,7 @@ bool KFilterDev::open( int mode )
     d->bNeedHeader = !d->bSkipHeaders;
     filter->init( mode );
     d->bOpenedUnderlyingDevice = !filter->device()->isOpen();
-    bool ret = d->bOpenedUnderlyingDevice ? filter->device()->open( (TQIODevice_OpenModeFlag)mode ) : true;
+    bool ret = d->bOpenedUnderlyingDevice ? filter->device()->open( (OpenMode)mode ) : true;
     d->result = KFilterBase::OK;
 
     if ( !ret )
