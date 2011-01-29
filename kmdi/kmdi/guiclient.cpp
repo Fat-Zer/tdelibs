@@ -202,7 +202,7 @@ void ToggleToolViewAction::anDWChanged()
     setChecked(true);
   else if (isChecked() && (m_dw->parentDockTabGroup() &&
           ((static_cast<KDockWidget*>(m_dw->parentDockTabGroup()->
-                  tqparent()->tqqt_cast("KDockWidget")))->mayBeShow())))
+                  tqparent()->qt_cast("KDockWidget")))->mayBeShow())))
     setChecked(false);
 }
 

@@ -1,5 +1,5 @@
 /*  This file is part of the KDE project
-    Copyright (C) 2002 Matthias Hölzer-Klüpfel <mhk@kde.org>
+    Copyright (C) 2002 Matthias Hï¿½lzer-Klï¿½pfel <mhk@kde.org>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -320,7 +320,7 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
 
   if (dynamic_cast<TQComboBox*>(w) || dynamic_cast<TQLineEdit*>(w) ||
       dynamic_cast<TQTextEdit*>(w) || dynamic_cast<TQTextView*>(w) ||
-      dynamic_cast<TQSpinBox*>(w) || w->tqqt_cast( "KMultiTabBar" ))
+      dynamic_cast<TQSpinBox*>(w) || w->qt_cast( "KMultiTabBar" ))
       return;
 
   // now treat 'ordinary' widgets
@@ -661,7 +661,7 @@ void KAccelString::dump()
  The algorithm has some advantages:
 
    * it favors 'nice' accelerators (first characters in a word, etc.)
-   * it is quite fast, O(N²)
+   * it is quite fast, O(Nï¿½)
    * it is easy to understand :-)
 
  The disadvantages:

@@ -667,7 +667,7 @@ KResolver::ErrorCodes KStandardWorker::addUnix()
   if (!m_encodedName.isEmpty())
     return KResolver::AddrFamily; // non local hostname
 
-  if (protocol() || static_cast<const char *>(protocolName()))
+  if (protocol() || !protocolName().isEmpty())
     return KResolver::BadFlags;	// cannot have Unix sockets with protocols
 
   TQString pathname = serviceName();

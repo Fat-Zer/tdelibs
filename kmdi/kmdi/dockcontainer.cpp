@@ -119,7 +119,7 @@ DockContainer::~DockContainer()
     it = m_map.begin();
     KDockWidget *w=it.key();
       if (m_overlapButtons.tqcontains(w)) {
-        (static_cast<KDockWidgetHeader*>(w->getHeader()->tqqt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
+        (static_cast<KDockWidgetHeader*>(w->getHeader()->qt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
         m_overlapButtons.remove(w);
       }
     m_map.remove(w);
@@ -149,7 +149,7 @@ void DockContainer::init()
   if ( parentDockWidget() && parentDockWidget()->parent() )
   {
     KDockSplitter *sp= static_cast<KDockSplitter*>(parentDockWidget()->
-                tqparent()->tqqt_cast("KDockSplitter"));
+                tqparent()->qt_cast("KDockSplitter"));
     if ( sp )
       sp->setSeparatorPosX( m_separatorPos );
   }
@@ -184,7 +184,7 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
     if (((KDockWidget*)tqparentWidget())->mayBeShow())
       ((KDockWidget*)tqparentWidget())->dockBack();
 
-    if (w->getHeader()->tqqt_cast("KDockWidgetHeader"))
+    if (w->getHeader()->qt_cast("KDockWidgetHeader"))
     {
       kdDebug(760)<<"*** KDockWidgetHeader has been found"<<endl;
 
@@ -357,7 +357,7 @@ void DockContainer::removeWidget(KDockWidget* dwdg)
   m_map.remove(w);
   m_revMap.remove(id);
   if (m_overlapButtons.tqcontains(w)) {
-    (static_cast<KDockWidgetHeader*>(w->getHeader()->tqqt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
+    (static_cast<KDockWidgetHeader*>(w->getHeader()->qt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
     m_overlapButtons.remove(w);
   }
   KDockContainer::removeWidget(w);
@@ -405,7 +405,7 @@ void DockContainer::tabClicked(int t)
     }
     m_ws->raiseWidget(t);
     if (m_ws->widget(t)) {
-      KDockWidget *tmpDw=static_cast<KDockWidget*>(m_ws->widget(t)->tqqt_cast("KDockWidget"));
+      KDockWidget *tmpDw=static_cast<KDockWidget*>(m_ws->widget(t)->qt_cast("KDockWidget"));
       if (tmpDw) {
         if (tmpDw->getWidget()) tmpDw->getWidget()->setFocus();
       } else kdDebug(760)<<"Something really weird is going on"<<endl;
@@ -423,7 +423,7 @@ void DockContainer::tabClicked(int t)
       if ( parentDockWidget() && parentDockWidget()->parent() )
       {
         KDockSplitter *sp= static_cast<KDockSplitter*>(parentDockWidget()->
-                    tqparent()->tqqt_cast("KDockSplitter"));
+                    tqparent()->qt_cast("KDockSplitter"));
         if ( sp )
           m_separatorPos = sp->separatorPos();
       }
@@ -476,7 +476,7 @@ void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
   if ( parentDockWidget() && parentDockWidget()->parent() )
   {
     KDockSplitter *sp= static_cast<KDockSplitter*>(parentDockWidget()->
-                tqparent()->tqqt_cast("KDockSplitter"));
+                tqparent()->qt_cast("KDockSplitter"));
     if ( sp )
       cfg->writeEntry( "separatorPosition", m_separatorPos );
   }

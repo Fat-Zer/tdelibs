@@ -1262,7 +1262,7 @@ void KExtendedSocket::cancelAsyncConnect()
   d->status = lookupDone;
 }
 
-bool KExtendedSocket::open(int mode)
+bool KExtendedSocket::open(OpenMode mode)
 {
   if (mode != IO_Raw | IO_ReadWrite)
     return false;		// invalid open mode

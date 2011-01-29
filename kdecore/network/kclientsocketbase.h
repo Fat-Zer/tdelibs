@@ -281,7 +281,7 @@ public:
    *
    * You should not call this function; instead, use @ref connect
    */
-  virtual inline bool open(int)
+  virtual inline bool open(OpenMode)
   { return connect(); }
 
   /**

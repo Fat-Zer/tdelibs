@@ -37,7 +37,7 @@ KQIODeviceGZip::~KQIODeviceGZip(void)
         close();
 }
 
-bool KQIODeviceGZip::open(int mode)
+bool KQIODeviceGZip::open(OpenMode mode)
 {
     if (m_gzfile)
         close(); // One file is already open, so close it first.

@@ -72,5 +72,5 @@ EncodingInterface *KTextEditor::encodingInterface (Document *doc)
   if (!doc)
     return 0;
 
-  return static_cast<EncodingInterface*>(doc->tqqt_cast("KTextEditor::EncodingInterface"));
+  return static_cast<EncodingInterface*>(doc->qt_cast("KTextEditor::EncodingInterface"));
 }

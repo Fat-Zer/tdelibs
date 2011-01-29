@@ -60,7 +60,7 @@ class TQStrList;
  *  setCentralWidget( p->widget() );
  *
  *  // cast the part to the TerminalInterface..
- *  TerminalInterface* t = static_cast<TerminalInterface*>( p->tqqt_cast( "TerminalInterface" ) );
+ *  TerminalInterface* t = static_cast<TerminalInterface*>( p->qt_cast( "TerminalInterface" ) );
  *  if( ! t )
  *  {
  *    // This probably happens because the konsole that is installed

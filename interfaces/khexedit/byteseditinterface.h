@@ -159,7 +159,7 @@ inline BytesEditInterface *bytesEditInterface( T *t )
   if( !t )
     return 0;
 
-  return static_cast<BytesEditInterface*>( t->tqqt_cast("KHE::BytesEditInterface") );
+  return static_cast<BytesEditInterface*>( t->qt_cast("KHE::BytesEditInterface") );
 }
 
 /** tries to create an instance of a hexedit widget for arrays of chars (char[])
@@ -177,37 +177,37 @@ inline BytesEditInterface *bytesEditInterface( T *t )
   * // is e.g. kdeutils (incl. khexedit2) installed, so a widget could be found and created?
   * if( BytesEditWidget )
   * {
-  *   // fetch the editor interface
-  *   KHE::BytesEditInterface *BytesEdit = KHE::bytesEditInterface( BytesEditWidget );
-  *   Q_ASSERT( BytesEdit ); // This should not fail!
+  * ï¿½ // fetch the editor interface
+  * ï¿½ KHE::BytesEditInterface *BytesEdit = KHE::bytesEditInterface( BytesEditWidget );
+  * ï¿½ Q_ASSERT( BytesEdit ); // This should not fail!
   *
-  *   // now use the editor.
-  *   BytesEdit->setData( Buffer, BufferSize, -1 );
-  *   BytesEdit->setMaxDataSize( BufferSize );
-  *   BytesEdit->setReadOnly( false );
-  *   BytesEdit->setAutoDelete( true );
+  * ï¿½ // now use the editor.
+  * ï¿½ BytesEdit->setData( Buffer, BufferSize, -1 );
+  * ï¿½ BytesEdit->setMaxDataSize( BufferSize );
+  * ï¿½ BytesEdit->setReadOnly( false );
+  * ï¿½ BytesEdit->setAutoDelete( true );
   *
-  *   KHE::ValueColumnInterface *ValueColumn = KHE::valueColumnInterface( BytesEditWidget );
-  *   if( ValueColumn )
-  *   {
-  *     ValueColumn->setCoding( KHE::ValueColumnInterface::BinaryCoding );
-  *     ValueColumn->setByteSpacingWidth( 2 );
-  *     ValueColumn->setNoOfGroupedBytes( 4 );
-  *     ValueColumn->setGroupSpacingWidth( 12 );
-  *   }
+  * ï¿½ KHE::ValueColumnInterface *ValueColumn = KHE::valueColumnInterface( BytesEditWidget );
+  * ï¿½ if( ValueColumn )
+  * ï¿½ {
+  * ï¿½ ï¿½ ValueColumn->setCoding( KHE::ValueColumnInterface::BinaryCoding );
+  * ï¿½ ï¿½ ValueColumn->setByteSpacingWidth( 2 );
+  * ï¿½ ï¿½ ValueColumn->setNoOfGroupedBytes( 4 );
+  * ï¿½ ï¿½ ValueColumn->setGroupSpacingWidth( 12 );
+  * ï¿½ }
   *
-  *   KHE::CharColumnInterface *CharColumn = KHE::charColumnInterface( BytesEditWidget );
-  *   if( CharColumn )
-  *   {
-  *     CharColumn->setShowUnprintable( false );
-  *     CharColumn->setSubstituteChar( '*' );
-  *   }
-  *   KHE::ClipboardInterface *Clipboard = KHE::clipboardInterface( BytesEditWidget );
-  *   if( Clipboard )
-  *   {
-  *     // Yes, use BytesEditWidget, not Clipboard, because that's the TQObject, indeed hacky...
-  *     connect( BytesEditWidget, TQT_SIGNAL(copyAvailable(bool)), this, TQT_SLOT(offerCopy(bool)) );
-  *   }
+  * ï¿½ KHE::CharColumnInterface *CharColumn = KHE::charColumnInterface( BytesEditWidget );
+  * ï¿½ if( CharColumn )
+  * ï¿½ {
+  * ï¿½ ï¿½ CharColumn->setShowUnprintable( false );
+  * ï¿½ ï¿½ CharColumn->setSubstituteChar( '*' );
+  * ï¿½ }
+  * ï¿½ KHE::ClipboardInterface *Clipboard = KHE::clipboardInterface( BytesEditWidget );
+  * ï¿½ if( Clipboard )
+  * ï¿½ {
+  * ï¿½ ï¿½ // Yes, use BytesEditWidget, not Clipboard, because that's the TQObject, indeed hacky...
+  * ï¿½ ï¿½ connect( BytesEditWidget, TQT_SIGNAL(copyAvailable(bool)), this, TQT_SLOT(offerCopy(bool)) );
+  * ï¿½ }
   * }
   * \endcode
   *

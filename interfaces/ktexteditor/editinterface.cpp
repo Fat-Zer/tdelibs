@@ -52,6 +52,6 @@ EditInterface *KTextEditor::editInterface (Document *doc)
   if (!doc)
     return 0;
 
-  return static_cast<EditInterface*>(doc->tqqt_cast("KTextEditor::EditInterface"));
+  return static_cast<EditInterface*>(doc->qt_cast("KTextEditor::EditInterface"));
 }
          

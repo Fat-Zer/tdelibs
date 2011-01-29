@@ -47,7 +47,7 @@ public:
     }
     virtual ~KLimitedIODevice() {}
 
-    virtual bool open( int m ) {
+    virtual bool open( OpenMode m ) {
         //kdDebug(7005) << "KLimitedIODevice::open m=" << m << endl;
         if ( m & IO_ReadOnly ) {
             /*bool ok = false;

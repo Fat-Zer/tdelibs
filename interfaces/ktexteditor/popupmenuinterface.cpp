@@ -65,5 +65,5 @@ PopupMenuInterface *KTextEditor::popupMenuInterface (View *view)
   if (!view)
     return 0;
 
-  return static_cast<PopupMenuInterface*>(view->tqqt_cast("KTextEditor::PopupMenuInterface"));
+  return static_cast<PopupMenuInterface*>(view->qt_cast("KTextEditor::PopupMenuInterface"));
 }

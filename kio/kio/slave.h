@@ -44,6 +44,7 @@ namespace KIO {
     class KIO_EXPORT Slave : public KIO::SlaveInterface
     {
 	Q_OBJECT
+	TQ_OBJECT
 
     protected:
 	/**

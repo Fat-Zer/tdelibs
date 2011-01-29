@@ -38,7 +38,7 @@ public:
     KQIODeviceGZip(const TQString& filename);
     ~KQIODeviceGZip(void);
 
-    bool open(int mode);
+    bool open(OpenMode mode);
     void close(void);
     void flush(void);
 

@@ -142,7 +142,7 @@ public:
   /**
    * Reimplementation from TQIODevice. You should not call this function in sockets.
    */
-  virtual bool open(int mode);
+  virtual bool open(OpenMode mode);
 
   /**
    * Closes the socket. Reimplemented from TQIODevice.
