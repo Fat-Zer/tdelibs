@@ -189,7 +189,7 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
       kdDebug(760)<<"*** KDockWidgetHeader has been found"<<endl;
 
       KDockWidgetHeader *hdr=static_cast<KDockWidgetHeader*>(w->getHeader()->
-        tqqt_cast("KDockWidgetHeader"));
+        qt_cast("KDockWidgetHeader"));
 
       KDockButton_Private *btn = new KDockButton_Private( hdr, "OverlapButton" );
 
@@ -257,7 +257,7 @@ bool DockContainer::eventFilter( TQObject *obj, TQEvent *event )
 				break;
 			}
 		      KDockWidgetHeader *hdr=static_cast<KDockWidgetHeader*>(w->getHeader()->
-	        	tqqt_cast("KDockWidgetHeader"));
+	        	qt_cast("KDockWidgetHeader"));
 			if (!hdr) {
 				kdDebug()<<"Wrong header type in DockContainer::eventFilter"<<endl;
 				break;
