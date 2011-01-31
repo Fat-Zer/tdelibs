@@ -151,7 +151,7 @@ namespace KDEPrivate
                                        const TQStringList &args, Type2Type<TQWidget> )
         {
 
-            WidgetParentType *p = dynamic_cast<WidgetParentType *>( parent );
+            WidgetParentType *p = dynamic_cast<WidgetParentType *>( static_cast<TQT_BASE_OBJECT_NAME*>(parent) );
             if ( parent && !p ) 
                 return 0;
             return new Product( p, name, args );
@@ -161,7 +161,7 @@ namespace KDEPrivate
                                        TQObject *parent, const char *name,
                                        const TQStringList &args, Type2Type<TQObject> )
         { 
-            ParentType *p = dynamic_cast<ParentType *>( parent );
+            ParentType *p = dynamic_cast<ParentType *>( static_cast<TQT_BASE_OBJECT_NAME*>(parent) );
             if ( parent && !p )
                 return 0;
             return new Product( p, name, args ); 

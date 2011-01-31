@@ -119,7 +119,7 @@ DockContainer::~DockContainer()
     it = m_map.begin();
     KDockWidget *w=it.key();
       if (m_overlapButtons.tqcontains(w)) {
-        (static_cast<KDockWidgetHeader*>(w->getHeader()->qt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
+        (::tqqt_cast<KDockWidgetHeader*>(w->getHeader()))->removeButton(m_overlapButtons[w]);
         m_overlapButtons.remove(w);
       }
     m_map.remove(w);
@@ -148,8 +148,8 @@ void DockContainer::init()
   // try to restore splitter size
   if ( parentDockWidget() && parentDockWidget()->parent() )
   {
-    KDockSplitter *sp= static_cast<KDockSplitter*>(parentDockWidget()->
-                tqparent()->qt_cast("KDockSplitter"));
+    KDockSplitter *sp= ::tqqt_cast<KDockSplitter*>(parentDockWidget()->
+                tqparent());
     if ( sp )
       sp->setSeparatorPosX( m_separatorPos );
   }
@@ -184,12 +184,11 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
     if (((KDockWidget*)tqparentWidget())->mayBeShow())
       ((KDockWidget*)tqparentWidget())->dockBack();
 
-    if (w->getHeader()->qt_cast("KDockWidgetHeader"))
+    if (::tqqt_cast<KDockWidgetHeader*>(w->getHeader()))
     {
       kdDebug(760)<<"*** KDockWidgetHeader has been found"<<endl;
 
-      KDockWidgetHeader *hdr=static_cast<KDockWidgetHeader*>(w->getHeader()->
-        qt_cast("KDockWidgetHeader"));
+      KDockWidgetHeader *hdr=::tqqt_cast<KDockWidgetHeader*>(w->getHeader());
 
       KDockButton_Private *btn = new KDockButton_Private( hdr, "OverlapButton" );
 
@@ -256,8 +255,7 @@ bool DockContainer::eventFilter( TQObject *obj, TQEvent *event )
 				kdDebug()<<"NO HEADER"<<endl;
 				break;
 			}
-		      KDockWidgetHeader *hdr=static_cast<KDockWidgetHeader*>(w->getHeader()->
-	        	qt_cast("KDockWidgetHeader"));
+		      KDockWidgetHeader *hdr=::tqqt_cast<KDockWidgetHeader*>(w->getHeader());
 			if (!hdr) {
 				kdDebug()<<"Wrong header type in DockContainer::eventFilter"<<endl;
 				break;
@@ -357,7 +355,7 @@ void DockContainer::removeWidget(KDockWidget* dwdg)
   m_map.remove(w);
   m_revMap.remove(id);
   if (m_overlapButtons.tqcontains(w)) {
-    (static_cast<KDockWidgetHeader*>(w->getHeader()->qt_cast("KDockWidgetHeader")))->removeButton(m_overlapButtons[w]);
+    (::tqqt_cast<KDockWidgetHeader*>(w->getHeader()))->removeButton(m_overlapButtons[w]);
     m_overlapButtons.remove(w);
   }
   KDockContainer::removeWidget(w);
@@ -405,7 +403,7 @@ void DockContainer::tabClicked(int t)
     }
     m_ws->raiseWidget(t);
     if (m_ws->widget(t)) {
-      KDockWidget *tmpDw=static_cast<KDockWidget*>(m_ws->widget(t)->qt_cast("KDockWidget"));
+      KDockWidget *tmpDw=::tqqt_cast<KDockWidget*>(m_ws->widget(t));
       if (tmpDw) {
         if (tmpDw->getWidget()) tmpDw->getWidget()->setFocus();
       } else kdDebug(760)<<"Something really weird is going on"<<endl;
@@ -422,8 +420,8 @@ void DockContainer::tabClicked(int t)
        // try save splitter position
       if ( parentDockWidget() && parentDockWidget()->parent() )
       {
-        KDockSplitter *sp= static_cast<KDockSplitter*>(parentDockWidget()->
-                    tqparent()->qt_cast("KDockSplitter"));
+        KDockSplitter *sp= ::tqqt_cast<KDockSplitter*>(parentDockWidget()->
+                    tqparent());
         if ( sp )
           m_separatorPos = sp->separatorPos();
       }
@@ -475,8 +473,8 @@ void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
   // try to save the splitter position
   if ( parentDockWidget() && parentDockWidget()->parent() )
   {
-    KDockSplitter *sp= static_cast<KDockSplitter*>(parentDockWidget()->
-                tqparent()->qt_cast("KDockSplitter"));
+    KDockSplitter *sp= ::tqqt_cast<KDockSplitter*>(parentDockWidget()->
+                tqparent());
     if ( sp )
       cfg->writeEntry( "separatorPosition", m_separatorPos );
   }

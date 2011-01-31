@@ -68,7 +68,7 @@ SelectionInterfaceExt *KTextEditor::selectionInterfaceExt (Document *doc)
   if (!doc)
     return 0;
 
-  return static_cast<SelectionInterfaceExt*>(doc->qt_cast("KTextEditor::SelectionInterfaceExt"));
+  return dynamic_cast<KTextEditor::SelectionInterfaceExt*>(doc);
 }
 
 SelectionInterfaceExt *KTextEditor::selectionInterfaceExt (View *view)
@@ -76,7 +76,7 @@ SelectionInterfaceExt *KTextEditor::selectionInterfaceExt (View *view)
   if (!view)
     return 0;
 
-  return static_cast<SelectionInterfaceExt*>(view->qt_cast("KTextEditor::SelectionInterfaceExt"));
+  return dynamic_cast<KTextEditor::SelectionInterfaceExt*>(view);
 }
 
 //END KTextEditor::SelectionInterfaceExt

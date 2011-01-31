@@ -72,7 +72,7 @@ ConfigInterfaceExtension *KTextEditor::configInterfaceExtension (Document *doc)
   if (!doc)
     return 0;
 
-  return static_cast<ConfigInterfaceExtension*>(doc->qt_cast("KTextEditor::ConfigInterfaceExtension"));
+  return dynamic_cast<KTextEditor::ConfigInterfaceExtension*>(doc);
 }
                       
 ConfigInterfaceExtension *KTextEditor::configInterfaceExtension (Plugin *plugin)
@@ -80,5 +80,5 @@ ConfigInterfaceExtension *KTextEditor::configInterfaceExtension (Plugin *plugin)
   if (!plugin)
     return 0;
 
-  return static_cast<ConfigInterfaceExtension*>(plugin->qt_cast("KTextEditor::ConfigInterfaceExtension"));
+  return dynamic_cast<KTextEditor::ConfigInterfaceExtension*>(plugin);
 }

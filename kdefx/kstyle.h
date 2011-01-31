@@ -331,10 +331,10 @@ class KDEFX_EXPORT KStyle: public TQCommonStyle
 					const TQWidget* widget = 0,
 					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		int tqstyleHint( StyleHint sh, 
+		int tqstyleHint( TQ_StyleHint sh, 
 					const TQWidget* w = 0,
 					const TQStyleOption &opt = TQStyleOption::SO_Default,
-					QStyleHintReturn* shr = 0 ) const;
+					TQStyleHintReturn* shr = 0 ) const;
 
 	protected:
 		bool eventFilter( TQObject* object, TQEvent* event );

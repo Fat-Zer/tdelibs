@@ -1586,10 +1586,10 @@ TQSize LightStyleV2::tqsizeFromContents( ContentsType contents,
     return ret;
 }
 
-int LightStyleV2::tqstyleHint( StyleHint stylehint,
+int LightStyleV2::tqstyleHint( TQ_StyleHint stylehint,
 			   const TQWidget *widget,
 			   const TQStyleOption &option,
-			   QStyleHintReturn* returnData ) const
+			   TQStyleHintReturn* returnData ) const
 {
     int ret;
 

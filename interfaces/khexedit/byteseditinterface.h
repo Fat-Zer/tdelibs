@@ -159,7 +159,7 @@ inline BytesEditInterface *bytesEditInterface( T *t )
   if( !t )
     return 0;
 
-  return static_cast<BytesEditInterface*>( t->qt_cast("KHE::BytesEditInterface") );
+  return ::tqqt_cast<KHE::BytesEditInterface*>( t );
 }
 
 /** tries to create an instance of a hexedit widget for arrays of chars (char[])

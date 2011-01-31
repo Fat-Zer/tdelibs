@@ -3433,10 +3433,10 @@ TQSize PlastikStyle::tqsizeFromContents(ContentsType t,
     return KStyle::tqsizeFromContents (t, widget, s, opt);
 }
 
-int PlastikStyle::tqstyleHint( StyleHint stylehint,
+int PlastikStyle::tqstyleHint( TQ_StyleHint stylehint,
                                    const TQWidget *widget,
                                    const TQStyleOption &option,
-                                   QStyleHintReturn* returnData ) const
+                                   TQStyleHintReturn* returnData ) const
 {
     switch (stylehint) {
         case SH_PopupMenu_SubMenuPopupDelay:

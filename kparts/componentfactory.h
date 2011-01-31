@@ -66,7 +66,7 @@ namespace KParts
                                                T::tqstaticMetaObject()->className(),
                                                args );
 
-            T *result = dynamic_cast<T *>( object );
+            T *result = dynamic_cast<T *>( static_cast<TQT_BASE_OBJECT_NAME*>(object) );
             if ( !result )
                     delete object;
             return result;

@@ -490,7 +490,7 @@ int Sym::qt() const
 		if( g_rgQtToSymX[i].keySymX == m_sym )
 			return g_rgQtToSymX[i].keySymQt;
 #endif
-	return Qt::Key_unknown;
+	return TQt::Key_unknown;
 }
 
 TQString Sym::toString( bool bUserSpace ) const
@@ -646,7 +646,7 @@ bool symToKeyQt( uint keySym, int& keyQt )
 {
 	Sym sym( keySym );
 	keyQt = sym.qt();
-	return (keyQt != Qt::Key_unknown);
+	return (keyQt != TQt::Key_unknown);
 }
 
 bool modToModQt( uint mod, int& modQt )

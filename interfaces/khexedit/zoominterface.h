@@ -71,7 +71,7 @@ ZoomInterface *zoomInterface( T *t )
   if( !t )
     return 0;
 
-  return static_cast<ZoomInterface*>( t->qt_cast("KHE::ZoomInterface") );
+  return ::tqqt_cast<KHE::ZoomInterface*>( t );
 }
 
 }

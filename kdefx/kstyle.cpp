@@ -1825,8 +1825,8 @@ TQPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
 }
 
 
-int KStyle::tqstyleHint( StyleHint sh, const TQWidget* w,
-					   const TQStyleOption &opt, QStyleHintReturn* shr) const
+int KStyle::tqstyleHint( TQ_StyleHint sh, const TQWidget* w,
+					   const TQStyleOption &opt, TQStyleHintReturn* shr) const
 {
 	switch (sh)
 	{

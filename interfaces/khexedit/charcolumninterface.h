@@ -97,7 +97,7 @@ CharColumnInterface *charColumnInterface( T *t )
   if( !t )
     return 0;
 
-  return static_cast<CharColumnInterface*>( t->qt_cast("KHE::CharColumnInterface") );
+  return ::tqqt_cast<KHE::CharColumnInterface*>( t );
 }
 
 }

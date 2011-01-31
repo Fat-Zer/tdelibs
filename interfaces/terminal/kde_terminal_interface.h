@@ -1,4 +1,4 @@
-// interface.h -*- C++ -*-
+// // interface.h -*- C++ -*-
 // Copyright (C)  2002  Dominique Devriese <devriese@kde.org>
 // Copyright (C)  2005  Peter Rockai <me@mornfall.net>
 
@@ -60,7 +60,7 @@ class TQStrList;
  *  setCentralWidget( p->widget() );
  *
  *  // cast the part to the TerminalInterface..
- *  TerminalInterface* t = static_cast<TerminalInterface*>( p->qt_cast( "TerminalInterface" ) );
+ *  TerminalInterface* t = ::tqqt_cast<TerminalInterface*>( p );
  *  if( ! t )
  *  {
  *    // This probably happens because the konsole that is installed

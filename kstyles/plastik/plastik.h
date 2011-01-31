@@ -123,9 +123,9 @@ public:
                            const TQSize &s,
                            const TQStyleOption &o) const;
 
-    int tqstyleHint(StyleHint, const TQWidget * = 0,
+    int tqstyleHint(TQ_StyleHint, const TQWidget * = 0,
                   const TQStyleOption & = TQStyleOption::Default,
-                  QStyleHintReturn * = 0 ) const;
+                  TQStyleHintReturn * = 0 ) const;
 
 protected:
     enum TabPosition

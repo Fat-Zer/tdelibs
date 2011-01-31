@@ -1739,28 +1739,28 @@ void KMdiMainFrm::setIDEAlModeStyle( int flags )
 	d->m_styleIDEAlMode = flags; // see KMultiTabBar for the first 3 bits
 	if ( m_leftContainer )
 	{
-		KMdiDockContainer * tmpL = ( KMdiDockContainer* ) ( m_leftContainer->getWidget()->qt_cast( "KMdiDockContainer" ) );
+		KMdiDockContainer * tmpL = ::tqqt_cast<KMdiDockContainer*>( m_leftContainer->getWidget() );
 		if ( tmpL )
 			tmpL->setStyle( flags );
 	}
 
 	if ( m_rightContainer )
 	{
-		KMdiDockContainer * tmpR = ( KMdiDockContainer* ) ( m_rightContainer->getWidget()->qt_cast( "KMdiDockContainer" ) );
+		KMdiDockContainer * tmpR = ::tqqt_cast<KMdiDockContainer*>( m_rightContainer->getWidget() );
 		if ( tmpR )
 			tmpR->setStyle( flags );
 	}
 
 	if ( m_topContainer )
 	{
-		KMdiDockContainer * tmpT = ( KMdiDockContainer* ) ( m_topContainer->getWidget()->qt_cast( "KMdiDockContainer" ) );
+		KMdiDockContainer * tmpT = ::tqqt_cast<KMdiDockContainer*>( m_topContainer->getWidget() );
 		if ( tmpT )
 			tmpT->setStyle( flags );
 	}
 
 	if ( m_bottomContainer )
 	{
-		KMdiDockContainer * tmpB = ( KMdiDockContainer* ) ( m_bottomContainer->getWidget()->qt_cast( "KMdiDockContainer" ) );
+		KMdiDockContainer * tmpB = ::tqqt_cast<KMdiDockContainer*>( m_bottomContainer->getWidget() );
 		if ( tmpB )
 			tmpB->setStyle( flags );
 	}

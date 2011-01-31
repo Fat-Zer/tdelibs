@@ -76,9 +76,9 @@ public:
     TQSize tqsizeFromContents(ContentsType, const TQWidget *, const TQSize &,
 			   const TQStyleOption & = TQStyleOption::Default ) const;
 
-    int tqstyleHint(StyleHint, const TQWidget * = 0,
+    int tqstyleHint(TQ_StyleHint, const TQWidget * = 0,
 		  const TQStyleOption & = TQStyleOption::Default,
-		  QStyleHintReturn * = 0 ) const;
+		  TQStyleHintReturn * = 0 ) const;
 
     TQPixmap stylePixmap( StylePixmap stylepixmap,
 			 const TQWidget* widget = 0,

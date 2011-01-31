@@ -696,8 +696,7 @@ void KPluginSelector::defaults()
     // tabwidget - defaults() will be called for all of them)
 
     TQWidget * pluginconfig = d->widgetstack->visibleWidget();
-    KCModuleProxy * kcm = ( KCModuleProxy* )pluginconfig->qt_cast(
-            "KCModuleProxy" );
+    KCModuleProxy * kcm = ::tqqt_cast<KCModuleProxy*>(pluginconfig);
     if( kcm )
     {
         kdDebug( 702 ) << "call KCModule::defaults() for the plugins KCM"

@@ -47,6 +47,7 @@
 
 #include "kaccelmanager_private.h"
 #include "../kdeui/kstdaction_p.h"
+#include "../kutils/kmultitabbar.h"
 
 
 /*********************************************************************
@@ -320,7 +321,7 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
 
   if (dynamic_cast<TQComboBox*>(w) || dynamic_cast<TQLineEdit*>(w) ||
       dynamic_cast<TQTextEdit*>(w) || dynamic_cast<TQTextView*>(w) ||
-      dynamic_cast<TQSpinBox*>(w) || w->qt_cast( "KMultiTabBar" ))
+      dynamic_cast<TQSpinBox*>(w) || static_cast<KMultiTabBar*>(w->qt_cast("KMultiTabBar")))
       return;
 
   // now treat 'ordinary' widgets

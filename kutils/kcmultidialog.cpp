@@ -358,8 +358,7 @@ void KCMultiDialog::slotAboutToShow(TQWidget *page)
     if( ! obj )
         return;
 
-    KCModuleProxy * module = ( KCModuleProxy* )obj->qt_cast(
-            "KCModuleProxy" );
+    KCModuleProxy * module = ::tqqt_cast<KCModuleProxy*>(obj);
     if( ! module )
         return;
     d->currentModule = module;

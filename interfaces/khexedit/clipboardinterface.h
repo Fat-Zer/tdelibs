@@ -78,7 +78,7 @@ ClipboardInterface *clipboardInterface( T *t )
   if( !t )
     return 0;
 
-  return static_cast<ClipboardInterface*>( t->qt_cast("KHE::ClipboardInterface") );
+  return ::tqqt_cast<KHE::ClipboardInterface*>( t );
 }
 
 }

@@ -20,7 +20,7 @@ Win::Win()
     KParts::Part* p = static_cast<KParts::Part*>( factory->create( this, "tralala", "TQObject", "KParts::ReadOnlyPart" ) );
     setCentralWidget( p->widget() );
 
-    TerminalInterface* t = static_cast<TerminalInterface*>( p->qt_cast( "TerminalInterface" ) );
+    TerminalInterface* t = ::tqqt_cast<TerminalInterface*>( p );
     t->showShellInDir( TQDir::home().path() );
 //     TQStrList l;
 //     l.append( "python" );
@@ -46,11 +46,11 @@ int main( int argc, char** argv )
 void Win::pythonExited()
 {
     std::cerr << "hee, " << p << std::endl;
-    std::cerr << ( p->qt_cast( "TerminalInterface" ) ) << std::endl;
+    std::cerr << ( ::tqqt_cast<TerminalInterface>(p) ) << std::endl;
     // KMessageBox::sorry( this, TQString::fromUtf8( "Exited, status was %1" ).arg( status ) );
     disconnect(p, TQT_SIGNAL( processExited() ),
             this, TQT_SLOT( pythonExited() ));
-    TerminalInterface* t = static_cast<TerminalInterface*>( p->qt_cast( "TerminalInterface" ) );
+    TerminalInterface* t = ::tqqt_cast<TerminalInterface*>( p );
     TQStrList l;
     l.append( "echo" );
     l.append( "hello world" );

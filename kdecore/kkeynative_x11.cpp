@@ -181,7 +181,7 @@ int KKeyNative::keyCodeQt() const
 {
 	int keyQt = KKeyServer::Sym(m_sym).qt(), modQt;
 
-	if( keyQt != Qt::Key_unknown && KKeyServer::modXToModQt( m_mod, modQt ) )
+	if( keyQt != TQt::Key_unknown && KKeyServer::modXToModQt( m_mod, modQt ) )
 		return keyQt | modQt;
 
 	return 0;
