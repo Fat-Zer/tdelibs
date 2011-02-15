@@ -54,4 +54,4 @@ tde_add_executable( dcopstart SOURCES dcopstart.cpp LINK DCOP-shared DESTINATION
 
 #### dcopquit ###################################
 
-tde_add_executable( dcopquit SOURCES dcopquit.cpp LINK DCOP-shared DESTINATION ${BIN_INSTALL_DIR} )
+tde_add_executable( dcopquit SOURCES dcopquit.cpp LINK DCOP-shared X11 DESTINATION ${BIN_INSTALL_DIR} )
