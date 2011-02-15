@@ -24,7 +24,7 @@ link_directories(
 
 #### dcop #######################################
 
-tde_add_executable( dcop SOURCES dcop.cpp LINK DCOP-shared DESTINATION ${BIN_INSTALL_DIR} )
+tde_add_executable( dcop SOURCES dcop.cpp LINK DCOP-shared X11 DESTINATION ${BIN_INSTALL_DIR} )
 
 
 #### dcopfind ###################################
