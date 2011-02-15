@@ -64,12 +64,12 @@ int main(int /*argc*/,char /* **argv*/)
   list.append(f);
 
   list.sortBy(FamilyName);
-  if ( !(   (*list.at(0)).uid()=="78ze"
-         && (*list.at(1)).uid()=="Rsdf"
-         && (*list.at(2)).uid()=="Fhwn"
-         && (*list.at(3)).uid()=="kk45"
-         && (*list.at(4)).uid()=="Asdf"
-         && (*list.at(5)).uid()=="Z2hk"
+  if ( !(   (*list.tqat(0)).uid()=="78ze"
+         && (*list.tqat(1)).uid()=="Rsdf"
+         && (*list.tqat(2)).uid()=="Fhwn"
+         && (*list.tqat(3)).uid()=="kk45"
+         && (*list.tqat(4)).uid()=="Asdf"
+         && (*list.tqat(5)).uid()=="Z2hk"
         ) ) {
       kdError() << "SORTING BY FAMILY NAME NOT CORRECT!" << endl;
       kdDebug() << "list sorted by family name:" << endl;
@@ -79,12 +79,12 @@ int main(int /*argc*/,char /* **argv*/)
   }
   list.setReverseSorting(true);
   list.sort();
-  if ( !(   (*list.at(5)).uid()=="78ze"
-         && (*list.at(4)).uid()=="Rsdf"
-         && (*list.at(3)).uid()=="Fhwn"
-         && (*list.at(2)).uid()=="kk45"
-         && (*list.at(1)).uid()=="Asdf"
-         && (*list.at(0)).uid()=="Z2hk"
+  if ( !(   (*list.tqat(5)).uid()=="78ze"
+         && (*list.tqat(4)).uid()=="Rsdf"
+         && (*list.tqat(3)).uid()=="Fhwn"
+         && (*list.tqat(2)).uid()=="kk45"
+         && (*list.tqat(1)).uid()=="Asdf"
+         && (*list.tqat(0)).uid()=="Z2hk"
         ) ) {
       kdError() << "REVERSE SORTING BY FAMILY NAME NOT CORRECT!" << endl;
       kdDebug() << "list reverse sorted by family name:" << endl;
@@ -95,12 +95,12 @@ int main(int /*argc*/,char /* **argv*/)
 
   list.setReverseSorting(false);
   list.sortBy(FormattedName);
-  if ( !(   (*list.at(0)).uid()=="78ze"
-         && (*list.at(1)).uid()=="Rsdf"
-         && (*list.at(2)).uid()=="Fhwn"
-         && (*list.at(3)).uid()=="kk45"
-         && (*list.at(4)).uid()=="Z2hk"
-         && (*list.at(5)).uid()=="Asdf"
+  if ( !(   (*list.tqat(0)).uid()=="78ze"
+         && (*list.tqat(1)).uid()=="Rsdf"
+         && (*list.tqat(2)).uid()=="Fhwn"
+         && (*list.tqat(3)).uid()=="kk45"
+         && (*list.tqat(4)).uid()=="Z2hk"
+         && (*list.tqat(5)).uid()=="Asdf"
         ) ) {
       kdError() << "SORTING BY FORMATTED NAME NOT CORRECT!" << endl;
       kdDebug() << "list sorted by formatted name:" << endl;
@@ -110,12 +110,12 @@ int main(int /*argc*/,char /* **argv*/)
   }
   list.setReverseSorting(true);
   list.sort();
-  if ( !(   (*list.at(5)).uid()=="78ze"
-         && (*list.at(4)).uid()=="Rsdf"
-         && (*list.at(3)).uid()=="Fhwn"
-         && (*list.at(2)).uid()=="kk45"
-         && (*list.at(1)).uid()=="Z2hk"
-         && (*list.at(0)).uid()=="Asdf"
+  if ( !(   (*list.tqat(5)).uid()=="78ze"
+         && (*list.tqat(4)).uid()=="Rsdf"
+         && (*list.tqat(3)).uid()=="Fhwn"
+         && (*list.tqat(2)).uid()=="kk45"
+         && (*list.tqat(1)).uid()=="Z2hk"
+         && (*list.tqat(0)).uid()=="Asdf"
         ) ) {
       kdError() << "REVERSE SORTING BY FORMATTED NAME NOT CORRECT!" << endl;
       kdDebug() << "list reverse sorted by formatted name:" << endl;
@@ -127,12 +127,12 @@ int main(int /*argc*/,char /* **argv*/)
 
   list.setReverseSorting(false);
   list.sortBy(Uid);
-  if ( !(   (*list.at(0)).uid()=="78ze"
-         && (*list.at(1)).uid()=="Asdf"
-         && (*list.at(2)).uid()=="Fhwn"
-         && (*list.at(3)).uid()=="Rsdf"
-         && (*list.at(4)).uid()=="Z2hk"
-         && (*list.at(5)).uid()=="kk45"
+  if ( !(   (*list.tqat(0)).uid()=="78ze"
+         && (*list.tqat(1)).uid()=="Asdf"
+         && (*list.tqat(2)).uid()=="Fhwn"
+         && (*list.tqat(3)).uid()=="Rsdf"
+         && (*list.tqat(4)).uid()=="Z2hk"
+         && (*list.tqat(5)).uid()=="kk45"
         ) ) {
       kdError() << "SORTING BY UID NOT CORRECT!" << endl;
       kdDebug() << "list sorted by Uid:" << endl;
@@ -142,12 +142,12 @@ int main(int /*argc*/,char /* **argv*/)
   }
   list.setReverseSorting(true);
   list.sortBy(Uid);
-  if ( !(   (*list.at(5)).uid()=="78ze"
-         && (*list.at(4)).uid()=="Asdf"
-         && (*list.at(3)).uid()=="Fhwn"
-         && (*list.at(2)).uid()=="Rsdf"
-         && (*list.at(1)).uid()=="Z2hk"
-         && (*list.at(0)).uid()=="kk45"
+  if ( !(   (*list.tqat(5)).uid()=="78ze"
+         && (*list.tqat(4)).uid()=="Asdf"
+         && (*list.tqat(3)).uid()=="Fhwn"
+         && (*list.tqat(2)).uid()=="Rsdf"
+         && (*list.tqat(1)).uid()=="Z2hk"
+         && (*list.tqat(0)).uid()=="kk45"
         ) ) {
       kdError() << "REVERSE SORTING BY UID NOT CORRECT!" << endl;
       kdDebug() << "list sorted by Uid:" << endl;
@@ -170,8 +170,8 @@ int main(int /*argc*/,char /* **argv*/)
   list2.append(f);
   list2.setReverseSorting(false);
   list2.sort();
-  if ( !(   (*list2.at(0)).uid()=="78ze"
-         && (*list2.at(1)).uid()=="Asdf"
+  if ( !(   (*list2.tqat(0)).uid()=="78ze"
+         && (*list2.tqat(1)).uid()=="Asdf"
         ) ) {
       kdError() << "SORTING BY FORMATTED NAME IN A TWO ENTRY LIST NOT CORRECT!" << endl;
       kdDebug() << "list sorted by formatted name, two entries:" << endl;
@@ -181,8 +181,8 @@ int main(int /*argc*/,char /* **argv*/)
   }
   list2.setReverseSorting(true);
   list2.sort();
-  if ( !(   (*list2.at(1)).uid()=="78ze"
-         && (*list2.at(0)).uid()=="Asdf"
+  if ( !(   (*list2.tqat(1)).uid()=="78ze"
+         && (*list2.tqat(0)).uid()=="Asdf"
         ) ) {
       kdError() << "REVERSE SORTING BY FORMATTED NAME IN A TWO ENTRY LIST NOT CORRECT!" << endl;
       kdDebug() << "list reverse sorted by formatted name, two entries:" << endl;

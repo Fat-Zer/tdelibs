@@ -216,7 +216,7 @@ void KMListView::setPrinterList(TQPtrList<KMPrinter> *list)
 	TQPtrList<KMListViewItem>	deleteList;
 	deleteList.setAutoDelete(true);
 	for (uint i=0; i<m_items.count(); i++)
-		if (m_items.at(i)->isDiscarded())
+		if (m_items.tqat(i)->isDiscarded())
 		{
 			// instance items are put in front of the list
 			// so that they are destroyed first

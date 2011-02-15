@@ -178,7 +178,7 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
 	while (!layer_offsets.isEmpty()) {
 		TQ_INT32 layer_offset = layer_offsets.pop();
 
-		xcf_io.tqdevice()->at(layer_offset);
+		xcf_io.tqdevice()->tqat(layer_offset);
 
 		if (!loadLayer(xcf_io, xcf_image))
 			return;
@@ -415,7 +415,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 
 	if( !composeTiles(xcf_image))
 		return false;
-	xcf_io.tqdevice()->at(layer.hierarchy_offset);
+	xcf_io.tqdevice()->tqat(layer.hierarchy_offset);
 
 	// As tiles are loaded, they are copied into the layers tiles by
 	// this routine. (loadMask(), below, uses a slightly different
@@ -427,7 +427,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 		return false;
 
 	if (layer.mask_offset != 0) {
-		xcf_io.tqdevice()->at(layer.mask_offset);
+		xcf_io.tqdevice()->tqat(layer.mask_offset);
 
 		if (!loadMask(xcf_io, layer))
 			return false;
@@ -758,13 +758,13 @@ bool XCFImageFormat::loadHierarchy(TQDataStream& xcf_io, Layer& layer)
 		}
 	} while (junk != 0);
 
-	TQIODevice::Offset saved_pos = xcf_io.tqdevice()->at();
+	TQIODevice::Offset saved_pos = xcf_io.tqdevice()->tqat();
 
-	xcf_io.tqdevice()->at(offset);
+	xcf_io.tqdevice()->tqat(offset);
 	if (!loadLevel(xcf_io, layer, bpp))
 		return false;
 
-	xcf_io.tqdevice()->at(saved_pos);
+	xcf_io.tqdevice()->tqat(saved_pos);
 	return true;
 }
 
@@ -801,7 +801,7 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, TQ_INT32 bpp)
 				return false;
 			}
 
-			TQIODevice::Offset saved_pos = xcf_io.tqdevice()->at();
+			TQIODevice::Offset saved_pos = xcf_io.tqdevice()->tqat();
 			TQ_UINT32 offset2;
 			xcf_io >> offset2;
 
@@ -815,7 +815,7 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, TQ_INT32 bpp)
 			if (offset2 == 0)
 				offset2 = offset + (uint)(TILE_WIDTH * TILE_HEIGHT * 4 * 1.5);
 
-			xcf_io.tqdevice()->at(offset);
+			xcf_io.tqdevice()->tqat(offset);
 			int size = layer.image_tiles[j][i].width() * layer.image_tiles[j][i].height();
 
 			if (!loadTileRLE(xcf_io, layer.tile, size, offset2 - offset, bpp))
@@ -827,7 +827,7 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, TQ_INT32 bpp)
 
 			layer.assignBytes(layer, i, j);
 
-			xcf_io.tqdevice()->at(saved_pos);
+			xcf_io.tqdevice()->tqat(saved_pos);
 			xcf_io >> offset;
 
 			if (xcf_io.tqdevice()->status() != IO_Ok) {
@@ -873,7 +873,7 @@ bool XCFImageFormat::loadMask(TQDataStream& xcf_io, Layer& layer)
 		return false;
 	}
 
-	xcf_io.tqdevice()->at(hierarchy_offset);
+	xcf_io.tqdevice()->tqat(hierarchy_offset);
 	layer.assignBytes = assignMaskBytes;
 
 	if (!loadHierarchy(xcf_io, layer))

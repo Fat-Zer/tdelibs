@@ -112,7 +112,7 @@ void KHTMLPartBrowserExtension::editableWidgetFocused( TQWidget *widget )
 
     if ( !m_connectedToClipboard && m_editableFormWidget )
     {
-        connect( TQApplication::clipboard(), TQT_SIGNAL( dataChanged() ),
+        connect( TQApplication::tqclipboard(), TQT_SIGNAL( dataChanged() ),
                  this, TQT_SLOT( updateEditActions() ) );
 
         if ( m_editableFormWidget->inherits( "QLineEdit" ) || m_editableFormWidget->inherits( "QTextEdit" ) )
@@ -135,7 +135,7 @@ void KHTMLPartBrowserExtension::editableWidgetBlurred( TQWidget * /*widget*/ )
 
     if ( m_connectedToClipboard )
     {
-        disconnect( TQApplication::clipboard(), TQT_SIGNAL( dataChanged() ),
+        disconnect( TQApplication::tqclipboard(), TQT_SIGNAL( dataChanged() ),
                     this, TQT_SLOT( updateEditActions() ) );
 
         if ( oldWidget )
@@ -338,7 +338,7 @@ void KHTMLPartBrowserExtension::updateEditActions()
     TQMimeSource *data = TQApplication::tqclipboard()->data();
     enableAction( "paste", data->provides( "text/plain" ) );
 #else
-    TQString data=TQApplication::clipboard()->text();
+    TQString data=TQApplication::tqclipboard()->text();
     enableAction( "paste", data.contains("://"));
 #endif
     bool hasSelection = false;
@@ -759,7 +759,7 @@ void KHTMLPopupGUIClient::slotCopyImageLocation()
   TQApplication::tqclipboard()->setData( new KURLDrag( lst ), TQClipboard::Clipboard );
   TQApplication::tqclipboard()->setData( new KURLDrag( lst ), TQClipboard::Selection );
 #else
-  TQApplication::clipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
+  TQApplication::tqclipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
 #endif
 }
 

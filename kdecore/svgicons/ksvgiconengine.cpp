@@ -202,7 +202,11 @@ public:
 		TQWMatrix matrix = m_engine->painter()->parseTransform(transform);
 
 		TQWMatrix *current = m_engine->painter()->tqworldMatrix();
+#ifdef USE_QT4
+printf("[FIXME] *current = matrix * *current locks up under Qt4; bypassing for now\n\r");
+#else // USE_QT4
 		*current = matrix * *current;
+#endif // USE_QT4
 	}
 
 	void parseCommonAttributes(TQDomNode &node)

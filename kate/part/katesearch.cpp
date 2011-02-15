@@ -386,7 +386,7 @@ void KateSearch::replaceOne()
     int ncaps = m_re.numCaptures();
     while ( pos >= 0 ) {
       TQString substitute;
-      TQChar argument = br.cap(1).at(0);
+      TQChar argument = TQString(br.cap(1)).tqat(0);
       if ( argument.isDigit() ) {
         // the second character is a digit, this is a backreference
         int ccap = argument.digitValue();
@@ -639,9 +639,9 @@ bool KateSearch::doSearch( const TQString& text )
           {
             found = (
                       ( foundCol == 0 ||
-                        ! doc()->highlight()->isInWord( doc()->textLine( foundLine ).at( foundCol - 1 ) ) ) &&
+                        ! doc()->highlight()->isInWord( doc()->textLine( foundLine ).tqat( foundCol - 1 ) ) ) &&
                       ( foundCol + matchLen == doc()->lineLength( foundLine ) ||
-                        ! doc()->highlight()->isInWord( doc()->textLine( foundLine ).at( foundCol + matchLen ) ) )
+                        ! doc()->highlight()->isInWord( doc()->textLine( foundLine ).tqat( foundCol + matchLen ) ) )
                     );
             if ( found )
             {

@@ -384,7 +384,7 @@ int main(int argc, char *argv[])
   check("KURL::setFileName()", u2.url(), "file:///home/dfaure/myotherfile.txt");
   // more tricky, renaming a directory (kpropsdlg.cc, line ~ 238)
       TQString tmpurl = "file:/home/dfaure/myolddir/";
-      if ( tmpurl.at(tmpurl.length() - 1) == '/')
+      if ( tmpurl.tqat(tmpurl.length() - 1) == '/')
           // It's a directory, so strip the trailing slash first
           tmpurl.truncate( tmpurl.length() - 1);
       KURL newUrl = tmpurl;

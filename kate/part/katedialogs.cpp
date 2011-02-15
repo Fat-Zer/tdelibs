@@ -819,7 +819,7 @@ void KateEditKeyConfiguration::showEvent ( TQShowEvent * )
   if (!m_ready)
   {
     (new TQVBoxLayout(this))->setAutoAdd(true);
-    KateView* view = (KateView*)m_doc->views().at(0);
+    KateView* view = (KateView*)m_doc->views().tqat(0);
     m_ac = view->editActionCollection();
     m_keyChooser = new KKeyChooser( m_ac, this, false );
     connect( m_keyChooser, TQT_SIGNAL( keyChange() ), this, TQT_SLOT( slotChanged() ) );
@@ -1154,7 +1154,7 @@ void KatePartPluginConfigPage::apply ()
   KateDocumentConfig::global()->configStart ();
 
   for (uint i=0; i < m_items.count(); i++)
-    KateDocumentConfig::global()->setPlugin (m_items.at(i)->pluginIndex(), m_items.at(i)->isOn());
+    KateDocumentConfig::global()->setPlugin (m_items.tqat(i)->pluginIndex(), m_items.tqat(i)->isOn());
 
   KateDocumentConfig::global()->configEnd ();
 }
@@ -1243,7 +1243,7 @@ void KatePartPluginConfigPage::slotConfigure()
 
     for( uint i=0; i<editorPages.count(); i++ )
     {
-      editorPages.at( i )->apply();
+      editorPages.tqat( i )->apply();
     }
   }
 

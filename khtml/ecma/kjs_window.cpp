@@ -1013,7 +1013,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     TQPtrList<KParts::ReadOnlyPart> frames = part->frames();
     unsigned int len = frames.count();
     if (i < len) {
-      KParts::ReadOnlyPart* frame = frames.at(i);
+      KParts::ReadOnlyPart* frame = frames.tqat(i);
       if (frame)
         return Window::retrieve(frame);
     }
@@ -2412,7 +2412,7 @@ Value FrameArray::get(ExecState *exec, const Identifier &p) const
     bool ok;
     unsigned int i = p.toArrayIndex(&ok);
     if (ok && i < len)
-      frame = frames.at(i);
+      frame = frames.tqat(i);
   }
 
   // we are potentially fetching a reference to a another Window object here.

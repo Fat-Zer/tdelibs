@@ -422,7 +422,7 @@ int Backend::open(const TQByteArray& password) {
 	// compare hashes
 	int sz = encrypted.size();
 	for (int i = 0; i < 20; i++) {
-		if (testhash[i] != encrypted.at(sz - 20 + i)) {
+		if (testhash[i] != static_cast<const char>(encrypted.tqat(sz - 20 + i))) {
 			encrypted.fill(0);
 			sha.reset();
 			return -8;         // hash error.

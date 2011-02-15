@@ -76,7 +76,7 @@ void DockMainWindow::createGUI( Part * part )
 
   KXMLGUIFactory *factory = guiFactory();
 
-  setUpdatesEnabled( false );
+  tqsetUpdatesEnabled( false );
 
   TQPtrList<Plugin> plugins;
 
@@ -117,7 +117,7 @@ void DockMainWindow::createGUI( Part * part )
 
   }
 
-  setUpdatesEnabled( true );
+  tqsetUpdatesEnabled( true );
 
   d->m_activePart = part;
 }

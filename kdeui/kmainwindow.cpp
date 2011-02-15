@@ -491,7 +491,7 @@ void KMainWindow::setupGUI( TQSize defaultSize, int options, const TQString & xm
 void KMainWindow::createGUI( const TQString &xmlfile, bool _conserveMemory )
 {
     // disabling the updates prevents unnecessary redraws
-    setUpdatesEnabled( false );
+    tqsetUpdatesEnabled( false );
 
     // just in case we are rebuilding, let's remove our old client
     guiFactory()->removeClient( this );
@@ -564,7 +564,7 @@ void KMainWindow::createGUI( const TQString &xmlfile, bool _conserveMemory )
       conserveMemory();
     }
 
-    setUpdatesEnabled( true );
+    tqsetUpdatesEnabled( true );
     updateGeometry();
 }
 

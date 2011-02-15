@@ -61,7 +61,7 @@ static bool seekToCodeStart( TQIODevice * io, TQ_UINT32 & ps_offset, TQ_UINT32 &
                 + ((unsigned char) buf[2] << 16)
                 + ((unsigned char) buf[3] << 24);
             kdDebug(399) << "kimgio EPS: Offset: " << ps_offset <<" Size: " << ps_size << endl;
-            if ( !io->at(ps_offset) ) // Get offset of PostScript code in the MS-DOS EPS file.
+            if ( !io->tqat(ps_offset) ) // Get offset of PostScript code in the MS-DOS EPS file.
             {
                 kdError(399) << "kimgio EPS: cannot seek in MS-DOS EPS file" << endl;
                 return false;
@@ -218,7 +218,7 @@ KDE_EXPORT void kimgio_eps_read (TQImageIO *image)
 
         io->reset(); // Go back to start of file to give all the file to GhostScript
         if (ps_offset>0L) // We have an offset
-              io->at(ps_offset);
+              io->tqat(ps_offset);
         TQByteArray buffer ( io->readAll() );
 
         // If we have no MS-DOS EPS file or if the size seems wrong, then choose the buffer size

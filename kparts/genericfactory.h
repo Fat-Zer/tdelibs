@@ -111,7 +111,7 @@ namespace KParts
 
             if ( part && !qstrcmp( className, "KParts::ReadOnlyPart" ) )
             {
-                KParts::ReadWritePart *rwp = dynamic_cast<KParts::ReadWritePart *>( part );
+                KParts::ReadWritePart *rwp = tqt_dynamic_cast<KParts::ReadWritePart *>( part );
                 if ( rwp )
                     rwp->setReadWrite( false );
             }
@@ -137,11 +137,11 @@ namespace KParts
                                                                                      args );
 
             // (this cast is guaranteed to work...)
-            KParts::Part *part = dynamic_cast<KParts::Part *>( object );
+            KParts::Part *part = tqt_dynamic_cast<KParts::Part *>( object );
 
             if ( part && !qstrcmp( className, "KParts::ReadOnlyPart" ) )
             {
-                KParts::ReadWritePart *rwp = dynamic_cast<KParts::ReadWritePart *>( part );
+                KParts::ReadWritePart *rwp = tqt_dynamic_cast<KParts::ReadWritePart *>( part );
                 if ( rwp )
                     rwp->setReadWrite( false );
             }

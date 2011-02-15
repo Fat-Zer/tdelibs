@@ -256,7 +256,7 @@ void KAction::initPrivate( const TQString& text, const KShortcut& cut,
 {
     d->m_cutDefault = cut;
 
-    m_parentCollection = dynamic_cast<KActionCollection *>( parent() );
+    m_parentCollection = tqt_dynamic_cast<KActionCollection *>( parent() );
     kdDebug(129) << "KAction::initPrivate(): this = " << this << " name = \"" << name() << "\" cut = " << cut.toStringInternal() << " m_parentCollection = " << m_parentCollection << endl;
     if ( m_parentCollection )
         m_parentCollection->insert( this );
@@ -816,7 +816,7 @@ void KAction::plugMainWindowAccel( TQWidget *w )
   while ( !tl->isDialog() && ( n = tl->tqparentWidget() ) ) // lookup parent and store
     tl = n;
 
-  KMainWindow * mw = dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow
+  KMainWindow * mw = tqt_dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow
   if (mw)
     plugAccel( mw->accel() );
   else
@@ -1051,12 +1051,12 @@ TQWidget* KAction::container( int index ) const
 
 KToolBar* KAction::toolBar( int index ) const
 {
-    return dynamic_cast<KToolBar *>( d->m_containers[ index ].m_container );
+    return tqt_dynamic_cast<KToolBar *>( d->m_containers[ index ].m_container );
 }
 
 TQPopupMenu* KAction::popupMenu( int index ) const
 {
-    return dynamic_cast<TQPopupMenu *>( d->m_containers[ index ].m_container );
+    return tqt_dynamic_cast<TQPopupMenu *>( d->m_containers[ index ].m_container );
 }
 
 TQWidget* KAction::representative( int index ) const
@@ -1120,14 +1120,14 @@ void KAction::slotPopupActivated()
 {
   if( ::tqqt_cast<TQSignal *>(sender()))
   {
-    int id = dynamic_cast<const TQSignal *>(sender())->value().toInt();
+    int id = tqt_dynamic_cast<const TQSignal *>(sender())->value().toInt();
     int pos = findContainer(id);
     if(pos != -1)
     {
-      TQPopupMenu* qpm = dynamic_cast<TQPopupMenu *>( container(pos) );
+      TQPopupMenu* qpm = tqt_dynamic_cast<TQPopupMenu *>( container(pos) );
       if(qpm)
       {
-        KPopupMenu* kpm = dynamic_cast<KPopupMenu *>( qpm );
+        KPopupMenu* kpm = tqt_dynamic_cast<KPopupMenu *>( qpm );
         TQt::ButtonState state;
         if ( kpm ) // KPopupMenu? Nice, it stores the state.
             state = kpm->state();

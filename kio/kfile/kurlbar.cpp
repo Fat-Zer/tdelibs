@@ -1010,7 +1010,7 @@ KURL KURLBarItemDialog::url() const
 {
     TQString text = m_urlEdit->url();
     KURL u;
-    if ( text.at(0) == '/' )
+    if ( text.tqat(0) == '/' )
         u.setPath( text );
     else
         u = text;

@@ -415,7 +415,7 @@ kdbgstream& kdbgstream::operator << (const TQWidget* widget)
       return *this;
     }
   output += string;
-  if (output.at(output.length() -1 ) == (QChar)'\n')
+  if (output.tqat(output.length() -1 ) == (QChar)'\n')
     {
       flush();
     }

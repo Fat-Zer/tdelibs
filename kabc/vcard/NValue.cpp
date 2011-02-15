@@ -106,11 +106,11 @@ NValue::_parse()
 	for (unsigned int i = 0; i < l.count(); i++) {
 
 		switch (i) {
-			case 0: family_	= l.at(0);	break;
-			case 1: given_	= l.at(1);	break;
-			case 2: middle_	= l.at(2);	break;
-			case 3: prefix_	= l.at(3);	break;
-			case 4: suffix_	= l.at(4);	break;
+			case 0: family_	= l.tqat(0);	break;
+			case 1: given_	= l.tqat(1);	break;
+			case 2: middle_	= l.tqat(2);	break;
+			case 3: prefix_	= l.tqat(3);	break;
+			case 4: suffix_	= l.tqat(4);	break;
 			default:			break;
 		}
 	}

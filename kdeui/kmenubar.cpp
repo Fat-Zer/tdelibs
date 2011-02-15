@@ -506,7 +506,7 @@ void KMenuBar::drawContents( TQPainter* p )
         BackgroundMode bg_mode = backgroundMode();
         BackgroundOrigin bg_origin = backgroundOrigin();
         
-        setUpdatesEnabled(false);
+        tqsetUpdatesEnabled(false);
         setBackgroundMode(X11ParentRelative);
         setBackgroundOrigin(WindowOrigin);
 
@@ -561,7 +561,7 @@ void KMenuBar::drawContents( TQPainter* p )
 
         setBackgroundOrigin(bg_origin);
         setBackgroundMode(bg_mode);
-        setUpdatesEnabled(up_enabled);
+        tqsetUpdatesEnabled(up_enabled);
     }
 }
 

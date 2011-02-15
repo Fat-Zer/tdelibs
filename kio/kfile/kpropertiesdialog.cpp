@@ -576,7 +576,7 @@ void KPropertiesDialog::rename( const TQString& _name )
   else
   {
     TQString tmpurl = m_singleUrl.url();
-    if ( tmpurl.at(tmpurl.length() - 1) == '/')
+    if ( tmpurl.tqat(tmpurl.length() - 1) == '/')
       // It's a directory, so strip the trailing slash first
       tmpurl.truncate( tmpurl.length() - 1);
     newUrl = tmpurl;
@@ -908,7 +908,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     // Enhanced rename: Don't highlight the file extension.
     TQString pattern;
     KServiceTypeFactory::self()->findFromPattern( filename, &pattern );
-    if (!pattern.isEmpty() && pattern.at(0)=='*' && pattern.tqfind('*',1)==-1)
+    if (!pattern.isEmpty() && pattern.tqat(0)=='*' && pattern.tqfind('*',1)==-1)
       d->m_lined->setSelection(0, filename.length()-pattern.stripWhiteSpace().length()+1);
     else
     {
@@ -1654,11 +1654,11 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
 
   /* Group: Access Permissions */
   gb = new TQGroupBox ( 0, Qt::Vertical, i18n("Access Permissions"), d->m_frame );
-  gb->layout()->setSpacing(KDialog::spacingHint());
-  gb->layout()->setMargin(KDialog::marginHint());
+  gb->tqlayout()->setSpacing(KDialog::spacingHint());
+  gb->tqlayout()->setMargin(KDialog::marginHint());
   box->addWidget (gb);
 
-  gl = new TQGridLayout (gb->layout(), 7, 2);
+  gl = new TQGridLayout (gb->tqlayout(), 7, 2);
   gl->setColStretch(1, 1);
 
   l = d->explanationLabel = new TQLabel( "", gb );
@@ -1723,11 +1723,11 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
 
   /**** Group: Ownership ****/
   gb = new TQGroupBox ( 0, Qt::Vertical, i18n("Ownership"), d->m_frame );
-  gb->layout()->setSpacing(KDialog::spacingHint());
-  gb->layout()->setMargin(KDialog::marginHint());
+  gb->tqlayout()->setSpacing(KDialog::spacingHint());
+  gb->tqlayout()->setMargin(KDialog::marginHint());
   box->addWidget (gb);
 
-  gl = new TQGridLayout (gb->layout(), 4, 3);
+  gl = new TQGridLayout (gb->tqlayout(), 4, 3);
   gl->addRowSpacing(0, 10);
 
   /*** Set Owner ***/
@@ -1915,10 +1915,10 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
 
   // Group: Access Permissions
   gb = new TQGroupBox ( 0, Qt::Vertical, i18n("Access Permissions"), mainVBox );
-  gb->layout()->setSpacing(KDialog::spacingHint());
-  gb->layout()->setMargin(KDialog::marginHint());
+  gb->tqlayout()->setSpacing(KDialog::spacingHint());
+  gb->tqlayout()->setMargin(KDialog::marginHint());
 
-  gl = new TQGridLayout (gb->layout(), 6, 6);
+  gl = new TQGridLayout (gb->tqlayout(), 6, 6);
   gl->addRowSpacing(0, 10);
 
   TQValueVector<TQWidget*> theNotSpecials;
@@ -3635,7 +3635,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   mainlayout->addWidget(tmpQGroupBox);
 
-  TQGridLayout *grid = new TQGridLayout(tmpQGroupBox->layout(), 2, 2);
+  TQGridLayout *grid = new TQGridLayout(tmpQGroupBox->tqlayout(), 2, 2);
   grid->setSpacing( KDialog::spacingHint() );
   grid->setColStretch(1, 1);
 
@@ -3662,7 +3662,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   mainlayout->addWidget(tmpQGroupBox);
 
-  grid = new TQGridLayout(tmpQGroupBox->layout(), 3, 2);
+  grid = new TQGridLayout(tmpQGroupBox->tqlayout(), 3, 2);
   grid->setSpacing( KDialog::spacingHint() );
   grid->setColStretch(1, 1);
 
@@ -3701,7 +3701,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   mainlayout->addWidget(tmpQGroupBox);
 
-  grid = new TQGridLayout(tmpQGroupBox->layout(), 2, 2);
+  grid = new TQGridLayout(tmpQGroupBox->tqlayout(), 2, 2);
   grid->setSpacing(KDialog::spacingHint());
   grid->setColStretch(1, 1);
 

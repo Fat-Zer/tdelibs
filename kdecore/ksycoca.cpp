@@ -177,7 +177,8 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
      {
         // We open a dummy database instead.
         //kdDebug(7011) << "No database, opening a dummy one." << endl;
-        TQBuffer *buffer = new TQBuffer( TQByteArray() );
+        TQBuffer *buffer = new TQBuffer();
+        buffer->tqsetBufferFromCopy(TQByteArray());
         buffer->open(IO_ReadWrite);
         m_str = new TQDataStream( buffer);
         (*m_str) << (TQ_INT32) KSYCOCA_VERSION;
@@ -229,7 +230,7 @@ void KSycoca::closeDatabase()
 {
    QIODevice *device = 0;
    if (m_str)
-      device = m_str->device();
+      device = m_str->tqdevice();
 #ifdef HAVE_MMAP
    if (device && m_sycoca_mmap)
    {
@@ -248,6 +249,7 @@ void KSycoca::closeDatabase()
    if (TQT_TQIODEVICE(d->database) != device)
       delete d->database;
    if (m_barray) delete m_barray;
+   m_barray = 0;
    device = 0;
    d->database = 0;
    // It is very important to delete all factories here
@@ -286,7 +288,7 @@ TQDataStream * KSycoca::findEntry(int offset, KSycocaType &type)
    if ( !m_str )
       openDatabase();
    //kdDebug(7011) << TQString("KSycoca::_findEntry(offset=%1)").arg(offset,8,16) << endl;
-   m_str->tqdevice()->at(offset);
+   m_str->tqdevice()->tqat(offset);
    TQ_INT32 aType;
    (*m_str) >> aType;
    type = (KSycocaType) aType;
@@ -304,7 +306,7 @@ bool KSycoca::checkVersion(bool abortOnError)
       // We should never get here... if a database was found then m_str shouldn't be 0L.
       assert(m_str);
    }
-   m_str->tqdevice()->at(0);
+   m_str->tqdevice()->tqat(0);
    TQ_INT32 aVersion;
    (*m_str) >> aVersion;
    if ( aVersion < KSYCOCA_VERSION )
@@ -359,7 +361,7 @@ TQDataStream * KSycoca::findFactory(KSycocaFactoryId id)
       if (aId == id)
       {
          //kdDebug(7011) << TQString("KSycoca::findFactory(%1) offset %2").arg((int)id).arg(aOffset) << endl;
-         m_str->tqdevice()->at(aOffset);
+         m_str->tqdevice()->tqat(aOffset);
          return m_str;
       }
    }

@@ -524,7 +524,7 @@ int PtyProcess::waitForChild()
                     fputs(output, stdout);
                     fflush(stdout);
                 }
-                lineStart = output.at( output.length() - 1 ) == '\n';
+                lineStart = output.tqat( output.length() - 1 ) == '\n';
                 output = readAll(false);
             }
         }

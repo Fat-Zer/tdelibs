@@ -200,8 +200,8 @@ void KBookmarkBar::fillBookmarkBar(KBookmarkGroup & parent)
             else
             {
                 KAction *action = new KBookmarkAction( text, bm.icon(), 0, m_actionCollection, 0 );
-                connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, Qt::ButtonState )),
-                        this, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, Qt::ButtonState ) ));
+                connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, TQt::ButtonState )),
+                        this, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, TQt::ButtonState ) ));
 
                 action->setProperty( "url", bm.url().url() );
                 action->setProperty( "address", bm.address() );
@@ -231,8 +231,8 @@ void KBookmarkBar::fillBookmarkBar(KBookmarkGroup & parent)
                                                     bm.address());
             connect(menu, TQT_SIGNAL( aboutToShowContextMenu(const KBookmark &, TQPopupMenu * ) ),
                     this, TQT_SIGNAL( aboutToShowContextMenu(const KBookmark &, TQPopupMenu * ) ));
-            connect(menu, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState) ),
-                    this, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState) ));
+            connect(menu, TQT_SIGNAL( openBookmark( const TQString &, TQt::ButtonState) ),
+                    this, TQT_SIGNAL( openBookmark( const TQString &, TQt::ButtonState) ));
             menu->fillBookmarkMenu();
             action->plug(m_toolBar);
             m_lstSubMenus.append( menu );

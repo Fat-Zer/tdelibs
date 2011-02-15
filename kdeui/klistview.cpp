@@ -621,7 +621,7 @@ void KListView::slotAutoSelect()
 
       bool select = !d->pCurrentItem->isSelected();
       bool update = viewport()->isUpdatesEnabled();
-      viewport()->setUpdatesEnabled( false );
+      viewport()->tqsetUpdatesEnabled( false );
 
       bool down = previousItem->itemPos() < d->pCurrentItem->itemPos();
       TQListViewItemIterator lit( down ? previousItem : d->pCurrentItem );
@@ -638,7 +638,7 @@ void KListView::slotAutoSelect()
       }
 
       blockSignals( block );
-      viewport()->setUpdatesEnabled( update );
+      viewport()->tqsetUpdatesEnabled( update );
       triggerUpdate();
 
       emit selectionChanged();
@@ -661,7 +661,7 @@ void KListView::slotAutoSelect()
     }
   }
   else
-    kdDebug() << "KListView::slotAutoSelect: That´s not supposed to happen!!!!" << endl;
+    kdDebug() << "KListView::slotAutoSelect: Thatï¿½s not supposed to happen!!!!" << endl;
 }
 
 void KListView::slotHeaderChanged()

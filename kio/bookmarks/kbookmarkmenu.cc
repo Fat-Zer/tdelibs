@@ -404,9 +404,9 @@ void RMB::slotRMBActionCopyLocation( int val )
   if ( !bookmark.isGroup() )
   {
     kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
-                                QClipboard::Selection );
+                                TQClipboard::Selection );
     kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
-                                QClipboard::Clipboard );
+                                TQClipboard::Clipboard );
   }
 }
 
@@ -609,8 +609,8 @@ void KBookmarkMenu::fillBookmarkMenu()
           new KBookmarkMenu( m_pManager, m_pOwner, actionMenu->popupMenu(),
                              m_actionCollection, false,
                              m_bAddBookmark, TQString::null );
-       connect( subMenu, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState ) ),
-                this, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState ) ));
+       connect( subMenu, TQT_SIGNAL( openBookmark( const TQString &, TQt::ButtonState ) ),
+                this, TQT_SIGNAL( openBookmark( const TQString &, TQt::ButtonState ) ));
        m_lstSubMenus.append(subMenu);
 
        connect(actionMenu->popupMenu(), TQT_SIGNAL(aboutToShow()), subMenu, TQT_SLOT(slotNSLoad()));
@@ -639,8 +639,8 @@ void KBookmarkMenu::fillBookmarkMenu()
       {
         //kdDebug(7043) << "Creating URL bookmark menu item for " << bm.text() << endl;
         KAction * action = new KBookmarkAction( text, bm.icon(), 0, m_actionCollection, 0 );
-        connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, Qt::ButtonState )),
-                this, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, Qt::ButtonState ) ));
+        connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, TQt::ButtonState )),
+                this, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, TQt::ButtonState ) ));
 
         action->setProperty( "url", bm.url().url() );
         action->setProperty( "address", bm.address() );
@@ -668,8 +668,8 @@ void KBookmarkMenu::fillBookmarkMenu()
 
       connect(subMenu, TQT_SIGNAL( aboutToShowContextMenu( const KBookmark &, TQPopupMenu * ) ),
                  this, TQT_SIGNAL( aboutToShowContextMenu( const KBookmark &, TQPopupMenu * ) ));
-      connect(subMenu, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState ) ),
-                this, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState ) ));
+      connect(subMenu, TQT_SIGNAL( openBookmark( const TQString &, TQt::ButtonState ) ),
+                this, TQT_SIGNAL( openBookmark( const TQString &, TQt::ButtonState ) ));
       m_lstSubMenus.append( subMenu );
     }
   }
@@ -1058,8 +1058,8 @@ void KBookmarkMenuNSImporter::newBookmark( const TQString & text, const TQCStrin
   TQString _text = KStringHandler::csqueeze(text);
   _text.replace( '&', "&&" );
   KAction * action = new KBookmarkAction(_text, "html", 0, 0, "", m_actionCollection, 0);
-  connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, Qt::ButtonState )),
-          m_menu, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, Qt::ButtonState ) ));
+  connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, TQt::ButtonState )),
+          m_menu, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, TQt::ButtonState ) ));
   action->setProperty( "url", url );
   action->setToolTip( url );
   action->plug( mstack.top()->m_parentMenu );
@@ -1076,8 +1076,8 @@ void KBookmarkMenuNSImporter::newFolder( const TQString & text, bool, const TQSt
   KBookmarkMenu *subMenu = new KBookmarkMenu( m_pManager, m_menu->m_pOwner, actionMenu->popupMenu(),
                                               m_actionCollection, false,
                                               m_menu->m_bAddBookmark, TQString::null );
-  connect( subMenu, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState ) ),
-           m_menu, TQT_SIGNAL( openBookmark( const TQString &, Qt::ButtonState ) ));
+  connect( subMenu, TQT_SIGNAL( openBookmark( const TQString &, TQt::ButtonState ) ),
+           m_menu, TQT_SIGNAL( openBookmark( const TQString &, TQt::ButtonState ) ));
   mstack.top()->m_lstSubMenus.append( subMenu );
 
   mstack.push(subMenu);

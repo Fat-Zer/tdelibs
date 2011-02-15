@@ -627,7 +627,7 @@ void DrListOption::setChoice(int choicenum)
 {
 	if (choicenum >= 0 && choicenum < (int)m_choices.count())
 	{
-		setValueText(m_choices.at(choicenum)->name());
+		setValueText(m_choices.tqat(choicenum)->name());
 	}
 }
 

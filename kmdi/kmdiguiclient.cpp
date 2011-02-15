@@ -174,7 +174,7 @@ KMDIGUIClient::~KMDIGUIClient()
 
 	//     actionCollection()->writeShortcutSettings( "KMDI Shortcuts", kapp->config() );
 	for ( uint i = 0;i < m_toolViewActions.count();i++ )
-		disconnect( m_toolViewActions.at( i ), 0, this, 0 );
+		disconnect( m_toolViewActions.tqat( i ), 0, this, 0 );
 
 	m_toolViewActions.setAutoDelete( false );
 	m_toolViewActions.clear();
@@ -230,7 +230,7 @@ void KMDIGUIClient::setupActions()
 	TQPtrList<KAction> addList;
 	if ( m_toolViewActions.count() < 3 )
 		for ( uint i = 0;i < m_toolViewActions.count();i++ )
-			addList.append( m_toolViewActions.at( i ) );
+			addList.append( m_toolViewActions.tqat( i ) );
 	else
 		addList.append( m_toolMenu );
 	if ( m_mdiMode == KMdi::IDEAlMode )
@@ -258,7 +258,7 @@ void KMDIGUIClient::addToolView( KMdiToolViewAccessor* mtva )
 	sc = KShortcut( cfg->readEntry( aname, "" ) );
 	cfg->setGroup( _grp );
 	KAction *a = new ToggleToolViewAction( i18n( "Show %1" ).arg( mtva->wrappedWidget() ->caption() ),
-	                                       /*TQString::null*/sc, dynamic_cast<KDockWidget*>( mtva->wrapperWidget() ),
+	                                       /*TQString::null*/sc, tqt_dynamic_cast<KDockWidget*>( mtva->wrapperWidget() ),
 	                                       m_mdiMainFrm, actionCollection(), aname.latin1() );
 #if KDE_IS_VERSION(3,2,90)
 

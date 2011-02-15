@@ -127,7 +127,7 @@ void KCompletion::addItem( const TQString& item, uint weight )
     // nodes.
 
     for ( uint i = 0; i < len; i++ ) {
-        node = node->insert( item.at(i), sorted );
+        node = node->insert( item.tqat(i), sorted );
         if ( weighted )
             node->confirm( weight -1 ); // node->insert() sets weighting to 1
     }
@@ -419,7 +419,7 @@ TQString KCompletion::findCompletion( const TQString& string )
 
     // start at the tree-root and try to find the search-string
     for( uint i = 0; i < string.length(); i++ ) {
-        ch = string.at( i );
+        ch = string.tqat( i );
         node = node->find( ch );
 
         if ( node )
@@ -508,7 +508,7 @@ void KCompletion::findAllCompletions(const TQString& string,
 
     // start at the tree-root and try to find the search-string
     for( uint i = 0; i < string.length(); i++ ) {
-        ch = string.at( i );
+        ch = string.tqat( i );
         node = node->find( ch );
 
         if ( node )
@@ -595,7 +595,7 @@ void KCompletion::extractStringsFromNodeCI( const KCompTreeNode *node,
         return;
     }
 
-    TQChar ch1 = restString.at(0);
+    TQChar ch1 = restString.tqat(0);
     TQString newRest = restString.mid(1);
     KCompTreeNode *child1, *child2;
 
@@ -725,7 +725,7 @@ void KCompTreeNode::remove( const TQString& str )
     uint i = 0;
     for ( ; i < string.length(); i++ )
     {
-        child = parent->find( string.at( i ) );
+        child = parent->find( string.tqat( i ) );
         if ( child )
             deletables.insert( i + 1, child );
         else
@@ -736,8 +736,8 @@ void KCompTreeNode::remove( const TQString& str )
 
     for ( ; i >= 1; i-- )
     {
-        parent = deletables.at( i - 1 );
-        child = deletables.at( i );
+        parent = deletables.tqat( i - 1 );
+        child = deletables.tqat( i );
         if ( child->myChildren.count() == 0 )
             delete parent->myChildren.remove( child );
     }
@@ -874,7 +874,7 @@ KCompTreeNode *KCompTreeNodeList::remove(KCompTreeNode *item)
     return item;
 }
 
-KCompTreeNode *KCompTreeNodeList::at(uint index) const
+KCompTreeNode *KCompTreeNodeList::tqat(uint index) const
 {
     KCompTreeNode *cur = first;
     while (index-- && cur) cur = cur->next;

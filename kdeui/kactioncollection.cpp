@@ -110,7 +110,7 @@ KActionCollection::KActionCollection( TQObject *parent, const char *name,
   kdWarning(129) << "KActionCollection::KActionCollection( TQObject *parent, const char *name, KInstance *instance )" << endl; //ellis
   kdDebug(129) << kdBacktrace() << endl;
   d = new KActionCollectionPrivate;
-  TQWidget* w = dynamic_cast<TQWidget*>( parent );
+  TQWidget* w = tqt_dynamic_cast<TQWidget*>( parent );
   if( w )
     setWidget( w );
   //d->m_bOneKAccelOnly = (d->m_kaccelList.count() > 0);
@@ -250,8 +250,8 @@ void KActionCollection::removeWidget( TQWidget* w )
         }
         delete pKAccel;
 
-        d->m_widgetList.remove( d->m_widgetList.at( i ) );
-        d->m_kaccelList.remove( d->m_kaccelList.at( i ) );
+        d->m_widgetList.remove( d->m_widgetList.tqat( i ) );
+        d->m_kaccelList.remove( d->m_kaccelList.tqat( i ) );
 
         if( d->m_iWidgetCurrent == (int)i )
           d->m_iWidgetCurrent = -1;
@@ -402,7 +402,7 @@ KAction* KActionCollection::action( int index ) const
   TQAsciiDictIterator<KAction> it( d->m_actionDict );
   it += index;
   return it.current();
-//  return d->m_actions.at( index );
+//  return d->m_actions.tqat( index );
 }
 
 bool KActionCollection::readShortcutSettings( const TQString& sConfigGroup, KConfigBase* pConfig )

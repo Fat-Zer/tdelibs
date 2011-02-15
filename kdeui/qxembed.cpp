@@ -501,7 +501,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                         // L0683: Set focus on saved focus widget
                         if ( focusCurrent ) {
                             focusCurrent->setFocus();
-                            if( QXEmbed* emb = dynamic_cast< QXEmbed* >( focusCurrent ))
+                            if( QXEmbed* emb = tqt_dynamic_cast< QXEmbed* >( focusCurrent ))
                                 emb->updateEmbeddedFocus( true );
                         }
                         else if ( !w->tqtopLevelWidget()->tqfocusWidget() )
@@ -545,7 +545,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 //        We first record what the focus widget was
                 //        and clear the Qt focus.
                 if ( w->tqtopLevelWidget()->tqfocusWidget() ) {
-                    if( QXEmbed* emb = dynamic_cast< QXEmbed* >( w->tqtopLevelWidget()->tqfocusWidget()))
+                    if( QXEmbed* emb = tqt_dynamic_cast< QXEmbed* >( w->tqtopLevelWidget()->tqfocusWidget()))
                         emb->updateEmbeddedFocus( false );
                     focusMap->insert( w->tqtopLevelWidget(),
                         new TQGuardedPtr<TQWidget>(w->tqtopLevelWidget()->tqfocusWidget() ) );

@@ -1103,7 +1103,7 @@ KLocale::SignPosition KLocale::negativeMonetarySignPosition() const
 static inline void put_it_in( TQChar *buffer, uint& index, const TQString &s )
 {
   for ( uint l = 0; l < s.length(); l++ )
-    buffer[index++] = s.at( l );
+    buffer[index++] = s.tqat( l );
 }
 
 static inline void put_it_in( TQChar *buffer, uint& index, int number )
@@ -1352,14 +1352,14 @@ TQString KLocale::formatDate(const TQDate &pDate, bool shortFormat) const
     {
       if ( !escape )
 	{
-	  if ( (TQChar(rst.at( format_index )).tqunicode()) == '%' )
+	  if ( (TQChar(rst.tqat( format_index )).tqunicode()) == '%' )
 	    escape = true;
 	  else
-	    buffer.append(rst.at(format_index));
+	    buffer.append(rst.tqat(format_index));
 	}
       else
 	{
-	  switch ( TQChar(rst.at( format_index )).tqunicode() )
+	  switch ( TQChar(rst.tqat( format_index )).tqunicode() )
 	    {
 	    case '%':
 	      buffer.append('%');
@@ -1401,7 +1401,7 @@ TQString KLocale::formatDate(const TQDate &pDate, bool shortFormat) const
 	      buffer.append(calendar()->weekDayName(pDate, false));
 	      break;
 	    default:
-	      buffer.append(rst.at(format_index));
+	      buffer.append(rst.tqat(format_index));
 	      break;
 	    }
 	  escape = false;
@@ -1583,12 +1583,12 @@ double KLocale::readMoney(const TQString &_str, bool * ok) const
  */
 static int readInt(const TQString &str, uint &pos)
 {
-  if (!str.at(pos).isDigit()) return -1;
+  if (!str.tqat(pos).isDigit()) return -1;
   int result = 0;
-  for (; str.length() > pos && str.at(pos).isDigit(); pos++)
+  for (; str.length() > pos && str.tqat(pos).isDigit(); pos++)
     {
       result *= 10;
-      result += str.at(pos).digitValue();
+      result += str.tqat(pos).digitValue();
     }
 
   return result;
@@ -1625,22 +1625,22 @@ TQDate KLocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) 
   while (fmt.length() > fmtpos && str.length() > strpos && !error)
   {
 
-    TQChar c = fmt.at(fmtpos++);
+    TQChar c = fmt.tqat(fmtpos++);
 
     if (c != (QChar)'%') {
-      if (c.isSpace() && str.at(strpos).isSpace())
+      if (c.isSpace() && str.tqat(strpos).isSpace())
         strpos++;
-      else if (c != str.at(strpos++))
+      else if (c != str.tqat(strpos++))
         error = true;
     }
     else
     {
       int j;
       // remove space at the beginning
-      if (str.length() > strpos && str.at(strpos).isSpace())
+      if (str.length() > strpos && str.tqat(strpos).isSpace())
         strpos++;
 
-      c = fmt.at(fmtpos++);
+      c = fmt.tqat(fmtpos++);
       switch (c)
       {
 	case 'a':
@@ -1765,22 +1765,22 @@ TQTime KLocale::readTime(const TQString &intstr, ReadTimeFlags flags, bool *ok) 
     {
       if ( !(Format.length() > Formatpos && str.length() > strpos) ) goto error;
 
-      TQChar c = Format.at(Formatpos++);
+      TQChar c = Format.tqat(Formatpos++);
 
       if (c != (QChar)'%')
 	{
 	  if (c.isSpace())
 	    strpos++;
-	  else if (c != str.at(strpos++))
+	  else if (c != str.tqat(strpos++))
 	    goto error;
 	  continue;
 	}
 
       // remove space at the beginning
-      if (str.length() > strpos && str.at(strpos).isSpace())
+      if (str.length() > strpos && str.tqat(strpos).isSpace())
 	strpos++;
 
-      c = Format.at(Formatpos++);
+      c = Format.tqat(Formatpos++);
       switch (c)
 	{
 	case 'p':
@@ -1876,14 +1876,14 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
     {
       if ( !escape )
 	{
-	  if ( (TQChar(rst.at( format_index )).tqunicode()) == '%' )
+	  if ( (TQChar(rst.tqat( format_index )).tqunicode()) == '%' )
 	    escape = true;
 	  else
-	    buffer[index++] = rst.at( format_index );
+	    buffer[index++] = rst.tqat( format_index );
 	}
       else
 	{
-	  switch ( TQChar(rst.at( format_index )).tqunicode() )
+	  switch ( TQChar(rst.tqat( format_index )).tqunicode() )
 	    {
 	    case '%':
 	      buffer[index++] = (QChar)'%';
@@ -1915,7 +1915,7 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
 	      number = pTime.hour();
 	    case 'l':
 	      // to share the code
-	      if ( (TQChar(rst.at( format_index )).tqunicode()) == 'l' )
+	      if ( (TQChar(rst.tqat( format_index )).tqunicode()) == 'l' )
 		number = isDuration ? pTime.hour() : (pTime.hour() + 11) % 12 + 1;
 	      if ( number / 10 )
 		buffer[index++] = number / 10 + '0';
@@ -1932,7 +1932,7 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
 	      }
 	      break;
 	    default:
-	      buffer[index++] = rst.at( format_index );
+	      buffer[index++] = rst.tqat( format_index );
 	      break;
 	    }
 	  escape = false;

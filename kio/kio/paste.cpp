@@ -132,7 +132,7 @@ static KIO::CopyJob* chooseAndPaste( const KURL& u, TQMimeSource* data,
     kdDebug() << " result=" << result << " chosenFormat=" << chosenFormat << endl;
     KURL new_url( u );
     new_url.addPath( result );
-    // if "data" came from QClipboard, then it was deleted already - by a nice 0-seconds timer
+    // if "data" came from TQClipboard, then it was deleted already - by a nice 0-seconds timer
     // In that case, get it again. Let's hope the user didn't copy something else meanwhile :/
     if ( clipboard ) {
         data = TQApplication::tqclipboard()->data();

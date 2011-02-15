@@ -1079,6 +1079,11 @@ TQImage& KImageEffect::blend(const TQColor& clr, TQImage& dst, float opacity)
     if (dst.depth() != 32)
         dst = dst.convertDepth(32);
 
+#ifdef USE_QT4
+    if (dst.format() != QImage::Format_ARGB32)
+        dst = dst.convertToFormat(QImage::Format_ARGB32);	// This is needed because Qt4 has multiple variants with a 32 bit depth, and the routines below expect one specific variant (ARGB)
+#endif
+
     int pixels = dst.width() * dst.height();
 
 #ifdef USE_SSE2_INLINE_ASM
@@ -1328,6 +1333,13 @@ TQImage& KImageEffect::blend(TQImage& src, TQImage& dst, float opacity)
 
     if (src.depth() != 32) src = src.convertDepth(32);
     if (dst.depth() != 32) dst = dst.convertDepth(32);
+
+#ifdef USE_QT4
+    if (src.format() != QImage::Format_ARGB32)
+        src = dst.convertToFormat(QImage::Format_ARGB32);	// This is needed because Qt4 has multiple variants with a 32 bit depth, and the routines below expect one specific variant (ARGB)
+    if (dst.format() != QImage::Format_ARGB32)
+        dst = dst.convertToFormat(QImage::Format_ARGB32);	// This is needed because Qt4 has multiple variants with a 32 bit depth, and the routines below expect one specific variant (ARGB)
+#endif
 
     int pixels = src.width() * src.height();
 

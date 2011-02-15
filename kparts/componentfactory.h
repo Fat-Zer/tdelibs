@@ -66,7 +66,7 @@ namespace KParts
                                                T::tqstaticMetaObject()->className(),
                                                args );
 
-            T *result = dynamic_cast<T *>( static_cast<TQT_BASE_OBJECT_NAME*>(object) );
+            T *result = tqt_dynamic_cast<T *>( object );
             if ( !result )
                     delete object;
             return result;
@@ -104,7 +104,7 @@ namespace KParts
                                                         T::tqstaticMetaObject()->className(),
                                                         args );
 
-            T *result = dynamic_cast<T *>( object );
+            T *result = tqt_dynamic_cast<T *>( object );
             if ( !result )
                 delete object;
             return result;
@@ -178,7 +178,7 @@ namespace KParts
                     *error = ErrNoFactory;
                 return 0;
             }
-            KParts::Factory *partFactory = dynamic_cast<KParts::Factory *>( factory );
+            KParts::Factory *partFactory = tqt_dynamic_cast<KParts::Factory *>( factory );
             if ( !partFactory )
             {
                 library->unload();

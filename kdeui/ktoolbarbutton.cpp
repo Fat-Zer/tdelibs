@@ -118,7 +118,7 @@ KToolBarButton::KToolBarButton( const TQString& _icon, int _id,
   TQToolButton::setTextLabel(_txt);
   d->m_instance = _instance;
 
-  d->m_parent = dynamic_cast<KToolBar*>(_parent);
+  d->m_parent = tqt_dynamic_cast<KToolBar*>(_parent);
   if (d->m_parent) {
     connect(d->m_parent, TQT_SIGNAL( modechange() ),
             this,         TQT_SLOT( modeChange() ));
@@ -151,7 +151,7 @@ KToolBarButton::KToolBarButton( const TQPixmap& pixmap, int _id,
   d->m_id       = _id;
   TQToolButton::setTextLabel(txt);
 
-  d->m_parent = dynamic_cast<KToolBar*>(_parent);
+  d->m_parent = tqt_dynamic_cast<KToolBar*>(_parent);
   if (d->m_parent) {
     connect(d->m_parent, TQT_SIGNAL( modechange() ),
             this,         TQT_SLOT( modeChange() ));
@@ -405,7 +405,7 @@ void KToolBarButton::enterEvent(TQEvent *)
 
 bool KToolBarButton::eventFilter(TQObject *o, TQEvent *ev)
 {
-  if ((KToolBarButton *)o == this)
+  if (TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(this))
   {
 
     // Popup the menu when the left mousebutton is pressed and the mouse

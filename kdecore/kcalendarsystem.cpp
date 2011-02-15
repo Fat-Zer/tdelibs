@@ -90,10 +90,10 @@ static int stringToInteger(const TQString & sNum, int & iLength)
   unsigned int iPos = 0;
 
   int result = 0;
-  for (; sNum.length() > iPos && sNum.at(iPos).isDigit(); iPos++)
+  for (; sNum.length() > iPos && sNum.tqat(iPos).isDigit(); iPos++)
     {
       result *= 10;
-      result += sNum.at(iPos).digitValue();
+      result += sNum.tqat(iPos).digitValue();
     }
 
   iLength = iPos;

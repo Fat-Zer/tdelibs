@@ -70,7 +70,7 @@ static TQColor readColorEntry( TQSettings* s, const char *pKey,
     TQString aValue = s->readEntry( pKey );
     if ( !aValue.isEmpty() )
     {
-        if ( aValue.at( 0 ) == '#' )
+        if ( aValue.tqat( 0 ) == '#' )
         {
             aRetColor.setNamedColor( aValue );
         }

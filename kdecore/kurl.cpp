@@ -1687,14 +1687,14 @@ TQString KURL::fileName( bool _strip_trailing_slash ) const
 
   if ( _strip_trailing_slash )
   {
-    while ( len >= 1 && path[ len - 1 ] == (QChar)'/' )
+    while ( len >= 1 && path[ len - 1 ] == TQChar('/') )
       len--;
   }
-  else if ( path[ len - 1 ] == (QChar)'/' )
+  else if ( path[ len - 1 ] == TQChar('/') )
     return fname;
 
   // Does the path only consist of '/' characters ?
-  if ( len == 1 && path[ 0 ] == (QChar)'/' )
+  if ( len == 1 && path[ 0 ] == TQChar('/') )
     return fname;
 
   // Skip last n slashes
@@ -1704,13 +1704,13 @@ TQString KURL::fileName( bool _strip_trailing_slash ) const
      // This is hairy, we need the last unencoded slash.
      // Count in the encoded string how many encoded slashes follow the last
      // unencoded one.
-     int i = m_strPath_encoded.tqfindRev( (QChar)'/', len - 1 );
+     int i = m_strPath_encoded.tqfindRev( TQChar('/'), len - 1 );
      TQString fileName_encoded = m_strPath_encoded.mid(i+1);
      n += fileName_encoded.tqcontains("%2f", false);
   }
   int i = len;
   do {
-    i = path.tqfindRev( (QChar)'/', i - 1 );
+    i = path.tqfindRev( TQChar('/'), i - 1 );
   }
   while (--n && (i > 0));
 

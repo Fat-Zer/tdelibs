@@ -552,7 +552,7 @@ void KXMLGUIFactory::configureAction( KAction *action, const TQDomAttr &attribut
 
 int KXMLGUIFactory::configureShortcuts(bool bAllowLetterShortcuts , bool bSaveSettings )
 {
-	KKeyDialog dlg( bAllowLetterShortcuts, dynamic_cast<TQWidget*>(parent()) );
+	KKeyDialog dlg( bAllowLetterShortcuts, tqt_dynamic_cast<TQWidget*>(parent()) );
 	TQPtrListIterator<KXMLGUIClient> it( d->m_clients );
 	KXMLGUIClient *client;
 	while( (client=it.current()) !=0 )

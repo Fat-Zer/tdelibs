@@ -51,7 +51,7 @@ namespace
             TQPtrListIterator<TQDockWindow> dockWindowIt( dockWindows );
             for ( ; dockWindowIt.current(); ++dockWindowIt ) {
 
-                KToolBar *toolBar = dynamic_cast<KToolBar *>( dockWindowIt.current() );
+                KToolBar *toolBar = tqt_dynamic_cast<KToolBar *>( dockWindowIt.current() );
                 if ( !toolBar )
                     continue;
 
@@ -232,7 +232,7 @@ void ToolBarHandler::connectToActionContainer( KAction *action )
 
 void ToolBarHandler::connectToActionContainer( TQWidget *container )
 {
-    TQPopupMenu *popupMenu = dynamic_cast<TQPopupMenu *>( container );
+    TQPopupMenu *popupMenu = tqt_dynamic_cast<TQPopupMenu *>( container );
     if ( !popupMenu )
         return;
 

@@ -93,7 +93,7 @@ void MainWindow::createGUI( Part * part )
 
   assert( factory );
 
-  setUpdatesEnabled( false );
+  tqsetUpdatesEnabled( false );
 
   TQPtrList<Plugin> plugins;
 
@@ -137,7 +137,7 @@ void MainWindow::createGUI( Part * part )
         applyMainWindowSettings( KGlobal::config(), autoSaveGroup() );
   }
 
-  setUpdatesEnabled( true );
+  tqsetUpdatesEnabled( true );
 
   d->m_activePart = part;
 }

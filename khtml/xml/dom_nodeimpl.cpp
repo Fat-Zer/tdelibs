@@ -1925,7 +1925,7 @@ NodeImpl *GenericRONamedNodeMapImpl::item ( unsigned long index ) const
     if (index >= m_contents->count())
         return 0;
 
-    return m_contents->at(index);
+    return m_contents->tqat(index);
 }
 
 unsigned long GenericRONamedNodeMapImpl::length(  ) const

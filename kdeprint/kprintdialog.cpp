@@ -361,7 +361,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	l2->addStretch(1);
 	l2->addWidget(d->m_ok,0);
 	l2->addWidget(m_cancel,0);
-	TQGridLayout	*l3 = new TQGridLayout(m_pbox->layout(),3,3,7);
+	TQGridLayout	*l3 = new TQGridLayout(m_pbox->tqlayout(),3,3,7);
 	l3->setColStretch(1,1);
 	l3->setRowStretch(0,1);
 	TQGridLayout	*l4 = new TQGridLayout(0, 5, 2, 0, 5);
@@ -824,7 +824,7 @@ void KPrintDialog::reload()
 	// remove printer dependent pages (usually from plugin)
 	TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", "TQTabWidget")));
 	for (uint i=0; i<d->m_pages.count(); i++)
-		if (d->m_pages.at(i)->onlyRealPrinters())
+		if (d->m_pages.tqat(i)->onlyRealPrinters())
 		{
 			KPrintDialogPage	*page = d->m_pages.take(i--);
 			if (tabs)
@@ -952,10 +952,10 @@ void KPrintDialog::enableDialogPage( int index, bool flag )
 	if ( d->m_pages.count() > 1 )
 	{
 		TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", "TQTabWidget")));
-		tabs->setTabEnabled( d->m_pages.at( index ), flag );
+		tabs->setTabEnabled( d->m_pages.tqat( index ), flag );
 	}
 	else
-		d->m_pages.at( 0 )->setEnabled( flag );
+		d->m_pages.tqat( 0 )->setEnabled( flag );
 }
 
 void KPrintDialog::slotOpenFileDialog()

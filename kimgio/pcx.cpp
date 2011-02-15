@@ -46,7 +46,7 @@ static TQDataStream &operator>>( TQDataStream &s, PCXHEADER &ph )
 
   // Skip the rest of the header
   TQ_UINT8 byte;
-  while ( s.tqdevice()->at() < 128 )
+  while ( s.tqdevice()->tqat() < 128 )
     s >> byte;
 
   return s;
@@ -183,7 +183,7 @@ static void readImage4( TQImage &img, TQDataStream &s, const PCXHEADER &header )
       TQ_UINT32 offset = i*header.BytesPerLine;
       for ( unsigned int x=0; x<header.width(); ++x )
         if ( buf[ offset + ( x/8 ) ] & ( 128 >> ( x%8 ) ) )
-          pixbuf[ x ] = pixbuf.at(x) + ( 1 << i );
+          pixbuf[ x ] = static_cast<const char>(pixbuf.tqat(x)) + ( 1 << i );
     }
 
     uchar *p = img.scanLine( y );
@@ -343,7 +343,7 @@ static void writeLine( TQDataStream &s, TQByteArray &buf )
     count = 1;
     byte = buf[ i++ ];
 
-    while ( ( i < size ) && ( byte == buf.at(i) ) && ( count < 63 ) )
+    while ( ( i < size ) && ( TQChar(byte) == buf.tqat(i) ) && ( count < 63 ) )
     {
       ++i;
       ++count;
@@ -412,7 +412,7 @@ static void writeImage4( TQImage &img, TQDataStream &s, PCXHEADER &header )
     {
       for ( int i=0; i<4; ++i )
         if ( *( p+x ) & ( 1 << i ) )
-          buf[ i ][ x/8 ] = buf[ i ].at(x/8) | 1 << ( 7-x%8 );
+          buf[ i ][ x/8 ] = buf[ i ].tqat(x/8) | 1 << ( 7-x%8 );
     }
 
     for ( int i=0; i<4; ++i )

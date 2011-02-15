@@ -416,10 +416,10 @@ KJS::Value KJS::KateJSDocumentProtoFunc::call(KJS::ExecState *exec, KJS::Object 
       return KJS::Null ();
 
     case KateJSDocument::IsInWord:
-      return KJS::Boolean( doc->highlight()->isInWord( args[0].toString(exec).qstring().at(0), args[1].toUInt32(exec) ) );
+      return KJS::Boolean( doc->highlight()->isInWord( args[0].toString(exec).qstring().tqat(0), args[1].toUInt32(exec) ) );
 
     case KateJSDocument::CanBreakAt:
-      return KJS::Boolean( doc->highlight()->canBreakAt( args[0].toString(exec).qstring().at(0), args[1].toUInt32(exec) ) );
+      return KJS::Boolean( doc->highlight()->canBreakAt( args[0].toString(exec).qstring().tqat(0), args[1].toUInt32(exec) ) );
 
     case KateJSDocument::CanComment:
       return KJS::Boolean( doc->highlight()->canComment( args[0].toUInt32(exec), args[1].toUInt32(exec) ) );

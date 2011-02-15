@@ -291,7 +291,7 @@ kimgio_jp2_write( TQImageIO* io )
 		TQ_LONG size;
 
 		// seek to the beginning of the file.
-		if( !in->at( 0 ) ) { delete ktempf; return; }
+		if( !in->tqat( 0 ) ) { delete ktempf; return; }
 
 		// 0 or -1 is EOF / error
 		while( ( size = in->readBlock( b.data(), 4096 ) ) > 0 ) {

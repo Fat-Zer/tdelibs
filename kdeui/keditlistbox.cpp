@@ -411,7 +411,7 @@ void KEditListBox::virtual_hook( int, void* )
 KEditListBox::CustomEditor::CustomEditor( KComboBox *combo )
 {
     m_representationWidget = combo;
-    m_lineEdit = dynamic_cast<KLineEdit*>( combo->lineEdit() );
+    m_lineEdit = tqt_dynamic_cast<KLineEdit*>( combo->lineEdit() );
     assert( m_lineEdit );
 }
 

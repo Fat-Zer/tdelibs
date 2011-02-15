@@ -201,7 +201,7 @@ void KWordWrap::drawFadeoutText(TQPainter *p, int x, int y, int maxW,
         int n = TQMIN( tl, 3);
         for (int i = 0; i < n; i++) {
             p->setPen( mixColors( 0.70 - i * 0.25, textColor, bgColor ) );
-            TQString s( t.at( tl - n + i ) );
+            TQString s( t.tqat( tl - n + i ) );
             p->drawText( x, y, s );
             x += fm.width( s );
         }

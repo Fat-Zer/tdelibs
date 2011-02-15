@@ -172,7 +172,7 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
     }
     else if ( KStdAccel::pasteSelection().contains( key ) )
     {
-        TQString text = TQApplication::clipboard()->text( QClipboard::Selection);
+        TQString text = TQApplication::tqclipboard()->text( TQClipboard::Selection);
         if ( !text.isEmpty() )
             insert( text );
         e->accept();

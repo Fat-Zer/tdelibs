@@ -2761,7 +2761,7 @@ static TQString expandLF(const TQString& s)
     unsigned pos2 = 0;
     for(unsigned pos = 0; pos < len; pos++)
     {
-       TQChar c = s.at(pos);
+       TQChar c = s.tqat(pos);
        switch(c.tqunicode())
        {
          case '\n':

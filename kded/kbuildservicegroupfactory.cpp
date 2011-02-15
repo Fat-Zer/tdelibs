@@ -165,14 +165,14 @@ KBuildServiceGroupFactory::save(TQDataStream &str)
 {
    KSycocaFactory::save(str);
 
-   m_baseGroupDictOffset = str.tqdevice()->at();
+   m_baseGroupDictOffset = str.tqdevice()->tqat();
    m_baseGroupDict->save(str);
 
-   int endOfFactoryData = str.tqdevice()->at();
+   int endOfFactoryData = str.tqdevice()->tqat();
 
    // Update header (pass #3)
    saveHeader(str);
 
    // Seek to end.
-   str.tqdevice()->at(endOfFactoryData);
+   str.tqdevice()->tqat(endOfFactoryData);
 }

@@ -220,7 +220,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	l1->setColStretch(1,1);
 	l1->addWidget(m_pagebox,0,0);
 	l1->addWidget(m_copybox,0,1);
-	TQVBoxLayout	*l3 = new TQVBoxLayout(TQT_TQLAYOUT(m_pagebox->layout()), 5);
+	TQVBoxLayout	*l3 = new TQVBoxLayout(TQT_TQLAYOUT(m_pagebox->tqlayout()), 5);
 	l3->addWidget(m_all);
 	l3->addWidget(m_current);
 	TQHBoxLayout	*l4 = new TQHBoxLayout(0, 0, 5);
@@ -233,7 +233,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	l3->addLayout(l2);
 	l2->addWidget(m_pagesetlabel,0);
 	l2->addWidget(m_pageset,1);
-	TQGridLayout	*l5 = new TQGridLayout(m_copybox->layout(), 4, 2, 10);
+	TQGridLayout	*l5 = new TQGridLayout(m_copybox->tqlayout(), 4, 2, 10);
 	l5->setRowStretch(4,1);
 	l5->addWidget(m_copieslabel,0,0);
 	l5->addWidget(m_copies,0,1);

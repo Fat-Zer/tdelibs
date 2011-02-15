@@ -253,7 +253,7 @@ TQPtrList<KMPrinter>* KMManager::printerList(bool reload)
 		// remove discarded printers
 		for (uint i=0; i<m_printers.count(); i++)
 		{
-			KMPrinter	*prt = m_printers.at(i);
+			KMPrinter	*prt = m_printers.tqat(i);
 			if (prt->isDiscarded())
 			{
 				m_printers.remove(i);

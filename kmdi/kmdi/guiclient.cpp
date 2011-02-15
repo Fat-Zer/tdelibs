@@ -100,7 +100,7 @@ GUIClient::~GUIClient()
 {
 //     actionCollection()->writeShortcutSettings( "KMDI Shortcuts", kapp->config() );
   for (uint i=0;i<m_toolViewActions.count();i++)
-    disconnect(m_toolViewActions.at(i),0,this,0);
+    disconnect(m_toolViewActions.tqat(i),0,this,0);
 
   m_toolViewActions.setAutoDelete( false );
   m_toolViewActions.clear();
@@ -119,7 +119,7 @@ void GUIClient::setupActions()
   if (m_toolViewActions.count()<3)
   {
     for (uint i=0;i<m_toolViewActions.count();i++)
-      addList.append(m_toolViewActions.at(i));
+      addList.append(m_toolViewActions.tqat(i));
   }
   else
     addList.append(m_toolMenu);
@@ -146,7 +146,7 @@ void GUIClient::addToolView(KMDI::ToolViewAccessor* mtva)
   cfg->setGroup( _grp );
 
   KAction *a=new ToggleToolViewAction(i18n("Show %1").arg(mtva->wrappedWidget()->caption()),
-    /*TQString::null*/sc,dynamic_cast<KDockWidget*>(mtva->wrapperWidget()),
+    /*TQString::null*/sc,tqt_dynamic_cast<KDockWidget*>(mtva->wrapperWidget()),
     m_mdiMainFrm,actionCollection(), aname.latin1() );
 
   ((ToggleToolViewAction*)a)->setCheckedState(TQString(i18n("Hide %1").arg(mtva->wrappedWidget()->caption())));

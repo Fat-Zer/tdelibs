@@ -541,7 +541,7 @@ bool KBuildSycoca::recreate()
 void KBuildSycoca::save()
 {
    // Write header (#pass 1)
-   m_str->tqdevice()->at(0);
+   m_str->tqdevice()->tqat(0);
 
    (*m_str) << (TQ_INT32) KSycoca::version();
    KSycocaFactory * servicetypeFactory = 0L;
@@ -579,10 +579,10 @@ void KBuildSycoca::save()
          return; // error
    }
 
-   int endOfData = m_str->tqdevice()->at();
+   int endOfData = m_str->tqdevice()->tqat();
 
    // Write header (#pass 2)
-   m_str->tqdevice()->at(0);
+   m_str->tqdevice()->tqat(0);
 
    (*m_str) << (TQ_INT32) KSycoca::version();
    for(KSycocaFactory *factory = m_lstFactories->first();
@@ -599,7 +599,7 @@ void KBuildSycoca::save()
    (*m_str) << (TQ_INT32) 0; // No more factories.
 
    // Jump to end of database
-   m_str->tqdevice()->at(endOfData);
+   m_str->tqdevice()->tqat(endOfData);
 }
 
 bool KBuildSycoca::checkDirTimestamps( const TQString& dirname, const TQDateTime& stamp, bool top )

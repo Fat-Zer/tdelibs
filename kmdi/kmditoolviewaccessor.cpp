@@ -36,7 +36,7 @@ KMdiToolViewAccessor::KMdiToolViewAccessor( KMdiMainFrm *parent, TQWidget *widge
 	d = new KMdiToolViewAccessorPrivate();
 	if ( widgetToWrap->inherits( "KDockWidget" ) )
 	{
-		d->widgetContainer = dynamic_cast<KDockWidget*>( widgetToWrap );
+		d->widgetContainer = tqt_dynamic_cast<KDockWidget*>( widgetToWrap );
 		d->widget = d->widgetContainer->getWidget();
 	}
 	else

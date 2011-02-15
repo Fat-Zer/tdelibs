@@ -113,6 +113,7 @@
       <item> Q_INVOKABLE </item>
       <item> Q_NOREPLY </item>
       <item> Q_OBJECT </item>
+      <item> TQ_OBJECT </item>
       <item> Q_OVERRIDE </item>
       <item> Q_PRIVATE_SLOT </item>
       <item> Q_PROPERTY </item>
@@ -134,6 +135,7 @@
       <item> slots </item>
       <item> foreach </item>
       <item> forever </item>
+      <item> tqt_dynamic_cast</item>
 
       <item> qint8 </item>
       <item> qint16 </item>

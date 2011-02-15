@@ -252,7 +252,7 @@ bool KMdiDockContainer::eventFilter( TQObject *obj, TQEvent *event )
 	{
 	case TQEvent::MouseButtonPress:
 	{
-		KMultiTabBarTab* kmtbTab = dynamic_cast<KMultiTabBarTab*>( obj );
+		KMultiTabBarTab* kmtbTab = tqt_dynamic_cast<KMultiTabBarTab*>( obj );
 		if ( !kmtbTab )
 		{
 			kdDebug(760) << k_funcinfo << "Got a mouse button press but we have no tab" << endl;
@@ -332,7 +332,7 @@ void KMdiDockContainer::showWidget( KDockWidget *w )
 
 void KMdiDockContainer::changeOverlapMode()
 {
-	const KDockButton_Private * btn = dynamic_cast<const KDockButton_Private*>( sender() );
+	const KDockButton_Private * btn = tqt_dynamic_cast<const KDockButton_Private*>( sender() );
 
 	if ( !btn )
 		return ;
@@ -794,7 +794,7 @@ void KMdiDockContainer::toggle()
 		kdDebug( 760 ) << k_funcinfo << "lowering tab" << endl;
 		m_tb->setTab( oldtab, false );
 		tabClicked( oldtab );
-		KMdiMainFrm *mainFrm = dynamic_cast<KMdiMainFrm*>( m_mainWin );
+		KMdiMainFrm *mainFrm = tqt_dynamic_cast<KMdiMainFrm*>( m_mainWin );
 		if ( mainFrm && mainFrm->activeWindow() )
 			mainFrm->activeWindow()->setFocus();
 	}
@@ -826,7 +826,7 @@ void KMdiDockContainer::prevToolView()
 	if ( pos < 0 )
 		pos = tabs->count() - 1;
 
-	KMultiTabBarTab *tab = tabs->at( pos );
+	KMultiTabBarTab *tab = tabs->tqat( pos );
 	if ( !tab )
 		return ; //can never happen here, but who knows
 
@@ -847,7 +847,7 @@ void KMdiDockContainer::nextToolView()
 	if ( pos >= ( int ) tabs->count() )
 		pos = 0;
 
-	KMultiTabBarTab *tab = tabs->at( pos );
+	KMultiTabBarTab *tab = tabs->tqat( pos );
 	if ( !tab )
 		return ; //can never happen here, but who knows
 

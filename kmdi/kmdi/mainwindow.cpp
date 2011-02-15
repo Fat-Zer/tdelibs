@@ -327,7 +327,7 @@ void MainWindow::setToolViewStyle(int flag)
   bool toolviewExists = false;
   TQMap<TQWidget*,KMDI::ToolViewAccessor*>::Iterator it;
   for (it = m_toolViews->begin(); it != m_toolViews->end(); ++it) {
-    KDockWidget *dockWidget = dynamic_cast<KDockWidget*>(it.data()->wrapperWidget());
+    KDockWidget *dockWidget = tqt_dynamic_cast<KDockWidget*>(it.data()->wrapperWidget());
     if (dockWidget) {
       if (flag == KMDI::IconOnly)
       {
@@ -373,7 +373,7 @@ void MainWindow::dockToolViewsIntoContainers(TQPtrList<KDockWidget>& widgetsToRe
 void MainWindow::findToolViewsDockedToMain(TQPtrList<KDockWidget>* list,KDockWidget::DockPosition dprtmw) {
   KDockWidget *mainDock=getMainDockWidget();
   if (mainDock->parentDockTabGroup()) {
-    mainDock=dynamic_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
+    mainDock=tqt_dynamic_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
     // FIXME: will likely crash below due to unchecked cast
   }
 
@@ -384,7 +384,7 @@ void MainWindow::findToolViewsDockedToMain(TQPtrList<KDockWidget>* list,KDockWid
     }
 
     if (widget) {
-      KDockTabGroup *tg=dynamic_cast<KDockTabGroup*>(widget->
+      KDockTabGroup *tg=tqt_dynamic_cast<KDockTabGroup*>(widget->
           getWidget());
       if (tg) {
         kdDebug(760)<<"KDockTabGroup found"<<endl;

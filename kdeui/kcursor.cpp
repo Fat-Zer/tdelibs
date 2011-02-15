@@ -308,7 +308,7 @@ TQWidget* KCursorPrivateAutoHideEventFilter::actualWidget() const
     TQWidget* w = m_widget;
 
     // Is w a scrollview ? Call setCursor on the viewport in that case.
-    TQScrollView * sv = dynamic_cast<TQScrollView *>( w );
+    TQScrollView * sv = tqt_dynamic_cast<TQScrollView *>( w );
     if ( sv )
         w = sv->viewport();
 

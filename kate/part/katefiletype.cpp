@@ -106,20 +106,20 @@ void KateFileTypeManager::save (TQPtrList<KateFileType> *v)
   TQStringList newg;
   for (uint z=0; z < v->count(); z++)
   {
-    config.setGroup (v->at(z)->name);
+    config.setGroup (v->tqat(z)->name);
 
-    config.writeEntry ("Section", v->at(z)->section);
-    config.writeEntry ("Wildcards", v->at(z)->wildcards, ';');
-    config.writeEntry ("Mimetypes", v->at(z)->mimetypes, ';');
-    config.writeEntry ("Priority", v->at(z)->priority);
+    config.writeEntry ("Section", v->tqat(z)->section);
+    config.writeEntry ("Wildcards", v->tqat(z)->wildcards, ';');
+    config.writeEntry ("Mimetypes", v->tqat(z)->mimetypes, ';');
+    config.writeEntry ("Priority", v->tqat(z)->priority);
 
-    TQString varLine = v->at(z)->varLine;
+    TQString varLine = v->tqat(z)->varLine;
     if (TQRegExp("kate:(.*)").search(varLine) < 0)
       varLine.prepend ("kate: ");
 
     config.writeEntry ("Variables", varLine);
 
-    newg << v->at(z)->name;
+    newg << v->tqat(z)->name;
   }
 
   TQStringList g (config.groupList());
@@ -187,8 +187,8 @@ int KateFileTypeManager::fileType (KateDocument *doc)
 
   for (uint z=0; z < m_types.count(); z++)
   {
-    if (m_types.at(z)->mimetypes.tqfindIndex (mt->name()) > -1)
-      types.append (m_types.at(z));
+    if (m_types.tqat(z)->mimetypes.tqfindIndex (mt->name()) > -1)
+      types.append (m_types.tqat(z));
   }
 
   if ( !types.isEmpty() )
@@ -218,13 +218,13 @@ int KateFileTypeManager::wildcardsFind (const TQString &fileName)
 
   for (uint z=0; z < m_types.count(); z++)
   {
-    for( TQStringList::Iterator it = m_types.at(z)->wildcards.begin(); it != m_types.at(z)->wildcards.end(); ++it )
+    for( TQStringList::Iterator it = m_types.tqat(z)->wildcards.begin(); it != m_types.tqat(z)->wildcards.end(); ++it )
     {
       // anders: we need to be sure to match the end of string, as eg a css file
       // would otherwise end up with the c hl
       TQRegExp re(*it, true, true);
       if ( ( re.search( fileName ) > -1 ) && ( re.matchedLength() == (int)fileName.length() ) )
-        types.append (m_types.at(z));
+        types.append (m_types.tqat(z));
     }
   }
 
@@ -251,7 +251,7 @@ int KateFileTypeManager::wildcardsFind (const TQString &fileName)
 const KateFileType *KateFileTypeManager::fileType (uint number)
 {
   if (number < m_types.count())
-    return m_types.at(number);
+    return m_types.tqat(number);
 
   return 0;
 }
@@ -373,7 +373,7 @@ void KateFileTypeConfigTab::reload()
   {
     KateFileType *type = new KateFileType ();
 
-    *type = *KateFactory::self()->fileTypeManager()->list()->at(z);
+    *type = *KateFactory::self()->fileTypeManager()->list()->tqat(z);
 
     m_types.append (type);
   }
@@ -398,10 +398,10 @@ void KateFileTypeConfigTab::update ()
   typeCombo->clear ();
 
   for( uint i = 0; i < m_types.count(); i++) {
-    if (m_types.at(i)->section.length() > 0)
-      typeCombo->insertItem(m_types.at(i)->section + TQString ("/") + m_types.at(i)->name);
+    if (m_types.tqat(i)->section.length() > 0)
+      typeCombo->insertItem(m_types.tqat(i)->section + TQString ("/") + m_types.tqat(i)->name);
     else
-      typeCombo->insertItem(m_types.at(i)->name);
+      typeCombo->insertItem(m_types.tqat(i)->name);
   }
 
   typeCombo->setCurrentItem (0);
@@ -427,7 +427,7 @@ void KateFileTypeConfigTab::newType ()
   TQString newN = i18n("New Filetype");
 
   for( uint i = 0; i < m_types.count(); i++) {
-    if (m_types.at(i)->name == newN)
+    if (m_types.tqat(i)->name == newN)
     {
       typeCombo->setCurrentItem (i);
       typeChanged (i);
@@ -464,7 +464,7 @@ void KateFileTypeConfigTab::typeChanged (int type)
   KateFileType *t = 0;
 
   if ((type > -1) && ((uint)type < m_types.count()))
-    t = m_types.at(type);
+    t = m_types.tqat(type);
 
   if (t)
   {
@@ -536,8 +536,8 @@ void KateViewFileTypeAction::slotAboutToShow()
 
   for (int z=0; z<count; z++)
   {
-    TQString hlName = KateFactory::self()->fileTypeManager()->list()->at(z)->name;
-    TQString hlSection = KateFactory::self()->fileTypeManager()->list()->at(z)->section;
+    TQString hlName = KateFactory::self()->fileTypeManager()->list()->tqat(z)->name;
+    TQString hlSection = KateFactory::self()->fileTypeManager()->list()->tqat(z)->section;
 
     if ( !hlSection.isEmpty() && (names.tqcontains(hlName) < 1) )
     {
@@ -551,7 +551,7 @@ void KateViewFileTypeAction::slotAboutToShow()
 
       int m = subMenusName.tqfindIndex (hlSection);
       names << hlName;
-      subMenus.at(m)->insertItem ( hlName, this, TQT_SLOT(setType(int)), 0,  z+1);
+      subMenus.tqat(m)->insertItem ( hlName, this, TQT_SLOT(setType(int)), 0,  z+1);
     }
     else if (names.tqcontains(hlName) < 1)
     {
@@ -564,8 +564,8 @@ void KateViewFileTypeAction::slotAboutToShow()
 
   for (uint i=0;i<subMenus.count();i++)
   {
-    for (uint i2=0;i2<subMenus.at(i)->count();i2++)
-      subMenus.at(i)->setItemChecked(subMenus.at(i)->idAt(i2),false);
+    for (uint i2=0;i2<subMenus.tqat(i)->count();i2++)
+      subMenus.tqat(i)->setItemChecked(subMenus.tqat(i)->idAt(i2),false);
   }
   popupMenu()->setItemChecked (0, false);
 
@@ -577,8 +577,8 @@ void KateViewFileTypeAction::slotAboutToShow()
     if ((t = KateFactory::self()->fileTypeManager()->fileType (doc->fileType())))
     {
       int i = subMenusName.tqfindIndex (t->section);
-      if (i >= 0 && subMenus.at(i))
-        subMenus.at(i)->setItemChecked (doc->fileType()+1, true);
+      if (i >= 0 && subMenus.tqat(i))
+        subMenus.tqat(i)->setItemChecked (doc->fileType()+1, true);
       else
         popupMenu()->setItemChecked (0, true);
     }

@@ -218,12 +218,12 @@ void KJavaProcess::popBuffer()
 //	kdDebug(6100) << "Sending buffer to java, buffer = >>";
 //        for( unsigned int i = 0; i < buf->size(); i++ )
 //        {
-//            if( buf->at(i) == (char)0 )
+//            if( buf->tqat(i) == (char)0 )
 //                kdDebug(6100) << "<SEP>";
-//            else if( buf->at(i) > 0 && buf->at(i) < 10 )
-//                kdDebug(6100) << "<CMD " << (int) buf->at(i) << ">";
+//            else if( buf->tqat(i) > 0 && buf->tqat(i) < 10 )
+//                kdDebug(6100) << "<CMD " << (int) buf->tqat(i) << ">";
 //            else
-//                kdDebug(6100) << buf->at(i);
+//                kdDebug(6100) << buf->tqat(i);
 //        }
 //        kdDebug(6100) << "<<" << endl;
 

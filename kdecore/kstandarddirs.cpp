@@ -189,7 +189,7 @@ void KStandardDirs::addPrefix( const TQString& _dir, bool priority )
 	return;
 
     TQString dir = _dir;
-    if (dir.at(dir.length() - 1) != QChar('/'))
+    if (dir.tqat(dir.length() - 1) != QChar('/'))
 	dir += QChar('/');
 
     if (!prefixes.tqcontains(dir)) {
@@ -209,7 +209,7 @@ void KStandardDirs::addXdgConfigPrefix( const TQString& _dir, bool priority )
 	return;
 
     TQString dir = _dir;
-    if (dir.at(dir.length() - 1) != QChar('/'))
+    if (dir.tqat(dir.length() - 1) != QChar('/'))
 	dir += QChar('/');
 
     if (!d->xdgconf_prefixes.tqcontains(dir)) {
@@ -229,7 +229,7 @@ void KStandardDirs::addXdgDataPrefix( const TQString& _dir, bool priority )
 	return;
 
     TQString dir = _dir;
-    if (dir.at(dir.length() - 1) != QChar('/'))
+    if (dir.tqat(dir.length() - 1) != QChar('/'))
 	dir += QChar('/');
 
     if (!d->xdgdata_prefixes.tqcontains(dir)) {
@@ -271,7 +271,7 @@ bool KStandardDirs::addResourceType( const char *type,
 	relatives.insert(type, rels);
     }
     TQString copy = relativename;
-    if (copy.at(copy.length() - 1) != QChar('/'))
+    if (copy.tqat(copy.length() - 1) != QChar('/'))
 	copy += QChar('/');
     if (!rels->tqcontains(copy)) {
         if (priority)
@@ -301,7 +301,7 @@ bool KStandardDirs::addResourceDir( const char *type,
 	absolutes.insert(type, paths);
     }
     TQString copy = absdir;
-    if (copy.at(copy.length() - 1) != QChar('/'))
+    if (copy.tqat(copy.length() - 1) != QChar('/'))
       copy += QChar('/');
 
     if (!paths->tqcontains(copy)) {
@@ -452,7 +452,7 @@ bool KStandardDirs::exists(const TQString &fullPath)
 {
     KDE_struct_stat buff;
     if (access(TQFile::encodeName(fullPath), R_OK) == 0 && KDE_stat( TQFile::encodeName(fullPath), &buff ) == 0)
-	if (fullPath.at(fullPath.length() - 1) != QChar('/')) {
+	if (fullPath.tqat(fullPath.length() - 1) != QChar('/')) {
 	    if (S_ISREG( buff.st_mode ))
 		return true;
 	} else
@@ -478,9 +478,9 @@ static void lookupDirectory(const TQString& path, const TQString &relPart,
       return;
 
 #ifdef Q_WS_WIN
-    assert(path.at(path.length() - 1) == QChar('/') || path.at(path.length() - 1) == QChar('\\'));
+    assert(path.tqat(path.length() - 1) == QChar('/') || path.tqat(path.length() - 1) == QChar('\\'));
 #else
-    assert(path.at(path.length() - 1) == QChar('/'));
+    assert(path.tqat(path.length() - 1) == QChar('/'));
 #endif
 
     struct dirent *ep;
@@ -492,7 +492,7 @@ static void lookupDirectory(const TQString& path, const TQString &relPart,
     while( ( ep = readdir( dp ) ) != 0L )
     {
       TQString fn( TQFile::decodeName(ep->d_name));
-      if (fn == _dot || fn == _dotdot || TQChar(fn.at(fn.length() - 1)).latin1() == TQChar('~').latin1())
+      if (fn == _dot || fn == _dotdot || TQChar(fn.tqat(fn.length() - 1)).latin1() == TQChar('~').latin1())
 	continue;
 
       if (!recursive && !regexp.exactMatch(fn))
@@ -569,9 +569,9 @@ static void lookupPrefix(const TQString& prefix, const TQString& relpath,
     if (prefix.isEmpty()) //for sanity
       return;
 #ifdef Q_WS_WIN
-    assert(prefix.at(prefix.length() - 1) == QChar('/') || prefix.at(prefix.length() - 1) == QChar('\\'));
+    assert(prefix.tqat(prefix.length() - 1) == QChar('/') || prefix.tqat(prefix.length() - 1) == QChar('\\'));
 #else
-    assert(prefix.at(prefix.length() - 1) == QChar('/'));
+    assert(prefix.tqat(prefix.length() - 1) == QChar('/'));
 #endif
     KDE_struct_stat buff;
 
@@ -591,7 +591,7 @@ static void lookupPrefix(const TQString& prefix, const TQString& relpath,
 	while( ( ep = readdir( dp ) ) != 0L )
 	    {
 		TQString fn( TQFile::decodeName(ep->d_name));
-		if (fn == _dot || fn == _dotdot || fn.at(fn.length() - 1) == QChar('~'))
+		if (fn == _dot || fn == _dotdot || fn.tqat(fn.length() - 1) == QChar('~'))
 		    continue;
 
 		if ( !pathExp.exactMatch(fn) )
@@ -1176,7 +1176,7 @@ bool KStandardDirs::makeDir(const TQString& dir, int mode)
     uint len = target.length();
 
     // append trailing slash if missing
-    if (dir.at(len - 1) != QChar('/'))
+    if (dir.tqat(len - 1) != QChar('/'))
         target += QChar('/');
 
     TQString base("");

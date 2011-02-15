@@ -374,7 +374,7 @@ Application * KNotifyWidget::addApplicationEvents( const TQString& path )
     kdDebug() << "**** knotify: adding path: " << path << endl;
     TQString relativePath = path;
 
-    if ( path.at(0) == '/' && KStandardDirs::exists( path ) )
+    if ( path.tqat(0) == '/' && KStandardDirs::exists( path ) )
         relativePath = makeRelative( path );
 
     if ( !relativePath.isEmpty() )

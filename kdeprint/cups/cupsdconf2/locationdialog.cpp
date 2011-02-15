@@ -128,7 +128,7 @@ void LocationDialog::setInfos(CupsdConf *conf)
 
 void LocationDialog::fillLocation(CupsLocation *loc)
 {
-	loc->resource_ = conf_->resources_.at(resource_->currentItem());
+	loc->resource_ = conf_->resources_.tqat(resource_->currentItem());
 	loc->resourcename_ = loc->resource_->path_;
 	loc->authtype_ = authtype_->currentItem();
 	loc->authclass_ = (loc->authtype_ == AUTHTYPE_NONE ? AUTHCLASS_ANONYMOUS : authclass_->currentItem());

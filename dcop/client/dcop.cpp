@@ -262,7 +262,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 		}
 		if ( s == static_cast<int>(partl.count())-1)
 		{
-			partl.remove(partl.at(s));
+			partl.remove(partl.tqat(s));
 		}
 
 		lt = partl.join(" ");

@@ -398,7 +398,7 @@ void KMJobViewer::updateJobs()
 	}
 
 	for (uint i=0; i<m_items.count(); i++)
-		if (m_items.at(i)->isDiscarded())
+		if (m_items.tqat(i)->isDiscarded())
 		{
 			delete m_items.take(i);
 			i--;
@@ -510,7 +510,7 @@ void KMJobViewer::slotMove(int prID)
 {
 	if (prID >= 0 && prID < (int)(m_printers.count()))
 	{
-		KMPrinter	*p = m_printers.at(prID);
+		KMPrinter	*p = m_printers.tqat(prID);
 		send(KMJob::Move,i18n("Move to %1").arg(p->printerName()),p->printerName());
 	}
 }
@@ -540,7 +540,7 @@ void KMJobViewer::slotPrinterSelected(int prID)
 {
 	if (prID >= 0 && prID < (int)(m_printers.count()+1))
 	{
-		TQString	prname = (prID == 0 ? i18n("All Printers") : m_printers.at(prID-1)->printerName());
+		TQString	prname = (prID == 0 ? i18n("All Printers") : m_printers.tqat(prID-1)->printerName());
 		emit printerChanged(this, prname);
 	}
 }

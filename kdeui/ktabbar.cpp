@@ -48,7 +48,7 @@ KTabBar::KTabBar( TQWidget *parent, const char *name )
     mActivateDragSwitchTabTimer = new TQTimer( this );
     connect( mActivateDragSwitchTabTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( activateDragSwitchTab() ) );
 
-    connect(this, TQT_SIGNAL(layoutChanged()), TQT_SLOT(onLayoutChange()));
+    connect(this, TQT_SIGNAL(tqlayoutChanged()), TQT_SLOT(onLayoutChange()));
 }
 
 KTabBar::~KTabBar()
@@ -67,7 +67,7 @@ void KTabBar::setTabEnabled( int id, bool enabled )
             if ( !enabled && id == currentTab() && count()>1 ) {
                 TQPtrList<TQTab> *tablist = tabList();
                 if ( mTabCloseActivatePrevious )
-                    t = tablist->at( count()-2 );
+                    t = tablist->tqat( count()-2 );
                 else {
                 int index = indexOf( id );
                 index += ( index+1 == count() ) ? -1 : 1;

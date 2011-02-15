@@ -1269,8 +1269,8 @@ void KDirOperator::setupActions()
     mkdirAction = new KAction( i18n("New Folder..."), 0,
                                  TQT_TQOBJECT(this), TQT_SLOT( mkdir() ), myActionCollection, "mkdir" );
     KAction* trash = new KAction( i18n( "Move to Trash" ), "edittrash", Key_Delete, myActionCollection, "trash" );
-    connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, Qt::ButtonState ) ),
-	     this, TQT_SLOT( trashSelected( KAction::ActivationReason, Qt::ButtonState ) ) );
+    connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState ) ),
+	     this, TQT_SLOT( trashSelected( KAction::ActivationReason, TQt::ButtonState ) ) );
     new KAction( i18n( "Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this),
                   TQT_SLOT( deleteSelected() ), myActionCollection, "delete" );
     mkdirAction->setIcon( TQString::tqfromLatin1("folder_new") );

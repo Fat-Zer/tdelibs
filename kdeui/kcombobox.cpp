@@ -261,7 +261,7 @@ void KComboBox::setLineEdit( TQLineEdit *edit )
     }
 
     TQComboBox::setLineEdit( edit );
-    d->klineEdit = dynamic_cast<KLineEdit*>( edit );
+    d->klineEdit = tqt_dynamic_cast<KLineEdit*>( edit );
     setDelegate( d->klineEdit );
 
     // Connect the returnPressed signal for both Q[K]LineEdits'

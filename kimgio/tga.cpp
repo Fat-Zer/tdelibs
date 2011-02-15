@@ -324,7 +324,7 @@ KDE_EXPORT void kimgio_tga_read( TQImageIO *io )
 	// Read image header.
 	TgaHeader tga;
 	s >> tga;
-	s.tqdevice()->at( TgaHeader::SIZE + tga.id_length );
+	s.tqdevice()->tqat( TgaHeader::SIZE + tga.id_length );
 
 	// Check image file format.
 	if( s.atEnd() ) {

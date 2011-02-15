@@ -1239,7 +1239,7 @@ KCmdLineArgs::arg(int n) const
       exit(255);
    }
 
-   return parsedArgList->at(n);
+   return parsedArgList->tqat(n);
 }
 
 KURL

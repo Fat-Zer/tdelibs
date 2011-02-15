@@ -159,7 +159,7 @@ void KColorButton::keyPressEvent( TQKeyEvent *e )
   }
   else if ( KStdAccel::paste().contains( key ) ) {
     TQColor color;
-    KColorDrag::decode( TQApplication::tqclipboard()->data( QClipboard::Clipboard ), color );
+    KColorDrag::decode( TQApplication::tqclipboard()->data( TQClipboard::Clipboard ), color );
     setColor( color );
   }
   else

@@ -69,9 +69,9 @@ void KateRenderer::updateAttributes ()
 KateAttribute* KateRenderer::attribute(uint pos)
 {
   if (pos < m_attributes->size())
-    return &m_attributes->at(pos);
+    return &m_attributes->tqat(pos);
 
-  return &m_attributes->at(0);
+  return &m_attributes->tqat(0);
 }
 
 void KateRenderer::setDrawCaret(bool drawCaret)

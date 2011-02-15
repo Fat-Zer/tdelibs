@@ -194,7 +194,7 @@ TQSizePolicy KToolBarSeparator::sizePolicy() const
 
 KToolBar::KToolBar( TQWidget *parent, const char *name, bool honorStyle, bool readConfig )
     : TQToolBar( TQString::tqfromLatin1( name ),
-      dynamic_cast<TQMainWindow*>(parent),
+      tqt_dynamic_cast<TQMainWindow*>(parent),
       parent, false,
       name ? name : "mainToolBar")
 {
@@ -430,7 +430,7 @@ KAnimWidget *KToolBar::animatedWidget( int id )
     Id2WidgetMap::Iterator it = id2widget.tqfind( id );
     if ( it == id2widget.end() )
         return 0;
-    KAnimWidget *aw = dynamic_cast<KAnimWidget *>(*it);
+    KAnimWidget *aw = tqt_dynamic_cast<KAnimWidget *>(*it);
     if ( aw )
         return aw;
     TQObjectList *l = queryList( "KAnimWidget" );
@@ -440,7 +440,7 @@ KAnimWidget *KToolBar::animatedWidget( int id )
     }
 
     for ( TQObject *o = l->first(); o; o = l->next() ) {
-        KAnimWidget *aw = dynamic_cast<KAnimWidget *>(o);
+        KAnimWidget *aw = tqt_dynamic_cast<KAnimWidget *>(o);
         if ( aw )
         {
             delete l;
@@ -613,7 +613,7 @@ KComboBox * KToolBar::getCombo(int id)
     Id2WidgetMap::Iterator it = id2widget.tqfind( id );
     if ( it == id2widget.end() )
         return 0;
-    return dynamic_cast<KComboBox *>( *it );
+    return tqt_dynamic_cast<KComboBox *>( *it );
 }
 
 
@@ -622,7 +622,7 @@ KLineEdit * KToolBar::getLined (int id)
     Id2WidgetMap::Iterator it = id2widget.tqfind( id );
     if ( it == id2widget.end() )
         return 0;
-    return dynamic_cast<KLineEdit *>( *it );
+    return tqt_dynamic_cast<KLineEdit *>( *it );
 }
 
 
@@ -631,7 +631,7 @@ KToolBarButton * KToolBar::getButton (int id)
     Id2WidgetMap::Iterator it = id2widget.tqfind( id );
     if ( it == id2widget.end() )
         return 0;
-    return dynamic_cast<KToolBarButton *>( *it );
+    return tqt_dynamic_cast<KToolBarButton *>( *it );
 }
 
 
@@ -734,7 +734,7 @@ int KToolBar::itemIndex (int id)
 
 int KToolBar::idAt (int index)
 {
-    TQWidget *w = widgets.at(index);
+    TQWidget *w = widgets.tqat(index);
     return widget2id[w];
 }
 
@@ -856,10 +856,11 @@ void KToolBar::setIconText(IconText icontext, bool update)
     // ugly hack to force a TQMainWindow::triggerLayout( true )
     TQMainWindow *mw = mainWindow();
     if ( mw ) {
-        mw->setUpdatesEnabled( false );
-        mw->setToolBarsMovable( !mw->toolBarsMovable() );
-        mw->setToolBarsMovable( !mw->toolBarsMovable() );
-        mw->setUpdatesEnabled( true );
+        mw->tqsetUpdatesEnabled( false );
+//         mw->setToolBarsMovable( !mw->toolBarsMovable() );	// Old way
+//         mw->setToolBarsMovable( !mw->toolBarsMovable() );
+        mw->setCentralWidget(mw->centralWidget());	// This is a faster hack
+        mw->tqsetUpdatesEnabled( true );
     }
 }
 
@@ -893,13 +894,13 @@ void KToolBar::setIconSize(int size, bool update)
     // ugly hack to force a TQMainWindow::triggerLayout( true )
     if ( mainWindow() ) {
         TQMainWindow *mw = mainWindow();
-        mw->setUpdatesEnabled( false );
-        mw->setToolBarsMovable( !mw->toolBarsMovable() );
-        mw->setToolBarsMovable( !mw->toolBarsMovable() );
-        mw->setUpdatesEnabled( true );
+        mw->tqsetUpdatesEnabled( false );
+//         mw->setToolBarsMovable( !mw->toolBarsMovable() );	// Old way
+//         mw->setToolBarsMovable( !mw->toolBarsMovable() );
+        mw->setCentralWidget(mw->centralWidget());	// This is a faster hack
+        mw->tqsetUpdatesEnabled( true );
     }
 }
-
 
 int KToolBar::iconSize() const
 {
@@ -946,7 +947,7 @@ void KToolBar::setFlat (bool flag)
     else
         mainWindow()->moveDockWindow( this, DockTop );
     // And remember to save the new look later
-    KMainWindow *kmw = dynamic_cast<KMainWindow *>(mainWindow());
+    KMainWindow *kmw = tqt_dynamic_cast<KMainWindow *>(mainWindow());
     if ( kmw )
         kmw->setSettingsDirty();
 }
@@ -1092,7 +1093,7 @@ void KToolBar::saveSettings(KConfig *config, const TQString &_configGroup)
     // reappear at the same position the next time.
     // The whole set of indexes has to be saved.
     //kdDebug(220) << name() << "                writing index " << index << endl;
-    KMainWindow *kmw = dynamic_cast<KMainWindow *>(mainWindow());
+    KMainWindow *kmw = tqt_dynamic_cast<KMainWindow *>(mainWindow());
     // don't save if there's only one toolbar
 
     // Don't use kmw->toolBarIterator() because you might
@@ -1203,7 +1204,7 @@ void KToolBar::mousePressEvent ( TQMouseEvent *m )
                 else
                     return; // assume this was an action handled elsewhere, no need for setSettingsDirty()
             }
-            KMainWindow *kmw = dynamic_cast<KMainWindow *>(mw);
+            KMainWindow *kmw = tqt_dynamic_cast<KMainWindow *>(mw);
             if ( kmw )
                 kmw->setSettingsDirty();
         }
@@ -1237,17 +1238,17 @@ void KToolBar::rebuildLayout()
     for ( TQWidget *w = widgets.first(); w; w = widgets.next() ) {
         if ( w == rightAligned )
             continue;
-        KToolBarSeparator *ktbs = dynamic_cast<KToolBarSeparator *>(w);
+        KToolBarSeparator *ktbs = tqt_dynamic_cast<KToolBarSeparator *>(w);
         if ( ktbs && !ktbs->showLine() ) {
             l->addSpacing( orientation() == Qt::Vertical ? w->tqsizeHint().height() : w->tqsizeHint().width() );
             w->hide();
             continue;
         }
-        if ( dynamic_cast<TQPopupMenu *>(w) ) // w is a QPopupMenu?
+        if ( tqt_dynamic_cast<TQPopupMenu *>(w) ) // w is a QPopupMenu?
             continue;
         l->addWidget( w );
         w->show();
-        if ((orientation() == Qt::Horizontal) && dynamic_cast<TQLineEdit *>(w)) // w is TQLineEdit ?
+        if ((orientation() == Qt::Horizontal) && tqt_dynamic_cast<TQLineEdit *>(w)) // w is TQLineEdit ?
             l->addSpacing(2); // A little bit extra spacing behind it.
     }
     if ( rightAligned ) {
@@ -1269,14 +1270,14 @@ void KToolBar::rebuildLayout()
 void KToolBar::childEvent( TQChildEvent *e )
 {
     if ( e->child()->isWidgetType() ) {
-        TQWidget * w = dynamic_cast<TQWidget *>(e->child());
+        TQWidget * w = tqt_dynamic_cast<TQWidget *>(e->child());
         if (!w || !(::qstrcmp( "qt_dockwidget_internal", w->name())))
         {
            TQToolBar::childEvent( e );
            return;
         }
         if ( e->type() == TQEvent::ChildInserted ) {
-            if ( !dynamic_cast<TQPopupMenu *>(w)) { // e->child() is not a QPopupMenu
+            if ( !tqt_dynamic_cast<TQPopupMenu *>(w)) { // e->child() is not a QPopupMenu
                 // prevent items that have been explicitly inserted by insert*() from
                 // being inserted again
                 if ( !widget2id.tqcontains( w ) )
@@ -1293,8 +1294,8 @@ void KToolBar::childEvent( TQChildEvent *e )
             layoutTimer->start( 50, true );
             TQBoxLayout *l = boxLayout();
 
-            // clear the old layout so that we don't get unnecassery layout
-            // changes till we have rebuild the thing
+            // clear the old layout so that we don't get unnecessary layout
+            // changes until we have rebuilt the thing
             TQLayoutIterator it = l->iterator();
             while ( it.current() )
                it.deleteCurrent();
@@ -1366,7 +1367,7 @@ TQSize KToolBar::tqsizeHint() const
 
           minSize = minSize.expandedTo(TQSize(0, sh.height()));
           minSize += TQSize(sh.width()+1, 0);
-          if (dynamic_cast<TQLineEdit *>(w)) // w is a TQLineEdit ?
+          if (tqt_dynamic_cast<TQLineEdit *>(w)) // w is a TQLineEdit ?
              minSize += TQSize(2, 0); // A little bit extra spacing behind it.
        }
 
@@ -1428,7 +1429,7 @@ void KToolBar::show()
 void KToolBar::resizeEvent( TQResizeEvent *e )
 {
     bool b = isUpdatesEnabled();
-    setUpdatesEnabled( false );
+    tqsetUpdatesEnabled( false );
     TQToolBar::resizeEvent( e );
     if (b)
     {
@@ -1443,6 +1444,10 @@ void KToolBar::resizeEvent( TQResizeEvent *e )
          slotRepaint();
       }
     }
+//     else {
+//         printf("[WARNING] In KToolBar::resizeEvent, but this code block should not be executing.  Preventing toolbar lockup.  [Code 0045]\n\r");
+//         tqsetUpdatesEnabled( true );
+//     }
 }
 
 void KToolBar::slotIconChanged(int group)
@@ -1473,7 +1478,7 @@ void KToolBar::slotAppearanceChanged()
     applyAppearanceSettings(KGlobal::config(), TQString::null, true /* lose local settings */ );
 
     // And remember to save the new look later
-    KMainWindow *kmw = dynamic_cast<KMainWindow *>(mainWindow());
+    KMainWindow *kmw = tqt_dynamic_cast<KMainWindow *>(mainWindow());
     if ( kmw )
         kmw->setSettingsDirty();
 }
@@ -1727,14 +1732,14 @@ bool KToolBar::event( TQEvent *e )
 
 void KToolBar::slotRepaint()
 {
-    setUpdatesEnabled( false );
+    tqsetUpdatesEnabled( false );
     // Send a resizeEvent to update the "toolbar extension arrow"
     // (The button you get when your toolbar-items don't fit in
     // the available space)
     TQResizeEvent ev(size(), size());
     resizeEvent(&ev);
     TQApplication::sendPostedEvents( this, TQEvent::LayoutHint );
-    setUpdatesEnabled( true );
+    tqsetUpdatesEnabled( true );
     tqrepaint( true );
 }
 
@@ -1745,7 +1750,7 @@ void KToolBar::toolBarPosChanged( TQToolBar *tb )
     if ( d->oldPos == DockMinimized )
         rebuildLayout();
     d->oldPos = (TQMainWindow::ToolBarDock)barPos();
-    KMainWindow *kmw = dynamic_cast<KMainWindow *>(mainWindow());
+    KMainWindow *kmw = tqt_dynamic_cast<KMainWindow *>(mainWindow());
     if ( kmw )
         kmw->setSettingsDirty();
 }
@@ -2133,7 +2138,7 @@ void KToolBar::slotContextAboutToShow()
   // and ToolBarHandler::setupActions() deletes it, so better not keep it around.
   // So we currently plug/unplug the last two actions of the menu.
   // Another way would be to keep around the actions and plug them all into a (new each time) popupmenu.
-  KMainWindow *kmw = dynamic_cast<KMainWindow *>(mainWindow());
+  KMainWindow *kmw = tqt_dynamic_cast<KMainWindow *>(mainWindow());
   if ( kmw ) {
       kmw->setupToolbarMenuActions();
       // Only allow hiding a toolbar if the action is also plugged somewhere else (e.g. menubar)
@@ -2213,7 +2218,7 @@ void KToolBar::slotContextAboutToHide()
 {
   // We have to unplug whatever slotContextAboutToShow plugged into the menu.
   // Unplug the toolbar menu action
-  KMainWindow *kmw = dynamic_cast<KMainWindow *>(mainWindow());
+  KMainWindow *kmw = tqt_dynamic_cast<KMainWindow *>(mainWindow());
   if ( kmw && kmw->toolBarMenuAction() )
     if ( kmw->toolBarMenuAction()->containerCount() > 1 )
       kmw->toolBarMenuAction()->unplug(context);

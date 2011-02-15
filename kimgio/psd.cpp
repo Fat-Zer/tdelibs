@@ -119,15 +119,15 @@ namespace {	// Private.
 
 		// Skip mode data.
 		s >> tmp;
-		s.tqdevice()->at( s.tqdevice()->at() + tmp );
+		s.tqdevice()->tqat( s.tqdevice()->tqat() + tmp );
 
 		// Skip image resources.
 		s >> tmp;
-		s.tqdevice()->at( s.tqdevice()->at() + tmp );
+		s.tqdevice()->tqat( s.tqdevice()->tqat() + tmp );
 
 		// Skip the reserved data.
 		s >> tmp;
-		s.tqdevice()->at( s.tqdevice()->at() + tmp );
+		s.tqdevice()->tqat( s.tqdevice()->tqat() + tmp );
 		
 		// Find out if the data is compressed.
 		// Known values:

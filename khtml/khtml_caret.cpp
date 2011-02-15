@@ -2103,7 +2103,7 @@ static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
   int n = (int)row->row->size();
   int i;
   for (i = 0; i < n; i++) {
-    RenderTableCell *cell = row->row->at(i);
+    RenderTableCell *cell = row->row->tqat(i);
     if (!cell || (long)cell == -1) continue;
 
     int absx, absy;
@@ -2127,7 +2127,7 @@ static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
     int index = i - ((cnt >> 1) + 1)*(cnt & 1) + (cnt >> 1)*!(cnt & 1);
     if (index < 0 || index >= n) continue;
 
-    RenderTableCell *cell = row->row->at(index);
+    RenderTableCell *cell = row->row->tqat(index);
     if (!cell || (long)cell == -1) continue;
 
 #if DEBUG_CARETMODE > 1
@@ -2227,7 +2227,7 @@ static int findRowInSection(RenderTableSection *section, RenderTableCell *cell,
     // check for cell
     int m = row->row->size();
     for (int j = 0; j < m; j++) {
-      RenderTableCell *c = row->row->at(j);
+      RenderTableCell *c = row->row->tqat(j);
       if (c == directCell) return i;
     }/*next j*/
 

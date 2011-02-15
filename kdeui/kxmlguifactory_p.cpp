@@ -85,7 +85,7 @@ MergingIndexList::Iterator ContainerNode::findIndex( const TQString &name )
 
 /*
  * Check if the given container widget is a child of this node and return the node structure
- * if fonud.
+ * if found.
  */
 ContainerNode *ContainerNode::findContainerNode( TQWidget *container )
 {
@@ -238,7 +238,7 @@ void ContainerNode::plugActionList( BuildState &state, const MergingIndexList::I
         return;
 
     ContainerClient *client = findChildContainerClient( state.guiClient,
-                                                        TQString::null,
+                                                        TQString(),
                                                         mergingIndices.end() );
 
     client->actionLists.insert( k, state.actionList );
@@ -280,7 +280,7 @@ void ContainerNode::unplugActionList( BuildState &state, const MergingIndexList:
         return;
 
     ContainerClient *client = findChildContainerClient( state.guiClient,
-                                                        TQString::null,
+                                                        TQString(),
                                                         mergingIndices.end() );
 
     ActionListMap::Iterator lIt( client->actionLists.tqfind( k ) );
@@ -539,7 +539,7 @@ BuildHelper::BuildHelper( BuildState &state, ContainerNode *node )
     }
 
     m_state.currentDefaultMergingIt = parentNode->findIndex( defaultMergingName );
-    parentNode->calcMergingIndex( TQString::null, m_state.currentClientMergingIt,
+    parentNode->calcMergingIndex( TQString(), m_state.currentClientMergingIt,
                                   m_state, /*ignoreDefaultMergingIndex*/ false );
 }
 
@@ -727,7 +727,7 @@ void BuildHelper::processMergeElement( const TQString &tag, const TQString &name
 
     // re-calculate the running default and client merging indices.
     m_state.currentDefaultMergingIt = parentNode->findIndex( defaultMergingName );
-    parentNode->calcMergingIndex( TQString::null, m_state.currentClientMergingIt,
+    parentNode->calcMergingIndex( TQString(), m_state.currentClientMergingIt,
                                   m_state, ignoreDefaultMergingIndex );
 }
 
@@ -784,7 +784,7 @@ void BuildHelper::processContainerElement( const TQDomElement &e, const TQString
 
     // and re-calculate running values, for better performance
     m_state.currentDefaultMergingIt = parentNode->findIndex( defaultMergingName );
-    parentNode->calcMergingIndex( TQString::null, m_state.currentClientMergingIt,
+    parentNode->calcMergingIndex( TQString(), m_state.currentClientMergingIt,
                                   m_state, ignoreDefaultMergingIndex );
 }
 
@@ -823,8 +823,8 @@ TQWidget *BuildHelper::createContainer( TQWidget *parent, int index,
 
 void BuildState::reset()
 {
-    clientName = TQString::null;
-    actionListName = TQString::null;
+    clientName = TQString();
+    actionListName = TQString();
     actionList.clear();
     guiClient = 0;
     clientBuilder = 0;

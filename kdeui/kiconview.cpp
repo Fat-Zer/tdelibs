@@ -184,7 +184,7 @@ void KIconView::slotAutoSelect()
 
       bool select = !m_pCurrentItem->isSelected();
       bool update = viewport()->isUpdatesEnabled();
-      viewport()->setUpdatesEnabled( false );
+      viewport()->tqsetUpdatesEnabled( false );
 
       //Calculate the smallest rectangle that contains the current Item
       //and the one that got the autoselect event
@@ -216,7 +216,7 @@ void KIconView::slotAutoSelect()
       }
 
       blockSignals( block );
-      viewport()->setUpdatesEnabled( update );
+      viewport()->tqsetUpdatesEnabled( update );
       tqrepaintContents( redraw, false );
 
       emit selectionChanged();

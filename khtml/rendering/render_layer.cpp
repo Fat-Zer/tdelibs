@@ -168,7 +168,7 @@ TQRegion RenderLayer::paintedRegion(RenderLayer* rootLayer)
     if (m_negZOrderList) {
         uint count = m_negZOrderList->count();
         for (uint i = 0; i < count; i++) {
-            RenderLayer* child = m_negZOrderList->at(i);
+            RenderLayer* child = m_negZOrderList->tqat(i);
             r += child->paintedRegion(rootLayer);
         }
     }
@@ -188,7 +188,7 @@ TQRegion RenderLayer::paintedRegion(RenderLayer* rootLayer)
     if (m_posZOrderList) {
         uint count = m_posZOrderList->count();
         for (uint i = 0; i < count; i++) {
-            RenderLayer* child = m_posZOrderList->at(i);
+            RenderLayer* child = m_posZOrderList->tqat(i);
             r += child->paintedRegion(rootLayer);
         }
     }
@@ -266,7 +266,7 @@ void RenderLayer::updateWidgetMasks(RenderLayer* rootLayer)
             m_region = TQRect(0,0,sv->contentsWidth(),sv->contentsHeight());
 
             for (uint i = 0; i < count; i++) {
-                RenderLayer* child = m_posZOrderList->at(i);
+                RenderLayer* child = m_posZOrderList->tqat(i);
                 if (child->zIndex() == 0 && child->renderer()->style()->position() == STATIC)
                     continue; // we don't know the widget's exact stacking position within flow
                 m_region -= child->paintedRegion(rootLayer);
@@ -898,7 +898,7 @@ void RenderLayer::paintLayer(RenderLayer* rootLayer, TQPainter *p,
     if (m_negZOrderList) {
         uint count = m_negZOrderList->count();
         for (uint i = 0; i < count; i++) {
-            RenderLayer* child = m_negZOrderList->at(i);
+            RenderLayer* child = m_negZOrderList->tqat(i);
             child->paintLayer(rootLayer, p, paintDirtyRect, selectionOnly);
         }
     }
@@ -946,7 +946,7 @@ void RenderLayer::paintLayer(RenderLayer* rootLayer, TQPainter *p,
     if (m_posZOrderList) {
         uint count = m_posZOrderList->count();
         for (uint i = 0; i < count; i++) {
-            RenderLayer* child = m_posZOrderList->at(i);
+            RenderLayer* child = m_posZOrderList->tqat(i);
             child->paintLayer(rootLayer, p, paintDirtyRect, selectionOnly);
         }
     }
@@ -1026,7 +1026,7 @@ RenderLayer* RenderLayer::nodeAtPointForLayer(RenderLayer* rootLayer, RenderObje
     if (m_posZOrderList) {
         uint count = m_posZOrderList->count();
         for (int i = count-1; i >= 0; i--) {
-            RenderLayer* child = m_posZOrderList->at(i);
+            RenderLayer* child = m_posZOrderList->tqat(i);
             insideLayer = child->nodeAtPointForLayer(rootLayer, info, xMousePos, yMousePos, hitTestRect);
             if (insideLayer)
                 return insideLayer;
@@ -1057,7 +1057,7 @@ RenderLayer* RenderLayer::nodeAtPointForLayer(RenderLayer* rootLayer, RenderObje
     if (m_negZOrderList) {
         uint count = m_negZOrderList->count();
         for (int i = count-1; i >= 0; i--) {
-            RenderLayer* child = m_negZOrderList->at(i);
+            RenderLayer* child = m_negZOrderList->tqat(i);
             insideLayer = child->nodeAtPointForLayer(rootLayer, info, xMousePos, yMousePos, hitTestRect);
             if (insideLayer)
                 return insideLayer;
@@ -1261,8 +1261,8 @@ static void sortByZOrder(TQPtrVector<RenderLayer>* buffer,
         for (uint i = end-1; i > start; i--) {
             bool sorted = true;
             for (uint j = start; j < i; j++) {
-                RenderLayer* elt = buffer->at(j);
-                RenderLayer* elt2 = buffer->at(j+1);
+                RenderLayer* elt = buffer->tqat(j);
+                RenderLayer* elt2 = buffer->tqat(j+1);
                 if (elt->zIndex() > elt2->zIndex()) {
                     sorted = false;
                     buffer->insert(j, elt2);
@@ -1279,8 +1279,8 @@ static void sortByZOrder(TQPtrVector<RenderLayer>* buffer,
         sortByZOrder(buffer, mergeBuffer, start, mid);
         sortByZOrder(buffer, mergeBuffer, mid, end);
 
-        RenderLayer* elt = buffer->at(mid-1);
-        RenderLayer* elt2 = buffer->at(mid);
+        RenderLayer* elt = buffer->tqat(mid-1);
+        RenderLayer* elt2 = buffer->tqat(mid);
 
         // Handle the fast common case (of equal z-indices).  The list may already
         // be completely sorted.
@@ -1293,26 +1293,26 @@ static void sortByZOrder(TQPtrVector<RenderLayer>* buffer,
         uint i1 = start;
         uint i2 = mid;
 
-        elt = buffer->at(i1);
-        elt2 = buffer->at(i2);
+        elt = buffer->tqat(i1);
+        elt2 = buffer->tqat(i2);
 
         while (i1 < mid || i2 < end) {
             if (i1 < mid && (i2 == end || elt->zIndex() <= elt2->zIndex())) {
                 mergeBuffer->insert(mergeBuffer->count(), elt);
                 i1++;
                 if (i1 < mid)
-                    elt = buffer->at(i1);
+                    elt = buffer->tqat(i1);
             }
             else {
                 mergeBuffer->insert(mergeBuffer->count(), elt2);
                 i2++;
                 if (i2 < end)
-                    elt2 = buffer->at(i2);
+                    elt2 = buffer->tqat(i2);
             }
         }
 
         for (uint i = start; i < end; i++)
-            buffer->insert(i, mergeBuffer->at(i-start));
+            buffer->insert(i, mergeBuffer->tqat(i-start));
 
         mergeBuffer->clear();
     }
@@ -1471,7 +1471,7 @@ static void writeLayers(TQTextStream &ts, const RenderLayer* rootLayer, RenderLa
 
     if (negList) {
         for (unsigned i = 0; i != negList->count(); ++i)
-            writeLayers(ts, rootLayer, negList->at(i), paintDirtyRect, indent );
+            writeLayers(ts, rootLayer, negList->tqat(i), paintDirtyRect, indent );
     }
 
     if (shouldPaint)
@@ -1485,7 +1485,7 @@ static void writeLayers(TQTextStream &ts, const RenderLayer* rootLayer, RenderLa
     TQPtrVector<RenderLayer>* posList = l->posZOrderList();
     if (posList) {
         for (unsigned i = 0; i != posList->count(); ++i)
-            writeLayers(ts, rootLayer, posList->at(i), paintDirtyRect, indent);
+            writeLayers(ts, rootLayer, posList->tqat(i), paintDirtyRect, indent);
     }
 }
 

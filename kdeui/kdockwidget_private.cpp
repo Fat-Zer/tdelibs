@@ -274,7 +274,7 @@ void KDockSplitter::resizeEvent(TQResizeEvent *ev)
         // However, this works surprising well!
         if (m_orientation == Qt::Horizontal) {
           if (ev->oldSize().height() != ev->size().height()) {
-            if( (c1->getWidget()) && (dc=dynamic_cast<KDockContainer*>(c1->getWidget()))) {
+            if( (c1->getWidget()) && (dc=tqt_dynamic_cast<KDockContainer*>(c1->getWidget()))) {
               // dockwidget is on the bottom. move xpos so that the size from child1 stays
               xpos = (int)ceil(((double)factor) * checkValue(height() - child1->height() - 4) / height());
             } else {
@@ -286,7 +286,7 @@ void KDockSplitter::resizeEvent(TQResizeEvent *ev)
           }
         } else {
           if (ev->oldSize().width() != width()) {
-            if( (c1->getWidget()) && (dc=dynamic_cast<KDockContainer*>(c1->getWidget()))) {
+            if( (c1->getWidget()) && (dc=tqt_dynamic_cast<KDockContainer*>(c1->getWidget()))) {
               xpos = (int)ceil(((double)factor) * checkValue(width() - child1->width() - 4) / width());
             } else {
               // xpos should not change
@@ -332,11 +332,11 @@ void KDockSplitter::resizeEvent(TQResizeEvent *ev)
     kdDebug(282) << "Splitter visibility    : " << divider->isVisible() << endl;;
     kdDebug(282) << "Splitter procentual pos: " << xpos << endl;
     if (c0->getWidget()) {
-        dc=dynamic_cast<KDockContainer*>(c0->getWidget());
+        dc=tqt_dynamic_cast<KDockContainer*>(c0->getWidget());
         kdDebug(282) << "Child 0 KDockContainer?: " << dc << endl;
     }
     if (c1->getWidget()) {
-        dc=dynamic_cast<KDockContainer*>(c1->getWidget());
+        dc=tqt_dynamic_cast<KDockContainer*>(c1->getWidget());
         kdDebug(282) << "Child 1 KDockContainer?: " << dc << endl;
     }
     kdDebug(282) << "Child0                 : " << child0 << endl;
@@ -348,7 +348,7 @@ void KDockSplitter::resizeEvent(TQResizeEvent *ev)
     //
     if( ( (m_orientation==Qt::Vertical) &&((fixedWidth0==-1) && (fixedWidth1==-1)) ) ||
         ( (m_orientation==Qt::Horizontal)  &&((fixedHeight0==-1) && (fixedHeight1==-1)) ) ) {
-      if ((c0->getWidget()) && (dc=dynamic_cast<KDockContainer*>(c0->getWidget()))
+      if ((c0->getWidget()) && (dc=tqt_dynamic_cast<KDockContainer*>(c0->getWidget()))
            && (dc->isOverlapMode())) {
         // child0 ist a KDockContainer
         int position;
@@ -367,7 +367,7 @@ void KDockSplitter::resizeEvent(TQResizeEvent *ev)
           divider->setGeometry(position, 0, 4, height());
         }
       } else {
-        if ((c1->getWidget()) && (dc=dynamic_cast<KDockContainer*>(c1->getWidget()))
+        if ((c1->getWidget()) && (dc=tqt_dynamic_cast<KDockContainer*>(c1->getWidget()))
              && (dc->isOverlapMode())) {
           // child1 ist a KDockContainer
           int position;
@@ -403,7 +403,7 @@ void KDockSplitter::resizeEvent(TQResizeEvent *ev)
       int diff = 0;
 
       if (m_orientation == Qt::Horizontal) {
-        if ((c1->getWidget()) && (dc=dynamic_cast<KDockContainer*>(c1->getWidget()))) {
+        if ((c1->getWidget()) && (dc=tqt_dynamic_cast<KDockContainer*>(c1->getWidget()))) {
           // bottom is dockcontainer
           if( divider->isVisible() ) {
             child0->setGeometry(0, 0, width(), position);
@@ -419,7 +419,7 @@ void KDockSplitter::resizeEvent(TQResizeEvent *ev)
         }
       divider->setGeometry(0, position, width(), 4);
       } else {
-        if ((c1->getWidget()) && (dc=dynamic_cast<KDockContainer*>(c1->getWidget()))) {
+        if ((c1->getWidget()) && (dc=tqt_dynamic_cast<KDockContainer*>(c1->getWidget()))) {
           // right is dockcontainer
           if( divider->isVisible() ) {
             child0->setGeometry(0, 0, position, height());
@@ -497,8 +497,8 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
   switch (e->type()) {
     case TQEvent::MouseMove:
       mev= (TQMouseEvent*)e;
-      child0->setUpdatesEnabled(mOpaqueResize);
-      child1->setUpdatesEnabled(mOpaqueResize);
+      child0->tqsetUpdatesEnabled(mOpaqueResize);
+      child1->tqsetUpdatesEnabled(mOpaqueResize);
       if (m_orientation == Qt::Horizontal) {
         if ((fixedHeight0!=-1) || (fixedHeight1!=-1))
         {
@@ -536,8 +536,8 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
       handled= true;
       break;
     case TQEvent::MouseButtonRelease:
-      child0->setUpdatesEnabled(true);
-      child1->setUpdatesEnabled(true);
+      child0->tqsetUpdatesEnabled(true);
+      child1->tqsetUpdatesEnabled(true);
       mev= (TQMouseEvent*)e;
       if (m_orientation == Qt::Horizontal){
         if ((fixedHeight0!=-1) || (fixedHeight1!=-1))

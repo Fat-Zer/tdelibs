@@ -180,7 +180,7 @@ void KMIconView::setPrinterList(TQPtrList<KMPrinter> *list)
 	}
 
 	for (uint i=0; i<m_items.count(); i++)
-		if (m_items.at(i)->isDiscarded())
+		if (m_items.tqat(i)->isDiscarded())
 		{
 			delete m_items.take(i);
 			i--;

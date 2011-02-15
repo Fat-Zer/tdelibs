@@ -910,7 +910,7 @@ namespace {	// Private.
 			return false;
 		}
 		
-		int offset = s.tqdevice()->at();
+		int offset = s.tqdevice()->tqat();
 		int size = FaceOffset( header );
 
 		for( int i = 0; i < 6; i++ ) {
@@ -921,7 +921,7 @@ namespace {	// Private.
 			}
 
 			// Seek device.
-			s.tqdevice()->at( offset );
+			s.tqdevice()->tqat( offset );
 			offset += size;
 
 			// Load face from stream.

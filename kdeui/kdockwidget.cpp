@@ -535,7 +535,7 @@ void KDockWidget::setPixmap(const TQPixmap& pixmap) {
 		dtg->changeTab(this,pixmap,dtg->tabLabel(this));
 	 TQWidget *contWid=parentDockContainer();
          if (contWid) {
-         	KDockContainer *x = dynamic_cast<KDockContainer*>(contWid);
+         	KDockContainer *x = tqt_dynamic_cast<KDockContainer*>(contWid);
                 if (x) {
                         x->setPixmap(this,pixmap);
                 }
@@ -556,7 +556,7 @@ KDockWidget::~KDockWidget()
   }
 
   if (latestKDockContainer()) {
-    KDockContainer *x = dynamic_cast<KDockContainer*>(latestKDockContainer());
+    KDockContainer *x = tqt_dynamic_cast<KDockContainer*>(latestKDockContainer());
     if (x) {
       x->removeWidget(this);
     }
@@ -719,7 +719,7 @@ void KDockWidget::setLatestKDockContainer(TQWidget* container)
 {
 	if (container)
 	{
-		if (dynamic_cast<KDockContainer*>(container))
+		if (tqt_dynamic_cast<KDockContainer*>(container))
 			d->container=container;
 		else
 			d->container=0;
@@ -729,7 +729,7 @@ void KDockWidget::setLatestKDockContainer(TQWidget* container)
 TQWidget* KDockWidget::latestKDockContainer()
 {
 	if (!(d->container)) return 0;
-	if (dynamic_cast<KDockContainer*>(d->container.operator->())) return d->container;
+	if (tqt_dynamic_cast<KDockContainer*>(d->container.operator->())) return d->container;
 	return 0;
 }
 
@@ -782,7 +782,7 @@ void KDockWidget::updateHeader()
       header->hide();
     } else {
       header->setTopLevel( false );
-      if (widget && dynamic_cast<KDockContainer*>(widget))
+      if (widget && tqt_dynamic_cast<KDockContainer*>(widget))
         header->hide();
       else
         header->show();
@@ -999,7 +999,7 @@ KDockWidget* KDockWidget::manualDock( KDockWidget* target, DockPosition dockPos,
    * dock tab group, and our parent isn't a KDockContainer, and we have no explicit
    * parent dock container...we can't do much yet */
   if ( parent() && !parent()->inherits("KDockSplitter") && !parentDockTabGroup() &&
-  	!(dynamic_cast<KDockContainer*>(parent())) && !parentDockContainer()){
+  	!(tqt_dynamic_cast<KDockContainer*>(parent())) && !parentDockContainer()){
 //  kdDebug(282)<<"KDockWidget::manualDock(): success = false (3)"<<endl;
 //  kdDebug(282)<<parent()->name()<<endl;
     success = false;
@@ -1064,11 +1064,11 @@ KDockWidget* KDockWidget::manualDock( KDockWidget* target, DockPosition dockPos,
 	  if (!contWid) contWid=target->widget;
 	  if (contWid)
 	  {
-	  	KDockContainer *cont=dynamic_cast<KDockContainer*>(contWid);
+	  	KDockContainer *cont=tqt_dynamic_cast<KDockContainer*>(contWid);
 		  if (cont)
 		  {
 			if (latestKDockContainer() && (latestKDockContainer()!=contWid)) {
-				KDockContainer* dc = dynamic_cast<KDockContainer*>(latestKDockContainer());
+				KDockContainer* dc = tqt_dynamic_cast<KDockContainer*>(latestKDockContainer());
 				if (dc) {
 					dc->removeWidget(this);
 				}
@@ -1227,7 +1227,7 @@ TQWidget *KDockWidget::parentDockContainer() const
 {
   if (!parent()) return 0L;
   TQWidget* candidate = tqparentWidget()->tqparentWidget();
-  if (candidate && dynamic_cast<KDockContainer*>(candidate)) return candidate;
+  if (candidate && tqt_dynamic_cast<KDockContainer*>(candidate)) return candidate;
   return 0L;
 }
 
@@ -1382,7 +1382,7 @@ void KDockWidget::undock()
   {
 //	  kdDebug(282)<<"undocked from dockcontainer"<<endl;
 	  undockedFromContainer=true;
-	  KDockContainer* dc = dynamic_cast<KDockContainer*>(d->container.operator->());
+	  KDockContainer* dc = tqt_dynamic_cast<KDockContainer*>(d->container.operator->());
 	  if (dc) {
 		  dc->undockWidget(this);
 		  setFormerBrotherDockWidget(dc->parentDockWidget());
@@ -1462,7 +1462,7 @@ void KDockWidget::setWidget( TQWidget* mw )
   layout = new TQVBoxLayout( this );
   layout->setResizeMode( TQLayout::Minimum );
 
-  KDockContainer* dc = dynamic_cast<KDockContainer*>(widget);
+  KDockContainer* dc = tqt_dynamic_cast<KDockContainer*>(widget);
   if (dc)
   {
     d->isContainer=true;
@@ -1538,7 +1538,7 @@ void KDockWidget::makeDockVisible()
   }
   if (parentDockContainer()) {
     TQWidget *contWid=parentDockContainer();
-    KDockContainer *x = dynamic_cast<KDockContainer*>(contWid);
+    KDockContainer *x = tqt_dynamic_cast<KDockContainer*>(contWid);
     if (x) {
       x->showWidget(this);
     }
@@ -1862,7 +1862,7 @@ KDockWidget* KDockManager::findDockWidgetAt( const TQPoint& pos )
   }
   if ( qt_tqfind_obj_child( TQT_TQOBJECT(w), "KDockSplitter", "_dock_split_" ) ) return 0L;
   if ( qt_tqfind_obj_child( TQT_TQOBJECT(w), "KDockTabGroup", "_dock_tab" ) ) return 0L;
-  if (dynamic_cast<KDockContainer*>(w)) return 0L;
+  if (tqt_dynamic_cast<KDockContainer*>(w)) return 0L;
 
   if (!childDockWidgetList) return 0L;
   if ( childDockWidgetList->tqfind(w) != -1 ) return 0L;
@@ -2221,7 +2221,7 @@ void KDockManager::writeConfig(TQDomElement &base)
 
     for (TQObjectListIt it(d->containerDocks);it.current();++it)
     {
-        KDockContainer* dc = dynamic_cast<KDockContainer*>(((KDockWidget*)it.current())->widget);
+        KDockContainer* dc = tqt_dynamic_cast<KDockContainer*>(((KDockWidget*)it.current())->widget);
         if (dc) {
                 dc->prepareSave(nList);
         }
@@ -2241,7 +2241,7 @@ void KDockManager::writeConfig(TQDomElement &base)
 
         TQDomElement groupEl;
 	if (obj->d->isContainer) {
-      		KDockContainer* x = dynamic_cast<KDockContainer*>(obj->widget);
+      		KDockContainer* x = tqt_dynamic_cast<KDockContainer*>(obj->widget);
        		if (x) {
 			groupEl=doc.createElement("dockContainer");
           		x->save(groupEl);
@@ -2379,7 +2379,7 @@ void KDockManager::readConfig(TQDomElement &base)
 		if (!(cont->d->isContainer)) {
 			kdDebug(282)<<"restoration of dockContainer is only supported for already existing dock containers"<<endl;
 		} else {
-			KDockContainer *dc=dynamic_cast<KDockContainer*>(cont->getWidget());
+			KDockContainer *dc=tqt_dynamic_cast<KDockContainer*>(cont->getWidget());
 			if (!dc) kdDebug(282)<<"Error while trying to handle dockcontainer configuration restoration"<<endl;
 				else {
 					dc->load(childEl);
@@ -2555,7 +2555,7 @@ void KDockManager::writeConfig( KConfig* c, TQString group )
 //  kdDebug(282)<<TQString("list size: %1").arg(nList.count())<<endl;
   for (TQObjectListIt it(d->containerDocks);it.current();++it)
   {
-  	KDockContainer* dc = dynamic_cast<KDockContainer*>(((KDockWidget*)it.current())->widget);
+  	KDockContainer* dc = tqt_dynamic_cast<KDockContainer*>(((KDockWidget*)it.current())->widget);
 	if (dc) {
 		dc->prepareSave(nList);
 	}
@@ -2571,7 +2571,7 @@ void KDockManager::writeConfig( KConfig* c, TQString group )
       obj->header->saveConfig( c );
     }
     if (obj->d->isContainer) {
-       KDockContainer* x = dynamic_cast<KDockContainer*>(obj->widget);
+       KDockContainer* x = tqt_dynamic_cast<KDockContainer*>(obj->widget);
        if (x) {
           x->save(c,group);
        }
@@ -2734,7 +2734,7 @@ void KDockManager::readConfig( KConfig* c, TQString group )
     }
 
     if (obj && obj->d->isContainer) {
-		dynamic_cast<KDockContainer*>(obj->widget)->load(c,group);
+		tqt_dynamic_cast<KDockContainer*>(obj->widget)->load(c,group);
 		removeFromAutoCreateList(obj);
     }
     if ( obj && obj->header){
@@ -2774,7 +2774,7 @@ void KDockManager::readConfig( KConfig* c, TQString group )
       KDockWidget* d2 = getDockWidgetFromName( list.current() );
       tabDockGroup = d2->manualDock( d1, KDockWidget::DockCenter );
       if ( tabDockGroup ){
-        KDockTabGroup* tab = dynamic_cast<KDockTabGroup*>(tabDockGroup->widget);
+        KDockTabGroup* tab = tqt_dynamic_cast<KDockTabGroup*>(tabDockGroup->widget);
         list.next();
         while ( list.current() && tabDockGroup ){
           KDockWidget* tabDock = getDockWidgetFromName( list.current() );
@@ -2791,7 +2791,7 @@ void KDockManager::readConfig( KConfig* c, TQString group )
       obj = tabDockGroup;
     }
 
-    if (obj && obj->d->isContainer)  dynamic_cast<KDockContainer*>(obj->widget)->load(c,group);
+    if (obj && obj->d->isContainer)  tqt_dynamic_cast<KDockContainer*>(obj->widget)->load(c,group);
     if ( obj && obj->header){
       obj->header->loadConfig( c );
     }
@@ -2950,7 +2950,7 @@ void KDockManager::slotMenuPopup()
 
 void KDockManager::slotMenuActivated( int id )
 {
-  MenuDockData* data = menuData->at( id );
+  MenuDockData* data = menuData->tqat( id );
   data->dock->changeHideShowState();
 }
 
@@ -3121,9 +3121,9 @@ void KDockArea::resizeEvent(TQResizeEvent *rsize)
 //    for (unsigned int i=0;i<children()->count();i++)
     {
 //    	TQPtrList<TQObject> list(children());
-//       TQObject *obj=((TQPtrList<TQObject*>)children())->at(i);
+//       TQObject *obj=((TQPtrList<TQObject*>)children())->tqat(i);
 	TQObject *obj=children()->getFirst();
-       if (split = dynamic_cast<KDockSplitter*>(obj))
+       if (split = tqt_dynamic_cast<KDockSplitter*>(obj))
        {
           split->setGeometry( TQRect(TQPoint(0,0), size() ));
 //	  break;
@@ -3272,7 +3272,7 @@ void KDockContainer::prepareSave(TQStringList &names)
 		names.remove(tmp->data);
 //	for (uint i=0;i<m_children.count();i++)
 //	{
-//		names.remove(m_children.at(i));
+//		names.remove(m_children.tqat(i));
 //	}
 }
 

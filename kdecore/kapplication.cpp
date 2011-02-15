@@ -850,7 +850,7 @@ void KApplication::init(bool GUIenabled)
   //   kdialog itself.
   // * Don't warn if we run with a read-only $HOME
   TQCString readOnly = getenv("KDE_HOME_READONLY");
-  if (readOnly.isEmpty() && (qstrcmp(name(), "kdialog") != 0))
+  if (readOnly.isEmpty() && (tqstrcmp(name(), "kdialog") != 0))
   {
     KConfigGroupSaver saver(config, "KDE Action Restrictions");
     if (config->readBoolEntry("warn_unwritable_config",true))

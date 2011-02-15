@@ -1949,8 +1949,8 @@ int KToolBarPopupAction::plug( TQWidget *widget, int index )
     int id_ = KAction::getToolButtonID();
 
     if ( icon().isEmpty() && !iconSet().isNull() ) {
-        bar->insertButton( iconSet().pixmap(), id_, TQT_SIGNAL( buttonClicked(int, Qt::ButtonState) ), this,
-                           TQT_SLOT( slotButtonClicked(int, Qt::ButtonState) ),
+        bar->insertButton( iconSet().pixmap(), id_, TQT_SIGNAL( buttonClicked(int, TQt::ButtonState) ), this,
+                           TQT_SLOT( slotButtonClicked(int, TQt::ButtonState) ),
                            isEnabled(), plainText(),
                            index );
     } else {
@@ -1960,8 +1960,8 @@ int KToolBarPopupAction::plug( TQWidget *widget, int index )
         else
             instance = KGlobal::instance();
 
-        bar->insertButton( icon(), id_, TQT_SIGNAL( buttonClicked(int, Qt::ButtonState) ), this,
-                           TQT_SLOT( slotButtonClicked(int, Qt::ButtonState) ),
+        bar->insertButton( icon(), id_, TQT_SIGNAL( buttonClicked(int, TQt::ButtonState) ), this,
+                           TQT_SLOT( slotButtonClicked(int, TQt::ButtonState) ),
                            isEnabled(), plainText(),
                            index, instance );
     }
@@ -2027,7 +2027,7 @@ int KToggleToolBarAction::plug( TQWidget* w, int index )
     while ( !tl->isDialog() && ( n = tl->tqparentWidget() ) ) // lookup parent and store
       tl = n;
 
-    KMainWindow * mw = dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow
+    KMainWindow * mw = tqt_dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow
 
     if ( mw )
         m_toolBar = mw->toolBar( m_toolBarName );
@@ -2326,7 +2326,7 @@ void KPasteTextAction::menuAboutToShow()
       if (reply.isValid())
         list = reply;
     }
-    TQString clipboardText = tqApp->clipboard()->text(TQClipboard::Clipboard);
+    TQString clipboardText = tqApp->tqclipboard()->text(TQClipboard::Clipboard);
     if (list.isEmpty())
         list << clipboardText;
     bool found = false;
@@ -2354,7 +2354,7 @@ void KPasteTextAction::menuItemActivated( int id)
       TQString clipboardText = reply;
       reply = klipper.call("setClipboardContents(TQString)", clipboardText);
       if (reply.isValid())
-        kdDebug(129) << "Clipboard: " << TQString(tqApp->clipboard()->text(TQClipboard::Clipboard)) << endl;
+        kdDebug(129) << "Clipboard: " << TQString(tqApp->tqclipboard()->text(TQClipboard::Clipboard)) << endl;
     }
     TQTimer::singleShot(20, this, TQT_SLOT(slotActivated()));
 }

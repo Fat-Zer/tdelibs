@@ -281,7 +281,7 @@ void CSSStyleDeclarationImpl::removeCSSHints()
 	return;
 
     for (int i = (int)m_lstValues->count()-1; i >= 0; i--) {
-	if (!m_lstValues->at(i)->nonCSSHint)
+	if (!m_lstValues->tqat(i)->nonCSSHint)
 	    m_lstValues->remove(i);
     }
 }
@@ -358,8 +358,8 @@ unsigned long CSSStyleDeclarationImpl::length() const
 
 DOMString CSSStyleDeclarationImpl::item( unsigned long index ) const
 {
-    if(m_lstValues && index < m_lstValues->count() && m_lstValues->at(index))
-	return getPropertyName(m_lstValues->at(index)->m_id);
+    if(m_lstValues && index < m_lstValues->count() && m_lstValues->tqat(index))
+	return getPropertyName(m_lstValues->tqat(index)->m_id);
     return DOMString();
 }
 

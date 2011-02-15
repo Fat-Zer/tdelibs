@@ -671,7 +671,7 @@ bool modXToModQt( uint modX, int& modQt )
 	return modToModQt( modX, modQt );
 }
 
-KDECORE_EXPORT int qtButtonStateToMod( Qt::ButtonState s )
+KDECORE_EXPORT int qtButtonStateToMod( TQt::ButtonState s )
 {
 	int modQt = 0;
 	if (s & Qt::ShiftButton) modQt |= KKey::SHIFT;

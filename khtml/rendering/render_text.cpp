@@ -738,7 +738,7 @@ void RenderText::deleteInlineBoxes(RenderArena* arena)
         if (!arena)
             arena = renderArena();
         for(unsigned int i=0; i < len; i++) {
-            InlineTextBox* s = m_lines.at(i);
+            InlineTextBox* s = m_lines.tqat(i);
             if (s)
                 s->detach(arena);
             m_lines.remove(i);
@@ -1464,7 +1464,7 @@ static TQString quoteAndEscapeNonPrintables(const TQString &s)
     TQString result;
     result += '"';
     for (uint i = 0; i != s.length(); ++i) {
-        TQChar c = s.at(i);
+        TQChar c = s.tqat(i);
         if (c == '\\') {
             result += "\\\\";
         } else if (c == '"') {

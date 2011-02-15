@@ -93,7 +93,7 @@ namespace KIO {
    * The filename to use in that directory is prompted by this method.
    * @param dialogText the text to show in the dialog
    * @param widget parent widget to use for dialogs
-   * @param clipboard whether the TQMimeSource comes from QClipboard. If you
+   * @param clipboard whether the TQMimeSource comes from TQClipboard. If you
    * use pasteClipboard for that case, you never have to worry about this parameter.
    *
    * @see pasteClipboard()

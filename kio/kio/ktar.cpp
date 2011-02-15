@@ -461,14 +461,14 @@ bool KTar::openArchive( int mode )
 
                     //kdDebug(7041) << "KTar::openArchive file " << nm << " size=" << size << endl;
                     e = new KArchiveFile( this, nm, access, time, user, group, symlink,
-                                          dev->at(), size );
+                                          dev->tqat(), size );
                 }
 
                 // Skip contents + align bytes
                 int rest = size % 0x200;
                 int skip = size + (rest ? 0x200 - rest : 0);
-                //kdDebug(7041) << "KTar::openArchive, at()=" << dev->at() << " rest=" << rest << " skipping " << skip << endl;
-                if (! dev->at( dev->at() + skip ) )
+                //kdDebug(7041) << "KTar::openArchive, at()=" << dev->tqat() << " rest=" << rest << " skipping " << skip << endl;
+                if (! dev->tqat( dev->tqat() + skip ) )
                     kdWarning(7041) << "KTar::openArchive skipping " << skip << " failed" << endl;
             }
 
@@ -495,7 +495,7 @@ bool KTar::openArchive( int mode )
         else
         {
             //qDebug("Terminating. Read %d bytes, first one is %d", n, buffer[0]);
-            d->tarEnd = dev->at() - n; // Remember end of archive
+            d->tarEnd = dev->tqat() - n; // Remember end of archive
             ende = true;
         }
     } while( !ende );
@@ -591,7 +591,7 @@ bool KTar::writeDir( const TQString& name, const TQString& user, const TQString&
 
     char buffer[ 0x201 ];
     memset( buffer, 0, 0x200 );
-    if ( mode() & IO_ReadWrite ) device()->at(d->tarEnd); // Go to end of archive as might have moved with a read
+    if ( mode() & IO_ReadWrite ) device()->tqat(d->tarEnd); // Go to end of archive as might have moved with a read
 
     // If more than 100 chars, we need to use the LongLink trick
     if ( dirName.length() > 99 )
@@ -616,7 +616,7 @@ bool KTar::writeDir( const TQString& name, const TQString& user, const TQString&
 
     // Write header
     device()->writeBlock( buffer, 0x200 );
-    if ( mode() & IO_ReadWrite )  d->tarEnd = device()->at();
+    if ( mode() & IO_ReadWrite )  d->tarEnd = device()->tqat();
 
     d->dirList.append( dirName ); // contains trailing slash
     return true; // TODO if wanted, better error control
@@ -636,7 +636,7 @@ bool KTar::doneWriting( uint size )
     // Write tqalignment
     int rest = size % 0x200;
     if ( mode() & IO_ReadWrite )
-        d->tarEnd = device()->at() + (rest ? 0x200 - rest : 0); // Record our new end of archive
+        d->tarEnd = device()->tqat() + (rest ? 0x200 - rest : 0); // Record our new end of archive
     if ( rest )
     {
         char buffer[ 0x201 ];
@@ -799,7 +799,7 @@ bool KTar::prepareWriting_impl(const TQString &name, const TQString &user,
 
     char buffer[ 0x201 ];
     memset( buffer, 0, 0x200 );
-    if ( mode() & IO_ReadWrite ) device()->at(d->tarEnd); // Go to end of archive as might have moved with a read
+    if ( mode() & IO_ReadWrite ) device()->tqat(d->tarEnd); // Go to end of archive as might have moved with a read
 
     // provide converted stuff we need lateron
     TQCString encodedFilename = TQFile::encodeName(fileName);
@@ -858,7 +858,7 @@ bool KTar::writeDir_impl(const TQString &name, const TQString &user,
 
     char buffer[ 0x201 ];
     memset( buffer, 0, 0x200 );
-    if ( mode() & IO_ReadWrite ) device()->at(d->tarEnd); // Go to end of archive as might have moved with a read
+    if ( mode() & IO_ReadWrite ) device()->tqat(d->tarEnd); // Go to end of archive as might have moved with a read
 
     // provide converted stuff we need lateron
     TQCString encodedDirname = TQFile::encodeName(dirName);
@@ -882,7 +882,7 @@ bool KTar::writeDir_impl(const TQString &name, const TQString &user,
 
     // Write header
     device()->writeBlock( buffer, 0x200 );
-    if ( mode() & IO_ReadWrite )  d->tarEnd = device()->at();
+    if ( mode() & IO_ReadWrite )  d->tarEnd = device()->tqat();
 
     d->dirList.append( dirName ); // contains trailing slash
     return true; // TODO if wanted, better error control
@@ -916,7 +916,7 @@ bool KTar::writeSymLink_impl(const TQString &name, const TQString &target,
 
     char buffer[ 0x201 ];
     memset( buffer, 0, 0x200 );
-    if ( mode() & IO_ReadWrite ) device()->at(d->tarEnd); // Go to end of archive as might have moved with a read
+    if ( mode() & IO_ReadWrite ) device()->tqat(d->tarEnd); // Go to end of archive as might have moved with a read
 
     // provide converted stuff we need lateron
     TQCString encodedFilename = TQFile::encodeName(fileName);
@@ -946,7 +946,7 @@ bool KTar::writeSymLink_impl(const TQString &name, const TQString &target,
 
     // Write header
     bool retval = device()->writeBlock( buffer, 0x200 ) == 0x200;
-    if ( mode() & IO_ReadWrite )  d->tarEnd = device()->at();
+    if ( mode() & IO_ReadWrite )  d->tarEnd = device()->tqat();
     return retval;
 }
 

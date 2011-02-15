@@ -1406,7 +1406,7 @@ void TextAreaWidget::slotReplaceNext()
     }
 
     if (!(m_replace->options() & KReplaceDialog::PromptOnReplace)) {
-        viewport()->setUpdatesEnabled(false);
+        viewport()->tqsetUpdatesEnabled(false);
     }
 
     KFind::Result res = KFind::NoMatch;
@@ -1449,7 +1449,7 @@ void TextAreaWidget::slotReplaceNext()
     }
 
     if (!(m_replace->options() & KReplaceDialog::PromptOnReplace)) {
-        viewport()->setUpdatesEnabled(true);
+        viewport()->tqsetUpdatesEnabled(true);
         tqrepaintChanged();
     }
 

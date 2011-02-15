@@ -483,7 +483,7 @@ void DCOPProcessInternal( DCOPClientPrivate *d, int opcode, CARD32 key, const TQ
         int datalen = reply.size();
         pMsg->key = key;
         pMsg->length += datalen;
-        IceSendData( iceConn, datalen, const_cast<char *>(reply.data()));
+        IceSendData( iceConn, datalen, reply.data());
         return;
     }
 
@@ -1617,7 +1617,8 @@ bool DCOPClient::receive(const TQCString &/*app*/, const TQCString &objId,
         // fall through and send to object proxies
     }
 
-    if (!objId.isEmpty() && objId[objId.length()-1] == '*') {
+//     if (!objId.isEmpty() && objId[objId.length()-1] == '*') {
+    if (!objId.isEmpty() && ((objId.length()>0)?(objId[objId.length()-1] == '*'):0)) {
         // handle a multicast to several objects.
         // doesn't handle proxies currently.  should it?
         TQPtrList<DCOPObject> matchList =

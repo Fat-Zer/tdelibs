@@ -223,7 +223,7 @@ void KateNormalIndent::updateConfig ()
 
   for (uint i=0; i<items.count(); i++)
   {
-    TQString name = items.at(i)->name;
+    TQString name = items.tqat(i)->name;
     if (name.tqfind("Comment") != -1 && commentAttrib == 255)
     {
       commentAttrib = i;
@@ -2384,7 +2384,7 @@ void KateVarIndent::slotVariableChanged( const TQString &var, const TQString &va
 
     for (uint i=0; i<items.count(); i++)
     {
-      if ( items.at(i)->name.section( ':', 1 ) == val )
+      if ( items.tqat(i)->name.section( ':', 1 ) == val )
       {
         d->coupleAttrib = i;
         break;

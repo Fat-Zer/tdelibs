@@ -346,7 +346,7 @@ bool Scheduler::startJobScheduled(ProtocolInfo *protInfo)
        // Prevent starvation. We skip the first entry in the queue at most
        // 2 times in a row. The
        protInfo->skipCount = 0;
-       job = protInfo->joblist.at(0);
+       job = protInfo->joblist.tqat(0);
        slave = findIdleSlave(protInfo, job, dummy );
     }
     else
@@ -356,7 +356,7 @@ bool Scheduler::startJobScheduled(ProtocolInfo *protInfo)
        Slave *firstSlave = 0;
        for(uint i = 0; (i < protInfo->joblist.count()) && (i < 10); i++)
        {
-          job = protInfo->joblist.at(i);
+          job = protInfo->joblist.tqat(i);
           slave = findIdleSlave(protInfo, job, exact);
           if (!firstSlave)
           {

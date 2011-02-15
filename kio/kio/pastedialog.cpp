@@ -62,7 +62,7 @@ KIO::PasteDialog::PasteDialog( const TQString &caption, const TQString &label,
 
     m_clipboardChanged = false;
     if ( clipboard )
-        connect( TQApplication::clipboard(), TQT_SIGNAL( dataChanged() ),
+        connect( TQApplication::tqclipboard(), TQT_SIGNAL( dataChanged() ),
                  this, TQT_SLOT( slotClipboardDataChanged() ) );
 }
 

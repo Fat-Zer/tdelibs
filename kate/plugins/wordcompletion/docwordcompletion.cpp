@@ -91,9 +91,9 @@ void DocWordCompletionPlugin::addView(KTextEditor::View *view)
 void DocWordCompletionPlugin::removeView(KTextEditor::View *view)
 {
   for (uint z=0; z < m_views.count(); z++)
-    if (m_views.at(z)->parentClient() == view)
+    if (m_views.tqat(z)->parentClient() == view)
     {
-       DocWordCompletionPluginView *nview = m_views.at(z);
+       DocWordCompletionPluginView *nview = m_views.tqat(z);
        m_views.remove (nview);
        delete nview;
     }

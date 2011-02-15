@@ -63,7 +63,7 @@ const KInstance *Factory::partInstanceFromLibrary( const TQCString &libraryName 
     KLibFactory *factory = library->factory();
     if ( !factory )
         return 0;
-    KParts::Factory *pfactory = dynamic_cast<KParts::Factory *>( factory );
+    KParts::Factory *pfactory = tqt_dynamic_cast<KParts::Factory *>( factory );
     if ( !pfactory )
         return 0;
     return pfactory->partInstance();

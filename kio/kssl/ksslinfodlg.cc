@@ -348,7 +348,7 @@ void KSSLInfoDlg::slotChain(int x) {
         cl.setAutoDelete(true);
         for (int i = 0; i < x-1; i++)
             cl.remove((unsigned int)0);
-        KSSLCertificate thisCert = *(cl.at(0));
+        KSSLCertificate thisCert = *(cl.tqat(0));
         cl.remove((unsigned int)0);
         thisCert.chain().setChain(cl);
         displayCert(&thisCert);

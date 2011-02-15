@@ -127,7 +127,7 @@ namespace {	// Private.
 
 			if (val != 2)
 			{
-				s.tqdevice()->at( s.tqdevice()->at() - 1 );
+				s.tqdevice()->tqat( s.tqdevice()->tqat() - 1 );
 				Read_Old_Line(image.data(), width, s);
 				RGBE_To_QRgbLine(image.data(), scanline, width);
 				continue;

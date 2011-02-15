@@ -340,10 +340,10 @@ void KFileIconView::insertItem( KFileItem *i )
     TQIconView* qview = static_cast<TQIconView*>( this );
     // Since creating and initializing an item leads to a tqrepaint,
     // we disable updates on the IconView for a while.
-    qview->setUpdatesEnabled( false );
+    qview->tqsetUpdatesEnabled( false );
     KFileIconViewItem *item = new KFileIconViewItem( qview, i );
     initItem( item, i, true );
-    qview->setUpdatesEnabled( true );
+    qview->tqsetUpdatesEnabled( true );
 
     if ( !i->isMimeTypeKnown() )
         m_resolver->m_lstPendingMimeIconItems.append( item );
@@ -632,7 +632,7 @@ bool KFileIconView::canPreview( const KFileItem *item ) const
     for ( ; it != d->previewMimeTypes.end(); ++it ) {
         TQString type = *it;
         // the "mimetype" can be "image/*"
-        if ( type.at( type.length() - 1 ) == '*' ) {
+        if ( type.tqat( type.length() - 1 ) == '*' ) {
             r.setPattern( type );
             if ( r.search( item->mimetype() ) != -1 )
                 return true;

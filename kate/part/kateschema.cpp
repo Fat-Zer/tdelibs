@@ -643,14 +643,14 @@ void KateSchemaConfigFontColorTab::schemaChanged (uint schema)
   p.setColor( TQColorGroup::Highlight,
     KateFactory::self()->schemaManager()->schema(schema)->
       readColorEntry( "Color Selection", &_c ) );
-  _c = l->at(0)->textColor(); // not quite as much of an assumption ;)
+  _c = l->tqat(0)->textColor(); // not quite as much of an assumption ;)
   p.setColor( TQColorGroup::Text, _c );
   m_defaultStyles->viewport()->setPalette( p );
 
   // insert the default styles backwards to get them in the right order
   for ( int i = KateHlManager::self()->defaultStyles() - 1; i >= 0; i-- )
   {
-    new KateStyleListItem( m_defaultStyles, KateHlManager::self()->defaultStyleName(i, true), l->at( i ) );
+    new KateStyleListItem( m_defaultStyles, KateHlManager::self()->defaultStyleName(i, true), l->tqat( i ) );
   }
 }
 
@@ -770,7 +770,7 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
   p.setColor( TQColorGroup::Highlight,
     KateFactory::self()->schemaManager()->schema(m_schema)->
       readColorEntry( "Color Selection", &_c ) );
-  _c = l->at(0)->textColor(); // not quite as much of an assumption ;)
+  _c = l->tqat(0)->textColor(); // not quite as much of an assumption ;)
   p.setColor( TQColorGroup::Text, _c );
   m_styles->viewport()->setPalette( p );
 
@@ -795,9 +795,9 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
         parent->setOpen(true);
         prefixes.insert( prefix, parent );
       }
-      new KateStyleListItem( parent, name, l->at(itemData->defStyleNum), itemData );
+      new KateStyleListItem( parent, name, l->tqat(itemData->defStyleNum), itemData );
     } else {
-      new KateStyleListItem( m_styles, itemData->name, l->at(itemData->defStyleNum), itemData );
+      new KateStyleListItem( m_styles, itemData->name, l->tqat(itemData->defStyleNum), itemData );
     }
   }
 }

@@ -491,7 +491,7 @@ int KArchiveFile::size() const
 
 TQByteArray KArchiveFile::data() const
 {
-  archive()->device()->at( m_pos );
+  archive()->device()->tqat( m_pos );
 
   // Read content
   TQByteArray arr( m_size );

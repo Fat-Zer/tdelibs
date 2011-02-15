@@ -103,7 +103,7 @@ private:
     KClipboardSynchronizer( TQObject *parent = 0, const char *name = 0L );
     void setupSignals();
 
-    static void setClipboard( TQMimeSource* data, QClipboard::Mode mode );
+    static void setClipboard( TQMimeSource* data, TQClipboard::Mode mode );
 
     static KClipboardSynchronizer *s_self;
     static bool s_sync;

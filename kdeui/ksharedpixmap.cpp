@@ -206,13 +206,13 @@ bool KSharedPixmap::x11Event(XEvent *event)
 
     TQPixmap::resize( tw+origin.x(), th+origin.y() );
 
-    XCopyArea(qt_xdisplay(), pixmap, ((KPixmap*)this)->handle(), qt_xget_temp_gc(qt_xscreen(), false),
+    XCopyArea(qt_xdisplay(), pixmap, (static_cast<KPixmap*>(this))->handle(), qt_xget_temp_gc(qt_xscreen(), false),
             xa, ya, t1w+origin.x(), t1h+origin.y(), origin.x(), origin.y() );
-    XCopyArea(qt_xdisplay(), pixmap, ((KPixmap*)this)->handle(), qt_xget_temp_gc(qt_xscreen(), false),
+    XCopyArea(qt_xdisplay(), pixmap, (static_cast<KPixmap*>(this))->handle(), qt_xget_temp_gc(qt_xscreen(), false),
 	    0, ya, tw-t1w, t1h, t1w, 0);
-    XCopyArea(qt_xdisplay(), pixmap, ((KPixmap*)this)->handle(), qt_xget_temp_gc(qt_xscreen(), false),
+    XCopyArea(qt_xdisplay(), pixmap, (static_cast<KPixmap*>(this))->handle(), qt_xget_temp_gc(qt_xscreen(), false),
 	    xa, 0, t1w, th-t1h, 0, t1h);
-    XCopyArea(qt_xdisplay(), pixmap, ((KPixmap*)this)->handle(), qt_xget_temp_gc(qt_xscreen(), false),
+    XCopyArea(qt_xdisplay(), pixmap, (static_cast<KPixmap*>(this))->handle(), qt_xget_temp_gc(qt_xscreen(), false),
 	    0, 0, tw-t1w, th-t1h, t1w, t1h);
 
     XFree(pixmap_id);

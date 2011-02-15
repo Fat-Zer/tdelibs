@@ -643,7 +643,7 @@ void Directory::setOpen( bool o )
     return;
   }
 
-  listView()->setUpdatesEnabled( false );
+  listView()->tqsetUpdatesEnabled( false );
   const QFileInfoList * files = thisDir.entryInfoList();
   if ( files ){
     QFileInfoListIterator it( *files );
@@ -654,7 +654,7 @@ void Directory::setOpen( bool o )
         (void)new Directory( this, f->fileName() );
       }
     }
-    listView()->setUpdatesEnabled( true );
+    listView()->tqsetUpdatesEnabled( true );
   }
   TQListViewItem::setOpen( o );
 }

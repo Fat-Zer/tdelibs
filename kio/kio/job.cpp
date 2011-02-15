@@ -4533,7 +4533,7 @@ void MultiGetJob::slotFinished()
         // return slave to pool
         // fetch new slave for first entry in m_waitQueue and call start
         // again.
-        GetRequest *entry = m_waitQueue.at(0);
+        GetRequest *entry = m_waitQueue.tqat(0);
         m_url = entry->url;
         slaveDone();
         Scheduler::doJob(this);

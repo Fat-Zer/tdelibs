@@ -1777,7 +1777,7 @@ void KMdiMainFrm::setToolviewStyle( int flag )
 	TQMap<TQWidget*, KMdiToolViewAccessor*>::Iterator it;
 	for ( it = m_pToolViews->begin(); it != m_pToolViews->end(); ++it )
 	{
-		KDockWidget *dockWidget = dynamic_cast<KDockWidget*>( it.data()->wrapperWidget() );
+		KDockWidget *dockWidget = tqt_dynamic_cast<KDockWidget*>( it.data()->wrapperWidget() );
 		if ( dockWidget )
 		{
 			switch ( flag )
@@ -1886,7 +1886,7 @@ void KMdiMainFrm::findToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDock
 	KDockWidget* mainDock = getMainDockWidget();
 	if ( mainDock->parentDockTabGroup() )
 	{
-		mainDock = dynamic_cast<KDockWidget*>( mainDock->parentDockTabGroup()->parent() );
+		mainDock = tqt_dynamic_cast<KDockWidget*>( mainDock->parentDockTabGroup()->parent() );
 		// FIXME: will likely crash below due to unchecked cast
 	}
 
@@ -1903,7 +1903,7 @@ void KMdiMainFrm::findToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDock
 
 		if ( widget )
 		{
-			KDockTabGroup* tg = dynamic_cast<KDockTabGroup*>( widget->getWidget() );
+			KDockTabGroup* tg = tqt_dynamic_cast<KDockTabGroup*>( widget->getWidget() );
 			if ( tg )
 			{
 				kdDebug(760) << k_funcinfo << "KDockTabGroup found" << endl;
@@ -2118,7 +2118,7 @@ void KMdiMainFrm::finishIDEAlMode( bool full )
 
 TQStringList KMdiMainFrm::prepareIdealToTabs( KDockWidget* container )
 {
-	KDockContainer * pDW = dynamic_cast<KDockContainer*>( container->getWidget() );
+	KDockContainer * pDW = tqt_dynamic_cast<KDockContainer*>( container->getWidget() );
 	TQStringList widgetNames = ( ( KMdiDockContainer* ) pDW ) ->containedWidgets();
 	for ( TQStringList::iterator it = widgetNames.begin();it != widgetNames.end();++it )
 	{
@@ -2733,7 +2733,7 @@ void KMdiMainFrm::windowMenuItemActivated( int id )
 	if ( id < 100 )
 		return ;
 	id -= 100;
-	KMdiChildView *pView = m_pDocumentViews->at( id );
+	KMdiChildView *pView = m_pDocumentViews->tqat( id );
 	if ( !pView )
 		return ;
 	if ( pView->isMinimized() )
@@ -2759,7 +2759,7 @@ void KMdiMainFrm::dockMenuItemActivated( int id )
 	if ( id < 100 )
 		return ;
 	id -= 100;
-	KMdiChildView *pView = m_pDocumentViews->at( id );
+	KMdiChildView *pView = m_pDocumentViews->tqat( id );
 	if ( !pView )
 		return ;
 	if ( pView->isMinimized() )

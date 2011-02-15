@@ -204,7 +204,7 @@ void QEventLoopEx::registerSocketNotifier( TQSocketNotifier *notifier )
 		while ( p && p->fd > sockfd )
 			p = list->next();
 		if ( p )
-			list->insert( list->at(), sn );
+			list->insert( list->tqat(), sn );
 		else
 			list->append( sn );
 	}
