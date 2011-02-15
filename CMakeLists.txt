@@ -64,6 +64,7 @@ OPTION( WITH_TIFF "Enable tiff support" OFF )
 OPTION( WITH_JASPER "Enable jasper (jpeg2k) support" OFF )
 OPTION( WITH_OPENEXR "Enable openexr support" OFF )
 OPTION( WITH_UTEMPTER "Use utempter for utmp management" OFF )
+OPTION( WITH_AVAHI "Enable AVAHI support" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" OFF )
 OPTION( WITH_HSPELL "Enable hspell support" OFF )
@@ -112,7 +113,10 @@ endif( NO_BUILTIN )
 
 ##### system checks #############################
 
-
+check_include_file( "ltdl.h" HAVE_LTDL_H )
+if( NOT HAVE_LTDL_H )
+  tde_message_fatal( "ltdl.h are required, but not found on your system" )
+endif( )
 
 check_include_file( "alloca.h" HAVE_ALLOCA_H )
 check_include_file( "arpa/nameser8_compat.h" HAVE_ARPA_NAMESER8_COMPAT_H )
@@ -711,13 +715,13 @@ endif( WITH_LUA )
 
 ##### check for avahi ###########################
 
-pkg_search_module( AVAHI avahi-qt3 )
-if( NOT AVAHI_FOUND )
-    message(FATAL_ERROR "\navahi support are requested, but not found on your system" )
-endif( NOT AVAHI_FOUND )
-
-set( AVAHI_API_0_6 1 )
-
+if( WITH_AVAHI )
+  pkg_search_module( AVAHI avahi-qt3 )
+  if( NOT AVAHI_FOUND )
+      message(FATAL_ERROR "\navahi support are requested, but not found on your system" )
+  endif( NOT AVAHI_FOUND )
+  set( AVAHI_API_0_6 1 )
+endif( )
 
 ##### check for aspell ##########################
 # we need ASPELL_DATADIR too
