@@ -394,7 +394,7 @@ void KMainWindow::hide()
 
         d->hiddenDockWindows.clear();
 
-        TQObjectList *list = queryList( "TQDockWindow" );
+        TQObjectList *list = queryList( TQDOCKWINDOW_OBJECT_NAME_STRING );
         for( TQObjectListIt it( *list ); it.current(); ++it ) {
             TQDockWindow *dw = (TQDockWindow*)it.current();
             if ( dw->isTopLevel() && dw->isVisible() ) {

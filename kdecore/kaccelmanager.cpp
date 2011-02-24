@@ -263,7 +263,7 @@ void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &use
 
 void KAcceleratorManagerPrivate::traverseChildren(TQWidget *widget, Item *item)
 {
-  TQObjectList *childList = widget->queryList("TQWidget", 0, false, false);
+  TQObjectList *childList = widget->queryList(TQWIDGET_OBJECT_NAME_STRING, 0, false, false);
   for ( TQObject *it = childList->first(); it; it = childList->next() )
   {
     TQWidget *w = TQT_TQWIDGET(it);

@@ -752,7 +752,7 @@ void KMdiChildFrm::setClient( KMdiChildView *w, bool bAutomaticResize )
 	// memorize the focuses in a dictionary because they will get lost during reparenting
 	TQDict<TQ_FocusPolicy>* pFocPolDict = new TQDict<TQ_FocusPolicy>;
 	pFocPolDict->setAutoDelete( true );
-	TQObjectList *list = m_pClient->queryList( "TQWidget" );
+	TQObjectList *list = m_pClient->queryList( TQWIDGET_OBJECT_NAME_STRING );
 	TQObjectListIt it( *list );          // iterate over the buttons
 	TQObject * obj;
 	int i = 1;
@@ -833,7 +833,7 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 	m_pClient->setMaximumSize( maxs.width(), maxs.height() );
 
 	// remember the focus policies using the dictionary and reset them
-	TQObjectList *list = m_pClient->queryList( "TQWidget" );
+	TQObjectList *list = m_pClient->queryList( TQWIDGET_OBJECT_NAME_STRING );
 	TQObjectListIt it( *list );          // iterate over all child widgets of child frame
 	TQObject * obj;
 	TQWidget* firstFocusableChildWidget = 0;
@@ -887,7 +887,7 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 void KMdiChildFrm::linkChildren( TQDict<TQ_FocusPolicy>* pFocPolDict )
 {
 	// reset the focus policies for all widgets in the view (take them from the dictionary)
-	TQObjectList* list = m_pClient->queryList( "TQWidget" );
+	TQObjectList* list = m_pClient->queryList( TQWIDGET_OBJECT_NAME_STRING );
 	TQObjectListIt it( *list );          // iterate over all child widgets of child frame
 	TQObject* obj;
 	while ( ( obj = it.current() ) != 0 )
@@ -936,7 +936,7 @@ TQDict<TQ_FocusPolicy>* KMdiChildFrm::unlinkChildren()
 	TQDict<TQ_FocusPolicy>* pFocPolDict = new TQDict<TQ_FocusPolicy>;
 	pFocPolDict->setAutoDelete( true );
 
-	TQObjectList *list = m_pClient->queryList( "TQWidget" );
+	TQObjectList *list = m_pClient->queryList( TQWIDGET_OBJECT_NAME_STRING );
 	TQObjectListIt it( *list );          // iterate over all child widgets of child frame
 	TQObject * obj;
 	int i = 1;
@@ -1180,7 +1180,7 @@ bool KMdiChildFrm::eventFilter( TQObject *obj, TQEvent *e )
 			if ( ( pNewChild != 0L ) && ::tqqt_cast<TQWidget*>( pNewChild ) )
 			{
 				TQWidget * pNewWidget = TQT_TQWIDGET( pNewChild );
-				TQObjectList *list = pNewWidget->queryList( "TQWidget" );
+				TQObjectList *list = pNewWidget->queryList( TQWIDGET_OBJECT_NAME_STRING );
 				list->insert( 0, pNewChild );         // add the new child to the list too, just to save code
 				TQObjectListIt it( *list );          // iterate over all new child widgets
 				TQObject * obj;

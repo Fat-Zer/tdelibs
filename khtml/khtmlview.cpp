@@ -897,7 +897,7 @@ void KHTMLView::layout()
 
 void KHTMLView::closeChildDialogs()
 {
-    TQObjectList *dlgs = queryList("TQDialog");
+    TQObjectList *dlgs = queryList(TQDIALOG_OBJECT_NAME_STRING);
     for (TQObject *dlg = dlgs->first(); dlg; dlg = dlgs->next())
     {
         KDialogBase* dlgbase = dynamic_cast<KDialogBase *>( dlg );

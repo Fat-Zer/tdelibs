@@ -484,12 +484,12 @@ void KPrintDialog::setDialogPages(TQPtrList<KPrintDialogPage> *pages)
 			d->m_pages.append(pages->take(0));
 		d->m_pages.first()->reparent(d->m_dummy, TQPoint(0,0));
 		d->m_pages.first()->show();
-		delete d->m_dummy->child("TabWidget", "TQTabWidget");
+		delete d->m_dummy->child("TabWidget", TQTABWIDGET_OBJECT_NAME_STRING);
 	}
 	else
 	{
 		// more than one page.
-		TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", "TQTabWidget")));
+		TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", TQTABWIDGET_OBJECT_NAME_STRING)));
 		if (!tabs)
 		{
 			// TQTabWidget doesn't exist. Create it and reparent all
@@ -822,7 +822,7 @@ void KPrintDialog::slotWizard()
 void KPrintDialog::reload()
 {
 	// remove printer dependent pages (usually from plugin)
-	TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", "TQTabWidget")));
+	TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", TQTABWIDGET_OBJECT_NAME_STRING)));
 	for (uint i=0; i<d->m_pages.count(); i++)
 		if (d->m_pages.tqat(i)->onlyRealPrinters())
 		{
@@ -951,7 +951,7 @@ void KPrintDialog::enableDialogPage( int index, bool flag )
 
 	if ( d->m_pages.count() > 1 )
 	{
-		TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", "TQTabWidget")));
+		TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", TQTABWIDGET_OBJECT_NAME_STRING)));
 		tabs->setTabEnabled( d->m_pages.tqat( index ), flag );
 	}
 	else

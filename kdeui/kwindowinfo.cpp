@@ -85,7 +85,7 @@ void KWindowInfo::permanent( const TQString &text )
 void KWindowInfo::permanent( const TQString &text, const TQPixmap &pix )
 {
     if ( !oldText.isNull() ) {
-	TQObjectList *l = queryList( "TQTimer" );
+	TQObjectList *l = queryList( TQTIMER_OBJECT_NAME_STRING );
 	TQObjectListIt it( *l );
 	TQObject *obj;
 

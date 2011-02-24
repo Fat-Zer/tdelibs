@@ -684,7 +684,7 @@ int KJanusWidget::pageIndex( TQWidget *widget ) const
     // and addGridPage() but not with addPage() which returns a child of
     // the toplevel page. addPage() returns a TQFrame so I check for that.
     //
-    if( widget->isA("TQFrame") )
+    if( widget->isA(TQFRAME_OBJECT_NAME_STRING) )
     {
       return d->mPageToInt[widget->tqparentWidget()];
     }

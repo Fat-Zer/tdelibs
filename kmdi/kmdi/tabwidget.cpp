@@ -91,7 +91,7 @@ bool TabWidget::eventFilter(TQObject *obj, TQEvent *e )
     // child and its children
     TQObject* pLostChild = TQT_TQOBJECT(((TQChildEvent*)e)->child());
     if ((pLostChild != 0L) && (pLostChild->isWidgetType())) {
-       TQObjectList *list = pLostChild->queryList( "TQWidget" );
+       TQObjectList *list = pLostChild->queryList( TQWIDGET_OBJECT_NAME_STRING );
        list->insert(0, pLostChild);        // add the lost child to the list too, just to save code
        TQObjectListIt it( *list );          // iterate over all lost child widgets
        TQObject * o;
@@ -114,7 +114,7 @@ bool TabWidget::eventFilter(TQObject *obj, TQEvent *e )
        TQWidget* pNewWidget = (TQWidget*)pNewChild;
        if (pNewWidget->testWFlags((WFlags)(WType_Dialog | WShowModal)))
            return false;
-       TQObjectList *list = pNewWidget->queryList( "TQWidget" );
+       TQObjectList *list = pNewWidget->queryList( TQWIDGET_OBJECT_NAME_STRING );
        list->insert(0, pNewChild);         // add the new child to the list too, just to save code
        TQObjectListIt it( *list );          // iterate over all new child widgets
        TQObject * o;
@@ -138,7 +138,7 @@ void TabWidget::childDestroyed()
   const TQObject* pLostChild = TQT_TQOBJECT_CONST(sender());
   if ((pLostChild != 0L) && (pLostChild->isWidgetType()))
   {
-     TQObjectList *list = ((TQObject*)(pLostChild))->queryList("TQWidget");
+     TQObjectList *list = ((TQObject*)(pLostChild))->queryList(TQWIDGET_OBJECT_NAME_STRING);
      list->insert(0, pLostChild);        // add the lost child to the list too, just to save code
      TQObjectListIt it( *list );          // iterate over all lost child widgets
      TQObject * obj;

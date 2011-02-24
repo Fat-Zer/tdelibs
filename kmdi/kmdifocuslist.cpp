@@ -34,7 +34,7 @@ void KMdiFocusList::addWidgetTree( TQWidget* w )
 	w->setFocusPolicy( TQ_ClickFocus );
 	kdDebug( 760 ) << "KMdiFocusList::addWidgetTree: adding toplevel" << endl;
 	connect( w, TQT_SIGNAL( destroyed( TQObject * ) ), this, TQT_SLOT( objectHasBeenDestroyed( TQObject* ) ) );
-	TQObjectList *l = w->queryList( "TQWidget" );
+	TQObjectList *l = w->queryList( TQWIDGET_OBJECT_NAME_STRING );
 	TQObjectListIt it( *l );
 	TQObject *obj;
 	while ( ( obj = it.current() ) != 0 )
