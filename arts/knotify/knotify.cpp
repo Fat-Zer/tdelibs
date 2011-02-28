@@ -785,7 +785,7 @@ void KNotify::restartedArtsd()
 #ifndef WITHOUT_ARTS
     delete d->audioManager;
     d->audioManager = new KAudioManagerPlay( soundServer );
-    d->audioManager->setTitle( i18n( "KDE System Notifications" ) );
+    d->audioManager->setTitle( i18n( "Trinity System Notifications" ) );
     d->audioManager->setAutoRestoreID( "KNotify Aman Play" );
 #endif
 }

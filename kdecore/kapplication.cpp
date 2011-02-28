@@ -20,9 +20,20 @@
 
 #include "config.h"
 
+// #ifdef QTRANSLATOR_H
+// #error qtranslator.h was already included
+// #endif // QTRANSLATOR_H
+// 
+// #ifdef TQTRANSLATOR_H
+// #error tqtranslator.h was already included
+// #endif // TQTRANSLATOR_H
+
 #undef QT_NO_TRANSLATION
+#undef TQT_NO_TRANSLATION
 #include <tqtranslator.h>
+#include "kapplication.h"
 #define QT_NO_TRANSLATION
+#define TQT_NO_TRANSLATION
 #include <tqdir.h>
 #include <tqptrcollection.h>
 #include <tqwidgetlist.h>
@@ -46,9 +57,6 @@
 #include <tqsqlpropertymap.h>
 #endif
 
-#undef QT_NO_TRANSLATION
-#include "kapplication.h"
-#define QT_NO_TRANSLATION
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>

@@ -784,7 +784,7 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect, TQPixmap *pixmap)
     }
 
     uint actSpeed = KGlobalSettings::visualActivateSpeed();
-    uint actCount = QMIN(rect.width(), rect.height()) / 4;
+    uint actCount = TQMIN(rect.width(), rect.height()) / 4;
 
 
     // Clip actCount to range 1..10.
@@ -846,21 +846,23 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect, TQPixmap *pixmap)
     if ((widget->rect().width() <= maxRect.width())
        || (widget->rect().height() <= maxRect.height()))
     {
-        p = new TQPainter(TQApplication::desktop()->screen( -1 ), TRUE);
+//	p = new TQPainter(TQApplication::desktop()->screen( -1 ), TRUE);	// WARNING: This was done in Qt3.  It only worked in this placement due to a glitch in Qt3; it has therefore been moved below grabWidget, where it should have been in the first place.
 	pix = TQPixmap::grabWindow((TQApplication::desktop()->screen( -1 ))->winId(),
 		    		      maxRect.x(),
 				      maxRect.y(),
 				      maxRect.width(),
 				      maxRect.height());
+        p = new TQPainter(TQApplication::desktop()->screen( -1 ), TRUE);
     } else
     {
 	// not as ugly as drawing directly to the screen
-	p = new TQPainter(widget);
+//	p = new TQPainter(widget);	// WARNING: This was done in Qt3.  See above.
 	pix = TQPixmap::grabWidget(widget,
 			              maxRect.x(),
 				      maxRect.y(),
 				      maxRect.width(),
 				      maxRect.height());
+	p = new TQPainter(widget);
     }
     uchar deltaAlpha = 255 / (actCount * 1.2);
     
