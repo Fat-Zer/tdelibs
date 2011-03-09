@@ -272,6 +272,16 @@
 			</And>
 		</Include>
 		<Menu>
+			<Name>Email</Name>
+			<Directory>kde-internet-email.directory</Directory>
+			<Include>
+				<And>
+				<Category>Email</Category>
+				<Not><Category>X-KDE-More</Category></Not>
+				</And>
+			</Include>
+		</Menu>
+		<Menu>
 		  <Name>Terminal</Name>
 		  <Directory>kde-internet-terminal.directory</Directory>
 		</Menu>
@@ -355,6 +365,16 @@
 			<Not><Category>X-KDE-More</Category></Not>
 			</And>
 		</Include>
+		<Menu>
+			<Name>SuperUser</Name>
+			<Directory>kde-system-su.directory</Directory>
+			<Include>
+				<And>
+				<Category>X-KDE-System-su</Category>
+				<Not><Category>X-KDE-More</Category></Not>
+				</And>
+			</Include>
+		</Menu>
 		<Menu>
 			<Name>More</Name>
 			<Directory>kde-more.directory</Directory>
