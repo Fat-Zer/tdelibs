@@ -41,6 +41,7 @@
 #include <kpopupmenu.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
+#include <kstandarddirs.h>
 
 #include "kswitchlanguagedialog.h"
 
