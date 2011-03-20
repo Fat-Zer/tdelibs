@@ -650,15 +650,6 @@
 /* Define to 1 if you have the <X11/extensions/shape.h> header file. */
 #cmakedefine HAVE_X11_EXTENSIONS_SHAPE_H 1
 
-/* Define to 1 if you have the <X11/extensions/Xrandr.h> header file. */
-#cmakedefine HAVE_X11_EXTENSIONS_XRANDR_H 1
-
-/* Define to 1 if you have the <X11/extensions/XShm.h> header file. */
-#cmakedefine HAVE_X11_EXTENSIONS_XSHM_H 1
-
-/* Define to 1 if you have the <X11/ICE/ICElib.h> header file. */
-#cmakedefine HAVE_X11_ICE_ICELIB_H 1
-
 /* Define to 1 if the assembler supports 3DNOW instructions. */
 #undef HAVE_X86_3DNOW
 
@@ -676,9 +667,6 @@
 
 /* Define to 1 if you have the `_getpty' function. */
 #cmakedefine HAVE__GETPTY 1
-
-/* Define to 1 if you have the `_IceTransNoListen' function. */
-#undef HAVE__ICETRANSNOLISTEN
 
 /* Define to 1 if you have the </usr/src/sys/gnu/i386/isa/sound/awe_voice.h> header file. */
 #cmakedefine HAVE__USR_SRC_SYS_GNU_I386_ISA_SOUND_AWE_VOICE_H 1
