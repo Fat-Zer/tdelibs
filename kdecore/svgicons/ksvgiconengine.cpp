@@ -542,6 +542,8 @@ KSVGIconEngine::~KSVGIconEngine()
 
 bool KSVGIconEngine::load(int width, int height, const TQString &path)
 {
+	if(path.isNull()) return false;
+
 	TQDomDocument svgDocument("svg");
 	TQFile file(path);
 
