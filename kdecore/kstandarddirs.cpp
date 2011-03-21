@@ -1130,7 +1130,7 @@ TQString KStandardDirs::saveLocation(const char *type,
     if (KDE_stat(TQFile::encodeName(fullPath), &st) != 0 || !(S_ISDIR(st.st_mode))) {
 	if(!create) {
 #ifndef NDEBUG
-	    kdDebug() << TQString("save location %1 doesn't exist").arg(fullPath) << endl;
+	    kdDebug() << TQString("save location %1 doesn't exist").tqarg(fullPath) << endl;
 #endif
 	    return fullPath;
 	}
