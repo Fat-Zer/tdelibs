@@ -55,4 +55,5 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
+  LINK ${TQT_LIBRARIES}
 )
