@@ -713,11 +713,16 @@ endif( WITH_LUA )
 ##### check for avahi ###########################
 
 if( WITH_AVAHI )
-  pkg_search_module( AVAHI avahi-qt3 )
-  if( NOT AVAHI_FOUND )
-      message(FATAL_ERROR "\navahi support are requested, but not found on your system" )
-  endif( NOT AVAHI_FOUND )
-  set( AVAHI_API_0_6 1 )
+  if( WITH_QT4 )
+  endif( WITH_QT4 )
+
+  if( WITH_QT3 )
+    pkg_search_module( AVAHI avahi-qt3 )
+    if( NOT AVAHI_FOUND )
+        message(FATAL_ERROR "\navahi support are requested, but not found on your system" )
+    endif( NOT AVAHI_FOUND )
+    set( AVAHI_API_0_6 1 )
+  endif( WITH_QT3 )
 endif( )
 
 ##### check for aspell ##########################
