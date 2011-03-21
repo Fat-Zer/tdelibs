@@ -287,7 +287,7 @@ void KGlobalAccelPrivate::fakeKeyPressed(unsigned int keyCode) {
 		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
 			KAccelAction* pAction = *it;
 			kdDebug(125) << "\tcode: " << TQString::number(it.key().code, 16) << " mod: " << TQString::number(it.key().mod, 16)
-				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").arg(pAction->name()).arg(pAction->shortcut().toStringInternal()) : TQString::null)
+				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").tqarg(pAction->name()).tqarg(pAction->shortcut().toStringInternal()) : TQString())
 				<< endl;
 		}
 #endif
@@ -365,7 +365,7 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
 			KAccelAction* pAction = *it;
 			kdDebug(125) << "\tcode: " << TQString::number(it.key().code, 16) << " mod: " << TQString::number(it.key().mod, 16)
-				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").arg(pAction->name()).arg(pAction->shortcut().toStringInternal()) : TQString::null)
+				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").tqarg(pAction->name()).tqarg(pAction->shortcut().toStringInternal()) : TQString())
 				<< endl;
 		}
 #endif
