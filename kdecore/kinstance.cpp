@@ -40,7 +40,7 @@
   static TQPtrDict<TQCString> *allOldInstances = 0;
   #define DEBUG_ADD do { if (!allInstances) { allInstances = new TQPtrList<KInstance>(); allOldInstances = new TQPtrDict<TQCString>(); } allInstances->append(this); allOldInstances->insert( this, new TQCString( _name)); } while (false);
   #define DEBUG_REMOVE do { allInstances->removeRef(this); } while (false);
-  #define DEBUG_CHECK_ALIVE do { if (!allInstances->contains((KInstance*)this)) { TQCString *old = allOldInstances->find((KInstance*)this); qWarning("ACCESSING DELETED KINSTANCE! (%s)", old ? old->data() : "<unknown>"); assert(false); } } while (false);
+  #define DEBUG_CHECK_ALIVE do { if (!allInstances->tqcontains((KInstance*)this)) { TQCString *old = allOldInstances->tqfind((KInstance*)this); qWarning("ACCESSING DELETED KINSTANCE! (%s)", old ? old->data() : "<unknown>"); assert(false); } } while (false);
 #else
   #define DEBUG_ADD
   #define DEBUG_REMOVE
