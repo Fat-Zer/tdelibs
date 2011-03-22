@@ -572,7 +572,7 @@ void KXMLGUIClient::insertChildClient( KXMLGUIClient *child )
 
 void KXMLGUIClient::removeChildClient( KXMLGUIClient *child )
 {
-  assert( d->m_children.containsRef( child ) );
+  assert( d->m_children.tqcontainsRef( child ) );
   d->m_children.removeRef( child );
   child->d->m_parent = 0;
 }
