@@ -53,9 +53,9 @@
  * cope with symbol visibility.
  */
 #define KDE_Q_EXPORT_PLUGIN(PLUGIN) \
-  Q_EXTERN_C KDE_EXPORT const char* qt_ucm_query_verification_data(); \
-  Q_EXTERN_C KDE_EXPORT QUnknownInterface* ucm_instantiate(); \
-  Q_EXPORT_PLUGIN(PLUGIN)
+  TQ_EXTERN_C KDE_EXPORT const char* tqt_ucm_query_verification_data(); \
+  TQ_EXTERN_C KDE_EXPORT TQUnknownInterface* ucm_instantiate(); \
+  TQ_EXPORT_PLUGIN(PLUGIN)
 
 /**
  * The KDE_PACKED can be used to hint the compiler that a particular

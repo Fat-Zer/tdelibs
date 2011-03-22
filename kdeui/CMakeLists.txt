@@ -162,6 +162,7 @@ configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy
 
 tde_add_library( ${target} SHARED
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/dummy.cpp
+  LINK ${TQT_LIBRARIES}
   VERSION 4.2.0
   DESTINATION ${LIB_INSTALL_DIR}
 )

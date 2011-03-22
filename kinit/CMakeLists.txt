@@ -111,7 +111,7 @@ set( target kstartupconfig )
 
 tde_add_executable( ${target} AUTOMOC
   SOURCES kstartupconfig.cpp
-  LINK kdefakes-shared
+  LINK kdefakes-shared ${TQT_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

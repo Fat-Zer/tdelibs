@@ -1436,7 +1436,7 @@ CachedObjectType* Cache::requestObject( DocLoader* dl, const KURL& kurl, const c
 
     if ( o && dl->needReload( o, url ) ) {
         o = 0;
-        assert( cache->find( url ) == 0 );
+        assert( cache->tqfind( url ) == 0 );
     }
 
     if(!o)

@@ -1781,7 +1781,7 @@ void KDirListerCache::printDebug()
                     << " rootItem: " << ( itu.current()->rootItem ? itu.current()->rootItem->url() : KURL() )
                     << " autoUpdates refcount: " << itu.current()->autoUpdates
                     << " complete: " << itu.current()->complete
-                  << ( itu.current()->lstItems ? TQString(" with %1 items.").arg(itu.current()->lstItems->count()) : TQString(" lstItems=NULL") ) << endl;
+                  << ( itu.current()->lstItems ? TQString(" with %1 items.").tqarg(itu.current()->lstItems->count()) : TQString(" lstItems=NULL") ) << endl;
   }
 
   kdDebug(7004) << "urlsCurrentlyHeld: " << endl;
@@ -1814,7 +1814,7 @@ void KDirListerCache::printDebug()
   for ( ; itc.current() ; ++itc )
     kdDebug(7004) << "   " << itc.currentKey() << "  rootItem: "
                   << ( itc.current()->rootItem ? itc.current()->rootItem->url().prettyURL() : TQString("NULL") )
-                  << ( itc.current()->lstItems ? TQString(" with %1 items.").arg(itc.current()->lstItems->count()) : TQString(" lstItems=NULL") ) << endl;
+                  << ( itc.current()->lstItems ? TQString(" with %1 items.").tqarg(itc.current()->lstItems->count()) : TQString(" lstItems=NULL") ) << endl;
 }
 #endif
 

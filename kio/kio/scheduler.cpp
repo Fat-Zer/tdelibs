@@ -586,7 +586,7 @@ void Scheduler::_jobFinished(SimpleJob *job, Slave *slave)
        if (list)
        {
           assert(slave->isConnected());
-          assert(!coIdleSlaves->contains(slave));
+          assert(!coIdleSlaves->tqcontains(slave));
           coIdleSlaves->append(slave);
           if (!list->isEmpty())
              coSlaveTimer.start(0, true);
@@ -741,7 +741,7 @@ Scheduler::slotScheduleCoSlave()
            coIdleSlaves->removeRef(slave);
 //           kdDebug(7006) << "scheduler: job started " << job << endl;
 
-           assert(!coIdleSlaves->contains(slave));
+           assert(!coIdleSlaves->tqcontains(slave));
 
            KURL url =job->url();
            TQString host = url.host();
@@ -775,7 +775,7 @@ Scheduler::slotSlaveConnected()
     disconnect(slave, TQT_SIGNAL(connected()),
                this, TQT_SLOT(slotSlaveConnected()));
     emit slaveConnected(slave);
-    assert(!coIdleSlaves->contains(slave));
+    assert(!coIdleSlaves->tqcontains(slave));
     coIdleSlaves->append(slave);
     coSlaveTimer.start(0, true);
 }
@@ -814,7 +814,7 @@ Scheduler::_assignJobToSlave(KIO::Slave *slave, SimpleJob *job)
         return false;
     }
 
-    assert(list->contains(job) == 0);
+    assert(list->tqcontains(job) == 0);
     list->append(job);
     coSlaveTimer.start(0, true); // Start job on timer event
 
@@ -837,7 +837,7 @@ Scheduler::_disconnectSlave(KIO::Slave *slave)
     }
     delete list;
     coIdleSlaves->removeRef(slave);
-    assert(!coIdleSlaves->contains(slave));
+    assert(!coIdleSlaves->tqcontains(slave));
     disconnect(slave, TQT_SIGNAL(connected()),
                this, TQT_SLOT(slotSlaveConnected()));
     disconnect(slave, TQT_SIGNAL(error(int, const TQString &)),

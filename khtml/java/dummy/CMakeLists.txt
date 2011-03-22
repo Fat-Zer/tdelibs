@@ -19,6 +19,7 @@ configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy
 
 tde_add_library( kjava SHARED
   SOURCES dummy.cpp
+  LINK ${TQT_LIBRARIES}
   VERSION 1.0.0
   DESTINATION ${LIB_INSTALL_DIR}
 )

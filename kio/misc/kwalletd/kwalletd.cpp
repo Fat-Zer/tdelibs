@@ -710,7 +710,7 @@ int KWalletD::close(const TQString& wallet, bool force) {
 int KWalletD::closeWallet(KWallet::Backend *w, int handle, bool force) {
 	if (w) {
 		const TQString& wallet = w->walletName();
-		assert(_passwords.contains(wallet));
+		assert(_passwords.tqcontains(wallet));
 		if (w->refCount() == 0 || force) {
 			tqinvalidateHandle(handle);
 			if (_closeIdle && _timeouts) {
