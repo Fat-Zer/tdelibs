@@ -37,64 +37,64 @@ TQString expandvars(const char *_input)
         return result;
 
     bool changed = false;
-    int index = result.find("${prefix}");
+    int index = result.tqfind("${prefix}");
     if (index >= 0) {
-        result = result.replace(index, 9, "@CMAKE_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 9, "@CMAKE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("$(prefix)");
+    index = result.tqfind("$(prefix)");
     if (index >= 0) {
-        result = result.replace(index, 9, "@CMAKE_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 9, "@CMAKE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("${datadir}");
+    index = result.tqfind("${datadir}");
     if (index >= 0) {
-        result = result.replace(index, 10, "@SHARE_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 10, "@SHARE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("$(datadir)");
+    index = result.tqfind("$(datadir)");
     if (index >= 0) {
-        result = result.replace(index, 10, "@SHARE_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 10, "@SHARE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("${exec_prefix}");
+    index = result.tqfind("${exec_prefix}");
     if (index >= 0) {
-        result = result.replace(index, 14, "@EXEC_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 14, "@EXEC_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("$(exec_prefix)");
+    index = result.tqfind("$(exec_prefix)");
     if (index >= 0) {
-        result = result.replace(index, 14, "@EXEC_INSTALL_PREFIX@");
+        result = result.tqreplace(index, 14, "@EXEC_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.find("${libdir}");
+    index = result.tqfind("${libdir}");
     if (index >= 0) {
-        result = result.replace(index, 9, "@LIB_INSTALL_DIR@");
+        result = result.tqreplace(index, 9, "@LIB_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("$(libdir)");
+    index = result.tqfind("$(libdir)");
     if (index >= 0) {
-        result = result.replace(index, 9, "@LIB_INSTALL_DIR@");
+        result = result.tqreplace(index, 9, "@LIB_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("${includedir}");
+    index = result.tqfind("${includedir}");
     if (index >= 0) {
-        result = result.replace(index, 20, "@INCLUDE_INSTALL_DIR@");
+        result = result.tqreplace(index, 20, "@INCLUDE_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("$(includedir)");
+    index = result.tqfind("$(includedir)");
     if (index >= 0) {
-        result = result.replace(index, 20, "@INCLUDE_INSTALL_DIR@");
+        result = result.tqreplace(index, 20, "@INCLUDE_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("${sysconfdir}");
+    index = result.tqfind("${sysconfdir}");
     if (index >= 0) {
-        result = result.replace(index, 13, "@SYSCONF_INSTALL_DIR@");
+        result = result.tqreplace(index, 13, "@SYSCONF_INSTALL_DIR@");
         changed = true;
     }
-    index = result.find("$(sysconfdir)");
+    index = result.tqfind("$(sysconfdir)");
     if (index >= 0) {
-        result = result.replace(index, 13, "@SYSCONF_INSTALL_DIR@");
+        result = result.tqreplace(index, 13, "@SYSCONF_INSTALL_DIR@");
         changed = true;
     }
     if (changed)
@@ -201,7 +201,7 @@ int main(int argc, char **argv)
             if (helptexts[index]) {
                 printf("%s - %s\n", helptexts[index], i18n(helptexts[index+1]).local8Bit().data());
             } else {
-                printf("%s", i18n("%1 - unknown type\n").arg(*it).local8Bit().data());
+                printf("%s", i18n("%1 - unknown type\n").tqarg(*it).local8Bit().data());
             }
         }
         return 0;
@@ -226,7 +226,7 @@ int main(int argc, char **argv)
         else if ( type == "document" )
             printResult(KGlobalSettings::documentPath());
         else
-            fprintf(stderr, "%s", i18n("%1 - unknown type of userpath\n").arg(type).local8Bit().data() );
+            fprintf(stderr, "%s", i18n("%1 - unknown type of userpath\n").tqarg(type).local8Bit().data() );
         return 0;
     }
 
