@@ -13,6 +13,11 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
 )
 
+link_directories(
+  ${TQT_LIBRARY_DIRS}
+)
+
+
 ##### kjava #####################################
 
 configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy.cpp COPYONLY )
