@@ -1,6 +1,6 @@
 #################################################
 #
-#  (C) 2010 Serghei Amelian
+#  (C) 2010-2011 Serghei Amelian
 #  serghei (DOT) amelian (AT) gmail.com
 #
 #  Improvements and feedback are welcome
@@ -9,7 +9,7 @@
 #
 #################################################
 
-cmake_minimum_required( VERSION 2.6 )
+cmake_minimum_required( VERSION 2.8 )
 
 
 ##### general package setup #####################
@@ -43,7 +43,6 @@ include( TDESetupPaths )
 ##### setup and find essential stuff ############
 
 tde_setup_paths( )
-find_package( Qt )
 find_package( TQt )
 
 
@@ -768,10 +767,9 @@ set( KDE3_KCFGC_EXECUTABLE ${CMAKE_BINARY_DIR}/kdecore/kconfig_compiler/kconfig_
 
 add_definitions(
   -DHAVE_CONFIG_H
-  ${TQT_CFLAGS_OTHER}
 )
 
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include tqt.h" )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TQT_CXX_FLAGS}" )
 set( CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined" )
 set( CMAKE_MODULE_LINKER_FLAGS "-Wl,--no-undefined" )
 
