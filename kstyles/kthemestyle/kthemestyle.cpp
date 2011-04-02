@@ -488,7 +488,7 @@ bool KThemeStyle::eventFilter( TQObject* object, TQEvent* event )
             w->setPalette(pal);
         }
     }
-    if (!qstrcmp(object->name(), "kde toolbar widget") && object->inherits("QLabel"))
+    if (!qstrcmp(object->name(), "kde toolbar widget") && object->inherits(TQLABEL_OBJECT_NAME_STRING))
     {
         TQWidget* lb = TQT_TQWIDGET(object);
         if (lb->backgroundMode() == TQt::PaletteButton)

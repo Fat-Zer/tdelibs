@@ -76,7 +76,7 @@ void KIconSelectAction::setItems(const TQStringList& lst, const TQStringList& ic
 int KIconSelectAction::plug(TQWidget* widget, int index)
 {
 	int	value(-1);
-	if (widget->inherits("QPopupMenu"))
+	if (widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING))
 	{
 		createPopupMenu();
 		value = KSelectAction::plug(widget, index);

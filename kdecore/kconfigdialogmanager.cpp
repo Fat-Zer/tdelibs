@@ -79,7 +79,7 @@ void KConfigDialogManager::init(bool trackChanges)
     changedMap.insert(TQGROUPBOX_OBJECT_NAME_STRING, TQT_SIGNAL(toggled(bool)));
     changedMap.insert(TQCOMBOBOX_OBJECT_NAME_STRING, TQT_SIGNAL(activated (int)));
     //qsqlproperty map doesn't store the text, but the value!
-    //changedMap.insert("QComboBox", TQT_SIGNAL(textChanged(const TQString &)));
+    //changedMap.insert(TQCOMBOBOX_OBJECT_NAME_STRING, TQT_SIGNAL(textChanged(const TQString &)));
     changedMap.insert(TQDATEEDIT_OBJECT_NAME_STRING, TQT_SIGNAL(valueChanged(const TQDate &)));
     changedMap.insert(TQDATETIMEEDIT_OBJECT_NAME_STRING, TQT_SIGNAL(valueChanged(const TQDateTime &)));
     changedMap.insert(TQDIAL_OBJECT_NAME_STRING, TQT_SIGNAL(valueChanged (int)));

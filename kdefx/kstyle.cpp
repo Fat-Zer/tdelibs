@@ -575,13 +575,13 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 		// Check if we are a normal toolbar or a hidden dockwidget.
 		if ( parent &&
-			(parent->inherits("QToolBar") ||		// Normal toolbar
-			(parent->inherits("QMainWindow")) ))	// Collapsed dock
+			(parent->inherits(TQTOOLBAR_OBJECT_NAME_STRING) ||		// Normal toolbar
+			(parent->inherits(TQMAINWINDOW_OBJECT_NAME_STRING)) ))	// Collapsed dock
 
 			// Draw a toolbar handle
 			drawKStylePrimitive( KPE_ToolBarHandle, p, widget, r, cg, flags, opt );
 
-		else if ( widget->inherits("QDockWindowHandle") )
+		else if ( widget->inherits(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING) )
 
 			// Draw a dock window handle
 			drawKStylePrimitive( KPE_DockWindowHandle, p, widget, r, cg, flags, opt );
@@ -987,9 +987,9 @@ int KStyle::tqpixelMetric(PixelMetric m, const TQWidget* widget) const
 			// Check that we are not a normal toolbar or a hidden dockwidget,
 			// in which case we need to adjust the height for font size
 			if (widget && (parent = widget->tqparentWidget() )
-				&& !parent->inherits("QToolBar")
-				&& !parent->inherits("QMainWindow")
-				&& widget->inherits("QDockWindowHandle") )
+				&& !parent->inherits(TQTOOLBAR_OBJECT_NAME_STRING)
+				&& !parent->inherits(TQMAINWINDOW_OBJECT_NAME_STRING)
+				&& widget->inherits(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING) )
 					return widget->fontMetrics().lineSpacing();
 			else
 				return TQCommonStyle::tqpixelMetric(m, widget);
