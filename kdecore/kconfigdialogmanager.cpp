@@ -216,7 +216,6 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
       else
       {
         kdWarning(178) << "A widget named '" << widgetName << "' was found but there is no setting named '" << configId << "'" << endl;
-        assert(false);
       }
     }
     else if (childWidget->inherits("QLabel"))
