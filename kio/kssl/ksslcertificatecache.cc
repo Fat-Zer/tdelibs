@@ -286,7 +286,7 @@ TQStringList KSSLCertificateCache::getHostList(KSSLCertificate& cert) {
                             "cacheGetHostList(KSSLCertificate)",
                             data, rettype, retval);
 
-     if (rc && rettype == "TQStringList") {
+     if (rc && rettype == TQSTRINGLIST_OBJECT_NAME_STRING) {
         TQDataStream retStream(retval, IO_ReadOnly);
         TQStringList drc;
         retStream >> drc;
@@ -347,7 +347,7 @@ TQStringList KSSLCertificateCache::getKDEKeyByEmail(const TQString &email) {
                             "getKDEKeyByEmail(TQString)",
                             data, rettype, retval);
 
-     if (rc && rettype == "TQStringList") {
+     if (rc && rettype == TQSTRINGLIST_OBJECT_NAME_STRING) {
         TQDataStream retStream(retval, IO_ReadOnly);
         TQStringList drc;
         retStream >> drc;

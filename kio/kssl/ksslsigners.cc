@@ -199,7 +199,7 @@ TQStringList KSSLSigners::list() {
                          "caList()",
                          data, rettype, retval);
 
-     if (rc && rettype == "TQStringList") {
+     if (rc && rettype == TQSTRINGLIST_OBJECT_NAME_STRING) {
         TQDataStream retStream(retval, IO_ReadOnly);
         retStream >> drc;
      }
@@ -218,7 +218,7 @@ TQString KSSLSigners::getCert(TQString subject) {
                          "caGetCert(TQString)",
                          data, rettype, retval);
 
-     if (rc && rettype == "TQString") {
+     if (rc && rettype == TQSTRING_OBJECT_NAME_STRING) {
         TQDataStream retStream(retval, IO_ReadOnly);
         retStream >> drc;
      }

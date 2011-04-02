@@ -349,7 +349,7 @@ public:
      * It is valid behavior to create different kinds of objects
      * depending on the requested @p classname. For example a koffice
      * library may usually return a pointer to KoDocument.  But
-     * if asked for a "TQWidget", it could create a wrapper widget,
+     * if asked for a TQWIDGET_OBJECT_NAME_STRING, it could create a wrapper widget,
      * that encapsulates the Koffice specific features.
      *
      * create() automatically emits a signal objectCreated to tell
@@ -363,7 +363,7 @@ public:
      * @param args a list of arguments
      */
 
-     TQObject* create( TQObject* parent = 0, const char* name = 0, const char* classname = "TQObject", const TQStringList &args = TQStringList() );
+     TQObject* create( TQObject* parent = 0, const char* name = 0, const char* classname = TQOBJECT_OBJECT_NAME_STRING, const TQStringList &args = TQStringList() );
 
 signals:
     /**
@@ -382,7 +382,7 @@ protected:
      * It is valid behavior to create different kinds of objects
      * depending on the requested @p className. For example a koffice
      * library may usually return a pointer to KoDocument.  But
-     * if asked for a "TQWidget", it could create a wrapper widget,
+     * if asked for a TQWIDGET_OBJECT_NAME_STRING, it could create a wrapper widget,
      * that encapsulates the Koffice specific features.
      *
      * This function is called by #create()
@@ -392,7 +392,7 @@ protected:
      * @param args a list of arguments
      */
     virtual TQObject* createObject( TQObject* parent = 0, const char* name = 0,
-                                   const char* className = "TQObject",
+                                   const char* className = TQOBJECT_OBJECT_NAME_STRING,
                                    const TQStringList &args = TQStringList() ) = 0;
 
 

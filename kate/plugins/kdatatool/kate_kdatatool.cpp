@@ -160,9 +160,9 @@ void KDataToolPluginView::aboutToShow()
 	KInstance *inst=instance();
 
 	TQValueList<KDataToolInfo> tools;
-	tools += KDataToolInfo::query( "TQString", "text/plain", inst );
+	tools += KDataToolInfo::query( TQSTRING_OBJECT_NAME_STRING, "text/plain", inst );
 	if( m_singleWord )
-		tools += KDataToolInfo::query( "TQString", "application/x-singleword", inst );
+		tools += KDataToolInfo::query( TQSTRING_OBJECT_NAME_STRING, "application/x-singleword", inst );
 
 	m_actionList = KDataToolAction::dataToolActionList( tools, this,
 		TQT_SLOT( slotToolActivated( const KDataToolInfo &, const TQString & ) ) );
@@ -203,7 +203,7 @@ void KDataToolPluginView::slotToolActivated( const KDataToolInfo &info, const TQ
 		text = m_wordUnderCursor;
 
 	TQString mimetype = "text/plain";
-	TQString datatype = "TQString";
+	TQString datatype = TQSTRING_OBJECT_NAME_STRING;
 
 	// If unsupported (and if we have a single word indeed), try application/x-singleword
 	if ( !info.mimeTypes().tqcontains( mimetype ) && m_singleWord )

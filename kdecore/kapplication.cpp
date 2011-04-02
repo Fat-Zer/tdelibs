@@ -2136,8 +2136,8 @@ void KApplication::kdisplaySetPalette()
 void KApplication::kdisplaySetFont()
 {
     TQApplication::tqsetFont(KGlobalSettings::generalFont(), true);
-    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, "TQMenuBar");
-    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, "TQPopupMenu");
+    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, TQMENUBAR_OBJECT_NAME_STRING);
+    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, TQPOPUPMENU_OBJECT_NAME_STRING);
     TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, "KPopupTitle");
 
     // "patch" standard TQStyleSheet to follow our fonts
@@ -2240,8 +2240,8 @@ void KApplication::installKDEPropertyMap()
     kdeMap->insert( "KIntSpinBox", "value" );
     kdeMap->insert( "KDoubleNumInput", "value" );
     // Temp til fixed in QT then enable ifdef with the correct version num
-    kdeMap->insert( "TQGroupBox", "checked" );
-    kdeMap->insert( "TQTabWidget", "currentPage" );
+    kdeMap->insert( TQGROUPBOX_OBJECT_NAME_STRING, "checked" );
+    kdeMap->insert( TQTABWIDGET_OBJECT_NAME_STRING, "currentPage" );
     TQSqlPropertyMap::installDefaultMap( kdeMap );
 #endif
 }

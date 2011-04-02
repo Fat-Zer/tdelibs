@@ -39,7 +39,7 @@ class EscpFactory : public KLibFactory
 public:
 	EscpFactory(TQObject *parent = 0, const char *name = 0) : KLibFactory(parent, name) {}
 protected:
-	TQObject* createObject(TQObject *parent = 0, const char *name = 0, const char * className = "TQObject", const TQStringList& args = TQStringList())
+	TQObject* createObject(TQObject *parent = 0, const char *name = 0, const char * className = TQOBJECT_OBJECT_NAME_STRING, const TQStringList& args = TQStringList())
 	{
                Q_UNUSED(className);
 		KDialogBase	*dlg = new KDialogBase(TQT_TQWIDGET(parent), name, true, i18n("EPSON InkJet Printer Utilities"), KDialogBase::Close);

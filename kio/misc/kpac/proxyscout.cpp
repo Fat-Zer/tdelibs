@@ -130,7 +130,7 @@ namespace KPAC
         for ( RequestQueue::ConstIterator it = m_requestQueue.begin();
               it != m_requestQueue.end(); ++it )
         {
-            TQCString type = "TQString";
+            TQCString type = TQSTRING_OBJECT_NAME_STRING;
             TQByteArray data;
             TQDataStream ds( data, IO_WriteOnly );
             if ( success ) ds << handleRequest( ( *it ).url );

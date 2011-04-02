@@ -119,7 +119,7 @@ protected:
     /**
      * Reimplemented from KLibFactory. Calls createPart()
      */
-    virtual TQObject *createObject( TQObject *parent = 0, const char *name = 0, const char *classname = "TQObject", const TQStringList &args = TQStringList() );
+    virtual TQObject *createObject( TQObject *parent = 0, const char *name = 0, const char *classname = TQOBJECT_OBJECT_NAME_STRING, const TQStringList &args = TQStringList() );
 
     /** This 'enum' along with the structure below is NOT part of the public API.
       * It's going to disappear in KDE 4.0 and is likely to change inbetween.

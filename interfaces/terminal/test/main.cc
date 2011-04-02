@@ -17,7 +17,7 @@ Win::Win()
 {
     KLibFactory* factory = KLibLoader::self()->factory( "libkonsolepart" );
     assert( factory );
-    KParts::Part* p = static_cast<KParts::Part*>( factory->create( this, "tralala", "TQObject", "KParts::ReadOnlyPart" ) );
+    KParts::Part* p = static_cast<KParts::Part*>( factory->create( this, "tralala", TQOBJECT_OBJECT_NAME_STRING, "KParts::ReadOnlyPart" ) );
     setCentralWidget( p->widget() );
 
     TerminalInterface* t = ::tqqt_cast<TerminalInterface*>( p );

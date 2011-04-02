@@ -628,7 +628,7 @@ TQString param( const TQString &type )
     else if ( type == "Password" )    return "const TQString &";
     else {
         kdError() <<"kconfig_compiler does not support type \""<< type <<"\""<<endl;
-        return "TQString"; //For now, but an assert would be better
+        return TQSTRING_OBJECT_NAME_STRING; //For now, but an assert would be better
     }
 }
 
@@ -637,13 +637,13 @@ TQString param( const TQString &type )
 */
 TQString cppType( const TQString &type )
 {
-    if ( type == "String" )           return "TQString";
-    else if ( type == "StringList" )  return "TQStringList";
+    if ( type == "String" )           return TQSTRING_OBJECT_NAME_STRING;
+    else if ( type == "StringList" )  return TQSTRINGLIST_OBJECT_NAME_STRING;
     else if ( type == "Font" )        return "TQFont";
     else if ( type == "Rect" )        return "TQRect";
     else if ( type == "Size" )        return "TQSize";
     else if ( type == "Color" )       return "TQColor";
-    else if ( type == "Point" )       return "TQPoint";
+    else if ( type == "Point" )       return TQPOINT_OBJECT_NAME_STRING;
     else if ( type == "Int" )         return "int";
     else if ( type == "UInt" )        return "uint";
     else if ( type == "Bool" )        return "bool";
@@ -653,12 +653,12 @@ TQString cppType( const TQString &type )
     else if ( type == "UInt64" )      return "TQ_UINT64";
     else if ( type == "IntList" )     return "TQValueList<int>";
     else if ( type == "Enum" )        return "int";
-    else if ( type == "Path" )        return "TQString";
-    else if ( type == "PathList" )    return "TQStringList";
-    else if ( type == "Password" )    return "TQString";
+    else if ( type == "Path" )        return TQSTRING_OBJECT_NAME_STRING;
+    else if ( type == "PathList" )    return TQSTRINGLIST_OBJECT_NAME_STRING;
+    else if ( type == "Password" )    return TQSTRING_OBJECT_NAME_STRING;
     else {
         kdError()<<"kconfig_compiler does not support type \""<< type <<"\""<<endl;
-        return "TQString"; //For now, but an assert would be better
+        return TQSTRING_OBJECT_NAME_STRING; //For now, but an assert would be better
     }
 }
 
@@ -685,7 +685,7 @@ TQString defaultValue( const TQString &type )
     else if ( type == "Password" )    return "\"\""; // Use empty string, not null string!
     else {
         kdWarning()<<"Error, kconfig_compiler doesn't support the \""<< type <<"\" type!"<<endl;
-        return "TQString"; //For now, but an assert would be better
+        return TQSTRING_OBJECT_NAME_STRING; //For now, but an assert would be better
     }
 }
 

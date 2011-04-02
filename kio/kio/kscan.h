@@ -203,7 +203,7 @@ protected:
     KScanDialogFactory( TQObject *parent=0, const char *name=0 );
 
     virtual TQObject* createObject( TQObject* parent = 0, const char* name = 0,
-                                   const char* classname = "TQObject",
+                                   const char* classname = TQOBJECT_OBJECT_NAME_STRING,
                                    const TQStringList &args = TQStringList() );
 
 
@@ -339,7 +339,7 @@ protected:
     KOCRDialogFactory( TQObject *parent=0, const char *name=0 );
 
     virtual TQObject* createObject( TQObject* parent = 0, const char* name = 0,
-                                   const char* className = "TQObject",
+                                   const char* className = TQOBJECT_OBJECT_NAME_STRING,
                                    const TQStringList &args = TQStringList() );
 
 

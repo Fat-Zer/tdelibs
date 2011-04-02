@@ -54,7 +54,7 @@ class TQStrList;
  *  };
  *  // fetch the part..
  *  KParts::Part* p = static_cast<KParts::Part*>(
- *      factory->create( this, "tralala", "TQObject",
+ *      factory->create( this, "tralala", TQOBJECT_OBJECT_NAME_STRING,
  *                       "KParts::ReadOnlyPart" ) );
  *  assert( p );
  *  setCentralWidget( p->widget() );
