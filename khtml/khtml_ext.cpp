@@ -115,7 +115,7 @@ void KHTMLPartBrowserExtension::editableWidgetFocused( TQWidget *widget )
         connect( TQApplication::tqclipboard(), TQT_SIGNAL( dataChanged() ),
                  this, TQT_SLOT( updateEditActions() ) );
 
-        if ( m_editableFormWidget->inherits( "QLineEdit" ) || m_editableFormWidget->inherits( "QTextEdit" ) )
+        if ( m_editableFormWidget->inherits( TQLINEEDIT_OBJECT_NAME_STRING ) || m_editableFormWidget->inherits( TQTEXTEDIT_OBJECT_NAME_STRING ) )
             connect( m_editableFormWidget, TQT_SIGNAL( selectionChanged() ),
                      this, TQT_SLOT( updateEditActions() ) );
 
@@ -140,7 +140,7 @@ void KHTMLPartBrowserExtension::editableWidgetBlurred( TQWidget * /*widget*/ )
 
         if ( oldWidget )
         {
-            if ( oldWidget->inherits( "QLineEdit" ) || oldWidget->inherits( "QTextEdit" ) )
+            if ( oldWidget->inherits( TQLINEEDIT_OBJECT_NAME_STRING ) || oldWidget->inherits( TQTEXTEDIT_OBJECT_NAME_STRING ) )
                 disconnect( oldWidget, TQT_SIGNAL( selectionChanged() ),
                             this, TQT_SLOT( updateEditActions() ) );
         }
@@ -201,9 +201,9 @@ void KHTMLPartBrowserExtension::cut()
     if ( !m_editableFormWidget )
         return;
 
-    if ( m_editableFormWidget->inherits( "QLineEdit" ) )
+    if ( m_editableFormWidget->inherits( TQLINEEDIT_OBJECT_NAME_STRING ) )
         static_cast<TQLineEdit *>( &(*m_editableFormWidget) )->cut();
-    else if ( m_editableFormWidget->inherits( "QTextEdit" ) )
+    else if ( m_editableFormWidget->inherits( TQTEXTEDIT_OBJECT_NAME_STRING ) )
         static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->cut();
 }
 
@@ -254,9 +254,9 @@ void KHTMLPartBrowserExtension::copy()
     }
     else
     {
-        if ( m_editableFormWidget->inherits( "QLineEdit" ) )
+        if ( m_editableFormWidget->inherits( TQLINEEDIT_OBJECT_NAME_STRING ) )
             static_cast<TQLineEdit *>( &(*m_editableFormWidget) )->copy();
-        else if ( m_editableFormWidget->inherits( "QTextEdit" ) )
+        else if ( m_editableFormWidget->inherits( TQTEXTEDIT_OBJECT_NAME_STRING ) )
             static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->copy();
     }
 }
@@ -304,9 +304,9 @@ void KHTMLPartBrowserExtension::paste()
     if ( !m_editableFormWidget )
         return;
 
-    if ( m_editableFormWidget->inherits( "QLineEdit" ) )
+    if ( m_editableFormWidget->inherits( TQLINEEDIT_OBJECT_NAME_STRING ) )
         static_cast<TQLineEdit *>( &(*m_editableFormWidget) )->paste();
-    else if ( m_editableFormWidget->inherits( "QTextEdit" ) )
+    else if ( m_editableFormWidget->inherits( TQTEXTEDIT_OBJECT_NAME_STRING ) )
         static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->paste();
 }
 

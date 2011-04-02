@@ -1699,7 +1699,7 @@ void KDockManager::activate()
         obj->show();
     }
   }
-  if ( !main->inherits("QDialog") ) main->show();
+  if ( !main->inherits(TQDIALOG_OBJECT_NAME_STRING) ) main->show();
 }
 
 bool KDockManager::eventFilter( TQObject *obj, TQEvent *event )
@@ -3105,7 +3105,7 @@ void KDockArea::resizeEvent(TQResizeEvent *rsize)
 #ifndef NO_KDE2
 //    kdDebug(282)<<"KDockArea::resize"<<endl;
 #endif
-    TQObjectList *list=queryList("QWidget",0,false);
+    TQObjectList *list=queryList(TQWIDGET_OBJECT_NAME_STRING,0,false);
 
     TQObjectListIt it( *list ); // iterate over the buttons
     TQObject *obj;

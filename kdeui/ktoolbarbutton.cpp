@@ -298,7 +298,7 @@ void KToolBarButton::setIconSet( const TQIconSet &iconset )
 // remove?
 void KToolBarButton::setPixmap( const TQPixmap &pixmap )
 {
-  if( pixmap.isNull()) // called by QToolButton
+  if( pixmap.isNull()) // called by TQToolButton
   {
     TQToolButton::setPixmap( pixmap );
     return;

@@ -247,7 +247,7 @@ void PlastikStyle::polish(TQWidget* widget)
     if ( ::tqqt_cast<TQPushButton*>(widget) || ::tqqt_cast<TQComboBox*>(widget) ||
             ::tqqt_cast<TQSpinWidget*>(widget) || ::tqqt_cast<TQSlider*>(widget) ||
             ::tqqt_cast<TQCheckBox*>(widget) || ::tqqt_cast<TQRadioButton*>(widget) ||
-            ::tqqt_cast<TQToolButton*>(widget) || widget->inherits("QSplitterHandle") )
+            ::tqqt_cast<TQToolButton*>(widget) || widget->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
     {
 //         widget->setBackgroundMode(PaletteBackground);
         widget->installEventFilter(this);
@@ -285,7 +285,7 @@ void PlastikStyle::unPolish(TQWidget* widget)
             ::tqqt_cast<TQSpinWidget*>(widget) || ::tqqt_cast<TQSlider*>(widget) ||
             ::tqqt_cast<TQCheckBox*>(widget) || ::tqqt_cast<TQRadioButton*>(widget) ||
             ::tqqt_cast<TQToolButton*>(widget) || ::tqqt_cast<TQLineEdit*>(widget) ||
-            widget->inherits("QSplitterHandle") )
+            widget->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
     {
         widget->removeEventFilter(this);
     }
@@ -3478,7 +3478,7 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
     //Hover highlight... use tqqt_cast to check if the widget inheits one of the classes.
     if ( ::tqqt_cast<TQPushButton*>(obj) || ::tqqt_cast<TQComboBox*>(obj) ||
             ::tqqt_cast<TQSpinWidget*>(obj) || ::tqqt_cast<TQCheckBox*>(obj) ||
-            ::tqqt_cast<TQRadioButton*>(obj) || ::tqqt_cast<TQToolButton*>(obj) || obj->inherits("QSplitterHandle") )
+            ::tqqt_cast<TQRadioButton*>(obj) || ::tqqt_cast<TQToolButton*>(obj) || obj->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
     {
         if ((ev->type() == TQEvent::Enter) && TQT_TQWIDGET(obj)->isEnabled())
         {

@@ -899,7 +899,7 @@ void KMdiChildFrm::linkChildren( TQDict<TQ_FocusPolicy>* pFocPolDict )
 		if ( pFocPol != 0 )
 			widg->setFocusPolicy( *pFocPol );
 		
-		if ( !( widg->inherits( "QPopupMenu" ) ) )
+		if ( !( widg->inherits( TQPOPUPMENU_OBJECT_NAME_STRING ) ) )
 			widg->installEventFilter( this );
 
 	}
@@ -1155,7 +1155,7 @@ bool KMdiChildFrm::eventFilter( TQObject *obj, TQEvent *e )
 			// if we lost a child we uninstall ourself as event filter for the lost
 			// child and its children
 			TQObject* pLostChild = TQT_TQOBJECT(( ( TQChildEvent* ) e )->child());
-			if ( ( pLostChild != 0L )   /*&& (pLostChild->inherits("QWidget"))*/ )
+			if ( ( pLostChild != 0L )   /*&& (pLostChild->inherits(TQWIDGET_OBJECT_NAME_STRING))*/ )
 			{
 				TQObjectList* list = pLostChild->queryList();
 				list->insert( 0, pLostChild );        // add the lost child to the list too, just to save code

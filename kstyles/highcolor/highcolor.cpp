@@ -192,16 +192,16 @@ HighColorStyle::~HighColorStyle()
 void HighColorStyle::polish(TQWidget* widget)
 {
 	// Put in order of highest occurrence to maximise hit rate
-	if (widget->inherits("QPushButton")) {
+	if (widget->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
 		widget->installEventFilter(this);
-	} else if (widget->inherits("QMenuBar") || widget->inherits("QPopupMenu")) {
+	} else if (widget->inherits(TQMENUBAR_OBJECT_NAME_STRING) || widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
 		widget->setBackgroundMode(TQWidget::NoBackground);
 	} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
 		widget->installEventFilter(this);
 	} else if ( !qstrcmp( widget->name(), kdeToolbarWidget) ) {
 		widget->setBackgroundMode( NoBackground );	// We paint the whole background.
 		widget->installEventFilter(this);
-	} else if (widget->inherits("QToolBoxButton")) {
+	} else if (widget->inherits(TQTOOLBOXBUTTON_OBJECT_NAME_STRING)) {
 		TQFont font = widget->font();
 		font.setBold(true);
 		widget->setFont(font);
@@ -213,10 +213,10 @@ void HighColorStyle::polish(TQWidget* widget)
 
 void HighColorStyle::unPolish(TQWidget* widget)
 {
-	if (widget->inherits("QPushButton")) {
+	if (widget->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
 		widget->removeEventFilter(this);
 	}
-	else if (widget->inherits("QMenuBar") || widget->inherits("QPopupMenu")) {
+	else if (widget->inherits(TQMENUBAR_OBJECT_NAME_STRING) || widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
 		widget->setBackgroundMode(TQWidget::PaletteBackground);
 	} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
 		widget->removeEventFilter(this);
@@ -1651,7 +1651,7 @@ void HighColorStyle::tqdrawComplexControl( TQ_ComplexControl control,
 				}
 				else if (widget->parent())
 				{
-					if (widget->parent()->inherits("QToolBar"))
+					if (widget->parent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING))
 					{
 						TQToolBar* parent = (TQToolBar*)widget->parent();
 						TQRect pr = parent->rect();

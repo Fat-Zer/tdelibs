@@ -6871,7 +6871,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         return;
     }
 //    kdDebug(6050) << "KHTMLPart::slotActiveFrameChanged d->m_activeFrame=" << d->m_activeFrame << endl;
-    if ( d->m_activeFrame && d->m_activeFrame->widget() && d->m_activeFrame->widget()->inherits( "QFrame" ) )
+    if ( d->m_activeFrame && d->m_activeFrame->widget() && d->m_activeFrame->widget()->inherits( TQFRAME_OBJECT_NAME_STRING ) )
     {
         TQFrame *frame = static_cast<TQFrame *>( d->m_activeFrame->widget() );
         if (frame->frameStyle() != TQFrame::NoFrame)
@@ -6899,7 +6899,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
 
     d->m_activeFrame = part;
 
-    if ( d->m_activeFrame && d->m_activeFrame->widget()->inherits( "QFrame" ) )
+    if ( d->m_activeFrame && d->m_activeFrame->widget()->inherits( TQFRAME_OBJECT_NAME_STRING ) )
     {
         TQFrame *frame = static_cast<TQFrame *>( d->m_activeFrame->widget() );
         if (frame->frameStyle() != TQFrame::NoFrame)

@@ -338,17 +338,17 @@ void KeramikStyle::polish(TQApplication* app)
 void KeramikStyle::polish(TQWidget* widget)
 {
 	// Put in order of highest occurrence to maximise hit rate
-	if ( widget->inherits( "QPushButton" )  || widget->inherits( "QComboBox" ) || widget->inherits("QToolButton") )
+	if ( widget->inherits( TQPUSHBUTTON_OBJECT_NAME_STRING )  || widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) || widget->inherits(TQTOOLBUTTON_OBJECT_NAME_STRING) )
 	{
 		widget->installEventFilter(this);
-		if ( widget->inherits( "QComboBox" ) )
+		if ( widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) )
 			widget->setBackgroundMode( NoBackground );
 	}
-	else if ( widget->inherits( "QMenuBar" ) || widget->inherits( "QPopupMenu" ) )
+	else if ( widget->inherits( TQMENUBAR_OBJECT_NAME_STRING ) || widget->inherits( TQPOPUPMENU_OBJECT_NAME_STRING ) )
 		widget->setBackgroundMode( NoBackground );
 
  	else if ( widget->tqparentWidget() &&
-			  ( ( widget->inherits( "QListBox" ) && widget->tqparentWidget()->inherits( "QComboBox" ) ) ||
+			  ( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->tqparentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
 	            widget->inherits( "KCompletionBox" ) ) ) {
 		TQListBox* listbox = (TQListBox*) widget;
 		listbox->setLineWidth( 4 );
@@ -379,17 +379,17 @@ void KeramikStyle::polish(TQWidget* widget)
 void KeramikStyle::unPolish(TQWidget* widget)
 {
 	//### TODO: This needs major cleanup (and so does polish() )
-	if ( widget->inherits( "QPushButton" ) || widget->inherits( "QComboBox"  ) )
+	if ( widget->inherits( TQPUSHBUTTON_OBJECT_NAME_STRING ) || widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING  ) )
 	{
-		if ( widget->inherits( "QComboBox" ) )
+		if ( widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) )
 			widget->setBackgroundMode( PaletteButton );
 		widget->removeEventFilter(this);
 	}
-	else if ( widget->inherits( "QMenuBar" ) || widget->inherits( "QPopupMenu" ) )
+	else if ( widget->inherits( TQMENUBAR_OBJECT_NAME_STRING ) || widget->inherits( TQPOPUPMENU_OBJECT_NAME_STRING ) )
 		widget->setBackgroundMode( PaletteBackground );
 
  	else if ( widget->tqparentWidget() &&
-			  ( ( widget->inherits( "QListBox" ) && widget->tqparentWidget()->inherits( "QComboBox" ) ) ||
+			  ( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->tqparentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
 	            widget->inherits( "KCompletionBox" ) ) ) {
 		TQListBox* listbox = (TQListBox*) widget;
 		listbox->setLineWidth( 1 );
@@ -1231,7 +1231,7 @@ void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
 			
 			TQToolBar* parent = 0;
 			
-			if (widget && widget->parent() && widget->parent()->inherits("QToolBar"))
+			if (widget && widget->parent() && widget->parent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING))
 				parent = static_cast<TQToolBar*>(widget->parent());
 				
 			renderToolbarEntryBackground(p, parent, r, cg, (flags & Style_Horizontal));				
@@ -1359,7 +1359,7 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 			}
 			else
 			{
-				if (widget->parent() && widget->parent()->inherits("QToolBar"))
+				if (widget->parent() && widget->parent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING))
 					toolbarBlendWidget = widget;
 
 				tqdrawPrimitive( PE_ButtonCommand, p, r, cg, flags );
@@ -1466,7 +1466,7 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 		case CE_ToolButtonLabel:
 		{
 		    //const TQToolButton *toolbutton = static_cast<const TQToolButton * >(widget);
-			bool onToolbar = widget->tqparentWidget() && widget->tqparentWidget()->inherits( "QToolBar" );
+			bool onToolbar = widget->tqparentWidget() && widget->tqparentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 			TQRect nr = r;
 
 			if (!onToolbar)
@@ -1537,7 +1537,7 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 		case CE_DockWindowEmptyArea:
 		{
 			TQRect pr = r;
-			if (widget && widget->inherits("QToolBar"))
+			if (widget && widget->inherits(TQTOOLBAR_OBJECT_NAME_STRING))
 			{
 				const TQToolBar* tb = static_cast<const TQToolBar*>(widget);
 				if (tb->place() == TQDockWindow::OutsideDock)
@@ -1976,7 +1976,7 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 			{
 				//Double-buffer only when we are in the slower full-blend mode
 				if (widget->parent() &&
-						( widget->tqparent()->inherits("QToolBar")|| !qstrcmp(widget->tqparent()->name(), kdeToolbarWidget) ) )
+						( widget->tqparent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING)|| !qstrcmp(widget->tqparent()->name(), kdeToolbarWidget) ) )
 				{
 					buf = new TQPixmap( r.width(), r.height() );
 					br.setX(0);
@@ -2209,10 +2209,10 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 		// -------------------------------------------------------------------
 		case CC_ToolButton: {
 			const TQToolButton *toolbutton = (const TQToolButton *) widget;
-			bool onToolbar = widget->tqparentWidget() && widget->tqparentWidget()->inherits( "QToolBar" );
+			bool onToolbar = widget->tqparentWidget() && widget->tqparentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 			bool onExtender = !onToolbar &&
 				widget->tqparentWidget() && widget->tqparentWidget()->inherits( "QToolBarExtensionWidget") &&
-				widget->tqparentWidget()->tqparentWidget()->inherits( "QToolBar" );
+				widget->tqparentWidget()->tqparentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 
 			bool onControlButtons = false;
 			if (!onToolbar && !onExtender && widget->tqparentWidget() &&
@@ -2441,7 +2441,7 @@ TQSize KeramikStyle::tqsizeFromContents( ContentsType contents,
 
 		case CT_ToolButton:
 		{
-			bool onToolbar = widget->tqparentWidget() && widget->tqparentWidget()->inherits( "QToolBar" );
+			bool onToolbar = widget->tqparentWidget() && widget->tqparentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 			if (!onToolbar) //Behaves like a button, so scale appropriately to the border
 			{
 				int w = contentSize.width();

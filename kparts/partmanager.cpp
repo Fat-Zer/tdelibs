@@ -209,7 +209,7 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
     if ( !d->m_managedTopLevelWidgets.tqcontainsRef( w->tqtopLevelWidget() ) )
       return false;
 
-    if ( d->m_bIgnoreScrollBars && w->inherits( "QScrollBar" ) )
+    if ( d->m_bIgnoreScrollBars && w->inherits( TQSCROLLBAR_OBJECT_NAME_STRING ) )
       return false;
 
     if ( mev ) // mouse press or mouse double-click event

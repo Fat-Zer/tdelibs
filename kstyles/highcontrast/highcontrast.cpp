@@ -155,11 +155,11 @@ void HighContrastStyle::polish( TQPalette& pal )
 
 void HighContrastStyle::polish (TQWidget* widget)
 {
-	if (widget->inherits ("QButton")
-		   || widget->inherits ("QComboBox")
-		   || widget->inherits ("QSpinWidget")
-		   || widget->inherits ("QLineEdit")
-		   || widget->inherits ("QTextEdit"))
+	if (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
+		   || widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
+		   || widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)
+		   || widget->inherits (TQLINEEDIT_OBJECT_NAME_STRING)
+		   || widget->inherits (TQTEXTEDIT_OBJECT_NAME_STRING))
 	{
 		widget->installEventFilter (this);
 
@@ -174,7 +174,7 @@ void HighContrastStyle::polish (TQWidget* widget)
 
 void HighContrastStyle::unPolish (TQWidget* widget)
 {
-	if (widget->inherits ("QWidget") || widget->inherits ("QComboBox") || widget->inherits ("QSpinWidget") || widget->inherits ("QLineEdit") || widget->inherits ("QTextEdit"))
+	if (widget->inherits (TQWIDGET_OBJECT_NAME_STRING) || widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING) || widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING) || widget->inherits (TQLINEEDIT_OBJECT_NAME_STRING) || widget->inherits (TQTEXTEDIT_OBJECT_NAME_STRING))
 		widget->removeEventFilter (this);
 	KStyle::unPolish (widget);
 }
@@ -1595,7 +1595,7 @@ int HighContrastStyle::tqpixelMetric(PixelMetric m, const TQWidget *widget) cons
 		}
 
 		case PM_DefaultFrameWidth: {
-			if (widget && (widget->inherits ("QLineEdit") || widget->inherits ("QTextEdit")))
+			if (widget && (widget->inherits (TQLINEEDIT_OBJECT_NAME_STRING) || widget->inherits (TQTEXTEDIT_OBJECT_NAME_STRING)))
 				return 2*basicLineWidth;
 			else 
 				return basicLineWidth;
@@ -1805,17 +1805,17 @@ bool HighContrastStyle::eventFilter (TQObject *object, TQEvent *event)
 	{
 		// Handle hover effects.
 		if (event->type() == TQEvent::Enter
-				&& (widget->inherits ("QButton")
-					|| widget->inherits ("QComboBox")
-					|| widget->inherits ("QSpinWidget")))
+				&& (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
+					|| widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
+					|| widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)))
 		{
 			hoverWidget = widget;
 			widget->tqrepaint (false);
 		}
 		else if (event->type() == TQEvent::Leave
-					&& (widget->inherits ("QButton")
-						|| widget->inherits ("QComboBox")
-						|| widget->inherits ("QSpinWidget")))
+					&& (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
+						|| widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
+						|| widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)))
 		{
 			if (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget))
 				hoverWidget = 0L;
@@ -1826,8 +1826,8 @@ bool HighContrastStyle::eventFilter (TQObject *object, TQEvent *event)
 		{
 			TQWidget* widgetparent = dynamic_cast<TQWidget*>(widget->parent());
 			while (widgetparent
-							&& ! widgetparent->inherits ("QComboBox")
-							&& ! widgetparent->inherits ("QSpinWidget"))
+							&& ! widgetparent->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
+							&& ! widgetparent->inherits (TQSPINWIDGET_OBJECT_NAME_STRING))
 			{
 				widgetparent = dynamic_cast<TQWidget*>(widgetparent->parent());
 			}

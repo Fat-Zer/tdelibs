@@ -295,7 +295,7 @@ void LightStyleV2::tqdrawPrimitive( TQ_PrimitiveElement pe,
 	    if ( p && p->device()->devType() == TQInternal::Widget ) {
 		TQWidget *w = (TQWidget *) p->device();
 		TQWidget *p = w->tqparentWidget();
-		if (p->inherits("QDockWindow") && ! p->inherits("QToolBar")) {
+		if (p->inherits(TQDOCKWINDOW_OBJECT_NAME_STRING) && ! p->inherits(TQTOOLBAR_OBJECT_NAME_STRING)) {
 		    drawTitle = true;
 		    title = p->caption();
 		}

@@ -69,29 +69,29 @@ void KConfigDialogManager::init(bool trackChanges)
   if(trackChanges)
   {
     // QT
-    changedMap.insert("QButton", TQT_SIGNAL(stateChanged(int)));
-    changedMap.insert("QCheckBox", TQT_SIGNAL(stateChanged(int)));
-    changedMap.insert("QPushButton", TQT_SIGNAL(stateChanged(int)));
-    changedMap.insert("QRadioButton", TQT_SIGNAL(stateChanged(int)));
+    changedMap.insert(TQBUTTON_OBJECT_NAME_STRING, TQT_SIGNAL(stateChanged(int)));
+    changedMap.insert(TQCHECKBOX_OBJECT_NAME_STRING, TQT_SIGNAL(stateChanged(int)));
+    changedMap.insert(TQPUSHBUTTON_OBJECT_NAME_STRING, TQT_SIGNAL(stateChanged(int)));
+    changedMap.insert(TQRADIOBUTTON_OBJECT_NAME_STRING, TQT_SIGNAL(stateChanged(int)));
     // We can only store one thing, so you can't have
     // a ButtonGroup that is checkable.
-    changedMap.insert("QButtonGroup", TQT_SIGNAL(clicked(int)));
-    changedMap.insert("QGroupBox", TQT_SIGNAL(toggled(bool)));
-    changedMap.insert("QComboBox", TQT_SIGNAL(activated (int)));
+    changedMap.insert(TQBUTTONGROUP_OBJECT_NAME_STRING, TQT_SIGNAL(clicked(int)));
+    changedMap.insert(TQGROUPBOX_OBJECT_NAME_STRING, TQT_SIGNAL(toggled(bool)));
+    changedMap.insert(TQCOMBOBOX_OBJECT_NAME_STRING, TQT_SIGNAL(activated (int)));
     //qsqlproperty map doesn't store the text, but the value!
     //changedMap.insert("QComboBox", TQT_SIGNAL(textChanged(const TQString &)));
-    changedMap.insert("QDateEdit", TQT_SIGNAL(valueChanged(const TQDate &)));
-    changedMap.insert("QDateTimeEdit", TQT_SIGNAL(valueChanged(const TQDateTime &)));
-    changedMap.insert("QDial", TQT_SIGNAL(valueChanged (int)));
-    changedMap.insert("QLineEdit", TQT_SIGNAL(textChanged(const TQString &)));
-    changedMap.insert("QSlider", TQT_SIGNAL(valueChanged(int)));
-    changedMap.insert("QSpinBox", TQT_SIGNAL(valueChanged(int)));
-    changedMap.insert("QTimeEdit", TQT_SIGNAL(valueChanged(const TQTime &)));
-    changedMap.insert("QTextEdit", TQT_SIGNAL(textChanged()));
-    changedMap.insert("QTextBrowser", TQT_SIGNAL(sourceChanged(const TQString &)));
-    changedMap.insert("QMultiLineEdit", TQT_SIGNAL(textChanged()));
-    changedMap.insert("QListBox", TQT_SIGNAL(selectionChanged()));
-    changedMap.insert("QTabWidget", TQT_SIGNAL(currentChanged(TQWidget *)));
+    changedMap.insert(TQDATEEDIT_OBJECT_NAME_STRING, TQT_SIGNAL(valueChanged(const TQDate &)));
+    changedMap.insert(TQDATETIMEEDIT_OBJECT_NAME_STRING, TQT_SIGNAL(valueChanged(const TQDateTime &)));
+    changedMap.insert(TQDIAL_OBJECT_NAME_STRING, TQT_SIGNAL(valueChanged (int)));
+    changedMap.insert(TQLINEEDIT_OBJECT_NAME_STRING, TQT_SIGNAL(textChanged(const TQString &)));
+    changedMap.insert(TQSLIDER_OBJECT_NAME_STRING, TQT_SIGNAL(valueChanged(int)));
+    changedMap.insert(TQSPINBOX_OBJECT_NAME_STRING, TQT_SIGNAL(valueChanged(int)));
+    changedMap.insert(TQTIMEEDIT_OBJECT_NAME_STRING, TQT_SIGNAL(valueChanged(const TQTime &)));
+    changedMap.insert(TQTEXTEDIT_OBJECT_NAME_STRING, TQT_SIGNAL(textChanged()));
+    changedMap.insert(TQTEXTBROWSER_OBJECT_NAME_STRING, TQT_SIGNAL(sourceChanged(const TQString &)));
+    changedMap.insert(TQMULTILINEEDIT_OBJECT_NAME_STRING, TQT_SIGNAL(textChanged()));
+    changedMap.insert(TQLISTBOX_OBJECT_NAME_STRING, TQT_SIGNAL(selectionChanged()));
+    changedMap.insert(TQTABWIDGET_OBJECT_NAME_STRING, TQT_SIGNAL(currentChanged(TQWidget *)));
 
     // KDE
     changedMap.insert( "KComboBox", TQT_SIGNAL(activated (int)));
@@ -218,7 +218,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
         kdWarning(178) << "A widget named '" << widgetName << "' was found but there is no setting named '" << configId << "'" << endl;
       }
     }
-    else if (childWidget->inherits("QLabel"))
+    else if (childWidget->inherits(TQLABEL_OBJECT_NAME_STRING))
     {
       TQLabel *label = static_cast<TQLabel *>(childWidget);
       TQWidget *buddy = label->buddy();
@@ -238,8 +238,8 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
       TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.tqfind(childWidget->className());
       if (changedIt != changedMap.end())
       {
-        if ((!d->insideGroupBox || !childWidget->inherits("QRadioButton")) && 
-            !childWidget->inherits("QGroupBox"))
+        if ((!d->insideGroupBox || !childWidget->inherits(TQRADIOBUTTON_OBJECT_NAME_STRING)) && 
+            !childWidget->inherits(TQGROUPBOX_OBJECT_NAME_STRING))
           kdDebug(178) << "Widget '" << widgetName << "' (" << childWidget->className() << ") remains unmanaged." << endl;
       }        
     }
