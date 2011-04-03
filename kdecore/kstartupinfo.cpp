@@ -934,13 +934,8 @@ TQCString KStartupInfo::createNewStartupId()
     hostname[ 0 ] = '\0';
     if (!gethostname( hostname, 255 ))
 	hostname[sizeof(hostname)-1] = '\0';
-#ifdef Q_WS_X11
-    extern Time qt_x_user_time;
-#else
-    unsigned long qt_x_user_time = 0;
-#endif
     TQCString id = TQString(TQString( "%1;%2;%3;%4_TIME%5" ).arg( hostname ).arg( tm.tv_sec )
-        .arg( tm.tv_usec ).arg( getpid()).arg( qt_x_user_time )).utf8();
+        .arg( tm.tv_usec ).arg( getpid()).arg( GET_QT_X_USER_TIME() )).utf8();
     kdDebug( 172 ) << "creating: " << id << ":" << tqAppName() << endl;
     return id;
     }

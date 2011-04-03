@@ -172,8 +172,6 @@ bool KApplication::s_dcopClientNeedsPostInit = false;
 #ifdef Q_WS_X11
 static Atom atom_DesktopWindow;
 static Atom atom_NetSupported;
-extern Time qt_x_time;
-extern Time qt_x_user_time;
 static Atom kde_xdnd_drop;
 #endif
 
@@ -1750,18 +1748,18 @@ bool KApplication::x11EventFilter( XEvent *_event )
                     && _event->xclient.data.l[ 4 ] == 0
                     && _event->xclient.data.l[ 3 ] != 0 )
                     {
-                    if( qt_x_user_time == 0
-                        || NET::timestampCompare( _event->xclient.data.l[ 3 ], qt_x_user_time ) > 0 )
+                    if( GET_QT_X_USER_TIME() == 0
+                        || NET::timestampCompare( _event->xclient.data.l[ 3 ], GET_QT_X_USER_TIME() ) > 0 )
                         { // and the timestamp looks reasonable
-                        qt_x_user_time = _event->xclient.data.l[ 3 ]; // update our qt_x_user_time from it
+                          SET_QT_X_USER_TIME(_event->xclient.data.l[ 3 ]); // update our qt_x_user_time from it
                         }
                     }
                 else // normal DND, only needed until Qt updates qt_x_user_time from XdndDrop
                     {
-                    if( qt_x_user_time == 0
-                        || NET::timestampCompare( _event->xclient.data.l[ 2 ], qt_x_user_time ) > 0 )
+                    if( GET_QT_X_USER_TIME() == 0
+                        || NET::timestampCompare( _event->xclient.data.l[ 2 ], GET_QT_X_USER_TIME() ) > 0 )
                         { // the timestamp looks reasonable
-                        qt_x_user_time = _event->xclient.data.l[ 2 ]; // update our qt_x_user_time from it
+                          SET_QT_X_USER_TIME(_event->xclient.data.l[ 2 ]); // update our qt_x_user_time from it
                         }
                     }
                 }
@@ -1879,16 +1877,16 @@ void KApplication::updateUserTimestamp( unsigned long time )
         time = ev.xproperty.time;
         XDestroyWindow( qt_xdisplay(), w );
     }
-    if( qt_x_user_time == 0
-        || NET::timestampCompare( time, qt_x_user_time ) > 0 ) // check time > qt_x_user_time
-        qt_x_user_time = time;
+    if( GET_QT_X_USER_TIME() == 0
+        || NET::timestampCompare( time, GET_QT_X_USER_TIME() ) > 0 ) // check time > qt_x_user_time
+        SET_QT_X_USER_TIME(time);
 #endif
 }
 
 unsigned long KApplication::userTimestamp() const
 {
 #if defined Q_WS_X11
-    return qt_x_user_time;
+    return GET_QT_X_USER_TIME();
 #else
     return 0;
 #endif
@@ -1898,7 +1896,7 @@ void KApplication::updateRemoteUserTimestamp( const TQCString& dcopId, unsigned 
 {
 #if defined Q_WS_X11
     if( time == 0 )
-        time = qt_x_user_time;
+        time = GET_QT_X_USER_TIME();
     DCOPRef( dcopId, "MainApplication-Interface" ).call( "updateUserTimestamp", time );
 #endif
 }

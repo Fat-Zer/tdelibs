@@ -57,8 +57,6 @@
 
 static bool atoms_created = false;
 extern Atom qt_wm_protocols;
-extern Time qt_x_time;
-extern Time qt_x_user_time;
 
 static Atom net_wm_context_help;
 static Atom kde_wm_change_state;
@@ -241,7 +239,7 @@ void KWin::activateWindow( WId win, long time )
 #ifdef Q_WS_X11
     NETRootInfo info( qt_xdisplay(), 0 );
     if( time == 0 )
-        time = qt_x_user_time;
+        time = GET_QT_X_USER_TIME();
     info.setActiveWindow( win, NET::FromApplication, time,
         kapp->activeWindow() ? kapp->activeWindow()->winId() : 0 );
 #endif // Q_WS_X11 ...
@@ -253,7 +251,7 @@ void KWin::forceActiveWindow( WId win, long time )
 #ifdef Q_WS_X11
     NETRootInfo info( qt_xdisplay(), 0 );
     if( time == 0 )
-        time = qt_x_time;
+        time = GET_QT_X_TIME();
     info.setActiveWindow( win, NET::FromTool, time, 0 );
 #endif // Q_WS_X11
     KUniqueApplication::setHandleAutoStarted();

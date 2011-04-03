@@ -48,8 +48,6 @@ Atom KDETrayProxy::makeSelectionAtom()
     return XInternAtom( qt_xdisplay(), "_NET_SYSTEM_TRAY_S" + TQCString().setNum( qt_xscreen()), False );
     }
 
-extern Time qt_x_time;
-
 void KDETrayProxy::windowAdded( WId w )
     {
     NETWinInfo ni( qt_xdisplay(), w, qt_xrootwin(), NET::WMKDESystemTrayWinFor );
@@ -145,7 +143,7 @@ void KDETrayProxy::dockWindow( Window w, Window owner )
     ev.xclient.window = owner;
     ev.xclient.message_type = atom;
     ev.xclient.format = 32;
-    ev.xclient.data.l[ 0 ] = qt_x_time;
+    ev.xclient.data.l[ 0 ] = GET_QT_X_TIME();
     ev.xclient.data.l[ 1 ] = 0; // SYSTEM_TRAY_REQUEST_DOCK
     ev.xclient.data.l[ 2 ] = w;
     ev.xclient.data.l[ 3 ] = 0; // unused

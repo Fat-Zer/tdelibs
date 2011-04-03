@@ -101,7 +101,6 @@ extern Atom qt_wm_protocols;
 extern Atom qt_wm_delete_window;
 extern Atom qt_wm_take_focus;
 extern Atom qt_wm_state;
-extern Time qt_x_time;
 
 // L0006: X11 atoms private to QXEmbed
 static Atom xembed = 0;
@@ -200,7 +199,7 @@ static void sendXEmbedMessage( WId window, long message, long detail = 0,
     ev.xclient.window = window;
     ev.xclient.message_type = xembed;
     ev.xclient.format = 32;
-    ev.xclient.data.l[0] = qt_x_time;
+    ev.xclient.data.l[0] = GET_QT_X_TIME();
     ev.xclient.data.l[1] = message;
     ev.xclient.data.l[2] = detail;
     ev.xclient.data.l[3] = data1;
@@ -220,7 +219,7 @@ static void sendClientMessage(Window window, Atom a, long x)
   ev.xclient.message_type = a;
   ev.xclient.format = 32;
   ev.xclient.data.l[0] = x;
-  ev.xclient.data.l[1] = qt_x_time;
+  ev.xclient.data.l[1] = GET_QT_X_TIME();
   XSendEvent(qt_xdisplay(), window, false, NoEventMask, &ev);
 }
 
@@ -436,8 +435,8 @@ static int qxembed_x11_event_filter( XEvent* e)
             long message = e->xclient.data.l[1];
             long detail = e->xclient.data.l[2];
             // L0671: Keep Qt message time up to date
-            if ( msgtime > qt_x_time )
-                qt_x_time = msgtime;
+            if ( msgtime > GET_QT_X_TIME() )
+                SET_QT_X_TIME(msgtime);
             TQWidget* w = TQT_TQWIDGET(TQWidget::find( e->xclient.window ));
             if ( !w )
                 break;
@@ -570,8 +569,8 @@ static int qxembed_x11_event_filter( XEvent* e)
                 Atom a = e->xclient.data.l[0];
                 if ( a == qt_wm_take_focus ) {
                     // L0695: update Qt message time variable
-                    if ( (ulong) e->xclient.data.l[1] > qt_x_time )
-                        qt_x_time = e->xclient.data.l[1];
+                    if ( (ulong) e->xclient.data.l[1] > GET_QT_X_TIME() )
+                        SET_QT_X_TIME(e->xclient.data.l[1]);
                     // L0696: There is no problem when the window is not active.
                     //        Qt will generate a WindowActivate event that will
                     //        do the job (L1310).  This does not happen if the
@@ -695,7 +694,7 @@ QXEmbed::QXEmbed(TQWidget *parent, const char *name, WFlags f)
     if ( tqApp->activeWindow() == tqtopLevelWidget() )
         if ( !((QPublicWidget*) tqtopLevelWidget())->topData()->embedded )
             XSetInputFocus( qt_xdisplay(), d->focusProxy->winId(), 
-                            RevertToParent, qt_x_time );
+                            RevertToParent, GET_QT_X_TIME() );
     // L0915: ??? [drag&drop?]
     setAcceptDrops( true );
 }
@@ -747,7 +746,7 @@ QXEmbed::~QXEmbed()
     int revert;
     XGetInputFocus( qt_xdisplay(), &focus, &revert );
     if( focus == d->focusProxy->winId())
-        XSetInputFocus( qt_xdisplay(), tqtopLevelWidget()->winId(), RevertToParent, qt_x_time );
+        XSetInputFocus( qt_xdisplay(), tqtopLevelWidget()->winId(), RevertToParent, GET_QT_X_TIME() );
     // L01045: Delete our private data.
     delete d;
 }
@@ -817,7 +816,7 @@ bool QXEmbed::eventFilter( TQObject *o, TQEvent * e)
             if ( !((QPublicWidget*) tqtopLevelWidget())->topData()->embedded )
                 if (! hasFocus() )
                     XSetInputFocus( qt_xdisplay(), d->focusProxy->winId(), 
-                                    RevertToParent, qt_x_time );
+                                    RevertToParent, GET_QT_X_TIME() );
             if (d->xplain)
                 // L1311: Activation has changed. Grab state might change. See L2800.
                 checkGrab();
@@ -901,7 +900,7 @@ void QXEmbed::focusInEvent( TQFocusEvent * e ){
           //        This is dual safety here because FocusIn implies this.
           //        But see L1581 for an example where this really matters.
           XSetInputFocus( qt_xdisplay(), d->focusProxy->winId(), 
-                          RevertToParent, qt_x_time );
+                          RevertToParent, GET_QT_X_TIME() );
     if (d->xplain) {
         // L1520: Qt focus has changed. Grab state might change. See L2800.
         checkGrab();
@@ -951,7 +950,7 @@ void QXEmbed::focusOutEvent( TQFocusEvent * ){
             //        Function isActiveWindow() also returns true when a modal
             //        dialog child of this window is active.
             XSetInputFocus( qt_xdisplay(), d->focusProxy->winId(), 
-                            RevertToParent, qt_x_time );
+                            RevertToParent, GET_QT_X_TIME() );
 }
 
 

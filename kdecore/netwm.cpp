@@ -1600,9 +1600,8 @@ void NETRootInfo::updateSupportedProperties( Atom atom )
         p->properties[ PROTOCOLS2 ] |= WM2FullPlacement;
 }
 
-extern Time qt_x_user_time;
 void NETRootInfo::setActiveWindow(Window window) {
-    setActiveWindow( window, FromUnknown, qt_x_user_time, None );
+    setActiveWindow( window, FromUnknown, GET_QT_X_USER_TIME(), None );
 }
 
 void NETRootInfo::setActiveWindow(Window window, NET::RequestSource src,
@@ -1811,7 +1810,7 @@ void NETRootInfo::moveResizeWindowRequest(Window window, int flags, int x, int y
 
 void NETRootInfo::restackRequest(Window window, Window above, int detail)
 {
-    restackRequest( window, FromTool, above, detail, qt_x_user_time );
+    restackRequest( window, FromTool, above, detail, GET_QT_X_USER_TIME() );
 }
 
 void NETRootInfo::restackRequest(Window window, RequestSource src, Window above, int detail, Time timestamp )
