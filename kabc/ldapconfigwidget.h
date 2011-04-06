@@ -51,25 +51,25 @@ namespace KABC {
   {
     Q_OBJECT
     TQ_OBJECT
-    TQ_PROPERTY( LCW_Flags flags READ flags WRITE setFlags )
-    Q_PROPERTY( TQString user READ user WRITE setUser )
-    Q_PROPERTY( TQString password READ password WRITE setPassword )
-    Q_PROPERTY( TQString bindDN READ bindDN WRITE setBindDN )
-    Q_PROPERTY( TQString realm READ realm WRITE setRealm )
-    Q_PROPERTY( TQString host READ host WRITE setHost )
-    Q_PROPERTY( int port READ port WRITE setPort )
-    Q_PROPERTY( int ver READ ver WRITE setVer )
-    Q_PROPERTY( TQString dn READ dn WRITE setDn )
-    Q_PROPERTY( TQString filter READ filter WRITE setFilter )
-    Q_PROPERTY( TQString mech READ mech WRITE setMech )
-    Q_PROPERTY( bool secNO READ isSecNO WRITE setSecNO )
-    Q_PROPERTY( bool secSSL READ isSecSSL WRITE setSecSSL )
-    Q_PROPERTY( bool secTLS READ isSecSSL WRITE setSecTLS )
-    Q_PROPERTY( bool authAnon READ isAuthAnon WRITE setAuthAnon )
-    Q_PROPERTY( bool authSimple READ isAuthSimple WRITE setAuthSimple )
-    Q_PROPERTY( bool authSASL READ isAuthSASL WRITE setAuthSASL )
-    Q_PROPERTY( int sizeLimit READ sizeLimit WRITE setSizeLimit )
-    Q_PROPERTY( int timeLimit READ timeLimit WRITE setTimeLimit )
+    TQ_PROPERTY( LCW_Flags flags READ flagsProp WRITE setFlagsProp )
+    TQ_PROPERTY( TQString user READ user WRITE setUser )
+    TQ_PROPERTY( TQString password READ password WRITE setPassword )
+    TQ_PROPERTY( TQString bindDN READ bindDN WRITE setBindDN )
+    TQ_PROPERTY( TQString realm READ realm WRITE setRealm )
+    TQ_PROPERTY( TQString host READ host WRITE setHost )
+    TQ_PROPERTY( int port READ port WRITE setPort )
+    TQ_PROPERTY( int ver READ ver WRITE setVer )
+    TQ_PROPERTY( TQString dn READ dn WRITE setDn )
+    TQ_PROPERTY( TQString filter READ filter WRITE setFilter )
+    TQ_PROPERTY( TQString mech READ mech WRITE setMech )
+    TQ_PROPERTY( bool secNO READ isSecNO WRITE setSecNO )
+    TQ_PROPERTY( bool secSSL READ isSecSSL WRITE setSecSSL )
+    TQ_PROPERTY( bool secTLS READ isSecSSL WRITE setSecTLS )
+    TQ_PROPERTY( bool authAnon READ isAuthAnon WRITE setAuthAnon )
+    TQ_PROPERTY( bool authSimple READ isAuthSimple WRITE setAuthSimple )
+    TQ_PROPERTY( bool authSASL READ isAuthSASL WRITE setAuthSASL )
+    TQ_PROPERTY( int sizeLimit READ sizeLimit WRITE setSizeLimit )
+    TQ_PROPERTY( int timeLimit READ timeLimit WRITE setTimeLimit )
     TQ_SETS ( LCW_Flags )
         
     public:
@@ -245,6 +245,8 @@ namespace KABC {
 
       int flags() const;
       void setFlags( int flags );
+      inline LCW_Flags flagsProp() const { return (LCW_Flags)flags(); }
+      inline void setFlagsProp( LCW_Flags flags ) { setFlags((int)flags); }
 
       /**
        * Returns a LDAP Url constructed from the settings given.

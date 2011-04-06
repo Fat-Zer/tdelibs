@@ -48,7 +48,7 @@ class KDEUI_EXPORT KEditListBox : public TQGroupBox
 
    TQ_SETS( Button )
    TQ_PROPERTY( Button buttons READ buttonsProp WRITE setButtonsProp )
-   Q_PROPERTY( TQStringList items READ items WRITE setItems )
+   TQ_PROPERTY( TQStringList items READ items WRITE setItems )
 
 public:
     /**
