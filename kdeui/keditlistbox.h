@@ -47,7 +47,7 @@ class KDEUI_EXPORT KEditListBox : public TQGroupBox
    TQ_OBJECT
 
    TQ_SETS( Button )
-   TQ_PROPERTY( Button buttons READ buttons WRITE setButtons )
+   TQ_PROPERTY( Button buttons READ buttonsProp WRITE setButtonsProp )
    Q_PROPERTY( TQStringList items READ items WRITE setItems )
 
 public:
@@ -221,11 +221,13 @@ public:
        * Returns which buttons are visible
        */
       int buttons() const;
+      inline Button buttonsProp() const { return (Button)buttons(); }
 
       /**
        * Specifies which buttons should be visible
        */
       void setButtons( uint buttons );
+      inline void setButtonsProp( Button buttons ) { setButtons((uint)buttons); }
 
    signals:
       void changed();
