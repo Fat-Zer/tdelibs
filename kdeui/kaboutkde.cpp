@@ -38,7 +38,7 @@ KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
     "href=\"http://www.gnu.org/philosophy/free-sw.html\">Free Software</a> "
     "development.<br><br>No single group, company or organization controls the "
     "Trinity source code. Everyone is welcome to contribute to Trinity.<br><br>Visit <A "
-    "HREF=\"http://trinity.pearsoncomputing.net/\">http://trinity.pearsoncomputing.net</A> for more information "
+    "HREF=\"http://www.trinitydesktop.org/\">http://www.trinitydesktop.org</A> for more information "
     "about Trinity, and <A HREF=\"http://www.kde.org/\">http://www.kde.org</A> "
     "for more information on the KDE project. ");
 
@@ -60,11 +60,11 @@ KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
     "improved documentation. You decide!"
     "<br><br>"
     "Visit "
-    "<A HREF=\"http://trinity.pearsoncomputing.net/jobs/\">http://trinity.pearsoncomputing.net/jobs/</A> "
+    "<A HREF=\"http://www.trinitydesktop.org/jobs/\">http://www.trinitydesktop.org/jobs/</A> "
     "for information on some projects in which you can participate."
     "<br><br>"
     "If you need more information or documentation, then a visit to "
-    "<A HREF=\"http://trinity.pearsoncomputing.net/docs/\">http://trinity.pearsoncomputing.net/docs/</A> "
+    "<A HREF=\"http://www.trinitydesktop.org/docs/\">http://www.trinitydesktop.org/docs/</A> "
     "will provide you with what you need.");
   const TQString text4 = i18n(""
     "Trinity is available free of charge, but making it is not free.<br><br>"
@@ -73,7 +73,7 @@ KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
     "reimburse members and others on expenses they experienced when "
     "contributing to Trinity. You are encouraged to support Trinity through a financial "
     "donation, using one of the ways described at "
-    "<a href=\"http://trinity.pearsoncomputing.net/support/\">http://trinity.pearsoncomputing.net/support/</a>."
+    "<a href=\"http://www.trinitydesktop.org/donate.php\">http://www.trinitydesktop.org/donate.php</a>."
     "<br><br>Thank you very much in advance for your support!");
   setHelp( TQString::tqfromLatin1("khelpcenter/main.html"), TQString::null );
   setTitle(i18n("Trinity Desktop Environment. Release %1").
