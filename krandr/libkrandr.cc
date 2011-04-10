@@ -1,7 +1,7 @@
 /*  libkrandr.cc     - class KRandr that makes it easy to use XRandr in KDE
     This file is part of KRandr 0.9.5
     Copyright (C) 2010  Timothy Pearson
-    LibKMid's homepage : http://trinity.pearsoncomputing.net
+    LibKRandr's homepage : http://www.trinitydesktop.org
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
