@@ -115,7 +115,7 @@ KDateValidator::fixup( TQString& ) const
 }
 
 KDateTable::KDateTable(TQWidget *parent, TQDate date_, const char* name, WFlags f)
-  : TQGridView(parent, name, (f | WNoAutoErase))
+  : TQGridView(parent, name, (f | TQt::WNoAutoErase))
 {
   d = new KDateTablePrivate;
   setFontSize(10);
@@ -136,7 +136,7 @@ KDateTable::KDateTable(TQWidget *parent, TQDate date_, const char* name, WFlags 
 }
 
 KDateTable::KDateTable(TQWidget *parent, const char* name, WFlags f)
-  : TQGridView(parent, name, (f | WNoAutoErase))
+  : TQGridView(parent, name, (f | TQt::WNoAutoErase))
 {
   d = new KDateTablePrivate;
   setFontSize(10);
