@@ -578,32 +578,6 @@ if( NOT GLIB2_FOUND )
 endif( )
 
 
-
-##### check for Qt3 #############################
-
-# find_package( Qt3 )
-# if( NOT QT_FOUND )
-#     message(FATAL_ERROR "\nQt3 are required, but not found on your system" )
-# endif( NOT QT_FOUND )
-
-
-##### check for TQt #############################
-
-# pkg_search_module( TQT TQt )
-# if( NOT TQT_FOUND )
-#     message(FATAL_ERROR "\nTQt are required, but not found on your system" )
-# endif( NOT TQT_FOUND )
-#
-# set( QT_MOC_EXECUTABLE "tmoc" )
-#
-# # check if Qt is linked against Xft
-# set( bak_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} )
-# set( CMAKE_REQUIRED_LIBRARIES ${TQT_LDFLAGS} )
-# check_function_exists( XftInit KDEINIT_USE_XFT )
-# set( CMAKE_REQUIRED_LIBRARIES ${bak_CMAKE_REQUIRED_LIBRARIES} )
-# unset( bak_CMAKE_REQUIRED_LIBRARIES )
-
-
 ##### check for ALSA ############################
 # FIXME I propose to drop support for very old ALSA versions (i.e 0.5)
 

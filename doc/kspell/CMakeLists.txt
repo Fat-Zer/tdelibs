@@ -10,4 +10,4 @@
 #################################################
 
 tde_create_handbook( SRCDIR ${CMAKE_SOURCE_DIR}/kdoctools DESTINATION kspell )
-add_dependencies( kspell-handbook meinproc )
+add_dependencies( kspell-en-handbook meinproc )
