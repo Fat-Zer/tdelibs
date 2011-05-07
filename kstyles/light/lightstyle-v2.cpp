@@ -501,7 +501,8 @@ void LightStyleV2::tqdrawPrimitive( TQ_PrimitiveElement pe,
 		p->drawLine(r.topLeft(), r.topRight());
 		p->setPen(cg.background());
 		p->drawLine(r.left(), r.top() + 1, r.right(), r.top() + 1);
-		fr.addCoords(0, 2, 0, 0);
+		p->drawLine(r.left(), r.bottom(), r.right(), r.bottom());
+		fr.addCoords(0, 2, 0, -1);
 	    } else {
 		p->drawLine(r.topLeft(), r.bottomLeft());
 		p->setPen(cg.background());
@@ -523,11 +524,13 @@ void LightStyleV2::tqdrawPrimitive( TQ_PrimitiveElement pe,
 	    if (flags & Style_Horizontal) {
 		p->drawLine(r.topLeft(), r.topRight());
 		p->setPen(cg.background());
+		p->drawLine(r.left(), r.bottom(), r.right(), r.bottom());
 		p->drawLine(r.left(), r.top() + 1, r.right(), r.top() + 1);
 		fr.addCoords(0, 2, 0, -1);
 	    } else {
 		p->drawLine(r.topLeft(), r.bottomLeft());
 		p->setPen(cg.background());
+		p->drawLine(r.right(), r.top(), r.right(), r.bottom());
 		p->drawLine(r.left() + 1, r.top(), r.left() + 1, r.bottom());
 		fr.addCoords(2, 0, -1, 0);
 	    }
