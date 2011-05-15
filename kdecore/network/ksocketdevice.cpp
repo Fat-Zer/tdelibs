@@ -171,7 +171,7 @@ bool KSocketDevice::setSocketOptions(int opts)
   return true;			// all went well
 }
 
-bool KSocketDevice::open(OpenMode)
+bool KSocketDevice::open(TQ_OpenMode)
 {
   resetError();
   return false;

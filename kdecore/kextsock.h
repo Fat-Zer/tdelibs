@@ -627,7 +627,7 @@ public:
    * @return true if successful, false when an error occurred or the most was
    *         not correct
    */
-  virtual bool open(OpenMode mode = (OpenMode)(IO_Raw | IO_ReadWrite));
+  virtual bool open(TQ_OpenMode mode = (TQ_OpenMode)(IO_Raw | IO_ReadWrite));
 
   /**
    * Closes the socket. If we have data still in the write buffer yet to be

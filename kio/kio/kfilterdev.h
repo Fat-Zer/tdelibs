@@ -53,7 +53,7 @@ public:
      * Open for reading or writing.
      * If the KFilterBase's device is not opened, it will be opened.
      */
-    virtual bool open( OpenMode mode );
+    virtual bool open( TQ_OpenMode mode );
     /**
      * Close after reading or writing.
      * If the KFilterBase's device was opened by open(), it will be closed.
