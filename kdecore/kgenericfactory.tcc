@@ -180,9 +180,9 @@ namespace KDEPrivate
                                         const char *className, 
                                         const TQStringList &args )
         {
-            return ConcreteFactory<Product, ParentType>::create( tqparentWidget, widgetName,
+            return static_cast<TQObject*>(static_cast<QObject*>(ConcreteFactory<Product, ParentType>::create( tqparentWidget, widgetName,
                                                                  parent, name, className, 
-                                                                 args );
+                                                                 args )));
         }
  
     };
