@@ -162,7 +162,7 @@ ValueColumnInterface *valueColumnInterface( T *t )
   if( !t )
     return 0;
 
-  return ::tqqt_cast<KHE::ValueColumnInterface*>( t );
+  return dynamic_cast<KHE::ValueColumnInterface*>( t );
 }
 
 }
