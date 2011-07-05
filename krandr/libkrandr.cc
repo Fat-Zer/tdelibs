@@ -119,7 +119,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 			int i;
 			xcalib_result[0]=0;
 
-			icc_command = TQString("xcalib %1").arg(fileName);
+			icc_command = TQString("xcalib \"%1\"").arg(fileName);
 			if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 			{
 				printf("Xcalib pipe error\n\r");
@@ -262,7 +262,7 @@ TQString KRandrSimpleAPI::applySystemWideIccConfiguration(TQString kde_confdir) 
 	int i;
 	xcalib_result[0]=0;
 
-	icc_command = TQString("xcalib %1").arg(getIccFileName(NULL, "Default", kde_confdir));
+	icc_command = TQString("xcalib \"%1\"").arg(getIccFileName(NULL, "Default", kde_confdir));
 	if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 	{
 		printf("Xcalib pipe error\n\r");
