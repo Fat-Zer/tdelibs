@@ -1519,8 +1519,8 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
     TQListViewItem* item = currentItem();
     if (!item) return;
 
-    TQListViewItem* tqrepaintItem1 = item;
-    TQListViewItem* tqrepaintItem2 = 0L;
+    TQListViewItem* repaintItem1 = item;
+    TQListViewItem* repaintItem2 = 0L;
     TQListViewItem* visItem = 0L;
 
     TQListViewItem* nextItem = 0L;
@@ -1579,7 +1579,7 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
 
        if (nextItem)
        {
-          tqrepaintItem2=nextItem;
+          repaintItem2=nextItem;
           visItem=nextItem;
           setCurrentItem(nextItem);
        };
@@ -1614,7 +1614,7 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
        {
           if (d->selectedBySimpleMove)
              nextItem->setSelected(true);
-          tqrepaintItem2=nextItem;
+          repaintItem2=nextItem;
           visItem=nextItem;
           setCurrentItem(nextItem);
        };
@@ -1649,7 +1649,7 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
        {
           if (d->selectedBySimpleMove)
              nextItem->setSelected(true);
-          tqrepaintItem2=nextItem;
+          repaintItem2=nextItem;
           visItem=nextItem;
           setCurrentItem(nextItem);
        };
@@ -1671,7 +1671,7 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
           {
              if (d->selectedBySimpleMove)
                 nextItem->setSelected(true);
-             tqrepaintItem2=nextItem;
+             repaintItem2=nextItem;
              visItem=nextItem;
              setCurrentItem(nextItem);
           }
@@ -1684,7 +1684,7 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
        // move to the first item and toggle selection of all items inbetween
        nextItem = firstChild();
        visItem = nextItem;
-       tqrepaintItem2 = visItem;
+       repaintItem2 = visItem;
        if (d->selectedBySimpleMove)
           item->setSelected(false);
        if (shiftOrCtrl)
@@ -1797,7 +1797,7 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
           currentItem()->setSelected(true);
           emitSelectionChanged=true;
        }
-       tqrepaintItem2=currentItem();
+       repaintItem2=currentItem();
        if (realKey)
           visItem=currentItem();
        break;
@@ -1807,21 +1807,21 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
        ensureItemVisible(visItem);
 
     TQRect ir;
-    if (tqrepaintItem1)
-       ir = ir.unite( tqitemRect(tqrepaintItem1) );
-    if (tqrepaintItem2)
-       ir = ir.unite( tqitemRect(tqrepaintItem2) );
+    if (repaintItem1)
+       ir = ir.unite( tqitemRect(repaintItem1) );
+    if (repaintItem2)
+       ir = ir.unite( tqitemRect(repaintItem2) );
 
     if ( !ir.isEmpty() )
-    {                 // rectangle to be tqrepainted
+    {                 // rectangle to be repainted
        if ( ir.x() < 0 )
           ir.moveBy( -ir.x(), 0 );
        viewport()->tqrepaint( ir, false );
     }
-    /*if (tqrepaintItem1)
-       tqrepaintItem1->tqrepaint();
-    if (tqrepaintItem2)
-       tqrepaintItem2->tqrepaint();*/
+    /*if (repaintItem1)
+       repaintItem1->tqrepaint();
+    if (repaintItem2)
+       repaintItem2->tqrepaint();*/
     update();
     if (emitSelectionChanged)
        emit selectionChanged();

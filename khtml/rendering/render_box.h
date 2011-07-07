@@ -89,7 +89,7 @@ public:
 
     virtual void tqrepaint(Priority p=NormalPriority);
 
-    virtual void tqrepaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
+    virtual void repaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
 
     virtual short containingBlockWidth() const;
     void relativePositionOffset(int &tx, int &ty) const;

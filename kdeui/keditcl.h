@@ -401,7 +401,7 @@ protected:
     void        contentsDropEvent(TQDropEvent* e);
 
 private:
-    TQTimer* tqrepaintTimer;
+    TQTimer* repaintTimer;
 
     QString	killbufferstring;
     TQWidget     *parent;

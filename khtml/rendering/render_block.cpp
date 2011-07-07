@@ -635,7 +635,7 @@ void RenderBlock::layoutBlock(bool relayoutChildren)
     }
 
     if (markedForRepaint()) {
-        tqrepaintDuringLayout();
+        repaintDuringLayout();
         setMarkedForRepaint(false);
     }
 
@@ -1581,7 +1581,7 @@ void RenderBlock::layoutPositionedObjects(bool relayoutChildren)
         for ( ; (r = it.current()); ++it ) {
             //kdDebug(6040) << "   have a positioned object" << endl;
             if (r->markedForRepaint()) {
-                r->tqrepaintDuringLayout();
+                r->repaintDuringLayout();
                 r->setMarkedForRepaint(false);
             }
             if ( relayoutChildren || r->style()->position() == FIXED ||

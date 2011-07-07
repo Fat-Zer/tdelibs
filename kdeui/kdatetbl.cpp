@@ -536,7 +536,7 @@ KDateTable::setDate(const TQDate& date_)
   numDaysPrevMonth=calendar->daysInMonth(temp);
   if(changed)
     {
-      tqrepaintContents(false);
+      repaintContents(false);
     }
   return true;
 }
@@ -547,16 +547,16 @@ KDateTable::getDate() const
   return date;
 }
 
-// what are those tqrepaintContents() good for? (pfeiffer)
+// what are those repaintContents() good for? (pfeiffer)
 void KDateTable::focusInEvent( TQFocusEvent *e )
 {
-//    tqrepaintContents(false);
+//    repaintContents(false);
     TQGridView::focusInEvent( e );
 }
 
 void KDateTable::focusOutEvent( TQFocusEvent *e )
 {
-//    tqrepaintContents(false);
+//    repaintContents(false);
     TQGridView::focusOutEvent( e );
 }
 

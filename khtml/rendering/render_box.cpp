@@ -806,17 +806,17 @@ void RenderBox::tqrepaint(Priority prior)
             p = p->parent();
         int xoff = p->hasOverflowClip() ? 0 : p->overflowLeft();
         int yoff = p->hasOverflowClip() ? 0 : p->overflowTop();
-        p->tqrepaintRectangle( -ow + xoff, -ow + yoff, p->effectiveWidth()+ow*2, p->effectiveHeight()+ow*2, prior);
+        p->repaintRectangle( -ow + xoff, -ow + yoff, p->effectiveWidth()+ow*2, p->effectiveHeight()+ow*2, prior);
     }
     else
     {
         int xoff = hasOverflowClip() ? 0 : overflowLeft();
         int yoff = hasOverflowClip() ? 0 : overflowTop();
-        tqrepaintRectangle( -ow + xoff, -ow + yoff, effectiveWidth()+ow*2, effectiveHeight()+ow*2, prior);
+        repaintRectangle( -ow + xoff, -ow + yoff, effectiveWidth()+ow*2, effectiveHeight()+ow*2, prior);
     }
 }
 
-void RenderBox::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
+void RenderBox::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 {
     x += m_x;
     y += m_y;
@@ -830,7 +830,7 @@ void RenderBox::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool 
 
     if (style()->position() == FIXED) f=true;
 
-    // kdDebug( 6040 ) << "RenderBox(" <<this << ", " << renderName() << ")::tqrepaintRectangle (" << x << "/" << y << ") (" << w << "/" << h << ")" << endl;
+    // kdDebug( 6040 ) << "RenderBox(" <<this << ", " << renderName() << ")::repaintRectangle (" << x << "/" << y << ") (" << w << "/" << h << ")" << endl;
     RenderObject *o = container();
     if( o ) {
          if (o->layer()) {
@@ -839,7 +839,7 @@ void RenderBox::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool 
              if (style()->position() == ABSOLUTE)
                  o->layer()->checkInlineRelOffset(this,x,y);
         }
-        o->tqrepaintRectangle(x, y, w, h, p, f);
+        o->repaintRectangle(x, y, w, h, p, f);
     }
 }
 

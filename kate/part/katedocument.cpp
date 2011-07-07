@@ -2050,7 +2050,7 @@ void KateDocument::clearMark( uint line )
   emit marksChanged();
   delete mark;
   tagLines( line, line );
-  tqrepaintViews(true);
+  repaintViews(true);
 }
 
 void KateDocument::addMark( uint line, uint markType )
@@ -2087,7 +2087,7 @@ void KateDocument::addMark( uint line, uint markType )
 
   emit marksChanged();
   tagLines( line, line );
-  tqrepaintViews(true);
+  repaintViews(true);
 }
 
 void KateDocument::removeMark( uint line, uint markType )
@@ -2119,7 +2119,7 @@ void KateDocument::removeMark( uint line, uint markType )
 
   emit marksChanged();
   tagLines( line, line );
-  tqrepaintViews(true);
+  repaintViews(true);
 }
 
 TQPtrList<KTextEditor::Mark> KateDocument::marks()
@@ -2146,7 +2146,7 @@ void KateDocument::clearMarks()
   m_marks.clear();
 
   emit marksChanged();
-  tqrepaintViews(true);
+  repaintViews(true);
 }
 
 void KateDocument::setPixmap( MarkInterface::MarkTypes type, const TQPixmap& pixmap )
@@ -4112,10 +4112,10 @@ void KateDocument::tagLines(KateTextCursor start, KateTextCursor end)
     m_views.tqat(z)->tagLines(start, end, true);
 }
 
-void KateDocument::tqrepaintViews(bool paintOnlyDirty)
+void KateDocument::repaintViews(bool paintOnlyDirty)
 {
   for (uint z = 0; z < m_views.count(); z++)
-    m_views.tqat(z)->tqrepaintText(paintOnlyDirty);
+    m_views.tqat(z)->repaintText(paintOnlyDirty);
 }
 
 void KateDocument::tagAll()

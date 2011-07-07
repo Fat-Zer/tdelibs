@@ -608,7 +608,7 @@ class KateDocument : public Kate::Document,
     void setConfigFlags (uint flags);
 
     // Repaint all of all of the views
-    void tqrepaintViews(bool paintOnlyDirty = true);
+    void repaintViews(bool paintOnlyDirty = true);
 
     inline KateHighlighting *highlight () { return m_buffer->highlight(); }
 

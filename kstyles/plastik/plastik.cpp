@@ -3508,7 +3508,7 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
             TQMouseEvent *me = dynamic_cast<TQMouseEvent*>(ev);
 
             if (tabbar && me) {
-                // avoid unnecessary tqrepaints (which otherwise would occour on every
+                // avoid unnecessary repaints (which otherwise would occour on every
                 // MouseMove event causing high cpu load).
 
                 bool tqrepaint = true;

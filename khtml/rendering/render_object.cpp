@@ -1103,9 +1103,9 @@ void RenderObject::paint( PaintInfo&, int /*tx*/, int /*ty*/)
 {
 }
 
-void RenderObject::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
+void RenderObject::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 {
-    if(parent()) parent()->tqrepaintRectangle(x, y, w, h, p, f);
+    if(parent()) parent()->repaintRectangle(x, y, w, h, p, f);
 }
 
 #ifdef ENABLE_DUMP
@@ -1423,7 +1423,7 @@ void RenderObject::dirtyFormattingContext( bool checkContainer )
         m_parent->dirtyFormattingContext(false);
 }
 
-void RenderObject::tqrepaintDuringLayout()
+void RenderObject::repaintDuringLayout()
 {
     if (canvas()->needsFullRepaint() || isText())
         return;

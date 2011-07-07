@@ -62,8 +62,8 @@ public:
     KHTMLView *view() const { return m_view; }
 
     virtual void tqrepaint(Priority p=NormalPriority);
-    virtual void tqrepaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
-    void tqrepaintViewRectangle(int x, int y, int w, int h, bool asap=false);
+    virtual void repaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
+    void repaintViewRectangle(int x, int y, int w, int h, bool asap=false);
     bool needsFullRepaint() const;
     void deferredRepaint( RenderObject* o );
     void scheduleDeferredRepaints();

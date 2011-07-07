@@ -741,7 +741,7 @@ void CSSStyleSelector::adjustRenderStyle(RenderStyle* style, DOM::ElementImpl *e
     // Cull out any useless layers and also repeat patterns into additional layers.
     style->adjustBackgroundLayers();
 
-    // Only use slow tqrepaints if we actually have a background image.
+    // Only use slow repaints if we actually have a background image.
     // FIXME: We only need to tqinvalidate the fixed regions when scrolling.  It's total overkill to
     // prevent the entire view from blitting on a scroll.
     if (style->hasFixedBackgroundImage() && view)

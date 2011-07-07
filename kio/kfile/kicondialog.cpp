@@ -136,7 +136,7 @@ void KIconCanvas::slotLoadFiles()
     for (it=mFiles.begin(), i=0; it!=end; ++it, i++)
     {
 	// Calling kapp->processEvents() makes the iconview flicker like hell
-	// (it's being tqrepainted once for every new item), so we don't do this.
+	// (it's being repainted once for every new item), so we don't do this.
 	// Instead, we directly tqrepaint the progress bar without going through
 	// the event-loop. We do that just once for every 10th item so that
 	// the progress bar doesn't flicker in turn. (pfeiffer)

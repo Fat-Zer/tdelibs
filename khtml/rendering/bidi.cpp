@@ -1360,7 +1360,7 @@ void RenderBlock::layoutInlineChildren(bool relayoutChildren, int breakBeforeLin
         RenderObject *o = first( this, bidi, false );
         while ( o ) {
             if (o->markedForRepaint()) {
-                o->tqrepaintDuringLayout();
+                o->repaintDuringLayout();
                 o->setMarkedForRepaint(false);
              }
             if (o->isReplaced() || o->isFloating() || o->isPositioned()) {

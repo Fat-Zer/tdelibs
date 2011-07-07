@@ -144,7 +144,7 @@ class BytesEditInterface
 
   public: // call for action
     /** tqrepaint the indizes from i1 to i2 */
-    virtual void tqrepaintRange( int i1, int i2 ) = 0;
+    virtual void repaintRange( int i1, int i2 ) = 0;
 };
 
 

@@ -1450,7 +1450,7 @@ void TextAreaWidget::slotReplaceNext()
 
     if (!(m_replace->options() & KReplaceDialog::PromptOnReplace)) {
         viewport()->tqsetUpdatesEnabled(true);
-        tqrepaintChanged();
+        repaintChanged();
     }
 
     if (res == KFind::NoMatch) { // at end

@@ -181,7 +181,7 @@ public:
   /**
    * Toggle the state of the LED from Off to On and vice versa.
    *
-   * The widget will be tqrepainted when returning to the main
+   * The widget will be repainted when returning to the main
    * event loop.
    * @short Toggles LED on->off / off->on.
    * @deprecated, use #toggle() instead.
@@ -257,7 +257,7 @@ public slots:
   /**
    * Toggles the state of the led from Off to On or vice versa.
    *
-   * The widget tqrepaints itself immediately.
+   * The widget repaints itself immediately.
    */
   void toggle();
 

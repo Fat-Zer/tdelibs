@@ -71,7 +71,7 @@ class KDEFX_EXPORT KStyle: public TQCommonStyle
 		 * internal menu transparency engine.
 		 * 
 		 * @li FilledFrameWorkaround - Enable this flag to facilitate 
-		 * proper tqrepaints of QMenuBars and QToolBars when the style chooses 
+		 * proper repaints of QMenuBars and QToolBars when the style chooses 
 		 * to paint the interior of a TQFrame. The style primitives in question 
 		 * are PE_PanelMenuBar and PE_PanelDockWindow. The HighColor style uses
 		 * this workaround to enable painting of gradients in menubars and 

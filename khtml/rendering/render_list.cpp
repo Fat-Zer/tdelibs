@@ -387,7 +387,7 @@ void RenderListMarker::setPixmap( const TQPixmap &p, const TQRect& r, CachedImag
     if(m_width != m_listImage->pixmap_size().width() || m_height != m_listImage->pixmap_size().height())
         setNeedsLayoutAndMinMaxRecalc();
     else
-        tqrepaintRectangle(0, 0, m_width, m_height);
+        repaintRectangle(0, 0, m_width, m_height);
 }
 
 void RenderListMarker::calcMinMaxWidth()

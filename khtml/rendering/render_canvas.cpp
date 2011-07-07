@@ -269,7 +269,7 @@ bool RenderCanvas::needsFullRepaint() const
     return m_needsFullRepaint || m_pagedMode;
 }
 
-void RenderCanvas::tqrepaintViewRectangle(int x, int y, int w, int h, bool asap)
+void RenderCanvas::repaintViewRectangle(int x, int y, int w, int h, bool asap)
 {
   KHTMLAssert( view() );
   view()->scheduleRepaint( x, y, w, h, asap );
@@ -332,7 +332,7 @@ void RenderCanvas::paintBoxDecorations(PaintInfo& paintInfo, int /*_tx*/, int /*
     paintInfo.p->fillRect(paintInfo.r, view()->tqpalette().active().color(TQColorGroup::Base));
 }
 
-void RenderCanvas::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
+void RenderCanvas::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 {
     if (m_staticMode) return;
 //    kdDebug( 6040 ) << "updating views contents (" << x << "/" << y << ") (" << w << "/" << h << ")" << endl;
@@ -353,7 +353,7 @@ void RenderCanvas::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bo
         if (p == RealtimePriority)
 	// ### KWQ's updateContents has an additional parameter "now".
 	// It's not clear what the difference between updateContents(...,true)
-	// and tqrepaintContents(...) is. As Qt doesn't have this, I'm leaving it out. (LS)
+	// and repaintContents(...) is. As Qt doesn't have this, I'm leaving it out. (LS)
             m_view->updateContents(ur/*, true*/);
         else if (p == HighPriority)
             m_view->scheduleRepaint(x, y, w, h, true /*asap*/);
@@ -374,7 +374,7 @@ void RenderCanvas::scheduleDeferredRepaints()
         for ( it = m_dirtyChildren.begin(); it != m_dirtyChildren.end(); ++it )
             (*it)->tqrepaint();
     }
-    //kdDebug(6040) << "scheduled deferred tqrepaints: " << m_dirtyChildren.count() << " needed full tqrepaint: " << needsFullRepaint() << endl;
+    //kdDebug(6040) << "scheduled deferred repaints: " << m_dirtyChildren.count() << " needed full tqrepaint: " << needsFullRepaint() << endl;
     m_dirtyChildren.clear();
 }
 
@@ -388,7 +388,7 @@ void RenderCanvas::tqrepaint(Priority p)
                 m_view->scheduleRelayout();
                 return;
             }
-	    // ### same as in tqrepaintRectangle
+	    // ### same as in repaintRectangle
             m_view->updateContents(m_view->contentsX(), m_view->contentsY(),
                                    m_view->visibleWidth(), m_view->visibleHeight()/*, true*/);
         }

@@ -110,7 +110,7 @@ void KateSearch::find()
   }
 
   delete findDialog;
-  m_view->tqrepaintText ();
+  m_view->repaintText ();
 }
 
 void KateSearch::find( const TQString &pattern, long flags, bool add, bool shownotfound )

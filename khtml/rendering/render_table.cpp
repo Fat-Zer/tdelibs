@@ -277,7 +277,7 @@ void RenderTable::layout()
     }
 
     if (markedForRepaint()) {
-        tqrepaintDuringLayout();
+        repaintDuringLayout();
         setMarkedForRepaint(false);
     }
 
@@ -1306,7 +1306,7 @@ int RenderTableSection::layoutRows( int toAdd )
     m_width = table()->contentWidth();
 
     if (markedForRepaint()) {
-        tqrepaintDuringLayout();
+        repaintDuringLayout();
         setMarkedForRepaint(false);
     }
 
@@ -2319,9 +2319,9 @@ bool RenderTableCell::requiresLayer() const {
     return /* style()->opacity() < 1.0f || */ hasOverflowClip() || isRelPositioned();
 }
 
-void RenderTableCell::tqrepaintRectangle(int x, int y, int w, int h, Priority p, bool f)
+void RenderTableCell::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
 {
-    RenderBlock::tqrepaintRectangle(x, y, w, h + _topExtra + _bottomExtra, p, f);
+    RenderBlock::repaintRectangle(x, y, w, h + _topExtra + _bottomExtra, p, f);
 }
 
 bool RenderTableCell::absolutePosition(int &xPos, int &yPos, bool f) const

@@ -131,7 +131,7 @@ public:
 
     ToolBarInfo toolBarInfo;
     TQValueList<int> iconSizes;
-    TQTimer tqrepaintTimer;
+    TQTimer repaintTimer;
 
   // Default Values.
   bool HiddenDefault;
@@ -232,7 +232,7 @@ void KToolBar::init( bool readConfig, bool honorStyle )
     layoutTimer = new TQTimer( this );
     connect( layoutTimer, TQT_SIGNAL( timeout() ),
              this, TQT_SLOT( rebuildLayout() ) );
-    connect( &(d->tqrepaintTimer), TQT_SIGNAL( timeout() ),
+    connect( &(d->repaintTimer), TQT_SIGNAL( timeout() ),
              this, TQT_SLOT( slotRepaint() ) );
 
     if ( kapp ) { // may be null when started inside designer
@@ -1435,8 +1435,8 @@ void KToolBar::resizeEvent( TQResizeEvent *e )
     {
       if (layoutTimer->isActive())
       {
-         // Wait with tqrepainting till layout is complete.
-         d->tqrepaintTimer.start( 100, true );
+         // Wait with repainting till layout is complete.
+         d->repaintTimer.start( 100, true );
       }
       else
       {
@@ -1716,7 +1716,7 @@ void KToolBar::applySettings(KConfig *config, const TQString &_configGroup, bool
 bool KToolBar::event( TQEvent *e )
 {
     if ( (e->type() == TQEvent::LayoutHint) && isUpdatesEnabled() )
-       d->tqrepaintTimer.start( 100, true );
+       d->repaintTimer.start( 100, true );
 
     if (e->type() == TQEvent::ChildInserted )
     {

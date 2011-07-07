@@ -196,10 +196,10 @@ void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
         resizeCache = TQPixmap(); // for resized animations
 
         if(completeRepaint)
-            tqrepaintRectangle(borderLeft()+paddingLeft(), borderTop()+paddingTop(), contentWidth(), contentHeight());
+            repaintRectangle(borderLeft()+paddingLeft(), borderTop()+paddingTop(), contentWidth(), contentHeight());
         else
         {
-            tqrepaintRectangle(r.x() + borderLeft() + paddingLeft(), r.y() + borderTop() + paddingTop(),
+            repaintRectangle(r.x() + borderLeft() + paddingLeft(), r.y() + borderTop() + paddingTop(),
                              r.width(), r.height());
         }
     }

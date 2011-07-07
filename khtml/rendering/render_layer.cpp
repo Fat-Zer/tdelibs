@@ -205,7 +205,7 @@ void RenderLayer::tqrepaint( Priority p, bool markForRepaint )
     calculateRects(renderer()->canvas()->layer(), renderer()->viewRect(), layerBounds, damageRect, fgrect);
     m_visibleRect = damageRect.intersect( layerBounds );
     if (m_visibleRect.isValid())
-        renderer()->canvas()->tqrepaintViewRectangle( m_visibleRect.x(), m_visibleRect.y(), m_visibleRect.width(), m_visibleRect.height(), (p > NormalPriority) );
+        renderer()->canvas()->repaintViewRectangle( m_visibleRect.x(), m_visibleRect.y(), m_visibleRect.width(), m_visibleRect.height(), (p > NormalPriority) );
     if (markForRepaint)
         m_markedForRepaint = true;
 }
@@ -233,14 +233,14 @@ void RenderLayer::updateLayerPositions(RenderLayer* rootLayer, bool doFullRepain
 #ifdef APPLE_CHANGES
     // FIXME: Child object could override visibility.
     if (checkForRepaint && (m_object->style()->visibility() == VISIBLE))
-        m_object->tqrepaintAfterLayoutIfNeeded(m_tqrepaintRect, m_fullRepaintRect);
+        m_object->repaintAfterLayoutIfNeeded(m_repaintRect, m_fullRepaintRect);
 #else
     if (checkForRepaint && m_markedForRepaint) {
         TQRect layerBounds, damageRect, fgrect;
         calculateRects(rootLayer, renderer()->viewRect(), layerBounds, damageRect, fgrect);
         TQRect vr = damageRect.intersect( layerBounds );
         if (vr != m_visibleRect && vr.isValid()) {
-            renderer()->canvas()->tqrepaintViewRectangle( vr.x(), vr.y(), vr.width(), vr.height() );
+            renderer()->canvas()->repaintViewRectangle( vr.x(), vr.y(), vr.width(), vr.height() );
             m_visibleRect = vr;
         }
     }

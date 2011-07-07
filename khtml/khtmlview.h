@@ -179,7 +179,7 @@ signals:
     void cleared();
     void zoomView( int );
     void hideAccessKeys();
-    void tqrepaintAccessKeys();
+    void repaintAccessKeys();
     void findAheadActive( bool );
 //#define NO_SMOOTH_SCROLL_HACK
 #ifndef NO_SMOOTH_SCROLL_HACK

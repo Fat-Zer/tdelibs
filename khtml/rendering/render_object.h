@@ -327,7 +327,7 @@ public:
     void setOverhangingContents(bool p=true);
     void markContainingBlocksForLayout();
     void dirtyFormattingContext( bool checkContainer );
-    void tqrepaintDuringLayout();
+    void repaintDuringLayout();
     void setNeedsLayout(bool b, bool markParents = true);
     void setChildNeedsLayout(bool b, bool markParents = true);
     void setMinMaxKnown(bool b=true) {
@@ -683,7 +683,7 @@ public:
 
     // force a complete tqrepaint
     virtual void tqrepaint(Priority p = NormalPriority) { if(m_parent) m_parent->tqrepaint(p); }
-    virtual void tqrepaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
+    virtual void repaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
 
     virtual unsigned int length() const { return 1; }
 

@@ -295,14 +295,14 @@ void RenderFlow::tqrepaint(Priority prior)
         }
 
         RootInlineBox *lastRoot = lastLineBox() && !needsLayout() ? lastLineBox()->root() : 0;
-        containingBlock()->tqrepaintRectangle(-ow+left, -ow+top,
+        containingBlock()->repaintRectangle(-ow+left, -ow+top,
                                             width()+ow*2,
 					    (lastRoot ? lastRoot->bottomOverflow() - top : height())+ow*2, prior);
     }
     else {
         if (firstLineBox() && firstLineBox()->topOverflow() < 0) {
             int ow = style() ? style()->outlineSize() : 0;
-            tqrepaintRectangle(-ow, -ow+firstLineBox()->topOverflow(),
+            repaintRectangle(-ow, -ow+firstLineBox()->topOverflow(),
                              effectiveWidth()+ow*2, effectiveHeight()+ow*2, prior);
         }
         else

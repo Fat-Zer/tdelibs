@@ -217,7 +217,7 @@ void KIconView::slotAutoSelect()
 
       blockSignals( block );
       viewport()->tqsetUpdatesEnabled( update );
-      tqrepaintContents( redraw, false );
+      repaintContents( redraw, false );
 
       emit selectionChanged();
 

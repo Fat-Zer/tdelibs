@@ -74,7 +74,7 @@ KCharSelectTable::KCharSelectTable( TQWidget *parent, const char *name, const TQ
     setNumCols( 32 );
     setNumRows( 8 );
 
-    tqrepaintContents( false );
+    repaintContents( false );
     
     setToolTips();
 
@@ -86,7 +86,7 @@ KCharSelectTable::KCharSelectTable( TQWidget *parent, const char *name, const TQ
 void KCharSelectTable::setFont( const TQString &_font )
 {
     vFont = _font;
-    tqrepaintContents( false );
+    repaintContents( false );
 
     setToolTips();
 }
@@ -95,7 +95,7 @@ void KCharSelectTable::setFont( const TQString &_font )
 void KCharSelectTable::setChar( const TQChar &_chr )
 {
     vChr = _chr;
-    tqrepaintContents( false );
+    repaintContents( false );
 }
 
 //==================================================================
@@ -104,7 +104,7 @@ void KCharSelectTable::setTableNum( int _tableNum )
     focusItem = TQChar( _tableNum * 256 );
 
     vTableNum = _tableNum;
-    tqrepaintContents( false );
+    repaintContents( false );
 
     setToolTips();
 }
@@ -210,9 +210,9 @@ void KCharSelectTable::mouseMoveEvent( TQMouseEvent *e )
 	focusPos = vPos;
 	focusItem = vChr;
 
-	tqrepaintCell( oldFocus.y(), oldFocus.x(), true );
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( vPos.y(), vPos.x(), true );
+	repaintCell( oldFocus.y(), oldFocus.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( vPos.y(), vPos.x(), true );
 
 	emit highlighted( vChr );
 	emit highlighted();
@@ -256,8 +256,8 @@ void KCharSelectTable::keyPressEvent( TQKeyEvent *e )
 	vPos = focusPos;
 	vChr = focusItem;
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( vPos.y(), vPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( vPos.y(), vPos.x(), true );
 
 	emit activated( vChr );
 	emit activated();
@@ -277,8 +277,8 @@ void KCharSelectTable::gotoLeft()
 
 	focusItem = TQChar( vTableNum * 256 + numCols() * focusPos.y() + focusPos.x() );
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( focusPos.y(), focusPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( focusPos.y(), focusPos.x(), true );
 
 	emit focusItemChanged( vChr );
 	emit focusItemChanged();
@@ -295,8 +295,8 @@ void KCharSelectTable::gotoRight()
 
 	focusItem = TQChar( vTableNum * 256 + numCols() * focusPos.y() + focusPos.x() );
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( focusPos.y(), focusPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( focusPos.y(), focusPos.x(), true );
 
 	emit focusItemChanged( vChr );
 	emit focusItemChanged();
@@ -313,8 +313,8 @@ void KCharSelectTable::gotoUp()
 
 	focusItem = TQChar( vTableNum * 256 + numCols() * focusPos.y() + focusPos.x() );
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( focusPos.y(), focusPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( focusPos.y(), focusPos.x(), true );
 
 	emit focusItemChanged( vChr );
 	emit focusItemChanged();
@@ -331,8 +331,8 @@ void KCharSelectTable::gotoDown()
 
 	focusItem = TQChar( vTableNum * 256 + numCols() * focusPos.y() + focusPos.x() );
 
-	tqrepaintCell( oldPos.y(), oldPos.x(), true );
-	tqrepaintCell( focusPos.y(), focusPos.x(), true );
+	repaintCell( oldPos.y(), oldPos.x(), true );
+	repaintCell( focusPos.y(), focusPos.x(), true );
 
 	emit focusItemChanged( vChr );
 	emit focusItemChanged();

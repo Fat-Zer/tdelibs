@@ -1305,7 +1305,7 @@ void KateView::clear ()
   m_viewInternal->clear ();
 }
 
-void KateView::tqrepaintText (bool paintOnlyDirty)
+void KateView::repaintText (bool paintOnlyDirty)
 {
   m_viewInternal->paintText(0,0,m_viewInternal->width(),m_viewInternal->height(), paintOnlyDirty);
 }
@@ -1360,7 +1360,7 @@ bool KateView::setSelection( const KateTextCursor& start, const KateTextCursor& 
 
   tagSelection(oldSelectStart, oldSelectEnd);
 
-  tqrepaintText(true);
+  repaintText(true);
 
   emit selectionChanged ();
   emit m_doc->selectionChanged ();
@@ -1405,7 +1405,7 @@ bool KateView::clearSelection(bool redraw, bool finishedChangingSelection)
   oldSelectEnd = selectEnd;
 
   if (redraw)
-    tqrepaintText(true);
+    repaintText(true);
 
   if (finishedChangingSelection)
   {

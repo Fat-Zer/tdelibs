@@ -270,7 +270,7 @@ class KateView : public Kate::View,
 
     void clear ();
 
-    void tqrepaintText (bool paintOnlyDirty = false);
+    void repaintText (bool paintOnlyDirty = false);
 
     void updateView (bool changed = false);
   //END

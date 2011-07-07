@@ -1010,7 +1010,7 @@ void KKeyChooserItem::setShortcut( const KShortcut& cut )
 {
 	m_cut = cut;
 	m_bModified = (m_cut != m_pList->shortcut(m_iAction));
-	listView()->tqrepaintItem( this );
+	listView()->repaintItem( this );
 }
 
 void KKeyChooserItem::commitChanges()

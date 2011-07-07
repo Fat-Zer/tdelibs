@@ -1492,7 +1492,7 @@ void KateStyleListItem::paintCell( TQPainter *p, const TQColorGroup& /*cg*/, int
       }
       TQFont f ( ((KateStyleListView*)lv)->docfont );
       p->setFont( is->font(f) );
-      // FIXME - tqrepainting when text is cropped, and the column is enlarged is buggy.
+      // FIXME - repainting when text is cropped, and the column is enlarged is buggy.
       // Maybe I need painting the string myself :(
       // (wilbert) it depends on the font used
       TQListViewItem::paintCell( p, mcg, col, width, align );
