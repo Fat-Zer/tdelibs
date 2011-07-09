@@ -181,8 +181,8 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
     m_revMap.insert(tab,w);
 
 
-    if (((KDockWidget*)tqparentWidget())->mayBeShow())
-      ((KDockWidget*)tqparentWidget())->dockBack();
+    if (((KDockWidget*)parentWidget())->mayBeShow())
+      ((KDockWidget*)parentWidget())->dockBack();
 
     if (::tqqt_cast<KDockWidgetHeader*>(w->getHeader()))
     {
@@ -335,7 +335,7 @@ void DockContainer::changeOverlapMode()
 void DockContainer::hideIfNeeded() {
   kdDebug(760)<<"************************* hideIfNeeded *************************"<<endl;
   if (!itemNames.count())
-    ((KDockWidget*)tqparentWidget())->undock();
+    ((KDockWidget*)parentWidget())->undock();
 }
 
 void DockContainer::removeWidget(KDockWidget* dwdg)
@@ -363,7 +363,7 @@ void DockContainer::removeWidget(KDockWidget* dwdg)
   tabCaptions.remove(w->name());
   tabTooltips.remove(w->name());
   if (!itemNames.count())
-    ((KDockWidget*)tqparentWidget())->undock();
+    ((KDockWidget*)parentWidget())->undock();
 }
 
 void DockContainer::undockWidget(KDockWidget *dwdg)

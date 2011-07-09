@@ -146,7 +146,7 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
     // otherwise its shortcuts appear.
     TQWidget* p = parent;
     while ( p && !::tqqt_cast<KMainWindow *>( p ) )
-        p = p->tqparentWidget();
+        p = p->parentWidget();
 
     TQCString name = element.attribute( d->attrName ).utf8();
 

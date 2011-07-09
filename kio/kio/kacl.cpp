@@ -447,7 +447,7 @@ bool KACL::KACLPrivate::setAllUsersOrGroups( const TQValueList< QPair<TQString, 
         if ( currentTag ==  type ) {
             acl_delete_entry( newACL, entry );
             // we have to start from the beginning, the iterator is
-            // tqinvalidated, on deletion
+            // invalidated, on deletion
             ret = acl_get_entry( newACL, ACL_FIRST_ENTRY, &entry );
         } else {
             ret = acl_get_entry( newACL, ACL_NEXT_ENTRY, &entry );

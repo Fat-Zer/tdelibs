@@ -353,7 +353,7 @@ void KPopupMenu::keyPressEvent(TQKeyEvent* e)
             // therefore the lastHitIndex is valid
             i = d->lastHitIndex;
         }
-    } else if (key == Key_Backspace && tqparentMenu) {
+    } else if (key == Key_Backspace && parentMenu) {
         // backspace with no chars in the buffer... go back a menu.
         hide();
         resetKeyboardVars();

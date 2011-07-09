@@ -1113,7 +1113,7 @@ void KDialogBase::setDetailsWidget(TQWidget *detailsWidget)
 {
   delete d->detailsWidget;
   d->detailsWidget = detailsWidget;
-  if (d->detailsWidget->tqparentWidget() != this)
+  if (d->detailsWidget->parentWidget() != this)
      d->detailsWidget->reparent(this, TQPoint(0,0));
   d->detailsWidget->hide();
   if( mIsActivated )
@@ -1748,7 +1748,7 @@ TQSize KDialogBase::configDialogSize( KConfig& config,
 				      const TQString& groupName ) const
 {
    int w, h;
-   int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
+   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
    TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
    w = tqsizeHint().width();
@@ -1771,7 +1771,7 @@ void KDialogBase::saveDialogSize( const TQString& groupName, bool global )
 void KDialogBase::saveDialogSize( KConfig& config, const TQString& groupName,
 				      bool global ) const
 {
-   int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
+   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
    TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
    KConfigGroupSaver cs(&config, groupName);

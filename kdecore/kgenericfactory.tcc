@@ -121,7 +121,7 @@ namespace KDEPrivate
                              typename If< TQWidgetInheritanceTest< Product >::Result,
                                           TQWidget, TQObject >::Result >::Result BaseType;
  
-        static inline Product *create( TQWidget *tqparentWidget, const char *widgetName,
+        static inline Product *create( TQWidget *parentWidget, const char *widgetName,
                                        TQObject *parent, const char *name, 
                                        const char *className, const TQStringList &args )
         {
@@ -129,7 +129,7 @@ namespace KDEPrivate
             while ( tqmetaObject )
             {
                 if ( !qstrcmp( className, tqmetaObject->className() ) )
-                    return create( tqparentWidget, widgetName,
+                    return create( parentWidget, widgetName,
                                    parent, name, args, Type2Type<BaseType>() );
                 tqmetaObject = tqmetaObject->tqsuperClass();
             }
@@ -139,14 +139,14 @@ namespace KDEPrivate
         typedef typename If< TQWidgetInheritanceTest<ParentType>::Result,
                              ParentType, TQWidget >::Result WidgetParentType;
 
-        static inline Product *create( TQWidget *tqparentWidget, const char *widgetName,
+        static inline Product *create( TQWidget *parentWidget, const char *widgetName,
                                        TQObject *parent, const char *name,
                                        const TQStringList &args, Type2Type<KParts::Part> )
         { 
-            return new Product( tqparentWidget, widgetName, parent, name, args ); 
+            return new Product( parentWidget, widgetName, parent, name, args ); 
         }
 
-        static inline Product *create( TQWidget* /*tqparentWidget*/, const char* /*widgetName*/,
+        static inline Product *create( TQWidget* /*parentWidget*/, const char* /*widgetName*/,
                                        TQObject *parent, const char *name,
                                        const TQStringList &args, Type2Type<TQWidget> )
         {
@@ -157,7 +157,7 @@ namespace KDEPrivate
             return new Product( p, name, args );
         }
 
-        static inline Product *create( TQWidget* /*tqparentWidget*/, const char* /*widgetName*/,
+        static inline Product *create( TQWidget* /*parentWidget*/, const char* /*widgetName*/,
                                        TQObject *parent, const char *name,
                                        const TQStringList &args, Type2Type<TQObject> )
         { 
@@ -175,12 +175,12 @@ namespace KDEPrivate
     class MultiFactory
     {
     public:
-        inline static TQObject *create( TQWidget *tqparentWidget, const char *widgetName,
+        inline static TQObject *create( TQWidget *parentWidget, const char *widgetName,
                                         TQObject *parent, const char *name,
                                         const char *className, 
                                         const TQStringList &args )
         {
-            return static_cast<TQObject*>(static_cast<QObject*>(ConcreteFactory<Product, ParentType>::create( tqparentWidget, widgetName,
+            return static_cast<TQObject*>(static_cast<QObject*>(ConcreteFactory<Product, ParentType>::create( parentWidget, widgetName,
                                                                  parent, name, className, 
                                                                  args )));
         }
@@ -215,19 +215,19 @@ namespace KDEPrivate
     class MultiFactory< KTypeList<Product, ProductListTail>, TQObject >
     {
     public:
-        inline static TQObject *create( TQWidget *tqparentWidget, const char *widgetName,
+        inline static TQObject *create( TQWidget *parentWidget, const char *widgetName,
                                         TQObject *parent, const char *name,
                                         const char *className, 
                                         const TQStringList &args )
         {
             // try with the head of the typelist first. the head is always
             // a concrete type.
-            TQObject *object = MultiFactory<Product>::create( tqparentWidget, widgetName,
+            TQObject *object = MultiFactory<Product>::create( parentWidget, widgetName,
                                                               parent, name, className, 
                                                               args );
 
             if ( !object )
-                object = MultiFactory<ProductListTail>::create( tqparentWidget, widgetName,
+                object = MultiFactory<ProductListTail>::create( parentWidget, widgetName,
                                                                 parent, name, className, 
                                                                 args );
 
@@ -241,7 +241,7 @@ namespace KDEPrivate
                         KTypeList<ParentType, ParentTypeListTail> >
     {
     public:
-        inline static TQObject *create( TQWidget *tqparentWidget, const char *widgetName,
+        inline static TQObject *create( TQWidget *parentWidget, const char *widgetName,
                                         TQObject *parent, const char *name,
                                         const char *className, 
                                         const TQStringList &args )
@@ -249,7 +249,7 @@ namespace KDEPrivate
             // try with the head of the typelist first. the head is always
             // a concrete type.
             TQObject *object = MultiFactory<Product, ParentType>
-                                  ::create( tqparentWidget, widgetName,
+                                  ::create( parentWidget, widgetName,
                                             parent, name, className, args );
 
             // if that failed continue by advancing the typelist, calling this
@@ -257,7 +257,7 @@ namespace KDEPrivate
             // at the end we reach the nulltype specialization.
             if ( !object )
                 object = MultiFactory<ProductListTail, ParentTypeListTail>
-                             ::create( tqparentWidget, widgetName,
+                             ::create( parentWidget, widgetName,
                                        parent, name, className, args );
 
             return object;

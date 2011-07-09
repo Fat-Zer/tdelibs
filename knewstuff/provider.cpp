@@ -206,8 +206,8 @@ TQDomElement Provider::createDomElement( TQDomDocument &doc, TQDomElement &paren
 }
 
 
-ProviderLoader::ProviderLoader( TQWidget *tqparentWidget ) :
-  TQObject( tqparentWidget )
+ProviderLoader::ProviderLoader( TQWidget *parentWidget ) :
+  TQObject( parentWidget )
 {
   mProviders.setAutoDelete( true );
 }

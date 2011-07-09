@@ -176,9 +176,9 @@ class KDE_EXPORT ProviderLoader : public TQObject
     /**
      * Constructor.
      *
-     * @param tqparentWidget the parent widget
+     * @param parentWidget the parent widget
      */
-    ProviderLoader( TQWidget *tqparentWidget );
+    ProviderLoader( TQWidget *parentWidget );
 
     /**
      * Starts asynchronously loading the list of providers of the

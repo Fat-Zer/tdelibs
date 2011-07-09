@@ -244,7 +244,7 @@ class KateCmdLnWhatsThis : public TQWhatsThis
           Kate::Command *cmd = KateCmd::self()->queryCommand( name );
           if ( cmd )
           {
-            if ( cmd->help( (Kate::View*)m_parent->tqparentWidget(), name, s ) )
+            if ( cmd->help( (Kate::View*)m_parent->parentWidget(), name, s ) )
               return beg + name + mid + s + end;
             else
               return beg + name + mid + i18n("No help for '%1'").arg( name ) + end;
@@ -380,7 +380,7 @@ void KateCmdLine::slotReturnPressed ( const TQString& text )
 
 void KateCmdLine::hideMe () // unless i have focus ;)
 {
-  if ( isVisibleTo(tqparentWidget()) && ! hasFocus() ) {
+  if ( isVisibleTo(parentWidget()) && ! hasFocus() ) {
      m_view->toggleCmdLine ();
   }
 }

@@ -211,7 +211,7 @@ KDialogBase* KFind::findNextDialog( bool create )
 {
     if ( !m_dialog && create )
     {
-        m_dialog = new KFindNextDialog( m_pattern, tqparentWidget() );
+        m_dialog = new KFindNextDialog( m_pattern, parentWidget() );
         connect( m_dialog, TQT_SIGNAL( user1Clicked() ), this, TQT_SLOT( slotFindNext() ) );
         connect( m_dialog, TQT_SIGNAL( finished() ), this, TQT_SLOT( slotDialogClosed() ) );
     }
@@ -704,7 +704,7 @@ TQWidget* KFind::dialogsParent() const
     // If the find dialog is still up, it should get the focus when closing a message box
     // Otherwise, maybe the "find next?" dialog is up
     // Otherwise, the "view" is the parent.
-    return d->findDialog ? (TQWidget*)d->findDialog : ( m_dialog ? m_dialog : tqparentWidget() );
+    return d->findDialog ? (TQWidget*)d->findDialog : ( m_dialog ? m_dialog : parentWidget() );
 }
 
 #include "kfind.moc"

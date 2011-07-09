@@ -91,7 +91,7 @@ class KateDocument : public Kate::Document,
 
   public:
     KateDocument (bool bSingleViewMode=false, bool bBrowserView=false, bool bReadOnly=false,
-        TQWidget *tqparentWidget = 0, const char *widgetName = 0, TQObject * = 0, const char * = 0);
+        TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject * = 0, const char * = 0);
     ~KateDocument ();
 
     bool closeURL();

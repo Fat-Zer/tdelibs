@@ -1923,12 +1923,12 @@ short RenderObject::baselinePosition( bool firstLine ) const
     return fm.ascent() + ( lineHeight( firstLine) - fm.height() ) / 2;
 }
 
-void RenderObject::tqinvalidateVerticalPositions()
+void RenderObject::invalidateVerticalPositions()
 {
     m_verticalPosition = PositionUndefined;
     RenderObject *child = firstChild();
     while( child ) {
-        child->tqinvalidateVerticalPositions();
+        child->invalidateVerticalPositions();
         child = child->nextSibling();
     }
 }

@@ -286,7 +286,7 @@ void KMdiChildFrm::mouseMoveEvent( TQMouseEvent *e )
 		if ( !( e->state() & Qt::RightButton ) && !( e->state() & Qt::MidButton ) )
 		{
 			// same as: if no button or left button pressed
-			TQPoint p = tqparentWidget()->mapFromGlobal( e->globalPos() );
+			TQPoint p = parentWidget()->mapFromGlobal( e->globalPos() );
 			resizeWindow( m_iResizeCorner, p.x(), p.y() );
 		}
 		else
@@ -1394,7 +1394,7 @@ void KMdiChildFrm::redecorateButtons()
 
 TQRect KMdiChildFrm::mdiAreaContentsRect() const
 {
-	TQFrame * p = ( TQFrame* ) tqparentWidget();
+	TQFrame * p = ( TQFrame* ) parentWidget();
 	if ( p )
 	{
 		return p->contentsRect();

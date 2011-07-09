@@ -288,7 +288,7 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
       return false;
     }
 
-    w = w->tqparentWidget();
+    w = w->parentWidget();
 
     if ( w && ( ( w->testWFlags( WType_Dialog ) && w->isModal() ) ||
                 w->testWFlags( WType_Popup ) || w->testWFlags( WStyle_Tool ) ) )

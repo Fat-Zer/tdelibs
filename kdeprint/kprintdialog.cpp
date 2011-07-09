@@ -546,7 +546,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 	TQPtrList<KMPrinter>	*plist = KMFactory::self()->manager()->printerList();
 	if (!KMManager::self()->errorMsg().isEmpty())
 	{
-		KMessageBox::error(tqparentWidget(),
+		KMessageBox::error(parentWidget(),
 			"<qt><nobr>"+
 			i18n("An error occurred while retrieving the printer list:")
 			+"</nobr><br><br>"+KMManager::self()->errorMsg()+"</qt>");
@@ -934,7 +934,7 @@ void KPrintDialog::slotUpdatePossible( bool flag )
 {
 	MessageWindow::remove( this );
 	if ( !flag )
-		KMessageBox::error(tqparentWidget(),
+		KMessageBox::error(parentWidget(),
 			"<qt><nobr>"+
 			i18n("An error occurred while retrieving the printer list:")
 			+"</nobr><br><br>"+KMManager::self()->errorMsg()+"</qt>");

@@ -343,7 +343,7 @@ void KMdiTaskBar::layoutTaskBar( int taskBarWidth )
 	int tbHandlePixel;
 	tbHandlePixel = tqstyle().tqpixelMetric( TQStyle::PM_DockWindowHandleExtent, this );
 	int buttonAreaWidth = taskBarWidth - tbHandlePixel - tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, this ) - 5;
-	if ( ( ( allButtonsWidthHint ) <= buttonAreaWidth ) || ( width() < tqparentWidget() ->width() ) )
+	if ( ( ( allButtonsWidthHint ) <= buttonAreaWidth ) || ( width() < parentWidget() ->width() ) )
 	{
 		for ( b = m_pButtonList->first();b;b = m_pButtonList->next() )
 		{

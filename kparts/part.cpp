@@ -162,10 +162,10 @@ Part::~Part()
   delete d;
 }
 
-void Part::embed( TQWidget * tqparentWidget )
+void Part::embed( TQWidget * parentWidget )
 {
   if ( widget() )
-    widget()->reparent( tqparentWidget, 0, TQPoint( 0, 0 ), true );
+    widget()->reparent( parentWidget, 0, TQPoint( 0, 0 ), true );
 }
 
 TQWidget *Part::widget()

@@ -163,7 +163,7 @@ void KMdiChildFrmCaption::mouseMoveEvent( TQMouseEvent *e )
 	TQPoint mousePosInChildArea = relMousePosInChildArea - m_offset;
 
 	// set new child frame position
-	tqparentWidget() ->move( mousePosInChildArea );
+	parentWidget() ->move( mousePosInChildArea );
 }
 
 //=============== setActive ===============//

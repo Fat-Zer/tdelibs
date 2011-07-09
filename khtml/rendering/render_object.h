@@ -748,7 +748,7 @@ public:
     virtual int highestPosition(bool /*includeOverflowInterior*/=true, bool /*includeSelf*/=true) const { return 0; }
 
     // recursively tqinvalidate current layout
-    // unused: void tqinvalidateLayout();
+    // unused: void invalidateLayout();
 
     virtual void calcVerticalMargins() {}
     void removeFromObjectLists();
@@ -790,7 +790,7 @@ protected:
 
     virtual TQRect viewRect() const;
     void remove();
-    void tqinvalidateVerticalPositions();
+    void invalidateVerticalPositions();
     bool attemptDirectLayerTranslation();
     void updateWidgetMasks();
 

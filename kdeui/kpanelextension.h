@@ -309,7 +309,7 @@ protected:
      * Reimplement this change handler in order to adjust the look of your
      * applet.
      **/
-    virtual void tqalignmentChange( Alignment ) {}
+    virtual void alignmentChange( Alignment ) {}
 
     /**
      * Use this method to set the custom menu for this extensions so that it can be shown

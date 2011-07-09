@@ -269,7 +269,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
   // tag, in any event and just replace the old with the new
   if ( additive.attribute(attrNoMerge) == attrOne ) // ### use toInt() instead? (Simon)
   {
-    base.tqparentNode().tqreplaceChild(additive, base);
+    base.parentNode().tqreplaceChild(additive, base);
     return true;
   }
 

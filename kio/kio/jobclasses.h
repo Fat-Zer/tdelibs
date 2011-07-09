@@ -155,17 +155,17 @@ namespace KIO {
         /**
          * Enable or disable the automatic error handling. When automatic
          * error handling is enabled and an error occurs, then showErrorDialog()
-         * is called with the specified @p tqparentWidget (if supplied) , right before
+         * is called with the specified @p parentWidget (if supplied) , right before
          * the emission of the result signal.
          *
          * The default is false.
          *
          * @param enable enable or disable automatic error handling
-         * @param tqparentWidget the parent widget, passed to showErrorDialog.
+         * @param parentWidget the parent widget, passed to showErrorDialog.
 	 *        Can be 0 for top-level
 	 * @see isAutoErrorHandlingEnabled(), showErrorDialog()
          */
-        void setAutoErrorHandlingEnabled( bool enable, TQWidget *tqparentWidget = 0 );
+        void setAutoErrorHandlingEnabled( bool enable, TQWidget *parentWidget = 0 );
 
         /**
          * Returns whether automatic error handling is enabled or disabled.

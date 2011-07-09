@@ -58,18 +58,18 @@ class KDE_EXPORT Engine : public TQObject
 
       @param newStuff a KNewStuff object
       @param type the Hotstuff data type such as "korganizer/calendar"
-      @param tqparentWidget the parent window
+      @param parentWidget the parent window
     */
-    Engine( KNewStuff *newStuff, const TQString &type, TQWidget *tqparentWidget = 0 );
+    Engine( KNewStuff *newStuff, const TQString &type, TQWidget *parentWidget = 0 );
     /**
       Constructor.
 
       @param newStuff a KNewStuff object
       @param type the Hotstuff data type such as "korganizer/calendar"
       @param providerList the URL of the provider list
-      @param tqparentWidget the parent window
+      @param parentWidget the parent window
     */
-    Engine( KNewStuff *newStuff, const TQString &type, const TQString &providerList, TQWidget *tqparentWidget = 0 );
+    Engine( KNewStuff *newStuff, const TQString &type, const TQString &providerList, TQWidget *parentWidget = 0 );
 
     /**
       Destructor.
@@ -88,7 +88,7 @@ class KDE_EXPORT Engine : public TQObject
 
       @return parent widget
     */
-    TQWidget *tqparentWidget() const { return mParentWidget; }
+    TQWidget *parentWidget() const { return mParentWidget; }
 
     /**
       Initiates the download process, retrieving provider lists and invoking

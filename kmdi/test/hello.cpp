@@ -18,8 +18,8 @@
   Constructs a Hello widget. Starts a 40 ms animation timer.
 */
 
-Hello::Hello( const char *title, const char *text, TQWidget *tqparentWidget )
-    : KMdiChildView(title, tqparentWidget), t(text), b(0)
+Hello::Hello( const char *title, const char *text, TQWidget *parentWidget )
+    : KMdiChildView(title, parentWidget), t(text), b(0)
 {
     TQTimer *timer = new TQTimer(this);
     TQObject::connect( timer, TQT_SIGNAL(timeout()), TQT_SLOT(animate()) );

@@ -77,13 +77,13 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
     move( -1000, -1000 );
     KStdAction::quit(TQT_TQOBJECT(this), TQT_SLOT(maybeQuit()), d->actionCollection);
 
-    if (tqparentWidget())
+    if (parentWidget())
     {
         new KAction(i18n("Minimize"), KShortcut(),
                     TQT_TQOBJECT(this), TQT_SLOT( minimizeRestoreAction() ),
                     d->actionCollection, "minimizeRestore");
 #ifdef Q_WS_X11
-	KWin::WindowInfo info = KWin::windowInfo( tqparentWidget()->winId());
+	KWin::WindowInfo info = KWin::windowInfo( parentWidget()->winId());
 	d->on_all_desktops = info.onAllDesktops();
 #else
 	d->on_all_desktops = false;
@@ -152,9 +152,9 @@ void KSystemTray::mousePressEvent( TQMouseEvent *e )
     case Qt::MidButton:
 	// fall through
     case Qt::RightButton:
-	if ( tqparentWidget() ) {
+	if ( parentWidget() ) {
             KAction* action = d->actionCollection->action("minimizeRestore");
-	    if ( tqparentWidget()->isVisible() )
+	    if ( parentWidget()->isVisible() )
 		action->setText( i18n("&Minimize") );
 	    else
 		action->setText( i18n("&Restore") );
@@ -182,8 +182,8 @@ void KSystemTray::contextMenuAboutToShow( KPopupMenu* )
 // entry is "minimize", otherwise it's "restore"
 void KSystemTray::minimizeRestoreAction()
 {
-    if ( tqparentWidget() ) {
-        bool restore = !( tqparentWidget()->isVisible() );
+    if ( parentWidget() ) {
+        bool restore = !( parentWidget()->isVisible() );
 	minimizeRestore( restore );
     }
 }
@@ -207,9 +207,9 @@ void KSystemTray::maybeQuit()
     // KDE4: stop closing the parent widget? it results in complex application code
     //       instead make applications connect to the quitSelected() signal
 
-    if (tqparentWidget())
+    if (parentWidget())
     {
-        tqparentWidget()->close();
+        parentWidget()->close();
     }
     else
     {
@@ -237,7 +237,7 @@ void KSystemTray::setInactive()
 // (just like taskbar); otherwise hide it
 void KSystemTray::activateOrHide()
 {
-    TQWidget *pw = tqparentWidget();
+    TQWidget *pw = parentWidget();
 
     if ( !pw )
 	return;
@@ -283,7 +283,7 @@ void KSystemTray::activateOrHide()
 
 void KSystemTray::minimizeRestore( bool restore )
 {
-    TQWidget* pw = tqparentWidget();
+    TQWidget* pw = parentWidget();
     if( !pw )
 	return;
 #ifdef Q_WS_X11

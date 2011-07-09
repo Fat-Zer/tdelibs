@@ -318,10 +318,10 @@ void Job::showErrorDialog( TQWidget * parent )
   }
 }
 
-void Job::setAutoErrorHandlingEnabled( bool enable, TQWidget *tqparentWidget )
+void Job::setAutoErrorHandlingEnabled( bool enable, TQWidget *parentWidget )
 {
   d->m_autoErrorHandling = enable;
-  d->m_errorParentWidget = tqparentWidget;
+  d->m_errorParentWidget = parentWidget;
 }
 
 bool Job::isAutoErrorHandlingEnabled() const

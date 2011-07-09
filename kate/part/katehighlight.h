@@ -213,7 +213,7 @@ class KateHighlighting
 
     inline bool noHighlighting () const { return noHl; };
 
-    // be carefull: all documents hl should be tqinvalidated after calling this method!
+    // be carefull: all documents hl should be invalidated after calling this method!
     void dropDynamicContexts();
 
     TQString indentation () { return m_indentation; }
@@ -377,7 +377,7 @@ class KateHlManager : public TQObject
     uint countDynamicCtxs() { return dynamicCtxsCount; };
     void setForceNoDCReset(bool b) { forceNoDCReset = b; };
 
-    // be carefull: all documents hl should be tqinvalidated after having successfully called this method!
+    // be carefull: all documents hl should be invalidated after having successfully called this method!
     bool resetDynamicCtxs();
 
   signals:

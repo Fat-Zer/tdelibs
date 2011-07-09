@@ -353,8 +353,8 @@ bool KURLLabel::event (TQEvent *e)
 {
   if (e && e->type() == TQEvent::ParentPaletteChange)
   {
-    // use tqparentWidget() unless you are a toplevel widget, then try qAapp
-    TQPalette p = tqparentWidget() ? tqparentWidget()->palette() : tqApp->palette();
+    // use parentWidget() unless you are a toplevel widget, then try qAapp
+    TQPalette p = parentWidget() ? parentWidget()->palette() : tqApp->palette();
     p.setBrush(TQColorGroup::Base, p.brush(TQPalette::Normal, TQColorGroup::Background));
     p.setColor(TQColorGroup::Foreground, tqpalette().active().foreground());
     setPalette(p);

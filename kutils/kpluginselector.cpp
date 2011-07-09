@@ -101,7 +101,7 @@ KPluginListViewToolTip::KPluginListViewToolTip( TQWidget *parent, KListView *lv 
 
 void KPluginListViewToolTip::maybeTip( const TQPoint &pos )
 {
-    if ( !tqparentWidget() || !m_listView )
+    if ( !parentWidget() || !m_listView )
         return;
 
     KPluginInfoLVI *item = dynamic_cast<KPluginInfoLVI *>( m_listView->itemAt( pos ) );

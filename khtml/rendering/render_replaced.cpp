@@ -667,7 +667,7 @@ bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
         break;
 
     case TQEvent::Wheel:
-        if (widget()->tqparentWidget() == view()->viewport()) {
+        if (widget()->parentWidget() == view()->viewport()) {
             // don't allow the widget to react to wheel event unless its
             // currently focused. this avoids accidentally changing a select box
             // or something while wheeling a webpage.

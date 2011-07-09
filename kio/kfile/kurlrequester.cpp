@@ -340,7 +340,7 @@ TQString KURLRequester::filter( ) const
 KFileDialog * KURLRequester::fileDialog() const
 {
     if ( !myFileDialog ) {
-        TQWidget *p = tqparentWidget();
+        TQWidget *p = parentWidget();
         myFileDialog = new KFileDialog( TQString::null, d->fileDialogFilter, p,
                                         "file dialog", true );
 

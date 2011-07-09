@@ -1329,7 +1329,7 @@ void RenderBlock::layoutInlineChildren(bool relayoutChildren, int breakBeforeLin
 
     m_overflowHeight = 0;
 
-    tqinvalidateVerticalPositions();
+    invalidateVerticalPositions();
 #ifdef DEBUG_LAYOUT
     TQTime qt;
     qt.start();

@@ -2951,10 +2951,10 @@ void PlastikStyle::tqdrawComplexControl(TQ_ComplexControl control,
             // If we're pressed, on, or raised...
                 if (bflags & (Style_Down | Style_On | Style_Raised) || widget==hoverWidget ) {
                     tqdrawPrimitive(PE_ButtonTool, p, button, cg, bflags, opt);
-                } else if (tb->tqparentWidget() &&
-                            tb->tqparentWidget()->backgroundPixmap() &&
-                            !tb->tqparentWidget()->backgroundPixmap()->isNull()) {
-                    TQPixmap pixmap = *(tb->tqparentWidget()->backgroundPixmap());
+                } else if (tb->parentWidget() &&
+                            tb->parentWidget()->backgroundPixmap() &&
+                            !tb->parentWidget()->backgroundPixmap()->isNull()) {
+                    TQPixmap pixmap = *(tb->parentWidget()->backgroundPixmap());
                     p->drawTiledPixmap( r, pixmap, tb->pos() );
                 }
             }
@@ -3458,9 +3458,9 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
     if ( ::tqqt_cast<TQLineEdit*>(obj) ) {
         TQWidget* widget = TQT_TQWIDGET(obj);
 
-        if ( ::tqqt_cast<TQSpinWidget*>(widget->tqparentWidget()) )
+        if ( ::tqqt_cast<TQSpinWidget*>(widget->parentWidget()) )
         {
-            TQWidget* spinbox = widget->tqparentWidget();
+            TQWidget* spinbox = widget->parentWidget();
             if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
             {
                 spinbox->tqrepaint(false);

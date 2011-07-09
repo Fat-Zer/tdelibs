@@ -839,7 +839,7 @@ bool QXEmbed::eventFilter( TQObject *o, TQEvent * e)
         {
             TQWidget* pos = this;
             while( TQT_BASE_OBJECT(pos) != TQT_BASE_OBJECT(o) && TQT_BASE_OBJECT(pos) != TQT_BASE_OBJECT(tqtopLevelWidget()))
-                pos = pos->tqparentWidget();
+                pos = pos->parentWidget();
             if( TQT_BASE_OBJECT(pos) == TQT_BASE_OBJECT(o) ) {
                 // L1390: Send fake configure notify events whenever the
                 //        global position of the client changes. See L2900.

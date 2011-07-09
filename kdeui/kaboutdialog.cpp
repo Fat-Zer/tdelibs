@@ -451,7 +451,7 @@ void KAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
     f.setBold( true );
     mVersionLabel->setFont(f);
     mAuthorLabel->setFont(f);
-    mVersionLabel->tqparentWidget()->layout()->activate();
+    mVersionLabel->parentWidget()->layout()->activate();
   }
 
   update();
@@ -716,7 +716,7 @@ void KAboutContainerBase::setProduct( const TQString &appName,
     mAuthorLabel->hide();
   }
 
-  mIconLabel->tqparentWidget()->layout()->activate();
+  mIconLabel->parentWidget()->layout()->activate();
 }
 
 

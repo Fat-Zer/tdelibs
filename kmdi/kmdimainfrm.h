@@ -296,7 +296,7 @@ private:
 
 	// methods
 public:
-	KMdiMainFrm( TQWidget* tqparentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = (WFlags)(WType_TopLevel | WDestructiveClose) );
+	KMdiMainFrm( TQWidget* parentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = (WFlags)(WType_TopLevel | WDestructiveClose) );
 	virtual ~KMdiMainFrm();
 
 	/**

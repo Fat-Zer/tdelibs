@@ -711,11 +711,11 @@ void KFontChooser::showXLFDArea(bool show)
 {
   if( show )
   {
-    xlfdEdit->tqparentWidget()->show();
+    xlfdEdit->parentWidget()->show();
   }
   else
   {
-    xlfdEdit->tqparentWidget()->hide();
+    xlfdEdit->parentWidget()->hide();
   }
 }
 

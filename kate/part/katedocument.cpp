@@ -91,7 +91,7 @@ class KatePartPluginItem
 // KateDocument Constructor
 //
 KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
-                             bool bReadOnly, TQWidget *tqparentWidget,
+                             bool bReadOnly, TQWidget *parentWidget,
                              const char *widgetName, TQObject *parent, const char *name)
 : Kate::Document(parent, name),
   m_plugins (KateFactory::self()->plugins().count()),
@@ -214,7 +214,7 @@ KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
   // if single view mode, like in the konqui embedding, create a default view ;)
   if ( m_bSingleViewMode )
   {
-    KTextEditor::View *view = createView( tqparentWidget, widgetName );
+    KTextEditor::View *view = createView( parentWidget, widgetName );
     insertChildClient( view );
     view->show();
     setWidget( view );
@@ -2872,7 +2872,7 @@ void KateDocument::makeAttribs(bool needInvalidate)
     m_views.tqat(z)->renderer()->updateAttributes ();
 
   if (needInvalidate)
-    m_buffer->tqinvalidateHighlighting();
+    m_buffer->invalidateHighlighting();
 
   tagAll ();
 }

@@ -347,8 +347,8 @@ void KeramikStyle::polish(TQWidget* widget)
 	else if ( widget->inherits( TQMENUBAR_OBJECT_NAME_STRING ) || widget->inherits( TQPOPUPMENU_OBJECT_NAME_STRING ) )
 		widget->setBackgroundMode( NoBackground );
 
- 	else if ( widget->tqparentWidget() &&
-			  ( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->tqparentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
+ 	else if ( widget->parentWidget() &&
+			  ( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->parentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
 	            widget->inherits( "KCompletionBox" ) ) ) {
 		TQListBox* listbox = (TQListBox*) widget;
 		listbox->setLineWidth( 4 );
@@ -388,8 +388,8 @@ void KeramikStyle::unPolish(TQWidget* widget)
 	else if ( widget->inherits( TQMENUBAR_OBJECT_NAME_STRING ) || widget->inherits( TQPOPUPMENU_OBJECT_NAME_STRING ) )
 		widget->setBackgroundMode( PaletteBackground );
 
- 	else if ( widget->tqparentWidget() &&
-			  ( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->tqparentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
+ 	else if ( widget->parentWidget() &&
+			  ( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->parentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
 	            widget->inherits( "KCompletionBox" ) ) ) {
 		TQListBox* listbox = (TQListBox*) widget;
 		listbox->setLineWidth( 1 );
@@ -477,7 +477,7 @@ static void renderToolbarWidgetBackground(TQPainter* painter, const TQWidget* wi
 
 	// Find the top-level toolbar of this widget, since it may be nested in other
 	// widgets that are on the toolbar.
-	TQWidget *parent = TQT_TQWIDGET(widget->tqparentWidget());
+	TQWidget *parent = TQT_TQWIDGET(widget->parentWidget());
 	int x_offset = widget->x(), y_offset = widget->y();
 	while (parent && parent->parent() && !qstrcmp( parent->name(), kdeToolbarWidget ) )
 	{
@@ -1093,7 +1093,7 @@ void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 			TQWidget*  paintWidget = dynamic_cast<TQWidget*>(p->device());
 			TQToolBar* parent      = 0;
 			if (paintWidget)
-				parent = ::tqqt_cast<TQToolBar*>(paintWidget->tqparentWidget());
+				parent = ::tqqt_cast<TQToolBar*>(paintWidget->parentWidget());
 
 			renderToolbarEntryBackground(p, parent, r, cg, (flags & Style_Horizontal) );
 			if ( !(flags & Style_Horizontal) )
@@ -1306,16 +1306,16 @@ bool KeramikStyle::isFormWidget(const TQWidget* widget) const
 {
 	//Form widgets are in the KHTMLView, but that has 2 further inner levels
 	//of widgets - QClipperWidget, and outside of that, QViewportWidget
-	TQWidget* potentialClipPort = widget->tqparentWidget();
+	TQWidget* potentialClipPort = widget->parentWidget();
 	if ( !potentialClipPort || potentialClipPort->isTopLevel() )
 	return false;
 
-	TQWidget* potentialViewPort = potentialClipPort->tqparentWidget();
+	TQWidget* potentialViewPort = potentialClipPort->parentWidget();
 	if (!potentialViewPort || potentialViewPort->isTopLevel() ||
 			qstrcmp(potentialViewPort->name(), "qt_viewport") )
 		return false;
 
-	TQWidget* potentialKHTML  = potentialViewPort->tqparentWidget();
+	TQWidget* potentialKHTML  = potentialViewPort->parentWidget();
 	if (!potentialKHTML || potentialKHTML->isTopLevel() ||
 			qstrcmp(potentialKHTML->className(), "KHTMLView") )
 		return false;
@@ -1466,13 +1466,13 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 		case CE_ToolButtonLabel:
 		{
 		    //const TQToolButton *toolbutton = static_cast<const TQToolButton * >(widget);
-			bool onToolbar = widget->tqparentWidget() && widget->tqparentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
+			bool onToolbar = widget->parentWidget() && widget->parentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 			TQRect nr = r;
 
 			if (!onToolbar)
 			{
-				if (widget->tqparentWidget() &&
-				 !qstrcmp(widget->tqparentWidget()->name(),"qt_maxcontrols" ) )
+				if (widget->parentWidget() &&
+				 !qstrcmp(widget->parentWidget()->name(),"qt_maxcontrols" ) )
 				{
 					//Make sure we don't cut into the endline
 					if (!qstrcmp(widget->name(), "close"))
@@ -2136,9 +2136,9 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 		case CC_ScrollBar:
 		{
 			const TQScrollBar* sb = static_cast< const TQScrollBar* >( widget );
-			if (highlightScrollBar && sb->tqparentWidget()) //Don't do the check if not highlighting anyway
+			if (highlightScrollBar && sb->parentWidget()) //Don't do the check if not highlighting anyway
 			{
-				if (sb->tqparentWidget()->tqcolorGroup().button() != sb->tqcolorGroup().button())
+				if (sb->parentWidget()->tqcolorGroup().button() != sb->tqcolorGroup().button())
 					customScrollMode = true;
 			}
 			bool horizontal = sb->orientation() == Qt::Horizontal;
@@ -2209,14 +2209,14 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 		// -------------------------------------------------------------------
 		case CC_ToolButton: {
 			const TQToolButton *toolbutton = (const TQToolButton *) widget;
-			bool onToolbar = widget->tqparentWidget() && widget->tqparentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
+			bool onToolbar = widget->parentWidget() && widget->parentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 			bool onExtender = !onToolbar &&
-				widget->tqparentWidget() && widget->tqparentWidget()->inherits( "QToolBarExtensionWidget") &&
-				widget->tqparentWidget()->tqparentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
+				widget->parentWidget() && widget->parentWidget()->inherits( "QToolBarExtensionWidget") &&
+				widget->parentWidget()->parentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 
 			bool onControlButtons = false;
-			if (!onToolbar && !onExtender && widget->tqparentWidget() &&
-				 !qstrcmp(widget->tqparentWidget()->name(),"qt_maxcontrols" ) )
+			if (!onToolbar && !onExtender && widget->parentWidget() &&
+				 !qstrcmp(widget->parentWidget()->name(),"qt_maxcontrols" ) )
 			{
 				onControlButtons = true;
 				titleBarMode = Maximized;
@@ -2255,11 +2255,11 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 				}
 
 				// Check whether to draw a background pixmap
-				else if ( toolbutton->tqparentWidget() &&
-						  toolbutton->tqparentWidget()->backgroundPixmap() &&
-						  !toolbutton->tqparentWidget()->backgroundPixmap()->isNull() )
+				else if ( toolbutton->parentWidget() &&
+						  toolbutton->parentWidget()->backgroundPixmap() &&
+						  !toolbutton->parentWidget()->backgroundPixmap()->isNull() )
 				{
-					TQPixmap pixmap = *(toolbutton->tqparentWidget()->backgroundPixmap());
+					TQPixmap pixmap = *(toolbutton->parentWidget()->backgroundPixmap());
 					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
 				}
 				else if (onToolbar)
@@ -2441,7 +2441,7 @@ TQSize KeramikStyle::tqsizeFromContents( ContentsType contents,
 
 		case CT_ToolButton:
 		{
-			bool onToolbar = widget->tqparentWidget() && widget->tqparentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
+			bool onToolbar = widget->parentWidget() && widget->parentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 			if (!onToolbar) //Behaves like a button, so scale appropriately to the border
 			{
 				int w = contentSize.width();
@@ -2859,7 +2859,7 @@ bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
 					TQMouseEvent* mev = TQT_TQMOUSEEVENT(event);
 					TQListBox*    box = static_cast<TQListBox*>(TQT_TQWIDGET(object));
 					
-					TQWidget* parent = box->tqparentWidget();
+					TQWidget* parent = box->parentWidget();
 					if (!parent)
 						return false;
 					

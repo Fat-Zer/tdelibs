@@ -515,7 +515,7 @@ int main(int argc, char *argv[])
     KateDocument *part = new KateDocument(/*bSingleViewMode*/true,
                                           /*bBrowserView*/false,
                                           /*bReadOnly*/false,
-                                          /*tqparentWidget*/toplevel,
+                                          /*parentWidget*/toplevel,
                                           /*widgetName*/"testkate");
     part->readConfig(&cfg);
 

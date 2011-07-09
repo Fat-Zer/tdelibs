@@ -271,7 +271,7 @@ bool KBookmark::isSeparator() const
 
 bool KBookmark::hasParent() const
 {
-    TQDomElement parent = element.tqparentNode().toElement();
+    TQDomElement parent = element.parentNode().toElement();
     return !parent.isNull();
 }
 
@@ -311,7 +311,7 @@ TQString KBookmark::icon() const
 
 KBookmarkGroup KBookmark::parentGroup() const
 {
-    return KBookmarkGroup( element.tqparentNode().toElement() );
+    return KBookmarkGroup( element.parentNode().toElement() );
 }
 
 KBookmarkGroup KBookmark::toGroup() const

@@ -234,7 +234,7 @@ void KBookmarkManager::parse() const
         if ( n.isProcessingInstruction() )
         {
             TQDomProcessingInstruction pi = n.toProcessingInstruction();
-            pi.tqparentNode().removeChild(pi);
+            pi.parentNode().removeChild(pi);
         }
 
         TQDomProcessingInstruction pi;

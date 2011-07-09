@@ -222,9 +222,9 @@ void KMdiToolViewAccessor::place( KDockWidget::DockPosition pos, TQWidget* pTarg
 				pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd );
 				if ( !pTargetDock )
 				{
-					if ( pTargetWnd->tqparentWidget() )
+					if ( pTargetWnd->parentWidget() )
 					{
-						pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd->tqparentWidget() );
+						pTargetDock = mdiMainFrm->dockManager->findWidgetParentDock( pTargetWnd->parentWidget() );
 					}
 				}
 			}

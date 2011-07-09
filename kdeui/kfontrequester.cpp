@@ -72,7 +72,7 @@ void KFontRequester::setTitle( const TQString &title )
 
 void KFontRequester::buttonClicked()
 {
-  int result = KFontDialog::getFont( m_selFont, m_onlyFixed, tqparentWidget() );
+  int result = KFontDialog::getFont( m_selFont, m_onlyFixed, parentWidget() );
 
   if ( result == KDialog::Accepted )
   {

@@ -55,13 +55,13 @@ MessageWindow::MessageWindow( const TQString& txt, int delay, TQWidget *parent, 
 
 MessageWindow::~MessageWindow()
 {
-	m_windows.remove( tqparentWidget() );
+	m_windows.remove( parentWidget() );
 }
 
 void MessageWindow::slotTimer()
 {
-	TQSize psz = tqparentWidget()->size(), sz = tqsizeHint();
-	move( tqparentWidget()->mapToGlobal( TQPoint( (psz.width()-sz.width())/2, (psz.height()-sz.height())/2 ) ) );
+	TQSize psz = parentWidget()->size(), sz = tqsizeHint();
+	move( parentWidget()->mapToGlobal( TQPoint( (psz.width()-sz.width())/2, (psz.height()-sz.height())/2 ) ) );
 	if ( !isVisible() )
 	{
 		show();

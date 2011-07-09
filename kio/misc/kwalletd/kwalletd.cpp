@@ -712,7 +712,7 @@ int KWalletD::closeWallet(KWallet::Backend *w, int handle, bool force) {
 		const TQString& wallet = w->walletName();
 		assert(_passwords.tqcontains(wallet));
 		if (w->refCount() == 0 || force) {
-			tqinvalidateHandle(handle);
+			invalidateHandle(handle);
 			if (_closeIdle && _timeouts) {
 				_timeouts->removeTimer(handle);
 			}
@@ -757,7 +757,7 @@ int KWalletD::close(int handle, bool force) {
 			}
 			_wallets.remove(handle);
 			if (force) {
-				tqinvalidateHandle(handle);
+				invalidateHandle(handle);
 			}
 			if (_passwords.tqcontains(w->walletName())) {
 				w->close(TQByteArray().duplicate(_passwords[w->walletName()].data(), _passwords[w->walletName()].length()));
@@ -1193,7 +1193,7 @@ void KWalletD::slotAppUnregistered(const TQCString& app) {
 }
 
 
-void KWalletD::tqinvalidateHandle(int handle) {
+void KWalletD::invalidateHandle(int handle) {
 	for (TQMap<TQCString,TQValueList<int> >::Iterator i = _handles.begin();
 							i != _handles.end();
 									++i) {

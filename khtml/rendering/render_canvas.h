@@ -137,7 +137,7 @@ protected:
     void updateDocumentSize();
 
     // internal setters for cached values of document width/height
-    // Setting to -1/-1 tqinvalidates the cache.
+    // Setting to -1/-1 invalidates the cache.
     void setCachedDocWidth(int w ) { m_cachedDocWidth = w; }
     void setCachedDocHeight(int h) { m_cachedDocHeight = h; }
 

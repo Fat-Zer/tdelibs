@@ -364,7 +364,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 			else
 				pix.resize( w-2, h-2 );
 
-			TQString title = wid->tqparentWidget()->caption();
+			TQString title = wid->parentWidget()->caption();
 			TQPainter p2;
 			p2.begin(&pix);
 			p2.fillRect(pix.rect(), cg.brush(TQColorGroup::Highlight));
@@ -569,7 +569,7 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 		if (p && p->device()->devType() == TQInternal::Widget) {
 			widget = static_cast<TQWidget*>(p->device());
-			parent = widget->tqparentWidget();
+			parent = widget->parentWidget();
 		} else
 			return;		// Don't paint on non-widgets
 
@@ -986,7 +986,7 @@ int KStyle::tqpixelMetric(PixelMetric m, const TQWidget* widget) const
 			TQWidget* parent = 0;
 			// Check that we are not a normal toolbar or a hidden dockwidget,
 			// in which case we need to adjust the height for font size
-			if (widget && (parent = widget->tqparentWidget() )
+			if (widget && (parent = widget->parentWidget() )
 				&& !parent->inherits(TQTOOLBAR_OBJECT_NAME_STRING)
 				&& !parent->inherits(TQMAINWINDOW_OBJECT_NAME_STRING)
 				&& widget->inherits(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING) )
@@ -1200,10 +1200,10 @@ void KStyle::tqdrawComplexControl( TQ_ComplexControl control,
 			TQPainter p2;
 			p2.begin(&pix);
 
-			if ( slider->tqparentWidget() &&
-				 slider->tqparentWidget()->backgroundPixmap() &&
-				 !slider->tqparentWidget()->backgroundPixmap()->isNull() ) {
-				TQPixmap pixmap = *(slider->tqparentWidget()->backgroundPixmap());
+			if ( slider->parentWidget() &&
+				 slider->parentWidget()->backgroundPixmap() &&
+				 !slider->parentWidget()->backgroundPixmap()->isNull() ) {
+				TQPixmap pixmap = *(slider->parentWidget()->backgroundPixmap());
 				p2.drawTiledPixmap(r, pixmap, slider->pos());
 			} else
 				pix.fill(cg.background());

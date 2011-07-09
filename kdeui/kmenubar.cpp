@@ -167,8 +167,8 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
     top_level = true;
 
   d->wasTopLevel = top_level;
-  if( tqparentWidget()
-      && tqparentWidget()->tqtopLevelWidget()->isFullScreen())
+  if( parentWidget()
+      && parentWidget()->tqtopLevelWidget()->isFullScreen())
     top_level = false;
 
   if ( isTopLevelMenu() == top_level )
@@ -189,19 +189,19 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
       d->margin = margin();
       d->fallback_mode = false;
       bool wasShown = !isHidden();
-      reparent( tqparentWidget(), (WFlags)(WType_TopLevel | WStyle_Tool | WStyle_Customize | WStyle_NoBorder), TQPoint(0,0), false );
+      reparent( parentWidget(), (WFlags)(WType_TopLevel | WStyle_Tool | WStyle_Customize | WStyle_NoBorder), TQPoint(0,0), false );
 #ifdef Q_WS_X11
       KWin::setType( winId(), NET::TopMenu );
-      if( tqparentWidget())
-          XSetTransientForHint( qt_xdisplay(), winId(), tqparentWidget()->tqtopLevelWidget()->winId());
+      if( parentWidget())
+          XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->tqtopLevelWidget()->winId());
 #endif
       TQMenuBar::setFrameStyle( NoFrame );
       TQMenuBar::setLineWidth( 0 );
       TQMenuBar::setMargin( 0 );
       updateFallbackSize();
       d->min_size = TQSize( 0, 0 );
-      if( tqparentWidget() && !tqparentWidget()->isTopLevel())
-          setShown( tqparentWidget()->isVisible());
+      if( parentWidget() && !parentWidget()->isTopLevel())
+          setShown( parentWidget()->isVisible());
       else if ( wasShown )
           show();
   } else
@@ -217,8 +217,8 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
       setMinimumSize( 0, 0 );
       setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX );
       updateMenuBarSize();
-      if ( tqparentWidget() )
-          reparent( tqparentWidget(), TQPoint(0,0), !isHidden());
+      if ( parentWidget() )
+          reparent( parentWidget(), TQPoint(0,0), !isHidden());
   }
 }
 
@@ -244,7 +244,7 @@ bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
 {
     if ( d->topLevel )
     {
-	if ( tqparentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(tqparentWidget()->tqtopLevelWidget())  )
+	if ( parentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()->tqtopLevelWidget())  )
         {
 	    if( ev->type() == TQEvent::Resize )
 		return false; // ignore resizing of parent, TQMenuBar would try to adjust size
@@ -257,21 +257,21 @@ bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
                 // will update the state properly
                 setTopLevelMenuInternal( d->topLevel );
         }
-        if( tqparentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(tqparentWidget()) && ev->type() == TQEvent::Reparent )
+        if( parentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()) && ev->type() == TQEvent::Reparent )
             {
 #ifdef Q_WS_X11
-            XSetTransientForHint( qt_xdisplay(), winId(), tqparentWidget()->tqtopLevelWidget()->winId());
+            XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->tqtopLevelWidget()->winId());
 #else
             //TODO: WIN32?
 #endif
-            setShown( tqparentWidget()->isTopLevel() || tqparentWidget()->isVisible());
+            setShown( parentWidget()->isTopLevel() || parentWidget()->isVisible());
             }
-        if( tqparentWidget() && !tqparentWidget()->isTopLevel() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(tqparentWidget()))
+        if( parentWidget() && !parentWidget()->isTopLevel() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()))
         { // if the parent is not toplevel, KMenuBar needs to match its visibility status
             if( ev->type() == TQEvent::Show )
                 {
 #ifdef Q_WS_X11
-                XSetTransientForHint( qt_xdisplay(), winId(), tqparentWidget()->tqtopLevelWidget()->winId());
+                XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->tqtopLevelWidget()->winId());
 #else
                 //TODO: WIN32?
 #endif
@@ -283,10 +283,10 @@ bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
     }
     else
     {
-        if( tqparentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(tqparentWidget()->tqtopLevelWidget()))
+        if( parentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()->tqtopLevelWidget()))
         {
             if( ev->type() == TQEvent::WindowStateChange
-                && !tqparentWidget()->tqtopLevelWidget()->isFullScreen() )
+                && !parentWidget()->tqtopLevelWidget()->isFullScreen() )
                 setTopLevelMenuInternal( d->wasTopLevel );
         }
     }

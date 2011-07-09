@@ -53,7 +53,7 @@ KFilePreview::~KFilePreview()
 
     // don't delete the preview, we can reuse it
     // (it will get deleted by ~KDirOperator)
-    if ( preview && preview->tqparentWidget() == this ) {
+    if ( preview && preview->parentWidget() == this ) {
         preview->reparent(0L, 0, TQPoint(0, 0), false);
     }
 }

@@ -204,8 +204,8 @@ void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, TQPixmap pixmap, const
 		m_map.insert( w, tab );
 		m_revMap.insert( tab, w );
 
-		if ( ( ( KDockWidget* ) tqparentWidget() ) ->mayBeShow() )
-			( ( KDockWidget* ) tqparentWidget() ) ->dockBack();
+		if ( ( ( KDockWidget* ) parentWidget() ) ->mayBeShow() )
+			( ( KDockWidget* ) parentWidget() ) ->dockBack();
 
 		if ( ::tqqt_cast<KDockWidgetHeader*>(w->getHeader()) )
 		{
@@ -362,7 +362,7 @@ void KMdiDockContainer::hideIfNeeded()
 	if ( itemNames.count() == 0 )
 	{
 		kdDebug( 760 ) << k_funcinfo << "Hiding the dock container" << endl;
-		( ( KDockWidget* ) tqparentWidget() )->undock();
+		( ( KDockWidget* ) parentWidget() )->undock();
 	}
 }
 

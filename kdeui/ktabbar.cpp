@@ -48,7 +48,7 @@ KTabBar::KTabBar( TQWidget *parent, const char *name )
     mActivateDragSwitchTabTimer = new TQTimer( this );
     connect( mActivateDragSwitchTabTimer, TQT_SIGNAL( timeout() ), TQT_SLOT( activateDragSwitchTab() ) );
 
-    connect(this, TQT_SIGNAL(tqlayoutChanged()), TQT_SLOT(onLayoutChange()));
+    connect(this, TQT_SIGNAL(layoutChanged()), TQT_SLOT(onLayoutChange()));
 }
 
 KTabBar::~KTabBar()

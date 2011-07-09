@@ -401,7 +401,7 @@ void KURLBar::setListBox( KURLBarListBox *view )
     }
     else {
         m_listBox = view;
-        if ( m_listBox->tqparentWidget() != this )
+        if ( m_listBox->parentWidget() != this )
             m_listBox->reparent( this, TQPoint(0,0) );
         m_listBox->resize( width(), height() );
     }

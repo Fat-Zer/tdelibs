@@ -60,7 +60,7 @@ public:
      * \endcode
      * This could result in a call to
      * \code
-     *     createPart( tqparentWidget, name, parentObject, parentName, "KParts::Part",
+     *     createPart( parentWidget, name, parentObject, parentName, "KParts::Part",
      *                 TQStringList("name1="value1"", "name2="value2") );
      * \endcode
      *
@@ -71,7 +71,7 @@ public:
      * important for reference counting, and allows unloading the
      * library automatically once all its objects have been destroyed.
      */
-     Part *createPart( TQWidget *tqparentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0, const char *classname = "KParts::Part", const TQStringList &args = TQStringList() );
+     Part *createPart( TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0, const char *classname = "KParts::Part", const TQStringList &args = TQStringList() );
 
      /**
       * If you have a part contained in a shared library you might want to query
@@ -108,13 +108,13 @@ protected:
      * \endcode
      * This could result in a call to
      * \code
-     *     createPart( tqparentWidget, name, parentObject, parentName, "Kparts::Part",
+     *     createPart( parentWidget, name, parentObject, parentName, "Kparts::Part",
      *                 TQStringList("name1="value1"", "name2="value2") );
      * \endcode
      *
      * @returns the newly created part.
      */
-    virtual Part *createPartObject( TQWidget *tqparentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0, const char *classname = "KParts::Part", const TQStringList &args = TQStringList() ) = 0;
+    virtual Part *createPartObject( TQWidget *parentWidget = 0, const char *widgetName = 0, TQObject *parent = 0, const char *name = 0, const char *classname = "KParts::Part", const TQStringList &args = TQStringList() ) = 0;
     
     /**
      * Reimplemented from KLibFactory. Calls createPart()

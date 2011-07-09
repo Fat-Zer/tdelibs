@@ -459,8 +459,8 @@ void KJanusWidget::addPageWidget( TQFrame *page, const TQStringList &items,
       TQString itemName = items.last();
       IconListItem *item = new IconListItem( mIconList, pixmap, itemName );
       mIconListToPageStack.insert(item, page);
-      mIconList->tqinvalidateHeight();
-      mIconList->tqinvalidateWidth();
+      mIconList->invalidateHeight();
+      mIconList->invalidateWidth();
 
       if (mIconList->isVisible())
         mIconList->updateWidth();
@@ -686,7 +686,7 @@ int KJanusWidget::pageIndex( TQWidget *widget ) const
     //
     if( widget->isA(TQFRAME_OBJECT_NAME_STRING) )
     {
-      return d->mPageToInt[widget->tqparentWidget()];
+      return d->mPageToInt[widget->parentWidget()];
     }
     else
     {
@@ -714,8 +714,8 @@ void KJanusWidget::slotFontChanged()
     TQFont listFont( mIconList->font() );
     listFont.setBold( true );
     mIconList->setFont( listFont );
-    mIconList->tqinvalidateHeight();
-    mIconList->tqinvalidateWidth();
+    mIconList->invalidateHeight();
+    mIconList->invalidateWidth();
   }
 }
 
@@ -987,13 +987,13 @@ void KJanusWidget::IconListBox::updateWidth()
 }
 
 
-void KJanusWidget::IconListBox::tqinvalidateHeight()
+void KJanusWidget::IconListBox::invalidateHeight()
 {
   mHeightValid = false;
 }
 
 
-void KJanusWidget::IconListBox::tqinvalidateWidth()
+void KJanusWidget::IconListBox::invalidateWidth()
 {
   mWidthValid = false;
 }

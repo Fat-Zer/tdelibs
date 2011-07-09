@@ -1098,7 +1098,7 @@ void KFileItem::virtual_hook( int, void* )
 
 TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a )
 {
-    // We don't need to save/restore anything that refresh() tqinvalidates,
+    // We don't need to save/restore anything that refresh() invalidates,
     // since that means we can re-determine those by ourselves.
     s << a.m_url;
     s << a.m_strName;

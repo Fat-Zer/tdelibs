@@ -75,7 +75,7 @@ void KPanelExtension::tqsetAlignment( Alignment a )
 {
   if( _tqalignment == a ) return;
   _tqalignment = a;
-  tqalignmentChange( a );
+  alignmentChange( a );
 }
 
 void KPanelExtension::setSize( Size size, int customSize )

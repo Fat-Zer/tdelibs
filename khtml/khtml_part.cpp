@@ -203,7 +203,7 @@ KHTMLFrameList::Iterator KHTMLFrameList::find( const TQString &name )
     return it;
 }
 
-KHTMLPart::KHTMLPart( TQWidget *tqparentWidget, const char *widgetname, TQObject *parent, const char *name, GUIProfile prof )
+KHTMLPart::KHTMLPart( TQWidget *parentWidget, const char *widgetname, TQObject *parent, const char *name, GUIProfile prof )
 : KParts::ReadOnlyPart( parent, name )
 {
     d = 0;
@@ -211,7 +211,7 @@ KHTMLPart::KHTMLPart( TQWidget *tqparentWidget, const char *widgetname, TQObject
     setInstance(  KHTMLFactory::instance(), prof == BrowserViewGUI && !parentPart() );
     // TODO KDE4 - don't load plugins yet
     //setInstance( KHTMLFactory::instance(), false );
-    init( new KHTMLView( this, tqparentWidget, widgetname ), prof );
+    init( new KHTMLView( this, parentWidget, widgetname ), prof );
 }
 
 KHTMLPart::KHTMLPart( KHTMLView *view, TQObject *parent, const char *name, GUIProfile prof )
@@ -4643,7 +4643,7 @@ bool KHTMLPart::processObjectRequest( khtml::ChildFrame *child, const KURL &_url
   }
 }
 
-KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *tqparentWidget, const char *widgetName,
+KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char *widgetName,
                                              TQObject *parent, const char *name, const TQString &mimetype,
                                              TQString &serviceName, TQStringList &serviceTypes,
                                              const TQStringList &params )
@@ -4679,9 +4679,9 @@ KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *tqparentWidget, const cha
         className = "Browser/View";
 
       if ( factory->inherits( "KParts::Factory" ) )
-        res = static_cast<KParts::ReadOnlyPart *>(static_cast<KParts::Factory *>( factory )->createPart( tqparentWidget, widgetName, parent, name, className, params ));
+        res = static_cast<KParts::ReadOnlyPart *>(static_cast<KParts::Factory *>( factory )->createPart( parentWidget, widgetName, parent, name, className, params ));
       else
-        res = static_cast<KParts::ReadOnlyPart *>(factory->create( TQT_TQOBJECT(tqparentWidget), widgetName, className ));
+        res = static_cast<KParts::ReadOnlyPart *>(factory->create( TQT_TQOBJECT(parentWidget), widgetName, className ));
 
       if ( res ) {
         serviceTypes = service->serviceTypes();

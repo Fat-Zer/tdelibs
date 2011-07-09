@@ -393,7 +393,7 @@ extern "C" {
   defining INTERNAL_SIZE_T to be a 32 bit `unsigned int' at the
   expense of not being able to handle more than 2^32 of malloced
   space. If this limitation is acceptable, you are encouraged to set
-  this unless you are on a platform requiring 16byte tqalignments. In
+  this unless you are on a platform requiring 16byte alignments. In
   this case the tqalignment requirements turn out to negate any
   potential advantages of decreasing size_t word size.
 
@@ -421,7 +421,7 @@ extern "C" {
 /*
   MALLOC_ALIGNMENT is the minimum tqalignment for malloc'ed chunks.
   It must be a power of two at least 2 * SIZE_SZ, even on machines
-  for which smaller tqalignments would suffice. It may be defined as
+  for which smaller alignments would suffice. It may be defined as
   larger than this though. Note however that code and data structures
   are optimized for the case of 8-byte tqalignment.
 */
@@ -1938,7 +1938,7 @@ nextchunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
     Note that the `foot' of the current chunk is actually represented
     as the prev_size of the NEXT chunk. This makes it easier to
-    deal with tqalignments etc but can be very confusing when trying
+    deal with alignments etc but can be very confusing when trying
     to extend or adapt this code.
 
     The two exceptions to all this are
@@ -3454,7 +3454,7 @@ static Void_t* sYSMALLOc(nb, av) INTERNAL_SIZE_T nb; mstate av;
           double fencepost at old_top to prevent consolidation with space
           we don't own. These fenceposts are artificial chunks that are
           marked as inuse and are in any case too small to use.  We need
-          two to make sizes and tqalignments work out.
+          two to make sizes and alignments work out.
         */
    
         if (old_size != 0) {

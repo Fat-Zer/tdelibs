@@ -79,7 +79,7 @@ class KMDI_EXPORT MainWindow : public KParts::DockMainWindow
     /**
      * Constructor.
      */
-    MainWindow ( TQWidget* tqparentWidget, const char* name = "");
+    MainWindow ( TQWidget* parentWidget, const char* name = "");
 
     /**
      * Destructor.

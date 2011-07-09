@@ -849,7 +849,7 @@ void KateBuffer::setTabWidth (uint w)
     m_tabWidth = w;
 
     if (m_highlight && m_highlight->foldingIndentationSensitive())
-      tqinvalidateHighlighting();
+      invalidateHighlighting();
   }
 }
 
@@ -881,7 +881,7 @@ void KateBuffer::setHighlight(uint hlMode)
     m_highlight = h;
 
     if (tqinvalidate)
-      tqinvalidateHighlighting();
+      invalidateHighlighting();
 
     // inform the document that the hl was really changed
     // needed to update attributes and more ;)
@@ -889,7 +889,7 @@ void KateBuffer::setHighlight(uint hlMode)
   }
 }
 
-void KateBuffer::tqinvalidateHighlighting()
+void KateBuffer::invalidateHighlighting()
 {
   m_lineHighlightedMax = 0;
   m_lineHighlighted = 0;
@@ -977,7 +977,7 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
     {
       if (KateHlManager::self()->resetDynamicCtxs())
       {
-        kdDebug (13020) << "HL tqinvalidated - too many dynamic contexts ( >= " << m_maxDynamicContexts << ")" << endl;
+        kdDebug (13020) << "HL invalidated - too many dynamic contexts ( >= " << m_maxDynamicContexts << ")" << endl;
 
         // avoid recursive invalidation
         KateHlManager::self()->setForceNoDCReset(true);

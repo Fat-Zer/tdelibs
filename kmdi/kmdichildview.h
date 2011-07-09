@@ -182,13 +182,13 @@ public:
 	/**
 	 * Constructor
 	 */
-	KMdiChildView( const TQString& caption, TQWidget* tqparentWidget = 0L, const char* name = 0L, WFlags f = 0 );
+	KMdiChildView( const TQString& caption, TQWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
 	
 	/**
 	 * Constructor 
 	 * sets "Unnamed" as default caption
 	 */
-	KMdiChildView( TQWidget* tqparentWidget = 0L, const char* name = 0L, WFlags f = 0 );
+	KMdiChildView( TQWidget* parentWidget = 0L, const char* name = 0L, WFlags f = 0 );
 	
 	/**
 	 * Destructor
@@ -603,7 +603,7 @@ private:
 
 inline KMdiChildFrm *KMdiChildView::mdiParent() const
 {
-	TQWidget * pw = tqparentWidget();
+	TQWidget * pw = parentWidget();
 	if ( pw != 0L )
 		if ( pw->inherits( "KMdiChildFrm" ) )
 			return ( KMdiChildFrm * ) pw;

@@ -82,7 +82,7 @@ void KPanelApplet::tqsetAlignment( Alignment a )
 {
   if( _tqalignment == a ) return;
   _tqalignment = a;
-  tqalignmentChange( a );
+  alignmentChange( a );
 }
 
 // FIXME: Remove implementation for KDE 4

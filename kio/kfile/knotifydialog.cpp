@@ -130,7 +130,7 @@ namespace KNotify
     protected:
         virtual void maybeTip ( const TQPoint& p )
         {
-            TQHeader *header = static_cast<TQHeader*>( tqparentWidget() );
+            TQHeader *header = static_cast<TQHeader*>( parentWidget() );
             int section = 0;
 
             if ( header->orientation() == Qt::Horizontal )

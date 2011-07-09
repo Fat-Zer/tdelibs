@@ -827,7 +827,7 @@ PermissionDialog::~PermissionDialog()
 void PermissionDialog::clicked()
 {
     m_button = TQT_TQOBJECT_CONST(sender())->name();
-    static_cast<const TQWidget*>(sender())->tqparentWidget()->close();
+    static_cast<const TQWidget*>(sender())->parentWidget()->close();
 }
 
 #include "kjavaappletserver.moc"

@@ -389,7 +389,7 @@ signals:
 
 protected:
 
-    TQWidget* tqparentWidget() const { return (TQWidget *)parent(); }
+    TQWidget* parentWidget() const { return (TQWidget *)parent(); }
     TQWidget* dialogsParent() const;
 
 protected slots:

@@ -206,9 +206,9 @@ unsigned int Editor::editorNumber () const
   return myEditorNumber;
 }                         
 
-Editor *KTextEditor::createEditor ( const char* libname, TQWidget *tqparentWidget, const char *widgetName, TQObject *parent, const char *name )
+Editor *KTextEditor::createEditor ( const char* libname, TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name )
 {
-  return KParts::ComponentFactory::createPartInstanceFromLibrary<Editor>( libname, tqparentWidget, widgetName, parent, name );
+  return KParts::ComponentFactory::createPartInstanceFromLibrary<Editor>( libname, parentWidget, widgetName, parent, name );
 }
 
 Document *KTextEditor::createDocument ( const char* libname, TQObject *parent, const char *name )

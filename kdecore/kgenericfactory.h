@@ -133,7 +133,7 @@ KInstance *KGenericFactoryBase<T>::instance()
  *                         const TQStringList &args);</code>
  *     <li>If the class is derived from KParts::Part then it needs to have
  *         a constructor like:
- *         <code>MyPart( TQWidget *tqparentWidget, const char *widgetName,
+ *         <code>MyPart( TQWidget *parentWidget, const char *widgetName,
  *                       TQObject *parent, const char *name,
  *                       const TQStringList &args );</code>
  * </ul>
@@ -216,7 +216,7 @@ protected:
  *                         const TQStringList &args);</code>
  *     <li>If the class is derived from KParts::Part then it needs to have
  *         a constructor like:
- *         <code>MyPart( TQWidget *tqparentWidget, const char *widgetName,
+ *         <code>MyPart( TQWidget *parentWidget, const char *widgetName,
  *                       TQObject *parent, const char *name,
  *                       const TQStringList &args );</code>
  * </ul>
@@ -253,7 +253,7 @@ protected:
  *     {
  *         Q_ OBJECT
  *     public:
- *         MyDialogComponent( TQWidget *tqparentWidget, const char *name,
+ *         MyDialogComponent( TQWidget *parentWidget, const char *name,
  *                            const TQStringList &args );
  *         ...
  *     };
@@ -311,7 +311,7 @@ protected:
  *                         const TQStringList &args);</code>
  *     <li>If the class is derived from KParts::Part then it needs to have
  *         a constructor like:
- *         <code>MyPart( TQWidget *tqparentWidget, const char *widgetName,
+ *         <code>MyPart( TQWidget *parentWidget, const char *widgetName,
  *                       TQObject *parent, const char *name,
  *                       const TQStringList &args );</code>
  * </ul>
@@ -348,7 +348,7 @@ protected:
  *     {
  *         Q_ OBJECT
  *     public:
- *         MyDialogComponent( TQWidget *tqparentWidget, const char *name,
+ *         MyDialogComponent( TQWidget *parentWidget, const char *name,
  *                            const TQStringList &args );
  *         ...
  *     };

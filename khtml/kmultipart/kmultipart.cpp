@@ -93,7 +93,7 @@ Data for the second and last object.
 */
 
 
-KMultiPart::KMultiPart( TQWidget *tqparentWidget, const char *widgetName,
+KMultiPart::KMultiPart( TQWidget *parentWidget, const char *widgetName,
                         TQObject *parent, const char *name, const TQStringList& )
     : KParts::ReadOnlyPart( parent, name )
 {
@@ -101,7 +101,7 @@ KMultiPart::KMultiPart( TQWidget *tqparentWidget, const char *widgetName,
 
     setInstance( KMultiPartFactory::instance() );
 
-    TQVBox *box = new TQVBox( tqparentWidget, widgetName );
+    TQVBox *box = new TQVBox( parentWidget, widgetName );
     setWidget( box );
 
     m_extension = new KParts::BrowserExtension( this );

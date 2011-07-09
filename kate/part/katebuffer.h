@@ -591,7 +591,7 @@ class KateBuffer : public TQObject
     /**
      * Invalidate highlighting of whole buffer.
      */
-    void tqinvalidateHighlighting();
+    void invalidateHighlighting();
 
     KateCodeFoldingTree *foldingTree () { return &m_regionTree; };
 

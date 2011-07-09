@@ -157,7 +157,7 @@ void NetworkScanner::slotScanClicked()
 	if ( !d->scanning )
 	{
 		if ( d->localPrefix() == d->prefixaddress ||
-				KMessageBox::warningContinueCancel( this->tqparentWidget(),
+				KMessageBox::warningContinueCancel( this->parentWidget(),
 					i18n( "You are about to scan a subnet (%1.*) that does not "
 						  "correspond to the current subnet of this computer (%2.*). Do you want "
 						  "to scan the specified subnet anyway?" ).arg( d->prefixaddress ).arg( d->localPrefix() ),

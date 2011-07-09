@@ -40,7 +40,7 @@ class KMultipleDragPrivate;
  * Sample code for this:
  *
  * \code
- * KMultipleDrag *drag = new KMultipleDrag( tqparentWidget );
+ * KMultipleDrag *drag = new KMultipleDrag( parentWidget );
  * drag->addDragObject( new TQImageDrag( someQImage, 0 ) );
  * drag->addDragObject( new KURLDrag( someKURL, 0 ) );
  * drag->drag();

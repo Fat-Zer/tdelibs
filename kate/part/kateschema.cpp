@@ -351,7 +351,7 @@ KateSchemaConfigColorTab::KateSchemaConfigColorTab( TQWidget *parent, const char
   blay->addStretch();
 
   // connect signal changed(); changed is emitted by a ColorButton change!
-  connect( this, TQT_SIGNAL( changed() ), parent->tqparentWidget(), TQT_SLOT( slotChanged() ) );
+  connect( this, TQT_SIGNAL( changed() ), parent->parentWidget(), TQT_SLOT( slotChanged() ) );
 
   // TQWhatsThis help
   TQWhatsThis::add(m_back, i18n("<p>Sets the background color of the editing area.</p>"));
@@ -545,7 +545,7 @@ KateSchemaConfigFontTab::KateSchemaConfigFontTab( TQWidget *parent, const char *
   m_fontchooser->enableColumn(KFontChooser::StyleList, false);
   grid->addWidget( m_fontchooser, 0, 0);
 
-  connect (this, TQT_SIGNAL( changed()), parent->tqparentWidget(), TQT_SLOT (slotChanged()));
+  connect (this, TQT_SIGNAL( changed()), parent->parentWidget(), TQT_SLOT (slotChanged()));
   m_schema = -1;
 }
 
@@ -599,7 +599,7 @@ KateSchemaConfigFontColorTab::KateSchemaConfigFontColorTab( TQWidget *parent, co
   m_defaultStyles = new KateStyleListView( this, false );
   grid->addWidget( m_defaultStyles, 0, 0);
 
-  connect (m_defaultStyles, TQT_SIGNAL (changed()), parent->tqparentWidget(), TQT_SLOT (slotChanged()));
+  connect (m_defaultStyles, TQT_SIGNAL (changed()), parent->parentWidget(), TQT_SLOT (slotChanged()));
 
   TQWhatsThis::add( m_defaultStyles,  i18n(
       "This list displays the default styles for the current schema and "
@@ -716,7 +716,7 @@ KateSchemaConfigHighlightTab::KateSchemaConfigHighlightTab( TQWidget *parent, co
     "to edit from the popup menu.<p>You can unset the Background and Selected "
     "Background colors from the context menu when appropriate.") );
 
-  connect (m_styles, TQT_SIGNAL (changed()), parent->tqparentWidget(), TQT_SLOT (slotChanged()));
+  connect (m_styles, TQT_SIGNAL (changed()), parent->parentWidget(), TQT_SLOT (slotChanged()));
 }
 
 KateSchemaConfigHighlightTab::~KateSchemaConfigHighlightTab()

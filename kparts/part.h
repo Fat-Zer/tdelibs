@@ -208,7 +208,7 @@ public:
      * This method is not recommended since creating the widget with the correct
      * parent is simpler anyway.
      */
-    virtual void embed( TQWidget * tqparentWidget );
+    virtual void embed( TQWidget * parentWidget );
 
     /**
      * @return The widget defined by this part, set by setWidget().

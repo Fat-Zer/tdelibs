@@ -585,15 +585,15 @@ void KDockSplitter::updateName()
   if ( !initialised ) return;
 
   TQString new_name = TQString( child0->name() ) + "," + child1->name();
-  tqparentWidget()->setName( new_name.latin1() );
-  tqparentWidget()->setCaption( child0->caption() + "," + child1->caption() );
-  tqparentWidget()->tqrepaint( false );
+  parentWidget()->setName( new_name.latin1() );
+  parentWidget()->setCaption( child0->caption() + "," + child1->caption() );
+  parentWidget()->tqrepaint( false );
 
-  ((KDockWidget*)tqparentWidget())->firstName = child0->name();
-  ((KDockWidget*)tqparentWidget())->lastName = child1->name();
-  ((KDockWidget*)tqparentWidget())->splitterOrientation = m_orientation;
+  ((KDockWidget*)parentWidget())->firstName = child0->name();
+  ((KDockWidget*)parentWidget())->lastName = child1->name();
+  ((KDockWidget*)parentWidget())->splitterOrientation = m_orientation;
 
-  TQWidget* p = tqparentWidget()->tqparentWidget();
+  TQWidget* p = parentWidget()->parentWidget();
   if ( p && p->inherits("KDockSplitter" ) )
     ((KDockSplitter*)p)->updateName();
 }

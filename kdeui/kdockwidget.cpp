@@ -323,7 +323,7 @@ void KDockWidgetHeader::setDragPanel( KDockWidgetHeaderDrag* nd )
 
   delete drag;
   drag = nd;
-  if (drag->tqparentWidget()!=this) {
+  if (drag->parentWidget()!=this) {
 	drag->reparent(this,TQPoint(0,0));
   }
 
@@ -351,7 +351,7 @@ void KDockWidgetHeader::setDragPanel( KDockWidgetHeaderDrag* nd )
 void KDockWidgetHeader::addButton(KDockButton_Private* btn) {
 	if (!btn) return;
 
-	if (btn->tqparentWidget()!=this) {
+	if (btn->parentWidget()!=this) {
 		btn->reparent(this,TQPoint(0,0));
 	}
 	btn->setFixedSize(closeButton->pixmap()->width(),closeButton->pixmap()->height());
@@ -382,7 +382,7 @@ void KDockWidgetHeader::addButton(KDockButton_Private* btn) {
 }
 
 void KDockWidgetHeader::removeButton(KDockButton_Private* btn) {
-	if (btn->tqparentWidget()==this) {
+	if (btn->parentWidget()==this) {
 		if (d->btns.tqcontainsRef(btn)) d->btns.removeRef(btn);
 		delete btn;
 	}
@@ -858,7 +858,7 @@ void KDockWidget::show()
 void KDockWidget::setDockWindowType (NET::WindowType windowType)
 {
   d->windowType = windowType;
-  applyToWidget( tqparentWidget(), TQPoint(0,0) );
+  applyToWidget( parentWidget(), TQPoint(0,0) );
 }
 
 #endif
@@ -867,7 +867,7 @@ void KDockWidget::setDockWindowTransient (TQWidget *parent, bool transientEnable
 {
   d->_parent = parent;
   d->transient = transientEnabled;
-  applyToWidget( tqparentWidget(), TQPoint(0,0) );
+  applyToWidget( parentWidget(), TQPoint(0,0) );
 }
 
 TQWidget *KDockWidget::transientTo() {
@@ -898,7 +898,7 @@ bool KDockWidget::event( TQEvent *event )
       emit manager->change();
       break;
     case TQEvent::CaptionChange:
-      if ( tqparentWidget() ){
+      if ( parentWidget() ){
         if ( parent()->inherits("KDockSplitter") ){
           ((KDockSplitter*)(parent()))->updateName();
         }
@@ -1091,7 +1091,7 @@ KDockWidget* KDockWidget::manualDock( KDockWidget* target, DockPosition dockPos,
   }
 
   // create a new dockwidget that will contain the target and this
-  TQWidget* parentDock = target->tqparentWidget();
+  TQWidget* parentDock = target->parentWidget();
   KDockWidget* newDock = new KDockWidget( manager, "tempName", TQPixmap(TQString("")), parentDock );
   newDock->currentDockPos = target->currentDockPos;
 
@@ -1218,7 +1218,7 @@ KDockWidget* KDockWidget::manualDock( KDockWidget* target, DockPosition dockPos,
 KDockTabGroup* KDockWidget::parentDockTabGroup() const
 {
   if ( !parent() ) return 0L;
-  TQWidget* candidate = tqparentWidget()->tqparentWidget();
+  TQWidget* candidate = parentWidget()->parentWidget();
   if ( candidate && candidate->inherits("KDockTabGroup") ) return (KDockTabGroup*)candidate;
   return 0L;
 }
@@ -1226,7 +1226,7 @@ KDockTabGroup* KDockWidget::parentDockTabGroup() const
 TQWidget *KDockWidget::parentDockContainer() const
 {
   if (!parent()) return 0L;
-  TQWidget* candidate = tqparentWidget()->tqparentWidget();
+  TQWidget* candidate = parentWidget()->parentWidget();
   if (candidate && tqt_dynamic_cast<KDockContainer*>(candidate)) return candidate;
   return 0L;
 }
@@ -1295,7 +1295,7 @@ void KDockWidget::undock()
   manager->d->dragRect = TQRect ();
   manager->drawDragRectangle ();
 
-  TQWidget* parentW = tqparentWidget();
+  TQWidget* parentW = parentWidget();
   if ( !parentW ){
     hide();
     if (!d->blockHasUndockedSignal)
@@ -1337,7 +1337,7 @@ void KDockWidget::undock()
       KDockWidget* parentOfTab = (KDockWidget*)parentTab->parent();
       delete parentTab; // KDockTabGroup
 
-      TQWidget* parentOfDockWidget = parentOfTab->tqparentWidget();
+      TQWidget* parentOfDockWidget = parentOfTab->parentWidget();
       if ( !parentOfDockWidget ){
           if ( isV ) lastTab->show();
       } else {
@@ -1396,16 +1396,16 @@ void KDockWidget::undock()
       d->splitPosInPercent = parentSplitterOfDockWidget->separatorPosInPercent();
 
       KDockWidget* secondWidget = (KDockWidget*)parentSplitterOfDockWidget->getAnother( this );
-      KDockWidget* group        = (KDockWidget*)parentSplitterOfDockWidget->tqparentWidget();
+      KDockWidget* group        = (KDockWidget*)parentSplitterOfDockWidget->parentWidget();
       setFormerBrotherDockWidget(secondWidget);
       applyToWidget( 0L );
       group->hide();
 
-      if ( !group->tqparentWidget() ){
+      if ( !group->parentWidget() ){
         secondWidget->applyToWidget( 0L, group->frameGeometry().topLeft() );
         secondWidget->resize( group->width(), group->height() );
       } else {
-        TQWidget* obj = group->tqparentWidget();
+        TQWidget* obj = group->parentWidget();
         secondWidget->applyToWidget( obj );
         if ( obj->inherits("KDockSplitter") ){
           KDockSplitter* parentOfGroup = (KDockSplitter*)obj;
@@ -1494,13 +1494,13 @@ void KDockWidget::setDockTabName( KDockTabGroup* tab )
   listOfCaption.remove( listOfCaption.length()-1, 1 );
   listOfName.remove( listOfName.length()-1, 1 );
 
-  tab->tqparentWidget()->setName( listOfName.utf8() );
-  tab->tqparentWidget()->setCaption( listOfCaption );
+  tab->parentWidget()->setName( listOfName.utf8() );
+  tab->parentWidget()->setCaption( listOfCaption );
 
-  tab->tqparentWidget()->tqrepaint( false ); // KDockWidget->tqrepaint
-  if ( tab->tqparentWidget()->parent() )
-    if ( tab->tqparentWidget()->parent()->inherits("KDockSplitter") )
-      ((KDockSplitter*)(tab->tqparentWidget()->parent()))->updateName();
+  tab->parentWidget()->tqrepaint( false ); // KDockWidget->tqrepaint
+  if ( tab->parentWidget()->parent() )
+    if ( tab->parentWidget()->parent()->inherits("KDockSplitter") )
+      ((KDockSplitter*)(tab->parentWidget()->parent()))->updateName();
 }
 
 bool KDockWidget::mayBeHide() const
@@ -1545,11 +1545,11 @@ void KDockWidget::makeDockVisible()
   }
   if ( isVisible() ) return;
 
-  TQWidget* p = tqparentWidget();
+  TQWidget* p = parentWidget();
   while ( p ){
     if ( !p->isVisible() )
       p->show();
-    p = p->tqparentWidget();
+    p = p->parentWidget();
   }
   if( !parent() ) // is undocked
     dockBack();
@@ -1948,8 +1948,8 @@ void KDockManager::startDrag( KDockWidget* w )
    || ( w->currentDockPos == KDockWidget::DockTop) || ( w->currentDockPos == KDockWidget::DockBottom)) {
     w->prevSideDockPosBeforeDrag = w->currentDockPos;
 
-    if ( w->tqparentWidget()->inherits("KDockSplitter") ){
-      KDockSplitter* parentSplitterOfDockWidget = (KDockSplitter*)(w->tqparentWidget());
+    if ( w->parentWidget()->inherits("KDockSplitter") ){
+      KDockSplitter* parentSplitterOfDockWidget = (KDockSplitter*)(w->parentWidget());
       w->d->splitPosInPercent = parentSplitterOfDockWidget->separatorPosInPercent();
     }
   }

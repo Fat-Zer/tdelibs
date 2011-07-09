@@ -2024,7 +2024,7 @@ int KToggleToolBarAction::plug( TQWidget* w, int index )
     // Note: tqtopLevelWidget() stops too early, we can't use it.
     TQWidget * tl = w;
     TQWidget * n;
-    while ( !tl->isDialog() && ( n = tl->tqparentWidget() ) ) // lookup parent and store
+    while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
       tl = n;
 
     KMainWindow * mw = tqt_dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow

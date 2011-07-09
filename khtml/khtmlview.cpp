@@ -1179,7 +1179,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
 
     if (d->clickCount > 0 &&
         TQPoint(d->clickX-xm,d->clickY-ym).manhattanLength() > TQApplication::startDragDistance()) {
-	d->clickCount = 0;  // moving the mouse outside the threshold tqinvalidates the click
+	d->clickCount = 0;  // moving the mouse outside the threshold invalidates the click
     }
 
     // execute the scheduled script. This is to make sure the mouseover events come after the mouseout events
@@ -1903,7 +1903,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    if (c->isWidgetType()) {
 		TQWidget *w = TQT_TQWIDGET(c);
 		// don't install the event filter on toplevels
-		if (w->tqparentWidget(true) == view) {
+		if (w->parentWidget(true) == view) {
 		    if (!strcmp(w->name(), "__khtml")) {
 			w->installEventFilter(this);
 			w->unsetCursor();
@@ -1931,7 +1931,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
         TQWidget *c = v;
 	while (v && v != view) {
             c = v;
-	    v = v->tqparentWidget(true);
+	    v = v->parentWidget(true);
 	}
 
 	if (v && !strcmp(c->name(), "__khtml")) {
@@ -1948,7 +1948,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 		    while (v && v != view) {
 			x += v->x();
 			y += v->y();
-			v = v->tqparentWidget();
+			v = v->parentWidget();
 		    }
 		    viewportToContents( x, y, x, y );
 		    TQPaintEvent *pe = TQT_TQPAINTEVENT(e);
@@ -1969,7 +1969,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    case TQEvent::MouseButtonPress:
 	    case TQEvent::MouseButtonRelease:
 	    case TQEvent::MouseButtonDblClick: {
-		if ( (w->tqparentWidget() == view || ::tqqt_cast<TQScrollView*>(c)) && !::tqqt_cast<TQScrollBar *>(w)) {
+		if ( (w->parentWidget() == view || ::tqqt_cast<TQScrollView*>(c)) && !::tqqt_cast<TQScrollBar *>(w)) {
 		    TQMouseEvent *me = TQT_TQMOUSEEVENT(e);
 		    TQPoint pt = w->mapTo( view, me->pos());
 		    TQMouseEvent me2(me->type(), pt, me->button(), me->state());
@@ -1988,7 +1988,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 	    }
 	    case TQEvent::KeyPress:
 	    case TQEvent::KeyRelease:
-		if (w->tqparentWidget() == view && !::tqqt_cast<TQScrollBar *>(w)) {
+		if (w->parentWidget() == view && !::tqqt_cast<TQScrollBar *>(w)) {
 		    TQKeyEvent *ke = TQT_TQKEYEVENT(e);
 		    if (e->type() == TQEvent::KeyPress)
 			keyPressEvent(ke);

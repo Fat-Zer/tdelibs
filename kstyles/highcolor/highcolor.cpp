@@ -1642,11 +1642,11 @@ void HighColorStyle::tqdrawComplexControl( TQ_ComplexControl control,
 					tqdrawPrimitive(PE_ButtonTool, p, button, cg, bflags, opt);
 
 				// Check whether to draw a background pixmap
-				else if ( toolbutton->tqparentWidget() &&
-						  toolbutton->tqparentWidget()->backgroundPixmap() &&
-						  !toolbutton->tqparentWidget()->backgroundPixmap()->isNull() )
+				else if ( toolbutton->parentWidget() &&
+						  toolbutton->parentWidget()->backgroundPixmap() &&
+						  !toolbutton->parentWidget()->backgroundPixmap()->isNull() )
 				{
-					TQPixmap pixmap = *(toolbutton->tqparentWidget()->backgroundPixmap());
+					TQPixmap pixmap = *(toolbutton->parentWidget()->backgroundPixmap());
 					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
 				}
 				else if (widget->parent())

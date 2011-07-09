@@ -901,7 +901,7 @@ void KMainWindow::finalizeGUI( bool force )
 
 void KMainWindow::saveWindowSize( KConfig * config ) const
 {
-  int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
+  int scnum = TQApplication::desktop()->screenNumber(parentWidget());
   TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
   int w, h;
 #if defined Q_WS_X11
@@ -937,7 +937,7 @@ void KMainWindow::restoreWindowSize( KConfig * config )
         parseGeometry(true);
     } else {
         // restore the size
-        int scnum = TQApplication::desktop()->screenNumber(tqparentWidget());
+        int scnum = TQApplication::desktop()->screenNumber(parentWidget());
         TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
         if ( d->defaultWindowSize.isNull() ) // only once
           d->defaultWindowSize = TQRect(desk.width(), width(), desk.height(), height()); // store default values

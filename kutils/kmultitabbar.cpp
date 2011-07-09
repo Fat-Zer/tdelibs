@@ -445,13 +445,13 @@ void KMultiTabBarButton::setStyle(KMultiTabBar::KMultiTabBarStyle style)
 
 void KMultiTabBarButton::hideEvent( TQHideEvent* he) {
 	TQPushButton::hideEvent(he);
-	KMultiTabBar *tb=tqt_dynamic_cast<KMultiTabBar*>(tqparentWidget());
+	KMultiTabBar *tb=tqt_dynamic_cast<KMultiTabBar*>(parentWidget());
 	if (tb) tb->updateSeparator();
 }
 
 void KMultiTabBarButton::showEvent( TQShowEvent* he) {
 	TQPushButton::showEvent(he);
-	KMultiTabBar *tb=tqt_dynamic_cast<KMultiTabBar*>(tqparentWidget());
+	KMultiTabBar *tb=tqt_dynamic_cast<KMultiTabBar*>(parentWidget());
 	if (tb) tb->updateSeparator();
 }
 

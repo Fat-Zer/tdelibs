@@ -127,7 +127,7 @@ class KCertPartPrivate {
 };
 
 
-KCertPart::KCertPart(TQWidget *tqparentWidget, const char *widgetName,
+KCertPart::KCertPart(TQWidget *parentWidget, const char *widgetName,
                      TQObject *parent, const char *name,
 		     const TQStringList & /*args*/ ) 
           : KParts::ReadWritePart(parent, name) {
@@ -149,7 +149,7 @@ _silentImport = false;
 d = new KCertPartPrivate;
 d->browserExtension = new KParts::BrowserExtension(this);
 
-_frame = new TQFrame(tqparentWidget, widgetName);
+_frame = new TQFrame(parentWidget, widgetName);
 setWidget(_frame);
 
 _baseGrid = new TQGridLayout(_frame, 15, 9, KDialog::marginHint(),

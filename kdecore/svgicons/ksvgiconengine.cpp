@@ -225,8 +225,8 @@ printf("[FIXME] *current = matrix * *current locks up under Qt4; bypassing for n
 		TQPtrList<TQDomNamedNodeMap> applyList;
 		applyList.setAutoDelete(true);
 
-		TQDomNode tqshape = node.tqparentNode();
-		for(; !tqshape.isNull() ; tqshape = tqshape.tqparentNode())
+		TQDomNode tqshape = node.parentNode();
+		for(; !tqshape.isNull() ; tqshape = tqshape.parentNode())
 			applyList.prepend(new TQDomNamedNodeMap(tqshape.attributes()));
 
 		// Apply parent attributes

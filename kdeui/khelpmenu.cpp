@@ -307,7 +307,7 @@ void KHelpMenu::contextHelpActivated()
   TQWhatsThis::enterWhatsThisMode();
   TQWidget* w = TQApplication::widgetAt( TQCursor::pos(), true );
   while ( w && !w->isTopLevel() && !w->inherits("QXEmbed")  )
-      w = w->tqparentWidget();
+      w = w->parentWidget();
 #ifdef Q_WS_X11
    if ( w && w->inherits("QXEmbed") )
 	  (( QXEmbed*) w )->enterWhatsThisMode();
