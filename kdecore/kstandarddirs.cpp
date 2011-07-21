@@ -839,7 +839,7 @@ TQStringList KStandardDirs::resourceDirs(const char *type) const
                 }
 		// UGLY HACK - Chris CHeney
 		if (local && (!strcmp("config", type)))
-		  candidates->append("/etc/kde3/");
+		  candidates->append("/etc/trinity/");
 		//
                 local = false;
             }
@@ -1336,7 +1336,7 @@ void KStandardDirs::addKDEDefaults()
     }
     else
     {
-       localKdeDir =  TQDir::homeDirPath() + "/.kde3/";
+       localKdeDir =  TQDir::homeDirPath() + "/.trinity/";
     }
 
     if (localKdeDir != QString("-/"))
