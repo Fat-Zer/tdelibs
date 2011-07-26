@@ -1,3 +1,11 @@
+PLEASE SEE ADDITIONAL RESOURCES AT http://www.trinitydesktop.org,
+including compilation instructions in the Wiki and IRC channel(s) for support!
+
+=========================================================================
+ORIGINAL TEXT
+MAY BE OUTDATED AS OF 07/25/2011
+=========================================================================
+
 THIS DOCUMENT DESCRIBES HOW YOU CAN COMPILE KDE WHEN USING SUBVERSION
 
 (If you use source tarballs, you can skip "make -f Makefile.cvs" and
