@@ -10,6 +10,7 @@
 #################################################
 
 add_subdirectory( plastik )
+add_subdirectory( asteroid )
 add_subdirectory( highcolor )
 add_subdirectory( highcontrast )
 add_subdirectory( themes )
