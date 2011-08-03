@@ -583,7 +583,7 @@ protected:
                                   returnData );
     }
 
-    virtual TQSize sizeFromContents( ContentsType contents,
+    virtual TQSize tqsizeFromContents( ContentsType contents,
                                     const TQWidget *widget,
                                     const TQSize &contentsSize,
                                     const TQStyleOption& opt = TQStyleOption::Default ) const

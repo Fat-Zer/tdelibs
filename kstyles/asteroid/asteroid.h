@@ -19,6 +19,8 @@ public:
 
 	void polish(TQWidget *);
 	void unPolish(TQWidget *);
+	void polish( TQApplication* );
+	void unPolish( TQApplication* );
 
 	
 	void renderSliderHandle(TQPainter *p,
@@ -39,6 +41,10 @@ public:
 	                         const TQColorGroup &,
 	                         SFlags = Style_Default,
 	                         const TQStyleOption & = TQStyleOption::Default) const;
+
+	int tqstyleHint(TQ_StyleHint, const TQWidget * = 0,
+			    const TQStyleOption & = TQStyleOption::Default,
+			    TQStyleHintReturn * = 0 ) const;
 
 	void tqdrawPrimitive(TQ_PrimitiveElement,
 	                   TQPainter *,
@@ -88,7 +94,7 @@ public:
 	                             SubControl,
 	                             const TQStyleOption & = TQStyleOption::Default) const;
 
-	TQSize sizeFromContents(ContentsType,
+	TQSize tqsizeFromContents(ContentsType,
 	                       const TQWidget *,
 	                       const TQSize &,
 	                       const TQStyleOption &) const;

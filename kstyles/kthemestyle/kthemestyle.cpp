@@ -212,7 +212,7 @@ void kDrawWindowsArrow ( TQPainter *p, const TQStyle* style, TQStyle::PrimitiveE
 
 
 
-TQSize KThemeStyle::sizeFromContents( ContentsType contents,
+TQSize KThemeStyle::tqsizeFromContents( ContentsType contents,
                                      const TQWidget* widget,
                                      const TQSize &contentSize,
                                      const TQStyleOption& opt ) const
@@ -304,7 +304,7 @@ TQSize KThemeStyle::sizeFromContents( ContentsType contents,
             }
             
         default:
-            return KThemeBase::sizeFromContents( contents, widget, contentSize, opt );
+            return KThemeBase::tqsizeFromContents( contents, widget, contentSize, opt );
     }
 }
 

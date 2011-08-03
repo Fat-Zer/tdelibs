@@ -20,7 +20,18 @@
 #include <tqlistbox.h>
 #include <tqslider.h>
 #include <tqpushbutton.h>
+#include <tqtextedit.h>
+#include <tqlineedit.h>
+#include <tqtoolbar.h>
+#include <tqradiobutton.h>
 #include <tqprogressbar.h>
+#include <tqtabwidget.h>
+#include <tqtabbar.h>
+#include <tqgroupbox.h>
+#include <tqtoolbutton.h>
+#include <tqdockwindow.h>
+#include <tqtooltip.h>
+#include <tqdrawutil.h>
 #include <kpixmap.h>
 
 #include <tqbitmap.h>
@@ -29,7 +40,24 @@
 #define l_arrow 0,-3, 0,3, -1,-2, -1,2, -2,-1, -2,1, -3,0
 #define r_arrow -2,-3, -2,3, -1,-2, -1,2, 0,-1, 0,1, 1,0
 
+#include <../../kutils/kmultitabbar.h>
+
 #include "asteroid.h"
+
+// #define MINIMUM_PUSHBUTTON_WIDTH 75;
+// #define MINIMUM_PUSHBUTTON_HEIGHT 23;
+#define MINIMUM_PUSHBUTTON_WIDTH 73;
+#define MINIMUM_PUSHBUTTON_HEIGHT 21;
+
+#define ETCH_X_OFFSET 1
+#define ETCH_Y_OFFSET 1
+
+//#define POPUPMENUITEM_TEXT_ETCH_CONDITIONS ( etchtext && !enabled && !active )
+#define POPUPMENUITEM_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
+
+#define PUSHBUTTON_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
+#define HEADER_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
+#define TABBAR_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
 
 /* Hackery to make metasources work */
 #include "asteroid.moc"
@@ -77,9 +105,12 @@ void AsteroidStyle::polish(TQWidget *w)
 /*	Screwing with the palette is fun! and required in order to make it feel
 	authentic. -clee */
 	TQPalette wp = w->tqpalette();
-	wp.setColor(TQColorGroup::Dark, wp.active().color(TQColorGroup::Button).dark(350));
-	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));
-	w->setPalette(wp);
+	//wp.setColor(TQColorGroup::Dark, wp.active().color(TQColorGroup::Button).dark(350));
+	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
+	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
+
+	if ( ::tqqt_cast<TQLineEdit*>(w) || ::tqqt_cast<TQTextEdit*>(w) || ::tqqt_cast<TQMenuBar*>(w) || ::tqqt_cast<TQPushButton*>(w) || ::tqqt_cast<TQRadioButton*>(w) || ::tqqt_cast<TQTabBar*>(w) || ::tqqt_cast<TQToolBar*>(w) || ::tqqt_cast<TQProgressBar*>(w) || ::tqqt_cast<TQTabWidget*>(w) /*|| ::tqqt_cast<TQHeader*>(w) || ::tqqt_cast<TQComboBox*>(w) || ::tqqt_cast<TQFrame*>(w) || ::tqqt_cast<TQGroupBox*>(w) || ::tqqt_cast<TQPopupMenu*>(w) || ::tqqt_cast<TQToolButton*>(w) || ::tqqt_cast<TQDockWindow*>(w)|| ::tqqt_cast<TQButton*>(w)*/)
+		w->setPalette(wp);
 
 	if (w->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
 		w->installEventFilter(this);
@@ -91,6 +122,29 @@ void AsteroidStyle::polish(TQWidget *w)
 void AsteroidStyle::unPolish(TQWidget *w)
 {
 	KStyle::unPolish(w);
+}
+
+/*!
+    \reimp
+
+    Changes some application-wide settings
+*/
+void
+AsteroidStyle::polish( TQApplication* app)
+{	
+	TQPalette wp = TQApplication::tqpalette();
+	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
+	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
+	TQApplication::tqsetPalette( wp, TRUE );
+}
+
+/*! \reimp
+*/
+void
+AsteroidStyle::unPolish( TQApplication* /* app */ )
+{
+	TQFont f = TQApplication::font();
+	TQApplication::tqsetFont( f, TRUE ); // get rid of the special fonts for special widget classes
 }
 
 void AsteroidStyle::renderMenuBlendPixmap(KPixmap &pix,
@@ -219,6 +273,29 @@ void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
 	}
 }
 
+int AsteroidStyle::tqstyleHint( TQ_StyleHint stylehint,
+                                   const TQWidget *widget,
+                                   const TQStyleOption &option,
+                                   TQStyleHintReturn* returnData ) const
+{
+	switch (stylehint) {
+		case SH_EtchDisabledText:
+// 		case SH_Slider_SnapToValue:
+// 		case SH_PrintDialog_RightAlignButtons:
+// 		case SH_MainWindow_SpaceBelowMenuBar:
+// 		case SH_FontDialog_SelectAssociatedText:
+// 		case SH_PopupMenu_AllowActiveAndDisabled:
+// 		case SH_MenuBar_AltKeyNavigation:
+// 		case SH_MenuBar_MouseTracking:
+// 		case SH_PopupMenu_MouseTracking:
+// 		case SH_ComboBox_ListMouseTracking:
+// 		case SH_ScrollBar_StopMouseOverSlider:
+			return 1;
+		
+		default:
+			return KStyle::tqstyleHint(stylehint, widget, option, returnData);
+	}
+}
 
 void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
                                   TQPainter *p,
@@ -265,13 +342,44 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 			break;
 		}
 
-		case PE_HeaderSection:
-		case PE_ButtonBevel: {
-			p->setPen(cg.dark());
+		case PE_HeaderSection: {
+			p->setPen(cg.shadow());
 			p->setBrush(cg.background());
 			p->drawRect(r);
 
-			if (sf & Style_On || sf & Style_Down) {
+// 			if (sf & Style_On) {
+// 				p->setPen(cg.mid());
+// 				p->setBrush(TQBrush(cg.light(),TQt::Dense4Pattern));
+// 				p->drawRect(r);
+// 				p->setPen(cg.buttonText());
+// 			} else if (sf & Style_Down) {
+				p->setPen(cg.mid());
+				p->drawRect(r);
+				p->setPen(cg.buttonText());
+// 			} else {
+// 				p->setPen(cg.light());
+// 				p->drawLine(x, y, x2-1, y);
+// 				p->drawLine(x, y, x, y2-1);
+// 
+// 				p->setPen(cg.mid());
+// 				p->drawLine(x2-1, y2-1, x+1, y2-1);
+// 				p->drawLine(x2-1, y2-1, x2-1, y+1);
+// 			}
+
+			break;
+		}
+
+		case PE_ButtonBevel: {
+			p->setPen(cg.shadow());
+			p->setBrush(cg.background());
+			p->drawRect(r);
+
+			if (sf & Style_On) {
+				p->setPen(cg.mid());
+				p->setBrush(TQBrush(cg.light(),TQt::Dense4Pattern));
+				p->drawRect(r);
+				p->setPen(cg.buttonText());
+			} else if (sf & Style_Down) {
 				p->setPen(cg.mid());
 				p->drawRect(r);
 				p->setPen(cg.buttonText());
@@ -709,6 +817,231 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 		CE_ToolBoxTab
 
 	 */
+
+#ifndef TQT_NO_TABBAR
+	case CE_TabBarTab:
+		{
+		if ( !w || !w->parentWidget() || !o.tab() )
+			break;
+	
+		const TQTabBar * tb = (const TQTabBar *) w;
+		const TQTab * t = o.tab();
+		bool selected = sf & Style_Selected;
+		bool lastTab = (tb->indexOf( t->identifier() ) == tb->count()-1) ?
+				TRUE : FALSE;
+		TQRect r2( r );
+		if ( tb->tqshape() == TQTabBar::RoundedAbove ) {
+			p->setPen( cg.light() );
+			p->drawLine( r2.left(), r2.bottom()-1, r2.right(), r2.bottom()-1 );
+			if ( r2.left() == 0 )
+			p->drawPoint( tb->rect().bottomLeft() );
+	
+			if ( selected ) {
+			p->fillRect( TQRect( r2.left()+1, r2.bottom()-1, r2.width()-3, 2),
+					cg.brush( TQColorGroup::Background ));
+			p->setPen( cg.background() );
+			p->drawLine( r2.left()+1, r2.bottom(), r2.left()+1, r2.top()+2 );
+			p->setPen( cg.light() );
+			} else {
+			p->setPen( cg.light() );
+			r2.setRect( r2.left() + 2, r2.top() + 2,
+				r2.width() - 4, r2.height() - 2 );
+			}
+	
+			int x1, x2;
+			x1 = r2.left();
+			x2 = r2.right() - 2;
+			p->drawLine( x1, r2.bottom()-1, x1, r2.top() + 2 );
+			x1++;
+			p->drawPoint( x1, r2.top() + 1 );
+			x1++;
+			p->drawLine( x1, r2.top(), x2, r2.top() );
+			x1 = r2.left();
+	
+			p->setPen( cg.dark() );
+			x2 = r2.right() - 1;
+			p->drawLine( x2, r2.top() + 2, x2, r2.bottom() - 1 +
+				(selected ? 0:-1) );
+			p->setPen( cg.shadow() );
+			p->drawPoint( x2, r2.top() + 1 );
+			p->drawPoint( x2, r2.top() + 1 );
+			x2++;
+			p->drawLine( x2, r2.top() + 2, x2, r2.bottom() -
+				(selected ? (lastTab ? 0:1) :2));
+		} else if ( tb->tqshape() == TQTabBar::RoundedBelow ) {
+			bool rightAligned = tqstyleHint( SH_TabBar_Alignment, tb ) == TQt::AlignRight;
+			bool firstTab = tb->indexOf( t->identifier() ) == 0;
+			if ( selected ) {
+			p->fillRect( TQRect( r2.left()+1, r2.top(), r2.width()-3, 1),
+					cg.brush( TQColorGroup::Background ));
+			p->setPen( cg.background() );
+			p->drawLine( r2.left()+1, r2.top(), r2.left()+1, r2.bottom()-2 );
+			p->setPen( cg.dark() );
+			} else {
+			p->setPen( cg.shadow() );
+			p->drawLine( r2.left() +
+					(rightAligned && firstTab ? 0 : 1),
+					r2.top() + 1,
+					r2.right() - (lastTab ? 0 : 2),
+					r2.top() + 1 );
+	
+			if ( rightAligned && lastTab )
+				p->drawPoint( r2.right(), r2.top() );
+			p->setPen( cg.dark() );
+			p->drawLine( r2.left(), r2.top(), r2.right() - 1,
+					r2.top() );
+			r2.setRect( r2.left() + 2, r2.top(),
+					r2.width() - 4, r2.height() - 2 );
+			}
+	
+			p->drawLine( r2.right() - 1, r2.top() + (selected ? 0: 2),
+				r2.right() - 1, r2.bottom() - 2 );
+			p->drawPoint( r2.right() - 2, r2.bottom() - 2 );
+			p->drawLine( r2.right() - 2, r2.bottom() - 1,
+				r2.left() + 1, r2.bottom() - 1 );
+	
+			p->setPen( cg.shadow() );
+			p->drawLine( r2.right(),
+				r2.top() + (lastTab && rightAligned &&
+						selected) ? 0 : 1,
+				r2.right(), r2.bottom() - 1 );
+			p->drawPoint( r2.right() - 1, r2.bottom() - 1 );
+			p->drawLine( r2.right() - 1, r2.bottom(),
+				r2.left() + 2, r2.bottom() );
+	
+			p->setPen( cg.light() );
+			p->drawLine( r2.left(), r2.top() + (selected ? 0 : 2),
+				r2.left(), r2.bottom() - 2 );
+		} else {
+			TQCommonStyle::tqdrawControl(ce, p, w, r, cg, sf, o);
+		}
+		break;
+		}
+
+	case CE_TabBarLabel:
+		{
+		if ( o.isDefault() )
+			break;
+	
+		const TQTabBar * tb = (const TQTabBar *) w;
+		TQTab * t = o.tab();
+
+		const bool enabled = sf & Style_Enabled;
+		bool etchtext = tqstyleHint( SH_EtchDisabledText );
+	
+		TQRect tr = r;
+		if ( t->identifier() == tb->currentTab() )
+			tr.setBottom( tr.bottom() -
+				tqpixelMetric( TQStyle::PM_DefaultFrameWidth, tb ) );
+	
+		int tqalignment = TQt::AlignCenter | TQt::ShowPrefix;
+		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
+			tqalignment |= TQt::NoAccel;
+		tr.setWidth(tr.width()+4);	// Compensate for text appearing too far to the left
+		TQRect tr_offset = TQRect(tr.x()+ETCH_X_OFFSET, tr.y()+ETCH_Y_OFFSET, tr.width(), tr.height());
+		if TABBAR_TEXT_ETCH_CONDITIONS {
+			TQPen savePen = p->pen();
+			p->setPen( cg.light() );
+			TQColorGroup etchedcg = cg;
+			etchedcg.setColor( TQColorGroup::Text, cg.light() );
+			etchedcg.setColor( TQColorGroup::Mid, cg.light() );
+			etchedcg.setColor( TQColorGroup::Midlight, cg.light() );
+			etchedcg.setColor( TQColorGroup::Foreground, cg.light() );
+			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
+			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
+			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
+			drawItem( p, tr_offset, tqalignment, etchedcg, enabled, 0, t->text() );
+			p->setPen(savePen);
+		}
+		drawItem( p, tr, tqalignment, cg, enabled, 0, t->text() );
+	
+		if ( (sf & Style_HasFocus) && !t->text().isEmpty() )
+			tqdrawPrimitive( TQStyle::PE_FocusRect, p, r, cg );
+		break;
+		}
+#endif // TQT_NO_TABBAR
+
+// 	case CE_CheckBoxLabel:
+// 	{
+// #ifndef TQT_NO_CHECKBOX
+// 		const TQCheckBox *checkbox = (const TQCheckBox *) w;
+// 
+// 		const bool enabled = sf & Style_Enabled;
+// 		bool etchtext = tqstyleHint( SH_EtchDisabledText );
+// 	
+// 		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
+// 		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
+// 			tqalignment |= TQt::NoAccel;
+// 
+// 		TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
+// 		if CHECKBOX_TEXT_ETCH_CONDITIONS {
+// 			TQPen savePen = p->pen();
+// 			p->setPen( cg.light() );
+// 			TQColorGroup etchedcg = cg;
+// 			etchedcg.setColor( TQColorGroup::Text, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::Mid, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::Midlight, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::Foreground, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
+// 			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+// 			p->setPen(savePen);
+// 		}
+// 		drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+// 	
+// 		if (sf & Style_HasFocus) {
+// 			TQRect fr = tqvisualRect(subRect(SR_CheckBoxFocusRect, w), w);
+// 			tqdrawPrimitive(TQStyle::PE_FocusRect, p, fr, cg, sf);
+// 		}
+// #endif
+// 	    break;
+// 	}
+
+// 	case CE_RadioButtonLabel:
+// 	{
+// #ifndef TQT_NO_RADIOBUTTON
+// 		const TQRadioButton *radiobutton = (const TQRadioButton *) w;
+// 
+// 		const bool enabled = sf & Style_Enabled;
+// 		bool etchtext = tqstyleHint( SH_EtchDisabledText );
+// 
+// 		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
+// 		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
+// 			tqalignment |= TQt::NoAccel;
+// 
+// 		TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
+// 		if RADIOBUTTON_TEXT_ETCH_CONDITIONS {
+// 			TQPen savePen = p->pen();
+// 			p->setPen( cg.light() );
+// 			TQColorGroup etchedcg = cg;
+// 			etchedcg.setColor( TQColorGroup::Text, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::Mid, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::Midlight, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::Foreground, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
+// 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
+// 			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, enabled, radiobutton->pixmap(), radiobutton->text());
+// 			p->setPen(savePen);
+// 		}
+// 		drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, enabled, radiobutton->pixmap(), radiobutton->text());
+// 	
+// 		if (sf & Style_HasFocus) {
+// 			TQRect fr = tqvisualRect(subRect(SR_RadioButtonFocusRect, w), w);
+// 			tqdrawPrimitive(TQStyle::PE_FocusRect, p, fr, cg, sf);
+// 		}
+// #endif
+// 	    break;
+// 	}
+
+	case CE_ToolBoxTab:
+		{
+		qDrawShadePanel( p, r, cg, sf & (Style_Sunken | Style_Down | Style_On) , 1,
+				&cg.brush(TQColorGroup::Button));
+		break;
+		}
+
 		case CE_ProgressBarContents: {
 
 
@@ -791,11 +1124,33 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 		case CE_PushButton: {
 			const TQPushButton *pb = dynamic_cast<const TQPushButton *>(w);
 
-			if (pb->isDefault()) {
-				tqdrawPrimitive(PE_ButtonDefault, p, r, cg, sf);
-				tqdrawPrimitive(PE_ButtonBevel, p, TQRect(x+1, y+1, sw-2, sh-2), cg, sf);
-			} else {
-				tqdrawPrimitive(PE_ButtonBevel, p, r, cg, sf);
+			if ( ::tqqt_cast<KMultiTabBarButton*>(w) ) {
+				p->setPen(cg.mid());
+				p->setBrush(cg.background());
+				p->drawRect(r);
+	
+				if (sf & Style_On) {
+					p->setPen(cg.mid());
+					p->setBrush(TQBrush(cg.light(),TQt::Dense4Pattern));
+					p->drawRect(r);
+					p->setPen(cg.buttonText());
+				} else if (sf & Style_Down) {
+					p->setPen(cg.mid());
+					p->drawRect(r);
+					p->setPen(cg.buttonText());
+				} else {
+					p->setPen(cg.mid());
+					p->drawLine(x, y, x2-1, y);
+					p->drawLine(x, y, x, y2-1);
+				}
+			}
+			else {
+				if (pb->isDefault()) {
+					tqdrawPrimitive(PE_ButtonDefault, p, r, cg, sf);
+					tqdrawPrimitive(PE_ButtonBevel, p, TQRect(x+1, y+1, sw-2, sh-2), cg, sf);
+				} else {
+					tqdrawPrimitive(PE_ButtonBevel, p, r, cg, sf);
+				}
 			}
 
 			break;
@@ -805,6 +1160,8 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 			bool active = sf & Style_Active;
 			bool focused = sf & Style_HasFocus;
 			bool down = sf & Style_Down;
+			bool enabled = sf & Style_Enabled;
+			bool etchtext = tqstyleHint( SH_EtchDisabledText );
 			const int text_flags = AlignVCenter | AlignHCenter | ShowPrefix | DontClip | SingleLine;
 
 			if (active && focused) {
@@ -831,6 +1188,13 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 			}
 
 			p->setPen(cg.foreground());
+			TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
+			if POPUPMENUITEM_TEXT_ETCH_CONDITIONS {
+				TQPen savePen = p->pen();
+				p->setPen( cg.light() );
+				p->drawText(r_offset, text_flags, o.menuItem()->text());
+				p->setPen(savePen);
+			}
 			p->drawText(r, text_flags, o.menuItem()->text());
 
 			/*if (active && focused && down) {
@@ -844,6 +1208,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 		case CE_PushButtonLabel: {
 			const TQPushButton *pb = dynamic_cast<const TQPushButton *>(w);
 			const bool enabled = sf & Style_Enabled;
+			bool etchtext = tqstyleHint( SH_EtchDisabledText );
 			const int text_flags = AlignVCenter | AlignHCenter | ShowPrefix | DontClip | SingleLine;
 			int dx = 0;
 
@@ -857,12 +1222,17 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 				TQPixmap pixmap = pb->iconSet()->pixmap(TQIconSet::Small, mode);
 				TQRect pr(0, 0, pixmap.width(), pixmap.height());
 
-				pr.moveCenter(r.center());
-
-				if (!pb->text().isNull()) {
-					dx = r.height() - pixmap.height();
-					dx = static_cast<int>(dx * 0.5);
-					pr.moveLeft(dx);
+				if (pb->text().isNull())
+					dx = r.center().x()-(pixmap.width()/2);
+				else
+					dx = (r.height() - pixmap.height())/2;
+				if ( ::tqqt_cast<KMultiTabBarButton*>(pb) ) {
+					pr.moveCenter(TQPoint(((pixmap.width()/2)+dx), r.center().y()));
+					dx = (pixmap.width()+dx+(dx*0.5));
+				}
+				else {
+					pr.moveCenter(TQPoint(((pixmap.width()/2)+dx), r.center().y()));
+					dx = (pixmap.width()+dx+(dx*0.5));
 				}
 
 				p->drawPixmap(pr.topLeft(), pixmap);
@@ -875,11 +1245,25 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 			if (!pb->text().isNull()) {
 				p->setPen(enabled ? cg.buttonText() : pb->tqpalette().disabled().buttonText());
 				if (pb->iconSet() && !pb->iconSet()->isNull()) {
-					TQRect tr(p->boundingRect(r, text_flags, pb->text()));
-					tr.moveCenter(r.center());
-					tr.moveBy(dx, 0);
+					TQRect tpr(dx, r.y(), r.width()-dx, r.height());
+					TQRect tr(p->boundingRect(tpr, text_flags, pb->text()));
+
+					TQRect tr_offset = TQRect(tr.x()+ETCH_X_OFFSET, tr.y()+ETCH_Y_OFFSET, tr.width(), tr.height());
+					if PUSHBUTTON_TEXT_ETCH_CONDITIONS {
+						TQPen savePen = p->pen();
+						p->setPen( cg.light() );
+						p->drawText(tr_offset, text_flags, pb->text());
+						p->setPen(savePen);
+					}
 					p->drawText(tr, text_flags, pb->text());
 				} else {
+					TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
+					if PUSHBUTTON_TEXT_ETCH_CONDITIONS {
+						TQPen savePen = p->pen();
+						p->setPen( cg.light() );
+						p->drawText(r_offset, text_flags, pb->text());
+						p->setPen(savePen);
+					}
 					p->drawText(r, text_flags, pb->text());
 				}
 			}
@@ -891,6 +1275,8 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 		case CE_HeaderLabel: {
 			const TQHeader *hw = dynamic_cast<const TQHeader *>(w);
 			int hs = o.headerSection();
+			const bool enabled = sf & Style_Enabled;
+			bool etchtext = tqstyleHint( SH_EtchDisabledText );
 			const int text_flags = AlignVCenter | ShowPrefix | DontClip | SingleLine;
 
 			TQIconSet *is = hw->iconSet(hs);
@@ -901,9 +1287,23 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 				pr.setLeft(r.center().y() - (pm.height() - 1) / 2);
 				p->drawPixmap(pr.topLeft(), pm);
 				pr = TQRect(pr.width(), r.top(), r.width() - pr.width(), r.height());
+				TQRect pr_offset = TQRect(pr.x()+ETCH_X_OFFSET, pr.y()+ETCH_Y_OFFSET, pr.width(), pr.height());
+				if HEADER_TEXT_ETCH_CONDITIONS {
+					TQPen savePen = p->pen();
+					p->setPen( cg.light() );
+					p->drawText(pr_offset, text_flags, hw->label(hs));
+					p->setPen(savePen);
+				}
 				p->drawText(pr, text_flags, hw->label(hs));
 			} else {
 				p->setPen(cg.buttonText());
+				TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
+				if HEADER_TEXT_ETCH_CONDITIONS {
+					TQPen savePen = p->pen();
+					p->setPen( cg.light() );
+					p->drawText(r_offset, text_flags, hw->label(hs));
+					p->setPen(savePen);
+				}
 				p->drawText(r, text_flags, hw->label(hs));
 			}
 			break;
@@ -929,6 +1329,8 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 			bool active = sf & Style_Active;
 			bool disabled = !mi->isEnabled();
 			bool checkable = pum->isCheckable();
+			bool enabled = mi->isEnabled();
+			bool etchtext = tqstyleHint( SH_EtchDisabledText );
 
 			int xpos = x;
 			int xm = itemFrame + checkcol + itemHMargin;
@@ -999,6 +1401,20 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 			if (mi->custom()) {
 				int m = itemVMargin;
 				p->setPen(cg.foreground());
+				if POPUPMENUITEM_TEXT_ETCH_CONDITIONS {
+					TQPen savePen = p->pen();
+					p->setPen( cg.light() );
+					TQColorGroup etchedcg = cg;
+					etchedcg.setColor( TQColorGroup::Text, cg.light() );
+					etchedcg.setColor( TQColorGroup::Mid, cg.light() );
+					etchedcg.setColor( TQColorGroup::Midlight, cg.light() );
+					etchedcg.setColor( TQColorGroup::Foreground, cg.light() );
+					etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
+					etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
+					etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
+					mi->custom()->paint(p, etchedcg, active, !disabled, x+xm+ETCH_X_OFFSET, y+m+ETCH_Y_OFFSET, sw-xm-tab+1, sh-2*m);
+					p->setPen(savePen);
+				}
 				mi->custom()->paint(p, cg, active, !disabled, x+xm, y+m, sw-xm-tab+1, sh-2*m);
 				return;
 			} else {
@@ -1023,20 +1439,36 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 						int xp = x + sw - tab - rightBorder - itemHMargin - itemFrame + 1;
 
 						TQRect rr = TQRect(xp, y+m, tab, sh-(2*m));
+						TQRect rr_offset = TQRect(xp+ETCH_X_OFFSET, y+m+ETCH_Y_OFFSET, tab, sh-(2*m));
 						if (backwards) {
 							rr = tqvisualRect(rr, r);
+							rr_offset = tqvisualRect(rr_offset, r);
 						}
 
+						if POPUPMENUITEM_TEXT_ETCH_CONDITIONS {
+							TQPen savePen = p->pen();
+							p->setPen( cg.light() );
+							p->drawText(rr_offset, text_flags, s.mid(t+1));
+							p->setPen(savePen);
+						}
 						p->drawText(rr, text_flags, s.mid(t+1));
 						s = s.left(t);
 					}
 
 					TQRect rr = TQRect(xpos, y+m, sw-xm-tab+1, sh-(2*m));
+					TQRect rr_offset = TQRect(xpos+ETCH_X_OFFSET, y+m+ETCH_Y_OFFSET, sw-xm-tab+1, sh-(2*m));
 					if (backwards) {
 						rr = tqvisualRect(rr, r);
+						rr_offset = tqvisualRect(rr_offset, r);
 						text_flags |= AlignRight;
 					}
 
+					if POPUPMENUITEM_TEXT_ETCH_CONDITIONS {
+						TQPen savePen = p->pen();
+						p->setPen( cg.light() );
+						p->drawText(rr_offset, text_flags, s);
+						p->setPen(savePen);
+					}
 					p->drawText(rr, text_flags, s);
 				} else if (mi->pixmap()) {
 					TQPixmap *pixmap = mi->pixmap();
@@ -1217,6 +1649,52 @@ void AsteroidStyle::tqdrawComplexControl(TQ_ComplexControl cc,
 			break;
 		}
 
+#ifndef TQT_NO_TOOLBUTTON
+		case CC_ToolButton:
+		{
+			const TQToolButton *toolbutton = (const TQToolButton *) w;
+		
+			TQColorGroup c = cg;
+			if ( toolbutton->backgroundMode() != TQt::PaletteButton )
+				c.setBrush( TQColorGroup::Button, toolbutton->paletteBackgroundColor() );
+			TQRect button, menuarea;
+			button   = tqvisualRect( querySubControlMetrics(cc, w, SC_ToolButton, o), w );
+			menuarea = tqvisualRect( querySubControlMetrics(cc, w, SC_ToolButtonMenu, o), w );
+		
+			SFlags bflags = sf;
+			SFlags mflags = sf;
+		
+			if (sa & SC_ToolButton)
+				bflags |= Style_Down;
+			if (sa & SC_ToolButtonMenu)
+				mflags |= Style_Down;
+
+			if (sc & SC_ToolButton) {
+				if (bflags & (Style_Down | Style_On | Style_Raised)) {
+					tqdrawPrimitive(TQStyle::PE_ButtonTool, p, button, c, bflags, o);
+				} else if ( toolbutton->parentWidget() && toolbutton->parentWidget()->backgroundPixmap() && ! toolbutton->parentWidget()->backgroundPixmap()->isNull() ) {
+					TQPixmap pixmap =
+					*(toolbutton->parentWidget()->backgroundPixmap());
+			
+					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
+				}
+			}
+		
+			if (sc & SC_ToolButtonMenu) {
+				if (mflags & (Style_Down | Style_On | Style_Raised))
+					tqdrawPrimitive(TQStyle::PE_ButtonDropDown, p, menuarea, c, mflags, o);
+				tqdrawPrimitive(TQStyle::PE_ArrowDown, p, menuarea, c, mflags, o);
+			}
+		
+			if (toolbutton->hasFocus() && !toolbutton->focusProxy()) {
+				TQRect fr = toolbutton->rect();
+				fr.addCoords(3, 3, -3, -3);
+				tqdrawPrimitive(TQStyle::PE_FocusRect, p, fr, c);
+			}
+		
+			break;
+		}
+#endif // TQT_NO_TOOLBUTTON
 
 		case CC_Slider: {
 			const TQSlider* slider = (const TQSlider*)w;
@@ -1250,7 +1728,7 @@ void AsteroidStyle::tqdrawComplexControl(TQ_ComplexControl cc,
                         // Draw the tickmarks
 			/*if (controls & SC_SliderTickmarks)
 				TQCommonStyle::tqdrawComplexControl(control, &p2,
-						r, cg, flags, SC_SliderTickmarks, active, opt);*/
+						r, cg, flags, SC_SliderTickmarks, sa, o);*/
 
 			// Draw the slider handle
 			if ((sc & SC_SliderHandle) && handle.isValid()) {
@@ -1403,11 +1881,11 @@ int AsteroidStyle::tqpixelMetric(PixelMetric pm, const TQWidget *w) const
 		}
 
 		case PM_DialogButtonsButtonWidth: {
-			return 75;
+			return MINIMUM_PUSHBUTTON_WIDTH;
 		}
 
 		case PM_DialogButtonsButtonHeight: {
-			return 23;
+			return MINIMUM_PUSHBUTTON_HEIGHT;
 		}
 
 		case PM_DockWindowSeparatorExtent:
@@ -1424,6 +1902,24 @@ int AsteroidStyle::tqpixelMetric(PixelMetric pm, const TQWidget *w) const
 				return KStyle::tqpixelMetric(pm, w);
 			}
 		}
+
+		case PM_TabBarTabOverlap:
+			return 4;
+		
+		case PM_TabBarBaseHeight:
+			return 0;
+		
+		case PM_TabBarBaseOverlap:
+			return 0;
+		
+		case PM_TabBarTabHSpace:
+			return 24;
+		
+		case PM_TabBarTabShiftHorizontal:
+			return 4;
+
+		case PM_TabBarTabShiftVertical:
+			return 2;
 
 		default: {
 			return KStyle::tqpixelMetric(pm, w);
@@ -1547,7 +2043,7 @@ TQRect AsteroidStyle::querySubControlMetrics(TQ_ComplexControl cc,
 	}
 }
 
-TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
+TQSize AsteroidStyle::tqsizeFromContents(ContentsType ct,
                                       const TQWidget *w,
                                       const TQSize &s,
                                       const TQStyleOption &o) const
@@ -1576,12 +2072,30 @@ TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
 			const TQPushButton *pb = dynamic_cast<const TQPushButton *>(w);
 			const TQSize ret = KStyle::tqsizeFromContents(ct, w, s, o);
 			int rw = ret.width(), rh = ret.height();
-			int mw = 75, mh = 23;
+			int mw;
+			int mh;
+			if (pb->text().length() > 0) {
+				mw = MINIMUM_PUSHBUTTON_WIDTH;
+				mh = MINIMUM_PUSHBUTTON_HEIGHT;
+			}
+			else {
+				mw = 1;
+				mh = 1;
+			}
 
-			if (pb->iconSet() && !pb->iconSet()->isNull()) {
-				rw += pb->iconSet()->pixmap(TQIconSet::Small, TQIconSet::Normal).width();
-			} else if (pb->pixmap() && !pb->pixmap()->isNull()) {
-				rw += pb->pixmap()->width();
+			if (pb->text().length() > 0) {
+				if (pb->iconSet() && !pb->iconSet()->isNull()) {
+					rw += ((pb->iconSet()->pixmap(TQIconSet::Small, TQIconSet::Normal).width())*2.0);
+				} else if (pb->pixmap() && !pb->pixmap()->isNull()) {
+					rw += ((pb->pixmap()->width())*2.0);
+				}
+			}
+			else {
+				if (pb->iconSet() && !pb->iconSet()->isNull()) {
+					rw += ((pb->iconSet()->pixmap(TQIconSet::Small, TQIconSet::Normal).width())*0.0);
+				} else if (pb->pixmap() && !pb->pixmap()->isNull()) {
+					rw += ((pb->pixmap()->width())*0.0);
+				}
 			}
 
 			return TQSize((rw < mw ? mw : rw), (rh < mh ? mh : rh));
@@ -1590,20 +2104,6 @@ TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
 		case CT_ComboBox: {
 			int padding = (tqpixelMetric(PM_DefaultFrameWidth, w) * 2) + 1;
 			return TQSize(s.width() + 21, s.height() + padding);
-		}
-
-		case CT_MenuBar: {
-			const TQMenuBar *mb = dynamic_cast<const TQMenuBar *>(w);
-			int sh = TQFontInfo(mb->font()).pixelSize() + 4;
-			int sw = 10;
-			return TQSize(sw, sh);
-		}
-
-		case CT_Header: {
-			const TQHeader *hw = dynamic_cast<const TQHeader *>(w);
-			int sh = TQFontInfo(hw->font()).pixelSize() + 8;
-			int sw = 10;
-			return TQSize(sw, sh);
 		}
 
 		case CT_PopupMenuItem: {
@@ -1651,6 +2151,21 @@ TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
 			sw += 20;
 
 			return TQSize(sw, sh);
+		}
+
+		case CT_MenuBar: {
+			const TQMenuBar *mb = dynamic_cast<const TQMenuBar *>(w);
+			int sh = TQFontInfo(mb->font()).pixelSize() + 4;
+			int sw = 10;
+			return TQSize(sw, sh);
+		}
+
+		case CT_Header: {
+			// Fall through is intentional
+// 			const TQHeader *hw = dynamic_cast<const TQHeader *>(w);
+// 			int sh = TQFontInfo(hw->font()).pixelSize() + 8;
+// 			int sw = 10;
+// 			return TQSize(sw, sh);
 		}
 
 		default: {

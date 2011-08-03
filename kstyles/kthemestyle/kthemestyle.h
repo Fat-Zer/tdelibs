@@ -124,7 +124,7 @@ public:
                            const TQStyleOption& = TQStyleOption::Default,
                            QStyleHintReturn* returnData = 0 ) const;
 
-    virtual TQSize sizeFromContents( ContentsType contents,
+    virtual TQSize tqsizeFromContents( ContentsType contents,
                                     const TQWidget *widget,
                                     const TQSize &contentsSize,
                                     const TQStyleOption& = TQStyleOption::Default ) const;

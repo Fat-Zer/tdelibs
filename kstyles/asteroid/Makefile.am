@@ -11,7 +11,7 @@ noinst_HEADERS = asteroid.h
 kde_style_LTLIBRARIES = asteroid.la
 
 asteroid_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-asteroid_la_LIBADD = -lkdefx
+asteroid_la_LIBADD = -lkdefx -lkutils
 asteroid_la_SOURCES = asteroid.cpp
 
 themercdir = $(kde_datadir)/kstyle/themes
