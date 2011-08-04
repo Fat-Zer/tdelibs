@@ -23,6 +23,7 @@
 #include <tqtextedit.h>
 #include <tqlineedit.h>
 #include <tqtoolbar.h>
+#include <tqcheckbox.h>
 #include <tqradiobutton.h>
 #include <tqprogressbar.h>
 #include <tqtabwidget.h>
@@ -58,6 +59,8 @@
 #define PUSHBUTTON_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
 #define HEADER_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
 #define TABBAR_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
+#define CHECKBOX_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
+#define RADIOBUTTON_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
 
 /* Hackery to make metasources work */
 #include "asteroid.moc"
@@ -109,7 +112,7 @@ void AsteroidStyle::polish(TQWidget *w)
 	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
 	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
 
-	if ( ::tqqt_cast<TQLineEdit*>(w) || ::tqqt_cast<TQTextEdit*>(w) || ::tqqt_cast<TQMenuBar*>(w) || ::tqqt_cast<TQPushButton*>(w) || ::tqqt_cast<TQRadioButton*>(w) || ::tqqt_cast<TQTabBar*>(w) || ::tqqt_cast<TQToolBar*>(w) || ::tqqt_cast<TQProgressBar*>(w) || ::tqqt_cast<TQTabWidget*>(w) /*|| ::tqqt_cast<TQHeader*>(w) || ::tqqt_cast<TQComboBox*>(w) || ::tqqt_cast<TQFrame*>(w) || ::tqqt_cast<TQGroupBox*>(w) || ::tqqt_cast<TQPopupMenu*>(w) || ::tqqt_cast<TQToolButton*>(w) || ::tqqt_cast<TQDockWindow*>(w)|| ::tqqt_cast<TQButton*>(w)*/)
+	if ( ::tqqt_cast<TQLineEdit*>(w) || ::tqqt_cast<TQTextEdit*>(w) || ::tqqt_cast<TQMenuBar*>(w) || ::tqqt_cast<TQPushButton*>(w) || ::tqqt_cast<TQRadioButton*>(w) || ::tqqt_cast<TQTabBar*>(w) || ::tqqt_cast<TQToolBar*>(w) || ::tqqt_cast<TQProgressBar*>(w) || ::tqqt_cast<TQTabWidget*>(w) /*|| ::tqqt_cast<TQHeader*>(w) || ::tqqt_cast<TQComboBox*>(w) || ::tqqt_cast<TQFrame*>(w)*/ || ::tqqt_cast<TQGroupBox*>(w) || ::tqqt_cast<TQPopupMenu*>(w) || ::tqqt_cast<TQToolButton*>(w) || ::tqqt_cast<TQDockWindow*>(w)|| ::tqqt_cast<TQButton*>(w))
 		w->setPalette(wp);
 
 	if (w->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
@@ -378,10 +381,44 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 				p->setPen(cg.mid());
 				p->setBrush(TQBrush(cg.light(),TQt::Dense4Pattern));
 				p->drawRect(r);
+
+				p->setPen(cg.shadow());
+				p->drawLine(x, y, x2-1, y);
+				p->drawLine(x, y, x, y2-1);
+
+				p->setPen(cg.dark());
+				p->drawLine(x+1, y+1, x2-2, y+1);
+				p->drawLine(x+1, y+1, x+1, y2-2);
+
+				p->setPen(cg.light());
+				p->drawLine(x, y2, x2, y2);
+				p->drawLine(x2, y, x2, y2);
+
+				p->setPen(cg.background());
+				p->drawLine(x2-1, y2-1, x+1, y2-1);
+				p->drawLine(x2-1, y2-1, x2-1, y+1);
+
 				p->setPen(cg.buttonText());
 			} else if (sf & Style_Down) {
 				p->setPen(cg.mid());
 				p->drawRect(r);
+
+				p->setPen(cg.shadow());
+				p->drawLine(x, y, x2-1, y);
+				p->drawLine(x, y, x, y2-1);
+
+				p->setPen(cg.dark());
+				p->drawLine(x+1, y+1, x2-2, y+1);
+				p->drawLine(x+1, y+1, x+1, y2-2);
+
+				p->setPen(cg.light());
+				p->drawLine(x, y2, x2, y2);
+				p->drawLine(x2, y, x2, y2);
+
+				p->setPen(cg.background());
+				p->drawLine(x2-1, y2-1, x+1, y2-1);
+				p->drawLine(x2-1, y2-1, x2-1, y+1);
+
 				p->setPen(cg.buttonText());
 			} else {
 				p->setPen(cg.light());
@@ -672,6 +709,23 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 		}
 
 		case PE_Separator:
+			p->fillRect(r, cg.background());
+
+			if (!(sf & Style_Horizontal)) {
+				p->setPen(cg.background());
+				p->drawLine(x + 2, y , x2 - 2, y);
+				p->setPen(cg.light());
+				p->drawLine(x + 2, y + 1, x2 - 2, y + 1);
+			}
+			else
+			{
+				p->setPen(cg.background());
+				p->drawLine(x + 2, y + 2, x + 2, y2 - 2);
+				p->setPen(cg.light());
+				p->drawLine(x + 3, y + 2, x + 3, y2 - 2);
+			}
+			break;
+
 		case PE_DockWindowSeparator: {
 			p->fillRect(r, cg.background());
 
@@ -683,10 +737,10 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 			}
 			else
 			{
-			p->setPen(cg.mid());
-			p->drawLine(x + 2, y + 2, x + 2, y2 - 2);
-			p->setPen(cg.light());
-			p->drawLine(x + 3, y + 2, x + 3, y2 - 2);
+				p->setPen(cg.mid());
+				p->drawLine(x + 2, y + 2, x + 2, y2 - 2);
+				p->setPen(cg.light());
+				p->drawLine(x + 3, y + 2, x + 3, y2 - 2);
 			}
 			break;
 		}
@@ -938,7 +992,8 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
 			tqalignment |= TQt::NoAccel;
 		tr.setWidth(tr.width()+4);	// Compensate for text appearing too far to the left
-		TQRect tr_offset = TQRect(tr.x()+ETCH_X_OFFSET, tr.y()+ETCH_Y_OFFSET, tr.width(), tr.height());
+//		TQRect tr_offset = TQRect(tr.x()+ETCH_X_OFFSET, tr.y()+ETCH_Y_OFFSET, tr.width(), tr.height());
+		TQRect tr_offset = TQRect(tr.x()+0, tr.y()+0, tr.width(), tr.height());
 		if TABBAR_TEXT_ETCH_CONDITIONS {
 			TQPen savePen = p->pen();
 			p->setPen( cg.light() );
@@ -951,9 +1006,20 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
 			drawItem( p, tr_offset, tqalignment, etchedcg, enabled, 0, t->text() );
+			p->setPen( cg.dark() );
+			etchedcg.setColor( TQColorGroup::Text, cg.dark() );
+			etchedcg.setColor( TQColorGroup::Mid, cg.dark() );
+			etchedcg.setColor( TQColorGroup::Midlight, cg.dark() );
+			etchedcg.setColor( TQColorGroup::Foreground, cg.dark() );
+			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
+			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
+			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
+			drawItem( p, tr, tqalignment, cg, enabled, 0, t->text() );
 			p->setPen(savePen);
 		}
-		drawItem( p, tr, tqalignment, cg, enabled, 0, t->text() );
+		else {
+			drawItem( p, tr, tqalignment, cg, enabled, 0, t->text() );
+		}
 	
 		if ( (sf & Style_HasFocus) && !t->text().isEmpty() )
 			tqdrawPrimitive( TQStyle::PE_FocusRect, p, r, cg );
@@ -961,79 +1027,101 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 		}
 #endif // TQT_NO_TABBAR
 
-// 	case CE_CheckBoxLabel:
-// 	{
-// #ifndef TQT_NO_CHECKBOX
-// 		const TQCheckBox *checkbox = (const TQCheckBox *) w;
-// 
-// 		const bool enabled = sf & Style_Enabled;
-// 		bool etchtext = tqstyleHint( SH_EtchDisabledText );
-// 	
-// 		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
-// 		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
-// 			tqalignment |= TQt::NoAccel;
-// 
-// 		TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
-// 		if CHECKBOX_TEXT_ETCH_CONDITIONS {
-// 			TQPen savePen = p->pen();
-// 			p->setPen( cg.light() );
-// 			TQColorGroup etchedcg = cg;
-// 			etchedcg.setColor( TQColorGroup::Text, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::Mid, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::Midlight, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::Foreground, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
-// 			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
-// 			p->setPen(savePen);
-// 		}
-// 		drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
-// 	
-// 		if (sf & Style_HasFocus) {
-// 			TQRect fr = tqvisualRect(subRect(SR_CheckBoxFocusRect, w), w);
-// 			tqdrawPrimitive(TQStyle::PE_FocusRect, p, fr, cg, sf);
-// 		}
-// #endif
-// 	    break;
-// 	}
+	case CE_CheckBoxLabel:
+	{
+#ifndef TQT_NO_CHECKBOX
+		const TQCheckBox *checkbox = (const TQCheckBox *) w;
 
-// 	case CE_RadioButtonLabel:
-// 	{
-// #ifndef TQT_NO_RADIOBUTTON
-// 		const TQRadioButton *radiobutton = (const TQRadioButton *) w;
-// 
-// 		const bool enabled = sf & Style_Enabled;
-// 		bool etchtext = tqstyleHint( SH_EtchDisabledText );
-// 
-// 		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
-// 		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
-// 			tqalignment |= TQt::NoAccel;
-// 
-// 		TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
-// 		if RADIOBUTTON_TEXT_ETCH_CONDITIONS {
-// 			TQPen savePen = p->pen();
-// 			p->setPen( cg.light() );
-// 			TQColorGroup etchedcg = cg;
-// 			etchedcg.setColor( TQColorGroup::Text, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::Mid, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::Midlight, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::Foreground, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
-// 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
-// 			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, enabled, radiobutton->pixmap(), radiobutton->text());
-// 			p->setPen(savePen);
-// 		}
-// 		drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, enabled, radiobutton->pixmap(), radiobutton->text());
-// 	
-// 		if (sf & Style_HasFocus) {
-// 			TQRect fr = tqvisualRect(subRect(SR_RadioButtonFocusRect, w), w);
-// 			tqdrawPrimitive(TQStyle::PE_FocusRect, p, fr, cg, sf);
-// 		}
-// #endif
-// 	    break;
-// 	}
+		const bool enabled = sf & Style_Enabled;
+		bool etchtext = tqstyleHint( SH_EtchDisabledText );
+	
+		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
+		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
+			tqalignment |= TQt::NoAccel;
+
+		//TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
+		TQRect r_offset = TQRect(r.x()+0, r.y()+0, r.width(), r.height());
+		if CHECKBOX_TEXT_ETCH_CONDITIONS {
+			TQPen savePen = p->pen();
+			p->setPen( cg.light() );
+			TQColorGroup etchedcg = cg;
+			etchedcg.setColor( TQColorGroup::Text, cg.light() );
+			etchedcg.setColor( TQColorGroup::Mid, cg.light() );
+			etchedcg.setColor( TQColorGroup::Midlight, cg.light() );
+			etchedcg.setColor( TQColorGroup::Foreground, cg.light() );
+			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
+			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
+			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
+			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+			p->setPen( cg.dark() );
+			etchedcg.setColor( TQColorGroup::Text, cg.dark() );
+			etchedcg.setColor( TQColorGroup::Mid, cg.dark() );
+			etchedcg.setColor( TQColorGroup::Midlight, cg.dark() );
+			etchedcg.setColor( TQColorGroup::Foreground, cg.dark() );
+			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
+			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
+			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
+			drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+			p->setPen(savePen);
+		}
+		else {
+			drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+		}
+	
+		if (sf & Style_HasFocus) {
+			TQRect fr = tqvisualRect(subRect(SR_CheckBoxFocusRect, w), w);
+			tqdrawPrimitive(TQStyle::PE_FocusRect, p, fr, cg, sf);
+		}
+#endif
+	    break;
+	}
+
+	case CE_RadioButtonLabel:
+	{
+#ifndef TQT_NO_RADIOBUTTON
+		const TQRadioButton *radiobutton = (const TQRadioButton *) w;
+
+		const bool enabled = sf & Style_Enabled;
+		bool etchtext = tqstyleHint( SH_EtchDisabledText );
+
+		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
+		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
+			tqalignment |= TQt::NoAccel;
+
+//		TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
+		TQRect r_offset = TQRect(r.x()+0, r.y()+0, r.width(), r.height());
+		if RADIOBUTTON_TEXT_ETCH_CONDITIONS {
+			TQPen savePen = p->pen();
+			p->setPen( cg.light() );
+			TQColorGroup etchedcg = cg;
+			etchedcg.setColor( TQColorGroup::Text, cg.light() );
+			etchedcg.setColor( TQColorGroup::Mid, cg.light() );
+			etchedcg.setColor( TQColorGroup::Midlight, cg.light() );
+			etchedcg.setColor( TQColorGroup::Foreground, cg.light() );
+			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
+			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
+			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
+			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
+			p->setPen( cg.dark() );
+			etchedcg.setColor( TQColorGroup::Text, cg.dark() );
+			etchedcg.setColor( TQColorGroup::Mid, cg.dark() );
+			etchedcg.setColor( TQColorGroup::Midlight, cg.dark() );
+			etchedcg.setColor( TQColorGroup::Foreground, cg.dark() );
+			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
+			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
+			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
+			drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
+			p->setPen(savePen);
+		}
+		drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, enabled, radiobutton->pixmap(), radiobutton->text());
+	
+		if (sf & Style_HasFocus) {
+			TQRect fr = tqvisualRect(subRect(SR_RadioButtonFocusRect, w), w);
+			tqdrawPrimitive(TQStyle::PE_FocusRect, p, fr, cg, sf);
+		}
+#endif
+	    break;
+	}
 
 	case CE_ToolBoxTab:
 		{
@@ -1187,7 +1275,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 				}
 			}
 
-			p->setPen(cg.foreground());
+			p->setPen( POPUPMENUITEM_TEXT_ETCH_CONDITIONS?cg.dark():cg.foreground() );
 			TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
 			if POPUPMENUITEM_TEXT_ETCH_CONDITIONS {
 				TQPen savePen = p->pen();
@@ -1243,7 +1331,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 			}
 
 			if (!pb->text().isNull()) {
-				p->setPen(enabled ? cg.buttonText() : pb->tqpalette().disabled().buttonText());
+				p->setPen(POPUPMENUITEM_TEXT_ETCH_CONDITIONS?cg.dark():(enabled ? cg.buttonText() : pb->tqpalette().disabled().buttonText()));
 				if (pb->iconSet() && !pb->iconSet()->isNull()) {
 					TQRect tpr(dx, r.y(), r.width()-dx, r.height());
 					TQRect tr(p->boundingRect(tpr, text_flags, pb->text()));
@@ -1289,6 +1377,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 				pr = TQRect(pr.width(), r.top(), r.width() - pr.width(), r.height());
 				TQRect pr_offset = TQRect(pr.x()+ETCH_X_OFFSET, pr.y()+ETCH_Y_OFFSET, pr.width(), pr.height());
 				if HEADER_TEXT_ETCH_CONDITIONS {
+					p->setPen( cg.dark()) ;
 					TQPen savePen = p->pen();
 					p->setPen( cg.light() );
 					p->drawText(pr_offset, text_flags, hw->label(hs));
@@ -1296,7 +1385,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 				}
 				p->drawText(pr, text_flags, hw->label(hs));
 			} else {
-				p->setPen(cg.buttonText());
+				p->setPen( POPUPMENUITEM_TEXT_ETCH_CONDITIONS?cg.dark():cg.buttonText() );
 				TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
 				if HEADER_TEXT_ETCH_CONDITIONS {
 					TQPen savePen = p->pen();
@@ -1400,7 +1489,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 
 			if (mi->custom()) {
 				int m = itemVMargin;
-				p->setPen(cg.foreground());
+				p->setPen( POPUPMENUITEM_TEXT_ETCH_CONDITIONS?cg.dark():cg.foreground() );
 				if POPUPMENUITEM_TEXT_ETCH_CONDITIONS {
 					TQPen savePen = p->pen();
 					p->setPen( cg.light() );
@@ -1446,6 +1535,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 						}
 
 						if POPUPMENUITEM_TEXT_ETCH_CONDITIONS {
+							p->setPen(cg.dark());
 							TQPen savePen = p->pen();
 							p->setPen( cg.light() );
 							p->drawText(rr_offset, text_flags, s.mid(t+1));
@@ -1464,6 +1554,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 					}
 
 					if POPUPMENUITEM_TEXT_ETCH_CONDITIONS {
+						p->setPen(cg.dark());
 						TQPen savePen = p->pen();
 						p->setPen( cg.light() );
 						p->drawText(rr_offset, text_flags, s);
