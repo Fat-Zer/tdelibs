@@ -94,7 +94,7 @@ void KSSLKeyGen::slotGenerate() {
 		return;
 	}
 
-	KProgressDialog *kpd = new KProgressDialog(this, "progress dialog", i18n("KDE"), i18n("Please wait while the encryption keys are generated..."));
+	KProgressDialog *kpd = new KProgressDialog(this, "progress dialog", i18n("TDE"), i18n("Please wait while the encryption keys are generated..."));
 	kpd->progressBar()->setProgress(0);
 	kpd->show();
 	// FIXME - progress dialog won't show this way

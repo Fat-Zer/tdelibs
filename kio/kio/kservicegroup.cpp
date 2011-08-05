@@ -84,12 +84,12 @@ KServiceGroup::KServiceGroup( const TQString &configFile, const TQString & _relp
   TQStringList tmpList;
   if (config.hasKey("OnlyShowIn"))
   {
-     if (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
+     if ((!config.readListEntry("OnlyShowIn", ';').tqcontains("TDE")) && (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE")))
         d->m_bNoDisplay = true;
   }
   if (config.hasKey("NotShowIn"))
   {
-     if (config.readListEntry("NotShowIn", ';').tqcontains("KDE"))
+     if ((config.readListEntry("NotShowIn", ';').tqcontains("TDE")) && (config.readListEntry("NotShowIn", ';').tqcontains("KDE")))
         d->m_bNoDisplay = true;
   }
 

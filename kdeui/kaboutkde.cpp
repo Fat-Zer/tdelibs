@@ -27,7 +27,7 @@
 
 
 KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
-  :KAboutDialog( KAboutDialog::AbtKDEStandard, TQString::tqfromLatin1("KDE"),
+  :KAboutDialog( KAboutDialog::AbtKDEStandard, TQString::tqfromLatin1("TDE"),
 		 KDialogBase::Help|KDialogBase::Close, KDialogBase::Close,
 		 parent, name, modal )
 {

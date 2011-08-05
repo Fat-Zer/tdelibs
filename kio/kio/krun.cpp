@@ -708,7 +708,7 @@ static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service
     {
       // compat mode: assume KIO if not set and it's a KDE app
       TQStringList categories = _service.property("Categories").toStringList();
-      if ( categories.tqfind("KDE") != categories.end() )
+      if (( categories.tqfind("TDE") != categories.end() ) && ( categories.tqfind("KDE") != categories.end() ))
          supportedProtocols.append( "KIO" );
       else { // if no KDE app, be a bit over-generic
          supportedProtocols.append( "http");
