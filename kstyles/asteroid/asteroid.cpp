@@ -112,7 +112,15 @@ void AsteroidStyle::polish(TQWidget *w)
 	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
 	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
 
-	if ( ::tqqt_cast<TQLineEdit*>(w) || ::tqqt_cast<TQTextEdit*>(w) || ::tqqt_cast<TQMenuBar*>(w) || ::tqqt_cast<TQPushButton*>(w) || ::tqqt_cast<TQRadioButton*>(w) || ::tqqt_cast<TQTabBar*>(w) || ::tqqt_cast<TQToolBar*>(w) || ::tqqt_cast<TQProgressBar*>(w) || ::tqqt_cast<TQTabWidget*>(w) /*|| ::tqqt_cast<TQHeader*>(w) || ::tqqt_cast<TQComboBox*>(w) || ::tqqt_cast<TQFrame*>(w)*/ || ::tqqt_cast<TQGroupBox*>(w) || ::tqqt_cast<TQPopupMenu*>(w) || ::tqqt_cast<TQToolButton*>(w) || ::tqqt_cast<TQDockWindow*>(w)|| ::tqqt_cast<TQButton*>(w))
+	bool isProtectedObject = false;
+	TQObject *curparent = w;
+	while (curparent) {
+		if (curparent->inherits("KonqFileTip") || curparent->inherits("AppletItem")) {
+			isProtectedObject = true;
+		}
+		curparent = curparent->tqparent();
+	}
+	if (!isProtectedObject)
 		w->setPalette(wp);
 
 	if (w->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
@@ -345,7 +353,42 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 			break;
 		}
 
+		// FIXME
+		// This appears to do double duty,
+		// specifically it appears both in popup menu headers
+		// *and* at the top of tree views!
+		// The tree views need the stuff that is commented out
+		// to look correct, but when that is done the popup menus
+		// look absolutely HORRIBLE.
+		// How can we tell the two apart?  Create PE_HeaderSectionMenu perhaps?
 		case PE_HeaderSection: {
+			p->setPen(cg.shadow());
+			p->setBrush(cg.background());
+			p->drawRect(r);
+
+			if (sf & Style_On) {
+				p->setPen(cg.mid());
+				p->setBrush(TQBrush(cg.light(),TQt::Dense4Pattern));
+				p->drawRect(r);
+				p->setPen(cg.buttonText());
+			} else if (sf & Style_Down) {
+				p->setPen(cg.mid());
+				p->drawRect(r);
+				p->setPen(cg.buttonText());
+			} else {
+				p->setPen(cg.light());
+				p->drawLine(x, y, x2-1, y);
+				p->drawLine(x, y, x, y2-1);
+
+				p->setPen(cg.mid());
+				p->drawLine(x2-1, y2-1, x+1, y2-1);
+				p->drawLine(x2-1, y2-1, x2-1, y+1);
+			}
+
+			break;
+		}
+
+		case PE_HeaderSectionMenu: {
 			p->setPen(cg.shadow());
 			p->setBrush(cg.background());
 			p->drawRect(r);
@@ -1014,7 +1057,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
-			drawItem( p, tr, tqalignment, cg, enabled, 0, t->text() );
+			drawItem( p, tr, tqalignment, etchedcg, enabled, 0, t->text() );
 			p->setPen(savePen);
 		}
 		else {

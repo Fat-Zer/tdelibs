@@ -90,7 +90,7 @@ void KPopupTitle::paintEvent(TQPaintEvent *)
 {
     TQRect r(rect());
     TQPainter p(this);
-    kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSection, &p, r, tqpalette().active());
+    kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSectionMenu, &p, r, tqpalette().active());
 
     if (!miniicon.isNull())
         p.drawPixmap(4, (r.height()-miniicon.height())/2, miniicon);
