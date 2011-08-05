@@ -123,8 +123,14 @@ AutoStart::loadAutoStartList()
        ++it)
    {
        KDesktopFile config(*it, true);
-       if (!startCondition(config.readEntry("X-KDE-autostart-condition")))
-          continue;
+       if (config.hasKey("X-TDE-autostart-condition") {
+           if (!startCondition(config.readEntry("X-TDE-autostart-condition")))
+              continue;
+       }
+       else {
+           if (!startCondition(config.readEntry("X-KDE-autostart-condition")))
+              continue;
+       }
        if (!config.tryExec())
           continue;
        if (config.readBoolEntry("Hidden", false))
@@ -172,15 +178,15 @@ AutoStart::loadAutoStartList()
 
        if (config.hasKey("OnlyShowIn"))
        {
-          if (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
+          if (!config.readListEntry("OnlyShowIn", ';').tqcontains("TDE"))
               continue;
        }
        if (config.hasKey("NotShowIn"))
        {
-           if (config.readListEntry("NotShowIn", ';').tqcontains("KDE"))
+           if (config.readListEntry("NotShowIn", ';').tqcontains("TDE"))
                continue;
        }
-       
+
        if (config.hasKey("OnlyShowIn"))
        {
           if (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
@@ -195,22 +201,31 @@ AutoStart::loadAutoStartList()
        AutoStartItem *item = new AutoStartItem;
        item->name = extractName(*it);
        item->service = *it;
-       item->startAfter = config.readEntry("X-KDE-autostart-after");
+       if (config.hasKey("X-TDE-autostart-after")
+           item->startAfter = config.readEntry("X-TDE-autostart-after");
+       else
+           item->startAfter = config.readEntry("X-KDE-autostart-after");
        if( m_newStartup )
        {
-          item->phase = config.readNumEntry("X-KDE-autostart-phase", 2);
+          if (config.hasKey("X-TDE-autostart-phase")
+              item->phase = config.readNumEntry("X-TDE-autostart-phase", 2);
+          else
+              item->phase = config.readNumEntry("X-KDE-autostart-phase", 2);
           if (item->phase < 0)
              item->phase = 0;
        }
        else
        {
-          item->phase = config.readNumEntry("X-KDE-autostart-phase", 1);
+          if (config.hasKey("X-TDE-autostart-phase")
+              item->phase = config.readNumEntry("X-TDE-autostart-phase", 1);
+          else
+              item->phase = config.readNumEntry("X-KDE-autostart-phase", 1);
           if (item->phase < 1)
              item->phase = 1;
        }
        m_startList->append(item);
    }
-} 
+}
 
 TQString
 AutoStart::startService()
