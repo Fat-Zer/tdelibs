@@ -123,7 +123,7 @@ AutoStart::loadAutoStartList()
        ++it)
    {
        KDesktopFile config(*it, true);
-       if (config.hasKey("X-TDE-autostart-condition") {
+       if (config.hasKey("X-TDE-autostart-condition")) {
            if (!startCondition(config.readEntry("X-TDE-autostart-condition")))
               continue;
        }
@@ -201,13 +201,13 @@ AutoStart::loadAutoStartList()
        AutoStartItem *item = new AutoStartItem;
        item->name = extractName(*it);
        item->service = *it;
-       if (config.hasKey("X-TDE-autostart-after")
+       if (config.hasKey("X-TDE-autostart-after"))
            item->startAfter = config.readEntry("X-TDE-autostart-after");
        else
            item->startAfter = config.readEntry("X-KDE-autostart-after");
        if( m_newStartup )
        {
-          if (config.hasKey("X-TDE-autostart-phase")
+          if (config.hasKey("X-TDE-autostart-phase"))
               item->phase = config.readNumEntry("X-TDE-autostart-phase", 2);
           else
               item->phase = config.readNumEntry("X-KDE-autostart-phase", 2);
@@ -216,7 +216,7 @@ AutoStart::loadAutoStartList()
        }
        else
        {
-          if (config.hasKey("X-TDE-autostart-phase")
+          if (config.hasKey("X-TDE-autostart-phase"))
               item->phase = config.readNumEntry("X-TDE-autostart-phase", 1);
           else
               item->phase = config.readNumEntry("X-KDE-autostart-phase", 1);
