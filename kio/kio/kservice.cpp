@@ -742,7 +742,7 @@ bool KService::noDisplay() const {
   {
      TQString aValue = it.data().toString();
      TQStringList aList = TQStringList::split(';', aValue);
-     if ((aList.tqcontains("TDE")) && (aList.tqcontains("KDE")))
+     if ((aList.tqcontains("TDE")) || (aList.tqcontains("KDE")))
         return true;
   }
   

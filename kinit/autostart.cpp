@@ -178,23 +178,12 @@ AutoStart::loadAutoStartList()
 
        if (config.hasKey("OnlyShowIn"))
        {
-          if (!config.readListEntry("OnlyShowIn", ';').tqcontains("TDE"))
+          if ((!config.readListEntry("OnlyShowIn", ';').tqcontains("TDE")) && (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE")))
               continue;
        }
        if (config.hasKey("NotShowIn"))
        {
-           if (config.readListEntry("NotShowIn", ';').tqcontains("TDE"))
-               continue;
-       }
-
-       if (config.hasKey("OnlyShowIn"))
-       {
-          if (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE"))
-              continue;
-       }
-       if (config.hasKey("NotShowIn"))
-       {
-           if (config.readListEntry("NotShowIn", ';').tqcontains("KDE"))
+           if ((config.readListEntry("NotShowIn", ';').tqcontains("TDE")) || (config.readListEntry("NotShowIn", ';').tqcontains("KDE")))
                continue;
        }
 
