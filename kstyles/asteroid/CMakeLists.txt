@@ -41,6 +41,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdefx-shared kutils-shared
+  LINK kdefx-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/styles
 )

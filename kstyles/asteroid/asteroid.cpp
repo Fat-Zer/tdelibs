@@ -41,8 +41,6 @@
 #define l_arrow 0,-3, 0,3, -1,-2, -1,2, -2,-1, -2,1, -3,0
 #define r_arrow -2,-3, -2,3, -1,-2, -1,2, 0,-1, 0,1, 1,0
 
-#include <../../kutils/kmultitabbar.h>
-
 #include "asteroid.h"
 
 // #define MINIMUM_PUSHBUTTON_WIDTH 75;
@@ -142,7 +140,7 @@ void AsteroidStyle::unPolish(TQWidget *w)
 */
 void
 AsteroidStyle::polish( TQApplication* app)
-{	
+{
 	TQPalette wp = TQApplication::tqpalette();
 	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
 	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
@@ -154,8 +152,7 @@ AsteroidStyle::polish( TQApplication* app)
 void
 AsteroidStyle::unPolish( TQApplication* /* app */ )
 {
-	TQFont f = TQApplication::font();
-	TQApplication::tqsetFont( f, TRUE ); // get rid of the special fonts for special widget classes
+
 }
 
 void AsteroidStyle::renderMenuBlendPixmap(KPixmap &pix,
@@ -425,42 +422,46 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 				p->setBrush(TQBrush(cg.light(),TQt::Dense4Pattern));
 				p->drawRect(r);
 
-				p->setPen(cg.shadow());
-				p->drawLine(x, y, x2-1, y);
-				p->drawLine(x, y, x, y2-1);
-
-				p->setPen(cg.dark());
-				p->drawLine(x+1, y+1, x2-2, y+1);
-				p->drawLine(x+1, y+1, x+1, y2-2);
-
-				p->setPen(cg.light());
-				p->drawLine(x, y2, x2, y2);
-				p->drawLine(x2, y, x2, y2);
-
-				p->setPen(cg.background());
-				p->drawLine(x2-1, y2-1, x+1, y2-1);
-				p->drawLine(x2-1, y2-1, x2-1, y+1);
+				if (!(sf & Style_ButtonDefault)) {
+					p->setPen(cg.shadow());
+					p->drawLine(x, y, x2-1, y);
+					p->drawLine(x, y, x, y2-1);
+	
+					p->setPen(cg.dark());
+					p->drawLine(x+1, y+1, x2-2, y+1);
+					p->drawLine(x+1, y+1, x+1, y2-2);
+	
+					p->setPen(cg.light());
+					p->drawLine(x, y2, x2, y2);
+					p->drawLine(x2, y, x2, y2);
+	
+					p->setPen(cg.background());
+					p->drawLine(x2-1, y2-1, x+1, y2-1);
+					p->drawLine(x2-1, y2-1, x2-1, y+1);
+				}
 
 				p->setPen(cg.buttonText());
 			} else if (sf & Style_Down) {
 				p->setPen(cg.mid());
 				p->drawRect(r);
 
-				p->setPen(cg.shadow());
-				p->drawLine(x, y, x2-1, y);
-				p->drawLine(x, y, x, y2-1);
-
-				p->setPen(cg.dark());
-				p->drawLine(x+1, y+1, x2-2, y+1);
-				p->drawLine(x+1, y+1, x+1, y2-2);
-
-				p->setPen(cg.light());
-				p->drawLine(x, y2, x2, y2);
-				p->drawLine(x2, y, x2, y2);
-
-				p->setPen(cg.background());
-				p->drawLine(x2-1, y2-1, x+1, y2-1);
-				p->drawLine(x2-1, y2-1, x2-1, y+1);
+				if (!(sf & Style_ButtonDefault)) {
+					p->setPen(cg.shadow());
+					p->drawLine(x, y, x2-1, y);
+					p->drawLine(x, y, x, y2-1);
+	
+					p->setPen(cg.dark());
+					p->drawLine(x+1, y+1, x2-2, y+1);
+					p->drawLine(x+1, y+1, x+1, y2-2);
+	
+					p->setPen(cg.light());
+					p->drawLine(x, y2, x2, y2);
+					p->drawLine(x2, y, x2, y2);
+	
+					p->setPen(cg.background());
+					p->drawLine(x2-1, y2-1, x+1, y2-1);
+					p->drawLine(x2-1, y2-1, x2-1, y+1);
+				}
 
 				p->setPen(cg.buttonText());
 			} else {
@@ -1255,7 +1256,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 		case CE_PushButton: {
 			const TQPushButton *pb = dynamic_cast<const TQPushButton *>(w);
 
-			if ( ::tqqt_cast<KMultiTabBarButton*>(w) ) {
+			if ( w->inherits("KMultiTabBarButton") ) {
 				p->setPen(cg.mid());
 				p->setBrush(cg.background());
 				p->drawRect(r);
@@ -1357,7 +1358,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 					dx = r.center().x()-(pixmap.width()/2);
 				else
 					dx = (r.height() - pixmap.height())/2;
-				if ( ::tqqt_cast<KMultiTabBarButton*>(pb) ) {
+				if ( pb->inherits("KMultiTabBarButton") ) {
 					pr.moveCenter(TQPoint(((pixmap.width()/2)+dx), r.center().y()));
 					dx = (pixmap.width()+dx+(dx*0.5));
 				}
@@ -1940,7 +1941,6 @@ void AsteroidStyle::tqdrawComplexControlMask(TQ_ComplexControl cc,
 
 int AsteroidStyle::tqpixelMetric(PixelMetric pm, const TQWidget *w) const
 {
-
 	switch (pm) {
 	/*	PixelMetrics available are:
 
