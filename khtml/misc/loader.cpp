@@ -564,7 +564,7 @@ const TQPixmap &CachedImage::tiled_pixmap(const TQColor& newc, int xWidth, int x
     bgSize = TQSize(xWidth, xHeight);
 
     //See whether we can - and should - pre-blend
-    if (isvalid && (r.hasAlphaChannel() || r.tqmask() )) {
+    if (isvalid && (r.hasAlphaChannel() || r.mask() )) {
         bg = new TQPixmap(xWidth, xHeight, r.depth());
         bg->fill(newc);
         bitBlt(bg, 0, 0, src);
@@ -749,8 +749,8 @@ void CachedImage::movieStatus(int status)
             {
                 TQPixmap* pix = new TQPixmap;
                 pix->convertFromImage( TQImage(p->convertToImage()).convertDepth( 1 ), MonoOnly|AvoidDither );
-                if ( p->tqmask() )
-                    pix->setMask( *p->tqmask() );
+                if ( p->mask() )
+                    pix->setMask( *p->mask() );
                 delete p;
                 p = pix;
                 monochrome = false;

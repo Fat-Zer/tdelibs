@@ -233,7 +233,7 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
   else if ( prof == BrowserViewGUI )
     setXMLFile( "khtml_browser.rc" );
 
-  d = new KHTMLPartPrivate(tqparent());
+  d = new KHTMLPartPrivate(parent());
 
   d->m_view = view;
   setWidget( d->m_view );
@@ -5090,7 +5090,7 @@ void KHTMLPart::slotChildDocCreated()
 
 void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &args )
 {
-  khtml::ChildFrame *child = frame( TQT_TQOBJECT_CONST(sender())->tqparent() );
+  khtml::ChildFrame *child = frame( TQT_TQOBJECT_CONST(sender())->parent() );
   KHTMLPart *callingHtmlPart = const_cast<KHTMLPart *>(dynamic_cast<const KHTMLPart *>(sender()->parent()));
 
   // TODO: handle child target correctly! currently the script are always executed fur the parent

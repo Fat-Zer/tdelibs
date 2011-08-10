@@ -189,9 +189,9 @@ void KMimeTypeChooser::loadMimeTypes( const TQStringList &_selectedMimeTypes )
 
 void KMimeTypeChooser::editMimeType()
 {
-  if ( !(d->lvMimeTypes->currentItem() && (d->lvMimeTypes->currentItem())->tqparent()) )
+  if ( !(d->lvMimeTypes->currentItem() && (d->lvMimeTypes->currentItem())->parent()) )
     return;
-  TQString mt = (d->lvMimeTypes->currentItem()->tqparent())->text( 0 ) + "/" + (d->lvMimeTypes->currentItem())->text( 0 );
+  TQString mt = (d->lvMimeTypes->currentItem()->parent())->text( 0 ) + "/" + (d->lvMimeTypes->currentItem())->text( 0 );
   // thanks to libkonq/konq_operations.cc
   connect( KSycoca::self(), TQT_SIGNAL(databaseChanged()),
            this, TQT_SLOT(slotSycocaDatabaseChanged()) );
@@ -205,7 +205,7 @@ void KMimeTypeChooser::editMimeType()
 void KMimeTypeChooser::slotCurrentChanged(TQListViewItem* i)
 {
   if ( d->btnEditMimeType )
-    d->btnEditMimeType->setEnabled( i->tqparent() );
+    d->btnEditMimeType->setEnabled( i->parent() );
 }
 
 void KMimeTypeChooser::slotSycocaDatabaseChanged()
@@ -220,8 +220,8 @@ TQStringList KMimeTypeChooser::mimeTypes() const
   TQListViewItemIterator it( d->lvMimeTypes );
   for (; it.current(); ++it)
   {
-    if ( it.current()->tqparent() && ((TQCheckListItem*)it.current())->isOn() )
-      l << it.current()->tqparent()->text(0) + "/" + it.current()->text(0); // FIXME uncecked, should be Ok unless someone changes mimetypes during this!
+    if ( it.current()->parent() && ((TQCheckListItem*)it.current())->isOn() )
+      l << it.current()->parent()->text(0) + "/" + it.current()->text(0); // FIXME uncecked, should be Ok unless someone changes mimetypes during this!
   }
   return l;
 }
@@ -234,9 +234,9 @@ TQStringList KMimeTypeChooser::patterns() const
   TQListViewItemIterator it( d->lvMimeTypes );
   for (; it.current(); ++it)
   {
-    if ( it.current()->tqparent() && ((TQCheckListItem*)it.current())->isOn() )
+    if ( it.current()->parent() && ((TQCheckListItem*)it.current())->isOn() )
     {
-      p = KMimeType::mimeType( it.current()->tqparent()->text(0) + "/" + it.current()->text(0) );
+      p = KMimeType::mimeType( it.current()->parent()->text(0) + "/" + it.current()->text(0) );
       if ( p->name() != defMT )
         l += p->patterns();
     }

@@ -149,7 +149,7 @@ void DockContainer::init()
   if ( parentDockWidget() && parentDockWidget()->parent() )
   {
     KDockSplitter *sp= ::tqqt_cast<KDockSplitter*>(parentDockWidget()->
-                tqparent());
+                parent());
     if ( sp )
       sp->setSeparatorPosX( m_separatorPos );
   }
@@ -421,7 +421,7 @@ void DockContainer::tabClicked(int t)
       if ( parentDockWidget() && parentDockWidget()->parent() )
       {
         KDockSplitter *sp= ::tqqt_cast<KDockSplitter*>(parentDockWidget()->
-                    tqparent());
+                    parent());
         if ( sp )
           m_separatorPos = sp->separatorPos();
       }
@@ -464,8 +464,8 @@ void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
 {
   // group name
   TQString grp=cfg->group();
-  cfg->deleteGroup(group_or_prefix+TQString("::%1").arg(tqparent()->name()));
-  cfg->setGroup(group_or_prefix+TQString("::%1").arg(tqparent()->name()));
+  cfg->deleteGroup(group_or_prefix+TQString("::%1").arg(parent()->name()));
+  cfg->setGroup(group_or_prefix+TQString("::%1").arg(parent()->name()));
 
   // save overlap mode
   cfg->writeEntry("overlapMode",isOverlapMode());
@@ -474,7 +474,7 @@ void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
   if ( parentDockWidget() && parentDockWidget()->parent() )
   {
     KDockSplitter *sp= ::tqqt_cast<KDockSplitter*>(parentDockWidget()->
-                tqparent());
+                parent());
     if ( sp )
       cfg->writeEntry( "separatorPosition", m_separatorPos );
   }
@@ -507,7 +507,7 @@ void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
 void DockContainer::load(KConfig* cfg,const TQString& group_or_prefix)
 {
   TQString grp=cfg->group();
-  cfg->setGroup(group_or_prefix+TQString("::%1").arg(tqparent()->name()));
+  cfg->setGroup(group_or_prefix+TQString("::%1").arg(parent()->name()));
 
   if (cfg->readBoolEntry("overlapMode"))
     activateOverlapMode( m_vertical?m_tb->width():m_tb->height() );

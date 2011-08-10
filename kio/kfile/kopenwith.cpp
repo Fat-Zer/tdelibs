@@ -131,7 +131,7 @@ void KAppTreeListItem::activate()
 void KAppTreeListItem::setOpen( bool o )
 {
     if( o && !parsed ) { // fill the children before opening
-        ((KApplicationTree *) tqparent())->addDesktopGroup( path, this );
+        ((KApplicationTree *) parent())->addDesktopGroup( path, this );
         parsed = true;
     }
     TQListViewItem::setOpen( o );

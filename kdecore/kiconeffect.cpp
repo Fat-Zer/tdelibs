@@ -520,8 +520,8 @@ void KIconEffect::semiTransparent(TQPixmap &pix)
     }
 
     TQImage img;
-    if (pix.tqmask() != 0L)
-	img = pix.tqmask()->convertToImage();
+    if (pix.mask() != 0L)
+	img = pix.mask()->convertToImage();
     else
     {
 	img.create(pix.size(), 1, 2, TQImage::BigEndian);

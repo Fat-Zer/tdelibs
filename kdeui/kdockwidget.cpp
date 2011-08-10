@@ -422,12 +422,12 @@ void KDockWidgetHeader::setDragEnabled(bool b)
 #ifndef NO_KDE2
 void KDockWidgetHeader::saveConfig( KConfig* c )
 {
-  c->writeEntry( TQString("%1%2").arg(tqparent()->name()).arg(":stayButton"), stayButton->isOn() );
+  c->writeEntry( TQString("%1%2").arg(parent()->name()).arg(":stayButton"), stayButton->isOn() );
 }
 
 void KDockWidgetHeader::loadConfig( KConfig* c )
 {
-  setDragEnabled( !c->readBoolEntry( TQString("%1%2").arg(tqparent()->name()).arg(":stayButton"), false ) );
+  setDragEnabled( !c->readBoolEntry( TQString("%1%2").arg(parent()->name()).arg(":stayButton"), false ) );
 }
 #endif
 
@@ -1238,7 +1238,7 @@ void KDockWidget::setForcedFixedWidth(int w)
 	setFixedWidth(w);
 	if (!parent()) return;
 	if (parent()->inherits("KDockSplitter"))
-		::tqqt_cast<KDockSplitter*>(tqparent())->setForcedFixedWidth(this,w);
+		::tqqt_cast<KDockSplitter*>(parent())->setForcedFixedWidth(this,w);
 }
 
 void KDockWidget::setForcedFixedHeight(int h)
@@ -1247,7 +1247,7 @@ void KDockWidget::setForcedFixedHeight(int h)
 	setFixedHeight(h);
 	if (!parent()) return;
 	if (parent()->inherits("KDockSplitter"))
-		::tqqt_cast<KDockSplitter*>(tqparent())->setForcedFixedHeight(this,h);
+		::tqqt_cast<KDockSplitter*>(parent())->setForcedFixedHeight(this,h);
 }
 
 int KDockWidget::forcedFixedWidth()
@@ -1270,7 +1270,7 @@ void KDockWidget::restoreFromForcedFixedSize()
 	setMaximumHeight(32000);
 	if (!parent()) return;
 	if (parent()->inherits("KDockSplitter"))
-		::tqqt_cast<KDockSplitter*>(tqparent())->restoreFromForcedFixedSize(this);
+		::tqqt_cast<KDockSplitter*>(parent())->restoreFromForcedFixedSize(this);
 }
 
 void KDockWidget::toDesktop()
@@ -3180,7 +3180,7 @@ void KDockContainer::activateOverlapMode(int nonOverlapSize) {
 	if (parentDockWidget() && parentDockWidget()->parent()) {
 		kdDebug(282)<<"KDockContainer::activateOverlapMode: recalculating sizes"<<endl;
 		KDockSplitter *sp= ::tqqt_cast<KDockSplitter*>(parentDockWidget()->
-			tqparent());
+			parent());
 		if (sp)
 			sp->resizeEvent(0);
 	}
@@ -3192,7 +3192,7 @@ void KDockContainer::deactivateOverlapMode() {
 	if (parentDockWidget() && parentDockWidget()->parent()) {
 		kdDebug(282)<<"KDockContainer::deactivateOverlapMode: recalculating sizes"<<endl;
 		KDockSplitter *sp= ::tqqt_cast<KDockSplitter*>(parentDockWidget()->
-			tqparent());
+			parent());
 		if (sp)
 			sp->resizeEvent(0);
 		}

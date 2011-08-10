@@ -98,7 +98,7 @@ void KMWLocal::slotPortSelected(TQListViewItem *item)
 	if (!item || item->depth() <= 1 || item->depth() > 3)
 		uri = TQString::null;
 	else if (item->depth() == 3)
-		uri = item->tqparent()->text( 1 );
+		uri = item->parent()->text( 1 );
 	else
 		uri = item->text( 1 );
 	m_block = true;

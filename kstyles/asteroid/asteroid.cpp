@@ -116,7 +116,7 @@ void AsteroidStyle::polish(TQWidget *w)
 		if (curparent->inherits("KonqFileTip") || curparent->inherits("AppletItem")) {
 			isProtectedObject = true;
 		}
-		curparent = curparent->tqparent();
+		curparent = curparent->parent();
 	}
 	if (!isProtectedObject)
 		w->setPalette(wp);

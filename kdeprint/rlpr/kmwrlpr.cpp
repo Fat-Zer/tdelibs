@@ -100,7 +100,7 @@ void KMWRlpr::initPrinter(KMPrinter *p)
 		item = rlpr_findChild(item->firstChild(),m_queue->text());
 		if (item)
 		{
-			item->tqparent()->setOpen(true);
+			item->parent()->setOpen(true);
 			m_view->setCurrentItem(item);
 			m_view->ensureItemVisible(item);
 		}
@@ -203,7 +203,7 @@ void KMWRlpr::slotPrinterSelected(TQListViewItem *item)
 {
 	if (item && item->depth() == 1)
 	{
-		m_host->setText(item->tqparent()->text(0));
+		m_host->setText(item->parent()->text(0));
 		m_queue->setText(item->text(0));
 	}
 }

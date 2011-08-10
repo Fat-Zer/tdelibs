@@ -342,7 +342,7 @@ TQRect KCompletionBox::calculateGeometry() const
     // as wide as the combo, and gives the style a chance
     // to adjust it. Do that here as well, for consistency
     const TQObject* combo;
-    if ( d->m_parent && (combo = d->m_parent->tqparent() ) &&
+    if ( d->m_parent && (combo = d->m_parent->parent() ) &&
         combo->inherits(TQCOMBOBOX_OBJECT_NAME_STRING) )
     {
         const TQComboBox* cb = static_cast<const TQComboBox*>(TQT_TQWIDGET_CONST(combo));

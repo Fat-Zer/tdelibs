@@ -1068,7 +1068,7 @@ void KMdiChildFrm::doResize( bool captionOnly )
 static bool hasParent( TQObject* par, TQObject* o )
 {
 	while ( o && o != par )
-		o = o->tqparent();
+		o = o->parent();
 	return o == par;
 }
 
@@ -1086,7 +1086,7 @@ bool KMdiChildFrm::eventFilter( TQObject *obj, TQEvent *e )
 			while ( ( pObj != 0L ) && !bIsChild )
 			{
 				bIsChild = ( TQT_BASE_OBJECT(pObj) == TQT_BASE_OBJECT(this) );
-				pObj = pObj->tqparent();
+				pObj = pObj->parent();
 			}
 			// unset the resize cursor if the cursor moved from the frame into a inner widget
 			if ( bIsChild )
@@ -1112,7 +1112,7 @@ bool KMdiChildFrm::eventFilter( TQObject *obj, TQEvent *e )
 						m_pClient->activate();
 					}
 					
-					if ( ( TQT_BASE_OBJECT(obj->tqparent()) != TQT_BASE_OBJECT(m_pCaption) ) && ( TQT_BASE_OBJECT(obj) != TQT_BASE_OBJECT(m_pCaption) ) )
+					if ( ( TQT_BASE_OBJECT(obj->parent()) != TQT_BASE_OBJECT(m_pCaption) ) && ( TQT_BASE_OBJECT(obj) != TQT_BASE_OBJECT(m_pCaption) ) )
 					{
 						TQWidget* w = ( TQWidget* ) obj;
 						if ( ( w->focusPolicy() == TQ_ClickFocus ) || ( w->focusPolicy() == TQ_StrongFocus ) )

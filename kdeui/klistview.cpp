@@ -252,7 +252,7 @@ static TQListViewItem *prevItem (TQListViewItem *pi)
 	/*	Does what the TQListViewItem::previousSibling()
 	 *	of my dreams would do.
 	 */
-	if (pa && pa->tqparent() == pi->tqparent())
+	if (pa && pa->parent() == pi->parent())
 		return pa;
 
 	return 0;
@@ -278,8 +278,8 @@ void KListViewLineEdit::selectNextCell (TQListViewItem *pitem, int column, bool 
 	const int ncols = p->columns();
 	const int dir = forward ? +1 : -1;
 	const int restart = forward ? 0 : (ncols - 1);
-	TQListViewItem *top = (pitem && pitem->tqparent())
-		? pitem->tqparent()->firstChild()
+	TQListViewItem *top = (pitem && pitem->parent())
+		? pitem->parent()->firstChild()
 		: p->firstChild();
 	TQListViewItem *pi = pitem;
 
@@ -1100,7 +1100,7 @@ void KListView::findDrop(const TQPoint &pos, TQListViewItem *&parent, TQListView
 
       // Ok, there's one more level of complexity. We may want to become a new
       // sibling, but of an upper-level group, rather than the "above" item
-      TQListViewItem * betterAbove = above->tqparent();
+      TQListViewItem * betterAbove = above->parent();
       TQListViewItem * last = above;
       while ( betterAbove )
       {
@@ -1113,14 +1113,14 @@ void KListView::findDrop(const TQPoint &pos, TQListViewItem *&parent, TQListView
               else
                   break; // not enough on the left, so stop
               last = betterAbove;
-              betterAbove = betterAbove->tqparent(); // up one level
+              betterAbove = betterAbove->parent(); // up one level
           } else
               break; // we're among the child of betterAbove, not after the last one
       }
   }
   // set as sibling
   after = above;
-  parent = after ? after->tqparent() : 0L ;
+  parent = after ? after->parent() : 0L ;
 }
 
 TQListViewItem* KListView::lastChild () const
@@ -1269,7 +1269,7 @@ void KListView::moveItem(TQListViewItem *item, TQListViewItem *parent, TQListVie
     {
       if(i == item)
         return;
-      i = i->tqparent();
+      i = i->parent();
     }
 
   if (after)
@@ -1280,8 +1280,8 @@ void KListView::moveItem(TQListViewItem *item, TQListViewItem *parent, TQListVie
 
   // Basically reimplementing the TQListViewItem(TQListViewItem*, TQListViewItem*) constructor
   // in here, without ever deleting the item.
-  if (item->tqparent())
-        item->tqparent()->takeItem(item);
+  if (item->parent())
+        item->parent()->takeItem(item);
   else
         takeItem(item);
 
@@ -2310,12 +2310,12 @@ bool KListViewItem::isAlternate()
     {
        KListViewItem *item;
        bool previous = true;
-       if (tqparent())
+       if (parent())
        {
-          item = dynamic_cast<KListViewItem *>(tqparent());
+          item = dynamic_cast<KListViewItem *>(parent());
           if (item)
              previous = item->m_odd;
-          item = dynamic_cast<KListViewItem *>(tqparent()->firstChild());
+          item = dynamic_cast<KListViewItem *>(parent()->firstChild());
        }
        else
        {

@@ -176,7 +176,7 @@ void KToggleAction::setChecked( bool c )
     updateChecked( i );
 
   if ( c && parent() && !exclusiveGroup().isEmpty() ) {
-    const TQObjectList list = tqparent()->childrenListObject();
+    const TQObjectList list = parent()->childrenListObject();
     if ( !list.isEmpty() ) {
       TQObjectListIt it( list );
       for( ; it.current(); ++it ) {

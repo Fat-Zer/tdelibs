@@ -1976,7 +1976,7 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 			{
 				//Double-buffer only when we are in the slower full-blend mode
 				if (widget->parent() &&
-						( widget->tqparent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING)|| !qstrcmp(widget->tqparent()->name(), kdeToolbarWidget) ) )
+						( widget->parent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING)|| !qstrcmp(widget->parent()->name(), kdeToolbarWidget) ) )
 				{
 					buf = new TQPixmap( r.width(), r.height() );
 					br.setX(0);

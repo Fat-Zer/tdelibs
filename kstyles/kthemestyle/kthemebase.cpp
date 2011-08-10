@@ -239,7 +239,7 @@ void KThemeBase::generateBorderPix( int i )
     if ( pbPixmaps[ i ] )
     {
         // evidently I have to do masks manually...
-        const TQBitmap * srcMask = pbPixmaps[ i ] ->tqmask();
+        const TQBitmap * srcMask = pbPixmaps[ i ] ->mask();
         TQBitmap destMask( pbWidth[ i ], pbWidth[ i ] );
         TQPixmap tmp( pbWidth[ i ], pbWidth[ i ] );
 
@@ -810,7 +810,7 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
         mPainter.begin( &mask );
 
         TQPixmap *tmp = borderPixmap( widget ) ->border( KThemePixmap::TopLeft );
-        const TQBitmap *srcMask = tmp->tqmask();
+        const TQBitmap *srcMask = tmp->mask();
         int bdWidth = tmp->width();
 
         bitBlt( TQT_TQPAINTDEVICE(pixmap), 0, 0, TQT_TQPAINTDEVICE(tmp), 0, 0, bdWidth, bdWidth,
@@ -823,7 +823,7 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
 
 
         tmp = borderPixmap( widget ) ->border( KThemePixmap::TopRight );
-        srcMask = tmp->tqmask();
+        srcMask = tmp->mask();
         bitBlt( TQT_TQPAINTDEVICE(pixmap), w - bdWidth, 0, TQT_TQPAINTDEVICE(tmp), 0, 0, bdWidth,
                 bdWidth, TQt::CopyROP, false );
         if ( srcMask )
@@ -833,7 +833,7 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
             mPainter.fillRect( w - bdWidth, 0, bdWidth, bdWidth, color1 );
 
         tmp = borderPixmap( widget ) ->border( KThemePixmap::BottomLeft );
-        srcMask = tmp->tqmask();
+        srcMask = tmp->mask();
         bitBlt( TQT_TQPAINTDEVICE(pixmap), 0, h - bdWidth, TQT_TQPAINTDEVICE(tmp), 0, 0, bdWidth,
                 bdWidth, TQt::CopyROP, false );
         if ( srcMask )
@@ -843,7 +843,7 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
             mPainter.fillRect( 0, h - bdWidth, bdWidth, bdWidth, color1 );
 
         tmp = borderPixmap( widget ) ->border( KThemePixmap::BottomRight );
-        srcMask = tmp->tqmask();
+        srcMask = tmp->mask();
         bitBlt( TQT_TQPAINTDEVICE(pixmap), w - bdWidth, h - bdWidth, TQT_TQPAINTDEVICE(tmp), 0, 0,
                 bdWidth, bdWidth, TQt::CopyROP, false );
         if ( srcMask )
@@ -857,7 +857,7 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
         if ( w - bdWidth * 2 > 0 )
         {
             tmp = borderPixmap( widget ) ->border( KThemePixmap::Top );
-            srcMask = tmp->tqmask();
+            srcMask = tmp->mask();
             p.drawTiledPixmap( bdWidth, 0, w - bdWidth * 2, bdWidth, *tmp );
             if ( srcMask )
                 bitBlt( TQT_TQPAINTDEVICE(&mask), bdWidth, 0, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0,
@@ -866,7 +866,7 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
                 mPainter.fillRect( bdWidth, 0, w - bdWidth * 2, bdWidth, color1 );
 
             tmp = borderPixmap( widget ) ->border( KThemePixmap::Bottom );
-            srcMask = tmp->tqmask();
+            srcMask = tmp->mask();
             p.drawTiledPixmap( bdWidth, h - bdWidth, w - bdWidth * 2, bdWidth,
                                *tmp );
             if ( srcMask )
@@ -879,7 +879,7 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
         if ( h - bdWidth * 2 > 0 )
         {
             tmp = borderPixmap( widget ) ->border( KThemePixmap::Left );
-            srcMask = tmp->tqmask();
+            srcMask = tmp->mask();
             p.drawTiledPixmap( 0, bdWidth, bdWidth, h - bdWidth * 2, *tmp );
             if ( srcMask )
                 bitBlt( TQT_TQPAINTDEVICE(&mask), 0, bdWidth, KDE_TQBITMAP_TO_TQPAINTDEVICE(srcMask), 0, 0,
@@ -888,7 +888,7 @@ KThemePixmap* KThemeBase::scaleBorder( int w, int h, WidgetType widget ) const
                 mPainter.fillRect( 0, bdWidth, bdWidth, h - bdWidth * 2, color1 );
 
             tmp = borderPixmap( widget ) ->border( KThemePixmap::Right );
-            srcMask = tmp->tqmask();
+            srcMask = tmp->mask();
             p.drawTiledPixmap( w - bdWidth, bdWidth, bdWidth, h - bdWidth * 2,
                                *tmp );
             if ( srcMask )

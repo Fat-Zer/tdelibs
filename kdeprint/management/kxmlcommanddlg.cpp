@@ -683,7 +683,7 @@ void KXmlCommandAdvancedDlg::slotRemoveItem()
 	{
 		TQListViewItem	*newCurrent(item->nextSibling());
 		if (!newCurrent)
-			newCurrent = item->tqparent();
+			newCurrent = item->parent();
 		removeItem(item);
 		delete item;
 		m_view->setSelected(newCurrent, true);
@@ -713,7 +713,7 @@ void KXmlCommandAdvancedDlg::slotMoveUp()
 			item->moveItem(after);
 		else
 		{
-			TQListViewItem	*parent = item->tqparent();
+			TQListViewItem	*parent = item->parent();
 			parent->takeItem(item);
 			parent->insertItem(item);
 		}

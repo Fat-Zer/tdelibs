@@ -422,7 +422,7 @@ void TilePainter::draw( TQPainter *p, int x, int y, int width, int height, const
 					}
 					else
 					{
-						const TQBitmap* mask  = scale( col, row, w, h, color,  bg, disabled, false ).tqmask();
+						const TQBitmap* mask  = scale( col, row, w, h, color,  bg, disabled, false ).mask();
 						if (mask)
 						{
 							p->setBackgroundColor(Qt::color0);
@@ -442,7 +442,7 @@ void TilePainter::draw( TQPainter *p, int x, int y, int width, int height, const
 					}
 					else
 					{
-						const TQBitmap* mask = tile( col, row, color, bg, disabled, false ).tqmask();
+						const TQBitmap* mask = tile( col, row, color, bg, disabled, false ).mask();
 						if (mask)
 						{
 							p->setBackgroundColor(Qt::color0);

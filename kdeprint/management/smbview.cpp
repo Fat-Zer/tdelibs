@@ -196,7 +196,7 @@ void SmbView::setOpen(TQListViewItem *item, bool on)
 			}
 			*m_proc << KProcess::quote (item->text (0));
 			*m_proc << " -W ";
-			*m_proc << KProcess::quote (item->tqparent ()->
+			*m_proc << KProcess::quote (item->parent ()->
 							text (0));
 			if (!krb5ccname)
 			{
@@ -281,7 +281,7 @@ void SmbView::processShares()
 void SmbView::slotSelectionChanged(TQListViewItem *item)
 {
 	if (item && item->depth() == 2)
-		emit printerSelected(item->tqparent()->tqparent()->text(0),item->tqparent()->text(0),item->text(0));
+		emit printerSelected(item->parent()->parent()->text(0),item->parent()->text(0),item->text(0));
 }
 
 void SmbView::abort()

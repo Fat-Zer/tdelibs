@@ -170,9 +170,9 @@ void KMdiDockContainer::init()
 	if (!overlap) deactivateOverlapMode();
 
 	// try to restore splitter size
-	if ( parentDockWidget() && parentDockWidget()->tqparent() )
+	if ( parentDockWidget() && parentDockWidget()->parent() )
 	{
-		KDockSplitter * sp = ::tqqt_cast<KDockSplitter*>( parentDockWidget()->tqparent() );
+		KDockSplitter * sp = ::tqqt_cast<KDockSplitter*>( parentDockWidget()->parent() );
 		if ( sp )
 			sp->setSeparatorPosX( m_separatorPos );
 	}
@@ -465,9 +465,9 @@ void KMdiDockContainer::tabClicked( int t )
 	{
 		kdDebug( 760 ) << k_funcinfo << "Tab " << t << " was just deactiviated" << endl;
 		// try save splitter position
-		if ( parentDockWidget() && parentDockWidget()->tqparent() )
+		if ( parentDockWidget() && parentDockWidget()->parent() )
 		{
-			KDockSplitter * sp = ::tqqt_cast<KDockSplitter*>( parentDockWidget()->tqparent() );
+			KDockSplitter * sp = ::tqqt_cast<KDockSplitter*>( parentDockWidget()->parent() );
 			if ( sp )
 				m_separatorPos = sp->separatorPos();
 		}
@@ -517,7 +517,7 @@ void KMdiDockContainer::save( TQDomElement& dockEl )
 	TQDomDocument doc = dockEl.ownerDocument();
 	TQDomElement el;
 	el = doc.createElement( "name" );
-	el.appendChild( doc.createTextNode( TQString( "%1" ).arg( tqparent() ->name() ) ) );
+	el.appendChild( doc.createTextNode( TQString( "%1" ).arg( parent() ->name() ) ) );
 	dockEl.appendChild( el );
 	el = doc.createElement( "overlapMode" );
 	el.appendChild( doc.createTextNode( isOverlapMode() ? "true" : "false" ) );
@@ -627,8 +627,8 @@ void KMdiDockContainer::load( TQDomElement& dockEl )
 void KMdiDockContainer::save( KConfig* cfg, const TQString& group_or_prefix )
 {
 	TQString grp = cfg->group();
-	cfg->deleteGroup( group_or_prefix + TQString( "::%1" ).arg( tqparent() ->name() ) );
-	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( tqparent() ->name() ) );
+	cfg->deleteGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
+	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
 
 	if ( isOverlapMode() )
 		cfg->writeEntry( "overlapMode", "true" );
@@ -636,9 +636,9 @@ void KMdiDockContainer::save( KConfig* cfg, const TQString& group_or_prefix )
 		cfg->writeEntry( "overlapMode", "false" );
 
 	// try to save the splitter position
-	if ( parentDockWidget() && parentDockWidget() ->tqparent() )
+	if ( parentDockWidget() && parentDockWidget() ->parent() )
 	{
-		KDockSplitter * sp = ::tqqt_cast<KDockSplitter*>( parentDockWidget() -> tqparent() );
+		KDockSplitter * sp = ::tqqt_cast<KDockSplitter*>( parentDockWidget() -> parent() );
 		if ( sp )
 			cfg->writeEntry( "separatorPosition", m_separatorPos );
 	}
@@ -674,7 +674,7 @@ void KMdiDockContainer::save( KConfig* cfg, const TQString& group_or_prefix )
 void KMdiDockContainer::load( KConfig* cfg, const TQString& group_or_prefix )
 {
 	TQString grp = cfg->group();
-	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( tqparent() ->name() ) );
+	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
 
 	if ( cfg->readEntry( "overlapMode" ) != "false" )
 		activateOverlapMode( m_horizontal?m_tb->height():m_tb->width() );

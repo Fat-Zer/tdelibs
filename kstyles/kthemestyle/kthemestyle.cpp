@@ -895,7 +895,7 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRe
             {
                 if ( isPixmap( ( flags & Style_On || flags & Style_Down ) ? ExIndicatorOn : ExIndicatorOff ) )
                 {
-                    const TQBitmap * mask = uncached( ( flags & Style_On || flags & Style_Down ) ? ExIndicatorOn : ExIndicatorOff ) ->tqmask();
+                    const TQBitmap * mask = uncached( ( flags & Style_On || flags & Style_Down ) ? ExIndicatorOn : ExIndicatorOff ) ->mask();
                     if ( mask )
                     {
                         p->setPen( Qt::color1 );
@@ -913,7 +913,7 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRe
                 if ( isPixmap( ( flags & Style_On ) ? IndicatorOn : IndicatorOff ) )
                 {
                     const TQBitmap * mask = uncached( ( flags & Style_On ) ? IndicatorOn :
-                                                     IndicatorOff ) ->tqmask();
+                                                     IndicatorOff ) ->mask();
                     if ( mask )
                     {
                         p->setPen( Qt::color1 );
@@ -1853,8 +1853,8 @@ void KThemeStyle::drawKStylePrimitive( KStylePrimitive kpe,
                             TQWMatrix r270;
                             r270.rotate( 270 );
                             vsliderCache = new TQPixmap( uncached( Slider ) ->xForm( r270 ) );
-                            if ( uncached( Slider ) ->tqmask() )
-                                vsliderCache->setMask( uncached( Slider ) ->tqmask() ->xForm( r270 ) );
+                            if ( uncached( Slider ) ->mask() )
+                                vsliderCache->setMask( uncached( Slider ) ->mask() ->xForm( r270 ) );
                         }
                         bitBlt( p->device(), x + ( w - vsliderCache->width() ) / 2, y,
                                 vsliderCache );

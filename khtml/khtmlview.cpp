@@ -1285,8 +1285,8 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
             attr.save_under = True;
             XChangeWindowAttributes( qt_xdisplay(), d->cursor_icon_widget->winId(), CWSaveUnder, &attr );
             d->cursor_icon_widget->resize( icon_pixmap.width(), icon_pixmap.height());
-            if( icon_pixmap.tqmask() )
-                d->cursor_icon_widget->setMask( *icon_pixmap.tqmask());
+            if( icon_pixmap.mask() )
+                d->cursor_icon_widget->setMask( *icon_pixmap.mask());
             else
                 d->cursor_icon_widget->clearMask();
             d->cursor_icon_widget->setBackgroundPixmap( icon_pixmap );
