@@ -48,6 +48,8 @@ class KSessionManaged;
 class KStyle;
 class KURL;
 
+#define COMPOSITE	// [FIXME] Autodetect composition support
+
 #define kapp KApplication::kApplication()
 
 class KApplicationPrivate;
@@ -112,6 +114,10 @@ public:
   /**
    * This constructor takes aboutData and command line
    *  arguments from KCmdLineArgs.
+   *
+   *  If ARGB (transparent) widgets are to be used in your application,
+   *  please use KARGBApplication(new object name) or
+   *  KARGBApplication(new object name, allow_styles) instead of KApplication(...).
    *
    * @param allowStyles Set to false to disable the loading on plugin based
    * styles. This is only useful to applications that do not display a GUI
@@ -860,13 +866,86 @@ public:
    */
   TQString checkRecoverFile( const TQString& pFilename, bool& bRecover ) const;
 
-#ifdef Q_WS_X11
+#if defined(Q_WS_X11) && defined(COMPOSITE)
   /**
+   * @internal
    * Get the X11 display
    * @return the X11 Display
    */
-  Display *getDisplay() { return display; }
+   Display *getDisplay() { return display; }
+
+  /**
+   * @internal
+   * Gets X11 composition information
+   */
+   void getX11RGBAInformation(Display *dpy);
+
+  /**
+   * Gets the availability of a composition manager such as kompmgr
+   * Note that at least one application must have called detectCompositionManagerAvailable
+   * while the current X display was active in order for this method to return valid results.
+   * @see detectCompositionManagerAvailable()
+   * @return whether the composition manager is enabled
+   */
+   static bool isCompositionManagerAvailable();
+
+  /**
+   * Detects the availability of a composition manager such as kompmgr
+   * Note that calling this method will probably cause the screen to flicker.
+   * @see isCompositionManagerAvailable()
+   * @param force_available If set, force TDE to assume a composition manager is available
+   * @return whether the composition manager is enabled
+   */
+   bool detectCompositionManagerAvailable(bool force_available=false);
+
+  /**
+   * @internal
+   * Opens an X11 display and returns the handle to it
+   * @return the X11 display handle
+   */
+   Display *openX11RGBADisplay();
 #endif
+
+  /**
+   * @internal
+   * Creates a default KApplication with transparency support
+   * (if available)
+   */
+   static KApplication KARGBApplicationObject( bool allowStyles=true );
+
+   #define KARGBApplication(objectname, ...) const KApplication &__kapplication_internal_app = KApplication::KARGBApplicationObject(__VA_ARGS__); KApplication &objectname = const_cast<KApplication&>(__kapplication_internal_app);
+
+  /**
+   * Returns the X11 display visual
+   *
+   * @return A pointer to the X11 display visual
+   */
+   Qt::HANDLE getX11RGBAVisual(Display *dpy);
+
+  /**
+   * Returns the X11 display colormap
+   *
+   * @return An X11 display colormap object
+   */
+   Qt::HANDLE getX11RGBAColormap(Display *dpy);
+
+  /**
+   * Returns whether or not X11 composition is available
+   * 
+   * You must first call getX11RGBAInformation()
+   * 
+   * Note that getX11RGBAInformation() has already
+   * been called if you used the default KApplication
+   * constructor.
+   *
+   * Additionally, at least one application must have called
+   * detectCompositionManagerAvailable while the current X 
+   * display was active in order for this method to return
+   * valid results.
+   *
+   * @return true if composition is available
+   */
+   bool isX11CompositionAvailable();
 
   /**
    * Enables style plugins.
@@ -1200,6 +1279,12 @@ private:
   void dcopAutoRegistration();
   void dcopClientPostInit();
   void initUrlActionRestrictions();
+
+  bool argb_visual;
+#if defined(Q_WS_X11) && defined(COMPOSITE)
+  Qt::HANDLE argb_x11_visual;
+  Qt::HANDLE argb_x11_colormap;
+#endif
 
 public:
   /**

@@ -548,6 +548,12 @@ if( XRENDER_FOUND )
   set( HAVE_XRENDER 1 )
 endif( XRENDER_FOUND )
 
+##### check for xcomposite #########################
+
+pkg_search_module( XCOMPOSITE xcomposite )
+if( XCOMPOSITE_FOUND )
+  set( HAVE_XCOMPOSITE 1 )
+endif( XCOMPOSITE_FOUND )
 
 ##### check for libxml-2.0 ######################
 

@@ -125,6 +125,11 @@
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>
+#ifdef COMPOSITE
+#include <X11/extensions/Xrender.h>
+#include <X11/extensions/Xcomposite.h>
+#include <dlfcn.h>
+#endif
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/SM/SMlib.h>
@@ -173,6 +178,18 @@ bool KApplication::s_dcopClientNeedsPostInit = false;
 static Atom atom_DesktopWindow;
 static Atom atom_NetSupported;
 static Atom kde_xdnd_drop;
+#endif
+
+#ifdef Q_WS_X11
+static int composite_event, composite_error, composite_opcode;
+static bool x11_composite_error_generated;
+static int x11_error(Display *dpy, XErrorEvent *ev) {
+	if (ev->request_code == composite_opcode && ev->minor_code == X_CompositeRedirectSubwindows)
+	{
+		x11_composite_error_generated = true;
+		return 0;
+	}
+}
 #endif
 
 // duplicated from patched Qt, so that there won't be unresolved symbols if Qt gets
@@ -602,6 +619,7 @@ KApplication::KApplication( int& argc, char** argv, const TQCString& rAppName,
   TQApplication( argc, argv, GUIenabled ), KInstance(rAppName),
 #ifdef Q_WS_X11
   display(0L),
+  argb_visual(false),
 #endif
   d (new KApplicationPrivate())
 {
@@ -622,11 +640,11 @@ KApplication::KApplication( int& argc, char** argv, const TQCString& rAppName,
 }
 
 KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
-  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
-                TRUE ),	// Qt4 requires that there always be a GUI
+  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
   KInstance( KCmdLineArgs::about),
 #ifdef Q_WS_X11
   display(0L),
+  argb_visual(false),
 #endif
   d (new KApplicationPrivate)
 {
@@ -648,9 +666,11 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles ) :
   TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
-                visual, colormap ),
+                visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
   KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
 {
+    if ((visual) && (colormap))
+        getX11RGBAInformation(dpy);
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
     read_app_startup_id();
@@ -665,9 +685,11 @@ KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles, KInstance * _instance ) :
   TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
-                visual, colormap ),
+                visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
   KInstance( _instance ), display(0L), d (new KApplicationPrivate)
 {
+    if ((visual) && (colormap))
+        getX11RGBAInformation(dpy);
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
     read_app_startup_id();
@@ -684,6 +706,7 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled, KInstance* _insta
   TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
                 GUIenabled ),
   KInstance( _instance ),
+  argb_visual(false),
 #ifdef Q_WS_X11
   display(0L),
 #endif
@@ -708,6 +731,7 @@ KApplication::KApplication(Display *display, int& argc, char** argv, const TQCSt
                            bool allowStyles, bool GUIenabled ) :
   TQApplication( display ), KInstance(rAppName),
   display(0L),
+  argb_visual(false),
   d (new KApplicationPrivate())
 {
     aIconPixmap.pm.icon = 0L;
@@ -1718,7 +1742,190 @@ public:
 };
 #endif
 
+#if defined(Q_WS_X11) && defined(COMPOSITE)
+bool KApplication::isCompositionManagerAvailable() {
+	KConfigGroup pConfig (KGlobal::config(), "General");
+	return pConfig.readBoolEntry("compositingManagerAvailable", false);
 
+return false;
+}
+
+bool KApplication::detectCompositionManagerAvailable(bool force_available) {
+	bool compositing_manager_available;
+	if (force_available) {
+		compositing_manager_available = true;
+	}
+	else {
+		// See if compositing has been enabled
+		KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+		char *displayname = 0;
+		if ( qtargs->isSet("display"))
+			displayname = qtargs->getOption( "display" ).data();
+			
+		Display *dpy = XOpenDisplay( displayname );
+	
+		x11_composite_error_generated = false;
+		compositing_manager_available = false;
+		XSetErrorHandler(x11_error);
+		if (!XQueryExtension (dpy, COMPOSITE_NAME, &composite_opcode, &composite_event, &composite_error)) {
+			XSetErrorHandler(NULL);
+			compositing_manager_available = false;
+		}
+		else {
+			Window root_window = XDefaultRootWindow(dpy);
+			XCompositeRedirectSubwindows(dpy, root_window, CompositeRedirectManual);
+			XSync(dpy, false);
+			if (x11_composite_error_generated == true) {
+				compositing_manager_available = true;
+			}
+			else {
+				XCompositeUnredirectSubwindows(dpy, root_window, CompositeRedirectManual);
+				compositing_manager_available = false;
+			}
+			XSetErrorHandler(NULL);
+			XCloseDisplay(dpy);
+		}
+	}
+	
+	KConfigGroup pConfig (KGlobal::config(), "General");
+	bool cmanager_enabled = pConfig.readBoolEntry("compositingManagerAvailable", false);
+	if (cmanager_enabled != compositing_manager_available) {
+		pConfig.writeEntry("compositingManagerAvailable", compositing_manager_available, true, true);
+	}
+	pConfig.sync();
+
+	return compositing_manager_available;
+}
+
+Display* KApplication::openX11RGBADisplay() {
+	KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+	char *displayname = 0;
+	if ( qtargs->isSet("display"))
+		displayname = qtargs->getOption( "display" ).data();
+		
+	Display *dpy = XOpenDisplay( displayname );
+	return dpy;
+}
+
+Qt::HANDLE KApplication::getX11RGBAVisual(Display *dpy) {
+	getX11RGBAInformation(dpy);
+	return argb_x11_visual;
+}
+
+Qt::HANDLE KApplication::getX11RGBAColormap(Display *dpy) {
+	getX11RGBAInformation(dpy);
+	return argb_x11_colormap;
+}
+
+bool KApplication::isX11CompositionAvailable() {
+	return argb_visual & isCompositionManagerAvailable();
+}
+
+void KApplication::getX11RGBAInformation(Display *dpy) {
+	if ( !dpy ) {
+		argb_visual = false;
+		return;
+	}
+	
+	int screen = DefaultScreen( dpy );
+	Colormap colormap = 0;
+	Visual *visual = 0;
+	int event_base, error_base;
+	
+	if ( XRenderQueryExtension( dpy, &event_base, &error_base ) ) {
+		int nvi;
+		XVisualInfo templ;
+		templ.screen  = screen;
+		templ.depth   = 32;
+		templ.c_class = TrueColor;
+		XVisualInfo *xvi = XGetVisualInfo( dpy, VisualScreenMask | VisualDepthMask
+				| VisualClassMask, &templ, &nvi );
+		
+		for ( int i = 0; i < nvi; i++ ) {
+			XRenderPictFormat *format = XRenderFindVisualFormat( dpy, xvi[i].visual );
+			if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
+				visual = xvi[i].visual;
+				colormap = XCreateColormap( dpy, RootWindow( dpy, screen ), visual, AllocNone );
+				kdDebug() << "found visual with alpha support" << endl;
+				argb_visual = true;
+				break;
+			}
+		}
+	}
+	
+	if( argb_visual ) {
+		argb_x11_visual = Qt::HANDLE( visual );
+		argb_x11_colormap = Qt::HANDLE( colormap );
+		argb_visual = true;
+		return;
+	}
+	argb_visual = false;
+	return;
+}
+
+KApplication KApplication::KARGBApplicationObject( bool allowStyles ) {
+	KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+	bool argb_visual_available = false;
+	char *display = 0;
+	if ( qtargs->isSet("display"))
+		display = qtargs->getOption( "display" ).data();
+	
+	Display *dpy = XOpenDisplay( display );
+	if ( !dpy ) {
+		kdError() << "cannot connect to X server " << display << endl;
+		exit( 1 );
+	}
+	
+	int screen = DefaultScreen( dpy );
+	Colormap colormap = 0;
+	Visual *visual = 0;
+	int event_base, error_base;
+	
+	if ( XRenderQueryExtension( dpy, &event_base, &error_base ) ) {
+		int nvi;
+		XVisualInfo templ;
+		templ.screen  = screen;
+		templ.depth   = 32;
+		templ.c_class = TrueColor;
+		XVisualInfo *xvi = XGetVisualInfo( dpy, VisualScreenMask | VisualDepthMask
+				| VisualClassMask, &templ, &nvi );
+		
+		for ( int i = 0; i < nvi; i++ ) {
+			XRenderPictFormat *format = XRenderFindVisualFormat( dpy, xvi[i].visual );
+			if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
+				visual = xvi[i].visual;
+				colormap = XCreateColormap( dpy, RootWindow( dpy, screen ), visual, AllocNone );
+				kdDebug() << "found visual with alpha support" << endl;
+				argb_visual_available = true;
+				break;
+			}
+		}
+	}
+	
+	if( argb_visual_available ) {
+		return KApplication( dpy, Qt::HANDLE( visual ), Qt::HANDLE( colormap ), allowStyles );
+	}
+	else {
+		return KApplication(allowStyles, true);
+	}
+}
+#else
+Qt::HANDLE KApplication::getX11RGBAVisual(char *display) {
+	return 0;
+}
+
+Qt::HANDLE KApplication::getX11RGBAColormap(char *display) {
+	return 0;
+}
+
+bool KApplication::isX11CompositionAvailable() {
+	return false;
+}
+
+KApplication KApplication::KARGBApplication( bool allowStyles ) {
+	return KApplication::KApplication(allowStyles, true);
+}
+#endif
 
 static bool kapp_block_user_input = false;
 

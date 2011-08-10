@@ -129,7 +129,7 @@ tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
   EMBED kdecorenetwork-static
-  LINK ltdlc-static ${KDESVGICONS} DCOP-shared kdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ICE SM
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared kdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )
@@ -197,5 +197,13 @@ tde_add_executable( kde-config
 
 tde_add_executable(kgrantpty SETUID
   SOURCES kgrantpty.c
+  DESTINATION ${BIN_INSTALL_DIR}
+)
+
+##### kdetcompmgr #################################
+
+tde_add_executable( kdetcompmgr
+  SOURCES kdetcompmgr.cpp
+  LINK kdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

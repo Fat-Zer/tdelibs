@@ -665,6 +665,9 @@
 /* Defined if your system has XRender support */
 #cmakedefine HAVE_XRENDER 1
 
+/* Defined if your system has XComposite support */
+#cmakedefine HAVE_XCOMPOSITE 1
+
 /* Define to 1 if you have the `_getpty' function. */
 #cmakedefine HAVE__GETPTY 1
 
