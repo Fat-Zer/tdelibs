@@ -386,7 +386,7 @@ void KCursorPrivate::setAutoHideCursor( TQWidget *w, bool enable, bool customEve
 
     if ( enable )
     {
-        if ( m_eventFilters.tqfind( w ) != NULL )
+        if ( m_eventFilters.find( w ) != NULL )
             return;
         KCursorPrivateAutoHideEventFilter* filter = new KCursorPrivateAutoHideEventFilter( w );
         m_eventFilters.insert( w, filter );
@@ -412,7 +412,7 @@ bool KCursorPrivate::eventFilter( TQObject *o, TQEvent *e )
     if ( !enabled )
         return false;
 
-    KCursorPrivateAutoHideEventFilter* filter = m_eventFilters.tqfind( o );
+    KCursorPrivateAutoHideEventFilter* filter = m_eventFilters.find( o );
 
     Q_ASSERT( filter != NULL );
     if ( filter == NULL )

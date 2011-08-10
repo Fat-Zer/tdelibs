@@ -195,7 +195,7 @@ void KEditListBox::typedSomething(const TQString& text)
         else
         {
             StringComparisonMode mode = (StringComparisonMode) (ExactMatch | CaseSensitive );
-            bool enable = (!m_listBox->tqfindItem( text, mode ));
+            bool enable = (!m_listBox->findItem( text, mode ));
             servNewButton->setEnabled( enable );
         }
     }
@@ -266,7 +266,7 @@ void KEditListBox::addItem()
         else
         {
             StringComparisonMode mode = (StringComparisonMode) (ExactMatch | CaseSensitive );
-            alreadyInList =(m_listBox->tqfindItem(currentTextLE, mode) );
+            alreadyInList =(m_listBox->findItem(currentTextLE, mode) );
         }
     }
 

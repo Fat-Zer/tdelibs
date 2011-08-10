@@ -96,8 +96,8 @@ void KURLCompletionTest::testLocalRelativePath()
     waitForCompletion();
     TQStringList comp1all = m_completion->allMatches();
     assert( comp1all.count() == 2 );
-    assert( comp1all.tqfind( "file1" ) != comp1all.end() );
-    assert( comp1all.tqfind( "file#a" ) != comp1all.end() );
+    assert( comp1all.find( "file1" ) != comp1all.end() );
+    assert( comp1all.find( "file#a" ) != comp1all.end() );
     TQString comp1 = m_completion->replacedPath( "file1" ); // like KURLRequester does
     assert( comp1 == "file1" );
 
@@ -138,9 +138,9 @@ void KURLCompletionTest::testLocalURL()
     TQStringList comp1all = m_completion->allMatches();
     kdDebug() << comp1all << endl;
     assert( comp1all.count() == 2 );
-    assert( comp1all.tqfind( m_dirURL.url() + "file1" ) != comp1all.end() );
+    assert( comp1all.find( m_dirURL.url() + "file1" ) != comp1all.end() );
     TQString filehash = m_dirURL.url() + "file%23a";
-    assert( comp1all.tqfind( filehash ) != comp1all.end() );
+    assert( comp1all.find( filehash ) != comp1all.end() );
     TQString filehashPath = m_completion->replacedPath( filehash ); // note that it returns a path!!
     kdDebug() << filehashPath << endl;
     assert( filehashPath == m_dirURL.path() + "file#a" );

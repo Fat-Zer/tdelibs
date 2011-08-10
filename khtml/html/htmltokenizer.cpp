@@ -347,7 +347,7 @@ void HTMLTokenizer::parseSpecial(TokenizerString &src)
         // possible end of tagname, lets check.
         if ( !scriptCodeResync && !escaped && !src.escaped() && ( ch == '>' || ch == '/' || ch <= ' ' ) && ch &&
              scriptCodeSize >= searchStopperLen &&
-             !TQConstString( scriptCode+scriptCodeSize-searchStopperLen, searchStopperLen ).string().tqfind( searchStopper, 0, false )) {
+             !TQConstString( scriptCode+scriptCodeSize-searchStopperLen, searchStopperLen ).string().find( searchStopper, 0, false )) {
             scriptCodeResync = scriptCodeSize-searchStopperLen+1;
             tquote = NoQuote;
             continue;
@@ -1618,7 +1618,7 @@ void HTMLTokenizer::finish()
             food += TQString(scriptCode, scriptCodeSize);
         }
         else {
-            pos = TQConstString(scriptCode, scriptCodeSize).string().tqfind('>');
+            pos = TQConstString(scriptCode, scriptCodeSize).string().find('>');
             food.setUnicode(scriptCode+pos+1, scriptCodeSize-pos-1); // deep copy
         }
         KHTML_DELETE_QCHAR_VEC(scriptCode);

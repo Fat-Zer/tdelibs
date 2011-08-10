@@ -116,7 +116,7 @@ TQCString DCOPObject::objId() const
 
 bool DCOPObject::hasObject(const TQCString &_objId)
 {
-  if (objMap()->tqcontains(_objId))
+  if (objMap()->contains(_objId))
     return true;
   else
     return false;

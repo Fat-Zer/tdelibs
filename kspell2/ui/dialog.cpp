@@ -261,7 +261,7 @@ void Dialog::slotMisspelling(const TQString& word, int start )
 {
     kdDebug()<<"Dialog misspelling!!"<<endl;
     d->currentWord = Word( word, start );
-    if ( d->replaceAllMap.tqcontains( word ) ) {
+    if ( d->replaceAllMap.contains( word ) ) {
         d->ui->m_replacement->setText( d->replaceAllMap[ word ] );
         slotReplaceWord();
     } else {

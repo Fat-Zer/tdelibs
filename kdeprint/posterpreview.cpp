@@ -139,7 +139,7 @@ void PosterPreview::drawContents( TQPainter *painter )
 			{
 				for ( int j=0; j<m_cols; j++, x+=m_pw )
 				{
-					bool selected = ( m_selectedpages.tqfind( i*m_cols+j+1 ) != m_selectedpages.end() );
+					bool selected = ( m_selectedpages.find( i*m_cols+j+1 ) != m_selectedpages.end() );
 					p->fillRect( x+1, y+1, m_pw-2, m_ph-2, ( selected ? KGlobalSettings::highlightColor() : white ) );
 					p->drawRect( x, y, m_pw, m_ph );
 					if ( pw > 0 && ph > 0 )
@@ -187,7 +187,7 @@ void PosterPreview::mousePressEvent( TQMouseEvent *e )
 			r = m_rows - ( e->pos().y()-m_boundingrect.y() )/( m_boundingrect.height()/m_rows );
 			int pagenum = ( r-1 )*m_cols+c;
 
-			if ( m_selectedpages.tqfind( pagenum ) == m_selectedpages.end() ||
+			if ( m_selectedpages.find( pagenum ) == m_selectedpages.end() ||
 					!( e->state() & TQt::ShiftButton ) )
 			{
 				if ( !( e->state() & TQt::ShiftButton ) )
@@ -267,7 +267,7 @@ void PosterPreview::setSelectedPages( const TQString& s )
 	for ( TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it )
 	{
 		int p;
-		if ( ( p = ( *it ).tqfind( '-' ) ) == -1 )
+		if ( ( p = ( *it ).find( '-' ) ) == -1 )
 			m_selectedpages.append( ( *it ).toInt() );
 		else
 		{

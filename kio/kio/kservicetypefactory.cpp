@@ -102,7 +102,7 @@ TQVariant::Type KServiceTypeFactory::findPropertyTypeByName(const TQString &_nam
 
    assert (!KSycoca::self()->isBuilding());
 
-   TQMapConstIterator<TQString,int> it = m_propertyTypeDict.tqfind(_name);
+   TQMapConstIterator<TQString,int> it = m_propertyTypeDict.find(_name);
    if (it != m_propertyTypeDict.end()) {
      return (TQVariant::Type)it.data();
    }
@@ -134,7 +134,7 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
    TQ_INT32 right = nrOfEntries - 1;
    TQ_INT32 middle;
    // Extract extension
-   int lastDot = _filename.tqfindRev('.');
+   int lastDot = _filename.findRev('.');
    int ext_len = _filename.length() - lastDot - 1;
    if (lastDot != -1 && ext_len <= 4) // if no '.', skip the extension lookup
    {

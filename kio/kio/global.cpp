@@ -167,12 +167,12 @@ KIO_EXPORT TQString KIO::encodeFileName( const TQString & _str )
   TQString str( _str );
 
   int i = 0;
-  while ( ( i = str.tqfind( "%", i ) ) != -1 )
+  while ( ( i = str.find( "%", i ) ) != -1 )
   {
     str.replace( i, 1, "%%");
     i += 2;
   }
-  while ( ( i = str.tqfind( "/" ) ) != -1 )
+  while ( ( i = str.find( "/" ) ) != -1 )
       str.replace( i, 1, "%2f");
   return str;
 }

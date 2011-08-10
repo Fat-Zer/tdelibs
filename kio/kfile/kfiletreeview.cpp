@@ -413,7 +413,7 @@ KFileTreeBranchList& KFileTreeView::branches()
 
 bool KFileTreeView::removeBranch( KFileTreeBranch *branch )
 {
-   if(m_branches.tqcontains(branch))
+   if(m_branches.contains(branch))
    {
       delete (branch->root());
       m_branches.remove( branch );
@@ -558,7 +558,7 @@ void KFileTreeView::stopAnimation( KFileTreeViewItem * item )
 
    kdDebug(250) << "Stoping Animation !" << endl;
 
-   MapCurrentOpeningFolders::Iterator it = m_mapCurrentOpeningFolders.tqfind(item);
+   MapCurrentOpeningFolders::Iterator it = m_mapCurrentOpeningFolders.find(item);
    if ( it != m_mapCurrentOpeningFolders.end() )
    {
       if( item->isDir() && isOpen( item) )

@@ -632,9 +632,9 @@ TQString KFolderType::icon( const KURL& _url, bool _is_local ) const
           entries.append( ep->d_name );
           if ( readdir( dp ) == 0 ) { // only three
             // check if we got "." ".." and ".directory"
-            isempty = entries.tqfind( "." ) != entries.end() &&
-                      entries.tqfind( ".." ) != entries.end() &&
-                      entries.tqfind( ".directory" ) != entries.end();
+            isempty = entries.find( "." ) != entries.end() &&
+                      entries.find( ".." ) != entries.end() &&
+                      entries.find( ".directory" ) != entries.end();
           }
         }
         if (!isempty && !strcmp(ep->d_name, ".directory"))

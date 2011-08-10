@@ -303,7 +303,7 @@ void KAccelPrivate::slotKeyPressed( int id )
 {
 	kdDebug(125) << "KAccelPrivate::slotKeyPressed( " << id << " )" << endl;
 
-	if( m_mapIDToKey.tqcontains( id ) ) {
+	if( m_mapIDToKey.contains( id ) ) {
 		KKey key = m_mapIDToKey[id];
 		KKeySequence seq( key );
 		TQPopupMenu* pMenu = createPopupMenu( m_pWatch, seq );
@@ -357,7 +357,7 @@ bool KAccelPrivate::eventFilter( TQObject* /*pWatched*/, TQEvent* pEvent )
 			if( (*it) == keyCodeQt ) {
 				int nID = it.key();
 				kdDebug(125) << "shortcut found!" << endl;
-				if( m_mapIDToAction.tqcontains( nID ) ) {
+				if( m_mapIDToAction.contains( nID ) ) {
 					// TODO: reduce duplication between here and slotMenuActivated
 					KAccelAction* pAction = m_mapIDToAction[nID];
 					if( !pAction->isEnabled() )
@@ -608,7 +608,7 @@ void KAccel::changeMenuAccel( TQPopupMenu *menu, int id, const TQString& action 
 	if( !pAction || s.isEmpty() )
 		return;
 
-	int i = s.tqfind( '\t' );
+	int i = s.find( '\t' );
 
 	TQString k = pAction->shortcut().seq(0).toString();
 	if( k.isEmpty() )

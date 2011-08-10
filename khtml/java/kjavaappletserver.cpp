@@ -448,7 +448,7 @@ void KJavaAppletServer::sendURLData( int loaderID, int code, const TQByteArray& 
 
 void KJavaAppletServer::removeDataJob( int loaderID )
 {
-    const KIOJobMap::iterator it = d->kiojobs.tqfind( loaderID );
+    const KIOJobMap::iterator it = d->kiojobs.find( loaderID );
     if (it != d->kiojobs.end()) {
         it.data()->deleteLater();
         d->kiojobs.erase( it );
@@ -502,7 +502,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
     if (cmd_code == KJAS_PUT_DATA) {
         // rest of the data is for kio put
         if (ok) {
-            KIOJobMap::iterator it = d->kiojobs.tqfind( ID_num );
+            KIOJobMap::iterator it = d->kiojobs.find( ID_num );
             if (ok && it != d->kiojobs.end()) {
                 TQByteArray qba;
                 qba.setRawData(qb.data() + index, qb.size() - index - 1);
@@ -517,7 +517,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
     //now parse out the arguments
     while( index < qb_size )
     {
-        int sep_pos = qb.tqfind( 0, index );
+        int sep_pos = qb.find( 0, index );
         if (sep_pos < 0) {
             kdError(6100) << "Missing separation byte" << endl;
             sep_pos = qb_size;
@@ -565,7 +565,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
         case KJAS_DATA_COMMAND:
             if (ok && !args.empty()) {
                 const int cmd = args.first().toInt( &ok );
-                KIOJobMap::iterator it = d->kiojobs.tqfind( ID_num );
+                KIOJobMap::iterator it = d->kiojobs.find( ID_num );
                 if (ok && it != d->kiojobs.end())
                     it.data()->jobCommand( cmd );
                 kdDebug(6100) << "KIO Data command: " << ID_num << " " << args.first() << endl;
@@ -581,7 +581,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
         case KJAS_PUT_MEMBER:
         case KJAS_CALL_MEMBER: {
             const int ticket = args[0].toInt();
-            JSStack::iterator it = d->jsstack.tqfind(ticket);
+            JSStack::iterator it = d->jsstack.find(ticket);
             if (it != d->jsstack.end()) {
                 kdDebug(6100) << "slotJavaRequest: " << ticket << endl;
                 args.pop_front();
@@ -670,7 +670,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
                         TQString subject = cert->getSubject() + TQChar('\n');
                         TQRegExp reg(TQString("/[A-Z]+="));
                         int pos = 0;
-                        while ((pos = subject.tqfind(reg, pos)) > -1)
+                        while ((pos = subject.find(reg, pos)) > -1)
                             subject.replace(pos, 1, TQString("\n    "));
                         text += subject.mid(1);
                     }

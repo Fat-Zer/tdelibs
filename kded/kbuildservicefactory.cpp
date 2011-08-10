@@ -67,7 +67,7 @@ KSycocaEntry *
 KBuildServiceFactory::createEntry( const TQString& file, const char *resource )
 {
   TQString name = file;
-  int pos = name.tqfindRev('/');
+  int pos = name.findRev('/');
   if (pos != -1)
   {
      name = name.mid(pos+1);
@@ -227,7 +227,7 @@ KBuildServiceFactory::saveInitList(TQDataStream &str)
 void
 KBuildServiceFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
 {
-   if (m_dupeDict.tqfind(newEntry))
+   if (m_dupeDict.find(newEntry))
       return;
 
    KSycocaFactory::addEntry(newEntry, resource);
@@ -244,7 +244,7 @@ KBuildServiceFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
 
    TQString name = service->desktopEntryName();
    m_nameDict->add( name, newEntry );
-   m_serviceDict.tqreplace(name, service);
+   m_serviceDict.replace(name, service);
 
    TQString relName = service->desktopEntryPath();
    m_relNameDict->add( relName, newEntry );

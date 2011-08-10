@@ -52,7 +52,7 @@
 TQString generateId(const TQMap<TQString, DrBase*>& map)
 {
 	int	index(-1);
-	while (map.tqcontains(TQString::tqfromLatin1("item%1").arg(++index))) ;
+	while (map.contains(TQString::tqfromLatin1("item%1").arg(++index))) ;
 	return TQString::tqfromLatin1("item%1").arg(index);
 }
 
@@ -454,7 +454,7 @@ void KXmlCommandAdvancedDlg::viewItem(TQListViewItem *item)
 		m_name->setText(item->text(1));
 		m_desc->setText(item->text(0));
 
-		DrBase	*opt = (m_opts.tqcontains(item->text(1)) ? m_opts[item->text(1)] : 0);
+		DrBase	*opt = (m_opts.contains(item->text(1)) ? m_opts[item->text(1)] : 0);
 		if (opt)
 		{
 			bool	isgroup = (opt->type() < DrBase::String);
@@ -498,8 +498,8 @@ void KXmlCommandAdvancedDlg::viewItem(TQListViewItem *item)
 			m_addopt->setEnabled(isgroup);
 
 			TQListViewItem	*prevItem = findPrev(item), *nextItem = findNext(item);
-			DrBase	*prevOpt = (prevItem && m_opts.tqcontains(prevItem->text(1)) ? m_opts[prevItem->text(1)] : 0);
-			DrBase	*nextOpt = (nextItem && m_opts.tqcontains(nextItem->text(1)) ? m_opts[nextItem->text(1)] : 0);
+			DrBase	*prevOpt = (prevItem && m_opts.contains(prevItem->text(1)) ? m_opts[prevItem->text(1)] : 0);
+			DrBase	*nextOpt = (nextItem && m_opts.contains(nextItem->text(1)) ? m_opts[nextItem->text(1)] : 0);
 			m_up->setEnabled(prevOpt && !(prevOpt->type() < DrBase::String && opt->type() >= DrBase::String));
 			m_down->setEnabled(nextOpt && !(isgroup && nextOpt->type() >= DrBase::String));
 
@@ -571,7 +571,7 @@ void KXmlCommandAdvancedDlg::slotApplyChanges()
 
 		m_apply->setEnabled(false);
 
-		DrBase	*opt = (m_opts.tqcontains(item->text(1)) ? m_opts[item->text(1)] : 0);
+		DrBase	*opt = (m_opts.contains(item->text(1)) ? m_opts[item->text(1)] : 0);
 		m_opts.remove(item->text(1));
 		delete opt;
 
@@ -735,9 +735,9 @@ void KXmlCommandAdvancedDlg::slotMoveDown()
 
 void KXmlCommandAdvancedDlg::slotCommandChanged(const TQString& cmd)
 {
-	m_inputfile->parentWidget()->setEnabled(cmd.tqfind("%filterinput") != -1);
-	m_outputfile->parentWidget()->setEnabled(cmd.tqfind("%filteroutput") != -1);
-	m_view->setEnabled(cmd.tqfind("%filterargs") != -1);
+	m_inputfile->parentWidget()->setEnabled(cmd.find("%filterinput") != -1);
+	m_outputfile->parentWidget()->setEnabled(cmd.find("%filteroutput") != -1);
+	m_view->setEnabled(cmd.find("%filterargs") != -1);
 	m_name->parentWidget()->setEnabled(m_view->isEnabled());
 	slotSelectionChanged((m_view->isEnabled() ? m_view->currentItem() : 0));
 	m_view->setOpen(m_view->firstChild(), m_view->isEnabled());
@@ -751,7 +751,7 @@ void KXmlCommandAdvancedDlg::slotValueSelected(TQListViewItem *item)
 
 void KXmlCommandAdvancedDlg::slotOptionRenamed(TQListViewItem *item, int)
 {
-	if (item && m_opts.tqcontains(item->text(1)))
+	if (item && m_opts.contains(item->text(1)))
 	{
 		DrBase	*opt = m_opts[item->text(1)];
 		opt->set("text", item->text(0));
@@ -767,7 +767,7 @@ void KXmlCommandAdvancedDlg::recreateGroup(TQListViewItem *item, DrGroup *grp)
 	TQListViewItem	*child = item->firstChild();
 	while (child)
 	{
-		DrBase	*opt = (m_opts.tqcontains(child->text(1)) ? m_opts[child->text(1)] : 0);
+		DrBase	*opt = (m_opts.contains(child->text(1)) ? m_opts[child->text(1)] : 0);
 		if (opt)
 		{
 			if (opt->type() == DrBase::Group)
@@ -807,7 +807,7 @@ bool KXmlCommandAdvancedDlg::editCommand(KXmlCommand *xmlcmd, TQWidget *parent)
 		xmlcmd->setComment( xmldlg->m_comment->text().replace( TQRegExp( "\n" ), " " ) );
 
 		// need to recreate the driver tree structure
-		DrMain	*driver = (xmldlg->m_opts.tqcontains("__root__") ? static_cast<DrMain*>(xmldlg->m_opts["__root__"]) : 0);
+		DrMain	*driver = (xmldlg->m_opts.contains("__root__") ? static_cast<DrMain*>(xmldlg->m_opts["__root__"]) : 0);
 		if (!driver && xmldlg->m_opts.count() > 0)
 		{
 			kdDebug() << "KXmlCommandAdvancedDlg: driver structure not found, creating one" << endl;
@@ -951,7 +951,7 @@ void KXmlCommandDlg::setCommand(KXmlCommand *xmlCmd)
 		item->setRenameEnabled(0, true);
 	}
 
-	int	index = m_mimelist.tqfindIndex(xmlCmd->mimeType());
+	int	index = m_mimelist.findIndex(xmlCmd->mimeType());
 	if (index != -1)
 		m_mimetype->setCurrentItem(index);
 	else
@@ -964,7 +964,7 @@ void KXmlCommandDlg::setCommand(KXmlCommand *xmlCmd)
 	for (TQStringList::ConstIterator it=list.begin(); it!=list.end(); ++it)
 	{
 		m_selectedmime->insertItem(*it);
-		delete m_availablemime->tqfindItem(*it, TQt::ExactMatch);
+		delete m_availablemime->findItem(*it, TQt::ExactMatch);
 	}
 }
 

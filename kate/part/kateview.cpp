@@ -1748,7 +1748,7 @@ void KateView::lineAsHTML (KateTextLine::Ptr line, uint startCol, uint length, T
 
       charAttributes = m_renderer->attribute(line->attribute(curPos));
 
-      if ( ! stylecache.tqcontains( line->attribute(curPos) ) )
+      if ( ! stylecache.contains( line->attribute(curPos) ) )
       {
         TQString textdecoration;
         TQString style;

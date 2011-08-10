@@ -69,10 +69,10 @@ static int * ourMaxLength( const KPasswordEdit* const e ) {
 		d_ptr->setAutoDelete(true);
 		qAddPostRoutine( cleanup_d_ptr );
 	}
-	int* ret = d_ptr->tqfind( (void*) e );
+	int* ret = d_ptr->find( (void*) e );
 	if ( ! ret ) {
 		ret = new int;
-		d_ptr->tqreplace( (void*) e, ret );
+		d_ptr->replace( (void*) e, ret );
 	}
 	return ret;
 }
@@ -634,15 +634,15 @@ void KPasswordDialog::enableOkBtn()
       if (pwlength > 5) pwlength = 5;
 
       const TQRegExp numRxp("[0-9]", true, false);
-      int numeric = (int) (pass.tqcontains(numRxp) / lengthFactor);
+      int numeric = (int) (pass.contains(numRxp) / lengthFactor);
       if (numeric > 3) numeric = 3;
 
       const TQRegExp symbRxp("\\W", false, false);
-      int numsymbols = (int) (pass.tqcontains(symbRxp) / lengthFactor);
+      int numsymbols = (int) (pass.contains(symbRxp) / lengthFactor);
       if (numsymbols > 3) numsymbols = 3;
 
       const TQRegExp upperRxp("[A-Z]", true, false);
-      int upper = (int) (pass.tqcontains(upperRxp) / lengthFactor);
+      int upper = (int) (pass.contains(upperRxp) / lengthFactor);
       if (upper > 3) upper = 3;
 
       int pwstrength=((pwlength*10)-20) + (numeric*10) + (numsymbols*15) + (upper*10);

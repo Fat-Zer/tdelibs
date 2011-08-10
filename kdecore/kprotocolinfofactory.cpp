@@ -86,7 +86,7 @@ KProtocolInfoFactory::findProtocol(const TQString &protocol)
 {
   if (!m_sycocaDict) return 0; // Error!
 
-  TQMap<TQString,KProtocolInfo::Ptr>::iterator it = m_cache.tqfind(protocol);
+  TQMap<TQString,KProtocolInfo::Ptr>::iterator it = m_cache.find(protocol);
   if (it != m_cache.end())
      return (*it);
 

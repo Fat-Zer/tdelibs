@@ -485,7 +485,7 @@ void KEditToolbar::slotDefault()
     }
     else
     {
-        int slash = d->m_file.tqfindRev('/')+1;
+        int slash = d->m_file.findRev('/')+1;
         if (slash)
             d->m_file = d->m_file.mid(slash);
         TQString xml_file = locateLocal("data", TQString::tqfromLatin1( KGlobal::instance()->instanceName() + '/' ) + d->m_file);
@@ -1034,7 +1034,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
     KAction *action = actionCollection->action( i );
 
     // skip our active ones
-    if (active_list.tqcontains(action->name()))
+    if (active_list.contains(action->name()))
       continue;
 
     ToolbarItem *act = new ToolbarItem(m_inactiveList, tagActionList, action->name(), action->toolTip());
@@ -1361,7 +1361,7 @@ void KEditToolbarWidget::updateLocal(TQDomElement& elem)
         continue;
 
       TQDomElement toolbar = (*xit).m_document.documentElement().toElement();
-      toolbar.tqreplaceChild(elem, (*it));
+      toolbar.replaceChild(elem, (*it));
       return;
     }
 

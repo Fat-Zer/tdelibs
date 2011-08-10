@@ -128,9 +128,9 @@ KService::init( KDesktopFile *config )
     }
     // Try to make up a name.
     m_strName = entryPath();
-    int i = m_strName.tqfindRev('/');
+    int i = m_strName.findRev('/');
     m_strName = m_strName.mid(i+1);
-    i = m_strName.tqfindRev('.');
+    i = m_strName.findRev('.');
     if (i != -1)
        m_strName = m_strName.left(i);
   }
@@ -189,10 +189,10 @@ KService::init( KDesktopFile *config )
   }
 
   TQString name = entryPath();
-  int pos = name.tqfindRev('/');
+  int pos = name.findRev('/');
   if (pos != -1)
      name = name.mid(pos+1);
-  pos = name.tqfind('.');
+  pos = name.find('.');
   if (pos != -1)
      name = name.left(pos);
 
@@ -200,7 +200,7 @@ KService::init( KDesktopFile *config )
   if (kde4application && !m_strExec.startsWith("/")) {
     m_strExec = "KDEHOME=$HOME/.kde XDG_DATA_DIRS=/usr/share KDEDIRS=/usr/ XDG_CONFIG_DIRS=/etc/xdg/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH "+m_strExec;
   } else if (config->readBoolEntry("X-KDE-SubstituteUID")) {
-    int space = m_strExec.tqfind(" ");
+    int space = m_strExec.find(" ");
     if (space==-1)
       m_strExec = KStandardDirs::findExe(m_strExec);
     else {
@@ -253,7 +253,7 @@ KService::init( KDesktopFile *config )
      m_lstServiceTypes += config->readListEntry( "MimeType", ';' );
   entryMap.remove("MimeType");
 
-  if ( m_strType == "Application" && !m_lstServiceTypes.tqcontains("Application") )
+  if ( m_strType == "Application" && !m_lstServiceTypes.contains("Application") )
     // Applications implement the service type "Application" ;-)
     m_lstServiceTypes += "Application";
 
@@ -572,7 +572,7 @@ TQVariant KService::property( const TQString& _name, TQVariant::Type t ) const
 
   // Then we use a homebuild class based on KConfigBase to convert the TQString.
   // For some often used property types we do the conversion ourselves.
-  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.tqfind( _name );
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( _name );
   if ( (it == m_mapProps.end()) || (!it.data().isValid()))
   {
      //kdDebug(7012) << "Property not found " << _name << endl;
@@ -684,7 +684,7 @@ KService::Ptr KService::serviceByStorageId( const TQString& _storageId )
      return new KService(_storageId);
 
   TQString tmp = _storageId;
-  tmp = tmp.mid(tmp.tqfindRev('/')+1); // Strip dir
+  tmp = tmp.mid(tmp.findRev('/')+1); // Strip dir
 
   if (tmp.endsWith(".desktop"))
      tmp.truncate(tmp.length()-8);
@@ -720,7 +720,7 @@ TQString KService::username() const {
 }
 
 bool KService::noDisplay() const {
-  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.tqfind( "NoDisplay" );
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( "NoDisplay" );
   if ( (it != m_mapProps.end()) && (it.data().isValid()))
   {
      TQString aValue = it.data().toString().lower();
@@ -728,21 +728,21 @@ bool KService::noDisplay() const {
         return true;
   }
 
-  it = m_mapProps.tqfind( "OnlyShowIn" );
+  it = m_mapProps.find( "OnlyShowIn" );
   if ( (it != m_mapProps.end()) && (it.data().isValid()))
   {
      TQString aValue = it.data().toString();
      TQStringList aList = TQStringList::split(';', aValue);
-     if ((!aList.tqcontains("TDE")) && (!aList.tqcontains("KDE")))
+     if ((!aList.contains("TDE")) && (!aList.contains("KDE")))
         return true;
   }
 
-  it = m_mapProps.tqfind( "NotShowIn" );
+  it = m_mapProps.find( "NotShowIn" );
   if ( (it != m_mapProps.end()) && (it.data().isValid()))
   {
      TQString aValue = it.data().toString();
      TQStringList aList = TQStringList::split(';', aValue);
-     if ((aList.tqcontains("TDE")) || (aList.tqcontains("KDE")))
+     if ((aList.contains("TDE")) || (aList.contains("KDE")))
         return true;
   }
   
@@ -758,7 +758,7 @@ TQString KService::untranslatedGenericName() const {
 }
 
 bool KService::SuSEunimportant() const {
-  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.tqfind( "X-SuSE-Unimportant" );
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( "X-SuSE-Unimportant" );
   if ( (it == m_mapProps.end()) || (!it.data().isValid()))
   {
      return false;
@@ -772,7 +772,7 @@ bool KService::SuSEunimportant() const {
 }
 
 TQString KService::parentApp() const {
-  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.tqfind( "X-KDE-ParentApp" );
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( "X-KDE-ParentApp" );
   if ( (it == m_mapProps.end()) || (!it.data().isValid()))
   {
      return TQString::null;
@@ -783,8 +783,8 @@ TQString KService::parentApp() const {
 
 bool KService::allowMultipleFiles() const {
   // Can we pass multiple files on the command line or do we have to start the application for every single file ?
-  if ( m_strExec.tqfind( "%F" ) != -1 || m_strExec.tqfind( "%U" ) != -1 ||
-       m_strExec.tqfind( "%N" ) != -1 || m_strExec.tqfind( "%D" ) != -1 )
+  if ( m_strExec.find( "%F" ) != -1 || m_strExec.find( "%U" ) != -1 ||
+       m_strExec.find( "%N" ) != -1 || m_strExec.find( "%D" ) != -1 )
     return true;
   else
     return false;
@@ -836,7 +836,7 @@ TQString KService::newServicePath(bool showInMenu, const TQString &suggestedName
       else
          result = base + TQString("-%1.desktop").arg(i);
 
-      if (reservedMenuIds && reservedMenuIds->tqcontains(result))
+      if (reservedMenuIds && reservedMenuIds->contains(result))
          continue;
 
       // Lookup service by menu-id

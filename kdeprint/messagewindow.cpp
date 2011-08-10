@@ -85,7 +85,7 @@ void MessageWindow::add( TQWidget *parent, const TQString& txt, int delay )
 		kdWarning( 500 ) << "Cannot add a message window to a null parent" << endl;
 	else
 	{
-		MessageWindow *w = m_windows.tqfind( parent );
+		MessageWindow *w = m_windows.find( parent );
 		if ( w )
 			w->setText( txt );
 		else
@@ -96,14 +96,14 @@ void MessageWindow::add( TQWidget *parent, const TQString& txt, int delay )
 void MessageWindow::remove( TQWidget *parent )
 {
 	if ( parent )
-		delete m_windows.tqfind( parent );
+		delete m_windows.find( parent );
 }
 
 void MessageWindow::change( TQWidget *parent, const TQString& txt )
 {
 	if ( parent )
 	{
-		MessageWindow *w = m_windows.tqfind( parent );
+		MessageWindow *w = m_windows.find( parent );
 		if ( w )
 			w->setText( txt );
 		else

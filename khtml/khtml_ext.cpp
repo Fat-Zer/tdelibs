@@ -315,7 +315,7 @@ void KHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
     if ( !m_extensionProxy )
         return;
 
-    int slot = m_extensionProxy->tqmetaObject()->tqfindSlot( method );
+    int slot = m_extensionProxy->tqmetaObject()->findSlot( method );
     if ( slot == -1 )
         return;
 

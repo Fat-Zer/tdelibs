@@ -425,7 +425,7 @@ bool KatePrinter::print (KateDocument *doc)
                for (int i=0; i<3; i++)
                {
                  s = headerTagList[i];
-                 if (s.tqfind("%p") != -1) s.replace("%p", TQString::number(currentPage));
+                 if (s.find("%p") != -1) s.replace("%p", TQString::number(currentPage));
                  paint.drawText(marg, 0, headerWidth-(marg*2), headerHeight, align, s);
                  align = valign|(i == 0 ? Qt::AlignHCenter : Qt::AlignRight);
                }
@@ -453,7 +453,7 @@ bool KatePrinter::print (KateDocument *doc)
                for (int i=0; i<3; i++)
                {
                  s = footerTagList[i];
-                 if (s.tqfind("%p") != -1) s.replace("%p", TQString::number(currentPage));
+                 if (s.find("%p") != -1) s.replace("%p", TQString::number(currentPage));
                  paint.drawText(marg, maxHeight+innerMargin, headerWidth-(marg*2), footerHeight, align, s);
                  align = Qt::AlignVCenter|(i == 0 ? Qt::AlignHCenter : Qt::AlignRight);
                }

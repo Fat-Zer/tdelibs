@@ -108,7 +108,7 @@ void KDataToolPluginView::aboutToShow()
 	if ( selectionInterface(m_view->document())->hasSelection() )
 	{
 		word = selectionInterface(m_view->document())->selection();
-		if ( word.tqfind(' ') == -1 && word.tqfind('\t') == -1 && word.tqfind('\n') == -1 )
+		if ( word.find(' ') == -1 && word.find('\t') == -1 && word.find('\n') == -1 )
 			m_singleWord = true;
 		else
 			m_singleWord = false;
@@ -206,7 +206,7 @@ void KDataToolPluginView::slotToolActivated( const KDataToolInfo &info, const TQ
 	TQString datatype = TQSTRING_OBJECT_NAME_STRING;
 
 	// If unsupported (and if we have a single word indeed), try application/x-singleword
-	if ( !info.mimeTypes().tqcontains( mimetype ) && m_singleWord )
+	if ( !info.mimeTypes().contains( mimetype ) && m_singleWord )
 		mimetype = "application/x-singleword";
 	
 	kdDebug() << "Running tool with datatype=" << datatype << " mimetype=" << mimetype << endl;

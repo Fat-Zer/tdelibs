@@ -41,8 +41,8 @@ static bool bLaunchApp = 0;
 bool findObject( const char* app, const char* obj, const char* func, QCStringList args )
 {
     TQString f = func; // Qt is better with tqunicode strings, so use one.
-    int left = f.tqfind( '(' );
-    int right = f.tqfind( ')' );
+    int left = f.find( '(' );
+    int right = f.find( ')' );
 
     if ( right <  left )
     {
@@ -66,7 +66,7 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
 	for ( TQStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
 	    TQString lt = (*it).simplifyWhiteSpace();
 
-	    int s = lt.tqfind(' ');
+	    int s = lt.find(' ');
 
 	    // If there are spaces in the name, there may be two
 	    // reasons: the parameter name is still there, ie.
@@ -86,7 +86,7 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
 		//
 	    	s=1;
 
-		while (s < (int)partl.count() && intTypes.tqcontains(partl[s]))
+		while (s < (int)partl.count() && intTypes.contains(partl[s]))
 		{
 			s++;
 		}

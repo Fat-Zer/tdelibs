@@ -2301,7 +2301,7 @@ void KHTMLPart::checkCompleted()
   d->m_paUseStylesheet->setEnabled( sheets.count() > 2);
   if (sheets.count() > 2)
   {
-    d->m_paUseStylesheet->setCurrentItem(kMax(sheets.tqfindIndex(d->m_sheetUsed), 0));
+    d->m_paUseStylesheet->setCurrentItem(kMax(sheets.findIndex(d->m_sheetUsed), 0));
     slotUseStylesheet();
   }
 
@@ -2402,7 +2402,7 @@ void KHTMLPart::slotRedirect()
   d->m_redirectURL = TQString();
 
   // SYNC check with ecma/kjs_window.cpp::goURL !
-  if ( u.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( u.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     TQString script = KURL::decode_string( u.right( u.length() - 11 ) );
     kdDebug( 6050 ) << "KHTMLPart::slotRedirect script=" << script << endl;
@@ -2838,7 +2838,7 @@ bool KHTMLPart::findTextNext( const TQString &str, bool forward, bool caseSensit
                 matchLen = matcher.matchedLength();
             }
             else {
-              d->m_findPos = s.string().tqfind(str, d->m_findPos+1, caseSensitive);
+              d->m_findPos = s.string().find(str, d->m_findPos+1, caseSensitive);
               matchLen = str.length();
             }
 
@@ -3212,7 +3212,7 @@ bool KHTMLPart::findTextNext( bool reverse )
           s.truncate( d->m_findPosEnd );
         if ( !s.isEmpty() )
         {
-          newLine = s.tqfind( '\n' ) != -1; // did we just get a newline?
+          newLine = s.find( '\n' ) != -1; // did we just get a newline?
           if( !( options & KFindDialog::FindBackwards ))
           {
             //kdDebug(6050) << "StringPortion: " << index << "-" << index+s.length()-1 << " -> " << lastNode << endl;
@@ -3731,8 +3731,8 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
     return;
   }
 
-  if (url.tqfind( TQString::tqfromLatin1( "javascript:" ),0, false ) == 0 ) {
-    TQString jscode = KURL::decode_string( url.mid( url.tqfind( "javascript:", 0, false ) ) );
+  if (url.find( TQString::tqfromLatin1( "javascript:" ),0, false ) == 0 ) {
+    TQString jscode = KURL::decode_string( url.mid( url.find( "javascript:", 0, false ) ) );
     jscode = KStringHandler::rsqueeze( jscode, 80 ); // truncate if too long
     if (url.startsWith("javascript:window.open"))
       jscode += i18n(" (In new window)");
@@ -3906,7 +3906,7 @@ bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, c
   if ( !target.isEmpty() )
       hasTarget = true;
 
-  if ( url.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( url.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     crossFrameExecuteScript( target, KURL::decode_string( url.mid( 11 ) ) );
     return false;
@@ -3965,7 +3965,7 @@ bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, c
     }
   }
 
-  if (!d->m_referrer.isEmpty() && !args.metaData().tqcontains("referrer"))
+  if (!d->m_referrer.isEmpty() && !args.metaData().contains("referrer"))
     args.metaData()["referrer"] = d->m_referrer;
 
 
@@ -4276,7 +4276,7 @@ void KHTMLPart::updateActions()
   {
     TQObject *ext = KParts::BrowserExtension::childObject( frame );
     if ( ext )
-      enablePrintFrame = ext->tqmetaObject()->slotNames().tqcontains( "print()" );
+      enablePrintFrame = ext->tqmetaObject()->slotNames().contains( "print()" );
   }
 
   d->m_paPrintFrame->setEnabled( enablePrintFrame );
@@ -4319,7 +4319,7 @@ bool KHTMLPart::requestFrame( khtml::RenderPart *frame, const TQString &url, con
   (*it)->m_params = params;
 
   // Support for <frame src="javascript:string">
-  if ( url.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( url.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     if ( processObjectRequest(*it, KURL("about:blank"), TQString("text/html") ) ) {
       KHTMLPart* p = static_cast<KHTMLPart*>(static_cast<KParts::ReadOnlyPart *>((*it)->m_part));
@@ -4393,7 +4393,7 @@ bool KHTMLPart::requestObject( khtml::ChildFrame *child, const KURL &url, const 
   child->m_args = args;
   child->m_args.reload = (d->m_cachePolicy == KIO::CC_Reload);
   child->m_serviceName = TQString();
-  if (!d->m_referrer.isEmpty() && !child->m_args.metaData().tqcontains( "referrer" ))
+  if (!d->m_referrer.isEmpty() && !child->m_args.metaData().contains( "referrer" ))
     child->m_args.metaData()["referrer"] = d->m_referrer;
 
   child->m_args.metaData().insert("PropagateHttpHeader", "true");
@@ -4655,7 +4655,7 @@ KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char 
   KTrader::OfferList offers = KTrader::self()->query( mimetype, "KParts/ReadOnlyPart", constr, TQString() );
 
   if ( offers.isEmpty() ) {
-    int pos = mimetype.tqfind( "-plugin" );
+    int pos = mimetype.find( "-plugin" );
     if (pos < 0)
         return 0L;
     TQString stripped_mime = mimetype.left( pos );
@@ -4675,7 +4675,7 @@ KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char 
       KParts::ReadOnlyPart *res = 0L;
 
       const char *className = "KParts::ReadOnlyPart";
-      if ( service->serviceTypes().tqcontains( "Browser/View" ) )
+      if ( service->serviceTypes().contains( "Browser/View" ) )
         className = "Browser/View";
 
       if ( factory->inherits( "KParts::Factory" ) )
@@ -4811,7 +4811,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
 
   TQString urlstring = u.url();
 
-  if ( urlstring.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
+  if ( urlstring.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
     urlstring = KURL::decode_string(urlstring);
     crossFrameExecuteScript( _target, urlstring.right( urlstring.length() - 11) );
     return;
@@ -5095,7 +5095,7 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
 
   // TODO: handle child target correctly! currently the script are always executed fur the parent
   TQString urlStr = url.url();
-  if ( urlStr.tqfind( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
+  if ( urlStr.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
       TQString script = KURL::decode_string( urlStr.right( urlStr.length() - 11 ) );
       executeScript( DOM::Node(), script );
       return;
@@ -6660,7 +6660,7 @@ void KHTMLPart::slotPrintFrame()
 
   TQMetaObject *mo = ext->tqmetaObject();
 
-  int idx = mo->tqfindSlot( "print()", true );
+  int idx = mo->findSlot( "print()", true );
   if ( idx >= 0 ) {
     TQUObject o[ 1 ];
     ext->qt_invoke( idx, o );
@@ -6854,7 +6854,7 @@ void KHTMLPart::slotPartRemoved( KParts::Part *part )
             if (factory()) {
                 factory()->removeClient( part );
             }
-            if (childClients()->tqcontainsRef(part)) {
+            if (childClients()->containsRef(part)) {
                 removeChildClient( part );
             }
         }
@@ -6999,7 +6999,7 @@ bool KHTMLPart::pluginPageQuestionAsked(const TQString& mimetype) const
   if ( parent )
     return parent->pluginPageQuestionAsked(mimetype);
 
-  return d->m_pluginPageQuestionAsked.tqcontains(mimetype);
+  return d->m_pluginPageQuestionAsked.contains(mimetype);
 }
 
 void KHTMLPart::setPluginPageQuestionAsked(const TQString& mimetype)
@@ -7379,7 +7379,7 @@ void KHTMLPart::setSuppressedPopupIndicator( bool enable, KHTMLPart *originPart 
 
     if ( enable && originPart ) {
         d->m_openableSuppressedPopups++;
-        if ( d->m_suppressedPopupOriginParts.tqfindIndex( originPart ) == -1 )
+        if ( d->m_suppressedPopupOriginParts.findIndex( originPart ) == -1 )
             d->m_suppressedPopupOriginParts.append( originPart );
     }
 

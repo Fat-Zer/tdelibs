@@ -188,14 +188,14 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String("Mozilla");
   case AppName:
     // If we find "Mozilla" but not "(compatible, ...)" we are a real Netscape
-    if (userAgent.tqfind(TQString::tqfromLatin1("Mozilla")) >= 0 &&
-        userAgent.tqfind(TQString::tqfromLatin1("compatible")) == -1)
+    if (userAgent.find(TQString::tqfromLatin1("Mozilla")) >= 0 &&
+        userAgent.find(TQString::tqfromLatin1("compatible")) == -1)
     {
       //kdDebug() << "appName -> Mozilla" << endl;
       return String("Netscape");
     }
-    if (userAgent.tqfind(TQString::tqfromLatin1("Microsoft")) >= 0 ||
-        userAgent.tqfind(TQString::tqfromLatin1("MSIE")) >= 0)
+    if (userAgent.find(TQString::tqfromLatin1("Microsoft")) >= 0 ||
+        userAgent.find(TQString::tqfromLatin1("MSIE")) >= 0)
     {
       //kdDebug() << "appName -> IE" << endl;
       return String("Microsoft Internet Explorer");
@@ -204,17 +204,17 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String("Konqueror");
   case AppVersion:
     // We assume the string is something like Mozilla/version (properties)
-    return String(userAgent.mid(userAgent.tqfind('/') + 1));
+    return String(userAgent.mid(userAgent.find('/') + 1));
   case Product:
     // We are pretending to be Mozilla or Safari
-    if (userAgent.tqfind(TQString::tqfromLatin1("Mozilla")) >= 0 &&
-        userAgent.tqfind(TQString::tqfromLatin1("compatible")) == -1)
+    if (userAgent.find(TQString::tqfromLatin1("Mozilla")) >= 0 &&
+        userAgent.find(TQString::tqfromLatin1("compatible")) == -1)
     {
         return String("Gecko");
     }
     // When spoofing as IE, we use Undefined().
-    if (userAgent.tqfind(TQString::tqfromLatin1("Microsoft")) >= 0 ||
-        userAgent.tqfind(TQString::tqfromLatin1("MSIE")) >= 0)
+    if (userAgent.find(TQString::tqfromLatin1("Microsoft")) >= 0 ||
+        userAgent.find(TQString::tqfromLatin1("MSIE")) >= 0)
     {
         return Undefined();
     }
@@ -222,9 +222,9 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String("Konqueror/khtml");
   case ProductSub:
     {
-      int ix = userAgent.tqfind("Gecko");
+      int ix = userAgent.find("Gecko");
       if (ix >= 0 && userAgent.length() >= (uint)ix+14 && userAgent.tqunicode()[ix+5] == TQChar('/') &&
-          userAgent.tqfind(TQRegExp("\\d{8}"), ix+6) == ix+6)
+          userAgent.find(TQRegExp("\\d{8}"), ix+6) == ix+6)
       {
           // We have Gecko/<productSub> in the UA string
           return String(userAgent.mid(ix+6, 8));
@@ -245,10 +245,10 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String(userAgent);
   case Platform:
     // yet another evil hack, but necessary to spoof some sites...
-    if ( (userAgent.tqfind(TQString::tqfromLatin1("Win"),0,false)>=0) )
+    if ( (userAgent.find(TQString::tqfromLatin1("Win"),0,false)>=0) )
       return String(TQString::tqfromLatin1("Win32"));
-    else if ( (userAgent.tqfind(TQString::tqfromLatin1("Macintosh"),0,false)>=0) ||
-              (userAgent.tqfind(TQString::tqfromLatin1("Mac_PowerPC"),0,false)>=0) )
+    else if ( (userAgent.find(TQString::tqfromLatin1("Macintosh"),0,false)>=0) ||
+              (userAgent.find(TQString::tqfromLatin1("Mac_PowerPC"),0,false)>=0) )
       return String(TQString::tqfromLatin1("MacPPC"));
     else
     {

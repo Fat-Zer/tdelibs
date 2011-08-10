@@ -53,7 +53,7 @@ static void FAIL(const TQString &msg)
 
 static void popArg(TQCString &command, TQCString & line)
 {
-   int i = line.tqfind(' ');
+   int i = line.find(' ');
    if (i != -1)
    {
       command = line.left(i);
@@ -69,7 +69,7 @@ static void popArg(TQCString &command, TQCString & line)
 
 static void popArg(TQString &command, TQCString & line)
 {
-   int i = line.tqfind(' ');
+   int i = line.find(' ');
    if (i != -1)
    {
       command = TQString::tqfromLatin1(line.left(i));

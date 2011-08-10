@@ -426,7 +426,7 @@ TQStringList KActionCollection::groups() const
 
   TQAsciiDictIterator<KAction> it( d->m_actionDict );
   for( ; it.current(); ++it )
-    if ( !it.current()->group().isEmpty() && !lst.tqcontains( it.current()->group() ) )
+    if ( !it.current()->group().isEmpty() && !lst.contains( it.current()->group() ) )
       lst.append( it.current()->group() );
 
   return lst;

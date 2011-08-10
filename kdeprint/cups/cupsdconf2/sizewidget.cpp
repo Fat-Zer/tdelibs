@@ -45,7 +45,7 @@ SizeWidget::SizeWidget( TQWidget *parent, const char *name )
 
 void SizeWidget::setSizeString( const TQString& sz )
 {
-	int p = sz.tqfind( TQRegExp( "\\D" ) );
+	int p = sz.find( TQRegExp( "\\D" ) );
 	m_size->setValue( sz.left( p ).toInt() );
 	switch( sz[ p ].latin1() )
 	{

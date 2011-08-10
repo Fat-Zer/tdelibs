@@ -84,7 +84,7 @@ GeoValue::clone()
 	void
 GeoValue::_parse()
 {
-  int semiColon = strRep_.tqfind( ";" );
+  int semiColon = strRep_.find( ";" );
 
   if ( semiColon == -1 ) // invalid
     return;

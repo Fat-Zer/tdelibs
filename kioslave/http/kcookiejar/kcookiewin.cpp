@@ -115,7 +115,7 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
     KHttpCookiePtr cookie = cookieList.first();
 
     TQString host (cookie->host());
-    int pos = host.tqfind(':');
+    int pos = host.find(':');
     if ( pos > 0 )
     {
       TQString portNum = host.left(pos);

@@ -471,10 +471,10 @@ TQString KProtocolManager::defaultUserAgent( const TQString &_modifiers )
     if( modifiers.contains('l') )
     {
       TQStringList languageList = KGlobal::locale()->languageList();
-      TQStringList::Iterator it = languageList.tqfind( TQString::tqfromLatin1("C") );
+      TQStringList::Iterator it = languageList.find( TQString::tqfromLatin1("C") );
       if( it != languageList.end() )
       {
-        if( languageList.tqcontains( TQString::tqfromLatin1("en") ) > 0 )
+        if( languageList.contains( TQString::tqfromLatin1("en") ) > 0 )
           languageList.remove( it );
         else
           (*it) = TQString::tqfromLatin1("en");

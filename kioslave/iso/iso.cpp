@@ -130,7 +130,7 @@ bool kio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int star
         fullPath += '/';
 
     kdDebug()   << "the full path is " << fullPath << endl;
-    while ( (pos=fullPath.tqfind( '/', pos+1 )) != -1 )
+    while ( (pos=fullPath.find( '/', pos+1 )) != -1 )
     {
         TQString tryPath = fullPath.left( pos );
         kdDebug()   << fullPath << "  trying " << tryPath << endl;

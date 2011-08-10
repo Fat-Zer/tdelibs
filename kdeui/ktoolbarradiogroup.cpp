@@ -53,15 +53,15 @@ void KToolBarRadioGroup::addButton (int id)
 
 void KToolBarRadioGroup::removeButton (int id)
 {
-  if (!buttons->tqfind(id))
+  if (!buttons->find(id))
      return;
-  buttons->tqfind(id)->setRadio(false);
+  buttons->find(id)->setRadio(false);
   buttons->remove(id);
 }
 
 void KToolBarRadioGroup::slotToggled(int id)
 {
-  if (buttons->tqfind(id) && buttons->tqfind(id)->isOn())
+  if (buttons->find(id) && buttons->find(id)->isOn())
   {
     TQIntDictIterator<KToolBarButton> it(*buttons);
     while (it.current())

@@ -359,7 +359,7 @@ void KEdit::computePosition()
 
 
   while(find >=0 && find <= coltemp- 1 ){
-    find = linetext.tqfind('\t', find+start_of_line, true )-start_of_line;
+    find = linetext.find('\t', find+start_of_line, true )-start_of_line;
     if( find >=0 && find <= coltemp - 1 ){
       found_one = true;
       pos = pos + find - mem;

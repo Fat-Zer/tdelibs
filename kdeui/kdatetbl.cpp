@@ -596,7 +596,7 @@ void KDateTable::setCustomDatePainting(const TQDate &date, const TQColor &fgColo
     mode->fgColor=fgColor;
     mode->bgColor=bgColor;
 
-    d->customPaintingModes.tqreplace( date.toString(), mode );
+    d->customPaintingModes.replace( date.toString(), mode );
     d->useCustomColors=true;
     update();
 }

@@ -72,11 +72,11 @@ public:
             return 0L;
     }
     virtual bool provides( const char *mimeType ) const {
-        return ( m_formats.tqfind( mimeType ) > -1 );
+        return ( m_formats.find( mimeType ) > -1 );
     }
     virtual TQByteArray tqencodedData( const char *format ) const
     {
-        int index = m_formats.tqfind( format );
+        int index = m_formats.find( format );
         if ( index > -1 )
             return *(m_data.tqat( index ));
 

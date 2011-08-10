@@ -146,13 +146,13 @@ void KPanelApplet::watchForFocus(TQWidget* widget, bool watch)
 
     if (watch)
     {
-        if (d->watchedForFocus.tqfind(TQT_TQOBJECT(widget)) == -1)
+        if (d->watchedForFocus.find(TQT_TQOBJECT(widget)) == -1)
         {
             d->watchedForFocus.append(TQT_TQOBJECT(widget));
             widget->installEventFilter(this);
         }
     }
-    else if (d->watchedForFocus.tqfind(TQT_TQOBJECT(widget)) != -1)
+    else if (d->watchedForFocus.find(TQT_TQOBJECT(widget)) != -1)
     {
         d->watchedForFocus.remove(TQT_TQOBJECT(widget));
         widget->removeEventFilter(this);
@@ -172,7 +172,7 @@ void KPanelApplet::needsFocus(bool focus)
 
 bool KPanelApplet::eventFilter(TQObject *o, TQEvent * e)
 {
-    if (d->watchedForFocus.tqfind(o) != -1)
+    if (d->watchedForFocus.find(o) != -1)
     {
         if (e->type() == TQEvent::MouseButtonRelease ||
             e->type() == TQEvent::FocusIn)

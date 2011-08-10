@@ -269,7 +269,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
   // tag, in any event and just replace the old with the new
   if ( additive.attribute(attrNoMerge) == attrOne ) // ### use toInt() instead? (Simon)
   {
-    base.parentNode().tqreplaceChild(additive, base);
+    base.parentNode().replaceChild(additive, base);
     return true;
   }
 
@@ -572,7 +572,7 @@ void KXMLGUIClient::insertChildClient( KXMLGUIClient *child )
 
 void KXMLGUIClient::removeChildClient( KXMLGUIClient *child )
 {
-  assert( d->m_children.tqcontainsRef( child ) );
+  assert( d->m_children.containsRef( child ) );
   d->m_children.removeRef( child );
   child->d->m_parent = 0;
 }
@@ -734,7 +734,7 @@ TQString KXMLGUIClient::findVersionNumber( const TQString &xml )
       case ST_AFTER_OPEN:
       {
         //Jump to gui..
-        int guipos = xml.tqfind("gui", pos, false /*case-insensitive*/);
+        int guipos = xml.find("gui", pos, false /*case-insensitive*/);
         if (guipos == -1)
           return TQString::null; //Reject
 
@@ -747,7 +747,7 @@ TQString KXMLGUIClient::findVersionNumber( const TQString &xml )
         break;
       case ST_EXPECT_VERSION:
       {
-        int verpos =  xml.tqfind("version=\"", pos, false /*case-insensitive*/);
+        int verpos =  xml.find("version=\"", pos, false /*case-insensitive*/);
         if (verpos == -1)
           return TQString::null; //Reject
 
@@ -810,7 +810,7 @@ KXMLGUIClient::ActionPropertiesMap KXMLGUIClient::extractActionProperties( const
     if ( actionName.isEmpty() )
       continue;
 
-    TQMap<TQString, TQMap<TQString, TQString> >::Iterator propIt = properties.tqfind( actionName );
+    TQMap<TQString, TQMap<TQString, TQString> >::Iterator propIt = properties.find( actionName );
     if ( propIt == properties.end() )
       propIt = properties.insert( actionName, TQMap<TQString, TQString>() );
 
@@ -874,7 +874,7 @@ void KXMLGUIClient::addStateActionEnabled(const TQString& state,
   stateChange.actionsToEnable.append( action );
   //kdDebug() << "KXMLGUIClient::addStateActionEnabled( " << state << ", " << action << ")" << endl;
 
-  m_actionsStateMap.tqreplace( state, stateChange );
+  m_actionsStateMap.replace( state, stateChange );
 }
 
 
@@ -886,7 +886,7 @@ void KXMLGUIClient::addStateActionDisabled(const TQString& state,
   stateChange.actionsToDisable.append( action );
   //kdDebug() << "KXMLGUIClient::addStateActionDisabled( " << state << ", " << action << ")" << endl;
 
-  m_actionsStateMap.tqreplace( state, stateChange );
+  m_actionsStateMap.replace( state, stateChange );
 }
 
 

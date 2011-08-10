@@ -271,7 +271,7 @@ bool LDIFConverter::evaluatePair( Addressee &a, Address &homeAddr,
   }
   if ( fieldname == TQString::tqfromLatin1( "mail" ) ||
        fieldname == TQString::tqfromLatin1( "mozillasecondemail" ) ) { // mozilla
-    if ( a.emails().tqfindIndex( value ) == -1 )
+    if ( a.emails().findIndex( value ) == -1 )
       a.insertEmail( value );
     return true;
   }
@@ -528,7 +528,7 @@ TQString LDIFConverter::makeLDIFfieldString( TQString formatStr, TQString value,
     return TQString();
 
   // append format if not given
-  if (formatStr.tqfind(':') == -1)
+  if (formatStr.find(':') == -1)
     formatStr.append(": %1\n");
 
   // check if base64-encoding is needed
@@ -543,12 +543,12 @@ TQString LDIFConverter::makeLDIFfieldString( TQString formatStr, TQString value,
   }
 
   if (printable) // always encode if we find special chars...
-    printable = (value.tqfind('\n') == -1);
+    printable = (value.find('\n') == -1);
 
   if (!printable && allowEncode) {
     // encode to base64
     value = KCodecs::base64Encode( value.utf8() );
-    int p = formatStr.tqfind(':');
+    int p = formatStr.find(':');
     if (p>=0)
       formatStr.insert(p, ':');
   }

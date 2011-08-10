@@ -126,7 +126,7 @@ void CSSStyleDeclaration::setProperty( const DOMString &propName, const DOMStrin
     if (!id) return;
     bool important = false;
     TQString str = priority.string();
-    if (str.tqfind("important", 0, false) != -1)
+    if (str.find("important", 0, false) != -1)
         important = true;
 
     static_cast<CSSStyleDeclarationImpl *>(impl)->setProperty( id, value, important );

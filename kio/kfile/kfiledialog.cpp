@@ -204,7 +204,7 @@ void KFileDialog::setLocationLabel(const TQString& text)
 
 void KFileDialog::setFilter(const TQString& filter)
 {
-    int pos = filter.tqfind('/');
+    int pos = filter.find('/');
 
     // Check for an un-escaped '/', if found
     // interpret as a MIME filter.
@@ -219,7 +219,7 @@ void KFileDialog::setFilter(const TQString& filter)
     // escaped '/' characters.
 
     TQString copy (filter);
-    for (pos = 0; (pos = copy.tqfind("\\/", pos)) != -1; ++pos)
+    for (pos = 0; (pos = copy.find("\\/", pos)) != -1; ++pos)
         copy.remove(pos, 1);
 
     ops->clearFilter();
@@ -1133,7 +1133,7 @@ void KFileDialog::slotFilterChanged()
     TQString filter = filterWidget->currentFilter();
     ops->clearFilter();
 
-    if ( filter.tqfind( '/' ) > -1 ) {
+    if ( filter.find( '/' ) > -1 ) {
         TQStringList types = TQStringList::split( " ", filter );
         types.prepend( "inode/directory" );
         ops->setMimeFilter( types );
@@ -1250,7 +1250,7 @@ void KFileDialog::setSelection(const TQString& url)
     }
     else {
         TQString filename = u.url();
-        int sep = filename.tqfindRev('/');
+        int sep = filename.findRev('/');
         if (sep >= 0) { // there is a / in it
             if ( KProtocolInfo::supportsListing( u )) {
                 KURL dir(u);
@@ -1474,7 +1474,7 @@ KURL::List& KFileDialog::parseSelectedURLs() const
     if ( d->filenames.contains( '/' )) { // assume _one_ absolute filename
         static const TQString &prot = KGlobal::staticQString(":/");
         KURL u;
-        if ( d->filenames.tqfind( prot ) != -1 )
+        if ( d->filenames.find( prot ) != -1 )
             u = d->filenames;
         else
             u.setPath( d->filenames );
@@ -1504,7 +1504,7 @@ KURL::List KFileDialog::tokenize( const TQString& line ) const
     KURL u( ops->url() );
     TQString name;
 
-    int count = line.tqcontains( '"' );
+    int count = line.contains( '"' );
     if ( count == 0 ) { // no " " -> assume one single file
         u.setFileName( line );
         if ( u.isValid() )
@@ -1526,8 +1526,8 @@ KURL::List KFileDialog::tokenize( const TQString& line ) const
     int start = 0;
     int index1 = -1, index2 = -1;
     while ( true ) {
-        index1 = line.tqfind( '"', start );
-        index2 = line.tqfind( '"', index1 + 1 );
+        index1 = line.find( '"', start );
+        index2 = line.find( '"', index1 + 1 );
 
         if ( index1 < 0 )
             break;
@@ -1885,7 +1885,7 @@ static TQString getExtensionFromPatternList (const TQStringList &patternList)
         // *.JP?
         if ((*it).startsWith ("*.") &&
             (*it).length () > 2 &&
-            (*it).tqfind ('*', 2) < 0 && (*it).tqfind ('?', 2) < 0)
+            (*it).find ('*', 2) < 0 && (*it).find ('?', 2) < 0)
         {
             ret = (*it).mid (1);
             break;
@@ -1937,7 +1937,7 @@ void KFileDialog::updateAutoSelectExtension (void)
         if (!filter.isEmpty ())
         {
             // e.g. "*.cpp"
-            if (filter.tqfind ('/') < 0)
+            if (filter.find ('/') < 0)
             {
                 d->extension = getExtensionFromPatternList (TQStringList::split (" ", filter)).lower ();
                 kdDebug (kfile_area) << "\tsetFilter-style: pattern ext=\'"
@@ -2056,10 +2056,10 @@ void KFileDialog::updateLocationEditExtension (const TQString &lastExtension)
     KURL url = getCompleteURL (urlStr);
     kdDebug (kfile_area) << "updateLocationEditExtension (" << url << ")" << endl;
 
-    const int fileNameOffset = urlStr.tqfindRev ('/') + 1;
+    const int fileNameOffset = urlStr.findRev ('/') + 1;
     TQString fileName = urlStr.mid (fileNameOffset);
 
-    const int dot = fileName.tqfindRev ('.');
+    const int dot = fileName.findRev ('.');
     const int len = fileName.length ();
     if (dot > 0 && // has an extension already and it's not a hidden file
                    // like ".hidden" (but we do accept ".hidden.ext")
@@ -2115,7 +2115,7 @@ void KFileDialog::updateFilter ()
         KMimeType::Ptr mime = KMimeType::findByPath(urlStr, 0, true);
         if (mime && mime->name() != KMimeType::defaultMimeType()) {
             if (filterWidget->currentFilter() != mime->name() &&
-                filterWidget->filters.tqfindIndex(mime->name()) != -1) {
+                filterWidget->filters.findIndex(mime->name()) != -1) {
                 filterWidget->setCurrentFilter(mime->name());
             }
         }
@@ -2135,7 +2135,7 @@ void KFileDialog::appendExtension (KURL &url)
     kdDebug (kfile_area) << "appendExtension(" << url << ")" << endl;
 
     const int len = fileName.length ();
-    const int dot = fileName.tqfindRev ('.');
+    const int dot = fileName.findRev ('.');
 
     const bool suppressExtension = (dot == len - 1);
     const bool unspecifiedExtension = (dot <= 0);
@@ -2361,11 +2361,11 @@ void KFileDialog::setNonExtSelection()
     TQString pattern, filename = locationEdit->currentText().stripWhiteSpace();
     KServiceTypeFactory::self()->findFromPattern( filename, &pattern );
 
-    if ( !pattern.isEmpty() && pattern.tqat( 0 ) == '*' && pattern.tqfind( '*' , 1 ) == -1 )
+    if ( !pattern.isEmpty() && pattern.tqat( 0 ) == '*' && pattern.find( '*' , 1 ) == -1 )
        locationEdit->lineEdit()->setSelection( 0, filename.length() - pattern.stripWhiteSpace().length()+1 );
     else
     {
-       int lastDot = filename.tqfindRev( '.' );
+       int lastDot = filename.findRev( '.' );
        if ( lastDot > 0 )
           locationEdit->lineEdit()->setSelection( 0, lastDot );
     }

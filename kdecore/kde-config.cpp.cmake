@@ -37,64 +37,64 @@ TQString expandvars(const char *_input)
         return result;
 
     bool changed = false;
-    int index = result.tqfind("${prefix}");
+    int index = result.find("${prefix}");
     if (index >= 0) {
-        result = result.tqreplace(index, 9, "@CMAKE_INSTALL_PREFIX@");
+        result = result.replace(index, 9, "@CMAKE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.tqfind("$(prefix)");
+    index = result.find("$(prefix)");
     if (index >= 0) {
-        result = result.tqreplace(index, 9, "@CMAKE_INSTALL_PREFIX@");
+        result = result.replace(index, 9, "@CMAKE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.tqfind("${datadir}");
+    index = result.find("${datadir}");
     if (index >= 0) {
-        result = result.tqreplace(index, 10, "@SHARE_INSTALL_PREFIX@");
+        result = result.replace(index, 10, "@SHARE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.tqfind("$(datadir)");
+    index = result.find("$(datadir)");
     if (index >= 0) {
-        result = result.tqreplace(index, 10, "@SHARE_INSTALL_PREFIX@");
+        result = result.replace(index, 10, "@SHARE_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.tqfind("${exec_prefix}");
+    index = result.find("${exec_prefix}");
     if (index >= 0) {
-        result = result.tqreplace(index, 14, "@EXEC_INSTALL_PREFIX@");
+        result = result.replace(index, 14, "@EXEC_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.tqfind("$(exec_prefix)");
+    index = result.find("$(exec_prefix)");
     if (index >= 0) {
-        result = result.tqreplace(index, 14, "@EXEC_INSTALL_PREFIX@");
+        result = result.replace(index, 14, "@EXEC_INSTALL_PREFIX@");
         changed = true;
     }
-    index = result.tqfind("${libdir}");
+    index = result.find("${libdir}");
     if (index >= 0) {
-        result = result.tqreplace(index, 9, "@LIB_INSTALL_DIR@");
+        result = result.replace(index, 9, "@LIB_INSTALL_DIR@");
         changed = true;
     }
-    index = result.tqfind("$(libdir)");
+    index = result.find("$(libdir)");
     if (index >= 0) {
-        result = result.tqreplace(index, 9, "@LIB_INSTALL_DIR@");
+        result = result.replace(index, 9, "@LIB_INSTALL_DIR@");
         changed = true;
     }
-    index = result.tqfind("${includedir}");
+    index = result.find("${includedir}");
     if (index >= 0) {
-        result = result.tqreplace(index, 20, "@INCLUDE_INSTALL_DIR@");
+        result = result.replace(index, 20, "@INCLUDE_INSTALL_DIR@");
         changed = true;
     }
-    index = result.tqfind("$(includedir)");
+    index = result.find("$(includedir)");
     if (index >= 0) {
-        result = result.tqreplace(index, 20, "@INCLUDE_INSTALL_DIR@");
+        result = result.replace(index, 20, "@INCLUDE_INSTALL_DIR@");
         changed = true;
     }
-    index = result.tqfind("${sysconfdir}");
+    index = result.find("${sysconfdir}");
     if (index >= 0) {
-        result = result.tqreplace(index, 13, "@SYSCONF_INSTALL_DIR@");
+        result = result.replace(index, 13, "@SYSCONF_INSTALL_DIR@");
         changed = true;
     }
-    index = result.tqfind("$(sysconfdir)");
+    index = result.find("$(sysconfdir)");
     if (index >= 0) {
-        result = result.tqreplace(index, 13, "@SYSCONF_INSTALL_DIR@");
+        result = result.replace(index, 13, "@SYSCONF_INSTALL_DIR@");
         changed = true;
     }
     if (changed)

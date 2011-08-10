@@ -185,7 +185,7 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
     TQMap<int,TQValueList<int> > scIcons;
     for (KIconThemeDir *dir=mDirs.first(); dir!=0L; dir=mDirs.next())
     {
-        if ((dir->type() == KIcon::Scalable) && !scIcons.tqcontains(dir->size()))
+        if ((dir->type() == KIcon::Scalable) && !scIcons.contains(dir->size()))
         {
             TQValueList<int> lst;
             for (i=dir->minSize(); i<=dir->maxSize(); i++)
@@ -209,7 +209,7 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
         TQValueList<int>::ConstIterator it2;
         for (it2=lst.begin(); it2!=lst.end(); ++it2)
         {
-            if (scIcons.tqcontains(*it2))
+            if (scIcons.contains(*it2))
                 exp += scIcons[*it2];
             else
                 exp += *it2;
@@ -492,7 +492,7 @@ TQStringList KIconTheme::list()
 		KIconTheme oink(*it2);
 	    if (!oink.isValid()) continue;
 
-	    if (!_theme_list->tqcontains(*it2))
+	    if (!_theme_list->contains(*it2))
                 _theme_list->append(*it2);
         }
     }

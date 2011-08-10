@@ -137,7 +137,7 @@ void KXmlCommandSelector::loadCommands()
 	}
 	m_cmd->insertStringList(desclist);
 
-	int	index = m_cmdlist.tqfindIndex(thisCmd);
+	int	index = m_cmdlist.findIndex(thisCmd);
 	if (index != -1)
 		m_cmd->setCurrentItem(index);
 	if (m_cmd->currentItem() != -1 && m_cmd->isEnabled())
@@ -156,7 +156,7 @@ TQString KXmlCommandSelector::command() const
 
 void KXmlCommandSelector::setCommand(const TQString& cmd)
 {
-	int	index = m_cmdlist.tqfindIndex(cmd);
+	int	index = m_cmdlist.findIndex(cmd);
 
 	if (m_usefilter)
 		m_usefilter->setChecked(index != -1);
@@ -176,7 +176,7 @@ void KXmlCommandSelector::slotAddCommand()
 	{
 		bool	added(true);
 
-		if (m_cmdlist.tqfindIndex(cmdId) != -1)
+		if (m_cmdlist.findIndex(cmdId) != -1)
 		{
 			if (KMessageBox::warningContinueCancel(
 				this,

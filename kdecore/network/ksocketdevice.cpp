@@ -884,7 +884,7 @@ KSocketDevice::setDefaultImpl(KSocketDeviceFactoryBase* factory)
 void KSocketDevice::addNewImpl(KSocketDeviceFactoryBase* factory, int capabilities)
 {
   TQMutexLocker locker(&defaultImplFactoryMutex);
-  if (factories.tqcontains(capabilities))
+  if (factories.contains(capabilities))
     delete factories[capabilities];
   factories.insert(capabilities, factory);
 }

@@ -51,14 +51,14 @@ void ServiceBase::decode(const TQString& name)
 	} else {		// normal service or domain
 		TQString decoded_name=name;
 		decoded_name=decoded_name.replace("\\\\","\\");
-		int i = decoded_name.tqfind(TQRegExp("[^\\\\]\\."));
+		int i = decoded_name.find(TQRegExp("[^\\\\]\\."));
 		if (i==-1) return;            // first find service name
 		rest = decoded_name.mid(i+2);
 		m_serviceName=decoded_name.left(i+1).replace("\\.",".");
 	}
 	m_type = rest.section('.',0,1);
 	// does it really have a type?
-	if (m_type[0]=='_' && m_type[m_type.tqfind('.')+1]=='_')
+	if (m_type[0]=='_' && m_type[m_type.find('.')+1]=='_')
 		m_domain = rest.section('.',2,-1,TQString::SectionIncludeTrailingSep);
 	else {
 		m_type="";

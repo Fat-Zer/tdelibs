@@ -250,7 +250,7 @@ bool DistributionListManager::save()
       value.append( (*it).email );
     }
 
-    if ( d->mMissingEntries.tqfind( list->name() ) != d->mMissingEntries.end() ) {
+    if ( d->mMissingEntries.find( list->name() ) != d->mMissingEntries.end() ) {
       const MissingEntryList missList = d->mMissingEntries[ list->name() ];
       MissingEntryList::ConstIterator missIt;
       for ( missIt = missList.begin(); missIt != missList.end(); ++missIt ) {

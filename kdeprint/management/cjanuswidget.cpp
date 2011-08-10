@@ -241,7 +241,7 @@ CJanusWidget::CPage* CJanusWidget::findPage(TQListBoxItem *i)
 
 TQListBoxItem* CJanusWidget::findPrevItem(CPage *p)
 {
-	if (m_pages.tqfindRef(p) == -1)
+	if (m_pages.findRef(p) == -1)
 		m_pages.last();
 	else
 		m_pages.prev();

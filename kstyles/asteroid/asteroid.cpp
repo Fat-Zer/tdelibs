@@ -1555,7 +1555,7 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 				TQString s = mi->text();
 
 				if(!s.isNull()) {
-					int t = s.tqfind('\t');
+					int t = s.find('\t');
 					int m = itemVMargin;
 
 					int text_flags = AlignVCenter | ShowPrefix | DontClip | SingleLine;
@@ -2267,7 +2267,7 @@ TQSize AsteroidStyle::tqsizeFromContents(ContentsType ct,
 			}
 
 			if (!mi->text().isNull()) {
-				if ((mi->text().tqfind('\t') >= 0)) {
+				if ((mi->text().find('\t') >= 0)) {
 					sw += 16;
 				} else if (mi->popup()) {
 					sw += 8;

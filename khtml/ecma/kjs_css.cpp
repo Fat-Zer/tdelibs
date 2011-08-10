@@ -185,7 +185,7 @@ void DOMCSSStyleDeclaration::tryPut(ExecState *exec, const Identifier &propertyN
       if (propvalue.isEmpty())
         styleDecl.removeProperty(prop);
       else {
-        int important = propvalue.tqfind("!important", 0, false);
+        int important = propvalue.find("!important", 0, false);
         if (important == -1)
             styleDecl.setProperty(prop, DOM::DOMString(propvalue), "");
         else

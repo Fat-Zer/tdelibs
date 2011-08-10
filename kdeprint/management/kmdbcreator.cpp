@@ -133,7 +133,7 @@ void KMDBCreator::slotReceivedStdout(KProcess*, char *buf, int len)
 	// the toInt() will return 0. If that occurs for the first number,
 	// then the number of steps will be also 0.
 	bool	ok;
-	int	p = str.tqfind('\n');
+	int	p = str.find('\n');
 	int	n = str.mid(0, p).toInt(&ok);
 
 	// process the number received

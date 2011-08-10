@@ -118,7 +118,7 @@ namespace
 	static bool useDropShadow(TQWidget* w)
 	{
 		return w && w->tqmetaObject() && 
-			w->tqmetaObject()->tqfindProperty("KStyleMenuDropShadow") != -1;
+			w->tqmetaObject()->findProperty("KStyleMenuDropShadow") != -1;
 	}
 }
 
@@ -2081,7 +2081,7 @@ void TransparencyHandler::createShadowWindows(const TQWidget* p)
 void TransparencyHandler::removeShadowWindows(const TQWidget* p)
 {
 #ifdef Q_WS_X11
-	ShadowMap::iterator it = shadowMap().tqfind(p);
+	ShadowMap::iterator it = shadowMap().find(p);
 	if (it != shadowMap().end())
 	{
 		ShadowElements se = it.data();
@@ -2144,7 +2144,7 @@ bool TransparencyHandler::eventFilter( TQObject* object, TQEvent* event )
 		// * TODO : determine real cause for duplicate events
 		// * till 20021005
 		if ((dropShadow  || useDropShadow(p))
-		    && p->width() > 16 && p->height() > 16 && !shadowMap().tqcontains( p ))
+		    && p->width() > 16 && p->height() > 16 && !shadowMap().contains( p ))
 			createShadowWindows(p);
 	}
         else if (et == TQEvent::Resize && p->isShown() && p->isTopLevel())

@@ -524,7 +524,7 @@ if (whatType == "application/x-pkcs12") {
 
 		const char *signature = "-----BEGIN CERTIFICATE-----";
 		theFile[(uint)(qf.size()-1)] = 0;
-		isPEM = (TQCString(theFile.data()).tqfind(signature) >= 0);
+		isPEM = (TQCString(theFile.data()).find(signature) >= 0);
 	}
 
 	fp = fopen(m_file.local8Bit(), "r");

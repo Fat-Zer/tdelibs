@@ -357,7 +357,7 @@ class KateHlManager : public TQObject
 
     int detectHighlighting (class KateDocument *doc);
 
-    int findHl(KateHighlighting *h) {return hlList.tqfind(h);}
+    int findHl(KateHighlighting *h) {return hlList.find(h);}
     TQString identifierForName(const TQString&);
 
     // methodes to get the default style count + names

@@ -355,7 +355,7 @@ void KDockWidgetHeader::addButton(KDockButton_Private* btn) {
 		btn->reparent(this,TQPoint(0,0));
 	}
 	btn->setFixedSize(closeButton->pixmap()->width(),closeButton->pixmap()->height());
-	if (!d->btns.tqcontainsRef(btn)) d->btns.append(btn);
+	if (!d->btns.containsRef(btn)) d->btns.append(btn);
 
 	btn->show();
 
@@ -383,7 +383,7 @@ void KDockWidgetHeader::addButton(KDockButton_Private* btn) {
 
 void KDockWidgetHeader::removeButton(KDockButton_Private* btn) {
 	if (btn->parentWidget()==this) {
-		if (d->btns.tqcontainsRef(btn)) d->btns.removeRef(btn);
+		if (d->btns.containsRef(btn)) d->btns.removeRef(btn);
 		delete btn;
 	}
 }
@@ -1860,12 +1860,12 @@ KDockWidget* KDockManager::findDockWidgetAt( const TQPoint& pos )
     }
     w = p;
   }
-  if ( qt_tqfind_obj_child( TQT_TQOBJECT(w), "KDockSplitter", "_dock_split_" ) ) return 0L;
-  if ( qt_tqfind_obj_child( TQT_TQOBJECT(w), "KDockTabGroup", "_dock_tab" ) ) return 0L;
+  if ( qt_find_obj_child( TQT_TQOBJECT(w), "KDockSplitter", "_dock_split_" ) ) return 0L;
+  if ( qt_find_obj_child( TQT_TQOBJECT(w), "KDockTabGroup", "_dock_tab" ) ) return 0L;
   if (tqt_dynamic_cast<KDockContainer*>(w)) return 0L;
 
   if (!childDockWidgetList) return 0L;
-  if ( childDockWidgetList->tqfind(w) != -1 ) return 0L;
+  if ( childDockWidgetList->find(w) != -1 ) return 0L;
   if ( currentDragWidget->isGroup && ((KDockWidget*)w)->parentDockTabGroup() ) return 0L;
 
   KDockWidget* www = (KDockWidget*)w;
@@ -1910,7 +1910,7 @@ void KDockManager::findChildDockWidget( TQWidget*& ww, const TQWidget* p, const 
     while ( it.current() ) {
       if ( it.current()->isWidgetType() ) {
         w = (TQWidget*)it.current();
-        if ( w->isVisible() && w->tqgeometry().tqcontains(pos) ) {
+        if ( w->isVisible() && w->tqgeometry().contains(pos) ) {
           if ( w->inherits("KDockWidget") ) ww = w;
           findChildDockWidget( ww, w, w->mapFromParent(pos) );
           return;
@@ -2230,8 +2230,8 @@ void KDockManager::writeConfig(TQDomElement &base)
     TQStringList::Iterator nListIt=nList.begin();
     while ( nListIt!=nList.end() ) {
         KDockWidget *obj = getDockWidgetFromName( *nListIt);
-        if ((obj->isGroup && (!obj->d->isContainer)) && (nameList.tqfind( obj->firstName.latin1() ) == -1
-                             || nameList.tqfind(obj->lastName.latin1()) == -1)) {
+        if ((obj->isGroup && (!obj->d->isContainer)) && (nameList.find( obj->firstName.latin1() ) == -1
+                             || nameList.find(obj->lastName.latin1()) == -1)) {
             // Skip until children are saved (why?)
             ++nListIt;
 //            nList.next();
@@ -2578,7 +2578,7 @@ void KDockManager::writeConfig( KConfig* c, TQString group )
     }
 /*************************************************************************************************/
     if ( obj->isGroup ){
-      if ( (findList.tqfind( obj->firstName ) != findList.end()) && (findList.tqfind( obj->lastName ) != findList.end() )){
+      if ( (findList.find( obj->firstName ) != findList.end()) && (findList.find( obj->lastName ) != findList.end() )){
 
         c->writeEntry( cname+":type", "GROUP");
         if ( !obj->parent() ){
@@ -2601,9 +2601,9 @@ void KDockManager::writeConfig( KConfig* c, TQString group )
       } else {
 /*************************************************************************************************/
         //debug("  Skip %s", nList.current());
-        //if ( findList.tqfind( obj->firstName ) == -1 )
+        //if ( findList.find( obj->firstName ) == -1 )
         //  debug("  ? Not found %s", obj->firstName);
-        //if ( findList.tqfind( obj->lastName ) == -1 )
+        //if ( findList.find( obj->lastName ) == -1 )
         //  debug("  ? Not found %s", obj->lastName);
         ++nListIt;
         // if ( !nList.current() ) nList.first();

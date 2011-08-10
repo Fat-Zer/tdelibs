@@ -122,7 +122,7 @@ bool KContextMenuManager::eventFilter( TQObject *o, TQEvent * e)
 
 void KContextMenuManager::widgetDestroyed()
 {
-    if ( menus.tqfind( (TQObject*)sender() ) )
+    if ( menus.find( (TQObject*)sender() ) )
 	menus.remove( (TQObject*)sender() );
 }
 

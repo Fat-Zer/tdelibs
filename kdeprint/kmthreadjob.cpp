@@ -106,7 +106,7 @@ bool KMThreadJob::checkJob(int ID)
 
 KMJob* KMThreadJob::findJob(int ID)
 {
-	return m_jobs.tqfind(ID);
+	return m_jobs.find(ID);
 }
 
 KMJob* KMThreadJob::findJob(const TQString& uri)
@@ -115,7 +115,7 @@ KMJob* KMThreadJob::findJob(const TQString& uri)
 	{
 		int	pid = uri.mid(6).toInt();
 		if (pid > 0)
-			return m_jobs.tqfind(pid);
+			return m_jobs.find(pid);
 	}
 	return NULL;
 }
@@ -150,7 +150,7 @@ void KMThreadJob::createJob(KMJob *job)
 	if (job->id() > 0)
 	{
 		loadJobs();
-		if (!m_jobs.tqfind(job->id()))
+		if (!m_jobs.find(job->id()))
 		{
 			m_jobs.insert(job->id(),job);
 			saveJobs();

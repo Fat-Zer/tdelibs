@@ -489,7 +489,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 {
                     // L0681: Search saved focus widget.
                     TQWidget* focusCurrent = 0;
-                    TQGuardedPtr<TQWidget>* fw = focusMap->tqfind( w->tqtopLevelWidget() );
+                    TQGuardedPtr<TQWidget>* fw = focusMap->find( w->tqtopLevelWidget() );
                     if ( fw ) {
                         focusCurrent = *fw;
                         // L0682: Remove it from the map

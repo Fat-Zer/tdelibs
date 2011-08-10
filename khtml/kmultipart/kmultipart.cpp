@@ -246,7 +246,7 @@ void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
                 {
                     Q_ASSERT( m_nextMimeType.isNull() );
                     m_nextMimeType = TQString::tqfromLatin1( line.data() + 14 ).stripWhiteSpace();
-                    int semicolon = m_nextMimeType.tqfind( ';' );
+                    int semicolon = m_nextMimeType.find( ';' );
                     if ( semicolon != -1 )
                         m_nextMimeType = m_nextMimeType.left( semicolon );
                     kdDebug() << "m_nextMimeType=" << m_nextMimeType << endl;

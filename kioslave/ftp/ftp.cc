@@ -693,8 +693,8 @@ bool Ftp::ftpLogin()
   }
 
   TQString sTmp = remoteEncoding()->decode( ftpResponse(3) );
-  int iBeg = sTmp.tqfind('"');
-  int iEnd = sTmp.tqfindRev('"');
+  int iBeg = sTmp.find('"');
+  int iEnd = sTmp.findRev('"');
   if(iBeg > 0 && iBeg < iEnd)
   {
     m_initialPath = sTmp.mid(iBeg+1, iEnd-iBeg-1);
@@ -749,7 +749,7 @@ bool Ftp::ftpSendCmd( const TQCString& cmd, int maxretries )
 {
   assert(m_control != NULL);    // must have control connection socket
 
-  if ( cmd.tqfind( '\r' ) != -1 || cmd.tqfind( '\n' ) != -1)
+  if ( cmd.find( '\r' ) != -1 || cmd.find( '\n' ) != -1)
   {
     kdWarning(7102) << "Invalid command received (contains CR or LF):"
                     << cmd.data() << endl;
@@ -1285,7 +1285,7 @@ bool Ftp::ftpRename( const TQString & src, const TQString & dst, bool overwrite 
       return false;
   }
 
-  int pos = src.tqfindRev("/");
+  int pos = src.findRev("/");
   if( !ftpFolder(src.left(pos+1), false) )
       return false;
 
@@ -1838,7 +1838,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
         TQCString tmp( p_name );
         if ( p_access[0] == 'l' )
         {
-          int i = tmp.tqfindRev( " -> " );
+          int i = tmp.findRev( " -> " );
           if ( i != -1 ) {
             de.link = remoteEncoding()->decode(p_name + i + 4);
             tmp.truncate( i );
@@ -1852,7 +1852,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
         if ( tmp[0] == '/' ) // listing on ftp://ftp.gnupg.org/ starts with '/'
           tmp.remove( 0, 1 );
 
-        if (tmp.tqfind('/') != -1)
+        if (tmp.find('/') != -1)
           continue; // Don't trick us!
         // Some sites put more than one space between the date and the name
         // e.g. ftp://ftp.uni-marburg.de/mirror/

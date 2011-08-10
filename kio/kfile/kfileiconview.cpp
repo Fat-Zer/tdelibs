@@ -866,7 +866,7 @@ void KFileIconView::contentsDragEnterEvent( TQDragEnterEvent *e )
     if ((dropOptions() & AutoOpenDirs) == 0)
        return;
 
-    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(tqfindItem( contentsToViewport( e->pos() ) ));
+    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(findItem( contentsToViewport( e->pos() ) ));
     if ( item ) {  // are we over an item ?
        d->dropItem = item;
        d->autoOpenTimer.start( autoOpenDelay() ); // restart timer
@@ -889,7 +889,7 @@ void KFileIconView::contentsDragMoveEvent( TQDragMoveEvent *e )
     if ((dropOptions() & AutoOpenDirs) == 0)
        return;
 
-    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(tqfindItem( contentsToViewport( e->pos() ) ));
+    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(findItem( contentsToViewport( e->pos() ) ));
     if ( item ) {  // are we over an item ?
        if (d->dropItem != item)
        {
@@ -921,7 +921,7 @@ void KFileIconView::contentsDropEvent( TQDropEvent *e )
     }
     e->acceptAction();     // Yes
 
-    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(tqfindItem( contentsToViewport( e->pos() ) ));
+    KFileIconViewItem *item = dynamic_cast<KFileIconViewItem*>(findItem( contentsToViewport( e->pos() ) ));
     KFileItem * fileItem = 0;
     if (item)
         fileItem = item->fileInfo();

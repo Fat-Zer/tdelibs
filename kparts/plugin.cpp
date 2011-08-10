@@ -107,7 +107,7 @@ TQValueList<Plugin::PluginInfo> Plugin::pluginInfos( const KInstance * instance 
       if ( fInfo.extension() == TQString::tqfromLatin1( "desktop" ) )
           continue;
 
-      TQMap<TQString,TQStringList>::Iterator mapIt = sortedPlugins.tqfind( fInfo.fileName() );
+      TQMap<TQString,TQStringList>::Iterator mapIt = sortedPlugins.find( fInfo.fileName() );
       if ( mapIt == sortedPlugins.end() )
           mapIt = sortedPlugins.insert( fInfo.fileName(), TQStringList() );
 
@@ -249,7 +249,7 @@ void Plugin::loadPlugins( TQObject *parent, KXMLGUIClient* parentGUIClient, KIns
         else
         { // no user-setting, load plugin default setting
             TQString relPath = TQString( instance->instanceName() ) + "/" + (*pIt).m_relXMLFileName;
-            relPath.truncate( relPath.tqfindRev( '.' ) ); // remove extension
+            relPath.truncate( relPath.findRev( '.' ) ); // remove extension
             relPath += ".desktop";
             //kdDebug(1000) << "looking for " << relPath << endl;
             const TQString desktopfile = instance->dirs()->findResource( "data", relPath );

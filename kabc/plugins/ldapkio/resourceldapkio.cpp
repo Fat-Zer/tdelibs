@@ -330,49 +330,49 @@ void ResourceLDAPKIO::init()
     handle them in the load() method below.
     These are the default values
    */
-  if ( !mAttributes.tqcontains("objectClass") )
+  if ( !mAttributes.contains("objectClass") )
     mAttributes.insert( "objectClass", "inetOrgPerson" );
-  if ( !mAttributes.tqcontains("commonName") )
+  if ( !mAttributes.contains("commonName") )
     mAttributes.insert( "commonName", "cn" );
-  if ( !mAttributes.tqcontains("formattedName") )
+  if ( !mAttributes.contains("formattedName") )
     mAttributes.insert( "formattedName", "displayName" );
-  if ( !mAttributes.tqcontains("familyName") )
+  if ( !mAttributes.contains("familyName") )
     mAttributes.insert( "familyName", "sn" );
-  if ( !mAttributes.tqcontains("givenName") )
+  if ( !mAttributes.contains("givenName") )
     mAttributes.insert( "givenName", "givenName" );
-  if ( !mAttributes.tqcontains("mail") )
+  if ( !mAttributes.contains("mail") )
     mAttributes.insert( "mail", "mail" );
-  if ( !mAttributes.tqcontains("mailAlias") )
+  if ( !mAttributes.contains("mailAlias") )
     mAttributes.insert( "mailAlias", "" );
-  if ( !mAttributes.tqcontains("phoneNumber") )
+  if ( !mAttributes.contains("phoneNumber") )
     mAttributes.insert( "phoneNumber", "homePhone" );
-  if ( !mAttributes.tqcontains("telephoneNumber") )
+  if ( !mAttributes.contains("telephoneNumber") )
     mAttributes.insert( "telephoneNumber", "telephoneNumber" );
-  if ( !mAttributes.tqcontains("facsimileTelephoneNumber") )
+  if ( !mAttributes.contains("facsimileTelephoneNumber") )
     mAttributes.insert( "facsimileTelephoneNumber", "facsimileTelephoneNumber" );
-  if ( !mAttributes.tqcontains("mobile") )
+  if ( !mAttributes.contains("mobile") )
     mAttributes.insert( "mobile", "mobile" );
-  if ( !mAttributes.tqcontains("pager") )
+  if ( !mAttributes.contains("pager") )
     mAttributes.insert( "pager", "pager" );
-  if ( !mAttributes.tqcontains("description") )
+  if ( !mAttributes.contains("description") )
     mAttributes.insert( "description", "description" );
 
-  if ( !mAttributes.tqcontains("title") )
+  if ( !mAttributes.contains("title") )
     mAttributes.insert( "title", "title" );
-  if ( !mAttributes.tqcontains("street") )
+  if ( !mAttributes.contains("street") )
     mAttributes.insert( "street", "street" );
-  if ( !mAttributes.tqcontains("state") )
+  if ( !mAttributes.contains("state") )
     mAttributes.insert( "state", "st" );
-  if ( !mAttributes.tqcontains("city") )
+  if ( !mAttributes.contains("city") )
     mAttributes.insert( "city", "l" );
-  if ( !mAttributes.tqcontains("organization") )
+  if ( !mAttributes.contains("organization") )
     mAttributes.insert( "organization", "o" );
-  if ( !mAttributes.tqcontains("postalcode") )
+  if ( !mAttributes.contains("postalcode") )
     mAttributes.insert( "postalcode", "postalCode" );
 
-  if ( !mAttributes.tqcontains("uid") )
+  if ( !mAttributes.contains("uid") )
     mAttributes.insert( "uid", "uid" );
-  if ( !mAttributes.tqcontains("jpegPhoto") )
+  if ( !mAttributes.contains("jpegPhoto") )
     mAttributes.insert( "jpegPhoto", "jpegPhoto" );
 
   d->mLDAPUrl = KURL();

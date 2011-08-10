@@ -119,7 +119,7 @@ DeviceManager::DeviceManager(int def)
     TQString mapurl(config->readPathEntry("mapFilename"));
     if ((config->readBoolEntry("useMidiMapper", false))&&(!mapurl.isEmpty()))
     {
-      mapper_tmp = new MidiMapper( mapurl.mid(mapurl.tqfind(":")+1 ).local8Bit() );
+      mapper_tmp = new MidiMapper( mapurl.mid(mapurl.find(":")+1 ).local8Bit() );
     }
     else
       mapper_tmp = 0L;

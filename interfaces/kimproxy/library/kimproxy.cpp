@@ -248,7 +248,7 @@ bool KIMProxy::initialize()
 						{
 							m_apps_available = true;
 							//kdDebug( 790 ) << " app name: " << (*offer)->name() << ", has instance " << *app << ", dcopService: " << dcopService << endl;
-							if ( !m_im_client_stubs.tqfind( dcopService ) )
+							if ( !m_im_client_stubs.find( dcopService ) )
 							{
 								kdDebug( 790 ) << "App " << *app << ", dcopObjectId " << dcopObjectId << " found, using it for presence info." << endl;
 								m_im_client_stubs.insert( *app, new KIMIface_stub( d->dc, *app, dcopObjectId ) );
@@ -284,7 +284,7 @@ void KIMProxy::registeredToDCOP( const TQCString& appId )
 		if ( appId.left( dcopService.length() ) == dcopService )
 		{
 			// if it's not already known, insert it
-			if ( !m_im_client_stubs.tqfind( appId ) )
+			if ( !m_im_client_stubs.find( appId ) )
 			{
 				newApp = true;
 				kdDebug( 790 ) << "App: " << appId << ", dcopService: " << dcopService << " started, using it for presence info."<< endl;
@@ -301,7 +301,7 @@ void KIMProxy::registeredToDCOP( const TQCString& appId )
 void KIMProxy::unregisteredFromDCOP( const TQCString& appId )
 {
 	//kdDebug( 790 ) << k_funcinfo << appId << endl;
-	if ( m_im_client_stubs.tqfind( appId ) )
+	if ( m_im_client_stubs.find( appId ) )
 	{
 		kdDebug( 790 ) << appId << " quit, removing its presence info." << endl;
 		
@@ -618,7 +618,7 @@ KIMIface_stub * KIMProxy::stubForUid( const TQString &uid )
 	// get best appPresence
 	AppPresenceCurrent ap = d->presence_map[ uid ].best();
 	// look up the presence string from that app
-		return m_im_client_stubs.tqfind( ap.appId );
+		return m_im_client_stubs.find( ap.appId );
 }
 
 KIMIface_stub * KIMProxy::stubForProtocol( const TQString &protocol)
@@ -626,7 +626,7 @@ KIMIface_stub * KIMProxy::stubForProtocol( const TQString &protocol)
 	KIMIface_stub * app;
 	// see if the preferred client supports this protocol
 	TQString preferred = preferredApp();
-	if ( ( app = m_im_client_stubs.tqfind( preferred ) ) )
+	if ( ( app = m_im_client_stubs.find( preferred ) ) )
 	{
 		if ( app->protocols().grep( protocol ).count() > 0 )
 			return app;

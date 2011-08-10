@@ -55,11 +55,11 @@ void KDETrayProxy::windowAdded( WId w )
     if ( !trayWinFor ) // not a KDE tray window
         return;
 //    kdDebug() << "New tray window:" << w << endl;
-    if( !tray_windows.tqcontains( w ))
+    if( !tray_windows.contains( w ))
         tray_windows.append( w );
     withdrawWindow( w );
     // window will be removed from pending_windows when after docked
-    if( !pending_windows.tqcontains( w ))
+    if( !pending_windows.contains( w ))
         pending_windows.append( w );
     docked_windows.remove( w );
     Window owner = selection.owner();
@@ -85,21 +85,21 @@ bool KDETrayProxy::x11Event( XEvent* e )
     {
     if( tray_windows.isEmpty())
         return false;
-    if( e->type == DestroyNotify && tray_windows.tqcontains( e->xdestroywindow.window ))
+    if( e->type == DestroyNotify && tray_windows.contains( e->xdestroywindow.window ))
         {
         tray_windows.remove( e->xdestroywindow.window );
         pending_windows.remove( e->xdestroywindow.window );
         docked_windows.remove( e->xdestroywindow.window );
         }
-    if( e->type == ReparentNotify && tray_windows.tqcontains( e->xreparent.window ))
+    if( e->type == ReparentNotify && tray_windows.contains( e->xreparent.window ))
         {
         if( e->xreparent.parent == qt_xrootwin())
             {
-            if( !docked_windows.tqcontains( e->xreparent.window ) || e->xreparent.serial >= docked_windows[ e->xreparent.window ] )
+            if( !docked_windows.contains( e->xreparent.window ) || e->xreparent.serial >= docked_windows[ e->xreparent.window ] )
                 {
 //                kdDebug() << "Window released:" << e->xreparent.window << endl;
                 docked_windows.remove( e->xreparent.window );
-                if( !pending_windows.tqcontains( e->xreparent.window ))
+                if( !pending_windows.contains( e->xreparent.window ))
                     pending_windows.append( e->xreparent.window );
                 }
             }
@@ -109,9 +109,9 @@ bool KDETrayProxy::x11Event( XEvent* e )
             pending_windows.remove( e->xreparent.window );
             }
         }
-    if( e->type == UnmapNotify && tray_windows.tqcontains( e->xunmap.window ))
+    if( e->type == UnmapNotify && tray_windows.contains( e->xunmap.window ))
         {
-        if( docked_windows.tqcontains( e->xunmap.window ) && e->xunmap.serial >= docked_windows[ e->xunmap.window ] )
+        if( docked_windows.contains( e->xunmap.window ) && e->xunmap.serial >= docked_windows[ e->xunmap.window ] )
             {
 //            kdDebug() << "Window unmapped:" << e->xunmap.window << endl;
             XReparentWindow( qt_xdisplay(), e->xunmap.window, qt_xrootwin(), 0, 0 );

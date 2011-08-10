@@ -123,7 +123,7 @@ bool KCompletionBase::setKeyBinding( KeyBindingType item, const KShortcut& cut )
         for( KeyBindingMap::Iterator it = m_keyMap.begin(); it != m_keyMap.end(); ++it )
             if( it.data() == cut )  return false;
     }
-    m_keyMap.tqreplace( item, cut );
+    m_keyMap.replace( item, cut );
     return true;
 }
 

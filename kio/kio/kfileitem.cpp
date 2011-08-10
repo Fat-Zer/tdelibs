@@ -973,12 +973,12 @@ void KFileItem::setExtraData( const void *key, void *value )
     if ( !key )
         return;
 
-    m_extra.tqreplace( key, value );
+    m_extra.replace( key, value );
 }
 
 const void * KFileItem::extraData( const void *key ) const
 {
-    TQMapConstIterator<const void*,void*> it = m_extra.tqfind( key );
+    TQMapConstIterator<const void*,void*> it = m_extra.find( key );
     if ( it != m_extra.end() )
         return it.data();
     return 0L;
@@ -986,7 +986,7 @@ const void * KFileItem::extraData( const void *key ) const
 
 void * KFileItem::extraData( const void *key )
 {
-    TQMapIterator<const void*,void*> it = m_extra.tqfind( key );
+    TQMapIterator<const void*,void*> it = m_extra.find( key );
     if ( it != m_extra.end() )
         return it.data();
     return 0L;

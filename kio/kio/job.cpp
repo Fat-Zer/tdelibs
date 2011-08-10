@@ -392,7 +392,7 @@ MetaData Job::metaData() const
 
 TQString Job::queryMetaData(const TQString &key)
 {
-    if (!m_incomingMetaData.tqcontains(key))
+    if (!m_incomingMetaData.contains(key))
        return TQString::null;
     return m_incomingMetaData[key];
 }
@@ -821,8 +821,8 @@ StatJob::StatJob( const KURL& url, int command,
 
 void StatJob::start(Slave *slave)
 {
-    m_outgoingMetaData.tqreplace( "statSide", m_bSource ? "source" : "dest" );
-    m_outgoingMetaData.tqreplace( "details", TQString::number(m_details) );
+    m_outgoingMetaData.replace( "statSide", m_bSource ? "source" : "dest" );
+    m_outgoingMetaData.replace( "details", TQString::number(m_details) );
 
     connect( slave, TQT_SIGNAL( statEntry( const KIO::UDSEntry& ) ),
              TQT_SLOT( slotStatEntry( const KIO::UDSEntry & ) ) );
@@ -946,7 +946,7 @@ void TransferJob::slotRedirection( const KURL &url)
     // Some websites keep redirecting to themselves where each redirection
     // acts as the stage in a state-machine. We define "endless redirections"
     // as 5 redirections to the same URL.
-    if (m_redirectionList.tqcontains(url) > 5)
+    if (m_redirectionList.contains(url) > 5)
     {
        kdDebug(7007) << "TransferJob::slotRedirection: CYCLIC REDIRECTION!" << endl;
        m_error = ERR_CYCLIC_LINK;
@@ -1328,7 +1328,7 @@ TransferJob *KIO::http_post( const KURL& url, const TQByteArray &postData, bool 
 	for( TQValueList< int >::ConstIterator it = overriden_ports->begin();
 	     it != overriden_ports->end();
 	     ++it )
-	    if( overriden_ports->tqcontains( url.port()))
+	    if( overriden_ports->contains( url.port()))
 		_error = 0;
     }
 
@@ -2571,11 +2571,11 @@ void CopyJob::slotEntries(KIO::Job* job, const UDSEntryList& list)
                      KProtocolInfo::fileNameUsedForCopying( url ) == KProtocolInfo::FromURL ) {
                     //destFileName = url.fileName(); // Doesn't work for recursive listing
                     // Count the number of prefixes used by the recursive listjob
-                    int numberOfSlashes = displayName.tqcontains( '/' ); // don't make this a find()!
+                    int numberOfSlashes = displayName.contains( '/' ); // don't make this a find()!
                     TQString path = url.path();
                     int pos = 0;
                     for ( int n = 0; n < numberOfSlashes + 1; ++n ) {
-                        pos = path.tqfindRev( '/', pos - 1 );
+                        pos = path.findRev( '/', pos - 1 );
                         if ( pos == -1 ) { // error
                             kdWarning(7007) << "kioslave bug: not enough slashes in UDS_URL " << path << " - looking for " << numberOfSlashes << " slashes" << endl;
                             break;
@@ -2789,7 +2789,7 @@ void CopyJob::skip( const KURL & sourceUrl )
     // Check if this is one if toplevel sources
     // If yes, remove it from m_srcList, for a correct FilesRemoved() signal
     //kdDebug(7007) << "CopyJob::skip: looking for " << sourceUrl << endl;
-    KURL::List::Iterator sit = m_srcList.tqfind( sourceUrl );
+    KURL::List::Iterator sit = m_srcList.find( sourceUrl );
     if ( sit != m_srcList.end() )
     {
         //kdDebug(7007) << "CopyJob::skip: removing " << sourceUrl << " from list" << endl;
@@ -2967,7 +2967,7 @@ void CopyJob::slotResultConflictCreatingDirs( KIO::Job * job )
                 TQString path = (*renamedirit).uDest.path();
                 if ( path.left(oldPath.length()) == oldPath ) {
                     TQString n = path;
-                    n.tqreplace( 0, oldPath.length(), newPath );
+                    n.replace( 0, oldPath.length(), newPath );
                     kdDebug(7007) << "dirs list: " << (*renamedirit).uSource.path()
                                   << " was going to be " << path
                                   << ", changed into " << n << endl;
@@ -2981,7 +2981,7 @@ void CopyJob::slotResultConflictCreatingDirs( KIO::Job * job )
                 TQString path = (*renamefileit).uDest.path();
                 if ( path.left(oldPath.length()) == oldPath ) {
                     TQString n = path;
-                    n.tqreplace( 0, oldPath.length(), newPath );
+                    n.replace( 0, oldPath.length(), newPath );
                     kdDebug(7007) << "files list: " << (*renamefileit).uSource.path()
                                   << " was going to be " << path
                                   << ", changed into " << n << endl;
@@ -4305,7 +4305,7 @@ void DeleteJob::slotResult( Job *job )
          {
             // Add toplevel dir in list of dirs
             dirs.append( url );
-            if ( url.isLocalFile() && !m_parentDirs.tqcontains( url.path(-1) ) )
+            if ( url.isLocalFile() && !m_parentDirs.contains( url.path(-1) ) )
                 m_parentDirs.append( url.path(-1) );
 
             if ( !KProtocolInfo::canDeleteRecursive( url ) ) {
@@ -4334,7 +4334,7 @@ void DeleteJob::slotResult( Job *job )
                 //kdDebug(7007) << " Target is a file" << endl;
                 files.append( url );
             }
-            if ( url.isLocalFile() && !m_parentDirs.tqcontains( url.directory(false) ) )
+            if ( url.isLocalFile() && !m_parentDirs.contains( url.directory(false) ) )
                 m_parentDirs.append( url.directory(false) );
             ++m_currentStat;
             statNextSrc();
@@ -4585,12 +4585,12 @@ TQString CacheInfo::cachedFileName()
 
    TQString CEF = m_url.path();
 
-   int p = CEF.tqfind('/');
+   int p = CEF.find('/');
 
    while(p != -1)
    {
       CEF[p] = separator;
-      p = CEF.tqfind('/', p);
+      p = CEF.find('/', p);
    }
 
    TQString host = m_url.host().lower();

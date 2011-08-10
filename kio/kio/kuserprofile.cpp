@@ -165,7 +165,7 @@ KServiceTypeProfile::OfferList KServiceTypeProfile::offers( const TQString& _ser
         if (_genericServiceType.isEmpty() /*no constraint*/ || (*it)->hasServiceType( _genericServiceType ))
         {
             // Check that we don't already have it ;)
-            if ( serviceList.tqfind( (*it)->desktopEntryPath() ) == serviceList.end() )
+            if ( serviceList.find( (*it)->desktopEntryPath() ) == serviceList.end() )
             {
                 bool allow = (*it)->allowAsDefault();
                 KServiceOffer o( (*it), (*it)->initialPreferenceForMimeType(_servicetype), allow );
@@ -215,7 +215,7 @@ int KServiceTypeProfile::preference( const TQString& _service ) const
   KService::Ptr service = KService::serviceByName( _service );
   if (!service)
     return 0;
-  TQMap<TQString,Service>::ConstIterator it = m_mapServices.tqfind( service->storageId() );
+  TQMap<TQString,Service>::ConstIterator it = m_mapServices.find( service->storageId() );
   if ( it == m_mapServices.end() )
     return 0;
 
@@ -233,7 +233,7 @@ bool KServiceTypeProfile::allowAsDefault( const TQString& _service ) const
     return false;
 
   // Look what the user says ...
-  TQMap<TQString,Service>::ConstIterator it = m_mapServices.tqfind( service->storageId() );
+  TQMap<TQString,Service>::ConstIterator it = m_mapServices.find( service->storageId() );
   if ( it == m_mapServices.end() )
     return 0;
 
@@ -270,7 +270,7 @@ KServiceTypeProfile::OfferList KServiceTypeProfile::offers() const
     if ( m_strGenericServiceType.isEmpty() || (*it)->hasServiceType( m_strGenericServiceType ) )
     {
       // Now look into the profile, to find this service's preference.
-      TQMap<TQString,Service>::ConstIterator it2 = m_mapServices.tqfind( (*it)->storageId() );
+      TQMap<TQString,Service>::ConstIterator it2 = m_mapServices.find( (*it)->storageId() );
 
       if( it2 != m_mapServices.end() )
       {

@@ -458,7 +458,7 @@ bool KMManager::createSpecialPrinter(KMPrinter *p)
 
 bool KMManager::removeSpecialPrinter(KMPrinter *p)
 {
-	if (p && p->isSpecial() && m_printers.tqfindRef(p) != -1)
+	if (p && p->isSpecial() && m_printers.findRef(p) != -1)
 	{
 		m_printers.removeRef(p);
 		return m_specialmgr->savePrinters();

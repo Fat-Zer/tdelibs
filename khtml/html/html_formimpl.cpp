@@ -122,8 +122,8 @@ static TQCString encodeCString(const TQCString& e)
     // http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1
     // safe characters like NS handles them for compatibility
     static const char *safe = "-._*";
-    TQCString encoded(( e.length()+e.tqcontains( '\n' ) )*3
-                     +e.tqcontains('\r') * 3 + 1);
+    TQCString encoded(( e.length()+e.contains( '\n' ) )*3
+                     +e.contains('\r') * 3 + 1);
     int enclen = 0;
     bool crmissing = false;
     unsigned char oldc;
@@ -391,12 +391,12 @@ TQByteArray HTMLFormElementImpl::formData(bool& ok)
 
 void HTMLFormElementImpl::setEnctype( const DOMString& type )
 {
-    if(type.string().tqfind("multipart", 0, false) != -1 || type.string().tqfind("form-data", 0, false) != -1)
+    if(type.string().find("multipart", 0, false) != -1 || type.string().find("form-data", 0, false) != -1)
     {
         m_enctype = "multipart/form-data";
         m_multipart = true;
         m_post = true;
-    } else if (type.string().tqfind("text", 0, false) != -1 || type.string().tqfind("plain", 0, false) != -1)
+    } else if (type.string().find("text", 0, false) != -1 || type.string().find("plain", 0, false) != -1)
     {
         m_enctype = "text/plain";
         m_multipart = false;
@@ -457,7 +457,7 @@ void HTMLFormElementImpl::walletOpened(KWallet::Wallet *w) {
             if ((current->inputType() == HTMLInputElementImpl::PASSWORD ||
                     current->inputType() == HTMLInputElementImpl::TEXT) &&
                     !current->readOnly() &&
-                    map.tqcontains(current->name().string())) {
+                    map.contains(current->name().string())) {
                 getDocument()->setFocusNode(current);
                 current->setValue(map[current->name().string()]);
             }
@@ -2751,7 +2751,7 @@ void HTMLTextAreaElementImpl::attach()
 static TQString expandLF(const TQString& s)
 {
     // LF -> CRLF
-    unsigned crs = s.tqcontains( '\n' );
+    unsigned crs = s.contains( '\n' );
     if (crs == 0)
 	return s;
     unsigned len = s.length();

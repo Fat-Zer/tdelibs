@@ -62,7 +62,7 @@ LpcHelper::~LpcHelper()
 
 KMPrinter::PrinterState LpcHelper::state(const TQString& prname) const
 {
-	if (m_state.tqcontains(prname))
+	if (m_state.contains(prname))
 		return m_state[prname];
 	return KMPrinter::Unknown;
 }
@@ -82,26 +82,26 @@ void LpcHelper::parseStatusLPR(TQTextStream &t)
 		line = t.readLine();
 		if (line.isEmpty())
 			continue;
-		else if (!line[0].isSpace() && (p = line.tqfind(':')) != -1)
+		else if (!line[0].isSpace() && (p = line.find(':')) != -1)
 		{
 			printer = line.left(p);
 			m_state[printer] = KMPrinter::Idle;
 		}
-		else if (line.tqfind("printing is disabled") != -1)
+		else if (line.find("printing is disabled") != -1)
 		{
 			if (!printer.isEmpty())
 				m_state[printer] = KMPrinter::PrinterState((KMPrinter::Stopped) | (m_state[printer] & ~KMPrinter::StateMask));
 		}
-		else if (line.tqfind("queuing is disabled") != -1)
+		else if (line.find("queuing is disabled") != -1)
 		{
 			if (!printer.isEmpty())
 				m_state[printer] = KMPrinter::PrinterState((KMPrinter::Rejecting) | (m_state[printer] & KMPrinter::StateMask));
 		}
-		else if (line.tqfind("entries") != -1)
+		else if (line.find("entries") != -1)
 		{
 			if (!printer.isEmpty() &&
 			    (m_state[printer] & KMPrinter::StateMask) != KMPrinter::Stopped &&
-			    line.tqfind("no entries") == -1)
+			    line.find("no entries") == -1)
 				m_state[printer] = KMPrinter::PrinterState((m_state[printer] & ~KMPrinter::StateMask) | KMPrinter::Processing);
 		}
 	}
@@ -121,7 +121,7 @@ void LpcHelper::parseStatusLPRng(TQTextStream& t)
 		l = TQStringList::split(TQRegExp("\\s"), t.readLine(), false);
 		if (l.count() < 4)
 			continue;
-		p = l[0].tqfind('@');
+		p = l[0].find('@');
 		if (p == 0)
 			printer = l[0];
 		else
@@ -206,11 +206,11 @@ static TQString lprngAnswer(const TQString& result, const TQString& printer)
 {
 	int	p, q;
 
-	p = result.tqfind("\n" + printer);
+	p = result.find("\n" + printer);
 	if (p != -1)
 	{
-		q = result.tqfind(':', p)+2;
-		p = result.tqfind('\n', q);
+		q = result.find(':', p)+2;
+		p = result.find('\n', q);
 		TQString	answer = result.mid(q, p-q).stripWhiteSpace();
 		return answer;
 	}
@@ -274,9 +274,9 @@ bool LpcHelper::removeJob(KMJob *job, TQString& msg)
 		return false;
 	}
 	TQString	result = execute(m_lprmpath + " -P " + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
-	if (result.tqfind("dequeued") != -1)
+	if (result.find("dequeued") != -1)
 		return true;
-	else if (result.tqfind("Permission denied") != -1 || result.tqfind("no permissions") != -1)
+	else if (result.find("Permission denied") != -1 || result.find("no permissions") != -1)
 		msg = i18n("Permission denied.");
 	else
 		msg = i18n("Execution of lprm failed: %1").arg(result);

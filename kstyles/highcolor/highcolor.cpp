@@ -1407,7 +1407,7 @@ void HighColorStyle::tqdrawControl( TQ_ControlElement element,
 
 				// Does the menu item have a text label?
 				if ( !s.isNull() ) {
-					int t = s.tqfind( '\t' );
+					int t = s.find( '\t' );
 					int m = itemVMargin;
 					int text_flags = AlignVCenter | ShowPrefix | DontClip | SingleLine;
 					text_flags |= reverse ? AlignRight : AlignLeft;
@@ -1901,7 +1901,7 @@ TQSize HighColorStyle::tqsizeFromContents( ContentsType contents,
 								2 * itemFrame );
 			}
 
-			if ( ! mi->text().isNull() && mi->text().tqfind('\t') >= 0 )
+			if ( ! mi->text().isNull() && mi->text().find('\t') >= 0 )
 				w += 12;
 			else if ( mi->popup() )
 				w += 2 * arrowHMargin;
@@ -2037,7 +2037,7 @@ void HighColorStyle::renderGradient( TQPainter* p, const TQRect& r,
 	// We use these to draw parent-relative pixmaps for toolbar buttons
 	// and menubar items.
 
-	GradientSet* grSet = gDict.tqfind( clr.rgb() );
+	GradientSet* grSet = gDict.find( clr.rgb() );
 
 	if (!grSet) {
 		grSet = new GradientSet(clr);

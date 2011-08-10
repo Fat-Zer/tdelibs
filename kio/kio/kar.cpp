@@ -140,7 +140,7 @@ bool KAr::openArchive( int mode )
                     return false;
                 }
                 name = &ar_longnames[name.mid(1, 15).toInt()];
-                name = name.left(name.tqfind("/"));
+                name = name.left(name.find("/"));
             }
         }
         if (skip_entry) continue;

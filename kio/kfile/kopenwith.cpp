@@ -634,12 +634,12 @@ void KOpenWithDlg::slotOK()
         {
             TQString exec = serv->exec();
             fullExec = exec;
-            exec.tqreplace("%u", "", false);
-            exec.tqreplace("%f", "", false);
-            exec.tqreplace("-caption %c", "");
-            exec.tqreplace("-caption \"%c\"", "");
-            exec.tqreplace("%i", "");
-            exec.tqreplace("%m", "");
+            exec.replace("%u", "", false);
+            exec.replace("%f", "", false);
+            exec.replace("-caption %c", "");
+            exec.replace("-caption \"%c\"", "");
+            exec.replace("%i", "");
+            exec.replace("%m", "");
             exec = exec.simplifyWhiteSpace();
             if (exec == typedExec)
             {
@@ -760,7 +760,7 @@ void KOpenWithDlg::slotOK()
   if (bRemember || d->saveNewApps)
   {
     TQStringList mimeList = desktop->readListEntry("MimeType", ';');
-    if (!qServiceType.isEmpty() && !mimeList.tqcontains(qServiceType))
+    if (!qServiceType.isEmpty() && !mimeList.contains(qServiceType))
       mimeList.append(qServiceType);
     desktop->writeEntry("MimeType", mimeList, ';');
 

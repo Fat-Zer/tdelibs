@@ -960,7 +960,7 @@ void FileProtocol::del( const KURL& url, bool isfile)
 TQString FileProtocol::getUserName( uid_t uid )
 {
     TQString *temp;
-    temp = usercache.tqfind( uid );
+    temp = usercache.find( uid );
     if ( !temp ) {
         struct passwd *user = getpwuid( uid );
         if ( user ) {
@@ -977,7 +977,7 @@ TQString FileProtocol::getUserName( uid_t uid )
 TQString FileProtocol::getGroupName( gid_t gid )
 {
     TQString *temp;
-    temp = groupcache.tqfind( gid );
+    temp = groupcache.find( gid );
     if ( !temp ) {
         struct group *grp = getgrgid( gid );
         if ( grp ) {

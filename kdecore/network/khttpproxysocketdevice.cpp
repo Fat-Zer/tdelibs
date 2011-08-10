@@ -222,7 +222,7 @@ bool KHttpProxySocketDevice::parseServerReply()
 
       TQCString fullHeaders = d->reply + buf.data();
       // search for the end of the headers
-      index = fullHeaders.tqfind("\r\n\r\n");
+      index = fullHeaders.find("\r\n\r\n");
       if (index == -1)
 	{
 	  // no, headers not yet finished...
@@ -265,9 +265,9 @@ bool KHttpProxySocketDevice::parseServerReply()
 
   // now really parse the reply
   qDebug("KHttpProxySocketDevice: get reply: %s\n",
-	 d->reply.left(d->reply.tqfind('\r')).data());
+	 d->reply.left(d->reply.find('\r')).data());
   if (d->reply.left(7) != "HTTP/1." ||
-      (index = d->reply.tqfind(' ')) == -1 ||
+      (index = d->reply.find(' ')) == -1 ||
       d->reply[index + 1] != '2')
     {
       setError(IO_ConnectError, NetFailure);

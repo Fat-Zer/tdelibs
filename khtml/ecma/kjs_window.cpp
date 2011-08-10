@@ -1446,7 +1446,7 @@ void Window::goURL(ExecState* exec, const TQString& url, bool lockHistory)
       // check if we're allowed to inject javascript
       // SYNC check with khtml_part.cpp::slotRedirect!
       if ( isSafeScript(exec) ||
-            dstUrl.tqfind(TQString::tqfromLatin1("javascript:"), 0, false) != 0 )
+            dstUrl.find(TQString::tqfromLatin1("javascript:"), 0, false) != 0 )
         part->scheduleRedirection(-1,
                                   dstUrl,
                                   lockHistory);
@@ -1618,7 +1618,7 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
       while (it != flist.end()) {
         TQString s = *it++;
         TQString key, val;
-        int pos = s.tqfind('=');
+        int pos = s.find('=');
         if (pos >= 0) {
           key = s.left(pos).stripWhiteSpace().lower();
           val = s.mid(pos + 1).stripWhiteSpace().lower();
@@ -2271,7 +2271,7 @@ void WindowQObject::timerEvent(TQTimerEvent *)
   it = TQPtrListIterator<ScheduledAction>(toExecute);
   for (; it.current(); ++it) {
     ScheduledAction *action = it.current();
-    if (!scheduledActions.tqcontainsRef(action)) // removed by clearTimeout()
+    if (!scheduledActions.containsRef(action)) // removed by clearTimeout()
       continue;
 
     action->executing = true; // prevent deletion in clearTimeout()
@@ -2288,7 +2288,7 @@ void WindowQObject::timerEvent(TQTimerEvent *)
 
     action->executing = false;
 
-    if (!scheduledActions.tqcontainsRef(action))
+    if (!scheduledActions.containsRef(action))
       delete action;
     else
       action->nextTime = action->nextTime.addMSecs(action->interval);
@@ -2603,8 +2603,8 @@ void Location::put(ExecState *exec, const Identifier &p, const Value &v, int att
       url.setRef(str);
       break;
     case Host: {
-      TQString host = str.left(str.tqfind(":"));
-      TQString port = str.mid(str.tqfind(":")+1);
+      TQString host = str.left(str.find(":"));
+      TQString port = str.mid(str.find(":")+1);
       url.setHost(host);
       url.setPort(port.toUInt());
       break;

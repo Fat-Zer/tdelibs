@@ -152,7 +152,7 @@ DateValue::_parse()
 	// time = time-hour [":"] time-minute [":"] time-second [":"]
 	// [time-secfrac] [time-zone]
 	
-	int timeSep = strRep_.tqfind('T');
+	int timeSep = strRep_.find('T');
 	
 	TQCString dateStr;
 	TQCString timeStr;
@@ -173,7 +173,7 @@ DateValue::_parse()
 	
 	/////////////////////////////////////////////////////////////// DATE
 	
-	dateStr.tqreplace(TQRegExp("-"), "");
+	dateStr.replace(TQRegExp("-"), "");
 
 	kdDebug(5710) << "dateStr: " << dateStr << endl;
 
@@ -192,7 +192,7 @@ DateValue::_parse()
 
 	/////////////////////////////////////////////////////////////// ZONE
 	
-	int zoneSep = timeStr.tqfind('Z');
+	int zoneSep = timeStr.find('Z');
 	
 	if (zoneSep != -1 && timeStr.length() - zoneSep > 3) {
 		
@@ -208,7 +208,7 @@ DateValue::_parse()
 
 	//////////////////////////////////////////////////// SECOND FRACTION
 	
-	int secFracSep = timeStr.tqfindRev(',');
+	int secFracSep = timeStr.findRev(',');
 	
 	if (secFracSep != -1 && zoneSep != -1) { // zoneSep checked to avoid errors.
 		TQCString quirkafleeg = "0." + timeStr.mid(secFracSep + 1, zoneSep);
@@ -217,7 +217,7 @@ DateValue::_parse()
 	
 	/////////////////////////////////////////////////////////////// HMS
 
-	timeStr.tqreplace(TQRegExp(":"), "");
+	timeStr.replace(TQRegExp(":"), "");
 	
 	hour_	= timeStr.left(2).toInt();
 	minute_	= timeStr.mid(2, 2).toInt();

@@ -190,7 +190,7 @@ ScriptInterpreter::~ScriptInterpreter()
 #ifdef KJS_VERBOSE
   kdDebug(6070) << "ScriptInterpreter::~ScriptInterpreter " << this << " for part=" << m_frame << endl;
 #endif
-  assert( interpreterList && interpreterList->tqcontains( this ) );
+  assert( interpreterList && interpreterList->contains( this ) );
   interpreterList->remove( this );
   if ( interpreterList->isEmpty() ) {
     delete interpreterList;

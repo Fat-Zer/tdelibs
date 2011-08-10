@@ -572,7 +572,7 @@ KSSLCNode *node;
 				return false;
 			}
 
-			if (!node->hosts.tqcontains(host)) {
+			if (!node->hosts.contains(host)) {
 				node->hosts << host;
 			}
 
@@ -857,14 +857,14 @@ void KSSLD::searchAddCert(KSSLCertificate *cert) {
 	cert->getEmails(mails);
 	for(TQStringList::const_iterator iter = mails.begin(); iter != mails.end(); ++iter) {
 		TQString email = static_cast<const TQString &>(*iter).lower();
-		TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.tqfind(email);
+		TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.find(email);
 
 		if (it == skEmail.end())
 			it = skEmail.insert(email, TQPtrVector<KSSLCertificate>());
 
 		TQPtrVector<KSSLCertificate> &elem = *it;
 		
-		if (elem.tqfindRef(cert) == -1) {
+		if (elem.findRef(cert) == -1) {
 			unsigned int n = 0;
 			for(; n < elem.size(); n++) {
 				if (!elem.tqat(n)) {
@@ -887,14 +887,14 @@ void KSSLD::searchRemoveCert(KSSLCertificate *cert) {
 	TQStringList mails;
 	cert->getEmails(mails);
 	for(TQStringList::const_iterator iter = mails.begin(); iter != mails.end(); ++iter) {
-		TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.tqfind(static_cast<const TQString &>(*iter).lower());
+		TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.find(static_cast<const TQString &>(*iter).lower());
 
 		if (it == skEmail.end())
 		       break;
 
 		TQPtrVector<KSSLCertificate> &elem = *it;
 
-		int n = elem.tqfindRef(cert);
+		int n = elem.findRef(cert);
 		if (n != -1)
 			elem.remove(n);
 	}
@@ -903,7 +903,7 @@ void KSSLD::searchRemoveCert(KSSLCertificate *cert) {
 
 TQStringList KSSLD::getKDEKeyByEmail(const TQString &email) {
 	TQStringList rc;
-	TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.tqfind(email.lower());
+	TQMap<TQString, TQPtrVector<KSSLCertificate> >::iterator it = skEmail.find(email.lower());
 
 	kdDebug() << "GETKDEKey " << email.latin1() << endl;
 
@@ -924,7 +924,7 @@ TQStringList KSSLD::getKDEKeyByEmail(const TQString &email) {
 
 
 KSSLCertificate KSSLD::getCertByMD5Digest(const TQString &key) {
-	TQMap<TQString, KSSLCertificate *>::iterator iter = skMD5Digest.tqfind(key);
+	TQMap<TQString, KSSLCertificate *>::iterator iter = skMD5Digest.find(key);
 	
 	kdDebug() << "Searching cert for " << key.latin1() << endl;
 

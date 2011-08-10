@@ -399,7 +399,7 @@ bool Address::parseAddressTemplateSection( const TQString &tsection,
   bool ret = false;
   
   // first check for brackets that have to be evaluated first 
-  int fpos = result.tqfind( KABC_FMTTAG_purgeempty, stpos );
+  int fpos = result.find( KABC_FMTTAG_purgeempty, stpos );
   while ( -1 != fpos ) {
     int bpos1 = fpos + KABC_FMTTAG_purgeempty.length();
     int bpos2;
@@ -430,7 +430,7 @@ bool Address::parseAddressTemplateSection( const TQString &tsection,
         stpos = bpos1; 
       }
     }
-    fpos = result.tqfind( KABC_FMTTAG_purgeempty, stpos );
+    fpos = result.find( KABC_FMTTAG_purgeempty, stpos );
   }
 
   // after sorting out all purge tags, we just search'n'replace the rest,
@@ -438,7 +438,7 @@ bool Address::parseAddressTemplateSection( const TQString &tsection,
   // The following macro needs TQString for R_FIELD
   // It substitutes !_P_! for empty fields so conditional tags work later
 #define REPLTAG(R_TAG,R_FIELD) \
-  if ( result.tqfind(R_TAG, false) != -1 ) { \
+  if ( result.find(R_TAG, false) != -1 ) { \
     TQString rpl = R_FIELD.isEmpty() ? TQString("!_P_!") : R_FIELD; \
     result.replace( R_TAG, rpl ); \
     if ( !R_FIELD.isEmpty() ) { \
@@ -461,7 +461,7 @@ bool Address::parseAddressTemplateSection( const TQString &tsection,
 #undef REPLTAG
  
   // conditional comma 
-  fpos = result.tqfind( KABC_FMTTAG_condcomma, 0 );
+  fpos = result.find( KABC_FMTTAG_condcomma, 0 );
   while ( -1 != fpos ) {
     TQString str1 = result.mid( fpos - 5, 5 );
     TQString str2 = result.mid( fpos + 2, 5 );
@@ -470,10 +470,10 @@ bool Address::parseAddressTemplateSection( const TQString &tsection,
     } else {
       result.remove( fpos, 2 );
     }
-    fpos = result.tqfind( KABC_FMTTAG_condcomma, fpos );
+    fpos = result.find( KABC_FMTTAG_condcomma, fpos );
   }
   // conditional whitespace
-  fpos = result.tqfind( KABC_FMTTAG_condwhite, 0 );
+  fpos = result.find( KABC_FMTTAG_condwhite, 0 );
   while ( -1 != fpos ) {
     TQString str1 = result.mid( fpos - 5, 5 );
     TQString str2 = result.mid( fpos + 2, 5 );
@@ -482,7 +482,7 @@ bool Address::parseAddressTemplateSection( const TQString &tsection,
     } else {
       result.remove( fpos, 2 );
     }
-    fpos = result.tqfind( KABC_FMTTAG_condwhite, fpos );
+    fpos = result.find( KABC_FMTTAG_condwhite, fpos );
   }
 
   // remove purged:
@@ -560,7 +560,7 @@ TQString Address::ISOtoCountry( const TQString &ISOname )
     TQString strbuf = s.readLine();
     int pos;
     while ( !strbuf.isEmpty() ) {
-      if ( (pos = strbuf.tqfind( searchStr )) != -1 ) {
+      if ( (pos = strbuf.find( searchStr )) != -1 ) {
         file.close();
         return i18n( strbuf.left( pos ).utf8() );
       }

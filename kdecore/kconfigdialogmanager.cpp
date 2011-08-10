@@ -131,13 +131,13 @@ void KConfigDialogManager::setupWidget(TQWidget *widget, KConfigSkeletonItem *it
   TQVariant minValue = item->minValue();
   if (minValue.isValid())
   {
-    if (widget->tqmetaObject()->tqfindProperty("minValue", true) != -1)
+    if (widget->tqmetaObject()->findProperty("minValue", true) != -1)
        widget->setProperty("minValue", minValue);
   }
   TQVariant maxValue = item->maxValue();
   if (maxValue.isValid())
   {
-    if (widget->tqmetaObject()->tqfindProperty("maxValue", true) != -1)
+    if (widget->tqmetaObject()->findProperty("maxValue", true) != -1)
        widget->setProperty("maxValue", maxValue);
   }
   if (TQWhatsThis::textFor( widget ).isEmpty())
@@ -181,7 +181,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
 
         setupWidget(childWidget, item);
 
-        TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.tqfind(childWidget->className());
+        TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.find(childWidget->className());
 
         if (changedIt == changedMap.end())
         {
@@ -189,7 +189,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
 		   // it again using the super class name. This fixes a problem with using QtRuby/Korundum 
 		   // widgets with KConfigXT where 'Qt::Widget' wasn't being seen a the real deal, even 
 		   // though it was a 'QWidget'.
-          changedIt = changedMap.tqfind(childWidget->tqmetaObject()->tqsuperClassName());
+          changedIt = changedMap.find(childWidget->tqmetaObject()->tqsuperClassName());
         }
 
         if (changedIt == changedMap.end())
@@ -235,7 +235,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
 #ifndef NDEBUG
     else if (widgetName)
     {
-      TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.tqfind(childWidget->className());
+      TQMap<TQString, TQCString>::const_iterator changedIt = changedMap.find(childWidget->className());
       if (changedIt != changedMap.end())
       {
         if ((!d->insideGroupBox || !childWidget->inherits(TQRADIOBUTTON_OBJECT_NAME_STRING)) && 
@@ -283,7 +283,7 @@ void KConfigDialogManager::updateWidgets()
      if (item->isImmutable())
      {
         widget->setEnabled(false);
-        TQWidget *buddy = d->buddyWidget.tqfind(it.currentKey());
+        TQWidget *buddy = d->buddyWidget.find(it.currentKey());
         if (buddy)
            buddy->setEnabled(false);
      }

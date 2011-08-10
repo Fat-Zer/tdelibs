@@ -553,7 +553,7 @@ KMdiToolViewAccessor *KMdiMainFrm::createToolWindow()
 
 void KMdiMainFrm::deleteToolWindow( TQWidget* pWnd )
 {
-	if ( m_pToolViews->tqcontains( pWnd ) )
+	if ( m_pToolViews->contains( pWnd ) )
 		deleteToolWindow( ( *m_pToolViews ) [ pWnd ] );
 }
 
@@ -959,13 +959,13 @@ bool KMdiMainFrm::windowExists( KMdiChildView *pWnd, ExistsAs as )
 {
 	if ( ( as == ToolView ) || ( as == AnyView ) )
 	{
-		if ( m_pToolViews->tqcontains( pWnd ) )
+		if ( m_pToolViews->contains( pWnd ) )
 			return true;
 		if ( as == ToolView )
 			return false;
 	}
 	
-	if ( m_pDocumentViews->tqfindRef( pWnd ) != -1  )
+	if ( m_pDocumentViews->findRef( pWnd ) != -1  )
 		return true;
 
 	return false;
@@ -2357,7 +2357,7 @@ void KMdiMainFrm::activateFirstWin()
 		return ;
 
 	TQDateTime current = activeWindow() ->getTimeStamp();
-	TQMap<TQDateTime, KMdiChildView*>::iterator pos( m.tqfind( current ) );
+	TQMap<TQDateTime, KMdiChildView*>::iterator pos( m.find( current ) );
 	TQMap<TQDateTime, KMdiChildView*>::iterator newPos = pos;
 	if ( pos != m.end() )
 	{
@@ -2390,7 +2390,7 @@ void KMdiMainFrm::activateLastWin()
 		return ;
 
 	TQDateTime current = activeWindow() ->getTimeStamp();
-	TQMap<TQDateTime, KMdiChildView*>::iterator pos( m.tqfind( current ) );
+	TQMap<TQDateTime, KMdiChildView*>::iterator pos( m.find( current ) );
 	if ( pos != m.begin() )
 	{
 		--pos;

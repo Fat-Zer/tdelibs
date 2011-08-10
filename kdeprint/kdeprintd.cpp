@@ -192,7 +192,7 @@ bool KDEPrintd::checkFiles(TQString& cmd, const TQStringList& files)
 
 void KDEPrintd::statusMessage(const TQString& msg, int pid, const TQString& appName)
 {
-	StatusWindow	*w = m_windows.tqfind(pid);
+	StatusWindow	*w = m_windows.find(pid);
 	if (!w && !msg.isEmpty())
 	{
 		w = new StatusWindow(pid);

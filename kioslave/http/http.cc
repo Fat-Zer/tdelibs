@@ -171,7 +171,7 @@ static TQString sanitizeCustomHTTPHeader(const TQString& _header)
     TQString header = (*it).lower();
     // Do not allow Request line to be specified and ignore
     // the other HTTP headers.
-    if (header.tqfind(':') == -1 ||
+    if (header.find(':') == -1 ||
         header.startsWith("host") ||
         header.startsWith("via"))
       continue;
@@ -431,7 +431,7 @@ void HTTPProtocol::setHost( const TQString& host, int port,
     m_davHostOk = m_davHostUnsupported = false;
 
   // is it an IPv6 address?
-  if (host.tqfind(':') == -1)
+  if (host.find(':') == -1)
     {
       m_request.hostname = host;
       m_request.encoded_hostname = KIDNA::toAscii(host);
@@ -439,7 +439,7 @@ void HTTPProtocol::setHost( const TQString& host, int port,
   else
     {
       m_request.hostname = host;
-      int pos = host.tqfind('%');
+      int pos = host.find('%');
       if (pos == -1)
 	m_request.encoded_hostname = '[' + host + ']';
       else
@@ -828,8 +828,8 @@ void HTTPProtocol::davGeneric( const KURL& url, KIO::HTTP_METHOD method )
 
 int HTTPProtocol::codeFromResponse( const TQString& response )
 {
-  int firstSpace = response.tqfind( ' ' );
-  int secondSpace = response.tqfind( ' ', firstSpace + 1 );
+  int firstSpace = response.find( ' ' );
+  int secondSpace = response.find( ' ', firstSpace + 1 );
   return response.mid( firstSpace + 1, secondSpace - firstSpace - 1 ).toInt();
 }
 
@@ -3278,7 +3278,7 @@ try_again:
       // path, thus we extract the filename only.
       if ( !dispositionFilename.isEmpty() )
       {
-        int pos = dispositionFilename.tqfindRev( '/' );
+        int pos = dispositionFilename.findRev( '/' );
 
         if( pos > -1 )
           dispositionFilename = dispositionFilename.mid(pos+1);
@@ -4680,12 +4680,12 @@ FILE* HTTPProtocol::checkCacheEntry( bool readWrite)
 
    TQString CEF = m_request.path;
 
-   int p = CEF.tqfind('/');
+   int p = CEF.find('/');
 
    while(p != -1)
    {
       CEF[p] = separator;
-      p = CEF.tqfind('/', p);
+      p = CEF.find('/', p);
    }
 
    TQString host = m_request.hostname.lower();
@@ -4875,7 +4875,7 @@ void HTTPProtocol::updateExpireDate(time_t expireDate, bool updateCreationDate)
 void HTTPProtocol::createCacheEntry( const TQString &mimetype, time_t expireDate)
 {
    TQString dir = m_request.cef;
-   int p = dir.tqfindRev('/');
+   int p = dir.findRev('/');
    if (p == -1) return; // Error.
    dir.truncate(p);
 
@@ -5233,13 +5233,13 @@ bool HTTPProtocol::getAuthorization()
     {
       bool isStaleNonce = false;
       TQString auth = ( m_responseCode == 401 ) ? m_strAuthorization : m_strProxyAuthorization;
-      int pos = auth.tqfind("stale", 0, false);
+      int pos = auth.find("stale", 0, false);
       if ( pos != -1 )
       {
         pos += 5;
         int len = auth.length();
         while( pos < len && (auth[pos] == ' ' || auth[pos] == '=') ) pos++;
-        if ( pos < len && auth.tqfind("true", pos, false) != -1 )
+        if ( pos < len && auth.find("true", pos, false) != -1 )
         {
           isStaleNonce = true;
           kdDebug(7113) << "(" << m_pid << ") Stale nonce value. "
@@ -5358,13 +5358,13 @@ bool HTTPProtocol::getAuthorization()
       else
         auth = m_strProxyAuthorization;
 
-      int pos = auth.tqfind("stale", 0, false);
+      int pos = auth.find("stale", 0, false);
       if ( pos != -1 )
       {
         pos += 5;
         int len = auth.length();
         while( pos < len && (auth[pos] == ' ' || auth[pos] == '=') ) pos++;
-        if ( pos < len && auth.tqfind("true", pos, false) != -1 )
+        if ( pos < len && auth.find("true", pos, false) != -1 )
         {
           info.digestInfo = (m_responseCode == 401) ? m_strAuthorization : m_strProxyAuthorization;
           kdDebug(7113) << "(" << m_pid << ") Just a stale nonce value! "
@@ -5880,7 +5880,7 @@ TQString HTTPProtocol::createDigestAuth ( bool isForProxy )
       TQCString uri = TQCString(p,i+1);
       do
       {
-        pos = uri.tqfind( ' ', idx );
+        pos = uri.find( ' ', idx );
         if ( pos != -1 )
         {
           KURL u (m_request.url, uri.mid(idx, pos-idx));

@@ -122,7 +122,7 @@ ContentLine::operator == (ContentLine & x)
 	
 	TQPtrListIterator<Param> it(x.paramList());
 	
-	if (!paramList_.tqfind(it.current()))
+	if (!paramList_.find(it.current()))
 		return false;
 
 	return true;
@@ -140,9 +140,9 @@ ContentLine::_parse()
 	vDebug("parse");
 	
 	// Unqote newlines
-	strRep_ = strRep_.tqreplace( TQRegExp( "\\\\n" ), "\n" );
+	strRep_ = strRep_.replace( TQRegExp( "\\\\n" ), "\n" );
 	
-	int split = strRep_.tqfind(':');
+	int split = strRep_.find(':');
 	
 	if (split == -1) { // invalid content line
 		vDebug("No ':'");
@@ -152,7 +152,7 @@ ContentLine::_parse()
 	TQCString firstPart(strRep_.left(split));
 	TQCString valuePart(strRep_.mid(split + 1));
 	
-	split = firstPart.tqfind('.');
+	split = firstPart.find('.');
 	
 	if (split != -1) {
 		group_		= firstPart.left(split);
@@ -193,7 +193,7 @@ ContentLine::_parse()
 
 		TQCString str = *it;
 
-		split = str.tqfind("=");
+		split = str.find("=");
 		if (split < 0 ) {
 			vDebug("No '=' in parameter.");
 			continue;
@@ -275,7 +275,7 @@ ContentLine::_assemble()
         }
 
 	// Quote newlines
-	line = line.tqreplace( TQRegExp( "\n" ), "\\n" );
+	line = line.replace( TQRegExp( "\n" ), "\\n" );
 		
 	// Fold lines longer than 72 chars
 	const int maxLen = 72;

@@ -216,7 +216,7 @@ void KFileMetaPropsPlugin::createLayout()
         d->m_add->setEnabled(false);
         for (TQStringList::Iterator it = sk.begin(); it!=sk.end(); ++it)
         {
-                if ( l.tqfind(*it)==l.end() )
+                if ( l.find(*it)==l.end() )
                 {
                     d->m_add->setEnabled(true);
                     kdDebug(250) << "**first addable key is " << (*it).latin1() << "**" <<endl;

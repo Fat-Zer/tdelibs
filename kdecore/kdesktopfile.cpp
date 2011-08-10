@@ -83,7 +83,7 @@ TQString KDesktopFile::locateLocal(const TQString &path)
       {
         // Hm, that didn't work...
         // What now? Use filename only and hope for the best.
-        local = path.mid(path.tqfindRev('/')+1);
+        local = path.mid(path.findRev('/')+1);
       }
       local = ::locateLocal("xdgdata-dirs", local);
     }
@@ -102,7 +102,7 @@ TQString KDesktopFile::locateLocal(const TQString &path)
       if (!TQDir::isRelativePath(local))
       {
         // What now? Use filename only and hope for the best.
-        local = path.mid(path.tqfindRev('/')+1);
+        local = path.mid(path.findRev('/')+1);
       }
       local = ::locateLocal("xdgdata-apps", local);
     }
@@ -155,7 +155,7 @@ TQString KDesktopFile::translatedEntry(const char* key) const
   if (hasKey(key)) {
     TQString value = readEntryUntranslated(key);
     TQString fName = fileName();
-    fName = fName.mid(fName.tqfindRev('/')+1);
+    fName = fName.mid(fName.findRev('/')+1);
     TQString po_lookup_key = TQString::tqfromLatin1(key) + "(" + fName + "): " + value;
     TQString po_value = KGlobal::locale()->translate(po_lookup_key.utf8().data());
 

@@ -530,7 +530,7 @@ void KAction::updateShortcut( TQPopupMenu* menu, int id )
   //  show the string representation of its shortcut.
   if ( d->m_kaccel || d->m_kaccelList.count() ) {
     TQString s = menu->text( id );
-    int i = s.tqfind( '\t' );
+    int i = s.find( '\t' );
     if ( i >= 0 )
       s.replace( i+1, s.length()-i, d->m_cut.seq(0).toString() );
     else

@@ -121,9 +121,9 @@ void KMInstancePage::setPrinter(KMPrinter *p)
 
 	//iif (!oldText.isEmpty())
 	//{
-		TQListBoxItem	*item = m_view->tqfindItem(oldText);
+		TQListBoxItem	*item = m_view->findItem(oldText);
 		if (!item)
-			item = m_view->tqfindItem(i18n("(Default)"));
+			item = m_view->findItem(i18n("(Default)"));
 		if (item)
 			m_view->setSelected(item,true);
 	//}
@@ -138,7 +138,7 @@ void KMInstancePage::slotNew()
 			                     i18n("(Default)"),&ok,this);
 	if (ok)
 	{
-		if (name.tqfind(TQRegExp("[/\\s]")) != -1)
+		if (name.find(TQRegExp("[/\\s]")) != -1)
 			KMessageBox::error(this, i18n("Instance name must not contain any spaces or slashes."));
 		else
 		{
@@ -183,7 +183,7 @@ void KMInstancePage::slotCopy()
 				                     i18n("(Default)"),&ok,this);
 		if (ok)
 		{
-			if (name.tqfind(TQRegExp("[/\\s]")) != -1)
+			if (name.find(TQRegExp("[/\\s]")) != -1)
 				KMessageBox::error(this, i18n("Instance name must not contain any spaces or slashes."));
 			else
 			{

@@ -268,7 +268,7 @@ void Resource::removeAddressee( const Addressee &addr )
 
 Addressee Resource::findByUid( const TQString &uid )
 {
-  Addressee::Map::ConstIterator it = mAddrMap.tqfind( uid );
+  Addressee::Map::ConstIterator it = mAddrMap.find( uid );
 
   if ( it != mAddrMap.end() )
     return it.data();

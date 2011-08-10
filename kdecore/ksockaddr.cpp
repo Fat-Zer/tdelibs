@@ -421,7 +421,7 @@ bool KInetSocketAddress::setHost(const TQString& addr, int family)
 
 #ifdef AF_INET6
       // IPv6 addresses MUST contain colons (:) and IPv4 addresses must not
-      if (addr.tqfind(':') != -1)
+      if (addr.find(':') != -1)
 	family = AF_INET6;
       else
 	family = AF_INET;

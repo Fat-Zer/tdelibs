@@ -293,7 +293,7 @@ void NetAccess::removeTempFile(const TQString& name)
 {
   if (!tmpfiles)
     return;
-  if (tmpfiles->tqcontains(name))
+  if (tmpfiles->contains(name))
   {
     unlink(TQFile::encodeName(name));
     tmpfiles->remove(name);
@@ -403,7 +403,7 @@ TQString NetAccess::fish_executeInternal(const KURL & url, const TQString comman
     remoteTempFileName = tmpFile.name();
     // only need the filename KTempFile adds some KDE specific dirs
     // that probably does not exist on the remote side
-    int pos = remoteTempFileName.tqfindRev('/');
+    int pos = remoteTempFileName.findRev('/');
     remoteTempFileName = "/tmp/fishexec_" + remoteTempFileName.mid(pos + 1);
     tempPathUrl.setPath( remoteTempFileName );
     bJobOK = true; // success unless further error occurs
@@ -465,13 +465,13 @@ bool NetAccess::synchronousRunInternal( Job* job, TQWidget* window, TQByteArray*
   TQMetaObject *meta = job->tqmetaObject();
 
   static const char dataSignal[] = "data(KIO::Job*,const TQByteArray&)";
-  if ( meta->tqfindSignal( dataSignal ) != -1 ) {
+  if ( meta->findSignal( dataSignal ) != -1 ) {
       connect( job, TQT_SIGNAL(data(KIO::Job*,const TQByteArray&)),
                this, TQT_SLOT(slotData(KIO::Job*,const TQByteArray&)) );
   }
 
   static const char redirSignal[] = "redirection(KIO::Job*,const KURL&)";
-  if ( meta->tqfindSignal( redirSignal ) != -1 ) {
+  if ( meta->findSignal( redirSignal ) != -1 ) {
       connect( job, TQT_SIGNAL(redirection(KIO::Job*,const KURL&)),
                this, TQT_SLOT(slotRedirection(KIO::Job*, const KURL&)) );
   }

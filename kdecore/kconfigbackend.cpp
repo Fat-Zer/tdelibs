@@ -999,7 +999,7 @@ bool KConfigINIBackEnd::getEntryMap(KEntryMap &aTempMap, bool bGlobal,
     const KEntry &currentEntry = *aIt;
     if(aIt.key().bDefault)
     {
-       aTempMap.tqreplace(aIt.key(), currentEntry);
+       aTempMap.replace(aIt.key(), currentEntry);
        continue;
     }
 
@@ -1017,7 +1017,7 @@ bool KConfigINIBackEnd::getEntryMap(KEntryMap &aTempMap, bool bGlobal,
 
     // put this entry from the config object into the
     // temporary map, possibly replacing an existing entry
-    KEntryMapIterator aIt2 = aTempMap.tqfind(aIt.key());
+    KEntryMapIterator aIt2 = aTempMap.find(aIt.key());
     if (aIt2 != aTempMap.end() && (*aIt2).bImmutable)
        continue; // Bail out if the on-disk entry is immutable
 

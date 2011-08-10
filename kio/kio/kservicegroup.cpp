@@ -84,12 +84,12 @@ KServiceGroup::KServiceGroup( const TQString &configFile, const TQString & _relp
   TQStringList tmpList;
   if (config.hasKey("OnlyShowIn"))
   {
-     if ((!config.readListEntry("OnlyShowIn", ';').tqcontains("TDE")) && (!config.readListEntry("OnlyShowIn", ';').tqcontains("KDE")))
+     if ((!config.readListEntry("OnlyShowIn", ';').contains("TDE")) && (!config.readListEntry("OnlyShowIn", ';').contains("KDE")))
         d->m_bNoDisplay = true;
   }
   if (config.hasKey("NotShowIn"))
   {
-     if ((config.readListEntry("NotShowIn", ';').tqcontains("TDE")) || (config.readListEntry("NotShowIn", ';').tqcontains("KDE")))
+     if ((config.readListEntry("NotShowIn", ';').contains("TDE")) || (config.readListEntry("NotShowIn", ';').contains("KDE")))
         d->m_bNoDisplay = true;
   }
 
@@ -103,7 +103,7 @@ KServiceGroup::KServiceGroup( const TQString &configFile, const TQString & _relp
      m_strCaption = _relpath;
      if (m_strCaption.right(1) == "/")
         m_strCaption = m_strCaption.left(m_strCaption.length()-1);
-     int i = m_strCaption.tqfindRev('/');
+     int i = m_strCaption.findRev('/');
      if (i > 0)
         m_strCaption = m_strCaption.mid(i+1);
   }

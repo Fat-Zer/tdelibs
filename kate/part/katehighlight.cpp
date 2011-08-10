@@ -661,7 +661,7 @@ int KateHlKeyword::checkHgl(const TQString& text, int offset, int len)
 
   if (wordLen < minLen) return 0;
 
-  if ( dict[wordLen] && dict[wordLen]->tqfind(TQConstString(text.tqunicode() + offset, wordLen).string()) )
+  if ( dict[wordLen] && dict[wordLen]->find(TQConstString(text.tqunicode() + offset, wordLen).string()) )
     return offset2;
 
   return 0;
@@ -1293,7 +1293,7 @@ int KateHighlighting::makeDynamicContext(KateHlContext *model, const TQStringLis
   QPair<KateHlContext *, TQString> key(model, args->front());
   short value;
 
-  if (dynamicCtxs.tqcontains(key))
+  if (dynamicCtxs.contains(key))
     value = dynamicCtxs[key];
   else
   {
@@ -1931,12 +1931,12 @@ KateHlItem *KateHighlighting::createKateHlItem(KateSyntaxContextData *data,
 
   if (!beginRegionStr.isEmpty())
   {
-    regionId = RegionList->tqfindIndex(beginRegionStr);
+    regionId = RegionList->findIndex(beginRegionStr);
 
     if (regionId==-1) // if the region name doesn't already exist, add it to the list
     {
       (*RegionList)<<beginRegionStr;
-      regionId = RegionList->tqfindIndex(beginRegionStr);
+      regionId = RegionList->findIndex(beginRegionStr);
     }
 
     regionId++;
@@ -1946,12 +1946,12 @@ KateHlItem *KateHighlighting::createKateHlItem(KateSyntaxContextData *data,
 
   if (!endRegionStr.isEmpty())
   {
-    regionId2 = RegionList->tqfindIndex(endRegionStr);
+    regionId2 = RegionList->findIndex(endRegionStr);
 
     if (regionId2==-1) // if the region name doesn't already exist, add it to the list
     {
       (*RegionList)<<endRegionStr;
-      regionId2 = RegionList->tqfindIndex(endRegionStr);
+      regionId2 = RegionList->findIndex(endRegionStr);
     }
 
     regionId2 = -regionId2 - 1;
@@ -2088,14 +2088,14 @@ TQString KateHighlighting::hlKeyForAttrib( int i ) const
 
 bool KateHighlighting::isInWord( TQChar c, int attrib ) const
 {
-  return m_additionalData[ hlKeyForAttrib( attrib ) ]->deliminator.tqfind(c) < 0
+  return m_additionalData[ hlKeyForAttrib( attrib ) ]->deliminator.find(c) < 0
       && !c.isSpace() && c != '"' && c != '\'';
 }
 
 bool KateHighlighting::canBreakAt( TQChar c, int attrib ) const
 {
   static const TQString& sq = KGlobal::staticQString("\"'");
-  return (m_additionalData[ hlKeyForAttrib( attrib ) ]->wordWrapDeliminator.tqfind(c) != -1) && (sq.tqfind(c) == -1);
+  return (m_additionalData[ hlKeyForAttrib( attrib ) ]->wordWrapDeliminator.find(c) != -1) && (sq.find(c) == -1);
 }
 
 signed char KateHighlighting::commentRegion(int attr) const {
@@ -2206,7 +2206,7 @@ void KateHighlighting::readGlobalKeywordConfig()
     // remove any weakDelimitars (if any) from the default list and store this list.
     for (uint s=0; s < weakDeliminator.length(); s++)
     {
-      int f = deliminator.tqfind (weakDeliminator[s]);
+      int f = deliminator.find (weakDeliminator[s]);
 
       if (f > -1)
         deliminator.remove (f, 1);
@@ -2365,20 +2365,20 @@ int KateHighlighting::getIdFromString(TQStringList *ContextNameList, TQString tm
     }
   }
 
-  else if ( tmpLineEndContext.tqcontains("##"))
+  else if ( tmpLineEndContext.contains("##"))
   {
-    int o = tmpLineEndContext.tqfind("##");
+    int o = tmpLineEndContext.find("##");
     // FIXME at least with 'foo##bar'-style contexts the rules are picked up
     // but the default attribute is not
     TQString tmp=tmpLineEndContext.mid(o+2);
-    if (!embeddedHls.tqcontains(tmp))  embeddedHls.insert(tmp,KateEmbeddedHlInfo());
+    if (!embeddedHls.contains(tmp))  embeddedHls.insert(tmp,KateEmbeddedHlInfo());
     unres=tmp+':'+tmpLineEndContext.left(o);
     context=0;
   }
 
   else
   {
-    context=ContextNameList->tqfindIndex(buildPrefix+tmpLineEndContext);
+    context=ContextNameList->findIndex(buildPrefix+tmpLineEndContext);
     if (context==-1)
     {
       context=tmpLineEndContext.toInt();
@@ -2477,7 +2477,7 @@ void KateHighlighting::makeContextList()
       kdDebug(13010)<<"Looking up context0 for ruleset "<<incCtx<<endl;
       incCtx = incCtx.left(incCtx.length()-1);
       //try to find the context0 id for a given unresolvedReference
-      KateEmbeddedHlInfos::const_iterator hlIt=embeddedHls.tqfind(incCtx);
+      KateEmbeddedHlInfos::const_iterator hlIt=embeddedHls.find(incCtx);
       if (hlIt!=embeddedHls.end())
         *(unresIt.key())=hlIt.data().context0;
     }
@@ -2765,7 +2765,7 @@ int KateHighlighting::addToContextList(const TQString &ident, int ctx0)
         // only context refernces of type Name, ##Name, and Subname##Name are allowed
         if (incCtx.startsWith("##") || (!incCtx.startsWith("#")))
         {
-          int incCtxi = incCtx.tqfind("##");
+          int incCtxi = incCtx.find("##");
           //#stay, #pop is not interesting here
           if (incCtxi >= 0)
           {
@@ -2777,7 +2777,7 @@ int KateHighlighting::addToContextList(const TQString &ident, int ctx0)
             KateHlIncludeRule *ir=new KateHlIncludeRule(i,m_contexts[i]->items.count(),incCtxN,includeAttrib);
 
             //use the same way to determine cross hl file references as other items do
-            if (!embeddedHls.tqcontains(incSet))
+            if (!embeddedHls.contains(incSet))
               embeddedHls.insert(incSet,KateEmbeddedHlInfo());
             else
               kdDebug(13010)<<"Skipping embeddedHls.insert for "<<incCtxN<<endl;
@@ -2850,7 +2850,7 @@ int KateHighlighting::addToContextList(const TQString &ident, int ctx0)
 
   //BEGIN Resolve multiline region if possible
   if (!m_additionalData[ ident ]->multiLineRegion.isEmpty()) {
-    long commentregionid=RegionList.tqfindIndex( m_additionalData[ ident ]->multiLineRegion );
+    long commentregionid=RegionList.findIndex( m_additionalData[ ident ]->multiLineRegion );
     if (-1==commentregionid) {
       errorsAndWarnings+=i18n(
           "<B>%1</B>: Specified multiline comment region (%2) could not be resolved<BR>"
@@ -3086,7 +3086,7 @@ int KateHlManager::realWildcardFind(const TQString &fileName)
       if (highlight->priority() > pri)
       {
         pri = highlight->priority();
-        hl = hlList.tqfindRef (highlight);
+        hl = hlList.findRef (highlight);
       }
     }
     return hl;
@@ -3124,7 +3124,7 @@ int KateHlManager::mimeFind( KateDocument *doc )
       if (highlight->priority() > pri)
       {
         pri = highlight->priority();
-        hl = hlList.tqfindRef (highlight);
+        hl = hlList.findRef (highlight);
       }
     }
 
@@ -3421,9 +3421,9 @@ void KateViewHighlightAction::slotAboutToShow()
 
     if (!KateHlManager::self()->hlHidden(z))
     {
-      if ( !hlSection.isEmpty() && (names.tqcontains(hlName) < 1) )
+      if ( !hlSection.isEmpty() && (names.contains(hlName) < 1) )
       {
-        if (subMenusName.tqcontains(hlSection) < 1)
+        if (subMenusName.contains(hlSection) < 1)
         {
           subMenusName << hlSection;
           TQPopupMenu *menu = new TQPopupMenu ();
@@ -3431,11 +3431,11 @@ void KateViewHighlightAction::slotAboutToShow()
           popupMenu()->insertItem ( '&' + hlSection, menu);
         }
 
-        int m = subMenusName.tqfindIndex (hlSection);
+        int m = subMenusName.findIndex (hlSection);
         names << hlName;
         subMenus.tqat(m)->insertItem ( '&' + hlName, this, TQT_SLOT(setHl(int)), 0,  z);
       }
-      else if (names.tqcontains(hlName) < 1)
+      else if (names.contains(hlName) < 1)
       {
         names << hlName;
         popupMenu()->insertItem ( '&' + hlName, this, TQT_SLOT(setHl(int)), 0,  z);
@@ -3454,7 +3454,7 @@ void KateViewHighlightAction::slotAboutToShow()
   }
   popupMenu()->setItemChecked (0, false);
 
-  int i = subMenusName.tqfindIndex (KateHlManager::self()->hlSection(doc->hlMode()));
+  int i = subMenusName.findIndex (KateHlManager::self()->hlSection(doc->hlMode()));
   if (i >= 0 && subMenus.tqat(i))
     subMenus.tqat(i)->setItemChecked (doc->hlMode(), true);
   else

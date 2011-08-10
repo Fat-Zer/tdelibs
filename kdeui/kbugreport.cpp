@@ -289,7 +289,7 @@ void KBugReport::updateURL()
 void KBugReport::appChanged(int i)
 {
     TQString appName = d->appcombo->text(i);
-    int index = appName.tqfind( '/' );
+    int index = appName.find( '/' );
     if ( index > 0 )
         appName = appName.left( index );
     kdDebug() << "appName " << appName << endl;

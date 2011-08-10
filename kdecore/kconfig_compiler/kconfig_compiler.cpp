@@ -284,7 +284,7 @@ static TQString dumpNode(const TQDomNode &node)
 
 static TQString filenameOnly(TQString path)
 {
-   int i = path.tqfindRev('/');
+   int i = path.findRev('/');
    if (i >= 0)
       return path.mid(i+1);
    return path;
@@ -480,13 +480,13 @@ CfgEntry *parseEntry( const TQString &group, const TQDomElement &element )
 
   if ( nameIsEmpty ) {
     name = key;
-    name.tqreplace( " ", TQString() );
-  } else if ( name.tqcontains( ' ' ) ) {
+    name.replace( " ", TQString() );
+  } else if ( name.contains( ' ' ) ) {
     kdWarning()<<"Entry '"<<name<<"' contains spaces! <name> elements can't contain speces!"<<endl;
     name.remove( ' ' );
   }
 
-  if (name.tqcontains("$("))
+  if (name.contains("$("))
   {
     if (param.isEmpty())
     {
@@ -513,7 +513,7 @@ CfgEntry *parseEntry( const TQString &group, const TQDomElement &element )
   {
     // Adjust name
     paramName = name;
-    name.tqreplace("$("+param+")", TQString());
+    name.replace("$("+param+")", TQString());
     // Lookup defaults for indexed entries
     for(int i = 0; i <= paramMax; i++)
     {
@@ -534,7 +534,7 @@ CfgEntry *parseEntry( const TQString &group, const TQDomElement &element )
         int i = index.toInt(&ok);
         if (!ok)
         {
-          i = paramValues.tqfindIndex(index);
+          i = paramValues.findIndex(index);
           if (i == -1)
           {
             kdError() << "Index '" << index << "' for default value is unknown." << endl;
@@ -568,7 +568,7 @@ CfgEntry *parseEntry( const TQString &group, const TQDomElement &element )
     return 0;
   }
 
-  if (allNames.tqcontains(name))
+  if (allNames.contains(name))
   {
     if (nameIsEmpty)
       kdError() << "The key '" << key << "' can not be used as name for the entry because "
@@ -771,7 +771,7 @@ TQString paramString(const TQString &s, const CfgEntry *e, int i)
 {
   TQString result = s;
   TQString needle = "$("+e->param()+")";
-  if (result.tqcontains(needle))
+  if (result.contains(needle))
   {
     TQString tmp;
     if (e->paramType() == "Enum")
@@ -796,7 +796,7 @@ TQString paramString(const TQString &group, const TQValueList<Param> &parameters
   for (TQValueList<Param>::ConstIterator it = parameters.begin();
        it != parameters.end(); ++it)
   {
-     if (paramString.tqcontains("$("+(*it).name+")"))
+     if (paramString.contains("$("+(*it).name+")"))
      {
        TQString tmp;
        tmp.sprintf("%%%d", i++);
@@ -1249,7 +1249,7 @@ int main( int argc, char **argv )
     TQString t = e->type();
 
     // Manipulator
-    if (allMutators || mutators.tqcontains(n))
+    if (allMutators || mutators.contains(n))
     {
       h << "    /**" << endl;
       h << "      Set " << e->label() << endl;
@@ -1642,7 +1642,7 @@ int main( int argc, char **argv )
       TQString t = e->type();
   
       // Manipulator
-      if (allMutators || mutators.tqcontains(n))
+      if (allMutators || mutators.contains(n))
       {
         cpp << "void " << setFunction(n, className) << "( ";
         if (!e->param().isEmpty())

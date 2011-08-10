@@ -586,7 +586,7 @@ void KMJobViewer::loadPluginActions()
 		KAction	*act = actionCollection()->action("job_restart");
 		for (int i=0;i<act->containerCount();i++)
 		{
-			if (menuBar()->tqfindItem(act->itemId(i), &menu))
+			if (menuBar()->findItem(act->itemId(i), &menu))
 			{
 				menuindex = mpopindex = menu->indexOf(act->itemId(i))+1;
 				break;

@@ -590,7 +590,7 @@ void KDirOperator::checkPath(const TQString &, bool /*takeFiles*/) // SLOT
     text = text.stripWhiteSpace();
     // if the argument is no URL (the check is quite fragil) and it's
     // no absolute path, we add the current directory to get a correct url
-    if (text.tqfind(':') < 0 && text[0] != '/')
+    if (text.find(':') < 0 && text[0] != '/')
         text.insert(0, currUrl);
 
     // in case we have a selection defined and someone patched the file-
@@ -825,7 +825,7 @@ bool KDirOperator::checkPreviewInternal() const
 {
     TQStringList supported = KIO::PreviewJob::supportedMimeTypes();
     // no preview support for directories?
-    if ( dirOnlyMode() && supported.tqfindIndex( "inode/directory" ) == -1 )
+    if ( dirOnlyMode() && supported.findIndex( "inode/directory" ) == -1 )
         return false;
 
     TQStringList mimeTypes = dir->mimeFilters();

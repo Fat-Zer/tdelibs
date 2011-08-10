@@ -489,7 +489,7 @@ TQString KImageIO::type(const TQString& filename)
 {
   KImageIOFormatList *formatList = KImageIOFactory::self()->formatList;
   TQString suffix = filename;
-  int dot = suffix.tqfindRev('.');
+  int dot = suffix.findRev('.');
   if (dot >= 0)
     suffix = suffix.mid(dot + 1);
 
@@ -500,7 +500,7 @@ TQString KImageIO::type(const TQString& filename)
            ++it )
       {
           KImageIOFormat *format = (*it);
-          if (format->mSuffices.tqcontains(suffix))
+          if (format->mSuffices.contains(suffix))
               return format->mType;
       }
   }

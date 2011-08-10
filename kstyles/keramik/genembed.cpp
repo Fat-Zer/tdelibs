@@ -146,7 +146,7 @@ int main(int argc, char** argv)
 		int readJustID = 0;
 
 
-		if ((pos = s.tqfindRev("-")) != -1)
+		if ((pos = s.findRev("-")) != -1)
 		{
 				int suffix = evalSuffix(s.mid(pos));
 				if (suffix !=-1 )
@@ -156,7 +156,7 @@ int main(int argc, char** argv)
 				}
 		}
 
-		if (!assignID.tqcontains(id))
+		if (!assignID.contains(id))
 		{
 			assignID[id] = nextID;
 			nextID += 256;

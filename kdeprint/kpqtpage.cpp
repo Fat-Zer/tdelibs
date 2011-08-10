@@ -262,15 +262,15 @@ void KPQtPage::setOptions(const TQMap<TQString,TQString>& opts)
 			DrListOption	*opt = static_cast<DrListOption*>(driver()->findOption("PageSize"));
 			DrBase	*ch = opt->findChoice(val);
 			if (ch)
-				m_pagesize->setCurrentItem(opt->choices()->tqfindRef(ch));
+				m_pagesize->setCurrentItem(opt->choices()->findRef(ch));
 		}
 	}
 	else if (!opts["kde-pagesize"].isEmpty())
 		m_pagesize->setCurrentItem(findIndex(opts["kde-pagesize"].toInt()));
 	ID = NUP_1;
-	if (opts["_kde-filters"].tqfind("psnup") != -1)
+	if (opts["_kde-filters"].find("psnup") != -1)
 	{
-               if (opts.tqcontains("_kde-psnup-nup")) {
+               if (opts.contains("_kde-psnup-nup")) {
                        ID = opts["_kde-psnup-nup"].toInt();
                        if (ID == 1 || ID == 2 || ID == 4)
                        {
@@ -323,7 +323,7 @@ void KPQtPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 	else if (ID != NUP_OTHER)
 	{
 		int	nup(ID == NUP_2 ? 2 : 4);
-		if (s.tqfind("psnup") == -1)
+		if (s.find("psnup") == -1)
 		{
 			TQStringList	fl = TQStringList::split(',', s, false);
 			KXmlCommandManager::self()->insertCommand(fl, "psnup");

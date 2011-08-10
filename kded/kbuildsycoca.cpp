@@ -203,15 +203,15 @@ KSycocaEntry *KBuildSycoca::createEntry(const TQString &file, bool addToFactory)
          // Re-use old entry
          if (g_factory == g_bsgf) // Strip .directory from service-group entries
          {
-            entry = g_entryDict->tqfind(file.left(file.length()-10));
+            entry = g_entryDict->find(file.left(file.length()-10));
          }
          else if (g_factory == g_bsf)
          {
-            entry = g_entryDict->tqfind(file);
+            entry = g_entryDict->find(file);
          }
          else
          {
-            entry = g_entryDict->tqfind(file);
+            entry = g_entryDict->find(file);
          }
          // remove from g_ctimeDict; if g_ctimeDict is not empty
          // after all files have been processed, it means
@@ -300,7 +300,7 @@ bool KBuildSycoca::build()
          ++it1 )
     {
       KSycocaResource res = (*it1);
-      if (!allResources.tqcontains(res.resource))
+      if (!allResources.contains(res.resource))
          allResources.append(res.resource);
     }
   }
@@ -428,7 +428,7 @@ void KBuildSycoca::createMenu(TQString caption, TQString name, VFolderMenu::SubM
 
         if (timeStamp && (timeStamp == oldTimestamp))
         {
-            entry = dynamic_cast<KServiceGroup *> (g_serviceGroupEntryDict->tqfind(subName));
+            entry = dynamic_cast<KServiceGroup *> (g_serviceGroupEntryDict->find(subName));
             if (entry && (entry->directoryEntryPath() != directoryFile))
                 entry = 0; // Can't reuse this one!
         }

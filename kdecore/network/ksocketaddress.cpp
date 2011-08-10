@@ -131,7 +131,7 @@ bool KIpAddress::setAddress(const TQString& address)
   m_version = 0;
 
   // try to guess the address version
-  if (address.tqfind(':') != -1)
+  if (address.find(':') != -1)
     {
 #ifdef AF_INET6
       // guessing IPv6

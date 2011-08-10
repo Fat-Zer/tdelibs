@@ -215,7 +215,7 @@ Value RegTestFunction::call(ExecState *exec, Object &/*thisObj*/, const List &ar
     switch (id) {
 	case Print: {
 	    UString str = args[0].toString(exec);
-            if ( str.qstring().lower().tqfind( "failed!" ) >= 0 )
+            if ( str.qstring().lower().find( "failed!" ) >= 0 )
                 m_regTest->saw_failure = true;
             TQString res = str.qstring().replace('\007', "");
             m_regTest->m_currentOutput += res + "\n";
@@ -1077,7 +1077,7 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
     int pos = 0;
     do {
         pos++;
-        int newpos = absBase.tqfind('/', pos);
+        int newpos = absBase.find('/', pos);
         if (newpos == -1) newpos = absBase.length();
         TQConstString cmpPathComp(absPath.tqunicode() + pos, newpos - pos);
         TQConstString cmpBaseComp(absBase.tqunicode() + pos, newpos - pos);

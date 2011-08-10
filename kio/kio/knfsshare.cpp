@@ -123,7 +123,7 @@ bool KNFSSharePrivate::readExportsFile() {
     
     // Handle quotation marks
     if ( completeLine[0] == '"' ) {
-      int i = completeLine.tqfind('"',1);
+      int i = completeLine.find('"',1);
       if (i == -1) {
         kdError() << "KNFSShare: Parse error: Missing quotation mark: " << completeLine << endl;   
         continue;
@@ -131,9 +131,9 @@ bool KNFSSharePrivate::readExportsFile() {
       path = completeLine.mid(1,i-1);
       
     } else { // no quotation marks
-      int i = completeLine.tqfind(' ');
+      int i = completeLine.find(' ');
       if (i == -1)
-          i = completeLine.tqfind('\t');
+          i = completeLine.find('\t');
           
       if (i == -1) 
         path = completeLine;
@@ -180,7 +180,7 @@ bool KNFSShare::isDirectoryShared( const TQString & path ) const {
   if ( path[path.length()-1] != '/' )
        fixedPath += '/';
   
-  return d->sharedPaths.tqfind(fixedPath) != 0;
+  return d->sharedPaths.find(fixedPath) != 0;
 }
 
 TQStringList KNFSShare::sharedDirectories() const {

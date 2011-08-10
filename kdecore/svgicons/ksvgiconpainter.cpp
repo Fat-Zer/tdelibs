@@ -1263,8 +1263,8 @@ void KSVGIconPainter::setStrokeColor(const TQString &stroke)
 
 		TQString url = stroke;
 
-		unsigned int start = url.tqfind("#") + 1;
-		unsigned int end = url.tqfindRev(")");
+		unsigned int start = url.find("#") + 1;
+		unsigned int end = url.findRev(")");
 
 		d->helper->m_strokeGradientReference = url.mid(start, end - start);
 	}
@@ -1291,8 +1291,8 @@ void KSVGIconPainter::setFillColor(const TQString &fill)
 
 		TQString url = fill;
 
-		unsigned int start = url.tqfind("#") + 1;
-		unsigned int end = url.tqfindRev(")");
+		unsigned int start = url.find("#") + 1;
+		unsigned int end = url.findRev(")");
 
 		d->helper->m_fillGradientReference = url.mid(start, end - start);
 	}

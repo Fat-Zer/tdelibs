@@ -55,7 +55,7 @@ namespace
                 if ( !toolBar )
                     continue;
 
-                if ( oldToolBarList.tqfindRef( toolBar ) == -1 )
+                if ( oldToolBarList.findRef( toolBar ) == -1 )
                     m_needsRebuild = true;
 
                 m_toolBars.append( toolBar );

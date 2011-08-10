@@ -842,7 +842,7 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 	{ // for each found object...
 		TQWidget * widg = ( TQWidget* ) obj;
 		++it;
-		TQ_FocusPolicy* pFocPol = pFocPolDict->tqfind( widg->name() ); // remember the focus policy from before the reparent
+		TQ_FocusPolicy* pFocPol = pFocPolDict->find( widg->name() ); // remember the focus policy from before the reparent
 		if ( pFocPol )
 			widg->setFocusPolicy( *pFocPol );
 		
@@ -894,7 +894,7 @@ void KMdiChildFrm::linkChildren( TQDict<TQ_FocusPolicy>* pFocPolDict )
 	{ // for each found object...
 		TQWidget* widg = ( TQWidget* ) obj;
 		++it;
-		TQ_FocusPolicy* pFocPol = pFocPolDict->tqfind( widg->name() ); // remember the focus policy from before the reparent
+		TQ_FocusPolicy* pFocPol = pFocPolDict->find( widg->name() ); // remember the focus policy from before the reparent
 		
 		if ( pFocPol != 0 )
 			widg->setFocusPolicy( *pFocPol );

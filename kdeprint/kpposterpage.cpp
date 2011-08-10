@@ -265,7 +265,7 @@ void KPPosterPage::setOptions( const TQMap<TQString,TQString>& opts )
 		m_mediasize->setText( ps );
 	m_preview->setMediaSize( ps );
 
-	if ( opts[ "_kde-filters" ].tqfind( "poster" ) != -1 )
+	if ( opts[ "_kde-filters" ].find( "poster" ) != -1 )
 	{
 		m_postercheck->setChecked( true );
 		ps = opts[ "_kde-poster-size" ];
@@ -302,7 +302,7 @@ void KPPosterPage::getOptions( TQMap<TQString,TQString>& opts, bool )
 	}
 	else
 	{
-		if ( !o.tqcontains( "poster" ) )
+		if ( !o.contains( "poster" ) )
 			o.append( "poster" );
 		opts[ "_kde-filters" ] = o.join( "," );
 		opts[ "_kde-poster-media" ] = m_mediasize->text();

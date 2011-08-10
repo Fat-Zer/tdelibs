@@ -347,7 +347,7 @@ void KCModuleProxy::runAsRoot()
 
 		/* Remove all kdesu switches */
 		while( cmd.length() > 1 && cmd[ 0 ] == '-' )
-			cmd = TQString(cmd.remove( 0, cmd.tqfind( ' ' ) )).stripWhiteSpace();
+			cmd = TQString(cmd.remove( 0, cmd.find( ' ' ) )).stripWhiteSpace();
 	}
 
 	if (cmd.left(8) == "kcmshell")

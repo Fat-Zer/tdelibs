@@ -393,7 +393,7 @@ bool KSpell::addPersonal( const TQString & word )
   TQString qs = word.simplifyWhiteSpace();
 
   //we'll let ispell do the work here b/c we can
-  if ( qs.tqfind(' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
+  if ( qs.find(' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
     return false;
 
   qs.prepend( "*" );
@@ -412,7 +412,7 @@ bool KSpell::ignore( const TQString & word )
   TQString qs = word.simplifyWhiteSpace();
 
   //we'll let ispell do the work here b/c we can
-  if ( qs.tqfind (' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
+  if ( qs.find (' ') != -1 || qs.isEmpty() )    // make sure it's a _word_
     return false;
 
   qs.prepend( "@" );
@@ -483,7 +483,7 @@ bool KSpell::checkWord( const TQString & buffer, bool _usedialog )
   d->checking = true;
   TQString qs = buffer.simplifyWhiteSpace();
 
-  if ( qs.tqfind (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
+  if ( qs.find (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
     d->checkNextTimer->start( 0, true );
     return false;
   }
@@ -525,7 +525,7 @@ bool KSpell::checkWord( const TQString & buffer, bool _usedialog, bool suggest )
   d->checking = true;
   TQString qs = buffer.simplifyWhiteSpace();
 
-  if ( qs.tqfind (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
+  if ( qs.find (' ') != -1 || qs.isEmpty() ) {   // make sure it's a _word_
     d->checkNextTimer->start( 0, true );
     return false;
   }
@@ -660,7 +660,7 @@ TQString KSpell::funnyWord( const TQString & word )
 
       i = j-1;
 
-      if ( !( k = qs.tqfindRev(shorty) ) || k != -1 )
+      if ( !( k = qs.findRev(shorty) ) || k != -1 )
         qs.remove( k, shorty.length() );
       else
       {
@@ -699,7 +699,7 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
     int i,j;
 
 
-    word = buffer.mid( 2, buffer.tqfind( ' ', 3 ) -2 );
+    word = buffer.mid( 2, buffer.find( ' ', 3 ) -2 );
     //check() needs this
     orig=word;
 
@@ -717,18 +717,18 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
     //We don't take advantage of ispell's ignore function because
     //we can't interrupt ispell's output (when checking a large
     //buffer) to add a word to _it's_ ignore-list.
-    if ( ignorelist.tqfindIndex( word.lower() ) != -1 )
+    if ( ignorelist.findIndex( word.lower() ) != -1 )
       return IGNORE;
 
     //// Position in line ///
     TQString qs2;
 
-    if ( buffer.tqfind( ':' ) != -1 )
-      qs2 = buffer.left( buffer.tqfind(':') );
+    if ( buffer.find( ':' ) != -1 )
+      qs2 = buffer.left( buffer.find(':') );
     else
       qs2 = buffer;
 
-    posinline = qs2.right( qs2.length()-qs2.tqfindRev(' ') ).toInt()-1;
+    posinline = qs2.right( qs2.length()-qs2.findRev(' ') ).toInt()-1;
 
     ///// Replace-list stuff ////
     TQStringList::Iterator it = replacelist.begin();
@@ -745,14 +745,14 @@ int KSpell::parseOneResponse( const TQString &buffer, TQString &word, TQStringLi
     /////// Suggestions //////
     if ( buffer[0] != '#' )
     {
-      TQString qs = buffer.mid( buffer.tqfind(':')+2, buffer.length() );
+      TQString qs = buffer.mid( buffer.find(':')+2, buffer.length() );
       qs += ',';
       sugg.clear();
       i = j = 0;
 
       while( (unsigned int)i < qs.length() )
       {
-        TQString temp = qs.mid( i, (j=qs.tqfind (',',i)) - i );
+        TQString temp = qs.mid( i, (j=qs.find (',',i)) - i );
         sugg.append( funnyWord(temp) );
 
         i=j+2;
@@ -1016,7 +1016,7 @@ bool KSpell::check( const TQString &_buffer, bool _usedialog )
   emitProgress();
 
   // send first buffer line
-  int i = origbuffer.tqfind( '\n', 0 ) + 1;
+  int i = origbuffer.find( '\n', 0 ) + 1;
   qs = origbuffer.mid( 0, i );
   cleanFputs( qs, false );
 
@@ -1130,7 +1130,7 @@ void KSpell::check2( KProcIO * )
     //kdDebug(750) << "[EOL](" << tempe << ")[" << temp << "]" << endl;
 
     lastpos = (lastlastline=lastline) + offset; //do we really want this?
-    i = origbuffer.tqfind('\n', lastline) + 1;
+    i = origbuffer.find('\n', lastline) + 1;
     qs = origbuffer.mid( lastline, i-lastline );
     cleanFputs( qs, false );
     lastline = i;

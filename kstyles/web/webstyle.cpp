@@ -1603,7 +1603,7 @@ WebStyle::drawKickerTaskButton
   static TQString modStr =
     TQString::fromUtf8("[") + i18n("modified") + TQString::fromUtf8("]");
 
-  int modStrPos = s.tqfind(modStr);
+  int modStrPos = s.find(modStr);
 
   if (-1 != modStrPos)
   {

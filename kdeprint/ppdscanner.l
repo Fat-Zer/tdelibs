@@ -97,7 +97,7 @@ L        [[:alnum:]]
 	/**
 	 * Value state
 	 */
-<value>\"[^\"]*\"    { yylval = yytext; kdeprint_ppdscanner_lno += yylval[0].tqcontains('\n'); QDEBUG1("Quoted value: %s",yytext); return QUOTED; }
+<value>\"[^\"]*\"    { yylval = yytext; kdeprint_ppdscanner_lno += yylval[0].contains('\n'); QDEBUG1("Quoted value: %s",yytext); return QUOTED; }
 <value>{WORD}        { yylval = yytext; QDEBUG1("String part: %s",yytext); return STRINGPART; }
 <value>"/"           { BEGIN(translation_2); return '/'; }
 <value>"\n"          { kdeprint_ppdscanner_lno++; BEGIN(INITIAL); }

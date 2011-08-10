@@ -66,7 +66,7 @@ KPalette::KPalette(const TQString &name)
   // Read first line
   // Expected "GIMP Palette"
   if (paletteFile.readLine(line, maxLength) == -1) return;
-  if (line.tqfind(" Palette") == -1) return;
+  if (line.find(" Palette") == -1) return;
 
   while( paletteFile.readLine(line, maxLength) != -1)
   {

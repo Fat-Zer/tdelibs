@@ -82,7 +82,7 @@ void EditorChooser::readAppSetting(const TQString& postfix){
 	if (editor.isEmpty()) d->chooser->editorCombo->setCurrentItem(0);
 	else
 	{
-		int idx=d->elements.tqfindIndex(editor);
+		int idx=d->elements.findIndex(editor);
 		idx=idx+1;
 		d->chooser->editorCombo->setCurrentItem(idx);
 	}

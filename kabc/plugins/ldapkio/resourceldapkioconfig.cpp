@@ -281,7 +281,7 @@ AttributesDialog::AttributesDialog( const TQMap<TQString, TQString> &attributes,
   for ( i = 1; i < mMapCombo->count(); i++ ) {
     TQDictIterator<KLineEdit> it2( mLineEditDict );
     for ( ; it2.current(); ++it2 ) {
-      if ( mMapList[ i ].tqcontains( it2.currentKey() ) ) {
+      if ( mMapList[ i ].contains( it2.currentKey() ) ) {
         if ( mMapList[ i ][ it2.currentKey() ] != it2.current()->text() ) break;
       } else {
         if ( mDefaultMap[ it2.currentKey() ] != it2.current()->text() ) break;

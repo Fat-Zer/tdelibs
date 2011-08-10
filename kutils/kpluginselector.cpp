@@ -332,7 +332,7 @@ void KPluginSelectionWidget::updateConfigPage( KPluginInfo * plugininfo,
         d->kps->configPage( 1 );
     else
     {
-        if( !d->widgetIDs.tqcontains( plugininfo->pluginName() ) )
+        if( !d->widgetIDs.contains( plugininfo->pluginName() ) )
             // if no widget exists for the plugin create it
             embeddPluginKCMs( plugininfo, checked );
         else
@@ -464,7 +464,7 @@ void KPluginSelectionWidget::save()
                 names->append( TQString::null );
             for( TQStringList::ConstIterator nameit = names->begin();
                     nameit != names->end(); ++nameit )
-                if( updatedModules.tqfind( *nameit ) == updatedModules.end() )
+                if( updatedModules.find( *nameit ) == updatedModules.end() )
                     updatedModules.append( *nameit );
         }
     for( TQStringList::ConstIterator it = updatedModules.begin(); it != updatedModules.end(); ++it )

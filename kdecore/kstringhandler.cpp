@@ -22,7 +22,7 @@
 
 static void parsePythonRange( const TQCString &range, uint &start, uint &end )
 {
-    const int colon = range.tqfind( ':' );
+    const int colon = range.find( ':' );
     if ( colon == -1 ) {
         start = range.toUInt();
         end = start;
@@ -178,7 +178,7 @@ TQString KStringHandler::remword( const TQString &text , const TQString &word )
     // Split words and add into list
     TQStringList list = TQStringList::split( " ", text, true );
 
-    TQStringList::Iterator it = list.tqfind(word);
+    TQStringList::Iterator it = list.find(word);
 
     if (it != list.end())
        list.remove( it );
@@ -422,7 +422,7 @@ bool KStringHandler::matchFileName( const TQString& filename, const TQString& pa
    if ( pattern[ pattern_len - 1 ] == (QChar)'*' && len + 1 >= pattern_len ) {
       if ( pattern[ 0 ] == (QChar)'*' )
       {
-         return filename.tqfind(pattern.mid(1, pattern_len - 2)) != -1;
+         return filename.find(pattern.mid(1, pattern_len - 2)) != -1;
       }
 
       const TQChar *c1 = pattern.tqunicode();
@@ -457,7 +457,7 @@ KStringHandler::perlSplit(const TQString & sep, const TQString & s, uint max)
 
   int searchStart = 0;
 
-  int tokenStart = s.tqfind(sep, searchStart);
+  int tokenStart = s.find(sep, searchStart);
 
   while (-1 != tokenStart && (ignoreMax || l.count() < max - 1))
   {
@@ -465,7 +465,7 @@ KStringHandler::perlSplit(const TQString & sep, const TQString & s, uint max)
       l << s.mid(searchStart, tokenStart - searchStart);
 
     searchStart = tokenStart + sep.length();
-    tokenStart = s.tqfind(sep, searchStart);
+    tokenStart = s.find(sep, searchStart);
   }
 
   if (!s.mid(searchStart, s.length() - searchStart).isEmpty())
@@ -483,7 +483,7 @@ KStringHandler::perlSplit(const TQChar & sep, const TQString & s, uint max)
 
   int searchStart = 0;
 
-  int tokenStart = s.tqfind(sep, searchStart);
+  int tokenStart = s.find(sep, searchStart);
 
   while (-1 != tokenStart && (ignoreMax || l.count() < max - 1))
   {
@@ -491,7 +491,7 @@ KStringHandler::perlSplit(const TQChar & sep, const TQString & s, uint max)
       l << s.mid(searchStart, tokenStart - searchStart);
 
     searchStart = tokenStart + 1;
-    tokenStart = s.tqfind(sep, searchStart);
+    tokenStart = s.find(sep, searchStart);
   }
 
   if (!s.mid(searchStart, s.length() - searchStart).isEmpty())

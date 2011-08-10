@@ -141,7 +141,7 @@ DrMain* Foomatic2Loader::buildDriver() const
 	if ( m_foodata.isEmpty() )
 		return NULL;
 
-	TQVariant v = m_foodata.tqfind( "VAR" ).data();
+	TQVariant v = m_foodata.find( "VAR" ).data();
 	if ( !v.isNull() && v.type() == TQVariant::Map )
 	{
 		DrMain *driver = new DrMain;
@@ -151,8 +151,8 @@ DrMain* Foomatic2Loader::buildDriver() const
 		driver->set( "matic_printer", v.mapFind( "id" ).data().toString() );
 		driver->set( "matic_driver", v.mapFind( "driver" ).data().toString() );
 		driver->set( "text", TQString( "%1 %2 (%3)" ).arg( driver->get( "manufacturer" ) ).arg( driver->get( "model" ) ).arg( driver->get( "matic_driver" ) ) );
-		if ( m_foodata.tqcontains( "POSTPIPE" ) )
-			driver->set( "postpipe", m_foodata.tqfind( "POSTPIPE" ).data().toString() );
+		if ( m_foodata.contains( "POSTPIPE" ) )
+			driver->set( "postpipe", m_foodata.find( "POSTPIPE" ).data().toString() );
 		v = v.mapFind( "args" ).data();
 		if ( !v.isNull() && v.type() == TQVariant::List )
 		{
@@ -166,7 +166,7 @@ DrMain* Foomatic2Loader::buildDriver() const
 				{
 					TQString group = DrGroup::groupForOption( opt->name() );
 					DrGroup *grp = NULL;
-					if ( !groups.tqcontains( group ) )
+					if ( !groups.contains( group ) )
 					{
 						grp = new DrGroup;
 						grp->set( "text", group );
@@ -211,7 +211,7 @@ DrMain* Foomatic2Loader::modifyDriver( DrMain *driver ) const
 		TQValueList<DrBase*> optList;
 		DrGroup *grp = NULL;
 
-		TQVariant V = m_foodata.tqfind( "VAR" ).data();
+		TQVariant V = m_foodata.find( "VAR" ).data();
 		if ( !V.isNull() && V.type() == TQVariant::Map )
 		{
 			TQVariant v = V.mapFind( "args" ).data();

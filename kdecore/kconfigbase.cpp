@@ -272,7 +272,7 @@ TQString KConfigBase::readEntry( const char *pKey,
   if( expand || bExpand )
     {
       // check for environment variables and make necessary translations
-      int nDollarPos = aValue.tqfind( '$' );
+      int nDollarPos = aValue.find( '$' );
 
       while( nDollarPos != -1 && nDollarPos+1 < static_cast<int>(aValue.length())) {
         // there is at least one $
@@ -328,7 +328,7 @@ TQString KConfigBase::readEntry( const char *pKey,
           aValue.remove( nDollarPos, 1 );
           nDollarPos++;
         }
-        nDollarPos = aValue.tqfind( '$', nDollarPos );
+        nDollarPos = aValue.find( '$', nDollarPos );
       }
     }
 
@@ -793,7 +793,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
 
   TQString aValue = readEntry( pKey );
   if( !aValue.isNull() ) {
-    if ( aValue.tqcontains( ',' ) > 5 ) {
+    if ( aValue.contains( ',' ) > 5 ) {
       // KDE3 and upwards entry
       if ( !aRetFont.fromString( aValue ) && pDefault )
         aRetFont = *pDefault;
@@ -802,7 +802,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
       // backward compatibility with older font formats
       // ### remove KDE 3.1 ?
       // find first part (font family)
-      int nIndex = aValue.tqfind( ',' );
+      int nIndex = aValue.find( ',' );
       if( nIndex == -1 ){
         if( pDefault )
           aRetFont = *pDefault;
@@ -812,7 +812,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
 
       // find second part (point size)
       int nOldIndex = nIndex;
-      nIndex = aValue.tqfind( ',', nOldIndex+1 );
+      nIndex = aValue.find( ',', nOldIndex+1 );
       if( nIndex == -1 ){
         if( pDefault )
           aRetFont = *pDefault;
@@ -824,7 +824,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
 
       // find third part (style hint)
       nOldIndex = nIndex;
-      nIndex = aValue.tqfind( ',', nOldIndex+1 );
+      nIndex = aValue.find( ',', nOldIndex+1 );
 
       if( nIndex == -1 ){
         if( pDefault )
@@ -836,7 +836,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
 
       // find fourth part (char set)
       nOldIndex = nIndex;
-      nIndex = aValue.tqfind( ',', nOldIndex+1 );
+      nIndex = aValue.find( ',', nOldIndex+1 );
 
       if( nIndex == -1 ){
         if( pDefault )
@@ -848,7 +848,7 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
                                 nIndex-nOldIndex-1 );
       // find fifth part (weight)
       nOldIndex = nIndex;
-      nIndex = aValue.tqfind( ',', nOldIndex+1 );
+      nIndex = aValue.find( ',', nOldIndex+1 );
 
       if( nIndex == -1 ){
         if( pDefault )
@@ -979,7 +979,7 @@ TQColor KConfigBase::readColorEntry( const char *pKey,
           bool bOK;
 
           // find first part (red)
-          int nIndex = aValue.tqfind( ',' );
+          int nIndex = aValue.find( ',' );
 
           if( nIndex == -1 ){
             // return a sensible default -- Bernd
@@ -992,7 +992,7 @@ TQColor KConfigBase::readColorEntry( const char *pKey,
 
           // find second part (green)
           int nOldIndex = nIndex;
-          nIndex = aValue.tqfind( ',', nOldIndex+1 );
+          nIndex = aValue.find( ',', nOldIndex+1 );
 
           if( nIndex == -1 ){
             // return a sensible default -- Bernd

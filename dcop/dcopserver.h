@@ -130,7 +130,7 @@ public:
 
     DCOPConnection *findApp(const TQCString &appId);
     DCOPConnection *findConn(IceConn iceConn)
-       { return clients.tqfind(iceConn); }
+       { return clients.find(iceConn); }
 
     void sendMessage(DCOPConnection *conn, const TQCString &sApp,
                      const TQCString &rApp, const TQCString &rObj,

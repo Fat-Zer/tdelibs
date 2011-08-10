@@ -258,7 +258,7 @@ void KIconView::emitExecute( TQIconViewItem *item, const TQPoint &pos )
 
 void KIconView::updateDragHoldItem( TQDropEvent *e )
 {
-  TQIconViewItem *item = tqfindItem( e->pos() );
+  TQIconViewItem *item = findItem( e->pos() );
 
   if ( d->dragHoldItem != item)
   {
@@ -307,7 +307,7 @@ void KIconView::contentsMouseDoubleClickEvent ( TQMouseEvent * e )
 {
   TQIconView::contentsMouseDoubleClickEvent( e );
 
-  TQIconViewItem* item = tqfindItem( e->pos() );
+  TQIconViewItem* item = findItem( e->pos() );
 
   if( item ) {
     if( (e->button() == Qt::LeftButton) && !m_bUseSingle )
@@ -417,7 +417,7 @@ TQFontMetrics *KIconView::itemFontMetrics() const
 TQPixmap KIconView::selectedIconPixmap( TQPixmap *pix, const TQColor &col ) const
 {
     TQPixmap m;
-    if ( d->maskCache.tqfind( TQString::number( pix->serialNumber() ), m ) )
+    if ( d->maskCache.find( TQString::number( pix->serialNumber() ), m ) )
 	return m;
     m = KPixmapEffect::selectedPixmap( KPixmap(*pix), col );
     d->maskCache.insert( TQString::number( pix->serialNumber() ), m );

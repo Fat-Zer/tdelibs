@@ -736,7 +736,7 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
 		else Q_ASSERT(access & S_IFDIR);
             }
 
-            int pos = name.tqfindRev( '/' );
+            int pos = name.findRev( '/' );
             if ( pos == -1 )
                 entryName = name;
             else
@@ -1133,7 +1133,7 @@ bool KZip::prepareWriting_impl(const TQString &name, const TQString &user,
     // Find or create parent dir
     KArchiveDirectory* parentDir = rootDir();
     TQString fileName( name );
-    int i = name.tqfindRev( '/' );
+    int i = name.findRev( '/' );
     if ( i != -1 )
     {
         TQString dir = name.left( i );

@@ -44,7 +44,7 @@ KURL smbToUrl(const TQString& s)
 {
 	// allow to handle non-encoded chars in login/password
 	KURL	url;
-	int	p = s.tqfind('@');
+	int	p = s.find('@');
 	if (p == -1)
 	{
 		// assumes url starts with "smb://". Use encoding in
@@ -56,7 +56,7 @@ KURL smbToUrl(const TQString& s)
 		// assumes URL starts with "smb://"
 		TQString	username = s.mid(6, p-6);
 		url = KURL("smb://" + KURL::encode_string(s.mid(p+1)));
-		int	q = username.tqfind(':');
+		int	q = username.find(':');
 		if (q == -1)
 			url.setUser(username);
 		else
@@ -99,14 +99,14 @@ bool splitSmbURI( const TQString& uri, TQString& work, TQString& server, TQStrin
 		return false;
 	p = 6;
 
-	int p1 = uri.tqfind( '/', p );
+	int p1 = uri.find( '/', p );
 	if ( p1 != -1 )
 	{
-		int p2 = uri.tqfind( '@', p );
+		int p2 = uri.find( '@', p );
 		if ( p2 != -1 && p2 < p1 )
 		{
 			// Got a user
-			int p3 = uri.tqfind( ':', p );
+			int p3 = uri.find( ':', p );
 			if ( p3 != -1 && p3 < p2 )
 			{
 				// Got a password

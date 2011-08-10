@@ -219,7 +219,7 @@ void OptionListView::setOption(DrBase *opt)
 
 void OptionListView::setValue(const TQString& val)
 {
-	m_list->setCurrentItem(m_choices.tqfindIndex(val));
+	m_list->setCurrentItem(m_choices.findIndex(val));
 }
 
 void OptionListView::slotSelectionChanged()
@@ -265,7 +265,7 @@ void OptionBooleanView::setOption(DrBase *opt)
 
 void OptionBooleanView::setValue(const TQString& val)
 {
-	int	ID = m_choices.tqfindIndex(val);
+	int	ID = m_choices.findIndex(val);
 	m_group->setButton(ID);
 }
 

@@ -39,14 +39,14 @@ DCOPSignals::emitSignal( DCOPConnection *conn, const TQCString &_fun, const TQBy
 {
    TQCString senderObj;
    TQCString fun = _fun;
-   int i = fun.tqfind('#');
+   int i = fun.find('#');
    if (i > -1)
    {
       senderObj = fun.left(i);
       fun = fun.mid(i+1);
    }
 
-   DCOPSignalConnectionList *list = connections.tqfind(fun);
+   DCOPSignalConnectionList *list = connections.find(fun);
    if (!list) return;
    for(DCOPSignalConnection *current = list->first(); current; current = list->next())
    {
@@ -102,16 +102,16 @@ DCOPSignals::connectSignal( const TQCString &sender, const TQCString &senderObj,
    // TODO: Check if signal and slot match
    TQCString signalArgs, slotArgs;
    int i,j;
-   i = signal.tqfind('(');
+   i = signal.find('(');
    if (i < 0) return false;
    signalArgs = signal.mid(i+1);
-   j = signalArgs.tqfind(')');
+   j = signalArgs.find(')');
    if (j < 0) return false;
    signalArgs.truncate(j);
-   i = slot.tqfind('(');
+   i = slot.find('(');
    if (i < 0) return false;
    slotArgs = slot.mid(i+1);
-   j = slotArgs.tqfind(')');
+   j = slotArgs.find(')');
    if (j < 0) return false;
    slotArgs.truncate(j);
 
@@ -142,7 +142,7 @@ DCOPSignals::connectSignal( const TQCString &sender, const TQCString &senderObj,
    current->recvObj = receiverObj;
    current->slot = slot;
 
-   DCOPSignalConnectionList *list = connections.tqfind(signal);
+   DCOPSignalConnectionList *list = connections.find(signal);
    if (!list)
    {
       list = new DCOPSignalConnectionList;
@@ -177,7 +177,7 @@ DCOPSignals::disconnectSignal( const TQCString &sender, const TQCString &senderO
       return true;
    }
 
-   DCOPSignalConnectionList *list = connections.tqfind(signal);
+   DCOPSignalConnectionList *list = connections.find(signal);
    if (!list)
       return false; // Not found...
 
@@ -255,7 +255,7 @@ DCOPSignals::removeConnections(DCOPConnection *conn, const TQCString &obj)
       if (current->recvConn != conn)
          current->recvConn->signalConnectionList()->removeRef(current);
 
-      DCOPSignalConnectionList *signalList = connections.tqfind(current->signal);
+      DCOPSignalConnectionList *signalList = connections.find(current->signal);
       if (signalList)
       {
          signalList->removeRef(current);

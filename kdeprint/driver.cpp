@@ -61,7 +61,7 @@ DriverItem* DrBase::createItem(DriverItem *parent, DriverItem *after)
 
 void DrBase::setOptions(const TQMap<TQString,TQString>& opts)
 {
-	if (opts.tqcontains(name())) setValueText(opts[name()]);
+	if (opts.contains(name())) setValueText(opts[name()]);
 }
 
 void DrBase::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
@@ -224,7 +224,7 @@ void DrGroup::addObject(DrBase *optgrp)
 
 void DrGroup::removeOption(const TQString& name)
 {
-	DrBase	*opt = m_options.tqfind(name);
+	DrBase	*opt = m_options.find(name);
 	if (opt)
 	{
 		m_listoptions.removeRef(opt);
@@ -264,7 +264,7 @@ void DrGroup::createTree(DriverItem *parent)
 
 DrBase* DrGroup::findOption(const TQString& name, DrGroup **parentGroup)
 {
-	DrBase	*opt = m_options.tqfind(name);
+	DrBase	*opt = m_options.find(name);
 	if (!opt)
 	{
 		TQPtrListIterator<DrGroup>	it(m_subgroups);
@@ -278,7 +278,7 @@ DrBase* DrGroup::findOption(const TQString& name, DrGroup **parentGroup)
 
 DrGroup* DrGroup::findGroup(DrGroup *grp, DrGroup ** parentGroup)
 {
-	DrGroup	*group = (m_subgroups.tqfindRef(grp) == -1 ? 0 : grp);
+	DrGroup	*group = (m_subgroups.findRef(grp) == -1 ? 0 : grp);
 	if (!group)
 	{
 		TQPtrListIterator<DrGroup>	it(m_subgroups);

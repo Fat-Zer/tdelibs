@@ -80,7 +80,7 @@ bool KMLpdManager::completePrinter(KMPrinter *printer)
 
 bool KMLpdManager::completePrinterShort(KMPrinter *printer)
 {
-	PrintcapEntry	*entry = m_entries.tqfind(printer->name());
+	PrintcapEntry	*entry = m_entries.find(printer->name());
 	if (entry)
 	{
 		QString	type(entry->comment(2)), driver(entry->comment(7)), lp(entry->arg("lp"));
@@ -299,11 +299,11 @@ void KMLpdManager::checkStatus()
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			if ((p=line.tqfind(':')) != -1)
+			if ((p=line.find(':')) != -1)
 				printer = findPrinter(line.left(p));
 			else if (line.startsWith("printing") && printer)
-				printer->setState(line.tqfind("enabled") != -1 ? KMPrinter::Idle : KMPrinter::Stopped);
-			else if (line.tqfind("entries") != -1 && printer)
+				printer->setState(line.find("enabled") != -1 ? KMPrinter::Idle : KMPrinter::Stopped);
+			else if (line.find("entries") != -1 && printer)
 				if (!line.startsWith("no") && printer->state() == KMPrinter::Idle)
 					printer->setState(KMPrinter::Processing);
 		}
@@ -367,7 +367,7 @@ PrinttoolEntry* KMLpdManager::findPrinttoolEntry(const TQString& name)
 {
 	if (m_ptentries.count() == 0)
 		loadPrinttoolDb(driverDirectory()+"/printerdb");
-	PrinttoolEntry	*ent = m_ptentries.tqfind(name);
+	PrinttoolEntry	*ent = m_ptentries.find(name);
 	if (!ent)
 		setErrorMsg(i18n("Couldn't find driver <b>%1</b> in printtool database.").arg(name));
 	return ent;
@@ -406,7 +406,7 @@ DrMain* KMLpdManager::loadDbDriver(KMDBEntry *entry)
 
 PrintcapEntry* KMLpdManager::findPrintcapEntry(const TQString& name)
 {
-	PrintcapEntry	*ent = m_entries.tqfind(name);
+	PrintcapEntry	*ent = m_entries.find(name);
 	if (!ent)
 		setErrorMsg(i18n("Couldn't find printer <b>%1</b> in printcap file.").arg(name));
 	return ent;
@@ -471,7 +471,7 @@ TQMap<TQString,TQString> KMLpdManager::loadPrinttoolCfgFile(const TQString& file
 				break;
 			if (line.startsWith("export "))
 				line.replace(0,7,"");
-			if ((p=line.tqfind('=')) != -1)
+			if ((p=line.find('=')) != -1)
 			{
 				name = line.left(p);
 				val = line.right(line.length()-p-1);
@@ -510,7 +510,7 @@ bool KMLpdManager::savePrinttoolCfgFile(const TQString& templatefile, const TQSt
 				tout << "export ";
 				line.replace(0,7,TQString::tqfromLatin1(""));
 			}
-			if ((p=line.tqfind('=')) != -1)
+			if ((p=line.find('=')) != -1)
 			{
 				name = line.left(p);
 				tout << name << '=' << options[name] << endl;

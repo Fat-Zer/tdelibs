@@ -81,7 +81,7 @@ void PluginComboBox::reload()
 {
 	TQString	syst = KMFactory::self()->printSystem();
 	int	index(-1);
-	if ((index=m_pluginlist.tqfindIndex(syst)) != -1)
+	if ((index=m_pluginlist.findIndex(syst)) != -1)
 		m_combo->setCurrentItem(index);
 	configChanged();
 }

@@ -59,7 +59,7 @@ KDEsuClient::KDEsuClient()
     }
 
     // strip the screen number from the display
-    display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
+    display.replace(TQRegExp("\\.[0-9]+$"), "");
 #else
     TQCString display("QWS");
 #endif
@@ -169,13 +169,13 @@ TQCString KDEsuClient::escape(const TQCString &str)
 {
     TQCString copy = str;
     int n = 0;
-    while ((n = copy.tqfind("\\", n)) != -1)
+    while ((n = copy.find("\\", n)) != -1)
     {
         copy.insert(n, '\\');
         n += 2;
     }
     n = 0;
-    while ((n = copy.tqfind("\"", n)) != -1)
+    while ((n = copy.find("\"", n)) != -1)
     {
         copy.insert(n, '\\');
         n += 2;
@@ -313,7 +313,7 @@ TQValueList<TQCString> KDEsuClient::getKeys(const TQCString &group)
         // kdDebug(900) << "Found a matching entry: " << reply << endl;
         while (1)
         {
-            pos = reply.tqfind( '\007', index );
+            pos = reply.find( '\007', index );
             if( pos == -1 )
             {
                 if( index == 0 )

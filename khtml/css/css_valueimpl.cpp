@@ -896,21 +896,21 @@ FontFamilyValueImpl::FontFamilyValueImpl( const TQString &string)
     parsedFontName = parsedFontName.lower();
     // kdDebug(0) << "searching for face '" << parsedFontName << "'" << endl;
 
-    int pos = available.tqfind( ',' + parsedFontName + ',', 0, false );
+    int pos = available.find( ',' + parsedFontName + ',', 0, false );
     if ( pos == -1 ) {
         // many pages add extra MSs to make sure it's windows only ;(
         if ( parsedFontName.startsWith( "ms " ) )
             parsedFontName = parsedFontName.mid( 3 );
         if ( parsedFontName.endsWith( " ms" ) )
             parsedFontName.truncate( parsedFontName.length() - 3 );
-        pos = available.tqfind( ",ms " + parsedFontName + ',', 0, false );
+        pos = available.find( ",ms " + parsedFontName + ',', 0, false );
         if ( pos == -1 )
-            pos = available.tqfind( ',' + parsedFontName + " ms,", 0, false );
+            pos = available.find( ',' + parsedFontName + " ms,", 0, false );
     }
 
     if ( pos != -1 ) {
        ++pos;
-       int p = available.tqfind(',', pos);
+       int p = available.find(',', pos);
        assert( p != -1 ); // available is supposed to start and end with ,
        parsedFontName = available.mid( pos, p - pos);
        // kdDebug(0) << "going for '" << parsedFontName << "'" << endl;

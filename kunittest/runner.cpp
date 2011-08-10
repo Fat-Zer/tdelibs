@@ -203,7 +203,7 @@ namespace KUnitTest
 
     void Runner::runTest(const char *name)
     {
-        Tester *test = m_registry.tqfind(name);
+        Tester *test = m_registry.find(name);
         if ( test == 0L ) return;
 
         if ( s_debugCapturingEnabled )

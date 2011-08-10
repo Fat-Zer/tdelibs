@@ -40,7 +40,7 @@ LPRngToolHandler::LPRngToolHandler(KMManager *mgr)
 bool LPRngToolHandler::validate(PrintcapEntry *entry)
 {
 	if (entry->comment.startsWith("##LPRNGTOOL##") &&
-	    entry->comment.tqfind("UNKNOWN") == -1)
+	    entry->comment.find("UNKNOWN") == -1)
 		return true;
 	return false;
 }
@@ -82,14 +82,14 @@ bool LPRngToolHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, boo
 		if (!(str=entry->field("ifhp")).isEmpty())
 		{
 			TQString	model;
-			int	p = str.tqfind("model");
+			int	p = str.find("model");
 			if (p != -1)
 			{
-				p = str.tqfind('=', p);
+				p = str.find('=', p);
 				if (p != -1)
 				{
 					p++;
-					int	q = str.tqfind(',', p);
+					int	q = str.find(',', p);
 					if (q == -1)
 						model = str.mid(p);
 					else
@@ -142,7 +142,7 @@ void LPRngToolHandler::loadAuthFile(const TQString& filename, TQString& user, TQ
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			int	p = line.tqfind('=');
+			int	p = line.find('=');
 			if (p != -1)
 			{
 				TQString	key = line.left(p);
@@ -182,7 +182,7 @@ DrMain* LPRngToolHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool 
 
 DrMain* LPRngToolHandler::loadDbDriver(const TQString& s)
 {
-	int	p = s.tqfind('/');
+	int	p = s.find('/');
 	DrMain*	driver = loadToolDriver(locate("data", "kdeprint/lprngtooldriver1"));
 	if (driver)
 		driver->set("driverID", s.mid(p+1));
@@ -209,13 +209,13 @@ TQValueList< TQPair<TQString,TQStringList> > LPRngToolHandler::loadChoiceDict(co
 				key = TQString::null;
 				if (line.contains('|') == 2 || line.right(7) == "BOOLEAN")
 				{
-					int	p = line.tqfind('|', 7);
+					int	p = line.find('|', 7);
 					key = line.mid(7, p-7);
 				}
 			}
 			else if (line.startsWith("CHOICE"))
 			{
-				int	p = line.tqfind('|', 7);
+				int	p = line.find('|', 7);
 				l << line.mid(7, p-7);
 			}
 		}
@@ -239,7 +239,7 @@ TQMap<TQString,TQString> LPRngToolHandler::parseZOptions(const TQString& optstr)
 		bool	found(false);
 		for (TQValueList< TQPair<TQString,TQStringList> >::ConstIterator p=m_dict.begin(); p!=m_dict.end() && !found; ++p)
 		{
-			if ((*p).second.tqfind(*it) != (*p).second.end())
+			if ((*p).second.find(*it) != (*p).second.end())
 			{
 				opts[(*p).first] = (*it);
 				found = true;

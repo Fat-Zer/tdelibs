@@ -121,7 +121,7 @@ static KPerDomainSettings &setup_per_domain_policy(
     kdWarning() << "setup_per_domain_policy: domain is empty" << endl;
   }
   const TQString ldomain = domain.lower();
-  PolicyMap::iterator it = d->domainPolicy.tqfind(ldomain);
+  PolicyMap::iterator it = d->domainPolicy.find(ldomain);
   if (it == d->domainPolicy.end()) {
     // simply copy global domain settings (they should have been initialized
     // by this time)
@@ -161,7 +161,7 @@ void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domai
                                       KJavaScriptAdvice &javaAdvice, KJavaScriptAdvice& javaScriptAdvice)
 {
     TQString tmp(configStr);
-    int splitIndex = tmp.tqfind(':');
+    int splitIndex = tmp.find(':');
     if ( splitIndex == -1)
     {
         domain = configStr.lower();
@@ -172,7 +172,7 @@ void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domai
     {
         domain = tmp.left(splitIndex).lower();
         TQString adviceString = tmp.mid( splitIndex+1, tmp.length() );
-        int splitIndex2 = adviceString.tqfind( ':' );
+        int splitIndex2 = adviceString.find( ':' );
         if( splitIndex2 == -1 ) {
             // Java advice only
             javaAdvice = strToAdvice( adviceString );
@@ -508,7 +508,7 @@ void KHTMLSettings::init( KConfig * config, bool reset )
 	const TQStringList::ConstIterator itEnd = dl.end();
 	for (; it != itEnd; ++it) {
 	  const TQString domain = (*it).lower();
-	  TQMap<TQString,int>::Iterator pos = domainList.tqfind(domain);
+	  TQMap<TQString,int>::Iterator pos = domainList.find(domain);
 	  if (pos == notfound) domainList.insert(domain,0);
 	}/*next it*/
       }
@@ -656,7 +656,7 @@ static const KPerDomainSettings &lookup_hostname_policy(
   const PolicyMap::const_iterator notfound = d->domainPolicy.end();
 
   // First check whether there is a perfect match.
-  PolicyMap::const_iterator it = d->domainPolicy.tqfind(hostname);
+  PolicyMap::const_iterator it = d->domainPolicy.find(hostname);
   if( it != notfound ) {
 #ifdef DEBUG_SETTINGS
     kdDebug() << "perfect match" << endl;
@@ -670,9 +670,9 @@ static const KPerDomainSettings &lookup_hostname_policy(
   // there's no dots left.
   TQString host_part = hostname;
   int dot_idx = -1;
-  while( (dot_idx = host_part.tqfind(TQChar('.'))) >= 0 ) {
+  while( (dot_idx = host_part.find(TQChar('.'))) >= 0 ) {
     host_part.remove(0,dot_idx);
-    it = d->domainPolicy.tqfind(host_part);
+    it = d->domainPolicy.find(host_part);
     Q_ASSERT(notfound == d->domainPolicy.end());
     if( it != notfound ) {
 #ifdef DEBUG_SETTINGS
@@ -888,7 +888,7 @@ const TQString &KHTMLSettings::availableFamilies()
 
         for ( ; f != fEnd; ++f ) {
                 (*f).replace( foundryExp, "");
-                if (!s.tqcontains(*f))
+                if (!s.contains(*f))
                         s << *f;
         }
         s.sort();

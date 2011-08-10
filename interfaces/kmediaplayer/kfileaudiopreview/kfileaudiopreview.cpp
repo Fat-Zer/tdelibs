@@ -110,7 +110,7 @@ void KFileAudioPreview::showPreview( const KURL &url )
         return;
 
     KMimeType::Ptr mt = KMimeType::findByURL( url );
-    bool supported = m_supportedFormats.tqfind( mt->name() );
+    bool supported = m_supportedFormats.find( mt->name() );
     d->player->view()->setEnabled( supported );
     if ( !supported )
         return;

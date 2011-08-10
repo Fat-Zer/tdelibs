@@ -303,7 +303,7 @@ static void replace(TQString &s, const TQString &needle, const TQString &with)
   int pos=0;
   while (1)
   {
-    pos=s.tqfind(needle, pos);
+    pos=s.find(needle, pos);
     if (pos==-1) break;
     s.replace(pos, needle.length(), with);
     pos+=with.length();
@@ -442,7 +442,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
     // TODO if replace contains \n,
     // change the line number and
     // check for text that needs be searched behind the last inserted newline.
-    int lns = rep.tqcontains('\n');
+    int lns = rep.contains('\n');
     if ( lns )
     {
       line += lns;
@@ -451,7 +451,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
       {
       //  if ( endcol  >= startcol + len )
           endcol -= (startcol + len);
-          uint sc = rep.length() - rep.tqfindRev('\n') - 1;
+          uint sc = rep.length() - rep.findRev('\n') - 1;
         matches += sedMagic( doc, line, find, repOld, delim, noCase, repeat, sc, endcol );
       }
     }

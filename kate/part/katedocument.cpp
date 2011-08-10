@@ -1176,10 +1176,10 @@ bool KateDocument::editInsertText ( uint line, uint col, const TQString &str )
       uint tw = config()->tabWidth();
       int pos = 0;
       uint l = 0;
-      while ( (pos = s.tqfind('\t')) > -1 )
+      while ( (pos = s.find('\t')) > -1 )
       {
         l = tw - ( (col + pos)%tw );
-        s.tqreplace( pos, 1, TQString().fill( ' ', l ) );
+        s.replace( pos, 1, TQString().fill( ' ', l ) );
       }
     }
 
@@ -2151,12 +2151,12 @@ void KateDocument::clearMarks()
 
 void KateDocument::setPixmap( MarkInterface::MarkTypes type, const TQPixmap& pixmap )
 {
-  m_markPixmaps.tqreplace( type, new TQPixmap( pixmap ) );
+  m_markPixmaps.replace( type, new TQPixmap( pixmap ) );
 }
 
 void KateDocument::setDescription( MarkInterface::MarkTypes type, const TQString& description )
 {
-  m_markDescriptions.tqreplace( type, new TQString( description ) );
+  m_markDescriptions.replace( type, new TQString( description ) );
 }
 
 TQPixmap *KateDocument::markPixmap( MarkInterface::MarkTypes type )
@@ -2395,7 +2395,7 @@ bool KateDocument::openFile(KIO::Job * job)
   // service type magic to get encoding right
   //
   TQString serviceType = m_extension->urlArgs().serviceType.simplifyWhiteSpace();
-  int pos = serviceType.tqfind(';');
+  int pos = serviceType.find(';');
   if (pos != -1)
     setEncoding (serviceType.mid(pos+1));
 
@@ -2934,7 +2934,7 @@ void KateDocument::removeSuperCursor(KateSuperCursor *cursor, bool privateC) {
 
 bool KateDocument::ownedView(KateView *view) {
   // do we own the given view?
-  return (m_views.tqcontainsRef(view) > 0);
+  return (m_views.containsRef(view) > 0);
 }
 
 bool KateDocument::isLastView(int numViews) {
@@ -3232,7 +3232,7 @@ void KateDocument::paste ( KateView* view )
   if (s.isEmpty())
     return;
 
-  uint lines = s.tqcontains (TQChar ('\n'));
+  uint lines = s.contains (TQChar ('\n'));
 
   m_undoDontMerge = true;
 
@@ -4634,7 +4634,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
 {
   // simple check first, no regex
   // no kate inside, no vars, simple...
-  if (t.tqfind("kate") < 0)
+  if (t.find("kate") < 0)
     return;
 
   // found vars, if any
@@ -4672,7 +4672,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
     TQStringList types (TQStringList::split(';', kvLineMime.cap(1)));
 
     // no matching type found
-    if (!types.tqcontains (mimeType ()))
+    if (!types.contains (mimeType ()))
       return;
 
     s = kvLineMime.cap(2);
@@ -4708,7 +4708,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
     // only apply view & renderer config stuff
     if (onlyViewAndRenderer)
     {
-      if ( vvl.tqcontains( var ) ) // FIXME define above
+      if ( vvl.contains( var ) ) // FIXME define above
         setViewVariable( var, val );
     }
     else
@@ -4773,7 +4773,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
       {
         TQStringList l;
         l << "unix" << "dos" << "mac";
-        if ( (n = l.tqfindIndex( val.lower() )) != -1 )
+        if ( (n = l.findIndex( val.lower() )) != -1 )
           m_config->setEol( n );
       }
       else if ( var == "encoding" )
@@ -4791,7 +4791,7 @@ void KateDocument::readVariableLine( TQString t, bool onlyViewAndRenderer )
       }
 
       // VIEW SETTINGS
-      else if ( vvl.tqcontains( var ) )
+      else if ( vvl.contains( var ) )
         setViewVariable( var, val );
       else
       {
@@ -4862,14 +4862,14 @@ bool KateDocument::checkBoolValue( TQString val, bool *result )
   val = val.stripWhiteSpace().lower();
   TQStringList l;
   l << "1" << "on" << "true";
-  if ( l.tqcontains( val ) )
+  if ( l.contains( val ) )
   {
     *result = true;
     return true;
   }
   l.clear();
   l << "0" << "off" << "false";
-  if ( l.tqcontains( val ) )
+  if ( l.contains( val ) )
   {
     *result = false;
     return true;
@@ -4893,7 +4893,7 @@ bool KateDocument::checkColorValue( TQString val, TQColor &c )
 // KTextEditor::variable
 TQString KateDocument::variable( const TQString &name ) const
 {
-  if ( m_storedVariables.tqcontains( name ) )
+  if ( m_storedVariables.contains( name ) )
     return m_storedVariables[ name ];
 
   return "";

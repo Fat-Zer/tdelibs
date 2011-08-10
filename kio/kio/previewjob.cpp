@@ -163,7 +163,7 @@ void PreviewJob::startPreview()
     TQMap<TQString, KService::Ptr> mimeMap;
 
     for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
-        if (!d->enabledPlugins || d->enabledPlugins->tqcontains((*it)->desktopEntryName()))
+        if (!d->enabledPlugins || d->enabledPlugins->contains((*it)->desktopEntryName()))
     {
         TQStringList mimeTypes = (*it)->property("MimeTypes").toStringList();
         for (TQStringList::ConstIterator mt = mimeTypes.begin(); mt != mimeTypes.end(); ++mt)
@@ -176,7 +176,7 @@ void PreviewJob::startPreview()
     {
         PreviewItem item;
         item.item = it.current();
-        TQMap<TQString, KService::Ptr>::ConstIterator plugin = mimeMap.tqfind(it.current()->mimetype());
+        TQMap<TQString, KService::Ptr>::ConstIterator plugin = mimeMap.find(it.current()->mimetype());
         if (plugin == mimeMap.end()
             && (it.current()->mimetype() != "application/x-desktop")
             && (it.current()->mimetype() != "media/builtin-mydocuments")
@@ -187,7 +187,7 @@ void PreviewJob::startPreview()
             && (it.current()->mimetype() != "media/builtin-webbrowser"))
         {
             TQString mimeType = it.current()->mimetype();
-            plugin = mimeMap.tqfind(mimeType.replace(TQRegExp("/.*"), "/*"));
+            plugin = mimeMap.find(mimeType.replace(TQRegExp("/.*"), "/*"));
 
             if (plugin == mimeMap.end())
             {
@@ -196,7 +196,7 @@ void PreviewJob::startPreview()
                 TQString parentMimeType = mimeInfo->parentMimeType();
                 while (!parentMimeType.isEmpty())
                 {
-                    plugin = mimeMap.tqfind(parentMimeType);
+                    plugin = mimeMap.find(parentMimeType);
                     if (plugin != mimeMap.end()) break;
 
                     KMimeType::Ptr parentMimeInfo = KMimeType::mimeType(parentMimeType);
@@ -215,10 +215,10 @@ void PreviewJob::startPreview()
                 {
                     if (textProperty.toBool())
                     {
-                        plugin = mimeMap.tqfind("text/plain");
+                        plugin = mimeMap.find("text/plain");
                         if (plugin == mimeMap.end())
                         {
-                            plugin = mimeMap.tqfind( "text/*" );
+                            plugin = mimeMap.find( "text/*" );
                         }
                     }
                 }
@@ -553,7 +553,7 @@ TQStringList PreviewJob::availablePlugins()
     TQStringList result;
     KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
     for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
-        if (!result.tqcontains((*it)->desktopEntryName()))
+        if (!result.contains((*it)->desktopEntryName()))
             result.append((*it)->desktopEntryName());
     return result;
 }

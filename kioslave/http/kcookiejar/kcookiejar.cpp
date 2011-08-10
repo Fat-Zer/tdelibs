@@ -194,14 +194,14 @@ bool KHttpCookie::match(const TQString &fqdn, const TQStringList &domains,
        if (fqdn != mHost)
           return false;
     }
-    else if (!domains.tqcontains(mDomain))
+    else if (!domains.contains(mDomain))
     {
         if (mDomain[0] == '.')
             return false;
 
         // Maybe the domain needs an extra dot.
         TQString domain = '.' + mDomain;
-        if ( !domains.tqcontains( domain ) )
+        if ( !domains.contains( domain ) )
           if ( fqdn != mDomain )
             return false;
     }
@@ -261,7 +261,7 @@ KCookieJar::KCookieJar()
     for(TQStringList::ConstIterator it = countries.begin();
         it != countries.end(); ++it)
     {
-       m_twoLevelTLD.tqreplace(*it, (int *) 1);
+       m_twoLevelTLD.replace(*it, (int *) 1);
     }
 }
 
@@ -301,7 +301,7 @@ static void removeDuplicateFromList(KHttpCookieList *list, KHttpCookie *cookiePt
                 it != cookie->windowIds().end(); ++it)
             {
                long windowId = *it;
-               if (windowId && (cookiePtr->windowIds().tqfind(windowId) == cookiePtr->windowIds().end()))
+               if (windowId && (cookiePtr->windowIds().find(windowId) == cookiePtr->windowIds().end()))
                {
                   cookiePtr->windowIds().append(windowId);
                }
@@ -337,8 +337,8 @@ TQString KCookieJar::findCookies(const TQString &_url, bool useDOMFormat, long w
     if (!parseURL(_url, fqdn, path))
         return cookieStr;
 
-    bool secureRequest = (_url.tqfind( L1("https://"), 0, false) == 0 ||
-                          _url.tqfind( L1("webdavs://"), 0, false) == 0);
+    bool secureRequest = (_url.find( L1("https://"), 0, false) == 0 ||
+                          _url.find( L1("webdavs://"), 0, false) == 0);
 
     // kdDebug(7104) << "findCookies: URL= " << _url << ", secure = " << secureRequest << endl;
 
@@ -399,7 +399,7 @@ TQString KCookieJar::findCookies(const TQString &_url, bool useDOMFormat, long w
              continue;
           }
 
-          if (windowId && (cookie->windowIds().tqfind(windowId) == cookie->windowIds().end()))
+          if (windowId && (cookie->windowIds().find(windowId) == cookie->windowIds().end()))
           {
              cookie->windowIds().append(windowId);
           }
@@ -591,7 +591,7 @@ bool KCookieJar::parseURL(const TQString &_url,
     // Cookie spoofing protection.  Since there is no way a path separator
     // or escape encoded character is allowed in the hostname according
     // to RFC 2396, reject attempts to include such things there!
-    if(_fqdn.tqfind('/') > -1 || _fqdn.tqfind('%') > -1)
+    if(_fqdn.find('/') > -1 || _fqdn.find('%') > -1)
     {
         return false;  // deny everything!!
     }
@@ -620,7 +620,7 @@ void KCookieJar::extractDomains(const TQString &_fqdn,
     // Return numeric IPv4 addresses as is...
     if ((_fqdn.tqat(0) >= TQChar('0')) && (_fqdn.tqat(0) <= TQChar('9')))
     {
-       if (_fqdn.tqfind(TQRegExp(IP_ADDRESS_EXPRESSION)) > -1)
+       if (_fqdn.find(TQRegExp(IP_ADDRESS_EXPRESSION)) > -1)
        {
           _domains.append( _fqdn );
           return;
@@ -683,7 +683,7 @@ void KCookieJar::extractDomains(const TQString &_fqdn,
 */
 static TQString fixupDateTime(const TQString& dt)
 {
-  const int index = dt.tqfind(TQRegExp("[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}"));
+  const int index = dt.find(TQRegExp("[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}"));
 
   if (index > -1)
   {
@@ -729,7 +729,7 @@ KHttpCookieList KCookieJar::makeCookies(const TQString &_url,
         return KHttpCookieList();
     }
     TQString defaultPath;
-    int i = path.tqfindRev('/');
+    int i = path.findRev('/');
     if (i > 0)
        defaultPath = path.left(i);
 
@@ -811,7 +811,7 @@ KHttpCookieList KCookieJar::makeCookies(const TQString &_url,
                 if(dom.length() > 2 && dom[dom.length()-1] == '.')
                     dom = dom.left(dom.length()-1);
 
-                if(dom.tqcontains('.') > 1 || dom == ".local")
+                if(dom.contains('.') > 1 || dom == ".local")
                     lastCookie->mDomain = dom;
             }
             else if (cName == "max-age")
@@ -1020,7 +1020,7 @@ KCookieAdvice KCookieJar::cookieAdvice(KHttpCookiePtr cookiePtr)
     // cross-site cookie injection.
     if (!cookiePtr->domain().isEmpty())
     {
-      if (!domains.tqcontains(cookiePtr->domain()) && 
+      if (!domains.contains(cookiePtr->domain()) && 
           !cookiePtr->domain().endsWith("."+cookiePtr->host()))
           cookiePtr->fixDomain(TQString::null);
     }
@@ -1546,7 +1546,7 @@ void KCookieJar::loadConfig(KConfig *_config, bool reparse )
     {
         const TQString &value = *it++;
 
-        int sepPos = value.tqfindRev(':');
+        int sepPos = value.findRev(':');
 
         if (sepPos <= 0)
           continue;

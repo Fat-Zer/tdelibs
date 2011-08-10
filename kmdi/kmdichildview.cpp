@@ -546,7 +546,7 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 		if ( obj->isWidgetType() )
 		{
 			TQObjectList * list = queryList( TQWIDGET_OBJECT_NAME_STRING );
-			if ( list->tqfind( obj ) != -1 )
+			if ( list->find( obj ) != -1 )
 				m_focusedChildWidget = ( TQWidget* ) obj;
 
 			delete list;   // delete the list, not the objects

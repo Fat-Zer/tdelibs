@@ -333,7 +333,7 @@ KMFactory::PluginInfo KMFactory::pluginInfo(const TQString& name)
 void KMFactory::registerObject(KPReloadObject *obj, bool priority)
 {
 	// check if object already registered, then add it
-	if (m_objects.tqfindRef(obj) == -1)
+	if (m_objects.findRef(obj) == -1)
 	{
 		if (priority)
 			m_objects.prepend(obj);

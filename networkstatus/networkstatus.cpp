@@ -279,7 +279,7 @@ void NetworkStatusModule::setNetworkStatus( const TQString & networkName, int st
 		for ( NetworkUsageList::iterator it = usage.begin(); it != end; ++it )
 		{
 			// only notify once per host
-			if ( !notified.tqcontains( (*it).host ) )
+			if ( !notified.contains( (*it).host ) )
 			{
 				kdDebug() << "notifying statusChange of " << networkName << " to " << (int)status << 
 						" because " << (*it).appId << " is using " << (*it).host << endl;

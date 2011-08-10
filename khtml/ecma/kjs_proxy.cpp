@@ -343,8 +343,8 @@ void KJSProxyImpl::applyUserAgent()
   assert( m_script );
   TQString host = m_frame->m_part->url().isLocalFile() ? "localhost" : m_frame->m_part->url().host();
   TQString userAgent = KProtocolManager::userAgentForHost(host);
-  if (userAgent.tqfind(TQString::tqfromLatin1("Microsoft")) >= 0 ||
-      userAgent.tqfind(TQString::tqfromLatin1("MSIE")) >= 0)
+  if (userAgent.find(TQString::tqfromLatin1("Microsoft")) >= 0 ||
+      userAgent.find(TQString::tqfromLatin1("MSIE")) >= 0)
   {
     m_script->setCompatMode(Interpreter::IECompat);
 #ifdef KJS_VERBOSE
@@ -353,9 +353,9 @@ void KJSProxyImpl::applyUserAgent()
   }
   else
     // If we find "Mozilla" but not "(compatible, ...)" we are a real Netscape
-    if (userAgent.tqfind(TQString::tqfromLatin1("Mozilla")) >= 0 &&
-        userAgent.tqfind(TQString::tqfromLatin1("compatible")) == -1 &&
-        userAgent.tqfind(TQString::tqfromLatin1("KHTML")) == -1)
+    if (userAgent.find(TQString::tqfromLatin1("Mozilla")) >= 0 &&
+        userAgent.find(TQString::tqfromLatin1("compatible")) == -1 &&
+        userAgent.find(TQString::tqfromLatin1("KHTML")) == -1)
     {
       m_script->setCompatMode(Interpreter::NetscapeCompat);
 #ifdef KJS_VERBOSE

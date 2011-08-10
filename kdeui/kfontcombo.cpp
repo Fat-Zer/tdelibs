@@ -212,7 +212,7 @@ void KFontCombo::setCurrentFont(const TQString &family)
           return;
        }
     }
-    int x = lowerName.tqfind(" [");
+    int x = lowerName.find(" [");
     if (x>-1)
     {
        lowerName = lowerName.left(x);
@@ -251,7 +251,7 @@ void KFontCombo::setCurrentFont(const TQString &family)
     FcConfigSubstitute (config, pattern, FcMatchPattern);
     pattern = FcFontMatch(NULL, pattern, NULL);
     realFamily = (char*)FcNameUnparse(pattern);
-    realFamily.remove(realFamily.tqfind(regExp), realFamily.length());
+    realFamily.remove(realFamily.find(regExp), realFamily.length());
 
     if ( !realFamily.isEmpty() && realFamily != family )
        setCurrentFont( realFamily );

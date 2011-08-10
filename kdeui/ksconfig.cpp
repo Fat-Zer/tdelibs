@@ -266,7 +266,7 @@ KSpellConfig::interpret( TQString &fname, TQString &lname,
 
   TQString extension;
 
-  int i = dname.tqfind('-');
+  int i = dname.find('-');
   if ( i != -1 )
   {
     extension = dname.mid(i+1);
@@ -406,7 +406,7 @@ KSpellConfig::fillInDialog ()
   int whichelement=-1;
 
   if ( dictFromList() )
-    whichelement = langfnames.tqfindIndex(dictionary());
+    whichelement = langfnames.findIndex(dictionary());
 
   dictcombo->setMinimumWidth (dictcombo->tqsizeHint().width());
 
@@ -742,7 +742,7 @@ KSpellConfig::fillDicts( TQComboBox* box, TQStringList* dictionaries )
         }
       }
     }
-    int whichelement = langfnames.tqfindIndex(qsdict);
+    int whichelement = langfnames.findIndex(qsdict);
     if ( whichelement >= 0 ) {
       box->setCurrentItem( whichelement );
     }
@@ -788,7 +788,7 @@ KSpellConfig::setDictionary (const TQString s)
   qsdict=s; //.copy();
 
   if (qsdict.length()>5)
-    if ((signed)qsdict.tqfind(".hash")==(signed)qsdict.length()-5)
+    if ((signed)qsdict.find(".hash")==(signed)qsdict.length()-5)
       qsdict.remove (qsdict.length()-5,5);
 
 
@@ -797,7 +797,7 @@ KSpellConfig::setDictionary (const TQString s)
     int whichelement=-1;
     if (dictFromList())
     {
-      whichelement = langfnames.tqfindIndex(s);
+      whichelement = langfnames.findIndex(s);
 
       if(whichelement >= 0)
       {

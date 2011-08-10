@@ -514,7 +514,7 @@ void KNotifyWidget::updatePixmaps( ListViewItem *item )
 
 void KNotifyWidget::addVisibleApp( Application *app )
 {
-    if ( !app || (m_visibleApps.tqfindRef( app ) != -1) )
+    if ( !app || (m_visibleApps.findRef( app ) != -1) )
         return;
 
     m_visibleApps.append( app );
@@ -830,8 +830,8 @@ void KNotifyWidget::save()
 // "/opt/kde3/share/apps/kwin/eventsrc"
 TQString KNotifyWidget::makeRelative( const TQString& fullPath )
 {
-    int slash = fullPath.tqfindRev( '/' ) - 1;
-    slash = fullPath.tqfindRev( '/', slash );
+    int slash = fullPath.findRev( '/' ) - 1;
+    slash = fullPath.findRev( '/', slash );
 
     if ( slash < 0 )
         return TQString::null;
@@ -1001,7 +1001,7 @@ void KNotifyWidget::enableAll( int what, bool enable )
 Application::Application( const TQString &path )
 {
     TQString config_file = path;
-    config_file[config_file.tqfind('/')] = '.';
+    config_file[config_file.find('/')] = '.';
     m_events = 0L;
     config = new KConfig(config_file, false, false);
     kc = new KConfig(path, true, false, "data");
@@ -1011,7 +1011,7 @@ Application::Application( const TQString &path )
     m_description = kc->readEntry( TQString::tqfromLatin1("Comment"),
                                    i18n("No description available") );
 
-    int index = path.tqfind( '/' );
+    int index = path.find( '/' );
     if ( index >= 0 )
         m_appname = path.left( index );
     else

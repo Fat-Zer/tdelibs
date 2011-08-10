@@ -150,7 +150,7 @@ void KCompletion::addWeightedItem( const TQString& item )
     uint weight = 0;
 
     // find out the weighting of this item (appended to the string as ":num")
-    int index = item.tqfindRev(':');
+    int index = item.findRev(':');
     if ( index > 0 ) {
         bool ok;
         weight = item.mid( index + 1 ).toUInt( &ok );
@@ -274,7 +274,7 @@ TQStringList KCompletion::substringCompletion( const TQString& string ) const
 
     for( ; it != list.end(); ++it ) {
         TQString item = *it;
-        if ( item.tqfind( string, 0, false ) != -1 ) { // always case insensitive
+        if ( item.find( string, 0, false ) != -1 ) { // always case insensitive
             matches.append( item );
         }
     }

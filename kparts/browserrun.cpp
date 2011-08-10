@@ -128,7 +128,7 @@ void BrowserRun::scanFile()
       }
 
       // Set the PropagateHttpHeader meta-data if it has not already been set...
-      if (!m_args.metaData().tqcontains("PropagateHttpHeader"))
+      if (!m_args.metaData().contains("PropagateHttpHeader"))
           m_args.metaData().insert("PropagateHttpHeader", "TRUE");
   }
 
@@ -236,7 +236,7 @@ BrowserRun::NonEmbeddableResult BrowserRun::handleNonEmbeddable( const TQString&
                 m_sMimeType = mimeType;
                 TQString extension;
                 TQString fileName = m_suggestedFilename.isEmpty() ? m_strURL.fileName() : m_suggestedFilename;
-                int extensionPos = fileName.tqfindRev( '.' );
+                int extensionPos = fileName.findRev( '.' );
                 if ( extensionPos != -1 )
                     extension = fileName.mid( extensionPos ); // keep the '.'
                 KTempFile tempFile( TQString::null, extension );

@@ -97,10 +97,10 @@ KMPrinter* KMFoomaticManager::createPrinterFromElement(TQDomElement *elem)
 		printer->setName(e.text());
 		printer->setPrinterName(e.text());
 		printer->setState(KMPrinter::Idle);
-		/*if (printer->name().tqfind('/') != -1)
+		/*if (printer->name().find('/') != -1)
 		{
 			QString	s(printer->name());
-			int	p = s.tqfind('/');
+			int	p = s.find('/');
 			printer->setPrinterName(s.left(p));
 			printer->setInstanceName(s.mid(p+1));
 			printer->addType(KMPrinter::Virtual);

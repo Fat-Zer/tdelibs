@@ -159,8 +159,8 @@ void queryFunctions( const char* app, const char* obj )
 int callFunction( const char* app, const char* obj, const char* func, const QCStringList args )
 {
     TQString f = func; // Qt is better with tqunicode strings, so use one.
-    int left = f.tqfind( '(' );
-    int right = f.tqfind( ')' );
+    int left = f.find( '(' );
+    int right = f.find( ')' );
 
     if ( right <  left )
     {
@@ -181,12 +181,12 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 	    return( 1 );
 	}
 	for ( QCStringList::Iterator it = funcs.begin(); it != funcs.end(); ++it ) {
-	    int l = (*it).tqfind( '(' );
+	    int l = (*it).find( '(' );
 	    int s;
 	    if (l > 0)
-	        s = (*it).tqfindRev( ' ', l);
+	        s = (*it).findRev( ' ', l);
 	    else
-	        s = (*it).tqfind( ' ' );
+	        s = (*it).find( ' ' );
 
 	    if ( s < 0 )
 		s = 0;
@@ -195,8 +195,8 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 
 	    if ( l > 0 && (*it).mid( s, l - s ) == func ) {
 		realfunc = (*it).mid( s );
-		const TQString arguments = (*it).mid(l+1,(*it).tqfind( ')' )-l-1);
-		uint a = arguments.tqcontains(',');
+		const TQString arguments = (*it).mid(l+1,(*it).find( ')' )-l-1);
+		uint a = arguments.contains(',');
 		if ( (a==0 && !arguments.isEmpty()) || a>0)
 			a++;
 		if ( a == args.count()  )
@@ -209,8 +209,8 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 	    return( 1 );
 	}
 	f = realfunc;
-	left = f.tqfind( '(' );
-	right = f.tqfind( ')' );
+	left = f.find( '(' );
+	right = f.find( ')' );
     }
 
  doit:
@@ -230,7 +230,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 	for ( TQStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
 	    TQString lt = (*it).simplifyWhiteSpace();
 
-	    int s = lt.tqfind(' ');
+	    int s = lt.find(' ');
 
 	    // If there are spaces in the name, there may be two
 	    // reasons: the parameter name is still there, ie.
@@ -250,7 +250,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 		//
 		s=1;
 
-		while (s < static_cast<int>(partl.count()) && intTypes.tqcontains(partl[s]))
+		while (s < static_cast<int>(partl.count()) && intTypes.contains(partl[s]))
 		{
 			s++;
 		}
@@ -464,9 +464,9 @@ int runDCOP( QCStringList args, UserList users, Session session,
     QCStringList params;
     DCOPClient *client = 0L;
     int retval = 0;
-    if ( !args.isEmpty() && args[ 0 ].tqfind( "DCOPRef(" ) == 0 )
+    if ( !args.isEmpty() && args[ 0 ].find( "DCOPRef(" ) == 0 )
     {
-	int delimPos = args[ 0 ].tqfindRev( ',' );
+	int delimPos = args[ 0 ].findRev( ',' );
 	if( delimPos == -1 )
         {
 	    cerr_ << "Error: '" << args[ 0 ]
@@ -569,7 +569,7 @@ int runDCOP( QCStringList args, UserList users, Session session,
 	    }
 	    else if( !sessionName.isEmpty() )
 	    {
-		if( sessions.tqcontains( sessionName ) )
+		if( sessions.contains( sessionName ) )
 		{
 		    sessions.clear();
 		    sessions.append( sessionName );
@@ -861,7 +861,7 @@ int main( int argc, char** argv )
           if (prog[prog.length()-1] != '*')
           {
              // Strip a trailing -<PID> part.
-             int i = prog.tqfindRev('-');
+             int i = prog.findRev('-');
              if ((i >= 0) && prog.mid(i+1).toLong())
              {
                 prog = prog.left(i);      

@@ -266,7 +266,7 @@ void KSycoca::addFactory( KSycocaFactory *factory )
 
 bool KSycoca::isChanged(const char *type)
 {
-    return self()->d->changeList.tqcontains(type);
+    return self()->d->changeList.contains(type);
 }
 
 void KSycoca::notifyDatabaseChanged(const TQStringList &changeList)
@@ -428,7 +428,7 @@ TQString KSycoca::determineRelativePath( const TQString & _fullpath, const char 
   TQStringList::ConstIterator dirsit = dirs.begin();
   for ( ; dirsit != dirs.end() && sRelativeFilePath.isEmpty(); ++dirsit ) {
     // might need canonicalPath() ...
-    if ( _fullpath.tqfind( *dirsit ) == 0 ) // path is dirs + relativePath
+    if ( _fullpath.find( *dirsit ) == 0 ) // path is dirs + relativePath
       sRelativeFilePath = _fullpath.mid( (*dirsit).length() ); // skip appsdirs
   }
   if ( sRelativeFilePath.isEmpty() )

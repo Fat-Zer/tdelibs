@@ -144,7 +144,7 @@ void CachedObject::deref(CachedObjectClient *c)
     assert( c );
     assert( m_clients.count() );
     assert( !canDelete() );
-    assert( m_clients.tqfind( c ) );
+    assert( m_clients.find( c ) );
 
     Cache::flush();
 
@@ -981,7 +981,7 @@ void DocLoader::setExpireDate(time_t _expireDate, bool relative)
 
 void DocLoader::insertCachedObject( CachedObject* o ) const
 {
-    if ( m_docObjects.tqfind(o) )
+    if ( m_docObjects.find(o) )
         return;
     m_docObjects.insert( o, o );
     if ( m_docObjects.count() > 3 * m_docObjects.size() )
@@ -993,7 +993,7 @@ bool DocLoader::needReload(CachedObject *existing, const TQString& fullURL)
     bool reload = false;
     if (m_cachePolicy == KIO::CC_Verify)
     {
-       if (!m_reloadedURLs.tqcontains(fullURL))
+       if (!m_reloadedURLs.contains(fullURL))
        {
           if (existing && existing->isExpired())
           {
@@ -1005,7 +1005,7 @@ bool DocLoader::needReload(CachedObject *existing, const TQString& fullURL)
     }
     else if ((m_cachePolicy == KIO::CC_Reload) || (m_cachePolicy == KIO::CC_Refresh))
     {
-       if (!m_reloadedURLs.tqcontains(fullURL))
+       if (!m_reloadedURLs.contains(fullURL))
        {
           if (existing)
           {
@@ -1427,7 +1427,7 @@ CachedObjectType* Cache::requestObject( DocLoader* dl, const KURL& kurl, const c
     KIO::CacheControl cachePolicy = dl ? dl->cachePolicy() : KIO::CC_Verify;
 
     TQString url = kurl.url();
-    CachedObject* o = cache->tqfind(url);
+    CachedObject* o = cache->find(url);
 
     if ( o && o->type() != CachedType ) {
         removeCacheEntry( o );
@@ -1436,7 +1436,7 @@ CachedObjectType* Cache::requestObject( DocLoader* dl, const KURL& kurl, const c
 
     if ( o && dl->needReload( o, url ) ) {
         o = 0;
-        assert( cache->tqfind( url ) == 0 );
+        assert( cache->find( url ) == 0 );
     }
 
     if(!o)
@@ -1464,7 +1464,7 @@ CachedObjectType* Cache::requestObject( DocLoader* dl, const KURL& kurl, const c
 
 void Cache::preloadStyleSheet( const TQString &url, const TQString &stylesheet_data)
 {
-    CachedObject *o = cache->tqfind(url);
+    CachedObject *o = cache->find(url);
     if(o)
         removeCacheEntry(o);
 
@@ -1474,7 +1474,7 @@ void Cache::preloadStyleSheet( const TQString &url, const TQString &stylesheet_d
 
 void Cache::preloadScript( const TQString &url, const TQString &script_data)
 {
-    CachedObject *o = cache->tqfind(url);
+    CachedObject *o = cache->find(url);
     if(o)
         removeCacheEntry(o);
 

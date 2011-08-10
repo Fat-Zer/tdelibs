@@ -353,7 +353,7 @@ Resource *ManagerImpl::readResourceConfig( const TQString &identifier,
 
   if ( checkActive ) {
     TQStringList activeKeys = mConfig->readListEntry( "ResourceKeys" );
-    resource->setActive( activeKeys.tqcontains( identifier ) );
+    resource->setActive( activeKeys.contains( identifier ) );
   }
   mResources.append( resource );
 
@@ -383,20 +383,20 @@ void ManagerImpl::writeResourceConfig( Resource *resource, bool checkActive )
     TQStringList activeKeys = mConfig->readListEntry( "ResourceKeys" );
     TQStringList passiveKeys = mConfig->readListEntry( "PassiveResourceKeys" );
     if ( resource->isActive() ) {
-      if ( passiveKeys.tqcontains( key ) ) { // remove it from passive list
+      if ( passiveKeys.contains( key ) ) { // remove it from passive list
         passiveKeys.remove( key );
         mConfig->writeEntry( "PassiveResourceKeys", passiveKeys );
       }
-      if ( !activeKeys.tqcontains( key ) ) { // add it to active list
+      if ( !activeKeys.contains( key ) ) { // add it to active list
         activeKeys.append( key );
         mConfig->writeEntry( "ResourceKeys", activeKeys );
       }
     } else if ( !resource->isActive() ) {
-      if ( activeKeys.tqcontains( key ) ) { // remove it from active list
+      if ( activeKeys.contains( key ) ) { // remove it from active list
         activeKeys.remove( key );
         mConfig->writeEntry( "ResourceKeys", activeKeys );
       }
-      if ( !passiveKeys.tqcontains( key ) ) { // add it to passive list
+      if ( !passiveKeys.contains( key ) ) { // add it to passive list
         passiveKeys.append( key );
         mConfig->writeEntry( "PassiveResourceKeys", passiveKeys );
       }
@@ -414,7 +414,7 @@ void ManagerImpl::removeResource( Resource *resource )
   
   mConfig->setGroup( "General" );
   TQStringList activeKeys = mConfig->readListEntry( "ResourceKeys" );
-  if ( activeKeys.tqcontains( key ) ) {
+  if ( activeKeys.contains( key ) ) {
     activeKeys.remove( key );
     mConfig->writeEntry( "ResourceKeys", activeKeys );
   } else {

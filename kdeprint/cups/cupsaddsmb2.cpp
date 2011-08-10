@@ -231,7 +231,7 @@ void CupsAddSmb::checkActionStatus()
 			m_status = (m_buffer.count() == 0);
 			break;
 		case MkDir:
-			m_status = (m_buffer.count() == 1 || m_buffer[1].tqfind("ERRfilexists") != -1);
+			m_status = (m_buffer.count() == 1 || m_buffer[1].find("ERRfilexists") != -1);
 			break;
 		case AddDriver:
 		case AddPrinter:

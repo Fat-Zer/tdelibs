@@ -69,7 +69,7 @@ KSycocaEntry *
 KBuildServiceTypeFactory::createEntry(const TQString &file, const char *resource)
 {
   TQString name = file;
-  int pos = name.tqfindRev('/');
+  int pos = name.findRev('/');
   if (pos != -1)
   {
      name = name.mid(pos+1);
@@ -183,8 +183,8 @@ KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
         for ( ; patit != pat.end() ; ++patit )
         {
            const TQString &pattern = *patit;
-           if ( pattern.tqfindRev('*') == 0
-                && pattern.tqfindRev('.') == 1
+           if ( pattern.findRev('*') == 0
+                && pattern.findRev('.') == 1
                 && pattern.length() <= 6 )
               // it starts with "*.", has no other '*' and no other '.', and is max 6 chars
               // => fast patttern
@@ -193,7 +193,7 @@ KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
               otherPatterns.append( pattern );
            // Assumption : there is only one mimetype for that pattern
            // It doesn't really make sense otherwise, anyway.
-           dict.tqreplace( pattern, mimeType );
+           dict.replace( pattern, mimeType );
         }
       }
    }
@@ -267,7 +267,7 @@ KBuildServiceTypeFactory::addEntry(KSycocaEntry *newEntry, const char *resource)
    TQMap<TQString,TQVariant::Type>::ConstIterator pit = pd.begin();
    for( ; pit != pd.end(); ++pit )
    {
-     if (!m_propertyTypeDict.tqcontains(pit.key()))
+     if (!m_propertyTypeDict.contains(pit.key()))
        m_propertyTypeDict.insert(pit.key(), pit.data());
      else if (m_propertyTypeDict[pit.key()] != pit.data())
        kdWarning(7021) << "Property '"<< pit.key() << "' is defined multiple times ("<< serviceType->name() <<")" <<endl;

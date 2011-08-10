@@ -144,7 +144,7 @@ bool KSambaSharePrivate::readSmbConf() {
     }
 
     // parameter
-    int i = completeLine.tqfind('=');
+    int i = completeLine.find('=');
 
     if (i>-1)
     {
@@ -203,7 +203,7 @@ bool KSambaShare::isDirectoryShared( const TQString & path ) const {
   if ( path[path.length()-1] != '/' )
        fixedPath += '/';
   
-  return d->sharedPaths.tqfind(fixedPath) != 0;
+  return d->sharedPaths.find(fixedPath) != 0;
 }
 
 TQStringList KSambaShare::sharedDirectories() const {

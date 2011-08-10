@@ -244,7 +244,7 @@ uint KateSchemaManager::number (const TQString &name)
     return 1;
 
   int i;
-  if ((i = m_schemas.tqfindIndex(name)) > -1)
+  if ((i = m_schemas.findIndex(name)) > -1)
     return i;
 
   return 0;
@@ -416,7 +416,7 @@ void KateSchemaConfigColorTab::schemaChanged ( int newSchema )
   m_linenumber->disconnect( TQT_SIGNAL( changed( const TQColor & ) ) );
 
   // If we havent this schema, read in from config file
-  if ( ! m_schemas.tqcontains( newSchema ) )
+  if ( ! m_schemas.contains( newSchema ) )
   {
     // fallback defaults
     TQColor tmp0 (KGlobalSettings::baseColor());
@@ -746,7 +746,7 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
     m_hlDict[m_schema]->setAutoDelete (true);
   }
 
-  if (!m_hlDict[m_schema]->tqfind(m_hl))
+  if (!m_hlDict[m_schema]->find(m_hl))
   {
     kdDebug(13030) << "NEW HL, create list" << endl;
 
@@ -775,20 +775,20 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
   m_styles->viewport()->setPalette( p );
 
   TQDict<KateStyleListCaption> prefixes;
-  for ( KateHlItemData *itemData = m_hlDict[m_schema]->tqfind(m_hl)->last();
+  for ( KateHlItemData *itemData = m_hlDict[m_schema]->find(m_hl)->last();
         itemData != 0L;
-        itemData = m_hlDict[m_schema]->tqfind(m_hl)->prev())
+        itemData = m_hlDict[m_schema]->find(m_hl)->prev())
   {
     kdDebug(13030) << "insert items " << itemData->name << endl;
 
     // All stylenames have their language mode prefixed, e.g. HTML:Comment
     // split them and put them into nice substructures.
-    int c = itemData->name.tqfind(':');
+    int c = itemData->name.find(':');
     if ( c > 0 ) {
       TQString prefix = itemData->name.left(c);
       TQString name   = itemData->name.mid(c+1);
 
-      KateStyleListCaption *parent = prefixes.tqfind( prefix );
+      KateStyleListCaption *parent = prefixes.find( prefix );
       if ( ! parent )
       {
         parent = new KateStyleListCaption( m_styles, prefix );
@@ -969,7 +969,7 @@ void KateSchemaConfigPage::newSchema ()
 
   // soft update, no load from disk
   KateFactory::self()->schemaManager()->update (false);
-  int i = KateFactory::self()->schemaManager()->list ().tqfindIndex (t);
+  int i = KateFactory::self()->schemaManager()->list ().findIndex (t);
 
   update ();
   if (i > -1)
@@ -1021,7 +1021,7 @@ void KateViewSchemaAction::slotAboutToShow()
   {
     TQString hlName = KateFactory::self()->schemaManager()->list().operator[](z);
 
-    if (names.tqcontains(hlName) < 1)
+    if (names.contains(hlName) < 1)
     {
       names << hlName;
       popupMenu()->insertItem ( hlName, this, TQT_SLOT(setSchema(int)), 0,  z+1);

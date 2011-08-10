@@ -74,22 +74,22 @@ void SMTP::setTimeOut(int timeout)
 void SMTP::setSenderAddress(const TQString& sender)
 {
     senderAddress = sender;
-    int index = senderAddress.tqfind('<');
+    int index = senderAddress.find('<');
     if (index == -1)
         return;
     senderAddress = senderAddress.mid(index + 1);
-    index =  senderAddress.tqfind('>');
+    index =  senderAddress.find('>');
     if (index != -1)
         senderAddress = senderAddress.left(index);
     senderAddress = senderAddress.simplifyWhiteSpace();
     while (1) {
-        index =  senderAddress.tqfind(' ');
+        index =  senderAddress.find(' ');
         if (index != -1)
             senderAddress = senderAddress.mid(index + 1); // take one side
         else
             break;
     }
-    index = senderAddress.tqfind('@');
+    index = senderAddress.find('@');
     if (index == -1)
         senderAddress.append("@localhost"); // won't go through without a local mail system
 
@@ -218,7 +218,7 @@ void SMTP::socketRead(KSocket *socket)
 
     readBuffer[n] = '\0';
     lineBuffer += readBuffer;
-    nl = lineBuffer.tqfind('\n');
+    nl = lineBuffer.find('\n');
     if(nl == -1)
         return;
     lastLine = lineBuffer.left(nl);
@@ -249,7 +249,7 @@ void SMTP::processLine(TQString *line)
     int i, stat;
     TQString tmpstr;
 
-    i = line->tqfind(' ');
+    i = line->find(' ');
     tmpstr = line->left(i);
     if(i > 3)
         kdDebug() << "warning: SMTP status code longer then 3 digits: " << tmpstr << endl;

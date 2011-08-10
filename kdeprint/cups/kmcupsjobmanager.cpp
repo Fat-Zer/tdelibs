@@ -212,7 +212,7 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 		else if (name == "job-printer-uri" && !pr->isRemote())
 		{
 			TQString	str(attr->values[0].string.text);
-			int	p = str.tqfindRev('/');
+			int	p = str.findRev('/');
 			if (p != -1)
 				job->setPrinter(str.mid(p+1));
 		}
@@ -356,7 +356,7 @@ static TQString processRange(const TQString& range)
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		s.append(*it);
-		if ((*it).tqfind('-') == -1)
+		if ((*it).find('-') == -1)
 			s.append("-").append(*it);
 		s.append(",");
 	}
@@ -387,15 +387,15 @@ bool KMCupsJobManager::editJobAttributes(KMJob *j)
 
 	TQMap<TQString,TQString>	opts = req.toMap(IPP_TAG_JOB);
 	// translate the "Copies" option to non-CUPS syntax
-	if (opts.tqcontains("copies"))
+	if (opts.contains("copies"))
 		opts["kde-copies"] = opts["copies"];
-	if (opts.tqcontains("page-set"))
+	if (opts.contains("page-set"))
 		opts["kde-pageset"] = (opts["page-set"] == "even" ? "2" : (opts["page-set"] == "odd" ? "1" : "0"));
-	if (opts.tqcontains("OutputOrder"))
+	if (opts.contains("OutputOrder"))
 		opts["kde-pageorder"] = opts["OutputOrder"];
-	if (opts.tqcontains("multiple-document-handling"))
+	if (opts.contains("multiple-document-handling"))
 		opts["kde-collate"] = (opts["multiple-document-handling"] == "separate-documents-collated-copies" ? "Collate" : "Uncollate");
-	if (opts.tqcontains("page-ranges"))
+	if (opts.contains("page-ranges"))
 		opts["kde-range"] = opts["page-ranges"];
 
 	// find printer and construct dialog

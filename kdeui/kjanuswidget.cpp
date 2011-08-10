@@ -413,7 +413,7 @@ void KJanusWidget::InsertTreeListItem(const TQStringList &items, const TQPixmap 
       curPath << name;
 
       TQString key = curPath.join("_/_");
-      if (mFolderIconMap.tqcontains(key)) {
+      if (mFolderIconMap.contains(key)) {
         TQPixmap p = mFolderIconMap[key];
         newChild->setPixmap(0,p);
       }
@@ -1191,7 +1191,7 @@ void KJanusWidget::virtual_hook( int, void* )
 // delete the node.
 void KJanusWidget::removePage( TQWidget *page )
 {
-  if (!d || !d->mPageToInt.tqcontains(page))
+  if (!d || !d->mPageToInt.contains(page))
     return;
 
   int index = d->mPageToInt[page];
@@ -1237,7 +1237,7 @@ void KJanusWidget::removePage( TQWidget *page )
 
 TQString KJanusWidget::pageTitle(int index) const
 {
-  if (!d || !d->mIntToTitle.tqcontains(index))
+  if (!d || !d->mIntToTitle.contains(index))
     return TQString::null;
   else
     return d->mIntToTitle[index];
@@ -1246,7 +1246,7 @@ TQString KJanusWidget::pageTitle(int index) const
 
 TQWidget *KJanusWidget::pageWidget(int index) const
 {
-  if (!d || !d->mIntToPage.tqcontains(index))
+  if (!d || !d->mIntToPage.contains(index))
     return 0;
   else
     return d->mIntToPage[index];

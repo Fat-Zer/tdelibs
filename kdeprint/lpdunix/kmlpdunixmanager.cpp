@@ -114,12 +114,12 @@ TQMap<TQString,TQString> readEntry(KTextBuffer& t)
 		if (l.count() > 0)
 		{
 			int 	p(-1);
-			if ((p=l[0].tqfind('|')) != -1)
+			if ((p=l[0].find('|')) != -1)
 				entry["printer-name"] = l[0].left(p);	// only keep first name (discard aliases
 			else
 				entry["printer-name"] = l[0];
 			for (uint i=1; i<l.count(); i++)
-				if ((p=l[i].tqfind('=')) != -1)
+				if ((p=l[i].find('=')) != -1)
 					entry[l[i].left(p).stripWhiteSpace()] = l[i].right(l[i].length()-p-1).stripWhiteSpace();
 				else
 					entry[l[i].stripWhiteSpace()] = TQString::null;
@@ -192,14 +192,14 @@ void KMLpdUnixManager::parseEtcPrintcap()
 		while (!t.eof())
 		{
 			entry = readEntry(t);
-			if (entry.isEmpty() || !entry.tqcontains("printer-name") || entry.tqcontains("server"))
+			if (entry.isEmpty() || !entry.contains("printer-name") || entry.contains("server"))
 				continue;
 			if (entry["printer-name"] == "all")
 			{
-				if (entry.tqcontains("all"))
+				if (entry.contains("all"))
 				{
 					// find separator
-					int	p = entry["all"].tqfind(TQRegExp("[^a-zA-Z0-9_\\s-]"));
+					int	p = entry["all"].find(TQRegExp("[^a-zA-Z0-9_\\s-]"));
 					if (p != -1)
 					{
 						TQChar	c = entry["all"][p];
@@ -216,7 +216,7 @@ void KMLpdUnixManager::parseEtcPrintcap()
 			else
 			{
 				KMPrinter	*printer = ::createPrinter(entry);
-				if (entry.tqcontains("rm"))
+				if (entry.contains("rm"))
 					printer->setDescription(i18n("Remote printer queue on %1").arg(entry["rm"]));
 				else
 					printer->setDescription(i18n("Local printer"));
@@ -254,18 +254,18 @@ void KMLpdUnixManager::parseEtcPrintersConf()
 		while (!t.eof())
 		{
 			entry = readEntry(t);
-			if (entry.isEmpty() || !entry.tqcontains("printer-name"))
+			if (entry.isEmpty() || !entry.contains("printer-name"))
 				continue;
 			TQString	prname = entry["printer-name"];
 			if (prname == "_default")
 			{
-				if (entry.tqcontains("use"))
+				if (entry.contains("use"))
 					default_printer = entry["use"];
 			}
 			else if (prname != "_all")
 			{
 				KMPrinter	*printer = ::createPrinter(entry);
-				if (entry.tqcontains("bsdaddr"))
+				if (entry.contains("bsdaddr"))
 				{
 					TQStringList	l = TQStringList::split(',',entry["bsdaddr"],false);
 					printer->setDescription(i18n("Remote printer queue on %1").arg(l[0]));

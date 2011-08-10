@@ -60,7 +60,7 @@ TQString nextWord(const TQString& s, int& pos)
 	if (s[p1] == '{')
 	{
 		p1++;
-		p2 = s.tqfind('}',p1);
+		p2 = s.find('}',p1);
 	}
 	else
 	{
@@ -81,12 +81,12 @@ bool PrintcapEntry::readLine(const TQString& line)
 		m_name = l[0];
 		int	p(-1);
 		// discard aliases
-		if ((p=m_name.tqfind('|')) != -1)
+		if ((p=m_name.find('|')) != -1)
 			m_name = m_name.left(p);
 		m_args.clear();
 		for (uint i=1; i<l.count(); i++)
 		{
-			int	p = l[i].tqfind('=');
+			int	p = l[i].find('=');
 			if (p == -1) p = 2;
 			QString	key = l[i].left(p);
 			QString	value = l[i].right(l[i].length()-(l[i][p] == '=' ? p+1 : p));
@@ -140,22 +140,22 @@ KMPrinter* PrintcapEntry::createPrinter()
 TQStringList splitPrinttoolLine(const TQString& line)
 {
 	QStringList	l;
-	int 		p = line.tqfind(':');
+	int 		p = line.find(':');
 	if (p != -1)
 	{
 		l.append(line.left(p));
-		p = line.tqfind('{',p);
+		p = line.find('{',p);
 		if (p == -1)
 			l.append(line.right(line.length()-l[0].length()-1).stripWhiteSpace());
 		else
 		{
 			while (p != -1)
 			{
-				int 	q = line.tqfind('}',p);
+				int 	q = line.find('}',p);
 				if (q != -1)
 				{
 					l.append(line.mid(p+1,q-p-1));
-					p = line.tqfind('{',q);
+					p = line.find('{',q);
 				}
 				else break;
 			}

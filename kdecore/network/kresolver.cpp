@@ -917,7 +917,7 @@ TQString KResolver::localHostName()
   if (name.isEmpty())
     return TQString::tqfromLatin1("localhost");
 
-  if (name.tqfind('.') == -1)
+  if (name.find('.') == -1)
     {
       // not fully qualified
       // must resolve
@@ -961,7 +961,7 @@ TQCString KResolver::domainToAscii(const TQString& tqunicodeDomain)
   TQStringList input = splitLabels(tqunicodeDomain);
 
   // Do we allow IDN names for this TLD?
-  if (input.count() && !idnDomains->tqcontains(input[input.count()-1].lower()))
+  if (input.count() && !idnDomains->contains(input[input.count()-1].lower()))
     return input.join(".").lower().latin1(); // No IDN allowed for this TLD
 
   // 3) decide whether to enforce the STD3 rules for chars < 0x7F
@@ -1009,7 +1009,7 @@ TQString KResolver::domainToUnicode(const TQString& asciiDomain)
   TQStringList input = splitLabels(asciiDomain);
 
   // Do we allow IDN names for this TLD?
-  if (input.count() && !idnDomains->tqcontains(input[input.count()-1].lower()))
+  if (input.count() && !idnDomains->contains(input[input.count()-1].lower()))
     return asciiDomain.lower(); // No TLDs allowed
 
   // 3) decide whether to enforce the STD3 rules for chars < 0x7F

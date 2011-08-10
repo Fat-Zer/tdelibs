@@ -118,7 +118,7 @@ DockContainer::~DockContainer()
   while (m_map.count()) {
     it = m_map.begin();
     KDockWidget *w=it.key();
-      if (m_overlapButtons.tqcontains(w)) {
+      if (m_overlapButtons.contains(w)) {
         (::tqqt_cast<KDockWidgetHeader*>(w->getHeader()))->removeButton(m_overlapButtons[w]);
         m_overlapButtons.remove(w);
       }
@@ -164,7 +164,7 @@ void DockContainer::insertWidget (KDockWidget *dwdg, TQPixmap pixmap, const TQSt
 {
   KDockWidget* w = (KDockWidget*) dwdg;
   int tab;
-  bool alreadyThere=m_map.tqcontains(w);
+  bool alreadyThere=m_map.contains(w);
 
   if (alreadyThere)
   {
@@ -296,7 +296,7 @@ bool DockContainer::eventFilter( TQObject *obj, TQEvent *event )
 }
 
 void DockContainer::showWidget(KDockWidget *w) {
-    if (!m_map.tqcontains(w)) return;
+    if (!m_map.contains(w)) return;
 
     kdDebug()<<"KMDI::DockContainer::<showWidget"<<endl;
     int id=m_map[w];
@@ -341,7 +341,7 @@ void DockContainer::hideIfNeeded() {
 void DockContainer::removeWidget(KDockWidget* dwdg)
 {
     KDockWidget* w = (KDockWidget*) dwdg;
-  if (!m_map.tqcontains(w)) return;
+  if (!m_map.contains(w)) return;
   int id=m_map[w];
   if (m_tb->isTabRaised(id)) {
     //why do we hide the tab if we're just going
@@ -354,7 +354,7 @@ void DockContainer::removeWidget(KDockWidget* dwdg)
   m_ws->removeWidget(w);
   m_map.remove(w);
   m_revMap.remove(id);
-  if (m_overlapButtons.tqcontains(w)) {
+  if (m_overlapButtons.contains(w)) {
     (::tqqt_cast<KDockWidgetHeader*>(w->getHeader()))->removeButton(m_overlapButtons[w]);
     m_overlapButtons.remove(w);
   }
@@ -370,7 +370,7 @@ void DockContainer::undockWidget(KDockWidget *dwdg)
 {
   KDockWidget* w = (KDockWidget*) dwdg;
 
-  if (!m_map.tqcontains(w))
+  if (!m_map.contains(w))
     return;
 
   int id=m_map[w];
@@ -629,7 +629,7 @@ void DockContainer::toggle() {
 
 void DockContainer::prevToolView() {
     TQPtrList<KMultiTabBarTab>* tabs=m_tb->tabs();
-    int pos=tabs->tqfindRef(m_tb->tab(oldtab));
+    int pos=tabs->findRef(m_tb->tab(oldtab));
     if (pos==-1) return;
     pos--;
     if (pos<0) pos=tabs->count()-1;
@@ -641,7 +641,7 @@ void DockContainer::prevToolView() {
 
 void DockContainer::nextToolView() {
     TQPtrList<KMultiTabBarTab>* tabs=m_tb->tabs();
-    int pos=tabs->tqfindRef(m_tb->tab(oldtab));
+    int pos=tabs->findRef(m_tb->tab(oldtab));
     if (pos==-1) return;
     pos++;
     if (pos>=(int)tabs->count()) pos=0;

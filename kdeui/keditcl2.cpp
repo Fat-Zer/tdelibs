@@ -162,7 +162,7 @@ int KEdit::doSearch(TQString s_pattern, bool case_sensitive,
 
       string = textLine(i);
 
-      pos = string.tqfind(s_pattern, i == line ? col : 0, case_sensitive);
+      pos = string.find(s_pattern, i == line ? col : 0, case_sensitive);
 
       if( pos != -1){
 
@@ -191,7 +191,7 @@ int KEdit::doSearch(TQString s_pattern, bool case_sensitive,
       string = textLine(i);
       int line_length = string.length();
 
-      pos = string.tqfindRev(s_pattern, line == i ? col : line_length , case_sensitive);
+      pos = string.findRev(s_pattern, line == i ? col : line_length , case_sensitive);
 
       if (pos != -1){
 
@@ -528,10 +528,10 @@ int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
       string = textLine(line_counter);
 
       if (replace_all){
-	pos = string.tqfind(s_pattern, replace_all_col, case_sensitive);
+	pos = string.find(s_pattern, replace_all_col, case_sensitive);
       }
       else{
-	pos = string.tqfind(s_pattern, line_counter == line ? col : 0, case_sensitive);
+	pos = string.find(s_pattern, line_counter == line ? col : 0, case_sensitive);
       }
 
       if (pos == -1 ){
@@ -554,7 +554,7 @@ int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
 	    replace_all_col = pos + replacement.length();
 	    replace_all_line = line_counter;
 
-            pos = stringnew.tqfind(s_pattern, replace_all_col, case_sensitive);
+            pos = stringnew.find(s_pattern, replace_all_col, case_sensitive);
           }
           while( pos != -1); 
 
@@ -595,13 +595,13 @@ int KEdit::doReplace(TQString s_pattern, bool case_sensitive,
         if (replace_all_col < 0)
           pos = -1;
         else
-          pos = string.tqfindRev(s_pattern, replace_all_col , case_sensitive);
+          pos = string.findRev(s_pattern, replace_all_col , case_sensitive);
       }
       else{
         if ((line == line_counter) && (col < 0))
           pos = -1;
         else
-          pos = string.tqfindRev(s_pattern,
+          pos = string.findRev(s_pattern,
 			   line == line_counter ? col : line_length , case_sensitive);
       }
 

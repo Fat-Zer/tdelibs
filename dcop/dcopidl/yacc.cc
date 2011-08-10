@@ -1643,7 +1643,7 @@ yyreduce:
   case 15:
 #line 221 "yacc.yy"
     {
-                      int pos = in_namespace.tqfindRev( "::", -3 );
+                      int pos = in_namespace.findRev( "::", -3 );
                       if( pos >= 0 )
                           in_namespace = in_namespace.left( pos + 2 );
                       else

@@ -75,11 +75,11 @@ void KMdiChildArea::manageChild( KMdiChildFrm* child, bool show, bool cascade )
 	KMdiChildFrm* top = topChild();
 	
 	//remove old references. There can be more than one so we remove them all
-	if ( m_pZ->tqfindRef( child ) != -1 )
+	if ( m_pZ->findRef( child ) != -1 )
 	{
 		//TQPtrList::find* moves current() to the found item
 		m_pZ->take(); 
-		while ( m_pZ->tqfindNextRef( child ) != -1 )
+		while ( m_pZ->findNextRef( child ) != -1 )
 			m_pZ->take();
 	}
 
@@ -323,7 +323,7 @@ TQPoint KMdiChildArea::getCascadePoint( int indexOfWindow )
 void KMdiChildArea::childMinimized( KMdiChildFrm *minimizedChild, bool wasMaximized )
 {
 	//can't find the child in our list, so we don't care.
-	if ( m_pZ->tqfindRef( minimizedChild ) == -1 )
+	if ( m_pZ->findRef( minimizedChild ) == -1 )
 	{
 		kdDebug( 760 ) << k_funcinfo << "child was minimized but wasn't in our list!" << endl;
 		return;

@@ -491,14 +491,14 @@ TQString KCharsets::languageForEncoding( const TQString &encoding )
 
 TQString KCharsets::encodingForName( const TQString &descriptiveName )
 {
-    const int left = descriptiveName.tqfindRev( '(' );
+    const int left = descriptiveName.findRev( '(' );
     
     if (left<0) // No parenthesis, so assume it is a normal encoding name
 	return descriptiveName.stripWhiteSpace();
     
     TQString name(descriptiveName.mid(left+1));
     
-    const int right = name.tqfindRev( ')' );
+    const int right = name.findRev( ')' );
     
     if (right<0) 
         return name;
@@ -536,7 +536,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
 
     if (n.isEmpty()) {
         codec = KGlobal::locale()->codecForEncoding();
-        d->codecForNameDict.tqreplace("->locale<-", codec);
+        d->codecForNameDict.replace("->locale<-", codec);
         return codec;
     }
 
@@ -553,7 +553,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
     codec = TQTextCodec::codecForName(name);
 
     if(codec) {
-        d->codecForNameDict.tqreplace(key, codec);
+        d->codecForNameDict.replace(key, codec);
         return codec;
     }
 
@@ -566,7 +566,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
 
     if(codec)
     {
-        d->codecForNameDict.tqreplace(key, codec);
+        d->codecForNameDict.replace(key, codec);
         return codec;
     }
 
@@ -642,7 +642,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
     }
 
     if(codec) {
-        d->codecForNameDict.tqreplace(key, codec);
+        d->codecForNameDict.replace(key, codec);
         return codec;
     }
 
@@ -654,7 +654,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
         codec = TQTextCodec::codecForName(cname);
 
     if(codec) {
-        d->codecForNameDict.tqreplace(key, codec);
+        d->codecForNameDict.replace(key, codec);
         return codec;
     }
 

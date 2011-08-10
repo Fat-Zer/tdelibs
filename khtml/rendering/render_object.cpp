@@ -2223,7 +2223,7 @@ CounterNode* RenderObject::lookupCounter(const TQString& counter) const
 {
     TQDict<khtml::CounterNode>* counters = document()->counters(this);
     if (counters)
-        return counters->tqfind(counter);
+        return counters->find(counter);
     else
         return 0;
 }

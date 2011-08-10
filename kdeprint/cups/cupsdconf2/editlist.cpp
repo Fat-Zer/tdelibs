@@ -81,7 +81,7 @@ void EditList::setText(int index, const TQString& s)
 {
 	if (list_->text(index) != s)
 	{
-		TQListBoxItem	*it = list_->tqfindItem(s, TQt::ExactMatch);
+		TQListBoxItem	*it = list_->findItem(s, TQt::ExactMatch);
 		if (!it)
 			list_->changeItem(s, index);
 		else
@@ -97,13 +97,13 @@ void EditList::clear()
 
 void EditList::insertItem(const TQString& s)
 {
-	if (!list_->tqfindItem(s, TQt::ExactMatch))
+	if (!list_->findItem(s, TQt::ExactMatch))
 		list_->insertItem(s);
 }
 
 void EditList::insertItem(const TQPixmap& icon, const TQString& s)
 {
-	if (!list_->tqfindItem(s, TQt::ExactMatch))
+	if (!list_->findItem(s, TQt::ExactMatch))
 		list_->insertItem(icon, s);
 }
 

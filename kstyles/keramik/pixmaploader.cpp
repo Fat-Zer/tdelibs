@@ -260,7 +260,7 @@ TQPixmap PixmapLoader::scale( int name, int width, int height, const TQColor& co
 
 	int key = entry.key();
 
-	if ((cacheEntry = m_pixmapCache.tqfind(key, true)))
+	if ((cacheEntry = m_pixmapCache.find(key, true)))
 	{
 		if (entry == *cacheEntry) //True match!
 			return *cacheEntry->m_pixmap;

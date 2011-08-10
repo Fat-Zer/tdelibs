@@ -355,7 +355,7 @@ TQString KShell::joinArgsDQ( const TQStringList &args )
 TQString KShell::tildeExpand( const TQString &fname )
 {
     if (fname[0] == (QChar)'~') {
-        int pos = fname.tqfind( '/' );
+        int pos = fname.find( '/' );
         if (pos < 0)
             return homeDir( TQConstString( fname.tqunicode() + 1, fname.length() - 1 ).string() );
         TQString ret = homeDir( TQConstString( fname.tqunicode() + 1, pos - 1 ).string() );

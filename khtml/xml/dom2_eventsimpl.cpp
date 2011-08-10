@@ -499,14 +499,14 @@ public:
     }
 
     L toLeft(R r) {
-        TQMapIterator<R,L> i( m_rToL.tqfind(r) );
+        TQMapIterator<R,L> i( m_rToL.find(r) );
         if (i != m_rToL.end())
             return *i;
         return L();
     }
 
     R toRight(L l) {
-        TQMapIterator<L,R> i = m_lToR.tqfind(l);
+        TQMapIterator<L,R> i = m_lToR.find(l);
         if (i != m_lToR.end())
             return *i;
         return R();

@@ -171,7 +171,7 @@ TQString KURIFilterData::iconName()
             case KURIFilterData::EXECUTABLE:
             {
                 TQString exeName = m_pURI.url();
-                exeName = exeName.mid( exeName.tqfindRev( '/' ) + 1 ); // strip path if given
+                exeName = exeName.mid( exeName.findRev( '/' ) + 1 ); // strip path if given
                 KService::Ptr service = KService::serviceByDesktopName( exeName );
                 if (service && service->icon() != TQString::tqfromLatin1( "unknown" ))
                     m_strIconName = service->icon();

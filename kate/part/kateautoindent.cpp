@@ -224,55 +224,55 @@ void KateNormalIndent::updateConfig ()
   for (uint i=0; i<items.count(); i++)
   {
     TQString name = items.tqat(i)->name;
-    if (name.tqfind("Comment") != -1 && commentAttrib == 255)
+    if (name.find("Comment") != -1 && commentAttrib == 255)
     {
       commentAttrib = i;
     }
-    else if (name.tqfind("Region Marker") != -1 && regionAttrib == 255)
+    else if (name.find("Region Marker") != -1 && regionAttrib == 255)
     {
       regionAttrib = i;
     }
-    else if (name.tqfind("Symbol") != -1 && symbolAttrib == 255)
+    else if (name.find("Symbol") != -1 && symbolAttrib == 255)
     {
       symbolAttrib = i;
     }
-    else if (name.tqfind("Alert") != -1)
+    else if (name.find("Alert") != -1)
     {
       alertAttrib = i;
     }
-    else if (name.tqfind("Comment") != -1 && commentAttrib != 255 && doxyCommentAttrib == 255)
+    else if (name.find("Comment") != -1 && commentAttrib != 255 && doxyCommentAttrib == 255)
     {
       doxyCommentAttrib = i;
     }
-    else if (name.tqfind("Tags") != -1 && tagAttrib == 255)
+    else if (name.find("Tags") != -1 && tagAttrib == 255)
     {
       tagAttrib = i;
     }
-    else if (name.tqfind("Word") != -1 && wordAttrib == 255)
+    else if (name.find("Word") != -1 && wordAttrib == 255)
     {
       wordAttrib = i;
     }
-    else if (name.tqfind("Keyword") != -1 && keywordAttrib == 255)
+    else if (name.find("Keyword") != -1 && keywordAttrib == 255)
     {
       keywordAttrib = i;
     }
-    else if (name.tqfind("Normal") != -1 && normalAttrib == 255)
+    else if (name.find("Normal") != -1 && normalAttrib == 255)
     {
       normalAttrib = i;
     }
-    else if (name.tqfind("Extensions") != -1 && extensionAttrib == 255)
+    else if (name.find("Extensions") != -1 && extensionAttrib == 255)
     {
       extensionAttrib = i;
     }
-    else if (name.tqfind("Preprocessor") != -1 && preprocessorAttrib == 255)
+    else if (name.find("Preprocessor") != -1 && preprocessorAttrib == 255)
     {
       preprocessorAttrib = i;
     }
-    else if (name.tqfind("String") != -1 && stringAttrib == 255)
+    else if (name.find("String") != -1 && stringAttrib == 255)
     {
       stringAttrib = i;
     }
-    else if (name.tqfind("Char") != -1 && charAttrib == 255)
+    else if (name.find("Char") != -1 && charAttrib == 255)
     {
       charAttrib = i;
     }
@@ -583,7 +583,7 @@ bool KateCSmartIndent::handleDoxygen (KateDocCursor &begin)
       if (last <= 0 || !(justAfterDoxygen = textLine->stringAtPos(last-1, "*/")))
         insideDoxygen = true;
       if (justAfterDoxygen)
-        justAfterDoxygen &= textLine->string().tqfind("/**") < 0;
+        justAfterDoxygen &= textLine->string().find("/**") < 0;
       while (textLine->attribute(first) != doxyCommentAttrib && first <= textLine->lastChar())
         first++;
       if (textLine->stringAtPos(first, "//"))
@@ -700,7 +700,7 @@ static inline bool colonPermitsReindent(const KateNormalIndent &indenter,
 {
   const TQString txt = line->string(0,curCol);
   // do we have any significant preceding colon?
-  for (int pos = 0; (pos = txt.tqfind(':', pos)) >= 0; pos++) {
+  for (int pos = 0; (pos = txt.find(':', pos)) >= 0; pos++) {
     if (line->attribute(pos) == indenter.symbolAttrib)
       // yes, it has already contributed to this line's indentation, don't
       // indent again
@@ -722,7 +722,7 @@ void KateCSmartIndent::processChar(TQChar c)
   static const TQString triggers("}{)/:#n");
   static const TQString firstTriggers("}{)/:#");
   static const TQString lastTriggers(":n");
-  if (triggers.tqfind(c) < 0)
+  if (triggers.find(c) < 0)
     return;
 
   KateView *view = doc->activeView();
@@ -775,8 +775,8 @@ void KateCSmartIndent::processChar(TQChar c)
   // of the line
   const TQChar lastChar = textLine->getChar(textLine->lastChar());
   int pos;
-  if (((c == firstChar && firstTriggers.tqfind(firstChar) >= 0)
-        || (c == lastChar && lastTriggers.tqfind(lastChar) >= 0))
+  if (((c == firstChar && firstTriggers.find(firstChar) >= 0)
+        || (c == lastChar && lastTriggers.find(lastChar) >= 0))
       && (c != ':' || colonPermitsReindent(*this, textLine, curCol)))
     processLine(begin);
 }
@@ -1176,7 +1176,7 @@ uint KateCSmartIndent::findOpeningComment(KateDocCursor &start)
   {
     KateTextLine::Ptr textLine = doc->plainKateTextLine(cur.line());
 
-    int pos = textLine->string().tqfind("/*", false);
+    int pos = textLine->string().find("/*", false);
     if (pos >= 0)
     {
       KateDocCursor temp(cur.line(), pos, doc);
@@ -1359,7 +1359,7 @@ void KateXmlIndent::processChar (TQChar c)
   // only alter lines that start with a close element
   KateView *view = doc->activeView();
   TQString text = doc->plainKateTextLine(view->cursorLine())->string();
-  if(text.tqfind(startsWithCloseTag) == -1) return;
+  if(text.find(startsWithCloseTag) == -1) return;
 
   // process it
   processLine(view->cursorLine());
@@ -1404,7 +1404,7 @@ void KateXmlIndent::getLineInfo (uint line, uint &prevIndent, int &numTags,
   // <a>
   // </a>              <!-- indentation *already* decreased -->
   // requires that we discount the </a> from the number of closed tags
-  if(text.tqfind(startsWithCloseTag) != -1) ++numTags;
+  if(text.find(startsWithCloseTag) != -1) ++numTags;
 
   // count the number of open and close tags
   int lastCh = 0;
@@ -1445,10 +1445,10 @@ void KateXmlIndent::getLineInfo (uint line, uint &prevIndent, int &numTags,
           for(uint backLine = line; backLine; ) {
             // find first line with an open tag
             KateTextLine::Ptr x = doc->plainKateTextLine(--backLine);
-            if(x->string().tqfind('<') == -1) continue;
+            if(x->string().find('<') == -1) continue;
 
             // recalculate the indent
-            if(x->string().tqfind(unclosedDoctype) != -1) --numTags;
+            if(x->string().find(unclosedDoctype) != -1) --numTags;
             getLineInfo(backLine, prevIndent, numTags, attrCol, unclosedTag);
             break;
           }
@@ -1499,7 +1499,7 @@ uint KateXmlIndent::processLine (uint line)
   if(indent < 0) indent = 0;
 
   // unindent lines that start with a close tag
-  if(kateLine->string().tqfind(startsWithCloseTag) != -1) {
+  if(kateLine->string().find(startsWithCloseTag) != -1) {
     indent -= indentWidth;
   }
   if(indent < 0) indent = 0;
@@ -1606,7 +1606,7 @@ TQString KateCSAndSIndent::findOpeningCommentIndentation(const KateDocCursor &st
   {
     KateTextLine::Ptr textLine = doc->plainKateTextLine(cur.line());
 
-    int pos = textLine->string().tqfindRev("/*");
+    int pos = textLine->string().findRev("/*");
     // FIXME: /* inside /* is possible. This screws up in that case...
     if (pos >= 0)
       return initialWhitespace(textLine, pos);
@@ -1760,7 +1760,7 @@ int KateCSAndSIndent::lastNonCommentChar( const KateDocCursor &line )
 
   // find a possible start-of-comment
   int p = -2; // so the first find starts at position 0
-  do p = str.tqfind( "//", p + 2 );
+  do p = str.find( "//", p + 2 );
   while ( p >= 0 && textLine->attribute(p) != commentAttrib && textLine->attribute(p) != doxyCommentAttrib );
 
   // no // found? use whole string
@@ -2112,7 +2112,7 @@ void KateCSAndSIndent::processChar(TQChar c)
 {
   // 'n' trigger is for c# regions.
   static const TQString triggers("}{)]/:;#n");
-  if (triggers.tqfind(c) == -1)
+  if (triggers.find(c) == -1)
     return;
 
   // for historic reasons, processChar doesn't get a cursor
@@ -2372,9 +2372,9 @@ void KateVarIndent::slotVariableChanged( const TQString &var, const TQString &va
   {
     d->couples = 0;
     TQStringList l = TQStringList::split( " ", val );
-    if ( l.tqcontains("parens") ) d->couples |= Parens;
-    if ( l.tqcontains("braces") ) d->couples |= Braces;
-    if ( l.tqcontains("brackets") ) d->couples |= Brackets;
+    if ( l.contains("parens") ) d->couples |= Parens;
+    if ( l.contains("braces") ) d->couples |= Braces;
+    if ( l.contains("brackets") ) d->couples |= Brackets;
   }
   else if ( var == "var-indent-couple-attribute" )
   {

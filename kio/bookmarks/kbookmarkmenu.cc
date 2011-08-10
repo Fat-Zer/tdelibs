@@ -537,7 +537,7 @@ void KBookmarkMenu::addNewFolder()
 
   TQString title = i18n( "&New Bookmark Folder..." );
   int p;
-  while ( ( p = title.tqfind( '&' ) ) >= 0 )
+  while ( ( p = title.find( '&' ) ) >= 0 )
     title.remove( p, 1 );
 
   KAction * paNewFolder = new KAction( title,
@@ -1175,7 +1175,7 @@ void KBookmarkMenu::setDynamicBookmarks(const TQString &id, const DynMenuInfo &n
 
   // make sure list includes type
   config.setGroup("Bookmarks");
-  if (elist.tqcontains(id) < 1) {
+  if (elist.contains(id) < 1) {
     elist << id;
     config.writeEntry("DynamicMenus", elist);
   }

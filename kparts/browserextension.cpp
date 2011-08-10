@@ -374,7 +374,7 @@ BrowserExtension::BrowserExtension( KParts::ReadOnlyPart *parent,
   for ( int i=0 ; it != itEnd ; ++it, ++i )
   {
       // Does the extension have a slot with the name of this action ?
-      d->m_actionStatus.setBit( i, slotNames.tqcontains( it.key()+"()" ) );
+      d->m_actionStatus.setBit( i, slotNames.contains( it.key()+"()" ) );
   }
 
   connect( m_part, TQT_SIGNAL( completed() ),
@@ -552,7 +552,7 @@ void BrowserExtension::slotSetActionText( const char * name, const TQString& tex
 TQString BrowserExtension::actionText( const char * name ) const
 {
     int actionNumber = (*s_actionNumberMap)[ name ];
-    TQMap<int, TQString>::ConstIterator it = d->m_actionText.tqfind( actionNumber );
+    TQMap<int, TQString>::ConstIterator it = d->m_actionText.find( actionNumber );
     if ( it != d->m_actionText.end() )
         return *it;
     return TQString::null;

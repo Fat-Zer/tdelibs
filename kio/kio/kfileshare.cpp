@@ -105,7 +105,7 @@ void KFileShare::readConfig() // static
     else {
         // check if current user is in fileshare group
         KUserGroup shareGroup(s_fileShareGroup);
-        if (shareGroup.users().tqfindIndex(KUser()) > -1 ) 
+        if (shareGroup.users().findIndex(KUser()) > -1 ) 
             s_authorization = Authorized;
         else
             s_authorization = UserNotAllowed;
@@ -221,9 +221,9 @@ int KFileShare::isDirectoryShared( const TQString& _path )
     if ( path[path.length()-1] != '/' )
         path += '/';
     //return s_shareList && s_shareList->contains( path );
-    if( (*s_shareMap).tqcontains(path) && !((*s_shareMap)[path].isEmpty()) ) {
+    if( (*s_shareMap).contains(path) && !((*s_shareMap)[path].isEmpty()) ) {
         ret+=1;
-        if( (*s_shareMap)[path].tqfind("readwrite") != -1 )
+        if( (*s_shareMap)[path].find("readwrite") != -1 )
             ret+=2;
     }
     

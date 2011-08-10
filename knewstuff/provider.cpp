@@ -53,11 +53,11 @@ static ProviderPrivate *d_prov(const Provider *p)
     d_ptr_prov = new TQPtrDict<ProviderPrivate>();
     d_ptr_prov->setAutoDelete(true);
   }
-  ProviderPrivate *ret = d_ptr_prov->tqfind((void*)p);
+  ProviderPrivate *ret = d_ptr_prov->find((void*)p);
   if(!ret)
   {
     ret = new ProviderPrivate();
-    d_ptr_prov->tqreplace((void*)p, ret);
+    d_ptr_prov->replace((void*)p, ret);
   }
   return ret;
 }
@@ -89,7 +89,7 @@ Provider::~Provider()
 {
     if (d_ptr_prov)
     {
-        ProviderPrivate *p = d_ptr_prov->tqfind(this);
+        ProviderPrivate *p = d_ptr_prov->find(this);
         if (p)
             d_ptr_prov->remove(p);
 

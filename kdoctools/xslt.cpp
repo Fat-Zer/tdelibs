@@ -140,8 +140,8 @@ TQString splitOut(const TQString &parsed, int index)
     TQString filedata;
 
     while (true) {
-        int endindex = parsed.tqfind("</FILENAME>", index);
-        int startindex = parsed.tqfind("<FILENAME ", index) + 1;
+        int endindex = parsed.find("</FILENAME>", index);
+        int startindex = parsed.find("<FILENAME ", index) + 1;
 
 //        kdDebug() << "FILENAME " << startindex << " " << endindex << " " << inside << " " << parsed.mid(startindex + 18, 15)<< " " << parsed.length() << endl;
 
@@ -166,10 +166,10 @@ TQString splitOut(const TQString &parsed, int index)
 
     }
 
-    index = filedata.tqfind("<FILENAME ");
+    index = filedata.find("<FILENAME ");
 
     if (index > 0) {
-        int endindex = filedata.tqfindRev("</FILENAME>");
+        int endindex = filedata.findRev("</FILENAME>");
         while (filedata.tqat(endindex) != '>') endindex++;
         endindex++;
         filedata = filedata.left(index) + filedata.mid(endindex);

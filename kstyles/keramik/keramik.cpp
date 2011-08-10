@@ -1725,7 +1725,7 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 				TQString s = mi->text();
 				// Does the menu item have a text label?
 				if ( !s.isNull() ) {
-					int t = s.tqfind( '\t' );
+					int t = s.find( '\t' );
 					int m = itemVMargin;
 					int text_flags = AlignVCenter | ShowPrefix | DontClip | SingleLine;
 					text_flags |= reverse ? AlignRight : AlignLeft;
@@ -2501,7 +2501,7 @@ TQSize KeramikStyle::tqsizeFromContents( ContentsType contents,
 								2 * itemFrame );
 			}
 
-			if ( ! mi->text().isNull() && mi->text().tqfind('\t') >= 0 )
+			if ( ! mi->text().isNull() && mi->text().find('\t') >= 0 )
 				w += itemHMargin + itemFrame*2 + 7;
 			else if ( mi->popup() )
 				w += 2 * arrowHMargin;

@@ -933,7 +933,7 @@ YY_RULE_SETUP
 case 24:
 YY_RULE_SETUP
 #line 100 "./ppdscanner.l"
-{ yylval = yytext; kdeprint_ppdscanner_lno += yylval[0].tqcontains('\n'); QDEBUG1("Quoted value: %s",yytext); return QUOTED; }
+{ yylval = yytext; kdeprint_ppdscanner_lno += yylval[0].contains('\n'); QDEBUG1("Quoted value: %s",yytext); return QUOTED; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP

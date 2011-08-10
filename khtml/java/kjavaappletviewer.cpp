@@ -230,7 +230,7 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
     TQStringList::const_iterator it = args.begin();
     const TQStringList::const_iterator itEnd = args.end();
     for ( ; it != itEnd; ++it) {
-        const int equalPos = (*it).tqfind("=");
+        const int equalPos = (*it).find("=");
         if (equalPos > 0) {
             const TQString name = (*it).left (equalPos).upper ();
             TQString value = (*it).right ((*it).length () - equalPos - 1);

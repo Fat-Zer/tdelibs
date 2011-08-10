@@ -95,17 +95,17 @@ KMDriverDbWidget::~KMDriverDbWidget()
 
 void KMDriverDbWidget::setDriver(const TQString& manu, const TQString& model)
 {
-	TQListBoxItem	*item = m_manu->tqfindItem(manu);
+	TQListBoxItem	*item = m_manu->findItem(manu);
 	TQString		model_(model);
 	if (item)
 	{
 		m_manu->setCurrentItem(item);
-		item = m_model->tqfindItem(model_);
+		item = m_model->findItem(model_);
 		if (!item)
 			// try by stripping the manufacturer name from
 			// the beginning of the model string. This is
 			// often the case with PPD files
-			item = m_model->tqfindItem(model_.replace(0,manu.length()+1,TQString::tqfromLatin1("")));
+			item = m_model->findItem(model_.replace(0,manu.length()+1,TQString::tqfromLatin1("")));
 		if (item)
 			m_model->setCurrentItem(item);
 	}
@@ -203,11 +203,11 @@ void KMDriverDbWidget::slotPostscriptToggled(bool on)
 {
 	if (on)
 	{
-		TQListBoxItem	*item = m_manu->tqfindItem("GENERIC");
+		TQListBoxItem	*item = m_manu->findItem("GENERIC");
 		if (item)
 		{
 			m_manu->setCurrentItem(item);
-			item = m_model->tqfindItem( "POSTSCRIPT PRINTER" );
+			item = m_model->findItem( "POSTSCRIPT PRINTER" );
 			if ( item )
 			{
 				m_model->setCurrentItem( item );

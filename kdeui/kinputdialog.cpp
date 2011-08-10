@@ -229,7 +229,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
 
     for ( TQStringList::ConstIterator it=select.begin(); it!=select.end(); ++it )
     {
-      item = d->m_listBox->tqfindItem( *it, CaseSensitive|ExactMatch );
+      item = d->m_listBox->findItem( *it, CaseSensitive|ExactMatch );
       if ( item )
         d->m_listBox->setSelected( item, true );
     }
@@ -242,7 +242,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
       TQT_SLOT( slotOk() ) );
 
     TQString text = select.first();
-    item = d->m_listBox->tqfindItem( text, CaseSensitive|ExactMatch );
+    item = d->m_listBox->findItem( text, CaseSensitive|ExactMatch );
     if ( item )
       d->m_listBox->setSelected( item, true );
   }

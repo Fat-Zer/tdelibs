@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
     TQObject::connect( doc, TQT_SIGNAL(completed()), dummy, TQT_SLOT(handleDone()) );
 
-    if (args->url(0).url().right(4).tqfind(".xml", 0, false) == 0) {
+    if (args->url(0).url().right(4).find(".xml", 0, false) == 0) {
         KParts::URLArgs ags(doc->browserExtension()->urlArgs());
         ags.serviceType = "text/xml";
         doc->browserExtension()->setURLArgs(ags);

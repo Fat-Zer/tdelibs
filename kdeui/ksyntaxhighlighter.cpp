@@ -148,7 +148,7 @@ int KSyntaxHighlighter::highlightParagraph( const TQString &text, int )
     }
 
     TQString simplified = text;
-    simplified = TQString(simplified.tqreplace( TQRegExp( "\\s" ), TQString() )).tqreplace( '|', TQString::tqfromLatin1(">") );
+    simplified = TQString(simplified.replace( TQRegExp( "\\s" ), TQString() )).replace( '|', TQString::tqfromLatin1(">") );
     while ( simplified.startsWith( TQString::tqfromLatin1(">>>>") ) )
 	simplified = simplified.mid(3);
     if	( simplified.startsWith( TQString::tqfromLatin1(">>>") ) || simplified.startsWith( TQString::tqfromLatin1("> >	>") ) )
@@ -189,7 +189,7 @@ int KSpellingHighlighter::highlightParagraph( const TQString &text,
     // leave #includes, diffs, and quoted replies alone
     TQString diffAndCo( ">|" );
 
-    bool isCode = diffAndCo.tqfind(text[0]) != -1;
+    bool isCode = diffAndCo.find(text[0]) != -1;
 
     if ( !text.endsWith(" ") )
 	d->alwaysEndsWithSpace = false;
@@ -375,7 +375,7 @@ bool KDictSpellingHighlighter::isMisspelled( const TQString &word )
     // get tricky...
     // For auto detection ignore signature and reply prefix
     if ( !d->autoReady )
-	d->autoIgnoreDict.tqreplace( word, Ignore );
+	d->autoIgnoreDict.replace( word, Ignore );
 
     // "dict" is used as a cache to store the results of KSpell
     TQDict<int>* dict = ( d->globalConfig ? d->sDict() : d->mDict );
@@ -383,14 +383,14 @@ bool KDictSpellingHighlighter::isMisspelled( const TQString &word )
 	if ( d->autoReady && ( d->autoDict[word] != NotOkay )) {
 	    if ( !d->autoIgnoreDict[word] )
 		++d->errorCount;
-	    d->autoDict.tqreplace( word, NotOkay );
+	    d->autoDict.replace( word, NotOkay );
 	}
 
 	return d->active;
     }
     if ( !dict->isEmpty() && (*dict)[word] == Okay ) {
 	if ( d->autoReady && !d->autoDict[word] ) {
-	    d->autoDict.tqreplace( word, Okay );
+	    d->autoDict.replace( word, Okay );
 	}
 	return false;
     }
@@ -399,7 +399,7 @@ bool KDictSpellingHighlighter::isMisspelled( const TQString &word )
 	int para, index;
 	textEdit()->getCursorPosition( &para, &index );
 	++d->wordCount;
-	dict->tqreplace( word, Unknown );
+	dict->replace( word, Unknown );
 	++d->checksRequested;
 	if (currentParagraph() != para)
 	    d->completeRehighlightRequired = true;
@@ -425,9 +425,9 @@ void KDictSpellingHighlighter::slotMisspelling (const TQString &originalWord, co
     Q_UNUSED( suggestions );
     // kdDebug() << suggestions.join( " " ).latin1() << endl;
     if ( d->globalConfig )
-        d->sDict()->tqreplace( originalWord, NotOkay );
+        d->sDict()->replace( originalWord, NotOkay );
     else
-        d->mDict->tqreplace( originalWord, NotOkay );
+        d->mDict->replace( originalWord, NotOkay );
 
     //Emit this baby so that apps that want to have suggestions in a popup over
     //the misspelled word can catch them.
@@ -441,7 +441,7 @@ void KDictSpellingHighlighter::slotCorrected(const TQString &word,
 {
     TQDict<int>* dict = ( d->globalConfig ? d->sDict() : d->mDict );
     if ( !dict->isEmpty() && (*dict)[word] == Unknown ) {
-        dict->tqreplace( word, Okay );
+        dict->replace( word, Okay );
     }
     ++d->checksDone;
     if (d->checksDone == d->checksRequested) {

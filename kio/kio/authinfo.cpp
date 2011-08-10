@@ -146,7 +146,7 @@ bool NetRC::lookup( const KURL& url, AutoLogin& login, bool userealnetrc,
       return false;
   }
 
-  if ( !loginMap.tqcontains( type ) )
+  if ( !loginMap.contains( type ) )
     return false;
 
   LoginList l = loginMap[type];

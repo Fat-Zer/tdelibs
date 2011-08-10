@@ -136,7 +136,7 @@ ContainerNode *ContainerNode::findContainer( const TQString &name, const TQStrin
     {
         for (; nIt.current(); ++nIt )
             if ( nIt.current()->name == name &&
-                 !excludeList->tqcontainsRef( nIt.current()->container ) )
+                 !excludeList->containsRef( nIt.current()->container ) )
             {
                 res = nIt.current();
                 break;
@@ -149,7 +149,7 @@ ContainerNode *ContainerNode::findContainer( const TQString &name, const TQStrin
         for (; nIt.current(); ++nIt )
         {
             if ( nIt.current()->tagName == tagName &&
-                 !excludeList->tqcontainsRef( nIt.current()->container )
+                 !excludeList->containsRef( nIt.current()->container )
                  /*
                   * It is a bad idea to also compare the client, because
                   * we don't want to do so in situations like these:
@@ -226,7 +226,7 @@ void ContainerNode::plugActionList( BuildState &state, const MergingIndexList::I
 
     TQString k( mergingIdx.mergingName );
 
-    if ( k.tqfind( tagActionList ) == -1 )
+    if ( k.find( tagActionList ) == -1 )
         return;
 
     k = k.mid( tagActionList.length() );
@@ -268,7 +268,7 @@ void ContainerNode::unplugActionList( BuildState &state, const MergingIndexList:
 
     TQString k = mergingIdx.mergingName;
 
-    if ( k.tqfind( tagActionList ) == -1 )
+    if ( k.find( tagActionList ) == -1 )
         return;
 
     k = k.mid( tagActionList.length() );
@@ -283,7 +283,7 @@ void ContainerNode::unplugActionList( BuildState &state, const MergingIndexList:
                                                         TQString(),
                                                         mergingIndices.end() );
 
-    ActionListMap::Iterator lIt( client->actionLists.tqfind( k ) );
+    ActionListMap::Iterator lIt( client->actionLists.find( k ) );
     if ( lIt == client->actionLists.end() )
         return;
 
@@ -568,9 +568,9 @@ void BuildHelper::processElement( const TQDomElement &e )
 
     bool isActionTag = ( tag == tagAction );
 
-    if ( isActionTag || customTags.tqfindIndex( tag ) != -1 )
+    if ( isActionTag || customTags.findIndex( tag ) != -1 )
         processActionOrCustomElement( e, isActionTag );
-    else if ( containerTags.tqfindIndex( tag ) != -1 )
+    else if ( containerTags.findIndex( tag ) != -1 )
         processContainerElement( e, tag, currName );
     else if ( tag == tagMerge || tag == tagDefineGroup || tag == tagActionList )
         processMergeElement( tag, currName, e );

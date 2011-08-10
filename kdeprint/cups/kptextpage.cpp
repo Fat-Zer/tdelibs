@@ -261,7 +261,7 @@ void KPTextPage::setOptions(const TQMap<TQString,TQString>& opts)
 	if (!(value=opts["columns"]).isEmpty())
 		m_columns->setValue(value.toInt());
 	int	ID(0);
-	if (opts.tqcontains("prettyprint") && (opts["prettyprint"].isEmpty() || opts["prettyprint"] == "true"))
+	if (opts.contains("prettyprint") && (opts["prettyprint"].isEmpty() || opts["prettyprint"] == "true"))
 		ID = 1;
 	m_prettyprint->setButton(ID);
 	slotPrettyChanged(ID);

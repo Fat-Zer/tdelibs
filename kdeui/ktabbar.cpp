@@ -76,7 +76,7 @@ void KTabBar::setTabEnabled( int id, bool enabled )
 
                 if ( t->isEnabled() ) {
                     r = r.unite( t->rect() );
-                    tablist->append( tablist->take( tablist->tqfindRef( t ) ) );
+                    tablist->append( tablist->take( tablist->findRef( t ) ) );
                     emit selected( t->identifier() );
                 }
             }
@@ -181,7 +181,7 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
             }
             rect.moveLeft( t->rect().left() + 2 + xoff );
             rect.moveTop( t->rect().center().y()-pixmap.height()/2 + yoff );
-            if ( rect.tqcontains( e->pos() ) ) {
+            if ( rect.contains( e->pos() ) ) {
                 if ( mHoverCloseButton ) {
                     if ( mHoverCloseButtonTab == t )
                         return;
@@ -300,7 +300,7 @@ void KTabBar::setTabColor( int id, const TQColor& color )
 
 const TQColor &KTabBar::tabColor( int id  ) const
 {
-    if ( mTabColors.tqcontains( id ) )
+    if ( mTabColors.contains( id ) )
         return mTabColors[id];
 
     return tqcolorGroup().foreground();
@@ -312,7 +312,7 @@ int KTabBar::insertTab( TQTab *t, int index )
 
     if ( mTabCloseActivatePrevious && count() > 2 ) {
         TQPtrList<TQTab> *tablist = tabList();
-        tablist->insert( count()-2, tablist->take( tablist->tqfindRef( t ) ) );
+        tablist->insert( count()-2, tablist->take( tablist->findRef( t ) ) );
     }
 
     return res;
@@ -359,7 +359,7 @@ void KTabBar::paintLabel( TQPainter *p, const TQRect& br,
         flags |= TQStyle::Style_HasFocus;
 
     TQColorGroup cg( tqcolorGroup() );
-    if ( mTabColors.tqcontains( t->identifier() ) )
+    if ( mTabColors.contains( t->identifier() ) )
         cg.setColor( TQColorGroup::Foreground, mTabColors[t->identifier()] );
 
     tqstyle().tqdrawControl( TQStyle::CE_TabBarLabel, p, this, r,

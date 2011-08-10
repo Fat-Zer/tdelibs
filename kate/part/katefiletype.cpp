@@ -126,7 +126,7 @@ void KateFileTypeManager::save (TQPtrList<KateFileType> *v)
 
   for (uint z=0; z < g.count(); z++)
   {
-    if (newg.tqfindIndex (g[z]) == -1)
+    if (newg.findIndex (g[z]) == -1)
       config.deleteGroup (g[z]);
   }
 
@@ -187,7 +187,7 @@ int KateFileTypeManager::fileType (KateDocument *doc)
 
   for (uint z=0; z < m_types.count(); z++)
   {
-    if (m_types.tqat(z)->mimetypes.tqfindIndex (mt->name()) > -1)
+    if (m_types.tqat(z)->mimetypes.findIndex (mt->name()) > -1)
       types.append (m_types.tqat(z));
   }
 
@@ -539,9 +539,9 @@ void KateViewFileTypeAction::slotAboutToShow()
     TQString hlName = KateFactory::self()->fileTypeManager()->list()->tqat(z)->name;
     TQString hlSection = KateFactory::self()->fileTypeManager()->list()->tqat(z)->section;
 
-    if ( !hlSection.isEmpty() && (names.tqcontains(hlName) < 1) )
+    if ( !hlSection.isEmpty() && (names.contains(hlName) < 1) )
     {
-      if (subMenusName.tqcontains(hlSection) < 1)
+      if (subMenusName.contains(hlSection) < 1)
       {
         subMenusName << hlSection;
         TQPopupMenu *menu = new TQPopupMenu ();
@@ -549,11 +549,11 @@ void KateViewFileTypeAction::slotAboutToShow()
         popupMenu()->insertItem (hlSection, menu);
       }
 
-      int m = subMenusName.tqfindIndex (hlSection);
+      int m = subMenusName.findIndex (hlSection);
       names << hlName;
       subMenus.tqat(m)->insertItem ( hlName, this, TQT_SLOT(setType(int)), 0,  z+1);
     }
-    else if (names.tqcontains(hlName) < 1)
+    else if (names.contains(hlName) < 1)
     {
       names << hlName;
       popupMenu()->insertItem ( hlName, this, TQT_SLOT(setType(int)), 0,  z+1);
@@ -576,7 +576,7 @@ void KateViewFileTypeAction::slotAboutToShow()
     const KateFileType *t = 0;
     if ((t = KateFactory::self()->fileTypeManager()->fileType (doc->fileType())))
     {
-      int i = subMenusName.tqfindIndex (t->section);
+      int i = subMenusName.findIndex (t->section);
       if (i >= 0 && subMenus.tqat(i))
         subMenus.tqat(i)->setItemChecked (doc->fileType()+1, true);
       else

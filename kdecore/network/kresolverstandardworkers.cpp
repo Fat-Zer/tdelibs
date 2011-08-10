@@ -547,8 +547,8 @@ bool KStandardWorker::sanityCheck()
   if (!nodeName().isEmpty())
     {
       TQString node = nodeName();
-      if (node.tqfind('%') != -1)
-	node.truncate(node.tqfind('%'));
+      if (node.find('%') != -1)
+	node.truncate(node.find('%'));
 
       if (node.isEmpty() || node == TQString::tqfromLatin1("*") ||
 	  node == TQString::tqfromLatin1("localhost"))
@@ -584,7 +584,7 @@ bool KStandardWorker::resolveScopeId()
 {
   // we must test the original name, not the encoded one
   scopeid = 0;
-  int pos = nodeName().tqfindRev('%');
+  int pos = nodeName().findRev('%');
   if (pos == -1)
     return true;
 

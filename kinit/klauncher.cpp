@@ -893,7 +893,7 @@ KLauncher::exec_blind( const TQCString &name, const TQValueList<TQCString> &arg_
    request->transaction = 0; // No confirmation is send
    request->envs = envs;
    // Find service, if any - strip path if needed
-   KService::Ptr service = KService::serviceByDesktopName( name.mid( name.tqfindRev( '/' ) + 1 ));
+   KService::Ptr service = KService::serviceByDesktopName( name.mid( name.findRev( '/' ) + 1 ));
    if (service != NULL)
        send_service_startup_info( request,  service,
            startup_id, TQValueList< TQCString >());
@@ -1165,7 +1165,7 @@ KLauncher::kdeinit_exec(const TQString &app, const TQStringList &args,
    if( app != "kbuildsycoca" ) // avoid stupid loop
    {
        // Find service, if any - strip path if needed
-       KService::Ptr service = KService::serviceByDesktopName( app.mid( app.tqfindRev( '/' ) + 1 ));
+       KService::Ptr service = KService::serviceByDesktopName( app.mid( app.findRev( '/' ) + 1 ));
        if (service != NULL)
            send_service_startup_info( request,  service,
                startup_id, TQValueList< TQCString >());

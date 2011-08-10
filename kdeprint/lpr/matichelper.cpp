@@ -29,7 +29,7 @@ TQString maticFile(PrintcapEntry *entry)
 		s = entry->field("filter_options");
 		if (!s.isEmpty())
 		{
-			int	p = s.tqfindRev(' ');
+			int	p = s.findRev(' ');
 			if (p != -1)
 				s = s.mid(p+1);
 		}

@@ -86,7 +86,7 @@ static TQCString getDescrFromNum(unsigned int _num)
     KDebugCache->setAutoDelete(true);
   }
 
-  KDebugEntry *ent = KDebugCache->tqfind( _num );
+  KDebugEntry *ent = KDebugCache->find( _num );
   if ( ent )
     return ent->descr;
 
@@ -139,7 +139,7 @@ static TQCString getDescrFromNum(unsigned int _num)
   }
   file.close();
 
-  ent = KDebugCache->tqfind( _num );
+  ent = KDebugCache->find( _num );
   if ( ent )
       return ent->descr;
 

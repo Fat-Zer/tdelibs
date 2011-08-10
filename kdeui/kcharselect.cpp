@@ -460,7 +460,7 @@ TQSize KCharSelect::tqsizeHint() const
 //==================================================================
 void KCharSelect::setFont( const TQString &_font )
 {
-    const TQValueList<TQString>::Iterator it = fontList.tqfind( _font );
+    const TQValueList<TQString>::Iterator it = fontList.find( _font );
     if ( it != fontList.end() ) {
 	TQValueList<TQString>::Iterator it2 = fontList.begin();
 	int pos = 0;

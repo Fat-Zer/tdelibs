@@ -179,7 +179,7 @@ TQCString PtyProcess::readLine(bool block)
 
     if (!m_Inbuf.isEmpty()) 
     {
-        pos = m_Inbuf.tqfind('\n');
+        pos = m_Inbuf.find('\n');
         if (pos == -1) 
         {
             ret = m_Inbuf;
@@ -228,7 +228,7 @@ TQCString PtyProcess::readLine(bool block)
         buf[nbytes] = '\000';
         m_Inbuf += buf;
 
-        pos = m_Inbuf.tqfind('\n');
+        pos = m_Inbuf.find('\n');
         if (pos == -1) 
         {
             ret = m_Inbuf;
@@ -513,7 +513,7 @@ int PtyProcess::waitForChild()
                 if (!m_Exit.isEmpty())
                 {
                     // match exit string only at line starts
-                    int pos = output.tqfind(m_Exit.data());
+                    int pos = output.find(m_Exit.data());
                     if ((pos >= 0) && ((pos == 0 && lineStart) || (output.at (pos - 1) == '\n')))
                     {
                         kill(m_Pid, SIGTERM);

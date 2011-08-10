@@ -370,7 +370,7 @@ TQCString execpath_avoid_loops( const TQCString& exec, int envc, const char* env
          s_instance->dirs()->findExe( exec, paths.join( TQString( ":" ))));
      if( avoid_loops && !execpath.isEmpty())
      {
-         int pos = execpath.tqfindRev( '/' );
+         int pos = execpath.findRev( '/' );
          TQString bin_path = execpath.left( pos );
          for( TQStringList::Iterator it = paths.begin();
               it != paths.end();
@@ -456,7 +456,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
   {
      lib = _name;
      name = _name;
-     name = name.mid( name.tqfindRev('/') + 1);
+     name = name.mid( name.findRev('/') + 1);
      exec = _name;
      if (lib.right(3) == ".la")
         libpath = lib;
@@ -535,7 +535,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
               ++it )
          {
              TQCString tmp( it.current());
-             int pos = tmp.tqfind( '=' );
+             int pos = tmp.find( '=' );
              if( pos >= 0 )
                  unsetenv( tmp.left( pos ));
          }
@@ -1477,16 +1477,16 @@ static void kdeinit_library_path()
         it++)
    {
       TQString d = *it;
-      if (ltdl_library_path.tqcontains(d))
+      if (ltdl_library_path.contains(d))
           continue;
-      if (ld_library_path.tqcontains(d))
+      if (ld_library_path.contains(d))
           continue;
       if (d[d.length()-1] == '/')
       {
          d.truncate(d.length()-1);
-         if (ltdl_library_path.tqcontains(d))
+         if (ltdl_library_path.contains(d))
             continue;
-         if (ld_library_path.tqcontains(d))
+         if (ld_library_path.contains(d))
             continue;
       }
       if ((d == "/lib") || (d == "/usr/lib"))
@@ -1517,7 +1517,7 @@ static void kdeinit_library_path()
      exit(255);
    }
    int i;
-   if((i = display.tqfindRev('.')) > display.tqfindRev(':') && i >= 0)
+   if((i = display.findRev('.')) > display.findRev(':') && i >= 0)
      display.truncate(i);
 
    TQCString socketName = TQFile::encodeName(locateLocal("socket", TQString("kdeinit-%1").arg(TQString(display)), s_instance));

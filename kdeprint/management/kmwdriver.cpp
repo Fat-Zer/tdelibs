@@ -49,7 +49,7 @@ void KMWDriver::initPrinter(KMPrinter *p)
 		{
 			// use auto-detection info instead: split the string
 			// into make/model pair at the first space character
-			int p = autoDetect.tqfind( ' ' );
+			int p = autoDetect.find( ' ' );
 			if ( p != -1 )
 			{
 				TQString manu = autoDetect.left( p ), model = autoDetect.mid( p+1 );

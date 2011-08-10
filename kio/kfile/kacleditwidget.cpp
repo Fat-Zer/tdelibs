@@ -495,17 +495,17 @@ void EditACLEntryDialog::slotUpdateAllowedUsersAndGroups()
     m_groupsCombo->clear();
     if ( m_defaultCB && m_defaultCB->isChecked() ) {
         m_usersCombo->insertStringList( m_defaultUsers );
-        if ( m_defaultUsers.tqfind( oldUser ) != m_defaultUsers.end() )
+        if ( m_defaultUsers.find( oldUser ) != m_defaultUsers.end() )
             m_usersCombo->setCurrentText( oldUser );
         m_groupsCombo->insertStringList( m_defaultGroups );
-        if ( m_defaultGroups.tqfind( oldGroup ) != m_defaultGroups.end() )
+        if ( m_defaultGroups.find( oldGroup ) != m_defaultGroups.end() )
             m_groupsCombo->setCurrentText( oldGroup );
     } else {
         m_usersCombo->insertStringList( m_users );
-        if ( m_users.tqfind( oldUser ) != m_users.end() )
+        if ( m_users.find( oldUser ) != m_users.end() )
             m_usersCombo->setCurrentText( oldUser );
         m_groupsCombo->insertStringList( m_groups );
-        if ( m_groups.tqfind( oldGroup ) != m_groups.end() )
+        if ( m_groups.find( oldGroup ) != m_groups.end() )
             m_groupsCombo->setCurrentText( oldGroup );
     }
 }

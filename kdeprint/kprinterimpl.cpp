@@ -252,7 +252,7 @@ bool KPrinterImpl::startPrinting(const TQString& cmd, KPrinter *printer, const T
 
 	TQString	command(cmd), filestr;
 	TQStringList	printfiles;
-	if (command.tqfind("%in") == -1) command.append(" %in");
+	if (command.find("%in") == -1) command.append(" %in");
 
 	for (TQStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
 		if (TQFile::exists(*it))
@@ -317,7 +317,7 @@ int KPrinterImpl::filterFiles(KPrinter *printer, TQStringList& files, bool flag)
 	     !printer->option("kde-range").isEmpty() ||
 	     printer->pageSet() != KPrinter::AllPages))
 	{
-		if (flist.tqfindIndex("psselect") == -1)
+		if (flist.findIndex("psselect") == -1)
 		{
 			int	index = KXmlCommandManager::self()->insertCommand(flist, "psselect", false);
 			if (index == -1 || !KXmlCommandManager::self()->checkCommand("psselect"))
@@ -379,7 +379,7 @@ int KPrinterImpl::doFilterFiles(KPrinter *printer, TQStringList& files, const TQ
 	for (TQStringList::Iterator it=files.begin(); it!=files.end(); ++it)
 	{
 		TQString	mime = KMimeMagic::self()->findFileType(*it)->mimeType();
-		if (inputMimeTypes.tqfind(mime) == inputMimeTypes.end())
+		if (inputMimeTypes.find(mime) == inputMimeTypes.end())
 		{
 			if (KMessageBox::warningContinueCancel(0,
 				"<p>" + i18n("The MIME type %1 is not supported as input of the filter chain "
@@ -491,7 +491,7 @@ int KPrinterImpl::autoConvertFiles(KPrinter *printer, TQStringList& files, bool 
 			it = files.remove( it );
 			continue;
 		}
-		else if (mimeTypes.tqfindIndex(mime) == -1)
+		else if (mimeTypes.findIndex(mime) == -1)
 		{
 			if ((result=KMessageBox::warningYesNoCancel(NULL,
 					       i18n("<qt>The file format <em> %1 </em> is not directly supported by the current print system. You "

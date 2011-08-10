@@ -61,14 +61,14 @@ void KNSBookmarkImporterImpl::parse()
             TQCString t = s.stripWhiteSpace();
             if(t.left(12).upper() == "<DT><A HREF=" ||
                t.left(16).upper() == "<DT><H3><A HREF=") {
-              int firstQuotes = t.tqfind('"')+1;
-              int secondQuotes = t.tqfind('"', firstQuotes);
+              int firstQuotes = t.find('"')+1;
+              int secondQuotes = t.find('"', firstQuotes);
               if (firstQuotes != -1 && secondQuotes != -1)
               {
                 TQCString link = t.mid(firstQuotes, secondQuotes-firstQuotes);
-                int endTag = t.tqfind('>', secondQuotes+1);
+                int endTag = t.find('>', secondQuotes+1);
                 TQCString name = t.mid(endTag+1);
-                name = name.left(name.tqfindRev('<'));
+                name = name.left(name.findRev('<'));
                 if ( name.right(4) == "</A>" )
                     name = name.left( name.length() - 4 );
                 TQString qname = KCharsets::resolveEntities( codec->toUnicode( name ) );
@@ -79,9 +79,9 @@ void KNSBookmarkImporterImpl::parse()
               }
             }
             else if(t.left(7).upper() == "<DT><H3") {
-                int endTag = t.tqfind('>', 7);
+                int endTag = t.find('>', 7);
                 TQCString name = t.mid(endTag+1);
-                name = name.left(name.tqfindRev('<'));
+                name = name.left(name.findRev('<'));
                 TQString qname = KCharsets::resolveEntities( codec->toUnicode( name ) );
                 TQCString additionalInfo = t.mid( 8, endTag-8 );
                 bool folded = (additionalInfo.left(6) == "FOLDED");

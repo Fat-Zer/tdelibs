@@ -190,7 +190,7 @@ static void parseDataHeader(const KURL &url, DataHeader &header_info) {
   int raw_url_len = (int)raw_url.length();
 
   // jump over scheme part (must be "data:", we don't even check that)
-  header_info.data_offset = raw_url.tqfind(':');
+  header_info.data_offset = raw_url.find(':');
   header_info.data_offset++;	// jump over colon or to begin if scheme was missing
 
   // read mime type

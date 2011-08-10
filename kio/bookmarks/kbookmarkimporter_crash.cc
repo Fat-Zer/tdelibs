@@ -141,7 +141,7 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
     int count = 0;
     for ( ; (( fi = it.current() ) != 0) && (count < 20); ++it, ++count ) 
     {
-        bool stillAlive = activeLogs.tqcontains( fi->absFilePath() );
+        bool stillAlive = activeLogs.contains( fi->absFilePath() );
         if ( !stillAlive )
             crashFiles << fi->absFilePath();
     }

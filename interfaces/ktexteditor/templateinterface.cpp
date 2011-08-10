@@ -173,7 +173,7 @@ bool TemplateInterface::insertTemplateText ( uint line, uint column, const TQStr
         }
       }
       TQString placeholder = rx.cap( 1 );
-      if ( ! enhancedInitValues.tqcontains( placeholder ) )
+      if ( ! enhancedInitValues.contains( placeholder ) )
         enhancedInitValues[ placeholder ] = "";
 
       pos += rx.matchedLength();

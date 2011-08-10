@@ -800,7 +800,7 @@ void KPrintDialog::setOutputFileExtension(const TQString& ext)
 	{
 		KURL url( d->m_file->url() );
 		TQString f( url.fileName() );
-		int p = f.tqfindRev( '.' );
+		int p = f.findRev( '.' );
 		// change "file.ext"; don't change "file", "file." or ".file" but do change ".file.ext"
 		if ( p > 0 && p != int (f.length () - 1) )
 		{

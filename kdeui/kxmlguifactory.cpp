@@ -240,7 +240,7 @@ void KXMLGUIFactory::addClient( KXMLGUIClient *client )
     d->guiClient = client;
 
     // add this client to our client list
-    if ( !d->m_clients.tqcontainsRef( client ) )
+    if ( !d->m_clients.containsRef( client ) )
         d->m_clients.append( client );
     else
         kdDebug(1002) << "XMLGUI client already added " << client << endl;

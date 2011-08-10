@@ -619,7 +619,7 @@ TQString KACL::asString() const
 TQString KACL::KACLPrivate::getUserName( uid_t uid ) const
 {
     TQString *temp;
-    temp = m_usercache.tqfind( uid );
+    temp = m_usercache.find( uid );
     if ( !temp ) {
         struct passwd *user = getpwuid( uid );
         if ( user ) {
@@ -637,7 +637,7 @@ TQString KACL::KACLPrivate::getUserName( uid_t uid ) const
 TQString KACL::KACLPrivate::getGroupName( gid_t gid ) const
 {
     TQString *temp;
-    temp = m_groupcache.tqfind( gid );
+    temp = m_groupcache.find( gid );
     if ( !temp ) {
         struct group *grp = getgrgid( gid );
         if ( grp ) {

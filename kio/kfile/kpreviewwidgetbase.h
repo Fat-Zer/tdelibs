@@ -84,7 +84,7 @@ protected:
 private:
     class KPreviewWidgetBasePrivate;
     KPreviewWidgetBasePrivate * d() const {
-        return s_private->tqfind( const_cast<KPreviewWidgetBase*>( this ) );
+        return s_private->find( const_cast<KPreviewWidgetBase*>( this ) );
     }
     static TQPtrDict<KPreviewWidgetBasePrivate> * s_private;
 };

@@ -172,7 +172,7 @@ void buildFile( TQTextStream &ts, const TQString& group, const TQString& fileNam
     for ( uint idx = 0; idx < includes.count(); ++idx )
         ts << "#include <" << includes[ idx ] << ">" << endl;
     TQStringList classes = input.groupList();
-    classes.remove( classes.tqfind( "Global" ) );
+    classes.remove( classes.find( "Global" ) );
     // Autogenerate widget includes here
     for ( uint idx = 0; idx < classes.count(); ++idx )
         ts << buildWidgetInclude( classes[ idx ], input ) << endl;

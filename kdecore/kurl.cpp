@@ -338,7 +338,7 @@ static TQString cleanpath(const TQString &_path, bool cleanDirSeparator, bool de
 #else
      TQString encodedDot("%2e");
 #endif
-     if (path.tqfind(encodedDot, 0, false) != -1)
+     if (path.find(encodedDot, 0, false) != -1)
      {
 #ifndef KDE_QT_ONLY
         static const TQString &encodedDOT = KGlobal::staticQString("%2E"); // Uppercase!
@@ -365,7 +365,7 @@ static TQString cleanpath(const TQString &_path, bool cleanDirSeparator, bool de
 
   cdUp = 0;
   pos = orig_pos = len;
-  while ( pos && (pos = path.tqfindRev('/',--pos)) != -1 )
+  while ( pos && (pos = path.findRev('/',--pos)) != -1 )
   {
     len = orig_pos - pos - 1;
     if ( len == 2 && path[pos+1] == '.' && path[pos+2] == '.' )
@@ -542,11 +542,11 @@ KURL::KURL( const KURL& _u, const TQString& _rel_url, int encoding_hint )
   TQString rUrl = _rel_url;
   int len = _u.m_strProtocol.length();
   if ( !_u.m_strHost.isEmpty() && !rUrl.isEmpty() &&
-       rUrl.tqfind( _u.m_strProtocol, 0, false ) == 0 &&
+       rUrl.find( _u.m_strProtocol, 0, false ) == 0 &&
        rUrl[len] == ':' && (rUrl[len+1] != '/' ||
        (rUrl[len+1] == '/' && rUrl[len+2] != '/')) )
   {
-    rUrl.remove( 0, rUrl.tqfind( ':' ) + 1 );
+    rUrl.remove( 0, rUrl.find( ':' ) + 1 );
   }
 
   if ( rUrl.isEmpty() )
@@ -579,13 +579,13 @@ KURL::KURL( const KURL& _u, const TQString& _rel_url, int encoding_hint )
     }
     else if ( rUrl[0] != '?' )
     {
-       int pos = m_strPath.tqfindRev( '/' );
+       int pos = m_strPath.findRev( '/' );
        if (pos >= 0)
           m_strPath.truncate(pos);
        m_strPath += '/';
        if (!m_strPath_encoded.isEmpty())
        {
-          pos = m_strPath_encoded.tqfindRev( '/' );
+          pos = m_strPath_encoded.findRev( '/' );
           if (pos >= 0)
              m_strPath_encoded.truncate(pos);
           m_strPath_encoded += '/';
@@ -1231,7 +1231,7 @@ void KURL::setFileName( const TQString& _txt )
     path = "/";
   else
   {
-    int lastSlash = path.tqfindRev( '/' );
+    int lastSlash = path.findRev( '/' );
     if ( lastSlash == -1)
     {
       // The first character is not a '/' ???
@@ -1347,7 +1347,7 @@ void KURL::setEncodedPath( const TQString& _txt, int encoding_hint )
 
 void KURL::setEncodedPathAndQuery( const TQString& _txt, int encoding_hint )
 {
-  int pos = _txt.tqfind( '?' );
+  int pos = _txt.find( '?' );
   if ( pos == -1 )
   {
     setEncodedPath(_txt, encoding_hint);
@@ -1490,7 +1490,7 @@ TQString KURL::url( int _trailing, int encoding_hint ) const
     }
     if ( m_iUriMode == URL )
     {
-      bool IPv6 = (m_strHost.tqfind(':') != -1);
+      bool IPv6 = (m_strHost.find(':') != -1);
       if (IPv6)
         u += '[' + m_strHost + ']';
       else
@@ -1546,7 +1546,7 @@ TQString KURL::prettyURL( int _trailing ) const
     }
     if ( m_iUriMode == URL )
     {
-    bool IPv6 = (m_strHost.tqfind(':') != -1);
+    bool IPv6 = (m_strHost.find(':') != -1);
     if (IPv6)
     {
        u += '[' + m_strHost + ']';
@@ -1704,13 +1704,13 @@ TQString KURL::fileName( bool _strip_trailing_slash ) const
      // This is hairy, we need the last unencoded slash.
      // Count in the encoded string how many encoded slashes follow the last
      // unencoded one.
-     int i = m_strPath_encoded.tqfindRev( TQChar('/'), len - 1 );
+     int i = m_strPath_encoded.findRev( TQChar('/'), len - 1 );
      TQString fileName_encoded = m_strPath_encoded.mid(i+1);
-     n += fileName_encoded.tqcontains("%2f", false);
+     n += fileName_encoded.contains("%2f", false);
   }
   int i = len;
   do {
-    i = path.tqfindRev( TQChar('/'), i - 1 );
+    i = path.findRev( TQChar('/'), i - 1 );
   }
   while (--n && (i > 0));
 
@@ -1773,7 +1773,7 @@ TQString KURL::directory( bool _strip_trailing_slash_from_result,
   if ( result.isEmpty() || result == "/" )
     return result;
 
-  int i = result.tqfindRev( "/" );
+  int i = result.findRev( "/" );
   // If ( i == -1 ) => the first character is not a '/'
   // So it's some URL like file:blah.tgz, with no path
   if ( i == -1 )
@@ -2143,7 +2143,7 @@ TQMap< TQString, TQString > KURL::queryItems( int options, int encoding_hint ) c
   TQMap< TQString, TQString > result;
   TQStringList items = TQStringList::split( '&', m_strQuery_encoded );
   for ( TQStringList::const_iterator it = items.begin() ; it != items.end() ; ++it ) {
-    int equal_pos = (*it).tqfind( '=' );
+    int equal_pos = (*it).find( '=' );
     if ( equal_pos > 0 ) { // = is not the first char...
       TQString name = (*it).left( equal_pos );
       if ( options & CaseInsensitiveKeys )

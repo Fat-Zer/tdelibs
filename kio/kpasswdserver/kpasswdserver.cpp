@@ -115,12 +115,12 @@ static bool storeInWallet( KWallet::Wallet* wallet, const TQString& key, const K
     kdDebug(130) << "storeInWallet: walletKey=" << walletKey << "  reading existing map" << endl;
     if ( wallet->readMap( walletKey, map ) == 0 ) {
         Map::ConstIterator end = map.end();
-        Map::ConstIterator it = map.tqfind( "login" );
+        Map::ConstIterator it = map.find( "login" );
         while ( it != end ) {
             if ( it.data() == info.username ) {
                 break; // OK, overwrite this entry
             }
-            it = map.tqfind( TQString( "login-" ) + TQString::number( ++entryNumber ) );
+            it = map.find( TQString( "login-" ) + TQString::number( ++entryNumber ) );
         }
         // If no entry was found, create a new entry - entryNumber is set already.
     }
@@ -148,17 +148,17 @@ static bool readFromWallet( KWallet::Wallet* wallet, const TQString& key, const 
             typedef TQMap<TQString,TQString> Map;
             int entryNumber = 1;
             Map::ConstIterator end = map.end();
-            Map::ConstIterator it = map.tqfind( "login" );
+            Map::ConstIterator it = map.find( "login" );
             while ( it != end ) {
                 //kdDebug(130) << "readFromWallet: found " << it.key() << "=" << it.data() << endl;
-                Map::ConstIterator pwdIter = map.tqfind( makeMapKey( "password", entryNumber ) );
+                Map::ConstIterator pwdIter = map.find( makeMapKey( "password", entryNumber ) );
                 if ( pwdIter != end ) {
                     if ( it.data() == username )
                         password = pwdIter.data();
                     knownLogins.insert( it.data(), pwdIter.data() );
                 }
 
-                it = map.tqfind( TQString( "login-" ) + TQString::number( ++entryNumber ) );
+                it = map.find( TQString( "login-" ) + TQString::number( ++entryNumber ) );
             }
             //kdDebug(130) << knownLogins.count() << " known logins" << endl;
 
@@ -541,7 +541,7 @@ KPasswdServer::copyAuthInfo(const AuthInfo *i)
 const KPasswdServer::AuthInfo *
 KPasswdServer::findAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
 {
-   AuthInfoList *authList = m_authDict.tqfind(key);
+   AuthInfoList *authList = m_authDict.find(key);
    if (!authList)
       return 0;
 
@@ -579,7 +579,7 @@ KPasswdServer::findAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
 void
 KPasswdServer::removeAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
 {
-   AuthInfoList *authList = m_authDict.tqfind(key);
+   AuthInfoList *authList = m_authDict.find(key);
    if (!authList)
       return;
 
@@ -606,7 +606,7 @@ KPasswdServer::removeAuthInfoItem(const TQString &key, const KIO::AuthInfo &info
 void
 KPasswdServer::addAuthInfoItem(const TQString &key, const KIO::AuthInfo &info, long windowId, long seqNr, bool canceled)
 {
-   AuthInfoList *authList = m_authDict.tqfind(key);
+   AuthInfoList *authList = m_authDict.find(key);
    if (!authList)
    {
       authList = new AuthInfoList;
@@ -659,7 +659,7 @@ KPasswdServer::updateAuthExpire(const TQString &key, const AuthInfo *auth, long 
    else if (windowId && (current->expire != AuthInfo::expNever))
    {
       current->expire = AuthInfo::expWindowClose;
-      if (!current->windowList.tqcontains(windowId))
+      if (!current->windowList.contains(windowId))
          current->windowList.append(windowId);
    }
    else if (current->expire == AuthInfo::expTime)
@@ -670,13 +670,13 @@ KPasswdServer::updateAuthExpire(const TQString &key, const AuthInfo *auth, long 
    // Update mWindowIdList
    if (windowId)
    {
-      TQStringList *keysChanged = mWindowIdList.tqfind(windowId);
+      TQStringList *keysChanged = mWindowIdList.find(windowId);
       if (!keysChanged)
       {
          keysChanged = new TQStringList;
          mWindowIdList.insert(windowId, keysChanged);
       }
-      if (!keysChanged->tqcontains(key))
+      if (!keysChanged->contains(key))
          keysChanged->append(key);
    }
 }
@@ -684,14 +684,14 @@ KPasswdServer::updateAuthExpire(const TQString &key, const AuthInfo *auth, long 
 void
 KPasswdServer::removeAuthForWindowId(long windowId)
 {
-   TQStringList *keysChanged = mWindowIdList.tqfind(windowId);
+   TQStringList *keysChanged = mWindowIdList.find(windowId);
    if (!keysChanged) return;
 
    for(TQStringList::ConstIterator it = keysChanged->begin();
        it != keysChanged->end(); ++it)
    {
       TQString key = *it;
-      AuthInfoList *authList = m_authDict.tqfind(key);
+      AuthInfoList *authList = m_authDict.find(key);
       if (!authList)
          continue;
 

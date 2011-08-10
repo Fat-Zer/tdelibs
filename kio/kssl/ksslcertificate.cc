@@ -243,7 +243,7 @@ TQString KSSLCertificate::getKDEKey() const {
 
 TQString KSSLCertificate::getMD5DigestFromKDEKey(const TQString &k) {
 	TQString rc;
-	int pos = k.tqfindRev('(');
+	int pos = k.findRev('(');
 	if (pos != -1) {
 		unsigned int len = k.length();
 		if (k.tqat(len-1) == ')') {

@@ -1202,7 +1202,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
             c = KCursor::ibeamCursor();
         if ( mev.url.length() && m_part->settings()->changeCursor() ) {
             c = m_part->urlCursor();
-	    if (mev.url.string().startsWith("mailto:") && mev.url.string().tqfind('@')>0)
+	    if (mev.url.string().startsWith("mailto:") && mev.url.string().find('@')>0)
                 mailtoCursor = true;
             else
                 newWindowCursor = targetOpensNewWindow( m_part, mev.target.string() );
@@ -1217,7 +1217,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
         break;
     case CURSOR_POINTER:
         c = m_part->urlCursor();
-	if (mev.url.string().startsWith("mailto:") && mev.url.string().tqfind('@')>0)
+	if (mev.url.string().startsWith("mailto:") && mev.url.string().find('@')>0)
             mailtoCursor = true;
         else
             newWindowCursor = targetOpensNewWindow( m_part, mev.target.string() );
@@ -2275,7 +2275,7 @@ void KHTMLView::displayAccessKeys( KHTMLView* caller, KHTMLView* origview, TQVal
                 if( tqFind( taken.begin(), taken.end(), a ) == taken.end()) // !contains
                     accesskey = a;
             }
-            if( accesskey.isNull() && fallbacks.tqcontains( en )) {
+            if( accesskey.isNull() && fallbacks.contains( en )) {
                 TQChar a = fallbacks[ en ].upper();
                 if( tqFind( taken.begin(), taken.end(), a ) == taken.end()) // !contains
                     accesskey = TQString( "<qt><i>" ) + a + "</i></qt>";
@@ -2625,7 +2625,7 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
             }
             if( ignore )
                 continue;
-            if( text.isNull() && labels.tqcontains( element ))
+            if( text.isNull() && labels.contains( element ))
                 text = labels[ element ];
             if( text.isNull() && text_before )
                 text = getElementText( element, false );
@@ -2685,7 +2685,7 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
                 for( TQValueList< TQPair< TQString, TQChar > >::ConstIterator it = priorities.begin();
                      it != priorities.end();
                      ++it )
-                    if( text == (*it).first && keys.tqcontains( (*it).second )) {
+                    if( text == (*it).first && keys.contains( (*it).second )) {
                         key = (*it).second;
                         break;
                     }
@@ -2698,7 +2698,7 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
                 for( TQStringList::ConstIterator it = words.begin();
                      it != words.end();
                      ++it ) {
-                    if( keys.tqcontains( (*it)[ 0 ].upper())) {
+                    if( keys.contains( (*it)[ 0 ].upper())) {
                         key = (*it)[ 0 ].upper();
                         break;
                     }
@@ -2708,7 +2708,7 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
                 for( unsigned int i = 0;
                      i < text.length();
                      ++i ) {
-                    if( keys.tqcontains( text[ i ].upper())) {
+                    if( keys.contains( text[ i ].upper())) {
                         key = text[ i ].upper();
                         break;
                     }
@@ -2757,7 +2757,7 @@ bool KHTMLView::pagedMode() const
 void KHTMLView::setWidgetVisible(RenderWidget* w, bool vis)
 {
     if (vis) {
-        d->visibleWidgets.tqreplace(w, w->widget());
+        d->visibleWidgets.replace(w, w->widget());
     }
     else
         d->visibleWidgets.remove(w);
@@ -3085,7 +3085,7 @@ void KHTMLView::addFormCompletionItem(const TQString &name, const TQString &valu
     if (cc_number)
       return;
     TQStringList items = formCompletionItems(name);
-    if (!items.tqcontains(value))
+    if (!items.contains(value))
         items.prepend(value);
     while ((int)items.count() > m_part->settings()->maxFormCompletionItems())
         items.remove(items.fromLast());
@@ -3125,7 +3125,7 @@ bool KHTMLView::nonPasswordStorableSite(const TQString& host) const
     TQStringList sites =  d->formCompletions->readListEntry("Sites");
     d->formCompletions->setGroup(TQString::null);//reset
 
-    return (sites.tqfind(host) != sites.end());
+    return (sites.find(host) != sites.end());
 }
 
 // returns true if event should be swallowed

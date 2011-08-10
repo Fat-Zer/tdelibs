@@ -662,7 +662,7 @@ void PlastikStyle::renderPixel(TQPainter *p,
         int key = search.key();
 
         CacheEntry *cacheEntry;
-        if( (cacheEntry = pixmapCache->tqfind(key)) ) {
+        if( (cacheEntry = pixmapCache->find(key)) ) {
             if( search == *cacheEntry ) { // match! we can draw now...
                 if(cacheEntry->pixmap)
                     p->drawPixmap(pos, *(cacheEntry->pixmap) );
@@ -798,7 +798,7 @@ void PlastikStyle::renderGradient(TQPainter *painter,
     int key = search.key();
 
     CacheEntry *cacheEntry;
-    if( (cacheEntry = pixmapCache->tqfind(key)) ) {
+    if( (cacheEntry = pixmapCache->find(key)) ) {
         if( search == *cacheEntry ) { // match! we can draw now...
             if(cacheEntry->pixmap) {
                 painter->drawTiledPixmap(rect, *(cacheEntry->pixmap) );
@@ -1515,7 +1515,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
         case PE_ButtonTool:
         case PE_ButtonDropDown:
         case PE_ButtonCommand: {
-            bool khtmlMode = opt.isDefault() ? false : khtmlWidgets.tqcontains(opt.widget());
+            bool khtmlMode = opt.isDefault() ? false : khtmlWidgets.contains(opt.widget());
             renderButton(p, r, cg, (on||down), mouseOver, true, enabled, khtmlMode );
             break;
         }
@@ -2265,7 +2265,7 @@ void PlastikStyle::tqdrawControl(TQ_ControlElement element,
                 } else {
                     // find the animation Offset for the current Widget
                     TQWidget* nonConstWidget = const_cast<TQWidget*>(widget);
-                    TQMapConstIterator<TQWidget*, int> iter = progAnimWidgets.tqfind(nonConstWidget);
+                    TQMapConstIterator<TQWidget*, int> iter = progAnimWidgets.find(nonConstWidget);
                     if (iter != progAnimWidgets.end())
                         animShift = iter.data();
                 }
@@ -2605,7 +2605,7 @@ void PlastikStyle::tqdrawControl(TQ_ControlElement element,
                 TQString s = mi->text();
                 // Does the menu item have a text label?
                 if ( !s.isNull() ) {
-                    int t = s.tqfind( '\t' );
+                    int t = s.find( '\t' );
                     int m = 2;
                     int text_flags = AlignVCenter | ShowPrefix | DontClip | SingleLine;
                     text_flags |= reverse ? AlignRight : AlignLeft;
@@ -2785,7 +2785,7 @@ void PlastikStyle::tqdrawComplexControl(TQ_ComplexControl control,
                                               :cg.background();
 
             uint contourFlags = 0;
-            if( khtmlWidgets.tqcontains(cb) )
+            if( khtmlWidgets.contains(cb) )
                 contourFlags |= Draw_AlphaBlend;
             
             if (_inputFocusHighlight && hasFocus && editable && enabled)
@@ -3386,7 +3386,7 @@ TQSize PlastikStyle::tqsizeFromContents(ContentsType t,
                 }
             }
 
-            if (!mi->text().isNull() && (mi->text().tqfind('\t') >= 0)) {
+            if (!mi->text().isNull() && (mi->text().find('\t') >= 0)) {
                 w += itemHMargin + itemFrame*2 + 7;
             } else if (mi->popup()) {
                 w += 2 * arrowHMargin;

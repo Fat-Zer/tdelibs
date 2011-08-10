@@ -69,14 +69,14 @@ void KDEDModule::insert(const TQCString &app, const TQCString &key, KShared *obj
 
    // appKey acts as a placeholder
    KEntryKey appKey(app, 0);
-   d->objMap->tqreplace(appKey, 0);
+   d->objMap->replace(appKey, 0);
 
    KEntryKey indexKey(app, key);
 
    // Prevent deletion in case the same object is inserted again.
    KSharedPtr<KShared> _obj = obj; 
 
-   d->objMap->tqreplace(indexKey, _obj);
+   d->objMap->replace(indexKey, _obj);
    resetIdle();
 }
 

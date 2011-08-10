@@ -123,7 +123,7 @@ int KShortcutMenu::searchForKey( KKey key )
 	uint iKey = m_seq.count();
 	
 	for( uint iItem = 1; iItem < count(); iItem++ ) {
-		if( m_seqs.tqcontains( iItem ) ) {
+		if( m_seqs.contains( iItem ) ) {
 			KKey keyItem = m_seqs[iItem].key( iKey );
 			//kdDebug(125) << "iItem = " << iItem << " key = " << key.toStringInternal() << " keyItem = " << keyItem.toStringInternal() << endl;
 			if( key == keyItem ) {
@@ -146,7 +146,7 @@ void KShortcutMenu::keepItemsMatching( KKey key )
 	m_seq.setKey( iKey, key );
 	
 	for( uint iItem = 1; iItem < count(); iItem++ ) {
-		if( m_seqs.tqcontains( iItem ) ) {
+		if( m_seqs.contains( iItem ) ) {
 			KKey keyItem = m_seqs[iItem].key( iKey );
 			if( key != keyItem ) {
 				m_seqs.remove( iItem );

@@ -368,7 +368,7 @@ KFind::Result KFind::find()
                         delete d->emptyMatch;
                         d->emptyMatch = new Private::Match( d->currentId, m_index, m_matchedLength );
                     } else
-                        d->incrementalPath.tqreplace(m_pattern, new Private::Match(d->currentId, m_index, m_matchedLength));
+                        d->incrementalPath.replace(m_pattern, new Private::Match(d->currentId, m_index, m_matchedLength));
 
                     if ( m_pattern.length() < d->matchedPattern.length() )
                     {
@@ -471,7 +471,7 @@ int KFind::find(const TQString &text, const TQString &pattern, int index, long o
             while (index >= 0)
             {
                 // ...find the next match.
-                index = text.tqfindRev(pattern, index, caseSensitive);
+                index = text.findRev(pattern, index, caseSensitive);
                 if (index == -1)
                     break;
 
@@ -488,7 +488,7 @@ int KFind::find(const TQString &text, const TQString &pattern, int index, long o
             while (index < (int)text.length())
             {
                 // ...find the next match.
-                index = text.tqfind(pattern, index, caseSensitive);
+                index = text.find(pattern, index, caseSensitive);
                 if (index == -1)
                     break;
 
@@ -507,11 +507,11 @@ int KFind::find(const TQString &text, const TQString &pattern, int index, long o
         // Non-whole-word search.
         if (options & KFindDialog::FindBackwards)
         {
-            index = text.tqfindRev(pattern, index, caseSensitive);
+            index = text.findRev(pattern, index, caseSensitive);
         }
         else
         {
-            index = text.tqfind(pattern, index, caseSensitive);
+            index = text.find(pattern, index, caseSensitive);
         }
         if (index != -1)
         {
@@ -532,7 +532,7 @@ int KFind::find(const TQString &text, const TQRegExp &pattern, int index, long o
             while (index >= 0)
             {
                 // ...find the next match.
-                index = text.tqfindRev(pattern, index);
+                index = text.findRev(pattern, index);
                 if (index == -1)
                     break;
 
@@ -551,7 +551,7 @@ int KFind::find(const TQString &text, const TQRegExp &pattern, int index, long o
             while (index < (int)text.length())
             {
                 // ...find the next match.
-                index = text.tqfind(pattern, index);
+                index = text.find(pattern, index);
                 if (index == -1)
                     break;
 
@@ -572,11 +572,11 @@ int KFind::find(const TQString &text, const TQRegExp &pattern, int index, long o
         // Non-whole-word search.
         if (options & KFindDialog::FindBackwards)
         {
-            index = text.tqfindRev(pattern, index);
+            index = text.findRev(pattern, index);
         }
         else
         {
-            index = text.tqfind(pattern, index);
+            index = text.find(pattern, index);
         }
         if (index != -1)
         {

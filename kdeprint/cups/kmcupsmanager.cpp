@@ -655,10 +655,10 @@ void KMCupsManager::saveDriverFile(DrMain *driver, const TQString& filename)
 			if (line.startsWith("*% COMDATA #"))
 			{
 				int	p(-1), q(-1);
-				if ((p=line.tqfind("'name'")) != -1)
+				if ((p=line.find("'name'")) != -1)
 				{
-					p = line.tqfind('\'',p+6)+1;
-					q = line.tqfind('\'',p);
+					p = line.find('\'',p+6)+1;
+					q = line.find('\'',p);
 					keyword = line.mid(p,q-p);
 					opt = driver->findOption(keyword);
 					if (opt && (opt->type() == DrBase::Integer || opt->type() == DrBase::Float))
@@ -666,19 +666,19 @@ void KMCupsManager::saveDriverFile(DrMain *driver, const TQString& filename)
 					else
 						isnumeric = false;
 				}
-				/*else if ((p=line.tqfind("'type'")) != -1)
+				/*else if ((p=line.find("'type'")) != -1)
 				{
-					p = line.tqfind('\'',p+6)+1;
-					if (line.tqfind("float",p) != -1 || line.tqfind("int",p) != -1)
+					p = line.find('\'',p+6)+1;
+					if (line.find("float",p) != -1 || line.find("int",p) != -1)
 						isnumeric = true;
 					else
 						isnumeric = false;
 				}*/
-				else if ((p=line.tqfind("'default'")) != -1 && !keyword.isEmpty() && opt && isnumeric)
+				else if ((p=line.find("'default'")) != -1 && !keyword.isEmpty() && opt && isnumeric)
 				{
 					TQString	prefix = line.left(p+9);
 					tout << prefix << " => '" << opt->valueText() << '\'';
-					if (line.tqfind(',',p) != -1)
+					if (line.find(',',p) != -1)
 						tout << ',';
 					tout << endl;
 					continue;
@@ -687,7 +687,7 @@ void KMCupsManager::saveDriverFile(DrMain *driver, const TQString& filename)
 			}
 			else if (line.startsWith("*Default"))
 			{
-				int	p = line.tqfind(':',8);
+				int	p = line.find(':',8);
 				keyword = line.mid(8,p-8);
 				DrBase *bopt = 0;
 				if ( keyword == "PageRegion" || keyword == "ImageableArea" || keyword == "PaperDimension" )

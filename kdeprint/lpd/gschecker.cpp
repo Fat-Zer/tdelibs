@@ -48,7 +48,7 @@ void GsChecker::loadDriverList()
 			line = t.readLine().stripWhiteSpace();
 			if (ok)
 			{
-				if (line.tqfind(':') != -1)
+				if (line.find(':') != -1)
 					break;
 				else
 					buffer.append(line).append(" ");

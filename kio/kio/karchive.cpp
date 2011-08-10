@@ -406,7 +406,7 @@ KArchiveDirectory * KArchive::findOrCreate( const TQString & path )
     }
 
     // Otherwise go up and try again
-    int pos = path.tqfindRev( '/' );
+    int pos = path.findRev( '/' );
     KArchiveDirectory * parent;
     TQString dirname;
     if ( pos == -1 ) // no more slash => create in root dir
@@ -548,13 +548,13 @@ KArchiveEntry* KArchiveDirectory::entry( TQString name )
   // not "const TQString & name" since we want a local copy
   // (to remove leading slash if any)
 {
-  int pos = name.tqfind( '/' );
+  int pos = name.find( '/' );
   if ( pos == 0 ) // ouch absolute path (see also KArchive::findOrCreate)
   {
     if (name.length()>1)
     {
       name = name.mid( 1 ); // remove leading slash
-      pos = name.tqfind( '/' ); // look again
+      pos = name.find( '/' ); // look again
     }
     else // "/"
       return this;
@@ -563,7 +563,7 @@ KArchiveEntry* KArchiveDirectory::entry( TQString name )
   if ( pos != -1 && pos == (int)name.length()-1 )
   {
     name = name.left( pos );
-    pos = name.tqfind( '/' ); // look again
+    pos = name.find( '/' ); // look again
   }
   if ( pos != -1 )
   {

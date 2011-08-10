@@ -209,7 +209,7 @@ TQString localRootIP()
 	if (infos.count() > 0)
 	{
 		TQString	IPstr = infos.first()->address()->nodeName();
-		int	p = IPstr.tqfindRev('.');
+		int	p = IPstr.findRev('.');
 		IPstr.truncate(p);
 		return IPstr;
 	}

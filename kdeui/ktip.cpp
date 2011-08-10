@@ -115,12 +115,12 @@ void KTipDatabase::addTips(const TQString& tipFile )
     const TQRegExp rx("\\n+");
 
     int pos = -1;
-    while ((pos = content.tqfind("<html>", pos + 1, false)) != -1)
+    while ((pos = content.find("<html>", pos + 1, false)) != -1)
     {
        // to make translations work, tip extraction here must exactly 
        // match what is done by the preparetips script 
        TQString tip = content 
-           .mid(pos + 6, content.tqfind("</html>", pos, false) - pos - 6)
+           .mid(pos + 6, content.find("</html>", pos, false) - pos - 6)
            .replace(rx, "\n");
        if (!tip.endsWith("\n"))
            tip += "\n";

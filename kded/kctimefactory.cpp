@@ -72,7 +72,7 @@ void
 KCTimeInfo::addCTime(const TQString &path, TQ_UINT32 ctime)
 {
   assert(!path.isEmpty());
-  ctimeDict.tqreplace(path, new TQ_UINT32(ctime));
+  ctimeDict.replace(path, new TQ_UINT32(ctime));
 }
 
 TQ_UINT32
@@ -94,6 +94,6 @@ KCTimeInfo::fillCTimeDict(TQDict<TQ_UINT32> &dict)
       KSycocaEntry::read(*m_str, path);
       (*m_str) >> ctime;
       if (path.isEmpty()) break;
-      dict.tqreplace(path, new TQ_UINT32(ctime));
+      dict.replace(path, new TQ_UINT32(ctime));
     }
 }

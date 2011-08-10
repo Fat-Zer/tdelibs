@@ -81,7 +81,7 @@ void KateSearch::createActions( KActionCollection* ac )
 void KateSearch::addToList( TQStringList& list, const TQString& s )
 {
   if( list.count() > 0 ) {
-    TQStringList::Iterator it = list.tqfind( s );
+    TQStringList::Iterator it = list.find( s );
     if( *it != 0L )
       list.remove( it );
     if( list.count() >= 16 )
@@ -418,13 +418,13 @@ void KateSearch::replaceOne()
   replaces++;
 
   // if we inserted newlines, we better adjust.
-  uint newlines = replaceWith.tqcontains('\n');
+  uint newlines = replaceWith.contains('\n');
   if ( newlines )
   {
     if ( ! s.flags.backward )
     {
       s.cursor.setLine( s.cursor.line() + newlines );
-      s.cursor.setCol( replaceWith.length() - replaceWith.tqfindRev('\n') );
+      s.cursor.setCol( replaceWith.length() - replaceWith.findRev('\n') );
     }
     // selection?
     if ( s.flags.selected )
@@ -851,7 +851,7 @@ bool SearchCommand::exec(class Kate::View *view, const TQString &cmd, TQString &
     // Else, it's just one or two (space separated) words
     TQRegExp re_rep2("replace(?::([bceprsw]*))?\\s+(\\S+)(.*)");
 #define unbackslash(s) p=0;\
-while ( (p = pattern.tqfind( '\\' + delim, p )) > -1 )\
+while ( (p = pattern.find( '\\' + delim, p )) > -1 )\
 {\
   if ( !p || pattern[p-1] != '\\' )\
     pattern.remove( p, 1 );\

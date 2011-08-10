@@ -486,7 +486,7 @@ TQValueList<int> KPrinter::pageList() const
 				TQStringList	ranges = TQStringList::split(',',option("kde-range"),false);
 				for (TQStringList::ConstIterator it=ranges.begin();it!=ranges.end();++it)
 				{
-					int	p = (*it).tqfind('-');
+					int	p = (*it).find('-');
 					bool	ok;
 					if (p == -1)
 					{
@@ -638,7 +638,7 @@ void KPrinter::setOptions(const TQMap<TQString,TQString>& opts)
 	tmpset.remove( "kde-resolution" );
 	tmpset.remove( "kde-fonts" );
 	for (TQMap<TQString,TQString>::ConstIterator it=tmpset.begin();it!=tmpset.end();++it)
-		if (it.key().left(4) == "kde-" && !(d->m_options.tqcontains(it.key())))
+		if (it.key().left(4) == "kde-" && !(d->m_options.contains(it.key())))
 			d->m_options[it.key()] = it.data();
 }
 
@@ -880,9 +880,9 @@ void KPrinter::setPrintProgram(const TQString& prg)
 	else
 	{
 		TQString	s(prg);
-		if (s.tqfind("%in") == -1)
+		if (s.find("%in") == -1)
 			s.append(" %in");
-		setOutputToFile( s.tqfind( "%out" ) != -1 );
+		setOutputToFile( s.find( "%out" ) != -1 );
 		setOption("kde-isspecial", "1");
 		setOption("kde-special-command", s);
 	}

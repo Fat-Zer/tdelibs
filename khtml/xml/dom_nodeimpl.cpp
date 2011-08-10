@@ -2060,7 +2060,7 @@ bool RegisteredListenerList::stillContainsListener(const RegisteredEventListener
 {
     if (!listeners)
         return false;
-    return listeners->tqfind(listener) != listeners->end();
+    return listeners->find(listener) != listeners->end();
 }
 
 RegisteredListenerList::~RegisteredListenerList() {

@@ -144,7 +144,7 @@ bool KStandardDirs::isRestrictedResource(const char *type, const TQString& relPa
 void KStandardDirs::applyDataRestrictions(const TQString &relPath) const
 {
    TQString key;
-   int i = relPath.tqfind(QChar('/'));
+   int i = relPath.find(QChar('/'));
    if (i != -1)
       key = "data_"+relPath.left(i);
    else
@@ -192,7 +192,7 @@ void KStandardDirs::addPrefix( const TQString& _dir, bool priority )
     if (dir.tqat(dir.length() - 1) != QChar('/'))
 	dir += QChar('/');
 
-    if (!prefixes.tqcontains(dir)) {
+    if (!prefixes.contains(dir)) {
         priorityAdd(prefixes, dir, priority);
 	dircache.clear();
     }
@@ -212,7 +212,7 @@ void KStandardDirs::addXdgConfigPrefix( const TQString& _dir, bool priority )
     if (dir.tqat(dir.length() - 1) != QChar('/'))
 	dir += QChar('/');
 
-    if (!d->xdgconf_prefixes.tqcontains(dir)) {
+    if (!d->xdgconf_prefixes.contains(dir)) {
         priorityAdd(d->xdgconf_prefixes, dir, priority);
 	dircache.clear();
     }
@@ -232,7 +232,7 @@ void KStandardDirs::addXdgDataPrefix( const TQString& _dir, bool priority )
     if (dir.tqat(dir.length() - 1) != QChar('/'))
 	dir += QChar('/');
 
-    if (!d->xdgdata_prefixes.tqcontains(dir)) {
+    if (!d->xdgdata_prefixes.contains(dir)) {
 	priorityAdd(d->xdgdata_prefixes, dir, priority);
 	dircache.clear();
     }
@@ -265,7 +265,7 @@ bool KStandardDirs::addResourceType( const char *type,
     if (relativename.isEmpty())
        return false;
 
-    TQStringList *rels = relatives.tqfind(type);
+    TQStringList *rels = relatives.find(type);
     if (!rels) {
 	rels = new TQStringList();
 	relatives.insert(type, rels);
@@ -273,7 +273,7 @@ bool KStandardDirs::addResourceType( const char *type,
     TQString copy = relativename;
     if (copy.tqat(copy.length() - 1) != QChar('/'))
 	copy += QChar('/');
-    if (!rels->tqcontains(copy)) {
+    if (!rels->contains(copy)) {
         if (priority)
 	    rels->prepend(copy);
 	else
@@ -295,7 +295,7 @@ bool KStandardDirs::addResourceDir( const char *type,
 				    const TQString& absdir,
 				    bool priority)
 {
-    TQStringList *paths = absolutes.tqfind(type);
+    TQStringList *paths = absolutes.find(type);
     if (!paths) {
 	paths = new TQStringList();
 	absolutes.insert(type, paths);
@@ -304,7 +304,7 @@ bool KStandardDirs::addResourceDir( const char *type,
     if (copy.tqat(copy.length() - 1) != QChar('/'))
       copy += QChar('/');
 
-    if (!paths->tqcontains(copy)) {
+    if (!paths->contains(copy)) {
         if (priority)
             paths->prepend(copy);
         else
@@ -512,7 +512,7 @@ static void lookupDirectory(const TQString& path, const TQString &relPart,
       }
       if ( S_ISREG( buff.st_mode))
       {
-        if (!unique || !relList.tqcontains(relPart + fn))
+        if (!unique || !relList.contains(relPart + fn))
         {
 	    list.append( pathfn );
 	    relList.append( relPart + fn );
@@ -531,7 +531,7 @@ static void lookupDirectory(const TQString& path, const TQString &relPart,
         return; // File not found
      if ( S_ISREG( buff.st_mode))
      {
-       if (!unique || !relList.tqcontains(relPart + fn))
+       if (!unique || !relList.contains(relPart + fn))
        {
          list.append( pathfn );
          relList.append( relPart + fn );
@@ -557,7 +557,7 @@ static void lookupPrefix(const TQString& prefix, const TQString& relpath,
 
     if (relpath.length())
     {
-       int slash = relpath.tqfind(QChar('/'));
+       int slash = relpath.find(QChar('/'));
        if (slash < 0)
 	   rest = relpath.left(relpath.length() - 1);
        else {
@@ -629,7 +629,7 @@ KStandardDirs::findAllResources( const char *type,
 
     if (filter.length())
     {
-       int slash = filter.tqfindRev('/');
+       int slash = filter.findRev('/');
        if (slash < 0)
 	   filterFile = filter;
        else {
@@ -785,7 +785,7 @@ void KStandardDirs::createSpecialResource(const char *type)
 
 TQStringList KStandardDirs::resourceDirs(const char *type) const
 {
-    TQStringList *candidates = dircache.tqfind(type);
+    TQStringList *candidates = dircache.find(type);
 
     if (!candidates) { // filling cache
         if (strcmp(type, "socket") == 0)
@@ -812,7 +812,7 @@ TQStringList KStandardDirs::resourceDirs(const char *type) const
            d->dataRestrictionActive = false; // Reset
         }
 
-        dirs = relatives.tqfind(type);
+        dirs = relatives.find(type);
         if (dirs)
         {
             bool local = true;
@@ -834,7 +834,7 @@ TQStringList KStandardDirs::resourceDirs(const char *type) const
                     testdir.setPath(path);
                     if (local && restrictionActive)
                        continue;
-                    if ((local || testdir.exists()) && !candidates->tqcontains(path))
+                    if ((local || testdir.exists()) && !candidates->contains(path))
                         candidates->append(path);
                 }
 		// UGLY HACK - Chris CHeney
@@ -844,7 +844,7 @@ TQStringList KStandardDirs::resourceDirs(const char *type) const
                 local = false;
             }
         }
-        dirs = absolutes.tqfind(type);
+        dirs = absolutes.find(type);
         if (dirs)
             for (TQStringList::ConstIterator it = dirs->begin();
                  it != dirs->end(); ++it)
@@ -853,7 +853,7 @@ TQStringList KStandardDirs::resourceDirs(const char *type) const
                 if (testdir.exists())
                 {
                     TQString filename = realPath(*it);
-                    if (!candidates->tqcontains(filename))
+                    if (!candidates->contains(filename))
                         candidates->append(filename);
                 }
             }
@@ -897,7 +897,7 @@ TQStringList KStandardDirs::systemPaths( const TQString& pstr )
 
         if ( p[ 0 ] == QChar('~') )
         {
-            int len = p.tqfind( QChar('/') );
+            int len = p.find( QChar('/') );
             if ( len == -1 )
                 len = p.length();
             if ( len == 1 )
@@ -931,7 +931,7 @@ TQString KStandardDirs::findExe( const TQString& appname,
     TQFileInfo info;
 
     // absolute or relative path given
-    if (real_appname.tqfind(TQDir::separator()) >= 0)
+    if (real_appname.find(TQDir::separator()) >= 0)
     {
         info.setFile( real_appname );
         if( info.exists() && ( ignore || info.isExecutable() )
@@ -1006,7 +1006,7 @@ static int tokenize( TQStringList& tokens, const TQString& str,
 
     for( int index = 0; index < len; index++)
     {
-	if ( delim.tqfind( str[ index ] ) >= 0 )
+	if ( delim.find( str[ index ] ) >= 0 )
 	{
 	    tokens.append( token );
 	    token = "";
@@ -1093,17 +1093,17 @@ TQString KStandardDirs::saveLocation(const char *type,
 {
     checkConfig();
 
-    TQString *pPath = savelocations.tqfind(type);
+    TQString *pPath = savelocations.find(type);
     if (!pPath)
     {
-       TQStringList *dirs = relatives.tqfind(type);
+       TQStringList *dirs = relatives.find(type);
        if (!dirs && (
                      (strcmp(type, "socket") == 0) ||
                      (strcmp(type, "tmp") == 0) ||
                      (strcmp(type, "cache") == 0) ))
        {
           (void) resourceDirs(type); // Generate socket|tmp|cache resource.
-          dirs = relatives.tqfind(type); // Search again.
+          dirs = relatives.find(type); // Search again.
        }
        if (dirs)
        {
@@ -1116,7 +1116,7 @@ TQString KStandardDirs::saveLocation(const char *type,
              pPath = new TQString(realPath(localkdedir() + dirs->last()));
        }
        else {
-          dirs = absolutes.tqfind(type);
+          dirs = absolutes.find(type);
           if (!dirs)
              qFatal("KStandardDirs: The resource type %s is not registered", type);
           pPath = new TQString(realPath(dirs->last()));
@@ -1147,7 +1147,7 @@ TQString KStandardDirs::saveLocation(const char *type,
 TQString KStandardDirs::relativeLocation(const char *type, const TQString &absPath)
 {
     TQString fullPath = absPath;
-    int i = absPath.tqfindRev('/');
+    int i = absPath.findRev('/');
     if (i != -1)
     {
        fullPath = realPath(absPath.left(i+1))+absPath.mid(i+1); // Normalize
@@ -1185,7 +1185,7 @@ bool KStandardDirs::makeDir(const TQString& dir, int mode)
     while( i < len )
     {
         KDE_struct_stat st;
-        int pos = target.tqfind(QChar('/'), i);
+        int pos = target.find(QChar('/'), i);
         base += target.mid(i - 1, pos - i + 1);
         TQCString baseEncoded = TQFile::encodeName(base);
         // bail out if we encountered a problem
@@ -1236,10 +1236,10 @@ static TQString executablePrefix()
    if(path.isEmpty())
       return TQString::null;
 
-   int pos = path.tqfindRev('/'); // Skip filename
+   int pos = path.findRev('/'); // Skip filename
    if(pos <= 0)
       return TQString::null;
-   pos = path.tqfindRev(TQChar('/'), pos - 1); // Skip last directory
+   pos = path.findRev(TQChar('/'), pos - 1); // Skip last directory
    if(pos <= 0)
       return TQString::null;
 
@@ -1549,7 +1549,7 @@ bool KStandardDirs::addCustomized(KConfig *config)
         TQString kioskAdmin = config->readEntry("kioskAdmin");
         if (!kioskAdmin.isEmpty() && !kde_kiosk_admin)
         {
-            int i = kioskAdmin.tqfind(':');
+            int i = kioskAdmin.find(':');
             TQString user = kioskAdmin.left(i);
             TQString host = kioskAdmin.mid(i+1);
 
@@ -1694,7 +1694,7 @@ TQString locateLocal( const char *type,
 {
     // try to find slashes. If there are some, we have to
     // create the subdir first
-    int slash = filename.tqfindRev('/')+1;
+    int slash = filename.findRev('/')+1;
     if (!slash) // only one filename
 	return inst->dirs()->saveLocation(type, TQString::null, createDir) + filename;
 

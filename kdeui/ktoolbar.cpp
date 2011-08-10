@@ -427,7 +427,7 @@ int KToolBar::insertAnimatedWidget(int id, TQObject *receiver, const char *slot,
 
 KAnimWidget *KToolBar::animatedWidget( int id )
 {
-    Id2WidgetMap::Iterator it = id2widget.tqfind( id );
+    Id2WidgetMap::Iterator it = id2widget.find( id );
     if ( it == id2widget.end() )
         return 0;
     KAnimWidget *aw = tqt_dynamic_cast<KAnimWidget *>(*it);
@@ -610,7 +610,7 @@ TQString KToolBar::getComboItem (int id, int index) const
 
 KComboBox * KToolBar::getCombo(int id)
 {
-    Id2WidgetMap::Iterator it = id2widget.tqfind( id );
+    Id2WidgetMap::Iterator it = id2widget.find( id );
     if ( it == id2widget.end() )
         return 0;
     return tqt_dynamic_cast<KComboBox *>( *it );
@@ -619,7 +619,7 @@ KComboBox * KToolBar::getCombo(int id)
 
 KLineEdit * KToolBar::getLined (int id)
 {
-    Id2WidgetMap::Iterator it = id2widget.tqfind( id );
+    Id2WidgetMap::Iterator it = id2widget.find( id );
     if ( it == id2widget.end() )
         return 0;
     return tqt_dynamic_cast<KLineEdit *>( *it );
@@ -628,7 +628,7 @@ KLineEdit * KToolBar::getLined (int id)
 
 KToolBarButton * KToolBar::getButton (int id)
 {
-    Id2WidgetMap::Iterator it = id2widget.tqfind( id );
+    Id2WidgetMap::Iterator it = id2widget.find( id );
     if ( it == id2widget.end() )
         return 0;
     return tqt_dynamic_cast<KToolBarButton *>( *it );
@@ -637,7 +637,7 @@ KToolBarButton * KToolBar::getButton (int id)
 
 void KToolBar::alignItemRight (int id, bool right )
 {
-    Id2WidgetMap::Iterator it = id2widget.tqfind( id );
+    Id2WidgetMap::Iterator it = id2widget.find( id );
     if ( it == id2widget.end() )
         return;
     if ( rightAligned && !right && (*it) == rightAligned )
@@ -649,7 +649,7 @@ void KToolBar::alignItemRight (int id, bool right )
 
 TQWidget *KToolBar::getWidget (int id)
 {
-    Id2WidgetMap::Iterator it = id2widget.tqfind( id );
+    Id2WidgetMap::Iterator it = id2widget.find( id );
     return ( it == id2widget.end() ) ? 0 : (*it);
 }
 
@@ -677,7 +677,7 @@ void KToolBar::clear ()
 
 void KToolBar::removeItem(int id)
 {
-    Id2WidgetMap::Iterator it = id2widget.tqfind( id );
+    Id2WidgetMap::Iterator it = id2widget.find( id );
     if ( it == id2widget.end() )
     {
         kdDebug(220) << name() << " KToolBar::removeItem item " << id << " not found" << endl;
@@ -693,7 +693,7 @@ void KToolBar::removeItem(int id)
 
 void KToolBar::removeItemDelayed(int id)
 {
-    Id2WidgetMap::Iterator it = id2widget.tqfind( id );
+    Id2WidgetMap::Iterator it = id2widget.find( id );
     if ( it == id2widget.end() )
     {
         kdDebug(220) << name() << " KToolBar::removeItem item " << id << " not found" << endl;
@@ -729,7 +729,7 @@ void KToolBar::showItem (int id)
 int KToolBar::itemIndex (int id)
 {
     TQWidget *w = getWidget(id);
-    return w ? widgets.tqfindRef(w) : -1;
+    return w ? widgets.findRef(w) : -1;
 }
 
 int KToolBar::idAt (int index)
@@ -1006,7 +1006,7 @@ void KToolBar::saveState()
 
             if ( curname == barname ) {
                 just_append = false;
-                local.documentElement().tqreplaceChild( current, elem );
+                local.documentElement().replaceChild( current, elem );
                 break;
             }
         }
@@ -1280,7 +1280,7 @@ void KToolBar::childEvent( TQChildEvent *e )
             if ( !tqt_dynamic_cast<TQPopupMenu *>(w)) { // e->child() is not a QPopupMenu
                 // prevent items that have been explicitly inserted by insert*() from
                 // being inserted again
-                if ( !widget2id.tqcontains( w ) )
+                if ( !widget2id.contains( w ) )
                 {
                     int dummy = -1;
                     insertWidgetInternal( w, dummy, -1 );
@@ -2250,7 +2250,7 @@ void KToolBar::widgetDestroyed()
 void KToolBar::removeWidgetInternal( TQWidget * w )
 {
     widgets.removeRef( w );
-    TQMap< TQWidget*, int >::Iterator it = widget2id.tqfind( w );
+    TQMap< TQWidget*, int >::Iterator it = widget2id.find( w );
     if ( it == widget2id.end() )
         return;
     id2widget.remove( *it );

@@ -1185,9 +1185,9 @@ void KApplication::propagateSessionManager()
     TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
     TQCString display = ::getenv(DISPLAY);
     // strip the screen number from the display
-    display.tqreplace(TQRegExp("\\.[0-9]+$"), "");
+    display.replace(TQRegExp("\\.[0-9]+$"), "");
     int i;
-    while( (i = display.tqfind(':')) >= 0)
+    while( (i = display.find(':')) >= 0)
        display[i] = '_';
 
     fName += "_"+display;
@@ -1244,7 +1244,7 @@ void KApplication::commitData( TQSessionManager& sm )
             } else {
                 w = list->next();
             }
-            while ( w && done.tqcontainsRef( w ) )
+            while ( w && done.containsRef( w ) )
                 w = list->next();
         }
         delete list;
@@ -1909,7 +1909,7 @@ void KApplication::invokeEditSlot( const char *slot )
 
   TQMetaObject *meta = object->tqmetaObject();
 
-  int idx = meta->tqfindSlot( slot + 1, true );
+  int idx = meta->findSlot( slot + 1, true );
   if( idx < 0 )
     return;
 
@@ -2846,7 +2846,7 @@ TQString KApplication::tempSaveName( const TQString& pFilename ) const
         }
     }
 
-  aFilename.tqreplace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
+  aFilename.replace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
 
   return aFilename;
 }
@@ -2875,7 +2875,7 @@ TQString KApplication::checkRecoverFile( const TQString& pFilename,
         }
     }
 
-  aFilename.tqreplace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
+  aFilename.replace( "/", "\\!" ).prepend( "#" ).append( "#" ).prepend( "/" ).prepend( aAutosaveDir.absPath() );
 
   if( TQFile( aFilename ).exists() )
     {
@@ -2908,7 +2908,7 @@ bool checkAccess(const TQString& pathname, int mode)
 
   //strip the filename (everything until '/' from the end
   TQString dirName(pathname);
-  int pos = dirName.tqfindRev('/');
+  int pos = dirName.findRev('/');
   if ( pos == -1 )
     return false;   // No path in argument. This is evil, we won't allow this
   else if ( pos == 0 ) // don't turn e.g. /root into an empty string
@@ -3123,18 +3123,18 @@ void KApplication::initUrlActionRestrictions()
     bool bEnabled = (strEnabled == "true");
 
     if (refPath.startsWith("$HOME"))
-       refPath.tqreplace(0, 5, TQDir::homeDirPath());
+       refPath.replace(0, 5, TQDir::homeDirPath());
     else if (refPath.startsWith("~"))
-       refPath.tqreplace(0, 1, TQDir::homeDirPath());
+       refPath.replace(0, 1, TQDir::homeDirPath());
     if (urlPath.startsWith("$HOME"))
-       urlPath.tqreplace(0, 5, TQDir::homeDirPath());
+       urlPath.replace(0, 5, TQDir::homeDirPath());
     else if (urlPath.startsWith("~"))
-       urlPath.tqreplace(0, 1, TQDir::homeDirPath());
+       urlPath.replace(0, 1, TQDir::homeDirPath());
 
     if (refPath.startsWith("$TMP"))
-       refPath.tqreplace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
+       refPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
     if (urlPath.startsWith("$TMP"))
-       urlPath.tqreplace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
+       urlPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
 
     d->urlActionRestrictions.append(new KApplicationPrivate::URLActionRule
     	( action, refProt, refHost, refPath, urlProt, urlHost, urlPath, bEnabled));

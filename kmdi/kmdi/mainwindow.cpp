@@ -302,7 +302,7 @@ void MainWindow::deleteToolWindow( TQWidget* pWnd)
   if (!pWnd)
     return;
 
-  if (m_toolViews->tqcontains(pWnd)) {
+  if (m_toolViews->contains(pWnd)) {
     deleteToolWindow((*m_toolViews)[pWnd]);
   }
 }

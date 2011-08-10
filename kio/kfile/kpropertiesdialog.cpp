@@ -759,8 +759,8 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   {
     TQString path;
     if ( !m_bFromTemplate ) {
-      isTrash = ( properties->kurl().protocol().tqfind( "trash", 0, false)==0 );
-      if ( properties->kurl().protocol().tqfind("device", 0, false)==0)
+      isTrash = ( properties->kurl().protocol().find( "trash", 0, false)==0 );
+      if ( properties->kurl().protocol().find("device", 0, false)==0)
             isDevice = true;
       // Extract the full name, but without file: for local files
       if ( isReallyLocal )
@@ -908,11 +908,11 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     // Enhanced rename: Don't highlight the file extension.
     TQString pattern;
     KServiceTypeFactory::self()->findFromPattern( filename, &pattern );
-    if (!pattern.isEmpty() && pattern.tqat(0)=='*' && pattern.tqfind('*',1)==-1)
+    if (!pattern.isEmpty() && pattern.tqat(0)=='*' && pattern.find('*',1)==-1)
       d->m_lined->setSelection(0, filename.length()-pattern.stripWhiteSpace().length()+1);
     else
     {
-      int lastDot = filename.tqfindRev('.');
+      int lastDot = filename.findRev('.');
       if (lastDot > 0)
         d->m_lined->setSelection(0, lastDot);
     }
@@ -1127,7 +1127,7 @@ void KFilePropsPlugin::slotEditFileType()
 #ifdef Q_WS_X11
   TQString mime;
   if ( d->mimeType == KMimeType::defaultMimeType() ) {
-    int pos = d->oldFileName.tqfindRev( '.' );
+    int pos = d->oldFileName.findRev( '.' );
     if ( pos != -1 )
 	mime = "*" + d->oldFileName.mid(pos);
     else
@@ -1563,7 +1563,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   TQString path = properties->kurl().path(-1);
   TQString fname = properties->kurl().fileName();
   bool isLocal = properties->kurl().isLocalFile();
-  bool isTrash = ( properties->kurl().protocol().tqfind("trash", 0, false)==0 );
+  bool isTrash = ( properties->kurl().protocol().find("trash", 0, false)==0 );
   bool IamRoot = (geteuid() == 0);
 
   KFileItem * item = properties->item();
@@ -1805,11 +1805,11 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     TQString name = TQString::tqfromLatin1(ge->gr_name);
     if (name.isEmpty())
       name.setNum(ge->gr_gid);
-    if (groupList.tqfind(name) == groupList.end())
+    if (groupList.find(name) == groupList.end())
       groupList += name;
   }
 
-  bool isMyGroup = groupList.tqcontains(strGroup);
+  bool isMyGroup = groupList.contains(strGroup);
 
   /* add the group the file currently belongs to ..
    * .. if its not there already
@@ -1843,7 +1843,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   {
     grpCombo = new TQComboBox(gb, "combogrouplist");
     grpCombo->insertStringList(groupList);
-    grpCombo->setCurrentItem(groupList.tqfindIndex(strGroup));
+    grpCombo->setCurrentItem(groupList.findIndex(strGroup));
     gl->addWidget(grpCombo, 2, 1);
     connect( grpCombo, TQT_SIGNAL( activated( int ) ),
              this, TQT_SIGNAL( changed() ) );
@@ -2945,7 +2945,7 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
   device->setEditText( deviceStr );
   if ( !deviceStr.isEmpty() ) {
     // Set default options for this device (first matching entry)
-    int index = m_devicelist.tqfindIndex(deviceStr);
+    int index = m_devicelist.findIndex(deviceStr);
     if (index != -1)
     {
       //kdDebug(250) << "found it " << index << endl;
@@ -3020,7 +3020,7 @@ void KDevicePropsPlugin::slotActivated( int index )
 void KDevicePropsPlugin::slotDeviceChanged()
 {
   // Update mountpoint so that it matches the typed device
-  int index = m_devicelist.tqfindIndex( device->currentText() );
+  int index = m_devicelist.findIndex( device->currentText() );
   if ( index != -1 )
     mountpoint->setText( d->mountpointlist[index] );
   else
@@ -3255,11 +3255,11 @@ void KDesktopPropsPlugin::slotAddFiletype()
         TQString mimetype = (*it)->name();
         if (mimetype == KMimeType::defaultMimeType())
            continue;
-        int index = mimetype.tqfind("/");
+        int index = mimetype.find("/");
         TQString maj = mimetype.left(index);
         TQString min = mimetype.mid(index+1);
 
-        TQMapIterator<TQString,TQListViewItem*> mit = majorMap.tqfind( maj );
+        TQMapIterator<TQString,TQListViewItem*> mit = majorMap.find( maj );
         if ( mit == majorMap.end() ) {
            majorGroup = new TQListViewItem( mw->listView, maj );
            majorGroup->setExpandable(true);
@@ -3274,7 +3274,7 @@ void KDesktopPropsPlugin::slotAddFiletype()
         TQListViewItem *item = new TQListViewItem(majorGroup, min, (*it)->comment());
         item->setPixmap(0, (*it)->pixmap(KIcon::Small, IconSize(KIcon::Small)));
      }
-     TQMapIterator<TQString,TQListViewItem*> mit = majorMap.tqfind( "all" );
+     TQMapIterator<TQString,TQListViewItem*> mit = majorMap.find( "all" );
      if ( mit != majorMap.end())
      {
         mw->listView->setCurrentItem(mit.data());

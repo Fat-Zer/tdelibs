@@ -51,8 +51,8 @@ bool KSrvResolverWorker::preprocess()
     return false;
 
   TQString node = nodeName();
-  if (node.tqfind('%') != -1)
-    node.truncate(node.tqfind('%'));
+  if (node.find('%') != -1)
+    node.truncate(node.find('%'));
 
   if (node.isEmpty() || node == TQString::tqfromLatin1("*") ||
       node == TQString::tqfromLatin1("localhost"))

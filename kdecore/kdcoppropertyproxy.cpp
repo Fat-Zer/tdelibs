@@ -99,7 +99,7 @@ TQValueList<TQCString> KDCOPPropertyProxy::functions( TQObject *object )
   TQStrListIterator it( properties );
   for (; it.current(); ++it )
   {
-    const TQMetaProperty *metaProp = metaObj->property( metaObj->tqfindProperty( it.current(), true ), true );
+    const TQMetaProperty *metaProp = metaObj->property( metaObj->findProperty( it.current(), true ), true );
 
     assert( metaProp );
 
@@ -314,7 +314,7 @@ bool KDCOPPropertyProxy::decodePropertyRequestInternal( const TQCString &fun, TQ
     propName.detach();
     set = true;
     propName = propName.mid( 3 );
-    int p1 = propName.tqfind( '(' );
+    int p1 = propName.find( '(' );
 
     uint len = propName.length();
 
@@ -328,7 +328,7 @@ bool KDCOPPropertyProxy::decodePropertyRequestInternal( const TQCString &fun, TQ
   else
     propName.truncate( propName.length() - 2 );
 
-  if ( !object->tqmetaObject()->propertyNames( true ).tqcontains( propName ) )
+  if ( !object->tqmetaObject()->propertyNames( true ).contains( propName ) )
     return false;
 
   return true;

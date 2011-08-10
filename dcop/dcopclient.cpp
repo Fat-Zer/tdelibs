@@ -97,13 +97,13 @@ client_map_t *cliMap()
 
 DCOPClient *DCOPClient::findLocalClient( const TQCString &_appId )
 {
-    return cliMap()->tqfind(_appId.data());
+    return cliMap()->find(_appId.data());
 }
 
 static
 void registerLocalClient( const TQCString &_appId, DCOPClient *client )
 {
-    cliMap()->tqreplace(_appId.data(), client);
+    cliMap()->replace(_appId.data(), client);
 }
 
 static
@@ -263,12 +263,12 @@ static TQCString dcopServerFile(const TQCString &hostname, bool old)
         disp = "NODISPLAY";
 
     int i;
-    if((i = disp.tqfindRev('.')) > disp.tqfindRev(KPATH_SEPARATOR) && i >= 0)
+    if((i = disp.findRev('.')) > disp.findRev(KPATH_SEPARATOR) && i >= 0)
         disp.truncate(i);
 
     if (!old)
     {
-        while( (i = disp.tqfind(KPATH_SEPARATOR)) >= 0)
+        while( (i = disp.find(KPATH_SEPARATOR)) >= 0)
             disp[i] = '_';
     }
 
@@ -790,7 +790,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
                // Should we abort ?
             }
             contents[size] = '\0';
-            int pos = contents.tqfind('\n');
+            int pos = contents.find('\n');
             if ( pos == -1 ) // Shouldn't happen
             {
                 qDebug("Only one line in dcopserver file !: %s", contents.data());
@@ -1399,7 +1399,7 @@ static TQObject* findQtObject( TQCString id )
     for ( TQValueList<O>::ConstIterator it = l.begin(); it != l.end(); ++it ) {
         if ( (*it).s == id ) // exact match
             return (*it).o;
-        if ( !firstContains && (*it).s.tqcontains( expr ) ) {
+        if ( !firstContains && (*it).s.contains( expr ) ) {
             firstContains = (*it).o;
         }
     }
@@ -1413,7 +1413,7 @@ static QCStringList  findQtObjects( TQCString id )
     fillQtObjectsEx( l, 0, "qt" );
     QCStringList result;
     for ( TQValueList<O>::ConstIterator it = l.begin(); it != l.end(); ++it ) {
-        if ( (*it).s.tqcontains( expr ) )
+        if ( (*it).s.contains( expr ) )
             result << (*it).s;
     }
     return result;
@@ -1501,7 +1501,7 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             TQStrList lst = o->tqmetaObject()->propertyNames( true );
             for ( TQPtrListIterator<char> it( lst ); it.current(); ++it ) {
                 TQMetaObject *mo = o->tqmetaObject();
-                const TQMetaProperty* p = mo->property( mo->tqfindProperty( it.current(), true ), true );
+                const TQMetaProperty* p = mo->property( mo->findProperty( it.current(), true ), true );
                 if ( !p )
                     continue;
                 TQCString prop = p->type();
@@ -1532,7 +1532,7 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             reply << (TQ_INT8) o->setProperty( name, value );
             return true;
         } else {
-            int slot = o->tqmetaObject()->tqfindSlot( fun, true );
+            int slot = o->tqmetaObject()->findSlot( fun, true );
             if ( slot != -1 ) {
                 replyType = "void";
                 TQUObject uo[ 1 ];

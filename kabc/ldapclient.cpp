@@ -306,11 +306,11 @@ void LdapSearch::startSearch( const TQString& txt )
 
   cancelSearch();
 
-  int pos = txt.tqfind( '\"' );
+  int pos = txt.find( '\"' );
   if( pos >= 0 )
   {
     ++pos;
-    int pos2 = txt.tqfind( '\"', pos );
+    int pos2 = txt.find( '\"', pos );
     if( pos2 >= 0 )
         mSearchText = txt.mid( pos , pos2 - pos );
     else
@@ -408,7 +408,7 @@ void LdapSearch::makeSearchData( TQStringList& ret, LdapResultList& resList )
     }
 
     LdapResult sr;
-    sr.clientNumber = mClients.tqfindIndex( (*it1).client );
+    sr.clientNumber = mClients.findIndex( (*it1).client );
     sr.name = name;
     sr.email = mail;
     resList.append( sr );

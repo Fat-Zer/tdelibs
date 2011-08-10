@@ -82,7 +82,7 @@ KServiceType::init( KDesktopFile *config)
 
   for( ; gIt != tmpList.end(); ++gIt )
   {
-    if ( (*gIt).tqfind( "Property::" ) == 0 )
+    if ( (*gIt).find( "Property::" ) == 0 )
     {
       config->setGroup( *gIt );
       TQVariant v = config->readPropertyEntry( "Value",
@@ -95,7 +95,7 @@ KServiceType::init( KDesktopFile *config)
   gIt = tmpList.begin();
   for( ; gIt != tmpList.end(); ++gIt )
   {
-    if( (*gIt).tqfind( "PropertyDef::" ) == 0 )
+    if( (*gIt).find( "PropertyDef::" ) == 0 )
     {
       config->setGroup( *gIt );
       m_mapPropDefs.insert( (*gIt).mid( 13 ),
@@ -129,7 +129,7 @@ KServiceType::load( TQDataStream& _str )
   _str >> m_strName >> m_strIcon >> m_strComment >> m_mapProps >> m_mapPropDefs
        >> b;
   m_bValid = b;
-  m_bDerived = m_mapProps.tqcontains("X-KDE-Derived");
+  m_bDerived = m_mapProps.contains("X-KDE-Derived");
 }
 
 void
@@ -182,7 +182,7 @@ KServiceType::property( const TQString& _name ) const
   else if ( _name == "Comment" )
     v = TQVariant( m_strComment );
   else {
-    TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.tqfind( _name );
+    TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( _name );
     if ( it != m_mapProps.end() )
       v = it.data();
   }
@@ -209,7 +209,7 @@ KServiceType::propertyNames() const
 TQVariant::Type
 KServiceType::propertyDef( const TQString& _name ) const
 {
-  TQMap<TQString,TQVariant::Type>::ConstIterator it = m_mapPropDefs.tqfind( _name );
+  TQMap<TQString,TQVariant::Type>::ConstIterator it = m_mapPropDefs.find( _name );
   if ( it == m_mapPropDefs.end() )
     return TQVariant::Invalid;
   return it.data();
@@ -239,7 +239,7 @@ static void addUnique(KService::List &lst, TQDict<KService> &dict, const KServic
   for( ; it != newLst.end(); ++it )
   {
      KService *service = static_cast<KService*>(*it);
-     if (dict.tqfind(service->desktopEntryPath()))
+     if (dict.find(service->desktopEntryPath()))
         continue;
      dict.insert(service->desktopEntryPath(), service);
      lst.append(service);

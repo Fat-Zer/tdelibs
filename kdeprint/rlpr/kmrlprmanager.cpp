@@ -59,7 +59,7 @@ bool KMRlprManager::createPrinter(KMPrinter *p)
 
 bool KMRlprManager::removePrinter(KMPrinter *p)
 {
-	if (m_printers.tqfindRef(p) == -1)
+	if (m_printers.findRef(p) == -1)
 		setErrorMsg(i18n("Printer not found."));
 	else
 	{

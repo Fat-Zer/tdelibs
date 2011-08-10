@@ -68,7 +68,7 @@ protected:
 public:
  IconPath(const TQString &ip) : TQString (ip)
  {
-   int n = tqfindRev('/');
+   int n = findRev('/');
    m_iconName = (n==-1) ? static_cast<TQString>(*this) : mid(n+1);
  }
 

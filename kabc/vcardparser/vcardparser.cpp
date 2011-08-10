@@ -81,7 +81,7 @@ VCard::List VCardParser::parseVCards( const TQString& text )
       continue;
     } else {
       if ( inVCard && !currentLine.isEmpty() ) { // now parse the line
-        int colon = currentLine.tqfind( ':' );
+        int colon = currentLine.find( ':' );
         if ( colon == -1 ) { // invalid line
           currentLine = (*it);
           continue;
@@ -94,7 +94,7 @@ VCard::List VCardParser::parseVCards( const TQString& text )
         TQStringList params = TQStringList::split( ';', key );
 
         // check for group
-        if ( params[0].tqfind( '.' ) != -1 ) {
+        if ( params[0].find( '.' ) != -1 ) {
           const TQStringList groupList = TQStringList::split( '.', params[0] );
           vCardLine.setGroup( groupList[0] );
           vCardLine.setIdentifier( groupList[1] );
@@ -118,7 +118,7 @@ VCard::List VCardParser::parseVCards( const TQString& text )
               }
             }
             // This is pretty much a faster pair[1].contains( ',' )...
-            if ( pair[1].tqfind( ',' ) != -1 ) { // parameter in type=x,y,z format
+            if ( pair[1].find( ',' ) != -1 ) { // parameter in type=x,y,z format
               const TQStringList args = TQStringList::split( ',', pair[ 1 ] );
               TQStringList::ConstIterator argIt;
               for ( argIt = args.begin(); argIt != args.end(); ++argIt )
@@ -134,7 +134,7 @@ VCard::List VCardParser::parseVCards( const TQString& text )
         bool wasBase64Encoded = false;
 
         params = vCardLine.parameterList();
-        if ( params.tqfindIndex( "encoding" ) != -1 ) { // have to decode the data
+        if ( params.findIndex( "encoding" ) != -1 ) { // have to decode the data
           TQByteArray input;
           input = TQCString(value.latin1());
           if ( vCardLine.parameter( "encoding" ).lower() == "b" ||
@@ -155,7 +155,7 @@ VCard::List VCardParser::parseVCards( const TQString& text )
           output = TQCString(value.latin1());
         }
 
-        if ( params.tqfindIndex( "charset" ) != -1 ) { // have to convert the data
+        if ( params.findIndex( "charset" ) != -1 ) { // have to convert the data
           TQTextCodec *codec =
             TQTextCodec::codecForName( vCardLine.parameter( "charset" ).latin1() );
           if ( codec ) {

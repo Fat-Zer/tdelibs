@@ -321,7 +321,7 @@ void PasswordDialog::setKnownLogins( const TQMap<TQString, TQString>& knownLogin
 
 void PasswordDialog::slotActivated( const TQString& userName )
 {
-    TQMap<TQString, TQString>::ConstIterator it = d->knownLogins.tqfind( userName );
+    TQMap<TQString, TQString>::ConstIterator it = d->knownLogins.find( userName );
     if ( it != d->knownLogins.end() )
         setPassword( it.data() );
 }

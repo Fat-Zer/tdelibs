@@ -257,7 +257,7 @@ CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, TQString userStyleSheet, 
     u.setQuery( TQString::null );
     u.setRef( TQString::null );
     encodedurl.file = u.url();
-    int pos = encodedurl.file.tqfindRev('/');
+    int pos = encodedurl.file.findRev('/');
     encodedurl.path = encodedurl.file;
     if ( pos > 0 ) {
 	encodedurl.path.truncate( pos );
@@ -828,12 +828,12 @@ unsigned int CSSStyleSelector::addInlineDeclarations(DOM::ElementImpl* e,
 static void cleanpath(TQString &path)
 {
     int pos;
-    while ( (pos = path.tqfind( "/../" )) != -1 ) {
+    while ( (pos = path.find( "/../" )) != -1 ) {
         int prev = 0;
         if ( pos > 0 )
-            prev = path.tqfindRev( "/", pos -1 );
+            prev = path.findRev( "/", pos -1 );
         // don't remove the host, i.e. http://foo.org/../foo.html
-        if (prev < 0 || (prev > 3 && path.tqfindRev("://", prev-1) == prev-2))
+        if (prev < 0 || (prev > 3 && path.findRev("://", prev-1) == prev-2))
             path.remove( pos, 3);
         else
             // matching directory found ?
@@ -846,9 +846,9 @@ static void cleanpath(TQString &path)
     // We don't want to waste a function call on the search for the anchor
     // in the vast majority of cases where there is no "//" in the path.
     int refPos = -2;
-    while ( (pos = path.tqfind( "//", pos )) != -1) {
+    while ( (pos = path.find( "//", pos )) != -1) {
         if (refPos == -2)
-            refPos = path.tqfind("#", 0);
+            refPos = path.find("#", 0);
         if (refPos > 0 && pos >= refPos)
             break;
 
@@ -857,7 +857,7 @@ static void cleanpath(TQString &path)
         else
             pos += 2;
     }
-    while ( (pos = path.tqfind( "/./" )) != -1)
+    while ( (pos = path.find( "/./" )) != -1)
         path.remove( pos, 2 );
     //kdDebug() << "checkPseudoState " << path << endl;
 }
@@ -904,7 +904,7 @@ static bool matchNth(int count, const TQString& nth)
         b = 0;
     }
     else {
-        int n = nth.tqfind('n');
+        int n = nth.find('n');
         if (n != -1) {
             if (nth[0] == '-')
                 if (n==1)
@@ -917,11 +917,11 @@ static bool matchNth(int count, const TQString& nth)
                 else
                     a = nth.left(n).toInt();
 
-            int p = nth.tqfind('+');
+            int p = nth.find('+');
             if (p != -1)
                 b = nth.mid(p+1).toInt();
             else {
-                p = nth.tqfind('-');
+                p = nth.find('-');
                 b = -nth.mid(p+1).toInt();
             }
         }
@@ -1173,7 +1173,7 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
 
             int pos = 0;
             for ( ;; ) {
-                pos = val_str.string().tqfind(sel_str.string(), pos, caseSensitive);
+                pos = val_str.string().find(sel_str.string(), pos, caseSensitive);
                 if ( pos == -1 ) return false;
                 if ( pos == 0 || val_uc[pos-1].isSpace() ) {
                     int endpos = pos + sel_len;
@@ -1189,7 +1189,7 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             //kdDebug( 6080 ) << "checking for contains match" << endl;
             TQConstString val_str(value->tqunicode(), value->length());
             TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
-            return val_str.string().tqcontains(sel_str.string(), caseSensitive);
+            return val_str.string().contains(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Begin:
         {
@@ -1214,7 +1214,7 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             const TQString& selStr = sel_str.string();
             if(str.length() < selStr.length()) return false;
             // Check if str begins with selStr:
-            if(str.tqfind(selStr, 0, caseSensitive) != 0) return false;
+            if(str.find(selStr, 0, caseSensitive) != 0) return false;
             // It does. Check for exact match or following '-':
             if(str.length() != selStr.length()
                 && str[selStr.length()] != '-') return false;

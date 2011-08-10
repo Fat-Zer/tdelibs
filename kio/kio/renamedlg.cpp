@@ -440,13 +440,13 @@ TQString RenameDlg::suggestName(const KURL& baseURL, const TQString& oldName)
   TQString dotSuffix, suggestedName;
   TQString basename = oldName;
 
-  int index = basename.tqfind( '.' );
+  int index = basename.find( '.' );
   if ( index != -1 ) {
     dotSuffix = basename.mid( index );
     basename.truncate( index );
   }
 
-  int pos = basename.tqfindRev( '_' );
+  int pos = basename.findRev( '_' );
   if(pos != -1 ){
     TQString tmp = basename.mid( pos+1 );
     bool ok;

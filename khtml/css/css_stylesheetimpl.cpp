@@ -324,7 +324,7 @@ StyleSheetListImpl::~StyleSheetListImpl()
 
 void StyleSheetListImpl::add( StyleSheetImpl* s )
 {
-    if ( !styleSheets.tqcontainsRef( s ) ) {
+    if ( !styleSheets.containsRef( s ) ) {
         s->ref();
         styleSheets.append( s );
     }
@@ -379,8 +379,8 @@ MediaListImpl::MediaListImpl( CSSRuleImpl *parentRule, const DOMString &media )
 
 bool MediaListImpl::contains( const DOMString &medium ) const
 {
-    return m_lstMedia.empty() || m_lstMedia.tqcontains( medium ) ||
-            m_lstMedia.tqcontains( "all" );
+    return m_lstMedia.empty() || m_lstMedia.contains( medium ) ||
+            m_lstMedia.contains( "all" );
 }
 
 CSSStyleSheetImpl *MediaListImpl::parentStyleSheet() const

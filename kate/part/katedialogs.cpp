@@ -1388,10 +1388,10 @@ void KateHlConfigPage::hlChanged(int z)
     return;
   }
 
-  if ( !hlDataDict.tqfind( z ) )
+  if ( !hlDataDict.find( z ) )
     hlDataDict.insert( z, hl->getData() );
 
-  hlData = hlDataDict.tqfind( z );
+  hlData = hlDataDict.find( z );
   wildcards->setText(hlData->wildcards);
   mimetypes->setText(hlData->mimetypes);
   priority->setValue(hlData->priority);

@@ -1203,5 +1203,5 @@ bool KConfigSkeleton::isImmutable(const TQString &name)
 
 KConfigSkeletonItem *KConfigSkeleton::findItem(const TQString &name)
 {
-  return mItemDict.tqfind(name);
+  return mItemDict.find(name);
 }

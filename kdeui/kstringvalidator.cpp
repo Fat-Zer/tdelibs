@@ -30,12 +30,12 @@ TQValidator::State KStringListValidator::validate( TQString & input, int& ) cons
   if ( input.isEmpty() ) return Intermediate;
 
   if ( isRejecting() ) // anything not in mStringList is acceptable:
-    if ( mStringList.tqfind( input ) == mStringList.end() )
+    if ( mStringList.find( input ) == mStringList.end() )
       return Acceptable;
     else
       return Intermediate;
   else // only what is in mStringList is acceptable:
-    if ( mStringList.tqfind( input ) != mStringList.end() )
+    if ( mStringList.find( input ) != mStringList.end() )
       return Acceptable;
     else
       for ( TQStringList::ConstIterator it = mStringList.begin() ;
@@ -84,7 +84,7 @@ TQValidator::State KMimeTypeValidator::validate( TQString & input, int& ) const
 void KMimeTypeValidator::fixup( TQString & input ) const
 {
   TQRegExp invalidChars("[^/" ALLOWED_CHARS "]+");
-  input.tqreplace( invalidChars, TQString());
+  input.replace( invalidChars, TQString());
 }
 
 #include "kstringvalidator.moc"

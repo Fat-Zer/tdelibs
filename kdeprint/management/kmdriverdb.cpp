@@ -110,23 +110,23 @@ void KMDriverDB::slotDbCreated()
 
 KMDBEntryList* KMDriverDB::findEntry(const TQString& manu, const TQString& model)
 {
-	TQDict<KMDBEntryList>	*models = m_entries.tqfind(manu);
+	TQDict<KMDBEntryList>	*models = m_entries.find(manu);
 	if (models)
-		return models->tqfind(model);
+		return models->find(model);
 	return 0;
 }
 
 KMDBEntryList* KMDriverDB::findPnpEntry(const TQString& manu, const TQString& model)
 {
-	TQDict<KMDBEntryList>	*models = m_pnpentries.tqfind(manu);
+	TQDict<KMDBEntryList>	*models = m_pnpentries.find(manu);
 	if (models)
-		return models->tqfind(model);
+		return models->find(model);
 	return 0;
 }
 
 TQDict<KMDBEntryList>* KMDriverDB::findModels(const TQString& manu)
 {
-	return m_entries.tqfind(manu);
+	return m_entries.find(manu);
 }
 
 void KMDriverDB::insertEntry(KMDBEntry *entry)
@@ -140,14 +140,14 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 	}
 
 	// insert it in normal entries
-	TQDict<KMDBEntryList>	*models = m_entries.tqfind(entry->manufacturer);
+	TQDict<KMDBEntryList>	*models = m_entries.find(entry->manufacturer);
 	if (!models)
 	{
 		models = new TQDict<KMDBEntryList>(17,false);
 		models->setAutoDelete(true);
 		m_entries.insert(entry->manufacturer,models);
 	}
-	KMDBEntryList	*list = models->tqfind(entry->model);
+	KMDBEntryList	*list = models->find(entry->model);
 	if (!list)
 	{
 		list = new KMDBEntryList;
@@ -159,14 +159,14 @@ void KMDriverDB::insertEntry(KMDBEntry *entry)
 	if (!entry->pnpmanufacturer.isEmpty() && !entry->pnpmodel.isEmpty())
 	{
 		// insert it in PNP entries
-		models = m_pnpentries.tqfind(entry->manufacturer);
+		models = m_pnpentries.find(entry->manufacturer);
 		if (!models)
 		{
 			models = new TQDict<KMDBEntryList>(17,false);
 			models->setAutoDelete(true);
 			m_pnpentries.insert(entry->manufacturer,models);
 		}
-		list = models->tqfind(entry->model);
+		list = models->find(entry->model);
 		if (!list)
 		{
 			list = new KMDBEntryList;
@@ -209,7 +209,7 @@ void KMDriverDB::loadDbFile()
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			int	p = line.tqfind('=');
+			int	p = line.find('=');
 			if (p == -1)
 				continue;
 			words.clear();

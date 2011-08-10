@@ -492,7 +492,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
                     no = no->nextSibling();
             }
         }
-        if (os->selectionState() == SelectionInside && !oldSelectedInside.tqcontainsRef(os))
+        if (os->selectionState() == SelectionInside && !oldSelectedInside.containsRef(os))
             oldSelectedInside.append(os);
 
         os = no;
@@ -550,7 +550,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
                 if (no)
                     no = no->nextSibling();
             }
-        if (o->selectionState() == SelectionInside && !newSelectedInside.tqcontainsRef(o))
+        if (o->selectionState() == SelectionInside && !newSelectedInside.containsRef(o))
             newSelectedInside.append(o);
 
         o=no;
@@ -581,7 +581,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     TQPtrListIterator<RenderObject> oldIterator(oldSelectedInside);
     bool firstRect = true;
     for (; oldIterator.current(); ++oldIterator){
-        if (!newSelectedInside.tqcontainsRef(oldIterator.current())){
+        if (!newSelectedInside.containsRef(oldIterator.current())){
             if (firstRect){
                 updateRect = enclosingPositionedRect(oldIterator.current());
                 firstRect = false;
@@ -601,7 +601,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
     TQPtrListIterator<RenderObject> newIterator(newSelectedInside);
     firstRect = true;
     for (; newIterator.current(); ++newIterator){
-        if (!oldSelectedInside.tqcontainsRef(newIterator.current())){
+        if (!oldSelectedInside.containsRef(newIterator.current())){
             if (firstRect){
                 updateRect = enclosingPositionedRect(newIterator.current());
                 firstRect = false;

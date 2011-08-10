@@ -674,8 +674,8 @@ KPaletteTable::readNamedColor( void )
 	// that start with "gray".
 	//
 	TQString name = line.mid(pos).stripWhiteSpace();
-	if( name.isNull() || name.tqfind(' ') != -1 ||
-	    name.tqfind( "gray" ) != -1 ||  name.tqfind( "grey" ) != -1 )
+	if( name.isNull() || name.find(' ') != -1 ||
+	    name.find( "gray" ) != -1 ||  name.find( "grey" ) != -1 )
 	{
 	  continue;
 	}

@@ -890,7 +890,7 @@ void LightStyleV2::tqdrawControl( TQ_ControlElement control,
 
 	    TQString text = mi->text();
 	    if (! text.isNull()) {
-		int t = text.tqfind('\t');
+		int t = text.find('\t');
 
 		// draw accelerator/tab-text
 		if (t >= 0) {
@@ -1556,7 +1556,7 @@ TQSize LightStyleV2::tqsizeFromContents( ContentsType contents,
 	    maxpmw = QMAX(maxpmw, 16);
 	    w += (maxpmw * 2) + 8;
 
-	    if (! mi->text().isNull() && mi->text().tqfind('\t') >= 0)
+	    if (! mi->text().isNull() && mi->text().find('\t') >= 0)
 		w += 8;
 
 	    ret = TQSize(w, h);

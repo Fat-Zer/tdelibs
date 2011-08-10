@@ -47,7 +47,7 @@ KDataToolInfo::KDataToolInfo( const KService::Ptr& service, KInstance* instance 
     m_service = service;
     m_instance = instance;
 
-    if ( !!m_service && !m_service->serviceTypes().tqcontains( "KDataTool" ) )
+    if ( !!m_service && !m_service->serviceTypes().contains( "KDataTool" ) )
     {
         kdDebug(30003) << "The service " << m_service->name().latin1()
                        << " does not feature the service type KDataTool" << endl;
@@ -196,7 +196,7 @@ TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const
     {
         // Temporary replacement for the non-working trader query above
         if ( !instance || !(*it)->property("ExcludeFrom").toStringList()
-             .tqcontains( instance->instanceName() ) )
+             .contains( instance->instanceName() ) )
             lst.append( KDataToolInfo( *it, instance ) );
         else
             kdDebug() << (*it)->entryPath() << " excluded." << endl;

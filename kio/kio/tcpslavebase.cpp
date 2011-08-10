@@ -774,7 +774,7 @@ int TCPSlaveBase::verifyCertificate()
       }
 #endif
       if (!_IPmatchesCN && !d->militantSSL) { // force this if the user wants it
-         if (d->cc->getHostList(pc).tqcontains(ourHost)) {
+         if (d->cc->getHostList(pc).contains(ourHost)) {
             _IPmatchesCN = true;
          }
       }

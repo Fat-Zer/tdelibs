@@ -142,9 +142,9 @@ KPHpgl2Page::~KPHpgl2Page()
 void KPHpgl2Page::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	TQString	value;
-	if (opts.tqcontains("blackplot") && ((value=opts["blackplot"]).isEmpty() || value == "true"))
+	if (opts.contains("blackplot") && ((value=opts["blackplot"]).isEmpty() || value == "true"))
 		m_blackplot->setChecked(true);
-	if (opts.tqcontains("fitplot") && ((value=opts["fitplot"]).isEmpty() || value == "true"))
+	if (opts.contains("fitplot") && ((value=opts["fitplot"]).isEmpty() || value == "true"))
 		m_fitplot->setChecked(true);
 	if (!(value=opts["penwidth"]).isEmpty())
 		m_penwidth->setValue(value.toInt());

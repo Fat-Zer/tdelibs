@@ -140,7 +140,7 @@ void KMWRlpr::initialize()
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			if ((p=line.tqfind(':')) != -1)
+			if ((p=line.find(':')) != -1)
 			{
 				host = line.left(p).stripWhiteSpace();
 				TQListViewItem	*hitem = new TQListViewItem(m_view,host);
@@ -180,7 +180,7 @@ void KMWRlpr::initialize()
 			}
 			if (buffer.isEmpty())
 				continue;
-			int	p = buffer.tqfind(':');
+			int	p = buffer.find(':');
 			if (p != -1)
 			{
 				TQString	name = buffer.left(p);

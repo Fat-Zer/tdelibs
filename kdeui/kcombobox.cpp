@@ -163,7 +163,7 @@ void KComboBox::makeCompletion( const TQString& text )
         if( text.isNull() || !listBox() )
             return;
 
-        const int index = listBox()->index( listBox()->tqfindItem( text ) );
+        const int index = listBox()->index( listBox()->findItem( text ) );
         if( index >= 0 )
             setCurrentItem( index );
     }

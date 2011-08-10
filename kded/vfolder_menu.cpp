@@ -39,7 +39,7 @@ static void foldNode(TQDomElement &docElem, TQDomElement &e, TQMap<TQString,TQDo
 {
    if (s.isEmpty())
       s = e.text();
-   TQMap<TQString,TQDomElement>::iterator it = dupeList.tqfind(s);
+   TQMap<TQString,TQDomElement>::iterator it = dupeList.find(s);
    if (it != dupeList.end())
    {
       kdDebug(7021) << e.tagName() << " and " << s << " requires combining!" << endl;
@@ -69,7 +69,7 @@ static void replaceNode(TQDomElement &docElem, TQDomNode &n, const TQStringList 
 
 void VFolderMenu::registerFile(const TQString &file)
 {
-   int i = file.tqfindRev('/');
+   int i = file.findRev('/');
    if (i < 0)
       return;
 
@@ -108,8 +108,8 @@ TQStringList VFolderMenu::allDirectories()
 static void
 track(const TQString &menuId, const TQString &menuName, TQDict<KService> *includeList, TQDict<KService> *excludeList, TQDict<KService> *itemList, const TQString &comment)
 {
-   if (itemList->tqfind(menuId))
-      printf("%s: %s INCL %d EXCL %d\n", menuName.latin1(), comment.latin1(), includeList->tqfind(menuId) ? 1 : 0, excludeList->tqfind(menuId) ? 1 : 0);
+   if (itemList->find(menuId))
+      printf("%s: %s INCL %d EXCL %d\n", menuName.latin1(), comment.latin1(), includeList->find(menuId) ? 1 : 0, excludeList->find(menuId) ? 1 : 0);
 }
 
 void
@@ -117,7 +117,7 @@ VFolderMenu::includeItems(TQDict<KService> *items1, TQDict<KService> *items2)
 {
    for(TQDictIterator<KService> it(*items2); it.current(); ++it)
    {
-       items1->tqreplace(it.current()->menuId(), it.current());
+       items1->replace(it.current()->menuId(), it.current());
    }
 }
 
@@ -128,7 +128,7 @@ VFolderMenu::matchItems(TQDict<KService> *items1, TQDict<KService> *items2)
    {
        TQString id = it.current()->menuId();
        ++it;
-       if (!items2->tqfind(id))
+       if (!items2->find(id))
           items1->remove(id);
    }
 }
@@ -145,7 +145,7 @@ VFolderMenu::excludeItems(TQDict<KService> *items1, TQDict<KService> *items2)
 VFolderMenu::SubMenu*
 VFolderMenu::takeSubMenu(SubMenu *parentMenu, const TQString &menuName)
 {
-   int i = menuName.tqfind('/');
+   int i = menuName.find('/');
    TQString s1 = i > 0 ? menuName.left(i) : menuName;
    TQString s2 = menuName.mid(i+1);
 
@@ -231,7 +231,7 @@ VFolderMenu::mergeMenu(SubMenu *menu1, SubMenu *menu2, bool reversePriority)
 void
 VFolderMenu::insertSubMenu(SubMenu *parentMenu, const TQString &menuName, SubMenu *newMenu, bool reversePriority)
 {
-   int i = menuName.tqfind('/');
+   int i = menuName.find('/');
 
    TQString s1 = menuName.left(i);
    TQString s2 = menuName.mid(i+1);
@@ -271,12 +271,12 @@ VFolderMenu::insertSubMenu(SubMenu *parentMenu, const TQString &menuName, SubMen
 void
 VFolderMenu::insertService(SubMenu *parentMenu, const TQString &name, KService *newService)
 {
-   int i = name.tqfind('/');
+   int i = name.find('/');
 
    if (i == -1)
    {
      // Add it here
-     parentMenu->items.tqreplace(newService->menuId(), newService);
+     parentMenu->items.replace(newService->menuId(), newService);
      return;
    }
 
@@ -324,7 +324,7 @@ VFolderMenu::~VFolderMenu()
    for(appsInfo *info = m_appsInfoStack.first(); \
        info; info = m_appsInfoStack.next()) \
    { \
-      KService::List *list = info->dictCategories.tqfind(category); \
+      KService::List *list = info->dictCategories.find(category); \
       if (list) for(KService::List::ConstIterator it = list->begin(); \
              it != list->end(); ++it) \
       {
@@ -336,7 +336,7 @@ VFolderMenu::findApplication(const TQString &relPath)
    for(appsInfo *info = m_appsInfoStack.first();
        info; info = m_appsInfoStack.next())
    {
-      KService *s = info->applications.tqfind(relPath);
+      KService *s = info->applications.find(relPath);
       if (s)
          return s;
    }
@@ -347,7 +347,7 @@ void
 VFolderMenu::addApplication(const TQString &id, KService *service)
 {
    service->setMenuId(id);
-   m_appsInfo->applications.tqreplace(id, service);
+   m_appsInfo->applications.replace(id, service);
 }
 
 void
@@ -364,7 +364,7 @@ VFolderMenu::buildApplicationIndex(bool unusedOnly)
          KService *s = it.current();
          TQDictIterator<KService> tmpIt = it;
          ++it;
-         if (unusedOnly && m_usedAppsDict.tqfind(s->menuId()))
+         if (unusedOnly && m_usedAppsDict.find(s->menuId()))
          {
             // Remove and skip this one
             info->applications.remove(tmpIt.currentKey());
@@ -376,7 +376,7 @@ VFolderMenu::buildApplicationIndex(bool unusedOnly)
              it2 != cats.end(); ++it2)
          {
             const TQString &cat = *it2;
-            KService::List *list = info->dictCategories.tqfind(cat);
+            KService::List *list = info->dictCategories.find(cat);
             if (!list)
             {
                list = new KService::List();
@@ -603,7 +603,7 @@ VFolderMenu::mergeMenus(TQDomElement &docElem, TQString &name)
       else if( e.tagName() == "Menu") {
          TQString name;
          mergeMenus(e, name);
-         TQMap<TQString,TQDomElement>::iterator it = menuNodes.tqfind(name);
+         TQMap<TQString,TQDomElement>::iterator it = menuNodes.find(name);
          if (it != menuNodes.end())
          {
            TQDomElement docElem2 = *it;
@@ -719,7 +719,7 @@ VFolderMenu::pushDocInfo(const TQString &fileName, const TQString &baseDir)
       return;
    }
    int i;
-   i = baseName.tqfindRev('/');
+   i = baseName.findRev('/');
    if (i > 0)
    {
       m_docInfo.baseDir = baseName.left(i+1);
@@ -739,7 +739,7 @@ VFolderMenu::pushDocInfoParent(const TQString &basePath, const TQString &baseDir
 
    m_docInfo.baseDir = baseDir;
 
-   TQString fileName = basePath.mid(basePath.tqfindRev('/')+1);
+   TQString fileName = basePath.mid(basePath.findRev('/')+1);
    m_docInfo.baseName = fileName.left( fileName.length() - 5 );
    TQString baseName = TQDir::cleanDirPath(m_docInfo.baseDir + fileName);
 
@@ -937,7 +937,7 @@ VFolderMenu::processCondition(TQDomElement &domElem, TQDict<KService> *items)
       FOR_ALL_APPLICATIONS(it)
       {
          KService *s = it.current();
-         items->tqreplace(s->menuId(), s);
+         items->replace(s->menuId(), s);
       }
       FOR_ALL_APPLICATIONS_END
 
@@ -958,7 +958,7 @@ VFolderMenu::processCondition(TQDomElement &domElem, TQDict<KService> *items)
       FOR_CATEGORY(domElem.text(), it)
       {
          KService *s = *it;
-         items->tqreplace(s->menuId(), s);
+         items->replace(s->menuId(), s);
       }
       FOR_CATEGORY_END
    }
@@ -967,7 +967,7 @@ VFolderMenu::processCondition(TQDomElement &domElem, TQDict<KService> *items)
       FOR_ALL_APPLICATIONS(it)
       {
          KService *s = it.current();
-         items->tqreplace(s->menuId(), s);
+         items->replace(s->menuId(), s);
       }
       FOR_ALL_APPLICATIONS_END
    }
@@ -977,7 +977,7 @@ VFolderMenu::processCondition(TQDomElement &domElem, TQDict<KService> *items)
 kdDebug(7021) << "Adding file " << filename << endl;
       KService *s = findApplication(filename);
       if (s)
-         items->tqreplace(filename, s);
+         items->replace(filename, s);
    }
 }
 
@@ -1071,7 +1071,7 @@ kdDebug(7021) << "processKDELegacyDirs()" << endl;
          {
             TQString id = name;
             // Strip path from id
-            int i = id.tqfindRev('/');
+            int i = id.findRev('/');
             if (i >= 0)
                id = id.mid(i+1);
 
@@ -1079,7 +1079,7 @@ kdDebug(7021) << "processKDELegacyDirs()" << endl;
 
             // TODO: add Legacy category
             addApplication(id, service);
-            items.tqreplace(service->menuId(), service);
+            items.replace(service->menuId(), service);
             if (service->categories().isEmpty())
                insertService(m_currentMenu, name, service);
 
@@ -1144,10 +1144,10 @@ kdDebug(7021) << "processLegacyDir(" << dir << ", " << relDir << ", " << prefix 
 
             // TODO: Add legacy category
             addApplication(id, service);
-            items.tqreplace(service->menuId(), service);
+            items.replace(service->menuId(), service);
 
             if (service->categories().isEmpty())
-               m_currentMenu->items.tqreplace(id, service);
+               m_currentMenu->items.replace(id, service);
          }
       }
     }
@@ -1305,7 +1305,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for <KDE>" << endl;
 
                processKDELegacyDirs();
 
-               m_legacyNodes.tqreplace("<KDE>", m_currentMenu);
+               m_legacyNodes.replace("<KDE>", m_currentMenu);
                m_currentMenu = oldMenu;
 
                kdeLegacyDirsDone = true;
@@ -1318,7 +1318,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for <KDE>" << endl;
 
             TQString prefix = e.attributes().namedItem("prefix").toAttr().value();
 
-            if (m_defaultLegacyDirs.tqcontains(dir))
+            if (m_defaultLegacyDirs.contains(dir))
             {
                if (!kdeLegacyDirsDone)
                {
@@ -1328,7 +1328,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
 
                   processKDELegacyDirs();
 
-                  m_legacyNodes.tqreplace("<KDE>", m_currentMenu);
+                  m_legacyNodes.replace("<KDE>", m_currentMenu);
                   m_currentMenu = oldMenu;
 
                   kdeLegacyDirsDone = true;
@@ -1343,7 +1343,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
 
                processLegacyDir(dir, TQString::null, prefix);
 
-               m_legacyNodes.tqreplace(dir, m_currentMenu);
+               m_legacyNodes.replace(dir, m_currentMenu);
                m_currentMenu = oldMenu;
             }
          }
@@ -1421,7 +1421,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
          {
             // Add legacy nodes to Menu structure
             TQString dir = absoluteDir(e.text(), e.attribute("__BaseDir"));
-            SubMenu *legacyMenu = m_legacyNodes.tqfind(dir);
+            SubMenu *legacyMenu = m_legacyNodes.find(dir);
             if (legacyMenu)
             {
                mergeMenu(m_currentMenu, legacyMenu);
@@ -1432,7 +1432,7 @@ kdDebug(7021) << "Processing KDE Legacy dirs for " << dir << endl;
          {
             // Add legacy nodes to Menu structure
             TQString dir = "<KDE>";
-            SubMenu *legacyMenu = m_legacyNodes.tqfind(dir);
+            SubMenu *legacyMenu = m_legacyNodes.find(dir);
             if (legacyMenu)
             {
                mergeMenu(m_currentMenu, legacyMenu);
@@ -1618,7 +1618,7 @@ VFolderMenu::markUsedApplications(TQDict<KService> *items)
 {
    for(TQDictIterator<KService> it(*items); it.current(); ++it)
    {
-      m_usedAppsDict.tqreplace(it.current()->menuId(), it.current());
+      m_usedAppsDict.replace(it.current()->menuId(), it.current());
    }
 }
 

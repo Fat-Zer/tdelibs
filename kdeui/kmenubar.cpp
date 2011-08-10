@@ -518,7 +518,7 @@ void KMenuBar::drawContents( TQPainter* p )
 
         for ( int i=0; i<(int)count(); i++ )
         {
-            TQMenuItem *mi = tqfindItem( idAt( i ) );
+            TQMenuItem *mi = findItem( idAt( i ) );
 
             if ( !mi->text().isNull() || mi->pixmap() )
             {

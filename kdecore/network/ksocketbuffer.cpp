@@ -75,9 +75,9 @@ bool KSocketBuffer::canReadLine() const
   // walk the buffer
   for ( ; it != end; ++it)
     {
-      if ((*it).tqfind('\n', offset) != -1)
+      if ((*it).find('\n', offset) != -1)
 	return true;
-      if ((*it).tqfind('\r', offset) != -1)
+      if ((*it).find('\r', offset) != -1)
 	return true;
       offset = 0;
     }
@@ -101,7 +101,7 @@ TQCString KSocketBuffer::readLine()
   // walk the buffer
   for ( ; it != end; ++it)
     {
-      int posnl = (*it).tqfind('\n', offset);
+      int posnl = (*it).find('\n', offset);
       if (posnl == -1)
 	{
 	  // not found in this one

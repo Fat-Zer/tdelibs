@@ -165,7 +165,7 @@ bool KSaveFile::backupFile( const TQString& qFilename, const TQString& backupDir
    else
    {
        TQCString nameOnly;
-       int slash = cFilename.tqfindRev('/');
+       int slash = cFilename.findRev('/');
        if (slash < 0)
 	   nameOnly = cFilename;
        else

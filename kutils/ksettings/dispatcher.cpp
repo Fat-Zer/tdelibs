@@ -67,7 +67,7 @@ void Dispatcher::registerInstance( KInstance * instance, TQObject * recv, const 
     kdDebug( 701 ) << k_funcinfo << instanceName << endl;
     m_instanceName[ recv ] = instanceName;
     TQSignal * sig;
-    if( m_instanceInfo.tqcontains( instanceName ) )
+    if( m_instanceInfo.contains( instanceName ) )
     {
         sig = m_instanceInfo[ instanceName ].signal;
     }
@@ -86,7 +86,7 @@ void Dispatcher::registerInstance( KInstance * instance, TQObject * recv, const 
 KConfig * Dispatcher::configForInstanceName( const TQCString & instanceName )
 {
     kdDebug( 701 ) << k_funcinfo << endl;
-    if( m_instanceInfo.tqcontains( instanceName ) )
+    if( m_instanceInfo.contains( instanceName ) )
     {
         KInstance * inst = m_instanceInfo[ instanceName ].instance;
         if( inst )
@@ -111,7 +111,7 @@ void Dispatcher::reparseConfiguration( const TQCString & instanceName )
 {
     kdDebug( 701 ) << k_funcinfo << instanceName << endl;
     // check if the instanceName is valid:
-    if( ! m_instanceInfo.tqcontains( instanceName ) )
+    if( ! m_instanceInfo.contains( instanceName ) )
         return;
     // first we reparse the config of the instance so that the KConfig object
     // will be up to date

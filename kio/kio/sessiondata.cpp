@@ -236,8 +236,8 @@ SessionData::~SessionData()
 void SessionData::configDataFor( MetaData &configData, const TQString &proto,
                              const TQString & )
 {
-  if ( (proto.tqfind("http", 0, false) == 0 ) ||
-     (proto.tqfind("webdav", 0, false) == 0) )
+  if ( (proto.find("http", 0, false) == 0 ) ||
+     (proto.find("webdav", 0, false) == 0) )
   {
     if (!d->initDone)
         reset();
@@ -273,15 +273,15 @@ void SessionData::reset()
 
     // Get language settings...
     TQStringList languageList = KGlobal::locale()->languagesTwoAlpha();
-    TQStringList::Iterator it = languageList.tqfind( TQString::tqfromLatin1("C") );
+    TQStringList::Iterator it = languageList.find( TQString::tqfromLatin1("C") );
     if ( it != languageList.end() )
     {
-        if ( languageList.tqcontains( english ) > 0 )
+        if ( languageList.contains( english ) > 0 )
           languageList.remove( it );
         else
           (*it) = english;
     }
-    if ( !languageList.tqcontains( english ) )
+    if ( !languageList.contains( english ) )
        languageList.append( english );
 
     d->language = languageList.join( ", " );

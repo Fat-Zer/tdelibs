@@ -205,7 +205,7 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         result = r.url().local8Bit();
     } else if ( type.left( 11 ) == "TQValueList<" )
     {
-        if ( (uint)type.tqfind( '>', 11 ) != type.length() - 1 )
+        if ( (uint)type.find( '>', 11 ) != type.length() - 1 )
             return result;
 
         TQString nestedType = type.mid( 11, type.length() - 12 );
@@ -227,12 +227,12 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         }
     } else if ( type.left( 5 ) == "TQMap<" )
     {
-        int commaPos = type.tqfind( ',', 5 );
+        int commaPos = type.find( ',', 5 );
 
         if ( commaPos == -1 )
             return result;
 
-        if ( (uint)type.tqfind( '>', commaPos ) != type.length() - 1 )
+        if ( (uint)type.find( '>', commaPos ) != type.length() - 1 )
             return result;
 
         TQString keyType = type.mid( 5, commaPos - 5 );

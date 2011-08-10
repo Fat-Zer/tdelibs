@@ -78,7 +78,7 @@ static TQColor readColorEntry( TQSettings* s, const char *pKey,
         {
             bool bOK;
             // find first part (red)
-            int nIndex = aValue.tqfind( ',' );
+            int nIndex = aValue.find( ',' );
             if ( nIndex == -1 )
             {
                 // return a sensible default -- Bernd
@@ -91,7 +91,7 @@ static TQColor readColorEntry( TQSettings* s, const char *pKey,
 
             // find second part (green)
             int nOldIndex = nIndex;
-            nIndex = aValue.tqfind( ',', nOldIndex + 1 );
+            nIndex = aValue.find( ',', nOldIndex + 1 );
 
             if ( nIndex == -1 )
             {
@@ -176,7 +176,7 @@ public:
     */
     TQColor pixmapAveColor( const TQPixmap* p )
     {
-        if ( colorCache.tqcontains( p ) )
+        if ( colorCache.contains( p ) )
             return colorCache[ p ];
 
         TQImage to_ave = p->convertToImage();
@@ -565,7 +565,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
 {
     TQStringList keys = config.entryList( configFileName );
 
-    if ( keys.tqcontains( "foreground" ) )
+    if ( keys.contains( "foreground" ) )
     {
         d->overrideForeground = true;
         d->overrideForegroundCol = readColorEntry( &config, ( configFileName + "foreground" ).latin1(), 0 );
@@ -573,7 +573,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
     else
         d->overrideForeground = false;
 
-    if ( keys.tqcontains( "background" ) )
+    if ( keys.contains( "background" ) )
     {
         d->overrideBackground = true;
         d->overrideBackgroundCol = readColorEntry( &config, ( configFileName + "background" ).latin1(), 0 );
@@ -583,7 +583,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
 
 
 
-    if ( keys.tqcontains( "selectForeground" ) )
+    if ( keys.contains( "selectForeground" ) )
     {
         d->overrideSelectForeground = true;
         d->overrideSelectForegroundCol = readColorEntry( &config, ( configFileName + "selectForeground" ).latin1(), 0 );
@@ -591,7 +591,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
     else
         d->overrideSelectForeground = false;
 
-    if ( keys.tqcontains( "selectBackground" ) )
+    if ( keys.contains( "selectBackground" ) )
     {
         d->overrideSelectBackground = true;
         d->overrideSelectBackgroundCol = readColorEntry( &config, ( configFileName + "selectBackground" ).latin1(), 0 );
@@ -599,7 +599,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
     else
         d->overrideSelectBackground = false;
 
-    if ( keys.tqcontains( "windowBackground" ) )
+    if ( keys.contains( "windowBackground" ) )
     {
         d->overrideWindowBackground = true;
         d->overrideWindowBackgroundCol = readColorEntry( &config, ( configFileName + "windowBackground" ).latin1(), 0 );
@@ -608,7 +608,7 @@ void KThemeBase::applyConfigFile( TQSettings& config )
         d->overrideWindowBackground = false;
 
 
-    if ( keys.tqcontains( "windowForeground" ) )
+    if ( keys.contains( "windowForeground" ) )
     {
         d->overrideWindowForeground = true;
         d->overrideWindowForegroundCol = readColorEntry( &config, ( configFileName + "windowForeground" ).latin1(), 0 );
@@ -1271,22 +1271,22 @@ void KThemeBase::applyResourceGroup( TQSettings *config, int i )
     TQStringList keys = config->entryList( base );
 
     // Gradient low color or blend background
-    if ( keys.tqcontains( "GradientLow" ) )
+    if ( keys.contains( "GradientLow" ) )
         prop[ "GrLow" ] = readColorEntry( config, TQString( base + "GradientLow" ).latin1(),
                                           &TQApplication::tqpalette().active().background() ).name();
 
     // Gradient high color
-    if ( keys.tqcontains( "GradientHigh" ) )
+    if ( keys.contains( "GradientHigh" ) )
         prop[ "GrHigh" ] = readColorEntry( config, TQString( base + "GradientHigh" ).latin1(),
                                            &TQApplication::tqpalette().active().foreground() ).name();
 
     // Extended color attributes
-    if ( keys.tqcontains( "Foreground" ) || keys.tqcontains( "Background" ) )
+    if ( keys.contains( "Foreground" ) || keys.contains( "Background" ) )
     {
         TQColor fg, bg;
-        if ( keys.tqcontains( "Background" ) )
+        if ( keys.contains( "Background" ) )
             bg = readColorEntry( config, TQString( base + "Background" ).latin1(), &bg );
-        if ( keys.tqcontains( "Foreground" ) )
+        if ( keys.contains( "Foreground" ) )
             fg = readColorEntry( config, TQString( base + "Foreground" ).latin1(), &fg );
         prop[ "Foreground" ] = fg.name();
         prop[ "Background" ] = bg.name();
@@ -1320,7 +1320,7 @@ void KThemeBase::applyResourceGroup( TQSettings *config, int i )
         prop[ "Width" ] = TQString::number( config->readNumEntry( base + "Width", 10 ) );
     else if ( i == ComboBox || i == ComboBoxDown )
     {
-        if ( keys.tqcontains( "Round" ) )
+        if ( keys.contains( "Round" ) )
             prop[ "Round" ] = TQString::number( config->readBoolEntry( base + "Round", false ) );
         else
             prop[ "Round" ] = "5000"; // invalid, used w/multiple groups
@@ -1328,25 +1328,25 @@ void KThemeBase::applyResourceGroup( TQSettings *config, int i )
     }
     else if ( i == PushButton || i == PushButtonDown )
     {
-        if ( keys.tqcontains( "XShift" ) )
+        if ( keys.contains( "XShift" ) )
             prop[ "XShift" ] = TQString::number( config->readNumEntry( base + "XShift", 0 ) );
         else
             prop[ "XShift" ] = "5000";
-        if ( keys.tqcontains( "YShift" ) )
+        if ( keys.contains( "YShift" ) )
             prop[ "YShift" ] = TQString::number( config->readNumEntry( base + "YShift", 0 ) );
         else
             prop[ "YShift" ] = "5000";
-        if ( keys.tqcontains( "3DFocusRect" ) )
+        if ( keys.contains( "3DFocusRect" ) )
             prop[ "3DFRect" ] = TQString::number( config->
                                                  readBoolEntry(  base + "3DFocusRect", false ) );
         else
             prop[ "3DFRect" ] = "5000";
-        if ( keys.tqcontains( "3DFocusOffset" ) )
+        if ( keys.contains( "3DFocusOffset" ) )
             prop[ "3DFOffset" ] = TQString::number( config->
                                                    readBoolEntry(  base + "3DFocusOffset", 0 ) );
         else
             prop[ "3DFOffset" ] = "5000";
-        if ( keys.tqcontains( "Round" ) )
+        if ( keys.contains( "Round" ) )
             prop[ "Round" ] = TQString::number( config->readBoolEntry( base + "Round", false ) );
         else
             prop[ "Round" ] = "5000";
@@ -1765,7 +1765,7 @@ KThemePixmap* KThemeCache::pixmap( int w, int h, int widgetID, bool border,
     key.data.border = border;
     key.data.mask = mask;
 
-    KThemePixmap *pix = cache.tqfind( ( unsigned long ) key.cacheKey );
+    KThemePixmap *pix = cache.find( ( unsigned long ) key.cacheKey );
     if ( pix )
         pix->updateAccessed();
     return ( pix );
@@ -1780,7 +1780,7 @@ KThemePixmap* KThemeCache::horizontalPixmap( int w, int widgetID )
     key.data.height = 0;
     key.data.border = false;
     key.data.mask = false;
-    KThemePixmap *pix = cache.tqfind( ( unsigned long ) key.cacheKey );
+    KThemePixmap *pix = cache.find( ( unsigned long ) key.cacheKey );
     if ( pix )
         pix->updateAccessed();
     return ( pix );
@@ -1795,7 +1795,7 @@ KThemePixmap* KThemeCache::verticalPixmap( int h, int widgetID )
     key.data.height = h;
     key.data.border = false;
     key.data.mask = false;
-    KThemePixmap *pix = cache.tqfind( ( unsigned long ) key.cacheKey );
+    KThemePixmap *pix = cache.find( ( unsigned long ) key.cacheKey );
     if ( pix )
         pix->updateAccessed();
     return ( pix );
@@ -1814,7 +1814,7 @@ bool KThemeCache::insert( KThemePixmap *pixmap, ScaleHint scale, int widgetID,
     key.data.border = border;
     key.data.mask = mask;
 
-    if ( cache.tqfind( ( unsigned long ) key.cacheKey, true ) != NULL )
+    if ( cache.find( ( unsigned long ) key.cacheKey, true ) != NULL )
     {
         return ( true ); // a pixmap of this scale is already in there
     }

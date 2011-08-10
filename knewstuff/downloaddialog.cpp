@@ -421,19 +421,19 @@ void DownloadDialog::addEntry(Entry *entry, const TQStringList& variants)
 
   TQString lang = KGlobal::locale()->language();
 
-  if(variants.tqcontains("score"))
+  if(variants.contains("score"))
   {
     KListViewItem *tmp_r = new NumSortListViewItem(lv_r,
       entry->name(lang), entry->version(), TQString("%1").arg(entry->rating()));
     tmp_r->setPixmap(0, pix);
   }
-  if(variants.tqcontains("downloads"))
+  if(variants.contains("downloads"))
   {
     KListViewItem *tmp_d = new NumSortListViewItem(lv_d,
       entry->name(lang), entry->version(), TQString("%1").arg(entry->downloads()));
     tmp_d->setPixmap(0, pix);
   }
-  if(variants.tqcontains("latest"))
+  if(variants.contains("latest"))
   {
     KListViewItem *tmp_l = new DateSortListViewItem(lv_l,
       entry->name(lang), entry->version(), KGlobal::locale()->formatDate(entry->releaseDate()));
@@ -559,11 +559,11 @@ void DownloadDialog::install(Entry *e)
     m_entryitem->setPixmap(0, pix);
 
     TQListViewItem *item;
-    item = lv_r->tqfindItem(e->name(lang), 0);
+    item = lv_r->findItem(e->name(lang), 0);
     if(item) item->setPixmap(0, pix);
-    item = lv_d->tqfindItem(e->name(lang), 0);
+    item = lv_d->findItem(e->name(lang), 0);
     if(item) item->setPixmap(0, pix);
-    item = lv_l->tqfindItem(e->name(lang), 0);
+    item = lv_l->findItem(e->name(lang), 0);
     if(item) item->setPixmap(0, pix);
   }
 
@@ -651,19 +651,19 @@ void DownloadDialog::slotSelected()
     if(m_curtab != 0)
     {
       lv_r->clearSelection();
-      item = lv_r->tqfindItem(e->name(lang), 0);
+      item = lv_r->findItem(e->name(lang), 0);
       if(item) lv_r->setSelected(item, true);
     }
     if(m_curtab != 1)
     {
       lv_d->clearSelection();
-      item = lv_d->tqfindItem(e->name(lang), 0);
+      item = lv_d->findItem(e->name(lang), 0);
       if(item) lv_d->setSelected(item, true);
     }
     if(m_curtab != 2)
     {
       lv_l->clearSelection();
-      item = lv_l->tqfindItem(e->name(lang), 0);
+      item = lv_l->findItem(e->name(lang), 0);
       if(item) lv_l->setSelected(item, true);
     }
 
@@ -743,7 +743,7 @@ void DownloadDialog::slotPage(TQWidget *w)
 
   kdDebug() << "changed widget!!!" << endl;
 
-  if(m_map.tqfind(w) == m_map.end()) return;
+  if(m_map.find(w) == m_map.end()) return;
 
   d->m_page = w;
 
@@ -794,7 +794,7 @@ void DownloadDialog::loadProvider(Provider *p)
   for(TQStringList::Iterator it = variants.begin(); it != variants.end(); it++)
   {
     TQString url = p->downloadUrlVariant((*it)).url();
-    if(!urls.tqcontains(url))
+    if(!urls.contains(url))
     {
       urls[url] = TQStringList();
     }

@@ -92,7 +92,7 @@ TQString CupsdComment::comment(const TQString& key)
 {
         if (comments_.count() != 0 || loadComments())
 	{
-		Comment *comm = comments_.tqfind(key);
+		Comment *comm = comments_.find(key);
 		if (comm)
 			return comm->comment();
 	}
@@ -103,7 +103,7 @@ TQString CupsdComment::toolTip(const TQString& key)
 {
         if (comments_.count() != 0 || loadComments())
 	{
-		Comment *comm = comments_.tqfind(key);
+		Comment *comm = comments_.find(key);
 		if (comm)
 			return comm->toolTip();
 	}

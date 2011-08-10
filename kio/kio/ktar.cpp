@@ -385,7 +385,7 @@ bool KTar::openArchive( int mode )
                 name = name.left( name.length() - 1 );
             }
 
-            int pos = name.tqfindRev( '/' );
+            int pos = name.findRev( '/' );
             if ( pos == -1 )
                 nm = name;
             else
@@ -853,7 +853,7 @@ bool KTar::writeDir_impl(const TQString &name, const TQString &user,
     if ( dirName.right(1) != "/" )
         dirName += "/";
 
-    if ( d->dirList.tqcontains( dirName ) )
+    if ( d->dirList.contains( dirName ) )
         return true; // already there
 
     char buffer[ 0x201 ];

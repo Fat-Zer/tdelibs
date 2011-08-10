@@ -214,7 +214,7 @@ void KMJobManager::validatePluginActions(KActionCollection*, const TQPtrList<KMJ
 
 void KMJobManager::addPrinter(const TQString& pr, KMJobManager::JobType type, bool isSpecial)
 {
-	struct JobFilter	*jf = m_filter.tqfind(pr);
+	struct JobFilter	*jf = m_filter.find(pr);
 	if (!jf)
 	{
 		jf = new JobFilter;
@@ -226,7 +226,7 @@ void KMJobManager::addPrinter(const TQString& pr, KMJobManager::JobType type, bo
 
 void KMJobManager::removePrinter(const TQString& pr, KMJobManager::JobType type)
 {
-	struct JobFilter	*jf = m_filter.tqfind(pr);
+	struct JobFilter	*jf = m_filter.find(pr);
 	if (jf)
 	{
 		jf->m_type[type] = QMAX(0, jf->m_type[type]-1);

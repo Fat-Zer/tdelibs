@@ -360,23 +360,23 @@ void SlaveBase::disconnectSlave()
 
 void SlaveBase::setMetaData(const TQString &key, const TQString &value)
 {
-   mOutgoingMetaData.tqreplace(key, value);
+   mOutgoingMetaData.replace(key, value);
 }
 
 TQString SlaveBase::metaData(const TQString &key) const
 {
-   if (mIncomingMetaData.tqcontains(key))
+   if (mIncomingMetaData.contains(key))
       return mIncomingMetaData[key];
-   if (d->configData.tqcontains(key))
+   if (d->configData.contains(key))
       return d->configData[key];
    return TQString::null;
 }
 
 bool SlaveBase::hasMetaData(const TQString &key) const
 {
-   if (mIncomingMetaData.tqcontains(key))
+   if (mIncomingMetaData.contains(key))
       return true;
-   if (d->configData.tqcontains(key))
+   if (d->configData.contains(key))
       return true;
    return false;
 }

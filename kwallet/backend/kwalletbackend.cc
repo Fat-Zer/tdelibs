@@ -693,7 +693,7 @@ TQPtrList<Entry> Backend::readEntryList(const TQString& key) {
 
 
 bool Backend::createFolder(const TQString& f) {
-	if (_entries.tqcontains(f)) {
+	if (_entries.contains(f)) {
 		return false;
 	}
 
@@ -709,8 +709,8 @@ return true;
 
 int Backend::renameEntry(const TQString& oldName, const TQString& newName) {
 EntryMap& emap = _entries[_folder];
-EntryMap::Iterator oi = emap.tqfind(oldName);
-EntryMap::Iterator ni = emap.tqfind(newName);
+EntryMap::Iterator oi = emap.find(oldName);
+EntryMap::Iterator ni = emap.find(newName);
 
 	if (oi != emap.end() && ni == emap.end()) {
 		Entry *e = oi.data();
@@ -720,7 +720,7 @@ EntryMap::Iterator ni = emap.tqfind(newName);
 		KMD5 folderMd5;
 		folderMd5.update(_folder.utf8());
 
-		HashMap::iterator i = _hashes.tqfind(MD5Digest(folderMd5.rawDigest()));
+		HashMap::iterator i = _hashes.find(MD5Digest(folderMd5.rawDigest()));
 		if (i != _hashes.end()) {
 			KMD5 oldMd5, newMd5;
 			oldMd5.update(oldName.utf8());
@@ -747,7 +747,7 @@ void Backend::writeEntry(Entry *e) {
 	KMD5 folderMd5;
 	folderMd5.update(_folder.utf8());
 
-	HashMap::iterator i = _hashes.tqfind(MD5Digest(folderMd5.rawDigest()));
+	HashMap::iterator i = _hashes.find(MD5Digest(folderMd5.rawDigest()));
 	if (i != _hashes.end()) {
 		KMD5 md5;
 		md5.update(e->key().utf8());
@@ -757,7 +757,7 @@ void Backend::writeEntry(Entry *e) {
 
 
 bool Backend::hasEntry(const TQString& key) const {
-	return _entries.tqcontains(_folder) && _entries[_folder].tqcontains(key);
+	return _entries.contains(_folder) && _entries[_folder].contains(key);
 }
 
 
@@ -766,8 +766,8 @@ bool Backend::removeEntry(const TQString& key) {
 		return false;
 	}
 
-	FolderMap::Iterator fi = _entries.tqfind(_folder);
-	EntryMap::Iterator ei = fi.data().tqfind(key);
+	FolderMap::Iterator fi = _entries.find(_folder);
+	EntryMap::Iterator ei = fi.data().find(key);
 
 	if (fi != _entries.end() && ei != fi.data().end()) {
 		delete ei.data();
@@ -775,7 +775,7 @@ bool Backend::removeEntry(const TQString& key) {
 		KMD5 folderMd5;
 		folderMd5.update(_folder.utf8());
 
-		HashMap::iterator i = _hashes.tqfind(MD5Digest(folderMd5.rawDigest()));
+		HashMap::iterator i = _hashes.find(MD5Digest(folderMd5.rawDigest()));
 		if (i != _hashes.end()) {
 			KMD5 md5;
 			md5.update(key.utf8());
@@ -793,7 +793,7 @@ bool Backend::removeFolder(const TQString& f) {
 		return false;
 	}
 
-	FolderMap::Iterator fi = _entries.tqfind(f);
+	FolderMap::Iterator fi = _entries.find(f);
 
 	if (fi != _entries.end()) {
 		if (_folder == f) {
@@ -819,18 +819,18 @@ return false;
 bool Backend::folderDoesNotExist(const TQString& folder) const {
 	KMD5 md5;
 	md5.update(folder.utf8());
-	return !_hashes.tqcontains(MD5Digest(md5.rawDigest()));
+	return !_hashes.contains(MD5Digest(md5.rawDigest()));
 }
 
 
 bool Backend::entryDoesNotExist(const TQString& folder, const TQString& entry) const {
 	KMD5 md5;
 	md5.update(folder.utf8());
-	HashMap::const_iterator i = _hashes.tqfind(MD5Digest(md5.rawDigest()));
+	HashMap::const_iterator i = _hashes.find(MD5Digest(md5.rawDigest()));
 	if (i != _hashes.end()) {
 		md5.reset();
 		md5.update(entry.utf8());
-		return !i.data().tqcontains(MD5Digest(md5.rawDigest()));
+		return !i.data().contains(MD5Digest(md5.rawDigest()));
 	}
 	return true;
 }

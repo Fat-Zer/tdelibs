@@ -1123,7 +1123,7 @@ bool KJSDebugWin::haveBreakpoint(SourceFile *sourceFile, int line0, int line1)
   for (int i = 0; i < m_breakpointCount; i++) {
     int sourceId = m_breakpoints[i].sourceId;
     int lineno = m_breakpoints[i].lineno;
-    if (m_sourceFragments.tqcontains(sourceId) &&
+    if (m_sourceFragments.contains(sourceId) &&
         m_sourceFragments[sourceId]->sourceFile == sourceFile) {
       int absLineno = m_sourceFragments[sourceId]->baseLine+lineno-1;
       if (absLineno >= line0 && absLineno <= line1)

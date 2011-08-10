@@ -234,7 +234,7 @@ void KStartupInfo::new_startup_info_internal( const KStartupInfoId& id_P,
         return;
     if( id_P.none())
         return;
-    if( d->startups.tqcontains( id_P ))
+    if( d->startups.contains( id_P ))
         { // already reported, update
         d->startups[ id_P ].update( data_P );
         d->startups[ id_P ].age = 0; // CHECKME
@@ -250,7 +250,7 @@ void KStartupInfo::new_startup_info_internal( const KStartupInfoId& id_P,
         emit gotStartupChange( id_P, d->startups[ id_P ] );
         return;
         }
-    if( d->silent_startups.tqcontains( id_P ))
+    if( d->silent_startups.contains( id_P ))
         { // already reported, update
         d->silent_startups[ id_P ].update( data_P );
         d->silent_startups[ id_P ].age = 0; // CHECKME
@@ -265,7 +265,7 @@ void KStartupInfo::new_startup_info_internal( const KStartupInfoId& id_P,
         emit gotStartupChange( id_P, d->silent_startups[ id_P ] );
         return;
         }
-    if( d->uninited_startups.tqcontains( id_P ))
+    if( d->uninited_startups.contains( id_P ))
         {
         d->uninited_startups[ id_P ].update( data_P );
         kdDebug( 172 ) << "updating uninited" << endl;
@@ -317,18 +317,18 @@ void KStartupInfo::remove_startup_info_internal( const KStartupInfoId& id_P )
     {
     if( d == NULL )
         return;
-    if( d->startups.tqcontains( id_P ))
+    if( d->startups.contains( id_P ))
         {
 	kdDebug( 172 ) << "removing" << endl;
 	emit gotRemoveStartup( id_P, d->startups[ id_P ]);
 	d->startups.remove( id_P );
 	}
-    else if( d->silent_startups.tqcontains( id_P ))
+    else if( d->silent_startups.contains( id_P ))
 	{
 	kdDebug( 172 ) << "removing silent" << endl;
 	d->silent_startups.remove( id_P );
 	}
-    else if( d->uninited_startups.tqcontains( id_P ))
+    else if( d->uninited_startups.contains( id_P ))
 	{
 	kdDebug( 172 ) << "removing uninited" << endl;
 	d->uninited_startups.remove( id_P );
@@ -360,11 +360,11 @@ void KStartupInfo::remove_startup_pids( const KStartupInfoId& id_P,
         return;
     kdFatal( data_P.pids().count() == 0, 172 );
     Data* data = NULL;
-    if( d->startups.tqcontains( id_P ))
+    if( d->startups.contains( id_P ))
 	data = &d->startups[ id_P ];
-    else if( d->silent_startups.tqcontains( id_P ))
+    else if( d->silent_startups.contains( id_P ))
 	data = &d->silent_startups[ id_P ];
-    else if( d->uninited_startups.tqcontains( id_P ))
+    else if( d->uninited_startups.contains( id_P ))
         data = &d->uninited_startups[ id_P ];
     else
 	return;
@@ -669,7 +669,7 @@ bool KStartupInfo::find_id( const TQCString& id_P, KStartupInfoId* id_O,
     kdDebug( 172 ) << "find_id:" << id_P << endl;
     KStartupInfoId id;
     id.initId( id_P );
-    if( d->startups.tqcontains( id ))
+    if( d->startups.contains( id ))
         {
         if( id_O != NULL )
             *id_O = id;
@@ -1069,7 +1069,7 @@ unsigned long KStartupInfoId::timestamp() const
     {
     if( none())
         return 0;
-    int pos = d->id.tqfindRev( "_TIME" );
+    int pos = d->id.findRev( "_TIME" );
     if( pos >= 0 )
         {
         bool ok;
@@ -1083,10 +1083,10 @@ unsigned long KStartupInfoId::timestamp() const
     // snprintf (s, len, "%s/%s/%lu/%d-%d-%s",
     //   canonicalized_launcher, canonicalized_launchee, (unsigned long) timestamp,
     //  (int) getpid (), (int) sequence_number, hostbuf);
-    int pos1 = d->id.tqfindRev( '/' );
+    int pos1 = d->id.findRev( '/' );
     if( pos1 > 0 )
         {
-        int pos2 = d->id.tqfindRev( '/', pos1 - 1 );
+        int pos2 = d->id.findRev( '/', pos1 - 1 );
         if( pos2 >= 0 )
             {
             bool ok;
@@ -1374,7 +1374,7 @@ const TQCString& KStartupInfoData::hostname() const
 
 void KStartupInfoData::addPid( pid_t pid_P )
     {
-    if( !d->pids.tqcontains( pid_P ))
+    if( !d->pids.contains( pid_P ))
         d->pids.append( pid_P );
     }
 
@@ -1390,7 +1390,7 @@ const TQValueList< pid_t >& KStartupInfoData::pids() const
 
 bool KStartupInfoData::is_pid( pid_t pid_P ) const
     {
-    return d->pids.tqcontains( pid_P );
+    return d->pids.contains( pid_P );
     }
 
 void KStartupInfoData::setSilent( TriState state_P )
@@ -1446,24 +1446,24 @@ WId KStartupInfoData::launchedBy() const
 static
 long get_num( const TQString& item_P )
     {
-    unsigned int pos = item_P.tqfind( '=' );
+    unsigned int pos = item_P.find( '=' );
     return item_P.mid( pos + 1 ).toLong();
     }
 
 static
 unsigned long get_unum( const TQString& item_P )
     {
-    unsigned int pos = item_P.tqfind( '=' );
+    unsigned int pos = item_P.find( '=' );
     return item_P.mid( pos + 1 ).toULong();
     }
 
 static
 TQString get_str( const TQString& item_P )
     {
-    unsigned int pos = item_P.tqfind( '=' );
+    unsigned int pos = item_P.find( '=' );
     if( item_P.length() > pos + 2 && item_P[ pos + 1 ] == (QChar)'\"' )
         {
-        int pos2 = item_P.left( pos + 2 ).tqfind( '\"' );
+        int pos2 = item_P.left( pos + 2 ).find( '\"' );
         if( pos2 < 0 )
             return TQString::null;                      // 01234
         return item_P.mid( pos + 2, pos2 - 2 - pos );  // A="C"

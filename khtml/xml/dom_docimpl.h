@@ -616,7 +616,7 @@ protected:
                 TQConstString px( _prefix->s, _prefix->l );
                 TQString name = cs ? n.string() : n.string().upper();
                 TQString qn("aliases: " + (cs ? px.string() : px.string().upper()) + ":" + name);
-                if (!ids.tqfind( qn )) {
+                if (!ids.find( qn )) {
                     ids.insert( qn, (void*)id );
                 }
             }

@@ -62,7 +62,7 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeT
     if ( mimeType == "inode/directory" ) 
         return 0L;
 
-    KPreviewWidgetBase *provider = m_previewProviders.tqfind( mimeType );
+    KPreviewWidgetBase *provider = m_previewProviders.find( mimeType );
     if ( provider )
         return provider;
 
@@ -87,15 +87,15 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeT
     }
 
     // with the new mimetypes from the audio-preview, try again
-    provider = m_previewProviders.tqfind( mimeType );
+    provider = m_previewProviders.find( mimeType );
     if ( provider )
         return provider;
 
     // ### mimetype may be image/* for example, try that
-    int index = mimeType.tqfind( '/' );
+    int index = mimeType.find( '/' );
     if ( index > 0 )
     {
-        provider = m_previewProviders.tqfind( mimeType.left( index + 1 ) + "*" );
+        provider = m_previewProviders.find( mimeType.left( index + 1 ) + "*" );
         if ( provider )
             return provider;
     }
@@ -107,7 +107,7 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeT
         TQString parentMimeType = mimeInfo->parentMimeType();
         while ( !parentMimeType.isEmpty() )
         {
-            provider = m_previewProviders.tqfind( parentMimeType );
+            provider = m_previewProviders.find( parentMimeType );
             if ( provider )
                 return provider;
 
@@ -123,11 +123,11 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeT
         {
             if ( textProperty.toBool() )
             {
-                provider = m_previewProviders.tqfind( "text/plain" );
+                provider = m_previewProviders.find( "text/plain" );
                 if ( provider )
                     return provider;
 
-                provider = m_previewProviders.tqfind( "text/*" );
+                provider = m_previewProviders.find( "text/*" );
                 if ( provider )
                     return provider;
             }

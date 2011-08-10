@@ -284,7 +284,7 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
 
   connect( sizeListBox, TQT_SIGNAL(highlighted(const TQString&)),
 	   TQT_SLOT(size_chosen_slot(const TQString&)) );
-  sizeListBox->setSelected(sizeListBox->tqfindItem(TQString::number(10)), true); // default to 10pt.
+  sizeListBox->setSelected(sizeListBox->findItem(TQString::number(10)), true); // default to 10pt.
 
   row ++;
 
@@ -469,13 +469,13 @@ void KFontChooser::family_chosen_slot(const TQString& family)
     currentStyles.clear();
     for ( TQStringList::Iterator it = styles.begin(); it != styles.end(); ++it ) {
         TQString style = *it;
-        int pos = style.tqfind("Plain");
+        int pos = style.find("Plain");
         if(pos >=0) style = style.replace(pos,5,i18n("Regular"));
-        pos = style.tqfind("Normal");
+        pos = style.find("Normal");
         if(pos >=0) style = style.replace(pos,6,i18n("Regular"));
-        pos = style.tqfind("Oblique");
+        pos = style.find("Oblique");
         if(pos >=0) style = style.replace(pos,7,i18n("Italic"));
-        if(!styleListBox->tqfindItem(style)) {
+        if(!styleListBox->findItem(style)) {
             styleListBox->insertItem(i18n(style.utf8()));
             currentStyles.insert(i18n(style.utf8()), *it);
         }
@@ -486,9 +486,9 @@ void KFontChooser::family_chosen_slot(const TQString& family)
     }
 
     styleListBox->blockSignals(true);
-    TQListBoxItem *item = styleListBox->tqfindItem(selectedStyle);
+    TQListBoxItem *item = styleListBox->findItem(selectedStyle);
     if (item)
-       styleListBox->setSelected(styleListBox->tqfindItem(selectedStyle), true);
+       styleListBox->setSelected(styleListBox->findItem(selectedStyle), true);
     else
        styleListBox->setSelected(0, true);
     styleListBox->blockSignals(false);
@@ -538,7 +538,7 @@ void KFontChooser::style_chosen_slot(const TQString& style)
             fillSizeList();
     }
     sizeListBox->blockSignals(true);
-    sizeListBox->setSelected(sizeListBox->tqfindItem(TQString::number(selectedSize)), true);
+    sizeListBox->setSelected(sizeListBox->findItem(TQString::number(selectedSize)), true);
     sizeListBox->blockSignals(false);
     sizeListBox->ensureCurrentVisible();
 
@@ -587,7 +587,7 @@ void KFontChooser::setupDisplay()
   {
     if (family.contains('['))
     {
-      family = family.left(family.tqfind('[')).stripWhiteSpace();
+      family = family.left(family.find('[')).stripWhiteSpace();
       for (i = 0; i < numEntries; i++) {
         if (family == familyListBox->text(i).lower()) {
           familyListBox->setCurrentItem(i);
@@ -684,10 +684,10 @@ void KFontChooser::addFont( TQStringList &list, const char *xfont )
   TQString font = TQString::tqfromLatin1(ptr + 1);
 
   int pos;
-  if ( ( pos = font.tqfind( '-' ) ) > 0 ) {
+  if ( ( pos = font.find( '-' ) ) > 0 ) {
     font.truncate( pos );
 
-    if ( font.tqfind( TQString::tqfromLatin1("open look"), 0, false ) >= 0 )
+    if ( font.find( TQString::tqfromLatin1("open look"), 0, false ) >= 0 )
       return;
 
     TQStringList::Iterator it = list.begin();

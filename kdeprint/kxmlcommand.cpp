@@ -161,7 +161,7 @@ void KXmlCommand::setMimeType(const TQString& s)
 bool KXmlCommand::acceptMimeType(const TQString& s)
 {
 	check();
-	return (d->m_inputMime.tqfind(s) != d->m_inputMime.end());
+	return (d->m_inputMime.find(s) != d->m_inputMime.end());
 }
 
 TQStringList KXmlCommand::inputMimeTypes()
@@ -383,7 +383,7 @@ TQString KXmlCommand::buildCommand(const TQMap<TQString,TQString>& opts, bool pi
 			{
 				TQString	format = dopt->get("format");
 				TQString value = dopt->valueText();
-				if ( format.tqfind( quotedRe ) != -1 )
+				if ( format.find( quotedRe ) != -1 )
 				{
 					if ( ( value.right( 1 ) == "'" && value.left( 1 ) == "'" )  ||
 					     ( value.right( 1 ) == "\"" && value.left( 1 ) == "\"" ) )
@@ -463,7 +463,7 @@ void KXmlCommand::saveXml()
 TQDomElement KXmlCommand::createIO(TQDomDocument& doc, int n, const TQString& tag)
 {
 	TQDomElement	elem = doc.createElement(tag);
-	if (d->m_command.tqfind("%"+tag) != -1)
+	if (d->m_command.find("%"+tag) != -1)
 	{
 		for (int i=0; i<2; i++)
 		{
@@ -632,7 +632,7 @@ TQStringList KXmlCommandManager::commandList()
 			for (TQStringList::ConstIterator it2=list.begin(); it2!=list.end(); ++it2)
 			{
 				TQString	cmdName = (*it2).left((*it2).length()-8);
-				if (d->m_cmdlist.tqfind(cmdName) == d->m_cmdlist.end())
+				if (d->m_cmdlist.find(cmdName) == d->m_cmdlist.end())
 					d->m_cmdlist.append(cmdName);
 			}
 		}
@@ -676,7 +676,7 @@ TQString KXmlCommandManager::selectCommand(TQWidget *parent)
 
 KXmlCommand* KXmlCommandManager::command(const TQString& xmlId) const
 {
-	return (d->m_cmdmap.tqcontains(xmlId) ? d->m_cmdmap[xmlId] : 0);
+	return (d->m_cmdmap.contains(xmlId) ? d->m_cmdmap[xmlId] : 0);
 }
 
 int KXmlCommandManager::insertCommand(TQStringList& list, const TQString& filtername, bool defaultToStart)
@@ -728,7 +728,7 @@ TQStringList KXmlCommandManager::autoConvert(const TQString& mimesrc, const TQSt
 
 	preload();
 
-	if (d->m_mimemap.tqcontains(mimesrc))
+	if (d->m_mimemap.contains(mimesrc))
 	{
 		const TQValueList<KXmlCommand*>	l = d->m_mimemap[mimesrc];
 		for (TQValueList<KXmlCommand*>::ConstIterator it=l.begin(); it!=l.end(); ++it)
@@ -752,7 +752,7 @@ TQStringList KXmlCommandManager::autoConvert(const TQString& mimesrc, const TQSt
 				// mime types. Just discard it. If the subchain contains also the current
 				// considered filter, then discard it: it denotes of a cycle in filter
 				// chain.
-				if (subchain.count() > 0 && subchain.tqfindIndex((*it)->name()) == -1)
+				if (subchain.count() > 0 && subchain.findIndex((*it)->name()) == -1)
 				{
 					subchain.prepend((*it)->name());
 					if (subchain.count() < score || score == 0)
@@ -791,12 +791,12 @@ bool KXmlCommandManager::checkCommand(const TQString& xmlId, int inputCheck, int
 	TQString	cmd = (xmlCmd ? xmlCmd->command() : xmlId);
 	if (status && !cmd.isEmpty() && (inputCheck > None || outputCheck > None))
 	{
-		if (inputCheck > None && (cmd.tqfind("%in") == -1 || inputCheck == Advanced) && cmd.tqfind("%filterinput") == -1)
+		if (inputCheck > None && (cmd.find("%in") == -1 || inputCheck == Advanced) && cmd.find("%filterinput") == -1)
 		{
 			status = false;
 			errmsg = i18n("The command does not contain the required tag %1.").arg(inputCheck == Advanced ? "%filterinput" : "{%in,%filterinput}");
 		}
-		if (status && outputCheck > None && (cmd.tqfind("%out") == -1 || outputCheck == Advanced) && cmd.tqfind("filteroutput") == -1)
+		if (status && outputCheck > None && (cmd.find("%out") == -1 || outputCheck == Advanced) && cmd.find("filteroutput") == -1)
 		{
 			status = false;
 			errmsg = i18n("The command does not contain the required tag %1.").arg(outputCheck == Advanced ? "%filteroutput" : "{%out,%filteroutput}");

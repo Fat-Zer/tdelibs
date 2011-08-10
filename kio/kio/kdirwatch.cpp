@@ -135,7 +135,7 @@ void KDirWatchPrivate::dnotify_handler(int, siginfo_t *si, void *)
   // (Richard Stevens, Advanced programming in the Unix Environment)
   int saved_errno = errno;
 
-  Entry* e = dwp_self->fd_Entry.tqfind(si->si_fd);
+  Entry* e = dwp_self->fd_Entry.find(si->si_fd);
 
 //  kdDebug(7001) << "DNOTIFY Handler: fd " << si->si_fd << " path "
 //		<< TQString(e ? e->path:"unknown") << endl;
@@ -551,7 +551,7 @@ KDirWatchPrivate::Entry* KDirWatchPrivate::entry(const TQString& _path)
   if ( path.length() > 1 && path.right(1) == "/" )
     path.truncate( path.length() - 1 );
 
-  EntryMap::Iterator it = m_mapEntries.tqfind( path );
+  EntryMap::Iterator it = m_mapEntries.find( path );
   if ( it == m_mapEntries.end() )
     return 0;
   else
@@ -684,7 +684,7 @@ bool KDirWatchPrivate::useDNotify(Entry* e)
 	return false;
       }
 
-      fd_Entry.tqreplace(fd, e);
+      fd_Entry.replace(fd, e);
       e->dn_fd = fd;
 
       kdDebug(7001) << " Setup DNotify (fd " << fd
@@ -782,7 +782,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
   if ( path.length() > 1 && path.right(1) == "/" )
     path.truncate( path.length() - 1 );
 
-  EntryMap::Iterator it = m_mapEntries.tqfind( path );
+  EntryMap::Iterator it = m_mapEntries.find( path );
   if ( it != m_mapEntries.end() )
   {
     if (sub_entry) {
@@ -923,7 +923,7 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
 
   if (delayRemove) {
     // removeList is allowed to contain any entry at most once
-    if (removeList.tqfindRef(e)==-1)
+    if (removeList.findRef(e)==-1)
       removeList.append(e);
     // now e->isValid() is false
     return;

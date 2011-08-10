@@ -75,7 +75,7 @@ TQString HelpProtocol::langLookup(const TQString& fname)
 
         if ( ( *it ).right( 5 ) == ".html" )
         {
-            TQString file = (*it).left((*it).tqfindRev('/')) + "/index.docbook";
+            TQString file = (*it).left((*it).findRev('/')) + "/index.docbook";
             kdDebug( 7119 ) << "Looking for help in: " << file << endl;
             info.setFile(file);
             if (info.exists() && info.isFile() && info.isReadable())
@@ -189,7 +189,7 @@ void HelpProtocol::get( const KURL& url )
          return;
       }
     } else {
-        TQString docbook_file = file.left(file.tqfindRev('/')) + "/index.docbook";
+        TQString docbook_file = file.left(file.findRev('/')) + "/index.docbook";
         if (!KStandardDirs::exists(file)) {
             file = docbook_file;
         } else {
@@ -217,9 +217,9 @@ void HelpProtocol::get( const KURL& url )
         if (mParsed.isEmpty()) {
             tqunicodeError( i18n( "The requested help file could not be parsed:<br>%1" ).arg( file ) );
         } else {
-            int pos1 = mParsed.tqfind( "charset=" );
+            int pos1 = mParsed.find( "charset=" );
             if ( pos1 > 0 ) {
-              int pos2 = mParsed.tqfind( '"', pos1 );
+              int pos2 = mParsed.find( '"', pos1 );
               if ( pos2 > 0 ) {
                 mParsed.replace( pos1, pos2 - pos1, "charset=UTF-8" );
               }
@@ -274,7 +274,7 @@ void HelpProtocol::get( const KURL& url )
             {
                 int index = 0;
                 while ( true ) {
-                    index = mParsed.tqfind( TQRegExp( "<a name=" ), index);
+                    index = mParsed.find( TQRegExp( "<a name=" ), index);
                     if ( index == -1 ) {
                         kdDebug( 7119 ) << "no anchor\n";
                         break; // use whatever is the target, most likely index.html
@@ -283,12 +283,12 @@ void HelpProtocol::get( const KURL& url )
                     if ( mParsed.mid( index, 11 + anchor.length() ).lower() ==
                          TQString( "<a name=\"%1\">" ).arg( anchor ) )
                     {
-                        index = mParsed.tqfindRev( "<FILENAME filename=", index ) +
+                        index = mParsed.findRev( "<FILENAME filename=", index ) +
                                  strlen( "<FILENAME filename=\"" );
                         TQString filename=mParsed.mid( index, 2000 );
-                        filename = filename.left( filename.tqfind( '\"' ) );
+                        filename = filename.left( filename.find( '\"' ) );
                         TQString path = target.path();
-                        path = path.left( path.tqfindRev( '/' ) + 1) + filename;
+                        path = path.left( path.findRev( '/' ) + 1) + filename;
                         kdDebug( 7119 ) << "anchor found in " << path <<endl;
                         target.setPath( path );
                         break;
@@ -307,9 +307,9 @@ void HelpProtocol::emitFile( const KURL& url )
 {
     infoMessage(i18n("Looking up section"));
 
-    TQString filename = url.path().mid(url.path().tqfindRev('/') + 1);
+    TQString filename = url.path().mid(url.path().findRev('/') + 1);
 
-    int index = mParsed.tqfind(TQString("<FILENAME filename=\"%1\"").arg(filename));
+    int index = mParsed.find(TQString("<FILENAME filename=\"%1\"").arg(filename));
     if (index == -1) {
         if ( filename == "index.html" ) {
             data( fromUnicode( mParsed ) );

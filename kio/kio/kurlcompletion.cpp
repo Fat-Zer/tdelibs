@@ -786,7 +786,7 @@ bool KURLCompletion::envCompletion(const MyURL &url, TQString *match)
 		while ( *env ) {
 			TQString s = TQString::fromLocal8Bit( *env );
 
-			int pos = s.tqfind('=');
+			int pos = s.find('=');
 
 			if ( pos == -1 )
 				pos = s.length();
@@ -1407,7 +1407,7 @@ static bool expandEnv( TQString &text )
 
 	bool expanded = false;
 
-	while ( (pos = text.tqfind('$', pos)) != -1 ) {
+	while ( (pos = text.find('$', pos)) != -1 ) {
 
 		// Skip escaped '$'
 		//
@@ -1419,8 +1419,8 @@ static bool expandEnv( TQString &text )
 		else {
 			// Find the end of the variable = next '/' or ' '
 			//
-			int pos2 = text.tqfind( ' ', pos+1 );
-			int pos_tmp = text.tqfind( '/', pos+1 );
+			int pos2 = text.find( ' ', pos+1 );
+			int pos_tmp = text.find( '/', pos+1 );
 
 			if ( pos2 == -1 || (pos_tmp != -1 && pos_tmp < pos2) )
 				pos2 = pos_tmp;
@@ -1467,8 +1467,8 @@ static bool expandTilde(TQString &text)
 
 	// Find the end of the user name = next '/' or ' '
 	//
-	int pos2 = text.tqfind( ' ', 1 );
-	int pos_tmp = text.tqfind( '/', 1 );
+	int pos2 = text.find( ' ', 1 );
+	int pos_tmp = text.find( '/', 1 );
 
 	if ( pos2 == -1 || (pos_tmp != -1 && pos_tmp < pos2) )
 		pos2 = pos_tmp;

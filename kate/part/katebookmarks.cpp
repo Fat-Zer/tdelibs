@@ -176,7 +176,7 @@ void KateBookmarks::insertBookmarks( TQPopupMenu& menu )
       {
         sortArray[i] = (*it)->line;
         ssort( sortArray, i );
-        idx = sortArray.tqfind( (*it)->line ) + 3;
+        idx = sortArray.find( (*it)->line ) + 3;
       }
 
       menu.insertItem(

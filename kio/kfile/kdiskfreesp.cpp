@@ -109,7 +109,7 @@ void KDiskFreeSp::dfDone()
     if ( !s.isEmpty() ) {
       //kdDebug(kfile_area) << "GOT: [" << s << "]" << endl;
 
-      if (s.tqfind(BLANK)<0)      // devicename was too long, rest in next line
+      if (s.find(BLANK)<0)      // devicename was too long, rest in next line
 	if ( !t.eof() ) {       // just appends the next line
             v=t.readLine();
             s=s.append(v);
@@ -119,30 +119,30 @@ void KDiskFreeSp::dfDone()
 
       //kdDebug(kfile_area) << "[" << s << "]" << endl;
 
-      //TQString deviceName = s.left(s.tqfind(BLANK));
-      s=s.remove(0,s.tqfind(BLANK)+1 );
+      //TQString deviceName = s.left(s.find(BLANK));
+      s=s.remove(0,s.find(BLANK)+1 );
       //kdDebug(kfile_area) << "    DeviceName:    [" << deviceName << "]" << endl;
 
       if (!NO_FS_TYPE)
-          s=s.remove(0,s.tqfind(BLANK)+1 ); // eat fs type
+          s=s.remove(0,s.find(BLANK)+1 ); // eat fs type
 
-      u=s.left(s.tqfind(BLANK));
+      u=s.left(s.find(BLANK));
       unsigned long kBSize = u.toULong();
-      s=s.remove(0,s.tqfind(BLANK)+1 );
+      s=s.remove(0,s.find(BLANK)+1 );
       //kdDebug(kfile_area) << "    Size:       [" << kBSize << "]" << endl;
 
-      u=s.left(s.tqfind(BLANK));
+      u=s.left(s.find(BLANK));
       unsigned long kBUsed = u.toULong();
-      s=s.remove(0,s.tqfind(BLANK)+1 );
+      s=s.remove(0,s.find(BLANK)+1 );
       //kdDebug(kfile_area) << "    Used:       [" << kBUsed << "]" << endl;
 
-      u=s.left(s.tqfind(BLANK));
+      u=s.left(s.find(BLANK));
       unsigned long kBAvail = u.toULong();
-      s=s.remove(0,s.tqfind(BLANK)+1 );
+      s=s.remove(0,s.find(BLANK)+1 );
       //kdDebug(kfile_area) << "    Avail:       [" << kBAvail << "]" << endl;
 
 
-      s=s.remove(0,s.tqfind(BLANK)+1 );  // delete the capacity 94%
+      s=s.remove(0,s.find(BLANK)+1 );  // delete the capacity 94%
       TQString mountPoint = s.stripWhiteSpace();
       //kdDebug(kfile_area) << "    MountPoint:       [" << mountPoint << "]" << endl;
 

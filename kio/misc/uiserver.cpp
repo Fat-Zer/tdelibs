@@ -272,8 +272,8 @@ void ProgressItem::setPercent( unsigned long percent ) {
 
 void ProgressItem::setInfoMessage( const TQString & msg ) {
   TQString plainTextMsg(msg);
-  plainTextMsg.tqreplace( TQRegExp( "</?b>" ), TQString() );
-  plainTextMsg.tqreplace( TQRegExp( "<img.*>" ), TQString() );
+  plainTextMsg.replace( TQRegExp( "</?b>" ), TQString() );
+  plainTextMsg.replace( TQRegExp( "<img.*>" ), TQString() );
   setText( ListProgress::TB_PROGRESS, plainTextMsg );
 
   defaultProgress->slotInfoMessage( 0, msg );
@@ -1195,7 +1195,7 @@ void UIServer::showSSLInfoDialog(const TQString &url, const KIO::MetaData &meta,
 
       kdDebug(7024) << "ssl_cert_errors=" << meta["ssl_cert_errors"] << endl;
       kid->setCertState(meta["ssl_cert_errors"]);
-      TQString ip = meta.tqcontains("ssl_proxied") ? "" : meta["ssl_peer_ip"];
+      TQString ip = meta.contains("ssl_proxied") ? "" : meta["ssl_peer_ip"];
       kid->setup( x,
                   ip,
                   url, // the URL

@@ -179,7 +179,7 @@ void ConfigPage::load()
   KTrader::OfferList::ConstIterator end = plugins.end();
   for ( ; it != end; ++it ) {
     const TQString family = (*it)->property( "X-KDE-ResourceFamily" ).toString();
-    if ( compatFamilyNames.tqfind( family ) == compatFamilyNames.end() )
+    if ( compatFamilyNames.find( family ) == compatFamilyNames.end() )
         compatFamilyNames.append( family );
   }
 
@@ -300,7 +300,7 @@ void ConfigPage::slotAdd()
   if ( !ok )
     return;
 
-  TQString type = types[ descs.tqfindIndex( desc ) ];
+  TQString type = types[ descs.findIndex( desc ) ];
 
   // Create new resource
   Resource *resource = mCurrentManager->createResource( type );

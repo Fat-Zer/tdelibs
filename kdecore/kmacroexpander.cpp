@@ -339,7 +339,7 @@ template<class VT>
 int
 KMacroMapExpander<TQChar,VT>::expandPlainMacro( const TQString &str, uint pos, TQStringList &ret )
 {
-    TQMapConstIterator<TQChar,VT> it = macromap.tqfind(str[pos]);
+    TQMapConstIterator<TQChar,VT> it = macromap.find(str[pos]);
     if (it != macromap.end()) {
        ret += it.data();
        return 1;
@@ -355,7 +355,7 @@ KMacroMapExpander<TQChar,VT>::expandEscapedMacro( const TQString &str, uint pos,
         ret += TQString( escapeChar() );
         return 2;
     }
-    TQMapConstIterator<TQChar,VT> it = macromap.tqfind(str[pos+1]);
+    TQMapConstIterator<TQChar,VT> it = macromap.find(str[pos+1]);
     if (it != macromap.end()) {
        ret += it.data();
        return 2;
@@ -390,7 +390,7 @@ KMacroMapExpander<TQString,VT>::expandPlainMacro( const TQString &str, uint pos,
     if (!sl)
         return 0;
     TQMapConstIterator<TQString,VT> it =
-        macromap.tqfind( TQConstString( str.tqunicode() + pos, sl ).string() );
+        macromap.find( TQConstString( str.tqunicode() + pos, sl ).string() );
     if (it != macromap.end()) {
         ret += it.data();
         return sl;
@@ -421,7 +421,7 @@ KMacroMapExpander<TQString,VT>::expandEscapedMacro( const TQString &str, uint po
     if (!sl)
         return 0;
     TQMapConstIterator<TQString,VT> it =
-        macromap.tqfind( TQConstString( str.tqunicode() + rpos, sl ).string() );
+        macromap.find( TQConstString( str.tqunicode() + rpos, sl ).string() );
     if (it != macromap.end()) {
         ret += it.data();
         return rsl;

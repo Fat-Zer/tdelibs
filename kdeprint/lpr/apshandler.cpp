@@ -63,7 +63,7 @@ bool ApsHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool shor
 		if (!shortmode)
 		{
 			TQMap<TQString,TQString>	opts = loadResources(entry);
-			if (opts.tqcontains("PRINTER"))
+			if (opts.contains("PRINTER"))
 			{
 				prt->setDescription(i18n("APS Driver (%1)").arg(opts["PRINTER"]));
 				prt->setDriverInfo(prt->description());
@@ -148,7 +148,7 @@ TQMap<TQString,TQString> ApsHandler::loadVarFile(const TQString& filename)
 		while (!t.atEnd())
 		{
 			line = t.readLine().stripWhiteSpace();
-			if (line.isEmpty() || line[0] == '#' || (p = line.tqfind('=')) == -1)
+			if (line.isEmpty() || line[0] == '#' || (p = line.find('=')) == -1)
 				continue;
 			TQString	variable = line.left(p).stripWhiteSpace();
 			TQString	value = line.mid(p+1).stripWhiteSpace();
@@ -166,7 +166,7 @@ DrMain* ApsHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool config
 	if (driver /* && config */ )    // Load resources in all case, to get the correct page size
 	{
 		TQMap<TQString,TQString>	opts = loadResources(entry);
-		if ( !config && opts.tqcontains( "PAPERSIZE" ) )
+		if ( !config && opts.contains( "PAPERSIZE" ) )
 		{
 			// this is needed to keep applications informed
 			// about the current selected page size
@@ -187,7 +187,7 @@ DrMain* ApsHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool config
 
 DrMain* ApsHandler::loadDbDriver(const TQString& s)
 {
-	int	p = s.tqfind('/');
+	int	p = s.find('/');
 	DrMain	*driver = loadApsDriver(true);
 	if (driver)
 		driver->set("gsdriver", s.mid(p+1));

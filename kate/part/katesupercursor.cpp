@@ -662,7 +662,7 @@ void KateSuperRangeList::slotDeleted(TQObject* range)
       m_columnBoundaries.removeRef(r->m_end);
   }
 
-  int index = tqfindRef(r);
+  int index = findRef(r);
   if (index != -1)
     take(index);
   //else kdDebug(13020)<<"Range not found in list"<<endl;

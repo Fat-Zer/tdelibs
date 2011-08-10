@@ -320,7 +320,7 @@ void DCOPServer::slotOutputReady(int socket)
 qWarning("DCOPServer: slotOutputReady fd = %d", socket);
 #endif
    // Find out connection.
-   DCOPConnection *conn = fd_clients.tqfind(socket);
+   DCOPConnection *conn = fd_clients.find(socket);
    //assert(conn);
    //assert(conn->outputBlocked);
    //assert(conn->socket() == socket);
@@ -711,7 +711,7 @@ void DCOPProcessMessage( IceConn iceConn, IcePointer /*clientData*/,
 void DCOPServer::processMessage( IceConn iceConn, int opcode,
 				 unsigned long length, Bool /*swap*/)
 {
-    DCOPConnection* conn = clients.tqfind( iceConn );
+    DCOPConnection* conn = clients.find( iceConn );
     if ( !conn ) {
 	qWarning("DCOPServer::processMessage message from unknown connection. [opcode = %d]", opcode);
 	return;
@@ -1110,7 +1110,7 @@ DCOPConnection* DCOPServer::findApp( const TQCString& appId )
 {
     if ( appId.isNull() )
 	return 0;
-    DCOPConnection* conn = appIds.tqfind( appId );
+    DCOPConnection* conn = appIds.find( appId );
     return conn;
 }
 
@@ -1205,7 +1205,7 @@ void DCOPServer::removeConnection( void* data )
     while (!conn->waitingForReply.isEmpty()) {
 	IceConn iceConn = conn->waitingForReply.take(0);
 	if (iceConn) {
-	    DCOPConnection* target = clients.tqfind( iceConn );
+	    DCOPConnection* target = clients.find( iceConn );
 	    qWarning("DCOP aborting call from '%s' to '%s'", target ? target->appId.data() : "<unknown>" , conn->appId.data() );
 	    TQByteArray reply;
 	    DCOPMsg *pMsg;
@@ -1227,7 +1227,7 @@ void DCOPServer::removeConnection( void* data )
     while (!conn->waitingForDelayedReply.isEmpty()) {
 	IceConn iceConn = conn->waitingForDelayedReply.take(0);
 	if (iceConn) {
-	    DCOPConnection* target = clients.tqfind( iceConn );
+	    DCOPConnection* target = clients.find( iceConn );
 	    qWarning("DCOP aborting (delayed) call from '%s' to '%s'", target ? target->appId.data() : "<unknown>", conn->appId.data() );
 	    TQByteArray reply;
 	    DCOPMsg *pMsg;
@@ -1248,7 +1248,7 @@ void DCOPServer::removeConnection( void* data )
     {
 	IceConn iceConn = conn->waitingOnReply.take(0);
         if (iceConn) {
-           DCOPConnection* target = clients.tqfind( iceConn );
+           DCOPConnection* target = clients.find( iceConn );
            if (!target)
            {
                qWarning("DCOP Error: still waiting for answer from non-existing client.");
@@ -1360,7 +1360,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 
     if ( obj == "emit")
     {
-        DCOPConnection* conn = clients.tqfind( iceConn );
+        DCOPConnection* conn = clients.find( iceConn );
         if (conn) {
 	    //qDebug("DCOPServer: %s emits %s", conn->appId.data(), fun.data());
 	    dcopSignals->emitSignal(conn, fun, data, false);
@@ -1377,7 +1377,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 
             daemon = static_cast<bool>( iDaemon );
 
-	    DCOPConnection* conn = clients.tqfind( iceConn );
+	    DCOPConnection* conn = clients.find( iceConn );
             if ( conn && !conn->appId.isNull() ) {
                 if ( daemon ) {
                     if ( !conn->daemon )
@@ -1415,10 +1415,10 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 	if (!args.atEnd()) {
 	    TQCString app2 = readQCString(args);
 	    TQDataStream reply( replyData, IO_WriteOnly );
-	    DCOPConnection* conn = clients.tqfind( iceConn );
+	    DCOPConnection* conn = clients.find( iceConn );
 	    if ( conn && !app2.isEmpty() ) {
 		if ( !conn->appId.isNull() &&
-		     appIds.tqfind( conn->appId ) == conn ) {
+		     appIds.find( conn->appId ) == conn ) {
 		    appIds.remove( conn->appId );
 
 		}
@@ -1441,7 +1441,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 #endif
 
 		conn->appId = app2;
-		if ( appIds.tqfind( app2 ) != 0 ) {
+		if ( appIds.find( app2 ) != 0 ) {
 		    // we already have this application, unify
 		    int n = 1;
 		    TQCString tmp;
@@ -1450,12 +1450,12 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 			tmp.setNum( n );
 			tmp.prepend("-");
 			tmp.prepend( app2 );
-		    } while ( appIds.tqfind( tmp ) != 0 );
+		    } while ( appIds.find( tmp ) != 0 );
 		    conn->appId = tmp;
 		}
 		appIds.insert( conn->appId, conn );
 
-		int c = conn->appId.tqfind( '-' );
+		int c = conn->appId.find( '-' );
 		if ( c > 0 )
 		    conn->plainAppId = conn->appId.left( c );
 		else
@@ -1497,7 +1497,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 	if (!args.atEnd()) {
 	    TQ_INT8 notifyActive;
 	    args >> notifyActive;
-	    DCOPConnection* conn = clients.tqfind( iceConn );
+	    DCOPConnection* conn = clients.find( iceConn );
 	    if ( conn ) {
 		if ( notifyActive )
 		    conn->notifyRegister++;
@@ -1508,7 +1508,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
 	    return true;
 	}
     } else if ( fun == "connectSignal(TQCString,TQCString,TQCString,TQCString,TQCString,bool)") {
-        DCOPConnection* conn = clients.tqfind( iceConn );
+        DCOPConnection* conn = clients.find( iceConn );
         if (!conn) return false;
         TQDataStream args(data, IO_ReadOnly );
         if (args.atEnd()) return false;
@@ -1528,7 +1528,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
         reply << (TQ_INT8) (b?1:0);
         return true;
     } else if ( fun == "disconnectSignal(TQCString,TQCString,TQCString,TQCString,TQCString)") {
-        DCOPConnection* conn = clients.tqfind( iceConn );
+        DCOPConnection* conn = clients.find( iceConn );
         if (!conn) return false;
         TQDataStream args(data, IO_ReadOnly );
         if (args.atEnd()) return false;
@@ -1623,7 +1623,7 @@ static bool isRunning(const TQCString &fName, bool printNetworkId = false)
 	TQCString contents( size+1 );
 	bool ok = f.readBlock( contents.data(), size ) == size;
 	contents[size] = '\0';
-	int pos = contents.tqfind('\n');
+	int pos = contents.find('\n');
 	ok = ok && ( pos != -1 );
 	pid_t pid = ok ? contents.mid(pos+1).toUInt(&ok) : 0;
 	f.close();

@@ -865,7 +865,7 @@ void KListView::contentsMouseReleaseEvent( TQMouseEvent *e )
         if (!rootDecoClicked)
         {
           int col = header()->mapToLogical( header()->cellAt( p.x() ) );
-          if ( d->renameable.tqcontains(col) )
+          if ( d->renameable.contains(col) )
             rename(at, col);
         }
       }
@@ -1377,7 +1377,7 @@ void KListView::cleanItemHighlighter ()
 
 void KListView::rename(TQListViewItem *item, int c)
 {
-  if (d->renameable.tqcontains(c))
+  if (d->renameable.contains(c))
   {
     ensureItemVisible(item);
     d->editor->load(item,c);
@@ -1386,7 +1386,7 @@ void KListView::rename(TQListViewItem *item, int c)
 
 bool KListView::isRenameable (int col) const
 {
-  return d->renameable.tqcontains(col);
+  return d->renameable.contains(col);
 }
 
 void KListView::setRenameable (int col, bool renameable)

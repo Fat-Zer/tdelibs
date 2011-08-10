@@ -869,7 +869,7 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
     int pos = 0;
     do {
         pos++;
-        int newpos = absBase.tqfind('/', pos);
+        int newpos = absBase.find('/', pos);
         if (newpos == -1) newpos = absBase.length();
         TQConstString cmpPathComp(absPath.tqunicode() + pos, newpos - pos);
         TQConstString cmpBaseComp(absBase.tqunicode() + pos, newpos - pos);

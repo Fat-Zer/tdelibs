@@ -162,9 +162,9 @@ namespace KPAC
                     // this particular case, simply calling setProtocol() on
                     // it trashes the whole URL.
                     int len = proxyURL.protocol().length();
-                    if ( !proxyURL.isValid() || proxy.tqfind( ":/", len ) != len )
+                    if ( !proxyURL.isValid() || proxy.find( ":/", len ) != len )
                         proxy.prepend("http://");
-                    BlackList::Iterator it = m_blackList.tqfind( proxy );
+                    BlackList::Iterator it = m_blackList.find( proxy );
                     if ( it == m_blackList.end() ) return proxy;
                     else if ( std::time( 0 ) - *it > 1800 ) // 30 minutes
                     {

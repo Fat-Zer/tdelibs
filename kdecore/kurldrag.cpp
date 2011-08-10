@@ -140,7 +140,7 @@ bool KURLDrag::decode( const TQMimeSource *e, KURL::List &uris, TQMap<TQString,T
                 if ( readingKey )
                     key = *it;
                 else
-                    metaData.tqreplace( key, *it );
+                    metaData.replace( key, *it );
                 readingKey = !readingKey;
             }
             Q_ASSERT( readingKey ); // an odd number of items would be, well, odd ;-)

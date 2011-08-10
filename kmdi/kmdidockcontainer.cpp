@@ -138,7 +138,7 @@ KMdiDockContainer::~KMdiDockContainer()
 	{
 		it = m_map.begin();
 		KDockWidget *w = it.key();
-		if ( m_overlapButtons.tqcontains( w ) )
+		if ( m_overlapButtons.contains( w ) )
 		{
 			( ::tqqt_cast<KDockWidgetHeader*>( w->getHeader() ) )->removeButton( m_overlapButtons[w] );
 			m_overlapButtons.remove( w );
@@ -188,7 +188,7 @@ void KMdiDockContainer::insertWidget ( KDockWidget *dwdg, TQPixmap pixmap, const
 	kdDebug( 760 ) << k_funcinfo << "Adding a dockwidget to the dock container" << endl;
 	KDockWidget* w = dwdg;
 	int tab;
-	bool alreadyThere = m_map.tqcontains( w );
+	bool alreadyThere = m_map.contains( w );
 
 	if ( alreadyThere )
 	{
@@ -322,7 +322,7 @@ bool KMdiDockContainer::eventFilter( TQObject *obj, TQEvent *event )
 
 void KMdiDockContainer::showWidget( KDockWidget *w )
 {
-	if ( !m_map.tqcontains( w ) )
+	if ( !m_map.contains( w ) )
 		return ;
 
 	int id = m_map[ w ];
@@ -369,7 +369,7 @@ void KMdiDockContainer::hideIfNeeded()
 void KMdiDockContainer::removeWidget( KDockWidget* dwdg )
 {
 	KDockWidget * w = dwdg;
-	if ( !m_map.tqcontains( w ) )
+	if ( !m_map.contains( w ) )
 		return; //we don't have this widget in our container
 
 	kdDebug( 760 ) << k_funcinfo << endl;
@@ -385,7 +385,7 @@ void KMdiDockContainer::removeWidget( KDockWidget* dwdg )
 	m_ws->removeWidget( w );
 	m_map.remove( w );
 	m_revMap.remove( id );
-	if ( m_overlapButtons.tqcontains( w ) )
+	if ( m_overlapButtons.contains( w ) )
 	{
 		( ::tqqt_cast<KDockWidgetHeader*>( w->getHeader() ) )->removeButton( m_overlapButtons[ w ] );
 		m_overlapButtons.remove( w );
@@ -401,7 +401,7 @@ void KMdiDockContainer::undockWidget( KDockWidget *dwdg )
 {
 	KDockWidget * w = dwdg;
 
-	if ( !m_map.tqcontains( w ) )
+	if ( !m_map.contains( w ) )
 		return ;
 
 	int id = m_map[ w ];
@@ -817,7 +817,7 @@ void KMdiDockContainer::prevToolView()
 {
 	kdDebug( 760 ) << k_funcinfo << endl;
 	TQPtrList<KMultiTabBarTab>* tabs = m_tb->tabs();
-	int pos = tabs->tqfindRef( m_tb->tab( oldtab ) );
+	int pos = tabs->findRef( m_tb->tab( oldtab ) );
 
 	if ( pos == -1 )
 		return ;
@@ -838,7 +838,7 @@ void KMdiDockContainer::nextToolView()
 {
 	kdDebug( 760 ) << k_funcinfo << endl;
 	TQPtrList<KMultiTabBarTab>* tabs = m_tb->tabs();
-	int pos = tabs->tqfindRef( m_tb->tab( oldtab ) );
+	int pos = tabs->findRef( m_tb->tab( oldtab ) );
 
 	if ( pos == -1 )
 		return ;

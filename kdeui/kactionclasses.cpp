@@ -730,7 +730,7 @@ TQStringList KSelectAction::comboItems() const
     for( ; it != d->m_list.end(); ++it )
     {
       TQString item = *it;
-      int i = item.tqfind( '&' );
+      int i = item.find( '&' );
       if ( i > -1 )
         item = item.remove( i, 1 );
       lst.append( item );
@@ -779,18 +779,18 @@ void KSelectAction::slotActivated( const TQString &text )
   if ( isEditable() )
   {
     TQStringList lst = d->m_list;
-    if(!lst.tqcontains(text))
+    if(!lst.contains(text))
     {
       lst.append( text );
       setItems( lst );
     }
   }
 
-  int i = d->m_list.tqfindIndex( text );
+  int i = d->m_list.findIndex( text );
   if ( i > -1 )
       setCurrentItem( i );
   else
-      setCurrentItem( comboItems().tqfindIndex( text ) );
+      setCurrentItem( comboItems().findIndex( text ) );
   // Delay this. Especially useful when the slot connected to activated() will re-create
   // the menu, e.g. in the recent files action. This prevents a crash.
   TQTimer::singleShot( 0, this, TQT_SLOT( slotActivated() ) );
@@ -1476,7 +1476,7 @@ void KFontAction::setFont( const TQString &family )
           return;
        }
     }
-    i = lowerName.tqfind(" [");
+    i = lowerName.find(" [");
     if (i>-1)
     {
        lowerName = lowerName.left(i);
@@ -1513,7 +1513,7 @@ void KFontAction::setFont( const TQString &family )
     FcConfigSubstitute (config, pattern, FcMatchPattern);
     pattern = FcFontMatch(NULL, pattern, NULL);
     realFamily = (char*)FcNameUnparse(pattern);
-    realFamily.remove(realFamily.tqfind(regExp), realFamily.length());
+    realFamily.remove(realFamily.find(regExp), realFamily.length());
 
     if ( !realFamily.isEmpty() && realFamily != family )
        setFont( realFamily );
@@ -1637,7 +1637,7 @@ void KFontSizeAction::init()
 void KFontSizeAction::setFontSize( int size )
 {
     if ( size == fontSize() ) {
-        setCurrentItem( items().tqfindIndex( TQString::number( size ) ) );
+        setCurrentItem( items().findIndex( TQString::number( size ) ) );
         return;
     }
 
@@ -1646,7 +1646,7 @@ void KFontSizeAction::setFontSize( int size )
         return;
     }
 
-    int index = items().tqfindIndex( TQString::number( size ) );
+    int index = items().findIndex( TQString::number( size ) );
     if ( index == -1 ) {
         // Insert at the correct position in the list (to keep sorting)
         TQValueList<int> lst;
@@ -1664,7 +1664,7 @@ void KFontSizeAction::setFontSize( int size )
             strLst.append( TQString::number(*it) );
         KSelectAction::setItems( strLst );
         // Find new current item
-        index = lst.tqfindIndex( size );
+        index = lst.findIndex( size );
         setCurrentItem( index );
     }
     else

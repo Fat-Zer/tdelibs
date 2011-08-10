@@ -335,8 +335,8 @@ TQString VCardTool::createVCards( Addressee::List list, VCard::Version version )
     // X-
     const TQStringList customs = (*addrIt).customs();
     for ( strIt = customs.begin(); strIt != customs.end(); ++strIt ) {
-      TQString identifier = "X-" + (*strIt).left( (*strIt).tqfind( ":" ) );
-      TQString value = (*strIt).mid( (*strIt).tqfind( ":" ) + 1 );
+      TQString identifier = "X-" + (*strIt).left( (*strIt).find( ":" ) );
+      TQString value = (*strIt).mid( (*strIt).find( ":" ) + 1 );
       if ( value.isEmpty() )
         continue;
 
@@ -428,7 +428,7 @@ Addressee::List VCardTool::parseVCards( const TQString& vcard )
         // EMAIL
         else if ( identifier == "email" ) {
           const TQStringList types = (*lineIt).parameters( "type" );
-          addr.insertEmail( (*lineIt).value().asString(), types.tqfindIndex( "PREF" ) != -1 );
+          addr.insertEmail( (*lineIt).value().asString(), types.findIndex( "PREF" ) != -1 );
         }
 
         // FN
@@ -594,7 +594,7 @@ Addressee::List VCardTool::parseVCards( const TQString& vcard )
         // X-
         else if ( identifier.startsWith( "x-" ) ) {
           const TQString key = (*lineIt).identifier().mid( 2 );
-          int dash = key.tqfind( "-" );
+          int dash = key.find( "-" );
           addr.insertCustom( key.left( dash ), key.mid( dash + 1 ), (*lineIt).value().asString() );
         }
       }
@@ -610,11 +610,11 @@ TQDateTime VCardTool::parseDateTime( const TQString &str )
 {
   TQDateTime dateTime;
 
-  if ( str.tqfind( '-' ) == -1 ) { // is base format (yyyymmdd)
+  if ( str.find( '-' ) == -1 ) { // is base format (yyyymmdd)
     dateTime.setDate( TQDate( str.left( 4 ).toInt(), str.mid( 4, 2 ).toInt(),
                              str.mid( 6, 2 ).toInt() ) );
 
-    if ( str.tqfind( 'T' ) ) // has time information yyyymmddThh:mm:ss
+    if ( str.find( 'T' ) ) // has time information yyyymmddThh:mm:ss
       dateTime.setTime( TQTime( str.mid( 11, 2 ).toInt(), str.mid( 14, 2 ).toInt(),
                                str.mid( 17, 2 ).toInt() ) );
 
@@ -622,7 +622,7 @@ TQDateTime VCardTool::parseDateTime( const TQString &str )
     dateTime.setDate( TQDate( str.left( 4 ).toInt(), str.mid( 5, 2 ).toInt(),
                              str.mid( 8, 2 ).toInt() ) );
 
-    if ( str.tqfind( 'T' ) ) // has time information yyyy-mm-ddThh:mm:ss
+    if ( str.find( 'T' ) ) // has time information yyyy-mm-ddThh:mm:ss
       dateTime.setTime( TQTime( str.mid( 11, 2 ).toInt(), str.mid( 14, 2 ).toInt(),
                                str.mid( 17, 2 ).toInt() ) );
   }
@@ -653,16 +653,16 @@ Picture VCardTool::parsePicture( const VCardLine &line )
   Picture pic;
 
   const TQStringList params = line.parameterList();
-  if ( params.tqfindIndex( "encoding" ) != -1 ) {
+  if ( params.findIndex( "encoding" ) != -1 ) {
     TQImage img;
     img.loadFromData( line.value().asByteArray() );
     pic.setData( img );
-  } else if ( params.tqfindIndex( "value" ) != -1 ) {
+  } else if ( params.findIndex( "value" ) != -1 ) {
     if ( line.parameter( "value" ).lower() == "uri" )
       pic.setUrl( line.value().asString() );
   }
 
-  if ( params.tqfindIndex( "type" ) != -1 )
+  if ( params.findIndex( "type" ) != -1 )
     pic.setType( line.parameter( "type" ) );
 
   return pic;
@@ -700,9 +700,9 @@ Sound VCardTool::parseSound( const VCardLine &line )
   Sound snd;
 
   const TQStringList params = line.parameterList();
-  if ( params.tqfindIndex( "encoding" ) != -1 )
+  if ( params.findIndex( "encoding" ) != -1 )
     snd.setData( line.value().asByteArray() );
-  else if ( params.tqfindIndex( "value" ) != -1 ) {
+  else if ( params.findIndex( "value" ) != -1 ) {
     if ( line.parameter( "value" ).lower() == "uri" )
       snd.setUrl( line.value().asString() );
   }
@@ -738,12 +738,12 @@ Key VCardTool::parseKey( const VCardLine &line )
   Key key;
 
   const TQStringList params = line.parameterList();
-  if ( params.tqfindIndex( "encoding" ) != -1 )
+  if ( params.findIndex( "encoding" ) != -1 )
     key.setBinaryData( line.value().asByteArray() );
   else
     key.setTextData( line.value().asString() );
 
-  if ( params.tqfindIndex( "type" ) != -1 ) {
+  if ( params.findIndex( "type" ) != -1 ) {
     if ( line.parameter( "type" ).lower() == "x509" )
       key.setType( Key::X509 );
     else if ( line.parameter( "type" ).lower() == "pgp" )
@@ -814,7 +814,7 @@ Agent VCardTool::parseAgent( const VCardLine &line )
   Agent agent;
 
   const TQStringList params = line.parameterList();
-  if ( params.tqfindIndex( "value" ) != -1 ) {
+  if ( params.findIndex( "value" ) != -1 ) {
     if ( line.parameter( "value" ).lower() == "uri" )
       agent.setUrl( line.value().asString() );
   } else {
@@ -866,7 +866,7 @@ TQStringList VCardTool::splitString( const TQChar &sep, const TQString &str )
   TQString value( str );
 
   int start = 0;
-  int pos = value.tqfind( sep, start );
+  int pos = value.find( sep, start );
 
   while ( pos != -1 ) {
     if ( value[ pos - 1 ] != '\\' ) {
@@ -876,13 +876,13 @@ TQStringList VCardTool::splitString( const TQChar &sep, const TQString &str )
         list << TQString::null;
 
       start = pos + 1;
-      pos = value.tqfind( sep, start );
+      pos = value.find( sep, start );
     } else {
       if ( pos != 0 ) {
         value.replace( pos - 1, 2, sep );
-        pos = value.tqfind( sep, pos );
+        pos = value.find( sep, pos );
       } else
-        pos = value.tqfind( sep, pos + 1 );
+        pos = value.find( sep, pos + 1 );
     }
   }
 

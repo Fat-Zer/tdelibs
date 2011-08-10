@@ -1219,7 +1219,7 @@ void KLineEdit::setCompletedItems( const TQStringList& items, bool autoSuggest )
             bool wasSelected = d->completionBox->isSelected( d->completionBox->currentItem() );
             const TQString currentSelection = d->completionBox->currentText();
             d->completionBox->setItems( items );
-            TQListBoxItem* item = d->completionBox->tqfindItem( currentSelection, TQt::ExactMatch );
+            TQListBoxItem* item = d->completionBox->findItem( currentSelection, TQt::ExactMatch );
             // If no item is selected, that means the listbox hasn't been manipulated by the user yet,
             // because it's not possible otherwise to have no selected item. In such case make
             // always the first item current and unselected, so that the current item doesn't jump.
@@ -1246,7 +1246,7 @@ void KLineEdit::setCompletedItems( const TQStringList& items, bool autoSuggest )
 
         if ( d->autoSuggest && autoSuggest )
         {
-            int index = items.first().tqfind( txt );
+            int index = items.first().find( txt );
             TQString newText = items.first().mid( index );
             setUserSelection(false);
             setCompletedText(newText,true);

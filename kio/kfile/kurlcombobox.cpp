@@ -152,7 +152,7 @@ void KURLComboBox::setURLs( TQStringList urls, OverLoadResolving remove )
     // kill duplicates
     TQString text;
     while ( it != urls.end() ) {
-        while ( urls.tqcontains( *it ) > 1 ) {
+        while ( urls.contains( *it ) > 1 ) {
             it = urls.remove( it );
             continue;
         }

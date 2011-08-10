@@ -85,7 +85,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 	{
 		prt->setLocation(i18n("Local printer on %1").arg(val));
 		KURL	url(val);
-		if (val.tqfind("usb") != -1)
+		if (val.find("usb") != -1)
 			url.setProtocol("usb");
 		else
 			url.setProtocol("parallel");
@@ -126,7 +126,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 TQString MaticHandler::parsePostpipe(const TQString& s)
 {
 	TQString	url;
-	int	p = s.tqfindRev('|');
+	int	p = s.findRev('|');
 	TQStringList	args = TQStringList::split(" ", s.right(s.length()-p-1));
 
 	if (args.count() != 0)
@@ -167,7 +167,7 @@ TQString MaticHandler::parsePostpipe(const TQString& s)
 				else
 				{
 					TQString	host = (args[i].length() == 2 ? args[i+1] : args[i].right(args[i].length()-2));
-					int	p = host.tqfind("\\@");
+					int	p = host.find("\\@");
 					if (p != -1)
 					{
 						url = "lpd://" + host.right(host.length()-p-2) + "/" + host.left(p);
@@ -309,13 +309,13 @@ bool MaticHandler::savePrinterDriver(KMPrinter *prt, PrintcapEntry *entry, DrMai
 			line = tin.readLine();
 			if (line.stripWhiteSpace().startsWith("$postpipe"))
 				continue;
-			else if ((p = line.tqfind("'name'")) != -1)
+			else if ((p = line.find("'name'")) != -1)
 			{
-				p = line.tqfind('\'', p+6)+1;
-				q = line.tqfind('\'', p);
+				p = line.find('\'', p+6)+1;
+				q = line.find('\'', p);
 				optname = line.mid(p, q-p);
 			}
-			else if ((p = line.tqfind("'default'")) != -1)
+			else if ((p = line.find("'default'")) != -1)
 			{
 				DrBase	*opt = driver->findOption(optname);
 				if (opt)
@@ -372,7 +372,7 @@ bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 			line = tin.readLine();
 			if (line.startsWith("*% COMDATA #"))
 			{
-				if (line.tqfind("'default'") != -1)
+				if (line.find("'default'") != -1)
 				{
 					DrBase	*opt = (optname.isEmpty() ? NULL : driver->findOption(optname));
 					if (opt)

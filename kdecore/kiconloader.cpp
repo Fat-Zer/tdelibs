@@ -328,7 +328,7 @@ void KIconLoader::addBaseThemes(KIconThemeNode *node, const TQString &appname)
 
     for (it=lst.begin(); it!=lst.end(); ++it)
     {
-	if( d->mThemesInTree.tqcontains(*it) && (*it) != "hicolor")
+	if( d->mThemesInTree.contains(*it) && (*it) != "hicolor")
 	    continue;
 	KIconTheme *theme = new KIconTheme(*it,appname);
 	if (!theme->isValid()) {
@@ -370,7 +370,7 @@ void KIconLoader::addExtraDesktopThemes()
 	      TQDir dir2( buf );
 	      TQString themeName=dir2.dirName();
 
-	      if (!list.tqcontains(themeName))
+	      if (!list.contains(themeName))
 		list.append(themeName);
 	    }
 	}
@@ -378,7 +378,7 @@ void KIconLoader::addExtraDesktopThemes()
 
     for (it=list.begin(); it!=list.end(); ++it)
     {
-	if ( d->mThemesInTree.tqcontains(*it) )
+	if ( d->mThemesInTree.contains(*it) )
 		continue;
 	if ( *it == TQString("default.kde") ) continue;
 
@@ -601,7 +601,7 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
 	key = "$kicou_";
         key += TQString::number(size); key += '_';
 	key += name;
-	bool inCache = TQPixmapCache::tqfind(key, pix);
+	bool inCache = TQPixmapCache::find(key, pix);
 	if (inCache && (path_store == 0L))
 	    return pix;
 
@@ -691,7 +691,7 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
     key += overlayStr;
 
     // Is the icon in the cache?
-    bool inCache = TQPixmapCache::tqfind(key, pix);
+    bool inCache = TQPixmapCache::find(key, pix);
     if (inCache && (path_store == 0L))
 	return pix;
 
@@ -866,7 +866,7 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
 TQImage *KIconLoader::loadOverlay(const TQString &name, int size) const
 {
     TQString key = name + '_' + TQString::number(size);
-    TQImage *image = d->imgDict.tqfind(key);
+    TQImage *image = d->imgDict.find(key);
     if (image != 0L)
 	return image;
 
@@ -892,7 +892,7 @@ TQMovie KIconLoader::loadMovie(const TQString& name, KIcon::Group group, int siz
     TQString file = moviePath( name, group, size );
     if (file.isEmpty())
 	return TQMovie();
-    int dirLen = file.tqfindRev('/');
+    int dirLen = file.findRev('/');
     TQString icon = iconPath(name, size ? -size : group, true);
     if (!icon.isEmpty() && file.left(dirLen) != icon.left(dirLen))
 	return TQMovie();
@@ -1048,13 +1048,13 @@ TQStringList KIconLoader::queryIconsByContext(int group_or_size,
     TQStringList::ConstIterator it;
     for (it=result.begin(); it!=result.end(); ++it)
     {
-	int n = (*it).tqfindRev('/');
+	int n = (*it).findRev('/');
 	if (n == -1)
 	    name = *it;
 	else
 	    name = (*it).mid(n+1);
 	name = removeIconExtension(name);
-	if (!entries.tqcontains(name))
+	if (!entries.contains(name))
 	{
 	    entries += name;
 	    res2 += *it;
@@ -1088,13 +1088,13 @@ TQStringList KIconLoader::queryIcons(int group_or_size, KIcon::Context context) 
     TQStringList::ConstIterator it;
     for (it=result.begin(); it!=result.end(); ++it)
     {
-	int n = (*it).tqfindRev('/');
+	int n = (*it).findRev('/');
 	if (n == -1)
 	    name = *it;
 	else
 	    name = (*it).mid(n+1);
 	name = removeIconExtension(name);
-	if (!entries.tqcontains(name))
+	if (!entries.contains(name))
 	{
 	    entries += name;
 	    res2 += *it;
@@ -1383,7 +1383,7 @@ int IconSize(KIcon::Group group, KInstance *instance)
 TQPixmap KIconLoader::unknown()
 {
     TQPixmap pix;
-    if ( TQPixmapCache::tqfind("unknown", pix) )
+    if ( TQPixmapCache::find("unknown", pix) )
             return pix;
 
     TQString path = KGlobal::iconLoader()->iconPath("unknown", KIcon::Small, true);

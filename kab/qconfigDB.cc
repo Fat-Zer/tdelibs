@@ -73,7 +73,7 @@ static void tokenize(list<TQCString>& res, const TQCString& text, char tr, bool 
   while(zwei!=-1)
     {
       teil="";
-      zwei=text.tqfind(tr, eins);
+      zwei=text.find(tr, eins);
       if(zwei!=-1)
 	{
 	  teil=text.mid(eins, zwei-eins);
@@ -573,7 +573,7 @@ KeyValueMap::insertLine(TQCString line, bool force, bool relax, bool encode)
       return false;
     }
   // -----
-  index=line.tqfind('=');
+  index=line.find('=');
   if(index==-1)  // not found
       {
 	  kdDebug() << "KeyValueMap::insertLine: no \"=\" found in \""<<line<<"\".\n";
@@ -1015,7 +1015,7 @@ KeyValueMap::get(const TQCString& key, list<TQCString>& values) const
       second=first;
       for(;;)
 	{
-	  second=raw.tqfind('\\', second);
+	  second=raw.find('\\', second);
 	  // ----- this may never be the last and also not the second last
 	  //       character in a complex string:
 	  if(second!=-1)
@@ -1124,7 +1124,7 @@ KeyValueMap::get(const TQCString& key, TQStrList& values) const
       second=first;
       for(;;)
 	{
-	  second=raw.tqfind('\\', second);
+	  second=raw.find('\\', second);
 	  // ----- this may never be the last and also not the second last
 	  //       character in a complex string:
 	  if(second!=-1)
@@ -1975,7 +1975,7 @@ QConfigDB::stringToKeylist(const TQCString& desc)
     }
   for(;;)
     {
-      second=desc.tqfind('/', first);
+      second=desc.find('/', first);
       if(second==-1)
 	{
 	  if((unsigned)first<desc.length()+1)
