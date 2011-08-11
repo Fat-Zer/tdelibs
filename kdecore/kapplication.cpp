@@ -20,6 +20,10 @@
 
 #include "config.h"
 
+#ifdef HAVE_XCOMPOSITE
+#define COMPOSITE
+#endif
+
 // #ifdef QTRANSLATOR_H
 // #error qtranslator.h was already included
 // #endif // QTRANSLATOR_H
@@ -1910,6 +1914,21 @@ KApplication KApplication::KARGBApplicationObject( bool allowStyles ) {
 	}
 }
 #else
+void KApplication::getX11RGBAInformation(Display *dpy) {
+}
+
+bool KApplication::isCompositionManagerAvailable() {
+	return false;
+}
+
+bool KApplication::detectCompositionManagerAvailable(bool force_available) {
+	return false;
+}
+
+Display* KApplication::openX11RGBADisplay() {
+	return 0;
+}
+
 Qt::HANDLE KApplication::getX11RGBAVisual(char *display) {
 	return 0;
 }

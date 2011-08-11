@@ -48,8 +48,6 @@ class KSessionManaged;
 class KStyle;
 class KURL;
 
-#define COMPOSITE	// [FIXME] Autodetect composition support
-
 #define kapp KApplication::kApplication()
 
 class KApplicationPrivate;
@@ -866,13 +864,14 @@ public:
    */
   TQString checkRecoverFile( const TQString& pFilename, bool& bRecover ) const;
 
-#if defined(Q_WS_X11) && defined(COMPOSITE)
+#if defined(Q_WS_X11)
   /**
    * @internal
    * Get the X11 display
    * @return the X11 Display
    */
    Display *getDisplay() { return display; }
+#endif
 
   /**
    * @internal
@@ -904,7 +903,6 @@ public:
    * @return the X11 display handle
    */
    Display *openX11RGBADisplay();
-#endif
 
   /**
    * @internal
@@ -1281,7 +1279,7 @@ private:
   void initUrlActionRestrictions();
 
   bool argb_visual;
-#if defined(Q_WS_X11) && defined(COMPOSITE)
+#if defined(Q_WS_X11)
   Qt::HANDLE argb_x11_visual;
   Qt::HANDLE argb_x11_colormap;
 #endif
