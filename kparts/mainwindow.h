@@ -51,16 +51,28 @@ class KPARTS_EXPORT MainWindow : public KMainWindow, virtual public PartBase
   /**
    * Constructor, same signature as KMainWindow.
    */
+#ifdef qdoc
+  MainWindow( TQWidget* parent,  const char *name = 0L, WFlags f = WType_TopLevel | WDestructiveClose );
+#else
   MainWindow( TQWidget* parent,  const char *name = 0L, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
+#endif
   /**
    * Compatibility Constructor
    */
+#ifdef qdoc
+  MainWindow( const char *name = 0L, WFlags f = WDestructiveClose );
+#else
   MainWindow( const char *name = 0L, WFlags f = (WFlags)WDestructiveClose );
+#endif
   /**
    * Constructor with creation flags, see KMainWindow.
    * @since 3.2
    */
+#ifdef qdoc
+  MainWindow( int cflags, TQWidget* parent,  const char *name = 0L, WFlags f = WType_TopLevel | WDestructiveClose );
+#else
   MainWindow( int cflags, TQWidget* parent,  const char *name = 0L, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
+#endif
   /**
    * Destructor.
    */
@@ -105,3 +117,4 @@ private:
 }
 
 #endif
+

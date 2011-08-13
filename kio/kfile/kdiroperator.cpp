@@ -1560,7 +1560,7 @@ void KDirOperator::resizeEvent( TQResizeEvent * )
     if (m_fileView)
         m_fileView->widget()->resize( size() );
 
-    if ( progress->parent() == this ) // might be reparented into a statusbar
+    if ( TQT_BASE_OBJECT(progress->parent()) == TQT_BASE_OBJECT(this) ) // might be reparented into a statusbar
 	progress->move(2, height() - progress->height() -2);
 }
 

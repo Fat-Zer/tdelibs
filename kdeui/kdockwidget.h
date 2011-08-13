@@ -1332,7 +1332,11 @@ public:
    * @param name internal object name
    * @param f Qt::WidgetFlags widget flags
    */
+#ifdef qdoc
+  KDockMainWindow( TQWidget* parent = 0L, const char *name = 0L, WFlags f = WType_TopLevel | WDestructiveClose );
+#else
   KDockMainWindow( TQWidget* parent = 0L, const char *name = 0L, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
+#endif
 
   /**
    * Destructs a dockmainwindow.
@@ -1544,5 +1548,6 @@ private:
 
 
 #endif
+
 
 

@@ -53,7 +53,10 @@ public:
      * Open for reading or writing.
      * If the KFilterBase's device is not opened, it will be opened.
      */
+#ifdef qdoc
+#else
     virtual bool open( TQ_OpenMode mode );
+#endif
     /**
      * Close after reading or writing.
      * If the KFilterBase's device was opened by open(), it will be closed.
@@ -77,11 +80,14 @@ public:
     void setSkipHeaders();
 
     // Not implemented
+#ifdef qdoc
+#else
 #ifdef USE_QT4
     virtual qint64 size() const;
 #else // USE_QT4
     virtual TQIODevice::Offset size() const;
 #endif // USE_QT4
+#endif
 
     virtual TQIODevice::Offset at() const;
     /**
@@ -91,8 +97,11 @@ public:
 
     virtual bool atEnd() const;
 
+#ifdef qdoc
+#else
     virtual TQT_TQIO_LONG tqreadBlock( char *data, TQT_TQIO_ULONG maxlen );
     virtual TQT_TQIO_LONG tqwriteBlock( const char *data, TQT_TQIO_ULONG len );
+#endif
     //int readLine( char *data, uint maxlen );
 
     virtual int getch();
@@ -192,3 +201,4 @@ private:
 
 
 #endif
+

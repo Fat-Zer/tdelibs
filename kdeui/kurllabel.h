@@ -161,7 +161,10 @@ public:
   /**
    * Reimplemented for internal reasons, the API is not affected.
    */
+#ifdef qdoc
+#else
   virtual void setFocusPolicy ( TQ_FocusPolicy policy );
+#endif
 
   /**
    * Reimplemented for internal reasons, the API is not affected.
@@ -405,3 +408,4 @@ private:
 };
 
 #endif // KURLLABEL_H
+

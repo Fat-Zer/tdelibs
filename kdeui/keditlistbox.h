@@ -51,41 +51,7 @@ class KDEUI_EXPORT KEditListBox : public TQGroupBox
    TQ_PROPERTY( TQStringList items READ items WRITE setItems )
 
 public:
-    /**
-     * Custom editor class
-     *
-     * @since 3.1
-     **/
-    // ### KDE4: add virtual destructor
-    class CustomEditor
-    {
-    public:
-        KDEUI_EXPORT CustomEditor()
-            : m_representationWidget( 0L ),
-              m_lineEdit( 0L ) {}
-        KDEUI_EXPORT CustomEditor( TQWidget *repWidget, KLineEdit *edit )
-            : m_representationWidget( repWidget ),
-              m_lineEdit( edit ) {}
-        KDEUI_EXPORT CustomEditor( KComboBox *combo );
-
-        KDEUI_EXPORT void setRepresentationWidget( TQWidget *repWidget ) {
-            m_representationWidget = repWidget;
-        }
-        KDEUI_EXPORT void setLineEdit( KLineEdit *edit ) {
-            m_lineEdit = edit;
-        }
-
-        KDEUI_EXPORT virtual TQWidget   *representationWidget() const {
-            return m_representationWidget;
-        }
-        KDEUI_EXPORT  virtual KLineEdit *lineEdit() const {
-            return m_lineEdit;
-        }
-
-    protected:
-        TQWidget *m_representationWidget;
-        KLineEdit *m_lineEdit;
-    };
+   class CustomEditor;
 
    public:
 
@@ -270,6 +236,44 @@ public:
    private:
       //our lovely private d-pointer
       KEditListBoxPrivate* const d;
+
+    /**
+     * Custom editor class
+     *
+     * @since 3.1
+     **/
+    // ### KDE4: add virtual destructor
+    public:
+    class CustomEditor
+    {
+    public:
+        KDEUI_EXPORT CustomEditor()
+            : m_representationWidget( 0L ),
+              m_lineEdit( 0L ) {}
+        KDEUI_EXPORT CustomEditor( TQWidget *repWidget, KLineEdit *edit )
+            : m_representationWidget( repWidget ),
+              m_lineEdit( edit ) {}
+        KDEUI_EXPORT CustomEditor( KComboBox *combo );
+
+        KDEUI_EXPORT void setRepresentationWidget( TQWidget *repWidget ) {
+            m_representationWidget = repWidget;
+        }
+        KDEUI_EXPORT void setLineEdit( KLineEdit *edit ) {
+            m_lineEdit = edit;
+        }
+
+        KDEUI_EXPORT virtual TQWidget   *representationWidget() const {
+            return m_representationWidget;
+        }
+        KDEUI_EXPORT  virtual KLineEdit *lineEdit() const {
+            return m_lineEdit;
+        }
+
+    protected:
+        TQWidget *m_representationWidget;
+        KLineEdit *m_lineEdit;
+    };
 };
 
 #endif
+

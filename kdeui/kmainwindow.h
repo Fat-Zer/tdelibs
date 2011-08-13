@@ -133,7 +133,11 @@ public:
      * KMainWindow *kmw = new KMainWindow (...);
      * \endcode
      **/
+#ifdef qdoc
+    KMainWindow( TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
+#else
     KMainWindow( TQWidget* parent = 0, const char *name = 0, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
+#endif
 
     /**
      * Flags that can be passed in an argument to the constructor to
@@ -155,7 +159,11 @@ public:
      *
      * @since 3.2
      */
+#ifdef qdoc
+    KMainWindow( int cflags, TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
+#else
     KMainWindow( int cflags, TQWidget* parent = 0, const char *name = 0, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
+#endif
 
     /**
      * \brief Destructor.
@@ -1065,3 +1073,4 @@ inline void kRestoreMainWindows() {
 }
 
 #endif
+

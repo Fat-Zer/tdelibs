@@ -296,7 +296,11 @@ private:
 
 	// methods
 public:
+#ifdef qdoc
+	KMdiMainFrm( TQWidget* parentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = WType_TopLevel | WDestructiveClose );
+#else
 	KMdiMainFrm( TQWidget* parentWidget, const char* name = "", KMdi::MdiMode mdiMode = KMdi::ChildframeMode, WFlags flags = (WFlags)(WType_TopLevel | WDestructiveClose) );
+#endif
 	virtual ~KMdiMainFrm();
 
 	/**
@@ -877,3 +881,4 @@ signals:
 #endif //_KMDIMAINFRM_H_
 
 // kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
+
