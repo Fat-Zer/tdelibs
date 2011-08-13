@@ -113,9 +113,11 @@ public:
    * This constructor takes aboutData and command line
    *  arguments from KCmdLineArgs.
    *
-   *  If ARGB (transparent) widgets are to be used in your application,
-   *  please use KARGBApplication(new object name) or
-   *  KARGBApplication(new object name, allow_styles) instead of KApplication(...).
+   * If ARGB (transparent) widgets are to be used in your application,
+   * please use
+   * KApplication app(KApplication::openX11RGBADisplay());
+   * or
+   * KApplication app(KApplication::openX11RGBADisplay(), useStyles);
    *
    * @param allowStyles Set to false to disable the loading on plugin based
    * styles. This is only useful to applications that do not display a GUI
@@ -129,6 +131,25 @@ public:
   KApplication( bool allowStyles=true, bool GUIenabled=true);
 
 #ifdef Q_WS_X11
+  /**
+   * Constructor. Parses command-line arguments. Use this constructor when you
+   * you want ARGB support to be automatically detected and enabled.
+   *
+   * @param display Will be passed to Qt as the X display. The display must be
+   * valid and already opened.
+   *
+   * @param allowStyles Set to false to disable the loading on plugin based
+   * styles. This is only useful to applications that do not display a GUI
+   * normally. If you do create an application with @p allowStyles set to false
+   * that normally runs in the background but under special circumstances
+   * displays widgets call enableStyles() before displaying any widgets.
+   *
+   * @since KDE 3.5
+   * 
+   * @see RGBADisplay()
+   */
+  KApplication(Display *display, bool allowStyles);
+
   /**
    * Constructor. Parses command-line arguments. Use this constructor when you
    * you need to use a non-default visual or colormap. 
@@ -899,19 +920,13 @@ public:
 
   /**
    * @internal
-   * Opens an X11 display and returns the handle to it
-   * @return the X11 display handle
+   * Opens the display
+   * This can be used to initialize a KApplication with RGBA support like this:
+   * KApplication app(KApplication::openX11RGBADisplay());
+   * or
+   * KApplication app(KApplication::openX11RGBADisplay(), useStyles);
    */
-   Display *openX11RGBADisplay();
-
-  /**
-   * @internal
-   * Creates a default KApplication with transparency support
-   * (if available)
-   */
-   static KApplication KARGBApplicationObject( bool allowStyles=true );
-
-   #define KARGBApplication(objectname, ...) const KApplication &__kapplication_internal_app = KApplication::KARGBApplicationObject(__VA_ARGS__); KApplication &objectname = const_cast<KApplication&>(__kapplication_internal_app);
+   static Display* openX11RGBADisplay();
 
   /**
    * Returns the X11 display visual

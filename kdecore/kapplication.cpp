@@ -667,6 +667,22 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
 }
 
 #ifdef Q_WS_X11
+KApplication::KApplication( Display *dpy, bool allowStyles ) :
+  TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+                getX11RGBAVisual(dpy), getX11RGBAColormap(dpy) ),
+  KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
+{
+    aIconPixmap.pm.icon = 0L;
+    aIconPixmap.pm.miniIcon = 0L;
+    read_app_startup_id();
+    useStyles = allowStyles;
+    setName( instanceName() );
+    installSigpipeHandler();
+    parseCommandLine( );
+    init( true );
+    d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
+}
+
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles ) :
   TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
@@ -1803,11 +1819,16 @@ bool KApplication::detectCompositionManagerAvailable(bool force_available) {
 
 Display* KApplication::openX11RGBADisplay() {
 	KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
-	char *displayname = 0;
+	char *display = 0;
 	if ( qtargs->isSet("display"))
-		displayname = qtargs->getOption( "display" ).data();
-		
-	Display *dpy = XOpenDisplay( displayname );
+		display = qtargs->getOption( "display" ).data();
+	
+	Display *dpy = XOpenDisplay( display );
+	if ( !dpy ) {
+		kdError() << "cannot connect to X server " << display << endl;
+		exit( 1 );
+	}
+	
 	return dpy;
 }
 
@@ -1865,53 +1886,6 @@ void KApplication::getX11RGBAInformation(Display *dpy) {
 	}
 	argb_visual = false;
 	return;
-}
-
-KApplication KApplication::KARGBApplicationObject( bool allowStyles ) {
-	KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
-	bool argb_visual_available = false;
-	char *display = 0;
-	if ( qtargs->isSet("display"))
-		display = qtargs->getOption( "display" ).data();
-	
-	Display *dpy = XOpenDisplay( display );
-	if ( !dpy ) {
-		kdError() << "cannot connect to X server " << display << endl;
-		exit( 1 );
-	}
-	
-	int screen = DefaultScreen( dpy );
-	Colormap colormap = 0;
-	Visual *visual = 0;
-	int event_base, error_base;
-	
-	if ( XRenderQueryExtension( dpy, &event_base, &error_base ) ) {
-		int nvi;
-		XVisualInfo templ;
-		templ.screen  = screen;
-		templ.depth   = 32;
-		templ.c_class = TrueColor;
-		XVisualInfo *xvi = XGetVisualInfo( dpy, VisualScreenMask | VisualDepthMask
-				| VisualClassMask, &templ, &nvi );
-		
-		for ( int i = 0; i < nvi; i++ ) {
-			XRenderPictFormat *format = XRenderFindVisualFormat( dpy, xvi[i].visual );
-			if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
-				visual = xvi[i].visual;
-				colormap = XCreateColormap( dpy, RootWindow( dpy, screen ), visual, AllocNone );
-				kdDebug() << "found visual with alpha support" << endl;
-				argb_visual_available = true;
-				break;
-			}
-		}
-	}
-	
-	if( argb_visual_available ) {
-		return KApplication( dpy, Qt::HANDLE( visual ), Qt::HANDLE( colormap ), allowStyles );
-	}
-	else {
-		return KApplication(allowStyles, true);
-	}
 }
 #else
 void KApplication::getX11RGBAInformation(Display *dpy) {
