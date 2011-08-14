@@ -1232,9 +1232,9 @@ void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
 			TQToolBar* parent = 0;
 			
 			if (widget && widget->parent() && widget->parent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING))
-				parent = static_cast<TQToolBar*>(widget->parent());
+				parent = static_cast<TQToolBar*>(TQT_TQWIDGET(widget->parent()));
 				
-			renderToolbarEntryBackground(p, parent, r, cg, (flags & Style_Horizontal));				
+			renderToolbarEntryBackground(p, parent, r, cg, (flags & Style_Horizontal));
 			if (flags & Style_Horizontal) {
 				p->setPen(cg.light());
 				p->drawLine(x+1, y+4, x+1, y2-4);
@@ -2238,7 +2238,7 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 				bflags |= Style_MouseOver;
 
 
-			if (onToolbar &&  static_cast<TQToolBar*>(widget->parent())->orientation() == Qt::Horizontal)
+			if (onToolbar &&  static_cast<TQToolBar*>(TQT_TQWIDGET(widget->parent()))->orientation() == Qt::Horizontal)
 				bflags |= Style_Horizontal;
 
 			if (controls & SC_ToolButton)
@@ -2270,8 +2270,8 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 				{
 					// This assumes floating toolbars can't have extenders,
 					//(so if we're on an extender, we're not floating)
-					TQWidget*  parent  = static_cast<TQWidget*> (widget->parent());
-					TQToolBar* toolbar = static_cast<TQToolBar*>(parent->parent());
+					TQWidget*  parent  = static_cast<TQWidget*> (TQT_TQWIDGET(widget->parent()));
+					TQToolBar* toolbar = static_cast<TQToolBar*>(TQT_TQWIDGET(parent->parent()));
 					TQRect tr    = toolbar->rect();
 					bool  horiz = toolbar->orientation() == Qt::Horizontal;
 
@@ -2893,7 +2893,7 @@ bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
 	{
 		// We need to override the paint event to draw a
 		// gradient on a QToolBarExtensionWidget.
-		TQToolBar* toolbar = static_cast<TQToolBar*>(object->parent());
+		TQToolBar* toolbar = static_cast<TQToolBar*>(TQT_TQWIDGET(object->parent()));
 		TQWidget* widget = TQT_TQWIDGET(object);
 		TQRect wr = widget->rect (), tr = toolbar->rect();
 		TQPainter p( widget );

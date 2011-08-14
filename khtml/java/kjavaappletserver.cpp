@@ -777,7 +777,7 @@ PermissionDialog::PermissionDialog( TQWidget* parent )
 {}
 
 TQCString PermissionDialog::exec( const TQString & cert, const TQString & perm ) {
-    TQGuardedPtr<TQDialog> dialog = new TQDialog( static_cast<TQWidget*>(parent()), "PermissionDialog");
+    TQGuardedPtr<TQDialog> dialog = new TQDialog( TQT_TQWIDGET(parent()), "PermissionDialog");
 
     dialog->tqsetSizePolicy( TQSizePolicy( (TQSizePolicy::SizeType)1, (TQSizePolicy::SizeType)1, 0, 0, dialog->sizePolicy().hasHeightForWidth() ) );
     dialog->setModal( true );

@@ -259,7 +259,7 @@ void ProviderLoader::slotJobData( KIO::Job *, const TQByteArray &data )
 void ProviderLoader::slotJobResult( KIO::Job *job )
 {
   if ( job->error() ) {
-    job->showErrorDialog( static_cast<TQWidget *>(parent()) );
+    job->showErrorDialog( TQT_TQWIDGET(parent()) );
   }
 
   kdDebug() << "--PROVIDERS-START--" << endl << mJobData << "--PROV_END--"
@@ -267,7 +267,7 @@ void ProviderLoader::slotJobResult( KIO::Job *job )
 
   TQDomDocument doc;
   if ( !doc.setContent( mJobData ) ) {
-    KMessageBox::error( static_cast<TQWidget *>(parent()), i18n("Error parsing providers list.") );
+    KMessageBox::error( TQT_TQWIDGET(parent()), i18n("Error parsing providers list.") );
     return;
   }
 

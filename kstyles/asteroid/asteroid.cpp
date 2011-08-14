@@ -111,7 +111,7 @@ void AsteroidStyle::polish(TQWidget *w)
 	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
 
 	bool isProtectedObject = false;
-	TQObject *curparent = w;
+	TQObject *curparent = TQT_TQOBJECT(w);
 	while (curparent) {
 		if (curparent->inherits("KonqFileTip") || curparent->inherits("AppletItem")) {
 			isProtectedObject = true;

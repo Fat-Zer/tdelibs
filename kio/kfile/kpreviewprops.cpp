@@ -79,7 +79,7 @@ bool KPreviewPropsPlugin::supports( KFileItemList _items )
 
 void KPreviewPropsPlugin::aboutToShowPage( TQWidget* widget )
 {
-    if ( widget != preview->parent() )
+    if ( TQT_TQOBJECT(widget) != TQT_TQOBJECT(preview->parent()) )
         return;
 
     disconnect( properties, TQT_SIGNAL( aboutToShowPage( TQWidget * ) ), this, TQT_SLOT( aboutToShowPage( TQWidget* ) ) );

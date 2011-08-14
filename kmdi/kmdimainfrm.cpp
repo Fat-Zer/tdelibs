@@ -1899,7 +1899,7 @@ void KMdiMainFrm::findToolViewsDockedToMain( TQPtrList<KDockWidget>* list, KDock
 	KDockWidget* widget = mainDock->findNearestDockWidget( dprtmw );
 	if ( widget && widget->parentDockTabGroup() )
 	{
-		widget = static_cast<KDockWidget*>( widget->parentDockTabGroup() ->parent() );
+		widget = static_cast<KDockWidget*>( TQT_TQWIDGET(widget->parentDockTabGroup() ->parent()) );
 
 		if ( widget )
 		{
@@ -1931,7 +1931,7 @@ void KMdiMainFrm::setupToolViewsForIDEALMode()
 	KDockWidget *mainDock = getMainDockWidget();
 	KDockWidget *w = mainDock;
 	if ( mainDock->parentDockTabGroup() )
-		w = static_cast<KDockWidget*>( mainDock->parentDockTabGroup()->parent() );
+		w = static_cast<KDockWidget*>( TQT_TQWIDGET(mainDock->parentDockTabGroup()->parent()) );
 
 	TQPtrList<KDockWidget> leftReparentWidgets;
 	TQPtrList<KDockWidget> rightReparentWidgets;
@@ -1939,7 +1939,7 @@ void KMdiMainFrm::setupToolViewsForIDEALMode()
 	TQPtrList<KDockWidget> topReparentWidgets;
 
 	if ( mainDock->parentDockTabGroup() )
-		mainDock = static_cast<KDockWidget*>( mainDock->parentDockTabGroup() ->parent() );
+		mainDock = static_cast<KDockWidget*>( TQT_TQWIDGET(mainDock->parentDockTabGroup() ->parent()) );
 
 	findToolViewsDockedToMain( &leftReparentWidgets, KDockWidget::DockLeft );
 	findToolViewsDockedToMain( &rightReparentWidgets, KDockWidget::DockRight );
@@ -2137,7 +2137,7 @@ void KMdiMainFrm::idealToolViewsToStandardTabs( TQStringList widgetNames, KDockW
 	KDockWidget * mainDock = getMainDockWidget();
 	if ( mainDock->parentDockTabGroup() )
 	{
-		mainDock = static_cast<KDockWidget*>( mainDock->parentDockTabGroup() ->parent() );
+		mainDock = static_cast<KDockWidget*>( TQT_TQWIDGET(mainDock->parentDockTabGroup() ->parent()) );
 	}
 
 	if ( widgetNames.count() > 0 )

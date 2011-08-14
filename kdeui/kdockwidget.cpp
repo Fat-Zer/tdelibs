@@ -122,7 +122,7 @@ void KDockMainWindow::setMainDockWidget( KDockWidget* mdw )
 void KDockMainWindow::setView( TQWidget *view )
 {
   if ( view->isA("KDockWidget") ){
-    if ( view->parent() != this ) ((KDockWidget*)view)->applyToWidget( this );
+    if ( TQT_BASE_OBJECT(view->parent()) != TQT_BASE_OBJECT(this) ) ((KDockWidget*)view)->applyToWidget( this );
   }
 
 #ifndef NO_KDE2
@@ -778,7 +778,7 @@ void KDockWidget::updateHeader()
       setCursor(TQCursor(ArrowCursor));
 #endif
 
-    if ( (parent() == manager->main) || isGroup || (eDocking == KDockWidget::DockNone) ){
+    if ( (TQT_BASE_OBJECT(parent()) == TQT_BASE_OBJECT(manager->main)) || isGroup || (eDocking == KDockWidget::DockNone) ){
       header->hide();
     } else {
       header->setTopLevel( false );
@@ -799,7 +799,7 @@ void KDockWidget::updateHeader()
 
 void KDockWidget::applyToWidget( TQWidget* s, const TQPoint& p )
 {
-  if ( parent() != s )
+  if ( TQT_BASE_OBJECT(parent()) != TQT_BASE_OBJECT(s) )
   {
     hide();
     reparent(s, 0, TQPoint(0,0), false);
@@ -930,7 +930,7 @@ KDockWidget *KDockWidget::findNearestDockWidget(DockPosition pos)
 				static_cast<KDockWidget*>(((KDockSplitter*)(parent()))->getLast());
 
 			if (neighbor==this)
-			return (static_cast<KDockWidget*>(parent()->parent())->findNearestDockWidget(pos));
+			return (static_cast<KDockWidget*>(TQT_TQWIDGET(parent()->parent()))->findNearestDockWidget(pos));
 			else
 			if (neighbor->getWidget() && (::tqqt_cast<KDockTabGroup*>(neighbor->getWidget())))
 				return (KDockWidget*)(((KDockTabGroup*)neighbor->getWidget())->page(0));
@@ -938,7 +938,7 @@ KDockWidget *KDockWidget::findNearestDockWidget(DockPosition pos)
 			return neighbor;
 		}
 		else
-		return (static_cast<KDockWidget*>(parent()->parent())->findNearestDockWidget(pos));
+		return (static_cast<KDockWidget*>(TQT_TQWIDGET(parent()->parent()))->findNearestDockWidget(pos));
 
 	return 0;
 }
@@ -1449,7 +1449,7 @@ void KDockWidget::setWidget( TQWidget* mw )
 {
   if ( !mw ) return;
 
-  if ( mw->parent() != this ){
+  if ( TQT_BASE_OBJECT(mw->parent()) != TQT_BASE_OBJECT(this) ){
     mw->reparent(this, 0, TQPoint(0,0), false);
   }
 
@@ -1505,13 +1505,13 @@ void KDockWidget::setDockTabName( KDockTabGroup* tab )
 
 bool KDockWidget::mayBeHide() const
 {
-  bool f = (parent() != manager->main);
+  bool f = (TQT_BASE_OBJECT(parent()) != TQT_BASE_OBJECT(manager->main));
   return ( !isGroup && !isTabGroup && f && isVisible() && ( eDocking != (int)KDockWidget::DockNone ) );
 }
 
 bool KDockWidget::mayBeShow() const
 {
-  bool f = (parent() != manager->main);
+  bool f = (TQT_BASE_OBJECT(parent()) != TQT_BASE_OBJECT(manager->main));
   return ( !isGroup && !isTabGroup && f && !isVisible() );
 }
 
@@ -2213,7 +2213,7 @@ void KDockManager::writeConfig(TQDomElement &base)
     TQObjectListIt it(*childDock);
     KDockWidget *obj1;
     while ( (obj1=(KDockWidget*)it.current()) ) {
-        if ( obj1->parent() == main )
+        if ( TQT_BASE_OBJECT(obj1->parent()) == TQT_BASE_OBJECT(main) )
             mainWidgetStr = TQString::tqfromLatin1(obj1->name());
         nList.append(obj1->name());
         ++it;
@@ -2548,7 +2548,7 @@ void KDockManager::writeConfig( KConfig* c, TQString group )
     ++it;
     //debug("  +Add subdock %s", obj->name());
     nList.append( obj->name() );
-    if ( obj->parent() == main )
+    if ( TQT_BASE_OBJECT(obj->parent()) == TQT_BASE_OBJECT(main) )
       c->writeEntry( "Main:view", obj->name() );
   }
 

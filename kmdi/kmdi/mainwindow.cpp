@@ -153,7 +153,7 @@ void MainWindow::setupToolViews ()
   KDockWidget *w=mainDock;
 
   if (mainDock->parentDockTabGroup()) {
-    w=static_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
+    w=static_cast<KDockWidget*>(TQT_TQWIDGET(mainDock->parentDockTabGroup()->parent()));
   }
 
   TQPtrList<KDockWidget> leftReparentWidgets;
@@ -162,7 +162,7 @@ void MainWindow::setupToolViews ()
   TQPtrList<KDockWidget> topReparentWidgets;
 
   if (mainDock->parentDockTabGroup()) {
-    mainDock=static_cast<KDockWidget*>(mainDock->parentDockTabGroup()->parent());
+    mainDock=static_cast<KDockWidget*>(TQT_TQWIDGET(mainDock->parentDockTabGroup()->parent()));
   }
 
   findToolViewsDockedToMain(&leftReparentWidgets,KDockWidget::DockLeft);
@@ -380,7 +380,7 @@ void MainWindow::findToolViewsDockedToMain(TQPtrList<KDockWidget>* list,KDockWid
   KDockWidget* widget=mainDock->findNearestDockWidget(dprtmw);
   if (widget) {
     if (widget->parentDockTabGroup()) {
-      widget=static_cast<KDockWidget*>(widget->parentDockTabGroup()->parent());
+      widget=static_cast<KDockWidget*>(TQT_TQWIDGET(widget->parentDockTabGroup()->parent()));
     }
 
     if (widget) {

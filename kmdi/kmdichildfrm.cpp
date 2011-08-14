@@ -775,7 +775,7 @@ void KMdiChildFrm::setClient( KMdiChildView *w, bool bAutomaticResize )
 	delete list;                        // delete the list, not the objects
 
 	//Reparent if needed
-	if ( w->parent() != this )
+	if ( TQT_BASE_OBJECT(w->parent()) != TQT_BASE_OBJECT(this) )
 	{
 		//reparent to this widget , no flags , point , show it
 		TQPoint pnt2( KMDI_CHILDFRM_BORDER, clientYPos );

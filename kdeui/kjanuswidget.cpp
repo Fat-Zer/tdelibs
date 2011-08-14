@@ -536,7 +536,7 @@ bool KJanusWidget::setSwallowedWidget( TQWidget *widget )
   }
   else
   {
-    if( widget->parent() != mSwallowPage )
+    if( TQT_BASE_OBJECT(widget->parent()) != TQT_BASE_OBJECT(mSwallowPage) )
     {
       widget->reparent( mSwallowPage, 0, TQPoint(0,0) );
     }

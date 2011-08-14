@@ -1979,7 +1979,7 @@ bool HighColorStyle::eventFilter( TQObject *object, TQEvent *event )
 			{
 				x_offset += parent->x();
 				y_offset += parent->y();
-				parent = static_cast<TQWidget*>(parent->parent());
+				parent = TQT_TQWIDGET(parent->parent());
 			}
 
 			TQRect r  = widget->rect();

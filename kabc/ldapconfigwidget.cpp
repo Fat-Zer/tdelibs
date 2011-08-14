@@ -615,7 +615,7 @@ void LdapConfigWidget::setFlags( int flags )
   obj = ch2.first();
   while ( obj != 0 ) {
     widget = dynamic_cast<TQWidget*> (obj);
-    if ( widget && widget->parent() == this ) {
+    if ( widget && TQT_BASE_OBJECT(widget->parent()) == TQT_BASE_OBJECT(this) ) {
       mainLayout->remove( widget );
       delete ( widget );
     }
