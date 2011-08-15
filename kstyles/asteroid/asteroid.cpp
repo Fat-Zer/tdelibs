@@ -2288,10 +2288,11 @@ TQSize AsteroidStyle::tqsizeFromContents(ContentsType ct,
 		}
 
 		case CT_MenuBar: {
-			const TQMenuBar *mb = dynamic_cast<const TQMenuBar *>(w);
-			int sh = TQFontInfo(mb->font()).pixelSize() + 4;
-			int sw = 10;
-			return TQSize(sw, sh);
+			// Fall through is intentional
+// 			const TQMenuBar *mb = dynamic_cast<const TQMenuBar *>(w);
+// 			int sh = TQFontInfo(mb->font()).pixelSize() + 4;
+// 			int sw = 10;
+// 			return TQSize(sw, sh);
 		}
 
 		case CT_Header: {
