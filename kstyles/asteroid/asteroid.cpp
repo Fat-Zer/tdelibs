@@ -797,7 +797,12 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 		case PE_PanelPopup: {
 			p->setPen(cg.background());
 			p->setBrush(cg.background());
-			p->drawRect(r);
+
+			int menuborder = 3;
+			p->drawRect(r.x(), r.y(), r.x()+menuborder, r.height());			// Left
+			p->drawRect(r.x()+r.width()-menuborder, r.y(), r.width(), r.height());		// Right
+			p->drawRect(r.x(), r.y(), r.width(), r.y()+menuborder);				// Top
+			p->drawRect(r.x(), r.y()+r.height()-menuborder, r.width(), r.height());		// Bottom
 
 			p->setPen(cg.dark());
 			p->drawLine(x2, y2, x, y2);
