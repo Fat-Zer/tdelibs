@@ -63,6 +63,12 @@
 #undef HAVE_XRENDER
 #endif
 
+#ifdef HAVE_XCOMPOSITE
+#include <X11/extensions/Xrender.h>
+#include <X11/extensions/Xcomposite.h>
+#include <dlfcn.h>
+#endif
+
 #include <limits.h>
 
 namespace
@@ -138,6 +144,10 @@ class TransparencyHandler : public TQObject
 #ifdef HAVE_XRENDER
 		void XRenderBlendToPixmap(const TQWidget* p);
 #endif
+#ifdef HAVE_XCOMPOSITE
+	    bool haveX11RGBASupport();
+#endif
+		TQImage handleRealAlpha(TQImage);
 		void createShadowWindows(const TQWidget* p);
 		void removeShadowWindows(const TQWidget* p);
 		void rightShadow(TQImage& dst);
@@ -1951,9 +1961,24 @@ TransparencyHandler::~TransparencyHandler()
 {
 }
 
+bool TransparencyHandler::haveX11RGBASupport()
+{
+	// Simple way
+	if (TQPaintDevice::x11AppDepth() == 32) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+#define REAL_ALPHA_STRENGTH 255.0
+
 // This is meant to be ugly but fast.
 void TransparencyHandler::rightShadow(TQImage& dst)
 {
+	bool have_composite = haveX11RGBASupport();
+
 	if (dst.depth() != 32)
 		dst = dst.convertDepth(32);
 
@@ -1965,34 +1990,60 @@ void TransparencyHandler::rightShadow(TQImage& dst)
 	register unsigned char* data = dst.bits();		// Skip alpha
 #endif
 	for(register int i = 0; i < 16; i++) {
-		*data = (unsigned char)((*data)*top_right_corner[i]); data++;
-		*data = (unsigned char)((*data)*top_right_corner[i]); data++;
-		*data = (unsigned char)((*data)*top_right_corner[i]); data++;
-		data++;	// skip alpha
+		if (have_composite) {
+			data++;
+			data++;
+			data++;
+			*data = (unsigned char)(REAL_ALPHA_STRENGTH*(1.0-top_right_corner[i])); data++;
+		}
+		else {
+			*data = (unsigned char)((*data)*top_right_corner[i]); data++;
+			*data = (unsigned char)((*data)*top_right_corner[i]); data++;
+			*data = (unsigned char)((*data)*top_right_corner[i]); data++;
+			data++;	// skip alpha
+		}
 	}
 
 	pixels -= 32;	// tint right strip without rounded edges.
 	register int c = 0;
 	for(register int i = 0; i < pixels; i++) {
-		*data = (unsigned char)((*data)*shadow_strip[c]); data++;
-		*data = (unsigned char)((*data)*shadow_strip[c]); data++;
-		*data = (unsigned char)((*data)*shadow_strip[c]); data++;
-		data++; // skip alpha
-	        ++c;
+		if (have_composite) {
+			data++;
+			data++;
+			data++;;
+			*data = (unsigned char)(REAL_ALPHA_STRENGTH*(1.0-shadow_strip[c])); data++;
+		}
+		else {
+			*data = (unsigned char)((*data)*shadow_strip[c]); data++;
+			*data = (unsigned char)((*data)*shadow_strip[c]); data++;
+			*data = (unsigned char)((*data)*shadow_strip[c]); data++;
+			data++; // skip alpha
+		}
+		++c;
 		c %= 4;
 	}
 
 	// tint bottom edge
 	for(register int i = 0; i < 16; i++) {
-		*data = (unsigned char)((*data)*bottom_right_corner[i]); data++;
-		*data = (unsigned char)((*data)*bottom_right_corner[i]); data++;
-		*data = (unsigned char)((*data)*bottom_right_corner[i]); data++;
-		data++;	// skip alpha
+		if (have_composite) {
+			data++;
+			data++;
+			data++;
+			*data = (unsigned char)(REAL_ALPHA_STRENGTH*(1.0-bottom_right_corner[i])); data++;
+		}
+		else {
+			*data = (unsigned char)((*data)*bottom_right_corner[i]); data++;
+			*data = (unsigned char)((*data)*bottom_right_corner[i]); data++;
+			*data = (unsigned char)((*data)*bottom_right_corner[i]); data++;
+			data++;	// skip alpha
+		}
 	}
 }
 
 void TransparencyHandler::bottomShadow(TQImage& dst)
 {
+	bool have_composite = haveX11RGBASupport();
+
 	if (dst.depth() != 32)
 		dst = dst.convertDepth(32);
 
@@ -2011,23 +2062,57 @@ void TransparencyHandler::bottomShadow(TQImage& dst)
 	{
 		// Bottom-left Corner
 		for(register int x = 0; x < 4; x++) {
-			*data = (unsigned char)((*data)*(*corner)); data++;
-			*data = (unsigned char)((*data)*(*corner)); data++;
-			*data = (unsigned char)((*data)*(*corner)); data++;
-			data++; // skip alpha
+			if (have_composite) {
+				data++;
+				data++;
+				data++;
+				*data = (unsigned char)(REAL_ALPHA_STRENGTH*(1.0-(*corner))); data++;
+			}
+			else {
+				*data = (unsigned char)((*data)*(*corner)); data++;
+				*data = (unsigned char)((*data)*(*corner)); data++;
+				*data = (unsigned char)((*data)*(*corner)); data++;
+				data++; // skip alpha
+			}
 			corner++;
 		}
 
 		// Scanline
 		for(register int x = 0; x < width; x++) {
-			*data = (unsigned char)((*data)*strip_data); data++;
-			*data = (unsigned char)((*data)*strip_data); data++;
-			*data = (unsigned char)((*data)*strip_data); data++;
-			data++;
+			if (have_composite) {
+				data++;
+				data++;
+				data++;
+				*data = (unsigned char)(REAL_ALPHA_STRENGTH*(1.0-strip_data)); data++;
+			}
+			else {
+				*data = (unsigned char)((*data)*strip_data); data++;
+				*data = (unsigned char)((*data)*strip_data); data++;
+				*data = (unsigned char)((*data)*strip_data); data++;
+				data++; // skip alpha
+			}
 		}
 
 		strip_data = shadow_strip[++line];
 	}
+}
+
+TQImage TransparencyHandler::handleRealAlpha(TQImage img) {
+	TQImage clearImage = img.convertDepth(32);
+	clearImage.setAlphaBuffer(true);
+
+	int w = clearImage.width();
+	int h = clearImage.height();
+
+	for (int y = 0; y < h; ++y) {
+		TQRgb *ls = (TQRgb *)clearImage.scanLine( y );
+		for (int x = 0; x < w; ++x) {
+			TQRgb l = ls[x];
+			ls[x] = tqRgba( 0, 0, 0, 0 );
+		}
+	}
+
+	return clearImage;
 }
 
 // Create a shadow of thickness 4.
@@ -2038,6 +2123,8 @@ void TransparencyHandler::createShadowWindows(const TQWidget* p)
 	int y2 = p->y()+p->height();
 	TQRect shadow1(x2, p->y() + 4, 4, p->height());
 	TQRect shadow2(p->x() + 4, y2, p->width() - 4, 4);
+
+	bool have_composite = haveX11RGBASupport();
 
 	// Create a fake drop-down shadow effect via blended Xwindows
 	ShadowElements se;
@@ -2052,16 +2139,26 @@ void TransparencyHandler::createShadowWindows(const TQWidget* p)
 	shadowMap()[p] = se;
 
 	// Some hocus-pocus here to create the drop-shadow.
-	TQPixmap pix_shadow1 = TQPixmap::grabWindow(qt_xrootwin(),
-			shadow1.x(), shadow1.y(), shadow1.width(), shadow1.height());
-	TQPixmap pix_shadow2 = TQPixmap::grabWindow(qt_xrootwin(),
-			shadow2.x(), shadow2.y(), shadow2.width(), shadow2.height());
+	TQPixmap pix_shadow1;
+	TQPixmap pix_shadow2;
+	if (have_composite) {
+		pix_shadow1 = TQPixmap(shadow1.width(), shadow1.height());
+		pix_shadow2 = TQPixmap(shadow2.width(), shadow2.height());
+	}
+	else {
+		pix_shadow1 = TQPixmap::grabWindow(qt_xrootwin(),
+				shadow1.x(), shadow1.y(), shadow1.width(), shadow1.height());
+		pix_shadow2 = TQPixmap::grabWindow(qt_xrootwin(),
+				shadow2.x(), shadow2.y(), shadow2.width(), shadow2.height());
+	}
 
 	TQImage img;
 	img = pix_shadow1.convertToImage();
+	if (have_composite) img = handleRealAlpha(img);
 	rightShadow(img);
 	pix_shadow1.convertFromImage(img);
 	img = pix_shadow2.convertToImage();
+	if (have_composite) img = handleRealAlpha(img);
 	bottomShadow(img);
 	pix_shadow2.convertFromImage(img);
 

@@ -140,6 +140,8 @@
 #include <fixx11h.h>
 #endif
 
+#include <pwd.h>
+
 #ifndef Q_WS_WIN
 #include <KDE-ICE/ICElib.h>
 #else
@@ -1764,16 +1766,43 @@ public:
 
 #if defined(Q_WS_X11) && defined(COMPOSITE)
 bool KApplication::isCompositionManagerAvailable() {
-	KConfigGroup pConfig (KGlobal::config(), "General");
-	return pConfig.readBoolEntry("compositingManagerAvailable", false);
+	bool have_manager = false;
+	const char *home;
+	struct passwd *p;
+	p = getpwuid(getuid());
+	if (p)
+		home = p->pw_dir;
+	else
+		home = getenv("HOME");
 
-return false;
+	char *filename;
+	const char *configfile = "/.kompmgr.available";
+	int n = strlen(home)+strlen(configfile)+1;
+	filename = (char*)malloc(n*sizeof(char));
+	memset(filename,0,n);
+	strcat(filename, home);
+	strcat(filename, configfile);
+
+        // Now that we did all that by way of introduction...read the file!
+	FILE *pFile;
+	char buffer[255];
+	pFile = fopen(filename, "r");
+	int kompmgrpid = 0;
+	if (pFile) {
+		have_manager = true;
+		fclose(pFile);
+	}
+
+	free(filename);
+	filename = NULL;
+
+	return have_manager;
 }
 
-bool KApplication::detectCompositionManagerAvailable(bool force_available) {
+bool KApplication::detectCompositionManagerAvailable(bool force_available, bool available) {
 	bool compositing_manager_available;
 	if (force_available) {
-		compositing_manager_available = true;
+		compositing_manager_available = available;
 	}
 	else {
 		// See if compositing has been enabled
@@ -1781,7 +1810,7 @@ bool KApplication::detectCompositionManagerAvailable(bool force_available) {
 		char *displayname = 0;
 		if ( qtargs->isSet("display"))
 			displayname = qtargs->getOption( "display" ).data();
-			
+
 		Display *dpy = XOpenDisplay( displayname );
 	
 		x11_composite_error_generated = false;
@@ -1807,12 +1836,39 @@ bool KApplication::detectCompositionManagerAvailable(bool force_available) {
 		}
 	}
 	
-	KConfigGroup pConfig (KGlobal::config(), "General");
-	bool cmanager_enabled = pConfig.readBoolEntry("compositingManagerAvailable", false);
-	if (cmanager_enabled != compositing_manager_available) {
-		pConfig.writeEntry("compositingManagerAvailable", compositing_manager_available, true, true);
+	const char *home;
+	struct passwd *p;
+	p = getpwuid(getuid());
+	if (p)
+		home = p->pw_dir;
+	else
+		home = getenv("HOME");
+
+	char *filename;
+	const char *configfile = "/.kompmgr.available";
+	int n = strlen(home)+strlen(configfile)+1;
+	filename = (char*)malloc(n*sizeof(char));
+	memset(filename,0,n);
+	strcat(filename, home);
+	strcat(filename, configfile);
+
+	/* now that we did all that by way of introduction...create or remove the file! */
+	if (compositing_manager_available) {
+		FILE *pFile;
+		char buffer[255];
+		sprintf(buffer, "available");
+		pFile = fopen(filename, "w");
+		if (pFile) {
+			fwrite(buffer,1,strlen(buffer), pFile);
+			fclose(pFile);
+		}
 	}
-	pConfig.sync();
+	else {
+		unlink(filename);
+	}
+
+	free(filename);
+	filename = NULL;
 
 	return compositing_manager_available;
 }
@@ -1822,28 +1878,38 @@ Display* KApplication::openX11RGBADisplay() {
 	char *display = 0;
 	if ( qtargs->isSet("display"))
 		display = qtargs->getOption( "display" ).data();
-	
+
 	Display *dpy = XOpenDisplay( display );
 	if ( !dpy ) {
 		kdError() << "cannot connect to X server " << display << endl;
 		exit( 1 );
 	}
-	
+
 	return dpy;
 }
 
 Qt::HANDLE KApplication::getX11RGBAVisual(Display *dpy) {
 	getX11RGBAInformation(dpy);
-	return argb_x11_visual;
+	if (KApplication::isCompositionManagerAvailable() == true) {
+		return argb_x11_visual;
+	}
+	else {
+		return NULL;
+	}
 }
 
 Qt::HANDLE KApplication::getX11RGBAColormap(Display *dpy) {
 	getX11RGBAInformation(dpy);
-	return argb_x11_colormap;
+	if (KApplication::isCompositionManagerAvailable() == true) {
+		return argb_x11_colormap;
+	}
+	else {
+		return NULL;
+	}
 }
 
 bool KApplication::isX11CompositionAvailable() {
-	return argb_visual & isCompositionManagerAvailable();
+	return (argb_visual & isCompositionManagerAvailable());
 }
 
 void KApplication::getX11RGBAInformation(Display *dpy) {
@@ -1851,7 +1917,7 @@ void KApplication::getX11RGBAInformation(Display *dpy) {
 		argb_visual = false;
 		return;
 	}
-	
+
 	int screen = DefaultScreen( dpy );
 	Colormap colormap = 0;
 	Visual *visual = 0;
@@ -1896,6 +1962,28 @@ bool KApplication::isCompositionManagerAvailable() {
 }
 
 bool KApplication::detectCompositionManagerAvailable(bool force_available) {
+	const char *home;
+	struct passwd *p;
+	p = getpwuid(getuid());
+	if (p)
+		home = p->pw_dir;
+	else
+		home = getenv("HOME");
+
+	char *filename;
+	const char *configfile = "/.kompmgr.available";
+	int n = strlen(home)+strlen(configfile)+1;
+	filename = (char*)malloc(n*sizeof(char));
+	memset(filename,0,n);
+	strcat(filename, home);
+	strcat(filename, configfile);
+
+	/* now that we did all that by way of introduction...remove the file! */
+	unlink(filename);
+
+	free(filename);
+	filename = NULL;
+
 	return false;
 }
 

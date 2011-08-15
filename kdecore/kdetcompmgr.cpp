@@ -49,16 +49,17 @@ int main(int argc, char **argv)
     KApplication app;
     app.detectCompositionManagerAvailable();
 
-    if (!app.isCompositionManagerAvailable()) {
+//    if (!app.isCompositionManagerAvailable()) {
 	KConfig config("kwinrc", true);
 	config.setGroup( "Notification Messages" );
 	if (config.readBoolEntry("UseTranslucency",false)) {
-		app.detectCompositionManagerAvailable(true);
+		app.detectCompositionManagerAvailable(true, true);
 		return 2;
 	}
 	else {
+		app.detectCompositionManagerAvailable(true, false);
 		return 0;
 	}
-    }
+//    }
 }
 

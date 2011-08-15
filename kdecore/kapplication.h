@@ -914,9 +914,10 @@ public:
    * Note that calling this method will probably cause the screen to flicker.
    * @see isCompositionManagerAvailable()
    * @param force_available If set, force TDE to assume a composition manager is available
+   * @param available Whether or not the composition manager is available (only used if force_available is TRUE)
    * @return whether the composition manager is enabled
    */
-   bool detectCompositionManagerAvailable(bool force_available=false);
+   bool detectCompositionManagerAvailable(bool force_available=false, bool available=true);
 
   /**
    * @internal
