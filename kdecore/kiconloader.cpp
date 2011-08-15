@@ -51,6 +51,8 @@
 #include "svgicons/ksvgiconpainter.h"
 #endif
 
+#include <kimageeffect.h>
+
 #include "kiconloader_p.h"
 
 /*** KIconThemeNode: A node in the icon theme dependancy tree. ***/
@@ -855,7 +857,8 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
         }
     }
 
-    pix.convertFromImage(*img);
+    if (TQPaintDevice::x11AppDepth() == 32) pix.convertFromImage(KImageEffect::convertToPremultipliedAlpha( *img ));
+    else pix.convertFromImage(*img);
 
     delete img;
 

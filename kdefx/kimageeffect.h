@@ -773,6 +773,16 @@ public:
                           int ambient, bool compensate, bool invert,
                           BumpmapType type, bool tiled);
 
+    /**
+     * Convert an image with standard alpha to premultiplied alpha
+     *
+     * @param img the image you want convert
+     *
+     * @return The destination image (dst) containing the result.
+     * @author Timothy Pearson <kb9vqf@pearsoncomputing.net>
+     */
+    static TQImage convertToPremultipliedAlpha(TQImage input);
+
 private:
 
     /**

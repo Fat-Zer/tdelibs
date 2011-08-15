@@ -4937,3 +4937,40 @@ TQImage KImageEffect::bumpmap(TQImage &img, TQImage &map, double azimuth, double
     }
     return dst;
 }
+
+/**
+ * Convert an image with standard alpha to premultiplied alpha
+ *
+ * @param img the image you want convert
+ *
+ * @return The destination image (dst) containing the result.
+ * @author Timothy Pearson <kb9vqf@pearsoncomputing.net>
+ */
+TQImage KImageEffect::convertToPremultipliedAlpha(TQImage input) {
+	TQImage alphaImage = input;
+	if (!alphaImage.isNull()) alphaImage = alphaImage.convertDepth( 32 );
+
+	int w = alphaImage.width();
+	int h = alphaImage.height();
+
+	register int r;
+	register int g;
+	register int b;
+	register int a;
+	register float alpha_adjust;
+	register TQRgb l;
+	TQRgb *ls;
+	for (int y = 0; y < h; ++y) {
+		ls = (TQRgb *)alphaImage.scanLine( y );
+		for (int x = 0; x < w; ++x) {
+			l = ls[x];
+			alpha_adjust = (tqAlpha( l )/255.0);
+			r = int( tqRed( l ) * alpha_adjust );
+			g = int( tqGreen( l ) * alpha_adjust );
+			b = int( tqBlue( l ) * alpha_adjust );
+			a = int( tqAlpha( l ) * 1.0 );
+			ls[x] = tqRgba( r, g, b, a );
+		}
+	}
+	return alphaImage;
+}
