@@ -346,7 +346,7 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 	 */
 
 		case PE_FocusRect: {
-			p->drawWinFocusRect(r);
+			p->drawWinFocusRect(r, cg.background());
 			break;
 		}
 
