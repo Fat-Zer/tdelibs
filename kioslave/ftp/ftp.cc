@@ -1955,7 +1955,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
 
         // and p_date_3 contains probably a time
         char * semicolon;
-        if ( ( semicolon = (char*)strchr( p_date_3, ':' ) ) )
+        if ( ( semicolon = const_cast<char*>(strchr( p_date_3, ':' )) ) )
         {
           *semicolon = '\0';
           tmptr->tm_min = atoi( semicolon + 1 );

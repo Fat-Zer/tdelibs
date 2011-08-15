@@ -1660,7 +1660,7 @@ canonicalize_path (path)
 
 #ifdef LT_DIRSEP_CHAR
       /* Avoid this overhead where '/' is the only separator. */
-      while (ptr = (char*)strchr (ptr, LT_DIRSEP_CHAR))
+      while (ptr = strchr (ptr, LT_DIRSEP_CHAR))
 	{
 	  *ptr++ = '/';
 	}
@@ -1708,7 +1708,7 @@ find_file (basename, search_path, pdir, handle)
       int lendir;
       char *cur = next;
 
-      next = (char*)strchr (cur, LT_PATHSEP_CHAR);
+      next = strchr (cur, LT_PATHSEP_CHAR);
       if (!next)
 	{
 	  next = cur + strlen (cur);
@@ -2082,7 +2082,7 @@ lt_dlopen (filename)
 
   /* If the canonical module name is a path (relative or absolute)
      then split it into a directory part and a name part.  */
-  basename = (char*)strrchr (canonical, '/');
+  basename = strrchr (canonical, '/');
   if (basename)
     {
       ++basename;
@@ -2275,7 +2275,7 @@ lt_dlopen (filename)
 	    char *last_libname;
 	    error = trim (&dlname, &line[sizeof (STR_LIBRARY_NAMES) - 1]);
 	    if (! error && dlname &&
-		(last_libname = (char*)strrchr (dlname, ' ')) != NULL)
+		(last_libname = strrchr (dlname, ' ')) != NULL)
 	      {
 		last_libname = strdup (last_libname + 1);
 		LT_DLMEM_REASSIGN (dlname, last_libname);
