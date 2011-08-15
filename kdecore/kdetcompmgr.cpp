@@ -28,6 +28,9 @@
 #include <kdebug.h>
 #include <kconfig.h>
 
+#include <pwd.h>
+#include <signal.h>
+
 static const char description[] =
     I18N_NOOP("TDE composition manager detection utility");
 
@@ -47,12 +50,59 @@ int main(int argc, char **argv)
     KCmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;
+
+    KConfig config("kwinrc", true);
+    config.setGroup( "Notification Messages" );
+    if (!config.readBoolEntry("UseTranslucency",false)) {
+        // Attempt to load the kompmgr pid file
+        const char *home;
+        struct passwd *p;
+        p = getpwuid(getuid());
+        if (p)
+            home = p->pw_dir;
+        else
+            home = getenv("HOME");
+        char *filename;
+        const char *configfile = "/.kompmgr.pid";
+        int n = strlen(home)+strlen(configfile)+1;
+        filename = (char*)malloc(n*sizeof(char));
+        memset(filename,0,n);
+        strcat(filename, home);
+        strcat(filename, configfile);
+
+        printf("reading '%s' as kompmgr pidfile\n\n", filename);
+
+        // Now that we did all that by way of introduction...read the file!
+        FILE *pFile;
+        char buffer[255];
+        pFile = fopen(filename, "r");
+        int kompmgrpid = 0;
+        if (pFile) {
+            // obtain file size
+            fseek (pFile , 0 , SEEK_END);
+            unsigned long lSize = ftell (pFile);
+            if (lSize > 254)
+                lSize = 254;
+            rewind (pFile);
+            size_t result = fread (buffer, 1, lSize, pFile);
+            fclose(pFile);
+            kompmgrpid = atoi(buffer);
+        }
+
+        free(filename);
+        filename = NULL;
+
+        if (kompmgrpid) {
+            kill(kompmgrpid, SIGTERM);
+        }
+    }
+
     app.detectCompositionManagerAvailable();
 
 //    if (!app.isCompositionManagerAvailable()) {
-	KConfig config("kwinrc", true);
-	config.setGroup( "Notification Messages" );
-	if (config.readBoolEntry("UseTranslucency",false)) {
+	KConfig config2("kwinrc", true);
+	config2.setGroup( "Notification Messages" );
+	if (config2.readBoolEntry("UseTranslucency",false)) {
 		app.detectCompositionManagerAvailable(true, true);
 		return 2;
 	}
