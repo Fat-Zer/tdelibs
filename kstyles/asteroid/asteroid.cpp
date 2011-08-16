@@ -1757,7 +1757,7 @@ void AsteroidStyle::tqdrawComplexControl(TQ_ComplexControl cc,
 
 			p->drawRect(hr);
 
-			if (cb->listBox() && cb->listBox()->isVisible()) {
+			if ((cb) && (cb->listBox() && cb->listBox()->isVisible())) {
 				p->setPen(cg.mid());
 				p->drawRect(hr);
 			} else {
@@ -1777,7 +1777,7 @@ void AsteroidStyle::tqdrawComplexControl(TQ_ComplexControl cc,
 			TQRect cr(sw - handle_offset-1, y+2, handle_width, sh - 4);
 			TQRect pmr(0, 0, 7, 4);
 			pmr.moveCenter(cr.center());
-			if (cb->listBox() && cb->listBox()->isVisible()) {
+			if ((cb) && (cb->listBox() && cb->listBox()->isVisible())) {
 				pmr.moveBy(1, 1);
 			}
 
