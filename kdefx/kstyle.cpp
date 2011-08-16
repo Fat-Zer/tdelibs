@@ -144,9 +144,7 @@ class TransparencyHandler : public TQObject
 #ifdef HAVE_XRENDER
 		void XRenderBlendToPixmap(const TQWidget* p);
 #endif
-#ifdef HAVE_XCOMPOSITE
-	    bool haveX11RGBASupport();
-#endif
+		bool haveX11RGBASupport();
 		TQImage handleRealAlpha(TQImage);
 		void createShadowWindows(const TQWidget* p);
 		void removeShadowWindows(const TQWidget* p);
@@ -1963,7 +1961,7 @@ TransparencyHandler::~TransparencyHandler()
 
 bool TransparencyHandler::haveX11RGBASupport()
 {
-	// Simple way
+	// Simple way to determine if we have ARGB support
 	if (TQPaintDevice::x11AppDepth() == 32) {
 		return true;
 	}
