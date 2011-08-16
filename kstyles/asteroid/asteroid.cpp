@@ -345,6 +345,30 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 		PE_ScrollBarLast
 	 */
 
+		case PE_Splitter:
+		{
+			QPen oldPen = p->pen();
+			p->setPen(cg.background());
+			p->drawRect(r);
+			p->setPen( cg.light() );
+// 			if ( sf & Style_Horizontal ) {
+// 				p->drawLine( r.x() + 1, r.y(), r.x() + 1, r.height() );
+// 				p->setPen( cg.dark() );
+// 				p->drawLine( r.x(), r.y(), r.x(), r.height() );
+// 				p->drawLine( r.right()-1, r.y(), r.right()-1, r.height() );
+// 				p->setPen( cg.shadow() );
+// 				p->drawLine( r.right(), r.y(), r.right(), r.height() );
+// 			} else {
+// 				p->drawLine( r.x(), r.y() + 1, r.width(), r.y() + 1 );
+// 				p->setPen( cg.dark() );
+// 				p->drawLine( r.x(), r.bottom() - 1, r.width(), r.bottom() - 1 );
+// 				p->setPen( cg.shadow() );
+// 				p->drawLine( r.x(), r.bottom(), r.width(), r.bottom() );
+// 			}
+			p->setPen( oldPen );
+			break;
+		}
+
 		case PE_FocusRect: {
 			p->drawWinFocusRect(r, cg.background());
 			break;
@@ -1261,7 +1285,8 @@ void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
 		case CE_PushButton: {
 			const TQPushButton *pb = dynamic_cast<const TQPushButton *>(w);
 
-			if ( w->inherits("KMultiTabBarButton") ) {
+			// Get rid of ugliness in Konqueror and KDevelop tab bar buttons, respectively
+			if ( w->inherits("KMultiTabBarButton") || w->inherits("Ideal::Button")) {
 				p->setPen(cg.mid());
 				p->setBrush(cg.background());
 				p->drawRect(r);
@@ -1745,11 +1770,11 @@ void AsteroidStyle::tqdrawComplexControl(TQ_ComplexControl cc,
 			p->drawLine(x2-1, y2-1, x2-1, y+1);
 			p->drawLine(x2-1, y2-1, x+1, y2-1);
 
-		//	Fill in the area behind the text.
+			// Fill in the area behind the text.
 			p->fillRect(querySubControlMetrics(cc, w, SC_ComboBoxEditField), cg.base());
 			p->setBrush(cg.background());
 
-		//	Draw the box on the right.
+			// Draw the box on the right.
 			TQRect hr(sw - handle_offset-1, y+2, handle_width, sh-4);
 			int hrx, hry, hrx2, hry2;
 			hr.coords(&hrx, &hry, &hrx2, &hry2);
@@ -1757,7 +1782,10 @@ void AsteroidStyle::tqdrawComplexControl(TQ_ComplexControl cc,
 
 			p->drawRect(hr);
 
-			if ((cb) && (cb->listBox() && cb->listBox()->isVisible())) {
+			bool draw_skinny_frame = false;
+// 			if (!cb) draw_skinny_frame = true;
+			if ((cb) && (cb->listBox() && cb->listBox()->isVisible())) draw_skinny_frame = true;
+			if (draw_skinny_frame) {
 				p->setPen(cg.mid());
 				p->drawRect(hr);
 			} else {
@@ -2059,6 +2087,9 @@ int AsteroidStyle::tqpixelMetric(PixelMetric pm, const TQWidget *w) const
 
 		case PM_TabBarTabShiftVertical:
 			return 2;
+
+		case PM_SplitterWidth:
+			return TQMAX( 4, TQApplication::globalStrut().width() );
 
 		default: {
 			return KStyle::tqpixelMetric(pm, w);
