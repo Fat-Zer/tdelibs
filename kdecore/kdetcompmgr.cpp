@@ -97,7 +97,7 @@ int main(int argc, char **argv)
         }
     }
 
-    app.detectCompositionManagerAvailable();
+//     app.detectCompositionManagerAvailable();
 
 //    if (!app.isCompositionManagerAvailable()) {
 	KConfig config2("kwinrc", true);
