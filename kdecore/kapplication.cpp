@@ -1311,7 +1311,7 @@ static void checkRestartVersion( TQSessionManager& sm )
     int format;
     unsigned long nitems, after;
     unsigned char* data;
-    if( XGetWindowProperty( dpy, RootWindow( dpy, 0 ), XInternAtom( dpy, "KDE_FULL_SESSION", False ),
+    if( XGetWindowProperty( dpy, RootWindow( dpy, 0 ), XInternAtom( dpy, "TDE_FULL_SESSION", False ),
         0, 1, False, AnyPropertyType, &type, &format, &nitems, &after, &data ) == Success ) {
         if( data != NULL )
             XFree( data );

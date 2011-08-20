@@ -358,7 +358,7 @@ int PtyProcess::exec(const TQCString &command, const QCStringList &args)
     {
         putenv(const_cast<TQCString&>(*it).data());
     }
-    unsetenv("KDE_FULL_SESSION");
+    unsetenv("TDE_FULL_SESSION");
     
     // set temporarily LC_ALL to C, for su (to be able to parse "Password:")
     const char* old_lc_all = getenv( "LC_ALL" );
