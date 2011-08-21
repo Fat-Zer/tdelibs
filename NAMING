@@ -71,5 +71,5 @@ LDFLAGS: -module $(KDE_PLUGIN)
 
 A definition like kde_module_LTLIBRARIES = <Name>
 means that the module is installed under $(kde_moduledir),
-which is $prefix/lib/kde3/ in KDE3.
+which is $prefix/lib/trinity/ in KDE3.
 

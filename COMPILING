@@ -60,7 +60,7 @@ ldconfig -m $QTDIR/lib
 
 You probably also want to add $KDEDIR/bin and $QTDIR/bin to your path.
 
-See http://www.kde.org/kde2-and-kde3.html for tips about setting up
+See http://www.kde.org/kde2-and-trinity.html for tips about setting up
 KDE 3.0 next to KDE 2.x.
 
 Compiling

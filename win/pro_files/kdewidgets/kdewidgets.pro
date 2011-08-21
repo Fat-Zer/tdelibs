@@ -1,5 +1,5 @@
 TEMPLATE	= lib
-CONFIG += kde3lib #this is a dynamic kde library
+CONFIG += trinitylib #this is a dynamic kde library
 
 include( $(KDELIBS)/win/common.pro )
 
@@ -9,7 +9,7 @@ system( makekdewidgets -o kdewidgets.cpp kde.widgets )
 
 TARGET = kdewidgets
 
-DESTDIR		= $$KDELIBDESTDIR/kde3/plugins/designer
+DESTDIR		= $$KDELIBDESTDIR/trinity/plugins/designer
 
 LIBS +=  $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR/kio$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR/kdeui$$KDELIB_SUFFIX \

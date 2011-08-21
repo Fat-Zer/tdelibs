@@ -136,7 +136,7 @@ AutoStart::loadAutoStartList()
        if (config.readBoolEntry("Hidden", false))
           continue;
 
-       // Check to see if the most important ( usually ~/.config/autostart or ~/.kde3/Autostart) XDG directory
+       // Check to see if the most important ( usually ~/.config/autostart or ~/.trinity/Autostart) XDG directory
        // has overridden the Hidden directive and honor it if set to True
        bool autostartOverriddenAndDisabled = false;
        for(TQStringList::ConstIterator localit = files.begin();

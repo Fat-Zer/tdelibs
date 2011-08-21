@@ -4,7 +4,7 @@ File=kcookiejarrc
 Group=Browser Settings/HTTP,Cookie Policy
 
 # Update cookies config file...
-Id=kde3.1/cvs
+Id=trinity.1/cvs
 File=kcookiejarrc
 Group=<default>,Cookie Dialog
 Key=DefaultRadioButton,PreferredPolicy

@@ -32,7 +32,7 @@ class TQDataStream;
  * the common functionality for servicetypes and services.
  * 
  * @internal
- * @see http://developer.kde.org/documentation/library/kdeqt/kde3arch/ksycoca.html 
+ * @see http://developer.kde.org/documentation/library/kdeqt/trinityarch/ksycoca.html 
  */
 class KDECORE_EXPORT KSycocaEntry : public KShared
 {

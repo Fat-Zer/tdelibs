@@ -1,5 +1,5 @@
 TEMPLATE	= lib
-CONFIG += kde3lib #this is a kde module library
+CONFIG += trinitylib #this is a kde module library
 
 include( $(KDELIBS)/win/common.pro )
 

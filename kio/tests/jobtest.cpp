@@ -583,7 +583,7 @@ void JobTest::copyFileToSystem( bool resolve_local_urls )
 
     // Check mimetype
     kdDebug() << m_mimetype << endl;
-    // There's no mimemagic determination in kio_file in kde3. Fixing this for kde4...
+    // There's no mimemagic determination in kio_file in trinity. Fixing this for kde4...
     assert( m_mimetype == "application/octet-stream" );
     //assert( m_mimetype == "text/plain" );
 

@@ -68,8 +68,8 @@ static char win32_mapDir_KDEDIR[MAX_PATH] = "";
 // when mapping is performed, frees old name at *dir and allocates new path for *dir 
 void win32_mapDir( char **dir )
 {
-    static const char* WIN32_LIBDIR_FROM = "/opt/kde3/lib/kde3";
-    static const char* WIN32_LIBDIR_TO = "c:/kde/lib/kde3";
+    static const char* WIN32_LIBDIR_FROM = "/opt/trinity/lib/trinity";
+    static const char* WIN32_LIBDIR_TO = "c:/kde/lib/trinity";
     char *e;
 //TODO........
     if (!*win32_mapDir_KDEDIR) {
@@ -78,7 +78,7 @@ void win32_mapDir( char **dir )
         strncpy( win32_mapDir_KDEDIR, e, MAX_PATH );
     }
     assert(dir && *dir && win32_mapDir_KDEDIR && *win32_mapDir_KDEDIR);
-    // /opt/kde3/lib/kde3 -> <letter>:/kde/lib/kde3
+    // /opt/trinity/lib/trinity -> <letter>:/kde/lib/trinity
 
     if (strcmp(*dir, WIN32_LIBDIR_FROM)==0) {
         free(*dir);

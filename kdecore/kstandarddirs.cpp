@@ -1062,9 +1062,9 @@ TQString KStandardDirs::kde_default(const char *type) {
     if (!strcmp(type, "lib"))
 	return "lib" KDELIBSUFF "/";
     if (!strcmp(type, "module"))
-	return "lib" KDELIBSUFF "/kde3/";
+	return "lib" KDELIBSUFF "/trinity/";
     if (!strcmp(type, "qtplugins"))
-        return "lib" KDELIBSUFF "/kde3/plugins";
+        return "lib" KDELIBSUFF "/trinity/plugins";
     if (!strcmp(type, "xdgdata-apps"))
         return "applications/";
     if (!strcmp(type, "xdgdata-icon"))

@@ -297,7 +297,7 @@ KConfig *cfg;
    		<< "/usr/local/bin"             
    		<< "/usr/local/openssl/bin"     
    		<< "/opt/openssl/bin"           
-   		<< "/opt/kde3/bin"              
+   		<< "/opt/trinity/bin"              
    		<< "";                          
                                        
    libnamess << "cygssl-0.9.7.dll"     

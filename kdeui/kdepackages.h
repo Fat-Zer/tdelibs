@@ -1253,7 +1253,7 @@ const char * const packages[] = {
 "step/stepcore",
 "superkaramba",
 "sweeper",
-"systemsettings-kde3",
+"systemsettings-trinity",
 "systemsettings",
 "systemsettings/accessibility",
 "systemsettings/autostart",

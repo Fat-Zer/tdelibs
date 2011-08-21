@@ -119,7 +119,7 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
 
   if (!kde_home || !kde_home[0])
   {
-     kde_home = "~/.kde3/";
+     kde_home = "~/.trinity/";
   }
 
   if (kde_home[0] == '~')

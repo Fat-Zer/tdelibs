@@ -1327,7 +1327,7 @@ static void checkRestartVersion( TQSessionManager& sm )
             }
         }
     }
-    TQString wrapper = KStandardDirs::findExe( "kde3" );
+    TQString wrapper = KStandardDirs::findExe( "trinity" );
     TQStringList restartCommand = sm.restartCommand();
     restartCommand.prepend( wrapper );
     sm.setRestartCommand( restartCommand );
@@ -2312,28 +2312,28 @@ TQPalette KApplication::createApplicationPalette()
 
 TQPalette KApplication::createApplicationPalette( KConfig *config, int contrast_ )
 {
-    TQColor kde34Background( 239, 239, 239 );
-    TQColor kde34Blue( 103,141,178 );
+    TQColor trinity4Background( 239, 239, 239 );
+    TQColor trinity4Blue( 103,141,178 );
 
-    TQColor kde34Button;
+    TQColor trinity4Button;
     if ( TQPixmap::defaultDepth() > 8 )
-      kde34Button.setRgb( 221, 223, 228 );
+      trinity4Button.setRgb( 221, 223, 228 );
     else
-      kde34Button.setRgb( 220, 220, 220 );
+      trinity4Button.setRgb( 220, 220, 220 );
 
-    TQColor kde34Link( 0, 0, 238 );
-    TQColor kde34VisitedLink( 82, 24, 139 );
+    TQColor trinity4Link( 0, 0, 238 );
+    TQColor trinity4VisitedLink( 82, 24, 139 );
 
-    TQColor background = config->readColorEntry( "background", &kde34Background );
+    TQColor background = config->readColorEntry( "background", &trinity4Background );
     TQColor foreground = config->readColorEntry( "foreground", tqblackptr );
-    TQColor button = config->readColorEntry( "buttonBackground", &kde34Button );
+    TQColor button = config->readColorEntry( "buttonBackground", &trinity4Button );
     TQColor buttonText = config->readColorEntry( "buttonForeground", tqblackptr );
-    TQColor highlight = config->readColorEntry( "selectBackground", &kde34Blue );
+    TQColor highlight = config->readColorEntry( "selectBackground", &trinity4Blue );
     TQColor highlightedText = config->readColorEntry( "selectForeground", tqwhiteptr );
     TQColor base = config->readColorEntry( "windowBackground", tqwhiteptr );
     TQColor baseText = config->readColorEntry( "windowForeground", tqblackptr );
-    TQColor link = config->readColorEntry( "linkColor", &kde34Link );
-    TQColor visitedLink = config->readColorEntry( "visitedLinkColor", &kde34VisitedLink );
+    TQColor link = config->readColorEntry( "linkColor", &trinity4Link );
+    TQColor visitedLink = config->readColorEntry( "visitedLinkColor", &trinity4VisitedLink );
 
     int highlightVal, lowlightVal;
     highlightVal = 100 + (2*contrast_+4)*16/10;

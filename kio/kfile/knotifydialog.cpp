@@ -827,7 +827,7 @@ void KNotifyWidget::save()
 }
 
 // returns e.g. "kwin/eventsrc" from a given path
-// "/opt/kde3/share/apps/kwin/eventsrc"
+// "/opt/trinity/share/apps/kwin/eventsrc"
 TQString KNotifyWidget::makeRelative( const TQString& fullPath )
 {
     int slash = fullPath.findRev( '/' ) - 1;

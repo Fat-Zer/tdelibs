@@ -69,7 +69,7 @@ TQFont *KGlobalSettings::_menuFont = 0;
 TQFont *KGlobalSettings::_windowTitleFont = 0;
 TQFont *KGlobalSettings::_taskbarFont = 0;
 TQFont *KGlobalSettings::_largeFont = 0;
-TQColor *KGlobalSettings::_kde34Blue = 0;
+TQColor *KGlobalSettings::_trinity4Blue = 0;
 TQColor *KGlobalSettings::_inactiveBackground = 0;
 TQColor *KGlobalSettings::_inactiveForeground = 0;
 TQColor *KGlobalSettings::_activeBackground = 0;
@@ -194,7 +194,7 @@ TQColor KGlobalSettings::toolBarHighlightColor()
 {
     initColors();
     KConfigGroup g( KGlobal::config(), "Toolbar style" );
-    return g.readColorEntry("HighlightColor", _kde34Blue);
+    return g.readColorEntry("HighlightColor", _trinity4Blue);
 }
 
 TQColor KGlobalSettings::inactiveTitleColor()
@@ -566,11 +566,11 @@ void KGlobalSettings::initStatic() // should be called initPaths(). Don't put an
 
 void KGlobalSettings::initColors()
 {
-    if (!_kde34Blue) {
+    if (!_trinity4Blue) {
       if (TQPixmap::defaultDepth() > 8)
-        _kde34Blue = new TQColor(103,141,178);
+        _trinity4Blue = new TQColor(103,141,178);
       else
-        _kde34Blue = new TQColor(0, 0, 192);
+        _trinity4Blue = new TQColor(0, 0, 192);
     }
     if (!alternateColor)
       alternateColor = new TQColor(237, 244, 249);

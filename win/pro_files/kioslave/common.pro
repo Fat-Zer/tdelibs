@@ -1,6 +1,6 @@
 TEMPLATE	= lib
 
-CONFIG += kde3lib #this is a dynamic kde library
+CONFIG += trinitylib #this is a dynamic kde library
 
 include( $(KDELIBS)/win/common.pro )
 

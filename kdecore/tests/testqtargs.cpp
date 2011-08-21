@@ -4,8 +4,8 @@
   I used the following compile options:
 
   g++ -g -Wall -o testqtargs testqtargs.cpp  -I/usr/X11R6/include \
-  -I/opt/qt3/include -I/opt/kde3/include -L/usr/X11R6/lib -L/opt/qt3/lib \
-  -L/opt/kde3/lib -lqt -lkdecore
+  -I/opt/qt3/include -I/opt/trinity/include -L/usr/X11R6/lib -L/opt/qt3/lib \
+  -L/opt/trinity/lib -lqt -lkdecore
 
   if invoked like this ./testqtargs --bg blue --caption something --hello hi
 

@@ -13,7 +13,7 @@ ghostviewtest_SOURCES = ghostview.cpp
 ghostviewtest_LDADD = $(LIB_KPARTS)
 
 # These are not really libraries, but modules dynamically opened.
-# So they should be installed in kde_module_dir, which is usually $prefix/lib/kde3
+# So they should be installed in kde_module_dir, which is usually $prefix/lib/trinity
 kde_module_LTLIBRARIES = libspellcheckplugin.la libnotepadpart.la
 
 libspellcheckplugin_la_SOURCES = plugin_spellcheck.cpp

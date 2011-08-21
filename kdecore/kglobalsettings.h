@@ -567,7 +567,7 @@ private:
     static TQFont *_windowTitleFont;
     static TQFont *_taskbarFont;
     static TQFont *_largeFont;
-    static TQColor * _kde34Blue;
+    static TQColor * _trinity4Blue;
     static TQColor * _inactiveBackground;
     static TQColor * _inactiveForeground;
     static TQColor * _activeBackground;

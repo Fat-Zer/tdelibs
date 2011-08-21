@@ -12,7 +12,7 @@ exists( custom_defs.pro ) {
 }
 
 # common version info for all libs:
-!contains( CONFIG, kde3lib ) {
+!contains( CONFIG, trinitylib ) {
 	VER_MAJ = $(KDE_VER_MAJ)
 	VER_MIN = $(KDE_VER_MIN)
 	VER_PAT = $(KDE_VER_PAT)
@@ -62,10 +62,10 @@ isEmpty( KDEBUG ) {
   }
   !contains(CONFIG,debug) {
 		KDEBUG=_
-		contains(CONFIG,kde3lib) {
+		contains(CONFIG,trinitylib) {
 			KDELIBDEBUG=
 		}
-		!contains(CONFIG,kde3lib) {
+		!contains(CONFIG,trinitylib) {
 			KDELIBDEBUG=_
 		}
 		KDELIBDEBUGLIB=.lib
@@ -101,16 +101,16 @@ contains( TEMPLATE, lib ) {
 	# indicate that we building a library
 	QMAKE_CXXFLAGS += -DKDE_MAKE_LIB=1
 
-	# lib/kde3 dest dir (for modules)
-	contains( CONFIG, kde3lib ) {
-	  DESTDIR = $$KDEBINDESTDIR/lib/kde3
+	# lib/trinity dest dir (for modules)
+	contains( CONFIG, trinitylib ) {
+	  DESTDIR = $$KDEBINDESTDIR/lib/trinity
 	  TARGET_EXT = .dll #- no ver. in filename
 	}
-	!contains( CONFIG, kde3lib ) {
+	!contains( CONFIG, trinitylib ) {
 	  DESTDIR = $$KDELIBDESTDIR
 	}
 	contains( CONFIG, kstyle ) {
-	  DESTDIR = $$KDEBINDESTDIR/lib/kde3/plugins/styles
+	  DESTDIR = $$KDEBINDESTDIR/lib/trinity/plugins/styles
 	  CONFIG += plugin
 	}
 #  !contains(CONFIG,debug) {
