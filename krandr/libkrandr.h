@@ -165,8 +165,9 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     /**
     * Saves the systemwide display configuration screenInfoArray to the specified profile
     * If profilename is empty, the default profile is utilized
+    * If enable is set to true, the default profile will be applied at system startup
     */
-    void saveSystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray);
+    void saveSystemwideDisplayConfiguration(bool enable, TQString profilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray);
 
     /**
     * Reads the systemwide display configuration screenInfoArray from the specified profile
@@ -174,6 +175,12 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     * WARNING: The calling application must free the returned objects when it is done using them
     */
     TQPtrList<SingleScreenData> loadSystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir);
+
+    /**
+    * Applies the systemwide display configuration screenInfoArray from the specified profile
+    * If profilename is empty, the default profile is utilized
+    */
+    void applySystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir);
 
     /**
     * Applies the systemwide display configuration screenInfoArray to the hardware

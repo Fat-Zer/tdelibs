@@ -17,6 +17,7 @@
  */
 
 #include "randr.h"
+#include "lowlevel_randr.h"
 
 #include <tqtimer.h>
 
@@ -75,21 +76,53 @@ void RandRScreen::loadSettings()
 	Q_ASSERT(d->config);
 
 	Rotation rotation;
-	m_currentSize = m_proposedSize = XRRConfigCurrentConfiguration(d->config, &rotation);
-	m_currentRotation = m_proposedRotation = rotation;
+	if (d->config) {
+		m_currentSize = m_proposedSize = XRRConfigCurrentConfiguration(d->config, &rotation);
+		m_currentRotation = m_proposedRotation = rotation;
+	}
+	else {
+		m_currentSize = m_proposedSize = 0;
+		m_currentRotation = m_proposedRotation = 0;
+	}
 
 	m_pixelSizes.clear();
 	m_mmSizes.clear();
-	int numSizes;
-	XRRScreenSize* sizes = XRRSizes(qt_xdisplay(), m_screen, &numSizes);
-	for (int i = 0; i < numSizes; i++) {
-		m_pixelSizes.append(TQSize(sizes[i].width, sizes[i].height));
-		m_mmSizes.append(TQSize(sizes[i].mwidth, sizes[i].mheight));
+
+	if (d->config) {
+		int numSizes;
+		XRRScreenSize* sizes = XRRSizes(qt_xdisplay(), m_screen, &numSizes);
+		for (int i = 0; i < numSizes; i++) {
+			m_pixelSizes.append(TQSize(sizes[i].width, sizes[i].height));
+			m_mmSizes.append(TQSize(sizes[i].mwidth, sizes[i].mheight));
+		}
+
+		m_rotations = XRRRotations(qt_xdisplay(), m_screen, &rotation);
+	}
+	else {
+		// Great, now we have to go after the information manually.  Ughh.
+		ScreenInfo *screeninfo = internal_read_screen_info(qt_xdisplay());
+		XRROutputInfo *output_info = screeninfo->outputs[m_screen]->info;
+		CrtcInfo *current_crtc = screeninfo->outputs[m_screen]->cur_crtc;
+		int numSizes = screeninfo->res->nmode;
+		for (int i = 0; i < numSizes; i++) {
+			TQSize newSize = TQSize(screeninfo->res->modes[i].width, screeninfo->res->modes[i].height);
+			if (!m_pixelSizes.contains(newSize)) {
+				m_pixelSizes.append(newSize);
+				m_mmSizes.append(TQSize(output_info->mm_width, output_info->mm_height));
+			}
+		}
+		if (current_crtc) {
+			m_rotations = current_crtc->rotations;
+			m_currentRotation = m_proposedRotation = current_crtc->cur_rotation;
+		}
 	}
 
-	m_rotations = XRRRotations(qt_xdisplay(), m_screen, &rotation);
-
-	m_currentRefreshRate = m_proposedRefreshRate = refreshRateHzToIndex(m_currentSize, XRRConfigCurrentRate(d->config));
+	if (d->config) {
+		m_currentRefreshRate = m_proposedRefreshRate = refreshRateHzToIndex(m_currentSize, XRRConfigCurrentRate(d->config));
+	}
+	else {
+		m_currentRefreshRate = m_proposedRefreshRate = 0;
+	}
 }
 
 void RandRScreen::setOriginal()
@@ -105,13 +138,30 @@ bool RandRScreen::applyProposed()
 
 	Status status;
 
-	if (proposedRefreshRate() < 0)
-		status = XRRSetScreenConfig(qt_xdisplay(), d->config, DefaultRootWindow(qt_xdisplay()), (SizeID)proposedSize(), (Rotation)proposedRotation(), CurrentTime);
-	else {
-		if( refreshRateIndexToHz(proposedSize(), proposedRefreshRate()) <= 0 ) {
-			m_proposedRefreshRate = 0;
+	if (!d->config) {
+		d->config = XRRGetScreenInfo(qt_xdisplay(), RootWindow(qt_xdisplay(), m_screen));
+		Q_ASSERT(d->config);
+	}
+
+	if (d->config) {
+		if (proposedRefreshRate() < 0)
+			status = XRRSetScreenConfig(qt_xdisplay(), d->config, DefaultRootWindow(qt_xdisplay()), (SizeID)proposedSize(), (Rotation)proposedRotation(), CurrentTime);
+		else {
+			if( refreshRateIndexToHz(proposedSize(), proposedRefreshRate()) <= 0 ) {
+				m_proposedRefreshRate = 0;
+			}
+			status = XRRSetScreenConfigAndRate(qt_xdisplay(), d->config, DefaultRootWindow(qt_xdisplay()), (SizeID)proposedSize(), (Rotation)proposedRotation(), refreshRateIndexToHz(proposedSize(), proposedRefreshRate()), CurrentTime);
 		}
-		status = XRRSetScreenConfigAndRate(qt_xdisplay(), d->config, DefaultRootWindow(qt_xdisplay()), (SizeID)proposedSize(), (Rotation)proposedRotation(), refreshRateIndexToHz(proposedSize(), proposedRefreshRate()), CurrentTime);
+	}
+	else {
+		// Great, now we have to set the information manually.  Ughh.
+		// FIXME--this does not work!
+		ScreenInfo *screeninfo = internal_read_screen_info(qt_xdisplay());
+		screeninfo->cur_width = (*m_pixelSizes.at(proposedSize())).width();
+		screeninfo->cur_height = (*m_pixelSizes.at(proposedSize())).height();
+		internal_main_low_apply(screeninfo);
+
+		status = RRSetConfigSuccess;
 	}
 
 	//kdDebug() << "New size: " << WidthOfScreen(ScreenOfDisplay(TQPaintDevice::x11AppDisplay(), screen)) << ", " << HeightOfScreen(ScreenOfDisplay(TQPaintDevice::x11AppDisplay(), screen)) << endl;
@@ -152,7 +202,7 @@ bool RandRScreen::confirm()
 
 	// FIXME remember to put the dialog on the right screen
 
-	KTimerDialog acceptDialog ( 15000, KTimerDialog::CountDown, 
+	KTimerDialog acceptDialog ( 15000, KTimerDialog::CountDown,
                 KApplication::kApplication()->mainWidget(),
 											"mainKTimerDialog",
 											true,
@@ -386,11 +436,26 @@ int RandRScreen::currentMMHeight() const
 TQStringList RandRScreen::refreshRates(int size) const
 {
 	int nrates;
-	short* rates = XRRRates(qt_xdisplay(), m_screen, (SizeID)size, &nrates);
-
 	TQStringList ret;
-	for (int i = 0; i < nrates; i++)
-		ret << refreshRateDirectDescription(rates[i]);
+
+	if (d->config) {
+		short* rates = XRRRates(qt_xdisplay(), m_screen, (SizeID)size, &nrates);
+
+		for (int i = 0; i < nrates; i++)
+			ret << refreshRateDirectDescription(rates[i]);
+	}
+	else {
+		// Great, now we have to go after the information manually.  Ughh.
+		ScreenInfo *screeninfo = internal_read_screen_info(qt_xdisplay());
+		int numSizes = screeninfo->res->nmode;
+		for (int i = 0; i < numSizes; i++) {
+			int refresh_rate = ((screeninfo->res->modes[i].dotClock*1.0)/((screeninfo->res->modes[i].hTotal)*(screeninfo->res->modes[i].vTotal)*1.0));
+			TQString newRate = refreshRateDirectDescription(refresh_rate);
+			if (!ret.contains(newRate)) {
+				ret.append(newRate);
+			}
+		}
+	}
 
 	return ret;
 }
@@ -720,7 +785,7 @@ bool RandRScreen::showTestConfigurationDialog()
 
 	// FIXME remember to put the dialog on the right screen
 
-	KTimerDialog acceptDialog ( 15000, KTimerDialog::CountDown, 
+	KTimerDialog acceptDialog ( 15000, KTimerDialog::CountDown,
                 KApplication::kApplication()->mainWidget(),
 											"mainKTimerDialog",
 											true,

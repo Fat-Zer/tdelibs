@@ -28,7 +28,13 @@
 #include <klocale.h>
 #include <kapplication.h>
 
+#include <stdlib.h>
+
 #include "libkrandr.h"
+
+// FIXME
+// For now, just use the standalone xrandr program to apply the display settings
+#define USE_XRANDR_PROGRAM
 
 // This routine is courtsey of an answer on "Stack Overflow"
 // It takes an LSB-first int and makes it an MSB-first int (or vice versa)
@@ -267,7 +273,7 @@ TQString KRandrSimpleAPI::applyIccConfiguration(TQString profileName, TQString k
 
 TQString KRandrSimpleAPI::getEDIDMonitorName(int card, TQString displayname) {
 	TQString edid;
-	TQByteArray binaryedid = getEDID(card, displayname); 
+	TQByteArray binaryedid = getEDID(card, displayname);
 	if (binaryedid.isNull())
 		return TQString();
 
@@ -375,16 +381,25 @@ TQString KRandrSimpleAPI::applySystemWideIccConfiguration(TQString kde_confdir) 
 	return "";
 }
 
-void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray) {
+void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(bool enable, TQString profilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray) {
 	int i;
 
 	TQString filename;
+
+	filename = "displayglobals";
+	filename.prepend(kde_confdir.append("/"));
+	KSimpleConfig* display_config = new KSimpleConfig( filename );
+	display_config->setGroup("General");
+	display_config->writeEntry("ApplySettingsOnStart", enable);
+	display_config->sync();
+	delete display_config;
+
 	filename = profilename;
 	if (filename == "")
 		filename = "default";
 	filename.prepend(kde_confdir.append("/displayconfig/"));
 
-	KSimpleConfig* display_config = new KSimpleConfig( filename );
+	display_config = new KSimpleConfig( filename );
 
 	i=0;
 	SingleScreenData *screendata;
@@ -416,6 +431,22 @@ void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(TQString profilename, T
 
 	display_config->sync();
 	delete display_config;
+}
+
+void KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir) {
+	TQString filename = "displayglobals";
+	filename.prepend(kde_confdir.append("/"));
+	KSimpleConfig* display_config = new KSimpleConfig( filename );
+	display_config->setGroup("General");
+	bool enabled = display_config->readBoolEntry("ApplySettingsOnStart", false);
+	delete display_config;
+
+	if (enabled) {
+		TQPtrList<SingleScreenData> screenInfoArray;
+		screenInfoArray = loadSystemwideDisplayConfiguration(profilename, kde_confdir);
+		applySystemwideDisplayConfiguration(screenInfoArray, FALSE);
+		destroyScreenInformationObject(screenInfoArray);
+	}
 }
 
 TQPtrList<SingleScreenData> KRandrSimpleAPI::loadSystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir) {
@@ -507,6 +538,55 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 	}
 
 	if (isValid() == true) {
+#ifdef USE_XRANDR_PROGRAM
+		// Assemble the command string for xrandr
+		TQString command;
+		command = "xrandr";
+
+		randr_display = XOpenDisplay(NULL);
+		randr_screen_info = read_screen_info(randr_display);
+		for (i = 0; i < randr_screen_info->n_output; i++) {
+			screendata = screenInfoArray.at(i);
+			output_info = randr_screen_info->outputs[i]->info;
+			command.append(" --output ").append(output_info->name);
+			if (screendata->is_primary || screendata->is_extended) {
+				command.append(TQString(" --mode %1x%2").arg(screendata->current_x_pixel_count).arg(screendata->current_y_pixel_count));
+				command.append(TQString(" --pos %1x%2").arg(screendata->absolute_x_position).arg(screendata->absolute_y_position));
+				command.append(TQString(" --refresh %1").arg((*screendata->refresh_rates.at(screendata->current_refresh_rate_index)).replace("Hz", "")));
+				if (screendata->current_rotation_index == 0) command.append(" --rotate ").append("normal");
+				if (screendata->current_rotation_index == 1) command.append(" --rotate ").append("left");
+				if (screendata->current_rotation_index == 2) command.append(" --rotate ").append("inverted");
+				if (screendata->current_rotation_index == 3) command.append(" --rotate ").append("right");
+				if ((screendata->has_x_flip == 0) && (screendata->has_y_flip == 0)) command.append(" --reflect ").append("normal");
+				if ((screendata->has_x_flip == 1) && (screendata->has_y_flip == 0)) command.append(" --reflect ").append("x");
+				if ((screendata->has_x_flip == 0) && (screendata->has_y_flip == 1)) command.append(" --reflect ").append("y");
+				if ((screendata->has_x_flip == 1) && (screendata->has_y_flip == 1)) command.append(" --reflect ").append("xy");
+				if (screendata->is_primary) {
+					command.append(" --primary");
+				}
+			}
+			else {
+				command.append(" --off");
+			}
+		}
+
+		system(command.ascii());
+
+		// HACK
+		// This is needed because Qt does not properly generate screen
+		// resize events when switching screens, so KDE gets stuck in the old resolution
+		// This only seems to happen with more than one screen, so check for that condition...
+		// FIXME: This also only occurs when the primary display has been changed
+		// FIXME: Check for that condition as well!
+		if (kapp->desktop()->numScreens() > 1) {
+			for (i = 0; i < randr_screen_info->n_output; i++) {
+				screendata = screenInfoArray.at(i);
+				if (screendata->is_primary == true) {
+					kapp->desktop()->emitResizedSignal(i);
+				}
+			}
+		}
+#else
 		randr_display = XOpenDisplay(NULL);
 		randr_screen_info = read_screen_info(randr_display);
 		// Turn off all displays
@@ -567,10 +647,12 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 
 			if (screendata->is_primary || screendata->is_extended) {
 				// Set rotation, refresh rate, and size
-				screen(i)->proposeSize(screendata->current_resolution_index);
-				screen(i)->proposeRefreshRate(screendata->current_refresh_rate_index);
-				screen(i)->proposeRotation(getHardwareRotationFlags(screendata));
-				screen(i)->applyProposed();
+				RandRScreen *cur_screen = new RandRScreen(i);
+				cur_screen->proposeSize(screendata->current_resolution_index);
+				cur_screen->proposeRefreshRate(screendata->current_refresh_rate_index);
+				cur_screen->proposeRotation(getHardwareRotationFlags(screendata));
+				cur_screen->applyProposed();
+				delete cur_screen;
 
 				// Force data reload
 				randr_screen_info = read_screen_info(randr_display);
@@ -578,11 +660,14 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 
 				// Finally, set the screen's position
 				randr_screen_info->cur_crtc = randr_screen_info->outputs[i]->cur_crtc;
-				randr_screen_info->cur_crtc->cur_x = screendata->absolute_x_position;
-				randr_screen_info->cur_crtc->cur_y = screendata->absolute_y_position;
-				j=main_low_apply(randr_screen_info);
+				if (randr_screen_info->cur_crtc) {
+					randr_screen_info->cur_crtc->cur_x = screendata->absolute_x_position;
+					randr_screen_info->cur_crtc->cur_y = screendata->absolute_y_position;
+					j=main_low_apply(randr_screen_info);
+				}
 			}
 		}
+#endif
 	}
 
 	if (test == TRUE) {
@@ -629,7 +714,7 @@ void KRandrSimpleAPI::ensureMonitorDataConsistency(TQPtrList<SingleScreenData> s
 		for (i=0;i<numberOfScreens;i++) {
 			screendata = screenInfoArray.at(i);
 			if (!has_primary_monitor) {
-				if (screendata->is_extended) {
+				if (screendata->screen_connected && screendata->is_extended) {
 					screendata->is_primary = true;
 					screendata->is_extended = true;
 					has_primary_monitor = true;
@@ -653,8 +738,6 @@ void KRandrSimpleAPI::ensureMonitorDataConsistency(TQPtrList<SingleScreenData> s
 	for (i=0;i<numberOfScreens;i++) {
 		screendata = screenInfoArray.at(i);
 		if (screendata->is_primary) {
-			screendata->absolute_x_position = 0;
-			screendata->absolute_y_position = 0;
 			screendata->is_extended = true;
 		}
 	}
@@ -668,6 +751,25 @@ void KRandrSimpleAPI::ensureMonitorDataConsistency(TQPtrList<SingleScreenData> s
 		screendata->current_x_pixel_count = x_res_string.toInt();
 		screendata->current_y_pixel_count = y_res_string.toInt();
 		screendata->current_orientation_mask = getHardwareRotationFlags(screendata);
+	}
+
+	// Each screen's absolute position is given relative to the primary monitor
+	// Fix up the absolute positions
+	int primary_offset_x = 0;
+	int primary_offset_y = 0;
+	for (i=0;i<numberOfScreens;i++) {
+		screendata = screenInfoArray.at(i);
+		if (screendata->is_primary) {
+			primary_offset_x = screendata->absolute_x_position;
+			primary_offset_y = screendata->absolute_y_position;
+			primary_offset_x = primary_offset_x * (-1);
+			primary_offset_y = primary_offset_y * (-1);
+		}
+	}
+	for (i=0;i<numberOfScreens;i++) {
+		screendata = screenInfoArray.at(i);
+		screendata->absolute_x_position = screendata->absolute_x_position + primary_offset_x;
+		screendata->absolute_y_position = screendata->absolute_y_position + primary_offset_y;
 	}
 }
 
@@ -685,13 +787,14 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 
 	// Clear existing info
 	destroyScreenInformationObject(screenInfoArray);
-	
+
 	int numberOfScreens = 0;
 	if (isValid() == true) {
 		randr_display = XOpenDisplay(NULL);
 		randr_screen_info = read_screen_info(randr_display);
 		for (i = 0; i < randr_screen_info->n_output; i++) {
 			output_info = randr_screen_info->outputs[i]->info;
+			CrtcInfo *current_crtc = randr_screen_info->outputs[i]->cur_crtc;
 
 			// Create new data object
 			screendata = new SingleScreenData;
@@ -706,26 +809,44 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 			}
 
 			// Get resolutions
-			RandRScreen *cur_screen = screen(i);
+			bool screen_active;
+			RandRScreen *cur_screen = 0;
+			if (RR_Disconnected == randr_screen_info->outputs[i]->info->connection) {
+				// Output DISCONNECTED
+				screen_active = false;
+			}
+			else {
+				if (randr_screen_info->outputs[i]->cur_crtc) {
+					// Output CONNECTED and ON
+					screen_active = true;
+					cur_screen = new RandRScreen(i);
+				}
+				else {
+					// Output CONNECTED and OFF
+					screen_active = false;
+					cur_screen = new RandRScreen(i);
+				}
+			}
+
 			if (cur_screen) {
 				screendata->screen_connected = true;
 				for (int j = 0; j < cur_screen->numSizes(); j++) {
 					screendata->resolutions.append(i18n("%1 x %2").tqarg(cur_screen->pixelSize(j).width()).tqarg(cur_screen->pixelSize(j).height()));
 				}
 				screendata->current_resolution_index = cur_screen->proposedSize();
-	
+
 				// Get refresh rates
 				TQStringList rr = cur_screen->refreshRates(screendata->current_resolution_index);
 				for (TQStringList::Iterator it = rr.begin(); it != rr.end(); ++it) {
 					screendata->refresh_rates.append(*it);
 				}
 				screendata->current_refresh_rate_index = cur_screen->proposedRefreshRate();
-	
+
 				// Get color depths
 				// [FIXME]
 				screendata->color_depths.append(i18n("Default"));
 				screendata->current_color_depth_index = 0;
-	
+
 				// Get orientation flags
 				// RandRScreen::Rotate0
 				// RandRScreen::Rotate90
@@ -733,7 +854,7 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				// RandRScreen::Rotate270
 				// RandRScreen::ReflectX
 				// RandRScreen::ReflectY
-	
+
 				screendata->rotations.append(i18n("Normal"));
 				screendata->rotations.append(i18n("Rotate 90 degrees"));
 				screendata->rotations.append(i18n("Rotate 180 degrees"));
@@ -760,20 +881,25 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				screendata->has_x_flip = (screendata->current_orientation_mask & RandRScreen::ReflectX);
 				screendata->has_y_flip = (screendata->current_orientation_mask & RandRScreen::ReflectY);
 				screendata->supports_transformations = (cur_screen->rotations() != RandRScreen::Rotate0);
-	
+
 				// Determine if this display is primary and/or extended
 				// [FIXME]
 				screendata->is_primary = false;
-				screendata->is_extended = false;
-	
+				screendata->is_extended = screen_active;
+
 				// Get this screen's absolute position
-				// [FIXME]
 				screendata->absolute_x_position = 0;
 				screendata->absolute_y_position = 0;
-	
+				if (current_crtc) {
+					screendata->absolute_x_position = current_crtc->info->x;
+					screendata->absolute_y_position = current_crtc->info->y;
+				}
+
 				// Get this screen's current resolution
 				screendata->current_x_pixel_count = cur_screen->pixelSize(screendata->current_resolution_index).width();
 				screendata->current_y_pixel_count = cur_screen->pixelSize(screendata->current_resolution_index).height();
+
+				delete cur_screen;
 			}
 			else {
 				// Fill in generic data for this disconnected output
@@ -784,17 +910,17 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				screendata->refresh_rates = i18n("Default");
 				screendata->color_depths = i18n("Default");
 				screendata->rotations = i18n("N/A");
-				
+
 				screendata->current_resolution_index = 0;
 				screendata->current_refresh_rate_index = 0;
 				screendata->current_color_depth_index = 0;
-				
+
 				screendata->current_rotation_index = 0;
 				screendata->current_orientation_mask = 0;
 				screendata->has_x_flip = false;
 				screendata->has_y_flip = false;
 				screendata->supports_transformations = false;
-				
+
 				screendata->is_primary = false;
 				screendata->is_extended = false;
 				screendata->absolute_x_position = 0;
@@ -815,22 +941,22 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 		screendata->screenFriendlyName = i18n("Default output on generic video card");
 		screendata->generic_screen_detected = true;
 		screendata->screen_connected = true;
-		
+
 		screendata->resolutions = i18n("Default");
 		screendata->refresh_rates = i18n("Default");
 		screendata->color_depths = i18n("Default");
 		screendata->rotations = i18n("N/A");
-		
+
 		screendata->current_resolution_index = 0;
 		screendata->current_refresh_rate_index = 0;
 		screendata->current_color_depth_index = 0;
-		
+
 		screendata->current_rotation_index = 0;
 		screendata->current_orientation_mask = 0;
 		screendata->has_x_flip = false;
 		screendata->has_y_flip = false;
 		screendata->supports_transformations = false;
-		
+
 		screendata->is_primary = true;
 		screendata->is_extended = true;
 		screendata->absolute_x_position = 0;
