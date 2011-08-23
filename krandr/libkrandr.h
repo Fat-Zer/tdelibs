@@ -29,6 +29,8 @@
 
 #ifdef __cplusplus
 
+#include <tqfile.h>
+
 #include <kconfig.h>
 #include <ksimpleconfig.h>
 #include <kdelibs_export.h>
@@ -149,6 +151,56 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
      * Applies all previously configured settings to the specified screen.
      */
     int main_low_apply (ScreenInfo *screen_info);
+
+    /**
+    * Gets the binary monitor EDID for the specified card and display
+    */
+    TQByteArray getEDID(int card, TQString displayname);
+
+    /**
+    * Gets the monitor EDID name for the specified card and display
+    */
+    TQString getEDIDMonitorName(int card, TQString displayname);
+
+    /**
+    * Saves the systemwide display configuration screenInfoArray to the specified profile
+    * If profilename is empty, the default profile is utilized
+    */
+    void saveSystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray);
+
+    /**
+    * Reads the systemwide display configuration screenInfoArray from the specified profile
+    * If profilename is empty, the default profile is utilized
+    * WARNING: The calling application must free the returned objects when it is done using them
+    */
+    TQPtrList<SingleScreenData> loadSystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir);
+
+    /**
+    * Applies the systemwide display configuration screenInfoArray to the hardware
+    * If test is true, the new configuration will be loaded for a short period of time, then reverted automatically
+    * Returns true if configuration was accepted; false if not
+    */
+    bool applySystemwideDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test=TRUE);
+
+    /**
+    * Destroys a screen information object
+    */
+    void destroyScreenInformationObject(TQPtrList<SingleScreenData> screenInfoArray);
+
+    /**
+    * Ensures that the data contained within screenInfoArray is self consistent
+    */
+    void ensureMonitorDataConsistency(TQPtrList<SingleScreenData> screenInfoArray);
+
+    /**
+    * Reads the current display configuration screenInfoArray from the hardware
+    */
+    TQPtrList<SingleScreenData> readCurrentDisplayConfiguration();
+
+    /**
+    * Returns the hardware rotation flags given a valid SingleScreenData structure
+    */
+    int getHardwareRotationFlags(SingleScreenData*);
 
     /**
      * Returns whether or not the system supports XRandR

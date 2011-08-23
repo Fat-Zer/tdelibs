@@ -708,6 +708,45 @@ void RandRDisplay::applyProposed(bool confirm)
 	}
 }
 
+bool RandRDisplay::showTestConfigurationDialog()
+{
+	return screen(0)->showTestConfigurationDialog();
+}
+
+bool RandRScreen::showTestConfigurationDialog()
+{
+	// uncomment the line below and edit out the KTimerDialog stuff to get
+	// a version which works on today's kdelibs (no accept dialog is presented)
+
+	// FIXME remember to put the dialog on the right screen
+
+	KTimerDialog acceptDialog ( 15000, KTimerDialog::CountDown, 
+                KApplication::kApplication()->mainWidget(),
+											"mainKTimerDialog",
+											true,
+											i18n("Confirm Display Settings"),
+											KTimerDialog::Ok|KTimerDialog::Cancel,
+											KTimerDialog::Cancel);
+
+	acceptDialog.setButtonOK(KGuiItem(i18n("&Accept Configuration"), "button_ok"));
+	acceptDialog.setButtonCancel(KGuiItem(i18n("&Return to Previous Configuration"), "button_cancel"));
+
+	KActiveLabel *label = new KActiveLabel(i18n("Your display devices has been configured "
+                    "to match the settings shown above. Please indicate whether you wish to "
+                    "keep this configuration. In 15 seconds the display will revert to your previous "
+                    "settings."), &acceptDialog, "userSpecifiedLabel");
+
+	acceptDialog.setMainWidget(label);
+
+	KDialog::centerOnScreen(&acceptDialog, 0);
+
+	m_shownDialog = &acceptDialog;
+	connect( m_shownDialog, TQT_SIGNAL( destroyed()), this, TQT_SLOT( shownDialogDestroyed()));
+	connect( kapp->desktop(), TQT_SIGNAL( resized(int)), this, TQT_SLOT( desktopResized()));
+
+        return acceptDialog.exec();
+}
+
 int RandRScreen::pixelCount( int index ) const
 {
 	TQSize sz = pixelSize(index);

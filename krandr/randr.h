@@ -29,6 +29,34 @@
 class KTimerDialog;
 class RandRScreenPrivate;
 
+struct SingleScreenData {
+	TQString screenFriendlyName;
+	bool generic_screen_detected;
+	bool screen_connected;
+
+	TQStringList resolutions;
+	TQStringList refresh_rates;
+	TQStringList color_depths;
+	TQStringList rotations;
+
+	int current_resolution_index;
+	int current_refresh_rate_index;
+	int current_color_depth_index;
+
+	int current_rotation_index;
+	int current_orientation_mask;
+	bool has_x_flip;
+	bool has_y_flip;
+	bool supports_transformations;
+
+	bool is_primary;
+	bool is_extended;
+	int absolute_x_position;
+	int absolute_y_position;
+	int current_x_pixel_count;
+	int current_y_pixel_count;
+};
+
 class RandRScreen : public TQObject
 {
 	Q_OBJECT
@@ -63,6 +91,7 @@ public:
 
 public slots:
 	bool		confirm();
+	bool		showTestConfigurationDialog();
 
 public:
 	TQString		changedMessage() const;
@@ -217,6 +246,8 @@ public:
 	static bool		syncTrayApp(KConfig& config);
 
 	void	applyProposed(bool confirm = true);
+
+	bool showTestConfigurationDialog();
 
 private:
 	int				m_numScreens;
