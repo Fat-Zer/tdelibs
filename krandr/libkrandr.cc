@@ -449,6 +449,9 @@ TQPoint KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQString profilenam
 		if (screenInfoArray.count() > 0) {
 			applySystemwideDisplayConfiguration(screenInfoArray, FALSE);
 		}
+		destroyScreenInformationObject(screenInfoArray);
+		screenInfoArray = readCurrentDisplayConfiguration();
+		ensureMonitorDataConsistency(screenInfoArray);
 		ret = primaryScreenOffsetFromTLC(screenInfoArray);
 		destroyScreenInformationObject(screenInfoArray);
 	}
