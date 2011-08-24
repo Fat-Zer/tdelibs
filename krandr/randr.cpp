@@ -73,7 +73,6 @@ void RandRScreen::loadSettings()
 		XRRFreeScreenConfigInfo(d->config);
 
 	d->config = XRRGetScreenInfo(qt_xdisplay(), RootWindow(qt_xdisplay(), m_screen));
-	Q_ASSERT(d->config);
 
 	Rotation rotation;
 	if (d->config) {

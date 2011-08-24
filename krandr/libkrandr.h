@@ -179,8 +179,9 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     /**
     * Applies the systemwide display configuration screenInfoArray from the specified profile
     * If profilename is empty, the default profile is utilized
+    * Returns the offset of the primary screen's top left corner
     */
-    void applySystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir);
+    TQPoint applySystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir);
 
     /**
     * Applies the systemwide display configuration screenInfoArray to the hardware
@@ -193,6 +194,11 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     * Destroys a screen information object
     */
     void destroyScreenInformationObject(TQPtrList<SingleScreenData> screenInfoArray);
+
+    /**
+    * Returns the offset of the primary screen's Top Left Corner
+    */
+    TQPoint primaryScreenOffsetFromTLC(TQPtrList<SingleScreenData> screenInfoArray);
 
     /**
     * Ensures that the data contained within screenInfoArray is self consistent

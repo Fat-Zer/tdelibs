@@ -433,7 +433,9 @@ void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(bool enable, TQString p
 	delete display_config;
 }
 
-void KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir) {
+TQPoint KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir) {
+	TQPoint ret;
+
 	TQString filename = "displayglobals";
 	filename.prepend(kde_confdir.append("/"));
 	KSimpleConfig* display_config = new KSimpleConfig( filename );
@@ -444,9 +446,14 @@ void KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQString profilename, 
 	if (enabled) {
 		TQPtrList<SingleScreenData> screenInfoArray;
 		screenInfoArray = loadSystemwideDisplayConfiguration(profilename, kde_confdir);
-		applySystemwideDisplayConfiguration(screenInfoArray, FALSE);
+		if (screenInfoArray.count() > 0) {
+			applySystemwideDisplayConfiguration(screenInfoArray, FALSE);
+		}
+		ret = primaryScreenOffsetFromTLC(screenInfoArray);
 		destroyScreenInformationObject(screenInfoArray);
 	}
+
+	return ret;
 }
 
 TQPtrList<SingleScreenData> KRandrSimpleAPI::loadSystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir) {
@@ -460,7 +467,7 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::loadSystemwideDisplayConfiguration(
 
 	KSimpleConfig* display_config = new KSimpleConfig( filename );
 
-	TQStringList grouplist;
+	TQStringList grouplist = display_config->groupList();
 	SingleScreenData *screendata;
 	TQPtrList<SingleScreenData> screenInfoArray;
 	for ( TQStringList::Iterator it = grouplist.begin(); it != grouplist.end(); ++it ) {
@@ -521,6 +528,8 @@ int KRandrSimpleAPI::getHardwareRotationFlags(SingleScreenData* screendata) {
 	}
 	return rotationFlags;
 }
+
+#define USE_XRANDR_PROGRAM
 
 bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test) {
 	int i;
@@ -773,6 +782,28 @@ void KRandrSimpleAPI::ensureMonitorDataConsistency(TQPtrList<SingleScreenData> s
 	}
 }
 
+TQPoint KRandrSimpleAPI::primaryScreenOffsetFromTLC(TQPtrList<SingleScreenData> screenInfoArray) {
+	int i;
+	SingleScreenData *screendata;
+	int numberOfScreens = screenInfoArray.count();
+
+	int primary_offset_x = 0;
+	int primary_offset_y = 0;
+	for (i=0;i<numberOfScreens;i++) {
+		screendata = screenInfoArray.at(i);
+		if (screendata->absolute_x_position < primary_offset_x) {
+			primary_offset_x = screendata->absolute_x_position;
+		}
+		if (screendata->absolute_y_position < primary_offset_y) {
+			primary_offset_y = screendata->absolute_y_position;
+		}
+	}
+	primary_offset_x = primary_offset_x * (-1);
+	primary_offset_y = primary_offset_y * (-1);
+
+	return TQPoint(primary_offset_x, primary_offset_y);
+}
+
 TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 	// Discover display information
 	int i;
@@ -833,7 +864,13 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				for (int j = 0; j < cur_screen->numSizes(); j++) {
 					screendata->resolutions.append(i18n("%1 x %2").tqarg(cur_screen->pixelSize(j).width()).tqarg(cur_screen->pixelSize(j).height()));
 				}
-				screendata->current_resolution_index = cur_screen->proposedSize();
+				screendata->current_resolution_index = 0;
+				if (current_crtc) {
+					screendata->current_resolution_index = screendata->resolutions.findIndex(i18n("%1 x %2").tqarg(current_crtc->info->width).tqarg(current_crtc->info->height));
+				}
+				if (screendata->current_resolution_index < 0) {
+					screendata->current_resolution_index = cur_screen->proposedSize();
+				}
 
 				// Get refresh rates
 				TQStringList rr = cur_screen->refreshRates(screendata->current_resolution_index);
