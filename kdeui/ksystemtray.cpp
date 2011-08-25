@@ -34,6 +34,7 @@
 #include <qxembed.h>
 #endif
 
+#include <kimageeffect.h>
 #include <kiconloader.h>
 #include <kconfig.h>
 
@@ -325,9 +326,12 @@ TQPixmap KSystemTray::loadSizedIcon( const TQString &icon, int iconWidth, KInsta
 
 void KSystemTray::setPixmap( const TQPixmap& p )
 {
-    TQLabel::setPixmap( p );
+    TQPixmap iconPixmapToSet = p;
+    if (TQPaintDevice::x11AppDepth() == 32) iconPixmapToSet.convertFromImage(KImageEffect::convertToPremultipliedAlpha( iconPixmapToSet.convertToImage() ));
+    if (TQPaintDevice::x11AppDepth() == 32) setBackgroundMode( NoBackground );
+    TQLabel::setPixmap( iconPixmapToSet );
 #ifdef Q_WS_X11
-    KWin::setIcons( winId(), p, TQPixmap());
+    KWin::setIcons( winId(), iconPixmapToSet, TQPixmap());
 #endif
 }
 
