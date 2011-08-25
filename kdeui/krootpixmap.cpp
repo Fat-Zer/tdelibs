@@ -59,6 +59,8 @@ void KRootPixmap::init()
 {
     d = new KRootPixmapData;
     m_Fade = 0;
+    m_BlurRadius = 0;
+    m_BlurSigma = 0;
     m_pPixmap = new KSharedPixmap; //ordinary KPixmap on win32
     m_pTimer = new TQTimer( this );
     m_bInit = false;
@@ -137,6 +139,11 @@ void KRootPixmap::setFadeEffect(double fade, const TQColor &color)
     if ( m_bActive && m_bInit ) tqrepaint(true);
 }
 
+void KRootPixmap::setBlurEffect(double radius, double sigma)
+{
+    m_BlurRadius = radius;
+    m_BlurSigma = sigma;
+}
 
 bool KRootPixmap::eventFilter(TQObject *, TQEvent *event)
 {
@@ -310,6 +317,14 @@ void KRootPixmap::updateBackground( KSharedPixmap *spm )
 	TQImage img = io.convertToImage(pm);
 	img = KImageEffect::fade(img, m_Fade, m_FadeColor);
 	pm = io.convertToPixmap(img);
+    }
+
+    if ((m_BlurRadius > 1e-6) || (m_BlurSigma > 1e-6))
+    {
+        KPixmapIO io;
+        TQImage img = io.convertToImage(pm);
+        img = KImageEffect::blur(img, m_BlurRadius, m_BlurSigma);
+        pm = io.convertToPixmap(img);
     }
 
     if ( !m_bCustomPaint )

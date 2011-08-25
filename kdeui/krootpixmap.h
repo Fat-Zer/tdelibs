@@ -105,6 +105,16 @@ public:
      */
     const TQColor &color() const { return m_FadeColor; }
 
+    /** @since 3.5
+     * @return the blur radius.
+     */
+    const double &blurRadius() const { return m_BlurRadius; }
+
+    /** @since 3.5
+     * @return the blur sigma.
+     */
+    const double &blurSigma() const { return m_BlurSigma; }
+
     /** @since 3.2
      * @return the color opacity.
      */
@@ -132,6 +142,18 @@ public slots:
      * @param color The color to fade to.
      */
     void setFadeEffect(double opacity, const TQColor &color);
+
+    /**
+     * Sets the blue effect.
+     *
+     * This effect will blur the background with the specified values.
+     * If both values are set to zero no blur is applied (this is the default).
+     * @param radius The radius of the gaussian not counting the
+     * center pixel. Use 0 and a suitable radius will be automatically used.
+     * @param sigma The standard deviation of the gaussian. Use 1 if you're not
+     * sure.
+     */
+    void setBlurEffect(double radius, double sigma);
 
     /**
      * Repaints the widget background. Normally, you shouldn't need this
@@ -201,6 +223,8 @@ private:
 
     double m_Fade;
     TQColor m_FadeColor;
+    double m_BlurRadius;
+    double m_BlurSigma;
 
     TQRect m_Rect;
     TQWidget *m_pWidget;

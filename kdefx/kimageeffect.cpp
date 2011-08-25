@@ -4316,6 +4316,7 @@ TQImage KImageEffect::blur(TQImage &src, double radius, double sigma)
 
     dest.create(src.width(), src.height(), 32);
 
+    // Horizontal convolution
     scanline = (unsigned int *)malloc(sizeof(unsigned int)*src.height());
     temp = (unsigned int *)malloc(sizeof(unsigned int)*src.height());
     for(y=0; y < src.height(); ++y){
@@ -4324,14 +4325,17 @@ TQImage KImageEffect::blur(TQImage &src, double radius, double sigma)
         blurScanLine(kernel, width, p, q, src.width());
     }
 
-    unsigned int **srcTable = (unsigned int **)src.jumpTable();
+    TQImage partial = dest;
+
+    // Vertical convolution
+    unsigned int **srcTable = (unsigned int **)partial.jumpTable();
     unsigned int **destTable = (unsigned int **)dest.jumpTable();
-    for(x=0; x < src.width(); ++x){
-        for(y=0; y < src.height(); ++y){
+    for(x=0; x < partial.width(); ++x){
+        for(y=0; y < partial.height(); ++y){
             scanline[y] = srcTable[y][x];
         }
-        blurScanLine(kernel, width, scanline, temp, src.height());
-        for(y=0; y < src.height(); ++y){
+        blurScanLine(kernel, width, scanline, temp, partial.height());
+        for(y=0; y < partial.height(); ++y){
             destTable[y][x] = temp[y];
         }
     }
