@@ -84,8 +84,14 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
 
     /**
      * Reads current screen information.
+     * NOTE: The caller is responsible for calling freeScreenInfoStructure() when done
      */
     ScreenInfo* read_screen_info(Display *display);
+
+    /**
+     * Frees the ScreenInfo structure
+     */
+    void freeScreenInfoStructure(ScreenInfo* screen_info);
 
     /**
      * Sets the screen size.
@@ -189,6 +195,11 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     * Returns true if configuration was accepted; false if not
     */
     bool applySystemwideDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test=TRUE);
+
+    /**
+    * Applies the gamma contained within the systemwide display configuration screenInfoArray to the hardware
+    */
+    void applySystemwideDisplayGamma(TQPtrList<SingleScreenData> screenInfoArray);
 
     /**
     * Destroys a screen information object

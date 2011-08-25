@@ -43,6 +43,10 @@ struct SingleScreenData {
 	int current_refresh_rate_index;
 	int current_color_depth_index;
 
+	float gamma_red;
+	float gamma_green;
+	float gamma_blue;
+
 	int current_rotation_index;
 	int current_orientation_mask;
 	bool has_x_flip;

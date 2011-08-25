@@ -29,6 +29,7 @@
 #include <kapplication.h>
 
 #include <stdlib.h>
+#include <cmath>
 
 #include "libkrandr.h"
 
@@ -115,7 +116,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 
 		if (isValid() == true) {
 			screenNumber = -1;
-			randr_display = XOpenDisplay(NULL);
+			randr_display = qt_xdisplay();
 			randr_screen_info = read_screen_info(randr_display);
 			if (randr_screen_info == NULL) {
 				return "";
@@ -136,6 +137,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 				}
 				j++;
 			}
+			freeScreenInfoStructure(randr_screen_info);
 		}
 
 		if (screenNumber >= 0) {
@@ -179,7 +181,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 
 		if (isValid() == true) {
 			screenNumber = -1;
-			randr_display = XOpenDisplay(NULL);
+			randr_display = qt_xdisplay();
 			randr_screen_info = read_screen_info(randr_display);
 			if (randr_screen_info == NULL) {
 				return "";
@@ -200,6 +202,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 				}
 				j++;
 			}
+			freeScreenInfoStructure(randr_screen_info);
 		}
 
 		if (screenNumber >= 0) {
@@ -247,7 +250,7 @@ TQString KRandrSimpleAPI::applyIccConfiguration(TQString profileName, TQString k
 
 	// Find all screens
 	if (isValid() == true) {
-		randr_display = XOpenDisplay(NULL);
+		randr_display = qt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		if (randr_screen_info == NULL) {
 			return "";
@@ -259,6 +262,7 @@ TQString KRandrSimpleAPI::applyIccConfiguration(TQString profileName, TQString k
 				return errorstr;
 			}
 		}
+		freeScreenInfoStructure(randr_screen_info);
 	}
 	else {
 		return applyIccFile(getIccFileName(profileName, "Default", kde_confdir), "Default");
@@ -417,6 +421,9 @@ void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(bool enable, TQString p
 		display_config->writeEntry("CurrentColorDepth", screendata->current_color_depth_index);
 		display_config->writeEntry("CurrentRotation", screendata->current_rotation_index);
 		display_config->writeEntry("CurrentOrientiation", screendata->current_orientation_mask);
+		display_config->writeEntry("GammaRed", screendata->gamma_red);
+		display_config->writeEntry("GammaGreen", screendata->gamma_green);
+		display_config->writeEntry("GammaBlue", screendata->gamma_blue);
 		display_config->writeEntry("CurrentXFlip", screendata->has_x_flip);
 		display_config->writeEntry("CurrentYFlip", screendata->has_y_flip);
 		display_config->writeEntry("SupportsTransformation", screendata->supports_transformations);
@@ -491,6 +498,9 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::loadSystemwideDisplayConfiguration(
 			screendata->current_color_depth_index = display_config->readNumEntry("CurrentColorDepth");
 			screendata->current_rotation_index = display_config->readNumEntry("CurrentRotation");
 			screendata->current_orientation_mask = display_config->readNumEntry("CurrentOrientiation");
+			screendata->gamma_red = display_config->readDoubleNumEntry("GammaRed");
+			screendata->gamma_green = display_config->readDoubleNumEntry("GammaGreen");
+			screendata->gamma_blue = display_config->readDoubleNumEntry("GammaBlue");
 			screendata->has_x_flip = display_config->readBoolEntry("CurrentXFlip");
 			screendata->has_y_flip = display_config->readBoolEntry("CurrentYFlip");
 			screendata->supports_transformations = display_config->readBoolEntry("SupportsTransformation");
@@ -555,7 +565,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		TQString command;
 		command = "xrandr";
 
-		randr_display = XOpenDisplay(NULL);
+		randr_display = qt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		for (i = 0; i < randr_screen_info->n_output; i++) {
 			screendata = screenInfoArray.at(i);
@@ -565,6 +575,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 				command.append(TQString(" --mode %1x%2").arg(screendata->current_x_pixel_count).arg(screendata->current_y_pixel_count));
 				command.append(TQString(" --pos %1x%2").arg(screendata->absolute_x_position).arg(screendata->absolute_y_position));
 				command.append(TQString(" --refresh %1").arg((*screendata->refresh_rates.at(screendata->current_refresh_rate_index)).replace("Hz", "")));
+				command.append(TQString(" --gamma %1:%2:%3").arg(screendata->gamma_red).arg(screendata->gamma_green).arg(screendata->gamma_blue));
 				if (screendata->current_rotation_index == 0) command.append(" --rotate ").append("normal");
 				if (screendata->current_rotation_index == 1) command.append(" --rotate ").append("left");
 				if (screendata->current_rotation_index == 2) command.append(" --rotate ").append("inverted");
@@ -581,6 +592,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 				command.append(" --off");
 			}
 		}
+		freeScreenInfoStructure(randr_screen_info);
 
 		system(command.ascii());
 
@@ -599,7 +611,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 			}
 		}
 #else
-		randr_display = XOpenDisplay(NULL);
+		randr_display = qt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		// Turn off all displays
 		for (i = 0; i < randr_screen_info->n_output; i++) {
@@ -613,6 +625,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 			output_off (randr_screen_info, randr_screen_info->cur_output);
 			j=main_low_apply(randr_screen_info);
 		}
+		freeScreenInfoStructure(randr_screen_info);
 		randr_screen_info = read_screen_info(randr_display);
 		// Turn on the primary display
 		for (i = 0; i < randr_screen_info->n_output; i++) {
@@ -628,6 +641,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 				j=main_low_apply(randr_screen_info);
 			}
 		}
+		freeScreenInfoStructure(randr_screen_info);
 		// Handle the remaining displays
 		randr_screen_info = read_screen_info(randr_display);
 		for (i = 0; i < randr_screen_info->n_output; i++) {
@@ -652,6 +666,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 				}
 			}
 		}
+		freeScreenInfoStructure(randr_screen_info);
 		randr_screen_info = read_screen_info(randr_display);
 		for (i = 0; i < randr_screen_info->n_output; i++) {
 			screendata = screenInfoArray.at(i);
@@ -679,8 +694,11 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 				}
 			}
 		}
+		freeScreenInfoStructure(randr_screen_info);
 #endif
 	}
+
+	applySystemwideDisplayGamma(screenInfoArray);
 
 	if (test == TRUE) {
 		int ret = showTestConfigurationDialog();
@@ -807,6 +825,69 @@ TQPoint KRandrSimpleAPI::primaryScreenOffsetFromTLC(TQPtrList<SingleScreenData> 
 	return TQPoint(primary_offset_x, primary_offset_y);
 }
 
+void KRandrSimpleAPI::applySystemwideDisplayGamma(TQPtrList<SingleScreenData> screenInfoArray) {
+	int i;
+	Display *randr_display;
+	XRROutputInfo *output_info;
+	ScreenInfo *randr_screen_info;
+	XRRCrtcGamma *gamma;
+
+	SingleScreenData *screendata;
+
+	if (isValid() == true) {
+		randr_display = qt_xdisplay();
+		randr_screen_info = read_screen_info(randr_display);
+		for (i = 0; i < randr_screen_info->n_output; i++) {
+			screendata = screenInfoArray.at(i);
+			output_info = randr_screen_info->outputs[i]->info;
+			CrtcInfo *current_crtc = randr_screen_info->outputs[i]->cur_crtc;
+			// vvvvvvvvv This chunk of code is borrowed from xrandr vvvvvvvvvv
+			int size = XRRGetCrtcGammaSize(randr_display, current_crtc->id);
+			if (!size) {
+				continue;
+			}
+			gamma = XRRAllocGamma(size);
+			if (!gamma) {
+				continue;
+			}
+			for (i = 0; i < size; i++) {
+				if (screendata->gamma_red == 1.0)
+					gamma->red[i] = i << 8;
+				else
+					gamma->red[i] = (pow((double)i/(double)(size-1), (double)screendata->gamma_red) * (double)(size-1)*256);
+
+				if (screendata->gamma_green == 1.0)
+					gamma->green[i] = i << 8;
+				else
+					gamma->green[i] = (pow((double)i/(double)(size-1), (double)screendata->gamma_green) * (double)(size-1)*256);
+
+				if (screendata->gamma_blue == 1.0)
+					gamma->blue[i] = i << 8;
+				else
+					gamma->blue[i] = (pow((double)i/(double)(size-1), (double)screendata->gamma_blue) * (double)(size-1)*256);
+			}
+			XRRSetCrtcGamma(randr_display, current_crtc->id, gamma);
+			free(gamma);
+			// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		}
+		freeScreenInfoStructure(randr_screen_info);
+	}
+}
+
+void KRandrSimpleAPI::freeScreenInfoStructure(ScreenInfo* screen_info) {
+	int i;
+
+	for (i=0; i<screen_info->n_crtc; i++) {
+		free(screen_info->crtcs[i]);
+	}
+	for (i=0; i<screen_info->n_output; i++) {
+		free(screen_info->outputs[i]);
+	}
+	free(screen_info->outputs);
+	free(screen_info->crtcs);
+	free(screen_info);
+}
+
 TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 	// Discover display information
 	int i;
@@ -824,7 +905,7 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 
 	int numberOfScreens = 0;
 	if (isValid() == true) {
-		randr_display = XOpenDisplay(NULL);
+		randr_display = qt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		for (i = 0; i < randr_screen_info->n_output; i++) {
 			output_info = randr_screen_info->outputs[i]->info;
@@ -923,8 +1004,11 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				screendata->supports_transformations = (cur_screen->rotations() != RandRScreen::Rotate0);
 
 				// Determine if this display is primary and/or extended
-				// [FIXME]
-				screendata->is_primary = false;
+				RROutput primaryoutput = XRRGetOutputPrimary(qt_xdisplay(), DefaultRootWindow(qt_xdisplay()));
+				if (primaryoutput == randr_screen_info->outputs[i]->id)
+					screendata->is_primary = false;
+				else
+					screendata->is_primary = true;
 				screendata->is_extended = screen_active;
 
 				// Get this screen's absolute position
@@ -938,6 +1022,31 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				// Get this screen's current resolution
 				screendata->current_x_pixel_count = cur_screen->pixelSize(screendata->current_resolution_index).width();
 				screendata->current_y_pixel_count = cur_screen->pixelSize(screendata->current_resolution_index).height();
+
+				// Get this screen's current gamma values
+				// [FIXME]
+				// This attempts to guess a gamma value based on the LUT settings at 50%
+				// It may not always be 100% correct, or even anywhere close...
+				// Essentially it "undoes" the LUT gamma calculation from xrandr
+				// lut_gamma->green[i] = (pow(i/(size - 1), desired_gamma.green) * (size - 1) * 256);
+				if (current_crtc) {
+					//int slot = 127;
+					int slot = 7;
+					int size = XRRGetCrtcGammaSize(randr_display, current_crtc->id);
+					XRRCrtcGamma *gammastruct = XRRGetCrtcGamma (randr_display, current_crtc->id);
+					screendata->gamma_red = log(gammastruct->red[slot]/((size-1.0)*256.0))/log(slot/(size-1.0));
+					screendata->gamma_green = log(gammastruct->green[slot]/((size-1.0)*256.0))/log(slot/(size-1.0));
+					screendata->gamma_blue = log(gammastruct->blue[slot]/((size-1.0)*256.0))/log(slot/(size-1.0));
+				}
+				else {
+					screendata->gamma_red = 2.2;
+					screendata->gamma_green = 2.2;
+					screendata->gamma_blue = 2.2;
+				}
+				// Round off the gamma to one decimal place
+				screendata->gamma_red = floorf(screendata->gamma_red * 10 + 0.5) / 10;
+				screendata->gamma_green = floorf(screendata->gamma_green * 10 + 0.5) / 10;
+				screendata->gamma_blue = floorf(screendata->gamma_blue * 10 + 0.5) / 10;
 
 				delete cur_screen;
 			}
@@ -954,6 +1063,10 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				screendata->current_resolution_index = 0;
 				screendata->current_refresh_rate_index = 0;
 				screendata->current_color_depth_index = 0;
+
+				screendata->gamma_red = 2.2;
+				screendata->gamma_green = 2.2;
+				screendata->gamma_blue = 2.2;
 
 				screendata->current_rotation_index = 0;
 				screendata->current_orientation_mask = 0;
@@ -972,6 +1085,8 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 			// Check for more screens...
 			numberOfScreens++;
 		}
+
+		freeScreenInfoStructure(randr_screen_info);
 	}
 	else {
 		screendata = new SingleScreenData;
@@ -990,6 +1105,10 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 		screendata->current_resolution_index = 0;
 		screendata->current_refresh_rate_index = 0;
 		screendata->current_color_depth_index = 0;
+
+		screendata->gamma_red = 2.2;
+		screendata->gamma_green = 2.2;
+		screendata->gamma_blue = 2.2;
 
 		screendata->current_rotation_index = 0;
 		screendata->current_orientation_mask = 0;
