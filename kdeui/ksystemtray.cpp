@@ -329,31 +329,8 @@ void KSystemTray::setPixmap( const TQPixmap& p )
 {
 	TQPixmap iconPixmapToSet = p;
 	if (TQPaintDevice::x11AppDepth() == 32) {
-		// Since full ARGB visuals are in use, we must handle the three primary data
-		// channel types (color, alpha, and mask) separately.
-		// First, make the actual color and internal alpha of the icon is correct
 		TQImage correctedImage = KImageEffect::convertToPremultipliedAlpha( iconPixmapToSet.convertToImage() );
 		iconPixmapToSet.convertFromImage(correctedImage);
-		// Next, handle the mask channel to make sure that the transparent
-		// sections remain transparent when drawn on the screen
-		TQBitmap maskBitmap;
-		// Generate the mask utilizing ONLY the pixels that are fully opaque
-		TQImage newMaskImage = correctedImage;
-		int w = newMaskImage.width();
-		int h = newMaskImage.height();
-		for (int y = 0; y < h; ++y) {
-			TQRgb *ls = (TQRgb *)newMaskImage.scanLine( y );
-			for (int x = 0; x < w; ++x) {
-				TQRgb l = ls[x];
-				int r = int( tqRed( l ) );
-				int g = int( tqGreen( l ) );
-				int b = int( tqBlue( l ) );
-				int a = int( (tqAlpha( l ) == 255) ? 255 : 0 );
-				ls[x] = tqRgba( r, g, b, a );
-			}
-		}
-		maskBitmap.convertFromImage(newMaskImage.createAlphaMask());
-		setMask(maskBitmap);
 	}
 	TQLabel::setPixmap( iconPixmapToSet );
 #ifdef Q_WS_X11
