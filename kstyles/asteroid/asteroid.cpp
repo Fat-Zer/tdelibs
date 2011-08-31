@@ -33,6 +33,9 @@
 #include <tqdockwindow.h>
 #include <tqtooltip.h>
 #include <tqdrawutil.h>
+#include <tqlistview.h>
+#include <tqcleanuphandler.h>
+
 #include <kpixmap.h>
 
 #include <tqbitmap.h>
@@ -113,10 +116,15 @@ void AsteroidStyle::polish(TQWidget *w)
 	bool isProtectedObject = false;
 	TQObject *curparent = TQT_TQOBJECT(w);
 	while (curparent) {
-		if (curparent->inherits("KonqFileTip") || curparent->inherits("AppletItem")) {
-			isProtectedObject = true;
+		if (curparent->inherits("KonqFileTip") || curparent->inherits("AppletItem")
+			|| curparent->inherits("KJanusWidget")
+			) {
+				isProtectedObject = true;
 		}
 		curparent = curparent->parent();
+	}
+	if ((w->parent()) && (!w->ownPalette())) {
+		isProtectedObject = true;
 	}
 	if (!isProtectedObject)
 		w->setPalette(wp);
@@ -718,9 +726,12 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 			if (sf & Style_Enabled) {
 				tqdrawPrimitive(sf & Style_Horizontal ? PE_ArrowRight : PE_ArrowDown, p, r, cg, sf);
 			} else {
+				TQPen oldPen = p->pen();
 				p->setPen(cg.light());
-				tqdrawPrimitive(sf & Style_Horizontal ? PE_ArrowRight : PE_ArrowDown, p, TQRect(x+1, y+1, w-1, h-1), cg, sf);
+				tqdrawPrimitive(sf & Style_Horizontal ? PE_ArrowRight : PE_ArrowDown, p, TQRect(x+1, y+1, w, h), cg, sf);
+				p->setPen(cg.dark());
 				tqdrawPrimitive(sf & Style_Horizontal ? PE_ArrowRight : PE_ArrowDown, p, r, cg, sf);
+				p->setPen(oldPen);
 			}
 			break;
 		}
@@ -746,7 +757,16 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 			}
 
 			p->setPen(cg.foreground());
-			tqdrawPrimitive(sf & Style_Horizontal ? PE_ArrowLeft : PE_ArrowUp, p, r, cg, sf);
+			if (sf & Style_Enabled) {
+				tqdrawPrimitive(sf & Style_Horizontal ? PE_ArrowLeft : PE_ArrowUp, p, r, cg, sf);
+			} else {
+				TQPen oldPen = p->pen();
+				p->setPen(cg.light());
+				tqdrawPrimitive(sf & Style_Horizontal ? PE_ArrowLeft : PE_ArrowUp, p, TQRect(x+1, y+1, w, h), cg, sf);
+				p->setPen(cg.dark());
+				tqdrawPrimitive(sf & Style_Horizontal ? PE_ArrowLeft : PE_ArrowUp, p, r, cg, sf);
+				p->setPen(oldPen);
+			}
 			break;
 		}
 
@@ -1738,6 +1758,168 @@ void AsteroidStyle::tqdrawComplexControl(TQ_ComplexControl cc,
 		CC_TitleBar
 		CC_ListView
 	 */
+#ifndef TQT_NO_LISTVIEW
+		case CC_ListView:
+			{
+			if ( sc & SC_ListView ) {
+				TQCommonStyle::tqdrawComplexControl( cc, p, w, r, cg, sf, sc, sa, o );
+			}
+			if ( sc & ( SC_ListViewBranch | SC_ListViewExpand ) ) {
+				if (o.isDefault())
+				break;
+		
+				TQListViewItem *item = o.listViewItem(),
+					*child = item->firstChild();
+		
+				int y = r.y();
+				int c;
+				int dotoffset = 0;
+				TQPointArray dotlines;
+				if ( sa == (uint)SC_All && sc == SC_ListViewExpand ) {
+				c = 2;
+				dotlines.resize(2);
+				dotlines[0] = TQPoint( r.right(), r.top() );
+				dotlines[1] = TQPoint( r.right(), r.bottom() );
+				} else {
+				int linetop = 0, linebot = 0;
+				// each branch needs at most two lines, ie. four end points
+				dotoffset = (item->itemPos() + item->height() - y) %2;
+				dotlines.resize( item->childCount() * 4 );
+				c = 0;
+		
+				// skip the stuff above the exposed rectangle
+				while ( child && y + child->height() <= 0 ) {
+					y += child->totalHeight();
+					child = child->nextSibling();
+				}
+		
+				int bx = r.width() / 2;
+		
+				// paint stuff in the magical area
+				TQListView* v = item->listView();
+				while ( child && y < r.height() ) {
+					if (child->isVisible()) {
+					int lh;
+					if ( !item->multiLinesEnabled() )
+						lh = child->height();
+					else
+						lh = p->fontMetrics().height() + 2 * v->itemMargin();
+					lh = TQMAX( lh, TQApplication::globalStrut().height() );
+					if ( lh % 2 > 0 )
+						lh++;
+					linebot = y + lh/2;
+					if ( (child->isExpandable() || child->childCount()) &&
+						(child->height() > 0) ) {
+						// needs a box
+						p->setPen( cg.mid() );
+						p->drawRect( bx-4, linebot-4, 9, 9 );
+						// plus or minus
+						p->setPen( cg.text() );
+						p->drawLine( bx - 2, linebot, bx + 2, linebot );
+						if ( !child->isOpen() )
+						p->drawLine( bx, linebot - 2, bx, linebot + 2 );
+						// dotlinery
+						p->setPen( cg.mid() );
+						dotlines[c++] = TQPoint( bx, linetop );
+						dotlines[c++] = TQPoint( bx, linebot - 4 );
+						dotlines[c++] = TQPoint( bx + 5, linebot );
+						dotlines[c++] = TQPoint( r.width(), linebot );
+						linetop = linebot + 5;
+					} else {
+						// just dotlinery
+						dotlines[c++] = TQPoint( bx+1, linebot -1);
+						dotlines[c++] = TQPoint( r.width(), linebot -1);
+					}
+					y += child->totalHeight();
+					}
+					child = child->nextSibling();
+				}
+		
+				// Expand line height to edge of rectangle if there's any
+				// visible child below
+				while ( child && child->height() <= 0)
+					child = child->nextSibling();
+				if ( child )
+					linebot = r.height();
+		
+				if ( linetop < linebot ) {
+					dotlines[c++] = TQPoint( bx, linetop );
+					dotlines[c++] = TQPoint( bx, linebot );
+				}
+				}
+				p->setPen( cg.text() );
+		
+				static TQBitmap *verticalLine = 0, *horizontalLine = 0;
+				static TQCleanupHandler<TQBitmap> qlv_cleanup_bitmap;
+				if ( !verticalLine ) {
+				// make 128*1 and 1*128 bitmaps that can be used for
+				// drawing the right sort of lines.
+				verticalLine = new TQBitmap( 1, 129, TRUE );
+				horizontalLine = new TQBitmap( 128, 1, TRUE );
+				TQPointArray a( 64 );
+				TQPainter p;
+				p.begin( verticalLine );
+				int i;
+				for( i=0; i<64; i++ )
+					a.setPoint( i, 0, i*2+1 );
+				p.setPen( Qt::color1 );
+				p.drawPoints( a );
+				p.end();
+				TQApplication::flushX();
+				verticalLine->setMask( *verticalLine );
+				p.begin( horizontalLine );
+				for( i=0; i<64; i++ )
+					a.setPoint( i, i*2+1, 0 );
+				p.setPen( Qt::color1 );
+				p.drawPoints( a );
+				p.end();
+				TQApplication::flushX();
+				horizontalLine->setMask( *horizontalLine );
+				qlv_cleanup_bitmap.add( &verticalLine );
+				qlv_cleanup_bitmap.add( &horizontalLine );
+				}
+		
+				int line; // index into dotlines
+				if ( sc & SC_ListViewBranch ) for( line = 0; line < c; line += 2 ) {
+				// assumptions here: lines are horizontal or vertical.
+				// lines always start with the numerically lowest
+				// coordinate.
+		
+				// point ... relevant coordinate of current point
+				// end ..... same coordinate of the end of the current line
+				// other ... the other coordinate of the current point/line
+				if ( dotlines[line].y() == dotlines[line+1].y() ) {
+					int end = dotlines[line+1].x();
+					int point = dotlines[line].x();
+					int other = dotlines[line].y();
+					while( point < end ) {
+					int i = 128;
+					if ( i+point > end )
+						i = end-point;
+					p->drawPixmap( point, other, *horizontalLine,
+							0, 0, i, 1 );
+					point += i;
+					}
+				} else {
+					int end = dotlines[line+1].y();
+					int point = dotlines[line].y();
+					int other = dotlines[line].x();
+					int pixmapoffset = ((point & 1) != dotoffset ) ? 1 : 0;
+					while( point < end ) {
+					int i = 128;
+					if ( i+point > end )
+						i = end-point;
+					p->drawPixmap( other, point, *verticalLine,
+							0, pixmapoffset, 1, i );
+					point += i;
+					}
+				}
+				}
+			}
+			}
+			break;
+#endif //TQT_NO_LISTVIEW
+
 		case CC_ComboBox: {
 			int x, y, x2, y2, sw, sh;
 			const TQComboBox *cb = dynamic_cast<const TQComboBox *>(w);
