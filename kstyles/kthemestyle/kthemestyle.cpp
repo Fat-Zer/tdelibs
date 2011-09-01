@@ -839,6 +839,7 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRe
                 break;
 
             }
+        case PE_HeaderSectionMenu:
         case PE_HeaderSection:
             {
                 sunken = false; //Never mind this one

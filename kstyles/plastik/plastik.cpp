@@ -1476,6 +1476,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
             break;
         }
 
+        case PE_HeaderSectionMenu:
         case PE_HeaderSection: {
             // the taskbar buttons seems to be painted with PE_HeaderSection but I
             // want them look like normal buttons (at least for now. :) )

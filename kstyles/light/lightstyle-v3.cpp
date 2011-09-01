@@ -223,6 +223,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
     const TQBrush *fill = 0;
 
     switch (pe) {
+    case PE_HeaderSectionMenu:
     case PE_HeaderSection:
 	// don't draw any headers sunken
 	flags = ((flags | Style_Sunken) ^ Style_Sunken) | Style_Raised;

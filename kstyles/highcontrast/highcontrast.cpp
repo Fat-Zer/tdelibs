@@ -372,6 +372,7 @@ void HighContrastStyle::tqdrawPrimitive (TQ_PrimitiveElement pe,
 		}
 		// HEADER SECTION
 		// -------------------------------------------------------------------
+		case PE_HeaderSectionMenu:
 		case PE_HeaderSection: {
 			setColorsButton (p, cg, flags, 0);
 			drawRect (p, r);

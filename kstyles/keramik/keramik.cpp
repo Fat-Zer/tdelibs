@@ -740,6 +740,7 @@ void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 			// HEADER SECTION
 			// -------------------------------------------------------------------
+		case PE_HeaderSectionMenu:
 		case PE_HeaderSection:
 			if ( flags & Style_Down )
 				Keramik::RectTilePainter( keramik_listview_pressed, false ).draw( p, r, cg.button(), cg.background() );

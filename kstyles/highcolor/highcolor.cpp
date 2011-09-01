@@ -414,6 +414,7 @@ void HighColorStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 		// HEADER SECTION
 		// -------------------------------------------------------------------
+		case PE_HeaderSectionMenu:
 		case PE_HeaderSection: {
 			// Temporary solution for the proper orientation of gradients.
 			bool horizontal = true;

@@ -137,6 +137,7 @@ void LightStyleV2::tqdrawPrimitive( TQ_PrimitiveElement pe,
 				const TQStyleOption &data ) const
 {
     switch (pe) {
+    case PE_HeaderSectionMenu:
     case PE_HeaderSection:
 	{
 	    flags = ((flags | Style_Sunken) ^ Style_Sunken) | Style_Raised; 
