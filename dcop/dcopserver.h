@@ -61,6 +61,8 @@ class TQTextStream;
 class TQFile;
 #endif
 
+#define NDEBUG
+
 typedef TQValueList<TQCString> QCStringList;
 
 /**
