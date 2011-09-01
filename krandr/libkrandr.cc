@@ -841,6 +841,9 @@ void KRandrSimpleAPI::applySystemwideDisplayGamma(TQPtrList<SingleScreenData> sc
 			screendata = screenInfoArray.at(i);
 			output_info = randr_screen_info->outputs[i]->info;
 			CrtcInfo *current_crtc = randr_screen_info->outputs[i]->cur_crtc;
+			if (!current_crtc) {
+				continue;
+			}
 			// vvvvvvvvv This chunk of code is borrowed from xrandr vvvvvvvvvv
 			int size = XRRGetCrtcGammaSize(randr_display, current_crtc->id);
 			if (!size) {
