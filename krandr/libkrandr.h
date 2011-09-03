@@ -202,6 +202,11 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     void applySystemwideDisplayGamma(TQPtrList<SingleScreenData> screenInfoArray);
 
     /**
+    * Applies the DPMS settings contained within the systemwide display configuration screenInfoArray to the hardware
+    */
+    void applySystemwideDisplayDPMS(TQPtrList<SingleScreenData> screenInfoArray);
+
+    /**
     * Destroys a screen information object
     */
     void destroyScreenInformationObject(TQPtrList<SingleScreenData> screenInfoArray);

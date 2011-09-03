@@ -59,6 +59,12 @@ struct SingleScreenData {
 	int absolute_y_position;
 	int current_x_pixel_count;
 	int current_y_pixel_count;
+
+	bool has_dpms;
+	bool enable_dpms;
+	unsigned int dpms_standby_delay;
+	unsigned int dpms_suspend_delay;
+	unsigned int dpms_off_delay;
 };
 
 class RandRScreen : public TQObject

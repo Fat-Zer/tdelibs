@@ -33,6 +33,8 @@
 
 #include "libkrandr.h"
 
+#include <X11/extensions/dpms.h>
+
 // FIXME
 // For now, just use the standalone xrandr program to apply the display settings
 #define USE_XRANDR_PROGRAM
@@ -433,6 +435,11 @@ void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(bool enable, TQString p
 		display_config->writeEntry("AbsYPos", screendata->absolute_y_position);
 		display_config->writeEntry("CurrentXPixelCount", screendata->current_x_pixel_count);
 		display_config->writeEntry("CurrentYPixelCount", screendata->current_y_pixel_count);
+		display_config->writeEntry("HasDPMS", screendata->has_dpms);
+		display_config->writeEntry("EnableDPMS", screendata->enable_dpms);
+		display_config->writeEntry("DPMSStandbyDelay", screendata->dpms_standby_delay);
+		display_config->writeEntry("DPMSSuspendDelay", screendata->dpms_suspend_delay);
+		display_config->writeEntry("DPMSPowerDownDelay", screendata->dpms_off_delay);
 		i++;
 	}
 
@@ -510,6 +517,11 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::loadSystemwideDisplayConfiguration(
 			screendata->absolute_y_position = display_config->readNumEntry("AbsYPos");
 			screendata->current_x_pixel_count = display_config->readNumEntry("CurrentXPixelCount");
 			screendata->current_y_pixel_count = display_config->readNumEntry("CurrentYPixelCount");
+			screendata->has_dpms = display_config->readBoolEntry("HasDPMS");
+			screendata->enable_dpms = display_config->readBoolEntry("EnableDPMS");
+			screendata->dpms_standby_delay = display_config->readNumEntry("DPMSStandbyDelay");
+			screendata->dpms_suspend_delay = display_config->readNumEntry("DPMSSuspendDelay");
+			screendata->dpms_off_delay = display_config->readNumEntry("DPMSPowerDownDelay");
 		}
 	}
 
@@ -699,6 +711,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 	}
 
 	applySystemwideDisplayGamma(screenInfoArray);
+	applySystemwideDisplayDPMS(screenInfoArray);
 
 	if (test == TRUE) {
 		int ret = showTestConfigurationDialog();
@@ -877,6 +890,40 @@ void KRandrSimpleAPI::applySystemwideDisplayGamma(TQPtrList<SingleScreenData> sc
 	}
 }
 
+void KRandrSimpleAPI::applySystemwideDisplayDPMS(TQPtrList<SingleScreenData> screenInfoArray) {
+	int i;
+	Display *randr_display;
+	XRROutputInfo *output_info;
+	ScreenInfo *randr_screen_info;
+	XRRCrtcGamma *gamma;
+
+	SingleScreenData *screendata;
+
+	if (isValid() == true) {
+		randr_display = qt_xdisplay();
+		randr_screen_info = read_screen_info(randr_display);
+		for (i = 0; i < randr_screen_info->n_output; i++) {
+			screendata = screenInfoArray.at(i);
+			output_info = randr_screen_info->outputs[i]->info;
+			CrtcInfo *current_crtc = randr_screen_info->outputs[i]->cur_crtc;
+			if (!current_crtc) {
+				continue;
+			}
+			if (!screendata->has_dpms) {
+				continue;
+			}
+			if (screendata->enable_dpms) {
+				DPMSSetTimeouts(randr_display, screendata->dpms_standby_delay, screendata->dpms_suspend_delay, screendata->dpms_off_delay);
+				DPMSEnable(randr_display);
+			}
+			else {
+				DPMSDisable(randr_display);
+			}
+		}
+		freeScreenInfoStructure(randr_screen_info);
+	}
+}
+
 void KRandrSimpleAPI::freeScreenInfoStructure(ScreenInfo* screen_info) {
 	int i;
 
@@ -944,6 +991,29 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 					screen_active = false;
 					cur_screen = new RandRScreen(i);
 				}
+			}
+
+			// Get DPMS information
+			if (screendata->has_dpms) {
+				CARD16 dpms_standby_delay;
+				CARD16 dpms_suspend_delay;
+				CARD16 dpms_off_delay;
+				screendata->has_dpms = DPMSGetTimeouts(randr_display, &dpms_standby_delay, &dpms_suspend_delay, &dpms_off_delay);
+				screendata->dpms_standby_delay = dpms_standby_delay;
+				screendata->dpms_suspend_delay = dpms_suspend_delay;
+				screendata->dpms_off_delay = dpms_off_delay;
+				if (screendata->has_dpms) {
+					CARD16 power_level;
+					BOOL enable_dpms;
+					screendata->has_dpms = DPMSInfo(randr_display, &power_level, &enable_dpms);
+					screendata->enable_dpms = enable_dpms;
+				}
+			}
+			if (!screendata->has_dpms) {
+				screendata->enable_dpms = false;
+				screendata->dpms_standby_delay = 0;
+				screendata->dpms_suspend_delay = 0;
+				screendata->dpms_off_delay = 0;
 			}
 
 			if (cur_screen) {
