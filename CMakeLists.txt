@@ -409,7 +409,7 @@ endif( WITH_SUDO_KDESU_BACKEND )
 #### set some constants #########################
 
 set( LTDL_OBJDIR \".\" )
-set( KDELIBSUFF "" )
+set( KDELIBSUFF "${LIB_SUFFIX}" )
 set( kde_socklen_t socklen_t )
 
 
