@@ -30,6 +30,48 @@
 #include <kio/global.h>
 #include <kio/slavebase.h>
 
+#include <tqfile.h>
+#include <tqtimer.h>
+#include <tqapplication.h>
+#include <tqlabel.h>
+#include <tqpushbutton.h>
+#include <tqhbox.h>
+#include <tqwhatsthis.h>
+#include <tqiconview.h>
+#include <tqpainter.h>
+#include <tqpixmap.h>
+#include <tqlabel.h>
+#include <tqlayout.h>
+#include <tqpushbutton.h>
+#include <tqstring.h>
+#include <tqregexp.h>
+#include <tqstyle.h>
+#include <tqtimer.h>
+
+#include <kdebug.h>
+#include <klocale.h>
+#include <kinstance.h>
+
+#include <kwin.h>
+#include <kurl.h>
+#include <kaction.h>
+#include <kpopupmenu.h>
+#include <kmessagebox.h>
+#include <kiconloader.h>
+#include <kprogressbox.h>
+#include <kpassdlg.h>
+#include <klistview.h>
+#include <kapplication.h>
+#include <kconfigdialog.h>
+
+#include <kdirlister.h>
+#include <kstandarddirs.h>
+#include <klistviewsearchline.h>
+#include <kiconviewsearchline.h>
+#include <kstaticdeleter.h>
+#include <kgenericfactory.h>
+#include <kparts/browserextension.h>
+
 class KActionMenu;
 class KonqDirPart;
 class KLineEdit;
@@ -88,6 +130,7 @@ public slots:
   void slotSetupCancelled();
   void slotRsyncCancelled();
   void slotUnisonCancelled();
+  void executeLogoutAutoSync();
 
 signals:
   void setupDone();
@@ -103,6 +146,7 @@ private:
   bool m_progressDialogExists;
 
   bool m_bSettingsLoaded;
+  bool m_bInSpecialSync;
 
   /** true if connection is logged in successfully */
   bool isLoggedIn;

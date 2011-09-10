@@ -34,7 +34,7 @@ install( FILES
   DESTINATION ${INCLUDE_INSTALL_DIR}/libkrsync )
 
 
-##### krandr ####################################
+##### krsync ####################################
 
 set( target krsync )
 

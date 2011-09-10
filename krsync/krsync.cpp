@@ -50,48 +50,6 @@
 #include <util.h>
 #endif
 
-#include <tqfile.h>
-#include <tqtimer.h>
-#include <tqapplication.h>
-#include <tqlabel.h>
-#include <tqpushbutton.h>
-#include <tqhbox.h>
-#include <tqwhatsthis.h>
-#include <tqiconview.h>
-#include <tqpainter.h>
-#include <tqpixmap.h>
-#include <tqlabel.h>
-#include <tqlayout.h>
-#include <tqpushbutton.h>
-#include <tqstring.h>
-#include <tqregexp.h>
-#include <tqstyle.h>
-#include <tqtimer.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-#include <kinstance.h>
-
-#include <kwin.h>
-#include <kurl.h>
-#include <kaction.h>
-#include <kpopupmenu.h>
-#include <kmessagebox.h>
-#include <kiconloader.h>
-#include <kprogressbox.h>
-#include <kpassdlg.h>
-#include <klistview.h>
-#include <kapplication.h>
-#include <kconfigdialog.h>
-
-#include <kdirlister.h>
-#include <kstandarddirs.h>
-#include <klistviewsearchline.h>
-#include <kiconviewsearchline.h>
-#include <kstaticdeleter.h>
-#include <kgenericfactory.h>
-#include <kparts/browserextension.h>
-
 #include <kio/global.h>
 #include <kio/slavebase.h>
 
@@ -103,7 +61,7 @@
 #define CONFIGURATION_FILE_SEPARATOR ';'
 
 KRsync::KRsync (TQObject* parent, const char* name)
-                : TQObject (parent, name)
+                : TQObject (parent, name), m_bSettingsLoaded(false), m_progressDialog(false), m_progressDialogExists(false), m_bInSpecialSync(false)
 {
     loadSettings();
 
@@ -506,7 +464,7 @@ int KRsync::establishConnectionRsync(char *buffer, KIO::fileoffset_t len) {
             continue;
         //if (str.contains("rsync error:")) {
         if (str.contains("rsync:") || str.contains("failed.") || (str.contains("Could not") && str.endsWith("."))) {
-            KMessageBox::error(NULL, str);
+            KMessageBox::error(NULL, str, i18n("Remote Folder Synchronization"));
         }
         else if (!str.isEmpty()) {
             thisFn += str;
@@ -519,6 +477,7 @@ int KRsync::establishConnectionRsync(char *buffer, KIO::fileoffset_t len) {
                     m_progressDialog->progressBar()->setTotalSteps(2);
                     m_progressDialog->progressBar()->setValue(1);
                     connect (m_progressDialog, TQT_SIGNAL(cancelClicked()), TQT_SLOT(slotRsyncCancelled()));
+                    if (m_bInSpecialSync) m_progressDialog->move(0,0);
                     m_progressDialog->show();
                     m_progressDialogExists = true;
                 }
@@ -553,7 +512,7 @@ int KRsync::establishConnectionRsync(char *buffer, KIO::fileoffset_t len) {
             return 0;
         }
         else if (buf.endsWith("?")) {
-            int rc = KMessageBox::questionYesNo(NULL, thisFn+buf);
+            int rc = KMessageBox::questionYesNo(NULL, thisFn+buf, i18n("Remote Folder Synchronization"));
             if (rc == KMessageBox::Yes) {
                 writeChild("yes\n",4);
             } else {
@@ -620,7 +579,7 @@ int KRsync::establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQStr
             continue;
         //if (str.contains("rsync error:")) {
         if (((str.contains("rsync:") || str.contains("failed.") || str.contains("Could not")) && str.endsWith("."))) {
-            KMessageBox::error(NULL, str);
+            KMessageBox::error(NULL, str, i18n("Remote Folder Synchronization"));
         }
         else if (str.startsWith("Fatal error")) {
             TQString fullError = str + buf;
@@ -629,7 +588,7 @@ int KRsync::establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQStr
             fullError.replace(": unable", ":<br>Unable");
             fullError.replace(")", ")</i><br>");
             fullError.replace("(", "<br><i>(");
-            KMessageBox::error(NULL, fullError);
+            KMessageBox::error(NULL, fullError, i18n("Remote Folder Synchronization"));
         }
         else if (!str.isEmpty()) {
             thisFn += str;
@@ -641,6 +600,7 @@ int KRsync::establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQStr
                     m_progressDialog->progressBar()->setTotalSteps(0);
                     m_progressDialog->setAutoClose(true);
                     connect (m_progressDialog, TQT_SIGNAL(cancelClicked()), TQT_SLOT(slotUnisonCancelled()));
+                    if (m_bInSpecialSync) m_progressDialog->move(0,0);
                     m_progressDialog->show();
                     m_progressDialogExists = true;
                 }
@@ -681,7 +641,7 @@ int KRsync::establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQStr
                     writeChild("y\n",3);
                 }
                 else {
-                    int rc = KMessageBox::questionYesNo(NULL, buf);
+                    int rc = KMessageBox::questionYesNo(NULL, buf, i18n("Remote Folder Synchronization"));
                     if (rc == KMessageBox::Yes) {
                         writeChild("y\n",3);
                     } else {
@@ -694,7 +654,7 @@ int KRsync::establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQStr
                     writeChild("y\n",3);
                 }
                 else {
-                    int rc = KMessageBox::questionYesNo(NULL, buf);
+                    int rc = KMessageBox::questionYesNo(NULL, buf, i18n("Remote Folder Synchronization"));
                     if (rc == KMessageBox::Yes) {
                         writeChild("yes\n",4);
                     } else {
@@ -744,7 +704,7 @@ int KRsync::establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQStr
         }
 
         if (m_progressDialogExists == true) {
-            if (str.contains("exit()") && str.contains("ICE default IO")) {
+            if ((str.contains("exit()") && str.contains("ICE default IO")) || (str.startsWith("Fatal error"))) {
                 if (m_progressDialogExists == true) {
                     while (!m_progressDialog) {
                         usleep(100);
@@ -833,6 +793,16 @@ void KRsync::loadSettings()
   cfgautosync_onlogout_list = cfg.readListEntry("AutoSyncOnLogout", CONFIGURATION_FILE_SEPARATOR);
 
   m_bSettingsLoaded = true;
+}
+
+void KRsync::executeLogoutAutoSync()
+{
+  for (TQStringList::Iterator i(cfgautosync_onlogout_list.begin()); i != cfgautosync_onlogout_list.end(); ++i) {
+	setCurrentDirectoryURL(*i);
+	m_bInSpecialSync = true;
+	slotSync();
+	m_bInSpecialSync = false;
+  }
 }
 
 TQString KRsync::findLocalFolderByName(TQString folderurl)
