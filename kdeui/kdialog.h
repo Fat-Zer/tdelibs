@@ -1,6 +1,7 @@
 /*  This file is part of the KDE Libraries
  *  Copyright (C) 1998 Thomas Tanghus (tanghus@earthling.net)
  *  Additions 1999-2000 by Espen Sand (espen@kde.org)
+ *  Additions 2011 by Timothy Pearson (kb9vqf@pearsoncomputing.net)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -205,6 +206,36 @@ private slots:
 protected:
       KDialogQueuePrivate* const d;
       static KDialogQueue *_self;
+};
+
+ /**
+  * \brief The default system modal dialog
+  *
+  * This displays the special TDE system modal dialog,
+  * which is used solely to present noninterruptible 
+  * session management status messages to the user.
+  *
+  * @author Timothy Pearson <kb9vqf@pearsoncomputing.net>
+  */
+class TQLabel;
+class KDEUI_EXPORT KSMModalDialog : public TQWidget
+{
+      Q_OBJECT
+
+public:
+      KSMModalDialog( TQWidget* parent );
+      ~KSMModalDialog();
+
+      void setStatusMessage(TQString message);
+      void setStartupPhase(TQString msg);
+      void closeSMDialog();
+
+protected slots:
+      void closeEvent(TQCloseEvent *e);
+
+private:
+      TQLabel* m_statusLabel;
+      bool m_allowClose;
 };
 
 #endif // __KDIALOG_H

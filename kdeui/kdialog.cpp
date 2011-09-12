@@ -24,6 +24,9 @@
 #include <kwhatsthismanager_p.h>
 #include <kdebug.h>
 #include <kstaticdeleter.h>
+#include <kiconloader.h>
+#include <kglobalsettings.h>
+#include <klocale.h>
 
 #include <tqlayout.h>
 #include <tqobjectlist.h>
@@ -32,6 +35,9 @@
 #include <tqvaluelist.h>
 #include <tqtimer.h>
 #include <tqcursor.h>
+#include <tqlabel.h>
+#include <tqstyle.h>
+#include <tqimage.h>
 
 #include "config.h"
 #ifdef Q_WS_X11
@@ -317,5 +323,131 @@ void KDialogQueue::slotShowQueuedDialog()
 
 void KDialog::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
+
+KSMModalDialog::KSMModalDialog(TQWidget* parent)
+  : TQWidget( 0, "", Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WDestructiveClose ), m_allowClose(false)
+
+{
+	// Signal that we do not want any window controls to be shown at all
+	Atom kde_wm_system_modal_notification;
+	kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+	XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+
+	TQVBoxLayout* vbox = new TQVBoxLayout( this );
+	
+	TQFrame* frame = new TQFrame( this );
+	frame->setFrameStyle( TQFrame::NoFrame );
+	frame->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
+	// we need to set the minimum size for the window
+	frame->setMinimumWidth(400);
+	vbox->addWidget( frame );
+	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+	TQHBoxLayout* centerbox = new TQHBoxLayout( frame, 0, KDialog::spacingHint() );
+	TQHBoxLayout* seperatorbox = new TQHBoxLayout( frame, 0, 0 );
+
+	TQWidget* ticon = new TQWidget( frame );
+	KIconLoader * ldr = KGlobal::iconLoader();
+	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", KIcon::Panel, KIcon::SizeLarge, KIcon::DefaultState, 0L, true);
+
+	// Manually draw the alpha portions of the icon onto the widget background color...
+	TQRgb backgroundRgb = ticon->paletteBackgroundColor().rgb();
+	TQImage correctedImage = trinityPixmap.convertToImage();
+	correctedImage = correctedImage.convertDepth(32);
+	correctedImage.setAlphaBuffer(true);
+	int w = correctedImage.width();
+	int h = correctedImage.height();
+	for (int y = 0; y < h; ++y) {
+		TQRgb *ls = (TQRgb *)correctedImage.scanLine( y );
+		for (int x = 0; x < w; ++x) {
+			TQRgb l = ls[x];
+			float alpha_adjust = tqAlpha( l )/255.0;
+			int r = int( (tqRed( l ) * alpha_adjust) + (tqRed( backgroundRgb ) * (1.0-alpha_adjust)) );
+			int g = int( (tqGreen( l ) * alpha_adjust) + (tqGreen( backgroundRgb ) * (1.0-alpha_adjust)) );
+			int b = int( (tqBlue( l ) * alpha_adjust) + (tqBlue( backgroundRgb ) * (1.0-alpha_adjust)) );
+			int a = int( 255 );
+			ls[x] = tqRgba( r, g, b, a );
+		}
+	}
+	trinityPixmap.convertFromImage(correctedImage);
+
+	ticon->setBackgroundPixmap(trinityPixmap);
+	ticon->setMinimumSize(trinityPixmap.size());
+	ticon->setMaximumSize(trinityPixmap.size());
+	ticon->resize(trinityPixmap.size());
+	centerbox->addWidget( ticon, AlignCenter );
+
+	TQWidget* swidget = new TQWidget( frame );
+	swidget->resize(2, frame->sizeHint().width());
+	swidget->setBackgroundColor(Qt::black);
+	seperatorbox->addWidget( swidget, AlignCenter );
+
+	TQLabel* label = new TQLabel( i18n("Trinity Desktop Environment"), frame );
+	TQFont fnt = label->font();
+	fnt.setBold( true );
+	fnt.setPointSize( fnt.pointSize() * 3 / 2 );
+	label->setFont( fnt );
+	centerbox->addWidget( label, AlignCenter );
+
+	m_statusLabel = new TQLabel( i18n("Pondering what to do next").append("..."), frame );
+	fnt = m_statusLabel->font();
+	fnt.setBold( false );
+	fnt.setPointSize( fnt.pointSize() * 1 );
+	m_statusLabel->setFont( fnt );
+	gbox->addMultiCellWidget( m_statusLabel, 2, 2, 0, 0, AlignLeft | AlignVCenter );
+
+	gbox->addLayout(centerbox, 0, 0);
+	gbox->addLayout(seperatorbox, 1, 0);
+
+	setFixedSize( sizeHint() );
+	setCaption( i18n("Please wait...") );
+
+	// Center the dialog
+	TQSize sh = tqsizeHint();
+	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+	move(rect.x() + (rect.width() - sh.width())/2, rect.y() + (rect.height() - sh.height())/2);
+}
+
+KSMModalDialog::~KSMModalDialog()
+{
+}
+
+void KSMModalDialog::setStatusMessage(TQString message)
+{
+    if (message == "") {
+        m_statusLabel->setText(i18n("Pondering what to do next").append("..."));
+    }
+    else {
+        m_statusLabel->setText(message);
+    }
+}
+
+void KSMModalDialog::closeSMDialog()
+{
+	m_allowClose = true;
+	close();
+}
+
+void KSMModalDialog::closeEvent(TQCloseEvent *e)
+{
+	//---------------------------------------------
+	// Don't call the base function because
+	// we want to ignore the close event
+	//---------------------------------------------
+
+	if (m_allowClose)
+		TQWidget::closeEvent(e);
+}
+
+void KSMModalDialog::setStartupPhase(TQString msg)
+{
+	if (msg == TQString("dcop")) setStatusMessage(i18n("Starting DCOP").append("..."));
+	if (msg == TQString("kded")) setStatusMessage(i18n("Starting TDE daemon").append("..."));
+	if (msg == TQString("kcminit")) setStatusMessage(i18n("Starting services").append("..."));
+	if (msg == TQString("ksmserver")) setStatusMessage(i18n("Starting session").append("..."));
+	if (msg == TQString("wm started")) setStatusMessage(i18n("Initializing window manager").append("..."));
+	if (msg == TQString("kdesktop")) setStatusMessage(i18n("Loading desktop").append("..."));
+	if (msg == TQString("kicker")) setStatusMessage(i18n("Loading panels").append("..."));
+	if (msg == TQString("session ready")) setStatusMessage(i18n("Restoring applications").append("..."));
+}
 
 #include "kdialog.moc"
