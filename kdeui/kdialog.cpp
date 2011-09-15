@@ -324,24 +324,18 @@ void KDialogQueue::slotShowQueuedDialog()
 void KDialog::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-KSMModalDialog::KSMModalDialog(TQWidget* parent)
-  : TQWidget( 0, "", Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WDestructiveClose ), m_allowClose(false)
-
+KSMModalDialogHeader::KSMModalDialogHeader(TQWidget* parent)
+  : TQWidget( parent, "", Qt::WDestructiveClose )
 {
-	// Signal that we do not want any window controls to be shown at all
-	Atom kde_wm_system_modal_notification;
-	kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
-	XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
-
 	TQVBoxLayout* vbox = new TQVBoxLayout( this );
-	
+
 	TQFrame* frame = new TQFrame( this );
 	frame->setFrameStyle( TQFrame::NoFrame );
-	frame->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
+	frame->setLineWidth( 0 );
 	// we need to set the minimum size for the window
 	frame->setMinimumWidth(400);
 	vbox->addWidget( frame );
-	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, 0, KDialog::spacingHint() );
 	TQHBoxLayout* centerbox = new TQHBoxLayout( frame, 0, KDialog::spacingHint() );
 	TQHBoxLayout* seperatorbox = new TQHBoxLayout( frame, 0, 0 );
 
@@ -388,15 +382,47 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	label->setFont( fnt );
 	centerbox->addWidget( label, AlignCenter );
 
+	gbox->addLayout(centerbox, 0, 0);
+	gbox->addLayout(seperatorbox, 1, 0);
+
+	setFixedSize( sizeHint() );
+}
+
+KSMModalDialogHeader::~KSMModalDialogHeader()
+{
+}
+
+KSMModalDialog::KSMModalDialog(TQWidget* parent)
+  : TQWidget( 0, "", Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WDestructiveClose ), m_allowClose(false)
+
+{
+	// Signal that we do not want any window controls to be shown at all
+	Atom kde_wm_system_modal_notification;
+	kde_wm_system_modal_notification = XInternAtom(qt_xdisplay(), "_KDE_WM_MODAL_SYS_NOTIFICATION", False);
+	XChangeProperty(qt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
+
+	TQVBoxLayout* vbox = new TQVBoxLayout( this );
+	
+	TQFrame* frame = new TQFrame( this );
+	frame->setFrameStyle( TQFrame::NoFrame );
+	frame->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
+	// we need to set the minimum size for the window
+	frame->setMinimumWidth(400);
+	vbox->addWidget( frame );
+	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+	TQHBoxLayout* centerbox = new TQHBoxLayout( frame, 0, KDialog::spacingHint() );
+
 	m_statusLabel = new TQLabel( i18n("Pondering what to do next").append("..."), frame );
-	fnt = m_statusLabel->font();
+	TQFont fnt = m_statusLabel->font();
 	fnt.setBold( false );
 	fnt.setPointSize( fnt.pointSize() * 1 );
 	m_statusLabel->setFont( fnt );
 	gbox->addMultiCellWidget( m_statusLabel, 2, 2, 0, 0, AlignLeft | AlignVCenter );
 
+	KSMModalDialogHeader *theader = new KSMModalDialogHeader(this);
+	centerbox->addWidget( theader, AlignCenter );
+
 	gbox->addLayout(centerbox, 0, 0);
-	gbox->addLayout(seperatorbox, 1, 0);
 
 	setFixedSize( sizeHint() );
 	setCaption( i18n("Please wait...") );

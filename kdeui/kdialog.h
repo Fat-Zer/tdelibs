@@ -209,6 +209,22 @@ protected:
 };
 
  /**
+  * \brief The default system modal dialog header
+  *
+  * Internal use only
+  *
+  * @author Timothy Pearson <kb9vqf@pearsoncomputing.net>
+  */
+class KDEUI_EXPORT KSMModalDialogHeader : public TQWidget
+{
+      Q_OBJECT
+
+public:
+      KSMModalDialogHeader( TQWidget* parent );
+      ~KSMModalDialogHeader();
+};
+
+ /**
   * \brief The default system modal dialog
   *
   * This displays the special TDE system modal dialog,
