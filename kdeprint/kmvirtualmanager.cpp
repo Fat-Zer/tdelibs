@@ -179,7 +179,7 @@ void KMVirtualManager::setAsDefault(KMPrinter *p, const TQString& name, TQWidget
 
 void KMVirtualManager::refresh()
 {
-	TQFileInfo	fi(TQDir::homeDirPath() + TQFile::decodeName("/.cups/.lpoptions"));
+	TQFileInfo	fi(TQDir::homeDirPath() + TQFile::decodeName("/.cups/lpoptions"));
 	TQFileInfo	fi2(TQFile::decodeName("/etc/cups/lpoptions"));
 
 	// if root, then only use global file: trick -> use twice the same file
