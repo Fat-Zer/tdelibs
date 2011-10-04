@@ -26,6 +26,7 @@
 #include <tqstringlist.h>
 
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kapplication.h>
 
 #include <stdlib.h>
@@ -48,6 +49,25 @@ unsigned int reverse_bits(register unsigned int x)
     x = (((x & 0xf0f0f0f0) >> 4) | ((x & 0x0f0f0f0f) << 4));
     x = (((x & 0xff00ff00) >> 8) | ((x & 0x00ff00ff) << 8));
     return((x >> 16) | (x << 16));
+}
+
+// This routine returns the output of an arbitrary Bash command
+TQString exec(const char * cmd) {
+	TQString bashcommand = cmd;
+	bashcommand = bashcommand.replace("\"", "\\\"");
+	bashcommand = TQString("/bin/bash -c \"%1\" 2>&1").tqarg(bashcommand);
+	FILE* pipe = popen(bashcommand.ascii(), "r");
+	if (!pipe) return "ERROR";
+	char buffer[128];
+	TQString result = "";
+	while(!feof(pipe)) {
+		if(fgets(buffer, 128, pipe) != NULL) {
+			result += buffer;
+		}
+	}
+	pclose(pipe);
+	result.remove(result.length(), 1);
+	return result;
 }
 
 TQString capitalizeString(TQString in) {
@@ -606,7 +626,15 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		}
 		freeScreenInfoStructure(randr_screen_info);
 
-		system(command.ascii());
+		TQString xrandr_command_output = exec(command.ascii());
+		xrandr_command_output = xrandr_command_output.stripWhiteSpace();
+		if (xrandr_command_output != "") {
+			applySystemwideDisplayConfiguration(oldconfig, FALSE);
+			accepted = false;
+			destroyScreenInformationObject(oldconfig);
+			KMessageBox::sorry(0, xrandr_command_output, i18n("XRandR encountered a problem"));
+			return accepted;
+		}
 
 		// HACK
 		// This is needed because Qt does not properly generate screen
@@ -774,6 +802,19 @@ void KRandrSimpleAPI::ensureMonitorDataConsistency(TQPtrList<SingleScreenData> s
 					screendata->is_extended = true;
 					has_primary_monitor = true;
 				}
+			}
+		}
+	}
+
+	bool found_first_primary_monitor = false;
+	for (i=0;i<numberOfScreens;i++) {
+		screendata = screenInfoArray.at(i);
+		if (screendata->is_primary) {
+			if (!found_first_primary_monitor) {
+				found_first_primary_monitor = true;
+			}
+			else {
+				screendata->is_primary = false;
 			}
 		}
 	}
@@ -1083,6 +1124,8 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				else
 					screendata->is_primary = true;
 				screendata->is_extended = screen_active;
+				if (!screendata->is_extended)
+					screendata->is_primary = false;
 
 				// Get this screen's absolute position
 				screendata->absolute_x_position = 0;
