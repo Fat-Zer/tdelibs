@@ -599,29 +599,34 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 
 		randr_display = qt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
-		for (i = 0; i < randr_screen_info->n_output; i++) {
+		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
-			output_info = randr_screen_info->outputs[i]->info;
-			command.append(" --output ").append(output_info->name);
-			if (screendata->is_primary || screendata->is_extended) {
-				command.append(TQString(" --mode %1x%2").arg(screendata->current_x_pixel_count).arg(screendata->current_y_pixel_count));
-				command.append(TQString(" --pos %1x%2").arg(screendata->absolute_x_position).arg(screendata->absolute_y_position));
-				command.append(TQString(" --refresh %1").arg((*screendata->refresh_rates.at(screendata->current_refresh_rate_index)).replace("Hz", "")));
-				command.append(TQString(" --gamma %1:%2:%3").arg(screendata->gamma_red).arg(screendata->gamma_green).arg(screendata->gamma_blue));
-				if (screendata->current_rotation_index == 0) command.append(" --rotate ").append("normal");
-				if (screendata->current_rotation_index == 1) command.append(" --rotate ").append("left");
-				if (screendata->current_rotation_index == 2) command.append(" --rotate ").append("inverted");
-				if (screendata->current_rotation_index == 3) command.append(" --rotate ").append("right");
-				if ((screendata->has_x_flip == 0) && (screendata->has_y_flip == 0)) command.append(" --reflect ").append("normal");
-				if ((screendata->has_x_flip == 1) && (screendata->has_y_flip == 0)) command.append(" --reflect ").append("x");
-				if ((screendata->has_x_flip == 0) && (screendata->has_y_flip == 1)) command.append(" --reflect ").append("y");
-				if ((screendata->has_x_flip == 1) && (screendata->has_y_flip == 1)) command.append(" --reflect ").append("xy");
-				if (screendata->is_primary) {
-					command.append(" --primary");
+			if (screendata) {
+				output_info = randr_screen_info->outputs[i]->info;
+				command.append(" --output ").append(output_info->name);
+				if (screendata->is_primary || screendata->is_extended) {
+					command.append(TQString(" --mode %1x%2").arg(screendata->current_x_pixel_count).arg(screendata->current_y_pixel_count));
+					command.append(TQString(" --pos %1x%2").arg(screendata->absolute_x_position).arg(screendata->absolute_y_position));
+					command.append(TQString(" --refresh %1").arg((*screendata->refresh_rates.at(screendata->current_refresh_rate_index)).replace("Hz", "")));
+					command.append(TQString(" --gamma %1:%2:%3").arg(screendata->gamma_red).arg(screendata->gamma_green).arg(screendata->gamma_blue));
+					if (screendata->current_rotation_index == 0) command.append(" --rotate ").append("normal");
+					if (screendata->current_rotation_index == 1) command.append(" --rotate ").append("left");
+					if (screendata->current_rotation_index == 2) command.append(" --rotate ").append("inverted");
+					if (screendata->current_rotation_index == 3) command.append(" --rotate ").append("right");
+					if ((screendata->has_x_flip == 0) && (screendata->has_y_flip == 0)) command.append(" --reflect ").append("normal");
+					if ((screendata->has_x_flip == 1) && (screendata->has_y_flip == 0)) command.append(" --reflect ").append("x");
+					if ((screendata->has_x_flip == 0) && (screendata->has_y_flip == 1)) command.append(" --reflect ").append("y");
+					if ((screendata->has_x_flip == 1) && (screendata->has_y_flip == 1)) command.append(" --reflect ").append("xy");
+					if (screendata->is_primary) {
+						command.append(" --primary");
+					}
+				}
+				else {
+					command.append(" --off");
 				}
 			}
 			else {
-				command.append(" --off");
+				printf("[WARNING] Unable to find configuration for monitor %d; settings may not be correctly applied...\n\r", i); fflush(stdout);
 			}
 		}
 		freeScreenInfoStructure(randr_screen_info);
@@ -643,7 +648,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		// FIXME: This also only occurs when the primary display has been changed
 		// FIXME: Check for that condition as well!
 		if (kapp->desktop()->numScreens() > 1) {
-			for (i = 0; i < randr_screen_info->n_output; i++) {
+			for (i = 0; i < screenInfoArray.count(); i++) {
 				screendata = screenInfoArray.at(i);
 				if (screendata->is_primary == true) {
 					kapp->desktop()->emitResizedSignal(i);
@@ -654,7 +659,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		randr_display = qt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		// Turn off all displays
-		for (i = 0; i < randr_screen_info->n_output; i++) {
+		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
 			output_info = randr_screen_info->outputs[i]->info;
 
@@ -668,7 +673,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		freeScreenInfoStructure(randr_screen_info);
 		randr_screen_info = read_screen_info(randr_display);
 		// Turn on the primary display
-		for (i = 0; i < randr_screen_info->n_output; i++) {
+		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
 			output_info = randr_screen_info->outputs[i]->info;
 
@@ -684,7 +689,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		freeScreenInfoStructure(randr_screen_info);
 		// Handle the remaining displays
 		randr_screen_info = read_screen_info(randr_display);
-		for (i = 0; i < randr_screen_info->n_output; i++) {
+		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
 			output_info = randr_screen_info->outputs[i]->info;
 
@@ -708,7 +713,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		}
 		freeScreenInfoStructure(randr_screen_info);
 		randr_screen_info = read_screen_info(randr_display);
-		for (i = 0; i < randr_screen_info->n_output; i++) {
+		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
 			output_info = randr_screen_info->outputs[i]->info;
 
@@ -891,7 +896,7 @@ void KRandrSimpleAPI::applySystemwideDisplayGamma(TQPtrList<SingleScreenData> sc
 	if (isValid() == true) {
 		randr_display = qt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
-		for (i = 0; i < randr_screen_info->n_output; i++) {
+		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
 			output_info = randr_screen_info->outputs[i]->info;
 			CrtcInfo *current_crtc = randr_screen_info->outputs[i]->cur_crtc;
@@ -943,7 +948,7 @@ void KRandrSimpleAPI::applySystemwideDisplayDPMS(TQPtrList<SingleScreenData> scr
 	if (isValid() == true) {
 		randr_display = qt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
-		for (i = 0; i < randr_screen_info->n_output; i++) {
+		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
 			output_info = randr_screen_info->outputs[i]->info;
 			CrtcInfo *current_crtc = randr_screen_info->outputs[i]->cur_crtc;
