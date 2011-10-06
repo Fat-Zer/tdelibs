@@ -194,7 +194,7 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     * If test is true, the new configuration will be loaded for a short period of time, then reverted automatically
     * Returns true if configuration was accepted; false if not
     */
-    bool applySystemwideDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test=TRUE);
+    bool applySystemwideDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test=TRUE, TQString kde_confdir="");
 
     /**
     * Applies the gamma contained within the systemwide display configuration screenInfoArray to the hardware

@@ -481,7 +481,7 @@ TQPoint KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQString profilenam
 		TQPtrList<SingleScreenData> screenInfoArray;
 		screenInfoArray = loadSystemwideDisplayConfiguration(profilename, kde_confdir);
 		if (screenInfoArray.count() > 0) {
-			applySystemwideDisplayConfiguration(screenInfoArray, FALSE);
+			applySystemwideDisplayConfiguration(screenInfoArray, FALSE, kde_confdir);
 		}
 		destroyScreenInformationObject(screenInfoArray);
 		screenInfoArray = readCurrentDisplayConfiguration();
@@ -576,7 +576,7 @@ int KRandrSimpleAPI::getHardwareRotationFlags(SingleScreenData* screendata) {
 
 #define USE_XRANDR_PROGRAM
 
-bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test) {
+bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test, TQString kde_confdir) {
 	int i;
 	int j;
 	bool accepted = true;
@@ -634,7 +634,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		TQString xrandr_command_output = exec(command.ascii());
 		xrandr_command_output = xrandr_command_output.stripWhiteSpace();
 		if (xrandr_command_output != "") {
-			applySystemwideDisplayConfiguration(oldconfig, FALSE);
+			applySystemwideDisplayConfiguration(oldconfig, FALSE, kde_confdir);
 			accepted = false;
 			destroyScreenInformationObject(oldconfig);
 			KMessageBox::sorry(0, xrandr_command_output, i18n("XRandR encountered a problem"));
@@ -745,11 +745,14 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 
 	applySystemwideDisplayGamma(screenInfoArray);
 	applySystemwideDisplayDPMS(screenInfoArray);
+	TQString current_icc_profile = getCurrentProfile();
+	applySystemWideIccConfiguration(kde_confdir);
+	applyIccConfiguration(current_icc_profile, kde_confdir);
 
 	if (test == TRUE) {
 		int ret = showTestConfigurationDialog();
 		if (!ret) {
-			applySystemwideDisplayConfiguration(oldconfig, FALSE);
+			applySystemwideDisplayConfiguration(oldconfig, FALSE, kde_confdir);
 			accepted = false;
 		}
 		destroyScreenInformationObject(oldconfig);
@@ -1040,6 +1043,7 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 			}
 
 			// Get DPMS information
+			screendata->has_dpms = 1;	// [FIXME] Master Xorg check for global DPMS support should go here if possible
 			if (screendata->has_dpms) {
 				CARD16 dpms_standby_delay;
 				CARD16 dpms_suspend_delay;
