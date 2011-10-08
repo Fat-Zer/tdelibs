@@ -633,12 +633,14 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 
 		TQString xrandr_command_output = exec(command.ascii());
 		xrandr_command_output = xrandr_command_output.stripWhiteSpace();
-		if (xrandr_command_output != "") {
-			applySystemwideDisplayConfiguration(oldconfig, FALSE, kde_confdir);
-			accepted = false;
-			destroyScreenInformationObject(oldconfig);
-			KMessageBox::sorry(0, xrandr_command_output, i18n("XRandR encountered a problem"));
-			return accepted;
+		if (test) {
+			if (xrandr_command_output != "") {
+				applySystemwideDisplayConfiguration(oldconfig, FALSE, kde_confdir);
+				accepted = false;
+				destroyScreenInformationObject(oldconfig);
+				KMessageBox::sorry(0, xrandr_command_output, i18n("XRandR encountered a problem"));
+				return accepted;
+			}
 		}
 
 		// HACK
