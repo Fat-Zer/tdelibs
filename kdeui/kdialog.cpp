@@ -393,7 +393,7 @@ KSMModalDialogHeader::~KSMModalDialogHeader()
 }
 
 KSMModalDialog::KSMModalDialog(TQWidget* parent)
-  : TQWidget( 0, "", Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WDestructiveClose ), m_allowClose(false)
+  : TQWidget( 0, "systemmodaldialogclass", Qt::WStyle_Customize | Qt::WType_Dialog | Qt::WStyle_Title | Qt::WStyle_StaysOnTop | Qt::WDestructiveClose ), m_keepOnTopTimer(NULL), m_allowClose(false)
 
 {
 	// Signal that we do not want any window controls to be shown at all
@@ -431,10 +431,27 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	TQSize sh = tqsizeHint();
 	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
 	move(rect.x() + (rect.width() - sh.width())/2, rect.y() + (rect.height() - sh.height())/2);
+
+	show();
+	keepMeOnTop();
+}
+
+void KSMModalDialog::keepMeOnTop()
+{
+	if (!m_keepOnTopTimer) {
+		m_keepOnTopTimer = new TQTimer();
+		connect(m_keepOnTopTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(keepMeOnTop()));
+		m_keepOnTopTimer->start(100, FALSE);
+	}
+	setActiveWindow();
+	raise();
+	setFocus();
 }
 
 KSMModalDialog::~KSMModalDialog()
 {
+	m_keepOnTopTimer->stop();
+	delete m_keepOnTopTimer;
 }
 
 void KSMModalDialog::setStatusMessage(TQString message)

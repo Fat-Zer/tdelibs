@@ -247,9 +247,11 @@ public:
       void closeSMDialog();
 
 protected slots:
+      void keepMeOnTop();
       void closeEvent(TQCloseEvent *e);
 
 private:
+      TQTimer* m_keepOnTopTimer;
       TQLabel* m_statusLabel;
       bool m_allowClose;
 };
