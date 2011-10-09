@@ -13,7 +13,7 @@ fi
 
 PKG_PROG_PKG_CONFIG
 
-PKG_CHECK_MODULES( AVAHI, [ avahi-qt3 >= 0.4 , avahi-client >= 0.4 ])
+PKG_CHECK_MODULES( AVAHI, [ avahi-tqt >= 0.4 , avahi-client >= 0.4 ])
 AC_SUBST(AVAHI_CFLAGS)
 AC_SUBST(AVAHI_LIBS)
 PKG_CHECK_EXISTS( [ avahi-client >= 0.6], AC_DEFINE(AVAHI_API_0_6,1,[Avahi API 0.6] ) )

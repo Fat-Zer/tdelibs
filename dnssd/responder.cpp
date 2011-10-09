@@ -25,7 +25,7 @@
 #include <kidna.h>
 #include <kdebug.h>
 #ifdef HAVE_DNSSD
-#include <avahi-qt3/qt-watch.h>
+#include <avahi-tqt/qt-watch.h>
 #endif
 
 namespace DNSSD
