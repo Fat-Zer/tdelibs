@@ -707,7 +707,7 @@ if( WITH_AVAHI )
   endif( WITH_QT4 )
 
   if( WITH_QT3 )
-    pkg_search_module( AVAHI avahi-qt3 )
+    pkg_search_module( AVAHI avahi-tqt )
     if( NOT AVAHI_FOUND )
         message(FATAL_ERROR "\navahi support are requested, but not found on your system" )
     endif( NOT AVAHI_FOUND )
