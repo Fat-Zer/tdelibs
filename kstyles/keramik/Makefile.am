@@ -15,7 +15,7 @@ noinst_PROGRAMS = genembed
 
 genembed_SOURCES = genembed.cpp
 genembed_LDADD = ../../kdefx/libkdefx.la
-genembed_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+genembed_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 pixmaps.keramik: pics/checkbox-off.png pics/checkbox-on.png pics/combobox-list-bc.png\
 	 pics/combobox-list-bl.png pics/combobox-list-br.png pics/combobox-list-cl.png pics/combobox-list-cr.png\

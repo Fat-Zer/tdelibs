@@ -10,7 +10,7 @@ bin_PROGRAMS = $(KSVGTOPNG)
 
 ksvgtopng_SOURCES = ksvgtopng.cpp
 ksvgtopng_LDADD =  $(LIB_KDECORE) $(top_builddir)/kdecore/svgicons/libkdesvgicons.la
-ksvgtopng_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+ksvgtopng_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 install-data-local:
 	-rm -f $(DESTDIR)$(kde_icondir)/default.kde

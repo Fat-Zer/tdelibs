@@ -52,7 +52,7 @@ METASOURCES = AUTO
 
 bin_PROGRAMS = kab2kabc
 
-kab2kabc_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kab2kabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 kab2kabc_LDADD = libkabc.la ../kab/libkab.la
 kab2kabc_SOURCES = kab2kabc.cpp
 

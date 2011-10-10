@@ -5,7 +5,7 @@ INCLUDES = -I$(top_srcdir)/kio -I$(top_srcdir) -I$(srcdir) -I$(srcdir)/.. $(all_
 #lib_LTLIBRARIES = libkscriptloader.la libkscript.la
 lib_LTLIBRARIES = libkscript.la
 #libkscriptloader_la_SOURCES = scriptloader.cpp
-#libkscriptloader_la_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+#libkscriptloader_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 #libkscriptloader_la_LIBADD = $(LIB_KPARTS)
 
 libkscript_la_SOURCES = scriptmanager.cpp

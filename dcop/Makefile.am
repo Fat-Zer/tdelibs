@@ -50,15 +50,15 @@ dcopserver_la_LIBADD  = libDCOP.la $(LIB_QT)
 
 dcopserver_shutdown_SOURCES = dcopserver_shutdown.c
 
-testdcop_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+testdcop_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testdcop_SOURCES = testdcop.cpp
 testdcop_LDADD = libDCOP.la
 
-dcop_deadlock_test_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+dcop_deadlock_test_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 dcop_deadlock_test_SOURCES = dcop_deadlock_test.cpp
 dcop_deadlock_test_LDADD = ../kdecore/libkdecore.la
 
-testdcopc_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+testdcopc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testdcopc_SOURCES = testdcopc.c dcopc.c
 testdcopc_LDADD =  KDE-ICE/libkICE.la $(LIBSM)
 

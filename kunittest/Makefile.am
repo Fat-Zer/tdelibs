@@ -10,7 +10,7 @@ libkunittestinclude_HEADERS = runner.h tester.h module.h
 libkunittestincludedir = $(includedir)/kunittest
 
 bin_PROGRAMS = kunittestmodrunner
-kunittestmodrunner_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kunittestmodrunner_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 kunittestmodrunner_LDADD = libkunittest.la $(LIB_KDECORE)
 kunittestmodrunner_SOURCES = modrunner.cpp
 

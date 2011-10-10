@@ -37,7 +37,7 @@ kcm_kresources_la_LIBADD = libkresources.la $(LIB_QT) $(LIB_KDEUI) $(LIB_KDECORE
 
 check_PROGRAMS = testresources
 
-testresources_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testresources_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testresources_LDADD   = libkresources.la
 testresources_SOURCES = testresources.cpp
 

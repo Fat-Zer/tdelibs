@@ -38,11 +38,11 @@ kde_services_DATA = kio_uiserver.desktop
 
 kmailservice_SOURCES = kmailservice.cpp
 kmailservice_LDADD = $(LIB_KDECORE)
-kmailservice_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+kmailservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 ktelnetservice_SOURCES = ktelnetservice.cpp
 ktelnetservice_LDADD = $(LIB_KDEUI)
-ktelnetservice_LDFLAGS = $(KDE_RPATH) $(all_libraries)
+ktelnetservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 protocol_DATA = kmailservice.protocol telnet.protocol rlogin.protocol rtsp.protocol ssh.protocol \
 		mms.protocol mmst.protocol mmsu.protocol pnm.protocol rtspt.protocol rtspu.protocol

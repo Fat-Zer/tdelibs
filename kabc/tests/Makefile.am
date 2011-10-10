@@ -12,44 +12,44 @@ check_PROGRAMS = testlock testldapclient
 testlock_LDFLAGS = $(all_libraries)
 testlock_SOURCES = testlock.cpp
 
-testldapclient_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testldapclient_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testldapclient_SOURCES = testldapclient.cpp
 
 EXTRA_PROGRAMS = testkabc testkabcdlg testdistlist bigread bigwrite testdb \
   testaddressee testaddresseelist testaddressfmt kabcargl testaddresslineedit
 
-testkabc_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testkabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testkabc_SOURCES = testkabc.cpp
 
-testaddressee_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testaddressee_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testaddressee_SOURCES = testaddressee.cpp
 
-testaddresseelist_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testaddresseelist_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testaddresseelist_SOURCES = testaddresseelist.cpp
 
-testaddressfmt_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testaddressfmt_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testaddressfmt_SOURCES = testaddressfmt.cpp
 
-testkabcdlg_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testkabcdlg_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testkabcdlg_SOURCES = testkabcdlg.cpp
 
-testdistlist_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testdistlist_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testdistlist_SOURCES = testdistlist.cpp
 
-testaddresslineedit_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testaddresslineedit_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testaddresslineedit_SOURCES = testaddresslineedit.cpp
 
-bigread_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+bigread_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 bigread_LDADD = ../libkabc.la $(top_builddir)/kabc/plugins/file/libkabc_file.la
 bigread_SOURCES = bigread.cpp
 
-bigwrite_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+bigwrite_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 bigwrite_LDADD = ../libkabc.la $(top_builddir)/kabc/plugins/file/libkabc_file.la
 bigwrite_SOURCES = bigwrite.cpp
 
-testdb_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+testdb_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 testdb_SOURCES = testdb.cpp
 
-kabcargl_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kabcargl_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 kabcargl_SOURCES = kabcargl.cpp
 
