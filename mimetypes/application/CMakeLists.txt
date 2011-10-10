@@ -67,13 +67,17 @@ install( FILES
     x-xliff.desktop x-7z.desktop xml.desktop x-webarchive.desktop  x-mimearchive.desktop
     xsd.desktop relaxng.desktop
     vnd.oasis.opendocument.graphics-template.desktop
+    vnd.oasis.opendocument.graphics-flat-xml.desktop
     vnd.oasis.opendocument.graphics.desktop
     vnd.oasis.opendocument.formula.desktop
     vnd.oasis.opendocument.presentation-template.desktop
+    vnd.oasis.opendocument.presentation-flat-xml.desktop
     vnd.oasis.opendocument.presentation.desktop
     vnd.oasis.opendocument.spreadsheet-template.desktop
+    vnd.oasis.opendocument.spreadsheet-flat-xml.desktop
     vnd.oasis.opendocument.spreadsheet.desktop
     vnd.oasis.opendocument.text-template.desktop
+    vnd.oasis.opendocument.text-flat-xml.desktop
     vnd.oasis.opendocument.text.desktop
     vnd.oasis.opendocument.image.desktop
     vnd.oasis.opendocument.chart.desktop
