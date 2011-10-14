@@ -50,7 +50,7 @@ public:
 	 * are listed using KIO.
 	 * @li DirCompletion - Same as FileCompletion but only returns directories.
 	 */
-	enum Mode { ExeCompletion=1, FileCompletion, DirCompletion };
+	enum Mode { ExeCompletion=1, FileCompletion, DirCompletion, SystemExeCompletion };
 
 	/**
 	 * Constructs a KURLCompletion object in FileCompletion mode.
@@ -186,6 +186,7 @@ private:
 	bool userCompletion(const MyURL &url, TQString *match);
 	bool envCompletion(const MyURL &url, TQString *match);
 	bool exeCompletion(const MyURL &url, TQString *match);
+	bool systemexeCompletion(const MyURL &url, TQString *match);
 	bool fileCompletion(const MyURL &url, TQString *match);
 	bool urlCompletion(const MyURL &url, TQString *match);
 

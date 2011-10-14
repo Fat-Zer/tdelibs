@@ -620,6 +620,18 @@ TQString KURLCompletion::makeCompletion(const TQString &text)
 		if ( urlCompletion( url, &match ) )
 			return match;
 	}
+	else if ( d->mode == SystemExeCompletion ) {
+		// Executables
+		//
+		if ( systemexeCompletion( url, &match ) )
+			return match;
+
+		// KRun can run "man:" and "info:" etc. so why not treat them
+		// as executables...
+
+		if ( urlCompletion( url, &match ) )
+			return match;
+	}
 	else {
 		// Local files, directories
 		//
@@ -838,6 +850,66 @@ bool KURLCompletion::exeCompletion(const MyURL &url, TQString *match)
 		dirList.append( d->cwd + '/' + dir );
 	}
 	else if ( !url.file().isEmpty() ) {
+		// $PATH
+		dirList = TQStringList::split(KPATH_SEPARATOR,
+					TQString::fromLocal8Bit(::getenv("PATH")));
+
+		TQStringList::Iterator it = dirList.begin();
+
+		for ( ; it != dirList.end(); it++ )
+			(*it).append('/');
+	}
+
+	// No hidden files unless the user types "."
+	bool no_hidden_files = url.file().tqat(0) != '.';
+
+	// List files if needed
+	//
+	if ( !isListedURL( CTExe, dir, url.file(), no_hidden_files ) )
+	{
+		stop();
+		clear();
+
+		setListedURL( CTExe, dir, url.file(), no_hidden_files );
+
+		*match = listDirectories( dirList, url.file(), true, false, no_hidden_files );
+	}
+	else if ( !isRunning() ) {
+		*match = finished();
+	}
+	else {
+		if ( d->dirListThread )
+			setListedURL( CTExe, dir, url.file(), no_hidden_files );
+		*match = TQString::null;
+	}
+
+	return true;
+}
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+// System Executables
+//
+
+bool KURLCompletion::systemexeCompletion(const MyURL &url, TQString *match)
+{
+	if ( url.protocol() != "file" )
+		return false;
+
+	TQString dir = url.dir();
+
+	dir = unescape( dir ); // remove escapes
+
+	// Find directories to search for completions, either
+	//
+	// 1. complete path given in url
+	// 2. current directory (d->cwd)
+	// 3. $PATH
+	// 4. no directory at all
+
+	TQStringList dirList;
+
+	if ( !url.file().isEmpty() ) {
 		// $PATH
 		dirList = TQStringList::split(KPATH_SEPARATOR,
 					TQString::fromLocal8Bit(::getenv("PATH")));
