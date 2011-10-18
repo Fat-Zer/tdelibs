@@ -291,6 +291,11 @@ signals:
      */
     void clicked( TQPoint pos );
 
+    /**
+     * Emitted when the popup is hidden.
+     */
+    void hidden(KPassivePopup*);
+
 protected:
     /**
      * This method positions the popup.

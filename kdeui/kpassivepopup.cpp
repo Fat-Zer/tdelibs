@@ -226,6 +226,7 @@ void KPassivePopup::show(const TQPoint &p)
 void KPassivePopup::hideEvent( TQHideEvent * )
 {
     hideTimer->stop();
+    emit( hidden( this ) );
     if ( m_autoDelete )
         deleteLater();
 }
