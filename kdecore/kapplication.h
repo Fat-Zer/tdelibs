@@ -152,6 +152,35 @@ public:
 
   /**
    * Constructor. Parses command-line arguments. Use this constructor when you
+   * you want ARGB support to be automatically detected and enabled.
+   *
+   * @param display Will be passed to Qt as the X display. The display must be
+   * valid and already opened.
+   *
+   * @param disable_argb Set to true to disable ARGB visuals in this application.
+   *
+   * @param display Will be passed to Qt as the X display. The display must be
+   * valid and already opened.
+   *
+   * @param visual A pointer to the X11 visual that should be used by the
+   * appliction. Note that only TrueColor visuals are supported on depths
+   * greater than 8 bpp. If this parameter is NULL, the default visual will
+   * be used instead.
+   *
+   * @param allowStyles Set to false to disable the loading on plugin based
+   * styles. This is only useful to applications that do not display a GUI
+   * normally. If you do create an application with @p allowStyles set to false
+   * that normally runs in the background but under special circumstances
+   * displays widgets call enableStyles() before displaying any widgets.
+   *
+   * @since KDE 3.5
+   * 
+   * @see RGBADisplay()
+   */
+  KApplication(Display *display, bool disable_argb, Qt::HANDLE visual, Qt::HANDLE colormap, bool allowStyles);
+
+  /**
+   * Constructor. Parses command-line arguments. Use this constructor when you
    * you need to use a non-default visual or colormap. 
    *
    * @param display Will be passed to Qt as the X display. The display must be

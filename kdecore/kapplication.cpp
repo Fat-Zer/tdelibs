@@ -685,6 +685,23 @@ KApplication::KApplication( Display *dpy, bool allowStyles ) :
     d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
 }
 
+KApplication::KApplication( Display *dpy, bool disable_argb, Qt::HANDLE visual, Qt::HANDLE colormap, bool allowStyles ) :
+  TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+                disable_argb?visual:getX11RGBAVisual(dpy), disable_argb?colormap:getX11RGBAColormap(dpy) ),
+  KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
+{
+    aIconPixmap.pm.icon = 0L;
+    aIconPixmap.pm.miniIcon = 0L;
+    read_app_startup_id();
+    useStyles = allowStyles;
+    if (disable_argb) argb_visual = false;
+    setName( instanceName() );
+    installSigpipeHandler();
+    parseCommandLine( );
+    init( true );
+    d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
+}
+
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles ) :
   TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
@@ -728,10 +745,10 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled, KInstance* _insta
   TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
                 GUIenabled ),
   KInstance( _instance ),
-  argb_visual(false),
 #ifdef Q_WS_X11
   display(0L),
 #endif
+  argb_visual(false),
   d (new KApplicationPrivate)
 {
     aIconPixmap.pm.icon = 0L;
