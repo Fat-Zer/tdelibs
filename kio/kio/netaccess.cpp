@@ -464,7 +464,7 @@ bool NetAccess::synchronousRunInternal( Job* job, TQWidget* window, TQByteArray*
 
   TQMetaObject *meta = job->tqmetaObject();
 
-  static const char dataSignal[] = "data(KIO::Job*,const " TQBYTEARRAY_OBJECT_NAME_STRING ""&)";
+  static const char dataSignal[] = "data(KIO::Job*,const " TQBYTEARRAY_OBJECT_NAME_STRING "&)";
   if ( meta->findSignal( dataSignal ) != -1 ) {
       connect( job, TQT_SIGNAL(data(KIO::Job*,const TQByteArray&)),
                this, TQT_SLOT(slotData(KIO::Job*,const TQByteArray&)) );
