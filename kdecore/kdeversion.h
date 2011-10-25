@@ -22,7 +22,7 @@
 
 #include "kdelibs_export.h"
 
-#define KDE_VERSION_STRING "3.5.13 [DEVELOPMENT]"
+#define KDE_VERSION_STRING "3.5.13"
 #define KDE_VERSION_MAJOR 3
 #define KDE_VERSION_MINOR 5
 #define KDE_VERSION_RELEASE 13
