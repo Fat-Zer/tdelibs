@@ -529,7 +529,8 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
 
     if (!widget->childrenListObject().isEmpty()) {
         // build region
-        TQObjectListIterator it = widget->childrenListObject();
+        TQObjectList childWidgets = widget->childrenListObject();
+        TQObjectListIterator it(childWidgets);
         for (; it.current(); ++it) {
             TQWidget* const w = ::tqqt_cast<TQWidget *>(it.current());
 	    if ( w && !w->isTopLevel() && !w->isHidden()) {
