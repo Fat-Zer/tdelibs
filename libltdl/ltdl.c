@@ -616,6 +616,10 @@ sys_dl_open (loader_data, filename)
 
   if (!module)
     {
+      char *error;
+      if ((error = dlerror()) != NULL)  {
+        printf ("The Trinity ltdl loader was unable to dlopen() the shared library '%s' : '%s'\n\r", filename, error);
+      }
       MUTEX_SETERROR (DLERROR (CANNOT_OPEN));
     }
 
