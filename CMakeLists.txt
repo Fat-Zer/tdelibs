@@ -546,7 +546,7 @@ endif( NOT FONTCONFIG_FOUND )
 
 ##### check for Xrandr ##########################
 
-pkg_search_module( XRANDR xrandr )
+pkg_search_module( XRANDR xrandr>=1.2 )
 if( XRANDR_FOUND )
   set( XRANDR_SUPPORT 1 )
 endif( XRANDR_FOUND )
