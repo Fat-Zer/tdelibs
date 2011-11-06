@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001-2003 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001-2003 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -66,7 +66,7 @@ private:
 	TQStringList           m_fonts;
 	TQString               m_errormsg;
 
-	friend int kdeprint_ppdparse(void*);
+	friend int tdeprint_ppdparse(void*);
 	DrGroup* findOrCreateGroupForOption( const TQString& );
 	void processPageSizes( DrMain* );
 };

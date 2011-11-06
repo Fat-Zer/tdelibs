@@ -13,12 +13,12 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_BINARY_DIR}/kjs
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore/network
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore/network
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kded
@@ -49,7 +49,7 @@ set( ${target}_SKELS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeinit_kded-shared kjs-shared ${RESOLV_LIBRARIES}
+  LINK tdeinit_kded-shared kjs-shared ${RESOLV_LIBRARIES}
   DEPENDENCIES dcopidl
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

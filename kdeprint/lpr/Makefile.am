@@ -1,10 +1,10 @@
 AM_CPPFLAGS = -D_KDEPRINT_COMPILE
 
-INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/kdeprint -I$(top_srcdir)/kdeprint/management $(all_includes)
+INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/tdeprint -I$(top_srcdir)/tdeprint/management $(all_includes)
 
-kde_module_LTLIBRARIES = kdeprint_lpr.la
+kde_module_LTLIBRARIES = tdeprint_lpr.la
 
-kdeprint_lpr_la_SOURCES = printcapreader.cpp lprhandler.cpp \
+tdeprint_lpr_la_SOURCES = printcapreader.cpp lprhandler.cpp \
 			     matichandler.cpp klprfactory.cpp kmlprmanager.cpp \
 			     kmlpruimanager.cpp lpchelper.cpp lpqhelper.cpp \
 			     kmlprjobmanager.cpp matichelper.cpp \
@@ -12,10 +12,10 @@ kdeprint_lpr_la_SOURCES = printcapreader.cpp lprhandler.cpp \
 			     lprsettings.cpp kmconfiglpr.cpp apshandler.cpp \
 			     lprngtoolhandler.cpp \
 			     editentrydialog.cpp
-kdeprint_lpr_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-kdeprint_lpr_la_LIBADD = $(top_builddir)/kdeprint/management/libtdeprint_management.la \
+tdeprint_lpr_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
+tdeprint_lpr_la_LIBADD = $(top_builddir)/tdeprint/management/libtdeprint_management.la \
     $(LIB_QT) $(LIB_KDEPRINT) $(LIB_KDEUI) $(LIB_KDECORE)
-kdeprint_lpr_la_METASOURCES = AUTO
+tdeprint_lpr_la_METASOURCES = AUTO
 
 noinst_HEADERS = printcapreader.h \
 		 matichandler.h kmlprmanager.h \
@@ -25,16 +25,16 @@ noinst_HEADERS = printcapreader.h \
 		 lprngtoolhandler.h \
 		 editentrydialog.h
 
-kdeprintlpr_HEADERS = printcapentry.h lprhandler.h lprsettings.h
-kdeprintlprdir = $(includedir)/kdeprint/lpr
+tdeprintlpr_HEADERS = printcapentry.h lprhandler.h lprsettings.h
+tdeprintlprdir = $(includedir)/tdeprint/lpr
 
 bin_PROGRAMS = make_driver_db_lpr
 make_driver_db_lpr_SOURCES = make_driver_db_lpr.c
 make_driver_db_lpr_LDFLAGS = $(all_libraries) 
-make_driver_db_lpr_LDADD = $(top_builddir)/kdecore/libtdefakes.la ../libdriverparse.a $(LIBDL)
+make_driver_db_lpr_LDADD = $(top_builddir)/tdecore/libtdefakes.la ../libdriverparse.a $(LIBDL)
 
 entry_DATA = lpr.print
-entrydir = $(kde_datadir)/kdeprint/plugins
+entrydir = $(kde_datadir)/tdeprint/plugins
 
 miscdata_DATA = apsdriver1 apsdriver2 lprngtooldriver1
-miscdatadir = $(kde_datadir)/kdeprint
+miscdatadir = $(kde_datadir)/tdeprint

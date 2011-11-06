@@ -20,10 +20,10 @@
 
 AM_CPPFLAGS = -DQT_PLUGIN 
 
-INCLUDES = -I$(top_srcdir)/kdefx $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdefx $(all_includes)
 noinst_HEADERS = kthemestyle.h kthemebase.h kstyledirs.h
 kde_style_LTLIBRARIES = kthemestyle.la
 kthemestyle_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-kthemestyle_la_LIBADD = ../../kdefx/libtdefx.la  ../../kdecore/libtdecore.la -ldl $(LIB_QT)
+kthemestyle_la_LIBADD = ../../tdefx/libtdefx.la  ../../tdecore/libtdecore.la -ldl $(LIB_QT)
 kthemestyle_la_SOURCES = kthemebase.cpp kthemestyle.cpp kstyledirs.cpp
 kthemestyle_la_METASOURCES = AUTO

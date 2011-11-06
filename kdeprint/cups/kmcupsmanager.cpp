@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -846,9 +846,9 @@ TQStringList KMCupsManager::detectLocalPrinters()
 
 void KMCupsManager::createPluginActions(KActionCollection *coll)
 {
-	KAction	*act = new KAction(i18n("&Export Driver..."), "kdeprint_uploadsmb", 0, this, TQT_SLOT(exportDriver()), coll, "plugin_export_driver");
+	KAction	*act = new KAction(i18n("&Export Driver..."), "tdeprint_uploadsmb", 0, this, TQT_SLOT(exportDriver()), coll, "plugin_export_driver");
 	act->setGroup("plugin");
-	act = new KAction(i18n("&Printer IPP Report"), "kdeprint_report", 0, this, TQT_SLOT(printerIppReport()), coll, "plugin_printer_ipp_report");
+	act = new KAction(i18n("&Printer IPP Report"), "tdeprint_report", 0, this, TQT_SLOT(printerIppReport()), coll, "plugin_printer_ipp_report");
 	act->setGroup("plugin");
 }
 

@@ -9,13 +9,13 @@ DEFINES += MAKE_KATEPART_LIB
 TARGET		= katepart$$KDELIBDEBUG
 
 LIBS += $$KDELIBDESTDIR/katepartinterfaces$$KDELIB_SUFFIX \
-	$$KDELIBDESTDIR/ktexteditor$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX \
-	$$KDELIBDESTDIR/kdeui$$KDELIB_SUFFIX \
+	$$KDELIBDESTDIR/ktexteditor$$KDELIB_SUFFIX $$KDELIBDESTDIR/tdecore$$KDELIB_SUFFIX \
+	$$KDELIBDESTDIR/tdeui$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR/kutils$$KDELIB_SUFFIX $$KDELIBDESTDIR/kparts$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/kio$$KDELIB_SUFFIX
 
 INCLUDEPATH += $(KDELIBS)/interfaces $(KDELIBS)/interfaces/kregexpeditor \
-	$(KDELIBS)/kutils $(KDELIBS)/kdeprint
+	$(KDELIBS)/kutils $(KDELIBS)/tdeprint
 
 system( bash kmoc )
 system( bash kdcopidl )

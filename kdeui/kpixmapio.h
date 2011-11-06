@@ -1,7 +1,7 @@
 /* vi: ts=8 sts=4 sw=4
  *
  *
- * This file is part of the KDE project, module kdeui.
+ * This file is part of the KDE project, module tdeui.
  * Copyright (C) 2000 Geert Jansen <jansen@kde.org>
  *
  * You can Freely distribute this program under the GNU Library General

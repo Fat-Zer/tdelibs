@@ -1,4 +1,4 @@
-# release version with compiled-in kdefx classes
+# release version with compiled-in tdefx classes
 # this is used eg. for QT-only apps like Installer
 
 TEMPLATE	= lib
@@ -35,15 +35,15 @@ gradients.cpp \
 thinkeramik.cpp \
 pixmaploader.cpp
 
-#compile in kdefx
+#compile in tdefx
 SOURCES += \
-../../../kdefx/kstyle.cpp \
-../../../kdefx/kimageeffect.cpp \
-../../../kdefx/kpixmapeffect.cpp \
-../../../kdefx/kpixmap.cpp
+../../../tdefx/kstyle.cpp \
+../../../tdefx/kimageeffect.cpp \
+../../../tdefx/kpixmapeffect.cpp \
+../../../tdefx/kpixmap.cpp
 
 system( moc thinkeramik.h -o moc/thinkeramik.moc )
-system( moc ../../../kdefx/kstyle.h -o moc/kstyle.moc )
+system( moc ../../../tdefx/kstyle.h -o moc/kstyle.moc )
 
 
 system( bash ./genemb.sh )

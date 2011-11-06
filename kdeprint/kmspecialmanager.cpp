@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -20,7 +20,7 @@
 #include "kmspecialmanager.h"
 #include "kmmanager.h"
 #include "kmprinter.h"
-#include "kdeprintcheck.h"
+#include "tdeprintcheck.h"
 #include "kxmlcommand.h"
 #include "driver.h"
 
@@ -46,11 +46,11 @@ bool KMSpecialManager::savePrinters()
 	QString	confname;
 	if (getuid() == 0)
 	{
-		confname = locate("data", "kdeprint/specials.desktop");
+		confname = locate("data", "tdeprint/specials.desktop");
 		if (confname.startsWith(KGlobal::dirs()->localkdedir()))
 		{
 			// seems there's a problem here
-			m_mgr->setErrorMsg(i18n("A file share/kdeprint/specials.desktop was found in your "
+			m_mgr->setErrorMsg(i18n("A file share/tdeprint/specials.desktop was found in your "
 						"local KDE directory. This file probably comes from a previous KDE "
 						"release and should be removed in order to manage global pseudo "
 						"printers."));
@@ -58,7 +58,7 @@ bool KMSpecialManager::savePrinters()
 		}
 	}
 	else
-		confname = locateLocal("data","kdeprint/specials.desktop");
+		confname = locateLocal("data","tdeprint/specials.desktop");
 
 	KSimpleConfig	conf(confname);
 
@@ -108,7 +108,7 @@ bool KMSpecialManager::loadPrinters()
 
 	bool	result(true);
 	TQString	localDir = KGlobal::dirs()->localkdedir();
-	TQStringList	files = KGlobal::dirs()->findAllResources("data", "kdeprint/specials.desktop");
+	TQStringList	files = KGlobal::dirs()->findAllResources("data", "tdeprint/specials.desktop");
 	// local files should processed last, so we need to reorder the list
 	// and put local files at the end
 	TQStringList	orderedFiles;

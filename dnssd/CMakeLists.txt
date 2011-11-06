@@ -13,9 +13,9 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -44,7 +44,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.0.0
-  LINK kdecore-shared
+  LINK tdecore-shared
   DEPENDENCIES kconfig_compiler
   DESTINATION ${LIB_INSTALL_DIR}
 )

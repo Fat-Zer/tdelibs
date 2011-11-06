@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -137,7 +137,7 @@ void KMLprManager::initHandlers()
 	insertHandler(new LPRngToolHandler(this));
 
 	// now load external handlers
-	TQStringList	l = KGlobal::dirs()->findAllResources("data", "kdeprint/lpr/*.la");
+	TQStringList	l = KGlobal::dirs()->findAllResources("data", "tdeprint/lpr/*.la");
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		KLibrary	*library = KLibLoader::self()->library(TQFile::encodeName(*it));
@@ -455,7 +455,7 @@ TQString KMLprManager::printOptions(KPrinter *prt)
 
 void KMLprManager::createPluginActions(KActionCollection *coll)
 {
-	KAction	*act = new KAction(i18n("&Edit printcap Entry..."), "kdeprint_report", 0, this, TQT_SLOT(slotEditPrintcap()), coll, "plugin_editprintcap");
+	KAction	*act = new KAction(i18n("&Edit printcap Entry..."), "tdeprint_report", 0, this, TQT_SLOT(slotEditPrintcap()), coll, "plugin_editprintcap");
 	act->setGroup("plugin");
 }
 

@@ -39,5 +39,5 @@ SRCDOC_DEST=$(kde_htmldir)/en/kdelibs/khtml
 ## generate lib documentation
 srcdoc:
 	$(mkinstalldirs) $(SRCDOC_DEST)
-	kdoc -H -d $(SRCDOC_DEST) kdecore -lqt
+	kdoc -H -d $(SRCDOC_DEST) tdecore -lqt
 

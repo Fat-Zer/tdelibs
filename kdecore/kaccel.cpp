@@ -523,7 +523,7 @@ bool KAccel::setShortcut( const TQString& sAction, const KShortcut& cut )
 
 const TQString& KAccel::configGroup() const
 	{ return d->configGroup(); }
-// for kdegames/ksirtet
+// for tdegames/ksirtet
 void KAccel::setConfigGroup( const TQString& s )
 	{ d->setConfigGroup( s ); }
 

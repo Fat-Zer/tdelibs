@@ -30,7 +30,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#launching">Starting other programs</A></LI>
 <LI><A HREF="#khtmlw">khtmlw</A></LI>
 <LI><A HREF="#KIntegerLine">KIntegerLine, KIntLineEdit</A></LI>
-<LI><A HREF="#KDNDIcon">KDNDIcon, KDNDDropZone, KDNDWidget, kdecore/drag.h</A></LI>
+<LI><A HREF="#KDNDIcon">KDNDIcon, KDNDDropZone, KDNDWidget, tdecore/drag.h</A></LI>
 <LI><A HREF="#KConfigBase">KConfigBase, KConfig, KSimpleConfig</A></LI>
 <LI><A HREF="#libkfm">libkfm</A></LI>
 <LI><A HREF="#KDialog">KDialog</A></LI>
@@ -175,7 +175,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   certain option was specified on the command line and your application 
   now automatically supports --help and --version. It aborts with a
   useful error message when the command line contains a syntax error.
-  See kdelibs/kdecore/kcmdlineargs.h for more info.<P>
+  See kdelibs/tdecore/kcmdlineargs.h for more info.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -285,7 +285,7 @@ The old aboutKDE(), aboutApp() and appHelpActivated() of KApplication
 have all been removed. If you need direct access to these or need
 access to a help menu in a class that is not derived from
 KMainWindow then allocate an instance of the new class KHelpMenu.
-See KDE 2.0 API reference or khelpmenu.h (kdeui) for additional info.<P>
+See KDE 2.0 API reference or khelpmenu.h (tdeui) for additional info.<P>
 Espen Sand &lt;<A HREF="mailto:espen@kde.org">espen@kde.org</A>&gt;<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -430,7 +430,7 @@ khtmlw has been replaced with khtml.<BR>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KDNDIcon">KDNDIcon, KDNDDropZone, KDNDWidget, kdecore/drag.h</A></H3>
+<H3><A NAME="KDNDIcon">KDNDIcon, KDNDDropZone, KDNDWidget, tdecore/drag.h</A></H3>
 
 KDE Drag and Drop is Dead.  Long live Qt Xdnd.<P>
 
@@ -481,7 +481,7 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
 
   Much more extensive documentation on the KConfig and friends API can
   be found in the kdoc generated documentation from the header files,
-  and in kdecore/KCONFIG_DESIGN.<P>
+  and in tdecore/KCONFIG_DESIGN.<P>
 
   To use the new iterator, you will probably want to do something like
   this:<P>
@@ -515,7 +515,7 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
 <TR><TD>KFM::exec             </TD><TD>-&gt; "(void) new KRun (url)" (kdelibs/kio/krun.h)</TD></TR>
 <TR><TD>KFM::copy, KFM::move  </TD><TD>-&gt; KIO::Job (async, see kio/job.h)<BR>
                             or KIO::NetAccess (sync, see kio/netaccess.h)</TD></TR>
-<TR><TD>DlgLocation           </TD><TD>-&gt; Use KLineEditDlg (kdeui/klineeditdlg.h) instead</TD></TR>
+<TR><TD>DlgLocation           </TD><TD>-&gt; Use KLineEditDlg (tdeui/klineeditdlg.h) instead</TD></TR>
 </TABLE>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>

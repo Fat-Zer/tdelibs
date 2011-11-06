@@ -464,7 +464,7 @@ Sometimes it might be interesting to use DCOP between processes
 belonging to different users, e.g. a frontend process running
 with the user's id, and a backend process running as root.
 
-For this you can use kdesu with the --nonewdcop option. kdesu will
+For this you can use tdesu with the --nonewdcop option. tdesu will
 then forward the address of the DCOP server as well as the authentication
 information to the new user. 
 
@@ -479,9 +479,9 @@ carefully reviewed that your DCOPClient does not provide objects/functions
 that could be abused for privilege escalation.
 
 
-Example: kdesu --nonewdcop -u root -c kcmroot
+Example: tdesu --nonewdcop -u root -c kcmroot
 
-This will, after kdesu got the root password, execute kcmroot as root,
+This will, after tdesu got the root password, execute kcmroot as root,
 talking to the user's dcop server.
 
 
@@ -503,7 +503,7 @@ int main(int argc, char **argv)
 
 Compiled with:
 
-g++ -O2 -o testit testit.cpp -I$QTDIR/include -L$QTDIR/lib -lkdecore
+g++ -O2 -o testit testit.cpp -I$QTDIR/include -L$QTDIR/lib -ltdecore
 
 on Linux yields the following memory use statistics:
 

@@ -16,14 +16,14 @@ WISHES
 
 - Possibility to specify a different input slot for first page???
 
-- add "Subject" or "Regarding" to kdeprintfax interface: look first
+- add "Subject" or "Regarding" to tdeprintfax interface: look first
   if this is possible in efax and/or hylafax
 
 - add the possibility to view a printjob file (if possible)
 
 - restarting server: use of "ps" in a subshell to get the pid, possibility
   of authentification (put this into separate program that would restart
-  itself using kdesu).
+  itself using tdesu).
 
 - CUPS: a "Printer/Server Debugging Helper" would be nice: you could 
   vary the LogLevel there, restart the server, provide a viewer

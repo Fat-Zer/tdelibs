@@ -6,7 +6,7 @@ include( $(KDELIBS)/win/common.pro )
 # needed to export library classes:
 DEFINES += MAKE_KDEPRINT_LIB
 
-TARGET		= kdeprint$$KDEBUG
+TARGET		= tdeprint$$KDEBUG
 
 SOURCES = \
 kprinter.cpp \

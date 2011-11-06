@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *
  *  This library is free software; you can redistribute it and/or
@@ -225,12 +225,12 @@ void KPQtPage::init()
 
 void KPQtPage::slotOrientationChanged(int ID)
 {
-	m_orientpix->setPixmap(UserIcon((ID == ORIENT_PORTRAIT_ID ? "kdeprint_portrait" : "kdeprint_landscape")));
+	m_orientpix->setPixmap(UserIcon((ID == ORIENT_PORTRAIT_ID ? "tdeprint_portrait" : "tdeprint_landscape")));
 }
 
 void KPQtPage::slotColorModeChanged(int ID)
 {
-	m_colorpix->setPixmap(UserIcon((ID == COLORMODE_COLOR_ID ? "kdeprint_color" : "kdeprint_grayscale")));
+	m_colorpix->setPixmap(UserIcon((ID == COLORMODE_COLOR_ID ? "tdeprint_color" : "tdeprint_grayscale")));
 }
 
 void KPQtPage::slotNupChanged(int ID)
@@ -238,10 +238,10 @@ void KPQtPage::slotNupChanged(int ID)
 	QString	pixstr;
 	switch (ID)
 	{
-		case NUP_1: pixstr = "kdeprint_nup1"; break;
-		case NUP_2: pixstr = "kdeprint_nup2"; break;
-		case NUP_4: pixstr = "kdeprint_nup4"; break;
-		case NUP_OTHER: pixstr = "kdeprint_nupother"; break;
+		case NUP_1: pixstr = "tdeprint_nup1"; break;
+		case NUP_2: pixstr = "tdeprint_nup2"; break;
+		case NUP_4: pixstr = "tdeprint_nup4"; break;
+		case NUP_OTHER: pixstr = "tdeprint_nupother"; break;
 	}
 	m_nuppix->setPixmap(UserIcon(pixstr));
 }

@@ -20,7 +20,7 @@
 INCLUDES= -I$(srcdir)/.. -I$(top_srcdir) $(all_includes)
 
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kded.la kbuildsycoca.la
+tdeinit_LTLIBRARIES = kded.la kbuildsycoca.la
 
 kded_la_LDFLAGS = $(all_libraries) -module -avoid-version
 kded_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_KDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
@@ -38,15 +38,15 @@ kbuildsycoca_la_SOURCES = kbuildsycoca.cpp kbuildservicetypefactory.cpp \
 
 bin_PROGRAMS = kdontchangethehostname kde-menu kmimelist
 
-kdontchangethehostname_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+kdontchangethehostname_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 kdontchangethehostname_LDADD = $(LIB_KDECORE) 
 kdontchangethehostname_SOURCES = khostname.cpp
 
-kmimelist_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+kmimelist_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 kmimelist_LDADD = ../kio/libkio.la
 kmimelist_SOURCES = kmimelist.cpp
 
-kde_menu_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+kde_menu_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 kde_menu_LDADD = $(LIB_KIO)
 kde_menu_SOURCES = kde-menu.cpp
 

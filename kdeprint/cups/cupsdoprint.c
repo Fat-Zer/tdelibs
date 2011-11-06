@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -87,7 +87,7 @@ static const char* getPasswordCB(const char* prompt)
 	char *_user = shell_quote( cupsUser() ), *_passwd = NULL;
 	FILE *output;
 
-	snprintf( buf, sizeof( buf )-1, "dcop kded kdeprintd requestPassword %s %s %d %d",
+	snprintf( buf, sizeof( buf )-1, "dcop kded tdeprintd requestPassword %s %s %d %d",
 			_user,
 			cupsServer(),
 			ippPort(),

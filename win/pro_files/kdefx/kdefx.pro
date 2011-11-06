@@ -6,7 +6,7 @@ include( $(KDELIBS)/win/common.pro )
 # needed to export library classes:
 DEFINES += MAKE_KDEFX_LIB
 
-TARGET		= kdefx$$KDEBUG
+TARGET		= tdefx$$KDEBUG
 
 system( bash kmoc )
 

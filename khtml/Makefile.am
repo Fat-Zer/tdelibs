@@ -55,7 +55,7 @@ libkhtml_la_LIBADD = ./xml/libkhtmlxml.la ./html/libkhtmlhtml.la \
 	./misc/libkhtmlmisc.la ecma/libkjs_html.la ./dom/libkhtmldom.la $(LIBKJAVA) \
 	$(LIB_KPARTS) \
 	$(LIBTHAI) \
-	$(top_builddir)/kdeprint/libtdeprint.la  \
+	$(top_builddir)/tdeprint/libtdeprint.la  \
 	$(top_builddir)/kutils/libkutils.la \
 	$(top_builddir)/kwallet/client/libkwalletclient.la $(top_builddir)/kjs/libkjs.la $(LIB_KDEUI) $(LIB_QT) $(LIB_KDECORE) $(LIB_KFILE) $(top_builddir)/dcop/libDCOP.la $(LIBJPEG) $(LIB_X11)
 
@@ -84,7 +84,7 @@ INCLUDES = -I$(top_srcdir)/kjs -I$(top_builddir)/kjs -I$(top_srcdir)/kimgio \
 	-I$(srcdir)/dom -I$(srcdir)/xml -I$(srcdir)/html -I$(srcdir)/css \
 	-I$(top_srcdir)/libltdl \
 	-I$(top_srcdir)/kio/kssl -I$(top_builddir)/kio/kssl \
-	-I$(top_srcdir)/kdeprint \
+	-I$(top_srcdir)/tdeprint \
 	-I$(top_srcdir)/interfaces \
 	-I$(top_srcdir)/interfaces/kregexpeditor \
         -I$(top_srcdir)/kwallet/client \
@@ -102,7 +102,7 @@ SRCDOC_DEST=$(kde_htmldir)/en/kdelibs/khtml
 ## generate lib documentation
 srcdoc:
 	$(mkinstalldirs) $(SRCDOC_DEST)
-	kdoc -H -d $(SRCDOC_DEST) kdecore \
+	kdoc -H -d $(SRCDOC_DEST) tdecore \
 	         $(include_HEADERS) -lqt
 
 EXTRA_DIST =  CHANGES DESIGN README.HTMLWidget README.tags 
@@ -124,7 +124,7 @@ testkhtml_static_LDFLAGS = -static
 testregression_SOURCES = test_regression.cpp test_regression_fontoverload.cpp
 testregression_LDADD = libkhtml.la
 
-DOXYGEN_REFERENCES = kdecore kdeui kio kdefx kparts
+DOXYGEN_REFERENCES = tdecore tdeui kio tdefx kparts
 DOXYGEN_EXCLUDE =  test*.* css ecma html java kmultipart misc pics rendering test xml
 
 include ../admin/Doxyfile.am

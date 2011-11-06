@@ -8,11 +8,11 @@
         * can subscribe or read the mailing lists for any additions and/or 
         * modifications to the API.
 	*
-	* - <a target="_top" href="kdecore/html/index.html"><b>kdecore</b></a>
-        *   (<a target="_top" href="kdecore/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdecore/html/index.html"><b>tdecore</b></a>
+        *   (<a target="_top" href="tdecore/html/classes.html">classes</a>)\n
 	*   <i>Core Trinity classes that are not related to the user interface.</i>
-	* - <a target="_top" href="kdeui/html/index.html"><b>kdeui</b></a>
-        *   (<a target="_top" href="kdeui/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdeui/html/index.html"><b>tdeui</b></a>
+        *   (<a target="_top" href="tdeui/html/classes.html">classes</a>)\n
 	*   <i>Trinity User interface classes such as widgets.</i>
 	* - <a target="_top" href="khtml/html/index.html"><b>khtml</b></a>
         *   (<a target="_top" href="khtml/html/classes.html">classes</a>)\n
@@ -30,8 +30,8 @@
 	* - <a target="_top" href="dcop/html/index.html"><b>dcop</b></a>
         *   (<a target="_top" href="dcop/html/classes.html">classes</a>)\n
 	*   <i>The DCOP communications library.</i>
-	* - <a target="_top" href="kdefx/html/index.html"><b>kdefx</b></a>
-        *   (<a target="_top" href="kdefx/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdefx/html/index.html"><b>tdefx</b></a>
+        *   (<a target="_top" href="tdefx/html/classes.html">classes</a>)\n
 	*   <i>A library with pixmap effects.</i>
 	* - <a target="_top" href="kmdi/html/index.html"><b>kmdi</b></a>
         *   (<a target="_top" href="kmdi/html/classes.html">classes</a>)\n
@@ -39,8 +39,8 @@
 	* - <a target="_top" href="libkmid/html/index.html"><b>libkmid</b></a>
         *   (<a target="_top" href="libkmid/html/classes.html">classes</a>)\n
 	*   <i>Midi library.</i>
-	* - <a target="_top" href="kdeprint/html/index.html"><b>kdeprint</b></a>
-        *   (<a target="_top" href="kdeprint/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdeprint/html/index.html"><b>tdeprint</b></a>
+        *   (<a target="_top" href="tdeprint/html/classes.html">classes</a>)\n
 	*   <i>High level  printer control functionality.</i>
 	* - <a target="_top" href="krandr/html/index.html"><b>krandr</b></a>
         *   (<a target="_top" href="krandr/html/classes.html">classes</a>)\n

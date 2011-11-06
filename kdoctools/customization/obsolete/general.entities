@@ -188,7 +188,7 @@
 <!ENTITY kdepasswd	"<application>kdepasswd</application>">
 <!ENTITY kdesktop	"<application>KDesktop</application>">
 <!ENTITY kdessh	"<application>kdessh</application>">
-<!ENTITY kdesu	"<application>KDE su</application>">
+<!ENTITY tdesu	"<application>KDE su</application>">
 <!ENTITY kdiskfree	"<application>KDiskFree</application>">
 <!ENTITY kdict	"<application>KDict</application>">
 <!ENTITY kdm	"<application>kdm</application>">

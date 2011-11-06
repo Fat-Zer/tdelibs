@@ -75,14 +75,14 @@ Differences with current dox: <TODO>
 # autoconf and configure. Run it in the "top builddir" with one argument,
 # the "top srcdir". Something like this:
 #
-# cd /mnt/build/kdepim
-# sh /mnt/src/kdepim/doc/api/doxygen.sh /mnt/src/kdepim
+# cd /mnt/build/tdepim
+# sh /mnt/src/tdepim/doc/api/doxygen.sh /mnt/src/tdepim
 #
 # You can also build single subdirs (for instance, after updating some
 # dox and you don't want to rebuild for the enitre module) by giving the
 # subdirectory _relative to the top srcdir_ as a second argument:
 #
-# sh /mnt/src/kdepim/doc/api/doxygen.sh /mnt/src/kdepim kpilot/lib
+# sh /mnt/src/tdepim/doc/api/doxygen.sh /mnt/src/tdepim kpilot/lib
 # 
 # When generating dox for kdelibs, a tag file for Qt is also created.
 # The location of Qt is specified indirectly through $QTDOCDIR or,

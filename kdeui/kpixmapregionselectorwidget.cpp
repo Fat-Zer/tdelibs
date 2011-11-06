@@ -18,8 +18,8 @@
 */
 
 /* NOTE: There are two copies of this .h and the .cpp file, with subtle differences.
- * One copy is in kdelibs/kdeui, and the other copy is in kdepim/libtdepim
- * This is because kdepim has to remain backwards compatible.  Any changes
+ * One copy is in kdelibs/tdeui, and the other copy is in tdepim/libtdepim
+ * This is because tdepim has to remain backwards compatible.  Any changes
  * to either file should be made to the other.
  */
 

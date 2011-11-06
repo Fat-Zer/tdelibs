@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -60,7 +60,7 @@ KMDriverDB::~KMDriverDB()
 TQString KMDriverDB::dbFile()
 {
 	// this calls insure missing directories creation
-	TQString	filename = locateLocal("data",TQString::tqfromLatin1("kdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
+	TQString	filename = locateLocal("data",TQString::tqfromLatin1("tdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
 	return filename;
 }
 

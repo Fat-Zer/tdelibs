@@ -2,7 +2,7 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  *
  * This file contains code from TEShell.C of the KDE konsole.
@@ -42,7 +42,7 @@
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include "kdesu_pty.h"
+#include "tdesu_pty.h"
 
 // stdlib.h is meant to declare the prototypes but doesn't :(
 #ifndef __THROW

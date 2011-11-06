@@ -47,7 +47,7 @@
 #include <kapplication.h>
 #include <ksock.h>
 #include <kcrash.h>
-#include <kdesu/client.h>
+#include <tdesu/client.h>
 #include <klocale.h>
 #include <ksocks.h>
 

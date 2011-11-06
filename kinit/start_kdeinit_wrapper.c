@@ -26,11 +26,11 @@
 #ifdef KDEINIT_OOM_PROTECT
 
 /*
- The start_kdeinit wrapper is setuid, which means some shell variables like LD_LIBRARY_PATH
- get unset before it's launched. However kdeinit is used to launch most of KDE, so such variables
+ The start_tdeinit wrapper is setuid, which means some shell variables like LD_LIBRARY_PATH
+ get unset before it's launched. However tdeinit is used to launch most of KDE, so such variables
  should not be dropped. Therefore this wrapper for the setuid wrapper read the environment
- and writes it to start_kdeinit's stdin, which after dropping priviledges reads it and uses it
- for launching the real kdeinit.
+ and writes it to start_tdeinit's stdin, which after dropping priviledges reads it and uses it
+ for launching the real tdeinit.
 */
 int main(int argc, char **argv)
 {
@@ -50,9 +50,9 @@ int main(int argc, char **argv)
          close( 0 ); /* stdin */
          dup2( pipes[ 0 ], 0 );
          close( pipes[ 0 ] );
-         argv[ 0 ] = (char*)"start_kdeinit";
-         execvp("start_kdeinit", argv);
-         perror("start_kdeinit");
+         argv[ 0 ] = (char*)"start_tdeinit";
+         execvp("start_tdeinit", argv);
+         perror("start_tdeinit");
          return 1;
       case 0: { /* child, pass env and exit */
          extern char** environ;
@@ -84,9 +84,9 @@ int main(int argc, char **argv)
 {
    if(argc == 0)
       return 1;
-   argv[0] = "start_kdeinit";
-   execvp("start_kdeinit",argv);
-   perror("start_kdeinit");
+   argv[0] = "start_tdeinit";
+   execvp("start_tdeinit",argv);
+   perror("start_tdeinit");
    return 1;
 }
 #endif

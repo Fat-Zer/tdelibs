@@ -14,10 +14,10 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/kabc
 
   ${TQT_INCLUDE_DIRS}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
 )

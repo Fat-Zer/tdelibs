@@ -17,7 +17,7 @@
 #    Boston, MA 02110-1301, USA.
 
 
-INCLUDES= -I$(srcdir)/../libltdl/ -I$(top_srcdir) -I$(top_srcdir)/kdefx \
+INCLUDES= -I$(srcdir)/../libltdl/ -I$(top_srcdir) -I$(top_srcdir)/tdefx \
     -I$(top_builddir)/kio/kio -I$(top_srcdir)/kio/bookmarks $(all_includes) $(LIBART_CFLAGS)
 
 noinst_LTLIBRARIES  = libkfile.la

@@ -15,18 +15,18 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/kjs
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdefx
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdefx
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kio/kfile
   ${CMAKE_SOURCE_DIR}/kjs
   ${CMAKE_SOURCE_DIR}/kutils
-  ${CMAKE_SOURCE_DIR}/kdeprint
+  ${CMAKE_SOURCE_DIR}/tdeprint
   ${CMAKE_SOURCE_DIR}/interfaces
   ${CMAKE_SOURCE_DIR}/interfaces/kregexpeditor
   ${LUA_INCLUDE_DIRS}
@@ -72,6 +72,6 @@ configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy
 tde_add_kpart( ${target}
   SOURCES dummy.cpp
   EMBED kate-static
-  LINK kjs-shared kdeprint-shared katepartinterfaces-shared kutils-shared
+  LINK kjs-shared tdeprint-shared katepartinterfaces-shared kutils-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

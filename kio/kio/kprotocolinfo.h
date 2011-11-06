@@ -669,11 +669,11 @@ protected:
   TQString m_config;
   int m_maxSlaves;
 
-  bool canRenameFromFile() const; // for kprotocolinfo_kdecore
-  bool canRenameToFile() const; // for kprotocolinfo_kdecore
-  bool canDeleteRecursive() const; // for kprotocolinfo_kdecore
-  FileNameUsedForCopying fileNameUsedForCopying() const; // for kprotocolinfo_kdecore
-  static KProtocolInfo* findProtocol(const KURL &url); // for kprotocolinfo_kdecore
+  bool canRenameFromFile() const; // for kprotocolinfo_tdecore
+  bool canRenameToFile() const; // for kprotocolinfo_tdecore
+  bool canDeleteRecursive() const; // for kprotocolinfo_tdecore
+  FileNameUsedForCopying fileNameUsedForCopying() const; // for kprotocolinfo_tdecore
+  static KProtocolInfo* findProtocol(const KURL &url); // for kprotocolinfo_tdecore
 
 protected:
   virtual void virtual_hook( int id, void* data );

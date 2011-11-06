@@ -7,12 +7,12 @@ include( $(KDELIBS)/win/zlib.pro )
 # needed to export library classes:
 DEFINES += MAKE_KDECORE_LIB
 
-LIBS += $$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/kdefx$$KDELIB_SUFFIX \
+LIBS += $$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/tdefx$$KDELIB_SUFFIX \
 	-lqassistantclient
 
-TARGET		= kdecore$$KDEBUG
+TARGET		= tdecore$$KDEBUG
 
-INCLUDEPATH += $(KDELIBS)/libltdl $(KDELIBS)/kdecore/network
+INCLUDEPATH += $(KDELIBS)/libltdl $(KDELIBS)/tdecore/network
 
 system( bash kmoc )
 system( bash kdcopidl )
@@ -95,7 +95,7 @@ ksockaddr.cpp \
 kmdcodec.cpp \
 kdcoppropertyproxy.cpp \
 klibloader.cpp \
-kprotocolinfo_kdecore.cpp \
+kprotocolinfo_tdecore.cpp \
 ../kio/kio/kprotocolinfo.cpp \
 kprotocolinfofactory.cpp \
 kmountpoint.cpp \
@@ -136,8 +136,8 @@ kdebugdcopiface_stub.cpp \
 kdebugdcopiface_skel.cpp
 
 
-exists( custom_kdecore.pro ) {
-  include( custom_kdecore.pro )
+exists( custom_tdecore.pro ) {
+  include( custom_tdecore.pro )
 }
 
 HEADERS		=

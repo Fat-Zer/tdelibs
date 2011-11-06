@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -128,7 +128,7 @@ void KMJobViewer::setPrinter(const TQString& prname)
 {
 	// We need to trigger a refresh even if the printer
 	// has not changed, some jobs may have been canceled
-	// outside kdeprint. We can't return simply if
+	// outside tdeprint. We can't return simply if
 	// prname == m_prname.
 	if (m_prname != prname)
 	{
@@ -298,7 +298,7 @@ void KMJobViewer::initActions()
 	}
 
 	// Filter actions
-	KActionMenu	*fact = new KActionMenu(i18n("&Select Printer"), "kdeprint_printer", actionCollection(), "filter_modify");
+	KActionMenu	*fact = new KActionMenu(i18n("&Select Printer"), "tdeprint_printer", actionCollection(), "filter_modify");
 	fact->setDelayed(false);
 	connect(fact->popupMenu(),TQT_SIGNAL(activated(int)),TQT_SLOT(slotPrinterSelected(int)));
 	connect(fact->popupMenu(),TQT_SIGNAL(aboutToShow()),KMTimer::self(),TQT_SLOT(hold()));

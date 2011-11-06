@@ -7,7 +7,7 @@ INCLUDES=	$(all_includes)
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kcookiejar.la
+tdeinit_LTLIBRARIES = kcookiejar.la
 kde_module_LTLIBRARIES = kded_kcookiejar.la
 
 kcookiejar_la_SOURCES = main.cpp

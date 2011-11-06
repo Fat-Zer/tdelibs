@@ -456,8 +456,8 @@ TQStringList KRun::processDesktopExec(const KService &_service, const KURL::List
  2 << split(term) << "-e"                                    << split(cmd)
  3 << split(term) << "-e"                                    << "sh" << "-c" << cmd
 
- 4                        << "kdesu" << "-u" << user << "-c" << cmd
- 5                        << "kdesu" << "-u" << user << "-c" << ("sh -c " + quote(cmd))
+ 4                        << "tdesu" << "-u" << user << "-c" << cmd
+ 5                        << "tdesu" << "-u" << user << "-c" << ("sh -c " + quote(cmd))
  6 << split(term) << "-e" << "su"            << user << "-c" << cmd
  7 << split(term) << "-e" << "su"            << user << "-c" << ("sh -c " + quote(cmd))
 
@@ -466,8 +466,8 @@ TQStringList KRun::processDesktopExec(const KService &_service, const KURL::List
  a << term        << "-e"                                    << cmd
  b << term        << "-e"                                    << ("sh -c " + quote(cmd))
 
- c                        << "kdesu" << "-u" << user << "-c" << quote(cmd)
- d                        << "kdesu" << "-u" << user << "-c" << quote("sh -c " + quote(cmd))
+ c                        << "tdesu" << "-u" << user << "-c" << quote(cmd)
+ d                        << "tdesu" << "-u" << user << "-c" << quote("sh -c " + quote(cmd))
  e << term        << "-e" << "su"            << user << "-c" << quote(cmd)
  f << term        << "-e" << "su"            << user << "-c" << quote("sh -c " + quote(cmd))
 
@@ -499,7 +499,7 @@ TQStringList KRun::processDesktopExec(const KService &_service, const KURL::List
     if (_service.terminal())
       result << "su";
     else
-      result << "kdesu" << "-u";
+      result << "tdesu" << "-u";
     result << _service.username() << "-c";
     KShell::splitArgs(exec, KShell::AbortOnMeta | KShell::TildeExpand, &err);
     if (err == KShell::FoundMeta) {

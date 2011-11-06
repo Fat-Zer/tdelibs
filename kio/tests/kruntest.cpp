@@ -146,16 +146,16 @@ int main(int argc, char **argv)
 "'/bin/sh' '-c' 'echo $PWD '", // 1
 "'x-term' '-T' ' - just_a_test' '-e' 'date' '-u'", // 2
 "'x-term' '-T' ' - just_a_test' '-e' '/bin/sh' '-c' 'echo $PWD '", // 3
-"'kdesu' '-u' 'sprallo' '-c' 'date -u '", // 4
-"'kdesu' '-u' 'sprallo' '-c' '/bin/sh -c '\\''echo $PWD '\\'''", // 5
+"'tdesu' '-u' 'sprallo' '-c' 'date -u '", // 4
+"'tdesu' '-u' 'sprallo' '-c' '/bin/sh -c '\\''echo $PWD '\\'''", // 5
 "'x-term' '-T' ' - just_a_test' '-e' 'su' 'sprallo' '-c' 'date -u '", // 6
 "'x-term' '-T' ' - just_a_test' '-e' 'su' 'sprallo' '-c' '/bin/sh -c '\\''echo $PWD '\\'''", // 7
 "'date -u '", // 8
 "'echo $PWD '", // 9
 "'x-term -T \" - just_a_test\"' '-e' 'date -u '", // a
 "'x-term -T \" - just_a_test\"' '-e' '/bin/sh -c '\\''echo $PWD '\\'''", // b
-"'kdesu' '-u' 'sprallo' '-c' ''\\''date -u '\\'''", // c
-"'kdesu' '-u' 'sprallo' '-c' ''\\''/bin/sh -c '\\''\\'\\'''\\''echo $PWD '\\''\\'\\'''\\'''\\'''", // d
+"'tdesu' '-u' 'sprallo' '-c' ''\\''date -u '\\'''", // c
+"'tdesu' '-u' 'sprallo' '-c' ''\\''/bin/sh -c '\\''\\'\\'''\\''echo $PWD '\\''\\'\\'''\\'''\\'''", // d
 "'x-term -T \" - just_a_test\"' '-e' 'su' 'sprallo' '-c' ''\\''date -u '\\'''", // e
 "'x-term -T \" - just_a_test\"' '-e' 'su' 'sprallo' '-c' ''\\''/bin/sh -c '\\''\\'\\'''\\''echo $PWD '\\''\\'\\'''\\'''\\'''", // f
     };

@@ -28,24 +28,24 @@ fi
 KDE_FIND_PATH(freetype-config, KDEINIT_FREETYPE_CONFIG, [${prefix}/bin ${exec_prefix}/bin /usr/bin /usr/local/bin /opt/local/bin])
 if test -n "$KDEINIT_FREETYPE_CONFIG"; then
     KDEINIT_XFT_INCLUDES="`$KDEINIT_FREETYPE_CONFIG --cflags` $FONTCONFIG_CFLAGS"
-    kdeinit_cppflags=$CPPFLAGS
+    tdeinit_cppflags=$CPPFLAGS
     CPPFLAGS="$CPPFLAGS $KDEINIT_XFT_INCLUDES $FONTCONFIG_CFLAGS"
     KDE_CHECK_HEADER(X11/Xft/Xft.h,[],[KDEINIT_USE_XFT=])
-    CPPFLAGS=$kdeinit_cppflags
+    CPPFLAGS=$tdeinit_cppflags
 else
     KDEINIT_USE_XFT=
 fi
 
 if test -n "$KDEINIT_USE_XFT"; then
-    AC_DEFINE(KDEINIT_USE_XFT,1,[Use Xft preinitialization in kdeinit])
+    AC_DEFINE(KDEINIT_USE_XFT,1,[Use Xft preinitialization in tdeinit])
 fi
 if test -n "$KDEINIT_FONTCONFIG"; then
-    AC_DEFINE(KDEINIT_USE_FONTCONFIG,1,[Use FontConfig in kdeinit])
+    AC_DEFINE(KDEINIT_USE_FONTCONFIG,1,[Use FontConfig in tdeinit])
 fi
 AC_SUBST(KDEINIT_XFT_INCLUDES)
 
-AC_MSG_CHECKING(whether to make kdeinit setuid root in order to protect it from bad Linux OOM-killer)
-kdeinit_setuid=
+AC_MSG_CHECKING(whether to make tdeinit setuid root in order to protect it from bad Linux OOM-killer)
+tdeinit_setuid=
 case $target_os in
     linux*)
         AC_MSG_RESULT(yes)

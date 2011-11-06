@@ -18,7 +18,7 @@
 
 INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/kio $(all_includes)
 LDADD = $(LIB_KIO)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 check_PROGRAMS = ksycocatest getalltest kruntest ktartest kziptest\
                  kioslavetest kdirwatchtest kshredtest speed kurifiltertest \

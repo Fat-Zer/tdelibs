@@ -20,7 +20,7 @@ INCLUDES= -I../kded $(all_includes)
 
 bin_PROGRAMS = 
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kconf_update.la
+tdeinit_LTLIBRARIES = kconf_update.la
 
 kconf_update_la_SOURCES = kconf_update.cpp
 kconf_update_la_LIBADD = $(LIB_KDECORE) $(LIB_QT)

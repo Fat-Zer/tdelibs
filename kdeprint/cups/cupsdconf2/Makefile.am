@@ -4,7 +4,7 @@ INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/kio -I$(top_srcdir)/kfile $(all_includ
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = cupsdconf.la
+tdeinit_LTLIBRARIES = cupsdconf.la
 
 # library creation
 cupsdconf_la_SOURCES = cupsdconf.cpp cupsddialog.cpp cupsdpage.cpp cupsdcomment.cpp cupsdsplash.cpp \
@@ -26,7 +26,7 @@ noinst_HEADERS = cupsdconf.h cupsdpage.h cupsddialog.h cupsdcomment.h cupsdsplas
 
 # Data
 cupsdconfdata_DATA = kde_logo.png cups_logo.png cupsd.conf.template
-cupsdconfdatadir   = $(kde_datadir)/kdeprint
+cupsdconfdatadir   = $(kde_datadir)/tdeprint
 
 # Translations
 messages:

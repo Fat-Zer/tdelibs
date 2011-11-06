@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -35,7 +35,7 @@ KMPropMembers::KMPropMembers(TQWidget *parent, const char *name)
 	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 10, 0);
 	main_->addWidget(m_members);
 
-	m_pixmap = "kdeprint_printer_class";
+	m_pixmap = "tdeprint_printer_class";
 	m_title = i18n("Members");
 	m_header = i18n("Class Members");
 }

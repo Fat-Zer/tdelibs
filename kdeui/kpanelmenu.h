@@ -1,7 +1,7 @@
 /*****************************************************************
 
 Copyright (c) 1996-2000 the kicker authors. See file AUTHORS.
-          (c) 2001 Michael Goffioul <kdeprint@swing.be>
+          (c) 2001 Michael Goffioul <tdeprint@swing.be>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ class KPanelMenuPrivate;
  * library name without any extension). This desktop file has to be installed in
  * $KDEDIR/share/apps/kicker/menuext/.
  *
- * @author The kicker maintainers, Michael Goffioul <kdeprint@swing.be>
+ * @author The kicker maintainers, Michael Goffioul <tdeprint@swing.be>
  */
 class KDEUI_EXPORT KPanelMenu : public KPopupMenu
 {

@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -20,7 +20,7 @@
 #include "kxmlcommand.h"
 #include "driver.h"
 #include "kmfactory.h"
-#include "kdeprintcheck.h"
+#include "tdeprintcheck.h"
 #include "driverview.h"
 
 #include <tqfile.h>
@@ -199,7 +199,7 @@ void KXmlCommand::setComment( const TQString& s )
 
 bool KXmlCommand::isValid()
 {
-	return (!locate("data", "kdeprint/filters/"+name()+".desktop").isEmpty());
+	return (!locate("data", "tdeprint/filters/"+name()+".desktop").isEmpty());
 }
 
 void KXmlCommand::check(bool use_xml)
@@ -218,7 +218,7 @@ void KXmlCommand::check(bool use_xml)
 
 void KXmlCommand::loadDesktop()
 {
-	KSimpleConfig	conf(locate("data", "kdeprint/filters/"+name()+".desktop"));
+	KSimpleConfig	conf(locate("data", "tdeprint/filters/"+name()+".desktop"));
 	conf.setGroup("KDE Print Filter Entry");
 	d->m_description = conf.readEntry("Comment");
 	d->m_outputMime = conf.readEntry("MimeTypeOut");
@@ -229,7 +229,7 @@ void KXmlCommand::loadDesktop()
 
 void KXmlCommand::saveDesktop()
 {
-	KSimpleConfig	conf(locateLocal("data", "kdeprint/filters/"+name()+".desktop"));
+	KSimpleConfig	conf(locateLocal("data", "tdeprint/filters/"+name()+".desktop"));
 	conf.setGroup("KDE Print Filter Entry");
 	conf.writeEntry("Comment", d->m_description);
 	conf.writeEntry("MimeTypeIn", d->m_inputMime);
@@ -240,7 +240,7 @@ void KXmlCommand::saveDesktop()
 
 void KXmlCommand::loadXml()
 {
-	TQFile	f(locate("data", "kdeprint/filters/"+name()+".xml"));
+	TQFile	f(locate("data", "tdeprint/filters/"+name()+".xml"));
 	TQDomDocument	doc;
 	if (f.open(IO_ReadOnly) && doc.setContent(&f) && doc.documentElement().tagName() == "kprintfilter")
 	{
@@ -425,7 +425,7 @@ void KXmlCommand::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 
 void KXmlCommand::saveXml()
 {
-	TQFile	f(locateLocal("data", "kdeprint/filters/"+name()+".xml"));
+	TQFile	f(locateLocal("data", "tdeprint/filters/"+name()+".xml"));
 	if (!f.open(IO_WriteOnly))
 		return;
 
@@ -576,7 +576,7 @@ KXmlCommand* KXmlCommandManager::loadCommand(const TQString& xmlId, bool check)
 {
 	if (check)
 	{
-		TQString	desktopFile = locate("data", "kdeprint/filters/"+xmlId+".desktop");
+		TQString	desktopFile = locate("data", "tdeprint/filters/"+xmlId+".desktop");
 		if (desktopFile.isEmpty())
 			return 0;
 	}
@@ -624,7 +624,7 @@ TQStringList KXmlCommandManager::commandList()
 {
 	if (d->m_cmdlist.isEmpty())
 	{
-		TQStringList	dirs = KGlobal::dirs()->findDirs("data", "kdeprint/filters/");
+		TQStringList	dirs = KGlobal::dirs()->findDirs("data", "tdeprint/filters/");
 
 		for (TQStringList::ConstIterator it=dirs.begin(); it!=dirs.end(); ++it)
 		{

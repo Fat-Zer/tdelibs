@@ -22,7 +22,7 @@
 
 #include <windows.h>
 
-#include <kdecore/kdelibs_export.h>
+#include <tdecore/kdelibs_export.h>
 
 #ifdef  __cplusplus
 #include <tqstring.h>

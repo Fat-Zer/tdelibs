@@ -42,10 +42,10 @@ dcop/dcopidl2cpp \
 dcop/dcopserver \
 dcop/dcopserver_shutdown \
 dcop/iceauth \
-kdefx \
+tdefx \
 $additional \
-kdecore \
-kdeui \
+tdecore \
+tdeui \
 kio \
 kresources \
 kabc/vcard \

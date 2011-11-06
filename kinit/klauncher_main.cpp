@@ -52,11 +52,11 @@ static KCmdLineOptions options[] =
 
 extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
 {
-   // Started via kdeinit.
+   // Started via tdeinit.
    if (fcntl(LAUNCHER_FD, F_GETFD) == -1)
    {
       fprintf(stderr, "%s", i18n("klauncher: This program is not supposed to be started manually.\n"
-                                 "klauncher: It is started automatically by kdeinit.\n").local8Bit().data());
+                                 "klauncher: It is started automatically by tdeinit.\n").local8Bit().data());
       return 1;
    }
 

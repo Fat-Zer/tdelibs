@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -362,7 +362,7 @@ bool KMManager::uncompressFile(const TQString& filename, TQString& destname)
 		if ((uchar)(buf[0]) == 037 && (uchar)(buf[1]) == 0213)
 		{
 			f.close();
-			destname = locateLocal("tmp","kdeprint_") + KApplication::randomString(8);
+			destname = locateLocal("tmp","tdeprint_") + KApplication::randomString(8);
 			f.setName(destname);
 
 			if (f.open(IO_WriteOnly))
@@ -422,7 +422,7 @@ TQString KMManager::testPage()
 	conf->setGroup("General");
 	QString	tpage = conf->readPathEntry("TestPage");
 	if (tpage.isEmpty())
-		tpage = locate("data","kdeprint/testprint.ps");
+		tpage = locate("data","tdeprint/testprint.ps");
 	return tpage;
 }
 

@@ -2,7 +2,7 @@
 *
 * $Id$
 *
-* This file is part of the KDE project, module kdesu.
+* This file is part of the KDE project, module tdesu.
 * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
 * 
 * Sudo support added by Jonathan Riddell <jriddell@ ubuntu.com>
@@ -112,7 +112,7 @@ int SuProcess::exec(const char *password, int check)
     if (superUserCommand == "su") {
         args += "-c";
     }
-    args += TQCString(__KDE_BINDIR) + "/kdesu_stub";
+    args += TQCString(__KDE_BINDIR) + "/tdesu_stub";
 #ifndef Q_OS_DARWIN
     args += "-";
 #endif
@@ -199,7 +199,7 @@ int SuProcess::exec(const char *password, int check)
     if (iret < 0)
     {
         if (!check)
-            kdError(900) << k_lineinfo << "Converstation with kdesu_stub failed\n";
+            kdError(900) << k_lineinfo << "Converstation with tdesu_stub failed\n";
         return iret;
     }
     else if (iret == 1)
@@ -245,7 +245,7 @@ int SuProcess::ConverseSU(const char *password)
             case WaitForPrompt:
             {
                 // In case no password is needed.
-                if (line == "kdesu_stub")
+                if (line == "tdesu_stub")
                 {
                     unreadLine(line);
                     return ok;
@@ -319,8 +319,8 @@ int SuProcess::ConverseSU(const char *password)
             }
             //////////////////////////////////////////////////////////////////////////
             case HandleStub:
-                // Read till we get "kdesu_stub"
-                if (line == "kdesu_stub")
+                // Read till we get "tdesu_stub"
+                if (line == "tdesu_stub")
                 {
                     unreadLine(line);
                     return ok;

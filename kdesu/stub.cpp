@@ -2,14 +2,14 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
  * This is free software; you can use this library under the GNU Library 
  * General Public License, version 2. See the file "COPYING.LIB" for the 
  * exact licensing terms.
  *
- * stub.cpp: Conversation with kdesu_stub.
+ * stub.cpp: Conversation with tdesu_stub.
  */
 
 #include <config.h>
@@ -72,8 +72,8 @@ TQCString StubProcess::commaSeparatedList(QCStringList lst)
 }
     
 /*
- * Conversation with kdesu_stub. This is how we pass the authentication
- * tokens (X11, DCOP) and other stuff to kdesu_stub.
+ * Conversation with tdesu_stub. This is how we pass the authentication
+ * tokens (X11, DCOP) and other stuff to tdesu_stub.
  * return values: -1 = error, 0 = ok, 1 = kill me
  */
 
@@ -86,7 +86,7 @@ int StubProcess::ConverseStub(int check)
 	if (line.isNull())
 	    return -1;
 
-	if (line == "kdesu_stub") 
+	if (line == "tdesu_stub") 
 	{
 	    // This makes parsing a lot easier.
 	    enableLocalEcho(false);

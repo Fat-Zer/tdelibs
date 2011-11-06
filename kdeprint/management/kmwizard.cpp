@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -244,7 +244,7 @@ void KMWizard::slotNext()
 
 void KMWizard::slotHelp()
 {
-	kapp->invokeHelp(TQString::null, "kdeprint");
+	kapp->invokeHelp(TQString::null, "tdeprint");
 }
 
 void KMWizard::enableWizard()

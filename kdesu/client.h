@@ -2,14 +2,14 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  *
  * This is free software; you can use this library under the GNU Library
  * General Public License, version 2. See the file "COPYING.LIB" for the
  * exact licensing terms.
  *
- * client.h: client to access kdesud.
+ * client.h: client to access tdesud.
  */
 
 #ifndef __KDE_su_Client_h_Included__
@@ -30,7 +30,7 @@
 typedef TQValueList<TQCString> QCStringList;
 
 /**
- * A client class to access kdesud, the KDE su daemon. Kdesud can assist in 
+ * A client class to access tdesud, the KDE su daemon. Kdesud can assist in 
  * password caching in two ways:
  *
  * @li For high security passwords, like for su and ssh, it executes the
@@ -53,7 +53,7 @@ public:
     ~KDEsuClient();
 
     /**
-     * Lets kdesud execute a command. If the daemon does not have a password
+     * Lets tdesud execute a command. If the daemon does not have a password
      * for this command, this will fail and you need to call setPass().
      *
      * @param command The command to execute.
@@ -169,7 +169,7 @@ public:
     int delGroup(const TQCString &group);
 
     /**
-     * Ping kdesud. This can be used for diagnostics.
+     * Ping tdesud. This can be used for diagnostics.
      * @return Zero on success, -1 on failure
      */
     int ping();
@@ -180,7 +180,7 @@ public:
     int stopServer();
 
     /**
-     * Try to start up kdesud
+     * Try to start up tdesud
      */
     int startServer();
 

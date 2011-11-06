@@ -900,7 +900,7 @@ pid_t KDEDesktopMimeType::runMimeType( const KURL& url , const KSimpleConfig & )
   args << url.path();
 
   int pid;
-  if ( !KApplication::kdeinitExec("kfmclient", args, 0, &pid) )
+  if ( !KApplication::tdeinitExec("kfmclient", args, 0, &pid) )
       return pid;
 
   KProcess p;

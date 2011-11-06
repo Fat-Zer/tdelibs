@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -17,7 +17,7 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#include "kdeprintd.h"
+#include "tdeprintd.h"
 #include "kprintprocess.h"
 
 #include <tqfile.h>
@@ -42,7 +42,7 @@
 
 extern "C"
 {
-	KDE_EXPORT KDEDModule *create_kdeprintd(const TQCString& name)
+	KDE_EXPORT KDEDModule *create_tdeprintd(const TQCString& name)
 	{
 		return new KDEPrintd(name);
 	}
@@ -123,7 +123,7 @@ int KDEPrintd::print(const TQString& cmd, const TQStringList& files, bool remfla
 		KURL url( re.cap( 1 ) );
 		if ( !url.isLocalFile() )
 		{
-			TQString tmpFilename = locateLocal( "tmp", "kdeprint_" + kapp->randomString( 8 ) );
+			TQString tmpFilename = locateLocal( "tmp", "tdeprint_" + kapp->randomString( 8 ) );
 			command.replace( re, KProcess::quote( tmpFilename ) );
 			proc->setOutput( re.cap( 1 ) );
 			proc->setTempOutput( tmpFilename );
@@ -181,7 +181,7 @@ bool KDEPrintd::checkFiles(TQString& cmd, const TQStringList& files)
 				i18n("Provide root's Password"),
 				"provideRootsPassword") == KMessageBox::Continue)
 			{
-				cmd = ("kdesu -c " + KProcess::quote(cmd));
+				cmd = ("tdesu -c " + KProcess::quote(cmd));
 				break;
 			}
 			else
@@ -312,4 +312,4 @@ void KDEPrintd::initPassword( const TQString& user, const TQString& passwd, cons
 		kdWarning( 500 ) << "Unable to initialize password, cannot communicate with kded_kpasswdserver" << endl;
 }
 
-#include "kdeprintd.moc"
+#include "tdeprintd.moc"

@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001-2003 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001-2003 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -46,7 +46,7 @@ public:
 private:
 	TQMap<TQString,TQVariant> m_foodata;
 
-	friend int kdeprint_foomatic2parse( void* );
+	friend int tdeprint_foomatic2parse( void* );
 	DrBase* createValue( const TQString&, const TQMap<TQString,TQVariant>& ) const;
 	DrBase* createOption( const TQMap<TQString,TQVariant>& ) const;
 };

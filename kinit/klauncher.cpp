@@ -162,11 +162,11 @@ IdleSlave::age(time_t now)
    return (int) difftime(now, mBirthDate);
 }
 
-KLauncher::KLauncher(int _kdeinitSocket, bool new_startup)
+KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
 //  : KApplication( false, false ), // No Styles, No GUI
   : KApplication( false, true ),	// TQClipboard tries to construct a QWidget so a GUI is technically needed, even though it is not used
     DCOPObject("klauncher"),
-    kdeinitSocket(_kdeinitSocket), mAutoStart( new_startup ),
+    tdeinitSocket(_tdeinitSocket), mAutoStart( new_startup ),
     dontBlockReading(false), newStartup( new_startup )
 {
 #ifdef Q_WS_X11
@@ -200,10 +200,10 @@ KLauncher::KLauncher(int _kdeinitSocket, bool new_startup)
 
    connect(&mTimer, TQT_SIGNAL(timeout()), TQT_SLOT(idleTimeout()));
 
-   kdeinitNotifier = new TQSocketNotifier(kdeinitSocket, TQSocketNotifier::Read);
-   connect(kdeinitNotifier, TQT_SIGNAL( activated( int )),
+   tdeinitNotifier = new TQSocketNotifier(tdeinitSocket, TQSocketNotifier::Read);
+   connect(tdeinitNotifier, TQT_SIGNAL( activated( int )),
            this, TQT_SLOT( slotKDEInitData( int )));
-   kdeinitNotifier->setEnabled( true );
+   tdeinitNotifier->setEnabled( true );
    lastRequest = 0;
    bProcessingQueue = false;
 
@@ -221,7 +221,7 @@ KLauncher::KLauncher(int _kdeinitSocket, bool new_startup)
    klauncher_header request_header;
    request_header.cmd = LAUNCHER_OK;
    request_header.arg_length = 0;
-   write(kdeinitSocket, &request_header, sizeof(request_header));
+   write(tdeinitSocket, &request_header, sizeof(request_header));
 }
 
 KLauncher::~KLauncher()
@@ -274,18 +274,18 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
    if ((fun == "start_service_by_name(TQString,TQStringList)") ||
        (fun == "start_service_by_desktop_path(TQString,TQStringList)")||
        (fun == "start_service_by_desktop_name(TQString,TQStringList)")||
-       (fun == "kdeinit_exec(TQString,TQStringList)") ||
-       (fun == "kdeinit_exec_wait(TQString,TQStringList)") ||
+       (fun == "tdeinit_exec(TQString,TQStringList)") ||
+       (fun == "tdeinit_exec_wait(TQString,TQStringList)") ||
        (fun == "start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
        (fun == "start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString)")||
        (fun == "start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
        (fun == "start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)") ||
        (fun == "start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)")||
        (fun == "start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)") ||
-       (fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)") ||
-       (fun == "kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>)") ||
-       (fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
-       (fun == "kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
+       (fun == "tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)") ||
+       (fun == "tdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>)") ||
+       (fun == "tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
+       (fun == "tdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
    {
       TQDataStream stream(data, IO_ReadOnly);
       bool bNoWait = false;
@@ -306,11 +306,11 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
           (fun == "start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString)")||
           (fun == "start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
          stream >> envs >> startup_id;
-      else if ((fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)") ||
-          (fun == "kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>)"))
+      else if ((fun == "tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)") ||
+          (fun == "tdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>)"))
          stream >> envs;
-      else if ((fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
-          (fun == "kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
+      else if ((fun == "tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)") ||
+          (fun == "tdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
          stream >> envs >> startup_id;
       bool finished;
       if (strncmp(fun, "start_service_by_name(", 22) == 0)
@@ -328,17 +328,17 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
          kdDebug(7016) << "KLauncher: Got start_service_by_desktop_name('" << serviceName << "', ...)" << endl;
          finished = start_service_by_desktop_name(serviceName, urls, envs, startup_id, bNoWait );
       }
-      else if ((fun == "kdeinit_exec(TQString,TQStringList)")
-              || (fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)")
-              || (fun == "kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
+      else if ((fun == "tdeinit_exec(TQString,TQStringList)")
+              || (fun == "tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)")
+              || (fun == "tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
       {
-         kdDebug(7016) << "KLauncher: Got kdeinit_exec('" << serviceName << "', ...)" << endl;
-         finished = kdeinit_exec(serviceName, urls, envs, startup_id, false);
+         kdDebug(7016) << "KLauncher: Got tdeinit_exec('" << serviceName << "', ...)" << endl;
+         finished = tdeinit_exec(serviceName, urls, envs, startup_id, false);
       }
       else
       {
-         kdDebug(7016) << "KLauncher: Got kdeinit_exec_wait('" << serviceName << "', ...)" << endl;
-         finished = kdeinit_exec(serviceName, urls, envs, startup_id, true);
+         kdDebug(7016) << "KLauncher: Got tdeinit_exec_wait('" << serviceName << "', ...)" << endl;
+         finished = tdeinit_exec(serviceName, urls, envs, startup_id, true);
       }
       if (!finished)
       {
@@ -413,7 +413,7 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
       klauncher_header request_header;
       request_header.cmd = LAUNCHER_TERMINATE_KDE;
       request_header.arg_length = 0;
-      write(kdeinitSocket, &request_header, sizeof(request_header));
+      write(tdeinitSocket, &request_header, sizeof(request_header));
       destruct(0);
    }
    else if (fun == "autoStart()")
@@ -459,16 +459,16 @@ KLauncher::functions()
     funcs << "serviceResult start_service_by_name(TQString,TQStringList)";
     funcs << "serviceResult start_service_by_desktop_path(TQString,TQStringList)";
     funcs << "serviceResult start_service_by_desktop_name(TQString,TQStringList)";
-    funcs << "serviceResult kdeinit_exec(TQString,TQStringList)";
-    funcs << "serviceResult kdeinit_exec_wait(TQString,TQStringList)";
+    funcs << "serviceResult tdeinit_exec(TQString,TQStringList)";
+    funcs << "serviceResult tdeinit_exec_wait(TQString,TQStringList)";
     funcs << "serviceResult start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)";
     funcs << "serviceResult start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString)";
     funcs << "serviceResult start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString)";
     funcs << "serviceResult start_service_by_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)";
     funcs << "serviceResult start_service_by_desktop_path(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)";
     funcs << "serviceResult start_service_by_desktop_name(TQString,TQStringList,TQValueList<TQCString>,TQCString,bool)";
-    funcs << "serviceResult kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)";
-    funcs << "serviceResult kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>)";
+    funcs << "serviceResult tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)";
+    funcs << "serviceResult tdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>)";
     funcs << "TQString requestSlave(TQString,TQString,TQString)";
     funcs << "pid_t requestHoldSlave(KURL,TQString)";
     funcs << "void waitForSlave(pid_t)";
@@ -491,8 +491,8 @@ void KLauncher::setLaunchEnv(const TQCString &name, const TQCString &_value)
    memcpy(requestData.data()+name.length()+1, value.data(), value.length()+1);
    request_header.cmd = LAUNCHER_SETENV;
    request_header.arg_length = requestData.size();
-   write(kdeinitSocket, &request_header, sizeof(request_header));
-   write(kdeinitSocket, requestData.data(), request_header.arg_length);
+   write(tdeinitSocket, &request_header, sizeof(request_header));
+   write(tdeinitSocket, requestData.data(), request_header.arg_length);
 }
 
 /*
@@ -529,19 +529,19 @@ KLauncher::slotKDEInitData(int)
    if( dontBlockReading )
    {
    // in case we get a request to start an application and data arrive
-   // to kdeinitSocket at the same time, requestStart() will already
+   // to tdeinitSocket at the same time, requestStart() will already
    // call slotKDEInitData(), so we must check there's still something
    // to read, otherwise this would block
       fd_set in;
       timeval tm = { 0, 0 };
       FD_ZERO ( &in );
-      FD_SET( kdeinitSocket, &in );
-      select( kdeinitSocket + 1, &in, 0, 0, &tm );
-      if( !FD_ISSET( kdeinitSocket, &in ))
+      FD_SET( tdeinitSocket, &in );
+      select( tdeinitSocket + 1, &in, 0, 0, &tm );
+      if( !FD_ISSET( tdeinitSocket, &in ))
          return;
    }
    dontBlockReading = false;
-   int result = read_socket(kdeinitSocket, (char *) &request_header,
+   int result = read_socket(tdeinitSocket, (char *) &request_header,
                             sizeof( request_header));
    if (result == -1)
    {
@@ -551,7 +551,7 @@ KLauncher::slotKDEInitData(int)
       destruct(255); // Exit!
    }
    requestData.resize(request_header.arg_length);
-   result = read_socket(kdeinitSocket, (char *) requestData.data(),
+   result = read_socket(tdeinitSocket, (char *) requestData.data(),
                         request_header.arg_length);
 
    if (request_header.cmd == LAUNCHER_DIED)
@@ -791,7 +791,7 @@ void
 KLauncher::requestStart(KLaunchRequest *request)
 {
    requestList.append( request );
-   // Send request to kdeinit.
+   // Send request to tdeinit.
    klauncher_header request_header;
    TQByteArray requestData;
    int length = 0;
@@ -865,14 +865,14 @@ KLauncher::requestStart(KLaunchRequest *request)
    request_header.cmd = LAUNCHER_EXEC_NEW;
 #endif
    request_header.arg_length = length;
-   write(kdeinitSocket, &request_header, sizeof(request_header));
-   write(kdeinitSocket, requestData.data(), request_header.arg_length);
+   write(tdeinitSocket, &request_header, sizeof(request_header));
+   write(tdeinitSocket, requestData.data(), request_header.arg_length);
 
    // Wait for pid to return.
    lastRequest = request;
    dontBlockReading = false;
    do {
-      slotKDEInitData( kdeinitSocket );
+      slotKDEInitData( tdeinitSocket );
    }
    while (lastRequest != 0);
    dontBlockReading = true;
@@ -1090,7 +1090,7 @@ KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr ser
         data.setWMClass( wmclass );
     if( silent )
         data.setSilent( KStartupInfoData::Yes );
-    // the rest will be sent by kdeinit
+    // the rest will be sent by tdeinit
     KStartupInfo::sendStartupX( dpy, id, data );
     if( mCached_dpy != dpy && mCached_dpy != NULL )
         XCloseDisplay( mCached_dpy );
@@ -1136,7 +1136,7 @@ KLauncher::cancel_service_startup_info( KLaunchRequest* request, const TQCString
 }
 
 bool
-KLauncher::kdeinit_exec(const TQString &app, const TQStringList &args,
+KLauncher::tdeinit_exec(const TQString &app, const TQStringList &args,
    const TQValueList<TQCString> &envs, TQCString startup_id, bool wait)
 {
    KLaunchRequest *request = new KLaunchRequest;
@@ -1298,7 +1298,7 @@ KLauncher::requestSlave(const TQString &protocol,
        klauncher_header request_header;
        request_header.cmd = LAUNCHER_DEBUG_WAIT;
        request_header.arg_length = 0;
-       write(kdeinitSocket, &request_header, sizeof(request_header));
+       write(tdeinitSocket, &request_header, sizeof(request_header));
     }
     if (mSlaveValgrind == arg1)
     {

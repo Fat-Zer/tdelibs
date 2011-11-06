@@ -32,9 +32,9 @@
 /*
  Prevent getting killed by bad heuristic in Linux OOM-killer.
  This wrapper decreases the chance OOM killer kills it (or its children,
- namely kdeinit), opens a pipe and forks. Child drops privileges
- and launches kdeinit. Since processes started by kdeinit should
- not have this protection, kdeinit will after forking send the new
+ namely tdeinit), opens a pipe and forks. Child drops privileges
+ and launches tdeinit. Since processes started by tdeinit should
+ not have this protection, tdeinit will after forking send the new
  PID using the pipe and wait for a signal. This parent will reset the protection
  and SIGUSR1 the process to continue.
  returns 1 if pid is valid
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
             return 1;
          }
          close( pipes[ 0 ] );
-         /* read original environment passed by start_kdeinit_wrapper */
+         /* read original environment passed by start_tdeinit_wrapper */
          if( read( 0, header, 7 ) == 7 && strncmp( header, "environ", 7 ) == 0 ) {
              unsigned count;
              if( read( 0, &count, sizeof( unsigned )) == sizeof( unsigned )

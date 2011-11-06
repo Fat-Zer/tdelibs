@@ -1,7 +1,7 @@
 /*
    This file is part of the KDE libraries
 
-<<<Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+<<<Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
    Copyright (C) 2004 Frans Englich <frans.englich@telia.com>
 
    This library is free software; you can redistribute it and/or

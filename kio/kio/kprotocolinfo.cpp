@@ -26,7 +26,7 @@
 #include "kprotocolinfofactory.h"
 #include "kprotocolmanager.h"
 
-// Most of this class is implemented in kdecore/kprotocolinfo_kdecore.cpp
+// Most of this class is implemented in tdecore/kprotocolinfo_tdecore.cpp
 // This file only contains a few static class-functions that depend on
 // KProtocolManager
 

@@ -2,14 +2,14 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  *
  * This is free software; you can use this library under the GNU Library
  * General Public License, version 2. See the file "COPYING.LIB" for the
  * exact licensing terms.
  *
- * client.cpp: A client for kdesud.
+ * client.cpp: A client for tdesud.
  */
 
 #include <config.h>
@@ -64,7 +64,7 @@ KDEsuClient::KDEsuClient()
     TQCString display("QWS");
 #endif
 
-    sock = TQFile::encodeName(locateLocal("socket", TQString("kdesud_%1").arg(display.data())));
+    sock = TQFile::encodeName(locateLocal("socket", TQString("tdesud_%1").arg(display.data())));
     d = new KDEsuClientPrivate;
     connect();
 }
@@ -387,9 +387,9 @@ int KDEsuClient::stopServer()
 
 static TQString findDaemon()
 {
-    TQString daemon = locate("bin", "kdesud");
+    TQString daemon = locate("bin", "tdesud");
     if (daemon.isEmpty()) // if not in KDEDIRS, rely on PATH
-	daemon = KStandardDirs::findExe("kdesud");
+	daemon = KStandardDirs::findExe("tdesud");
 
     if (daemon.isEmpty())
     {
@@ -422,14 +422,14 @@ int KDEsuClient::startServer()
        return -1;
 
     if (!isServerSGID()) {
-	kdWarning(900) << k_lineinfo << "kdesud not setgid!\n";
+	kdWarning(900) << k_lineinfo << "tdesud not setgid!\n";
     }
 
-    // kdesud only forks to the background after it is accepting
+    // tdesud only forks to the background after it is accepting
     // connections.
-    // We start it via kdeinit to make sure that it doesn't inherit
+    // We start it via tdeinit to make sure that it doesn't inherit
     // any fd's from the parent process.
-    int ret = kapp->kdeinitExecWait(d->daemon);
+    int ret = kapp->tdeinitExecWait(d->daemon);
     connect();
     return ret;
 }

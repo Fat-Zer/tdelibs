@@ -98,7 +98,7 @@ KSycoca::KSycoca()
    }
    // We register with DCOP _before_ we try to open the database.
    // This way we can be relative sure that the KDE framework is
-   // up and running (kdeinit, dcopserver, klaucnher, kded) and
+   // up and running (tdeinit, dcopserver, klaucnher, kded) and
    // that the database is up to date.
    openDatabase();
    _self = this;
@@ -332,7 +332,7 @@ TQDataStream * KSycoca::findFactory(KSycocaFactoryId id)
          if (!triedLaunchingKdeinit) // try only once
          {
            triedLaunchingKdeinit = true;
-           kdDebug(7011) << "findFactory: we have no database.... launching kdeinit" << endl;
+           kdDebug(7011) << "findFactory: we have no database.... launching tdeinit" << endl;
            KApplication::startKdeinit();
            // Ok, the new database should be here now, open it.
          }

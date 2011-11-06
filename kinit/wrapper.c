@@ -181,13 +181,13 @@ static int openSocket()
      return -1;
   }
 
-  if (strlen(sock_file)+strlen(display)+strlen("/kdeinit_")+2 > MAX_SOCK_FILE)
+  if (strlen(sock_file)+strlen(display)+strlen("/tdeinit_")+2 > MAX_SOCK_FILE)
   {
      fprintf(stderr, "[trinity kinit] Warning: Socket name will be too long.\n");
      free (display);
      return -1;
   }
-  strcat(sock_file, "/kdeinit_");
+  strcat(sock_file, "/tdeinit_");
   strcat(sock_file, display);
   free(display);
 
@@ -330,24 +330,24 @@ int main(int argc, char **argv)
       p++;
    start = p;
 
-   if (strcmp(start, "kdeinit_wrapper") == 0)
+   if (strcmp(start, "tdeinit_wrapper") == 0)
       wrapper = 1;
    else if (strcmp(start, "kshell") == 0)
       ext_wrapper = 1;
    else if (strcmp(start, "kwrapper") == 0)
       kwrapper = 1;
-   else if (strcmp(start, "kdeinit_shutdown") == 0)
+   else if (strcmp(start, "tdeinit_shutdown") == 0)
    {
       if( argc > 1)
       {
          fprintf(stderr, "[trinity kinit] Usage: %s\n\n", start);
-         fprintf(stderr, "[trinity kinit] Shuts down kdeinit master process and terminates all processes spawned from it.\n");
+         fprintf(stderr, "[trinity kinit] Shuts down tdeinit master process and terminates all processes spawned from it.\n");
          exit( 255 );
       }
       sock = openSocket();
       if( sock < 0 )
       {
-          fprintf( stderr, "[trinity kinit] Error: Can't contact kdeinit!\n" );
+          fprintf( stderr, "[trinity kinit] Error: Can't contact tdeinit!\n" );
           exit( 255 );
       }
       header.cmd = LAUNCHER_TERMINATE_KDE;
@@ -370,7 +370,7 @@ int main(int argc, char **argv)
    }
 
    sock = openSocket();
-   if( sock < 0 ) /* couldn't contact kdeinit, start argv[ 0 ] directly */
+   if( sock < 0 ) /* couldn't contact tdeinit, start argv[ 0 ] directly */
    {
       execvp( argv[ 0 ], argv );
       fprintf( stderr, "[trinity kinit] Error: Can't run %s !\n", argv[ 0 ] );

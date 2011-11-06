@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "kdesasl.h"
+#include "tdesasl.h"
 
 #include <kmdcodec.h>
 #include <kurl.h>

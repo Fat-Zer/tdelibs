@@ -101,7 +101,7 @@ check_PROGRAMS = testkjs
 testkjs_SOURCES = testkjs.cpp
 testkjs_LDADD = libkjs.la
 
-DOXYGEN_REFERENCES = kdecore
+DOXYGEN_REFERENCES = tdecore
 include ../admin/Doxyfile.am
 
 .PHONY: parser

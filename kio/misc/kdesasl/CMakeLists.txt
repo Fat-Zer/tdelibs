@@ -12,8 +12,8 @@
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -23,20 +23,20 @@ link_directories(
 
 ##### headers ###################################
 
-install(FILES kdesasl.h DESTINATION ${INCLUDE_INSTALL_DIR}/kio )
+install(FILES tdesasl.h DESTINATION ${INCLUDE_INSTALL_DIR}/kio )
 
 
-##### kdesasl ###################################
+##### tdesasl ###################################
 
-set( target kdesasl )
+set( target tdesasl )
 
 set( ${target}_SRCS
-  kdesasl.cpp
+  tdesasl.cpp
 )
 
 tde_add_library( ${target} SHARED
   SOURCES ${${target}_SRCS}
   VERSION 1.2.0
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )

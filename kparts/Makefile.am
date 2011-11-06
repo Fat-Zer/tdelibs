@@ -28,5 +28,5 @@ libkparts_la_METASOURCES = AUTO
 servicetype_DATA = kpart.desktop krop.desktop krwp.desktop browserview.desktop 
 servicetypedir = $(kde_servicetypesdir)
 
-DOXYGEN_REFERENCES = kdecore kdeui kdefx kio
+DOXYGEN_REFERENCES = tdecore tdeui tdefx kio
 include ../admin/Doxyfile.am

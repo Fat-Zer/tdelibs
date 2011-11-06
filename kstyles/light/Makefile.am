@@ -20,10 +20,10 @@
 
 AM_CPPFLAGS = -DQT_PLUGIN
 
-INCLUDES = -I$(top_srcdir)/kdefx $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdefx $(all_includes)
 noinst_HEADERS = lightstyle-v2.h lightstyle-v3.h
 kde_style_LTLIBRARIES = light.la
 light_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-light_la_LIBADD =  $(LIB_QT) ../../kdefx/libtdefx.la
+light_la_LIBADD =  $(LIB_QT) ../../tdefx/libtdefx.la
 light_la_SOURCES = light.cpp lightstyle-v2.cpp lightstyle-v3.cpp
 light_la_METASOURCES = AUTO

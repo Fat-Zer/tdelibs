@@ -3,10 +3,10 @@ INCLUDES=$(all_includes)
 lib_LTLIBRARIES = libtdesasl.la
 METASOURCES     = AUTO
 
-kdesaslincludedir = $(includedir)/kio
-kdesaslinclude_HEADERS = kdesasl.h
+tdesaslincludedir = $(includedir)/kio
+tdesaslinclude_HEADERS = tdesasl.h
 
-libtdesasl_la_SOURCES = kdesasl.cpp
+libtdesasl_la_SOURCES = tdesasl.cpp
 libtdesasl_la_LDFLAGS = $(all_libraries) -version-info 3:0:2 -no-undefined
 libtdesasl_la_LIBADD = $(LIB_KDECORE) $(LIB_QT)
 

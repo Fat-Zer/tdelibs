@@ -12,17 +12,17 @@ libknewstuff_la_SOURCES = engine.cpp entry.cpp downloaddialog.cpp \
 
 bin_PROGRAMS = khotnewstuff
 
-khotnewstuff_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+khotnewstuff_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 khotnewstuff_LDADD = libknewstuff.la
 khotnewstuff_SOURCES = khotnewstuff.cpp
 
 EXTRA_PROGRAMS = testnewstuff ghns
 
-testnewstuff_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+testnewstuff_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 testnewstuff_LDADD   = libknewstuff.la
 testnewstuff_SOURCES = testnewstuff.cpp
 
-ghns_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+ghns_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 ghns_LDADD   = libknewstuff.la
 ghns_SOURCES = ghns.cpp
 

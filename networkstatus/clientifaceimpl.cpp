@@ -1,5 +1,5 @@
 /*
-    This file is part of kdepim.
+    This file is part of tdepim.
 
     Copyright (c) 2005 Will Stephenson <lists@stevello.free-online.co.uk>
 

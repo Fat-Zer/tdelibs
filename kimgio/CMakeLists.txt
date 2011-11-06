@@ -14,8 +14,8 @@ set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${USE_EXCEPTIONS} )
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -29,7 +29,7 @@ set( target kimg_eps )
 
 tde_add_kpart( ${target}
   SOURCES eps.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -40,7 +40,7 @@ set( target kimg_xview )
 
 tde_add_kpart( ${target}
   SOURCES xview.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -51,7 +51,7 @@ if( TIFF_FOUND )
   set( target kimg_tiff )
   tde_add_kpart( ${target}
     SOURCES tiffr.cpp
-    LINK kdecore-shared ${TIFF_LIBRARIES}
+    LINK tdecore-shared ${TIFF_LIBRARIES}
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
   install( FILES tiff.kimgio DESTINATION ${SERVICES_INSTALL_DIR} )
@@ -64,7 +64,7 @@ set( target kimg_ico )
 
 tde_add_kpart( ${target}
   SOURCES ico.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -75,7 +75,7 @@ if( JASPER_FOUND )
   set( target kimg_jp2 )
   tde_add_kpart( ${target}
     SOURCES jp2.cpp
-    LINK kdecore-shared ${JASPER_LIBRARIES}
+    LINK tdecore-shared ${JASPER_LIBRARIES}
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
   install( FILES jp2.kimgio DESTINATION ${SERVICES_INSTALL_DIR} )
@@ -87,7 +87,7 @@ endif( JASPER_FOUND )
 set( target kimg_pcx )
 tde_add_kpart( ${target}
   SOURCES pcx.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -97,7 +97,7 @@ tde_add_kpart( ${target}
 set( target kimg_tga )
 tde_add_kpart( ${target}
   SOURCES tga.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -107,7 +107,7 @@ tde_add_kpart( ${target}
 set( target kimg_rgb )
 tde_add_kpart( ${target}
   SOURCES rgb.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -117,7 +117,7 @@ tde_add_kpart( ${target}
 set( target kimg_xcf )
 tde_add_kpart( ${target}
   SOURCES xcf.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -127,7 +127,7 @@ tde_add_kpart( ${target}
 set( target kimg_dds )
 tde_add_kpart( ${target}
   SOURCES dds.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -138,7 +138,7 @@ if( OPENEXR_FOUND )
   set( target kimg_exr )
   tde_add_kpart( ${target}
     SOURCES exr.cpp
-    LINK kdecore-shared ${OPENEXR_LIBRARIES}
+    LINK tdecore-shared ${OPENEXR_LIBRARIES}
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
   # FIXME COMPILE_FLAGS must be written a little better
@@ -152,7 +152,7 @@ endif( OPENEXR_FOUND )
 set( target kimg_psd )
 tde_add_kpart( ${target}
   SOURCES psd.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -161,7 +161,7 @@ tde_add_kpart( ${target}
 set( target kimg_hdr )
 tde_add_kpart( ${target}
   SOURCES hdr.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 

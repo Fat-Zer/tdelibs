@@ -20,8 +20,8 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -53,7 +53,7 @@ tde_add_library( ${target} SHARED AUTOMOC
 )
 
 
-#### dcopserver (kdeinit) #######################
+#### dcopserver (tdeinit) #######################
 
 set( target dcopserver )
 
@@ -61,7 +61,7 @@ set( ${target}_SRCS
   dcopserver.cpp dcopsignals.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK kICE-static DCOP-shared
 )

@@ -148,7 +148,7 @@ int main(int argc, char **argv)
       args.append("--checkstamps");
       TQString command = "kbuildsycoca";
       TQCString _launcher = KApplication::launcher();
-      if (!DCOPRef(_launcher, _launcher).call("kdeinit_exec_wait", command, args).isValid())
+      if (!DCOPRef(_launcher, _launcher).call("tdeinit_exec_wait", command, args).isValid())
       {
          qWarning("Can't talk to klauncher!");
          command = KGlobal::dirs()->findExe(command);

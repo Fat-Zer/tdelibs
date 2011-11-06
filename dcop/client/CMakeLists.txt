@@ -13,8 +13,8 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_BINARY_DIR}/tdecore
 )
 
 link_directories(

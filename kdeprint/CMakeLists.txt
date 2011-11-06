@@ -26,12 +26,12 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdefx
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdefx
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kio/kfile
@@ -53,16 +53,16 @@ install( FILES
     kprintdialogpage.h kpreloadobject.h kmmanager.h
     kmprinter.h kmobject.h kprintdialog.h driver.h
     kmjobmanager.h kmjob.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/kdeprint )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdeprint )
 
 
 ##### other data ################################
 
 install( FILES kprintpreviewui.rc DESTINATION ${CONFIG_INSTALL_DIR}/ui )
-install( FILES testprint.ps specials.desktop DESTINATION ${DATA_INSTALL_DIR}/kdeprint )
-install( FILES kdeprintd.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kded )
-install( FILES kdeprintrc DESTINATION ${CONFIG_INSTALL_DIR} )
-install( FILES kdeprintrc.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
+install( FILES testprint.ps specials.desktop DESTINATION ${DATA_INSTALL_DIR}/tdeprint )
+install( FILES tdeprintd.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kded )
+install( FILES tdeprintrc DESTINATION ${CONFIG_INSTALL_DIR} )
+install( FILES tdeprintrc.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 
 
 ##### driverparse ###############################
@@ -74,25 +74,25 @@ tde_add_library( ${target} STATIC_PIC
 )
 
 
-##### kded_kdeprintd ############################
+##### kded_tdeprintd ############################
 
-set( target kded_kdeprintd )
+set( target kded_tdeprintd )
 
 set( ${target}_SRCS
-  kdeprintd.cpp kprintprocess.cpp kdeprintd.skel
+  tdeprintd.cpp kprintprocess.cpp tdeprintd.skel
 )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kio-shared kdeinit_kded-shared
+  LINK kio-shared tdeinit_kded-shared
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
 
-#### kdeprint ###################################
+#### tdeprint ###################################
 
-set( target kdeprint )
+set( target tdeprint )
 
 set( ${target}_SRCS
   kmfactory.cpp kmjob.cpp kmjobmanager.cpp kmmanager.cpp
@@ -103,7 +103,7 @@ set( ${target}_SRCS
   kpcopiespage.cpp kpdriverpage.cpp kprinterpropertydialog.cpp
   kpgeneralpage.cpp kpqtpage.cpp kmthreadjob.cpp
   kpipeprocess.cpp kpfilterpage.cpp kmspecialmanager.cpp
-  kdeprintcheck.cpp plugincombobox.cpp kpreloadobject.cpp
+  tdeprintcheck.cpp plugincombobox.cpp kpreloadobject.cpp
   kfilelist.cpp kprintaction.cpp kpfileselectpage.cpp
   treecombobox.cpp kxmlcommand.cpp util.cpp printerfilter.cpp
   marginpreview.cpp marginvaluewidget.cpp marginwidget.cpp

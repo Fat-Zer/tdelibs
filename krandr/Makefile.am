@@ -13,7 +13,7 @@ libkrandr_la_SOURCES  = randr.cpp lowlevel_randr.c ktimerdialog.cpp libkrandr.cc
 METASOURCES = AUTO
 
 libkrandr_la_LDFLAGS = $(KDE_MT_LDFLAGS) -version-info 0:95  -no-undefined
-libkrandr_la_LIBADD = $(LIBASOUND) ../kdecore/libtdecore.la $(LIB_QT) $(LIB_XRANDR)
+libkrandr_la_LIBADD = $(LIBASOUND) ../tdecore/libtdecore.la $(LIB_QT) $(LIB_XRANDR)
 
-DOXYGEN_REFERENCES = kdecore
+DOXYGEN_REFERENCES = tdecore
 include ../admin/Doxyfile.am

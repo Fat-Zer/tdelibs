@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -123,7 +123,7 @@ KMListView::KMListView(TQWidget *parent, const char *name)
 	connect(this,TQT_SIGNAL(onViewport()),TQT_SLOT(slotOnViewport()));
 
 	m_root = new KMListViewItem(this,i18n("Print System"));
-	m_root->setPixmap(0,SmallIcon("kdeprint_printer"));
+	m_root->setPixmap(0,SmallIcon("tdeprint_printer"));
 	m_root->setOpen(true);
 	m_classes = new KMListViewItem(m_root,i18n("Classes"));
 	m_classes->setPixmap(0,SmallIcon("package"));

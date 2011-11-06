@@ -77,7 +77,7 @@ Arts::SoundServerV2 KArtsServer::server(void)
 
 	X11CommConfig.sync();
 	
-	proc << TQFile::encodeName(KStandardDirs::findExe(TQString::tqfromLatin1("kdeinit_wrapper"))).data();
+	proc << TQFile::encodeName(KStandardDirs::findExe(TQString::tqfromLatin1("tdeinit_wrapper"))).data();
 
 	if(rt)
 		proc << TQFile::encodeName(KStandardDirs::findExe(TQString::tqfromLatin1("artswrapper"))).data();
@@ -91,7 +91,7 @@ Arts::SoundServerV2 KArtsServer::server(void)
 		// We could have a race-condition here.
 		// The correct way to do it is to make artsd fork-and-exit
 		// after starting to listen to connections (and running artsd
-		// directly instead of using kdeinit), but this is better
+		// directly instead of using tdeinit), but this is better
 		// than nothing.
 		int time = 0;
 		do

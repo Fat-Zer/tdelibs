@@ -20,17 +20,17 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore/network
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore/network
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kio/kfile
-  ${CMAKE_SOURCE_DIR}/kdeprint
-  ${CMAKE_SOURCE_DIR}/kdeprint/management
+  ${CMAKE_SOURCE_DIR}/tdeprint
+  ${CMAKE_SOURCE_DIR}/tdeprint/management
 )
 
 link_directories(
@@ -40,13 +40,13 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES cups.print DESTINATION ${DATA_INSTALL_DIR}/kdeprint/plugins )
-install( FILES preview.png preview-mini.png DESTINATION ${DATA_INSTALL_DIR}/kdeprint )
+install( FILES cups.print DESTINATION ${DATA_INSTALL_DIR}/tdeprint/plugins )
+install( FILES preview.png preview-mini.png DESTINATION ${DATA_INSTALL_DIR}/tdeprint )
 
 
-#### kdeprint_cups ##############################
+#### tdeprint_cups ##############################
 
-set( target kdeprint_cups )
+set( target tdeprint_cups )
 
 set( ${target}_SRCS
   cupsinfos.cpp ipprequest.cpp kmcupsfactory.cpp
@@ -62,7 +62,7 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeprint_management-shared ${CUPS_LIBRARIES}
+  LINK tdeprint_management-shared ${CUPS_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -77,7 +77,7 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK driverparse-static kdefakes-shared ${ZLIB_LIBRARIES} ${DL_LIBRARIES}
+  LINK driverparse-static tdefakes-shared ${ZLIB_LIBRARIES} ${DL_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
@@ -92,6 +92,6 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kdefakes-shared ${CUPS_LIBRARIES}
+  LINK tdefakes-shared ${CUPS_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )

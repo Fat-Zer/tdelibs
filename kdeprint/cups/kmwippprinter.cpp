@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -62,7 +62,7 @@ KMWIppPrinter::KMWIppPrinter(TQWidget *parent, const char *name)
 	m_info->setPaper(tqcolorGroup().background());
 	m_info->setMinimumHeight(100);
 	m_info->setText(i18n("<p>Either enter the printer URI directly, or use the network scanning facility.</p>"));
-	m_ippreport = new KPushButton(KGuiItem(i18n("&IPP Report"), "kdeprint_report"), this);
+	m_ippreport = new KPushButton(KGuiItem(i18n("&IPP Report"), "tdeprint_report"), this);
 	m_ippreport->setEnabled(false);
 
 	m_scanner = new NetworkScanner( 631, this );
@@ -140,7 +140,7 @@ void KMWIppPrinter::slotScanFinished()
 		else
 		name = it.current()->Name;
 		TQListViewItem	*item = new TQListViewItem(m_list,name,it.current()->IP,TQString::number(it.current()->Port));
-		item->setPixmap(0,SmallIcon("kdeprint_printer"));
+		item->setPixmap(0,SmallIcon("tdeprint_printer"));
 	}
 }
 

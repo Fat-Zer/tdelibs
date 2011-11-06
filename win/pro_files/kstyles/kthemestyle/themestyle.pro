@@ -1,6 +1,6 @@
 include( ../common.pro )
 
-LIBS += $$KDELIBDESTDIR\kdecore$$KDELIB_SUFFIX
+LIBS += $$KDELIBDESTDIR\tdecore$$KDELIB_SUFFIX
 
 TARGET		= kthemestyle$$KDEBUG
 

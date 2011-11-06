@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *  Copyright (C) 2004  Dominique Devriese <devriese@kde.org>
  *
  *  This library is free software; you can redistribute it and/or
@@ -34,7 +34,7 @@ extern "C"
 {
 	KDEPRINT_EXPORT int add_printer_wizard(TQWidget *parent)
 	{
-                return kdeprint_management_add_printer_wizard( parent );
+                return tdeprint_management_add_printer_wizard( parent );
 	}
 
 	KDEPRINT_EXPORT bool config_dialog(TQWidget *parent)

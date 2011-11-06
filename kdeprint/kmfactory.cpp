@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -24,7 +24,7 @@
 #include "kprinterimpl.h"
 #include "kprinter.h"
 #include "kpreloadobject.h"
-#include "kdeprintcheck.h"
+#include "tdeprintcheck.h"
 #include "kxmlcommand.h"
 
 #include <tqdir.h>
@@ -113,8 +113,8 @@ KMFactory::KMFactory()
 	if ( !ok )
 		settings.writeEntry( "/qt/embedFonts", true );
 
-	KGlobal::iconLoader()->addAppDir("kdeprint");
-        KGlobal::locale()->insertCatalogue("kdeprint");
+	KGlobal::iconLoader()->addAppDir("tdeprint");
+        KGlobal::locale()->insertCatalogue("tdeprint");
 
 	// create DCOP signal connection
 	connectDCOPSignal(0, 0, "pluginChanged(pid_t)", "slot_pluginChanged(pid_t)", false);
@@ -213,7 +213,7 @@ void KMFactory::loadFactory(const TQString& syst)
 		if (sys.isEmpty())
 			// load default configured print plugin
 			sys = printSystem();
-		TQString	libname = TQString::tqfromLatin1("kdeprint_%1").arg(sys);
+		TQString	libname = TQString::tqfromLatin1("tdeprint_%1").arg(sys);
 		m_factory = KLibLoader::self()->factory(TQFile::encodeName(libname));
                 if (!m_factory)
                 {
@@ -228,7 +228,7 @@ KConfig* KMFactory::printConfig(const TQString& group)
 {
 	if (!m_printconfig)
 	{
-		m_printconfig = new KConfig("kdeprintrc");
+		m_printconfig = new KConfig("tdeprintrc");
 		Q_CHECK_PTR(m_printconfig);
 	}
 	if (!group.isEmpty())
@@ -295,7 +295,7 @@ void KMFactory::reload(const TQString& syst, bool saveSyst)
 
 TQValueList<KMFactory::PluginInfo> KMFactory::pluginList()
 {
-	TQDir	d(locate("data", "kdeprint/plugins/"), "*.print", TQDir::Name, TQDir::Files);
+	TQDir	d(locate("data", "tdeprint/plugins/"), "*.print", TQDir::Name, TQDir::Files);
 	TQValueList<PluginInfo>	list;
 	for (uint i=0; i<d.count(); i++)
 	{
@@ -311,7 +311,7 @@ KMFactory::PluginInfo KMFactory::pluginInfo(const TQString& name)
 {
 	TQString	path(name);
 	if (path[0] != '/')
-		path = locate("data", TQString::tqfromLatin1("kdeprint/plugins/%1.print").arg(name));
+		path = locate("data", TQString::tqfromLatin1("tdeprint/plugins/%1.print").arg(name));
 	KSimpleConfig	conf(path);
 	PluginInfo	info;
 
@@ -339,7 +339,7 @@ void KMFactory::registerObject(KPReloadObject *obj, bool priority)
 			m_objects.prepend(obj);
 		else
 			m_objects.append(obj);
-		kdDebug(500) << "kdeprint: registering " << (void*)obj << ", number of objects = " << m_objects.count() << endl;
+		kdDebug(500) << "tdeprint: registering " << (void*)obj << ", number of objects = " << m_objects.count() << endl;
 	}
 }
 
@@ -347,7 +347,7 @@ void KMFactory::unregisterObject(KPReloadObject *obj)
 {
 	// remove object from list (not deleted as autoDelete is false)
 	m_objects.removeRef(obj);
-	kdDebug(500) << "kdeprint: unregistering " << (void*)obj << ", number of objects = " << m_objects.count() << endl;
+	kdDebug(500) << "tdeprint: unregistering " << (void*)obj << ", number of objects = " << m_objects.count() << endl;
 }
 
 TQString KMFactory::autoDetect()
@@ -414,14 +414,14 @@ void KMFactory::saveConfig()
 
 TQPair<TQString,TQString> KMFactory::requestPassword( int& seqNbr, const TQString& user, const TQString& host, int port )
 {
-	DCOPRef kdeprintd( "kded", "kdeprintd" );
+	DCOPRef tdeprintd( "kded", "tdeprintd" );
 	/**
 	 * We do not use an internal event loop for 2 potential problems:
 	 *  - the MessageWindow modality (appearing afterwards, it pops up on top
 	 *    of the password dialog)
 	 *  - KMTimer should be stopped, but it's unavailable from this object
 	 */
-	DCOPReply reply = kdeprintd.call( "requestPassword", user, host, port, seqNbr );
+	DCOPReply reply = tdeprintd.call( "requestPassword", user, host, port, seqNbr );
 	if ( reply.isValid() )
 	{
 		TQString replyString = reply;
@@ -440,14 +440,14 @@ TQPair<TQString,TQString> KMFactory::requestPassword( int& seqNbr, const TQStrin
 
 void KMFactory::initPassword( const TQString& user, const TQString& password, const TQString& host, int port )
 {
-	DCOPRef kdeprintd( "kded", "kdeprintd" );
+	DCOPRef tdeprintd( "kded", "tdeprintd" );
 	/**
 	 * We do not use an internal event loop for 2 potential problems:
 	 *  - the MessageWindow modality (appearing afterwards, it pops up on top
 	 *    of the password dialog)
 	 *  - KMTimer should be stopped, but it's unavailable from this object
 	 */
-	kdeprintd.call( "initPassword", user, password, host, port );
+	tdeprintd.call( "initPassword", user, password, host, port );
 }
 
 #include "kmfactory.moc"

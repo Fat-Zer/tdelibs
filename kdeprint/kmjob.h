@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *
  *  This library is free software; you can redistribute it and/or
@@ -27,7 +27,7 @@
 
 #include <tqstring.h>
 #include <tqvaluevector.h>
-#include <kdeprint/kmobject.h>
+#include <tdeprint/kmobject.h>
 #include <kdelibs_export.h>
 
 /**

@@ -49,7 +49,7 @@
 
 #include "kpassdlg.h"
 
-#include "../kdesu/defaults.h"
+#include "../tdesu/defaults.h"
 
 /*
  * Password line editor.
@@ -339,7 +339,7 @@ void KPasswordDialog::init()
 
     KConfig* const cfg = KGlobal::config();
     const KConfigGroupSaver saver(cfg, "Passwords");
-    bool def = ( qstrcmp( tqAppName(), "kdesu" ) == 0 ? defKeep : false );
+    bool def = ( qstrcmp( tqAppName(), "tdesu" ) == 0 ? defKeep : false );
     if (m_Keep && cfg->readBoolEntry("Keep", def))
 	++m_Keep;
 

@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -285,7 +285,7 @@ TQValueList<KAction*> KMCupsJobManager::createPluginActions(KActionCollection *c
 	TQValueList<KAction*>	list;
 	KAction	*act(0);
 
-	list <<  (act = new PluginAction(0, i18n("&Job IPP Report"), "kdeprint_report", 0, coll, "plugin_ipp"));
+	list <<  (act = new PluginAction(0, i18n("&Job IPP Report"), "tdeprint_report", 0, coll, "plugin_ipp"));
 	act->setGroup("plugin");
 	list << (act = new PluginAction(1, i18n("&Increase Priority"), "up", 0, coll, "plugin_prioup"));
 	act->setGroup("plugin");

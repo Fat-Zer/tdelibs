@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -55,8 +55,8 @@ protected:
 
 extern "C"
 {
-	void* init_kdeprint_tool_escputil() KDE_EXPORT;
-	void* init_kdeprint_tool_escputil()
+	void* init_tdeprint_tool_escputil() KDE_EXPORT;
+	void* init_tdeprint_tool_escputil()
 	{
 		return new EscpFactory;
 	}
@@ -78,7 +78,7 @@ EscpWidget::EscpWidget(TQWidget *parent, const char *name)
 	TQPushButton	*alignbtn = new TQPushButton(this, "-a");
 	alignbtn->setPixmap(DesktopIcon("exec"));
 	TQPushButton	*inkbtn = new TQPushButton(this, "-i");
-	inkbtn->setPixmap(DesktopIcon("kdeprint_inklevel"));
+	inkbtn->setPixmap(DesktopIcon("tdeprint_inklevel"));
 	TQPushButton	*identbtn = new TQPushButton(this, "-d");
 	identbtn->setPixmap(DesktopIcon("exec"));
 

@@ -17,8 +17,8 @@ or <a href="http://doc.trolltech.com/3.0/porting.html">this page online</a>.<P>
 <UL>
 <LI><A HREF="#gettingstarted">Getting Started</A></LI>
 <LI><A HREF="#kab">Changes in kab</A></LI>
-<LI><A HREF="#kdecore">Changes in kdecore</A></LI>
-<LI><A HREF="#kdeui">Changes in kdeui</A></LI>
+<LI><A HREF="#tdecore">Changes in tdecore</A></LI>
+<LI><A HREF="#tdeui">Changes in tdeui</A></LI>
 <LI><A HREF="#kio">Changes in kio</A></LI>
 <LI><A HREF="#kparts">Changes in kparts</A></LI>
 <LI><A HREF="#kspell">Changes in kspell</A></LI>
@@ -65,7 +65,7 @@ The old name will still work unless KDE_NO_COMPAT is defined.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="kdecore">Changes in kdecore</A></H3>
+<H3><A NAME="tdecore">Changes in tdecore</A></H3>
 
 <H4>KDesktopWidget</H4>
 KDesktopWidget is obsolete. Include &lt;tqdesktopwidget.h&gt; and use QDesktopWidget
@@ -109,7 +109,7 @@ The <i>filename()</i> method has been renamed to <i>fileName()</i>.
 The old name will still work unless KDE_NO_COMPAT is defined.
 
 <H4>KPixmapSplitter</H4>
-KPixmapSplitter has now been moved to the new kdefx library.
+KPixmapSplitter has now been moved to the new tdefx library.
 
 <H4>KStringHandler</H4>
 The <i>matchFilename( const TQString& filename, const TQString& pattern )</i> method has been 
@@ -121,8 +121,8 @@ Due to the major changes in the TQStyle API in Qt3, KStyle has been completely
 re-written. KStyle is now a thin wrapper around TQCommonStyle with a few extra 
 primitive elements and a simple popupMenu transparency engine. All KStyles can
 now style Qt apps like designer and assistant automatically. KStyle is no longer
-present in kdecore. It is now in a new library called kdefx to allow Qt apps to
-use KDE's styles without having the styles linked to kdecore/kdeui.
+present in tdecore. It is now in a new library called tdefx to allow Qt apps to
+use KDE's styles without having the styles linked to tdecore/tdeui.
 
 <H4>KURL</H4>
 The <i>filename( bool _ignore_trailing_slash_in_path = true )</i> method has been 
@@ -219,7 +219,7 @@ KURLBar and KURLBarItem.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="kdeui">Changes in kdeui</A></H3>
+<H3><A NAME="tdeui">Changes in tdeui</A></H3>
 
 <H4>KAccelMenu</H4>
 This class has been removed, Qt offers the same functionality.
@@ -281,7 +281,7 @@ KEdit is now deprecated. You should use use KTextEditor::Editor or
 KTextEdit instead.
 
 <H4>KImageEffect</H4>
-KImageEffect has now been moved to the new kdefx library.
+KImageEffect has now been moved to the new tdefx library.
 
 <H4>KMessageBox</H4>
 KMessageBox now does automatic line-breaking. When using plain-text, you should 
@@ -303,7 +303,7 @@ at run-time). See KDE 3.0 documentation
 for more informations on this new extension.
 
 <H4>KPixmapEffect</H4>
-PixmapEffect has now been moved to the new kdefx library.
+PixmapEffect has now been moved to the new tdefx library.
 
 <H4>KProgress</H4>
 KProgress is now based on TQProgressBar.
@@ -319,7 +319,7 @@ The old name will still work unless KDE_NO_COMPAT is defined.
 
 <H4>KThemeBase, KThemeStyle</H4>
 KThemeBase and KThemeStyle have been ported over to the new QStyle/KStyle API
-present in Qt3/KDE3. KThemeBase is no longer in kdeui, but in kstyles/kthemestyle
+present in Qt3/KDE3. KThemeBase is no longer in tdeui, but in kstyles/kthemestyle
 as its use is basically limited to KThemeStyle.
 
 <H4>KAction, KToolBar, KToolBarButton and icons</H4>

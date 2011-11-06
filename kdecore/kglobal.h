@@ -227,7 +227,7 @@ int KDECORE_EXPORT kasciistricmp( const char *str1, const char *str2 );
  * support, site-independent access to the filesystem and a large number
  * of other (but no less important) things.
  *
- * All KDE applications should link to the kdecore library. Also, using a
+ * All KDE applications should link to the tdecore library. Also, using a
  * KApplication derived class instead of TQApplication is almost
  * mandatory if you expect your application to behave nicely within the
  * KDE environment.

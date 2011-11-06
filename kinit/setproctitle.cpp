@@ -134,7 +134,7 @@ char		**Argv = NULL;		/* pointer to argument vector */
 char		*LastArgv = NULL;	/* end of argv */
 
 void
-kdeinit_initsetproctitle(int argc, char **argv, char **envp)
+tdeinit_initsetproctitle(int argc, char **argv, char **envp)
 {
 	register int i, envpsize = 0;
 #if !defined(HAVE_NSGETENVIRON) || !defined(HAVE_CRT_EXTERNS_H)
@@ -287,7 +287,7 @@ setproctitle(const char *fmt, ...)
 
 /*VARARGS2*/
 void
-kdeinit_setproctitle(const char *fmt, ...)
+tdeinit_setproctitle(const char *fmt, ...)
 {
 	char buf[SPT_BUFSIZE];
 

@@ -26,8 +26,8 @@ lib_LTLIBRARIES = libtdefx.la
 libtdefx_la_LDFLAGS = $(KDE_RPATH) $(KDE_MT_LDFLAGS) $(all_libraries) -no-undefined -version-info 6:0:2
 libtdefx_la_LIBADD = $(LIB_QT) $(LIB_XRENDER) $(LIB_X11)
 libtdefx_la_NMCHECK = $(srcdir)/libtdefx.nmcheck
-libtdefx_la_NMCHECKWEAK = $(srcdir)/libtdefx_weak.nmcheck $(top_srcdir)/kdecore/libqt-mt_weak.nmcheck \
-	$(top_srcdir)/kdecore/standard_weak.nmcheck
+libtdefx_la_NMCHECKWEAK = $(srcdir)/libtdefx_weak.nmcheck $(top_srcdir)/tdecore/libqt-mt_weak.nmcheck \
+	$(top_srcdir)/tdecore/standard_weak.nmcheck
 
 include_HEADERS = kpixmap.h kpixmapsplitter.h \
 	kpixmapeffect.h kimageeffect.h kdrawutil.h kstyle.h kcpuinfo.h
@@ -40,6 +40,6 @@ METASOURCES = AUTO
 
 EXTRA_DIST = Mainpage.dox
 
-DOXYGEN_REFERENCES = kdecore
+DOXYGEN_REFERENCES = tdecore
 include ../admin/Doxyfile.am
 

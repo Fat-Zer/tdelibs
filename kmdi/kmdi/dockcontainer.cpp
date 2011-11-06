@@ -37,7 +37,7 @@
 #include <kconfig.h>
 #include <klocale.h>
 
-//TODO: Well, this is already defined in kdeui/kdockwidget.cpp
+//TODO: Well, this is already defined in tdeui/kdockwidget.cpp
 static const char* const kmdi_not_close_xpm[]={
 "5 5 2 1",
 "# c black",

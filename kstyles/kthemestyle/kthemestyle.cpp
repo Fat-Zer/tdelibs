@@ -115,7 +115,7 @@ public:
     {
 #ifdef __GLIBC__
         dlopen("kthemestyle.so",RTLD_LAZY);
-        //####### Keep reference count up so kdecore w. fast-malloc doesn't get unloaded
+        //####### Keep reference count up so tdecore w. fast-malloc doesn't get unloaded
         //####### (Fixes exit crashes with qt-only apps that occur on Linux)
         //####### This should be rethought after 3.0,
         //####### as it relies on the implementation-specific behavior

@@ -20,7 +20,7 @@
 #    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #    Boston, MA 02110-1301, USA.
 
-INCLUDES = -I$(top_srcdir)/kdefx -I$(top_srcdir)/kdecore/network $(all_includes) $(LIBART_CFLAGS)
+INCLUDES = -I$(top_srcdir)/tdefx -I$(top_srcdir)/tdecore/network $(all_includes) $(LIBART_CFLAGS)
 
 if include_SVGICONS
 SVGICONS=svgicons
@@ -117,20 +117,20 @@ libtdecore_la_SOURCES = libintl.cpp kapplication.cpp \
 	kcalendarsystemhijri.cpp kcalendarsystemhebrew.cpp \
 	kcalendarsystemfactory.cpp kmacroexpander.cpp kidna.cpp \
 	ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp \
-	kprotocolinfo_kdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp \
+	kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp \
 	kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp \
 	kqiodevicegzip_p.cpp ktimezones.cpp
 
 libtdecore_la_LDFLAGS = $(QT_LDFLAGS) $(KDE_RPATH) $(KDE_MT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) -version-info 6:0:2 -no-undefined
 libtdecore_la_LIBADD = malloc/libklmalloc.la network/libtdecorenetwork.la $(SVGICON_LIB) ../dcop/libDCOP.la ../libltdl/libltdlc.la \
-	$(LIBART_LIBS) $(LIB_IDN) $(top_builddir)/kdefx/libtdefx.la $(LIB_QT) $(LIBSM) $(LIB_X11) $(LIBZ) $(LIBDL)
+	$(LIBART_LIBS) $(LIB_IDN) $(top_builddir)/tdefx/libtdefx.la $(LIB_QT) $(LIBSM) $(LIB_X11) $(LIBZ) $(LIBDL)
 libtdecore_la_NMCHECK = $(srcdir)/libtdecore.nmcheck
 libtdecore_la_NMCHECKWEAK = $(srcdir)/libtdecore_weak.nmcheck $(srcdir)/libqt-mt_weak.nmcheck \
-	$(top_srcdir)/dcop/libDCOP_weak.nmcheck $(top_srcdir)/kdecore/standard_weak.nmcheck
+	$(top_srcdir)/dcop/libDCOP_weak.nmcheck $(top_srcdir)/tdecore/standard_weak.nmcheck
 
 libtdecore_la_METASOURCES = AUTO
 
-SRCDOC_DEST=$(kde_htmldir)/en/kdelibs/kdecore
+SRCDOC_DEST=$(kde_htmldir)/en/kdelibs/tdecore
 
 kdebugdir = $(kde_confdir)
 kdebug_DATA = kdebug.areas kdebugrc language.codes
@@ -154,7 +154,7 @@ install-data-local:
 uninstall-local:
 	-rm -f $(DESTDIR)$(includedir)/kio/kmdcodec.h
 
-# If you add a color palette file here, please change kdelibs/kdeui/kcolordialog.cpp too to allow to translate the name
+# If you add a color palette file here, please change kdelibs/tdeui/kcolordialog.cpp too to allow to translate the name
 colors_DATA = 40.colors Web.colors Royal.colors Rainbow.colors
 colorsdir = $(kde_confdir)/colors
 
@@ -188,7 +188,7 @@ install-exec-hook:
 
 DISTCLEANFILES = kde-config.cpp
 
-DOXYGEN_REFERENCES = dcop kdeui kparts kio
+DOXYGEN_REFERENCES = dcop tdeui kparts kio
 DOXYGEN_EXCLUDE = malloc kde_file.h
 DOXYGEN_SET_WARN_IF_UNDOCUMENTED = YES
 

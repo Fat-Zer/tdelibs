@@ -1136,7 +1136,7 @@ void KHTMLPart::launchJSErrorDialog() {
 void KHTMLPart::launchJSConfigDialog() {
   TQStringList args;
   args << "khtml_java_js";
-  KApplication::kdeinitExec( "kcmshell", args );
+  KApplication::tdeinitExec( "kcmshell", args );
 }
 
 TQVariant KHTMLPart::executeScript(const TQString& filename, int baseLine, const DOM::Node& n, const TQString& script)

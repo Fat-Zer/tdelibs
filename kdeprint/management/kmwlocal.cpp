@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -48,7 +48,7 @@ KMWLocal::KMWLocal(TQWidget *parent, const char *name)
 	m_ports->addColumn("");
 	m_ports->setSorting(-1);
 	TQListViewItem	*root = new TQListViewItem(m_ports, i18n("Local System"));
-	root->setPixmap(0, SmallIcon("kdeprint_computer"));
+	root->setPixmap(0, SmallIcon("tdeprint_computer"));
 	root->setOpen(true);
 	connect(m_ports, TQT_SIGNAL(selectionChanged(TQListViewItem*)), TQT_SLOT(slotPortSelected(TQListViewItem*)));
 	TQLabel	*l1 = new TQLabel(i18n("URI:"), this);
@@ -197,7 +197,7 @@ void KMWLocal::initialize()
 		{
 			TQListViewItem	*pItem = new TQListViewItem(last[index], printer);
 			last[index]->setOpen(true);
-			pItem->setPixmap(0, SmallIcon("kdeprint_printer"));
+			pItem->setPixmap(0, SmallIcon("tdeprint_printer"));
 		}
 	}
 	m_initialized = true;

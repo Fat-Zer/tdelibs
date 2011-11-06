@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -84,7 +84,7 @@ void KMWIppSelect::initPrinter(KMPrinter *p)
 		while (attr)
 		{
 			if (attr->name && strcmp(attr->name,"printer-name") == 0)
-				m_list->insertItem(SmallIcon("kdeprint_printer"),TQString::tqfromLatin1(attr->values[0].string.text));
+				m_list->insertItem(SmallIcon("tdeprint_printer"),TQString::tqfromLatin1(attr->values[0].string.text));
 			attr = attr->next;
 		}
 		m_list->sort();

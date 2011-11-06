@@ -19,35 +19,35 @@ INCLUDES = -I$(srcdir)/../libltdl/ $(all_includes) $(KDEINIT_XFT_INCLUDES)
 
 SUBDIRS = . tests
 
-bin_PROGRAMS = kdeinit kdeinit_wrapper kshell kdeinit_shutdown lnusertemp kwrapper kioslave \
-               kstartupconfig kdostartupconfig start_kdeinit start_kdeinit_wrapper
+bin_PROGRAMS = tdeinit tdeinit_wrapper kshell tdeinit_shutdown lnusertemp kwrapper kioslave \
+               kstartupconfig kdostartupconfig start_tdeinit start_tdeinit_wrapper
 
 lib_LTLIBRARIES = 
-kdeinit_LTLIBRARIES = klauncher.la
-kdeinit_SOURCES = kinit.cpp setproctitle.cpp
+tdeinit_LTLIBRARIES = klauncher.la
+tdeinit_SOURCES = kinit.cpp setproctitle.cpp
 
 # NOTE: We link against all common libraries even if we don't need them ourselves.
 # For the future: examine if condensing the tons of *_LDFLAGS variables
 # into $(all_libraries) isn't better
 AM_LDFLAGS = $(LDFLAGS_AS_NEEDED) $(LDFLAGS_NEW_DTAGS)
 
-kdeinit_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
+tdeinit_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                   $(KDE_RPATH)
-kdeinit_LDADD = $(LIB_KPARTS) -lXft $(LIB_QT)
+tdeinit_LDADD = $(LIB_KPARTS) -lXft $(LIB_QT)
 
 kioslave_SOURCES = kioslave.cpp
 kioslave_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                   $(KDE_RPATH)
 kioslave_LDADD = $(LIB_KIO) 
 
-kdeinit_wrapper_SOURCES = wrapper.c
-kdeinit_wrapper_LDADD = $(LIBSOCKET)
+tdeinit_wrapper_SOURCES = wrapper.c
+tdeinit_wrapper_LDADD = $(LIBSOCKET)
 
 kshell_SOURCES = shell.c
 kshell_LDADD = $(LIBSOCKET)
 
-kdeinit_shutdown_SOURCES = wrapper.c
-kdeinit_shutdown_LDADD = $(LIBSOCKET)
+tdeinit_shutdown_SOURCES = wrapper.c
+tdeinit_shutdown_LDADD = $(LIBSOCKET)
 
 lnusertemp_SOURCES = lnusertemp.c 
 lnusertemp_LDFLAGS = $(KDE_RPATH)
@@ -60,18 +60,18 @@ klauncher_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_KDECORE) $(top_builddir)/dcop/l
 klauncher_la_SOURCES = klauncher.cpp klauncher_main.cpp autostart.cpp
 
 kstartupconfig_SOURCES  = kstartupconfig.cpp
-kstartupconfig_LDADD  = $(top_builddir)/kdecore/libtdefakes.la $(LIB_QT)
+kstartupconfig_LDADD  = $(top_builddir)/tdecore/libtdefakes.la $(LIB_QT)
 kdostartupconfig_SOURCES = kdostartupconfig.cpp
 kdostartupconfig_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                            $(KDE_RPATH)
 kdostartupconfig_LDADD  = $(LIB_KDECORE)
 
-start_kdeinit_SOURCES = start_kdeinit.c
-kdeinitpath = $(bindir)/kdeinit
-start_kdeinit_CFLAGS = $(KDE_USE_FPIE) -DEXECUTE=\"$(kdeinitpath)\"
-start_kdeinit_LDFLAGS = $(KDE_USE_PIE)
+start_tdeinit_SOURCES = start_tdeinit.c
+tdeinitpath = $(bindir)/tdeinit
+start_tdeinit_CFLAGS = $(KDE_USE_FPIE) -DEXECUTE=\"$(tdeinitpath)\"
+start_tdeinit_LDFLAGS = $(KDE_USE_PIE)
 
-start_kdeinit_wrapper_SOURCES = start_kdeinit_wrapper.c
+start_tdeinit_wrapper_SOURCES = start_tdeinit_wrapper.c
 
 METASOURCES = AUTO
 
@@ -86,7 +86,7 @@ dummy.cpp:
 
 install-exec-hook:
 	@if test \${KDEINIT_SETUID} != 0; then \
-		(chown 0 $(DESTDIR)$(bindir)/start_kdeinit && chmod 4755 $(DESTDIR)$(bindir)/start_kdeinit) || echo "Please make start_kdeinit setuid root" ; \
+		(chown 0 $(DESTDIR)$(bindir)/start_tdeinit && chmod 4755 $(DESTDIR)$(bindir)/start_tdeinit) || echo "Please make start_tdeinit setuid root" ; \
 	fi
 
 include $(top_srcdir)/admin/Doxyfile.am

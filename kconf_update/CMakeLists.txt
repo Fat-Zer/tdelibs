@@ -11,8 +11,8 @@
 
 include_directories(
   ${TQT_INCLUDE_DIRS}
-  ${CMAKE_BINARY_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -28,7 +28,7 @@ set( ${target}_SRCS
   kconf_update.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdecore-shared
+  LINK tdecore-shared
 )

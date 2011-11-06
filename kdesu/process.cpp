@@ -2,7 +2,7 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
  * This file contains code from TEShell.C of the KDE konsole. 
@@ -53,7 +53,7 @@
 #include <kstandarddirs.h>
 
 #include "process.h"
-#include "kdesu_pty.h"
+#include "tdesu_pty.h"
 #include "kcookie.h"
 
 int PtyProcess::waitMS(int fd,int ms)

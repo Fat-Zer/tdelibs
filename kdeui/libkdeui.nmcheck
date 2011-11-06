@@ -1,5 +1,5 @@
 # KDE namespace check file
 
-# kdeui classes
+# tdeui classes
 K*::*
 QXEmbed::*

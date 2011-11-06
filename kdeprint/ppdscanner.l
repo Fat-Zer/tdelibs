@@ -1,7 +1,7 @@
 %{
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001-2003 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001-2003 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -23,21 +23,21 @@
 #define YYSTYPE TQStringList
 #include "ppdparser.cpp.h"
 
-#define yylval kdeprint_ppdlval
+#define yylval tdeprint_ppdlval
 
-QIODevice *kdeprint_ppdscanner_device = NULL;
+QIODevice *tdeprint_ppdscanner_device = NULL;
 #define YY_INPUT(buf,result,max_size) \
 	{ \
-		if (kdeprint_ppdscanner_device) \
+		if (tdeprint_ppdscanner_device) \
 		{ \
-			result = kdeprint_ppdscanner_device->readBlock(buf,max_size); \
+			result = tdeprint_ppdscanner_device->readBlock(buf,max_size); \
 			if (result < 0) \
 				result = 0; \
 		} \
 		else \
 			result = 0; \
 	}
-int kdeprint_ppdscanner_lno = 0;
+int tdeprint_ppdscanner_lno = 0;
 
 #if 0
 #define QDEBUG0(s) qDebug(s)
@@ -84,7 +84,7 @@ L        [[:alnum:]]
 	 */
 <option>{WORD3}      { yylval = yytext; QDEBUG1("Option: %s",yytext); return OPTION; }
 <option>":"          { BEGIN(value); return ':'; }
-<option>"\n"         { kdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
+<option>"\n"         { tdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
 <option>"/"          { BEGIN(translation_1); return '/'; }
 
 	/**
@@ -92,22 +92,22 @@ L        [[:alnum:]]
 	 */
 <translation_1>[^\n:]*  { yylval = yytext; QDEBUG1("Translation: %s",yytext); return TRANSLATION; }
 <translation_1>":"      { BEGIN(value); return ':'; }
-<translation_1>"\n"     { kdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
+<translation_1>"\n"     { tdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
 
 	/**
 	 * Value state
 	 */
-<value>\"[^\"]*\"    { yylval = yytext; kdeprint_ppdscanner_lno += yylval[0].contains('\n'); QDEBUG1("Quoted value: %s",yytext); return QUOTED; }
+<value>\"[^\"]*\"    { yylval = yytext; tdeprint_ppdscanner_lno += yylval[0].contains('\n'); QDEBUG1("Quoted value: %s",yytext); return QUOTED; }
 <value>{WORD}        { yylval = yytext; QDEBUG1("String part: %s",yytext); return STRINGPART; }
 <value>"/"           { BEGIN(translation_2); return '/'; }
-<value>"\n"          { kdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
+<value>"\n"          { tdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
 <value>":"           { /* stay in the same state */ return ':'; }
 
 	/**
 	 * Translation state (2: with colon)
 	 */
 <translation_2>[^\n]*   { yylval = yytext; QDEBUG1("Translation: %s",yytext); return TRANSLATION; }
-<translation_2>"\n"     { kdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
+<translation_2>"\n"     { tdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
 
 	/**
 	 * Constraint state
@@ -115,27 +115,27 @@ L        [[:alnum:]]
 <constr>":"         { return ':'; }
 <constr>\*{WORD2}   { yylval = yytext+1; QDEBUG1("Constraint keyword: %s",yytext); return KEYWORD; }
 <constr>{WORD2}     { yylval = yytext; QDEBUG1("Constraint option: %s",yytext); return OPTION; }
-<constr>"\n"        { kdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
+<constr>"\n"        { tdeprint_ppdscanner_lno++; BEGIN(INITIAL); }
 
-"\n"                { kdeprint_ppdscanner_lno++; /* eat up */ }
+"\n"                { tdeprint_ppdscanner_lno++; /* eat up */ }
 <*>.                { /* eat up */ }
 
 %%
 
-void kdeprint_ppdscanner_init(QIODevice *d)
+void tdeprint_ppdscanner_init(QIODevice *d)
 {
-	kdeprint_ppdscanner_device = d;
-	kdeprint_ppdscanner_lno = 1;
+	tdeprint_ppdscanner_device = d;
+	tdeprint_ppdscanner_lno = 1;
 }
 
-void kdeprint_ppdscanner_terminate( bool deleteIt )
+void tdeprint_ppdscanner_terminate( bool deleteIt )
 {
 	if (deleteIt)
-		delete kdeprint_ppdscanner_device;
-	kdeprint_ppdscanner_device = NULL;
+		delete tdeprint_ppdscanner_device;
+	tdeprint_ppdscanner_device = NULL;
 }
 
-int kdeprint_ppdscanner_numberoflines()
+int tdeprint_ppdscanner_numberoflines()
 {
-	return kdeprint_ppdscanner_lno;
+	return tdeprint_ppdscanner_lno;
 }

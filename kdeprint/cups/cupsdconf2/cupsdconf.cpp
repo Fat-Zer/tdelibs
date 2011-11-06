@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -607,7 +607,7 @@ bool CupsdConf::parseOption(const TQString& line)
 
 bool CupsdConf::loadAvailableResources()
 {
-	KConfig	conf("kdeprintrc");
+	KConfig	conf("tdeprintrc");
 	conf.setGroup("CUPS");
 	TQString	host = conf.readEntry("Host",cupsServer());
 	int 	port = conf.readNumEntry("Port",ippPort());
@@ -876,9 +876,9 @@ TQString CupsResource::typeToIconName(int type)
 	   case RESOURCE_GLOBAL:
 	   	return TQString("folder");
 	   case RESOURCE_PRINTER:
-	   	return TQString("kdeprint_printer");
+	   	return TQString("tdeprint_printer");
 	   case RESOURCE_CLASS:
-	   	return TQString("kdeprint_printer_class");
+	   	return TQString("tdeprint_printer_class");
 	}
 	return TQString("folder");
 }

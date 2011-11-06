@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *
  *  This library is free software; you can redistribute it and/or
@@ -194,7 +194,7 @@ void KPrinterImpl::broadcastOption(const TQString& key, const TQString& value)
 
 int KPrinterImpl::dcopPrint(const TQString& cmd, const TQStringList& files, bool removeflag)
 {
-	kdDebug(500) << "kdeprint: print command: " << cmd << endl;
+	kdDebug(500) << "tdeprint: print command: " << cmd << endl;
 
 	int result = 0;
 	DCOPClient	*dclient = kapp->dcopClient();
@@ -209,7 +209,7 @@ int KPrinterImpl::dcopPrint(const TQString& cmd, const TQStringList& files, bool
 	arg << cmd;
 	arg << files;
 	arg << removeflag;
-	if (dclient->call( "kded", "kdeprintd", "print(TQString,TQStringList,bool)", data, replyType, replyData ))
+	if (dclient->call( "kded", "tdeprintd", "print(TQString,TQStringList,bool)", data, replyType, replyData ))
 	{
 		if (replyType == "int")
 		{
@@ -222,7 +222,7 @@ int KPrinterImpl::dcopPrint(const TQString& cmd, const TQStringList& files, bool
 
 void KPrinterImpl::statusMessage(const TQString& msg, KPrinter *printer)
 {
-	kdDebug(500) << "kdeprint: status message: " << msg << endl;
+	kdDebug(500) << "tdeprint: status message: " << msg << endl;
 	KConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
 	if (!conf->readBoolEntry("ShowStatusMsg", true))
@@ -243,7 +243,7 @@ void KPrinterImpl::statusMessage(const TQString& msg, KPrinter *printer)
 	arg << message;
 	arg << (int)getpid();
 	arg << kapp->caption();
-	dclient->send( "kded", "kdeprintd", "statusMessage(TQString,int,TQString)", data );
+	dclient->send( "kded", "tdeprintd", "statusMessage(TQString,int,TQString)", data );
 }
 
 bool KPrinterImpl::startPrinting(const TQString& cmd, KPrinter *printer, const TQStringList& files, bool flag)
@@ -278,7 +278,7 @@ bool KPrinterImpl::startPrinting(const TQString& cmd, KPrinter *printer, const T
 		{
 			TQString	msg = i18n("Unable to start child print process. ");
 			if (pid == 0)
-				msg += i18n("The KDE print server (<b>kdeprintd</b>) could not be contacted. Check that this server is running.");
+				msg += i18n("The KDE print server (<b>tdeprintd</b>) could not be contacted. Check that this server is running.");
 			else
 				msg += i18n("1 is the command that <files> is given to", "Check the command syntax:\n%1 <files>").arg(cmd);
 			printer->setErrorMessage(msg);
@@ -296,7 +296,7 @@ TQString KPrinterImpl::tempFile()
 {
 	TQString	f;
 	// be sure the file doesn't exist
-	do f = locateLocal("tmp","kdeprint_") + KApplication::randomString(8); while (TQFile::exists(f));
+	do f = locateLocal("tmp","tdeprint_") + KApplication::randomString(8); while (TQFile::exists(f));
 	return f;
 }
 
@@ -372,7 +372,7 @@ int KPrinterImpl::doFilterFiles(KPrinter *printer, TQStringList& files, const TQ
 			return -1;
 		}
 	}
-	kdDebug(500) << "kdeprint: filter command: " << filtercmd << endl;
+	kdDebug(500) << "tdeprint: filter command: " << filtercmd << endl;
 
 	TQString	rin("%in"), rout("%out"), rpsl("%psl"), rpsu("%psu");
 	TQString	ps = pageSizeToPageName( printer->option( "kde-printsize" ).isEmpty() ? printer->pageSize() : ( KPrinter::PageSize )printer->option( "kde-printsize" ).toInt() );
@@ -508,7 +508,7 @@ int KPrinterImpl::autoConvertFiles(KPrinter *printer, TQStringList& files, bool 
 					       TQString::null,
 					       i18n("Convert"),
 					       i18n("Keep"),
-					       TQString::tqfromLatin1("kdeprintAutoConvert"))) == KMessageBox::Yes)
+					       TQString::tqfromLatin1("tdeprintAutoConvert"))) == KMessageBox::Yes)
 			{
 				// find the filter chain
 				TQStringList	flist = KXmlCommandManager::self()->autoConvert(mime, primaryMimeType);

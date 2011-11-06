@@ -2,7 +2,7 @@
 *
 * $Id$
 *
-* This file is part of the KDE project, module kdesu.
+* This file is part of the KDE project, module tdesu.
 * Copyright (C) 2000 Geert Jansen <jansen@kde.org>
 *
 * This is free software; you can use this library under the GNU Library
@@ -44,7 +44,7 @@ SshProcess::SshProcess(const TQCString &host, const TQCString &user, const TQCSt
     m_Host = host;
     m_User = user;
     m_Command = command;
-    m_Stub = "kdesu_stub";
+    m_Stub = "tdesu_stub";
     srand(time(0L));
 }
 
@@ -116,7 +116,7 @@ int SshProcess::exec(const char *password, int check)
     if (ret < 0)
     {
         if (!check)
-            kdError(900) << k_lineinfo << "Converstation with kdesu_stub failed\n";
+            kdError(900) << k_lineinfo << "Converstation with tdesu_stub failed\n";
         return ret;
     }
     else if (ret == 1)
@@ -205,8 +205,8 @@ int SshProcess::ConverseSsh(const char *password, int check)
 
         switch (state) {
         case 0:
-            // Check for "kdesu_stub" header.
-            if (line == "kdesu_stub")
+            // Check for "tdesu_stub" header.
+            if (line == "tdesu_stub")
             {
                 unreadLine(line);
                 return 0;

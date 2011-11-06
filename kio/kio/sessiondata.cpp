@@ -30,7 +30,7 @@
 #include <kprotocolmanager.h>
 #include <kstandarddirs.h>
 
-#include <kdesu/client.h>
+#include <tdesu/client.h>
 #include <kio/slaveconfig.h>
 #include <kio/http_slave_defaults.h>
 
@@ -82,14 +82,14 @@ public:
 
 private:
 #ifdef Q_OS_UNIX
-  KDEsuClient * m_kdesuClient;
+  KDEsuClient * m_tdesuClient;
 #endif
 };
 
 SessionData::AuthDataList::AuthDataList()
 {
 #ifdef Q_OS_UNIX
-  m_kdesuClient = new KDEsuClient;
+  m_tdesuClient = new KDEsuClient;
 #endif
   setAutoDelete(true);
 }
@@ -98,8 +98,8 @@ SessionData::AuthDataList::~AuthDataList()
 {
   purgeCachedData();
 #ifdef Q_OS_UNIX
-  delete m_kdesuClient;
-  m_kdesuClient = 0;
+  delete m_tdesuClient;
+  m_tdesuClient = 0;
 #endif
 }
 
@@ -131,12 +131,12 @@ void SessionData::AuthDataList::removeData( const TQCString& gkey )
 bool SessionData::AuthDataList::pingCacheDaemon()
 {
 #ifdef Q_OS_UNIX
-  Q_ASSERT(m_kdesuClient);
+  Q_ASSERT(m_tdesuClient);
 
-  int success = m_kdesuClient->ping();
+  int success = m_tdesuClient->ping();
   if( success == -1 )
   {
-    success = m_kdesuClient->startServer();
+    success = m_tdesuClient->startServer();
     if( success == -1 )
         return false;
   }
@@ -154,15 +154,15 @@ void SessionData::AuthDataList::registerAuthData( SessionData::AuthData* d )
 #ifdef Q_OS_UNIX
   bool ok;
   TQCString ref_key = d->key + "-refcount";
-  int count = m_kdesuClient->getVar(ref_key).toInt( &ok );
+  int count = m_tdesuClient->getVar(ref_key).toInt( &ok );
   if( ok )
   {
     TQCString val;
     val.setNum( count+1 );
-    m_kdesuClient->setVar( ref_key, val, 0, d->group );
+    m_tdesuClient->setVar( ref_key, val, 0, d->group );
   }
   else
-    m_kdesuClient->setVar( ref_key, "1", 0, d->group );
+    m_tdesuClient->setVar( ref_key, "1", 0, d->group );
 #endif
 }
 
@@ -176,18 +176,18 @@ void SessionData::AuthDataList::unregisterAuthData( SessionData::AuthData* d )
   TQCString ref_key = d->key + "-refcount";
 
 #ifdef Q_OS_UNIX
-  count = m_kdesuClient->getVar( ref_key ).toInt( &ok );
+  count = m_tdesuClient->getVar( ref_key ).toInt( &ok );
   if ( ok )
   {
     if ( count > 1 )
     {
         TQCString val;
         val.setNum(count-1);
-        m_kdesuClient->setVar( ref_key, val, 0, d->group );
+        m_tdesuClient->setVar( ref_key, val, 0, d->group );
     }
     else
     {
-        m_kdesuClient->delVars(d->key);
+        m_tdesuClient->delVars(d->key);
     }
   }
 #endif

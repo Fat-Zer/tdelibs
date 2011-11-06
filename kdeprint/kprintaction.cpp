@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -20,7 +20,7 @@
 #include "kprintaction.h"
 
 #include <kprinter.h>
-#include <kdeprint/kmmanager.h>
+#include <tdeprint/kmmanager.h>
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <klocale.h>

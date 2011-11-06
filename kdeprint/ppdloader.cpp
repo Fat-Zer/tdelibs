@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001-2003 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001-2003 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -27,9 +27,9 @@
 #include <tqfile.h>
 #include <math.h>
 
-void kdeprint_ppdscanner_init( TQIODevice* );
-void kdeprint_ppdscanner_terminate( bool deleteIt = true );
-int kdeprint_ppdscanner_numberoflines();
+void tdeprint_ppdscanner_init( TQIODevice* );
+void tdeprint_ppdscanner_terminate( bool deleteIt = true );
+int tdeprint_ppdscanner_numberoflines();
 
 static TQString processLocaleString( const TQString& s )
 {
@@ -131,10 +131,10 @@ DrMain* PPDLoader::readFromFile( const TQString& filename )
 		bool result = true;
 
 		m_groups.push( driver );
-		kdeprint_ppdscanner_init( d );
-		if ( kdeprint_ppdparse( this ) != 0 )
+		tdeprint_ppdscanner_init( d );
+		if ( tdeprint_ppdparse( this ) != 0 )
 			result = false;
-		kdeprint_ppdscanner_terminate( true );
+		tdeprint_ppdscanner_terminate( true );
 
 		if ( result )
 		{
@@ -170,7 +170,7 @@ DrMain* PPDLoader::loadDriver( const TQString& filename, TQString* msg )
 	PPDLoader loader;
 	DrMain *driver = loader.readFromFile( filename );
 	if ( !driver && msg )
-		*msg = filename + i18n( "(line %1): " ).arg( kdeprint_ppdscanner_numberoflines() ) + loader.errorMsg();
+		*msg = filename + i18n( "(line %1): " ).arg( tdeprint_ppdscanner_numberoflines() ) + loader.errorMsg();
 	return driver;
 }
 

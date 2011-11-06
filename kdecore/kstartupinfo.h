@@ -49,7 +49,7 @@ class KStartupInfoPrivate;
  *
  * This class can be used to send information about started application,
  * change the information and receive this information. For detailed
- * description, see kdelibs/kdecore/README.kstartupinfo.
+ * description, see kdelibs/tdecore/README.kstartupinfo.
  *
  * You usually don't need to use this class for sending the notification
  * information, as KDE libraries should do this when an application is

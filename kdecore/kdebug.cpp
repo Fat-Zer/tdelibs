@@ -289,7 +289,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
   }
   case 1: // Message Box
   {
-      // Since we are in kdecore here, we cannot use KMsgBox and use
+      // Since we are in tdecore here, we cannot use KMsgBox and use
       // TQMessageBox instead
       if ( !kDebug_data->aAreaName.isEmpty() )
           aCaption += TQString("(%1)").arg( QString(kDebug_data->aAreaName) );

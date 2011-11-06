@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -154,5 +154,5 @@ void KMRlprManager::savePrintersConf(const TQString& filename)
 
 TQString KMRlprManager::printerFile()
 {
-	return locateLocal("data","kdeprint/printers.conf");
+	return locateLocal("data","tdeprint/printers.conf");
 }

@@ -11,5 +11,5 @@
 #define	QUOTED	262
 
 
-extern YYSTYPE kdeprint_foomatic2lval;
+extern YYSTYPE tdeprint_foomatic2lval;
 #endif

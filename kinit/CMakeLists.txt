@@ -14,11 +14,11 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${FREETYPE_INCLUDE_DIRS}
@@ -29,9 +29,9 @@ link_directories(
 )
 
 
-#### kdeinit ####################################
+#### tdeinit ####################################
 
-set( target kdeinit )
+set( target tdeinit )
 
 set( ${target}_SRCS
   kinit.cpp setproctitle.cpp
@@ -44,9 +44,9 @@ tde_add_executable( ${target}
 )
 
 
-#### kdeinit_wrapper ############################
+#### tdeinit_wrapper ############################
 
-set( target kdeinit_wrapper )
+set( target tdeinit_wrapper )
 
 tde_add_executable( ${target}
   SOURCES wrapper.c
@@ -64,9 +64,9 @@ tde_add_executable( ${target}
 )
 
 
-#### kdeinit_shutdown ###########################
+#### tdeinit_shutdown ###########################
 
-set( target kdeinit_shutdown )
+set( target tdeinit_shutdown )
 
 tde_add_executable( ${target}
   SOURCES wrapper.c
@@ -111,7 +111,7 @@ set( target kstartupconfig )
 
 tde_add_executable( ${target} AUTOMOC
   SOURCES kstartupconfig.cpp
-  LINK kdefakes-shared ${TQT_LIBRARIES}
+  LINK tdefakes-shared ${TQT_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
@@ -122,33 +122,33 @@ set( target kdostartupconfig )
 
 tde_add_executable( ${target} AUTOMOC
   SOURCES kdostartupconfig.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
 
-#### start_kdeinit ##############################
+#### start_tdeinit ##############################
 
-set( target start_kdeinit )
+set( target start_tdeinit )
 
 if( KDEINIT_SETUID )
   set( _setuid SETUID )
 endif( KDEINIT_SETUID )
 
 tde_add_executable( ${target} ${_setuid}
-  SOURCES start_kdeinit.c
+  SOURCES start_tdeinit.c
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
-set_target_properties( ${target} PROPERTIES COMPILE_FLAGS -DEXECUTE=\\"${BIN_INSTALL_DIR}/kdeinit\\" )
+set_target_properties( ${target} PROPERTIES COMPILE_FLAGS -DEXECUTE=\\"${BIN_INSTALL_DIR}/tdeinit\\" )
 
 
-#### start_kdeinit_wrapper ######################
+#### start_tdeinit_wrapper ######################
 
-set( target start_kdeinit_wrapper )
+set( target start_tdeinit_wrapper )
 
 tde_add_executable( ${target}
-  SOURCES start_kdeinit_wrapper.c
+  SOURCES start_tdeinit_wrapper.c
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
@@ -161,7 +161,7 @@ set( ${target}_SRCS
   klauncher.cpp klauncher_main.cpp autostart.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK kio-shared
 )

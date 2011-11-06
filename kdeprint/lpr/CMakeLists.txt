@@ -18,13 +18,13 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
-  ${CMAKE_SOURCE_DIR}/kdeprint
-  ${CMAKE_SOURCE_DIR}/kdeprint/management
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
+  ${CMAKE_SOURCE_DIR}/tdeprint
+  ${CMAKE_SOURCE_DIR}/tdeprint/management
 )
 
 link_directories(
@@ -36,18 +36,18 @@ link_directories(
 
 install( FILES
     printcapentry.h lprhandler.h lprsettings.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/kdeprint/lpr )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdeprint/lpr )
 
 
 ##### other data ################################
 
-install( FILES lpr.print DESTINATION ${DATA_INSTALL_DIR}/kdeprint/plugins )
-install( FILES apsdriver1 apsdriver2 lprngtooldriver1 DESTINATION ${DATA_INSTALL_DIR}/kdeprint )
+install( FILES lpr.print DESTINATION ${DATA_INSTALL_DIR}/tdeprint/plugins )
+install( FILES apsdriver1 apsdriver2 lprngtooldriver1 DESTINATION ${DATA_INSTALL_DIR}/tdeprint )
 
 
-#### kdeprint_lpr ###############################
+#### tdeprint_lpr ###############################
 
-set( target kdeprint_lpr )
+set( target tdeprint_lpr )
 
 set( ${target}_SRCS
   printcapreader.cpp lprhandler.cpp matichandler.cpp
@@ -60,7 +60,7 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeprint_management-shared
+  LINK tdeprint_management-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -75,6 +75,6 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK driverparse-static kdefakes-shared ${DL_LIBRARIES}
+  LINK driverparse-static tdefakes-shared ${DL_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )

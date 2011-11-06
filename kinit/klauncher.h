@@ -110,7 +110,7 @@ class KLauncher : public KApplication, public DCOPObject
    Q_OBJECT
 
 public:
-   KLauncher(int _kdeinitSocket, bool new_startup);
+   KLauncher(int _tdeinitSocket, bool new_startup);
 
    ~KLauncher();
 
@@ -141,7 +141,7 @@ protected:
        const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind);
    bool start_service_by_desktop_name(const TQString &serviceName, const TQStringList &urls,
        const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind);
-   bool kdeinit_exec(const TQString &app, const TQStringList &args,
+   bool tdeinit_exec(const TQString &app, const TQStringList &args,
        const TQValueList<TQCString> &envs, TQCString startup_id, bool wait);
 
    void waitForSlave(pid_t pid);
@@ -176,8 +176,8 @@ public slots:
 protected:
    TQPtrList<KLaunchRequest> requestList; // Requests being handled
    TQPtrList<KLaunchRequest> requestQueue; // Requests waiting to being handled
-   int kdeinitSocket;
-   TQSocketNotifier *kdeinitNotifier;
+   int tdeinitSocket;
+   TQSocketNotifier *tdeinitNotifier;
    serviceResult DCOPresult;
    KLaunchRequest *lastRequest;
    TQPtrList<SlaveWaitRequest> mSlaveWaitRequest;

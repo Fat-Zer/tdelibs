@@ -761,11 +761,11 @@ Comment[zh_CN]=外部
 Comment[zh_HK]=外部
 Comment[zh_TW]=外部
 Comment[zu]=Ngaphandle
-Icon=kdeprintfax
-Command=kdeprintfax %in
+Icon=tdeprintfax
+Command=tdeprintfax %in
 File=0
 Extension=
-Require=exec:/kdeprintfax
+Require=exec:/tdeprintfax
 
 [Printer 3]
 Command=ps2pdf -sPAPERSIZE=%psl %in %out && kmailservice 'mailto:?attachment=file:%out' && sleep 15 && rm -f %out
@@ -1111,7 +1111,7 @@ Description[zh_TW]=使用 ksendfax 將目前文件傳真出去
 Description[zu]=Sebenzisa i-ksendfax ukuthumela i-fax yohlu lwamafayela amanje
 Extension=
 File=0
-Icon=kdeprintfax
+Icon=tdeprintfax
 Name=Advanced Faxing Tool (ksendfax)
 Name[af]=Gevorderde Faks Program (ksendfax)
 Name[ar]=أداة إرسال فاكس متقدمة (ksendfax)

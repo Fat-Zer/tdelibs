@@ -1,7 +1,7 @@
 %{
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001-2003 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001-2003 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -23,13 +23,13 @@
 #define YYSTYPE QVariant
 #include "fooparser.cpp.h"
 
-#define yylval kdeprint_foomatic2lval
+#define yylval tdeprint_foomatic2lval
 
 #define YY_INPUT( buf, result, max_size ) \
 	{ \
-		if ( kdeprint_foomatic2scanner_device ) \
+		if ( tdeprint_foomatic2scanner_device ) \
 		{ \
-			result = kdeprint_foomatic2scanner_device->readBlock( buf, max_size ); \
+			result = tdeprint_foomatic2scanner_device->readBlock( buf, max_size ); \
 			if ( result < 0 ) \
 				result = 0; \
 		} \
@@ -37,7 +37,7 @@
 			result = 0; \
 	}
 
-QIODevice* kdeprint_foomatic2scanner_device = NULL;
+QIODevice* tdeprint_foomatic2scanner_device = NULL;
 %}
 
 %option noyywrap
@@ -72,12 +72,12 @@ D        [[:digit:]]
 
 %%
 
-void kdeprint_foomatic2scanner_init( QIODevice *d )
+void tdeprint_foomatic2scanner_init( QIODevice *d )
 {
-	kdeprint_foomatic2scanner_device = d;
+	tdeprint_foomatic2scanner_device = d;
 }
 
-void kdeprint_foomatic2scanner_terminate()
+void tdeprint_foomatic2scanner_terminate()
 {
-	kdeprint_foomatic2scanner_device = NULL;
+	tdeprint_foomatic2scanner_device = NULL;
 }

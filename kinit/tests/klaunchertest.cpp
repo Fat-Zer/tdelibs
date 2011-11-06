@@ -28,7 +28,7 @@
 
 int main(int argc, char *argv[])
 {
-   KApplication::kdeinitExec("konsole");
+   KApplication::tdeinitExec("konsole");
 
    KApplication k(argc, argv, "klaunchertest");
  

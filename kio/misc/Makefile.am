@@ -20,10 +20,10 @@ AM_CPPFLAGS = -D_LARGEFILE64_SOURCE
 
 INCLUDES=  -I$(srcdir)/.. -I$(top_srcdir) -I$(srcdir)/../kssl -I../kssl $(all_includes) $(SSL_INCLUDES)
 
-SUBDIRS = . ksendbugmail kpac kdesasl kssld kfile kwalletd kntlm
+SUBDIRS = . ksendbugmail kpac tdesasl kssld kfile kwalletd kntlm
 
 lib_LTLIBRARIES =
-kdeinit_LTLIBRARIES = kio_uiserver.la
+tdeinit_LTLIBRARIES = kio_uiserver.la
 bin_PROGRAMS = kmailservice ktelnetservice
 
 observer_DIR = $(top_srcdir)/kio/kio
@@ -38,11 +38,11 @@ kde_services_DATA = kio_uiserver.desktop
 
 kmailservice_SOURCES = kmailservice.cpp
 kmailservice_LDADD = $(LIB_KDECORE)
-kmailservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+kmailservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 ktelnetservice_SOURCES = ktelnetservice.cpp
 ktelnetservice_LDADD = $(LIB_KDEUI)
-ktelnetservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+ktelnetservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 protocol_DATA = kmailservice.protocol telnet.protocol rlogin.protocol rtsp.protocol ssh.protocol \
 		mms.protocol mmst.protocol mmsu.protocol pnm.protocol rtspt.protocol rtspu.protocol

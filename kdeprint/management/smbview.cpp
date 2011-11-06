@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -240,7 +240,7 @@ void SmbView::processServers()
 			continue;
 		TQListViewItem	*item = new TQListViewItem(m_current,words[0]);
 		item->setExpandable(true);
-		item->setPixmap(0,SmallIcon("kdeprint_computer"));
+		item->setPixmap(0,SmallIcon("tdeprint_computer"));
 	}
 }
 
@@ -273,7 +273,7 @@ void SmbView::processShares()
 			//	comm += (words[i]+" ");
 			//TQListViewItem	*item = new TQListViewItem(m_current,words[0],comm);
 			TQListViewItem	*item = new TQListViewItem(m_current,sharen,comm);
-			item->setPixmap(0,SmallIcon("kdeprint_printer"));
+			item->setPixmap(0,SmallIcon("tdeprint_printer"));
 		}
 	}
 }

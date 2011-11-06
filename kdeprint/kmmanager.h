@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -24,7 +24,7 @@
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
-#include <kdeprint/kmprinter.h>
+#include <tdeprint/kmprinter.h>
 
 #include <tqobject.h>
 #include <tqstring.h>

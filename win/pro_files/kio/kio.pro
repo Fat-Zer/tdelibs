@@ -6,14 +6,14 @@ include( $(KDELIBS)/win/zlib.pro )
 # needed to export library classes:
 DEFINES += MAKE_KIO_LIB
 
-LIBS += $$KDELIBDESTDIR\kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdeui$$KDELIB_SUFFIX \
+LIBS += $$KDELIBDESTDIR\tdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\tdeui$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdewin32$$KDELIB_SUFFIX
 
 system( bash kmoc kio kfile misc bookmarks kssl )
 
 TARGET = kio$$KDEBUG
 
-INCLUDEPATH += $(KDELIBS)/kdecore/network $(KDELIBS)/kio/kio $(KDELIBS)/kio/misc $(KDELIBS)/kio/bookmarks \
+INCLUDEPATH += $(KDELIBS)/tdecore/network $(KDELIBS)/kio/kio $(KDELIBS)/kio/misc $(KDELIBS)/kio/bookmarks \
   $(KDELIBS)/kio/kssl \
   $(KDELIBS)/libltdl $(KDELIBS)/interfaces \
   $(KDELIBS)/kio/kio/moc $(KDELIBS)/kio/misc/moc $(KDELIBS)/kio/kfile/moc \
@@ -179,7 +179,7 @@ kssl/ksmimecrypto.cc
 #removed kio/kautomount.cpp \
 
 SOURCES += \
-../kdecore/kprotocolinfo_kdecore.cpp
+../tdecore/kprotocolinfo_tdecore.cpp
 
 # js 2004-08-05 ^^^^^ a hack because msvc cannot split a class between two libraries!
 

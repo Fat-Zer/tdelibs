@@ -643,7 +643,7 @@ Thu Mar 12 00:36:05 1998  Stephan Kulow  <coolo@kde.org>
 Sun Feb 15 23:13:47 1998 Richard Moore <rich@kde.org>
 	
 	* More work on the bookmarks - they should work properly now, you
-	must create the directory ~/.kde/share/apps/kdeui to store the
+	must create the directory ~/.kde/share/apps/tdeui to store the
 	bookmarks in.
 	
 	* Regenerated docs

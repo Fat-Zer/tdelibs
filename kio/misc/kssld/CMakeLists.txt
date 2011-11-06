@@ -14,10 +14,10 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/kio/kssl
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/kio/kssl
 )
 
@@ -41,7 +41,7 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeinit_kded-shared
+  LINK tdeinit_kded-shared
   DEPENDENCIES dcopidl
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

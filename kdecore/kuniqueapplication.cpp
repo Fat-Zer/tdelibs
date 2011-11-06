@@ -164,7 +164,7 @@ KUniqueApplication::start()
               ::exit(255);
            }
 
-           // Try to launch kdeinit.
+           // Try to launch tdeinit.
            startKdeinit();
            regName = dc->registerAs(appName, false);
            if (regName.isEmpty())

@@ -88,7 +88,7 @@ The KStartupInfo classes :
 --------------------------
 
  In some cases, or if you are interested in getting the ASN information, you
-have to use the KStartupInfo classes in kdelibs/kdecore.
+have to use the KStartupInfo classes in kdelibs/tdecore.
 
 Receiving the application startup notification information :
 ------------------------------------------------------------

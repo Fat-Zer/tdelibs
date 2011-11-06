@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -113,7 +113,7 @@ const char* getPassword(const char*)
 CupsdDialog::CupsdDialog(TQWidget *parent, const char *name)
 	: KDialogBase(IconList, "", Ok|Cancel|User1, Ok, parent, name, true, true, KGuiItem(i18n("Short Help"), "help"))
 {
-	KGlobal::iconLoader()->addAppDir("kdeprint");
+	KGlobal::iconLoader()->addAppDir("tdeprint");
 	KGlobal::locale()->insertCatalogue("cupsdconf");
 
 	setShowIconsInTreeList(true);
@@ -208,7 +208,7 @@ bool CupsdDialog::restartServer(TQString& msg)
 	{
                 bool success = false;
 		KProcess proc;
-		proc << "kdesu" << "-c" << "/etc/init.d/cupsys restart";
+		proc << "tdesu" << "-c" << "/etc/init.d/cupsys restart";
 		success = proc.start( KProcess::Block ) && proc.normalExit();
                 if( !success )    
 			msg = i18n("Unable to restart CUPS server (pid = %1)").arg(serverPid);

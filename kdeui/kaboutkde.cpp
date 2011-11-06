@@ -82,6 +82,6 @@ KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
   addTextPage( i18n("&Report Bugs or Wishes"), text2, true );
   addTextPage( i18n("&Join the Trinity Team"), text3, true );
   addTextPage( i18n("&Support Trinity"), text4, true );
-  setImage( locate( "data", TQString::tqfromLatin1("kdeui/pics/aboutkde.png")) );
+  setImage( locate( "data", TQString::tqfromLatin1("tdeui/pics/aboutkde.png")) );
   setImageBackgroundColor( white );
 }

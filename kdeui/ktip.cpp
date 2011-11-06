@@ -216,11 +216,11 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	TQHBoxLayout *pl = new TQHBoxLayout(vbox, 0, 0);
 
 	TQLabel *bulb = new TQLabel(this);
-	bulb->setPixmap(locate("data", "kdeui/pics/ktip-bulb.png"));
+	bulb->setPixmap(locate("data", "tdeui/pics/ktip-bulb.png"));
 	pl->addWidget(bulb);
 
 	TQLabel *titlePane = new TQLabel(this);
-	titlePane->setBackgroundPixmap(locate("data", "kdeui/pics/ktip-background.png"));
+	titlePane->setBackgroundPixmap(locate("data", "tdeui/pics/ktip-background.png"));
 	titlePane->setText(i18n("Did you know...?\n"));
 	titlePane->setFont(TQFont(KGlobalSettings::generalFont().family(), 20, TQFont::Bold));
 	titlePane->tqsetAlignment(TQLabel::AlignCenter);

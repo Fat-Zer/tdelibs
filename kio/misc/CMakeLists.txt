@@ -11,7 +11,7 @@
 
 add_subdirectory( ksendbugmail )
 add_subdirectory( kpac )
-add_subdirectory( kdesasl )
+add_subdirectory( tdesasl )
 add_subdirectory( kssld )
 add_subdirectory( kfile )
 add_subdirectory( kwalletd )
@@ -24,15 +24,15 @@ add_definitions(
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_BINARY_DIR}/kio
   ${CMAKE_BINARY_DIR}/kio/kio
   ${CMAKE_BINARY_DIR}/kio/kssl
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdefx
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdefx
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kio/kssl
@@ -69,7 +69,7 @@ set( ${target}_SRCS
   uiserver.cpp uiserver.skel
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK kio-shared
   DEPENDENCIES dcopidl
@@ -82,7 +82,7 @@ set( target kmailservice )
 
 tde_add_executable( ${target}
   SOURCES ${target}.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
@@ -93,7 +93,7 @@ set( target ktelnetservice )
 
 tde_add_executable( ${target}
   SOURCES ${target}.cpp
-  LINK kdeui-shared
+  LINK tdeui-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

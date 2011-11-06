@@ -18,13 +18,13 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
-  ${CMAKE_SOURCE_DIR}/kdeprint
-  ${CMAKE_SOURCE_DIR}/kdeprint/management
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
+  ${CMAKE_SOURCE_DIR}/tdeprint
+  ${CMAKE_SOURCE_DIR}/tdeprint/management
 )
 
 link_directories(
@@ -34,12 +34,12 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES rlpr.print DESTINATION ${DATA_INSTALL_DIR}/kdeprint/plugins )
+install( FILES rlpr.print DESTINATION ${DATA_INSTALL_DIR}/tdeprint/plugins )
 
 
-##### kdeprint_rlpr #############################
+##### tdeprint_rlpr #############################
 
-set( target kdeprint_rlpr )
+set( target tdeprint_rlpr )
 
 set( ${target}_SRCS
   kmrlprfactory.cpp kmrlprmanager.cpp krlprprinterimpl.cpp
@@ -49,6 +49,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeprint_management-shared
+  LINK tdeprint_management-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

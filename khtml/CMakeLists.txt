@@ -28,20 +28,20 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/kjs
   ${CMAKE_BINARY_DIR}/kio/kssl
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdefx
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdefx
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kio/kfile
   ${CMAKE_SOURCE_DIR}/kio/kssl
   ${CMAKE_SOURCE_DIR}/kutils
   ${CMAKE_SOURCE_DIR}/kwallet/client
-  ${CMAKE_SOURCE_DIR}/kdeprint
+  ${CMAKE_SOURCE_DIR}/tdeprint
 )
 
 link_directories(
@@ -88,7 +88,7 @@ tde_add_library( ${target} SHARED AUTOMOC
   VERSION 4.2.0
   LINK ${VSCRIPT} kjava-static kjs_html-static khtmldom-static khtmlcss-static
     khtmlhtml-static khtmlxml-static khtmlrender-static khtmlmisc-static
-    kutils-shared kdeprint-shared kjs-shared ${JPEG_LIBRARIES}
+    kutils-shared tdeprint-shared kjs-shared ${JPEG_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
   DEPENDENCIES dcopidl
 )

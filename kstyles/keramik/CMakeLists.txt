@@ -19,9 +19,9 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdefx
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdefx
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -39,7 +39,7 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kdefx-shared
+  LINK tdefx-shared
 )
 
 
@@ -65,6 +65,6 @@ set_source_files_properties( pixmaploader.cpp PROPERTIES OBJECT_DEPENDS ${CMAKE_
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdefx-shared Xext
+  LINK tdefx-shared Xext
   DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/styles
 )

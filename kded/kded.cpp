@@ -75,17 +75,17 @@ static void runBuildSycoca(TQObject *callBackObj=0, const char *callBackSlot=0)
       dataStream << TQString("kbuildsycoca") << args;
       TQCString _launcher = KApplication::launcher();
 
-      kapp->dcopClient()->callAsync(_launcher, _launcher, "kdeinit_exec_wait(TQString,TQStringList)", data, callBackObj, callBackSlot);
+      kapp->dcopClient()->callAsync(_launcher, _launcher, "tdeinit_exec_wait(TQString,TQStringList)", data, callBackObj, callBackSlot);
    }
    else
    {
-      KApplication::kdeinitExecWait( "kbuildsycoca", args );
+      KApplication::tdeinitExecWait( "kbuildsycoca", args );
    }
 }
 
 static void runKonfUpdate()
 {
-   KApplication::kdeinitExecWait( "kconf_update", TQStringList(), 0, 0, "0" /*no startup notification*/ );
+   KApplication::tdeinitExecWait( "kconf_update", TQStringList(), 0, 0, "0" /*no startup notification*/ );
 }
 
 static void runDontChangeHostname(const TQCString &oldName, const TQCString &newName)
@@ -93,7 +93,7 @@ static void runDontChangeHostname(const TQCString &oldName, const TQCString &new
    TQStringList args;
    args.append(TQFile::decodeName(oldName));
    args.append(TQFile::decodeName(newName));
-   KApplication::kdeinitExecWait( "kdontchangethehostname", args );
+   KApplication::tdeinitExecWait( "kdontchangethehostname", args );
 }
 
 Kded::Kded(bool checkUpdates, bool new_startup)

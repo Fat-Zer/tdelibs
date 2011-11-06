@@ -34,7 +34,7 @@
  * cascading style sheets (CSS2), and JavaScript.
  *
  * If you want to add to your application a widget that only needs simple text
- * browsing, you can also use the KTextBrowser widget in kdeui.
+ * browsing, you can also use the KTextBrowser widget in tdeui.
  *
  * KHTMLPart :
  *   The main part/widget for using khtml.

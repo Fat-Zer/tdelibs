@@ -81,14 +81,14 @@ contains( TEMPLATE, app ) {
 #  !contains(CONFIG,debug) {
 #    DESTDIR = $$KDEBINDESTDIR\release-bin
 #  }
-	!contains(CONFIG,nokdecore) {
-			LIBS += $$KDELIBDESTDIR/kdecore$$KDELIB_SUFFIX
+	!contains(CONFIG,notdecore) {
+			LIBS += $$KDELIBDESTDIR/tdecore$$KDELIB_SUFFIX
 	}
-	!contains(CONFIG,nokdeui) {
-			LIBS += $$KDELIBDESTDIR/kdeui$$KDELIB_SUFFIX
+	!contains(CONFIG,notdeui) {
+			LIBS += $$KDELIBDESTDIR/tdeui$$KDELIB_SUFFIX
 	}
-	!contains(CONFIG,nokdefx) {
-			LIBS += $$KDELIBDESTDIR/kdefx$$KDELIB_SUFFIX
+	!contains(CONFIG,notdefx) {
+			LIBS += $$KDELIBDESTDIR/tdefx$$KDELIB_SUFFIX
 	}
 }
 # default template is "lib"

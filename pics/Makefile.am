@@ -1,6 +1,6 @@
 SUBDIRS = . hicolor crystalsvg emoticons
 
-INCLUDES = $(LIBART_CFLAGS) -I$(top_srcdir)/kdecore/svgicons -I$(top_srcdir)/kdefx $(all_includes)
+INCLUDES = $(LIBART_CFLAGS) -I$(top_srcdir)/tdecore/svgicons -I$(top_srcdir)/tdefx $(all_includes)
 
 if include_SVGICONS
 KSVGTOPNG=ksvgtopng
@@ -9,8 +9,8 @@ endif
 bin_PROGRAMS = $(KSVGTOPNG)
 
 ksvgtopng_SOURCES = ksvgtopng.cpp
-ksvgtopng_LDADD =  $(LIB_KDECORE) $(top_builddir)/kdecore/svgicons/libkdesvgicons.la
-ksvgtopng_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+ksvgtopng_LDADD =  $(LIB_KDECORE) $(top_builddir)/tdecore/svgicons/libkdesvgicons.la
+ksvgtopng_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 install-data-local:
 	-rm -f $(DESTDIR)$(kde_icondir)/default.kde

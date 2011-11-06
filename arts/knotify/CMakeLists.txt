@@ -14,11 +14,11 @@ include_directories(
   ${ARTS_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/arts/kde
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
 )
 
 link_directories(
@@ -43,7 +43,7 @@ set( ${target}_SRCS
 if( ARTS_FOUND )
   set( LIBS artskde-shared )
 else( ARTS_FOUND )
-  set( LIBS kdeui-shared )
+  set( LIBS tdeui-shared )
 endif( ARTS_FOUND )
 
 tde_add_kpart( ${target} AUTOMOC

@@ -1,6 +1,6 @@
 /* vi: ts=8 sts=4 sw=4
  *
- * This file is part of the KDE project, module kdecore.
+ * This file is part of the KDE project, module tdecore.
  * Copyright (C) 2000 Geert Jansen <jansen@kde.org>
  *                    Antonio Larrosa <larrosa@kde.org>
  *

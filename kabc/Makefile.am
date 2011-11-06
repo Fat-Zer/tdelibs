@@ -52,7 +52,7 @@ METASOURCES = AUTO
 
 bin_PROGRAMS = kab2kabc
 
-kab2kabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+kab2kabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 kab2kabc_LDADD = libkabc.la ../kab/libkab.la
 kab2kabc_SOURCES = kab2kabc.cpp
 
@@ -62,7 +62,7 @@ autostartdir = $(datadir)/autostart
 manager_DATA = kabc_manager.desktop
 managerdir = $(kde_servicesdir)/kresources
 
-DOXYGEN_REFERENCES = kdecore kdeui
+DOXYGEN_REFERENCES = tdecore tdeui
 
 map_DATA = countrytransl.map
 mapdir = $(kde_datadir)/kabc

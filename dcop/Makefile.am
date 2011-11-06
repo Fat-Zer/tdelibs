@@ -33,7 +33,7 @@ lib_LTLIBRARIES  = libDCOP.la
 libDCOP_la_LIBADD = KDE-ICE/libkICE.la $(LIB_QT)
 libDCOP_la_LDFLAGS = $(KDE_RPATH) -version-info 6:0:2 -no-undefined $(all_libraries)
 libDCOP_la_NMCHECK = $(srcdir)/libDCOP.nmcheck
-libDCOP_la_NMCHECKWEAK = $(srcdir)/libDCOP_weak.nmcheck $(top_srcdir)/kdecore/libqt-mt_weak.nmcheck
+libDCOP_la_NMCHECKWEAK = $(srcdir)/libDCOP_weak.nmcheck $(top_srcdir)/tdecore/libqt-mt_weak.nmcheck
 
 include_HEADERS = dcopclient.h dcopobject.h dcopstub.h dcopref.h dcoptypes.h kdatastream.h
 noinst_HEADERS = version.h dcopglobal.h dcopserver.h testdcop.h dcopsignals.h dcop-path.h
@@ -43,27 +43,27 @@ METASOURCES = AUTO
 # dcopstub needs to go first for --enable-final to work
 libDCOP_la_SOURCES = dcopstub.cpp dcopref.cpp dcopobject.cpp dcopclient.cpp
 
-kdeinit_LTLIBRARIES = dcopserver.la
+tdeinit_LTLIBRARIES = dcopserver.la
 dcopserver_la_LDFLAGS = -module -avoid-version $(all_libraries)
 dcopserver_la_SOURCES = dcopserver.cpp dcopsignals.cpp
 dcopserver_la_LIBADD  = libDCOP.la $(LIB_QT)
 
 dcopserver_shutdown_SOURCES = dcopserver_shutdown.c
 
-testdcop_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+testdcop_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 testdcop_SOURCES = testdcop.cpp
 testdcop_LDADD = libDCOP.la
 
-dcop_deadlock_test_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+dcop_deadlock_test_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 dcop_deadlock_test_SOURCES = dcop_deadlock_test.cpp
-dcop_deadlock_test_LDADD = ../kdecore/libtdecore.la
+dcop_deadlock_test_LDADD = ../tdecore/libtdecore.la
 
-testdcopc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+testdcopc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 testdcopc_SOURCES = testdcopc.c dcopc.c
 testdcopc_LDADD =  KDE-ICE/libkICE.la $(LIBSM)
 
 EXTRA_DIST = HOWTO ICE Mainpage.dox
 
-DOXYGEN_REFERENCES = kdecore
+DOXYGEN_REFERENCES = tdecore
 DOXYGEN_EXCLUDE = KDE-ICE
 include ../admin/Doxyfile.am

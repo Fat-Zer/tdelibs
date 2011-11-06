@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *
  *  This library is free software; you can redistribute it and/or
@@ -106,7 +106,7 @@ public:
 
 static KLibFactory* componentFactory()
 {
-	kdDebug(500) << "kdeprint: querying trader for 'application/postscript' service" << endl;
+	kdDebug(500) << "tdeprint: querying trader for 'application/postscript' service" << endl;
 	KLibFactory	*factory(0);
 	factory = KLibLoader::self()->factory("libkghostviewpart");
         if( factory )
@@ -147,7 +147,7 @@ static bool continuePrint(const TQString& msg_, TQWidget *parent, bool previewOn
 KPrintPreview::KPrintPreview(TQWidget *parent, bool previewOnly)
 : KDialogBase(parent, "PreviewDlg", true, i18n("Print Preview"), 0)
 {
-	kdDebug(500) << "kdeprint: creating preview dialog" << endl;
+	kdDebug(500) << "tdeprint: creating preview dialog" << endl;
 	d = new KPrintPreviewPrivate(this);
 	d->previewonly_ = previewOnly;
 

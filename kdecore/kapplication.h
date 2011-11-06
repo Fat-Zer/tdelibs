@@ -814,10 +814,10 @@ public:
                 TQString *error=0, TQCString *dcopService=0, int *pid = 0, const TQCString &startup_id = "", bool noWait = false );
 
   /**
-   * Starts a program via kdeinit.
+   * Starts a program via tdeinit.
    *
    * program name and arguments are converted to according to the
-   * local encoding and passed as is to kdeinit.
+   * local encoding and passed as is to tdeinit.
    *
    * @param name Name of the program to start
    * @param args Arguments to pass to the program
@@ -830,16 +830,16 @@ public:
    *           "" ( empty string ) is the default
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int kdeinitExec( const TQString& name, const TQStringList &args,
+  static int tdeinitExec( const TQString& name, const TQStringList &args,
                 TQString *error, int *pid, const TQCString& startup_id );
   // KDE4 merge with above with startup_id = ""
-  static int kdeinitExec( const TQString& name, const TQStringList &args=TQStringList(),
+  static int tdeinitExec( const TQString& name, const TQStringList &args=TQStringList(),
                 TQString *error=0, int *pid = 0 );
 
   /**
-   * Starts a program via kdeinit and wait for it to finish.
+   * Starts a program via tdeinit and wait for it to finish.
    *
-   * Like kdeinitExec(), but it waits till the program is finished.
+   * Like tdeinitExec(), but it waits till the program is finished.
    * As such it behaves similar to the system(...) function.
    *
    * @param name Name of the program to start
@@ -853,10 +853,10 @@ public:
    *           "" ( empty string ) is the default
    * @return an error code indicating success (== 0) or failure (> 0).
    */
-  static int kdeinitExecWait( const TQString& name, const TQStringList &args,
+  static int tdeinitExecWait( const TQString& name, const TQStringList &args,
                 TQString *error, int *pid, const TQCString& startup_id );
   // KDE4 merge with above with startup_id = ""
-  static int kdeinitExecWait( const TQString& name, const TQStringList &args=TQStringList(),
+  static int tdeinitExecWait( const TQString& name, const TQStringList &args=TQStringList(),
                 TQString *error=0, int *pid = 0 );
 
   /**

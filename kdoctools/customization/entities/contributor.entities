@@ -142,7 +142,7 @@
 <!ENTITY Francis.Giannaros '<personname><firstname>Francis</firstname><surname>Giannaros</surname></personname>'>
 <!ENTITY Francis.Giannaros.mail '<email>francisg@gmail.com</email>'>
 <!ENTITY Michael.Goffioul '<personname><firstname>Michael</firstname><surname>Goffioul</surname></personname>'>
-<!ENTITY Michael.Goffioul.mail '<email>kdeprint@swing.be</email>'>
+<!ENTITY Michael.Goffioul.mail '<email>tdeprint@swing.be</email>'>
 <!ENTITY Robert.Gogolok '<personname><firstname>Robert</firstname><surname>Gogolok</surname></personname>'>
 <!ENTITY Robert.Gogolok.mail '<email>mail@robert-gogolok.de</email>'>
 <!ENTITY Nicolas.Goutte '<personname><firstname>Nicolas</firstname><surname>Goutte</surname></personname>'>

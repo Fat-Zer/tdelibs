@@ -20,10 +20,10 @@
 
 AM_CPPFLAGS = -DQT_PLUGIN
 
-INCLUDES = -I$(top_srcdir)/kdefx $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdefx $(all_includes)
 noinst_HEADERS = highcolor.h bitmaps.h
 kde_style_LTLIBRARIES = highcolor.la
 highcolor_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-highcolor_la_LIBADD = ../../kdefx/libtdefx.la $(LIB_QT)
+highcolor_la_LIBADD = ../../tdefx/libtdefx.la $(LIB_QT)
 highcolor_la_SOURCES = highcolor.cpp
 highcolor_la_METASOURCES = AUTO

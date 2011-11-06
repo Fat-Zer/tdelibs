@@ -11,8 +11,8 @@
 
 include_directories(
   ${TQT_INCLUDE_DIRS}
-  ${CMAKE_BINARY_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -24,6 +24,6 @@ link_directories(
 
 tde_add_executable( kconfig_compiler
   SOURCES kconfig_compiler.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

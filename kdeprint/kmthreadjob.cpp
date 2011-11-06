@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -44,7 +44,7 @@ KMThreadJob::~KMThreadJob()
 
 TQString KMThreadJob::jobFile()
 {
-	QString	f = locateLocal("data","kdeprint/printjobs");
+	QString	f = locateLocal("data","tdeprint/printjobs");
 	return f;
 }
 

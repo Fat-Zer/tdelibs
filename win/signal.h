@@ -20,7 +20,7 @@
 #ifndef SIGNAL_H
 #define SIGNAL_H
 
-#include <kdecore/kdelibs_export.h>
+#include <tdecore/kdelibs_export.h>
 
 #ifdef  __cplusplus
 extern "C" {

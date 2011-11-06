@@ -21,10 +21,10 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdefx
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdefx
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kio/kfile
@@ -84,7 +84,7 @@ install( FILES
 
 install( FILES
     aboutkde.png ktip-bulb.png ktip-background.png
-  DESTINATION ${DATA_INSTALL_DIR}/kdeui/pics )
+  DESTINATION ${DATA_INSTALL_DIR}/tdeui/pics )
 
 install( FILES
     ui_standards.rc
@@ -97,7 +97,7 @@ install( PROGRAMS
 
 ##### libtdeui ##################################
 
-set( target kdeui )
+set( target tdeui )
 
 set( ${target}_SRCS
   qxembed.cpp ksharedpixmap.cpp kpixmapio.cpp
@@ -148,7 +148,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
-  LINK kdecore-shared ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARIES}
+  LINK tdecore-shared ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARIES}
   DEPENDENCIES dcopidl
   DESTINATION ${LIB_INSTALL_DIR}
 )

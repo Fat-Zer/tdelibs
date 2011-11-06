@@ -12,9 +12,9 @@
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
-  ${CMAKE_SOURCE_DIR}/kdefx
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
+  ${CMAKE_SOURCE_DIR}/tdefx
   ${CMAKE_SOURCE_DIR}/dcop
 )
 
@@ -45,5 +45,5 @@ set( test_PROGS
 )
 
 foreach( PROG ${test_PROGS} )
-  tde_add_executable( ${PROG} AUTOMOC SOURCES "${PROG}.cpp" LINK kdeui-shared )
+  tde_add_executable( ${PROG} AUTOMOC SOURCES "${PROG}.cpp" LINK tdeui-shared )
 endforeach( PROG ${test_PROGS} )

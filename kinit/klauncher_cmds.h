@@ -44,7 +44,7 @@ typedef struct
 /*
  * LAUNCHER_SETENV
  *
- * Change environment of future processes launched via kdeinit.
+ * Change environment of future processes launched via tdeinit.
  * DON'T use this if you want to change environment only for one
  * application you're going to start.
  *
@@ -56,7 +56,7 @@ typedef struct
 /*
  * LAUNCHER_DIED
  *
- * Notification A child of kdeinit died.
+ * Notification A child of tdeinit died.
  *
  * long pid;
  * long exit_code;
@@ -94,7 +94,7 @@ typedef struct
  * char *envs: environment strings.
  * int avoid_loops : avoid using the first path in $PATH where
  *    this process binary is found in order to avoid
- *    infinite loop by binary->kdeinit_wrapper link in $PATH
+ *    infinite loop by binary->tdeinit_wrapper link in $PATH
  * char* startup_id: app startup notification id, "0" for none,
  *   "" ( empty string ) is the default
  */
@@ -132,7 +132,7 @@ typedef struct
  * char *envs: environment strings.
  * int avoid_loops : avoid using the first path in $PATH where
  *    this process binary is found in order to avoid
- *    infinite loop by binary->kdeinit_wrapper link in $PATH
+ *    infinite loop by binary->tdeinit_wrapper link in $PATH
  * char* startup_id: app startup notification id, "0" for none,
  *   "" ( empty string ) is the default
  * 
@@ -154,7 +154,7 @@ typedef struct
  * char *tty: tty to redirect stdout/stderr to.
  * int avoid_loops : avoid using the first path in $PATH where
  *    this process binary is found in order to avoid
- *    infinite loop by binary->kdeinit_wrapper link in $PATH
+ *    infinite loop by binary->tdeinit_wrapper link in $PATH
  * char* startup_id: app startup notification id, "0" for none,
  *   "" ( empty string ) is the default
  */
@@ -174,12 +174,12 @@ typedef struct
  * char *envs: environment strings.
  * int avoid_loops : avoid using the first path in $PATH where
  *    this process binary is found in order to avoid
- *    infinite loop by binary->kdeinit_wrapper link in $PATH
+ *    infinite loop by binary->tdeinit_wrapper link in $PATH
  */
 
 #define LAUNCHER_FD	42
 /*
- * File descriptor to use for communication with kdeinit.
+ * File descriptor to use for communication with tdeinit.
  */
 
 #endif

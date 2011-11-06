@@ -88,7 +88,7 @@ iterate over all available resources to harvest all events.
 
 EXAMPLES
 --------
-For examples, check the following files in kdepim/libkcal:
+For examples, check the following files in tdepim/libkcal:
 - resourcecalendar.{h,cpp} 
   Defines the base class of the calendar resource family
 - kcmcalendars.{h,cpp}
@@ -112,7 +112,7 @@ with libkcal:
 The "exchange" calendar resource is compiled in a separate 
 library, dynamically loaded by the resource manager if 
 resources of this type are used. This resource is in
-kdepim/kresources/exchange:
+tdepim/kresources/exchange:
 - resourceexchange.{h,cpp}
   Defines the exchange resource
 - resourceexchangeconfig.{h,cpp}

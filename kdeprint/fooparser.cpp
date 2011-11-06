@@ -4,13 +4,13 @@
 
 #define YYBISON 1  /* Identify Bison output.  */
 
-#define yyparse kdeprint_foomatic2parse
-#define yylex kdeprint_foomatic2lex
-#define yyerror kdeprint_foomatic2error
-#define yylval kdeprint_foomatic2lval
-#define yychar kdeprint_foomatic2char
-#define yydebug kdeprint_foomatic2debug
-#define yynerrs kdeprint_foomatic2nerrs
+#define yyparse tdeprint_foomatic2parse
+#define yylex tdeprint_foomatic2lex
+#define yyerror tdeprint_foomatic2error
+#define yylval tdeprint_foomatic2lval
+#define yychar tdeprint_foomatic2char
+#define yydebug tdeprint_foomatic2debug
+#define yynerrs tdeprint_foomatic2nerrs
 #define	VAR	257
 #define	STRING	258
 #define	NUMBER	259
@@ -22,7 +22,7 @@
 
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001-2003 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001-2003 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public

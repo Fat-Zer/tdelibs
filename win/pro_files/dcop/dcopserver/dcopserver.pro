@@ -2,7 +2,7 @@ TEMPLATE	= app
 
 # needed to export library classes:
 
-CONFIG += nokdecore nokdefx nokdeui
+CONFIG += notdecore notdefx notdeui
 include( $(KDELIBS)/win/common.pro )
 
 DEFINES += MAKE_DCOP_LIB 

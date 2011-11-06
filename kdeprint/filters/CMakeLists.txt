@@ -18,6 +18,6 @@ install( FILES
     psbook2.xml psbook.desktop psbook.xml psselect.desktop
     psselect.xml ps2pdf.desktop ps2pdf.xml pdf2ps.desktop
     pdf2ps.xml poster.desktop poster.xml
-  DESTINATION ${DATA_INSTALL_DIR}/kdeprint/filters )
+  DESTINATION ${DATA_INSTALL_DIR}/tdeprint/filters )
 
 install( PROGRAMS imagetops DESTINATION ${BIN_INSTALL_DIR} )

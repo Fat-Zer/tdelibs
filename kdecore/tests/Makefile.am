@@ -17,7 +17,7 @@
 #    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #    Boston, MA 02110-1301, USA.
 
-INCLUDES = -I$(top_srcdir)/kdecore $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdecore $(all_includes)
 
 AM_LDFLAGS = $(QT_LDFLAGS) $(X_LDFLAGS) $(KDE_RPATH)
 

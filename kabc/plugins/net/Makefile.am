@@ -11,7 +11,7 @@ libkabc_net_la_COMPILE_FIRST = $(top_builddir)/kabc/addressee.h
 
 kde_module_LTLIBRARIES = kabc_net.la
 kabc_net_la_SOURCES = resourcenetplugin.cpp
-kabc_net_la_LDFLAGS	= $(all_libraries) -module $(KDE_PLUGIN) $(LIB_QT) -L../../../kdecore/.libs/ -lkdecore
+kabc_net_la_LDFLAGS	= $(all_libraries) -module $(KDE_PLUGIN) $(LIB_QT) -L../../../tdecore/.libs/ -ltdecore
 kabc_net_la_LIBADD	= libkabc_net.la
 
 METASOURCES = AUTO

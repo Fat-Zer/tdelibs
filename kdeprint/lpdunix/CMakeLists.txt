@@ -18,12 +18,12 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
-  ${CMAKE_SOURCE_DIR}/kdeprint
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
+  ${CMAKE_SOURCE_DIR}/tdeprint
 )
 
 link_directories(
@@ -33,12 +33,12 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES lpdunix.print DESTINATION ${DATA_INSTALL_DIR}/kdeprint/plugins )
+install( FILES lpdunix.print DESTINATION ${DATA_INSTALL_DIR}/tdeprint/plugins )
 
 
-#### kdeprint_lpdunix ###########################
+#### tdeprint_lpdunix ###########################
 
-set( target kdeprint_lpdunix )
+set( target tdeprint_lpdunix )
 
 set( ${target}_SRCS
   kmlpdunixfactory.cpp kmlpdunixmanager.cpp
@@ -47,6 +47,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kdeprint-shared
+  LINK tdeprint-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

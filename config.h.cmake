@@ -692,10 +692,10 @@
 /* Enable prevention against poor Linux OOM-killer */
 #cmakedefine KDEINIT_OOM_PROTECT 1
 
-/* Use FontConfig in kdeinit */
+/* Use FontConfig in tdeinit */
 #cmakedefine KDEINIT_USE_FONTCONFIG 1
 
-/* Use Xft preinitialization in kdeinit */
+/* Use Xft preinitialization in tdeinit */
 #cmakedefine KDEINIT_USE_XFT 1
 
 /* Suffix for lib directories */

@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -28,9 +28,9 @@ SidePixmap::SidePixmap(TQWidget *parent, const char *name)
 	setLineWidth(1);
 	setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 
-	m_side.load(locate("data", "kdeprint/side.png"));
-	m_tileup.load(locate("data", "kdeprint/tileup.png"));
-	m_tiledown.load(locate("data", "kdeprint/tiledown.png"));
+	m_side.load(locate("data", "tdeprint/side.png"));
+	m_tileup.load(locate("data", "tdeprint/tileup.png"));
+	m_tiledown.load(locate("data", "tdeprint/tiledown.png"));
 
 	tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Minimum));
 }

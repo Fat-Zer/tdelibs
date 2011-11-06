@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -144,12 +144,12 @@ void KMWRlpr::initialize()
 			{
 				host = line.left(p).stripWhiteSpace();
 				TQListViewItem	*hitem = new TQListViewItem(m_view,host);
-				hitem->setPixmap(0,SmallIcon("kdeprint_computer"));
+				hitem->setPixmap(0,SmallIcon("tdeprint_computer"));
 				TQStringList	prs = TQStringList::split(' ',line.right(line.length()-p-1),false);
 				for (TQStringList::ConstIterator it=prs.begin(); it!=prs.end(); ++it)
 				{
 					TQListViewItem	*pitem = new TQListViewItem(hitem,*it);
-					pitem->setPixmap(0,SmallIcon("kdeprint_printer"));
+					pitem->setPixmap(0,SmallIcon("tdeprint_printer"));
 				}
 			}
 		}
@@ -187,10 +187,10 @@ void KMWRlpr::initialize()
 				if (!hitem)
 				{
 					hitem = new TQListViewItem(m_view,"localhost");
-					hitem->setPixmap(0,SmallIcon("kdeprint_computer"));
+					hitem->setPixmap(0,SmallIcon("tdeprint_computer"));
 				}
 				TQListViewItem	*pitem = new TQListViewItem(hitem,name);
-				pitem->setPixmap(0,SmallIcon("kdeprint_printer"));
+				pitem->setPixmap(0,SmallIcon("tdeprint_printer"));
 			}
 		}
 	}

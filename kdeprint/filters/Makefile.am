@@ -1,4 +1,4 @@
-filtersdir = $(kde_datadir)/kdeprint/filters
+filtersdir = $(kde_datadir)/tdeprint/filters
 filters_DATA = enscript.desktop enscript.xml\
 	       psnup.desktop psnup.xml \
 	       imagetops.desktop imagetops.xml \

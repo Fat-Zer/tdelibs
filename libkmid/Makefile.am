@@ -18,7 +18,7 @@ libkmid_la_SOURCES  = midiout.cc player.cc track.cc midimapper.cc \
 	libkmid.cc
 
 libkmid_la_LDFLAGS = $(KDE_MT_LDFLAGS) -version-info 0:95  -no-undefined
-libkmid_la_LIBADD = $(LIBASOUND) ../kdecore/libtdecore.la $(LIB_QT)
+libkmid_la_LIBADD = $(LIBASOUND) ../tdecore/libtdecore.la $(LIB_QT)
 
-DOXYGEN_REFERENCES = kdecore
+DOXYGEN_REFERENCES = tdecore
 include ../admin/Doxyfile.am

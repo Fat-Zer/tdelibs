@@ -104,7 +104,7 @@ int main(int argc, char **argv)
 		cmd << TQString::number(url.port());
 	}
 
-	app.kdeinitExec(terminal, cmd);
+	app.tdeinitExec(terminal, cmd);
 
 	return 0;
 }

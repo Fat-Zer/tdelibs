@@ -16,7 +16,7 @@ noinst_HEADERS = plastik.h misc.h
 kde_style_LTLIBRARIES = plastik.la
 plastik_la_SOURCES = plastik.cpp misc.cpp
 plastik_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-plastik_la_LIBADD = ../../kdefx/libtdefx.la $(LIB_QT)
+plastik_la_LIBADD = ../../tdefx/libtdefx.la $(LIB_QT)
 plastik_la_METASOURCES = AUTO
 
 DISTCLEANFILES = $(plastik_la_METASOURCES)

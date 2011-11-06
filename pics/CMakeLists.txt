@@ -20,10 +20,10 @@ if( WITH_LIBART )
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${LIBART_INCLUDE_DIRS}
-  ${CMAKE_BINARY_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdefx
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore/svgicons
+  ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdefx
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore/svgicons
 )
 
 link_directories(
@@ -46,7 +46,7 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kdesvgicons-static kdecore-shared
+  LINK kdesvgicons-static tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

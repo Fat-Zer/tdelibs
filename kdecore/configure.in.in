@@ -1,7 +1,7 @@
 dnl Compile in the exec prefix to help kstddirs in finding dynamic libs
 AC_DEFINE_UNQUOTED(__KDE_EXECPREFIX, "$exec_prefix", [execprefix or NONE if not set, for libloading])
 
-dnl Compile in kde_bindir to safely find kdesu_stub.
+dnl Compile in kde_bindir to safely find tdesu_stub.
 if test "$exec_prefix" = "NONE"; then
     bindir_str="\"$prefix/bin\""
 else
@@ -167,9 +167,9 @@ AC_TRY_LINK(dnl
 
 AC_CHECK_HEADERS(sys/mount.h)  
 
-dnl AC_OUTPUT(kdecore/kde-config.cpp)
+dnl AC_OUTPUT(tdecore/kde-config.cpp)
 
-AM_CONFIG_HEADER(kdecore/kdemacros.h)
+AM_CONFIG_HEADER(tdecore/kdemacros.h)
 
 SVGICONS=
 	

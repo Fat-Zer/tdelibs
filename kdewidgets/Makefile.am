@@ -25,8 +25,8 @@ INCLUDES = -I$(top_srcdir)/kfile $(all_includes)
 
 bin_PROGRAMS = makekdewidgets
 makekdewidgets_SOURCES = makekdewidgets.cpp
-makekdewidgets_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
-makekdewidgets_LDADD = $(LIB_QT) ../kdecore/libtdecore.la 
+makekdewidgets_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+makekdewidgets_LDADD = $(LIB_QT) ../tdecore/libtdecore.la 
 
 kde_widget_LTLIBRARIES = kdewidgets.la
 kdewidgets_la_LDFLAGS = $(KDE_PLUGIN) -module $(all_libraries)

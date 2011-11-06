@@ -5,8 +5,8 @@ include( $(KDELIBS)/win/common.pro )
 
 TARGET		= kdewin32$$KDEBUG
 
-QMAKE_CXXFLAGS += /FI$(KDELIBS)/kdecore/kdelibs_export.h
-QMAKE_CFLAGS += /FI$(KDELIBS)/kdecore/kdelibs_export.h
+QMAKE_CXXFLAGS += /FI$(KDELIBS)/tdecore/kdelibs_export.h
+QMAKE_CFLAGS += /FI$(KDELIBS)/tdecore/kdelibs_export.h
 
 system( moc qeventloopex.h -o moc/qeventloopex.moc )
 

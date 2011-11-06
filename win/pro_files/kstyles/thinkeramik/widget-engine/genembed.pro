@@ -3,7 +3,7 @@ TEMPLATE	= app
 include( $(KDELIBS)/win/common.pro )
 
 
-unix:LIBS += -lkdefx
+unix:LIBS += -ltdefx
 
 win32 {
 	CONFIG +=console

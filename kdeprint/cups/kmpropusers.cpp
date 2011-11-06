@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -37,7 +37,7 @@ KMPropUsers::KMPropUsers(TQWidget *parent, const char *name)
 
 	m_title = i18n("Users");
 	m_header = i18n("Users Access Settings");
-	m_pixmap = "kdeprint_printer_users";
+	m_pixmap = "tdeprint_printer_users";
 }
 
 KMPropUsers::~KMPropUsers()

@@ -47,13 +47,13 @@
 
 /* If NAME_PREFIX is specified substitute the variables and functions
    names.  */
-#define yyparse kdeprint_ppdparse
-#define yylex   kdeprint_ppdlex
-#define yyerror kdeprint_ppderror
-#define yylval  kdeprint_ppdlval
-#define yychar  kdeprint_ppdchar
-#define yydebug kdeprint_ppddebug
-#define yynerrs kdeprint_ppdnerrs
+#define yyparse tdeprint_ppdparse
+#define yylex   tdeprint_ppdlex
+#define yyerror tdeprint_ppderror
+#define yylval  tdeprint_ppdlval
+#define yychar  tdeprint_ppdchar
+#define yydebug tdeprint_ppddebug
+#define yynerrs tdeprint_ppdnerrs
 
 
 /* Tokens.  */
@@ -103,7 +103,7 @@
 
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001-2003 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001-2003 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -131,8 +131,8 @@
 
 #define builder static_cast<PPDLoader*>( ppdloader )
 
-int kdeprint_ppdlex();
-#define kdeprint_ppderror(msg) static_cast<PPDLoader*>( ppdloader )->setErrorMsg( msg )
+int tdeprint_ppdlex();
+#define tdeprint_ppderror(msg) static_cast<PPDLoader*>( ppdloader )->setErrorMsg( msg )
 
 
 /* Enabling traces.  */

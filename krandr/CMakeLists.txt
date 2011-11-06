@@ -13,10 +13,10 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
   ${XRANDR_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
 )
 
 link_directories(
@@ -43,6 +43,6 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 0.0.95
-  LINK kdeui-shared ${XRANDR_LIBRARIES} Xext
+  LINK tdeui-shared ${XRANDR_LIBRARIES} Xext
   DESTINATION ${LIB_INSTALL_DIR}
 )

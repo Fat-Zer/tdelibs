@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -288,9 +288,9 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	m_printerlabel->setBuddy(d->m_printers);
 	d->m_properties = new KPushButton(KGuiItem(i18n("P&roperties"), "edit"), m_pbox);
 	TQWhatsThis::add( d->m_properties, whatsThisPrintJobProperties);
-	d->m_options = new KPushButton(KGuiItem(i18n("System Op&tions"), "kdeprint_configmgr"), this);
+	d->m_options = new KPushButton(KGuiItem(i18n("System Op&tions"), "tdeprint_configmgr"), this);
 	TQWhatsThis::add(d->m_options,whatsThisSystemOptions);
-	d->m_default = new KPushButton(KGuiItem(i18n("Set as &Default"), "kdeprint_defaultsoft"), m_pbox);
+	d->m_default = new KPushButton(KGuiItem(i18n("Set as &Default"), "tdeprint_defaultsoft"), m_pbox);
 	TQWhatsThis::add(d->m_default,whatsThisSetDefaultPrinter);
 	d->m_filter = new TQPushButton(m_pbox);
 	d->m_filter->setPixmap(SmallIcon("filter"));
@@ -914,7 +914,7 @@ void KPrintDialog::slotToggleFilter(bool on)
 
 void KPrintDialog::slotHelp()
 {
-	kapp->invokeHelp(TQString::null, "kdeprint");
+	kapp->invokeHelp(TQString::null, "tdeprint");
 }
 
 void KPrintDialog::slotOutputFileSelected(const TQString& txt)

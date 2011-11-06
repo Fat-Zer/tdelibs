@@ -13,10 +13,10 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kded
 )
 
@@ -46,7 +46,7 @@ set( target networkstatus )
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES networkstatuscommon.cpp
   VERSION 0.0.0
-  LINK  kdeui-shared
+  LINK  tdeui-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
 
@@ -80,7 +80,7 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeinit_kded-shared networkstatus-shared
+  LINK tdeinit_kded-shared networkstatus-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
   DEPENDENCIES dcopidl
 )

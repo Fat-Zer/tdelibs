@@ -2,7 +2,7 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
  * This is free software; you can use this library under the GNU Library 
@@ -24,9 +24,9 @@
 typedef TQValueList<TQCString> QCStringList;
 
 /**
- * Chat with kdesu_stub.
+ * Chat with tdesu_stub.
  *
- * StubProcess extends PtyProcess with functionality to chat with kdesu_stub.
+ * StubProcess extends PtyProcess with functionality to chat with tdesu_stub.
  */
 
 class KDESU_EXPORT StubProcess: public PtyProcess
@@ -52,7 +52,7 @@ public:
     void setUser(const TQCString &user) { m_User = user; }
 
     /**
-     * Set to "X only mode": Sycoca is not built and kdeinit is not launched.
+     * Set to "X only mode": Sycoca is not built and tdeinit is not launched.
      */
     void setXOnly(bool xonly) { m_bXOnly = xonly; }
 
@@ -82,7 +82,7 @@ public:
 protected:
 
     /**
-     * Exchange all parameters with kdesu_stub.
+     * Exchange all parameters with tdesu_stub.
      */
     int ConverseStub(int check);
 

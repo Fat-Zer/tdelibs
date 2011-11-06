@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001-2003 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001-2003 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -26,8 +26,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 
-void kdeprint_foomatic2scanner_init( TQIODevice* );
-void kdeprint_foomatic2scanner_terminate();
+void tdeprint_foomatic2scanner_init( TQIODevice* );
+void tdeprint_foomatic2scanner_terminate();
 
 Foomatic2Loader::Foomatic2Loader()
 {
@@ -41,10 +41,10 @@ bool Foomatic2Loader::read( TQIODevice *d )
 {
 	bool result = true;
 	m_foodata.clear();
-	kdeprint_foomatic2scanner_init( d );
-	if ( kdeprint_foomatic2parse( this ) != 0 )
+	tdeprint_foomatic2scanner_init( d );
+	if ( tdeprint_foomatic2parse( this ) != 0 )
 		result = false;
-	kdeprint_foomatic2scanner_terminate();
+	tdeprint_foomatic2scanner_terminate();
 	return result;
 }
 

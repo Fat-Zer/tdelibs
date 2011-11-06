@@ -2,7 +2,7 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  * 
  * This is free software; you can use this library under the GNU Library 
@@ -128,7 +128,7 @@ public:
 public: /* static */
     /*
     ** This is a collection of static functions that can be
-    ** used for process control inside kdesu. I'd suggest 
+    ** used for process control inside tdesu. I'd suggest 
     ** against using this publicly. There are probably 
     ** nicer Qt based ways to do what you want.
     */

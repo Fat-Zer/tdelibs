@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -275,7 +275,7 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 
 	m_hue->setEnabled(useColor);
 	m_saturation->setEnabled(useColor);
-	TQImage	img(locate("data", "kdeprint/preview.png"));
+	TQImage	img(locate("data", "tdeprint/preview.png"));
 	m_preview->setImage(img);
 
 	KSeparator	*sep = new KSeparator(Qt::Horizontal, colorbox);

@@ -6,13 +6,13 @@ include( $(KDELIBS)/win/common.pro )
 # needed to export library classes:
 DEFINES += MAKE_KDEUI_LIB
 
-LIBS += $$KDELIBDESTDIR\kdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdefx$$KDELIB_SUFFIX \
+LIBS += $$KDELIBDESTDIR\tdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\tdefx$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX 
 
 system( bash kmoc )
 system( bash kdcopidl )
 
-TARGET		= kdeui$$KDEBUG
+TARGET		= tdeui$$KDEBUG
 
 SOURCES = \
 kaboutapplication.cpp \

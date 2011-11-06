@@ -13,8 +13,8 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_BINARY_DIR}/tdecore
 )
 
 
@@ -35,9 +35,9 @@ install( FILES
 install( FILES ipv6blacklist DESTINATION ${CONFIG_INSTALL_DIR} )
 
 
-##### kdecorenetwork ############################
+##### tdecorenetwork ############################
 
-set( target kdecorenetwork )
+set( target tdecorenetwork )
 
 set( ${target}_SRCS
   kresolver.cpp kresolvermanager.cpp kresolverworkerbase.cpp

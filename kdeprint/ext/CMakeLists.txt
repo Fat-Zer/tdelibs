@@ -17,11 +17,11 @@ include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
-  ${CMAKE_SOURCE_DIR}/kdeprint
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
+  ${CMAKE_SOURCE_DIR}/tdeprint
 )
 
 link_directories(
@@ -31,12 +31,12 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES ext.print DESTINATION ${DATA_INSTALL_DIR}/kdeprint/plugins )
+install( FILES ext.print DESTINATION ${DATA_INSTALL_DIR}/tdeprint/plugins )
 
 
-##### kdeprint_ext ##############################
+##### tdeprint_ext ##############################
 
-set( target kdeprint_ext )
+set( target tdeprint_ext )
 
 set( ${target}_SRCS
   kmextfactory.cpp kmextmanager.cpp kextprinterimpl.cpp
@@ -45,6 +45,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeprint-shared
+  LINK tdeprint-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

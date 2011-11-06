@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -25,7 +25,7 @@
 #endif
 
 #include <tqwidget.h>
-#include <kdeprint/kpreloadobject.h>
+#include <tdeprint/kpreloadobject.h>
 #include <kmainwindow.h>
 
 class KMManager;
@@ -128,6 +128,6 @@ private:
 	KToolBar *m_menubar;
 };
 
-KDEPRINT_EXPORT int kdeprint_management_add_printer_wizard( TQWidget* parent );
+KDEPRINT_EXPORT int tdeprint_management_add_printer_wizard( TQWidget* parent );
 
 #endif

@@ -45,23 +45,23 @@ Here is an alphabetical list:
 * kconf_update
     Auto-Updater for config files.
 
-* kdecore
+* tdecore
     This is the core collection of KDE stuff. Non GUI classes reside here.
 
 * kded
     The KDE daemon checks for newly installed software, update files
     or hostname changes and takes according actions.
 
-* kdefx
+* tdefx
     Library with pixmap effects.
 
-* kdeprint
+* tdeprint
     The very versatile printing subsystem of KDE.
 
-* kdesu
+* tdesu
     Library for password entering and handling
 
-* kdeui
+* tdeui
     The main collection of misc. user interface classes (widgets).
     KSpell and related classes are a frontend to ispell for use within a
     GUI app.

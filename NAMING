@@ -16,7 +16,7 @@ use both "xxxx.la" and "libxxxx.la" as names for DSOs!!
 KDEInit Loadable Modules
 ========================
 Name: <appname>.la
-Definition: kdeinit_LTLIBRARIES = <appname>.la
+Definition: tdeinit_LTLIBRARIES = <appname>.la
 LDFLAGS: -module $(KDE_PLUGIN)
 
 

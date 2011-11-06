@@ -20,7 +20,7 @@ libkatepart_la_LIBADD = libkate.la ../interfaces/libkatepartinterfaces.la $(LIB_
 
 libkatepart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
 
-INCLUDES= -I../interfaces -I$(top_srcdir) -I$(top_srcdir)/kdeprint -I$(top_srcdir)/interfaces  -I$(top_srcdir)/interfaces/kregexpeditor -I$(top_srcdir)/kdefx -I$(top_srcdir)/kutils -I$(top_builddir)/kjs $(LUA_INCLUDES) $(all_includes)
+INCLUDES= -I../interfaces -I$(top_srcdir) -I$(top_srcdir)/tdeprint -I$(top_srcdir)/interfaces  -I$(top_srcdir)/interfaces/kregexpeditor -I$(top_srcdir)/tdefx -I$(top_srcdir)/kutils -I$(top_builddir)/kjs $(LUA_INCLUDES) $(all_includes)
 
 METASOURCES = AUTO
 

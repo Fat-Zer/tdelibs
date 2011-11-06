@@ -104,7 +104,7 @@ klockfile.cpp		Waldo Bastian <bastian@kde.org> (copyright)
 kmacroexpander.cpp
 kmanagerselection.cpp	Lubos Lunak        <l.lunak@kde.org> (copyright)
 kmountpoint.cpp		Waldo Bastian <bastian@kde.org> (copyright)
-kprotocolinfo_kdecore.cpp	Torben Weis <weis@kde.org> (copyright)
+kprotocolinfo_tdecore.cpp	Torben Weis <weis@kde.org> (copyright)
 kprotocolinfofactory.cpp	Torben Weis <weis@kde.org> (copyright)
 kprotocolinfofactory.cpp	Waldo Bastian <bastian@kde.org> (copyright)
 kpty.cpp

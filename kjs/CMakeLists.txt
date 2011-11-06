@@ -14,7 +14,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -59,6 +59,6 @@ tde_add_lut( keywords.table lexer.lut.h lexer.cpp )
 tde_add_library( ${target} SHARED
   SOURCES ${${target}_SRCS}
   VERSION 1.2.0
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )

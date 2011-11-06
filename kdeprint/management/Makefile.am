@@ -1,10 +1,10 @@
 AM_CPPFLAGS = -D_KDEPRINT_COMPILE
 
-INCLUDES= -I$(top_srcdir)/kdefx -I$(top_srcdir)/kdeprint -I$(top_builddir)/kdeprint -I$(top_srcdir)/kio -I$(top_srcdir)/kfile -I$(top_srcdir) $(all_includes)
+INCLUDES= -I$(top_srcdir)/tdefx -I$(top_srcdir)/tdeprint -I$(top_builddir)/tdeprint -I$(top_srcdir)/kio -I$(top_srcdir)/kfile -I$(top_srcdir) $(all_includes)
 
 lib_LTLIBRARIES = libtdeprint_management.la
 kde_module_LTLIBRARIES = libtdeprint_management_module.la
-kdeinit_LTLIBRARIES = kaddprinterwizard.la
+tdeinit_LTLIBRARIES = kaddprinterwizard.la
 bin_PROGRAMS = 
 
 kaddprinterwizard_la_SOURCES = kaddprinterwizard.cpp
@@ -29,12 +29,12 @@ libtdeprint_management_la_LDFLAGS = $(all_libraries) -version-info 6:0:2 -no-und
 libtdeprint_management_la_LIBADD = ../libtdeprint.la $(LIB_QT) $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
 libtdeprint_management_la_METASOURCES = AUTO
 
-libtdeprint_management_module_la_SOURCES = kdeprint_management_module.cpp
+libtdeprint_management_module_la_SOURCES = tdeprint_management_module.cpp
 libtdeprint_management_module_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
 libtdeprint_management_module_la_LIBADD = libtdeprint_management.la $(LIB_QT) $(LIB_KDEUI) $(LIB_KDECORE)
 
-kdeprint_HEADERS = kmmainview.h kmjobviewer.h kmprinterpage.h kiconselectaction.h kmtimer.h
-kdeprintdir = $(includedir)/kdeprint
+tdeprint_HEADERS = kmmainview.h kmjobviewer.h kmprinterpage.h kiconselectaction.h kmtimer.h
+tdeprintdir = $(includedir)/tdeprint
 
 noinst_HEADERS = kmdbcreator.h kmdriverdb.h kmdriverdbwidget.h kmiconview.h \
 		 kminfopage.h kmmainview.h kmpages.h \
@@ -48,5 +48,5 @@ noinst_HEADERS = kmdbcreator.h kmdriverdb.h kmdriverdbwidget.h kmiconview.h \
 		 kmconfigfilter.h kmconfigfonts.h kmconfigjobs.h networkscanner.h
 
 dataicon_DATA = tileup.png tiledown.png side.png
-dataicondir = $(kde_datadir)/kdeprint
+dataicondir = $(kde_datadir)/tdeprint
 

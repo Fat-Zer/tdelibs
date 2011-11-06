@@ -14,8 +14,8 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -33,7 +33,7 @@ install( FILES
 
 ##### libtdefx ##################################
 
-set( target kdefx )
+set( target tdefx )
 
 set( ${target}_SRCS
   kpixmap.cpp kpixmapsplitter.cpp kpixmapeffect.cpp

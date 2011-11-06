@@ -18,7 +18,7 @@
 
 AM_CPPFLAGS = -D_LARGEFILE64_SOURCE
 
-INCLUDES=  -I$(top_srcdir) -I$(srcdir)/.. -I$(top_srcdir)/kdecore/network -I$(srcdir)/../kssl -I../kssl -I$(srcdir)/../../interfaces  $(all_includes) $(SSL_INCLUDES)
+INCLUDES=  -I$(top_srcdir) -I$(srcdir)/.. -I$(top_srcdir)/tdecore/network -I$(srcdir)/../kssl -I../kssl -I$(srcdir)/../../interfaces  $(all_includes) $(SSL_INCLUDES)
 
 noinst_LTLIBRARIES = libkiocore.la libksycoca.la
 
@@ -63,7 +63,7 @@ include_HEADERS += kacl.h
 #endif
 
 #libkiocore_la_LDFLAGS = $(all_libraries)
-#libkiocore_la_LIBADD = ../../kdeui/libtdeui.la ../../kdesu/libtdesu.la $(LIBZ) $(LIBFAM) $(LIBVOLMGT)
+#libkiocore_la_LIBADD = ../../tdeui/libtdeui.la ../../tdesu/libtdesu.la $(LIBZ) $(LIBFAM) $(LIBVOLMGT)
 
 libkiocore_la_SOURCES = authinfo.cpp \
 	kshred.cpp \

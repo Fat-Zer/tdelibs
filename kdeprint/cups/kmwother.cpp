@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -97,7 +97,7 @@ void KMWOther::initPrinter(KMPrinter *p)
 				if ( cl == "network" )
 					parent->setPixmap( 0, SmallIcon( "network" ) );
 				else if ( cl == "direct" )
-					parent->setPixmap( 0, SmallIcon( "kdeprint_computer" ) );
+					parent->setPixmap( 0, SmallIcon( "tdeprint_computer" ) );
 				else if ( cl == "serial" )
 					parent->setPixmap( 0, SmallIcon( "usb" ) );
 				else

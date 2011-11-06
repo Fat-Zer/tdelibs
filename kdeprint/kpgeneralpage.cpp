@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -696,11 +696,11 @@ void KPGeneralPage::slotOrientationChanged(int ID)
 	TQString	iconstr;
 	switch (ID)
 	{
-		case ORIENT_PORTRAIT_ID: iconstr = "kdeprint_portrait"; break;
-		case ORIENT_LANDSCAPE_ID: iconstr = "kdeprint_landscape"; break;
-		case ORIENT_REVPORTRAIT_ID: iconstr = "kdeprint_revportrait"; break;
-		case ORIENT_REVLANDSCAPE_ID: iconstr = "kdeprint_revlandscape"; break;
-		default: iconstr = "kdeprint_portrait"; break;
+		case ORIENT_PORTRAIT_ID: iconstr = "tdeprint_portrait"; break;
+		case ORIENT_LANDSCAPE_ID: iconstr = "tdeprint_landscape"; break;
+		case ORIENT_REVPORTRAIT_ID: iconstr = "tdeprint_revportrait"; break;
+		case ORIENT_REVLANDSCAPE_ID: iconstr = "tdeprint_revlandscape"; break;
+		default: iconstr = "tdeprint_portrait"; break;
 	}
 	m_orientpix->setPixmap(UserIcon(iconstr));
 }
@@ -710,10 +710,10 @@ void KPGeneralPage::slotNupChanged(int ID)
 	TQString	iconstr;
 	switch (ID)
 	{
-		case NUP_1_ID: iconstr = "kdeprint_nup1"; break;
-		case NUP_2_ID: iconstr = "kdeprint_nup2"; break;
-		case NUP_4_ID: iconstr = "kdeprint_nup4"; break;
-		default: iconstr = "kdeprint_nup1"; break;
+		case NUP_1_ID: iconstr = "tdeprint_nup1"; break;
+		case NUP_2_ID: iconstr = "tdeprint_nup2"; break;
+		case NUP_4_ID: iconstr = "tdeprint_nup4"; break;
+		default: iconstr = "tdeprint_nup1"; break;
 	}
 	m_nuppix->setPixmap(UserIcon(iconstr));
 }
@@ -725,10 +725,10 @@ void KPGeneralPage::slotDuplexChanged(int ID)
 		TQString	iconstr;
 		switch (ID)
 		{
-			case DUPLEX_NONE_ID: iconstr = "kdeprint_duplex_none"; break;
-			case DUPLEX_LONG_ID: iconstr = "kdeprint_duplex_long"; break;
-			case DUPLEX_SHORT_ID: iconstr = "kdeprint_duplex_short"; break;
-			default: iconstr = "kdeprint_duplex_none"; break;
+			case DUPLEX_NONE_ID: iconstr = "tdeprint_duplex_none"; break;
+			case DUPLEX_LONG_ID: iconstr = "tdeprint_duplex_long"; break;
+			case DUPLEX_SHORT_ID: iconstr = "tdeprint_duplex_short"; break;
+			default: iconstr = "tdeprint_duplex_none"; break;
 		}
 		m_duplexpix->setPixmap(UserIcon(iconstr));
 	}

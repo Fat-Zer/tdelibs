@@ -447,7 +447,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 extra->embedded = 1;
 #ifdef USE_QT4
                 // [FIXME]
-                printf("[FIXME] WId not set in kdelibs/kdeui/qxembed.cpp\n\r");
+                printf("[FIXME] WId not set in kdelibs/tdeui/qxembed.cpp\n\r");
 #else // USE_QT4
                 extra->parentWinId = e->xclient.data.l[3];
 #endif // USE_QT4
@@ -1320,7 +1320,7 @@ void QXEmbed::embedClientIntoWindow(TQWidget* client, WId window)
     ((QXEmbed*)client)->topData()->embedded = true;
 #ifdef USE_QT4
     // [FIXME]
-    printf("[FIXME] WId not set in kdelibs/kdeui/qxembed.cpp\n\r");
+    printf("[FIXME] WId not set in kdelibs/tdeui/qxembed.cpp\n\r");
 #else // USE_QT4
     ((QXEmbed*)client)->topData()->parentWinId = window;
 #endif // USE_QT4

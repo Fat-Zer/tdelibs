@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -78,7 +78,7 @@ TQString KMJob::pixmap()
 		return TQString::tqfromLatin1("exec");
 
 	// normal case
-	QString	str("kdeprint_job");
+	QString	str("tdeprint_job");
 	switch (m_state)
 	{
 		case KMJob::Printing:

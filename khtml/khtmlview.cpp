@@ -2785,7 +2785,7 @@ void KHTMLView::print(bool quick)
     if ( !docname.isEmpty() )
         docname = KStringHandler::csqueeze(docname, 80);
     if(quick || printer->setup(this, i18n("Print %1").arg(docname))) {
-        viewport()->setCursor( tqwaitCursor ); // only viewport(), no TQApplication::, otherwise we get the busy cursor in kdeprint's dialogs
+        viewport()->setCursor( tqwaitCursor ); // only viewport(), no TQApplication::, otherwise we get the busy cursor in tdeprint's dialogs
         // set up KPrinter
         printer->setFullPage(false);
         printer->setCreator(TQString("KDE %1.%2.%3 HTML Library").arg(KDE_VERSION_MAJOR).arg(KDE_VERSION_MINOR).arg(KDE_VERSION_RELEASE));

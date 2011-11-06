@@ -362,7 +362,7 @@ TQString KLibLoader::findLibrary( const char * name, const KInstance * instance 
       {
         libfile = instance->dirs()->findResource( "lib", libname );
 #ifndef NDEBUG
-        if ( !libfile.isEmpty() && libname.left(3) == "lib" ) // don't warn for kdeinit modules
+        if ( !libfile.isEmpty() && libname.left(3) == "lib" ) // don't warn for tdeinit modules
           kdDebug(150) << "library " << libname << " not found under 'module' but under 'lib'" << endl;
 #endif
       }

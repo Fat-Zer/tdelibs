@@ -1,7 +1,7 @@
 /* vi: ts=8 sts=4 sw=4
  * $Id$
  *
- * This file is part of the KDE project, module kdecore.
+ * This file is part of the KDE project, module tdecore.
  * Copyright (C) 2000 Geert Jansen <jansen@kde.org>
  * with minor additions and based on ideas from
  * Torsten Rahn <torsten@kde.org>
@@ -279,7 +279,7 @@ TQPixmap KIconEffect::apply(TQPixmap pixmap, int effect, float value,
     return result;
 }
 
-// Taken from KImageEffect. We don't want to link kdecore to kdeui! As long
+// Taken from KImageEffect. We don't want to link tdecore to tdeui! As long
 // as this code is not too big, it doesn't seem much of a problem to me.
 
 void KIconEffect::toGray(TQImage &img, float value)

@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *
  *  This library is free software; you can redistribute it and/or
@@ -30,7 +30,7 @@
 #include <kdemacros.h>
 #include <kdelibs_export.h>
 
-#include <kdeprint/kpreloadobject.h>
+#include <tdeprint/kpreloadobject.h>
 
 class KPrinterImpl;
 class KPrintDialogPage;
@@ -78,7 +78,7 @@ class DrPageSize;
  * of the print dialog to integrate application specific print options. This is done by subclassing
  * KPrintDialogPage and adding the page using addDialogPage().
  *
- * When compiling an application that uses KPrinter, you must link to -lkdeprint, which when
+ * When compiling an application that uses KPrinter, you must link to -ltdeprint, which when
  * using the standard KDE build framework can be done by adding $(LIB_KDEPRINT) to _LDADD.
  *
  * @short The central interface class to access the KDE print system.
@@ -106,7 +106,7 @@ public:
 	 * page selection will be enabled in the print dialog, otherwise it will be
 	 * disabled. However some applications (word processor) can do page selection
 	 * themselves, then it will be enabled in the print dialog, whatever the
-	 * print system used. But such an application has to tell kdeprint about its
+	 * print system used. But such an application has to tell tdeprint about its
 	 * feature:
 	 *  @li @p ApplicationSide: the application will do page selection
 	 *  @li @p SystemSide: page selection will be left to the print system, if available (default)

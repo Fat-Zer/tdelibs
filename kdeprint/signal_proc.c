@@ -114,7 +114,7 @@ int main(int argc, char **argv)
 
 				fprintf(stderr, "operation not authorized, switching to root\n");
 				snprintf(buf, 256, "kill -%d %d", signal_number, pid);
-				if (execlp("kdesu", "kdesu", "-c", buf, (void *)0) == -1)
+				if (execlp("tdesu", "tdesu", "-c", buf, (void *)0) == -1)
 				{
 					fprintf(stderr, "operation failed: %s\n", strerror(errno));
 					return -1;

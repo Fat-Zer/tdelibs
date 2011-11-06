@@ -377,15 +377,15 @@ second process where to find the authentication information.
 (Note that this implies that the second process is able to
 read the authentication file, so it will probably only work
 if the second process runs as root. If it should run as another
-user, a similar approach to what kdesu does with xauth must
+user, a similar approach to what tdesu does with xauth must
 be taken. In fact, it would be a very good idea to add DCOP
-support to kdesu!)
+support to tdesu!)
 
 For example
 
-ICEAUTHORITY=~user/.ICEauthority kdesu root -c kcmroot -dcopserver `cat ~user/.DCOPserver`
+ICEAUTHORITY=~user/.ICEauthority tdesu root -c kcmroot -dcopserver `cat ~user/.DCOPserver`
 
-will, after kdesu got the root password, execute kcmroot as root, talking
+will, after tdesu got the root password, execute kcmroot as root, talking
 to the user's dcop server.
 
 

@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -26,5 +26,5 @@
 #include <kgenericfactory.h>
 
 typedef K_TYPELIST_4( KMCupsManager, KMCupsJobManager, KMCupsUiManager, KCupsPrinterImpl ) Products;
-K_EXPORT_COMPONENT_FACTORY( kdeprint_cups, KGenericFactory< Products >( "ppdtranslations" ) )
+K_EXPORT_COMPONENT_FACTORY( tdeprint_cups, KGenericFactory< Products >( "ppdtranslations" ) )
 

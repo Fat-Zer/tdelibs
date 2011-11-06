@@ -45,7 +45,7 @@ kimg_ico_la_LIBADD  = $(LIB_QT)
 
 kimg_jp2_la_SOURCES = jp2.cpp
 kimg_jp2_la_LDFLAGS = -module $(KIMGIO_PLUGIN) -no-undefined $(all_libraries)
-kimg_jp2_la_LIBADD = $(LIB_QT) $(LIB_JASPER) ../kdecore/libtdecore.la
+kimg_jp2_la_LIBADD = $(LIB_QT) $(LIB_JASPER) ../tdecore/libtdecore.la
 
 kimg_pcx_la_SOURCES = pcx.cpp
 kimg_pcx_la_LDFLAGS = -module $(KIMGIO_PLUGIN) -no-undefined $(all_libraries)

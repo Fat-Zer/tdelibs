@@ -12,9 +12,9 @@
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
-  ${CMAKE_SOURCE_DIR}/kdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
 )
 
 link_directories(
@@ -46,6 +46,6 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED
   SOURCES ${${target}_SRCS}
   VERSION 0.0.95
-  LINK kdecore-shared ${ALSA_LIBRARIES}
+  LINK tdecore-shared ${ALSA_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

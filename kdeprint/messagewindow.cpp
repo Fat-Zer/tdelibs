@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2002 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2002 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -39,7 +39,7 @@ MessageWindow::MessageWindow( const TQString& txt, int delay, TQWidget *parent, 
 	box->setSpacing( 10 );
 	box->setMargin( 5 );
 	TQLabel *pix = new TQLabel( box );
-	pix->setPixmap( DesktopIcon( "kdeprint_printer" ) );
+	pix->setPixmap( DesktopIcon( "tdeprint_printer" ) );
 	m_text = new TQLabel( txt, box );
 
 	TQHBoxLayout *l0 = new TQHBoxLayout( this, 0, 0 );

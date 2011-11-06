@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -37,11 +37,11 @@ CupsdSplash::CupsdSplash(TQWidget *parent, const char *name)
 	main_->addLayout(sub_);
 
 	TQLabel	*cupslogo_ = new TQLabel(this);
-	TQString	logopath = locate("data", TQString("kdeprint/cups_logo.png"));
+	TQString	logopath = locate("data", TQString("tdeprint/cups_logo.png"));
 	cupslogo_->setPixmap(logopath.isEmpty() ? TQPixmap() : TQPixmap(logopath));
 	cupslogo_->tqsetAlignment(Qt::AlignCenter);
 	TQLabel	*kupslogo_ = new TQLabel(this);
-	logopath = locate("data", TQString("kdeprint/kde_logo.png"));
+	logopath = locate("data", TQString("tdeprint/kde_logo.png"));
 	kupslogo_->setPixmap(logopath.isEmpty() ? TQPixmap() : TQPixmap(logopath));
 	kupslogo_->tqsetAlignment(Qt::AlignCenter);
 

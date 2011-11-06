@@ -1,13 +1,13 @@
-AM_CPPFLAGS = -I$(top_srcdir)/kdecore -I$(top_srcdir) $(all_includes)
+AM_CPPFLAGS = -I$(top_srcdir)/tdecore -I$(top_srcdir) $(all_includes)
 
 check_PROGRAMS = example # autoexample
 EXTRA_PROGRAMS = autoexample
 
-example_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+example_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 example_LDADD = $(LIB_KDECORE)
 example_SOURCES = example.cpp exampleprefs_base.cpp
 
-autoexample_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
+autoexample_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 autoexample_LDADD = $(LIB_KDECORE) $(LIB_KDEUI)
 autoexample_SOURCES = exampleprefs_base.cpp general_base.ui myoptions_base.ui \
   autoexample.cpp  

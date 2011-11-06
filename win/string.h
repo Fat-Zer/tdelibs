@@ -20,7 +20,7 @@
 #ifndef KDEWIN_STRING_H
 #define KDEWIN_STRING_H
 
-#include <kdecore/kdelibs_export.h>
+#include <tdecore/kdelibs_export.h>
 
 #define strncasecmp strnicmp
 #define strcasecmp stricmp

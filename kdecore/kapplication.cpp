@@ -1440,18 +1440,18 @@ bool KApplication::sessionSaving() const
 void KApplication::startKdeinit()
 {
 #ifndef Q_WS_WIN //TODO
-  KInstance inst( "startkdeinitlock" );
-  KLockFile lock( locateLocal( "tmp", "startkdeinitlock", &inst ));
+  KInstance inst( "starttdeinitlock" );
+  KLockFile lock( locateLocal( "tmp", "starttdeinitlock", &inst ));
   if( lock.lock( KLockFile::LockNoBlock ) != KLockFile::LockOK ) {
      lock.lock();
      DCOPClient cl;
      if( cl.attach())
          return; // whoever held the lock has already started dcopserver
   }
-  // Try to launch kdeinit.
-  TQString srv = KStandardDirs::findExe(TQString::tqfromLatin1("kdeinit"));
+  // Try to launch tdeinit.
+  TQString srv = KStandardDirs::findExe(TQString::tqfromLatin1("tdeinit"));
   if (srv.isEmpty())
-     srv = KStandardDirs::findExe(TQString::tqfromLatin1("kdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
+     srv = KStandardDirs::findExe(TQString::tqfromLatin1("tdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
   if (srv.isEmpty())
      return;
   if (kapp && (Tty != kapp->type()))
@@ -2884,7 +2884,7 @@ void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const 
    TQString error;
    // TODO this should check if cmd has a .desktop file, and use data from it, together
    // with sending more ASN data
-   if (kdeinitExec(cmd, cmdTokens, &error, NULL, startup_id ))
+   if (tdeinitExec(cmd, cmdTokens, &error, NULL, startup_id ))
      if (Tty != kapp->type())
        TQMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Mail Client"),
              i18n("Could not launch the mail client:\n\n%1").arg(error), i18n("&OK"));
@@ -3006,7 +3006,7 @@ startServiceInternal( const TQCString &function,
    // make sure there is id, so that user timestamp exists
    stream << ( startup_id.isEmpty() ? KStartupInfo::createNewStartupId() : startup_id );
 #endif
-   if( function.left( 12 ) != "kdeinit_exec" )
+   if( function.left( 12 ) != "tdeinit_exec" )
        stream << noWait;
 
    if (!dcopClient->call(_launcher, _launcher,
@@ -3100,32 +3100,32 @@ KApplication::startServiceByDesktopName( const TQString& _name, const TQStringLi
 }
 
 int
-KApplication::kdeinitExec( const TQString& name, const TQStringList &args,
+KApplication::tdeinitExec( const TQString& name, const TQStringList &args,
                            TQString *error, int *pid )
 {
-    return kdeinitExec( name, args, error, pid, "" );
+    return tdeinitExec( name, args, error, pid, "" );
 }
 
 int
-KApplication::kdeinitExec( const TQString& name, const TQStringList &args,
+KApplication::tdeinitExec( const TQString& name, const TQStringList &args,
                            TQString *error, int *pid, const TQCString& startup_id )
 {
-   return startServiceInternal("kdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)",
+   return startServiceInternal("tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)",
         name, args, error, 0, pid, startup_id, false);
 }
 
 int
-KApplication::kdeinitExecWait( const TQString& name, const TQStringList &args,
+KApplication::tdeinitExecWait( const TQString& name, const TQStringList &args,
                            TQString *error, int *pid )
 {
-    return kdeinitExecWait( name, args, error, pid, "" );
+    return tdeinitExecWait( name, args, error, pid, "" );
 }
 
 int
-KApplication::kdeinitExecWait( const TQString& name, const TQStringList &args,
+KApplication::tdeinitExecWait( const TQString& name, const TQStringList &args,
                            TQString *error, int *pid, const TQCString& startup_id )
 {
-   return startServiceInternal("kdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)",
+   return startServiceInternal("tdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)",
         name, args, error, 0, pid, startup_id, false);
 }
 

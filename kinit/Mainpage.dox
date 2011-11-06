@@ -1,6 +1,6 @@
 /** @mainpage Trinity Initialization Routines
 
-kdeinit is a process launcher somewhat similar to the
+tdeinit is a process launcher somewhat similar to the
 famous init used for booting UNIX.
 <p>
 It launches processes by forking and then loading a
@@ -8,8 +8,8 @@ dynamic library which should contain a 'main(...)'
 function.  This both increases the startup speed and
 reduces the memory consumption of Trinity applications.
 
-kdeinit_wrapper, kshell and kwrapper provide methods
-of starting programs via kdeinit.
+tdeinit_wrapper, kshell and kwrapper provide methods
+of starting programs via tdeinit.
 
 @authors
 Waldo Bastian \<bastian@kde.org\><br>
@@ -24,6 +24,6 @@ Most code is @lgpl
 
 */
 
-// DOXYGEN_REFERENCES = kdecore
+// DOXYGEN_REFERENCES = tdecore
 // DOXYGEN_SET_PROJECT_NAME = KInit
 // vim:ts=4:sw=4:expandtab:filetype=doxygen

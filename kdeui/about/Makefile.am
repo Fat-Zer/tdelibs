@@ -1,5 +1,5 @@
 
-kde_infopage_datadir = $(kde_datadir)/kdeui/about
+kde_infopage_datadir = $(kde_datadir)/tdeui/about
 kde_infopage_data_DATA = \
 	bar-bottom-left.png    bar-top-right.png      bar-bottom-middle.png  bottom-left.png \
 	box-middle-left.png    top-left.png           bar-bottom-right.png   bottom-middle.png \

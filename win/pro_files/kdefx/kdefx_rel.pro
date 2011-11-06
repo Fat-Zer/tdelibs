@@ -24,4 +24,4 @@ kcpuinfo.cpp
 
 HEADERS		=
 
-TARGET		= kdefx
+TARGET		= tdefx

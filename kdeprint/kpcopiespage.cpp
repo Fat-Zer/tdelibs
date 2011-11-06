@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -270,7 +270,7 @@ void KPCopiesPage::slotRangeEntered()
 
 void KPCopiesPage::slotCollateClicked()
 {
-	TQString	s("kdeprint_");
+	TQString	s("tdeprint_");
 	s.append((m_collate->isChecked() ? "collate" : "uncollate"));
 	if (m_order->isChecked()) s.append("_reverse");
 	m_collatepix->setPixmap(UserIcon(s));

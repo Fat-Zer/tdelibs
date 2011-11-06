@@ -14,9 +14,9 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kio/kfile
@@ -31,7 +31,7 @@ link_directories(
 
 install( FILES
     kde_logo.png cups_logo.png cupsd.conf.template
-  DESTINATION ${DATA_INSTALL_DIR}/kdeprint )
+  DESTINATION ${DATA_INSTALL_DIR}/tdeprint )
 
 
 #### cupsdconf ##################################
@@ -48,7 +48,7 @@ set( ${target}_SRCS
   cups-util.c qdirmultilineedit.cpp sizewidget.cpp main.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK kio-shared ${CUPS_LIBRARIES}
 )

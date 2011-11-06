@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -331,7 +331,7 @@ void KPTextPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 
 void KPTextPage::slotPrettyChanged(int ID)
 {
-	TQString	iconstr = (ID == 0 ? "kdeprint_nup1" : "kdeprint_prettyprint");
+	TQString	iconstr = (ID == 0 ? "tdeprint_nup1" : "tdeprint_prettyprint");
 	m_prettypix->setPixmap(UserIcon(iconstr));
 }
 

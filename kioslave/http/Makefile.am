@@ -3,14 +3,14 @@
 
 SUBDIRS = kcookiejar
 
-INCLUDES= -I$(top_srcdir)/interfaces -I$(top_srcdir)/kio/httpfilter -I$(top_srcdir)/kdecore/network $(all_includes) $(GSSAPI_INCS)
+INCLUDES= -I$(top_srcdir)/interfaces -I$(top_srcdir)/kio/httpfilter -I$(top_srcdir)/tdecore/network $(all_includes) $(GSSAPI_INCS)
 AM_LDFLAGS = $(all_libraries) $(GSSAPI_RPATH)
 
 ####### Files
 
 bin_PROGRAMS=
 lib_LTLIBRARIES=
-kdeinit_LTLIBRARIES = kio_http_cache_cleaner.la
+tdeinit_LTLIBRARIES = kio_http_cache_cleaner.la
 kde_module_LTLIBRARIES = kio_http.la
 
 kio_http_la_SOURCES = http.cc

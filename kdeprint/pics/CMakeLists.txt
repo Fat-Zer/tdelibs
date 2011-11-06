@@ -12,30 +12,30 @@
 ##### other data ################################
 
 install( FILES
-    kdeprint_collate.png kdeprint_collate_reverse.png
-    kdeprint_color.png kdeprint_duplex_none.png
-    kdeprint_duplex_long.png kdeprint_duplex_short.png
-    kdeprint_grayscale.png kdeprint_landscape.png
-    kdeprint_nup1.png kdeprint_nup2.png kdeprint_nup4.png
-    kdeprint_portrait.png kdeprint_revlandscape.png
-    kdeprint_revportrait.png kdeprint_uncollate.png
-    kdeprint_uncollate_reverse.png kdeprint_nupother.png
-    kdeprint_prettyprint.png
-  DESTINATION ${DATA_INSTALL_DIR}/kdeprint/pics )
+    tdeprint_collate.png tdeprint_collate_reverse.png
+    tdeprint_color.png tdeprint_duplex_none.png
+    tdeprint_duplex_long.png tdeprint_duplex_short.png
+    tdeprint_grayscale.png tdeprint_landscape.png
+    tdeprint_nup1.png tdeprint_nup2.png tdeprint_nup4.png
+    tdeprint_portrait.png tdeprint_revlandscape.png
+    tdeprint_revportrait.png tdeprint_uncollate.png
+    tdeprint_uncollate_reverse.png tdeprint_nupother.png
+    tdeprint_prettyprint.png
+  DESTINATION ${DATA_INSTALL_DIR}/tdeprint/pics )
 
 tde_install_icons(
-    kdeprint_job kdeprint_job_error kdeprint_job_process
-    kdeprint_job_stopped kdeprint_printer kdeprint_printer_class
-    kdeprint_printer_class_stopped kdeprint_printer_defect
-    kdeprint_printer_remote kdeprint_printer_remote_stopped
-    kdeprint_printer_stopped kdeprint_printer_remote_process
-    kdeprint_printer_process kdeprint_printer_class_process
-    kdeprint_computer kdeprint_printer_infos history
-    kdeprint_printer_users filterstop kdeprint_job_completed
-    kdeprint_job_cancelled package_utilities kdeprint_enableprinter
-    kdeprint_stopprinter kdeprint_addprinter kdeprint_addpseudo
-    kdeprint_configmgr kdeprint_configsrv kdeprint_defaulthard
-    kdeprint_defaultsoft kdeprint_report kdeprint_testprinter
-    kdeprint_uploadsmb kdeprint_restartsrv kdeprint_inklevel
-    kdeprint_printstate kdeprint_queuestate
-  DESTINATION ${DATA_INSTALL_DIR}/kdeprint/icons )
+    tdeprint_job tdeprint_job_error tdeprint_job_process
+    tdeprint_job_stopped tdeprint_printer tdeprint_printer_class
+    tdeprint_printer_class_stopped tdeprint_printer_defect
+    tdeprint_printer_remote tdeprint_printer_remote_stopped
+    tdeprint_printer_stopped tdeprint_printer_remote_process
+    tdeprint_printer_process tdeprint_printer_class_process
+    tdeprint_computer tdeprint_printer_infos history
+    tdeprint_printer_users filterstop tdeprint_job_completed
+    tdeprint_job_cancelled package_utilities tdeprint_enableprinter
+    tdeprint_stopprinter tdeprint_addprinter tdeprint_addpseudo
+    tdeprint_configmgr tdeprint_configsrv tdeprint_defaulthard
+    tdeprint_defaultsoft tdeprint_report tdeprint_testprinter
+    tdeprint_uploadsmb tdeprint_restartsrv tdeprint_inklevel
+    tdeprint_printstate tdeprint_queuestate
+  DESTINATION ${DATA_INSTALL_DIR}/tdeprint/icons )

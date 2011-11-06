@@ -27,7 +27,7 @@
 #include <fcntl.h>
 #include <ctype.h>
 
-#include <kdecore/kdelibs_export.h> 
+#include <tdecore/kdelibs_export.h> 
 
 #ifdef __cplusplus
 extern "C" {

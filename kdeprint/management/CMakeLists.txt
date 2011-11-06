@@ -18,16 +18,16 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdefx
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdefx
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kio/kfile
-  ${CMAKE_SOURCE_DIR}/kdeprint
+  ${CMAKE_SOURCE_DIR}/tdeprint
 )
 
 link_directories(
@@ -40,19 +40,19 @@ link_directories(
 install( FILES
     kmmainview.h kmjobviewer.h kmprinterpage.h
     kiconselectaction.h kmtimer.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/kdeprint )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdeprint )
 
 
 ##### other data ################################
 
 install( FILES
     tileup.png tiledown.png side.png
-  DESTINATION ${DATA_INSTALL_DIR}/kdeprint )
+  DESTINATION ${DATA_INSTALL_DIR}/tdeprint )
 
 
-#### kdeprint_management ########################
+#### tdeprint_management ########################
 
-set( target kdeprint_management )
+set( target tdeprint_management )
 
 set( ${target}_SRCS
   kmdbcreator.cpp kmdriverdb.cpp kmdriverdbwidget.cpp
@@ -77,7 +77,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
-  LINK kdeprint-shared
+  LINK tdeprint-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
 
@@ -87,12 +87,12 @@ tde_add_library( ${target} SHARED AUTOMOC
 set( target libtdeprint_management_module )
 
 set( ${target}_SRCS
-  kdeprint_management_module.cpp
+  tdeprint_management_module.cpp
 )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeprint_management-shared
+  LINK tdeprint_management-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -105,7 +105,7 @@ set( ${target}_SRCS
   kaddprinterwizard.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kdeprint-shared
+  LINK tdeprint-shared
 )

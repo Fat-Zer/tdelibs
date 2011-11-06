@@ -125,14 +125,14 @@ class KCModuleProxy::KCModuleProxyPrivate
  - Two Layout problems in runAsRoot:
  	* lblBusy doesn't show
  	* d->kcm/d->rootInfo doesn't get it right when the user 
-		presses cancel in the kdesu dialog
+		presses cancel in the tdesu dialog
 
  - Resizing horizontally is contrained; minimum size is set somewhere. 
  	It appears to be somehow derived from the module's size.
 
  - Prettify: set icon in KCMultiDialog.
 
- - Perhaps it's possible to link against kdesu such that 
+ - Perhaps it's possible to link against tdesu such that 
  	the dialog is in process?
 
  */
@@ -341,11 +341,11 @@ void KCModuleProxy::runAsRoot()
 
 	/* Prepare the process to run the kcmshell */
 	TQString cmd = moduleInfo().service()->exec().stripWhiteSpace();
-	if (cmd.left(5) == "kdesu")
+	if (cmd.left(5) == "tdesu")
 	{
 		cmd = TQString(cmd.remove(0,5)).stripWhiteSpace();
 
-		/* Remove all kdesu switches */
+		/* Remove all tdesu switches */
 		while( cmd.length() > 1 && cmd[ 0 ] == '-' )
 			cmd = TQString(cmd.remove( 0, cmd.find( ' ' ) )).stripWhiteSpace();
 	}
@@ -354,13 +354,13 @@ void KCModuleProxy::runAsRoot()
 		cmd = TQString(cmd.remove(0,8)).stripWhiteSpace();
 
 	/* Run the process */
-	TQString kdesu = KStandardDirs::findExe("kdesu");
-	if (!kdesu.isEmpty())
+	TQString tdesu = KStandardDirs::findExe("tdesu");
+	if (!tdesu.isEmpty())
 	{
 
 		d->rootProcess = new KProcess;
 
-		*d->rootProcess << kdesu;
+		*d->rootProcess << tdesu;
 		*d->rootProcess << "--nonewdcop" << "-n" << "-d" << TQString( "-i%1" ).arg(moduleInfo().icon());
 
 		*d->rootProcess << TQString("%1 %2 --embed-proxy %3 --lang %4").arg(locate("exe", "kcmshell"))

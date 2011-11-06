@@ -14,10 +14,10 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}/kdecore
+  ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/dcop
-  ${CMAKE_SOURCE_DIR}/kdecore
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
 )
@@ -47,9 +47,9 @@ set( ${target}_SRCS
   kded.cpp kdedmodule.cpp
 )
 
-# we must to export kdeinit_kded-shared because various
+# we must to export tdeinit_kded-shared because various
 # modules need this library
-tde_add_kdeinit_executable( ${target} AUTOMOC EXPORT
+tde_add_tdeinit_executable( ${target} AUTOMOC EXPORT
   SOURCES ${${target}_SRCS}
   LINK kio-shared
 )
@@ -66,7 +66,7 @@ set( ${target}_SRCS
   kctimefactory.cpp vfolder_menu.cpp
 )
 
-tde_add_kdeinit_executable( ${target} AUTOMOC
+tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK kio-shared
 )
@@ -82,7 +82,7 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

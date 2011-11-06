@@ -25,7 +25,7 @@ kde_servicetypes_DATA = kplugininfo.desktop
 
 METASOURCES = AUTO
 
-DOXYGEN_REFERENCES = kdecore kdeui kio
+DOXYGEN_REFERENCES = tdecore tdeui kio
 include ../admin/Doxyfile.am
 
 # vim: et

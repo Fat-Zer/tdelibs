@@ -74,7 +74,7 @@ void KActiveLabel::openLink(const TQString & link)
 
    TQStringList args;
    args << "exec" << link;
-   kapp->kdeinitExec("kfmclient", args);
+   kapp->tdeinitExec("kfmclient", args);
 }
 
 void KActiveLabel::virtual_hook( int, void* )

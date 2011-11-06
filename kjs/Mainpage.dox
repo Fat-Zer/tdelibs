@@ -22,7 +22,7 @@ Harri Porten \<porten@kde.org\>
 
 */
 
-// DOXYGEN_REFERENCES = kdecore
+// DOXYGEN_REFERENCES = tdecore
 // DOXYGEN_SET_PROJECT_NAME = KJS
 // DOXYGEN_SET_EXCLUDE_PATTERNS += */wtf/* 
 // DOXYGEN_SET_EXCLUDE_PATTERNS += */kjs/*.cpp */kjs/*.h

@@ -1,7 +1,7 @@
 %{
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001-2003 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001-2003 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -29,8 +29,8 @@
 
 #define builder static_cast<PPDLoader*>( ppdloader )
 
-int kdeprint_ppdlex();
-#define kdeprint_ppderror(msg) static_cast<PPDLoader*>( ppdloader )->setErrorMsg( msg )
+int tdeprint_ppdlex();
+#define tdeprint_ppderror(msg) static_cast<PPDLoader*>( ppdloader )->setErrorMsg( msg )
 %}
 
 %token TRANSLATION

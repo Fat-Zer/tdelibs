@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -163,7 +163,7 @@ DrMain* LPRngToolHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool 
 		return NULL;
 	}
 
-	DrMain*	driver = loadToolDriver(locate("data", "kdeprint/lprngtooldriver1"));
+	DrMain*	driver = loadToolDriver(locate("data", "tdeprint/lprngtooldriver1"));
 	if (driver)
 	{
 		TQString	model = prt->option("driverID");
@@ -183,7 +183,7 @@ DrMain* LPRngToolHandler::loadDriver(KMPrinter *prt, PrintcapEntry *entry, bool 
 DrMain* LPRngToolHandler::loadDbDriver(const TQString& s)
 {
 	int	p = s.find('/');
-	DrMain*	driver = loadToolDriver(locate("data", "kdeprint/lprngtooldriver1"));
+	DrMain*	driver = loadToolDriver(locate("data", "tdeprint/lprngtooldriver1"));
 	if (driver)
 		driver->set("driverID", s.mid(p+1));
 	return driver;
@@ -231,7 +231,7 @@ TQMap<TQString,TQString> LPRngToolHandler::parseZOptions(const TQString& optstr)
 		return opts;
 	
 	if (m_dict.count() == 0)
-		m_dict = loadChoiceDict(locate("data", "kdeprint/lprngtooldriver1"));
+		m_dict = loadChoiceDict(locate("data", "tdeprint/lprngtooldriver1"));
 
 	TQString	unknown;
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)

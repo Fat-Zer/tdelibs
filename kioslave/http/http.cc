@@ -5082,7 +5082,7 @@ void HTTPProtocol::configAuth( char *p, bool isForProxy )
         ((m_iProxyAuthCount > 0) && (f < ProxyAuthentication)))
     {
       // Since I purposefully made the Proxy-Authentication settings
-      // persistent to reduce the number of round-trips to kdesud we
+      // persistent to reduce the number of round-trips to tdesud we
       // have to take special care when an unknown/unsupported auth-
       // scheme is received. This check accomplishes just that...
       if ( m_iProxyAuthCount == 0)

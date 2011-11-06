@@ -1,6 +1,6 @@
 # KDE namespace check file
 
-# kdesu classes
+# tdesu classes
 SshProcess:*
 PTY::*
 SuProcess::*

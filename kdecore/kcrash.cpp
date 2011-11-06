@@ -177,7 +177,7 @@ KCrash::defaultCrashHandler (int sig)
           argv[i++] = "--appname";
           argv[i++] = appName;
           if (KApplication::loadedByKdeinit)
-            argv[i++] = "--kdeinit";
+            argv[i++] = "--tdeinit";
 
           // only add apppath if it's not NULL
           if (appPath) {
@@ -314,10 +314,10 @@ void KCrash::startDrKonqi( const char* argv[], int argc )
   }
 }
 
-// If we can't reach kdeinit we can still at least try to fork()
+// If we can't reach tdeinit we can still at least try to fork()
 void KCrash::startDirectly( const char* argv[], int )
 {
-  fprintf( stderr, "KCrash cannot reach kdeinit, launching directly.\n" );
+  fprintf( stderr, "KCrash cannot reach tdeinit, launching directly.\n" );
   pid_t pid = fork();
   if (pid <= 0)
   {
@@ -483,13 +483,13 @@ static int openSocket()
      return -1;
   }
 
-  if (strlen(sock_file)+strlen(display)+strlen("/kdeinit_")+2 > MAX_SOCK_FILE)
+  if (strlen(sock_file)+strlen(display)+strlen("/tdeinit_")+2 > MAX_SOCK_FILE)
   {
      fprintf(stderr, "Warning: Socket name will be too long.\n");
      free(display);
      return -1;
   }
-  strcat(sock_file, "/kdeinit_");
+  strcat(sock_file, "/tdeinit_");
   strcat(sock_file, display);
   free(display);
 

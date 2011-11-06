@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -46,7 +46,7 @@ ImagePosition::ImagePosition(TQWidget *parent, const char *name)
 	position_ = Center;
 	setMinimumSize(tqsizeHint());
 	tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
-	pix_.load(locate("data", "kdeprint/preview-mini.png"));
+	pix_.load(locate("data", "tdeprint/preview-mini.png"));
 }
 
 ImagePosition::~ImagePosition()

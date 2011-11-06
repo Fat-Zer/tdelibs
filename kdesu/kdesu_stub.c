@@ -2,10 +2,10 @@
  *
  * $Id$
  *
- * This file is part of the KDE project, module kdesu.
+ * This file is part of the KDE project, module tdesu.
  * Copyright (C) 1999,2000 Geert Jansen <jansen@kde.org>
  *
- * kdesu_stub.c: KDE su executes this stub through su or ssh. This stub in turn
+ * tdesu_stub.c: KDE su executes this stub through su or ssh. This stub in turn
  *               executes the target program. Before that, startup parameters
  *               are sent through stdin.
  *
@@ -14,7 +14,7 @@
  *
  *   Parameter       Description         Format (csl = comma separated list)
  *
- * - kdesu_stub      Header              "ok" | "stop"
+ * - tdesu_stub      Header              "ok" | "stop"
  * - display         X11 display         string
  * - display_auth    X11 authentication  "type cookie" pair
  * - dcopserver      KDE dcopserver      csl of netids
@@ -67,7 +67,7 @@ struct param_struct
 
 struct param_struct params[] = 
 {
-    { "kdesu_stub", 0L },
+    { "tdesu_stub", 0L },
     { "display", 0L },
     { "display_auth", 0L },
     { "dcopserver", 0L },
@@ -192,7 +192,7 @@ int main()
     pid_t pid;
     FILE *fout;
     struct passwd *pw;
-    const char* kdesu_lc_all;
+    const char* tdesu_lc_all;
 
     /* Get startup parameters. */
 
@@ -203,7 +203,7 @@ int main()
 	if (fgets(buf, BUFSIZE, stdin) == 0L) 
 	{
 	    printf("end\n"); fflush(stdout);
-	    perror("kdesu_stub: fgets()");
+	    perror("tdesu_stub: fgets()");
 	    exit(1);
 	}
 	params[i].value = xstrdup(buf);
@@ -222,7 +222,7 @@ int main()
 	if (fgets(buf, BUFSIZE, stdin) == 0L) 
 	{
 	    printf("end\n"); fflush(stdout);
-	    perror("kdesu_stub: fgets()");
+	    perror("tdesu_stub: fgets()");
 	    exit(1);
 	}
 	tmp = xstrdup( buf );
@@ -237,9 +237,9 @@ int main()
     xsetenv("PATH", params[P_PATH].value);
     xsetenv("DESKTOP_STARTUP_ID", params[P_APP_STARTUP_ID].value);
 
-    kdesu_lc_all = getenv( "KDESU_LC_ALL" );
-    if( kdesu_lc_all != NULL )
-        xsetenv("LC_ALL",kdesu_lc_all);
+    tdesu_lc_all = getenv( "KDESU_LC_ALL" );
+    if( tdesu_lc_all != NULL )
+        xsetenv("LC_ALL",tdesu_lc_all);
     else
         unsetenv("LC_ALL");
 
@@ -248,7 +248,7 @@ int main()
     pw = getpwnam(params[P_USER].value);
     if (pw == 0L) 
     {
-	printf("kdesu_stub: user %s does not exist!\n", params[P_USER].value);
+	printf("tdesu_stub: user %s does not exist!\n", params[P_USER].value);
 	exit(1);
     }
     xsetenv("HOME", pw->pw_dir);
@@ -265,7 +265,7 @@ int main()
 	sched.sched_priority = min + (int) (((double) prio) * (max - min) / 100 + 0.5);
 	sched_setscheduler(0, SCHED_FIFO, &sched);
 #else
-	printf("kdesu_stub: realtime scheduling not supported\n");
+	printf("tdesu_stub: realtime scheduling not supported\n");
 #endif
     } else 
     {
@@ -281,19 +281,19 @@ int main()
     {
 	if (setgid(pw->pw_gid) == -1) 
 	{
-	    perror("kdesu_stub: setgid()");
+	    perror("tdesu_stub: setgid()");
 	    exit(1);
 	}
 #ifdef HAVE_INITGROUPS
 	if (initgroups(pw->pw_name, pw->pw_gid) == -1) 
 	{
-	    perror("kdesu_stub: initgroups()");
+	    perror("tdesu_stub: initgroups()");
 	    exit(1);
 	}
 #endif
 	if (setuid(pw->pw_uid) == -1) 
 	{
-	    perror("kdesu_stub: setuid()");
+	    perror("tdesu_stub: setuid()");
 	    exit(1);
 	}
 	xsetenv("HOME", pw->pw_dir);
@@ -323,7 +323,7 @@ int main()
 	   umask(oldumask);
 
            if (fd2 == -1) {
-                perror("kdesu_stub: mkstemp()");
+                perror("tdesu_stub: mkstemp()");
                 exit(1);
            } else
                 close(fd2);
@@ -332,7 +332,7 @@ int main()
 	   fout = popen("xauth >/dev/null 2>&1","w");
            if (fout == NULL)
 	   {
-		perror("kdesu_stub: popen(xauth)");
+		perror("tdesu_stub: popen(xauth)");
 		exit(1);
 	   }
 	   fprintf(fout, "add %s %s\n", disp,
@@ -361,7 +361,7 @@ int main()
             fd = mkstemp(iceauthority);
 	    umask(oldumask);
             if (fd == -1) {
-                perror("kdesu_stub: mkstemp()");
+                perror("tdesu_stub: mkstemp()");
                 exit(1);
             } else
                 close(fd);
@@ -369,7 +369,7 @@ int main()
 
 	    fout = popen("iceauth >/dev/null 2>&1", "w");
 	    if (!fout) {
-		perror("kdesu_stub: popen iceauth");
+		perror("tdesu_stub: popen iceauth");
 		exit(1);
 	    }
 	    for (i=0; host[i]; i++)
@@ -381,11 +381,11 @@ int main()
 	}
     }
 
-    /* Rebuild the sycoca and start kdeinit? */
+    /* Rebuild the sycoca and start tdeinit? */
 
     if (strcmp(params[P_XWIN_ONLY].value, "no"))
     {
-	system("kdeinit --suicide");
+	system("tdeinit --suicide");
     }
 
     /* Execute the command */
@@ -393,7 +393,7 @@ int main()
     pid = fork();
     if (pid == -1) 
     {
-	perror("kdesu_stub: fork()");
+	perror("tdesu_stub: fork()");
 	exit(1);
     }
     if (pid) 
@@ -408,7 +408,7 @@ int main()
 		if (errno == EINTR)
 		    continue;
 		if (errno != ECHILD)
-		    perror("kdesu_stub: waitpid()");
+		    perror("tdesu_stub: waitpid()");
 		break;
 	    }
 	    if (WIFEXITED(state))
@@ -426,7 +426,7 @@ int main()
 	/* Child: exec command. */
 	sprintf(buf, "%s", params[P_COMMAND].value);
 	execl("/bin/sh", "sh", "-c", buf, (void *)0);
-	perror("kdesu_stub: exec()");
+	perror("tdesu_stub: exec()");
 	_exit(1);
     }
 }

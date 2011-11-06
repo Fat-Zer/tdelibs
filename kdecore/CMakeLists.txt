@@ -27,8 +27,8 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/network
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/libltdl
-  ${CMAKE_SOURCE_DIR}/kdefx
-  ${CMAKE_SOURCE_DIR}/kdeui
+  ${CMAKE_SOURCE_DIR}/tdefx
+  ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${LIBART_INCLUDE_DIRS}
   ${LIBIDN_INCLUDE_DIRS}
@@ -90,7 +90,7 @@ install( FILES eventsrc
 
 ##### libtdecore ################################
 
-set( target kdecore )
+set( target tdecore )
 
 set( ${target}_SRCS
   libintl.cpp kapplication.cpp kdebug.cpp netwm.cpp
@@ -120,7 +120,7 @@ set( ${target}_SRCS
   kcalendarsystemhijri.cpp kcalendarsystemhebrew.cpp
   kcalendarsystemfactory.cpp kmacroexpander.cpp kidna.cpp
   ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp
-  kprotocolinfo_kdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp
+  kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp
   kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp
   kqiodevicegzip_p.cpp ktimezones.cpp
 )
@@ -128,16 +128,16 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
-  EMBED kdecorenetwork-static
-  LINK ltdlc-static ${KDESVGICONS} DCOP-shared kdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM
+  EMBED tdecorenetwork-static
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )
 
 
-##### kdefakes_nonpic ###########################
+##### tdefakes_nonpic ###########################
 
-set( target kdefakes_nonpic )
+set( target tdefakes_nonpic )
 
 set( ${target}_SRCS
   fakes.c vsnprintf.c
@@ -148,9 +148,9 @@ tde_add_library( ${target} STATIC
   DESTINATION ${LIB_INSTALL_DIR}
 )
 
-##### kdefakes_pic ##############################
+##### tdefakes_pic ##############################
 
-set( target kdefakes_pic )
+set( target tdefakes_pic )
 
 set( ${target}_SRCS
   fakes.c vsnprintf.c
@@ -164,7 +164,7 @@ tde_add_library( ${target} STATIC_PIC
 
 ##### libtdefakes ###############################
 
-set( target kdefakes )
+set( target tdefakes )
 
 set( ${target}_SRCS
   fakes.c vsnprintf.c
@@ -185,7 +185,7 @@ configure_file( kde-config.cpp.cmake kde-config.cpp @ONLY )
 
 tde_add_executable( kde-config
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/kde-config.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
@@ -204,6 +204,6 @@ tde_add_executable(kgrantpty SETUID
 
 tde_add_executable( kdetcompmgr
   SOURCES kdetcompmgr.cpp
-  LINK kdecore-shared
+  LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

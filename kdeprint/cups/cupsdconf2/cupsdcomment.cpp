@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -114,7 +114,7 @@ bool CupsdComment::loadComments()
 {
         comments_.setAutoDelete(true);
         comments_.clear();
-        TQFile	f(locate("data", "kdeprint/cupsd.conf.template"));
+        TQFile	f(locate("data", "tdeprint/cupsd.conf.template"));
 	if (f.exists() && f.open(IO_ReadOnly))
 	{
                 Comment         *comm;

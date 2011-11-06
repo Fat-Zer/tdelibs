@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -52,7 +52,7 @@ KMWDriverTest::KMWDriverTest(TQWidget *parent, const char *name)
 	TQLabel	*l2 = new TQLabel(i18n("<b>Model:</b>"), this);
 	TQLabel	*l3 = new TQLabel(i18n("<b>Description:</b>"), this);
 
-	m_test = new KPushButton(KGuiItem(i18n("&Test"), "kdeprint_testprinter"), this);
+	m_test = new KPushButton(KGuiItem(i18n("&Test"), "tdeprint_testprinter"), this);
 	m_settings = new KPushButton(KGuiItem(i18n("&Settings"), "configure"), this);
 
 	TQLabel	*l0 = new TQLabel(this);

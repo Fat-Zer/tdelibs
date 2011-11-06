@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -36,7 +36,7 @@ CupsdBrowsingPage::CupsdBrowsingPage(TQWidget *parent, const char *name)
 {
 	setPageLabel(i18n("Browsing"));
 	setHeader(i18n("Browsing Settings"));
-	setPixmap("kdeprint_printer_remote");
+	setPixmap("tdeprint_printer_remote");
 
 	browseinterval_ = new KIntNumInput(this);
 	browseport_ = new KIntNumInput(this);

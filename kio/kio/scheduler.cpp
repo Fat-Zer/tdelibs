@@ -33,7 +33,7 @@
 #include <kprotocolinfo.h>
 #include <assert.h>
 #include <kstaticdeleter.h>
-#include <kdesu/client.h>
+#include <tdesu/client.h>
 
 
 // Slaves may be idle for MAX_SLAVE_IDLE time before they are being returned

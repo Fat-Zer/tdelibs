@@ -1,13 +1,13 @@
-INCLUDES = -I$(top_srcdir)/kdeprint $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdeprint $(all_includes)
 
-kde_module_LTLIBRARIES = kdeprint_foomatic.la
+kde_module_LTLIBRARIES = tdeprint_foomatic.la
 
-kdeprint_foomatic_la_SOURCES = kmfoomaticfactory.cpp \
+tdeprint_foomatic_la_SOURCES = kmfoomaticfactory.cpp \
 				  kmfoomaticmanager.cpp \
 				  kfoomaticprinterimpl.cpp
-kdeprint_foomatic_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-kdeprint_foomatic_la_LIBADD = $(top_builddir)/kdeprint/management/libtdeprint_management.la
-kdeprint_foomatic_la_METASOURCES = AUTO
+tdeprint_foomatic_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
+tdeprint_foomatic_la_LIBADD = $(top_builddir)/tdeprint/management/libtdeprint_management.la
+tdeprint_foomatic_la_METASOURCES = AUTO
 
 noinst_HEADERS = kmfoomaticmanager.h \
 		 kfoomaticprinterimpl.h
@@ -17,4 +17,4 @@ bin_PROGRAMS = make_driver_db_foomatic
 make_driver_db_foomatic_SOURCES = make_driver_db_foomatic.c
 
 entry_DATA = foomatic.print
-entrydir = $(kde_datadir)/kdeprint/plugins
+entrydir = $(kde_datadir)/tdeprint/plugins

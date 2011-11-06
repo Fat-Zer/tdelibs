@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *
  *  This library is free software; you can redistribute it and/or
@@ -39,7 +39,7 @@ class DrMain;
  * "kde-appname-optionname" for internal reasons.
  *
  * \code
- * #include <kdeprint/kprintdialogpage.h>
+ * #include <tdeprint/kprintdialogpage.h>
  *
  * class MyDialogPage : public KPrintDialogPage
  * {

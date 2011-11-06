@@ -102,11 +102,11 @@ Makefile.am but not a Makefile. If you try to compile such a directory
 you will get an error like:
 
   Making all in management
-  make[3]: Entering directory /home/gregturp/KDE/kdelibs/kdeprint/management'
+  make[3]: Entering directory /home/gregturp/KDE/kdelibs/tdeprint/management'
   make[3]: *** No rule to make target all'.  Stop.
-  make[3]: Leaving directory /home/gregturp/KDE/kdelibs/kdeprint/management'
+  make[3]: Leaving directory /home/gregturp/KDE/kdelibs/tdeprint/management'
   make[2]: *** [all-recursive] Error 1
-  make[2]: Leaving directory /home/gregturp/KDE/kdelibs/kdeprint'
+  make[2]: Leaving directory /home/gregturp/KDE/kdelibs/tdeprint'
   make[1]: *** [all-recursive] Error 1
   make[1]: Leaving directory /home/gregturp/KDE/kdelibs'
   make: *** [all-recursive-am] Error 2

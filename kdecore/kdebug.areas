@@ -5,48 +5,48 @@
 #
 #Format : number<tab>description
 
-125        kdecore (KAccel)
-126        kdecore (KURL)
+125        tdecore (KAccel)
+126        tdecore (KURL)
 127        kio (KProtocolInfo)
-128        kdecore (KRegExp)
-129        kdecore (KAction)
+128        tdecore (KRegExp)
+129        tdecore (KAction)
 130        kio (KPasswdServer)
-131        kdecore (KAcceleratorManager)
-150        kdecore (KLibLoader)
-160        kdecore (KNotifyClient)
-170        kdecore (KNetwork socket)
-171        kdecore (KSocks)
-172        kdecore (KStartupInfo)
-173        kdecore (KLocale)
-174        kdecore (KProcIO)
-175        kdecore (KProcess)
-176        kdecore (KWin)
-177        kdecore (KConfigSkeleton)
-178        kdecore (KConfigDialogManager)
-179        kdecore (KNetwork resolver)
-180        kdecore (kdelibs)
-200        kdeui (KMainWindow)
-220        kdeui (KToolBar)
-230        kdeui (KCommand)
-240        kdeui (kdelibs)
+131        tdecore (KAcceleratorManager)
+150        tdecore (KLibLoader)
+160        tdecore (KNotifyClient)
+170        tdecore (KNetwork socket)
+171        tdecore (KSocks)
+172        tdecore (KStartupInfo)
+173        tdecore (KLocale)
+174        tdecore (KProcIO)
+175        tdecore (KProcess)
+176        tdecore (KWin)
+177        tdecore (KConfigSkeleton)
+178        tdecore (KConfigDialogManager)
+179        tdecore (KNetwork resolver)
+180        tdecore (kdelibs)
+200        tdeui (KMainWindow)
+220        tdeui (KToolBar)
+230        tdeui (KCommand)
+240        tdeui (kdelibs)
 250        kfile (kdelibs)
-264        kdecore (KIconLoader)
-265        kdecore (KIconEffect)
-270        kdeui (KRootPixmap)
-280        kdeui (KSharedPixmap)
-281        kdeui (KCModule)
-282        kdeui (KDockWidget)
-290        kdeui (KPixmapIO)
-291        kdeui (KAboutDialog)
-292        kdeui (KComboBox)
-293        kdeui (KLineEdit)
-294        kdeui (KEdit)
-295        kdeui (KMenuBar)
-296        kdeui (KPopupMenu)
-298        kdeui (KDatePicker)
+264        tdecore (KIconLoader)
+265        tdecore (KIconEffect)
+270        tdeui (KRootPixmap)
+280        tdeui (KSharedPixmap)
+281        tdeui (KCModule)
+282        tdeui (KDockWidget)
+290        tdeui (KPixmapIO)
+291        tdeui (KAboutDialog)
+292        tdeui (KComboBox)
+293        tdeui (KLineEdit)
+294        tdeui (KEdit)
+295        tdeui (KMenuBar)
+296        tdeui (KPopupMenu)
+298        tdeui (KDatePicker)
 399        kimgio
 400        artskde
-500        kdeprint
+500        tdeprint
 700        kutils (KSettings::Dialog)
 701        kutils (KSettings::Dispatcher)
 702        kutils (KPluginSelector)
@@ -61,7 +61,7 @@
 780        kcmshell (kdelibs)
 790        kimproxy (kdelibs)
 800        kabapi (kdelibs)
-900        kdesu (kdelibs)
+900        tdesu (kdelibs)
 912        ksmartcard (kdelibs)
 
 
@@ -74,8 +74,8 @@
 1202        konqueror
 1203        libkonq
 1204        kdesktop
-1205        kdesud
-1206        kdesu
+1205        tdesud
+1206        tdesu
 1207        kdesktop (Minicli)
 1208        kcontrol
 1210        kicker
@@ -151,7 +151,7 @@
 5150        libkleopatra
 
 
-# kdepim
+# tdepim
 5200        kitchensync
 5201        kitchensync (Konnector)
 5202        kitchensync (OpieKonnector)

@@ -23,7 +23,7 @@ METASOURCES = AUTO
 
 lib_LTLIBRARIES = 
 bin_PROGRAMS = 
-kdeinit_LTLIBRARIES = kcmshell.la
+tdeinit_LTLIBRARIES = kcmshell.la
 
 kcmshell_la_SOURCES = main.cpp main.skel
 kcmshell_la_LIBADD = ../kutils/libkutils.la $(LIB_QT) $(LIB_KDEUI) $(top_builddir)/dcop/libDCOP.la $(LIB_KDECORE) $(LIB_KFILE)

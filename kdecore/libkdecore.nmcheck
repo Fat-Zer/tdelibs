@@ -1,6 +1,6 @@
 # KDE namespace check file
 
-# kdecore classes
+# tdecore classes
 K*::*
 
 # these should preferably go in some namespace in KDE4
@@ -48,7 +48,7 @@ kasciistricmp
 # from libtldl
 lt_dl*
 
-# from kdefakes
+# from tdefakes
 setenv
 unsetenv
 usleep

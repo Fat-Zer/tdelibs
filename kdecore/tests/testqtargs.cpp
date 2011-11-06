@@ -5,7 +5,7 @@
 
   g++ -g -Wall -o testqtargs testqtargs.cpp  -I/usr/X11R6/include \
   -I/opt/qt3/include -I/opt/trinity/include -L/usr/X11R6/lib -L/opt/qt3/lib \
-  -L/opt/trinity/lib -lqt -lkdecore
+  -L/opt/trinity/lib -lqt -ltdecore
 
   if invoked like this ./testqtargs --bg blue --caption something --hello hi
 
@@ -28,7 +28,7 @@
   --bg is aliased to --background but If you try it with --background or 
   -background, you get the same thing.
 
-  in kdecore/kapplication.cpp, KCmdLineOption qt_options is defined and used 
+  in tdecore/kapplication.cpp, KCmdLineOption qt_options is defined and used 
   by the static method Kapplication::addCmdLineOptions to add the Qt options
   but its' entries look like this:
 

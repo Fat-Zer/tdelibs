@@ -30,7 +30,7 @@ libkio_la_LDFLAGS = -version-info 6:0:2 -no-undefined $(all_libraries) \
 	$(KDE_MT_LDFLAGS)
 libkio_la_LIBADD = kssl/libkssl.la kio/libkiocore.la \
 	kio/libksycoca.la bookmarks/libkbookmarks.la kfile/libkfile.la \
-	../kdeui/libtdeui.la ../kdesu/libtdesu.la \
+	../tdeui/libtdeui.la ../tdesu/libtdesu.la \
 	../kwallet/client/libkwalletclient.la \
 	$(LIBZ) $(LIBFAM) $(LIBVOLMGT) $(ACL_LIBS) $(LIB_QT) $(LIB_KDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 
@@ -62,6 +62,6 @@ messages:
 	$(XGETTEXT) `find . ../kioslave -name "*.cpp" -o -name "*.cc" -o -name "*.h"` -o $(podir)/kio.pot
 	rm -f rc.cpp
 
-DOXYGEN_REFERENCES = kdecore kdefx kjs dcop kdeui kio/kio kio/kfile
+DOXYGEN_REFERENCES = tdecore tdefx kjs dcop tdeui kio/kio kio/kfile
 DOXYGEN_EXCLUDE = kssl/kssl
 include ../admin/Doxyfile.am

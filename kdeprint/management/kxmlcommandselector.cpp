@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (c) 2001 Michael Goffioul <kdeprint@swing.be>
+ *  Copyright (c) 2001 Michael Goffioul <tdeprint@swing.be>
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -20,7 +20,7 @@
 #include "kxmlcommandselector.h"
 #include "kxmlcommand.h"
 #include "kxmlcommanddlg.h"
-#include "kdeprintcheck.h"
+#include "tdeprintcheck.h"
 
 #include <tqcombobox.h>
 #include <kpushbutton.h>

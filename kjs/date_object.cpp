@@ -754,7 +754,7 @@ double KJS::parseDate(const UString &u)
   return seconds == invalidDate ? NaN : seconds * 1000.0;
 }
 
-///// Awful duplication from krfcdate.cpp - we don't link to kdecore
+///// Awful duplication from krfcdate.cpp - we don't link to tdecore
 
 static double ymdhms_to_seconds(int year, int mon, int day, int hour, int minute, int second)
 {

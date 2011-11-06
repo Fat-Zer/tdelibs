@@ -74,7 +74,7 @@ typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 #endif
 
-extern YYSTYPE kdeprint_ppdlval;
+extern YYSTYPE tdeprint_ppdlval;
 
 
 
