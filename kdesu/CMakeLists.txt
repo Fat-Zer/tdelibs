@@ -30,7 +30,7 @@ install( FILES
   DESTINATION ${INCLUDE_INSTALL_DIR}/kdesu )
 
 
-##### libkdesu ##################################
+##### libtdesu ##################################
 
 set( target kdesu )
 

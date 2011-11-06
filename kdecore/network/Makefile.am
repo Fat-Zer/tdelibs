@@ -2,7 +2,7 @@
 
 # this is the program that gets installed.  it's name is used for all
 # of the other Makefile.am variables
-noinst_LTLIBRARIES = libkdecorenetwork.la
+noinst_LTLIBRARIES = libtdecorenetwork.la
 
 # set the include path for X, qt and KDE
 INCLUDES = $(all_includes)
@@ -11,7 +11,7 @@ INCLUDES = $(all_includes)
 # convenience lib - no LDFLAGS or LIBADD !
 # Note:
 #  ksocketdevice.cpp must appear before any inclusion of ksocketdevice.h
-libkdecorenetwork_la_SOURCES = kresolver.cpp \
+libtdecorenetwork_la_SOURCES = kresolver.cpp \
 		kresolvermanager.cpp \
 		kresolverworkerbase.cpp \
 		ksocketaddress.cpp \

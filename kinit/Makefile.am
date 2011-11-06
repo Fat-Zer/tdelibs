@@ -60,7 +60,7 @@ klauncher_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_KDECORE) $(top_builddir)/dcop/l
 klauncher_la_SOURCES = klauncher.cpp klauncher_main.cpp autostart.cpp
 
 kstartupconfig_SOURCES  = kstartupconfig.cpp
-kstartupconfig_LDADD  = $(top_builddir)/kdecore/libkdefakes.la $(LIB_QT)
+kstartupconfig_LDADD  = $(top_builddir)/kdecore/libtdefakes.la $(LIB_QT)
 kdostartupconfig_SOURCES = kdostartupconfig.cpp
 kdostartupconfig_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                            $(KDE_RPATH)

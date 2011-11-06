@@ -6,7 +6,7 @@ KDE_CXXFLAGS = -UQT_NO_ASCII_CAST
 noinst_HEADERS = keramik.h pixmaploader.h keramikimage.h bitmaps.h gradients.h colorutil.h
 kde_style_LTLIBRARIES = keramik.la
 keramik_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
-keramik_la_LIBADD = ../../kdefx/libkdefx.la $(LIB_QT) $(LIB_XEXT)
+keramik_la_LIBADD = ../../kdefx/libtdefx.la $(LIB_QT) $(LIB_XEXT)
 keramik_la_SOURCES = keramik.cpp pixmaploader.cpp gradients.cpp colorutil.cpp
 keramik_la_COMPILE_FIRST = keramikrc.h
 keramik_la_METASOURCES = AUTO
@@ -14,7 +14,7 @@ keramik_la_METASOURCES = AUTO
 noinst_PROGRAMS = genembed
 
 genembed_SOURCES = genembed.cpp
-genembed_LDADD = ../../kdefx/libkdefx.la
+genembed_LDADD = ../../kdefx/libtdefx.la
 genembed_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -lkdefx $(LIB_KIO) -lktexteditor
 
 pixmaps.keramik: pics/checkbox-off.png pics/checkbox-on.png pics/combobox-list-bc.png\

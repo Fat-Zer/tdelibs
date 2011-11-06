@@ -10,7 +10,7 @@
 *
 * This library provides standard user interface elements for use in
 * Trinity applications. If your Trinity application has a GUI, you will almost
-* certainly link to libkdeui.
+* certainly link to libtdeui.
 *
 * Most applications with single or multiple toplevel widgets
 * should use the KMainWindow class in this library, which

@@ -2,8 +2,8 @@ AM_CPPFLAGS = -D_KDEPRINT_COMPILE
 
 INCLUDES= -I$(top_srcdir)/kdefx -I$(top_srcdir)/kdeprint -I$(top_builddir)/kdeprint -I$(top_srcdir)/kio -I$(top_srcdir)/kfile -I$(top_srcdir) $(all_includes)
 
-lib_LTLIBRARIES = libkdeprint_management.la
-kde_module_LTLIBRARIES = libkdeprint_management_module.la
+lib_LTLIBRARIES = libtdeprint_management.la
+kde_module_LTLIBRARIES = libtdeprint_management_module.la
 kdeinit_LTLIBRARIES = kaddprinterwizard.la
 bin_PROGRAMS = 
 
@@ -11,7 +11,7 @@ kaddprinterwizard_la_SOURCES = kaddprinterwizard.cpp
 kaddprinterwizard_la_LIBADD = $(LIB_QT) $(LIB_KDECORE) $(LIB_KDEPRINT) $(LIB_KDEUI)
 kaddprinterwizard_la_LDFLAGS = -module -avoid-version $(all_libraries) $(KDE_RPATH)
 
-libkdeprint_management_la_SOURCES = \
+libtdeprint_management_la_SOURCES = \
 	kmdbcreator.cpp kmdriverdb.cpp kmdriverdbwidget.cpp \
 	kmiconview.cpp kminfopage.cpp kmmainview.cpp \
 	kmpages.cpp kmprinterview.cpp kmjobviewer.cpp \
@@ -25,13 +25,13 @@ libkdeprint_management_la_SOURCES = \
 	kmwlocal.cpp kiconselectaction.cpp kmconfigpreview.cpp sidepixmap.cpp \
 	pluginaction.cpp kxmlcommanddlg.cpp kxmlcommandselector.cpp kmconfigcommand.cpp \
 	kmconfigfilter.cpp kmconfigfonts.cpp kmconfigjobs.cpp networkscanner.cpp
-libkdeprint_management_la_LDFLAGS = $(all_libraries) -version-info 6:0:2 -no-undefined
-libkdeprint_management_la_LIBADD = ../libkdeprint.la $(LIB_QT) $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
-libkdeprint_management_la_METASOURCES = AUTO
+libtdeprint_management_la_LDFLAGS = $(all_libraries) -version-info 6:0:2 -no-undefined
+libtdeprint_management_la_LIBADD = ../libtdeprint.la $(LIB_QT) $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
+libtdeprint_management_la_METASOURCES = AUTO
 
-libkdeprint_management_module_la_SOURCES = kdeprint_management_module.cpp
-libkdeprint_management_module_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
-libkdeprint_management_module_la_LIBADD = libkdeprint_management.la $(LIB_QT) $(LIB_KDEUI) $(LIB_KDECORE)
+libtdeprint_management_module_la_SOURCES = kdeprint_management_module.cpp
+libtdeprint_management_module_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
+libtdeprint_management_module_la_LIBADD = libtdeprint_management.la $(LIB_QT) $(LIB_KDEUI) $(LIB_KDECORE)
 
 kdeprint_HEADERS = kmmainview.h kmjobviewer.h kmprinterpage.h kiconselectaction.h kmtimer.h
 kdeprintdir = $(includedir)/kdeprint

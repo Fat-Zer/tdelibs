@@ -163,9 +163,9 @@ Taj brought up the idea of deligating all progress informations to an extern
 GUI daemon which could be provided in several implementations - examples
 are popup dialogs (most are annoyed by them, like me :) or a kicker applet
 or something completely different. This would also remove the dependency on
-libkdeui (I hope).
+libtdeui (I hope).
 Conclusion: kio_uiserver is this single GUI daemon, but the dependency on
-libkdeui couldn't be removed (for many reasons, including Job::showErrorDialog())
+libtdeui couldn't be removed (for many reasons, including Job::showErrorDialog())
 
 A. progress handling
 ---------------------

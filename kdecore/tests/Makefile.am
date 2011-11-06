@@ -37,7 +37,7 @@ noinst_HEADERS = klocaletest.h kprocesstest.h KIDLTest.h \
 
 METASOURCES = AUTO
 
-LDADD = ../libkdecore.la
+LDADD = ../libtdecore.la
 kconfigtestgui_SOURCES = kconfigtestgui.cpp
 kdebugtest_SOURCES = kdebugtest.cpp
 klocaletest_SOURCES = klocaletest.cpp

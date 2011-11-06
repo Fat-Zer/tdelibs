@@ -15,7 +15,7 @@ kdeprint_cups_la_SOURCES = cupsinfos.cpp ipprequest.cpp kmcupsfactory.cpp kmcups
 				  kptextpage.cpp kphpgl2page.cpp cupsaddsmb2.cpp kmwother.cpp ippreportdlg.cpp \
 				  kptagspage.cpp
 kdeprint_cups_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-kdeprint_cups_la_LIBADD = $(top_builddir)/kdeprint/management/libkdeprint_management.la $(LIB_KIO) $(LIB_CUPS) $(LIB_QT) $(LIB_KDEPRINT) $(LIB_KDECORE) $(LIB_KDEUI)
+kdeprint_cups_la_LIBADD = $(top_builddir)/kdeprint/management/libtdeprint_management.la $(LIB_KIO) $(LIB_CUPS) $(LIB_QT) $(LIB_KDEPRINT) $(LIB_KDECORE) $(LIB_KDEUI)
 kdeprint_cups_la_METASOURCES = AUTO
 
 noinst_HEADERS = cupsinfos.h ipprequest.h kmcupsjobmanager.h kmcupsmanager.h kmcupsuimanager.h \
@@ -27,11 +27,11 @@ noinst_HEADERS = cupsinfos.h ipprequest.h kmcupsjobmanager.h kmcupsmanager.h kmc
 
 bin_PROGRAMS = make_driver_db_cups cupsdoprint
 make_driver_db_cups_SOURCES = make_driver_db_cups.c
-make_driver_db_cups_LDADD = ../libdriverparse.a $(top_builddir)/kdecore/libkdefakes.la $(LIBDL) $(LIBZ)
+make_driver_db_cups_LDADD = ../libdriverparse.a $(top_builddir)/kdecore/libtdefakes.la $(LIBDL) $(LIBZ)
 make_driver_db_cups_LDFLAGS = $(all_libraries)
 
 cupsdoprint_SOURCES = cupsdoprint.c
-cupsdoprint_LDADD = $(LIB_CUPS) $(top_builddir)/kdecore/libkdefakes.la
+cupsdoprint_LDADD = $(LIB_CUPS) $(top_builddir)/kdecore/libtdefakes.la
 cupsdoprint_LDFLAGS = $(all_libraries)
 
 entry_DATA = cups.print

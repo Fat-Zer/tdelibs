@@ -30,7 +30,7 @@ libkio_la_LDFLAGS = -version-info 6:0:2 -no-undefined $(all_libraries) \
 	$(KDE_MT_LDFLAGS)
 libkio_la_LIBADD = kssl/libkssl.la kio/libkiocore.la \
 	kio/libksycoca.la bookmarks/libkbookmarks.la kfile/libkfile.la \
-	../kdeui/libkdeui.la ../kdesu/libkdesu.la \
+	../kdeui/libtdeui.la ../kdesu/libtdesu.la \
 	../kwallet/client/libkwalletclient.la \
 	$(LIBZ) $(LIBFAM) $(LIBVOLMGT) $(ACL_LIBS) $(LIB_QT) $(LIB_KDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 

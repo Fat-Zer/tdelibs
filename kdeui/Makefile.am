@@ -26,9 +26,9 @@ INCLUDES= -I/usr/include/freetype2/ -I$(top_srcdir)/kdefx -I$(top_srcdir)/interf
 # into $(all_libraries) isn't better
 AM_LDFLAGS = $(LDFLAGS_AS_NEEDED) $(LDFLAGS_NEW_DTAGS)
 
-lib_LTLIBRARIES = libkdeui.la libkspell.la
-libkdeui_la_LDFLAGS = $(KDE_MT_LDFLAGS) -no-undefined -version-info 6:0:2
-libkdeui_la_LIBADD = ../kdecore/libkdecore.la $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_X11) $(top_builddir)/kdefx/libkdefx.la $(LIB_XEXT)
+lib_LTLIBRARIES = libtdeui.la libkspell.la
+libtdeui_la_LDFLAGS = $(KDE_MT_LDFLAGS) -no-undefined -version-info 6:0:2
+libtdeui_la_LIBADD = ../kdecore/libtdecore.la $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_X11) $(top_builddir)/kdefx/libtdefx.la $(LIB_XEXT)
 
 libkspell_la_LDFLAGS = $(KDE_MT_LDFLAGS) -version-info 6:0:2 -no-undefined
 libkspell_la_SOURCES = dummy.cpp
@@ -80,7 +80,7 @@ include_HEADERS = kprogressbox.h kprogress.h kcolordlg.h \
 # the files on the first line need to occur first when compiling
 # with --enable-final since they use X defines that get undefined
 # in ksharedpixmap.cpp
-libkdeui_la_SOURCES = \
+libtdeui_la_SOURCES = \
 		qxembed.cpp ksharedpixmap.cpp kpixmapio.cpp \
 		kpopupmenu.cpp ktoolbar.cpp kaction.cpp kstdaction.cpp \
 		kactioncollection.cpp kactionclasses.cpp \
@@ -133,9 +133,9 @@ noinst_HEADERS = kdockwidget_private.h kdockwidget_p.h klistviewlineedit.h \
 scripts_SCRIPTS = preparetips
 scriptsdir = $(kde_bindir)
 
-libkdeui_la_METASOURCES = AUTO
-libkdeui_la_NMCHECK = $(srcdir)/libkdeui.nmcheck
-libkdeui_la_NMCHECKWEAK = $(srcdir)/libkdeui_weak.nmcheck $(top_srcdir)/kdecore/libkdecore_weak.nmcheck \
+libtdeui_la_METASOURCES = AUTO
+libtdeui_la_NMCHECK = $(srcdir)/libtdeui.nmcheck
+libtdeui_la_NMCHECKWEAK = $(srcdir)/libtdeui_weak.nmcheck $(top_srcdir)/kdecore/libtdecore_weak.nmcheck \
 	$(top_srcdir)/dcop/libDCOP_weak.nmcheck $(top_srcdir)/kdecore/libqt-mt_weak.nmcheck
 
 rcdir = $(kde_confdir)/ui

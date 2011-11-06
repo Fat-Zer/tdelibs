@@ -6,7 +6,7 @@ kdeprint_foomatic_la_SOURCES = kmfoomaticfactory.cpp \
 				  kmfoomaticmanager.cpp \
 				  kfoomaticprinterimpl.cpp
 kdeprint_foomatic_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-kdeprint_foomatic_la_LIBADD = $(top_builddir)/kdeprint/management/libkdeprint_management.la
+kdeprint_foomatic_la_LIBADD = $(top_builddir)/kdeprint/management/libtdeprint_management.la
 kdeprint_foomatic_la_METASOURCES = AUTO
 
 noinst_HEADERS = kmfoomaticmanager.h \

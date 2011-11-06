@@ -82,9 +82,9 @@ tde_add_library( ${target} SHARED AUTOMOC
 )
 
 
-#### libkdeprint_management_module ##############
+#### libtdeprint_management_module ##############
 
-set( target libkdeprint_management_module )
+set( target libtdeprint_management_module )
 
 set( ${target}_SRCS
   kdeprint_management_module.cpp

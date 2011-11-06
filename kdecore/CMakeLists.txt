@@ -88,7 +88,7 @@ install( FILES eventsrc
   DESTINATION ${DATA_INSTALL_DIR}/knotify )
 
 
-##### libkdecore ################################
+##### libtdecore ################################
 
 set( target kdecore )
 
@@ -162,7 +162,7 @@ tde_add_library( ${target} STATIC_PIC
 )
 
 
-##### libkdefakes ###############################
+##### libtdefakes ###############################
 
 set( target kdefakes )
 

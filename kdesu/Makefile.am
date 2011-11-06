@@ -1,13 +1,13 @@
-## Makefile.am for libkdesu
+## Makefile.am for libtdesu
 
 INCLUDES = -I$(top_srcdir)/kio/ $(all_includes)
 
-lib_LTLIBRARIES = libkdesu.la
-libkdesu_la_SOURCES = client.cpp process.cpp kcookie.cpp su.cpp ssh.cpp stub.cpp kdesu_pty.cpp
-libkdesu_la_LDFLAGS = -version-info 6:0:2 -no-undefined $(all_libraries) 
-libkdesu_la_LIBADD = $(LIB_KDECORE) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la
-libkdesu_la_NMCHECK = $(srcdir)/libkdesu.nmcheck
-libkdesu_la_NMCHECKWEAK = $(srcdir)/libkdesu_weak.nmcheck $(top_srcdir)/kdecore/libkdecore_weak.nmcheck \
+lib_LTLIBRARIES = libtdesu.la
+libtdesu_la_SOURCES = client.cpp process.cpp kcookie.cpp su.cpp ssh.cpp stub.cpp kdesu_pty.cpp
+libtdesu_la_LDFLAGS = -version-info 6:0:2 -no-undefined $(all_libraries) 
+libtdesu_la_LIBADD = $(LIB_KDECORE) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la
+libtdesu_la_NMCHECK = $(srcdir)/libtdesu.nmcheck
+libtdesu_la_NMCHECKWEAK = $(srcdir)/libtdesu_weak.nmcheck $(top_srcdir)/kdecore/libtdecore_weak.nmcheck \
 	$(top_srcdir)/dcop/libDCOP_weak.nmcheck $(top_srcdir)/kdecore/libqt-mt_weak.nmcheck
 
 kdesudir = $(includedir)/kdesu

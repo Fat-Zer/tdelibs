@@ -19,7 +19,7 @@ the system libc malloc is used, otherwise this malloc is used.
 
 
  If you have any problem with this malloc, try first using --enable-fast-malloc=debug and
-recompiling libkdecore, or use valgrind. This malloc seems to be more vulnerable to heap
+recompiling libtdecore, or use valgrind. This malloc seems to be more vulnerable to heap
 corruption, such as deleting a block twice, so faulty code may run without problems
 with standard malloc shipped with your libc, but it will crash with this malloc. In case
 you think there's any problem with this malloc, please mail me.

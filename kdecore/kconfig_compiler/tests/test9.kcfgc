@@ -5,7 +5,7 @@ ClassName=Test9
 #
 # Inherits=KConfigSkeleton
 #
-# IncludeFiles=libkdepim/kpimprefs.h
+# IncludeFiles=libtdepim/kpimprefs.h
 #
 MemberVariables=public
 #

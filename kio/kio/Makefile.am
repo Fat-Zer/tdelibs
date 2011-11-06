@@ -63,7 +63,7 @@ include_HEADERS += kacl.h
 #endif
 
 #libkiocore_la_LDFLAGS = $(all_libraries)
-#libkiocore_la_LIBADD = ../../kdeui/libkdeui.la ../../kdesu/libkdesu.la $(LIBZ) $(LIBFAM) $(LIBVOLMGT)
+#libkiocore_la_LIBADD = ../../kdeui/libtdeui.la ../../kdesu/libtdesu.la $(LIBZ) $(LIBFAM) $(LIBVOLMGT)
 
 libkiocore_la_SOURCES = authinfo.cpp \
 	kshred.cpp \

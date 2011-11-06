@@ -33,8 +33,8 @@ SUBDIRS = malloc network $(SVGICONS) . kconfig_compiler tests
 # into $(all_libraries) isn't better
 AM_LDFLAGS = $(LDFLAGS_AS_NEEDED) $(LDFLAGS_NEW_DTAGS)
 
-lib_LTLIBRARIES = libkdefakes.la libkdecore.la
-lib_LIBRARIES = libkdefakes_nonpic.a libkdefakes_pic.a
+lib_LTLIBRARIES = libtdefakes.la libtdecore.la
+lib_LIBRARIES = libtdefakes_nonpic.a libtdefakes_pic.a
 
 include_HEADERS = kconfig.h kconfigskeleton.h \
 	kconfigdata.h ksimpleconfig.h kconfigdialogmanager.h \
@@ -61,11 +61,11 @@ include_HEADERS = kconfig.h kconfigskeleton.h \
 	kidna.h ktempdir.h kshell.h fixx11h.h kxerrorhandler.h kdelibs_export.h \
 	kdemacros.h kde_file.h ktimezones.h
 
-libkdefakes_la_SOURCES = fakes.c vsnprintf.c
-libkdefakes_la_LDFLAGS = -version-info 6:0:2
-libkdefakes_la_LIBADD  = $(LIBSOCKET)
+libtdefakes_la_SOURCES = fakes.c vsnprintf.c
+libtdefakes_la_LDFLAGS = -version-info 6:0:2
+libtdefakes_la_LIBADD  = $(LIBSOCKET)
 
-libkdefakes_nonpic_a_SOURCES = fakes_nonpic.c vsnprintf_nonpic.c
+libtdefakes_nonpic_a_SOURCES = fakes_nonpic.c vsnprintf_nonpic.c
 
 fakes_nonpic.c:$(srcdir)/fakes.c
 	-rm -f fakes_nonpic.c
@@ -75,11 +75,11 @@ vsnprintf_nonpic.c:  $(srcdir)/vsnprintf.c
 	-rm -f vsnprintf_nonpic.c
 	$(LN_S) $(srcdir)/vsnprintf.c vsnprintf_nonpic.c
 
-libkdefakes_pic.a: libkdefakes.la
-	-rm -f libkdefakes_pic.a fakes_pic.o vsnprintf_pic.o
+libtdefakes_pic.a: libtdefakes.la
+	-rm -f libtdefakes_pic.a fakes_pic.o vsnprintf_pic.o
 	cp -f .libs/fakes.o fakes_pic.o; cp -f .libs/vsnprintf.o vsnprintf_pic.o
-	ar cru libkdefakes_pic.a fakes_pic.o vsnprintf_pic.o
-	ranlib libkdefakes_pic.a
+	ar cru libtdefakes_pic.a fakes_pic.o vsnprintf_pic.o
+	ranlib libtdefakes_pic.a
 
 noinst_HEADERS = kaccelaction.h kaccelbase.h kaccelprivate.h kckey.h \
 	kcompletion_private.h netwm_p.h \
@@ -89,7 +89,7 @@ noinst_HEADERS = kaccelaction.h kaccelbase.h kaccelprivate.h kckey.h \
 	kcalendarsystemhijri.h kcalendarsystemhebrew.h kcalendarsystemjalali.h \
 	kprotocolinfofactory.h kqiodevicegzip_p.h kiconloader_p.h
 
-libkdecore_la_SOURCES = libintl.cpp kapplication.cpp \
+libtdecore_la_SOURCES = libintl.cpp kapplication.cpp \
 	kdebug.cpp netwm.cpp kconfigbase.cpp kconfig.cpp  ksimpleconfig.cpp \
 	kconfigbackend.cpp kmanagerselection.cpp kdesktopfile.cpp \
 	kstandarddirs.cpp ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp \
@@ -121,14 +121,14 @@ libkdecore_la_SOURCES = libintl.cpp kapplication.cpp \
 	kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp \
 	kqiodevicegzip_p.cpp ktimezones.cpp
 
-libkdecore_la_LDFLAGS = $(QT_LDFLAGS) $(KDE_RPATH) $(KDE_MT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) -version-info 6:0:2 -no-undefined
-libkdecore_la_LIBADD = malloc/libklmalloc.la network/libkdecorenetwork.la $(SVGICON_LIB) ../dcop/libDCOP.la ../libltdl/libltdlc.la \
-	$(LIBART_LIBS) $(LIB_IDN) $(top_builddir)/kdefx/libkdefx.la $(LIB_QT) $(LIBSM) $(LIB_X11) $(LIBZ) $(LIBDL)
-libkdecore_la_NMCHECK = $(srcdir)/libkdecore.nmcheck
-libkdecore_la_NMCHECKWEAK = $(srcdir)/libkdecore_weak.nmcheck $(srcdir)/libqt-mt_weak.nmcheck \
+libtdecore_la_LDFLAGS = $(QT_LDFLAGS) $(KDE_RPATH) $(KDE_MT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) -version-info 6:0:2 -no-undefined
+libtdecore_la_LIBADD = malloc/libklmalloc.la network/libtdecorenetwork.la $(SVGICON_LIB) ../dcop/libDCOP.la ../libltdl/libltdlc.la \
+	$(LIBART_LIBS) $(LIB_IDN) $(top_builddir)/kdefx/libtdefx.la $(LIB_QT) $(LIBSM) $(LIB_X11) $(LIBZ) $(LIBDL)
+libtdecore_la_NMCHECK = $(srcdir)/libtdecore.nmcheck
+libtdecore_la_NMCHECKWEAK = $(srcdir)/libtdecore_weak.nmcheck $(srcdir)/libqt-mt_weak.nmcheck \
 	$(top_srcdir)/dcop/libDCOP_weak.nmcheck $(top_srcdir)/kdecore/standard_weak.nmcheck
 
-libkdecore_la_METASOURCES = AUTO
+libtdecore_la_METASOURCES = AUTO
 
 SRCDOC_DEST=$(kde_htmldir)/en/kdelibs/kdecore
 
@@ -171,7 +171,7 @@ parser: kentities.gperf
 bin_PROGRAMS = kde-config kgrantpty
 
 kde_config_SOURCES = kde-config.cpp
-kde_config_LDADD = ./libkdecore.la
+kde_config_LDADD = ./libtdecore.la
 kde_config_LDFLAGS = $(KDE_RPATH) $(KDE_MT_LDFLAGS)
 
 kgrantpty_SOURCES = kgrantpty.c

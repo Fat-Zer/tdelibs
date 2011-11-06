@@ -146,7 +146,7 @@ public:
     void enableWrite( bool enable );
 
 #ifdef KSOCK_NO_BROKEN
-    // BCI: remove in libkdecore.so.4
+    // BCI: remove in libtdecore.so.4
     /**
      * Return address.
      * This function is dumb. Don't ever use it
@@ -156,7 +156,7 @@ public:
      */
     unsigned long ipv4_addr() KDE_DEPRECATED;
 
-    // BCI: remove in libkdecore.so.4
+    // BCI: remove in libtdecore.so.4
     /**
       *  A small wrapper around gethostbyname() and such.
       *  Don't use this in new programs. Use KExtendedSocket::lookup
@@ -300,7 +300,7 @@ public:
     unsigned short int port();
 
 #ifdef KSOCK_NO_BROKEN
-    // BCI: remove in libkdecore.so.4
+    // BCI: remove in libtdecore.so.4
     /**
      * The address.
      * This is dumb. Don't use it

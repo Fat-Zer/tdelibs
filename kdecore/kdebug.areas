@@ -172,7 +172,7 @@
 5230	    kitchensync SyncEntry
 5231	    kitchensync SyncUI
 5250        kitchensync (Syncing Algorithm)
-5300        libkdepim
+5300        libtdepim
 5310        kprefs
 5400        calendarsystem
 5500        knotes
@@ -346,9 +346,9 @@
 # toys and games
 10000        amor
 10500        KBackgammon
-11000        libkdegames
-11001        libkdegames (KGame)
-11002        libkdegames (Highscores)
+11000        libtdegames
+11001        libtdegames (KGame)
+11002        libtdegames (Highscores)
 11111        kpat
 12000        KPoker
 12001        KPoker (Server)

@@ -18,7 +18,7 @@ kcookiejar_la_LIBADD = $(LIB_KDECORE) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la
 kded_kcookiejar_la_SOURCES = kcookiejar.cpp kcookieserver.cpp \
 			kcookieserver.skel kcookiewin.cpp 
 kded_kcookiejar_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kded_kcookiejar_la_LIBADD = $(LIB_KDED) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_KDECORE) $(LIB_X11) $(LIB_KDEUI) $(top_builddir)/kded/libkdeinit_kded.la
+kded_kcookiejar_la_LIBADD = $(LIB_KDED) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_KDECORE) $(LIB_X11) $(LIB_KDEUI) $(top_builddir)/kded/libtdeinit_kded.la
 
 kded_DATA = kcookiejar.desktop
 kdeddir = $(kde_servicesdir)/kded

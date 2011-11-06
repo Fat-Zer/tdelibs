@@ -44,7 +44,7 @@ check_PROGRAMS = kaboutdialogtest kblendtest kbuttonboxtest kcharselecttest \
 
 METASOURCES = AUTO
 
-LDADD = ../libkdeui.la
+LDADD = ../libtdeui.la
 
 kaboutdialogtest_SOURCES = kaboutdialogtest.cpp
 kblendtest_SOURCES = kblendtest.cpp

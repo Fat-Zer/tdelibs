@@ -210,11 +210,11 @@ public:
 	 * @li All absolute paths (most recent first).
 	 *
 	 * The filename should be a filename relative to the base dir
-	 * for resources. So is a way to get the path to libkdecore.la
-	 * to findResource("lib", "libkdecore.la"). KStandardDirs will
+	 * for resources. So is a way to get the path to libtdecore.la
+	 * to findResource("lib", "libtdecore.la"). KStandardDirs will
 	 * then look into the subdir lib of all elements of all prefixes
-	 * ($KDEDIRS) for a file libkdecore.la and return the path to
-	 * the first one it finds (e.g. /opt/kde/lib/libkdecore.la)
+	 * ($KDEDIRS) for a file libtdecore.la and return the path to
+	 * the first one it finds (e.g. /opt/kde/lib/libtdecore.la)
 	 *
 	 * @param type The type of the wanted resource
 	 * @param filename A relative filename of the resource.
@@ -286,8 +286,8 @@ public:
 	 * that have been installed into the same directory without
 	 * having to look for each file.
 	 *
-	 * findResourceDir("lib", "libkdecore.la") would return the
-	 * path of the subdir libkdecore.la is found first in
+	 * findResourceDir("lib", "libtdecore.la") would return the
+	 * path of the subdir libtdecore.la is found first in
 	 * (e.g. /opt/kde/lib/)
 	 *
 	 * @param type The type of the wanted resource

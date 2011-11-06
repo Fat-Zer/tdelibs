@@ -95,7 +95,7 @@ install( PROGRAMS
   DESTINATION ${BIN_INSTALL_DIR} )
 
 
-##### libkdeui ##################################
+##### libtdeui ##################################
 
 set( target kdeui )
 

@@ -56,7 +56,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#KDockWidget">KDockWidget</A></LI>
 <LI><A HREF="#KPixmap">KPixmap, KPixmapEffect</A></LI>
 <LI><A HREF="#KControlCenter">KDE Control Center</A></LI>
-<LI><A HREF="#KWMModuleApplication">KWMModuleApplication libkdeui/kwmmapp.h</A></LI>
+<LI><A HREF="#KWMModuleApplication">KWMModuleApplication libtdeui/kwmmapp.h</A></LI>
 <LI><A HREF="#KDebug">KDebug</A></LI>
 <LI><A HREF="#KFileDialog">KFileDialog - General Stuff</A></LI>
 <LI><A HREF="#KFileDialogPreview">KFileDialog - Preview Mode</A></LI>
@@ -678,7 +678,7 @@ Gradients. See kdelibs/kdetest/kgradienttest &amp; kunbalancedgradienttest for
 information on how they actually look.<P>
 
 Look further in this document for other info about pixmap effect code 
-reorganization (essentially, all effects are now in libkdeui.so: gradient(), 
+reorganization (essentially, all effects are now in libtdeui.so: gradient(), 
 unbalancedGradient(), hash(), desaturate(), pattern(), fade(), blend() etc.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -763,7 +763,7 @@ See <A HREF="KTMainWindow">KTMainWindow</A> for more details.
 
 KPixmap::gradientFill, KPixmap::patternFill, KPixmap::tile and
 KPixmap::mapFill have been moved to KPixmapEffect, which is now part
-of libkdeui.<P>
+of libtdeui.<P>
 
 KPixmap::tile() has been renamed to KPixmapEffects::createTile().<P>
 
@@ -787,10 +787,10 @@ Matthias Hoelzer-Kluepfel &lt;<A HREF="mailto:hoelzer@kde.org">hoelzer@kde.org</
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
 
-<H3><A NAME="KWMModuleApplication">KWMModuleApplication libkdeui/kwmmapp.h</A></H3>
+<H3><A NAME="KWMModuleApplication">KWMModuleApplication libtdeui/kwmmapp.h</A></H3>
 
 The KWMModuleApplication has been removed. Instead, use the class
-KWinModule in libkdecore. The API is a bit cleaner but very similar,
+KWinModule in libtdecore. The API is a bit cleaner but very similar,
 so you will feel comfortable immediately. One of the advantages of
 KWinModule is that it doesn't require a special KApplication
 subclass. This lead to many problems and misunderstandings in the

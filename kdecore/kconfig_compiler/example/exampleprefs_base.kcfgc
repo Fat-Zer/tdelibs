@@ -5,7 +5,7 @@ ClassName=ExamplePrefsBase
 #
 # Inherits=KConfigSkeleton
 #
-# IncludeFiles=libkdepim/kpimprefs.h
+# IncludeFiles=libtdepim/kpimprefs.h
 #
 # MemberVariables=public
 #

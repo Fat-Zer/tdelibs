@@ -22,17 +22,17 @@
 
 INCLUDES= $(all_includes)
 
-lib_LTLIBRARIES = libkdefx.la
-libkdefx_la_LDFLAGS = $(KDE_RPATH) $(KDE_MT_LDFLAGS) $(all_libraries) -no-undefined -version-info 6:0:2
-libkdefx_la_LIBADD = $(LIB_QT) $(LIB_XRENDER) $(LIB_X11)
-libkdefx_la_NMCHECK = $(srcdir)/libkdefx.nmcheck
-libkdefx_la_NMCHECKWEAK = $(srcdir)/libkdefx_weak.nmcheck $(top_srcdir)/kdecore/libqt-mt_weak.nmcheck \
+lib_LTLIBRARIES = libtdefx.la
+libtdefx_la_LDFLAGS = $(KDE_RPATH) $(KDE_MT_LDFLAGS) $(all_libraries) -no-undefined -version-info 6:0:2
+libtdefx_la_LIBADD = $(LIB_QT) $(LIB_XRENDER) $(LIB_X11)
+libtdefx_la_NMCHECK = $(srcdir)/libtdefx.nmcheck
+libtdefx_la_NMCHECKWEAK = $(srcdir)/libtdefx_weak.nmcheck $(top_srcdir)/kdecore/libqt-mt_weak.nmcheck \
 	$(top_srcdir)/kdecore/standard_weak.nmcheck
 
 include_HEADERS = kpixmap.h kpixmapsplitter.h \
 	kpixmapeffect.h kimageeffect.h kdrawutil.h kstyle.h kcpuinfo.h
 
-libkdefx_la_SOURCES = kpixmap.cpp kpixmapsplitter.cpp \
+libtdefx_la_SOURCES = kpixmap.cpp kpixmapsplitter.cpp \
 		kpixmapeffect.cpp kimageeffect.cpp kdrawutil.cpp kstyle.cpp \
 		kcpuinfo.cpp
 

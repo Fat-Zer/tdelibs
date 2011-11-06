@@ -29,7 +29,7 @@ it uses need to be linked.
 Startup Speed
 =============
 
-Starting an application linked against libqt, libkdecore and libkdeui
+Starting an application linked against libqt, libtdecore and libtdeui
 in the conventional way takes approx. 150ms on a Pentium III - 500Mhz. 
 Starting the same application via kdeinit takes less than 10ms.
 
@@ -39,7 +39,7 @@ constructor requires an extra 100ms in both cases)
 Memory Usage
 ============
 
-An application linked against libqt, libkdecore and libkdeui started
+An application linked against libqt, libtdecore and libtdeui started
 in the conventional way requires about 498Kb memory. 
 (average of 10 instances) If the same application is started via
 kdeinit it requires about 142Kb. A difference of 356Kb (application 

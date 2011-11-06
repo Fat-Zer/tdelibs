@@ -31,7 +31,7 @@ install( FILES
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
-##### libkdefx ##################################
+##### libtdefx ##################################
 
 set( target kdefx )
 

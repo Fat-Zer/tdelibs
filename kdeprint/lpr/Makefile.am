@@ -13,7 +13,7 @@ kdeprint_lpr_la_SOURCES = printcapreader.cpp lprhandler.cpp \
 			     lprngtoolhandler.cpp \
 			     editentrydialog.cpp
 kdeprint_lpr_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-kdeprint_lpr_la_LIBADD = $(top_builddir)/kdeprint/management/libkdeprint_management.la \
+kdeprint_lpr_la_LIBADD = $(top_builddir)/kdeprint/management/libtdeprint_management.la \
     $(LIB_QT) $(LIB_KDEPRINT) $(LIB_KDEUI) $(LIB_KDECORE)
 kdeprint_lpr_la_METASOURCES = AUTO
 
@@ -31,7 +31,7 @@ kdeprintlprdir = $(includedir)/kdeprint/lpr
 bin_PROGRAMS = make_driver_db_lpr
 make_driver_db_lpr_SOURCES = make_driver_db_lpr.c
 make_driver_db_lpr_LDFLAGS = $(all_libraries) 
-make_driver_db_lpr_LDADD = $(top_builddir)/kdecore/libkdefakes.la ../libdriverparse.a $(LIBDL)
+make_driver_db_lpr_LDADD = $(top_builddir)/kdecore/libtdefakes.la ../libdriverparse.a $(LIBDL)
 
 entry_DATA = lpr.print
 entrydir = $(kde_datadir)/kdeprint/plugins
