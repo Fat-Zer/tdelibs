@@ -4,7 +4,7 @@ include( $(KDELIBS)/win/common.pro )
 
 
 # needed to export library classes:
-DEFINES += MAKE_KDEUI_LIB
+DEFINES += MAKE_TDEUI_LIB
 
 LIBS += $$KDELIBDESTDIR\tdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\tdefx$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX 

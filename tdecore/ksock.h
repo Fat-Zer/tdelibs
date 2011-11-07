@@ -88,7 +88,7 @@ class KServerSocketPrivate;
  * @author Torben Weis <weis@uni-frankfurt.de>
  * @short A TCP/IP client socket.
  */
-class KDECORE_EXPORT KSocket : public TQObject
+class TDECORE_EXPORT KSocket : public TQObject
 {
     Q_OBJECT
 public:
@@ -251,7 +251,7 @@ private:
  *
  * @author Torben Weis <weis@stud.uni-frankfurt.de>
 */
-class KDECORE_EXPORT KServerSocket : public TQObject
+class TDECORE_EXPORT KServerSocket : public TQObject
 {
     Q_OBJECT
 public:

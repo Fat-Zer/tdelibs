@@ -49,7 +49,7 @@ class TQLayoutItem;
  * @see KDialogBase
  * @author Thomas Tanghus <tanghus@earthling.net>, Espen Sand <espensa@online.no>
  */
-class KDEUI_EXPORT KDialog : public TQDialog
+class TDEUI_EXPORT KDialog : public TQDialog
 {
   Q_OBJECT
 
@@ -186,7 +186,7 @@ class KDEUI_EXPORT KDialog : public TQDialog
   * @author Waldo Bastian <bastian@kde.org>
   */
 class KDialogQueuePrivate;
-class KDEUI_EXPORT KDialogQueue : public TQObject
+class TDEUI_EXPORT KDialogQueue : public TQObject
 {
       Q_OBJECT
 
@@ -215,7 +215,7 @@ protected:
   *
   * @author Timothy Pearson <kb9vqf@pearsoncomputing.net>
   */
-class KDEUI_EXPORT KSMModalDialogHeader : public TQWidget
+class TDEUI_EXPORT KSMModalDialogHeader : public TQWidget
 {
       Q_OBJECT
 
@@ -234,7 +234,7 @@ public:
   * @author Timothy Pearson <kb9vqf@pearsoncomputing.net>
   */
 class TQLabel;
-class KDEUI_EXPORT KSMModalDialog : public TQWidget
+class TDEUI_EXPORT KSMModalDialog : public TQWidget
 {
       Q_OBJECT
 

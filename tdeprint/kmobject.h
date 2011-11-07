@@ -21,7 +21,7 @@
 #ifndef KMOBJECT_H
 #define KMOBJECT_H
 
-#if !defined( _KDEPRINT_COMPILE ) && defined( __GNUC__ )
+#if !defined( _TDEPRINT_COMPILE ) && defined( __GNUC__ )
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 

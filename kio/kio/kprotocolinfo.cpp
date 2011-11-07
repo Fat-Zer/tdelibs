@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifdef MAKE_KDECORE_LIB //needed for proper linkage (win32)
+#ifdef MAKE_TDECORE_LIB //needed for proper linkage (win32)
 #undef KIO_EXPORT
 #define KIO_EXPORT KDE_EXPORT
 #endif
@@ -32,7 +32,7 @@
 
 KProtocolInfo* KProtocolInfo::findProtocol(const KURL &url)
 {
-#ifdef MAKE_KDECORE_LIB
+#ifdef MAKE_TDECORE_LIB
    return 0;
 #else
    TQString protocol = url.protocol();

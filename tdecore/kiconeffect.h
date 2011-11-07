@@ -31,7 +31,7 @@ class KIconEffectPrivate;
  * in a toolbar gray.
  * @see KIcon
  */
-class KDECORE_EXPORT KIconEffect
+class TDECORE_EXPORT KIconEffect
 {
 public:
   /**

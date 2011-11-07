@@ -18,7 +18,7 @@
 #include "kdrawutil.h"
 #include <tqdrawutil.h>
 
-KDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
+TDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
                      const TQColorGroup &g, bool sunken,
                      const TQBrush *fill)
 {
@@ -40,13 +40,13 @@ KDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
 }
 
 
-KDEFX_EXPORT void kDrawNextButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
+TDEFX_EXPORT void kDrawNextButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
                      bool sunken, const TQBrush *fill)
 {
     kDrawNextButton(p, r.x(), r.y(), r.width(), r.height(), g, sunken, fill);
 }
 
-KDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
+TDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
                    const TQColorGroup &g, bool sunken, const TQBrush *fill)
 {
     TQPen oldPen = p->pen();
@@ -90,13 +90,13 @@ KDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
     p->setPen(oldPen);
 }
 
-KDEFX_EXPORT void kDrawBeButton(TQPainter *p, TQRect &r, const TQColorGroup &g, bool sunken,
+TDEFX_EXPORT void kDrawBeButton(TQPainter *p, TQRect &r, const TQColorGroup &g, bool sunken,
                    const TQBrush *fill)
 {
     kDrawBeButton(p, r.x(), r.y(), r.width(), r.height(), g, sunken, fill);
 }
 
-KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
+TDEFX_EXPORT void kDrawRoundButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
                       bool sunken)
 {
     int x, y, x2, y2;
@@ -136,7 +136,7 @@ KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, const TQRect &r, const TQColorG
         qDrawWinPanel(p, x, y, r.width(), r.height(), g, sunken);
 }
 
-KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
+TDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
                       const TQColorGroup &g, bool sunken)
 {
     TQRect r(x, y, w, h);
@@ -145,7 +145,7 @@ KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
 
 #define QCOORDARRLEN(x) sizeof(x)/(sizeof(TQCOORD)*2)
 
-KDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool clear)
+TDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool clear)
 {
     // round edge fills
     static const TQCOORD btm_left_fill[]={ 0,0,1,0,2,0,3,0,4,0,0,1,1,1,2,1,3,1,4,1,
@@ -194,7 +194,7 @@ KDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool 
         p->fillRect(x, y, w, h, fillBrush);
 }
 
-KDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h)
+TDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h)
 {
     // using a bunch of TQRect lines seems much more efficient than bitmaps or
     // point arrays, even tho it uses more statements
@@ -214,7 +214,7 @@ KDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h)
     r += TQRect(x2, y+6, 1, h-12);
 }
 
-KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y,
+TDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y,
                    TQBitmap *lightColor, TQBitmap *midColor,
                    TQBitmap *midlightColor, TQBitmap *darkColor,
                    TQBitmap *blackColor, TQBitmap *whiteColor)
@@ -236,7 +236,7 @@ KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int 
     }
 }
 
-KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y, int w,
+TDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y, int w,
                    int h, bool isXBitmaps, const uchar *lightColor,
                    const uchar *midColor, const uchar *midlightColor,
                    const uchar *darkColor, const uchar *blackColor,

@@ -34,7 +34,7 @@
  * @since 3.1.3
  * @author Oswald Buddenhagen <ossi@kde.org>
  */
-class KDECORE_EXPORT KMacroExpanderBase {
+class TDECORE_EXPORT KMacroExpanderBase {
 
 public:
     /**
@@ -188,7 +188,7 @@ private:
  * @since 3.3
  * @author Oswald Buddenhagen <ossi@kde.org>
  */
-class KDECORE_EXPORT KWordMacroExpander : public KMacroExpanderBase {
+class TDECORE_EXPORT KWordMacroExpander : public KMacroExpanderBase {
 
 public:
     /**
@@ -221,7 +221,7 @@ protected:
  * @since 3.3
  * @author Oswald Buddenhagen <ossi@kde.org>
  */
-class KDECORE_EXPORT KCharMacroExpander : public KMacroExpanderBase {
+class TDECORE_EXPORT KCharMacroExpander : public KMacroExpanderBase {
 
 public:
     /**
@@ -270,7 +270,7 @@ namespace KMacroExpander {
      * // s is now "% Title: /tmp/myfile.txt:My File";
      * \endcode
      */
-    KDECORE_EXPORT TQString expandMacros( const TQString &str, const TQMap<TQChar,TQString> &map, TQChar c = '%' );
+    TDECORE_EXPORT TQString expandMacros( const TQString &str, const TQMap<TQChar,TQString> &map, TQChar c = '%' );
 
     /**
      * Perform safe macro expansion (substitution) on a string for use
@@ -295,7 +295,7 @@ namespace KMacroExpander {
      * system(TQFile::encodeName(s));
      * \endcode
      */
-    KDECORE_EXPORT TQString expandMacrosShellQuote( const TQString &str, const TQMap<TQChar,TQString> &map, TQChar c = '%' );
+    TDECORE_EXPORT TQString expandMacrosShellQuote( const TQString &str, const TQMap<TQChar,TQString> &map, TQChar c = '%' );
 
     /**
      * Perform safe macro expansion (substitution) on a string.
@@ -320,7 +320,7 @@ namespace KMacroExpander {
      * // s is now "Title: /tmp/myfile.txt-My File";
      * \endcode
      */
-    KDECORE_EXPORT TQString expandMacros( const TQString &str, const TQMap<TQString,TQString> &map, TQChar c = '%' );
+    TDECORE_EXPORT TQString expandMacros( const TQString &str, const TQMap<TQString,TQString> &map, TQChar c = '%' );
 
     /**
      * Perform safe macro expansion (substitution) on a string for use
@@ -348,18 +348,18 @@ namespace KMacroExpander {
      * system(TQFile::encodeName(s));
      * \endcode
      */
-    KDECORE_EXPORT TQString expandMacrosShellQuote( const TQString &str, const TQMap<TQString,TQString> &map, TQChar c = '%' );
+    TDECORE_EXPORT TQString expandMacrosShellQuote( const TQString &str, const TQMap<TQString,TQString> &map, TQChar c = '%' );
 
     /**
      * Same as above, except that the macros expand to string lists that
      * are simply join(" ")ed together.
      */
-    KDECORE_EXPORT TQString expandMacros( const TQString &str, const TQMap<TQChar,TQStringList> &map, TQChar c = '%' );
+    TDECORE_EXPORT TQString expandMacros( const TQString &str, const TQMap<TQChar,TQStringList> &map, TQChar c = '%' );
     /**
      * Same as above, except that the macros expand to string lists that
      * are simply join(" ")ed together.
      */
-    KDECORE_EXPORT TQString expandMacros( const TQString &str, const TQMap<TQString,TQStringList> &map, TQChar c = '%' );
+    TDECORE_EXPORT TQString expandMacros( const TQString &str, const TQMap<TQString,TQStringList> &map, TQChar c = '%' );
 
     /**
      * Same as above, except that the macros expand to string lists.
@@ -367,14 +367,14 @@ namespace KMacroExpander {
      * join(" ")ed together; otherwise every element expands to a separate
      * quoted string.
      */
-    KDECORE_EXPORT TQString expandMacrosShellQuote( const TQString &str, const TQMap<TQChar,TQStringList> &map, TQChar c = '%' );
+    TDECORE_EXPORT TQString expandMacrosShellQuote( const TQString &str, const TQMap<TQChar,TQStringList> &map, TQChar c = '%' );
     /**
      * Same as above, except that the macros expand to string lists.
      * If the macro appears inside a quoted string, the list is simply
      * join(" ")ed together; otherwise every element expands to a separate
      * quoted string.
      */
-    KDECORE_EXPORT TQString expandMacrosShellQuote( const TQString &str, const TQMap<TQString,TQStringList> &map, TQChar c = '%' );
+    TDECORE_EXPORT TQString expandMacrosShellQuote( const TQString &str, const TQMap<TQString,TQStringList> &map, TQChar c = '%' );
 }
 
 #endif /* _KMACROEXPANDER_H */

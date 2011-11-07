@@ -59,7 +59,7 @@ class QXEmbedData;
  *
  * @short The QXEmbed widget is a graphical socket that can embed an external X-Window.
 */
-class KDEUI_EXPORT QXEmbed : public TQWidget
+class TDEUI_EXPORT QXEmbed : public TQWidget
 {
     Q_OBJECT
     TQ_OBJECT

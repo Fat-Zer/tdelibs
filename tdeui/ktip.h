@@ -52,7 +52,7 @@ class KTextBrowser;
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>
  *
  */
-class KDEUI_EXPORT KTipDatabase
+class TDEUI_EXPORT KTipDatabase
 {
 public:
     /**
@@ -105,7 +105,7 @@ private:
  *
  * @author Matthias Hoelzer-Kluepfel <mhk@caldera.de>
  */
-class KDEUI_EXPORT KTipDialog : public KDialog
+class TDEUI_EXPORT KTipDialog : public KDialog
 {
     Q_OBJECT
 public:

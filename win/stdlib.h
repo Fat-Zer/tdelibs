@@ -47,8 +47,8 @@ extern "C" {
 #define EXIT_SUCCESS 0
 
 /* from fakes.c */
-KDECORE_EXPORT int setenv(const char *__string, const char *__value, int __overwrite);
-KDECORE_EXPORT void unsetenv(const char *__string);
+TDECORE_EXPORT int setenv(const char *__string, const char *__value, int __overwrite);
+TDECORE_EXPORT void unsetenv(const char *__string);
 
 #ifdef __cplusplus
 }

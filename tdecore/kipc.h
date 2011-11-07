@@ -46,7 +46,7 @@
  * @see KApplication::kipcMessage()
  * @author Geert Jansen <jansen@kde.org>
  */
-class KDECORE_EXPORT KIPC
+class TDECORE_EXPORT KIPC
 {
 public:
     /**

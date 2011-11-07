@@ -41,7 +41,7 @@
  *
  * @author Michael Wiedmann <mw@miwie.in-berlin.de>
  */
-class KDEUI_EXPORT KRestrictedLine : public KLineEdit
+class TDEUI_EXPORT KRestrictedLine : public KLineEdit
 {
   Q_OBJECT
   Q_PROPERTY( TQString validChars READ validChars WRITE setValidChars )

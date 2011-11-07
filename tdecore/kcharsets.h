@@ -40,7 +40,7 @@ class TQTextCodec;
  *
  * @author Lars Knoll <knoll@kde.org>
  */
-class KDECORE_EXPORT KCharsets
+class TDECORE_EXPORT KCharsets
 {
     friend class KGlobal;
 

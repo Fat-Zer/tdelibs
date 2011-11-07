@@ -58,7 +58,7 @@ class NETWinInfo;
  * @see NetWinInfo
  * @author Matthias Ettrich (ettrich@kde.org)
 */
-class KDECORE_EXPORT KWin
+class TDECORE_EXPORT KWin
 {
 public:
 
@@ -466,7 +466,7 @@ public:
     /**
      * @deprecated Use WindowInfo .
      */
-    struct KDECORE_EXPORT Info
+    struct TDECORE_EXPORT Info
     {
       /// The window's id.
 	WId win;
@@ -519,7 +519,7 @@ private:
  * Information about a window.
  * @since 3.2
  */
-class KDECORE_EXPORT KWin::WindowInfo
+class TDECORE_EXPORT KWin::WindowInfo
 {
 public:
     /**

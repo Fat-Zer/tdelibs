@@ -30,7 +30,7 @@ class TQWMatrix;
 class TQDomElement;
 class TQPointArray;
 
-class KDECORE_EXPORT KSVGIconPainter
+class TDECORE_EXPORT KSVGIconPainter
 {
 public:
 	KSVGIconPainter(int width, int height);

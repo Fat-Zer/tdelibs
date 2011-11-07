@@ -20,7 +20,7 @@
 #ifndef KPRINTDIALOG_H
 #define KPRINTDIALOG_H
 
-#if !defined( _KDEPRINT_COMPILE ) && defined( __GNUC__ )
+#if !defined( _TDEPRINT_COMPILE ) && defined( __GNUC__ )
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
@@ -38,7 +38,7 @@ class KPrintDialogPage;
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT KPrintDialog : public KDialog, public KPReloadObject
+class TDEPRINT_EXPORT KPrintDialog : public KDialog, public KPReloadObject
 {
 	Q_OBJECT
 public:

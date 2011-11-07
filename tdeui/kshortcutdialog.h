@@ -38,7 +38,7 @@ class KShortcutDialogAdvanced;
  * @see KKeyDialog
  * @since 3.4
  */
-class KDEUI_EXPORT KShortcutDialog : public KDialogBase
+class TDEUI_EXPORT KShortcutDialog : public KDialogBase
 {
 	Q_OBJECT
 public:

@@ -39,7 +39,7 @@ class KButtonBoxPrivate;
  * @version $Id$
  **/
 
-class KDEUI_EXPORT KButtonBox : public TQWidget
+class TDEUI_EXPORT KButtonBox : public TQWidget
 {
   Q_OBJECT
 

@@ -53,7 +53,7 @@ class KWinModulePrivate;
  * @short Base class for KDE Window Manager modules.
  * @author Matthias Ettrich (ettrich@kde.org)
  */
-class KDECORE_EXPORT KWinModule : public TQObject
+class TDECORE_EXPORT KWinModule : public TQObject
 {
     Q_OBJECT
 

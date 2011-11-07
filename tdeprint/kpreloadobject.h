@@ -22,7 +22,7 @@
 
 #include <kdelibs_export.h>
 
-class KDEPRINT_EXPORT KPReloadObject
+class TDEPRINT_EXPORT KPReloadObject
 {
 friend class KMFactory;
 public:

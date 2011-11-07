@@ -42,7 +42,7 @@ class TQColor;
  *
  * @author Joerg Habenicht, Richard J. Moore (rich@kde.org) 1998, 1999
  */
-class KDEUI_EXPORT KLed : public TQWidget
+class TDEUI_EXPORT KLed : public TQWidget
 {
     Q_OBJECT
     Q_ENUMS( State Shape Look )

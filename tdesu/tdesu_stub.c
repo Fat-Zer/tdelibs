@@ -237,7 +237,7 @@ int main()
     xsetenv("PATH", params[P_PATH].value);
     xsetenv("DESKTOP_STARTUP_ID", params[P_APP_STARTUP_ID].value);
 
-    tdesu_lc_all = getenv( "KDESU_LC_ALL" );
+    tdesu_lc_all = getenv( "TDESU_LC_ALL" );
     if( tdesu_lc_all != NULL )
         xsetenv("LC_ALL",tdesu_lc_all);
     else

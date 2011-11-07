@@ -129,7 +129,7 @@ class TQPopupMenu;
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KDECORE_EXPORT KCompletion : public TQObject
+class TDECORE_EXPORT KCompletion : public TQObject
 {
     Q_ENUMS( CompOrder )
     Q_PROPERTY( CompOrder order READ order WRITE setOrder )
@@ -612,7 +612,7 @@ class KCompletionMatchesPrivate;
  *
  * @short List for keeping matches returned from KCompletion
  */
-class KDECORE_EXPORT KCompletionMatches : public KCompletionMatchesList
+class TDECORE_EXPORT KCompletionMatches : public KCompletionMatchesList
 {
 public:
     KCompletionMatches( bool sort );
@@ -660,7 +660,7 @@ private:
  * @short An abstract class for adding text completion support to widgets.
  * @author Dawit Alemayehu <adawit@kde.org>
  */
-class KDECORE_EXPORT KCompletionBase
+class TDECORE_EXPORT KCompletionBase
 {
 public:
     /**

@@ -55,7 +55,7 @@ class KKeyChooserItem;
  * @see KKeyDialog
  * @author Nicolas Hadacek <hadacek@via.ecp.fr>
  */
-class KDEUI_EXPORT KKeyChooser : public TQWidget
+class TDEUI_EXPORT KKeyChooser : public TQWidget
 {
 	Q_OBJECT
  public:
@@ -271,7 +271,7 @@ typedef KKeyChooser KKeyChooser;
  *
  * @author Nicolas Hadacek <hadacek@via.ecp.fr>
  */
-class KDEUI_EXPORT KKeyDialog : public KDialogBase
+class TDEUI_EXPORT KKeyDialog : public KDialogBase
 {
 	Q_OBJECT
 

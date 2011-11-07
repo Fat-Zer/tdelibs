@@ -2,13 +2,13 @@
 ## Makefile.am of kdebase/kioslave/metainfo
 
 INCLUDES = $(all_includes)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 METASOURCES = AUTO
 
 kde_module_LTLIBRARIES = kio_metainfo.la
 
 kio_metainfo_la_SOURCES = metainfo.cpp
-kio_metainfo_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_KDECORE)
+kio_metainfo_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE)
 kio_metainfo_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 noinst_HEADERS = metainfo.h 

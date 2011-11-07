@@ -29,7 +29,7 @@
  *
  * @author Waldo Bastian <bastian@kde.org>
  */
-class KDECORE_EXPORT KRFCDate
+class TDECORE_EXPORT KRFCDate
 {
 public:
    /**

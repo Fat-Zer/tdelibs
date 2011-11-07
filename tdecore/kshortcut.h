@@ -37,7 +37,7 @@ class KKeyNative;
 * @see KShortcut
 */
 
-class KDECORE_EXPORT KKey
+class TDECORE_EXPORT KKey
 {
  public:
         /**
@@ -285,7 +285,7 @@ class KDECORE_EXPORT KKey
 * @see KShortcut
 */
 
-class KDECORE_EXPORT KKeySequence
+class TDECORE_EXPORT KKeySequence
 {
  public:
         /// Defines the maximum length of the key sequence
@@ -540,7 +540,7 @@ class KDECORE_EXPORT KKeySequence
 * 
 */
 
-class KDECORE_EXPORT KShortcut
+class TDECORE_EXPORT KShortcut
 {
  public:
         /**

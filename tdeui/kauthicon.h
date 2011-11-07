@@ -44,7 +44,7 @@ class KAuthIconPrivate;
  * @see KRootPermsIcon, KWritePermsIcon
  * @author Preston Brown <pbrown@kde.org>
  */
-class KDEUI_EXPORT KAuthIcon : public TQWidget
+class TDEUI_EXPORT KAuthIcon : public TQWidget
 {
   Q_OBJECT
 
@@ -100,7 +100,7 @@ class KRootPermsIconPrivate;
  * @see KAuthIcon
  * @author Preston Brown <pbrown@kde.org>
  */
-class KDEUI_EXPORT KRootPermsIcon : public KAuthIcon
+class TDEUI_EXPORT KRootPermsIcon : public KAuthIcon
 {
   Q_OBJECT
 
@@ -132,7 +132,7 @@ class KWritePermsIconPrivate;
  * @see KAuthIcon
  * @author Preston Brown <pbrown@kde.org>
  */
-class KDEUI_EXPORT KWritePermsIcon : public KAuthIcon
+class TDEUI_EXPORT KWritePermsIcon : public KAuthIcon
 {
   Q_OBJECT
   Q_PROPERTY( TQString fileName READ fileName WRITE setFileName )

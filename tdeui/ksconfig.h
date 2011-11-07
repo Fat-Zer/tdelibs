@@ -84,7 +84,7 @@ enum KSpellClients {
  * @see KSpell
  */
 
-class KDEUI_EXPORT KSpellConfig : public TQWidget
+class TDEUI_EXPORT KSpellConfig : public TQWidget
 {
   Q_OBJECT
 

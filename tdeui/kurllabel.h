@@ -68,7 +68,7 @@ class TQPixmap;
  * @version $Id$
  *
  */
-class KDEUI_EXPORT KURLLabel : public TQLabel
+class TDEUI_EXPORT KURLLabel : public TQLabel
 {
   Q_OBJECT
   Q_PROPERTY (TQString url READ url WRITE setURL)

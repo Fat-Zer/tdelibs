@@ -37,7 +37,7 @@
  * settings.  If you want to get informed when the user selects
  * something connect to the TQListBox::selectionChanged() signal.
  **/
-class KDEUI_EXPORT KListBox : public TQListBox
+class TDEUI_EXPORT KListBox : public TQListBox
 {
     Q_OBJECT
 

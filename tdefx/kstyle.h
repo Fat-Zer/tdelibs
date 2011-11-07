@@ -54,7 +54,7 @@ struct KStylePrivate;
  * @author Karol Szwed (gallium@kde.org)
  * @version $Id$
  */
-class KDEFX_EXPORT KStyle: public TQCommonStyle
+class TDEFX_EXPORT KStyle: public TQCommonStyle
 {
 	Q_OBJECT
 	TQ_OBJECT

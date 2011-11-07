@@ -92,7 +92,7 @@ class KExtendedSocketPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short an extended socket
  */
-class KDECORE_EXPORT KExtendedSocket: public KBufferedIO // public TQObject, public QIODevice
+class TDECORE_EXPORT KExtendedSocket: public KBufferedIO // public TQObject, public QIODevice
 {
   Q_OBJECT
   TQ_OBJECT
@@ -1039,7 +1039,7 @@ private:
  * Contains information about an internet address. It wraps addrinfo,
  * see getaddrinfo(3) for more information.
  */
-class KDECORE_EXPORT KAddressInfo
+class TDECORE_EXPORT KAddressInfo
 {
 private:
   addrinfo *ai;

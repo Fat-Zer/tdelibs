@@ -34,7 +34,7 @@ class KKeyNativePrivate;
  * Representation of a key in the format native of the windowing system (eg. X11).
  * @see KKey
  */
-class KDECORE_EXPORT KKeyNative
+class TDECORE_EXPORT KKeyNative
 {
  public:
 	/**

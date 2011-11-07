@@ -32,10 +32,10 @@ extern "C" {
 #endif
 
 /* implemented in fakes.c */
-KDECORE_EXPORT unsigned long strlcpy(char *dst, const char *src, unsigned long siz);
+TDECORE_EXPORT unsigned long strlcpy(char *dst, const char *src, unsigned long siz);
 
 /* implemented in fakes.c */
-KDECORE_EXPORT unsigned long strlcat(char *dst, const char *src, unsigned long siz);
+TDECORE_EXPORT unsigned long strlcat(char *dst, const char *src, unsigned long siz);
 
 KDEWIN32_EXPORT char* strndup(const char *src, size_t n);
 

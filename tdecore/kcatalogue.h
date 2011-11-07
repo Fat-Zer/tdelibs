@@ -34,7 +34,7 @@ class KCataloguePrivate;
  * @see KLocale
  */
 //REVISED: hausmann
-class KDECORE_EXPORT KCatalogue
+class TDECORE_EXPORT KCatalogue
 {
 public:
   /**

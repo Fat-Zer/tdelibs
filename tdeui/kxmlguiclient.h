@@ -40,7 +40,7 @@ class KXMLGUIBuilder;
  * GUI from actions and an XML document, and can be dynamically merged
  * with other KXMLGUIClients.
  */
-class KDEUI_EXPORT KXMLGUIClient
+class TDEUI_EXPORT KXMLGUIClient
 {
     friend class KEditToolbarWidget; // for setXMLFile(3 args)
 public:

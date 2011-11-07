@@ -34,7 +34,7 @@
  * @author Hans Petter Bieker <bieker@kde.org>
  * @since 3.2
  */
-class KDEUI_EXPORT KTimeWidget : public TQWidget
+class TDEUI_EXPORT KTimeWidget : public TQWidget
 {
   Q_OBJECT
   Q_PROPERTY( TQTime time READ time WRITE setTime )

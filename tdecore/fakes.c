@@ -42,7 +42,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-KDECORE_EXPORT int setenv(const char *name, const char *value, int overwrite) {
+TDECORE_EXPORT int setenv(const char *name, const char *value, int overwrite) {
     int i;
     char * a;
 
@@ -75,7 +75,7 @@ KDECORE_EXPORT int setenv(const char *name, const char *value, int overwrite) {
 extern char ** environ;
 #endif
 
-KDECORE_EXPORT void unsetenv (name)
+TDECORE_EXPORT void unsetenv (name)
      const char *name;
 {
   size_t len;
@@ -186,7 +186,7 @@ int seteuid(uid_t euid)
 
    Returns a file descriptor open on the file for reading and writing.  */
 
-KDECORE_EXPORT int mkstemps (char* _template, int suffix_len)
+TDECORE_EXPORT int mkstemps (char* _template, int suffix_len)
 {
   static const char letters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   char *XXXXXX;
@@ -238,7 +238,7 @@ KDECORE_EXPORT int mkstemps (char* _template, int suffix_len)
 #endif /* !HAVE_MKSTEMPS */
 
 #ifndef HAVE_MKSTEMP
-KDECORE_EXPORT int mkstemp (char* _template)
+TDECORE_EXPORT int mkstemp (char* _template)
 {
   return mkstemps( _template, 0 );
 }
@@ -265,7 +265,7 @@ KDECORE_EXPORT int mkstemp (char* _template)
 
    Returns a file descriptor open on the file for reading and writing.  */
 
-KDECORE_EXPORT char* mkdtemp (char* _template)
+TDECORE_EXPORT char* mkdtemp (char* _template)
 {
   static const char letters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   char *XXXXXX;
@@ -315,7 +315,7 @@ KDECORE_EXPORT char* mkdtemp (char* _template)
 #ifndef ENOTSUP
 #define ENOTSUP 134 /* Not supported */
 #endif
-KDECORE_EXPORT int revoke(const char *tty)
+TDECORE_EXPORT int revoke(const char *tty)
 {
         errno = ENOTSUP;
         return -1;
@@ -324,7 +324,7 @@ KDECORE_EXPORT int revoke(const char *tty)
 
 #ifndef HAVE_STRLCPY
 #include <string.h>
-KDECORE_EXPORT unsigned long strlcpy(char* d, const char* s, unsigned long bufsize)
+TDECORE_EXPORT unsigned long strlcpy(char* d, const char* s, unsigned long bufsize)
 {
     unsigned long len, ret = strlen(s);
 
@@ -343,7 +343,7 @@ KDECORE_EXPORT unsigned long strlcpy(char* d, const char* s, unsigned long bufsi
 
 #ifndef HAVE_STRLCAT
 #include <string.h>
-KDECORE_EXPORT unsigned long strlcat(char* d, const char* s, unsigned long bufsize)
+TDECORE_EXPORT unsigned long strlcat(char* d, const char* s, unsigned long bufsize)
 {
     char *cp;
     unsigned long ret, len1, len2 = strlen(s);

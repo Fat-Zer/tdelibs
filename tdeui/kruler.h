@@ -68,7 +68,7 @@
  * @short A ruler widget.
  * @author Jörg Habenicht
  */
-class KDEUI_EXPORT KRuler : public TQFrame
+class TDEUI_EXPORT KRuler : public TQFrame
 {
   Q_OBJECT
   Q_PROPERTY( int minValue READ minValue WRITE setMinValue )

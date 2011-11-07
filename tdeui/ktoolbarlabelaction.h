@@ -46,7 +46,7 @@ class TQLabel;
  *
  * @author Felix Berger <felixberger@beldesign.de>
  */
-class KDEUI_EXPORT KToolBarLabelAction : public KWidgetAction
+class TDEUI_EXPORT KToolBarLabelAction : public KWidgetAction
 {
 public:
   /**

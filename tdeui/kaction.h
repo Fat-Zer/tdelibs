@@ -199,7 +199,7 @@ class KMainWindow;
  *
  * @see KStdAction
  */
-class KDEUI_EXPORT KAction : public TQObject
+class TDEUI_EXPORT KAction : public TQObject
 {
   friend class KActionCollection;
   Q_OBJECT

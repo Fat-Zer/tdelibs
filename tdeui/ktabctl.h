@@ -45,7 +45,7 @@
  * @author Alexander Sanda (alex@darkstar.ping.at)
  * @version $Id$
 */
-class KDEUI_EXPORT KTabCtl : public TQWidget
+class TDEUI_EXPORT KTabCtl : public TQWidget
 {
     Q_OBJECT
 

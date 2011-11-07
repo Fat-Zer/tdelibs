@@ -34,7 +34,7 @@ class TQDragObject;
  * @short A TQPushButton with drag-support and KGuiItem support
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KDEUI_EXPORT KPushButton : public TQPushButton
+class TDEUI_EXPORT KPushButton : public TQPushButton
 {
     Q_OBJECT
     Q_PROPERTY(int stdItem READ guiItm WRITE setGuiItm )

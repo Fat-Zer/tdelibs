@@ -45,14 +45,14 @@
  * @param fill    The brush to use for filling the interior of the button.
  *                Pass @a null to prevent the button from being filled.
  */
-KDEFX_EXPORT void kDrawNextButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
+TDEFX_EXPORT void kDrawNextButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
                      bool sunken=false, const TQBrush *fill=0);
 
 /**
  * @relates KStyle
  * @overload
  */
-KDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
+TDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
                      const TQColorGroup &g, bool sunken=false, 
                      const TQBrush *fill=0);
 
@@ -69,7 +69,7 @@ KDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
  * @param fill    The brush to use for filling the interior of the button.
  *                Pass @a null to prevent the button from being filled.
  */
-KDEFX_EXPORT void kDrawBeButton(TQPainter *p, TQRect &r, const TQColorGroup &g,
+TDEFX_EXPORT void kDrawBeButton(TQPainter *p, TQRect &r, const TQColorGroup &g,
                    bool sunken=false, const TQBrush *fill=0);
 
 /**
@@ -77,7 +77,7 @@ KDEFX_EXPORT void kDrawBeButton(TQPainter *p, TQRect &r, const TQColorGroup &g,
  * @c \#include @c <kdrawutil.h>
  * @overload
  */
-KDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
+TDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
                    const TQColorGroup &g, bool sunken=false, 
                    const TQBrush *fill=0);
 
@@ -93,14 +93,14 @@ KDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
  * @param g       Specifies the shading colors.
  * @param sunken  Whether to draw the button as sunken (pressed) or not.
  */
-KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
+TDEFX_EXPORT void kDrawRoundButton(TQPainter *p, const TQRect &r, const TQColorGroup &g,
                       bool sunken=false);
 
 /**
  * @relates KStyle
  * @overload
  */
-KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
+TDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
                       const TQColorGroup &g, bool sunken=false);
 
 /**
@@ -118,7 +118,7 @@ KDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
  *
  * @see kDrawRoundButton() and kDrawRoundMask()
  */
-KDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h);
+TDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h);
 
 /**
  * @relates KStyle
@@ -135,7 +135,7 @@ KDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h);
  * @param clear  Whether to clear the rectangle specified by @p (x, y, w, h) to
  *               Qt::color0 before drawing the mask.
  */
-KDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool clear=false);
+TDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool clear=false);
 
 /**
  * @relates KStyle
@@ -161,7 +161,7 @@ KDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool 
  *
  * @see QColorGroup
  */
-KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y,
+TDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y,
                    TQBitmap *lightColor=0, TQBitmap *midColor=0,
                    TQBitmap *midlightColor=0, TQBitmap *darkColor=0,
                    TQBitmap *blackColor=0, TQBitmap *whiteColor=0);
@@ -171,7 +171,7 @@ KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int 
  * @c \#include @c <kdrawutil.h>
  * @overload
  */
- KDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y, int w,
+ TDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int y, int w,
                    int h, bool isXBitmaps=true, const uchar *lightColor = 0,
                    const uchar *midColor=0, const uchar *midlightColor=0,
                    const uchar *darkColor=0, const uchar *blackColor=0,

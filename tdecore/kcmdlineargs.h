@@ -37,7 +37,7 @@ typedef TQValueList<TQCString> QCStringList;
  *
  * @see KCmdLineArgs for additional usage information
  */
-struct KDECORE_EXPORT KCmdLineOptions
+struct TDECORE_EXPORT KCmdLineOptions
 {
    /**
     * The name of the argument as it should be called on the command line and
@@ -219,7 +219,7 @@ class KCmdLineArgsPrivate;
  *  @author Waldo Bastian
  *  @version 0.0.4
  */
-class KDECORE_EXPORT KCmdLineArgs
+class TDECORE_EXPORT KCmdLineArgs
 {
   friend class KApplication;
   friend class KUniqueApplication;

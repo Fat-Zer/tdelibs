@@ -52,7 +52,7 @@ class KAnimWidgetPrivate;
  *
  * @author Kurt Granroth <granroth@kde.org>
  */
-class KDEUI_EXPORT KAnimWidget : public TQFrame
+class TDEUI_EXPORT KAnimWidget : public TQFrame
 {
   Q_OBJECT
   Q_PROPERTY( int size READ size WRITE setSize )

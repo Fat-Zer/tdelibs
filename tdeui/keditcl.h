@@ -34,7 +34,7 @@ class KHistoryCombo;
 class KIntNumInput;
 class TQVButtonGroup;
 
-class KDEUI_EXPORT KEdGotoLine : public KDialogBase
+class TDEUI_EXPORT KEdGotoLine : public KDialogBase
 {
     Q_OBJECT
 
@@ -56,7 +56,7 @@ private:
 };
 
 ///
-class KDEUI_EXPORT KEdFind : public KDialogBase
+class TDEUI_EXPORT KEdFind : public KDialogBase
 {
     Q_OBJECT
     Q_PROPERTY( TQString text READ getText WRITE setText )
@@ -106,7 +106,7 @@ private:
 };
 
 ///
-class KDEUI_EXPORT KEdReplace : public KDialogBase
+class TDEUI_EXPORT KEdReplace : public KDialogBase
 {
     Q_OBJECT
 
@@ -168,7 +168,7 @@ private:
  * @author Bernd Johannes Wuebben <wuebben@math.cornell.edu>, Waldo Bastian <bastian@kde.org>
  **/
 
-class KDEUI_EXPORT_DEPRECATED KEdit : public TQMultiLineEdit
+class TDEUI_EXPORT_DEPRECATED KEdit : public TQMultiLineEdit
 {
     Q_OBJECT
 

@@ -22,7 +22,7 @@ CLEANFILES = addressee.h addressee.cpp field.cpp
 lib_LTLIBRARIES = libkabc.la
 libkabc_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 3:0:2 -no-undefined
 libkabc_la_LIBADD = vcard/libvcard.la vcardparser/libvcards.la $(LIB_KIO) \
-                    $(top_builddir)/kresources/libkresources.la $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_KDEUI) $(LIB_KDECORE)
+                    $(top_builddir)/kresources/libkresources.la $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDEUI) $(LIB_TDECORE)
 libkabc_la_COMPILE_FIRST = addressee.h
 
 libkabc_la_SOURCES = \
@@ -52,7 +52,7 @@ METASOURCES = AUTO
 
 bin_PROGRAMS = kab2kabc
 
-kab2kabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kab2kabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 kab2kabc_LDADD = libkabc.la ../kab/libkab.la
 kab2kabc_SOURCES = kab2kabc.cpp
 

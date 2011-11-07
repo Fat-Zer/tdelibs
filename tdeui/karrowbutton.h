@@ -35,7 +35,7 @@ class KArrowButtonPrivate;
  *
  * @author Frerich Raabe
  */
-class KDEUI_EXPORT KArrowButton : public TQPushButton
+class TDEUI_EXPORT KArrowButton : public TQPushButton
 {
 	Q_OBJECT
 	Q_PROPERTY( int arrowType READ arrowTp WRITE setArrowTp )

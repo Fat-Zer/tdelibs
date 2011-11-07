@@ -9,7 +9,7 @@ class KAccelAction;
 /**
  * @internal
  */
-class KDECORE_EXPORT KAccelPrivate : public TQObject, public KAccelBase
+class TDECORE_EXPORT KAccelPrivate : public TQObject, public KAccelBase
 {
 	Q_OBJECT
  public:

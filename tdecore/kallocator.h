@@ -43,7 +43,7 @@ class KZoneAllocatorPrivate;
  * memory though.
  * @author Waldo Bastian <bastian@kde.org>, Michael Matz <matz@kde.org>
  */
-class KDECORE_EXPORT KZoneAllocator
+class TDECORE_EXPORT KZoneAllocator
 {
 public:
     /**

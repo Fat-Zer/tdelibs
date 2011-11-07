@@ -21,7 +21,7 @@
 #ifndef DRIVER_H
 #define DRIVER_H
 
-#if !defined( _KDEPRINT_COMPILE ) && defined( __GNUC__ )
+#if !defined( _TDEPRINT_COMPILE ) && defined( __GNUC__ )
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
@@ -58,7 +58,7 @@ class DrPageSize;
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT DrBase
+class TDEPRINT_EXPORT DrBase
 {
 public:
 	enum Type { Base = 0, Main, ChoiceGroup, Group, String, Integer, Float, List, Boolean };
@@ -103,7 +103,7 @@ protected:
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT DrGroup : public DrBase
+class TDEPRINT_EXPORT DrGroup : public DrBase
 {
 public:
 	DrGroup();
@@ -150,7 +150,7 @@ protected:
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT DrMain : public DrGroup
+class TDEPRINT_EXPORT DrMain : public DrGroup
 {
 public:
 	DrMain();
@@ -202,7 +202,7 @@ public:
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT DrStringOption : public DrBase
+class TDEPRINT_EXPORT DrStringOption : public DrBase
 {
 public:
 	DrStringOption();
@@ -226,7 +226,7 @@ protected:
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT DrIntegerOption : public DrBase
+class TDEPRINT_EXPORT DrIntegerOption : public DrBase
 {
 public:
 	DrIntegerOption();
@@ -251,7 +251,7 @@ protected:
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT DrFloatOption : public DrBase
+class TDEPRINT_EXPORT DrFloatOption : public DrBase
 {
 public:
 	DrFloatOption();
@@ -276,7 +276,7 @@ protected:
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT DrListOption : public DrBase
+class TDEPRINT_EXPORT DrListOption : public DrBase
 {
 public:
 	DrListOption();
@@ -308,7 +308,7 @@ protected:
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT DrBooleanOption : public DrListOption
+class TDEPRINT_EXPORT DrBooleanOption : public DrListOption
 {
 	/* just an overloaded class, with different type */
 public:

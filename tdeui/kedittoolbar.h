@@ -107,7 +107,7 @@ namespace
  * @author Kurt Granroth <granroth@kde.org>
  * @version $Id$
  */
-class KDEUI_EXPORT KEditToolbar : public KDialogBase
+class TDEUI_EXPORT KEditToolbar : public KDialogBase
 {
     Q_OBJECT
 public:
@@ -267,7 +267,7 @@ private:
  * @author Kurt Granroth <granroth@kde.org>
  * @version $Id$
  */
-class KDEUI_EXPORT KEditToolbarWidget : public TQWidget, virtual public KXMLGUIClient
+class TDEUI_EXPORT KEditToolbarWidget : public TQWidget, virtual public KXMLGUIClient
 {
   Q_OBJECT
 public:

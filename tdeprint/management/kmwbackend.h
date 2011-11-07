@@ -27,7 +27,7 @@
 class TQButtonGroup;
 class TQVBoxLayout;
 
-class KDEPRINT_EXPORT KMWBackend : public KMWizardPage
+class TDEPRINT_EXPORT KMWBackend : public KMWizardPage
 {
 public:
 	KMWBackend(TQWidget *parent = 0, const char *name = 0);

@@ -31,7 +31,7 @@ class KSycocaDictStringList;
  * @internal
  * Hash table implementation for the sycoca database file
  */
-class KDECORE_EXPORT KSycocaDict
+class TDECORE_EXPORT KSycocaDict
 {
 public:
    /**

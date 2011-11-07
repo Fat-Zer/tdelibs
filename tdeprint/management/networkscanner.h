@@ -25,7 +25,7 @@
 #include <tqptrlist.h>
 
 
-class KDEPRINT_EXPORT NetworkScanner : public TQWidget
+class TDEPRINT_EXPORT NetworkScanner : public TQWidget
 {
 	Q_OBJECT
 

@@ -30,7 +30,7 @@ class DrMain;
 class DrGroup;
 class DrBase;
 
-class KDEPRINT_EXPORT KXmlCommand : public TQObject
+class TDEPRINT_EXPORT KXmlCommand : public TQObject
 {
 	friend class KXmlCommandManager;
 
@@ -86,7 +86,7 @@ private:
 	KXmlCommandPrivate	*d;
 };
 
-class KDEPRINT_EXPORT KXmlCommandManager : public TQObject
+class TDEPRINT_EXPORT KXmlCommandManager : public TQObject
 {
 public:
 	enum IO_CheckType	{ None = 0, Basic, Advanced };

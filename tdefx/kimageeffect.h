@@ -47,7 +47,7 @@ class TQRect;
  * just call the static methods. They are encapsulated here merely to provide
  * a common namespace.
  */
-class KDEFX_EXPORT KImageEffect
+class TDEFX_EXPORT KImageEffect
 {
 public:
     /**

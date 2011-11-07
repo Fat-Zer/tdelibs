@@ -118,7 +118,7 @@ class TQWidget;
  * @short Configurable key binding support.
  */
 
-class KDECORE_EXPORT KAccelBase
+class TDECORE_EXPORT KAccelBase
 {
  public:
 	/** Initialization mode of the KAccelBase, used in constructor. */

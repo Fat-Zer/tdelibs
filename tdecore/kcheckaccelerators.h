@@ -63,7 +63,7 @@ class TQTextView;
  there are shown all conflicts grouped by accelerator, and a list of all used
  accelerators.
 */
-class KDECORE_EXPORT KCheckAccelerators : public TQObject
+class TDECORE_EXPORT KCheckAccelerators : public TQObject
 {
     Q_OBJECT
 public:

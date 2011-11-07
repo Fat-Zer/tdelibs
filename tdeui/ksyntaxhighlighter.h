@@ -39,7 +39,7 @@ class KSpellConfig;
 /**
  * \brief Syntax sensitive text highlighter
  */
-class KDEUI_EXPORT KSyntaxHighlighter : public TQSyntaxHighlighter
+class TDEUI_EXPORT KSyntaxHighlighter : public TQSyntaxHighlighter
 {
 public:
     enum SyntaxMode {
@@ -62,7 +62,7 @@ private:
     KSyntaxHighlighterPrivate *d;
 };
 
-class KDEUI_EXPORT KSpellingHighlighter : public KSyntaxHighlighter
+class TDEUI_EXPORT KSpellingHighlighter : public KSyntaxHighlighter
 {
 public:
     KSpellingHighlighter( TQTextEdit *textEdit,
@@ -91,7 +91,7 @@ private:
 /**
  * \brief Dictionary sensitive text highlighter
  */
-class KDEUI_EXPORT KDictSpellingHighlighter : public TQObject, public KSpellingHighlighter
+class TDEUI_EXPORT KDictSpellingHighlighter : public TQObject, public KSpellingHighlighter
 {
 Q_OBJECT
 

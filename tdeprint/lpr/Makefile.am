@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -D_KDEPRINT_COMPILE
+AM_CPPFLAGS = -D_TDEPRINT_COMPILE
 
 INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/tdeprint -I$(top_srcdir)/tdeprint/management $(all_includes)
 
@@ -14,7 +14,7 @@ tdeprint_lpr_la_SOURCES = printcapreader.cpp lprhandler.cpp \
 			     editentrydialog.cpp
 tdeprint_lpr_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
 tdeprint_lpr_la_LIBADD = $(top_builddir)/tdeprint/management/libtdeprint_management.la \
-    $(LIB_QT) $(LIB_KDEPRINT) $(LIB_KDEUI) $(LIB_KDECORE)
+    $(LIB_QT) $(LIB_TDEPRINT) $(LIB_TDEUI) $(LIB_TDECORE)
 tdeprint_lpr_la_METASOURCES = AUTO
 
 noinst_HEADERS = printcapreader.h \

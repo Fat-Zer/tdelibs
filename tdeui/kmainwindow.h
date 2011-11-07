@@ -95,7 +95,7 @@ class DCOPObject;
 
  */
 
-class KDEUI_EXPORT KMainWindow : public TQMainWindow, public KXMLGUIBuilder, virtual public KXMLGUIClient
+class TDEUI_EXPORT KMainWindow : public TQMainWindow, public KXMLGUIBuilder, virtual public KXMLGUIClient
 {
     friend class KMWSessionManaged;
     Q_OBJECT

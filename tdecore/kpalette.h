@@ -43,7 +43,7 @@ class KPalettePrivate;
  *
  * @author Waldo Bastian (bastian@kde.org)
  **/
-class KDECORE_EXPORT KPalette
+class TDECORE_EXPORT KPalette
 {
 public:
    /**

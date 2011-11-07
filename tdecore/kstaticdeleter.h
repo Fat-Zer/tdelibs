@@ -36,7 +36,7 @@
  * @see KGlobal::unregisterStaticDeleter()
  * @see KGlobal::deleteStaticDeleters()
  */
-class KDECORE_EXPORT KStaticDeleterBase {
+class TDECORE_EXPORT KStaticDeleterBase {
 public:
     virtual ~KStaticDeleterBase() { }
     /**

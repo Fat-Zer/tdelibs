@@ -23,7 +23,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#ifdef KDEINIT_OOM_PROTECT
+#ifdef TDEINIT_OOM_PROTECT
 
 /*
  The start_tdeinit wrapper is setuid, which means some shell variables like LD_LIBRARY_PATH

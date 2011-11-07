@@ -42,7 +42,7 @@ class TQWidget;
  *
  * @author Kurt Granroth <granroth@kde.org>
  */
-class KDEUI_EXPORT KCursor : public TQt
+class TDEUI_EXPORT KCursor : public TQt
 {
 public:
     /**

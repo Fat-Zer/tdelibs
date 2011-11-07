@@ -148,7 +148,7 @@ class KURL;
  *
  * @author Dawit Alemayehu <adawit@kde.org>
  */
-class KDEUI_EXPORT KComboBox : public TQComboBox, public KCompletionBase
+class TDEUI_EXPORT KComboBox : public TQComboBox, public KCompletionBase
 {
   Q_OBJECT
   Q_PROPERTY( bool autoCompletion READ autoCompletion WRITE setAutoCompletion )
@@ -537,7 +537,7 @@ class KPixmapProvider;
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KDEUI_EXPORT KHistoryCombo : public KComboBox
+class TDEUI_EXPORT KHistoryCombo : public KComboBox
 {
     Q_OBJECT
     Q_PROPERTY( TQStringList historyItems READ historyItems WRITE setHistoryItems )
@@ -796,7 +796,7 @@ private:
     KHistoryComboPrivate* const d;
 };
 
-class KDEUI_EXPORT KHistoryComboEditor : public KDialogBase
+class TDEUI_EXPORT KHistoryComboEditor : public KDialogBase
 {
     Q_OBJECT
 

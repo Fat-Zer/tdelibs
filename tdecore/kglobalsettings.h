@@ -45,7 +45,7 @@ class KURL;
  *
  * @author David Faure <faure@kde.org>
  */
-class KDECORE_EXPORT KGlobalSettings
+class TDECORE_EXPORT KGlobalSettings
 {
   public:
 

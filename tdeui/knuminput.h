@@ -46,7 +46,7 @@ class KIntSpinBox;
  * for a different variable type
  *
  */
-class KDEUI_EXPORT KNumInput : public TQWidget
+class TDEUI_EXPORT KNumInput : public TQWidget
 {
     Q_OBJECT
     TQ_OBJECT
@@ -185,7 +185,7 @@ private:
  * @version $Id$
  */
 
-class KDEUI_EXPORT KIntNumInput : public KNumInput
+class TDEUI_EXPORT KIntNumInput : public KNumInput
 {
     Q_OBJECT
     TQ_OBJECT
@@ -431,7 +431,7 @@ class KDoubleLine;
  * @see KIntNumInput, KDoubleSpinBox
  */
 
-class KDEUI_EXPORT KDoubleNumInput : public KNumInput
+class TDEUI_EXPORT KDoubleNumInput : public KNumInput
 {
     Q_OBJECT
     TQ_OBJECT
@@ -704,7 +704,7 @@ private:
  *  The class provides an easy interface to use other
  *  numeric systems than the decimal.
  */
-class KDEUI_EXPORT KIntSpinBox : public TQSpinBox
+class TDEUI_EXPORT KIntSpinBox : public TQSpinBox
 {
     Q_OBJECT
     TQ_OBJECT
@@ -835,7 +835,7 @@ private:
    @since 3.1
 **/
 
-class KDEUI_EXPORT KDoubleSpinBox : public TQSpinBox {
+class TDEUI_EXPORT KDoubleSpinBox : public TQSpinBox {
   Q_OBJECT
   TQ_OBJECT
   Q_PROPERTY( bool acceptLocalizedNumbers READ acceptLocalizedNumbers WRITE setAcceptLocalizedNumbers )

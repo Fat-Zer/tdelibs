@@ -30,7 +30,7 @@
  * @author Waldo Bastian <bastian@kde.org>
  * @since 3.3
  */
-class KDECORE_EXPORT KLockFile : public KShared
+class TDECORE_EXPORT KLockFile : public KShared
 {
 public:
    typedef KSharedPtr<KLockFile> Ptr;

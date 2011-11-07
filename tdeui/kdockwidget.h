@@ -100,7 +100,7 @@ namespace KMDI
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockWidgetAbstractHeader : public TQFrame
+class TDEUI_EXPORT KDockWidgetAbstractHeader : public TQFrame
 {
   Q_OBJECT
   TQ_OBJECT
@@ -150,7 +150,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockWidgetAbstractHeaderDrag : public TQFrame
+class TDEUI_EXPORT KDockWidgetAbstractHeaderDrag : public TQFrame
 {
   Q_OBJECT
   TQ_OBJECT
@@ -196,7 +196,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockWidgetHeaderDrag : public KDockWidgetAbstractHeaderDrag
+class TDEUI_EXPORT KDockWidgetHeaderDrag : public KDockWidgetAbstractHeaderDrag
 {
   Q_OBJECT
   TQ_OBJECT
@@ -238,7 +238,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockWidgetHeader : public KDockWidgetAbstractHeader
+class TDEUI_EXPORT KDockWidgetHeader : public KDockWidgetAbstractHeader
 {
   Q_OBJECT
   TQ_OBJECT
@@ -364,7 +364,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockTabGroup : public TQTabWidget
+class TDEUI_EXPORT KDockTabGroup : public TQTabWidget
 {
   Q_OBJECT
   TQ_OBJECT
@@ -425,7 +425,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockWidget: public TQWidget
+class TDEUI_EXPORT KDockWidget: public TQWidget
 {
   Q_OBJECT
   TQ_OBJECT
@@ -912,7 +912,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockManager: public TQObject
+class TDEUI_EXPORT KDockManager: public TQObject
 {
   Q_OBJECT
   TQ_OBJECT
@@ -1311,7 +1311,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class KDEUI_EXPORT KDockMainWindow : public KMainWindow
+class TDEUI_EXPORT KDockMainWindow : public KMainWindow
 {
   Q_OBJECT
   TQ_OBJECT
@@ -1482,7 +1482,7 @@ private:
   KDockMainWindowPrivate *d;
 };
 
-class KDEUI_EXPORT KDockArea : public TQWidget
+class TDEUI_EXPORT KDockArea : public TQWidget
 {
   Q_OBJECT
   TQ_OBJECT

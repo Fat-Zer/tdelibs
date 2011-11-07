@@ -65,7 +65,7 @@ class TQVBox;
  * @author Richard Moore, rich@kde.org
  * @author Sascha Cunz, sascha.cunz@tiscali.de
  */
-class KDEUI_EXPORT KPassivePopup : public TQFrame
+class TDEUI_EXPORT KPassivePopup : public TQFrame
 {
     Q_OBJECT
     Q_PROPERTY (bool autoDelete READ autoDelete WRITE setAutoDelete )

@@ -43,7 +43,7 @@ class KRootPropPrivate;
 * @see  KConfig::KConfig
 * @author Mark Donohoe (donohe@kde.org)
 */
-class KDECORE_EXPORT KRootProp
+class TDECORE_EXPORT KRootProp
 {
 private:	
   Atom atom;

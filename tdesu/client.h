@@ -47,7 +47,7 @@ typedef TQValueList<TQCString> QCStringList;
  * See setVar, delVar, delGroup.
  */
 
-class KDESU_EXPORT KDEsuClient {
+class TDESU_EXPORT KDEsuClient {
 public:
     KDEsuClient();
     ~KDEsuClient();

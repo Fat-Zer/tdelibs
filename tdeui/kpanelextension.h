@@ -94,7 +94,7 @@ class KPanelExtensionPrivate;
  *
  * @author Matthias Elter <elter@kde.org>
  **/
-class KDEUI_EXPORT KPanelExtension : public TQFrame
+class TDEUI_EXPORT KPanelExtension : public TQFrame
 {
     Q_OBJECT
 

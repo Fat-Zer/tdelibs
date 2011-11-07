@@ -39,7 +39,7 @@
  * @version $Id$
 */
 
-class KDEUI_EXPORT KMenuBar : public TQMenuBar
+class TDEUI_EXPORT KMenuBar : public TQMenuBar
 {
     Q_OBJECT
 

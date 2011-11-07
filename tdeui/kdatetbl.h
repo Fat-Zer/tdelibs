@@ -37,7 +37,7 @@ class KPopupMenu;
 * @version $Id$
 * @author Stephan Binner
 */
-class KDEUI_EXPORT KDateInternalWeekSelector : public TQLineEdit
+class TDEUI_EXPORT KDateInternalWeekSelector : public TQLineEdit
 {
   Q_OBJECT
 protected:
@@ -64,7 +64,7 @@ private:
 * @version $Id$
 * @author Tim Gilman, Mirko Boehm
 */
-class KDEUI_EXPORT KDateInternalMonthPicker : public TQGridView
+class TDEUI_EXPORT KDateInternalMonthPicker : public TQGridView
 {
   Q_OBJECT
 protected:
@@ -137,7 +137,7 @@ private:
 * @version $Id$
 * @author Tim Gilman, Mirko Boehm
 */
-class KDEUI_EXPORT KDateInternalYearSelector : public TQLineEdit
+class TDEUI_EXPORT KDateInternalYearSelector : public TQLineEdit
 {
   Q_OBJECT
 protected:
@@ -163,7 +163,7 @@ private:
  * @author Tim Gilman, Mirko Boehm
  * @version $Id$
  */
-class KDEUI_EXPORT KPopupFrame : public TQFrame
+class TDEUI_EXPORT KPopupFrame : public TQFrame
 {
   Q_OBJECT
 protected:
@@ -238,7 +238,7 @@ private:
 /**
 * Validates user-entered dates.
 */
-class KDEUI_EXPORT KDateValidator : public TQValidator
+class TDEUI_EXPORT KDateValidator : public TQValidator
 {
 public:
     KDateValidator(TQWidget* parent=0, const char* name=0);
@@ -260,7 +260,7 @@ public:
  * @version $Id$
  * @author Tim Gilman, Mirko Boehm
  */
-class KDEUI_EXPORT KDateTable : public TQGridView
+class TDEUI_EXPORT KDateTable : public TQGridView
 {
     Q_OBJECT
     Q_PROPERTY( TQDate date READ getDate WRITE setDate )

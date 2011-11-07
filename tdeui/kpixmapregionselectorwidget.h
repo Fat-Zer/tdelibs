@@ -41,7 +41,7 @@ class KPopupMenu;
  * @author Antonio Larrosa <larrosa@kde.org>
  * @since 3.4
  */
-class KDEUI_EXPORT KPixmapRegionSelectorWidget : public TQWidget
+class TDEUI_EXPORT KPixmapRegionSelectorWidget : public TQWidget
 {
    Q_OBJECT
 public:

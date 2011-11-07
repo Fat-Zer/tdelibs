@@ -64,7 +64,7 @@ class KGuiItem;
  *
  * @author Espen Sand (espen@kde.org)
  */
-class KDEUI_EXPORT KJanusWidget : public TQWidget
+class TDEUI_EXPORT KJanusWidget : public TQWidget
 {
   Q_OBJECT
 

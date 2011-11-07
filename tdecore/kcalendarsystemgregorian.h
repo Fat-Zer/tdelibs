@@ -40,7 +40,7 @@ class KCalendarSystemGregorianPrivate;
  * @author Carlos Moro <cfmoro@correo.uniovi.es>
  * @since 3.2
  */
-class KDECORE_EXPORT KCalendarSystemGregorian: public KCalendarSystem
+class TDECORE_EXPORT KCalendarSystemGregorian: public KCalendarSystem
 {
 public:
   /** Constructor. Just like KCalendarSystem::KCalendarSystem(). */

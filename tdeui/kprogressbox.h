@@ -51,7 +51,7 @@
  * @short A dialog with a progress bar and text box.
  * @author Timothy Pearson
  */
-class KDEUI_EXPORT KProgressBoxDialog : public KDialogBase
+class TDEUI_EXPORT KProgressBoxDialog : public KDialogBase
 {
     Q_OBJECT
 

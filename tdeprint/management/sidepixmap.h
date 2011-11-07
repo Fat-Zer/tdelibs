@@ -25,7 +25,7 @@
 
 #include <kdelibs_export.h>
 
-class KDEPRINT_EXPORT SidePixmap : public TQFrame
+class TDEPRINT_EXPORT SidePixmap : public TQFrame
 {
 public:
 	SidePixmap(TQWidget *parent = 0, const char *name = 0);

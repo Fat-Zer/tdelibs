@@ -42,7 +42,7 @@ class KCalendarSystemHebrewPrivate;
  * @author Hans Petter Bieker <bieker@kde.org>
  * @since 3.2
  */
-class KDECORE_EXPORT KCalendarSystemHebrew : public KCalendarSystem
+class TDECORE_EXPORT KCalendarSystemHebrew : public KCalendarSystem
 {
 public:
   /** Constructor. Just like KCalendarSystem::KCalendarSystem(). */

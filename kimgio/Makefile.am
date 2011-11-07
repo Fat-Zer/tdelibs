@@ -37,7 +37,7 @@ kimg_xview_la_LIBADD  = $(LIB_QT)
 
 kimg_eps_la_SOURCES = eps.cpp
 kimg_eps_la_LDFLAGS = -module $(KIMGIO_PLUGIN) -no-undefined $(all_libraries)
-kimg_eps_la_LIBADD  = $(LIB_KDECORE) $(LIB_QT)
+kimg_eps_la_LIBADD  = $(LIB_TDECORE) $(LIB_QT)
 
 kimg_ico_la_SOURCES = ico.cpp
 kimg_ico_la_LDFLAGS = -module $(KIMGIO_PLUGIN) -no-undefined $(all_libraries)

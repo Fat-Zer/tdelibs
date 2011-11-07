@@ -31,7 +31,7 @@ class KCompTreeNode;
 /**
  * @internal
  */
-class KDECORE_EXPORT KCompTreeNodeList
+class TDECORE_EXPORT KCompTreeNodeList
 {
 public:
     KCompTreeNodeList() : first(0), last(0), m_count(0) {}
@@ -81,7 +81,7 @@ typedef KCompTreeNodeList KCompTreeChildren;
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  * @internal
  */
-class KDECORE_EXPORT KCompTreeNode : public TQChar
+class TDECORE_EXPORT KCompTreeNode : public TQChar
 {
 public:
     KCompTreeNode() : TQChar(), myWeight(0) {}
@@ -146,7 +146,7 @@ typedef KSortableValueList<TQString> KCompletionMatchesList;
 /**
  * @internal
  */
-class KDECORE_EXPORT KCompletionMatchesWrapper
+class TDECORE_EXPORT KCompletionMatchesWrapper
 {
 public:
     KCompletionMatchesWrapper( bool sort = false )

@@ -29,7 +29,7 @@
  * map/dict/list config node entry.
  * @internal
  */
-struct KDECORE_EXPORT KEntry
+struct TDECORE_EXPORT KEntry
 {
   KEntry()
     : mValue(0), bDirty(false), bNLS(false), 
@@ -66,7 +66,7 @@ struct KDECORE_EXPORT KEntry
  * to which it belongs.
  * @internal
  */
-struct KDECORE_EXPORT KEntryKey
+struct TDECORE_EXPORT KEntryKey
 {
   KEntryKey(const TQCString& _group = 0,
 	    const TQCString& _key = 0)

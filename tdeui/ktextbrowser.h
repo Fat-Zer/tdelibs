@@ -39,7 +39,7 @@
  * @author Espen Sand (espensa@online.no)
  */
 
-class KDEUI_EXPORT KTextBrowser : public TQTextBrowser
+class TDEUI_EXPORT KTextBrowser : public TQTextBrowser
 {
   Q_OBJECT
   Q_PROPERTY( bool notifyClick READ isNotifyClick WRITE setNotifyClick )

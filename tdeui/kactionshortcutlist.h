@@ -9,7 +9,7 @@
 //---------------------------------------------------------------------
 
 class KAccelShortcutListPrivate;
-class KDEUI_EXPORT KActionShortcutList : public KShortcutList
+class TDEUI_EXPORT KActionShortcutList : public KShortcutList
 {
  public:
 	KActionShortcutList( KActionCollection* );
@@ -47,7 +47,7 @@ class KDEUI_EXPORT KActionShortcutList : public KShortcutList
 //---------------------------------------------------------------------
 
 class KAccelShortcutListPrivate;
-class KDEUI_EXPORT KActionPtrShortcutList : public KShortcutList
+class TDEUI_EXPORT KActionPtrShortcutList : public KShortcutList
 {
  public:
 	KActionPtrShortcutList( KActionPtrList& );

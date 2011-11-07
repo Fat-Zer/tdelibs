@@ -94,7 +94,7 @@ class KSocketBasePrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KSocketBase
+class TDECORE_EXPORT KSocketBase
 {
 public:
   /**
@@ -440,7 +440,7 @@ private:
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KActiveSocketBase: public TQIODevice, virtual public KSocketBase
+class TDECORE_EXPORT KActiveSocketBase: public TQIODevice, virtual public KSocketBase
 {
 public:
   /**
@@ -689,7 +689,7 @@ protected:
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KPassiveSocketBase: virtual public KSocketBase
+class TDECORE_EXPORT KPassiveSocketBase: virtual public KSocketBase
 {
 public:
   /**

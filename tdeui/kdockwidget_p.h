@@ -40,7 +40,7 @@ COMPATIBLE. THIS HEADER IS ONLY INSTALLED, BECAUSE IT IS NEEDED IN
 #include <tqstringlist.h>
 // Add some describing comment !!
 
-class KDEUI_EXPORT KDockContainer
+class TDEUI_EXPORT KDockContainer
 {
 public:
   KDockContainer();

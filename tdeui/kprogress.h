@@ -43,7 +43,7 @@
  *
  * @author Aaron Seigo
  */
-class KDEUI_EXPORT KProgress : public TQProgressBar
+class TDEUI_EXPORT KProgress : public TQProgressBar
 {
   Q_OBJECT
 
@@ -184,7 +184,7 @@ private:
  * @short A dialog with a progress bar
  * @author Aaron J. Seigo
  */
-class KDEUI_EXPORT KProgressDialog : public KDialogBase
+class TDEUI_EXPORT KProgressDialog : public KDialogBase
 {
     Q_OBJECT
 

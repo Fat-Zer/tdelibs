@@ -90,7 +90,7 @@ namespace KShell {
      *  target, see Errors
      * @return a list of unquoted words or an empty list if an error occurred
      */
-    KDECORE_EXPORT TQStringList splitArgs( const TQString &cmd, int flags = 0, int *err = 0 );
+    TDECORE_EXPORT TQStringList splitArgs( const TQString &cmd, int flags = 0, int *err = 0 );
 
     /**
      * Quotes and joins @p args together according to POSIX shell rules.
@@ -98,7 +98,7 @@ namespace KShell {
      * @param args a list of strings to quote and join
      * @return a command suitable for shell execution
      */
-    KDECORE_EXPORT TQString joinArgs( const TQStringList &args );
+    TDECORE_EXPORT TQString joinArgs( const TQStringList &args );
 
     /**
      * Same as above, but $'' is used instead of '' for the quoting.
@@ -110,7 +110,7 @@ namespace KShell {
      * @param args a list of strings to quote and join
      * @return a command suitable for shell execution
      */
-    KDECORE_EXPORT TQString joinArgsDQ( const TQStringList &args );
+    TDECORE_EXPORT TQString joinArgsDQ( const TQStringList &args );
 
     /**
      * Quotes and joins @p argv together according to POSIX shell rules.
@@ -121,7 +121,7 @@ namespace KShell {
      *  @p argv must be null-terminated.
      * @return a command suitable for shell execution
      */
-    KDECORE_EXPORT TQString joinArgs( const char * const *argv, int argc = -1 );
+    TDECORE_EXPORT TQString joinArgs( const char * const *argv, int argc = -1 );
 
     /**
      * Performs tilde expansion on @p path. Interprets "~/path" and
@@ -130,7 +130,7 @@ namespace KShell {
      * @param path the path to tilde-expand
      * @return the expanded path
      */
-    KDECORE_EXPORT TQString tildeExpand( const TQString &path );
+    TDECORE_EXPORT TQString tildeExpand( const TQString &path );
 
     /**
      * Obtain a @p user's home directory.
@@ -139,7 +139,7 @@ namespace KShell {
      *  An empty string denotes the current user.
      * @return The user's home directory.
      */
-    KDECORE_EXPORT TQString homeDir( const TQString &user );
+    TDECORE_EXPORT TQString homeDir( const TQString &user );
 
 }
 

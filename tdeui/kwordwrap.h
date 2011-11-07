@@ -45,7 +45,7 @@
  *
  * @author David Faure <faure@kde.org>
  */
-class KDEUI_EXPORT KWordWrap
+class TDEUI_EXPORT KWordWrap
 {
 public:
     /**

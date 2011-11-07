@@ -39,7 +39,7 @@ class KBugReportPrivate;
  *
  * @author David Faure <faure@kde.org>
  */
-class KDEUI_EXPORT KBugReport : public KDialogBase
+class TDEUI_EXPORT KBugReport : public KDialogBase
 {
   Q_OBJECT
 public:

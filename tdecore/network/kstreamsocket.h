@@ -94,7 +94,7 @@ class KStreamSocketPrivate;
  * @see KNetwork::KBufferedSocket, KNetwork::KServerSocket
  * @author Thiago Macieira <thiago@kde.org>
  */
-class KDECORE_EXPORT KStreamSocket: public KClientSocketBase
+class TDECORE_EXPORT KStreamSocket: public KClientSocketBase
 {
   Q_OBJECT
   TQ_OBJECT

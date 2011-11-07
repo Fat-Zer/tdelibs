@@ -288,7 +288,7 @@ KLed::paintRound() // paint a ROUND RAISED led lamp
     paint.drawEllipse( scale, scale, width - scale*2, width - scale*2 );
 
     // Draw the bright light spot of the LED now, using modified "old"
-    // painter routine taken from KDEUI큦 KLed widget:
+    // painter routine taken from TDEUI큦 KLed widget:
 
     // Setting the new width of the pen is essential to avoid "pixelized"
     // shadow like it can be observed with the old LED code
@@ -384,7 +384,7 @@ KLed::paintSunken() // paint a ROUND SUNKEN led lamp
     paint.drawEllipse( scale, scale, width - scale*2, width - scale*2 );
 
     // Draw the bright light spot of the LED now, using modified "old"
-    // painter routine taken from KDEUI큦 KLed widget:
+    // painter routine taken from TDEUI큦 KLed widget:
 
     // Setting the new width of the pen is essential to avoid "pixelized"
     // shadow like it can be observed with the old LED code

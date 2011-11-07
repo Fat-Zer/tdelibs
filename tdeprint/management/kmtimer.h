@@ -20,7 +20,7 @@
 #ifndef KMTIMER_H
 #define KMTIMER_H
 
-#if !defined( _KDEPRINT_COMPILE ) && defined( __GNUC__ )
+#if !defined( _TDEPRINT_COMPILE ) && defined( __GNUC__ )
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
@@ -34,7 +34,7 @@
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT KMTimer : public TQTimer
+class TDEPRINT_EXPORT KMTimer : public TQTimer
 {
 	Q_OBJECT
 public:

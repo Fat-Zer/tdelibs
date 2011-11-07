@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -D_KDEPRINT_COMPILE
+AM_CPPFLAGS = -D_TDEPRINT_COMPILE
 
 SUBDIRS = cupsdconf2
 
@@ -15,7 +15,7 @@ tdeprint_cups_la_SOURCES = cupsinfos.cpp ipprequest.cpp kmcupsfactory.cpp kmcups
 				  kptextpage.cpp kphpgl2page.cpp cupsaddsmb2.cpp kmwother.cpp ippreportdlg.cpp \
 				  kptagspage.cpp
 tdeprint_cups_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
-tdeprint_cups_la_LIBADD = $(top_builddir)/tdeprint/management/libtdeprint_management.la $(LIB_KIO) $(LIB_CUPS) $(LIB_QT) $(LIB_KDEPRINT) $(LIB_KDECORE) $(LIB_KDEUI)
+tdeprint_cups_la_LIBADD = $(top_builddir)/tdeprint/management/libtdeprint_management.la $(LIB_KIO) $(LIB_CUPS) $(LIB_QT) $(LIB_TDEPRINT) $(LIB_TDECORE) $(LIB_TDEUI)
 tdeprint_cups_la_METASOURCES = AUTO
 
 noinst_HEADERS = cupsinfos.h ipprequest.h kmcupsjobmanager.h kmcupsmanager.h kmcupsuimanager.h \

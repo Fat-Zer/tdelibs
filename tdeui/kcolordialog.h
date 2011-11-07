@@ -55,7 +55,7 @@ class KColorCells;
  * @see KXYSelector, KValueSelector, KColorDialog
  * @author Martin Jones (mjones@kde.org)
 */
-class KDEUI_EXPORT KHSSelector : public KXYSelector
+class TDEUI_EXPORT KHSSelector : public KXYSelector
 {
   Q_OBJECT
 
@@ -99,7 +99,7 @@ class KValueSelectorPrivate;
  * @see KHSSelector, KColorDialog
  * @author Martin Jones (mjones@kde.org)
  */
-class KDEUI_EXPORT KValueSelector : public KSelector
+class TDEUI_EXPORT KValueSelector : public KSelector
 {
   Q_OBJECT
 
@@ -161,7 +161,7 @@ private:
  *
  * @author Waldo Bastian <bastian@kde.org>
  **/
-class KDEUI_EXPORT KColor : public TQColor
+class TDEUI_EXPORT KColor : public TQColor
 {
 public:
   KColor();
@@ -195,7 +195,7 @@ private:
  *
  * @author Waldo Bastian <bastian@kde.org>
  **/
-class KDEUI_EXPORT KPaletteTable : public TQWidget
+class TDEUI_EXPORT KPaletteTable : public TQWidget
 {
   Q_OBJECT
 public:
@@ -250,7 +250,7 @@ private:
 *
 * @author Martin Jones <mjones@kde.org>
 */
-class KDEUI_EXPORT KColorCells : public TQGridView
+class TDEUI_EXPORT KColorCells : public TQGridView
 {
   Q_OBJECT
 public:
@@ -308,7 +308,7 @@ private:
  * automatically handles drag and drop from and on the widget.
  *
  */
-class KDEUI_EXPORT KColorPatch : public TQFrame
+class TDEUI_EXPORT KColorPatch : public TQFrame
 {
   Q_OBJECT
 public:
@@ -374,7 +374,7 @@ private:
  * the currently selected color is a KColorPatch.
  *
  **/
-class KDEUI_EXPORT KColorDialog : public KDialogBase
+class TDEUI_EXPORT KColorDialog : public KDialogBase
 {
   Q_OBJECT
 

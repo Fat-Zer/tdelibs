@@ -45,7 +45,7 @@ class KShortcut;
  *
  * @short Base class for accessing accelerator lists
  */
-class KDECORE_EXPORT KShortcutList
+class TDECORE_EXPORT KShortcutList
 {
  public:
         /**
@@ -195,7 +195,7 @@ class KGlobalAccel;
  * KShortcutList implementation to access KAccel and
  * KGlobalAccel lists.
  */
-class KDECORE_EXPORT KAccelShortcutList : public KShortcutList
+class TDECORE_EXPORT KAccelShortcutList : public KShortcutList
 {
  public:
         /**
@@ -260,7 +260,7 @@ namespace KStdAccel {
  * KShortcutList implementation that accesses KStdAccel
  * actions.
  */
-class KDECORE_EXPORT ShortcutList : public KShortcutList
+class TDECORE_EXPORT ShortcutList : public KShortcutList
 {
  public:
         /**

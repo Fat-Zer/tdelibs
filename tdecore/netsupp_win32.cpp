@@ -23,12 +23,12 @@
 
 #include "netsupp.h"
 
-KDECORE_EXPORT void kde_freeaddrinfo(struct kde_addrinfo *ai)
+TDECORE_EXPORT void kde_freeaddrinfo(struct kde_addrinfo *ai)
 {
 	//TODO
 }
 
-KDECORE_EXPORT int kde_getaddrinfo(const char *name, const char *service,
+TDECORE_EXPORT int kde_getaddrinfo(const char *name, const char *service,
 		    const struct addrinfo* hint,
 		    struct kde_addrinfo** result)
 {
@@ -37,7 +37,7 @@ KDECORE_EXPORT int kde_getaddrinfo(const char *name, const char *service,
 	return err;
 }
 
-KDECORE_EXPORT char *gai_strerror(int errorcode)
+TDECORE_EXPORT char *gai_strerror(int errorcode)
 {
   return 0;
 }
@@ -51,13 +51,13 @@ int getnameinfo(const struct sockaddr *sa,
 	return -1;
 }
 
-KDECORE_EXPORT const char* inet_ntop(int af, const void *cp, char *buf, size_t len)
+TDECORE_EXPORT const char* inet_ntop(int af, const void *cp, char *buf, size_t len)
 {
 	//TODO
 	return 0;
 }
 
-KDECORE_EXPORT int inet_pton(int af, const char *cp, void *buf)
+TDECORE_EXPORT int inet_pton(int af, const char *cp, void *buf)
 {
 	//TODO
 	return -1;

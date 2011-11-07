@@ -84,7 +84,7 @@ struct KPixmapIOPrivate;
  * point in using it.
  */
 
-class KDEUI_EXPORT KPixmapIO
+class TDEUI_EXPORT KPixmapIO
 {
 public:
     KPixmapIO();

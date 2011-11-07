@@ -33,7 +33,7 @@ typedef TQValueList<TQCString> QCStringList;
  * This means that programs which require a terminal will work.
  */
 
-class KDESU_EXPORT PtyProcess
+class TDESU_EXPORT PtyProcess
 {
 public:
     PtyProcess();

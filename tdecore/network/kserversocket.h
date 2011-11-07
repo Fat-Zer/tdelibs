@@ -104,7 +104,7 @@ class KServerSocketPrivate;
  * @see KNetwork::KStreamSocket, KNetwork::KBufferedSocket
  * @author Thiago Macieira <thiago@kde.org>
  */
-class KDECORE_EXPORT KServerSocket: public TQObject, public KPassiveSocketBase
+class TDECORE_EXPORT KServerSocket: public TQObject, public KPassiveSocketBase
 {
   Q_OBJECT
   TQ_OBJECT

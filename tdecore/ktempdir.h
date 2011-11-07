@@ -50,7 +50,7 @@ class KTempDirPrivate;
  * @since 3.2
  * @author Joseph Wenninger <jowenn@kde.org>
  */
-class KDECORE_EXPORT KTempDir
+class TDECORE_EXPORT KTempDir
 {
 public:
    /**

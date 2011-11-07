@@ -131,9 +131,9 @@ tde_add_executable( ${target} AUTOMOC
 
 set( target start_tdeinit )
 
-if( KDEINIT_SETUID )
+if( TDEINIT_SETUID )
   set( _setuid SETUID )
-endif( KDEINIT_SETUID )
+endif( TDEINIT_SETUID )
 
 tde_add_executable( ${target} ${_setuid}
   SOURCES start_tdeinit.c

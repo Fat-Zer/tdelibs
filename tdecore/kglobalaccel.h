@@ -42,7 +42,7 @@ class KGlobalAccelPrivate;
 * @see KKeyDialog
 * @short Configurable global shortcut support
 */
-class KDECORE_EXPORT KGlobalAccel : public TQObject
+class TDECORE_EXPORT KGlobalAccel : public TQObject
 {
 	Q_OBJECT
  public:

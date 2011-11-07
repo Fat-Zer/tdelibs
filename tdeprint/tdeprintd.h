@@ -17,8 +17,8 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#ifndef KDEPRINTD_H
-#define KDEPRINTD_H
+#ifndef TDEPRINTD_H
+#define TDEPRINTD_H
 
 #include <kdedmodule.h>
 #include <tqptrlist.h>

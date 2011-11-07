@@ -690,13 +690,13 @@
 #define KDEDIR "@KDEDIR@"
 
 /* Enable prevention against poor Linux OOM-killer */
-#cmakedefine KDEINIT_OOM_PROTECT 1
+#cmakedefine TDEINIT_OOM_PROTECT 1
 
 /* Use FontConfig in tdeinit */
-#cmakedefine KDEINIT_USE_FONTCONFIG 1
+#cmakedefine TDEINIT_USE_FONTCONFIG 1
 
 /* Use Xft preinitialization in tdeinit */
-#cmakedefine KDEINIT_USE_XFT 1
+#cmakedefine TDEINIT_USE_XFT 1
 
 /* Suffix for lib directories */
 #define KDELIBSUFF "@KDELIBSUFF@"

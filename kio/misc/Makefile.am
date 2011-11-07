@@ -29,7 +29,7 @@ bin_PROGRAMS = kmailservice ktelnetservice
 observer_DIR = $(top_srcdir)/kio/kio
 
 kio_uiserver_la_SOURCES = uiserver.cpp uiserver.skel observer.stub
-kio_uiserver_la_LIBADD = $(LIB_KIO) $(LIB_KDEUI) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_KDECORE)
+kio_uiserver_la_LIBADD = $(LIB_KIO) $(LIB_TDEUI) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE)
 kio_uiserver_la_LDFLAGS = $(all_libraries) -module -avoid-version
 
 METASOURCES = AUTO
@@ -37,12 +37,12 @@ METASOURCES = AUTO
 kde_services_DATA = kio_uiserver.desktop
 
 kmailservice_SOURCES = kmailservice.cpp
-kmailservice_LDADD = $(LIB_KDECORE)
-kmailservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kmailservice_LDADD = $(LIB_TDECORE)
+kmailservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 ktelnetservice_SOURCES = ktelnetservice.cpp
-ktelnetservice_LDADD = $(LIB_KDEUI)
-ktelnetservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+ktelnetservice_LDADD = $(LIB_TDEUI)
+ktelnetservice_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 protocol_DATA = kmailservice.protocol telnet.protocol rlogin.protocol rtsp.protocol ssh.protocol \
 		mms.protocol mmst.protocol mmsu.protocol pnm.protocol rtspt.protocol rtspu.protocol

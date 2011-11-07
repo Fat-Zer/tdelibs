@@ -32,7 +32,7 @@ class KMPrinter;
 class KMManager;
 class TQWidget;
 
-class KDEPRINT_EXPORT KMVirtualManager : public TQObject, public KPReloadObject
+class TDEPRINT_EXPORT KMVirtualManager : public TQObject, public KPReloadObject
 {
 public:
 	KMVirtualManager(KMManager *parent = 0, const char *name = 0);

@@ -12,7 +12,7 @@
 add_subdirectory( cupsdconf2 )
 
 add_definitions(
-  -D_KDEPRINT_COMPILE
+  -D_TDEPRINT_COMPILE
 )
 
 include_directories(

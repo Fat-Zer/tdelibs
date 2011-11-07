@@ -38,7 +38,7 @@ class TQPixmap;
  *  @author Chris Howells (howells@kde.org)
  *  @since 3.2
  */
-class KDEUI_EXPORT KSplashScreen : public TQSplashScreen
+class TDEUI_EXPORT KSplashScreen : public TQSplashScreen
 {
   Q_OBJECT
 

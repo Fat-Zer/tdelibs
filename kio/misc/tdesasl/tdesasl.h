@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDESASL_H
-#define KDESASL_H
+#ifndef TDESASL_H
+#define TDESASL_H
 
 #include <tqstring.h>
 

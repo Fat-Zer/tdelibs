@@ -48,7 +48,7 @@ class KCharSelectPrivate;
  * @author Reginald Stadlbauer <reggie@kde.org>
  */
 
-class KDEUI_EXPORT KCharSelectTable : public TQGridView
+class TDEUI_EXPORT KCharSelectTable : public TQGridView
 {
     Q_OBJECT
 
@@ -137,7 +137,7 @@ private:
  * @author Reginald Stadlbauer <reggie@kde.org>
  */
 
-class KDEUI_EXPORT KCharSelect : public TQVBox
+class TDEUI_EXPORT KCharSelect : public TQVBox
 {
     Q_OBJECT
     Q_PROPERTY( TQString fontFamily READ font WRITE setFont )

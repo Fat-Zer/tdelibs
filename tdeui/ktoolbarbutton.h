@@ -41,7 +41,7 @@ class TQPainter;
  * KToolBar methods instead.
  * @internal
  */
-class KDEUI_EXPORT KToolBarButton : public TQToolButton
+class TDEUI_EXPORT KToolBarButton : public TQToolButton
 {
   Q_OBJECT
   TQ_OBJECT
@@ -321,7 +321,7 @@ private:
 * @internal
 * @version $Id$
 */
-class KDEUI_EXPORT KToolBarButtonList : public TQIntDict<KToolBarButton>
+class TDEUI_EXPORT KToolBarButtonList : public TQIntDict<KToolBarButton>
 {
 public:
    KToolBarButtonList();

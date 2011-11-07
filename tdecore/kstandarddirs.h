@@ -122,7 +122,7 @@ class KStandardDirsPrivate;
  *
  * @see KGlobalSettings
  */
-class KDECORE_EXPORT KStandardDirs
+class TDECORE_EXPORT KStandardDirs
 {
 public:
         /**
@@ -700,7 +700,7 @@ public:
  * This function is just for convenience. It simply calls
  *instance->dirs()->\link KStandardDirs::findResource() findResource\endlink(type, filename).
  **/
-KDECORE_EXPORT TQString locate( const char *type, const TQString& filename, const KInstance* instance = KGlobal::instance() );
+TDECORE_EXPORT TQString locate( const char *type, const TQString& filename, const KInstance* instance = KGlobal::instance() );
 
 /*!
  * \relates KStandardDirs
@@ -711,7 +711,7 @@ KDECORE_EXPORT TQString locate( const char *type, const TQString& filename, cons
  * specific file, filename must have a trailing slash.
  *
  **/
-KDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename, const KInstance* instance = KGlobal::instance() );
+TDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename, const KInstance* instance = KGlobal::instance() );
 
 /*!
  * \relates KStandardDirs
@@ -722,7 +722,7 @@ KDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename,
  * filename must have a trailing slash.
  *
  **/
-KDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename, bool createDir, const KInstance* instance = KGlobal::instance() );
+TDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename, bool createDir, const KInstance* instance = KGlobal::instance() );
 
 /*! @} */
 

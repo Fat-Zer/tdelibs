@@ -33,7 +33,7 @@ class KIconPrivate;
  * @see KIconTheme
  * @see KIconLoader
  */
-class KDECORE_EXPORT KIcon
+class TDECORE_EXPORT KIcon
 {
 public:
     KIcon() { size = 0; }
@@ -184,7 +184,7 @@ inline KIcon::Group operator++(KIcon::Group& group,int) { KIcon::Group ret = gro
  * iconloader but can be used by others too.
  * @see KIconLoader
  */
-class KDECORE_EXPORT KIconTheme
+class TDECORE_EXPORT KIconTheme
 {
 public:
     /**

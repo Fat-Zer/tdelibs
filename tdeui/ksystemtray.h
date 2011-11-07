@@ -60,7 +60,7 @@ class KSystemTrayPrivate;
  *
  * @author Matthias Ettrich <ettrich@kde.org>
  **/
-class KDEUI_EXPORT KSystemTray : public TQLabel
+class TDEUI_EXPORT KSystemTray : public TQLabel
 {
     Q_OBJECT
 public:

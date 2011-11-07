@@ -29,7 +29,7 @@ typedef TQValueList<TQCString> QCStringList;
  * StubProcess extends PtyProcess with functionality to chat with tdesu_stub.
  */
 
-class KDESU_EXPORT StubProcess: public PtyProcess
+class TDESU_EXPORT StubProcess: public PtyProcess
 {
 public:
     StubProcess();

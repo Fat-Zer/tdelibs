@@ -40,7 +40,7 @@
  * A custom drawing routine for the widget surface has
  * to be provided by the subclass.
  */
-class KDEUI_EXPORT KXYSelector : public TQWidget
+class TDEUI_EXPORT KXYSelector : public TQWidget
 {
   Q_OBJECT
   Q_PROPERTY( int xValue READ xValue WRITE setXValue )
@@ -156,7 +156,7 @@ private:
  * A custom drawing routine for the widget surface has
  * to be provided by the subclass.
  */
-class KDEUI_EXPORT KSelector : public TQWidget, public TQRangeControl
+class TDEUI_EXPORT KSelector : public TQWidget, public TQRangeControl
 {
   Q_OBJECT
   Q_PROPERTY( int value READ value WRITE setValue )
@@ -290,7 +290,7 @@ private:
  * \image html kgradientselector.png "KDE Gradient Selector Widget"
  *
  **/
-class KDEUI_EXPORT KGradientSelector : public KSelector
+class TDEUI_EXPORT KGradientSelector : public KSelector
 {
   Q_OBJECT
 

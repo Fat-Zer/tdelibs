@@ -35,7 +35,7 @@ class KSwitchLanguageDialogPrivate;
  * @author Krzysztof Lichota (lichota@mimuw.edu.pl)
  */
 
-class KDEUI_EXPORT KSwitchLanguageDialog : public KDialogBase
+class TDEUI_EXPORT KSwitchLanguageDialog : public KDialogBase
 {
   Q_OBJECT
 

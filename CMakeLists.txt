@@ -101,8 +101,8 @@ endif( ${CMAKE_SYSTEM_PROCESSOR} MATCHES "i?86" OR ${CMAKE_SYSTEM_PROCESSOR} STR
 ##### check for operating system ################
 
 if( ${CMAKE_SYSTEM_NAME} STREQUAL "Linux" )
-  set( KDEINIT_SETUID 1 )
-  set( KDEINIT_OOM_PROTECT 1 )
+  set( TDEINIT_SETUID 1 )
+  set( TDEINIT_OOM_PROTECT 1 )
 endif( ${CMAKE_SYSTEM_NAME} STREQUAL "Linux" )
 
 
@@ -408,13 +408,13 @@ endif( __PATH_SU )
 # FIXME for unknown reason cmake cannot find sudo
 # find_program( __PATH_SUDO "sudo" )
 set( __PATH_SUDO "/usr/bin/sudo" )
-if( WITH_SUDO_KDESU_BACKEND )
+if( WITH_SUDO_TDESU_BACKEND )
   if( __PATH_SUDO )
     set( DEFAULT_SUPER_USER_COMMAND ${__PATH_SUDO} )
   else( __PATH_SUDO )
     message( FATAL_ERROR "sudo was chosen as tdesu backend, but was not found in path." )
   endif( __PATH_SUDO )
-endif( WITH_SUDO_KDESU_BACKEND )
+endif( WITH_SUDO_TDESU_BACKEND )
 
 
 #### set some constants #########################
@@ -533,7 +533,7 @@ if( NOT FREETYPE_FOUND )
     message(FATAL_ERROR "\nfreetype2 are required, but not found on your system" )
 endif( NOT FREETYPE_FOUND )
 
-set( KDEINIT_USE_FONTCONFIG 1 )
+set( TDEINIT_USE_FONTCONFIG 1 )
 
 
 ##### check for fontconfig ######################
@@ -629,12 +629,12 @@ endif( WITH_ARTS )
 
 ##### check for Xft #############################
 
-if( KDEINIT_USE_XFT )
+if( TDEINIT_USE_XFT )
   pkg_search_module( XFT xft )
   if( NOT XFT_FOUND )
       message(FATAL_ERROR "\nXft are required, but not found on your system" )
   endif( NOT XFT_FOUND )
-endif( KDEINIT_USE_XFT )
+endif( TDEINIT_USE_XFT )
 
 
 ##### check for libart ##########################

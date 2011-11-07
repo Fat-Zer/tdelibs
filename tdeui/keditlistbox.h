@@ -41,7 +41,7 @@ class KEditListBoxPrivate;
  * \image html keditlistbox.png "KDE Edit List Box Widget"
  *
  */
-class KDEUI_EXPORT KEditListBox : public TQGroupBox
+class TDEUI_EXPORT KEditListBox : public TQGroupBox
 {
    Q_OBJECT
    TQ_OBJECT
@@ -247,25 +247,25 @@ public:
     class CustomEditor
     {
     public:
-        KDEUI_EXPORT CustomEditor()
+        TDEUI_EXPORT CustomEditor()
             : m_representationWidget( 0L ),
               m_lineEdit( 0L ) {}
-        KDEUI_EXPORT CustomEditor( TQWidget *repWidget, KLineEdit *edit )
+        TDEUI_EXPORT CustomEditor( TQWidget *repWidget, KLineEdit *edit )
             : m_representationWidget( repWidget ),
               m_lineEdit( edit ) {}
-        KDEUI_EXPORT CustomEditor( KComboBox *combo );
+        TDEUI_EXPORT CustomEditor( KComboBox *combo );
 
-        KDEUI_EXPORT void setRepresentationWidget( TQWidget *repWidget ) {
+        TDEUI_EXPORT void setRepresentationWidget( TQWidget *repWidget ) {
             m_representationWidget = repWidget;
         }
-        KDEUI_EXPORT void setLineEdit( KLineEdit *edit ) {
+        TDEUI_EXPORT void setLineEdit( KLineEdit *edit ) {
             m_lineEdit = edit;
         }
 
-        KDEUI_EXPORT virtual TQWidget   *representationWidget() const {
+        TDEUI_EXPORT virtual TQWidget   *representationWidget() const {
             return m_representationWidget;
         }
-        KDEUI_EXPORT  virtual KLineEdit *lineEdit() const {
+        TDEUI_EXPORT  virtual KLineEdit *lineEdit() const {
             return m_lineEdit;
         }
 

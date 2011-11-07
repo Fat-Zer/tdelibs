@@ -39,7 +39,7 @@ class KCalendarSystemPrivate;
  * @author Carlos Moro <cfmoro@correo.uniovi.es>
  * @since 3.2
  */
-class KDECORE_EXPORT KCalendarSystem
+class TDECORE_EXPORT KCalendarSystem
 {
 public:
   /**

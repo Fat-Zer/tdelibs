@@ -45,7 +45,7 @@ class TQBitmap;
  *
  * @author Daniel M. Duley <mosfet@kde.org>
  */
-class KDEUI_EXPORT KDualColorButton : public TQWidget
+class TDEUI_EXPORT KDualColorButton : public TQWidget
 {
     Q_OBJECT
     Q_ENUMS( DualColor )

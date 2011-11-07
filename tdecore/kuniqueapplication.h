@@ -45,7 +45,7 @@ class KUniqueApplicationPrivate;
  * @see KApplication DCOPObject
  * @author Preston Brown <pbrown@kde.org>
  */
-class KDECORE_EXPORT KUniqueApplication : public KApplication, public DCOPObject
+class TDECORE_EXPORT KUniqueApplication : public KApplication, public DCOPObject
 {
   Q_OBJECT
 public:

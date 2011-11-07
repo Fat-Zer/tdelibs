@@ -32,7 +32,7 @@
  *
  * @author Malte Starostik <malte@kde.org>
  */
-class KDEUI_EXPORT KFontCombo : public KComboBox
+class TDEUI_EXPORT KFontCombo : public KComboBox
 {
     Q_OBJECT
     Q_PROPERTY(TQString family READ currentFont WRITE setCurrentFont)

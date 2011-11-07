@@ -31,7 +31,7 @@ namespace KIDNA {
      *
      * If conversion is not possible, an empty string is returned.
      */
-    KDECORE_EXPORT TQCString toAsciiCString(const TQString &idna);
+    TDECORE_EXPORT TQCString toAsciiCString(const TQString &idna);
 
     /**
      * Converts an International Domain Name @p idna to 
@@ -39,13 +39,13 @@ namespace KIDNA {
      *
      * If conversion is not possible, an empty string is returned.
      */
-    KDECORE_EXPORT TQString toAscii(const TQString &idna);
+    TDECORE_EXPORT TQString toAscii(const TQString &idna);
 
     /**
      * Converts an International Domain Name @p idna to 
      * its UNICODE representation
      */
-    KDECORE_EXPORT TQString toUnicode(const TQString &idna);
+    TDECORE_EXPORT TQString toUnicode(const TQString &idna);
 }
 
 #endif /* _KIDNA_H */

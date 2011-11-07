@@ -55,11 +55,11 @@ static TQString	pass_string;
 extern "C"
 {
 #include "cups-util.h"
-	KDEPRINT_EXPORT bool restartServer(TQString& msg)
+	TDEPRINT_EXPORT bool restartServer(TQString& msg)
 	{
 		return CupsdDialog::restartServer(msg);
 	}
-	KDEPRINT_EXPORT bool configureServer(TQWidget *parent, TQString& msg)
+	TDEPRINT_EXPORT bool configureServer(TQWidget *parent, TQString& msg)
 	{
 		dynamically_loaded = true;
 		bool result = CupsdDialog::configure(TQString::null, parent, &msg);

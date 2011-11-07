@@ -33,7 +33,7 @@ class KLocale;
  * @author Carlos Moro <cfmoro@correo.uniovi.es>
  * @since 3.2
  */
-class KDECORE_EXPORT KCalendarSystemFactory
+class TDECORE_EXPORT KCalendarSystemFactory
 {
 public:
   KCalendarSystemFactory ();

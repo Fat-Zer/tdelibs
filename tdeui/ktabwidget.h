@@ -33,7 +33,7 @@ class KTabWidgetPrivate;
  *
  * @since 3.2
  */
-class KDEUI_EXPORT KTabWidget : public TQTabWidget
+class TDEUI_EXPORT KTabWidget : public TQTabWidget
 {
     Q_OBJECT
     Q_PROPERTY( bool tabReorderingEnabled READ isTabReorderingEnabled WRITE setTabReorderingEnabled )

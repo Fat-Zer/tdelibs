@@ -37,7 +37,7 @@
  *
  * @author Waldo Bastian <bastian@kde.org>
  */
-class KDECORE_EXPORT KShared {
+class TDECORE_EXPORT KShared {
 public:
    /**
     * Standard constructor.  This will initialize the reference count

@@ -32,7 +32,7 @@ libkio_la_LIBADD = kssl/libkssl.la kio/libkiocore.la \
 	kio/libksycoca.la bookmarks/libkbookmarks.la kfile/libkfile.la \
 	../tdeui/libtdeui.la ../tdesu/libtdesu.la \
 	../kwallet/client/libkwalletclient.la \
-	$(LIBZ) $(LIBFAM) $(LIBVOLMGT) $(ACL_LIBS) $(LIB_QT) $(LIB_KDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
+	$(LIBZ) $(LIBFAM) $(LIBVOLMGT) $(ACL_LIBS) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 
 kde_mime_DATA = magic
 kde_servicetypes_DATA = application.desktop kurifilterplugin.desktop \

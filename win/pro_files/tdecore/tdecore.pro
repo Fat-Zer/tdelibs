@@ -5,7 +5,7 @@ include( $(KDELIBS)/win/common.pro )
 include( $(KDELIBS)/win/zlib.pro )
 
 # needed to export library classes:
-DEFINES += MAKE_KDECORE_LIB
+DEFINES += MAKE_TDECORE_LIB
 
 LIBS += $$KDELIBDESTDIR/dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR/tdefx$$KDELIB_SUFFIX \
 	-lqassistantclient

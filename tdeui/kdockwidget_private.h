@@ -41,9 +41,9 @@ class KDockContainer;
  *
  * @author Max Judin.
  */
-class KDEUI_EXPORT KDockSplitter : public TQWidget
+class TDEUI_EXPORT KDockSplitter : public TQWidget
 {
-  // NOTE: in theory the KDEUI_EXPORT above shouldn't be there, but it's needed for kexi,
+  // NOTE: in theory the TDEUI_EXPORT above shouldn't be there, but it's needed for kexi,
   // which copies the whole definition of the class to be able to access separatorPosInPercent etc. 
   // This needs real fixing in KDE4.
   
@@ -245,7 +245,7 @@ private:
  *
  * @author Max Judin.
 */
-class KDEUI_EXPORT KDockButton_Private : public TQPushButton
+class TDEUI_EXPORT KDockButton_Private : public TQPushButton
 {
   Q_OBJECT
 public:

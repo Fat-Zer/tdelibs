@@ -25,7 +25,7 @@
 
 #include <kdelibs_export.h>
 
-struct KDEPRINT_EXPORT KMDBEntry
+struct TDEPRINT_EXPORT KMDBEntry
 {
 	// the file location of the driver
 	TQString	file;

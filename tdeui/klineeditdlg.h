@@ -37,7 +37,7 @@ class TQValidator;
  * @author David Faure <faure@kde.org>, layout management by Preston Brown <pbrown@kde.org>
  */
 
-class KDEUI_EXPORT_DEPRECATED KLineEditDlg : public KDialogBase
+class TDEUI_EXPORT_DEPRECATED KLineEditDlg : public KDialogBase
 {
   Q_OBJECT
 public:

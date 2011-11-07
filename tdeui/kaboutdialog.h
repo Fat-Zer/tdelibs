@@ -47,7 +47,7 @@ class KAboutContainerPrivate;
 /**
  *  KAboutContainer can be used to make a application specific AboutDialog.
  */
-class KDEUI_EXPORT KAboutContainer : public TQFrame
+class TDEUI_EXPORT KAboutContainer : public TQFrame
 {
   Q_OBJECT
 
@@ -89,7 +89,7 @@ class KAboutContributorPrivate;
  * Used internally by KAboutWidget
  * @internal
  */
-class KDEUI_EXPORT KAboutContributor : public TQFrame
+class TDEUI_EXPORT KAboutContributor : public TQFrame
 {
   Q_OBJECT
 
@@ -147,7 +147,7 @@ class KDEUI_EXPORT KAboutContributor : public TQFrame
  *
  * It has a minimum size set.
  */
-class KDEUI_EXPORT KAboutWidget : public TQWidget
+class TDEUI_EXPORT KAboutWidget : public TQWidget
 {
   Q_OBJECT
 
@@ -280,7 +280,7 @@ class KAboutDialogPrivate;
  * @author Mirko Boehm (mirko@kde.org) and Espen Sand (espensa@online.no)
  * @see KDialogBase
  */
-class KDEUI_EXPORT KAboutDialog : public KDialogBase
+class TDEUI_EXPORT KAboutDialog : public KDialogBase
 {
   Q_OBJECT
 

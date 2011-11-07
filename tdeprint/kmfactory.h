@@ -42,7 +42,7 @@ class KLibFactory;
 class KConfig;
 class KPReloadObject;
 
-class KDEPRINT_EXPORT KMFactory : public TQObject, public DCOPObject
+class TDEPRINT_EXPORT KMFactory : public TQObject, public DCOPObject
 {
 	Q_OBJECT
 	K_DCOP

@@ -37,7 +37,7 @@ class TQString;
  * @since 3.1
 */
 
-class KDECORE_EXPORT KAcceleratorManager
+class TDECORE_EXPORT KAcceleratorManager
 {
 public:
 

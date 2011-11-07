@@ -121,4 +121,4 @@ tde_add_library( ${target} SHARED AUTOMOC
   DESTINATION ${LIB_INSTALL_DIR}
 )
 
-set_target_properties( ${target}-shared PROPERTIES COMPILE_FLAGS -D_KDEPRINT_COMPILE )
+set_target_properties( ${target}-shared PROPERTIES COMPILE_FLAGS -D_TDEPRINT_COMPILE )

@@ -17,15 +17,15 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#ifndef KDEPRINTCHECK_H
-#define KDEPRINTCHECK_H
+#ifndef TDEPRINTCHECK_H
+#define TDEPRINTCHECK_H
 
 #include <tqstring.h>
 #include <tqstringlist.h>
 #include <kconfig.h>
 #include <kurl.h>
 
-class KDEPRINT_EXPORT KdeprintChecker
+class TDEPRINT_EXPORT KdeprintChecker
 {
 public:
 	static bool check(KConfig *conf, const TQString& group = TQString::null);

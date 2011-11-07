@@ -37,7 +37,7 @@ namespace KNetwork {
  *
  * @warning This code is untested!
  */
-class KDECORE_EXPORT KSocksSocketDevice: public KSocketDevice
+class TDECORE_EXPORT KSocksSocketDevice: public KSocketDevice
 {
 public:
   /** 

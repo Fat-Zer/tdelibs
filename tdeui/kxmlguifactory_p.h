@@ -36,7 +36,7 @@ namespace KXMLGUI
 
 struct BuildState;
 
-class KDEUI_EXPORT ActionList : public TQPtrList<KAction>
+class TDEUI_EXPORT ActionList : public TQPtrList<KAction>
 {
 public:
     ActionList() {}
@@ -107,7 +107,7 @@ typedef TQValueList<MergingIndex> MergingIndexList;
  * position.
  * (used when no merging index is used for a certain action, custom element or sub-container)
  */
-struct KDEUI_EXPORT ContainerNode
+struct TDEUI_EXPORT ContainerNode
 {
     ContainerNode( TQWidget *_container, const TQString &_tagName, const TQString &_name,
                    ContainerNode *_parent = 0L, KXMLGUIClient *_client = 0L,
@@ -178,7 +178,7 @@ struct KDEUI_EXPORT ContainerNode
 typedef TQPtrList<ContainerNode> ContainerNodeList;
 typedef TQPtrListIterator<ContainerNode> ContainerNodeListIt;
 
-class KDEUI_EXPORT BuildHelper
+class TDEUI_EXPORT BuildHelper
 {
 public:
     BuildHelper( BuildState &state, 
@@ -220,7 +220,7 @@ private:
     ContainerNode *parentNode;
 };
 
-struct KDEUI_EXPORT BuildState
+struct TDEUI_EXPORT BuildState
 {
     BuildState() : guiClient( 0 ), builder( 0 ), clientBuilder( 0 ) {}
 

@@ -32,7 +32,7 @@ class KStatusBar;
  *  Internal label class for use in KStatusBar
  *  @internal
  */
-class KDEUI_EXPORT KStatusBarLabel : public TQLabel
+class TDEUI_EXPORT KStatusBarLabel : public TQLabel
 {
   Q_OBJECT
 
@@ -84,7 +84,7 @@ signals:
 
  *  @see KActionCollection
  */
-class KDEUI_EXPORT KStatusBar : public TQStatusBar
+class TDEUI_EXPORT KStatusBar : public TQStatusBar
 {
   Q_OBJECT
 

@@ -36,7 +36,7 @@ class KAction;
  * This class can generate DCOP object ids for given action objects, which it automatically
  * processes, as being a DCOPObjectProxy .
  */
-class KDEUI_EXPORT KDCOPActionProxy : public DCOPObjectProxy
+class TDEUI_EXPORT KDCOPActionProxy : public DCOPObjectProxy
 {
 public:
   /**

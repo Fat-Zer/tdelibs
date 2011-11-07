@@ -25,11 +25,11 @@
 
 #define KDE_IMPORT __declspec(dllimport)
 
-#ifdef MAKE_KDECORE_LIB
-# define KDECORE_EXPORT KDE_EXPORT
+#ifdef MAKE_TDECORE_LIB
+# define TDECORE_EXPORT KDE_EXPORT
 #else
-# ifndef KDECORE_EXPORT
-#  define KDECORE_EXPORT KDE_IMPORT //for apps and other libs
+# ifndef TDECORE_EXPORT
+#  define TDECORE_EXPORT KDE_IMPORT //for apps and other libs
 # endif
 #endif
 
@@ -40,27 +40,27 @@
 #endif
 
 /* some classes, i.e. KDock* already use EXPORT_* macro: define it too */
-#ifdef MAKE_KDEUI_LIB
-# define KDEUI_EXPORT KDE_EXPORT
+#ifdef MAKE_TDEUI_LIB
+# define TDEUI_EXPORT KDE_EXPORT
 # define EXPORT_DOCKCLASS KDE_EXPORT
 #elif KDE_MAKE_LIB
-# define KDEUI_EXPORT KDE_IMPORT
+# define TDEUI_EXPORT KDE_IMPORT
 # define EXPORT_DOCKCLASS KDE_IMPORT /* for library build export docklass by default */
 #else
-# define KDEUI_EXPORT
+# define TDEUI_EXPORT
 # define EXPORT_DOCKCLASS
 #endif
 
-#ifdef MAKE_KDEFX_LIB
-# define KDEFX_EXPORT  KDE_EXPORT
+#ifdef MAKE_TDEFX_LIB
+# define TDEFX_EXPORT  KDE_EXPORT
 #else
-# define KDEFX_EXPORT KDE_IMPORT
+# define TDEFX_EXPORT KDE_IMPORT
 #endif
 
-#ifdef MAKE_KDEPRINT_LIB
-# define KDEPRINT_EXPORT  KDE_EXPORT
+#ifdef MAKE_TDEPRINT_LIB
+# define TDEPRINT_EXPORT  KDE_EXPORT
 #else
-# define KDEPRINT_EXPORT KDE_IMPORT
+# define TDEPRINT_EXPORT KDE_IMPORT
 #endif
 
 #ifndef KIO_EXPORT
@@ -108,10 +108,10 @@
 # define KRESOURCES_EXPORT KDE_IMPORT
 #endif
 
-#ifdef MAKE_KDESU_LIB
-# define KDESU_EXPORT KDE_EXPORT
+#ifdef MAKE_TDESU_LIB
+# define TDESU_EXPORT KDE_EXPORT
 #else
-# define KDESU_EXPORT KDE_IMPORT
+# define TDESU_EXPORT KDE_IMPORT
 #endif
 
 // all KStyle libs

@@ -97,7 +97,7 @@ public:
    * the whole URL.
    */
  static bool isKnownProtocol( const TQString& protocol )
-#ifdef KPROTOCOLINFO_KDECORE
+#ifdef KPROTOCOLINFO_TDECORE
   KDE_WEAK_SYMBOL
 #endif
   ;
@@ -226,7 +226,7 @@ public:
    * the whole URL.
    */
  static bool isHelperProtocol( const TQString& protocol )
-#ifdef KPROTOCOLINFO_KDECORE
+#ifdef KPROTOCOLINFO_TDECORE
   KDE_WEAK_SYMBOL
 #endif
   ;
@@ -254,7 +254,7 @@ public:
    * the whole URL.
    */
   static bool isFilterProtocol( const TQString& protocol )
-#ifdef KPROTOCOLINFO_KDECORE
+#ifdef KPROTOCOLINFO_TDECORE
   KDE_WEAK_SYMBOL
 #endif
   ;

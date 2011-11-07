@@ -55,7 +55,7 @@ class KXMLGUIClient;
 
 class KToolBarPrivate;
 
-class KDEUI_EXPORT KToolBarSeparator : public TQFrame
+class TDEUI_EXPORT KToolBarSeparator : public TQFrame
 {
     Q_OBJECT
     TQ_OBJECT
@@ -101,7 +101,7 @@ private:
   * @author Reginald Stadlbauer <reggie@kde.org>, Stephan Kulow <coolo@kde.org>, Sven Radej <radej@kde.org>.
   */
 
-class KDEUI_EXPORT KToolBar : public TQToolBar
+class TDEUI_EXPORT KToolBar : public TQToolBar
 {
     Q_OBJECT
     TQ_OBJECT

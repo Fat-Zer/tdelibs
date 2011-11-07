@@ -39,7 +39,7 @@ class KAsyncIOPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short Asynchronous I/O support
  */
-class KDECORE_EXPORT KAsyncIO:
+class TDECORE_EXPORT KAsyncIO:
 #ifdef USE_QT4
 #else // USE_QT4
 public TQObject,

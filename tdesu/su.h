@@ -23,7 +23,7 @@
  * Executes a command under elevated privileges, using su.
  */
 
-class KDESU_EXPORT SuProcess: public StubProcess
+class TDESU_EXPORT SuProcess: public StubProcess
 {
 public:
     SuProcess(const TQCString &user=0, const TQCString &command=0);

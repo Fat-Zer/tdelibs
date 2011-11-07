@@ -28,7 +28,7 @@
 class TQComboBox;
 class TQLabel;
 
-class KDEPRINT_EXPORT PluginComboBox : public TQWidget, public KPReloadObject
+class TDEPRINT_EXPORT PluginComboBox : public TQWidget, public KPReloadObject
 {
 	Q_OBJECT
 public:

@@ -28,7 +28,7 @@
 class DrBase;
 class DrMain;
 
-class KDEPRINT_EXPORT Foomatic2Loader
+class TDEPRINT_EXPORT Foomatic2Loader
 {
 public:
 	Foomatic2Loader();

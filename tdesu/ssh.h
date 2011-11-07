@@ -23,7 +23,7 @@
  * Executes a remote command, using ssh.
  */
 
-class KDESU_EXPORT SshProcess: public StubProcess
+class TDESU_EXPORT SshProcess: public StubProcess
 {
 public:
     SshProcess(const TQCString &host=0, const TQCString &user=0, const TQCString &command=0);

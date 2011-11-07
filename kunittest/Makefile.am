@@ -4,14 +4,14 @@ METASOURCES = AUTO
 lib_LTLIBRARIES = libkunittest.la
 libkunittest_la_SOURCES = runner.cpp tester.cpp
 libkunittest_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0:0
-libkunittest_la_LIBADD = $(LIB_KDECORE) $(LIB_QT)
+libkunittest_la_LIBADD = $(LIB_TDECORE) $(LIB_QT)
 
 libkunittestinclude_HEADERS = runner.h tester.h module.h
 libkunittestincludedir = $(includedir)/kunittest
 
 bin_PROGRAMS = kunittestmodrunner
-kunittestmodrunner_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-kunittestmodrunner_LDADD = libkunittest.la $(LIB_KDECORE)
+kunittestmodrunner_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kunittestmodrunner_LDADD = libkunittest.la $(LIB_TDECORE)
 kunittestmodrunner_SOURCES = modrunner.cpp
 
 # The check_ target makes sure we don't install the modules,

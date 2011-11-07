@@ -57,7 +57,7 @@
  *
  * @author Marc Mutz <mutz@kde.org>
  **/
-class KDEUI_EXPORT KStringListValidator : public TQValidator {
+class TDEUI_EXPORT KStringListValidator : public TQValidator {
   Q_OBJECT
   Q_PROPERTY( TQStringList stringList READ stringList WRITE setStringList )
   Q_PROPERTY( bool rejecting READ isRejecting WRITE setRejecting )
@@ -116,7 +116,7 @@ private:
  *
  * @author Marc Mutz <mutz@kde.org>
  **/
-class KDEUI_EXPORT KMimeTypeValidator : public TQValidator
+class TDEUI_EXPORT KMimeTypeValidator : public TQValidator
 {
   Q_OBJECT
 public:

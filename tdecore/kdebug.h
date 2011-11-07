@@ -77,7 +77,7 @@ class kdbgstreamprivate;
  * \endcode
  * @see kndbgstream
  */
-class KDECORE_EXPORT kdbgstream {
+class TDECORE_EXPORT kdbgstream {
  public:
   /**
    * @internal
@@ -437,7 +437,7 @@ inline kdbgstream &endl( kdbgstream &s) { s << "\n"; return s; }
  */
 inline kdbgstream &flush( kdbgstream &s) { s.flush(); return s; }
 
-KDECORE_EXPORT kdbgstream &perror( kdbgstream &s);
+TDECORE_EXPORT kdbgstream &perror( kdbgstream &s);
 
 /**
  * \relates KGlobal
@@ -445,7 +445,7 @@ KDECORE_EXPORT kdbgstream &perror( kdbgstream &s);
  * nothing.
  * @see kndDebug()
  */
-class KDECORE_EXPORT kndbgstream {
+class TDECORE_EXPORT kndbgstream {
  public:
     /// Default constructor.
     kndbgstream() {}
@@ -596,14 +596,14 @@ inline kndbgstream &perror( kndbgstream & s) { return s; }
  * @param area an id to identify the output, 0 for default
  * @see kndDebug()
  */
-KDECORE_EXPORT kdbgstream kdDebug(int area = 0);
-KDECORE_EXPORT kdbgstream kdDebug(bool cond, int area = 0);
+TDECORE_EXPORT kdbgstream kdDebug(int area = 0);
+TDECORE_EXPORT kdbgstream kdDebug(bool cond, int area = 0);
 /**
  * \relates KGlobal
  * Returns a backtrace.
  * @return a backtrace
  */
-KDECORE_EXPORT TQString kdBacktrace();
+TDECORE_EXPORT TQString kdBacktrace();
 /**
  * \relates KGlobal
  * Returns a backtrace.
@@ -611,7 +611,7 @@ KDECORE_EXPORT TQString kdBacktrace();
  * @return a backtrace
  * @since 3.1
  */
-KDECORE_EXPORT TQString kdBacktrace(int levels);
+TDECORE_EXPORT TQString kdBacktrace(int levels);
 /**
  * Returns a dummy debug stream. The stream does not print anything.
  * @param area an id to identify the output, 0 for default
@@ -628,31 +628,31 @@ inline TQString kndBacktrace(int) { return TQString::null; }
  * information.
  * @param area an id to identify the output, 0 for default
  */
-KDECORE_EXPORT kdbgstream kdWarning(int area = 0);
-KDECORE_EXPORT kdbgstream kdWarning(bool cond, int area = 0);
+TDECORE_EXPORT kdbgstream kdWarning(int area = 0);
+TDECORE_EXPORT kdbgstream kdWarning(bool cond, int area = 0);
 /**
  * \relates KGlobal
  * Returns an error stream. You can use it to print error
  * information.
  * @param area an id to identify the output, 0 for default
  */
-KDECORE_EXPORT kdbgstream kdError(int area = 0);
-KDECORE_EXPORT kdbgstream kdError(bool cond, int area = 0);
+TDECORE_EXPORT kdbgstream kdError(int area = 0);
+TDECORE_EXPORT kdbgstream kdError(bool cond, int area = 0);
 /**
  * \relates KGlobal
  * Returns a fatal error stream. You can use it to print fatal error
  * information.
  * @param area an id to identify the output, 0 for default
  */
-KDECORE_EXPORT kdbgstream kdFatal(int area = 0);
-KDECORE_EXPORT kdbgstream kdFatal(bool cond, int area = 0);
+TDECORE_EXPORT kdbgstream kdFatal(int area = 0);
+TDECORE_EXPORT kdbgstream kdFatal(bool cond, int area = 0);
 
 /**
  * \relates KGlobal
  * Deletes the kdebugrc cache and therefore forces KDebug to reread the
  * config file
  */
-KDECORE_EXPORT void kdClearDebugConfig();
+TDECORE_EXPORT void kdClearDebugConfig();
 
 /** @} */
 

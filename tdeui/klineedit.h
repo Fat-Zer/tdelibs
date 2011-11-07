@@ -142,7 +142,7 @@ class KURL;
  * @author Dawit Alemayehu <adawit@kde.org>
  */
 
-class KDEUI_EXPORT KLineEdit : public TQLineEdit, public KCompletionBase
+class TDEUI_EXPORT KLineEdit : public TQLineEdit, public KCompletionBase
 {
     friend class KComboBox;
 

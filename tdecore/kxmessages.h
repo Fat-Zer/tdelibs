@@ -49,7 +49,7 @@ class KXMessagesPrivate;
  * @author Lubos Lunak <l.lunak@kde.org>
  */
 // KDE4 - make this internal for KStartupInfo only?
-class KDECORE_EXPORT KXMessages
+class TDECORE_EXPORT KXMessages
     : public TQWidget
     {
     Q_OBJECT

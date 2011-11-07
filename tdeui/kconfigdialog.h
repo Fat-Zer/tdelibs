@@ -69,7 +69,7 @@ class KConfigDialogManager;
  * @author Waldo Bastian <bastian@kde.org>
  * @since 3.2
  */
-class KDEUI_EXPORT KConfigDialog : public KDialogBase {
+class TDEUI_EXPORT KConfigDialog : public KDialogBase {
 Q_OBJECT
 
 signals:

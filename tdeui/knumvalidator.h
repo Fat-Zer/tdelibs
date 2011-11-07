@@ -41,7 +41,7 @@ class TQString;
   @author Glen Parker <glenebob@nwlink.com>
   @version 0.0.1
 */
-class KDEUI_EXPORT KIntValidator : public TQValidator {
+class TDEUI_EXPORT KIntValidator : public TQValidator {
 
   public:
     /**
@@ -106,7 +106,7 @@ class KFloatValidatorPrivate;
   @author Glen Parker <glenebob@nwlink.com>
   @version 0.0.1
 */
-class KDEUI_EXPORT KFloatValidator : public TQValidator {
+class TDEUI_EXPORT KFloatValidator : public TQValidator {
 
   public:
     /**
@@ -178,7 +178,7 @@ class KDEUI_EXPORT KFloatValidator : public TQValidator {
    @since 3.1
 **/
 
-class KDEUI_EXPORT KDoubleValidator : public TQDoubleValidator {
+class TDEUI_EXPORT KDoubleValidator : public TQDoubleValidator {
   Q_OBJECT
   Q_PROPERTY( bool acceptLocalizedNumbers READ acceptLocalizedNumbers WRITE setAcceptLocalizedNumbers )
 public:

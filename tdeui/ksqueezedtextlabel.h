@@ -43,7 +43,7 @@
 /*
  * QLabel
  */
-class KDEUI_EXPORT KSqueezedTextLabel : public TQLabel {
+class TDEUI_EXPORT KSqueezedTextLabel : public TQLabel {
   Q_OBJECT
 
 public:

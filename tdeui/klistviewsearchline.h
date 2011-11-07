@@ -44,7 +44,7 @@ class TQToolButton;
  * @since 3.3
  */
 
-class KDEUI_EXPORT KListViewSearchLine : public KLineEdit
+class TDEUI_EXPORT KListViewSearchLine : public KLineEdit
 {
     Q_OBJECT
 
@@ -216,7 +216,7 @@ private:
  *
  * @since 3.4
  */
-class KDEUI_EXPORT KListViewSearchLineWidget : public TQHBox
+class TDEUI_EXPORT KListViewSearchLineWidget : public TQHBox
 {
     Q_OBJECT
 

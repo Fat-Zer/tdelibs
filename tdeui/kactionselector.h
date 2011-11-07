@@ -76,7 +76,7 @@ class KActionSelectorPrivate;
     @author Anders Lund <anders@alweb.dk>
 */
 
-class KDEUI_EXPORT KActionSelector : public TQWidget {
+class TDEUI_EXPORT KActionSelector : public TQWidget {
   Q_OBJECT
   Q_ENUMS( ButtonIconSize InsertionPolicy )
   Q_PROPERTY( bool moveOnDoubleClick READ moveOnDoubleClick WRITE setMoveOnDoubleClick )

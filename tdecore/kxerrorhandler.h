@@ -54,7 +54,7 @@
  * @author Lubos Lunak <l.lunak@kde.org>
  * @short Handler for X errors
  */
-class KDECORE_EXPORT KXErrorHandler
+class TDECORE_EXPORT KXErrorHandler
     {
     public:
         /**

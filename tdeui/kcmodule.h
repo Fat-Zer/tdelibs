@@ -66,7 +66,7 @@ class KInstance;
  *
  * @author Matthias Hoelzer-Kluepfel <hoelzer@kde.org>
  */
-class KDEUI_EXPORT KCModule : public TQWidget
+class TDEUI_EXPORT KCModule : public TQWidget
 {
   Q_OBJECT
 

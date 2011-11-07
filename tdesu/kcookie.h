@@ -24,7 +24,7 @@ typedef TQValueList<TQCString> QCStringList;
  * program (X11 and DCOP cookies).
  */
 
-class KDESU_EXPORT KCookie
+class TDESU_EXPORT KCookie
 {
 public:
     KCookie();

@@ -33,7 +33,7 @@ class DrBase;
 class DrMain;
 struct PS_private;
 
-class KDEPRINT_EXPORT PPDLoader
+class TDEPRINT_EXPORT PPDLoader
 {
 public:
 	PPDLoader();

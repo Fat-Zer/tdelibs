@@ -43,7 +43,7 @@
 * @author Harri Porten <porten@kde.org>
 * @version 0.3 
 */
-class KDEUI_EXPORT KWizard : public TQWizard
+class TDEUI_EXPORT KWizard : public TQWizard
 {
   Q_OBJECT
 public:

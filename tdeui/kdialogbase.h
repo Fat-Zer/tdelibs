@@ -188,7 +188,7 @@ class KDialogBaseTile;
  *
  * @author Mirko Boehm (mirko@kde.org) and Espen Sand (espen@kde.org)
  */
-class KDEUI_EXPORT KDialogBase : public KDialog
+class TDEUI_EXPORT KDialogBase : public KDialog
 {
   Q_OBJECT
 

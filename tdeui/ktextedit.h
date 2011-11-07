@@ -40,7 +40,7 @@ class KSpell;
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  * @since 3.1
  */
-class KDEUI_EXPORT KTextEdit : public TQTextEdit
+class TDEUI_EXPORT KTextEdit : public TQTextEdit
 {
     Q_OBJECT
 

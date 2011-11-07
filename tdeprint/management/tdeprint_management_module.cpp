@@ -32,18 +32,18 @@
 
 extern "C"
 {
-	KDEPRINT_EXPORT int add_printer_wizard(TQWidget *parent)
+	TDEPRINT_EXPORT int add_printer_wizard(TQWidget *parent)
 	{
                 return tdeprint_management_add_printer_wizard( parent );
 	}
 
-	KDEPRINT_EXPORT bool config_dialog(TQWidget *parent)
+	TDEPRINT_EXPORT bool config_dialog(TQWidget *parent)
 	{
 		KMConfigDialog	dlg(parent);
 		return dlg.exec();
 	}
 
-	KDEPRINT_EXPORT TQString select_command( TQWidget* parent )
+	TDEPRINT_EXPORT TQString select_command( TQWidget* parent )
 	{
 		KDialogBase dlg( parent, 0, true, i18n( "Select Command" ), KDialogBase::Ok|KDialogBase::Cancel );
 		KXmlCommandSelector *xmlSel = new KXmlCommandSelector( false, &dlg, "CommandSelector", &dlg );

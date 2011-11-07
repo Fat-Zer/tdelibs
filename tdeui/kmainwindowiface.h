@@ -37,7 +37,7 @@ class KMainWindow;
  *
  * @author Ian Reinhart Geiser <geiseri@yahoo.com>
  */
-class KDEUI_EXPORT KMainWindowInterface : virtual public DCOPObject
+class TDEUI_EXPORT KMainWindowInterface : virtual public DCOPObject
 {
 K_DCOP
 

@@ -50,7 +50,7 @@ class KPixmapSplitterPrivate;
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KDEFX_EXPORT KPixmapSplitter
+class TDEFX_EXPORT KPixmapSplitter
 {
 public:
     /**

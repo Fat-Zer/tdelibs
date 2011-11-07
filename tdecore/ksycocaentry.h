@@ -34,7 +34,7 @@ class TQDataStream;
  * @internal
  * @see http://developer.kde.org/documentation/library/kdeqt/trinityarch/ksycoca.html 
  */
-class KDECORE_EXPORT KSycocaEntry : public KShared
+class TDECORE_EXPORT KSycocaEntry : public KShared
 {
  
 public:

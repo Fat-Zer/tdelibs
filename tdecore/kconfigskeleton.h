@@ -47,7 +47,7 @@
    * addItem() functions of KConfigSkeleton instead. If you subclass this class you will
    * have to register instances with the function KConfigSkeleton::addItem().
    */
-  class KDECORE_EXPORT KConfigSkeletonItem
+  class TDECORE_EXPORT KConfigSkeletonItem
   {
   public:
     typedef TQValueList < KConfigSkeletonItem * >List;
@@ -362,14 +362,14 @@ template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonI
    * subclasses yourself, but you can use \ref kconfig_compiler to automatically
    * generate the C++ code from an XML description of the configuration options.
    */
-class KDECORE_EXPORT KConfigSkeleton
+class TDECORE_EXPORT KConfigSkeleton
 {
 public:
 
   /**
    * Class for handling a string preferences item.
    */
-  class KDECORE_EXPORT ItemString:public KConfigSkeletonGenericItem < TQString >
+  class TDECORE_EXPORT ItemString:public KConfigSkeletonGenericItem < TQString >
   {
   public:
     enum Type { Normal, Password, Path };
@@ -391,7 +391,7 @@ public:
   /**
    * Class for handling a password preferences item.
    */
-  class KDECORE_EXPORT ItemPassword:public ItemString
+  class TDECORE_EXPORT ItemPassword:public ItemString
   {
   public:
     ItemPassword(const TQString & group, const TQString & key,
@@ -402,7 +402,7 @@ public:
   /**
    * Class for handling a path preferences item.
    */
-  class KDECORE_EXPORT ItemPath:public ItemString
+  class TDECORE_EXPORT ItemPath:public ItemString
   {
   public:
     ItemPath(const TQString & group, const TQString & key,
@@ -414,7 +414,7 @@ public:
   /**
    * Class for handling a TQVariant preferences item.
    */
-  class KDECORE_EXPORT ItemProperty:public KConfigSkeletonGenericItem < TQVariant >
+  class TDECORE_EXPORT ItemProperty:public KConfigSkeletonGenericItem < TQVariant >
   {
   public:
     ItemProperty(const TQString & group, const TQString & key,
@@ -429,7 +429,7 @@ public:
   /**
    * Class for handling a bool preferences item.
    */
-  class KDECORE_EXPORT ItemBool:public KConfigSkeletonGenericItem < bool >
+  class TDECORE_EXPORT ItemBool:public KConfigSkeletonGenericItem < bool >
   {
   public:
     ItemBool(const TQString & group, const TQString & key, bool & reference,
@@ -444,7 +444,7 @@ public:
   /**
    * Class for handling an integer preferences item.
    */
-  class KDECORE_EXPORT ItemInt:public KConfigSkeletonGenericItem < int >
+  class TDECORE_EXPORT ItemInt:public KConfigSkeletonGenericItem < int >
   {
   public:
     ItemInt(const TQString & group, const TQString & key, int &reference,
@@ -469,7 +469,7 @@ public:
   /**
    * Class for handling an 64-bit integer preferences item.
    */
-  class KDECORE_EXPORT ItemInt64:public KConfigSkeletonGenericItem < TQ_INT64 >
+  class TDECORE_EXPORT ItemInt64:public KConfigSkeletonGenericItem < TQ_INT64 >
   {
   public:
     ItemInt64(const TQString & group, const TQString & key, TQ_INT64 &reference,
@@ -495,7 +495,7 @@ public:
   /**
    * Class for handling enums.
    */
-  class KDECORE_EXPORT ItemEnum:public ItemInt
+  class TDECORE_EXPORT ItemEnum:public ItemInt
   {
   public:
     struct Choice
@@ -521,7 +521,7 @@ public:
   /**
    * Class for handling an unsingend integer preferences item.
    */
-  class KDECORE_EXPORT ItemUInt:public KConfigSkeletonGenericItem < unsigned int >
+  class TDECORE_EXPORT ItemUInt:public KConfigSkeletonGenericItem < unsigned int >
   {
   public:
     ItemUInt(const TQString & group, const TQString & key,
@@ -547,7 +547,7 @@ public:
   /**
    * Class for hanlding a long integer preferences item.
    */
-  class KDECORE_EXPORT ItemLong:public KConfigSkeletonGenericItem < long >
+  class TDECORE_EXPORT ItemLong:public KConfigSkeletonGenericItem < long >
   {
   public:
     ItemLong(const TQString & group, const TQString & key, long &reference,
@@ -573,7 +573,7 @@ public:
   /**
    * Class for handling an unsigned long integer preferences item.
    */
-  class KDECORE_EXPORT ItemULong:public KConfigSkeletonGenericItem < unsigned long >
+  class TDECORE_EXPORT ItemULong:public KConfigSkeletonGenericItem < unsigned long >
   {
   public:
     ItemULong(const TQString & group, const TQString & key,
@@ -598,7 +598,7 @@ public:
   /**
    * Class for handling unsigned 64-bit integer preferences item.
    */
-  class KDECORE_EXPORT ItemUInt64:public KConfigSkeletonGenericItem < TQ_UINT64 >
+  class TDECORE_EXPORT ItemUInt64:public KConfigSkeletonGenericItem < TQ_UINT64 >
   {
   public:
     ItemUInt64(const TQString & group, const TQString & key, TQ_UINT64 &reference,
@@ -624,7 +624,7 @@ public:
   /**
    * Class for handling a floating point preference item.
    */
-  class KDECORE_EXPORT ItemDouble:public KConfigSkeletonGenericItem < double >
+  class TDECORE_EXPORT ItemDouble:public KConfigSkeletonGenericItem < double >
   {
   public:
     ItemDouble(const TQString & group, const TQString & key,
@@ -650,7 +650,7 @@ public:
   /**
    * Class for handling a color preferences item.
    */
-  class KDECORE_EXPORT ItemColor:public KConfigSkeletonGenericItem < TQColor >
+  class TDECORE_EXPORT ItemColor:public KConfigSkeletonGenericItem < TQColor >
   {
   public:
     ItemColor(const TQString & group, const TQString & key,
@@ -666,7 +666,7 @@ public:
   /**
    * Class for handling a font preferences item.
    */
-  class KDECORE_EXPORT ItemFont:public KConfigSkeletonGenericItem < TQFont >
+  class TDECORE_EXPORT ItemFont:public KConfigSkeletonGenericItem < TQFont >
   {
   public:
     ItemFont(const TQString & group, const TQString & key, TQFont & reference,
@@ -681,7 +681,7 @@ public:
   /**
    * Class for handling a TQRect preferences item.
    */
-  class KDECORE_EXPORT ItemRect:public KConfigSkeletonGenericItem < TQRect >
+  class TDECORE_EXPORT ItemRect:public KConfigSkeletonGenericItem < TQRect >
   {
   public:
     ItemRect(const TQString & group, const TQString & key, TQRect & reference,
@@ -696,7 +696,7 @@ public:
   /**
    * Class for handling a TQPoint preferences item.
    */
-  class KDECORE_EXPORT ItemPoint:public KConfigSkeletonGenericItem < TQPoint >
+  class TDECORE_EXPORT ItemPoint:public KConfigSkeletonGenericItem < TQPoint >
   {
   public:
     ItemPoint(const TQString & group, const TQString & key, TQPoint & reference,
@@ -711,7 +711,7 @@ public:
   /**
    * Class for handling a TQSize preferences item.
    */
-  class KDECORE_EXPORT ItemSize:public KConfigSkeletonGenericItem < TQSize >
+  class TDECORE_EXPORT ItemSize:public KConfigSkeletonGenericItem < TQSize >
   {
   public:
     ItemSize(const TQString & group, const TQString & key, TQSize & reference,
@@ -726,7 +726,7 @@ public:
   /**
    * Class for handling a TQDateTime preferences item.
    */
-  class KDECORE_EXPORT ItemDateTime:public KConfigSkeletonGenericItem < TQDateTime >
+  class TDECORE_EXPORT ItemDateTime:public KConfigSkeletonGenericItem < TQDateTime >
   {
   public:
     ItemDateTime(const TQString & group, const TQString & key,
@@ -742,7 +742,7 @@ public:
   /**
    * Class for handling a string list preferences item.
    */
-  class KDECORE_EXPORT ItemStringList:public KConfigSkeletonGenericItem < TQStringList >
+  class TDECORE_EXPORT ItemStringList:public KConfigSkeletonGenericItem < TQStringList >
   {
   public:
     ItemStringList(const TQString & group, const TQString & key,
@@ -758,7 +758,7 @@ public:
   /**
    * Class for handling a path list preferences item.
    */
-  class KDECORE_EXPORT ItemPathList:public ItemStringList
+  class TDECORE_EXPORT ItemPathList:public ItemStringList
   {
   public:
     ItemPathList(const TQString & group, const TQString & key,
@@ -773,7 +773,7 @@ public:
   /**
    * Class for handling an integer list preferences item.
    */
-  class KDECORE_EXPORT ItemIntList:public KConfigSkeletonGenericItem < TQValueList < int > >
+  class TDECORE_EXPORT ItemIntList:public KConfigSkeletonGenericItem < TQValueList < int > >
   {
   public:
     ItemIntList(const TQString & group, const TQString & key,

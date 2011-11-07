@@ -30,7 +30,7 @@
  * @author Michael Roth <mroth@wirlweb.de>
  * @version $Id$
 */
-class KDEUI_EXPORT KSeparator : public TQFrame
+class TDEUI_EXPORT KSeparator : public TQFrame
 {
   Q_OBJECT
   Q_PROPERTY( int orientation READ orientation WRITE setOrientation )

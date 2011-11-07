@@ -376,16 +376,16 @@ bool ShortcutList::save() const
 	return writeSettings( TQString::null, 0, false, true );
 }
 
-KDECORE_EXPORT TQString action(StdAccel id)
+TDECORE_EXPORT TQString action(StdAccel id)
 	{ return name(id); }
-KDECORE_EXPORT TQString description(StdAccel id)
+TDECORE_EXPORT TQString description(StdAccel id)
 	{ return label(id); }
-KDECORE_EXPORT int key(StdAccel id)
+TDECORE_EXPORT int key(StdAccel id)
 	{ return shortcut(id).keyCodeQt(); }
-KDECORE_EXPORT int defaultKey(StdAccel id)
+TDECORE_EXPORT int defaultKey(StdAccel id)
 	{ return shortcutDefault(id).keyCodeQt(); }
 
-KDECORE_EXPORT bool isEqual(const TQKeyEvent* ev, int keyQt)
+TDECORE_EXPORT bool isEqual(const TQKeyEvent* ev, int keyQt)
 {
 	KKey key1( ev ), key2( keyQt );
 	return key1 == key2;

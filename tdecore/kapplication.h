@@ -93,7 +93,7 @@ class KApplicationPrivate;
 * @short Controls and provides information to all KDE applications.
 * @author Matthias Kalle Dalheimer <kalle@kde.org>
 */
-class KDECORE_EXPORT KApplication : public TQApplication, public KInstance
+class TDECORE_EXPORT KApplication : public TQApplication, public KInstance
 {
 
   Q_OBJECT
@@ -1562,7 +1562,7 @@ private:
  * @param mode     The access mode, as in the access() system call.
  * @return Whether the access is allowed, true = Access allowed
  */
-KDECORE_EXPORT bool checkAccess(const TQString& pathname, int mode);
+TDECORE_EXPORT bool checkAccess(const TQString& pathname, int mode);
 
 class KSessionManagedPrivate;
 
@@ -1582,7 +1582,7 @@ class KSessionManagedPrivate;
   @short Highlevel access to session management.
   @author Matthias Ettrich <ettrich@kde.org>
  */
-class KDECORE_EXPORT KSessionManaged
+class TDECORE_EXPORT KSessionManaged
 {
 public:
   KSessionManaged();

@@ -55,7 +55,7 @@ template <class Z> class NETRArray;
    @see KWin
  **/
 
-class KDECORE_EXPORT NETRootInfo : public NET {
+class TDECORE_EXPORT NETRootInfo : public NET {
 public:
     /**
         Indexes for the properties array.
@@ -775,7 +775,7 @@ private:
  use it instead of NETRootInfo and override also the added virtual methods.
  @since 3.2
 */
-class KDECORE_EXPORT NETRootInfo2
+class TDECORE_EXPORT NETRootInfo2
     : public NETRootInfo
 {
 public:
@@ -847,7 +847,7 @@ protected:
  use it instead of NETRootInfo and override also the added virtual methods.
  @since 3.3
 */
-class KDECORE_EXPORT NETRootInfo3
+class TDECORE_EXPORT NETRootInfo3
     : public NETRootInfo2
 {
 public:
@@ -899,7 +899,7 @@ protected:
  use it instead of NETRootInfo and override also the added virtual methods.
  @since 3.5
 */
-class KDECORE_EXPORT NETRootInfo4
+class TDECORE_EXPORT NETRootInfo4
     : public NETRootInfo3
 {
 public:
@@ -936,7 +936,7 @@ protected:
    @see http://www.freedesktop.org/standards/wm-spec/
  **/
 
-class KDECORE_EXPORT NETWinInfo : public NET {
+class TDECORE_EXPORT NETWinInfo : public NET {
 public:
     /**
         Indexes for the properties array.

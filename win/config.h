@@ -44,8 +44,8 @@
 extern "C" {
 #endif
 
-KDECORE_EXPORT int mkstemps (char* _template, int suffix_len);
-KDECORE_EXPORT char* mkdtemp (char* _template);
+TDECORE_EXPORT int mkstemps (char* _template, int suffix_len);
+TDECORE_EXPORT char* mkdtemp (char* _template);
 
 #ifdef __cplusplus
 }

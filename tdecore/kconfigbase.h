@@ -67,7 +67,7 @@ class KConfigGroup;
  * @see KSimpleConfig
  * @see KSharedConfig
  */
-class KDECORE_EXPORT KConfigBase : public TQObject
+class TDECORE_EXPORT KConfigBase : public TQObject
 {
   Q_OBJECT
   TQ_OBJECT
@@ -2056,7 +2056,7 @@ class KConfigGroupSaverPrivate;
   * @short Helper class for easier use of KConfig/KSimpleConfig groups
   */
 
-class KDECORE_EXPORT KConfigGroupSaver // KDE4 remove
+class TDECORE_EXPORT KConfigGroupSaver // KDE4 remove
 {
 public:
   /**
@@ -2100,7 +2100,7 @@ class KConfigGroupPrivate;
 /**
  * A KConfigBase derived class for one specific group in a KConfig object.
  */
-class KDECORE_EXPORT KConfigGroup: public KConfigBase
+class TDECORE_EXPORT KConfigGroup: public KConfigBase
 {
 public:
    /**

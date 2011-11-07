@@ -87,7 +87,7 @@ class DrMain;
  * @short Base class for customized print dialog pages.
  * @see KPrinter
  */
-class KDEPRINT_EXPORT KPrintDialogPage : public TQWidget
+class TDEPRINT_EXPORT KPrintDialogPage : public TQWidget
 {
 	Q_OBJECT
 public:

@@ -5,7 +5,7 @@
 <INCLUDE>qstring.h</INCLUDE>
 <CLASS>
     <NAME>Test</NAME>
-    <LINK_SCOPE>KDEUI_EXPORT</LINK_SCOPE>
+    <LINK_SCOPE>TDEUI_EXPORT</LINK_SCOPE>
     <SUPER>MyNamespace::MyParentClass</SUPER>
     <SUPER>DCOPObject</SUPER>
     <SUPER>QValueList&lt;<TYPE>QString</TYPE>&gt;</SUPER>

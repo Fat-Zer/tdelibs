@@ -5,7 +5,7 @@ include( $(KDELIBS)/win/common.pro )
 # needed to export library classes:
 #DEFINES += MAKE_DCOP_LIB
 
-DEFINES += KDECORE_EXPORT=
+DEFINES += TDECORE_EXPORT=
 
 TARGET		= dcopclient
 

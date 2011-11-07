@@ -24,7 +24,7 @@
 
 class TQTextView;
 
-class KDEPRINT_EXPORT KMPropMembers : public KMPropWidget
+class TDEPRINT_EXPORT KMPropMembers : public KMPropWidget
 {
 public:
 	KMPropMembers(TQWidget *parent = 0, const char *name = 0);

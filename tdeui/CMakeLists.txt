@@ -9,9 +9,9 @@
 #
 #################################################
 
-if( BUILD_KDEUI_TESTS )
+if( BUILD_TDEUI_TESTS )
   add_subdirectory( tests )
-endif( BUILD_KDEUI_TESTS )
+endif( BUILD_TDEUI_TESTS )
 
 add_subdirectory( about )
 add_subdirectory( kdetrayproxy )

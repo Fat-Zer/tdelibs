@@ -36,7 +36,7 @@ class TQGList;
  *
  * @author Sean Harmer <sh@astro.keele.ac.uk>
  */
-class KDECORE_EXPORT KRandomSequence
+class TDECORE_EXPORT KRandomSequence
 {
 public: 
   /**

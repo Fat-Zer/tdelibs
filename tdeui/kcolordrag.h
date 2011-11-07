@@ -33,7 +33,7 @@ class KColorDragPrivate;
  *
  * See the Qt drag'n'drop documentation.
  */
-class KDEUI_EXPORT KColorDrag : public TQStoredDrag {
+class TDEUI_EXPORT KColorDrag : public TQStoredDrag {
     Q_OBJECT
 
 public:

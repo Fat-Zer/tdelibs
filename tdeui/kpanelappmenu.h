@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * @author Daniel M. Duley <mosfet@kde.org>
  */
-class KDEUI_EXPORT KPanelAppMenu : public TQObject, public DCOPObject
+class TDEUI_EXPORT KPanelAppMenu : public TQObject, public DCOPObject
 {
     Q_OBJECT
 public:

@@ -36,7 +36,7 @@ class KDCOPPropertyProxyPrivate;
  * "setFoo( TQString )" and "TQString foo()" automatically into the corresponding
  * setProperty/property calls.
  */
-class KDECORE_EXPORT KDCOPPropertyProxy
+class TDECORE_EXPORT KDCOPPropertyProxy
 {
 public:
   /**

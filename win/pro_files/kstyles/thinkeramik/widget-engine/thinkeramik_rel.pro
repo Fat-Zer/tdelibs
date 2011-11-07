@@ -7,7 +7,7 @@ unix {
 	INCLUDEPATH += moc
 	#force finding libraries in current dir (for installer, etc):
 	QMAKE_LFLAGS += -Wl,-rpath,.
-	DEFINES += KDEFX_EXPORT=
+	DEFINES += TDEFX_EXPORT=
 }
 
 
@@ -25,7 +25,7 @@ LIBS= #DONT BE DEPENDENT ON ANY OTHER LIBS
 CONFIG -= debug
 
 # needed to export library classes:
-DEFINES += MAKE_KSTYLE_LIB MAKE_KDEFX_LIB
+DEFINES += MAKE_KSTYLE_LIB MAKE_TDEFX_LIB
 
 TARGET		= thinkeramik
 

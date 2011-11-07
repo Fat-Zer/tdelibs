@@ -28,7 +28,7 @@ class TQButtonGroup;
 class TQGroupBox;
 class TQLabel;
 
-class KDEPRINT_EXPORT KPGeneralPage : public KPrintDialogPage
+class TDEPRINT_EXPORT KPGeneralPage : public KPrintDialogPage
 {
 	Q_OBJECT
 public:

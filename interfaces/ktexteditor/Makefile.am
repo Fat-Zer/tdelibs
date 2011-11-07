@@ -22,8 +22,8 @@ libktexteditor_la_SOURCES = ktexteditor.cpp \
     texthintinterface.cpp editinterfaceext.cpp variableinterface.cpp templateinterface.cpp
 
 
-libktexteditor_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_KDECORE) $(LIB_KDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-libktexteditor_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/dcop/libDCOP.la $(LIB_KABC) $(LIB_KDECORE) $(LIB_QT) $(LIB_KFILE) $(LIB_KDEUI)
+libktexteditor_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+libktexteditor_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/dcop/libDCOP.la $(LIB_KABC) $(LIB_TDECORE) $(LIB_QT) $(LIB_KFILE) $(LIB_TDEUI)
 
 ktexteditorinclude_HEADERS = document.h view.h editor.h plugin.h editinterface.h undointerface.h \
                              selectioninterface.h cursorinterface.h \

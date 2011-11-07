@@ -71,7 +71,7 @@
  * @author Dawit Alemayehu <adawit@kde.org>
  * @author Rik Hemsley <rik@kde.org>
  */
-class KDECORE_EXPORT KCodecs
+class TDECORE_EXPORT KCodecs
 {
 public:
 
@@ -399,7 +399,7 @@ class KMD5Private;
  * @author Dirk Mueller <mueller@kde.org>, Dawit Alemayehu <adawit@kde.org>
  */
 
-class KDECORE_EXPORT KMD5
+class TDECORE_EXPORT KMD5
 {
 public:
 
@@ -574,7 +574,7 @@ private:
  *
  * The class usage is the same as KMD5.
  */
-class KDECORE_EXPORT KMD4
+class TDECORE_EXPORT KMD4
 {
 public:
 

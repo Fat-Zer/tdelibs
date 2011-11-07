@@ -53,7 +53,7 @@ class KSharedPixmapPrivate;
  * @version $Id$
  *
  */
-class KDEUI_EXPORT KSharedPixmap: 
+class TDEUI_EXPORT KSharedPixmap: 
     public TQWidget,
     public KPixmap
 {

@@ -56,7 +56,7 @@ class KTimezoneWidgetPrivate;
  * @author S.R.Haque <srhaque@iee.org>
  * @since 3.5
  */
-class KDEUI_EXPORT KTimezoneWidget :
+class TDEUI_EXPORT KTimezoneWidget :
     public KListView
 {
     Q_OBJECT

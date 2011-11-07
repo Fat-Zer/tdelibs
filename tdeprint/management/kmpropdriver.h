@@ -26,7 +26,7 @@
 
 class TQLabel;
 
-class KDEPRINT_EXPORT KMPropDriver : public KMPropWidget
+class TDEPRINT_EXPORT KMPropDriver : public KMPropWidget
 {
 public:
 	KMPropDriver(TQWidget *parent = 0, const char *name = 0);

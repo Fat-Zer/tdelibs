@@ -41,7 +41,7 @@ class TQString;
  * @see KStaticDeleterBase
  * @author Sirtaj Singh Kang (taj@kde.org)
  */
-class KDECORE_EXPORT KGlobal
+class TDECORE_EXPORT KGlobal
 {
 public:
 
@@ -216,7 +216,7 @@ inline const T& kClamp( const T& x, const T& low, const T& high )
  * qstricmp fails with e.g. the Turkish locale where 'I'.lower() != 'i'
  * @since 3.4
  */
-int KDECORE_EXPORT kasciistricmp( const char *str1, const char *str2 );
+int TDECORE_EXPORT kasciistricmp( const char *str1, const char *str2 );
  
 
 /**

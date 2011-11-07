@@ -57,7 +57,7 @@ libkhtml_la_LIBADD = ./xml/libkhtmlxml.la ./html/libkhtmlhtml.la \
 	$(LIBTHAI) \
 	$(top_builddir)/tdeprint/libtdeprint.la  \
 	$(top_builddir)/kutils/libkutils.la \
-	$(top_builddir)/kwallet/client/libkwalletclient.la $(top_builddir)/kjs/libkjs.la $(LIB_KDEUI) $(LIB_QT) $(LIB_KDECORE) $(LIB_KFILE) $(top_builddir)/dcop/libDCOP.la $(LIBJPEG) $(LIB_X11)
+	$(top_builddir)/kwallet/client/libkwalletclient.la $(top_builddir)/kjs/libkjs.la $(LIB_TDEUI) $(LIB_QT) $(LIB_TDECORE) $(LIB_KFILE) $(top_builddir)/dcop/libDCOP.la $(LIBJPEG) $(LIB_X11)
 
 # init_libkhtml is in libkhtml.so; init_libkhtmlpart needs to be in the part
 dummy.cpp: $(srcdir)/Makefile.am

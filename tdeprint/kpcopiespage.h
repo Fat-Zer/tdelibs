@@ -31,7 +31,7 @@ class TQSpinBox;
 class TQLabel;
 class KPrinter;
 
-class KDEPRINT_EXPORT KPCopiesPage : public KPrintDialogPage, public KPReloadObject
+class TDEPRINT_EXPORT KPCopiesPage : public KPrintDialogPage, public KPReloadObject
 {
 	Q_OBJECT
 public:

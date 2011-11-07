@@ -5,7 +5,7 @@ INCLUDES = -I$(top_srcdir)/kio/ $(all_includes)
 lib_LTLIBRARIES = libtdesu.la
 libtdesu_la_SOURCES = client.cpp process.cpp kcookie.cpp su.cpp ssh.cpp stub.cpp tdesu_pty.cpp
 libtdesu_la_LDFLAGS = -version-info 6:0:2 -no-undefined $(all_libraries) 
-libtdesu_la_LIBADD = $(LIB_KDECORE) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la
+libtdesu_la_LIBADD = $(LIB_TDECORE) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la
 libtdesu_la_NMCHECK = $(srcdir)/libtdesu.nmcheck
 libtdesu_la_NMCHECKWEAK = $(srcdir)/libtdesu_weak.nmcheck $(top_srcdir)/tdecore/libtdecore_weak.nmcheck \
 	$(top_srcdir)/dcop/libDCOP_weak.nmcheck $(top_srcdir)/tdecore/libqt-mt_weak.nmcheck

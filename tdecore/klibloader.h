@@ -47,7 +47,7 @@ class KLibraryPrivate;
  * @see KLibLoader
  * @author Torben Weis <weis@kde.org>
  */
-class KDECORE_EXPORT KLibrary : public TQObject
+class TDECORE_EXPORT KLibrary : public TQObject
 {
     friend class KLibLoader;
     friend class TQAsciiDict<KLibrary>;
@@ -139,7 +139,7 @@ class KLibWrapPrivate;
  * @see KLibrary
  * @author Torben Weis <weis@kde.org>
  */
-class KDECORE_EXPORT KLibLoader : public TQObject
+class TDECORE_EXPORT KLibLoader : public TQObject
 {
     friend class KLibrary;
 
@@ -330,7 +330,7 @@ private:
  *
  * @author Torben Weis <weis@kde.org>
  */
-class KDECORE_EXPORT KLibFactory : public TQObject
+class TDECORE_EXPORT KLibFactory : public TQObject
 {
     Q_OBJECT
 public:

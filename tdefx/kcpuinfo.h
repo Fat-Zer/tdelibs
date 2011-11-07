@@ -36,7 +36,7 @@
  *
  * @since 3.2
  */
-class KDEFX_EXPORT KCPUInfo
+class TDEFX_EXPORT KCPUInfo
 {
     public:
        /**

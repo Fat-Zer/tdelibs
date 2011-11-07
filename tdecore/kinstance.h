@@ -40,7 +40,7 @@ class KSharedConfig;
  *
  * @author Torben Weis
  */
-class KDECORE_EXPORT KInstance
+class TDECORE_EXPORT KInstance
 {
     friend class KStandardDirs;
 

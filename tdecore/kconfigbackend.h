@@ -45,7 +45,7 @@ class KConfigBackEndPrivate;
  *         Matthias Kalle Dalheimer <kalle@kde.org>
  * @short KDE Configuration file loading/saving abstract base class
  */
-class KDECORE_EXPORT KConfigBackEnd
+class TDECORE_EXPORT KConfigBackEnd
 {
   friend class KConfig;
   friend class KSharedConfig;
@@ -188,7 +188,7 @@ protected:
  * @author Preston Brown <pbrown@kde.org>,
  *         Matthias Kalle Dalheimer <kalle@kde.org>
  */
-class KDECORE_EXPORT KConfigINIBackEnd : public KConfigBackEnd
+class TDECORE_EXPORT KConfigINIBackEnd : public KConfigBackEnd
 {
 
 public:

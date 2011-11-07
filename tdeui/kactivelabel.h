@@ -34,7 +34,7 @@ class KActiveLabelPrivate;
   * @author Waldo Bastian (bastian@kde.org)
   * @version $Id$
   */
-class KDEUI_EXPORT KActiveLabel : public TQTextBrowser
+class TDEUI_EXPORT KActiveLabel : public TQTextBrowser
 {
     Q_OBJECT
 public:

@@ -93,7 +93,7 @@ namespace KNotifyClient
      *
      * @short Enables KNotifyClient to use a different KInstance
      */
-    class KDECORE_EXPORT Instance
+    class TDECORE_EXPORT Instance
     {
     public:
         /**
@@ -175,7 +175,7 @@ namespace KNotifyClient
 	 * first triggered.
 	 * @return true if daemon is running (always true at the moment)
 	 **/
-	KDECORE_EXPORT bool startDaemon();
+	TDECORE_EXPORT bool startDaemon();
 
 //#ifndef KDE_NO_COMPAT
 	/**
@@ -185,7 +185,7 @@ namespace KNotifyClient
 	 *             the user connected the event to sound, only. Can be TQString::null.
 	 * @return a value > 0, unique for this event if successful, 0 otherwise
 	 */
-	KDECORE_EXPORT int event(const TQString &message, const TQString &text=TQString::null) KDE_DEPRECATED;
+	TDECORE_EXPORT int event(const TQString &message, const TQString &text=TQString::null) KDE_DEPRECATED;
 
 	/**
 	 * @deprecated
@@ -194,7 +194,7 @@ namespace KNotifyClient
 	 * @param text The text explaining the event you raise. Can be TQString::null.
 	 * @return a value > 0, unique for this event if successful, 0 otherwise
 	 */
-	KDECORE_EXPORT int event( StandardEvent event, const TQString& text=TQString::null ) KDE_DEPRECATED;
+	TDECORE_EXPORT int event( StandardEvent event, const TQString& text=TQString::null ) KDE_DEPRECATED;
 
 	/**
 	 * @deprecated
@@ -206,7 +206,7 @@ namespace KNotifyClient
 	 * @param file The log file to append the message to if selected with @p present
 	 * @return a value > 0, unique for this event if successful, 0 otherwise
 	 */
-	KDECORE_EXPORT int userEvent(const TQString &text=TQString::null, int present=Default, int level=Default,
+	TDECORE_EXPORT int userEvent(const TQString &text=TQString::null, int present=Default, int level=Default,
 	                             const TQString &sound=TQString::null, const TQString &file=TQString::null) KDE_DEPRECATED;
 	
 //#endif
@@ -227,7 +227,7 @@ namespace KNotifyClient
 	 * @since 3.1.1
 	 */
 	// KDE4: use WId instead of int
-	KDECORE_EXPORT int event( int winId, const TQString& message,
+	TDECORE_EXPORT int event( int winId, const TQString& message,
                               const TQString& text = TQString::null );
 
 	/**
@@ -242,7 +242,7 @@ namespace KNotifyClient
 	 * @since 3.1.1
 	 */
 	// KDE4: use WId instead of int
-	KDECORE_EXPORT int event( int winId, StandardEvent event,
+	TDECORE_EXPORT int event( int winId, StandardEvent event,
                               const TQString& text = TQString::null );
 
 	/**
@@ -260,7 +260,7 @@ namespace KNotifyClient
 	 * @since 3.1.1
 	 */
 	// KDE4: use WId instead of int
-	KDECORE_EXPORT int userEvent(int winId, const TQString &text=TQString::null, int present=Default, int level=Default,
+	TDECORE_EXPORT int userEvent(int winId, const TQString &text=TQString::null, int present=Default, int level=Default,
 	                      const TQString &sound=TQString::null, const TQString &file=TQString::null);
 	
 	/**
@@ -271,7 +271,7 @@ namespace KNotifyClient
 	 * \endcode
 	 * @param reason the reason, can be TQString::null.
 	 */
-	KDECORE_EXPORT void beep(const TQString& reason=TQString::null);
+	TDECORE_EXPORT void beep(const TQString& reason=TQString::null);
 
 	/**
 	 * Gets the presentation associated with a certain event name
@@ -282,7 +282,7 @@ namespace KNotifyClient
 	 * @param eventname the event name to check
 	 * @return the presentation methods
 	 */
-	KDECORE_EXPORT int getPresentation(const TQString &eventname);
+	TDECORE_EXPORT int getPresentation(const TQString &eventname);
 	
 	/**
 	 * Gets the default file associated with a certain event name
@@ -292,7 +292,7 @@ namespace KNotifyClient
 	 * @param present the presentation method
 	 * @return the associated file. Can be TQString::null if not found.
 	 */
-	KDECORE_EXPORT TQString getFile(const TQString &eventname, int present);
+	TDECORE_EXPORT TQString getFile(const TQString &eventname, int present);
 	
 	/**
 	 * Gets the default presentation for the event of this program.
@@ -302,7 +302,7 @@ namespace KNotifyClient
 	 * \endcode
 	 * @return the presentation methods
 	 */
-	KDECORE_EXPORT int getDefaultPresentation(const TQString &eventname);
+	TDECORE_EXPORT int getDefaultPresentation(const TQString &eventname);
 	
 	/**
 	 * Gets the default File for the event of this program.
@@ -313,13 +313,13 @@ namespace KNotifyClient
 	 * @param present the presentation method
 	 * @return the default file. Can be TQString::null if not found.
 	 */
-	KDECORE_EXPORT TQString getDefaultFile(const TQString &eventname, int present);
+	TDECORE_EXPORT TQString getDefaultFile(const TQString &eventname, int present);
 
 	/**
 	 * Shortcut to KNotifyClient::Instance::current() :)
 	 * @returns the current KInstance.
 	 */
-	KDECORE_EXPORT KInstance * instance();
+	TDECORE_EXPORT KInstance * instance();
 }
 
 #endif

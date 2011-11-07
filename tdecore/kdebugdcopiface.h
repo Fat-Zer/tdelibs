@@ -27,7 +27,7 @@
 /**
  * @short DCOP interface to KDebug.
  **/
-class KDECORE_EXPORT KDebugDCOPIface : virtual public DCOPObject
+class TDECORE_EXPORT KDebugDCOPIface : virtual public DCOPObject
 {
 	K_DCOP
 public:

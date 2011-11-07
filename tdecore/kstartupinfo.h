@@ -64,7 +64,7 @@ class KStartupInfoPrivate;
  *
  * @author Lubos Lunak <l.lunak@kde.org>
  */
-class KDECORE_EXPORT KStartupInfo
+class TDECORE_EXPORT KStartupInfo
     : public TQObject
     {
     Q_OBJECT
@@ -392,7 +392,7 @@ class KStartupInfoIdPrivate;
  *
  * @author Lubos Lunak <l.lunak@kde.org>
  */
-class KDECORE_EXPORT KStartupInfoId
+class TDECORE_EXPORT KStartupInfoId
     {
     public:
 	/**
@@ -465,7 +465,7 @@ class KStartupInfoDataPrivate;
  *
  * @author Lubos Lunak <l.lunak@kde.org>
  */
-class KDECORE_EXPORT KStartupInfoData
+class TDECORE_EXPORT KStartupInfoData
     {
     public:
 	/**

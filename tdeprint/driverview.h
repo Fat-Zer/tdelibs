@@ -30,13 +30,13 @@
 class DrOptionView;
 class DrMain;
 
-class KDEPRINT_EXPORT DrListView : public KListView
+class TDEPRINT_EXPORT DrListView : public KListView
 {
 public:
 	DrListView(TQWidget *parent = 0, const char *name = 0);
 };
 
-class KDEPRINT_EXPORT DriverView : public TQWidget
+class TDEPRINT_EXPORT DriverView : public TQWidget
 {
 	Q_OBJECT
 public:

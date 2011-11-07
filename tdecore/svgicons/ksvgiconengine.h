@@ -27,7 +27,7 @@
 
 class KSVGIconPainter;
 
-class KDECORE_EXPORT KSVGIconEngine
+class TDECORE_EXPORT KSVGIconEngine
 {
 public:
 	KSVGIconEngine();

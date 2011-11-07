@@ -20,7 +20,7 @@
 #ifndef KMMAINVIEW_H
 #define KMMAINVIEW_H
 
-#if !defined( _KDEPRINT_COMPILE ) && defined( __GNUC__ )
+#if !defined( _TDEPRINT_COMPILE ) && defined( __GNUC__ )
 #warning internal header, do not use except if you are a KDEPrint developer
 #endif
 
@@ -50,7 +50,7 @@ class TQMenuBar;
  * if you're a KDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class KDEPRINT_EXPORT KMMainView : public TQWidget, public KPReloadObject
+class TDEPRINT_EXPORT KMMainView : public TQWidget, public KPReloadObject
 {
 	Q_OBJECT
 public:
@@ -128,6 +128,6 @@ private:
 	KToolBar *m_menubar;
 };
 
-KDEPRINT_EXPORT int tdeprint_management_add_printer_wizard( TQWidget* parent );
+TDEPRINT_EXPORT int tdeprint_management_add_printer_wizard( TQWidget* parent );
 
 #endif

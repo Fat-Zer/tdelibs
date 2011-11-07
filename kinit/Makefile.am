@@ -15,7 +15,7 @@
 #    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #    Boston, MA 02110-1301, USA.
 
-INCLUDES = -I$(srcdir)/../libltdl/ $(all_includes) $(KDEINIT_XFT_INCLUDES)
+INCLUDES = -I$(srcdir)/../libltdl/ $(all_includes) $(TDEINIT_XFT_INCLUDES)
 
 SUBDIRS = . tests
 
@@ -56,7 +56,7 @@ kwrapper_SOURCES = kwrapper.c
 kwrapper_LDADD = $(LIBSOCKET)
 
 klauncher_la_LDFLAGS = $(all_libraries) -module -avoid-version
-klauncher_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_KDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
+klauncher_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 klauncher_la_SOURCES = klauncher.cpp klauncher_main.cpp autostart.cpp
 
 kstartupconfig_SOURCES  = kstartupconfig.cpp
@@ -64,7 +64,7 @@ kstartupconfig_LDADD  = $(top_builddir)/tdecore/libtdefakes.la $(LIB_QT)
 kdostartupconfig_SOURCES = kdostartupconfig.cpp
 kdostartupconfig_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                            $(KDE_RPATH)
-kdostartupconfig_LDADD  = $(LIB_KDECORE)
+kdostartupconfig_LDADD  = $(LIB_TDECORE)
 
 start_tdeinit_SOURCES = start_tdeinit.c
 tdeinitpath = $(bindir)/tdeinit
@@ -85,7 +85,7 @@ dummy.cpp:
 	echo > dummy.cpp
 
 install-exec-hook:
-	@if test \${KDEINIT_SETUID} != 0; then \
+	@if test \${TDEINIT_SETUID} != 0; then \
 		(chown 0 $(DESTDIR)$(bindir)/start_tdeinit && chmod 4755 $(DESTDIR)$(bindir)/start_tdeinit) || echo "Please make start_tdeinit setuid root" ; \
 	fi
 

@@ -50,7 +50,7 @@ class KClientSocketBasePrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KClientSocketBase :
+class TDECORE_EXPORT KClientSocketBase :
 #ifdef USE_QT4
 #else // USE_QT4
 public TQObject,

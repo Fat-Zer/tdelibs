@@ -45,7 +45,7 @@ typedef unsigned ksocklen_t;
  *
  * @short Access to a SOCKS Proxy.
  */
-class KDECORE_EXPORT KSocks {
+class TDECORE_EXPORT KSocks {
    friend class KStaticDeleter<KSocks>;
 
 public:

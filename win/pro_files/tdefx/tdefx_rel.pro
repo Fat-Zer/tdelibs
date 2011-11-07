@@ -8,7 +8,7 @@ include( $(KDELIBS)/win/common.pro )
 
 
 # needed to export library classes:
-DEFINES += MAKE_KDEFX_LIB
+DEFINES += MAKE_TDEFX_LIB
 
 system( moc kstyle.h -o moc/kstyle.moc )
 

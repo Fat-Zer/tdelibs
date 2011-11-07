@@ -30,7 +30,7 @@ namespace KMail {
  * geiseri at some point in the near future.
  * blah di blah
  **/
-class KDEUI_EXPORT Test : public MyNamespace::MyParentClass, virtual public DCOPObject,
+class TDEUI_EXPORT Test : public MyNamespace::MyParentClass, virtual public DCOPObject,
              public TQValueList<TQString>
 {
     K_DCOP

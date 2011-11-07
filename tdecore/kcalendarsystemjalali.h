@@ -33,7 +33,7 @@ class KCalendarSystemJalaliPrivate;
 /**
  Jalali calendar type implementation
 */
-class KDECORE_EXPORT KCalendarSystemJalali : public KCalendarSystem
+class TDECORE_EXPORT KCalendarSystemJalali : public KCalendarSystem
 {
 public:
   /** Constructor. Just like KCalendarSystem::KCalendarSystem(). */

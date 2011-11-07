@@ -40,7 +40,7 @@ class KConfigPrivate;
 * @see KGlobal::config(), KConfigBase, KSimpleConfig
 * @short KDE Configuration Management class
 */
-class KDECORE_EXPORT KConfig : public KConfigBase
+class TDECORE_EXPORT KConfig : public KConfigBase
 {
   Q_OBJECT
 
@@ -270,7 +270,7 @@ private:
  * KSharedConfig provides a reference counted, shared memory variant
  * of KConfig.
  */
-class KDECORE_EXPORT KSharedConfig : public KConfig, public KShared
+class TDECORE_EXPORT KSharedConfig : public KConfig, public KShared
 {
   friend class TQValueList<KSharedConfig*>;
 public:

@@ -63,7 +63,7 @@ class KResolverEntryPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KResolverEntry
+class TDECORE_EXPORT KResolverEntry
 {
 public:
   /**
@@ -194,7 +194,7 @@ class KResolverResultsPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KResolverResults: public TQValueList<KResolverEntry>
+class TDECORE_EXPORT KResolverResults: public TQValueList<KResolverEntry>
 {
 public:
   /**
@@ -292,7 +292,7 @@ class KResolverPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KResolver: public TQObject
+class TDECORE_EXPORT KResolver: public TQObject
 {
   Q_OBJECT
   TQ_OBJECT

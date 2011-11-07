@@ -363,9 +363,9 @@ int PtyProcess::exec(const TQCString &command, const QCStringList &args)
     // set temporarily LC_ALL to C, for su (to be able to parse "Password:")
     const char* old_lc_all = getenv( "LC_ALL" );
     if( old_lc_all != NULL )
-        setenv( "KDESU_LC_ALL", old_lc_all, 1 );
+        setenv( "TDESU_LC_ALL", old_lc_all, 1 );
     else
-        unsetenv( "KDESU_LC_ALL" );
+        unsetenv( "TDESU_LC_ALL" );
     setenv("LC_ALL", "C", 1);
 
     // From now on, terminal output goes through the tty.

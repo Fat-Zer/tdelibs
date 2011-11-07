@@ -37,7 +37,7 @@ struct KPtyPrivate;
  *
  * @since 3.2
  **/
-class KDECORE_EXPORT KPty {
+class TDECORE_EXPORT KPty {
 
 public:
 

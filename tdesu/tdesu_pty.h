@@ -22,7 +22,7 @@
 
 #include <kdelibs_export.h>
 
-class KDESU_EXPORT PTY {
+class TDESU_EXPORT PTY {
 
 public:
     /**

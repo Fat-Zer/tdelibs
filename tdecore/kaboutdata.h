@@ -51,7 +51,7 @@ class KAboutDataPrivate;
  *   KCmdLineArgs::init(argc, argv, &about);
  * \endcode
  */
-class KDECORE_EXPORT KAboutPerson
+class TDECORE_EXPORT KAboutPerson
 {
 public:
     /**
@@ -131,7 +131,7 @@ class KAboutTranslatorPrivate;
  * translator information is generated dynamically from the translation
  * of a dummy string.
 */
-class KDECORE_EXPORT KAboutTranslator
+class TDECORE_EXPORT KAboutTranslator
 {
 public:
     /**
@@ -179,7 +179,7 @@ private:
  * classes.
  * @author Espen Sand (espen@kde.org), David Faure (faure@kde.org)
  */
-class KDECORE_EXPORT KAboutData
+class TDECORE_EXPORT KAboutData
 {
   public:
   /**

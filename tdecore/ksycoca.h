@@ -41,7 +41,7 @@ class KSycocaFactoryList;
  * @internal
  * Read-only SYstem COnfiguration CAche
  */
-class KDECORE_EXPORT KSycoca : public TQObject, public DCOPObject
+class TDECORE_EXPORT KSycoca : public TQObject, public DCOPObject
 {
   Q_OBJECT
   K_DCOP

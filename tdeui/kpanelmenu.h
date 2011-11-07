@@ -50,7 +50,7 @@ class KPanelMenuPrivate;
  *
  * @author The kicker maintainers, Michael Goffioul <tdeprint@swing.be>
  */
-class KDEUI_EXPORT KPanelMenu : public KPopupMenu
+class TDEUI_EXPORT KPanelMenu : public KPopupMenu
 {
     Q_OBJECT
 

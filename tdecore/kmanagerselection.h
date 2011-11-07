@@ -47,7 +47,7 @@ class KSelectionOwnerPrivate;
  @since 3.2
  @short ICCCM manager selection owner
 */
-class KDECORE_EXPORT KSelectionOwner
+class TDECORE_EXPORT KSelectionOwner
     : public TQObject
     {
     Q_OBJECT
@@ -170,7 +170,7 @@ class KSelectionWatcherPrivate;
  @since 3.2
  @short ICCCM manager selection watching
 */
-class KDECORE_EXPORT KSelectionWatcher
+class TDECORE_EXPORT KSelectionWatcher
     : public TQObject
     {
     Q_OBJECT

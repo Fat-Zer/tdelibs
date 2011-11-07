@@ -37,7 +37,7 @@
  * @version $Id$
  * @since 3.2
  */
-class KDEUI_EXPORT KDateTimeWidget : public TQWidget
+class TDEUI_EXPORT KDateTimeWidget : public TQWidget
 {
   Q_OBJECT
   Q_PROPERTY( TQDateTime dateTime READ dateTime WRITE setDateTime )

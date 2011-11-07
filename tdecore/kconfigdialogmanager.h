@@ -75,7 +75,7 @@ class TQSqlPropertyMap;
  * @author Benjamin C Meyer <ben+kdelibs at meyerhome dot net>
  * @author Waldo Bastian <bastian@kde.org>
  */
-class KDECORE_EXPORT KConfigDialogManager : public TQObject {
+class TDECORE_EXPORT KConfigDialogManager : public TQObject {
 
 Q_OBJECT
 

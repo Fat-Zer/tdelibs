@@ -94,7 +94,7 @@ class TQPopupMenu;
  *
  * @author Matthias Elter <elter@kde.org>
  **/
-class KDEUI_EXPORT KPanelApplet : public TQFrame
+class TDEUI_EXPORT KPanelApplet : public TQFrame
 {
     Q_OBJECT
 

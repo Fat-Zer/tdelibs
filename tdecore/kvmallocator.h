@@ -36,7 +36,7 @@ class KVMAllocatorPrivate;
  * 
  * @author Waldo Bastian <bastian@kde.org>
  */
-class KDECORE_EXPORT KVMAllocator
+class TDECORE_EXPORT KVMAllocator
 {
 public:
     struct Block;

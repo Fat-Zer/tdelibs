@@ -24,7 +24,7 @@ class TQColor;
  * just call the static methods. They are encapsulated here merely to provide
  * a common namespace.
  */
-class KDEFX_EXPORT KPixmapEffect
+class TDEFX_EXPORT KPixmapEffect
 {
 public:
     enum GradientType { VerticalGradient, HorizontalGradient,

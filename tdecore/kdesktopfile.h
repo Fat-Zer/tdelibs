@@ -31,7 +31,7 @@ class KDesktopFilePrivate;
  * @see  KConfigBase  KConfig
  * @short KDE Desktop File Management class
  */
-class KDECORE_EXPORT KDesktopFile : public KConfig
+class TDECORE_EXPORT KDesktopFile : public KConfig
 {
   Q_OBJECT
 

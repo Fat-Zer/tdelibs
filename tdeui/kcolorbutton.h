@@ -34,7 +34,7 @@ class KColorButtonPrivate;
 *
 * \image html kcolorbutton.png "KDE Color Button"
 */
-class KDEUI_EXPORT KColorButton : public TQPushButton
+class TDEUI_EXPORT KColorButton : public TQPushButton
 {
     Q_OBJECT
     Q_PROPERTY( TQColor color READ color WRITE setColor )

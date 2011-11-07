@@ -36,7 +36,7 @@ class KXMLGUIClient;
  * the toplevel widget is a KMainWindow. Other implementations may appear
  * in the future (dialogs for instance)
  */
-class KDEUI_EXPORT KXMLGUIBuilder
+class TDEUI_EXPORT KXMLGUIBuilder
 {
  public:
 

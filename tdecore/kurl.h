@@ -124,7 +124,7 @@ class KURLPrivate;
  *
  *  @author  Torben Weis <weis@kde.org>
  */
-class KDECORE_EXPORT KURL
+class TDECORE_EXPORT KURL
 {
 public:
   /**
@@ -184,7 +184,7 @@ public:
    * @see KURL
    * @see QValueList
    */
-  class KDECORE_EXPORT List : public TQValueList<KURL>
+  class TDECORE_EXPORT List : public TQValueList<KURL>
   {
   public:
     /**
@@ -1793,8 +1793,8 @@ private:
   unsigned short int m_iPort;
   TQString m_strPath_encoded;
 
-  friend KDECORE_EXPORT TQDataStream & operator<< (TQDataStream & s, const KURL & a);
-  friend KDECORE_EXPORT TQDataStream & operator>> (TQDataStream & s, KURL & a);
+  friend TDECORE_EXPORT TQDataStream & operator<< (TQDataStream & s, const KURL & a);
+  friend TDECORE_EXPORT TQDataStream & operator>> (TQDataStream & s, KURL & a);
 private:
   KURLPrivate* d;
 };
@@ -1806,7 +1806,7 @@ private:
  * are nevertheless considered to be unequal.
  * That means no malformed URL equals anything else.
  */
-KDECORE_EXPORT bool urlcmp( const TQString& _url1, const TQString& _url2 );
+TDECORE_EXPORT bool urlcmp( const TQString& _url1, const TQString& _url2 );
 
 /**
  * \relates KURL
@@ -1820,9 +1820,9 @@ KDECORE_EXPORT bool urlcmp( const TQString& _url1, const TQString& _url2 );
  * @param _ignore_trailing Described in KURL::cmp
  * @param _ignore_ref If true, disables comparison of HTML-style references.
  */
-KDECORE_EXPORT bool urlcmp( const TQString& _url1, const TQString& _url2, bool _ignore_trailing, bool _ignore_ref );
+TDECORE_EXPORT bool urlcmp( const TQString& _url1, const TQString& _url2, bool _ignore_trailing, bool _ignore_ref );
 
-KDECORE_EXPORT TQDataStream & operator<< (TQDataStream & s, const KURL & a);
-KDECORE_EXPORT TQDataStream & operator>> (TQDataStream & s, KURL & a);
+TDECORE_EXPORT TQDataStream & operator<< (TQDataStream & s, const KURL & a);
+TDECORE_EXPORT TQDataStream & operator>> (TQDataStream & s, KURL & a);
 
 #endif

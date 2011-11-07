@@ -48,7 +48,7 @@ class KDateTable;
  *     @author Tim Gilman, Mirko Boehm
  *
  **/
-class KDEUI_EXPORT KDatePicker: public TQFrame
+class TDEUI_EXPORT KDatePicker: public TQFrame
 {
   Q_OBJECT
   Q_PROPERTY( TQDate date READ date WRITE setDate)

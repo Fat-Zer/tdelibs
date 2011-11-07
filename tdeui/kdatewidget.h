@@ -33,7 +33,7 @@
 *
 * @version $Id$
 */
-class KDEUI_EXPORT KDateWidget : public TQWidget
+class TDEUI_EXPORT KDateWidget : public TQWidget
 {
   Q_OBJECT
   Q_PROPERTY( TQDate date READ date WRITE setDate )

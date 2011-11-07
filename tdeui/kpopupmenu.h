@@ -35,7 +35,7 @@
  *
  * @author Daniel M. Duley <mosfet@kde.org>
  */
-class KDEUI_EXPORT KPopupTitle : public TQWidget
+class TDEUI_EXPORT KPopupTitle : public TQWidget
 {
     Q_OBJECT
 
@@ -120,7 +120,7 @@ private:
  * @author Daniel M. Duley <mosfet@kde.org>
  * @author Hamish Rodda <rodda@kde.org>
  */
-class KDEUI_EXPORT KPopupMenu : public TQPopupMenu {
+class TDEUI_EXPORT KPopupMenu : public TQPopupMenu {
     Q_OBJECT
     TQ_OBJECT
 public:

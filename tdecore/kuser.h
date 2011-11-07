@@ -42,7 +42,7 @@ template <class T> class TQValueList;
  * @author Tim Jansen <tim@tjansen.de>
  * @since 3.2
  */
-class KDECORE_EXPORT KUser {
+class TDECORE_EXPORT KUser {
 
 public:
 
@@ -253,7 +253,7 @@ struct group;
  * @author Jan Schaefer <j_schaef@informatik.uni-kl.de>
  * @since 3.3
  */
-class KDECORE_EXPORT KUserGroup {
+class TDECORE_EXPORT KUserGroup {
 
 public:
 

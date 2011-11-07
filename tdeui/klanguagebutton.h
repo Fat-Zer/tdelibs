@@ -44,7 +44,7 @@ class TQPopupMenu;
  * Combined version of KTagCombo and KLanguageCombo but using a QPushButton
  * instead.
  */
-class KDEUI_EXPORT KLanguageButton : public TQWidget
+class TDEUI_EXPORT KLanguageButton : public TQWidget
 {
   Q_OBJECT
 

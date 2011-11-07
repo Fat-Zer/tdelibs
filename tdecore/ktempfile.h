@@ -52,7 +52,7 @@ class KTempFilePrivate;
  *
  * @author Waldo Bastian <bastian@kde.org>
  */
-class KDECORE_EXPORT KTempFile
+class TDECORE_EXPORT KTempFile
 {
    friend class KSaveFile;
 public:

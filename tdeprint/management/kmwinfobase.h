@@ -26,7 +26,7 @@
 class TQLabel;
 class TQLineEdit;
 
-class KDEPRINT_EXPORT KMWInfoBase : public KMWizardPage
+class TDEPRINT_EXPORT KMWInfoBase : public KMWizardPage
 {
 public:
 	KMWInfoBase(int n = 1, TQWidget *parent = 0, const char *name = 0);

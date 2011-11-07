@@ -48,7 +48,7 @@ class KResolverEntry;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KDatagramPacket
+class TDECORE_EXPORT KDatagramPacket
 {
   TQByteArray m_data;
   KSocketAddress m_address;
@@ -177,7 +177,7 @@ class KDatagramSocketPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KDatagramSocket: public KClientSocketBase
+class TDECORE_EXPORT KDatagramSocket: public KClientSocketBase
 {
   Q_OBJECT
   TQ_OBJECT

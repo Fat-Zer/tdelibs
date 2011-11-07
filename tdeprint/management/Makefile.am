@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -D_KDEPRINT_COMPILE
+AM_CPPFLAGS = -D_TDEPRINT_COMPILE
 
 INCLUDES= -I$(top_srcdir)/tdefx -I$(top_srcdir)/tdeprint -I$(top_builddir)/tdeprint -I$(top_srcdir)/kio -I$(top_srcdir)/kfile -I$(top_srcdir) $(all_includes)
 
@@ -8,7 +8,7 @@ tdeinit_LTLIBRARIES = kaddprinterwizard.la
 bin_PROGRAMS = 
 
 kaddprinterwizard_la_SOURCES = kaddprinterwizard.cpp
-kaddprinterwizard_la_LIBADD = $(LIB_QT) $(LIB_KDECORE) $(LIB_KDEPRINT) $(LIB_KDEUI)
+kaddprinterwizard_la_LIBADD = $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEPRINT) $(LIB_TDEUI)
 kaddprinterwizard_la_LDFLAGS = -module -avoid-version $(all_libraries) $(KDE_RPATH)
 
 libtdeprint_management_la_SOURCES = \
@@ -26,12 +26,12 @@ libtdeprint_management_la_SOURCES = \
 	pluginaction.cpp kxmlcommanddlg.cpp kxmlcommandselector.cpp kmconfigcommand.cpp \
 	kmconfigfilter.cpp kmconfigfonts.cpp kmconfigjobs.cpp networkscanner.cpp
 libtdeprint_management_la_LDFLAGS = $(all_libraries) -version-info 6:0:2 -no-undefined
-libtdeprint_management_la_LIBADD = ../libtdeprint.la $(LIB_QT) $(LIB_KDECORE) $(LIB_KDEUI) $(LIB_KFILE)
+libtdeprint_management_la_LIBADD = ../libtdeprint.la $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEUI) $(LIB_KFILE)
 libtdeprint_management_la_METASOURCES = AUTO
 
 libtdeprint_management_module_la_SOURCES = tdeprint_management_module.cpp
 libtdeprint_management_module_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) -no-undefined
-libtdeprint_management_module_la_LIBADD = libtdeprint_management.la $(LIB_QT) $(LIB_KDEUI) $(LIB_KDECORE)
+libtdeprint_management_module_la_LIBADD = libtdeprint_management.la $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE)
 
 tdeprint_HEADERS = kmmainview.h kmjobviewer.h kmprinterpage.h kiconselectaction.h kmtimer.h
 tdeprintdir = $(includedir)/tdeprint

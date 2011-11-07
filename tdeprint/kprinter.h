@@ -79,13 +79,13 @@ class DrPageSize;
  * KPrintDialogPage and adding the page using addDialogPage().
  *
  * When compiling an application that uses KPrinter, you must link to -ltdeprint, which when
- * using the standard KDE build framework can be done by adding $(LIB_KDEPRINT) to _LDADD.
+ * using the standard KDE build framework can be done by adding $(LIB_TDEPRINT) to _LDADD.
  *
  * @short The central interface class to access the KDE print system.
  * @author Michael Goffioul
  * @see TQPrinter, KPrintDialogPage
  */
-class KDEPRINT_EXPORT KPrinter : public TQPaintDevice, public KPReloadObject
+class TDEPRINT_EXPORT KPrinter : public TQPaintDevice, public KPReloadObject
 {
 friend class KPrinterWrapper;
 friend class KPrinterImpl;
@@ -769,8 +769,8 @@ protected:
 
 // Utility functions
 
-KDEPRINT_EXPORT KPrinter::PageSize pageNameToPageSize(const TQString& name);
-KDEPRINT_EXPORT const char* pageSizeToPageName(KPrinter::PageSize s);
+TDEPRINT_EXPORT KPrinter::PageSize pageNameToPageSize(const TQString& name);
+TDEPRINT_EXPORT const char* pageSizeToPageName(KPrinter::PageSize s);
 /**
  * DO NOT USE, WILL BE REMOVED.
  * @obsolete

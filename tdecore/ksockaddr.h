@@ -43,7 +43,7 @@ class KSocketAddressPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short a socket address.
  */
-class KDECORE_EXPORT KSocketAddress: public TQObject
+class TDECORE_EXPORT KSocketAddress: public TQObject
 {
   Q_OBJECT
 protected:
@@ -230,7 +230,7 @@ class KInetSocketAddressPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short an Internet socket address
  */
-class KDECORE_EXPORT KInetSocketAddress: public ::KSocketAddress
+class TDECORE_EXPORT KInetSocketAddress: public ::KSocketAddress
 {
   Q_OBJECT
 public:
@@ -581,7 +581,7 @@ class KUnixSocketAddressPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short a Unix socket address
  */
-class KDECORE_EXPORT KUnixSocketAddress: public ::KSocketAddress
+class TDECORE_EXPORT KUnixSocketAddress: public ::KSocketAddress
 {
   Q_OBJECT
 public:

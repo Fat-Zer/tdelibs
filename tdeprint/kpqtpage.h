@@ -29,7 +29,7 @@ class TQComboBox;
 class TQLabel;
 class DrMain;
 
-class KDEPRINT_EXPORT KPQtPage : public KPrintDialogPage
+class TDEPRINT_EXPORT KPQtPage : public KPrintDialogPage
 {
 	Q_OBJECT
 public:

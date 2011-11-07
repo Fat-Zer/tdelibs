@@ -27,7 +27,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#ifdef KDEINIT_OOM_PROTECT
+#ifdef TDEINIT_OOM_PROTECT
 
 /*
  Prevent getting killed by bad heuristic in Linux OOM-killer.

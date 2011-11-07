@@ -34,7 +34,7 @@
  * be called by the default crash handler, giving the application a chance
  * to save its data.
  */
-class KDECORE_EXPORT KCrash
+class TDECORE_EXPORT KCrash
 {
  private: // ;o)
   static const char *appName;

@@ -30,7 +30,7 @@ class MarginPreview;
 class TQCheckBox;
 class TQComboBox;
 
-class KDEPRINT_EXPORT MarginWidget : public TQWidget
+class TDEPRINT_EXPORT MarginWidget : public TQWidget
 {
 	Q_OBJECT
 public:

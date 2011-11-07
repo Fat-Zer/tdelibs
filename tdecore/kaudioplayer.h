@@ -53,7 +53,7 @@ class KAudioPlayerPrivate;
  *
  */
 //REVISED: hausmann
-class KDECORE_EXPORT KAudioPlayer : public TQObject {
+class TDECORE_EXPORT KAudioPlayer : public TQObject {
 Q_OBJECT
 public:
 	/**

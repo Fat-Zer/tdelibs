@@ -32,7 +32,7 @@
  * @author Waldo Bastian <bastian@kde.org>
  * @since 3.2
  */
-class KDECORE_EXPORT KMountPoint : public KShared
+class TDECORE_EXPORT KMountPoint : public KShared
 {
    typedef signed long long int filesize_t;
 public:

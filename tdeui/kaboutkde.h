@@ -37,7 +37,7 @@
  * @author Espen Sand (espen@kde.org)
  */
 
-class KDEUI_EXPORT KAboutKDE : public KAboutDialog
+class TDEUI_EXPORT KAboutKDE : public KAboutDialog
 {
   public:
     /**

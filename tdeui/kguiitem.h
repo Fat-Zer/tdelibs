@@ -35,7 +35,7 @@
  * @author Holger Freyther <freyher@yahoo.com>
  * @see KStdGuiItem
  */
-class KDEUI_EXPORT KGuiItem
+class TDEUI_EXPORT KGuiItem
 {
 public:
     KGuiItem();

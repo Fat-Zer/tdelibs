@@ -45,7 +45,7 @@ class KMulticastSocketPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KDECORE_EXPORT KMulticastSocket: public KDatagramSocket
+class TDECORE_EXPORT KMulticastSocket: public KDatagramSocket
 {
   // Q_add-it-here_OBJECT
 public:

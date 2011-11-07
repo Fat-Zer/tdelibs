@@ -25,7 +25,7 @@
 
 #include <kdelibs_export.h>
 
-class KDEPRINT_EXPORT KPipeProcess : public TQFile
+class TDEPRINT_EXPORT KPipeProcess : public TQFile
 {
 public:
 	KPipeProcess(const TQString& cmd = TQString::null, int mode = IO_ReadOnly);

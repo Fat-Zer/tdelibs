@@ -127,7 +127,7 @@ class KPty;
  * @author Christian Czezatke e9025461@student.tuwien.ac.at
  *
  **/
-class KDECORE_EXPORT KProcess : public TQObject
+class TDECORE_EXPORT KProcess : public TQObject
 {
   Q_OBJECT
 
@@ -901,7 +901,7 @@ class KShellProcessPrivate;
 *   	processes through a shell.
 *   @author Christian Czezatke <e9025461@student.tuwien.ac.at>
 */
-class KDECORE_EXPORT KShellProcess: public KProcess
+class TDECORE_EXPORT KShellProcess: public KProcess
 {
   Q_OBJECT
 

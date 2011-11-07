@@ -97,7 +97,7 @@
 # endif
 #endif
 
-#if defined(KDEINIT_USE_XFT) && defined(KDEINIT_USE_FONTCONFIG)
+#if defined(TDEINIT_USE_XFT) && defined(TDEINIT_USE_FONTCONFIG)
 #include <X11/Xft/Xft.h>
 extern "C" FcBool XftInitFtLibrary (void);
 #include <fontconfig/fontconfig.h>
@@ -386,7 +386,7 @@ TQCString execpath_avoid_loops( const TQCString& exec, int envc, const char* env
      return execpath;
 }
 
-#ifdef KDEINIT_OOM_PROTECT
+#ifdef TDEINIT_OOM_PROTECT
 static int oom_pipe = -1;
 
 static void oom_protect_sighandler( int ) {
@@ -892,7 +892,7 @@ static void init_tdeinit_socket()
      {
         fprintf(stderr, "tdeinit: Shutting down running client.\n");
         klauncher_header request_header;
-        request_header.cmd = LAUNCHER_TERMINATE_KDEINIT;
+        request_header.cmd = LAUNCHER_TERMINATE_TDEINIT;
         request_header.arg_length = 0;
         write(s, &request_header, sizeof(request_header));
         sleep(1); // Give it some time
@@ -1298,7 +1298,7 @@ static void handle_launcher_request(int sock = -1)
        tdeinit_xio_errhandler( 0L );
 #endif
    }
-   else if (request_header.cmd == LAUNCHER_TERMINATE_KDEINIT)
+   else if (request_header.cmd == LAUNCHER_TERMINATE_TDEINIT)
    {
 #ifndef NDEBUG
        fprintf(stderr,"tdeinit: Killing tdeinit/klauncher.\n");
@@ -1401,7 +1401,7 @@ static void handle_requests(pid_t waitForPid)
          int sock = accept(d.wrapper, (struct sockaddr *)&client, &sClient);
          if (sock >= 0)
          {
-#if defined(KDEINIT_USE_XFT) && defined(KDEINIT_USE_FONTCONFIG)
+#if defined(TDEINIT_USE_XFT) && defined(TDEINIT_USE_FONTCONFIG)
             if( FcGetVersion() < 20390 && !FcConfigUptoDate(NULL))
                FcInitReinitialize();
 #endif
@@ -1422,7 +1422,7 @@ static void handle_requests(pid_t waitForPid)
          int sock = accept(d.wrapper_old, (struct sockaddr *)&client, &sClient);
          if (sock >= 0)
          {
-#if defined(KDEINIT_USE_XFT) && defined(KDEINIT_USE_FONTCONFIG)
+#if defined(TDEINIT_USE_XFT) && defined(TDEINIT_USE_FONTCONFIG)
             if( FcGetVersion() < 20390 && !FcConfigUptoDate(NULL))
                FcInitReinitialize();
 #endif
@@ -1708,7 +1708,7 @@ int main(int argc, char **argv, char **envp)
          keep_running = 0;
       if (strcmp(safe_argv[i], "--new-startup") == 0)
          new_startup = 1;
-#ifdef KDEINIT_OOM_PROTECT
+#ifdef TDEINIT_OOM_PROTECT
       if (strcmp(safe_argv[i], "--oom-pipe") == 0 && i+1<argc)
          oom_pipe = atol(argv[i+1]);
 #endif
@@ -1829,7 +1829,7 @@ int main(int argc, char **argv, char **envp)
 #endif
 
    {
-#if defined(KDEINIT_USE_XFT) && defined(KDEINIT_USE_FONTCONFIG)
+#if defined(TDEINIT_USE_XFT) && defined(TDEINIT_USE_FONTCONFIG)
       if( FcGetVersion() < 20390 )
       {
         XftInit(0);
@@ -1872,7 +1872,7 @@ int main(int argc, char **argv, char **envp)
          handle_requests(pid);
       }
       else if (safe_argv[i][0] == '-'
-#ifdef KDEINIT_OOM_PROTECT
+#ifdef TDEINIT_OOM_PROTECT
           || isdigit(safe_argv[i][0])
 #endif
           )

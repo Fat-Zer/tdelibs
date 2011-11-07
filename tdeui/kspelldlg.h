@@ -43,7 +43,7 @@ enum KS_RESULT {
   KS_CONFIG=     9
 };
 
-class KDEUI_EXPORT KSpellDlg : public KDialogBase
+class TDEUI_EXPORT KSpellDlg : public KDialogBase
 {
   Q_OBJECT
 
