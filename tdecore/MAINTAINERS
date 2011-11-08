@@ -71,8 +71,8 @@ ktempfile.cpp		Waldo Bastian <bastian@kde.org>
 kuniqueapplication.cpp	Waldo Bastian <bastian@kde.org>
 kurl.cpp		Waldo Bastian <bastian@kde.org>
 kurldrag.cpp		David Faure <faure@kde.org>
-kwin.cpp        	Lubos Lunak <l.lunak@kde.org>
-kwinmodule.cpp  	Lubos Lunak <l.lunak@kde.org>
+twin.cpp        	Lubos Lunak <l.lunak@kde.org>
+twinmodule.cpp  	Lubos Lunak <l.lunak@kde.org>
 kxmessages.cpp		Lubos Lunak <l.lunak@kde.org>
 kxerrorhandler.cpp	Lubos Lunak <l.lunak@kde.org>
 libintl.cpp		Hans Petter Bieker <bieker@kde.org>

@@ -43,7 +43,7 @@
 #include <klocale.h>
 #include "kspell.h"
 #include "kspelldlg.h"
-#include <kwin.h>
+#include <twin.h>
 #include <kprocio.h>
 
 #define MAXLINELENGTH 10000

@@ -41,10 +41,10 @@
 #include <klocale.h>
 #include <kmdcodec.h>
 #include <kparts/browserinterface.h>
-#include <kwin.h>
+#include <twin.h>
 
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-#include <kwinmodule.h> // schroder
+#include <twinmodule.h> // schroder
 #endif
 
 #ifndef KONQ_EMBEDDED

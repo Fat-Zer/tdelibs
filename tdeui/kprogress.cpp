@@ -36,7 +36,7 @@
 
 #include <kapplication.h>
 #include <klocale.h>
-#include <kwin.h>
+#include <twin.h>
 
 KProgress::KProgress(TQWidget *parent, const char *name, WFlags f)
   : TQProgressBar(parent, name, f),

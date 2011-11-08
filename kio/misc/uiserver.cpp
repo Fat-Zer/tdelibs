@@ -38,7 +38,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <tdesu/client.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kdialog.h>
 #include <ksystemtray.h>
 #include <kpopupmenu.h>

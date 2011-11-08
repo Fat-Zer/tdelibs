@@ -36,7 +36,7 @@
 #include <kreplacedialog.h>
 #include <kspell.h>
 #include <kurlcompletion.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <tqstyle.h>
 

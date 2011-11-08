@@ -9,10 +9,10 @@
 #include <tqtimer.h>
 #include <tqtooltip.h>
 #include <ksystemtray.h>
-#include <kwin.h>
+#include <twin.h>
 
-#include "kwindowinfo.h"
-#include "kwindowinfo.moc"
+#include "twindowinfo.h"
+#include "twindowinfo.moc"
 
 static const int UNSPECIFIED_TIMEOUT = -1;
 static const int DEFAULT_MESSAGE_TIMEOUT = 3000;

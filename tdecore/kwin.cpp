@@ -34,7 +34,7 @@
 #include <tqdialog.h>
 
 #include "config.h"
-#include "kwin.h"
+#include "twin.h"
 #include "kapplication.h"
 
 #include <kglobal.h>
@@ -62,10 +62,10 @@ static Atom net_wm_context_help;
 static Atom kde_wm_change_state;
 static Atom kde_wm_window_opacity;
 static Atom kde_wm_window_shadow;
-static Atom kwin_UTF8_STRING;
+static Atom twin_UTF8_STRING;
 static Atom net_wm_cm;
 
-static void kwin_net_create_atoms() {
+static void twin_net_create_atoms() {
     if (!atoms_created){
 	const int max = 20;
 	Atom* atoms[max];
@@ -146,7 +146,7 @@ static void sendClientMessage(Window w, Atom a, long x){
 bool KWin::compositingActive()
 {
 #ifdef Q_WS_X11
-    kwin_net_create_atoms();
+    twin_net_create_atoms();
     return XGetSelectionOwner( qt_xdisplay(), net_wm_cm ) != None;
 #else
     return false;
@@ -166,7 +166,7 @@ public:
 ContextWidget::ContextWidget()
 	: TQWidget(0,0)
     {
-	kwin_net_create_atoms();
+	twin_net_create_atoms();
 	kapp->installX11EventFilter( this );
 	TQWhatsThis::enterWhatsThisMode();
 	TQCursor c = *TQApplication::overrideCursor();
@@ -561,7 +561,7 @@ void KWin::clearState( WId win, unsigned long state )
 void KWin::setOpacity( WId win, uint percent )
 {
 #ifdef Q_WS_X11
-    kwin_net_create_atoms();
+    twin_net_create_atoms();
     if (percent > 99)
         XDeleteProperty (qt_xdisplay(), win, kde_wm_window_opacity);
     else
@@ -575,7 +575,7 @@ void KWin::setOpacity( WId win, uint percent )
 void KWin::setShadowSize( WId win, uint percent )
 {
 #ifdef Q_WS_X11
-    kwin_net_create_atoms();
+    twin_net_create_atoms();
     long shadowSize = long(0xFFFFFFFF/100.0*percent);
     XChangeProperty(qt_xdisplay(), win, kde_wm_window_shadow, XA_CARDINAL, 32, PropModeReplace, (unsigned char *) &shadowSize, 1L);
 #endif
@@ -686,7 +686,7 @@ void KWin::iconifyWindow( WId win, bool animation)
 #ifdef Q_WS_X11
     if ( !animation )
     {
-        kwin_net_create_atoms();
+        twin_net_create_atoms();
 	sendClientMessageToRoot( win, kde_wm_change_state, IconicState, 1 );
     }
     XIconifyWindow( qt_xdisplay(), win, qt_xscreen() );
@@ -699,7 +699,7 @@ void KWin::deIconifyWindow( WId win, bool animation )
 #ifdef Q_WS_X11
     if ( !animation )
     {
-        kwin_net_create_atoms();
+        twin_net_create_atoms();
 	sendClientMessageToRoot( win, kde_wm_change_state, NormalState, 1 );
     }
     XMapWindow( qt_xdisplay(), win );
@@ -1245,10 +1245,10 @@ TQString KWin::readNameProperty( WId win, unsigned long atom )
 #ifdef Q_WS_X11
     if ( XGetTextProperty( qt_xdisplay(), win, &tp, atom ) != 0 && tp.value != NULL ) 
     {
-        if (!kwin_UTF8_STRING)
-          kwin_UTF8_STRING = XInternAtom( qt_xdisplay(), "UTF8_STRING", False);
+        if (!twin_UTF8_STRING)
+          twin_UTF8_STRING = XInternAtom( qt_xdisplay(), "UTF8_STRING", False);
 
-        if ( tp.encoding == kwin_UTF8_STRING ) {
+        if ( tp.encoding == twin_UTF8_STRING ) {
             result = TQString::fromUtf8 ( (const char*) tp.value );
         }
         else if ( XmbTextPropertyToTextList( qt_xdisplay(), &tp, &text, &count) == Success &&

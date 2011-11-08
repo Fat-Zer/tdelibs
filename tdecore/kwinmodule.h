@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 /*
- * kwinmodule.h. Part of the KDE project.
+ * twinmodule.h. Part of the KDE project.
  */
 
 #ifndef KWINMODULE_H
@@ -220,7 +220,7 @@ public:
     bool showingDesktop() const;
 
     /**
-     * Informs kwin via dcop to not manage a window with the
+     * Informs twin via dcop to not manage a window with the
      * specified @p title.
      *
      * Useful for swallowing legacy applications, for example java

@@ -38,7 +38,7 @@
 #include <kpassdlg.h>
 #include <kstandarddirs.h>
 #include <kwalletentry.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include <tqdir.h>
 #include <tqlabel.h>

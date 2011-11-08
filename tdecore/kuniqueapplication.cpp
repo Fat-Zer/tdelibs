@@ -39,7 +39,7 @@
 #include <kaboutdata.h>
 
 #if defined Q_WS_X11
-#include <kwin.h> 
+#include <twin.h> 
 #include <kstartupinfo.h> 
 #endif
 

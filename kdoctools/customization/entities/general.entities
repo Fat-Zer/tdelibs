@@ -338,7 +338,7 @@
 <!ENTITY kvoctrain	"<application>KVocTrain</application>">
 <!ENTITY kworldclock	"<application>KWorldClock</application>">
 <!ENTITY kword	"<application>KWord</application>">
-<!ENTITY kwin	"<application>KWin</application>">
+<!ENTITY twin	"<application>KWin</application>">
 <!ENTITY k4wins	"<application>KWin4</application>">
 <!ENTITY kwordquiz "<application>KWordQuiz</application>">
 <!ENTITY kwrite	"<application>KWrite</application>">

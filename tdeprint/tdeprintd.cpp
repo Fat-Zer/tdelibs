@@ -32,7 +32,7 @@
 #include <kpushbutton.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kapplication.h>
 #include <tqlayout.h>
 #include <tqtimer.h>

@@ -42,7 +42,7 @@
 #include <khelpmenu.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kedittoolbar.h>
 #include <kmainwindow.h>
 

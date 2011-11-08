@@ -64,7 +64,7 @@
 #include <kglobalsettings.h>
 #include <klibloader.h>
 #include <kdirwatch.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kencodingfiledialog.h>
 #include <ktempfile.h>
 #include <kmdcodec.h>

@@ -312,7 +312,7 @@
 <!ENTITY kvoctrain	"<application>KVocTrain</application>">
 <!ENTITY kworldclock	"<application>KWorldClock</application>">
 <!ENTITY kword	"<application>KWord</application>">
-<!ENTITY kwin	"<application>KWin</application>">
+<!ENTITY twin	"<application>KWin</application>">
 <!ENTITY k4wins	"<application>K Four Wins</application>">
 <!ENTITY kwrite	"<application>KWrite</application>">
 <!ENTITY kwuftpd	"<application>kwuftpd</application>">
@@ -385,4 +385,4 @@
 <!ENTITY kmoon	"<application>Moon Phase</application>">
 <!ENTITY kodo	"<application>KOdometer</application>">
 <!ENTITY kpat	"<application>KPatience</application>">
-<!ENTITY kwin4	"<application>K Four Wins</application>">
+<!ENTITY twin4	"<application>K Four Wins</application>">

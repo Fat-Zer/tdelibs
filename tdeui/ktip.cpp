@@ -49,7 +49,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kglobalsettings.h>
 
 #ifdef Q_WS_X11
-#include <kwin.h>
+#include <twin.h>
 #endif
 
 #include "ktip.h"

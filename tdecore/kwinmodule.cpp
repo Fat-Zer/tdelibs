@@ -23,8 +23,8 @@
 
 #include <tqwidget.h>
 #ifdef Q_WS_X11 //FIXME
-#include "kwinmodule.h"
-#include "kwin.h"
+#include "twinmodule.h"
+#include "twin.h"
 #include <X11/Xatom.h>
 #include "kapplication.h"
 #include "kdebug.h"
@@ -114,13 +114,13 @@ public:
 };
 
 KWinModule::KWinModule( TQObject* parent )
-    : TQObject( parent, "kwin_module" )
+    : TQObject( parent, "twin_module" )
 {
     init(INFO_ALL);
 }
 
 KWinModule::KWinModule( TQObject* parent, int what )
-    : TQObject( parent, "kwin_module" )
+    : TQObject( parent, "twin_module" )
 {
     init(what);
 }
@@ -186,7 +186,7 @@ TQSize KWinModulePrivate::numberOfViewports(int desktop) const
     TQSize s(netdesktop.width / TQApplication::desktop()->width(),
             netdesktop.height / TQApplication::desktop()->height());
 
-    // workaround some kwin bugs
+    // workaround some twin bugs
     if (s.width() < 1) s.setWidth(1);
     if (s.height() < 1) s.setHeight(1);
     return s;
@@ -474,9 +474,9 @@ void KWinModule::doNotManage( const TQString& title )
     TQCString replyType;
     TQDataStream arg(data, IO_WriteOnly);
     arg << title;
-    kapp->dcopClient()->call("kwin", "", "doNotManage(TQString)",
+    kapp->dcopClient()->call("twin", "", "doNotManage(TQString)",
 			     data, replyType, replyData);
 }
 
-#include "kwinmodule.moc"
+#include "twinmodule.moc"
 #endif

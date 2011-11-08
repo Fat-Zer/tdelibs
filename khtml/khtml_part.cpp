@@ -117,7 +117,7 @@ using namespace DOM;
 #include "kpassivepopup.h"
 #include "kpopupmenu.h"
 #include "rendering/render_form.h"
-#include <kwin.h>
+#include <twin.h>
 
 #define HINT_UTF8	106
 

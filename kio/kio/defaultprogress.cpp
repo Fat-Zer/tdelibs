@@ -36,7 +36,7 @@
 #include <klineedit.h>
 
 #ifdef Q_WS_X11
-#include <kwin.h>
+#include <twin.h>
 #endif
 
 #include "jobclasses.h"

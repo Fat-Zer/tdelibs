@@ -30,8 +30,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqpainter.h>
 #include <tqvaluelist.h>
 
-#include <kwin.h> 
-#include <kwinmodule.h> 
+#include <twin.h> 
+#include <twinmodule.h> 
 
 #include <klocale.h>
 #include <kstringhandler.h>
@@ -42,16 +42,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <dcopclient.h>
 
 #undef Bool
-#include "kwindowlistmenu.h"
-#include "kwindowlistmenu.moc"
+#include "twindowlistmenu.h"
+#include "twindowlistmenu.moc"
 
-static TQCString kwinName() {
+static TQCString twinName() {
     TQCString appname;
     int screen_number = DefaultScreen(qt_xdisplay());
     if (screen_number == 0)
-        appname = "kwin";
+        appname = "twin";
     else
-        appname.sprintf("kwin-screen-%d", screen_number);
+        appname.sprintf("twin-screen-%d", screen_number);
     return appname;
 }
 
@@ -85,7 +85,7 @@ int NameSortedInfoList::compareItems( TQPtrCollection::Item s1, TQPtrCollection:
 KWindowListMenu::KWindowListMenu(TQWidget *parent, const char *name)
   : KPopupMenu(parent, name)
 {
-    kwin_module = new KWinModule(TQT_TQOBJECT(this));
+    twin_module = new KWinModule(TQT_TQOBJECT(this));
 
     connect(this, TQT_SIGNAL(activated(int)), TQT_SLOT(slotExec(int)));
 }
@@ -115,9 +115,9 @@ void KWindowListMenu::init()
     int i, d;
     i = 0;
 
-    int nd = kwin_module->numberOfDesktops();
-    int cd = kwin_module->currentDesktop();
-    WId active_window = kwin_module->activeWindow();
+    int nd = twin_module->numberOfDesktops();
+    int cd = twin_module->currentDesktop();
+    WId active_window = twin_module->activeWindow();
 
     // Make sure the popup is not too wide, otherwise clicking in the middle of kdesktop
     // wouldn't leave any place for the popup, and release would activate some menu entry.    
@@ -139,8 +139,8 @@ void KWindowListMenu::init()
 
 
     TQValueList<KWin::WindowInfo> windows;
-    for (TQValueList<WId>::ConstIterator it = kwin_module->windows().begin();
-         it != kwin_module->windows().end(); ++it) {
+    for (TQValueList<WId>::ConstIterator it = twin_module->windows().begin();
+         it != twin_module->windows().end(); ++it) {
          windows.append( KWin::windowInfo( *it, NET::WMDesktop ));
     }
     bool show_all_desktops_group = ( nd > 1 );
@@ -180,7 +180,7 @@ void KWindowListMenu::init()
                 if ( items == 1 && nd > 1 )
                 {
                     if( !on_all_desktops )
-                        insertTitle(kwin_module->desktopName( d ), 1000 + d);
+                        insertTitle(twin_module->desktopName( d ), 1000 + d);
                     else
                         insertTitle(i18n("On All Desktops"), 2000 );
                 }
@@ -242,12 +242,12 @@ void KWindowListMenu::selectActiveWindow()
 
 void KWindowListMenu::slotUnclutterWindows()
 {
-    kapp->dcopClient()->send(kwinName(), "KWinInterface", "unclutterDesktop()", TQString(""));
+    kapp->dcopClient()->send(twinName(), "KWinInterface", "unclutterDesktop()", TQString(""));
 }
 
 void KWindowListMenu::slotCascadeWindows()
 {
-    kapp->dcopClient()->send(kwinName(), "KWinInterface", "cascadeDesktop()", TQString(""));
+    kapp->dcopClient()->send(twinName(), "KWinInterface", "cascadeDesktop()", TQString(""));
 }
 
 void KWindowListMenu::virtual_hook( int id, void* data )

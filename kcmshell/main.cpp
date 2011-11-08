@@ -41,7 +41,7 @@
 #include <kservice.h>
 #include <kservicegroup.h>
 #include <kstartupinfo.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kglobal.h>
 
 #include "main.h"

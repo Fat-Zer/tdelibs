@@ -18,7 +18,7 @@
 #include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <tqmultilineedit.h>
-#include "kwindowtest.h"
+#include "twindowtest.h"
 
 #include <kglobal.h>
 
@@ -372,13 +372,13 @@ testWindow::~testWindow ()
   /********************************************************/
 
   delete tb1->getWidget(8);
-  //debug ("kwindowtest: deleted clock");
+  //debug ("twindowtest: deleted clock");
   
   delete tb;
   delete tb1;
   delete menuBar;
 
-  qDebug ("kwindowtest finished");
+  qDebug ("twindowtest finished");
 }
 
 void testWindow::beFixed()
@@ -524,5 +524,5 @@ int main( int argc, char *argv[] )
     return ret;
 }
 
-#include "kwindowtest.moc"
+#include "twindowtest.moc"
 

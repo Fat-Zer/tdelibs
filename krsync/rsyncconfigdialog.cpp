@@ -74,7 +74,7 @@
 #include <klocale.h>
 #include <kinstance.h>
 
-#include <kwin.h>
+#include <twin.h>
 #include <kaction.h>
 #include <kpopupmenu.h>
 #include <kmessagebox.h>

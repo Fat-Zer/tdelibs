@@ -80,11 +80,11 @@
 1208        kcontrol
 1210        kicker
 1211        konsole
-1212        kwin
+1212        twin
 1213        kappfinder
 1214        kdesktop (icons)
 1215        ksysguard
-1216        kwin (client errors)
+1216        twin (client errors)
 1217        khotkeys
 1218        ksmserver
 1219        media kioslave
@@ -360,7 +360,7 @@
 12007        kolf
 12008        kbounce
 12009        kblackbox
-12010        kwin4
+12010        twin4
 12011        kenolaba
 12012        kasteroids
 

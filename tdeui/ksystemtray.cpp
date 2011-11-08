@@ -29,8 +29,8 @@
 #include "kaboutdata.h"
 
 #ifdef Q_WS_X11
-#include <kwin.h>
-#include <kwinmodule.h>
+#include <twin.h>
+#include <twinmodule.h>
 #include <qxembed.h>
 #endif
 
@@ -347,4 +347,4 @@ void KSystemTray::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "ksystemtray.moc"
-#include "kdockwindow.moc"
+#include "kdoctwindow.moc"

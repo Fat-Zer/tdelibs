@@ -43,7 +43,7 @@
 #include <kcursor.h>
 #include <kmenubar.h>
 #include <kdebug.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kio/netaccess.h>
 #include <tqtimer.h>
 #include <tqlayout.h>

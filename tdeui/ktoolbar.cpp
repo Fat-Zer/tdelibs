@@ -27,7 +27,7 @@
 
 #ifdef KDE_USE_FINAL
 #undef Always
-#include <tqdockwindow.h>
+#include <tqdoctwindow.h>
 #endif
 
 #include <string.h>
@@ -58,7 +58,7 @@
 #include <kanimwidget.h>
 #include <kedittoolbar.h>
 #include <kipc.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kdebug.h>
 #include <ktoolbarbutton.h>
 

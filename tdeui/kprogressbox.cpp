@@ -39,7 +39,7 @@
 
 #include <kapplication.h>
 #include <klocale.h>
-#include <kwin.h>
+#include <twin.h>
 
 struct KProgressBoxDialog::KProgressBoxDialogPrivate
 {

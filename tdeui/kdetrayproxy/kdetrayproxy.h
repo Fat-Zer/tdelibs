@@ -22,7 +22,7 @@
 
 #include <tqvaluelist.h>
 #include <kmanagerselection.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <tqwidget.h>
 
 class KDETrayProxy

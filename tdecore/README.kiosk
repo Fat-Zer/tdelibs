@@ -239,7 +239,7 @@ action/menuedit
 
 
 KWin related:
-action/kwin_rmb // RMB window context menu
+action/twin_rmb // RMB window context menu
 
 Konsole related:
 action/konsole_rmb // RMB context menu

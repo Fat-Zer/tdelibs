@@ -22,8 +22,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#ifndef __kwindowlistmenu_h__
-#define __kwindowlistmenu_h__
+#ifndef __twindowlistmenu_h__
+#define __twindowlistmenu_h__
 
 #include <kpopupmenu.h>
 #include <tqmap.h>
@@ -61,7 +61,7 @@ protected slots:
     void slotCascadeWindows();
 
 private:
-    KWinModule*         kwin_module;
+    KWinModule*         twin_module;
     TQMap<int,WId>       map;
 protected:
     virtual void virtual_hook( int id, void* data );

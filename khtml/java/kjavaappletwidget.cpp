@@ -22,7 +22,7 @@
 #include "kjavaappletwidget.h"
 #include "kjavaappletserver.h"
 
-#include <kwin.h>
+#include <twin.h>
 #include <kdebug.h>
 #include <klocale.h>
 

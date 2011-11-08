@@ -81,7 +81,7 @@ public:
      * and normal applications are forbidden to use it.
      *
      * In case of problems, consult the KWin README in the kdebase
-     * package (kdebase/kwin/README), or ask on the kwin@kde.org
+     * package (kdebase/twin/README), or ask on the twin@kde.org
      * mailing list.
      *
      * @param win the id of the window to make active

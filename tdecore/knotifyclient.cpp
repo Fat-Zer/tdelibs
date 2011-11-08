@@ -38,7 +38,7 @@ static bool canAvoidStartupEvent( const TQString& event, const TQString& appname
     static bool checkAvoid = true;
     if( !checkAvoid )
         return false;
-    if(( appname != "kwin" && appname != "ksmserver" ) || present > 0 ) {
+    if(( appname != "twin" && appname != "ksmserver" ) || present > 0 ) {
         checkAvoid = false;
         return false;
     }

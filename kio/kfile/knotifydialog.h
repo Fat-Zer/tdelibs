@@ -107,7 +107,7 @@ public:
      * KNotifyDialog can handle events for multiple applications (i.e. eventsrc files).
      * Successive calls with a different @p path will add them.
      * @param path The absolute or relative path to the eventsrc file to be configured.
-     *             A relative path would be e.g. "kwin/eventsrc".
+     *             A relative path would be e.g. "twin/eventsrc".
      * @see clearApplicationEvents()
      */
     virtual void addApplicationEvents( const TQString& path );

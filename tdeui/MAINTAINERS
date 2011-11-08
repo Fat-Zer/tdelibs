@@ -88,7 +88,7 @@ ktoolbar.cpp		Waldo Bastian <bastian@kde.org>
 ktoolbarbutton.cpp	Waldo Bastian <bastian@kde.org>
 ktoolbarradiogroup.cpp
 kurllabel.cpp
-kwindowlistmenu.cpp
+twindowlistmenu.cpp
 kwizard.cpp
 kwordwrap.cpp		David Faure <faure@kde.org>
 kxmlguibuilder.cpp

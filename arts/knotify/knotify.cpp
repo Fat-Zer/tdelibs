@@ -65,7 +65,7 @@
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <kuniqueapplication.h>
-#include <kwin.h>
+#include <twin.h>
 
 #include "knotify.h"
 #include "knotify.moc"
@@ -130,7 +130,7 @@ KDE_EXPORT int kdemain(int argc, char **argv)
     // KNotifClient::startDaemon()) whenever a KNotify event occurs. Especially
     // KWin may fire many events (e.g. when a window pops up). When we have
     // problems with aRts or the installation, we might get an infinite loop
-    // of knotify crashing, popping up the crashhandler window and kwin firing
+    // of knotify crashing, popping up the crashhandler window and twin firing
     // another event, starting knotify again...
     // We try to prevent this by tracking our startup and offer options to
     // abort this.

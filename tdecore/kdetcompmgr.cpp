@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 
     KApplication app;
 
-    KConfig config("kwinrc", true);
+    KConfig config("twinrc", true);
     config.setGroup( "Notification Messages" );
     if (!config.readBoolEntry("UseTranslucency",false)) {
         // Attempt to load the kompmgr pid file
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 //     app.detectCompositionManagerAvailable();
 
 //    if (!app.isCompositionManagerAvailable()) {
-	KConfig config2("kwinrc", true);
+	KConfig config2("twinrc", true);
 	config2.setGroup( "Notification Messages" );
 	if (config2.readBoolEntry("UseTranslucency",false)) {
 		app.detectCompositionManagerAvailable(true, true);

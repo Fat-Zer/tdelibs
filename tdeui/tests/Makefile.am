@@ -33,7 +33,7 @@ check_PROGRAMS = kaboutdialogtest kblendtest kbuttonboxtest kcharselecttest \
 	kpalettetest \
 	kpopuptest kprogresstest krulertest kseparatortest \
 	kstatusbartest ktabctltest \
-	kunbalancedgrdtest kwindowtest kwizardtest \
+	kunbalancedgrdtest twindowtest kwizardtest \
 	itemcontainertest kpanelmenutest kedittest \
 	kxmlguitest kaccelgentest ksystemtraytest klistviewtest \
 	ktextedittest kmainwindowtest kmainwindowrestoretest \
@@ -79,7 +79,7 @@ kstatusbartest_SOURCES = kstatusbartest.cpp
 ktabctltest_SOURCES = ktabctltest.cpp
 ktimewidgettest_SOURCES = ktimewidgettest.cpp
 kunbalancedgrdtest_SOURCES = kunbalancedgrdtest.cpp
-kwindowtest_SOURCES = kwindowtest.cpp
+twindowtest_SOURCES = twindowtest.cpp
 kwizardtest_SOURCES = kwizardtest.cpp
 itemcontainertest_SOURCES = itemcontainertest.cpp
 kpanelmenutest_SOURCES = kpanelmenutest.cpp

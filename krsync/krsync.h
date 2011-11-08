@@ -52,7 +52,7 @@
 #include <klocale.h>
 #include <kinstance.h>
 
-#include <kwin.h>
+#include <twin.h>
 #include <kurl.h>
 #include <kaction.h>
 #include <kpopupmenu.h>

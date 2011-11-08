@@ -295,8 +295,8 @@
 <!ENTITY  kstart-g            "<application>К-покрета</application>"  >
 <!ENTITY  kstart-n            "<application>К-покрет</application>"  >
 <!ENTITY  kterm-n             "<application>Ктерм</application>"  >
-<!ENTITY  kwin-g              "<application>К-проза</application>"  >
-<!ENTITY  kwin-n              "<application>К-проз</application>"  >
+<!ENTITY  twin-g              "<application>К-проза</application>"  >
+<!ENTITY  twin-n              "<application>К-проз</application>"  >
 <!ENTITY  LeeWeeTiong-n       "<personname><firstname>Ли Ви</firstname> <surname>Тионг</surname></personname>"  >
 <!ENTITY  LGPL-i              "<acronym>МОЈЛ</acronym>ом"  >
 <!ENTITY  LGPL-n              "<acronym>МОЈЛ</acronym>"  >

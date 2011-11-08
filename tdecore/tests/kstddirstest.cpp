@@ -43,9 +43,9 @@ int main(int argc, char **argv)
     kdDebug() << "docs " << (*it).ascii() << endl;
   }
 
-  list = t.findDirs("data", "kwin");
+  list = t.findDirs("data", "twin");
   for (TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it) {
-    kdDebug() << "kwin dirs " << (*it).ascii() << endl;
+    kdDebug() << "twin dirs " << (*it).ascii() << endl;
   }
 
   kdDebug() << "hit " << t.findResourceDir("config", "kcmdisplayrc") << endl;

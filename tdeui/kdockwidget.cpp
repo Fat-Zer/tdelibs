@@ -38,7 +38,7 @@
 #include <klocale.h>
 #include <ktoolbar.h>
 #include <kpopupmenu.h>
-#include <kwin.h>
+#include <twin.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
 

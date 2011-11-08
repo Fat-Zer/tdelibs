@@ -43,7 +43,7 @@ include_HEADERS = kprogressbox.h kprogress.h kcolordlg.h \
 		kmainwindow.h kmainwindowiface.h ktoolbar.h kmenubar.h \
 		knuminput.h kseparator.h klineedit.h \
 		krestrictedline.h kcolorbutton.h kcolorbtn.h \
-		ksystemtray.h kdockwindow.h kbuttonbox.h \
+		ksystemtray.h kdoctwindow.h kbuttonbox.h \
 		keditcl.h kled.h keditlistbox.h \
 		kwizard.h kkeydialog.h kkeybutton.h \
 		kurllabel.h kruler.h kcursor.h \
@@ -64,9 +64,9 @@ include_HEADERS = kprogressbox.h kprogress.h kcolordlg.h \
 		krootpixmap.h kaboutkde.h kaboutapplication.h \
 		kpanelapplet.h kpushbutton.h kdcopactionproxy.h kcolorcombo.h \
 		kpanelextension.h kcompletionbox.h ksqueezedtextlabel.h \
-		kcommand.h kwindowlistmenu.h kfontcombo.h kaccelgen.h ktip.h \
+		kcommand.h twindowlistmenu.h kfontcombo.h kaccelgen.h ktip.h \
 		kdatewidget.h karrowbutton.h kguiitem.h kstdguiitem.h \
-		kstringvalidator.h kwindowinfo.h \
+		kstringvalidator.h twindowinfo.h \
 		ktextedit.h kpassivepopup.h \
 		kdatetimewidget.h ktimewidget.h ktimezonewidget.h kscrollview.h \
 		kspell.h ksconfig.h kspelldlg.h ksyntaxhighlighter.h \
@@ -111,11 +111,11 @@ libtdeui_la_SOURCES = \
 		kaboutapplication.cpp kpanelapplet.cpp kdcopactionproxy.cpp \
 		kcolorcombo.cpp kpushbutton.cpp kpanelextension.cpp \
 		kcompletionbox.cpp ksqueezedtextlabel.cpp kcmodule.cpp \
-		kcommand.cpp kwindowlistmenu.cpp kfontcombo.cpp ktip.cpp \
+		kcommand.cpp twindowlistmenu.cpp kfontcombo.cpp ktip.cpp \
 		kdatewidget.cpp karrowbutton.cpp kmainwindowiface.cpp \
                 kmainwindowiface.skel kguiitem.cpp kstdguiitem.cpp \
 		kstringvalidator.cpp kactivelabel.cpp \
-		kwindowinfo.cpp ktextedit.cpp kwizard.cpp kpassivepopup.cpp \
+		twindowinfo.cpp ktextedit.cpp kwizard.cpp kpassivepopup.cpp \
 		ktoolbarhandler.cpp kdatetimewidget.cpp ktimewidget.cpp ktimezonewidget.cpp \
 		ksconfig.cpp kspelldlg.cpp \
 		kspell.cpp ksyntaxhighlighter.cpp ktabbar.cpp ktabwidget.cpp \

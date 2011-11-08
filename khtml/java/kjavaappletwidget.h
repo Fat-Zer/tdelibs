@@ -29,7 +29,7 @@
 #include "java/kjavaappletcontext.h"
 #include "java/kjavaapplet.h"
 #include <qxembed.h>
-#include <kwinmodule.h>
+#include <twinmodule.h>
 
 /**
  * @short A widget for displaying Java applets

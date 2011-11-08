@@ -34,7 +34,7 @@ set( test_PROGS
   kpalettetest
   kpopuptest kprogresstest krulertest kseparatortest
   kstatusbartest ktabctltest
-  kunbalancedgrdtest kwindowtest kwizardtest
+  kunbalancedgrdtest twindowtest kwizardtest
   itemcontainertest kpanelmenutest kedittest
   kxmlguitest kaccelgentest ksystemtraytest klistviewtest
   ktextedittest kmainwindowtest kmainwindowrestoretest

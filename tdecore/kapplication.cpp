@@ -104,7 +104,7 @@
 #include <sys/types.h>
 
 #ifndef Q_WS_WIN
-#include "kwin.h"
+#include "twin.h"
 #endif
 
 #include <fcntl.h>

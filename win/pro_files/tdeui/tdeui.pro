@@ -113,7 +113,7 @@ ktoolbarhandler.cpp \
 ktoolbarradiogroup.cpp \
 kurllabel.cpp \
 kwhatsthismanager.cpp \
-kwindowinfo.cpp \
+twindowinfo.cpp \
 kwizard.cpp \
 kwordwrap.cpp \
 kxmlguibuilder.cpp \

@@ -57,7 +57,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 #include <kidna.h>
-#include <kwin.h>
+#include <twin.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kurllabel.h>

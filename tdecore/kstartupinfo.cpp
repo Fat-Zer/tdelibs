@@ -58,9 +58,9 @@ DEALINGS IN THE SOFTWARE.
 #include <kapplication.h>
 #include <signal.h>
 #ifdef Q_WS_X11
-#include <kwinmodule.h>
+#include <twinmodule.h>
 #include <kxmessages.h>
-#include <kwin.h>
+#include <twin.h>
 #endif
 
 static const char* const NET_STARTUP_MSG = "_NET_STARTUP_INFO";
