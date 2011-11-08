@@ -27,7 +27,7 @@
 
 #ifdef KDE_USE_FINAL
 #undef Always
-#include <tqdoctwindow.h>
+#include <tqdockwindow.h>
 #endif
 
 #include <string.h>

@@ -347,4 +347,4 @@ void KSystemTray::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "ksystemtray.moc"
-#include "kdoctwindow.moc"
+#include "kdockwindow.moc"

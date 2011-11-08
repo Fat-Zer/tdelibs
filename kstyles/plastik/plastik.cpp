@@ -2689,7 +2689,7 @@ void PlastikStyle::tqdrawControl(TQ_ControlElement element,
             break;
         }
 
-    // Menu and doctwindow empty space
+    // Menu and dockwindow empty space
     //
         case CE_DockWindowEmptyArea:
             p->fillRect(r, cg.background());

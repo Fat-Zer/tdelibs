@@ -30,7 +30,7 @@
 #include <tqtabbar.h>
 #include <tqgroupbox.h>
 #include <tqtoolbutton.h>
-#include <tqdoctwindow.h>
+#include <tqdockwindow.h>
 #include <tqtooltip.h>
 #include <tqdrawutil.h>
 #include <tqlistview.h>

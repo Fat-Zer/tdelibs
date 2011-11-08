@@ -43,7 +43,7 @@ include_HEADERS = kprogressbox.h kprogress.h kcolordlg.h \
 		kmainwindow.h kmainwindowiface.h ktoolbar.h kmenubar.h \
 		knuminput.h kseparator.h klineedit.h \
 		krestrictedline.h kcolorbutton.h kcolorbtn.h \
-		ksystemtray.h kdoctwindow.h kbuttonbox.h \
+		ksystemtray.h kdockwindow.h kbuttonbox.h \
 		keditcl.h kled.h keditlistbox.h \
 		kwizard.h kkeydialog.h kkeybutton.h \
 		kurllabel.h kruler.h kcursor.h \
