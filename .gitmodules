@@ -4,3 +4,6 @@
 [submodule "cmake"]
 	path = cmake
 	url = http://system@scm.trinitydesktop.org/scm/git/tde-common-cmake
+[submodule "libltdl"]
+	path = libltdl
+	url = http://system@scm.trinitydesktop.org/scm/git/libltdl
