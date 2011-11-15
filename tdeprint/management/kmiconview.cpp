@@ -38,7 +38,7 @@ void KMIconViewItem::paintItem(TQPainter *p, const TQColorGroup& cg)
 {
 	if (m_state != 0)
 	{
-		QFont	f(p->font());
+		TQFont	f(p->font());
 		if (m_state & 0x1) f.setBold(true);
 		if (m_state & 0x2) f.setItalic(true);
 		p->setFont(f);
@@ -48,17 +48,17 @@ void KMIconViewItem::paintItem(TQPainter *p, const TQColorGroup& cg)
 
 void KMIconViewItem::calcRect(const TQString&)
 {
-	QRect	ir(rect()), pr, tr;
+	TQRect	ir(rect()), pr, tr;
 
 	// pixmap rect
 	pr.setWidth(pixmap()->width());
 	pr.setHeight(pixmap()->height());
 
 	// text rect
-	QFont	f(iconView()->font());
+	TQFont	f(iconView()->font());
 	if (m_state & 0x1) f.setBold(true);
 	if (m_state & 0x2) f.setItalic(true);
-	QFontMetrics	fm(f);
+	TQFontMetrics	fm(f);
 	if (m_mode == TQIconView::Bottom)
 		tr = fm.boundingRect(0, 0, iconView()->maxItemWidth(), 0xFFFFFF, AlignHCenter|AlignTop|WordBreak|BreakAnywhere, text()+"X");
 	else

@@ -215,7 +215,7 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
       setLineWidth( d->lineWidth );
       setMargin( d->margin );
       setMinimumSize( 0, 0 );
-      setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX );
+      setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX );
       updateMenuBarSize();
       if ( parentWidget() )
           reparent( parentWidget(), TQPoint(0,0), !isHidden());
@@ -314,7 +314,7 @@ void KMenuBar::updateFallbackSize()
             d->fallback_mode = false;
             KWin::setStrut( winId(), 0, 0, 0, 0 );
             setMinimumSize( 0, 0 );
-            setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX );
+            setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX );
             updateMenuBarSize();
         }
 	return;

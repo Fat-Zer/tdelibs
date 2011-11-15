@@ -36,7 +36,7 @@ protected:
 	void drawContents(TQPainter*);
 
 private:
-	QPixmap	m_side, m_tileup, m_tiledown;
+	TQPixmap	m_side, m_tileup, m_tiledown;
 };
 
 #endif

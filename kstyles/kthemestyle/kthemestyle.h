@@ -122,7 +122,7 @@ public:
     virtual int tqstyleHint( StyleHint sh,
                            const TQWidget *widget = 0,
                            const TQStyleOption& = TQStyleOption::Default,
-                           QStyleHintReturn* returnData = 0 ) const;
+                           TQStyleHintReturn* returnData = 0 ) const;
 
     virtual TQSize tqsizeFromContents( ContentsType contents,
                                     const TQWidget *widget,

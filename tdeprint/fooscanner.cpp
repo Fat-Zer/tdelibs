@@ -446,7 +446,7 @@ char *yytext;
 
 #include <tqvariant.h>
 #include <tqiodevice.h>
-#define YYSTYPE QVariant
+#define YYSTYPE TQVariant
 #include "fooparser.cpp.h"
 
 #define yylval tdeprint_foomatic2lval

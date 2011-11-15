@@ -52,7 +52,7 @@ protected:
 
 private:
 	int	position_;
-	QPixmap	pix_;
+	TQPixmap	pix_;
 };
 
 #endif

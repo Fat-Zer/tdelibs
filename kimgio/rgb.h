@@ -76,7 +76,7 @@ private:
 
 	TQ_UINT32		*m_starttab;
 	TQ_UINT32		*m_lengthtab;
-	QByteArray		m_data;
+	TQByteArray		m_data;
 	TQByteArray::Iterator	m_pos;
 	RLEMap			m_rlemap;
 	TQPtrVector<RLEData>	m_rlevector;

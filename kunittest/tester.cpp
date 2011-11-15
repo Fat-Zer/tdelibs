@@ -40,7 +40,7 @@ namespace KUnitTest
 
     void SlotTester::invokeMember(const TQString &str)
     {
-        TQString slotname = TQString::number(QSLOT_CODE) + str;
+        TQString slotname = TQString::number(TQSLOT_CODE) + str;
         connect(this, TQT_SIGNAL(invoke()), this, slotname.ascii());
         emit invoke();
         disconnect(this, TQT_SIGNAL(invoke()), this, slotname.ascii());

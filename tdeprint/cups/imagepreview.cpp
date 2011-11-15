@@ -58,9 +58,9 @@ void ImagePreview::paintEvent(TQPaintEvent*){
 	QImage	tmpImage = convertImage(image_,hue_,(bw_ ? 0 : saturation_),brightness_,gamma_);
 	int	x = (width()-tmpImage.width())/2, y = (height()-tmpImage.height())/2;
 
-	QPixmap	buffer(width(), height());
+	TQPixmap	buffer(width(), height());
 	buffer.fill(parentWidget(), 0, 0);
-	QPainter	p(&buffer);
+	TQPainter	p(&buffer);
 	p.drawImage(x,y,tmpImage);
 	p.end();
 

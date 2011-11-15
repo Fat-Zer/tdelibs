@@ -355,7 +355,7 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 
 		case PE_Splitter:
 		{
-			QPen oldPen = p->pen();
+			TQPen oldPen = p->pen();
 			p->setPen(cg.background());
 			p->drawRect(r);
 			p->setPen( cg.light() );

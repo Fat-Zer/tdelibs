@@ -2185,7 +2185,7 @@ void KThemeStyle::drawBaseMask( TQPainter *p, int x, int y, int w, int h,
         p->fillRect( x, y, w, h, fillBrush );
 }
 
-int KThemeStyle::tqstyleHint( StyleHint sh, const TQWidget *w, const TQStyleOption &opt, QStyleHintReturn *shr ) const
+int KThemeStyle::tqstyleHint( StyleHint sh, const TQWidget *w, const TQStyleOption &opt, TQStyleHintReturn *shr ) const
 {
     switch ( sh )
     {

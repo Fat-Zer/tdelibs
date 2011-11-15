@@ -672,7 +672,7 @@ int runDCOP( QCStringList args, UserList users, Session session,
 	    if( !success )
 	    {
 		cerr_ << "ERROR: Couldn't attach to DCOP server!" << endl;
-		retval = QMAX( retval, 1 );
+		retval = TQMAX( retval, 1 );
 		if( users.isEmpty() )
 		    break;
 		else
@@ -725,7 +725,7 @@ int runDCOP( QCStringList args, UserList users, Session session,
 			if( !buf.isNull() )
 			{
 			    int res = callFunction( app, objid, function, params );
-			    retval = QMAX( retval, res );
+			    retval = TQMAX( retval, res );
 			}
 		    }
 		}
@@ -734,7 +734,7 @@ int runDCOP( QCStringList args, UserList users, Session session,
 		    // Just call function
 //		    cout_ << "call " << app << ", " << objid << ", " << function << ", (params)" << endl;
 		    int res = callFunction( app, objid, function, params );
-		    retval = QMAX( retval, res );
+		    retval = TQMAX( retval, res );
 		}
 		break;
 	    }

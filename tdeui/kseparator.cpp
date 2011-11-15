@@ -81,8 +81,8 @@ int KSeparator::orientation() const
 
 void KSeparator::drawFrame(TQPainter *p)
 {
-   QPoint	p1, p2;
-   QRect	r     = frameRect();
+   TQPoint	p1, p2;
+   TQRect	r     = frameRect();
    const TQColorGroup & g = tqcolorGroup();
 
    if ( frameStyle() & HLine ) {

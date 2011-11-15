@@ -49,7 +49,7 @@ TQSize SidePixmap::tqsizeHint() const
 
 void SidePixmap::drawContents(TQPainter *p)
 {
-	QRect	r = contentsRect();
+	TQRect	r = contentsRect();
 	if (r.height() <= m_side.height())
 	{
 		// case where the main pixmap is enough, just center it

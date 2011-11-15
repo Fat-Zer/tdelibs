@@ -65,7 +65,7 @@ protected:
 
 private:
 	KMManager		*m_manager;
-	QDateTime		m_checktime;
+	TQDateTime		m_checktime;
         TQString                 m_defaultprinter;
 };
 

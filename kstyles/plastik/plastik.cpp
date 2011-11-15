@@ -886,7 +886,7 @@ void PlastikStyle::renderPanel(TQPainter *p,
 
     if (kickerMode &&
             p->tqdevice() && p->tqdevice()->devType() == TQInternal::Widget &&
-            TQCString(static_cast<TQWidget*>(static_cast<QWidget*>(static_cast<QPaintDevice*>(p->tqdevice())))->className()) == "FittsLawFrame") {
+            TQCString(TQT_TQWIDGET(static_cast<TQPaintDevice*>(p->tqdevice()))->className()) == "FittsLawFrame") {
     //  Stolen wholesale from Keramik. I don't like it, but oh well.
         if (sunken) {
             const TQCOORD corners[] = { x2, y, x2, y2, x, y2, x, y };
@@ -1819,7 +1819,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
     // --------------
         case PE_Splitter: {
             // highlight on mouse over
-            TQColor color = (static_cast<QPaintDevice*>(static_cast<QWidget*>(hoverWidget)) == static_cast<QPaintDevice*>(p->tqdevice()))?TQColor(cg.background().light(100+_contrast)):cg.background();
+            TQColor color = (static_cast<TQPaintDevice*>(static_cast<TQWidget*>(hoverWidget)) == static_cast<TQPaintDevice*>(p->tqdevice()))?TQColor(cg.background().light(100+_contrast)):cg.background();
             p->fillRect(r, color);
             if (w > h) {
                 if (h > 4) {

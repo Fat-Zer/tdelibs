@@ -176,7 +176,7 @@ static XKeyEvent last_key_event;
 class QPublicWidget : public TQWidget
 {
 public:
-    QTLWExtra* topData() { return TQWidget::topData(); }
+    TQTLWExtra* topData() { return TQWidget::topData(); }
     TQFocusData *focusData(){ return TQWidget::focusData(); }
     bool focusNextPrev(bool b) { return focusNextPrevChild(b); }
 };
@@ -443,7 +443,7 @@ static int qxembed_x11_event_filter( XEvent* e)
             switch ( message) {
             case XEMBED_EMBEDDED_NOTIFY: {
                 // L0675: We just have been embedded into a XEMBED aware widget.
-                QTLWExtra *extra = ((QPublicWidget*)w->tqtopLevelWidget())->topData();
+                TQTLWExtra *extra = ((QPublicWidget*)w->tqtopLevelWidget())->topData();
                 extra->embedded = 1;
 #ifdef USE_QT4
                 // [FIXME]

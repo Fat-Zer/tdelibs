@@ -956,7 +956,7 @@ void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 			if (kickerMode)
 			{
 				if (p->device() && p->device()->devType() == TQInternal::Widget &&
-											 TQCString(static_cast<TQWidget*>(static_cast<QWidget*>(static_cast<QPaintDevice*>(p->tqdevice())))->className()) == "FittsLawFrame" )
+											 TQCString(TQT_TQWIDGET(static_cast<TQPaintDevice*>(p->tqdevice()))->className()) == "FittsLawFrame" )
 				{
 					int x2 = x + r.width() - 1;
 					int y2 = y + r.height() - 1;

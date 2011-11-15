@@ -575,7 +575,7 @@ protected:
     virtual int tqstyleHint( StyleHint sh,
                            const TQWidget *widget = 0,
                            const TQStyleOption& opt = TQStyleOption::Default,
-                           QStyleHintReturn* returnData = 0 ) const
+                           TQStyleHintReturn* returnData = 0 ) const
     {
         return KStyle::tqstyleHint( sh,
                                   widget,

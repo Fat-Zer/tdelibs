@@ -90,7 +90,7 @@ public:
     ~KMWSessionManaged()
     {
     }
-    bool saveState( QSessionManager& )
+    bool saveState( TQSessionManager& )
     {
         KConfig* config = KApplication::kApplication()->sessionConfig();
         if ( KMainWindow::memberList->first() ){
@@ -110,7 +110,7 @@ public:
         return true;
     }
 
-    bool commitData( QSessionManager& sm )
+    bool commitData( TQSessionManager& sm )
     {
         // not really a fast method but the only compatible one
         if ( sm.allowsInteraction() ) {

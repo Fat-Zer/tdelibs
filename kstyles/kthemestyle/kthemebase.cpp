@@ -231,7 +231,7 @@ union kthemeKey{
     unsigned int cacheKey;
 };
 
-#define KDE_TQBITMAP_TO_TQPAINTDEVICE(x) static_cast<const TQPaintDevice*>(static_cast<const QPaintDevice*>(static_cast<const QPixmap*>(static_cast<const QBitmap*>(x))))
+#define KDE_TQBITMAP_TO_TQPAINTDEVICE(x) TQT_TQPAINTDEVICE_CONST(static_cast<const TQPixmap*>(static_cast<const TQBitmap*>(x)))
 
 void KThemeBase::generateBorderPix( int i )
 {

@@ -35,7 +35,7 @@ public:
 	}
 
 	PrinterType	type;
-	QStringList	printers;
+	TQStringList	printers;
 	TQWidget *parentWidget;
 };
 

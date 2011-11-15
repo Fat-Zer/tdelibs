@@ -24,8 +24,8 @@ void urlToSmb(const KURL& url, TQString& work, TQString& server, TQString& print
 {
 	if (url.protocol() != "smb")
 		return;
-	QString	h = url.host();
-	QStringList	l = TQStringList::split('/', url.path(), false);
+	TQString	h = url.host();
+	TQStringList	l = TQStringList::split('/', url.path(), false);
 	if (l.count() > 1)
 	{
 		work = h;

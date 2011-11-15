@@ -76,7 +76,7 @@ bool KMThreadJob::loadJobs()
 			line = t.readLine().stripWhiteSpace();
 			if (line.isEmpty())
 				continue;
-			QStringList	ll = TQStringList::split(CHARSEP,line,true);
+			TQStringList	ll = TQStringList::split(CHARSEP,line,true);
 			if (ll.count() == 5)
 			{
 				KMJob	*job = new KMJob();

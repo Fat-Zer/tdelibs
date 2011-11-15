@@ -323,8 +323,8 @@ void KMdiChildFrm::resizeWindow( int resizeCorner, int xPos, int yPos )
 	// Calculate the minimum width & height
 	int minWidth = 0;
 	int minHeight = 0;
-	int maxWidth = QWIDGETSIZE_MAX;
-	int maxHeight = QWIDGETSIZE_MAX;
+	int maxWidth = TQWIDGETSIZE_MAX;
+	int maxHeight = TQWIDGETSIZE_MAX;
 	
 	// it could be the client forces the childframe to enlarge its minimum size
 	if ( m_pClient )
@@ -562,7 +562,7 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 				{
 					m_pClient->tqlayout() ->setResizeMode( m_oldLayoutResizeMode );
 				}
-				setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX );
+				setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX );
 				// reset to maximize-captionbar
 				m_pMaximize->setPixmap( *m_pRestoreButtonPixmap );
 				m_pMinimize->setPixmap( *m_pMinButtonPixmap );
@@ -582,7 +582,7 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 				m_pClient->m_stateChanged = true;
 				m_state = state;
 				// client min / max size / layout behavior don't change
-				setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX );
+				setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX );
 				m_pMaximize->setPixmap( *m_pRestoreButtonPixmap );
 				int nFrameWidth = KMDI_CHILDFRM_DOUBLE_BORDER;
 				int nFrameHeight = KMDI_CHILDFRM_DOUBLE_BORDER + KMDI_CHILDFRM_SEPARATOR +
@@ -664,7 +664,7 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 	else
 	{
 		m_pManager->setMinimumSize( 0, 0 );
-		m_pManager->setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX );
+		m_pManager->setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX );
 	}
 }
 
@@ -782,7 +782,7 @@ void KMdiChildFrm::setClient( KMdiChildView *w, bool bAutomaticResize )
 		TQSize mincs = w->tqminimumSize();
 		TQSize maxcs = w->tqmaximumSize();
 		w->setMinimumSize( 0, 0 );
-		w->setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX );
+		w->setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX );
 
 		// min/max sizes, flags, DND get lost. :-(
 		w->reparent( this, 0, pnt2, w->isVisible() );

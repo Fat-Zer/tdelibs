@@ -93,15 +93,15 @@ void TreeListBoxItem::paint(TQPainter *p)
 		return;
 	}
 
-	const QPixmap	*pix = pixmap();
-	QRect	r = p->viewport();
+	const TQPixmap	*pix = pixmap();
+	TQRect	r = p->viewport();
 	int	h = height(listBox());
 	int	xo = (m_depth * stepSize() + 2);
 	int	yo = (pix ? (h-pix->height())/2 : 0);
 
 	if (m_depth > 0)
 	{
-		QPen	oldPen = p->pen();
+		TQPen	oldPen = p->pen();
 		p->setPen(listBox()->tqcolorGroup().mid());
 
 		TreeListBoxItem	*item = this;

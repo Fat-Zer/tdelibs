@@ -858,7 +858,7 @@ void KPrintDialog::configChanged()
 
 void KPrintDialog::expandDialog(bool on)
 {
-	QSize	sz(size());
+	TQSize	sz(size());
 	bool	needResize(isVisible());
 
 	if (on)

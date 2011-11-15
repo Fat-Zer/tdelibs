@@ -729,12 +729,12 @@ void KMdiChildView::setMaximumSize( int maxw, int maxh )
 	if ( mdiParent() && mdiParent()->state() == KMdiChildFrm::Normal )
 	{
 		int w = maxw + KMDI_CHILDFRM_DOUBLE_BORDER;
-		if ( w > QWIDGETSIZE_MAX )
-			w = QWIDGETSIZE_MAX;
+		if ( w > TQWIDGETSIZE_MAX )
+			w = TQWIDGETSIZE_MAX;
 
 		int h = maxh + KMDI_CHILDFRM_DOUBLE_BORDER + KMDI_CHILDFRM_SEPARATOR + mdiParent() ->captionHeight();
-		if ( h > QWIDGETSIZE_MAX )
-			h = QWIDGETSIZE_MAX;
+		if ( h > TQWIDGETSIZE_MAX )
+			h = TQWIDGETSIZE_MAX;
 
 		mdiParent()->setMaximumSize( w, h );
 	}

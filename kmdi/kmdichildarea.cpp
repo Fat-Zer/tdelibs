@@ -194,7 +194,7 @@ void KMdiChildArea::setTopChild( KMdiChildFrm* child, bool /* bSetFocus */ )
 		m_pZ->append( child );
 		
 		int nChildAreaMinW = 0, nChildAreaMinH = 0;
-		int nChildAreaMaxW = QWIDGETSIZE_MAX, nChildAreaMaxH = QWIDGETSIZE_MAX;
+		int nChildAreaMaxW = TQWIDGETSIZE_MAX, nChildAreaMaxH = TQWIDGETSIZE_MAX;
 		if ( topChildMaximized && child->m_pClient )
 		{
 			//the former top child is maximized, so maximize the new one

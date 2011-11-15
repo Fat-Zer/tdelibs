@@ -20,7 +20,7 @@
 
 #include <qvariant.h>
 #include <qiodevice.h>
-#define YYSTYPE QVariant
+#define YYSTYPE TQVariant
 #include "fooparser.cpp.h"
 
 #define yylval tdeprint_foomatic2lval
@@ -37,7 +37,7 @@
 			result = 0; \
 	}
 
-QIODevice* tdeprint_foomatic2scanner_device = NULL;
+TQIODevice* tdeprint_foomatic2scanner_device = NULL;
 %}
 
 %option noyywrap

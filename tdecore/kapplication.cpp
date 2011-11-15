@@ -1774,7 +1774,7 @@ KApplication::~KApplication()
 
 
 #ifdef Q_WS_X11
-class KAppX11HackWidget: public QWidget
+class KAppX11HackWidget: public TQWidget
 {
 public:
     bool publicx11Event( XEvent * e) { return x11Event( e ); }
@@ -2786,14 +2786,14 @@ void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const 
        // put the whole address lists into RFC2047 encoded blobs; technically
        // this isn't correct, but KMail understands it nonetheless
        to = TQString( "=?utf8?b?%1?=" )
-            .arg( QString(KCodecs::base64Encode( _to.utf8(), false )) );
+            .arg( TQString(KCodecs::base64Encode( _to.utf8(), false )) );
      }
      if ( !_cc.isEmpty() )
        cc = TQString( "=?utf8?b?%1?=" )
-            .arg( QString(KCodecs::base64Encode( _cc.utf8(), false )) );
+            .arg( TQString(KCodecs::base64Encode( _cc.utf8(), false )) );
      if ( !_bcc.isEmpty() )
        bcc = TQString( "=?utf8?b?%1?=" )
-             .arg( QString(KCodecs::base64Encode( _bcc.utf8(), false )) );
+             .arg( TQString(KCodecs::base64Encode( _bcc.utf8(), false )) );
    } else {
      to = _to;
      cc = _cc;

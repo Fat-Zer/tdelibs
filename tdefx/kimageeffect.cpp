@@ -302,7 +302,7 @@ TQImage KImageEffect::gradient(const TQSize &size, const TQColor &ca,
             int h = (size.height()+1)>>1;
             for (y = 0; y < h; y++) {
                 unsigned int *sl1 = (unsigned int *)image.scanLine(y);
-                unsigned int *sl2 = (unsigned int *)image.scanLine(QMAX(size.height()-y-1, y));
+                unsigned int *sl2 = (unsigned int *)image.scanLine(TQMAX(size.height()-y-1, y));
 
                 int w = (size.width()+1)>>1;
                 int x2 = size.width()-1;
@@ -316,19 +316,19 @@ TQImage KImageEffect::gradient(const TQSize &size, const TQColor &ca,
                     }
                     if (eff == RectangleGradient) {
                         rgb = tqRgb(rcb - rSign *
-                                   QMAX(xtable[0][x], ytable[0][y]) * 2,
+                                   TQMAX(xtable[0][x], ytable[0][y]) * 2,
                                    gcb - gSign *
-                                   QMAX(xtable[1][x], ytable[1][y]) * 2,
+                                   TQMAX(xtable[1][x], ytable[1][y]) * 2,
                                    bcb - bSign *
-                                   QMAX(xtable[2][x], ytable[2][y]) * 2);
+                                   TQMAX(xtable[2][x], ytable[2][y]) * 2);
                     }
                     if (eff == PipeCrossGradient) {
                         rgb = tqRgb(rcb - rSign *
-                                   QMIN(xtable[0][x], ytable[0][y]) * 2,
+                                   TQMIN(xtable[0][x], ytable[0][y]) * 2,
                                    gcb - gSign *
-                                   QMIN(xtable[1][x], ytable[1][y]) * 2,
+                                   TQMIN(xtable[1][x], ytable[1][y]) * 2,
                                    bcb - bSign *
-                                   QMIN(xtable[2][x], ytable[2][y]) * 2);
+                                   TQMIN(xtable[2][x], ytable[2][y]) * 2);
                     }
                     if (eff == EllipticGradient) {
                         rgb = tqRgb(rcb - rSign *
@@ -565,20 +565,20 @@ TQImage KImageEffect::unbalancedGradient(const TQSize &size, const TQColor &ca,
                   else if (eff == RectangleGradient)
                   {
                       scanline[x] = tqRgb(rcb - rSign *
-                                         QMAX(xtable[0][x], ytable[0][y]) * 2,
+                                         TQMAX(xtable[0][x], ytable[0][y]) * 2,
                                          gcb - gSign *
-                                         QMAX(xtable[1][x], ytable[1][y]) * 2,
+                                         TQMAX(xtable[1][x], ytable[1][y]) * 2,
                                          bcb - bSign *
-                                         QMAX(xtable[2][x], ytable[2][y]) * 2);
+                                         TQMAX(xtable[2][x], ytable[2][y]) * 2);
                   }
                   else if (eff == PipeCrossGradient)
                   {
                       scanline[x] = tqRgb(rcb - rSign *
-                                         QMIN(xtable[0][x], ytable[0][y]) * 2,
+                                         TQMIN(xtable[0][x], ytable[0][y]) * 2,
                                          gcb - gSign *
-                                         QMIN(xtable[1][x], ytable[1][y]) * 2,
+                                         TQMIN(xtable[1][x], ytable[1][y]) * 2,
                                          bcb - bSign *
-                                         QMIN(xtable[2][x], ytable[2][y]) * 2);
+                                         TQMIN(xtable[2][x], ytable[2][y]) * 2);
                   }
                   else if (eff == EllipticGradient)
                   {
@@ -1666,7 +1666,7 @@ TQImage& KImageEffect::blend(TQImage &image, float initial_intensity,
                 yvar = var / image_height   * (image_height - y*2/unaffected -1);
 
                 if (eff == RectangleGradient)
-                    intensity = initial_intensity + QMAX(xvar, yvar);
+                    intensity = initial_intensity + TQMAX(xvar, yvar);
                 else
                     intensity = initial_intensity + sqrt(xvar * xvar + yvar * yvar);
                 if (intensity > 1) intensity = 1;
@@ -1710,7 +1710,7 @@ TQImage& KImageEffect::blend(TQImage &image, float initial_intensity,
                 yvar = var / image_height   * (image_height - y*2/unaffected -1);
 
                 if (eff == RectangleGradient)
-                    intensity = initial_intensity + QMAX(xvar, yvar);
+                    intensity = initial_intensity + TQMAX(xvar, yvar);
                 else
                     intensity = initial_intensity + sqrt(xvar * xvar + yvar * yvar);
                 if (intensity > 1) intensity = 1;
@@ -1974,7 +1974,7 @@ TQImage& KImageEffect::flatten(TQImage &img, const TQColor &ca,
     int b1 = ca.blue(); int b2 = cb.blue();
     int min = 0, max = 255;
 
-    QRgb col;
+    TQRgb col;
 
     // Get minimum and maximum greylevel.
     if (img.numColors()) {
@@ -1982,8 +1982,8 @@ TQImage& KImageEffect::flatten(TQImage &img, const TQColor &ca,
 	for (int i = 0; i < img.numColors(); i++) {
 	    col = img.color(i);
 	    int mean = (tqRed(col) + tqGreen(col) + tqBlue(col)) / 3;
-	    min = QMIN(min, mean);
-	    max = QMAX(max, mean);
+	    min = TQMIN(min, mean);
+	    max = TQMAX(max, mean);
 	}
     } else {
 	// truecolor
@@ -1991,8 +1991,8 @@ TQImage& KImageEffect::flatten(TQImage &img, const TQColor &ca,
 	    for (int x=0; x < img.width(); x++) {
 		col = img.pixel(x, y);
 		int mean = (tqRed(col) + tqGreen(col) + tqBlue(col)) / 3;
-		min = QMIN(min, mean);
-		max = QMAX(max, mean);
+		min = TQMIN(min, mean);
+		max = TQMAX(max, mean);
 	    }
     }
 
@@ -2070,7 +2070,7 @@ TQImage& KImageEffect::fade(TQImage &img, float val, const TQColor &color)
     int green = color.green();
     int blue = color.blue();
 
-    QRgb col;
+    TQRgb col;
     int r, g, b, cr, cg, cb;
 
     if (img.depth() <= 8) {
@@ -2096,7 +2096,7 @@ TQImage& KImageEffect::fade(TQImage &img, float val, const TQColor &color)
     } else {
 	// truecolor
         for (int y=0; y<img.height(); y++) {
-            QRgb *data = (QRgb *) img.scanLine(y);
+            TQRgb *data = (TQRgb *) img.scanLine(y);
             for (int x=0; x<img.width(); x++) {
                 col = *data;
                 cr = tqRed(col); cg = tqGreen(col); cb = tqBlue(col);
@@ -2490,15 +2490,15 @@ bool KImageEffect::blend(
 //  output.setAlphaBuffer(true); // I should do some benchmarks to see if
 	// this is worth the effort
 
-  register QRgb *i, *o, *b;
+  register TQRgb *i, *o, *b;
 
   register int a;
   register int j,k;
   for (j=0; j<ch; j++)
   {
-    b=reinterpret_cast<QRgb *>(&const_cast<TQImage&>(lower).scanLine(y+j) [ (x+cw) << 2 ]);
-    i=reinterpret_cast<QRgb *>(&const_cast<TQImage&>(upper).scanLine(cy+j)[ (cx+cw) << 2 ]);
-    o=reinterpret_cast<QRgb *>(&const_cast<TQImage&>(output).scanLine(j)  [ cw << 2 ]);
+    b=reinterpret_cast<TQRgb *>(&const_cast<TQImage&>(lower).scanLine(y+j) [ (x+cw) << 2 ]);
+    i=reinterpret_cast<TQRgb *>(&const_cast<TQImage&>(upper).scanLine(cy+j)[ (cx+cw) << 2 ]);
+    o=reinterpret_cast<TQRgb *>(&const_cast<TQImage&>(output).scanLine(j)  [ cw << 2 ]);
 
     k=cw-1;
     --b; --i; --o;
@@ -2598,15 +2598,15 @@ void KImageEffect::blendOnLower(const TQImage &upper, const TQPoint &upperOffset
 {
     // clip rect
     TQRect lr =  lowerRect & lower.rect();
-    lr.setWidth( QMIN(lr.width(), upper.width()-upperOffset.x()) );
-    lr.setHeight( QMIN(lr.height(), upper.height()-upperOffset.y()) );
+    lr.setWidth( TQMIN(lr.width(), upper.width()-upperOffset.x()) );
+    lr.setHeight( TQMIN(lr.height(), upper.height()-upperOffset.y()) );
     if ( !lr.isValid() ) return;
 
     // blend
     for (int y = 0; y < lr.height(); y++) {
         for (int x = 0; x < lr.width(); x++) {
-            QRgb *b = reinterpret_cast<QRgb*>(const_cast<TQImage&>(lower).scanLine(lr.y() + y)+ (lr.x() + x) * sizeof(QRgb));
-            QRgb *d = reinterpret_cast<QRgb*>(const_cast<TQImage&>(upper).scanLine(upperOffset.y() + y) + (upperOffset.x() + x) * sizeof(QRgb));
+            TQRgb *b = reinterpret_cast<TQRgb*>(const_cast<TQImage&>(lower).scanLine(lr.y() + y)+ (lr.x() + x) * sizeof(TQRgb));
+            TQRgb *d = reinterpret_cast<TQRgb*>(const_cast<TQImage&>(upper).scanLine(upperOffset.y() + y) + (upperOffset.x() + x) * sizeof(TQRgb));
             int a = tqAlpha(*d);
             *b = tqRgb(tqRed(*b) - (((tqRed(*b) - tqRed(*d)) * a) >> 8),
                       tqGreen(*b) - (((tqGreen(*b) - tqGreen(*d)) * a) >> 8),
@@ -2620,15 +2620,15 @@ void KImageEffect::blendOnLower(const TQImage &upper, const TQPoint &upperOffset
 {
     // clip rect
     TQRect lr =  lowerRect & lower.rect();
-    lr.setWidth( QMIN(lr.width(), upper.width()-upperOffset.x()) );
-    lr.setHeight( QMIN(lr.height(), upper.height()-upperOffset.y()) );
+    lr.setWidth( TQMIN(lr.width(), upper.width()-upperOffset.x()) );
+    lr.setHeight( TQMIN(lr.height(), upper.height()-upperOffset.y()) );
     if ( !lr.isValid() ) return;
 
     // blend
     for (int y = 0; y < lr.height(); y++) {
         for (int x = 0; x < lr.width(); x++) {
-            QRgb *b = reinterpret_cast<QRgb*>(const_cast<TQImage&>(lower).scanLine(lr.y() + y)+ (lr.x() + x) * sizeof(QRgb));
-            QRgb *d = reinterpret_cast<QRgb*>(const_cast<TQImage&>(upper).scanLine(upperOffset.y() + y) + (upperOffset.x() + x) * sizeof(QRgb));
+            TQRgb *b = reinterpret_cast<TQRgb*>(const_cast<TQImage&>(lower).scanLine(lr.y() + y)+ (lr.x() + x) * sizeof(TQRgb));
+            TQRgb *d = reinterpret_cast<TQRgb*>(const_cast<TQImage&>(upper).scanLine(upperOffset.y() + y) + (upperOffset.x() + x) * sizeof(TQRgb));
             int a = tqRound(opacity * tqAlpha(*d));
             *b = tqRgb(tqRed(*b) - (((tqRed(*b) - tqRed(*d)) * a) >> 8),
                       tqGreen(*b) - (((tqGreen(*b) - tqGreen(*d)) * a) >> 8),
@@ -2708,7 +2708,7 @@ void KImageEffect::blendOnLower(TQImage &upper, TQImage &lower,
     TQRect r = computeDestinationRect(lower.size(), disposition, upper);
     for (int y = r.top(); y<r.bottom(); y += upper.height())
         for (int x = r.left(); x<r.right(); x += upper.width())
-            blendOnLower(upper, TQPoint(-QMIN(x, 0), -QMIN(y, 0)),
+            blendOnLower(upper, TQPoint(-TQMIN(x, 0), -TQMIN(y, 0)),
                    lower, TQRect(x, y, upper.width(), upper.height()), opacity);
 }
 
@@ -2791,7 +2791,7 @@ TQImage KImageEffect::sample(TQImage &src, int w, int h)
     }
     else if(depth == 1) {
         int r = src.bitOrder() == TQImage::LittleEndian;
-        memcpy(dest.tqcolorTable(), src.tqcolorTable(), src.numColors()*sizeof(QRgb));
+        memcpy(dest.tqcolorTable(), src.tqcolorTable(), src.numColors()*sizeof(TQRgb));
         for(int y=0; y < h; ++y){
             unsigned char *destData = dest.scanLine(y);
             unsigned char *srcData = src.scanLine(y_offset[y]);
@@ -2806,7 +2806,7 @@ TQImage KImageEffect::sample(TQImage &src, int w, int h)
         }
     }
     else{ // PseudoClass source image
-        memcpy(dest.tqcolorTable(), src.tqcolorTable(), src.numColors()*sizeof(QRgb));
+        memcpy(dest.tqcolorTable(), src.tqcolorTable(), src.numColors()*sizeof(TQRgb));
         for(int y=0; y < h; ++y){
             unsigned char *destData = dest.scanLine(y);
             unsigned char *srcData = src.scanLine(y_offset[y]);
@@ -3469,8 +3469,8 @@ TQImage KImageEffect::spread(TQImage &src, unsigned int amount)
             for(x=0; x < src.width(); x++){
                 x_distance = x + ((rand() & (amount+1))-quantum);
                 y_distance = y + ((rand() & (amount+1))-quantum);
-                x_distance = QMIN(x_distance, src.width()-1);
-                y_distance = QMIN(y_distance, src.height()-1);
+                x_distance = TQMIN(x_distance, src.width()-1);
+                y_distance = TQMIN(y_distance, src.height()-1);
                 if(x_distance < 0)
                     x_distance = 0;
                 if(y_distance < 0)
@@ -3489,8 +3489,8 @@ TQImage KImageEffect::spread(TQImage &src, unsigned int amount)
             for(x=0; x < src.width(); x++){
                 x_distance = x + ((rand() & (amount+1))-quantum);
                 y_distance = y + ((rand() & (amount+1))-quantum);
-                x_distance = QMIN(x_distance, src.width()-1);
-                y_distance = QMIN(y_distance, src.height()-1);
+                x_distance = TQMIN(x_distance, src.width()-1);
+                y_distance = TQMIN(y_distance, src.height()-1);
                 if(x_distance < 0)
                     x_distance = 0;
                 if(y_distance < 0)
@@ -3516,7 +3516,7 @@ TQImage KImageEffect::swirl(TQImage &src, double degrees,
     // compute scaling factor
     x_center = src.width()/2.0;
     y_center = src.height()/2.0;
-    radius = QMAX(x_center,y_center);
+    radius = TQMAX(x_center,y_center);
     x_scale=1.0;
     y_scale=1.0;
     if(src.width() > src.height())
@@ -4515,7 +4515,7 @@ TQImage KImageEffect::shade(TQImage &src, bool color_shading, double azimuth,
     if(src.depth() > 8){ // DirectClass source image
         unsigned int *p, *s0, *s1, *s2;
         for(y=0; y < src.height(); ++y){
-            p = (unsigned int *)src.scanLine(QMIN(QMAX(y-1,0),src.height()-3));
+            p = (unsigned int *)src.scanLine(TQMIN(TQMAX(y-1,0),src.height()-3));
             q = (unsigned int *)dest.scanLine(y);
             // shade this row of pixels.
             *q++=(*(p+src.width()));
@@ -4568,7 +4568,7 @@ TQImage KImageEffect::shade(TQImage &src, bool color_shading, double azimuth,
         int scanLineIdx;
         unsigned int *cTable = (unsigned int *)src.tqcolorTable();
         for(y=0; y < src.height(); ++y){
-            scanLineIdx = QMIN(QMAX(y-1,0),src.height()-3);
+            scanLineIdx = TQMIN(TQMAX(y-1,0),src.height()-3);
             p = (unsigned char *)src.scanLine(scanLineIdx);
             q = (unsigned int *)dest.scanLine(y);
             // shade this row of pixels.
@@ -4811,7 +4811,7 @@ static void bumpmap_row( uint           *src,
             else {
                 shade = (int)( ndotl / sqrt(double(nx * nx + ny * ny + params->nz2)) );
 
-                shade = (int)( shade + QMAX(0.0, (255 * params->compensation - shade)) *
+                shade = (int)( shade + TQMAX(0.0, (255 * params->compensation - shade)) *
                                ambient / 255 );
 	    }
 	}

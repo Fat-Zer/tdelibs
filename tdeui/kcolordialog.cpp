@@ -1221,7 +1221,7 @@ KColorDialog::setDefaultColor( const TQColor& col )
 
         d->l_right->addWidget( d->cbDefaultColor );
 
-        mainWidget()->setMaximumSize( QWIDGETSIZE_MAX, QWIDGETSIZE_MAX ); // cancel setFixedSize()
+        mainWidget()->setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX ); // cancel setFixedSize()
         d->tl_layout->activate();
         mainWidget()->setMinimumSize( mainWidget()->tqsizeHint() );
         disableResize();

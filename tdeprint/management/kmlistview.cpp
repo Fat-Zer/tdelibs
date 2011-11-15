@@ -96,7 +96,7 @@ void KMListViewItem::paintCell(TQPainter *p, const TQColorGroup& cg, int c, int 
 {
 	if (m_state != 0)
 	{
-		QFont	f(p->font());
+		TQFont	f(p->font());
 		if (m_state & 0x1) f.setBold(true);
 		if (m_state & 0x2) f.setItalic(true);
 		p->setFont(f);
