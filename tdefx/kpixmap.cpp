@@ -98,7 +98,7 @@ static bool kdither_32_to_8( const TQImage *src, TQImage *dst )
 	    // Bi-directional error diffusion
 	    if ( y&1 ) {
 		for (x=0; x<sw; x++) {
-		    int pix = QMAX(QMIN(2, (l1[x] * 2 + 128)/ 255), 0);
+		    int pix = TQMAX(TQMIN(2, (l1[x] * 2 + 128)/ 255), 0);
 		    int err = l1[x] - pix * 255 / 2;
 		    pv[chan][x] = pix;
 
@@ -113,7 +113,7 @@ static bool kdither_32_to_8( const TQImage *src, TQImage *dst )
 		}
 	    } else {
 		for (x=sw; x-->0; ) {
-		    int pix = QMAX(QMIN(2, (l1[x] * 2 + 128)/ 255), 0);
+		    int pix = TQMAX(TQMIN(2, (l1[x] * 2 + 128)/ 255), 0);
 		    int err = l1[x] - pix * 255 / 2;
 		    pv[chan][x] = pix;
 
@@ -357,7 +357,7 @@ bool KPixmap::checkColorTable( const TQImage &image )
 	
     }
 
-    QRgb* ctable = image.tqcolorTable();
+    TQRgb* ctable = image.tqcolorTable();
 
     int ncols = image.numColors();
     int j;

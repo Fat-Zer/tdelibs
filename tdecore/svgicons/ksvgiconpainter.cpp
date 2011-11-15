@@ -672,7 +672,7 @@ public:
 
 		  for(int y = 0; y < m_height; y++)
 		  {
-			  QRgb *sl = reinterpret_cast<QRgb *>(m_image->scanLine(y));
+			  TQRgb *sl = reinterpret_cast<TQRgb *>(m_image->scanLine(y));
 			  for(int x = 0; x < m_width; x++)
 				  sl[x] = tqRgba(line[x * 4], line[x * 4 + 1], line[x * 4 + 2], line[x * 4 + 3]);
 
