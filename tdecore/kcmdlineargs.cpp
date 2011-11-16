@@ -594,7 +594,7 @@ KCmdLineArgs::parseAllArgs()
                    (::qstrcmp(option, "v") == 0))
          {
             printQ( TQString("Qt: %1\n").arg(qVersion()));
-            printQ( TQString("KDE: %1\n").arg(KDE_VERSION_STRING));
+            printQ( TQString("KDE: %1\n").arg(TDE_VERSION_STRING));
             printQ( TQString("%1: %2\n").
       arg(about->programName()).arg(about->version()));
             exit(0);

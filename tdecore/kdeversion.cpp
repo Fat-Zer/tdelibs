@@ -21,26 +21,26 @@
 
 unsigned int KDE::version()
 {
-    return KDE_VERSION;
+    return TDE_VERSION;
 }
 
 unsigned int KDE::versionMajor()
 {
-    return KDE_VERSION_MAJOR;
+    return TDE_VERSION_MAJOR;
 }
 
 unsigned int KDE::versionMinor()
 {
-    return KDE_VERSION_MINOR;
+    return TDE_VERSION_MINOR;
 }
 
 unsigned int KDE::versionRelease()
 {
-    return KDE_VERSION_RELEASE;
+    return TDE_VERSION_RELEASE;
 }
 
 const char *KDE::versionString()
 {
-    return KDE_VERSION_STRING;
+    return TDE_VERSION_STRING;
 }
 

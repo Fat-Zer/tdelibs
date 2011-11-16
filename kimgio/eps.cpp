@@ -251,7 +251,7 @@ KDE_EXPORT void kimgio_eps_write( TQImageIO *imageio )
   TQPainter p;
 
   // making some definitions (papersize, output to file, filename):
-  psOut.setCreator( "KDE " KDE_VERSION_STRING  );
+  psOut.setCreator( "KDE " TDE_VERSION_STRING  );
   psOut.setOutputToFile( true );
 
   // Extension must be .eps so that Qt generates EPS file

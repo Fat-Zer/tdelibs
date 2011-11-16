@@ -2788,7 +2788,7 @@ void KHTMLView::print(bool quick)
         viewport()->setCursor( tqwaitCursor ); // only viewport(), no TQApplication::, otherwise we get the busy cursor in tdeprint's dialogs
         // set up KPrinter
         printer->setFullPage(false);
-        printer->setCreator(TQString("KDE %1.%2.%3 HTML Library").arg(KDE_VERSION_MAJOR).arg(KDE_VERSION_MINOR).arg(KDE_VERSION_RELEASE));
+        printer->setCreator(TQString("KDE %1.%2.%3 HTML Library").arg(TDE_VERSION_MAJOR).arg(TDE_VERSION_MINOR).arg(TDE_VERSION_RELEASE));
         printer->setDocName(docname);
 
         TQPainter *p = new TQPainter;

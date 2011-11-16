@@ -17,21 +17,21 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KDE_VERSION_H_
-#define _KDE_VERSION_H_
+#ifndef _TDE_VERSION_H_
+#define _TDE_VERSION_H_
 
 #include "kdelibs_export.h"
 
-#define KDE_VERSION_STRING "3.5.13"
-#define KDE_VERSION_MAJOR 3
-#define KDE_VERSION_MINOR 5
-#define KDE_VERSION_RELEASE 13
+#define TDE_VERSION_STRING "3.5.13"
+#define TDE_VERSION_MAJOR 3
+#define TDE_VERSION_MINOR 5
+#define TDE_VERSION_RELEASE 13
 #define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
 
-#define KDE_VERSION \
-  KDE_MAKE_VERSION(KDE_VERSION_MAJOR,KDE_VERSION_MINOR,KDE_VERSION_RELEASE)
+#define TDE_VERSION \
+  KDE_MAKE_VERSION(TDE_VERSION_MAJOR,TDE_VERSION_MINOR,TDE_VERSION_RELEASE)
 
-#define KDE_IS_VERSION(a,b,c) ( KDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
+#define KDE_IS_VERSION(a,b,c) ( TDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
 
 /**
  * Namespace for general KDE functions.
@@ -39,7 +39,7 @@
 namespace KDE
 {
     /**
-     * Returns the encoded number of KDE's version, see the KDE_VERSION macro.
+     * Returns the encoded number of KDE's version, see the TDE_VERSION macro.
      * In contrary to that macro this function returns the number of the actully
      * installed KDE version, not the number of the KDE version that was
      * installed when the program was compiled.
@@ -76,4 +76,4 @@ namespace KDE
     TDECORE_EXPORT const char *versionString();
 }
 
-#endif // _KDE_VERSION_H_
+#endif // _TDE_VERSION_H_

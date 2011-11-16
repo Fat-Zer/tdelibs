@@ -179,7 +179,7 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutD
       m_strVersion = m_aboutData->version();
   else
       m_strVersion = i18n("no version set (programmer error!)");
-  d->kde_version = TQString::tqfromLatin1( KDE_VERSION_STRING );
+  d->kde_version = TQString::tqfromLatin1( TDE_VERSION_STRING );
   d->kde_version += ", " + TQString::tqfromLatin1( KDE_DISTRIBUTION_TEXT );
   if ( !d->submitBugButton )
       m_strVersion += " " + d->kde_version;

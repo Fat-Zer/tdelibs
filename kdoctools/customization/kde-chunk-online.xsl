@@ -8,7 +8,7 @@
 <xsl:include href="kde-style.xsl"/>
 <xsl:output encoding="utf-8"/>
 
-<xsl:variable name="KDE_VERSION">1.13</xsl:variable> 
+<xsl:variable name="TDE_VERSION">1.13</xsl:variable> 
 
 <xsl:template name="make-relative-filename">
   <xsl:param name="base.dir" select="'./'"/>
@@ -64,7 +64,7 @@
 
 <xsl:template name="user.head.content">
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
-   <meta name="GENERATOR" content="KDE XSL Stylesheet V{$KDE_VERSION} using libxslt"/>
+   <meta name="GENERATOR" content="KDE XSL Stylesheet V{$TDE_VERSION} using libxslt"/>
 </xsl:template>
 
 <!-- try with olinks: it nearly works --><!--

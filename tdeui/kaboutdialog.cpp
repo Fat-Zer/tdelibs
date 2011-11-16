@@ -702,7 +702,7 @@ void KAboutContainerBase::setProduct( const TQString &appName,
     kdDebug(291) << "no kapp" << endl;
 
   const TQString msg1 = i18n("%1 %2 (Using Trinity %3)").arg(appName).arg(version).
-    arg(TQString::fromLatin1(KDE_VERSION_STRING));
+    arg(TQString::fromLatin1(TDE_VERSION_STRING));
   const TQString msg2 = !year.isEmpty() ? i18n("%1 %2, %3").arg('©').arg(year).
     arg(author) : TQString::fromLatin1("");
 

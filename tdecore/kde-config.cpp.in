@@ -156,7 +156,7 @@ int main(int argc, char **argv)
 
     if (args->isSet("version"))
     {
-        printf("%s\n", KDE_VERSION_STRING);
+        printf("%s\n", TDE_VERSION_STRING);
         return 0;
     }
 

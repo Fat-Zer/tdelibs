@@ -77,7 +77,7 @@ KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
     "<br><br>Thank you very much in advance for your support!");
   setHelp( TQString::tqfromLatin1("khelpcenter/main.html"), TQString::null );
   setTitle(i18n("Trinity Desktop Environment. Release %1").
-	   arg(TQString::tqfromLatin1(KDE_VERSION_STRING)) );
+	   arg(TQString::tqfromLatin1(TDE_VERSION_STRING)) );
   addTextPage( i18n("About Trinity","&About"), text1, true );
   addTextPage( i18n("&Report Bugs or Wishes"), text2, true );
   addTextPage( i18n("&Join the Trinity Team"), text3, true );
