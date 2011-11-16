@@ -22,10 +22,18 @@
 
 #include "kdelibs_export.h"
 
-#define TDE_VERSION_STRING "3.5.13"
-#define TDE_VERSION_MAJOR 3
-#define TDE_VERSION_MINOR 5
-#define TDE_VERSION_RELEASE 13
+/*
+    R <ABI VERSION> . <BUGFIX REVISION> . <SECURITY PATCHLEVEL>
+    Security patchlevel is not present on initial release
+    It is added on the first security release, starting with ".a"
+    ".a" would correspond to a TDE_VERSION_RELEASE of 1, ".b" would be 2, etc.
+    A new bugfix revision resets the security level
+    A new ABI version resets both the bugfix revision and the security level
+*/
+#define TDE_VERSION_STRING "R14.0 [DEVELOPMENT]"
+#define TDE_VERSION_MAJOR 14
+#define TDE_VERSION_MINOR 0
+#define TDE_VERSION_RELEASE 0
 #define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
 
 #define TDE_VERSION \
