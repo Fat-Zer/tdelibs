@@ -21,7 +21,7 @@
 #ifndef KSVGIconEngine_H
 #define KSVGIconEngine_H
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /** \internal DO NOT USE! */
 

@@ -16,7 +16,7 @@
 #define __KDE_su_Client_h_Included__
 
 #include <tqglobal.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #ifdef Q_OS_UNIX
 

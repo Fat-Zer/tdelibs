@@ -25,7 +25,7 @@
 
 #include <tqobject.h>
 #include <tqvaluelist.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 #ifdef Q_MOC_RUN
 #define Q_OS_UNIX

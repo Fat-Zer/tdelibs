@@ -365,7 +365,7 @@ void KHostName::changeSessionManager()
 
 int main(int argc, char **argv)
 {
-   KLocale::setMainCatalogue("kdelibs");
+   KLocale::setMainCatalogue("tdelibs");
    KAboutData d(appName, I18N_NOOP("KDontChangeTheHostName"), appVersion,
                 I18N_NOOP("Informs KDE about a change in hostname"),
                 KAboutData::License_GPL, "(c) 2001 Waldo Bastian");

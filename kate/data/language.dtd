@@ -17,7 +17,7 @@
         <!DOCTYPE language SYSTEM "language.dtd">
 
         You can validate your syntax files using checkXML from the development
-        package of kdelibs:
+        package of tdelibs:
          checkXML yourSyntax.xml
         If you see any 'validity error' lines, you should fix them. If you get
         a lot of 'No template matches' lines, everything's just fine. You've

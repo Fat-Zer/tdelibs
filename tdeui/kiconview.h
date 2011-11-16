@@ -21,7 +21,7 @@
 #include <tqcursor.h>
 #include <tqiconview.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * @short A variant of TQIconView that honors KDE's system-wide settings.

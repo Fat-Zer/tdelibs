@@ -23,7 +23,7 @@
 #include <tqfont.h>
 #include <unistd.h>
 
-#include <kdeversion.h>
+#include <tdeversion.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>

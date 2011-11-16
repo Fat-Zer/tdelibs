@@ -21,7 +21,7 @@
  * Definitions for common types, variables, and functions.
  */
 
-#include <tdecore/kdelibs_export.h>
+#include <tdecore/tdelibs_export.h>
 
 #ifdef _MSC_VER
 # include <msvc/stdlib.h>

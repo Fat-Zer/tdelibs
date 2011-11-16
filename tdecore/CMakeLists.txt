@@ -47,7 +47,7 @@ install( FILES
     kconfigdialogmanager.h kconfigbase.h kdesktopfile.h
     kurl.h ksock.h kaboutdata.h kcmdlineargs.h kconfigbackend.h
     kapp.h kapplication.h kuniqueapp.h kuniqueapplication.h
-    kcharsets.h kdeversion.h kpty.h kprocess.h kprocctrl.h
+    kcharsets.h tdeversion.h kpty.h kprocess.h kprocctrl.h
     klocale.h kicontheme.h kiconloader.h kdebug.h twinmodule.h
     twin.h krootprop.h kshortcut.h kkeynative.h kaccel.h
     kglobalaccel.h kstdaccel.h kshortcutlist.h kcatalogue.h
@@ -66,7 +66,7 @@ install( FILES
     kcalendarsystem.h kcalendarsystemfactory.h kmacroexpander.h
     kmanagerselection.h kmountpoint.h kuser.h klockfile.h
     kidna.h ktempdir.h kshell.h fixx11h.h kxerrorhandler.h
-    kdelibs_export.h kde_file.h ktimezones.h
+    tdelibs_export.h kde_file.h ktimezones.h
     ${CMAKE_CURRENT_BINARY_DIR}/kdemacros.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
@@ -115,7 +115,7 @@ set( ${target}_SRCS
   ksycocafactory.cpp kxmessages.cpp kstartupinfo.cpp
   kcatalogue.cpp kasyncio.cpp kmultipledrag.cpp kstaticdeleter.cpp
   kappdcopiface.cpp kappdcopiface.skel kclipboard.cpp
-  kcheckaccelerators.cpp kdeversion.cpp kdebugdcopiface.cpp
+  kcheckaccelerators.cpp tdeversion.cpp kdebugdcopiface.cpp
   kdebugdcopiface.skel kcalendarsystem.cpp kcalendarsystemgregorian.cpp
   kcalendarsystemhijri.cpp kcalendarsystemhebrew.cpp
   kcalendarsystemfactory.cpp kmacroexpander.cpp kidna.cpp

@@ -30,7 +30,7 @@
 
 #include <tqstringlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * The goal of this class is to make sure that, when the user needs to 

@@ -23,7 +23,7 @@
 #include <tqmime.h>
 #include <tqobject.h>
 #include <tqstrlist.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
  * This class is only for internal use.

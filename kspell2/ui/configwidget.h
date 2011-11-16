@@ -22,7 +22,7 @@
 #define KSPELL_CONFIGWIDGET_H
 
 #include <tqwidget.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace KSpell2
 {

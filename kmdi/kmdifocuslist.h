@@ -21,7 +21,7 @@
 #include <tqobject.h>
 #include <tqmap.h>
 #include <tqwidget.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KMDI_EXPORT KMdiFocusList: public TQObject
 {

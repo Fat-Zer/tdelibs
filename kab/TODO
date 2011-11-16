@@ -7,7 +7,7 @@ Thanks.
 PS: I am still looking for volunteers who try writing the import filters. 
     Most often I do not have the different other addressbook programs myselfes.
 PS1: This TODO list deals with tasks to add to the KDE addressbook
-library. If you want the application to be extended, read kdeutils/kab/TODO.
+library. If you want the application to be extended, read tdeutils/kab/TODO.
 --------------------------------------------------------------------------------
 ° [done] change mail addresses to an unlimited list with selection before
          sending an email

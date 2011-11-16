@@ -20,7 +20,7 @@
 #ifndef _SYS_STAT_H
 #define _SYS_STAT_H
 
-#include <tdecore/kdelibs_export.h>
+#include <tdecore/tdelibs_export.h>
 
 /* regular sys/stat.h */
 #ifdef _MSC_VER

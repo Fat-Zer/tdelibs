@@ -24,7 +24,7 @@
 #ifndef KNETWORKINTERFACE_H
 #define KNETWORKINTERFACE_H
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace KNetwork {
 
@@ -32,7 +32,7 @@ namespace KNetwork {
  * A place-holder class for a future network interface class.
  * This class is to be replaced with a more powerful version, inspired
  * by:
- *  - KInetInterface (kdenetwork/krfb/srvloc)
+ *  - KInetInterface (tdenetwork/krfb/srvloc)
  *  - NWInterface (kdenonbeta/knot/lib)
  *  - java.net.NetworkInterface
  */

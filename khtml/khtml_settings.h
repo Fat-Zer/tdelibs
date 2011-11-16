@@ -27,7 +27,7 @@ class KConfig;
 #include <tqfont.h>
 #include <tqmap.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 struct KPerDomainSettings;
 class KHTMLSettingsPrivate;

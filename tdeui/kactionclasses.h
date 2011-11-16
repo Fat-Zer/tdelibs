@@ -930,7 +930,7 @@ public:
                  const char* name = 0 );
 
 // The ctors with fontListCriteria were added after 3.3-beta1.
-// This define is used in koffice. Remove when koffice has a dependency on kdelibs-3.3 or more.
+// This define is used in koffice. Remove when koffice has a dependency on tdelibs-3.3 or more.
 #define KFONTACTION_HAS_CRITERIA_ARG
     KFontAction( uint fontListCriteria, const TQString& text,
                  const KShortcut& cut = KShortcut(), TQObject* parent = 0,

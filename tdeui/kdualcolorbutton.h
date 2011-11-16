@@ -22,7 +22,7 @@ class TQBitmap;
 #include <tqbrush.h>
 #include <tqwidget.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * @short A widget for selecting two related colors.

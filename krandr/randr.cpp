@@ -197,7 +197,7 @@ bool RandRScreen::applyProposedAndConfirm()
 bool RandRScreen::confirm()
 {
 	// uncomment the line below and edit out the KTimerDialog stuff to get
-	// a version which works on today's kdelibs (no accept dialog is presented)
+	// a version which works on today's tdelibs (no accept dialog is presented)
 
 	// FIXME remember to put the dialog on the right screen
 
@@ -780,7 +780,7 @@ bool RandRDisplay::showTestConfigurationDialog()
 bool RandRScreen::showTestConfigurationDialog()
 {
 	// uncomment the line below and edit out the KTimerDialog stuff to get
-	// a version which works on today's kdelibs (no accept dialog is presented)
+	// a version which works on today's tdelibs (no accept dialog is presented)
 
 	// FIXME remember to put the dialog on the right screen
 

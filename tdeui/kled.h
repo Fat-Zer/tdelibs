@@ -24,7 +24,7 @@
 #define _KLED_H_
 
 #include <tqwidget.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQColor;
 /**

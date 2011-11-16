@@ -26,7 +26,7 @@
 #include <tqptrdict.h>
 #include <tqkeysequence.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQWidget;
 class TQPopupMenu;

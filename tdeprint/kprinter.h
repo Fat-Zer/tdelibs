@@ -28,7 +28,7 @@
 #include <tqstringlist.h>
 #include <tqvaluelist.h>
 #include <kdemacros.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #include <tdeprint/kpreloadobject.h>
 

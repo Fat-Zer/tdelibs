@@ -47,7 +47,7 @@ class TQDateTime;
 class KSSLCertChain;
 class KSSLX509V3;
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #ifdef Q_WS_WIN
 #include "ksslconfig_win.h"

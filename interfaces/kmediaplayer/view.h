@@ -25,7 +25,7 @@
 #define KMEDIAPLAYERVIEW_H
 
 #include <tqwidget.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace KMediaPlayer
 {

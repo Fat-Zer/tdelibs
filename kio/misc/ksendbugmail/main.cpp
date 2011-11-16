@@ -58,7 +58,7 @@ void BugMailer::slotSend() {
 
 int main(int argc, char **argv) {
 
-    KLocale::setMainCatalogue("kdelibs");
+    KLocale::setMainCatalogue("tdelibs");
     KAboutData d("ksendbugmail", I18N_NOOP("KSendBugMail"), "1.0",
                  I18N_NOOP("Sends a short bug report to submit@bugs.kde.org"),
                  KAboutData::License_GPL, "(c) 2000 Stephan Kulow");

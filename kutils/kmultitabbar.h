@@ -33,7 +33,7 @@
 #include <tqptrlist.h>
 #include <tqpushbutton.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQPixmap;
 class TQPainter;

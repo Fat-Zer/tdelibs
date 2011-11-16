@@ -33,7 +33,7 @@
 #include <dom/dom_doc.h>
 #include <dom/dom_string.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KHTMLView;
 class KHTMLPart;

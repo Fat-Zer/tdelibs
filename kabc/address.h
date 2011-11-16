@@ -25,7 +25,7 @@
 #include <tqstring.h>
 #include <tqvaluelist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 // template tags for address formatting localization
 #define KABC_FMTTAG_realname   TQString("%n")

@@ -174,7 +174,7 @@ inline BytesEditInterface *bytesEditInterface( T *t )
   * ...
   *
   * TQWidget *BytesEditWidget = KHE::createBytesEditWidget( this, "BytesEditWidget" );
-  * // is e.g. kdeutils (incl. khexedit2) installed, so a widget could be found and created?
+  * // is e.g. tdeutils (incl. khexedit2) installed, so a widget could be found and created?
   * if( BytesEditWidget )
   * {
   * � // fetch the editor interface

@@ -1,4 +1,4 @@
-# Makefile.am of kdebase/kioslave/http
+# Makefile.am of tdebase/kioslave/http
 
 SUBDIRS=tests
 INCLUDES=	$(all_includes)

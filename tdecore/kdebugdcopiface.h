@@ -22,7 +22,7 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
  * @short DCOP interface to KDebug.

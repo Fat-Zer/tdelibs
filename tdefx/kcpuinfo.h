@@ -27,7 +27,7 @@
 #ifndef __KCPUINFO_H
 #define __KCPUINFO_H
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * This class provides a means for applications to obtain information at

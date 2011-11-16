@@ -23,7 +23,7 @@
 #include <tqwidget.h>
 #include <tqvaluevector.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class MarginValueWidget;
 class MarginPreview;

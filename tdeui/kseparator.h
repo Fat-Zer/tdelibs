@@ -22,7 +22,7 @@
 
 #include <tqframe.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * Standard horizontal or vertical separator.

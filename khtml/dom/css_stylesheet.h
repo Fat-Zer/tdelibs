@@ -31,7 +31,7 @@
 #include <dom/dom_node.h>
 #include <dom/dom_misc.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace DOM {
 

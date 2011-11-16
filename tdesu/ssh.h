@@ -17,7 +17,7 @@
 
 #include "stub.h"
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * Executes a remote command, using ssh.

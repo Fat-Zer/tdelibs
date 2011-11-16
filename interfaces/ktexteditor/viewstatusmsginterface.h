@@ -19,7 +19,7 @@
 #ifndef __ktexteditor_viewstatusmsginterface_h__
 #define __ktexteditor_viewstatusmsginterface_h__
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQString;
 class TQCString;

@@ -24,7 +24,7 @@
 #include <tqptrlist.h>
 #include <tqdatetime.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #include "kpreloadobject.h"
 

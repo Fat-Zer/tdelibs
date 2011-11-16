@@ -13,7 +13,7 @@
 <!-- (c) 2004 by Wilbert Berendsen (wilbert@kde.nl)
     Changes by Matthew Woehlke (mw_triad@users.sourceforge.net)
     Changes by Sebastian Pipping (webmaster@hartwork.org)
-    Released under the LGPL, part of kdelibs/kate -->
+    Released under the LGPL, part of tdelibs/kate -->
 
   <highlighting>
     <list name="keywords">

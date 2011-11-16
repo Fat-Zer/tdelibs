@@ -55,7 +55,7 @@ doxygen.sh [--recurse] [--modulename] [--doxdatadir=<dir>] [--installdir=<dir>]
               a subdirectory apidocs/ . Modulename is the last part of
               the <top_srcdir> (usually a KDE SVN module name).
 --doxdatadir=<dir> Locate the HTML header files and support graphics.
-              In kdelibs, the subdirectory doc/common/ contains these
+              In tdelibs, the subdirectory doc/common/ contains these
               files (and this README). In an installed KDE system, 
               $KDEDIR/share/doc/HTML/en/common/ contains a copy.
               This argument is mandatory if doxygen.sh can't guess where
@@ -84,7 +84,7 @@ Differences with current dox: <TODO>
 #
 # sh /mnt/src/tdepim/doc/api/doxygen.sh /mnt/src/tdepim kpilot/lib
 # 
-# When generating dox for kdelibs, a tag file for Qt is also created.
+# When generating dox for tdelibs, a tag file for Qt is also created.
 # The location of Qt is specified indirectly through $QTDOCDIR or,
 # if that is not set, $QTDIR, or otherwise guessed. You may explicitly
 # set the location of a pre-generated tag file with $QTDOCTAG. One

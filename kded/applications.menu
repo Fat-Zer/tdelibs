@@ -41,7 +41,7 @@
                 <Directory>kde-development.directory</Directory>
                 <Menu>
                         <Name>X-KDE-KDevelopIDE</Name>
-                        <Directory>kde-development-kdevelop.directory</Directory>
+                        <Directory>kde-development-tdevelop.directory</Directory>
                         <Include>
                                 <And>
                                 <Category>Development</Category>

@@ -23,7 +23,7 @@
 #include <tqfile.h>
 #include <stdio.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TDEPRINT_EXPORT KPipeProcess : public TQFile
 {

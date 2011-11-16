@@ -23,7 +23,7 @@
 #include <tqframe.h>
 #include <tqpixmap.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TDEPRINT_EXPORT SidePixmap : public TQFrame
 {

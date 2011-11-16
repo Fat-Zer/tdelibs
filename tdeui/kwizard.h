@@ -25,7 +25,7 @@
 
 #include <tqwizard.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
 * General-purpose multi-page dialog.

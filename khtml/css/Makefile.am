@@ -44,7 +44,7 @@ INCLUDES = -I$(top_srcdir)/kimgio -I$(top_srcdir)/kio -I$(top_srcdir)/dcop \
 cssdir = $(kde_datadir)/khtml/css
 css_DATA = html4.css quirks.css
 
-SRCDOC_DEST=$(kde_htmldir)/en/kdelibs/khtml
+SRCDOC_DEST=$(kde_htmldir)/en/tdelibs/khtml
 
 EXTRA_DIST = parser.y
 

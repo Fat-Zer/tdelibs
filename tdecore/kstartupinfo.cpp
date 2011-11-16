@@ -66,7 +66,7 @@ DEALINGS IN THE SOFTWARE.
 static const char* const NET_STARTUP_MSG = "_NET_STARTUP_INFO";
 static const char* const NET_STARTUP_WINDOW = "_NET_STARTUP_ID";
 // DESKTOP_STARTUP_ID is used also in kinit/wrapper.c ,
-// tdesu in both kdelibs and kdebase and who knows where else
+// tdesu in both tdelibs and tdebase and who knows where else
 static const char* const NET_STARTUP_ENV = "DESKTOP_STARTUP_ID";
 
 static bool auto_app_started_sending = true;

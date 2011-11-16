@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (C) 2003 Benjamin C Meyer (ben+kdelibs at meyerhome dot net)
+ *  Copyright (C) 2003 Benjamin C Meyer (ben+tdelibs at meyerhome dot net)
  *  Copyright (C) 2003 Waldo Bastian <bastian@kde.org>
  *  Copyright (C) 2004 Michael Brade <brade@kde.org>
  *

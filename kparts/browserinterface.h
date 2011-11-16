@@ -4,7 +4,7 @@
 #include <tqobject.h>
 #include <tqvariant.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace KParts
 {

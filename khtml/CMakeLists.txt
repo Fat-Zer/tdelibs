@@ -103,7 +103,7 @@ set( ${target}_SRCS
 )
 
 file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/dummy.cpp
-"#include <kdelibs_export.h>
+"#include <tdelibs_export.h>
 extern \"C\" KDE_EXPORT void* init_libkhtml();
 extern \"C\" KDE_EXPORT void* init_libkhtmlpart() { return init_libkhtml(); }
 " )
@@ -125,7 +125,7 @@ set( ${target}_SRCS
 
 file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/imgdummy.cpp
 "
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 extern \"C\"  KDE_EXPORT void* init_khtmlimagefactory();
 extern \"C\"  KDE_EXPORT void* init_khtmlimagepart() { return init_khtmlimagefactory(); }
 " )

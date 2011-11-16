@@ -19,7 +19,7 @@
 #ifndef __ktexteditor_undointerface_h__
 #define __ktexteditor_undointerface_h__
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQCString;
 

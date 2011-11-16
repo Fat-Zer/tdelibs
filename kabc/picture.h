@@ -23,7 +23,7 @@
 
 #include <tqimage.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace KABC {
 

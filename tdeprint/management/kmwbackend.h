@@ -21,7 +21,7 @@
 #define KMWBACKEND_H
 
 #include "kmwizardpage.h"
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 #include <tqmap.h>
 
 class TQButtonGroup;

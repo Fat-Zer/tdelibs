@@ -125,7 +125,7 @@ void KCModuleContainer::addModule( const TQString& module )
 {
 	/* In case it doesn't exist we just silently drop it.
 	 * This allows people to easily extend containers.
-	 * For example, KCM monitor gamma can be in kdegraphics.
+	 * For example, KCM monitor gamma can be in tdegraphics.
 	 */
 	if ( !KService::serviceByDesktopName( module ) )
 	{

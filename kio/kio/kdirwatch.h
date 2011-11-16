@@ -22,7 +22,7 @@
 #include <tqdatetime.h>
 #include <tqmap.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #define kdirwatch KDirWatch::self()
 

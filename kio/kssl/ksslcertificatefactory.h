@@ -23,7 +23,7 @@
 #ifndef _KSSLCERTIFICATEFACTORY_H
 #define _KSSLCERTIFICATEFACTORY_H
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KSSLCertificate;
 

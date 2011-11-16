@@ -23,7 +23,7 @@
 #include <tqfont.h>
 #include <tqstringlist.h>
 #include <tqptrlist.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class KGlobal;
 class KCharsetsPrivate;

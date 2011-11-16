@@ -1,5 +1,5 @@
 # $Id$
-# Makefile.am of kdebase/kioslave/http
+# Makefile.am of tdebase/kioslave/http
 
 INCLUDES=	$(all_includes) 
 

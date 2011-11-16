@@ -30,7 +30,7 @@
 #define HTML_ELEMENT_H
 
 #include <dom/dom_element.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KHTMLView;
 

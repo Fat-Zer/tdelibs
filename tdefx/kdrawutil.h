@@ -23,7 +23,7 @@
 #include <tqbitmap.h>
 #include <tqpalette.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /*
  * Various drawing routines. Also see Qt's tqdrawutil.h for some more routines

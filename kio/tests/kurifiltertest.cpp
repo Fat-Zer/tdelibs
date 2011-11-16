@@ -292,7 +292,7 @@ int main(int argc, char **argv)
     TQCString home = getenv("HOME");
     TQCString kdehome = getenv("KDEHOME");
 
-    filter( "$SOMEVAR/kdelibs/kio", 0, KURIFilterData::ERROR ); // note: this dir doesn't exist...
+    filter( "$SOMEVAR/tdelibs/kio", 0, KURIFilterData::ERROR ); // note: this dir doesn't exist...
     filter( "$ETC/passwd", "/etc/passwd", KURIFilterData::LOCAL_FILE );
     filter( "$QTDIR/doc/html/functions.html#s", TQCString("file://")+qtdir+"/doc/html/functions.html#s", KURIFilterData::LOCAL_FILE );
     filter( "http://www.kde.org/$USER", "http://www.kde.org/$USER", KURIFilterData::NET_PROTOCOL ); // no expansion
@@ -325,7 +325,7 @@ int main(int argc, char **argv)
     KStandardDirs::makeDir( kdehome+"/share/Dir[Bracket" );
     filter( "$KDEHOME/share/Dir[Bracket", kdehome+"/share/Dir[Bracket", KURIFilterData::LOCAL_DIR );
 
-    filter( "$HOME/$KDEDIR/kdebase/kcontrol/ebrowsing", 0, KURIFilterData::ERROR );
+    filter( "$HOME/$KDEDIR/tdebase/kcontrol/ebrowsing", 0, KURIFilterData::ERROR );
     filter( "$1/$2/$3", "http://www.google.com/search?q=$1/$2/$3&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL );  // can be used as bogus or valid test. Currently triggers default search, i.e. google
     filter( "$$$$", "http://www.google.com/search?q=$$$$&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL ); // worst case scenarios.
 

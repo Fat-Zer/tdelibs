@@ -17,7 +17,7 @@
 #include <tqpixmap.h>
 #include <tqcolor.h>
 #include <tqrect.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class TQWidget;
 

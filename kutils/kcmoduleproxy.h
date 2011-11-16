@@ -25,7 +25,7 @@
 #include <tqstringlist.h>
 
 #include <kservice.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KAboutData;
 class KCModule;

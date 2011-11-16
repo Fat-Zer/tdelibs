@@ -541,7 +541,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) c
 
 // -----------------------------------------------------------------------------
 
-// #ifdef USE_QT4 // kdebindings / smoke needs this function declaration available at all times.  Furthermore I don't think it would hurt to have the declaration available at all times...so leave these commented out for now
+// #ifdef USE_QT4 // tdebindings / smoke needs this function declaration available at all times.  Furthermore I don't think it would hurt to have the declaration available at all times...so leave these commented out for now
 
 //void KStyle::tqdrawPrimitive( TQ_ControlElement pe,
 //							TQPainter* p,

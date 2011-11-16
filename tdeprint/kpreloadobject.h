@@ -20,7 +20,7 @@
 #ifndef KPRELOADOBJECT_H
 #define KPRELOADOBJECT_H
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TDEPRINT_EXPORT KPReloadObject
 {

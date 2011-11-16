@@ -23,7 +23,7 @@
 #include <tqstringlist.h>
 #include <tqregexp.h>            // for the word ranges
 #include <tqfontmetrics.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
  * This class contains utility functions for handling strings.

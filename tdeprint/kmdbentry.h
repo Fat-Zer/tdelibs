@@ -23,7 +23,7 @@
 #include <tqstring.h>
 #include <tqptrlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 struct TDEPRINT_EXPORT KMDBEntry
 {

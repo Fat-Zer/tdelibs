@@ -24,7 +24,7 @@
 #include <tqstring.h>
 #include <tqobject.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace KABC {
 

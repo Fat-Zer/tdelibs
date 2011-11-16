@@ -24,7 +24,7 @@ maintainer (currently bradh@kde.org) with full details.
 
 
 To add local files:
-1) Create the .pem file and check it into cvs in kdelibs/kio/kssl/kssl.
+1) Create the .pem file and check it into cvs in tdelibs/kio/kssl/kssl.
 2) List the pem file name as a single line in 'localcerts'.
 
 

@@ -30,7 +30,7 @@ class DCOPStubPrivate;
 #include <stdlib.h>
 
 #include <tqstring.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
 * Abstract base class for dcop stubs as created by the

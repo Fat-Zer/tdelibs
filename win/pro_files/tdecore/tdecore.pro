@@ -69,7 +69,7 @@ kshortcut.cpp \
 kshortcutmenu.cpp \
 kshortcutlist.cpp \
 kinstance.cpp \
-kdeversion.cpp \
+tdeversion.cpp \
 klocale.cpp \
 kicontheme.cpp \
 kiconloader.cpp \

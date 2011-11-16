@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #include <tqwidget.h>
 #include <tqcstring.h>
 #include <tqmap.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #ifdef Q_MOC_RUN
 #define Q_WS_X11

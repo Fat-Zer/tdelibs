@@ -44,7 +44,7 @@
 #include <time.h>
 #include <utime.h>
 
-// The code comes partly from kdebase/kioslave/trash/testtrash.cpp
+// The code comes partly from tdebase/kioslave/trash/testtrash.cpp
 
 static bool check(const TQString& txt, TQString a, TQString b)
 {

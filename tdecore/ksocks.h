@@ -22,7 +22,7 @@
 #include <sys/types.h>
 #include <sys/time.h>
 #include <kstaticdeleter.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #ifdef Q_OS_UNIX
 

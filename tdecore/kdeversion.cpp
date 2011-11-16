@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kdeversion.h"
+#include "tdeversion.h"
 
 unsigned int KDE::version()
 {

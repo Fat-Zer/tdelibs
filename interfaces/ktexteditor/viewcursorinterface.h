@@ -20,7 +20,7 @@
 #ifndef __ktexteditor_viewcursorinterface_h__
 #define __ktexteditor_viewcursorinterface_h__
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQCString;
 

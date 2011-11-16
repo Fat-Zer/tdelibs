@@ -25,7 +25,7 @@
 #endif
 
 #include <tqtimer.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * @internal

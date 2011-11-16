@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
- /* This file is heavily based on ktar.cpp from kdelibs (c) David Faure */
+ /* This file is heavily based on ktar.cpp from tdelibs (c) David Faure */
  
 #include <stdio.h>
 #include <stdlib.h>

@@ -24,7 +24,7 @@
 #include <tqstringlist.h>
 #include <tqcstring.h>
 #include <dcopref.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class KApplication;
 

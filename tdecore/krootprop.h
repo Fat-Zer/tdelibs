@@ -26,7 +26,7 @@ typedef unsigned long Atom;
 #include <tqmap.h>
 #include <tqstringlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KRootPropPrivate;
 

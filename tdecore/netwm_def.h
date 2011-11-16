@@ -26,7 +26,7 @@
 #ifndef   __netwm_def_h
 #define   __netwm_def_h
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
   Simple point class for NET classes.

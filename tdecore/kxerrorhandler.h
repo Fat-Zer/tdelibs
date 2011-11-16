@@ -27,7 +27,7 @@
 
 #include <tqvaluelist.h>
 #include <tqwindowdefs.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 #include <X11/Xlib.h>
 
 /**

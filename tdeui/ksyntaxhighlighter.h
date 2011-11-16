@@ -29,7 +29,7 @@
 #include <tqcolor.h>
 #include <tqstringlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQAccel;
 class TQTimer;

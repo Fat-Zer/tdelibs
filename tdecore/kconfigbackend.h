@@ -26,7 +26,7 @@
 #include <kconfigbase.h>
 #include <klockfile.h>
 #include <klocale.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class TQFile;
 class KConfigBackEndPrivate;

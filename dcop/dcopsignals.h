@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqasciidict.h>
 #include <tqptrlist.h>
 #include <tqstring.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class DCOPConnection;
 

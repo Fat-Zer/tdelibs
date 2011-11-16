@@ -20,7 +20,7 @@
 #ifndef _KDEWIN_UNISTD_H
 #define _KDEWIN_UNISTD_H
 
-#include <tdecore/kdelibs_export.h>
+#include <tdecore/tdelibs_export.h>
 
 #include <io.h> /* access(), etc.*/
 #include <process.h> /* getpid(), etc.*/

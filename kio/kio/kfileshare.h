@@ -21,7 +21,7 @@
 #define kfileshare_h
 #include <tqobject.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KDirWatch;
 

@@ -26,7 +26,7 @@ class KSSLCertificate;
 #include <tqstringlist.h>
 #include <tqdatetime.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KIO_EXPORT KSSLCertificateCache {
 public:

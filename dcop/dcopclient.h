@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqvaluelist.h>
 #include <tqstring.h>
 #include <kdatastream.h> // needed for proper bool marshalling
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class DCOPObjectProxy;
 class DCOPClientPrivate;

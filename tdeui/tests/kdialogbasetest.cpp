@@ -44,7 +44,7 @@ int main(int argc, char** argv)
   KDialogBase dialog;
   /* Set a help chapter. If you do not set one, the link is not shown, and the
      upper part of the frame shrinks as much as possible. The help window "
-     "will of course only pop up if you correctly installed kdebase. */
+     "will of course only pop up if you correctly installed tdebase. */
   // I disabled it, as khcclient did not run for me.
   // dialog.setHelp("kdehelp/intro.html", "", "");
   /* This TQTextView is intended to be the main widget of our dialog. The

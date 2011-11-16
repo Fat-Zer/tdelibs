@@ -23,7 +23,7 @@
 #include <tqpopupmenu.h>
 #include <kpixmapeffect.h>
 #include <kpixmap.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 /**
  * @short KPopupMenu title widget.
  *

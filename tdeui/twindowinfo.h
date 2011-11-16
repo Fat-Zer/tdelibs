@@ -13,7 +13,7 @@
 #include <tqpixmap.h>
 #include <tqstring.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * Displays messages in the window icon and title. The message is usually

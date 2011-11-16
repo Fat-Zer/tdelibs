@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <tqimage.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #include "xview.h"
 

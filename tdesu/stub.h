@@ -19,7 +19,7 @@
 #include "process.h"
 #include "kcookie.h"
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 typedef TQValueList<TQCString> QCStringList;
 

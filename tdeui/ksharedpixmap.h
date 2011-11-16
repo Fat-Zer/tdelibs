@@ -40,7 +40,7 @@ class KSharedPixmapPrivate;
  *
  * The server part of shared pixmaps is not implemented here. 
  * That part is provided by KPixmapServer, in the source file:
- * kdebase/kdesktop/pixmapserver.cc.
+ * tdebase/kdesktop/pixmapserver.cc.
  *
  * An example: copy from a shared pixmap:
  * \code

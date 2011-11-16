@@ -122,7 +122,7 @@ void KMimeTypeChooser::loadMimeTypes( const TQStringList &_selectedMimeTypes )
   d->lvMimeTypes->clear();
 
   TQMap<TQString,TQListViewItem*> groups;
-  // thanks to kdebase/kcontrol/filetypes/filetypesview
+  // thanks to tdebase/kcontrol/filetypes/filetypesview
   KMimeType::List mimetypes = KMimeType::allMimeTypes();
   TQValueListIterator<KMimeType::Ptr> it(mimetypes.begin());
 

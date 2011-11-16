@@ -20,7 +20,7 @@
 #ifndef _SYS_UTSNAME_H
 #define _SYS_UTSNAME_H
 
-#include <tdecore/kdelibs_export.h>
+#include <tdecore/tdelibs_export.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -23,7 +23,7 @@
 #include <tqaccel.h>
 #include <kshortcut.h>
 #include <kstdaccel.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class TQPopupMenu; // for obsolete insertItem() methods below
 class TQWidget;

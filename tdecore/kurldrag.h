@@ -23,7 +23,7 @@
 #include <tqstringlist.h>
 #include <tqdragobject.h>
 #include <kurl.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 class TQMimeSource;
 
 class KURLDragPrivate;

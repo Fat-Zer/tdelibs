@@ -142,12 +142,12 @@ contains( TEMPLATE, lib ) {
 
 # global definitions
 win32-borland {
-    QMAKE_CXXFLAGS += /I $(KDELIBS)/win/kdelibs_global_win.h
-    QMAKE_CFLAGS += /I $(KDELIBS)/win/kdelibs_global_win.h
+    QMAKE_CXXFLAGS += /I $(KDELIBS)/win/tdelibs_global_win.h
+    QMAKE_CFLAGS += /I $(KDELIBS)/win/tdelibs_global_win.h
 }
 win32-msvc* {
-    QMAKE_CXXFLAGS += /FI$(KDELIBS)/win/kdelibs_global_win.h
-    QMAKE_CFLAGS += /FI$(KDELIBS)/win/kdelibs_global_win.h
+    QMAKE_CXXFLAGS += /FI$(KDELIBS)/win/tdelibs_global_win.h
+    QMAKE_CFLAGS += /FI$(KDELIBS)/win/tdelibs_global_win.h
 
     # Language Extensions
     QMAKE_CXXFLAGS += /Ze

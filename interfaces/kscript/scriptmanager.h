@@ -25,7 +25,7 @@
 #include <tqdict.h>
 #include <tqobject.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class ScriptInfo;
 //namespace KScriptInterface

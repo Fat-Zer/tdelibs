@@ -356,7 +356,7 @@ TQFont KGlobalSettings::generalFont()
     if (_generalFont)
         return *_generalFont;
 
-    // Sync default with kdebase/kcontrol/fonts/fonts.cpp
+    // Sync default with tdebase/kcontrol/fonts/fonts.cpp
     _generalFont = new TQFont("Sans Serif", 10);
     _generalFont->setPointSize(10);
     _generalFont->setStyleHint(TQFont::SansSerif);
@@ -372,7 +372,7 @@ TQFont KGlobalSettings::fixedFont()
     if (_fixedFont)
         return *_fixedFont;
 
-    // Sync default with kdebase/kcontrol/fonts/fonts.cpp
+    // Sync default with tdebase/kcontrol/fonts/fonts.cpp
     _fixedFont = new TQFont("Monospace", 10);
     _fixedFont->setPointSize(10);
     _fixedFont->setStyleHint(TQFont::TypeWriter);
@@ -388,7 +388,7 @@ TQFont KGlobalSettings::toolBarFont()
     if(_toolBarFont)
         return *_toolBarFont;
 
-    // Sync default with kdebase/kcontrol/fonts/fonts.cpp
+    // Sync default with tdebase/kcontrol/fonts/fonts.cpp
     _toolBarFont = new TQFont("Sans Serif", 10);
     _toolBarFont->setPointSize(10);
     _toolBarFont->setStyleHint(TQFont::SansSerif);
@@ -404,7 +404,7 @@ TQFont KGlobalSettings::menuFont()
     if(_menuFont)
         return *_menuFont;
 
-    // Sync default with kdebase/kcontrol/fonts/fonts.cpp
+    // Sync default with tdebase/kcontrol/fonts/fonts.cpp
     _menuFont = new TQFont("Sans Serif", 10);
     _menuFont->setPointSize(10);
     _menuFont->setStyleHint(TQFont::SansSerif);
@@ -420,7 +420,7 @@ TQFont KGlobalSettings::windowTitleFont()
     if(_windowTitleFont)
         return *_windowTitleFont;
 
-    // Sync default with kdebase/kcontrol/fonts/fonts.cpp
+    // Sync default with tdebase/kcontrol/fonts/fonts.cpp
     _windowTitleFont = new TQFont("Sans Serif", 9, TQFont::Bold);
     _windowTitleFont->setPointSize(10);
     _windowTitleFont->setStyleHint(TQFont::SansSerif);
@@ -436,7 +436,7 @@ TQFont KGlobalSettings::taskbarFont()
     if(_taskbarFont)
         return *_taskbarFont;
 
-    // Sync default with kdebase/kcontrol/fonts/fonts.cpp
+    // Sync default with tdebase/kcontrol/fonts/fonts.cpp
     _taskbarFont = new TQFont("Sans Serif", 10);
     _taskbarFont->setPointSize(10);
     _taskbarFont->setStyleHint(TQFont::SansSerif);

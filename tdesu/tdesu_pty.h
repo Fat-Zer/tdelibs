@@ -20,7 +20,7 @@
 
 #include <tqcstring.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TDESU_EXPORT PTY {
 

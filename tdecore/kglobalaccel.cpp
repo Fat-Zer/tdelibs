@@ -115,7 +115,7 @@ bool KGlobalAccel::setActionEnabled( const TQString& sAction, bool bEnable )
 
 const TQString& KGlobalAccel::configGroup() const
 	{ return d->configGroup(); }
-// for kdemultimedia/kmix
+// for tdemultimedia/kmix
 void KGlobalAccel::setConfigGroup( const TQString& s )
 	{ d->setConfigGroup( s ); }
 

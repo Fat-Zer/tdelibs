@@ -27,7 +27,7 @@
 #include <tqglobal.h>
 
 #ifdef Q_WS_WIN
-#include <kdelibs_export_win.h>
+#include <tdelibs_export_win.h>
 
 #else /* Q_OS_UNIX */
 

@@ -22,7 +22,7 @@
 class TQString;
 class TQCString;
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace KTextEditor
 {

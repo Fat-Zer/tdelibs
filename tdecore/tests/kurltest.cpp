@@ -125,8 +125,8 @@ int main(int argc, char *argv[])
   baseURL = "http://www.foo.bar/top//test2/file2.html";
   check( "KURL::url()", baseURL.url(), "http://www.foo.bar/top//test2/file2.html" );
 
-  baseURL = "file:/usr/local/src/kde2/////kdelibs/kio";
-  check( "KURL::url()", baseURL.url(), "file:///usr/local/src/kde2/////kdelibs/kio" );
+  baseURL = "file:/usr/local/src/kde2/////tdelibs/kio";
+  check( "KURL::url()", baseURL.url(), "file:///usr/local/src/kde2/////tdelibs/kio" );
 
   baseURL = "http://www.foo.bar";
   KURL rel_url2( baseURL, "mailto:bastian@kde.org" );
@@ -135,9 +135,9 @@ int main(int argc, char *argv[])
   baseURL = "mailto:bastian@kde.org?subject=hello";
   check( "KURL::url()", baseURL.url(), "mailto:bastian@kde.org?subject=hello" );
 
-  baseURL = "file:/usr/local/src/kde2/kdelibs/kio/";
-  KURL url2( baseURL, "../../////kdebase/konqueror" );
-  check( "KURL::url()", url2.url(), "file:///usr/local/src/kde2/////kdebase/konqueror" );
+  baseURL = "file:/usr/local/src/kde2/tdelibs/kio/";
+  KURL url2( baseURL, "../../////tdebase/konqueror" );
+  check( "KURL::url()", url2.url(), "file:///usr/local/src/kde2/////tdebase/konqueror" );
 
   TQString u1 = "file:/home/dfaure/my#myref";
   url1 = u1;
@@ -318,8 +318,8 @@ int main(int argc, char *argv[])
           "http://www.google.com/foo%20%20%20%20%20%20 bar/");
 
   KURL carsten;
-  carsten.setPath("/home/gis/src/kde/kdelibs/kfile/.#kfiledetailview.cpp.1.18");
-  check("KURL::path()", carsten.path(), "/home/gis/src/kde/kdelibs/kfile/.#kfiledetailview.cpp.1.18");
+  carsten.setPath("/home/gis/src/kde/tdelibs/kfile/.#kfiledetailview.cpp.1.18");
+  check("KURL::path()", carsten.path(), "/home/gis/src/kde/tdelibs/kfile/.#kfiledetailview.cpp.1.18");
 
   KURL charles;
   charles.setPath( "/home/charles/foo%20moo" );

@@ -23,7 +23,7 @@
 #include <tqdom.h>
 #include <tqstringlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KXMLGUIBuilderPrivate;
 class TQWidget;

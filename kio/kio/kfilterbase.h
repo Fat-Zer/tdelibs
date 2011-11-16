@@ -22,7 +22,7 @@
 #include <tqobject.h>
 #include <tqstring.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #ifdef Q_WS_WIN
 #undef ERROR //avoid conflicts

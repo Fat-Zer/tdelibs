@@ -25,7 +25,7 @@
 #include <tqvalidator.h>
 #include <tqstringlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * @short A TQValidator to (dis)allow certain strings

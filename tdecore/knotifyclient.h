@@ -18,7 +18,7 @@
 #ifndef _KNOTIFY_CLIENT
 #define _KNOTIFY_CLIENT
 #include <tqstring.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class KInstance;
 #undef None // X11 headers...

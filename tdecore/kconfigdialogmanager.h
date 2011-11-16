@@ -1,6 +1,6 @@
 /*
  *  This file is part of the KDE libraries
- *  Copyright (C) 2003 Benjamin C Meyer (ben+kdelibs at meyerhome dot net)
+ *  Copyright (C) 2003 Benjamin C Meyer (ben+tdelibs at meyerhome dot net)
  *  Copyright (C) 2003 Waldo Bastian <bastian@kde.org>
  *
  *  This library is free software; you can redistribute it and/or
@@ -23,7 +23,7 @@
 
 #include <tqobject.h>
 #include <tqptrlist.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class KConfigSkeleton;
 class KConfigSkeletonItem;
@@ -72,7 +72,7 @@ class TQSqlPropertyMap;
  * it is modified you should add its signal using addWidgetChangedSignal().
 
  * @since 3.2
- * @author Benjamin C Meyer <ben+kdelibs at meyerhome dot net>
+ * @author Benjamin C Meyer <ben+tdelibs at meyerhome dot net>
  * @author Waldo Bastian <bastian@kde.org>
  */
 class TDECORE_EXPORT KConfigDialogManager : public TQObject {

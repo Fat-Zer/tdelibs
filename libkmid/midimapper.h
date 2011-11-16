@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 #include <libkmid/dattypes.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #define KM_NAME_SIZE 30
 

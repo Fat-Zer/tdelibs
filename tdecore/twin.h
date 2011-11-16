@@ -23,7 +23,7 @@
 #include <tqwindowdefs.h>
 #include <tqstring.h>
 #include <tqpixmap.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 #ifdef Q_OS_UNIX
 
@@ -80,8 +80,8 @@ public:
      * Except for rare cases, this request will be always honored,
      * and normal applications are forbidden to use it.
      *
-     * In case of problems, consult the KWin README in the kdebase
-     * package (kdebase/twin/README), or ask on the twin@kde.org
+     * In case of problems, consult the KWin README in the tdebase
+     * package (tdebase/twin/README), or ask on the twin@kde.org
      * mailing list.
      *
      * @param win the id of the window to make active

@@ -20,7 +20,7 @@
 #ifndef __KBUTTONBOX__H__
 #define __KBUTTONBOX__H__
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #include <tqwidget.h>
 class TQPushButton;

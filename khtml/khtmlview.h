@@ -28,7 +28,7 @@
 // qt includes and classes
 #include <tqscrollview.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQPainter;
 class TQRect;

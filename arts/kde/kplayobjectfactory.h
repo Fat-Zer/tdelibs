@@ -23,7 +23,7 @@
 #define KPLAYOBJECTFACTORY_H
 
 #include <kurl.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #include "soundserver.h"
 #include "kplayobject.h"

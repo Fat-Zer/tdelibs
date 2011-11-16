@@ -22,7 +22,7 @@
 #include <tqwidget.h>
 #include <tqdatetime.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
 * @short A pushbutton to display or allow user selection of a date.

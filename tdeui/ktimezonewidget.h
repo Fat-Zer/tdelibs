@@ -20,7 +20,7 @@
 #ifndef KTIMEZONEWIDGET_H
 #define KTIMEZONEWIDGET_H
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 #include <klistview.h>
 #include <tqstring.h>
 

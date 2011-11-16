@@ -18,8 +18,8 @@ Make sure you get the following stuff from the repository:
 
 qt-copy (This is qt-3.3.2)
 arts
-kdelibs
-kdebase (strongly recommended but not strictly necessary)
+tdelibs
+tdebase (strongly recommended but not strictly necessary)
 <any other package you are interested in>
 
 It is important that you compile AND INSTALL the above packages in the 
@@ -91,7 +91,7 @@ file, "Makefile.in" as well as "Makefile" files. So it can be that after
 some struggle to get QTDIR/KDEDIR setup correctly your setup is actually 
 correct, but old -incorrect- settings are still lying around.
 
-The best thing to do in such a case is to do a "svn-clean" (from kdesdk/scripts).
+The best thing to do in such a case is to do a "svn-clean" (from tdesdk/scripts).
 This removes all files which aren't stored in the repository. You can then start all over 
 again with "makefile -f Makefile.cvs". Make sure you don't have any important 
 files lying around in your source tree any more, they will be deleted!
@@ -102,20 +102,20 @@ Makefile.am but not a Makefile. If you try to compile such a directory
 you will get an error like:
 
   Making all in management
-  make[3]: Entering directory /home/gregturp/KDE/kdelibs/tdeprint/management'
+  make[3]: Entering directory /home/gregturp/KDE/tdelibs/tdeprint/management'
   make[3]: *** No rule to make target all'.  Stop.
-  make[3]: Leaving directory /home/gregturp/KDE/kdelibs/tdeprint/management'
+  make[3]: Leaving directory /home/gregturp/KDE/tdelibs/tdeprint/management'
   make[2]: *** [all-recursive] Error 1
-  make[2]: Leaving directory /home/gregturp/KDE/kdelibs/tdeprint'
+  make[2]: Leaving directory /home/gregturp/KDE/tdelibs/tdeprint'
   make[1]: *** [all-recursive] Error 1
-  make[1]: Leaving directory /home/gregturp/KDE/kdelibs'
+  make[1]: Leaving directory /home/gregturp/KDE/tdelibs'
   make: *** [all-recursive-am] Error 2
 
 The solution is to redo "make -f Makefile.cvs; ./configure". 
 
 You can create a single Makefile from a Makefile.am file with the
-kdesdk/scripts/create_makefile script. Make sure to run it from the toplevel
-directory. (E.g. /home/gregturp/KDE/kdelibs)
+tdesdk/scripts/create_makefile script. Make sure to run it from the toplevel
+directory. (E.g. /home/gregturp/KDE/tdelibs)
 
 Problems?
 =========
@@ -131,7 +131,7 @@ a 'q', you probably have not setup your QTDIR correct or have the wrong
 version of Qt.
 
 If you encounter compile errors after updating from SVN, check whether you 
-need to update kdelibs as well. If the problems persists, wait a few hours,
+need to update tdelibs as well. If the problems persists, wait a few hours,
 usually compile errors are fixed shortly after they have been introduced.
 
 If you still have problems read the kde-devel@kde.org mailinglist and/or

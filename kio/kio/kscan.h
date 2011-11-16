@@ -29,7 +29,7 @@ class TQImage;
 /**
  * This is a base class for scanning dialogs. You can derive from this class
  * and implement your own dialog. An implementation is available in
- * kdegraphics/libkscan.
+ * tdegraphics/libkscan.
  *
  * Application developers that wish to add scanning support to their program
  * can use the static method @p KScanDialog::getScanDialog() to get an instance

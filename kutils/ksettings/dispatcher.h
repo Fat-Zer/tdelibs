@@ -22,7 +22,7 @@
 
 #include <tqobject.h>
 #include <tqmap.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQCString;
 class TQSignal;

@@ -22,7 +22,7 @@
 
 #include <tqstring.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KURL;
 class TQStrIList;

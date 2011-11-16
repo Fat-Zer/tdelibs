@@ -22,7 +22,7 @@
 #include <tqstring.h>
 #include <tqvaluelist.h>
 #include <tqdatastream.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class KSycocaEntry;
 class KSycocaDictStringList;

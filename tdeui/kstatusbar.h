@@ -24,7 +24,7 @@
 #include <tqstatusbar.h>
 #include <tqintdict.h>
 #include <tqlabel.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KStatusBar;
 

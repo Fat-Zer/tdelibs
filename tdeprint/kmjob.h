@@ -28,7 +28,7 @@
 #include <tqstring.h>
 #include <tqvaluevector.h>
 #include <tdeprint/kmobject.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * @internal

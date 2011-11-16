@@ -22,7 +22,7 @@
 #define KPIXMAPPROVIDER_H
 
 #include <tqpixmap.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
  * A tiny abstract class with just one method:

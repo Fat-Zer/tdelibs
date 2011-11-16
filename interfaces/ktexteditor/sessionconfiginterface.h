@@ -19,7 +19,7 @@
 #ifndef __ktexteditor_sessionconfiginterface_h__
 #define __ktexteditor_sessionconfiginterface_h__
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQCString;
 class KConfig;

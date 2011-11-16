@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
- /* This file is heavily based on tar.h from kdebase
+ /* This file is heavily based on tar.h from tdebase
   * (c) David Faure <faure@kde.org>
   */
 

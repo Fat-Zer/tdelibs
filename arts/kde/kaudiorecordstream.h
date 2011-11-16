@@ -27,7 +27,7 @@
 
 #include <tqobject.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KArtsServer;
 namespace Arts { class StereoEffectStack; }

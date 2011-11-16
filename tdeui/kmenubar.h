@@ -27,7 +27,7 @@
 
 #include <tqmenubar.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * %KDE Style-able menubar.

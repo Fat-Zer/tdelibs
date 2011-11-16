@@ -23,7 +23,7 @@
 #include <tqlistview.h>
 
 #include <tqptrlist.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQDragObject;
 class KConfig;

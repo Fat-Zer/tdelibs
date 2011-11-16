@@ -23,7 +23,7 @@
 #include <tqobject.h>
 #include <tqcstring.h>
 #include <tqstring.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /*
  * This file defines a class that envelopes most, if not all, socket addresses

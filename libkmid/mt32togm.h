@@ -24,7 +24,7 @@
 #ifndef _MT32TOGM_H
 #define _MT32TOGM_H
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 extern int KMID_EXPORT MT32toGM[128];
 

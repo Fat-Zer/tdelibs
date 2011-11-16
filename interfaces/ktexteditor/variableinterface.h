@@ -19,7 +19,7 @@
 #ifndef _KTEXTEDITOR_VARIABLE_INTERFACE_H_
 #define _KTEXTEDITOR_VARIABLE_INTERFACE_H_
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQString;
 

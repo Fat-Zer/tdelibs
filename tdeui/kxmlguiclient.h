@@ -24,7 +24,7 @@
 #include <tqmap.h>
 #include <tqstringlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQWidget;
 class KAction;

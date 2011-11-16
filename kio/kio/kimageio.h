@@ -10,7 +10,7 @@
 
 #include <tqstringlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * Interface to the KDE Image IO plugin architecture.

@@ -105,9 +105,9 @@ seems sensible.\
 Building \
 ========\
  \
-This code needs to live in a subdir off the khtml directory in kdelibs. The\
+This code needs to live in a subdir off the khtml directory in tdelibs. The\
 subdir should be called 'xpath'. The easiest way to regenerate the makefiles\
-is to go to the root of the kdelibs tree and run: \
+is to go to the root of the tdelibs tree and run: \
   create_makefiles khtml/xpath\
  \
 This code is intended to compile, but not to work.\

@@ -22,7 +22,7 @@
 
 #include <tqpushbutton.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KColorButtonPrivate;
 /**

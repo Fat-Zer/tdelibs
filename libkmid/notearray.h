@@ -25,7 +25,7 @@
 #define NOTEARRAY_H
 
 #include <libkmid/dattypes.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * Holds a resizeable array of note on/off and patch change events. It can

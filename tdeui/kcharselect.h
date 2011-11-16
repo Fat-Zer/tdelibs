@@ -29,7 +29,7 @@
 #include <tqpoint.h>
 #include <tqstringlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQFont;
 class TQFontDatabase;

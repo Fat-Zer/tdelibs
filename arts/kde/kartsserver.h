@@ -24,7 +24,7 @@
 #include "kmedia2.h"
 #include <tqobject.h>
 #include "soundserver.h"
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * KArtsServer is a wrapper to conveniently get a reference to a SoundServer,

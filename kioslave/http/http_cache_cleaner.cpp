@@ -189,7 +189,7 @@ void scanDirectory(FileInfoList &fileEntries, const TQString &name, const TQStri
 
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
-   KLocale::setMainCatalogue("kdelibs");
+   KLocale::setMainCatalogue("tdelibs");
    KCmdLineArgs::init( argc, argv, appName,
 		       I18N_NOOP("KDE HTTP cache maintenance tool"),
 		       description, version, true);

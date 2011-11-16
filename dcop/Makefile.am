@@ -1,4 +1,4 @@
-# This Makefile.am was taken from the kdelibs distribution and
+# This Makefile.am was taken from the tdelibs distribution and
 # modified for DCOP.  Preston Brown (Oct 10, 1999)
 #
 # Copyright (c) 1999 Preston Brown <pbrown@kde.org>

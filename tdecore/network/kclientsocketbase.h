@@ -30,7 +30,7 @@
 
 #include "ksocketbase.h"
 #include "kresolver.h"
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #ifdef Q_MOC_RUN
 #define USE_QT4

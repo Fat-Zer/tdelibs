@@ -20,7 +20,7 @@
 
 #include <tqscrollview.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * @short A variant of TQScrollView that supports smooth scrolling.

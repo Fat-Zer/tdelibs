@@ -177,7 +177,7 @@ TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const
         else
             constr = constr + " and " + tmp;
     }
-/* Bug in KTrader ? Test with HEAD-kdelibs!
+/* Bug in KTrader ? Test with HEAD-tdelibs!
     if ( instance )
     {
         TQString tmp = TQString::tqfromLatin1( "not ('%1' in ExcludeFrom)" ).arg( instance->instanceName() );

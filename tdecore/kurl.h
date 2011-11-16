@@ -22,7 +22,7 @@
 
 #include <tqstring.h>
 #include <tqvaluelist.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class TQUrl;
 class TQStringList;
@@ -749,7 +749,7 @@ public:
    * @brief Tests if the URL has a reference part
    *
    * @return @c true if the URL has a reference part. In a URL like
-   *         <tt>"http://www.kde.org/kdebase.tar#tar:/README"</tt> it would
+   *         <tt>"http://www.kde.org/tdebase.tar#tar:/README"</tt> it would
    *         return @c true as well
    *
    * @see ref()
@@ -1493,7 +1493,7 @@ public:
    *
    * Example for a nested URL:
    * @code
-   * file:///home/weis/kde.tgz#gzip:/#tar:/kdebase
+   * file:///home/weis/kde.tgz#gzip:/#tar:/tdebase
    * @endcode
    * A URL like <tt>"http://www.kde.org#tar:/kde/README.hml#ref1"</tt> will be
    * split in <tt>"http://www.kde.org#ref1"</tt> and
@@ -1521,7 +1521,7 @@ public:
    *
    * Example for a nested URL:
    * @code
-   * file:///home/weis/kde.tgz#gzip:/#tar:/kdebase
+   * file:///home/weis/kde.tgz#gzip:/#tar:/tdebase
    * @endcode
    * A URL like <tt>"http://www.kde.org#tar:/kde/README.hml#ref1"</tt> will be
    * split in <tt>"http://www.kde.org#ref1"</tt> and

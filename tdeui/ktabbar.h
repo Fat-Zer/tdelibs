@@ -23,7 +23,7 @@
 
 #include <tqtabbar.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQTimer;
 class TQPushButton;

@@ -110,7 +110,7 @@ KSocksTable::~KSocksTable() {
  *      libraries differently.  Expect .so, .sl, .a (!) (AIX does this).
  *   3) Find a unique symbol in the library that we can use to identify that
  *      library and write out the test case in the constructor
- *   4) Make necessary changes to the KControl module in kdebase/kcontrol/....
+ *   4) Make necessary changes to the KControl module in tdebase/kcontrol/....
  *   5) TEST!
  *
  */

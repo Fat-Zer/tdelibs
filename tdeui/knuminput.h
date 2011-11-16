@@ -29,7 +29,7 @@
 
 #include <tqwidget.h>
 #include <tqspinbox.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQLabel;
 class TQSlider;

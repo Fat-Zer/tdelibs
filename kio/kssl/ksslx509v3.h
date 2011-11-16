@@ -23,7 +23,7 @@
 
 #include <tqstring.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 // ### KDE4: fix constness of methods
 /**

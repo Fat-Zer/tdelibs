@@ -1,5 +1,5 @@
 <?xml version = '1.0'?>
-<kdevelop>
+<tdevelop>
   <general>
     <author>Will Stephenson</author>
     <email>wstephenson@suse.de</email>
@@ -105,4 +105,4 @@
       <headerCompletionDelay>250</headerCompletionDelay>
     </codecompletion>
   </kdevcppsupport>
-</kdevelop>
+</tdevelop>

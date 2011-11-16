@@ -20,7 +20,7 @@
 
 #include <tqiodevice.h>
 #include <tqstring.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQFile;
 class KFilterBase;

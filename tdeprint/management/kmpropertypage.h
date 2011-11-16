@@ -23,7 +23,7 @@
 #include "cjanuswidget.h"
 #include "kmprinterpage.h"
 #include <tdeprint/kpreloadobject.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 #include <tqptrlist.h>
 
 class KMPropWidget;

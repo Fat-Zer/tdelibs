@@ -24,7 +24,7 @@
 #include <tqintdict.h>
 #include <tqvaluestack.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQWidgetStack;
 class TQLabel;

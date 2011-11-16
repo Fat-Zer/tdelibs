@@ -27,7 +27,7 @@
 #define SAMPLETESTMODULE_H
 
 #include "tester.h"
-// Outside of kdelibs you would use: #include <kunittest/tester.h>
+// Outside of tdelibs you would use: #include <kunittest/tester.h>
 
 class SampleTester : public KUnitTest::Tester
 {

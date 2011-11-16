@@ -22,7 +22,7 @@
 
 #include <tqglobal.h>	// For uint
 #include <tqstring.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class TQVariant;
 class KConfigBase;

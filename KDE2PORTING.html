@@ -70,9 +70,9 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   The first step to get your KDE application to compile under KDE 2.0,
   is to detect KDE 2.0 and Qt 2.x at configure time. The easiest way to
   get a working autoconf/automake framework, is to either use 
-  <a href="http://www.kdevelop.org">KDevelop</a> or
+  <a href="http://www.tdevelop.org">KDevelop</a> or
   <a href="http://home.earthlink.net/~granroth/kapptemplate/index.html">kapptemplate</a>
-  (available in CVS under the module "kdesdk"), to generate a new
+  (available in CVS under the module "tdesdk"), to generate a new
   application template. Replace the generated source files by yours
   and adapt Makefile.am accordingly.
 
@@ -80,11 +80,11 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
 <H3><A NAME="general">Global changes</A></H3>
 
-  We did our best to clean up the header files of kdelibs, so they do
+  We did our best to clean up the header files of tdelibs, so they do
   not include unnecessary bloat for your application. As a consequence, you
   may notice that some header files are missing from your source files as
   they have been included before by kapp.h for example. There is a script
-  in kdesdk/scripts called "fixheaders" that takes care of most of these
+  in tdesdk/scripts called "fixheaders" that takes care of most of these
   cases. Just call "make -k 2&gt;&amp;1 | perl .../fixheaders" and it will try
   to look after the error messages and add includes as it recognize the
   errors.<P>
@@ -175,7 +175,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   certain option was specified on the command line and your application 
   now automatically supports --help and --version. It aborts with a
   useful error message when the command line contains a syntax error.
-  See kdelibs/tdecore/kcmdlineargs.h for more info.<P>
+  See tdelibs/tdecore/kcmdlineargs.h for more info.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -505,14 +505,14 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
  <STRONG> Replacement table :</STRONG><P>
 <TABLE BORDER="1">
 
-<TR><TD>KFM::download         </TD><TD>-&gt; KIO::NetAccess::download (kdelibs/kio/netaccess.h)</TD></TR>
+<TR><TD>KFM::download         </TD><TD>-&gt; KIO::NetAccess::download (tdelibs/kio/netaccess.h)</TD></TR>
 <TR><TD>KFM::removeTempFile   </TD><TD>-&gt; KIO::NetAccess::removeTempFile</TD></TR>
 <TR><TD COLSPAN="2" ROWSPAN="0">refreshDesktop, sortDesktop, selectRootIcons : removed; kdesktop handles it</TD></TR>
 <TR><TD>KFM::configure        </TD><TD>-&gt; see konqueror DCOP interface</TD></TR>
-<TR><TD>KFM::openURL          </TD><TD>-&gt; "(void) new KRun (url)" (kdelibs/kio/krun.h)</TD></TR>
+<TR><TD>KFM::openURL          </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/kio/krun.h)</TD></TR>
 <TR><TD>KFM::refreshDirectory </TD><TD>-&gt; not needed anymore since konqy/kdesktop use KDirWatch</TD></TR>
-<TR><TD>KFM::openProperties   </TD><TD>-&gt; "(void) new KPropertiesDialog (url)" (kdelibs/kfile/kpropsdlg.h)</TD></TR>
-<TR><TD>KFM::exec             </TD><TD>-&gt; "(void) new KRun (url)" (kdelibs/kio/krun.h)</TD></TR>
+<TR><TD>KFM::openProperties   </TD><TD>-&gt; "(void) new KPropertiesDialog (url)" (tdelibs/kfile/kpropsdlg.h)</TD></TR>
+<TR><TD>KFM::exec             </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/kio/krun.h)</TD></TR>
 <TR><TD>KFM::copy, KFM::move  </TD><TD>-&gt; KIO::Job (async, see kio/job.h)<BR>
                             or KIO::NetAccess (sync, see kio/netaccess.h)</TD></TR>
 <TR><TD>DlgLocation           </TD><TD>-&gt; Use KLineEditDlg (tdeui/klineeditdlg.h) instead</TD></TR>
@@ -552,10 +552,10 @@ input font most closely, but can display the given charset.<P>
 <H3><A NAME="KWizard">KWizard, KNoteBook</A></H3>
 
 KWizard is based on TQWizard now. The API has changed. Consult Qt's
-documentation and kdelibs/kdetest/kwizardtest.cpp for an example use.<P>
+documentation and tdelibs/kdetest/kwizardtest.cpp for an example use.<P>
 KNoteBook (deeply entwined with the former KWizard) has been removed until
 someone is willing to port it to work with the new wizard. If you want to
-use it you'll find the necessary files in kdegraphics/kiconedit.<P>
+use it you'll find the necessary files in tdegraphics/kiconedit.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -674,7 +674,7 @@ KPixmapEffect::<BR></TD>
                  PipeCross,<BR>
                  Elliptic]</TD></TR></TABLE>
 
-Gradients. See kdelibs/kdetest/kgradienttest &amp; kunbalancedgradienttest for
+Gradients. See tdelibs/kdetest/kgradienttest &amp; kunbalancedgradienttest for
 information on how they actually look.<P>
 
 Look further in this document for other info about pixmap effect code 
@@ -778,7 +778,7 @@ The format for modules for the KDE Control Center has changed quite
 a bit. If you want to port your module to the new schema, please
 consult<P>
 
-kdebase/kcontrol/README<P>
+tdebase/kcontrol/README<P>
 
 which explains what needs to be done.<P>
 
@@ -805,9 +805,9 @@ provides some useful lists, like the list of all managed windows).
 
 Use kdDebug, kdWarning, kdError, kdFatal to log debug output, warnings and
 errors in a very flexible way. kdebug has been improved, and the API simplified.
-kdesdk/scripts/kDebug2kdDebug.sh provides a script for automating the conversion.
+tdesdk/scripts/kDebug2kdDebug.sh provides a script for automating the conversion.
 Note that enabling/disabling debug output can now be done with kdebugdialog,
-which can be found in kdebase. The hidden dialog on C+S+F12 no longer exists.
+which can be found in tdebase. The hidden dialog on C+S+F12 no longer exists.
 <P>
 Also, note that qDebug and fprintf aren't disabled by -DNDEBUG, whereas kdDebug is.
 One more reason to use kdDebug !

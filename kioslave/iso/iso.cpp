@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
- /* This file is heavily based on tar.cc from kdebase
+ /* This file is heavily based on tar.cc from tdebase
   * (c) David Faure <faure@kde.org>
   */
 

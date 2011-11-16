@@ -23,7 +23,7 @@
 #include <tqdict.h>
 #include <tqobject.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace KParts {
 

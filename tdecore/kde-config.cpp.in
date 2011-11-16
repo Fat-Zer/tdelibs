@@ -113,7 +113,7 @@ void printResult(const TQString &s)
 
 int main(int argc, char **argv)
 {
-    KLocale::setMainCatalogue("kdelibs");
+    KLocale::setMainCatalogue("tdelibs");
     KAboutData about("kde-config", "kde-config", "1.0", description, KAboutData::License_GPL, "(C) 2000 Stephan Kulow");
     KCmdLineArgs::init( argc, argv, &about);
 

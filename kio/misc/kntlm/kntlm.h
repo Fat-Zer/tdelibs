@@ -24,7 +24,7 @@
 #include <tqcstring.h>
 #include <tqstring.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * @short KNTLM class implements the NTLM authentication protocol.

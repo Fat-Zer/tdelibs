@@ -24,7 +24,7 @@
 #include <tqwidget.h>
 #include <tqmap.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KMPrinter;
 class DrMain;

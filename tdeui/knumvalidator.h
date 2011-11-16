@@ -26,7 +26,7 @@
 
 #include <tqvalidator.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQWidget;
 class TQString;

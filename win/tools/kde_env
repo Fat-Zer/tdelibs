@@ -13,7 +13,7 @@ if [ -n "$MSVC" ] ; then
 fi
 
 # Generic settings
-export KDELIBS=$KDEWIN\\kdelibs  # KDElibs/win32 source directory
+export KDELIBS=$KDEWIN\\tdelibs  # KDElibs/win32 source directory
 export INCLUDE="$KDELIBS\\win;$KDELIBS;$KDELIBS\\tdecore;$KDELIBS\\tdefx;$KDELIBS\\tdeprint;$KDELIBS\\tdeui;$KDELIBS\\kmdi;$KDELIBS\\dcop;$KDELIBS\\kio;$KDELIBS\\kio\\kio;$KDELIBS\\kio\\kfile;$INCLUDE"
 
 # Version information for binaries

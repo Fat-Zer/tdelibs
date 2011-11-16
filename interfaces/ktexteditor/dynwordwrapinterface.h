@@ -20,7 +20,7 @@
 #ifndef __ktexteditor_dynwordwrapinterface_h__
 #define __ktexteditor_dynwordwrapinterface_h__
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQCString;
 

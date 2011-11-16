@@ -22,7 +22,7 @@
 
 #include <tqsplashscreen.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQPixmap;
 

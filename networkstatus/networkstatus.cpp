@@ -33,7 +33,7 @@
 #include "serviceifaceimpl.h"
 #include "network.h"
 
-#include <kdeversion.h>
+#include <tdeversion.h>
 #include <kdemacros.h>
 
 #if KDE_IS_VERSION( 3,3,90 )

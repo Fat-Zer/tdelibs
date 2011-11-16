@@ -1,7 +1,7 @@
 Checklist to ensure that zeroconf will work:
 
 1) Install Avahi, at least version 0.3
-2) compile kdnssd-avahi and install it to replace 'stub' libkdnssd.so provided by kdelibs
+2) compile kdnssd-avahi and install it to replace 'stub' libkdnssd.so provided by tdelibs
 3) check /etc/nsswitch.conf and ensure that there is 'mdns' before 'dns' in
 line starting with 'host:'. It should be something like:
 host: files mdns dns

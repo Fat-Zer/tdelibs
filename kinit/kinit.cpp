@@ -71,7 +71,7 @@
 #include <kstartupinfo.h> // schroder
 #endif
 
-#include <kdeversion.h>
+#include <tdeversion.h>
 
 #include "ltdl.h"
 #include "klauncher_cmds.h"
@@ -1619,7 +1619,7 @@ static void setupX()
     XSetErrorHandler(tdeinit_x_errhandler);
 }
 
-// Borrowed from kdebase/kaudio/kaudioserver.cpp
+// Borrowed from tdebase/kaudio/kaudioserver.cpp
 static int initXconnection()
 {
   X11display = XOpenDisplay(NULL);

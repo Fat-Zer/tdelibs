@@ -300,7 +300,7 @@ static TQString makeQuestion( const KURL& url, const TQString& mimeType, const T
 BrowserRun::AskSaveResult BrowserRun::askSave( const KURL & url, KService::Ptr offer, const TQString& mimeType, const TQString & suggestedFilename )
 {
     // SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC
-    // NOTE: Keep this function in sync with kdebase/kcontrol/filetypes/filetypedetails.cpp
+    // NOTE: Keep this function in sync with tdebase/kcontrol/filetypes/filetypedetails.cpp
     //       FileTypeDetails::updateAskSave()
 
     TQString question = makeQuestion( url, mimeType, suggestedFilename );
@@ -323,7 +323,7 @@ BrowserRun::AskSaveResult BrowserRun::askSave( const KURL & url, KService::Ptr o
 BrowserRun::AskSaveResult BrowserRun::askEmbedOrSave( const KURL & url, const TQString& mimeType, const TQString & suggestedFilename, int flags )
 {
     // SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC
-    // NOTE: Keep this funcion in sync with kdebase/kcontrol/filetypes/filetypedetails.cpp
+    // NOTE: Keep this funcion in sync with tdebase/kcontrol/filetypes/filetypedetails.cpp
     //       FileTypeDetails::updateAskSave()
 
     KMimeType::Ptr mime = KMimeType::mimeType( mimeType );

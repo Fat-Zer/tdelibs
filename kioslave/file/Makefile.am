@@ -1,4 +1,4 @@
-## Makefile.am of kdebase/kioslave/file
+## Makefile.am of tdebase/kioslave/file
 
 AM_CPPFLAGS = -D_LARGEFILE64_SOURCE
 

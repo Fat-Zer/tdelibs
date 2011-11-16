@@ -22,7 +22,7 @@
 
 #include <tqstring.h>
 #include <kshortcut.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class TQKeyEvent;
 class KAccelActions;

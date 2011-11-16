@@ -21,7 +21,7 @@
 #define KCATALOGUE_H
 
 #include <tqstring.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 struct kde_loaded_l10nfile;
 
@@ -83,7 +83,7 @@ public:
   int pluralType() const;
   
   /**
-   * Sets the plural type for the catalog. The caller has probably looked it up in a kdelibs.mo-catalog 
+   * Sets the plural type for the catalog. The caller has probably looked it up in a tdelibs.mo-catalog 
    * for the appropriate language
    *
    * @return The plural type for the catalog

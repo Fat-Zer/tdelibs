@@ -47,7 +47,7 @@
 #include <windows.h>
 #endif
 
-static const char * const SYSTEM_MESSAGES = "kdelibs";
+static const char * const SYSTEM_MESSAGES = "tdelibs";
 
 static const char *maincatalogue = 0;
 
@@ -136,7 +136,7 @@ void KLocale::initMainCatalogues(const TQString & catalog)
     // do not use insertCatalogue here, that would already trigger updateCatalogs
     d->catalogNames.append( mainCatalogue );   // application catalog
     if (mainCatalogue.contains("desktop") == 0 || mainCatalogue.contains("kdesktop") == 1) { //don't bother if we're looking up desktop translations
-      d->catalogNames.append( SYSTEM_MESSAGES ); // always include kdelibs.mo
+      d->catalogNames.append( SYSTEM_MESSAGES ); // always include tdelibs.mo
       d->catalogNames.append( "kio" );            // always include kio.mo
       d->catalogNames.append( "xdg-user-dirs" );
     }
@@ -216,7 +216,7 @@ int KLocale::pluralType( const TQString & language )
       return pluralType( *it );
     }
   }
-  // kdelibs.mo does not seem to exist for this language
+  // tdelibs.mo does not seem to exist for this language
   return -1;
 }
 
@@ -229,7 +229,7 @@ int KLocale::pluralType( const KCatalogue& catalog )
       "thd@kde.org and coolo@kde.org, they will tell you. "
       "Better leave that out if unsure, the programs will "
       "crash!!\nDefinition of PluralForm - to be set by the "
-      "translator of kdelibs.po");
+      "translator of tdelibs.po");
     TQString pf (catalog.translate( pluralFormString));
     if ( pf.isEmpty() ) {
       return -1;
@@ -440,10 +440,10 @@ bool KLocale::setLanguage(const TQStringList & languages)
   // 1) some empty strings that we have to eliminate
   // 2) duplicate entries like in de:fr:de, where we have to keep the first occurrance of a language in order
   //    to preserve the order of precenence of the user => iterate backwards
-  // 3) languages into which the application is not translated. For those languages we should not even load kdelibs.mo or kio.po.
+  // 3) languages into which the application is not translated. For those languages we should not even load tdelibs.mo or kio.po.
   //    these langugage have to be dropped. Otherwise we get strange side effects, e.g. with Hebrew:
   //    the right/left switch for languages that write from
-  //    right to left (like Hebrew or Arabic) is set in kdelibs.mo. If you only have kdelibs.mo
+  //    right to left (like Hebrew or Arabic) is set in tdelibs.mo. If you only have tdelibs.mo
   //    but nothing from appname.mo, you get a mostly English app with layout from right to left.
   //    That was considered to be a bug by the Hebrew translators.
   for( TQStringList::Iterator it = languageList.fromLast();
@@ -672,8 +672,8 @@ void KLocale::updateCatalogues( )
   }
 
   // now iterate over all languages and all wanted catalog names and append or create them in the right order
-  // the sequence must be e.g. nds/appname nds/kdelibs nds/kio de/appname de/kdelibs de/kio etc.
-  // and not nds/appname de/appname nds/kdelibs de/kdelibs etc. Otherwise we would be in trouble with a language
+  // the sequence must be e.g. nds/appname nds/tdelibs nds/kio de/appname de/tdelibs de/kio etc.
+  // and not nds/appname de/appname nds/tdelibs de/tdelibs etc. Otherwise we would be in trouble with a language
   // sequende nds,en_US, de. In this case en_US must hide everything below in the language list.
   for ( TQStringList::ConstIterator itLangs =  d->languageList.begin();
 	  itLangs != d->languageList.end(); ++itLangs)

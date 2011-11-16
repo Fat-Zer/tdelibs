@@ -33,7 +33,7 @@
 #include <tqmap.h>
 
 #include "kconfigdata.h"
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class KConfigBackEnd;
 class KConfigBasePrivate;

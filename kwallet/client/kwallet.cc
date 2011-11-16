@@ -22,7 +22,7 @@
 #include "kwallet.h"
 #include <kconfig.h>
 #include <kdebug.h>
-#include <kdeversion.h>
+#include <tdeversion.h>
 #include <dcopclient.h>
 #include <dcopref.h>
 #include <tqpopupmenu.h>

@@ -15,7 +15,7 @@
 
 #include <tqcstring.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #include "stub.h"
 

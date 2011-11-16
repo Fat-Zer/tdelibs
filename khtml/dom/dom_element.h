@@ -32,7 +32,7 @@
 #include <dom/dom_node.h>
 #include <dom/css_value.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace DOM {
 

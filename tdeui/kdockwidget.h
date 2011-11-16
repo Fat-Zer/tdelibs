@@ -1,6 +1,6 @@
 /* This file is part of the KDE libraries
    Copyright (C) 2000 Max Judin <novaprint@mtu-net.ru>
-   Copyright (C) 2000 Falk Brettschneider <falk@kdevelop.org>
+   Copyright (C) 2000 Falk Brettschneider <falk@tdevelop.org>
    Copyright (C) 2002,2003 Joseph Wenninger <jowenn@kde.org>
 
    This library is free software; you can redistribute it and/or
@@ -23,7 +23,7 @@
    -----------
    05/2001 -               : useful patches, bugfixes by Christoph Cullmann <crossfire@babylon2k.de>,
                              Joseph Wenninger <jowenn@bigfoot.com> and  Falk Brettschneider
-   03/2001 - 05/2001       : maintained and enhanced by Falk Brettschneider <falk@kdevelop.org>
+   03/2001 - 05/2001       : maintained and enhanced by Falk Brettschneider <falk@tdevelop.org>
    03/2000                 : class documentation added by Falk Brettschneider <gigafalk@yahoo.com>
    10/1999 - 03/2000       : programmed by Max Judin <novaprint@mtu-net.ru>
 

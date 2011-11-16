@@ -23,7 +23,7 @@
 #define _KLOCALE_H
 
 #include <tqstring.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQStringList;
 class TQTextCodec;
@@ -1188,7 +1188,7 @@ private:
   void initFormat(KConfig *config);
   
   /**
-   * @internal Initializes the catalogs appname, kdelibs and kio for all chosen languages.
+   * @internal Initializes the catalogs appname, tdelibs and kio for all chosen languages.
    *
    * @param config The configuration object used for init
    * @param useEnv True if we should use environment variables
@@ -1283,14 +1283,14 @@ private:
    */
   void initPluralTypes( );
   /**
-   * @internal Find the plural type for a language. Look this up in the corresponding kdelibs.po.
+   * @internal Find the plural type for a language. Look this up in the corresponding tdelibs.po.
    *
    * @param language The language to examine
    */
   int pluralType( const TQString & language );
   
   /**
-   * @internal Find the plural type information for a given catalog. This catalog will be a kdelibs.mo. Method
+   * @internal Find the plural type information for a given catalog. This catalog will be a tdelibs.mo. Method
    * just exists to make code more readable.
    *
    * @param language The language to examine

@@ -27,7 +27,7 @@
 #include <libkmid/dattypes.h>
 #include <libkmid/track.h>
 #include <stdio.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * Contains all the information about a MIDI file.

@@ -46,7 +46,7 @@ else
 Please reinstall aRts in the same prefix as KDE, different prefixes are not
 supported right now.
 
-(kdelibs prefix is $prefix, aRts prefix is $ARTS_HAVE_PREFIX)
+(tdelibs prefix is $prefix, aRts prefix is $ARTS_HAVE_PREFIX)
   ])
 	fi
   fi
@@ -57,11 +57,11 @@ supported right now.
   AC_MSG_ERROR([aRts $ARTS_WANT_VERSION_MAJOR.$ARTS_WANT_VERSION_MINOR not found.
 
 You'll need to install a suitable version of aRts in the same prefix as KDE
-before you build kdelibs.
+before you build tdelibs.
 
 (found
  * artsc-config: $ARTSCCONFIG
- * kdelibs prefix: $prefix
+ * tdelibs prefix: $prefix
  * aRts prefix: $ARTS_HAVE_PREFIX
  * aRts version: $ARTS_HAVE_VERSION (required: $ARTS_WANT_VERSION_MAJOR.$ARTS_WANT_VERSION_MINOR)
 )

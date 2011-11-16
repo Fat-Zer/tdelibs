@@ -37,7 +37,7 @@ application palette (light and dark shades are\ncalculated)."), 0},
 
   it looks for "background"  instead of "-background" so never find the arg.
 
-  Software:  g++ 2.95, kdelibs from CVS Jan 28, Qt 3.01
+  Software:  g++ 2.95, tdelibs from CVS Jan 28, Qt 3.01
   OS: Debian GNU/Linux 3.0 (sid)
 
 

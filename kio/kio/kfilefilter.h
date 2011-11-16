@@ -28,7 +28,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQRegExp;
 class KFileItem;

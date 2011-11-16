@@ -53,9 +53,9 @@
  * You are responsible for what you do with it though. It
  * is licensed under a BSD license - read the top of each file.
  *
- * All the GUI related stuff is in kdesdk/kunittest, the core libraries are in kdelibs/kunittest.
+ * All the GUI related stuff is in tdesdk/kunittest, the core libraries are in tdelibs/kunittest.
  * A simple example modules is in kdelisbs/kunittest/samplemodule.{h,cpp}, however more examples
- * can be found in kdesdk/kunittest/example.
+ * can be found in tdesdk/kunittest/example.
  *
  * There are roughly two ways to use the KUnitTest library. Either you create dynamically
  * loadable modules and use the kunittestmodrunner or kunittestguimodrunner programs to run
@@ -67,7 +67,7 @@
  * them.
  * @li runnergui.{h,cpp} - the GUI wrapper around the runner. The GUI neatly organizes the
  *   test results. With the kunittest helper script it can even add the debug output
- *   to the test results. For this you need to have the kdesdk module installed.
+ *   to the test results. For this you need to have the tdesdk module installed.
  * @li tester.h - which holds the base of a pure test object (Tester).
  * @li module.h - defines macros to create a dynamically loadable module.
  *
@@ -314,7 +314,7 @@ SampleTest - 1 test passed, 1 test failed
  * @li kunittestmod --folder [folder] --query [query] : Loads and runs all modules in the folder matching the query. Use a GUI.
  * @li kunittest_debughelper [dcopobject] : A PERL script that is able to redirect debug output to a RunnerGUI instance.
  *
- * These scripts are part of the kdesdk/kunittest module.
+ * These scripts are part of the tdesdk/kunittest module.
  */
 
 /*!
@@ -329,7 +329,7 @@ using namespace std;
 #include <tqstringlist.h>
 #include <tqasciidict.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /*! @def CHECK(x,y)
  * Use this macro to perform an equality check. For example

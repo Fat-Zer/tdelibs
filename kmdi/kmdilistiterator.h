@@ -12,7 +12,7 @@
 //    copyright            : (C) 1999-2003 by Massimo Morin (mmorin@schedsys.com)
 //                                         and
 //                                         Falk Brettschneider
-//    email                :  falkbr@kdevelop.org (Falk Brettschneider)
+//    email                :  falkbr@tdevelop.org (Falk Brettschneider)
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------

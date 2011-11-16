@@ -20,7 +20,7 @@
 
 #include <tqlistbox.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * @short A variant of TQListBox that honors KDE's system-wide settings.

@@ -31,7 +31,7 @@
 class TQMenuData;
 class TQTextView;
 
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
  @internal

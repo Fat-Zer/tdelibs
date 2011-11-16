@@ -34,7 +34,7 @@
 #define _DOM_Node_h_
 
 #include <tqstring.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQRect;
 

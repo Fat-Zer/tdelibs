@@ -33,7 +33,7 @@
 
 #include <kconfig.h>
 #include <ksimpleconfig.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * Simple API covering most of the uses of libkrandr.

@@ -20,7 +20,7 @@
 #ifndef _SYS_TIME_H_
 #define _SYS_TIME_H_
 
-#include <tdecore/kdelibs_export.h>
+#include <tdecore/tdelibs_export.h>
 
 //??#if !defined(_INC_TIME)
 

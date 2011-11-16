@@ -26,7 +26,7 @@
 #include <tqdom.h>
 #include <tqvaluelist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KAction;
 class KXMLGUIFactoryPrivate;

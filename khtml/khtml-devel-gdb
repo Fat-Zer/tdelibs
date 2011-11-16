@@ -1,6 +1,6 @@
 # This file defines handy gdb macros for KHTML
 # To use it, add this line to your ~/.gdbinit :
-# source /path/to/kde/sources/kdelibs/khtml/khtml-devel-gdb
+# source /path/to/kde/sources/tdelibs/khtml/khtml-devel-gdb
 
 define printdomstring
     printdomstringimpl $arg0.impl

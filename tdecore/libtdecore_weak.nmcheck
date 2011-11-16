@@ -1,6 +1,6 @@
 # KDE namespace check file
 
-# kdelibs classes
+# tdelibs classes
 KApplication::*
 
 # these should preferably go in some namespace in KDE4

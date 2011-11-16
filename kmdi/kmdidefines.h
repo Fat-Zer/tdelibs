@@ -13,7 +13,7 @@
 //    copyright            : (C) 1999-2003 by Falk Brettschneider
 //                                         and
 //                                         Szymon Stefanek (stefanek@tin.it)
-//    email                :  falkbr@kdevelop.org (Falk Brettschneider)
+//    email                :  falkbr@tdevelop.org (Falk Brettschneider)
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
@@ -27,7 +27,7 @@
 #ifndef _KMDI_DEFINES_H_
 #define _KMDI_DEFINES_H_
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #define KMDI_CHILDFRM_SEPARATOR 2
 #define KMDI_CHILDFRM_BORDER 4

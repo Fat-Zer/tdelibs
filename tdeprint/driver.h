@@ -32,7 +32,7 @@
 #include <tqrect.h>
 #include <tqsize.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class DriverItem;
 class TQListView;

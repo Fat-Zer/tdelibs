@@ -20,7 +20,7 @@
 #ifndef __ktexteditor_searchinterface_h__
 #define __ktexteditor_searchinterface_h__
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQRegExp;
 class TQString;

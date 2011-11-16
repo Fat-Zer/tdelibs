@@ -21,7 +21,7 @@
 #include <tqstring.h>
 #include <kprocess.h>
 #include <tqstrlist.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class KProcIOPrivate;
 class TQTextCodec;

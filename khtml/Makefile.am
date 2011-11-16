@@ -61,7 +61,7 @@ libkhtml_la_LIBADD = ./xml/libkhtmlxml.la ./html/libkhtmlhtml.la \
 
 # init_libkhtml is in libkhtml.so; init_libkhtmlpart needs to be in the part
 dummy.cpp: $(srcdir)/Makefile.am
-	echo '#include <kdelibs_export.h>' > $@
+	echo '#include <tdelibs_export.h>' > $@
 	echo 'extern "C" KDE_EXPORT void* init_libkhtml();' >> $@
 	echo 'extern "C" KDE_EXPORT void* init_libkhtmlpart() { return init_libkhtml(); } ' >> $@
 
@@ -71,7 +71,7 @@ libkhtmlpart_la_LIBADD = libkhtml.la $(LIB_QT)
 
 # init_khtmlimagefactory is in libkhtml.so; init_khtmlimagepart needs to be in the part
 imgdummy.cpp: $(srcdir)/Makefile.am
-	echo '#include <kdelibs_export.h>' > $@
+	echo '#include <tdelibs_export.h>' > $@
 	echo 'extern "C"  KDE_EXPORT void* init_khtmlimagefactory();' >> $@
 	echo 'extern "C"  KDE_EXPORT void* init_khtmlimagepart() { return init_khtmlimagefactory(); } ' >> $@
 
@@ -97,7 +97,7 @@ service_DATA = khtml.desktop khtmlimage.desktop
 rcdir = $(kde_datadir)/khtml
 rc_DATA = khtml.rc khtml_browser.rc khtml_popupmenu.rc
 
-SRCDOC_DEST=$(kde_htmldir)/en/kdelibs/khtml
+SRCDOC_DEST=$(kde_htmldir)/en/tdelibs/khtml
 
 ## generate lib documentation
 srcdoc:

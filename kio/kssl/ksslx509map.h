@@ -24,7 +24,7 @@
 #include <tqmap.h>
 #include <tqstring.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * X.509 Map Parsing Class

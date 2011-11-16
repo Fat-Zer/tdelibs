@@ -57,8 +57,8 @@
  *
  * @section Requirements
  *
- * You may build any KDE application to use KSpeech, since the interface is in kdelibs, but
- * the kdeaccessibility package must be installed for KTTS to function.
+ * You may build any KDE application to use KSpeech, since the interface is in tdelibs, but
+ * the tdeaccessibility package must be installed for KTTS to function.
  *
  * You will need a speech synthesis engine, such as Festival.  See the KTTS Handbook
  * for the latest information on installing and configuring speech engines and voices
@@ -105,7 +105,7 @@
         speech engine
    @endverbatim
  *
- * The %KTTSD Plugin API is documented in PluginConf in the kdeaccessibility module.
+ * The %KTTSD Plugin API is documented in PluginConf in the tdeaccessibility module.
  *
  * There is a separate GUI application, called kttsmgr, for providing %KTTSD
  * configuration and job management.
@@ -186,11 +186,11 @@
  *
  * There are two methods of making DCOP calls from your application to %KTTSD.
  *
- *   - Manually code them using dcopClient object.  See kdebase/konqueror/kttsplugin/khtmlkttsd.cpp
+ *   - Manually code them using dcopClient object.  See tdebase/konqueror/kttsplugin/khtmlkttsd.cpp
  *     for an example.  This method is recommended if you want to make a few simple calls to KTTSD.
  *   - Use kspeech_stub as described below.  This method generates the marshalling code for you
  *     and is recommended for a more complex speech-enabled applications.  kcmkttsmgr in the
- *     kdeaccessibility module is an example that uses this method.
+ *     tdeaccessibility module is an example that uses this method.
  *
  * To make DCOP calls from your program using kspeech_stub, follow these steps:
  *

@@ -23,7 +23,7 @@
 #define _KCONFIGDATA_H
 
 #include <tqmap.h> // generic red-black tree class
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
  * map/dict/list config node entry.

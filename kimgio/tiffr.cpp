@@ -8,7 +8,7 @@
 
 #include <tqimage.h>
 #include <tqfile.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #include <assert.h>
 

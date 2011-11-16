@@ -97,7 +97,7 @@ kclipboard.cpp		Carsten Pfeiffer <pfeiffer@kde.org> (copyright)
 kconfigdialogmanager.cpp
 kconfigskeleton.cpp
 kdebugdcopiface.cpp	Andreas Beckermann (b_mann@gmx.de) (copyright)
-kdeversion.cpp
+tdeversion.cpp
 kglobalaccel_win.cpp	Ellis Whitehead <ellis@kde.org> (copyright)
 kkeyserver_x11.cpp
 klockfile.cpp		Waldo Bastian <bastian@kde.org> (copyright)

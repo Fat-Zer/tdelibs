@@ -39,7 +39,7 @@
 #include <tqglobal.h>
 #include <tqstring.h>
 #include <tqiodevice.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
  * A wrapper class for the most commonly used encoding and

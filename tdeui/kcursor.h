@@ -24,7 +24,7 @@
 #define _KCURSOR_H
 
 #include <tqcursor.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQWidget;
 

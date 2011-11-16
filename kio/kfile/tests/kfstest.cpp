@@ -143,7 +143,7 @@ int main(int argc, char **argv)
 			TQString::tqfromLatin1("*|All Files\n"
 					    "*.lo *.o *.la|All libtool Files"),
 			0, 0, true);
-//    dlg.setFilter( "*.kdevelop" );
+//    dlg.setFilter( "*.tdevelop" );
 	dlg.setMode( (KFile::Mode) (KFile::Files |
                                     KFile::Directory |
                                     KFile::ExistingOnly |

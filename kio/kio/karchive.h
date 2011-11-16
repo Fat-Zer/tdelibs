@@ -29,7 +29,7 @@
 #include <tqstringlist.h>
 #include <tqdict.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KArchiveDirectory;
 class KArchiveFile;

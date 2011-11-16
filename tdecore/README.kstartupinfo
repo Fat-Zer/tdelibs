@@ -68,7 +68,7 @@ MapNotify=<bool>
     - this key is obsolete
     - true is equivalent to X-KDE-StartupNotify=true and no X-KDE-WMClass set
     - false is equivalent to X-KDE-StartupNotify=true and X-KDE-WMClass=0
-        - many .desktop files in KDE ( especially in kdebase/kappfinder )
+        - many .desktop files in KDE ( especially in tdebase/kappfinder )
             seem to have MapNotify=false even though it's not needed, this
             needs to be checked and replaced by the needed X-KDE-* values,
             often just X-KDE-StartupNotify=true should be enough
@@ -88,7 +88,7 @@ The KStartupInfo classes :
 --------------------------
 
  In some cases, or if you are interested in getting the ASN information, you
-have to use the KStartupInfo classes in kdelibs/tdecore.
+have to use the KStartupInfo classes in tdelibs/tdecore.
 
 Receiving the application startup notification information :
 ------------------------------------------------------------
@@ -147,7 +147,7 @@ update the ASN info when necessary, e.g. when KUniqueApplication
 forks into background, it sends the PID change. That's how compliant
 applications should work, and this support for ASN should be provided
 by toolkits. All KDE application should be compliant by now, since
-kdelibs do all the necessary things. The KDE_STARTUP_ENV variable
+tdelibs do all the necessary things. The KDE_STARTUP_ENV variable
 is read and unset in KApplication constructor, and _KDE_STARTUP_ID
 is set on every toplevel window in KApplication::setTopWidget().
  However, majority of applications aren't compliant now, and even

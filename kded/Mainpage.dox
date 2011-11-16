@@ -5,7 +5,7 @@ of these tasks are built in, others are started on demand.
 <p>
 The chances are you are looking here because you want to write a
 TrinityD module.  For that, see TrinityDModule in tdecore and the
-<a href="http://websvn.kde.org/trunk/Trinity/kdelibs/kded/README.kded?view=markup">TrinityD
+<a href="http://websvn.kde.org/trunk/Trinity/tdelibs/kded/README.kded?view=markup">TrinityD
 README</a>.
 
 

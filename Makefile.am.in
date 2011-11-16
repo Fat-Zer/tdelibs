@@ -56,13 +56,13 @@ messages:
 	echo ./tdecore/kde-config.cpp.in >> files ;\
 	$(EXTRACTRC) `find $$dirs -maxdepth 1 \( -name "*.rc" -o -name "*.ui" \) ` ./dnssd/kcm_kdnssd.kcfg > rc.cpp; \
 	: > kde.pot ;\
-	$(XGETTEXT) -ktranslate -x qt-messages.pot rc.cpp `cat files` && cat messages.po qt-messages.pot > $(podir)/kdelibs.pot
+	$(XGETTEXT) -ktranslate -x qt-messages.pot rc.cpp `cat files` && cat messages.po qt-messages.pot > $(podir)/tdelibs.pot
 	$(XGETTEXT) common_texts.cpp -o kde.pot
 	rm -f dirs
 
 EXTRA_DIST = admin kde.pot \
 	COMPILING COMPILING.html COPYING.BSD DEBUG \
-	KDE2PORTING.html NAMING common_texts.cpp kdelibs.lsm kdoc.rules \
+	KDE2PORTING.html NAMING common_texts.cpp tdelibs.lsm kdoc.rules \
 	qt-messages.pot configure.in.in configure.in.mid configure.in.bot
 
 MAINTAINERCLEANFILES = configure.files subdirs
@@ -72,7 +72,7 @@ dist-hook:
 
 # Rule for generating HTML documentation [you need kdoc installed]
 # Don't forget to run qt2kdoc first (qt2kdoc $QTDIR/doc/html)
-# The kdelibs docu will end up in ./srcdoc/
+# The tdelibs docu will end up in ./srcdoc/
 kdedoc:
 	cd $(top_srcdir) && \
 	makekdedoc -p'--skip-internal' --outputdir=$(top_builddir)/srcdoc
@@ -87,30 +87,30 @@ qtmessages:
 		grep -v $$file list > list.new && mv list.new list ;\
 	done ;\
 	xgettext -C -ktr -kQT_TRANSLATE_NOOP `cat list`  ;\
-	cd ../../kdelibs ;\
+	cd ../../tdelibs ;\
 	mv $$top_srcdir/../qt-copy/src/messages.po $$top_srcdir
 	echo "remove the header from messages.po and move to qt-messages.pot"
 
 include admin/Doxyfile.am
 include admin/deps.am
 
-apidox-am-toplevel-yes: apidox-am-toplevel-kdelibs
+apidox-am-toplevel-yes: apidox-am-toplevel-tdelibs
 
-apidox-am-toplevel-kdelibs: $(top_builddir)/apidocs/qt/qt.tag
+apidox-am-toplevel-tdelibs: $(top_builddir)/apidocs/qt/qt.tag
 
 $(top_builddir)/apidocs/qt/qt.tag:
 	@echo "*** Creating a tag file for the Qt library:"; \
 	$(mkinstalldirs) $(top_builddir)/apidocs/qt; \
 	doxytag -t $(top_builddir)/apidocs/qt/qt.tag $(QTDOCDIR)
 
-install-data-local: install-apidox-kdelibs
+install-data-local: install-apidox-tdelibs
 
 ## install the tag file for the Qt documentation
-install-apidox-kdelibs:
+install-apidox-tdelibs:
 	if test -f $(top_builddir)/apidocs/qt/qt.tag; then \
 		$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/qt ;\
 		echo $(INSTALL_DATA) $(top_builddir)/apidocs/qt/qt.tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/qt; \
 		$(INSTALL_DATA) $(top_builddir)/apidocs/qt/qt.tag $(DESTDIR)$(kde_htmldir)/en/$(PACKAGE)-apidocs/qt; \
 	fi
 
-.PHONY: install-apidox-kdelibs apidox-am-toplevel-kdelibs apidox-am-toplevel-yes qtmessages
+.PHONY: install-apidox-tdelibs apidox-am-toplevel-tdelibs apidox-am-toplevel-yes qtmessages

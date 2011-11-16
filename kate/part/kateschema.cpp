@@ -296,7 +296,7 @@ KateSchemaConfigColorTab::KateSchemaConfigColorTab( TQWidget *parent, const char
   label->tqsetAlignment( AlignLeft|AlignVCenter);
   m_current = new KColorButton(b);
 
-  // Markers from kdelibs/interfaces/ktextinterface/markinterface.h
+  // Markers from tdelibs/interfaces/ktextinterface/markinterface.h
   b = new TQHBox (gbTextArea);
   b->setSpacing(KDialog::spacingHint());
   m_combobox = new KComboBox(b, "color_combo_box");

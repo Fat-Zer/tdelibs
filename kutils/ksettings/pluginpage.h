@@ -21,7 +21,7 @@
 #define KSETTINGS_PLUGINPAGE_H
 
 #include <kcmodule.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KPluginSelector;
 

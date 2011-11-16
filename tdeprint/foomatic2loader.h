@@ -23,7 +23,7 @@
 #include <tqmap.h>
 #include <tqvariant.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class DrBase;
 class DrMain;

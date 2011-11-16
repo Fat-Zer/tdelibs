@@ -21,7 +21,7 @@
 
 #include <dcopobject.h>
 #include <dcopref.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KActionCollection;
 class KAction;

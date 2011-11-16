@@ -110,7 +110,7 @@ set       toc,title
           <xsl:if test="@targetdocent">
             <xsl:value-of select="unparsed-entity-uri(string($targetdocent))"/>
           </xsl:if>
-                <xsl:for-each select="document('/home/fouvry/kdeutils/doc/kedit/index.docbook')">
+                <xsl:for-each select="document('/home/fouvry/tdeutils/doc/kedit/index.docbook')">
 		  <xsl:value-of select=".//*[@id=$localinfo]"/>
                 </xsl:for-each>
 		<xsl:text>#</xsl:text>

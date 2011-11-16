@@ -31,7 +31,7 @@
 #include <assert.h>
 #include <kdebug.h>
 #include <kdockwidget.h>
-#include <kdeversion.h>
+#include <tdeversion.h>
 #include "kmdimainfrm.h"
 #include "kmditoolviewaccessor.h"
 #include "kmditoolviewaccessor_p.h"

@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 #define __KMANAGERSELECTION_H
 
 #include <tqobject.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #ifdef Q_MOC_RUN
 #define Q_WS_X11

@@ -1,6 +1,6 @@
 # This file defines handy gdb macros
 # To use it, add this line to your ~/.gdbinit :
-# source /path/to/kde/sources/kdelibs/kjs/kjs-devel-gdb
+# source /path/to/kde/sources/tdelibs/kjs/kjs-devel-gdb
 
 define printucharstar
        set $i=0

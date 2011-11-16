@@ -24,7 +24,7 @@
 #ifndef _SYS_LOG_H
 #define _SYS_LOG_H
 
-#include <tdecore/kdelibs_export.h>
+#include <tdecore/tdelibs_export.h>
 
 #define	LOG_EMERG	0
 #define	LOG_ALERT	1

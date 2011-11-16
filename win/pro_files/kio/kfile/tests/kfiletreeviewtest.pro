@@ -4,9 +4,9 @@ include( $(KDELIBS)/win/common.pro )
 
 
 #allow to select target independently from debug information
-kdebase_release:CONFIG -= console
-kdebase_release:CONFIG += windows
-kdebase_release:QMAKE_MAKEFILE = Makefile.release
+tdebase_release:CONFIG -= console
+tdebase_release:CONFIG += windows
+tdebase_release:QMAKE_MAKEFILE = Makefile.release
 
 
 TARGET		= kfiletreeviewtest

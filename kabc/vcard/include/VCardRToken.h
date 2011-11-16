@@ -27,7 +27,7 @@
 
 #include <tqstrlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace VCARD
 {

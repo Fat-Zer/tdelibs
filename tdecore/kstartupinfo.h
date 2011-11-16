@@ -37,7 +37,7 @@ DEALINGS IN THE SOFTWARE.
 #include <tqcstring.h>
 #include <tqstring.h>
 #include <tqvaluelist.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class KStartupInfoId;
 class KStartupInfoData;
@@ -49,7 +49,7 @@ class KStartupInfoPrivate;
  *
  * This class can be used to send information about started application,
  * change the information and receive this information. For detailed
- * description, see kdelibs/tdecore/README.kstartupinfo.
+ * description, see tdelibs/tdecore/README.kstartupinfo.
  *
  * You usually don't need to use this class for sending the notification
  * information, as KDE libraries should do this when an application is

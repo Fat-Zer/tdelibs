@@ -23,7 +23,7 @@
 #define _KDIALOG_H_
 
 #include <tqdialog.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQLayoutItem;
 

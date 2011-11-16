@@ -19,7 +19,7 @@
 #include <tqmemarray.h>
 #include <tqpaintdevicemetrics.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #include "ico.h"
 

@@ -14,9 +14,9 @@ cmake_minimum_required( VERSION 2.8 )
 
 ##### general package setup #####################
 
-project( kdelibs )
+project( tdelibs )
 
-set( PACKAGE kdelibs )
+set( PACKAGE tdelibs )
 set( VERSION "3.5.13" )
 
 

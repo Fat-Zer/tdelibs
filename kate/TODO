@@ -56,7 +56,7 @@ TODO:
   switch between short / detailed descriptions)
 
 * Whatever else is needed for multiuser editing (and perhaps put most of it
-  inside the part, so eg. kate, kdevelop, quanta etc. could all use it)
+  inside the part, so eg. kate, tdevelop, quanta etc. could all use it)
 
 * Scripting (we don't have any yet do we?)
 

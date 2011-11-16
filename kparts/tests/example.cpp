@@ -26,7 +26,7 @@ Shell::Shell()
 
   // We can do this "switch active part" because we have a splitter with
   // two items in it.
-  // I wonder what kdevelop uses/will use to embed kedit, BTW.
+  // I wonder what tdevelop uses/will use to embed kedit, BTW.
   m_splitter = new TQSplitter( this );
 
   m_part1 = new Part1(this, m_splitter);

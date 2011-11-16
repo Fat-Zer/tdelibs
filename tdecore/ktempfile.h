@@ -23,7 +23,7 @@
 #include <tqstring.h>
 #include <stdio.h>
 #include <errno.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class TQFile;
 class TQTextStream;

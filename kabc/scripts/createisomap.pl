@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #
 # Create a translation table countryname->iso-code from the entry.desktop
-# files in kdebase/l10n/*/
+# files in tdebase/l10n/*/
 #
 # USAGE EXAMPLE:
 #     ./createisomap.pl $KDEDIR/share/locale/l10n > countrytransl.map

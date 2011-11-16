@@ -34,7 +34,7 @@ noinst_HEADERS = \
 INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/dcop -I$(top_srcdir)/kio -I$(top_srcdir)/libltdl \
            -I$(top_srcdir)/khtml -I$(top_srcdir)/kutils $(all_includes)
 
-SRCDOC_DEST=$(kde_htmldir)/en/kdelibs/khtml
+SRCDOC_DEST=$(kde_htmldir)/en/tdelibs/khtml
 
 ## generate lib documentation
 srcdoc:

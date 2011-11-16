@@ -207,28 +207,28 @@
 <!ENTITY  kde-nju             "<acronym>КДЕ</acronym>"  >
 <!ENTITY  kde-nmu             "<acronym>КДЕ</acronym>"  >
 <!ENTITY  kde-nmz             "<acronym>КДЕ</acronym>"  >
-<!ENTITY  kdeaddons-n         "<acronym>КДЕ</acronym>-додаци"  >
-<!ENTITY  kdeadmin-n          "<acronym>КДЕ</acronym>-администрација"  >
-<!ENTITY  kdeartwork-n        "<acronym>КДЕ</acronym>-уметност"  >
-<!ENTITY  kdebase-g           "<acronym>КДЕ</acronym>-основе"  >
-<!ENTITY  kdebase-n           "<acronym>КДЕ</acronym>-основа"  >
-<!ENTITY  kdebindings-n       "<acronym>КДЕ</acronym>-везе"  >
+<!ENTITY  tdeaddons-n         "<acronym>КДЕ</acronym>-додаци"  >
+<!ENTITY  tdeadmin-n          "<acronym>КДЕ</acronym>-администрација"  >
+<!ENTITY  tdeartwork-n        "<acronym>КДЕ</acronym>-уметност"  >
+<!ENTITY  tdebase-g           "<acronym>КДЕ</acronym>-основе"  >
+<!ENTITY  tdebase-n           "<acronym>КДЕ</acronym>-основа"  >
+<!ENTITY  tdebindings-n       "<acronym>КДЕ</acronym>-везе"  >
 <!ENTITY  kdecc-a             "<application>К контролни центар</application>"  >
 <!ENTITY  kdecc-g             "<application>К контролног центра</application>"  >
 <!ENTITY  kdecc-l             "<application>К контролном центру</application>"  >
 <!ENTITY  kdecc-n             "<application>К контролни центар</application>"  >
-<!ENTITY  kdeedu-n            "<acronym>КДЕ</acronym>-образовање"  >
+<!ENTITY  tdeedu-n            "<acronym>КДЕ</acronym>-образовање"  >
 <!ENTITY  kdeexp-g            "К радног окружења"  >
 <!ENTITY  kdeexp-n            "К радно окружење"  >
 <!ENTITY  tdegames-n          "<acronym>КДЕ</acronym>-игре"  >
-<!ENTITY  kdegraphics-n       "<acronym>КДЕ</acronym>-графика"  >
-<!ENTITY  kdelibs-n           "<acronym>КДЕ</acronym>-библиотеке"  >
-<!ENTITY  kdemultimedia-n     "<acronym>КДЕ</acronym>-мултимедија"  >
-<!ENTITY  kdenetwork-n        "<acronym>КДЕ</acronym>-мрежа"  >
+<!ENTITY  tdegraphics-n       "<acronym>КДЕ</acronym>-графика"  >
+<!ENTITY  tdelibs-n           "<acronym>КДЕ</acronym>-библиотеке"  >
+<!ENTITY  tdemultimedia-n     "<acronym>КДЕ</acronym>-мултимедија"  >
+<!ENTITY  tdenetwork-n        "<acronym>КДЕ</acronym>-мрежа"  >
 <!ENTITY  kdesktop-n          "<application>К радна површина</application>"  >
-<!ENTITY  kdetoys-n           "<acronym>КДЕ</acronym>-играчке"  >
-<!ENTITY  kdeutils-n          "<acronym>КДЕ</acronym>-алати"  >
-<!ENTITY  kdevelop-n          "<acronym>КДЕ</acronym>-развој"  >
+<!ENTITY  tdetoys-n           "<acronym>КДЕ</acronym>-играчке"  >
+<!ENTITY  tdeutils-n          "<acronym>КДЕ</acronym>-алати"  >
+<!ENTITY  tdevelop-n          "<acronym>КДЕ</acronym>-развој"  >
 <!ENTITY  kdm-a               "<application>Кдм</application>"  >
 <!ENTITY  kdm-g               "<application>Кдма</application>"  >
 <!ENTITY  kdm-n               "<application>Кдм</application>"  >

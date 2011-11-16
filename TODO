@@ -71,7 +71,7 @@ that we would like to make for the next binary incompatible release.
 - Solve need for casting when using bitfield enums (e.g. KProcess::Communication),
   if Simon's solution works.
 
-- Merge kdelibs/tdecore/kuser.h and kdeadmin/kuser/kuser.h.
+- Merge tdelibs/tdecore/kuser.h and tdeadmin/kuser/kuser.h.
 
 - Simplify memory management with KParts. The part and the widget delete each other,
   which in fact makes it more complex to handle. The part owns the widget so it

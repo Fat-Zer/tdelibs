@@ -20,7 +20,7 @@
 #ifndef _KTIMEZONES_H
 #define _KTIMEZONES_H
 
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 #include <tqdatetime.h>
 #include <tqnamespace.h>
 #include <tqmap.h>

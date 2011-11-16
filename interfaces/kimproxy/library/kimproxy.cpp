@@ -217,7 +217,7 @@ bool KIMProxy::initialize()
 	if ( !m_initialized )
 	{
 		m_initialized = true; // we should only do this once, as registeredToDCOP() will catch any new starts
-		// So there is no error from a failed query when using kdelibs 3.2, which don't have this servicetype
+		// So there is no error from a failed query when using tdelibs 3.2, which don't have this servicetype
 		if ( KServiceType::serviceType( IM_SERVICE_TYPE ) ) 
 		{
 			//kdDebug( 790 ) << k_funcinfo << endl;

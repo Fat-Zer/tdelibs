@@ -19,7 +19,7 @@
 #ifndef __ktexteditor_popupmenuinterface_h__
 #define __ktexteditor_popupmenuinterface_h__
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQCString;
 class TQPopupMenu;

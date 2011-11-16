@@ -181,7 +181,7 @@ bool KMultiPart::openURL( const KURL &url )
     return true;
 }
 
-// Yes, libkdenetwork's has such a parser already (MultiPart),
+// Yes, libtdenetwork's has such a parser already (MultiPart),
 // but it works on the complete string, expecting the whole data to be available....
 // The version here is asynchronous.
 void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )

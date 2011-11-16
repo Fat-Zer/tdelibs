@@ -25,7 +25,7 @@
 #include <tqstringlist.h>
 #include <tqstring.h>
 #include <tqmap.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
  * Abstract base class for the worker classes behind the KMacroExpander namespace

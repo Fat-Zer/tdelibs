@@ -139,7 +139,7 @@ extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 
 int kdemain( int argc, char **argv )
 {
-  KLocale::setMainCatalogue("kdelibs");
+  KLocale::setMainCatalogue("tdelibs");
   KInstance instance( "kio_ftp" );
   ( void ) KGlobal::locale();
 

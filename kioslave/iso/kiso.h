@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
- /* This file is heavily based on ktar.h from kdelibs
+ /* This file is heavily based on ktar.h from tdelibs
   * (c) Torben Weis <weis@kde.org>, David Faure <faure@kde.org>
   */
 

@@ -124,7 +124,7 @@ public:
      *                    a number
      *
      * @return A list of services that satisfy the query
-     * @see http://developer.kde.org/documentation/library/3.5-api/kdelibs-apidocs/kio/kio/html/tradersyntax.html
+     * @see http://developer.kde.org/documentation/library/3.5-api/tdelibs-apidocs/kio/kio/html/tradersyntax.html
      */
     virtual OfferList query( const TQString& servicetype,
 			     const TQString& constraint = TQString::null,
@@ -288,7 +288,7 @@ protected:
  *   - <tt>('KParts/ReadOnlyPart' in ServiceTypes) and ('text/plain' in ServiceTypes)</tt>@n
  *     All read-only KParts that handle the mime type 'text/plain'.
  *
- * @author Bernd Gehrmann <a href="mailto:bernd@kdevelop.org">bernd@kdevelop.org</a>
+ * @author Bernd Gehrmann <a href="mailto:bernd@tdevelop.org">bernd@tdevelop.org</a>
 */
 
 

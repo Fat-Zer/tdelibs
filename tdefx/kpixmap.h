@@ -26,7 +26,7 @@
 
 #include <tqpixmap.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 const int KColorMode_Mask	= 0x00000300;
 const int WebOnly 	= 0x00000200;

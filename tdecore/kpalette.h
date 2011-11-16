@@ -26,7 +26,7 @@
 #include <tqptrlist.h>
 #include <tqstring.h>
 #include <tqstringlist.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class KPalettePrivate;
 

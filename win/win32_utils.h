@@ -22,7 +22,7 @@
 
 #include <windows.h>
 
-#include <tdecore/kdelibs_export.h>
+#include <tdecore/tdelibs_export.h>
 
 #ifdef  __cplusplus
 #include <tqstring.h>
@@ -88,7 +88,7 @@ TQCString getWin32LocaleName();
 
 /*! Temporary solutiuon
  \return a KFileDialog-compatible filter string converted to TQFileDialog compatible one. 
- This is temporary solution for kdelibs/win32... */
+ This is temporary solution for tdelibs/win32... */
 KDEWIN32_EXPORT TQString convertKFileDialogFilterToQFileDialogFilter(const TQString& filter);
 
 #endif //__cplusplus

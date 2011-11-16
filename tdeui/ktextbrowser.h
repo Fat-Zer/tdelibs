@@ -22,7 +22,7 @@
 
 #include <tqtextbrowser.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * @short Extended TQTextBrowser.

@@ -21,7 +21,7 @@
 #include <tqstring.h>
 #include <tqcolor.h>
 #include <tqfont.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 #define KDE_DEFAULT_SINGLECLICK false
 #define KDE_DEFAULT_ICONTEXTROUNDED true

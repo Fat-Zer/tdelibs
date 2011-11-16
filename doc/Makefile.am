@@ -1,3 +1,3 @@
 
-SUBDIRS = common kspell kdelibs
+SUBDIRS = common kspell tdelibs
 

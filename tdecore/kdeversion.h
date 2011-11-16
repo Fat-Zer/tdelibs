@@ -20,7 +20,7 @@
 #ifndef _TDE_VERSION_H_
 #define _TDE_VERSION_H_
 
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /*
     R <ABI VERSION> . <BUGFIX REVISION> . <SECURITY PATCHLEVEL>

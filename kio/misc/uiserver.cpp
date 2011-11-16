@@ -1377,7 +1377,7 @@ UIServer* UIServer::createInstance()
 
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
-    KLocale::setMainCatalogue("kdelibs");
+    KLocale::setMainCatalogue("tdelibs");
     //  GS 5/2001 - I changed the name to "TDE" to make it look better
     //              in the titles of dialogs which are displayed.
     KAboutData aboutdata("kio_uiserver", I18N_NOOP("TDE"),

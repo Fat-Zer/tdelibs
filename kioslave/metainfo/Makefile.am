@@ -1,5 +1,5 @@
 ## $Id$
-## Makefile.am of kdebase/kioslave/metainfo
+## Makefile.am of tdebase/kioslave/metainfo
 
 INCLUDES = $(all_includes)
 AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor

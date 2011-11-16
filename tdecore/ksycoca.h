@@ -23,7 +23,7 @@
 #include <tqobject.h>
 #include <tqstringlist.h>
 #include "ksycocatype.h"
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQDataStream;
 class KSycocaPrivate;

@@ -24,7 +24,7 @@
 
 #include <tqdragobject.h>
 #include <tqcolor.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KColorDragPrivate;
 /**

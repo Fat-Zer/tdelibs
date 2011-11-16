@@ -1,4 +1,4 @@
-#!/usr/bin/perl -I/Users/duke/src/kde/kdebindings/kalyptus
+#!/usr/bin/perl -I/Users/duke/src/kde/tdebindings/kalyptus
 # -*- indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-
 
 # KDOC -- C++ and CORBA IDL interface documentation tool.

@@ -24,7 +24,7 @@
 #include <tqptrlist.h>
 #include <tqstring.h>
 #include <tqobject.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class KAction;
 class KActionCollection;

@@ -27,7 +27,7 @@
 #include <tqvaluelist.h>
 #include <tqcstring.h>
 #include <tqobject.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class TQSocketNotifier;
 class KProcessPrivate;

@@ -28,7 +28,7 @@ In this case, yes, that could be saved in the part.
 --------------
 
 4) Perhaps a part wants to know if it got activated, so we might want to
-   re-introduce that PartActivateEvent from kdelibs/kparts.
+   re-introduce that PartActivateEvent from tdelibs/kparts.
    Question: Shall this event be sent when the GUI of the part is activated
    or shall it be sent when the part "really" got activated (via KPartManager)?
 
@@ -90,7 +90,7 @@ it is embedded (with or without GUI items). Hmmm..
 	Loading and saving in that case would mean save/load the view profile.
 
 (David) Hmmm... somebody wanting to embed a full konqy ? Component technology allows
-you to avoid duplicate code by embedding a component that does what you want. Like kdevelop
+you to avoid duplicate code by embedding a component that does what you want. Like tdevelop
 embeds a kedit component. Which app would want to embed a huge component containing
 a file maneger + a web browser + a generic viewer + ... ? I think this is not a component,
 but an application. Views are components...
@@ -140,7 +140,7 @@ the whole, at other places).
 (David) Depends how we want to handle the popupmenu in KonqHTMLView, for
 instance.
 At the moment it's missing, and it will be a problem when that view is moved to
-kdelibs : no more libkonq for it. But anyway I agree : the part should
+tdelibs : no more libkonq for it. But anyway I agree : the part should
 generally take care of its own menu (I'm thinking of KNotePadPart for instance)
 Perhaps this would remain in KBrowserPart though (we need it in konqueror).
 
@@ -331,7 +331,7 @@ changes.
 <dfaure> well I think _yes_ you would expect its actions to become available to the user, no ?
 <weis> dfaure: Imagine you write a report generator that shows database queries using the browser view. Would you as a programmer want to have menu entries like "OpenURL" and "History" in your report generator? I would not.
 <dfaure> hmmm ... then it's the HTML widget you're using, not the part...
-<dfaure> when kdevelop embeds kwrite, it wants the actions from kwrite...
+<dfaure> when tdevelop embeds kwrite, it wants the actions from kwrite...
 <dfaure> open file, save file, ...
 <weis> dfaure: Well,. why not load a HTML widget at runtime as a part ...
 <dfaure> sure, why not :-)

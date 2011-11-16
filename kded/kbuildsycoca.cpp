@@ -717,7 +717,7 @@ public:
 
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
-   KLocale::setMainCatalogue("kdelibs");
+   KLocale::setMainCatalogue("tdelibs");
    KAboutData d(appName, I18N_NOOP("KBuildSycoca"), appVersion,
                 I18N_NOOP("Rebuilds the system configuration cache."),
                 KAboutData::License_GPL, "(c) 1999-2002 KDE Developers");
@@ -763,8 +763,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    KCrash::setEmergencySaveFunction(crashHandler);
    KCrash::setApplicationName(TQString(appName));
 
-   // this program is in kdelibs so it uses kdelibs as catalog
-   KLocale::setMainCatalogue("kdelibs");
+   // this program is in tdelibs so it uses tdelibs as catalog
+   KLocale::setMainCatalogue("tdelibs");
    // force generating of KLocale object. if not, the database will get
    // be translated
    KGlobal::locale();

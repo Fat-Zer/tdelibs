@@ -25,7 +25,7 @@
 class TQWidget;
 class TQString;
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * KDE Accelerator manager.

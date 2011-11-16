@@ -22,7 +22,7 @@
 
 #include <tqptrlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQCString;
 

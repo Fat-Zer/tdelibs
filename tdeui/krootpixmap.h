@@ -13,7 +13,7 @@
 
 #include <tqobject.h>
 #include <tqcolor.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #ifndef Q_WS_QWS //FIXME
 

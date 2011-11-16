@@ -72,7 +72,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
    putenv(strdup("SESSION_MANAGER="));
 
    // Allow the locale to initialize properly
-   KLocale::setMainCatalogue("kdelibs");
+   KLocale::setMainCatalogue("tdelibs");
 
    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 

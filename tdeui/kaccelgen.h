@@ -24,7 +24,7 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 /**
  * Provides functions that, given a collection of QStrings, will

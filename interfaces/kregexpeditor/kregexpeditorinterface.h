@@ -8,11 +8,11 @@
  * 
  * @author Jesper K. Pedersen blackie@kde.org
  *
- * The actual editor is located in kdeutils, with an interface in
- * kdelibs. This means that it is a bit more complicated to create an
+ * The actual editor is located in tdeutils, with an interface in
+ * tdelibs. This means that it is a bit more complicated to create an
  * instance of the editor, but only a little bit more complicated.
  *
- * To check if kregexpeditor in kdeutils is installed and available use this line:
+ * To check if kregexpeditor in tdeutils is installed and available use this line:
  * 
  * \code
  * bool installed=!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
@@ -24,7 +24,7 @@
  * \code
  * TQDialog *editorDialog = KParts::ComponentFactory::createInstanceFromQuery<TQDialog>( "KRegExpEditor/KRegExpEditor" );
  * if ( editorDialog ) {
- *   // kdeutils was installed, so the dialog was found fetch the editor interface
+ *   // tdeutils was installed, so the dialog was found fetch the editor interface
  *   KRegExpEditorInterface *editor = ::tqqt_cast<KRegExpEditorInterface *>( editorDialog );
  *   Q_ASSERT( editor ); // This should not fail!
  *   
@@ -52,7 +52,7 @@
  * KParts::ComponentFactory::createInstanceFromQuery<TQWidget>( 
  *     "KRegExpEditor/KRegExpEditor", TQString::null, parent );
  * if ( editorWidget ) {
- *   // kdeutils was installed, so the widget was found fetch the editor interface
+ *   // tdeutils was installed, so the widget was found fetch the editor interface
  *   KRegExpEditorInterface *editor = ::tqqt_cast<KRegExpEditorInterface *>( editorWidget );
  *   Q_ASSERT( editor ); // This should not fail!
  *   

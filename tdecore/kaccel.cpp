@@ -572,7 +572,7 @@ bool KAccel::insertItem( const TQString& sLabel, const TQString& sAction,
 	return pAction != 0;
 }
 
-// Used in kdeutils/kjots
+// Used in tdeutils/kjots
 bool KAccel::insertStdItem( KStdAccel::StdAccel id, const TQString& sLabel )
 {
 	KAccelAction* pAction = d->insert( KStdAccel::name( id ), sLabel, TQString::null,

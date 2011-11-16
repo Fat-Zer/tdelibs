@@ -20,7 +20,7 @@
 #include <tqstringlist.h>
 #include <tqvaluelist.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class PTY;
 typedef TQValueList<TQCString> QCStringList;

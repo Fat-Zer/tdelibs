@@ -23,7 +23,7 @@
 #define _KDEBUG_H_
 
 #include <tqstring.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 class TQWidget;
 class TQDateTime;

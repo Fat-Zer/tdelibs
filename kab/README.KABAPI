@@ -9,7 +9,7 @@ include directory into your sources.
 
 The documentation of the kab API is contained in the header file
 (kabapi.h), you can extract it by parsing the file with kdoc. The kab
-binary source directory in the kdeutils package contains a sample program
+binary source directory in the tdeutils package contains a sample program
 that tries to explain some basic functions of the API. It is important
 that you report any bugs you find in the API or in the rest of kab to
 

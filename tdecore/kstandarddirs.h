@@ -35,7 +35,7 @@ class KStandardDirsPrivate;
  * @short Site-independent access to standard KDE directories.
  * @author Stephan Kulow <coolo@kde.org> and Sirtaj Singh Kang <taj@kde.org>
  *
- * This is one of the most central classes in kdelibs as
+ * This is one of the most central classes in tdelibs as
  * it provides a basic service: It knows where the files
  * reside on the user's hard disk. And it's meant to be the
  * only one that knows -- to make the real location as
@@ -52,7 +52,7 @@ class KStandardDirsPrivate;
  *
  * The main idea behind KStandardDirs is that there are several
  * toplevel prefixes below which the files lie. One of these prefixes is
- * the one where the user installed kdelibs, one is where the
+ * the one where the user installed tdelibs, one is where the
  * application was installed, and one is $HOME/.kde, but there
  * may be even more. Under these prefixes there are several well
  * defined suffixes where specific resource types are to be found.
@@ -66,7 +66,7 @@ class KStandardDirsPrivate;
  * specific directories that aren't in his $HOME/.kde directory for,
  * for example, icons.
  *
- * <b>Standard resources that kdelibs allocates are:</b>\n
+ * <b>Standard resources that tdelibs allocates are:</b>\n
  *
  * @li apps - Applications menu (.desktop files).
  * @li cache - Cached information (e.g. favicons, web-pages)
@@ -138,7 +138,7 @@ public:
 	/**
 	 * Adds another search dir to front of the @p fsstnd list.
 	 *
-	 * @li When compiling kdelibs, the prefix is added to this.
+	 * @li When compiling tdelibs, the prefix is added to this.
 	 * @li KDEDIRS or KDEDIR is taking into account
 	 * @li Additional dirs may be loaded from kdeglobals.
 	 *

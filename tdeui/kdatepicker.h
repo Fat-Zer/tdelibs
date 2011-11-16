@@ -21,7 +21,7 @@
 #define KDATEPICKER_H
 #include <tqdatetime.h>
 #include <tqframe.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class TQLineEdit;
 class TQToolButton;

@@ -22,7 +22,7 @@
 
 #include <tqpair.h>
 #include <tqvaluelist.h>
-#include "kdelibs_export.h"
+#include "tdelibs_export.h"
 
 /**
  * KSortableItem is a TQPair that provides several operators

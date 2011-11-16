@@ -24,7 +24,7 @@
 #define DEVICEMAN_H
 
 #include <libkmid/dattypes.h>
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 class MidiOut;
 class MidiMapper;

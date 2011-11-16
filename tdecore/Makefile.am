@@ -40,7 +40,7 @@ include_HEADERS = kconfig.h kconfigskeleton.h \
 	kconfigdata.h ksimpleconfig.h kconfigdialogmanager.h \
 	kconfigbase.h kdesktopfile.h kurl.h ksock.h kaboutdata.h \
 	kcmdlineargs.h kconfigbackend.h kapp.h kapplication.h kuniqueapp.h \
-	kuniqueapplication.h kcharsets.h kdeversion.h kpty.h kprocess.h \
+	kuniqueapplication.h kcharsets.h tdeversion.h kpty.h kprocess.h \
 	kprocctrl.h klocale.h kicontheme.h kiconloader.h kdebug.h \
 	twinmodule.h twin.h krootprop.h kshortcut.h kkeynative.h kaccel.h \
 	kglobalaccel.h kstdaccel.h kshortcutlist.h kcatalogue.h \
@@ -58,7 +58,7 @@ include_HEADERS = kconfig.h kconfigskeleton.h \
 	ktypelist.h ksortablevaluelist.h kdebugclasses.h kclipboard.h \
 	kcalendarsystem.h kcalendarsystemfactory.h kmacroexpander.h \
 	kmanagerselection.h kmountpoint.h kuser.h klockfile.h \
-	kidna.h ktempdir.h kshell.h fixx11h.h kxerrorhandler.h kdelibs_export.h \
+	kidna.h ktempdir.h kshell.h fixx11h.h kxerrorhandler.h tdelibs_export.h \
 	kdemacros.h kde_file.h ktimezones.h
 
 libtdefakes_la_SOURCES = fakes.c vsnprintf.c
@@ -112,7 +112,7 @@ libtdecore_la_SOURCES = libintl.cpp kapplication.cpp \
 	kxmessages.cpp kstartupinfo.cpp kcatalogue.cpp kasyncio.cpp \
 	kmultipledrag.cpp kstaticdeleter.cpp kappdcopiface.cpp \
 	kappdcopiface.skel kclipboard.cpp kcheckaccelerators.cpp \
-	kdeversion.cpp kdebugdcopiface.cpp kdebugdcopiface.skel \
+	tdeversion.cpp kdebugdcopiface.cpp kdebugdcopiface.skel \
 	kcalendarsystem.cpp kcalendarsystemgregorian.cpp \
 	kcalendarsystemhijri.cpp kcalendarsystemhebrew.cpp \
 	kcalendarsystemfactory.cpp kmacroexpander.cpp kidna.cpp \
@@ -130,7 +130,7 @@ libtdecore_la_NMCHECKWEAK = $(srcdir)/libtdecore_weak.nmcheck $(srcdir)/libqt-mt
 
 libtdecore_la_METASOURCES = AUTO
 
-SRCDOC_DEST=$(kde_htmldir)/en/kdelibs/tdecore
+SRCDOC_DEST=$(kde_htmldir)/en/tdelibs/tdecore
 
 kdebugdir = $(kde_confdir)
 kdebug_DATA = kdebug.areas kdebugrc language.codes
@@ -154,7 +154,7 @@ install-data-local:
 uninstall-local:
 	-rm -f $(DESTDIR)$(includedir)/kio/kmdcodec.h
 
-# If you add a color palette file here, please change kdelibs/tdeui/kcolordialog.cpp too to allow to translate the name
+# If you add a color palette file here, please change tdelibs/tdeui/kcolordialog.cpp too to allow to translate the name
 colors_DATA = 40.colors Web.colors Royal.colors Rainbow.colors
 colorsdir = $(kde_confdir)/colors
 

@@ -47,7 +47,7 @@ class Kded;
  *   }
  * \endcode
  *
- * See kdelibs/kded/HOWTO for more detailed documentation.
+ * See tdelibs/kded/HOWTO for more detailed documentation.
  *
  * @author Waldo Bastian <bastian@kde.org>
  */

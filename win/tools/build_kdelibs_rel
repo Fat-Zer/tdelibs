@@ -1,14 +1,14 @@
 #!/bin/bash
-# compile entire kdelibs/win32 in release mode
+# compile entire tdelibs/win32 in release mode
 # (c) 2003-2005, Jaroslaw Staniek, js@iidea.pl
 
 if [ "$1" == "noclean" ] ; then
 	noclean=1
 fi
 
-update_kdelibs_pro_files || exit 1
+update_tdelibs_pro_files || exit 1
 .copy_missing_headers || exit 1
-source .build_kdelibs_comon || exit 1
+source .build_tdelibs_comon || exit 1
 
 cd "$KDELIBS"
 

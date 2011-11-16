@@ -40,7 +40,7 @@ using namespace std;
 #include <tqasciidict.h>
 #include <tqstring.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 #include "tester.h"
 

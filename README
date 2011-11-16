@@ -1,6 +1,6 @@
 In this file:
 
-* About kdelibs
+* About tdelibs
 * Licensing
 * Common Mistakes
 * Upgrading
@@ -8,7 +8,7 @@ In this file:
 * More Info
 
 
-About kdelibs
+About tdelibs
 -------------
 This is version 3.5.13 of the Trinity Desktop Environment [TDE] libraries.
 
@@ -165,7 +165,7 @@ See also the file DEBUG.
 
 Upgrading
 ---------
-If you have an kdebase older than 3.0 installed, just copy all your .k*rc
+If you have an tdebase older than 3.0 installed, just copy all your .k*rc
 files from $HOME to $HOME/.kde/share/config. In the other case, default
 values are used for most apps.
 
@@ -232,7 +232,7 @@ So, here are some tips on bug reporting:
   Linux Distributor and his appropriate mailing list or bug reporting tool.
 
 * The chance is high that your bug has already been dealt with ... so look
-  if there is a newer version of kdelibs available. Reporting bugs for
+  if there is a newer version of tdelibs available. Reporting bugs for
   older, deprecated versions usually don't get that much attention :-)
 
 * Also the chance is high that another one experienced your problem. The

@@ -22,8 +22,8 @@
 #define _KAPP_H
 
 // Version macros. Never put this further down.
-#include "kdeversion.h"
-#include "kdelibs_export.h"
+#include "tdeversion.h"
+#include "tdelibs_export.h"
 
 class KConfig;
 class KCharsets;
@@ -1078,7 +1078,7 @@ public:
   /**
    * Updates the last user action timestamp to the given time, or to the current time,
    * if 0 is given. Do not use unless you're really sure what you're doing.
-   * Consult focus stealing prevention section in kdebase/twin/README.
+   * Consult focus stealing prevention section in tdebase/twin/README.
    * @since 3.2
    */
   void updateUserTimestamp( unsigned long time = 0 );
@@ -1095,7 +1095,7 @@ public:
    * to the given time, or to this application's user time, if 0 is given.
    * Use before causing user interaction in the remote application, e.g. invoking a dialog
    * in the application using a DCOP call.
-   * Consult focus stealing prevention section in kdebase/twin/README.
+   * Consult focus stealing prevention section in tdebase/twin/README.
    * @since 3.3
    */
   void updateRemoteUserTimestamp( const TQCString& dcopId, unsigned long time = 0 );

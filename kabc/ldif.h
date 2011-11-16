@@ -25,7 +25,7 @@
 #include <tqcstring.h>
 #include <tqmemarray.h>
 
-#include <kdelibs_export.h>
+#include <tdelibs_export.h>
 
 namespace KABC {
 
