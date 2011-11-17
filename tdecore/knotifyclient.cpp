@@ -42,7 +42,7 @@ static bool canAvoidStartupEvent( const TQString& event, const TQString& appname
         checkAvoid = false;
         return false;
     }
-    // startkde event is in global events file
+    // starttde event is in global events file
     static KConfig* configfile = appname != "ksmserver"
         ? new KConfig( appname + ".eventsrc", true, false )
         : new KConfig( "knotify.eventsrc", true, false );

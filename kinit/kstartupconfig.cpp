@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 
 /*
 
-This utility helps to have some configuration options available in startkde
+This utility helps to have some configuration options available in starttde
 without the need to launch anything linked to KDE libraries (which may need
 some time to load).
 

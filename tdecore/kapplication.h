@@ -302,7 +302,7 @@ public:
    * Disables session management for this application.
    *
    * Useful in case  your application is started by the
-   * initial "startkde" script.
+   * initial "starttde" script.
    */
   void disableSessionManagement();
 

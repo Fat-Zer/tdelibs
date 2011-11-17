@@ -1514,7 +1514,7 @@ Comment[zh_HK]=發生了一個很嚴重的錯誤，令程式必須結束
 Comment[zh_TW]=因為發生了一個很嚴重的錯誤，所以該程式必須要結束
 default_presentation=2
 level=8
-[startkde]
+[starttde]
 Name=Login
 Name[af]=Aanteken
 Name[ar]=دخول
