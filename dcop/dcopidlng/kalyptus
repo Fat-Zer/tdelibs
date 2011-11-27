@@ -115,6 +115,7 @@ $allowed_k_dcop_accesors_re = join("|", @allowed_k_dcop_accesors);
     Q_WS_QWS => 'undef',
     Q_WS_MAC => 'undef',
     Q_OBJECT => <<'CODE',
+    TQ_OBJECT => <<'CODE',
 public:
     virtual QMetaObject *metaObject() const;
     virtual const char *className() const;
@@ -373,7 +374,7 @@ sub readSourceLine
 =head2 readCxxLine
 
 	Reads a C++ source line, skipping comments, blank lines,
-	preprocessor tokens and the Q_OBJECT macro
+	preprocessor tokens and the Q_OBJECT/TQ_OBJECT macros
 
 =cut
 
@@ -402,6 +403,10 @@ LOOP:
 		}
 
 		if ( $p =~ /^\s*Q_OBJECT/ ) {
+			push @inputqueue, @codeqobject;
+			next;
+		}
+		if ( $p =~ /^\s*TQ_OBJECT/ ) {
 			push @inputqueue, @codeqobject;
 			next;
 		}
