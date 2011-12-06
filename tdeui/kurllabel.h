@@ -169,7 +169,7 @@ public:
   /**
    * Reimplemented for internal reasons, the API is not affected.
    */
-  virtual void tqsetSizePolicy ( TQSizePolicy );
+  virtual void setSizePolicy ( TQSizePolicy );
 
 public slots:
   /**

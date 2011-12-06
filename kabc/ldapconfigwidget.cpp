@@ -129,7 +129,7 @@ void LdapConfigWidget::initWidget()
   if ( mFlags & W_PORT ) {
     label = new TQLabel( i18n( "Port:" ), this );
     mPort = new TQSpinBox( 0, 65535, 1, this, "kcfg_ldapport" );
-    mPort->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Preferred ) );
+    mPort->setSizePolicy( TQSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Preferred ) );
     mPort->setValue( 389 );
 
     mainLayout->addWidget( label, row, col );
@@ -140,7 +140,7 @@ void LdapConfigWidget::initWidget()
   if ( mFlags & W_VER ) {
     label = new TQLabel( i18n( "LDAP version:" ), this );
     mVer = new TQSpinBox( 2, 3, 1, this, "kcfg_ldapver" );
-    mVer->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Preferred ) );
+    mVer->setSizePolicy( TQSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Preferred ) );
     mVer->setValue( 3 );
     mainLayout->addWidget( label, row, col );
     mainLayout->addWidget( mVer, row, col+1 );
@@ -151,7 +151,7 @@ void LdapConfigWidget::initWidget()
   if ( mFlags & W_SIZELIMIT ) {
     label = new TQLabel( i18n( "Size limit:" ), this );
     mSizeLimit = new TQSpinBox( 0, 9999999, 1, this, "kcfg_ldapsizelimit" );
-    mSizeLimit->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Preferred ) );
+    mSizeLimit->setSizePolicy( TQSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Preferred ) );
     mSizeLimit->setValue( 0 );
     mSizeLimit->setSpecialValueText( i18n("Default") );
     mainLayout->addWidget( label, row, col );
@@ -162,7 +162,7 @@ void LdapConfigWidget::initWidget()
   if ( mFlags & W_TIMELIMIT ) {
     label = new TQLabel( i18n( "Time limit:" ), this );
     mTimeLimit = new TQSpinBox( 0, 9999999, 1, this, "kcfg_ldaptimelimit" );
-    mTimeLimit->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Preferred ) );
+    mTimeLimit->setSizePolicy( TQSizePolicy( TQSizePolicy::Maximum, TQSizePolicy::Preferred ) );
     mTimeLimit->setValue( 0 );
     mTimeLimit->setSuffix( i18n(" sec") );
     mTimeLimit->setSpecialValueText( i18n("Default") );

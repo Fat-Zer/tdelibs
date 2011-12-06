@@ -32,7 +32,7 @@ SidePixmap::SidePixmap(TQWidget *parent, const char *name)
 	m_tileup.load(locate("data", "tdeprint/tileup.png"));
 	m_tiledown.load(locate("data", "tdeprint/tiledown.png"));
 
-	tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Minimum));
+	setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Minimum));
 }
 
 bool SidePixmap::isValid()

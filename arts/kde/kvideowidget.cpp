@@ -92,7 +92,7 @@ KVideoWidget::KVideoWidget( TQWidget *parent, const char *name, WFlags f )
 void KVideoWidget::init(void)
 {
     setMinimumSize(0, 0);
-    tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+    setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
     setFocusPolicy( TQ_ClickFocus );
 
     fullscreenWidget = 0;

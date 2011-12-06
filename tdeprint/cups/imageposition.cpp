@@ -45,7 +45,7 @@ ImagePosition::ImagePosition(TQWidget *parent, const char *name)
 {
 	position_ = Center;
 	setMinimumSize(sizeHint());
-	tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
+	setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding, TQSizePolicy::MinimumExpanding));
 	pix_.load(locate("data", "tdeprint/preview-mini.png"));
 }
 

@@ -104,7 +104,7 @@ KMdiDockContainer::KMdiDockContainer( TQWidget *parent, TQWidget *win, int posit
 
 	m_ws = new TQWidgetStack( this );
 
-	m_ws->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+	m_ws->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 
 	//layout the tabbar
 	if ( position == KDockWidget::DockLeft || position == KDockWidget::DockTop )

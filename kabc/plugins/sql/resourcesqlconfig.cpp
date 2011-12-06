@@ -60,7 +60,7 @@ ResourceSqlConfig::ResourceSqlConfig( TQWidget* parent,  const char* name )
   label = new TQLabel( i18n( "Port:" ), this );
   TQVBox *box = new TQVBox(this);
   mPort = new TQSpinBox(0, 65535, 1, box );
-  mPort->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Maximum, TQSizePolicy::Preferred));
+  mPort->setSizePolicy(TQSizePolicy(TQSizePolicy::Maximum, TQSizePolicy::Preferred));
   mPort->setValue(389);
   new TQWidget(box, "dummy");
 

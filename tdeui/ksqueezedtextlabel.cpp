@@ -22,14 +22,14 @@
 
 KSqueezedTextLabel::KSqueezedTextLabel( const TQString &text , TQWidget *parent, const char *name )
  : TQLabel ( parent, name ) {
-  tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+  setSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
   fullText = text;
   squeezeTextToLabel();
 }
 
 KSqueezedTextLabel::KSqueezedTextLabel( TQWidget *parent, const char *name )
  : TQLabel ( parent, name ) {
-  tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
+  setSizePolicy(TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
 }
 
 void KSqueezedTextLabel::resizeEvent( TQResizeEvent * ) {

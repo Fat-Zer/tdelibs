@@ -436,9 +436,9 @@ void KURLLabel::setFocusPolicy( TQ_FocusPolicy policy )
   }
 }
 
-void KURLLabel::tqsetSizePolicy ( TQSizePolicy policy )
+void KURLLabel::setSizePolicy ( TQSizePolicy policy )
 {
-  TQLabel::tqsetSizePolicy(policy);
+  TQLabel::setSizePolicy(policy);
   if (!d->MarginAltered && policy.horData()==TQSizePolicy::Fixed && policy.verData()==TQSizePolicy::Fixed) {
       TQLabel::setMargin(0); //better default : better look when fixed size
   }

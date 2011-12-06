@@ -85,7 +85,7 @@ KACLEditWidget::KACLEditWidget( TQWidget *parent, const char *name )
     m_DelBtn = new TQPushButton( i18n( "Delete Entry" ), vbox, "delete_entry_button" );
     connect( m_DelBtn, TQT_SIGNAL( clicked() ), m_listView, TQT_SLOT( slotRemoveEntry() ) );
     TQWidget *spacer = new TQWidget( vbox );
-    spacer->tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Expanding );
+    spacer->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Expanding );
     slotUpdateButtons();
 }
 

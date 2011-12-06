@@ -79,7 +79,7 @@ void KEditListBox::init( bool checkAtEntering, int buttons,
     d->m_checkAtEntering = checkAtEntering;
 
     servNewButton = servRemoveButton = servUpButton = servDownButton = 0L;
-    tqsetSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding,
+    setSizePolicy(TQSizePolicy(TQSizePolicy::MinimumExpanding,
                               TQSizePolicy::MinimumExpanding));
 
     TQGridLayout * grid = new TQGridLayout(this, 7, 2,

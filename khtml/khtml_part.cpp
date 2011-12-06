@@ -608,7 +608,7 @@ bool KHTMLPart::openURL( const KURL &url )
       if (!d->m_statusBarUALabel) {
         d->m_statusBarUALabel = new KURLLabel(d->m_statusBarExtension->statusBar());
         d->m_statusBarUALabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
-        d->m_statusBarUALabel->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+        d->m_statusBarUALabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
         d->m_statusBarUALabel->setUseCursor(false);
         d->m_statusBarExtension->addStatusBarItem(d->m_statusBarUALabel, 0, false);
         d->m_statusBarUALabel->setPixmap(SmallIcon("agent", instance()));
@@ -1075,7 +1075,7 @@ KJSErrorDlg *KHTMLPart::jsErrorExtension() {
   if (!d->m_statusBarJSErrorLabel) {
     d->m_statusBarJSErrorLabel = new KURLLabel(d->m_statusBarExtension->statusBar());
     d->m_statusBarJSErrorLabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
-    d->m_statusBarJSErrorLabel->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+    d->m_statusBarJSErrorLabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
     d->m_statusBarJSErrorLabel->setUseCursor(false);
     d->m_statusBarExtension->addStatusBarItem(d->m_statusBarJSErrorLabel, 0, false);
     TQToolTip::add(d->m_statusBarJSErrorLabel, i18n("This web page contains coding errors."));
@@ -1525,7 +1525,7 @@ void KHTMLPart::setPageSecurity( PageSecurity sec )
   if ( sec != NotCrypted && !d->m_statusBarIconLabel && !parentPart() ) {
     d->m_statusBarIconLabel = new KURLLabel( d->m_statusBarExtension->statusBar() );
     d->m_statusBarIconLabel->setFixedHeight( instance()->iconLoader()->currentSize(KIcon::Small) );
-    d->m_statusBarIconLabel->tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+    d->m_statusBarIconLabel->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
     d->m_statusBarIconLabel->setUseCursor( false );
     d->m_statusBarExtension->addStatusBarItem( d->m_statusBarIconLabel, 0, false );
     connect( d->m_statusBarIconLabel, TQT_SIGNAL( leftClickedURL() ), TQT_SLOT( slotSecurity() ) );
@@ -7249,7 +7249,7 @@ void KHTMLPart::walletOpened(KWallet::Wallet *wallet) {
   if (!d->m_statusBarWalletLabel) {
     d->m_statusBarWalletLabel = new KURLLabel(d->m_statusBarExtension->statusBar());
     d->m_statusBarWalletLabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
-    d->m_statusBarWalletLabel->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
+    d->m_statusBarWalletLabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
     d->m_statusBarWalletLabel->setUseCursor(false);
     d->m_statusBarExtension->addStatusBarItem(d->m_statusBarWalletLabel, 0, false);
     d->m_statusBarWalletLabel->setPixmap(SmallIcon("wallet_open", instance()));
@@ -7386,7 +7386,7 @@ void KHTMLPart::setSuppressedPopupIndicator( bool enable, KHTMLPart *originPart 
     if ( enable && !d->m_statusBarPopupLabel ) {
         d->m_statusBarPopupLabel = new KURLLabel( d->m_statusBarExtension->statusBar() );
         d->m_statusBarPopupLabel->setFixedHeight( instance()->iconLoader()->currentSize( KIcon::Small) );
-        d->m_statusBarPopupLabel->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
+        d->m_statusBarPopupLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
         d->m_statusBarPopupLabel->setUseCursor( false );
         d->m_statusBarExtension->addStatusBarItem( d->m_statusBarPopupLabel, 0, false );
         d->m_statusBarPopupLabel->setPixmap( SmallIcon( "window_suppressed", instance() ) );

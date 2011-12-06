@@ -192,7 +192,7 @@ void KPluginSelectionWidget::init( const TQValueList<KPluginInfo*> & plugininfos
             TQT_SLOT( executed( TQListViewItem * ) ) );
     connect( listview, TQT_SIGNAL( selectionChanged( TQListViewItem * ) ), this,
             TQT_SLOT( executed( TQListViewItem * ) ) );
-    listview->tqsetSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
+    listview->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
     listview->setAcceptDrops( false );
     listview->setFullWidth( true );
     listview->setSelectionModeExt( KListView::Single );

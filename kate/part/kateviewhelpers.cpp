@@ -697,7 +697,7 @@ KateIconBorder::KateIconBorder ( KateViewInternal* internalView, TQWidget *paren
   , m_cachedLNWidth( 0 )
   , m_maxCharWidth( 0 )
 {
-  tqsetSizePolicy( TQSizePolicy(  TQSizePolicy::Fixed, TQSizePolicy::Minimum ) );
+  setSizePolicy( TQSizePolicy(  TQSizePolicy::Fixed, TQSizePolicy::Minimum ) );
 
   setBackgroundMode( NoBackground );
 

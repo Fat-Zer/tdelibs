@@ -838,13 +838,13 @@ KMultiTabBar::KMultiTabBar(KMultiTabBarMode bm, TQWidget *parent,const char *nam
 	if (bm==Vertical)
 	{
 		m_l=new TQVBoxLayout(this);
-		tqsetSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Expanding, true);
+		setSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Expanding, true);
 //		setFixedWidth(24);
 	}
 	else
 	{
 		m_l=new TQHBoxLayout(this);
-		tqsetSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Fixed, true);
+		setSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Fixed, true);
 //		setFixedHeight(24);
 	}
 	m_l->setMargin(0);

@@ -201,7 +201,7 @@ void KFileMetaPropsPlugin::createLayout()
 
     // the add key (disabled until fully implemented)
 /*    d->m_add = new TQPushButton(i18n("&Add"), topframe);
-    d->m_add->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Fixed,
+    d->m_add->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed,
                                         TQSizePolicy::Fixed));
     connect(d->m_add, TQT_SIGNAL(clicked()), this, TQT_SLOT(slotAdd()));
     tmp->addWidget(d->m_add);

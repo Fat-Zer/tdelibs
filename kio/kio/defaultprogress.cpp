@@ -130,7 +130,7 @@ void DefaultProgress::init()
   hBox->addWidget(resumeLabel);
 
   progressLabel = new TQLabel( this );
-/*  progressLabel->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::MinimumExpanding,
+/*  progressLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::MinimumExpanding,
                                              TQSizePolicy::Preferred ) );*/
   progressLabel->setAlignment( TQLabel::AlignRight );
   hBox->addWidget( progressLabel );

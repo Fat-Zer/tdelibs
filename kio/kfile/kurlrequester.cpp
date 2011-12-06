@@ -402,7 +402,7 @@ KPushButton * KURLRequester::button() const
 
 KEditListBox::CustomEditor KURLRequester::customEditor()
 {
-    tqsetSizePolicy(TQSizePolicy( TQSizePolicy::Preferred,
+    setSizePolicy(TQSizePolicy( TQSizePolicy::Preferred,
                                TQSizePolicy::Fixed));
 
     KLineEdit *edit = d->edit;

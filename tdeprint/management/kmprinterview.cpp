@@ -47,7 +47,7 @@ KMPrinterView::KMPrinterView(TQWidget *parent, const char *name)
 	connect(m_listview,TQT_SIGNAL(printerSelected(const TQString&)),TQT_SLOT(slotPrinterSelected(const TQString&)));
 
 	setViewType(m_type);
-	tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
+	setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding ) );
 }
 
 KMPrinterView::~KMPrinterView()

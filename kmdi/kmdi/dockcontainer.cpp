@@ -90,7 +90,7 @@ DockContainer::DockContainer(TQWidget *parent, TQWidget *win, int position, int 
 
   m_ws=new TQWidgetStack(this);
 
-  m_ws->tqsetSizePolicy(TQSizePolicy(TQSizePolicy::Expanding,TQSizePolicy::Expanding));
+  m_ws->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding,TQSizePolicy::Expanding));
 
   if ( (position==KDockWidget::DockLeft) || (position==KDockWidget::DockTop))
   {

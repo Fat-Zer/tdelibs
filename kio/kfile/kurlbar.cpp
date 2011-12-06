@@ -341,7 +341,7 @@ KURLBar::KURLBar( bool useGlobalItems, TQWidget *parent, const char *name, WFlag
     d = new KURLBarPrivate();
 
     setListBox( 0L );
-    tqsetSizePolicy( TQSizePolicy( isVertical() ?
+    setSizePolicy( TQSizePolicy( isVertical() ?
                                 TQSizePolicy::Maximum :
                                 TQSizePolicy::Preferred,
                                 isVertical() ?
@@ -378,7 +378,7 @@ KURLBarItem * KURLBar::insertDynamicItem(const KURL& url, const TQString& descri
 void KURLBar::setOrientation( Qt::Orientation orient )
 {
     m_listBox->setOrientation( orient );
-    tqsetSizePolicy( TQSizePolicy( isVertical() ?
+    setSizePolicy( TQSizePolicy( isVertical() ?
                                 TQSizePolicy::Maximum :
                                 TQSizePolicy::Preferred,
                                 isVertical() ?

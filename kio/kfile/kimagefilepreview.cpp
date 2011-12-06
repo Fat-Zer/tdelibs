@@ -44,7 +44,7 @@ KImageFilePreview::KImageFilePreview( TQWidget *parent )
     imageLabel = new TQLabel( this );
     imageLabel->setFrameStyle( TQFrame::NoFrame );
     imageLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-    imageLabel->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding) );
+    imageLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding) );
     vb->addWidget( imageLabel );
 
     TQHBoxLayout *hb = new TQHBoxLayout( 0 );
