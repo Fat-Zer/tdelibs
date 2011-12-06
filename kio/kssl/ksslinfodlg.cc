@@ -399,37 +399,37 @@ void KSSLCertBox::setValues(TQString certName, TQWidget *mailCatcher) {
     TQLabel *label = 0L;
     if (!(tmp = cert.getValue("O")).isEmpty()) {
         label = new TQLabel(i18n("Organization:"), _frame);
-        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("OU")).isEmpty()) {
         label = new TQLabel(i18n("Organizational unit:"), _frame);
-        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("L")).isEmpty()) {
         label = new TQLabel(i18n("Locality:"), _frame);
-        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("ST")).isEmpty()) {
         label = new TQLabel(i18n("Federal State","State:"), _frame);
-        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("C")).isEmpty()) {
         label = new TQLabel(i18n("Country:"), _frame);
-        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("CN")).isEmpty()) {
         label = new TQLabel(i18n("Common name:"), _frame);
-        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         new TQLabel(tmp, _frame);
     }
     if (!(tmp = cert.getValue("Email")).isEmpty()) {
         label = new TQLabel(i18n("Email:"), _frame);
-        label->tqsetAlignment(Qt::AlignLeft | Qt::AlignTop);
+        label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
         if (mailCatcher) {
             KURLLabel *mail = new KURLLabel(tmp, tmp, _frame);
             connect(mail, TQT_SIGNAL(leftClickedURL(const TQString &)), mailCatcher, TQT_SLOT(mailClicked(const TQString &)));

@@ -71,7 +71,7 @@ void KPanelExtension::setPosition( Position p )
   positionChange( p );
 }
 
-void KPanelExtension::tqsetAlignment( Alignment a )
+void KPanelExtension::setAlignment( Alignment a )
 {
   if( _tqalignment == a ) return;
   _tqalignment = a;

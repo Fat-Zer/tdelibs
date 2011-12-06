@@ -57,7 +57,7 @@ class KateCodeCompletionCommentLabel : public TQLabel
         setAutoMask( false );
         setFrameStyle( TQFrame::Plain | TQFrame::Box );
         setLineWidth( 1 );
-        tqsetAlignment( AlignAuto | AlignTop );
+        setAlignment( AlignAuto | AlignTop );
         polish();
         setText(text);
         adjustSize();

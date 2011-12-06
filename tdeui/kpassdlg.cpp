@@ -354,13 +354,13 @@ void KPasswordDialog::init()
     if (!pix.isNull()) {
 	lbl = new TQLabel(m_pMain);
 	lbl->setPixmap(pix);
-	lbl->tqsetAlignment(AlignHCenter|AlignVCenter);
+	lbl->setAlignment(AlignHCenter|AlignVCenter);
 	lbl->setFixedSize(lbl->sizeHint());
 	m_pGrid->addWidget(lbl, 0, 0, (TQ_Alignment)AlignCenter);
     }
 
     m_pHelpLbl = new TQLabel(m_pMain);
-    m_pHelpLbl->tqsetAlignment(AlignLeft|AlignVCenter|WordBreak);
+    m_pHelpLbl->setAlignment(AlignLeft|AlignVCenter|WordBreak);
     m_pGrid->addWidget(m_pHelpLbl, 0, 2, (TQ_Alignment)AlignLeft);
     m_pGrid->addRowSpacing(1, 10);
     m_pGrid->setRowStretch(1, 12);
@@ -371,7 +371,7 @@ void KPasswordDialog::init()
 
     // Row 3: Password editor #1
     lbl = new TQLabel(m_pMain);
-    lbl->tqsetAlignment(AlignLeft|AlignVCenter);
+    lbl->setAlignment(AlignLeft|AlignVCenter);
     lbl->setText(i18n("&Password:"));
     lbl->setFixedSize(lbl->sizeHint());
     m_pGrid->addWidget(lbl, 7, 0, (TQ_Alignment)AlignLeft);
@@ -402,7 +402,7 @@ void KPasswordDialog::init()
     } else if (m_Type == NewPassword) {
 	m_pGrid->addRowSpacing(8, 10);
 	lbl = new TQLabel(m_pMain);
-	lbl->tqsetAlignment(AlignLeft|AlignVCenter);
+	lbl->setAlignment(AlignLeft|AlignVCenter);
 	lbl->setText(i18n("&Verify:"));
 	lbl->setFixedSize(lbl->sizeHint());
 	m_pGrid->addWidget(lbl, 9, 0, (TQ_Alignment)AlignLeft);
@@ -424,7 +424,7 @@ void KPasswordDialog::init()
         strengthBox->setSpacing(10);
         m_pGrid->addMultiCellWidget(strengthBox, 11, 11, 0, 2);
         TQLabel* const passStrengthLabel = new TQLabel(strengthBox);
-        passStrengthLabel->tqsetAlignment(AlignLeft|AlignVCenter);
+        passStrengthLabel->setAlignment(AlignLeft|AlignVCenter);
         passStrengthLabel->setText(i18n("Password strength meter:"));
         d->m_strengthBar = new KProgress(100, strengthBox, "PasswordStrengthMeter");
         d->m_strengthBar->setPercentageVisible(false);
@@ -443,7 +443,7 @@ void KPasswordDialog::init()
         m_pGrid->setRowStretch(12, 12);
 
         d->m_MatchLabel = new TQLabel(m_pMain);
-        d->m_MatchLabel->tqsetAlignment(AlignLeft|AlignVCenter|WordBreak);
+        d->m_MatchLabel->setAlignment(AlignLeft|AlignVCenter|WordBreak);
         m_pGrid->addMultiCellWidget(d->m_MatchLabel, 13, 13, 0, 2);
         d->m_MatchLabel->setText(i18n("Passwords do not match"));
 
@@ -490,12 +490,12 @@ void KPasswordDialog::addLine(TQString key, TQString value)
 	return;
 
     TQLabel *lbl = new TQLabel(key, m_pMain);
-    lbl->tqsetAlignment(AlignLeft|AlignTop);
+    lbl->setAlignment(AlignLeft|AlignTop);
     lbl->setFixedSize(lbl->sizeHint());
     m_pGrid->addWidget(lbl, m_Row+2, 0, (TQ_Alignment)AlignLeft);
 
     lbl = new TQLabel(value, m_pMain);
-    lbl->tqsetAlignment(AlignTop|WordBreak);
+    lbl->setAlignment(AlignTop|WordBreak);
     lbl->setFixedSize(275, lbl->heightForWidth(275));
     m_pGrid->addWidget(lbl, m_Row+2, 2, (TQ_Alignment)AlignLeft);
     ++m_Row;

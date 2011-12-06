@@ -106,7 +106,7 @@ KAboutContributor::KAboutContributor( TQWidget *_parent, const char *wname,
   connect(kurl, TQT_SIGNAL(leftClickedURL(const TQString &)),
 	  TQT_SLOT(urlClickedSlot(const TQString &)));
 
-  mLabel[3]->tqsetAlignment( AlignTop );
+  mLabel[3]->setAlignment( AlignTop );
 
   fontChange( font() );
   updateLayout();
@@ -314,7 +314,7 @@ KAboutContainerBase::KAboutContainerBase( int layoutType, TQWidget *_parent,
   if( layoutType & AbtTitle )
   {
     mTitleLabel = new TQLabel( this, "title" );
-    mTitleLabel->tqsetAlignment(AlignCenter);
+    mTitleLabel->setAlignment(AlignCenter);
     mTopLayout->addWidget( mTitleLabel );
     mTopLayout->addSpacing( KDialog::spacingHint() );
   }
@@ -905,7 +905,7 @@ void KAboutContainer::addTitle( const TQString &title, int tqalignment,
   {
     label->setFrameStyle(TQFrame::Panel | TQFrame::Raised);
   }
-  label->tqsetAlignment( tqalignment );
+  label->setAlignment( tqalignment );
 }
 
 
@@ -924,7 +924,7 @@ void KAboutContainer::addImage( const TQString &fileName, int tqalignment )
     pix = logo;
     label->setPixmap( pix );
   }
-  label->tqsetAlignment( tqalignment );
+  label->setAlignment( tqalignment );
 }
 
 #if 0
@@ -1326,7 +1326,7 @@ KAboutWidget::KAboutWidget(TQWidget *_parent, const char *_name)
   cont->setText(i18n("Other Contributors:"));
   logo->setText(i18n("(No logo available)"));
   logo->setFrameStyle(TQFrame::Panel | TQFrame::Raised);
-  version->tqsetAlignment(AlignCenter);
+  version->setAlignment(AlignCenter);
   // -----
   connect(author, TQT_SIGNAL(sendEmail(const TQString&, const TQString&)),
 	  TQT_SLOT(sendEmailSlot(const TQString&, const TQString&)));

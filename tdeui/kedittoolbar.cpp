@@ -853,7 +853,7 @@ void KEditToolbarWidget::setupLayout()
   connect(m_downAction, TQT_SIGNAL(clicked()), TQT_SLOT(slotDownButton()));
 
   d->m_helpArea = new TQLabel(this);
-  d->m_helpArea->tqsetAlignment( TQt::WordBreak );
+  d->m_helpArea->setAlignment( TQt::WordBreak );
 
   // now start with our layouts
   TQVBoxLayout *top_layout = new TQVBoxLayout(this, 0, KDialog::spacingHint());

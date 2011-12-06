@@ -281,19 +281,19 @@ KateSchemaConfigColorTab::KateSchemaConfigColorTab( TQWidget *parent, const char
   b = new TQHBox (gbTextArea);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Normal text:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_back = new KColorButton(b);
 
   b = new TQHBox (gbTextArea);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Selected text:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_selected = new KColorButton(b);
 
   b = new TQHBox (gbTextArea);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Current line:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_current = new KColorButton(b);
 
   // Markers from tdelibs/interfaces/ktextinterface/markinterface.h
@@ -319,31 +319,31 @@ KateSchemaConfigColorTab::KateSchemaConfigColorTab( TQWidget *parent, const char
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Left border background:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_iconborder = new KColorButton(b);
 
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Line numbers:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_linenumber = new KColorButton(b);
 
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Bracket highlight:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_bracket = new KColorButton(b);
 
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Word wrap markers:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_wwmarker = new KColorButton(b);
 
   b = new TQHBox (gbBorder);
   b->setSpacing(KDialog::spacingHint());
   label = new TQLabel( i18n("Tab markers:"), b);
-  label->tqsetAlignment( AlignLeft|AlignVCenter);
+  label->setAlignment( AlignLeft|AlignVCenter);
   m_tmarker = new KColorButton(b);
 
   blay->addWidget(gbBorder);

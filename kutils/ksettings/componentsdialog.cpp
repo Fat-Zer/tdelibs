@@ -59,9 +59,9 @@ ComponentsDialog::ComponentsDialog( TQWidget * parent, const char * name )
     d->iconwidget = new TQLabel( d->infowidget );
     ( void )new KSeparator( d->infowidget );
     d->commentwidget = new TQLabel( d->infowidget );
-    d->commentwidget->tqsetAlignment( TQt::WordBreak );
+    d->commentwidget->setAlignment( TQt::WordBreak );
     d->descriptionwidget = new TQLabel( d->infowidget );
-    d->descriptionwidget->tqsetAlignment( TQt::WordBreak );
+    d->descriptionwidget->setAlignment( TQt::WordBreak );
 
     d->listview->addColumn( TQString::null );
     d->listview->header()->hide();

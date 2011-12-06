@@ -37,7 +37,7 @@ public:
   KDateWidgetSpinBox(int min, int max, TQWidget *parent)
     : TQSpinBox(min, max, 1, parent)
   {
-     editor()->tqsetAlignment(TQt::AlignRight);
+     editor()->setAlignment(TQt::AlignRight);
   }
 };
 

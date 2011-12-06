@@ -382,7 +382,7 @@ KCharSelect::KCharSelect( TQWidget *parent, const char *name, const TQString &_f
 
     TQLabel* const lFont = new TQLabel( i18n( "Font:" ), bar );
     lFont->resize( lFont->sizeHint() );
-    lFont->tqsetAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    lFont->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
     lFont->setMaximumWidth( lFont->sizeHint().width() );
 
     fontCombo = new TQComboBox( true, bar );
@@ -393,7 +393,7 @@ KCharSelect::KCharSelect( TQWidget *parent, const char *name, const TQString &_f
 
     TQLabel* const lTable = new TQLabel( i18n( "Table:" ), bar );
     lTable->resize( lTable->sizeHint() );
-    lTable->tqsetAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    lTable->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
     lTable->setMaximumWidth( lTable->sizeHint().width() );
 
     tableSpinBox = new TQSpinBox( 0, 255, 1, bar );
@@ -403,7 +403,7 @@ KCharSelect::KCharSelect( TQWidget *parent, const char *name, const TQString &_f
 
     TQLabel* const lUnicode = new TQLabel( i18n( "&Unicode code point:" ), bar );
     lUnicode->resize( lUnicode->sizeHint() );
-    lUnicode->tqsetAlignment( Qt::AlignRight | Qt::AlignVCenter );
+    lUnicode->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
     lUnicode->setMaximumWidth( lUnicode->sizeHint().width() );
 
     const TQRegExp rx( "[a-fA-F0-9]{1,4}" );

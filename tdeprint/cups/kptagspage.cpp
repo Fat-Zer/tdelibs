@@ -93,7 +93,7 @@ KPTagsPage::KPTagsPage(bool ro, TQWidget *parent, const char *name)
 		TQFont	f = lab->font();
 		f.setBold(true);
 		lab->setFont(f);
-		lab->tqsetAlignment(AlignVCenter|AlignRight);
+		lab->setAlignment(AlignVCenter|AlignRight);
 		l0->addWidget(lab);
 	}
 }

@@ -1003,7 +1003,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   // add the HSV fields
   //
   label = new TQLabel( i18n("H:"), page );
-  label->tqsetAlignment(AlignRight | AlignVCenter);
+  label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 0, 2);
   d->hedit = new KColorSpinBox( 0, 359, 1, page );
   d->hedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->hedit) ) );
@@ -1012,7 +1012,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   	TQT_SLOT( slotHSVChanged() ) );
 
   label = new TQLabel( i18n("S:"), page );
-  label->tqsetAlignment(AlignRight | AlignVCenter);
+  label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 1, 2);
   d->sedit = new KColorSpinBox( 0, 255, 1, page );
   d->sedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->sedit) ) );
@@ -1021,7 +1021,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   	TQT_SLOT( slotHSVChanged() ) );
 
   label = new TQLabel( i18n("V:"), page );
-  label->tqsetAlignment(AlignRight | AlignVCenter);
+  label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 2, 2);
   d->vedit = new KColorSpinBox( 0, 255, 1, page );
   d->vedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->vedit) ) );
@@ -1033,7 +1033,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   // add the RGB fields
   //
   label = new TQLabel( i18n("R:"), page );
-  label->tqsetAlignment(AlignRight | AlignVCenter);
+  label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 0, 4);
   d->redit = new KColorSpinBox( 0, 255, 1, page );
   d->redit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->redit) ) );
@@ -1042,7 +1042,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   	TQT_SLOT( slotRGBChanged() ) );
 
   label = new TQLabel( i18n("G:"), page );
-  label->tqsetAlignment(AlignRight | AlignVCenter);
+  label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget( label, 1, 4);
   d->gedit = new KColorSpinBox( 0, 255,1, page );
   d->gedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->gedit) ) );
@@ -1051,7 +1051,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   	TQT_SLOT( slotRGBChanged() ) );
 
   label = new TQLabel( i18n("B:"), page );
-  label->tqsetAlignment(AlignRight | AlignVCenter);
+  label->setAlignment(AlignRight | AlignVCenter);
   l_lbot->addWidget(label, 2, 4);
   d->bedit = new KColorSpinBox( 0, 255, 1, page );
   d->bedit->setValidator( new TQIntValidator( TQT_TQOBJECT(d->bedit) ) );

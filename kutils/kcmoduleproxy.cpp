@@ -323,7 +323,7 @@ void KCModuleProxy::runAsRoot()
 
 	TQLabel *lblBusy = new TQLabel(i18n("<big>Loading...</big>"), d->embedWidget, "lblBusy" );
 	lblBusy->setTextFormat(RichText);
-	lblBusy->tqsetAlignment(AlignCenter);
+	lblBusy->setAlignment(AlignCenter);
 	lblBusy->setGeometry(0,0, d->kcm->width(), d->kcm->height());
 	lblBusy->show();
 

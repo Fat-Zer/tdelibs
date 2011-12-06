@@ -116,7 +116,7 @@ void KPQtPage::init()
 	m_pagesize = new TQComboBox(this);
           TQWhatsThis::add(m_pagesize, whatsThisPageSizeOtPageLabel);
 	TQLabel	*m_pagesizelabel = new TQLabel(i18n("Page s&ize:"), this);
-	m_pagesizelabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
+	m_pagesizelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
 	m_pagesizelabel->setBuddy(m_pagesize);
 	m_orientbox = new TQButtonGroup(0, Qt::Vertical, i18n("Orientation"), this);
           TQWhatsThis::add(m_orientbox, whatsThisOrientationOtPageLabel);
@@ -129,7 +129,7 @@ void KPQtPage::init()
           TQWhatsThis::add(m_landscape, whatsThisOrientationOtPageLabel);
 
 	m_orientpix = new TQLabel(m_orientbox);
-	m_orientpix->tqsetAlignment(Qt::AlignCenter);
+	m_orientpix->setAlignment(Qt::AlignCenter);
           TQWhatsThis::add(m_orientpix, whatsThisOrientationOtPageLabel);
 
 	TQRadioButton	*m_color = new TQRadioButton(i18n("Colo&r"), m_colorbox);
@@ -137,7 +137,7 @@ void KPQtPage::init()
 
 	TQRadioButton	*m_grayscale = new TQRadioButton(i18n("&Grayscale"), m_colorbox);
 	m_colorpix = new TQLabel(m_colorbox);
-	m_colorpix->tqsetAlignment(Qt::AlignCenter);
+	m_colorpix->setAlignment(Qt::AlignCenter);
           TQWhatsThis::add(m_colorpix, whatsThisColorModeOtPageLabel);
 
 	m_nupbox = new TQButtonGroup(0, Qt::Vertical, i18n("Pages per Sheet"), this);
@@ -152,7 +152,7 @@ void KPQtPage::init()
           TQWhatsThis::add(m_nupother, whatsThisPagesPerSheetOtPageLabel);
 
 	m_nuppix = new TQLabel(m_nupbox);
-	m_nuppix->tqsetAlignment(Qt::AlignCenter);
+	m_nuppix->setAlignment(Qt::AlignCenter);
           TQWhatsThis::add(m_nuppix, whatsThisPagesPerSheetOtPageLabel);
 
 	// layout creation

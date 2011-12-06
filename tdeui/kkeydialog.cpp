@@ -439,7 +439,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
 
   d->lInfo = new TQLabel(d->fCArea);
   //resize(0,0);
-  //d->lInfo->tqsetAlignment( AlignCenter );
+  //d->lInfo->setAlignment( AlignCenter );
   //d->lInfo->setEnabled( false );
   //d->lInfo->hide();
   grid->addMultiCellWidget( d->lInfo, 2, 2, 0, 3 );

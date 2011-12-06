@@ -58,7 +58,7 @@ public:
   /**
    * Overridden for internal reasons; the API remains unaffected.
    */
-  virtual void tqsetAlignment( int );
+  virtual void setAlignment( int );
 
 public slots:
   void setText( const TQString & );

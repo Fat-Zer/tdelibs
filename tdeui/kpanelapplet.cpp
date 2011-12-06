@@ -78,7 +78,7 @@ void KPanelApplet::setPosition( Position p )
   positionChange( p );
 }
 
-void KPanelApplet::tqsetAlignment( Alignment a )
+void KPanelApplet::setAlignment( Alignment a )
 {
   if( _tqalignment == a ) return;
   _tqalignment = a;

@@ -87,12 +87,12 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
     {
         lbl = new TQLabel( main );
         lbl->setPixmap( pix );
-        lbl->tqsetAlignment( Qt::AlignLeft|Qt::AlignVCenter );
+        lbl->setAlignment( Qt::AlignLeft|Qt::AlignVCenter );
         lbl->setFixedSize( lbl->sizeHint() );
         d->layout->addWidget( lbl, 0, 0, Qt::AlignLeft );
     }
     d->prompt = new TQLabel( main );
-    d->prompt->tqsetAlignment( Qt::AlignLeft|Qt::AlignVCenter|TQt::WordBreak );
+    d->prompt->setAlignment( Qt::AlignLeft|Qt::AlignVCenter|TQt::WordBreak );
     d->layout->addWidget( d->prompt, 0, 2, Qt::AlignLeft );
     if ( prompt.isEmpty() )
         setPrompt( i18n( "You need to supply a username and a password" ) );
@@ -106,7 +106,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
 
     // Row 4: Username field
     d->userNameLabel = new TQLabel( i18n("&Username:"), main );
-    d->userNameLabel->tqsetAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+    d->userNameLabel->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     d->userNameLabel->setFixedSize( d->userNameLabel->sizeHint() );
     d->userNameHBox = new TQHBox( main );
 
@@ -123,7 +123,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
 
     // Row 6: Password field
     lbl = new TQLabel( i18n("&Password:"), main );
-    lbl->tqsetAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+    lbl->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     lbl->setFixedSize( lbl->sizeHint() );
     TQHBox* hbox = new TQHBox( main );
     d->passEdit = new KLineEdit( hbox );
@@ -239,11 +239,11 @@ void PasswordDialog::addCommentLine( const TQString& label,
     TQWidget *main = mainWidget();
 
     TQLabel* lbl = new TQLabel( label, main);
-    lbl->tqsetAlignment( Qt::AlignVCenter|Qt::AlignRight );
+    lbl->setAlignment( Qt::AlignVCenter|Qt::AlignRight );
     lbl->setFixedSize( lbl->sizeHint() );
     d->layout->addWidget( lbl, d->nRow+2, 0, Qt::AlignLeft );
     lbl = new TQLabel( comment, main);
-    lbl->tqsetAlignment( Qt::AlignVCenter|Qt::AlignLeft|TQt::WordBreak );
+    lbl->setAlignment( Qt::AlignVCenter|Qt::AlignLeft|TQt::WordBreak );
     calculateLabelSize(lbl);
     d->layout->addWidget( lbl, d->nRow+2, 2, Qt::AlignLeft );
     d->layout->addRowSpacing( 3, 10 ); // Add a spacer

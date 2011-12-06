@@ -42,7 +42,7 @@ KStatusBarLabel::KStatusBarLabel( const TQString& text, int _id,
   setLineWidth  (0);
   setFrameStyle (TQFrame::NoFrame);
 
-  tqsetAlignment( AlignHCenter | AlignVCenter | SingleLine );
+  setAlignment( AlignHCenter | AlignVCenter | SingleLine );
 
   connect (this, TQT_SIGNAL(itemPressed(int)), parent, TQT_SIGNAL(pressed(int)));
   connect (this, TQT_SIGNAL(itemReleased(int)), parent, TQT_SIGNAL(released(int)));
@@ -129,7 +129,7 @@ void KStatusBar::setItemAlignment (int id, int align)
   KStatusBarLabel *l = items[id];
   if (l)
   {
-    l->tqsetAlignment(align);
+    l->setAlignment(align);
   }
   else
     kdDebug() << "KStatusBar::setItemAlignment: bad item id: " << id << endl;

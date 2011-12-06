@@ -42,7 +42,7 @@ Form1::Form1( TQWidget* parent,  const char* name )
     GroupBox1->layout()->setSpacing( 0 );
     GroupBox1->layout()->setMargin( 0 );
     GroupBox1Layout = new TQVBoxLayout( GroupBox1->layout() );
-    GroupBox1Layout->tqsetAlignment( Qt::AlignTop );
+    GroupBox1Layout->setAlignment( Qt::AlignTop );
     GroupBox1Layout->setSpacing( 6 );
     GroupBox1Layout->setMargin( 11 );
 

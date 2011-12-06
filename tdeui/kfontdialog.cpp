@@ -295,7 +295,7 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
   //i18n: This is a classical test phrase. (It contains all letters from A to Z.)
   sampleEdit->setText(i18n("The Quick Brown Fox Jumps Over The Lazy Dog"));
   sampleEdit->setMinimumHeight( sampleEdit->fontMetrics().lineSpacing() );
-  sampleEdit->tqsetAlignment(Qt::AlignCenter);
+  sampleEdit->setAlignment(Qt::AlignCenter);
   gridLayout->addMultiCellWidget(sampleEdit, 4, 4, 0, 2);
   TQString sampleEditWhatsThisText =
     i18n("This sample text illustrates the current settings. "

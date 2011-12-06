@@ -84,7 +84,7 @@ void KToolBarLabelAction::init()
   /* these lines were copied from Konqueror's KonqDraggableLabel class in
      konq_misc.cc */
   d->m_label->setBackgroundMode(TQt::PaletteButton);
-  d->m_label->tqsetAlignment((TQApplication::reverseLayout()
+  d->m_label->setAlignment((TQApplication::reverseLayout()
 			 ? Qt::AlignRight : Qt::AlignLeft) |
  			Qt::AlignVCenter | TQt::ShowPrefix );
   d->m_label->adjustSize();

@@ -168,7 +168,7 @@ public:
 
   /**
    * Sets the tqalignment of item @p id. By default all fields are aligned
-   * @p AlignHCenter | @p AlignVCenter. See TQLabel::tqsetAlignment for details.
+   * @p AlignHCenter | @p AlignVCenter. See TQLabel::setAlignment for details.
    *
   */
   void setItemAlignment(int id, int align);

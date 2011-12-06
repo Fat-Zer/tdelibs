@@ -344,7 +344,7 @@ NetworkScannerConfig::NetworkScannerConfig(NetworkScanner *scanner, const char *
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
 
 	mask_ = new TQLineEdit(dummy);
-	mask_->tqsetAlignment(Qt::AlignRight);
+	mask_->setAlignment(Qt::AlignRight);
 	port_ = new TQComboBox(true,dummy);
         if ( port_->lineEdit() )
             port_->lineEdit()->setValidator( val );

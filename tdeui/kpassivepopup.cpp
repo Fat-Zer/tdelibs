@@ -138,7 +138,7 @@ TQVBox * KPassivePopup::standardView( const TQString& caption,
 	hb->setSpacing( KDialog::spacingHint() );
 	ttlIcon = new TQLabel( hb, "title_icon" );
 	ttlIcon->setPixmap( icon );
-        ttlIcon->tqsetAlignment( AlignLeft );
+        ttlIcon->setAlignment( AlignLeft );
     }
 
     if ( !caption.isEmpty() ) {
@@ -146,14 +146,14 @@ TQVBox * KPassivePopup::standardView( const TQString& caption,
 	TQFont fnt = ttl->font();
 	fnt.setBold( true );
 	ttl->setFont( fnt );
-	ttl->tqsetAlignment( Qt::AlignHCenter );
+	ttl->setAlignment( Qt::AlignHCenter );
         if ( hb )
             hb->setStretchFactor( ttl, 10 ); // enforce centering
     }
 
     if ( !text.isEmpty() ) {
         msg = new TQLabel( text, vb, "msg_label" );
-        msg->tqsetAlignment( AlignLeft );
+        msg->setAlignment( AlignLeft );
     }
 
     return vb;

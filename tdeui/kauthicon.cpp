@@ -113,7 +113,7 @@ KAuthIcon::KAuthIcon(TQWidget *parent, const char *name)
     lockLabel->setText(lockText);
   else
     lockLabel->setText(openLockText);
-  lockLabel->tqsetAlignment(AlignCenter);
+  lockLabel->setAlignment(AlignCenter);
   lockLabel->setMinimumSize(lockLabel->sizeHint());
   lockLabel->setText(lockText);
 

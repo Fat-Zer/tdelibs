@@ -223,7 +223,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	titlePane->setBackgroundPixmap(locate("data", "tdeui/pics/ktip-background.png"));
 	titlePane->setText(i18n("Did you know...?\n"));
 	titlePane->setFont(TQFont(KGlobalSettings::generalFont().family(), 20, TQFont::Bold));
-	titlePane->tqsetAlignment(TQLabel::AlignCenter);
+	titlePane->setAlignment(TQLabel::AlignCenter);
 	pl->addWidget(titlePane, 100);
     }
 
@@ -268,7 +268,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	TQLabel *l = new TQLabel(hbox);
 	l->setPixmap(img);
 	l->setBackgroundColor(mBlendedColor);
-	l->tqsetAlignment(Qt::AlignRight | Qt::AlignBottom);
+	l->setAlignment(Qt::AlignRight | Qt::AlignBottom);
 
 	resize(550, 230);
         TQSize sh = size();

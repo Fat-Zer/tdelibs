@@ -246,7 +246,7 @@ TQWidget * KPluginSelectionWidget::insertKCM( TQWidget * parent,
     {
         //FIXME: not very verbose
         TQLabel * label = new TQLabel( i18n( "Error" ), parent );
-        label->tqsetAlignment( Qt::AlignCenter );
+        label->setAlignment( Qt::AlignCenter );
 
         return label;
     }
@@ -536,7 +536,7 @@ KPluginSelector::KPluginSelector( TQWidget * parent, const char * name )
     TQLabel * label = new TQLabel( i18n( "(This plugin is not configurable)" ),
             d->widgetstack );
     ( new TQVBoxLayout( label, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
-    label->tqsetAlignment( Qt::AlignCenter );
+    label->setAlignment( Qt::AlignCenter );
     label->setMinimumSize( 200, 200 );
 
     d->widgetstack->addWidget( label, 1 );

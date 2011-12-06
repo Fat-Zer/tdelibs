@@ -256,7 +256,7 @@ void KFileIconView::showToolTip( TQIconViewItem *item )
 			      (WFlags)(WStyle_StaysOnTop | WStyle_Customize | WStyle_NoBorder | WStyle_Tool | WX11BypassWM) );
 	toolTip->setFrameStyle( TQFrame::Plain | TQFrame::Box );
 	toolTip->setLineWidth( 1 );
-	toolTip->tqsetAlignment( AlignLeft | AlignTop );
+	toolTip->setAlignment( AlignLeft | AlignTop );
 	toolTip->move( TQCursor::pos() + TQPoint( 14, 14 ) );
 	toolTip->adjustSize();
 	TQRect screen = TQApplication::desktop()->screenGeometry(

@@ -32,7 +32,7 @@ KMInfoPage::KMInfoPage(TQWidget *parent, const char *name)
 {
 	m_title = new TQLabel(this);
 	m_titlepixmap = new TQLabel(this);
-	m_titlepixmap->tqsetAlignment(Qt::AlignCenter);
+	m_titlepixmap->setAlignment(Qt::AlignCenter);
         KSeparator* sep = new KSeparator( KSeparator::HLine, this);
 	m_type = new TQLabel(this);
 	m_description = new TQLabel(this);
@@ -42,19 +42,19 @@ KMInfoPage::KMInfoPage(TQWidget *parent, const char *name)
 	m_uri = new TQLabel(this);
 	m_device = new TQLabel(this);
 	TQLabel	*m_loclabel = new TQLabel(i18n("Physical Location", "Location:"), this);
-	m_loclabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_loclabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	TQLabel	*m_desclabel = new TQLabel(i18n("Description:"), this);
-	m_desclabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_desclabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	TQLabel	*m_typelabel = new TQLabel(i18n("Type:"), this);
-	m_typelabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_typelabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	TQLabel	*m_statelabel = new TQLabel(i18n("Status", "State:"), this);
-	m_statelabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_statelabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	TQLabel	*m_urilabel = new TQLabel(i18n("URI:"), this);
-	m_urilabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_urilabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	m_devlabel = new TQLabel(i18n("Device:"), this);
-	m_devlabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_devlabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 	TQLabel	*m_modellabel = new TQLabel(i18n("Model:"), this);
-	m_modellabel->tqsetAlignment(Qt::AlignRight|Qt::AlignVCenter);
+	m_modellabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 
 	TQGridLayout	*lay0 = new TQGridLayout(this, 11, 2, 0, 5);
 	TQHBoxLayout	*lay1 = new TQHBoxLayout(0, 0, 10);

@@ -108,7 +108,7 @@ void KNumInput::setLabel(const TQString & label, int a)
     else {
         if (m_label) m_label->setText(label);
         else m_label = new TQLabel(label, this, "KNumInput::TQLabel");
-        m_label->tqsetAlignment((a & (~(AlignTop|AlignBottom|AlignVCenter)))
+        m_label->setAlignment((a & (~(AlignTop|AlignBottom|AlignVCenter)))
                               | AlignVCenter);
         // if no vertical tqalignment set, use Top tqalignment
         if(!(a & (AlignTop|AlignBottom|AlignVCenter)))
@@ -204,7 +204,7 @@ void KNumInput::setSteps(int minor, int major)
 KIntSpinBox::KIntSpinBox(TQWidget *parent, const char *name)
     : TQSpinBox(0, 99, 1, parent, name)
 {
-    editor()->tqsetAlignment(AlignRight);
+    editor()->setAlignment(AlignRight);
     val_base = 10;
     setValue(0);
 }
@@ -217,7 +217,7 @@ KIntSpinBox::KIntSpinBox(int lower, int upper, int step, int value, int base,
                          TQWidget* parent, const char* name)
     : TQSpinBox(lower, upper, step, parent, name)
 {
-    editor()->tqsetAlignment(AlignRight);
+    editor()->setAlignment(AlignRight);
     val_base = base;
     setValue(value);
 }
@@ -996,7 +996,7 @@ public:
 KDoubleSpinBox::KDoubleSpinBox( TQWidget * parent, const char * name )
   : TQSpinBox( parent, name )
 {
-  editor()->tqsetAlignment( Qt::AlignRight );
+  editor()->setAlignment( Qt::AlignRight );
   d = new Private();
   updateValidator();
   connect( this, TQT_SIGNAL(valueChanged(int)), TQT_SLOT(slotValueChanged(int)) );
@@ -1007,7 +1007,7 @@ KDoubleSpinBox::KDoubleSpinBox( double lower, double upper, double step,
 				TQWidget * parent, const char * name )
   : TQSpinBox( parent, name )
 {
-  editor()->tqsetAlignment( Qt::AlignRight );
+  editor()->setAlignment( Qt::AlignRight );
   d = new Private();
   setRange( lower, upper, step, precision );
   setValue( value );

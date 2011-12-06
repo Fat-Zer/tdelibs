@@ -189,7 +189,7 @@ public:
     /**
      * @internal
      **/
-    void tqsetAlignment( Alignment a );
+    void setAlignment( Alignment a );
     /**
      * @internal
      * @since 3.1

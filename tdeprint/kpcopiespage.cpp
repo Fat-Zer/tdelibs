@@ -186,7 +186,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	m_order = new TQCheckBox(i18n("Re&verse"), m_copybox);
 	TQWhatsThis::add(m_order, whatsThisReverseLabel);
 	m_collatepix = new TQLabel(m_copybox);
-	m_collatepix->tqsetAlignment(Qt::AlignCenter);
+	m_collatepix->setAlignment(Qt::AlignCenter);
 	m_collatepix->setMinimumHeight(70);
 	TQLabel	*m_copieslabel = new TQLabel(i18n("Cop&ies:"), m_copybox);
 	m_copies = new TQSpinBox(m_copybox);

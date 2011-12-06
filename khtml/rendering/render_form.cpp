@@ -491,7 +491,7 @@ void RenderLineEdit::setStyle(RenderStyle* _style)
 {
     RenderFormElement::setStyle( _style );
 
-    widget()->tqsetAlignment(textAlignment());
+    widget()->setAlignment(textAlignment());
 }
 
 void RenderLineEdit::highLightWord( unsigned int length, unsigned int pos )
@@ -1670,7 +1670,7 @@ void RenderTextArea::setStyle(RenderStyle* _style)
     RenderFormElement::setStyle(_style);
 
     widget()->blockSignals(true);
-    widget()->tqsetAlignment(textAlignment());
+    widget()->setAlignment(textAlignment());
     widget()->blockSignals(false);
 
     scrollbarsStyled = false;

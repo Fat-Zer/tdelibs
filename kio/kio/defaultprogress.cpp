@@ -132,7 +132,7 @@ void DefaultProgress::init()
   progressLabel = new TQLabel( this );
 /*  progressLabel->tqsetSizePolicy( TQSizePolicy( TQSizePolicy::MinimumExpanding,
                                              TQSizePolicy::Preferred ) );*/
-  progressLabel->tqsetAlignment( TQLabel::AlignRight );
+  progressLabel->setAlignment( TQLabel::AlignRight );
   hBox->addWidget( progressLabel );
 
   hBox = new TQHBoxLayout();
@@ -273,7 +273,7 @@ void DefaultProgress::slotPercent( KIO::Job*, unsigned long percent )
 void DefaultProgress::slotInfoMessage( KIO::Job*, const TQString & msg )
 {
   speedLabel->setText( msg );
-  speedLabel->tqsetAlignment( speedLabel->tqalignment() & ~TQt::WordBreak );
+  speedLabel->setAlignment( speedLabel->tqalignment() & ~TQt::WordBreak );
 }
 
 

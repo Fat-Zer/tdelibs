@@ -73,11 +73,11 @@ void KSqueezedTextLabel::squeezeTextToLabel() {
   }
 }
 
-void KSqueezedTextLabel::tqsetAlignment( int tqalignment )
+void KSqueezedTextLabel::setAlignment( int tqalignment )
 {
   // save fullText and restore it
   TQString tmpFull(fullText);
-  TQLabel::tqsetAlignment(tqalignment);
+  TQLabel::setAlignment(tqalignment);
   fullText = tmpFull;
 }
 

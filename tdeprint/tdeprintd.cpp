@@ -66,11 +66,11 @@ StatusWindow::StatusWindow(int pid)
 : TQWidget(NULL, "StatusWindow", (WFlags)(WType_TopLevel|WStyle_DialogBorder|WStyle_StaysOnTop|WDestructiveClose)), m_pid(pid)
 {
 	m_label = new TQLabel(this);
-	m_label->tqsetAlignment(AlignCenter);
+	m_label->setAlignment(AlignCenter);
 	m_button = new KPushButton(KStdGuiItem::close(), this);
 	m_icon = new TQLabel(this);
 	m_icon->setPixmap(DesktopIcon("fileprint"));
-	m_icon->tqsetAlignment(AlignCenter);
+	m_icon->setAlignment(AlignCenter);
 	KWin::setIcons(winId(), *(m_icon->pixmap()), SmallIcon("fileprint"));
 	TQGridLayout	*l0 = new TQGridLayout(this, 2, 3, 10, 10);
 	l0->setRowStretch(0, 1);

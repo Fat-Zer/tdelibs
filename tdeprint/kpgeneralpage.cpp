@@ -262,15 +262,15 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 
 	// widget creation
 	TQLabel	*m_pagesizelabel = new TQLabel(i18n("Page s&ize:"), this);
-	m_pagesizelabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
+	m_pagesizelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
           TQWhatsThis::add(m_pagesizelabel, whatsThisGeneralPageSizeLabel);
 
 	TQLabel	*m_papertypelabel = new TQLabel(i18n("Paper t&ype:"), this);
-	m_papertypelabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
+	m_papertypelabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
           TQWhatsThis::add(m_papertypelabel, whatsThisGeneralPaperTypeLabel);
 
 	TQLabel	*m_inputslotlabel = new TQLabel(i18n("Paper so&urce:"), this);
-	m_inputslotlabel->tqsetAlignment(Qt::AlignVCenter|Qt::AlignRight);
+	m_inputslotlabel->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
           TQWhatsThis::add(m_inputslotlabel, whatsThisGeneralPaperSourceLabel);
 
 	m_pagesize = new TQComboBox(this);
@@ -305,19 +305,19 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 
 	m_portrait->setChecked(true);
 	m_orientpix = new TQLabel(m_orientbox);
-	m_orientpix->tqsetAlignment(Qt::AlignCenter);
+	m_orientpix->setAlignment(Qt::AlignCenter);
 	TQRadioButton	*m_dupnone = new TQRadioButton(i18n("duplex orientation", "&None"), m_duplexbox);
 	TQRadioButton	*m_duplong = new TQRadioButton(i18n("duplex orientation", "Lon&g side"), m_duplexbox);
 	TQRadioButton	*m_dupshort = new TQRadioButton(i18n("duplex orientation", "S&hort side"), m_duplexbox);
 	m_dupnone->setChecked(true);
 	m_duplexpix = new TQLabel(m_duplexbox);
-	m_duplexpix->tqsetAlignment(Qt::AlignCenter);
+	m_duplexpix->setAlignment(Qt::AlignCenter);
 	TQRadioButton	*m_nup1 = new TQRadioButton("&1", m_nupbox);
 	TQRadioButton	*m_nup2 = new TQRadioButton("&2", m_nupbox);
 	TQRadioButton	*m_nup4 = new TQRadioButton("&4", m_nupbox);
 	m_nup1->setChecked(true);
 	m_nuppix = new TQLabel(m_nupbox);
-	m_nuppix->tqsetAlignment(Qt::AlignCenter);
+	m_nuppix->setAlignment(Qt::AlignCenter);
 	m_startbanner = new TQComboBox(m_bannerbox);
 	m_endbanner = new TQComboBox(m_bannerbox);
 	TQLabel	*m_startbannerlabel = new TQLabel(i18n("S&tart:"), m_bannerbox);
