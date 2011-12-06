@@ -155,7 +155,7 @@ public:
     if (!e)
       return false;
 
-    TQByteArray data = e->tqencodedData(TOOLBARITEMMIMETYPE);
+    TQByteArray data = e->encodedData(TOOLBARITEMMIMETYPE);
     if ( data.isEmpty() )
       return false;
 

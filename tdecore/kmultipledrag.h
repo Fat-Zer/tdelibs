@@ -80,7 +80,7 @@ public:
      * @return the data, or a null byte array if not found
      * @reimp
      */
-    virtual TQByteArray tqencodedData( const char *mime ) const;
+    virtual TQByteArray encodedData( const char *mime ) const;
 
     /**
      * Returns the @p i'th supported format, or 0.

@@ -145,7 +145,7 @@ public:
   /// @reimp
   virtual const char * format( int i ) const;
   /// @reimp
-  virtual TQByteArray tqencodedData( const char* mime ) const;
+  virtual TQByteArray encodedData( const char* mime ) const;
 
 protected:
   /**

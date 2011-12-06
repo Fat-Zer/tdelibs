@@ -48,7 +48,7 @@ public:
     virtual ~KColorDrag() {}
 
     virtual const char *format(int i) const;
-    virtual TQByteArray tqencodedData ( const char * m ) const;
+    virtual TQByteArray encodedData ( const char * m ) const;
 
     /**
      * Sets the color of the drag to @p col.

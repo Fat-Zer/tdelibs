@@ -56,7 +56,7 @@ public:
             while ( (format = src->format( i++ )) )
             {
                 byteArray = new TQByteArray();
-                *byteArray = src->tqencodedData( format ).copy();
+                *byteArray = src->encodedData( format ).copy();
                 m_data.append( byteArray );
                 m_formats.append( format );
             }
@@ -74,7 +74,7 @@ public:
     virtual bool provides( const char *mimeType ) const {
         return ( m_formats.find( mimeType ) > -1 );
     }
-    virtual TQByteArray tqencodedData( const char *format ) const
+    virtual TQByteArray encodedData( const char *format ) const
     {
         int index = m_formats.find( format );
         if ( index > -1 )
