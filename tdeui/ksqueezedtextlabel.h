@@ -53,8 +53,8 @@ public:
   KSqueezedTextLabel( TQWidget *parent, const char *name = 0 );
   KSqueezedTextLabel( const TQString &text, TQWidget *parent, const char *name = 0 );
 
-  virtual TQSize tqminimumSizeHint() const;
-  virtual TQSize tqsizeHint() const;
+  virtual TQSize minimumSizeHint() const;
+  virtual TQSize sizeHint() const;
   /**
    * Overridden for internal reasons; the API remains unaffected.
    */

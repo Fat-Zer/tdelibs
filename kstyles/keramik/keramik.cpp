@@ -1936,7 +1936,7 @@ bool KeramikStyle::isSizeConstrainedCombo(const TQComboBox* combo) const
 {
 	if (combo->width() >= 80)
 		return false;
-	int suggestedWidth = combo->tqsizeHint().width();
+	int suggestedWidth = combo->sizeHint().width();
 	
 	if (combo->width() - suggestedWidth < -5)
 		return true;
@@ -2475,8 +2475,8 @@ TQSize KeramikStyle::tqsizeFromContents( ContentsType contents,
 			int w = contentSize.width(), h = contentSize.height();
 
 			if ( mi->custom() ) {
-				w = mi->custom()->tqsizeHint().width();
-				h = mi->custom()->tqsizeHint().height();
+				w = mi->custom()->sizeHint().width();
+				h = mi->custom()->sizeHint().height();
 				if ( ! mi->custom()->fullSpan() )
 					h += 2*itemVMargin + 2*itemFrame;
 			}
@@ -2586,7 +2586,7 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 				{
 					//Note that the widget here == the combo, not the completion
 					//box, so we don't get any recursion
-					int suggestedWidth = widget->tqsizeHint().width(); 
+					int suggestedWidth = widget->sizeHint().width(); 
 					TQRect def = opt.rect();
 					def.addCoords( 4, -4, -6, 4 );
 					

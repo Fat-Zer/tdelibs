@@ -153,12 +153,12 @@ void KPTagsPage::getOptions(TQMap<TQString,TQString>& opts, bool)
 	}
 }
 
-TQSize KPTagsPage::tqsizeHint() const
+TQSize KPTagsPage::sizeHint() const
 {
 	return TQSize(-1, -1);
 }
 
-TQSize KPTagsPage::tqminimumSizeHint() const
+TQSize KPTagsPage::minimumSizeHint() const
 {
 	return TQSize(-1, -1);
 }

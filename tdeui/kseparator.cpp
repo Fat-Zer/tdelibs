@@ -100,7 +100,7 @@ void KSeparator::drawFrame(TQPainter *p)
 }
 
 
-TQSize KSeparator::tqsizeHint() const
+TQSize KSeparator::sizeHint() const
 {
    if ( frameStyle() & VLine )
       return TQSize(2, 0);

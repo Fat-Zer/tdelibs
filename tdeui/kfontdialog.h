@@ -252,7 +252,7 @@ public:
   /**
    * Reimplemented for internal reasons.
    */
-  virtual TQSize tqsizeHint( void ) const;
+  virtual TQSize sizeHint( void ) const;
 
 signals:
   /**

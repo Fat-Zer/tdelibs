@@ -125,7 +125,7 @@ void KTabCtl::setSizes()
 {
     unsigned i;
 
-    TQSize min(tabs->tqsizeHint());    /* the minimum required size for the tabbar */
+    TQSize min(tabs->sizeHint());    /* the minimum required size for the tabbar */
     tabs->resize(min);         /* make sure that the tabbar does not require more space than actually needed. */
 
 
@@ -190,16 +190,16 @@ void KTabCtl::setShape( TQTabBar::Shape tqshape )
 }
 
 TQSize
-KTabCtl::tqsizeHint() const
+KTabCtl::sizeHint() const
 {
 	/* desired size of the tabbar */
-	TQSize hint(tabs->tqsizeHint());
+	TQSize hint(tabs->sizeHint());
 
 	/* overall desired size of all pages */
 	TQSize pageHint;
 	for (unsigned int i = 0; i < pages.size(); i++)
 	{
-		TQSize sizeI(pages[i]->tqsizeHint());
+		TQSize sizeI(pages[i]->sizeHint());
 
 		if (sizeI.isValid())
 		{
@@ -229,7 +229,7 @@ KTabCtl::tqsizeHint() const
 	}
 
 	/*
-	 * If not at least a one page has a valid tqsizeHint we have to return
+	 * If not at least a one page has a valid sizeHint we have to return
 	 * an invalid size as well.
 	 */
 	return (pageHint);

@@ -55,7 +55,7 @@ public:
   KAuthIcon(TQWidget *parent = 0, const char *name = 0);
   ~KAuthIcon();
 
-  virtual TQSize tqsizeHint() const;
+  virtual TQSize sizeHint() const;
   /**
    * return the status of whatever is being monitored.
    */

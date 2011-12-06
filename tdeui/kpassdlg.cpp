@@ -355,7 +355,7 @@ void KPasswordDialog::init()
 	lbl = new TQLabel(m_pMain);
 	lbl->setPixmap(pix);
 	lbl->tqsetAlignment(AlignHCenter|AlignVCenter);
-	lbl->setFixedSize(lbl->tqsizeHint());
+	lbl->setFixedSize(lbl->sizeHint());
 	m_pGrid->addWidget(lbl, 0, 0, (TQ_Alignment)AlignCenter);
     }
 
@@ -373,7 +373,7 @@ void KPasswordDialog::init()
     lbl = new TQLabel(m_pMain);
     lbl->tqsetAlignment(AlignLeft|AlignVCenter);
     lbl->setText(i18n("&Password:"));
-    lbl->setFixedSize(lbl->tqsizeHint());
+    lbl->setFixedSize(lbl->sizeHint());
     m_pGrid->addWidget(lbl, 7, 0, (TQ_Alignment)AlignLeft);
 
     TQHBoxLayout *h_lay = new TQHBoxLayout();
@@ -381,7 +381,7 @@ void KPasswordDialog::init()
     m_pEdit = new KPasswordEdit(m_pMain);
     m_pEdit2 = 0;
     lbl->setBuddy(m_pEdit);
-    TQSize size = m_pEdit->tqsizeHint();
+    TQSize size = m_pEdit->sizeHint();
     m_pEdit->setFixedHeight(size.height());
     m_pEdit->setMinimumWidth(size.width());
     h_lay->addWidget(m_pEdit);
@@ -392,7 +392,7 @@ void KPasswordDialog::init()
 	m_pGrid->addRowSpacing(8, 10);
 	m_pGrid->setRowStretch(8, 12);
 	TQCheckBox* const cb = new TQCheckBox(i18n("&Keep password"), m_pMain);
-	cb->setFixedSize(cb->tqsizeHint());
+	cb->setFixedSize(cb->sizeHint());
 	if (m_Keep > 1)
 	    cb->setChecked(true);
 	else
@@ -404,14 +404,14 @@ void KPasswordDialog::init()
 	lbl = new TQLabel(m_pMain);
 	lbl->tqsetAlignment(AlignLeft|AlignVCenter);
 	lbl->setText(i18n("&Verify:"));
-	lbl->setFixedSize(lbl->tqsizeHint());
+	lbl->setFixedSize(lbl->sizeHint());
 	m_pGrid->addWidget(lbl, 9, 0, (TQ_Alignment)AlignLeft);
 
 	h_lay = new TQHBoxLayout();
 	m_pGrid->addLayout(h_lay, 9, 2);
 	m_pEdit2 = new KPasswordEdit(m_pMain);
 	lbl->setBuddy(m_pEdit2);
-	size = m_pEdit2->tqsizeHint();
+	size = m_pEdit2->sizeHint();
 	m_pEdit2->setFixedHeight(size.height());
 	m_pEdit2->setMinimumWidth(size.width());
 	h_lay->addWidget(m_pEdit2);
@@ -491,7 +491,7 @@ void KPasswordDialog::addLine(TQString key, TQString value)
 
     TQLabel *lbl = new TQLabel(key, m_pMain);
     lbl->tqsetAlignment(AlignLeft|AlignTop);
-    lbl->setFixedSize(lbl->tqsizeHint());
+    lbl->setFixedSize(lbl->sizeHint());
     m_pGrid->addWidget(lbl, m_Row+2, 0, (TQ_Alignment)AlignLeft);
 
     lbl = new TQLabel(value, m_pMain);

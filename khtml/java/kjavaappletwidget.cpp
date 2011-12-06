@@ -98,10 +98,10 @@ void KJavaAppletWidget::setWindow( WId w )
     }
 }
 
-TQSize KJavaAppletWidget::tqsizeHint() const
+TQSize KJavaAppletWidget::sizeHint() const
 {
-    kdDebug(6100) << "KJavaAppletWidget::tqsizeHint()" << endl;
-    TQSize rval = QXEmbed::tqsizeHint();
+    kdDebug(6100) << "KJavaAppletWidget::sizeHint()" << endl;
+    TQSize rval = QXEmbed::sizeHint();
 
     if( rval.width() == 0 || rval.height() == 0 )
     {
@@ -132,7 +132,7 @@ void KJavaAppletWidget::showEvent (TQShowEvent * e) {
     if (!applet()->isCreated() && !applet()->appletClass().isEmpty()) {
         // delayed showApplet
         if (applet()->size().width() <= 0)
-            applet()->setSize (tqsizeHint());
+            applet()->setSize (sizeHint());
         showApplet();
     }
 }

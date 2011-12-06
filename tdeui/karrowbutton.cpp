@@ -40,7 +40,7 @@ KArrowButton::~KArrowButton()
 	delete d;
 }
 
-TQSize KArrowButton::tqsizeHint() const
+TQSize KArrowButton::sizeHint() const
 {
 	return TQSize( 12, 12 );
 }

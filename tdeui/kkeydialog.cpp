@@ -423,7 +423,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   d->pbtnShortcut = new KKeyButton(d->fCArea, "key");
   d->pbtnShortcut->setEnabled( false );
   connect( d->pbtnShortcut, TQT_SIGNAL(capturedShortcut(const KShortcut&)), TQT_SLOT(capturedShortcut(const KShortcut&)) );
-  grid->addRowSpacing( 1, d->pbtnShortcut->tqsizeHint().height() + 5 );
+  grid->addRowSpacing( 1, d->pbtnShortcut->sizeHint().height() + 5 );
 
   wtstr = i18n("Use this button to choose a new shortcut key. Once you click it, "
   		"you can press the key-combination which you would like to be assigned "
@@ -601,7 +601,7 @@ void KKeyChooser::slotSettingsChanged( int category )
 
 void KKeyChooser::fontChange( const TQFont & )
 {
-        d->fCArea->setMinimumHeight( 4*d->pbtnShortcut->tqsizeHint().height() );
+        d->fCArea->setMinimumHeight( 4*d->pbtnShortcut->sizeHint().height() );
 
         int widget_width = 0;
 

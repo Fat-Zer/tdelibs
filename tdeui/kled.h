@@ -249,8 +249,8 @@ public:
    */
   void setLook( Look look );
 
-  virtual TQSize tqsizeHint() const;
-  virtual TQSize tqminimumSizeHint() const;
+  virtual TQSize sizeHint() const;
+  virtual TQSize minimumSizeHint() const;
 
 public slots:
 

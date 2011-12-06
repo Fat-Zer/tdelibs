@@ -807,7 +807,7 @@ TQCString PermissionDialog::exec( const TQString & cert, const TQString & perm )
     TQPushButton* const grant = new TQPushButton( i18n("&Grant All"), dialog, "grant" );
     buttonLayout->addWidget( grant );
     dialogLayout->addLayout( buttonLayout );
-    dialog->resize( dialog->tqminimumSizeHint() );
+    dialog->resize( dialog->minimumSizeHint() );
     //clearWState( WState_Polished );
 
     connect( no, TQT_SIGNAL( clicked() ), this, TQT_SLOT( clicked() ) );

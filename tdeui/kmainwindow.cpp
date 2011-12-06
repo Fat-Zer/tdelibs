@@ -1188,12 +1188,12 @@ TQSize KMainWindow::sizeForCentralWidgetSize(TQSize size)
         {
           case KToolBar::Top:
           case KToolBar::Bottom:
-            size += TQSize(0, tb->tqsizeHint().height());
+            size += TQSize(0, tb->sizeHint().height());
             break;
 
           case KToolBar::Left:
           case KToolBar::Right:
-            size += TQSize(toolBar()->tqsizeHint().width(), 0);
+            size += TQSize(toolBar()->sizeHint().width(), 0);
             break;
 
           case KToolBar::Flat:
@@ -1212,7 +1212,7 @@ TQSize KMainWindow::sizeForCentralWidgetSize(TQSize size)
     }
     TQStatusBar *sb = internalStatusBar();
     if( sb && !sb->isHidden() )
-       size += TQSize(0, sb->tqsizeHint().height());
+       size += TQSize(0, sb->sizeHint().height());
 
     return size;
 }

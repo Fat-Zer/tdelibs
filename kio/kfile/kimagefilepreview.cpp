@@ -137,7 +137,7 @@ void KImageFilePreview::resizeEvent( TQResizeEvent * )
     timer->start( 100, true ); // forces a new preview
 }
 
-TQSize KImageFilePreview::tqsizeHint() const
+TQSize KImageFilePreview::sizeHint() const
 {
     return TQSize( 20, 200 ); // otherwise it ends up huge???
 }

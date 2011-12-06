@@ -268,7 +268,7 @@ void KURLBarItem::paint( TQPainter *p )
     }
 }
 
-TQSize KURLBarItem::tqsizeHint() const
+TQSize KURLBarItem::sizeHint() const
 {
     int wmin = 0;
     int hmin = 0;
@@ -284,9 +284,9 @@ TQSize KURLBarItem::tqsizeHint() const
     }
 
     if ( lb->isVertical() )
-        wmin = QMIN( wmin, lb->viewport()->tqsizeHint().width() );
+        wmin = QMIN( wmin, lb->viewport()->sizeHint().width() );
     else
-        hmin = QMIN( hmin, lb->viewport()->tqsizeHint().height() );
+        hmin = QMIN( hmin, lb->viewport()->sizeHint().height() );
 
     return TQSize( wmin, hmin );
 }
@@ -294,17 +294,17 @@ TQSize KURLBarItem::tqsizeHint() const
 int KURLBarItem::width( const TQListBox *lb ) const
 {
     if ( static_cast<const KURLBarListBox *>( lb )->isVertical() )
-        return QMAX( tqsizeHint().width(), lb->viewport()->width() );
+        return QMAX( sizeHint().width(), lb->viewport()->width() );
     else
-        return tqsizeHint().width();
+        return sizeHint().width();
 }
 
 int KURLBarItem::height( const TQListBox *lb ) const
 {
     if ( static_cast<const KURLBarListBox *>( lb )->isVertical() )
-        return tqsizeHint().height();
+        return sizeHint().height();
     else
-        return QMAX( tqsizeHint().height(), lb->viewport()->height() );
+        return QMAX( sizeHint().height(), lb->viewport()->height() );
 }
 
 bool KURLBarItem::isPersistent() const
@@ -435,7 +435,7 @@ void KURLBar::setIconSize( int size )
         item = static_cast<KURLBarItem*>( item->next() );
     }
 
-    resize( tqsizeHint() );
+    resize( sizeHint() );
     updateGeometry();
 }
 
@@ -466,14 +466,14 @@ void KURLBar::paletteChange( const TQPalette & )
     setPalette( pal );
 }
 
-TQSize KURLBar::tqsizeHint() const
+TQSize KURLBar::sizeHint() const
 {
-    return m_listBox->tqsizeHint();
+    return m_listBox->sizeHint();
 
 #if 0
     // this code causes vertical and or horizontal scrollbars appearing
     // depending on the text, font, moonphase and earth rotation. Just using
-    // m_listBox->tqsizeHint() fixes this (although the widget can then be
+    // m_listBox->sizeHint() fixes this (although the widget can then be
     // resized to a smaller size so that scrollbars appear).
     int w = 0;
     int h = 0;
@@ -484,7 +484,7 @@ TQSize KURLBar::tqsizeHint() const
           item;
           item = static_cast<KURLBarItem*>( item->next() ) ) {
 
-        TQSize sh = item->tqsizeHint();
+        TQSize sh = item->sizeHint();
 
         if ( vertical ) {
             w = QMAX( w, sh.width() );
@@ -508,9 +508,9 @@ TQSize KURLBar::tqsizeHint() const
 #endif
 }
 
-TQSize KURLBar::tqminimumSizeHint() const
+TQSize KURLBar::minimumSizeHint() const
 {
-    TQSize s = tqsizeHint(); // ###
+    TQSize s = sizeHint(); // ###
     int w = s.width()  + m_listBox->verticalScrollBar()->width();
     int h = s.height() + m_listBox->horizontalScrollBar()->height();
     return TQSize( w, h );

@@ -260,7 +260,7 @@ void KCompletionBox::popup()
         clearSelection();
         if ( !isVisible() )
             show();
-        else if ( size().height() != tqsizeHint().height() )
+        else if ( size().height() != sizeHint().height() )
             sizeAndPosition();
     }
 }
@@ -335,8 +335,8 @@ TQRect KCompletionBox::calculateGeometry() const
     int ih = itemHeight();
     int h = QMIN( 15 * ih, (int) count() * ih ) + 2*frameWidth();
 
-    int w = (d->m_parent) ? d->m_parent->width() : KListBox::tqminimumSizeHint().width();
-    w = QMAX( KListBox::tqminimumSizeHint().width(), w );
+    int w = (d->m_parent) ? d->m_parent->width() : KListBox::minimumSizeHint().width();
+    w = QMAX( KListBox::minimumSizeHint().width(), w );
 
     //If we're inside a combox, Qt by default makes the dropdown
     // as wide as the combo, and gives the style a chance
@@ -373,7 +373,7 @@ TQRect KCompletionBox::calculateGeometry() const
     return TQRect(x, y, w, h);
 }
 
-TQSize KCompletionBox::tqsizeHint() const
+TQSize KCompletionBox::sizeHint() const
 {
     return calculateGeometry().size();
 }
@@ -520,7 +520,7 @@ void KCompletionBox::setItems( const TQStringList& items )
             triggerUpdate( false );
     }
 
-    if ( isVisible() && size().height() != tqsizeHint().height() )
+    if ( isVisible() && size().height() != sizeHint().height() )
         sizeAndPosition();
 
     blockSignals( block );

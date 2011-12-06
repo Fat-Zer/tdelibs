@@ -408,7 +408,7 @@ KSpellConfig::fillInDialog ()
   if ( dictFromList() )
     whichelement = langfnames.findIndex(dictionary());
 
-  dictcombo->setMinimumWidth (dictcombo->tqsizeHint().width());
+  dictcombo->setMinimumWidth (dictcombo->sizeHint().width());
 
   if (dictionary().isEmpty() ||  whichelement!=-1)
   {

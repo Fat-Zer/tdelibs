@@ -230,7 +230,7 @@ void SButton::resize( bool sameWidth, int margin,
 
   for( p = list.first(); p; p =  list.next() )
   {
-    const TQSize s( p->tqsizeHint() );
+    const TQSize s( p->sizeHint() );
     if( s.height() > h ) { h = s.height(); }
     if( s.width() > w ) { w = s.width(); }
   }
@@ -239,7 +239,7 @@ void SButton::resize( bool sameWidth, int margin,
   {
     for( p = list.first(); p; p =  list.next() )
     {
-      TQSize s( p->tqsizeHint() );
+      TQSize s( p->sizeHint() );
       if( sameWidth ) { s.setWidth( w ); }
       p->setFixedWidth( s.width() );
       t += s.width() + spacing;
@@ -253,7 +253,7 @@ void SButton::resize( bool sameWidth, int margin,
     // sameWidth has no effect here
     for( p = list.first(); p; p =  list.next() )
     {
-      TQSize s( p->tqsizeHint() );
+      TQSize s( p->sizeHint() );
       s.setWidth( w );
       p->setFixedSize( s );
       t += s.height() + spacing;
@@ -429,17 +429,17 @@ void KDialogBase::adjustSize()
 //  if (layout())
 //     layout()->activate();
   if( d->bFixed )
-    setFixedSize( tqsizeHint() );
+    setFixedSize( sizeHint() );
   else
-    resize( tqsizeHint() );
+    resize( sizeHint() );
 }
 
-TQSize KDialogBase::tqsizeHint() const
+TQSize KDialogBase::sizeHint() const
 {
-   return d->minSize.expandedTo( tqminimumSizeHint() ) + d->incSize;
+   return d->minSize.expandedTo( minimumSizeHint() ) + d->incSize;
 }
 
-TQSize KDialogBase::tqminimumSizeHint() const
+TQSize KDialogBase::minimumSizeHint() const
 {
   const int m = marginHint();
   const int s = spacingHint();
@@ -464,13 +464,13 @@ TQSize KDialogBase::tqminimumSizeHint() const
   //
   if( mJanus )
   {
-    s2 = mJanus->tqminimumSizeHint() + zeroByS;
+    s2 = mJanus->minimumSizeHint() + zeroByS;
   }
   else if( mMainWidget )
   {
-    s2 = mMainWidget->tqsizeHint() + zeroByS;
+    s2 = mMainWidget->sizeHint() + zeroByS;
     s2 = s2.expandedTo( mMainWidget->tqminimumSize() );
-    s2 = s2.expandedTo( mMainWidget->tqminimumSizeHint() );
+    s2 = s2.expandedTo( mMainWidget->minimumSizeHint() );
     if( s2.isEmpty() )
     {
       s2 = TQSize( 100, 100+s );
@@ -485,9 +485,9 @@ TQSize KDialogBase::tqminimumSizeHint() const
 
   if (d->detailsWidget && d->bDetails)
   {
-    s2 = d->detailsWidget->tqsizeHint() + zeroByS;
+    s2 = d->detailsWidget->sizeHint() + zeroByS;
     s2 = s2.expandedTo( d->detailsWidget->tqminimumSize() );
-    s2 = s2.expandedTo( d->detailsWidget->tqminimumSizeHint() );
+    s2 = s2.expandedTo( d->detailsWidget->minimumSizeHint() );
     s1.rwidth()  = QMAX( s1.rwidth(), s2.rwidth() );
     s1.rheight() += s2.rheight();
   }
@@ -530,7 +530,7 @@ TQSize KDialogBase::tqminimumSizeHint() const
 
 void KDialogBase::disableResize()
 {
-  setFixedSize( tqsizeHint() );
+  setFixedSize( sizeHint() );
 }
 
 
@@ -748,7 +748,7 @@ void KDialogBase::setButtonStyle( int style )
       {
         newButton = actionButton( (ButtonCode) (layout[i] & ~(Stretch | Filler)));
         if (newButton)
-           lay->addSpacing(newButton->tqsizeHint().width());
+           lay->addSpacing(newButton->sizeHint().width());
       }
       continue;
     }
@@ -1751,8 +1751,8 @@ TQSize KDialogBase::configDialogSize( KConfig& config,
    int scnum = TQApplication::desktop()->screenNumber(parentWidget());
    TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
-   w = tqsizeHint().width();
-   h = tqsizeHint().height();
+   w = sizeHint().width();
+   h = sizeHint().height();
 
    KConfigGroupSaver cs(&config, groupName);
    w = config.readNumEntry( TQString::tqfromLatin1("Width %1").arg( desk.width()), w );

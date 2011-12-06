@@ -734,12 +734,12 @@ void KToolBarButton::setToggle(bool flag)
     disconnect(this, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotToggled()));
 }
 
-TQSize KToolBarButton::tqsizeHint() const
+TQSize KToolBarButton::sizeHint() const
 {
    return d->size;
 }
 
-TQSize KToolBarButton::tqminimumSizeHint() const
+TQSize KToolBarButton::minimumSizeHint() const
 {
    return d->size;
 }

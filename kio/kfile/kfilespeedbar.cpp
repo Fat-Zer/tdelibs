@@ -133,15 +133,15 @@ void KFileSpeedBar::save( KConfig *config )
     writeConfig( config, "KFileDialog Speedbar" );
 }
 
-TQSize KFileSpeedBar::tqsizeHint() const
+TQSize KFileSpeedBar::sizeHint() const
 {
-    TQSize tqsizeHint = KURLBar::tqsizeHint();
+    TQSize sizeHint = KURLBar::sizeHint();
     int ems = fontMetrics().width("mmmmmmmmmmmm");
-    if (tqsizeHint.width() < ems)
+    if (sizeHint.width() < ems)
     {
-        tqsizeHint.setWidth(ems);
+        sizeHint.setWidth(ems);
     }
-    return tqsizeHint;
+    return sizeHint;
 }
 
 #include "kfilespeedbar.moc"

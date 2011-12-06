@@ -37,7 +37,7 @@ public:
 
 	void setFileList(const TQStringList&);
 	TQStringList fileList() const;
-	TQSize tqsizeHint() const;
+	TQSize sizeHint() const;
 
 protected slots:
 	void slotAddFile();

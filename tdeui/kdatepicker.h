@@ -90,7 +90,7 @@ public:
    *  size hint, try adding 28 to each of the reported numbers of
    *  pixels.
    **/
-  TQSize tqsizeHint() const;
+  TQSize sizeHint() const;
 
   /**
    * Sets the date.

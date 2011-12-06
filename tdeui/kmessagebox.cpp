@@ -247,7 +247,7 @@ int KMessageBox::createKMessageBox(KDialogBase *dialog, TQPixmap icon,
        if ( details.length() < 512 ) {
          KActiveLabel *label3 = new KActiveLabel(qrichtextify(details),
                                                  detailsGroup);
-         label3->setMinimumSize(label3->tqsizeHint());
+         label3->setMinimumSize(label3->sizeHint());
          if (!(options & KMessageBox::AllowLink))
          {
            TQObject::disconnect(label3, TQT_SIGNAL(linkClicked(const TQString &)),

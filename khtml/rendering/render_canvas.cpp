@@ -217,11 +217,11 @@ void RenderCanvas::updateDocumentSize()
         // if we are about to show a scrollbar, and the document is sized to the viewport w or h,
         // then reserve the scrollbar space so that it doesn't trigger the _other_ scrollbar
 
-        if (!vss && m_width - m_view->verticalScrollBar()->tqsizeHint().width() == s.width() &&
+        if (!vss && m_width - m_view->verticalScrollBar()->sizeHint().width() == s.width() &&
             m_cachedDocWidth <= m_width)
             hDocW = kMin( m_cachedDocWidth, s.width() );
 
-        if (!hss && m_height - m_view->horizontalScrollBar()->tqsizeHint().height() == s.height() &&
+        if (!hss && m_height - m_view->horizontalScrollBar()->sizeHint().height() == s.height() &&
             m_cachedDocHeight <= m_height)
             hDocH = kMin( m_cachedDocHeight, s.height() );
 

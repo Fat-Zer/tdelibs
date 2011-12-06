@@ -171,8 +171,8 @@ void DefaultProgress::init()
   connect( d->cancelClose, TQT_SIGNAL( clicked() ), TQT_SLOT( slotStop() ) );
   hBox->addWidget( d->cancelClose );
 
-  resize( tqsizeHint() );
-  setMaximumHeight(tqsizeHint().height());
+  resize( sizeHint() );
+  setMaximumHeight(sizeHint().height());
 
   d->keepOpenChecked = false;
   d->noCaptionYet = true;

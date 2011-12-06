@@ -105,9 +105,9 @@ void KMPrinterView::slotPrinterSelected(const TQString& p)
 	m_current = p;
 }
 
-TQSize KMPrinterView::tqminimumSizeHint() const
+TQSize KMPrinterView::minimumSizeHint() const
 {
-	return TQWidgetStack::tqminimumSizeHint();
+	return TQWidgetStack::minimumSizeHint();
 }
 
 #include "kmprinterview.moc"

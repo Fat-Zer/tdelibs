@@ -367,7 +367,7 @@ void KIconDialog::init()
             mContextMap[ mNumContext++ ] = context_id[ i ];
         }
     }
-    mpCombo->setFixedSize(mpCombo->tqsizeHint());
+    mpCombo->setFixedSize(mpCombo->sizeHint());
 
     mpBrowseBut->setFixedWidth(mpCombo->width());
 

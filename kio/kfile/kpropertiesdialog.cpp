@@ -1966,7 +1966,7 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
   TQWhatsThis::add(l, execWhatsThis);
   theNotSpecials.append( l );
   // GJ: Add space between normal and special modes
-  TQSize size = l->tqsizeHint();
+  TQSize size = l->sizeHint();
   size.setWidth(size.width() + 15);
   l->setFixedSize(size);
   gl->addWidget (l, 1, 3);
@@ -2685,35 +2685,35 @@ KBindingPropsPlugin::KBindingPropsPlugin( KPropertiesDialog *_props ) : KPropsDl
 
   tmpQLabel = new TQLabel( d->m_frame, "Label_1" );
   tmpQLabel->setText(  i18n("Pattern ( example: *.html;*.htm )") );
-  tmpQLabel->setMinimumSize(tmpQLabel->tqsizeHint());
+  tmpQLabel->setMinimumSize(tmpQLabel->sizeHint());
   mainlayout->addWidget(tmpQLabel, 1);
 
   //patternEdit->setGeometry( 10, 40, 210, 30 );
   //patternEdit->setText( "" );
   patternEdit->setMaxLength( 512 );
-  patternEdit->setMinimumSize( patternEdit->tqsizeHint() );
+  patternEdit->setMinimumSize( patternEdit->sizeHint() );
   patternEdit->setFixedHeight( fontHeight );
   mainlayout->addWidget(patternEdit, 1);
 
   tmpQLabel = new TQLabel( d->m_frame, "Label_2" );
   tmpQLabel->setText(  i18n("Mime Type") );
-  tmpQLabel->setMinimumSize(tmpQLabel->tqsizeHint());
+  tmpQLabel->setMinimumSize(tmpQLabel->sizeHint());
   mainlayout->addWidget(tmpQLabel, 1);
 
   //mimeEdit->setGeometry( 10, 160, 210, 30 );
   mimeEdit->setMaxLength( 256 );
-  mimeEdit->setMinimumSize( mimeEdit->tqsizeHint() );
+  mimeEdit->setMinimumSize( mimeEdit->sizeHint() );
   mimeEdit->setFixedHeight( fontHeight );
   mainlayout->addWidget(mimeEdit, 1);
 
   tmpQLabel = new TQLabel( d->m_frame, "Label_3" );
   tmpQLabel->setText(  i18n("Comment") );
-  tmpQLabel->setMinimumSize(tmpQLabel->tqsizeHint());
+  tmpQLabel->setMinimumSize(tmpQLabel->sizeHint());
   mainlayout->addWidget(tmpQLabel, 1);
 
   //commentEdit->setGeometry( 10, 100, 210, 30 );
   commentEdit->setMaxLength( 256 );
-  commentEdit->setMinimumSize( commentEdit->tqsizeHint() );
+  commentEdit->setMinimumSize( commentEdit->sizeHint() );
   commentEdit->setFixedHeight( fontHeight );
   mainlayout->addWidget(commentEdit, 1);
 

@@ -74,7 +74,7 @@ public:
      */
     TQPixmap icon() const { return miniicon; }
 
-    TQSize tqsizeHint() const;
+    TQSize sizeHint() const;
 
 public slots:
     /// @since 3.1

@@ -88,7 +88,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
         lbl = new TQLabel( main );
         lbl->setPixmap( pix );
         lbl->tqsetAlignment( Qt::AlignLeft|Qt::AlignVCenter );
-        lbl->setFixedSize( lbl->tqsizeHint() );
+        lbl->setFixedSize( lbl->sizeHint() );
         d->layout->addWidget( lbl, 0, 0, Qt::AlignLeft );
     }
     d->prompt = new TQLabel( main );
@@ -107,11 +107,11 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
     // Row 4: Username field
     d->userNameLabel = new TQLabel( i18n("&Username:"), main );
     d->userNameLabel->tqsetAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    d->userNameLabel->setFixedSize( d->userNameLabel->tqsizeHint() );
+    d->userNameLabel->setFixedSize( d->userNameLabel->sizeHint() );
     d->userNameHBox = new TQHBox( main );
 
     d->userEdit = new KLineEdit( d->userNameHBox );
-    TQSize s = d->userEdit->tqsizeHint();
+    TQSize s = d->userEdit->sizeHint();
     d->userEdit->setFixedHeight( s.height() );
     d->userEdit->setMinimumWidth( s.width() );
     d->userNameLabel->setBuddy( d->userEdit );
@@ -124,14 +124,14 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
     // Row 6: Password field
     lbl = new TQLabel( i18n("&Password:"), main );
     lbl->tqsetAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    lbl->setFixedSize( lbl->tqsizeHint() );
+    lbl->setFixedSize( lbl->sizeHint() );
     TQHBox* hbox = new TQHBox( main );
     d->passEdit = new KLineEdit( hbox );
     if ( cfg->readEntry("EchoMode", "OneStar") == "NoEcho" )
         d->passEdit->setEchoMode( TQLineEdit::NoEcho );
     else
         d->passEdit->setEchoMode( TQLineEdit::Password );
-    s = d->passEdit->tqsizeHint();
+    s = d->passEdit->sizeHint();
     d->passEdit->setFixedHeight( s.height() );
     d->passEdit->setMinimumWidth( s.width() );
     lbl->setBuddy( d->passEdit );
@@ -145,7 +145,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
         // Row 8: Keep Password
         hbox = new TQHBox( main );
         d->keepCheckBox = new TQCheckBox( i18n("&Keep password"), hbox );
-        d->keepCheckBox->setFixedSize( d->keepCheckBox->tqsizeHint() );
+        d->keepCheckBox->setFixedSize( d->keepCheckBox->sizeHint() );
         d->keep = cfg->readBoolEntry("Keep", false );
         d->keepCheckBox->setChecked( d->keep );
         connect(d->keepCheckBox, TQT_SIGNAL(toggled( bool )), TQT_SLOT(slotKeep( bool )));
@@ -165,7 +165,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
         d->userEdit->setFocus();
 
     d->userEditCombo = 0;
-//    setFixedSize( tqsizeHint() );
+//    setFixedSize( sizeHint() );
 }
 
 TQString PasswordDialog::username() const
@@ -240,7 +240,7 @@ void PasswordDialog::addCommentLine( const TQString& label,
 
     TQLabel* lbl = new TQLabel( label, main);
     lbl->tqsetAlignment( Qt::AlignVCenter|Qt::AlignRight );
-    lbl->setFixedSize( lbl->tqsizeHint() );
+    lbl->setFixedSize( lbl->sizeHint() );
     d->layout->addWidget( lbl, d->nRow+2, 0, Qt::AlignLeft );
     lbl = new TQLabel( comment, main);
     lbl->tqsetAlignment( Qt::AlignVCenter|Qt::AlignLeft|TQt::WordBreak );
@@ -304,7 +304,7 @@ void PasswordDialog::setKnownLogins( const TQMap<TQString, TQString>& knownLogin
         delete d->userEdit;
         d->userEditCombo = new KComboBox( true, d->userNameHBox );
         d->userEdit = d->userEditCombo->lineEdit();
-        TQSize s = d->userEditCombo->tqsizeHint();
+        TQSize s = d->userEditCombo->sizeHint();
         d->userEditCombo->setFixedHeight( s.height() );
         d->userEditCombo->setMinimumWidth( s.width() );
         d->userNameLabel->setBuddy( d->userEditCombo );

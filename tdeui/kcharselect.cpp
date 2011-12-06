@@ -110,7 +110,7 @@ void KCharSelectTable::setTableNum( int _tableNum )
 }
 
 //==================================================================
-TQSize KCharSelectTable::tqsizeHint() const
+TQSize KCharSelectTable::sizeHint() const
 {
     int w = cellWidth();
     int h = cellHeight();
@@ -381,30 +381,30 @@ KCharSelect::KCharSelect( TQWidget *parent, const char *name, const TQString &_f
     bar->setSpacing( KDialog::spacingHint() );
 
     TQLabel* const lFont = new TQLabel( i18n( "Font:" ), bar );
-    lFont->resize( lFont->tqsizeHint() );
+    lFont->resize( lFont->sizeHint() );
     lFont->tqsetAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    lFont->setMaximumWidth( lFont->tqsizeHint().width() );
+    lFont->setMaximumWidth( lFont->sizeHint().width() );
 
     fontCombo = new TQComboBox( true, bar );
     fillFontCombo();
-    fontCombo->resize( fontCombo->tqsizeHint() );
+    fontCombo->resize( fontCombo->sizeHint() );
 
     connect( fontCombo, TQT_SIGNAL( activated( const TQString & ) ), this, TQT_SLOT( fontSelected( const TQString & ) ) );
 
     TQLabel* const lTable = new TQLabel( i18n( "Table:" ), bar );
-    lTable->resize( lTable->tqsizeHint() );
+    lTable->resize( lTable->sizeHint() );
     lTable->tqsetAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    lTable->setMaximumWidth( lTable->tqsizeHint().width() );
+    lTable->setMaximumWidth( lTable->sizeHint().width() );
 
     tableSpinBox = new TQSpinBox( 0, 255, 1, bar );
-    tableSpinBox->resize( tableSpinBox->tqsizeHint() );
+    tableSpinBox->resize( tableSpinBox->sizeHint() );
 
     connect( tableSpinBox, TQT_SIGNAL( valueChanged( int ) ), this, TQT_SLOT( tableChanged( int ) ) );
 
     TQLabel* const lUnicode = new TQLabel( i18n( "&Unicode code point:" ), bar );
-    lUnicode->resize( lUnicode->tqsizeHint() );
+    lUnicode->resize( lUnicode->sizeHint() );
     lUnicode->tqsetAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    lUnicode->setMaximumWidth( lUnicode->tqsizeHint().width() );
+    lUnicode->setMaximumWidth( lUnicode->sizeHint().width() );
 
     const TQRegExp rx( "[a-fA-F0-9]{1,4}" );
     TQValidator* const validator = new TQRegExpValidator( rx, TQT_TQOBJECT(this) );
@@ -412,7 +412,7 @@ KCharSelect::KCharSelect( TQWidget *parent, const char *name, const TQString &_f
     d->tqunicodeLine = new KLineEdit( bar );
     d->tqunicodeLine->setValidator(validator);
     lUnicode->setBuddy(d->tqunicodeLine);
-    d->tqunicodeLine->resize( d->tqunicodeLine->tqsizeHint() );
+    d->tqunicodeLine->resize( d->tqunicodeLine->sizeHint() );
     slotUpdateUnicode(_chr);
 
     connect( d->tqunicodeLine, TQT_SIGNAL( returnPressed() ), this, TQT_SLOT( slotUnicodeEntered() ) );
@@ -452,9 +452,9 @@ KCharSelect::~KCharSelect()
 }
 
 //==================================================================
-TQSize KCharSelect::tqsizeHint() const
+TQSize KCharSelect::sizeHint() const
 {
-    return TQVBox::tqsizeHint();
+    return TQVBox::sizeHint();
 }
 
 //==================================================================

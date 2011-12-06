@@ -65,7 +65,7 @@ public:
     * This size is
     * calculated by the width/height of all buttons plus border/autoborder.
     */
-  virtual TQSize tqsizeHint() const;
+  virtual TQSize sizeHint() const;
   virtual TQSizePolicy sizePolicy() const;
   virtual void resizeEvent(TQResizeEvent *);
 

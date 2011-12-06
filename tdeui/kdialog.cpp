@@ -428,7 +428,7 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	setCaption( i18n("Please wait...") );
 
 	// Center the dialog
-	TQSize sh = tqsizeHint();
+	TQSize sh = sizeHint();
 	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
 	move(rect.x() + (rect.width() - sh.width())/2, rect.y() + (rect.height() - sh.height())/2);
 

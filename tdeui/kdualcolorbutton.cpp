@@ -51,8 +51,8 @@ KDualColorButton::KDualColorButton(TQWidget *parent, const char *name, TQWidget*
     curColor = Foreground;
     dragFlag = false;
     miniCtlFlag = false;
-    if(tqsizeHint().isValid())
-        setMinimumSize(tqsizeHint());
+    if(sizeHint().isValid())
+        setMinimumSize(sizeHint());
     setAcceptDrops(true);
 }
 
@@ -72,8 +72,8 @@ KDualColorButton::KDualColorButton(const TQColor &fgColor, const TQColor &bgColo
     curColor = Foreground;
     dragFlag = false;
     miniCtlFlag = false;
-    if(tqsizeHint().isValid())
-        setMinimumSize(tqsizeHint());
+    if(sizeHint().isValid())
+        setMinimumSize(sizeHint());
     setAcceptDrops(true);
 }
 
@@ -104,7 +104,7 @@ TQColor KDualColorButton::currentColor() const
     return (curColor == Background ? bg.color() : fg.color());
 }
 
-TQSize KDualColorButton::tqsizeHint() const
+TQSize KDualColorButton::sizeHint() const
 {
     return TQSize(34, 34);
 }

@@ -627,13 +627,13 @@ KLed::off()
 }
 
 TQSize
-KLed::tqsizeHint() const
+KLed::sizeHint() const
 {
   return TQSize(16, 16);
 }
 
 TQSize
-KLed::tqminimumSizeHint() const
+KLed::minimumSizeHint() const
 {
   return TQSize(16, 16 );
 }

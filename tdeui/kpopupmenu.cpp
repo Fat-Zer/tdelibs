@@ -115,7 +115,7 @@ void KPopupTitle::paintEvent(TQPaintEvent *)
     }
 }
 
-TQSize KPopupTitle::tqsizeHint() const
+TQSize KPopupTitle::sizeHint() const
 {
     return tqminimumSize();
 }

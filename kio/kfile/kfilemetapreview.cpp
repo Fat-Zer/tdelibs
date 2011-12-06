@@ -43,7 +43,7 @@ void KFileMetaPreview::initPreviewProviders()
     KImageFilePreview *imagePreview = new KImageFilePreview( m_stack );
     (void) m_stack->addWidget( imagePreview );
     m_stack->raiseWidget( imagePreview );
-    resize( imagePreview->tqsizeHint() );
+    resize( imagePreview->sizeHint() );
 
     TQStringList mimeTypes = imagePreview->supportedMimeTypes();
     TQStringList::ConstIterator it = mimeTypes.begin();

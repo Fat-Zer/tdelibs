@@ -109,7 +109,7 @@ public:
      * returns the preferred size of this item
      * @since 3.1
      */
-    TQSize tqsizeHint() const;
+    TQSize sizeHint() const;
 
     /**
      * returns the width of this item.
@@ -319,12 +319,12 @@ public:
      * @returns a proper sizehint, depending on the orientation and the number
      * of items available.
      */
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 
     /**
      * @returns a proper minimum size (reimplemented)
      */
-    virtual TQSize tqminimumSizeHint() const;
+    virtual TQSize minimumSizeHint() const;
 
     /**
      * Call this method to read a saved configuration from @p config,

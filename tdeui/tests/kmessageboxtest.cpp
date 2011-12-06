@@ -25,18 +25,18 @@ ExampleWidget::ExampleWidget( TQWidget *parent, const char *name )
     // and sub-layouts.
     TQSize sh;
     setText("<p>Hello.</p>");
-    sh = tqsizeHint();
+    sh = sizeHint();
     qWarning("SizeHint = %d x %d", sh.width(), sh.height());
     setText("Hello.");
-    sh = tqsizeHint();
+    sh = sizeHint();
     qWarning("SizeHint = %d x %d", sh.width(), sh.height());
     setText("<p>Hello<br>World</p>");
-    sh = tqsizeHint();
+    sh = sizeHint();
     qWarning("SizeHint = %d x %d", sh.width(), sh.height());
 //    setText("Hello\nWorld");
-    sh = tqsizeHint();
+    sh = sizeHint();
     qWarning("SizeHint = %d x %d", sh.width(), sh.height());
-    setMinimumSize(tqsizeHint());
+    setMinimumSize(sizeHint());
 }
 
 

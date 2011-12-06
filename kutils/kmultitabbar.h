@@ -239,7 +239,7 @@ public slots:
          */
 	void setText(const TQString &);
 
-	TQSize tqsizeHint() const;
+	TQSize sizeHint() const;
 
 protected:
 	KMultiTabBar::KMultiTabBarPosition m_position;

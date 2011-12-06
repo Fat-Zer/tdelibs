@@ -758,14 +758,14 @@ void KJanusWidget::setFocus()
 }
 
 
-TQSize KJanusWidget::tqminimumSizeHint() const
+TQSize KJanusWidget::minimumSizeHint() const
 {
   if( mFace == TreeList || mFace == IconList )
   {
     TQSize s1( KDialog::spacingHint(), KDialog::spacingHint()*2 );
     TQSize s2(0,0);
     TQSize s3(0,0);
-    TQSize s4( mPageStack->tqsizeHint() );
+    TQSize s4( mPageStack->sizeHint() );
 
     if( mFace == TreeList )
     {
@@ -781,7 +781,7 @@ TQSize KJanusWidget::tqminimumSizeHint() const
 
     if( mTitleLabel->isVisible() )
     {
-      s3 += mTitleLabel->tqsizeHint();
+      s3 += mTitleLabel->sizeHint();
       s3.rheight() += mTitleSep->tqminimumSize().height();
     }
 
@@ -795,7 +795,7 @@ TQSize KJanusWidget::tqminimumSizeHint() const
   }
   else if( mFace == Tabbed )
   {
-    return mTabControl->tqsizeHint();
+    return mTabControl->sizeHint();
   }
   else if( mFace == Swallow )
   {
@@ -803,7 +803,7 @@ TQSize KJanusWidget::tqminimumSizeHint() const
   }
   else if( mFace == Plain )
   {
-    return mPlainPage->tqsizeHint();
+    return mPlainPage->sizeHint();
   }
   else
   {
@@ -813,9 +813,9 @@ TQSize KJanusWidget::tqminimumSizeHint() const
 }
 
 
-TQSize KJanusWidget::tqsizeHint() const
+TQSize KJanusWidget::sizeHint() const
 {
-  return tqminimumSizeHint();
+  return minimumSizeHint();
 }
 
 
@@ -914,7 +914,7 @@ bool KJanusWidget::eventFilter( TQObject *o, TQEvent *e )
     if( item )
     {
       int lw = item->width( mIconList );
-      int sw = mIconList->verticalScrollBar()->tqsizeHint().width();
+      int sw = mIconList->verticalScrollBar()->sizeHint().width();
       mIconList->setFixedWidth( lw+sw+mIconList->frameWidth()*2 );
     }
   }
@@ -978,7 +978,7 @@ void KJanusWidget::IconListBox::updateWidth()
 
     if( verticalScrollBar()->isVisible() )
     {
-      maxWidth += verticalScrollBar()->tqsizeHint().width();
+      maxWidth += verticalScrollBar()->sizeHint().width();
     }
 
     setFixedWidth( maxWidth + frameWidth()*2 );

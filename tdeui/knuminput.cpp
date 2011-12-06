@@ -130,16 +130,16 @@ void KNumInput::layout(bool deep)
     int w1 = m_colw1;
     int w2 = m_colw2;
 
-    // label tqsizeHint
-    m_sizeLabel = (m_label ? m_label->tqsizeHint() : TQSize(0,0));
+    // label sizeHint
+    m_sizeLabel = (m_label ? m_label->sizeHint() : TQSize(0,0));
 
     if(m_label && (m_tqalignment & AlignVCenter))
         m_colw1 = m_sizeLabel.width() + 4;
     else
         m_colw1 = 0;
 
-    // slider tqsizeHint
-    m_sizeSlider = (m_slider ? m_slider->tqsizeHint() : TQSize(0, 0));
+    // slider sizeHint
+    m_sizeSlider = (m_slider ? m_slider->sizeHint() : TQSize(0, 0));
 
     doLayout();
 
@@ -187,9 +187,9 @@ TQSizePolicy KNumInput::sizePolicy() const
     return TQSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Fixed );
 }
 
-TQSize KNumInput::tqsizeHint() const
+TQSize KNumInput::sizeHint() const
 {
-    return tqminimumSizeHint();
+    return minimumSizeHint();
 }
 
 void KNumInput::setSteps(int minor, int major)
@@ -412,7 +412,7 @@ void KIntNumInput::setEditFocus(bool mark)
     m_spin->setEditFocus(mark);
 }
 
-TQSize KIntNumInput::tqminimumSizeHint() const
+TQSize KIntNumInput::minimumSizeHint() const
 {
     constPolish();
 
@@ -428,7 +428,7 @@ TQSize KIntNumInput::tqminimumSizeHint() const
         // label is in the same row as the other widgets
         h = QMAX(h, m_sizeLabel.height() + 2);
 
-    w = m_slider ? m_slider->tqsizeHint().width() + 8 : 0;
+    w = m_slider ? m_slider->sizeHint().width() + 8 : 0;
     w += m_colw1 + m_colw2;
 
     if(m_tqalignment & (AlignTop|AlignBottom))
@@ -439,7 +439,7 @@ TQSize KIntNumInput::tqminimumSizeHint() const
 
 void KIntNumInput::doLayout()
 {
-    m_sizeSpin = m_spin->tqsizeHint();
+    m_sizeSpin = m_spin->sizeHint();
     m_colw2 = m_sizeSpin.width();
 
     if (m_label)
@@ -653,7 +653,7 @@ void KDoubleNumInput::slotEmitRelativeValueChanged( double value )
     emit relativeValueChanged( value / d->referencePoint );
 }
 
-TQSize KDoubleNumInput::tqminimumSizeHint() const
+TQSize KDoubleNumInput::minimumSizeHint() const
 {
     constPolish();
 
@@ -669,7 +669,7 @@ TQSize KDoubleNumInput::tqminimumSizeHint() const
         // label is in the same row as the other widgets
 	h = QMAX(h, m_sizeLabel.height() + 2);
 
-    w = m_slider ? m_slider->tqsizeHint().width() + 8 : 0;
+    w = m_slider ? m_slider->sizeHint().width() + 8 : 0;
     w += m_colw1 + m_colw2;
 
     if(m_tqalignment & (AlignTop|AlignBottom))
@@ -719,7 +719,7 @@ void KDoubleNumInput::resizeEvent(TQResizeEvent* e)
 
 void KDoubleNumInput::doLayout()
 {
-    m_sizeEdit = d->spin->tqsizeHint();
+    m_sizeEdit = d->spin->sizeHint();
     m_colw2 = m_sizeEdit.width();
 }
 

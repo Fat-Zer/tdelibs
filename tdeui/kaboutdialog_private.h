@@ -88,7 +88,7 @@ class KAboutContainerBase : public TQWidget
   public:
     KAboutContainerBase( int layoutType, TQWidget *parent = 0, char *name = 0 );
     virtual void show( void );
-    virtual TQSize tqsizeHint( void ) const;
+    virtual TQSize sizeHint( void ) const;
 
     void setTitle( const TQString &title );
     void setImage( const TQString &fileName );

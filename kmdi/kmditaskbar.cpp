@@ -106,7 +106,7 @@ void KMdiTaskBarButton::fitText( const TQString& origStr, int newWidth )
 {
 	TQButton::setText( m_actualText );
 
-	int actualWidth = tqsizeHint().width();
+	int actualWidth = sizeHint().width();
 	int realLetterCount = origStr.length();
 	int newLetterCount = ( newWidth * realLetterCount ) / actualWidth;
 	int w = newWidth + 1;
@@ -348,9 +348,9 @@ void KMdiTaskBar::layoutTaskBar( int taskBarWidth )
 		for ( b = m_pButtonList->first();b;b = m_pButtonList->next() )
 		{
 			b->setText( b->actualText() );
-			if ( b->width() != b->tqsizeHint().width() )
+			if ( b->width() != b->sizeHint().width() )
 			{
-				b->setFixedWidth( b->tqsizeHint().width() );
+				b->setFixedWidth( b->sizeHint().width() );
 				b->show();
 			}
 		}

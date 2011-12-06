@@ -1185,7 +1185,7 @@ void HighColorStyle::tqdrawControl( TQ_ControlElement element,
 			// Make the label indicate if the button is a default button or not
 			if ( active || button->isDefault() ) {
 				// Draw "fake" bold text  - this enables the font metrics to remain
-				// the same as computed in TQPushButton::tqsizeHint(), but gives
+				// the same as computed in TQPushButton::sizeHint(), but gives
 				// a reasonable bold effect.
 				int i;
 
@@ -1875,8 +1875,8 @@ TQSize HighColorStyle::tqsizeFromContents( ContentsType contents,
 			int w = contentSize.width(), h = contentSize.height();
 
 			if ( mi->custom() ) {
-				w = mi->custom()->tqsizeHint().width();
-				h = mi->custom()->tqsizeHint().height();
+				w = mi->custom()->sizeHint().width();
+				h = mi->custom()->sizeHint().height();
 				if ( ! mi->custom()->fullSpan() )
 					h += 2*itemVMargin + 2*itemFrame;
 			}

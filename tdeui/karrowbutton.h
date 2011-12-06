@@ -59,7 +59,7 @@ class TDEUI_EXPORT KArrowButton : public TQPushButton
 		/**
 		 * Reimplemented from TQPushButton.
 		 */
-		virtual TQSize tqsizeHint() const;
+		virtual TQSize sizeHint() const;
 
 		/**
 		* Returns the arrow type

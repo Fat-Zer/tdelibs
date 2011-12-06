@@ -98,7 +98,7 @@ void KKeyButton::setShortcut( const KShortcut& cut )
 void KKeyButton::setText( const TQString& text )
 {
 	TQPushButton::setText( text );
-	setFixedSize( tqsizeHint().width()+12, tqsizeHint().height()+8 );
+	setFixedSize( sizeHint().width()+12, sizeHint().height()+8 );
 }
 
 void KKeyButton::captureShortcut()

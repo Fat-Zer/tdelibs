@@ -426,8 +426,8 @@ class TDEUI_EXPORT KDialogBase : public KDialog
      * resized before showing it.
      **/
     virtual void adjustSize();
-    virtual TQSize tqsizeHint() const;
-    virtual TQSize tqminimumSizeHint() const;
+    virtual TQSize sizeHint() const;
+    virtual TQSize minimumSizeHint() const;
 
     /**
      * Retrieve the empty page when the predefined layout is used in @p Plain
@@ -828,7 +828,7 @@ class TDEUI_EXPORT KDialogBase : public KDialog
 
    /**
     * read the dialogs size from the configuration according to the screen size.
-    * If no size is saved for one dimension of the screen, tqsizeHint() is returned.
+    * If no size is saved for one dimension of the screen, sizeHint() is returned.
     *
     * @param groupName Name of the group to read from. The old group
     *                  of KGlobal::config is preserved.
@@ -837,7 +837,7 @@ class TDEUI_EXPORT KDialogBase : public KDialog
 
    /**
     * read the dialogs size from the configuration according to the screen size.
-    * If no size is saved for one dimension of the screen, tqsizeHint() is returned.
+    * If no size is saved for one dimension of the screen, sizeHint() is returned.
     *
     * @param config The KConfig object to read from
     * @param groupName Name of the group to read from. The old group

@@ -56,8 +56,8 @@ protected:
     virtual void viewportResizeEvent(TQResizeEvent* ev)
     {
       TQScrollView::viewportResizeEvent(ev);
-      m_frame->resize( kMax(m_frame->tqsizeHint().width(), ev->size().width()),
-                       kMax(m_frame->tqsizeHint().height(), ev->size().height()));
+      m_frame->resize( kMax(m_frame->sizeHint().width(), ev->size().width()),
+                       kMax(m_frame->sizeHint().height(), ev->size().height()));
     };
 
 private:

@@ -70,7 +70,7 @@ short RenderApplet::intrinsicWidth() const
     int rval = 300;
 
     if( m_widget )
-        rval = ((KJavaAppletWidget*)(m_widget))->tqsizeHint().width();
+        rval = ((KJavaAppletWidget*)(m_widget))->sizeHint().width();
 
     return rval > 10 ? rval : 50;
 }
@@ -80,7 +80,7 @@ int RenderApplet::intrinsicHeight() const
     int rval = 150;
 
     if( m_widget )
-        rval = m_widget->tqsizeHint().height();
+        rval = m_widget->sizeHint().height();
 
     return rval > 10 ? rval : 50;
 }

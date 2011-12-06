@@ -260,8 +260,8 @@ TQSize KThemeStyle::tqsizeFromContents( ContentsType contents,
 
                 if ( mi->custom() )
                 {
-                    w = mi->custom() ->tqsizeHint().width();
-                    h = mi->custom() ->tqsizeHint().height();
+                    w = mi->custom() ->sizeHint().width();
+                    h = mi->custom() ->sizeHint().height();
                     if ( ! mi->custom() ->fullSpan() )
                         h += 2 * itemVMargin + 2 * itemFrame;
                 }
@@ -1178,7 +1178,7 @@ void KThemeStyle::tqdrawControl( ControlElement element,
                 if ( active || button->isDefault() && button->isEnabled() )
                 {
                     // Draw "fake" bold text  - this enables the font metrics to remain
-                    // the same as computed in TQPushButton::tqsizeHint(), but gives
+                    // the same as computed in TQPushButton::sizeHint(), but gives
                     // a reasonable bold effect.
                     int i;
 

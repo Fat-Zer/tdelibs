@@ -32,7 +32,7 @@ public:
 	void setParameters(int brightness, int hue, int saturation, int gamma);
 	void setImage(const TQImage& image);
 	void setBlackAndWhite(bool on);
-	TQSize tqminimumSizeHint() const;
+	TQSize minimumSizeHint() const;
 
 private: // Private attributes
 	int brightness_;

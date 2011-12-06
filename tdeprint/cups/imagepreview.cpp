@@ -72,7 +72,7 @@ void ImagePreview::setBlackAndWhite(bool on){
 	update();
 }
 
-TQSize ImagePreview::tqminimumSizeHint() const
+TQSize ImagePreview::minimumSizeHint() const
 {
 	return image_.size();
 }

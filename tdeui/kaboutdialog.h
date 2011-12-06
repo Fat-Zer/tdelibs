@@ -66,8 +66,8 @@ class TDEUI_EXPORT KAboutContainer : public TQFrame
 		    bool showframe = false, bool showBold = false );
     void addImage( const TQString &fileName, int tqalignment=AlignLeft );
 
-    virtual TQSize tqsizeHint( void ) const;
-    virtual TQSize tqminimumSizeHint( void ) const;
+    virtual TQSize sizeHint( void ) const;
+    virtual TQSize minimumSizeHint( void ) const;
 
   protected:
     virtual void childEvent( TQChildEvent *e );
@@ -115,7 +115,7 @@ class TDEUI_EXPORT KAboutContributor : public TQFrame
     TQString getURL( void ) const;
     TQString getWork( void ) const;
 
-    virtual TQSize tqsizeHint( void ) const;
+    virtual TQSize sizeHint( void ) const;
 
   protected:
     virtual void fontChange( const TQFont &oldFont );

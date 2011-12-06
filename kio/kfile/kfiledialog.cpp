@@ -1738,7 +1738,7 @@ void KFileDialog::readConfig( KConfig *kc, const TQString& group )
     updateAutoSelectExtension ();
 
     int w1 = tqminimumSize().width();
-    int w2 = toolbar->tqsizeHint().width() + 10;
+    int w2 = toolbar->sizeHint().width() + 10;
     if (w1 < w2)
         setMinimumWidth(w2);
 

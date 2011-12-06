@@ -118,7 +118,7 @@ void CJanusWidget::CListBox::computeWidth()
 		item = item->next();
 	}
 	if (verticalScrollBar()->isVisible())
-		w += verticalScrollBar()->tqsizeHint().width();
+		w += verticalScrollBar()->sizeHint().width();
 	w += (frameWidth()*2);
 	setFixedWidth(w);
 }

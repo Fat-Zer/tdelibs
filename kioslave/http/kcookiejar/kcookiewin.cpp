@@ -103,7 +103,7 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
     TQLabel* icon = new TQLabel( hBox );
     icon->setPixmap( TQMessageBox::standardIcon(TQMessageBox::Warning) );
     icon->tqsetAlignment( Qt::AlignCenter );
-    icon->setFixedSize( 2*icon->tqsizeHint() );
+    icon->setFixedSize( 2*icon->sizeHint() );
 
     int count = cookieList.count();
 
@@ -203,7 +203,7 @@ KCookieWin::KCookieWin( TQWidget *parent, KHttpCookieList cookieList,
 
 
     vlayout->addWidget( bbox );
-    setFixedSize( tqsizeHint() );
+    setFixedSize( sizeHint() );
 }
 
 KCookieWin::~KCookieWin()
@@ -313,7 +313,7 @@ KCookieDetail::KCookieDetail( KHttpCookieList cookieList, int cookieCount,
     if ( cookieCount > 1 )
     {
         TQPushButton* btnNext = new TQPushButton( i18n("Next cookie","&Next >>"), this );
-        btnNext->setFixedSize( btnNext->tqsizeHint() );
+        btnNext->setFixedSize( btnNext->sizeHint() );
         grid->addMultiCellWidget( btnNext, 8, 8, 0, 1 );
         connect( btnNext, TQT_SIGNAL(clicked()), TQT_SLOT(slotNextCookie()) );
 #ifndef QT_NO_TOOLTIP

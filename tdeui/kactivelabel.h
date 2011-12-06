@@ -56,8 +56,8 @@ public:
      */
     KActiveLabel(const TQString & text, TQWidget * parent, const char * name = 0);
 
-    TQSize tqminimumSizeHint() const;
-    TQSize tqsizeHint() const;
+    TQSize minimumSizeHint() const;
+    TQSize sizeHint() const;
 
 public slots:
     /**

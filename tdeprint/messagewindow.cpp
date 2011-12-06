@@ -60,7 +60,7 @@ MessageWindow::~MessageWindow()
 
 void MessageWindow::slotTimer()
 {
-	TQSize psz = parentWidget()->size(), sz = tqsizeHint();
+	TQSize psz = parentWidget()->size(), sz = sizeHint();
 	move( parentWidget()->mapToGlobal( TQPoint( (psz.width()-sz.width())/2, (psz.height()-sz.height())/2 ) ) );
 	if ( !isVisible() )
 	{

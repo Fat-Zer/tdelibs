@@ -39,7 +39,7 @@
  * which makes the buttons look better.
  *
  * 01/17/98  Mario Weilguni <mweilguni@sime.com>
- * Fixed a bug in tqsizeHint()
+ * Fixed a bug in sizeHint()
  * Improved the handling of Motif default buttons
  *
  * 01/09/98  Mario Weilguni <mweilguni@sime.com>
@@ -178,7 +178,7 @@ void KButtonBox::layout() {
     ++itr;
   }
 
-  setMinimumSize(tqsizeHint());
+  setMinimumSize(sizeHint());
 }
 
 void KButtonBox::placeButtons() {
@@ -300,7 +300,7 @@ TQSize KButtonBox::bestButtonSize() const {
   return s;
 }
 
-TQSize KButtonBox::tqsizeHint() const {
+TQSize KButtonBox::sizeHint() const {
   unsigned int dw;
 
   if(data->buttons.isEmpty())
@@ -355,7 +355,7 @@ TQSizePolicy KButtonBox::sizePolicy() const
  * as minimum width
  */
 TQSize KButtonBox::buttonSizeHint(TQPushButton *b) const {
-  TQSize s = b->tqsizeHint();
+  TQSize s = b->sizeHint();
   const TQSize ms = b->tqminimumSize();
   if(s.width() < minButtonWidth)
     s.setWidth(minButtonWidth);

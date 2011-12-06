@@ -55,7 +55,7 @@ class KGuiItem;
  * on the page, plain widget or the swallowed widget this will be taken care
  * of automatically. The size is used when the KJanusWidget determines its
  * own minimum size. You get the minimum size by using the
- * tqminimumSizeHint() or tqsizeHint() methods.
+ * minimumSizeHint() or sizeHint() methods.
  *
  * Pages that have been added in TreeList, IconList or Tabbed mode can be
  * removed by simply deleting the page. However, it would be preferable to use
@@ -186,7 +186,7 @@ class TDEUI_EXPORT KJanusWidget : public TQWidget
      *
      * @return The minimum size.
      */
-    virtual TQSize tqminimumSizeHint() const;
+    virtual TQSize minimumSizeHint() const;
 
     /**
      * Returns the recommended size for the widget in order to be displayed
@@ -194,7 +194,7 @@ class TDEUI_EXPORT KJanusWidget : public TQWidget
      *
      * @return The recommended size.
      */
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 
     /**
      * Returns the empty widget that is available in Plain mode.

@@ -62,7 +62,7 @@ class TDEUI_EXPORT KToolBarSeparator : public TQFrame
 public:
     KToolBarSeparator( Orientation, bool l, TQToolBar *parent, const char* name=0 );
 
-    TQSize tqsizeHint() const;
+    TQSize sizeHint() const;
     Orientation orientation() const { return orient; }
     TQSizePolicy sizePolicy() const;
     bool showLine() const { return line; }
@@ -945,8 +945,8 @@ public:
     void setStretchableWidget( TQWidget *w );
     TQSizePolicy sizePolicy() const;
     bool highlight() const;
-    TQSize tqsizeHint() const;
-    TQSize tqminimumSizeHint() const;
+    TQSize sizeHint() const;
+    TQSize minimumSizeHint() const;
     TQSize tqminimumSize() const;
 
     void hide();

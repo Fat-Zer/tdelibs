@@ -36,16 +36,16 @@ void KSqueezedTextLabel::resizeEvent( TQResizeEvent * ) {
   squeezeTextToLabel();
 }
 
-TQSize KSqueezedTextLabel::tqminimumSizeHint() const
+TQSize KSqueezedTextLabel::minimumSizeHint() const
 {
-  TQSize sh = TQLabel::tqminimumSizeHint();
+  TQSize sh = TQLabel::minimumSizeHint();
   sh.setWidth(-1);
   return sh;
 }
 
-TQSize KSqueezedTextLabel::tqsizeHint() const
+TQSize KSqueezedTextLabel::sizeHint() const
 {
-  return TQSize(contentsRect().width(), TQLabel::tqsizeHint().height());
+  return TQSize(contentsRect().width(), TQLabel::sizeHint().height());
 }
 
 void KSqueezedTextLabel::setText( const TQString &text ) {

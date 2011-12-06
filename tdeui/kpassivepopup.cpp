@@ -194,8 +194,8 @@ void KPassivePopup::mouseReleaseEvent( TQMouseEvent *e )
 
 void KPassivePopup::show()
 {
-    if ( size() != tqsizeHint() )
-	resize( tqsizeHint() );
+    if ( size() != sizeHint() )
+	resize( sizeHint() );
 
     if ( d->fixedPosition.isNull() )
 	positionSelf();

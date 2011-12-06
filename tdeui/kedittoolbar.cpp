@@ -427,7 +427,7 @@ void KEditToolbar::init()
     connect(m_widget, TQT_SIGNAL(enableOk(bool)), TQT_SLOT(enableButtonApply(bool)));
     enableButtonApply(false);
 
-    setMinimumSize(tqsizeHint());
+    setMinimumSize(sizeHint());
     s_defaultToolbar = 0L;
 }
 
@@ -547,7 +547,7 @@ KEditToolbarWidget::KEditToolbarWidget(KActionCollection *collection,
   // now load in our toolbar combo box
   loadToolbarCombo();
   adjustSize();
-  setMinimumSize(tqsizeHint());
+  setMinimumSize(sizeHint());
 }
 
 KEditToolbarWidget::KEditToolbarWidget(const TQString& defaultToolbar,
@@ -561,7 +561,7 @@ KEditToolbarWidget::KEditToolbarWidget(const TQString& defaultToolbar,
   // now load in our toolbar combo box
   loadToolbarCombo(defaultToolbar);
   adjustSize();
-  setMinimumSize(tqsizeHint());
+  setMinimumSize(sizeHint());
 }
 
 KEditToolbarWidget::KEditToolbarWidget( KXMLGUIFactory* factory,
@@ -573,7 +573,7 @@ KEditToolbarWidget::KEditToolbarWidget( KXMLGUIFactory* factory,
   // now load in our toolbar combo box
   loadToolbarCombo();
   adjustSize();
-  setMinimumSize(tqsizeHint());
+  setMinimumSize(sizeHint());
 }
 
 KEditToolbarWidget::KEditToolbarWidget( const TQString& defaultToolbar,
@@ -586,7 +586,7 @@ KEditToolbarWidget::KEditToolbarWidget( const TQString& defaultToolbar,
   // now load in our toolbar combo box
   loadToolbarCombo(defaultToolbar);
   adjustSize();
-  setMinimumSize(tqsizeHint());
+  setMinimumSize(sizeHint());
 }
 
 KEditToolbarWidget::~KEditToolbarWidget()

@@ -130,7 +130,7 @@ void KColorButton::drawButtonLabel( TQPainter *painter )
   }
 }
 
-TQSize KColorButton::tqsizeHint() const
+TQSize KColorButton::sizeHint() const
 {
   return tqstyle().tqsizeFromContents(TQStyle::CT_PushButton, this, TQSize(40, 15)).
 	  	expandedTo(TQApplication::globalStrut());

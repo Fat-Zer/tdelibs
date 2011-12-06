@@ -253,7 +253,7 @@ void KTabWidget::resizeTabs( int changeTabIndex )
         newMaxLength=d->m_maxLength;
         uint lcw=0, rcw=0;
 
-        int tabBarHeight = tabBar()->tqsizeHint().height();
+        int tabBarHeight = tabBar()->sizeHint().height();
         if ( cornerWidget( TopLeft ) && cornerWidget( TopLeft )->isVisible() )
             lcw = QMAX( cornerWidget( TopLeft )->width(), tabBarHeight );
         if ( cornerWidget( TopRight ) && cornerWidget( TopRight )->isVisible() )
@@ -451,7 +451,7 @@ void KTabWidget::removePage( TQWidget * w ) {
 
 bool KTabWidget::isEmptyTabbarSpace( const TQPoint &point ) const
 {
-    TQSize size( tabBar()->tqsizeHint() );
+    TQSize size( tabBar()->sizeHint() );
     if ( ( tabPosition()==Top && point.y()< size.height() ) || ( tabPosition()==Bottom && point.y()>(height()-size.height() ) ) ) {
         TQWidget *rightcorner = cornerWidget( TopRight );
         if ( rightcorner ) {

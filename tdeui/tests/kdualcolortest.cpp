@@ -23,7 +23,7 @@ KDualColorWidget::KDualColorWidget(TQWidget *parent, const char *name)
     layout->addWidget(colorBtn, 0);
     layout->addWidget(lbl, 1);
     layout->activate();
-    resize(tqsizeHint());
+    resize(sizeHint());
 }
 
 void KDualColorWidget::slotFgChanged(const TQColor &c)

@@ -82,7 +82,7 @@ ConfigDialog::ConfigDialog( TQWidget *parent, const TQString& resourceFamily,
       TQT_SLOT( slotNameChanged(const TQString &)));
 
   slotNameChanged( mName->text() );
-  setMinimumSize( tqsizeHint() );
+  setMinimumSize( sizeHint() );
 }
 
 void ConfigDialog::setInEditMode( bool value )

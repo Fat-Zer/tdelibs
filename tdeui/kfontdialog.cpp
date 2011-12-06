@@ -66,7 +66,7 @@ static int minimumListWidth( const TQListBox *list )
   }
   if( w == 0 ) { w = 40; }
   w += list->frameWidth() * 2;
-  w += list->verticalScrollBar()->tqsizeHint().width();
+  w += list->verticalScrollBar()->sizeHint().width();
   return w;
 }
 
@@ -403,9 +403,9 @@ TQButton::ToggleState KFontChooser::sizeIsRelative() const
        : TQButton::NoChange;
 }
 
-TQSize KFontChooser::tqsizeHint( void ) const
+TQSize KFontChooser::sizeHint( void ) const
 {
-  return tqminimumSizeHint();
+  return minimumSizeHint();
 }
 
 

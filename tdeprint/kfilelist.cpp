@@ -263,7 +263,7 @@ void KFileList::slotOpenFile()
 	}
 }
 
-TQSize KFileList::tqsizeHint() const
+TQSize KFileList::sizeHint() const
 {
 	return TQSize(100, 100);
 }

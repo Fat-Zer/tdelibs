@@ -42,7 +42,7 @@ public:
 	void setViewType(ViewType t);
 	ViewType viewType() const 	{ return m_type; }
 
-	TQSize tqminimumSizeHint() const;
+	TQSize minimumSizeHint() const;
 
 signals:
 	void printerSelected(const TQString&);

@@ -3365,8 +3365,8 @@ TQSize PlastikStyle::tqsizeFromContents(ContentsType t,
             bool checkable = popup->isCheckable();
 
             if (mi->custom()) {
-                w = mi->custom()->tqsizeHint().width();
-                h = mi->custom()->tqsizeHint().height();
+                w = mi->custom()->sizeHint().width();
+                h = mi->custom()->sizeHint().height();
                 if (!mi->custom()->fullSpan() )
                     h += 4;
             } else if (mi->widget()) {

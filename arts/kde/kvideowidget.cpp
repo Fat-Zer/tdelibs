@@ -286,7 +286,7 @@ void KVideoWidget::setDoubleSize()
     doubleSizeActivated();
 }
 
-TQSize KVideoWidget::tqsizeHint() const
+TQSize KVideoWidget::sizeHint() const
 {
     return TQSize( videoWidth, videoHeight );
 }

@@ -394,7 +394,7 @@ void KMenuBar::checkSize( int& w, int& h )
 {
     if( !d->topLevel || d->fallback_mode )
 	return;
-    TQSize s = tqsizeHint();
+    TQSize s = sizeHint();
     w = s.width();
     h = s.height();
     // This is not done as setMinimumSize(), because that would set the minimum
@@ -404,17 +404,17 @@ void KMenuBar::checkSize( int& w, int& h )
     h = KMAX( h, d->min_size.height());
 }
 
-// QMenuBar's tqsizeHint() gives wrong size (insufficient width), which causes wrapping in the kicker applet
-TQSize KMenuBar::tqsizeHint() const
+// QMenuBar's sizeHint() gives wrong size (insufficient width), which causes wrapping in the kicker applet
+TQSize KMenuBar::sizeHint() const
 {
     if( !d->topLevel || block_resize > 0 )
-        return TQMenuBar::tqsizeHint();
-    // Since TQMenuBar::tqsizeHint() may indirectly call resize(),
+        return TQMenuBar::sizeHint();
+    // Since TQMenuBar::sizeHint() may indirectly call resize(),
     // avoid infinite recursion.
     ++block_resize;
     // find the minimum useful height, and enlarge the width until the menu fits in that height (one row)
     int h = heightForWidth( 1000000 );
-    int w = TQMenuBar::tqsizeHint().width();
+    int w = TQMenuBar::sizeHint().width();
     // optimization - don't call heightForWidth() too many times
     while( heightForWidth( w + 12 ) > h )
         w += 12;
@@ -448,7 +448,7 @@ bool KMenuBar::x11Event( XEvent* ev )
 void KMenuBar::updateMenuBarSize()
     {
     menuContentsChanged(); // trigger invalidating calculated size
-    resize( tqsizeHint());   // and resize to preferred size
+    resize( sizeHint());   // and resize to preferred size
     }
 
 void KMenuBar::setFrameStyle( int style )

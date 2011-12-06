@@ -452,7 +452,7 @@ public:
      *   have been created and placed inside the main window (i.e. for 99% of
      *   apps setCentralWidget())
      * - Widgets that inherit from TQWidget (like game boards) should overload
-     *   "virtual TQSize tqsizeHint() const;" to specify a default size rather
+     *   "virtual TQSize sizeHint() const;" to specify a default size rather
      *   than letting TQWidget::adjust use the default size of 0x0.
      */
     void setAutoSaveSettings( const TQString & groupName = TQString::tqfromLatin1("MainWindow"),
@@ -657,10 +657,10 @@ public:
      *
      * @deprecated You normally don't need this, the recommended way to achieve a
      *   certain central widget size is as follows:
-     *     @li Override tqsizeHint() in the central widget so that it
+     *     @li Override sizeHint() in the central widget so that it
      *      returns the desired size.
      *     @li Call updateGeometry() in the central widget whenever the
-     *      desired size changes. This ensures that the new tqsizeHint() is properly
+     *      desired size changes. This ensures that the new sizeHint() is properly
      *      propagated to any parent layout.
      *     @li Now call adjustSize() in the mainwindow to resize the
      *      mainwindow such that the central widget will become the desired size.

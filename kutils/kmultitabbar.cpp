@@ -456,7 +456,7 @@ void KMultiTabBarButton::showEvent( TQShowEvent* he) {
 }
 
 
-TQSize KMultiTabBarButton::tqsizeHint() const
+TQSize KMultiTabBarButton::sizeHint() const
 {
     constPolish();
 
@@ -577,12 +577,12 @@ void KMultiTabBarTab::updateState()
 		if ((m_position==KMultiTabBar::Right || m_position==KMultiTabBar::Left)) {
 			setFixedWidth(24);
 			if ((m_style==KMultiTabBar::KDEV3)  || (m_style==KMultiTabBar::KDEV3ICON) || (isOn())) {
-				setFixedHeight(KMultiTabBarButton::tqsizeHint().width());
+				setFixedHeight(KMultiTabBarButton::sizeHint().width());
 			} else setFixedHeight(36);
 		} else {
 			setFixedHeight(24);
 			if ((m_style==KMultiTabBar::KDEV3)  || (m_style==KMultiTabBar::KDEV3ICON) || (isOn())) {
-				setFixedWidth(KMultiTabBarButton::tqsizeHint().width());
+				setFixedWidth(KMultiTabBarButton::sizeHint().width());
 			} else setFixedWidth(36);
 		}
 	} else {
@@ -633,7 +633,7 @@ void KMultiTabBarTab::drawButtonStyled(TQPainter *paint) {
 	const int height = 24;
 	if ((m_style==KMultiTabBar::KDEV3) || (m_style==KMultiTabBar::KDEV3ICON) || (isOn())) {
 		 if ((m_position==KMultiTabBar::Left) || (m_position==KMultiTabBar::Right))
-			sh=TQSize(this->height(),this->width());//KMultiTabBarButton::tqsizeHint();
+			sh=TQSize(this->height(),this->width());//KMultiTabBarButton::sizeHint();
 			else sh=TQSize(this->width(),this->height());
 	}
 	else

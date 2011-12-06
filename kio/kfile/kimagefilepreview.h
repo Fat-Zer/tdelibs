@@ -36,7 +36,7 @@ class KIO_EXPORT KImageFilePreview : public KPreviewWidgetBase
 		KImageFilePreview(TQWidget *parent);
 		~KImageFilePreview();
 
-		virtual TQSize tqsizeHint() const;
+		virtual TQSize sizeHint() const;
 
 	public slots:
 		virtual void showPreview(const KURL &url);

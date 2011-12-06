@@ -572,7 +572,7 @@ public:
   ErrorCode createConfigFile();
   ErrorCode loadConfigFile(); /**< Load the local configuration file. */
   // ErrorCode configureKab(); /**< Open the configuration dialog for the KabAPI. */
-  // TQSize tqsizeHint();  /**< The preferred (minimal) size of the view. */ // ni
+  // TQSize sizeHint();  /**< The preferred (minimal) size of the view. */ // ni
   /**
    * This method parses a vCard and creates an Entry object from it.
    */

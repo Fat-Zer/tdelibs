@@ -127,7 +127,7 @@ class KateIconBorder : public TQWidget
     KateIconBorder( KateViewInternal* internalView, TQWidget *parent );
 
     // VERY IMPORTANT ;)
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 
     void updateFont();
     int lineNumberWidth() const;

@@ -764,14 +764,14 @@ KHistoryComboEditor::KHistoryComboEditor( const TQStringList& entries, TQWidget 
         new TQListViewItem( m_pListView, *it );
     }
 
-    m_pListView->setMinimumSize( m_pListView->tqsizeHint() );
+    m_pListView->setMinimumSize( m_pListView->sizeHint() );
 
     connect( m_pListView, TQT_SIGNAL( selectionChanged( TQListViewItem * ) ),
              this, TQT_SLOT( slotSelectionChanged( TQListViewItem * ) ) );
 
     enableButton( KDialogBase::User1, false );
 
-    resize( tqsizeHint() );
+    resize( sizeHint() );
 }
 
 KHistoryComboEditor::~KHistoryComboEditor()

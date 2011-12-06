@@ -627,8 +627,8 @@ void KSelectAction::updateItems( int id )
       TQStringList::ConstIterator it = lst.begin();
       for( ; it != lst.end(); ++it )
         cb->insertItem( *it );
-      // qt caches and never recalculates the tqsizeHint()
-      // qcombobox.cpp recommends calling setFont to tqinvalidate the tqsizeHint
+      // qt caches and never recalculates the sizeHint()
+      // qcombobox.cpp recommends calling setFont to tqinvalidate the sizeHint
       // setFont sets own_font = True, so we're a bit mean and calll
       // unsetFont which calls setFont and then overwrites the own_font
       cb->unsetFont();
@@ -678,7 +678,7 @@ int KSelectAction::plug( TQWidget *widget, int index )
     if ( cb )
     {
       if (!isEditable()) cb->setFocusPolicy(TQ_NoFocus);
-      cb->setMinimumWidth( cb->tqsizeHint().width() );
+      cb->setMinimumWidth( cb->sizeHint().width() );
       if ( d->m_comboWidth > 0 )
       {
         cb->setMinimumWidth( d->m_comboWidth );
@@ -1534,7 +1534,7 @@ int KFontAction::plug( TQWidget *w, int index )
              TQT_SLOT( slotActivated( const TQString & ) ) );
     cb->setEnabled( isEnabled() );
     bar->insertWidget( id_, comboWidth(), cb, index );
-    cb->setMinimumWidth( cb->tqsizeHint().width() );
+    cb->setMinimumWidth( cb->sizeHint().width() );
 
     addContainer( bar, id_ );
 

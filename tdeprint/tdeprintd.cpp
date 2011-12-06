@@ -86,8 +86,8 @@ void StatusWindow::setMessage(const TQString& msg)
 {
 	//QSize	oldSz = size();
 	m_label->setText(msg);
-	//QSize	sz = m_label->tqsizeHint();
-	//sz += TQSize(layout()->margin()*2, layout()->margin()*2+layout()->spacing()+m_button->tqsizeHint().height());
+	//QSize	sz = m_label->sizeHint();
+	//sz += TQSize(layout()->margin()*2, layout()->margin()*2+layout()->spacing()+m_button->sizeHint().height());
 	// dialog will never be smaller
 	//sz = sz.expandedTo(oldSz);
 	//resize(sz);

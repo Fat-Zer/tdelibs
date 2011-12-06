@@ -401,7 +401,7 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
 
   TQToolButton *clearButton = new TQToolButton( this );
   clearButton->setIconSet( BarIcon( "locationbar_erase" ) );
-  clearButton->setFixedSize( clearButton->tqsizeHint() );
+  clearButton->setFixedSize( clearButton->sizeHint() );
   connect( clearButton, TQT_SIGNAL( clicked() ), TQT_SLOT( slotClear() ) );
   TQToolTip::add( clearButton, i18n( "Clear input field" ) );
 
@@ -518,7 +518,7 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
   //edit->setText( _value );
   // This is what caused "can't click on items before clicking on Name header".
   // Probably due to the resizeEvent handler using width().
-  //resize( minimumWidth(), tqsizeHint().height() );
+  //resize( minimumWidth(), sizeHint().height() );
   edit->setFocus();
   slotTextChanged();
 }

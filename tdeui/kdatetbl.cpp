@@ -561,14 +561,14 @@ void KDateTable::focusOutEvent( TQFocusEvent *e )
 }
 
 TQSize
-KDateTable::tqsizeHint() const
+KDateTable::sizeHint() const
 {
   if(maxCell.height()>0 && maxCell.width()>0)
     {
       return TQSize(maxCell.width()*numCols()+2*frameWidth(),
              (maxCell.height()+2)*numRows()+2*frameWidth());
     } else {
-      kdDebug() << "KDateTable::tqsizeHint: obscure failure - " << endl;
+      kdDebug() << "KDateTable::sizeHint: obscure failure - " << endl;
       return TQSize(-1, -1);
     }
 }
@@ -713,7 +713,7 @@ KDateInternalMonthPicker::KDateInternalMonthPicker
 }
 
 TQSize
-KDateInternalMonthPicker::tqsizeHint() const
+KDateInternalMonthPicker::sizeHint() const
 {
   return TQSize((max.width()+6)*numCols()+2*frameWidth(),
          (max.height()+6)*numRows()+2*frameWidth());

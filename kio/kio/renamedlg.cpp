@@ -380,7 +380,7 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
     d->bCancel->setDefault( true );
     layout->addWidget( d->bCancel );
 
-    resize( tqsizeHint() );
+    resize( sizeHint() );
 }
 
 RenameDlg::~RenameDlg()

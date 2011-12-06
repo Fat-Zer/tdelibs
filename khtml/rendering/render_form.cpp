@@ -809,7 +809,7 @@ void RenderFileButton::calcMinMaxWidth()
                                              edit,
           TQSize(w + 2 + 2*edit->frameWidth(), kMax(h, 14) + 2 + 2*edit->frameWidth()))
         .expandedTo(TQApplication::globalStrut());
-    TQSize bs = static_cast<KURLRequester*>( m_widget )->tqminimumSizeHint() - edit->tqminimumSizeHint();
+    TQSize bs = static_cast<KURLRequester*>( m_widget )->minimumSizeHint() - edit->minimumSizeHint();
 
     setIntrinsicWidth( s.width() + bs.width() );
     setIntrinsicHeight( kMax(s.height(), bs.height()) );
@@ -1107,14 +1107,14 @@ void RenderSelect::layout( )
         if(size < 1)
             size = kMin(static_cast<KListBox*>(m_widget)->count(), 10u);
 
-        width += 2*w->frameWidth() + w->verticalScrollBar()->tqsizeHint().width();
+        width += 2*w->frameWidth() + w->verticalScrollBar()->sizeHint().width();
         height = size*height + 2*w->frameWidth();
 
         setIntrinsicWidth( width );
         setIntrinsicHeight( height );
     }
     else {
-        TQSize s(m_widget->tqsizeHint());
+        TQSize s(m_widget->sizeHint());
         setIntrinsicWidth( s.width() );
         setIntrinsicHeight( s.height() );
     }
@@ -1651,10 +1651,10 @@ void RenderTextArea::calcMinMaxWidth()
     const TQFontMetrics &m = style()->fontMetrics();
     w->setTabStopWidth(8 * m.width(" "));
     TQSize size( kMax(element()->cols(), 1L)*m.width('x') + w->frameWidth() +
-                w->verticalScrollBar()->tqsizeHint().width(),
+                w->verticalScrollBar()->sizeHint().width(),
                 kMax(element()->rows(), 1L)*m.lineSpacing() + w->frameWidth()*4 +
                 (w->wordWrap() == TQTextEdit::NoWrap ?
-                 w->horizontalScrollBar()->tqsizeHint().height() : 0)
+                 w->horizontalScrollBar()->sizeHint().height() : 0)
         );
 
     setIntrinsicWidth( size.width() );

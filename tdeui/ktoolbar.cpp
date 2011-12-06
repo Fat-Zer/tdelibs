@@ -181,7 +181,7 @@ void KToolBarSeparator::styleChange( TQStyle& )
     setOrientation( orient );
 }
 
-TQSize KToolBarSeparator::tqsizeHint() const
+TQSize KToolBarSeparator::sizeHint() const
 {
     int dim = tqstyle().tqpixelMetric( TQStyle::PM_DockWindowSeparatorExtent, this );
     return orientation() == Qt::Vertical ? TQSize( 0, dim ) : TQSize( dim, 0 );
@@ -1240,7 +1240,7 @@ void KToolBar::rebuildLayout()
             continue;
         KToolBarSeparator *ktbs = tqt_dynamic_cast<KToolBarSeparator *>(w);
         if ( ktbs && !ktbs->showLine() ) {
-            l->addSpacing( orientation() == Qt::Vertical ? w->tqsizeHint().height() : w->tqsizeHint().width() );
+            l->addSpacing( orientation() == Qt::Vertical ? w->sizeHint().height() : w->sizeHint().width() );
             w->hide();
             continue;
         }
@@ -1343,7 +1343,7 @@ TQSizePolicy KToolBar::sizePolicy() const
         return TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Expanding );
 }
 
-TQSize KToolBar::tqsizeHint() const
+TQSize KToolBar::sizeHint() const
 {
     TQSize minSize(0,0);
     KToolBar *ncThis = const_cast<KToolBar *>(this);
@@ -1357,7 +1357,7 @@ TQSize KToolBar::tqsizeHint() const
      case KToolBar::Bottom:
        for ( TQWidget *w = ncThis->widgets.first(); w; w = ncThis->widgets.next() )
        {
-          TQSize sh = w->tqsizeHint();
+          TQSize sh = w->sizeHint();
           if ( w->tqsizePolicy().horData() == TQSizePolicy::Ignored )
              sh.setWidth( 1 );
           if ( w->tqsizePolicy().verData() == TQSizePolicy::Ignored )
@@ -1379,7 +1379,7 @@ TQSize KToolBar::tqsizeHint() const
      case KToolBar::Right:
        for ( TQWidget *w = ncThis->widgets.first(); w; w = ncThis->widgets.next() )
        {
-          TQSize sh = w->tqsizeHint();
+          TQSize sh = w->sizeHint();
           if ( w->tqsizePolicy().horData() == TQSizePolicy::Ignored )
              sh.setWidth( 1 );
           if ( w->tqsizePolicy().verData() == TQSizePolicy::Ignored )
@@ -1395,7 +1395,7 @@ TQSize KToolBar::tqsizeHint() const
        break;
 
      default:
-       minSize = TQToolBar::tqsizeHint();
+       minSize = TQToolBar::sizeHint();
        break;
     }
     return minSize;
@@ -1403,12 +1403,12 @@ TQSize KToolBar::tqsizeHint() const
 
 TQSize KToolBar::tqminimumSize() const
 {
-    return tqminimumSizeHint();
+    return minimumSizeHint();
 }
 
-TQSize KToolBar::tqminimumSizeHint() const
+TQSize KToolBar::minimumSizeHint() const
 {
-    return tqsizeHint();
+    return sizeHint();
 }
 
 bool KToolBar::highlight() const

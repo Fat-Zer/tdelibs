@@ -345,7 +345,7 @@ void KDockWidgetHeader::setDragPanel( KDockWidgetHeaderDrag* nd )
   layout->activate();
   kdDebug(282)<<"KdockWidgetHeader::setDragPanel:minimum height="<<layout->tqminimumSize().height()<<endl;
   //FIXME somebody left this here, but we don't know what the hell it's for.
-  drag->setFixedHeight( closeButton->height()); // /*layout->minimumS*/tqsizeHint().height() );
+  drag->setFixedHeight( closeButton->height()); // /*layout->minimumS*/sizeHint().height() );
 }
 
 void KDockWidgetHeader::addButton(KDockButton_Private* btn) {

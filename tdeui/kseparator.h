@@ -70,7 +70,7 @@ class TDEUI_EXPORT KSeparator : public TQFrame
   /**
    * The recommended height (width) for a horizontal (vertical) separator.
    **/
-  virtual TQSize tqsizeHint() const;
+  virtual TQSize sizeHint() const;
 
 protected:
   /**

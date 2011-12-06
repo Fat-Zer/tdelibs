@@ -61,7 +61,7 @@ public:
      */
     ~KCompletionBox();
 
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 
     /**
      * @returns true if selecting an item results in the emition of the selected signal.

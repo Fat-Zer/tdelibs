@@ -44,7 +44,7 @@ QDirMultiLineEdit::QDirMultiLineEdit(TQWidget *parent, const char *name)
 	connect(m_remove, TQT_SIGNAL(clicked()), TQT_SLOT(slotRemoveClicked()));
 	m_remove->setEnabled(false);
 
-	m_view->setFixedHeight(TQMAX(m_view->fontMetrics().lineSpacing()*3+m_view->lineWidth()*2, m_add->tqsizeHint().height()*2));
+	m_view->setFixedHeight(TQMAX(m_view->fontMetrics().lineSpacing()*3+m_view->lineWidth()*2, m_add->sizeHint().height()*2));
 
 	TQHBoxLayout	*l0 = new TQHBoxLayout(this, 0, 3);
 	TQVBoxLayout	*l1 = new TQVBoxLayout(0, 0, 0);

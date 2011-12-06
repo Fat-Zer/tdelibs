@@ -42,7 +42,7 @@ bool SidePixmap::isValid()
 			&& (m_side.width() == m_tiledown.width()));
 }
 
-TQSize SidePixmap::tqsizeHint() const
+TQSize SidePixmap::sizeHint() const
 {
 	return (TQSize(m_side.width()+lineWidth(), 300+lineWidth()));
 }

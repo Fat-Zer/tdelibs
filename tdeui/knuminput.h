@@ -117,7 +117,7 @@ public:
      *
      * @return the preferred size necessary to show the control
      */
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 
 protected:
     /**
@@ -318,7 +318,7 @@ public:
      *
      * @return the minimum size necessary to show the control
      */
-    virtual TQSize tqminimumSizeHint() const;
+    virtual TQSize minimumSizeHint() const;
 
 public slots:
     /**
@@ -599,7 +599,7 @@ public:
     void setSpecialValueText(const TQString& text);
 
     virtual void setLabel(const TQString & label, int a = AlignLeft | AlignTop);
-    virtual TQSize tqminimumSizeHint() const;
+    virtual TQSize minimumSizeHint() const;
     virtual bool eventFilter(TQObject*, TQEvent*);
 
 public slots:

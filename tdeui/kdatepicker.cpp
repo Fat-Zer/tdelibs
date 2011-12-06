@@ -390,7 +390,7 @@ KDatePicker::selectYearClicked()
   KPopupFrame* popup = new KPopupFrame(this);
   KDateInternalYearSelector* picker = new KDateInternalYearSelector(popup);
   // -----
-  picker->resize(picker->tqsizeHint());
+  picker->resize(picker->sizeHint());
   picker->setYear( table->getDate().year() );
   picker->selectAll();
   popup->setMainWidget(picker);
@@ -467,9 +467,9 @@ KDatePicker::todayButtonClicked()
 }
 
 TQSize
-KDatePicker::tqsizeHint() const
+KDatePicker::sizeHint() const
 {
-  return TQWidget::tqsizeHint();
+  return TQWidget::sizeHint();
 }
 
 void

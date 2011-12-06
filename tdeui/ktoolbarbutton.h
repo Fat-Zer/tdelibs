@@ -292,8 +292,8 @@ protected:
   /// @since 3.4
   void mouseReleaseEvent( TQMouseEvent * );
   void showMenu();
-  TQSize tqsizeHint() const;
-  TQSize tqminimumSizeHint() const;
+  TQSize sizeHint() const;
+  TQSize minimumSizeHint() const;
   TQSize tqminimumSize() const;
 
   /// @since 3.1

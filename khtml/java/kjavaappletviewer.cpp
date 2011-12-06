@@ -391,7 +391,7 @@ bool KJavaAppletViewer::openURL (const KURL & url) {
         } else
             applet->setAppletClass (url.url ());
         AppletParameterDialog (w).exec ();
-        applet->setSize (w->tqsizeHint());
+        applet->setSize (w->sizeHint());
     }
     if (!m_statusbar_icon) {
         KStatusBar *sb = m_statusbar->statusBar();
@@ -500,7 +500,7 @@ void KJavaAppletViewerBrowserExtension::restoreState (TQDataStream & stream) {
         applet->setParameter (key, val);
         kdDebug(6100) << "restoreState key:" << key << " val:" << val << endl;
     }
-    applet->setSize (w->tqsizeHint ());
+    applet->setSize (w->sizeHint ());
     if (w->isVisible())
         w->showApplet ();
 }

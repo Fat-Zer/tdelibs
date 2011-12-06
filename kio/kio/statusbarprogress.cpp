@@ -64,7 +64,7 @@ StatusbarProgress::StatusbarProgress( TQWidget* parent, bool button )
   m_pLabel->installEventFilter( this );
   m_pLabel->setMinimumWidth( w );
   stack->addWidget( m_pLabel, 2 );
-  setMinimumSize( tqsizeHint() );
+  setMinimumSize( sizeHint() );
 
   mode = None;
   setMode();

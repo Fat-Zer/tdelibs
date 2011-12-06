@@ -757,7 +757,7 @@ void KateIconBorder::setFoldingMarkersOn( bool enable )
   TQTimer::singleShot( 0, this, TQT_SLOT(update()) );
 }
 
-TQSize KateIconBorder::tqsizeHint() const
+TQSize KateIconBorder::sizeHint() const
 {
   int w = 0;
 
@@ -866,7 +866,7 @@ void KateIconBorder::paintBorder (int /*x*/, int y, int /*width*/, int height)
     {
       // we went from n0 ->n9 lines or vice verca
       // this causes an extra updateGeometry() first time the line numbers
-      // are displayed, but tqsizeHint() is supposed to be const so we can't set
+      // are displayed, but sizeHint() is supposed to be const so we can't set
       // the cached value there.
       m_cachedLNWidth = lnWidth;
       m_oldBackgroundColor = m_view->renderer()->config()->iconBarColor();

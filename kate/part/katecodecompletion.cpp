@@ -47,7 +47,7 @@
 
 /**
  * This class is used as the codecompletion listbox. It can be resized according to its contents,
- *  therfor the needed size is provided by tqsizeHint();
+ *  therfor the needed size is provided by sizeHint();
  *@short Listbox showing codecompletion
  *@author Jonas B. Jacobi <j.jacobi@gmx.de>
  */
@@ -61,7 +61,7 @@ class KateCCListBox : public TQListBox
     {
     }
 
-    TQSize tqsizeHint()  const
+    TQSize sizeHint()  const
     {
         int count = this->count();
         int height = 20;
@@ -124,7 +124,7 @@ KateCodeCompletion::KateCodeCompletion( KateView* view )
 
   m_completionListBox->installEventFilter( this );
 
-  m_completionPopup->resize(m_completionListBox->tqsizeHint() + TQSize(2,2));
+  m_completionPopup->resize(m_completionListBox->sizeHint() + TQSize(2,2));
   m_completionPopup->installEventFilter( this );
   m_completionPopup->setFocusProxy( m_view->m_viewInternal );
 
@@ -305,7 +305,7 @@ void KateCodeCompletion::updateBox( bool )
   }
 
     kdDebug(13035)<<"KateCodeCompletion::updateBox: Resizing widget"<<endl;
-        m_completionPopup->resize(m_completionListBox->tqsizeHint() + TQSize(2,2));
+        m_completionPopup->resize(m_completionListBox->sizeHint() + TQSize(2,2));
     TQPoint p = m_view->mapToGlobal( m_view->cursorCoordinates() );
         int x = p.x();
         int y = p.y() ;

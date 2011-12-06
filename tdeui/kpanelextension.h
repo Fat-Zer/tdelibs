@@ -136,7 +136,7 @@ public:
      * location in the Window Manager Dock. Please note that the size can not be larger than the
      * maxsize given by the handler.
      **/
-    virtual TQSize tqsizeHint(Position /*p*/, TQSize maxsize) const { return maxsize; }
+    virtual TQSize sizeHint(Position /*p*/, TQSize maxsize) const { return maxsize; }
 
     /**
      * Always use this KConfig object to save/load your extensions configuration.

@@ -2468,8 +2468,8 @@ TQSize AsteroidStyle::tqsizeFromContents(ContentsType ct,
 			TQMenuItem *mi = o.menuItem();
 
 			if (mi->custom()) {
-				sw = mi->custom()->tqsizeHint().width();
-				sh = mi->custom()->tqsizeHint().height();
+				sw = mi->custom()->sizeHint().width();
+				sh = mi->custom()->sizeHint().height();
 			} else if (mi->widget()) {
 			/* This is a do-nothing branch */
 			} else if (mi->isSeparator()) {

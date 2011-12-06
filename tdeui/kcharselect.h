@@ -56,7 +56,7 @@ public:
     KCharSelectTable( TQWidget *parent, const char *name, const TQString &_font,
 		      const TQChar &_chr, int _tableNum );
 
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
     virtual void resizeEvent( TQResizeEvent * );
 
     virtual void setFont( const TQString &_font );
@@ -157,7 +157,7 @@ public:
     /**
      * Reimplemented.
      */
-    virtual TQSize tqsizeHint() const;
+    virtual TQSize sizeHint() const;
 
     /**
      * Sets the font which is displayed to @p font

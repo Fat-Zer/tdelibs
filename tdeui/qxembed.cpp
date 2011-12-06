@@ -1332,7 +1332,7 @@ void QXEmbed::embedClientIntoWindow(TQWidget* client, WId window)
 
 
 // L2500: Specifies that this widget can use additional space,
-//        and that it can survive on less than tqsizeHint().
+//        and that it can survive on less than sizeHint().
 TQSizePolicy QXEmbed::sizePolicy() const
 {
     return TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Expanding );
@@ -1340,13 +1340,13 @@ TQSizePolicy QXEmbed::sizePolicy() const
 
 
 // L2520: Returns a size sufficient for the embedded window
-TQSize QXEmbed::tqsizeHint() const
+TQSize QXEmbed::sizeHint() const
 {
-    return tqminimumSizeHint();
+    return minimumSizeHint();
 }
 
 // L2550: Returns the minimum size specified by the embedded window.
-TQSize QXEmbed::tqminimumSizeHint() const
+TQSize QXEmbed::minimumSizeHint() const
 {
     int minw = 0;
     int minh = 0;

@@ -597,7 +597,7 @@ KPaletteTable::KPaletteTable( TQWidget *parent, int minWidth, int cols)
   connect( mNamedColorList, TQT_SIGNAL(highlighted( const TQString & )),
 	   this, TQT_SLOT( slotColorTextSelected( const TQString & )) );
 
-  setFixedSize( tqsizeHint());
+  setFixedSize( sizeHint());
   connect( combo, TQT_SIGNAL(activated(const TQString &)),
 	this, TQT_SLOT(slotSetPalette( const TQString &)));
 }
@@ -1157,7 +1157,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
 	   TQT_SLOT( setColor( const TQColor&)));
 
   tl_layout->activate();
-  page->setMinimumSize( page->tqsizeHint() );
+  page->setMinimumSize( page->sizeHint() );
 
   readSettings();
   d->bRecursion = false;
@@ -1223,7 +1223,7 @@ KColorDialog::setDefaultColor( const TQColor& col )
 
         mainWidget()->setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX ); // cancel setFixedSize()
         d->tl_layout->activate();
-        mainWidget()->setMinimumSize( mainWidget()->tqsizeHint() );
+        mainWidget()->setMinimumSize( mainWidget()->sizeHint() );
         disableResize();
 
         connect( d->cbDefaultColor, TQT_SIGNAL( clicked() ), TQT_SLOT( slotDefaultColorClicked() ) );

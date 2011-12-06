@@ -72,7 +72,7 @@ int KabAPI::exec()
 	    {
 	      listbox->setCurrentItem(0);
 	    }
-	  listbox->setMinimumSize(listbox->tqsizeHint());
+	  listbox->setMinimumSize(listbox->sizeHint());
 	  adjustSize();
 	  resize(tqminimumSize());
 	  return KDialogBase::exec();

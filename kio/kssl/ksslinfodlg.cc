@@ -331,7 +331,7 @@ void KSSLInfoDlg::displayCert(KSSLCertificate *x) {
     }
 
     d->_csl->setText(errorStr);
-    d->_csl->setMinimumSize(d->_csl->tqsizeHint());
+    d->_csl->setMinimumSize(d->_csl->sizeHint());
 
     d->_subject->setValues(x->getSubject());
     d->_issuer->setValues(x->getIssuer());

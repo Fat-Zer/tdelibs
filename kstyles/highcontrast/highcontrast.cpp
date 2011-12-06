@@ -1730,8 +1730,8 @@ TQSize HighContrastStyle::tqsizeFromContents( ContentsType contents,
 			int w = contentSize.width(), h = contentSize.height();
 
 			if ( mi->custom() ) {
-				w = mi->custom()->tqsizeHint().width();
-				h = mi->custom()->tqsizeHint().height();
+				w = mi->custom()->sizeHint().width();
+				h = mi->custom()->sizeHint().height();
 				if ( ! mi->custom()->fullSpan() )
 					h += 2*itemVMargin + 2*itemFrame;
 			}

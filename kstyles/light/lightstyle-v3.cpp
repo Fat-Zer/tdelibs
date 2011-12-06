@@ -1756,8 +1756,8 @@ TQSize LightStyleV3::tqsizeFromContents( ContentsType contents,
 	    int w = contentsSize.width(), h = contentsSize.height();
 
 	    if (mi->custom()) {
-		w = mi->custom()->tqsizeHint().width();
-		h = mi->custom()->tqsizeHint().height();
+		w = mi->custom()->sizeHint().width();
+		h = mi->custom()->sizeHint().height();
 		if (! mi->custom()->fullSpan() && h < 22)
 		    h = 22;
 	    } else if(mi->widget()) {

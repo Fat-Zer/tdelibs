@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 			   "Press OK or Cancel when done"
 			   , w);
     l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->tqsizeHint());
+    l->setMinimumSize(l->sizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     TQPushButton *b = bbox->addButton("OK");
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
 			   "OK and Cancel are right aligned\n"\
 			   "Try resizing the window!", w);
     l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->tqsizeHint());
+    l->setMinimumSize(l->sizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
 			   "OK and Cancel are middle aligned\n"\
 			   "Try resizing the window!", w);
     l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->tqsizeHint());
+    l->setMinimumSize(l->sizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
@@ -121,7 +121,7 @@ int main(int argc, char **argv) {
 			   "since it will look ugly -- "
 			   "anyway, it works", w);
     l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->tqsizeHint());
+    l->setMinimumSize(l->sizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
@@ -153,7 +153,7 @@ int main(int argc, char **argv) {
 			   "the former example!"
 			   ,w);
     l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->tqsizeHint());
+    l->setMinimumSize(l->sizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w);
     bbox->addStretch(1);
@@ -183,7 +183,7 @@ int main(int argc, char **argv) {
 			   "too?"
 			   ,w);
     l->tqsetAlignment(Qt::AlignVCenter|Qt::AlignLeft|Qt::WordBreak);
-    l->setMinimumSize(l->tqsizeHint());
+    l->setMinimumSize(l->sizeHint());
     tl->addWidget(l,1);
     KButtonBox *bbox = new KButtonBox(w, KButtonBox::Vertical);
     TQPushButton *b = bbox->addButton("OK");

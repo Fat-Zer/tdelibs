@@ -313,7 +313,7 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 	TQRadioButton	*left = new TQRadioButton(positionbox);
 	TQRadioButton	*right = new TQRadioButton(positionbox);
 	TQRadioButton	*hcenter = new TQRadioButton(positionbox);
-	TQSize	sz = bottom->tqsizeHint();
+	TQSize	sz = bottom->sizeHint();
 	bottom->setFixedSize(sz);
 	vcenter->setFixedSize(sz);
 	top->setFixedSize(sz);
