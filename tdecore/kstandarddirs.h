@@ -105,17 +105,17 @@ class KStandardDirsPrivate;
  *
  * <b>KStandardDirs supports the following environment variables:</b>
  *
- * @li KDEDIRS: This may set an additional number of directory prefixes to
+ * @li TDEDIRS: This may set an additional number of directory prefixes to
  *          search for resources. The directories should be separated
  *          by ':'. The directories are searched in the order they are
  *          specified.
- * @li KDEDIR:  Used for backwards compatibility. As KDEDIRS but only a single
- *          directory may be specified. If KDEDIRS is set KDEDIR is
+ * @li TDEDIR:  Used for backwards compatibility. As TDEDIRS but only a single
+ *          directory may be specified. If TDEDIRS is set TDEDIR is
  *          ignored.
- * @li KDEHOME: The directory where changes are saved to. This directory is
- *          used to search for resources first. If KDEHOME is not
+ * @li TDEHOME: The directory where changes are saved to. This directory is
+ *          used to search for resources first. If TDEHOME is not
  *          specified it defaults to "$HOME/.kde"
- * @li KDEROOTHOME: Like KDEHOME, but used for the root user.
+ * @li KDEROOTHOME: Like TDEHOME, but used for the root user.
  *          If KDEROOTHOME is not set it defaults to the .kde directory in the
  *          home directory of root, usually "/root/.kde".
  *          Note that the setting of $HOME is ignored in this case.
@@ -139,7 +139,7 @@ public:
 	 * Adds another search dir to front of the @p fsstnd list.
 	 *
 	 * @li When compiling tdelibs, the prefix is added to this.
-	 * @li KDEDIRS or KDEDIR is taking into account
+	 * @li TDEDIRS or TDEDIR is taking into account
 	 * @li Additional dirs may be loaded from kdeglobals.
 	 *
 	 * @param dir The directory to append relative paths to.
@@ -213,7 +213,7 @@ public:
 	 * for resources. So is a way to get the path to libtdecore.la
 	 * to findResource("lib", "libtdecore.la"). KStandardDirs will
 	 * then look into the subdir lib of all elements of all prefixes
-	 * ($KDEDIRS) for a file libtdecore.la and return the path to
+	 * ($TDEDIRS) for a file libtdecore.la and return the path to
 	 * the first one it finds (e.g. /opt/kde/lib/libtdecore.la)
 	 *
 	 * @param type The type of the wanted resource
@@ -232,7 +232,7 @@ public:
 	 *
 	 * E.g. by restricting the "wallpaper" resource, only system-wide
 	 * installed wallpapers will be found by this class. Wallpapers
-	 * installed under the $KDEHOME directory will be ignored.
+	 * installed under the $TDEHOME directory will be ignored.
 	 *
 	 * @param type The type of the resource to check
 	 * @param relPath A relative path in the resource.
@@ -631,7 +631,7 @@ public:
 
         // Like their public counter parts but with an extra priority argument
         // If priority is true, the directory is added directly after
-        // $KDEHOME/$XDG_DATA_HOME/$XDG_CONFIG_HOME
+        // $TDEHOME/$XDG_DATA_HOME/$XDG_CONFIG_HOME
 	void addPrefix( const TQString& dir, bool priority );
 	void addXdgConfigPrefix( const TQString& dir, bool priority );
 	void addXdgDataPrefix( const TQString& dir, bool priority );

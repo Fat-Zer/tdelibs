@@ -16,7 +16,7 @@ echo "-------------------------------------------------"
 echo "Building Debug Version of KDElibs/win32"
 echo "Source directory: \$KDELIBS = $KDELIBS"
 echo "Version: $KDE_VER_MAJ.$KDE_VER_MIN.$KDE_VER_PAT"
-echo "Destination directory: \$KDEDIR = $KDEDIR"
+echo "Destination directory: \$TDEDIR = $TDEDIR"
 if [ -n $noclean ] ; then
 	echo "Options: noclean"
 fi
@@ -73,7 +73,7 @@ qmake makekdewidgets.pro && $make clean && $make || exit 1
 qmake && $make clean && $make || exit 1
 
 # copy kdewidgets plugin for Qt Designer
-cp $KDEDIR/lib/trinity/plugins/designer/kdewidgets.dll $QTDIR/plugins/designer/
+cp $TDEDIR/lib/trinity/plugins/designer/kdewidgets.dll $QTDIR/plugins/designer/
 
 cd $pwd
 

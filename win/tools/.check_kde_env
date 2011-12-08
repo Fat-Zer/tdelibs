@@ -7,8 +7,8 @@ if [ -z "$KDEWIN" ] ; then
 	exit 1
 fi
 
-if [ -z "$KDEDIR" ] ; then 
-	echo `basename $0`": \$KDEDIR environment variable is not set. Set it to absolute path of tdelibs/win32 binaries, e.g. C:\\kde"
+if [ -z "$TDEDIR" ] ; then 
+	echo `basename $0`": \$TDEDIR environment variable is not set. Set it to absolute path of tdelibs/win32 binaries, e.g. C:\\kde"
 	exit 1
 fi
 

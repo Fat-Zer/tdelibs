@@ -687,7 +687,7 @@
 #cmakedefine HAVE___ARGZ_STRINGIFY 1
 
 /* The prefix to use as fallback */
-#define KDEDIR "@KDEDIR@"
+#define TDEDIR "@TDEDIR@"
 
 /* Enable prevention against poor Linux OOM-killer */
 #cmakedefine TDEINIT_OOM_PROTECT 1

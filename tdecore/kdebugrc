@@ -2,7 +2,7 @@
 # This allows to leave the kdDebug* calls in the code, but still have them
 # disabled for most users.
 #
-# This file will be installed as $KDEDIR/share/config/kdebugrc
+# This file will be installed as $TDEDIR/share/config/kdebugrc
 #
 # There are four levels of output: Info, Warn, Error and Fatal
 # corresponding to kdDebug(), kdWarn(), kdError(), kdFatal()

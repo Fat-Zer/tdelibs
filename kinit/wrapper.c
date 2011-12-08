@@ -132,7 +132,7 @@ static int openSocket()
 #define MAX_SOCK_FILE 255
   char sock_file[MAX_SOCK_FILE + 1];
   const char *home_dir = getenv("HOME");
-  const char *kde_home = getenv("KDEHOME");
+  const char *kde_home = getenv("TDEHOME");
   char *display;
 
   sock_file[0] = sock_file[MAX_SOCK_FILE] = 0;

@@ -10,8 +10,8 @@ CONFIG += debug
 CONFIG += console
 
 unix:DEFINES   = NO_INCLUDE_MOCFILES QT_NO_COMPAT
-unix:LIBS       += -lkmdi -L$(KDEDIR)/lib -ltdecore -ltdeui -lDCOP -lkparts
-unix:INCLUDEPATH     += . .. $(KDEDIR)/include
+unix:LIBS       += -lkmdi -L$(TDEDIR)/lib -ltdecore -ltdeui -lDCOP -lkparts
+unix:INCLUDEPATH     += . .. $(TDEDIR)/include
 
 LIBS += $$KDELIBDESTDIR\kmdi$$KDELIB_SUFFIX $$KDELIBDESTDIR\kparts$$KDELIB_SUFFIX
 

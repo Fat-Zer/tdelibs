@@ -27,7 +27,7 @@ class KInstance;
  * This namespace provides a method for issuing events to a KNotifyServer
  * call KNotifyClient::event("eventname"); to issue it.
  * On installation, there should be a file called
- * $KDEDIR/share/apps/appname/eventsrc which contains the events.
+ * $TDEDIR/share/apps/appname/eventsrc which contains the events.
  *
  * The file looks like this:
  * \code

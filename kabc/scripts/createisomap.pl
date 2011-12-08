@@ -4,7 +4,7 @@
 # files in tdebase/l10n/*/
 #
 # USAGE EXAMPLE:
-#     ./createisomap.pl $KDEDIR/share/locale/l10n > countrytransl.map
+#     ./createisomap.pl $TDEDIR/share/locale/l10n > countrytransl.map
 #
 # Don't laugh at me. I put this together with an old perl book, perl
 # being a language I've never used before.

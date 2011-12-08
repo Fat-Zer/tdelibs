@@ -12,7 +12,7 @@ DEFINES += MAKE_TDEFX_LIB
 
 system( moc kstyle.h -o moc/kstyle.moc )
 
-LIBS -= "$(KDEDIR)\lib\kdewin32_$(KDE_VER).lib" "$(KDEDIR)\lib\ltdl_$(KDE_VER).lib"
+LIBS -= "$(TDEDIR)\lib\kdewin32_$(KDE_VER).lib" "$(TDEDIR)\lib\ltdl_$(KDE_VER).lib"
 
 SOURCES = \
 kimageeffect.cpp \

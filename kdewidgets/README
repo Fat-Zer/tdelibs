@@ -7,7 +7,7 @@ Summary:
 
 This directory contains KDE custom widgets for designer 2 which comes with
 Qt 3. Just make sure your plugin path in qtconfig includes
-$KDEDIR/lib/trinity/plugins . With the KDE build system nothing special 
+$TDEDIR/lib/trinity/plugins . With the KDE build system nothing special 
 (i.e. editing the plugin path) is needed, as uic will automatically be
 called with -L <path to the kdewidgets plugin> .
 

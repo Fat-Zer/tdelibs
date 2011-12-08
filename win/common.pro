@@ -46,7 +46,7 @@ contains(KW_CONFIG,console) {
 
 # global binary destination directory
 isEmpty( KDEBINDESTDIR ) {
-	KDEBINDESTDIR = $(KDEDIR)
+	KDEBINDESTDIR = $(TDEDIR)
 }
 
 # global library destination directory 

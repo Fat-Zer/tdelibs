@@ -8,7 +8,7 @@ Call
   qmake kFourChildren -o Makefile
   make
 to build the example app.
-Likely you must set the environment variable KDEDIR (to e.g. /opt/trinity).
+Likely you must set the environment variable TDEDIR (to e.g. /opt/trinity).
 
 
 

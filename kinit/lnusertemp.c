@@ -100,7 +100,7 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
   char tmp_buf[PATH_MAX+1];
   int uid = getuid();
   const char *home_dir = getenv("HOME");
-  const char *kde_home = uid ? getenv("KDEHOME") : getenv("KDEROOTHOME");
+  const char *kde_home = uid ? getenv("TDEHOME") : getenv("KDEROOTHOME");
   int result;
   struct stat stat_buf;
 
@@ -181,7 +181,7 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
   result = lstat(kde_tmp_dir, &stat_buf);
   if ((result == 0) && (S_ISDIR(stat_buf.st_mode)))
   {
-     /* $KDEHOME/tmp is a normal directory. Do nothing. */
+     /* $TDEHOME/tmp is a normal directory. Do nothing. */
      /*printf("Directory \"%s\" already exists.\n", kde_tmp_dir);*/
      return 0;
   }

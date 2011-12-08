@@ -198,7 +198,7 @@ KService::init( KDesktopFile *config )
 
   m_strExec = config->readPathEntry( "Exec" );
   if (kde4application && !m_strExec.startsWith("/")) {
-    m_strExec = "KDEHOME=$HOME/.kde XDG_DATA_DIRS=/usr/share KDEDIRS=/usr/ XDG_CONFIG_DIRS=/etc/xdg/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH "+m_strExec;
+    m_strExec = "TDEHOME=$HOME/.kde XDG_DATA_DIRS=/usr/share TDEDIRS=/usr/ XDG_CONFIG_DIRS=/etc/xdg/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH "+m_strExec;
   } else if (config->readBoolEntry("X-KDE-SubstituteUID")) {
     int space = m_strExec.find(" ");
     if (space==-1)

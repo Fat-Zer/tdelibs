@@ -562,7 +562,7 @@ void KBuildSycoca::save()
       (*m_str) << aOffset;
    }
    (*m_str) << (TQ_INT32) 0; // No more factories.
-   // Write KDEDIRS
+   // Write TDEDIRS
    (*m_str) << KGlobal::dirs()->kfsstnd_prefixes();
    (*m_str) << newTimestamp;
    (*m_str) << KGlobal::locale()->language();
@@ -732,7 +732,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
    if (bGlobalDatabase)
    {
-     setenv("KDEHOME", "-", 1);
+     setenv("TDEHOME", "-", 1);
      setenv("KDEROOTHOME", "-", 1);
    }
 

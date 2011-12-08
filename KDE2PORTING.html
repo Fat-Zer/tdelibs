@@ -117,9 +117,9 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   BarIcon() or use KGlobal::iconLoader() instead of getIconLoader()<P>
 
   kde_*dir() have been removed as they require a unique top level directory
-  for all applications (KDEDIR). This concept doesn't exist in KDE 2.0
+  for all applications (TDEDIR). This concept doesn't exist in KDE 2.0
   any more, it has been replaced with "multiple levels of directories",
-  set in KDEDIRS, so that it's possible to have global settings and
+  set in TDEDIRS, so that it's possible to have global settings and
   group settings, applied before user settings.<P>
 
   Replace code that uses kde_*dir() + filename with calls to

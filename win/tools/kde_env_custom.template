@@ -7,7 +7,7 @@
 	MSVC="c:\\vs7"
 
 # Top KDE Directory - target of your compilation, please change
-export KDEDIR="c:\\kde"
+export TDEDIR="c:\\kde"
 
 # KDElibs/win32 top source directory, please change
 KDEWIN="c:\\kdewin32"

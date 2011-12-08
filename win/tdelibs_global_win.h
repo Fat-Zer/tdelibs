@@ -79,8 +79,8 @@ int kde_start
 #ifdef __cplusplus
 #include <tqstring.h>
 
-# ifndef KDEDIR
-#  define KDEDIR TQString(KDEWIN32_DIR)
+# ifndef TDEDIR
+#  define TDEDIR TQString(KDEWIN32_DIR)
 # endif
 # ifndef __KDE_BINDIR 
 #  define __KDE_BINDIR TQString(KDEWIN32_DIR "/bin")

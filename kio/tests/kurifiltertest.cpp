@@ -154,8 +154,8 @@ static const KCmdLineOptions options[] =
 int main(int argc, char **argv)
 {
     // Ensure that user configuration doesn't change the results of those tests
-    // KDEHOME needs to be writable though, for a ksycoca database
-    setenv( "KDEHOME", TQFile::encodeName( TQDir::homeDirPath() + "/.kde-kurifiltertest" ), true );
+    // TDEHOME needs to be writable though, for a ksycoca database
+    setenv( "TDEHOME", TQFile::encodeName( TQDir::homeDirPath() + "/.kde-kurifiltertest" ), true );
     setenv( "KDE_FORK_SLAVES", "yes", true ); // simpler, for the final cleanup
 
     KAboutData aboutData(appName, programName, version, description);
@@ -214,7 +214,7 @@ int main(int argc, char **argv)
 
     // ShortURI/LocalDomain filter tests. NOTE: any of these tests can fail
     // if you have specified your own patterns in kshorturifilterrc. For
-    // examples, see $KDEDIR/share/config/kshorturifilterrc .
+    // examples, see $TDEDIR/share/config/kshorturifilterrc .
     filter( "linuxtoday.com", "http://linuxtoday.com", KURIFilterData::NET_PROTOCOL );
     filter( "LINUXTODAY.COM", "http://linuxtoday.com", KURIFilterData::NET_PROTOCOL );
     filter( "kde.org", "http://kde.org", KURIFilterData::NET_PROTOCOL );
@@ -290,7 +290,7 @@ int main(int argc, char **argv)
 
     TQCString qtdir=getenv("QTDIR");
     TQCString home = getenv("HOME");
-    TQCString kdehome = getenv("KDEHOME");
+    TQCString kdehome = getenv("TDEHOME");
 
     filter( "$SOMEVAR/tdelibs/kio", 0, KURIFilterData::ERROR ); // note: this dir doesn't exist...
     filter( "$ETC/passwd", "/etc/passwd", KURIFilterData::LOCAL_FILE );
@@ -301,31 +301,31 @@ int main(int argc, char **argv)
     if (kdehome.isEmpty())
     {
       kdehome += "$HOME/.kde";
-      setenv("KDEHOME", kdehome.data(), 0);
+      setenv("TDEHOME", kdehome.data(), 0);
     }
 
-    filter( "$KDEHOME/share", kdehome+"/share", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/share", kdehome+"/share", KURIFilterData::LOCAL_DIR );
     KStandardDirs::makeDir( kdehome+"/a+plus" );
-    filter( "$KDEHOME/a+plus", kdehome+"/a+plus", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/a+plus", kdehome+"/a+plus", KURIFilterData::LOCAL_DIR );
 
     // BR 27788
     KStandardDirs::makeDir( kdehome+"/share/Dir With Space" );
-    filter( "$KDEHOME/share/Dir With Space", kdehome+"/share/Dir With Space", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/share/Dir With Space", kdehome+"/share/Dir With Space", KURIFilterData::LOCAL_DIR );
 
     // support for name filters (BR 93825)
-    filter( "$KDEHOME/*.txt", kdehome+"/*.txt", KURIFilterData::LOCAL_DIR );
-    filter( "$KDEHOME/[a-b]*.txt", kdehome+"/[a-b]*.txt", KURIFilterData::LOCAL_DIR );
-    filter( "$KDEHOME/a?c.txt", kdehome+"/a?c.txt", KURIFilterData::LOCAL_DIR );
-    filter( "$KDEHOME/?c.txt", kdehome+"/?c.txt", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/*.txt", kdehome+"/*.txt", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/[a-b]*.txt", kdehome+"/[a-b]*.txt", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/a?c.txt", kdehome+"/a?c.txt", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/?c.txt", kdehome+"/?c.txt", KURIFilterData::LOCAL_DIR );
     // but let's check that a directory with * in the name still works
     KStandardDirs::makeDir( kdehome+"/share/Dir*With*Stars" );
-    filter( "$KDEHOME/share/Dir*With*Stars", kdehome+"/share/Dir*With*Stars", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/share/Dir*With*Stars", kdehome+"/share/Dir*With*Stars", KURIFilterData::LOCAL_DIR );
     KStandardDirs::makeDir( kdehome+"/share/Dir?QuestionMark" );
-    filter( "$KDEHOME/share/Dir?QuestionMark", kdehome+"/share/Dir?QuestionMark", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/share/Dir?QuestionMark", kdehome+"/share/Dir?QuestionMark", KURIFilterData::LOCAL_DIR );
     KStandardDirs::makeDir( kdehome+"/share/Dir[Bracket" );
-    filter( "$KDEHOME/share/Dir[Bracket", kdehome+"/share/Dir[Bracket", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/share/Dir[Bracket", kdehome+"/share/Dir[Bracket", KURIFilterData::LOCAL_DIR );
 
-    filter( "$HOME/$KDEDIR/tdebase/kcontrol/ebrowsing", 0, KURIFilterData::ERROR );
+    filter( "$HOME/$TDEDIR/tdebase/kcontrol/ebrowsing", 0, KURIFilterData::ERROR );
     filter( "$1/$2/$3", "http://www.google.com/search?q=$1/$2/$3&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL );  // can be used as bogus or valid test. Currently triggers default search, i.e. google
     filter( "$$$$", "http://www.google.com/search?q=$$$$&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL ); // worst case scenarios.
 

@@ -57,7 +57,7 @@ public:
     * Creates a temporary directory with the name:
     *  \p \<directoryPrefix\>\<six letters\>
     *
-    * The default \p directoryPrefix is "$KDEHOME/tmp-$HOST/appname"
+    * The default \p directoryPrefix is "$TDEHOME/tmp-$HOST/appname"
     * @param directoryPrefix the prefix of the file name, or
     *        TQString::null for the default value
     * @param mode the file permissions,

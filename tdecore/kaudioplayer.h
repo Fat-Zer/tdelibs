@@ -75,7 +75,7 @@ public:
 	 * Static play function.
 	 *
 	 * @param filename Absolute path to the filename of the sound file to play.
-	 *                if not absolute, goes off KDEDIR/share/sounds/ (preferred)
+	 *                if not absolute, goes off TDEDIR/share/sounds/ (preferred)
 	 */
 	static void play(const TQString &filename);
 

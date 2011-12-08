@@ -388,7 +388,7 @@ int KDEsuClient::stopServer()
 static TQString findDaemon()
 {
     TQString daemon = locate("bin", "tdesud");
-    if (daemon.isEmpty()) // if not in KDEDIRS, rely on PATH
+    if (daemon.isEmpty()) // if not in TDEDIRS, rely on PATH
 	daemon = KStandardDirs::findExe("tdesud");
 
     if (daemon.isEmpty())

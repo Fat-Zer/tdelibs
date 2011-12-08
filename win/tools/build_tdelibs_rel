@@ -16,7 +16,7 @@ echo "-------------------------------------------------"
 echo "Building Release Version of KDElibs/win32"
 echo "Source directory: \$KDELIBS = $KDELIBS"
 echo "Version: $KDE_VER_MAJ.$KDE_VER_MIN.$KDE_VER_PAT"
-echo "Destination directory: \$KDEDIR = $KDEDIR"
+echo "Destination directory: \$TDEDIR = $TDEDIR"
 if [ -n $noclean ] ; then
 	echo "Options: noclean"
 fi

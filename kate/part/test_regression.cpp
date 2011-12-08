@@ -404,7 +404,7 @@ int main(int argc, char *argv[])
 
     TQString kh("/var/tmp/%1_kate_non_existent");
     kh = kh.arg( pw->pw_name );
-    setenv( "KDEHOME", kh.latin1(), 1 );
+    setenv( "TDEHOME", kh.latin1(), 1 );
     setenv( "LC_ALL", "C", 1 );
     setenv( "LANG", "C", 1 );
 

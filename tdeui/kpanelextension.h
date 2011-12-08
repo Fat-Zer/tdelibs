@@ -43,7 +43,7 @@ class KPanelExtensionPrivate;
  * external wrapper process.
  *
  * The panel locates available extensions by searching for extension desktop
- * files in (ALL_KDEDIRS)/share/apps/kicker/extensions. Every panel extension should
+ * files in (ALL_TDEDIRS)/share/apps/kicker/extensions. Every panel extension should
  * install a desktop file there to be recognized by the panel.
  *
  * Besides standard keys like "Name", "Comment" and "Icon" there are

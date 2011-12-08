@@ -28,10 +28,10 @@ This utility helps to have some configuration options available in starttde
 without the need to launch anything linked to KDE libraries (which may need
 some time to load).
 
-The configuration options are written to $KDEHOME/share/config/startupconfigkeys,
+The configuration options are written to $TDEHOME/share/config/startupconfigkeys,
 one option per line, as <file> <group> <key> <default>. It is possible to
 use ' for quoting multiword entries. Values of these options will be written
-to $KDEHOME/share/config/startupconfig as a shell script that will set
+to $TDEHOME/share/config/startupconfig as a shell script that will set
 the values to shell variables, named <file>_<group>_<key> (all spaces replaced
 by underscores, everything lowercase). So e.g. line
 "ksplashrc KSplash Theme Default" may result in "ksplashrc_ksplash_theme=Default".
@@ -76,8 +76,8 @@ Otherwise kdostartupconfig is launched to create or update all the necessary fil
 int main()
     {
     char kdehome[ 1024 ];
-    if( getenv( "KDEHOME" ))
-        strlcpy( kdehome, getenv( "KDEHOME" ), 1024 );
+    if( getenv( "TDEHOME" ))
+        strlcpy( kdehome, getenv( "TDEHOME" ), 1024 );
     else if( getenv( "HOME" ))
         {
         strlcpy( kdehome, getenv( "HOME" ), 1024 );

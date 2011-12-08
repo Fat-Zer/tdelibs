@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
 
 
    //
-   debug("\nTrying findByURL for $KDEDIR/bin/kdesktop");
+   debug("\nTrying findByURL for $TDEDIR/bin/kdesktop");
    KMimeType::Ptr mf  = KMimeType::findByURL( KStandardDirs::findExe( "kdesktop" ), 0,
 				 true, false );
    assert( mf );

@@ -24,17 +24,17 @@ for its applications. Resources range from icons, wallpapers, fonts to
 sounds, menu-descriptions and configuration files. 
 
 In KDE1 there were two locations were resources could be located: The 
-resources provided by the system were located under $KDEDIR and user-
+resources provided by the system were located under $TDEDIR and user-
 specific resources were located under $HOME/.kde.
 
 In KDE2 resource management has been largely abstracted by the introduction
 of the KStandardDirs class and has become much more flexible. The user /
 administrator can now specify a variable number of locations where resources
-can be found. A list of locations can either be specified via $KDEDIRS
+can be found. A list of locations can either be specified via $TDEDIRS
 (notice the extra 'S'), via /etc/kderc and even via the kdeglobals config 
 file. The location where user-specific resources can be found can be
-set with $KDEHOME (The default is $HOME/.kde). Changes made by the user
-are always written back to $KDEHOME.
+set with $TDEHOME (The default is $HOME/.kde). Changes made by the user
+are always written back to $TDEHOME.
 
 Both KDE1 and KDE2 feature so called "cascading configuration files": There
 can be multiple configuration files with the same name in the various 
@@ -42,29 +42,29 @@ locations for (config) resources, when that is the case, the information of
 all these configuration files is combined on a key by key basis. If the same
 key (within a certain group) is defined in more than one place, the value
 of the key for the config file that was read last will override any previously
-read values. Configuration files under $KDEHOME are always read last. This
+read values. Configuration files under $TDEHOME are always read last. This
 ensures that after a configuration entry is written, the same value wil be
 read back.
 
 In KDE3 two important changes have been made:
 
 * Default values are no longer written.
-When a configuration file in a location other than $KDEHOME defines a value 
+When a configuration file in a location other than $TDEHOME defines a value 
 for a key and the application subsequently writes out a new configuration file
-to $KDEHOME, that configuration file will only contain an entry for the key
+to $TDEHOME, that configuration file will only contain an entry for the key
 if its value differs from the value read from the other file.
 
 This counters the problem that changing default configuration files under 
-$KDEDIR would not take effect for users, since these users would most likely
-have their own copy of these settings under $KDEHOME. KDE3 will make sure 
-not to copy these settings so changes made under $KDEDIR will affect all users
+$TDEDIR would not take effect for users, since these users would most likely
+have their own copy of these settings under $TDEHOME. KDE3 will make sure 
+not to copy these settings so changes made under $TDEDIR will affect all users
 that haven't explicitly changed the affected settings to something else.
 
 * Configuration entries can be marked "immutable".
 Starting with KDE3, configuration entries can be marked "immutable". When a
 configuration entry is immutable it means that configuration files that are
 read later will not be able to override its value. Immutable entries cannot
-be changed via KConfig and if the entry is present under $KDEHOME it will 
+be changed via KConfig and if the entry is present under $TDEHOME it will 
 be ignored.
 
 Entries can be marked immutable on 4 different levels:
@@ -383,8 +383,8 @@ shell_access
           option (Alt-F2) can be used to run shell-commands and arbitrary  
           executables. Likewise, executables placed in the user's
           Autostart folder will no longer be executed. Applications can
-          still be autostarted by placing .desktop files in the $KDEHOME/Autostart
-          or $KDEDIR/share/autostart directory.
+          still be autostarted by placing .desktop files in the $TDEHOME/Autostart
+          or $TDEDIR/share/autostart directory.
           See also run_desktop_files.
 
 custom_config 
@@ -416,13 +416,13 @@ run_desktop_files
           part of the default desktop, KDE menu, registered services and
           autostarting services.
           * The default desktop includes the files under 
-            $KDEDIR/share/kdesktop/Desktop but _NOT_ the files under
+            $TDEDIR/share/kdesktop/Desktop but _NOT_ the files under
             $HOME/Desktop. 
-          * The KDE menu includes all files under $KDEDIR/share/applnk and
+          * The KDE menu includes all files under $TDEDIR/share/applnk and
             $XDGDIR/applications
-          * Registered services includes all files under $KDEDIR/share/services. 
-          * Autostarting services include all files under $KDEDIR/share/autostart 
-            but _NOT_ the files under $KDEHOME/Autostart
+          * Registered services includes all files under $TDEDIR/share/services. 
+          * Autostarting services include all files under $TDEDIR/share/autostart 
+            but _NOT_ the files under $TDEHOME/Autostart
 
           You probably also want to activate the following resource
           restictions:
@@ -432,7 +432,7 @@ run_desktop_files
           "services" - To restrict registered services.
           "autostart" - To restrict autostarting services.
           Otherwise users can still execute .desktop files by placing them
-          in e.g. $KDEHOME/share/kdesktop/Desktop
+          in e.g. $TDEHOME/share/kdesktop/Desktop
 
 lineedit_text_completion
         - defines whether input lines should have the potential to remember 
@@ -553,14 +553,14 @@ Some remarks:
 KDE3 Resource Restrictions
 ==========================
 Most KDE applications make use of additional resource files that are typically
-located in directories under $KDEDIR/share. By default KDE allows users to
+located in directories under $TDEDIR/share. By default KDE allows users to
 override any of these resources by placing files in the same location 
-under $KDEHOME/share. For example, Konsole stores profiles under 
-$KDEDIR/share/apps/konsole and users can add additional profiles by 
-installing files in $KDEHOME/share/apps/konsole.
+under $TDEHOME/share. For example, Konsole stores profiles under 
+$TDEDIR/share/apps/konsole and users can add additional profiles by 
+installing files in $TDEHOME/share/apps/konsole.
 
 KDE3 Resource Restrictions make it possible to restrict the lookup of files
-to directories outside of $KDEHOME only.
+to directories outside of $TDEHOME only.
 
 The following resources are defined:
 
@@ -589,7 +589,7 @@ data_<appname> - covers the sub section for <appname> in the data resource.
 To restrict resources the kdeglobals file should contain the
 group "[KDE Resource Restrictions]", each resource can then be restricted by
 adding "<resource>=false". E.g. to restrict the "wallpaper" resource to 
-$KDEDIR/share/wallpapers one would add:
+$TDEDIR/share/wallpapers one would add:
 [KDE Resource Restrictions][$i]
 wallpaper=false
 

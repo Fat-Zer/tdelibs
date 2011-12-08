@@ -99,7 +99,7 @@ public:
     * @internal - returns update signature of database
     *
     * Signature that keeps track of changes to
-    * $KDEDIR/share/services/update_ksycoca
+    * $TDEDIR/share/services/update_ksycoca
     *
     * Touching this file causes the database to be recreated
     * from scratch.

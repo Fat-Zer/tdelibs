@@ -46,7 +46,7 @@ class KPanelMenuPrivate;
  * Finally, you also have to provide a desktop file describing your dynamic menu. The
  * relevant entries are: Name, Comment, Icon and X-KDE-Library (which contains the
  * library name without any extension). This desktop file has to be installed in
- * $KDEDIR/share/apps/kicker/menuext/.
+ * $TDEDIR/share/apps/kicker/menuext/.
  *
  * @author The kicker maintainers, Michael Goffioul <tdeprint@swing.be>
  */

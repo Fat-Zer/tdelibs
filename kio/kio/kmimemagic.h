@@ -82,7 +82,7 @@ protected:
  *
  *
  * Unless specified otherwise, KMimeMagic uses
- * $KDEDIR/share/mimelnk/magic for this purpose.
+ * $TDEDIR/share/mimelnk/magic for this purpose.
  *
  * To make KMimeMagic restore the 'atime' of a file after it opened it,
  * add its directory in kmimemagicrc like:

@@ -165,7 +165,7 @@ public:
    * is stored.
    *
    * This is a relative path if the desktop entry was found in any
-   * of the locations pointed to by $KDEDIRS (e.g. "Internet/kppp.desktop")
+   * of the locations pointed to by $TDEDIRS (e.g. "Internet/kppp.desktop")
    * It is a full path if the desktop entry originates from another
    * location.
    * @return the path of the service's desktop file,

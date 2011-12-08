@@ -39,7 +39,7 @@
  * instead of a type of file.
  * For instance, KOfficeFilter is a service type.
  * It is associated to services according to the user profile (kuserprofile.h).
- * Service types are stored as desktop files in $KDEHOME/share/servicetypes.
+ * Service types are stored as desktop files in $TDEHOME/share/servicetypes.
  * @see KService
  */
 class KIO_EXPORT KServiceType : public KSycocaEntry

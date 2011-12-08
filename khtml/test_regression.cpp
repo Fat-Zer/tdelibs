@@ -440,7 +440,7 @@ int main(int argc, char *argv[])
 
     TQString kh("/var/tmp/%1_non_existant");
     kh = kh.arg( pw->pw_name );
-    setenv( "KDEHOME", kh.latin1(), 1 );
+    setenv( "TDEHOME", kh.latin1(), 1 );
     setenv( "LC_ALL", "C", 1 );
     setenv( "LANG", "C", 1 );
 

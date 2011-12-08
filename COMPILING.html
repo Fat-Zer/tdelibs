@@ -36,24 +36,24 @@ source. Qt libs then end up in /usr/local/lib/qt3/lib.
 <p>2) Where do you want to have KDE installed. A good candidate is /usr/local/kde
 
 <p>Make sure you do (if using sh, ksh, or bash):
-<pre>export KDEDIR=/usr/local/kde</pre>
+<pre>export TDEDIR=/usr/local/kde</pre>
 
 <p>With csh or tcsh the following is more appropriate:
 
-<pre>setenv KDEDIR /usr/local/kde</pre>
+<pre>setenv TDEDIR /usr/local/kde</pre>
 
 <p>Now you want to make sure that Qt and KDE libraries are picked up correctly.
 
 <p>On systems that respond to environment variables something similar to the 
 following is appropriate:
 
-<p>export LD_LIBRARY_PATH=$KDEDIR/lib:$QTDIR/lib
+<p>export LD_LIBRARY_PATH=$TDEDIR/lib:$QTDIR/lib
 
 <p>On systems whose diety of choice is ldconfig, try:
-<pre>ldconfig -m $KDEDIR/lib
+<pre>ldconfig -m $TDEDIR/lib
 ldconfig -m $QTDIR/lib</pre>
 
-<p>You probably also want to add $KDEDIR/bin and $QTDIR/bin to your path.
+<p>You probably also want to add $TDEDIR/bin and $QTDIR/bin to your path.
 
 <p>See http://www.kde.org/kde2-and-trinity.html for tips about setting up
 KDE 3.0 next to KDE 2.x.
@@ -92,7 +92,7 @@ make</pre>
 especially if your system has more version of Qt installed. Be aware 
 that information about library paths gets saved in the "config.cache" 
 file, "Makefile.in" as well as "Makefile" files. So it can be that after 
-some struggle to get QTDIR/KDEDIR setup correctly your setup is actually 
+some struggle to get QTDIR/TDEDIR setup correctly your setup is actually 
 correct, but old -incorrect- settings are still lying around.
 
 <p>The best thing to do in such a case is to do a "make cvs-clean". This 

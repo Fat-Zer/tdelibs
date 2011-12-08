@@ -565,7 +565,7 @@ public:
    * Creates the local configuration file. The filename is fixed to
    * \c kab.config, it will be created in the local kab directory
    * (\c $HOME/.kde/share/apps/kab). Adapt the global configuration template
-   * file (\c $KDEDIR/share/apps/kab/template.config) for unusual site-specific
+   * file (\c $TDEDIR/share/apps/kab/template.config) for unusual site-specific
    * settings.
    * The method does not load the new config file.
    */

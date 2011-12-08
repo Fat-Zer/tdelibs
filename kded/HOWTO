@@ -9,7 +9,7 @@ is derived from KDEDModule. The name of a factory method always starts with
 
 It also needs to provide a desktop file that defines the service provided by
 the module. The desktop file needs to be installed under 
-$KDEDIR/share/services/kded/. The name of the desktop file must match with 
+$TDEDIR/share/services/kded/. The name of the desktop file must match with 
 the name of the DCOP object that is implemented by the module.
 
 The desktop file needs to define the library in which the module is 

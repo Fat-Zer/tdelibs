@@ -167,7 +167,7 @@ static void priorityAdd(TQStringList &prefixes, const TQString& dir, bool priori
 {
     if (priority && !prefixes.isEmpty())
     {
-        // Add in front but behind $KDEHOME
+        // Add in front but behind $TDEHOME
         TQStringList::iterator it = prefixes.begin();
         it++;
         prefixes.insert(it, 1, dir);
@@ -1253,13 +1253,13 @@ TQString KStandardDirs::kfsstnd_defaultprefix()
    if (!s->defaultprefix.isEmpty())
       return s->defaultprefix;
 #ifdef Q_WS_WIN
-   s->defaultprefix = readEnvPath("KDEDIR");
+   s->defaultprefix = readEnvPath("TDEDIR");
    if (s->defaultprefix.isEmpty()) {
       s->defaultprefix = TQFile::decodeName("c:\\kde");
       //TODO: find other location (the Registry?)
    }
 #else //UNIX
-   s->defaultprefix = KDEDIR;
+   s->defaultprefix = TDEDIR;
 #endif
    if (s->defaultprefix.isEmpty())
       kdWarning() << "KStandardDirs::kfsstnd_defaultprefix(): default KDE prefix not found!" << endl;
@@ -1287,15 +1287,15 @@ void KStandardDirs::addKDEDefaults()
 {
     TQStringList kdedirList;
 
-    // begin KDEDIRS
-    TQString kdedirs = readEnvPath("KDEDIRS");
+    // begin TDEDIRS
+    TQString kdedirs = readEnvPath("TDEDIRS");
     if (!kdedirs.isEmpty())
     {
         tokenize(kdedirList, kdedirs, TQChar(KPATH_SEPARATOR));
     }
     else
     {
-        TQString kdedir = readEnvPath("KDEDIR");
+        TQString kdedir = readEnvPath("TDEDIR");
         if (!kdedir.isEmpty())
         {
            kdedir = KShell::tildeExpand(kdedir);
@@ -1303,8 +1303,8 @@ void KStandardDirs::addKDEDefaults()
         }
     }
 
-#ifndef Q_OS_WIN //no default KDEDIR on win32 defined
-    kdedirList.append(KDEDIR);
+#ifndef Q_OS_WIN //no default TDEDIR on win32 defined
+    kdedirList.append(TDEDIR);
 #endif
 
 #ifdef __KDE_EXECPREFIX
@@ -1324,10 +1324,10 @@ void KStandardDirs::addKDEDefaults()
     if (getuid() == 0) {
       localKdeDir = readEnvPath("KDEROOTHOME");
       if (localKdeDir.isEmpty() == true)
-        localKdeDir = readEnvPath("KDEHOME");
+        localKdeDir = readEnvPath("TDEHOME");
     }
     else {
-      localKdeDir = readEnvPath("KDEHOME");
+      localKdeDir = readEnvPath("TDEHOME");
     }
     if (!localKdeDir.isEmpty())
     {
@@ -1352,7 +1352,7 @@ void KStandardDirs::addKDEDefaults()
         TQString dir = KShell::tildeExpand(*it);
 	addPrefix(dir);
     }
-    // end KDEDIRS
+    // end TDEDIRS
 
     // begin XDG_CONFIG_XXX
     TQStringList xdgdirList;

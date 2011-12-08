@@ -75,7 +75,7 @@ public:
 
     /**
      * This will set the classpath the Java process will use.  It's used as a the
-     * -cp command line option.  It adds every jar file stored in $KDEDIRS/share/apps/kjava/
+     * -cp command line option.  It adds every jar file stored in $TDEDIRS/share/apps/kjava/
      * to the classpath, and then adds the $CLASSPATH environmental variable.  This allows
      * users to simply drop the JSSE (Java Secure Sockets Extension classes into that directory
      * without having to modify the jvm configuration files.

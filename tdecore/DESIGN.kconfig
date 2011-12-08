@@ -52,7 +52,7 @@ void deleteEntry(key); // Remove entry
 
 Note that there is a subtle difference between revertToDefault() and deleteEntry().
 revertToDefault() will change the entry to the default value set by the system 
-administrator (Via e.g. $KDEDIR/share/config) or, if no such default was set,
+administrator (Via e.g. $TDEDIR/share/config) or, if no such default was set,
 non-existant.
 deleteEntry() will make the entry non-existant.
 
@@ -123,7 +123,7 @@ mandatory if enums become an explicit type.
 
 
 Instead of relying on the defaults that are hard-coded in the application, 
-rely on default configuration files being installed in $KDEDIR. The technical
+rely on default configuration files being installed in $TDEDIR. The technical
 changes required for this are very minimal, it is mostly a change in policy.
 
 Type information can be provide by preceding every entry with a formalized 

@@ -40,7 +40,7 @@ namespace KParts
  *
  * If you want this plugin to be used by a part, you need to
  * install the rc file under the directory
- * "data" (KDEDIR/share/apps usually)+"/instancename/kpartplugins/"
+ * "data" (TDEDIR/share/apps usually)+"/instancename/kpartplugins/"
  * where instancename is the name of the part's instance.
  *
  * You should also install a "plugin info" .desktop file with the same name.

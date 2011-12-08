@@ -36,7 +36,7 @@
 #define HAVE_SYS_TIME_H 1
 #endif
 
-/*#define KDEDIR "F:\\KDE"  TODO */
+/*#define TDEDIR "F:\\KDE"  TODO */
 
 #define KDELIBSUFF ""
 

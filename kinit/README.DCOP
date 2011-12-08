@@ -34,8 +34,8 @@ serviceResult start_service_by_name(QString serviceName, QStringList url)
  * Start a service by desktop path.
  *
  * 'serviceName' refers to a desktop file describing the service.
- * This may be an absolute path or a path relative to $KDEDIRS/applnk
- * and/or $KDEDIRS/services
+ * This may be an absolute path or a path relative to $TDEDIRS/applnk
+ * and/or $TDEDIRS/services
  * E.g. it should have the form "Applications/korganizer.desktop" or
  * "/opt/kde/share/applnk/Applications/korganizer.desktop".
  *
@@ -57,8 +57,8 @@ serviceResult start_service_by_desktop_path(QString serviceName, QStringList url
  * Start a service by desktop name.
  *
  * 'serviceName' refers to a desktop file describing the service.
- * The service is looked up anywhere in $KDEDIR/applnk and/or
- * $KDEDIR/services.
+ * The service is looked up anywhere in $TDEDIR/applnk and/or
+ * $TDEDIR/services.
  * E.g. it should have the form "korganizer".
  *
  * 'url', if not empty, will be passed to the service as
