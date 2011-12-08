@@ -733,7 +733,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    if (bGlobalDatabase)
    {
      setenv("TDEHOME", "-", 1);
-     setenv("KDEROOTHOME", "-", 1);
+     setenv("TDEROOTHOME", "-", 1);
    }
 
    KApplication::disableAutoDcopRegistration();

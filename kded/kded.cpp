@@ -158,11 +158,11 @@ void Kded::initModules()
      KConfig *config = kapp->config();
      bool kde_running = !( getenv( "TDE_FULL_SESSION" ) == NULL || getenv( "TDE_FULL_SESSION" )[ 0 ] == '\0' );
     // not the same user like the one running the session (most likely we're run via sudo or something)
-    if( getenv( "KDE_SESSION_UID" ) != NULL && uid_t( atoi( getenv( "KDE_SESSION_UID" ))) != getuid())
+    if( getenv( "TDE_SESSION_UID" ) != NULL && uid_t( atoi( getenv( "TDE_SESSION_UID" ))) != getuid())
         kde_running = false;
      // Preload kded modules.
      KService::List kdedModules = KServiceType::offers("KDEDModule");
-     TQString version = getenv( "KDE_SESSION_VERSION" );
+     TQString version = getenv( "TDE_SESSION_VERSION" );
      TQStringList blacklist;
      if ( version >= "4" )
      {

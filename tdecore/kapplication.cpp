@@ -1332,8 +1332,8 @@ static void checkRestartVersion( TQSessionManager& sm )
         0, 1, False, AnyPropertyType, &type, &format, &nitems, &after, &data ) == Success ) {
         if( data != NULL )
             XFree( data );
-        if( type == XA_STRING && format == 8 ) { // session set, check if KDE_SESSION_VERSION is not set (meaning KDE3)
-            if( XGetWindowProperty( dpy, RootWindow( dpy, 0 ), XInternAtom( dpy, "KDE_SESSION_VERSION", False ),
+        if( type == XA_STRING && format == 8 ) { // session set, check if TDE_SESSION_VERSION is not set (meaning KDE3)
+            if( XGetWindowProperty( dpy, RootWindow( dpy, 0 ), XInternAtom( dpy, "TDE_SESSION_VERSION", False ),
                 0, 1, False, AnyPropertyType, &type, &format, &nitems, &after, &data ) == Success ) {
                 if( data != NULL )
                     XFree( data ); // KDE4 or newer
@@ -1385,7 +1385,7 @@ void KApplication::saveState( TQSessionManager& sm )
     // tell the session manager about our new lifecycle
     TQStringList restartCommand = sm.restartCommand();
 
-    TQCString multiHead = getenv("KDE_MULTIHEAD");
+    TQCString multiHead = getenv("TDE_MULTIHEAD");
     if (multiHead.lower() == "true") {
         // if multihead is enabled, we save our -display argument so that
         // we are restored onto the correct head... one problem with this

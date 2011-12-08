@@ -143,7 +143,7 @@ AutoStart::loadAutoStartList()
            localit != files.end();
            ++localit)
        {
-           if (((*localit).startsWith(KGlobal::dirs()->localxdgconfdir()) == true) || ((*localit).startsWith(KGlobal::dirs()->localkdedir()) == true)) {
+           if (((*localit).startsWith(KGlobal::dirs()->localxdgconfdir()) == true) || ((*localit).startsWith(KGlobal::dirs()->localtdedir()) == true)) {
                // Same local file name?
                TQString localOuter;
                TQString localInner;

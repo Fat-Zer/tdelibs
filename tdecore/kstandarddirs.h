@@ -115,8 +115,8 @@ class KStandardDirsPrivate;
  * @li TDEHOME: The directory where changes are saved to. This directory is
  *          used to search for resources first. If TDEHOME is not
  *          specified it defaults to "$HOME/.kde"
- * @li KDEROOTHOME: Like TDEHOME, but used for the root user.
- *          If KDEROOTHOME is not set it defaults to the .kde directory in the
+ * @li TDEROOTHOME: Like TDEHOME, but used for the root user.
+ *          If TDEROOTHOME is not set it defaults to the .kde directory in the
  *          home directory of root, usually "/root/.kde".
  *          Note that the setting of $HOME is ignored in this case.
  *
@@ -550,7 +550,7 @@ public:
 	 * Don't use this function if you can use locateLocal
 	 * @return the toplevel directory
 	 */
-	TQString localkdedir() const;
+	TQString localtdedir() const;
 
 	/**
 	 * @internal

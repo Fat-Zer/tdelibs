@@ -290,7 +290,7 @@ int main(int argc, char **argv)
 
     TQCString qtdir=getenv("QTDIR");
     TQCString home = getenv("HOME");
-    TQCString kdehome = getenv("TDEHOME");
+    TQCString tdehome = getenv("TDEHOME");
 
     filter( "$SOMEVAR/tdelibs/kio", 0, KURIFilterData::ERROR ); // note: this dir doesn't exist...
     filter( "$ETC/passwd", "/etc/passwd", KURIFilterData::LOCAL_FILE );
@@ -298,32 +298,32 @@ int main(int argc, char **argv)
     filter( "http://www.kde.org/$USER", "http://www.kde.org/$USER", KURIFilterData::NET_PROTOCOL ); // no expansion
 
     // Assume the default (~/.kde) if
-    if (kdehome.isEmpty())
+    if (tdehome.isEmpty())
     {
-      kdehome += "$HOME/.kde";
-      setenv("TDEHOME", kdehome.data(), 0);
+      tdehome += "$HOME/.kde";
+      setenv("TDEHOME", tdehome.data(), 0);
     }
 
-    filter( "$TDEHOME/share", kdehome+"/share", KURIFilterData::LOCAL_DIR );
-    KStandardDirs::makeDir( kdehome+"/a+plus" );
-    filter( "$TDEHOME/a+plus", kdehome+"/a+plus", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/share", tdehome+"/share", KURIFilterData::LOCAL_DIR );
+    KStandardDirs::makeDir( tdehome+"/a+plus" );
+    filter( "$TDEHOME/a+plus", tdehome+"/a+plus", KURIFilterData::LOCAL_DIR );
 
     // BR 27788
-    KStandardDirs::makeDir( kdehome+"/share/Dir With Space" );
-    filter( "$TDEHOME/share/Dir With Space", kdehome+"/share/Dir With Space", KURIFilterData::LOCAL_DIR );
+    KStandardDirs::makeDir( tdehome+"/share/Dir With Space" );
+    filter( "$TDEHOME/share/Dir With Space", tdehome+"/share/Dir With Space", KURIFilterData::LOCAL_DIR );
 
     // support for name filters (BR 93825)
-    filter( "$TDEHOME/*.txt", kdehome+"/*.txt", KURIFilterData::LOCAL_DIR );
-    filter( "$TDEHOME/[a-b]*.txt", kdehome+"/[a-b]*.txt", KURIFilterData::LOCAL_DIR );
-    filter( "$TDEHOME/a?c.txt", kdehome+"/a?c.txt", KURIFilterData::LOCAL_DIR );
-    filter( "$TDEHOME/?c.txt", kdehome+"/?c.txt", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/*.txt", tdehome+"/*.txt", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/[a-b]*.txt", tdehome+"/[a-b]*.txt", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/a?c.txt", tdehome+"/a?c.txt", KURIFilterData::LOCAL_DIR );
+    filter( "$TDEHOME/?c.txt", tdehome+"/?c.txt", KURIFilterData::LOCAL_DIR );
     // but let's check that a directory with * in the name still works
-    KStandardDirs::makeDir( kdehome+"/share/Dir*With*Stars" );
-    filter( "$TDEHOME/share/Dir*With*Stars", kdehome+"/share/Dir*With*Stars", KURIFilterData::LOCAL_DIR );
-    KStandardDirs::makeDir( kdehome+"/share/Dir?QuestionMark" );
-    filter( "$TDEHOME/share/Dir?QuestionMark", kdehome+"/share/Dir?QuestionMark", KURIFilterData::LOCAL_DIR );
-    KStandardDirs::makeDir( kdehome+"/share/Dir[Bracket" );
-    filter( "$TDEHOME/share/Dir[Bracket", kdehome+"/share/Dir[Bracket", KURIFilterData::LOCAL_DIR );
+    KStandardDirs::makeDir( tdehome+"/share/Dir*With*Stars" );
+    filter( "$TDEHOME/share/Dir*With*Stars", tdehome+"/share/Dir*With*Stars", KURIFilterData::LOCAL_DIR );
+    KStandardDirs::makeDir( tdehome+"/share/Dir?QuestionMark" );
+    filter( "$TDEHOME/share/Dir?QuestionMark", tdehome+"/share/Dir?QuestionMark", KURIFilterData::LOCAL_DIR );
+    KStandardDirs::makeDir( tdehome+"/share/Dir[Bracket" );
+    filter( "$TDEHOME/share/Dir[Bracket", tdehome+"/share/Dir[Bracket", KURIFilterData::LOCAL_DIR );
 
     filter( "$HOME/$TDEDIR/tdebase/kcontrol/ebrowsing", 0, KURIFilterData::ERROR );
     filter( "$1/$2/$3", "http://www.google.com/search?q=$1/$2/$3&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL );  // can be used as bogus or valid test. Currently triggers default search, i.e. google
@@ -349,12 +349,12 @@ int main(int argc, char **argv)
     filter( sc.sprintf("gg%cпрйвет", delimiter) /* greetings in russian utf-8*/, "http://www.google.com/search?q=%D0%BF%D1%80%D0%B9%D0%B2%D0%B5%D1%82&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL );
 
     // Absolute Path tests for kshorturifilter
-    filter( "./", kdehome+"/share", KURIFilterData::LOCAL_DIR, "kshorturifilter", kdehome+"/share/" ); // cleanDirPath removes the trailing slash
-    filter( "../", kdehome, KURIFilterData::LOCAL_DIR, "kshorturifilter", kdehome+"/share" );
-    filter( "config", kdehome+"/share/config", KURIFilterData::LOCAL_DIR, "kshorturifilter", kdehome+"/share" );
+    filter( "./", tdehome+"/share", KURIFilterData::LOCAL_DIR, "kshorturifilter", tdehome+"/share/" ); // cleanDirPath removes the trailing slash
+    filter( "../", tdehome, KURIFilterData::LOCAL_DIR, "kshorturifilter", tdehome+"/share" );
+    filter( "config", tdehome+"/share/config", KURIFilterData::LOCAL_DIR, "kshorturifilter", tdehome+"/share" );
 
     // Clean up
-    KIO::NetAccess::del( kdehome, 0 );
+    KIO::NetAccess::del( tdehome, 0 );
 
     kdDebug() << "All tests done. Go home..." << endl;
     return 0;

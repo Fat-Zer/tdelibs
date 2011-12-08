@@ -553,7 +553,7 @@ void KGlobalSettings::initStatic() // should be called initPaths(). Don't put an
     }
 
     // Autostart Path
-    *s_autostartPath = KGlobal::dirs()->localkdedir() + "Autostart/";
+    *s_autostartPath = KGlobal::dirs()->localtdedir() + "Autostart/";
     *s_autostartPath = g.readPathEntry( "Autostart" , *s_autostartPath);
     *s_autostartPath = TQDir::cleanDirPath( *s_autostartPath );
     if ( !s_autostartPath->endsWith("/") )
@@ -668,7 +668,7 @@ bool KGlobalSettings::isMultiHead()
 #ifdef Q_WS_WIN
     return GetSystemMetrics(SM_CMONITORS) > 1;
 #else
-    TQCString multiHead = getenv("KDE_MULTIHEAD");
+    TQCString multiHead = getenv("TDE_MULTIHEAD");
     if (!multiHead.isEmpty()) {
         return (multiHead.lower() == "true");
     }

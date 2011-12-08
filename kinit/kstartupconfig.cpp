@@ -75,25 +75,25 @@ Otherwise kdostartupconfig is launched to create or update all the necessary fil
 
 int main()
     {
-    char kdehome[ 1024 ];
+    char tdehome[ 1024 ];
     if( getenv( "TDEHOME" ))
-        strlcpy( kdehome, getenv( "TDEHOME" ), 1024 );
+        strlcpy( tdehome, getenv( "TDEHOME" ), 1024 );
     else if( getenv( "HOME" ))
         {
-        strlcpy( kdehome, getenv( "HOME" ), 1024 );
-        strlcat( kdehome, "/.trinity", 1024  );
+        strlcpy( tdehome, getenv( "HOME" ), 1024 );
+        strlcat( tdehome, "/.trinity", 1024  );
         }
     else
         return 1;
     char filename[ 1024 ];
-    strlcpy( filename, kdehome, 1024 );
+    strlcpy( filename, tdehome, 1024 );
     strlcat( filename, "/share/config/startupconfig", 1024 );
     if( access( filename, R_OK ) != 0 )
         {
         int ret = system( "kdostartupconfig" );
         return WEXITSTATUS( ret );
         }
-    strlcpy( filename, kdehome, 1024 );
+    strlcpy( filename, tdehome, 1024 );
     strlcat( filename, "/share/config/startupconfigfiles", 1024 );
     struct stat st;
     if( stat( filename, &st ) != 0 )
@@ -108,7 +108,7 @@ int main()
         int ret = system( "kdostartupconfig" );
         return WEXITSTATUS( ret );
         }
-    strlcpy( filename, kdehome, 1024 );
+    strlcpy( filename, tdehome, 1024 );
     strlcat( filename, "/share/config/startupconfigkeys", 1024 );
     FILE* keys = fopen( filename, "r" );
     if( keys == NULL )

@@ -723,7 +723,7 @@ void KStandardDirs::createSpecialResource(const char *type)
        strlcpy(hostname, getenv("XAUTHLOCALHOSTNAME"), 255 );
    else
        gethostname(hostname, 255);
-   TQString dir = TQString("%1%2-%3").arg(localkdedir()).arg(type).arg(hostname);
+   TQString dir = TQString("%1%2-%3").arg(localtdedir()).arg(type).arg(hostname);
    char link[1024];
    link[1023] = 0;
    int result = readlink(TQFile::encodeName(dir).data(), link, 1023);
@@ -1113,7 +1113,7 @@ TQString KStandardDirs::saveLocation(const char *type,
           else if (strncmp(type, "xdgconf-", 8) == 0)
              pPath = new TQString(realPath(localxdgconfdir() + dirs->last()));
           else
-             pPath = new TQString(realPath(localkdedir() + dirs->last()));
+             pPath = new TQString(realPath(localtdedir() + dirs->last()));
        }
        else {
           dirs = absolutes.find(type);
@@ -1285,44 +1285,44 @@ TQString KStandardDirs::kfsstnd_defaultbindir()
 
 void KStandardDirs::addKDEDefaults()
 {
-    TQStringList kdedirList;
+    TQStringList tdedirList;
 
     // begin TDEDIRS
-    TQString kdedirs = readEnvPath("TDEDIRS");
-    if (!kdedirs.isEmpty())
+    TQString tdedirs = readEnvPath("TDEDIRS");
+    if (!tdedirs.isEmpty())
     {
-        tokenize(kdedirList, kdedirs, TQChar(KPATH_SEPARATOR));
+        tokenize(tdedirList, tdedirs, TQChar(KPATH_SEPARATOR));
     }
     else
     {
-        TQString kdedir = readEnvPath("TDEDIR");
-        if (!kdedir.isEmpty())
+        TQString tdedir = readEnvPath("TDEDIR");
+        if (!tdedir.isEmpty())
         {
-           kdedir = KShell::tildeExpand(kdedir);
-           kdedirList.append(kdedir);
+           tdedir = KShell::tildeExpand(tdedir);
+           tdedirList.append(tdedir);
         }
     }
 
 #ifndef Q_OS_WIN //no default TDEDIR on win32 defined
-    kdedirList.append(TDEDIR);
+    tdedirList.append(TDEDIR);
 #endif
 
 #ifdef __KDE_EXECPREFIX
     TQString execPrefix(__KDE_EXECPREFIX);
     if (execPrefix!="NONE")
-       kdedirList.append(execPrefix);
+       tdedirList.append(execPrefix);
 #endif
 #ifdef __linux__
     const TQString linuxExecPrefix = executablePrefix();
     if ( !linuxExecPrefix.isEmpty() )
-       kdedirList.append( linuxExecPrefix );
+       tdedirList.append( linuxExecPrefix );
 #endif
 
     // We treat root differently to prevent a "su" shell messing up the
     // file permissions in the user's home directory.
     TQString localKdeDir;
     if (getuid() == 0) {
-      localKdeDir = readEnvPath("KDEROOTHOME");
+      localKdeDir = readEnvPath("TDEROOTHOME");
       if (localKdeDir.isEmpty() == true)
         localKdeDir = readEnvPath("TDEHOME");
     }
@@ -1345,8 +1345,8 @@ void KStandardDirs::addKDEDefaults()
         addPrefix(localKdeDir);
     }
 
-	TQStringList::ConstIterator end(kdedirList.end());
-    for (TQStringList::ConstIterator it = kdedirList.begin();
+	TQStringList::ConstIterator end(tdedirList.end());
+    for (TQStringList::ConstIterator it = tdedirList.begin();
 	 it != end; ++it)
     {
         TQString dir = KShell::tildeExpand(*it);
@@ -1403,8 +1403,8 @@ void KStandardDirs::addKDEDefaults()
     else
     {
 	xdgdirList.clear();
-        for (TQStringList::ConstIterator it = kdedirList.begin();
-           it != kdedirList.end(); ++it)
+        for (TQStringList::ConstIterator it = tdedirList.begin();
+           it != tdedirList.end(); ++it)
         {
            TQString dir = *it;
            if (dir[dir.length()-1] != QChar('/'))
@@ -1657,7 +1657,7 @@ bool KStandardDirs::addCustomized(KConfig *config)
     return configDirsChanged;
 }
 
-TQString KStandardDirs::localkdedir() const
+TQString KStandardDirs::localtdedir() const
 {
     // Return the prefix to use for saving
     return prefixes.first();

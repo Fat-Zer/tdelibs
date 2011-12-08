@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 
     if (args->isSet("localprefix"))
     {
-        printResult(KGlobal::dirs()->localkdedir());
+        printResult(KGlobal::dirs()->localtdedir());
         return 0;
     }
 

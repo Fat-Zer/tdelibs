@@ -299,8 +299,8 @@ void KHostName::changeDcop()
 void KHostName::changeStdDirs(const TQCString &type)
 {
    // We make links to the old dirs cause we can't delete the old dirs.
-   TQCString oldDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localkdedir()).arg(type.data()).arg(oldName.data()));
-   TQCString newDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localkdedir()).arg(type.data()).arg(newName.data()));
+   TQCString oldDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localtdedir()).arg(type.data()).arg(oldName.data()));
+   TQCString newDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localtdedir()).arg(type.data()).arg(newName.data()));
 
    KDE_struct_stat st_buf;
 

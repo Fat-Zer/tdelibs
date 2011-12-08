@@ -47,7 +47,7 @@ bool KMSpecialManager::savePrinters()
 	if (getuid() == 0)
 	{
 		confname = locate("data", "tdeprint/specials.desktop");
-		if (confname.startsWith(KGlobal::dirs()->localkdedir()))
+		if (confname.startsWith(KGlobal::dirs()->localtdedir()))
 		{
 			// seems there's a problem here
 			m_mgr->setErrorMsg(i18n("A file share/tdeprint/specials.desktop was found in your "
@@ -107,7 +107,7 @@ bool KMSpecialManager::loadPrinters()
 	if (m_loaded) return true;
 
 	bool	result(true);
-	TQString	localDir = KGlobal::dirs()->localkdedir();
+	TQString	localDir = KGlobal::dirs()->localtdedir();
 	TQStringList	files = KGlobal::dirs()->findAllResources("data", "tdeprint/specials.desktop");
 	// local files should processed last, so we need to reorder the list
 	// and put local files at the end

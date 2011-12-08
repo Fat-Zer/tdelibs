@@ -100,7 +100,7 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
   char tmp_buf[PATH_MAX+1];
   int uid = getuid();
   const char *home_dir = getenv("HOME");
-  const char *kde_home = uid ? getenv("TDEHOME") : getenv("KDEROOTHOME");
+  const char *kde_home = uid ? getenv("TDEHOME") : getenv("TDEROOTHOME");
   int result;
   struct stat stat_buf;
 
