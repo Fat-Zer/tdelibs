@@ -22,7 +22,7 @@
 
 TQPixmap KURLPixmapProvider::pixmapFor( const TQString& url, int size ) {
 	KURL u;
-	if ( url.tqat(0) == '/' )
+	if ( url.at(0) == '/' )
 	    u.setPath( url );
 	else
 	    u = url;

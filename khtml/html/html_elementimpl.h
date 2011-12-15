@@ -68,7 +68,7 @@ public:
 
 protected:
     // for IMG, OBJECT and APPLET
-    void addHTMLAlignment( DOMString tqalignment );
+    void addHTMLAlignment( DOMString alignment );
 };
 
 class HTMLGenericElementImpl : public HTMLElementImpl

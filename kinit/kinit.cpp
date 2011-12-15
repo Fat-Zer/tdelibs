@@ -49,7 +49,7 @@
 #include <tqfile.h>
 #include <tqdatetime.h>
 #include <tqfileinfo.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqregexp.h>
 #include <tqfont.h>
 #include <kinstance.h>

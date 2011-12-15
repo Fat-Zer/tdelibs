@@ -34,7 +34,7 @@
 #include <tqfont.h>
 #include <tqgroupbox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqscrollbar.h>
 #include <tqstringlist.h>
 #include <tqfontdatabase.h>
@@ -331,8 +331,8 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
     setSizeIsRelative( *sizeIsRelativeState );
 
   KConfig *config = KGlobal::config();
-  KConfigGroupSaver saver(config, TQString::tqfromLatin1("General"));
-  showXLFDArea(config->readBoolEntry(TQString::tqfromLatin1("fontSelectorShowXLFD"), false));
+  KConfigGroupSaver saver(config, TQString::fromLatin1("General"));
+  showXLFDArea(config->readBoolEntry(TQString::fromLatin1("fontSelectorShowXLFD"), false));
 }
 
 KFontChooser::~KFontChooser()
@@ -464,7 +464,7 @@ void KFontChooser::toggled_checkbox()
 void KFontChooser::family_chosen_slot(const TQString& family)
 {
     TQFontDatabase dbase;
-    TQStringList styles = TQStringList(dbase.tqstyles(family));
+    TQStringList styles = TQStringList(dbase.styles(family));
     styleListBox->clear();
     currentStyles.clear();
     for ( TQStringList::Iterator it = styles.begin(); it != styles.end(); ++it ) {
@@ -526,7 +526,7 @@ void KFontChooser::style_chosen_slot(const TQString& style)
         fillSizeList();
     } else {                                // is bitmap font.
         //sampleEdit->setPaletteBackgroundPixmap( BitmapPixmap ); // TODO
-        TQValueList<int> sizes = dbase.tqsmoothSizes(familyListBox->currentText(), currentStyles[currentStyle]);
+        TQValueList<int> sizes = dbase.smoothSizes(familyListBox->currentText(), currentStyles[currentStyle]);
         if(sizes.count() > 0) {
             TQValueList<int>::iterator it;
             diff=1000;
@@ -641,7 +641,7 @@ void KFontChooser::setupDisplay()
 void KFontChooser::getFontList( TQStringList &list, uint fontListCriteria)
 {
   TQFontDatabase dbase;
-  TQStringList lstSys(dbase.tqfamilies());
+  TQStringList lstSys(dbase.families());
 
   // if we have criteria; then check fonts before adding
   if (fontListCriteria)
@@ -681,13 +681,13 @@ void KFontChooser::addFont( TQStringList &list, const char *xfont )
   if ( !ptr )
     return;
 
-  TQString font = TQString::tqfromLatin1(ptr + 1);
+  TQString font = TQString::fromLatin1(ptr + 1);
 
   int pos;
   if ( ( pos = font.find( '-' ) ) > 0 ) {
     font.truncate( pos );
 
-    if ( font.find( TQString::tqfromLatin1("open look"), 0, false ) >= 0 )
+    if ( font.find( TQString::fromLatin1("open look"), 0, false ) >= 0 )
       return;
 
     TQStringList::Iterator it = list.begin();

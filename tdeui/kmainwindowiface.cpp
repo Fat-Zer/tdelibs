@@ -25,7 +25,7 @@
 #include <kdcoppropertyproxy.h>
 #include <kmainwindow.h>
 #include <kaction.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 
 
 KMainWindowInterface::KMainWindowInterface(KMainWindow * mainWindow)
@@ -135,7 +135,7 @@ int KMainWindowInterface::getWinID()
 }
 void KMainWindowInterface::grabWindowToClipBoard()
 {
-	TQClipboard *clipboard = TQApplication::tqclipboard();
+	TQClipboard *clipboard = TQApplication::clipboard();
 	clipboard->setPixmap(TQPixmap::grabWidget(m_MainWindow));
 }
 void KMainWindowInterface::hide()

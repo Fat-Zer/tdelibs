@@ -148,14 +148,14 @@ int KSyntaxHighlighter::highlightParagraph( const TQString &text, int )
     }
 
     TQString simplified = text;
-    simplified = TQString(simplified.replace( TQRegExp( "\\s" ), TQString() )).replace( '|', TQString::tqfromLatin1(">") );
-    while ( simplified.startsWith( TQString::tqfromLatin1(">>>>") ) )
+    simplified = TQString(simplified.replace( TQRegExp( "\\s" ), TQString() )).replace( '|', TQString::fromLatin1(">") );
+    while ( simplified.startsWith( TQString::fromLatin1(">>>>") ) )
 	simplified = simplified.mid(3);
-    if	( simplified.startsWith( TQString::tqfromLatin1(">>>") ) || simplified.startsWith( TQString::tqfromLatin1("> >	>") ) )
+    if	( simplified.startsWith( TQString::fromLatin1(">>>") ) || simplified.startsWith( TQString::fromLatin1("> >	>") ) )
 	setFormat( 0, text.length(), d->col2 );
-    else if	( simplified.startsWith( TQString::tqfromLatin1(">>") ) || simplified.startsWith( TQString::tqfromLatin1("> >") ) )
+    else if	( simplified.startsWith( TQString::fromLatin1(">>") ) || simplified.startsWith( TQString::fromLatin1("> >") ) )
 	setFormat( 0, text.length(), d->col3 );
-    else if	( simplified.startsWith( TQString::tqfromLatin1(">") ) )
+    else if	( simplified.startsWith( TQString::fromLatin1(">") ) )
 	setFormat( 0, text.length(), d->col4 );
     else
 	setFormat( 0, text.length(), d->col5 );

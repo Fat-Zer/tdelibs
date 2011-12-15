@@ -32,7 +32,7 @@ bool _expandvars = false;
 
 TQString expandvars(const char *_input)
 {
-    TQString result = TQString::tqfromLatin1(_input);
+    TQString result = TQString::fromLatin1(_input);
     if (!_expandvars)
         return result;
 

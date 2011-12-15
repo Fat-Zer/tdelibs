@@ -24,7 +24,7 @@
 #include <tqtoolbutton.h>
 #include <tqheader.h>
 #include <tqtooltip.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwhatsthis.h>
 #include <klistview.h>
 #include <klocale.h>

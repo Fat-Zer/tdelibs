@@ -11,7 +11,7 @@
 #include "helpwindow.h"
 #include <kapplication.h>
 #include <tqwindowsstyle.h>
-#include <tqstylesheet.h>
+#include <stylesheet.h>
 #include <stdlib.h>
 
 

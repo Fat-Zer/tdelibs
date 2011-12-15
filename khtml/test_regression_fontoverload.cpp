@@ -98,7 +98,7 @@ QFakeFontEngine::QFakeFontEngine( XFontStruct *fs, const char *name, int size )
     : QFontEngineXLFD( fs,  name,  0)
 {
     pixS = size;
-    ahem = TQString::tqfromLatin1(name).contains("ahem");
+    ahem = TQString::fromLatin1(name).contains("ahem");
 }
 
 QFakeFontEngine::~QFakeFontEngine()
@@ -337,7 +337,7 @@ void DCOPClient::processSocketData( int )
 }
 
 #include <tqapplication.h>
-#include <tqpalette.h>
+#include <palette.h>
 
 KDE_EXPORT void TQApplication::setPalette( const TQPalette &, bool ,
                                const char*  )

@@ -34,7 +34,7 @@
 #include <tqdatetimeedit.h>
 #include <tqpixmap.h>
 #include <tqimage.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqvalidator.h>
 
 /*

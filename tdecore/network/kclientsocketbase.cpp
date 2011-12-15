@@ -148,7 +148,7 @@ bool KClientSocketBase::lookup()
     {
       if (d->localResolver.serviceName().isNull() &&
 	  !d->localResolver.nodeName().isNull())
-	d->localResolver.setServiceName(TQString::tqfromLatin1(""));
+	d->localResolver.setServiceName(TQString::fromLatin1(""));
 
       // don't restart the lookups if they had succeeded and
       // the input values weren't changed

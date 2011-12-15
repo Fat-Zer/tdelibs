@@ -26,7 +26,7 @@
 #include <stdlib.h>
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kconfig.h>
 #include <ksimpleconfig.h>
@@ -201,7 +201,7 @@ KonfUpdate::log()
       }
    }
    
-   (*m_textStream) << TQDateTime::tqcurrentDateTime().toString( Qt::ISODate ) << " ";
+   (*m_textStream) << TQDateTime::currentDateTime().toString( Qt::ISODate ) << " ";
    
    return *m_textStream;
 }

@@ -20,7 +20,7 @@
 #include "qdirlineedit.h"
 
 #include <tqlineedit.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <kpushbutton.h>
 #include <kfiledialog.h>
 #include <kiconloader.h>

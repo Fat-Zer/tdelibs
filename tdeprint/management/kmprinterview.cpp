@@ -24,7 +24,7 @@
 #include "kmtimer.h"
 #include "kmmanager.h"
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpopupmenu.h>
 #include <kaction.h>
 #include <klocale.h>

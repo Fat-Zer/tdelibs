@@ -328,14 +328,14 @@ NodeImpl *HTMLFormCollectionImpl::item( unsigned long index ) const
     TQPtrList<HTMLGenericFormElementImpl>& l = static_cast<HTMLFormElementImpl*>( m_refNode )->formElements;
     for (unsigned i = strt; i < l.count(); i++)
     {
-        if (l.tqat( i )->isEnumeratable())
+        if (l.at( i )->isEnumeratable())
         {
             if (dist == 0)
             {
                 //Found it!
                 m_cache->position      = index;
                 m_cache->current.index = i;
-                return l.tqat( i );
+                return l.at( i );
             }
             else
                 --dist;
@@ -349,7 +349,7 @@ unsigned long HTMLFormCollectionImpl::calcLength(NodeImpl *start) const
     unsigned length = 0;
     TQPtrList<HTMLGenericFormElementImpl> l = static_cast<HTMLFormElementImpl*>( start )->formElements;
     for ( unsigned i = 0; i < l.count(); i++ )
-        if ( l.tqat( i )->isEnumeratable() )
+        if ( l.at( i )->isEnumeratable() )
             ++length;
     return length;
 }
@@ -369,7 +369,7 @@ NodeImpl *HTMLFormCollectionImpl::nextNamedItem( const DOMString &name ) const
     //Go through the list, trying to find the appropriate named form element.
     for ( ; currentNamePos < l.count(); ++currentNamePos )
     {
-        HTMLGenericFormElementImpl* el = l.tqat(currentNamePos);
+        HTMLGenericFormElementImpl* el = l.at(currentNamePos);
         if (el->isEnumeratable() &&
              ((el->getAttribute(ATTR_ID)   == name) ||
               (el->getAttribute(ATTR_NAME) == name)))
@@ -387,7 +387,7 @@ NodeImpl *HTMLFormCollectionImpl::nextNamedItem( const DOMString &name ) const
     TQPtrList<HTMLImageElementImpl>& il = static_cast<HTMLFormElementImpl*>( m_refNode )->imgElements;
     for ( ; currentNameImgPos < il.count(); ++currentNameImgPos )
     {
-        HTMLImageElementImpl* el = il.tqat(currentNameImgPos);
+        HTMLImageElementImpl* el = il.at(currentNameImgPos);
         if ((el->getAttribute(ATTR_ID)   == name) ||
             (el->getAttribute(ATTR_NAME) == name))
         {

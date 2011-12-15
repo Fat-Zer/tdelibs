@@ -102,6 +102,6 @@ TextListValue::numValues()
 TextListValue::value(unsigned int i)
 {
 	parse();
-	return valueList_.tqat(i);
+	return valueList_.at(i);
 }
 

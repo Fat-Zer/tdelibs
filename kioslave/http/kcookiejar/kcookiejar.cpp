@@ -84,12 +84,12 @@
 #define READ_BUFFER_SIZE 8192
 #define IP_ADDRESS_EXPRESSION "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
 
-// Note with respect to TQString::tqfromLatin1( )
+// Note with respect to TQString::fromLatin1( )
 // Cookies are stored as 8 bit data and passed to kio_http as
 // latin1 regardless of their actual encoding.
 
 // L1 is used to indicate latin1 constants
-#define L1(x) TQString::tqfromLatin1(x)
+#define L1(x) TQString::fromLatin1(x)
 
 template class TQPtrList<KHttpCookie>;
 template class TQPtrDict<KHttpCookieList>;
@@ -154,9 +154,9 @@ KHttpCookie::KHttpCookie(const TQString &_host,
 //
 // Checks if a cookie has been expired
 //
-bool    KHttpCookie::isExpired(time_t tqcurrentDate)
+bool    KHttpCookie::isExpired(time_t currentDate)
 {
-    return (mExpireDate != 0) && (mExpireDate < tqcurrentDate);
+    return (mExpireDate != 0) && (mExpireDate < currentDate);
 }
 
 //
@@ -479,7 +479,7 @@ static const char * parseNameValue(const char *header,
             // No '=' sign -> use string as the value, name is empty
             // (behavior found in Mozilla and IE)
             Name = "";
-            Value = TQString::tqfromLatin1(header);
+            Value = TQString::fromLatin1(header);
             Value.truncate( s - header );
             Value = Value.stripWhiteSpace();
             return (s);
@@ -516,12 +516,12 @@ static const char * parseNameValue(const char *header,
             if ((*s=='\0') || (*s=='\n'))
             {
                 // End of Name
-                Value = TQString::tqfromLatin1(header);
+                Value = TQString::fromLatin1(header);
                 Value.truncate(s - header);
                 return (s);
             }
         }
-        Value = TQString::tqfromLatin1(header);
+        Value = TQString::fromLatin1(header);
         // *s == '\"';
         if (keepQuotes)
            Value.truncate( ++s - header );
@@ -542,7 +542,7 @@ static const char * parseNameValue(const char *header,
         while ((*s != '\0') && (*s != ';') && (*s != '\n'))
             s++;
         // End of Name
-        Value = TQString::tqfromLatin1(header);
+        Value = TQString::fromLatin1(header);
         Value.truncate( s - header );
         Value = Value.stripWhiteSpace();
     }
@@ -618,7 +618,7 @@ void KCookieJar::extractDomains(const TQString &_fqdn,
        return;
     }
     // Return numeric IPv4 addresses as is...
-    if ((_fqdn.tqat(0) >= TQChar('0')) && (_fqdn.tqat(0) <= TQChar('9')))
+    if ((_fqdn.at(0) >= TQChar('0')) && (_fqdn.at(0) <= TQChar('9')))
     {
        if (_fqdn.find(TQRegExp(IP_ADDRESS_EXPRESSION)) > -1)
        {
@@ -1457,11 +1457,11 @@ bool KCookieJar::loadCookies(const TQString &_filename)
             if ((expDate == 0) || (expDate < curTime))
                 continue;
 
-            KHttpCookie *cookie = new KHttpCookie(TQString::tqfromLatin1(host),
-                                                  TQString::tqfromLatin1(domain), 
-                                                  TQString::tqfromLatin1(path), 
-                                                  TQString::tqfromLatin1(name),
-                                                  TQString::tqfromLatin1(value), 
+            KHttpCookie *cookie = new KHttpCookie(TQString::fromLatin1(host),
+                                                  TQString::fromLatin1(domain), 
+                                                  TQString::fromLatin1(path), 
+                                                  TQString::fromLatin1(name),
+                                                  TQString::fromLatin1(value), 
                                                   expDate, protVer,
                                                   secure, httpOnly, explicitPath);
             addCookie(cookie);

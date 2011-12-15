@@ -134,7 +134,7 @@ void SMTP::sendMessage(void)
         kdDebug() << "state was == FINISHED\n" << endl;
         finished = false;
         state = IN;
-        writeString = TQString::tqfromLatin1("helo %1\r\n").arg(domainName);
+        writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
         write(sock->socket(), writeString.ascii(), writeString.length());
     }
     if(connected){
@@ -262,7 +262,7 @@ void SMTP::processLine(TQString *line)
     switch(stat){
     case GREET:     //220
         state = IN;
-        writeString = TQString::tqfromLatin1("helo %1\r\n").arg(domainName);
+        writeString = TQString::fromLatin1("helo %1\r\n").arg(domainName);
         kdDebug() << "out: " << writeString << endl;
 	write(sock->socket(), writeString.ascii(), writeString.length());
         break;
@@ -273,19 +273,19 @@ void SMTP::processLine(TQString *line)
         switch(state){
         case IN:
             state = READY;
-            writeString = TQString::tqfromLatin1("mail from: %1\r\n").arg(senderAddress);
+            writeString = TQString::fromLatin1("mail from: %1\r\n").arg(senderAddress);
             kdDebug() << "out: " << writeString << endl;
             write(sock->socket(), writeString.ascii(), writeString.length());
             break;
         case READY:
             state = SENTFROM;
-            writeString = TQString::tqfromLatin1("rcpt to: %1\r\n").arg(recipientAddress);
+            writeString = TQString::fromLatin1("rcpt to: %1\r\n").arg(recipientAddress);
              kdDebug() << "out: " << writeString << endl;
             write(sock->socket(), writeString.ascii(), writeString.length());
             break;
         case SENTFROM:
             state = SENTTO;
-            writeString = TQString::tqfromLatin1("data\r\n");
+            writeString = TQString::fromLatin1("data\r\n");
              kdDebug() << "out: " << writeString << endl;
             write(sock->socket(), writeString.ascii(), writeString.length());
             break;
@@ -305,11 +305,11 @@ void SMTP::processLine(TQString *line)
         break;
     case READYDATA: //354
         state = DATA;
-        writeString = TQString::tqfromLatin1("Subject: %1\r\n").arg(messageSubject);
+        writeString = TQString::fromLatin1("Subject: %1\r\n").arg(messageSubject);
         writeString += messageHeader;
         writeString += "\r\n";
         writeString += messageBody;
-        writeString += TQString::tqfromLatin1(".\r\n");
+        writeString += TQString::fromLatin1(".\r\n");
         kdDebug() << "out: " << writeString;
         write(sock->socket(), writeString.ascii(), writeString.length());
         break;

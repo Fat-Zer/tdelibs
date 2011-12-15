@@ -18,7 +18,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 
 #include <kapplication.h>

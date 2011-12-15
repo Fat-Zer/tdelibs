@@ -155,7 +155,7 @@ public:
 private:
     TQString      m_data;
     uint         m_pos;
-    const TQChar *m_tqunicode;
+    const TQChar *m_unicode;
     bool         m_finished;
 };
 

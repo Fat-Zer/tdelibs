@@ -28,7 +28,7 @@
 #include <ksycoca.h>
 
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>
@@ -195,9 +195,9 @@ void KMimeTypeChooser::editMimeType()
   // thanks to libkonq/konq_operations.cc
   connect( KSycoca::self(), TQT_SIGNAL(databaseChanged()),
            this, TQT_SLOT(slotSycocaDatabaseChanged()) );
-  TQString keditfiletype = TQString::tqfromLatin1("keditfiletype");
+  TQString keditfiletype = TQString::fromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype
-                    + " --parent " + TQString::number( (ulong)tqtopLevelWidget()->winId())
+                    + " --parent " + TQString::number( (ulong)topLevelWidget()->winId())
                     + " " + KProcess::quote(mt),
                     keditfiletype, keditfiletype /*unused*/);
 }

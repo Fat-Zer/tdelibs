@@ -379,7 +379,7 @@ void FileProtocol::put( const KURL& url, int _mode, bool _overwrite, bool _resum
     kdDebug(7101) << "put(): " << dest_orig << ", mode=" << _mode << endl;
 
     TQString dest_part( dest_orig );
-    dest_part += TQString::tqfromLatin1(".part");
+    dest_part += TQString::fromLatin1(".part");
     TQCString _dest_part( TQFile::encodeName(dest_part));
 
     KDE_struct_stat buff_orig;
@@ -809,7 +809,7 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
     ut.modtime = buff_src.st_mtime;
     if ( ::utime( _dest.data(), &ut ) != 0 )
     {
-        kdWarning() << TQString(TQString::tqfromLatin1("Couldn't preserve access and modification time for\n%1").arg( dest.path() )) << endl;
+        kdWarning() << TQString(TQString::fromLatin1("Couldn't preserve access and modification time for\n%1").arg( dest.path() )) << endl;
     }
 
     processedSize( buff_src.st_size );
@@ -859,7 +859,7 @@ void FileProtocol::rename( const KURL &src, const KURL &dest,
             error( KIO::ERR_ACCESS_DENIED, dest.path() );
         }
         else if (errno == EXDEV) {
-           error( KIO::ERR_UNSUPPORTED_ACTION, TQString::tqfromLatin1("rename"));
+           error( KIO::ERR_UNSUPPORTED_ACTION, TQString::fromLatin1("rename"));
         }
         else if (errno == EROFS) { // The file is on a read-only filesystem
            error( KIO::ERR_CANNOT_DELETE, src.path() );
@@ -964,8 +964,8 @@ TQString FileProtocol::getUserName( uid_t uid )
     if ( !temp ) {
         struct passwd *user = getpwuid( uid );
         if ( user ) {
-            usercache.insert( uid, new TQString(TQString::tqfromLatin1(user->pw_name)) );
-            return TQString::tqfromLatin1( user->pw_name );
+            usercache.insert( uid, new TQString(TQString::fromLatin1(user->pw_name)) );
+            return TQString::fromLatin1( user->pw_name );
         }
         else
             return TQString::number( uid );
@@ -981,8 +981,8 @@ TQString FileProtocol::getGroupName( gid_t gid )
     if ( !temp ) {
         struct group *grp = getgrgid( gid );
         if ( grp ) {
-            groupcache.insert( gid, new TQString(TQString::tqfromLatin1(grp->gr_name)) );
-            return TQString::tqfromLatin1( grp->gr_name );
+            groupcache.insert( gid, new TQString(TQString::fromLatin1(grp->gr_name)) );
+            return TQString::fromLatin1( grp->gr_name );
         }
         else
             return TQString::number( gid );
@@ -1116,7 +1116,7 @@ void FileProtocol::stat( const KURL & url )
      */
     TQCString _path( TQFile::encodeName(url.path(-1)));
 
-    TQString sDetails = metaData(TQString::tqfromLatin1("details"));
+    TQString sDetails = metaData(TQString::fromLatin1("details"));
     int details = sDetails.isEmpty() ? 2 : sDetails.toInt();
     kdDebug(7101) << "FileProtocol::stat details=" << details << endl;
 
@@ -1419,10 +1419,10 @@ void FileProtocol::mount( bool _ro, const char *_fstype, const TQString& _dev, c
     bool fstype_empty = !_fstype || !*_fstype;
     TQCString fstype = KProcess::quote(_fstype).latin1(); // good guess
     TQCString readonly = _ro ? "-r" : "";
-    TQString epath = TQString::tqfromLatin1(getenv("PATH"));
-    TQString path = TQString::tqfromLatin1("/sbin:/bin");
+    TQString epath = TQString::fromLatin1(getenv("PATH"));
+    TQString path = TQString::fromLatin1("/sbin:/bin");
     if(!epath.isEmpty())
-        path += TQString::tqfromLatin1(":") + epath;
+        path += TQString::fromLatin1(":") + epath;
     TQString mountProg = KGlobal::dirs()->findExe("mount", path);
     if (mountProg.isEmpty()){
       error( KIO::ERR_COULD_NOT_MOUNT, i18n("Could not find program \"mount\""));
@@ -1604,7 +1604,7 @@ void FileProtocol::unmount( const TQString& _point )
 	}
 #else
     TQString epath = getenv("PATH");
-    TQString path = TQString::tqfromLatin1("/sbin:/bin");
+    TQString path = TQString::fromLatin1("/sbin:/bin");
     if (!epath.isEmpty())
        path += ":" + epath;
     TQString umountProg = KGlobal::dirs()->findExe("umount", path);
@@ -1658,7 +1658,7 @@ void FileProtocol::unmount( const TQString& _point )
 bool FileProtocol::pmount(const TQString &dev)
 {
     TQString epath = getenv("PATH");
-    TQString path = TQString::tqfromLatin1("/sbin:/bin");
+    TQString path = TQString::fromLatin1("/sbin:/bin");
     if (!epath.isEmpty())
         path += ":" + epath;
     TQString pmountProg = KGlobal::dirs()->findExe("pmount", path);
@@ -1700,7 +1700,7 @@ bool FileProtocol::pumount(const TQString &point)
     if (dev.endsWith("/")) dev.truncate(dev.length()-1);
 
     TQString epath = getenv("PATH");
-    TQString path = TQString::tqfromLatin1("/sbin:/bin");
+    TQString path = TQString::fromLatin1("/sbin:/bin");
     if (!epath.isEmpty())
         path += ":" + epath;
     TQString pumountProg = KGlobal::dirs()->findExe("pumount", path);
@@ -1774,7 +1774,7 @@ static bool isExtendedACL( acl_t acl )
 static TQString aclAsString(  acl_t acl )
 {
     char *aclString = acl_to_text( acl, 0 );
-    TQString ret = TQString::tqfromLatin1( aclString );
+    TQString ret = TQString::fromLatin1( aclString );
     acl_free( (void*)aclString );
     return ret;
 }

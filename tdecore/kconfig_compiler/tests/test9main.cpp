@@ -32,7 +32,7 @@ int main( int, char*[] )
   kdWarning() << myPathsList2 << endl;
 
   // add another path
-  TQStringList newlist = TQDir::homeDirPath() + TQString::tqfromLatin1("/.kde");
+  TQStringList newlist = TQDir::homeDirPath() + TQString::fromLatin1("/.kde");
   myPathsList2 = myPathsList2 + newlist;
   kdWarning() << myPathsList2 << endl;
 

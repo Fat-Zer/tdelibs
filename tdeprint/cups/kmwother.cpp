@@ -24,7 +24,7 @@
 #include "cupsinfos.h"
 
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqheader.h>
 #include <tqdict.h>

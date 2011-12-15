@@ -98,7 +98,7 @@ bool KAr::openArchive( int mode )
         TQCString name;
         int date, uid, gid, mode, size;
 
-        dev->tqat( dev->tqat() + (2 - (dev->tqat() % 2)) % 2 ); // Ar headers are padded to byte boundary
+        dev->at( dev->at() + (2 - (dev->at() % 2)) % 2 ); // Ar headers are padded to byte boundary
 
         if ( dev->readBlock (ar_header.data(), 60) != 60 ) { // Read ar header
             kdWarning(7042) << "Couldn't read header" << endl;
@@ -131,7 +131,7 @@ bool KAr::openArchive( int mode )
                 kdDebug(7042) << "Read in longnames entry" << endl;
             } else if (name.mid(1, 1) == " ") { // Symbol table entry
                 kdDebug(7042) << "Skipped symbol entry" << endl;
-                dev->tqat( dev->tqat() + size );
+                dev->at( dev->at() + size );
                 skip_entry = true;
             } else { // Longfilename
                 kdDebug(7042) << "Longfilename #" << name.mid(1, 15).toInt() << endl;
@@ -150,10 +150,10 @@ bool KAr::openArchive( int mode )
         kdDebug(7042) << "Filename: " << name << " Size: " << size << endl;
 
         KArchiveEntry* entry;
-        entry = new KArchiveFile(this, name, mode, date, /*uid*/ 0, /*gid*/ 0, 0, dev->tqat(), size);
+        entry = new KArchiveFile(this, name, mode, date, /*uid*/ 0, /*gid*/ 0, 0, dev->at(), size);
         rootDir()->addEntry(entry); // Ar files don't support directorys, so everything in root
 
-        dev->tqat( dev->tqat() + size ); // Skip contents
+        dev->at( dev->at() + size ); // Skip contents
     }
     delete[] ar_longnames;
 

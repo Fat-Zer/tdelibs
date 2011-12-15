@@ -21,7 +21,7 @@
 #include "driverview.h"
 #include "driver.h"
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <klocale.h>
 
 KPDriverPage::KPDriverPage(KMPrinter *p, DrMain *d, TQWidget *parent, const char *name)

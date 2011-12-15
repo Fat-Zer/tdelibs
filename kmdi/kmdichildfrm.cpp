@@ -278,7 +278,7 @@ void KMdiChildFrm::mouseMoveEvent( TQMouseEvent *e )
 	if ( !m_pClient )
 		return;
 	
-	if ( m_pClient->tqminimumSize() == m_pClient->tqmaximumSize() )
+	if ( m_pClient->minimumSize() == m_pClient->maximumSize() )
 		return; 
 
 	if ( m_bResizing )
@@ -329,11 +329,11 @@ void KMdiChildFrm::resizeWindow( int resizeCorner, int xPos, int yPos )
 	// it could be the client forces the childframe to enlarge its minimum size
 	if ( m_pClient )
 	{
-		minWidth = m_pClient->tqminimumSize().width() + KMDI_CHILDFRM_DOUBLE_BORDER;
-		minHeight = m_pClient->tqminimumSize().height() + KMDI_CHILDFRM_DOUBLE_BORDER +
+		minWidth = m_pClient->minimumSize().width() + KMDI_CHILDFRM_DOUBLE_BORDER;
+		minHeight = m_pClient->minimumSize().height() + KMDI_CHILDFRM_DOUBLE_BORDER +
 		            m_pCaption->heightHint() + KMDI_CHILDFRM_SEPARATOR;
-		maxWidth = m_pClient->tqmaximumSize().width() + KMDI_CHILDFRM_DOUBLE_BORDER;
-		maxHeight = m_pClient->tqmaximumSize().height() + KMDI_CHILDFRM_DOUBLE_BORDER +
+		maxWidth = m_pClient->maximumSize().width() + KMDI_CHILDFRM_DOUBLE_BORDER;
+		maxHeight = m_pClient->maximumSize().height() + KMDI_CHILDFRM_DOUBLE_BORDER +
 		            m_pCaption->heightHint() + KMDI_CHILDFRM_SEPARATOR;
 	}
 	
@@ -524,7 +524,7 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			// client min / max size / layout behavior don't change
 			// set frame max size indirectly by setting the clients max size to
 			// it's current value (calls setMaxSize() of frame)
-			m_pClient->setMaximumSize( m_pClient->tqmaximumSize().width(), m_pClient->tqmaximumSize().height() );
+			m_pClient->setMaximumSize( m_pClient->maximumSize().width(), m_pClient->maximumSize().height() );
 			m_pMaximize->setPixmap( *m_pMaxButtonPixmap );
 			setGeometry( m_restoredRect );
 			break;
@@ -534,9 +534,9 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			// restore client min / max size / layout behavior
 			m_pClient->setMinimumSize( m_oldClientMinSize.width(), m_oldClientMinSize.height() );
 			m_pClient->setMaximumSize( m_oldClientMaxSize.width(), m_oldClientMaxSize.height() );
-			if ( m_pClient->tqlayout() != 0L )
+			if ( m_pClient->layout() != 0L )
 			{
-				m_pClient->tqlayout() ->setResizeMode( m_oldLayoutResizeMode );
+				m_pClient->layout() ->setResizeMode( m_oldLayoutResizeMode );
 			}
 			m_pMinimize->setPixmap( *m_pMinButtonPixmap );
 			m_pMaximize->setPixmap( *m_pMaxButtonPixmap );
@@ -558,9 +558,9 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 				// restore client min / max size / layout behavior
 				m_pClient->setMinimumSize( m_oldClientMinSize.width(), m_oldClientMinSize.height() );
 				m_pClient->setMaximumSize( m_oldClientMaxSize.width(), m_oldClientMaxSize.height() );
-				if ( m_pClient->tqlayout() != 0L )
+				if ( m_pClient->layout() != 0L )
 				{
-					m_pClient->tqlayout() ->setResizeMode( m_oldLayoutResizeMode );
+					m_pClient->layout() ->setResizeMode( m_oldLayoutResizeMode );
 				}
 				setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX );
 				// reset to maximize-captionbar
@@ -608,17 +608,17 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			m_pClient->m_stateChanged = true;
 			m_state = state;
 			// save client min / max size / layout behavior
-			m_oldClientMinSize = m_pClient->tqminimumSize();
-			m_oldClientMaxSize = m_pClient->tqmaximumSize();
-			if ( m_pClient->tqlayout() != 0L )
+			m_oldClientMinSize = m_pClient->minimumSize();
+			m_oldClientMaxSize = m_pClient->maximumSize();
+			if ( m_pClient->layout() != 0L )
 			{
-				m_oldLayoutResizeMode = m_pClient->tqlayout() ->tqresizeMode();
+				m_oldLayoutResizeMode = m_pClient->layout() ->resizeMode();
 			}
 			m_pClient->setMinimumSize( 0, 0 );
 			m_pClient->setMaximumSize( 0, 0 );
-			if ( m_pClient->tqlayout() != 0L )
+			if ( m_pClient->layout() != 0L )
 			{
-				m_pClient->tqlayout() ->setResizeMode( TQLayout::FreeResize );
+				m_pClient->layout() ->setResizeMode( TQLayout::FreeResize );
 			}
 			switchToMinimizeLayout();
 			m_pManager->childMinimized( this, true );
@@ -627,18 +627,18 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			m_pClient->m_stateChanged = true;
 			m_state = state;
 			// save client min / max size / layout behavior
-			m_oldClientMinSize = m_pClient->tqminimumSize();
-			m_oldClientMaxSize = m_pClient->tqmaximumSize();
-			if ( m_pClient->tqlayout() != 0L )
+			m_oldClientMinSize = m_pClient->minimumSize();
+			m_oldClientMaxSize = m_pClient->maximumSize();
+			if ( m_pClient->layout() != 0L )
 			{
-				m_oldLayoutResizeMode = m_pClient->tqlayout() ->tqresizeMode();
+				m_oldLayoutResizeMode = m_pClient->layout() ->resizeMode();
 			}
 			m_restoredRect = geometry();
 			m_pClient->setMinimumSize( 0, 0 );
 			m_pClient->setMaximumSize( 0, 0 );
-			if ( m_pClient->tqlayout() != 0L )
+			if ( m_pClient->layout() != 0L )
 			{
-				m_pClient->tqlayout() ->setResizeMode( TQLayout::FreeResize );
+				m_pClient->layout() ->setResizeMode( TQLayout::FreeResize );
 			}
 			switchToMinimizeLayout();
 			m_pManager->childMinimized( this, false );
@@ -694,7 +694,7 @@ void KMdiChildFrm::setCaption( const TQString& text )
 void KMdiChildFrm::enableClose( bool bEnable )
 {
 	m_pClose->setEnabled( bEnable );
-	m_pClose->tqrepaint( false );
+	m_pClose->repaint( false );
 }
 
 //============ setIcon ==================//
@@ -779,8 +779,8 @@ void KMdiChildFrm::setClient( KMdiChildView *w, bool bAutomaticResize )
 	{
 		//reparent to this widget , no flags , point , show it
 		TQPoint pnt2( KMDI_CHILDFRM_BORDER, clientYPos );
-		TQSize mincs = w->tqminimumSize();
-		TQSize maxcs = w->tqmaximumSize();
+		TQSize mincs = w->minimumSize();
+		TQSize maxcs = w->maximumSize();
 		w->setMinimumSize( 0, 0 );
 		w->setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX );
 
@@ -798,11 +798,11 @@ void KMdiChildFrm::setClient( KMdiChildView *w, bool bAutomaticResize )
 	TQObject::connect( m_pClient, TQT_SIGNAL( mdiParentNowMaximized( bool ) ), m_pManager, TQT_SIGNAL( nowMaximized( bool ) ) );
 
 	if ( m_pClient->minimumWidth() > m_pManager->m_defaultChildFrmSize.width() )
-		setMinimumWidth( m_pClient->tqminimumSize().width() + KMDI_CHILDFRM_DOUBLE_BORDER );
+		setMinimumWidth( m_pClient->minimumSize().width() + KMDI_CHILDFRM_DOUBLE_BORDER );
 
 	if ( m_pClient->minimumHeight() > m_pManager->m_defaultChildFrmSize.height() )
 	{
-		setMinimumHeight( m_pClient->tqminimumSize().height() + KMDI_CHILDFRM_DOUBLE_BORDER +
+		setMinimumHeight( m_pClient->minimumSize().height() + KMDI_CHILDFRM_DOUBLE_BORDER +
 		                  m_pCaption->heightHint() + KMDI_CHILDFRM_SEPARATOR );
 	}
 }
@@ -826,8 +826,8 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 	if ( focusedChildWidget != 0 )
 		nameOfFocusedWidget = focusedChildWidget->name();
 
-	TQSize mins = m_pClient->tqminimumSize();
-	TQSize maxs = m_pClient->tqmaximumSize();
+	TQSize mins = m_pClient->minimumSize();
+	TQSize maxs = m_pClient->maximumSize();
 	m_pClient->reparent( 0, 0, mapToGlobal( pos() ) - pos() + positionOffset, isVisible() );
 	m_pClient->setMinimumSize( mins.width(), mins.height() );
 	m_pClient->setMaximumSize( maxs.width(), maxs.height() );

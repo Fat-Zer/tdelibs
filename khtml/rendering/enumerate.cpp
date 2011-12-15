@@ -138,7 +138,7 @@ TQString toHebrew( int number ) {
     TQString letter;
     if (number < 1) return TQString::number(number);
     if (number>999) {
-  	letter = toHebrew(number/1000) + TQString::tqfromLatin1("'");
+  	letter = toHebrew(number/1000) + TQString::fromLatin1("'");
    	number = number%1000;
     }
 

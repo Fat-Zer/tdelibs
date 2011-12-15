@@ -21,8 +21,8 @@
 
 #include <tqdir.h>
 #include <tqfile.h>
-#include <tqtextcodec.h>
-#include <tqtextstream.h>
+#include <textcodec.h>
+#include <textstream.h>
 
 #include <kconfig.h>
 #include <kglobal.h>

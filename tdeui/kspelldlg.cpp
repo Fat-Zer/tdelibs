@@ -22,7 +22,7 @@
 #include <tqstringlist.h>
 #include <tqpushbutton.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <kapplication.h>
 #include <klocale.h>

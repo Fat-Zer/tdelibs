@@ -24,7 +24,7 @@
 #include <kconfig.h>
 #include <kdialog.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 
 KMConfigCups::KMConfigCups(TQWidget *parent)
 : KMConfigPage(parent,"ConfigCups")

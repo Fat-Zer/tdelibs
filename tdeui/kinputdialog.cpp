@@ -21,7 +21,7 @@
 #undef Status
 #endif // USE_QT4
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqvalidator.h>
 #include <tqwhatsthis.h>

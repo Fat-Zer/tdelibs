@@ -27,7 +27,7 @@
 #include <tqlabel.h>
 #include <tqwidgetstack.h>
 #include <kmessagebox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kseparator.h>

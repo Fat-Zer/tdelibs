@@ -20,7 +20,7 @@
 #include "ktextedit.h"
 
 #include <tqapplication.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqpopupmenu.h>
 
 #include <ksyntaxhighlighter.h>
@@ -172,7 +172,7 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
     }
     else if ( KStdAccel::pasteSelection().contains( key ) )
     {
-        TQString text = TQApplication::tqclipboard()->text( TQClipboard::Selection);
+        TQString text = TQApplication::clipboard()->text( TQClipboard::Selection);
         if ( !text.isEmpty() )
             insert( text );
         e->accept();
@@ -182,7 +182,7 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
     // ignore Ctrl-Return so that KDialogs can close the dialog
     else if ( e->state() == ControlButton &&
               (e->key() == Key_Return || e->key() == Key_Enter) &&
-              tqtopLevelWidget()->inherits( "KDialog" ) )
+              topLevelWidget()->inherits( "KDialog" ) )
     {
         e->ignore();
         return;

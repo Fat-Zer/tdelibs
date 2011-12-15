@@ -29,11 +29,11 @@
 #include <kprotocolinfo.h>
 
 #include <tqvalidator.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqfileinfo.h>
 #include <tqdatetime.h>
-#include <tqstylesheet.h>
+#include <stylesheet.h>
 #include <tqvgroupbox.h>
 
 #undef Bool

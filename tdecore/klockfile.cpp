@@ -34,7 +34,7 @@
 #include <unistd.h>
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kde_file.h>
 #include <kapplication.h>

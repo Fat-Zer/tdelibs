@@ -19,7 +19,7 @@
 #ifndef KCLIPBOARD_H
 #define KCLIPBOARD_H
 
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqmime.h>
 #include <tqobject.h>
 #include <tqstrlist.h>

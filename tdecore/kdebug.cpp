@@ -43,7 +43,7 @@
 #include <tqregion.h>
 #include <tqstringlist.h>
 #include <tqpen.h>
-#include <tqbrush.h>
+#include <brush.h>
 #include <tqsize.h>
 
 #include <kurl.h>
@@ -373,7 +373,7 @@ kdbgstream& kdbgstream::operator << (TQChar ch)
 {
   if (!print) return *this;
   if (!ch.isPrint())
-    output += "\\x" + TQString::number( ch.tqunicode(), 16 ).rightJustify(2, '0');
+    output += "\\x" + TQString::number( ch.unicode(), 16 ).rightJustify(2, '0');
   else {
     output += ch;
     if (ch == (QChar)'\n') flush();
@@ -415,7 +415,7 @@ kdbgstream& kdbgstream::operator << (const TQWidget* widget)
       return *this;
     }
   output += string;
-  if (output.tqat(output.length() -1 ) == (QChar)'\n')
+  if (output.at(output.length() -1 ) == (QChar)'\n')
     {
       flush();
     }
@@ -454,7 +454,7 @@ kdbgstream& kdbgstream::operator<<( const TQRect& r ) {
 kdbgstream& kdbgstream::operator<<( const TQRegion& reg ) {
     *this<< "[ ";
 
-    TQMemArray<TQRect>rs=reg.tqrects();
+    TQMemArray<TQRect>rs=reg.rects();
     for (uint i=0;i<rs.size();++i)
         *this << TQString(TQString("[%1,%2 - %3x%4] ").arg(rs[i].x()).arg(rs[i].y()).arg(rs[i].width()).arg(rs[i].height() )) ;
 
@@ -567,8 +567,8 @@ TQString kdBacktrace(int levels)
 
     for (int i = 0; i < n; ++i)
         s += TQString::number(i) +
-             TQString::tqfromLatin1(": ") +
-             TQString::tqfromLatin1(strings[i]) + TQString::tqfromLatin1("\n");
+             TQString::fromLatin1(": ") +
+             TQString::fromLatin1(strings[i]) + TQString::fromLatin1("\n");
     s += "]\n";
     if (strings)
         free (strings);

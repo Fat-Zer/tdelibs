@@ -25,7 +25,7 @@
 
 #include <stdlib.h> // getenv
 
-#include <tqtextcodec.h>
+#include <textcodec.h>
 #include <tqfile.h>
 #include <tqprinter.h>
 #include <tqdatetime.h>
@@ -123,7 +123,7 @@ void KLocale::initMainCatalogues(const TQString & catalog)
   // don't use main catalogue if we're looking up .desktop translations
   if (mainCatalogue.contains("desktop") == 0 || mainCatalogue.contains("kdesktop") == 1) {
     if (maincatalogue) {
-      mainCatalogue = TQString::tqfromLatin1(maincatalogue);
+      mainCatalogue = TQString::fromLatin1(maincatalogue);
     }
   }
 
@@ -312,13 +312,13 @@ void KLocale::initFormat()
   KConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig entry(locate("locale",
-                             TQString::tqfromLatin1("l10n/%1/entry.desktop")
+                             TQString::fromLatin1("l10n/%1/entry.desktop")
                              .arg(m_country)), true);
   entry.setGroup("KCM Locale");
 
   // Numeric
 #define readConfigEntry(key, default, save) \
-  save = entry.readEntry(key, TQString::tqfromLatin1(default)); \
+  save = entry.readEntry(key, TQString::fromLatin1(default)); \
   save = config->readEntry(key, save);
 
 #define readConfigNumEntry(key, default, save, type) \
@@ -331,7 +331,7 @@ void KLocale::initFormat()
 
   readConfigEntry("DecimalSymbol", ".", m_decimalSymbol);
   readConfigEntry("ThousandsSeparator", ",", m_thousandsSeparator);
-  m_thousandsSeparator.replace( TQString::tqfromLatin1("$0"), TQString() );
+  m_thousandsSeparator.replace( TQString::fromLatin1("$0"), TQString() );
   //kdDebug(173) << "m_thousandsSeparator=" << m_thousandsSeparator << endl;
 
   readConfigEntry("PositiveSign", "", m_positiveSign);
@@ -342,7 +342,7 @@ void KLocale::initFormat()
   readConfigEntry("MonetaryDecimalSymbol", ".", m_monetaryDecimalSymbol);
   readConfigEntry("MonetaryThousandsSeparator", ",",
 		  m_monetaryThousandsSeparator);
-  m_monetaryThousandsSeparator.replace(TQString::tqfromLatin1("$0"), TQString());
+  m_monetaryThousandsSeparator.replace(TQString::fromLatin1("$0"), TQString());
 
   readConfigNumEntry("FracDigits", 2, m_fracDigits, int);
   readConfigBoolEntry("PositivePrefixCurrencySymbol", true,
@@ -372,7 +372,7 @@ void KLocale::initFormat()
   //Grammatical
   //Precedence here is l10n / i18n / config file
   KSimpleConfig language(locate("locale",
-			        TQString::tqfromLatin1("%1/entry.desktop")
+			        TQString::fromLatin1("%1/entry.desktop")
                                 .arg(m_language)), true);
   language.setGroup("KCM Locale");
 #define read3ConfigBoolEntry(key, default, save) \
@@ -404,7 +404,7 @@ bool KLocale::setCountry(const TQString & country)
 TQString KLocale::catalogueFileName(const TQString & language,
 				   const KCatalogue & catalog)
 {
-  TQString path = TQString::tqfromLatin1("%1/LC_MESSAGES/%2.mo")
+  TQString path = TQString::fromLatin1("%1/LC_MESSAGES/%2.mo")
     .arg( language )
     .arg( catalog.name() );
 
@@ -497,7 +497,7 @@ bool KLocale::isApplicationTranslatedInto( const TQString & language)
 
   TQString appName = d->appName;
   if (maincatalogue) {
-    appName = TQString::tqfromLatin1(maincatalogue);
+    appName = TQString::fromLatin1(maincatalogue);
   }
   // sorry, catalogueFileName requires catalog object,k which we do not have here
   // path finding was supposed to be moved completely to KCatalogue. The interface cannot
@@ -505,7 +505,7 @@ bool KLocale::isApplicationTranslatedInto( const TQString & language)
   // duplicated code for file path evaluation. Cleanup will follow later. We could have e.g.
   // a static method in KCataloge that can translate between these file names.
   // a stat
-  TQString sFileName = TQString::tqfromLatin1("%1/LC_MESSAGES/%2.mo")
+  TQString sFileName = TQString::fromLatin1("%1/LC_MESSAGES/%2.mo")
     .arg( language )
     .arg( appName );
   // kdDebug() << "isApplicationTranslatedInto: filename " << sFileName << endl;
@@ -1103,7 +1103,7 @@ KLocale::SignPosition KLocale::negativeMonetarySignPosition() const
 static inline void put_it_in( TQChar *buffer, uint& index, const TQString &s )
 {
   for ( uint l = 0; l < s.length(); l++ )
-    buffer[index++] = s.tqat( l );
+    buffer[index++] = s.at( l );
 }
 
 static inline void put_it_in( TQChar *buffer, uint& index, int number )
@@ -1352,14 +1352,14 @@ TQString KLocale::formatDate(const TQDate &pDate, bool shortFormat) const
     {
       if ( !escape )
 	{
-	  if ( (TQChar(rst.tqat( format_index )).tqunicode()) == '%' )
+	  if ( (TQChar(rst.at( format_index )).unicode()) == '%' )
 	    escape = true;
 	  else
-	    buffer.append(rst.tqat(format_index));
+	    buffer.append(rst.at(format_index));
 	}
       else
 	{
-	  switch ( TQChar(rst.tqat( format_index )).tqunicode() )
+	  switch ( TQChar(rst.at( format_index )).unicode() )
 	    {
 	    case '%':
 	      buffer.append('%');
@@ -1401,7 +1401,7 @@ TQString KLocale::formatDate(const TQDate &pDate, bool shortFormat) const
 	      buffer.append(calendar()->weekDayName(pDate, false));
 	      break;
 	    default:
-	      buffer.append(rst.tqat(format_index));
+	      buffer.append(rst.at(format_index));
 	      break;
 	    }
 	  escape = false;
@@ -1583,12 +1583,12 @@ double KLocale::readMoney(const TQString &_str, bool * ok) const
  */
 static int readInt(const TQString &str, uint &pos)
 {
-  if (!str.tqat(pos).isDigit()) return -1;
+  if (!str.at(pos).isDigit()) return -1;
   int result = 0;
-  for (; str.length() > pos && str.tqat(pos).isDigit(); pos++)
+  for (; str.length() > pos && str.at(pos).isDigit(); pos++)
     {
       result *= 10;
-      result += str.tqat(pos).digitValue();
+      result += str.at(pos).digitValue();
     }
 
   return result;
@@ -1625,22 +1625,22 @@ TQDate KLocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) 
   while (fmt.length() > fmtpos && str.length() > strpos && !error)
   {
 
-    TQChar c = fmt.tqat(fmtpos++);
+    TQChar c = fmt.at(fmtpos++);
 
     if (c != (QChar)'%') {
-      if (c.isSpace() && str.tqat(strpos).isSpace())
+      if (c.isSpace() && str.at(strpos).isSpace())
         strpos++;
-      else if (c != str.tqat(strpos++))
+      else if (c != str.at(strpos++))
         error = true;
     }
     else
     {
       int j;
       // remove space at the beginning
-      if (str.length() > strpos && str.tqat(strpos).isSpace())
+      if (str.length() > strpos && str.at(strpos).isSpace())
         strpos++;
 
-      c = fmt.tqat(fmtpos++);
+      c = fmt.at(fmtpos++);
       switch (c)
       {
 	case 'a':
@@ -1765,22 +1765,22 @@ TQTime KLocale::readTime(const TQString &intstr, ReadTimeFlags flags, bool *ok) 
     {
       if ( !(Format.length() > Formatpos && str.length() > strpos) ) goto error;
 
-      TQChar c = Format.tqat(Formatpos++);
+      TQChar c = Format.at(Formatpos++);
 
       if (c != (QChar)'%')
 	{
 	  if (c.isSpace())
 	    strpos++;
-	  else if (c != str.tqat(strpos++))
+	  else if (c != str.at(strpos++))
 	    goto error;
 	  continue;
 	}
 
       // remove space at the beginning
-      if (str.length() > strpos && str.tqat(strpos).isSpace())
+      if (str.length() > strpos && str.at(strpos).isSpace())
 	strpos++;
 
-      c = Format.tqat(Formatpos++);
+      c = Format.at(Formatpos++);
       switch (c)
 	{
 	case 'p':
@@ -1876,14 +1876,14 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
     {
       if ( !escape )
 	{
-	  if ( (TQChar(rst.tqat( format_index )).tqunicode()) == '%' )
+	  if ( (TQChar(rst.at( format_index )).unicode()) == '%' )
 	    escape = true;
 	  else
-	    buffer[index++] = rst.tqat( format_index );
+	    buffer[index++] = rst.at( format_index );
 	}
       else
 	{
-	  switch ( TQChar(rst.tqat( format_index )).tqunicode() )
+	  switch ( TQChar(rst.at( format_index )).unicode() )
 	    {
 	    case '%':
 	      buffer[index++] = (QChar)'%';
@@ -1915,7 +1915,7 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
 	      number = pTime.hour();
 	    case 'l':
 	      // to share the code
-	      if ( (TQChar(rst.tqat( format_index )).tqunicode()) == 'l' )
+	      if ( (TQChar(rst.at( format_index )).unicode()) == 'l' )
 		number = isDuration ? pTime.hour() : (pTime.hour() + 11) % 12 + 1;
 	      if ( number / 10 )
 		buffer[index++] = number / 10 + '0';
@@ -1932,7 +1932,7 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
 	      }
 	      break;
 	    default:
-	      buffer[index++] = rst.tqat( format_index );
+	      buffer[index++] = rst.at( format_index );
 	      break;
 	    }
 	  escape = false;
@@ -1948,8 +1948,8 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
 
 bool KLocale::use12Clock() const
 {
-  if ((timeFormat().contains(TQString::tqfromLatin1("%I")) > 0) ||
-      (timeFormat().contains(TQString::tqfromLatin1("%l")) > 0))
+  if ((timeFormat().contains(TQString::fromLatin1("%I")) > 0) ||
+      (timeFormat().contains(TQString::fromLatin1("%l")) > 0))
     return true;
   else
     return false;
@@ -1957,7 +1957,7 @@ bool KLocale::use12Clock() const
 
 TQString KLocale::languages() const
 {
-  return d->languageList.join( TQString::tqfromLatin1(":") );
+  return d->languageList.join( TQString::fromLatin1(":") );
 }
 
 TQStringList KLocale::languageList() const
@@ -2008,7 +2008,7 @@ void KLocale::initInstance()
 
   KInstance *app = KGlobal::instance();
   if (app) {
-    KGlobal::_locale = new KLocale(TQString::tqfromLatin1(app->instanceName()));
+    KGlobal::_locale = new KLocale(TQString::fromLatin1(app->instanceName()));
 
     // only do this for the global instance
     TQTextCodec::setCodecForLocale(KGlobal::_locale->codecForEncoding());
@@ -2265,12 +2265,12 @@ void KLocale::setMeasureSystem(MeasureSystem value)
 
 TQString KLocale::defaultLanguage()
 {
-  return TQString::tqfromLatin1("en_US");
+  return TQString::fromLatin1("en_US");
 }
 
 TQString KLocale::defaultCountry()
 {
-  return TQString::tqfromLatin1("C");
+  return TQString::fromLatin1("C");
 }
 
 const char * KLocale::encoding() const
@@ -2325,7 +2325,7 @@ TQStringList KLocale::languagesTwoAlpha() const
 
   TQStringList result;
 
-  KConfig config(TQString::tqfromLatin1("language.codes"), true, false);
+  KConfig config(TQString::fromLatin1("language.codes"), true, false);
   config.setGroup("TwoLetterCodes");
 
   for ( TQStringList::ConstIterator it = origList.begin();
@@ -2466,7 +2466,7 @@ KLocale & KLocale::operator=(const KLocale & rhs)
 }
 
 bool KLocale::setCharset(const TQString & ) { return true; }
-TQString KLocale::charset() const { return TQString::tqfromLatin1("UTF-8"); }
+TQString KLocale::charset() const { return TQString::fromLatin1("UTF-8"); }
 
 // KDE4: remove
 #if 0

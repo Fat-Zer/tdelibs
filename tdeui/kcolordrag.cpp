@@ -92,7 +92,7 @@ KColorDrag::decode( TQMimeSource *e, TQColor &color)
         return true;
 
      TQByteArray data = e->encodedData( text_mime_string);
-     TQString colorName = TQString::tqfromLatin1(data.data(), data.size());
+     TQString colorName = TQString::fromLatin1(data.data(), data.size());
      if ((colorName.length() < 4) || (colorName[0] != '#'))
         return false;
      color.setNamedColor(colorName);

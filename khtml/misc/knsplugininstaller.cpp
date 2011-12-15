@@ -36,10 +36,10 @@
 #include <tqiodevice.h>
 #include <tqfile.h>
 #include <tqlabel.h>
-#include <tqlayout.h> 
+#include <layout.h> 
 #include <tqmap.h>
 #include <tqstringlist.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <sys/utsname.h>
 

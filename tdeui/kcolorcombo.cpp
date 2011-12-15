@@ -37,7 +37,7 @@
 #include <tqfile.h>
 #include <tqimage.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqvalidator.h>
 #include <tqpainter.h>

@@ -930,7 +930,7 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
     case CSS_PROP_TOP:
         return getPositionOffsetValue(renderer, CSS_PROP_TOP);
     case CSS_PROP_UNICODE_BIDI:
-        switch (style->tqunicodeBidi()) {
+        switch (style->unicodeBidi()) {
         case UBNormal:
             return new CSSPrimitiveValueImpl(CSS_VAL_NORMAL);
         case Embed:

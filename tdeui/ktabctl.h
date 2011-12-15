@@ -61,7 +61,7 @@ public:
     bool isTabEnabled(const TQString& );
     void setTabEnabled(const TQString&, bool);
     void setBorder(bool);
-    void setShape( TQTabBar::Shape tqshape );
+    void setShape( TQTabBar::Shape shape );
     virtual TQSize sizeHint() const;
 
 protected:

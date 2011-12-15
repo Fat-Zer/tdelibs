@@ -35,7 +35,7 @@
 #include "misc/loader.h"
 #include "dom/html_form.h"
 #include "dom/html_image.h"
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqfileinfo.h>
 #include <tqpopupmenu.h>
 #include <tqurl.h>
@@ -112,7 +112,7 @@ void KHTMLPartBrowserExtension::editableWidgetFocused( TQWidget *widget )
 
     if ( !m_connectedToClipboard && m_editableFormWidget )
     {
-        connect( TQApplication::tqclipboard(), TQT_SIGNAL( dataChanged() ),
+        connect( TQApplication::clipboard(), TQT_SIGNAL( dataChanged() ),
                  this, TQT_SLOT( updateEditActions() ) );
 
         if ( m_editableFormWidget->inherits( TQLINEEDIT_OBJECT_NAME_STRING ) || m_editableFormWidget->inherits( TQTEXTEDIT_OBJECT_NAME_STRING ) )
@@ -135,7 +135,7 @@ void KHTMLPartBrowserExtension::editableWidgetBlurred( TQWidget * /*widget*/ )
 
     if ( m_connectedToClipboard )
     {
-        disconnect( TQApplication::tqclipboard(), TQT_SIGNAL( dataChanged() ),
+        disconnect( TQApplication::clipboard(), TQT_SIGNAL( dataChanged() ),
                     this, TQT_SLOT( updateEditActions() ) );
 
         if ( oldWidget )
@@ -223,7 +223,7 @@ void KHTMLPartBrowserExtension::copy()
 	text.replace( TQChar( 0xa0 ), ' ' );
 
 
-        TQClipboard *cb = TQApplication::tqclipboard();
+        TQClipboard *cb = TQApplication::clipboard();
         disconnect( cb, TQT_SIGNAL( selectionChanged() ), m_part, TQT_SLOT( slotClearSelection() ) );
 #ifndef QT_NO_MIMECLIPBOARD
 	TQString htmltext;
@@ -315,7 +315,7 @@ void KHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
     if ( !m_extensionProxy )
         return;
 
-    int slot = m_extensionProxy->tqmetaObject()->findSlot( method );
+    int slot = m_extensionProxy->metaObject()->findSlot( method );
     if ( slot == -1 )
         return;
 
@@ -335,10 +335,10 @@ void KHTMLPartBrowserExtension::updateEditActions()
 
     // ### duplicated from KonqMainWindow::slotClipboardDataChanged
 #ifndef QT_NO_MIMECLIPBOARD // Handle minimalized versions of Qt Embedded
-    TQMimeSource *data = TQApplication::tqclipboard()->data();
+    TQMimeSource *data = TQApplication::clipboard()->data();
     enableAction( "paste", data->provides( "text/plain" ) );
 #else
-    TQString data=TQApplication::tqclipboard()->text();
+    TQString data=TQApplication::clipboard()->text();
     enableAction( "paste", data.contains("://"));
 #endif
     bool hasSelection = false;
@@ -715,10 +715,10 @@ void KHTMLPopupGUIClient::slotCopyLinkLocation()
   // Set it in both the mouse selection and in the clipboard
   KURL::List lst;
   lst.append( safeURL );
-  TQApplication::tqclipboard()->setData( new KURLDrag( lst ), TQClipboard::Clipboard );
-  TQApplication::tqclipboard()->setData( new KURLDrag( lst ), TQClipboard::Selection );
+  TQApplication::clipboard()->setData( new KURLDrag( lst ), TQClipboard::Clipboard );
+  TQApplication::clipboard()->setData( new KURLDrag( lst ), TQClipboard::Selection );
 #else
-  TQApplication::tqclipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
+  TQApplication::clipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
 #endif
 }
 
@@ -741,8 +741,8 @@ void KHTMLPopupGUIClient::slotCopyImage()
   drag->addDragObject( new KURLDrag(lst, d->m_khtml->view(), "Image URL") );
 
   // Set it in both the mouse selection and in the clipboard
-  TQApplication::tqclipboard()->setData( drag, TQClipboard::Clipboard );
-  TQApplication::tqclipboard()->setData( new KURLDrag(lst), TQClipboard::Selection );
+  TQApplication::clipboard()->setData( drag, TQClipboard::Clipboard );
+  TQApplication::clipboard()->setData( new KURLDrag(lst), TQClipboard::Selection );
 #else
   kdDebug() << "slotCopyImage called when the clipboard does not support this.  This should not be possible." << endl;
 #endif
@@ -756,10 +756,10 @@ void KHTMLPopupGUIClient::slotCopyImageLocation()
   // Set it in both the mouse selection and in the clipboard
   KURL::List lst;
   lst.append( safeURL );
-  TQApplication::tqclipboard()->setData( new KURLDrag( lst ), TQClipboard::Clipboard );
-  TQApplication::tqclipboard()->setData( new KURLDrag( lst ), TQClipboard::Selection );
+  TQApplication::clipboard()->setData( new KURLDrag( lst ), TQClipboard::Clipboard );
+  TQApplication::clipboard()->setData( new KURLDrag( lst ), TQClipboard::Selection );
 #else
-  TQApplication::tqclipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
+  TQApplication::clipboard()->setText( safeURL.url() ); //FIXME(E): Handle multiple entries
 #endif
 }
 
@@ -809,7 +809,7 @@ void KHTMLPopupGUIClient::saveURL( TQWidget *parent, const TQString &caption,
                                    const TQString &filter, long cacheId,
                                    const TQString & suggestedFilename )
 {
-  TQString name = TQString::tqfromLatin1( "index.html" );
+  TQString name = TQString::fromLatin1( "index.html" );
   if ( !suggestedFilename.isEmpty() )
     name = suggestedFilename;
   else if ( !url.fileName().isEmpty() )

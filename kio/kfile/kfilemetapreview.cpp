@@ -8,7 +8,7 @@
 
 #include "kfilemetapreview.h"
 
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <kio/previewjob.h>
 #include <klibloader.h>

@@ -74,7 +74,7 @@ void KAnimWidget::stop()
 {
   d->current_frame = 0;
   d->timer.stop();
-  tqrepaint();
+  repaint();
 }
 
 void KAnimWidget::setSize( int size )
@@ -162,7 +162,7 @@ void KAnimWidget::slotTimerUpdate()
   // We have to clear the widget when repainting a transparent image
   // By doing it like this we get a bit of flicker though. A better
   // way might be to merge it with the background in drawContents.
-  tqrepaint(d->transparent);
+  repaint(d->transparent);
 }
 
 void KAnimWidget::drawContents( TQPainter *p )

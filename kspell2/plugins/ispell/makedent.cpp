@@ -903,7 +903,7 @@ ISpellChecker::findfiletype (const char *name, int searchnames, int *deformatter
 
 /*
 	HACK: macros replaced with function implementations 
-	so we could do a side-effect-free check for tqunicode
+	so we could do a side-effect-free check for unicode
 	characters which aren't in hashheader
 
 	TODO: this is just a workaround to keep us from crashing. 

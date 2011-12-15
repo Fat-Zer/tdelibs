@@ -20,7 +20,7 @@
 #include "kpfileselectpage.h"
 #include "kfilelist.h"
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqstringlist.h>
 #include <tqregexp.h>
 #include <tqheader.h>

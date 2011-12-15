@@ -46,7 +46,7 @@
 #include <assert.h>
 
 #include <tqcursor.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqobjectlist.h>
 #include <tqpopupmenu.h>
 #include <tqmenubar.h>
@@ -64,7 +64,7 @@
 
 
 #include <tqtoolbutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqstring.h>
 #include <tqmap.h>
 #include <tqvaluelist.h>

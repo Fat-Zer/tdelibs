@@ -109,7 +109,7 @@ bool KMDBCreator::createDriverDB(const TQString& dirname, const TQString& filena
 	{
 		if (!m_dlg)
 		{
-			m_dlg = new TQProgressDialog(parent->tqtopLevelWidget(),"progress-dialog",true);
+			m_dlg = new TQProgressDialog(parent->topLevelWidget(),"progress-dialog",true);
 			m_dlg->setLabelText(i18n("Please wait while KDE rebuilds a driver database."));
 			m_dlg->setCaption(i18n("Driver Database"));
 			connect(m_dlg,TQT_SIGNAL(canceled()),TQT_SLOT(slotCancelled()));

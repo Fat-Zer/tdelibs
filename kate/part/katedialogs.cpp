@@ -86,7 +86,7 @@
 #include <tqheader.h>
 #include <tqhgroupbox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqlistbox.h>
 #include <tqlistview.h>
@@ -101,7 +101,7 @@
 #include <tqspinbox.h>
 #include <tqstringlist.h>
 #include <tqtabwidget.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 #include <tqtoolbutton.h>
 #include <tqvbox.h>
 #include <tqvgroupbox.h>
@@ -712,7 +712,7 @@ KateViewDefaultsConfig::KateViewDefaultsConfig(TQWidget *parent)
         "you to set a maximum width of the screen, as a percentage, after which "
         "dynamically wrapped lines will no longer be vertically aligned.  For "
         "example, at 50%, lines whose indentation levels are deeper than 50% of "
-        "the width of the screen will not have vertical tqalignment applied to "
+        "the width of the screen will not have vertical alignment applied to "
         "subsequent wrapped lines.</p>"));
   TQWhatsThis::add(m_line,i18n(
         "If this option is checked, every new view will display line numbers "
@@ -819,7 +819,7 @@ void KateEditKeyConfiguration::showEvent ( TQShowEvent * )
   if (!m_ready)
   {
     (new TQVBoxLayout(this))->setAutoAdd(true);
-    KateView* view = (KateView*)m_doc->views().tqat(0);
+    KateView* view = (KateView*)m_doc->views().at(0);
     m_ac = view->editActionCollection();
     m_keyChooser = new KKeyChooser( m_ac, this, false );
     connect( m_keyChooser, TQT_SIGNAL( keyChange() ), this, TQT_SLOT( slotChanged() ) );
@@ -1154,7 +1154,7 @@ void KatePartPluginConfigPage::apply ()
   KateDocumentConfig::global()->configStart ();
 
   for (uint i=0; i < m_items.count(); i++)
-    KateDocumentConfig::global()->setPlugin (m_items.tqat(i)->pluginIndex(), m_items.tqat(i)->isOn());
+    KateDocumentConfig::global()->setPlugin (m_items.at(i)->pluginIndex(), m_items.at(i)->isOn());
 
   KateDocumentConfig::global()->configEnd ();
 }
@@ -1243,7 +1243,7 @@ void KatePartPluginConfigPage::slotConfigure()
 
     for( uint i=0; i<editorPages.count(); i++ )
     {
-      editorPages.tqat( i )->apply();
+      editorPages.at( i )->apply();
     }
   }
 

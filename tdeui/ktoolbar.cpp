@@ -40,7 +40,7 @@
 #include <tqobjectlist.h>
 #include <tqtimer.h>
 #include <tqstyle.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <ktoolbar.h>
 #include <kmainwindow.h>
@@ -170,7 +170,7 @@ void KToolBarSeparator::drawContents( TQPainter* p )
             flags = flags | TQStyle::Style_Horizontal;
 
         tqstyle().tqdrawPrimitive(TQStyle::PE_DockWindowSeparator, p,
-                              contentsRect(), tqcolorGroup(), flags);
+                              contentsRect(), colorGroup(), flags);
     } else {
         TQFrame::drawContents(p);
     }
@@ -183,7 +183,7 @@ void KToolBarSeparator::styleChange( TQStyle& )
 
 TQSize KToolBarSeparator::sizeHint() const
 {
-    int dim = tqstyle().tqpixelMetric( TQStyle::PM_DockWindowSeparatorExtent, this );
+    int dim = tqstyle().pixelMetric( TQStyle::PM_DockWindowSeparatorExtent, this );
     return orientation() == Qt::Vertical ? TQSize( 0, dim ) : TQSize( dim, 0 );
 }
 
@@ -193,7 +193,7 @@ TQSizePolicy KToolBarSeparator::sizePolicy() const
 }
 
 KToolBar::KToolBar( TQWidget *parent, const char *name, bool honorStyle, bool readConfig )
-    : TQToolBar( TQString::tqfromLatin1( name ),
+    : TQToolBar( TQString::fromLatin1( name ),
       tqt_dynamic_cast<TQMainWindow*>(parent),
       parent, false,
       name ? name : "mainToolBar")
@@ -202,7 +202,7 @@ KToolBar::KToolBar( TQWidget *parent, const char *name, bool honorStyle, bool re
 }
 
 KToolBar::KToolBar( TQMainWindow *parentWindow, TQMainWindow::ToolBarDock dock, bool newLine, const char *name, bool honorStyle, bool readConfig )
-    : TQToolBar( TQString::tqfromLatin1( name ),
+    : TQToolBar( TQString::fromLatin1( name ),
       parentWindow, dock, newLine,
       name ? name : "mainToolBar")
 {
@@ -210,7 +210,7 @@ KToolBar::KToolBar( TQMainWindow *parentWindow, TQMainWindow::ToolBarDock dock, 
 }
 
 KToolBar::KToolBar( TQMainWindow *parentWindow, TQWidget *dock, bool newLine, const char *name, bool honorStyle, bool readConfig )
-    : TQToolBar( TQString::tqfromLatin1( name ),
+    : TQToolBar( TQString::fromLatin1( name ),
       parentWindow, dock, newLine,
       name ? name : "mainToolBar")
 {
@@ -734,7 +734,7 @@ int KToolBar::itemIndex (int id)
 
 int KToolBar::idAt (int index)
 {
-    TQWidget *w = widgets.tqat(index);
+    TQWidget *w = widgets.at(index);
     return widget2id[w];
 }
 
@@ -856,11 +856,11 @@ void KToolBar::setIconText(IconText icontext, bool update)
     // ugly hack to force a TQMainWindow::triggerLayout( true )
     TQMainWindow *mw = mainWindow();
     if ( mw ) {
-        mw->tqsetUpdatesEnabled( false );
+        mw->setUpdatesEnabled( false );
 //         mw->setToolBarsMovable( !mw->toolBarsMovable() );	// Old way
 //         mw->setToolBarsMovable( !mw->toolBarsMovable() );
         mw->setCentralWidget(mw->centralWidget());	// This is a faster hack
-        mw->tqsetUpdatesEnabled( true );
+        mw->setUpdatesEnabled( true );
     }
 }
 
@@ -894,11 +894,11 @@ void KToolBar::setIconSize(int size, bool update)
     // ugly hack to force a TQMainWindow::triggerLayout( true )
     if ( mainWindow() ) {
         TQMainWindow *mw = mainWindow();
-        mw->tqsetUpdatesEnabled( false );
+        mw->setUpdatesEnabled( false );
 //         mw->setToolBarsMovable( !mw->toolBarsMovable() );	// Old way
 //         mw->setToolBarsMovable( !mw->toolBarsMovable() );
         mw->setCentralWidget(mw->centralWidget());	// This is a faster hack
-        mw->tqsetUpdatesEnabled( true );
+        mw->setUpdatesEnabled( true );
     }
 }
 
@@ -1263,7 +1263,7 @@ void KToolBar::rebuildLayout()
         if ( stretchableWidget )
             l->setStretchFactor( stretchableWidget, 10 );
     }
-    l->tqinvalidate();
+    l->invalidate();
     TQApplication::postEvent( this, new TQEvent( TQEvent::LayoutHint ) );
 }
 
@@ -1358,12 +1358,12 @@ TQSize KToolBar::sizeHint() const
        for ( TQWidget *w = ncThis->widgets.first(); w; w = ncThis->widgets.next() )
        {
           TQSize sh = w->sizeHint();
-          if ( w->tqsizePolicy().horData() == TQSizePolicy::Ignored )
+          if ( w->sizePolicy().horData() == TQSizePolicy::Ignored )
              sh.setWidth( 1 );
-          if ( w->tqsizePolicy().verData() == TQSizePolicy::Ignored )
+          if ( w->sizePolicy().verData() == TQSizePolicy::Ignored )
              sh.setHeight( 1 );
-          sh = sh.boundedTo( w->tqmaximumSize() )
-                 .expandedTo( w->tqminimumSize() ).expandedTo( TQSize(1, 1) );
+          sh = sh.boundedTo( w->maximumSize() )
+                 .expandedTo( w->minimumSize() ).expandedTo( TQSize(1, 1) );
 
           minSize = minSize.expandedTo(TQSize(0, sh.height()));
           minSize += TQSize(sh.width()+1, 0);
@@ -1371,7 +1371,7 @@ TQSize KToolBar::sizeHint() const
              minSize += TQSize(2, 0); // A little bit extra spacing behind it.
        }
 
-       minSize += TQSize(TQApplication::tqstyle().tqpixelMetric( TQStyle::PM_DockWindowHandleExtent ), 0);
+       minSize += TQSize(TQApplication::tqstyle().pixelMetric( TQStyle::PM_DockWindowHandleExtent ), 0);
        minSize += TQSize(margin*2, margin*2);
        break;
 
@@ -1380,17 +1380,17 @@ TQSize KToolBar::sizeHint() const
        for ( TQWidget *w = ncThis->widgets.first(); w; w = ncThis->widgets.next() )
        {
           TQSize sh = w->sizeHint();
-          if ( w->tqsizePolicy().horData() == TQSizePolicy::Ignored )
+          if ( w->sizePolicy().horData() == TQSizePolicy::Ignored )
              sh.setWidth( 1 );
-          if ( w->tqsizePolicy().verData() == TQSizePolicy::Ignored )
+          if ( w->sizePolicy().verData() == TQSizePolicy::Ignored )
              sh.setHeight( 1 );
-          sh = sh.boundedTo( w->tqmaximumSize() )
-                 .expandedTo( w->tqminimumSize() ).expandedTo( TQSize(1, 1) );
+          sh = sh.boundedTo( w->maximumSize() )
+                 .expandedTo( w->minimumSize() ).expandedTo( TQSize(1, 1) );
 
           minSize = minSize.expandedTo(TQSize(sh.width(), 0));
           minSize += TQSize(0, sh.height()+1);
        }
-       minSize += TQSize(0, TQApplication::tqstyle().tqpixelMetric( TQStyle::PM_DockWindowHandleExtent ));
+       minSize += TQSize(0, TQApplication::tqstyle().pixelMetric( TQStyle::PM_DockWindowHandleExtent ));
        minSize += TQSize(margin*2, margin*2);
        break;
 
@@ -1401,7 +1401,7 @@ TQSize KToolBar::sizeHint() const
     return minSize;
 }
 
-TQSize KToolBar::tqminimumSize() const
+TQSize KToolBar::minimumSize() const
 {
     return minimumSizeHint();
 }
@@ -1429,7 +1429,7 @@ void KToolBar::show()
 void KToolBar::resizeEvent( TQResizeEvent *e )
 {
     bool b = isUpdatesEnabled();
-    tqsetUpdatesEnabled( false );
+    setUpdatesEnabled( false );
     TQToolBar::resizeEvent( e );
     if (b)
     {
@@ -1446,7 +1446,7 @@ void KToolBar::resizeEvent( TQResizeEvent *e )
     }
 //     else {
 //         printf("[WARNING] In KToolBar::resizeEvent, but this code block should not be executing.  Preventing toolbar lockup.  [Code 0045]\n\r");
-//         tqsetUpdatesEnabled( true );
+//         setUpdatesEnabled( true );
 //     }
 }
 
@@ -1486,25 +1486,25 @@ void KToolBar::slotAppearanceChanged()
 //static
 bool KToolBar::highlightSetting()
 {
-    TQString grpToolbar(TQString::tqfromLatin1("Toolbar style"));
+    TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
     KConfigGroupSaver saver(KGlobal::config(), grpToolbar);
-    return KGlobal::config()->readBoolEntry(TQString::tqfromLatin1("Highlighting"),true);
+    return KGlobal::config()->readBoolEntry(TQString::fromLatin1("Highlighting"),true);
 }
 
 //static
 bool KToolBar::transparentSetting()
 {
-    TQString grpToolbar(TQString::tqfromLatin1("Toolbar style"));
+    TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
     KConfigGroupSaver saver(KGlobal::config(), grpToolbar);
-    return KGlobal::config()->readBoolEntry(TQString::tqfromLatin1("TransparentMoving"),true);
+    return KGlobal::config()->readBoolEntry(TQString::fromLatin1("TransparentMoving"),true);
 }
 
 //static
 KToolBar::IconText KToolBar::iconTextSetting()
 {
-    TQString grpToolbar(TQString::tqfromLatin1("Toolbar style"));
+    TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
     KConfigGroupSaver saver(KGlobal::config(), grpToolbar);
-    TQString icontext = KGlobal::config()->readEntry(TQString::tqfromLatin1("IconText"),TQString::tqfromLatin1("IconOnly"));
+    TQString icontext = KGlobal::config()->readEntry(TQString::fromLatin1("IconText"),TQString::fromLatin1("IconOnly"));
     if ( icontext == "IconTextRight" )
         return IconTextRight;
     else if ( icontext == "IconTextBottom" )
@@ -1546,7 +1546,7 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const TQString &_configG
     TQString iconText = d->IconTextDefault;
 
     // this is the first iteration
-    TQString grpToolbar(TQString::tqfromLatin1("Toolbar style"));
+    TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
     { // start block for KConfigGroupSaver
         KConfigGroupSaver saver(gconfig, grpToolbar);
 
@@ -1732,15 +1732,15 @@ bool KToolBar::event( TQEvent *e )
 
 void KToolBar::slotRepaint()
 {
-    tqsetUpdatesEnabled( false );
+    setUpdatesEnabled( false );
     // Send a resizeEvent to update the "toolbar extension arrow"
     // (The button you get when your toolbar-items don't fit in
     // the available space)
     TQResizeEvent ev(size(), size());
     resizeEvent(&ev);
     TQApplication::sendPostedEvents( this, TQEvent::LayoutHint );
-    tqsetUpdatesEnabled( true );
-    tqrepaint( true );
+    setUpdatesEnabled( true );
+    repaint( true );
 }
 
 void KToolBar::toolBarPosChanged( TQToolBar *tb )

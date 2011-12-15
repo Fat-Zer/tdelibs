@@ -74,7 +74,7 @@
 #include <tqpushbutton.h>
 #include <tqscrollview.h>
 #include <tqstring.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqvaluelist.h>
 #include <tqwidget.h>
 #include <tqfileinfo.h>
@@ -943,7 +943,7 @@ TQString RegressionTest::getPartOutput( OutputType type)
         getPartDOMOutput( outputStream, m_part, 0 );
     }
 
-    dump.replace( m_baseDir + "/tests", TQString::tqfromLatin1( "REGRESSION_SRCDIR" ) );
+    dump.replace( m_baseDir + "/tests", TQString::fromLatin1( "REGRESSION_SRCDIR" ) );
     return dump;
 }
 
@@ -1051,7 +1051,7 @@ void RegressionTest::doJavascriptReport( const TQString &test )
     text.replace( TQRegExp( "\nFAIL" ), "\n<span style='color: red'>FAIL</span>" );
     text.replace( TQRegExp( "\nPASSED" ), "\n<span style='color: green'>PASSED</span>" );
     text.replace( TQRegExp( "\nPASS" ), "\n<span style='color: green'>PASS</span>" );
-    if ( text.tqat( 0 ) == '\n' )
+    if ( text.at( 0 ) == '\n' )
         text = text.mid( 1, text.length() );
     text.replace( '\n', "<br>\n" );
     cl += text;
@@ -1079,8 +1079,8 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
         pos++;
         int newpos = absBase.find('/', pos);
         if (newpos == -1) newpos = absBase.length();
-        TQConstString cmpPathComp(absPath.tqunicode() + pos, newpos - pos);
-        TQConstString cmpBaseComp(absBase.tqunicode() + pos, newpos - pos);
+        TQConstString cmpPathComp(absPath.unicode() + pos, newpos - pos);
+        TQConstString cmpBaseComp(absBase.unicode() + pos, newpos - pos);
 //         kdDebug() << "cmpPathComp: \"" << cmpPathComp.string() << "\"" << endl;
 //         kdDebug() << "cmpBaseComp: \"" << cmpBaseComp.string() << "\"" << endl;
 //         kdDebug() << "pos: " << pos << " newpos: " << newpos << endl;
@@ -1094,8 +1094,8 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
 
     TQString rel;
     {
-        TQConstString relBase(absBase.tqunicode() + basepos, absBase.length() - basepos);
-        TQConstString relPath(absPath.tqunicode() + pathpos, absPath.length() - pathpos);
+        TQConstString relBase(absBase.unicode() + basepos, absBase.length() - basepos);
+        TQConstString relPath(absPath.unicode() + pathpos, absPath.length() - pathpos);
         // generate as many .. as there are path elements in relBase
         if (relBase.string().length() > 0) {
             for (int i = relBase.string().contains('/'); i > 0; --i)
@@ -1138,7 +1138,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & RenderFailure ) {
         renderDiff += "<pre>";
-        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-render %3/%2-render" )
+        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-render %3/%2-render" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {
@@ -1154,7 +1154,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & DomFailure ) {
         domDiff += "<pre>";
-        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-dom %3/%2-dom" )
+        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-dom %3/%2-dom" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {

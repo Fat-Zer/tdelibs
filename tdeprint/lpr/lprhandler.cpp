@@ -25,7 +25,7 @@
 #include "driver.h"
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqvaluestack.h>
 #include <klocale.h>
 

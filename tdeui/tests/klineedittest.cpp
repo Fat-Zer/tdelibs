@@ -1,6 +1,6 @@
 #include <tqstring.h>
 #include <tqpushbutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqhbox.h>
 #include <tqtimer.h>
 

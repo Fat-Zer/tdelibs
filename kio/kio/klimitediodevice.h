@@ -56,7 +56,7 @@ public:
             else
                 ok = m_dev->open( m );
             if ( ok )*/
-                m_dev->tqat( m_start ); // No concurrent access !
+                m_dev->at( m_start ); // No concurrent access !
         }
         else
             kdWarning(7005) << "KLimitedIODevice::open only supports IO_ReadOnly!" << endl;
@@ -89,13 +89,13 @@ public:
             return c[0];
     }
     virtual int ungetch( int c ) { return m_dev->ungetch(c); } // ## apply lower limit ?
-    virtual Offset at() const { return m_dev->tqat() - m_start; }
+    virtual Offset at() const { return m_dev->at() - m_start; }
     virtual bool at( Offset pos ) {
         Q_ASSERT( pos <= m_length );
         pos = QMIN( pos, m_length ); // Apply upper limit
-        return m_dev->tqat( m_start + pos );
+        return m_dev->at( m_start + pos );
     }
-    virtual bool atEnd() const { return m_dev->atEnd() || m_dev->tqat() >= m_start + m_length; }
+    virtual bool atEnd() const { return m_dev->atEnd() || m_dev->at() >= m_start + m_length; }
 private:
     TQIODevice* m_dev;
     TQ_ULONG m_start;

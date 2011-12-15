@@ -485,7 +485,7 @@ void KCompletionBox::setItems( const TQStringList& items )
     }
     else {
         //Keep track of whether we need to change anything,
-        //so we can avoid a tqrepaint for identical updates,
+        //so we can avoid a repaint for identical updates,
         //to reduce flicker
         bool dirty = false;
 

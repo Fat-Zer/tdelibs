@@ -20,7 +20,7 @@
 #include <tqhbuttongroup.h>
 #include <tqpushbutton.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqmultilineedit.h>
 #include <tqradiobutton.h>
 #include <tqwhatsthis.h>
@@ -51,7 +51,7 @@
 #include <kcombobox.h>
 #include <config.h>
 #include <ktempfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqfile.h>
 
 class KBugReportPrivate {
@@ -88,7 +88,7 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutD
   TQWidget * parent = plainPage();
   d->submitBugButton = 0;
 
-  //if ( m_aboutData->bugAddress() == TQString::tqfromLatin1("submit@bugs.pearsoncomputing.net") )
+  //if ( m_aboutData->bugAddress() == TQString::fromLatin1("submit@bugs.pearsoncomputing.net") )
   //{
   //  // This is a core KDE application -> redirect to the web form
     // Always redirect to the Web form for Trinity
@@ -153,7 +153,7 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutD
   TQWhatsThis::add( d->appcombo, qwtstr );
   d->appcombo->insertStrList((const char**)packages);
   connect(d->appcombo, TQT_SIGNAL(activated(int)), TQT_SLOT(appChanged(int)));
-  d->appname = TQString::tqfromLatin1( m_aboutData
+  d->appname = TQString::fromLatin1( m_aboutData
                                     ? m_aboutData->productName()
                                     : tqApp->name() );
   glay->addWidget( d->appcombo, row, 1 );
@@ -179,8 +179,8 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutD
       m_strVersion = m_aboutData->version();
   else
       m_strVersion = i18n("no version set (programmer error!)");
-  d->kde_version = TQString::tqfromLatin1( TDE_VERSION_STRING );
-  d->kde_version += ", " + TQString::tqfromLatin1( KDE_DISTRIBUTION_TEXT );
+  d->kde_version = TQString::fromLatin1( TDE_VERSION_STRING );
+  d->kde_version += ", " + TQString::fromLatin1( KDE_DISTRIBUTION_TEXT );
   if ( !d->submitBugButton )
       m_strVersion += " " + d->kde_version;
   m_version = new TQLabel( m_strVersion, parent );
@@ -193,16 +193,16 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutD
 
   struct utsname unameBuf;
   uname( &unameBuf );
-  d->os = TQString::tqfromLatin1( unameBuf.sysname ) +
-          " (" + TQString::tqfromLatin1( unameBuf.machine ) + ") "
-          "release " + TQString::tqfromLatin1( unameBuf.release );
+  d->os = TQString::fromLatin1( unameBuf.sysname ) +
+          " (" + TQString::fromLatin1( unameBuf.machine ) + ") "
+          "release " + TQString::fromLatin1( unameBuf.release );
 
   tmpLabel = new TQLabel(d->os, parent);
   glay->addMultiCellWidget( tmpLabel, row, row, 1, 2 );
 
   tmpLabel = new TQLabel(i18n("Compiler:"), parent);
   glay->addWidget( tmpLabel, ++row, 0 );
-  tmpLabel = new TQLabel(TQString::tqfromLatin1(KDE_COMPILER_VERSION), parent);
+  tmpLabel = new TQLabel(TQString::fromLatin1(KDE_COMPILER_VERSION), parent);
   glay->addMultiCellWidget( tmpLabel, row, row, 1, 2 );
 
   if ( !d->submitBugButton )
@@ -311,7 +311,7 @@ void KBugReport::slotConfigureEmail()
 {
   if (m_process) return;
   m_process = new KProcess;
-  *m_process << TQString::tqfromLatin1("kcmshell") << TQString::tqfromLatin1("kcm_useraccount");
+  *m_process << TQString::fromLatin1("kcmshell") << TQString::fromLatin1("kcm_useraccount");
   connect(m_process, TQT_SIGNAL(processExited(KProcess *)), TQT_SLOT(slotSetFrom()));
   if (!m_process->start())
   {
@@ -330,24 +330,24 @@ void KBugReport::slotSetFrom()
   m_configureEmail->setEnabled(true);
 
   // ### KDE4: why oh why is KEmailSettings in kio?
-  KConfig emailConf( TQString::tqfromLatin1("emaildefaults") );
+  KConfig emailConf( TQString::fromLatin1("emaildefaults") );
 
   // find out the default profile
-  emailConf.setGroup( TQString::tqfromLatin1("Defaults") );
-  TQString profile = TQString::tqfromLatin1("PROFILE_");
-  profile += emailConf.readEntry( TQString::tqfromLatin1("Profile"),
-                                  TQString::tqfromLatin1("Default") );
+  emailConf.setGroup( TQString::fromLatin1("Defaults") );
+  TQString profile = TQString::fromLatin1("PROFILE_");
+  profile += emailConf.readEntry( TQString::fromLatin1("Profile"),
+                                  TQString::fromLatin1("Default") );
 
   emailConf.setGroup( profile );
-  TQString fromaddr = emailConf.readEntry( TQString::tqfromLatin1("EmailAddress") );
+  TQString fromaddr = emailConf.readEntry( TQString::fromLatin1("EmailAddress") );
   if (fromaddr.isEmpty()) {
      struct passwd *p;
      p = getpwuid(getuid());
-     fromaddr = TQString::tqfromLatin1(p->pw_name);
+     fromaddr = TQString::fromLatin1(p->pw_name);
   } else {
-     TQString name = emailConf.readEntry( TQString::tqfromLatin1("FullName"));
+     TQString name = emailConf.readEntry( TQString::fromLatin1("FullName"));
      if (!name.isEmpty())
-        fromaddr = name + TQString::tqfromLatin1(" <") + fromaddr + TQString::tqfromLatin1(">");
+        fromaddr = name + TQString::fromLatin1(" <") + fromaddr + TQString::fromLatin1(">");
   }
   m_from->setText( fromaddr );
 }
@@ -438,9 +438,9 @@ TQString KBugReport::text() const
 {
     kdDebug() << m_bgSeverity->selected()->name() << endl;
     // Prepend the pseudo-headers to the contents of the mail
-  TQString severity = TQString::tqfromLatin1(m_bgSeverity->selected()->name());
+  TQString severity = TQString::fromLatin1(m_bgSeverity->selected()->name());
   TQString appname = d->appcombo->currentText();
-  TQString os = TQString::tqfromLatin1("OS: %1 (%2)\n").
+  TQString os = TQString::fromLatin1("OS: %1 (%2)\n").
                arg(KDE_COMPILING_OS).
                arg(KDE_DISTRIBUTION_TEXT);
   TQString bodyText;
@@ -452,25 +452,25 @@ TQString KBugReport::text() const
      bodyText += line;
   }
 
-  if (severity == TQString::tqfromLatin1("i18n") && KGlobal::locale()->language() != KLocale::defaultLanguage()) {
+  if (severity == TQString::fromLatin1("i18n") && KGlobal::locale()->language() != KLocale::defaultLanguage()) {
       // Case 1 : i18n bug
-      TQString package = TQString::tqfromLatin1("i18n_%1").arg(KGlobal::locale()->language());
-      package = package.replace(TQString::tqfromLatin1("_"), TQString::tqfromLatin1("-"));
-      return TQString::tqfromLatin1("Package: %1").arg(package) +
-          TQString::tqfromLatin1("\n"
+      TQString package = TQString::fromLatin1("i18n_%1").arg(KGlobal::locale()->language());
+      package = package.replace(TQString::fromLatin1("_"), TQString::fromLatin1("-"));
+      return TQString::fromLatin1("Package: %1").arg(package) +
+          TQString::fromLatin1("\n"
                               "Application: %1\n"
                               // not really i18n's version, so better here IMHO
                               "Version: %2\n").arg(appname).arg(m_strVersion)+
-          os+TQString::tqfromLatin1("\n")+bodyText;
+          os+TQString::fromLatin1("\n")+bodyText;
   } else {
-      appname = appname.replace(TQString::tqfromLatin1("_"), TQString::tqfromLatin1("-"));
+      appname = appname.replace(TQString::fromLatin1("_"), TQString::fromLatin1("-"));
       // Case 2 : normal bug
-      return TQString::tqfromLatin1("Package: %1\n"
+      return TQString::fromLatin1("Package: %1\n"
                                  "Version: %2\n"
                                  "Severity: %3\n")
           .arg(appname).arg(m_strVersion).arg(severity)+
-          TQString::tqfromLatin1("Compiler: %1\n").arg(KDE_COMPILER_VERSION)+
-          os+TQString::tqfromLatin1("\n")+bodyText;
+          TQString::fromLatin1("Compiler: %1\n").arg(KDE_COMPILER_VERSION)+
+          os+TQString::fromLatin1("\n")+bodyText;
   }
 }
 
@@ -478,12 +478,12 @@ bool KBugReport::sendBugReport()
 {
   TQString recipient ( m_aboutData ?
     m_aboutData->bugAddress() :
-    TQString::tqfromLatin1("submit@bugs.pearsoncomputing.net") );
+    TQString::fromLatin1("submit@bugs.pearsoncomputing.net") );
 
   TQString command;
   command = locate("exe", "ksendbugmail");
   if (command.isEmpty())
-      command = KStandardDirs::findExe( TQString::tqfromLatin1("ksendbugmail") );
+      command = KStandardDirs::findExe( TQString::fromLatin1("ksendbugmail") );
 
   KTempFile outputfile;
   outputfile.close();

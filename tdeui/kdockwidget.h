@@ -452,7 +452,7 @@ public:
    */
   KDockWidget( KDockManager* dockManager, const char* name,
                const TQPixmap &pixmap, TQWidget* parent = 0L, const TQString& strCaption = TQString::null,
-               const TQString& strTabPageLabel = TQString::tqfromLatin1( " " ), WFlags f = 0);
+               const TQString& strTabPageLabel = TQString::fromLatin1( " " ), WFlags f = 0);
 
   /**
    * Destructs a dockwidget.
@@ -1377,7 +1377,7 @@ public:
    * @return    a pointer to the new created dockwidget
    */
   KDockWidget* createDockWidget( const TQString& name, const TQPixmap &pixmap, TQWidget* parent = 0L,
-    const TQString& strCaption = TQString::null, const TQString& strTabPageLabel = TQString::tqfromLatin1( " " ) );
+    const TQString& strCaption = TQString::null, const TQString& strTabPageLabel = TQString::fromLatin1( " " ) );
 
   /**
    * Saves the current dock window layout into a DOM tree below the given element.
@@ -1503,7 +1503,7 @@ public:
   KDockWidget* getMainDockWidget(){ return mainDockWidget; }
 
   KDockWidget* createDockWidget( const TQString& name, const TQPixmap &pixmap, TQWidget* parent = 0L,
-    const TQString& strCaption = TQString::null, const TQString& strTabPageLabel = TQString::tqfromLatin1( " " ) );
+    const TQString& strCaption = TQString::null, const TQString& strTabPageLabel = TQString::fromLatin1( " " ) );
 
   void writeDockConfig(TQDomElement &base);
   void readDockConfig(TQDomElement &base);

@@ -148,7 +148,7 @@ KDE_EXPORT void kimgio_exr_read( TQImageIO *io )
 		}
 
 		io->setImage( image );
-		io->setqStatus( 0 );
+		io->seStatus( 0 );
     }
     catch (const std::exception &exc)
     {

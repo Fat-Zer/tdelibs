@@ -118,7 +118,7 @@ public:
     bool keepOpen() const;
   void finished();
 
-  void tqsetVisible( bool visible );
+  void setVisible( bool visible );
   void setDefaultProgressVisible( bool visible );
   bool isVisible() const { return m_visible; }
 

@@ -23,7 +23,7 @@
 #include <tqwidget.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqsize.h>
 #include <tqevent.h>
 #include <tqkeycode.h>
@@ -187,9 +187,9 @@ void KPasswordEdit::erase()
 void KPasswordEdit::focusInEvent(TQFocusEvent *e)
 {
     const TQString txt = text();
-    tqsetUpdatesEnabled(false);
+    setUpdatesEnabled(false);
     TQLineEdit::focusInEvent(e);
-    tqsetUpdatesEnabled(true);
+    setUpdatesEnabled(true);
     setText(txt);
 }
 

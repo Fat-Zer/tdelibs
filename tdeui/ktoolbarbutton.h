@@ -294,7 +294,7 @@ protected:
   void showMenu();
   TQSize sizeHint() const;
   TQSize minimumSizeHint() const;
-  TQSize tqminimumSize() const;
+  TQSize minimumSize() const;
 
   /// @since 3.1
   bool isRaised() const;

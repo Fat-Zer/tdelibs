@@ -281,7 +281,7 @@ public:
    *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
-   * @see TQString::tqfromLatin1()
+   * @see TQString::fromLatin1()
    */
   KURL( const char * url, int encoding_hint = 0 );
   /**
@@ -307,7 +307,7 @@ public:
    *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
-   * @see TQString::tqfromLatin1()
+   * @see TQString::fromLatin1()
    */
   KURL( const TQCString& url, int encoding_hint = 0 );
 
@@ -1586,7 +1586,7 @@ public:
    *
    * Convenience function.
    *
-   * Convert tqunicoded string to local encoding and use %%-style
+   * Convert unicoded string to local encoding and use %%-style
    * encoding for all common delimiters / non-ascii characters.
    *
    * @param str the string to encode (can be @c TQString::null)
@@ -1605,7 +1605,7 @@ public:
    *
    * Convenience function.
    *
-   * Convert tqunicoded string to local encoding and use %%-style
+   * Convert unicoded string to local encoding and use %%-style
    * encoding for all common delimiters and non-ascii characters
    * as well as the slash @c '/'.
    *
@@ -1623,7 +1623,7 @@ public:
    *
    * Convenience function.
    *
-   * Decode %-style encoding and convert from local encoding to tqunicode.
+   * Decode %-style encoding and convert from local encoding to unicode.
    *
    * Reverse of encode_string()
    *

@@ -19,7 +19,7 @@
 
 #include "ksettings/componentsdialog.h"
 #include <klocale.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <klistview.h>
 #include <tqlabel.h>
 #include <tqheader.h>

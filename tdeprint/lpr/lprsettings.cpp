@@ -23,7 +23,7 @@
 
 #include <kconfig.h>
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #define LPDCONF "/etc/lpd.conf"
 #define PRINTCAP "/etc/printcap"

@@ -97,7 +97,7 @@ public:
      */
     DOMString upper() const;
 
-    TQChar *tqunicode() const;
+    TQChar *unicode() const;
     TQString string() const;
 
     int toInt() const;

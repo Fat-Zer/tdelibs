@@ -287,7 +287,7 @@ void KGlobalAccelPrivate::fakeKeyPressed(unsigned int keyCode) {
 		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
 			KAccelAction* pAction = *it;
 			kdDebug(125) << "\tcode: " << TQString::number(it.key().code, 16) << " mod: " << TQString::number(it.key().mod, 16)
-				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").tqarg(pAction->name()).tqarg(pAction->shortcut().toStringInternal()) : TQString())
+				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").arg(pAction->name()).arg(pAction->shortcut().toStringInternal()) : TQString())
 				<< endl;
 		}
 #endif
@@ -365,7 +365,7 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
 			KAccelAction* pAction = *it;
 			kdDebug(125) << "\tcode: " << TQString::number(it.key().code, 16) << " mod: " << TQString::number(it.key().mod, 16)
-				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").tqarg(pAction->name()).tqarg(pAction->shortcut().toStringInternal()) : TQString())
+				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").arg(pAction->name()).arg(pAction->shortcut().toStringInternal()) : TQString())
 				<< endl;
 		}
 #endif
@@ -407,14 +407,14 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
 	if( rexPassIndex.search( pAction->methodSlotPtr() ) >= 0 && rexIndex.search( pAction->name() ) >= 0 ) {
 		int n = rexIndex.cap(1).toInt();
 		kdDebug(125) << "Calling " << pAction->methodSlotPtr() << " int = " << n << endl;
-                int slot_id = pAction->objSlotPtr()->tqmetaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
+                int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 ) {
                     TQUObject o[2];
                     static_TQUType_int.set(o+1,n);
                     const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
                 }
 	} else if( rexPassInfo.search( pAction->methodSlotPtr() ) ) {
-                int slot_id = pAction->objSlotPtr()->tqmetaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
+                int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 ) {
                     TQUObject o[4];
                     static_TQUType_TQString.set(o+1,pAction->name());
@@ -423,7 +423,7 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
                     const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
                 }
 	} else {
-                int slot_id = pAction->objSlotPtr()->tqmetaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
+                int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 )
                     const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, 0 );
 	}

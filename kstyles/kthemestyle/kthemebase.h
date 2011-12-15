@@ -36,7 +36,7 @@ Copyright (C) 1998, 1999, 2000 KDE Team
 #include <tqstring.h>
 #include <kstyle.h>
 #include <tqsettings.h>
-#include <tqpalette.h> // for QColorGroup
+#include <palette.h> // for QColorGroup
 #include "kstyledirs.h"
 #include <tqmap.h>
 
@@ -300,12 +300,12 @@ public:
      * If a color group is set in the theme configuration
      * that is used, otherwise defaultColor is returned.
      *
-     * @param defaultGroup The tqcolorGroup to set if one is available.
+     * @param defaultGroup The colorGroup to set if one is available.
      *
      * @param widget The widget whose color group to retrieve.
      *
      */
-    const TQColorGroup* tqcolorGroup( const TQColorGroup &defaultGroup,
+    const TQColorGroup* colorGroup( const TQColorGroup &defaultGroup,
                                    WidgetType widget ) const;
 
     TQBrush pixmapBrush( const TQColorGroup &group, TQColorGroup::ColorRole role,
@@ -508,9 +508,9 @@ protected:
     /**
     These are included for fuuture extension purposes..
     */
-    virtual int tqpixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const
+    virtual int pixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const
     {
-        return KStyle::tqpixelMetric( metric, widget );
+        return KStyle::pixelMetric( metric, widget );
     }
 
     virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRect & r, const TQColorGroup & cg,
@@ -522,7 +522,7 @@ protected:
     }
 
 
-    virtual void tqdrawControl( TQ_ControlElement element,
+    virtual void drawControl( TQ_ControlElement element,
                               TQPainter *p,
                               const TQWidget *widget,
                               const TQRect &r,
@@ -530,21 +530,21 @@ protected:
                               SFlags how = Style_Default,
                               const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        KStyle::tqdrawControl( element, p, widget,
+        KStyle::drawControl( element, p, widget,
                              r, cg, how, opt );
     }
 
-    virtual void tqdrawControlMask( TQ_ControlElement element,
+    virtual void drawControlMask( TQ_ControlElement element,
                                   TQPainter *p,
                                   const TQWidget *widget,
                                   const TQRect &r,
                                   const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        KStyle::tqdrawControlMask( element, p, widget, r, opt );
+        KStyle::drawControlMask( element, p, widget, r, opt );
     }
 
 
-    virtual void tqdrawComplexControl( TQ_ComplexControl control,
+    virtual void drawComplexControl( TQ_ComplexControl control,
                                      TQPainter *p,
                                      const TQWidget* widget,
                                      const TQRect &r,
@@ -554,7 +554,7 @@ protected:
                                      SCFlags active = SC_None,
                                      const TQStyleOption& opt = TQStyleOption::Default ) const
     {
-        KStyle::tqdrawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
+        KStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
     }
 
 
@@ -572,12 +572,12 @@ protected:
     }
 
 
-    virtual int tqstyleHint( StyleHint sh,
+    virtual int styleHint( StyleHint sh,
                            const TQWidget *widget = 0,
                            const TQStyleOption& opt = TQStyleOption::Default,
                            TQStyleHintReturn* returnData = 0 ) const
     {
-        return KStyle::tqstyleHint( sh,
+        return KStyle::styleHint( sh,
                                   widget,
                                   opt,
                                   returnData );
@@ -731,7 +731,7 @@ inline TQBrush KThemeBase::pixmapBrush( const TQColorGroup &group,
         return ( group.color( role ) );
 }
 
-inline const TQColorGroup* KThemeBase::tqcolorGroup( const TQColorGroup &defaultGroup,
+inline const TQColorGroup* KThemeBase::colorGroup( const TQColorGroup &defaultGroup,
         WidgetType widget ) const
 {
     return ( ( colors[ widget ] ) ? colors[ widget ] : &defaultGroup );

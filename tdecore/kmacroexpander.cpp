@@ -56,7 +56,7 @@ void KMacroExpanderBase::expandMacros( TQString &str )
 
     for (pos = 0; pos < str.length(); ) {
         if (ec != (QChar)0) {
-            if (str.tqunicode()[pos] != ec)
+            if (str.unicode()[pos] != ec)
                 goto nohit;
             if (!(len = expandEscapedMacro( str, pos, rst )))
                 goto nohit;
@@ -109,7 +109,7 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
     TQString rsts;
 
     while (pos < str.length()) {
-        TQChar cc( str.tqunicode()[pos] );
+        TQChar cc( str.unicode()[pos] );
         if (ec != (QChar)0) {
             if (cc != ec)
                 goto nohit;
@@ -205,7 +205,7 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str, uint &pos )
                     pos = pos2;
                     return false;
                 }
-                cc = str.tqunicode()[pos2];
+                cc = str.unicode()[pos2];
                 if (cc == (QChar)'`')
                     break;
                 if (cc == (QChar)'\\') {
@@ -383,14 +383,14 @@ template<class VT>
 int
 KMacroMapExpander<TQString,VT>::expandPlainMacro( const TQString &str, uint pos, TQStringList &ret )
 {
-    if (isIdentifier( str[pos - 1].tqunicode() ))
+    if (isIdentifier( str[pos - 1].unicode() ))
         return 0;
     uint sl;
-    for (sl = 0; isIdentifier( str[pos + sl].tqunicode() ); sl++);
+    for (sl = 0; isIdentifier( str[pos + sl].unicode() ); sl++);
     if (!sl)
         return 0;
     TQMapConstIterator<TQString,VT> it =
-        macromap.find( TQConstString( str.tqunicode() + pos, sl ).string() );
+        macromap.find( TQConstString( str.unicode() + pos, sl ).string() );
     if (it != macromap.end()) {
         ret += it.data();
         return sl;
@@ -415,13 +415,13 @@ KMacroMapExpander<TQString,VT>::expandEscapedMacro( const TQString &str, uint po
         rsl = sl + 3;
     } else {
         rpos = pos + 1;
-        for (sl = 0; isIdentifier( str[rpos + sl].tqunicode() ); sl++);
+        for (sl = 0; isIdentifier( str[rpos + sl].unicode() ); sl++);
         rsl = sl + 1;
     }
     if (!sl)
         return 0;
     TQMapConstIterator<TQString,VT> it =
-        macromap.find( TQConstString( str.tqunicode() + rpos, sl ).string() );
+        macromap.find( TQConstString( str.unicode() + rpos, sl ).string() );
     if (it != macromap.end()) {
         ret += it.data();
         return rsl;
@@ -454,13 +454,13 @@ KCharMacroExpander::expandEscapedMacro( const TQString &str, uint pos, TQStringL
 int
 KWordMacroExpander::expandPlainMacro( const TQString &str, uint pos, TQStringList &ret )
 {
-    if (isIdentifier( str[pos - 1].tqunicode() ))
+    if (isIdentifier( str[pos - 1].unicode() ))
         return 0;
     uint sl;
-    for (sl = 0; isIdentifier( str[pos + sl].tqunicode() ); sl++);
+    for (sl = 0; isIdentifier( str[pos + sl].unicode() ); sl++);
     if (!sl)
         return 0;
-    if (expandMacro( TQConstString( str.tqunicode() + pos, sl ).string(), ret ))
+    if (expandMacro( TQConstString( str.unicode() + pos, sl ).string(), ret ))
         return sl;
     return 0;
 }
@@ -481,12 +481,12 @@ KWordMacroExpander::expandEscapedMacro( const TQString &str, uint pos, TQStringL
         rsl = sl + 3;
     } else {
         rpos = pos + 1;
-        for (sl = 0; isIdentifier( str[rpos + sl].tqunicode() ); sl++);
+        for (sl = 0; isIdentifier( str[rpos + sl].unicode() ); sl++);
         rsl = sl + 1;
     }
     if (!sl)
         return 0;
-    if (expandMacro( TQConstString( str.tqunicode() + rpos, sl ).string(), ret ))
+    if (expandMacro( TQConstString( str.unicode() + rpos, sl ).string(), ret ))
         return rsl;
     return 0;
 }

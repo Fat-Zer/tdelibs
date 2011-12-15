@@ -30,7 +30,7 @@
 #include <tqapplication.h>
 #include <tqimage.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwhatsthis.h>
 #include <klocale.h>
 #include <knuminput.h>
@@ -192,7 +192,7 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 	TQString whatsThisPreviewPositionImagePage = i18n( " <qt> "
 			" <p><b>Position Preview Thumbnail</b></p> "
 			" <p>This position preview thumbnail indicates the position of the image on the paper sheet. "
-			" <p>Click on horizontal and vertical radio buttons to move image tqalignment on paper around. Options are: "
+			" <p>Click on horizontal and vertical radio buttons to move image alignment on paper around. Options are: "
 			" <ul> "
 			" <li> center      </li>"
 			" <li> top         </li>"
@@ -353,7 +353,7 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 	l0->addWidget(sizebox, 1, 0);
 	l0->addWidget(positionbox, 1, 1);
 	l0->setColStretch(0, 1);
-	TQGridLayout	*l1 = new TQGridLayout(colorbox->tqlayout(), 5, 2, 10);
+	TQGridLayout	*l1 = new TQGridLayout(colorbox->layout(), 5, 2, 10);
 	l1->addWidget(m_brightness, 0, 0);
 	l1->addWidget(m_hue, 1, 0);
 	l1->addWidget(m_saturation, 2, 0);
@@ -361,14 +361,14 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 	l1->addWidget(m_gamma, 4, 0);
 	l1->addMultiCellWidget(m_preview, 0, 3, 1, 1);
 	l1->addWidget(defbtn, 4, 1);
-	TQVBoxLayout	*l2 = new TQVBoxLayout(TQT_TQLAYOUT(sizebox->tqlayout()), 3);
+	TQVBoxLayout	*l2 = new TQVBoxLayout(TQT_TQLAYOUT(sizebox->layout()), 3);
 	l2->addStretch(1);
 	l2->addWidget(lab);
 	l2->addWidget(m_sizetype);
 	l2->addSpacing(10);
 	l2->addWidget(m_size);
 	l2->addStretch(1);
-	TQGridLayout	*l3 = new TQGridLayout(positionbox->tqlayout(), 2, 2, 10);
+	TQGridLayout	*l3 = new TQGridLayout(positionbox->layout(), 2, 2, 10);
 	TQHBoxLayout	*l4 = new TQHBoxLayout(0, 0, 10);
 	TQVBoxLayout	*l5 = new TQVBoxLayout(0, 0, 10);
 	l3->addLayout(l4, 0, 1);

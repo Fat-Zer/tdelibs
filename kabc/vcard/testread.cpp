@@ -3,7 +3,7 @@
 #include <assert.h>
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <VCard.h>
 

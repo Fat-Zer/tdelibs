@@ -265,7 +265,7 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
       {
           // Assume inode/directory, if the protocol supports listing.
           if ( KProtocolInfo::supportsListing( _url ) )
-              return mimeType( TQString::tqfromLatin1("inode/directory") );
+              return mimeType( TQString::fromLatin1("inode/directory") );
           else
               return defaultMimeTypePtr(); // == 'no idea', e.g. for "data:,foo/"
       }
@@ -382,15 +382,15 @@ void KMimeType::init( KDesktopFile * config )
   m_lstPatterns = config->readListEntry( "Patterns", ';' );
 
   // Read the X-KDE-AutoEmbed setting and store it in the properties map
-  TQString XKDEAutoEmbed = TQString::tqfromLatin1("X-KDE-AutoEmbed");
+  TQString XKDEAutoEmbed = TQString::fromLatin1("X-KDE-AutoEmbed");
   if ( config->hasKey( XKDEAutoEmbed ) )
     m_mapProps.insert( XKDEAutoEmbed, TQVariant( config->readBoolEntry( XKDEAutoEmbed ), 0 ) );
 
-  TQString XKDEText = TQString::tqfromLatin1("X-KDE-text");
+  TQString XKDEText = TQString::fromLatin1("X-KDE-text");
   if ( config->hasKey( XKDEText ) )
     m_mapProps.insert( XKDEText, config->readBoolEntry( XKDEText ) );
 
-  TQString XKDEIsAlso = TQString::tqfromLatin1("X-KDE-IsAlso");
+  TQString XKDEIsAlso = TQString::fromLatin1("X-KDE-IsAlso");
   if ( config->hasKey( XKDEIsAlso ) ) {
     TQString inherits = config->readEntry( XKDEIsAlso );
     if ( inherits != name() )
@@ -399,7 +399,7 @@ void KMimeType::init( KDesktopFile * config )
         kdWarning(7009) << "Error: " << inherits << " inherits from itself!!!!" << endl;
   }
 
-  TQString XKDEPatternsAccuracy = TQString::tqfromLatin1("X-KDE-PatternsAccuracy");
+  TQString XKDEPatternsAccuracy = TQString::fromLatin1("X-KDE-PatternsAccuracy");
   if ( config->hasKey( XKDEPatternsAccuracy ) )
     m_mapProps.insert( XKDEPatternsAccuracy, config->readEntry( XKDEPatternsAccuracy ) );
 
@@ -838,7 +838,7 @@ pid_t KDEDesktopMimeType::runFSDevice( const KURL& _url, const KSimpleConfig &cf
     KURL mpURL;
     mpURL.setPath( mp );
     // Open a new window
-    retval = KRun::runURL( mpURL, TQString::tqfromLatin1("inode/directory") );
+    retval = KRun::runURL( mpURL, TQString::fromLatin1("inode/directory") );
   }
   else
   {

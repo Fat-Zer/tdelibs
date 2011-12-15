@@ -21,7 +21,7 @@
 #include <stdlib.h>
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kprocess.h>
 #include <kdebug.h>

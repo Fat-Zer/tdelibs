@@ -2,7 +2,7 @@
 #include <kdialogbase.h>
 
 #include <tqstring.h>
-#include <tqtextview.h>
+#include <textview.h>
 
 int main(int argc, char** argv)
 {
@@ -64,7 +64,7 @@ int main(int argc, char** argv)
      widget may change before the dialog is shown. Additionally, setting a
      help chapter may cause a need for adjustment since it modifies the height
      of the upper frame. */
-  dialog.resize(dialog.tqminimumSize());
+  dialog.resize(dialog.minimumSize());
   /* The dialog object is used just as any other TQDialog: */
   if(dialog.exec())
     {

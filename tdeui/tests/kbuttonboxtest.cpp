@@ -18,7 +18,7 @@
 */
 #include <kapplication.h>
 #include "kbuttonbox.h"
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqdialog.h>
 #include <tqpushbutton.h>

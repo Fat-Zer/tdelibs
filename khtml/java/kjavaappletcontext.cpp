@@ -138,7 +138,7 @@ void KJavaAppletContext::received( const TQString& cmd, const TQStringList& arg 
     kdDebug(6100) << "KJavaAppletContext::received, cmd = >>" << cmd << "<<" << endl;
     kdDebug(6100) << "arg count = " << arg.count() << endl;
 
-    if ( cmd == TQString::tqfromLatin1("showstatus")
+    if ( cmd == TQString::fromLatin1("showstatus")
 	 && !arg.empty() )
     {
         TQString tmp = arg.first();
@@ -146,19 +146,19 @@ void KJavaAppletContext::received( const TQString& cmd, const TQStringList& arg 
         kdDebug(6100) << "status message = " << tmp << endl;
         emit showStatus( tmp );
     }
-    else if ( cmd == TQString::tqfromLatin1( "showurlinframe" )
+    else if ( cmd == TQString::fromLatin1( "showurlinframe" )
               && arg.count() > 1 )
     {
         kdDebug(6100) << "url = " << arg[0] << ", frame = " << arg[1] << endl;
         emit showDocument( arg[0], arg[1] );
     }
-    else if ( cmd == TQString::tqfromLatin1( "showdocument" )
+    else if ( cmd == TQString::fromLatin1( "showdocument" )
               && !arg.empty() )
     {
         kdDebug(6100) << "url = " << arg.first() << endl;
         emit showDocument( arg.first(), "_top" );
     }
-    else if ( cmd == TQString::tqfromLatin1( "resizeapplet" )
+    else if ( cmd == TQString::fromLatin1( "resizeapplet" )
               && arg.count() > 2 )
     {
         //arg[1] should be appletID
@@ -180,10 +180,10 @@ void KJavaAppletContext::received( const TQString& cmd, const TQStringList& arg 
                 tmp->resizeAppletWidget( width, height );
         }
     }
-    else if (cmd.startsWith(TQString::tqfromLatin1("audioclip_"))) {
+    else if (cmd.startsWith(TQString::fromLatin1("audioclip_"))) {
         kdDebug(DEBUGAREA) << "process Audio command (not yet implemented): " << cmd  << " " << arg[0] << endl;
     }
-    else if ( cmd == TQString::tqfromLatin1( "JS_Event" )
+    else if ( cmd == TQString::fromLatin1( "JS_Event" )
               && arg.count() > 2 )
     {
         bool ok;
@@ -198,7 +198,7 @@ void KJavaAppletContext::received( const TQString& cmd, const TQStringList& arg 
         else
             kdError(DEBUGAREA) << "parse JS event " << arg[0] << " " << arg[1] << endl;
     }
-    else if ( cmd == TQString::tqfromLatin1( "AppletStateNotification" ) )
+    else if ( cmd == TQString::fromLatin1( "AppletStateNotification" ) )
     {
         bool ok;
         const int appletID = arg.first().toInt(&ok);
@@ -222,7 +222,7 @@ void KJavaAppletContext::received( const TQString& cmd, const TQStringList& arg 
         } else
             kdError(DEBUGAREA) << "AppletStateNotification: Applet ID is not numerical" << endl;
     }
-    else if ( cmd == TQString::tqfromLatin1( "AppletFailed" ) ) {
+    else if ( cmd == TQString::fromLatin1( "AppletFailed" ) ) {
         bool ok;
         const int appletID = arg.first().toInt(&ok);
         if (ok)

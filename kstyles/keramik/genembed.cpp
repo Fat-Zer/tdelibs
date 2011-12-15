@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #include <tqimage.h>
 #include <tqmap.h>
 #include <tqregexp.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqvaluevector.h>
 
 #include <kimageeffect.h>

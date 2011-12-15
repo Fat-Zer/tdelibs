@@ -34,7 +34,7 @@
 #include <tqcombobox.h>
 #include <tqlabel.h>
 #include <tqcheckbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwidgetstack.h>
 #include <tqheader.h>
 
@@ -148,7 +148,7 @@ KACLListViewItem::KACLListViewItem( TQListView* parent,
    qualifier( _qualifier ), isPartial( false )
 {
     m_pACLListView = dynamic_cast<KACLListView*>( parent );
-    tqrepaint();
+    repaint();
 }
 
 
@@ -192,7 +192,7 @@ TQString KACLListViewItem::key( int, bool ) const
 }
 
 void KACLListViewItem::paintCell( TQPainter* p, const TQColorGroup &cg,
-                                  int column, int width, int tqalignment )
+                                  int column, int width, int alignment )
 {
     TQColorGroup mycg = cg;
     if ( isDefault ) {
@@ -204,7 +204,7 @@ void KACLListViewItem::paintCell( TQPainter* p, const TQColorGroup &cg,
         mycg.setColor( TQColorGroup::Text, TQColor( 100, 100, 100 ) );
         p->setFont( font );
     }
-    KListViewItem::paintCell( p, mycg, column, width, tqalignment );
+    KListViewItem::paintCell( p, mycg, column, width, alignment );
 
     KACLListViewItem *below =0;
     if ( itemBelow() )
@@ -247,7 +247,7 @@ void KACLListViewItem::updatePermPixmaps()
         setPixmap( 4, TQPixmap() );
 }
 
-void KACLListViewItem::tqrepaint()
+void KACLListViewItem::repaint()
 {
     int idx = 0;
     switch ( type )
@@ -527,7 +527,7 @@ void EditACLEntryDialog::slotOk()
     }
     if ( m_defaultCB )
         m_item->isDefault = m_defaultCB->isChecked();
-    m_item->tqrepaint();
+    m_item->repaint();
 
     KDialogBase::slotOk();
 }
@@ -582,14 +582,14 @@ KACLListView::KACLListView( TQWidget* parent, const char* name )
     struct passwd *user = 0;
     setpwent();
     while ( ( user = getpwent() ) != 0 ) {
-       m_allUsers << TQString::tqfromLatin1( user->pw_name );
+       m_allUsers << TQString::fromLatin1( user->pw_name );
     }
     endpwent();
 
     struct group *gr = 0;
     setgrent();
     while ( ( gr = getgrent() ) != 0 ) {
-       m_allGroups << TQString::tqfromLatin1( gr->gr_name );
+       m_allGroups << TQString::fromLatin1( gr->gr_name );
     }
     endgrent();
     m_allUsers.sort();
@@ -1019,7 +1019,7 @@ void KACLListView::slotRemoveEntry()
                 delete item;
             } else {
                 item->value = 0;
-                item->tqrepaint();
+                item->repaint();
             }
             if ( !itemWasDefault )
                 calculateEffectiveRights();
@@ -1030,7 +1030,7 @@ void KACLListView::slotRemoveEntry()
                       || item->type == Group
                       || item->type == Others ) ) {
                 item->value = 0;
-                item->tqrepaint();
+                item->repaint();
             } else {
                 delete item;
             }

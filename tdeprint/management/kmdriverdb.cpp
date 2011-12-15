@@ -25,7 +25,7 @@
 #include <kdebug.h>
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqfileinfo.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
@@ -60,7 +60,7 @@ KMDriverDB::~KMDriverDB()
 TQString KMDriverDB::dbFile()
 {
 	// this calls insure missing directories creation
-	TQString	filename = locateLocal("data",TQString::tqfromLatin1("tdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
+	TQString	filename = locateLocal("data",TQString::fromLatin1("tdeprint/printerdb_%1.txt").arg(KMFactory::self()->printSystem()));
 	return filename;
 }
 

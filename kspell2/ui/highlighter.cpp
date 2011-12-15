@@ -27,7 +27,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
-#include <tqtextedit.h>
+#include <textedit.h>
 #include <tqtimer.h>
 #include <tqcolor.h>
 #include <tqdict.h>

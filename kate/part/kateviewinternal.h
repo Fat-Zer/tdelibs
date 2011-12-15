@@ -222,7 +222,7 @@ class KateViewInternal : public TQWidget
     int scrollX;
     int scrollY;
 
-    TQt::tqCursorShape m_mouseCursor;
+    TQt::CursorShape m_mouseCursor;
 
     KateSuperCursor cursor;
     KateTextCursor displayCursor;

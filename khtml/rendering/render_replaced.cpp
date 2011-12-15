@@ -183,7 +183,7 @@ bool RenderWidget::event( TQEvent *e )
             return true;
         TQWidgetResizeEvent *re = static_cast<TQWidgetResizeEvent *>(e);
         m_widget->resize( re->w,  re->h );
-        tqrepaint();
+        repaint();
     }
     // eat all events - except if this is a frame (in which case KHTMLView handles it all)
     if ( ::tqqt_cast<KHTMLView *>( m_widget ) )
@@ -543,10 +543,10 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
             }
         }
     }
-    TQMemArray<TQRect> br = blit.tqrects();
+    TQMemArray<TQRect> br = blit.rects();
 
     const int cnt = br.size();
-    const bool external = p->tqdevice()->isExtDev();
+    const bool external = p->device()->isExtDev();
     TQPixmap* const pm = PaintBuffer::grab( widget->size() );
     if (!pm)
     {
@@ -558,7 +558,7 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
     if ( external ) {
 	// even hackier!
         TQPainter pt( pm );
-        const TQColor c = widget->tqcolorGroup().base();
+        const TQColor c = widget->colorGroup().base();
         for (int i = 0; i < cnt; ++i)
             pt.fillRect( br[i], c );
     } else {
@@ -672,7 +672,7 @@ bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
             // don't allow the widget to react to wheel event unless its
             // currently focused. this avoids accidentally changing a select box
             // or something while wheeling a webpage.
-            if (tqApp->tqfocusWidget() != widget() &&
+            if (tqApp->focusWidget() != widget() &&
                 widget()->focusPolicy() <= TQ_StrongFocus)  {
                 TQT_TQWHEELEVENT(e)->ignore();
                 TQApplication::sendEvent(view(), e);

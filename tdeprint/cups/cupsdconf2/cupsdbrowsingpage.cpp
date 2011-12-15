@@ -23,7 +23,7 @@
 #include "browsedialog.h"
 
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqcheckbox.h>
 #include <tqcombobox.h>
 #include <tqwhatsthis.h>

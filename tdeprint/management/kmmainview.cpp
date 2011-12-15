@@ -40,7 +40,7 @@
 #include <tqtimer.h>
 #include <tqcombobox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpopupmenu.h>
 #include <kmessagebox.h>
 #include <kaction.h>

@@ -182,7 +182,7 @@ void KMdiChildFrmCaption::setActive( bool bActive )
 	                                            m_pParent->m_pManager->m_captionInactiveBackColor );
 
 	m_bActive = bActive;
-	tqrepaint( false );
+	repaint( false );
 }
 
 //=============== setCaption ===============//
@@ -190,7 +190,7 @@ void KMdiChildFrmCaption::setActive( bool bActive )
 void KMdiChildFrmCaption::setCaption( const TQString& text )
 {
 	m_szCaption = text;
-	tqrepaint( false );
+	repaint( false );
 }
 
 //============== heightHint ===============//

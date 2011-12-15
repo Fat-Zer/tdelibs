@@ -394,7 +394,7 @@ KRFCDate::parseDateISO8601( const TQString& input_ )
   mday   = l[2].toUInt();
 
   // Z suffix means UTC.
-  if ((QChar)'Z' == timeString.tqat(timeString.length() - 1)) {
+  if ((QChar)'Z' == timeString.at(timeString.length() - 1)) {
     timeString.remove(timeString.length() - 1, 1);
   }
 

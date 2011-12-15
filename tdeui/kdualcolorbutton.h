@@ -19,7 +19,7 @@
 #define __KDUALCOLORBTN_H
 
 class TQBitmap;
-#include <tqbrush.h>
+#include <brush.h>
 #include <tqwidget.h>
 
 #include <tdelibs_export.h>

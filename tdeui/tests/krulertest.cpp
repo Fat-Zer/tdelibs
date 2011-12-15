@@ -3,7 +3,7 @@
 #include "krulertest.h"
 
 #include "kruler.h"
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqgroupbox.h>
 

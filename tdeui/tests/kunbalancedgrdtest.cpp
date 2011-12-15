@@ -3,7 +3,7 @@
 #include <kpixmapeffect.h>
 #include <tqpainter.h>
 #include <tqstring.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 int cols = 3, rows = 3; // how many
 
@@ -159,7 +159,7 @@ void myTopWidget::rebalance()
 
   if ((otime - itime )> 500)
     {
-      grds->tqrepaint(false);
+      grds->repaint(false);
       itime = time.elapsed();
     }
 }

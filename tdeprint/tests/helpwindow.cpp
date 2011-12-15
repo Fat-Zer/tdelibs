@@ -19,8 +19,8 @@
 #include <tqtoolbutton.h>
 #include <tqiconset.h>
 #include <tqfile.h>
-#include <tqtextstream.h>
-#include <tqstylesheet.h>
+#include <textstream.h>
+#include <stylesheet.h>
 #include <tqmessagebox.h>
 #include <tqfiledialog.h>
 #include <tqapplication.h>
@@ -278,7 +278,7 @@ void HelpWindow::print()
 	TQRect view( body );
 	int page = 1;
 	do {
-	    richText.draw( &p, body.left(), body.top(), view, tqcolorGroup() );
+	    richText.draw( &p, body.left(), body.top(), view, colorGroup() );
 	    view.moveBy( 0, body.height() );
 	    p.translate( 0 , -body.height() );
 	    p.setFont( font );

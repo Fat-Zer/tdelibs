@@ -60,7 +60,7 @@
 #include <kfileitem.h>
 #include <tqfile.h>
 #include <tqdir.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 
 // for keygen
 #include <tqstring.h>
@@ -193,7 +193,7 @@ inline static TQString escapeUnencodeable(const TQTextCodec* codec, const TQStri
             enc_string.append(c);
         else {
             TQString ampersandEscape;
-            ampersandEscape.sprintf("&#%u;", c.tqunicode());
+            ampersandEscape.sprintf("&#%u;", c.unicode());
             enc_string.append(ampersandEscape);
         }
     }
@@ -1322,10 +1322,10 @@ TQString HTMLInputElementImpl::state( )
 {
     switch (m_type) {
     case PASSWORD:
-        return TQString::tqfromLatin1("."); // empty string, avoid restoring
+        return TQString::fromLatin1("."); // empty string, avoid restoring
     case CHECKBOX:
     case RADIO:
-        return TQString::tqfromLatin1(checked() ? "on" : "off");
+        return TQString::fromLatin1(checked() ? "on" : "off");
     case TEXT:
         if (autoComplete() && value() != getAttribute(ATTR_VALUE) && getDocument()->view())
             getDocument()->view()->addFormCompletionItem(name().string(), value().string());
@@ -1340,7 +1340,7 @@ void HTMLInputElementImpl::restoreState(const TQString &state)
     switch (m_type) {
     case CHECKBOX:
     case RADIO:
-        setChecked((state == TQString::tqfromLatin1("on")));
+        setChecked((state == TQString::fromLatin1("on")));
         break;
     case FILE:
         m_value = DOMString(state.left(state.length()-1));
@@ -1566,12 +1566,12 @@ bool HTMLInputElementImpl::encoding(const TQTextCodec* codec, khtml::encodingLis
             if(m_clicked)
             {
                 m_clicked = false;
-                TQString astr(nme.isEmpty() ? TQString::tqfromLatin1("x") : nme + ".x");
+                TQString astr(nme.isEmpty() ? TQString::fromLatin1("x") : nme + ".x");
 
                 encoding += fixUpfromUnicode(codec, astr);
                 astr.setNum(KMAX( clickX(), 0 ));
                 encoding += fixUpfromUnicode(codec, astr);
-                astr = nme.isEmpty() ? TQString::tqfromLatin1("y") : nme + ".y";
+                astr = nme.isEmpty() ? TQString::fromLatin1("y") : nme + ".y";
                 encoding += fixUpfromUnicode(codec, astr);
                 astr.setNum(KMAX( clickY(), 0 ) );
                 encoding += fixUpfromUnicode(codec, astr);
@@ -1618,7 +1618,7 @@ bool HTMLInputElementImpl::encoding(const TQTextCodec* codec, khtml::encodingLis
             KIO::UDSEntry filestat;
 
             // can't submit file in www-url-form encoded
-            TQWidget* const toplevel = static_cast<RenderSubmitButton*>(m_render)->widget()->tqtopLevelWidget();
+            TQWidget* const toplevel = static_cast<RenderSubmitButton*>(m_render)->widget()->topLevelWidget();
             if (multipart) {
                 TQCString filearray( "" );
                 if ( KIO::NetAccess::stat(fileurl, filestat, toplevel)) {
@@ -2761,8 +2761,8 @@ static TQString expandLF(const TQString& s)
     unsigned pos2 = 0;
     for(unsigned pos = 0; pos < len; pos++)
     {
-       TQChar c = s.tqat(pos);
-       switch(c.tqunicode())
+       TQChar c = s.at(pos);
+       switch(c.unicode())
        {
          case '\n':
            r[pos2++] = '\r';

@@ -24,7 +24,7 @@
 
 #include "kdiskfreesp.h"
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kdebug.h>
 #include <kprocess.h>
@@ -100,7 +100,7 @@ void KDiskFreeSp::dfDone()
 
   TQTextStream t (dfStringErrOut, IO_ReadOnly);
   TQString s=t.readLine();
-  if ( (s.isEmpty()) || ( s.left(10) != TQString::tqfromLatin1("Filesystem") ) )
+  if ( (s.isEmpty()) || ( s.left(10) != TQString::fromLatin1("Filesystem") ) )
     kdError() << "Error running df command... got [" << s << "]" << endl;
   while ( !t.eof() ) {
     TQString u,v;

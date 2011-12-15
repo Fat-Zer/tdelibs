@@ -72,7 +72,7 @@ static void updatePoliciesConfig(KConfig *cfg) {
 		cfg->setGroup(*i);
 
 		// remove it if it has expired
-		if (!cfg->readBoolEntry("Permanent") && cfg->readDateTimeEntry("Expires") < TQDateTime::tqcurrentDateTime()) {
+		if (!cfg->readBoolEntry("Permanent") && cfg->readDateTimeEntry("Expires") < TQDateTime::currentDateTime()) {
 			cfg->deleteGroup(*i);
 			continue;
 		}
@@ -164,7 +164,7 @@ KSSLCNode *node;
 
 	for (node = certList.first(); node; node = certList.next()) {
 		if (node->permanent ||
-			node->expires > TQDateTime::tqcurrentDateTime()) {
+			node->expires > TQDateTime::currentDateTime()) {
 			// First convert to a binary format and then write the
 			// kconfig entry write the (CN, policy, cert) to
 			// KSimpleConfig
@@ -239,7 +239,7 @@ TQStringList groups = cfg->groupList();
 		// remove it if it has expired
 		if (!cfg->readBoolEntry("Permanent") &&
 			cfg->readDateTimeEntry("Expires") <
-				TQDateTime::tqcurrentDateTime()) {
+				TQDateTime::currentDateTime()) {
 			cfg->deleteGroup(*i);
 			continue;
 		}
@@ -278,7 +278,7 @@ KSSLCNode *node;
 			node->permanent = permanent;
 
 			if (!permanent) {
-				node->expires = TQDateTime::tqcurrentDateTime();
+				node->expires = TQDateTime::currentDateTime();
 				// FIXME: make this configurable
 				node->expires = TQT_TQDATETIME_OBJECT(node->expires.addSecs(3600));
 			}
@@ -297,7 +297,7 @@ KSSLCNode *node;
 	certList.prepend(n); 
 
 	if (!permanent) {
-		n->expires = TQDateTime::tqcurrentDateTime();
+		n->expires = TQDateTime::currentDateTime();
 		n->expires = TQT_TQDATETIME_OBJECT(n->expires.addSecs(3600));
 	}
 
@@ -312,7 +312,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (KSSLX509Map(node->cert->getSubject()).getValue("CN") == cn) {
 			if (!node->permanent &&
-				node->expires < TQDateTime::tqcurrentDateTime()) {
+				node->expires < TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -338,7 +338,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {  
 			if (!node->permanent &&
-				node->expires < TQDateTime::tqcurrentDateTime()) {
+				node->expires < TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -362,7 +362,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (KSSLX509Map(node->cert->getSubject()).getValue("CN") == cn) {
 			if (!node->permanent &&
-				node->expires < TQDateTime::tqcurrentDateTime()) {
+				node->expires < TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -386,7 +386,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent &&
-				node->expires < TQDateTime::tqcurrentDateTime()) {
+				node->expires < TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -410,7 +410,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent && node->expires <
-					TQDateTime::tqcurrentDateTime()) {
+					TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				delete node;
@@ -535,7 +535,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent && node->expires <
-				       TQDateTime::tqcurrentDateTime()) {
+				       TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				searchRemoveCert(node->cert);
@@ -563,7 +563,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent && node->expires <
-				       	TQDateTime::tqcurrentDateTime()) {
+				       	TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				searchRemoveCert(node->cert);
@@ -593,7 +593,7 @@ KSSLCNode *node;
 	for (node = certList.first(); node; node = certList.next()) {
 		if (cert == *(node->cert)) {
 			if (!node->permanent && node->expires <
-				       	TQDateTime::tqcurrentDateTime()) {
+				       	TQDateTime::currentDateTime()) {
 				certList.remove(node);
 				cfg->deleteGroup(node->cert->getMD5Digest());
 				searchRemoveCert(node->cert);
@@ -867,7 +867,7 @@ void KSSLD::searchAddCert(KSSLCertificate *cert) {
 		if (elem.findRef(cert) == -1) {
 			unsigned int n = 0;
 			for(; n < elem.size(); n++) {
-				if (!elem.tqat(n)) {
+				if (!elem.at(n)) {
 					elem.insert(n, cert);
 					break;
 				}
@@ -912,7 +912,7 @@ TQStringList KSSLD::getKDEKeyByEmail(const TQString &email) {
 
 	TQPtrVector<KSSLCertificate> &elem = *it;
 	for (unsigned int n = 0; n < elem.size(); n++) {
-		KSSLCertificate *cert = elem.tqat(n);
+		KSSLCertificate *cert = elem.at(n);
 		if (cert) {
 			rc.append(cert->getKDEKey());
 		}

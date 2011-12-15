@@ -54,8 +54,8 @@ bool KSrvResolverWorker::preprocess()
   if (node.find('%') != -1)
     node.truncate(node.find('%'));
 
-  if (node.isEmpty() || node == TQString::tqfromLatin1("*") ||
-      node == TQString::tqfromLatin1("localhost"))
+  if (node.isEmpty() || node == TQString::fromLatin1("*") ||
+      node == TQString::fromLatin1("localhost"))
     return false;		// empty == localhost
 
   encodedName = KResolver::domainToAscii(node);
@@ -85,7 +85,7 @@ bool KSrvResolverWorker::preprocess()
 	return false;
 
       protoname = "_";
-      protoname += names.tqat(0);
+      protoname += names.at(0);
     }
   else if (sockettype == SOCK_STREAM || sockettype == 0)
     protoname = "_tcp";
@@ -225,7 +225,7 @@ bool KSrvResolverWorker::postprocess()
 
 void KSrvResolverWorker::customEvent(TQCustomEvent*)
 {
-  dns = new TQDns(TQString::tqfromLatin1(encodedName), TQDns::Srv);
+  dns = new TQDns(TQString::fromLatin1(encodedName), TQDns::Srv);
   TQObject::connect(dns, TQT_SIGNAL(resultsReady()), this, TQT_SLOT(dnsResultsReady()));
 }
 

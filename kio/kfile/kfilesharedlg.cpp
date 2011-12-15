@@ -23,7 +23,7 @@
 #include <tqdir.h>
 #include <tqradiobutton.h>
 #include <tqbuttongroup.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <kprocess.h>
 #include <kprocio.h>

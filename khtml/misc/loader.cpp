@@ -213,7 +213,7 @@ CachedCSSStyleSheet::CachedCSSStyleSheet(DocLoader* dl, const DOMString &url, KI
     : CachedObject(url, CSSStyleSheet, _cachePolicy, 0)
 {
     // Set the type we want (probably css or xml)
-    TQString ah = TQString::tqfromLatin1( accept );
+    TQString ah = TQString::fromLatin1( accept );
     if ( !ah.isEmpty() )
         ah += ",";
     ah += "*/*;q=0.1";
@@ -327,7 +327,7 @@ CachedScript::CachedScript(DocLoader* dl, const DOMString &url, KIO::CacheContro
     // It's javascript we want.
     // But some websites think their scripts are <some wrong mimetype here>
     // and refuse to serve them if we only accept application/x-javascript.
-    setAccept( TQString::tqfromLatin1("*/*") );
+    setAccept( TQString::fromLatin1("*/*") );
     // load the file
     Cache::loader()->load(dl, this, false);
     m_loading = true;
@@ -397,7 +397,7 @@ public:
 
     void sendTo(TQDataSink* sink, int n)
     {
-        sink->receive((const uchar*)&buffer.tqat(pos), n);
+        sink->receive((const uchar*)&buffer.at(pos), n);
 
         pos += n;
 
@@ -787,7 +787,7 @@ void CachedImage::setShowAnimations( KHTMLSettings::KAnimationAdvice showAnimati
         delete p;
         p = new TQPixmap(m->framePixmap());
         m->disconnectUpdate( this, TQT_SLOT( movieUpdated( const TQRect &) ));
-        m->disconnectqStatus( this, TQT_SLOT( movieStatus( int ) ));
+        m->disconnecStatus( this, TQT_SLOT( movieStatus( int ) ));
         m->disconnectResize( this, TQT_SLOT( movieResize( const TQSize& ) ) );
         TQTimer::singleShot(0, this, TQT_SLOT( deleteMovie()));
         imgSource = 0;
@@ -850,7 +850,7 @@ void CachedImage::data ( TQBuffer &_buffer, bool eof )
             imgSource = new ImageSource( _buffer.buffer());
             m = new TQMovie( imgSource, 8192 );
             m->connectUpdate( this, TQT_SLOT( movieUpdated( const TQRect &) ));
-            m->connectqStatus( this, TQT_SLOT( movieStatus(int)));
+            m->connecStatus( this, TQT_SLOT( movieStatus(int)));
             m->connectResize( this, TQT_SLOT( movieResize( const TQSize& ) ) );
         }
     }
@@ -1167,7 +1167,7 @@ void Loader::servePendingRequests()
             {
                 job->addMetaData( "cross-domain", part->toplevelURL().url() );
                 if (part->widget())
-                    job->setWindow (part->widget()->tqtopLevelWidget());
+                    job->setWindow (part->widget()->topLevelWidget());
             }
         }
 

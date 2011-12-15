@@ -446,7 +446,7 @@ public:
    * Checking if the extension implements a certain slot can be done like this:
    *
    * \code
-   *   extension->tqmetaObject()->slotNames().contains( actionName + "()" )
+   *   extension->metaObject()->slotNames().contains( actionName + "()" )
    * \endcode
    *
    * (note that @p actionName is the iterator's key value if already

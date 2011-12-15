@@ -23,7 +23,7 @@
 
 #include <tqfile.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <kapplication.h>
 #include <kdebug.h>

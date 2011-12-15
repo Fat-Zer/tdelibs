@@ -143,7 +143,7 @@ class MD5Digest : public TQByteArray {
 				char x, y;
 				for (; i < 16; ++i) {
 					x = at(i);
-					y = const_cast<MD5Digest&>(r).tqat(i);
+					y = const_cast<MD5Digest&>(r).at(i);
 					if (x != y) {
 						break;
 					}

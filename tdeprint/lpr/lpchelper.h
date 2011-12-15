@@ -22,7 +22,7 @@
 
 #include <tqobject.h>
 #include <tqmap.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include "kmprinter.h"
 
 class KMJob;

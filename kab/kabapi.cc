@@ -74,7 +74,7 @@ int KabAPI::exec()
 	    }
 	  listbox->setMinimumSize(listbox->sizeHint());
 	  adjustSize();
-	  resize(tqminimumSize());
+	  resize(minimumSize());
 	  return KDialogBase::exec();
 	} else {
 	  kdDebug(KAB_KDEBUG_AREA) << "KabAPI::exec: error creating interface."

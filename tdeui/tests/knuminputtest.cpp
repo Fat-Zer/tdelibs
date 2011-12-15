@@ -8,7 +8,7 @@
 *
 */
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqvgroupbox.h>
 
 #include <kapplication.h>

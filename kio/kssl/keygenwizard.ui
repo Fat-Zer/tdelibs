@@ -30,7 +30,7 @@
             <property name="scaledContents">
                 <bool>false</bool>
             </property>
-            <property name="tqalignment">
+            <property name="alignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="wordwrap" stdset="0">

@@ -24,7 +24,7 @@
 
 #include <tqbuttongroup.h>
 #include <tqgroupbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqradiobutton.h>
 #include <tqwhatsthis.h>

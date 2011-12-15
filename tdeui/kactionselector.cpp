@@ -27,7 +27,7 @@
 #include <tqlistbox.h>
 #include <tqtoolbutton.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqevent.h>
 #include <tqwhatsthis.h>
 

@@ -25,7 +25,7 @@
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqstring.h>
 #include <tqregexp.h>
@@ -132,9 +132,9 @@ bool KProgress::setIndicator(TQString &indicator, int progress, int totalSteps)
     if (!totalSteps)
         return false;
     TQString newString(mFormat);
-    newString.replace(TQString::tqfromLatin1("%v"),
+    newString.replace(TQString::fromLatin1("%v"),
                       TQString::number(progress));
-    newString.replace(TQString::tqfromLatin1("%m"),
+    newString.replace(TQString::fromLatin1("%m"),
                       TQString::number(totalSteps));
 
     if (totalSteps > INT_MAX / 1000) {
@@ -142,7 +142,7 @@ bool KProgress::setIndicator(TQString &indicator, int progress, int totalSteps)
         totalSteps /= 1000;
     }
 
-    newString.replace(TQString::tqfromLatin1("%p"),
+    newString.replace(TQString::fromLatin1("%p"),
                       TQString::number((progress * 100) / totalSteps)); 
 
     if (newString != indicator)

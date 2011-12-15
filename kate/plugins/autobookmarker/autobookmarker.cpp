@@ -44,7 +44,7 @@
 
 #include <tqcheckbox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqlistview.h>
 #include <tqpopupmenu.h>
@@ -235,7 +235,7 @@ void ABGlobal::writeConfig()
   // fill in the current list
   for ( uint i = 0; i < m_ents->count(); i++ )
   {
-    AutoBookmarkEnt *e = m_ents->tqat( i );
+    AutoBookmarkEnt *e = m_ents->at( i );
     config->setGroup( TQString("autobookmark%1").arg( i ) );
     config->writeEntry( "pattern", e->pattern );
     config->writeEntry( "filemask", e->filemask, ';' );

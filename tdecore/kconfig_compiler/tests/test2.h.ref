@@ -21,7 +21,7 @@ class Test2 : public MyPrefs
     */
     void setAutoSave( bool v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "AutoSave" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AutoSave" ) ))
         mAutoSave = v;
     }
 
@@ -46,7 +46,7 @@ class Test2 : public MyPrefs
     */
     void setAutoSaveInterval( int v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "AutoSaveInterval" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AutoSaveInterval" ) ))
         mAutoSaveInterval = v;
     }
 
@@ -71,7 +71,7 @@ class Test2 : public MyPrefs
     */
     void setConfirm( bool v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "Confirm" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Confirm" ) ))
         mConfirm = v;
     }
 
@@ -96,7 +96,7 @@ class Test2 : public MyPrefs
     */
     void setArchiveFile( const TQString & v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "ArchiveFile" ) ))
+      if (!isImmutable( TQString::fromLatin1( "ArchiveFile" ) ))
         mArchiveFile = v;
     }
 
@@ -121,7 +121,7 @@ class Test2 : public MyPrefs
     */
     void setDestination( int v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "Destination" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Destination" ) ))
         mDestination = v;
     }
 
@@ -146,7 +146,7 @@ class Test2 : public MyPrefs
     */
     void setHourSize( int v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "HourSize" ) ))
+      if (!isImmutable( TQString::fromLatin1( "HourSize" ) ))
         mHourSize = v;
     }
 
@@ -171,7 +171,7 @@ class Test2 : public MyPrefs
     */
     void setSelectionStartsEditor( bool v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "SelectionStartsEditor" ) ))
+      if (!isImmutable( TQString::fromLatin1( "SelectionStartsEditor" ) ))
         mSelectionStartsEditor = v;
     }
 
@@ -196,7 +196,7 @@ class Test2 : public MyPrefs
     */
     void setSelectedPlugins( const TQStringList & v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "SelectedPlugins" ) ))
+      if (!isImmutable( TQString::fromLatin1( "SelectedPlugins" ) ))
         mSelectedPlugins = v;
     }
 
@@ -221,7 +221,7 @@ class Test2 : public MyPrefs
     */
     void setHighlightColor( const TQColor & v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "HighlightColor" ) ))
+      if (!isImmutable( TQString::fromLatin1( "HighlightColor" ) ))
         mHighlightColor = v;
     }
 
@@ -246,7 +246,7 @@ class Test2 : public MyPrefs
     */
     void setAgendaBgColor( const TQColor & v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "AgendaBgColor" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AgendaBgColor" ) ))
         mAgendaBgColor = v;
     }
 
@@ -271,7 +271,7 @@ class Test2 : public MyPrefs
     */
     void setTimeBarFont( const TQFont & v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "TimeBarFont" ) ))
+      if (!isImmutable( TQString::fromLatin1( "TimeBarFont" ) ))
         mTimeBarFont = v;
     }
 

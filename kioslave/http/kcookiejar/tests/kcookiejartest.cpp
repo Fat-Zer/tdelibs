@@ -72,12 +72,12 @@ static void popArg(TQString &command, TQCString & line)
    int i = line.find(' ');
    if (i != -1)
    {
-      command = TQString::tqfromLatin1(line.left(i));
+      command = TQString::fromLatin1(line.left(i));
       line = line.mid(i+1);
    }
    else
    {
-      command = TQString::tqfromLatin1(line);
+      command = TQString::fromLatin1(line);
       line = 0;
    }   
 }
@@ -158,7 +158,7 @@ static void processCheck(TQCString &line)
    if (url.isEmpty())
       FAIL(TQString("Missing URL"));
 
-   TQString expectedCookies = TQString::tqfromLatin1(line);
+   TQString expectedCookies = TQString::fromLatin1(line);
 
    TQString cookies = jar->findCookies(urlStr, false, 0, 0).stripWhiteSpace();
    if (cookies != expectedCookies)
@@ -246,8 +246,8 @@ int main(int argc, char *argv[])
    TQCString arg2;
    TQString result;
 
-   lastYear = new TQCString(TQString("Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::tqcurrentDate().year()-1).utf8());
-   nextYear = new TQCString(TQString(" expires=Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::tqcurrentDate().year()+1).utf8());
+   lastYear = new TQCString(TQString("Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::currentDate().year()-1).utf8());
+   nextYear = new TQCString(TQString(" expires=Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::currentDate().year()+1).utf8());
 
    KAboutData about("kcookietest", "kcookietest", "1.0", description, KAboutData::License_GPL, "(C) 2004 Waldo Bastian");
    KCmdLineArgs::init( argc, argv, &about);

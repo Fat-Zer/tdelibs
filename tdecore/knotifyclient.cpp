@@ -86,7 +86,7 @@ static int sendNotifyEvent(const TQString &message, const TQString &text,
   // knotify daemon needs toplevel window
   TQWidget* widget = TQT_TQWIDGET(TQWidget::find( (WId)winId ));
   if( widget )
-    winId = (int)widget->tqtopLevelWidget()->winId();
+    winId = (int)widget->topLevelWidget()->winId();
 
   TQByteArray data;
   TQDataStream ds(data, IO_WriteOnly);
@@ -126,20 +126,20 @@ int KNotifyClient::event( int winId, StandardEvent type, const TQString& text )
     TQString message;
     switch ( type ) {
     case cannotOpenFile:
-	message = TQString::tqfromLatin1("cannotopenfile");
+	message = TQString::fromLatin1("cannotopenfile");
 	break;
     case warning:
-	message = TQString::tqfromLatin1("warning");
+	message = TQString::fromLatin1("warning");
 	break;
     case fatalError:
-	message = TQString::tqfromLatin1("fatalerror");
+	message = TQString::fromLatin1("fatalerror");
 	break;
     case catastrophe:
-	message = TQString::tqfromLatin1("catastrophe");
+	message = TQString::fromLatin1("catastrophe");
 	break;
     case notification: // fall through
     default:
-	message = TQString::tqfromLatin1("notification");
+	message = TQString::fromLatin1("notification");
 	break;
     }
 

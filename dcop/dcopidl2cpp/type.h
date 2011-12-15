@@ -1,7 +1,7 @@
 #ifndef TYPE_H
 #define TYPE_H
 
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqdom.h>
 
 static TQString writeType( TQTextStream& str, const TQDomElement& r )

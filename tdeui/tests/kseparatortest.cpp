@@ -19,7 +19,7 @@
 
 
 #include <kapplication.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwidget.h>
 
 #include "kseparator.h"

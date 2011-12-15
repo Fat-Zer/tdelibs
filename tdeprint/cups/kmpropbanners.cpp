@@ -23,7 +23,7 @@
 #include "kmwbanners.h"
 
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <klocale.h>
 
 KMPropBanners::KMPropBanners(TQWidget *parent, const char *name)

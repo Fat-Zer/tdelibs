@@ -246,7 +246,7 @@ TQString KSSLCertificate::getMD5DigestFromKDEKey(const TQString &k) {
 	int pos = k.findRev('(');
 	if (pos != -1) {
 		unsigned int len = k.length();
-		if (k.tqat(len-1) == ')') {
+		if (k.at(len-1) == ')') {
 			rc = k.mid(pos+1, len-pos-2);
 		}
 	}
@@ -871,7 +871,7 @@ TQDateTime KSSLCertificate::getQDTNotBefore() const {
 #ifdef KSSL_HAVE_SSL
 return ASN1_UTCTIME_QDateTime(X509_get_notBefore(d->m_cert), NULL);
 #else
-return TQDateTime::tqcurrentDateTime();
+return TQDateTime::currentDateTime();
 #endif
 }
 
@@ -880,7 +880,7 @@ TQDateTime KSSLCertificate::getQDTNotAfter() const {
 #ifdef KSSL_HAVE_SSL
 return ASN1_UTCTIME_QDateTime(X509_get_notAfter(d->m_cert), NULL);
 #else
-return TQDateTime::tqcurrentDateTime();
+return TQDateTime::currentDateTime();
 #endif
 }
 

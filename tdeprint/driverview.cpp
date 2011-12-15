@@ -25,7 +25,7 @@
 #include <tqlistview.h>
 #include <tqsplitter.h>
 #include <tqheader.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwhatsthis.h>
 #include <klocale.h>
 

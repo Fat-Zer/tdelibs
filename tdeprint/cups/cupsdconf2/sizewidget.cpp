@@ -21,7 +21,7 @@
 
 #include <tqcombobox.h>
 #include <tqspinbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqregexp.h>
 #include <klocale.h>
 

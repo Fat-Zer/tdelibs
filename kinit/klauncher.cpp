@@ -182,7 +182,7 @@ KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
                                     objId(), "terminateKDE()", false );
 
    TQString prefix = locateLocal("socket", "klauncher");
-   KTempFile domainname(prefix, TQString::tqfromLatin1(".slave-socket"));
+   KTempFile domainname(prefix, TQString::fromLatin1(".slave-socket"));
    if (domainname.status() != 0)
    {
       // Sever error!

@@ -1110,7 +1110,7 @@ TQImage& KImageEffect::blend(const TQColor& clr, TQImage& dst, float opacity)
 
         TQ_UINT32 *data = reinterpret_cast<TQ_UINT32*>( dst.bits() );
 
-        // Check how many pixels we need to process to achieve 16 byte tqalignment
+        // Check how many pixels we need to process to achieve 16 byte alignment
         int offset = (16 - (TQ_UINT32( data ) & 0x0f)) / 4;
 
         // The main loop processes 8 pixels / iteration
@@ -1358,7 +1358,7 @@ TQImage& KImageEffect::blend(TQImage& src, TQImage& dst, float opacity)
         TQ_UINT32 *data1 = reinterpret_cast<TQ_UINT32*>( src.bits() );
         TQ_UINT32 *data2 = reinterpret_cast<TQ_UINT32*>( dst.bits() );
 
-        // Check how many pixels we need to process to achieve 16 byte tqalignment
+        // Check how many pixels we need to process to achieve 16 byte alignment
         int offset = (16 - (TQ_UINT32( data2 ) & 0x0f)) / 4;
 
         // The main loop processes 4 pixels / iteration
@@ -3697,7 +3697,7 @@ TQImage KImageEffect::charcoal(TQImage &src, double radius, double sigma)
     TQImage img(edge(src, radius));
     img = blur(img, radius, sigma);
     normalize(img);
-    img.tqinvertPixels(false);
+    img.invertPixels(false);
     KImageEffect::toGray(img);
     return(img);
 }

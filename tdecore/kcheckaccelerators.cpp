@@ -30,8 +30,8 @@
 #include <tqpopupmenu.h>
 #include <tqapplication.h>
 #include <tqdialog.h>
-#include <tqlayout.h>
-#include <tqtextview.h>
+#include <layout.h>
+#include <textview.h>
 #include <tqobjectlist.h>
 #include <tqmenubar.h>
 #include <tqtabbar.h>

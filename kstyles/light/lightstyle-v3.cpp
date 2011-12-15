@@ -26,7 +26,7 @@
 #include "tqapplication.h"
 #include "tqcheckbox.h"
 #include "tqpainter.h"
-#include "tqpalette.h"
+#include "palette.h"
 #include "tqframe.h"
 #include "tqpushbutton.h"
 #include "tqdrawutil.h"
@@ -34,7 +34,7 @@
 #include "tqscrollbar.h"
 #include "tqtabbar.h"
 #include "tqguardedptr.h"
-#include "tqlayout.h"
+#include "layout.h"
 #include "tqlineedit.h"
 #include "tqimage.h"
 #include "tqcombobox.h"
@@ -249,7 +249,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 	// fill the header
 	if ( ! br.isValid() )
 	    break;
-	p->fillRect( br, cg.tqbrush( ( flags & Style_Down ) ?
+	p->fillRect( br, cg.brush( ( flags & Style_Down ) ?
 				   TQColorGroup::Midlight : TQColorGroup::Button ) );
 
 	// the taskbuttons in kicker seem to allow the style to set the pencolor
@@ -266,11 +266,11 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 		if (flags & (TQStyle::Style_Down |
 			     TQStyle::Style_On |
 			     TQStyle::Style_Sunken))
-		    fill = &cg.tqbrush(TQColorGroup::Midlight);
+		    fill = &cg.brush(TQColorGroup::Midlight);
 		else
-		    fill = &cg.tqbrush(TQColorGroup::Button);
+		    fill = &cg.brush(TQColorGroup::Button);
 	    } else
-		fill = &cg.tqbrush(TQColorGroup::Background);
+		fill = &cg.brush(TQColorGroup::Background);
 
 	    bool etch = true;
 	    if ( flags & Style_ButtonDefault ) {
@@ -278,7 +278,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 		br.addCoords( 1, 1, -1, -1 );
 	    }
 	    drawLightBevel( p, br, cg, flags,
-			    tqpixelMetric( PM_DefaultFrameWidth ) + ( etch ? 1 : 0 ),
+			    pixelMetric( PM_DefaultFrameWidth ) + ( etch ? 1 : 0 ),
 			    etch, true, fill );
 	    break;
 	}
@@ -289,12 +289,12 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 	    if (flags & (TQStyle::Style_Down |
 			 TQStyle::Style_On |
 			 TQStyle::Style_Sunken))
-		fill = &cg.tqbrush(TQColorGroup::Midlight);
+		fill = &cg.brush(TQColorGroup::Midlight);
 	    else
-		fill = &cg.tqbrush(TQColorGroup::Button);
+		fill = &cg.brush(TQColorGroup::Button);
 	} else
-	    fill = &cg.tqbrush(TQColorGroup::Background);
-	drawLightBevel( p, r, cg, flags, tqpixelMetric( PM_DefaultFrameWidth ),
+	    fill = &cg.brush(TQColorGroup::Background);
+	drawLightBevel( p, r, cg, flags, pixelMetric( PM_DefaultFrameWidth ),
 			false, true, fill );
 	break;
 
@@ -306,11 +306,11 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    if (flags & TQStyle::Style_Enabled) {
 		if (sunken)
-		    thefill = cg.tqbrush(TQColorGroup::Midlight);
+		    thefill = cg.brush(TQColorGroup::Midlight);
 		else
-		    thefill = cg.tqbrush(TQColorGroup::Button);
+		    thefill = cg.brush(TQColorGroup::Button);
 	    } else
-		thefill = cg.tqbrush(TQColorGroup::Background);
+		thefill = cg.brush(TQColorGroup::Background);
 
 	    p->setPen( cg.dark() );
 	    p->drawLine(r.topLeft(),     r.topRight());
@@ -353,11 +353,11 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
     case PE_Indicator:
 	const TQBrush *fill;
 	if (! (flags & Style_Enabled))
-	    fill = &cg.tqbrush(TQColorGroup::Background);
+	    fill = &cg.brush(TQColorGroup::Background);
 	else if (flags & Style_Down)
-	    fill = &cg.tqbrush(TQColorGroup::Mid);
+	    fill = &cg.brush(TQColorGroup::Mid);
 	else
-	    fill = &cg.tqbrush(TQColorGroup::Base);
+	    fill = &cg.brush(TQColorGroup::Base);
 	drawLightBevel( p, r, cg, flags | Style_Sunken, 2, true, true, fill );
 
 	p->setPen(cg.text());
@@ -395,7 +395,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 	    cr.addCoords( 2, 2, -2, -2 );
 	    ir.addCoords( 3, 3, -3, -3 );
 
-	    p->fillRect( r, cg.tqbrush( TQColorGroup::Background ) );
+	    p->fillRect( r, cg.brush( TQColorGroup::Background ) );
 
 	    p->setPen( flags & Style_Down ? cg.mid() :
 		       ( flags & Style_Enabled ? cg.base() : cg.background() ) );
@@ -440,7 +440,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 		    TQPixmap pm(r.height(), r.width());
 		    TQPainter p2(&pm);
 		    p2.fillRect(0, 0, pm.width(), pm.height(),
-				cg.tqbrush(TQColorGroup::Highlight));
+				cg.brush(TQColorGroup::Highlight));
 		    p2.setPen(cg.highlightedText());
 		    p2.drawText(0, 0, pm.width(), pm.height(), AlignCenter, title);
 		    p2.end();
@@ -461,7 +461,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 		}
 	    } else {
 		if (drawTitle) {
-		    p->fillRect(r, cg.tqbrush(TQColorGroup::Highlight));
+		    p->fillRect(r, cg.brush(TQColorGroup::Highlight));
 		    p->setPen(cg.highlightedText());
 		    p->drawText(r, AlignCenter, title);
 		} else {
@@ -526,13 +526,13 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    if ( ! br.isValid() )
 		break;
-	    p->fillRect( br, cg.tqbrush( TQColorGroup::Button ) );
+	    p->fillRect( br, cg.brush( TQColorGroup::Button ) );
 	    break;
 	}
 
     case PE_PanelPopup:
 	drawLightBevel( p, r, cg, flags,
-			( data.isDefault() ? tqpixelMetric(PM_DefaultFrameWidth) :
+			( data.isDefault() ? pixelMetric(PM_DefaultFrameWidth) :
 			  data.lineWidth() ), false, true );
 	break;
 
@@ -545,7 +545,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    int cover = 0;
 	    int reallw = ( data.isDefault() ?
-			   tqpixelMetric( PM_DefaultFrameWidth ) : data.lineWidth() );
+			   pixelMetric( PM_DefaultFrameWidth ) : data.lineWidth() );
 	    cover = reallw - 1;
 
 	    if ( ! ( flags & Style_Sunken ) )
@@ -573,16 +573,16 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
     case PE_PanelDockWindow:
 	drawLightBevel( p, r, cg, flags, ( data.isDefault() ?
-					   tqpixelMetric(PM_DefaultFrameWidth) :
+					   pixelMetric(PM_DefaultFrameWidth) :
 					   data.lineWidth() ), false, false,
-			&cg.tqbrush( TQColorGroup::Button ) );
+			&cg.brush( TQColorGroup::Button ) );
 	break;
 
     case PE_PanelMenuBar:
 	drawLightBevel( p, r, cg, flags, ( data.isDefault() ?
-					   tqpixelMetric(PM_MenuBarFrameWidth) :
+					   pixelMetric(PM_MenuBarFrameWidth) :
 					   data.lineWidth() ), false, false,
-			&cg.tqbrush( TQColorGroup::Button ) );
+			&cg.brush( TQColorGroup::Button ) );
 	break;
 
     case PE_ScrollBarSubLine:
@@ -608,7 +608,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    if ( ! br.isValid() )
 		break;
-	    p->fillRect( br, cg.tqbrush( ( flags & Style_Down ) ?
+	    p->fillRect( br, cg.brush( ( flags & Style_Down ) ?
 				       TQColorGroup::Midlight :
 				       TQColorGroup::Button ) );
 	    br.addCoords( 2, 2, -2, -2 );
@@ -642,7 +642,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    if ( ! br.isValid() )
 		break;
-	    p->fillRect( br, cg.tqbrush( ( flags & Style_Down ) ?
+	    p->fillRect( br, cg.brush( ( flags & Style_Down ) ?
 				       TQColorGroup::Midlight :
 				       TQColorGroup::Button ) );
 	    br.addCoords( 2, 2, -2, -2 );
@@ -673,7 +673,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    if ( ! br.isValid() )
 		break;
-	    p->fillRect( br, cg.tqbrush( ( flags & Style_Down ) ?
+	    p->fillRect( br, cg.brush( ( flags & Style_Down ) ?
 				       TQColorGroup::Midlight :
 				       TQColorGroup::Button ) );
 	    break;
@@ -699,7 +699,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    if ( ! br.isValid() )
 		break;
-	    p->fillRect( br, cg.tqbrush( ( flags & Style_Down ) ?
+	    p->fillRect( br, cg.brush( ( flags & Style_Down ) ?
 				       TQColorGroup::Midlight :
 				       TQColorGroup::Button ) );
 	    break;
@@ -729,7 +729,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 	    p->drawLine( br.topRight(), br.bottomRight() );
 	    br.addCoords( 1, 1, -1, -1 );
 
-	    p->fillRect( br, cg.tqbrush( TQColorGroup::Highlight ) );
+	    p->fillRect( br, cg.brush( TQColorGroup::Highlight ) );
 	    break;
 	}
 
@@ -804,7 +804,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
     }
 }
 
-void LightStyleV3::tqdrawControl( TQ_ControlElement control,
+void LightStyleV3::drawControl( TQ_ControlElement control,
 			      TQPainter *p,
 			      const TQWidget *widget,
 			      const TQRect &r,
@@ -818,7 +818,7 @@ void LightStyleV3::tqdrawControl( TQ_ControlElement control,
 	    const TQTabBar *tb = (const TQTabBar *) widget;
 	    TQRect br = r;
 
-	    if ( tb->tqshape() == TQTabBar::RoundedAbove ) {
+	    if ( tb->shape() == TQTabBar::RoundedAbove ) {
 		if ( ! ( flags & Style_Selected ) ) {
 		    p->setPen( cg.background() );
 		    p->drawLine( br.left(),  br.bottom(),
@@ -847,13 +847,13 @@ void LightStyleV3::tqdrawControl( TQ_ControlElement control,
 
 		if ( flags & Style_Selected )
 		{
-                    p->fillRect( br.right() - 3, br.top() + 1, 3, br.height() - 1, cg.tqbrush(TQColorGroup::Highlight));
+                    p->fillRect( br.right() - 3, br.top() + 1, 3, br.height() - 1, cg.brush(TQColorGroup::Highlight));
 		    br.addCoords( 1, 1, -4, 0 );
 		}
 		else
 		    br.addCoords( 1, 1, -1, 0 );
 		p->fillRect( br, cg.background() );
-	    } else if ( tb->tqshape() == TQTabBar::RoundedBelow ) {
+	    } else if ( tb->shape() == TQTabBar::RoundedBelow ) {
 		if ( ! ( flags & Style_Selected ) ) {
 		    p->setPen( cg.background() );
 		    p->drawLine( br.left(),  br.top(),
@@ -885,7 +885,7 @@ void LightStyleV3::tqdrawControl( TQ_ControlElement control,
 
 		if ( flags & Style_Selected )
 		{
-		    p->fillRect( br.right() - 2, br.top(), 3, br.height(), cg.tqbrush(TQColorGroup::Highlight));
+		    p->fillRect( br.right() - 2, br.top(), 3, br.height(), cg.brush(TQColorGroup::Highlight));
 		    br.addCoords( 1, 0, -3, -1 );
 		}
 		else
@@ -893,7 +893,7 @@ void LightStyleV3::tqdrawControl( TQ_ControlElement control,
 
 		p->fillRect( br, cg.background() );
 	    } else
-		TQCommonStyle::tqdrawControl( control, p, widget, r, cg, flags, data );
+		TQCommonStyle::drawControl( control, p, widget, r, cg, flags, data );
 	    break;
 	}
 
@@ -911,7 +911,7 @@ void LightStyleV3::tqdrawControl( TQ_ControlElement control,
             	if ( widget->erasePixmap() && !widget->erasePixmap()->isNull() )
                 	p->drawPixmap( r.topLeft(), *widget->erasePixmap(), r );
 		else
-			p->fillRect(r, cg.tqbrush(TQColorGroup::Button));
+			p->fillRect(r, cg.brush(TQColorGroup::Button));
 		p->setPen( cg.mid() );
 		p->drawLine(r.left() + 12,  r.top() + 1,
 			    r.right() - 12, r.top() + 1);
@@ -923,11 +923,11 @@ void LightStyleV3::tqdrawControl( TQ_ControlElement control,
 
 	    if (flags & Style_Active)
 		qDrawShadePanel(p, r, cg, true, 1,
-				&cg.tqbrush(TQColorGroup::Midlight));
+				&cg.brush(TQColorGroup::Midlight));
 	     else if ( widget->erasePixmap() && !widget->erasePixmap()->isNull() )
 		p->drawPixmap( r.topLeft(), *widget->erasePixmap(), r );
 	    else
-		p->fillRect(r, cg.tqbrush(TQColorGroup::Button));
+		p->fillRect(r, cg.brush(TQColorGroup::Button));
 
 	    if ( !mi )
 		break;
@@ -946,16 +946,16 @@ void LightStyleV3::tqdrawControl( TQ_ControlElement control,
 
 	    bool reverse = TQApplication::reverseLayout();
 	    if ( reverse ) {
-		cr = tqvisualRect( cr, r );
-		sr = tqvisualRect( sr, r );
-		tr = tqvisualRect( tr, r );
-		ir = tqvisualRect( ir, r );
+		cr = visualRect( cr, r );
+		sr = visualRect( sr, r );
+		tr = visualRect( tr, r );
+		ir = visualRect( ir, r );
 	    }
 
 	    if (mi->isChecked() &&
 		! (flags & Style_Active) &
 		(flags & Style_Enabled))
-		qDrawShadePanel(p, cr, cg, true, 1, &cg.tqbrush(TQColorGroup::Midlight));
+		qDrawShadePanel(p, cr, cg, true, 1, &cg.brush(TQColorGroup::Midlight));
 
 	    if (mi->iconSet()) {
 		TQIconSet::Mode mode =
@@ -1057,16 +1057,16 @@ void LightStyleV3::tqdrawControl( TQ_ControlElement control,
 
     case CE_MenuBarEmptyArea:
 	{
-	    p->fillRect(r, cg.tqbrush(TQColorGroup::Button));
+	    p->fillRect(r, cg.brush(TQColorGroup::Button));
 	    break;
 	}
 
     case CE_MenuBarItem:
 	{
 	    if ( flags & Style_Active )
-		qDrawShadePanel(p, r, cg, true, 1, &cg.tqbrush(TQColorGroup::Midlight));
+		qDrawShadePanel(p, r, cg, true, 1, &cg.brush(TQColorGroup::Midlight));
 	    else
-		p->fillRect( r, cg.tqbrush( TQColorGroup::Button ) );
+		p->fillRect( r, cg.brush( TQColorGroup::Button ) );
 
 	    if (data.isDefault())
 		break;
@@ -1079,17 +1079,17 @@ void LightStyleV3::tqdrawControl( TQ_ControlElement control,
 	}
 
     case CE_ProgressBarGroove:
-	drawLightBevel( p, r, cg, Style_Sunken, tqpixelMetric( PM_DefaultFrameWidth ),
-			true, true, &cg.tqbrush( TQColorGroup::Background ) );
+	drawLightBevel( p, r, cg, Style_Sunken, pixelMetric( PM_DefaultFrameWidth ),
+			true, true, &cg.brush( TQColorGroup::Background ) );
 	break;
 
     default:
-	TQCommonStyle::tqdrawControl(control, p, widget, r, cg, flags, data);
+	TQCommonStyle::drawControl(control, p, widget, r, cg, flags, data);
 	break;
     }
 }
 
-void LightStyleV3::tqdrawControlMask( TQ_ControlElement control,
+void LightStyleV3::drawControlMask( TQ_ControlElement control,
 				  TQPainter *p,
 				  const TQWidget *widget,
 				  const TQRect &r,
@@ -1101,7 +1101,7 @@ void LightStyleV3::tqdrawControlMask( TQ_ControlElement control,
 	break;
 
     default:
-	TQCommonStyle::tqdrawControlMask(control, p, widget, r, data);
+	TQCommonStyle::drawControlMask(control, p, widget, r, data);
 	break;
     }
 }
@@ -1114,7 +1114,7 @@ TQRect LightStyleV3::subRect(SubRect subrect, const TQWidget *widget) const
     case SR_PushButtonFocusRect:
 	{
 	    rect = TQCommonStyle::subRect( SR_PushButtonContents, widget );
-	    int bm = tqpixelMetric( PM_ButtonMargin, widget ), hbm = bm / 2;
+	    int bm = pixelMetric( PM_ButtonMargin, widget ), hbm = bm / 2;
 	    rect.addCoords( hbm, hbm, -hbm, -hbm );
   	    break;
   	}
@@ -1151,7 +1151,7 @@ TQRect LightStyleV3::subRect(SubRect subrect, const TQWidget *widget) const
     return rect;
 }
 
-void LightStyleV3::tqdrawComplexControl( TQ_ComplexControl control,
+void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 				     TQPainter* p,
 				     const TQWidget* widget,
 				     const TQRect& r,
@@ -1167,15 +1167,15 @@ void LightStyleV3::tqdrawComplexControl( TQ_ComplexControl control,
 	    const TQComboBox *combobox = (const TQComboBox *) widget;
 	    TQRect frame, arrow, field;
 	    frame =
-		TQStyle::tqvisualRect(querySubControlMetrics(CC_ComboBox, widget,
+		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, widget,
 							  SC_ComboBoxFrame, data),
 				   widget);
 	    arrow =
-		TQStyle::tqvisualRect(querySubControlMetrics(CC_ComboBox, widget,
+		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, widget,
 							  SC_ComboBoxArrow, data),
 				   widget);
 	    field =
-		TQStyle::tqvisualRect(querySubControlMetrics(CC_ComboBox, widget,
+		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, widget,
 							  SC_ComboBoxEditField, data),
 				   widget);
 
@@ -1185,7 +1185,7 @@ void LightStyleV3::tqdrawComplexControl( TQ_ComplexControl control,
 	    if ((controls & SC_ComboBoxArrow) && arrow.isValid()) {
 		drawLightEtch( p, arrow, cg.button(), ( active == SC_ComboBoxArrow ) );
 		arrow.addCoords( 1, 1, -1, -1 );
-		p->fillRect( arrow, cg.tqbrush( TQColorGroup::Button ) );
+		p->fillRect( arrow, cg.brush( TQColorGroup::Button ) );
 		arrow.addCoords(3, 1, -1, -1);
 		tqdrawPrimitive(PE_ArrowDown, p, arrow, cg, flags);
 	    }
@@ -1194,9 +1194,9 @@ void LightStyleV3::tqdrawComplexControl( TQ_ComplexControl control,
 		if (flags & Style_HasFocus) {
 		    if (! combobox->editable()) {
 			TQRect fr =
-			    TQStyle::tqvisualRect( subRect( SR_ComboBoxFocusRect, widget ),
+			    TQStyle::visualRect( subRect( SR_ComboBoxFocusRect, widget ),
 						widget );
-			p->fillRect( fr, cg.tqbrush( TQColorGroup::Highlight ) );
+			p->fillRect( fr, cg.brush( TQColorGroup::Highlight ) );
 			tqdrawPrimitive( PE_FocusRect, p, fr, cg,
 				       flags | Style_FocusAtBorder,
 				       TQStyleOption(cg.highlight()));
@@ -1205,8 +1205,8 @@ void LightStyleV3::tqdrawComplexControl( TQ_ComplexControl control,
 		    p->setPen(cg.highlightedText());
 		} else {
 		    p->fillRect( field, ( ( flags & Style_Enabled ) ?
-					  cg.tqbrush( TQColorGroup::Base ) :
-					  cg.tqbrush( TQColorGroup::Background ) ) );
+					  cg.brush( TQColorGroup::Base ) :
+					  cg.brush( TQColorGroup::Background ) ) );
 		    p->setPen( cg.text() );
 		}
 	    }
@@ -1236,7 +1236,7 @@ void LightStyleV3::tqdrawComplexControl( TQ_ComplexControl control,
 		p->drawLine( up.topLeft(), up.bottomLeft() );
 
 		up.addCoords( 1, 0, 0, 0 );
-		p->fillRect( up, cg.tqbrush( TQColorGroup::Button ) );
+		p->fillRect( up, cg.brush( TQColorGroup::Button ) );
 		drawLightEtch( p, up, cg.button(), ( active == SC_SpinWidgetUp ) );
 
 		up.addCoords( 1, 0, 0, 0 );
@@ -1254,7 +1254,7 @@ void LightStyleV3::tqdrawComplexControl( TQ_ComplexControl control,
 		p->drawLine( down.topLeft(), down.bottomLeft() );
 
 		down.addCoords( 1, 0, 0, 0 );
-		p->fillRect( down, cg.tqbrush( TQColorGroup::Button ) );
+		p->fillRect( down, cg.brush( TQColorGroup::Button ) );
 		drawLightEtch( p, down, cg.button(), ( active == SC_SpinWidgetDown ) );
 
 		down.addCoords( 1, 0, 0, 0 );
@@ -1409,19 +1409,19 @@ void LightStyleV3::tqdrawComplexControl( TQ_ComplexControl control,
 	    }
 
 	    if (controls & SC_SliderTickmarks)
-		TQCommonStyle::tqdrawComplexControl(control, p, widget, r, cg, flags,
+		TQCommonStyle::drawComplexControl(control, p, widget, r, cg, flags,
 						 SC_SliderTickmarks, active, data );
 	    break;
 	}
 
     case CC_ListView:
 	// use the base style for CC_ListView
-	basestyle->tqdrawComplexControl(control, p, widget, r, cg, flags,
+	basestyle->drawComplexControl(control, p, widget, r, cg, flags,
 				      controls, active, data);
 	break;
 
     default:
-	TQCommonStyle::tqdrawComplexControl(control, p, widget, r, cg, flags,
+	TQCommonStyle::drawComplexControl(control, p, widget, r, cg, flags,
 				      controls, active, data);
 	break;
     }
@@ -1437,8 +1437,8 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
     switch (control) {
     case CC_ComboBox:
 	{
-	    int fw = tqpixelMetric( PM_DefaultFrameWidth, widget );
-	    int sb = tqpixelMetric( PM_ScrollBarExtent ); // width of the arrow
+	    int fw = pixelMetric( PM_DefaultFrameWidth, widget );
+	    int sb = pixelMetric( PM_ScrollBarExtent ); // width of the arrow
 
 	    switch ( sc ) {
 	    case SC_ComboBoxFrame:
@@ -1463,7 +1463,7 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
 	{
 	    const TQScrollBar *scrollbar = (const TQScrollBar *) widget;
 	    int sliderstart = scrollbar->sliderStart();
-	    int sbextent = tqpixelMetric(PM_ScrollBarExtent, widget);
+	    int sbextent = pixelMetric(PM_ScrollBarExtent, widget);
 	    int maxlen = ((scrollbar->orientation() == Qt::Horizontal) ?
 			  scrollbar->width() : scrollbar->height()) - (sbextent * 3);
 	    int sliderlen;
@@ -1474,7 +1474,7 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
 		sliderlen = (scrollbar->pageStep() * maxlen) /
 			    (range + scrollbar->pageStep());
 
-		int slidermin = tqpixelMetric( PM_ScrollBarSliderMin, widget );
+		int slidermin = pixelMetric( PM_ScrollBarSliderMin, widget );
 		if ( sliderlen < slidermin || range > INT_MAX / 2 )
 		    sliderlen = slidermin;
 		if ( sliderlen > maxlen )
@@ -1538,8 +1538,8 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
     case CC_Slider:
 	{
 	    const TQSlider *slider = (const TQSlider *) widget;
-	    int tickOffset = tqpixelMetric( PM_SliderTickmarkOffset, widget );
-	    int thickness = tqpixelMetric( PM_SliderControlThickness, widget );
+	    int tickOffset = pixelMetric( PM_SliderTickmarkOffset, widget );
+	    int thickness = pixelMetric( PM_SliderControlThickness, widget );
 
 	    switch ( sc ) {
 	    case SC_SliderGroove:
@@ -1552,7 +1552,7 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
 	    case SC_SliderHandle:
 		{
 		    int pos = slider->sliderStart();
-		    int len = tqpixelMetric( PM_SliderLength, widget );
+		    int len = pixelMetric( PM_SliderLength, widget );
 
 		    if ( slider->orientation() == Qt::Horizontal )
 			ret.setRect( pos + 2, tickOffset + 2, len - 4, thickness - 4 );
@@ -1594,7 +1594,7 @@ TQStyle::SubControl LightStyleV3::querySubControl( TQ_ComplexControl control,
     return ret;
 }
 
-int LightStyleV3::tqpixelMetric( PixelMetric metric,
+int LightStyleV3::pixelMetric( PixelMetric metric,
 			     const TQWidget *widget ) const
 {
     int ret;
@@ -1691,7 +1691,7 @@ int LightStyleV3::tqpixelMetric( PixelMetric metric,
 	break;
 
     default:
-	ret = TQCommonStyle::tqpixelMetric(metric, widget);
+	ret = TQCommonStyle::pixelMetric(metric, widget);
 	break;
     }
 
@@ -1708,8 +1708,8 @@ TQSize LightStyleV3::tqsizeFromContents( ContentsType contents,
     switch (contents) {
     case CT_ComboBox:
 	{
-	    int fw = tqpixelMetric( PM_DefaultFrameWidth, widget ) * 2;
-	    int sb = tqpixelMetric( PM_ScrollBarExtent ); // width of the arrow
+	    int fw = pixelMetric( PM_DefaultFrameWidth, widget ) * 2;
+	    int sb = pixelMetric( PM_ScrollBarExtent ); // width of the arrow
 	    int w = contentsSize.width();
 	    int h = contentsSize.height();
 
@@ -1729,7 +1729,7 @@ TQSize LightStyleV3::tqsizeFromContents( ContentsType contents,
 	    const TQPushButton *button = (const TQPushButton *) widget;
 	    ret = TQCommonStyle::tqsizeFromContents( contents, widget, contentsSize, data );
 	    int w = ret.width(), h = ret.height();
-	    int dbi = tqpixelMetric( PM_ButtonDefaultIndicator, widget ) * 2;
+	    int dbi = pixelMetric( PM_ButtonDefaultIndicator, widget ) * 2;
 	    int mw = 80 - dbi, mh = 25 - dbi;
 
 	    // only expand the button if we are displaying text...
@@ -1818,7 +1818,7 @@ TQSize LightStyleV3::tqsizeFromContents( ContentsType contents,
     return ret;
 }
 
-int LightStyleV3::tqstyleHint( TQ_StyleHint stylehint,
+int LightStyleV3::styleHint( TQ_StyleHint stylehint,
 			   const TQWidget *widget,
 			   const TQStyleOption &option,
 			   TQStyleHintReturn* returnData ) const
@@ -1847,7 +1847,7 @@ int LightStyleV3::tqstyleHint( TQ_StyleHint stylehint,
 	break;
 
     default:
-	ret = TQCommonStyle::tqstyleHint(stylehint, widget, option, returnData);
+	ret = TQCommonStyle::styleHint(stylehint, widget, option, returnData);
 	break;
     }
 

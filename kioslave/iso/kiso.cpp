@@ -192,7 +192,7 @@ static int readf(char *buf, int start, int len,void *udata) {
 
     TQIODevice* dev = ( static_cast<KIso*> (udata) )->device();
 
-    if (dev->tqat(start<<11)) {
+    if (dev->at(start<<11)) {
         if ((dev->readBlock(buf, len<<11)) != -1) return (len);
     }
     kdDebug() << "KIso::ReadRequest failed start: " << start << " len: " << len << endl;

@@ -47,7 +47,7 @@
 #include <tqfileinfo.h>
 #include <tqpopupmenu.h>
 #include <tqregexp.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 
 namespace KJS {
@@ -62,7 +62,7 @@ UString::UString(const TQString &d)
 {
   unsigned int len = d.length();
   UChar *dat = new UChar[len];
-  memcpy(dat, d.tqunicode(), len * sizeof(UChar));
+  memcpy(dat, d.unicode(), len * sizeof(UChar));
   rep = UString::Rep::create(dat, len);
 }
 
@@ -416,10 +416,10 @@ KJS::Value KJS::KateJSDocumentProtoFunc::call(KJS::ExecState *exec, KJS::Object 
       return KJS::Null ();
 
     case KateJSDocument::IsInWord:
-      return KJS::Boolean( doc->highlight()->isInWord( args[0].toString(exec).qstring().tqat(0), args[1].toUInt32(exec) ) );
+      return KJS::Boolean( doc->highlight()->isInWord( args[0].toString(exec).qstring().at(0), args[1].toUInt32(exec) ) );
 
     case KateJSDocument::CanBreakAt:
-      return KJS::Boolean( doc->highlight()->canBreakAt( args[0].toString(exec).qstring().tqat(0), args[1].toUInt32(exec) ) );
+      return KJS::Boolean( doc->highlight()->canBreakAt( args[0].toString(exec).qstring().at(0), args[1].toUInt32(exec) ) );
 
     case KateJSDocument::CanComment:
       return KJS::Boolean( doc->highlight()->canComment( args[0].toUInt32(exec), args[1].toUInt32(exec) ) );
@@ -1135,7 +1135,7 @@ void KateIndentJScriptManager::parseScriptHeader(const TQString &filePath,
     if (currentState==NOTHING)
     {
       if (keyValue.exactMatch(line)) {
-        TQStringList sl=keyValue.tqcapturedTexts();
+        TQStringList sl=keyValue.capturedTexts();
         kdDebug(13050)<<"key:"<<sl[1]<<endl<<"value:"<<sl[2]<<endl;
         kdDebug(13050)<<"key-length:"<<sl[1].length()<<endl<<"value-length:"<<sl[2].length()<<endl;
         TQString key=sl[1];

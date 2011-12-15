@@ -1881,15 +1881,15 @@ void CSS2Properties::setTop( const DOMString &value )
     if(impl) ((ElementImpl *)impl)->setAttribute("top", value);
 }
 
-DOMString CSS2Properties::tqunicodeBidi() const
+DOMString CSS2Properties::unicodeBidi() const
 {
     if(!impl) return 0;
-    return ((ElementImpl *)impl)->getAttribute("tqunicodeBidi");
+    return ((ElementImpl *)impl)->getAttribute("unicodeBidi");
 }
 
 void CSS2Properties::setUnicodeBidi( const DOMString &value )
 {
-    if(impl) ((ElementImpl *)impl)->setAttribute("tqunicodeBidi", value);
+    if(impl) ((ElementImpl *)impl)->setAttribute("unicodeBidi", value);
 }
 
 DOMString CSS2Properties::verticalAlign() const

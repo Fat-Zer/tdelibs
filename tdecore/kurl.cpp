@@ -42,9 +42,9 @@
 #include <tqdir.h>
 #include <tqstringlist.h>
 #include <tqregexp.h>
-#include <tqstylesheet.h>
+#include <stylesheet.h>
 #include <tqmap.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 #include <tqmutex.h>
 
 #ifdef Q_WS_WIN
@@ -172,14 +172,14 @@ static TQString lazy_encode( const TQString& segment, bool encodeAt=true )
 
   for ( int i = 0; i < old_length; i++ )
   {
-    unsigned int character = segment[i].tqunicode(); // Don't use latin1()
+    unsigned int character = segment[i].unicode(); // Don't use latin1()
                                                    // It returns 0 for non-latin1 values
     // Small set of really ambiguous chars
     if ((character < 32) ||  // Low ASCII
         ((character == '%') && // The escape character itself
            (i+2 < old_length) && // But only if part of a valid escape sequence!
-          (hex2int(segment[i+1].tqunicode())!= -1) &&
-          (hex2int(segment[i+2].tqunicode())!= -1)) ||
+          (hex2int(segment[i+1].unicode())!= -1) &&
+          (hex2int(segment[i+2].unicode())!= -1)) ||
         (character == '?') || // Start of query delimiter
         ((character == '@') && encodeAt) || // Username delimiter
         (character == '#') || // Start of reference delimiter
@@ -404,7 +404,7 @@ bool KURL::isRelativeURL(const TQString &_url)
 {
   int len = _url.length();
   if (!len) return true; // Very short relative URL.
-  const TQChar *str = _url.tqunicode();
+  const TQChar *str = _url.unicode();
 
   // Absolute URL must start with alpha-character
   if (!isalpha(str[0].latin1()))
@@ -471,13 +471,13 @@ KURL::KURL( const TQString &url, int encoding_hint )
 KURL::KURL( const char * url, int encoding_hint )
 {
   reset();
-  parse( TQString::tqfromLatin1(url), encoding_hint );
+  parse( TQString::fromLatin1(url), encoding_hint );
 }
 
 KURL::KURL( const TQCString& url, int encoding_hint )
 {
   reset();
-  parse( TQString::tqfromLatin1(url), encoding_hint );
+  parse( TQString::fromLatin1(url), encoding_hint );
 }
 
 KURL::KURL( const KURL& _u )
@@ -643,7 +643,7 @@ void KURL::parse( const TQString& _url, int encoding_hint )
 	return;
     }
 
-    const TQChar* buf = _url.tqunicode();
+    const TQChar* buf = _url.unicode();
     const TQChar* orig = buf;
     uint len = _url.length();
     uint pos = 0;
@@ -707,7 +707,7 @@ NodeErr:
 void KURL::parseRawURI( const TQString& _url, int encoding_hint )
 {
     uint len = _url.length();
-    const TQChar* buf = _url.tqunicode();
+    const TQChar* buf = _url.unicode();
 
     uint pos = 0;
 
@@ -762,7 +762,7 @@ void KURL::parseURL( const TQString& _url, int encoding_hint )
   bool badHostName = false;
   int start = 0;
   uint len = _url.length();
-  const TQChar* buf = _url.tqunicode();
+  const TQChar* buf = _url.unicode();
 
   TQChar delim;
   TQString tmp;
@@ -1040,7 +1040,7 @@ KURL& KURL::operator=( const TQString& _url )
 KURL& KURL::operator=( const char * _url )
 {
   reset();
-  parse( TQString::tqfromLatin1(_url) );
+  parse( TQString::fromLatin1(_url) );
 
   return *this;
 }
@@ -2150,7 +2150,7 @@ TQMap< TQString, TQString > KURL::queryItems( int options, int encoding_hint ) c
 	name = name.lower();
       TQString value = (*it).mid( equal_pos + 1 );
       if ( value.isEmpty() )
-	result.insert( name, TQString::tqfromLatin1("") );
+	result.insert( name, TQString::fromLatin1("") );
       else {
 	// ### why is decoding name not necessary?
 	value.replace( '+', ' ' ); // + in queries means space
@@ -2191,7 +2191,7 @@ TQString KURL::queryItem( const TQString& _item, int encoding_hint ) const
         return decode_string( str, encoding_hint );
       }
       else // empty value
-        return TQString::tqfromLatin1("");
+        return TQString::fromLatin1("");
     }
   }
 

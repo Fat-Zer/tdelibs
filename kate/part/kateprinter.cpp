@@ -48,7 +48,7 @@
 #include <tqgroupbox.h>
 #include <tqhbox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqspinbox.h>
 #include <tqstringlist.h>
@@ -184,7 +184,7 @@ bool KatePrinter::print (KateDocument *doc)
          // This retrieves all tags, ued or not, but
          // none of theese operations should be expensive,
          // and searcing each tag in the format strings is avoided.
-         TQDateTime dt = TQDateTime::tqcurrentDateTime();
+         TQDateTime dt = TQDateTime::currentDateTime();
          TQMap<TQString,TQString> tags;
 
          KUser u (KUser::UseRealUserID);
@@ -505,7 +505,7 @@ bool KatePrinter::print (KateDocument *doc)
              // use color of dsNormal for the title string and the hline
              KateAttributeList _dsList;
              KateHlManager::self()->getDefaults ( renderer.config()->schema(), _dsList );
-             paint.setPen( _dsList.tqat(0)->textColor() );
+             paint.setPen( _dsList.at(0)->textColor() );
              int _marg = 0; // this could be available globally!??
              if ( useBox )
              {

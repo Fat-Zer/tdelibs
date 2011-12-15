@@ -27,7 +27,7 @@
 #include <kiconloader.h>
 #include <kdebug.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqvbox.h>
 #include <tqmap.h>
 

@@ -335,7 +335,7 @@ class Manager : private ManagerNotifier
             ++it ) {
         TQString desc = mFactory->typeName( *it );
         if ( !mFactory->typeDescription( *it ).isEmpty() )
-          desc += TQString::tqfromLatin1(" (") + mFactory->typeDescription( *it ) + TQString::tqfromLatin1(")");
+          desc += TQString::fromLatin1(" (") + mFactory->typeDescription( *it ) + TQString::fromLatin1(")");
 
         typeDescs.append( desc );
       }

@@ -89,7 +89,7 @@ static const char titleEnd [] = "</title";
 #define fixUpChar(x)
 #else
 #define fixUpChar(x) \
-            switch ((x).tqunicode()) \
+            switch ((x).unicode()) \
             { \
             case 0x80: (x) = 0x20ac; break; \
             case 0x82: (x) = 0x201a;    break; \
@@ -471,7 +471,7 @@ void HTMLTokenizer::parseComment(TokenizerString &src)
 
         if (strict)
         {
-            if (src->tqunicode() == '-') {
+            if (src->unicode() == '-') {
                 delimiterCount++;
                 if (delimiterCount == 2) {
                     delimiterCount = 0;
@@ -482,7 +482,7 @@ void HTMLTokenizer::parseComment(TokenizerString &src)
                 delimiterCount = 0;
         }
 
-        if ((!strict || canClose) && src->tqunicode() == '>')
+        if ((!strict || canClose) && src->unicode() == '>')
         {
             bool handleBrokenComments =  brokenComments && !( script || style );
             bool scriptEnd=false;
@@ -521,7 +521,7 @@ void HTMLTokenizer::parseServer(TokenizerString &src)
     checkScriptBuffer(src.length());
     while ( !src.isEmpty() ) {
         scriptCode[ scriptCodeSize++ ] = *src;
-        if (src->tqunicode() == '>' &&
+        if (src->unicode() == '>' &&
             scriptCodeSize > 1 && scriptCode[scriptCodeSize-2] == '%') {
             ++src;
             server = false;
@@ -607,7 +607,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, TQChar *&dest, bool start)
 
     while( !src.isEmpty() )
     {
-        ushort cc = src->tqunicode();
+        ushort cc = src->unicode();
         switch(Entity) {
         case NoEntity:
             return;
@@ -639,7 +639,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, TQChar *&dest, bool start)
 
         case Hexadecimal:
         {
-            int uc = EntityChar.tqunicode();
+            int uc = EntityChar.unicode();
             int ll = kMin<uint>(src.length(), 8);
             while(ll--) {
                 TQChar csrc(src->lower());
@@ -658,7 +658,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, TQChar *&dest, bool start)
         }
         case Decimal:
         {
-            int uc = EntityChar.tqunicode();
+            int uc = EntityChar.unicode();
             int ll = kMin(src.length(), 9-cBufferPos);
             while(ll--) {
                 cc = src->cell();
@@ -718,7 +718,7 @@ void HTMLTokenizer::parseEntity(TokenizerString &src, TQChar *&dest, bool start)
         }
         case SearchSemicolon:
 #ifdef TOKEN_DEBUG
-            kdDebug( 6036 ) << "ENTITY " << EntityChar.tqunicode() << endl;
+            kdDebug( 6036 ) << "ENTITY " << EntityChar.unicode() << endl;
 #endif
             fixUpChar(EntityChar);
 
@@ -919,7 +919,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
                                     a = khtml::getAttrID(cBuffer, cBufferPos-1);
                             }
                             if (!a)
-                                attrName = TQString::tqfromLatin1(TQCString(cBuffer, cBufferPos+1).data());
+                                attrName = TQString::fromLatin1(TQCString(cBuffer, cBufferPos+1).data());
                         }
 
                         dest = buffer;
@@ -941,7 +941,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
             }
             if ( cBufferPos == CBUFLEN ) {
                 cBuffer[cBufferPos] = '\0';
-                attrName = TQString::tqfromLatin1(TQCString(cBuffer, cBufferPos+1).data());
+                attrName = TQString::fromLatin1(TQCString(cBuffer, cBufferPos+1).data());
                 dest = buffer;
                 *dest++ = 0;
                 tag = SearchEqual;
@@ -956,7 +956,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
             ushort curchar;
             bool atespace = false;
             while(!src.isEmpty()) {
-                curchar = src->tqunicode();
+                curchar = src->unicode();
                 if(curchar > ' ') {
                     if(curchar == '=') {
 #ifdef TOKEN_DEBUG
@@ -988,7 +988,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
         {
             ushort curchar;
             while(!src.isEmpty()) {
-                curchar = src->tqunicode();
+                curchar = src->unicode();
                 if(curchar > ' ') {
                     if(( curchar == '\'' || curchar == '\"' )) {
                         tquote = curchar == '\"' ? DoubleQuote : SingleQuote;
@@ -1012,7 +1012,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
             while(!src.isEmpty()) {
                 checkBuffer();
 
-                curchar = src->tqunicode();
+                curchar = src->unicode();
                 if(curchar <= '\'' && !src.escaped()) {
                     // ### attributes like '&{blaa....};' are supposed to be treated as jscript.
                     if ( curchar == '&' )
@@ -1050,7 +1050,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
             ushort curchar;
             while(!src.isEmpty()) {
                 checkBuffer();
-                curchar = src->tqunicode();
+                curchar = src->unicode();
                 if(curchar <= '>' && !src.escaped()) {
                     // parse Entities
                     if ( curchar == '&' )
@@ -1351,7 +1351,7 @@ void HTMLTokenizer::write( const TokenizerString &str, bool appendData )
         // do we need to enlarge the buffer?
         checkBuffer();
 
-        ushort cc = src->tqunicode();
+        ushort cc = src->unicode();
 
         if (skipLF && (cc != '\n'))
             skipLF = false;

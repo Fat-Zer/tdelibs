@@ -23,7 +23,7 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 #include <tqptrlist.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqpair.h>
 
 #include "cupsdcomment.h"

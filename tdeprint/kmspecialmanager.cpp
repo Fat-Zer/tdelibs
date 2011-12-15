@@ -66,7 +66,7 @@ bool KMSpecialManager::savePrinters()
 	conf.setGroup("General");
 	int	n = conf.readNumEntry("Number",0);
 	for (int i=0;i<n;i++)
-		conf.deleteGroup(TQString::tqfromLatin1("Printer %1").arg(i),true);
+		conf.deleteGroup(TQString::fromLatin1("Printer %1").arg(i),true);
 
 	// then add printers
 	n = 0;
@@ -74,7 +74,7 @@ bool KMSpecialManager::savePrinters()
 	for (;it.current();++it)
 	{
 		if (!it.current()->isSpecial() || it.current()->isVirtual()) continue;
-		conf.setGroup(TQString::tqfromLatin1("Printer %1").arg(n));
+		conf.setGroup(TQString::fromLatin1("Printer %1").arg(n));
 		conf.writeEntry("Name",it.current()->name());
 		conf.writeEntry("Description",it.current()->description());
 		conf.writeEntry("Comment",it.current()->location());
@@ -139,7 +139,7 @@ bool KMSpecialManager::loadDesktopFile(const TQString& filename)
 	int	n = conf.readNumEntry("Number",0);
 	for (int i=0;i<n;i++)
 	{
-		QString	grpname = TQString::tqfromLatin1("Printer %1").arg(i);
+		QString	grpname = TQString::fromLatin1("Printer %1").arg(i);
 		if (!conf.hasGroup(grpname)) continue;
 		conf.setGroup(grpname);
 		KMPrinter	*printer = new KMPrinter;

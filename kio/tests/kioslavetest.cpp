@@ -9,7 +9,7 @@
   LGPL version 2.
  */
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqmessagebox.h>
 #include <tqdir.h>
 

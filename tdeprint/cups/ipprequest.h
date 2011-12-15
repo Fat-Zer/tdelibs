@@ -22,7 +22,7 @@
 
 #include <tqstring.h>
 #include <tqstringlist.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqmap.h>
 
 #include <cups/ipp.h>

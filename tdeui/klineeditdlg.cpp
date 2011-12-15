@@ -22,7 +22,7 @@
 #include <tqpushbutton.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #undef Unsorted // Required for --enable-final (tqdir.h)
 #include <tqfiledialog.h>
 

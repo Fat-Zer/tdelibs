@@ -21,7 +21,7 @@
 
 #include <tqlabel.h>
 #include <tqpushbutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqtooltip.h>
 #include <tqwhatsthis.h>
 

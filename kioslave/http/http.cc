@@ -607,7 +607,7 @@ void HTTPProtocol::stat(const KURL& url)
 
   if ( m_protocol != "webdav" && m_protocol != "webdavs" )
   {
-    TQString statSide = metaData(TQString::tqfromLatin1("statSide"));
+    TQString statSide = metaData(TQString::fromLatin1("statSide"));
     if ( statSide != "source" )
     {
       // When uploading we assume the file doesn't exit
@@ -1805,7 +1805,7 @@ bool HTTPProtocol::isOffline(const KURL &url)
 
   TQDataStream stream(params, IO_WriteOnly);
 
-  if ( url.host() == TQString::tqfromLatin1("localhost") || url.host() == TQString::tqfromLatin1("127.0.0.1") || url.host() == TQString::tqfromLatin1("::") ) {
+  if ( url.host() == TQString::fromLatin1("localhost") || url.host() == TQString::fromLatin1("127.0.0.1") || url.host() == TQString::fromLatin1("::") ) {
       return false;
   }
   if ( dcopClient()->call( "kded", "networkstatus", "status()",
@@ -2786,7 +2786,7 @@ try_again:
       // by assuming that they will be sending html.
       kdDebug(7113) << "(" << m_pid << ") HTTPPreadHeader: HEAD -> returned "
                     << "mimetype: " << DEFAULT_MIME_TYPE << endl;
-      mimeType(TQString::tqfromLatin1(DEFAULT_MIME_TYPE));
+      mimeType(TQString::fromLatin1(DEFAULT_MIME_TYPE));
       return true;
     }
 
@@ -2847,7 +2847,7 @@ try_again:
 
     // Store the the headers so they can be passed to the
     // calling application later
-    m_responseHeader << TQString::tqfromLatin1(buf);
+    m_responseHeader << TQString::fromLatin1(buf);
 
     if ((strncasecmp(buf, "HTTP/", 5) == 0) ||
         (strncasecmp(buf, "ICY ", 4) == 0)) // Shoutcast support
@@ -3030,7 +3030,7 @@ try_again:
     // Keep Alive
     else if (strncasecmp(buf, "Keep-Alive:", 11) == 0) {
       TQStringList options = TQStringList::split(',',
-                                     TQString::tqfromLatin1(trimLead(buf+11)));
+                                     TQString::fromLatin1(trimLead(buf+11)));
       for(TQStringList::ConstIterator it = options.begin();
           it != options.end();
           it++)
@@ -3046,7 +3046,7 @@ try_again:
     // Cache control
     else if (strncasecmp(buf, "Cache-Control:", 14) == 0) {
       TQStringList cacheControls = TQStringList::split(',',
-                                     TQString::tqfromLatin1(trimLead(buf+14)));
+                                     TQString::fromLatin1(trimLead(buf+14)));
       for(TQStringList::ConstIterator it = cacheControls.begin();
           it != cacheControls.end();
           it++)
@@ -3081,7 +3081,7 @@ try_again:
 
     else if (strncasecmp(buf, "Content-location:", 17) == 0) {
       setMetaData ("content-location",
-                   TQString::tqfromLatin1(trimLead(buf+17)).stripWhiteSpace());
+                   TQString::fromLatin1(trimLead(buf+17)).stripWhiteSpace());
     }
 
     // what type of data do we have?
@@ -3093,7 +3093,7 @@ try_again:
       while ( *pos && *pos != ';' )  pos++;
 
       // Assign the mime-type.
-      m_strMimeType = TQString::tqfromLatin1(start, pos-start).stripWhiteSpace().lower();
+      m_strMimeType = TQString::fromLatin1(start, pos-start).stripWhiteSpace().lower();
       kdDebug(7113) << "(" << m_pid << ") Content-type: " << m_strMimeType << endl;
 
       // If we still have text, then it means we have a mime-type with a
@@ -3108,8 +3108,8 @@ try_again:
 
         if (*pos)
         {
-          mediaAttribute = TQString::tqfromLatin1(start, pos-start).stripWhiteSpace().lower();
-          mediaValue = TQString::tqfromLatin1(pos+1, end-pos-1).stripWhiteSpace();
+          mediaAttribute = TQString::fromLatin1(start, pos-start).stripWhiteSpace().lower();
+          mediaValue = TQString::fromLatin1(pos+1, end-pos-1).stripWhiteSpace();
 	  pos = end;
           if (mediaValue.length() &&
               (mediaValue[0] == '"') &&
@@ -3153,7 +3153,7 @@ try_again:
 
     // Cache management
     else if (strncasecmp(buf, "Last-Modified:", 14) == 0) {
-      m_request.lastModified = (TQString::tqfromLatin1(trimLead(buf+14))).stripWhiteSpace();
+      m_request.lastModified = (TQString::fromLatin1(trimLead(buf+14))).stripWhiteSpace();
     }
 
     // whoops.. we received a warning
@@ -3177,7 +3177,7 @@ try_again:
     // The deprecated Refresh Response
     else if (strncasecmp(buf,"Refresh:", 8) == 0) {
       mayCache = false;  // Do not cache page as it defeats purpose of Refresh tag!
-      setMetaData( "http-refresh", TQString::tqfromLatin1(trimLead(buf+8)).stripWhiteSpace() );
+      setMetaData( "http-refresh", TQString::fromLatin1(trimLead(buf+8)).stripWhiteSpace() );
     }
 
     // In fact we should do redirection only if we got redirection code
@@ -3254,7 +3254,7 @@ try_again:
               dispositionBuf--;
 
             if ( dispositionBuf > bufStart )
-              dispositionFilename = TQString::tqfromLatin1( bufStart, dispositionBuf-bufStart );
+              dispositionFilename = TQString::fromLatin1( bufStart, dispositionBuf-bufStart );
 
             break;
           }
@@ -3267,7 +3267,7 @@ try_again:
             dispositionBuf++;
 
           if ( dispositionBuf > bufStart )
-            dispositionType = TQString::tqfromLatin1( bufStart, dispositionBuf-bufStart ).stripWhiteSpace();
+            dispositionType = TQString::fromLatin1( bufStart, dispositionBuf-bufStart ).stripWhiteSpace();
 
           while ( *dispositionBuf == ';' || *dispositionBuf == ' ' )
             dispositionBuf++;
@@ -3288,7 +3288,7 @@ try_again:
       }
     }
     else if(strncasecmp(buf, "Content-Language:", 17) == 0) {
-      TQString language = TQString::tqfromLatin1(trimLead(buf+17)).stripWhiteSpace();
+      TQString language = TQString::fromLatin1(trimLead(buf+17)).stripWhiteSpace();
       if (!language.isEmpty())
         setMetaData("content-language", language);
     }
@@ -3381,17 +3381,17 @@ try_again:
 
       // md5 signature
       else if (strncasecmp(buf, "Content-MD5:", 12) == 0) {
-        m_sContentMD5 = TQString::tqfromLatin1(trimLead(buf + 12));
+        m_sContentMD5 = TQString::fromLatin1(trimLead(buf + 12));
       }
 
       // *** Responses to the HTTP OPTIONS method follow
       // WebDAV capabilities
       else if (strncasecmp(buf, "DAV:", 4) == 0) {
         if (m_davCapabilities.isEmpty()) {
-          m_davCapabilities << TQString::tqfromLatin1(trimLead(buf + 4));
+          m_davCapabilities << TQString::fromLatin1(trimLead(buf + 4));
         }
         else {
-          m_davCapabilities << TQString::tqfromLatin1(trimLead(buf + 4));
+          m_davCapabilities << TQString::fromLatin1(trimLead(buf + 4));
         }
       }
       // *** Responses to the HTTP OPTIONS method finished
@@ -3667,14 +3667,14 @@ try_again:
      if (m_strMimeType == "application/x-tar")
      {
         m_qContentEncodings.remove(m_qContentEncodings.fromLast());
-        m_strMimeType = TQString::tqfromLatin1("application/x-tgz");
+        m_strMimeType = TQString::fromLatin1("application/x-tgz");
      }
      else if (m_strMimeType == "application/postscript")
      {
         // LEONB: Adding another exception for psgz files.
         // Could we use the mimelnk files instead of hardcoding all this?
         m_qContentEncodings.remove(m_qContentEncodings.fromLast());
-        m_strMimeType = TQString::tqfromLatin1("application/x-gzpostscript");
+        m_strMimeType = TQString::fromLatin1("application/x-gzpostscript");
      }
      else if ( m_request.allowCompressedPage &&
                m_strMimeType != "application/x-tgz" &&
@@ -3683,7 +3683,7 @@ try_again:
                m_request.url.path().right(6) == ".ps.gz" )
      {
         m_qContentEncodings.remove(m_qContentEncodings.fromLast());
-        m_strMimeType = TQString::tqfromLatin1("application/x-gzpostscript");
+        m_strMimeType = TQString::fromLatin1("application/x-gzpostscript");
      }
      else if ( (m_request.allowCompressedPage &&
                 m_strMimeType == "text/html")
@@ -3700,7 +3700,7 @@ try_again:
      else
      {
         m_qContentEncodings.remove(m_qContentEncodings.fromLast());
-        m_strMimeType = TQString::tqfromLatin1("application/x-gzip");
+        m_strMimeType = TQString::fromLatin1("application/x-gzip");
      }
   }
 
@@ -3713,34 +3713,34 @@ try_again:
   if (m_qContentEncodings.last() == "bzip2")
   {
      m_qContentEncodings.remove(m_qContentEncodings.fromLast());
-     m_strMimeType = TQString::tqfromLatin1("application/x-bzip2");
+     m_strMimeType = TQString::fromLatin1("application/x-bzip2");
   }
 
   // Convert some common mimetypes to standard KDE mimetypes
   if (m_strMimeType == "application/x-targz")
-     m_strMimeType = TQString::tqfromLatin1("application/x-tgz");
+     m_strMimeType = TQString::fromLatin1("application/x-tgz");
   else if (m_strMimeType == "application/zip")
-     m_strMimeType = TQString::tqfromLatin1("application/x-zip");
+     m_strMimeType = TQString::fromLatin1("application/x-zip");
   else if (m_strMimeType == "image/x-png")
-     m_strMimeType = TQString::tqfromLatin1("image/png");
+     m_strMimeType = TQString::fromLatin1("image/png");
   else if (m_strMimeType == "image/bmp")
-     m_strMimeType = TQString::tqfromLatin1("image/x-bmp");
+     m_strMimeType = TQString::fromLatin1("image/x-bmp");
   else if (m_strMimeType == "audio/mpeg" || m_strMimeType == "audio/x-mpeg" || m_strMimeType == "audio/mp3")
-     m_strMimeType = TQString::tqfromLatin1("audio/x-mp3");
+     m_strMimeType = TQString::fromLatin1("audio/x-mp3");
   else if (m_strMimeType == "audio/microsoft-wave")
-     m_strMimeType = TQString::tqfromLatin1("audio/x-wav");
+     m_strMimeType = TQString::fromLatin1("audio/x-wav");
   else if (m_strMimeType == "audio/midi")
-     m_strMimeType = TQString::tqfromLatin1("audio/x-midi");
+     m_strMimeType = TQString::fromLatin1("audio/x-midi");
   else if (m_strMimeType == "image/x-xpixmap")
-     m_strMimeType = TQString::tqfromLatin1("image/x-xpm");
+     m_strMimeType = TQString::fromLatin1("image/x-xpm");
   else if (m_strMimeType == "application/rtf")
-     m_strMimeType = TQString::tqfromLatin1("text/rtf");
+     m_strMimeType = TQString::fromLatin1("text/rtf");
 
   // Crypto ones....
   else if (m_strMimeType == "application/pkix-cert" ||
            m_strMimeType == "application/binary-certificate")
   {
-     m_strMimeType = TQString::tqfromLatin1("application/x-x509-ca-cert");
+     m_strMimeType = TQString::fromLatin1("application/x-x509-ca-cert");
   }
 
   // Prefer application/x-tgz or x-gzpostscript over application/x-gzip.
@@ -3748,9 +3748,9 @@ try_again:
   {
      if ((m_request.url.path().right(7) == ".tar.gz") ||
          (m_request.url.path().right(4) == ".tar"))
-        m_strMimeType = TQString::tqfromLatin1("application/x-tgz");
+        m_strMimeType = TQString::fromLatin1("application/x-tgz");
      if ((m_request.url.path().right(6) == ".ps.gz"))
-        m_strMimeType = TQString::tqfromLatin1("application/x-gzpostscript");
+        m_strMimeType = TQString::fromLatin1("application/x-gzpostscript");
   }
 
   // Some webservers say "text/plain" when they mean "application/x-bzip2"
@@ -3758,15 +3758,15 @@ try_again:
   {
      TQString ext = m_request.url.path().right(4).upper();
      if (ext == ".BZ2")
-        m_strMimeType = TQString::tqfromLatin1("application/x-bzip2");
+        m_strMimeType = TQString::fromLatin1("application/x-bzip2");
      else if (ext == ".PEM")
-        m_strMimeType = TQString::tqfromLatin1("application/x-x509-ca-cert");
+        m_strMimeType = TQString::fromLatin1("application/x-x509-ca-cert");
      else if (ext == ".SWF")
-        m_strMimeType = TQString::tqfromLatin1("application/x-shockwave-flash");
+        m_strMimeType = TQString::fromLatin1("application/x-shockwave-flash");
      else if (ext == ".PLS")
-        m_strMimeType = TQString::tqfromLatin1("audio/x-scpls");
+        m_strMimeType = TQString::fromLatin1("audio/x-scpls");
      else if (ext == ".WMV")
-        m_strMimeType = TQString::tqfromLatin1("video/x-ms-wmv");
+        m_strMimeType = TQString::fromLatin1("video/x-ms-wmv");
   }
 
 #if 0
@@ -3871,11 +3871,11 @@ void HTTPProtocol::addEncoding(TQString encoding, TQStringList &encs)
     //if ( m_cmd != CMD_COPY )
       m_iSize = NO_SIZE;
   } else if ((encoding == "x-gzip") || (encoding == "gzip")) {
-    encs.append(TQString::tqfromLatin1("gzip"));
+    encs.append(TQString::fromLatin1("gzip"));
   } else if ((encoding == "x-bzip2") || (encoding == "bzip2")) {
-    encs.append(TQString::tqfromLatin1("bzip2")); // Not yet supported!
+    encs.append(TQString::fromLatin1("bzip2")); // Not yet supported!
   } else if ((encoding == "x-deflate") || (encoding == "deflate")) {
-    encs.append(TQString::tqfromLatin1("deflate"));
+    encs.append(TQString::fromLatin1("deflate"));
   } else {
     kdDebug(7113) << "(" << m_pid << ") Unknown encoding encountered.  "
                     << "Please write code. Encoding = \"" << encoding
@@ -4270,7 +4270,7 @@ void HTTPProtocol::slotData(const TQByteArray &_d)
 
         if ( m_strMimeType.isEmpty() )
         {
-          m_strMimeType = TQString::tqfromLatin1( DEFAULT_MIME_TYPE );
+          m_strMimeType = TQString::fromLatin1( DEFAULT_MIME_TYPE );
           kdDebug(7113) << "(" << m_pid << ") Using default mimetype: "
                         <<  m_strMimeType << endl;
         }
@@ -4711,7 +4711,7 @@ FILE* HTTPProtocol::checkCacheEntry( bool readWrite)
    TQCString u = m_request.url.url().latin1();
    for(int i = u.length(); i--;)
    {
-      hash = (hash * 12211 + static_cast<const char>(u.tqat(i))) % 2147483563;
+      hash = (hash * 12211 + static_cast<const char>(u.at(i))) % 2147483563;
    }
 
    TQString hashString;
@@ -4739,7 +4739,7 @@ FILE* HTTPProtocol::checkCacheEntry( bool readWrite)
       ok = false;
 
    time_t date;
-   time_t tqcurrentDate = time(0);
+   time_t currentDate = time(0);
 
    // URL
    if (ok && (!fgets(buffer, 400, fs)))
@@ -4762,10 +4762,10 @@ FILE* HTTPProtocol::checkCacheEntry( bool readWrite)
    {
       date = (time_t) strtoul(buffer, 0, 10);
       m_request.creationDate = date;
-      if (m_maxCacheAge && (difftime(tqcurrentDate, date) > m_maxCacheAge))
+      if (m_maxCacheAge && (difftime(currentDate, date) > m_maxCacheAge))
       {
          m_request.bMustRevalidate = true;
-         m_request.expireDate = tqcurrentDate;
+         m_request.expireDate = currentDate;
       }
    }
 
@@ -4779,14 +4779,14 @@ FILE* HTTPProtocol::checkCacheEntry( bool readWrite)
       {
          date = (time_t) strtoul(buffer, 0, 10);
          // After the expire date we need to revalidate.
-         if (!date || difftime(tqcurrentDate, date) >= 0)
+         if (!date || difftime(currentDate, date) >= 0)
             m_request.bMustRevalidate = true;
          m_request.expireDate = date;
       }
       else if (m_request.cache == CC_Refresh)
       {
          m_request.bMustRevalidate = true;
-         m_request.expireDate = tqcurrentDate;
+         m_request.expireDate = currentDate;
       }
    }
 
@@ -5135,12 +5135,12 @@ void HTTPProtocol::configAuth( char *p, bool isForProxy )
   if( isForProxy )
   {
     ProxyAuthentication = f;
-    m_strProxyAuthorization = TQString::tqfromLatin1( strAuth );
+    m_strProxyAuthorization = TQString::fromLatin1( strAuth );
   }
   else
   {
     Authentication = f;
-    m_strAuthorization = TQString::tqfromLatin1( strAuth );
+    m_strAuthorization = TQString::fromLatin1( strAuth );
   }
 }
 
@@ -5943,7 +5943,7 @@ TQString HTTPProtocol::createDigestAuth ( bool isForProxy )
 
     for (int i = 0; i < count; i++ )
     {
-      KURL u ( info.digestURI.tqat(i) );
+      KURL u ( info.digestURI.at(i) );
 
       send &= (m_request.url.protocol().lower() == u.protocol().lower());
       send &= (m_request.hostname.lower() == u.host().lower());

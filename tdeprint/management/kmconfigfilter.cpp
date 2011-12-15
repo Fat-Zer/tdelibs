@@ -24,7 +24,7 @@
 #include <tqgroupbox.h>
 #include <tqlineedit.h>
 #include <tqtoolbutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqapplication.h>
 

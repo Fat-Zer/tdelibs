@@ -197,7 +197,7 @@ void KListViewLineEdit::load(TQListViewItem *i, int c)
         item=i;
         col=c;
 
-        TQRect rect(p->tqitemRect(i));
+        TQRect rect(p->itemRect(i));
         setText(item->text(c));
         home( true );
 
@@ -621,7 +621,7 @@ void KListView::slotAutoSelect()
 
       bool select = !d->pCurrentItem->isSelected();
       bool update = viewport()->isUpdatesEnabled();
-      viewport()->tqsetUpdatesEnabled( false );
+      viewport()->setUpdatesEnabled( false );
 
       bool down = previousItem->itemPos() < d->pCurrentItem->itemPos();
       TQListViewItemIterator lit( down ? previousItem : d->pCurrentItem );
@@ -638,7 +638,7 @@ void KListView::slotAutoSelect()
       }
 
       blockSignals( block );
-      viewport()->tqsetUpdatesEnabled( update );
+      viewport()->setUpdatesEnabled( update );
       triggerUpdate();
 
       emit selectionChanged();
@@ -716,7 +716,7 @@ void KListView::focusInEvent( TQFocusEvent *fe )
       && (currentItem()))
   {
       currentItem()->setSelected(true);
-      currentItem()->tqrepaint();
+      currentItem()->repaint();
       emit selectionChanged();
   };
 }
@@ -736,7 +736,7 @@ void KListView::focusOutEvent( TQFocusEvent *fe )
       && (!d->editor->isVisible()))
   {
       currentItem()->setSelected(false);
-      currentItem()->tqrepaint();
+      currentItem()->repaint();
       emit selectionChanged();
   };
 
@@ -776,7 +776,7 @@ void KListView::contentsMousePressEvent( TQMouseEvent *e )
      if (currentItem())
      {
         currentItem()->setSelected(false);
-        currentItem()->tqrepaint();
+        currentItem()->repaint();
 //        emit selectionChanged();
      }
   }
@@ -1008,7 +1008,7 @@ void KListView::contentsDragMoveEvent(TQDragMoveEvent *event)
       {
         cleanDropVisualizer();
         d->mOldDropVisualizer=tmpRect;
-        viewport()->tqrepaint(tmpRect);
+        viewport()->repaint(tmpRect);
       }
     }
     if (dropHighlighter())
@@ -1018,7 +1018,7 @@ void KListView::contentsDragMoveEvent(TQDragMoveEvent *event)
       {
         cleanItemHighlighter();
         d->mOldDropHighlighter=tmpRect;
-        viewport()->tqrepaint(tmpRect);
+        viewport()->repaint(tmpRect);
       }
     }
   }
@@ -1045,7 +1045,7 @@ void KListView::cleanDropVisualizer()
   {
     TQRect rect=d->mOldDropVisualizer;
     d->mOldDropVisualizer = TQRect();
-    viewport()->tqrepaint(rect, true);
+    viewport()->repaint(rect, true);
   }
 }
 
@@ -1067,7 +1067,7 @@ void KListView::findDrop(const TQPoint &pos, TQListViewItem *&parent, TQListView
 	else
 	{
 		// Get the closest item before us ('atpos' or the one above, if any)
-		if (p.y() - tqitemRect(atpos).topLeft().y() < (atpos->height()/2))
+		if (p.y() - itemRect(atpos).topLeft().y() < (atpos->height()/2))
 			above = atpos->itemAbove();
 		else
 			above = atpos;
@@ -1327,12 +1327,12 @@ TQRect KListView::drawDropVisualizer(TQPainter *p, TQListViewItem *parent,
                             it = it->firstChild();
             }
 
-            insertmarker = tqitemRect (it ? it : after);
+            insertmarker = itemRect (it ? it : after);
             level = after->depth();
         }
         else if (parent)
         {
-            insertmarker = tqitemRect (parent);
+            insertmarker = itemRect (parent);
             level = parent->depth() + 1;
         }
         insertmarker.setLeft( treeStepSize() * ( level + (rootIsDecorated() ? 1 : 0) ) + itemMargin() );
@@ -1355,11 +1355,11 @@ TQRect KListView::drawItemHighlighter(TQPainter *painter, TQListViewItem *item)
 
   if (item)
   {
-    r = tqitemRect(item);
+    r = itemRect(item);
     r.setLeft(r.left()+(item->depth()+(rootIsDecorated() ? 1 : 0))*treeStepSize());
     if (painter)
-      tqstyle().tqdrawPrimitive(TQStyle::PE_FocusRect, painter, r, tqcolorGroup(),
-                            TQStyle::Style_FocusAtBorder, tqcolorGroup().highlight());
+      tqstyle().tqdrawPrimitive(TQStyle::PE_FocusRect, painter, r, colorGroup(),
+                            TQStyle::Style_FocusAtBorder, colorGroup().highlight());
   }
 
   return r;
@@ -1371,7 +1371,7 @@ void KListView::cleanItemHighlighter ()
   {
     TQRect rect=d->mOldDropHighlighter;
     d->mOldDropHighlighter = TQRect();
-    viewport()->tqrepaint(rect, true);
+    viewport()->repaint(rect, true);
   }
 }
 
@@ -1482,7 +1482,7 @@ void KListView::activateAutomaticSelection()
    if (currentItem())
    {
       currentItem()->setSelected(true);
-      currentItem()->tqrepaint();
+      currentItem()->repaint();
       emit selectionChanged();
    };
 }
@@ -1808,20 +1808,20 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
 
     TQRect ir;
     if (repaintItem1)
-       ir = ir.unite( tqitemRect(repaintItem1) );
+       ir = ir.unite( itemRect(repaintItem1) );
     if (repaintItem2)
-       ir = ir.unite( tqitemRect(repaintItem2) );
+       ir = ir.unite( itemRect(repaintItem2) );
 
     if ( !ir.isEmpty() )
     {                 // rectangle to be repainted
        if ( ir.x() < 0 )
           ir.moveBy( -ir.x(), 0 );
-       viewport()->tqrepaint( ir, false );
+       viewport()->repaint( ir, false );
     }
     /*if (repaintItem1)
-       repaintItem1->tqrepaint();
+       repaintItem1->repaint();
     if (repaintItem2)
-       repaintItem2->tqrepaint();*/
+       repaintItem2->repaint();*/
     update();
     if (emitSelectionChanged)
        emit selectionChanged();
@@ -1895,7 +1895,7 @@ void KListView::emitContextMenu (KListView*, TQListViewItem* i)
   TQPoint p;
 
   if (i)
-        p = viewport()->mapToGlobal(tqitemRect(i).center());
+        p = viewport()->mapToGlobal(itemRect(i).center());
   else
         p = mapToGlobal(rect().center());
 
@@ -1940,7 +1940,7 @@ void KListView::viewportPaintEvent(TQPaintEvent *e)
       TQPainter painter(viewport());
 
       // This is where we actually draw the drop-highlighter
-      tqstyle().tqdrawPrimitive(TQStyle::PE_FocusRect, &painter, d->mOldDropHighlighter, tqcolorGroup(),
+      tqstyle().tqdrawPrimitive(TQStyle::PE_FocusRect, &painter, d->mOldDropHighlighter, colorGroup(),
                             TQStyle::Style_FocusAtBorder);
     }
   d->painting = false;
@@ -2001,13 +2001,13 @@ const TQColor &KListView::alternateBackground() const
 void KListView::setAlternateBackground(const TQColor &c)
 {
   d->alternateBackground = c;
-  tqrepaint();
+  repaint();
 }
 
 void KListView::setShadeSortColumn(bool shadeSortColumn)
 {
   d->shadeSortColumn = shadeSortColumn;
-  tqrepaint();
+  repaint();
 }
 
 bool KListView::shadeSortColumn() const
@@ -2231,7 +2231,7 @@ const TQColor &KListViewItem::backgroundColor()
 {
   if (isAlternate())
     return static_cast< KListView* >(listView())->alternateBackground();
-  return listView()->viewport()->tqcolorGroup().base();
+  return listView()->viewport()->colorGroup().base();
 }
 
 TQColor KListViewItem::backgroundColor(int column)
@@ -2239,7 +2239,7 @@ TQColor KListViewItem::backgroundColor(int column)
   KListView* view = static_cast< KListView* >(listView());
   TQColor color = isAlternate() ?
                  view->alternateBackground() :
-                 view->viewport()->tqcolorGroup().base();
+                 view->viewport()->colorGroup().base();
 
   // calculate a different color if the current column is sorted (only if more than 1 column)
   if ( (view->columns() > 1) && view->shadeSortColumn() && (column == view->columnSorted()) )
@@ -2335,7 +2335,7 @@ bool KListViewItem::isAlternate()
   return false;
 }
 
-void KListViewItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int tqalignment)
+void KListViewItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment)
 {
   TQColorGroup _cg = cg;
   TQListView* lv = listView();
@@ -2353,7 +2353,7 @@ void KListViewItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column, 
                  TQColorGroup::Background : TQColorGroup::Base,
                  backgroundColor(column));
   }
-  TQListViewItem::paintCell(p, _cg, column, width, tqalignment);
+  TQListViewItem::paintCell(p, _cg, column, width, alignment);
 }
 
 void KListView::virtual_hook( int, void* )

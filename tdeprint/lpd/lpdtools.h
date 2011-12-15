@@ -22,7 +22,7 @@
 #include <tqstring.h>
 #include <tqmap.h>
 #include <tqptrlist.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 class KMLpdManager;
 class DrMain;

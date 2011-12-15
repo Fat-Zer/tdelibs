@@ -20,7 +20,7 @@
  */
 
 #include <tqhbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqvbox.h>
 #include <tqtimer.h>
 #include <tqprogressbar.h>

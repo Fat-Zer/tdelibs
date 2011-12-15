@@ -29,7 +29,7 @@
 #include <kfiledialog.h>
 #include <kimagefilepreview.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqstring.h>
 #include <tqstringlist.h>
 #include <tqsortedlist.h>
@@ -122,7 +122,7 @@ void KIconCanvas::slotLoadFiles()
     TQApplication::setOverrideCursor(tqwaitCursor);
 
     // disable updates to not trigger paint events when adding child items
-    tqsetUpdatesEnabled( false );
+    setUpdatesEnabled( false );
 
 #ifdef HAVE_LIBART
     KSVGIconEngine *svgEngine = new KSVGIconEngine();
@@ -137,7 +137,7 @@ void KIconCanvas::slotLoadFiles()
     {
 	// Calling kapp->processEvents() makes the iconview flicker like hell
 	// (it's being repainted once for every new item), so we don't do this.
-	// Instead, we directly tqrepaint the progress bar without going through
+	// Instead, we directly repaint the progress bar without going through
 	// the event-loop. We do that just once for every 10th item so that
 	// the progress bar doesn't flicker in turn. (pfeiffer)
 	if ( emitProgress >= 10 ) {
@@ -191,7 +191,7 @@ void KIconCanvas::slotLoadFiles()
 #endif
 
     // enable updates since we have to draw the whole view now
-    tqsetUpdatesEnabled( true );
+    setUpdatesEnabled( true );
 
     TQApplication::restoreOverrideCursor();
     d->m_bLoading = false;
@@ -259,7 +259,7 @@ void KIconDialog::init()
     mGroupOrSize = KIcon::Desktop;
     mContext = KIcon::Any;
     mType = 0;
-    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::tqfromLatin1("*.png"));
+    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::fromLatin1("*.png"));
 
     TQWidget *main = new TQWidget( this );
     setMainWidget(main);
@@ -268,11 +268,11 @@ void KIconDialog::init()
     top->setSpacing( spacingHint() );
 
     TQButtonGroup *bgroup = new TQButtonGroup(0, Qt::Vertical, i18n("Icon Source"), main);
-    bgroup->tqlayout()->setSpacing(KDialog::spacingHint());
-    bgroup->tqlayout()->setMargin(KDialog::marginHint());
+    bgroup->layout()->setSpacing(KDialog::spacingHint());
+    bgroup->layout()->setMargin(KDialog::marginHint());
     top->addWidget(bgroup);
     connect(bgroup, TQT_SIGNAL(clicked(int)), TQT_SLOT(slotButtonClicked(int)));
-    TQGridLayout *grid = new TQGridLayout(bgroup->tqlayout(), 3, 2);
+    TQGridLayout *grid = new TQGridLayout(bgroup->layout(), 3, 2);
     mpRb1 = new TQRadioButton(i18n("S&ystem icons:"), bgroup);
     grid->addWidget(mpRb1, 1, 0);
     mpCombo = new TQComboBox(bgroup);
@@ -631,8 +631,8 @@ void KIconDialog::slotProgress(int p)
 {
     mpProgress->setProgress(p);
     // commented out the following since setProgress already paints ther
-    // progress bar. ->tqrepaint() only makes it flicker
-    //mpProgress->tqrepaint();
+    // progress bar. ->repaint() only makes it flicker
+    //mpProgress->repaint();
 }
 
 void KIconDialog::slotFinished()

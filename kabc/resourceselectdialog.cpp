@@ -24,7 +24,7 @@
 #include <kstdguiitem.h>
 
 #include <tqgroupbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include "resource.h"
 #include "addressbook.h"
@@ -64,7 +64,7 @@ ResourceSelectDialog::ResourceSelectDialog( AddressBook *ab, TQWidget *parent, c
   uint counter = 0;
   TQPtrList<Resource> list = ab->resources();
   for ( uint i = 0; i < list.count(); ++i ) {
-    Resource *resource = list.tqat( i );
+    Resource *resource = list.at( i );
     if ( resource && !resource->readOnly() ) {
       mResourceMap.insert( counter, resource );
       mResourceId->insertItem( resource->resourceName() );

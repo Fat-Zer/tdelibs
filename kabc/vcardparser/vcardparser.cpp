@@ -19,7 +19,7 @@
 */
 
 #include <tqregexp.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 
 #include <kmdcodec.h>
 
@@ -144,7 +144,7 @@ VCard::List VCardParser::parseVCards( const TQString& text )
           }
           else if ( vCardLine.parameter( "encoding" ).lower() == "quoted-printable" ) {
             // join any qp-folded lines
-            while ( value.tqat( value.length() - 1 ) == '=' && it != linesEnd ) {
+            while ( value.at( value.length() - 1 ) == '=' && it != linesEnd ) {
               value = value.remove( value.length() - 1, 1 ) + (*it);
               ++it;
             }

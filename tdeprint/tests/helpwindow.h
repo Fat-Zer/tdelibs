@@ -12,7 +12,7 @@
 #define HELPWINDOW_H
 
 #include <kmainwindow.h>
-#include <tqtextbrowser.h>
+#include <textbrowser.h>
 #include <tqstringlist.h>
 #include <tqmap.h>
 #include <tqdir.h>

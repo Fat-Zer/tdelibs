@@ -21,7 +21,7 @@
 
 #include <unistd.h> // For getuid
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqtimer.h>
 
@@ -134,7 +134,7 @@ KAuthIcon::~KAuthIcon()
 
 TQSize KAuthIcon::sizeHint() const
 {
-  return layout->tqminimumSize();
+  return layout->minimumSize();
 }
 
 

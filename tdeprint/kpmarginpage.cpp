@@ -26,7 +26,7 @@
 #include "marginwidget.h"
 
 #include <tqgroupbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqprinter.h>
 #include <tqpaintdevicemetrics.h>
 

@@ -20,7 +20,7 @@
 
 #include <tqapplication.h>
 #include <tqstyle.h>
-#include <tqstylesheet.h>
+#include <stylesheet.h>
 
 #include <kconfig.h>
 #include <kiconloader.h>
@@ -95,7 +95,7 @@ void KTabWidget::insertTab( TQWidget *child, TQTab *tab, int index )
             resizeTabs( d->m_tabNames.count()-1 );
         }
         else {
-            d->m_tabNames.insert( d->m_tabNames.tqat( index ), tab->text() );
+            d->m_tabNames.insert( d->m_tabNames.at( index ), tab->text() );
             resizeTabs( index );
         }
     }
@@ -163,8 +163,8 @@ bool KTabWidget::tabCloseActivatePrevious() const
 unsigned int KTabWidget::tabBarWidthForMaxChars( uint maxLength )
 {
     int hframe, overlap;
-    hframe  = tabBar()->tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabHSpace, tabBar() );
-    overlap = tabBar()->tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabOverlap, tabBar() );
+    hframe  = tabBar()->tqstyle().pixelMetric( TQStyle::PM_TabBarTabHSpace, tabBar() );
+    overlap = tabBar()->tqstyle().pixelMetric( TQStyle::PM_TabBarTabOverlap, tabBar() );
 
     TQFontMetrics fm = tabBar()->fontMetrics();
     int x = 0;
@@ -301,7 +301,7 @@ void KTabWidget::dragMoveEvent( TQDragMoveEvent *e )
 {
     if ( isEmptyTabbarSpace( e->pos() ) ) {
         bool accept = false;
-        // The tqreceivers of the testCanDecode() signal has to adjust
+        // The receivers of the testCanDecode() signal has to adjust
         // 'accept' accordingly.
         emit testCanDecode( e, accept);
         e->accept( accept );
@@ -422,7 +422,7 @@ void KTabWidget::moveTab( int from, int to )
         if ( to < 0 || to >= count() )
             d->m_tabNames.append( TQString::null );
         else
-            d->m_tabNames.insert( d->m_tabNames.tqat( to ), TQString::null );
+            d->m_tabNames.insert( d->m_tabNames.at( to ), TQString::null );
     }
 
     w = page( to );
@@ -441,7 +441,7 @@ void KTabWidget::removePage( TQWidget * w ) {
     if ( d->m_automaticResizeTabs ) {
         int index = indexOf( w );
         if ( index != -1 )
-            d->m_tabNames.remove( d->m_tabNames.tqat( index ) );
+            d->m_tabNames.remove( d->m_tabNames.at( index ) );
     }
     TQTabWidget::removePage( w );
     if ( d->m_automaticResizeTabs )

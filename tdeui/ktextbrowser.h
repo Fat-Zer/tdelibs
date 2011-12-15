@@ -20,7 +20,7 @@
 #ifndef _KTEXT_BROWSER_H_
 #define _KTEXT_BROWSER_H_
 
-#include <tqtextbrowser.h>
+#include <textbrowser.h>
 
 #include <tdelibs_export.h>
 

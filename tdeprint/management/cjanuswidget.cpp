@@ -23,7 +23,7 @@
 #include <tqlabel.h>
 #include <tqpainter.h>
 #include <klistbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <kseparator.h>
 
 class CJanusWidget::CPage

@@ -20,9 +20,9 @@
 
 #include <iostream>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kaboutdata.h>
 #include <kapplication.h>

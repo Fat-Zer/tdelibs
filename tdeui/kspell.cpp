@@ -34,7 +34,7 @@
 #endif
 
 #include <tqregexp.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 #include <tqtimer.h>
 
 #include <kapplication.h>
@@ -995,7 +995,7 @@ bool KSpell::check( const TQString &_buffer, bool _usedialog )
   //         origbuffer since I got errors otherwise
   if ( !origbuffer.endsWith("\n\n" ) )
   {
-    if (origbuffer.tqat(origbuffer.length()-1)!='\n')
+    if (origbuffer.at(origbuffer.length()-1)!='\n')
     {
       origbuffer+='\n';
       origbuffer+='\n'; //shouldn't these be removed at some point?
@@ -1220,10 +1220,10 @@ void KSpell::dialog( const TQString & word, TQStringList & sugg, const char *_sl
   TQString marker( "_MARKER_" );
   tmpBuf.replace( lastpos, word.length(), marker );
   TQString context = tmpBuf.mid(QMAX(lastpos-18,0), 2*18+marker.length());
-  context.replace( '\n',TQString::tqfromLatin1(" "));
-  context.replace( '<', TQString::tqfromLatin1("&lt;") );
-  context.replace( '>', TQString::tqfromLatin1("&gt;") );
-  context.replace( marker, TQString::tqfromLatin1("<b>%1</b>").arg( word ) );
+  context.replace( '\n',TQString::fromLatin1(" "));
+  context.replace( '<', TQString::fromLatin1("&lt;") );
+  context.replace( '>', TQString::fromLatin1("&gt;") );
+  context.replace( marker, TQString::fromLatin1("<b>%1</b>").arg( word ) );
   context = "<qt>" + context + "</qt>";
 
   ksdlg->init( word, &sugg, context );

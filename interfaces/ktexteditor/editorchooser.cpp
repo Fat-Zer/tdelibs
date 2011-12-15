@@ -9,7 +9,7 @@
 #include <klocale.h>
 #include <tqlabel.h>
 #include <kapplication.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include "editorchooser_ui.h"
 
@@ -95,7 +95,7 @@ void EditorChooser::writeAppSetting(const TQString& postfix){
 	cfg->setGroup("KTEXTEDITOR:"+postfix);
 	cfg->writeEntry("DEVELOPER_INFO","NEVER TRY TO USE VALUES FROM THAT GROUP, THEY ARE SUBJECT TO CHANGES");
 	cfg->writePathEntry("editor", (d->chooser->editorCombo->currentItem()==0) ? 
-		TQString::null : (*d->elements.tqat(d->chooser->editorCombo->currentItem()-1)));
+		TQString::null : (*d->elements.at(d->chooser->editorCombo->currentItem()-1)));
 	cfg->sync();
 	cfg->setGroup(previousGroup);
 

@@ -68,7 +68,7 @@ void KRootPixmap::init()
     m_bCustomPaint = false;
 
     connect(kapp, TQT_SIGNAL(backgroundChanged(int)), TQT_SLOT(slotBackgroundChanged(int)));
-    connect(m_pTimer, TQT_SIGNAL(timeout()), TQT_SLOT(tqrepaint()));
+    connect(m_pTimer, TQT_SIGNAL(timeout()), TQT_SLOT(repaint()));
 #ifdef Q_WS_X11
     connect(m_pPixmap, TQT_SIGNAL(done(bool)), TQT_SLOT(slotDone(bool)));
 
@@ -77,7 +77,7 @@ void KRootPixmap::init()
     connect(d->twin, TQT_SIGNAL(currentDesktopChanged(int)), TQT_SLOT(desktopChanged(int)));
 #endif
 
-    d->toplevel = m_pWidget->tqtopLevelWidget();
+    d->toplevel = m_pWidget->topLevelWidget();
     d->toplevel->installEventFilter(this);
     m_pWidget->installEventFilter(this);
 }
@@ -115,7 +115,7 @@ void KRootPixmap::start()
 	return;
     }
     if (m_bInit)
-	tqrepaint(true);
+	repaint(true);
 }
 
 
@@ -136,7 +136,7 @@ void KRootPixmap::setFadeEffect(double fade, const TQColor &color)
 	m_Fade = fade;
     m_FadeColor = color;
 
-    if ( m_bActive && m_bInit ) tqrepaint(true);
+    if ( m_bActive && m_bInit ) repaint(true);
 }
 
 void KRootPixmap::setBlurEffect(double radius, double sigma)
@@ -170,7 +170,7 @@ bool KRootPixmap::eventFilter(TQObject *, TQEvent *event)
 
     case TQEvent::Reparent:
         d->toplevel->removeEventFilter(this);
-        d->toplevel = m_pWidget->tqtopLevelWidget();
+        d->toplevel = m_pWidget->topLevelWidget();
         d->toplevel->installEventFilter(this);
         break;
 
@@ -188,31 +188,31 @@ void KRootPixmap::desktopChanged(int desktop)
 	return;
 
 #ifdef Q_WS_X11
-    if (KWin::windowInfo(m_pWidget->tqtopLevelWidget()->winId()).desktop() == NET::OnAllDesktops &&
+    if (KWin::windowInfo(m_pWidget->topLevelWidget()->winId()).desktop() == NET::OnAllDesktops &&
 	pixmapName(m_Desk) != pixmapName(desktop))
 #endif
-	tqrepaint(true);
+	repaint(true);
 }
 
 void KRootPixmap::desktopChanged( WId window, unsigned int properties )
 {
 #ifdef Q_WS_X11
     if( !(properties & NET::WMDesktop) ||
-	(window != m_pWidget->tqtopLevelWidget()->winId()))
+	(window != m_pWidget->topLevelWidget()->winId()))
 	return;
 #endif
 
     kdDebug() << k_funcinfo << endl;
-    tqrepaint(true);
+    repaint(true);
 }
 
-void KRootPixmap::tqrepaint()
+void KRootPixmap::repaint()
 {
-    tqrepaint(false);
+    repaint(false);
 }
 
 
-void KRootPixmap::tqrepaint(bool force)
+void KRootPixmap::repaint(bool force)
 {
     TQPoint p1 = m_pWidget->mapToGlobal(m_pWidget->rect().topLeft());
     TQPoint p2 = m_pWidget->mapToGlobal(m_pWidget->rect().bottomRight());
@@ -233,7 +233,7 @@ void KRootPixmap::tqrepaint(bool force)
     }
     m_Rect = TQRect(p1, p2);
 #ifdef Q_WS_X11
-    m_Desk = KWin::windowInfo(m_pWidget->tqtopLevelWidget()->winId()).desktop();
+    m_Desk = KWin::windowInfo(m_pWidget->topLevelWidget()->winId()).desktop();
     if (m_Desk == NET::OnAllDesktops)
 	m_Desk = currentDesktop();
 
@@ -341,7 +341,7 @@ void KRootPixmap::slotBackgroundChanged(int desk)
 	return;
 
     if (desk == m_Desk)
-	tqrepaint(true);
+	repaint(true);
 }
 
 #include "krootpixmap.moc"

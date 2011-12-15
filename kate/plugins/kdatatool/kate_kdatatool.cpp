@@ -58,9 +58,9 @@ void KDataToolPlugin::removeView(KTextEditor::View *view)
 {
 	for (uint z=0; z < m_views.count(); z++)
         {
-		if (m_views.tqat(z)->parentClient() == view)
+		if (m_views.at(z)->parentClient() == view)
 		{
-			KDataToolPluginView *nview = m_views.tqat(z);
+			KDataToolPluginView *nview = m_views.at(z);
 			m_views.remove (nview);
 			delete nview;
 		}
@@ -126,7 +126,7 @@ void KDataToolPluginView::aboutToShow()
 		// find begin of word:
 		m_singleWord_start = 0;
 		for(int i = col; i >= 0; i--) {
-			TQChar ch = tmp_line.tqat(i);
+			TQChar ch = tmp_line.at(i);
 			if( ! (ch.isLetter() || ch == '-' || ch == '\'') )
 			{
 				m_singleWord_start = i+1;
@@ -137,7 +137,7 @@ void KDataToolPluginView::aboutToShow()
 		// find end of word:
 		m_singleWord_end = tmp_line.length();
 		for(uint i = col+1; i < tmp_line.length(); i++) {
-			TQChar ch = tmp_line.tqat(i);
+			TQChar ch = tmp_line.at(i);
 			if( ! (ch.isLetter() || ch == '-' || ch == '\'') )
 			{
 				m_singleWord_end = i;

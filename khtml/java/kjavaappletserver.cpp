@@ -48,7 +48,7 @@
 #include <tqlabel.h>
 #include <tqdialog.h>
 #include <tqpushbutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqregexp.h>
 
 #include <stdlib.h>
@@ -531,19 +531,19 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
     switch( cmd_code )
     {
         case KJAS_SHOW_DOCUMENT:
-            cmd = TQString::tqfromLatin1( "showdocument" );
+            cmd = TQString::fromLatin1( "showdocument" );
             break;
 
         case KJAS_SHOW_URLINFRAME:
-            cmd = TQString::tqfromLatin1( "showurlinframe" );
+            cmd = TQString::fromLatin1( "showurlinframe" );
             break;
 
         case KJAS_SHOW_STATUS:
-            cmd = TQString::tqfromLatin1( "showstatus" );
+            cmd = TQString::fromLatin1( "showstatus" );
             break;
 
         case KJAS_RESIZE_APPLET:
-            cmd = TQString::tqfromLatin1( "resizeapplet" );
+            cmd = TQString::fromLatin1( "resizeapplet" );
             break;
 
         case KJAS_GET_URLDATA:
@@ -573,7 +573,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
                 kdError(6100) << "KIO Data command error " << ok << " args:" << args.size() << endl;
             return;
         case KJAS_JAVASCRIPT_EVENT:
-            cmd = TQString::tqfromLatin1( "JS_Event" );
+            cmd = TQString::fromLatin1( "JS_Event" );
             kdDebug(6100) << "Javascript request: "<< contextID
                           << " code: " << args[0] << endl;
             break;
@@ -593,24 +593,24 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
             return;
         }
         case KJAS_AUDIOCLIP_PLAY:
-            cmd = TQString::tqfromLatin1( "audioclip_play" );
+            cmd = TQString::fromLatin1( "audioclip_play" );
             kdDebug(6100) << "Audio Play: url=" << args[0] << endl;
             break;
         case KJAS_AUDIOCLIP_LOOP:
-            cmd = TQString::tqfromLatin1( "audioclip_loop" );
+            cmd = TQString::fromLatin1( "audioclip_loop" );
             kdDebug(6100) << "Audio Loop: url=" << args[0] << endl;
             break;
         case KJAS_AUDIOCLIP_STOP:
-            cmd = TQString::tqfromLatin1( "audioclip_stop" );
+            cmd = TQString::fromLatin1( "audioclip_stop" );
             kdDebug(6100) << "Audio Stop: url=" << args[0] << endl;
             break;
         case KJAS_APPLET_STATE:
             kdDebug(6100) << "Applet State Notification for Applet " << args[0] << ". New state=" << args[1] << endl;
-            cmd = TQString::tqfromLatin1( "AppletStateNotification" );
+            cmd = TQString::fromLatin1( "AppletStateNotification" );
             break;
         case KJAS_APPLET_FAILED:
             kdDebug(6100) << "Applet " << args[0] << " Failed: " << args[1] << endl;
-            cmd = TQString::tqfromLatin1( "AppletFailed" );
+            cmd = TQString::fromLatin1( "AppletFailed" );
             break;
         case KJAS_SECURITY_CONFIRM: {
             if (KSSL::doesSSLWork() && !d->kssl)

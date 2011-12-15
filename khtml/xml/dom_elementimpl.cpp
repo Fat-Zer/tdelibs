@@ -46,7 +46,7 @@
 #include "css/cssproperties.h"
 #include "xml/dom_xmlimpl.h"
 
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <kdebug.h>
 #include <stdlib.h>
 
@@ -855,7 +855,7 @@ DOMString ElementImpl::toString() const
 
 	for (NodeImpl *child = firstChild(); child != NULL; child = child->nextSibling()) {
 	    DOMString kid = child->toString();
-	    result += TQConstString(kid.tqunicode(), kid.length()).string();
+	    result += TQConstString(kid.unicode(), kid.length()).string();
 	}
 
 	result += "</";

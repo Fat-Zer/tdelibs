@@ -155,7 +155,7 @@ bool KServerSocket::lookup()
   // make sure we have at least one parameter for lookup
   if (d->resolver.serviceName().isNull() &&
       !d->resolver.nodeName().isNull())
-    d->resolver.setServiceName(TQString::tqfromLatin1(""));
+    d->resolver.setServiceName(TQString::fromLatin1(""));
 
   // don't restart the lookups if they had succeeded and
   // the input values weren't changed

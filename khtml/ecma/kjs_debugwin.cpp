@@ -25,9 +25,9 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
-#include <tqtextedit.h>
+#include <textedit.h>
 #include <tqlistbox.h>
 #include <tqmultilineedit.h>
 #include <tqapplication.h>
@@ -107,7 +107,7 @@ void SourceDisplay::setSource(SourceFile *sourceFile)
   }
 
   TQString code = sourceFile->getCode();
-  const TQChar *chars = code.tqunicode();
+  const TQChar *chars = code.unicode();
   uint len = code.length();
   TQChar newLine('\n');
   TQChar cr('\r');
@@ -182,7 +182,7 @@ void SourceDisplay::showEvent(TQShowEvent *)
 void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, int cliph)
 {
   if (!m_sourceFile) {
-    p->fillRect(clipx,clipy,clipw,cliph,tqpalette().active().base());
+    p->fillRect(clipx,clipy,clipw,cliph,palette().active().base());
     return;
   }
 
@@ -207,26 +207,26 @@ void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, 
     TQString linenoStr = TQString().sprintf("%d",lineno+1);
 
 
-    p->fillRect(0,height*lineno,linenoWidth,height,tqpalette().active().mid());
+    p->fillRect(0,height*lineno,linenoWidth,height,palette().active().mid());
 
-    p->setPen(tqpalette().active().text());
+    p->setPen(palette().active().text());
     p->drawText(0,height*lineno,linenoWidth,height,Qt::AlignRight,linenoStr);
 
     TQColor bgColor;
     TQColor textColor;
 
     if (lineno == m_currentLine) {
-      bgColor = tqpalette().active().highlight();
-      textColor = tqpalette().active().highlightedText();
+      bgColor = palette().active().highlight();
+      textColor = palette().active().highlightedText();
     }
     else if (m_debugWin->haveBreakpoint(m_sourceFile,lineno+1,lineno+1)) {
-      bgColor = tqpalette().active().text();
-      textColor = tqpalette().active().base();
+      bgColor = palette().active().text();
+      textColor = palette().active().base();
       p->drawPixmap(2,height*lineno+height/2-m_breakpointIcon.height()/2,m_breakpointIcon);
     }
     else {
-      bgColor = tqpalette().active().base();
-      textColor = tqpalette().active().text();
+      bgColor = palette().active().base();
+      textColor = palette().active().text();
     }
 
     p->fillRect(linenoWidth,height*lineno,right-linenoWidth,height,bgColor);
@@ -236,10 +236,10 @@ void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, 
   }
 
   int remainingTop = height*(lastLine+1);
-  p->fillRect(0,remainingTop,linenoWidth,bottom-remainingTop,tqpalette().active().mid());
+  p->fillRect(0,remainingTop,linenoWidth,bottom-remainingTop,palette().active().mid());
 
   p->fillRect(linenoWidth,remainingTop,
-	      right-linenoWidth,bottom-remainingTop,tqpalette().active().base());
+	      right-linenoWidth,bottom-remainingTop,palette().active().base());
 }
 
 //-------------------------------------------------------------------------
@@ -548,7 +548,7 @@ void KJSDebugWin::slotToggleBreakpoint(int lineno)
   if (m_sourceSel->currentItem() < 0)
     return;
 
-  SourceFile *sourceFile = m_sourceSelFiles.tqat(m_sourceSel->currentItem());
+  SourceFile *sourceFile = m_sourceSelFiles.at(m_sourceSel->currentItem());
 
   // Find the source fragment containing the selected line (if any)
   int sourceId = -1;
@@ -592,14 +592,14 @@ void KJSDebugWin::slotSourceSelected(int sourceSelIndex)
   // A source file has been selected from the drop-down list - display the file
   if (sourceSelIndex < 0 || sourceSelIndex >= (int)m_sourceSel->count())
     return;
-  SourceFile *sourceFile = m_sourceSelFiles.tqat(sourceSelIndex);
+  SourceFile *sourceFile = m_sourceSelFiles.at(sourceSelIndex);
   displaySourceFile(sourceFile,true);
 
   // If the currently selected context is in the current source file, then hilight
   // the line it's on.
   if (m_contextList->currentItem() >= 0) {
     Context ctx = m_execs[m_contextList->currentItem()]->context();
-    if (m_sourceFragments[ctx.sourceId()]->sourceFile == m_sourceSelFiles.tqat(sourceSelIndex))
+    if (m_sourceFragments[ctx.sourceId()]->sourceFile == m_sourceSelFiles.at(sourceSelIndex))
       setSourceLine(ctx.sourceId(),ctx.curStmtFirstLine());
   }
 }
@@ -614,7 +614,7 @@ void KJSDebugWin::slotEval()
   if (m_execStates.isEmpty()) {
     if (m_sourceSel->currentItem() < 0)
       return;
-    SourceFile *sourceFile = m_sourceSelFiles.tqat(m_sourceSel->currentItem());
+    SourceFile *sourceFile = m_sourceSelFiles.at(m_sourceSel->currentItem());
     if (!sourceFile->interpreter)
       return;
     exec = sourceFile->interpreter->globalExec();
@@ -690,7 +690,7 @@ bool KJSDebugWin::eventFilter(TQObject *o, TQEvent *e)
 
 void KJSDebugWin::disableOtherWindows()
 {
-  TQWidgetList *widgets = TQApplication::tqallWidgets();
+  TQWidgetList *widgets = TQApplication::allWidgets();
   TQWidgetListIt it(*widgets);
   for (; it.current(); ++it)
     it.current()->installEventFilter(this);
@@ -698,7 +698,7 @@ void KJSDebugWin::disableOtherWindows()
 
 void KJSDebugWin::enableOtherWindows()
 {
-  TQWidgetList *widgets = TQApplication::tqallWidgets();
+  TQWidgetList *widgets = TQApplication::allWidgets();
   TQWidgetListIt it(*widgets);
   for (; it.current(); ++it)
     it.current()->removeEventFilter(this);
@@ -744,7 +744,7 @@ bool KJSDebugWin::sourceParsed(KJS::ExecState *exec, int sourceId,
     if (!sourceFile->interpreter)
       sourceFile->interpreter = exec->interpreter();
     for (index = 0; index < m_sourceSel->count(); index++) {
-      if (m_sourceSelFiles.tqat(index) == sourceFile)
+      if (m_sourceSelFiles.at(index) == sourceFile)
 	break;
     }
     assert(index < m_sourceSel->count());
@@ -782,7 +782,7 @@ bool KJSDebugWin::sourceUnused(KJS::ExecState *exec, int sourceId)
     SourceFile *sourceFile = fragment->sourceFile;
     if (sourceFile->hasOneRef()) {
       for (int i = 0; i < m_sourceSel->count(); i++) {
-	if (m_sourceSelFiles.tqat(i) == sourceFile) {
+	if (m_sourceSelFiles.at(i) == sourceFile) {
 	  m_sourceSel->removeItem(i);
 	  m_sourceSelFiles.remove(i);
 	  break;
@@ -861,7 +861,7 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
 
   if (dontShowAgain) {
     KConfig *config = kapp->config();
-    KConfigGroupSaver saver(config,TQString::tqfromLatin1("Java/JavaScript Settings"));
+    KConfigGroupSaver saver(config,TQString::fromLatin1("Java/JavaScript Settings"));
     config->writeEntry("ReportJavaScriptErrors",TQVariant(false,0));
     config->sync();
     TQByteArray data;
@@ -930,7 +930,7 @@ void KJSDebugWin::setSourceLine(int sourceId, int lineno)
   SourceFile *sourceFile = source->sourceFile;
   if (m_curSourceFile != source->sourceFile) {
       for (int i = 0; i < m_sourceSel->count(); i++)
-	if (m_sourceSelFiles.tqat(i) == sourceFile)
+	if (m_sourceSelFiles.at(i) == sourceFile)
 	  m_sourceSel->setCurrentItem(i);
       displaySourceFile(sourceFile,false);
   }

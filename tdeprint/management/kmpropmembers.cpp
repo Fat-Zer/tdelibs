@@ -21,15 +21,15 @@
 #include "kmprinter.h"
 #include "kmwizard.h"
 
-#include <tqtextview.h>
-#include <tqlayout.h>
+#include <textview.h>
+#include <layout.h>
 #include <klocale.h>
 
 KMPropMembers::KMPropMembers(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)
 {
 	m_members = new TQTextView(this);
-	m_members->setPaper(tqcolorGroup().background());
+	m_members->setPaper(colorGroup().background());
 	m_members->setFrameStyle(TQFrame::NoFrame);
 
 	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 10, 0);

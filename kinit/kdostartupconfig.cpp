@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 // See description in kstartupconfig.cpp .
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <kinstance.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>

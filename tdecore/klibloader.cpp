@@ -19,7 +19,7 @@
 #include "config.h"
 
 #include <config.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqfile.h>
 #include <tqdir.h>
 #include <tqtimer.h>
@@ -549,17 +549,17 @@ void KLibLoader::close_pending(KLibWrapPrivate *wrap)
          We need to make sure to clear the clipboard before unloading a DSO
          because the DSO could have defined an object derived from QMimeSource
          and placed that on the clipboard. */
-      /*kapp->tqclipboard()->clear();*/
+      /*kapp->clipboard()->clear();*/
 
       /* Well.. let's do something more subtle... convert the clipboard context
          to text. That should be safe as it only uses objects defined by Qt. */
-      if( kapp->tqclipboard()->ownsSelection()) {
-	kapp->tqclipboard()->setText(
-            kapp->tqclipboard()->text( TQClipboard::Selection ), TQClipboard::Selection );
+      if( kapp->clipboard()->ownsSelection()) {
+	kapp->clipboard()->setText(
+            kapp->clipboard()->text( TQClipboard::Selection ), TQClipboard::Selection );
       }
-      if( kapp->tqclipboard()->ownsClipboard()) {
-	kapp->tqclipboard()->setText(
-            kapp->tqclipboard()->text( TQClipboard::Clipboard ), TQClipboard::Clipboard );
+      if( kapp->clipboard()->ownsClipboard()) {
+	kapp->clipboard()->setText(
+            kapp->clipboard()->text( TQClipboard::Clipboard ), TQClipboard::Clipboard );
       }
     }
 

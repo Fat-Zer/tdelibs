@@ -99,7 +99,7 @@ void KMIconViewItem::updatePrinter(KMPrinter *p, int mode)
 			setText(TQString::null);
 			setText(p->name());
 		}
-		setKey(TQString::tqfromLatin1("%1_%2").arg((p->isSpecial() ? "special" : (p->isClass(false) ? "class" : "printer"))).arg(p->name()));
+		setKey(TQString::fromLatin1("%1_%2").arg((p->isSpecial() ? "special" : (p->isClass(false) ? "class" : "printer"))).arg(p->name()));
 		m_isclass = p->isClass(false);
 	}
 	if (mode != m_mode || ((oldstate&0x4) != (m_state&0x4)) || (p && p->pixmap() != m_pixmap))
@@ -114,7 +114,7 @@ void KMIconViewItem::updatePrinter(KMPrinter *p, int mode)
 			setPixmap(SmallIcon(m_pixmap, 0, iconstate));
 	}
 	//if (update)
-	//	tqrepaint();
+	//	repaint();
 	setDiscarded(false);
 }
 
@@ -180,7 +180,7 @@ void KMIconView::setPrinterList(TQPtrList<KMPrinter> *list)
 	}
 
 	for (uint i=0; i<m_items.count(); i++)
-		if (m_items.tqat(i)->isDiscarded())
+		if (m_items.at(i)->isDiscarded())
 		{
 			delete m_items.take(i);
 			i--;

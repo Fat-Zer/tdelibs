@@ -253,7 +253,7 @@ TQPtrList<KMPrinter>* KMManager::printerList(bool reload)
 		// remove discarded printers
 		for (uint i=0; i<m_printers.count(); i++)
 		{
-			KMPrinter	*prt = m_printers.tqat(i);
+			KMPrinter	*prt = m_printers.at(i);
 			if (prt->isDiscarded())
 			{
 				m_printers.remove(i);
@@ -268,7 +268,7 @@ TQPtrList<KMPrinter>* KMManager::printerList(bool reload)
 		//   - use the PRINTER variable
 		if (!softDefault())
 		{
-			KMPrinter	*defprinter = findPrinter(TQString::tqfromLatin1(getenv("PRINTER")));
+			KMPrinter	*defprinter = findPrinter(TQString::fromLatin1(getenv("PRINTER")));
 			if (defprinter)
 				setSoftDefault(defprinter);
 		}
@@ -475,7 +475,7 @@ TQStringList KMManager::detectLocalPrinters()
 {
 	TQStringList	list;
 	for (int i=0; i<3; i++)
-		list << TQString() << TQString::tqfromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << TQString();
+		list << TQString() << TQString::fromLatin1("parallel:/dev/lp%1").arg(i) << i18n("Parallel Port #%1").arg(i+1) << TQString();
 	return list;
 }
 

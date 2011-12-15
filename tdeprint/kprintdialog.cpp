@@ -44,7 +44,7 @@
 #include <tqcombobox.h>
 #include <tqtabwidget.h>
 #include <tqvbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqregexp.h>
 #include <kmessagebox.h>
 #include <tqdir.h>
@@ -361,7 +361,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	l2->addStretch(1);
 	l2->addWidget(d->m_ok,0);
 	l2->addWidget(m_cancel,0);
-	TQGridLayout	*l3 = new TQGridLayout(m_pbox->tqlayout(),3,3,7);
+	TQGridLayout	*l3 = new TQGridLayout(m_pbox->layout(),3,3,7);
 	l3->setColStretch(1,1);
 	l3->setRowStretch(0,1);
 	TQGridLayout	*l4 = new TQGridLayout(0, 5, 2, 0, 5);
@@ -568,7 +568,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 			if (!sep && it.current()->isSpecial())
 			{
 				sep = true;
-				d->m_printers->insertItem(TQPixmap(), TQString::tqfromLatin1("--------"));
+				d->m_printers->insertItem(TQPixmap(), TQString::fromLatin1("--------"));
 			}
 			d->m_printers->insertItem(SmallIcon(it.current()->pixmap(),0,(it.current()->isValid() ? (int)KIcon::DefaultState : (int)KIcon::LockOverlay)),it.current()->name(),false/*sep*/);
 			if (it.current()->isSoftDefault())
@@ -824,7 +824,7 @@ void KPrintDialog::reload()
 	// remove printer dependent pages (usually from plugin)
 	TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", TQTABWIDGET_OBJECT_NAME_STRING)));
 	for (uint i=0; i<d->m_pages.count(); i++)
-		if (d->m_pages.tqat(i)->onlyRealPrinters())
+		if (d->m_pages.at(i)->onlyRealPrinters())
 		{
 			KPrintDialogPage	*page = d->m_pages.take(i--);
 			if (tabs)
@@ -863,7 +863,7 @@ void KPrintDialog::expandDialog(bool on)
 
 	if (on)
 	{
-		sz.setHeight(sz.height()+d->m_dummy->tqminimumSize().height()+d->m_plugin->tqminimumSize().height()+2*layout()->spacing());
+		sz.setHeight(sz.height()+d->m_dummy->minimumSize().height()+d->m_plugin->minimumSize().height()+2*layout()->spacing());
 		if (isVisible() || !d->m_dummy->isVisible() || !d->m_plugin->isVisible())
 		{
 			d->m_dummy->show();
@@ -952,10 +952,10 @@ void KPrintDialog::enableDialogPage( int index, bool flag )
 	if ( d->m_pages.count() > 1 )
 	{
 		TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", TQTABWIDGET_OBJECT_NAME_STRING)));
-		tabs->setTabEnabled( d->m_pages.tqat( index ), flag );
+		tabs->setTabEnabled( d->m_pages.at( index ), flag );
 	}
 	else
-		d->m_pages.tqat( 0 )->setEnabled( flag );
+		d->m_pages.at( 0 )->setEnabled( flag );
 }
 
 void KPrintDialog::slotOpenFileDialog()

@@ -26,7 +26,7 @@
 #include <tqlabel.h>
 #include <tqbutton.h>
 #include <tqbuttongroup.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqradiobutton.h>
 #include <tqwhatsthis.h>
 
@@ -347,27 +347,27 @@ KPGeneralPage::KPGeneralPage(KMPrinter *pr, DrMain *dr, TQWidget *parent, const 
 	lay2->addWidget(m_nupbox, 1, 1);
 	lay2->setColStretch(0, 1);
 	lay2->setColStretch(1, 1);
-	TQGridLayout	*lay3 = new TQGridLayout(m_orientbox->tqlayout(), 4, 2,
+	TQGridLayout	*lay3 = new TQGridLayout(m_orientbox->layout(), 4, 2,
 		KDialog::spacingHint());
 	lay3->addWidget(m_portrait, 0, 0);
 	lay3->addWidget(m_landscape, 1, 0);
 	lay3->addWidget(m_revland, 2, 0);
 	lay3->addWidget(m_revport, 3, 0);
 	lay3->addMultiCellWidget(m_orientpix, 0, 3, 1, 1);
-	TQGridLayout	*lay4 = new TQGridLayout(m_duplexbox->tqlayout(), 3, 2,
+	TQGridLayout	*lay4 = new TQGridLayout(m_duplexbox->layout(), 3, 2,
 		KDialog::spacingHint());
 	lay4->addWidget(m_dupnone, 0, 0);
 	lay4->addWidget(m_duplong, 1, 0);
 	lay4->addWidget(m_dupshort, 2, 0);
 	lay4->addMultiCellWidget(m_duplexpix, 0, 2, 1, 1);
 	lay4->setRowStretch( 0, 1 );
-	TQGridLayout	*lay5 = new TQGridLayout(m_nupbox->tqlayout(), 3, 2,
+	TQGridLayout	*lay5 = new TQGridLayout(m_nupbox->layout(), 3, 2,
 		KDialog::spacingHint());
 	lay5->addWidget(m_nup1, 0, 0);
 	lay5->addWidget(m_nup2, 1, 0);
 	lay5->addWidget(m_nup4, 2, 0);
 	lay5->addMultiCellWidget(m_nuppix, 0, 2, 1, 1);
-	TQGridLayout	*lay6 = new TQGridLayout(m_bannerbox->tqlayout(), 2, 2,
+	TQGridLayout	*lay6 = new TQGridLayout(m_bannerbox->layout(), 2, 2,
 		KDialog::spacingHint());
 	lay6->addWidget(m_startbannerlabel, 0, 0);
 	lay6->addWidget(m_endbannerlabel, 1, 0);
@@ -622,17 +622,17 @@ void KPGeneralPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 		DrListOption	*opt;
 		if ((opt=(DrListOption*)driver()->findOption("PageSize")) != NULL)
 		{
-			DrBase	*ch = opt->choices()->tqat(m_pagesize->currentItem());
+			DrBase	*ch = opt->choices()->at(m_pagesize->currentItem());
 			if (incldef || ch->name() != opt->get("default")) opts["PageSize"] = ch->name();
 		}
 		if ((opt=(DrListOption*)driver()->findOption("MediaType")) != NULL)
 		{
-			DrBase	*ch = opt->choices()->tqat(m_papertype->currentItem());
+			DrBase	*ch = opt->choices()->at(m_papertype->currentItem());
 			if (incldef || ch->name() != opt->get("default")) opts["MediaType"] = ch->name();
 		}
 		if ((opt=(DrListOption*)driver()->findOption("InputSlot")) != NULL)
 		{
-			DrBase	*ch = opt->choices()->tqat(m_inputslot->currentItem());
+			DrBase	*ch = opt->choices()->at(m_inputslot->currentItem());
 			if (incldef || ch->name() != opt->get("default")) opts["InputSlot"] = ch->name();
 		}
 

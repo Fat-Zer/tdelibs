@@ -45,7 +45,7 @@
 #include <tqpixmap.h>
 #include <tqbuffer.h>
 #include <tqstringlist.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 #include <tqtimer.h>
 
 #include <kurl.h>

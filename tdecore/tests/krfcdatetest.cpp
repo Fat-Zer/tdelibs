@@ -4,7 +4,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kcharsets.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 #include <krfcdate.h>
 
 bool check(TQString txt, time_t a, time_t b)

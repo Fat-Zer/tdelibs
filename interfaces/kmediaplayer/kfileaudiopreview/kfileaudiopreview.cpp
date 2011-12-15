@@ -2,7 +2,7 @@
 
 #include <tqcheckbox.h>
 #include <tqhbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqvgroupbox.h>
 
 #include <kglobal.h>

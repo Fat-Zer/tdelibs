@@ -178,7 +178,7 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
         // We open a dummy database instead.
         //kdDebug(7011) << "No database, opening a dummy one." << endl;
         TQBuffer *buffer = new TQBuffer();
-        buffer->tqsetBufferFromCopy(TQByteArray());
+        buffer->setBuffer(TQByteArray());
         buffer->open(IO_ReadWrite);
         m_str = new TQDataStream( buffer);
         (*m_str) << (TQ_INT32) KSYCOCA_VERSION;
@@ -230,7 +230,7 @@ void KSycoca::closeDatabase()
 {
    QIODevice *device = 0;
    if (m_str)
-      device = m_str->tqdevice();
+      device = m_str->device();
 #ifdef HAVE_MMAP
    if (device && m_sycoca_mmap)
    {
@@ -288,7 +288,7 @@ TQDataStream * KSycoca::findEntry(int offset, KSycocaType &type)
    if ( !m_str )
       openDatabase();
    //kdDebug(7011) << TQString("KSycoca::_findEntry(offset=%1)").arg(offset,8,16) << endl;
-   m_str->tqdevice()->tqat(offset);
+   m_str->device()->at(offset);
    TQ_INT32 aType;
    (*m_str) >> aType;
    type = (KSycocaType) aType;
@@ -306,7 +306,7 @@ bool KSycoca::checkVersion(bool abortOnError)
       // We should never get here... if a database was found then m_str shouldn't be 0L.
       assert(m_str);
    }
-   m_str->tqdevice()->tqat(0);
+   m_str->device()->at(0);
    TQ_INT32 aVersion;
    (*m_str) >> aVersion;
    if ( aVersion < KSYCOCA_VERSION )
@@ -361,7 +361,7 @@ TQDataStream * KSycoca::findFactory(KSycocaFactoryId id)
       if (aId == id)
       {
          //kdDebug(7011) << TQString("KSycoca::findFactory(%1) offset %2").arg((int)id).arg(aOffset) << endl;
-         m_str->tqdevice()->tqat(aOffset);
+         m_str->device()->at(aOffset);
          return m_str;
       }
    }
@@ -483,7 +483,7 @@ void KSycocaEntry::read( TQDataStream &s, TQString &str )
   else if ( bytes > 0 ) {              // not empty
       int bt = bytes/2;
       str.setLength( bt );
-      TQChar* ch = (TQChar *) str.tqunicode();
+      TQChar* ch = (TQChar *) str.unicode();
       char t[8192];
       char *b = t;
       s.readRawBytes( b, bytes );

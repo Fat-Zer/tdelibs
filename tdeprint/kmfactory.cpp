@@ -213,7 +213,7 @@ void KMFactory::loadFactory(const TQString& syst)
 		if (sys.isEmpty())
 			// load default configured print plugin
 			sys = printSystem();
-		TQString	libname = TQString::tqfromLatin1("tdeprint_%1").arg(sys);
+		TQString	libname = TQString::fromLatin1("tdeprint_%1").arg(sys);
 		m_factory = KLibLoader::self()->factory(TQFile::encodeName(libname));
                 if (!m_factory)
                 {
@@ -311,7 +311,7 @@ KMFactory::PluginInfo KMFactory::pluginInfo(const TQString& name)
 {
 	TQString	path(name);
 	if (path[0] != '/')
-		path = locate("data", TQString::tqfromLatin1("tdeprint/plugins/%1.print").arg(name));
+		path = locate("data", TQString::fromLatin1("tdeprint/plugins/%1.print").arg(name));
 	KSimpleConfig	conf(path);
 	PluginInfo	info;
 
@@ -363,7 +363,7 @@ TQString KMFactory::autoDetect()
 			currentPrecedence = plugins[i].detectPrecedence;
 		}
 	}
-	return (pluginIndex == -1 ? TQString::tqfromLatin1("lpdunix") : plugins[pluginIndex].name);
+	return (pluginIndex == -1 ? TQString::fromLatin1("lpdunix") : plugins[pluginIndex].name);
 }
 
 void KMFactory::slot_pluginChanged(pid_t pid)

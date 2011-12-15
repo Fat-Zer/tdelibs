@@ -49,7 +49,7 @@ TQString UString::qstring() const
 UString::UString( const TQString &s )
 {
     UChar* data = new UChar[ s.length() ];
-    std::memcpy( data, s.tqunicode(), s.length() * sizeof( UChar ) );
+    std::memcpy( data, s.unicode(), s.length() * sizeof( UChar ) );
     rep = Rep::create( data, s.length() );
 }
 

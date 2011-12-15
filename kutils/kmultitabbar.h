@@ -28,7 +28,7 @@
 #include <tqscrollview.h>
 #include <tqvbox.h>
 #include <tqhbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqstring.h>
 #include <tqptrlist.h>
 #include <tqpushbutton.h>

@@ -21,7 +21,7 @@
 
 #include "kswitchlanguagedialog.h"
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqtooltip.h>
 #include <tqlabel.h>
 #include <tqmap.h>

@@ -29,7 +29,7 @@
 #include <kcmdlineargs.h>
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include "vcardconverter.h"
 
@@ -60,7 +60,7 @@ int main( int argc, char **argv )
   addressee.setOrganization( "KDE" );
   addressee.setNote( "nerver\ntouch a running system" );
   addressee.setProductId( "testId" );
-  addressee.setRevision( TQDateTime::tqcurrentDateTime() );
+  addressee.setRevision( TQDateTime::currentDateTime() );
   addressee.setSortString( "koenig" );
   addressee.setUrl( KURL( "http://wgess16.dyndns.org") );
   addressee.setSecrecy(  KABC::Secrecy( KABC::Secrecy::Confidential ) );

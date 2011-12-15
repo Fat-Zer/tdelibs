@@ -21,7 +21,7 @@
 
 */
 
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <kaboutdata.h>
 #include <kconfigskeleton.h>

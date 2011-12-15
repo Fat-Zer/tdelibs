@@ -324,13 +324,13 @@ KDE_EXPORT void kimgio_tga_read( TQImageIO *io )
 	// Read image header.
 	TgaHeader tga;
 	s >> tga;
-	s.tqdevice()->tqat( TgaHeader::SIZE + tga.id_length );
+	s.device()->at( TgaHeader::SIZE + tga.id_length );
 
 	// Check image file format.
 	if( s.atEnd() ) {
 		kdDebug(399) << "This TGA file is not valid." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 
@@ -338,7 +338,7 @@ KDE_EXPORT void kimgio_tga_read( TQImageIO *io )
 	if( !IsSupported(tga) ) {
 		kdDebug(399) << "This TGA file is not supported." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 				
@@ -349,13 +349,13 @@ KDE_EXPORT void kimgio_tga_read( TQImageIO *io )
 	if( result == false ) {
   		kdDebug(399) << "Error loading TGA file." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 
 
     io->setImage( img );
-    io->setqStatus( 0 );
+    io->seStatus( 0 );
 }
 
 
@@ -385,6 +385,6 @@ KDE_EXPORT void kimgio_tga_write( TQImageIO *io )
                 s << TQ_UINT8( tqAlpha( color ) );
         }
 
-    io->setqStatus( 0 );
+    io->seStatus( 0 );
 }
  

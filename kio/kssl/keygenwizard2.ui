@@ -24,7 +24,7 @@
             <property name="text">
                 <string>You must now provide a password for the certificate request. Please choose a very secure password as this will be used to encrypt your private key.</string>
             </property>
-            <property name="tqalignment">
+            <property name="alignment">
                 <set>WordBreak|AlignVCenter|AlignLeft</set>
             </property>
             <property name="wordwrap" stdset="0">

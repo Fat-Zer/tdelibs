@@ -38,7 +38,7 @@ RegExp::UTF8SupportState RegExp::utf8Support = RegExp::Unknown;
 RegExp::RegExp(const UString &p, int f)
   : pat(p), flgs(f), m_notEmpty(false), valid(true), buffer(0), originalPos(0)
 {
-  // Determine whether libpcre has tqunicode support if need be..
+  // Determine whether libpcre has unicode support if need be..
 #ifdef PCRE_CONFIG_UTF8
   if (utf8Support == Unknown) {
     int supported;
@@ -64,13 +64,13 @@ RegExp::RegExp(const UString &p, int f)
         escape = false;
         // we only care about \u
         if (c == 'u') {
-	  // standard tqunicode escape sequence looks like \uxxxx but
+	  // standard unicode escape sequence looks like \uxxxx but
 	  // other browsers also accept less then 4 hex digits
 	  unsigned short u = 0;
 	  int j = 0;
 	  for (j = 0; j < 4; ++j) {
-	    if (i + 1 < p.size() && Lexer::isHexDigit(p[i + 1].tqunicode())) {
-	      u = (u << 4) + Lexer::convertHex(p[i + 1].tqunicode());
+	    if (i + 1 < p.size() && Lexer::isHexDigit(p[i + 1].unicode())) {
+	      u = (u << 4) + Lexer::convertHex(p[i + 1].unicode());
 	      ++i;
 	    } else {
 	      // sequence incomplete. restore index.
@@ -222,7 +222,7 @@ void RegExp::prepareUtf8(const UString& s)
   int  *posOut = originalPos;
   const UChar *d = s.data();
   for (int i = 0; i != length; ++i) {
-    unsigned short c = d[i].tqunicode();
+    unsigned short c = d[i].unicode();
 
     int sequenceLen;
     if (c < 0x80) {

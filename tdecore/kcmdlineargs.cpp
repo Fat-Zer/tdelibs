@@ -858,7 +858,7 @@ KCmdLineArgs::usage(const char *id)
      bool hasOptions = false;
      TQString optionsHeader;
      if (args->name)
-        optionsHeader = optionHeaderString.arg(i18n("%1 options").arg(TQString::tqfromLatin1(args->name)));
+        optionsHeader = optionHeaderString.arg(i18n("%1 options").arg(TQString::fromLatin1(args->name)));
      else
         optionsHeader = i18n("\nOptions:\n");
 
@@ -1239,7 +1239,7 @@ KCmdLineArgs::arg(int n) const
       exit(255);
    }
 
-   return parsedArgList->tqat(n);
+   return parsedArgList->at(n);
 }
 
 KURL

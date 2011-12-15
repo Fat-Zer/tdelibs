@@ -1,5 +1,5 @@
 #include <tqdatetimeedit.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include "kdebug.h"
 #include "kdialog.h"

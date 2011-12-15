@@ -137,7 +137,7 @@ void DataSlave::send(int cmd, const TQByteArray &arr) {
       break;
     default:
       error(ERR_UNSUPPORTED_ACTION,
-		unsupportedActionErrorString(TQString::tqfromLatin1("data"),cmd));
+		unsupportedActionErrorString(TQString::fromLatin1("data"),cmd));
   }/*end switch*/
 }
 

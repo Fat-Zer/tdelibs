@@ -24,10 +24,10 @@
 #include <tqfileinfo.h>
 #include <tqframe.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpoint.h>
 #include <tqscrollview.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqvbox.h>
 #include <tqwhatsthis.h>
 #include <tqwidget.h>
@@ -311,7 +311,7 @@ void KCModuleProxy::runAsRoot()
 
 	TQPalette pal( red );
 	pal.setColor( TQColorGroup::Background, 
-		tqcolorGroup().background() );
+		colorGroup().background() );
 	d->embedFrame->setPalette( pal );
 	d->embedFrame->setLineWidth( 2 );
 	d->embedFrame->setMidLineWidth( 2 );
@@ -416,7 +416,7 @@ void KCModuleProxy::rootExited()
 	/* Such that the "ordinary" module loads again */
 	d->rootMode = false;
 
-	d->topLayout->tqinvalidate();
+	d->topLayout->invalidate();
 
 	TQShowEvent ev;
 	showEvent( &ev ); 

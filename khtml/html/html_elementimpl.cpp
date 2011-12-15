@@ -176,7 +176,7 @@ void HTMLElementImpl::parseAttribute(AttributeImpl *attr)
     case ATTR_CLASS:
         if (attr->val()) {
           DOMString v = attr->value();
-          const TQChar* s = v.tqunicode();
+          const TQChar* s = v.unicode();
           int l = v.length();
           while( l && !s->isSpace() )
             l--,s++;
@@ -354,11 +354,11 @@ static inline bool isHexDigit( const TQChar &c ) {
 
 static inline int toHex( const TQChar &c ) {
     return ( (c >= TQChar('0') && c <= TQChar('9'))
-	     ? (c.tqunicode() - '0')
+	     ? (c.unicode() - '0')
 	     : ( ( c >= TQChar('a') && c <= TQChar('f') )
-		 ? (c.tqunicode() - 'a' + 10)
+		 ? (c.unicode() - 'a' + 10)
 		 : ( ( c >= TQChar('A') && c <= TQChar('F') )
-		     ? (c.tqunicode() - 'A' + 10)
+		     ? (c.unicode() - 'A' + 10)
 		     : -1 ) ) );
 }
 
@@ -457,7 +457,7 @@ DOMString HTMLElementImpl::innerHTML() const
     TQString result; //Use TQString to accumulate since DOMString is poor for appends
     for (NodeImpl *child = firstChild(); child != NULL; child = child->nextSibling()) {
         DOMString kid = child->toString();
-        result += TQConstString(kid.tqunicode(), kid.length()).string();
+        result += TQConstString(kid.unicode(), kid.length()).string();
     }
     return result;
 }
@@ -620,32 +620,32 @@ void HTMLElementImpl::setInnerText( const DOMString &text, int& exceptioncode )
     appendChild( t, exceptioncode );
 }
 
-void HTMLElementImpl::addHTMLAlignment( DOMString tqalignment )
+void HTMLElementImpl::addHTMLAlignment( DOMString alignment )
 {
-    //qDebug("tqalignment is %s", tqalignment.string().latin1() );
-    // vertical tqalignment with respect to the current baseline of the text
+    //qDebug("alignment is %s", alignment.string().latin1() );
+    // vertical alignment with respect to the current baseline of the text
     // right or left means floating images
     int propfloat = -1;
     int propvalign = -1;
-    if ( strcasecmp( tqalignment, "absmiddle" ) == 0 ) {
+    if ( strcasecmp( alignment, "absmiddle" ) == 0 ) {
         propvalign = CSS_VAL_MIDDLE;
-    } else if ( strcasecmp( tqalignment, "absbottom" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "absbottom" ) == 0 ) {
         propvalign = CSS_VAL_BOTTOM;
-    } else if ( strcasecmp( tqalignment, "left" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "left" ) == 0 ) {
 	propfloat = CSS_VAL_LEFT;
 	propvalign = CSS_VAL_TOP;
-    } else if ( strcasecmp( tqalignment, "right" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "right" ) == 0 ) {
 	propfloat = CSS_VAL_RIGHT;
 	propvalign = CSS_VAL_TOP;
-    } else if ( strcasecmp( tqalignment, "top" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "top" ) == 0 ) {
 	propvalign = CSS_VAL_TOP;
-    } else if ( strcasecmp( tqalignment, "middle" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "middle" ) == 0 ) {
 	propvalign = CSS_VAL__KHTML_BASELINE_MIDDLE;
-    } else if ( strcasecmp( tqalignment, "center" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "center" ) == 0 ) {
 	propvalign = CSS_VAL_MIDDLE;
-    } else if ( strcasecmp( tqalignment, "bottom" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "bottom" ) == 0 ) {
 	propvalign = CSS_VAL_BASELINE;
-    } else if ( strcasecmp ( tqalignment, "texttop") == 0 ) {
+    } else if ( strcasecmp ( alignment, "texttop") == 0 ) {
 	propvalign = CSS_VAL_TEXT_TOP;
     }
 

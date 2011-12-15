@@ -146,11 +146,11 @@ public:
     virtual void clear();
 
     /**
-      * does a tqrepaint of the view.
+      * does a repaint of the view.
       *
       * The default implementation calls
       * \code
-      * widget()->tqrepaint(f)
+      * widget()->repaint(f)
       * \endcode
       **/
     virtual void updateView(bool f = true);

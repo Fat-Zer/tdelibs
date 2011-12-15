@@ -394,7 +394,7 @@ bool KZip::openArchive( int mode )
         // ReadWrite mode still uses TQFile for now; we'd need to copy to the tempfile, in fact.
         if ( !m_filename.isEmpty() ) {
             setDevice( TQT_TQIODEVICE(new TQFile( m_filename )) );
-            if ( !device()->tqopen( mode ) )
+            if ( !device()->open( mode ) )
                 return false;
         }
         break; // continued below
@@ -427,7 +427,7 @@ bool KZip::openArchive( int mode )
     for (;;) // repeat until 'end of entries' signature is reached
     {
 kdDebug(7040) << "loop starts" << endl;
-kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
+kdDebug(7040) << "dev->at() now : " << dev->at() << endl;
         n = dev->readBlock( buffer, 4 );
 
         if (n < 4)
@@ -449,7 +449,7 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
 	    kdDebug(7040) << "PK34 found local file header" << endl;
             startOfFile = false;
             // can this fail ???
-	    dev->tqat( dev->tqat() + 2 ); // skip 'version needed to extract'
+	    dev->at( dev->at() + 2 ); // skip 'version needed to extract'
 
 	    // read static header stuff
             n = dev->readBlock( buffer, 24 );
@@ -490,7 +490,7 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
 
             // read and parse the beginning of the extra field,
             // skip rest of extra field in case it is too long
-            unsigned int extraFieldEnd = dev->tqat() + extralen;
+            unsigned int extraFieldEnd = dev->at() + extralen;
 	    pfi->extralen = extralen;
 	    int handledextralen = QMIN(extralen, (int)sizeof buffer);
 
@@ -505,7 +505,7 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
 	    }
 
             // jump to end of extra field
-            dev->tqat( extraFieldEnd );
+            dev->at( extraFieldEnd );
 
 	    // we have to take care of the 'general purpose bit flag'.
             // if bit 3 is set, the header doesn't contain the length of
@@ -544,18 +544,18 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
 		    if ( buffer[0] == 'K' && buffer[1] == 7 && buffer[2] == 8 )
                     {
                         foundSignature = true;
-                        dev->tqat( dev->tqat() + 12 ); // skip the 'data_descriptor'
+                        dev->at( dev->at() + 12 ); // skip the 'data_descriptor'
                     }
 		    else if ( ( buffer[0] == 'K' && buffer[1] == 1 && buffer[2] == 2 )
 		         || ( buffer[0] == 'K' && buffer[1] == 3 && buffer[2] == 4 ) )
                     {
                         foundSignature = true;
-                        dev->tqat( dev->tqat() - 4 ); // go back 4 bytes, so that the magic bytes can be found...
+                        dev->at( dev->at() - 4 ); // go back 4 bytes, so that the magic bytes can be found...
                     }
                     else if ( buffer[0] == 'P' || buffer[1] == 'P' || buffer[2] == 'P' )
                     {
                         // We have another P character so we must go back a little to check if it is a magic
-                        dev->tqat( dev->tqat() - 3 );
+                        dev->at( dev->at() - 3 );
                     }
 
                 }
@@ -611,14 +611,14 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
 				if ( buffer[0] == 'K' && buffer[1] == 7 && buffer[2] == 8 )
 				{
 					foundSignature = true;
-					dev->tqat( dev->tqat() + 12 ); // skip the 'data_descriptor'
+					dev->at( dev->at() + 12 ); // skip the 'data_descriptor'
 				}
 
 				if ( ( buffer[0] == 'K' && buffer[1] == 1 && buffer[2] == 2 )
 					|| ( buffer[0] == 'K' && buffer[1] == 3 && buffer[2] == 4 ) )
 				{
 					foundSignature = true;
-					dev->tqat( dev->tqat() - 4 );
+					dev->at( dev->at() - 4 );
 					// go back 4 bytes, so that the magic bytes can be found
 					// in the next cycle...
 				}
@@ -626,10 +626,10 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
 		    }
 		    else
 		    {
-// 			kdDebug(7040) << "before interesting dev->tqat(): " << dev->tqat() << endl;
+// 			kdDebug(7040) << "before interesting dev->at(): " << dev->at() << endl;
 			bool success;
-			success = dev->tqat( dev->tqat() + compr_size ); // can this fail ???
-/*			kdDebug(7040) << "after interesting dev->tqat(): " << dev->tqat() << endl;
+			success = dev->at( dev->at() + compr_size ); // can this fail ???
+/*			kdDebug(7040) << "after interesting dev->at(): " << dev->at() << endl;
 			if ( success )
 				kdDebug(7040) << "dev->at was successful... " << endl;
 			else
@@ -653,7 +653,7 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
             // so we reached the central header at the end of the zip file
             // here we get all interesting data out of the central header
             // of a file
-            offset = dev->tqat() - 4;
+            offset = dev->at() - 4;
 
             //set offset for appending new files
             if ( d->m_offset == 0L ) d->m_offset = offset;
@@ -792,7 +792,7 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
 
             //calculate offset to next entry
             offset += 46 + commlen + extralen + namelen;
-            bool b = dev->tqat(offset);
+            bool b = dev->at(offset);
             Q_ASSERT( b );
             if ( !b )
               return false;
@@ -832,12 +832,12 @@ kdDebug(7040) << "dev->tqat() now : " << dev->tqat() << endl;
                 if ( buffer[0] == 'K' && buffer[1] == 3 && buffer[2] == 4 )
                 {
                     foundSignature = true;
-                    dev->tqat( dev->tqat() - 4 ); // go back 4 bytes, so that the magic bytes can be found...
+                    dev->at( dev->at() - 4 ); // go back 4 bytes, so that the magic bytes can be found...
                 }
                 else if ( buffer[0] == 'P' || buffer[1] == 'P' || buffer[2] == 'P' )
                 {
                         // We have another P character so we must go back a little to check if it is a magic
-                    dev->tqat( dev->tqat() - 3 );
+                    dev->at( dev->at() - 3 );
                 }
             }
         }
@@ -871,14 +871,14 @@ bool KZip::closeArchive()
     char buffer[ 22 ]; // first used for 12, then for 22 at the end
     uLong crc = crc32(0L, Z_NULL, 0);
 
-    TQ_LONG centraldiroffset = device()->tqat();
+    TQ_LONG centraldiroffset = device()->at();
     //kdDebug(7040) << "closearchive: centraldiroffset: " << centraldiroffset << endl;
     TQ_LONG atbackup = centraldiroffset;
     TQPtrListIterator<KZipFileEntry> it( d->m_fileList );
 
     for ( ; it.current() ; ++it )
     {	//set crc and compressed size in each local file header
-        if ( !device()->tqat( it.current()->headerStart() + 14 ) )
+        if ( !device()->at( it.current()->headerStart() + 14 ) )
             return false;
 	//kdDebug(7040) << "closearchive setcrcandcsize: filename: "
 	//    << it.current()->path()
@@ -905,7 +905,7 @@ bool KZip::closeArchive()
         if ( device()->writeBlock( buffer, 12 ) != 12 )
             return false;
     }
-    device()->tqat( atbackup );
+    device()->at( atbackup );
 
     for ( it.toFirst(); it.current() ; ++it )
     {
@@ -994,9 +994,9 @@ bool KZip::closeArchive()
         if ( !ok )
             return false;
     }
-    TQ_LONG centraldirendoffset = device()->tqat();
+    TQ_LONG centraldirendoffset = device()->at();
     //kdDebug(7040) << "closearchive: centraldirendoffset: " << centraldirendoffset << endl;
-    //kdDebug(7040) << "closearchive: device()->tqat(): " << device()->tqat() << endl;
+    //kdDebug(7040) << "closearchive: device()->at(): " << device()->at() << endl;
 
     //write end of central dir record.
     buffer[ 0 ] = 'P'; //end of central dir signature
@@ -1107,7 +1107,7 @@ bool KZip::prepareWriting_impl(const TQString &name, const TQString &user,
     }
 
     // set right offset in zip.
-    if ( !device()->tqat( d->m_offset ) ) {
+    if ( !device()->at( d->m_offset ) ) {
         kdWarning(7040) << "prepareWriting_impl: cannot seek in ZIP file. Disk full?" << endl;
         abort();
         return false;
@@ -1144,9 +1144,9 @@ bool KZip::prepareWriting_impl(const TQString &name, const TQString &user,
 
     // construct a KZipFileEntry and add it to list
     KZipFileEntry * e = new KZipFileEntry( this, fileName, perm, mtime, user, group, TQString::null,
-                                           name, device()->tqat() + 30 + name.length(), // start
+                                           name, device()->at() + 30 + name.length(), // start
                                            0 /*size unknown yet*/, d->m_compression, 0 /*csize unknown yet*/ );
-    e->setHeaderStart( device()->tqat() );
+    e->setHeaderStart( device()->at() );
     //kdDebug(7040) << "wrote file start: " << e->position() << " name: " << name << endl;
     parentDir->addEntry( e );
 
@@ -1274,13 +1274,13 @@ bool KZip::doneWriting( uint size )
     Q_ASSERT( d->m_currentFile );
     //kdDebug(7040) << "donewriting reached." << endl;
     //kdDebug(7040) << "filename: " << d->m_currentFile->path() << endl;
-    //kdDebug(7040) << "getpos (at): " << device()->tqat() << endl;
+    //kdDebug(7040) << "getpos (at): " << device()->at() << endl;
     d->m_currentFile->setSize(size);
     int extra_field_len = 0;
     if ( d->m_extraField == ModificationTime )
         extra_field_len = 17;	// value also used in doneWriting()
 
-    int csize = device()->tqat() -
+    int csize = device()->at() -
         d->m_currentFile->headerStart() - 30 -
 		d->m_currentFile->path().length() - extra_field_len;
     d->m_currentFile->setCompressedSize(csize);
@@ -1294,7 +1294,7 @@ bool KZip::doneWriting( uint size )
     d->m_currentFile = 0L;
 
     // update saved offset for appending new files
-    d->m_offset = device()->tqat();
+    d->m_offset = device()->at();
     return true;
 }
 

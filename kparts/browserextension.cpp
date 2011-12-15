@@ -20,13 +20,13 @@
 #include "browserextension.h"
 
 #include <tqapplication.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 #include <tqtimer.h>
 #include <tqobjectlist.h>
 #include <tqmetaobject.h>
 #include <tqregexp.h>
 #include <tqstrlist.h>
-#include <tqstylesheet.h>
+#include <stylesheet.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -370,7 +370,7 @@ BrowserExtension::BrowserExtension( KParts::ReadOnlyPart *parent,
   // they're supported or not
   ActionSlotMap::ConstIterator it = s_actionSlotMap->begin();
   ActionSlotMap::ConstIterator itEnd = s_actionSlotMap->end();
-  TQStrList slotNames = tqmetaObject()->slotNames();
+  TQStrList slotNames = metaObject()->slotNames();
   for ( int i=0 ; it != itEnd ; ++it, ++i )
   {
       // Does the extension have a slot with the name of this action ?
@@ -452,7 +452,7 @@ void BrowserExtension::slotCompleted()
 void BrowserExtension::pasteRequest()
 {
     TQCString plain( "plain" );
-    TQString url = TQApplication::tqclipboard()->text(plain, TQClipboard::Selection).stripWhiteSpace();
+    TQString url = TQApplication::clipboard()->text(plain, TQClipboard::Selection).stripWhiteSpace();
     // Remove linefeeds and any whitespace surrounding it.
     url.remove(TQRegExp("[\\ ]*\\n+[\\ ]*"));
 

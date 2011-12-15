@@ -46,7 +46,7 @@ public:
     DOMStringIt(TQChar *str, uint len)
 	{ s = str, l = len; lines = 0; }
     DOMStringIt(const TQString &str)
-	{ s = str.tqunicode(); l = str.length(); lines = 0; }
+	{ s = str.unicode(); l = str.length(); lines = 0; }
 
     DOMStringIt *operator++()
     {
@@ -85,13 +85,13 @@ class TokenizerSubstring
     friend class TokenizerString;
 public:    
     TokenizerSubstring() : m_length(0), m_current(0) {}
-    TokenizerSubstring(const TQString &str) : m_string(str), m_length(str.length()), m_current(m_length == 0 ? 0 : str.tqunicode()) {}
+    TokenizerSubstring(const TQString &str) : m_string(str), m_length(str.length()), m_current(m_length == 0 ? 0 : str.unicode()) {}
     TokenizerSubstring(const TQChar *str, int length) : m_length(length), m_current(length == 0 ? 0 : str) {}
 
     void clear() { m_length = 0; m_current = 0; }
 
     void appendTo(TQString &str) const {
-        if (m_string.tqunicode() == m_current) {
+        if (m_string.unicode() == m_current) {
             if (str.isEmpty())
                 str = m_string;
             else

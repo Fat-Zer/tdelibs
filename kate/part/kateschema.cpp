@@ -49,8 +49,8 @@
 #include <tqgrid.h>
 #include <tqgroupbox.h>
 #include <tqlabel.h>
-#include <tqtextcodec.h>
-#include <tqlayout.h>
+#include <textcodec.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqheader.h>
 #include <tqlistbox.h>
@@ -643,14 +643,14 @@ void KateSchemaConfigFontColorTab::schemaChanged (uint schema)
   p.setColor( TQColorGroup::Highlight,
     KateFactory::self()->schemaManager()->schema(schema)->
       readColorEntry( "Color Selection", &_c ) );
-  _c = l->tqat(0)->textColor(); // not quite as much of an assumption ;)
+  _c = l->at(0)->textColor(); // not quite as much of an assumption ;)
   p.setColor( TQColorGroup::Text, _c );
   m_defaultStyles->viewport()->setPalette( p );
 
   // insert the default styles backwards to get them in the right order
   for ( int i = KateHlManager::self()->defaultStyles() - 1; i >= 0; i-- )
   {
-    new KateStyleListItem( m_defaultStyles, KateHlManager::self()->defaultStyleName(i, true), l->tqat( i ) );
+    new KateStyleListItem( m_defaultStyles, KateHlManager::self()->defaultStyleName(i, true), l->at( i ) );
   }
 }
 
@@ -770,7 +770,7 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
   p.setColor( TQColorGroup::Highlight,
     KateFactory::self()->schemaManager()->schema(m_schema)->
       readColorEntry( "Color Selection", &_c ) );
-  _c = l->tqat(0)->textColor(); // not quite as much of an assumption ;)
+  _c = l->at(0)->textColor(); // not quite as much of an assumption ;)
   p.setColor( TQColorGroup::Text, _c );
   m_styles->viewport()->setPalette( p );
 
@@ -795,9 +795,9 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
         parent->setOpen(true);
         prefixes.insert( prefix, parent );
       }
-      new KateStyleListItem( parent, name, l->tqat(itemData->defStyleNum), itemData );
+      new KateStyleListItem( parent, name, l->at(itemData->defStyleNum), itemData );
     } else {
-      new KateStyleListItem( m_styles, itemData->name, l->tqat(itemData->defStyleNum), itemData );
+      new KateStyleListItem( m_styles, itemData->name, l->at(itemData->defStyleNum), itemData );
     }
   }
 }
@@ -1088,9 +1088,9 @@ void KateStyleListView::showPopupMenu( KateStyleListItem *i, const TQPoint &glob
   TQPixmap scl(16,16);
   scl.fill( i->style()->selectedTextColor() );
   TQPixmap bgcl(16,16);
-  bgcl.fill( i->style()->itemSet(KateAttribute::BGColor) ? i->style()->bgColor() : viewport()->tqcolorGroup().base() );
+  bgcl.fill( i->style()->itemSet(KateAttribute::BGColor) ? i->style()->bgColor() : viewport()->colorGroup().base() );
   TQPixmap sbgcl(16,16);
-  sbgcl.fill( i->style()->itemSet(KateAttribute::SelectedBGColor) ? i->style()->selectedBGColor() : viewport()->tqcolorGroup().base() );
+  sbgcl.fill( i->style()->itemSet(KateAttribute::SelectedBGColor) ? i->style()->selectedBGColor() : viewport()->colorGroup().base() );
 
   if ( showtitle )
     m.insertTitle( i->contextName(), KateStyleListItem::ContextName );
@@ -1156,7 +1156,7 @@ void KateStyleListView::slotMousePressed(int btn, TQListViewItem* i, const TQPoi
   if ( dynamic_cast<KateStyleListItem*>(i) ) {
      if ( btn == Qt::LeftButton && c > 0 ) {
       // map pos to item/column and call KateStyleListItem::activate(col, pos)
-      ((KateStyleListItem*)i)->activate( c, viewport()->mapFromGlobal( pos ) - TQPoint( 0, tqitemRect(i).top() ) );
+      ((KateStyleListItem*)i)->activate( c, viewport()->mapFromGlobal( pos ) - TQPoint( 0, itemRect(i).top() ) );
     }
   }
 }
@@ -1357,7 +1357,7 @@ void KateStyleListItem::toggleDefStyle()
     delete is;
     is = new KateAttribute( *ds );
     updateStyle();
-    tqrepaint();
+    repaint();
   }
 }
 
@@ -1441,7 +1441,7 @@ void KateStyleListItem::setColor( int column )
     break;
   }
 
-  tqrepaint();
+  repaint();
 }
 
 void KateStyleListItem::unsetColor( int c )
@@ -1465,7 +1465,7 @@ void KateStyleListItem::paintCell( TQPainter *p, const TQColorGroup& /*cg*/, int
   Q_ASSERT( lv ); //###
 
   // use a private color group and set the text/highlighted text colors
-  TQColorGroup mcg = lv->viewport()->tqcolorGroup();
+  TQColorGroup mcg = lv->viewport()->colorGroup();
 
   if ( col ) // col 0 is drawn by the superclass method
     p->fillRect( 0, 0, width, height(), TQBrush( mcg.base() ) );
@@ -1602,7 +1602,7 @@ void KateStyleListCaption::paintCell( TQPainter *p, const TQColorGroup& /*cg*/, 
   Q_ASSERT( lv ); //###
 
   // use the same colorgroup as the other items in the viewport
-  TQColorGroup mcg = lv->viewport()->tqcolorGroup();
+  TQColorGroup mcg = lv->viewport()->colorGroup();
 
   TQListViewItem::paintCell( p, mcg, col, width, align );
 }

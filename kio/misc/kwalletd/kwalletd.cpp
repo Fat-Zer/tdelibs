@@ -42,10 +42,10 @@
 
 #include <tqdir.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqregexp.h>
-#include <tqstylesheet.h>
+#include <stylesheet.h>
 #include <tqvbox.h>
 
 #include <assert.h>

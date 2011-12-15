@@ -22,11 +22,11 @@
 #include <kmimetype.h>
 #include <klocale.h>
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqcombobox.h>
 #include <tqapplication.h>
-#include <tqclipboard.h>
+#include <clipboard.h>
 
 KIO::PasteDialog::PasteDialog( const TQString &caption, const TQString &label,
                                const TQString &value, const TQStringList& items,
@@ -62,7 +62,7 @@ KIO::PasteDialog::PasteDialog( const TQString &caption, const TQString &label,
 
     m_clipboardChanged = false;
     if ( clipboard )
-        connect( TQApplication::tqclipboard(), TQT_SIGNAL( dataChanged() ),
+        connect( TQApplication::clipboard(), TQT_SIGNAL( dataChanged() ),
                  this, TQT_SLOT( slotClipboardDataChanged() ) );
 }
 

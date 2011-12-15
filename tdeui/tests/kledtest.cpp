@@ -50,14 +50,14 @@ KLedTest::KLedTest(TQWidget* parent)
   }
   else {
     y=Grid; index=0;
-    for( int tqshape=0; (int)tqshape<2; tqshape=(KLed::Shape)(tqshape+1)) {
+    for( int shape=0; (int)shape<2; shape=(KLed::Shape)(shape+1)) {
       x=Grid;
       for( int look=0; (int)look<3; look=(KLed::Look)(look+1)) {
 	for(state=KLed::Off; (int)state<2; state=(KLed::State)(state+1))
 	    {
 	      leds[index]=new KLed(Qt::yellow, state,
 				   (KLed::Look)(look+1),
-				   (KLed::Shape)(tqshape+1), this);
+				   (KLed::Shape)(shape+1), this);
 	      leds[index]->setGeometry(x, y, LedWidth, LedHeight);
 	      ++index;
 	      x+=Grid+LedWidth;
@@ -108,7 +108,7 @@ KLedTest::nextLook() {
   ledlook = static_cast<KLed::Look>(tmp);
   l->setLook(ledlook);
   //qDebug("painting look %i", ledlook);
-  //l->tqrepaint(); 
+  //l->repaint(); 
 }
 
 

@@ -188,14 +188,14 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String("Mozilla");
   case AppName:
     // If we find "Mozilla" but not "(compatible, ...)" we are a real Netscape
-    if (userAgent.find(TQString::tqfromLatin1("Mozilla")) >= 0 &&
-        userAgent.find(TQString::tqfromLatin1("compatible")) == -1)
+    if (userAgent.find(TQString::fromLatin1("Mozilla")) >= 0 &&
+        userAgent.find(TQString::fromLatin1("compatible")) == -1)
     {
       //kdDebug() << "appName -> Mozilla" << endl;
       return String("Netscape");
     }
-    if (userAgent.find(TQString::tqfromLatin1("Microsoft")) >= 0 ||
-        userAgent.find(TQString::tqfromLatin1("MSIE")) >= 0)
+    if (userAgent.find(TQString::fromLatin1("Microsoft")) >= 0 ||
+        userAgent.find(TQString::fromLatin1("MSIE")) >= 0)
     {
       //kdDebug() << "appName -> IE" << endl;
       return String("Microsoft Internet Explorer");
@@ -207,14 +207,14 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String(userAgent.mid(userAgent.find('/') + 1));
   case Product:
     // We are pretending to be Mozilla or Safari
-    if (userAgent.find(TQString::tqfromLatin1("Mozilla")) >= 0 &&
-        userAgent.find(TQString::tqfromLatin1("compatible")) == -1)
+    if (userAgent.find(TQString::fromLatin1("Mozilla")) >= 0 &&
+        userAgent.find(TQString::fromLatin1("compatible")) == -1)
     {
         return String("Gecko");
     }
     // When spoofing as IE, we use Undefined().
-    if (userAgent.find(TQString::tqfromLatin1("Microsoft")) >= 0 ||
-        userAgent.find(TQString::tqfromLatin1("MSIE")) >= 0)
+    if (userAgent.find(TQString::fromLatin1("Microsoft")) >= 0 ||
+        userAgent.find(TQString::fromLatin1("MSIE")) >= 0)
     {
         return Undefined();
     }
@@ -223,7 +223,7 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
   case ProductSub:
     {
       int ix = userAgent.find("Gecko");
-      if (ix >= 0 && userAgent.length() >= (uint)ix+14 && userAgent.tqunicode()[ix+5] == TQChar('/') &&
+      if (ix >= 0 && userAgent.length() >= (uint)ix+14 && userAgent.unicode()[ix+5] == TQChar('/') &&
           userAgent.find(TQRegExp("\\d{8}"), ix+6) == ix+6)
       {
           // We have Gecko/<productSub> in the UA string
@@ -245,19 +245,19 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
     return String(userAgent);
   case Platform:
     // yet another evil hack, but necessary to spoof some sites...
-    if ( (userAgent.find(TQString::tqfromLatin1("Win"),0,false)>=0) )
-      return String(TQString::tqfromLatin1("Win32"));
-    else if ( (userAgent.find(TQString::tqfromLatin1("Macintosh"),0,false)>=0) ||
-              (userAgent.find(TQString::tqfromLatin1("Mac_PowerPC"),0,false)>=0) )
-      return String(TQString::tqfromLatin1("MacPPC"));
+    if ( (userAgent.find(TQString::fromLatin1("Win"),0,false)>=0) )
+      return String(TQString::fromLatin1("Win32"));
+    else if ( (userAgent.find(TQString::fromLatin1("Macintosh"),0,false)>=0) ||
+              (userAgent.find(TQString::fromLatin1("Mac_PowerPC"),0,false)>=0) )
+      return String(TQString::fromLatin1("MacPPC"));
     else
     {
         struct utsname name;
         int ret = uname(&name);
         if ( ret >= 0 )
-            return String(TQString(TQString::tqfromLatin1("%1 %1 X11").arg(name.sysname).arg(name.machine)));
+            return String(TQString(TQString::fromLatin1("%1 %1 X11").arg(name.sysname).arg(name.machine)));
         else // can't happen
-            return String(TQString(TQString::tqfromLatin1("Unix X11")));
+            return String(TQString(TQString::fromLatin1("Unix X11")));
     }
   case CpuClass:
   {
@@ -394,7 +394,7 @@ Value Plugins::get(ExecState *exec, const Identifier &propertyName) const
     bool ok;
     unsigned int i = propertyName.toULong(&ok);
     if( ok && i<plugins->count() )
-      return Value( new Plugin( exec, plugins->tqat(i) ) );
+      return Value( new Plugin( exec, plugins->at(i) ) );
 
     // plugin[name]
     Value val = pluginByName( exec, propertyName.qstring() );
@@ -439,7 +439,7 @@ Value PluginsFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
       bool ok;
       unsigned int i = args[0].toString(exec).toArrayIndex(&ok);
       if( ok && i<base->plugins->count() )
-        return Value( new Plugin( exec, base->plugins->tqat(i) ) );
+        return Value( new Plugin( exec, base->plugins->at(i) ) );
       return Undefined();
     }
     case Plugins_NamedItem:
@@ -479,7 +479,7 @@ Value MimeTypes::get(ExecState *exec, const Identifier &propertyName) const
     bool ok;
     unsigned int i = propertyName.toULong(&ok);
     if( ok && i<mimes->count() )
-      return Value( new MimeType( exec, mimes->tqat(i) ) );
+      return Value( new MimeType( exec, mimes->at(i) ) );
 
     // mimeTypes[name]
     Value val = mimeTypeByName( exec, propertyName.qstring() );
@@ -522,7 +522,7 @@ Value MimeTypesFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
       bool ok;
       unsigned int i = args[0].toString(exec).toArrayIndex(&ok);
       if( ok && i<base->mimes->count() )
-        return Value( new MimeType( exec, base->mimes->tqat(i) ) );
+        return Value( new MimeType( exec, base->mimes->at(i) ) );
       return Undefined();
     }
     case MimeTypes_NamedItem:
@@ -562,8 +562,8 @@ Value Plugin::get(ExecState *exec, const Identifier &propertyName) const
   //kdDebug(6070) << "Plugin::get plugin[" << i << "]" << endl;
   if( ok && i<m_info->mimes.count() )
   {
-    //kdDebug(6070) << "returning mimetype " << m_info->mimes.tqat(i)->type << endl;
-    return Value(new MimeType(exec, m_info->mimes.tqat(i)));
+    //kdDebug(6070) << "returning mimetype " << m_info->mimes.at(i)->type << endl;
+    return Value(new MimeType(exec, m_info->mimes.at(i)));
   }
 
   // plugin["name"]
@@ -609,7 +609,7 @@ Value PluginFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     bool ok;
     unsigned int i = args[0].toString(exec).toArrayIndex(&ok);
     if( ok && i< plugin->pluginInfo()->mimes.count() )
-      return Value( new MimeType( exec, plugin->pluginInfo()->mimes.tqat(i) ) );
+      return Value( new MimeType( exec, plugin->pluginInfo()->mimes.at(i) ) );
     return Undefined();
   }
   case Plugin_NamedItem:

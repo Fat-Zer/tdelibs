@@ -24,7 +24,7 @@
 #include <tqgroupbox.h>
 #include <tqlineedit.h>
 #include <tqcheckbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqvalidator.h>
 
@@ -87,13 +87,13 @@ KMCupsConfigWidget::KMCupsConfigWidget(TQWidget *parent, const char *name)
 	TQVBoxLayout	*lay0 = new TQVBoxLayout(this, 0, 10);
 	lay0->addWidget(m_hostbox,1);
 	lay0->addWidget(m_loginbox,1);
-	TQGridLayout	*lay2 = new TQGridLayout(m_hostbox->tqlayout(), 2, 2, 10);
+	TQGridLayout	*lay2 = new TQGridLayout(m_hostbox->layout(), 2, 2, 10);
 	lay2->setColStretch(1,1);
 	lay2->addWidget(m_hostlabel,0,0);
 	lay2->addWidget(m_portlabel,1,0);
 	lay2->addWidget(m_host,0,1);
 	lay2->addWidget(m_port,1,1);
-	TQGridLayout	*lay3 = new TQGridLayout(m_loginbox->tqlayout(), 4, 2, 10);
+	TQGridLayout	*lay3 = new TQGridLayout(m_loginbox->layout(), 4, 2, 10);
 	lay3->setColStretch(1,1);
 	lay3->addWidget(m_loginlabel,0,0);
 	lay3->addWidget(m_passwordlabel,1,0);

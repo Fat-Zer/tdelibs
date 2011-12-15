@@ -168,7 +168,7 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
 
   d->wasTopLevel = top_level;
   if( parentWidget()
-      && parentWidget()->tqtopLevelWidget()->isFullScreen())
+      && parentWidget()->topLevelWidget()->isFullScreen())
     top_level = false;
 
   if ( isTopLevelMenu() == top_level )
@@ -193,7 +193,7 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
 #ifdef Q_WS_X11
       KWin::setType( winId(), NET::TopMenu );
       if( parentWidget())
-          XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->tqtopLevelWidget()->winId());
+          XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
 #endif
       TQMenuBar::setFrameStyle( NoFrame );
       TQMenuBar::setLineWidth( 0 );
@@ -244,13 +244,13 @@ bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
 {
     if ( d->topLevel )
     {
-	if ( parentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()->tqtopLevelWidget())  )
+	if ( parentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()->topLevelWidget())  )
         {
 	    if( ev->type() == TQEvent::Resize )
 		return false; // ignore resizing of parent, TQMenuBar would try to adjust size
 	    if ( ev->type() == TQEvent::Accel || ev->type() == TQEvent::AccelAvailable )
             {
-		if ( TQApplication::sendEvent( tqtopLevelWidget(), ev ) )
+		if ( TQApplication::sendEvent( topLevelWidget(), ev ) )
 		    return true;
 	    }
             if(ev->type() == TQEvent::ShowFullScreen )
@@ -260,7 +260,7 @@ bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
         if( parentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()) && ev->type() == TQEvent::Reparent )
             {
 #ifdef Q_WS_X11
-            XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->tqtopLevelWidget()->winId());
+            XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
 #else
             //TODO: WIN32?
 #endif
@@ -271,7 +271,7 @@ bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
             if( ev->type() == TQEvent::Show )
                 {
 #ifdef Q_WS_X11
-                XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->tqtopLevelWidget()->winId());
+                XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
 #else
                 //TODO: WIN32?
 #endif
@@ -283,10 +283,10 @@ bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
     }
     else
     {
-        if( parentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()->tqtopLevelWidget()))
+        if( parentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()->topLevelWidget()))
         {
             if( ev->type() == TQEvent::WindowStateChange
-                && !parentWidget()->tqtopLevelWidget()->isFullScreen() )
+                && !parentWidget()->topLevelWidget()->isFullScreen() )
                 setTopLevelMenuInternal( d->wasTopLevel );
         }
     }
@@ -506,14 +506,14 @@ void KMenuBar::drawContents( TQPainter* p )
         BackgroundMode bg_mode = backgroundMode();
         BackgroundOrigin bg_origin = backgroundOrigin();
         
-        tqsetUpdatesEnabled(false);
+        setUpdatesEnabled(false);
         setBackgroundMode(X11ParentRelative);
         setBackgroundOrigin(WindowOrigin);
 
 	p->eraseRect( rect() );
 	erase();
         
-        TQColorGroup g = tqcolorGroup();
+        TQColorGroup g = colorGroup();
         bool e;
 
         for ( int i=0; i<(int)count(); i++ )
@@ -522,16 +522,16 @@ void KMenuBar::drawContents( TQPainter* p )
 
             if ( !mi->text().isNull() || mi->pixmap() )
             {
-                TQRect r = tqitemRect(i);
+                TQRect r = itemRect(i);
                 if(r.isEmpty() || !mi->isVisible())
                     continue;
 
                 e = mi->isEnabledAndVisible();
                 if ( e )
-                    g = isEnabled() ? ( isActiveWindow() ? tqpalette().active() :
-                                        tqpalette().inactive() ) : tqpalette().disabled();
+                    g = isEnabled() ? ( isActiveWindow() ? palette().active() :
+                                        palette().inactive() ) : palette().disabled();
                 else
-                    g = tqpalette().disabled();
+                    g = palette().disabled();
 
                 bool item_active = ( actItem ==  i );
 
@@ -548,7 +548,7 @@ void KMenuBar::drawContents( TQPainter* p )
                         flags |= TQStyle::Style_Down;
                     flags |= TQStyle::Style_HasFocus;
 
-                    tqstyle().tqdrawControl(TQStyle::CE_MenuBarItem, p, this,
+                    tqstyle().drawControl(TQStyle::CE_MenuBarItem, p, this,
                                         r, g, flags, TQStyleOption(mi));
                 }
                 else
@@ -561,7 +561,7 @@ void KMenuBar::drawContents( TQPainter* p )
 
         setBackgroundOrigin(bg_origin);
         setBackgroundMode(bg_mode);
-        tqsetUpdatesEnabled(up_enabled);
+        setUpdatesEnabled(up_enabled);
     }
 }
 

@@ -182,7 +182,7 @@ void TabWidget::insertTab ( TQWidget * child, const TQString & label, int index)
   KTabWidget::insertTab(child,label,index);
   showPage(child);
   maybeShow();
-  tabBar()->tqrepaint();
+  tabBar()->repaint();
 }
 
 void TabWidget::insertTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label, int index )
@@ -190,7 +190,7 @@ void TabWidget::insertTab ( TQWidget * child, const TQIconSet & iconset, const T
   KTabWidget::insertTab(child,iconset,label,index);
   showPage(child);
   maybeShow();
-  tabBar()->tqrepaint();
+  tabBar()->repaint();
 }
 
 void TabWidget::insertTab ( TQWidget * child, TQTab * tab, int index)
@@ -198,7 +198,7 @@ void TabWidget::insertTab ( TQWidget * child, TQTab * tab, int index)
   KTabWidget::insertTab(child,tab,index);
   showPage(child);
   maybeShow();
-  tabBar()->tqrepaint();
+  tabBar()->repaint();
 }
 
 void TabWidget::removePage ( TQWidget * w )

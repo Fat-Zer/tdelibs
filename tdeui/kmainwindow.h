@@ -455,7 +455,7 @@ public:
      *   "virtual TQSize sizeHint() const;" to specify a default size rather
      *   than letting TQWidget::adjust use the default size of 0x0.
      */
-    void setAutoSaveSettings( const TQString & groupName = TQString::tqfromLatin1("MainWindow"),
+    void setAutoSaveSettings( const TQString & groupName = TQString::fromLatin1("MainWindow"),
                               bool saveWindowSize = true );
 
     /**
@@ -1036,7 +1036,7 @@ template <typename T>
 inline void kRestoreMainWindows() {
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
     const TQString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == TQString::tqfromLatin1( T::staticMetaObject()->className() ) )
+    if ( className == TQString::fromLatin1( T::staticMetaObject()->className() ) )
       (new T)->restore( n );
   }
 }
@@ -1048,9 +1048,9 @@ inline void kRestoreMainWindows() {
   classNames[1] = T1::staticMetaObject()->className();
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
     const TQString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == TQString::tqfromLatin1( classNames[0] ) )
+    if ( className == TQString::fromLatin1( classNames[0] ) )
       (new T0)->restore( n );
-    else if ( className == TQString::tqfromLatin1( classNames[1] ) )
+    else if ( className == TQString::fromLatin1( classNames[1] ) )
       (new T1)->restore( n );
   }
 }
@@ -1063,11 +1063,11 @@ inline void kRestoreMainWindows() {
   classNames[2] = T2::staticMetaObject()->className();
   for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
     const TQString className = KMainWindow::classNameOfToplevel( n );
-    if ( className == TQString::tqfromLatin1( classNames[0] ) )
+    if ( className == TQString::fromLatin1( classNames[0] ) )
       (new T0)->restore( n );
-    else if ( className == TQString::tqfromLatin1( classNames[1] ) )
+    else if ( className == TQString::fromLatin1( classNames[1] ) )
       (new T1)->restore( n );
-    else if ( className == TQString::tqfromLatin1( classNames[2] ) )
+    else if ( className == TQString::fromLatin1( classNames[2] ) )
       (new T2)->restore( n );
   }
 }

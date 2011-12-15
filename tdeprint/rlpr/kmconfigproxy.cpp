@@ -20,7 +20,7 @@
 #include "kmconfigproxy.h"
 #include "kmproxywidget.h"
 
-#include <tqlayout.h>
+#include <layout.h>
 #include <klocale.h>
 
 KMConfigProxy::KMConfigProxy(TQWidget *parent)

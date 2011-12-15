@@ -26,7 +26,7 @@
 #include <tqlineedit.h>
 #include <tqvbuttongroup.h>
 #include <tqcheckbox.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqhbox.h>
 #include <tqpopupmenu.h>

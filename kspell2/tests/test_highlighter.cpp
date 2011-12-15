@@ -25,7 +25,7 @@
 #include <kapplication.h>
 #include <kdebug.h>
 
-#include <tqtextedit.h>
+#include <textedit.h>
 
 int main( int argc, char** argv )
 {

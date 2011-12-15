@@ -150,7 +150,7 @@ bool ConnectionManager::askToConnect( TQWidget * mainWidget )
 			 i18n("This application is currently in offline mode.  Do you want to connect in order to carry out this operation?"),
 																		i18n("Leave Offline Mode?"),
 																		i18n("Connect"), i18n("Do Not Connect"),
-																		TQString::tqfromLatin1("OfflineModeAlwaysGoOnline") ) == KMessageBox::Yes );
+																		TQString::fromLatin1("OfflineModeAlwaysGoOnline") ) == KMessageBox::Yes );
 }
 
 #include "connectionmanager.moc"

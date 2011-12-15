@@ -424,10 +424,10 @@ void KMdiChildArea::cascadeMaximized()
 			childFrm->move( pnt );
 			TQSize curSize( width() - pnt.x(), height() - pnt.y() );
 			
-			if ( ( childFrm->tqminimumSize().width() > curSize.width() ) ||
-			     ( childFrm->tqminimumSize().height() > curSize.height() ) )
+			if ( ( childFrm->minimumSize().width() > curSize.width() ) ||
+			     ( childFrm->minimumSize().height() > curSize.height() ) )
 			{
-				childFrm->resize( childFrm->tqminimumSize() );
+				childFrm->resize( childFrm->minimumSize() );
 			}
 			else
 				childFrm->resize( curSize );

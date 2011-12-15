@@ -19,7 +19,7 @@ BrowserInterface::~BrowserInterface()
 
 void BrowserInterface::callMethod( const char *name, const TQVariant &argument )
 {
-    int slot = tqmetaObject()->findSlot( name );
+    int slot = metaObject()->findSlot( name );
 
     if ( slot == -1 )
         return;

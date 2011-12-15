@@ -35,7 +35,7 @@
 #include <kurl.h>
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 K_EXPORT_COMPONENT_FACTORY( ktexteditor_insertfile, KGenericFactory<InsertFilePlugin>( "ktexteditor_insertfile" ) )
 
@@ -59,9 +59,9 @@ void InsertFilePlugin::addView(KTextEditor::View *view)
 void InsertFilePlugin::removeView(KTextEditor::View *view)
 {
   for (uint z=0; z < m_views.count(); z++)
-    if (m_views.tqat(z)->parentClient() == view)
+    if (m_views.at(z)->parentClient() == view)
     {
-       InsertFilePluginView *nview = m_views.tqat(z);
+       InsertFilePluginView *nview = m_views.at(z);
        m_views.remove (nview);
        delete nview;
     }

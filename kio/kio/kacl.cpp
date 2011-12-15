@@ -623,8 +623,8 @@ TQString KACL::KACLPrivate::getUserName( uid_t uid ) const
     if ( !temp ) {
         struct passwd *user = getpwuid( uid );
         if ( user ) {
-            m_usercache.insert( uid, new TQString(TQString::tqfromLatin1(user->pw_name)) );
-            return TQString::tqfromLatin1( user->pw_name );
+            m_usercache.insert( uid, new TQString(TQString::fromLatin1(user->pw_name)) );
+            return TQString::fromLatin1( user->pw_name );
         }
         else
             return TQString::number( uid );
@@ -641,8 +641,8 @@ TQString KACL::KACLPrivate::getGroupName( gid_t gid ) const
     if ( !temp ) {
         struct group *grp = getgrgid( gid );
         if ( grp ) {
-            m_groupcache.insert( gid, new TQString(TQString::tqfromLatin1(grp->gr_name)) );
-            return TQString::tqfromLatin1( grp->gr_name );
+            m_groupcache.insert( gid, new TQString(TQString::fromLatin1(grp->gr_name)) );
+            return TQString::fromLatin1( grp->gr_name );
         }
         else
             return TQString::number( gid );
@@ -654,7 +654,7 @@ TQString KACL::KACLPrivate::getGroupName( gid_t gid ) const
 static TQString aclAsString(const acl_t acl)
 {
     char *aclString = acl_to_text( acl, 0 );
-    TQString ret = TQString::tqfromLatin1( aclString );
+    TQString ret = TQString::fromLatin1( aclString );
     acl_free( (void*)aclString );
     return ret;
 }

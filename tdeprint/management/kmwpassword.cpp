@@ -25,7 +25,7 @@
 #include <tqlineedit.h>
 #include <tqvbuttongroup.h>
 #include <tqradiobutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <klocale.h>
 #include <kcursor.h>
 
@@ -121,7 +121,7 @@ void KMWPassword::updatePrinter(KMPrinter *p)
 			p->setOption( "kde-password", TQString::null );
 			break;
 		case 1:
-			p->setOption( "kde-login", TQString::tqfromLatin1( "guest" ) );
+			p->setOption( "kde-login", TQString::fromLatin1( "guest" ) );
 			p->setOption( "kde-password", TQString::null );
 			break;
 		case 2:

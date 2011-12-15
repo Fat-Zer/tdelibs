@@ -1,7 +1,7 @@
 #include "kmessagebox.h"
 
 #include <tqdialog.h>
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <stdlib.h>
 
@@ -79,11 +79,11 @@ case 1:
   i = KMessageBox::warningContinueCancel(w, 
                 "You are about to <Print>.\n"
 		"Are you sure?",
-                "Print", TQString::tqfromLatin1("&Print"), "dontask", false);
+                "Print", TQString::fromLatin1("&Print"), "dontask", false);
   i = KMessageBox::warningContinueCancel(0, 
                 "You are about to <Print>.\n"
 		"Are you sure?",
-                "Print", TQString::tqfromLatin1("&Print"), "dontask", KMessageBox::AllowLink);
+                "Print", TQString::fromLatin1("&Print"), "dontask", KMessageBox::AllowLink);
   i = KMessageBox::questionYesNo(0, "<p>Do you have a printer? thisisaverylongdkldhklghklghklashgkllasghkdlsghkldfghklsabla bla bbla bla. It also has <a href=http://www.kde.org>this URL</a>.</p>",
   	TQString("Bla"), TQString("Yes"), TQString("No"), "bla", KMessageBox::AllowLink);
   break;
@@ -96,7 +96,7 @@ case 2:
 case 3:
   i = KMessageBox::questionYesNo(0,
                 "Does your printer support color or only black and white?",
-                "Printer setup", TQString::tqfromLatin1("&Color"), TQString::tqfromLatin1("&Black & White"));
+                "Printer setup", TQString::fromLatin1("&Color"), TQString::fromLatin1("&Black & White"));
   break;
 
 case 4:
@@ -123,13 +123,13 @@ case 6:
   i = KMessageBox::warningContinueCancel(0, 
                 "You are about to print.\n"
 		"Are you sure?",
-                "Print", TQString::tqfromLatin1("&Print"));
+                "Print", TQString::fromLatin1("&Print"));
   break;
 case 7:
   i = KMessageBox::warningContinueCancel(0, 
                 "You are about to <Print>.\n"
 		"Are you sure?",
-                "Print", TQString::tqfromLatin1("&Print"), "dontask", false);
+                "Print", TQString::fromLatin1("&Print"), "dontask", false);
   break;
 
 case 8:
@@ -142,14 +142,14 @@ case 9:
   i = KMessageBox::warningYesNoCancel(0,
                 "Your document contains unsaved changes.\n"
                 "Do you want to save your changes?\n",
-                TQString::tqfromLatin1("Close"));
+                TQString::fromLatin1("Close"));
   break;
 
 case 10:
   i = KMessageBox::warningYesNoCancel(0,
                 "Your document contains unsaved changes.\n"
                 "Do you want to save or discard your changes?\n",
-                "Close", TQString::tqfromLatin1("&Save"), TQString::tqfromLatin1("&Discard") );
+                "Close", TQString::fromLatin1("&Save"), TQString::fromLatin1("&Discard") );
   break;
 
 case 11:

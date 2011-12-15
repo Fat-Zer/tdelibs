@@ -19,9 +19,9 @@
 #include <tqvaluelist.h>
 #include <tqfileinfo.h>
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqregexp.h>
-#include <tqtextcodec.h>
+#include <textcodec.h>
 
 #include <kdebug.h>
 #include <kurl.h>
@@ -112,7 +112,7 @@ TQString HelpProtocol::lookupFile(const TQString &fname,
 	}
         else
 	{
-	    tqunicodeError( i18n("There is no documentation available for %1." ).arg(path) );
+	    unicodeError( i18n("There is no documentation available for %1." ).arg(path) );
 	    finished();
             return TQString::null;
 	}
@@ -123,7 +123,7 @@ TQString HelpProtocol::lookupFile(const TQString &fname,
 }
 
 
-void HelpProtocol::tqunicodeError( const TQString &t )
+void HelpProtocol::unicodeError( const TQString &t )
 {
    data(fromUnicode( TQString(
         "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=%1\"></head>\n"
@@ -148,10 +148,10 @@ void HelpProtocol::get( const KURL& url )
     doc = url.path();
 
     if ( !mGhelp ) {
-        if (doc.tqat(0) != '/')
+        if (doc.at(0) != '/')
             doc = doc.prepend('/');
 
-        if (doc.tqat(doc.length() - 1) == '/')
+        if (doc.at(doc.length() - 1) == '/')
             doc += "index.html";
     }
 
@@ -215,7 +215,7 @@ void HelpProtocol::get( const KURL& url )
         kdDebug( 7119 ) << "parsed " << mParsed.length() << endl;
 
         if (mParsed.isEmpty()) {
-            tqunicodeError( i18n( "The requested help file could not be parsed:<br>%1" ).arg( file ) );
+            unicodeError( i18n( "The requested help file could not be parsed:<br>%1" ).arg( file ) );
         } else {
             int pos1 = mParsed.find( "charset=" );
             if ( pos1 > 0 ) {
@@ -248,7 +248,7 @@ void HelpProtocol::get( const KURL& url )
         kdDebug( 7119 ) << "parsed " << mParsed.length() << endl;
 
         if (mParsed.isEmpty()) {
-            tqunicodeError( i18n( "The requested help file could not be parsed:<br>%1" ).arg( file ) );
+            unicodeError( i18n( "The requested help file could not be parsed:<br>%1" ).arg( file ) );
         } else {
             TQString query = url.query(), anchor;
 
@@ -316,7 +316,7 @@ void HelpProtocol::emitFile( const KURL& url )
             return;
         }
 
-        tqunicodeError( i18n("Could not find filename %1 in %2.").arg(filename).arg( url.url() ) );
+        unicodeError( i18n("Could not find filename %1 in %2.").arg(filename).arg( url.url() ) );
         return;
     }
 

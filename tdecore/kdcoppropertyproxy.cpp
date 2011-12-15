@@ -29,8 +29,8 @@
 #include <tqiconset.h>
 #include <tqfont.h>
 #include <tqimage.h>
-#include <tqbrush.h>
-#include <tqpalette.h>
+#include <brush.h>
+#include <palette.h>
 
 #include <ctype.h>
 #include <assert.h>
@@ -94,7 +94,7 @@ TQValueList<TQCString> KDCOPPropertyProxy::functions( TQObject *object )
   res << "bool setProperty(TQCString name,TQVariant property)";
   res << "TQValueList<TQCString> propertyNames(bool super)";
 
-  TQMetaObject *metaObj = object->tqmetaObject();
+  TQMetaObject *metaObj = object->metaObject();
   TQStrList properties = metaObj->propertyNames( true );
   TQStrListIterator it( properties );
   for (; it.current(); ++it )
@@ -157,7 +157,7 @@ bool KDCOPPropertyProxy::processPropertyRequest( const TQCString &fun, const TQB
     stream >> b;
 
     TQValueList<TQCString> res;
-    TQStrList props = object->tqmetaObject()->propertyNames( static_cast<bool>( b ) );
+    TQStrList props = object->metaObject()->propertyNames( static_cast<bool>( b ) );
     TQStrListIterator it( props );
     for (; it.current(); ++it )
       res.append( it.current() );
@@ -328,7 +328,7 @@ bool KDCOPPropertyProxy::decodePropertyRequestInternal( const TQCString &fun, TQ
   else
     propName.truncate( propName.length() - 2 );
 
-  if ( !object->tqmetaObject()->propertyNames( true ).contains( propName ) )
+  if ( !object->metaObject()->propertyNames( true ).contains( propName ) )
     return false;
 
   return true;

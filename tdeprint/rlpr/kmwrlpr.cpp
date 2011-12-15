@@ -23,8 +23,8 @@
 
 #include <tqdir.h>
 #include <tqfile.h>
-#include <tqtextstream.h>
-#include <tqlayout.h>
+#include <textstream.h>
+#include <layout.h>
 #include <tqlabel.h>
 #include <tqlineedit.h>
 #include <tqheader.h>
@@ -53,7 +53,7 @@ KMWRlpr::KMWRlpr(TQWidget *parent, const char *name)
 	m_view = new KListView(this);
 	m_view->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_view->setLineWidth(1);
-	m_view->addColumn(TQString::tqfromLatin1(""));
+	m_view->addColumn(TQString::fromLatin1(""));
 	m_view->header()->hide();
 	m_view->setRootIsDecorated(true);
 	m_view->setSorting(0);
@@ -109,7 +109,7 @@ void KMWRlpr::initPrinter(KMPrinter *p)
 
 void KMWRlpr::updatePrinter(KMPrinter *p)
 {
-	TQString	uri = TQString::tqfromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
+	TQString	uri = TQString::fromLatin1("lpd://%1/%2").arg(m_host->text()).arg(m_queue->text());
 	p->setDevice(uri);
 	p->setOption("host",m_host->text());
 	p->setOption("queue",m_queue->text());

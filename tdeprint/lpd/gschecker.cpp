@@ -21,7 +21,7 @@
 #include "kpipeprocess.h"
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 GsChecker::GsChecker(TQObject *parent, const char *name)
 : TQObject(parent,name)
@@ -53,7 +53,7 @@ void GsChecker::loadDriverList()
 				else
 					buffer.append(line).append(" ");
 			}
-			else if (line.startsWith(TQString::tqfromLatin1("Available devices:")))
+			else if (line.startsWith(TQString::fromLatin1("Available devices:")))
 				ok = true;
 		}
 		m_driverlist = TQStringList::split(' ',buffer,false);

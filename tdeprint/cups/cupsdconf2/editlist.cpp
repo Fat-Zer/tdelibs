@@ -21,7 +21,7 @@
 
 #include <klistbox.h>
 #include <kpushbutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kguiitem.h>

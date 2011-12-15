@@ -234,7 +234,7 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
         if (equalPos > 0) {
             const TQString name = (*it).left (equalPos).upper ();
             TQString value = (*it).right ((*it).length () - equalPos - 1);
-            if (value.tqat(0)=='\"')
+            if (value.at(0)=='\"')
                 value = value.right (value.length () - 1);
             if (value.at (value.length () - 1) == '\"')
                 value.truncate (value.length () - 1);
@@ -245,27 +245,27 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
                     baseurl = KURL (KURL (value), TQString (".")).url ();
                 } else if (name == "__KHTML__CODEBASE")
                     khtml_codebase = value;
-                else if (name_lower == TQString::tqfromLatin1("codebase") ||
-                         name_lower == TQString::tqfromLatin1("java_codebase")) {
+                else if (name_lower == TQString::fromLatin1("codebase") ||
+                         name_lower == TQString::fromLatin1("java_codebase")) {
                     if (!value.isEmpty ())
                         codebase = value;
                 } else if (name == "__KHTML__CLASSID")
-                //else if (name.lower()==TQString::tqfromLatin1("classid"))
+                //else if (name.lower()==TQString::fromLatin1("classid"))
                     classid = value;
-                else if (name_lower == TQString::tqfromLatin1("code") ||
-                         name_lower == TQString::tqfromLatin1("java_code"))
+                else if (name_lower == TQString::fromLatin1("code") ||
+                         name_lower == TQString::fromLatin1("java_code"))
                     classname = value;
-                else if (name_lower == TQString::tqfromLatin1("src"))
+                else if (name_lower == TQString::fromLatin1("src"))
                     src_param = value;
-                else if (name_lower == TQString::tqfromLatin1("archive") ||
-                         name_lower == TQString::tqfromLatin1("java_archive") ||
+                else if (name_lower == TQString::fromLatin1("archive") ||
+                         name_lower == TQString::fromLatin1("java_archive") ||
                          name_lower.startsWith ("cache_archive"))
                     applet->setArchives (value);
-                else if (name_lower == TQString::tqfromLatin1("name"))
+                else if (name_lower == TQString::fromLatin1("name"))
                     applet->setAppletName (value);
-                else if (name_lower == TQString::tqfromLatin1("width"))
+                else if (name_lower == TQString::fromLatin1("width"))
                     width = value.toInt();
-                else if (name_lower == TQString::tqfromLatin1("height"))
+                else if (name_lower == TQString::fromLatin1("height"))
                     height = value.toInt();
                 if (!name.startsWith ("__KHTML__")) {
                     applet->setParameter (name, value);
@@ -327,7 +327,7 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
         info.verifyPath = true;
 
         TQDataStream stream(params, IO_WriteOnly);
-        stream << info << m_view->tqtopLevelWidget()->winId();
+        stream << info << m_view->topLevelWidget()->winId();
 
         if (!kapp->dcopClient ()->call( "kded", "kpasswdserver", "checkAuthInfo(KIO::AuthInfo, long int)", params, replyType, reply ) ) {
             kdWarning() << "Can't communicate with kded_kpasswdserver!" << endl;
@@ -342,7 +342,7 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
 
     /* install event filter for close events */
     if (wparent)
-        wparent->tqtopLevelWidget ()->installEventFilter (this);
+        wparent->topLevelWidget ()->installEventFilter (this);
 
     setInstance (KJavaAppletViewerFactory::instance ());
     KParts::Part::setWidget (m_view);

@@ -587,7 +587,7 @@ TQString KInetSocketAddress::nodeName() const
       return i18n("<empty>");
     }
 
-  return TQString::tqfromLatin1(buf); // FIXME! What's the encoding?
+  return TQString::fromLatin1(buf); // FIXME! What's the encoding?
 }
 
 TQString KInetSocketAddress::serviceName() const
@@ -717,7 +717,7 @@ TQString KInetSocketAddress::addrToString(int family, const void* addr)
 {
   char buf[INET6_ADDRSTRLEN+1];
 
-  return TQString::tqfromLatin1(inet_ntop(family, addr, buf, INET6_ADDRSTRLEN));
+  return TQString::fromLatin1(inet_ntop(family, addr, buf, INET6_ADDRSTRLEN));
 }
 
 bool KInetSocketAddress::stringToAddr(int family, const char *text, void *dest)

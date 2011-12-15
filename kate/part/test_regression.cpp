@@ -56,7 +56,7 @@
 #include <tqscrollview.h>
 #include <tqstring.h>
 #include <tqregexp.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 #include <tqvaluelist.h>
 #include <tqwidget.h>
 #include <tqfileinfo.h>
@@ -871,8 +871,8 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
         pos++;
         int newpos = absBase.find('/', pos);
         if (newpos == -1) newpos = absBase.length();
-        TQConstString cmpPathComp(absPath.tqunicode() + pos, newpos - pos);
-        TQConstString cmpBaseComp(absBase.tqunicode() + pos, newpos - pos);
+        TQConstString cmpPathComp(absPath.unicode() + pos, newpos - pos);
+        TQConstString cmpBaseComp(absBase.unicode() + pos, newpos - pos);
 //         kdDebug() << "cmpPathComp: \"" << cmpPathComp.string() << "\"" << endl;
 //         kdDebug() << "cmpBaseComp: \"" << cmpBaseComp.string() << "\"" << endl;
 //         kdDebug() << "pos: " << pos << " newpos: " << newpos << endl;
@@ -886,8 +886,8 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
 
     TQString rel;
     {
-        TQConstString relBase(absBase.tqunicode() + basepos, absBase.length() - basepos);
-        TQConstString relPath(absPath.tqunicode() + pathpos, absPath.length() - pathpos);
+        TQConstString relBase(absBase.unicode() + basepos, absBase.length() - basepos);
+        TQConstString relPath(absPath.unicode() + pathpos, absPath.length() - pathpos);
         // generate as many .. as there are path elements in relBase
         if (relBase.string().length() > 0) {
             for (int i = relBase.string().contains('/'); i > 0; --i)
@@ -935,7 +935,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & ResultFailure ) {
         domDiff += "<pre>";
-        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-result %3/%2-result" )
+        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-result %3/%2-result" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {

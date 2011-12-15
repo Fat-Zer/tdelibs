@@ -20,7 +20,7 @@
 
 #include <tqcombobox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqlineedit.h>
 #include <tqspinbox.h>
 #include <tqstring.h>

@@ -693,7 +693,7 @@ public:
    * and interpret it as a date and time.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value ( tqcurrentDateTime() by default)
+   * @param pDefault A default value ( currentDateTime() by default)
    * returned if the key was not found or if the read value cannot be
    * interpreted.
    * @return The value for this key.
@@ -707,7 +707,7 @@ public:
    * and interpret it as a date and time.
    *
    * @param pKey The key to search for.
-   * @param pDefault A default value ( tqcurrentDateTime() by default)
+   * @param pDefault A default value ( currentDateTime() by default)
    * returned if the key was not found or if the read value cannot be
    * interpreted.
    * @return The value for this key.
@@ -979,7 +979,7 @@ public:
   void writeEntry( const TQString& pKey, const char *pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false )
-    { writeEntry(pKey, TQString::tqfromLatin1(pValue), bPersistent, bGlobal, bNLS); }
+    { writeEntry(pKey, TQString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
   /**
    * Write a (key/value) pair.
    *
@@ -1000,7 +1000,7 @@ public:
   void writeEntry( const char *pKey, const char *pValue,
                       bool bPersistent = true, bool bGlobal = false,
                       bool bNLS = false )
-    { writeEntry(pKey, TQString::tqfromLatin1(pValue), bPersistent, bGlobal, bNLS); }
+    { writeEntry(pKey, TQString::fromLatin1(pValue), bPersistent, bGlobal, bNLS); }
 
   /**
    * Write a (key/value) pair.

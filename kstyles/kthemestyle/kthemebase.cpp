@@ -70,7 +70,7 @@ static TQColor readColorEntry( TQSettings* s, const char *pKey,
     TQString aValue = s->readEntry( pKey );
     if ( !aValue.isEmpty() )
     {
-        if ( aValue.tqat( 0 ) == '#' )
+        if ( aValue.at( 0 ) == '#' )
         {
             aRetColor.setNamedColor( aValue );
         }
@@ -1100,12 +1100,12 @@ TQColorGroup* KThemeBase::makeColorGroup( const TQColor &fg, const TQColor &bg,
         lowlightVal = 100 + ( ( 2 * d->contrast + 4 ) * 10 );
         return ( new TQColorGroup( fg, bg, bg.light( highlightVal ),
                                   bg.dark( lowlightVal ), bg.dark( 120 ),
-                                  fg, TQApplication::tqpalette().active().base() ) );
+                                  fg, TQApplication::palette().active().base() ) );
     }
     else
         return ( new TQColorGroup( fg, bg, bg.light( 150 ), bg.dark(),
                                   bg.dark( 120 ), fg,
-                                  TQApplication::tqpalette().active().base() ) );
+                                  TQApplication::palette().active().base() ) );
 }
 
 
@@ -1273,12 +1273,12 @@ void KThemeBase::applyResourceGroup( TQSettings *config, int i )
     // Gradient low color or blend background
     if ( keys.contains( "GradientLow" ) )
         prop[ "GrLow" ] = readColorEntry( config, TQString( base + "GradientLow" ).latin1(),
-                                          &TQApplication::tqpalette().active().background() ).name();
+                                          &TQApplication::palette().active().background() ).name();
 
     // Gradient high color
     if ( keys.contains( "GradientHigh" ) )
         prop[ "GrHigh" ] = readColorEntry( config, TQString( base + "GradientHigh" ).latin1(),
-                                           &TQApplication::tqpalette().active().foreground() ).name();
+                                           &TQApplication::palette().active().foreground() ).name();
 
     // Extended color attributes
     if ( keys.contains( "Foreground" ) || keys.contains( "Background" ) )
@@ -1413,7 +1413,7 @@ void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdname
     // Blend intensity
     tmpStr = prop[ "Blend" ];
     if ( tmpStr.isEmpty() )
-        tmpStr = TQString::tqfromLatin1( "0.0" );
+        tmpStr = TQString::fromLatin1( "0.0" );
     blends[ i ] = tmpStr.toFloat();
 
     // Bevel contrast
@@ -1429,7 +1429,7 @@ void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdname
     if ( gradients[ i ] != GrNone || blends[ i ] != 0.0 )
         grLowColors[ i ] =
             new TQColor( readColorEntry( prop, "GrLow",
-                                        TQApplication::tqpalette().active().
+                                        TQApplication::palette().active().
                                         background() ) );
     else
         grLowColors[ i ] = NULL;
@@ -1438,7 +1438,7 @@ void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdname
     if ( gradients[ i ] != GrNone )
         grHighColors[ i ] =
             new TQColor( readColorEntry( prop, "GrHigh",
-                                        TQApplication::tqpalette().active().
+                                        TQApplication::palette().active().
                                         background() ) );
     else
         grHighColors[ i ] = NULL;
@@ -1450,9 +1450,9 @@ void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdname
     if ( fg.isValid() || bg.isValid() )
     {
         if ( !fg.isValid() )
-            fg = TQApplication::tqpalette().active().foreground();
+            fg = TQApplication::palette().active().foreground();
         if ( !bg.isValid() )
-            bg = TQApplication::tqpalette().active().background();
+            bg = TQApplication::palette().active().background();
         colors[ i ] = makeColorGroup( fg, bg, TQt::WindowsStyle );
     }
     else
@@ -1609,7 +1609,7 @@ TQPalette KThemeBase::overridePalette( const TQPalette& pal )
     {
         if ( isColor( Background ) )
         {
-            background = tqcolorGroup( pal.active(), Background )
+            background = colorGroup( pal.active(), Background )
                          ->background();
         }
         if ( isPixmap( Background ) )
@@ -1622,7 +1622,7 @@ TQPalette KThemeBase::overridePalette( const TQPalette& pal )
                             background.dark( lowlightVal ), background.dark( 120 ),
                             baseText, buttonText /*CHECKME: BrightText*/, base, background );
 
-        buttonText = tqcolorGroup( pre, PushButton ) ->foreground();
+        buttonText = colorGroup( pre, PushButton ) ->foreground();
     }
 
     TQColor disfg = foreground;

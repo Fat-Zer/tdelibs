@@ -91,7 +91,7 @@ private:
   * Once you have a KToolBar object, you can insert items into it with the
   * insert... methods, or remove them with the removeItem() method. This
   * can be done at any time; the toolbar will be automatically updated.
-  * There are also many methods to set per-child properties like tqalignment
+  * There are also many methods to set per-child properties like alignment
   * and toggle behavior.
   *
   * KToolBar uses a global config group to load toolbar settings on
@@ -947,7 +947,7 @@ public:
     bool highlight() const;
     TQSize sizeHint() const;
     TQSize minimumSizeHint() const;
-    TQSize tqminimumSize() const;
+    TQSize minimumSize() const;
 
     void hide();
     void show();

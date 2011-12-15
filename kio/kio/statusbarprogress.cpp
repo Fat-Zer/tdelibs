@@ -17,7 +17,7 @@
 */
 
 #include <tqtooltip.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqwidgetstack.h>
 #include <tqpushbutton.h>
 #include <tqlabel.h>

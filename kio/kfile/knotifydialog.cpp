@@ -42,7 +42,7 @@
 #include <tqheader.h>
 #include <tqlabel.h>
 #include <tqlistview.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqptrlist.h>
 #include <tqpushbutton.h>
 #include <tqstring.h>
@@ -181,7 +181,7 @@ KNotifyDialog::~KNotifyDialog()
 void KNotifyDialog::addApplicationEvents( const char *appName )
 {
     addApplicationEvents( TQString::fromUtf8( appName ) +
-                          TQString::tqfromLatin1( "/eventsrc" ) );
+                          TQString::fromLatin1( "/eventsrc" ) );
 }
 
 void KNotifyDialog::addApplicationEvents( const TQString& path )
@@ -374,7 +374,7 @@ Application * KNotifyWidget::addApplicationEvents( const TQString& path )
     kdDebug() << "**** knotify: adding path: " << path << endl;
     TQString relativePath = path;
 
-    if ( path.tqat(0) == '/' && KStandardDirs::exists( path ) )
+    if ( path.at(0) == '/' && KStandardDirs::exists( path ) )
         relativePath = makeRelative( path );
 
     if ( !relativePath.isEmpty() )
@@ -1005,10 +1005,10 @@ Application::Application( const TQString &path )
     m_events = 0L;
     config = new KConfig(config_file, false, false);
     kc = new KConfig(path, true, false, "data");
-    kc->setGroup( TQString::tqfromLatin1("!Global!") );
-    m_icon = kc->readEntry(TQString::tqfromLatin1("IconName"),
-                           TQString::tqfromLatin1("misc"));
-    m_description = kc->readEntry( TQString::tqfromLatin1("Comment"),
+    kc->setGroup( TQString::fromLatin1("!Global!") );
+    m_icon = kc->readEntry(TQString::fromLatin1("IconName"),
+                           TQString::fromLatin1("misc"));
+    m_description = kc->readEntry( TQString::fromLatin1("Comment"),
                                    i18n("No description available") );
 
     int index = path.find( '/' );
@@ -1070,10 +1070,10 @@ void Application::reloadEvents( bool revertToDefaults )
 
     Event *e = 0L;
 
-    TQString global = TQString::tqfromLatin1("!Global!");
-    TQString default_group = TQString::tqfromLatin1("<default>");
-    TQString name = TQString::tqfromLatin1("Name");
-    TQString comment = TQString::tqfromLatin1("Comment");
+    TQString global = TQString::fromLatin1("!Global!");
+    TQString default_group = TQString::fromLatin1("<default>");
+    TQString name = TQString::fromLatin1("Name");
+    TQString comment = TQString::fromLatin1("Comment");
 
     TQStringList conflist = kc->groupList();
     TQStringList::ConstIterator it = conflist.begin();

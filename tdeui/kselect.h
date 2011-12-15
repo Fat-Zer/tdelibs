@@ -351,7 +351,7 @@ public:
 protected:
 
   virtual void drawContents( TQPainter * );
-  virtual TQSize tqminimumSize() const
+  virtual TQSize minimumSize() const
   { return sizeHint(); }
 
 private:

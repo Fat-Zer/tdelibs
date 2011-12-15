@@ -20,7 +20,7 @@
 #include "kpschedulepage.h"
 
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqcombobox.h>
 #include <tqregexp.h>
 #include <tqdatetimeedit.h>

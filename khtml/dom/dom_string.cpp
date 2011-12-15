@@ -39,7 +39,7 @@ DOMString::DOMString(const TQString &str)
 	return;
     }
 
-    impl = new DOMStringImpl( str.tqunicode(), str.length() );
+    impl = new DOMStringImpl( str.unicode(), str.length() );
     impl->ref();
 }
 
@@ -193,10 +193,10 @@ bool DOMString::percentage(int &_percentage) const
     return true;
 }
 
-TQChar *DOMString::tqunicode() const
+TQChar *DOMString::unicode() const
 {
     if(!impl) return 0;
-    return impl->tqunicode();
+    return impl->unicode();
 }
 
 TQString DOMString::string() const
@@ -225,8 +225,8 @@ bool DOM::strcasecmp( const DOMString &as, const DOMString &bs )
 {
     if ( as.length() != bs.length() ) return true;
 
-    const TQChar *a = as.tqunicode();
-    const TQChar *b = bs.tqunicode();
+    const TQChar *a = as.unicode();
+    const TQChar *b = bs.unicode();
     if ( a == b )  return false;
     if ( !( a && b ) )  return true;
     int l = as.length();
@@ -239,7 +239,7 @@ bool DOM::strcasecmp( const DOMString &as, const DOMString &bs )
 
 bool DOM::strcasecmp( const DOMString &as, const char* bs )
 {
-    const TQChar *a = as.tqunicode();
+    const TQChar *a = as.unicode();
     int l = as.length();
     if ( !bs ) return ( l != 0 );
     while ( l-- ) {
@@ -265,7 +265,7 @@ bool DOM::operator==( const DOMString &a, const DOMString &b )
 
     if( l != b.length() ) return false;
 
-    if(!memcmp(a.tqunicode(), b.tqunicode(), l*sizeof(TQChar)))
+    if(!memcmp(a.unicode(), b.unicode(), l*sizeof(TQChar)))
 	return true;
     return false;
 }
@@ -276,7 +276,7 @@ bool DOM::operator==( const DOMString &a, const TQString &b )
 
     if( l != b.length() ) return false;
 
-    if(!memcmp(a.tqunicode(), b.tqunicode(), l*sizeof(TQChar)))
+    if(!memcmp(a.unicode(), b.unicode(), l*sizeof(TQChar)))
 	return true;
     return false;
 }
@@ -291,7 +291,7 @@ bool DOM::operator==( const DOMString &a, const char *b )
         const TQChar *aptr = aimpl->s;
         while ( alen-- ) {
             unsigned char c = *b++;
-            if ( !c || ( *aptr++ ).tqunicode() != c )
+            if ( !c || ( *aptr++ ).unicode() != c )
                 return false;
         }
     }

@@ -25,7 +25,7 @@
 
 #include <tqcombobox.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqmap.h>
 #include <klocale.h>
 

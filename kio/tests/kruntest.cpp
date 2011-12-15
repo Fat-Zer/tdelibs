@@ -28,7 +28,7 @@
 #include <kde_file.h>
 
 #include <tqpushbutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqdir.h>
 
 #include <stdlib.h>

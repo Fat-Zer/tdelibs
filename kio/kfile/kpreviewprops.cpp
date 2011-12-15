@@ -19,7 +19,7 @@
 
 #include "kpreviewprops.h"
 
-#include <tqlayout.h>
+#include <layout.h>
 
 #include <kfilemetapreview.h>
 #include <kglobalsettings.h>

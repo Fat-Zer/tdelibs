@@ -356,7 +356,7 @@ TQSizePolicy KButtonBox::sizePolicy() const
  */
 TQSize KButtonBox::buttonSizeHint(TQPushButton *b) const {
   TQSize s = b->sizeHint();
-  const TQSize ms = b->tqminimumSize();
+  const TQSize ms = b->minimumSize();
   if(s.width() < minButtonWidth)
     s.setWidth(minButtonWidth);
 

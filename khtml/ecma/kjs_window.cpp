@@ -31,7 +31,7 @@
 #include "html/html_documentimpl.h"
 #include "rendering/render_frames.h"
 
-#include <tqstylesheet.h>
+#include <stylesheet.h>
 #include <tqtimer.h>
 #include <tqpaintdevicemetrics.h>
 #include <tqapplication.h>
@@ -864,7 +864,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
       if (!part->widget())
         return Number(0);
-      KWin::WindowInfo inf = KWin::windowInfo(part->widget()->tqtopLevelWidget()->winId());
+      KWin::WindowInfo inf = KWin::windowInfo(part->widget()->topLevelWidget()->winId());
       return Number(entry->value == OuterHeight ?
                     inf.geometry().height() : inf.geometry().width());
 #else
@@ -1013,7 +1013,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     TQPtrList<KParts::ReadOnlyPart> frames = part->frames();
     unsigned int len = frames.count();
     if (i < len) {
-      KParts::ReadOnlyPart* frame = frames.tqat(i);
+      KParts::ReadOnlyPart* frame = frames.at(i);
       if (frame)
         return Window::retrieve(frame);
     }
@@ -1446,7 +1446,7 @@ void Window::goURL(ExecState* exec, const TQString& url, bool lockHistory)
       // check if we're allowed to inject javascript
       // SYNC check with khtml_part.cpp::slotRedirect!
       if ( isSafeScript(exec) ||
-            dstUrl.find(TQString::tqfromLatin1("javascript:"), 0, false) != 0 )
+            dstUrl.find(TQString::fromLatin1("javascript:"), 0, false) != 0 )
         part->scheduleRedirection(-1,
                                   dstUrl,
                                   lockHistory);
@@ -1622,7 +1622,7 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
         if (pos >= 0) {
           key = s.left(pos).stripWhiteSpace().lower();
           val = s.mid(pos + 1).stripWhiteSpace().lower();
-          TQRect screen = KGlobalSettings::desktopGeometry(widget->tqtopLevelWidget());
+          TQRect screen = KGlobalSettings::desktopGeometry(widget->topLevelWidget());
 
           if (key == "left" || key == "screenx") {
             winargs.x = (int)val.toFloat() + screen.x();
@@ -1633,13 +1633,13 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
             if (winargs.y < screen.y() || winargs.y > screen.bottom())
               winargs.y = screen.y(); // only safe choice until size is determined
           } else if (key == "height") {
-            winargs.height = (int)val.toFloat() + 2*tqApp->tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.height = (int)val.toFloat() + 2*tqApp->tqstyle().pixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.height > screen.height())  // should actually check workspace
               winargs.height = screen.height();
             if (winargs.height < 100)
               winargs.height = 100;
           } else if (key == "width") {
-            winargs.width = (int)val.toFloat() + 2*tqApp->tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
+            winargs.width = (int)val.toFloat() + 2*tqApp->tqstyle().pixelMetric( TQStyle::PM_DefaultFrameWidth ) + 2;
             if (winargs.width > screen.width())    // should actually check workspace
               winargs.width = screen.width();
             if (winargs.width < 100)
@@ -1897,8 +1897,8 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     KHTMLSettings::KJSWindowFocusPolicy policy =
 		part->settings()->windowFocusPolicy(part->url().host());
     if(policy == KHTMLSettings::KJSWindowFocusAllow && widget) {
-      widget->tqtopLevelWidget()->raise();
-      KWin::deIconifyWindow( widget->tqtopLevelWidget()->winId() );
+      widget->topLevelWidget()->raise();
+      KWin::deIconifyWindow( widget->topLevelWidget()->winId() );
       widget->setActiveWindow();
       emit part->browserExtension()->requestFocus(part);
     }
@@ -1950,7 +1950,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
-        TQWidget * tl = widget->tqtopLevelWidget();
+        TQWidget * tl = widget->topLevelWidget();
         TQRect sg = KGlobalSettings::desktopGeometry(tl);
 
         TQPoint dest = tl->pos() + TQPoint( args[0].toInt32(exec), args[1].toInt32(exec) );
@@ -1970,7 +1970,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
-        TQWidget * tl = widget->tqtopLevelWidget();
+        TQWidget * tl = widget->topLevelWidget();
         TQRect sg = KGlobalSettings::desktopGeometry(tl);
 
         TQPoint dest( args[0].toInt32(exec)+sg.x(), args[1].toInt32(exec)+sg.y() );
@@ -1989,7 +1989,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     if(policy == KHTMLSettings::KJSWindowResizeAllow
     		&& args.size() == 2 && widget)
     {
-      TQWidget * tl = widget->tqtopLevelWidget();
+      TQWidget * tl = widget->topLevelWidget();
       TQRect geom = tl->frameGeometry();
       window->resizeTo( tl,
                         geom.width() + args[0].toInt32(exec),
@@ -2003,7 +2003,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     if(policy == KHTMLSettings::KJSWindowResizeAllow
                && args.size() == 2 && widget)
     {
-      TQWidget * tl = widget->tqtopLevelWidget();
+      TQWidget * tl = widget->topLevelWidget();
       window->resizeTo( tl, args[0].toInt32(exec), args[1].toInt32(exec) );
     }
     return Undefined();
@@ -2412,7 +2412,7 @@ Value FrameArray::get(ExecState *exec, const Identifier &p) const
     bool ok;
     unsigned int i = p.toArrayIndex(&ok);
     if (ok && i < len)
-      frame = frames.tqat(i);
+      frame = frames.at(i);
   }
 
   // we are potentially fetching a reference to a another Window object here.
@@ -2545,7 +2545,7 @@ Value Location::get(ExecState *exec, const Identifier &p) const
 	return String("");
       return String( url.path().isEmpty() ? TQString("/") : url.path() );
     case Port:
-      return String( url.port() ? TQString::number((int)url.port()) : TQString::tqfromLatin1("") );
+      return String( url.port() ? TQString::number((int)url.port()) : TQString::fromLatin1("") );
     case Protocol:
       return String( url.protocol()+":" );
     case Search:

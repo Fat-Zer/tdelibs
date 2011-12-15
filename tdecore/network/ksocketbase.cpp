@@ -309,7 +309,7 @@ int KActiveSocketBase::putch(int ch)
 void KActiveSocketBase::setError(int status, SocketError error)
 {
   KSocketBase::setError(error);
-  setqStatus(status);
+  seStatus(status);
 }
 
 void KActiveSocketBase::resetError()

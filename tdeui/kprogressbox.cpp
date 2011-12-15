@@ -26,7 +26,7 @@
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <tqlabel.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <tqpushbutton.h>
 #include <tqstring.h>
 #include <tqregexp.h>

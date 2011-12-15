@@ -19,7 +19,7 @@
 */
 
 #include <tqfile.h>
-#include <tqtextstream.h>
+#include <textstream.h>
 
 #include <kabapi.h>
 #include <kaboutdata.h>
@@ -57,12 +57,12 @@ void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )
   TQString name;
   TQString comment;
 
-  if ( entry.tqat( entry.length() -1 ) == ')' ) {
+  if ( entry.at( entry.length() -1 ) == ')' ) {
     int br = entry.findRev( '(' );
     if ( br >= 0 ) {
       comment = entry.mid( br + 1, entry.length() - br - 2 );
       entry.truncate( br );
-      if ( entry.tqat( entry.length() - 1 ).isSpace() ) {
+      if ( entry.at( entry.length() - 1 ).isSpace() ) {
         entry.truncate( br - 1 );
       }
     }
@@ -80,22 +80,22 @@ void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )
     name = entry.left( posSpace );
   }
 
-  if ( email.tqat( 0 ) == '<' && email.tqat( email.length() - 1) == '>' ) {
+  if ( email.at( 0 ) == '<' && email.at( email.length() - 1) == '>' ) {
     email = email.mid( 1, email.length() - 2 );
   }
-  if ( name.tqat( 0 ) == '"' && name.tqat( name.length() - 1) == '"' ) {
+  if ( name.at( 0 ) == '"' && name.at( name.length() - 1) == '"' ) {
     name = name.mid( 1, name.length() - 2 );
   }
-  if ( name.tqat( 0 ) == '\'' && name.tqat( name.length() - 1) == '\'' ) {
+  if ( name.at( 0 ) == '\'' && name.at( name.length() - 1) == '\'' ) {
     name = name.mid( 1, name.length() - 2 );
   }
 
-  if ( name.tqat( name.length() -1 ) == ')' ) {
+  if ( name.at( name.length() -1 ) == ')' ) {
     int br = name.findRev( '(' );
     if ( br >= 0 ) {
       comment = name.mid( br + 1, name.length() - br - 2 ) + " " + comment;
       name.truncate( br );
-      if ( name.tqat( name.length() - 1 ).isSpace() ) {
+      if ( name.at( name.length() - 1 ).isSpace() ) {
         name.truncate( br - 1 );
       }
     }
@@ -148,16 +148,16 @@ void importKMailAddressBook( KABC::AddressBook *ab )
 
   TQStringList::ConstIterator it;
   for ( it = kmailEntries.begin(); it != kmailEntries.end(); ++it ) {
-    if ( (*it).tqat( 0 ) == '#' ) continue;
+    if ( (*it).at( 0 ) == '#' ) continue;
     bool insideQuote = false;
     int end = (*it).length() - 1;
     for ( int i = end; i; i-- ) {
-      if ( (*it).tqat( i ) == '"' ) {
+      if ( (*it).at( i ) == '"' ) {
         if ( insideQuote )
           insideQuote = false;
         else
           insideQuote = true;
-      } else if ( (*it).tqat( i ) == ',' && !insideQuote ) {
+      } else if ( (*it).at( i ) == ',' && !insideQuote ) {
         readKMailEntry( (*it).mid( i + 1, end - i ), ab );
         end = i - 1;
       }

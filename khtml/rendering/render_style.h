@@ -39,7 +39,7 @@
 #include <tqfont.h>
 #include <tqfontmetrics.h>
 #include <tqptrlist.h>
-#include <tqpalette.h>
+#include <palette.h>
 #include <tqapplication.h>
 
 #include "dom/dom_misc.h"
@@ -919,7 +919,7 @@ protected:
                 PseudoId _styleType : 4;
                 bool _hasClip : 1;
                 unsigned _pseudoBits : 8;
-                EUnicodeBidi _tqunicodeBidi : 2;
+                EUnicodeBidi _unicodeBidi : 2;
 
                 // non CSS2 non-inherited
                 bool _textOverflow : 1; // Whether or not lines that spill out should be truncated with "..."
@@ -991,7 +991,7 @@ protected:
 	noninherited_flags.f._styleType = NOPSEUDO;
 	noninherited_flags.f._hasClip = false;
         noninherited_flags.f._pseudoBits = 0;
-	noninherited_flags.f._tqunicodeBidi = initialUnicodeBidi();
+	noninherited_flags.f._unicodeBidi = initialUnicodeBidi();
 	noninherited_flags.f._textOverflow = initialTextOverflow();
         noninherited_flags.f.unused = 0;
     }
@@ -1108,7 +1108,7 @@ public:
     LengthBox clip() const { return visual->clip; }
     bool hasClip() const { return noninherited_flags.f._hasClip; }
 
-    EUnicodeBidi tqunicodeBidi() const { return noninherited_flags.f._tqunicodeBidi; }
+    EUnicodeBidi unicodeBidi() const { return noninherited_flags.f._unicodeBidi; }
 
     EClear clear() const { return  noninherited_flags.f._clear; }
     ETableLayout tableLayout() const { return  noninherited_flags.f._table_layout; }
@@ -1272,7 +1272,7 @@ public:
     void setClip( Length top, Length right, Length bottom, Length left );
     void setHasClip( bool b ) { noninherited_flags.f._hasClip = b; }
 
-    void setUnicodeBidi( EUnicodeBidi b ) { noninherited_flags.f._tqunicodeBidi = b; }
+    void setUnicodeBidi( EUnicodeBidi b ) { noninherited_flags.f._unicodeBidi = b; }
 
     void setClear(EClear v) {  noninherited_flags.f._clear = v; }
     void setTableLayout(ETableLayout v) {  noninherited_flags.f._table_layout = v; }

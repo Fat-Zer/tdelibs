@@ -135,7 +135,7 @@ TQString KGuiItem::plainText() const
     int resultLength = 0;
     stripped.setLength(len);
 
-    const TQChar* data    = d->m_text.tqunicode();
+    const TQChar* data    = d->m_text.unicode();
     for ( int pos = 0; pos < len; ++pos )
     {
         if ( data[ pos ] != '&' )

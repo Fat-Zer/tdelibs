@@ -27,7 +27,7 @@
 
 #include <tqlabel.h>
 #include <kpushbutton.h>
-#include <tqlayout.h>
+#include <layout.h>
 #include <klocale.h>
 #include <kapplication.h>
 #include <kmessagebox.h>

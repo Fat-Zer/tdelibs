@@ -78,7 +78,7 @@ public:
 
     TQRect rect() const
     {
-        TQRect r = listView()->tqitemRect(this);
+        TQRect r = listView()->itemRect(this);
         return TQRect( listView()->viewportToContents( r.topLeft() ),
                       TQSize( r.width(), r.height() ) );
     }
