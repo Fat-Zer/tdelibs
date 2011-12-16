@@ -20,7 +20,7 @@
 #include "messagewindow.h"
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtimer.h>
 #include <tqpixmap.h>
 #include <tqhbox.h>

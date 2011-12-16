@@ -79,7 +79,7 @@ namespace KJS {
     /**
      * @return the 16 bit Unicode value of the character
      */
-    unsigned short unicode() const { return uc; }
+    unsigned short tqunicode() const { return uc; }
   public:
     /**
      * @return The character converted to lower case.
@@ -132,7 +132,7 @@ namespace KJS {
     /**
      * @return Unicode value.
      */
-    unsigned short unicode() const { return ref().uc; }
+    unsigned short tqunicode() const { return ref().uc; }
     /**
      * @return Lower byte.
      */
@@ -158,7 +158,7 @@ namespace KJS {
     int offset;
   };
 
-  inline UChar::UChar(const UCharReference &c) : uc(c.unicode()) { }
+  inline UChar::UChar(const UCharReference &c) : uc(c.tqunicode()) { }
 
   /**
    * @short 8 bit char based string class

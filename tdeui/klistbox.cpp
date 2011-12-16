@@ -133,7 +133,7 @@ void KListBox::slotAutoSelect()
 
       bool select = !m_pCurrentItem->isSelected();
       bool update = viewport()->isUpdatesEnabled();
-      viewport()->setUpdatesEnabled( false );
+      viewport()->tqsetUpdatesEnabled( false );
 
       bool down = index( previousItem ) < index( m_pCurrentItem );
       TQListBoxItem* it = down ? previousItem : m_pCurrentItem;
@@ -150,7 +150,7 @@ void KListBox::slotAutoSelect()
       }
       
       blockSignals( block );
-      viewport()->setUpdatesEnabled( update );
+      viewport()->tqsetUpdatesEnabled( update );
       triggerUpdate( false );
 
       emit selectionChanged();

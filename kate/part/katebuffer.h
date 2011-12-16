@@ -116,7 +116,7 @@ class KateBufBlock
     void removeLine(uint i);
 
     /**
-     * mark this block as dirty, will invalidate the swap data
+     * mark this block as dirty, will tqinvalidate the swap data
      * insert/removeLine will mark the block dirty itself
      */
     void markDirty ();
@@ -611,7 +611,7 @@ class KateBuffer : public TQObject
      * @returns true when the highlighting in the next block needs to be updated,
      * false otherwise.
      */
-    bool doHighlight (KateBufBlock *buf, uint from, uint to, bool invalidate);
+    bool doHighlight (KateBufBlock *buf, uint from, uint to, bool tqinvalidate);
 
   signals:
     /**

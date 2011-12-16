@@ -95,7 +95,7 @@ KShred::fillbyte(unsigned int byte)
   }
   if (!flush())
     return false;
-  return file->at(0);
+  return file->tqat(0);
 }
 
 
@@ -114,7 +114,7 @@ KShred::fillpattern(unsigned char *data, unsigned int size)
   }
   if (!flush())
     return false;
-  return file->at(0);
+  return file->tqat(0);
 }
 
 
@@ -140,7 +140,7 @@ KShred::fillrandom()
   }
   if (!flush())
     return false;
-  return file->at(0);
+  return file->tqat(0);
 }
 
 

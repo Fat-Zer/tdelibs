@@ -535,9 +535,9 @@ bool RenderObject::hasStaticY() const
 
 void RenderObject::setPixmap(const TQPixmap&, const TQRect& /*r*/, CachedImage* image)
 {
-    //repaint bg when it finished loading
+    //tqrepaint bg when it finished loading
     if(image && parent() && style() && style()->backgroundLayers()->containsImage(image)) {
-        isBody() ? canvas()->repaint() : repaint();
+        isBody() ? canvas()->tqrepaint() : tqrepaint();
     }
 }
 
@@ -1164,15 +1164,15 @@ TQString RenderObject::information() const
        << " mB: " << marginBottom() << " qB: " << isBottomMarginQuirk()
        << "}"
         << (isTableCell() ?
-            ( TQString::fromLatin1(" [r=") +
+            ( TQString::tqfromLatin1(" [r=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->row() ) +
-              TQString::fromLatin1(" c=") +
+              TQString::tqfromLatin1(" c=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->col() ) +
-              TQString::fromLatin1(" rs=") +
+              TQString::tqfromLatin1(" rs=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->rowSpan() ) +
-              TQString::fromLatin1(" cs=") +
+              TQString::tqfromLatin1(" cs=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->colSpan() ) +
-              TQString::fromLatin1("]") ) : TQString::null );
+              TQString::tqfromLatin1("]") ) : TQString::null );
     if ( layer() )
         ts << " layer=" << layer();
     if ( continuation() )
@@ -1283,11 +1283,11 @@ void RenderObject::setStyle(RenderStyle *style)
                m_style->outlineWidth() > style->outlineWidth() ||
                (!m_style->hidesOverflow() && style->hidesOverflow()) ||
                ( m_style->hasClip() && !(m_style->clip() == style->clip()) ) ) ) {
-            // schedule a repaint with the old style
+            // schedule a tqrepaint with the old style
             if (layer() && !isInlineFlow())
-                layer()->repaint(pri);
+                layer()->tqrepaint(pri);
             else
-                repaint(pri);
+                tqrepaint(pri);
         }
 
         if ( ( isFloating() && m_style->floating() != style->floating() ) ||
@@ -1345,7 +1345,7 @@ void RenderObject::setStyle(RenderStyle *style)
             }
             setNeedsLayoutAndMinMaxRecalc();
         } else if (!isText() && d >= RenderStyle::Visible) {
-            // a repaint is enough
+            // a tqrepaint is enough
             if (layer()) {
                 if (canvas() && canvas()->needsWidgetMasks()) {
                     // update our widget masks
@@ -1357,9 +1357,9 @@ void RenderObject::setStyle(RenderStyle *style)
                 }
             }
             if (layer() && !isInlineFlow())
-                layer()->repaint(pri);
+                layer()->tqrepaint(pri);
             else
-                repaint(pri);
+                tqrepaint(pri);
         }
     }
 }
@@ -1428,9 +1428,9 @@ void RenderObject::repaintDuringLayout()
     if (canvas()->needsFullRepaint() || isText())
         return;
     if (layer() && !isInlineFlow()) {
-        layer()->repaint( NormalPriority, true );
+        layer()->tqrepaint( NormalPriority, true );
     } else {
-       repaint();
+       tqrepaint();
        canvas()->deferredRepaint( this );
     }
 }
@@ -1850,7 +1850,7 @@ short RenderObject::getVerticalPosition( bool firstLine, RenderObject* ref ) con
             bool checkParent = ref->isInline() && !ref->isReplacedBlock() &&
                                !( ref->style()->verticalAlign() == TOP || ref->style()->verticalAlign() == BOTTOM );
             vpos = checkParent ? ref->verticalPositionHint( firstLine ) : 0;
-            // don't allow elements nested inside text-top to have a different valignment.
+            // don't allow elements nested inside text-top to have a different vtqalignment.
             if ( va == BASELINE )
                 return vpos;
             else if ( va == LENGTH )

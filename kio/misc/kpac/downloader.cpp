@@ -21,7 +21,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 #include <kcharsets.h>
 #include <kglobal.h>

@@ -186,10 +186,10 @@ public:
     void togglePerm( acl_perm_t perm );
 
     virtual void paintCell( TQPainter *p, const TQColorGroup &cg,
-                            int column, int width, int alignment );
+                            int column, int width, int tqalignment );
 
     void updatePermPixmaps();
-    void repaint();
+    void tqrepaint();
 
     KACLListView::EntryType type;
     unsigned short value;

@@ -87,7 +87,7 @@ public:
     virtual int rightmostPosition(bool includeOverflowInterior=true, bool includeSelf=true) const;
     virtual int leftmostPosition(bool includeOverflowInterior=true, bool includeSelf=true) const;
 
-    virtual void repaint(Priority p=NormalPriority);
+    virtual void tqrepaint(Priority p=NormalPriority);
 
     virtual void repaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
 

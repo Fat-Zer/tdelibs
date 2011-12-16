@@ -22,9 +22,9 @@
 #include <tqcheckbox.h>
 #include <tqhbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqsimplerichtext.h>
-#include <stylesheet.h>
+#include <tqstylesheet.h>
 
 #include <kcombobox.h>
 #include <kconfig.h>
@@ -198,7 +198,7 @@ static void calculateLabelSize(TQLabel *label)
    // Calculate a proper size for the text.
    {
        TQSimpleRichText rt(qt_text, label->font());
-       TQRect d = KGlobalSettings::desktopGeometry(label->topLevelWidget());
+       TQRect d = KGlobalSettings::desktopGeometry(label->tqtopLevelWidget());
 
        pref_width = d.width() / 4;
        rt.setWidth(pref_width-10);

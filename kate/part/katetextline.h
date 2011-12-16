@@ -145,10 +145,10 @@ class KateTextLine : public KShared
     inline TQChar getChar (uint pos) const { return m_text[pos]; }
 
     /**
-     * Gets the text as a unicode representation
+     * Gets the text as a tqunicode representation
      * @return text of this line as TQChar array
      */
-    inline const TQChar *text() const { return m_text.unicode(); }
+    inline const TQChar *text() const { return m_text.tqunicode(); }
 
     /**
      * Highlighting array
@@ -419,7 +419,7 @@ class KateTextLine : public KShared
    */
   private:
     /**
-     * text of line as unicode
+     * text of line as tqunicode
      */
     TQString m_text;
 

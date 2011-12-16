@@ -86,7 +86,7 @@ void KNumInput::init()
 
     m_label = 0;
     m_slider = 0;
-    m_alignment = 0;
+    m_tqalignment = 0;
 }
 
 KNumInput::~KNumInput()
@@ -103,17 +103,17 @@ void KNumInput::setLabel(const TQString & label, int a)
     if(label.isEmpty()) {
         delete m_label;
         m_label = 0;
-        m_alignment = 0;
+        m_tqalignment = 0;
     }
     else {
         if (m_label) m_label->setText(label);
         else m_label = new TQLabel(label, this, "KNumInput::TQLabel");
         m_label->setAlignment((a & (~(AlignTop|AlignBottom|AlignVCenter)))
                               | AlignVCenter);
-        // if no vertical alignment set, use Top alignment
+        // if no vertical tqalignment set, use Top tqalignment
         if(!(a & (AlignTop|AlignBottom|AlignVCenter)))
            a |= AlignTop;
-        m_alignment = a;
+        m_tqalignment = a;
     }
 
     layout(true);
@@ -133,7 +133,7 @@ void KNumInput::layout(bool deep)
     // label sizeHint
     m_sizeLabel = (m_label ? m_label->sizeHint() : TQSize(0,0));
 
-    if(m_label && (m_alignment & AlignVCenter))
+    if(m_label && (m_tqalignment & AlignVCenter))
         m_colw1 = m_sizeLabel.width() + 4;
     else
         m_colw1 = 0;
@@ -422,7 +422,7 @@ TQSize KIntNumInput::minimumSizeHint() const
     h = 2 + QMAX(m_sizeSpin.height(), m_sizeSlider.height());
 
     // if in extra row, then count it here
-    if(m_label && (m_alignment & (AlignBottom|AlignTop)))
+    if(m_label && (m_tqalignment & (AlignBottom|AlignTop)))
         h += 4 + m_sizeLabel.height();
     else
         // label is in the same row as the other widgets
@@ -431,7 +431,7 @@ TQSize KIntNumInput::minimumSizeHint() const
     w = m_slider ? m_slider->sizeHint().width() + 8 : 0;
     w += m_colw1 + m_colw2;
 
-    if(m_alignment & (AlignTop|AlignBottom))
+    if(m_tqalignment & (AlignTop|AlignBottom))
         w = QMAX(w, m_sizeLabel.width() + 4);
 
     return TQSize(w, h);
@@ -451,12 +451,12 @@ void KIntNumInput::resizeEvent(TQResizeEvent* e)
     int w = m_colw1;
     int h = 0;
 
-    if(m_label && (m_alignment & AlignTop)) {
+    if(m_label && (m_tqalignment & AlignTop)) {
         m_label->setGeometry(0, 0, e->size().width(), m_sizeLabel.height());
         h += m_sizeLabel.height() + KDialog::spacingHint();
     }
 
-    if(m_label && (m_alignment & AlignVCenter))
+    if(m_label && (m_tqalignment & AlignVCenter))
         m_label->setGeometry(0, 0, w, m_sizeSpin.height());
 
     if (tqApp->reverseLayout())
@@ -477,7 +477,7 @@ void KIntNumInput::resizeEvent(TQResizeEvent* e)
 
     h += m_sizeSpin.height() + 2;
 
-    if(m_label && (m_alignment & AlignBottom))
+    if(m_label && (m_tqalignment & AlignBottom))
         m_label->setGeometry(0, h, m_sizeLabel.width(), m_sizeLabel.height());
 }
 
@@ -663,7 +663,7 @@ TQSize KDoubleNumInput::minimumSizeHint() const
     h = 2 + QMAX(m_sizeEdit.height(), m_sizeSlider.height());
 
     // if in extra row, then count it here
-    if(m_label && (m_alignment & (AlignBottom|AlignTop)))
+    if(m_label && (m_tqalignment & (AlignBottom|AlignTop)))
         h += 4 + m_sizeLabel.height();
     else
         // label is in the same row as the other widgets
@@ -672,7 +672,7 @@ TQSize KDoubleNumInput::minimumSizeHint() const
     w = m_slider ? m_slider->sizeHint().width() + 8 : 0;
     w += m_colw1 + m_colw2;
 
-    if(m_alignment & (AlignTop|AlignBottom))
+    if(m_tqalignment & (AlignTop|AlignBottom))
         w = QMAX(w, m_sizeLabel.width() + 4);
 
     return TQSize(w, h);
@@ -683,12 +683,12 @@ void KDoubleNumInput::resizeEvent(TQResizeEvent* e)
     int w = m_colw1;
     int h = 0;
 
-    if(m_label && (m_alignment & AlignTop)) {
+    if(m_label && (m_tqalignment & AlignTop)) {
         m_label->setGeometry(0, 0, e->size().width(), m_sizeLabel.height());
         h += m_sizeLabel.height() + 4;
     }
 
-    if(m_label && (m_alignment & AlignVCenter))
+    if(m_label && (m_tqalignment & AlignVCenter))
         m_label->setGeometry(0, 0, w, m_sizeEdit.height());
 
     if (tqApp->reverseLayout())
@@ -713,7 +713,7 @@ void KDoubleNumInput::resizeEvent(TQResizeEvent* e)
 
     h += m_sizeEdit.height() + 2;
 
-    if(m_label && (m_alignment & AlignBottom))
+    if(m_label && (m_tqalignment & AlignBottom))
         m_label->setGeometry(0, h, m_sizeLabel.width(), m_sizeLabel.height());
 }
 

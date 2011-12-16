@@ -33,7 +33,7 @@ class TQWidget;
  *
  * A wrapper around TQCursor that allows for "themed" cursors.
  *
- * Currently, the only themed cursor is a hand shaped cursor.
+ * Currently, the only themed cursor is a hand tqshaped cursor.
  *
  * A typical usage would be
  * \code

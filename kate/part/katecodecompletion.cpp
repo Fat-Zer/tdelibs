@@ -42,7 +42,7 @@
 #include <tqapplication.h>
 #include <tqsizegrip.h>
 #include <tqfontmetrics.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqregexp.h>
 
 /**
@@ -384,7 +384,7 @@ void KateCodeCompletion::showComment()
   m_completionListBox->ensureCurrentVisible();
 
   finalPoint.setY(
-    m_completionListBox->viewport()->mapToGlobal(m_completionListBox->itemRect(
+    m_completionListBox->viewport()->mapToGlobal(m_completionListBox->tqitemRect(
       m_completionListBox->item(m_completionListBox->currentItem())).topLeft()).y());
 
   m_commentLabel->move(finalPoint);

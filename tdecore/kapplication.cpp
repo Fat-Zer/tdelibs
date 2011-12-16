@@ -44,14 +44,14 @@
 #include <tqstrlist.h>
 #include <tqfile.h>
 #include <tqmessagebox.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 #include <tqlineedit.h>
-#include <textedit.h>
+#include <tqtextedit.h>
 #include <tqsessionmanager.h>
 #include <tqptrlist.h>
 #include <tqtimer.h>
-#include <stylesheet.h>
+#include <tqstylesheet.h>
 #include <tqpixmapcache.h>
 #include <tqtooltip.h>
 #include <tqstylefactory.h>
@@ -1012,7 +1012,7 @@ void KApplication::init(bool GUIenabled)
 
   // install appdata resource type
   KGlobal::dirs()->addResourceType("appdata", KStandardDirs::kde_default("data")
-                                   + TQString::fromLatin1(name()) + '/');
+                                   + TQString::tqfromLatin1(name()) + '/');
   pSessionConfig = 0L;
   bSessionManagement = true;
 
@@ -1291,7 +1291,7 @@ void KApplication::commitData( TQSessionManager& sm )
 
     if ( sm.allowsInteraction() ) {
         TQWidgetList done;
-        TQWidgetList *list = TQApplication::topLevelWidgets();
+        TQWidgetList *list = TQApplication::tqtopLevelWidgets();
         bool canceled = false;
         TQWidget* w = list->first();
         while ( !canceled && w ) {
@@ -1302,7 +1302,7 @@ void KApplication::commitData( TQSessionManager& sm )
                 if ( !canceled )
                     done.append( w );
                 delete list; // one never knows...
-                list = TQApplication::topLevelWidgets();
+                list = TQApplication::tqtopLevelWidgets();
                 w = list->first();
             } else {
                 w = list->next();
@@ -1449,9 +1449,9 @@ void KApplication::startKdeinit()
          return; // whoever held the lock has already started dcopserver
   }
   // Try to launch tdeinit.
-  TQString srv = KStandardDirs::findExe(TQString::fromLatin1("tdeinit"));
+  TQString srv = KStandardDirs::findExe(TQString::tqfromLatin1("tdeinit"));
   if (srv.isEmpty())
-     srv = KStandardDirs::findExe(TQString::fromLatin1("tdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
+     srv = KStandardDirs::findExe(TQString::tqfromLatin1("tdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
   if (srv.isEmpty())
      return;
   if (kapp && (Tty != kapp->type()))
@@ -2208,11 +2208,11 @@ void KApplication::updateRemoteUserTimestamp( const TQCString& dcopId, unsigned 
 
 void KApplication::invokeEditSlot( const char *slot )
 {
-  TQObject *object = TQT_TQOBJECT(focusWidget());
+  TQObject *object = TQT_TQOBJECT(tqfocusWidget());
   if( !object )
     return;
 
-  TQMetaObject *meta = object->metaObject();
+  TQMetaObject *meta = object->tqmetaObject();
 
   int idx = meta->findSlot( slot + 1, true );
   if( idx < 0 )
@@ -2430,7 +2430,7 @@ void KApplication::kdisplaySetPalette()
             return;
     }
 #endif
-    TQApplication::setPalette( createApplicationPalette(), true);
+    TQApplication::tqsetPalette( createApplicationPalette(), true);
     emit kdisplayPaletteChanged();
     emit appearanceChanged();
 }
@@ -2438,10 +2438,10 @@ void KApplication::kdisplaySetPalette()
 
 void KApplication::kdisplaySetFont()
 {
-    TQApplication::setFont(KGlobalSettings::generalFont(), true);
-    TQApplication::setFont(KGlobalSettings::menuFont(), true, TQMENUBAR_OBJECT_NAME_STRING);
-    TQApplication::setFont(KGlobalSettings::menuFont(), true, TQPOPUPMENU_OBJECT_NAME_STRING);
-    TQApplication::setFont(KGlobalSettings::menuFont(), true, "KPopupTitle");
+    TQApplication::tqsetFont(KGlobalSettings::generalFont(), true);
+    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, TQMENUBAR_OBJECT_NAME_STRING);
+    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, TQPOPUPMENU_OBJECT_NAME_STRING);
+    TQApplication::tqsetFont(KGlobalSettings::menuFont(), true, "KPopupTitle");
 
     // "patch" standard TQStyleSheet to follow our fonts
     TQStyleSheet* sheet = TQStyleSheet::defaultSheet();
@@ -2777,10 +2777,10 @@ void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const 
    TQString command = config.readPathEntry("EmailClient");
 
    TQString to, cc, bcc;
-   if (command.isEmpty() || command == TQString::fromLatin1("kmail")
+   if (command.isEmpty() || command == TQString::tqfromLatin1("kmail")
        || command.endsWith("/kmail"))
    {
-     command = TQString::fromLatin1("kmail --composer -s %s -c %c -b %b --body %B --attach %A -- %t");
+     command = TQString::tqfromLatin1("kmail --composer -s %s -c %c -b %b --body %B --attach %A -- %t");
      if ( !_to.isEmpty() )
      {
        // put the whole address lists into RFC2047 encoded blobs; technically

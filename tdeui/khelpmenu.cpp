@@ -119,7 +119,7 @@ KPopupMenu* KHelpMenu::menu()
     // compatible.
     //
     const KAboutData *aboutData = d->mAboutData ? d->mAboutData : KGlobal::instance()->aboutData();
-    TQString appName = (aboutData)? aboutData->programName() : TQString::fromLatin1(tqApp->name());
+    TQString appName = (aboutData)? aboutData->programName() : TQString::tqfromLatin1(tqApp->name());
 
     mMenu = new KPopupMenu();
     connect( mMenu, TQT_SIGNAL(destroyed()), this, TQT_SLOT(menuDestroyed()));

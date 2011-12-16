@@ -53,7 +53,7 @@ void KMJobManager::discardAllJobs()
 void KMJobManager::removeDiscardedJobs()
 {
 	for (uint i=0;i<m_jobs.count();i++)
-		if (m_jobs.at(i)->isDiscarded())
+		if (m_jobs.tqat(i)->isDiscarded())
 		{
 			m_jobs.remove(i);
 			i--;

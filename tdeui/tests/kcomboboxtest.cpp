@@ -14,7 +14,7 @@
 #include <ksimpleconfig.h>
 
 #include <tqpushbutton.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpixmap.h>
 #include <tqlabel.h>
 #include <tqhbox.h>

@@ -31,7 +31,7 @@ class KURLComboBox::KURLComboBoxPrivate
 {
 public:
     KURLComboBoxPrivate() {
-	dirpix = SmallIcon(TQString::fromLatin1("folder"));
+	dirpix = SmallIcon(TQString::tqfromLatin1("folder"));
     }
 
     TQPixmap dirpix;
@@ -72,7 +72,7 @@ void KURLComboBox::init( Mode mode )
     setTrapReturnKey( true );
     setSizePolicy( TQSizePolicy( TQSizePolicy::Expanding, TQSizePolicy::Fixed ));
 
-    opendirPix = SmallIcon(TQString::fromLatin1("folder_open"));
+    opendirPix = SmallIcon(TQString::tqfromLatin1("folder_open"));
 
     connect( this, TQT_SIGNAL( activated( int )), TQT_SLOT( slotActivated( int )));
 }
@@ -87,7 +87,7 @@ TQStringList KURLComboBox::urls() const
     for ( int i = defaultList.count(); i < count(); i++ ) {
         url = text( i );
         if ( !url.isEmpty() ) {
-            //if ( url.at(0) == '/' )
+            //if ( url.tqat(0) == '/' )
             //    list.append( url.prepend( fileProt ) );
             //else
                 list.append( url );
@@ -129,7 +129,7 @@ void KURLComboBox::setDefaults()
 
     KURLComboItem *item;
     for ( unsigned int id = 0; id < defaultList.count(); id++ ) {
-        item = defaultList.at( id );
+        item = defaultList.tqat( id );
         insertURLItem( item );
     }
 }

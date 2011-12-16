@@ -23,7 +23,7 @@
 #include "kspell_hspelldict.h"
 #include <kdebug.h>
 
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 using namespace KSpell2;
 

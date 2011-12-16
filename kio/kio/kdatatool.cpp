@@ -167,11 +167,11 @@ TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const
 
     if ( !datatype.isEmpty() )
     {
-        constr = TQString::fromLatin1( "DataType == '%1'" ).arg( datatype );
+        constr = TQString::tqfromLatin1( "DataType == '%1'" ).arg( datatype );
     }
     if ( !mimetype.isEmpty() )
     {
-        TQString tmp = TQString::fromLatin1( "'%1' in DataMimeTypes" ).arg( mimetype );
+        TQString tmp = TQString::tqfromLatin1( "'%1' in DataMimeTypes" ).arg( mimetype );
         if ( constr.isEmpty() )
             constr = tmp;
         else
@@ -180,7 +180,7 @@ TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const
 /* Bug in KTrader ? Test with HEAD-tdelibs!
     if ( instance )
     {
-        TQString tmp = TQString::fromLatin1( "not ('%1' in ExcludeFrom)" ).arg( instance->instanceName() );
+        TQString tmp = TQString::tqfromLatin1( "not ('%1' in ExcludeFrom)" ).arg( instance->instanceName() );
         if ( constr.isEmpty() )
             constr = tmp;
         else

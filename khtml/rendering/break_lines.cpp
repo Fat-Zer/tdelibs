@@ -1,7 +1,7 @@
 #include <break_lines.h>
 #include <klibloader.h>
 #include "tqcstring.h"
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <tqcleanuphandler.h>
 #include <config.h>
 

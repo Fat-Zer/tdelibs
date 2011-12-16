@@ -94,7 +94,7 @@ static TQString makeWalletKey( const TQString& key, const TQString& realm )
 // Helper for storeInWallet/readFromWallet
 static TQString makeMapKey( const char* key, int entryNumber )
 {
-    TQString str = TQString::fromLatin1( key );
+    TQString str = TQString::tqfromLatin1( key );
     if ( entryNumber > 1 )
         str += "-" + TQString::number( entryNumber );
     return str;

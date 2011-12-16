@@ -24,7 +24,7 @@
 #include "kmdriverdb.h"
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <kpushbutton.h>
 #include <klistbox.h>
 #include <klocale.h>
@@ -93,7 +93,7 @@ void KMWDriverSelect::updatePrinter(KMPrinter *p)
 	int	index = m_list->currentItem();
 	if (m_entries && index >= 0 && index < (int)(m_entries->count()))
 	{
-		KMDBEntry	*entry = m_entries->at(index);
+		KMDBEntry	*entry = m_entries->tqat(index);
 		p->setDbEntry(entry);
 		p->setDriverInfo(entry->description);
 	}
@@ -107,8 +107,8 @@ void KMWDriverSelect::updatePrinter(KMPrinter *p)
 void KMWDriverSelect::slotDriverComment()
 {
 	int	index = m_list->currentItem();
-	if (m_entries && index >=0 && index < (int)(m_entries->count()) && !m_entries->at(index)->drivercomment.isEmpty())
-		KMessageBox::information(this, m_entries->at(index)->drivercomment, TQString::null, TQString::null, KMessageBox::AllowLink);
+	if (m_entries && index >=0 && index < (int)(m_entries->count()) && !m_entries->tqat(index)->drivercomment.isEmpty())
+		KMessageBox::information(this, m_entries->tqat(index)->drivercomment, TQString::null, TQString::null, KMessageBox::AllowLink);
 	else
 		KMessageBox::error(this, i18n("No information about the selected driver."));
 }

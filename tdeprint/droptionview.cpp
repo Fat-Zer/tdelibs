@@ -29,7 +29,7 @@
 #include <tqvbuttongroup.h>
 #include <tqradiobutton.h>
 #include <tqwidgetstack.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqapplication.h>
 
 #include <kcursor.h>

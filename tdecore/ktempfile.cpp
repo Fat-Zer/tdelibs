@@ -46,7 +46,7 @@
 #include <tqdatetime.h>
 #include <tqfile.h>
 #include <tqdatastream.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 #include "kglobal.h"
 #include "kapplication.h"

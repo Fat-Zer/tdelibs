@@ -137,7 +137,7 @@ public:
     ~CSSRuleListImpl();
 
     unsigned long length() const { return m_lstCSSRules.count(); }
-    CSSRuleImpl *item ( unsigned long index ) { return m_lstCSSRules.at( index ); }
+    CSSRuleImpl *item ( unsigned long index ) { return m_lstCSSRules.tqat( index ); }
 
 
     /* not part of the DOM */

@@ -23,7 +23,7 @@
 #include "lprsettings.h"
 
 #include <kstandarddirs.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 #include <kdebug.h>
 #include <klocale.h>

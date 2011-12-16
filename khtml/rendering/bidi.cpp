@@ -242,7 +242,7 @@ static inline RenderObject *Bidinext(RenderObject *par, RenderObject *current, B
         if (!oldEndOfInline && !current->isFloating() && !current->isReplaced() && !current->isPositioned()) {
             next = current->firstChild();
             if ( next && adjustEmbedding ) {
-                EUnicodeBidi ub = next->style()->unicodeBidi();
+                EUnicodeBidi ub = next->style()->tqunicodeBidi();
                 if ( ub != UBNormal && !emptyRun ) {
                     EDirection dir = next->style()->direction();
                     TQChar::Direction d = ( ub == Embed ? ( dir == RTL ? TQChar::DirRLE : TQChar::DirLRE )
@@ -261,7 +261,7 @@ static inline RenderObject *Bidinext(RenderObject *par, RenderObject *current, B
             while (current && current != par) {
                 next = current->nextSibling();
                 if (next) break;
-                if ( adjustEmbedding && current->style()->unicodeBidi() != UBNormal && !emptyRun ) {
+                if ( adjustEmbedding && current->style()->tqunicodeBidi() != UBNormal && !emptyRun ) {
                     embed( TQChar::DirPDF, bidi );
                 }
                 current = current->parent();
@@ -454,7 +454,7 @@ static void checkMidpoints(BidiIterator& lBreak, BidiState &bidi)
                     // Don't shave a character off the endpoint if it was from a soft hyphen.
                     RenderText* textObj = static_cast<RenderText*>(endpoint.obj);
                     if (endpoint.pos+1 < textObj->length() &&
-                        textObj->text()[endpoint.pos+1].unicode() == SOFT_HYPHEN)
+                        textObj->text()[endpoint.pos+1].tqunicode() == SOFT_HYPHEN)
                         return;
                 }
                 endpoint.pos--;
@@ -484,7 +484,7 @@ static void appendRunsForObject(int start, int end, RenderObject* obj, BidiState
     bool haveNextMidpoint = (smidpoints && sCurrMidpoint < sNumMidpoints);
     BidiIterator nextMidpoint;
     if (haveNextMidpoint)
-        nextMidpoint = smidpoints->at(sCurrMidpoint);
+        nextMidpoint = smidpoints->tqat(sCurrMidpoint);
     if (betweenMidpoints) {
         if (!(haveNextMidpoint && nextMidpoint.obj == obj))
             return;
@@ -1241,7 +1241,7 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
 	}
 
 	// this causes the operator ++ to open and close embedding levels as needed
-	// for the CSS unicode-bidi property
+	// for the CSS tqunicode-bidi property
 	adjustEmbedding = true;
         bidi.current.increment( bidi );
 	adjustEmbedding = false;
@@ -1611,11 +1611,11 @@ BidiIterator RenderBlock::findNextLineBreak(BidiIterator &start, BidiState &bidi
     // be skipped.
     while (!start.atEnd() && (start.obj->isInlineFlow() || (!start.obj->style()->preserveWS() && !start.obj->isBR() &&
 #ifndef QT_NO_UNICODETABLES
-        ( (start.current().unicode() == (ushort)0x0020) || // ASCII space
-          (start.current().unicode() == (ushort)0x0009) || // ASCII tab
-          (start.current().unicode() == (ushort)0x000A) || // ASCII line feed
-          (start.current().unicode() == (ushort)0x000C) || // ASCII form feed
-          (start.current().unicode() == (ushort)0x200B) || // Zero-width space
+        ( (start.current().tqunicode() == (ushort)0x0020) || // ASCII space
+          (start.current().tqunicode() == (ushort)0x0009) || // ASCII tab
+          (start.current().tqunicode() == (ushort)0x000A) || // ASCII line feed
+          (start.current().tqunicode() == (ushort)0x000C) || // ASCII form feed
+          (start.current().tqunicode() == (ushort)0x200B) || // Zero-width space
           start.obj->isFloatingOrPositioned() )
 #else
 	      ( start.current() == ' ' || start.current() == '\n' || start.obj->isFloatingOrPositioned() )
@@ -1824,7 +1824,7 @@ BidiIterator RenderBlock::findNextLineBreak(BidiIterator &start, BidiState &bidi
                     isLineEmpty = false;
 
                 // Check for soft hyphens.  Go ahead and ignore them.
-                if (c.unicode() == SOFT_HYPHEN && pos > 0) {
+                if (c.tqunicode() == SOFT_HYPHEN && pos > 0) {
                     nextIsSoftBreakable = true;
                     if (!ignoringSpaces) {
                         // Ignore soft hyphens
@@ -1911,7 +1911,7 @@ BidiIterator RenderBlock::findNextLineBreak(BidiIterator &start, BidiState &bidi
                                 lBreak.endOfInline = false;
                             }
                             goto end;
-                        } else if ( (pos > 1 && str[pos-1].unicode() == SOFT_HYPHEN) )
+                        } else if ( (pos > 1 && str[pos-1].tqunicode() == SOFT_HYPHEN) )
                             // Subtract the width of the soft hyphen out since we fit on a line.
                             tmpW -= t->width(pos-1, 1, f);
                     }
@@ -2189,7 +2189,7 @@ BidiIterator RenderBlock::findNextLineBreak(BidiIterator &start, BidiState &bidi
         // For soft hyphens on line breaks, we have to chop out the midpoints that made us
         // ignore the hyphen so that it will render at the end of the line.
         TQChar c = static_cast<RenderText*>(lBreak.obj)->text()[lBreak.pos-1];
-        if (c.unicode() == SOFT_HYPHEN)
+        if (c.tqunicode() == SOFT_HYPHEN)
             chopMidpointsAt(lBreak.obj, lBreak.pos-2);
     }
 

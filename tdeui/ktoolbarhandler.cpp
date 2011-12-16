@@ -209,7 +209,7 @@ void ToolBarHandler::init( KMainWindow *mainWindow )
 
     if ( domDocument().documentElement().isNull() ) {
 
-        TQString completeDescription = TQString::fromLatin1( guiDescription )
+        TQString completeDescription = TQString::tqfromLatin1( guiDescription )
             .arg( actionListName );
 
         setXML( completeDescription, false /*merge*/ );

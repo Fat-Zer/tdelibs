@@ -182,7 +182,7 @@ TQString KSSLSettings::getCipherList() {
 	// Also remove NULL ciphers and 168bit ciphers
 	for (unsigned int i = 0; i < cipherList.count(); i++) {
 		CipherNode *j = 0L;
-		while ((j = cipherList.at(i)) != 0L) {
+		while ((j = cipherList.tqat(i)) != 0L) {
 			if (j->name.contains("ADH-") || j->name.contains("NULL-") || j->name.contains("DES-CBC3-SHA") || j->name.contains("FZA")) {
 				cipherList.remove(j);
 			} else {

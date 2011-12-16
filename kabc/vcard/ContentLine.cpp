@@ -174,7 +174,7 @@ ContentLine::_parse()
 		return;
 	}
 	
-	name_ = l.at(0);
+	name_ = l.tqat(0);
 
 	// Now we have the name, so the rest of 'l' is the params.
 	// Remove the name part.

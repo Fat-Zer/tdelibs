@@ -508,7 +508,7 @@ int KPrinterImpl::autoConvertFiles(KPrinter *printer, TQStringList& files, bool 
 					       TQString::null,
 					       i18n("Convert"),
 					       i18n("Keep"),
-					       TQString::fromLatin1("tdeprintAutoConvert"))) == KMessageBox::Yes)
+					       TQString::tqfromLatin1("tdeprintAutoConvert"))) == KMessageBox::Yes)
 			{
 				// find the filter chain
 				TQStringList	flist = KXmlCommandManager::self()->autoConvert(mime, primaryMimeType);

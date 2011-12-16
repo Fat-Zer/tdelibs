@@ -23,7 +23,7 @@
 #include <kaboutdata.h>
 #include <kstandarddirs.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 TQString
 KAboutPerson::name() const
@@ -296,7 +296,7 @@ KAboutData::setProgramLogo(const TQImage& image)
 TQString
 KAboutData::version() const
 {
-   return TQString::fromLatin1(mVersion);
+   return TQString::tqfromLatin1(mVersion);
 }
 
 TQString
@@ -311,13 +311,13 @@ KAboutData::shortDescription() const
 TQString
 KAboutData::homepage() const
 {
-   return TQString::fromLatin1(mHomepageAddress);
+   return TQString::tqfromLatin1(mHomepageAddress);
 }
 
 TQString
 KAboutData::bugAddress() const
 {
-   return TQString::fromLatin1(mBugEmailAddress);
+   return TQString::tqfromLatin1(mBugEmailAddress);
 }
 
 const TQValueList<KAboutPerson>

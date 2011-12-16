@@ -132,7 +132,7 @@ void KFontListItem::paint(TQPainter *p)
             if (m_canPaintName)
                 p->setFont(*m_font);
             else
-                t = TQString::fromLatin1("(%1)").arg(m_fontName);
+                t = TQString::tqfromLatin1("(%1)").arg(m_fontName);
         }
         TQFontMetrics fm(p->fontMetrics());
         p->drawText(3, (m_combo->d->lineSpacing + fm.ascent() + fm.leading() / 2) / 2, t);

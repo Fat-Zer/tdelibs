@@ -17,7 +17,7 @@
 */
 
 #include <tqtimer.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtooltip.h>
 #include <tqdatetime.h>
 #include <tqcheckbox.h>
@@ -273,7 +273,7 @@ void DefaultProgress::slotPercent( KIO::Job*, unsigned long percent )
 void DefaultProgress::slotInfoMessage( KIO::Job*, const TQString & msg )
 {
   speedLabel->setText( msg );
-  speedLabel->setAlignment( speedLabel->alignment() & ~TQt::WordBreak );
+  speedLabel->setAlignment( speedLabel->tqalignment() & ~TQt::WordBreak );
 }
 
 

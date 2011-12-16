@@ -112,13 +112,13 @@ AdrValue::_parse()
 		
 		switch (i) {
 			
-			case 0: poBox_		= l.at(0);	break;
-			case 1: extAddress_	= l.at(1);	break;
-			case 2: street_		= l.at(2);	break;
-			case 3: locality_	= l.at(3);	break;
-			case 4: region_		= l.at(4);	break;
-			case 5: postCode_	= l.at(5);	break;
-			case 6: countryName_	= l.at(6);	break;
+			case 0: poBox_		= l.tqat(0);	break;
+			case 1: extAddress_	= l.tqat(1);	break;
+			case 2: street_		= l.tqat(2);	break;
+			case 3: locality_	= l.tqat(3);	break;
+			case 4: region_		= l.tqat(4);	break;
+			case 5: postCode_	= l.tqat(5);	break;
+			case 6: countryName_	= l.tqat(6);	break;
 			default:							break;
 		}
 	}

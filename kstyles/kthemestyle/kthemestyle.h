@@ -79,13 +79,13 @@ public:
     KThemeStyle( const TQString& configDir, const TQString &configFile = TQString::null );
     ~KThemeStyle();
 
-    virtual int pixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const;
+    virtual int tqpixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const;
 
     virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRect & r, const TQColorGroup & cg,
                                  SFlags flags = Style_Default,
                                  const TQStyleOption& = TQStyleOption::Default ) const;
 
-    virtual void drawControl( ControlElement element,
+    virtual void tqdrawControl( ControlElement element,
                               TQPainter *p,
                               const TQWidget *widget,
                               const TQRect &r,
@@ -93,14 +93,14 @@ public:
                               SFlags how = Style_Default,
                               const TQStyleOption& = TQStyleOption::Default ) const;
 
-    virtual void drawControlMask( ControlElement element,
+    virtual void tqdrawControlMask( ControlElement element,
                                   TQPainter *p,
                                   const TQWidget *widget,
                                   const TQRect &r,
                                   const TQStyleOption& = TQStyleOption::Default ) const;
 
 
-    virtual void drawComplexControl( TQ_ComplexControl control,
+    virtual void tqdrawComplexControl( TQ_ComplexControl control,
                                      TQPainter *p,
                                      const TQWidget* widget,
                                      const TQRect &r,
@@ -119,7 +119,7 @@ public:
                                       const TQStyleOption& = TQStyleOption::Default ) const;
 
 
-    virtual int styleHint( StyleHint sh,
+    virtual int tqstyleHint( StyleHint sh,
                            const TQWidget *widget = 0,
                            const TQStyleOption& = TQStyleOption::Default,
                            TQStyleHintReturn* returnData = 0 ) const;
@@ -192,7 +192,7 @@ public:
      * @param w The rectangle width.
      * @param h The rectangle height.
      * @param sunken Draws a sunken style if @p true.
-     * @param rounded Draws a rounded shape if @p true. Requires bWidth to be
+     * @param rounded Draws a rounded tqshape if @p true. Requires bWidth to be
      * at least 1.
      * @param hWidth The highlight width.
      * @param bWidth The border width.

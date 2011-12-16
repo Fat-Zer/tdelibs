@@ -497,8 +497,8 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
   switch (e->type()) {
     case TQEvent::MouseMove:
       mev= (TQMouseEvent*)e;
-      child0->setUpdatesEnabled(mOpaqueResize);
-      child1->setUpdatesEnabled(mOpaqueResize);
+      child0->tqsetUpdatesEnabled(mOpaqueResize);
+      child1->tqsetUpdatesEnabled(mOpaqueResize);
       if (m_orientation == Qt::Horizontal) {
         if ((fixedHeight0!=-1) || (fixedHeight1!=-1))
         {
@@ -513,7 +513,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
           if (tmp_xpos != xpos) {
             xpos = tmp_xpos;
             resizeEvent(0);
-            divider->repaint(true);
+            divider->tqrepaint(true);
           }
         }
       } else {
@@ -529,15 +529,15 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
           if (tmp_xpos != xpos) {
             xpos = tmp_xpos;
             resizeEvent(0);
-            divider->repaint(true);
+            divider->tqrepaint(true);
           }
         }
       }
       handled= true;
       break;
     case TQEvent::MouseButtonRelease:
-      child0->setUpdatesEnabled(true);
-      child1->setUpdatesEnabled(true);
+      child0->tqsetUpdatesEnabled(true);
+      child1->tqsetUpdatesEnabled(true);
       mev= (TQMouseEvent*)e;
       if (m_orientation == Qt::Horizontal){
         if ((fixedHeight0!=-1) || (fixedHeight1!=-1))
@@ -546,7 +546,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
         }
         xpos = factor* checkValue( mapFromGlobal(mev->globalPos()).y() ) / height();
         resizeEvent(0);
-        divider->repaint(true);
+        divider->tqrepaint(true);
       } else {
         if ((fixedWidth0!=-1) || (fixedWidth1!=-1))
         {
@@ -554,7 +554,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
         }
         xpos = factor* checkValue( mapFromGlobal(mev->globalPos()).x() ) / width();
         resizeEvent(0);
-        divider->repaint(true);
+        divider->tqrepaint(true);
       }
       handled= true;
       break;
@@ -587,7 +587,7 @@ void KDockSplitter::updateName()
   TQString new_name = TQString( child0->name() ) + "," + child1->name();
   parentWidget()->setName( new_name.latin1() );
   parentWidget()->setCaption( child0->caption() + "," + child1->caption() );
-  parentWidget()->repaint( false );
+  parentWidget()->tqrepaint( false );
 
   ((KDockWidget*)parentWidget())->firstName = child0->name();
   ((KDockWidget*)parentWidget())->lastName = child1->name();
@@ -634,7 +634,7 @@ KDockButton_Private::~KDockButton_Private()
 
 void KDockButton_Private::drawButton( TQPainter* p )
 {
-  p->fillRect( 0,0, width(), height(), TQBrush(colorGroup().brush(TQColorGroup::Background)) );
+  p->fillRect( 0,0, width(), height(), TQBrush(tqcolorGroup().brush(TQColorGroup::Background)) );
   p->drawPixmap( (width() - pixmap()->width()) / 2, (height() - pixmap()->height()) / 2, *pixmap() );
   if ( moveMouse && !isDown() ){
     p->setPen( white );
@@ -642,12 +642,12 @@ void KDockButton_Private::drawButton( TQPainter* p )
     p->lineTo( 0, 0 );
     p->lineTo( width() - 1, 0 );
 
-    p->setPen( colorGroup().dark() );
+    p->setPen( tqcolorGroup().dark() );
     p->lineTo( width() - 1, height() - 1 );
     p->lineTo( 0, height() - 1 );
   }
   if ( isOn() || isDown() ){
-    p->setPen( colorGroup().dark() );
+    p->setPen( tqcolorGroup().dark() );
     p->moveTo( 0, height() - 1 );
     p->lineTo( 0, 0 );
     p->lineTo( width() - 1, 0 );
@@ -661,13 +661,13 @@ void KDockButton_Private::drawButton( TQPainter* p )
 void KDockButton_Private::enterEvent( TQEvent * )
 {
   moveMouse = true;
-  repaint();
+  tqrepaint();
 }
 
 void KDockButton_Private::leaveEvent( TQEvent * )
 {
   moveMouse = false;
-  repaint();
+  tqrepaint();
 }
 
 /*************************************************************************/

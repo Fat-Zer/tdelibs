@@ -25,7 +25,7 @@
 
 #include <klocale.h>
 #include <kpushbutton.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
 

@@ -281,7 +281,7 @@ findProp (register const char *str, register unsigned int len)
 #line 102 "cssproperties.gperf"
       {"text-align", CSS_PROP_TEXT_ALIGN},
 #line 109 "cssproperties.gperf"
-      {"unicode-bidi", CSS_PROP_UNICODE_BIDI},
+      {"tqunicode-bidi", CSS_PROP_UNICODE_BIDI},
 #line 82 "cssproperties.gperf"
       {"outline-color", CSS_PROP_OUTLINE_COLOR},
 #line 60 "cssproperties.gperf"
@@ -632,7 +632,7 @@ static const char * const propertyList[] = {
 "text-shadow", 
 "text-transform", 
 "top", 
-"unicode-bidi", 
+"tqunicode-bidi", 
 "vertical-align", 
 "visibility", 
 "white-space", 

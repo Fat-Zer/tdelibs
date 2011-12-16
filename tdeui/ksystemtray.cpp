@@ -69,7 +69,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
     d->actionCollection = new KActionCollection(this);
 
 #ifdef Q_WS_X11
-    KWin::setSystemTrayWindowFor( winId(), parent?parent->topLevelWidget()->winId(): qt_xrootwin() );
+    KWin::setSystemTrayWindowFor( winId(), parent?parent->tqtopLevelWidget()->winId(): qt_xrootwin() );
 #endif
     setBackgroundMode(X11ParentRelative);
     setBackgroundOrigin(WindowOrigin);
@@ -96,7 +96,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
         d->on_all_desktops = false;
     }
     setCaption( KGlobal::instance()->aboutData()->programName());
-    setAlignment( alignment() | Qt::AlignVCenter | Qt::AlignHCenter );
+    setAlignment( tqalignment() | Qt::AlignVCenter | Qt::AlignHCenter );
 
     // Handle the possibility that the requested system tray size is something other than 22x22 pixels, per the Free Desktop specifications
     setScaledContents(true);

@@ -47,7 +47,7 @@ KPanelApplet::KPanelApplet(const TQString& configFile, Type type,
   : TQFrame(parent, name, f)
   , _type(type)
   , _position( pBottom )
-  , _alignment( LeftTop )
+  , _tqalignment( LeftTop )
   , _config(0)
   , _actions(actions)
   , d(new KPanelApplet::KPanelAppletPrivate())
@@ -80,8 +80,8 @@ void KPanelApplet::setPosition( Position p )
 
 void KPanelApplet::setAlignment( Alignment a )
 {
-  if( _alignment == a ) return;
-  _alignment = a;
+  if( _tqalignment == a ) return;
+  _tqalignment = a;
   alignmentChange( a );
 }
 

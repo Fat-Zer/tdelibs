@@ -22,7 +22,7 @@
 #include "kmprinter.h"
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include <kurlrequester.h>
 #include <klocale.h>
@@ -72,6 +72,6 @@ bool KMWFile::isValid(TQString& msg)
 
 void KMWFile::updatePrinter(KMPrinter *p)
 {
-	TQString	dev = TQString::fromLatin1("file:%1").arg(m_url->url());
+	TQString	dev = TQString::tqfromLatin1("file:%1").arg(m_url->url());
 	p->setDevice(dev);
 }

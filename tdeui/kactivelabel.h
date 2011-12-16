@@ -19,7 +19,7 @@
 #ifndef _KACTIVELABEL_H_
 #define _KACTIVELABEL_H_
 
-#include <textbrowser.h>
+#include <tqtextbrowser.h>
 
 #include <tdelibs_export.h>
 

@@ -2,7 +2,7 @@
 #include <klineeditdlg.h>
 
 #include <tqstring.h>
-#include <textview.h>
+#include <tqtextview.h>
 
 int main(int argc, char** argv)
 {

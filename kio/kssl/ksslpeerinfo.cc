@@ -65,7 +65,7 @@ void KSSLPeerInfo::setPeerHost(TQString realHost) {
 #ifdef Q_WS_WIN //TODO kresolver not ported
 	d->peerHost = d->peerHost.lower();
 #else	
-	d->peerHost = TQString::fromLatin1(KNetwork::KResolver::domainToAscii(d->peerHost));
+	d->peerHost = TQString::tqfromLatin1(KNetwork::KResolver::domainToAscii(d->peerHost));
 #endif	
 }
 

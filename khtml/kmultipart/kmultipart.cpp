@@ -51,7 +51,7 @@ public:
         Q_ASSERT( !m_lineComplete );
         if ( storeNewline || c != '\n' ) {
             int sz = m_currentLine.size();
-            m_currentLine.resize( sz+1, TQGArray::SpeedOptim );
+            m_currentLine.tqresize( sz+1, TQGArray::SpeedOptim );
             m_currentLine[sz] = c;
         }
         if ( c == '\n' )
@@ -68,7 +68,7 @@ public:
         reset();
     }
     void reset() {
-        m_currentLine.resize( 0, TQGArray::SpeedOptim );
+        m_currentLine.tqresize( 0, TQGArray::SpeedOptim );
         m_lineComplete = false;
     }
 private:
@@ -234,7 +234,7 @@ void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
                 }
                 else if ( !qstrnicmp( line.data(), "Content-Encoding:", 17 ) )
                 {
-                    TQString encoding = TQString::fromLatin1(line.data()+17).stripWhiteSpace().lower();
+                    TQString encoding = TQString::tqfromLatin1(line.data()+17).stripWhiteSpace().lower();
                     if (encoding == "gzip" || encoding == "x-gzip") {
                         m_gzip = true;
                     } else {
@@ -245,7 +245,7 @@ void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
                 else if ( !qstrnicmp( line.data(), "Content-Type:", 13 ) )
                 {
                     Q_ASSERT( m_nextMimeType.isNull() );
-                    m_nextMimeType = TQString::fromLatin1( line.data() + 14 ).stripWhiteSpace();
+                    m_nextMimeType = TQString::tqfromLatin1( line.data() + 14 ).stripWhiteSpace();
                     int semicolon = m_nextMimeType.find( ';' );
                     if ( semicolon != -1 )
                         m_nextMimeType = m_nextMimeType.left( semicolon );

@@ -41,7 +41,7 @@
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqstring.h>
 #include <tqregexp.h>

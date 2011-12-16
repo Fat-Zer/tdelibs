@@ -23,7 +23,7 @@
 #include "kmdriverdbwidget.h"
 #include "kmdriverdb.h"
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
 KMWDriver::KMWDriver(TQWidget *parent, const char *name)

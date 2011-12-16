@@ -165,7 +165,7 @@ bool KIpAddress::setAddress(const TQString& address)
 
 bool KIpAddress::setAddress(const char* address)
 {
-  return setAddress(TQString::fromLatin1(address));
+  return setAddress(TQString::tqfromLatin1(address));
 }
 
 // set from binary data
@@ -194,13 +194,13 @@ TQString KIpAddress::toString() const
     {
     case 4:
       inet_ntop(AF_INET, m_data, buf, sizeof(buf) - 1);
-      return TQString::fromLatin1(buf);
+      return TQString::tqfromLatin1(buf);
 
     case 6:
 #ifdef AF_INET6
       inet_ntop(AF_INET6, m_data, buf, sizeof(buf) - 1);
 #endif
-      return TQString::fromLatin1(buf);
+      return TQString::tqfromLatin1(buf);
     }
 
   return TQString::null;
@@ -270,7 +270,7 @@ public:
   {
     addr.generic = 0L;
     curlen = 0;
-    invalidate();
+    tqinvalidate();
   }
 
   ~KSocketAddressData()
@@ -282,7 +282,7 @@ public:
   inline bool invalid() const
   { return reallen == 0; }
 
-  inline void invalidate()
+  inline void tqinvalidate()
   { reallen = 0; }
 
   void dup(const sockaddr* sa, TQ_UINT16 len, bool clear = true);
@@ -348,7 +348,7 @@ void KSocketAddressData::dup(const sockaddr* sa, TQ_UINT16 len, bool clear)
   if (len < MIN_SOCKADDR_LEN)
     {
       // certainly invalid
-      invalidate();
+      tqinvalidate();
       return;
     }
 
@@ -359,7 +359,7 @@ void KSocketAddressData::dup(const sockaddr* sa, TQ_UINT16 len, bool clear)
 	     (sa->sa_family == AF_UNIX && len < MIN_SOCKADDR_UN_LEN)))
     {
       // also invalid
-      invalidate();
+      tqinvalidate();
       return;
     }
 
@@ -444,7 +444,7 @@ KSocketAddress& KSocketAddress::operator =(const KSocketAddress& other)
   if (other.d && !other.d->invalid())
     d->dup(other.d->addr.generic, other.d->reallen);
   else
-    d->invalidate();
+    d->tqinvalidate();
   return *this;
 }
 
@@ -467,7 +467,7 @@ KSocketAddress& KSocketAddress::setAddress(const sockaddr* sa, TQ_UINT16 len)
   if (sa != 0L && len >= MIN_SOCKADDR_LEN)
     d->dup(sa, len);
   else
-    d->invalidate();
+    d->tqinvalidate();
 
   return *this;
 }
@@ -619,7 +619,7 @@ TQString KSocketAddress::toString() const
     fmt = "[%1]:%2";
 #endif
   else if (d->addr.generic->sa_family == AF_UNIX)
-    return TQString::fromLatin1("unix:%1").arg(serviceName());
+    return TQString::tqfromLatin1("unix:%1").arg(serviceName());
   else
     return i18n("1: the unknown socket address family number",
 		"Unknown family %1").arg(d->addr.generic->sa_family);
@@ -788,7 +788,7 @@ KInetSocketAddress& KInetSocketAddress::setHost(const KIpAddress& ip)
 
     default:
       // empty
-      d->invalidate();
+      d->tqinvalidate();
     }
 
   return *this;
@@ -832,7 +832,7 @@ KInetSocketAddress& KInetSocketAddress::setPort(TQ_UINT16 port)
 #endif
       
     default:
-      d->invalidate();		// setting the port on something else
+      d->tqinvalidate();		// setting the port on something else
     }
 
   return *this;
@@ -897,7 +897,7 @@ void KInetSocketAddress::update()
     return;
 #endif
   else
-    d->invalidate();
+    d->tqinvalidate();
 }
 
 KUnixSocketAddress::KUnixSocketAddress()
@@ -908,7 +908,7 @@ KUnixSocketAddress::KUnixSocketAddress(const sockaddr* sa, TQ_UINT16 len)
   : KSocketAddress(sa, len)
 {
   if (!d->invalid() && d->addr.un->sun_family != AF_UNIX)
-    d->invalidate();
+    d->tqinvalidate();
 }
 
 KUnixSocketAddress::KUnixSocketAddress(const KUnixSocketAddress& other)

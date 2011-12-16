@@ -1,4 +1,4 @@
-#include <layout.h>
+#include <tqlayout.h>
 
 #include "kdatewidget.h"
 #include "kdebug.h"

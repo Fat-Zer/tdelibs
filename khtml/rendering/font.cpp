@@ -293,7 +293,7 @@ int Font::width( TQChar *chs, int, int pos, int len, int start, int end, int toA
     const TQString qstr = cstr.string();
     if ( scFont ) {
 	const TQString upper = qstr.upper();
-	const TQChar *uc = qstr.unicode();
+	const TQChar *uc = qstr.tqunicode();
 	const TQFontMetrics sc_fm( *scFont );
 	for ( int i = 0; i < len; ++i ) {
 	    if ( (uc+i)->category() == TQChar::Letter_Lowercase )
@@ -407,7 +407,7 @@ bool Font::isFontScalable(TQFontDatabase& db, const TQFont& font)
             /* Cache size info */
             if (!scalSizesCache)
                 scalSizesCache = new TQMap<ScalKey, TQValueList<int> >;
-            (*scalSizesCache)[key] = db.smoothSizes(font.family(), db.styleString(font));
+            (*scalSizesCache)[key] = db.tqsmoothSizes(font.family(), db.styleString(font));
         }
     }
 

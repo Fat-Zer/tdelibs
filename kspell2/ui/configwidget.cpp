@@ -29,7 +29,7 @@
 #include <klocale.h>
 
 #include <tqcheckbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 using namespace KSpell2;
 

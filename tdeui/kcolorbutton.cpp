@@ -23,7 +23,7 @@
 #include <tqpainter.h>
 #include <tqdrawutil.h>
 #include <tqapplication.h>
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqstyle.h>
 #include <kglobalsettings.h>
 #include <kstdaccel.h>
@@ -85,7 +85,7 @@ void KColorButton::setColor( const TQColor &c )
 {
   if ( col != c ) {
     col = c;
-    repaint( false );
+    tqrepaint( false );
     emit changed( col );
   }
 }
@@ -108,25 +108,25 @@ void KColorButton::drawButtonLabel( TQPainter *painter )
   TQRect r = tqstyle().subRect( TQStyle::SR_PushButtonContents, this );
   r.rect(&x, &y, &w, &h);
 
-  int margin = tqstyle().pixelMetric( TQStyle::PM_ButtonMargin, this );
+  int margin = tqstyle().tqpixelMetric( TQStyle::PM_ButtonMargin, this );
   x += margin;
   y += margin;
   w -= 2*margin;
   h -= 2*margin;
 
   if (isOn() || isDown()) {
-    x += tqstyle().pixelMetric( TQStyle::PM_ButtonShiftHorizontal, this );
-    y += tqstyle().pixelMetric( TQStyle::PM_ButtonShiftVertical, this );
+    x += tqstyle().tqpixelMetric( TQStyle::PM_ButtonShiftHorizontal, this );
+    y += tqstyle().tqpixelMetric( TQStyle::PM_ButtonShiftVertical, this );
   }
 
   TQColor fillCol = isEnabled() ? col : backgroundColor();
-  qDrawShadePanel( painter, x, y, w, h, colorGroup(), true, 1, NULL);
+  qDrawShadePanel( painter, x, y, w, h, tqcolorGroup(), true, 1, NULL);
   if ( fillCol.isValid() )
     painter->fillRect( x+1, y+1, w-2, h-2, fillCol );
 
   if ( hasFocus() ) {
     TQRect focusRect = tqstyle().subRect( TQStyle::SR_PushButtonFocusRect, this );
-    tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, painter, focusRect, colorGroup() );
+    tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, painter, focusRect, tqcolorGroup() );
   }
 }
 
@@ -155,11 +155,11 @@ void KColorButton::keyPressEvent( TQKeyEvent *e )
 
   if ( KStdAccel::copy().contains( key ) ) {
     TQMimeSource* mime = new KColorDrag( color() );
-    TQApplication::clipboard()->setData( mime, TQClipboard::Clipboard );
+    TQApplication::tqclipboard()->setData( mime, TQClipboard::Clipboard );
   }
   else if ( KStdAccel::paste().contains( key ) ) {
     TQColor color;
-    KColorDrag::decode( TQApplication::clipboard()->data( TQClipboard::Clipboard ), color );
+    KColorDrag::decode( TQApplication::tqclipboard()->data( TQClipboard::Clipboard ), color );
     setColor( color );
   }
   else

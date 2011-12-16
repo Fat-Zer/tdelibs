@@ -16,7 +16,7 @@
 #include <assert.h>
 #include <kfilterbase.h>
 #include <kfilterdev.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <stdlib.h>
 #include <config.h>
 #include <stdarg.h>
@@ -133,7 +133,7 @@ xmlParserInputPtr meinExternalEntityLoader(const char *URL, const char *ID,
 TQString splitOut(const TQString &parsed, int index)
 {
     int start_index = index + 1;
-    while (parsed.at(start_index - 1) != '>') start_index++;
+    while (parsed.tqat(start_index - 1) != '>') start_index++;
 
     int inside = 0;
 
@@ -170,7 +170,7 @@ TQString splitOut(const TQString &parsed, int index)
 
     if (index > 0) {
         int endindex = filedata.findRev("</FILENAME>");
-        while (filedata.at(endindex) != '>') endindex++;
+        while (filedata.tqat(endindex) != '>') endindex++;
         endindex++;
         filedata = filedata.left(index) + filedata.mid(endindex);
     }
@@ -279,7 +279,7 @@ TQString lookForCache( const TQString &filename )
 {
     kdDebug() << "lookForCache " << filename << endl;
     assert( filename.endsWith( ".docbook" ) );
-    assert( filename.at( 0 ) == '/' );
+    assert( filename.tqat( 0 ) == '/' );
 
     TQString cache = filename.left( filename.length() - 7 );
     TQString output;
@@ -336,7 +336,7 @@ TQCString fromUnicode( const TQString &data )
                 buffer_len += test.length();
             } else {
                 TQString res;
-                res.sprintf( "&#%d;", TQChar(part.at( i )).unicode() );
+                res.sprintf( "&#%d;", TQChar(part.tqat( i )).tqunicode() );
                 test = locale->fromUnicode( res );
                 if (buffer_len + test.length() + 1 > sizeof(buffer))
                    break;

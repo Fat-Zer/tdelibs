@@ -691,7 +691,7 @@ const TQString& RandRDisplay::version() const
 void RandRDisplay::setCurrentScreen(int index)
 {
 	m_currentScreenIndex = index;
-	m_currentScreen = m_screens.at(m_currentScreenIndex);
+	m_currentScreen = m_screens.tqat(m_currentScreenIndex);
 	Q_ASSERT(m_currentScreen);
 }
 
@@ -719,7 +719,7 @@ int RandRDisplay::numScreens() const
 
 RandRScreen* RandRDisplay::screen(int index)
 {
-	return m_screens.at(index);
+	return m_screens.tqat(index);
 }
 
 RandRScreen* RandRDisplay::currentScreen()

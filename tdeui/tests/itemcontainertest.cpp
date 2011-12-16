@@ -8,7 +8,7 @@
 *
 */
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqvbox.h>
 #include <tqhbox.h>
 #include <tqbuttongroup.h>

@@ -910,7 +910,7 @@ namespace {	// Private.
 			return false;
 		}
 		
-		int offset = s.device()->at();
+		int offset = s.tqdevice()->tqat();
 		int size = FaceOffset( header );
 
 		for( int i = 0; i < 6; i++ ) {
@@ -921,7 +921,7 @@ namespace {	// Private.
 			}
 
 			// Seek device.
-			s.device()->at( offset );
+			s.tqdevice()->tqat( offset );
 			offset += size;
 
 			// Load face from stream.
@@ -964,7 +964,7 @@ KDE_EXPORT void kimgio_dds_read( TQImageIO *io )
 	if( fourcc != FOURCC_DDS ) {
 		kdDebug(399) << "This is not a DDS file." << endl;
 		io->setImage( TQImage() );
-		io->seStatus( -1 );
+		io->setqStatus( -1 );
 		return;
 	}
 
@@ -976,7 +976,7 @@ KDE_EXPORT void kimgio_dds_read( TQImageIO *io )
 	if( s.atEnd() || !IsValid( header ) ) {
 		kdDebug(399) << "This DDS file is not valid." << endl;
 		io->setImage( TQImage() );
-		io->seStatus( -1 );
+		io->setqStatus( -1 );
 		return;
 	}
 
@@ -984,7 +984,7 @@ KDE_EXPORT void kimgio_dds_read( TQImageIO *io )
 	if( !IsSupported( header ) ) {
 		kdDebug(399) << "This DDS file is not supported." << endl;
 		io->setImage( TQImage() );
-		io->seStatus( -1 );
+		io->setqStatus( -1 );
 		return;
 	}
 
@@ -1002,12 +1002,12 @@ KDE_EXPORT void kimgio_dds_read( TQImageIO *io )
 	if( result == false ) {
 		kdDebug(399) << "Error loading DDS file." << endl;
 		io->setImage( TQImage() );
-		io->seStatus( -1 );
+		io->setqStatus( -1 );
 		return;
 	}
 
     io->setImage( img );
-    io->seStatus( 0 );
+    io->setqStatus( 0 );
 }
 
 

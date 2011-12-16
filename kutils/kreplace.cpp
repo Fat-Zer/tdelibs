@@ -50,7 +50,7 @@ KReplaceNextDialog::KReplaceNextDialog(TQWidget *parent) :
 {
     m_mainLabel = new TQLabel( this );
     setMainWidget( m_mainLabel );
-    resize(minimumSize());
+    resize(tqminimumSize());
 }
 
 void KReplaceNextDialog::setLabel( const TQString& pattern, const TQString& replacement )

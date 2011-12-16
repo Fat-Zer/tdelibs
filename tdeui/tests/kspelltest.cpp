@@ -22,7 +22,7 @@
 
 #include <tqstring.h>
 #include <tqlabel.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 int main(int argc, char **argv)
 {

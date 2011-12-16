@@ -107,7 +107,7 @@ using namespace DOM;
 #include <kstatusbar.h>
 #include <kurllabel.h>
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqfile.h>
 #include <tqtooltip.h>
 #include <tqmetaobject.h>
@@ -717,7 +717,7 @@ bool KHTMLPart::openURL( const KURL &url )
   }
 
   if (widget())
-     d->m_job->setWindow(widget()->topLevelWidget());
+     d->m_job->setWindow(widget()->tqtopLevelWidget());
   d->m_job->addMetaData(args.metaData());
 
   connect( d->m_job, TQT_SIGNAL( result( KIO::Job* ) ),
@@ -1480,7 +1480,7 @@ void KHTMLPart::clear()
   d->m_startOffset = 0;
   d->m_endOffset = 0;
 #ifndef QT_NO_CLIPBOARD
-  connect( kapp->clipboard(), TQT_SIGNAL( selectionChanged()), TQT_SLOT( slotClearSelection()));
+  connect( kapp->tqclipboard(), TQT_SIGNAL( selectionChanged()), TQT_SLOT( slotClearSelection()));
 #endif
 
   d->m_jobPercent = 0;
@@ -1722,14 +1722,14 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   d->m_bJScriptForce = false;
   d->m_bJScriptOverride = true;
   begin();
-  TQString errText = TQString::fromLatin1( "<HTML dir=%1><HEAD><TITLE>" )
+  TQString errText = TQString::tqfromLatin1( "<HTML dir=%1><HEAD><TITLE>" )
                            .arg(TQApplication::reverseLayout() ? "rtl" : "ltr");
   errText += i18n( "Error while loading %1" ).arg( reqUrl.htmlURL() );
-  errText += TQString::fromLatin1( "</TITLE></HEAD><BODY><P>" );
+  errText += TQString::tqfromLatin1( "</TITLE></HEAD><BODY><P>" );
   errText += i18n( "An error occurred while loading <B>%1</B>:" ).arg( reqUrl.htmlURL() );
-  errText += TQString::fromLatin1( "</P>" );
+  errText += TQString::tqfromLatin1( "</P>" );
   errText += TQStyleSheet::convertFromPlainText( KIO::buildErrorString( errorCode, text ) );
-  errText += TQString::fromLatin1( "</BODY></HTML>" );
+  errText += TQString::tqfromLatin1( "</BODY></HTML>" );
   write(errText);
   end();
 
@@ -1757,56 +1757,56 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   TQString url, protocol, datetime;
   url = reqUrl.prettyURL();
   protocol = reqUrl.protocol();
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = KGlobal::locale()->formatDateTime( TQDateTime::tqcurrentDateTime(),
                                                 false );
 
-  TQString doc = TQString::fromLatin1( "<html><head><title>" );
+  TQString doc = TQString::tqfromLatin1( "<html><head><title>" );
   doc += i18n( "Error: " );
   doc += errorName;
-  doc += TQString::fromLatin1( " - %1</title></head><body><h1>" ).arg( url );
+  doc += TQString::tqfromLatin1( " - %1</title></head><body><h1>" ).arg( url );
   doc += i18n( "The requested operation could not be completed" );
-  doc += TQString::fromLatin1( "</h1><h2>" );
+  doc += TQString::tqfromLatin1( "</h1><h2>" );
   doc += errorName;
-  doc += TQString::fromLatin1( "</h2>" );
+  doc += TQString::tqfromLatin1( "</h2>" );
   if ( !techName.isNull() ) {
-    doc += TQString::fromLatin1( "<h2>" );
+    doc += TQString::tqfromLatin1( "<h2>" );
     doc += i18n( "Technical Reason: " );
     doc += techName;
-    doc += TQString::fromLatin1( "</h2>" );
+    doc += TQString::tqfromLatin1( "</h2>" );
   }
-  doc += TQString::fromLatin1( "<h3>" );
+  doc += TQString::tqfromLatin1( "<h3>" );
   doc += i18n( "Details of the Request:" );
-  doc += TQString::fromLatin1( "</h3><ul><li>" );
+  doc += TQString::tqfromLatin1( "</h3><ul><li>" );
   doc += i18n( "URL: %1" ).arg( url );
-  doc += TQString::fromLatin1( "</li><li>" );
+  doc += TQString::tqfromLatin1( "</li><li>" );
   if ( !protocol.isNull() ) {
     // uncomment for 3.1... i18n change
     // doc += i18n( "Protocol: %1" ).arg( protocol ).arg( protocol );
-    doc += TQString::fromLatin1( "</li><li>" );
+    doc += TQString::tqfromLatin1( "</li><li>" );
   }
   doc += i18n( "Date and Time: %1" ).arg( datetime );
-  doc += TQString::fromLatin1( "</li><li>" );
+  doc += TQString::tqfromLatin1( "</li><li>" );
   doc += i18n( "Additional Information: %1" ).arg( text );
-  doc += TQString::fromLatin1( "</li></ul><h3>" );
+  doc += TQString::tqfromLatin1( "</li></ul><h3>" );
   doc += i18n( "Description:" );
-  doc += TQString::fromLatin1( "</h3><p>" );
+  doc += TQString::tqfromLatin1( "</h3><p>" );
   doc += description;
-  doc += TQString::fromLatin1( "</p>" );
+  doc += TQString::tqfromLatin1( "</p>" );
   if ( causes.count() ) {
-    doc += TQString::fromLatin1( "<h3>" );
+    doc += TQString::tqfromLatin1( "<h3>" );
     doc += i18n( "Possible Causes:" );
-    doc += TQString::fromLatin1( "</h3><ul><li>" );
+    doc += TQString::tqfromLatin1( "</h3><ul><li>" );
     doc += causes.join( "</li><li>" );
-    doc += TQString::fromLatin1( "</li></ul>" );
+    doc += TQString::tqfromLatin1( "</li></ul>" );
   }
   if ( solutions.count() ) {
-    doc += TQString::fromLatin1( "<h3>" );
+    doc += TQString::tqfromLatin1( "<h3>" );
     doc += i18n( "Possible Solutions:" );
-    doc += TQString::fromLatin1( "</h3><ul><li>" );
+    doc += TQString::tqfromLatin1( "</h3><ul><li>" );
     doc += solutions.join( "</li><li>" );
-    doc += TQString::fromLatin1( "</li></ul>" );
+    doc += TQString::tqfromLatin1( "</li></ul>" );
   }
-  doc += TQString::fromLatin1( "</body></html>" );
+  doc += TQString::tqfromLatin1( "</body></html>" );
 
   write( doc );
   end();
@@ -2286,7 +2286,7 @@ void KHTMLPart::checkCompleted()
   }
 
   // the view will emit completed on our behalf,
-  // either now or at next repaint if one is pending
+  // either now or at next tqrepaint if one is pending
 
   //kdDebug(6050) << this << " asks the view to emit completed. pendingAction=" << pendingAction << endl;
   d->m_view->complete( pendingAction );
@@ -2402,7 +2402,7 @@ void KHTMLPart::slotRedirect()
   d->m_redirectURL = TQString();
 
   // SYNC check with ecma/kjs_window.cpp::goURL !
-  if ( u.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( u.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     TQString script = KURL::decode_string( u.right( u.length() - 11 ) );
     kdDebug( 6050 ) << "KHTMLPart::slotRedirect script=" << script << endl;
@@ -3005,7 +3005,7 @@ void KHTMLPart::findText()
 
   // The lineedit of the dialog would make khtml lose its selection, otherwise
 #ifndef QT_NO_CLIPBOARD
-  disconnect( kapp->clipboard(), TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotClearSelection()) );
+  disconnect( kapp->tqclipboard(), TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotClearSelection()) );
 #endif
 
   // Now show the dialog in which the user can choose options.
@@ -3036,7 +3036,7 @@ void KHTMLPart::findText( const TQString &str, long options, TQWidget *parent, K
     return;
 
 #ifndef QT_NO_CLIPBOARD
-  connect( kapp->clipboard(), TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotClearSelection()) );
+  connect( kapp->tqclipboard(), TQT_SIGNAL(selectionChanged()), TQT_SLOT(slotClearSelection()) );
 #endif
 
   // Create the KFind object
@@ -3731,7 +3731,7 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
     return;
   }
 
-  if (url.find( TQString::fromLatin1( "javascript:" ),0, false ) == 0 ) {
+  if (url.find( TQString::tqfromLatin1( "javascript:" ),0, false ) == 0 ) {
     TQString jscode = KURL::decode_string( url.mid( url.find( "javascript:", 0, false ) ) );
     jscode = KStringHandler::rsqueeze( jscode, 80 ); // truncate if too long
     if (url.startsWith("javascript:window.open"))
@@ -3838,18 +3838,18 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
         extra = i18n(" (In other frame)");
     }
 
-    if (u.protocol() == TQString::fromLatin1("mailto")) {
-      TQString mailtoMsg /* = TQString::fromLatin1("<img src=%1>").arg(locate("icon", TQString::fromLatin1("locolor/16x16/actions/mail_send.png")))*/;
+    if (u.protocol() == TQString::tqfromLatin1("mailto")) {
+      TQString mailtoMsg /* = TQString::tqfromLatin1("<img src=%1>").arg(locate("icon", TQString::tqfromLatin1("locolor/16x16/actions/mail_send.png")))*/;
       mailtoMsg += i18n("Email to: ") + KURL::decode_string(u.path());
       TQStringList queries = TQStringList::split('&', u.query().mid(1));
       TQStringList::Iterator it = queries.begin();
       const TQStringList::Iterator itEnd = queries.end();
       for (; it != itEnd; ++it)
-        if ((*it).startsWith(TQString::fromLatin1("subject=")))
+        if ((*it).startsWith(TQString::tqfromLatin1("subject=")))
           mailtoMsg += i18n(" - Subject: ") + KURL::decode_string((*it).mid(8));
-        else if ((*it).startsWith(TQString::fromLatin1("cc=")))
+        else if ((*it).startsWith(TQString::tqfromLatin1("cc=")))
           mailtoMsg += i18n(" - CC: ") + KURL::decode_string((*it).mid(3));
-        else if ((*it).startsWith(TQString::fromLatin1("bcc=")))
+        else if ((*it).startsWith(TQString::tqfromLatin1("bcc=")))
           mailtoMsg += i18n(" - BCC: ") + KURL::decode_string((*it).mid(4));
       mailtoMsg = TQStyleSheet::escape(mailtoMsg);
       mailtoMsg.replace(TQRegExp("([\n\r\t]|[ ]{10})"), TQString());
@@ -3858,9 +3858,9 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
     }
    // Is this check necessary at all? (Frerich)
 #if 0
-    else if (u.protocol() == TQString::fromLatin1("http")) {
+    else if (u.protocol() == TQString::tqfromLatin1("http")) {
         DOM::Node hrefNode = nodeUnderMouse().parentNode();
-        while (hrefNode.nodeName().string() != TQString::fromLatin1("A") && !hrefNode.isNull())
+        while (hrefNode.nodeName().string() != TQString::tqfromLatin1("A") && !hrefNode.isNull())
           hrefNode = hrefNode.parentNode();
 
         if (!hrefNode.isNull()) {
@@ -3868,12 +3868,12 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
           if (!hreflangNode.isNull()) {
             TQString countryCode = hreflangNode.nodeValue().string().lower();
             // Map the language code to an appropriate country code.
-            if (countryCode == TQString::fromLatin1("en"))
-              countryCode = TQString::fromLatin1("gb");
-            TQString flagImg = TQString::fromLatin1("<img src=%1>").arg(
-                locate("locale", TQString::fromLatin1("l10n/")
+            if (countryCode == TQString::tqfromLatin1("en"))
+              countryCode = TQString::tqfromLatin1("gb");
+            TQString flagImg = TQString::tqfromLatin1("<img src=%1>").arg(
+                locate("locale", TQString::tqfromLatin1("l10n/")
                 + countryCode
-                + TQString::fromLatin1("/flag.png")));
+                + TQString::tqfromLatin1("/flag.png")));
             emit setStatusBarText(flagImg + u.prettyURL() + extra);
           }
         }
@@ -3906,7 +3906,7 @@ bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, c
   if ( !target.isEmpty() )
       hasTarget = true;
 
-  if ( url.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( url.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     crossFrameExecuteScript( target, KURL::decode_string( url.mid( 11 ) ) );
     return false;
@@ -4027,7 +4027,7 @@ void KHTMLPart::slotViewDocumentSource()
      }
   }
 
-  (void) KRun::runURL( url, TQString::fromLatin1("text/plain"), isTempFile );
+  (void) KRun::runURL( url, TQString::tqfromLatin1("text/plain"), isTempFile );
 }
 
 void KHTMLPart::slotViewPageInfo()
@@ -4108,7 +4108,7 @@ void KHTMLPart::slotViewFrameSource()
      }
   }
 
-  (void) KRun::runURL( url, TQString::fromLatin1("text/plain"), isTempFile );
+  (void) KRun::runURL( url, TQString::tqfromLatin1("text/plain"), isTempFile );
 }
 
 KURL KHTMLPart::backgroundURL() const
@@ -4276,7 +4276,7 @@ void KHTMLPart::updateActions()
   {
     TQObject *ext = KParts::BrowserExtension::childObject( frame );
     if ( ext )
-      enablePrintFrame = ext->metaObject()->slotNames().contains( "print()" );
+      enablePrintFrame = ext->tqmetaObject()->slotNames().contains( "print()" );
   }
 
   d->m_paPrintFrame->setEnabled( enablePrintFrame );
@@ -4319,7 +4319,7 @@ bool KHTMLPart::requestFrame( khtml::RenderPart *frame, const TQString &url, con
   (*it)->m_params = params;
 
   // Support for <frame src="javascript:string">
-  if ( url.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
+  if ( url.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     if ( processObjectRequest(*it, KURL("about:blank"), TQString("text/html") ) ) {
       KHTMLPart* p = static_cast<KHTMLPart*>(static_cast<KParts::ReadOnlyPart *>((*it)->m_part));
@@ -4341,7 +4341,7 @@ bool KHTMLPart::requestFrame( khtml::RenderPart *frame, const TQString &url, con
 
 TQString KHTMLPart::requestFrameName()
 {
-   return TQString::fromLatin1("<!--frame %1-->").arg(d->m_frameNameId++);
+   return TQString::tqfromLatin1("<!--frame %1-->").arg(d->m_frameNameId++);
 }
 
 bool KHTMLPart::requestObject( khtml::RenderPart *frame, const TQString &url, const TQString &serviceType,
@@ -4408,7 +4408,7 @@ bool KHTMLPart::requestObject( khtml::ChildFrame *child, const KURL &url, const 
 
   // We want a KHTMLPart if the HTML says <frame src=""> or <frame src="about:blank">
   if ((url.isEmpty() || url.url() == "about:blank") && args.serviceType.isEmpty())
-    args.serviceType = TQString::fromLatin1( "text/html" );
+    args.serviceType = TQString::tqfromLatin1( "text/html" );
 
   if ( args.serviceType.isEmpty() ) {
     kdDebug(6050) << "Running new KHTMLRun for " << this << " and child=" << child << endl;
@@ -4650,7 +4650,7 @@ KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char 
 {
   TQString constr;
   if ( !serviceName.isEmpty() )
-    constr.append( TQString::fromLatin1( "Name == '%1'" ).arg( serviceName ) );
+    constr.append( TQString::tqfromLatin1( "Name == '%1'" ).arg( serviceName ) );
 
   KTrader::OfferList offers = KTrader::self()->query( mimetype, "KParts/ReadOnlyPart", constr, TQString() );
 
@@ -4701,7 +4701,7 @@ KParts::PartManager *KHTMLPart::partManager()
 {
   if ( !d->m_manager && d->m_view )
   {
-    d->m_manager = new KParts::PartManager( d->m_view->topLevelWidget(), this, "khtml part manager" );
+    d->m_manager = new KParts::PartManager( d->m_view->tqtopLevelWidget(), this, "khtml part manager" );
     d->m_manager->setAllowNestedParts( true );
     connect( d->m_manager, TQT_SIGNAL( activePartChanged( KParts::Part * ) ),
              this, TQT_SLOT( slotActiveFrameChanged( KParts::Part * ) ) );
@@ -4777,7 +4777,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
                                                       "WarnOnUnencryptedForm");
           // Move this setting into KSSL instead
           KConfig *config = kapp->config();
-          TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
+          TQString grpNotifMsgs = TQString::tqfromLatin1("Notification Messages");
           KConfigGroupSaver saver( config, grpNotifMsgs );
 
           if (!config->readBoolEntry("WarnOnUnencryptedForm", true)) {
@@ -4811,7 +4811,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
 
   TQString urlstring = u.url();
 
-  if ( urlstring.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 ) {
+  if ( urlstring.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
     urlstring = KURL::decode_string(urlstring);
     crossFrameExecuteScript( _target, urlstring.right( urlstring.length() - 11) );
     return;
@@ -4873,18 +4873,18 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
       TQString bodyEnc;
       if (contentType.lower() == "multipart/form-data") {
          // FIXME: is this correct?  I suspect not
-         bodyEnc = KURL::encode_string(TQString::fromLatin1(formData.data(),
+         bodyEnc = KURL::encode_string(TQString::tqfromLatin1(formData.data(),
                                                            formData.size()));
       } else if (contentType.lower() == "text/plain") {
          // Convention seems to be to decode, and s/&/\n/
-         TQString tmpbody = TQString::fromLatin1(formData.data(),
+         TQString tmpbody = TQString::tqfromLatin1(formData.data(),
                                                formData.size());
          tmpbody.replace(TQRegExp("[&]"), "\n");
          tmpbody.replace(TQRegExp("[+]"), " ");
          tmpbody = KURL::decode_string(tmpbody);  // Decode the rest of it
          bodyEnc = KURL::encode_string(tmpbody);  // Recode for the URL
       } else {
-         bodyEnc = KURL::encode_string(TQString::fromLatin1(formData.data(),
+         bodyEnc = KURL::encode_string(TQString::tqfromLatin1(formData.data(),
                                                            formData.size()));
       }
 
@@ -4895,7 +4895,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
 
   if ( strcmp( action, "get" ) == 0 ) {
     if (u.protocol() != "mailto")
-       u.setQuery( TQString::fromLatin1( formData.data(), formData.size() ) );
+       u.setQuery( TQString::tqfromLatin1( formData.data(), formData.size() ) );
     args.setDoPost( false );
   }
   else {
@@ -4975,7 +4975,7 @@ void KHTMLPart::popupMenu( const TQString &linkUrl )
   KHTMLPopupGUIClient* client = new KHTMLPopupGUIClient( this, d->m_popupMenuXML, linkKURL );
   TQGuardedPtr<TQObject> guard( client );
 
-  TQString mimetype = TQString::fromLatin1( "text/html" );
+  TQString mimetype = TQString::tqfromLatin1( "text/html" );
   args.metaData()["referrer"] = referrer;
 
   if (!linkUrl.isEmpty())				// over a link
@@ -5095,7 +5095,7 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
 
   // TODO: handle child target correctly! currently the script are always executed fur the parent
   TQString urlStr = url.url();
-  if ( urlStr.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 ) {
+  if ( urlStr.find( TQString::tqfromLatin1( "javascript:" ), 0, false ) == 0 ) {
       TQString script = KURL::decode_string( urlStr.right( urlStr.length() - 11 ) );
       executeScript( DOM::Node(), script );
       return;
@@ -5103,17 +5103,17 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
 
   TQString frameName = args.frameName.lower();
   if ( !frameName.isEmpty() ) {
-    if ( frameName == TQString::fromLatin1( "_top" ) )
+    if ( frameName == TQString::tqfromLatin1( "_top" ) )
     {
       emit d->m_extension->openURLRequest( url, args );
       return;
     }
-    else if ( frameName == TQString::fromLatin1( "_blank" ) )
+    else if ( frameName == TQString::tqfromLatin1( "_blank" ) )
     {
       emit d->m_extension->createNewWindow( url, args );
       return;
     }
-    else if ( frameName == TQString::fromLatin1( "_parent" ) )
+    else if ( frameName == TQString::tqfromLatin1( "_parent" ) )
     {
       KParts::URLArgs newArgs( args );
       newArgs.frameName = TQString();
@@ -5121,7 +5121,7 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
       emit d->m_extension->openURLRequest( url, newArgs );
       return;
     }
-    else if ( frameName != TQString::fromLatin1( "_self" ) )
+    else if ( frameName != TQString::tqfromLatin1( "_self" ) )
     {
       khtml::ChildFrame *_frame = recursiveFrameRequest( callingHtmlPart, url, args );
 
@@ -6610,9 +6610,9 @@ void KHTMLPart::khtmlMouseReleaseEvent( khtml::MouseReleaseEvent *event )
 #ifndef QT_NO_CLIPBOARD
     TQString text = selectedText();
     text.replace(TQChar(0xa0), ' ');
-    disconnect( kapp->clipboard(), TQT_SIGNAL( selectionChanged()), this, TQT_SLOT( slotClearSelection()));
-    kapp->clipboard()->setText(text,TQClipboard::Selection);
-    connect( kapp->clipboard(), TQT_SIGNAL( selectionChanged()), TQT_SLOT( slotClearSelection()));
+    disconnect( kapp->tqclipboard(), TQT_SIGNAL( selectionChanged()), this, TQT_SLOT( slotClearSelection()));
+    kapp->tqclipboard()->setText(text,TQClipboard::Selection);
+    connect( kapp->tqclipboard(), TQT_SIGNAL( selectionChanged()), TQT_SLOT( slotClearSelection()));
 #endif
     //kdDebug( 6000 ) << "selectedText = " << text << endl;
     emitSelectionChanged();
@@ -6658,7 +6658,7 @@ void KHTMLPart::slotPrintFrame()
   if ( !ext )
     return;
 
-  TQMetaObject *mo = ext->metaObject();
+  TQMetaObject *mo = ext->tqmetaObject();
 
   int idx = mo->findSlot( "print()", true );
   if ( idx >= 0 ) {
@@ -6877,7 +6877,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         if (frame->frameStyle() != TQFrame::NoFrame)
         {
            frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken);
-           frame->repaint();
+           frame->tqrepaint();
         }
     }
 
@@ -6905,7 +6905,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         if (frame->frameStyle() != TQFrame::NoFrame)
         {
            frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Plain);
-           frame->repaint();
+           frame->tqrepaint();
         }
         kdDebug(6050) << "new active frame " << d->m_activeFrame << endl;
     }
@@ -7157,7 +7157,7 @@ void KHTMLPart::openWallet(DOM::HTMLFormElementImpl *form)
   }
 
   if (!d->m_wq) {
-    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
+    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->tqtopLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
     d->m_wq = new KHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));
@@ -7199,7 +7199,7 @@ void KHTMLPart::saveToWallet(const TQString& key, const TQMap<TQString,TQString>
   }
 
   if (!d->m_wq) {
-    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
+    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->tqtopLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
     d->m_wq = new KHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));

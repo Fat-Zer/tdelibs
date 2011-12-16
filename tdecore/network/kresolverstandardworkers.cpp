@@ -140,7 +140,7 @@ bool KBlacklistWorker::isBlacklisted(const TQString& host)
     return false;
 
   // KDE4: QLatin1String
-  TQString ascii = TQString::fromLatin1(KResolver::domainToAscii(host));
+  TQString ascii = TQString::tqfromLatin1(KResolver::domainToAscii(host));
 
   TQMutexLocker locker(&blacklistMutex);
 
@@ -251,7 +251,7 @@ namespace
 
 	// check blacklist
 	if (m_af != AF_INET && 
-	    KBlacklistWorker::isBlacklisted(TQString::fromLatin1(m_hostname)))
+	    KBlacklistWorker::isBlacklisted(TQString::tqfromLatin1(m_hostname)))
 	  break;
 
 # ifdef USE_GETHOSTBYNAME2_R
@@ -358,7 +358,7 @@ namespace
     if (socktype == 0)
       socktype = SOCK_STREAM;	// default
 
-    TQString canon = KResolver::domainToUnicode(TQString::fromLatin1(he->h_name));
+    TQString canon = KResolver::domainToUnicode(TQString::tqfromLatin1(he->h_name));
     KInetSocketAddress sa;
     sa.setPort(m_port);
     if (he->h_addrtype != AF_INET)
@@ -404,7 +404,7 @@ namespace
   {
     // check blacklist
     if ((m_af != AF_INET && m_af != AF_UNSPEC) && 
-	KBlacklistWorker::isBlacklisted(TQString::fromLatin1(m_node)))
+	KBlacklistWorker::isBlacklisted(TQString::tqfromLatin1(m_node)))
       {
 	results.setError(KResolver::NoName);
 	finished();
@@ -550,8 +550,8 @@ bool KStandardWorker::sanityCheck()
       if (node.find('%') != -1)
 	node.truncate(node.find('%'));
 
-      if (node.isEmpty() || node == TQString::fromLatin1("*") ||
-	  node == TQString::fromLatin1("localhost"))
+      if (node.isEmpty() || node == TQString::tqfromLatin1("*") ||
+	  node == TQString::tqfromLatin1("localhost"))
 	m_encodedName.truncate(0);
       else
 	{
@@ -616,7 +616,7 @@ bool KStandardWorker::resolveService()
       // service name does not contain a port number
       // must be a name
 
-      if (serviceName().isEmpty() || serviceName().compare(TQString::fromLatin1("*")) == 0)
+      if (serviceName().isEmpty() || serviceName().compare(TQString::tqfromLatin1("*")) == 0)
 	port = 0;
       else
 	{
@@ -712,7 +712,7 @@ bool KStandardWorker::resolveNumerically()
   // now try to resolve the hostname numerically
   KInetSocketAddress sa;
   setError(KResolver::NoError);
-  sa.setHost(KIpAddress(TQString::fromLatin1(m_encodedName)));
+  sa.setHost(KIpAddress(TQString::tqfromLatin1(m_encodedName)));
   
   // if it failed, the length was reset to 0
   bool ok = sa.length() != 0;

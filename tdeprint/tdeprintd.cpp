@@ -34,7 +34,7 @@
 #include <kstandarddirs.h>
 #include <twin.h>
 #include <kapplication.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtimer.h>
 #include <tqregexp.h>
 

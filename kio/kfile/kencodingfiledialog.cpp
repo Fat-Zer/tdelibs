@@ -27,7 +27,7 @@
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcharsets.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <kdiroperator.h>
 #include <krecentdocument.h>
 
@@ -54,7 +54,7 @@ KEncodingFileDialog::KEncodingFileDialog(const TQString& startDir, const TQStrin
   d->encoding->clear ();
   TQString sEncoding = encoding;
   if (sEncoding.isEmpty())
-     sEncoding = TQString::fromLatin1(KGlobal::locale()->encoding());
+     sEncoding = TQString::tqfromLatin1(KGlobal::locale()->encoding());
   
   TQStringList encodings (KGlobal::charsets()->availableEncodingNames());
   int insert = 0;
@@ -170,7 +170,7 @@ KEncodingFileDialog::Result KEncodingFileDialog::getSaveFileNameAndEncoding(cons
                                      TQWidget *parent,
                                      const TQString& caption)
 {
-    bool specialDir = dir.at(0) == ':';
+    bool specialDir = dir.tqat(0) == ':';
     KEncodingFileDialog dlg(specialDir?dir:TQString::null, encoding,filter,caption.isNull() ? i18n("Save As") : caption,
 	Saving,parent, "filedialog", true);
 
@@ -193,7 +193,7 @@ KEncodingFileDialog::Result  KEncodingFileDialog::getSaveURLAndEncoding(const TQ
 			     const TQString& dir, const  TQString& filter,
                              TQWidget *parent, const TQString& caption)
 {
-    bool specialDir = dir.at(0) == ':';
+    bool specialDir = dir.tqat(0) == ':';
     KEncodingFileDialog dlg(specialDir?dir:TQString::null, encoding,filter,caption.isNull() ? i18n("Save As") : 
 	caption, Saving,parent, "filedialog", true);
 

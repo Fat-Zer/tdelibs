@@ -257,11 +257,11 @@ DrMain* PrinttoolEntry::createDriver()
 			for (int i=0;it.current();++it,i++)
 			{
 				ch = new DrBase;
-				ch->setName(TQString::fromLatin1("%1x%2").arg(it.current()->xdpi).arg(it.current()->ydpi));
+				ch->setName(TQString::tqfromLatin1("%1x%2").arg(it.current()->xdpi).arg(it.current()->ydpi));
 				if (it.current()->comment.isEmpty())
-					ch->set("text",TQString::fromLatin1("%1x%2 DPI").arg(it.current()->xdpi).arg(it.current()->ydpi));
+					ch->set("text",TQString::tqfromLatin1("%1x%2 DPI").arg(it.current()->xdpi).arg(it.current()->ydpi));
 				else
-					ch->set("text",TQString::fromLatin1("%2x%3 DPI (%1)").arg(it.current()->comment).arg(it.current()->xdpi).arg(it.current()->ydpi));
+					ch->set("text",TQString::tqfromLatin1("%2x%3 DPI (%1)").arg(it.current()->comment).arg(it.current()->xdpi).arg(it.current()->ydpi));
 				lopt->addChoice(ch);
 			}
 			QString	defval = lopt->choices()->first()->name();
@@ -281,13 +281,13 @@ DrMain* PrinttoolEntry::createDriver()
 			{
 				ch = new DrBase;
 				if (m_gsdriver != "uniprint")
-					ch->setName(TQString::fromLatin1("-dBitsPerPixel=%1").arg(it.current()->bpp));
+					ch->setName(TQString::tqfromLatin1("-dBitsPerPixel=%1").arg(it.current()->bpp));
 				else
 					ch->setName(it.current()->bpp);
 				if (it.current()->comment.isEmpty())
 					ch->set("text",it.current()->bpp);
 				else
-					ch->set("text",TQString::fromLatin1("%1 - %2").arg(it.current()->bpp).arg(it.current()->comment));
+					ch->set("text",TQString::tqfromLatin1("%1 - %2").arg(it.current()->bpp).arg(it.current()->comment));
 				lopt->addChoice(ch);
 			}
 			QString	defval = lopt->choices()->first()->name();

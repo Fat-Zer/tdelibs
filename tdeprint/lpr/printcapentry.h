@@ -27,7 +27,7 @@
 #include <tqstring.h>
 #include <tqmap.h>
 #include <tqstringlist.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 /**
  * @internal

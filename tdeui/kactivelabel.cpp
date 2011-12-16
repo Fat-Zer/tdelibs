@@ -113,7 +113,7 @@ void KActiveLabel::keyPressEvent( TQKeyEvent *e )
 
 TQSize KActiveLabel::minimumSizeHint() const
 {
-   TQSize ms = minimumSize();
+   TQSize ms = tqminimumSize();
    if ((ms.width() > 0) && (ms.height() > 0))
       return ms;
 

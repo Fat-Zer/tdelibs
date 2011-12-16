@@ -24,7 +24,7 @@
 #include "kmmanager.h"
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
 KMPropGeneral::KMPropGeneral(TQWidget *parent, const char *name)

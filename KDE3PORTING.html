@@ -647,13 +647,13 @@ For more details please consult the HOWTO file in the kcontrol directory.
 
 <p>The API for Kicker panel applets and extensions has changed. Panels can now be
 left/top, center, or right/bottom aligned, and applets and extensions may receive
-notification about a change in alignment.
+notification about a change in tqalignment.
 
 <H4>KPanelApplet</H4>
 
 <p>The virtual methods orientationChange() and popupDirectionChange() are deprecated.
 Instead you should reimplement positionChange() and alignmentChange() to be
-notified of changes in the position and alignment of the panel on which your applet
+notified of changes in the position and tqalignment of the panel on which your applet
 resides. In addition, the popupDirection() method and the Direction enum are
 deprecated. Instead you should use the position() method and Position enum. Applets that use
 the deprecated methods will still work with KDE 3, but may not compile or work with
@@ -662,7 +662,7 @@ a future version.
 <H4>KPanelExtension</H4>
 
 <p>There is a new method alignmentChange() that your extension should reimplement if
-it needs to know about changes in alignment.
+it needs to know about changes in tqalignment.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 <p>

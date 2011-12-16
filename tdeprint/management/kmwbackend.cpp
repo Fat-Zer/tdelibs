@@ -21,7 +21,7 @@
 #include "kmwizard.h"
 #include "kmprinter.h"
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqregexp.h>
 #include <tqbuttongroup.h>
 #include <tqradiobutton.h>
@@ -102,7 +102,7 @@ void KMWBackend::updatePrinter(KMPrinter *p)
 	else p->setType(KMPrinter::Printer);
 	p->setOption("kde-backend",TQString::number(ID));
 	TQString	s = m_buttons->selected()->text();
-	s.replace(TQRegExp("&(?=\\w)"), TQString::fromLatin1(""));
+	s.replace(TQRegExp("&(?=\\w)"), TQString::tqfromLatin1(""));
 	p->setOption("kde-backend-description",s);
 	setNextPage((m_map.contains(ID) ? m_map[ID] : KMWizard::Error));
 }

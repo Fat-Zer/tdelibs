@@ -334,7 +334,7 @@ void DrGroup::flattenGroup(TQMap<TQString, DrBase*>& optmap, int& index)
 		optmap[oit.current()->name()] = oit.current();
 
 	if (name().isEmpty())
-		optmap[TQString::fromLatin1("group%1").arg(index++)] = this;
+		optmap[TQString::tqfromLatin1("group%1").arg(index++)] = this;
 	else
 		optmap[name()] = this;
 
@@ -627,7 +627,7 @@ void DrListOption::setChoice(int choicenum)
 {
 	if (choicenum >= 0 && choicenum < (int)m_choices.count())
 	{
-		setValueText(m_choices.at(choicenum)->name());
+		setValueText(m_choices.tqat(choicenum)->name());
 	}
 }
 

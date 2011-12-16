@@ -19,7 +19,7 @@
 
 #include <tqpopupmenu.h>
 #include <tqcombobox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlineedit.h>
 
 #include "knuminput.h"

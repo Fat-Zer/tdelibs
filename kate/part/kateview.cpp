@@ -76,9 +76,9 @@
 #include <tqstyle.h>
 #include <tqevent.h>
 #include <tqpopupmenu.h>
-#include <layout.h>
-#include <clipboard.h>
-#include <stylesheet.h>
+#include <tqlayout.h>
+#include <tqclipboard.h>
+#include <tqstylesheet.h>
 //END includes
 
 KateView::KateView( KateDocument *doc, TQWidget *parent, const char * name )
@@ -793,7 +793,7 @@ void KateView::contextMenuEvent( TQContextMenuEvent *ev )
   if ( !m_doc || !m_doc->browserExtension()  )
     return;
   emit m_doc->browserExtension()->popupMenu( /*this, */ev->globalPos(), m_doc->url(),
-                                        TQString::fromLatin1( "text/plain" ) );
+                                        TQString::tqfromLatin1( "text/plain" ) );
   ev->accept();
 }
 
@@ -1233,11 +1233,11 @@ void KateView::updateRendererConfig()
 
   // update the text area
   m_viewInternal->updateView (true);
-  m_viewInternal->repaint ();
+  m_viewInternal->tqrepaint ();
 
   // update the left border right, for example linenumbers
   m_viewInternal->leftBorder->updateFont();
-  m_viewInternal->leftBorder->repaint ();
+  m_viewInternal->leftBorder->tqrepaint ();
 
 // @@ showIndentLines is not cached anymore.
 //  m_renderer->setShowIndentLines (m_renderer->config()->showIndentationLines());
@@ -1596,7 +1596,7 @@ void KateView::paste()
 {
   m_doc->paste( this );
   emit selectionChanged();
-  m_viewInternal->repaint();
+  m_viewInternal->tqrepaint();
 }
 
 void KateView::cut()
@@ -1613,7 +1613,7 @@ void KateView::copy() const
   if (!hasSelection())
     return;
 
-  TQApplication::clipboard()->setText(selection ());
+  TQApplication::tqclipboard()->setText(selection ());
 }
 
 void KateView::copyHTML()
@@ -1629,7 +1629,7 @@ void KateView::copyHTML()
   drag->addDragObject( htmltextdrag);
   drag->addDragObject( new TQTextDrag( selection()));
 
-  TQApplication::clipboard()->setData(drag);
+  TQApplication::tqclipboard()->setData(drag);
 }
 
 TQString KateView::selectionAsHtml()

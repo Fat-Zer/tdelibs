@@ -31,7 +31,7 @@
 #include <kcursor.h>
 
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <cstdlib>
 
 

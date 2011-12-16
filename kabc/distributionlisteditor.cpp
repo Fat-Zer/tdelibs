@@ -19,7 +19,7 @@
 */
 
 #include <tqlistview.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqcombobox.h>
 #include <tqbuttongroup.h>

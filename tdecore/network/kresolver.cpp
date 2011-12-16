@@ -915,7 +915,7 @@ TQString KResolver::localHostName()
     }
 
   if (name.isEmpty())
-    return TQString::fromLatin1("localhost");
+    return TQString::tqfromLatin1("localhost");
 
   if (name.find('.') == -1)
     {
@@ -924,7 +924,7 @@ TQString KResolver::localHostName()
       KResolverResults results = resolve(name, "0", CanonName);
       if (results.isEmpty())
 	// cannot find a valid hostname!
-	return TQString::fromLatin1("localhost");
+	return TQString::tqfromLatin1("localhost");
       else
 	return results.first().canonicalName();
     }
@@ -934,7 +934,7 @@ TQString KResolver::localHostName()
 
 
 // forward declaration
-static TQStringList splitLabels(const TQString& unicodeDomain);
+static TQStringList splitLabels(const TQString& tqunicodeDomain);
 static TQCString ToASCII(const TQString& label);
 static TQString ToUnicode(const TQString& label);
 
@@ -943,11 +943,11 @@ static TQStringList *KResolver_initIdnDomains()
   const char *kde_use_idn = getenv("KDE_USE_IDN");
   if (!kde_use_idn)
      kde_use_idn = "ac:at:br:cat:ch:cl:cn:de:dk:fi:gr:hu:info:io:is:jp:kr:li:lt:museum:org:no:se:sh:th:tm:tw:vn";
-  return new TQStringList(TQStringList::split(':', TQString::fromLatin1(kde_use_idn).lower()));
+  return new TQStringList(TQStringList::split(':', TQString::tqfromLatin1(kde_use_idn).lower()));
 }
 
 // implement the ToAscii function, as described by IDN documents
-TQCString KResolver::domainToAscii(const TQString& unicodeDomain)
+TQCString KResolver::domainToAscii(const TQString& tqunicodeDomain)
 {
   if (!idnDomains)
     idnDomains = KResolver_initIdnDomains();
@@ -958,7 +958,7 @@ TQCString KResolver::domainToAscii(const TQString& unicodeDomain)
 
   // 2) split the domain into individual labels, without
   // separators.
-  TQStringList input = splitLabels(unicodeDomain);
+  TQStringList input = splitLabels(tqunicodeDomain);
 
   // Do we allow IDN names for this TLD?
   if (input.count() && !idnDomains->contains(input[input.count()-1].lower()))
@@ -987,7 +987,7 @@ TQCString KResolver::domainToAscii(const TQString& unicodeDomain)
 
 TQString KResolver::domainToUnicode(const TQCString& asciiDomain)
 {
-  return domainToUnicode(TQString::fromLatin1(asciiDomain));
+  return domainToUnicode(TQString::tqfromLatin1(asciiDomain));
 }
 
 // implement the ToUnicode function, as described by IDN documents
@@ -1048,7 +1048,7 @@ void KResolver::virtual_hook( int, void* )
 //  RFC 3492 - Punycode: A Bootstring encoding of Unicode
 //          for Internationalized Domain Names in Applications (IDNA)
 
-static TQStringList splitLabels(const TQString& unicodeDomain)
+static TQStringList splitLabels(const TQString& tqunicodeDomain)
 {
   // From RFC 3490 section 3.1:
   // "Whenever dots are used as label separators, the following characters
@@ -1060,9 +1060,9 @@ static TQStringList splitLabels(const TQString& unicodeDomain)
   TQStringList lst;
   int start = 0;
   uint i;
-  for (i = 0; i < unicodeDomain.length(); i++)
+  for (i = 0; i < tqunicodeDomain.length(); i++)
     {
-      unsigned int c = unicodeDomain[i].unicode();
+      unsigned int c = tqunicodeDomain[i].tqunicode();
 
       if (c == separators[0] ||
 	  c == separators[1] ||
@@ -1070,13 +1070,13 @@ static TQStringList splitLabels(const TQString& unicodeDomain)
 	  c == separators[3])
 	{
 	  // found a separator!
-	  lst << unicodeDomain.mid(start, i - start);
+	  lst << tqunicodeDomain.mid(start, i - start);
 	  start = i + 1;
 	}
     }
   if ((long)i >= start)
     // there is still one left
-    lst << unicodeDomain.mid(start, i - start);
+    lst << tqunicodeDomain.mid(start, i - start);
 
   return lst;
 }
@@ -1101,7 +1101,7 @@ static TQCString ToASCII(const TQString& label)
 
   uint i;
   for (i = 0; i < label.length(); i++)
-    ucs4[i] = (unsigned long)label[i].unicode();
+    ucs4[i] = (unsigned long)label[i].tqunicode();
   ucs4[i] = 0;			// terminate with NUL, just to be on the safe side
 
   if (idna_to_ascii_4i(ucs4, label.length(), buf, 0) == IDNA_SUCCESS)
@@ -1118,7 +1118,7 @@ static TQCString ToASCII(const TQString& label)
 static TQString ToUnicode(const TQString& label)
 {
 #ifdef HAVE_IDNA_H
-  // We have idna.h, so we can use the idna_to_unicode
+  // We have idna.h, so we can use the idna_to_tqunicode
   // function :)
 
   TQ_UINT32 *ucs4_input, *ucs4_output;
@@ -1126,7 +1126,7 @@ static TQString ToUnicode(const TQString& label)
 
   ucs4_input = new TQ_UINT32[label.length() + 1];
   for (uint i = 0; i < label.length(); i++)
-    ucs4_input[i] = (unsigned long)label[i].unicode();
+    ucs4_input[i] = (unsigned long)label[i].tqunicode();
 
   // try the same length for output
   ucs4_output = new TQ_UINT32[outlen = label.length()];

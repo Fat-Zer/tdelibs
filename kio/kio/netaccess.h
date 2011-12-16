@@ -92,7 +92,7 @@ public:
      * }
      * \endcode
      *
-     * Of course, your user interface will still process exposure/repaint
+     * Of course, your user interface will still process exposure/tqrepaint
      * events during the download.
      *
      * If the download fails, lastError() and lastErrorString() will be set.

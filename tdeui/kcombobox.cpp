@@ -20,7 +20,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqlistbox.h>
 #include <tqpopupmenu.h>
 #include <tqapplication.h>

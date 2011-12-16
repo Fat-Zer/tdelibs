@@ -148,7 +148,7 @@ int main(int argc, char **argv)
     {
        for( int i = 1; i < argc; i++ )
        {
-	  argv1 = TQString::fromLatin1(argv[i]);
+	  argv1 = TQString::tqfromLatin1(argv[i]);
 	  kdDebug() << "Opening " << argv1 << endl;
 	  if( argv1 == "-d" )
 	     tf->setDirOnly();

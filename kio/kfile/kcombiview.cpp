@@ -300,7 +300,7 @@ void KCombiView::slotSortingChanged( TQDir::SortSpec sorting )
 
 KFileView *KCombiView::focusView( KFileView *preferred ) const
 {
-    TQWidget *w = focusWidget();
+    TQWidget *w = tqfocusWidget();
     KFileView *other = (right == preferred) ? left : right;
     return (preferred && w == preferred->widget()) ? preferred : other;
 }

@@ -38,12 +38,12 @@ KDE_EXPORT void kimgio_rgb_read(TQImageIO *io)
 
 	if (!sgi.readImage(img)) {
 		io->setImage(TQImage());
-		io->seStatus(-1);
+		io->setqStatus(-1);
 		return;
 	}
 
 	io->setImage(img);
-	io->seStatus(0);
+	io->setqStatus(0);
 }
 
 
@@ -53,9 +53,9 @@ KDE_EXPORT void kimgio_rgb_write(TQImageIO *io)
 	TQImage img = io->image();
 
 	if (!sgi.writeImage(img))
-		io->seStatus(-1);
+		io->setqStatus(-1);
 
-	io->seStatus(0);
+	io->setqStatus(0);
 }
 
 

@@ -223,7 +223,7 @@ void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
     {
 	if (groups[i] == 0L)
 	    break;
-	config->setGroup(TQString::fromLatin1(groups[i]) + "Icons");
+	config->setGroup(TQString::tqfromLatin1(groups[i]) + "Icons");
 	d->mpGroups[i].size = config->readNumEntry("Size", 0);
 	d->mpGroups[i].dblPixels = config->readBoolEntry("DoublePixels", false);
 	if (TQPixmap::defaultDepth()>8)
@@ -686,9 +686,9 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
     {
 	key += d->mpEffect.fingerprint(group, state);
 	if (d->mpGroups[group].dblPixels)
-	    key += TQString::fromLatin1(":dblsize");
+	    key += TQString::tqfromLatin1(":dblsize");
     } else
-	key += TQString::fromLatin1("noeffect");
+	key += TQString::tqfromLatin1("noeffect");
     key += '_';
     key += overlayStr;
 

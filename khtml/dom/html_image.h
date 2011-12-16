@@ -90,7 +90,7 @@ public:
 
     /**
      * Comma-separated list of lengths, defining an active region
-     * geometry. See also \c shape for the shape of the
+     * geometry. See also \c tqshape for the tqshape of the
      * region. See the <a
      * href="http://www.w3.org/TR/REC-html40/struct/objects.html#adef-coords">
      * coords attribute definition </a> in HTML 4.0.
@@ -131,16 +131,16 @@ public:
     void setNoHref( bool );
 
     /**
-     * The shape of the active area. The coordinates are given by
+     * The tqshape of the active area. The coordinates are given by
      * \c coords . See the <a
-     * href="http://www.w3.org/TR/REC-html40/struct/objects.html#adef-shape">
-     * shape attribute definition </a> in HTML 4.0.
+     * href="http://www.w3.org/TR/REC-html40/struct/objects.html#adef-tqshape">
+     * tqshape attribute definition </a> in HTML 4.0.
      *
      */
-    DOMString shape() const;
+    DOMString tqshape() const;
 
     /**
-     * see shape
+     * see tqshape
      */
     void setShape( const DOMString & );
 

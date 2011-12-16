@@ -31,7 +31,7 @@
 #include <fontconfig/fontconfig.h>
 
 #include <tqcursor.h>
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqfontdatabase.h>
 #include <tqobjectlist.h>
 #include <tqwhatsthis.h>
@@ -628,7 +628,7 @@ void KSelectAction::updateItems( int id )
       for( ; it != lst.end(); ++it )
         cb->insertItem( *it );
       // qt caches and never recalculates the sizeHint()
-      // qcombobox.cpp recommends calling setFont to invalidate the sizeHint
+      // qcombobox.cpp recommends calling setFont to tqinvalidate the sizeHint
       // setFont sets own_font = True, so we're a bit mean and calll
       // unsetFont which calls setFont and then overwrites the own_font
       cb->unsetFont();
@@ -1626,7 +1626,7 @@ void KFontSizeAction::init()
 
     setEditable( true );
     TQFontDatabase fontDB;
-    TQValueList<int> sizes = fontDB.standardSizes();
+    TQValueList<int> sizes = fontDB.tqstandardSizes();
     TQStringList lst;
     for ( TQValueList<int>::Iterator it = sizes.begin(); it != sizes.end(); ++it )
         lst.append( TQString::number( *it ) );
@@ -2021,7 +2021,7 @@ int KToggleToolBarAction::plug( TQWidget* w, int index )
       return -1;
 
   if ( !m_toolBar ) {
-    // Note: topLevelWidget() stops too early, we can't use it.
+    // Note: tqtopLevelWidget() stops too early, we can't use it.
     TQWidget * tl = w;
     TQWidget * n;
     while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
@@ -2326,7 +2326,7 @@ void KPasteTextAction::menuAboutToShow()
       if (reply.isValid())
         list = reply;
     }
-    TQString clipboardText = tqApp->clipboard()->text(TQClipboard::Clipboard);
+    TQString clipboardText = tqApp->tqclipboard()->text(TQClipboard::Clipboard);
     if (list.isEmpty())
         list << clipboardText;
     bool found = false;
@@ -2354,7 +2354,7 @@ void KPasteTextAction::menuItemActivated( int id)
       TQString clipboardText = reply;
       reply = klipper.call("setClipboardContents(TQString)", clipboardText);
       if (reply.isValid())
-        kdDebug(129) << "Clipboard: " << TQString(tqApp->clipboard()->text(TQClipboard::Clipboard)) << endl;
+        kdDebug(129) << "Clipboard: " << TQString(tqApp->tqclipboard()->text(TQClipboard::Clipboard)) << endl;
     }
     TQTimer::singleShot(20, this, TQT_SLOT(slotActivated()));
 }
@@ -2363,7 +2363,7 @@ void KPasteTextAction::slotActivated()
 {
   if (!m_mixedMode) {
     TQWidget *w = tqApp->widgetAt(TQCursor::pos(), true);
-    TQMimeSource *data = TQApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
     if (!data->provides("text/plain") && w) {
       m_popup->popup(w->mapToGlobal(TQPoint(0, w->height())));
     } else

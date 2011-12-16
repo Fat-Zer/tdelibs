@@ -47,7 +47,7 @@
 #include <tqtimer.h>
 #include <tqwhatsthis.h>
 #include <tqregexp.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 #include <math.h>
 

@@ -46,8 +46,8 @@
 #include <tqpopupmenu.h>
 #include <tqdropsite.h>
 #include <tqpainter.h>
-#include <layout.h>
-#include <clipboard.h>
+#include <tqlayout.h>
+#include <tqclipboard.h>
 #include <tqpixmap.h>
 #include <tqvbox.h>
 
@@ -89,7 +89,7 @@ KateViewInternal::KateViewInternal(KateView *view, KateDocument *doc)
   // cursor
   cursor.setMoveOnInsert (true);
 
-  // invalidate selStartCached, or keyb selection is screwed initially
+  // tqinvalidate selStartCached, or keyb selection is screwed initially
   selStartCached.setLine( -1 );
   //
   // scrollbar for lines
@@ -2649,9 +2649,9 @@ void KateViewInternal::keyReleaseEvent( TQKeyEvent* e )
 
       if (m_selChangedByUser)
       {
-        TQApplication::clipboard()->setSelectionMode( true );
+        TQApplication::tqclipboard()->setSelectionMode( true );
         m_view->copy();
-        TQApplication::clipboard()->setSelectionMode( false );
+        TQApplication::tqclipboard()->setSelectionMode( false );
 
         m_selChangedByUser = false;
       }
@@ -2711,9 +2711,9 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
             m_view->selectLine( cursor );
           }
 
-          TQApplication::clipboard()->setSelectionMode( true );
+          TQApplication::tqclipboard()->setSelectionMode( true );
           m_view->copy();
-          TQApplication::clipboard()->setSelectionMode( false );
+          TQApplication::tqclipboard()->setSelectionMode( false );
 
           // Keep the line at the select anchor selected during further
           // mouse selection
@@ -2759,7 +2759,7 @@ void KateViewInternal::mousePressEvent( TQMouseEvent* e )
         }
         else
         {
-          selStartCached.setLine( -1 ); // invalidate
+          selStartCached.setLine( -1 ); // tqinvalidate
         }
 
         if( !( e->state() & TQt::ShiftButton ) && isTargetSelected( e->pos() ) )
@@ -2889,9 +2889,9 @@ void KateViewInternal::mouseDoubleClickEvent(TQMouseEvent *e)
       // Move cursor to end (or beginning) of selected word
       if (m_view->hasSelection())
       {
-        TQApplication::clipboard()->setSelectionMode( true );
+        TQApplication::tqclipboard()->setSelectionMode( true );
         m_view->copy();
-        TQApplication::clipboard()->setSelectionMode( false );
+        TQApplication::tqclipboard()->setSelectionMode( false );
 
         // Shift+DC before the "cached" word should move the cursor to the
         // beginning of the selection, not the end
@@ -2933,9 +2933,9 @@ void KateViewInternal::mouseReleaseEvent( TQMouseEvent* e )
 
       if (m_selChangedByUser)
       {
-        TQApplication::clipboard()->setSelectionMode( true );
+        TQApplication::tqclipboard()->setSelectionMode( true );
         m_view->copy();
-        TQApplication::clipboard()->setSelectionMode( false );
+        TQApplication::tqclipboard()->setSelectionMode( false );
         // Set cursor to edge of selection... which edge depends on what
         // "direction" the selection was made in
         if ( m_view->selectStart < selectAnchor )
@@ -2961,9 +2961,9 @@ void KateViewInternal::mouseReleaseEvent( TQMouseEvent* e )
 
       if( m_doc->isReadWrite() )
       {
-        TQApplication::clipboard()->setSelectionMode( true );
+        TQApplication::tqclipboard()->setSelectionMode( true );
         m_view->paste ();
-        TQApplication::clipboard()->setSelectionMode( false );
+        TQApplication::tqclipboard()->setSelectionMode( false );
       }
 
       e->accept ();

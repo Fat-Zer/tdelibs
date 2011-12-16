@@ -606,7 +606,7 @@ signals:
    * data structures before returning from the slot.
    * Example:
    * \code
-   *     TQString myBuf = TQString::fromLatin1(buffer, buflen);
+   *     TQString myBuf = TQString::tqfromLatin1(buffer, buflen);
    * \endcode
    **/
   void receivedStdout(KProcess *proc, char *buffer, int buflen);

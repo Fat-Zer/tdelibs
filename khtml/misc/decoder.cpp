@@ -37,7 +37,7 @@ using namespace khtml;
 #include "htmlhashes.h"
 
 #include <tqregexp.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 #include <kglobal.h>
 #include <kcharsets.h>

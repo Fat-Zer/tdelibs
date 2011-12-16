@@ -96,7 +96,7 @@ struct KIO::PreviewJobPrivate
     // If the file to create a thumb for was a temp file, this is its name
     TQString tempName;
     // Over that, it's too much
-    unsigned long maximumSize;
+    unsigned long tqmaximumSize;
     // the size for the icon overlay
     int iconSize;
     // the transparency of the blended mimetype icon
@@ -246,7 +246,7 @@ void PreviewJob::startPreview()
   // Read configuration value for the maximum allowed size
     KConfig * config = KGlobal::config();
     KConfigGroupSaver cgs( config, "PreviewSettings" );
-    d->maximumSize = config->readNumEntry( "MaximumSize", 1024*1024 /* 1MB */ );
+    d->tqmaximumSize = config->readNumEntry( "MaximumSize", 1024*1024 /* 1MB */ );
 
     if (bNeedCache)
     {
@@ -339,7 +339,7 @@ void PreviewJob::slotResult( KIO::Job *job )
                 }
                 else if ( (*it).m_uds == KIO::UDS_SIZE )
                     {
-                    if ( filesize_t((*it).m_long) > d->maximumSize &&
+                    if ( filesize_t((*it).m_long) > d->tqmaximumSize &&
                          !d->ignoreMaximumSize &&
                          !d->currentItem.plugin->property("IgnoreMaximumSize").toBool() )
                     {

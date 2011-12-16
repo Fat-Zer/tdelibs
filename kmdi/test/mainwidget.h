@@ -19,7 +19,7 @@
 #define MAINWIDGET_H
 
 #include <tqcheckbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqdom.h>
 #include <kmdimainfrm.h>

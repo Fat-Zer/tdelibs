@@ -17,7 +17,7 @@
 #include <tqtooltip.h>
 #include <tqmessagebox.h>
 #include <tqtabbar.h>
-#include <palette.h>
+#include <tqpalette.h>
 #include <tqmultilineedit.h>
 
 #include <stdio.h>

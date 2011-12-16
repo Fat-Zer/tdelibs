@@ -31,7 +31,7 @@
 #include <tqfontdatabase.h>
 #include <kdebug.h>
 
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <tqmap.h>
 #include <tqcstring.h>
 #include <tqdir.h>
@@ -202,7 +202,7 @@ static struct Builtin
     { "ascii", "iso 8859-1" },
     { "x-utf-8", "utf-8" },
     { "x-utf-7", "utf-7" }, // ### FIXME: UTF-7 is not in Qt 
-    { "unicode-1-1-utf-7", "utf-7" }, // ### FIXME: UTF-7 is not in Qt
+    { "tqunicode-1-1-utf-7", "utf-7" }, // ### FIXME: UTF-7 is not in Qt
     { "utf-16", "iso-10646-ucs-2" },
     { "utf16", "iso-10646-ucs-2" },
     { "ucs2", "iso-10646-ucs-2" },
@@ -381,11 +381,11 @@ TQChar KCharsets::fromEntity(const TQString &str)
         if (str[pos] == (QChar)'x' || str[pos] == (QChar)'X') {
             pos++;
             // '&#x0000', hexadeciaml character reference
-            TQString tmp(str.unicode()+pos, str.length()-pos);
+            TQString tmp(str.tqunicode()+pos, str.length()-pos);
             res = tmp.toInt(&ok, 16);
         } else {
             //  '&#0000', decimal character reference
-            TQString tmp(str.unicode()+pos, str.length()-pos);
+            TQString tmp(str.tqunicode()+pos, str.length()-pos);
             res = tmp.toInt(&ok, 10);
         }
         return res;
@@ -422,14 +422,14 @@ TQChar KCharsets::fromEntity(const TQString &str, int &len)
 TQString KCharsets::toEntity(const TQChar &ch)
 {
     TQString ent;
-    ent.sprintf("&#0x%x;", ch.unicode());
+    ent.sprintf("&#0x%x;", ch.tqunicode());
     return ent;
 }
 
 TQString KCharsets::resolveEntities( const TQString &input )
 {
     TQString text = input;
-    const TQChar *p = text.unicode();
+    const TQChar *p = text.tqunicode();
     const TQChar *end = p + text.length();
     const TQChar *ampersand = 0;
     bool scanForSemicolon = false;
@@ -460,12 +460,12 @@ TQString KCharsets::resolveEntities( const TQString &input )
         if ( entityValue.isNull() )
             continue;
 
-        const uint ampersandPos = ampersand - text.unicode();
+        const uint ampersandPos = ampersand - text.tqunicode();
 
         text[ (int)ampersandPos ] = entityValue;
         text.remove( ampersandPos + 1, entityLength + 1 );
-        p = text.unicode() + ampersandPos;
-        end = text.unicode() + text.length();
+        p = text.tqunicode() + ampersandPos;
+        end = text.tqunicode() + text.length();
         ampersand = 0;
     }
 
@@ -477,7 +477,7 @@ TQStringList KCharsets::availableEncodingNames()
     TQStringList available;
     for ( const char* const* pos = charsets_for_encoding; *pos; ++pos ) {
         //kdDebug(0) << *charsets << " available" << endl;
-        available.append( TQString::fromLatin1( *pos ));
+        available.append( TQString::tqfromLatin1( *pos ));
     }
     return available;
 }
@@ -511,7 +511,7 @@ TQStringList KCharsets::descriptiveEncodingNames()
     // As we are sorting, we can directly read the array language_for_encoding
     TQStringList encodings;
     for ( const LanguageForEncoding* pos = language_for_encoding; pos->index; ++pos ) {
-        const TQString name = TQString::fromLatin1( pos->index );
+        const TQString name = TQString::tqfromLatin1( pos->index );
         const TQString description = i18n( language_names[ pos->data ] );
         encodings.append( i18n("Descriptive Encoding Name", "%1 ( %2 )"). arg ( description ). arg( name ) );
     }
@@ -573,7 +573,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
     TQString dir;
     {
     KConfigGroupSaver cfgsav( KGlobal::config(), "i18n" );
-    dir = KGlobal::config()->readPathEntry("i18ndir", TQString::fromLatin1("/usr/share/i18n/charmaps"));
+    dir = KGlobal::config()->readPathEntry("i18ndir", TQString::tqfromLatin1("/usr/share/i18n/charmaps"));
     }
 
     // these are codecs not included in Qt. They can be build up if the corresponding charmap
@@ -584,7 +584,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
         cname = name;
     cname = cname.upper();
 
-    const TQString basicName = TQString::fromLatin1(cname);
+    const TQString basicName = TQString::tqfromLatin1(cname);
     kdDebug() << k_funcinfo << endl << " Trying to find " << cname << " in " << dir << endl;
     
     TQString charMapFileName;

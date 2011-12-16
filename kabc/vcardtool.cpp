@@ -36,7 +36,7 @@ static bool needsEncoding( const TQString &value )
 {
   uint length = value.length();
   for ( uint i = 0; i < length; ++i ) {
-    char c = value.at( i ).latin1();
+    char c = value.tqat( i ).latin1();
     if ( (c < 33 || c > 126) && c != ' ' && c != '=' )
       return true;
   }

@@ -20,7 +20,7 @@
 #include <tqlistbox.h>
 #include <tqslider.h>
 #include <tqpushbutton.h>
-#include <textedit.h>
+#include <tqtextedit.h>
 #include <tqlineedit.h>
 #include <tqtoolbar.h>
 #include <tqcheckbox.h>
@@ -108,7 +108,7 @@ void AsteroidStyle::polish(TQWidget *w)
 {
 /*	Screwing with the palette is fun! and required in order to make it feel
 	authentic. -clee */
-	TQPalette wp = w->palette();
+	TQPalette wp = w->tqpalette();
 	//wp.setColor(TQColorGroup::Dark, wp.active().color(TQColorGroup::Button).dark(350));
 	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
 	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
@@ -149,10 +149,10 @@ void AsteroidStyle::unPolish(TQWidget *w)
 void
 AsteroidStyle::polish( TQApplication* app)
 {
-	TQPalette wp = TQApplication::palette();
+	TQPalette wp = TQApplication::tqpalette();
 	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
 	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
-	TQApplication::setPalette( wp, TRUE );
+	TQApplication::tqsetPalette( wp, TRUE );
 }
 
 /*! \reimp
@@ -289,7 +289,7 @@ void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
 	}
 }
 
-int AsteroidStyle::styleHint( TQ_StyleHint stylehint,
+int AsteroidStyle::tqstyleHint( TQ_StyleHint stylehint,
                                    const TQWidget *widget,
                                    const TQStyleOption &option,
                                    TQStyleHintReturn* returnData ) const
@@ -309,7 +309,7 @@ int AsteroidStyle::styleHint( TQ_StyleHint stylehint,
 			return 1;
 		
 		default:
-			return KStyle::styleHint(stylehint, widget, option, returnData);
+			return KStyle::tqstyleHint(stylehint, widget, option, returnData);
 	}
 }
 
@@ -613,13 +613,13 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 				p->drawPolygon(TQPointArray(24, outside));
 			}
 			p->setPen(cg.mid());
-			p->drawPolyline(TQPointArray(24, outside), 0, 12);
+			p->tqdrawPolyline(TQPointArray(24, outside), 0, 12);
 			p->setPen(cg.light());
-			p->drawPolyline(TQPointArray(24, outside), 12, 12);
+			p->tqdrawPolyline(TQPointArray(24, outside), 12, 12);
 			p->setPen(cg.dark());
-			p->drawPolyline(TQPointArray(20, inside), 0, 10);
+			p->tqdrawPolyline(TQPointArray(20, inside), 0, 10);
 			p->setPen(cg.background());
-			p->drawPolyline(TQPointArray(20, inside), 10, 10);
+			p->tqdrawPolyline(TQPointArray(20, inside), 10, 10);
 			break;
 		}
 
@@ -907,8 +907,8 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 			}
 
 			if (sf & Style_Down) {
-				p->translate(pixelMetric(PM_ButtonShiftHorizontal),
-				             pixelMetric(PM_ButtonShiftVertical));
+				p->translate(tqpixelMetric(PM_ButtonShiftHorizontal),
+				             tqpixelMetric(PM_ButtonShiftVertical));
 			}
 
 			a.translate((x + w/2), (y + (h-1)/2));
@@ -916,8 +916,8 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 			p->drawPoint(a[6]);
 
 			if (sf & Style_Down) {
-				p->translate(-pixelMetric(PM_ButtonShiftHorizontal),
-				             -pixelMetric(PM_ButtonShiftVertical));
+				p->translate(-tqpixelMetric(PM_ButtonShiftHorizontal),
+				             -tqpixelMetric(PM_ButtonShiftVertical));
 			}
 
 			break;
@@ -929,7 +929,7 @@ void AsteroidStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 	}
 }
 
-void AsteroidStyle::drawControl(TQ_ControlElement ce,
+void AsteroidStyle::tqdrawControl(TQ_ControlElement ce,
                                 TQPainter *p,
                                 const TQWidget *w,
                                 const TQRect &r,
@@ -977,7 +977,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		bool lastTab = (tb->indexOf( t->identifier() ) == tb->count()-1) ?
 				TRUE : FALSE;
 		TQRect r2( r );
-		if ( tb->shape() == TQTabBar::RoundedAbove ) {
+		if ( tb->tqshape() == TQTabBar::RoundedAbove ) {
 			p->setPen( cg.light() );
 			p->drawLine( r2.left(), r2.bottom()-1, r2.right(), r2.bottom()-1 );
 			if ( r2.left() == 0 )
@@ -1015,8 +1015,8 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			x2++;
 			p->drawLine( x2, r2.top() + 2, x2, r2.bottom() -
 				(selected ? (lastTab ? 0:1) :2));
-		} else if ( tb->shape() == TQTabBar::RoundedBelow ) {
-			bool rightAligned = styleHint( SH_TabBar_Alignment, tb ) == TQt::AlignRight;
+		} else if ( tb->tqshape() == TQTabBar::RoundedBelow ) {
+			bool rightAligned = tqstyleHint( SH_TabBar_Alignment, tb ) == TQt::AlignRight;
 			bool firstTab = tb->indexOf( t->identifier() ) == 0;
 			if ( selected ) {
 			p->fillRect( TQRect( r2.left()+1, r2.top(), r2.width()-3, 1),
@@ -1060,7 +1060,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			p->drawLine( r2.left(), r2.top() + (selected ? 0 : 2),
 				r2.left(), r2.bottom() - 2 );
 		} else {
-			TQCommonStyle::drawControl(ce, p, w, r, cg, sf, o);
+			TQCommonStyle::tqdrawControl(ce, p, w, r, cg, sf, o);
 		}
 		break;
 		}
@@ -1074,16 +1074,16 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		TQTab * t = o.tab();
 
 		const bool enabled = sf & Style_Enabled;
-		bool etchtext = styleHint( SH_EtchDisabledText );
+		bool etchtext = tqstyleHint( SH_EtchDisabledText );
 	
 		TQRect tr = r;
 		if ( t->identifier() == tb->currentTab() )
 			tr.setBottom( tr.bottom() -
-				pixelMetric( TQStyle::PM_DefaultFrameWidth, tb ) );
+				tqpixelMetric( TQStyle::PM_DefaultFrameWidth, tb ) );
 	
-		int alignment = TQt::AlignCenter | TQt::ShowPrefix;
-		if (!styleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
-			alignment |= TQt::NoAccel;
+		int tqalignment = TQt::AlignCenter | TQt::ShowPrefix;
+		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
+			tqalignment |= TQt::NoAccel;
 		tr.setWidth(tr.width()+4);	// Compensate for text appearing too far to the left
 //		TQRect tr_offset = TQRect(tr.x()+ETCH_X_OFFSET, tr.y()+ETCH_Y_OFFSET, tr.width(), tr.height());
 		TQRect tr_offset = TQRect(tr.x()+0, tr.y()+0, tr.width(), tr.height());
@@ -1098,7 +1098,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
-			drawItem( p, tr_offset, alignment, etchedcg, enabled, 0, t->text() );
+			drawItem( p, tr_offset, tqalignment, etchedcg, enabled, 0, t->text() );
 			p->setPen( cg.dark() );
 			etchedcg.setColor( TQColorGroup::Text, cg.dark() );
 			etchedcg.setColor( TQColorGroup::Mid, cg.dark() );
@@ -1107,11 +1107,11 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
-			drawItem( p, tr, alignment, etchedcg, enabled, 0, t->text() );
+			drawItem( p, tr, tqalignment, etchedcg, enabled, 0, t->text() );
 			p->setPen(savePen);
 		}
 		else {
-			drawItem( p, tr, alignment, cg, enabled, 0, t->text() );
+			drawItem( p, tr, tqalignment, cg, enabled, 0, t->text() );
 		}
 	
 		if ( (sf & Style_HasFocus) && !t->text().isEmpty() )
@@ -1126,11 +1126,11 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		const TQCheckBox *checkbox = (const TQCheckBox *) w;
 
 		const bool enabled = sf & Style_Enabled;
-		bool etchtext = styleHint( SH_EtchDisabledText );
+		bool etchtext = tqstyleHint( SH_EtchDisabledText );
 	
-		int alignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
-		if (!styleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
-			alignment |= TQt::NoAccel;
+		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
+		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
+			tqalignment |= TQt::NoAccel;
 
 		//TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
 		TQRect r_offset = TQRect(r.x()+0, r.y()+0, r.width(), r.height());
@@ -1145,7 +1145,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
-			drawItem(p, r_offset, alignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
 			p->setPen( cg.dark() );
 			etchedcg.setColor( TQColorGroup::Text, cg.dark() );
 			etchedcg.setColor( TQColorGroup::Mid, cg.dark() );
@@ -1154,15 +1154,15 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
-			drawItem(p, r, alignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+			drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
 			p->setPen(savePen);
 		}
 		else {
-			drawItem(p, r, alignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+			drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
 		}
 	
 		if (sf & Style_HasFocus) {
-			TQRect fr = visualRect(subRect(SR_CheckBoxFocusRect, w), w);
+			TQRect fr = tqvisualRect(subRect(SR_CheckBoxFocusRect, w), w);
 			tqdrawPrimitive(TQStyle::PE_FocusRect, p, fr, cg, sf);
 		}
 #endif
@@ -1175,11 +1175,11 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		const TQRadioButton *radiobutton = (const TQRadioButton *) w;
 
 		const bool enabled = sf & Style_Enabled;
-		bool etchtext = styleHint( SH_EtchDisabledText );
+		bool etchtext = tqstyleHint( SH_EtchDisabledText );
 
-		int alignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
-		if (!styleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
-			alignment |= TQt::NoAccel;
+		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
+		if (!tqstyleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
+			tqalignment |= TQt::NoAccel;
 
 //		TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
 		TQRect r_offset = TQRect(r.x()+0, r.y()+0, r.width(), r.height());
@@ -1194,7 +1194,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
-			drawItem(p, r_offset, alignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
+			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
 			p->setPen( cg.dark() );
 			etchedcg.setColor( TQColorGroup::Text, cg.dark() );
 			etchedcg.setColor( TQColorGroup::Mid, cg.dark() );
@@ -1203,13 +1203,13 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
-			drawItem(p, r, alignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
+			drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
 			p->setPen(savePen);
 		}
-		drawItem(p, r, alignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, enabled, radiobutton->pixmap(), radiobutton->text());
+		drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, enabled, radiobutton->pixmap(), radiobutton->text());
 	
 		if (sf & Style_HasFocus) {
-			TQRect fr = visualRect(subRect(SR_RadioButtonFocusRect, w), w);
+			TQRect fr = tqvisualRect(subRect(SR_RadioButtonFocusRect, w), w);
 			tqdrawPrimitive(TQStyle::PE_FocusRect, p, fr, cg, sf);
 		}
 #endif
@@ -1343,7 +1343,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			bool focused = sf & Style_HasFocus;
 			bool down = sf & Style_Down;
 			bool enabled = sf & Style_Enabled;
-			bool etchtext = styleHint( SH_EtchDisabledText );
+			bool etchtext = tqstyleHint( SH_EtchDisabledText );
 			const int text_flags = AlignVCenter | AlignHCenter | ShowPrefix | DontClip | SingleLine;
 
 			if (active && focused) {
@@ -1390,13 +1390,13 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		case CE_PushButtonLabel: {
 			const TQPushButton *pb = dynamic_cast<const TQPushButton *>(w);
 			const bool enabled = sf & Style_Enabled;
-			bool etchtext = styleHint( SH_EtchDisabledText );
+			bool etchtext = tqstyleHint( SH_EtchDisabledText );
 			const int text_flags = AlignVCenter | AlignHCenter | ShowPrefix | DontClip | SingleLine;
 			int dx = 0;
 
 			if (sf & Style_Down) {
-				p->translate(pixelMetric(PM_ButtonShiftHorizontal),
-				             pixelMetric(PM_ButtonShiftVertical));
+				p->translate(tqpixelMetric(PM_ButtonShiftHorizontal),
+				             tqpixelMetric(PM_ButtonShiftVertical));
 			}
 
 			if (pb->iconSet() && !pb->iconSet()->isNull()) {
@@ -1425,7 +1425,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			}
 
 			if (!pb->text().isNull()) {
-				p->setPen(POPUPMENUITEM_TEXT_ETCH_CONDITIONS?cg.dark():(enabled ? cg.buttonText() : pb->palette().disabled().buttonText()));
+				p->setPen(POPUPMENUITEM_TEXT_ETCH_CONDITIONS?cg.dark():(enabled ? cg.buttonText() : pb->tqpalette().disabled().buttonText()));
 				if (pb->iconSet() && !pb->iconSet()->isNull()) {
 					TQRect tpr(dx, r.y(), r.width()-dx, r.height());
 					TQRect tr(p->boundingRect(tpr, text_flags, pb->text()));
@@ -1458,7 +1458,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			const TQHeader *hw = dynamic_cast<const TQHeader *>(w);
 			int hs = o.headerSection();
 			const bool enabled = sf & Style_Enabled;
-			bool etchtext = styleHint( SH_EtchDisabledText );
+			bool etchtext = tqstyleHint( SH_EtchDisabledText );
 			const int text_flags = AlignVCenter | ShowPrefix | DontClip | SingleLine;
 
 			TQIconSet *is = hw->iconSet(hs);
@@ -1513,7 +1513,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			bool disabled = !mi->isEnabled();
 			bool checkable = pum->isCheckable();
 			bool enabled = mi->isEnabled();
-			bool etchtext = styleHint( SH_EtchDisabledText );
+			bool etchtext = tqstyleHint( SH_EtchDisabledText );
 
 			int xpos = x;
 			int xm = itemFrame + checkcol + itemHMargin;
@@ -1553,7 +1553,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 				pmr.moveCenter(cr.center());
 
 				if (backwards)
-					pmr = visualRect(pmr, r);
+					pmr = tqvisualRect(pmr, r);
 
 				p->setPen(cg.highlightedText());
 				p->drawPixmap(pmr.topLeft(), pixmap);
@@ -1572,7 +1572,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 
 					TQRect rr = TQRect(xp, y, checkcol, sh);
 					if (backwards) {
-						rr = visualRect(rr, r);
+						rr = tqvisualRect(rr, r);
 					}
 
 					tqdrawPrimitive(PE_CheckMark, p, rr, cg, cflags);
@@ -1624,8 +1624,8 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 						TQRect rr = TQRect(xp, y+m, tab, sh-(2*m));
 						TQRect rr_offset = TQRect(xp+ETCH_X_OFFSET, y+m+ETCH_Y_OFFSET, tab, sh-(2*m));
 						if (backwards) {
-							rr = visualRect(rr, r);
-							rr_offset = visualRect(rr_offset, r);
+							rr = tqvisualRect(rr, r);
+							rr_offset = tqvisualRect(rr_offset, r);
 						}
 
 						if POPUPMENUITEM_TEXT_ETCH_CONDITIONS {
@@ -1642,8 +1642,8 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 					TQRect rr = TQRect(xpos, y+m, sw-xm-tab+1, sh-(2*m));
 					TQRect rr_offset = TQRect(xpos+ETCH_X_OFFSET, y+m+ETCH_Y_OFFSET, sw-xm-tab+1, sh-(2*m));
 					if (backwards) {
-						rr = visualRect(rr, r);
-						rr_offset = visualRect(rr_offset, r);
+						rr = tqvisualRect(rr, r);
+						rr_offset = tqvisualRect(rr_offset, r);
 						text_flags |= AlignRight;
 					}
 
@@ -1668,7 +1668,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			}
 
 			if (mi->popup()) {
-				int dim = pixelMetric(PM_MenuButtonIndicator);
+				int dim = tqpixelMetric(PM_MenuButtonIndicator);
 
 				xpos = x + sw - arrowHMargin - 2 * itemFrame - dim;
 
@@ -1680,7 +1680,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 
 				TQRect rr = TQRect(xpos, y + sh/2 - dim/2, dim, dim);
 				if (backwards)
-					rr = visualRect(rr, r);
+					rr = tqvisualRect(rr, r);
 				tqdrawPrimitive((backwards ? PE_ArrowLeft : PE_ArrowRight), p, rr, cg, Style_Enabled);
 			}
 
@@ -1688,12 +1688,12 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		}
 
 		default: {
-			KStyle::drawControl(ce, p, w, r, cg, sf, o);
+			KStyle::tqdrawControl(ce, p, w, r, cg, sf, o);
 		}
 	}
 }
 
-void AsteroidStyle::drawControlMask(TQ_ControlElement ce,
+void AsteroidStyle::tqdrawControlMask(TQ_ControlElement ce,
                                     TQPainter *p,
                                     const TQWidget *w,
                                     const TQRect &r,
@@ -1733,12 +1733,12 @@ void AsteroidStyle::drawControlMask(TQ_ControlElement ce,
 		CE_HeaderLabel
 	 */
 			default: {
-			KStyle::drawControlMask(ce, p, w, r, o);
+			KStyle::tqdrawControlMask(ce, p, w, r, o);
 		}
 	}
 }
 
-void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
+void AsteroidStyle::tqdrawComplexControl(TQ_ComplexControl cc,
                                        TQPainter *p,
                                        const TQWidget *w,
                                        const TQRect &r,
@@ -1762,7 +1762,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 		case CC_ListView:
 			{
 			if ( sc & SC_ListView ) {
-				TQCommonStyle::drawComplexControl( cc, p, w, r, cg, sf, sc, sa, o );
+				TQCommonStyle::tqdrawComplexControl( cc, p, w, r, cg, sf, sc, sa, o );
 			}
 			if ( sc & ( SC_ListViewBranch | SC_ListViewExpand ) ) {
 				if (o.isDefault())
@@ -1960,7 +1960,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			TQRect hr(sw - handle_offset-1, y+2, handle_width, sh-4);
 			int hrx, hry, hrx2, hry2;
 			hr.coords(&hrx, &hry, &hrx2, &hry2);
-			if (backwards) { hr = visualRect(hr, r); }
+			if (backwards) { hr = tqvisualRect(hr, r); }
 
 			p->drawRect(hr);
 
@@ -1991,7 +1991,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 				pmr.moveBy(1, 1);
 			}
 
-			if (backwards) { pmr = visualRect(pmr, r); }
+			if (backwards) { pmr = tqvisualRect(pmr, r); }
 
 			p->setPen(cg.foreground());
 			p->drawPixmap(pmr.topLeft(), downArrow);
@@ -2008,8 +2008,8 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			if ( toolbutton->backgroundMode() != TQt::PaletteButton )
 				c.setBrush( TQColorGroup::Button, toolbutton->paletteBackgroundColor() );
 			TQRect button, menuarea;
-			button   = visualRect( querySubControlMetrics(cc, w, SC_ToolButton, o), w );
-			menuarea = visualRect( querySubControlMetrics(cc, w, SC_ToolButtonMenu, o), w );
+			button   = tqvisualRect( querySubControlMetrics(cc, w, SC_ToolButton, o), w );
+			menuarea = tqvisualRect( querySubControlMetrics(cc, w, SC_ToolButtonMenu, o), w );
 		
 			SFlags bflags = sf;
 			SFlags mflags = sf;
@@ -2077,7 +2077,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
                         /* Turn these off for now */
                         // Draw the tickmarks
 			/*if (controls & SC_SliderTickmarks)
-				TQCommonStyle::drawComplexControl(control, &p2,
+				TQCommonStyle::tqdrawComplexControl(control, &p2,
 						r, cg, flags, SC_SliderTickmarks, sa, o);*/
 
 			// Draw the slider handle
@@ -2126,12 +2126,12 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 
 
 		default: {
-			KStyle::drawComplexControl(cc, p, w, r, cg, sf, sc, sa, o);
+			KStyle::tqdrawComplexControl(cc, p, w, r, cg, sf, sc, sa, o);
 		}
 	}
 }
 
-void AsteroidStyle::drawComplexControlMask(TQ_ComplexControl cc,
+void AsteroidStyle::tqdrawComplexControlMask(TQ_ComplexControl cc,
                                            TQPainter *p,
                                            const TQWidget *w,
                                            const TQRect &r,
@@ -2149,12 +2149,12 @@ void AsteroidStyle::drawComplexControlMask(TQ_ComplexControl cc,
 		CC_ListView
 	 */
 			default: {
-			KStyle::drawComplexControlMask(cc, p, w, r, o);
+			KStyle::tqdrawComplexControlMask(cc, p, w, r, o);
 		}
 	}
 }
 
-int AsteroidStyle::pixelMetric(PixelMetric pm, const TQWidget *w) const
+int AsteroidStyle::tqpixelMetric(PixelMetric pm, const TQWidget *w) const
 {
 	switch (pm) {
 	/*	PixelMetrics available are:
@@ -2248,7 +2248,7 @@ int AsteroidStyle::pixelMetric(PixelMetric pm, const TQWidget *w) const
 			if (w && w->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
 				return 3;
 			} else {
-				return KStyle::pixelMetric(pm, w);
+				return KStyle::tqpixelMetric(pm, w);
 			}
 		}
 
@@ -2274,7 +2274,7 @@ int AsteroidStyle::pixelMetric(PixelMetric pm, const TQWidget *w) const
 			return TQMAX( 4, TQApplication::globalStrut().width() );
 
 		default: {
-			return KStyle::pixelMetric(pm, w);
+			return KStyle::tqpixelMetric(pm, w);
 		}
 	}
 }
@@ -2454,7 +2454,7 @@ TQSize AsteroidStyle::tqsizeFromContents(ContentsType ct,
 		}
 
 		case CT_ComboBox: {
-			int padding = (pixelMetric(PM_DefaultFrameWidth, w) * 2) + 1;
+			int padding = (tqpixelMetric(PM_DefaultFrameWidth, w) * 2) + 1;
 			return TQSize(s.width() + 21, s.height() + padding);
 		}
 

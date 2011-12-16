@@ -48,7 +48,7 @@ namespace KUnitTest
     
     void SlotTester::allTests()
     {
-        TQStrList allSlots = metaObject()->slotNames();
+        TQStrList allSlots = tqmetaObject()->slotNames();
         
         if ( allSlots.contains("setUp()") > 0 ) invokeMember("setUp()");
 

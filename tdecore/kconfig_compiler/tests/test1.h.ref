@@ -24,7 +24,7 @@ class Test1 : public KConfigSkeleton
     */
     void setOneOption( bool v )
     {
-      if (!isImmutable( TQString::fromLatin1( "OneOption" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "OneOption" ) ))
         mOneOption = v;
     }
 
@@ -41,7 +41,7 @@ class Test1 : public KConfigSkeleton
     */
     void setAnotherOption( int v )
     {
-      if (!isImmutable( TQString::fromLatin1( "AnotherOption" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "AnotherOption" ) ))
         mAnotherOption = v;
     }
 
@@ -58,7 +58,7 @@ class Test1 : public KConfigSkeleton
     */
     void setListOption( int v )
     {
-      if (!isImmutable( TQString::fromLatin1( "ListOption" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "ListOption" ) ))
         mListOption = v;
     }
 
@@ -75,7 +75,7 @@ class Test1 : public KConfigSkeleton
     */
     void setMyString( const TQString & v )
     {
-      if (!isImmutable( TQString::fromLatin1( "MyString" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "MyString" ) ))
         mMyString = v;
     }
 
@@ -92,7 +92,7 @@ class Test1 : public KConfigSkeleton
     */
     void setMyPath( const TQString & v )
     {
-      if (!isImmutable( TQString::fromLatin1( "MyPath" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "MyPath" ) ))
         mMyPath = v;
     }
 
@@ -109,7 +109,7 @@ class Test1 : public KConfigSkeleton
     */
     void setAnotherOption2( int v )
     {
-      if (!isImmutable( TQString::fromLatin1( "AnotherOption2" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "AnotherOption2" ) ))
         mAnotherOption2 = v;
     }
 
@@ -126,7 +126,7 @@ class Test1 : public KConfigSkeleton
     */
     void setMyStringList( const TQStringList & v )
     {
-      if (!isImmutable( TQString::fromLatin1( "MyStringList" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "MyStringList" ) ))
         mMyStringList = v;
     }
 
@@ -143,7 +143,7 @@ class Test1 : public KConfigSkeleton
     */
     void setMyStringListHidden( const TQStringList & v )
     {
-      if (!isImmutable( TQString::fromLatin1( "MyStringListHidden" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "MyStringListHidden" ) ))
         mMyStringListHidden = v;
     }
 
@@ -160,7 +160,7 @@ class Test1 : public KConfigSkeleton
     */
     void setMyNumber( int v )
     {
-      if (!isImmutable( TQString::fromLatin1( "MyNumber" ) ))
+      if (!isImmutable( TQString::tqfromLatin1( "MyNumber" ) ))
         mMyNumber = v;
     }
 

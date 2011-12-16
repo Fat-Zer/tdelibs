@@ -113,7 +113,7 @@ void BinaryFormat::saveAll( AddressBook*, Resource *resource, TQFile *file )
   }
 
   // set real number of entries
-  stream.device()->at( 2 * sizeof( TQ_UINT32 ) );
+  stream.tqdevice()->tqat( 2 * sizeof( TQ_UINT32 ) );
   stream << counter;
 }
 

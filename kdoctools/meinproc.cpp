@@ -23,7 +23,7 @@
 #include <kaboutdata.h>
 #include <stdlib.h>
 #include <kdebug.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <tqfileinfo.h>
 #include <kprocess.h>
 #include <tqvaluevector.h>

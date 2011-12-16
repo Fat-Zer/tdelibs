@@ -22,7 +22,7 @@
 #include <tqlineedit.h>
 #include <tqlabel.h>
 #include <tqcheckbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqvalidator.h>
 #include <klocale.h>
 #include <kconfig.h>
@@ -46,7 +46,7 @@ KMProxyWidget::KMProxyWidget(TQWidget *parent, const char *name)
 	m_proxyhost->setEnabled(false);
 	m_proxyport->setEnabled(false);
 
-	TQGridLayout	*lay0 = new TQGridLayout(layout(), 3, 2, 10);
+	TQGridLayout	*lay0 = new TQGridLayout(tqlayout(), 3, 2, 10);
 	lay0->setColStretch(1,1);
 	lay0->addMultiCellWidget(m_useproxy,0,0,0,1);
 	lay0->addWidget(m_hostlabel,1,0);

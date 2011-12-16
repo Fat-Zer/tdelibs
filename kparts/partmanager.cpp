@@ -206,7 +206,7 @@ bool PartManager::eventFilter( TQObject *obj, TQEvent *ev )
   {
     TQPoint pos;
 
-    if ( !d->m_managedTopLevelWidgets.containsRef( w->topLevelWidget() ) )
+    if ( !d->m_managedTopLevelWidgets.containsRef( w->tqtopLevelWidget() ) )
       return false;
 
     if ( d->m_bIgnoreScrollBars && w->inherits( TQSCROLLBAR_OBJECT_NAME_STRING ) )

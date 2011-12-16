@@ -100,7 +100,7 @@ class KDialogBaseTile;
  * signals that are related to the standard action buttons will be used
  * when you don't use these buttons.
  *
- * <b>Dialog shapes:</b>\n
+ * <b>Dialog tqshapes:</b>\n
  *
  * You can either use one of the prebuilt, easy to use, faces or
  * define your own main widget. The dialog provides ready to use
@@ -733,7 +733,7 @@ class TDEUI_EXPORT KDialogBase : public KDialog
      * Sets the page with @p index to be displayed.
      *
      * This method will only
-     * work when the dialog is using the predefined shape of TreeList,
+     * work when the dialog is using the predefined tqshape of TreeList,
      * IconList or Tabbed.
      *
      * @param index Index of the page to be shown.
@@ -745,7 +745,7 @@ class TDEUI_EXPORT KDialogBase : public KDialog
      * Returns the index of the active page.
      *
      * This method will only work when the dialog is using the
-     * predefined shape of Tabbed, TreeList or IconList.
+     * predefined tqshape of Tabbed, TreeList or IconList.
      *
      * @return The page index or -1 if there is no active page.
      */
@@ -1167,7 +1167,7 @@ class TDEUI_EXPORT KDialogBase : public KDialog
      * set it as a minimum size for the resulting dialog.
      *
      * You should not need to use this method and never if you use one of
-     * the predefined shapes.
+     * the predefined tqshapes.
      *
      * @param w The width of you special widget.
      * @param h The height of you special widget.

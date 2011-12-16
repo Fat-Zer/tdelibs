@@ -167,7 +167,7 @@ public:
   void changeItem( const TQString& text, int id );
 
   /**
-   * Sets the alignment of item @p id. By default all fields are aligned
+   * Sets the tqalignment of item @p id. By default all fields are aligned
    * @p AlignHCenter | @p AlignVCenter. See TQLabel::setAlignment for details.
    *
   */

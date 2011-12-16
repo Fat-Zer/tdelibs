@@ -26,7 +26,7 @@
 #include <kmessagebox.h>
 #include <tqlabel.h>
 #include <tqregexp.h>
-#include <stylesheet.h>
+#include <tqstylesheet.h>
 #include <tqguardedptr.h>
 #include <tqptrvector.h>
 #include <kdebug.h>

@@ -6,7 +6,7 @@
 #include <tqcheckbox.h>
 #include <tqfile.h>
 #include <tqdir.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqmultilineedit.h>
 #include <tqlineedit.h>
 #include <tqvbox.h>

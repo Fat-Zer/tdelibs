@@ -633,7 +633,7 @@ class RectImpl;
 
 /**
  * The \c Rect interface is used to represent any <a
- * href="http://www.w3.org/TR/REC-CSS2/visufx.html#value-def-shape">
+ * href="http://www.w3.org/TR/REC-CSS2/visufx.html#value-def-tqshape">
  * rect </a> value. This interface reflects the values in the
  * underlying style property. Hence, modifications made through this
  * interface modify the style property.

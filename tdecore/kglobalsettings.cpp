@@ -50,8 +50,8 @@ static QRgb qt_colorref2qrgb(COLORREF col)
 #include <stdlib.h>
 #include <kprotocolinfo.h>
 
-#include <textcodec.h>
-#include <textstream.h>
+#include <tqtextcodec.h>
+#include <tqtextstream.h>
 #include <tqfile.h>
 
 #ifdef Q_WS_X11
@@ -451,7 +451,7 @@ TQFont KGlobalSettings::taskbarFont()
 TQFont KGlobalSettings::largeFont(const TQString &text)
 {
     TQFontDatabase db;
-    TQStringList fam = db.families();
+    TQStringList fam = db.tqfamilies();
 
     // Move a bunch of preferred fonts to the front.
     if (fam.remove("Arial"))

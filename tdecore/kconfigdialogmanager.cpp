@@ -131,13 +131,13 @@ void KConfigDialogManager::setupWidget(TQWidget *widget, KConfigSkeletonItem *it
   TQVariant minValue = item->minValue();
   if (minValue.isValid())
   {
-    if (widget->metaObject()->findProperty("minValue", true) != -1)
+    if (widget->tqmetaObject()->findProperty("minValue", true) != -1)
        widget->setProperty("minValue", minValue);
   }
   TQVariant maxValue = item->maxValue();
   if (maxValue.isValid())
   {
-    if (widget->metaObject()->findProperty("maxValue", true) != -1)
+    if (widget->tqmetaObject()->findProperty("maxValue", true) != -1)
        widget->setProperty("maxValue", maxValue);
   }
   if (TQWhatsThis::textFor( widget ).isEmpty())
@@ -189,7 +189,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
 		   // it again using the super class name. This fixes a problem with using QtRuby/Korundum 
 		   // widgets with KConfigXT where 'Qt::Widget' wasn't being seen a the real deal, even 
 		   // though it was a 'QWidget'.
-          changedIt = changedMap.find(childWidget->metaObject()->superClassName());
+          changedIt = changedMap.find(childWidget->tqmetaObject()->tqsuperClassName());
         }
 
         if (changedIt == changedMap.end())

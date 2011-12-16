@@ -102,7 +102,7 @@ public:
 
     virtual void parseAttribute(AttributeImpl *attr);
 
-    bool isDefault() const { return shape==Default; }
+    bool isDefault() const { return tqshape==Default; }
 
     bool mapMouseEvent(int x_, int y_, int width_, int height_,
                        khtml::RenderObject::NodeInfo& info);
@@ -117,7 +117,7 @@ protected:
     khtml::Length* m_coords;
     int m_coordsLen;
     int lastw, lasth;
-    Shape shape  : 3;
+    Shape tqshape  : 3;
     bool nohref  : 1;
 };
 

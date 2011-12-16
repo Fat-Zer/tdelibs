@@ -26,7 +26,7 @@
 
 #include <tqgrid.h>
 #include <tqhbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtooltip.h>
 #include <tqvbox.h>
 #include <tqwhatsthis.h>
@@ -454,7 +454,7 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( mUrlHelp )
   {
-    s2 = mUrlHelp->minimumSize() + zeroByS;
+    s2 = mUrlHelp->tqminimumSize() + zeroByS;
   }
   s1.rwidth()   = QMAX( s1.rwidth(), s2.rwidth() );
   s1.rheight() += s2.rheight();
@@ -469,7 +469,7 @@ TQSize KDialogBase::minimumSizeHint() const
   else if( mMainWidget )
   {
     s2 = mMainWidget->sizeHint() + zeroByS;
-    s2 = s2.expandedTo( mMainWidget->minimumSize() );
+    s2 = s2.expandedTo( mMainWidget->tqminimumSize() );
     s2 = s2.expandedTo( mMainWidget->minimumSizeHint() );
     if( s2.isEmpty() )
     {
@@ -486,7 +486,7 @@ TQSize KDialogBase::minimumSizeHint() const
   if (d->detailsWidget && d->bDetails)
   {
     s2 = d->detailsWidget->sizeHint() + zeroByS;
-    s2 = s2.expandedTo( d->detailsWidget->minimumSize() );
+    s2 = s2.expandedTo( d->detailsWidget->tqminimumSize() );
     s2 = s2.expandedTo( d->detailsWidget->minimumSizeHint() );
     s1.rwidth()  = QMAX( s1.rwidth(), s2.rwidth() );
     s1.rheight() += s2.rheight();
@@ -497,7 +497,7 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( mActionSep )
   {
-    s1.rheight() += mActionSep->minimumSize().height() + s;
+    s1.rheight() += mActionSep->tqminimumSize().height() + s;
   }
 
   //
@@ -505,7 +505,7 @@ TQSize KDialogBase::minimumSizeHint() const
   //
   if( d->mButton.box )
   {
-    s2 = d->mButton.box->minimumSize();
+    s2 = d->mButton.box->tqminimumSize();
     if( mButtonOrientation == Qt::Horizontal )
     {
       s1.rwidth()   = QMAX( s1.rwidth(), s2.rwidth() );
@@ -1492,10 +1492,10 @@ TQRect KDialogBase::getContentsRect() const
   r.setLeft( marginHint() );
   r.setTop( marginHint() + (mUrlHelp ? mUrlHelp->height() : 0) );
   r.setRight( width() - marginHint() );
-  int h = (!mActionSep ? 0 : mActionSep->minimumSize().height()+marginHint());
+  int h = (!mActionSep ? 0 : mActionSep->tqminimumSize().height()+marginHint());
   if( d->mButton.box )
   {
-    r.setBottom( height() - d->mButton.box->minimumSize().height() - h );
+    r.setBottom( height() - d->mButton.box->tqminimumSize().height() - h );
   }
   else
   {
@@ -1513,14 +1513,14 @@ void KDialogBase::getBorderWidths(int& ulx, int& uly, int& lrx, int& lry) const
   uly = marginHint();
   if( mUrlHelp  )
   {
-    uly += mUrlHelp->minimumSize().height();
+    uly += mUrlHelp->tqminimumSize().height();
   }
 
   lrx = marginHint();
-  lry = d->mButton.box ? d->mButton.box->minimumSize().height() : 0;
+  lry = d->mButton.box ? d->mButton.box->tqminimumSize().height() : 0;
   if( mActionSep )
   {
-    lry += mActionSep->minimumSize().height() + marginHint();
+    lry += mActionSep->tqminimumSize().height() + marginHint();
   }
 }
 
@@ -1755,8 +1755,8 @@ TQSize KDialogBase::configDialogSize( KConfig& config,
    h = sizeHint().height();
 
    KConfigGroupSaver cs(&config, groupName);
-   w = config.readNumEntry( TQString::fromLatin1("Width %1").arg( desk.width()), w );
-   h = config.readNumEntry( TQString::fromLatin1("Height %1").arg( desk.height()), h );
+   w = config.readNumEntry( TQString::tqfromLatin1("Width %1").arg( desk.width()), w );
+   h = config.readNumEntry( TQString::tqfromLatin1("Height %1").arg( desk.height()), h );
 
    return TQSize( w, h );
 }
@@ -1777,9 +1777,9 @@ void KDialogBase::saveDialogSize( KConfig& config, const TQString& groupName,
    KConfigGroupSaver cs(&config, groupName);
    TQSize sizeToSave = size();
 
-   config.writeEntry( TQString::fromLatin1("Width %1").arg( desk.width()),
+   config.writeEntry( TQString::tqfromLatin1("Width %1").arg( desk.width()),
 		      TQString::number( sizeToSave.width()), true, global);
-   config.writeEntry( TQString::fromLatin1("Height %1").arg( desk.height()),
+   config.writeEntry( TQString::tqfromLatin1("Height %1").arg( desk.height()),
 		      TQString::number( sizeToSave.height()), true, global);
 }
 

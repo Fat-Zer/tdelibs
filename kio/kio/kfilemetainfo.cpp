@@ -937,7 +937,7 @@ KFilePlugin* KFileMetaInfoProvider::loadPlugin( const TQString& mimeType, const 
         query = "(not exist [X-KDE-Protocol])";
         queryMimeType = mimeType;
     } else {
-        query = TQString::fromLatin1( "[X-KDE-Protocol] == '%1'" ).arg(protocol);
+        query = TQString::tqfromLatin1( "[X-KDE-Protocol] == '%1'" ).arg(protocol);
         // querying for a protocol: we have no mimetype, so we need to use KFilePlugin as one
         queryMimeType = "KFilePlugin";
         // hopefully using KFilePlugin as genericMimeType too isn't a problem

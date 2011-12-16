@@ -19,7 +19,7 @@
  */
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <kapplication.h>
 #include <kwizard.h>
 

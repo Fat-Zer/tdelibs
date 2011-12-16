@@ -51,7 +51,7 @@ void ImagePreview::setParameters(int brightness, int hue, int saturation, int ga
 	hue_ = hue;
 	saturation_ = saturation;
 	gamma_ = gamma;
-	repaint();
+	tqrepaint();
 }
 
 void ImagePreview::paintEvent(TQPaintEvent*){

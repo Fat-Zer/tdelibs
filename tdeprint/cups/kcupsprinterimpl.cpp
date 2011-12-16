@@ -67,8 +67,8 @@ bool KCupsPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 	// check printer object
 	if (!printer) return false;
 
-	TQString	hoststr = TQString::fromLatin1("%1:%2").arg(CupsInfos::self()->host()).arg(CupsInfos::self()->port());
-	cmd = TQString::fromLatin1("cupsdoprint -P %1 -J %3 -H %2").arg(quote(printer->printerName())).arg(quote(hoststr)).arg(quote(printer->docName()));
+	TQString	hoststr = TQString::tqfromLatin1("%1:%2").arg(CupsInfos::self()->host()).arg(CupsInfos::self()->port());
+	cmd = TQString::tqfromLatin1("cupsdoprint -P %1 -J %3 -H %2").arg(quote(printer->printerName())).arg(quote(hoststr)).arg(quote(printer->docName()));
 	if (!CupsInfos::self()->login().isEmpty())
 	{
 		TQString	userstr(CupsInfos::self()->login());
@@ -127,7 +127,7 @@ void KCupsPrinterImpl::broadcastOption(const TQString& key, const TQString& valu
 		KPrinterImpl::broadcastOption("orientation-requested",(value == "Landscape" ? "4" : "3"));
 	else if (key == "kde-pagesize")
 	{
-		TQString	pagename = TQString::fromLatin1(pageSizeToPageName((KPrinter::PageSize)value.toInt()));
+		TQString	pagename = TQString::tqfromLatin1(pageSizeToPageName((KPrinter::PageSize)value.toInt()));
 		KPrinterImpl::broadcastOption("PageSize",pagename);
 		// simple hack for classes
 		KPrinterImpl::broadcastOption("media",pagename);

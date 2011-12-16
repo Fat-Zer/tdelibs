@@ -123,8 +123,8 @@ namespace
 
 	static bool useDropShadow(TQWidget* w)
 	{
-		return w && w->metaObject() && 
-			w->metaObject()->findProperty("KStyleMenuDropShadow") != -1;
+		return w && w->tqmetaObject() && 
+			w->tqmetaObject()->findProperty("KStyleMenuDropShadow") != -1;
 	}
 }
 
@@ -264,8 +264,8 @@ void KStyle::polish( TQWidget* widget )
 	if ( d->useFilledFrameWorkaround )
 	{
 		if ( TQFrame *frame = ::tqqt_cast< TQFrame* >( widget ) ) {
-			TQFrame::Shape shape = frame->frameShape();
-			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
+			TQFrame::Shape tqshape = frame->frameShape();
+			if (tqshape == TQFrame::ToolBarPanel || tqshape == TQFrame::MenuBarPanel)
 				widget->installEventFilter(this);
 		} 
 	}
@@ -285,8 +285,8 @@ void KStyle::unPolish( TQWidget* widget )
 	if ( d->useFilledFrameWorkaround )
 	{
 		if ( TQFrame *frame = ::tqqt_cast< TQFrame* >( widget ) ) {
-			TQFrame::Shape shape = frame->frameShape();
-			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
+			TQFrame::Shape tqshape = frame->frameShape();
+			if (tqshape == TQFrame::ToolBarPanel || tqshape == TQFrame::MenuBarPanel)
 				widget->removeEventFilter(this);
 		}
 	}
@@ -554,7 +554,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) c
 //	// What should "widget" be in actuality?  How should I get it?  From where?
 //	// Almost certainly it should not be null!
 //	TQWidget *widget = 0;
-//	drawControl(pe, p, widget, r, cg, flags, opt);
+//	tqdrawControl(pe, p, widget, r, cg, flags, opt);
 //}
 
 // #endif // USE_QT4
@@ -627,9 +627,9 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 			}
 		
 			XRenderFillRectangle(
-					p->device()->x11Display(),
+					p->tqdevice()->x11Display(),
 					PictOpOver,
-					p->device()->x11RenderHandle(),
+					p->tqdevice()->x11RenderHandle(),
 					&clr,
 					rect.x() + point.x(),
 					rect.y() + point.y(),
@@ -654,7 +654,7 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 
 
-void KStyle::drawControl( TQ_ControlElement element,
+void KStyle::tqdrawControl( TQ_ControlElement element,
 						  TQPainter* p,
 						  const TQWidget* widget,
 						  const TQRect &r,
@@ -668,7 +668,7 @@ void KStyle::drawControl( TQ_ControlElement element,
 		// ------------------------------------------------------------------------
 		case CE_TabBarTab: {
 			const TQTabBar* tb  = (const TQTabBar*) widget;
-			TQTabBar::Shape tbs = tb->shape();
+			TQTabBar::Shape tbs = tb->tqshape();
 			bool selected      = flags & Style_Selected;
 			int x = r.x(), y=r.y(), bottom=r.bottom(), right=r.right();
 
@@ -952,7 +952,7 @@ void KStyle::drawControl( TQ_ControlElement element,
 		}
 
 		default:
-			TQCommonStyle::drawControl(element, p, widget, r, cg, flags, opt);
+			TQCommonStyle::tqdrawControl(element, p, widget, r, cg, flags, opt);
 	}
 }
 
@@ -979,7 +979,7 @@ TQRect KStyle::subRect(SubRect r, const TQWidget* widget) const
 }
 
 
-int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
+int KStyle::tqpixelMetric(PixelMetric m, const TQWidget* widget) const
 {
 	switch(m)
 	{
@@ -1000,7 +1000,7 @@ int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 				&& widget->inherits(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING) )
 					return widget->fontMetrics().lineSpacing();
 			else
-				return TQCommonStyle::pixelMetric(m, widget);
+				return TQCommonStyle::tqpixelMetric(m, widget);
 		}
 
 		// TABS
@@ -1010,8 +1010,8 @@ int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 
 		case PM_TabBarTabVSpace: {
 			const TQTabBar * tb = (const TQTabBar *) widget;
-			if ( tb->shape() == TQTabBar::RoundedAbove ||
-				 tb->shape() == TQTabBar::RoundedBelow )
+			if ( tb->tqshape() == TQTabBar::RoundedAbove ||
+				 tb->tqshape() == TQTabBar::RoundedBelow )
 				return 10;
 			else
 				return 4;
@@ -1019,7 +1019,7 @@ int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 
 		case PM_TabBarTabOverlap: {
 			const TQTabBar* tb = (const TQTabBar*)widget;
-			TQTabBar::Shape tbs = tb->shape();
+			TQTabBar::Shape tbs = tb->tqshape();
 
 			if ( (tbs == TQTabBar::RoundedAbove) ||
 				 (tbs == TQTabBar::RoundedBelow) )
@@ -1084,10 +1084,10 @@ int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 			return 0;
 
 		case PM_PopupMenuScrollerHeight:
-			return pixelMetric( PM_ScrollBarExtent, 0);
+			return tqpixelMetric( PM_ScrollBarExtent, 0);
 
 		default:
-			return TQCommonStyle::pixelMetric( m, widget );
+			return TQCommonStyle::tqpixelMetric( m, widget );
 	}
 }
 
@@ -1104,7 +1104,7 @@ static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
     return sibling;
 }
 
-void KStyle::drawComplexControl( TQ_ComplexControl control,
+void KStyle::tqdrawComplexControl( TQ_ComplexControl control,
 								 TQPainter* p,
 								 const TQWidget* widget,
 								 const TQRect &r,
@@ -1227,7 +1227,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 
 			// Draw the tickmarks
 			if (controls & SC_SliderTickmarks)
-				TQCommonStyle::drawComplexControl(control, &p2, widget,
+				TQCommonStyle::tqdrawComplexControl(control, &p2, widget,
 						r, cg, flags, SC_SliderTickmarks, active, opt);
 
 			// Draw the slider handle
@@ -1253,7 +1253,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 
 			// Paint the icon and text.
 			if ( controls & SC_ListView )
-				TQCommonStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
+				TQCommonStyle::tqdrawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
 
 			// If we're have a branch or are expanded...
 			if ( controls & (SC_ListViewBranch | SC_ListViewExpand) )
@@ -1393,7 +1393,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 		}
 
 		default:
-			TQCommonStyle::drawComplexControl( control, p, widget, r, cg,
+			TQCommonStyle::tqdrawComplexControl( control, p, widget, r, cg,
 											  flags, controls, active, opt );
 			break;
 	}
@@ -1432,7 +1432,7 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 		const TQScrollBar *sb = (const TQScrollBar*)widget;
 		bool horizontal = sb->orientation() == Qt::Horizontal;
 		int sliderstart = sb->sliderStart();
-		int sbextent    = pixelMetric(PM_ScrollBarExtent, widget);
+		int sbextent    = tqpixelMetric(PM_ScrollBarExtent, widget);
 		int maxlen      = (horizontal ? sb->width() : sb->height())
 						  - (sbextent * (threeButtonScrollBar ? 3 : 2));
 		int sliderlen;
@@ -1443,7 +1443,7 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 			uint range = sb->maxValue() - sb->minValue();
 			sliderlen = (sb->pageStep() * maxlen) /	(range + sb->pageStep());
 
-			int slidermin = pixelMetric( PM_ScrollBarSliderMin, widget );
+			int slidermin = tqpixelMetric( PM_ScrollBarSliderMin, widget );
 			if ( sliderlen < slidermin || range > INT_MAX / 2 )
 				sliderlen = slidermin;
 			if ( sliderlen > maxlen )
@@ -1833,7 +1833,7 @@ TQPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
 }
 
 
-int KStyle::styleHint( TQ_StyleHint sh, const TQWidget* w,
+int KStyle::tqstyleHint( TQ_StyleHint sh, const TQWidget* w,
 					   const TQStyleOption &opt, TQStyleHintReturn* shr) const
 {
 	switch (sh)
@@ -1848,7 +1848,7 @@ int KStyle::styleHint( TQ_StyleHint sh, const TQWidget* w,
 			return d->menuAltKeyNavigation ? 1 : 0;
 
 		case SH_PopupMenu_SubMenuPopupDelay:
-			if ( styleHint( SH_PopupMenu_SloppySubMenus, w ) )
+			if ( tqstyleHint( SH_PopupMenu_SloppySubMenus, w ) )
 				return QMIN( 100, d->popupMenuDelay );
 			else
 				return d->popupMenuDelay;
@@ -1884,7 +1884,7 @@ int KStyle::styleHint( TQ_StyleHint sh, const TQWidget* w,
 		}
 
 		default:
-			return TQCommonStyle::styleHint(sh, w, opt, shr);
+			return TQCommonStyle::tqstyleHint(sh, w, opt, shr);
 	}
 }
 
@@ -1897,7 +1897,7 @@ bool KStyle::eventFilter( TQObject* object, TQEvent* event )
 		// ensure that the filled frame contents are properly painted.
 		// We essentially modify the paintEvent's rect to include the
 		// panel border, which also paints the widget's interior.
-		// This is nasty, but I see no other way to properly repaint
+		// This is nasty, but I see no other way to properly tqrepaint
 		// filled frames in all QMenuBars and QToolBars.
 		// -- Karol.
 		TQFrame *frame = 0;
@@ -2222,12 +2222,12 @@ bool TransparencyHandler::eventFilter( TQObject* object, TQEvent* event )
 				case XRender:
 #endif
 				case SoftwareBlend:
-					blendToPixmap(p->colorGroup(), p);
+					blendToPixmap(p->tqcolorGroup(), p);
 					break;
 
 				case SoftwareTint:
 				default:
-					blendToColor(p->colorGroup().button());
+					blendToColor(p->tqcolorGroup().button());
 			};
 
 			p->setErasePixmap(pix);
@@ -2315,10 +2315,10 @@ void TransparencyHandler::XRenderBlendToPixmap(const TQWidget* p)
 
 	// Allow styles to define the blend pixmap - allows for some interesting effects.
 	if (::tqqt_cast<TQPopupMenu*>(p))
-	   kstyle->renderMenuBlendPixmap( renderPix, p->colorGroup(),
+	   kstyle->renderMenuBlendPixmap( renderPix, p->tqcolorGroup(),
 			   ::tqqt_cast<TQPopupMenu*>(p) );
 	else
-		renderPix.fill(p->colorGroup().button());	// Just tint as the default behavior
+		renderPix.fill(p->tqcolorGroup().button());	// Just tint as the default behavior
 
 	Display* dpy = qt_xdisplay();
 	Pixmap   alphaPixmap;

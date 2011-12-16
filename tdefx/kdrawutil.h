@@ -21,7 +21,7 @@
 #include <tqnamespace.h>
 #include <tqpainter.h>
 #include <tqbitmap.h>
-#include <palette.h>
+#include <tqpalette.h>
 
 #include <tdelibs_export.h>
 
@@ -125,7 +125,7 @@ TDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h);
  * @c \#include @c <kdrawutil.h>
  *
  * Paints the pixels covered by a round button of the given size with
- * Qt::color1. This function is useful in TQStyle::drawControlMask().
+ * Qt::color1. This function is useful in TQStyle::tqdrawControlMask().
  *
  * @param p      The painter to use for drawing the button.
  * @param x      The X coordinate of the button.

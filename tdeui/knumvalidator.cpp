@@ -67,7 +67,7 @@ TQValidator::State KIntValidator::validate ( TQString &str, int & ) const
   if (_base > 10)
     newStr = newStr.upper();
 
-  if (newStr == TQString::fromLatin1("-")) // a special case
+  if (newStr == TQString::tqfromLatin1("-")) // a special case
     if ((_min || _max) && _min >= 0)
       ok = false;
     else
@@ -209,12 +209,12 @@ TQValidator::State KFloatValidator::validate ( TQString &str, int & ) const
   TQString newStr;
   newStr = str.stripWhiteSpace();
 
-  if (newStr == TQString::fromLatin1("-")) // a special case
+  if (newStr == TQString::tqfromLatin1("-")) // a special case
     if ((_min || _max) && _min >= 0)
       ok = false;
     else
       return TQValidator::Acceptable;
-  else if (newStr == TQString::fromLatin1(".") || (d->acceptLocalizedNumbers && newStr==KGlobal::locale()->decimalSymbol())) // another special case
+  else if (newStr == TQString::tqfromLatin1(".") || (d->acceptLocalizedNumbers && newStr==KGlobal::locale()->decimalSymbol())) // another special case
     return TQValidator::Acceptable;
   else if (newStr.length())
   {

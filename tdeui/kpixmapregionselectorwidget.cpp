@@ -27,7 +27,7 @@
 #include <tqpainter.h>
 #include <tqcolor.h>
 #include <tqimage.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <kimageeffect.h>
 #include <kdebug.h>
 #include <klocale.h>

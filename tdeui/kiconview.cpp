@@ -184,7 +184,7 @@ void KIconView::slotAutoSelect()
 
       bool select = !m_pCurrentItem->isSelected();
       bool update = viewport()->isUpdatesEnabled();
-      viewport()->setUpdatesEnabled( false );
+      viewport()->tqsetUpdatesEnabled( false );
 
       //Calculate the smallest rectangle that contains the current Item
       //and the one that got the autoselect event
@@ -216,7 +216,7 @@ void KIconView::slotAutoSelect()
       }
 
       blockSignals( block );
-      viewport()->setUpdatesEnabled( update );
+      viewport()->tqsetUpdatesEnabled( update );
       repaintContents( redraw, false );
 
       emit selectionChanged();
@@ -485,7 +485,7 @@ void KIconViewItem::calcRect( const TQString& text_ )
     KIconView *view = static_cast<KIconView *>(iconView());
     TQRect itemIconRect = pixmapRect();
     TQRect itemTextRect = textRect();
-    TQRect itemRect = rect();
+    TQRect tqitemRect = rect();
 
     int pw = 0;
     int ph = 0;
@@ -507,9 +507,9 @@ void KIconViewItem::calcRect( const TQString& text_ )
     itemIconRect.setWidth( pw );
 #if 1 // FIXME 
     // There is a bug in Qt which prevents the item from being placed
-    // properly when the pixmapRect is not at the top of the itemRect, so we
+    // properly when the pixmapRect is not at the top of the tqitemRect, so we
     // have to increase the height of the pixmapRect and leave it at the top
-    // of the itemRect...
+    // of the tqitemRect...
     if ( d && !d->m_pixmapSize.isNull() )
         itemIconRect.setHeight( d->m_pixmapSize.height() + 2 );
     else
@@ -574,8 +574,8 @@ void KIconViewItem::calcRect( const TQString& text_ )
             h = itemTextRect.height() + itemIconRect.height() + 1;
         }
 
-        itemRect.setWidth( w );
-        itemRect.setHeight( h );
+        tqitemRect.setWidth( w );
+        tqitemRect.setHeight( h );
         int width = QMAX( w, TQApplication::globalStrut().width() ); // see TQIconViewItem::width()
         int height = QMAX( h, TQApplication::globalStrut().height() ); // see TQIconViewItem::height()
         itemTextRect = TQRect( ( width - itemTextRect.width() ) / 2, height - itemTextRect.height(),
@@ -597,8 +597,8 @@ void KIconViewItem::calcRect( const TQString& text_ )
             h = QMAX( itemTextRect.height(), itemIconRect.height() );
         w = itemTextRect.width() + itemIconRect.width() + 1;
 
-        itemRect.setWidth( w );
-        itemRect.setHeight( h );
+        tqitemRect.setWidth( w );
+        tqitemRect.setHeight( h );
         int width = QMAX( w, TQApplication::globalStrut().width() ); // see TQIconViewItem::width()
         int height = QMAX( h, TQApplication::globalStrut().height() ); // see TQIconViewItem::height()
 
@@ -621,8 +621,8 @@ void KIconViewItem::calcRect( const TQString& text_ )
         setPixmapRect( itemIconRect );
     if ( itemTextRect != textRect() )
         setTextRect( itemTextRect );
-    if ( itemRect != rect() )
-        setItemRect( itemRect );
+    if ( tqitemRect != rect() )
+        setItemRect( tqitemRect );
 
     // Done by setPixmapRect, setTextRect and setItemRect !  [and useless if no rect changed]
     //view->updateItemContainer( this );
@@ -680,7 +680,7 @@ void KIconViewItem::paintPixmap( TQPainter *p, const TQColorGroup &cg )
 
 #if 1 // FIXME 
         // Move the pixmap manually because the pixmapRect is at the
-        // top of the itemRect
+        // top of the tqitemRect
         // (won't be needed anymore in future versions of qt)
         if ( d && !d->m_pixmapSize.isNull() )
         {

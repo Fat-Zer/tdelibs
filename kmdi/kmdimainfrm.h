@@ -142,7 +142,7 @@ public:
  * use fakeSDIApplication() to fake it and isFakingSDIApplication() to query whether or not an SDI
  * interface is being faked.
  *
- * You can dynamically change the shape of the attached MDI views using setFrameDecorOfAttachedViews().
+ * You can dynamically change the tqshape of the attached MDI views using setFrameDecorOfAttachedViews().
  *
  * Additionally, here's a hint how to restore the mainframe's settings from config file:
  * \code

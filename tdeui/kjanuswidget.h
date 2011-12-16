@@ -50,7 +50,7 @@ class KGuiItem;
  * This class provides KJanusWidget::TreeList, KJanusWidget::IconList,
  * KJanusWidget::Tabbed, KJanusWidget::Plain and KJanusWidget::Swallow layouts.
  *
- * For all modes it is important that you specify the TQWidget::minimumSize()
+ * For all modes it is important that you specify the TQWidget::tqminimumSize()
  * on the page, plain widget or the swallowed widget. If you use a QLayout
  * on the page, plain widget or the swallowed widget this will be taken care
  * of automatically. The size is used when the KJanusWidget determines its

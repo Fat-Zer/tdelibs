@@ -173,7 +173,7 @@ void KateTemplateHandler::generateRangeTable( uint insertLine, uint insertCol, c
     {
       ++col;
 
-      if ( insertString.at( colInText ) == '\n' )
+      if ( insertString.tqat( colInText ) == '\n' )
       {
         col = 0;
         line++;
@@ -216,7 +216,7 @@ void KateTemplateHandler::slotTextInserted( int line, int col )
 
   if ( !m_currentRange ) return ;
 
-  KateTemplatePlaceHolder *ph = m_tabOrder.at( m_currentTabStop );
+  KateTemplatePlaceHolder *ph = m_tabOrder.tqat( m_currentTabStop );
 
   TQString sourceText = m_doc->text ( m_currentRange->start().line(), m_currentRange->start().col(),
                                      m_currentRange->end().line(), m_currentRange->end().col(), false );
@@ -257,7 +257,7 @@ void KateTemplateHandler::locateRange( const KateTextCursor& cursor )
 
   for ( uint i = 0;i < m_tabOrder.count();i++ )
   {
-    KateTemplatePlaceHolder *ph = m_tabOrder.at( i );
+    KateTemplatePlaceHolder *ph = m_tabOrder.tqat( i );
 
     for ( KateSuperRangeList::const_iterator it = ph->ranges.begin();it != ph->ranges.end();++it )
     {
@@ -297,9 +297,9 @@ bool KateTemplateHandler::operator() ( KKey key )
     if ( m_currentTabStop < 0 ) m_currentTabStop = m_tabOrder.count() - 1;
   }
 
-  m_currentRange = m_tabOrder.at( m_currentTabStop ) ->ranges.at( 0 );
+  m_currentRange = m_tabOrder.tqat( m_currentTabStop ) ->ranges.tqat( 0 );
 
-  if ( m_tabOrder.at( m_currentTabStop ) ->isInitialValue )
+  if ( m_tabOrder.tqat( m_currentTabStop ) ->isInitialValue )
   {
     m_doc->activeView()->setSelection( m_currentRange->start(), m_currentRange->end() );
   }

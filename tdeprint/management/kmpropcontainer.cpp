@@ -21,7 +21,7 @@
 #include "kmpropwidget.h"
 
 #include <kpushbutton.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kseparator.h>
 #include <kguiitem.h>

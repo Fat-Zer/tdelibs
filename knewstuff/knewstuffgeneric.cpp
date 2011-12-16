@@ -20,7 +20,7 @@
 */
 
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqdir.h>
 
 #include <kdebug.h>

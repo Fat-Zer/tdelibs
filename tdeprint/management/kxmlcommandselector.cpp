@@ -26,7 +26,7 @@
 #include <kpushbutton.h>
 #include <tqlabel.h>
 #include <tqcheckbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtooltip.h>
 #include <tqlineedit.h>
 #include <kinputdialog.h>

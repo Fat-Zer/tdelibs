@@ -1,4 +1,4 @@
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqtimer.h>
 
 #include <kaboutdata.h>

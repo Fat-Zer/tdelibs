@@ -57,7 +57,7 @@
 #include <tqinputdialog.h>
 #include <tqintdict.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlcdnumber.h>
 #include <tqlineedit.h>
 #include <tqptrlist.h>
@@ -92,9 +92,9 @@
 #include <tqtabdialog.h>
 #include <qtableview.h>
 #include <tqtabwidget.h>
-#include <textbrowser.h>
-#include <textstream.h>
-#include <textview.h>
+#include <tqtextbrowser.h>
+#include <tqtextstream.h>
+#include <tqtextview.h>
 #include <tqtoolbar.h>
 #include <tqtoolbutton.h>
 #include <tqtooltip.h>
@@ -1975,7 +1975,7 @@ void KLegacyStyle::polish(TQWidget *widget) {
     }
 
     GtkObject *gobj = gobj = priv->gtkDict.find(((metaobject) ? metaobject :
-						 widget->metaObject()));
+						 widget->tqmetaObject()));
 
     if (gobj) {
 	if (gobj->font() && (*gobj->font() != TQApplication::font()))
@@ -2181,7 +2181,7 @@ void KLegacyStyle::drawPushButton(TQPushButton *btn, TQPainter *p) {
     key.cachekey = 0;
     key.data.function = KLegacy::Box;
 
-    TQColorGroup g = btn->colorGroup();
+    TQColorGroup g = btn->tqcolorGroup();
     TQBrush fill = g.brush(TQColorGroup::Button);
     int x1, y1, x2, y2;
     btn->rect().coords(&x1, &y1, &x2, &y2);
@@ -2741,7 +2741,7 @@ void KLegacyStyle::drawScrollBarControls(TQPainter *p, const TQScrollBar *scroll
 		  (active & SubLine), x, y,
 		  buttonDim,
 		  buttonDim,
-		  scrollbar->colorGroup(), true);
+		  scrollbar->tqcolorGroup(), true);
 
 	if  (scrollbar->orientation() == Vertical)
 	    y = scrollbar->height() - buttonDim - defaultFrameWidth();
@@ -2753,7 +2753,7 @@ void KLegacyStyle::drawScrollBarControls(TQPainter *p, const TQScrollBar *scroll
 		  (active & AddLine), x, y,
 		  buttonDim,
 		  buttonDim,
-		  scrollbar->colorGroup(), true);
+		  scrollbar->tqcolorGroup(), true);
     }
     p->drawPixmap(0, 0, buf);
 }
@@ -2954,8 +2954,8 @@ void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, boo
     key.data.function = KLegacy::Extension;
     key.data.state = (! selected) ? KLegacy::Active : KLegacy::Normal;
     key.data.shadow = KLegacy::Out;
-    key.data.gapSide = (tabbar->shape() == TQTabBar::RoundedAbove ||
-			tabbar->shape() == TQTabBar::TriangularAbove) ?
+    key.data.gapSide = (tabbar->tqshape() == TQTabBar::RoundedAbove ||
+			tabbar->tqshape() == TQTabBar::TriangularAbove) ?
 		       KLegacy::Bottom : KLegacy::Top;
 
     int ry = tab->r.top(), rh = tab->r.height();
@@ -2963,8 +2963,8 @@ void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, boo
     if (! selected) {
 	rh -= 2;
 
-	if (tabbar->shape() == TQTabBar::RoundedAbove ||
-	    tabbar->shape() == TQTabBar::TriangularAbove)
+	if (tabbar->tqshape() == TQTabBar::RoundedAbove ||
+	    tabbar->tqshape() == TQTabBar::TriangularAbove)
 	    ry += 2;
     }
 
@@ -3261,7 +3261,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		obj->inherits(TQSLIDER_OBJECT_NAME_STRING) ||
 		obj->inherits(TQSCROLLBAR_OBJECT_NAME_STRING)) {
 		priv->lastWidget = (TQWidget *) obj;
-		priv->lastWidget->repaint(false);
+		priv->lastWidget->tqrepaint(false);
 	    } else if (obj->inherits(TQRADIOBUTTON_OBJECT_NAME_STRING)) {
 		TQWidget *w = (TQWidget *) obj;
 
@@ -3327,7 +3327,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	{
 	    if (obj == priv->lastWidget) {
 		priv->lastWidget = 0;
-		((TQWidget *) obj)->repaint(false);
+		((TQWidget *) obj)->tqrepaint(false);
 	    } else if (obj->inherits(TQRADIOBUTTON_OBJECT_NAME_STRING) ||
 		       obj->inherits(TQCHECKBOX_OBJECT_NAME_STRING)) {
 		TQWidget *w = (TQWidget *) obj;
@@ -3335,7 +3335,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		if (! w->isTopLevel()) {
 		    w->setBackgroundMode(TQWidget::X11ParentRelative);
 		    w->setBackgroundOrigin(TQWidget::WidgetOrigin);
-		    w->repaint(true);
+		    w->tqrepaint(true);
 		}
 	    }
 
@@ -3349,7 +3349,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	    if (obj->inherits(TQSCROLLBAR_OBJECT_NAME_STRING) &&
 		(! (me->state() & (LeftButton | MidButton | RightButton)))) {
 		priv->hovering = true;
-		((TQWidget *) obj)->repaint(false);
+		((TQWidget *) obj)->tqrepaint(false);
 		priv->hovering = false;
 	    }
 

@@ -67,7 +67,7 @@ void KTabBar::setTabEnabled( int id, bool enabled )
             if ( !enabled && id == currentTab() && count()>1 ) {
                 TQPtrList<TQTab> *tablist = tabList();
                 if ( mTabCloseActivatePrevious )
-                    t = tablist->at( count()-2 );
+                    t = tablist->tqat( count()-2 );
                 else {
                 int index = indexOf( id );
                 index += ( index+1 == count() ) ? -1 : 1;
@@ -80,7 +80,7 @@ void KTabBar::setTabEnabled( int id, bool enabled )
                     emit selected( t->identifier() );
                 }
             }
-            repaint( r );
+            tqrepaint( r );
         }
     }
 }
@@ -172,8 +172,8 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
             int xoff = 0, yoff = 0;
             // The additional offsets were found by try and error, TODO: find the rational behind them
             if ( t == tab( currentTab() ) ) {
-                xoff = tqstyle().pixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this ) + 3;
-                yoff = tqstyle().pixelMetric( TQStyle::PM_TabBarTabShiftVertical, this ) - 4;
+                xoff = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this ) + 3;
+                yoff = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftVertical, this ) - 4;
             }
             else {
                 xoff = 7;
@@ -253,7 +253,7 @@ void KTabBar::dragMoveEvent( TQDragMoveEvent *e )
     TQTab *tab = selectTab( e->pos() );
     if( tab ) {
         bool accept = false;
-        // The receivers of the testCanDecode() signal has to adjust
+        // The tqreceivers of the testCanDecode() signal has to adjust
         // 'accept' accordingly.
         emit testCanDecode( e, accept);
         if ( accept && tab != TQTabBar::tab( currentTab() ) ) {
@@ -294,7 +294,7 @@ void KTabBar::setTabColor( int id, const TQColor& color )
     TQTab *t = tab( id );
     if ( t ) {
         mTabColors.insert( id, color );
-        repaint( t->rect(), false );
+        tqrepaint( t->rect(), false );
     }
 }
 
@@ -303,7 +303,7 @@ const TQColor &KTabBar::tabColor( int id  ) const
     if ( mTabColors.contains( id ) )
         return mTabColors[id];
 
-    return colorGroup().foreground();
+    return tqcolorGroup().foreground();
 }
 
 int KTabBar::insertTab( TQTab *t, int index )
@@ -341,8 +341,8 @@ void KTabBar::paintLabel( TQPainter *p, const TQRect& br,
         r.setLeft( r.left() + pixw + 4 );
         r.setRight( r.right() + 2 );
 
-        int inactiveXShift = tqstyle().pixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this );
-        int inactiveYShift = tqstyle().pixelMetric( TQStyle::PM_TabBarTabShiftVertical, this );
+        int inactiveXShift = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this );
+        int inactiveYShift = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftVertical, this );
 
         int right = t->text().isEmpty() ? br.right() - pixw : br.left() + 2;
 
@@ -358,12 +358,12 @@ void KTabBar::paintLabel( TQPainter *p, const TQRect& br,
     if ( has_focus )
         flags |= TQStyle::Style_HasFocus;
 
-    TQColorGroup cg( colorGroup() );
+    TQColorGroup cg( tqcolorGroup() );
     if ( mTabColors.contains( t->identifier() ) )
         cg.setColor( TQColorGroup::Foreground, mTabColors[t->identifier()] );
 
-    tqstyle().drawControl( TQStyle::CE_TabBarLabel, p, this, r,
-                             t->isEnabled() ? cg : palette().disabled(),
+    tqstyle().tqdrawControl( TQStyle::CE_TabBarLabel, p, this, r,
+                             t->isEnabled() ? cg : tqpalette().disabled(),
                              flags, TQStyleOption(t) );
 }
 

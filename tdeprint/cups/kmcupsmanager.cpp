@@ -34,7 +34,7 @@
 #include "ppdloader.h"
 
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 #include <tqtimer.h>
 #include <tqsocket.h>
@@ -95,7 +95,7 @@ KMCupsManager::~KMCupsManager()
 
 TQString KMCupsManager::driverDbCreationProgram()
 {
-	return TQString::fromLatin1("/opt/trinity/bin/make_driver_db_cups");
+	return TQString::tqfromLatin1("/opt/trinity/bin/make_driver_db_cups");
 }
 
 TQString KMCupsManager::driverDirectory()
@@ -173,7 +173,7 @@ bool KMCupsManager::createPrinter(KMPrinter *p)
 		else if (!p->option("requesting-user-name-allowed").isEmpty())
 			req.addName(IPP_TAG_PRINTER,"requesting-user-name-allowed",TQStringList::split(",",p->option("requesting-user-name-allowed"),false));
 		else
-			req.addName(IPP_TAG_PRINTER,"requesting-user-name-allowed",TQString::fromLatin1("all"));
+			req.addName(IPP_TAG_PRINTER,"requesting-user-name-allowed",TQString::tqfromLatin1("all"));
 	}
 	req.addText(IPP_TAG_PRINTER,"printer-info",p->description());
 	req.addText(IPP_TAG_PRINTER,"printer-location",p->location());
@@ -287,8 +287,8 @@ bool KMCupsManager::completePrinterShort(KMPrinter *p)
 	delete kes;
 	m_hostSuccess = false;
 	} else {
-	TQDateTime tm = TQDateTime::currentDateTime().addSecs(2);
-	while (!m_lookupDone && (TQDateTime::currentDateTime() < tm))
+	TQDateTime tm = TQDateTime::tqcurrentDateTime().addSecs(2);
+	while (!m_lookupDone && (TQDateTime::tqcurrentDateTime() < tm))
 	tqApp->processEvents();
 
 	kes->cancelAsyncConnect();
@@ -358,8 +358,8 @@ bool KMCupsManager::completePrinterShort(KMPrinter *p)
 		// banners
 		req.name("job-sheets-default",values);
 		while (values.count() < 2) values.append("none");
-		p->setOption("kde-banners",values.join(TQString::fromLatin1(",")));
-		if (req.name("job-sheets-supported",values)) p->setOption("kde-banners-supported",values.join(TQString::fromLatin1(",")));
+		p->setOption("kde-banners",values.join(TQString::tqfromLatin1(",")));
+		if (req.name("job-sheets-supported",values)) p->setOption("kde-banners-supported",values.join(TQString::tqfromLatin1(",")));
 
 		// quotas
 		int	ival;
@@ -405,7 +405,7 @@ bool KMCupsManager::testPrinter(KMPrinter *p)
 	   req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
 	   req.addMime(IPP_TAG_OPERATION,"document-format","application/postscript");
 	   if (!CupsInfos::self()->login().isEmpty()) req.addName(IPP_TAG_OPERATION,"requesting-user-name",CupsInfos::self()->login());
-	   req.addName(IPP_TAG_OPERATION,"job-name",TQString::fromLatin1("KDE Print Test"));
+	   req.addName(IPP_TAG_OPERATION,"job-name",TQString::tqfromLatin1("KDE Print Test"));
 	   if (req.doFileRequest("/printers/",testpage))
 	   return true;
 	   reportIppError(&req);
@@ -453,7 +453,7 @@ void KMCupsManager::loadServerPrinters()
 			// load default
 			req.init();
 			req.setOperation(CUPS_GET_DEFAULT);
-			req.addKeyword(IPP_TAG_OPERATION,"requested-attributes",TQString::fromLatin1("printer-name"));
+			req.addKeyword(IPP_TAG_OPERATION,"requested-attributes",TQString::tqfromLatin1("printer-name"));
 			if (req.doRequest("/printers/"))
 			{
 				TQString	s = TQString::null;
@@ -576,7 +576,7 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 {
 	TQStringList	comps = TQStringList::split('/', drname, false);
 	TQString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	TQString	PATH = getenv("PATH") + TQString::tqfromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
@@ -691,7 +691,7 @@ void KMCupsManager::saveDriverFile(DrMain *driver, const TQString& filename)
 				keyword = line.mid(8,p-8);
 				DrBase *bopt = 0;
 				if ( keyword == "PageRegion" || keyword == "ImageableArea" || keyword == "PaperDimension" )
-					bopt = driver->findOption( TQString::fromLatin1( "PageSize" ) );
+					bopt = driver->findOption( TQString::tqfromLatin1( "PageSize" ) );
 				else
 					bopt = driver->findOption( keyword );
 				if (bopt)
@@ -938,7 +938,7 @@ void KMCupsManager::slotConnectionSuccess()
 
 	IppRequest req;
 	req.setOperation( CUPS_GET_PRINTERS );
-	req.addKeyword( IPP_TAG_OPERATION, "requested-attributes", TQString::fromLatin1( "printer-name" ) );
+	req.addKeyword( IPP_TAG_OPERATION, "requested-attributes", TQString::tqfromLatin1( "printer-name" ) );
 	if ( req.doRequest( "/printers/" ) )
 		setUpdatePossible( true );
 	else

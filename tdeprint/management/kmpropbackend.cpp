@@ -22,7 +22,7 @@
 #include "kmwizard.h"
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
 KMPropBackend::KMPropBackend(TQWidget *parent, const char *name)

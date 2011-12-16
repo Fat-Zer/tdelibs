@@ -97,7 +97,7 @@ KIO_EXPORT TQString KIO::number( KIO::filesize_t size )
 {
     char charbuf[256];
     sprintf(charbuf, "%lld", size);
-    return TQString::fromLatin1(charbuf);
+    return TQString::tqfromLatin1(charbuf);
 }
 
 KIO_EXPORT unsigned int KIO::calculateRemainingSeconds( KIO::filesize_t totalSize,
@@ -284,7 +284,7 @@ KIO_EXPORT TQString KIO::buildErrorString(int errorCode, const TQString &errorTe
       result = i18n( "Could not create socket for accessing %1." ).arg( errorText );
       break;
     case  KIO::ERR_COULD_NOT_CONNECT:
-      result = i18n( "Could not connect to host %1." ).arg( errorText.isEmpty() ? TQString::fromLatin1("localhost") : errorText );
+      result = i18n( "Could not connect to host %1." ).arg( errorText.isEmpty() ? TQString::tqfromLatin1("localhost") : errorText );
       break;
     case  KIO::ERR_CONNECTION_BROKEN:
       result = i18n( "Connection to host %1 is broken." ).arg( errorText );
@@ -477,16 +477,16 @@ KIO_EXPORT TQStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0
     url = i18n( "(unknown)" );
   }
 
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = KGlobal::locale()->formatDateTime( TQDateTime::tqcurrentDateTime(),
                                                 false );
 
   ret << errorName;
-  ret << TQString::fromLatin1( "<qt><p><b>" ) + errorName +
-         TQString::fromLatin1( "</b></p><p>" ) + description +
-         TQString::fromLatin1( "</p>" );
-  ret2 = TQString::fromLatin1( "<qt><p>" );
+  ret << TQString::tqfromLatin1( "<qt><p><b>" ) + errorName +
+         TQString::tqfromLatin1( "</b></p><p>" ) + description +
+         TQString::tqfromLatin1( "</p>" );
+  ret2 = TQString::tqfromLatin1( "<qt><p>" );
   if ( !techName.isEmpty() )
-    ret2 += i18n( "<b>Technical reason</b>: " ) + techName + TQString::fromLatin1( "</p>" );
+    ret2 += i18n( "<b>Technical reason</b>: " ) + techName + TQString::tqfromLatin1( "</p>" );
   ret2 += i18n( "</p><p><b>Details of the request</b>:" );
   ret2 += i18n( "</p><ul><li>URL: %1</li>" ).arg( url );
   if ( !protocol.isEmpty() ) {
@@ -497,12 +497,12 @@ KIO_EXPORT TQStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0
   if ( !causes.isEmpty() ) {
     ret2 += i18n( "<p><b>Possible causes</b>:</p><ul><li>" );
     ret2 += causes.join( "</li><li>" );
-    ret2 += TQString::fromLatin1( "</li></ul>" );
+    ret2 += TQString::tqfromLatin1( "</li></ul>" );
   }
   if ( !solutions.isEmpty() ) {
     ret2 += i18n( "<p><b>Possible solutions</b>:</p><ul><li>" );
     ret2 += solutions.join( "</li><li>" );
-    ret2 += TQString::fromLatin1( "</li></ul>" );
+    ret2 += TQString::tqfromLatin1( "</li></ul>" );
   }
   ret << ret2;
   return ret;
@@ -559,7 +559,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
     protocol = i18n( "(unknown)" );
   }
 
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = KGlobal::locale()->formatDateTime( TQDateTime::tqcurrentDateTime(),
                                                 false );
 
   TQString errorName, techName, description;
@@ -1738,7 +1738,7 @@ static TQString get_mount_info(const TQString& filename,
         if ( is_my_mountpoint( mounted[i].f_mntonname, realname, max ) )
         {
             mountPoint = TQFile::decodeName(mounted[i].f_mntonname);
-            fstype = TQString::fromLatin1(mounttype);
+            fstype = TQString::tqfromLatin1(mounttype);
             check_mount_point( mounttype, mounted[i].f_mntfromname,
                                isautofs, isslow );
             // keep going, looking for a potentially better one
@@ -1805,7 +1805,7 @@ static TQString get_mount_info(const TQString& filename,
             if ( is_my_mountpoint( mountedto, realname, max ) )
             {
                 mountPoint = TQFile::decodeName(mountedto);
-                fstype = TQString::fromLatin1(ent->vfsent_name);
+                fstype = TQString::tqfromLatin1(ent->vfsent_name);
                 check_mount_point(ent->vfsent_name, device_name, isautofs, isslow);
 
                 if (ismanual == Unseen)

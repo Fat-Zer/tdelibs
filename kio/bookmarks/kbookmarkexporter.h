@@ -23,7 +23,7 @@
 #ifndef __kbookmarkexporter_h
 #define __kbookmarkexporter_h
 
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <kbookmark.h>
 
 /**

@@ -36,7 +36,7 @@
 #include <dcopclient.h>
 #include <tqfile.h>
 #include <tqfileinfo.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <kstaticdeleter.h>
 #include <tqptrstack.h>
 
@@ -329,7 +329,7 @@ bool KBookmarkManager::saveAs( const TQString & filename, bool toolbarCache ) co
 
     // Save the bookmark toolbar folder for quick loading
     // but only when it will actually make things quicker
-    const TQString cacheFilename = filename + TQString::fromLatin1(".tbcache");
+    const TQString cacheFilename = filename + TQString::tqfromLatin1(".tbcache");
     if(toolbarCache && !root().isToolbarGroup())
     {
         KSaveFile cacheFile( cacheFilename );
@@ -388,7 +388,7 @@ KBookmarkGroup KBookmarkManager::toolbar()
     if(!m_docIsLoaded)
     {
         kdDebug(7043) << "KBookmarkManager::toolbar trying cache" << endl;
-        const TQString cacheFilename = m_bookmarksFile + TQString::fromLatin1(".tbcache");
+        const TQString cacheFilename = m_bookmarksFile + TQString::tqfromLatin1(".tbcache");
         TQFileInfo bmInfo(m_bookmarksFile);
         TQFileInfo cacheInfo(cacheFilename);
         if (m_toolbarDoc.isNull() &&
@@ -614,11 +614,11 @@ void KBookmarkManager::setEditorOptions( const TQString& caption, bool browser )
 void KBookmarkManager::slotEditBookmarks()
 {
     KProcess proc;
-    proc << TQString::fromLatin1("keditbookmarks");
+    proc << TQString::tqfromLatin1("keditbookmarks");
     if (!dptr()->m_editorCaption.isNull())
-       proc << TQString::fromLatin1("--customcaption") << dptr()->m_editorCaption;
+       proc << TQString::tqfromLatin1("--customcaption") << dptr()->m_editorCaption;
     if (!dptr()->m_browserEditor)
-       proc << TQString::fromLatin1("--nobrowser");
+       proc << TQString::tqfromLatin1("--nobrowser");
     proc << m_bookmarksFile;
     proc.start(KProcess::DontCare);
 }
@@ -626,8 +626,8 @@ void KBookmarkManager::slotEditBookmarks()
 void KBookmarkManager::slotEditBookmarksAtAddress( const TQString& address )
 {
     KProcess proc;
-    proc << TQString::fromLatin1("keditbookmarks")
-         << TQString::fromLatin1("--address") << address
+    proc << TQString::tqfromLatin1("keditbookmarks")
+         << TQString::tqfromLatin1("--address") << address
          << m_bookmarksFile;
     proc.start(KProcess::DontCare);
 }
@@ -690,7 +690,7 @@ void KBookmarkManager::updateFavicon( const TQString &url, const TQString &favic
 
 TQString KBookmarkManager::userBookmarksFile()
 {
-    return locateLocal("data", TQString::fromLatin1("konqueror/bookmarks.xml"));
+    return locateLocal("data", TQString::tqfromLatin1("konqueror/bookmarks.xml"));
 }
 
 KBookmarkManager* KBookmarkManager::userBookmarksManager()

@@ -24,7 +24,7 @@
 #include <tqfile.h>
 #include <tqdir.h>
 #include <tqfileinfo.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -168,7 +168,7 @@ TQString getPrintcapFileName()
 				if (pcentry[0] == '|')
 				{ // printcap through pipe
 					printcap = locateLocal("tmp","printcap");
-					TQString	cmd = TQString::fromLatin1("echo \"all\" | %1 > %2").arg(pcentry.mid(1)).arg(printcap);
+					TQString	cmd = TQString::tqfromLatin1("echo \"all\" | %1 > %2").arg(pcentry.mid(1)).arg(printcap);
 					kdDebug() << "printcap obtained through pipe" << endl << "executing: " << cmd << endl;
 					::system(cmd.local8Bit());
 				}
@@ -234,7 +234,7 @@ TQString getEtcPrintersConfName()
 	{
 		// standard file not found, try NIS
 		printersconf = locateLocal("tmp","printers.conf");
-		TQString	cmd = TQString::fromLatin1("ypcat printers.conf.byname > %1").arg(printersconf);
+		TQString	cmd = TQString::tqfromLatin1("ypcat printers.conf.byname > %1").arg(printersconf);
 		kdDebug() << "printers.conf obtained from NIS server: " << cmd << endl;
 		::system(TQFile::encodeName(cmd));
 	}

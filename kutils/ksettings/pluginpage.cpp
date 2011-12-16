@@ -19,7 +19,7 @@
 
 #include "ksettings/pluginpage.h"
 #include "kpluginselector.h"
-#include <layout.h>
+#include <tqlayout.h>
 #include <kdialog.h>
 #include "ksettings/dispatcher.h"
 

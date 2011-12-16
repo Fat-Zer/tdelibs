@@ -22,7 +22,7 @@
 #include "kmjobmanager.h"
 
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqstringlist.h>
 #include <kstandarddirs.h>
 

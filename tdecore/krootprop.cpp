@@ -27,7 +27,7 @@
 #include "klocale.h"
 #include "kcharsets.h"
 #include "kapplication.h"
-#include <textstream.h>
+#include <tqtextstream.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>

@@ -327,7 +327,7 @@ void CSSStyleSelector::loadDefaultStyle(const KHTMLSettings *s, DocumentImpl *do
 	if ( readbytes >= 0 )
 	    file[readbytes] = '\0';
 
-	TQString style = TQString::fromLatin1( file.data() );
+	TQString style = TQString::tqfromLatin1( file.data() );
 	if(s)
 	    style += s->settingsToCSS();
 	DOMString str(style);
@@ -352,7 +352,7 @@ void CSSStyleSelector::loadDefaultStyle(const KHTMLSettings *s, DocumentImpl *do
 	if ( readbytes >= 0 )
 	    file[readbytes] = '\0';
 
-	TQString style = TQString::fromLatin1( file.data() );
+	TQString style = TQString::tqfromLatin1( file.data() );
 	DOMString str(style);
 
 	s_quirksSheet = new DOM::CSSStyleSheetImpl(doc);
@@ -742,7 +742,7 @@ void CSSStyleSelector::adjustRenderStyle(RenderStyle* style, DOM::ElementImpl *e
     style->adjustBackgroundLayers();
 
     // Only use slow repaints if we actually have a background image.
-    // FIXME: We only need to invalidate the fixed regions when scrolling.  It's total overkill to
+    // FIXME: We only need to tqinvalidate the fixed regions when scrolling.  It's total overkill to
     // prevent the entire view from blitting on a scroll.
     if (style->hasFixedBackgroundImage() && view)
         view->useSlowRepaints();
@@ -786,7 +786,7 @@ unsigned int CSSStyleSelector::addInlineDeclarations(DOM::ElementImpl* e,
         if (i == firstLen)
             values = addValues;
 
-        CSSProperty *prop = values->at(i >= firstLen ? i - firstLen : i);
+        CSSProperty *prop = values->tqat(i >= firstLen ? i - firstLen : i);
 	Source source = Inline;
 
         if( prop->m_important ) source = InlineImportant;
@@ -871,7 +871,7 @@ static PseudoState checkPseudoState( const CSSStyleSelector::Encodedurl& encoded
     if( attr.isNull() ) {
         return PseudoNone;
     }
-    TQConstString cu(attr.unicode(), attr.length());
+    TQConstString cu(attr.tqunicode(), attr.length());
     TQString u = cu.string();
     if ( !u.contains("://") ) {
         if ( u[0] == '/' )
@@ -1165,8 +1165,8 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             // else the value is longer and can be a list
             if ( sel->match == CSSSelector::Class && !e->hasClassList() ) return false;
 
-            TQChar* sel_uc = sel->value.unicode();
-            TQChar* val_uc = value->unicode();
+            TQChar* sel_uc = sel->value.tqunicode();
+            TQChar* val_uc = value->tqunicode();
 
             TQConstString sel_str(sel_uc, sel_len);
             TQConstString val_str(val_uc, val_len);
@@ -1187,29 +1187,29 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
         case CSSSelector::Contain:
         {
             //kdDebug( 6080 ) << "checking for contains match" << endl;
-            TQConstString val_str(value->unicode(), value->length());
-            TQConstString sel_str(sel->value.unicode(), sel->value.length());
+            TQConstString val_str(value->tqunicode(), value->length());
+            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
             return val_str.string().contains(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Begin:
         {
             //kdDebug( 6080 ) << "checking for beginswith match" << endl;
-            TQConstString val_str(value->unicode(), value->length());
-            TQConstString sel_str(sel->value.unicode(), sel->value.length());
-            return val_str.string().startsWith(sel_str.string(), caseSensitive);
+            TQConstString val_str(value->tqunicode(), value->length());
+            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
+            return val_str.string().tqstartsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::End:
         {
             //kdDebug( 6080 ) << "checking for endswith match" << endl;
-            TQConstString val_str(value->unicode(), value->length());
-            TQConstString sel_str(sel->value.unicode(), sel->value.length());
-            return val_str.string().endsWith(sel_str.string(), caseSensitive);
+            TQConstString val_str(value->tqunicode(), value->length());
+            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
+            return val_str.string().tqendsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Hyphen:
         {
             //kdDebug( 6080 ) << "checking for hyphen match" << endl;
-            TQConstString val_str(value->unicode(), value->length());
-            TQConstString sel_str(sel->value.unicode(), sel->value.length());
+            TQConstString val_str(value->tqunicode(), value->length());
+            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
             const TQString& str = val_str.string();
             const TQString& selStr = sel_str.string();
             if(str.length() < selStr.length()) return false;
@@ -1782,7 +1782,7 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
             TQPtrList<CSSSelector> *s = r->selector();
             for(int j = 0; j < (int)s->count(); j++)
             {
-                CSSOrderedRule *rule = new CSSOrderedRule(r, s->at(j), count());
+                CSSOrderedRule *rule = new CSSOrderedRule(r, s->tqat(j), count());
 		TQPtrList<CSSOrderedRule>::append(rule);
                 //kdDebug( 6080 ) << "appending StyleRule!" << endl;
             }
@@ -1829,7 +1829,7 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
                         for( int j = 0; j < ( int ) s->count(); j++ )
                         {
                             CSSOrderedRule *orderedRule = new CSSOrderedRule(
-                                            styleRule, s->at( j ), count() );
+                                            styleRule, s->tqat( j ), count() );
                 	    TQPtrList<CSSOrderedRule>::append( orderedRule );
                         }
                     }
@@ -1891,7 +1891,7 @@ void CSSOrderedPropertyList::append(DOM::CSSStyleDeclarationImpl *decl, uint sel
     int len = values->count();
     for(int i = 0; i < len; i++)
     {
-        CSSProperty *prop = values->at(i);
+        CSSProperty *prop = values->tqat(i);
 	Source source = regular;
 
 	if( prop->m_important ) source = important;
@@ -2079,7 +2079,7 @@ static TQColor colorForCSSValue( int css_value )
 	    KConfig bckgrConfig("kdesktoprc", true, false); // No multi-screen support
 	    bckgrConfig.setGroup("Desktop0");
 	    // Desktop background.
-	    return bckgrConfig.readColorEntry("Color1", &tqApp->palette().disabled().background());
+	    return bckgrConfig.readColorEntry("Color1", &tqApp->tqpalette().disabled().background());
 	}
 	return TQColor();
     }
@@ -2597,7 +2597,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
     }
 
     case CSS_PROP_UNICODE_BIDI: {
-        HANDLE_INHERIT_AND_INITIAL(unicodeBidi, UnicodeBidi)
+        HANDLE_INHERIT_AND_INITIAL(tqunicodeBidi, UnicodeBidi)
         if(!primitiveValue) break;
         switch (primitiveValue->getIdent()) {
             case CSS_VAL_NORMAL:

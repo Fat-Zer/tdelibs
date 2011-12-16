@@ -25,7 +25,7 @@
 #include "kdockwidget_private.h"
 
 #include <tqwidgetstack.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtimer.h>
 #include <tqtooltip.h>
 #include <kmultitabbar.h>
@@ -633,7 +633,7 @@ void DockContainer::prevToolView() {
     if (pos==-1) return;
     pos--;
     if (pos<0) pos=tabs->count()-1;
-    KMultiTabBarTab *tab=tabs->at(pos);
+    KMultiTabBarTab *tab=tabs->tqat(pos);
     if (!tab) return; //can never happen here, but who knows
     m_tb->setTab(tab->id(),true);
     tabClicked(tab->id());
@@ -645,7 +645,7 @@ void DockContainer::nextToolView() {
     if (pos==-1) return;
     pos++;
     if (pos>=(int)tabs->count()) pos=0;
-    KMultiTabBarTab *tab=tabs->at(pos);
+    KMultiTabBarTab *tab=tabs->tqat(pos);
     if (!tab) return; //can never happen here, but who knows
     m_tb->setTab(tab->id(),true);
     tabClicked(tab->id());

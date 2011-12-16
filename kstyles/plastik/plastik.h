@@ -81,7 +81,7 @@ public:
                        SFlags flags = Style_Default,
                        const TQStyleOption &opt = TQStyleOption::Default ) const;
 
-    void drawControl(TQ_ControlElement element,
+    void tqdrawControl(TQ_ControlElement element,
                      TQPainter *p,
                      const TQWidget *widget,
                      const TQRect &r,
@@ -89,9 +89,9 @@ public:
                      SFlags flags = Style_Default,
                      const TQStyleOption& = TQStyleOption::Default ) const;
 
-    void drawControlMask( TQ_ControlElement, TQPainter *, const TQWidget *, const TQRect &, const TQStyleOption &) const;
+    void tqdrawControlMask( TQ_ControlElement, TQPainter *, const TQWidget *, const TQRect &, const TQStyleOption &) const;
 
-    void drawComplexControl(TQ_ComplexControl control,
+    void tqdrawComplexControl(TQ_ComplexControl control,
                             TQPainter *p,
                             const TQWidget *widget,
                             const TQRect &r,
@@ -101,7 +101,7 @@ public:
                             SCFlags active = SC_None,
                             const TQStyleOption& = TQStyleOption::Default ) const;
 
-    int pixelMetric(PixelMetric m,
+    int tqpixelMetric(PixelMetric m,
                     const TQWidget *widget = 0 ) const;
 
     TQRect subRect(SubRect r,
@@ -112,7 +112,7 @@ public:
                                  SubControl subcontrol,
                                  const TQStyleOption &opt = TQStyleOption::Default ) const;
 
-    void drawComplexControlMask(TQStyle::TQ_ComplexControl c,
+    void tqdrawComplexControlMask(TQStyle::TQ_ComplexControl c,
                                 TQPainter *p,
                                 const TQWidget *w,
                                 const TQRect &r,
@@ -123,7 +123,7 @@ public:
                            const TQSize &s,
                            const TQStyleOption &o) const;
 
-    int styleHint(TQ_StyleHint, const TQWidget * = 0,
+    int tqstyleHint(TQ_StyleHint, const TQWidget * = 0,
                   const TQStyleOption & = TQStyleOption::Default,
                   TQStyleHintReturn * = 0 ) const;
 

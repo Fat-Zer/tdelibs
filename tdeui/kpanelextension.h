@@ -282,9 +282,9 @@ protected:
     Position position() const { return _position; }
 
     /**
-     * @return the extension's alignment. (left/top, center, or right/bottom)
+     * @return the extension's tqalignment. (left/top, center, or right/bottom)
      **/
-    Alignment alignment() const { return _alignment; }
+    Alignment tqalignment() const { return _tqalignment; }
 
     /**
      * @return the extensions orientation. (horizontal or vertical)
@@ -305,7 +305,7 @@ protected:
     virtual void positionChange( Position ) {}
 
     /**
-     * This extension has changed its alignment.
+     * This extension has changed its tqalignment.
      * Reimplement this change handler in order to adjust the look of your
      * applet.
      **/
@@ -333,7 +333,7 @@ protected:
 private:
     Type         		_type;
     Position     		_position;
-    Alignment    		_alignment;
+    Alignment    		_tqalignment;
     KConfig*     		_config;
     int          		_actions;
 protected:

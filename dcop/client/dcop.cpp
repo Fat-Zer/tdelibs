@@ -38,7 +38,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqimage.h>
 #include <tqmap.h>
 #include <tqstringlist.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqvariant.h>
 
 #include "../dcopclient.h"
@@ -158,7 +158,7 @@ void queryFunctions( const char* app, const char* obj )
 
 int callFunction( const char* app, const char* obj, const char* func, const QCStringList args )
 {
-    TQString f = func; // Qt is better with unicode strings, so use one.
+    TQString f = func; // Qt is better with tqunicode strings, so use one.
     int left = f.find( '(' );
     int right = f.find( ')' );
 
@@ -262,7 +262,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 		}
 		if ( s == static_cast<int>(partl.count())-1)
 		{
-			partl.remove(partl.at(s));
+			partl.remove(partl.tqat(s));
 		}
 
 		lt = partl.join(" ");

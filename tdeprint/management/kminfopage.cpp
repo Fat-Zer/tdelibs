@@ -22,7 +22,7 @@
 
 #include <tqpixmap.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
@@ -107,7 +107,7 @@ void KMInfoPage::setPrinter(KMPrinter *p)
 	}
 	else
 	{
-		m_title->setText(TQString::fromLatin1("<b>%1</b>").arg(p->name()));
+		m_title->setText(TQString::tqfromLatin1("<b>%1</b>").arg(p->name()));
 		m_titlepixmap->setPixmap(SmallIcon(p->pixmap()));
 		if (p->isImplicit()) m_type->setText(i18n("Implicit class"));
 		else if (p->isClass(false))

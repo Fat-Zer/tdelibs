@@ -5,7 +5,7 @@
 
 #include <tqsplitter.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqmultilineedit.h>
 
 #include <kaboutdata.h>

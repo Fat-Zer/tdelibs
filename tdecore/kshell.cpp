@@ -72,7 +72,7 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
         do {
             if (pos >= args.length())
                 goto okret;
-            c = args.unicode()[pos++];
+            c = args.tqunicode()[pos++];
         } while (c.isSpace());
         TQString cret;
         if ((flags & TildeExpand) && c == (QChar)'~') {
@@ -80,7 +80,7 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
             for (; ; pos++) {
                 if (pos >= args.length())
                     break;
-                c = args.unicode()[pos];
+                c = args.tqunicode()[pos];
                 if (c == (QChar)'/' || c.isSpace())
                     break;
                 if (isQuoteMeta( c )) {
@@ -91,7 +91,7 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
                 if ((flags & AbortOnMeta) && isMeta( c ))
                     goto metaerr;
             }
-            TQString ccret = homeDir( TQConstString( args.unicode() + opos, pos - opos ).string() );
+            TQString ccret = homeDir( TQConstString( args.tqunicode() + opos, pos - opos ).string() );
             if (ccret.isEmpty()) {
                 pos = opos;
                 c = (QChar)'~';
@@ -129,20 +129,20 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
                 do {
                     if (pos >= args.length())
                         goto quoteerr;
-                    c = args.unicode()[pos++];
+                    c = args.tqunicode()[pos++];
                 } while (c != (QChar)'\'');
-                cret += TQConstString( args.unicode() + spos, pos - spos - 1 ).string();
+                cret += TQConstString( args.tqunicode() + spos, pos - spos - 1 ).string();
             } else if (c == (QChar)'"') {
                 for (;;) {
                     if (pos >= args.length())
                         goto quoteerr;
-                    c = args.unicode()[pos++];
+                    c = args.tqunicode()[pos++];
                     if (c == (QChar)'"')
                         break;
                     if (c == (QChar)'\\') {
                         if (pos >= args.length())
                             goto quoteerr;
-                        c = args.unicode()[pos++];
+                        c = args.tqunicode()[pos++];
                         if (c != (QChar)'"' && c != (QChar)'\\' &&
                             !((flags & AbortOnMeta) && (c == (QChar)'$' || c == (QChar)'`')))
                             cret += (QChar)'\\';
@@ -155,13 +155,13 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
                 for (;;) {
                     if (pos >= args.length())
                         goto quoteerr;
-                    c = args.unicode()[pos++];
+                    c = args.tqunicode()[pos++];
                     if (c == (QChar)'\'')
                         break;
                     if (c == (QChar)'\\') {
                         if (pos >= args.length())
                             goto quoteerr;
-                        c = args.unicode()[pos++];
+                        c = args.tqunicode()[pos++];
                         switch (c) {
                         case 'a': cret += (QChar)'\a'; break;
                         case 'b': cret += (QChar)'\b'; break;
@@ -212,7 +212,7 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
                 if (c == (QChar)'\\') {
                     if (pos >= args.length())
                         goto quoteerr;
-                    c = args.unicode()[pos++];
+                    c = args.tqunicode()[pos++];
                     if (!c.isSpace() &&
                         !((flags & AbortOnMeta) ? isMeta( c ) : isQuoteMeta( c )))
                         cret += '\\';
@@ -222,7 +222,7 @@ TQStringList KShell::splitArgs( const TQString &args, int flags, int *err )
             }
             if (pos >= args.length())
                 break;
-            c = args.unicode()[pos++];
+            c = args.tqunicode()[pos++];
         } while (!c.isSpace());
         ret += cret;
         firstword = false;
@@ -265,7 +265,7 @@ TQString KShell::joinArgs( const TQStringList &args )
             ret.append( q ).append( q );
         else {
             for (uint i = 0; i < (*it).length(); i++)
-                if (isSpecial((*it).unicode()[i])) {
+                if (isSpecial((*it).tqunicode()[i])) {
                     TQString tmp(*it);
                     tmp.replace( q, "'\\''" );
                     ret += q;
@@ -294,7 +294,7 @@ TQString KShell::joinArgs( const char * const *args, int nargs )
         else {
             TQString tmp( TQFile::decodeName( *argp ) );
             for (uint i = 0; i < tmp.length(); i++)
-                if (isSpecial(tmp.unicode()[i])) {
+                if (isSpecial(tmp.tqunicode()[i])) {
                     tmp.replace( q, "'\\''" );
                     ret += q;
                     tmp += q;
@@ -319,10 +319,10 @@ TQString KShell::joinArgsDQ( const TQStringList &args )
             ret.append( q ).append( q );
         else {
             for (uint i = 0; i < (*it).length(); i++)
-                if (isSpecial((*it).unicode()[i])) {
+                if (isSpecial((*it).tqunicode()[i])) {
                     ret.append( '$' ).append( q );
                     for (uint pos = 0; pos < (*it).length(); pos++) {
-                        int c = (*it).unicode()[pos];
+                        int c = (*it).tqunicode()[pos];
                         if (c < 32) {
                             ret += bs;
                             switch (c) {
@@ -357,10 +357,10 @@ TQString KShell::tildeExpand( const TQString &fname )
     if (fname[0] == (QChar)'~') {
         int pos = fname.find( '/' );
         if (pos < 0)
-            return homeDir( TQConstString( fname.unicode() + 1, fname.length() - 1 ).string() );
-        TQString ret = homeDir( TQConstString( fname.unicode() + 1, pos - 1 ).string() );
+            return homeDir( TQConstString( fname.tqunicode() + 1, fname.length() - 1 ).string() );
+        TQString ret = homeDir( TQConstString( fname.tqunicode() + 1, pos - 1 ).string() );
         if (!ret.isNull())
-            ret += TQConstString( fname.unicode() + pos, fname.length() - pos ).string();
+            ret += TQConstString( fname.tqunicode() + pos, fname.length() - pos ).string();
         return ret;
     }
     return fname;

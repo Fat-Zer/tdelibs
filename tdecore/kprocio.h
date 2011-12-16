@@ -35,7 +35,7 @@ class TQTextCodec;
  *        buffer and maintained/freed appropriately.  There is no need
  *        to be concerned with wroteStdin() signals _at_all_.
  *    @li readln() reads a line of data and buffers any leftovers.
- *    @li Conversion from/to unicode.
+ *    @li Conversion from/to tqunicode.
  *
  * Basically, KProcIO gives you buffered I/O similar to fgets()/fputs().
  *

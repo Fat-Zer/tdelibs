@@ -23,7 +23,7 @@
 
 #include <tqgroupbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -106,9 +106,9 @@ ConfigPage::ConfigPage( TQWidget *parent, const char *name )
 
   TQGroupBox *groupBox = new TQGroupBox( i18n( "Resources" ), this );
   groupBox->setColumnLayout(0, Qt::Vertical );
-  groupBox->layout()->setSpacing( 6 );
-  groupBox->layout()->setMargin( 11 );
-  TQGridLayout *groupBoxLayout = new TQGridLayout( groupBox->layout(), 2, 2 );
+  groupBox->tqlayout()->setSpacing( 6 );
+  groupBox->tqlayout()->setMargin( 11 );
+  TQGridLayout *groupBoxLayout = new TQGridLayout( groupBox->tqlayout(), 2, 2 );
 
   mFamilyCombo = new KComboBox( false, groupBox );
   groupBoxLayout->addMultiCellWidget( mFamilyCombo, 0, 0, 0, 1 );
@@ -130,7 +130,7 @@ ConfigPage::ConfigPage( TQWidget *parent, const char *name )
   mEditButton->setEnabled( false );
   mStandardButton = buttonBox->addButton( i18n( "&Use as Standard" ), TQT_TQOBJECT(this), TQT_SLOT(slotStandard()) );
   mStandardButton->setEnabled( false );
-  buttonBox->layout();
+  buttonBox->tqlayout();
 
   groupBoxLayout->addWidget( buttonBox, 1, 1 );
 

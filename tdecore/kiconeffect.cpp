@@ -153,8 +153,8 @@ TQString KIconEffect::fingerprint(int group, int state) const
         cached += ':';
         cached += tmp.setNum(mValue[group][state]);
         cached += ':';
-        cached += mTrans[group][state] ? TQString::fromLatin1("trans")
-            : TQString::fromLatin1("notrans");
+        cached += mTrans[group][state] ? TQString::tqfromLatin1("trans")
+            : TQString::tqfromLatin1("notrans");
         if (mEffect[group][state] == Colorize || mEffect[group][state] == ToMonochrome)
         {
             cached += ':';
@@ -742,7 +742,7 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect)
 
     TQPainter p(widget);
 
-    // Use NotROP to avoid having to repaint the pixmap each time.
+    // Use NotROP to avoid having to tqrepaint the pixmap each time.
     p.setPen(TQPen(Qt::black, 2, Qt::DotLine));
     p.setRasterOp(TQt::NotROP);
 

@@ -20,8 +20,8 @@
 #include <stdio.h>
 
 #include <tqfile.h>
-#include <textcodec.h>
-#include <stylesheet.h>
+#include <tqtextcodec.h>
+#include <tqstylesheet.h>
 
 #include <kdebug.h>
 #include <klocale.h>

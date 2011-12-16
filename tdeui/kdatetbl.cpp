@@ -233,7 +233,7 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
          ( daynum == 6 && calendar->calendarName() == "gregorian" ) )
           normalday=false;
 
-			TQBrush brushInvertTitle(colorGroup().base());
+			TQBrush brushInvertTitle(tqcolorGroup().base());
 			TQColor titleColor(isEnabled()?( KGlobalSettings::activeTitleColor() ):( KGlobalSettings::inactiveTitleColor() ) );
 			TQColor textColor(isEnabled()?( KGlobalSettings::activeTextColor() ):( KGlobalSettings::inactiveTextColor() ) );
       if (!normalday)
@@ -250,7 +250,7 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
         }
       painter->drawText(0, 0, w, h-1, AlignCenter,
                         calendar->weekDayName(daynum, true), -1, &rect);
-      painter->setPen(colorGroup().text());
+      painter->setPen(tqcolorGroup().text());
       painter->moveTo(0, h-1);
       painter->lineTo(w-1, h-1);
       // ----- draw the weekday:
@@ -267,7 +267,7 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
           // ° painting a day of the previous month or
           // ° painting a day of the following month
           // TODO: don't hardcode gray here! Use a color with less contrast to the background than normal text.
-          painter->setPen( colorGroup().mid() );
+          painter->setPen( tqcolorGroup().mid() );
 //          painter->setPen(gray);
         } else { // paint a day of the current month
           if ( d->useCustomColors )
@@ -292,9 +292,9 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
               }
               painter->setPen( mode->fgColor );
             } else
-              painter->setPen(colorGroup().text());
+              painter->setPen(tqcolorGroup().text());
           } else //if ( firstWeekDay < 4 ) // <- this doesn' make sense at all!
-          painter->setPen(colorGroup().text());
+          painter->setPen(tqcolorGroup().text());
         }
 
       pen=painter->pen();
@@ -308,25 +308,25 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
            // draw the currently selected date
 	   if (isEnabled())
 	   {
-           painter->setPen(colorGroup().highlight());
-           painter->setBrush(colorGroup().highlight());
+           painter->setPen(tqcolorGroup().highlight());
+           painter->setBrush(tqcolorGroup().highlight());
 	   }
 	   else
 	   {
-	   painter->setPen(colorGroup().text());
-           painter->setBrush(colorGroup().text());
+	   painter->setPen(tqcolorGroup().text());
+           painter->setBrush(tqcolorGroup().text());
 	   }
-           pen=TQPen(colorGroup().highlightedText());
+           pen=TQPen(tqcolorGroup().highlightedText());
         } else {
           painter->setBrush(paletteBackgroundColor());
           painter->setPen(paletteBackgroundColor());
-//          painter->setBrush(colorGroup().base());
-//          painter->setPen(colorGroup().base());
+//          painter->setBrush(tqcolorGroup().base());
+//          painter->setPen(tqcolorGroup().base());
         }
 
       if ( pCellDate == TQDate::currentDate() )
       {
-         painter->setPen(colorGroup().text());
+         painter->setPen(tqcolorGroup().text());
       }
 
       if ( paintRect ) painter->drawRect(0, 0, w, h);
@@ -439,7 +439,7 @@ KDateTable::setFontSize(int size)
       maxCell.setHeight(QMAX(maxCell.height(), rect.height()));
     }
   // ----- compare with a real wide number and add some space:
-  rect=metrics.boundingRect(TQString::fromLatin1("88"));
+  rect=metrics.boundingRect(TQString::tqfromLatin1("88"));
   maxCell.setWidth(QMAX(maxCell.width()+2, rect.width()));
   maxCell.setHeight(QMAX(maxCell.height()+4, rect.height()));
 }
@@ -815,7 +815,7 @@ KDateInternalMonthPicker::contentsMouseMoveEvent(TQMouseEvent *e)
               updateCell( row, col /*, false */ ); // mark the new active cell
             }
         }
-      if ( tmpRow > -1 ) // repaint the former active cell
+      if ( tmpRow > -1 ) // tqrepaint the former active cell
           updateCell( tmpRow, tmpCol /*, true */ );
     }
 }
@@ -1006,7 +1006,7 @@ int
 KPopupFrame::exec(TQPoint pos)
 {
   popup(pos);
-  repaint();
+  tqrepaint();
   d->exec = true;
   const TQGuardedPtr<TQObject> that = TQT_TQOBJECT(this);
   tqApp->enter_loop();

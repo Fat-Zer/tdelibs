@@ -25,7 +25,7 @@ extern "C" {
 }
 
 // #include <tqstring.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqfile.h>
 #include <tqtimer.h>
 #include <tqdatetime.h>
@@ -1188,7 +1188,7 @@ KeyValueMap::insert(const TQCString& key, const TQStrList& values, bool force)
   // ----- create coded string list:
   for(count=0; count<values.count(); ++count)
     { // create strings like "abc\efgh\eijk":
-      temp=makeComplexString(((TQStrList)values).at(count));
+      temp=makeComplexString(((TQStrList)values).tqat(count));
       temp.remove(0, 1); // remove the leading "\""
       temp.remove(temp.length()-1, 1); // the trailing "\""
       value+=temp;
@@ -1231,7 +1231,7 @@ KeyValueMap::get(const TQCString& key, TQStringList& values) const
   // ----- do the conversion:
   for(count=0; count<temp.count(); ++count)
     {
-      values.append(TQString::fromUtf8(temp.at(count)));
+      values.append(TQString::fromUtf8(temp.tqat(count)));
     }
   // -----
   kdDebug(GUARD, KAB_KDEBUG_AREA) <<  "KeyValueMap::get[QStringList]: done." << endl;
@@ -1252,7 +1252,7 @@ KeyValueMap::insert(const TQCString& key, const TQStringList& values, bool force
   // ----- create TQCString list:
   for(count=0; count<values.count(); ++count)
     {
-      utf8strings.append((*values.at(count)).utf8());
+      utf8strings.append((*values.tqat(count)).utf8());
     }
   kdDebug(GUARD, KAB_KDEBUG_AREA) <<  "KeyValueMap::insert[QStringList]: done." << endl;
   return insert(key, utf8strings, force);

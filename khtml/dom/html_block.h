@@ -105,7 +105,7 @@ public:
     ~HTMLDivElement();
 
     /**
-     * Horizontal text alignment. See the <a
+     * Horizontal text tqalignment. See the <a
      * href="http://www.w3.org/TR/REC-html40/present/graphics.html#adef-align">
      * align attribute definition </a> in HTML 4.0. This attribute is
      * deprecated in HTML 4.0.
@@ -231,7 +231,7 @@ public:
     ~HTMLHeadingElement();
 
     /**
-     * Horizontal text alignment. See the <a
+     * Horizontal text tqalignment. See the <a
      * href="http://www.w3.org/TR/REC-html40/present/graphics.html#adef-align">
      * align attribute definition </a> in HTML 4.0. This attribute is
      * deprecated in HTML 4.0.
@@ -272,7 +272,7 @@ public:
     ~HTMLParagraphElement();
 
     /**
-     * Horizontal text alignment. See the <a
+     * Horizontal text tqalignment. See the <a
      * href="http://www.w3.org/TR/REC-html40/present/graphics.html#adef-align">
      * align attribute definition </a> in HTML 4.0. This attribute is
      * deprecated in HTML 4.0.

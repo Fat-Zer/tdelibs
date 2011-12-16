@@ -188,7 +188,7 @@ struct spool_attr_t
     char spool_attr_str42[sizeof("rules")];
     char spool_attr_str43[sizeof("compact")];
     char spool_attr_str44[sizeof("rev")];
-    char spool_attr_str45[sizeof("shape")];
+    char spool_attr_str45[sizeof("tqshape")];
     char spool_attr_str46[sizeof("charset")];
     char spool_attr_str47[sizeof("charoff")];
     char spool_attr_str48[sizeof("lang")];
@@ -343,7 +343,7 @@ static const struct spool_attr_t spool_attr_contents =
     "rules",
     "compact",
     "rev",
-    "shape",
+    "tqshape",
     "charset",
     "charoff",
     "lang",

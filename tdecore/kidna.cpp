@@ -43,12 +43,12 @@ TQString KIDNA::toAscii(const TQString &idna)
 {
   if (idna.length() && (idna[0] == (QChar)'.'))
   {
-     TQString host = TQString::fromLatin1(toAsciiCString(idna.mid(1)));
+     TQString host = TQString::tqfromLatin1(toAsciiCString(idna.mid(1)));
      if (host.isEmpty())
         return TQString::null; // Error
      return idna[0] + host;
   }
-  return TQString::fromLatin1(toAsciiCString(idna));
+  return TQString::tqfromLatin1(toAsciiCString(idna));
 }
 
 TQString KIDNA::toUnicode(const TQString &idna)

@@ -25,7 +25,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqpainter.h>
 #include <tqtimer.h>
 
@@ -420,9 +420,9 @@ bool KLineEdit::copySqueezedText(bool clipboard) const
          return false;
       TQString t = d->squeezedText;
       t = t.mid(start, end - start);
-      disconnect( TQApplication::clipboard(), TQT_SIGNAL(selectionChanged()), this, 0);
-      TQApplication::clipboard()->setText( t, clipboard ? TQClipboard::Clipboard : TQClipboard::Selection );
-      connect( TQApplication::clipboard(), TQT_SIGNAL(selectionChanged()), this,
+      disconnect( TQApplication::tqclipboard(), TQT_SIGNAL(selectionChanged()), this, 0);
+      TQApplication::tqclipboard()->setText( t, clipboard ? TQClipboard::Clipboard : TQClipboard::Selection );
+      connect( TQApplication::tqclipboard(), TQT_SIGNAL(selectionChanged()), this,
                TQT_SLOT(clipboardChanged()) );
       return true;
    }
@@ -453,7 +453,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
     }
     else if ( KStdAccel::pasteSelection().contains( key ) )
     {
-        TQString text = TQApplication::clipboard()->text( TQClipboard::Selection);
+        TQString text = TQApplication::tqclipboard()->text( TQClipboard::Selection);
         insert( text );
         deselect();
         return;
@@ -575,7 +575,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
               mode == KGlobalSettings::CompletionMan) && noModifier )
         {
             TQString keycode = e->text();
-            if ( !keycode.isEmpty() && (keycode.unicode()->isPrint() ||
+            if ( !keycode.isEmpty() && (keycode.tqunicode()->isPrint() ||
                 e->key() == Key_Backspace || e->key() == Key_Delete ) )
             {
                 bool hasUserSelection=d->userSelection;
@@ -658,7 +658,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             // as if there was no selection. After processing the key event, we
             // can set the new autocompletion again.
             if (hadSelection && !hasUserSelection && start>cPos &&
-               ( (!keycode.isEmpty() && keycode.unicode()->isPrint()) ||
+               ( (!keycode.isEmpty() && keycode.tqunicode()->isPrint()) ||
                  e->key() == Key_Backspace || e->key() == Key_Delete ) )
             {
                 del();
@@ -679,7 +679,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             int len = txt.length();
 
             if ( txt != old_txt && len/* && ( cursorPosition() == len || force )*/ &&
-                 ( (!keycode.isEmpty() && keycode.unicode()->isPrint()) ||
+                 ( (!keycode.isEmpty() && keycode.tqunicode()->isPrint()) ||
                    e->key() == Key_Backspace || e->key() == Key_Delete) )
             {
                 if ( e->key() == Key_Backspace )
@@ -840,7 +840,7 @@ void KLineEdit::mousePressEvent( TQMouseEvent* e )
 void KLineEdit::mouseReleaseEvent( TQMouseEvent* e )
 {
     TQLineEdit::mouseReleaseEvent( e );
-    if (TQApplication::clipboard()->supportsSelection() ) {
+    if (TQApplication::tqclipboard()->supportsSelection() ) {
         if ( e->button() == Qt::LeftButton ) {
             // Fix copying of squeezed text if needed
             copySqueezedText( false );

@@ -22,7 +22,7 @@
 #include <kurl.h>
 #include <tqstring.h>
 #include <tqcstring.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 class KRemoteEncodingPrivate;
 /**

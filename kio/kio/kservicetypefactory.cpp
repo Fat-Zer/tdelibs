@@ -118,14 +118,14 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
    // Get stream to the header
    TQDataStream *str = m_str;
 
-   str->device()->at( m_fastPatternOffset );
+   str->tqdevice()->tqat( m_fastPatternOffset );
 
    TQ_INT32 nrOfEntries;
    (*str) >> nrOfEntries;
    TQ_INT32 entrySize;
    (*str) >> entrySize;
 
-   TQ_INT32 fastOffset =  str->device()->at( );
+   TQ_INT32 fastOffset =  str->tqdevice()->tqat( );
 
    TQ_INT32 matchingOffset = 0;
 
@@ -145,7 +145,7 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
       while (left <= right) {
          middle = (left + right) / 2;
          // read pattern at position "middle"
-         str->device()->at( middle * entrySize + fastOffset );
+         str->tqdevice()->tqat( middle * entrySize + fastOffset );
          KSycocaEntry::read(*str, pattern);
          int cmp = pattern.compare( extension );
          if (cmp < 0)
@@ -166,7 +166,7 @@ KMimeType * KServiceTypeFactory::findFromPattern(const TQString &_filename, TQSt
 
    // Now try the "other" Pattern table
    if ( m_patterns.isEmpty() ) {
-      str->device()->at( m_otherPatternOffset );
+      str->tqdevice()->tqat( m_otherPatternOffset );
 
       TQString pattern;
       TQ_INT32 mimetypeOffset;

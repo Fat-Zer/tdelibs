@@ -23,7 +23,7 @@
 #include "qdirmultilineedit.h"
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 
 #include <klocale.h>

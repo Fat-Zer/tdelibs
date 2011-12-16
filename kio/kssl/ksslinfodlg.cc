@@ -23,7 +23,7 @@
 
 #include <kssl.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <kpushbutton.h>
 #include <tqframe.h>
 #include <tqlabel.h>
@@ -273,14 +273,14 @@ void KSSLInfoDlg::displayCert(KSSLCertificate *x) {
     d->_serialNum->setText(x->getSerialNumber());
 
     cspl = d->_validFrom->palette();
-    if (x->getQDTNotBefore() > TQDateTime::currentDateTime(Qt::UTC))
+    if (x->getQDTNotBefore() > TQDateTime::tqcurrentDateTime(Qt::UTC))
         cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
     else cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
     d->_validFrom->setPalette(cspl);
     d->_validFrom->setText(x->getNotBefore());
 
     cspl = d->_validUntil->palette();
-    if (x->getQDTNotAfter() < TQDateTime::currentDateTime(Qt::UTC))
+    if (x->getQDTNotAfter() < TQDateTime::tqcurrentDateTime(Qt::UTC))
         cspl.setColor(TQColorGroup::Foreground, TQColor(196,33,21));
     else cspl.setColor(TQColorGroup::Foreground, TQColor(42,153,59));
     d->_validUntil->setPalette(cspl);
@@ -305,8 +305,8 @@ void KSSLInfoDlg::displayCert(KSSLCertificate *x) {
         ksv = ksvl.first();
 
         if (ksv == KSSLCertificate::SelfSigned) {
-            if (x->getQDTNotAfter() > TQDateTime::currentDateTime(Qt::UTC) &&
-                    x->getQDTNotBefore() < TQDateTime::currentDateTime(Qt::UTC)) {
+            if (x->getQDTNotAfter() > TQDateTime::tqcurrentDateTime(Qt::UTC) &&
+                    x->getQDTNotBefore() < TQDateTime::tqcurrentDateTime(Qt::UTC)) {
                 if (KSSLSigners().useForSSL(*x))
                     ksv = KSSLCertificate::Ok;
             } else {
@@ -348,7 +348,7 @@ void KSSLInfoDlg::slotChain(int x) {
         cl.setAutoDelete(true);
         for (int i = 0; i < x-1; i++)
             cl.remove((unsigned int)0);
-        KSSLCertificate thisCert = *(cl.at(0));
+        KSSLCertificate thisCert = *(cl.tqat(0));
         cl.remove((unsigned int)0);
         thisCert.chain().setChain(cl);
         displayCert(&thisCert);

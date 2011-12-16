@@ -451,13 +451,13 @@ TQString KIconTheme::current()
     KConfig *config = KGlobal::config();
     KConfigGroupSaver saver(config, "Icons");
     *_theme = config->readEntry("Theme",defaultThemeName());
-    if ( *_theme == TQString::fromLatin1("hicolor") ) *_theme = defaultThemeName();
+    if ( *_theme == TQString::tqfromLatin1("hicolor") ) *_theme = defaultThemeName();
 /*    if (_theme->isEmpty())
     {
         if (TQPixmap::defaultDepth() > 8)
             *_theme = defaultThemeName();
         else
-            *_theme = TQString::fromLatin1("locolor");
+            *_theme = TQString::tqfromLatin1("locolor");
     }*/
     return *_theme;
 }
@@ -511,7 +511,7 @@ void KIconTheme::reconfigure()
 // static
 TQString KIconTheme::defaultThemeName()
 {
-    return TQString::fromLatin1("crystalsvg");
+    return TQString::tqfromLatin1("crystalsvg");
 }
 
 /*** KIconThemeDir ***/

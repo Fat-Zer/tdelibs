@@ -10,7 +10,7 @@
 
 #include <tqapplication.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtimer.h>
 #include <tqvbox.h>
 #include <tqpainter.h>

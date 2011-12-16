@@ -22,7 +22,7 @@
 #include <tqcheckbox.h>
 #include <tqcombobox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtimer.h>
 
 #include <kapplication.h>
@@ -363,8 +363,8 @@ KSpellConfig::interpret( TQString &fname, TQString &lname,
   }
 
   //We have explicitly chosen English as the default here.
-  if ( ( KGlobal::locale()->language() == TQString::fromLatin1("C") &&
-         lname==TQString::fromLatin1("en") ) ||
+  if ( ( KGlobal::locale()->language() == TQString::tqfromLatin1("C") &&
+         lname==TQString::tqfromLatin1("en") ) ||
        KGlobal::locale()->language() == lname )
     return true;
 

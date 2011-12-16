@@ -23,7 +23,7 @@
 #include "kmmanager.h"
 #include "kmprinter.h"
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqtoolbutton.h>
 #include <klistbox.h>

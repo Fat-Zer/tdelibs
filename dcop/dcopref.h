@@ -396,7 +396,7 @@ public:
      * Flag for allowing entering the event loop if the call blocks too long.
      * @p NoEventLoop disables entering the event loop.
      * @p UseEventLoop allows entering the event loop while waiting for long
-     * blocking DCOP call, thus making the GUI repaint if needed, and possibly
+     * blocking DCOP call, thus making the GUI tqrepaint if needed, and possibly
      * allowing also other code in the application to be executed.
      * @see DCOPClient::call()
      */

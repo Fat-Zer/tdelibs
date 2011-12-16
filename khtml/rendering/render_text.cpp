@@ -738,7 +738,7 @@ void RenderText::deleteInlineBoxes(RenderArena* arena)
         if (!arena)
             arena = renderArena();
         for(unsigned int i=0; i < len; i++) {
-            InlineTextBox* s = m_lines.at(i);
+            InlineTextBox* s = m_lines.tqat(i);
             if (s)
                 s->detach(arena);
             m_lines.remove(i);
@@ -1036,7 +1036,7 @@ void RenderText::calcMinMaxWidth()
     bool firstLine = true;
     for(int i = 0; i < len; i++)
     {
-        unsigned short c = str->s[i].unicode();
+        unsigned short c = str->s[i].tqunicode();
         bool isNewline = false;
 
         // If line-breaks survive to here they are preserved
@@ -1056,7 +1056,7 @@ void RenderText::calcMinMaxWidth()
             continue;
 
         int wordlen = 0;
-        while( i+wordlen < len && (i+wordlen == 0 || str->s[i+wordlen].unicode() != SOFT_HYPHEN) &&
+        while( i+wordlen < len && (i+wordlen == 0 || str->s[i+wordlen].tqunicode() != SOFT_HYPHEN) &&
                !(isBreakable( str->s, i+wordlen, str->l )) )
             wordlen++;
 
@@ -1328,11 +1328,11 @@ short RenderText::width() const
     return w;
 }
 
-void RenderText::repaint(Priority p)
+void RenderText::tqrepaint(Priority p)
 {
     RenderObject *cb = containingBlock();
     if(cb)
-        cb->repaint(p);
+        cb->tqrepaint(p);
 }
 
 bool RenderText::isFixedWidthFont() const
@@ -1464,13 +1464,13 @@ static TQString quoteAndEscapeNonPrintables(const TQString &s)
     TQString result;
     result += '"';
     for (uint i = 0; i != s.length(); ++i) {
-        TQChar c = s.at(i);
+        TQChar c = s.tqat(i);
         if (c == '\\') {
             result += "\\\\";
         } else if (c == '"') {
             result += "\\\"";
         } else {
-            ushort u = c.unicode();
+            ushort u = c.tqunicode();
             if (u >= 0x20 && u < 0x7F) {
                 result += c;
             } else {

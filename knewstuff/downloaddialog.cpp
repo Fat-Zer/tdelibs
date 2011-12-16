@@ -36,11 +36,11 @@
 #include <knewstuff/knewstuffgeneric.h>
 #include <knewstuff/engine.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqdom.h>
 #include <tqlabel.h>
-#include <textbrowser.h>
+#include <tqtextbrowser.h>
 #include <tqtabwidget.h>
 #include <tqtimer.h> // hack
 
@@ -182,9 +182,9 @@ void DownloadDialog::clear()
     kdDebug() << "clear listviews in " << v << endl;
     if(v)
     {
-      (*(v->at(0)))->clear();
-      (*(v->at(1)))->clear();
-      (*(v->at(2)))->clear();
+      (*(v->tqat(0)))->clear();
+      (*(v->tqat(1)))->clear();
+      (*(v->tqat(2)))->clear();
 
       //delete (*it);
     }
@@ -570,7 +570,7 @@ void DownloadDialog::install(Entry *e)
   if(currentEntryItem() == m_entryitem)
   {
     TQPushButton *in;
-    in = *(m_buttons[d->m_page]->at(0));
+    in = *(m_buttons[d->m_page]->tqat(0));
     if(in) in->setEnabled(false);
   }
 
@@ -625,8 +625,8 @@ void DownloadDialog::slotTab()
   else
   {
     TQPushButton *de, *in;
-    in = *(m_buttons[d->m_page]->at(0));
-    de = *(m_buttons[d->m_page]->at(1));
+    in = *(m_buttons[d->m_page]->tqat(0));
+    de = *(m_buttons[d->m_page]->tqat(1));
 
     if(in) in->setEnabled(false);
     if(de) de->setEnabled(false);
@@ -705,8 +705,8 @@ void DownloadDialog::slotSelected()
     else enabled = true;
 
     TQPushButton *de, *in;
-    in = *(m_buttons[d->m_page]->at(0));
-    de = *(m_buttons[d->m_page]->at(1));
+    in = *(m_buttons[d->m_page]->tqat(0));
+    de = *(m_buttons[d->m_page]->tqat(1));
     if(in) in->setEnabled(enabled);
     if(de) de->setEnabled(true);
   }
@@ -747,9 +747,9 @@ void DownloadDialog::slotPage(TQWidget *w)
 
   d->m_page = w;
 
-  lv_r = *(m_map[w]->at(0));
-  lv_d = *(m_map[w]->at(1));
-  lv_l = *(m_map[w]->at(2));
+  lv_r = *(m_map[w]->tqat(0));
+  lv_d = *(m_map[w]->tqat(1));
+  lv_l = *(m_map[w]->tqat(2));
   p = m_providers[w];
   m_rt = m_rts[w];
 

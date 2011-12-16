@@ -29,7 +29,7 @@
 #include <kcursor.h>
 #include <tqapplication.h>
 #include <kmessagebox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqstrlist.h>
 
@@ -105,7 +105,7 @@ void KMDriverDbWidget::setDriver(const TQString& manu, const TQString& model)
 			// try by stripping the manufacturer name from
 			// the beginning of the model string. This is
 			// often the case with PPD files
-			item = m_model->findItem(model_.replace(0,manu.length()+1,TQString::fromLatin1("")));
+			item = m_model->findItem(model_.replace(0,manu.length()+1,TQString::tqfromLatin1("")));
 		if (item)
 			m_model->setCurrentItem(item);
 	}

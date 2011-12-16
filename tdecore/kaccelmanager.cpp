@@ -36,7 +36,7 @@
 #include <tqradiobutton.h>
 #include <tqspinbox.h>
 #include <tqtabbar.h>
-#include <textview.h>
+#include <tqtextview.h>
 #include <tqwidget.h>
 #include <tqwidgetstack.h>
 
@@ -240,12 +240,12 @@ void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &use
         if ( dynamic_cast<TQLabel*>( it->m_widget ) && it->m_widget->inherits("KURLLabel") )
              continue;
 
-        int tprop = it->m_widget->metaObject()->findProperty("text", true);
+        int tprop = it->m_widget->tqmetaObject()->findProperty("text", true);
         if (tprop != -1)  {
             if (checkChange(contents[cnt]))
                 it->m_widget->setProperty("text", contents[cnt].accelerated());
         } else {
-            tprop = it->m_widget->metaObject()->findProperty("title", true);
+            tprop = it->m_widget->tqmetaObject()->findProperty("title", true);
             if (tprop != -1 && checkChange(contents[cnt]))
                 it->m_widget->setProperty("title", contents[cnt].accelerated());
         }
@@ -341,9 +341,9 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
   {
     TQString content;
     TQVariant variant;
-    int tprop = w->metaObject()->findProperty("text", true);
+    int tprop = w->tqmetaObject()->findProperty("text", true);
     if (tprop != -1)  {
-        const TQMetaProperty* p = w->metaObject()->property( tprop, true );
+        const TQMetaProperty* p = w->tqmetaObject()->property( tprop, true );
         if ( p && p->isValid() )
             w->qt_property( tprop, 1, &variant );
         else
@@ -351,9 +351,9 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
     }
 
     if (tprop == -1)  {
-        tprop = w->metaObject()->findProperty("title", true);
+        tprop = w->tqmetaObject()->findProperty("title", true);
         if (tprop != -1)  {
-            const TQMetaProperty* p = w->metaObject()->property( tprop, true );
+            const TQMetaProperty* p = w->tqmetaObject()->property( tprop, true );
             if ( p && p->isValid() )
                 w->qt_property( tprop, 1, &variant );
         }

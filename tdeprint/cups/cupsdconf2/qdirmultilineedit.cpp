@@ -19,7 +19,7 @@
 
 #include "qdirmultilineedit.h"
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqheader.h>
 #include <tqpushbutton.h>
 #include <klistview.h>

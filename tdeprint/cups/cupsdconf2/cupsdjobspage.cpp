@@ -22,7 +22,7 @@
 
 #include <tqlabel.h>
 #include <tqcheckbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 
 #include <klocale.h>

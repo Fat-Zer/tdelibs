@@ -36,7 +36,7 @@
 class TQPainter;
 class TQFontMetrics;
 
-// Define a constant for soft hyphen's unicode value.
+// Define a constant for soft hyphen's tqunicode value.
 #define SOFT_HYPHEN 173
 
 const int cNoTruncation = -1;
@@ -247,7 +247,7 @@ public:
     virtual short marginLeft() const { return style()->marginLeft().minWidth(0); }
     virtual short marginRight() const { return style()->marginRight().minWidth(0); }
 
-    virtual void repaint(Priority p=NormalPriority);
+    virtual void tqrepaint(Priority p=NormalPriority);
 
     bool hasBreakableChar() const { return m_hasBreakableChar; }
     const TQFontMetrics &metrics(bool firstLine) const;

@@ -47,7 +47,7 @@ class TDEUI_EXPORT KLed : public TQWidget
     Q_OBJECT
     Q_ENUMS( State Shape Look )
     Q_PROPERTY( State state READ state WRITE setState )
-    Q_PROPERTY( Shape shape READ shape WRITE setShape )
+    Q_PROPERTY( Shape tqshape READ tqshape WRITE setShape )
     Q_PROPERTY( Look look READ look WRITE setLook )
     Q_PROPERTY( TQColor color READ color WRITE setColor )
     Q_PROPERTY( int darkFactor READ darkFactor WRITE setDarkFactor )
@@ -62,7 +62,7 @@ public:
 
   /**
    * Shades of the lamp.
-   * @short LED shape
+   * @short LED tqshape
    */
   enum Shape { Rectangular, Circular };
 
@@ -114,12 +114,12 @@ public:
    * @param col Initial color of the LED.
    * @param state    Sets the State.
    * @param look     Sets the Look.
-   * @param shape    Sets the Shape (rectangular or circular)
+   * @param tqshape    Sets the Shape (rectangular or circular)
    * @param parent   Will be handed over to TQWidget.
    * @param name     Will be handed over to TQWidget.
    * @short Constructor
    */
-  KLed(const TQColor& col, KLed::State state, KLed::Look look, KLed::Shape shape,
+  KLed(const TQColor& col, KLed::State state, KLed::Look look, KLed::Shape tqshape,
        TQWidget *parent=0, const char *name=0);
 
 
@@ -137,7 +137,7 @@ public:
    */
   State state() const;
 
-  Shape shape() const;
+  Shape tqshape() const;
 
   /**
    * Returns the color of the widget
@@ -175,7 +175,7 @@ public:
   void setState( State state );
 
   /**
-   * Set the shape of the LED to @p s.
+   * Set the tqshape of the LED to @p s.
    */
   void setShape(Shape s);
   /**
@@ -317,7 +317,7 @@ private:
   State led_state;
   TQColor led_color;
   Look  led_look;
-  Shape led_shape;
+  Shape led_tqshape;
 
 protected:
   virtual void virtual_hook( int id, void* data );

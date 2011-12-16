@@ -29,7 +29,7 @@
 #include <tqfile.h>
 #include <tqdir.h>
 #include <tqstring.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <dcopclient.h>
 
 #include <sys/types.h>

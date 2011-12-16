@@ -21,7 +21,7 @@
 
 #include <tqlabel.h>
 #include <tqpixmap.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 

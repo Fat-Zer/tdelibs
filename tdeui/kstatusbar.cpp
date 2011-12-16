@@ -65,8 +65,8 @@ KStatusBar::KStatusBar( TQWidget *parent, const char *name )
   // ...but off by default (sven)
   KConfig *config = KGlobal::config();
   TQString group(config->group());
-  config->setGroup(TQString::fromLatin1("StatusBar style"));
-  bool grip_enabled = config->readBoolEntry(TQString::fromLatin1("SizeGripEnabled"), false);
+  config->setGroup(TQString::tqfromLatin1("StatusBar style"));
+  bool grip_enabled = config->readBoolEntry(TQString::tqfromLatin1("SizeGripEnabled"), false);
   setSizeGripEnabled(grip_enabled);
   config->setGroup(group);
 }

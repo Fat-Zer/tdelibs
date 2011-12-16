@@ -60,7 +60,7 @@
 #include <tqpainter.h>
 #include <tqpixmap.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 #include <tqstring.h>
 #include <tqregexp.h>
@@ -121,13 +121,13 @@ RsyncConfigDialog::RsyncConfigDialog(TQWidget* parent, const char* name,
     mCancelText = actionButton(KDialogBase::Cancel)->text();
 
     TQFrame* mainWidget = plainPage();
-    TQVBoxLayout* layout = new TQVBoxLayout(mainWidget, 10);
+    TQVBoxLayout* tqlayout = new TQVBoxLayout(mainWidget, 10);
     mLabel = new TQLabel(TQString("<b>") + text + TQString("</b><br>")+i18n("Setting up synchronization for local folder")+TQString("<br><i>") + localfolder, mainWidget);
-    layout->addWidget(mLabel);
+    tqlayout->addWidget(mLabel);
 
     // Create an exclusive button group
     TQButtonGroup *layoutg = new TQButtonGroup( 1, Qt::Horizontal, i18n("Synchronization Method")+TQString(":"), mainWidget);
-    layout->addWidget( layoutg );
+    tqlayout->addWidget( layoutg );
     layoutg->setExclusive( TRUE );
 
     // Insert radiobuttons
@@ -147,7 +147,7 @@ RsyncConfigDialog::RsyncConfigDialog(TQWidget* parent, const char* name,
 
     // Create an exclusive button group
     TQButtonGroup *layoutm = new TQButtonGroup( 1, Qt::Horizontal, i18n("Remote Folder")+TQString(":"), mainWidget);
-    layout->addWidget( layoutm );
+    tqlayout->addWidget( layoutm );
     layoutg->setExclusive( TRUE );
 
     m_rsync_txt = new TQLineEdit(layoutm);
@@ -157,7 +157,7 @@ RsyncConfigDialog::RsyncConfigDialog(TQWidget* parent, const char* name,
 
     // Create an exclusive button group
     TQButtonGroup *layouta = new TQButtonGroup( 1, Qt::Horizontal, i18n("Automatic Synchronization")+TQString(":"), mainWidget);
-    layout->addWidget( layouta );
+    tqlayout->addWidget( layouta );
     layouta->setExclusive( FALSE );
 
     m_sync_auto_logout_cb = new TQCheckBox(layouta);

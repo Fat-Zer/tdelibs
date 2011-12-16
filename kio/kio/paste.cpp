@@ -36,9 +36,9 @@
 #include <ktempfile.h>
 
 #include <tqapplication.h>
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqdragobject.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqvaluevector.h>
 
 static KURL getNewFileName( const KURL &u, const TQString& text )
@@ -135,7 +135,7 @@ static KIO::CopyJob* chooseAndPaste( const KURL& u, TQMimeSource* data,
     // if "data" came from TQClipboard, then it was deleted already - by a nice 0-seconds timer
     // In that case, get it again. Let's hope the user didn't copy something else meanwhile :/
     if ( clipboard ) {
-        data = TQApplication::clipboard()->data();
+        data = TQApplication::tqclipboard()->data();
     }
     const TQByteArray ba = data->encodedData( chosenFormat );
     return pasteDataAsyncTo( new_url, ba );
@@ -146,13 +146,13 @@ static KIO::CopyJob* chooseAndPaste( const KURL& u, TQMimeSource* data,
 KIO_EXPORT bool KIO::isClipboardEmpty()
 {
 #ifndef QT_NO_MIMECLIPBOARD
-  TQMimeSource *data = TQApplication::clipboard()->data();
+  TQMimeSource *data = TQApplication::tqclipboard()->data();
   if ( data->provides( "text/uri-list" ) && data->encodedData( "text/uri-list" ).size() > 0 )
     return false;
 #else
   // Happens with some versions of Qt Embedded... :/
   // Guess.
-  TQString data = TQApplication::clipboard()->text();
+  TQString data = TQApplication::tqclipboard()->text();
   if(data.contains("://"))
 	  return false;
 #endif
@@ -215,7 +215,7 @@ KIO_EXPORT KIO::Job *KIO::pasteClipboard( const KURL& dest_url, bool move )
   }
 
 #ifndef QT_NO_MIMECLIPBOARD
-  TQMimeSource *data = TQApplication::clipboard()->data();
+  TQMimeSource *data = TQApplication::tqclipboard()->data();
 
   // First check for URLs.
   KURL::List urls;
@@ -233,14 +233,14 @@ KIO_EXPORT KIO::Job *KIO::pasteClipboard( const KURL& dest_url, bool move )
 
     // If moving, erase the clipboard contents, the original files don't exist anymore
     if ( move )
-      TQApplication::clipboard()->clear();
+      TQApplication::tqclipboard()->clear();
     return res;
   }
   return pasteMimeSource( data, dest_url, TQString::null, 0 /*TODO parent widget*/, true /*clipboard*/ );
 #else
   TQByteArray ba;
   TQTextStream txtStream( ba, IO_WriteOnly );
-  TQStringList data = TQStringList::split("\n", TQApplication::clipboard()->text());
+  TQStringList data = TQStringList::split("\n", TQApplication::tqclipboard()->text());
   KURL::List urls;
   KURLDrag::decode(data, urls);
   TQStringList::Iterator end(data.end());
@@ -290,7 +290,7 @@ KIO_EXPORT KIO::CopyJob* KIO::pasteDataAsync( const KURL& u, const TQByteArray& 
 
 KIO_EXPORT TQString KIO::pasteActionText()
 {
-    TQMimeSource *data = TQApplication::clipboard()->data();
+    TQMimeSource *data = TQApplication::tqclipboard()->data();
     KURL::List urls;
     if ( KURLDrag::canDecode( data ) && KURLDrag::decode( data, urls ) ) {
         if ( urls.isEmpty() )

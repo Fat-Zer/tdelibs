@@ -13,7 +13,7 @@
 #include <tqlabel.h>
 #include <tqlistbox.h>
 #include <tqpushbutton.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqvariant.h>
 #include <tqtooltip.h>
 #include <tqwhatsthis.h>

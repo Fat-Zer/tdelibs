@@ -441,7 +441,7 @@ public:
     void layoutIfNeeded() { if (needsLayout()) layout(); }
 
     // used for element state updates that can not be fixed with a
-    // repaint and do not need a relayout
+    // tqrepaint and do not need a relayout
     virtual void updateFromElement() {}
 
     // Called immediately after render-object is inserted
@@ -681,8 +681,8 @@ public:
     // Used by collapsed border tables.
     virtual void collectBorders(TQValueList<CollapsedBorderValue>& borderStyles);
 
-    // force a complete repaint
-    virtual void repaint(Priority p = NormalPriority) { if(m_parent) m_parent->repaint(p); }
+    // force a complete tqrepaint
+    virtual void tqrepaint(Priority p = NormalPriority) { if(m_parent) m_parent->tqrepaint(p); }
     virtual void repaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
 
     virtual unsigned int length() const { return 1; }
@@ -747,7 +747,7 @@ public:
     virtual int leftmostPosition(bool /*includeOverflowInterior*/=true, bool /*includeSelf*/=true) const { return 0; }
     virtual int highestPosition(bool /*includeOverflowInterior*/=true, bool /*includeSelf*/=true) const { return 0; }
 
-    // recursively invalidate current layout
+    // recursively tqinvalidate current layout
     // unused: void invalidateLayout();
 
     virtual void calcVerticalMargins() {}

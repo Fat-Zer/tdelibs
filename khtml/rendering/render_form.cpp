@@ -155,8 +155,8 @@ void RenderCheckBox::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQCheckBox *cb = static_cast<TQCheckBox *>( m_widget );
-    TQSize s( cb->tqstyle().pixelMetric( TQStyle::PM_IndicatorWidth ),
-             cb->tqstyle().pixelMetric( TQStyle::PM_IndicatorHeight ) );
+    TQSize s( cb->tqstyle().tqpixelMetric( TQStyle::PM_IndicatorWidth ),
+             cb->tqstyle().tqpixelMetric( TQStyle::PM_IndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -207,8 +207,8 @@ void RenderRadioButton::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQRadioButton *rb = static_cast<TQRadioButton *>( m_widget );
-    TQSize s( rb->tqstyle().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
-             rb->tqstyle().pixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
+    TQSize s( rb->tqstyle().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
+             rb->tqstyle().tqpixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -260,17 +260,17 @@ void RenderSubmitButton::calcMinMaxWidth()
 
     bool empty = raw.isEmpty();
     if ( empty )
-        raw = TQString::fromLatin1("X");
+        raw = TQString::tqfromLatin1("X");
     TQFontMetrics fm = pb->fontMetrics();
     TQSize ts = fm.size( ShowPrefix, raw);
     TQSize s(pb->tqstyle().tqsizeFromContents( TQStyle::CT_PushButton, pb, ts )
             .expandedTo(TQApplication::globalStrut()));
-    int margin = pb->tqstyle().pixelMetric( TQStyle::PM_ButtonMargin, pb) +
-		 pb->tqstyle().pixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
+    int margin = pb->tqstyle().tqpixelMetric( TQStyle::PM_ButtonMargin, pb) +
+		 pb->tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
     int w = ts.width() + margin;
     int h = s.height();
     if (pb->isDefault() || pb->autoDefault()) {
-	int dbw = pb->tqstyle().pixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
+	int dbw = pb->tqstyle().tqpixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
 	w += dbw;
     }
 
@@ -1018,7 +1018,7 @@ void RenderSelect::updateFromElement()
                     DOMString label = optElem->getAttribute(ATTR_LABEL);
                     if (!label.isEmpty())
                         text = label.string();
-                    text = TQString::fromLatin1("    ")+text;
+                    text = TQString::tqfromLatin1("    ")+text;
                 }
 
                 if(m_useListBox) {
@@ -1406,7 +1406,7 @@ void TextAreaWidget::slotReplaceNext()
     }
 
     if (!(m_replace->options() & KReplaceDialog::PromptOnReplace)) {
-        viewport()->setUpdatesEnabled(false);
+        viewport()->tqsetUpdatesEnabled(false);
     }
 
     KFind::Result res = KFind::NoMatch;
@@ -1449,7 +1449,7 @@ void TextAreaWidget::slotReplaceNext()
     }
 
     if (!(m_replace->options() & KReplaceDialog::PromptOnReplace)) {
-        viewport()->setUpdatesEnabled(true);
+        viewport()->tqsetUpdatesEnabled(true);
         repaintChanged();
     }
 
@@ -1738,13 +1738,13 @@ TQString RenderTextArea::text()
             paragraphText = paragraphText.left(pl); //Snip invented space.
             for (int l = 0; l < pl; ++l) {
                 if (lindex != w->lineOfChar(p, l)) {
-                    paragraphText.insert(l+ll++, TQString::fromLatin1("\n"));
+                    paragraphText.insert(l+ll++, TQString::tqfromLatin1("\n"));
                     lindex = w->lineOfChar(p, l);
                 }
             }
             txt += paragraphText;
             if (p < w->paragraphs() - 1)
-                txt += TQString::fromLatin1("\n");
+                txt += TQString::tqfromLatin1("\n");
         }
     }
     else

@@ -32,7 +32,7 @@
 #include <tqdir.h>
 #include <tqfile.h>
 #include <tqmap.h>
-#include <stylesheet.h>
+#include <tqstylesheet.h>
 
 #include <kdebug.h>
 #include <kfilemetainfo.h>
@@ -1041,7 +1041,7 @@ TQString KFileItem::parsePermissions(mode_t perm) const
     if (hasExtendedACL())
         p[10]='+';
 
-    return TQString::fromLatin1(p);
+    return TQString::tqfromLatin1(p);
 }
 
 // check if we need to cache this

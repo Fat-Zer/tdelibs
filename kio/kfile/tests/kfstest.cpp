@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <tqdir.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqstringlist.h>
 #include <tqwidget.h>
 
@@ -51,11 +51,11 @@ int main(int argc, char **argv)
     TQString argv1;
     TQString startDir;
     if (argc > 1)
-	argv1 = TQString::fromLatin1(argv[1]);
+	argv1 = TQString::tqfromLatin1(argv[1]);
     if ( argc > 2 )
-        startDir = TQString::fromLatin1( argv[2]);
+        startDir = TQString::tqfromLatin1( argv[2]);
 
-    if (argv1 == TQString::fromLatin1("diroperator")) {
+    if (argv1 == TQString::tqfromLatin1("diroperator")) {
 	KDirOperator *op = new KDirOperator(startDir, 0, "operator");
 	op->setViewConfig( KGlobal::config(), "TestGroup" );
 	op->setView(KFile::Simple);
@@ -64,24 +64,24 @@ int main(int argc, char **argv)
 	a.exec();
     }
 
-    else if (argv1 == TQString::fromLatin1("justone")) {
+    else if (argv1 == TQString::tqfromLatin1("justone")) {
         TQString name = KFileDialog::getOpenFileName(startDir);
         qDebug("filename=%s",name.latin1());
     }
 
-    else if (argv1 == TQString::fromLatin1("existingURL")) {
+    else if (argv1 == TQString::tqfromLatin1("existingURL")) {
         KURL url = KFileDialog::getExistingURL();
         qDebug("URL=%s",url.url().latin1());
         name1 = url.url();
     }
 
-    else if (argv1 == TQString::fromLatin1("preview")) {
+    else if (argv1 == TQString::tqfromLatin1("preview")) {
         KURL u =  KFileDialog::getImageOpenURL();
         qDebug("filename=%s", u.url().latin1());
     }
 
-    else if (argv1 == TQString::fromLatin1("preselect")) {
-        names = KFileDialog::getOpenFileNames(TQString::fromLatin1("/etc/passwd"));
+    else if (argv1 == TQString::tqfromLatin1("preselect")) {
+        names = KFileDialog::getOpenFileNames(TQString::tqfromLatin1("/etc/passwd"));
         TQStringList::Iterator it = names.begin();
         while ( it != names.end() ) {
             qDebug("selected file: %s", (*it).latin1());
@@ -89,10 +89,10 @@ int main(int argc, char **argv)
         }
     }
 
-    else if (argv1 == TQString::fromLatin1("dirs"))
+    else if (argv1 == TQString::tqfromLatin1("dirs"))
 	name1 = KFileDialog::getExistingDirectory();
 
-    else if (argv1 == TQString::fromLatin1("heap")) {
+    else if (argv1 == TQString::tqfromLatin1("heap")) {
 	KFileDialog *dlg = new KFileDialog( startDir, TQString::null, 0L,
 					    "file dialog", true );
 	dlg->setMode( KFile::File);
@@ -104,33 +104,33 @@ int main(int argc, char **argv)
     if ( urlBar )
     {
         urlBar->insertDynamicItem( KURL("ftp://ftp.kde.org"), 
-                                   TQString::fromLatin1("KDE FTP Server") );
+                                   TQString::tqfromLatin1("KDE FTP Server") );
     }
 
 	if ( dlg->exec() == KDialog::Accepted )
 	    name1 = dlg->selectedURL().url();
     }
 
-    else if ( argv1 == TQString::fromLatin1("eventloop") )
+    else if ( argv1 == TQString::tqfromLatin1("eventloop") )
     {
         KFDTest *test = new KFDTest( startDir );
         return a.exec();
     }
 
-    else if (argv1 == TQString::fromLatin1("save")) {
+    else if (argv1 == TQString::tqfromLatin1("save")) {
         KURL u = KFileDialog::getSaveURL();
-//        TQString(TQDir::homeDirPath() + TQString::fromLatin1("/testfile")),
+//        TQString(TQDir::homeDirPath() + TQString::tqfromLatin1("/testfile")),
 //        TQString::null, 0L);
         name1 = u.url();
     }
 
-    else if (argv1 == TQString::fromLatin1("icon")) {
+    else if (argv1 == TQString::tqfromLatin1("icon")) {
     	KIconDialog dlg;
 	TQString icon = dlg.selectIcon();
 	kdDebug() << icon << endl;
     }
 
-//     else if ( argv1 == TQString::fromLatin1("dirselect") ) {
+//     else if ( argv1 == TQString::tqfromLatin1("dirselect") ) {
 //         KURL url;
 //         url.setPath( "/" );
 //         KURL selected = KDirSelectDialog::selectDirectory( url );
@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 
     else {
 	KFileDialog dlg(startDir,
-			TQString::fromLatin1("*|All Files\n"
+			TQString::tqfromLatin1("*|All Files\n"
 					    "*.lo *.o *.la|All libtool Files"),
 			0, 0, true);
 //    dlg.setFilter( "*.tdevelop" );
@@ -177,7 +177,7 @@ int main(int argc, char **argv)
     }
 
     if (!(name1.isNull()))
-	KMessageBox::information(0, TQString::fromLatin1("You selected the file " ) + name1,
-				 TQString::fromLatin1("Your Choice"));
+	KMessageBox::information(0, TQString::tqfromLatin1("You selected the file " ) + name1,
+				 TQString::tqfromLatin1("Your Choice"));
     return 0;
 }

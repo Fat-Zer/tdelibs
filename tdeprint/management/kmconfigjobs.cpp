@@ -20,7 +20,7 @@
 #include "kmconfigjobs.h"
 
 #include <tqgroupbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include <knuminput.h>
 #include <klocale.h>

@@ -128,7 +128,7 @@ KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, c
 	if ( domDocument().documentElement().isNull() )
 	{
 
-		TQString completeDescription = TQString::fromLatin1( guiDescription )
+		TQString completeDescription = TQString::tqfromLatin1( guiDescription )
 		                              .arg( actionListName );
 
 		setXML( completeDescription, false /*merge*/ );
@@ -174,7 +174,7 @@ KMDIGUIClient::~KMDIGUIClient()
 
 	//     actionCollection()->writeShortcutSettings( "KMDI Shortcuts", kapp->config() );
 	for ( uint i = 0;i < m_toolViewActions.count();i++ )
-		disconnect( m_toolViewActions.at( i ), 0, this, 0 );
+		disconnect( m_toolViewActions.tqat( i ), 0, this, 0 );
 
 	m_toolViewActions.setAutoDelete( false );
 	m_toolViewActions.clear();
@@ -230,7 +230,7 @@ void KMDIGUIClient::setupActions()
 	TQPtrList<KAction> addList;
 	if ( m_toolViewActions.count() < 3 )
 		for ( uint i = 0;i < m_toolViewActions.count();i++ )
-			addList.append( m_toolViewActions.at( i ) );
+			addList.append( m_toolViewActions.tqat( i ) );
 	else
 		addList.append( m_toolMenu );
 	if ( m_mdiMode == KMdi::IDEAlMode )

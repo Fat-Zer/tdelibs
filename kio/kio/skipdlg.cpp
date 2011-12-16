@@ -23,7 +23,7 @@
 
 #include <tqmessagebox.h>
 #include <tqwidget.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 
 #include <kapplication.h>

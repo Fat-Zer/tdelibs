@@ -41,7 +41,7 @@ KMWIpp::KMWIpp(TQWidget *parent, const char *name)
 		     "before continuing.</p>"));
 	setLabel(0,i18n("Host:"));
 	setLabel(1,i18n("Port:"));
-	setText( 1, TQString::fromLatin1( "631" ) );
+	setText( 1, TQString::tqfromLatin1( "631" ) );
 }
 
 bool KMWIpp::isValid(TQString& msg)

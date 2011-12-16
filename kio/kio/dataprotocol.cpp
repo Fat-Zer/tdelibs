@@ -26,7 +26,7 @@
 #include <tqcstring.h>
 #include <tqstring.h>
 #include <tqstringlist.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 #ifdef DATAKIOSLAVE
 #  include <kinstance.h>
@@ -121,7 +121,7 @@ inline TQString extract(const TQString &buf, int &pos, TQChar c1,
 		TQChar c2 = '\0', TQChar c3 = '\0') {
   int oldpos = pos;
   pos = find(buf,oldpos,c1,c2,c3);
-  return TQString(buf.unicode() + oldpos, pos - oldpos);
+  return TQString(buf.tqunicode() + oldpos, pos - oldpos);
 }
 
 /** ignores all whitespaces
@@ -186,7 +186,7 @@ static void parseDataHeader(const KURL &url, DataHeader &header_info) {
   header_info.is_base64 = false;
 
   // decode url and save it
-  TQString &raw_url = header_info.url = TQString::fromLatin1("data:") + url.path();
+  TQString &raw_url = header_info.url = TQString::tqfromLatin1("data:") + url.path();
   int raw_url_len = (int)raw_url.length();
 
   // jump over scheme part (must be "data:", we don't even check that)

@@ -186,7 +186,7 @@ void KWindowListMenu::init()
                 }
 
                 // Avoid creating unwanted accelerators.
-                itemText.replace('&', TQString::fromLatin1("&&"));
+                itemText.replace('&', TQString::tqfromLatin1("&&"));
                 insertItem( pm, itemText, i);
                 map.insert(i, info->win());
                 if (info->win() == active_window)

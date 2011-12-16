@@ -38,7 +38,7 @@
 #include <assert.h>
 
 #include <tqcursor.h>
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqobjectlist.h>
 #include <tqpopupmenu.h>
 #include <tqmenubar.h>
@@ -57,9 +57,9 @@
 
 #include <tqtoolbutton.h>
 #include <tqdockarea.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtimer.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqstring.h>
 #include <tqmap.h>
 #include <tqvaluelist.h>
@@ -701,7 +701,7 @@ void KMdiMainFrm::detachWindow( KMdiChildView *pWnd, bool bShow )
 #ifdef Q_WS_X11
 		if ( mdiMode() == KMdi::ToplevelMode )
 		{
-			XSetTransientForHint( qt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
+			XSetTransientForHint( qt_xdisplay(), pWnd->winId(), tqtopLevelWidget() ->winId() );
 		}
 #endif
 
@@ -711,7 +711,7 @@ void KMdiMainFrm::detachWindow( KMdiChildView *pWnd, bool bShow )
 #ifdef Q_WS_X11
 	if ( mdiMode() == KMdi::ToplevelMode )
 	{
-		XSetTransientForHint( qt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
+		XSetTransientForHint( qt_xdisplay(), pWnd->winId(), tqtopLevelWidget() ->winId() );
 	}
 #endif
 
@@ -1659,8 +1659,8 @@ void KMdiMainFrm::finishTabPageMode()
 			if ( pView->isToolView() )
 				continue;
 			kdDebug(760) << "KMdiMainFrm::finishTabPageMode: in loop" << endl;
-			TQSize mins = pView->minimumSize();
-			TQSize maxs = pView->maximumSize();
+			TQSize mins = pView->tqminimumSize();
+			TQSize maxs = pView->tqmaximumSize();
 			TQSize sz = pView->size();
 			TQWidget* pParent = pView->parentWidget();
 			TQPoint p( pParent->mapToGlobal( pParent->pos() ) - pParent->pos() + m_undockPositioningOffset );
@@ -2075,8 +2075,8 @@ void KMdiMainFrm::finishIDEAlMode( bool full )
 			KMdiChildView* pView = it.current();
 			if ( pView->isToolView() )
 				continue;
-			TQSize mins = pView->minimumSize();
-			TQSize maxs = pView->maximumSize();
+			TQSize mins = pView->tqminimumSize();
+			TQSize maxs = pView->tqmaximumSize();
 			TQSize sz = pView->size();
 			TQWidget* pParent = pView->parentWidget();
 			TQPoint p( pParent->mapToGlobal( pParent->pos() ) - pParent->pos() + m_undockPositioningOffset );
@@ -2733,7 +2733,7 @@ void KMdiMainFrm::windowMenuItemActivated( int id )
 	if ( id < 100 )
 		return ;
 	id -= 100;
-	KMdiChildView *pView = m_pDocumentViews->at( id );
+	KMdiChildView *pView = m_pDocumentViews->tqat( id );
 	if ( !pView )
 		return ;
 	if ( pView->isMinimized() )
@@ -2759,7 +2759,7 @@ void KMdiMainFrm::dockMenuItemActivated( int id )
 	if ( id < 100 )
 		return ;
 	id -= 100;
-	KMdiChildView *pView = m_pDocumentViews->at( id );
+	KMdiChildView *pView = m_pDocumentViews->tqat( id );
 	if ( !pView )
 		return ;
 	if ( pView->isMinimized() )

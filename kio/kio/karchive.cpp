@@ -90,7 +90,7 @@ KArchive::~KArchive()
 
 bool KArchive::open( int mode )
 {
-    if ( m_dev && !m_dev->open( mode ) )
+    if ( m_dev && !m_dev->tqopen( mode ) )
         return false;
 
     if ( m_open )
@@ -375,7 +375,7 @@ KArchiveDirectory * KArchive::rootDir()
         TQString username = pw ? TQFile::decodeName(pw->pw_name) : TQString::number( getuid() );
         TQString groupname = grp ? TQFile::decodeName(grp->gr_name) : TQString::number( getgid() );
 
-        d->rootDir = new KArchiveDirectory( this, TQString::fromLatin1("/"), (int)(0777 + S_IFDIR), 0, username, groupname, TQString::null );
+        d->rootDir = new KArchiveDirectory( this, TQString::tqfromLatin1("/"), (int)(0777 + S_IFDIR), 0, username, groupname, TQString::null );
     }
     return d->rootDir;
 }
@@ -491,7 +491,7 @@ int KArchiveFile::size() const
 
 TQByteArray KArchiveFile::data() const
 {
-  archive()->device()->at( m_pos );
+  archive()->device()->tqat( m_pos );
 
   // Read content
   TQByteArray arr( m_size );

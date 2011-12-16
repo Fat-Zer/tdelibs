@@ -1259,7 +1259,7 @@ void KateCodeFoldingTree::cleanupUnneededNodes(unsigned int line)
 
   for (int i=0; i<(int)markedForDeleting.count(); i++)
   {
-    KateCodeFoldingNode *node = markedForDeleting.at(i);
+    KateCodeFoldingNode *node = markedForDeleting.tqat(i);
     if (node->deleteOpening)
       kdDebug(13000)<<"DELETE OPENING SET"<<endl;
     if (node->deleteEnding)
@@ -1335,7 +1335,7 @@ void KateCodeFoldingTree::toggleRegionVisibility(unsigned int line)
   findAllNodesOpenedOrClosedAt(line);
   for (int i=0; i<(int)nodesForLine.count(); i++)
   {
-    KateCodeFoldingNode *node=nodesForLine.at(i);
+    KateCodeFoldingNode *node=nodesForLine.tqat(i);
     if ( (!node->startLineValid) || (getStartLine(node) != line) )
     {
       nodesForLine.remove(i);
@@ -1346,10 +1346,10 @@ void KateCodeFoldingTree::toggleRegionVisibility(unsigned int line)
   if (nodesForLine.isEmpty())
     return;
 
-  nodesForLine.at(0)->visible = !nodesForLine.at(0)->visible;
+  nodesForLine.tqat(0)->visible = !nodesForLine.tqat(0)->visible;
 
-  if (!nodesForLine.at(0)->visible)
-    addHiddenLineBlock(nodesForLine.at(0),line);
+  if (!nodesForLine.tqat(0)->visible)
+    addHiddenLineBlock(nodesForLine.tqat(0),line);
   else
   {
     for (TQValueList<KateHiddenLineBlock>::Iterator it=hiddenLines.begin(); it!=hiddenLines.end();++it)
@@ -1359,7 +1359,7 @@ void KateCodeFoldingTree::toggleRegionVisibility(unsigned int line)
         break;
       }
 
-    updateHiddenSubNodes(nodesForLine.at(0));
+    updateHiddenSubNodes(nodesForLine.tqat(0));
   }
 
   emit regionVisibilityChangedAt(line);

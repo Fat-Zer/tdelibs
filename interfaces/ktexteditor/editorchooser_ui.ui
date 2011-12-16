@@ -31,7 +31,7 @@
                     <property name="name">
                         <cstring>TextLabel1</cstring>
                     </property>
-                    <property name="minimumSize">
+                    <property name="tqminimumSize">
                         <size>
                             <width>460</width>
                             <height>0</height>
@@ -40,7 +40,7 @@
                     <property name="text">
                         <string>Please choose the default text editing component that you wish to use in this application. If you choose &lt;B&gt;System Default&lt;/B&gt;, the application will honor your changes in the Control Center. All other choices will override that setting.</string>
                     </property>
-                    <property name="alignment">
+                    <property name="tqalignment">
                         <set>WordBreak|AlignVCenter|AlignLeft</set>
                     </property>
                 </widget>

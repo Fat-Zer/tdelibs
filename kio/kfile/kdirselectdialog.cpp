@@ -18,7 +18,7 @@
 */
 
 #include <tqdir.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpopupmenu.h>
 #include <tqstringlist.h>
 #include <tqvaluestack.h>
@@ -248,7 +248,7 @@ void KDirSelectDialog::slotNextDirToList( KFileTreeViewItem *item )
 {
     // scroll to make item the topmost item
     view()->ensureItemVisible( item );
-    TQRect r = view()->itemRect( item );
+    TQRect r = view()->tqitemRect( item );
     if ( r.isValid() )
     {
         int x, y;
@@ -391,7 +391,7 @@ void KDirSelectDialog::slotComboTextChanged( const TQString& text )
     {
         item->setSelected( false );
         // 2002/12/27, deselected item is not repainted, so force it
-        item->repaint();
+        item->tqrepaint();
     }
 }
 
@@ -426,7 +426,7 @@ void KDirSelectDialog::slotMkdir()
     {
         folderurl.addPath( *it );
         exists = KIO::NetAccess::exists( folderurl, false, 0 );
-        writeOk = !exists && KIO::NetAccess::mkdir( folderurl, topLevelWidget() );
+        writeOk = !exists && KIO::NetAccess::mkdir( folderurl, tqtopLevelWidget() );
     }
 
     if ( exists ) // url was already existant

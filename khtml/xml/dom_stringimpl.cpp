@@ -61,8 +61,8 @@ bool DOMStringImpl::containsOnlyWhitespace() const
 
     for (uint i = 0; i < l; i++) {
         TQChar c = s[i];
-        if (c.unicode() <= 0x7F) {
-            if (c.unicode() > ' ')
+        if (c.tqunicode() <= 0x7F) {
+            if (c.tqunicode() > ' ')
                 return false;
         } else {
             if (c.direction() != TQChar::DirWS)
@@ -294,10 +294,10 @@ khtml::Length* DOMStringImpl::toCoordsArray(int& len) const
     int pos2;
 
     while((pos2 = str.find(' ', pos)) != -1) {
-        r[i++] = parseLength((TQChar *) str.unicode()+pos, pos2-pos);
+        r[i++] = parseLength((TQChar *) str.tqunicode()+pos, pos2-pos);
         pos = pos2+1;
     }
-    r[i] = parseLength((TQChar *) str.unicode()+pos, str.length()-pos);
+    r[i] = parseLength((TQChar *) str.tqunicode()+pos, str.length()-pos);
 
     return r;
 }
@@ -320,13 +320,13 @@ khtml::Length* DOMStringImpl::toLengthArray(int& len) const
     int pos2;
 
     while((pos2 = str.find(',', pos)) != -1) {
-        r[i++] = parseLength((TQChar *) str.unicode()+pos, pos2-pos);
+        r[i++] = parseLength((TQChar *) str.tqunicode()+pos, pos2-pos);
         pos = pos2+1;
     }
 
     /* IE Quirk: If the last comma is the last char skip it and reduce len by one */
     if (str.length()-pos > 0)
-        r[i] = parseLength((TQChar *) str.unicode()+pos, str.length()-pos);
+        r[i] = parseLength((TQChar *) str.tqunicode()+pos, str.length()-pos);
     else
         len--;
 

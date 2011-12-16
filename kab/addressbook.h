@@ -127,7 +127,7 @@ class CategoriesMap : public TQMap<int, TQString>
  *  keys). Of course, in different files a key might be used twice. <BR>
  *  The keys are objects of the type KabKey and define the section in the 
  *  addressbook database where the entry is stored (see QConfigDB
- *  reference). Keys invalidate on file changes, so keep track of the
+ *  reference). Keys tqinvalidate on file changes, so keep track of the
  *  signal ::changed. <BR>
  *  kab watches file changes. If the opened file changes on disk, it is
  *  automatically reloaded and ::changed() is emitted. 

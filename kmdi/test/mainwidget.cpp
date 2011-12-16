@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqmenubar.h>
 #include <tqtoolbar.h>
 #include <tqmultilineedit.h>

@@ -29,7 +29,7 @@
 #include "kmconfigfonts.h"
 #include "kmconfigjobs.h"
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kconfig.h>

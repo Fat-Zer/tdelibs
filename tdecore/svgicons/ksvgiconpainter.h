@@ -41,7 +41,7 @@ public:
 
 	TQImage *image();
 
-	TQWMatrix *worldMatrix();
+	TQWMatrix *tqworldMatrix();
 
 	void finish();
 
@@ -61,7 +61,7 @@ public:
 	void setStrokeDashOffset(const TQString &dashOffset);
 	void setStrokeDashArray(const TQString &dashes);
 
-	void setWorldMatrix(TQWMatrix *worldMatrix);
+	void setWorldMatrix(TQWMatrix *tqworldMatrix);
 	void setClippingRect(int x, int y, int w, int h);
 
 	void drawRectangle(double x, double y, double w, double h, double rx, double ry);

@@ -7,7 +7,7 @@
  * License. See the file "COPYING" for the exact licensing terms.
  */
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqcombobox.h>
 #include <tqcheckbox.h>

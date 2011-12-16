@@ -27,7 +27,7 @@
 #include "kprocio.h"
 
 #include <kdebug.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 class KProcIOPrivate {
 public:

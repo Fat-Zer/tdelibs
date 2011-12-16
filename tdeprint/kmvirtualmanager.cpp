@@ -25,7 +25,7 @@
 
 #include <stdlib.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqdir.h>
 #include <tqfileinfo.h>
 #include <klocale.h>

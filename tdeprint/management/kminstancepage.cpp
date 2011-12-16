@@ -26,7 +26,7 @@
 #include "kprinter.h"
 #include "kmtimer.h"
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqregexp.h>
 #include <tqwhatsthis.h>
 #include <tqpushbutton.h>

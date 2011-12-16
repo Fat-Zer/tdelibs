@@ -33,7 +33,7 @@
 #include <tqpushbutton.h>
 #include <tqlabel.h>
 #include <tqdatetime.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include <tqdict.h>
 

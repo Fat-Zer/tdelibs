@@ -24,7 +24,7 @@
 #ifndef KSYNTAXHIGHLIGHTER_H
 #define KSYNTAXHIGHLIGHTER_H
 
-#include <textedit.h>
+#include <tqtextedit.h>
 #include <tqsyntaxhighlighter.h>
 #include <tqcolor.h>
 #include <tqstringlist.h>

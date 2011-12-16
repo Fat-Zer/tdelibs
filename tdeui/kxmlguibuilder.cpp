@@ -70,24 +70,24 @@ KXMLGUIBuilder::KXMLGUIBuilder( TQWidget *widget )
   d = new KXMLGUIBuilderPrivate;
   d->m_widget = widget;
 
-  d->tagMainWindow = TQString::fromLatin1( "mainwindow" );
-  d->tagMenuBar = TQString::fromLatin1( "menubar" );
-  d->tagMenu = TQString::fromLatin1( "menu" );
-  d->tagToolBar = TQString::fromLatin1( "toolbar" );
-  d->tagStatusBar = TQString::fromLatin1( "statusbar" );
+  d->tagMainWindow = TQString::tqfromLatin1( "mainwindow" );
+  d->tagMenuBar = TQString::tqfromLatin1( "menubar" );
+  d->tagMenu = TQString::tqfromLatin1( "menu" );
+  d->tagToolBar = TQString::tqfromLatin1( "toolbar" );
+  d->tagStatusBar = TQString::tqfromLatin1( "statusbar" );
 
-  d->tagSeparator = TQString::fromLatin1( "separator" );
-  d->tagTearOffHandle = TQString::fromLatin1( "tearoffhandle" );
-  d->tagMenuTitle = TQString::fromLatin1( "title" );
+  d->tagSeparator = TQString::tqfromLatin1( "separator" );
+  d->tagTearOffHandle = TQString::tqfromLatin1( "tearoffhandle" );
+  d->tagMenuTitle = TQString::tqfromLatin1( "title" );
 
-  d->attrName = TQString::fromLatin1( "name" );
-  d->attrLineSeparator = TQString::fromLatin1( "lineseparator" );
+  d->attrName = TQString::tqfromLatin1( "name" );
+  d->attrLineSeparator = TQString::tqfromLatin1( "lineseparator" );
 
-  d->attrText1 = TQString::fromLatin1( "text" );
-  d->attrText2 = TQString::fromLatin1( "Text" );
-  d->attrContext = TQString::fromLatin1( "context" );
+  d->attrText1 = TQString::tqfromLatin1( "text" );
+  d->attrText2 = TQString::tqfromLatin1( "Text" );
+  d->attrContext = TQString::tqfromLatin1( "context" );
 
-  d->attrIcon = TQString::fromLatin1( "icon" );
+  d->attrIcon = TQString::tqfromLatin1( "icon" );
 
   d->m_instance = 0;
   d->m_client = 0;
@@ -332,7 +332,7 @@ int KXMLGUIBuilder::createCustomElement( TQWidget *parent, int index, const TQDo
         TQDomAttr attr = attributes.item( i ).toAttr();
 
         if ( attr.name().lower() == d->attrLineSeparator &&
-             attr.value().lower() == TQString::fromLatin1("false") )
+             attr.value().lower() == TQString::tqfromLatin1("false") )
         {
           isLineSep = false;
           break;

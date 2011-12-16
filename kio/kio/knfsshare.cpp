@@ -18,7 +18,7 @@
 
 #include <tqdict.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 #include <kdirwatch.h>
 #include <kstaticdeleter.h>

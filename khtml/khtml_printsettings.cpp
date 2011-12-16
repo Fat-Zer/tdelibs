@@ -21,7 +21,7 @@
 
 #include <klocale.h>
 #include <tqcheckbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 
 KHTMLPrintSettings::KHTMLPrintSettings(TQWidget *parent, const char *name)

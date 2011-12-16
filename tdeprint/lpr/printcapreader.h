@@ -21,7 +21,7 @@
 #define PRINTCAPREADER_H
 
 #include <tqstring.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 
 class TQFile;
 class PrintcapEntry;

@@ -24,7 +24,7 @@
 #include "kmmanager.h"
 
 #include <klocale.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
 #include <tqheader.h>

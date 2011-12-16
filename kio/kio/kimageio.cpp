@@ -100,18 +100,18 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
    {
       if (mLib.isEmpty())
       {
-         iio->seStatus(1); // Error
+         iio->setqStatus(1); // Error
          return;
       }
       TQString libpath = KLibLoader::findLibrary(mLib.ascii());
       if ( libpath.isEmpty())
       {
-         iio->seStatus(1); // Error
+         iio->setqStatus(1); // Error
          return;
       }
       lt_dlhandle libhandle = lt_dlopen( TQFile::encodeName(libpath) );
       if (libhandle == 0) {
-         iio->seStatus(1); // error
+         iio->setqStatus(1); // error
          kdWarning() << "KImageIOFormat::callLibFunc: couldn't dlopen " << mLib << "(" << lt_dlerror() << ")" << endl;
          return;
       }
@@ -123,7 +123,7 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
          lt_ptr func = lt_dlsym(libhandle, funcName.ascii());
 
          if (func == NULL) {
-            iio->seStatus(1); // error
+            iio->setqStatus(1); // error
             kdWarning() << "couln't find " << funcName << " (" << lt_dlerror() << ")" << endl;
          }
          mReadFunc = (void (*)(TQImageIO *))func;
@@ -134,7 +134,7 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
          lt_ptr func = lt_dlsym(libhandle, funcName.ascii());
 
          if (func == NULL) {
-            iio->seStatus(1); // error
+            iio->setqStatus(1); // error
             kdWarning() << "couln't find " << funcName << " (" << lt_dlerror() << ")" << endl;
          }
          mWriteFunc = (void (*)(TQImageIO *))func;
@@ -145,12 +145,12 @@ KImageIOFormat::callLibFunc( bool read, TQImageIO *iio)
       if (mReadFunc)
          mReadFunc(iio);
       else
-         iio->seStatus(1); // Error
+         iio->setqStatus(1); // Error
    else
       if (mWriteFunc)
          mWriteFunc(iio);
       else
-         iio->seStatus(1); // Error
+         iio->setqStatus(1); // Error
 }
 
 
@@ -232,7 +232,7 @@ KImageIOFactory::createPattern( KImageIO::Mode _mode)
   patterns.sort();
   patterns.prepend(allPatterns);
 
-  TQString pattern = patterns.join(TQString::fromLatin1("\n"));
+  TQString pattern = patterns.join(TQString::tqfromLatin1("\n"));
   return pattern;
 }
 
@@ -256,7 +256,7 @@ KImageIOFactory::readImage( TQImageIO *iio)
    }
    if (!format || !format->bRead)
    {
-      iio->seStatus(1); // error
+      iio->setqStatus(1); // error
       return;
    }
 
@@ -283,7 +283,7 @@ KImageIOFactory::writeImage( TQImageIO *iio)
    }
    if (!format || !format->bWrite)
    {
-      iio->seStatus(1); // error
+      iio->setqStatus(1); // error
       return;
    }
 

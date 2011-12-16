@@ -23,7 +23,7 @@
 
 #include <tqcursor.h>
 #include <tqhbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 
 #include <kaboutdata.h>

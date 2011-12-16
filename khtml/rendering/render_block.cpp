@@ -881,7 +881,7 @@ static inline bool isAnonymousWhitespace( RenderObject* o ) {
         return false;
     RenderObject *fc = o->firstChild();
     return fc && fc == o->lastChild() && fc->isText() && static_cast<RenderText *>(fc)->stringLength() == 1 &&
-           static_cast<RenderText *>(fc)->text()[0].unicode() == ' ';
+           static_cast<RenderText *>(fc)->text()[0].tqunicode() == ' ';
 }
 
 RenderObject* RenderBlock::handleCompactChild(RenderObject* child, CompactInfo& compactInfo, const MarginInfo& marginInfo, bool& handled)

@@ -201,7 +201,7 @@ public:
 		// Combine new and old matrix
 		TQWMatrix matrix = m_engine->painter()->parseTransform(transform);
 
-		TQWMatrix *current = m_engine->painter()->worldMatrix();
+		TQWMatrix *current = m_engine->painter()->tqworldMatrix();
 #ifdef USE_QT4
 printf("[FIXME] *current = matrix * *current locks up under Qt4; bypassing for now\n\r");
 #else // USE_QT4
@@ -225,9 +225,9 @@ printf("[FIXME] *current = matrix * *current locks up under Qt4; bypassing for n
 		TQPtrList<TQDomNamedNodeMap> applyList;
 		applyList.setAutoDelete(true);
 
-		TQDomNode shape = node.parentNode();
-		for(; !shape.isNull() ; shape = shape.parentNode())
-			applyList.prepend(new TQDomNamedNodeMap(shape.attributes()));
+		TQDomNode tqshape = node.parentNode();
+		for(; !tqshape.isNull() ; tqshape = tqshape.parentNode())
+			applyList.prepend(new TQDomNamedNodeMap(tqshape.attributes()));
 
 		// Apply parent attributes
 		for(TQDomNamedNodeMap *map = applyList.first(); map != 0; map = applyList.next())
@@ -628,7 +628,7 @@ bool KSVGIconEngine::load(int width, int height, const TQString &path)
 		d->width = w;
 		d->height = h;
 
-		d->painter->worldMatrix()->scale(vratiow, vratioh);
+		d->painter->tqworldMatrix()->scale(vratiow, vratioh);
 	}
 	else
 	{
@@ -637,10 +637,10 @@ bool KSVGIconEngine::load(int width, int height, const TQString &path)
 		double ratiow = width / d->width;
 		double ratioh = height / d->height;
 
-		d->painter->worldMatrix()->scale(ratiow, ratioh);
+		d->painter->tqworldMatrix()->scale(ratiow, ratioh);
 	}
 
-	TQWMatrix initialMatrix = *d->painter->worldMatrix();
+	TQWMatrix initialMatrix = *d->painter->tqworldMatrix();
 	d->helper->m_initialMatrix = initialMatrix;
 
 	// Apply transform

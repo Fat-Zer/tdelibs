@@ -24,7 +24,7 @@
 #include <tqdir.h>
 #include <tqfile.h>
 #include <tqdom.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 #include <tqguardedptr.h>
 
@@ -143,7 +143,7 @@ TQString KXMLGUIClient::localXMLFile() const
   if ( !TQDir::isRelativePath(d->m_xmlFile) )
       return TQString::null; // can't save anything here
 
-  return locateLocal( "data", TQString::fromLatin1( instance()->instanceName() + '/' ) + d->m_xmlFile );
+  return locateLocal( "data", TQString::tqfromLatin1( instance()->instanceName() + '/' ) + d->m_xmlFile );
 }
 
 
@@ -178,7 +178,7 @@ void KXMLGUIClient::setXMLFile( const TQString& _file, bool merge, bool setXMLDo
   {
     TQString doc;
 
-    TQString filter = TQString::fromLatin1( instance()->instanceName() + '/' ) + _file;
+    TQString filter = TQString::tqfromLatin1( instance()->instanceName() + '/' ) + _file;
 
     TQStringList allFiles = instance()->dirs()->findAllResources( "data", filter ) + instance()->dirs()->findAllResources( "data", _file );
 
@@ -699,7 +699,7 @@ TQString KXMLGUIClient::findMostRecentXMLFile( const TQStringList &files, TQStri
       else
       {
         TQString f = (*local).file;
-        TQString backup = f + TQString::fromLatin1( ".backup" );
+        TQString backup = f + TQString::tqfromLatin1( ".backup" );
         TQDir dir;
         dir.rename( f, backup );
       }
@@ -760,9 +760,9 @@ TQString KXMLGUIClient::findVersionNumber( const TQString &xml )
         unsigned int endpos;
         for (endpos = pos; endpos <  xml.length(); endpos++)
         {
-          if (xml[endpos].unicode() >= '0' && xml[endpos].unicode() <= '9')
+          if (xml[endpos].tqunicode() >= '0' && xml[endpos].tqunicode() <= '9')
             continue; //Number..
-          if (xml[endpos].unicode() == '"') //End of parameter
+          if (xml[endpos].tqunicode() == '"') //End of parameter
             break;
           else //This shouldn't be here..
           {

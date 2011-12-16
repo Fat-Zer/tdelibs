@@ -333,7 +333,7 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
         diamond[2] = TQPoint(x+s,   y+2*s);
         diamond[3] = TQPoint(x,     y+s);
         p->setBrush( color );
-        p->drawConvexPolygon( diamond, 0, 4 );
+        p->tqdrawConvexPolygon( diamond, 0, 4 );
         return;
     }
     case LNONE:
@@ -344,21 +344,21 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
             	if( style()->direction() == LTR) {
                     p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, m_item);
                     p->drawText(_tx + fm.width(m_item), _ty, 0, 0, Qt::AlignLeft|TQt::DontClip,
-                                TQString::fromLatin1(". "));
+                                TQString::tqfromLatin1(". "));
                 }
             	else {
-                    const TQString& punct(TQString::fromLatin1(" ."));
+                    const TQString& punct(TQString::tqfromLatin1(" ."));
                     p->drawText(_tx, _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, punct);
             	    p->drawText(_tx + fm.width(punct), _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, m_item);
                 }
             } else {
                 if (style()->direction() == LTR) {
-                    const TQString& punct(TQString::fromLatin1(". "));
+                    const TQString& punct(TQString::tqfromLatin1(". "));
                     p->drawText(_tx-offset/2, _ty, 0, 0, Qt::AlignRight|TQt::DontClip, punct);
                     p->drawText(_tx-offset/2-fm.width(punct), _ty, 0, 0, Qt::AlignRight|TQt::DontClip, m_item);
                 }
             	else {
-                    const TQString& punct(TQString::fromLatin1(" ."));
+                    const TQString& punct(TQString::tqfromLatin1(" ."));
             	    p->drawText(_tx+offset/2, _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, punct);
                     p->drawText(_tx+offset/2+fm.width(punct), _ty, 0, 0, Qt::AlignLeft|TQt::DontClip, m_item);
                 }
@@ -543,7 +543,7 @@ void RenderListMarker::calcMinMaxWidth()
     default:
         KHTMLAssert(false);
     }
-    m_markerWidth = fm.width(m_item) + fm.width(TQString::fromLatin1(". "));
+    m_markerWidth = fm.width(m_item) + fm.width(TQString::tqfromLatin1(". "));
     }
 
 end:

@@ -27,7 +27,7 @@
 #include <kmessagebox.h>
 
 #include <tqgroupbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include "resource.h"
 
@@ -66,7 +66,7 @@ SelectDialog::SelectDialog( TQPtrList<Resource> list, TQWidget *parent,
   // setup listbox
   uint counter = 0;
   for ( uint i = 0; i < list.count(); ++i ) {
-    Resource *resource = list.at( i );
+    Resource *resource = list.tqat( i );
     if ( resource && !resource->readOnly() ) {
       mResourceMap.insert( counter, resource );
       mResourceId->insertItem( resource->resourceName() );

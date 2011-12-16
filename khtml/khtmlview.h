@@ -384,8 +384,8 @@ private:
      *
      * These operations are executed unconditionally, regardless of the
      * focus, and the caret display policy.
-     * @param forceRepaint @p true to force an immediate repaint, otherwise
-     *		do a scheduled repaint
+     * @param forceRepaint @p true to force an immediate tqrepaint, otherwise
+     *		do a scheduled tqrepaint
      */
     void showCaret(bool forceRepaint = false);
     /** makes the caret invisible, but does not influence the frequency timer.

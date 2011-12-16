@@ -49,7 +49,7 @@ public:
    * 0 is specified.
    * @return a KCalendarSystem object
    */
-  static KCalendarSystem *create (const TQString & calType = TQString::fromLatin1("gregorian"),
+  static KCalendarSystem *create (const TQString & calType = TQString::tqfromLatin1("gregorian"),
                                   const KLocale * locale = 0);
 
   /**

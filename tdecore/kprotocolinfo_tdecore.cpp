@@ -392,7 +392,7 @@ TQString KProtocolInfo::icon( const TQString& _protocol )
 {
   KProtocolInfo::Ptr prot = KProtocolInfoFactory::self()->findProtocol(_protocol);
   if ( !prot )
-    return TQString::fromLatin1("unknown");
+    return TQString::tqfromLatin1("unknown");
 
   return prot->m_icon;
 }

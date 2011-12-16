@@ -56,7 +56,7 @@ void PrintcapReader::unputLine(const TQString& s)
 
 PrintcapEntry* PrintcapReader::nextEntry()
 {
-    if (!m_stream.device())
+    if (!m_stream.tqdevice())
         return NULL;
 
     TQString line, comment, name, fields, buf;

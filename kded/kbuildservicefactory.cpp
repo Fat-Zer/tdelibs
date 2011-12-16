@@ -113,32 +113,32 @@ KBuildServiceFactory::save(TQDataStream &str)
 {
    KSycocaFactory::save(str);
 
-   m_nameDictOffset = str.device()->at();
+   m_nameDictOffset = str.tqdevice()->tqat();
    m_nameDict->save(str);
 
-   m_relNameDictOffset = str.device()->at();
+   m_relNameDictOffset = str.tqdevice()->tqat();
    m_relNameDict->save(str);
 
    saveOfferList(str);
    saveInitList(str);
 
-   m_menuIdDictOffset = str.device()->at();
+   m_menuIdDictOffset = str.tqdevice()->tqat();
    m_menuIdDict->save(str);
 
-   int endOfFactoryData = str.device()->at();
+   int endOfFactoryData = str.tqdevice()->tqat();
 
    // Update header (pass #3)
    saveHeader(str);
 
 
    // Seek to end.
-   str.device()->at(endOfFactoryData);
+   str.tqdevice()->tqat(endOfFactoryData);
 }
 
 void
 KBuildServiceFactory::saveOfferList(TQDataStream &str)
 {
-   m_offerListOffset = str.device()->at();
+   m_offerListOffset = str.tqdevice()->tqat();
 
    bool isNumber;
    for(TQDictIterator<KSycocaEntry::Ptr> itserv ( *m_entryDict );
@@ -201,7 +201,7 @@ KBuildServiceFactory::saveOfferList(TQDataStream &str)
 void
 KBuildServiceFactory::saveInitList(TQDataStream &str)
 {
-   m_initListOffset = str.device()->at();
+   m_initListOffset = str.tqdevice()->tqat();
 
    KService::List initList;
 

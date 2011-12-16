@@ -39,11 +39,11 @@
 #include <kstdaction.h>
 #include <kstringhandler.h>
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqfile.h>
 #include <tqheader.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlineedit.h>
 #include <tqlistview.h>
 #include <tqpushbutton.h>
@@ -403,9 +403,9 @@ void RMB::slotRMBActionCopyLocation( int val )
 
   if ( !bookmark.isGroup() )
   {
-    kapp->clipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
+    kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
                                 TQClipboard::Selection );
-    kapp->clipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
+    kapp->tqclipboard()->setData( KBookmarkDrag::newDrag(bookmark, 0),
                                 TQClipboard::Clipboard );
   }
 }

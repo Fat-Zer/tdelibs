@@ -21,7 +21,7 @@
 
 #include <tqtable.h>
 #include <tqheader.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqregexp.h>
 #include <tqwhatsthis.h>

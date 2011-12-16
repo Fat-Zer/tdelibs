@@ -36,9 +36,9 @@
 
 #include <tqpopupmenu.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqtimer.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <tqcstring.h>
 #include <tqdatetime.h>
 
@@ -172,10 +172,10 @@ class KateFileLoader
     // should spaces be ignored at end of line?
     inline bool removeTrailingSpaces () const { return m_removeTrailingSpaces; }
 
-    // internal unicode data array
-    inline const TQChar *unicode () const { return m_text.unicode(); }
+    // internal tqunicode data array
+    inline const TQChar *tqunicode () const { return m_text.tqunicode(); }
 
-    // read a line, return length + offset in unicode data
+    // read a line, return length + offset in tqunicode data
     void readLine (uint &offset, uint &length)
     {
       length = 0;
@@ -543,7 +543,7 @@ bool KateBuffer::canEncode ()
 
   kdDebug(13020) << "ENC NAME: " << codec->name() << endl;
 
-  // hardcode some unicode encodings which can encode all chars
+  // hardcode some tqunicode encodings which can encode all chars
   if ((TQString(codec->name()) == "UTF-8") || (TQString(codec->name()) == "ISO-10646-UCS-2"))
     return true;
 
@@ -860,12 +860,12 @@ void KateBuffer::setHighlight(uint hlMode)
    // aha, hl will change
   if (h != m_highlight)
   {
-    bool invalidate = !h->noHighlighting();
+    bool tqinvalidate = !h->noHighlighting();
 
     if (m_highlight)
     {
       m_highlight->release();
-      invalidate = true;
+      tqinvalidate = true;
     }
 
     h->use();
@@ -880,7 +880,7 @@ void KateBuffer::setHighlight(uint hlMode)
 
     m_highlight = h;
 
-    if (invalidate)
+    if (tqinvalidate)
       invalidateHighlighting();
 
     // inform the document that the hl was really changed
@@ -949,7 +949,7 @@ void KateBuffer::addIndentBasedFoldingInformation(TQMemArray<uint> &foldingList,
   }
 }
 
-bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, bool invalidate)
+bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, bool tqinvalidate)
 {
   // no hl around, no stuff to do
   if (!m_highlight)
@@ -971,7 +971,7 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
   //kdDebug (13020) << "HL UNTIL LINE: " << m_lineHighlighted << " MAX: " << m_lineHighlightedMax << endl;
   //kdDebug (13020) << "HL DYN COUNT: " << KateHlManager::self()->countDynamicCtxs() << " MAX: " << m_maxDynamicContexts << endl;
 
-  // see if there are too many dynamic contexts; if yes, invalidate HL of all documents
+  // see if there are too many dynamic contexts; if yes, tqinvalidate HL of all documents
   if (KateHlManager::self()->countDynamicCtxs() >= m_maxDynamicContexts)
   {
     {
@@ -1240,7 +1240,7 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
   buf->markDirty ();
 
   // tag the changed lines !
-  if (invalidate)
+  if (tqinvalidate)
     emit tagLines (startLine, current_line + buf->startLine());
 
   // emit that we have changed the folding
@@ -1353,14 +1353,14 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
   {
     uint offset = 0, length = 0;
     stream->readLine(offset, length);
-    const TQChar *unicodeData = stream->unicode () + offset;
+    const TQChar *tqunicodeData = stream->tqunicode () + offset;
 
     // strip spaces at end of line
     if ( stream->removeTrailingSpaces() )
     {
       while (length > 0)
       {
-        if (unicodeData[length-1].isSpace())
+        if (tqunicodeData[length-1].isSpace())
           --length;
         else
           break;
@@ -1391,13 +1391,13 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
       memcpy(buf+pos, (char *) &length, sizeof(uint));
       pos += sizeof(uint);
 
-      memcpy(buf+pos, (char *) unicodeData, sizeof(TQChar)*length);
+      memcpy(buf+pos, (char *) tqunicodeData, sizeof(TQChar)*length);
       pos += sizeof(TQChar)*length;
     }
     else
     {
       KateTextLine::Ptr textLine = new KateTextLine ();
-      textLine->insertText (0, length, unicodeData);
+      textLine->insertText (0, length, tqunicodeData);
       m_stringList.push_back (textLine);
     }
 

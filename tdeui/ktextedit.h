@@ -20,7 +20,7 @@
 #ifndef KTEXTEDIT_H
 #define KTEXTEDIT_H
 
-#include <textedit.h>
+#include <tqtextedit.h>
 
 #include <tdelibs_export.h>
 

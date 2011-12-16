@@ -145,7 +145,7 @@ void KListViewSearchLine::updateSearch(const TQString &s)
             it.current() && !currentItem;
             ++it)
         {
-            if(d->listView->itemRect(it.current()).isValid())
+            if(d->listView->tqitemRect(it.current()).isValid())
                 currentItem = it.current();
         }
     }
@@ -302,7 +302,7 @@ void KListViewSearchLine::activateSearch()
 
 void KListViewSearchLine::itemAdded(TQListViewItem *item) const
 {
-    item->setVisible(itemMatches(item, text()));
+    item->tqsetVisible(itemMatches(item, text()));
 }
 
 void KListViewSearchLine::listViewDeleted()
@@ -347,9 +347,9 @@ void KListViewSearchLine::checkItemParentsNotVisible()
     {
         TQListViewItem *item = it.current();
         if(itemMatches(item, d->search))
-            item->setVisible(true);
+            item->tqsetVisible(true);
         else
-            item->setVisible(false);
+            item->tqsetVisible(false);
     }
 }
 
@@ -381,23 +381,23 @@ bool KListViewSearchLine::checkItemParentsVisible(TQListViewItem *item, TQListVi
             visible = true;
             if (highestHiddenParent)
             {
-                highestHiddenParent->setVisible(true);
-                // Calling setVisible on our ancestor will unhide all its descendents. Hide the ones
+                highestHiddenParent->tqsetVisible(true);
+                // Calling tqsetVisible on our ancestor will unhide all its descendents. Hide the ones
                 // before us that should not be shown.
                 for(TQListViewItem *hide = first; hide != item; hide = hide->nextSibling())
-                    hide->setVisible(false);
+                    hide->tqsetVisible(false);
                 highestHiddenParent = 0;
-                // If we matched, than none of our children matched, yet the setVisible() call on our
+                // If we matched, than none of our children matched, yet the tqsetVisible() call on our
                 // ancestor unhid them, undo the damage:
                 if(!childMatch)
                     for(TQListViewItem *hide = item->firstChild(); hide; hide = hide->nextSibling())
-                        hide->setVisible(false);
+                        hide->tqsetVisible(false);
             }
             else
-                item->setVisible(true);
+                item->tqsetVisible(true);
         }
         else
-            item->setVisible(false);
+            item->tqsetVisible(false);
     }
     return visible;
 }

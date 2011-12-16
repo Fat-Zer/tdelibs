@@ -22,7 +22,7 @@
 
 #include <kssl.h>
 
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqradiobutton.h>
 #include <tqcheckbox.h>
 #include <tqlistview.h>

@@ -487,7 +487,7 @@ void XMLHttpRequest::setRequestHeader(const TQString& _name, const TQString &val
   // Reject all banned headers. See BANNED_HTTP_HEADERS above.
   // kdDebug() << "Banned HTTP Headers: " << BANNED_HTTP_HEADERS << endl;
   TQStringList bannedHeaders = TQStringList::split(',',
-                                  TQString::fromLatin1(BANNED_HTTP_HEADERS));
+                                  TQString::tqfromLatin1(BANNED_HTTP_HEADERS));
 
   if (bannedHeaders.contains(name))
     return;   // Denied

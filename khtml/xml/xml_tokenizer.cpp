@@ -42,7 +42,7 @@ using namespace DOM;
 using namespace khtml;
 
 XMLIncrementalSource::XMLIncrementalSource()
-    : TQXmlInputSource(), m_pos( 0 ), m_unicode( 0 ),
+    : TQXmlInputSource(), m_pos( 0 ), m_tqunicode( 0 ),
       m_finished( false )
 {
 }
@@ -59,13 +59,13 @@ TQChar XMLIncrementalSource::next()
     else if ( m_data.length() <= m_pos )
         return TQXmlInputSource::EndOfData;
     else
-        return m_unicode[m_pos++];
+        return m_tqunicode[m_pos++];
 }
 
 void XMLIncrementalSource::setData( const TQString& str )
 {
     m_data = str;
-    m_unicode = m_data.unicode();
+    m_tqunicode = m_data.tqunicode();
     m_pos = 0;
     if ( !str.isEmpty() )
         m_finished = false;
@@ -78,7 +78,7 @@ void XMLIncrementalSource::setData( const TQByteArray& data )
 void XMLIncrementalSource::appendXML( const TQString& str )
 {
     m_data += str;
-    m_unicode = m_data.unicode();
+    m_tqunicode = m_data.tqunicode();
 }
 
 TQString XMLIncrementalSource::data()
@@ -289,7 +289,7 @@ bool XMLHandler::comment(const TQString & ch)
     if (currentNode()->nodeType() == Node::TEXT_NODE)
         exitText();
     // ### handle exceptions
-    currentNode()->addChild(m_doc->createComment(new DOMStringImpl(ch.unicode(), ch.length())));
+    currentNode()->addChild(m_doc->createComment(new DOMStringImpl(ch.tqunicode(), ch.length())));
     return true;
 }
 
@@ -299,7 +299,7 @@ bool XMLHandler::processingInstruction(const TQString &target, const TQString &d
         exitText();
     // ### handle exceptions
     ProcessingInstructionImpl *pi =
-        m_doc->createProcessingInstruction(target, new DOMStringImpl(data.unicode(), data.length()));
+        m_doc->createProcessingInstruction(target, new DOMStringImpl(data.tqunicode(), data.length()));
     currentNode()->addChild(pi);
     pi->checkStyleSheet();
     return true;
@@ -364,7 +364,7 @@ bool XMLHandler::internalEntityDecl(const TQString &name, const TQString &value)
 {
     EntityImpl *e = new EntityImpl(m_doc,name);
     // ### further parse entities inside the value and add them as separate nodes (or entityreferences)?
-    e->addChild(m_doc->createTextNode(new DOMStringImpl(value.unicode(), value.length())));
+    e->addChild(m_doc->createTextNode(new DOMStringImpl(value.tqunicode(), value.length())));
      if (m_doc->doctype())
          static_cast<GenericRONamedNodeMapImpl*>(m_doc->doctype()->entities())->addNode(e);
     return true;

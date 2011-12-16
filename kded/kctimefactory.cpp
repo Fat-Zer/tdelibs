@@ -53,7 +53,7 @@ KCTimeInfo::save(TQDataStream &str)
 {
   KSycocaFactory::save(str);
 
-  m_dictOffset = str.device()->at();
+  m_dictOffset = str.tqdevice()->tqat();
   TQDictIterator<TQ_UINT32> it(ctimeDict);
   while( it.current())
   {
@@ -62,10 +62,10 @@ KCTimeInfo::save(TQDataStream &str)
   }   
   str << TQString::null << (TQ_UINT32) 0;
 
-  int endOfFactoryData = str.device()->at();
+  int endOfFactoryData = str.tqdevice()->tqat();
 
   saveHeader(str);
-  str.device()->at(endOfFactoryData);
+  str.tqdevice()->tqat(endOfFactoryData);
 }
 
 void 
@@ -86,7 +86,7 @@ void
 KCTimeInfo::fillCTimeDict(TQDict<TQ_UINT32> &dict)
 {
     assert(m_str);
-    m_str->device()->at(m_dictOffset);
+    m_str->tqdevice()->tqat(m_dictOffset);
     TQString path;
     TQ_UINT32 ctime;
     while(true)

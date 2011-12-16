@@ -72,9 +72,9 @@
 
 #include <tqtimer.h>
 #include <tqfile.h>
-#include <clipboard.h>
-#include <textstream.h>
-#include <textcodec.h>
+#include <tqclipboard.h>
+#include <tqtextstream.h>
+#include <tqtextcodec.h>
 #include <tqmap.h>
 //END  includes
 
@@ -323,7 +323,7 @@ void KateDocument::enablePluginGUI (KTextEditor::Plugin *plugin)
   if (!KTextEditor::pluginViewInterface(plugin)) return;
 
   for (uint i=0; i< m_views.count(); i++)
-    enablePluginGUI (plugin, m_views.at(i));
+    enablePluginGUI (plugin, m_views.tqat(i));
 }
 
 void KateDocument::disablePluginGUI (KTextEditor::Plugin *plugin, KateView *view)
@@ -347,7 +347,7 @@ void KateDocument::disablePluginGUI (KTextEditor::Plugin *plugin)
   if (!KTextEditor::pluginViewInterface(plugin)) return;
 
   for (uint i=0; i< m_views.count(); i++)
-    disablePluginGUI (plugin, m_views.at(i));
+    disablePluginGUI (plugin, m_views.tqat(i));
 }
 //END
 
@@ -641,7 +641,7 @@ bool KateDocument::setText(const TQString &s)
   TQValueList<KTextEditor::Mark> msave;
 
   for (uint i=0; i < m.count(); i++)
-    msave.append (*m.at(i));
+    msave.append (*m.tqat(i));
 
   editStart ();
 
@@ -924,7 +924,7 @@ void KateDocument::editStart (bool withUndo)
 
   for (uint z = 0; z < m_views.count(); z++)
   {
-    m_views.at(z)->editStart ();
+    m_views.tqat(z)->editStart ();
   }
 
   m_buffer->editStart ();
@@ -1029,7 +1029,7 @@ void KateDocument::editEnd ()
 
   // edit end for all views !!!!!!!!!
   for (uint z = 0; z < m_views.count(); z++)
-    m_views.at(z)->editEnd (m_buffer->editTagStart(), m_buffer->editTagEnd(), m_buffer->editTagFrom());
+    m_views.tqat(z)->editEnd (m_buffer->editTagStart(), m_buffer->editTagEnd(), m_buffer->editTagFrom());
 
   if (m_buffer->editChanged())
   {
@@ -1187,7 +1187,7 @@ bool KateDocument::editInsertText ( uint line, uint col, const TQString &str )
 
   editAddUndo (KateUndoGroup::editInsertText, line, col, s.length(), s);
 
-  l->insertText (col, s.length(), s.unicode());
+  l->insertText (col, s.length(), s.tqunicode());
 //   removeTrailingSpace(line); // ### nessecary?
 
   m_buffer->changeLine(line);
@@ -1410,7 +1410,7 @@ bool KateDocument::editInsertLine ( uint line, const TQString &s )
   removeTrailingSpace( line ); // old line
 
   KateTextLine::Ptr tl = new KateTextLine();
-  tl->insertText (0, s.length(), s.unicode(), 0);
+  tl->insertText (0, s.length(), s.tqunicode(), 0);
   m_buffer->insertLine(line, tl);
   m_buffer->changeLine(line);
 
@@ -2011,7 +2011,7 @@ void KateDocument::configDialog()
 
     for (uint i=0; i<editorPages.count(); i++)
     {
-      editorPages.at(i)->apply();
+      editorPages.tqat(i)->apply();
     }
 
     KateDocumentConfig::global()->configEnd ();
@@ -2316,7 +2316,7 @@ bool KateDocument::openURL( const KURL &url )
       w = m_views.first();
 
     if (w)
-      m_job->setWindow (w->topLevelWidget());
+      m_job->setWindow (w->tqtopLevelWidget());
 
     emit started( m_job );
 
@@ -2589,7 +2589,7 @@ bool KateDocument::saveFile()
   //
   if (!m_buffer->canEncode ()
        && (KMessageBox::warningContinueCancel(0,
-           i18n("The selected encoding cannot encode every unicode character in this document. Do you really want to save it? There could be some data lost."),i18n("Possible Data Loss"),i18n("Save Nevertheless")) != KMessageBox::Continue))
+           i18n("The selected encoding cannot encode every tqunicode character in this document. Do you really want to save it? There could be some data lost."),i18n("Possible Data Loss"),i18n("Save Nevertheless")) != KMessageBox::Continue))
   {
     return false;
   }
@@ -2869,7 +2869,7 @@ void KateDocument::setModified(bool m) {
 void KateDocument::makeAttribs(bool needInvalidate)
 {
   for (uint z = 0; z < m_views.count(); z++)
-    m_views.at(z)->renderer()->updateAttributes ();
+    m_views.tqat(z)->renderer()->updateAttributes ();
 
   if (needInvalidate)
     m_buffer->invalidateHighlighting();
@@ -3195,7 +3195,7 @@ void KateDocument::backspace( KateView *view, const KateTextCursor& c )
       if (!textLine)
         return;
 
-      if (config()->wordWrap() && textLine->endingWith(TQString::fromLatin1(" ")))
+      if (config()->wordWrap() && textLine->endingWith(TQString::tqfromLatin1(" ")))
       {
         // gg: in hard wordwrap mode, backspace must also eat the trailing space
         removeText (line-1, textLine->length()-1, line, 0);
@@ -3227,7 +3227,7 @@ void KateDocument::del( KateView *view, const KateTextCursor& c )
 
 void KateDocument::paste ( KateView* view )
 {
-  TQString s = TQApplication::clipboard()->text();
+  TQString s = TQApplication::tqclipboard()->text();
 
   if (s.isEmpty())
     return;
@@ -3981,9 +3981,9 @@ void KateDocument::transform( KateView *v, const KateTextCursor &c,
           if ( ( ! start && ! p ) ||
                    ( ( ln == selstart.line() || v->blockSelectionMode() ) &&
                    ! p && ! highlight()->isInWord( l->getChar( start - 1 )) ) ||
-                   ( p && ! highlight()->isInWord( s.at( p-1 ) ) )
+                   ( p && ! highlight()->isInWord( s.tqat( p-1 ) ) )
              )
-            s[p] = s.at(p).upper();
+            s[p] = s.tqat(p).upper();
           p++;
         }
       }
@@ -4096,7 +4096,7 @@ TQString KateDocument::getWord( const KateTextCursor& cursor ) {
 void KateDocument::tagLines(int start, int end)
 {
   for (uint z = 0; z < m_views.count(); z++)
-    m_views.at(z)->tagLines (start, end, true);
+    m_views.tqat(z)->tagLines (start, end, true);
 }
 
 void KateDocument::tagLines(KateTextCursor start, KateTextCursor end)
@@ -4109,21 +4109,21 @@ void KateDocument::tagLines(KateTextCursor start, KateTextCursor end)
   }
 
   for (uint z = 0; z < m_views.count(); z++)
-    m_views.at(z)->tagLines(start, end, true);
+    m_views.tqat(z)->tagLines(start, end, true);
 }
 
 void KateDocument::repaintViews(bool paintOnlyDirty)
 {
   for (uint z = 0; z < m_views.count(); z++)
-    m_views.at(z)->repaintText(paintOnlyDirty);
+    m_views.tqat(z)->repaintText(paintOnlyDirty);
 }
 
 void KateDocument::tagAll()
 {
   for (uint z = 0; z < m_views.count(); z++)
   {
-    m_views.at(z)->tagAll();
-    m_views.at(z)->updateView (true);
+    m_views.tqat(z)->tagAll();
+    m_views.tqat(z)->updateView (true);
   }
 }
 
@@ -4287,9 +4287,9 @@ void KateDocument::setDocName (TQString name )
 
   for (uint z=0; z < KateFactory::self()->documents()->count(); z++)
   {
-    if ( (KateFactory::self()->documents()->at(z) != this) && (KateFactory::self()->documents()->at(z)->url().filename() == url().filename()) )
-      if ( KateFactory::self()->documents()->at(z)->m_docNameNumber > count )
-        count = KateFactory::self()->documents()->at(z)->m_docNameNumber;
+    if ( (KateFactory::self()->documents()->tqat(z) != this) && (KateFactory::self()->documents()->tqat(z)->url().filename() == url().filename()) )
+      if ( KateFactory::self()->documents()->tqat(z)->m_docNameNumber > count )
+        count = KateFactory::self()->documents()->tqat(z)->m_docNameNumber;
   }
 
   m_docNameNumber = count + 1;
@@ -4437,14 +4437,14 @@ void KateDocument::reloadFile()
     TQValueList<int> lines, cols;
     for ( uint i=0; i < m_views.count(); i++ )
     {
-      lines.append( m_views.at( i )->cursorLine() );
-      cols.append( m_views.at( i )->cursorColumn() );
+      lines.append( m_views.tqat( i )->cursorLine() );
+      cols.append( m_views.tqat( i )->cursorColumn() );
     }
 
     KateDocument::openURL( url() );
 
     for ( uint i=0; i < m_views.count(); i++ )
-      m_views.at( i )->setCursorPositionInternal( lines[ i ], cols[ i ], m_config->tabWidth(), false );
+      m_views.tqat( i )->setCursorPositionInternal( lines[ i ], cols[ i ], m_config->tabWidth(), false );
 
     m_reloading = false;
 

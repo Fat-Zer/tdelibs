@@ -102,6 +102,6 @@ OrgValue::numValues()
 OrgValue::value(unsigned int i)
 {
 	parse();
-	return valueList_.at(i);
+	return valueList_.tqat(i);
 }
 

@@ -20,7 +20,7 @@
 #include "kmconfigpreview.h"
 
 #include <tqcheckbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqgroupbox.h>
 #include <tqlabel.h>
 

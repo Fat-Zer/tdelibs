@@ -26,7 +26,7 @@
 #include <tqspinbox.h>
 #include <tqlabel.h>
 #include <tqcombobox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <klocale.h>
 
 #ifdef HAVE_LIMITS_H

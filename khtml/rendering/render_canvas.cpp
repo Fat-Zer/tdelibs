@@ -329,7 +329,7 @@ void RenderCanvas::paintBoxDecorations(PaintInfo& paintInfo, int /*_tx*/, int /*
     if ((firstChild() && firstChild()->style()->visibility() == VISIBLE) || !view())
         return;
 
-    paintInfo.p->fillRect(paintInfo.r, view()->palette().active().color(TQColorGroup::Base));
+    paintInfo.p->fillRect(paintInfo.r, view()->tqpalette().active().color(TQColorGroup::Base));
 }
 
 void RenderCanvas::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)
@@ -372,13 +372,13 @@ void RenderCanvas::scheduleDeferredRepaints()
     if (!needsFullRepaint()) {
         TQValueList<RenderObject*>::const_iterator it;
         for ( it = m_dirtyChildren.begin(); it != m_dirtyChildren.end(); ++it )
-            (*it)->repaint();
+            (*it)->tqrepaint();
     }
-    //kdDebug(6040) << "scheduled deferred repaints: " << m_dirtyChildren.count() << " needed full repaint: " << needsFullRepaint() << endl;
+    //kdDebug(6040) << "scheduled deferred repaints: " << m_dirtyChildren.count() << " needed full tqrepaint: " << needsFullRepaint() << endl;
     m_dirtyChildren.clear();
 }
 
-void RenderCanvas::repaint(Priority p)
+void RenderCanvas::tqrepaint(Priority p)
 {
     if (m_view && !m_staticMode) {
         if (p == RealtimePriority) {
@@ -567,7 +567,7 @@ void RenderCanvas::setSelection(RenderObject *s, int sp, RenderObject *e, int ep
 
     TQRect updateRect;
 
-    // Don't use repaint() because it will cause all rects to
+    // Don't use tqrepaint() because it will cause all rects to
     // be united (see khtmlview::scheduleRepaint()).  Instead
     // just draw damage rects for objects that have a change
     // in selection state.
@@ -651,9 +651,9 @@ void RenderCanvas::clearSelection(bool doRepaint)
     {
         if (o->selectionState()!=SelectionNone)
             if (doRepaint)
-                o->repaint();
+                o->tqrepaint();
         o->setSelectionState(SelectionNone);
-        o->repaint();
+        o->tqrepaint();
         RenderObject* no;
         if ( !(no = o->firstChild()) )
             if ( !(no = o->nextSibling()) )
@@ -669,7 +669,7 @@ void RenderCanvas::clearSelection(bool doRepaint)
     if (m_selectionEnd) {
         m_selectionEnd->setSelectionState(SelectionNone);
         if (doRepaint)
-            m_selectionEnd->repaint();
+            m_selectionEnd->tqrepaint();
     }
 
     // set selection start & end to 0

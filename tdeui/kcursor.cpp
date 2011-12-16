@@ -370,9 +370,9 @@ KCursorPrivate::KCursorPrivate()
     hideCursorDelay = 5000; // 5s default value
 
     KConfig *kc = KGlobal::config();
-    KConfigGroupSaver ks( kc, TQString::fromLatin1("KDE") );
+    KConfigGroupSaver ks( kc, TQString::tqfromLatin1("KDE") );
     enabled = kc->readBoolEntry(
-		  TQString::fromLatin1("Autohiding cursor enabled"), true );
+		  TQString::tqfromLatin1("Autohiding cursor enabled"), true );
 }
 
 KCursorPrivate::~KCursorPrivate()

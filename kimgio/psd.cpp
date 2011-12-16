@@ -119,15 +119,15 @@ namespace {	// Private.
 
 		// Skip mode data.
 		s >> tmp;
-		s.device()->at( s.device()->at() + tmp );
+		s.tqdevice()->tqat( s.tqdevice()->tqat() + tmp );
 
 		// Skip image resources.
 		s >> tmp;
-		s.device()->at( s.device()->at() + tmp );
+		s.tqdevice()->tqat( s.tqdevice()->tqat() + tmp );
 
 		// Skip the reserved data.
 		s >> tmp;
-		s.device()->at( s.device()->at() + tmp );
+		s.tqdevice()->tqat( s.tqdevice()->tqat() + tmp );
 		
 		// Find out if the data is compressed.
 		// Known values:
@@ -250,7 +250,7 @@ void kimgio_psd_read( TQImageIO *io )
 	if( s.atEnd() || !IsValid( header ) ) {
 		kdDebug(399) << "This PSD file is not valid." << endl;
 		io->setImage( TQImage() );
-		io->seStatus( -1 );
+		io->setqStatus( -1 );
 		return;
 	}
 
@@ -258,7 +258,7 @@ void kimgio_psd_read( TQImageIO *io )
 	if( !IsSupported( header ) ) {
 		kdDebug(399) << "This PSD file is not supported." << endl;
 		io->setImage( TQImage() );
-		io->seStatus( -1 );
+		io->setqStatus( -1 );
 		return;
 	}
 
@@ -266,12 +266,12 @@ void kimgio_psd_read( TQImageIO *io )
 	if( !LoadPSD(s, header, img) ) {
 		kdDebug(399) << "Error loading PSD file." << endl;
 		io->setImage( TQImage() );
-		io->seStatus( -1 );
+		io->setqStatus( -1 );
 		return;
 	}
 
     io->setImage( img );
-    io->seStatus( 0 );
+    io->setqStatus( 0 );
 }
 
 

@@ -20,7 +20,7 @@
 #include "tqwhatsthis.h"
 #include <tqvariant.h>
 #include <kdebug.h>
-#include <textedit.h>
+#include <tqtextedit.h>
 #include <klocale.h>
 #include <kapplication.h>
 
@@ -68,11 +68,11 @@ bool KWhatsThisUndefined::clicked (const TQString& href)
         body . append ("Widget text: '" + (m_widget -> property ("text") . toString ()) + "'\n");
         TQString dsc = TQString ("current --> ") + m_widget -> name ();
         dsc . append (TQString (" (") + m_widget -> className () + ")\n");
-        for (w = m_widget; w && w != m_widget -> topLevelWidget (); w = w -> parentWidget ()) {
+        for (w = m_widget; w && w != m_widget -> tqtopLevelWidget (); w = w -> parentWidget ()) {
             dsc . append (w -> name ());
             dsc . append (TQString (" (") + w -> className () + ")\n");
         }
-        w = m_widget -> topLevelWidget ();
+        w = m_widget -> tqtopLevelWidget ();
         if (w) {
             dsc . append ("toplevel --> ");
             dsc . append (w -> name ());

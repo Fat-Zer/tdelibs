@@ -92,7 +92,7 @@ public:
     DOMStringImpl *capitalize(bool noFirstCap=false) const;
     DOMStringImpl *escapeHTML();
 
-    TQChar *unicode() const { return s; }
+    TQChar *tqunicode() const { return s; }
     uint length() const { return l; }
     TQString string() const;
 

@@ -47,7 +47,7 @@
 #include <kapplication.h>
 
 #include <tqstringlist.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 //END
 
 //BEGIN defines
@@ -65,10 +65,10 @@ static const int KATE_DYNAMIC_CONTEXTS_RESET_DELAY = 30 * 1000;
 
 inline bool kateInsideString (const TQString &str, TQChar ch)
 {
-  const TQChar *unicode = str.unicode();
+  const TQChar *tqunicode = str.tqunicode();
   const uint len = str.length();
   for (uint i=0; i < len; i++)
-    if (unicode[i] == ch)
+    if (tqunicode[i] == ch)
       return true;
 
   return false;
@@ -661,7 +661,7 @@ int KateHlKeyword::checkHgl(const TQString& text, int offset, int len)
 
   if (wordLen < minLen) return 0;
 
-  if ( dict[wordLen] && dict[wordLen]->find(TQConstString(text.unicode() + offset, wordLen).string()) )
+  if ( dict[wordLen] && dict[wordLen]->find(TQConstString(text.tqunicode() + offset, wordLen).string()) )
     return offset2;
 
   return 0;
@@ -815,7 +815,7 @@ int KateHlCOct::checkHgl(const TQString& text, int offset, int len)
 
     int offset2 = offset;
 
-    while ((len > 0) && (text.at(offset2) >= TQChar('0') && text.at(offset2) <= TQChar('7')))
+    while ((len > 0) && (text.tqat(offset2) >= TQChar('0') && text.tqat(offset2) <= TQChar('7')))
     {
       offset2++;
       len--;
@@ -958,7 +958,7 @@ int KateHlRegExpr::checkHgl(const TQString& text, int offset, int /*len*/)
 
 TQStringList *KateHlRegExpr::capturedTexts()
 {
-  return new TQStringList(Expr->capturedTexts());
+  return new TQStringList(Expr->tqcapturedTexts());
 }
 
 KateHlItem *KateHlRegExpr::clone(const TQStringList *args)
@@ -1038,7 +1038,7 @@ static int checkEscapedChar(const TQString& text, int offset, int& len)
         // replaced with something else but
         // for right now they work
         // check for hexdigits
-        for (i = 0; (len > 0) && (i < 2) && (static_cast<const char>(text.at(offset)) >= '0' && static_cast<const char>(text.at(offset)) <= '9' || (text[offset] & 0xdf) >= 'A' && (text[offset] & 0xdf) <= 'F'); i++)
+        for (i = 0; (len > 0) && (i < 2) && (static_cast<const char>(text.tqat(offset)) >= '0' && static_cast<const char>(text.tqat(offset)) <= '9' || (text[offset] & 0xdf) >= 'A' && (text[offset] & 0xdf) <= 'F'); i++)
         {
           offset++;
           len--;
@@ -1051,7 +1051,7 @@ static int checkEscapedChar(const TQString& text, int offset, int& len)
 
       case '0': case '1': case '2': case '3' :
       case '4': case '5': case '6': case '7' :
-        for (i = 0; (len > 0) && (i < 3) && (static_cast<const char>(text.at(offset)) >= '0' && static_cast<const char>(text.at(offset)) <= '7'); i++)
+        for (i = 0; (len > 0) && (i < 3) && (static_cast<const char>(text.tqat(offset)) >= '0' && static_cast<const char>(text.tqat(offset)) <= '7'); i++)
         {
           offset++;
           len--;
@@ -1890,7 +1890,7 @@ void KateHighlighting::addToKateHlItemDataList()
 int  KateHighlighting::lookupAttrName(const TQString& name, KateHlItemDataList &iDl)
 {
   for (uint i = 0; i < iDl.count(); i++)
-    if (iDl.at(i)->name == buildPrefix+name)
+    if (iDl.tqat(i)->name == buildPrefix+name)
       return i;
 
   kdDebug(13010)<<"Couldn't resolve itemDataName:"<<name<<endl;
@@ -2885,13 +2885,13 @@ void KateHighlighting::clearAttributeArrays ()
 
     for (uint z = 0; z < nAttribs; z++)
     {
-      KateHlItemData *itemData = itemDataList.at(z);
-      KateAttribute n = *defaultStyleList.at(itemData->defStyleNum);
+      KateHlItemData *itemData = itemDataList.tqat(z);
+      KateAttribute n = *defaultStyleList.tqat(itemData->defStyleNum);
 
       if (itemData && itemData->isSomethingSet())
         n += *itemData;
 
-      array->at(z) = n;
+      array->tqat(z) = n;
     }
   }
 }
@@ -2924,13 +2924,13 @@ TQMemArray<KateAttribute> *KateHighlighting::attributes (uint schema)
 
   for (uint z = 0; z < nAttribs; z++)
   {
-    KateHlItemData *itemData = itemDataList.at(z);
-    KateAttribute n = *defaultStyleList.at(itemData->defStyleNum);
+    KateHlItemData *itemData = itemDataList.tqat(z);
+    KateAttribute n = *defaultStyleList.tqat(itemData->defStyleNum);
 
     if (itemData && itemData->isSomethingSet())
       n += *itemData;
 
-    array->at(z) = n;
+    array->tqat(z) = n;
   }
 
   m_attributeArrays.insert(schema, array);
@@ -2946,7 +2946,7 @@ void KateHighlighting::getKateHlItemDataListCopy (uint schema, KateHlItemDataLis
   outlist.clear ();
   outlist.setAutoDelete (true);
   for (uint z=0; z < itemDataList.count(); z++)
-    outlist.append (new KateHlItemData (*itemDataList.at(z)));
+    outlist.append (new KateHlItemData (*itemDataList.tqat(z)));
 }
 
 //END
@@ -2974,7 +2974,7 @@ KateHlManager::KateHlManager()
       if (insert == hlList.count())
         break;
 
-      if ( TQString(hlList.at(insert)->section() + hlList.at(insert)->nameTranslated()).lower()
+      if ( TQString(hlList.tqat(insert)->section() + hlList.tqat(insert)->nameTranslated()).lower()
             > TQString(hl->section() + hl->nameTranslated()).lower() )
         break;
     }
@@ -3011,14 +3011,14 @@ KateHighlighting *KateHlManager::getHl(int n)
   if (n < 0 || n >= (int) hlList.count())
     n = 0;
 
-  return hlList.at(n);
+  return hlList.tqat(n);
 }
 
 int KateHlManager::nameFind(const TQString &name)
 {
   int z (hlList.count() - 1);
   for (; z > 0; z--)
-    if (hlList.at(z)->name() == name)
+    if (hlList.tqat(z)->name() == name)
       return z;
 
   return z;
@@ -3269,7 +3269,7 @@ void KateHlManager::getDefaults(uint schema, KateAttributeList &list)
 
   for (uint z = 0; z < defaultStyles(); z++)
   {
-    KateAttribute *i = list.at(z);
+    KateAttribute *i = list.tqat(z);
     TQStringList s = config->readListEntry(defaultStyleName(z));
     if (!s.isEmpty())
     {
@@ -3323,7 +3323,7 @@ void KateHlManager::setDefaults(uint schema, KateAttributeList &list)
   for (uint z = 0; z < defaultStyles(); z++)
   {
     TQStringList settings;
-    KateAttribute *i = list.at(z);
+    KateAttribute *i = list.tqat(z);
 
     settings<<(i->itemSet(KateAttribute::TextColor)?TQString::number(i->textColor().rgb(),16):"");
     settings<<(i->itemSet(KateAttribute::SelectedTextColor)?TQString::number(i->selectedTextColor().rgb(),16):"");
@@ -3348,22 +3348,22 @@ int KateHlManager::highlights()
 
 TQString KateHlManager::hlName(int n)
 {
-  return hlList.at(n)->name();
+  return hlList.tqat(n)->name();
 }
 
 TQString KateHlManager::hlNameTranslated(int n)
 {
-  return hlList.at(n)->nameTranslated();
+  return hlList.tqat(n)->nameTranslated();
 }
 
 TQString KateHlManager::hlSection(int n)
 {
-  return hlList.at(n)->section();
+  return hlList.tqat(n)->section();
 }
 
 bool KateHlManager::hlHidden(int n)
 {
-  return hlList.at(n)->hidden();
+  return hlList.tqat(n)->hidden();
 }
 
 TQString KateHlManager::identifierForName(const TQString& name)
@@ -3433,7 +3433,7 @@ void KateViewHighlightAction::slotAboutToShow()
 
         int m = subMenusName.findIndex (hlSection);
         names << hlName;
-        subMenus.at(m)->insertItem ( '&' + hlName, this, TQT_SLOT(setHl(int)), 0,  z);
+        subMenus.tqat(m)->insertItem ( '&' + hlName, this, TQT_SLOT(setHl(int)), 0,  z);
       }
       else if (names.contains(hlName) < 1)
       {
@@ -3447,16 +3447,16 @@ void KateViewHighlightAction::slotAboutToShow()
 
   for (uint i=0;i<subMenus.count();i++)
   {
-    for (uint i2=0;i2<subMenus.at(i)->count();i2++)
+    for (uint i2=0;i2<subMenus.tqat(i)->count();i2++)
     {
-      subMenus.at(i)->setItemChecked(subMenus.at(i)->idAt(i2),false);
+      subMenus.tqat(i)->setItemChecked(subMenus.tqat(i)->idAt(i2),false);
     }
   }
   popupMenu()->setItemChecked (0, false);
 
   int i = subMenusName.findIndex (KateHlManager::self()->hlSection(doc->hlMode()));
-  if (i >= 0 && subMenus.at(i))
-    subMenus.at(i)->setItemChecked (doc->hlMode(), true);
+  if (i >= 0 && subMenus.tqat(i))
+    subMenus.tqat(i)->setItemChecked (doc->hlMode(), true);
   else
     popupMenu()->setItemChecked (0, true);
 }

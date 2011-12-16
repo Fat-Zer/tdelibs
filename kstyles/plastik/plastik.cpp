@@ -885,21 +885,21 @@ void PlastikStyle::renderPanel(TQPainter *p,
     r.coords(&x, &y, &x2, &y2);
 
     if (kickerMode &&
-            p->device() && p->device()->devType() == TQInternal::Widget &&
-            TQCString(TQT_TQWIDGET(static_cast<TQPaintDevice*>(p->device()))->className()) == "FittsLawFrame") {
+            p->tqdevice() && p->tqdevice()->devType() == TQInternal::Widget &&
+            TQCString(TQT_TQWIDGET(static_cast<TQPaintDevice*>(p->tqdevice()))->className()) == "FittsLawFrame") {
     //  Stolen wholesale from Keramik. I don't like it, but oh well.
         if (sunken) {
             const TQCOORD corners[] = { x2, y, x2, y2, x, y2, x, y };
             p->setPen(g.background().dark());
             p->drawConvexPolygon(TQPointArray(4, corners));
             p->setPen(g.background().light());
-            p->drawPolyline(TQPointArray(4, corners), 0, 3);
+            p->tqdrawPolyline(TQPointArray(4, corners), 0, 3);
         } else {
             const TQCOORD corners[] = { x, y2, x, y, x2, y, x2, y2 };
             p->setPen(g.background().dark());
             p->drawPolygon(TQPointArray(4, corners));
             p->setPen(g.background().light());
-            p->drawPolyline(TQPointArray(4, corners), 0, 3);
+            p->tqdrawPolyline(TQPointArray(4, corners), 0, 3);
         }
     } else {
         renderContour(p, r, g.background(), getColor(g, PanelContour) );
@@ -1483,7 +1483,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
             if(!kickerMode) {
                 // detect if this is the left most header item
                 bool isFirst = false;
-                TQHeader *header = dynamic_cast<TQHeader*>(p->device() );
+                TQHeader *header = dynamic_cast<TQHeader*>(p->tqdevice() );
                 if (header) {
                     isFirst = header->mapToIndex(header->sectionAt(r.x() ) ) == 0;
                 }
@@ -1819,7 +1819,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
     // --------------
         case PE_Splitter: {
             // highlight on mouse over
-            TQColor color = (static_cast<TQPaintDevice*>(static_cast<TQWidget*>(hoverWidget)) == static_cast<TQPaintDevice*>(p->device()))?TQColor(cg.background().light(100+_contrast)):cg.background();
+            TQColor color = (static_cast<TQPaintDevice*>(static_cast<TQWidget*>(hoverWidget)) == static_cast<TQPaintDevice*>(p->tqdevice()))?TQColor(cg.background().light(100+_contrast)):cg.background();
             p->fillRect(r, color);
             if (w > h) {
                 if (h > 4) {
@@ -1862,9 +1862,9 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
             bool isEnabled = true;
             // panel is highlighted by default if it has focus, but if we have access to the
             // widget itself we can try to avoid highlighting in case it's readOnly or disabled.
-            if (p->device() && dynamic_cast<TQLineEdit*>(p->device()))
+            if (p->tqdevice() && dynamic_cast<TQLineEdit*>(p->tqdevice()))
             {
-                TQLineEdit* lineEdit = dynamic_cast<TQLineEdit*>(p->device());
+                TQLineEdit* lineEdit = dynamic_cast<TQLineEdit*>(p->tqdevice());
                 isReadOnly = lineEdit->isReadOnly();
                 isEnabled = lineEdit->isEnabled();
             }
@@ -1881,7 +1881,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
             // only thing we know is that khtml buffers its widgets into a pixmap. So
             // when the paint device is a TQPixmap, chances are high that we are in khtml.
             // It's possible that this breaks other things, so let's see how it works...
-            if (p->device() && dynamic_cast<TQPixmap*>(p->device() ) ) {
+            if (p->tqdevice() && dynamic_cast<TQPixmap*>(p->tqdevice() ) ) {
                 contourFlags += Draw_AlphaBlend;
             }
 
@@ -1942,7 +1942,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
         case PE_PanelMenuBar:
         case PE_PanelDockWindow: {
             // fix for toolbar lag (from Mosfet Liquid) 
-            TQWidget* w = dynamic_cast<TQWidget*>(p->device());
+            TQWidget* w = dynamic_cast<TQWidget*>(p->tqdevice());
             if(w && w->backgroundMode() == PaletteButton) 
                 w->setBackgroundMode(PaletteBackground);
             p->fillRect(r, cg.brush(TQColorGroup::Background));
@@ -2095,11 +2095,11 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
                 }
             }
 
-            const TQWMatrix oldMatrix( p->worldMatrix() );
+            const TQWMatrix oldMatrix( p->tqworldMatrix() );
 
             if (flags & Style_Down) {
-                p->translate(pixelMetric(PM_ButtonShiftHorizontal),
-                                pixelMetric(PM_ButtonShiftVertical));
+                p->translate(tqpixelMetric(PM_ButtonShiftHorizontal),
+                                tqpixelMetric(PM_ButtonShiftVertical));
             }
 
             a.translate((r.x()+r.width()/2), (r.y()+r.height()/2));
@@ -2139,7 +2139,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 }
 
 
-void PlastikStyle::drawControl(TQ_ControlElement element,
+void PlastikStyle::tqdrawControl(TQ_ControlElement element,
                               TQPainter *p,
                               const TQWidget *widget,
                               const TQRect &r,
@@ -2301,7 +2301,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 if(cw)
                     cornerWidget = true;
             }
-            TQTabBar::Shape tbs = tb->shape();
+            TQTabBar::Shape tbs = tb->tqshape();
             bool selected = false;
             if (flags & Style_Selected) selected = true;
             TabPosition pos;
@@ -2337,7 +2337,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                     renderTab(p, r, cg, mouseOver, selected, true, pos, false, cornerWidget);
                     break;
                     default:
-                            KStyle::drawControl(element, p, widget, r, cg, flags, opt);
+                            KStyle::tqdrawControl(element, p, widget, r, cg, flags, opt);
             }
 
             break;
@@ -2380,15 +2380,15 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             // Shift button contents if pushed.
             if ( active )
             {
-                x += pixelMetric(PM_ButtonShiftHorizontal, widget);
-                y += pixelMetric(PM_ButtonShiftVertical, widget);
+                x += tqpixelMetric(PM_ButtonShiftHorizontal, widget);
+                y += tqpixelMetric(PM_ButtonShiftVertical, widget);
                 flags |= Style_Sunken;
             }
 
             // Does the button have a popup menu?
             if ( button->isMenuButton() )
             {
-                int dx = pixelMetric( PM_MenuButtonIndicator, widget );
+                int dx = tqpixelMetric( PM_MenuButtonIndicator, widget );
                 if ( button->iconSet() && !button->iconSet()->isNull()  &&
                     (dx + button->iconSet()->pixmap (TQIconSet::Small, TQIconSet::Normal, TQIconSet::Off ).width()) >= w )
                 {
@@ -2397,7 +2397,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 else
                 {
 		    p->setPen(cg.buttonText());
-                    tqdrawPrimitive( PE_ArrowDown, p, visualRect( TQRect(x + w - dx - 8, y + 2, dx, h - 4), r ),
+                    tqdrawPrimitive( PE_ArrowDown, p, tqvisualRect( TQRect(x + w - dx - 8, y + 2, dx, h - 4), r ),
                                 cg, flags, opt );
                     w -= dx;
                 }
@@ -2423,7 +2423,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                     p->drawPixmap( x + 4, y + h / 2 - pixmap.height() / 2, pixmap );
 
                 if (cornArrow) //Draw over the icon
-                    tqdrawPrimitive( PE_ArrowDown, p, visualRect( TQRect(x + w - 6, x + h - 6, 7, 7), r ),
+                    tqdrawPrimitive( PE_ArrowDown, p, tqvisualRect( TQRect(x + w - 6, x + h - 6, 7, 7), r ),
                                 cg, flags, opt );
 
 
@@ -2433,14 +2433,14 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             }
 
             // Make the label indicate if the button is a default button or not
-            drawItem( p, TQRect(x, y, w, h), AlignCenter|ShowPrefix, button->colorGroup(),
+            drawItem( p, TQRect(x, y, w, h), AlignCenter|ShowPrefix, button->tqcolorGroup(),
                         button->isEnabled(), button->pixmap(), button->text(), -1,
-                        &button->colorGroup().buttonText() );
+                        &button->tqcolorGroup().buttonText() );
 
 
             if ( flags & Style_HasFocus )
                 tqdrawPrimitive( PE_FocusRect, p,
-                                visualRect( subRect( SR_PushButtonFocusRect, widget ), widget ),
+                                tqvisualRect( subRect( SR_PushButtonFocusRect, widget ), widget ),
                                 cg, flags );
             break;
         }
@@ -2490,7 +2490,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             bool enabled    = mi->isEnabled();
             bool checkable  = popupmenu->isCheckable();
             bool active     = flags & Style_Active;
-            bool etchtext   = styleHint( SH_EtchDisabledText );
+            bool etchtext   = tqstyleHint( SH_EtchDisabledText );
             bool reverse    = TQApplication::reverseLayout();
             if ( checkable )
                 checkcol = QMAX( checkcol, 20 );
@@ -2525,7 +2525,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 break;
             }
 
-            TQRect cr = visualRect( TQRect( r.x() + 2, r.y() + 2, checkcol - 1, r.height() - 4 ), r );
+            TQRect cr = tqvisualRect( TQRect( r.x() + 2, r.y() + 2, checkcol - 1, r.height() - 4 ), r );
             // Do we have an icon?
             if ( mi->iconSet() )
             {
@@ -2669,8 +2669,8 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             // Does the menu item have a submenu?
             if ( mi->popup() ) {
                 TQ_PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
-                int dim = pixelMetric(PM_MenuButtonIndicator) - 1;
-                TQRect vr = visualRect( TQRect( r.x() + r.width() - 5 - 1 - dim,
+                int dim = tqpixelMetric(PM_MenuButtonIndicator) - 1;
+                TQRect vr = tqvisualRect( TQRect( r.x() + r.width() - 5 - 1 - dim,
                             r.y() + r.height() / 2 - dim / 2, dim, dim), r );
 
                 // Draw an arrow at the far end of the menu item
@@ -2706,11 +2706,11 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             break;
 
         default:
-          KStyle::drawControl(element, p, widget, r, cg, flags, opt);
+          KStyle::tqdrawControl(element, p, widget, r, cg, flags, opt);
     }
 }
 
-void PlastikStyle::drawControlMask(TQ_ControlElement element,
+void PlastikStyle::tqdrawControlMask(TQ_ControlElement element,
                                   TQPainter *p,
                                   const TQWidget *w,
                                   const TQRect &r,
@@ -2725,12 +2725,12 @@ void PlastikStyle::drawControlMask(TQ_ControlElement element,
         }
 
         default: {
-            KStyle::drawControlMask (element, p, w, r, opt);
+            KStyle::tqdrawControlMask (element, p, w, r, opt);
         }
     }
 }
 
-void PlastikStyle::drawComplexControlMask(TQ_ComplexControl c,
+void PlastikStyle::tqdrawComplexControlMask(TQ_ComplexControl c,
                                          TQPainter *p,
                                          const TQWidget *w,
                                          const TQRect &r,
@@ -2746,12 +2746,12 @@ void PlastikStyle::drawComplexControlMask(TQ_ComplexControl c,
             break;
         }
         default: {
-            KStyle::drawComplexControlMask (c, p, w, r, o);
+            KStyle::tqdrawComplexControlMask (c, p, w, r, o);
         }
     }
 }
 
-void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
+void PlastikStyle::tqdrawComplexControl(TQ_ComplexControl control,
                                      TQPainter *p,
                                      const TQWidget *widget,
                                      const TQRect &r,
@@ -3141,7 +3141,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
         }
 
         default:
-            KStyle::drawComplexControl(control, p, widget,
+            KStyle::tqdrawComplexControl(control, p, widget,
                                         r, cg, flags, controls,
                                         active, opt);
             break;
@@ -3246,15 +3246,15 @@ TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
     }
 }
 
-int PlastikStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
+int PlastikStyle::tqpixelMetric(PixelMetric m, const TQWidget *widget) const
 {
     switch(m) {
     // TABS
     // ----
         case PM_TabBarTabVSpace: {
             const TQTabBar * tb = (const TQTabBar *) widget;
-            if (tb->shape() == TQTabBar::RoundedAbove ||
-                tb->shape() == TQTabBar::RoundedBelow)
+            if (tb->tqshape() == TQTabBar::RoundedAbove ||
+                tb->tqshape() == TQTabBar::RoundedBelow)
                 return 12;
             else
                 return 4;
@@ -3343,7 +3343,7 @@ int PlastikStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
         }
 
         default:
-            return KStyle::pixelMetric(m, widget);
+            return KStyle::tqpixelMetric(m, widget);
     }
 }
 
@@ -3412,8 +3412,8 @@ TQSize PlastikStyle::tqsizeFromContents(ContentsType t,
         {
             const TQPushButton* btn = static_cast<const TQPushButton*>(widget);
 
-            int w = s.width() + 2 * pixelMetric(PM_ButtonMargin, widget);
-            int h = s.height() + 2 * pixelMetric(PM_ButtonMargin, widget);
+            int w = s.width() + 2 * tqpixelMetric(PM_ButtonMargin, widget);
+            int h = s.height() + 2 * tqpixelMetric(PM_ButtonMargin, widget);
             if ( btn->text().isEmpty() && s.width() < 32 ) return TQSize(w, h);
 
             return TQSize( w+25, h+5 );
@@ -3434,7 +3434,7 @@ TQSize PlastikStyle::tqsizeFromContents(ContentsType t,
     return KStyle::tqsizeFromContents (t, widget, s, opt);
 }
 
-int PlastikStyle::styleHint( TQ_StyleHint stylehint,
+int PlastikStyle::tqstyleHint( TQ_StyleHint stylehint,
                                    const TQWidget *widget,
                                    const TQStyleOption &option,
                                    TQStyleHintReturn* returnData ) const
@@ -3444,7 +3444,7 @@ int PlastikStyle::styleHint( TQ_StyleHint stylehint,
             return 96; // Motif-like delay...
 
         default:
-            return KStyle::styleHint(stylehint, widget, option, returnData);
+            return KStyle::tqstyleHint(stylehint, widget, option, returnData);
     }
 }
 
@@ -3464,14 +3464,14 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
             TQWidget* spinbox = widget->parentWidget();
             if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
             {
-                spinbox->repaint(false);
+                spinbox->tqrepaint(false);
             }
             return false;
         }
 
         if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
         {
-            widget->repaint(false);
+            widget->tqrepaint(false);
         }
         return false;
     }
@@ -3485,13 +3485,13 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
         {
             TQWidget* button = TQT_TQWIDGET(obj);
             hoverWidget = button;
-            button->repaint(false);
+            button->tqrepaint(false);
         }
         else if ((ev->type() == TQEvent::Leave) && (TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(hoverWidget)) )
         {
             TQWidget* button = TQT_TQWIDGET(obj);
             hoverWidget = 0;
-            button->repaint(false);
+            button->tqrepaint(false);
         }
         return false;
     }
@@ -3501,7 +3501,7 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
             TQWidget* tabbar = TQT_TQWIDGET(obj);
             hoverWidget = tabbar;
             hoverTab = 0;
-            tabbar->repaint(false);
+            tabbar->tqrepaint(false);
         }
         else if (ev->type() == TQEvent::MouseMove)
         {
@@ -3512,15 +3512,15 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
                 // avoid unnecessary repaints (which otherwise would occour on every
                 // MouseMove event causing high cpu load).
 
-                bool repaint = true;
+                bool tqrepaint = true;
 
                 TQTab *tab = tabbar->selectTab(me->pos() );
                 if (hoverTab == tab)
-                    repaint = false;
+                    tqrepaint = false;
                 hoverTab = tab;
 
-                if (repaint)
-                    tabbar->repaint(false);
+                if (tqrepaint)
+                    tabbar->tqrepaint(false);
             }
         }
         else if (ev->type() == TQEvent::Leave)
@@ -3528,7 +3528,7 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
             TQWidget* tabbar = TQT_TQWIDGET(obj);
             hoverWidget = 0;
             hoverTab = 0;
-            tabbar->repaint(false);
+            tabbar->tqrepaint(false);
         }
         return false;
     }

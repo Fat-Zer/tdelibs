@@ -376,7 +376,7 @@ public:
 
     ItemString(const TQString & group, const TQString & key,
                TQString & reference,
-               const TQString & defaultValue = TQString::fromLatin1(""), // NOT TQString::null !!
+               const TQString & defaultValue = TQString::tqfromLatin1(""), // NOT TQString::null !!
                Type type = Normal);
 
     void writeConfig(KConfig * config);
@@ -396,7 +396,7 @@ public:
   public:
     ItemPassword(const TQString & group, const TQString & key,
                TQString & reference,
-               const TQString & defaultValue = TQString::fromLatin1("")); // NOT TQString::null !!
+               const TQString & defaultValue = TQString::tqfromLatin1("")); // NOT TQString::null !!
   };
 
   /**
@@ -859,7 +859,7 @@ public:
    * @return The created item
    */
   ItemString *addItemString(const TQString & name, TQString & reference,
-                            const TQString & defaultValue = TQString::fromLatin1(""), // NOT TQString::null !!
+                            const TQString & defaultValue = TQString::tqfromLatin1(""), // NOT TQString::null !!
                             const TQString & key = TQString::null);
 
   /**
@@ -876,7 +876,7 @@ public:
    * @return The created item
    */
   ItemPassword *addItemPassword(const TQString & name, TQString & reference,
-                              const TQString & defaultValue = TQString::fromLatin1(""),
+                              const TQString & defaultValue = TQString::tqfromLatin1(""),
                               const TQString & key = TQString::null);
 
   /**
@@ -893,7 +893,7 @@ public:
    * @return The created item
    */
   ItemPath *addItemPath(const TQString & name, TQString & reference,
-                          const TQString & defaultValue = TQString::fromLatin1(""),
+                          const TQString & defaultValue = TQString::tqfromLatin1(""),
                           const TQString & key = TQString::null);
 
   /**

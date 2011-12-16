@@ -243,7 +243,7 @@ namespace
 
 extern "C" KDE_EXPORT void kimgio_ico_read( TQImageIO* io )
 {
-    TQIODevice::Offset offset = io->ioDevice()->at();
+    TQIODevice::Offset offset = io->ioDevice()->tqat();
 
     TQDataStream stream( io->ioDevice() );
     stream.setByteOrder( TQDataStream::LittleEndian );
@@ -295,7 +295,7 @@ extern "C" KDE_EXPORT void kimgio_ico_read( TQImageIO* io )
          offset + selected->offset > io->ioDevice()->size() )
         return;
 
-    io->ioDevice()->at( offset + selected->offset );
+    io->ioDevice()->tqat( offset + selected->offset );
     TQImage icon;
     if ( loadFromDIB( stream, *selected, icon ) )
     {
@@ -306,7 +306,7 @@ extern "C" KDE_EXPORT void kimgio_ico_read( TQImageIO* io )
             icon.setText( "X-HotspotY", 0, TQString::number( selected->hotspotY ) );
         }
         io->setImage(icon);
-        io->seStatus(0);
+        io->setqStatus(0);
     }
 }
 
@@ -334,7 +334,7 @@ void kimgio_ico_write(TQImageIO *io)
     if (!qt_write_dib(dib, pixels))
         return;
 
-   uint hdrPos = dib.device()->at();
+   uint hdrPos = dib.device()->tqat();
     if (!qt_write_dib(dib, mask))
         return;
     memmove(dibData.data() + hdrPos, dibData.data() + hdrPos + BMP_WIN + 8, dibData.size() - hdrPos - BMP_WIN - 8);
@@ -361,14 +361,14 @@ void kimgio_ico_write(TQImageIO *io)
     rec.dibSize = dibData.size();
     ico << rec.width << rec.height << rec.colors
         << rec.hotspotX << rec.hotspotY << rec.dibSize;
-    rec.dibOffset = ico.device()->at() + sizeof(rec.dibOffset);
+    rec.dibOffset = ico.device()->tqat() + sizeof(rec.dibOffset);
     ico << rec.dibOffset;
 
     BMP_INFOHDR dibHeader;
-    dib.device()->at(0);
+    dib.device()->tqat(0);
     dib >> dibHeader;
     dibHeader.biHeight = io->image().height() << 1;
-    dib.device()->at(0);
+    dib.device()->tqat(0);
     dib << dibHeader;
 
     ico.writeRawBytes(dibData.data(), dibData.size());

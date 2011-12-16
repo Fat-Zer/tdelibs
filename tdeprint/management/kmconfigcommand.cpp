@@ -22,7 +22,7 @@
 
 #include <tqlabel.h>
 #include <tqgroupbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 
 #include <klocale.h>
 #include <kdialog.h>

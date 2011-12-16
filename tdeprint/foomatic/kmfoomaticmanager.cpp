@@ -136,7 +136,7 @@ DrMain* KMFoomaticManager::createDriverFromXML(TQDomElement *elem)
 	{
 		driver->set("manufacturer", pelem.namedItem("make").toElement().text());
 		driver->set("model", pelem.namedItem("model").toElement().text());
-		QString	s = TQString::fromLatin1("%1 %2 (%3)").arg(driver->get("manufacturer")).arg(driver->get("model")).arg(delem.namedItem("name").toElement().text());
+		QString	s = TQString::tqfromLatin1("%1 %2 (%3)").arg(driver->get("manufacturer")).arg(driver->get("model")).arg(delem.namedItem("name").toElement().text());
 		driver->set("description", s);
 		driver->set("text", s);
 

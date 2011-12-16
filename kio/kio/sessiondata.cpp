@@ -19,7 +19,7 @@
 */
 
 #include <tqptrlist.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 #include <kdebug.h>
 #include <kconfig.h>
@@ -273,7 +273,7 @@ void SessionData::reset()
 
     // Get language settings...
     TQStringList languageList = KGlobal::locale()->languagesTwoAlpha();
-    TQStringList::Iterator it = languageList.find( TQString::fromLatin1("C") );
+    TQStringList::Iterator it = languageList.find( TQString::tqfromLatin1("C") );
     if ( it != languageList.end() )
     {
         if ( languageList.contains( english ) > 0 )
@@ -286,7 +286,7 @@ void SessionData::reset()
 
     d->language = languageList.join( ", " );
 
-    d->charsets = TQString::fromLatin1(TQTextCodec::codecForLocale()->mimeName()).lower();
+    d->charsets = TQString::tqfromLatin1(TQTextCodec::codecForLocale()->mimeName()).lower();
     KProtocolManager::reparseConfiguration();
 }
 

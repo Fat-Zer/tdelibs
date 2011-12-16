@@ -144,7 +144,7 @@ class ResourceExampleConfig : public KRES::ResourceConfigWidget
 
   <B>resourceexampleconfig.cpp</B>:
 \code
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqlabel.h>
 #include <kresources/resourceconfigwidget.h>
 #include "resourceexample.h"

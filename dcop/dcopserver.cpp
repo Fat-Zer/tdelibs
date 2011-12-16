@@ -49,7 +49,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define QT_CLEAN_NAMESPACE 1
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqdatastream.h>
 #include <tqptrstack.h>
 #include <tqtimer.h>
@@ -126,8 +126,8 @@ static TQCString readQCString(TQDataStream &ds)
    TQCString result;
    TQ_UINT32 len;
    ds >> len;
-   TQIODevice *device = ds.device();
-   int bytesLeft = device->size()-device->at();
+   TQIODevice *device = ds.tqdevice();
+   int bytesLeft = device->size()-device->tqat();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
       qWarning("Corrupt data!\n");
@@ -145,8 +145,8 @@ static TQByteArray readQByteArray(TQDataStream &ds)
    TQByteArray result;
    TQ_UINT32 len;
    ds >> len;
-   TQIODevice *device = ds.device();
-   int bytesLeft = device->size()-device->at();
+   TQIODevice *device = ds.tqdevice();
+   int bytesLeft = device->size()-device->tqat();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
       qWarning("Corrupt data!\n");

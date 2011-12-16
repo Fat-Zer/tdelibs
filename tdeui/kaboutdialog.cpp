@@ -20,10 +20,10 @@
  *
  */
 
-#include <clipboard.h>
+#include <tqclipboard.h>
 #include <tqimage.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <ktextedit.h>
 #include <tqobjectlist.h>
 #include <tqpainter.h>
@@ -429,7 +429,7 @@ void KAboutContainerBase::show( void )
 
 TQSize KAboutContainerBase::sizeHint( void ) const
 {
-    return minimumSize().expandedTo( TQSize( TQWidget::sizeHint().width(), 0 ) );
+    return tqminimumSize().expandedTo( TQSize( TQWidget::sizeHint().width(), 0 ) );
 }
 
 void KAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
@@ -828,7 +828,7 @@ TQSize KAboutContainer::sizeHint( void ) const
       ++numChild;
       TQWidget* const w= TQT_TQWIDGET(o);
 
-      TQSize s = w->minimumSize();
+      TQSize s = w->tqminimumSize();
       if( s.isEmpty() )
       {
 	s = w->minimumSizeHint();
@@ -890,7 +890,7 @@ void KAboutContainer::addPerson( const TQString &_name, const TQString &_email,
 }
 
 
-void KAboutContainer::addTitle( const TQString &title, int alignment,
+void KAboutContainer::addTitle( const TQString &title, int tqalignment,
 				bool showFrame, bool showBold )
 {
 
@@ -905,11 +905,11 @@ void KAboutContainer::addTitle( const TQString &title, int alignment,
   {
     label->setFrameStyle(TQFrame::Panel | TQFrame::Raised);
   }
-  label->setAlignment( alignment );
+  label->setAlignment( tqalignment );
 }
 
 
-void KAboutContainer::addImage( const TQString &fileName, int alignment )
+void KAboutContainer::addImage( const TQString &fileName, int tqalignment )
 {
   if( fileName.isNull() )
   {
@@ -924,7 +924,7 @@ void KAboutContainer::addImage( const TQString &fileName, int alignment )
     pix = logo;
     label->setPixmap( pix );
   }
-  label->setAlignment( alignment );
+  label->setAlignment( tqalignment );
 }
 
 #if 0

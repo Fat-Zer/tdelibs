@@ -317,7 +317,7 @@ void KFileDetailView::updateView( const KFileItem *i )
     item->init();
     setSortingKey( item, i );
 
-    //item->repaint(); // only repaints if visible
+    //item->tqrepaint(); // only repaints if visible
 }
 
 void KFileDetailView::setSortingKey( KFileListViewItem *item,

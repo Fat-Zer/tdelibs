@@ -1,6 +1,6 @@
 
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 
 #include <kapplication.h>

@@ -35,7 +35,7 @@
 #include <kdebug.h>
 #include <kprocess.h>
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 
 #include <stdlib.h>
@@ -104,7 +104,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 				KURL	url ( parsePostpipe(postpipe) );
 				if (!url.isEmpty())
 				{
-					TQString	ds = TQString::fromLatin1("%1 (%2)").arg(prt->location()).arg(url.protocol());
+					TQString	ds = TQString::tqfromLatin1("%1 (%2)").arg(prt->location()).arg(url.protocol());
 					prt->setDevice(url.url());
 					prt->setLocation(ds);
 				}
@@ -115,7 +115,7 @@ bool MaticHandler::completePrinter(KMPrinter *prt, PrintcapEntry *entry, bool sh
 			{
 				prt->setManufacturer(m["make"].toString());
 				prt->setModel(m["model"].toString());
-				prt->setDriverInfo(TQString::fromLatin1("%1 %2 (%3)").arg(prt->manufacturer()).arg(prt->model()).arg(m["driver"].toString()));
+				prt->setDriverInfo(TQString::tqfromLatin1("%1 %2 (%3)").arg(prt->manufacturer()).arg(prt->model()).arg(m["driver"].toString()));
 			}
 		}
 	}
@@ -247,7 +247,7 @@ DrMain* MaticHandler::loadDbDriver(const TQString& path)
 	}
 
 	TQString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	TQString	PATH = getenv("PATH") + TQString::tqfromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
@@ -351,7 +351,7 @@ bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 	if (mdriver.isEmpty() || mprinter.isEmpty())
 		return true;
 
-	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
+	TQString	PATH = getenv("PATH") + TQString::tqfromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
 	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{

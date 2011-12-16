@@ -46,10 +46,10 @@ KSycocaFactory::KSycocaFactory(KSycocaFactoryId factory_id)
           (*m_str) >> i;
           m_endEntryOffset = i;
 
-          int saveOffset = m_str->device()->at();
+          int saveOffset = m_str->tqdevice()->tqat();
           // Init index tables
           m_sycocaDict = new KSycocaDict(m_str, m_sycocaDictOffset);   
-          saveOffset = m_str->device()->at(saveOffset);
+          saveOffset = m_str->tqdevice()->tqat(saveOffset);
       }
    }
    else
@@ -78,7 +78,7 @@ void
 KSycocaFactory::saveHeader(TQDataStream &str)
 {
    // Write header 
-   str.device()->at(mOffset);
+   str.tqdevice()->tqat(mOffset);
    str << (TQ_INT32) m_sycocaDictOffset;
    str << (TQ_INT32) m_beginEntryOffset;
    str << (TQ_INT32) m_endEntryOffset;
@@ -91,13 +91,13 @@ KSycocaFactory::save(TQDataStream &str)
                              // building database
    if (!m_sycocaDict) return; // Error!
 
-   mOffset = str.device()->at(); // store position in member variable
+   mOffset = str.tqdevice()->tqat(); // store position in member variable
    m_sycocaDictOffset = 0;
 
    // Write header (pass #1)
    saveHeader(str);
 
-   m_beginEntryOffset = str.device()->at();
+   m_beginEntryOffset = str.tqdevice()->tqat();
 
    // Write all entries.
    int entryCount = 0;
@@ -110,7 +110,7 @@ KSycocaFactory::save(TQDataStream &str)
       entryCount++;
    }
 
-   m_endEntryOffset = str.device()->at();
+   m_endEntryOffset = str.tqdevice()->tqat();
 
    // Write indices...
    // Linear index
@@ -124,16 +124,16 @@ KSycocaFactory::save(TQDataStream &str)
    }
 
    // Dictionary index
-   m_sycocaDictOffset = str.device()->at();      
+   m_sycocaDictOffset = str.tqdevice()->tqat();      
    m_sycocaDict->save(str);
 
-   int endOfFactoryData = str.device()->at();
+   int endOfFactoryData = str.tqdevice()->tqat();
 
    // Update header (pass #2)
    saveHeader(str);
 
    // Seek to end.
-   str.device()->at(endOfFactoryData);
+   str.tqdevice()->tqat(endOfFactoryData);
 }
 
 void 
@@ -169,7 +169,7 @@ KSycocaEntry::List KSycocaFactory::allEntries()
 
    // Assume we're NOT building a database
 
-   m_str->device()->at(m_endEntryOffset);
+   m_str->tqdevice()->tqat(m_endEntryOffset);
    TQ_INT32 entryCount;
    (*m_str) >> entryCount;
    

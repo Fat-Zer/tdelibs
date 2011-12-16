@@ -70,7 +70,7 @@ private:
 static inline unsigned int stupidHash(void* ptr)
 {
     unsigned long val = (unsigned long)ptr;
-    // remove alignment and multiply by a prime unlikely to be a factor of size
+    // remove tqalignment and multiply by a prime unlikely to be a factor of size
     val = (val >> 4) * 1237;
     return val;
 }

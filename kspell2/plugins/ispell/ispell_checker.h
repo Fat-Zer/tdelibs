@@ -36,7 +36,7 @@
 
 #include <tqstringlist.h>
 #include <tqvaluelist.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 #include <tqstring.h>
 
 
@@ -112,7 +112,7 @@ private:
 
 	/*
 		HACK: macros replaced with function implementations
-		so we could do a side-effect-free check for unicode
+		so we could do a side-effect-free check for tqunicode
 		characters which aren't in hashheader
 	*/
 	char myupper(ichar_t c);

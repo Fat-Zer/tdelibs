@@ -90,14 +90,14 @@ void KPopupTitle::paintEvent(TQPaintEvent *)
 {
     TQRect r(rect());
     TQPainter p(this);
-    kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSectionMenu, &p, r, palette().active());
+    kapp->tqstyle().tqdrawPrimitive(TQStyle::PE_HeaderSectionMenu, &p, r, tqpalette().active());
 
     if (!miniicon.isNull())
         p.drawPixmap(4, (r.height()-miniicon.height())/2, miniicon);
 
     if (!titleStr.isNull())
     {
-        p.setPen(palette().active().text());
+        p.setPen(tqpalette().active().text());
         TQFont f = p.font();
         f.setBold(true);
         p.setFont(f);
@@ -117,7 +117,7 @@ void KPopupTitle::paintEvent(TQPaintEvent *)
 
 TQSize KPopupTitle::sizeHint() const
 {
-    return minimumSize();
+    return tqminimumSize();
 }
 
 class KPopupMenu::KPopupMenuPrivate

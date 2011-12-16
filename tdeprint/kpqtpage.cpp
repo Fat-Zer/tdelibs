@@ -28,7 +28,7 @@
 #include <tqbuttongroup.h>
 #include <tqradiobutton.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqwhatsthis.h>
 
 #include <kiconloader.h>
@@ -164,15 +164,15 @@ void KPQtPage::init()
 	lay0->addWidget(m_orientbox,1,0);
 	lay0->addWidget(m_colorbox,1,1);
 	lay0->addWidget(m_nupbox,2,0);
-	TQGridLayout	*lay1 = new TQGridLayout(m_orientbox->layout(), 2, 2, 10);
+	TQGridLayout	*lay1 = new TQGridLayout(m_orientbox->tqlayout(), 2, 2, 10);
 	lay1->addWidget(m_portrait,0,0);
 	lay1->addWidget(m_landscape,1,0);
 	lay1->addMultiCellWidget(m_orientpix,0,1,1,1);
-	TQGridLayout	*lay2 = new TQGridLayout(m_colorbox->layout(), 2, 2, 10);
+	TQGridLayout	*lay2 = new TQGridLayout(m_colorbox->tqlayout(), 2, 2, 10);
 	lay2->addWidget(m_color,0,0);
 	lay2->addWidget(m_grayscale,1,0);
 	lay2->addMultiCellWidget(m_colorpix,0,1,1,1);
-	TQGridLayout	*lay3 = new TQGridLayout(m_nupbox->layout(), 4, 2, 5);
+	TQGridLayout	*lay3 = new TQGridLayout(m_nupbox->tqlayout(), 4, 2, 5);
 	lay3->addWidget(m_nup1,0,0);
 	lay3->addWidget(m_nup2,1,0);
 	lay3->addWidget(m_nup4,2,0);
@@ -305,7 +305,7 @@ void KPQtPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 		DrListOption	*opt = static_cast<DrListOption*>(driver()->findOption("PageSize"));
 		if (opt)
 		{
-			DrBase	*ch = opt->choices()->at(m_pagesize->currentItem());
+			DrBase	*ch = opt->choices()->tqat(m_pagesize->currentItem());
 			if (ch && (incldef || ch->name() != opt->get("default")))
 			{
 				opts["PageSize"] = ch->name();

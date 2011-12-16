@@ -153,7 +153,7 @@ bool KHttpProxySocketDevice::connect(const TQString& node, const TQString& servi
       setState(0);		// unset open flag
 
       // prepare the request
-      TQString request = TQString::fromLatin1("CONNECT %1:%2 HTTP/1.1\r\n"
+      TQString request = TQString::tqfromLatin1("CONNECT %1:%2 HTTP/1.1\r\n"
 					    "Cache-Control: no-cache\r\n"
 					    "Host: \r\n"
 					    "\r\n");

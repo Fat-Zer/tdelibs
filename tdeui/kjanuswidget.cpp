@@ -23,7 +23,7 @@
 #include <tqhbox.h>
 #include <tqheader.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqobjectlist.h>
 #include <tqpixmap.h>
 #include <tqsplitter.h>
@@ -518,7 +518,7 @@ bool KJanusWidget::setSwallowedWidget( TQWidget *widget )
   TQObjectList l = mSwallowPage->childrenListObject(); // silence please
   for( uint i=0; i < l.count(); i++ )
   {
-    TQObject *o = l.at(i);
+    TQObject *o = l.tqat(i);
     if( o->isWidgetType() )
     {
       ((TQWidget*)o)->hide();
@@ -542,7 +542,7 @@ bool KJanusWidget::setSwallowedWidget( TQWidget *widget )
     }
     gbox->addWidget(widget, 0, 0 );
     gbox->activate();
-    mSwallowPage->setMinimumSize( widget->minimumSize() );
+    mSwallowPage->setMinimumSize( widget->tqminimumSize() );
   }
 
   return true;
@@ -769,20 +769,20 @@ TQSize KJanusWidget::minimumSizeHint() const
 
     if( mFace == TreeList )
     {
-      s1.rwidth() += tqstyle().pixelMetric( TQStyle::PM_SplitterWidth );
-      s2 = mTreeList->minimumSize();
+      s1.rwidth() += tqstyle().tqpixelMetric( TQStyle::PM_SplitterWidth );
+      s2 = mTreeList->tqminimumSize();
     }
     else
     {
       mIconList->updateMinimumHeight();
       mIconList->updateWidth();
-      s2 = mIconList->minimumSize();
+      s2 = mIconList->tqminimumSize();
     }
 
     if( mTitleLabel->isVisible() )
     {
       s3 += mTitleLabel->sizeHint();
-      s3.rheight() += mTitleSep->minimumSize().height();
+      s3.rheight() += mTitleSep->tqminimumSize().height();
     }
 
     //
@@ -799,7 +799,7 @@ TQSize KJanusWidget::minimumSizeHint() const
   }
   else if( mFace == Swallow )
   {
-    return mSwallowPage->minimumSize();
+    return mSwallowPage->tqminimumSize();
   }
   else if( mFace == Plain )
   {
@@ -1074,13 +1074,13 @@ void KJanusWidget::IconListItem::highlight( bool erase )
    // For now, always disable highlighting
    erase = true;
 
-   TQRect r = listBox()->itemRect( this );
+   TQRect r = listBox()->tqitemRect( this );
    r.addCoords( 1, 1, -1, -1 );
 
    TQPainter p( listBox()->viewport() );
    p.setClipRegion( r );
 
-   const TQColorGroup &cg = listBox()->colorGroup();
+   const TQColorGroup &cg = listBox()->tqcolorGroup();
    if ( erase )
    {
       p.setPen( cg.base() );
@@ -1129,7 +1129,7 @@ const TQPixmap &KJanusWidget::IconListItem::defaultPixmap()
 
 void KJanusWidget::IconListItem::paint( TQPainter *painter )
 {
-  TQRect itemPaintRegion( listBox()->itemRect( this ) );
+  TQRect itemPaintRegion( listBox()->tqitemRect( this ) );
   TQRect r( 1, 1, itemPaintRegion.width() - 2, itemPaintRegion.height() - 2);
 
   if ( isSelected() )
@@ -1137,7 +1137,7 @@ void KJanusWidget::IconListItem::paint( TQPainter *painter )
     painter->eraseRect( r );
 
     painter->save();
-    painter->setPen( listBox()->colorGroup().highlight().dark( 160 ) );
+    painter->setPen( listBox()->tqcolorGroup().highlight().dark( 160 ) );
     painter->drawRect( r );
     painter->restore();
   }

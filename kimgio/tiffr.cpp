@@ -30,14 +30,14 @@ static toff_t tiff_seek( thandle_t handle, toff_t off, int whence )
     TQIODevice *dev = reinterpret_cast<TQIODevice *>( handle );
 
     if ( whence == SEEK_CUR )
-	off += dev->at();
+	off += dev->tqat();
     else if ( whence == SEEK_END )
 	off += dev->size();
 
-    if ( !dev->at( off ) )
+    if ( !dev->tqat( off ) )
 	return ( toff_t )-1;
 
-    return dev->at();
+    return dev->tqat();
 }
 
 static toff_t tiff_size( thandle_t handle )
@@ -140,7 +140,7 @@ KDE_EXPORT void kimgio_tiff_read( TQImageIO *io )
 	TIFFClose( tiff );
 
 	io->setImage( image );
-	io->seStatus ( 0 );
+	io->setqStatus ( 0 );
 }
 
 KDE_EXPORT void kimgio_tiff_write( TQImageIO * )

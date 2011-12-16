@@ -23,7 +23,7 @@
 #include <stdio.h>
 
 #include <tqfile.h>
-#include <textstream.h>
+#include <tqtextstream.h>
 #include <tqregexp.h>
 
 #include <dcopclient.h>

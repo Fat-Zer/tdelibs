@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <tqcheckbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqhbox.h>
 #include <tqsettings.h>
 #include <tqcolor.h>

@@ -24,7 +24,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kcharsets.h>
-#include <textcodec.h>
+#include <tqtextcodec.h>
 
 #include <sys/types.h>
 #include <stddef.h>

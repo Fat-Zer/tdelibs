@@ -231,7 +231,7 @@ DrMain* KMLprManager::loadPrinterDriver(KMPrinter *prt, bool config)
 DrMain* KMLprManager::loadFileDriver(const TQString& filename)
 {
 	int	p = filename.find('/');
-	TQString	handler_str = (p != -1 ? filename.left(p) : TQString::fromLatin1("default"));
+	TQString	handler_str = (p != -1 ? filename.left(p) : TQString::tqfromLatin1("default"));
 	LprHandler	*handler = m_handlers.find(handler_str);
 	if (handler)
 	{
@@ -422,7 +422,7 @@ bool KMLprManager::removePrinter(KMPrinter *prt)
 
 TQString KMLprManager::driverDbCreationProgram()
 {
-	return TQString::fromLatin1("make_driver_db_lpr");
+	return TQString::tqfromLatin1("make_driver_db_lpr");
 }
 
 TQString KMLprManager::driverDirectory()

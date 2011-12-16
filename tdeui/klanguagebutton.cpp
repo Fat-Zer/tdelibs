@@ -23,7 +23,7 @@
 
 #define INCLUDE_MENUITEM_DEF
 #include <tqpopupmenu.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqpushbutton.h>
 
 #include "klanguagebutton.h"
@@ -131,12 +131,12 @@ KLanguageButton::~KLanguageButton()
 void KLanguageButton::insertLanguage( const TQString& path, const TQString& name,
                         const TQString&, const TQString &submenu, int index )
 {
-  TQString output = name + TQString::fromLatin1( " (" ) + path +
-                   TQString::fromLatin1( ")" );
+  TQString output = name + TQString::tqfromLatin1( " (" ) + path +
+                   TQString::tqfromLatin1( ")" );
 #if 0
   // Nooooo ! Country != language
   TQPixmap flag( locate( "locale", sub + path +
-                TQString::fromLatin1( "/flag.png" ) ) );
+                TQString::tqfromLatin1( "/flag.png" ) ) );
 #endif
   insertItem( output, path, submenu, index );
 }
@@ -191,7 +191,7 @@ void KLanguageButton::slotActivated( int index )
   setCurrentItem( index );
 
   // Forward event from popup menu as if it was emitted from this widget:
-  TQString id = *m_ids->at( index );
+  TQString id = *m_ids->tqat( index );
   emit activated( id );
 }
 
@@ -199,7 +199,7 @@ void KLanguageButton::slotHighlighted( int index )
 {
   //kdDebug() << "slotHighlighted" << index << endl;
 
-  TQString id = *m_ids->at( index );
+  TQString id = *m_ids->tqat( index );
   emit ( highlighted(id) );
 }
 
@@ -237,7 +237,7 @@ bool KLanguageButton::contains( const TQString & id ) const
 
 TQString KLanguageButton::current() const
 {
-  return *m_ids->at( currentItem() );
+  return *m_ids->tqat( currentItem() );
 }
 
 
@@ -248,7 +248,7 @@ TQString KLanguageButton::id( int i ) const
     kdDebug() << "KLanguageButton::tag(), unknown tag " << i << endl;
     return TQString::null;
   }
-  return *m_ids->at( i );
+  return *m_ids->tqat( i );
 }
 
 

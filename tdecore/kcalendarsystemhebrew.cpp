@@ -614,7 +614,7 @@ TQDate KCalendarSystemHebrew::addYears( const TQDate & date, int nyears ) const
 // Ok
 TQString KCalendarSystemHebrew::calendarName() const
 {
-  return TQString::fromLatin1("hebrew");
+  return TQString::tqfromLatin1("hebrew");
 }
 
 // Ok
@@ -640,7 +640,7 @@ TQString KCalendarSystemHebrew::dayString(const TQDate & pDate, bool bShort) con
   TQString sResult;
 
   // Only use hebrew numbers if the hebrew setting is selected
-  if (locale()->language() == TQString::fromLatin1("he"))
+  if (locale()->language() == TQString::tqfromLatin1("he"))
     sResult = num2heb(day(pDate), false);
   else
     sResult = KCalendarSystem::dayString(pDate, bShort);
@@ -653,7 +653,7 @@ TQString KCalendarSystemHebrew::yearString(const TQDate & pDate, bool bShort) co
   TQString sResult;
 
   // Only use hebrew numbers if the hebrew setting is selected
-  if (locale()->language() == TQString::fromLatin1("he"))
+  if (locale()->language() == TQString::tqfromLatin1("he"))
     sResult = num2heb(year(pDate), !bShort);
   else
     sResult = KCalendarSystem::yearString(pDate, bShort);
@@ -684,9 +684,9 @@ static int heb2num(const TQString& str, int & iLength) {
     {
       if (s.length() > pos && s[pos + 1] >= TQChar(0x05D0) &&
           s[pos + 1] <= TQChar(0x05EA))
-        result += (c.unicode() - 0x05D0 + 1) * 1000;
+        result += (c.tqunicode() - 0x05D0 + 1) * 1000;
       else
-        result += c.unicode() - 0x05D0 + 1;
+        result += c.tqunicode() - 0x05D0 + 1;
     }
     else if (c == TQChar(0x05D8))
     {
@@ -702,11 +702,11 @@ static int heb2num(const TQString& str, int & iLength) {
       if (s.length() > pos && s[pos + 1] >= TQChar(0x05D9))
         return -1;
       else
-        result += decadeValues[c.unicode() - 0x05D9];
+        result += decadeValues[c.tqunicode() - 0x05D9];
     }
     else if (c >= TQChar(0x05E7) && c <= TQChar(0x05EA))
     {
-      result += (c.unicode() - 0x05E7 + 1) * 100;
+      result += (c.tqunicode() - 0x05E7 + 1) * 100;
     }
     else
     {

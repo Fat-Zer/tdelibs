@@ -25,7 +25,7 @@
 #include <kdialog.h>
 #include <kconfig.h>
 #include <tqgroupbox.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <kcursor.h>
 
 KMConfigCupsDir::KMConfigCupsDir(TQWidget *parent)

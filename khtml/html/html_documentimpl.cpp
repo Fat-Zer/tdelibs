@@ -110,8 +110,8 @@ DOMString HTMLDocumentImpl::cookie() const
     long windowId = 0;
     KHTMLView *v = view ();
 
-    if ( v && v->topLevelWidget() )
-      windowId = v->topLevelWidget()->winId();
+    if ( v && v->tqtopLevelWidget() )
+      windowId = v->tqtopLevelWidget()->winId();
 
     TQCString replyType;
     TQByteArray params, reply;
@@ -142,8 +142,8 @@ void HTMLDocumentImpl::setCookie( const DOMString & value )
     long windowId = 0;
     KHTMLView *v = view ();
 
-    if ( v && v->topLevelWidget() )
-      windowId = v->topLevelWidget()->winId();
+    if ( v && v->tqtopLevelWidget() )
+      windowId = v->tqtopLevelWidget()->winId();
 
     TQByteArray params;
     TQDataStream stream(params, IO_WriteOnly);
@@ -226,7 +226,7 @@ void HTMLDocumentImpl::slotHistoryChanged()
         return;
 
     recalcStyle( Force );
-    m_render->repaint();
+    m_render->tqrepaint();
 }
 
 HTMLMapElementImpl* HTMLDocumentImpl::getMap(const DOMString& _url)
@@ -235,7 +235,7 @@ HTMLMapElementImpl* HTMLDocumentImpl::getMap(const DOMString& _url)
     TQString s;
     int pos = url.find('#');
     //kdDebug(0) << "map pos of #:" << pos << endl;
-    s = TQString(_url.unicode() + pos + 1, _url.length() - pos - 1);
+    s = TQString(_url.tqunicode() + pos + 1, _url.length() - pos - 1);
 
     TQMapConstIterator<TQString,HTMLMapElementImpl*> it = mapMap.find(s);
 

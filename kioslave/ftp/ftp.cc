@@ -71,9 +71,9 @@
 #endif
 
 // JPF: a remark on coding style (2004-03-06):
-// Some calls to TQString::fromLatin1() were removed from the code. In most places
+// Some calls to TQString::tqfromLatin1() were removed from the code. In most places
 // the KDE code relies on implicit creation of QStrings. Also Qt has a lot of
-// const char* overloads, so that using TQString::fromLatin1() can be ineffectient!
+// const char* overloads, so that using TQString::tqfromLatin1() can be ineffectient!
 
 #define FTP_LOGIN   "anonymous"
 #define FTP_PASSWD  "anonymous@"
@@ -968,7 +968,7 @@ int Ftp::ftpOpenEPRTDataConnection()
   if (sin == NULL)
     return ERR_INTERNAL;
 
-  //  TQString command = TQString::fromLatin1("eprt |%1|%2|%3|").arg(sin->ianaFamily())
+  //  TQString command = TQString::tqfromLatin1("eprt |%1|%2|%3|").arg(sin->ianaFamily())
   //  .arg(sin->nodeName())
   //  .arg(sin->port());
   TQCString command;

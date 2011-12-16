@@ -26,7 +26,7 @@
 #include <tqcombobox.h>
 #include <tqvbox.h>
 #include <tqlabel.h>
-#include <layout.h>
+#include <tqlayout.h>
 #include <tqtoolbutton.h>
 #include <tqheader.h>
 

@@ -356,7 +356,7 @@ bool KURLLabel::event (TQEvent *e)
     // use parentWidget() unless you are a toplevel widget, then try qAapp
     TQPalette p = parentWidget() ? parentWidget()->palette() : tqApp->palette();
     p.setBrush(TQColorGroup::Base, p.brush(TQPalette::Normal, TQColorGroup::Background));
-    p.setColor(TQColorGroup::Foreground, palette().active().foreground());
+    p.setColor(TQColorGroup::Foreground, tqpalette().active().foreground());
     setPalette(p);
     d->LinkColor = KGlobalSettings::linkColor();
     setLinkColor(d->LinkColor);
@@ -367,7 +367,7 @@ bool KURLLabel::event (TQEvent *e)
     if (result && hasFocus()) {
         TQPainter p(this);
         TQRect r( activeRect() );
-        tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, &p, r, colorGroup() );
+        tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, &p, r, tqcolorGroup() );
     }
     return result;
   }
@@ -407,7 +407,7 @@ TQRect KURLLabel::activeRect() const
   TQRect r( contentsRect() );
   if (text().isEmpty() || (!d->MarginAltered && sizePolicy() == TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed)))
       return r; //fixed size is sometimes used with pixmap
-  int hAlign = TQApplication::horizontalAlignment( alignment() );
+  int hAlign = TQApplication::horizontalAlignment( tqalignment() );
   int indentX = (hAlign && indent()>0) ? indent() : 0;
   TQFontMetrics fm(font());
   r.setWidth( QMIN(fm.width(text()), r.width()));
