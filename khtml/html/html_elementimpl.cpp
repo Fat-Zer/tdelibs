@@ -620,32 +620,32 @@ void HTMLElementImpl::setInnerText( const DOMString &text, int& exceptioncode )
     appendChild( t, exceptioncode );
 }
 
-void HTMLElementImpl::addHTMLAlignment( DOMString tqalignment )
+void HTMLElementImpl::addHTMLAlignment( DOMString alignment )
 {
-    //qDebug("tqalignment is %s", tqalignment.string().latin1() );
-    // vertical tqalignment with respect to the current baseline of the text
+    //qDebug("alignment is %s", alignment.string().latin1() );
+    // vertical alignment with respect to the current baseline of the text
     // right or left means floating images
     int propfloat = -1;
     int propvalign = -1;
-    if ( strcasecmp( tqalignment, "absmiddle" ) == 0 ) {
+    if ( strcasecmp( alignment, "absmiddle" ) == 0 ) {
         propvalign = CSS_VAL_MIDDLE;
-    } else if ( strcasecmp( tqalignment, "absbottom" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "absbottom" ) == 0 ) {
         propvalign = CSS_VAL_BOTTOM;
-    } else if ( strcasecmp( tqalignment, "left" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "left" ) == 0 ) {
 	propfloat = CSS_VAL_LEFT;
 	propvalign = CSS_VAL_TOP;
-    } else if ( strcasecmp( tqalignment, "right" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "right" ) == 0 ) {
 	propfloat = CSS_VAL_RIGHT;
 	propvalign = CSS_VAL_TOP;
-    } else if ( strcasecmp( tqalignment, "top" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "top" ) == 0 ) {
 	propvalign = CSS_VAL_TOP;
-    } else if ( strcasecmp( tqalignment, "middle" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "middle" ) == 0 ) {
 	propvalign = CSS_VAL__KHTML_BASELINE_MIDDLE;
-    } else if ( strcasecmp( tqalignment, "center" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "center" ) == 0 ) {
 	propvalign = CSS_VAL_MIDDLE;
-    } else if ( strcasecmp( tqalignment, "bottom" ) == 0 ) {
+    } else if ( strcasecmp( alignment, "bottom" ) == 0 ) {
 	propvalign = CSS_VAL_BASELINE;
-    } else if ( strcasecmp ( tqalignment, "texttop") == 0 ) {
+    } else if ( strcasecmp ( alignment, "texttop") == 0 ) {
 	propvalign = CSS_VAL_TEXT_TOP;
     }
 

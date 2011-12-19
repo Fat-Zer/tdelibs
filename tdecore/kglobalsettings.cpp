@@ -451,7 +451,7 @@ TQFont KGlobalSettings::taskbarFont()
 TQFont KGlobalSettings::largeFont(const TQString &text)
 {
     TQFontDatabase db;
-    TQStringList fam = db.tqfamilies();
+    TQStringList fam = db.families();
 
     // Move a bunch of preferred fonts to the front.
     if (fam.remove("Arial"))

@@ -49,7 +49,7 @@ void KArrowButton::setArrowType(Qt::ArrowType a)
 {
 	if (d->arrow != a) {
 		d->arrow = a;
-		tqrepaint();
+		repaint();
 	}
 }
 Qt::ArrowType KArrowButton::arrowType() const

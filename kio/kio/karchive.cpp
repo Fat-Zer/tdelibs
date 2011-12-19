@@ -90,7 +90,7 @@ KArchive::~KArchive()
 
 bool KArchive::open( int mode )
 {
-    if ( m_dev && !m_dev->tqopen( mode ) )
+    if ( m_dev && !m_dev->open( mode ) )
         return false;
 
     if ( m_open )
@@ -491,7 +491,7 @@ int KArchiveFile::size() const
 
 TQByteArray KArchiveFile::data() const
 {
-  archive()->device()->tqat( m_pos );
+  archive()->device()->at( m_pos );
 
   // Read content
   TQByteArray arr( m_size );

@@ -815,7 +815,7 @@ KDateInternalMonthPicker::contentsMouseMoveEvent(TQMouseEvent *e)
               updateCell( row, col /*, false */ ); // mark the new active cell
             }
         }
-      if ( tmpRow > -1 ) // tqrepaint the former active cell
+      if ( tmpRow > -1 ) // repaint the former active cell
           updateCell( tmpRow, tmpCol /*, true */ );
     }
 }
@@ -1006,7 +1006,7 @@ int
 KPopupFrame::exec(TQPoint pos)
 {
   popup(pos);
-  tqrepaint();
+  repaint();
   d->exec = true;
   const TQGuardedPtr<TQObject> that = TQT_TQOBJECT(this);
   tqApp->enter_loop();

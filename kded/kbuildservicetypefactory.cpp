@@ -152,13 +152,13 @@ KBuildServiceTypeFactory::save(TQDataStream &str)
 
    savePatternLists(str);
 
-   int endOfFactoryData = str.tqdevice()->tqat();
+   int endOfFactoryData = str.device()->at();
 
    // Update header (pass #3)
    saveHeader(str);
 
    // Seek to end.
-   str.tqdevice()->tqat(endOfFactoryData);
+   str.device()->at(endOfFactoryData);
 }
 
 void
@@ -203,10 +203,10 @@ KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
    TQ_INT32 entrySize = 0;
    TQ_INT32 nrOfEntries = 0;
 
-   m_fastPatternOffset = str.tqdevice()->tqat();
+   m_fastPatternOffset = str.device()->at();
 
    // Write out fastPatternHeader (Pass #1)
-   str.tqdevice()->tqat(m_fastPatternOffset);
+   str.device()->at(m_fastPatternOffset);
    str << nrOfEntries;
    str << entrySize;
 
@@ -214,27 +214,27 @@ KBuildServiceTypeFactory::savePatternLists(TQDataStream &str)
    TQStringList::ConstIterator it = fastPatterns.begin();
    for ( ; it != fastPatterns.end() ; ++it )
    {
-     int start = str.tqdevice()->tqat();
+     int start = str.device()->at();
      // Justify to 6 chars with spaces, so that the size remains constant
      // in the database file.
      TQString paddedPattern = (*it).leftJustify(6).right(4); // remove leading "*."
      //kdDebug(7021) << TQString("FAST : '%1' '%2'").arg(paddedPattern).arg(dict[(*it)]->name()) << endl;
      str << paddedPattern;
      str << dict[(*it)]->offset();
-     entrySize = str.tqdevice()->tqat() - start;
+     entrySize = str.device()->at() - start;
      nrOfEntries++;
    }
 
    // store position
-   m_otherPatternOffset = str.tqdevice()->tqat();
+   m_otherPatternOffset = str.device()->at();
 
    // Write out fastPatternHeader (Pass #2)
-   str.tqdevice()->tqat(m_fastPatternOffset);
+   str.device()->at(m_fastPatternOffset);
    str << nrOfEntries;
    str << entrySize;
 
    // For the other patterns
-   str.tqdevice()->tqat(m_otherPatternOffset);
+   str.device()->at(m_otherPatternOffset);
 
    it = otherPatterns.begin();
    for ( ; it != otherPatterns.end() ; ++it )

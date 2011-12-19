@@ -214,7 +214,7 @@ void KProcessController::slotDoHousekeeping()
     if( waitpid( *uit, 0, WNOHANG ) > 0 )
     {
       uit = unixProcessList.remove( uit );
-      deref(); // counterpart to addProcess, can tqinvalidate 'this'
+      deref(); // counterpart to addProcess, can invalidate 'this'
     } else
       ++uit;
   }

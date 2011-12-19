@@ -81,11 +81,11 @@ void RenderBody::paintBoxDecorations(PaintInfo& paintInfo, int _tx, int _ty)
 
 }
 
-void RenderBody::tqrepaint(Priority p)
+void RenderBody::repaint(Priority p)
 {
     RenderObject *cb = containingBlock();
     if(cb)
-	cb->tqrepaint(p);
+	cb->repaint(p);
 }
 
 void RenderBody::layout()

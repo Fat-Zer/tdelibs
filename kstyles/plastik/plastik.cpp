@@ -885,8 +885,8 @@ void PlastikStyle::renderPanel(TQPainter *p,
     r.coords(&x, &y, &x2, &y2);
 
     if (kickerMode &&
-            p->tqdevice() && p->tqdevice()->devType() == TQInternal::Widget &&
-            TQCString(TQT_TQWIDGET(static_cast<TQPaintDevice*>(p->tqdevice()))->className()) == "FittsLawFrame") {
+            p->device() && p->device()->devType() == TQInternal::Widget &&
+            TQCString(TQT_TQWIDGET(static_cast<TQPaintDevice*>(p->device()))->className()) == "FittsLawFrame") {
     //  Stolen wholesale from Keramik. I don't like it, but oh well.
         if (sunken) {
             const TQCOORD corners[] = { x2, y, x2, y2, x, y2, x, y };
@@ -1483,7 +1483,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
             if(!kickerMode) {
                 // detect if this is the left most header item
                 bool isFirst = false;
-                TQHeader *header = dynamic_cast<TQHeader*>(p->tqdevice() );
+                TQHeader *header = dynamic_cast<TQHeader*>(p->device() );
                 if (header) {
                     isFirst = header->mapToIndex(header->sectionAt(r.x() ) ) == 0;
                 }
@@ -1819,7 +1819,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
     // --------------
         case PE_Splitter: {
             // highlight on mouse over
-            TQColor color = (static_cast<TQPaintDevice*>(static_cast<TQWidget*>(hoverWidget)) == static_cast<TQPaintDevice*>(p->tqdevice()))?TQColor(cg.background().light(100+_contrast)):cg.background();
+            TQColor color = (static_cast<TQPaintDevice*>(static_cast<TQWidget*>(hoverWidget)) == static_cast<TQPaintDevice*>(p->device()))?TQColor(cg.background().light(100+_contrast)):cg.background();
             p->fillRect(r, color);
             if (w > h) {
                 if (h > 4) {
@@ -1862,9 +1862,9 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
             bool isEnabled = true;
             // panel is highlighted by default if it has focus, but if we have access to the
             // widget itself we can try to avoid highlighting in case it's readOnly or disabled.
-            if (p->tqdevice() && dynamic_cast<TQLineEdit*>(p->tqdevice()))
+            if (p->device() && dynamic_cast<TQLineEdit*>(p->device()))
             {
-                TQLineEdit* lineEdit = dynamic_cast<TQLineEdit*>(p->tqdevice());
+                TQLineEdit* lineEdit = dynamic_cast<TQLineEdit*>(p->device());
                 isReadOnly = lineEdit->isReadOnly();
                 isEnabled = lineEdit->isEnabled();
             }
@@ -1881,7 +1881,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
             // only thing we know is that khtml buffers its widgets into a pixmap. So
             // when the paint device is a TQPixmap, chances are high that we are in khtml.
             // It's possible that this breaks other things, so let's see how it works...
-            if (p->tqdevice() && dynamic_cast<TQPixmap*>(p->tqdevice() ) ) {
+            if (p->device() && dynamic_cast<TQPixmap*>(p->device() ) ) {
                 contourFlags += Draw_AlphaBlend;
             }
 
@@ -1942,7 +1942,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
         case PE_PanelMenuBar:
         case PE_PanelDockWindow: {
             // fix for toolbar lag (from Mosfet Liquid) 
-            TQWidget* w = dynamic_cast<TQWidget*>(p->tqdevice());
+            TQWidget* w = dynamic_cast<TQWidget*>(p->device());
             if(w && w->backgroundMode() == PaletteButton) 
                 w->setBackgroundMode(PaletteBackground);
             p->fillRect(r, cg.brush(TQColorGroup::Background));
@@ -2301,7 +2301,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 if(cw)
                     cornerWidget = true;
             }
-            TQTabBar::Shape tbs = tb->tqshape();
+            TQTabBar::Shape tbs = tb->shape();
             bool selected = false;
             if (flags & Style_Selected) selected = true;
             TabPosition pos;
@@ -3253,8 +3253,8 @@ int PlastikStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
     // ----
         case PM_TabBarTabVSpace: {
             const TQTabBar * tb = (const TQTabBar *) widget;
-            if (tb->tqshape() == TQTabBar::RoundedAbove ||
-                tb->tqshape() == TQTabBar::RoundedBelow)
+            if (tb->shape() == TQTabBar::RoundedAbove ||
+                tb->shape() == TQTabBar::RoundedBelow)
                 return 12;
             else
                 return 4;
@@ -3464,14 +3464,14 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
             TQWidget* spinbox = widget->parentWidget();
             if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
             {
-                spinbox->tqrepaint(false);
+                spinbox->repaint(false);
             }
             return false;
         }
 
         if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
         {
-            widget->tqrepaint(false);
+            widget->repaint(false);
         }
         return false;
     }
@@ -3485,13 +3485,13 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
         {
             TQWidget* button = TQT_TQWIDGET(obj);
             hoverWidget = button;
-            button->tqrepaint(false);
+            button->repaint(false);
         }
         else if ((ev->type() == TQEvent::Leave) && (TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(hoverWidget)) )
         {
             TQWidget* button = TQT_TQWIDGET(obj);
             hoverWidget = 0;
-            button->tqrepaint(false);
+            button->repaint(false);
         }
         return false;
     }
@@ -3501,7 +3501,7 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
             TQWidget* tabbar = TQT_TQWIDGET(obj);
             hoverWidget = tabbar;
             hoverTab = 0;
-            tabbar->tqrepaint(false);
+            tabbar->repaint(false);
         }
         else if (ev->type() == TQEvent::MouseMove)
         {
@@ -3512,15 +3512,15 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
                 // avoid unnecessary repaints (which otherwise would occour on every
                 // MouseMove event causing high cpu load).
 
-                bool tqrepaint = true;
+                bool repaint = true;
 
                 TQTab *tab = tabbar->selectTab(me->pos() );
                 if (hoverTab == tab)
-                    tqrepaint = false;
+                    repaint = false;
                 hoverTab = tab;
 
-                if (tqrepaint)
-                    tabbar->tqrepaint(false);
+                if (repaint)
+                    tabbar->repaint(false);
             }
         }
         else if (ev->type() == TQEvent::Leave)
@@ -3528,7 +3528,7 @@ bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
             TQWidget* tabbar = TQT_TQWIDGET(obj);
             hoverWidget = 0;
             hoverTab = 0;
-            tabbar->tqrepaint(false);
+            tabbar->repaint(false);
         }
         return false;
     }

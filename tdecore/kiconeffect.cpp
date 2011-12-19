@@ -742,7 +742,7 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect)
 
     TQPainter p(widget);
 
-    // Use NotROP to avoid having to tqrepaint the pixmap each time.
+    // Use NotROP to avoid having to repaint the pixmap each time.
     p.setPen(TQPen(Qt::black, 2, Qt::DotLine));
     p.setRasterOp(TQt::NotROP);
 

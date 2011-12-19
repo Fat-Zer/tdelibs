@@ -85,7 +85,7 @@ void KColorButton::setColor( const TQColor &c )
 {
   if ( col != c ) {
     col = c;
-    tqrepaint( false );
+    repaint( false );
     emit changed( col );
   }
 }

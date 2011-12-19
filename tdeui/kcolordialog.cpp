@@ -1479,7 +1479,7 @@ void KColorDialog::showColor( const KColor &color, const TQString &name )
   d->valuePal->setValue( v );
   d->valuePal->updateContents();
   d->valuePal->blockSignals(false);
-  d->valuePal->tqrepaint( false );
+  d->valuePal->repaint( false );
   d->bRecursion = false;
 }
 

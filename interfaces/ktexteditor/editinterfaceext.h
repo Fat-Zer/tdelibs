@@ -44,7 +44,7 @@ class KTEXTEDITOR_EXPORT EditInterfaceExt
     /**
 	 * Begin an editing sequence.  Edit commands during this sequence will be
 	 * bunched together such that they represent a single undo command in the
-	 * editor, and so that tqrepaint events do not occur inbetween.
+	 * editor, and so that repaint events do not occur inbetween.
 	 *
 	 * Your application should not return control to the event loop while it
 	 * has an unterminated (no matching editEnd() call) editing sequence

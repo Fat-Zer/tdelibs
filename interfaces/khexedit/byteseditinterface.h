@@ -143,7 +143,7 @@ class BytesEditInterface
     virtual bool isModified() const = 0;
 
   public: // call for action
-    /** tqrepaint the indizes from i1 to i2 */
+    /** repaint the indizes from i1 to i2 */
     virtual void repaintRange( int i1, int i2 ) = 0;
 };
 

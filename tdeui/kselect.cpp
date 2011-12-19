@@ -135,7 +135,7 @@ void KXYSelector::paintEvent( TQPaintEvent *ev )
         }
         else if (paintRect.intersects(cursorRect))
         {
-           tqrepaint( cursorRect, false);
+           repaint( cursorRect, false);
         }
 
 	painter.end();
@@ -392,11 +392,11 @@ void KSelector::drawArrow( TQPainter *painter, bool show, const TQPoint &pos )
   {
     if ( orientation() == Qt::Vertical )
     {
-       tqrepaint(pos.x(), pos.y()-5, 6, 11, true);
+       repaint(pos.x(), pos.y()-5, 6, 11, true);
     }
     else
     {
-       tqrepaint(pos.x()-5, pos.y(), 11, 6, true);
+       repaint(pos.x()-5, pos.y(), 11, 6, true);
     }
   }
 }

@@ -62,9 +62,9 @@ class TDEUI_EXPORT KAboutContainer : public TQFrame
 		    const TQString &url, const TQString &task,
 		    bool showHeader = false, bool showframe = false,
 		    bool showBold = false );
-    void addTitle(  const TQString &title, int tqalignment=AlignLeft,
+    void addTitle(  const TQString &title, int alignment=AlignLeft,
 		    bool showframe = false, bool showBold = false );
-    void addImage( const TQString &fileName, int tqalignment=AlignLeft );
+    void addImage( const TQString &fileName, int alignment=AlignLeft );
 
     virtual TQSize sizeHint( void ) const;
     virtual TQSize minimumSizeHint( void ) const;

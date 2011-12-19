@@ -305,7 +305,7 @@ void KPQtPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 		DrListOption	*opt = static_cast<DrListOption*>(driver()->findOption("PageSize"));
 		if (opt)
 		{
-			DrBase	*ch = opt->choices()->tqat(m_pagesize->currentItem());
+			DrBase	*ch = opt->choices()->at(m_pagesize->currentItem());
 			if (ch && (incldef || ch->name() != opt->get("default")))
 			{
 				opts["PageSize"] = ch->name();

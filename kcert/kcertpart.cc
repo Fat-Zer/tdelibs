@@ -716,7 +716,7 @@ void KCertPart::slotChain(int c) {
 		displayPKCS12Cert(_p12->getCertificate());
 		_p12_certState->setText(KSSLCertificate::verifyText(_p12->validate()));
 	} else {
-		displayPKCS12Cert(_p12->getCertificate()->chain().getChain().tqat(c-1));
+		displayPKCS12Cert(_p12->getCertificate()->chain().getChain().at(c-1));
 	}
 }
 

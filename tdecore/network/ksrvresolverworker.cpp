@@ -85,7 +85,7 @@ bool KSrvResolverWorker::preprocess()
 	return false;
 
       protoname = "_";
-      protoname += names.tqat(0);
+      protoname += names.at(0);
     }
   else if (sockettype == SOCK_STREAM || sockettype == 0)
     protoname = "_tcp";

@@ -56,8 +56,8 @@ void KTabCtl::resizeEvent(TQResizeEvent *)
         for (i=0; i<(int)pages.size(); i++) {
             pages[i]->setGeometry(r);
         }
-        if( ( tabs->tqshape() == TQTabBar::RoundedBelow ) ||
-            ( tabs->tqshape() == TQTabBar::TriangularBelow ) ) {
+        if( ( tabs->shape() == TQTabBar::RoundedBelow ) ||
+            ( tabs->shape() == TQTabBar::TriangularBelow ) ) {
             tabs->move( 0, height()-tabs->height()-4 );
         }
     }
@@ -184,9 +184,9 @@ void KTabCtl::setBorder( bool state )
     blBorder = state;
 }
 
-void KTabCtl::setShape( TQTabBar::Shape tqshape )
+void KTabCtl::setShape( TQTabBar::Shape shape )
 {
-    tabs->setShape( tqshape );
+    tabs->setShape( shape );
 }
 
 TQSize
@@ -273,8 +273,8 @@ void KTabCtl::paintEvent(TQPaintEvent *)
 
 TQRect KTabCtl::getChildRect() const
 {
-    if( ( tabs->tqshape() == TQTabBar::RoundedBelow ) ||
-        ( tabs->tqshape() == TQTabBar::TriangularBelow ) ) {
+    if( ( tabs->shape() == TQTabBar::RoundedBelow ) ||
+        ( tabs->shape() == TQTabBar::TriangularBelow ) ) {
     	return TQRect(2, 1, width() - 4,
 		     height() - tabs->height() - 4);
     } else {

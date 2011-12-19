@@ -2733,7 +2733,7 @@ void KMdiMainFrm::windowMenuItemActivated( int id )
 	if ( id < 100 )
 		return ;
 	id -= 100;
-	KMdiChildView *pView = m_pDocumentViews->tqat( id );
+	KMdiChildView *pView = m_pDocumentViews->at( id );
 	if ( !pView )
 		return ;
 	if ( pView->isMinimized() )
@@ -2759,7 +2759,7 @@ void KMdiMainFrm::dockMenuItemActivated( int id )
 	if ( id < 100 )
 		return ;
 	id -= 100;
-	KMdiChildView *pView = m_pDocumentViews->tqat( id );
+	KMdiChildView *pView = m_pDocumentViews->at( id );
 	if ( !pView )
 		return ;
 	if ( pView->isMinimized() )

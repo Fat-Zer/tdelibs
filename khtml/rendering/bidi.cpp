@@ -484,7 +484,7 @@ static void appendRunsForObject(int start, int end, RenderObject* obj, BidiState
     bool haveNextMidpoint = (smidpoints && sCurrMidpoint < sNumMidpoints);
     BidiIterator nextMidpoint;
     if (haveNextMidpoint)
-        nextMidpoint = smidpoints->tqat(sCurrMidpoint);
+        nextMidpoint = smidpoints->at(sCurrMidpoint);
     if (betweenMidpoints) {
         if (!(haveNextMidpoint && nextMidpoint.obj == obj))
             return;

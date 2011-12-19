@@ -798,7 +798,7 @@ public:
     void setAccessKey( const DOMString & );
 
     /**
-     * Text tqalignment relative to \c FIELDSET . See the <a
+     * Text alignment relative to \c FIELDSET . See the <a
      * href="http://www.w3.org/TR/REC-html40/interact/forms.html#adef-align-LEGEND">
      * align attribute definition </a> in HTML 4.0. This attribute is
      * deprecated in HTML 4.0.

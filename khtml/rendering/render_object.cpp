@@ -535,9 +535,9 @@ bool RenderObject::hasStaticY() const
 
 void RenderObject::setPixmap(const TQPixmap&, const TQRect& /*r*/, CachedImage* image)
 {
-    //tqrepaint bg when it finished loading
+    //repaint bg when it finished loading
     if(image && parent() && style() && style()->backgroundLayers()->containsImage(image)) {
-        isBody() ? canvas()->tqrepaint() : tqrepaint();
+        isBody() ? canvas()->repaint() : repaint();
     }
 }
 
@@ -1283,11 +1283,11 @@ void RenderObject::setStyle(RenderStyle *style)
                m_style->outlineWidth() > style->outlineWidth() ||
                (!m_style->hidesOverflow() && style->hidesOverflow()) ||
                ( m_style->hasClip() && !(m_style->clip() == style->clip()) ) ) ) {
-            // schedule a tqrepaint with the old style
+            // schedule a repaint with the old style
             if (layer() && !isInlineFlow())
-                layer()->tqrepaint(pri);
+                layer()->repaint(pri);
             else
-                tqrepaint(pri);
+                repaint(pri);
         }
 
         if ( ( isFloating() && m_style->floating() != style->floating() ) ||
@@ -1345,7 +1345,7 @@ void RenderObject::setStyle(RenderStyle *style)
             }
             setNeedsLayoutAndMinMaxRecalc();
         } else if (!isText() && d >= RenderStyle::Visible) {
-            // a tqrepaint is enough
+            // a repaint is enough
             if (layer()) {
                 if (canvas() && canvas()->needsWidgetMasks()) {
                     // update our widget masks
@@ -1357,9 +1357,9 @@ void RenderObject::setStyle(RenderStyle *style)
                 }
             }
             if (layer() && !isInlineFlow())
-                layer()->tqrepaint(pri);
+                layer()->repaint(pri);
             else
-                tqrepaint(pri);
+                repaint(pri);
         }
     }
 }
@@ -1428,9 +1428,9 @@ void RenderObject::repaintDuringLayout()
     if (canvas()->needsFullRepaint() || isText())
         return;
     if (layer() && !isInlineFlow()) {
-        layer()->tqrepaint( NormalPriority, true );
+        layer()->repaint( NormalPriority, true );
     } else {
-       tqrepaint();
+       repaint();
        canvas()->deferredRepaint( this );
     }
 }
@@ -1850,7 +1850,7 @@ short RenderObject::getVerticalPosition( bool firstLine, RenderObject* ref ) con
             bool checkParent = ref->isInline() && !ref->isReplacedBlock() &&
                                !( ref->style()->verticalAlign() == TOP || ref->style()->verticalAlign() == BOTTOM );
             vpos = checkParent ? ref->verticalPositionHint( firstLine ) : 0;
-            // don't allow elements nested inside text-top to have a different vtqalignment.
+            // don't allow elements nested inside text-top to have a different valignment.
             if ( va == BASELINE )
                 return vpos;
             else if ( va == LENGTH )

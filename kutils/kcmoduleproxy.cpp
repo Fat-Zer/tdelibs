@@ -416,7 +416,7 @@ void KCModuleProxy::rootExited()
 	/* Such that the "ordinary" module loads again */
 	d->rootMode = false;
 
-	d->topLayout->tqinvalidate();
+	d->topLayout->invalidate();
 
 	TQShowEvent ev;
 	showEvent( &ev ); 

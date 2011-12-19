@@ -38,7 +38,7 @@ public:
     KCompTreeNode *begin() const { return first; }
     KCompTreeNode *end() const { return last; }
 
-    KCompTreeNode *tqat(uint index) const;
+    KCompTreeNode *at(uint index) const;
     void append(KCompTreeNode *item); 
     void prepend(KCompTreeNode *item); 
     void insert(KCompTreeNode *after, KCompTreeNode *item);
@@ -119,7 +119,7 @@ public:
 	return &myChildren;
     }
     inline const KCompTreeNode * childAt(int index) const {
-	return myChildren.tqat(index);
+	return myChildren.at(index);
     }
     inline const KCompTreeNode * firstChild() const {
 	return myChildren.begin();

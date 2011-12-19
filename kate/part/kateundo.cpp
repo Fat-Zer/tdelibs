@@ -296,9 +296,9 @@ void KateUndoGroup::undo ()
   if (m_doc->activeView())
   {
     for (uint z=0; z < m_items.count(); z++)
-      if (m_items.tqat(z)->type() != KateUndoGroup::editMarkLineAutoWrapped)
+      if (m_items.at(z)->type() != KateUndoGroup::editMarkLineAutoWrapped)
       {
-        m_doc->activeView()->editSetCursor (m_items.tqat(z)->cursorBefore());
+        m_doc->activeView()->editSetCursor (m_items.at(z)->cursorBefore());
         break;
       }
   }
@@ -319,9 +319,9 @@ void KateUndoGroup::redo ()
   if (m_doc->activeView())
   {
     for (uint z=0; z < m_items.count(); z++)
-      if (m_items.tqat(z)->type() != KateUndoGroup::editMarkLineAutoWrapped)
+      if (m_items.at(z)->type() != KateUndoGroup::editMarkLineAutoWrapped)
       {
-        m_doc->activeView()->editSetCursor (m_items.tqat(z)->cursorAfter());
+        m_doc->activeView()->editSetCursor (m_items.at(z)->cursorAfter());
         break;
       }
   }

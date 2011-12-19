@@ -1595,7 +1595,7 @@ TQString KFileDialog::getSaveFileName(const TQString& dir, const TQString& filte
                                      TQWidget *parent,
                                      const TQString& caption)
 {
-    bool specialDir = dir.tqat(0) == ':';
+    bool specialDir = dir.at(0) == ':';
     KFileDialog dlg( specialDir ? dir : TQString::null, filter, parent, "filedialog", true);
     if ( !specialDir )
         dlg.setSelection( dir ); // may also be a filename
@@ -1616,7 +1616,7 @@ TQString KFileDialog::getSaveFileNameWId(const TQString& dir, const TQString& fi
                                      WId parent_id,
                                      const TQString& caption)
 {
-    bool specialDir = dir.tqat(0) == ':';
+    bool specialDir = dir.at(0) == ':';
     TQWidget* parent = TQT_TQWIDGET(TQWidget::find( parent_id ));
     KFileDialog dlg( specialDir ? dir : TQString::null, filter, parent, "filedialog", true);
 #ifdef Q_WS_X11
@@ -1644,7 +1644,7 @@ TQString KFileDialog::getSaveFileNameWId(const TQString& dir, const TQString& fi
 KURL KFileDialog::getSaveURL(const TQString& dir, const TQString& filter,
                              TQWidget *parent, const TQString& caption)
 {
-    bool specialDir = dir.tqat(0) == ':';
+    bool specialDir = dir.at(0) == ':';
     KFileDialog dlg(specialDir ? dir : TQString::null, filter, parent, "filedialog", true);
     if ( !specialDir )
     dlg.setSelection( dir ); // may also be a filename
@@ -1950,7 +1950,7 @@ void KFileDialog::updateAutoSelectExtension (void)
 
                 // first try X-KDE-NativeExtension
                 TQString nativeExtension = mime->property ("X-KDE-NativeExtension").toString ();
-                if (nativeExtension.tqat (0) == '.')
+                if (nativeExtension.at (0) == '.')
                 {
                     d->extension = nativeExtension.lower ();
                     kdDebug (kfile_area) << "\tsetMimeFilter-style: native ext=\'"
@@ -2361,7 +2361,7 @@ void KFileDialog::setNonExtSelection()
     TQString pattern, filename = locationEdit->currentText().stripWhiteSpace();
     KServiceTypeFactory::self()->findFromPattern( filename, &pattern );
 
-    if ( !pattern.isEmpty() && pattern.tqat( 0 ) == '*' && pattern.find( '*' , 1 ) == -1 )
+    if ( !pattern.isEmpty() && pattern.at( 0 ) == '*' && pattern.find( '*' , 1 ) == -1 )
        locationEdit->lineEdit()->setSelection( 0, filename.length() - pattern.stripWhiteSpace().length()+1 );
     else
     {

@@ -867,7 +867,7 @@ void KSSLD::searchAddCert(KSSLCertificate *cert) {
 		if (elem.findRef(cert) == -1) {
 			unsigned int n = 0;
 			for(; n < elem.size(); n++) {
-				if (!elem.tqat(n)) {
+				if (!elem.at(n)) {
 					elem.insert(n, cert);
 					break;
 				}
@@ -912,7 +912,7 @@ TQStringList KSSLD::getKDEKeyByEmail(const TQString &email) {
 
 	TQPtrVector<KSSLCertificate> &elem = *it;
 	for (unsigned int n = 0; n < elem.size(); n++) {
-		KSSLCertificate *cert = elem.tqat(n);
+		KSSLCertificate *cert = elem.at(n);
 		if (cert) {
 			rc.append(cert->getKDEKey());
 		}

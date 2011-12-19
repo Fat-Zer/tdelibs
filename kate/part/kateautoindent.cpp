@@ -223,7 +223,7 @@ void KateNormalIndent::updateConfig ()
 
   for (uint i=0; i<items.count(); i++)
   {
-    TQString name = items.tqat(i)->name;
+    TQString name = items.at(i)->name;
     if (name.find("Comment") != -1 && commentAttrib == 255)
     {
       commentAttrib = i;
@@ -1411,7 +1411,7 @@ void KateXmlIndent::getLineInfo (uint line, uint &prevIndent, int &numTags,
   uint pos, len = text.length();
   bool seenOpen = false;
   for(pos = 0; pos < len; ++pos) {
-    int ch = text.tqat(pos).tqunicode();
+    int ch = text.at(pos).tqunicode();
     switch(ch) {
       case '<':
         seenOpen = true;
@@ -1467,11 +1467,11 @@ void KateXmlIndent::getLineInfo (uint line, uint &prevIndent, int &numTags,
   if(unclosedTag) {
     // find the start of the next attribute, so we can align with it
     do {
-      lastCh = text.tqat(++attrCol).tqunicode();
+      lastCh = text.at(++attrCol).tqunicode();
     }while(lastCh && lastCh != ' ' && lastCh != '\t');
 
     while(lastCh == ' ' || lastCh == '\t') {
-      lastCh = text.tqat(++attrCol).tqunicode();
+      lastCh = text.at(++attrCol).tqunicode();
     }
 
     attrCol = prevLine->cursorX(attrCol, tabWidth);
@@ -2384,7 +2384,7 @@ void KateVarIndent::slotVariableChanged( const TQString &var, const TQString &va
 
     for (uint i=0; i<items.count(); i++)
     {
-      if ( items.tqat(i)->name.section( ':', 1 ) == val )
+      if ( items.at(i)->name.section( ':', 1 ) == val )
       {
         d->coupleAttrib = i;
         break;

@@ -759,9 +759,9 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 			drawRoundRect (p, r);
 			
 			const TQTabBar *tb = static_cast< const TQTabBar * >(widget);
-            TQTabBar::Shape tqshape = tb->tqshape();
-			if (tqshape == TQTabBar::TriangularBelow || 
-				tqshape == TQTabBar::RoundedBelow) {
+            TQTabBar::Shape shape = tb->shape();
+			if (shape == TQTabBar::TriangularBelow || 
+				shape == TQTabBar::RoundedBelow) {
 				p->fillRect (r.left(), r.top(), 
 							 r.width(), 2*basicLineWidth, 
 							 p->pen().color());
@@ -1811,7 +1811,7 @@ bool HighContrastStyle::eventFilter (TQObject *object, TQEvent *event)
 					|| widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)))
 		{
 			hoverWidget = widget;
-			widget->tqrepaint (false);
+			widget->repaint (false);
 		}
 		else if (event->type() == TQEvent::Leave
 					&& (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
@@ -1820,7 +1820,7 @@ bool HighContrastStyle::eventFilter (TQObject *object, TQEvent *event)
 		{
 			if (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget))
 				hoverWidget = 0L;
-			widget->tqrepaint (false);
+			widget->repaint (false);
 		}
 		// Make sure the focus rectangle is shown correctly.
 		else if (event->type() == TQEvent::FocusIn || event->type() == TQEvent::FocusOut)
@@ -1834,9 +1834,9 @@ bool HighContrastStyle::eventFilter (TQObject *object, TQEvent *event)
 			}
 
 			if (widgetparent)
-				widgetparent->tqrepaint (false);
+				widgetparent->repaint (false);
 			else
-				widget->tqrepaint (false);
+				widget->repaint (false);
 		}
 	}
 	

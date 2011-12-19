@@ -264,8 +264,8 @@ void KStyle::polish( TQWidget* widget )
 	if ( d->useFilledFrameWorkaround )
 	{
 		if ( TQFrame *frame = ::tqqt_cast< TQFrame* >( widget ) ) {
-			TQFrame::Shape tqshape = frame->frameShape();
-			if (tqshape == TQFrame::ToolBarPanel || tqshape == TQFrame::MenuBarPanel)
+			TQFrame::Shape shape = frame->frameShape();
+			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
 				widget->installEventFilter(this);
 		} 
 	}
@@ -285,8 +285,8 @@ void KStyle::unPolish( TQWidget* widget )
 	if ( d->useFilledFrameWorkaround )
 	{
 		if ( TQFrame *frame = ::tqqt_cast< TQFrame* >( widget ) ) {
-			TQFrame::Shape tqshape = frame->frameShape();
-			if (tqshape == TQFrame::ToolBarPanel || tqshape == TQFrame::MenuBarPanel)
+			TQFrame::Shape shape = frame->frameShape();
+			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
 				widget->removeEventFilter(this);
 		}
 	}
@@ -627,9 +627,9 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 			}
 		
 			XRenderFillRectangle(
-					p->tqdevice()->x11Display(),
+					p->device()->x11Display(),
 					PictOpOver,
-					p->tqdevice()->x11RenderHandle(),
+					p->device()->x11RenderHandle(),
 					&clr,
 					rect.x() + point.x(),
 					rect.y() + point.y(),
@@ -668,7 +668,7 @@ void KStyle::drawControl( TQ_ControlElement element,
 		// ------------------------------------------------------------------------
 		case CE_TabBarTab: {
 			const TQTabBar* tb  = (const TQTabBar*) widget;
-			TQTabBar::Shape tbs = tb->tqshape();
+			TQTabBar::Shape tbs = tb->shape();
 			bool selected      = flags & Style_Selected;
 			int x = r.x(), y=r.y(), bottom=r.bottom(), right=r.right();
 
@@ -1010,8 +1010,8 @@ int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 
 		case PM_TabBarTabVSpace: {
 			const TQTabBar * tb = (const TQTabBar *) widget;
-			if ( tb->tqshape() == TQTabBar::RoundedAbove ||
-				 tb->tqshape() == TQTabBar::RoundedBelow )
+			if ( tb->shape() == TQTabBar::RoundedAbove ||
+				 tb->shape() == TQTabBar::RoundedBelow )
 				return 10;
 			else
 				return 4;
@@ -1019,7 +1019,7 @@ int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 
 		case PM_TabBarTabOverlap: {
 			const TQTabBar* tb = (const TQTabBar*)widget;
-			TQTabBar::Shape tbs = tb->tqshape();
+			TQTabBar::Shape tbs = tb->shape();
 
 			if ( (tbs == TQTabBar::RoundedAbove) ||
 				 (tbs == TQTabBar::RoundedBelow) )
@@ -1897,7 +1897,7 @@ bool KStyle::eventFilter( TQObject* object, TQEvent* event )
 		// ensure that the filled frame contents are properly painted.
 		// We essentially modify the paintEvent's rect to include the
 		// panel border, which also paints the widget's interior.
-		// This is nasty, but I see no other way to properly tqrepaint
+		// This is nasty, but I see no other way to properly repaint
 		// filled frames in all QMenuBars and QToolBars.
 		// -- Karol.
 		TQFrame *frame = 0;

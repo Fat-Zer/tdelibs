@@ -192,7 +192,7 @@ KPImagePage::KPImagePage(DrMain *driver, TQWidget *parent, const char *name)
 	TQString whatsThisPreviewPositionImagePage = i18n( " <qt> "
 			" <p><b>Position Preview Thumbnail</b></p> "
 			" <p>This position preview thumbnail indicates the position of the image on the paper sheet. "
-			" <p>Click on horizontal and vertical radio buttons to move image tqalignment on paper around. Options are: "
+			" <p>Click on horizontal and vertical radio buttons to move image alignment on paper around. Options are: "
 			" <ul> "
 			" <li> center      </li>"
 			" <li> top         </li>"

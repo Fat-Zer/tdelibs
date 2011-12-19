@@ -303,12 +303,12 @@ WebStyle::eventFilter(TQObject * o, TQEvent * e)
   if (e->type() == TQEvent::Enter)
   {
     _highlightedButton = pb;
-    pb->tqrepaint(false);
+    pb->repaint(false);
   }
   else if (e->type() == TQEvent::Leave)
   {
     _highlightedButton = 0;
-    pb->tqrepaint(false);
+    pb->repaint(false);
   }
 
   return false;
@@ -754,7 +754,7 @@ WebStyle::drawExclusiveIndicator
 
   p->setBrush(g.brush(TQColorGroup::Background));
 
-  // Avoid mistqshapen ellipses. Qt or X bug ? Who knows...
+  // Avoid misshapen ellipses. Qt or X bug ? Who knows...
 
   if (0 == w % 2)
     --w;
@@ -1457,7 +1457,7 @@ WebStyle::drawTab
   p->setPen(selected ? g.dark() : g.mid());
   p->fillRect(r, g.brush(TQColorGroup::Background));
 
-  switch (tabBar->tqshape())
+  switch (tabBar->shape())
   {
     case TQTabBar::RoundedAbove:
     case TQTabBar::TriangularAbove:

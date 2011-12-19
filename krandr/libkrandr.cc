@@ -55,7 +55,7 @@ unsigned int reverse_bits(register unsigned int x)
 TQString exec(const char * cmd) {
 	TQString bashcommand = cmd;
 	bashcommand = bashcommand.replace("\"", "\\\"");
-	bashcommand = TQString("/bin/bash -c \"%1\" 2>&1").tqarg(bashcommand);
+	bashcommand = TQString("/bin/bash -c \"%1\" 2>&1").arg(bashcommand);
 	FILE* pipe = popen(bashcommand.ascii(), "r");
 	if (!pipe) return "ERROR";
 	char buffer[128];
@@ -1071,11 +1071,11 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 			if (cur_screen) {
 				screendata->screen_connected = true;
 				for (int j = 0; j < cur_screen->numSizes(); j++) {
-					screendata->resolutions.append(i18n("%1 x %2").tqarg(cur_screen->pixelSize(j).width()).tqarg(cur_screen->pixelSize(j).height()));
+					screendata->resolutions.append(i18n("%1 x %2").arg(cur_screen->pixelSize(j).width()).arg(cur_screen->pixelSize(j).height()));
 				}
 				screendata->current_resolution_index = 0;
 				if (current_crtc) {
-					screendata->current_resolution_index = screendata->resolutions.findIndex(i18n("%1 x %2").tqarg(current_crtc->info->width).tqarg(current_crtc->info->height));
+					screendata->current_resolution_index = screendata->resolutions.findIndex(i18n("%1 x %2").arg(current_crtc->info->width).arg(current_crtc->info->height));
 				}
 				if (screendata->current_resolution_index < 0) {
 					screendata->current_resolution_index = cur_screen->proposedSize();

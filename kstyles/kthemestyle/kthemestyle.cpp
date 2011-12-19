@@ -650,7 +650,7 @@ void KThemeStyle::drawBaseButton( TQPainter *p, int x, int y, int w, int h,
     if ( gradientHint( type ) == GrReverseBevel )
     {
         int i;
-        bitBlt( p->tqdevice(), x, y, TQT_TQPAINTDEVICE(scalePixmap( w, h, type )), 0, 0, w, h,
+        bitBlt( p->device(), x, y, TQT_TQPAINTDEVICE(scalePixmap( w, h, type )), 0, 0, w, h,
                 TQt::CopyROP, true );
         p->setPen( g.text() );
         for ( i = 0; i < borderWidth( type ); ++i, ++x, ++y, w -= 2, h -= 2 )
@@ -690,7 +690,7 @@ void KThemeStyle::drawBaseButton( TQPainter *p, int x, int y, int w, int h,
         }
         if ( borderPixmap( type ) )
         {
-            bitBlt( p->tqdevice(), x, y, TQT_TQPAINTDEVICE(scaleBorder( w, h, type )), 0, 0, w, h,
+            bitBlt( p->device(), x, y, TQT_TQPAINTDEVICE(scaleBorder( w, h, type )), 0, 0, w, h,
                     TQt::CopyROP, false );
         }
         else
@@ -1239,7 +1239,7 @@ void KThemeStyle::drawControl( ControlElement element,
         case CE_TabBarTab:
             {
                 const TQTabBar* tb = ( const TQTabBar* ) widget;
-                TQTabBar::Shape tbs = tb->tqshape();
+                TQTabBar::Shape tbs = tb->shape();
                 bool selected = how & Style_Selected;
                 WidgetType widget = selected ? ActiveTab : InactiveTab;
                 const TQColorGroup *cg = colorGroup( tb->colorGroup(), widget );
@@ -1315,8 +1315,8 @@ void KThemeStyle::drawControl( ControlElement element,
                     else
                         p->fillRect( x, y, x2 - x + 1, y2 - y + 1, cg->background() );
                 }
-                else if ( tb->tqshape() == TQTabBar::RoundedBelow ||
-                        tb->tqshape() == TQTabBar::TriangularBelow )
+                else if ( tb->shape() == TQTabBar::RoundedBelow ||
+                        tb->shape() == TQTabBar::TriangularBelow )
                 {
                     if ( widget == ActiveTab )
                         widget = RotActiveTab;

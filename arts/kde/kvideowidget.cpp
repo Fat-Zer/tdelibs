@@ -147,7 +147,7 @@ void KVideoWidget::embed( Arts::VideoPlayObject vpo )
 	}
 
 	setBackgroundMode( PaletteBackground );
-	tqrepaint();
+	repaint();
 
 	// Resize GUI
 	videoWidth  = 0;

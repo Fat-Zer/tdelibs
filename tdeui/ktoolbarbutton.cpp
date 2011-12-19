@@ -376,7 +376,7 @@ void KToolBarButton::leaveEvent(TQEvent *)
   {
     d->m_isRaised = false;
     d->m_isActive = false;
-    tqrepaint(false);
+    repaint(false);
   }
 
   emit highlighted(d->m_id, false);
@@ -398,7 +398,7 @@ void KToolBarButton::enterEvent(TQEvent *)
       d->m_isActive = false;
     }
 
-    tqrepaint(false);
+    repaint(false);
   }
   emit highlighted(d->m_id, true);
 }
@@ -634,7 +634,7 @@ void KToolBarButton::paletteChange(const TQPalette &)
   if(!d->m_isSeparator)
   {
     modeChange();
-    tqrepaint(false); // no need to delete it first therefore only false
+    repaint(false); // no need to delete it first therefore only false
   }
 }
 
@@ -698,7 +698,7 @@ void KToolBarButton::setNoStyle(bool no_style)
 
     modeChange();
     d->m_iconText = KToolBar::IconTextRight;
-    tqrepaint(false);
+    repaint(false);
 }
 
 void KToolBarButton::setRadio (bool f)
@@ -716,13 +716,13 @@ void KToolBarButton::on(bool flag)
     setDown(flag);
     leaveEvent((TQEvent *) 0);
   }
-  tqrepaint();
+  repaint();
 }
 
 void KToolBarButton::toggle()
 {
   setOn(!isOn());
-  tqrepaint();
+  repaint();
 }
 
 void KToolBarButton::setToggle(bool flag)

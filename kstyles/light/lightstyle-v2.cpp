@@ -635,7 +635,7 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 	    tr.addCoords(0, 0,  0, -1);
 	    fr.addCoords(2, 2, -2, -2);
 	    
-	    if ( tb->tqshape() == TQTabBar::RoundedBelow || tb->tqshape() == TQTabBar::TriangularBelow) {
+	    if ( tb->shape() == TQTabBar::RoundedBelow || tb->shape() == TQTabBar::TriangularBelow) {
 		tr = r; tr.addCoords(0, 1, 0, 0);
 		fr = r; fr.addCoords(2, 2,-2, -4);
 		below = true;

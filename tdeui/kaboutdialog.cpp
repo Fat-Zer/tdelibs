@@ -890,7 +890,7 @@ void KAboutContainer::addPerson( const TQString &_name, const TQString &_email,
 }
 
 
-void KAboutContainer::addTitle( const TQString &title, int tqalignment,
+void KAboutContainer::addTitle( const TQString &title, int alignment,
 				bool showFrame, bool showBold )
 {
 
@@ -905,11 +905,11 @@ void KAboutContainer::addTitle( const TQString &title, int tqalignment,
   {
     label->setFrameStyle(TQFrame::Panel | TQFrame::Raised);
   }
-  label->setAlignment( tqalignment );
+  label->setAlignment( alignment );
 }
 
 
-void KAboutContainer::addImage( const TQString &fileName, int tqalignment )
+void KAboutContainer::addImage( const TQString &fileName, int alignment )
 {
   if( fileName.isNull() )
   {
@@ -924,7 +924,7 @@ void KAboutContainer::addImage( const TQString &fileName, int tqalignment )
     pix = logo;
     label->setPixmap( pix );
   }
-  label->setAlignment( tqalignment );
+  label->setAlignment( alignment );
 }
 
 #if 0

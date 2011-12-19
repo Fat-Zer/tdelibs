@@ -100,7 +100,7 @@ GUIClient::~GUIClient()
 {
 //     actionCollection()->writeShortcutSettings( "KMDI Shortcuts", kapp->config() );
   for (uint i=0;i<m_toolViewActions.count();i++)
-    disconnect(m_toolViewActions.tqat(i),0,this,0);
+    disconnect(m_toolViewActions.at(i),0,this,0);
 
   m_toolViewActions.setAutoDelete( false );
   m_toolViewActions.clear();
@@ -119,7 +119,7 @@ void GUIClient::setupActions()
   if (m_toolViewActions.count()<3)
   {
     for (uint i=0;i<m_toolViewActions.count();i++)
-      addList.append(m_toolViewActions.tqat(i));
+      addList.append(m_toolViewActions.at(i));
   }
   else
     addList.append(m_toolMenu);

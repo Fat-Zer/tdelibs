@@ -641,7 +641,7 @@ void KFontChooser::setupDisplay()
 void KFontChooser::getFontList( TQStringList &list, uint fontListCriteria)
 {
   TQFontDatabase dbase;
-  TQStringList lstSys(dbase.tqfamilies());
+  TQStringList lstSys(dbase.families());
 
   // if we have criteria; then check fonts before adding
   if (fontListCriteria)

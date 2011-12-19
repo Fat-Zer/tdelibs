@@ -51,7 +51,7 @@ KLed::KLed(TQWidget *parent, const char *name)
   : TQWidget( parent, name),
     led_state(On),
     led_look(Raised),
-    led_tqshape(Circular)
+    led_shape(Circular)
 {
   TQColor col(green);
   d = new KLed::KLedPrivate;
@@ -68,7 +68,7 @@ KLed::KLed(const TQColor& col, TQWidget *parent, const char *name)
   : TQWidget( parent, name),
     led_state(On),
     led_look(Raised),
-    led_tqshape(Circular)
+    led_shape(Circular)
 {
   d = new KLed::KLedPrivate;
   d->dark_factor = 300;
@@ -81,11 +81,11 @@ KLed::KLed(const TQColor& col, TQWidget *parent, const char *name)
 }
 
 KLed::KLed(const TQColor& col, KLed::State state,
-	   KLed::Look look, KLed::Shape tqshape, TQWidget *parent, const char *name )
+	   KLed::Look look, KLed::Shape shape, TQWidget *parent, const char *name )
   : TQWidget(parent, name),
     led_state(state),
     led_look(look),
-    led_tqshape(tqshape)
+    led_shape(shape)
 {
   d = new KLed::KLedPrivate;
   d->dark_factor = 300;
@@ -93,7 +93,7 @@ KLed::KLed(const TQColor& col, KLed::State state,
   d->off_map = 0;
   d->on_map = 0;
 
-  //setShape(tqshape);
+  //setShape(shape);
   setColor(col);
 }
 
@@ -114,7 +114,7 @@ KLed::paintEvent(TQPaintEvent *)
   t.start();
   for (int i=0; i<rounds; i++) {
 #endif
-  switch(led_tqshape)
+  switch(led_shape)
     {
     case Rectangular:
       switch (led_look)
@@ -525,9 +525,9 @@ KLed::state() const
 }
 
 KLed::Shape
-KLed::tqshape() const
+KLed::shape() const
 {
-  return led_tqshape;
+  return led_shape;
 }
 
 TQColor
@@ -561,9 +561,9 @@ KLed::toggleState()
 void
 KLed::setShape(KLed::Shape s)
 {
-  if(led_tqshape!=s)
+  if(led_shape!=s)
     {
-      led_tqshape = s;
+      led_shape = s;
       update();
     }
 }

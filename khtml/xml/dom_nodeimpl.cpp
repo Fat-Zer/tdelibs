@@ -588,7 +588,7 @@ void NodeImpl::handleLocalEvents(EventImpl *evt, bool useCapture)
 
     Event ev = evt;
     // removeEventListener (e.g. called from a JS event listener) might
-    // tqinvalidate the item after the current iterator (which "it" is pointing to).
+    // invalidate the item after the current iterator (which "it" is pointing to).
     // So we make a copy of the list.
     TQValueList<RegisteredEventListener> listeners = *m_regdListeners.listeners;
     TQValueList<RegisteredEventListener>::iterator it;
@@ -1925,7 +1925,7 @@ NodeImpl *GenericRONamedNodeMapImpl::item ( unsigned long index ) const
     if (index >= m_contents->count())
         return 0;
 
-    return m_contents->tqat(index);
+    return m_contents->at(index);
 }
 
 unsigned long GenericRONamedNodeMapImpl::length(  ) const

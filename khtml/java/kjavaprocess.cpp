@@ -168,7 +168,7 @@ void KJavaProcess::storeSize( TQByteArray* buff )
 
     const char* size_ptr = size_str.latin1();
     for( int i = 0; i < 8; ++i )
-        buff->tqat(i) = size_ptr[i];
+        buff->at(i) = size_ptr[i];
 }
 
 void KJavaProcess::sendBuffer( TQByteArray* buff )
@@ -218,12 +218,12 @@ void KJavaProcess::popBuffer()
 //	kdDebug(6100) << "Sending buffer to java, buffer = >>";
 //        for( unsigned int i = 0; i < buf->size(); i++ )
 //        {
-//            if( buf->tqat(i) == (char)0 )
+//            if( buf->at(i) == (char)0 )
 //                kdDebug(6100) << "<SEP>";
-//            else if( buf->tqat(i) > 0 && buf->tqat(i) < 10 )
-//                kdDebug(6100) << "<CMD " << (int) buf->tqat(i) << ">";
+//            else if( buf->at(i) > 0 && buf->at(i) < 10 )
+//                kdDebug(6100) << "<CMD " << (int) buf->at(i) << ">";
 //            else
-//                kdDebug(6100) << buf->tqat(i);
+//                kdDebug(6100) << buf->at(i);
 //        }
 //        kdDebug(6100) << "<<" << endl;
 

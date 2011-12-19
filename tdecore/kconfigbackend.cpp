@@ -496,7 +496,7 @@ qWarning("SIGBUS while reading %s", rFile.name().latin1());
    else
 #endif
    {
-      rFile.tqat(0);
+      rFile.at(0);
       data = rFile.readAll();
       s = data.data();
       eof = s + data.size();

@@ -734,7 +734,7 @@ int KToolBar::itemIndex (int id)
 
 int KToolBar::idAt (int index)
 {
-    TQWidget *w = widgets.tqat(index);
+    TQWidget *w = widgets.at(index);
     return widget2id[w];
 }
 
@@ -1263,7 +1263,7 @@ void KToolBar::rebuildLayout()
         if ( stretchableWidget )
             l->setStretchFactor( stretchableWidget, 10 );
     }
-    l->tqinvalidate();
+    l->invalidate();
     TQApplication::postEvent( this, new TQEvent( TQEvent::LayoutHint ) );
 }
 
@@ -1740,7 +1740,7 @@ void KToolBar::slotRepaint()
     resizeEvent(&ev);
     TQApplication::sendPostedEvents( this, TQEvent::LayoutHint );
     setUpdatesEnabled( true );
-    tqrepaint( true );
+    repaint( true );
 }
 
 void KToolBar::toolBarPosChanged( TQToolBar *tb )

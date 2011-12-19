@@ -67,7 +67,7 @@ public:
 
     virtual const char *format( int i ) const {
         if ( i < (int) m_formats.count() )
-            return m_formats.tqat( i );
+            return m_formats.at( i );
         else
             return 0L;
     }
@@ -78,7 +78,7 @@ public:
     {
         int index = m_formats.find( format );
         if ( index > -1 )
-            return *(m_data.tqat( index ));
+            return *(m_data.at( index ));
 
         return TQByteArray();
     }

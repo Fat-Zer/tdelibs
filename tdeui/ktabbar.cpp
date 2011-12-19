@@ -67,7 +67,7 @@ void KTabBar::setTabEnabled( int id, bool enabled )
             if ( !enabled && id == currentTab() && count()>1 ) {
                 TQPtrList<TQTab> *tablist = tabList();
                 if ( mTabCloseActivatePrevious )
-                    t = tablist->tqat( count()-2 );
+                    t = tablist->at( count()-2 );
                 else {
                 int index = indexOf( id );
                 index += ( index+1 == count() ) ? -1 : 1;
@@ -80,7 +80,7 @@ void KTabBar::setTabEnabled( int id, bool enabled )
                     emit selected( t->identifier() );
                 }
             }
-            tqrepaint( r );
+            repaint( r );
         }
     }
 }
@@ -253,7 +253,7 @@ void KTabBar::dragMoveEvent( TQDragMoveEvent *e )
     TQTab *tab = selectTab( e->pos() );
     if( tab ) {
         bool accept = false;
-        // The tqreceivers of the testCanDecode() signal has to adjust
+        // The receivers of the testCanDecode() signal has to adjust
         // 'accept' accordingly.
         emit testCanDecode( e, accept);
         if ( accept && tab != TQTabBar::tab( currentTab() ) ) {
@@ -294,7 +294,7 @@ void KTabBar::setTabColor( int id, const TQColor& color )
     TQTab *t = tab( id );
     if ( t ) {
         mTabColors.insert( id, color );
-        tqrepaint( t->rect(), false );
+        repaint( t->rect(), false );
     }
 }
 

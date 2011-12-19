@@ -267,7 +267,7 @@ KateIndentScript KateFactory::indentScript (const TQString &scriptname)
   KateIndentScript result;
   for(uint i=0;i<m_indentScriptManagers.count();i++)
   {
-    result=m_indentScriptManagers.tqat(i)->script(scriptname);
+    result=m_indentScriptManagers.at(i)->script(scriptname);
     if (!result.isNull()) return result;
   }
   return result;

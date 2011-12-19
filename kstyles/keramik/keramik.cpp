@@ -956,7 +956,7 @@ void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 			if (kickerMode)
 			{
 				if (p->device() && p->device()->devType() == TQInternal::Widget &&
-											 TQCString(TQT_TQWIDGET(static_cast<TQPaintDevice*>(p->tqdevice()))->className()) == "FittsLawFrame" )
+											 TQCString(TQT_TQWIDGET(static_cast<TQPaintDevice*>(p->device()))->className()) == "FittsLawFrame" )
 				{
 					int x2 = x + r.width() - 1;
 					int y2 = y + r.height() - 1;
@@ -1496,8 +1496,8 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 		{
 			const TQTabBar* tabBar = static_cast< const TQTabBar* >( widget );
 
-			bool bottom = tabBar->tqshape() == TQTabBar::RoundedBelow ||
-			              tabBar->tqshape() == TQTabBar::TriangularBelow;
+			bool bottom = tabBar->shape() == TQTabBar::RoundedBelow ||
+			              tabBar->shape() == TQTabBar::TriangularBelow;
 
 			if ( flags & Style_Selected )
 			{
@@ -1999,7 +1999,7 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 			//but that also alters height and not just width.
 			//readjust height to fake the other metrics (plus clear 
 			//the other areas, as appropriate). The automasker
-			//will take care of the overall tqshape.
+			//will take care of the overall shape.
 			if ( compact )
 			{
 				forceSmallMode = true;
@@ -2397,8 +2397,8 @@ int KeramikStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
 			const TQTabBar* tb = ::tqqt_cast<const TQTabBar*>(widget);
 			if (tb)
 			{
-				if (tb->tqshape() == TQTabBar::RoundedBelow || 
-					tb->tqshape() == TQTabBar::TriangularBelow)
+				if (tb->shape() == TQTabBar::RoundedBelow || 
+					tb->shape() == TQTabBar::TriangularBelow)
 					return 0;
 			}
 			
@@ -2751,7 +2751,7 @@ bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
 	{
 		TQWidget* button = TQT_TQWIDGET(object);
 		hoverWidget = 0;
-		button->tqrepaint( false );
+		button->repaint( false );
 		return false;
 	}
 
@@ -2761,7 +2761,7 @@ bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
 		if (event->type() == TQEvent::Enter && TQT_TQWIDGET(object)->isEnabled() )
 		{
 			hoverWidget = TQT_TQWIDGET(object);
-			hoverWidget->tqrepaint( false );
+			hoverWidget->repaint( false );
 		}
 		return false;
 	}
@@ -2789,7 +2789,7 @@ bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
 		switch (event->type())
 		{
 #ifdef HAVE_X11_EXTENSIONS_SHAPE_H
-			//Combo dropdowns are tqshaped	
+			//Combo dropdowns are shaped	
 			case TQEvent::Resize:
 			{
 				TQListBox* listbox = static_cast<TQListBox*>(TQT_TQWIDGET(object));

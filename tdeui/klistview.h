@@ -1070,7 +1070,7 @@ public:
   TQColor backgroundColor(int column);
 
   virtual void paintCell(TQPainter *p, const TQColorGroup &cg,
-    int column, int width, int tqalignment);
+    int column, int width, int alignment);
 
 private:
   void init();

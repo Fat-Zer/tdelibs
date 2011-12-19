@@ -775,7 +775,7 @@ void CaretBoxLine::addCreatedFlowBoxInside(InlineFlowBox *flowBox, const TQFontM
   caret_boxes.append(caretBox);
 
   // afaik an inner flow box can only have the width 0, therefore we don't
-  // have to care for rtl or tqalignment
+  // have to care for rtl or alignment
   // ### can empty inline elements have a width? css 2 spec isn't verbose about it
 
   caretBox->_y += flowBox->baseline() - fm.ascent();
@@ -2103,7 +2103,7 @@ static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
   int n = (int)row->row->size();
   int i;
   for (i = 0; i < n; i++) {
-    RenderTableCell *cell = row->row->tqat(i);
+    RenderTableCell *cell = row->row->at(i);
     if (!cell || (long)cell == -1) continue;
 
     int absx, absy;
@@ -2127,7 +2127,7 @@ static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
     int index = i - ((cnt >> 1) + 1)*(cnt & 1) + (cnt >> 1)*!(cnt & 1);
     if (index < 0 || index >= n) continue;
 
-    RenderTableCell *cell = row->row->tqat(index);
+    RenderTableCell *cell = row->row->at(index);
     if (!cell || (long)cell == -1) continue;
 
 #if DEBUG_CARETMODE > 1
@@ -2227,7 +2227,7 @@ static int findRowInSection(RenderTableSection *section, RenderTableCell *cell,
     // check for cell
     int m = row->row->size();
     for (int j = 0; j < m; j++) {
-      RenderTableCell *c = row->row->tqat(j);
+      RenderTableCell *c = row->row->at(j);
       if (c == directCell) return i;
     }/*next j*/
 

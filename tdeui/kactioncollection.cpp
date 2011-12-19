@@ -250,8 +250,8 @@ void KActionCollection::removeWidget( TQWidget* w )
         }
         delete pKAccel;
 
-        d->m_widgetList.remove( d->m_widgetList.tqat( i ) );
-        d->m_kaccelList.remove( d->m_kaccelList.tqat( i ) );
+        d->m_widgetList.remove( d->m_widgetList.at( i ) );
+        d->m_kaccelList.remove( d->m_kaccelList.at( i ) );
 
         if( d->m_iWidgetCurrent == (int)i )
           d->m_iWidgetCurrent = -1;
@@ -402,7 +402,7 @@ KAction* KActionCollection::action( int index ) const
   TQAsciiDictIterator<KAction> it( d->m_actionDict );
   it += index;
   return it.current();
-//  return d->m_actions.tqat( index );
+//  return d->m_actions.at( index );
 }
 
 bool KActionCollection::readShortcutSettings( const TQString& sConfigGroup, KConfigBase* pConfig )

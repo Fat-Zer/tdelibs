@@ -112,7 +112,7 @@ TQSize KDualColorButton::sizeHint() const
 void KDualColorButton::setForeground(const TQColor &c)
 {
     fg = TQBrush(c, Qt::SolidPattern);
-    tqrepaint(false);
+    repaint(false);
 
     emit fgChanged(fg.color());
 }
@@ -120,7 +120,7 @@ void KDualColorButton::setForeground(const TQColor &c)
 void KDualColorButton::setBackground(const TQColor &c)
 {
     bg = TQBrush(c, Qt::SolidPattern);
-    tqrepaint(false);
+    repaint(false);
 
     emit bgChanged(bg.color());
 }
@@ -131,13 +131,13 @@ void KDualColorButton::setCurrentColor(const TQColor &c)
         bg = TQBrush(c, Qt::SolidPattern);
     else
         fg = TQBrush(c, Qt::SolidPattern);
-    tqrepaint(false);
+    repaint(false);
 }
 
 void KDualColorButton::setCurrent(DualColor s)
 {
     curColor = s;
-    tqrepaint(false);
+    repaint(false);
 }
 
 void KDualColorButton::metrics(TQRect &fgRect, TQRect &bgRect)
@@ -181,7 +181,7 @@ void KDualColorButton::dropEvent(TQDropEvent *ev)
             bg.setColor(c);
             emit(bgChanged(c));
         }
-        tqrepaint(false);
+        repaint(false);
     }
 }
 
@@ -217,7 +217,7 @@ void KDualColorButton::mousePressEvent(TQMouseEvent *ev)
         emit bgChanged(bg.color());
         miniCtlFlag = true;
     }
-    tqrepaint(false);
+    repaint(false);
 }
 
 
@@ -270,7 +270,7 @@ void KDualColorButton::mouseReleaseEvent(TQMouseEvent *ev)
                 }
             }
         }
-        tqrepaint(false);
+        repaint(false);
         dragFlag = false;
     }
     else

@@ -41,8 +41,8 @@ void test_block( const TQString & fileName )
         // TQCString s(array,n+1); // Terminate with 0 before printing
         // printf("%s", s.data());
 
-        kdDebug() << "dev.at = " << dev->tqat() << endl;
-        //kdDebug() << "f.at = " << f.tqat() << endl;
+        kdDebug() << "dev.at = " << dev->at() << endl;
+        //kdDebug() << "f.at = " << f.at() << endl;
     }
     dev->close();
     delete dev;

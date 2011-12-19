@@ -2286,7 +2286,7 @@ void KHTMLPart::checkCompleted()
   }
 
   // the view will emit completed on our behalf,
-  // either now or at next tqrepaint if one is pending
+  // either now or at next repaint if one is pending
 
   //kdDebug(6050) << this << " asks the view to emit completed. pendingAction=" << pendingAction << endl;
   d->m_view->complete( pendingAction );
@@ -6877,7 +6877,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         if (frame->frameStyle() != TQFrame::NoFrame)
         {
            frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Sunken);
-           frame->tqrepaint();
+           frame->repaint();
         }
     }
 
@@ -6905,7 +6905,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         if (frame->frameStyle() != TQFrame::NoFrame)
         {
            frame->setFrameStyle( TQFrame::StyledPanel | TQFrame::Plain);
-           frame->tqrepaint();
+           frame->repaint();
         }
         kdDebug(6050) << "new active frame " << d->m_activeFrame << endl;
     }

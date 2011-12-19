@@ -694,7 +694,7 @@ void KMdiChildFrm::setCaption( const TQString& text )
 void KMdiChildFrm::enableClose( bool bEnable )
 {
 	m_pClose->setEnabled( bEnable );
-	m_pClose->tqrepaint( false );
+	m_pClose->repaint( false );
 }
 
 //============ setIcon ==================//

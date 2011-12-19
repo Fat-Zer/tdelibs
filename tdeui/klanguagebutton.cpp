@@ -191,7 +191,7 @@ void KLanguageButton::slotActivated( int index )
   setCurrentItem( index );
 
   // Forward event from popup menu as if it was emitted from this widget:
-  TQString id = *m_ids->tqat( index );
+  TQString id = *m_ids->at( index );
   emit activated( id );
 }
 
@@ -199,7 +199,7 @@ void KLanguageButton::slotHighlighted( int index )
 {
   //kdDebug() << "slotHighlighted" << index << endl;
 
-  TQString id = *m_ids->tqat( index );
+  TQString id = *m_ids->at( index );
   emit ( highlighted(id) );
 }
 
@@ -237,7 +237,7 @@ bool KLanguageButton::contains( const TQString & id ) const
 
 TQString KLanguageButton::current() const
 {
-  return *m_ids->tqat( currentItem() );
+  return *m_ids->at( currentItem() );
 }
 
 
@@ -248,7 +248,7 @@ TQString KLanguageButton::id( int i ) const
     kdDebug() << "KLanguageButton::tag(), unknown tag " << i << endl;
     return TQString::null;
   }
-  return *m_ids->tqat( i );
+  return *m_ids->at( i );
 }
 
 

@@ -513,7 +513,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
           if (tmp_xpos != xpos) {
             xpos = tmp_xpos;
             resizeEvent(0);
-            divider->tqrepaint(true);
+            divider->repaint(true);
           }
         }
       } else {
@@ -529,7 +529,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
           if (tmp_xpos != xpos) {
             xpos = tmp_xpos;
             resizeEvent(0);
-            divider->tqrepaint(true);
+            divider->repaint(true);
           }
         }
       }
@@ -546,7 +546,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
         }
         xpos = factor* checkValue( mapFromGlobal(mev->globalPos()).y() ) / height();
         resizeEvent(0);
-        divider->tqrepaint(true);
+        divider->repaint(true);
       } else {
         if ((fixedWidth0!=-1) || (fixedWidth1!=-1))
         {
@@ -554,7 +554,7 @@ bool KDockSplitter::eventFilter(TQObject *o, TQEvent *e)
         }
         xpos = factor* checkValue( mapFromGlobal(mev->globalPos()).x() ) / width();
         resizeEvent(0);
-        divider->tqrepaint(true);
+        divider->repaint(true);
       }
       handled= true;
       break;
@@ -587,7 +587,7 @@ void KDockSplitter::updateName()
   TQString new_name = TQString( child0->name() ) + "," + child1->name();
   parentWidget()->setName( new_name.latin1() );
   parentWidget()->setCaption( child0->caption() + "," + child1->caption() );
-  parentWidget()->tqrepaint( false );
+  parentWidget()->repaint( false );
 
   ((KDockWidget*)parentWidget())->firstName = child0->name();
   ((KDockWidget*)parentWidget())->lastName = child1->name();
@@ -661,13 +661,13 @@ void KDockButton_Private::drawButton( TQPainter* p )
 void KDockButton_Private::enterEvent( TQEvent * )
 {
   moveMouse = true;
-  tqrepaint();
+  repaint();
 }
 
 void KDockButton_Private::leaveEvent( TQEvent * )
 {
   moveMouse = false;
-  tqrepaint();
+  repaint();
 }
 
 /*************************************************************************/

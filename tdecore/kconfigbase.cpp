@@ -969,7 +969,7 @@ TQColor KConfigBase::readColorEntry( const char *pKey,
   TQString aValue = readEntry( pKey );
   if( !aValue.isEmpty() )
     {
-      if ( aValue.tqat(0) == (QChar)'#' )
+      if ( aValue.at(0) == (QChar)'#' )
         {
           aRetColor.setNamedColor(aValue);
         }
@@ -1040,10 +1040,10 @@ TQDateTime KConfigBase::readDateTimeEntry( const char *pKey,
   TQStrList list;
   int count = readListEntry( pKey, list, ',' );
   if( count == 6 ) {
-    TQDate date( atoi( list.tqat( 0 ) ), atoi( list.tqat( 1 ) ),
-                atoi( list.tqat( 2 ) ) );
-    TQTime time( atoi( list.tqat( 3 ) ), atoi( list.tqat( 4 ) ),
-                atoi( list.tqat( 5 ) ) );
+    TQDate date( atoi( list.at( 0 ) ), atoi( list.at( 1 ) ),
+                atoi( list.at( 2 ) ) );
+    TQTime time( atoi( list.at( 3 ) ), atoi( list.at( 4 ) ),
+                atoi( list.at( 5 ) ) );
 
     return TQDateTime( date, time );
   }
@@ -1424,7 +1424,7 @@ void KConfigBase::writeEntry ( const char *pKey, const TQStrList &list,
         }
       str_list += sep;
     }
-  if( str_list.tqat(str_list.length() - 1) == (QChar)sep )
+  if( str_list.at(str_list.length() - 1) == (QChar)sep )
     str_list.truncate( str_list.length() -1 );
   writeEntry( pKey, str_list, bPersistent, bGlobal, bNLS );
 }
@@ -1468,7 +1468,7 @@ void KConfigBase::writeEntry ( const char *pKey, const TQStringList &list,
         }
       str_list += sep;
     }
-  if( str_list.tqat(str_list.length() - 1) == (QChar)sep )
+  if( str_list.at(str_list.length() - 1) == (QChar)sep )
     str_list.truncate( str_list.length() -1 );
   writeEntry( pKey, str_list, bPersistent, bGlobal, bNLS, bExpand );
 }

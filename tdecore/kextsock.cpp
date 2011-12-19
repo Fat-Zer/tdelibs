@@ -248,7 +248,7 @@ void KExtendedSocket::setSocketStatus(int newstatus)
 
 void KExtendedSocket::setError(int errorcode, int syserror)
 {
-  seStatus(errorcode);
+  setStatus(errorcode);
   d->syserror = syserror;
 }
 

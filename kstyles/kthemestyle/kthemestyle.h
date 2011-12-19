@@ -192,7 +192,7 @@ public:
      * @param w The rectangle width.
      * @param h The rectangle height.
      * @param sunken Draws a sunken style if @p true.
-     * @param rounded Draws a rounded tqshape if @p true. Requires bWidth to be
+     * @param rounded Draws a rounded shape if @p true. Requires bWidth to be
      * at least 1.
      * @param hWidth The highlight width.
      * @param bWidth The border width.

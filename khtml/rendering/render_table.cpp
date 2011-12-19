@@ -482,7 +482,7 @@ void RenderTable::paint( PaintInfo& pI, int _tx, int _ty)
 #if 0
        TQString m;
        for (uint i = 0; i < borderStyles.count(); i++)
-         m += TQString("%1 ").arg((*borderStyles.tqat(i)).width());
+         m += TQString("%1 ").arg((*borderStyles.at(i)).width());
        kdDebug(6040) << m << endl;
 #endif
         TQValueListIterator<CollapsedBorderValue> it = borderStyles.begin();

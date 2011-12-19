@@ -106,7 +106,7 @@ void KKeyButton::captureShortcut()
 	KShortcut cut;
 
 	m_bEditing = true;
-	tqrepaint();
+	repaint();
 
         {
 	KShortcutDialog dlg( m_cut, d->bQtShortcut, this );
@@ -117,7 +117,7 @@ void KKeyButton::captureShortcut()
 	    emit capturedShortcut( cut );
 
 	m_bEditing = false;
-	tqrepaint();
+	repaint();
 }
 
 void KKeyButton::drawButton( TQPainter *painter )

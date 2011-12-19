@@ -977,7 +977,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		bool lastTab = (tb->indexOf( t->identifier() ) == tb->count()-1) ?
 				TRUE : FALSE;
 		TQRect r2( r );
-		if ( tb->tqshape() == TQTabBar::RoundedAbove ) {
+		if ( tb->shape() == TQTabBar::RoundedAbove ) {
 			p->setPen( cg.light() );
 			p->drawLine( r2.left(), r2.bottom()-1, r2.right(), r2.bottom()-1 );
 			if ( r2.left() == 0 )
@@ -1015,7 +1015,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			x2++;
 			p->drawLine( x2, r2.top() + 2, x2, r2.bottom() -
 				(selected ? (lastTab ? 0:1) :2));
-		} else if ( tb->tqshape() == TQTabBar::RoundedBelow ) {
+		} else if ( tb->shape() == TQTabBar::RoundedBelow ) {
 			bool rightAligned = styleHint( SH_TabBar_Alignment, tb ) == TQt::AlignRight;
 			bool firstTab = tb->indexOf( t->identifier() ) == 0;
 			if ( selected ) {
@@ -1081,9 +1081,9 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			tr.setBottom( tr.bottom() -
 				pixelMetric( TQStyle::PM_DefaultFrameWidth, tb ) );
 	
-		int tqalignment = TQt::AlignCenter | TQt::ShowPrefix;
+		int alignment = TQt::AlignCenter | TQt::ShowPrefix;
 		if (!styleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
-			tqalignment |= TQt::NoAccel;
+			alignment |= TQt::NoAccel;
 		tr.setWidth(tr.width()+4);	// Compensate for text appearing too far to the left
 //		TQRect tr_offset = TQRect(tr.x()+ETCH_X_OFFSET, tr.y()+ETCH_Y_OFFSET, tr.width(), tr.height());
 		TQRect tr_offset = TQRect(tr.x()+0, tr.y()+0, tr.width(), tr.height());
@@ -1098,7 +1098,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
-			drawItem( p, tr_offset, tqalignment, etchedcg, enabled, 0, t->text() );
+			drawItem( p, tr_offset, alignment, etchedcg, enabled, 0, t->text() );
 			p->setPen( cg.dark() );
 			etchedcg.setColor( TQColorGroup::Text, cg.dark() );
 			etchedcg.setColor( TQColorGroup::Mid, cg.dark() );
@@ -1107,11 +1107,11 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
-			drawItem( p, tr, tqalignment, etchedcg, enabled, 0, t->text() );
+			drawItem( p, tr, alignment, etchedcg, enabled, 0, t->text() );
 			p->setPen(savePen);
 		}
 		else {
-			drawItem( p, tr, tqalignment, cg, enabled, 0, t->text() );
+			drawItem( p, tr, alignment, cg, enabled, 0, t->text() );
 		}
 	
 		if ( (sf & Style_HasFocus) && !t->text().isEmpty() )
@@ -1128,9 +1128,9 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		const bool enabled = sf & Style_Enabled;
 		bool etchtext = styleHint( SH_EtchDisabledText );
 	
-		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
+		int alignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
 		if (!styleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
-			tqalignment |= TQt::NoAccel;
+			alignment |= TQt::NoAccel;
 
 		//TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
 		TQRect r_offset = TQRect(r.x()+0, r.y()+0, r.width(), r.height());
@@ -1145,7 +1145,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
-			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+			drawItem(p, r_offset, alignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
 			p->setPen( cg.dark() );
 			etchedcg.setColor( TQColorGroup::Text, cg.dark() );
 			etchedcg.setColor( TQColorGroup::Mid, cg.dark() );
@@ -1154,11 +1154,11 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
-			drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+			drawItem(p, r, alignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
 			p->setPen(savePen);
 		}
 		else {
-			drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
+			drawItem(p, r, alignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, sf & Style_Enabled, checkbox->pixmap(), checkbox->text());
 		}
 	
 		if (sf & Style_HasFocus) {
@@ -1177,9 +1177,9 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		const bool enabled = sf & Style_Enabled;
 		bool etchtext = styleHint( SH_EtchDisabledText );
 
-		int tqalignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
+		int alignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
 		if (!styleHint(SH_UnderlineAccelerator, w, TQStyleOption::Default, 0))
-			tqalignment |= TQt::NoAccel;
+			alignment |= TQt::NoAccel;
 
 //		TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
 		TQRect r_offset = TQRect(r.x()+0, r.y()+0, r.width(), r.height());
@@ -1194,7 +1194,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.light() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.light() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.light() );
-			drawItem(p, r_offset, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
+			drawItem(p, r_offset, alignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
 			p->setPen( cg.dark() );
 			etchedcg.setColor( TQColorGroup::Text, cg.dark() );
 			etchedcg.setColor( TQColorGroup::Mid, cg.dark() );
@@ -1203,10 +1203,10 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			etchedcg.setColor( TQColorGroup::HighlightedText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::BrightText, cg.dark() );
 			etchedcg.setColor( TQColorGroup::ButtonText, cg.dark() );
-			drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
+			drawItem(p, r, alignment | TQt::AlignVCenter | TQt::ShowPrefix, etchedcg, enabled, radiobutton->pixmap(), radiobutton->text());
 			p->setPen(savePen);
 		}
-		drawItem(p, r, tqalignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, enabled, radiobutton->pixmap(), radiobutton->text());
+		drawItem(p, r, alignment | TQt::AlignVCenter | TQt::ShowPrefix, cg, enabled, radiobutton->pixmap(), radiobutton->text());
 	
 		if (sf & Style_HasFocus) {
 			TQRect fr = visualRect(subRect(SR_RadioButtonFocusRect, w), w);

@@ -995,7 +995,7 @@ bool KSpell::check( const TQString &_buffer, bool _usedialog )
   //         origbuffer since I got errors otherwise
   if ( !origbuffer.endsWith("\n\n" ) )
   {
-    if (origbuffer.tqat(origbuffer.length()-1)!='\n')
+    if (origbuffer.at(origbuffer.length()-1)!='\n')
     {
       origbuffer+='\n';
       origbuffer+='\n'; //shouldn't these be removed at some point?

@@ -1413,7 +1413,7 @@ void StoredTransferJob::slotStoredData( KIO::Job *, const TQByteArray &data )
   if ( data.size() == 0 )
     return;
   unsigned int oldSize = m_data.size();
-  m_data.tqresize( oldSize + data.size(), TQGArray::SpeedOptim );
+  m_data.resize( oldSize + data.size(), TQGArray::SpeedOptim );
   memcpy( m_data.data() + oldSize, data.data(), data.size() );
 }
 
@@ -4533,7 +4533,7 @@ void MultiGetJob::slotFinished()
         // return slave to pool
         // fetch new slave for first entry in m_waitQueue and call start
         // again.
-        GetRequest *entry = m_waitQueue.tqat(0);
+        GetRequest *entry = m_waitQueue.at(0);
         m_url = entry->url;
         slaveDone();
         Scheduler::doJob(this);

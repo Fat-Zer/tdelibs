@@ -342,7 +342,7 @@ void KFileTreeView::slotAutoOpenFolder()
       return;
 
    m_dropItem->setOpen( true );
-   m_dropItem->tqrepaint();
+   m_dropItem->repaint();
 }
 
 

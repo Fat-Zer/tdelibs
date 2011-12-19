@@ -87,7 +87,7 @@ TQStringList KURLComboBox::urls() const
     for ( int i = defaultList.count(); i < count(); i++ ) {
         url = text( i );
         if ( !url.isEmpty() ) {
-            //if ( url.tqat(0) == '/' )
+            //if ( url.at(0) == '/' )
             //    list.append( url.prepend( fileProt ) );
             //else
                 list.append( url );
@@ -129,7 +129,7 @@ void KURLComboBox::setDefaults()
 
     KURLComboItem *item;
     for ( unsigned int id = 0; id < defaultList.count(); id++ ) {
-        item = defaultList.tqat( id );
+        item = defaultList.at( id );
         insertURLItem( item );
     }
 }

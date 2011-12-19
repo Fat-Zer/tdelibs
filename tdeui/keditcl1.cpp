@@ -104,7 +104,7 @@ KEdit::insertText(TQTextStream *stream)
 
    // MS: read everything at once if file <= 1MB,
    // else read in 5000-line chunks to keep memory usage acceptable.
-   TQIODevice *dev=stream->tqdevice();
+   TQIODevice *dev=stream->device();
    if (dev && dev->size()>(1024*1024)) {
       while(1) {
         int i;
@@ -128,7 +128,7 @@ KEdit::insertText(TQTextStream *stream)
    setCursorPosition(saveline, savecol);
 //   setAutoUpdate(true);
 
-//   tqrepaint();
+//   repaint();
 
    setModified(true);
    setFocus();
@@ -200,7 +200,7 @@ KEdit::cleanWhiteSpace()
    {
       deselect();
       d->autoUpdate = true;
-      tqrepaint();
+      repaint();
       return;
    }
    if (wordWrap() == NoWrap)
@@ -225,7 +225,7 @@ KEdit::cleanWhiteSpace()
 
    insert(newText);
    d->autoUpdate = true;
-   tqrepaint();
+   repaint();
 
    setModified(true);
    setFocus();

@@ -1497,7 +1497,7 @@ void KDockWidget::setDockTabName( KDockTabGroup* tab )
   tab->parentWidget()->setName( listOfName.utf8() );
   tab->parentWidget()->setCaption( listOfCaption );
 
-  tab->parentWidget()->tqrepaint( false ); // KDockWidget->tqrepaint
+  tab->parentWidget()->repaint( false ); // KDockWidget->repaint
   if ( tab->parentWidget()->parent() )
     if ( tab->parentWidget()->parent()->inherits("KDockSplitter") )
       ((KDockSplitter*)(tab->parentWidget()->parent()))->updateName();
@@ -1570,7 +1570,7 @@ void KDockWidget::loseFormerBrotherDockWidget()
     TQObject::disconnect( formerBrotherDockWidget, TQT_SIGNAL(iMBeingClosed()),
                          this, TQT_SLOT(loseFormerBrotherDockWidget()) );
   formerBrotherDockWidget = 0L;
-  tqrepaint();
+  repaint();
 }
 
 void KDockWidget::dockBack()
@@ -1910,7 +1910,7 @@ void KDockManager::findChildDockWidget( TQWidget*& ww, const TQWidget* p, const 
     while ( it.current() ) {
       if ( it.current()->isWidgetType() ) {
         w = (TQWidget*)it.current();
-        if ( w->isVisible() && w->tqgeometry().contains(pos) ) {
+        if ( w->isVisible() && w->geometry().contains(pos) ) {
           if ( w->inherits("KDockWidget") ) ww = w;
           findChildDockWidget( ww, w, w->mapFromParent(pos) );
           return;
@@ -2950,7 +2950,7 @@ void KDockManager::slotMenuPopup()
 
 void KDockManager::slotMenuActivated( int id )
 {
-  MenuDockData* data = menuData->tqat( id );
+  MenuDockData* data = menuData->at( id );
   data->dock->changeHideShowState();
 }
 
@@ -3121,7 +3121,7 @@ void KDockArea::resizeEvent(TQResizeEvent *rsize)
 //    for (unsigned int i=0;i<children()->count();i++)
     {
 //    	TQPtrList<TQObject> list(children());
-//       TQObject *obj=((TQPtrList<TQObject*>)children())->tqat(i);
+//       TQObject *obj=((TQPtrList<TQObject*>)children())->at(i);
 	TQObject *obj=children()->getFirst();
        if (split = tqt_dynamic_cast<KDockSplitter*>(obj))
        {
@@ -3272,7 +3272,7 @@ void KDockContainer::prepareSave(TQStringList &names)
 		names.remove(tmp->data);
 //	for (uint i=0;i<m_children.count();i++)
 //	{
-//		names.remove(m_children.tqat(i));
+//		names.remove(m_children.at(i));
 //	}
 }
 

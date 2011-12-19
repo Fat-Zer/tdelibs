@@ -42,7 +42,7 @@ KDE_EXPORT void kimgio_xcf_read(TQImageIO *io)
 KDE_EXPORT void kimgio_xcf_write(TQImageIO *io)
 {
 	kdDebug(399) << "XCF: write support not implemented" << endl;
-	io->seStatus(-1);
+	io->setStatus(-1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -127,14 +127,14 @@ void XCFImageFormat::readXCF(TQImageIO *io)
 	char tag[14];
 	xcf_io.readRawBytes(tag, sizeof(tag));
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on header tag" << endl;
 		return;
 	}
 
 	xcf_io >> xcf_image.width >> xcf_image.height >> xcf_image.type;
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on image info" << endl;
 		return;
 	}
@@ -156,7 +156,7 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
 
 		xcf_io >> layer_offset;
 
-		if (xcf_io.tqdevice()->status() != IO_Ok) {
+		if (xcf_io.device()->status() != IO_Ok) {
 			kdDebug(399) << "XCF: read failure on layer offsets" << endl;
 			return;
 		}
@@ -178,7 +178,7 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
 	while (!layer_offsets.isEmpty()) {
 		TQ_INT32 layer_offset = layer_offsets.pop();
 
-		xcf_io.tqdevice()->tqat(layer_offset);
+		xcf_io.device()->at(layer_offset);
 
 		if (!loadLayer(xcf_io, xcf_image))
 			return;
@@ -190,7 +190,7 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
 	}
 
 	io->setImage(xcf_image.image);
-	io->seStatus(0);
+	io->setStatus(0);
 }
 
 
@@ -294,7 +294,7 @@ bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteAr
 	xcf_io >> foo;
 	type=PropType(foo);	// TODO urks
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on property type" << type << endl;
 		return false;
 	}
@@ -309,7 +309,7 @@ bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteAr
 	if (type == PROP_COLORMAP) {
 		xcf_io >> size;
 
-		if (xcf_io.tqdevice()->status() != IO_Ok) {
+		if (xcf_io.device()->status() != IO_Ok) {
 			kdDebug(399) << "XCF: read failure on property " << type << " size" << endl;
 			return false;
 		}
@@ -329,7 +329,7 @@ bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteAr
 
 		xcf_io >> size >> factor >> digits;
 
-		if (xcf_io.tqdevice()->status() != IO_Ok) {
+		if (xcf_io.device()->status() != IO_Ok) {
 			kdDebug(399) << "XCF: read failure on property " << type << endl;
 			return false;
 		}
@@ -337,7 +337,7 @@ bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteAr
 		for (int i = 0; i < 5; i++) {
 			xcf_io >> unit_strings;
 
-			if (xcf_io.tqdevice()->status() != IO_Ok) {
+			if (xcf_io.device()->status() != IO_Ok) {
 				kdDebug(399) << "XCF: read failure on property " << type << endl;
 				return false;
 			}
@@ -354,7 +354,7 @@ bool XCFImageFormat::loadProperty(TQDataStream& xcf_io, PropType& type, TQByteAr
 		xcf_io.readRawBytes(data, size);
         }
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on property " << type << " data, size " << size << endl;
 		return false;
 	}
@@ -382,7 +382,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 
 	xcf_io >> layer.width >> layer.height >> layer.type >> layer.name;
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on layer" << endl;
 		return false;
 	}
@@ -405,7 +405,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 	// If there are any more layers, merge them into the final TQImage.
 
 	xcf_io >> layer.hierarchy_offset >> layer.mask_offset;
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on layer image offsets" << endl;
 		return false;
 	}
@@ -415,7 +415,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 
 	if( !composeTiles(xcf_image))
 		return false;
-	xcf_io.tqdevice()->tqat(layer.hierarchy_offset);
+	xcf_io.device()->at(layer.hierarchy_offset);
 
 	// As tiles are loaded, they are copied into the layers tiles by
 	// this routine. (loadMask(), below, uses a slightly different
@@ -427,7 +427,7 @@ bool XCFImageFormat::loadLayer(TQDataStream& xcf_io, XCFImage& xcf_image)
 		return false;
 
 	if (layer.mask_offset != 0) {
-		xcf_io.tqdevice()->tqat(layer.mask_offset);
+		xcf_io.device()->at(layer.mask_offset);
 
 		if (!loadMask(xcf_io, layer))
 			return false;
@@ -739,7 +739,7 @@ bool XCFImageFormat::loadHierarchy(TQDataStream& xcf_io, Layer& layer)
 
 	xcf_io >> width >> height >> bpp >> offset;
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on layer " << layer.name << " image header" << endl;
 		return false;
 	}
@@ -752,19 +752,19 @@ bool XCFImageFormat::loadHierarchy(TQDataStream& xcf_io, Layer& layer)
 	do {
 		xcf_io >> junk;
 
-		if (xcf_io.tqdevice()->status() != IO_Ok) {
+		if (xcf_io.device()->status() != IO_Ok) {
 			kdDebug(399) << "XCF: read failure on layer " << layer.name << " level offsets" << endl;
 			return false;
 		}
 	} while (junk != 0);
 
-	TQIODevice::Offset saved_pos = xcf_io.tqdevice()->tqat();
+	TQIODevice::Offset saved_pos = xcf_io.device()->at();
 
-	xcf_io.tqdevice()->tqat(offset);
+	xcf_io.device()->at(offset);
 	if (!loadLevel(xcf_io, layer, bpp))
 		return false;
 
-	xcf_io.tqdevice()->tqat(saved_pos);
+	xcf_io.device()->at(saved_pos);
 	return true;
 }
 
@@ -785,7 +785,7 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, TQ_INT32 bpp)
 
 	xcf_io >> width >> height >> offset;
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on layer " << layer.name << " level info" << endl;
 		return false;
 	}
@@ -801,11 +801,11 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, TQ_INT32 bpp)
 				return false;
 			}
 
-			TQIODevice::Offset saved_pos = xcf_io.tqdevice()->tqat();
+			TQIODevice::Offset saved_pos = xcf_io.device()->at();
 			TQ_UINT32 offset2;
 			xcf_io >> offset2;
 
-			if (xcf_io.tqdevice()->status() != IO_Ok) {
+			if (xcf_io.device()->status() != IO_Ok) {
 				kdDebug(399) << "XCF: read failure on layer " << layer.name << " level offset look-ahead" << endl;
 				return false;
 			}
@@ -815,7 +815,7 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, TQ_INT32 bpp)
 			if (offset2 == 0)
 				offset2 = offset + (uint)(TILE_WIDTH * TILE_HEIGHT * 4 * 1.5);
 
-			xcf_io.tqdevice()->tqat(offset);
+			xcf_io.device()->at(offset);
 			int size = layer.image_tiles[j][i].width() * layer.image_tiles[j][i].height();
 
 			if (!loadTileRLE(xcf_io, layer.tile, size, offset2 - offset, bpp))
@@ -827,10 +827,10 @@ bool XCFImageFormat::loadLevel(TQDataStream& xcf_io, Layer& layer, TQ_INT32 bpp)
 
 			layer.assignBytes(layer, i, j);
 
-			xcf_io.tqdevice()->tqat(saved_pos);
+			xcf_io.device()->at(saved_pos);
 			xcf_io >> offset;
 
-			if (xcf_io.tqdevice()->status() != IO_Ok) {
+			if (xcf_io.device()->status() != IO_Ok) {
 				kdDebug(399) << "XCF: read failure on layer " << layer.name << " level offset" << endl;
 				return false;
 			}
@@ -855,7 +855,7 @@ bool XCFImageFormat::loadMask(TQDataStream& xcf_io, Layer& layer)
 
 	xcf_io >> width >> height >> name;
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on mask info" << endl;
 		return false;
 	}
@@ -868,12 +868,12 @@ bool XCFImageFormat::loadMask(TQDataStream& xcf_io, Layer& layer)
 	TQ_UINT32 hierarchy_offset;
 	xcf_io >> hierarchy_offset;
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		kdDebug(399) << "XCF: read failure on mask image offset" << endl;
 		return false;
 	}
 
-	xcf_io.tqdevice()->tqat(hierarchy_offset);
+	xcf_io.device()->at(hierarchy_offset);
 	layer.assignBytes = assignMaskBytes;
 
 	if (!loadHierarchy(xcf_io, layer))
@@ -919,7 +919,7 @@ bool XCFImageFormat::loadTileRLE(TQDataStream& xcf_io, uchar* tile, int image_si
 
 	xcf_io.readRawBytes((char*)xcfdata, data_length);
 
-	if (xcf_io.tqdevice()->status() != IO_Ok) {
+	if (xcf_io.device()->status() != IO_Ok) {
 		delete[] xcfodata;
 		kdDebug(399) << "XCF: read failure on tile" << endl;
 		return false;

@@ -55,12 +55,12 @@
  * To receive mouse clicks or mouse moves,
  * the class has to be overloaded.
  *
- * For performance reasons, the public methods don't call TQWidget::tqrepaint().
+ * For performance reasons, the public methods don't call TQWidget::repaint().
  * (Slots do, see documentation below.)
  * All the changed settings will be painted once after leaving
  * to the main event loop.
  * For performance painting the slot methods should be used,
- * they do a fast TQWidget::tqrepaint() call after changing the values.
+ * they do a fast TQWidget::repaint() call after changing the values.
  * For setting multiple values like minValue(), maxValue(), offset() etc.
  * using the public methods is recommended
  * so the widget will be painted only once when entering the main event loop.
@@ -428,7 +428,7 @@ public slots:
    * Sets the pointer to a new position.
    *
    * The offset is NOT updated.
-   * TQWidget::tqrepaint() is called afterwards.
+   * TQWidget::repaint() is called afterwards.
    **/
   void slotNewValue(int);
 
@@ -436,7 +436,7 @@ public slots:
    * Sets the ruler marks to a new position.
    *
    * The pointer is NOT updated.
-   * TQWidget::tqrepaint() is called afterwards.
+   * TQWidget::repaint() is called afterwards.
    **/
   void slotNewOffset(int);
 

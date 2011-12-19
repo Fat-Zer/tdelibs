@@ -407,7 +407,7 @@ TQRect KURLLabel::activeRect() const
   TQRect r( contentsRect() );
   if (text().isEmpty() || (!d->MarginAltered && sizePolicy() == TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed)))
       return r; //fixed size is sometimes used with pixmap
-  int hAlign = TQApplication::horizontalAlignment( tqalignment() );
+  int hAlign = TQApplication::horizontalAlignment( alignment() );
   int indentX = (hAlign && indent()>0) ? indent() : 0;
   TQFontMetrics fm(font());
   r.setWidth( QMIN(fm.width(text()), r.width()));

@@ -148,10 +148,10 @@ void HelpProtocol::get( const KURL& url )
     doc = url.path();
 
     if ( !mGhelp ) {
-        if (doc.tqat(0) != '/')
+        if (doc.at(0) != '/')
             doc = doc.prepend('/');
 
-        if (doc.tqat(doc.length() - 1) == '/')
+        if (doc.at(doc.length() - 1) == '/')
             doc += "index.html";
     }
 

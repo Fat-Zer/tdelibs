@@ -201,7 +201,7 @@ int main(int argc, char **argv)
             if (helptexts[index]) {
                 printf("%s - %s\n", helptexts[index], i18n(helptexts[index+1]).local8Bit().data());
             } else {
-                printf("%s", i18n("%1 - unknown type\n").tqarg(*it).local8Bit().data());
+                printf("%s", i18n("%1 - unknown type\n").arg(*it).local8Bit().data());
             }
         }
         return 0;
@@ -226,7 +226,7 @@ int main(int argc, char **argv)
         else if ( type == "document" )
             printResult(KGlobalSettings::documentPath());
         else
-            fprintf(stderr, "%s", i18n("%1 - unknown type of userpath\n").tqarg(type).local8Bit().data() );
+            fprintf(stderr, "%s", i18n("%1 - unknown type of userpath\n").arg(type).local8Bit().data() );
         return 0;
     }
 

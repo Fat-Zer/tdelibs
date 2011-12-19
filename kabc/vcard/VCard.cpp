@@ -95,7 +95,7 @@ VCard::_parse()
 	}
 
 	// Get the first line
-	TQCString beginLine = TQCString(l.tqat(0)).stripWhiteSpace();
+	TQCString beginLine = TQCString(l.at(0)).stripWhiteSpace();
 
 	vDebug("Begin line == \"" + beginLine + "\"");
 

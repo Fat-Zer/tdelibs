@@ -46,8 +46,8 @@ public:
 
 protected:
 	bool changeState(const TQString&, const TQString&, TQString&);
-	void parseStatusLPR(TQTextStream&);
-	void parseStatusLPRng(TQTextStream&);
+	void parsetStatusLPR(TQTextStream&);
+	void parsetStatusLPRng(TQTextStream&);
 	int parseStateChangeLPR(const TQString&, const TQString&);
 	int parseStateChangeLPRng(const TQString&, const TQString&);
 

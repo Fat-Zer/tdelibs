@@ -237,7 +237,7 @@ void KateDocumentConfig::updateConfig ()
   {
     for (uint z=0; z < KateFactory::self()->documents()->count(); z++)
     {
-      KateFactory::self()->documents()->tqat(z)->updateConfig ();
+      KateFactory::self()->documents()->at(z)->updateConfig ();
     }
   }
 }
@@ -570,8 +570,8 @@ bool KateDocumentConfig::plugin (uint index) const
   if (index >= m_plugins.size())
     return false;
 
-  if (m_pluginsSet.tqat(index) || isGlobal())
-    return m_plugins.tqat(index);
+  if (m_pluginsSet.at(index) || isGlobal())
+    return m_plugins.at(index);
 
   return s_global->plugin (index);
 }
@@ -734,7 +734,7 @@ void KateViewConfig::updateConfig ()
   {
     for (uint z=0; z < KateFactory::self()->views()->count(); z++)
     {
-      KateFactory::self()->views()->tqat(z)->updateConfig ();
+      KateFactory::self()->views()->at(z)->updateConfig ();
     }
   }
 }
@@ -1088,7 +1088,7 @@ void KateRendererConfig::updateConfig ()
   {
     for (uint z=0; z < KateFactory::self()->renderers()->count(); z++)
     {
-      KateFactory::self()->renderers()->tqat(z)->updateConfig ();
+      KateFactory::self()->renderers()->at(z)->updateConfig ();
     }
   }
 }
@@ -1114,7 +1114,7 @@ void KateRendererConfig::reloadSchema()
 {
   if ( isGlobal() )
     for ( uint z=0; z < KateFactory::self()->renderers()->count(); z++ )
-      KateFactory::self()->renderers()->tqat(z)->config()->reloadSchema();
+      KateFactory::self()->renderers()->at(z)->config()->reloadSchema();
 
   else if ( m_renderer && m_schemaSet )
     setSchemaInternal( m_schema );

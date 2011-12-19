@@ -72,7 +72,7 @@ KMPrinter::PrinterState LpcHelper::state(KMPrinter *prt) const
 	return state(prt->printerName());
 }
 
-void LpcHelper::parseStatusLPR(TQTextStream &t)
+void LpcHelper::parsetStatusLPR(TQTextStream &t)
 {
 	TQString		printer, line;
 	int		p(-1);
@@ -107,7 +107,7 @@ void LpcHelper::parseStatusLPR(TQTextStream &t)
 	}
 }
 
-void LpcHelper::parseStatusLPRng(TQTextStream& t)
+void LpcHelper::parsetStatusLPRng(TQTextStream& t)
 {
 	TQStringList	l;
 	int	p(-1);
@@ -152,10 +152,10 @@ void LpcHelper::updateStates()
 		{
 			default:
 			case LprSettings::LPR:
-				parseStatusLPR(t);
+				parsetStatusLPR(t);
 				break;
 			case LprSettings::LPRng:
-				parseStatusLPRng(t);
+				parsetStatusLPRng(t);
 				break;
 		}
 		proc.close();

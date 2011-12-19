@@ -500,7 +500,7 @@ bool KBuildSycoca::recreate()
   if( build()) // Parse dirs
   {
     save(); // Save database
-    if (m_str->tqdevice()->status())
+    if (m_str->device()->status())
       database->abort(); // Error
     m_str = 0L;
     if (!database->close())
@@ -541,7 +541,7 @@ bool KBuildSycoca::recreate()
 void KBuildSycoca::save()
 {
    // Write header (#pass 1)
-   m_str->tqdevice()->tqat(0);
+   m_str->device()->at(0);
 
    (*m_str) << (TQ_INT32) KSycoca::version();
    KSycocaFactory * servicetypeFactory = 0L;
@@ -575,14 +575,14 @@ void KBuildSycoca::save()
        factory = m_lstFactories->next())
    {
       factory->save(*m_str);
-      if (m_str->tqdevice()->status())
+      if (m_str->device()->status())
          return; // error
    }
 
-   int endOfData = m_str->tqdevice()->tqat();
+   int endOfData = m_str->device()->at();
 
    // Write header (#pass 2)
-   m_str->tqdevice()->tqat(0);
+   m_str->device()->at(0);
 
    (*m_str) << (TQ_INT32) KSycoca::version();
    for(KSycocaFactory *factory = m_lstFactories->first();
@@ -599,7 +599,7 @@ void KBuildSycoca::save()
    (*m_str) << (TQ_INT32) 0; // No more factories.
 
    // Jump to end of database
-   m_str->tqdevice()->tqat(endOfData);
+   m_str->device()->at(endOfData);
 }
 
 bool KBuildSycoca::checkDirTimestamps( const TQString& dirname, const TQDateTime& stamp, bool top )

@@ -742,7 +742,7 @@ void CSSStyleSelector::adjustRenderStyle(RenderStyle* style, DOM::ElementImpl *e
     style->adjustBackgroundLayers();
 
     // Only use slow repaints if we actually have a background image.
-    // FIXME: We only need to tqinvalidate the fixed regions when scrolling.  It's total overkill to
+    // FIXME: We only need to invalidate the fixed regions when scrolling.  It's total overkill to
     // prevent the entire view from blitting on a scroll.
     if (style->hasFixedBackgroundImage() && view)
         view->useSlowRepaints();
@@ -786,7 +786,7 @@ unsigned int CSSStyleSelector::addInlineDeclarations(DOM::ElementImpl* e,
         if (i == firstLen)
             values = addValues;
 
-        CSSProperty *prop = values->tqat(i >= firstLen ? i - firstLen : i);
+        CSSProperty *prop = values->at(i >= firstLen ? i - firstLen : i);
 	Source source = Inline;
 
         if( prop->m_important ) source = InlineImportant;
@@ -1782,7 +1782,7 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
             TQPtrList<CSSSelector> *s = r->selector();
             for(int j = 0; j < (int)s->count(); j++)
             {
-                CSSOrderedRule *rule = new CSSOrderedRule(r, s->tqat(j), count());
+                CSSOrderedRule *rule = new CSSOrderedRule(r, s->at(j), count());
 		TQPtrList<CSSOrderedRule>::append(rule);
                 //kdDebug( 6080 ) << "appending StyleRule!" << endl;
             }
@@ -1829,7 +1829,7 @@ void CSSStyleSelectorList::append( CSSStyleSheetImpl *sheet,
                         for( int j = 0; j < ( int ) s->count(); j++ )
                         {
                             CSSOrderedRule *orderedRule = new CSSOrderedRule(
-                                            styleRule, s->tqat( j ), count() );
+                                            styleRule, s->at( j ), count() );
                 	    TQPtrList<CSSOrderedRule>::append( orderedRule );
                         }
                     }
@@ -1891,7 +1891,7 @@ void CSSOrderedPropertyList::append(DOM::CSSStyleDeclarationImpl *decl, uint sel
     int len = values->count();
     for(int i = 0; i < len; i++)
     {
-        CSSProperty *prop = values->tqat(i);
+        CSSProperty *prop = values->at(i);
 	Source source = regular;
 
 	if( prop->m_important ) source = important;

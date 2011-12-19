@@ -467,7 +467,7 @@ k_dcop_signals:
 	/**
 	 * @brief Indicates that a contact's presence has changed
 	 *
-	 * Notifies connected DCOP tqreceivers about a change in a contact's
+	 * Notifies connected DCOP receivers about a change in a contact's
 	 * presence.
 	 *
 	 * Implementations just have to call this method with the appropriate

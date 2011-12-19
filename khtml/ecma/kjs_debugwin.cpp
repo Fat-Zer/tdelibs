@@ -548,7 +548,7 @@ void KJSDebugWin::slotToggleBreakpoint(int lineno)
   if (m_sourceSel->currentItem() < 0)
     return;
 
-  SourceFile *sourceFile = m_sourceSelFiles.tqat(m_sourceSel->currentItem());
+  SourceFile *sourceFile = m_sourceSelFiles.at(m_sourceSel->currentItem());
 
   // Find the source fragment containing the selected line (if any)
   int sourceId = -1;
@@ -592,14 +592,14 @@ void KJSDebugWin::slotSourceSelected(int sourceSelIndex)
   // A source file has been selected from the drop-down list - display the file
   if (sourceSelIndex < 0 || sourceSelIndex >= (int)m_sourceSel->count())
     return;
-  SourceFile *sourceFile = m_sourceSelFiles.tqat(sourceSelIndex);
+  SourceFile *sourceFile = m_sourceSelFiles.at(sourceSelIndex);
   displaySourceFile(sourceFile,true);
 
   // If the currently selected context is in the current source file, then hilight
   // the line it's on.
   if (m_contextList->currentItem() >= 0) {
     Context ctx = m_execs[m_contextList->currentItem()]->context();
-    if (m_sourceFragments[ctx.sourceId()]->sourceFile == m_sourceSelFiles.tqat(sourceSelIndex))
+    if (m_sourceFragments[ctx.sourceId()]->sourceFile == m_sourceSelFiles.at(sourceSelIndex))
       setSourceLine(ctx.sourceId(),ctx.curStmtFirstLine());
   }
 }
@@ -614,7 +614,7 @@ void KJSDebugWin::slotEval()
   if (m_execStates.isEmpty()) {
     if (m_sourceSel->currentItem() < 0)
       return;
-    SourceFile *sourceFile = m_sourceSelFiles.tqat(m_sourceSel->currentItem());
+    SourceFile *sourceFile = m_sourceSelFiles.at(m_sourceSel->currentItem());
     if (!sourceFile->interpreter)
       return;
     exec = sourceFile->interpreter->globalExec();
@@ -744,7 +744,7 @@ bool KJSDebugWin::sourceParsed(KJS::ExecState *exec, int sourceId,
     if (!sourceFile->interpreter)
       sourceFile->interpreter = exec->interpreter();
     for (index = 0; index < m_sourceSel->count(); index++) {
-      if (m_sourceSelFiles.tqat(index) == sourceFile)
+      if (m_sourceSelFiles.at(index) == sourceFile)
 	break;
     }
     assert(index < m_sourceSel->count());
@@ -782,7 +782,7 @@ bool KJSDebugWin::sourceUnused(KJS::ExecState *exec, int sourceId)
     SourceFile *sourceFile = fragment->sourceFile;
     if (sourceFile->hasOneRef()) {
       for (int i = 0; i < m_sourceSel->count(); i++) {
-	if (m_sourceSelFiles.tqat(i) == sourceFile) {
+	if (m_sourceSelFiles.at(i) == sourceFile) {
 	  m_sourceSel->removeItem(i);
 	  m_sourceSelFiles.remove(i);
 	  break;
@@ -930,7 +930,7 @@ void KJSDebugWin::setSourceLine(int sourceId, int lineno)
   SourceFile *sourceFile = source->sourceFile;
   if (m_curSourceFile != source->sourceFile) {
       for (int i = 0; i < m_sourceSel->count(); i++)
-	if (m_sourceSelFiles.tqat(i) == sourceFile)
+	if (m_sourceSelFiles.at(i) == sourceFile)
 	  m_sourceSel->setCurrentItem(i);
       displaySourceFile(sourceFile,false);
   }

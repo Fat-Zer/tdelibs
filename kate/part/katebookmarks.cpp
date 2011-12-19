@@ -128,7 +128,7 @@ void KateBookmarks::clearBookmarks ()
 
   TQPtrList<KTextEditor::Mark> m = m_view->getDoc()->marks();
   for (uint i=0; i < m.count(); i++)
-    m_view->getDoc()->removeMark( m.tqat(i)->line, KTextEditor::MarkInterface::markType01 );
+    m_view->getDoc()->removeMark( m.at(i)->line, KTextEditor::MarkInterface::markType01 );
 
   // just to be sure ;)
   marksChanged ();
@@ -255,8 +255,8 @@ void KateBookmarks::goNext()
   int found = -1;
 
   for (uint z=0; z < m.count(); z++)
-    if ( (m.tqat(z)->line > line) && ((found == -1) || (uint(found) > m.tqat(z)->line)) )
-      found = m.tqat(z)->line;
+    if ( (m.at(z)->line > line) && ((found == -1) || (uint(found) > m.at(z)->line)) )
+      found = m.at(z)->line;
 
   if (found != -1)
     m_view->gotoLineNumber ( found );
@@ -272,8 +272,8 @@ void KateBookmarks::goPrevious()
   int found = -1;
 
   for (uint z=0; z < m.count(); z++)
-    if ((m.tqat(z)->line < line) && ((found == -1) || (uint(found) < m.tqat(z)->line)))
-      found = m.tqat(z)->line;
+    if ((m.at(z)->line < line) && ((found == -1) || (uint(found) < m.at(z)->line)))
+      found = m.at(z)->line;
 
   if (found != -1)
     m_view->gotoLineNumber ( found );

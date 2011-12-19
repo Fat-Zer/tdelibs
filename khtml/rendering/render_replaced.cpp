@@ -183,7 +183,7 @@ bool RenderWidget::event( TQEvent *e )
             return true;
         TQWidgetResizeEvent *re = static_cast<TQWidgetResizeEvent *>(e);
         m_widget->resize( re->w,  re->h );
-        tqrepaint();
+        repaint();
     }
     // eat all events - except if this is a frame (in which case KHTMLView handles it all)
     if ( ::tqqt_cast<KHTMLView *>( m_widget ) )
@@ -543,10 +543,10 @@ static void copyWidget(const TQRect& r, TQPainter *p, TQWidget *widget, int tx, 
             }
         }
     }
-    TQMemArray<TQRect> br = blit.tqrects();
+    TQMemArray<TQRect> br = blit.rects();
 
     const int cnt = br.size();
-    const bool external = p->tqdevice()->isExtDev();
+    const bool external = p->device()->isExtDev();
     TQPixmap* const pm = PaintBuffer::grab( widget->size() );
     if (!pm)
     {

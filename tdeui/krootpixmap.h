@@ -159,16 +159,16 @@ public slots:
      * Repaints the widget background. Normally, you shouldn't need this
      * as it is handled automatically.
      *
-     * @param force Force a tqrepaint, even if the contents did not change.
+     * @param force Force a repaint, even if the contents did not change.
      */
-    void tqrepaint( bool force );
+    void repaint( bool force );
 
     /**
      * Repaints the widget background. Normally, you shouldn't need this
      * as it is handled automatically. This is equivalent to calling
-     * tqrepaint( false ).
+     * repaint( false ).
      */
-    void tqrepaint();
+    void repaint();
 
     /**
      * Enables custom handling of the background painting. If custom

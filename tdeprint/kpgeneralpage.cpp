@@ -622,17 +622,17 @@ void KPGeneralPage::getOptions(TQMap<TQString,TQString>& opts, bool incldef)
 		DrListOption	*opt;
 		if ((opt=(DrListOption*)driver()->findOption("PageSize")) != NULL)
 		{
-			DrBase	*ch = opt->choices()->tqat(m_pagesize->currentItem());
+			DrBase	*ch = opt->choices()->at(m_pagesize->currentItem());
 			if (incldef || ch->name() != opt->get("default")) opts["PageSize"] = ch->name();
 		}
 		if ((opt=(DrListOption*)driver()->findOption("MediaType")) != NULL)
 		{
-			DrBase	*ch = opt->choices()->tqat(m_papertype->currentItem());
+			DrBase	*ch = opt->choices()->at(m_papertype->currentItem());
 			if (incldef || ch->name() != opt->get("default")) opts["MediaType"] = ch->name();
 		}
 		if ((opt=(DrListOption*)driver()->findOption("InputSlot")) != NULL)
 		{
-			DrBase	*ch = opt->choices()->tqat(m_inputslot->currentItem());
+			DrBase	*ch = opt->choices()->at(m_inputslot->currentItem());
 			if (incldef || ch->name() != opt->get("default")) opts["InputSlot"] = ch->name();
 		}
 

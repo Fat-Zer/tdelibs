@@ -234,7 +234,7 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
         if (equalPos > 0) {
             const TQString name = (*it).left (equalPos).upper ();
             TQString value = (*it).right ((*it).length () - equalPos - 1);
-            if (value.tqat(0)=='\"')
+            if (value.at(0)=='\"')
                 value = value.right (value.length () - 1);
             if (value.at (value.length () - 1) == '\"')
                 value.truncate (value.length () - 1);

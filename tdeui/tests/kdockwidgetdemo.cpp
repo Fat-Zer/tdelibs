@@ -242,7 +242,7 @@ void PixmapView::setPixmap( const TQPixmap &pix )
 {
     pixmap = pix;
     resizeContents( pixmap.size().width(), pixmap.size().height() );
-    viewport()->tqrepaint( true );
+    viewport()->repaint( true );
 }
 
 void PixmapView::drawContents( TQPainter *p, int, int, int, int )

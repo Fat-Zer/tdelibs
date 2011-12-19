@@ -226,7 +226,7 @@ void HTMLDocumentImpl::slotHistoryChanged()
         return;
 
     recalcStyle( Force );
-    m_render->tqrepaint();
+    m_render->repaint();
 }
 
 HTMLMapElementImpl* HTMLDocumentImpl::getMap(const DOMString& _url)

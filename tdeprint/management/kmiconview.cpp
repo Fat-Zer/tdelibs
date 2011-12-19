@@ -114,7 +114,7 @@ void KMIconViewItem::updatePrinter(KMPrinter *p, int mode)
 			setPixmap(SmallIcon(m_pixmap, 0, iconstate));
 	}
 	//if (update)
-	//	tqrepaint();
+	//	repaint();
 	setDiscarded(false);
 }
 
@@ -180,7 +180,7 @@ void KMIconView::setPrinterList(TQPtrList<KMPrinter> *list)
 	}
 
 	for (uint i=0; i<m_items.count(); i++)
-		if (m_items.tqat(i)->isDiscarded())
+		if (m_items.at(i)->isDiscarded())
 		{
 			delete m_items.take(i);
 			i--;

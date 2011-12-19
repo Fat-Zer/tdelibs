@@ -896,7 +896,7 @@ const ClassInfo* KJS::HTMLElement::classInfo() const
   rel		KJS::HTMLElement::AnchorRel		DontDelete
   rev		KJS::HTMLElement::AnchorRev		DontDelete
   search	KJS::HTMLElement::AnchorSearch		DontDelete
-  tqshape		KJS::HTMLElement::AnchorShape		DontDelete
+  shape		KJS::HTMLElement::AnchorShape		DontDelete
   tabIndex	KJS::HTMLElement::AnchorTabIndex	DontDelete
   target	KJS::HTMLElement::AnchorTarget		DontDelete
   text		KJS::HTMLElement::AnchorText		DontDelete|ReadOnly
@@ -981,7 +981,7 @@ const ClassInfo* KJS::HTMLElement::classInfo() const
   protocol	KJS::HTMLElement::AreaProtocol		DontDelete|ReadOnly
   search	KJS::HTMLElement::AreaSearch		DontDelete|ReadOnly
   noHref	KJS::HTMLElement::AreaNoHref		DontDelete
-  tqshape		KJS::HTMLElement::AreaShape		DontDelete
+  shape		KJS::HTMLElement::AreaShape		DontDelete
   tabIndex	KJS::HTMLElement::AreaTabIndex		DontDelete
   target	KJS::HTMLElement::AreaTarget		DontDelete
 @end
@@ -1599,7 +1599,7 @@ Value KJS::HTMLElement::getValueProperty(ExecState *exec, int token) const
     case AnchorName:            return String(anchor.name());
     case AnchorRel:             return String(anchor.rel());
     case AnchorRev:             return String(anchor.rev());
-    case AnchorShape:           return String(anchor.tqshape());
+    case AnchorShape:           return String(anchor.shape());
     case AnchorTabIndex:        return Number(anchor.tabIndex());
     case AnchorTarget:          return String(anchor.target());
     // Not specified in http://msdn.microsoft.com/workshop/author/dhtml/reference/objects/a.asp
@@ -1735,7 +1735,7 @@ Value KJS::HTMLElement::getValueProperty(ExecState *exec, int token) const
       }
     }
     case AreaNoHref:          return Boolean(area.noHref());
-    case AreaShape:           return String(area.tqshape());
+    case AreaShape:           return String(area.shape());
     case AreaTabIndex:        return Number(area.tabIndex());
     case AreaTarget:          return String(area.target());
     }

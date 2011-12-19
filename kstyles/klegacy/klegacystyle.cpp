@@ -2954,8 +2954,8 @@ void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, boo
     key.data.function = KLegacy::Extension;
     key.data.state = (! selected) ? KLegacy::Active : KLegacy::Normal;
     key.data.shadow = KLegacy::Out;
-    key.data.gapSide = (tabbar->tqshape() == TQTabBar::RoundedAbove ||
-			tabbar->tqshape() == TQTabBar::TriangularAbove) ?
+    key.data.gapSide = (tabbar->shape() == TQTabBar::RoundedAbove ||
+			tabbar->shape() == TQTabBar::TriangularAbove) ?
 		       KLegacy::Bottom : KLegacy::Top;
 
     int ry = tab->r.top(), rh = tab->r.height();
@@ -2963,8 +2963,8 @@ void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, boo
     if (! selected) {
 	rh -= 2;
 
-	if (tabbar->tqshape() == TQTabBar::RoundedAbove ||
-	    tabbar->tqshape() == TQTabBar::TriangularAbove)
+	if (tabbar->shape() == TQTabBar::RoundedAbove ||
+	    tabbar->shape() == TQTabBar::TriangularAbove)
 	    ry += 2;
     }
 
@@ -3261,7 +3261,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		obj->inherits(TQSLIDER_OBJECT_NAME_STRING) ||
 		obj->inherits(TQSCROLLBAR_OBJECT_NAME_STRING)) {
 		priv->lastWidget = (TQWidget *) obj;
-		priv->lastWidget->tqrepaint(false);
+		priv->lastWidget->repaint(false);
 	    } else if (obj->inherits(TQRADIOBUTTON_OBJECT_NAME_STRING)) {
 		TQWidget *w = (TQWidget *) obj;
 
@@ -3327,7 +3327,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	{
 	    if (obj == priv->lastWidget) {
 		priv->lastWidget = 0;
-		((TQWidget *) obj)->tqrepaint(false);
+		((TQWidget *) obj)->repaint(false);
 	    } else if (obj->inherits(TQRADIOBUTTON_OBJECT_NAME_STRING) ||
 		       obj->inherits(TQCHECKBOX_OBJECT_NAME_STRING)) {
 		TQWidget *w = (TQWidget *) obj;
@@ -3335,7 +3335,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 		if (! w->isTopLevel()) {
 		    w->setBackgroundMode(TQWidget::X11ParentRelative);
 		    w->setBackgroundOrigin(TQWidget::WidgetOrigin);
-		    w->tqrepaint(true);
+		    w->repaint(true);
 		}
 	    }
 
@@ -3349,7 +3349,7 @@ bool KLegacyStyle::eventFilter(TQObject *obj, TQEvent *e) {
 	    if (obj->inherits(TQSCROLLBAR_OBJECT_NAME_STRING) &&
 		(! (me->state() & (LeftButton | MidButton | RightButton)))) {
 		priv->hovering = true;
-		((TQWidget *) obj)->tqrepaint(false);
+		((TQWidget *) obj)->repaint(false);
 		priv->hovering = false;
 	    }
 

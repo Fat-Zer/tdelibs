@@ -824,7 +824,7 @@ void KPrintDialog::reload()
 	// remove printer dependent pages (usually from plugin)
 	TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", TQTABWIDGET_OBJECT_NAME_STRING)));
 	for (uint i=0; i<d->m_pages.count(); i++)
-		if (d->m_pages.tqat(i)->onlyRealPrinters())
+		if (d->m_pages.at(i)->onlyRealPrinters())
 		{
 			KPrintDialogPage	*page = d->m_pages.take(i--);
 			if (tabs)
@@ -952,10 +952,10 @@ void KPrintDialog::enableDialogPage( int index, bool flag )
 	if ( d->m_pages.count() > 1 )
 	{
 		TQTabWidget	*tabs = static_cast<TQTabWidget*>(TQT_TQWIDGET(d->m_dummy->child("TabWidget", TQTABWIDGET_OBJECT_NAME_STRING)));
-		tabs->setTabEnabled( d->m_pages.tqat( index ), flag );
+		tabs->setTabEnabled( d->m_pages.at( index ), flag );
 	}
 	else
-		d->m_pages.tqat( 0 )->setEnabled( flag );
+		d->m_pages.at( 0 )->setEnabled( flag );
 }
 
 void KPrintDialog::slotOpenFileDialog()

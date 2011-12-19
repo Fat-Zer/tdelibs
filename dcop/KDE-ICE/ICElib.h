@@ -89,7 +89,7 @@ typedef enum {
     IceClosedASAP,
     IceConnectionInUse,
     IceStartedShutdownNegotiation
-} IceCloseStatus;
+} IceClosetStatus;
 
 typedef enum {
     IceProcessMessagesSuccess,
@@ -398,7 +398,7 @@ extern Bool IceCheckShutdownNegotiation (
 
 #define IceCloseConnection KDE_IceCloseConnection
 
-extern IceCloseStatus IceCloseConnection (
+extern IceClosetStatus IceCloseConnection (
 #if NeedFunctionPrototypes
     IceConn		/* iceConn */
 #endif

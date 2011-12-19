@@ -511,7 +511,7 @@ public:
    * buffer to fit needs. This function should not be used except for handling
    * unknown socket address structures.
    *
-   * Also note that this function may tqinvalidate the socket if a known
+   * Also note that this function may invalidate the socket if a known
    * family is set (Internet or Unix socket) and the new length would be
    * too small to hold the system's sockaddr_* structure. If unsure, reset
    * the family:
@@ -535,7 +535,7 @@ public:
   /**
    * Sets the family of this object.
    *
-   * Note: setting the family will probably tqinvalidate any address data
+   * Note: setting the family will probably invalidate any address data
    * contained in this object. Use this function with care.
    *
    * @param family	the new family to set

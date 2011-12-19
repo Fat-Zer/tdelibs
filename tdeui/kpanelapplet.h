@@ -308,9 +308,9 @@ protected:
      **/
     Position position() const { return _position; }
     /**
-     * @return the applet's tqalignment. (top/left, center, or bottom/right)
+     * @return the applet's alignment. (top/left, center, or bottom/right)
      **/
-    Alignment tqalignment() const { return _tqalignment; }
+    Alignment alignment() const { return _alignment; }
 
     /**
      * The panel on which this applet resides has changed its position.
@@ -320,7 +320,7 @@ protected:
     virtual void positionChange( Position p );
 
     /**
-     * The panel on which this applet resides has changed its tqalignment.
+     * The panel on which this applet resides has changed its alignment.
      * Reimplement this change handler in order to adjust the look of your
      * applet.
      **/
@@ -383,7 +383,7 @@ protected:
 private:
     Type         _type;
     Position     _position;
-    Alignment    _tqalignment;
+    Alignment    _alignment;
     KConfig*     _config;
     int          _actions;
 protected:

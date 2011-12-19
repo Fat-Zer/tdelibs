@@ -518,7 +518,7 @@ bool KJanusWidget::setSwallowedWidget( TQWidget *widget )
   TQObjectList l = mSwallowPage->childrenListObject(); // silence please
   for( uint i=0; i < l.count(); i++ )
   {
-    TQObject *o = l.tqat(i);
+    TQObject *o = l.at(i);
     if( o->isWidgetType() )
     {
       ((TQWidget*)o)->hide();

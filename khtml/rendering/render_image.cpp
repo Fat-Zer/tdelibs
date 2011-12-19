@@ -416,7 +416,7 @@ void RenderImage::notifyFinished(CachedObject *finishedObj)
     if ( ( m_cachedImage == finishedObj || m_oldImage == finishedObj ) && m_oldImage ) {
         m_oldImage->deref( this );
         m_oldImage = 0;
-        tqrepaint();
+        repaint();
     }
 
     RenderReplaced::notifyFinished(finishedObj);

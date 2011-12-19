@@ -878,7 +878,7 @@ const TQString &KHTMLSettings::availableFamilies()
     if ( !avFamilies ) {
         avFamilies = new TQString;
         TQFontDatabase db;
-        TQStringList families = db.tqfamilies();
+        TQStringList families = db.families();
         TQStringList s;
         TQRegExp foundryExp(" \\[.+\\]");
 

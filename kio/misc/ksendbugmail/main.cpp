@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
     if (recipient.isEmpty())
         recipient = "submit@bugs.kde.org";
     else {
-        if (recipient.tqat(0) == '\'') {
+        if (recipient.at(0) == '\'') {
             recipient = recipient.mid(1).left(recipient.length() - 2);
         }
     }
@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
     if (subject.isEmpty())
         subject = "(no subject)";
     else {
-        if (subject.tqat(0) == '\'')
+        if (subject.at(0) == '\'')
             subject = subject.mid(1).left(subject.length() - 2);
     }
     TQTextIStream input(stdin);

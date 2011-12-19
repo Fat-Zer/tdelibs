@@ -79,7 +79,7 @@ LangValue::_parse()
 	
 	if (l.count() == 0) return;
 	
-	primary_ = l.tqat(0);
+	primary_ = l.at(0);
 	
 	l.remove(0u);
 	

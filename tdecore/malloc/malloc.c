@@ -85,7 +85,7 @@ int kde_malloc_is_used = 0;
     calloc(size_t n_elements, size_t element_size);
     free(Void_t* p);
     realloc(Void_t* p, size_t n);
-    memalign(size_t tqalignment, size_t n);
+    memalign(size_t alignment, size_t n);
     valloc(size_t n);
     mallinfo()
     mallopt(int parameter_number, int parameter_value)
@@ -107,7 +107,7 @@ int kde_malloc_is_used = 0;
        You can adjust this by defining INTERNAL_SIZE_T
 
   Alignment:                              2 * sizeof(size_t) (default)
-       (i.e., 8 byte tqalignment with 4byte size_t). This suffices for
+       (i.e., 8 byte alignment with 4byte size_t). This suffices for
        nearly all current machines and C compilers. However, you can
        define MALLOC_ALIGNMENT to be wider than this if necessary.
 
@@ -146,7 +146,7 @@ int kde_malloc_is_used = 0;
        default used to obtain memory from system) accepts signed
        arguments, and may not be able to handle size_t-wide arguments
        with negative sign bit.  Generally, values that would
-       appear as negative after accounting for overhead and tqalignment
+       appear as negative after accounting for overhead and alignment
        are supported only via mmap(), which does not have this
        limitation.
 
@@ -394,7 +394,7 @@ extern "C" {
   expense of not being able to handle more than 2^32 of malloced
   space. If this limitation is acceptable, you are encouraged to set
   this unless you are on a platform requiring 16byte alignments. In
-  this case the tqalignment requirements turn out to negate any
+  this case the alignment requirements turn out to negate any
   potential advantages of decreasing size_t word size.
 
   Implementors: Beware of the possible combinations of:
@@ -419,11 +419,11 @@ extern "C" {
 
 
 /*
-  MALLOC_ALIGNMENT is the minimum tqalignment for malloc'ed chunks.
+  MALLOC_ALIGNMENT is the minimum alignment for malloc'ed chunks.
   It must be a power of two at least 2 * SIZE_SZ, even on machines
   for which smaller alignments would suffice. It may be defined as
   larger than this though. Note however that code and data structures
-  are optimized for the case of 8-byte tqalignment.
+  are optimized for the case of 8-byte alignment.
 */
 
 
@@ -957,13 +957,13 @@ Void_t*  public_rEALLOc();
 #endif
 
 /*
-  memalign(size_t tqalignment, size_t n);
+  memalign(size_t alignment, size_t n);
   Returns a pointer to a newly allocated chunk of n bytes, aligned
-  in accord with the tqalignment argument.
+  in accord with the alignment argument.
 
-  The tqalignment argument should be a power of two. If the argument is
+  The alignment argument should be a power of two. If the argument is
   not a power of two, the nearest greater power is used.
-  8-byte tqalignment is guaranteed by normal malloc calls, so don't
+  8-byte alignment is guaranteed by normal malloc calls, so don't
   bother calling memalign with an argument of 8 or less.
 
   Overreliance on memalign is a sure way to fragment space.
@@ -1228,7 +1228,7 @@ int      public_mTRIm();
 
   Returns the number of bytes you can actually use in
   an allocated chunk, which may be more than you requested (although
-  often not) due to tqalignment and minimum size constraints.
+  often not) due to alignment and minimum size constraints.
   You can use this many bytes without worrying about
   overwriting other allocated objects. This is not a particularly great
   programming practice. malloc_usable_size can be more useful in
@@ -1252,8 +1252,8 @@ size_t   public_mUSABLe();
   number of bytes allocated via malloc (or realloc, etc) but not yet
   freed. Note that this is the number of bytes allocated, not the
   number requested. It will be larger than the number requested
-  because of tqalignment and bookkeeping overhead. Because it includes
-  tqalignment wastage as being in use, this figure may be greater than
+  because of alignment and bookkeeping overhead. Because it includes
+  alignment wastage as being in use, this figure may be greater than
   zero even when no user-level chunks are allocated.
 
   The reported current and maximum system memory can be inaccurate if
@@ -1290,7 +1290,7 @@ void     public_mSTATs();
   fragmentation without improving speed.
 
   M_MXFAST is set in REQUEST size units. It is internally used in
-  chunksize units, which adds padding and tqalignment.  You can reduce
+  chunksize units, which adds padding and alignment.  You can reduce
   M_MXFAST to 0 to disable all use of fastbins.  This causes the malloc
   algorithm to be a closer approximation of fifo-best-fit in all cases,
   not just for larger requests, but will generally cause it to be
@@ -1434,7 +1434,7 @@ void     public_mSTATs();
 
    1. The space cannot be reclaimed, consolidated, and then
       used to service later requests, as happens with normal chunks.
-   2. It can lead to more wastage because of mmap page tqalignment
+   2. It can lead to more wastage because of mmap page alignment
       requirements
    3. It causes malloc performance to be more dependent on host
       system memory management support routines which may vary in
@@ -1614,12 +1614,12 @@ Void_t* public_rEALLOc(Void_t* m, size_t bytes) {
   return m;
 }
 
-Void_t* public_mEMALIGn(size_t tqalignment, size_t bytes) {
+Void_t* public_mEMALIGn(size_t alignment, size_t bytes) {
   Void_t* m;
   if (MALLOC_PREACTION != 0) {
     return 0;
   }
-  m = mEMALIGn(tqalignment, bytes);
+  m = mEMALIGn(alignment, bytes);
   if (MALLOC_POSTACTION != 0) {
   }
   return m;
@@ -1956,7 +1956,7 @@ nextchunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 */
 
 /*
-  ---------- Size and tqalignment checks and conversions ----------
+  ---------- Size and alignment checks and conversions ----------
 */
 
 /* conversion from malloc headers to user pointers, and back */
@@ -1972,7 +1972,7 @@ nextchunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #define MINSIZE  \
   (unsigned long)(((MIN_CHUNK_SIZE+MALLOC_ALIGN_MASK) & ~MALLOC_ALIGN_MASK))
 
-/* Check if m has acceptable tqalignment */
+/* Check if m has acceptable alignment */
 
 #define aligned_OK(m)  (((unsigned long)((m)) & (MALLOC_ALIGN_MASK)) == 0)
 
@@ -2641,7 +2641,7 @@ static void do_check_remalloced_chunk(p, s) mchunkptr p; INTERNAL_SIZE_T s;
   /* Legal size ... */
   assert((sz & MALLOC_ALIGN_MASK) == 0);
   assert((unsigned long)(sz) >= MINSIZE);
-  /* ... and tqalignment */
+  /* ... and alignment */
   assert(aligned_OK(chunk2mem(p)));
   /* chunk is less than MINSIZE more than request */
   assert((long)(sz) - (long)(s) >= 0);
@@ -2704,7 +2704,7 @@ static void do_check_malloc_state()
   /* internal size_t must be no wider than pointer type */
   assert(sizeof(INTERNAL_SIZE_T) <= sizeof(char*));
 
-  /* tqalignment is a power of 2 */
+  /* alignment is a power of 2 */
   assert((MALLOC_ALIGNMENT & (MALLOC_ALIGNMENT-1)) == 0);
 
   /* cannot run remaining checks until fully initialized */
@@ -3209,7 +3209,7 @@ static Void_t* sYSMALLOc(nb, av) INTERNAL_SIZE_T nb; mstate av;
         /*
           The offset to the start of the mmapped region is stored
           in the prev_size field of the chunk. This allows us to adjust
-          returned start address to meet tqalignment requirements here 
+          returned start address to meet alignment requirements here 
           and in memalign(), and still be able to compute proper
           address argument for later munmap in free() and realloc().
         */
@@ -3288,7 +3288,7 @@ static Void_t* sYSMALLOc(nb, av) INTERNAL_SIZE_T nb; mstate av;
     Round to a multiple of page size.
     If MORECORE is not contiguous, this ensures that we only call it
     with whole-page arguments.  And if MORECORE is contiguous and
-    this is not first time through, this preserves page-tqalignment of
+    this is not first time through, this preserves page-alignment of
     previous calls. Otherwise, we correct to page-align below.
   */
 
@@ -3384,7 +3384,7 @@ static Void_t* sYSMALLOc(nb, av) INTERNAL_SIZE_T nb; mstate av;
       /* handle contiguous cases */
       if (contiguous(av)) { 
         
-        /* Guarantee tqalignment of first new chunk made from this space */
+        /* Guarantee alignment of first new chunk made from this space */
 
         front_misalign = (INTERNAL_SIZE_T)chunk2mem(brk) & MALLOC_ALIGN_MASK;
         if (front_misalign > 0) {
@@ -3554,7 +3554,7 @@ Void_t* mALLOc(size_t bytes)
 
   /*
     Convert request size to internal form by adding SIZE_SZ bytes
-    overhead plus possibly more to obtain necessary tqalignment and/or
+    overhead plus possibly more to obtain necessary alignment and/or
     to obtain a size of at least MINSIZE, the smallest allocatable
     size. Also, checked_request2size traps (returning 0) request sizes
     that are so large that they wrap around zero when padded and
@@ -4127,54 +4127,54 @@ Void_t* rEALLOc(oldmem, bytes) Void_t* oldmem; size_t bytes;
 
 INLINE
 #if __STD_C
-Void_t* mEMALIGn(size_t tqalignment, size_t bytes)
+Void_t* mEMALIGn(size_t alignment, size_t bytes)
 #else
-Void_t* mEMALIGn(tqalignment, bytes) size_t tqalignment; size_t bytes;
+Void_t* mEMALIGn(alignment, bytes) size_t alignment; size_t bytes;
 #endif
 {
   INTERNAL_SIZE_T nb;             /* padded  request size */
   char*           m;              /* memory returned by malloc call */
   mchunkptr       p;              /* corresponding chunk */
-  char*           brk;            /* tqalignment point within p */
+  char*           brk;            /* alignment point within p */
   mchunkptr       newp;           /* chunk to return */
   INTERNAL_SIZE_T newsize;        /* its size */
-  INTERNAL_SIZE_T leadsize;       /* leading space before tqalignment point */
+  INTERNAL_SIZE_T leadsize;       /* leading space before alignment point */
   mchunkptr       remainder;      /* spare room at end to split off */
   unsigned long   remainder_size; /* its size */
   INTERNAL_SIZE_T size;
 
-  /* If need less tqalignment than we give anyway, just relay to malloc */
+  /* If need less alignment than we give anyway, just relay to malloc */
 
-  if (tqalignment <= MALLOC_ALIGNMENT) return mALLOc(bytes);
+  if (alignment <= MALLOC_ALIGNMENT) return mALLOc(bytes);
 
   /* Otherwise, ensure that it is at least a minimum chunk size */
 
-  if (tqalignment <  MINSIZE) tqalignment = MINSIZE;
+  if (alignment <  MINSIZE) alignment = MINSIZE;
 
-  /* Make sure tqalignment is power of 2 (in case MINSIZE is not).  */
-  if ((tqalignment & (tqalignment - 1)) != 0) {
+  /* Make sure alignment is power of 2 (in case MINSIZE is not).  */
+  if ((alignment & (alignment - 1)) != 0) {
     size_t a = MALLOC_ALIGNMENT * 2;
-    while ((unsigned long)a < (unsigned long)tqalignment) a <<= 1;
-    tqalignment = a;
+    while ((unsigned long)a < (unsigned long)alignment) a <<= 1;
+    alignment = a;
   }
 
   checked_request2size(bytes, nb);
 
   /*
-    Strategy: find a spot within that chunk that meets the tqalignment
+    Strategy: find a spot within that chunk that meets the alignment
     request, and then possibly free the leading and trailing space.
   */
 
 
-  /* Call malloc with worst case padding to hit tqalignment. */
+  /* Call malloc with worst case padding to hit alignment. */
 
-  m  = (char*)(mALLOc(nb + tqalignment + MINSIZE));
+  m  = (char*)(mALLOc(nb + alignment + MINSIZE));
 
   if (m == 0) return 0; /* propagate failure */
 
   p = mem2chunk(m);
 
-  if ((((unsigned long)(m)) % tqalignment) != 0) { /* misaligned */
+  if ((((unsigned long)(m)) % alignment) != 0) { /* misaligned */
 
     /*
       Find an aligned spot inside chunk.  Since we need to give back
@@ -4184,10 +4184,10 @@ Void_t* mEMALIGn(tqalignment, bytes) size_t tqalignment; size_t bytes;
       total room so that this is always possible.
     */
 
-    brk = (char*)mem2chunk(((unsigned long)(m + tqalignment - 1)) &
-                           -((signed long) tqalignment));
+    brk = (char*)mem2chunk(((unsigned long)(m + alignment - 1)) &
+                           -((signed long) alignment));
     if ((unsigned long)(brk - (char*)(p)) < MINSIZE)
-      brk += tqalignment;
+      brk += alignment;
 
     newp = (mchunkptr)brk;
     leadsize = brk - (char*)(p);
@@ -4208,7 +4208,7 @@ Void_t* mEMALIGn(tqalignment, bytes) size_t tqalignment; size_t bytes;
     p = newp;
 
     assert (newsize >= nb &&
-            (((unsigned long)(chunk2mem(p))) % tqalignment) == 0);
+            (((unsigned long)(chunk2mem(p))) % alignment) == 0);
   }
 
   /* Also give back spare room at the end */
@@ -4375,7 +4375,7 @@ static Void_t** iALLOc(n_elements, sizes, opts, chunks) size_t n_elements; size_
       contents_size += request2size(sizes[i]);     
   }
 
-  /* subtract out tqalignment bytes from total to minimize overallocation */
+  /* subtract out alignment bytes from total to minimize overallocation */
   size = contents_size + array_size - MALLOC_ALIGN_MASK;
   
   /* 
@@ -5356,7 +5356,7 @@ History:
         and Anonymous.
       * Allow override of MALLOC_ALIGNMENT (Thanks to Ruud Waij for 
         helping test this.)
-      * memalign: check tqalignment arg
+      * memalign: check alignment arg
       * realloc: don't try to shift chunks backwards, since this
         leads to  more fragmentation in some programs and doesn't
         seem to help in any others.
@@ -5409,7 +5409,7 @@ History:
       * Support another case of realloc via move into top
       * Fix error occurring when initial sbrk_base not word-aligned.
       * Rely on page size for units instead of SBRK_UNIT to
-        avoid surprises about sbrk tqalignment conventions.
+        avoid surprises about sbrk alignment conventions.
       * Add mallinfo, mallopt. Thanks to Raymond Nijssen
         (raymond@es.ele.tue.nl) for the suggestion.
       * Add `pad' argument to malloc_trim and top_pad mallopt parameter.
@@ -5569,7 +5569,7 @@ Void_t* public_rEALLOc(Void_t* m, size_t bytes) {
 #endif
 }
 
-Void_t* public_mEMALIGn(size_t tqalignment, size_t bytes) {
+Void_t* public_mEMALIGn(size_t alignment, size_t bytes) {
 #ifndef KDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
@@ -5578,16 +5578,16 @@ Void_t* public_mEMALIGn(size_t tqalignment, size_t bytes) {
   if (MALLOC_PREACTION != 0) {
     return 0;
   }
-  m = mEMALIGn(tqalignment, bytes);
+  m = mEMALIGn(alignment, bytes);
   if (MALLOC_POSTACTION != 0) {
   }
   return m;
 #ifndef KDE_MALLOC_FULL
     }
   if( malloc_type == 2 )
-      return libc_memalign( tqalignment, bytes );
+      return libc_memalign( alignment, bytes );
   init_malloc_type();
-  return public_mEMALIGn( tqalignment, bytes );
+  return public_mEMALIGn( alignment, bytes );
 #endif
 }
 
@@ -5728,7 +5728,7 @@ int public_mALLOPt(int p, int v) {
 #endif
 
 int
-posix_memalign (void **memptr, size_t tqalignment, size_t size)
+posix_memalign (void **memptr, size_t alignment, size_t size)
 {
   void *mem;
 
@@ -5737,7 +5737,7 @@ posix_memalign (void **memptr, size_t tqalignment, size_t size)
   if (size % sizeof (void *) != 0 || (size & (size - 1)) != 0)
     return EINVAL;
 
-  mem = memalign (tqalignment, size);
+  mem = memalign (alignment, size);
 
   if (mem != NULL) {
     *memptr = mem;

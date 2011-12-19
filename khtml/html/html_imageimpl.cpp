@@ -441,7 +441,7 @@ HTMLAreaElementImpl::HTMLAreaElementImpl(DocumentImpl *doc)
     m_coords=0;
     m_coordsLen = 0;
     nohref = false;
-    tqshape = Unknown;
+    shape = Unknown;
     lasth = lastw = -1;
 }
 
@@ -461,13 +461,13 @@ void HTMLAreaElementImpl::parseAttribute(AttributeImpl *attr)
     {
     case ATTR_SHAPE:
         if ( strcasecmp( attr->value(), "default" ) == 0 )
-            tqshape = Default;
+            shape = Default;
         else if ( strcasecmp( attr->value(), "circle" ) == 0 )
-            tqshape = Circle;
+            shape = Circle;
         else if ( strcasecmp( attr->value(), "poly" ) == 0 || strcasecmp( attr->value(),  "polygon" ) == 0 )
-            tqshape = Poly;
+            shape = Poly;
         else if ( strcasecmp( attr->value(), "rect" ) == 0 )
-            tqshape = Rect;
+            shape = Rect;
         break;
     case ATTR_COORDS:
         delete [] m_coords;
@@ -530,7 +530,7 @@ TQRegion HTMLAreaElementImpl::getRegion(int width_, int height_) const
     // what the HTML author tried to tell us.
 
     // a Poly needs at least 3 points (6 coords), so this is correct
-    if ((tqshape==Poly || tqshape==Unknown) && m_coordsLen > 5) {
+    if ((shape==Poly || shape==Unknown) && m_coordsLen > 5) {
         // make sure its even
         int len = m_coordsLen >> 1;
         TQPointArray points(len);
@@ -539,19 +539,19 @@ TQRegion HTMLAreaElementImpl::getRegion(int width_, int height_) const
                             m_coords[(i<<1)+1].minWidth(height_));
         region = TQRegion(points);
     }
-    else if (tqshape==Circle && m_coordsLen>=3 || tqshape==Unknown && m_coordsLen == 3) {
+    else if (shape==Circle && m_coordsLen>=3 || shape==Unknown && m_coordsLen == 3) {
         int r = kMin(m_coords[2].minWidth(width_), m_coords[2].minWidth(height_));
         region = TQRegion(m_coords[0].minWidth(width_)-r,
                          m_coords[1].minWidth(height_)-r, 2*r, 2*r,TQRegion::Ellipse);
     }
-    else if (tqshape==Rect && m_coordsLen>=4 || tqshape==Unknown && m_coordsLen == 4) {
+    else if (shape==Rect && m_coordsLen>=4 || shape==Unknown && m_coordsLen == 4) {
         int x0 = m_coords[0].minWidth(width_);
         int y0 = m_coords[1].minWidth(height_);
         int x1 = m_coords[2].minWidth(width_);
         int y1 = m_coords[3].minWidth(height_);
         region = TQRegion(x0,y0,x1-x0,y1-y0);
     }
-    else if (tqshape==Default)
+    else if (shape==Default)
         region = TQRegion(0,0,width_,height_);
     // else
        // return null region

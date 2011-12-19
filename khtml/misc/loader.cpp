@@ -397,7 +397,7 @@ public:
 
     void sendTo(TQDataSink* sink, int n)
     {
-        sink->receive((const uchar*)&buffer.tqat(pos), n);
+        sink->receive((const uchar*)&buffer.at(pos), n);
 
         pos += n;
 
@@ -787,7 +787,7 @@ void CachedImage::setShowAnimations( KHTMLSettings::KAnimationAdvice showAnimati
         delete p;
         p = new TQPixmap(m->framePixmap());
         m->disconnectUpdate( this, TQT_SLOT( movieUpdated( const TQRect &) ));
-        m->disconnecStatus( this, TQT_SLOT( movieStatus( int ) ));
+        m->disconnectStatus( this, TQT_SLOT( movieStatus( int ) ));
         m->disconnectResize( this, TQT_SLOT( movieResize( const TQSize& ) ) );
         TQTimer::singleShot(0, this, TQT_SLOT( deleteMovie()));
         imgSource = 0;
@@ -850,7 +850,7 @@ void CachedImage::data ( TQBuffer &_buffer, bool eof )
             imgSource = new ImageSource( _buffer.buffer());
             m = new TQMovie( imgSource, 8192 );
             m->connectUpdate( this, TQT_SLOT( movieUpdated( const TQRect &) ));
-            m->connecStatus( this, TQT_SLOT( movieStatus(int)));
+            m->connectStatus( this, TQT_SLOT( movieStatus(int)));
             m->connectResize( this, TQT_SLOT( movieResize( const TQSize& ) ) );
         }
     }

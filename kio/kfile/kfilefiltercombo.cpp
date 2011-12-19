@@ -95,7 +95,7 @@ TQString KFileFilterCombo::currentFilter() const
 {
     TQString f = currentText();
     if (f == text(currentItem())) { // user didn't edit the text
-	f = *filters.tqat(currentItem());
+	f = *filters.at(currentItem());
         if ( d->isMimeFilter || (currentItem() == 0 && d->hasAllSupportedFiles) ) {
             return f; // we have a mimetype as filter
         }

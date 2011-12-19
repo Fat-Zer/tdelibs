@@ -867,7 +867,7 @@ void KHTMLView::layout()
         }
 #if 0
     ElementImpl *listitem = m_part->xmlDocImpl()->getElementById("__test_element__");
-    if (listitem) kdDebug(6000) << "after layout, before tqrepaint" << endl;
+    if (listitem) kdDebug(6000) << "after layout, before repaint" << endl;
     if (listitem) dumpLineBoxes(static_cast<RenderFlow *>(listitem->renderer()));
 #endif
 #ifndef KHTML_NO_CARET
@@ -2284,7 +2284,7 @@ void KHTMLView::displayAccessKeys( KHTMLView* caller, KHTMLView* origview, TQVal
 	        TQRect rec=en->getRect();
 	        TQLabel *lab=new TQLabel(accesskey,viewport(),0,(WFlags)WDestructiveClose);
 	        connect( origview, TQT_SIGNAL(hideAccessKeys()), lab, TQT_SLOT(close()) );
-	        connect( this, TQT_SIGNAL(repaintAccessKeys()), lab, TQT_SLOT(tqrepaint()));
+	        connect( this, TQT_SIGNAL(repaintAccessKeys()), lab, TQT_SLOT(repaint()));
 	        lab->setPalette(TQToolTip::palette());
 	        lab->setLineWidth(2);
 	        lab->setFrameStyle(TQFrame::Box | TQFrame::Plain);
@@ -2937,7 +2937,7 @@ void KHTMLView::print(bool quick)
 
             root->layer()->paint(p, TQRect(0, top, pageWidth, pageHeight));
 //             m_part->xmlDocImpl()->renderer()->layer()->paint(p, TQRect(0, top, pageWidth, pageHeight));
-//             root->tqrepaint();
+//             root->repaint();
 //             p->flush();
             kdDebug(6000) << "printed: page " << page <<" bottom At = " << bottom << endl;
 
@@ -2983,7 +2983,7 @@ void KHTMLView::paint(TQPainter *p, const TQRect &rc, int yOff, bool *more)
     khtml::RenderCanvas *root = static_cast<khtml::RenderCanvas *>(m_part->xmlDocImpl()->renderer());
     if(!root) return;
 
-    m_part->xmlDocImpl()->setPaintDevice(p->tqdevice());
+    m_part->xmlDocImpl()->setPaintDevice(p->device());
     root->setPagedMode(true);
     root->setStaticMode(true);
     root->setWidth(rc.width());
@@ -3510,12 +3510,12 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
 
     setStaticBackground(d->useSlowRepaints);
 
-//        kdDebug() << "scheduled tqrepaint "<< d->repaintTimerId  << endl;
+//        kdDebug() << "scheduled repaint "<< d->repaintTimerId  << endl;
     killTimer(d->repaintTimerId);
     d->repaintTimerId = 0;
 
     TQRect updateRegion;
-    TQMemArray<TQRect> rects = d->updateRegion.tqrects();
+    TQMemArray<TQRect> rects = d->updateRegion.rects();
 
     d->updateRegion = TQRegion();
 
@@ -3645,10 +3645,10 @@ void KHTMLView::complete( bool pendingAction )
             KHTMLViewPrivate::CSActionPending : KHTMLViewPrivate::CSFull;
     }
 
-    // is there a tqrepaint pending?
+    // is there a repaint pending?
     if (d->repaintTimerId)
     {
-//         kdDebug() << "requesting tqrepaint now" << endl;
+//         kdDebug() << "requesting repaint now" << endl;
         // do it now
         killTimer(d->repaintTimerId);
         d->repaintTimerId = startTimer( 20 );
@@ -3702,7 +3702,7 @@ void KHTMLView::initCaret(bool keepSelection)
     }/*end if*/
 //    kdDebug(6200) << "d->m_selectionStart " << m_part->d->m_selectionStart.handle()
 //    		<< " d->m_selectionEnd " << m_part->d->m_selectionEnd.handle() << endl;
-    // ### does not tqrepaint the selection on keepSelection!=false
+    // ### does not repaint the selection on keepSelection!=false
     moveCaretTo(m_part->d->caretNode().handle(), m_part->d->caretOffset(), !keepSelection);
 //    kdDebug(6200) << "d->m_selectionStart " << m_part->d->m_selectionStart.handle()
 //    		<< " d->m_selectionEnd " << m_part->d->m_selectionEnd.handle() << endl;
@@ -3877,7 +3877,7 @@ void KHTMLView::hideCaret()
         if (d->m_caretViewContext->visible) {
 //            kdDebug(6200) << "redraw caret hidden" << endl;
 	    d->m_caretViewContext->visible = false;
-	    // force tqrepaint, otherwise the event won't be handled
+	    // force repaint, otherwise the event won't be handled
 	    // before the focus leaves the window
 	    repaintContents(d->m_caretViewContext->x, d->m_caretViewContext->y,
 	    		d->m_caretViewContext->width,

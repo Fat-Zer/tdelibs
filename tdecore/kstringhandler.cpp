@@ -62,7 +62,7 @@ TQString KStringHandler::word( const TQString &text , const char *range )
     // Extract words
     //
     int wordsToExtract = cnt-pos+1;
-    TQStringList::Iterator it = list.tqat( pos);
+    TQStringList::Iterator it = list.at( pos);
 
     while ( (it != list.end()) && (wordsToExtract-- > 0))
     {
@@ -91,7 +91,7 @@ TQString KStringHandler::insword( const TQString &text , const TQString &word , 
     if ( pos >= list.count() )
         list.append( word );
     else
-        list.insert( list.tqat(pos) , word );
+        list.insert( list.at(pos) , word );
 
     // Rejoin
     return list.join( " " );
@@ -112,7 +112,7 @@ TQString KStringHandler::setword( const TQString &text , const TQString &word , 
         list.append( word );
     else
     {
-        list.insert( list.remove( list.tqat(pos) ) , word );
+        list.insert( list.remove( list.at(pos) ) , word );
     }
 
     // Rejoin
@@ -140,7 +140,7 @@ TQString KStringHandler::remrange( const TQString &text , const char *range )
     // Remove that range of words
     //
     int wordsToDelete = cnt-pos+1;
-    TQStringList::Iterator it = list.tqat( pos);
+    TQStringList::Iterator it = list.at( pos);
 
     while ( (it != list.end()) && (wordsToDelete-- > 0))
        it = list.remove( it );
@@ -159,7 +159,7 @@ TQString KStringHandler::remword( const TQString &text , uint pos )
     TQStringList list = TQStringList::split( " ", text, true );
 
     if ( pos < list.count() )
-        list.remove( list.tqat( pos ) );
+        list.remove( list.at( pos ) );
 
     // Rejoin
     return list.join( " " );

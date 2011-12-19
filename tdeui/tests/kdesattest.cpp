@@ -23,7 +23,7 @@ KDesatWidget::KDesatWidget(TQWidget *parent, const char *name)
 
 void KDesatWidget::change(double) {
     desat_value = slide->value();
-    tqrepaint(false);
+    repaint(false);
 }
 
 void KDesatWidget::paintEvent(TQPaintEvent */*ev*/)

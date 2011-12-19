@@ -716,7 +716,7 @@ void KListView::focusInEvent( TQFocusEvent *fe )
       && (currentItem()))
   {
       currentItem()->setSelected(true);
-      currentItem()->tqrepaint();
+      currentItem()->repaint();
       emit selectionChanged();
   };
 }
@@ -736,7 +736,7 @@ void KListView::focusOutEvent( TQFocusEvent *fe )
       && (!d->editor->isVisible()))
   {
       currentItem()->setSelected(false);
-      currentItem()->tqrepaint();
+      currentItem()->repaint();
       emit selectionChanged();
   };
 
@@ -776,7 +776,7 @@ void KListView::contentsMousePressEvent( TQMouseEvent *e )
      if (currentItem())
      {
         currentItem()->setSelected(false);
-        currentItem()->tqrepaint();
+        currentItem()->repaint();
 //        emit selectionChanged();
      }
   }
@@ -1008,7 +1008,7 @@ void KListView::contentsDragMoveEvent(TQDragMoveEvent *event)
       {
         cleanDropVisualizer();
         d->mOldDropVisualizer=tmpRect;
-        viewport()->tqrepaint(tmpRect);
+        viewport()->repaint(tmpRect);
       }
     }
     if (dropHighlighter())
@@ -1018,7 +1018,7 @@ void KListView::contentsDragMoveEvent(TQDragMoveEvent *event)
       {
         cleanItemHighlighter();
         d->mOldDropHighlighter=tmpRect;
-        viewport()->tqrepaint(tmpRect);
+        viewport()->repaint(tmpRect);
       }
     }
   }
@@ -1045,7 +1045,7 @@ void KListView::cleanDropVisualizer()
   {
     TQRect rect=d->mOldDropVisualizer;
     d->mOldDropVisualizer = TQRect();
-    viewport()->tqrepaint(rect, true);
+    viewport()->repaint(rect, true);
   }
 }
 
@@ -1371,7 +1371,7 @@ void KListView::cleanItemHighlighter ()
   {
     TQRect rect=d->mOldDropHighlighter;
     d->mOldDropHighlighter = TQRect();
-    viewport()->tqrepaint(rect, true);
+    viewport()->repaint(rect, true);
   }
 }
 
@@ -1482,7 +1482,7 @@ void KListView::activateAutomaticSelection()
    if (currentItem())
    {
       currentItem()->setSelected(true);
-      currentItem()->tqrepaint();
+      currentItem()->repaint();
       emit selectionChanged();
    };
 }
@@ -1816,12 +1816,12 @@ void KListView::fileManagerKeyPressEvent (TQKeyEvent* e)
     {                 // rectangle to be repainted
        if ( ir.x() < 0 )
           ir.moveBy( -ir.x(), 0 );
-       viewport()->tqrepaint( ir, false );
+       viewport()->repaint( ir, false );
     }
     /*if (repaintItem1)
-       repaintItem1->tqrepaint();
+       repaintItem1->repaint();
     if (repaintItem2)
-       repaintItem2->tqrepaint();*/
+       repaintItem2->repaint();*/
     update();
     if (emitSelectionChanged)
        emit selectionChanged();
@@ -2001,13 +2001,13 @@ const TQColor &KListView::alternateBackground() const
 void KListView::setAlternateBackground(const TQColor &c)
 {
   d->alternateBackground = c;
-  tqrepaint();
+  repaint();
 }
 
 void KListView::setShadeSortColumn(bool shadeSortColumn)
 {
   d->shadeSortColumn = shadeSortColumn;
-  tqrepaint();
+  repaint();
 }
 
 bool KListView::shadeSortColumn() const
@@ -2335,7 +2335,7 @@ bool KListViewItem::isAlternate()
   return false;
 }
 
-void KListViewItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int tqalignment)
+void KListViewItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column, int width, int alignment)
 {
   TQColorGroup _cg = cg;
   TQListView* lv = listView();
@@ -2353,7 +2353,7 @@ void KListViewItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column, 
                  TQColorGroup::Background : TQColorGroup::Base,
                  backgroundColor(column));
   }
-  TQListViewItem::paintCell(p, _cg, column, width, tqalignment);
+  TQListViewItem::paintCell(p, _cg, column, width, alignment);
 }
 
 void KListView::virtual_hook( int, void* )

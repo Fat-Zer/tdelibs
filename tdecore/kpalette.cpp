@@ -176,7 +176,7 @@ KPalette::color(int index)
   if ((index < 0) || (index >= nrColors()))
 	return TQColor();
 
-  kolor *node = mKolorList.tqat(index);
+  kolor *node = mKolorList.at(index);
   if (!node)
 	return TQColor();
 
@@ -202,7 +202,7 @@ KPalette::colorName(int index)
   if ((index < 0) || (index >= nrColors()))
 	return TQString::null;
 
-  kolor *node = mKolorList.tqat(index);
+  kolor *node = mKolorList.at(index);
   if (!node)
 	return TQString::null;
 
@@ -227,7 +227,7 @@ KPalette::changeColor(int index,
   if ((index < 0) || (index >= nrColors()))
 	return -1;
 
-  kolor *node = mKolorList.tqat(index);
+  kolor *node = mKolorList.at(index);
   if (!node)
 	return -1;
 

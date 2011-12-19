@@ -238,7 +238,7 @@ signals:
      *
      * Extra care must be taken to properly implement the "no prompt-on-replace" case.
      * For instance highlight isn't emitted in that case (some code might rely on it),
-     * and for performance reasons one should tqrepaint after replace() ONLY if
+     * and for performance reasons one should repaint after replace() ONLY if
      * prompt-on-replace was selected.
      *
      * @param text The text, in which the replacement has already been done.

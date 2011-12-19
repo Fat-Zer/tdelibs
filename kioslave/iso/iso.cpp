@@ -407,8 +407,8 @@ void kio_isoProtocol::getFile( const KIsoFile *isoFileEntry, const TQString &pat
             ptrblock_bytes = (nblocks+1) * 4;
             pointer_block=isoFileEntry->data( hdr->header_size << 2, ptrblock_bytes );
             if (pointer_block.size() == ptrblock_bytes &&
-                inbuf.tqresize(block_size2) &&
-                outbuf.tqresize(block_size)) {
+                inbuf.resize(block_size2) &&
+                outbuf.resize(block_size)) {
                     
                 pptr = pointer_block.data();
             } else {

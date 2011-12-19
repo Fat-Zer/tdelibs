@@ -750,7 +750,7 @@ bool KURLCompletion::userCompletion(const MyURL &url, TQString *match)
 {
 	if ( url.protocol() != "file"
 	      || !url.dir().isEmpty()
-	      || url.file().tqat(0) != '~' )
+	      || url.file().at(0) != '~' )
 		return false;
 
 	if ( !isListedURL( CTUser ) ) {
@@ -782,7 +782,7 @@ extern char **environ; // Array of environment variables
 
 bool KURLCompletion::envCompletion(const MyURL &url, TQString *match)
 {
-	if ( url.file().tqat(0) != '$' )
+	if ( url.file().at(0) != '$' )
 		return false;
 
 	if ( !isListedURL( CTEnv ) ) {
@@ -861,7 +861,7 @@ bool KURLCompletion::exeCompletion(const MyURL &url, TQString *match)
 	}
 
 	// No hidden files unless the user types "."
-	bool no_hidden_files = url.file().tqat(0) != '.';
+	bool no_hidden_files = url.file().at(0) != '.';
 
 	// List files if needed
 	//
@@ -921,7 +921,7 @@ bool KURLCompletion::systemexeCompletion(const MyURL &url, TQString *match)
 	}
 
 	// No hidden files unless the user types "."
-	bool no_hidden_files = url.file().tqat(0) != '.';
+	bool no_hidden_files = url.file().at(0) != '.';
 
 	// List files if needed
 	//
@@ -995,7 +995,7 @@ bool KURLCompletion::fileCompletion(const MyURL &url, TQString *match)
 	}
 
 	// No hidden files unless the user types "."
-	bool no_hidden_files = ( url.file().tqat(0) != '.' );
+	bool no_hidden_files = ( url.file().at(0) != '.' );
 
 	// List files if needed
 	//
@@ -1365,7 +1365,7 @@ void KURLCompletion::postProcessMatch( TQString *match ) const
 
 void KURLCompletion::adjustMatch( TQString& match ) const
 {
-	if ( match.tqat( match.length()-1 ) != '/' )
+	if ( match.at( match.length()-1 ) != '/' )
 	{
 		TQString copy;
 

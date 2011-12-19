@@ -860,12 +860,12 @@ void KateBuffer::setHighlight(uint hlMode)
    // aha, hl will change
   if (h != m_highlight)
   {
-    bool tqinvalidate = !h->noHighlighting();
+    bool invalidate = !h->noHighlighting();
 
     if (m_highlight)
     {
       m_highlight->release();
-      tqinvalidate = true;
+      invalidate = true;
     }
 
     h->use();
@@ -880,7 +880,7 @@ void KateBuffer::setHighlight(uint hlMode)
 
     m_highlight = h;
 
-    if (tqinvalidate)
+    if (invalidate)
       invalidateHighlighting();
 
     // inform the document that the hl was really changed
@@ -949,7 +949,7 @@ void KateBuffer::addIndentBasedFoldingInformation(TQMemArray<uint> &foldingList,
   }
 }
 
-bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, bool tqinvalidate)
+bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, bool invalidate)
 {
   // no hl around, no stuff to do
   if (!m_highlight)
@@ -971,7 +971,7 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
   //kdDebug (13020) << "HL UNTIL LINE: " << m_lineHighlighted << " MAX: " << m_lineHighlightedMax << endl;
   //kdDebug (13020) << "HL DYN COUNT: " << KateHlManager::self()->countDynamicCtxs() << " MAX: " << m_maxDynamicContexts << endl;
 
-  // see if there are too many dynamic contexts; if yes, tqinvalidate HL of all documents
+  // see if there are too many dynamic contexts; if yes, invalidate HL of all documents
   if (KateHlManager::self()->countDynamicCtxs() >= m_maxDynamicContexts)
   {
     {
@@ -1240,7 +1240,7 @@ bool KateBuffer::doHighlight (KateBufBlock *buf, uint startLine, uint endLine, b
   buf->markDirty ();
 
   // tag the changed lines !
-  if (tqinvalidate)
+  if (invalidate)
     emit tagLines (startLine, current_line + buf->startLine());
 
   // emit that we have changed the folding

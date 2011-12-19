@@ -338,7 +338,7 @@ void KFileIconView::insertItem( KFileItem *i )
     KFileView::insertItem( i );
 
     TQIconView* qview = static_cast<TQIconView*>( this );
-    // Since creating and initializing an item leads to a tqrepaint,
+    // Since creating and initializing an item leads to a repaint,
     // we disable updates on the IconView for a while.
     qview->setUpdatesEnabled( false );
     KFileIconViewItem *item = new KFileIconViewItem( qview, i );
@@ -450,7 +450,7 @@ void KFileIconView::updateView( bool b )
                 if ( !item->pixmapSize().isNull() )
                     item->setPixmapSize( TQSize( 0, 0 ) );
             }
-            // recalculate item parameters but avoid an in-place tqrepaint
+            // recalculate item parameters but avoid an in-place repaint
             item->setPixmap( (item->fileInfo())->pixmap( myIconSize ), true, false );
             item = static_cast<KFileIconViewItem *>(item->nextItem());
         } while ( item != 0L );
@@ -632,7 +632,7 @@ bool KFileIconView::canPreview( const KFileItem *item ) const
     for ( ; it != d->previewMimeTypes.end(); ++it ) {
         TQString type = *it;
         // the "mimetype" can be "image/*"
-        if ( type.tqat( type.length() - 1 ) == '*' ) {
+        if ( type.at( type.length() - 1 ) == '*' ) {
             r.setPattern( type );
             if ( r.search( item->mimetype() ) != -1 )
                 return true;
@@ -763,7 +763,7 @@ void KFileIconView::initItem( KFileIconViewItem *item, const KFileItem *i,
 
     if ( updateTextAndPixmap )
     {
-        // this causes a tqrepaint of the item, which we want to avoid during
+        // this causes a repaint of the item, which we want to avoid during
         // directory listing, when all items are created. We want to paint all
         // items at once, not every single item in that case.
         item->setText( i->text() , false, false );

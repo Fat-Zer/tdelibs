@@ -98,7 +98,7 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
 		}
 		if (s==(int)partl.count()-1)
 		{
-			partl.remove(partl.tqat(s));
+			partl.remove(partl.at(s));
 		}
 
 	    	lt = partl.join(" ");

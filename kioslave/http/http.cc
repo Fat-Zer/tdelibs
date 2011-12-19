@@ -4711,7 +4711,7 @@ FILE* HTTPProtocol::checkCacheEntry( bool readWrite)
    TQCString u = m_request.url.url().latin1();
    for(int i = u.length(); i--;)
    {
-      hash = (hash * 12211 + static_cast<const char>(u.tqat(i))) % 2147483563;
+      hash = (hash * 12211 + static_cast<const char>(u.at(i))) % 2147483563;
    }
 
    TQString hashString;
@@ -5943,7 +5943,7 @@ TQString HTTPProtocol::createDigestAuth ( bool isForProxy )
 
     for (int i = 0; i < count; i++ )
     {
-      KURL u ( info.digestURI.tqat(i) );
+      KURL u ( info.digestURI.at(i) );
 
       send &= (m_request.url.protocol().lower() == u.protocol().lower());
       send &= (m_request.hostname.lower() == u.host().lower());

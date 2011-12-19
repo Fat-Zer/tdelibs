@@ -522,7 +522,7 @@ bool CSSParser::parseValue( int propId, bool important )
             valid_primitive = true;
         break;
 
-    case CSS_PROP_CLIP:                 // <tqshape> | auto | inherit
+    case CSS_PROP_CLIP:                 // <shape> | auto | inherit
         if ( id == CSS_VAL_AUTO )
             valid_primitive = true;
         else if ( value->unit == Value::Function )

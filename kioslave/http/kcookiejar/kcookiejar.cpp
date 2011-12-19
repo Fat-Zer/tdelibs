@@ -618,7 +618,7 @@ void KCookieJar::extractDomains(const TQString &_fqdn,
        return;
     }
     // Return numeric IPv4 addresses as is...
-    if ((_fqdn.tqat(0) >= TQChar('0')) && (_fqdn.tqat(0) <= TQChar('9')))
+    if ((_fqdn.at(0) >= TQChar('0')) && (_fqdn.at(0) <= TQChar('9')))
     {
        if (_fqdn.find(TQRegExp(IP_ADDRESS_EXPRESSION)) > -1)
        {

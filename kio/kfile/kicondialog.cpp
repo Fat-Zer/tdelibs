@@ -137,7 +137,7 @@ void KIconCanvas::slotLoadFiles()
     {
 	// Calling kapp->processEvents() makes the iconview flicker like hell
 	// (it's being repainted once for every new item), so we don't do this.
-	// Instead, we directly tqrepaint the progress bar without going through
+	// Instead, we directly repaint the progress bar without going through
 	// the event-loop. We do that just once for every 10th item so that
 	// the progress bar doesn't flicker in turn. (pfeiffer)
 	if ( emitProgress >= 10 ) {
@@ -631,8 +631,8 @@ void KIconDialog::slotProgress(int p)
 {
     mpProgress->setProgress(p);
     // commented out the following since setProgress already paints ther
-    // progress bar. ->tqrepaint() only makes it flicker
-    //mpProgress->tqrepaint();
+    // progress bar. ->repaint() only makes it flicker
+    //mpProgress->repaint();
 }
 
 void KIconDialog::slotFinished()

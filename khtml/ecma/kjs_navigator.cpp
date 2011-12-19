@@ -394,7 +394,7 @@ Value Plugins::get(ExecState *exec, const Identifier &propertyName) const
     bool ok;
     unsigned int i = propertyName.toULong(&ok);
     if( ok && i<plugins->count() )
-      return Value( new Plugin( exec, plugins->tqat(i) ) );
+      return Value( new Plugin( exec, plugins->at(i) ) );
 
     // plugin[name]
     Value val = pluginByName( exec, propertyName.qstring() );
@@ -439,7 +439,7 @@ Value PluginsFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
       bool ok;
       unsigned int i = args[0].toString(exec).toArrayIndex(&ok);
       if( ok && i<base->plugins->count() )
-        return Value( new Plugin( exec, base->plugins->tqat(i) ) );
+        return Value( new Plugin( exec, base->plugins->at(i) ) );
       return Undefined();
     }
     case Plugins_NamedItem:
@@ -479,7 +479,7 @@ Value MimeTypes::get(ExecState *exec, const Identifier &propertyName) const
     bool ok;
     unsigned int i = propertyName.toULong(&ok);
     if( ok && i<mimes->count() )
-      return Value( new MimeType( exec, mimes->tqat(i) ) );
+      return Value( new MimeType( exec, mimes->at(i) ) );
 
     // mimeTypes[name]
     Value val = mimeTypeByName( exec, propertyName.qstring() );
@@ -522,7 +522,7 @@ Value MimeTypesFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
       bool ok;
       unsigned int i = args[0].toString(exec).toArrayIndex(&ok);
       if( ok && i<base->mimes->count() )
-        return Value( new MimeType( exec, base->mimes->tqat(i) ) );
+        return Value( new MimeType( exec, base->mimes->at(i) ) );
       return Undefined();
     }
     case MimeTypes_NamedItem:
@@ -562,8 +562,8 @@ Value Plugin::get(ExecState *exec, const Identifier &propertyName) const
   //kdDebug(6070) << "Plugin::get plugin[" << i << "]" << endl;
   if( ok && i<m_info->mimes.count() )
   {
-    //kdDebug(6070) << "returning mimetype " << m_info->mimes.tqat(i)->type << endl;
-    return Value(new MimeType(exec, m_info->mimes.tqat(i)));
+    //kdDebug(6070) << "returning mimetype " << m_info->mimes.at(i)->type << endl;
+    return Value(new MimeType(exec, m_info->mimes.at(i)));
   }
 
   // plugin["name"]
@@ -609,7 +609,7 @@ Value PluginFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     bool ok;
     unsigned int i = args[0].toString(exec).toArrayIndex(&ok);
     if( ok && i< plugin->pluginInfo()->mimes.count() )
-      return Value( new MimeType( exec, plugin->pluginInfo()->mimes.tqat(i) ) );
+      return Value( new MimeType( exec, plugin->pluginInfo()->mimes.at(i) ) );
     return Undefined();
   }
   case Plugin_NamedItem:

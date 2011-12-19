@@ -247,7 +247,7 @@ public:
     virtual short marginLeft() const { return style()->marginLeft().minWidth(0); }
     virtual short marginRight() const { return style()->marginRight().minWidth(0); }
 
-    virtual void tqrepaint(Priority p=NormalPriority);
+    virtual void repaint(Priority p=NormalPriority);
 
     bool hasBreakableChar() const { return m_hasBreakableChar; }
     const TQFontMetrics &metrics(bool firstLine) const;

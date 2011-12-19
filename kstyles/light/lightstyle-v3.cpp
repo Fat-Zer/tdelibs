@@ -818,7 +818,7 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 	    const TQTabBar *tb = (const TQTabBar *) widget;
 	    TQRect br = r;
 
-	    if ( tb->tqshape() == TQTabBar::RoundedAbove ) {
+	    if ( tb->shape() == TQTabBar::RoundedAbove ) {
 		if ( ! ( flags & Style_Selected ) ) {
 		    p->setPen( cg.background() );
 		    p->drawLine( br.left(),  br.bottom(),
@@ -853,7 +853,7 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 		else
 		    br.addCoords( 1, 1, -1, 0 );
 		p->fillRect( br, cg.background() );
-	    } else if ( tb->tqshape() == TQTabBar::RoundedBelow ) {
+	    } else if ( tb->shape() == TQTabBar::RoundedBelow ) {
 		if ( ! ( flags & Style_Selected ) ) {
 		    p->setPen( cg.background() );
 		    p->drawLine( br.left(),  br.top(),

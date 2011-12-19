@@ -415,7 +415,7 @@ kdbgstream& kdbgstream::operator << (const TQWidget* widget)
       return *this;
     }
   output += string;
-  if (output.tqat(output.length() -1 ) == (QChar)'\n')
+  if (output.at(output.length() -1 ) == (QChar)'\n')
     {
       flush();
     }
@@ -454,7 +454,7 @@ kdbgstream& kdbgstream::operator<<( const TQRect& r ) {
 kdbgstream& kdbgstream::operator<<( const TQRegion& reg ) {
     *this<< "[ ";
 
-    TQMemArray<TQRect>rs=reg.tqrects();
+    TQMemArray<TQRect>rs=reg.rects();
     for (uint i=0;i<rs.size();++i)
         *this << TQString(TQString("[%1,%2 - %3x%4] ").arg(rs[i].x()).arg(rs[i].y()).arg(rs[i].width()).arg(rs[i].height() )) ;
 

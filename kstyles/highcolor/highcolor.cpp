@@ -1926,7 +1926,7 @@ TQSize HighColorStyle::tqsizeFromContents( ContentsType contents,
 }
 
 
-// Fix Qt's wacky image tqalignment
+// Fix Qt's wacky image alignment
 TQPixmap HighColorStyle::stylePixmap(StylePixmap stylepixmap,
 									const TQWidget* widget,
 									const TQStyleOption& opt) const
@@ -1958,12 +1958,12 @@ bool HighColorStyle::eventFilter( TQObject *object, TQEvent *event )
 		if ( (event->type() == TQEvent::Enter) &&
 			 (button->isEnabled()) ) {
 			hoverWidget = button;
-			button->tqrepaint( false );
+			button->repaint( false );
 		} 
 		else if ( (event->type() == TQEvent::Leave) &&
 				  (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget)) ) {
 			hoverWidget = 0L;
-			button->tqrepaint( false );
+			button->repaint( false );
 		}
 	} else if ( object->parent() && !qstrcmp( object->name(), kdeToolbarWidget ) )
 	{

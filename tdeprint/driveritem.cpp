@@ -133,7 +133,7 @@ bool DriverItem::updateConflict()
 			m_conflict = (m_item->conflict());
 		}
 	}
-	tqrepaint();
+	repaint();
 	return m_conflict;
 }
 

@@ -576,7 +576,7 @@ void KPropertiesDialog::rename( const TQString& _name )
   else
   {
     TQString tmpurl = m_singleUrl.url();
-    if ( tmpurl.tqat(tmpurl.length() - 1) == '/')
+    if ( tmpurl.at(tmpurl.length() - 1) == '/')
       // It's a directory, so strip the trailing slash first
       tmpurl.truncate( tmpurl.length() - 1);
     newUrl = tmpurl;
@@ -908,7 +908,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     // Enhanced rename: Don't highlight the file extension.
     TQString pattern;
     KServiceTypeFactory::self()->findFromPattern( filename, &pattern );
-    if (!pattern.isEmpty() && pattern.tqat(0)=='*' && pattern.find('*',1)==-1)
+    if (!pattern.isEmpty() && pattern.at(0)=='*' && pattern.find('*',1)==-1)
       d->m_lined->setSelection(0, filename.length()-pattern.stripWhiteSpace().length()+1);
     else
     {

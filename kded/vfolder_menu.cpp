@@ -1000,7 +1000,7 @@ VFolderMenu::loadApplications(const TQString &dir, const TQString &prefix)
    while( ( ep = readdir( dp ) ) != 0L )
    {
       TQString fn( TQFile::decodeName(ep->d_name));
-      if (fn == _dot || fn == _dotdot || TQChar(fn.tqat(fn.length() - 1)).latin1() == '~')
+      if (fn == _dot || fn == _dotdot || TQChar(fn.at(fn.length() - 1)).latin1() == '~')
          continue;
 
       TQString pathfn = dir + fn;
@@ -1110,7 +1110,7 @@ kdDebug(7021) << "processLegacyDir(" << dir << ", " << relDir << ", " << prefix 
    while( ( ep = readdir( dp ) ) != 0L )
    {
       TQString fn( TQFile::decodeName(ep->d_name));
-      if (fn == _dot || fn == _dotdot || TQChar(fn.tqat(fn.length() - 1)).latin1() == '~')
+      if (fn == _dot || fn == _dotdot || TQChar(fn.at(fn.length() - 1)).latin1() == '~')
          continue;
 
       TQString pathfn = dir + fn;

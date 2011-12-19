@@ -127,7 +127,7 @@ void CupsdSecurityPage::slotAdd()
 			{
 				if (KMessageBox::warningContinueCancel(this, i18n("This location is already defined. Do you want to replace the existing one?"),TQString::null,i18n("Replace")) == KMessageBox::Continue)
 				{
-					index = locs_.tqat();
+					index = locs_.at();
 					locs_.remove();
 					break;
 				}
@@ -149,7 +149,7 @@ void CupsdSecurityPage::slotAdd()
 
 void CupsdSecurityPage::slotEdit(int index)
 {
-	CupsLocation *loc = locs_.tqat(index);
+	CupsLocation *loc = locs_.at(index);
 	LocationDialog::editLocation(loc, this, conf_);
 }
 

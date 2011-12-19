@@ -391,7 +391,7 @@ void KDirSelectDialog::slotComboTextChanged( const TQString& text )
     {
         item->setSelected( false );
         // 2002/12/27, deselected item is not repainted, so force it
-        item->tqrepaint();
+        item->repaint();
     }
 }
 

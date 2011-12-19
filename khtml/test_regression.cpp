@@ -1051,7 +1051,7 @@ void RegressionTest::doJavascriptReport( const TQString &test )
     text.replace( TQRegExp( "\nFAIL" ), "\n<span style='color: red'>FAIL</span>" );
     text.replace( TQRegExp( "\nPASSED" ), "\n<span style='color: green'>PASSED</span>" );
     text.replace( TQRegExp( "\nPASS" ), "\n<span style='color: green'>PASS</span>" );
-    if ( text.tqat( 0 ) == '\n' )
+    if ( text.at( 0 ) == '\n' )
         text = text.mid( 1, text.length() );
     text.replace( '\n', "<br>\n" );
     cl += text;

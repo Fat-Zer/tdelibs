@@ -149,7 +149,7 @@ void KFilePreview::updateView(bool b)
 {
     left->updateView(b);
     if(preview)
-        preview->tqrepaint(b);
+        preview->repaint(b);
 }
 
 void KFilePreview::updateView(const KFileItem *i)

@@ -126,8 +126,8 @@ static TQCString readQCString(TQDataStream &ds)
    TQCString result;
    TQ_UINT32 len;
    ds >> len;
-   TQIODevice *device = ds.tqdevice();
-   int bytesLeft = device->size()-device->tqat();
+   TQIODevice *device = ds.device();
+   int bytesLeft = device->size()-device->at();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
       qWarning("Corrupt data!\n");
@@ -145,8 +145,8 @@ static TQByteArray readQByteArray(TQDataStream &ds)
    TQByteArray result;
    TQ_UINT32 len;
    ds >> len;
-   TQIODevice *device = ds.tqdevice();
-   int bytesLeft = device->size()-device->tqat();
+   TQIODevice *device = ds.device();
+   int bytesLeft = device->size()-device->at();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
       qWarning("Corrupt data!\n");

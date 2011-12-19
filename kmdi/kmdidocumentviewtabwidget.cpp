@@ -54,7 +54,7 @@ void KMdiDocumentViewTabWidget::insertTab ( TQWidget * child, const TQString & l
 	KTabWidget::insertTab( child, label, index );
 	showPage( child );
 	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
-	tabBar() ->tqrepaint();
+	tabBar() ->repaint();
 }
 
 void KMdiDocumentViewTabWidget::insertTab ( TQWidget * child, const TQIconSet & iconset, const TQString & label, int index )
@@ -62,7 +62,7 @@ void KMdiDocumentViewTabWidget::insertTab ( TQWidget * child, const TQIconSet & 
 	KTabWidget::insertTab( child, iconset, label, index );
 	showPage( child );
 	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
-	tabBar() ->tqrepaint();
+	tabBar() ->repaint();
 }
 
 void KMdiDocumentViewTabWidget::insertTab ( TQWidget * child, TQTab * tab, int index )
@@ -70,7 +70,7 @@ void KMdiDocumentViewTabWidget::insertTab ( TQWidget * child, TQTab * tab, int i
 	KTabWidget::insertTab( child, tab, index );
 	showPage( child );
 	TQTimer::singleShot(0, this, TQT_SLOT(maybeShow()));
-	tabBar() ->tqrepaint();
+	tabBar() ->repaint();
 }
 
 void KMdiDocumentViewTabWidget::removePage ( TQWidget * w )

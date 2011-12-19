@@ -82,7 +82,7 @@ void KMultiTabBarInternal::setStyle(enum KMultiTabBar::KMultiTabBarStyle style)
 {
 	m_style=style;
         for (uint i=0;i<m_tabs.count();i++)
-                m_tabs.tqat(i)->setStyle(m_style);
+                m_tabs.at(i)->setStyle(m_style);
 
 	if  ( (m_style==KMultiTabBar::KDEV3) ||
 		(m_style==KMultiTabBar::KDEV3ICON ) ) {
@@ -106,11 +106,11 @@ void KMultiTabBarInternal::setStyle(enum KMultiTabBar::KMultiTabBarStyle style)
 		}
 		addChild(box);
 	        for (uint i=0;i<m_tabs.count();i++)
-        	        mainLayout->add(m_tabs.tqat(i));
+        	        mainLayout->add(m_tabs.at(i));
 		mainLayout->setAutoAdd(true);
 
 	}
-        viewport()->tqrepaint();
+        viewport()->repaint();
 }
 
 void KMultiTabBarInternal::drawContents ( TQPainter * paint, int clipx, int clipy, int clipw, int cliph )
@@ -175,7 +175,7 @@ void KMultiTabBarInternal::mousePressEvent(TQMouseEvent *ev)
 					uint ulen=0;\
 					diff=0; \
 					for (uint i2=i;i2<tabCount;i2++) {\
-						uint l1=m_tabs.tqat(i2)->neededSize();\
+						uint l1=m_tabs.at(i2)->neededSize();\
 						if ((ulen+l1)>space){\
 							if (ulen==0) diff=0;\
 							else diff=((float)(space-ulen))/(i2-i);\
@@ -208,7 +208,7 @@ void KMultiTabBarInternal::resizeEvent(TQResizeEvent *ev) {
 		const uint tabCount=m_tabs.count();
 	        for (uint i=0;i<tabCount;i++) {
 			cnt++;
-			tmp+=m_tabs.tqat(i)->neededSize();
+			tmp+=m_tabs.at(i)->neededSize();
 			if (tmp>space) {
 				if (cnt>1)i--;
 				else if (i==(tabCount-1)) break;
@@ -232,7 +232,7 @@ void KMultiTabBarInternal::resizeEvent(TQResizeEvent *ev) {
 
 			//kdDebug()<<"m_lines recalculated="<<m_lines<<endl;
 		        for (uint i=0;i<tabCount;i++) {
-				KMultiTabBarTab *tab=m_tabs.tqat(i);
+				KMultiTabBarTab *tab=m_tabs.at(i);
 				cnt++;
 				tmp+=tab->neededSize()+diff;
 				if (tmp>space) {
@@ -258,7 +258,7 @@ void KMultiTabBarInternal::resizeEvent(TQResizeEvent *ev) {
 					//kdDebug()<<"starting new line:"<<lines<<endl;
 
 				} else 	{
-					//kdDebug()<<"Placing line on line:"<<lines<<" pos: (x/y)=("<<tmp-m_tabs.tqat(i)->neededSize()<<"/"<<lines*24<<")"<<endl;
+					//kdDebug()<<"Placing line on line:"<<lines<<" pos: (x/y)=("<<tmp-m_tabs.at(i)->neededSize()<<"/"<<lines*24<<")"<<endl;
 					//kdDebug()<<"diff="<<diff<<endl;
 					tab->removeEventFilter(this);
 					tab->move(NEARBYINT(tmp-tab->neededSize()),lines*24);
@@ -279,7 +279,7 @@ void KMultiTabBarInternal::resizeEvent(TQResizeEvent *ev) {
 			tmp=-diff;
 
 		        for (uint i=0;i<tabCount;i++) {
-				KMultiTabBarTab *tab=m_tabs.tqat(i);
+				KMultiTabBarTab *tab=m_tabs.at(i);
 				cnt++;
 				tmp+=tab->neededSize()+diff;
 				if (tmp>space) {
@@ -311,7 +311,7 @@ void KMultiTabBarInternal::resizeEvent(TQResizeEvent *ev) {
 	} else {
 		int size=0; /*move the calculation into another function and call it only on add tab and tab click events*/
 		for (int i=0;i<(int)m_tabs.count();i++)
-			size+=(m_barMode==KMultiTabBar::Vertical?m_tabs.tqat(i)->height():m_tabs.tqat(i)->width());
+			size+=(m_barMode==KMultiTabBar::Vertical?m_tabs.at(i)->height():m_tabs.at(i)->width());
 		if ((m_position==KMultiTabBar::Bottom) || (m_position==KMultiTabBar::Top))
 			box->setGeometry(0,0,size,height());
 		else box->setGeometry(0,0,width(),size);
@@ -351,7 +351,7 @@ int KMultiTabBarInternal::appendTab(const TQPixmap &pic ,int id,const TQString& 
 		if (m_expandedTabSize<tab->neededSize()) {
 			m_expandedTabSize=tab->neededSize();
 			for (uint i=0;i<m_tabs.count();i++)
-				m_tabs.tqat(i)->setSize(m_expandedTabSize);
+				m_tabs.at(i)->setSize(m_expandedTabSize);
 
 		} else tab->setSize(m_expandedTabSize);
 	} else tab->updateState();
@@ -364,7 +364,7 @@ void KMultiTabBarInternal::removeTab(int id)
 {
 	for (uint pos=0;pos<m_tabs.count();pos++)
 	{
-		if (m_tabs.tqat(pos)->id()==id)
+		if (m_tabs.at(pos)->id()==id)
 		{
 			m_tabs.remove(pos);
 			resizeEvent(0);
@@ -377,8 +377,8 @@ void KMultiTabBarInternal::setPosition(enum KMultiTabBar::KMultiTabBarPosition p
 {
 	m_position=pos;
 	for (uint i=0;i<m_tabs.count();i++)
-		m_tabs.tqat(i)->setTabsPosition(m_position);
-	viewport()->tqrepaint();
+		m_tabs.at(i)->setTabsPosition(m_position);
+	viewport()->repaint();
 }
 
 KMultiTabBarButton::KMultiTabBarButton(const TQPixmap& pic,const TQString& text, TQPopupMenu *popup,
@@ -434,13 +434,13 @@ void KMultiTabBarButton::slotClicked()
 void KMultiTabBarButton::setPosition(KMultiTabBar::KMultiTabBarPosition pos)
 {
 	m_position=pos;
-	tqrepaint();
+	repaint();
 }
 
 void KMultiTabBarButton::setStyle(KMultiTabBar::KMultiTabBarStyle style)
 {
 	m_style=style;
-	tqrepaint();
+	repaint();
 }
 
 void KMultiTabBarButton::hideEvent( TQHideEvent* he) {
@@ -525,7 +525,7 @@ void KMultiTabBarTab::setTabsPosition(KMultiTabBar::KMultiTabBarPosition pos)
 	}
 
 	setPosition(pos);
-//	tqrepaint();
+//	repaint();
 }
 
 void KMultiTabBarTab::setIcon(const TQString& icon)
@@ -923,7 +923,7 @@ void KMultiTabBar::removeButton(int id)
 {
 	for (uint pos=0;pos<m_buttons.count();pos++)
 	{
-		if (m_buttons.tqat(pos)->id()==id)
+		if (m_buttons.at(pos)->id()==id)
 		{
 			m_buttons.take(pos)->deleteLater();
 			break;
@@ -978,7 +978,7 @@ void KMultiTabBar::setPosition(KMultiTabBarPosition pos)
 	m_position=pos;
 	m_internal->setPosition(pos);
 	for (uint i=0;i<m_buttons.count();i++)
-		m_buttons.tqat(i)->setPosition(pos);
+		m_buttons.at(i)->setPosition(pos);
 }
 
 KMultiTabBar::KMultiTabBarPosition KMultiTabBar::position() const
@@ -988,8 +988,8 @@ KMultiTabBar::KMultiTabBarPosition KMultiTabBar::position() const
 void KMultiTabBar::fontChange(const TQFont& /* oldFont */)
 {
 	for (uint i=0;i<tabs()->count();i++)
-		tabs()->tqat(i)->resize();
-	tqrepaint();
+		tabs()->at(i)->resize();
+	repaint();
 }
 
 TQPtrList<KMultiTabBarTab>* KMultiTabBar::tabs() {return m_internal->tabs();}

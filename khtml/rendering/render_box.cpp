@@ -622,7 +622,7 @@ void RenderBox::paintBackgroundExtended(TQPainter *p, const TQColor &c, const Ba
             sy+=b.y()-cy;
             cx=b.x();cy=b.y();cw=b.width();ch=b.height();
         }
-        // restrict painting to tqrepaint-clip
+        // restrict painting to repaint-clip
         if (cy < clipy) {
             ch -= (clipy - cy);
             sy += (clipy - cy);
@@ -795,7 +795,7 @@ void RenderBox::position(InlineBox* box, int /*from*/, int /*len*/, bool /*rever
         setPos( box->xPos(), box->yPos() );
 }
 
-void RenderBox::tqrepaint(Priority prior)
+void RenderBox::repaint(Priority prior)
 {
     int ow = style() ? style()->outlineSize() : 0;
     if( isInline() && !isReplaced() )

@@ -1233,11 +1233,11 @@ void KateView::updateRendererConfig()
 
   // update the text area
   m_viewInternal->updateView (true);
-  m_viewInternal->tqrepaint ();
+  m_viewInternal->repaint ();
 
   // update the left border right, for example linenumbers
   m_viewInternal->leftBorder->updateFont();
-  m_viewInternal->leftBorder->tqrepaint ();
+  m_viewInternal->leftBorder->repaint ();
 
 // @@ showIndentLines is not cached anymore.
 //  m_renderer->setShowIndentLines (m_renderer->config()->showIndentationLines());
@@ -1596,7 +1596,7 @@ void KateView::paste()
 {
   m_doc->paste( this );
   emit selectionChanged();
-  m_viewInternal->tqrepaint();
+  m_viewInternal->repaint();
 }
 
 void KateView::cut()

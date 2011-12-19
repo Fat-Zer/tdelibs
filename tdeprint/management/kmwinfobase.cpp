@@ -56,19 +56,19 @@ void KMWInfoBase::setInfo(const TQString& s)
 void KMWInfoBase::setLabel(int i, const TQString& s)
 {
 	if (i >= 0 && i < m_nlines)
-		m_labels.tqat(i)->setText(s);
+		m_labels.at(i)->setText(s);
 }
 
 void KMWInfoBase::setText(int i, const TQString& s)
 {
 	if (i >= 0 && i < m_nlines)
-		m_edits.tqat(i)->setText(s);
+		m_edits.at(i)->setText(s);
 }
 
 TQString KMWInfoBase::text(int i)
 {
 	if (i >= 0 && i < m_nlines)
-		return m_edits.tqat(i)->text();
+		return m_edits.at(i)->text();
 	return TQString::null;
 }
 
@@ -76,15 +76,15 @@ void KMWInfoBase::setCurrent(int i)
 {
 	if (i >= 0 && i < m_nlines)
 	{
-		m_edits.tqat(i)->selectAll();
-		m_edits.tqat(i)->setFocus();
+		m_edits.at(i)->selectAll();
+		m_edits.at(i)->setFocus();
 	}
 }
 
 TQLineEdit* KMWInfoBase::lineEdit( int i )
 {
 	if ( i >= 0 && i < m_nlines )
-		return m_edits.tqat( i );
+		return m_edits.at( i );
 	else
 		return NULL;
 }
