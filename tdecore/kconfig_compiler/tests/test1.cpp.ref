@@ -4,66 +4,66 @@
 #include "test1.h"
 
 Test1::Test1(  const TQString & transport, const TQString & folder )
-  : KConfigSkeleton( TQString::tqfromLatin1( "examplerc" ) )
+  : KConfigSkeleton( TQString::fromLatin1( "examplerc" ) )
   , mParamtransport(transport)
   , mParamfolder(folder)
 {
-  setCurrentGroup( TQString::tqfromLatin1( "General-%1" ).arg( mParamfolder ) );
+  setCurrentGroup( TQString::fromLatin1( "General-%1" ).arg( mParamfolder ) );
 
   KConfigSkeleton::ItemBool  *itemOneOption;
-  itemOneOption = new KConfigSkeleton::ItemBool( currentGroup(), TQString::tqfromLatin1( "OneOption" ), mOneOption, true );
-  addItem( itemOneOption, TQString::tqfromLatin1( "OneOption" ) );
+  itemOneOption = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "OneOption" ), mOneOption, true );
+  addItem( itemOneOption, TQString::fromLatin1( "OneOption" ) );
   KConfigSkeleton::ItemInt  *itemAnotherOption;
-  itemAnotherOption = new KConfigSkeleton::ItemInt( currentGroup(), TQString::tqfromLatin1( "Another Option" ), mAnotherOption, 5 );
-  addItem( itemAnotherOption, TQString::tqfromLatin1( "AnotherOption" ) );
+  itemAnotherOption = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Another Option" ), mAnotherOption, 5 );
+  addItem( itemAnotherOption, TQString::fromLatin1( "AnotherOption" ) );
   TQValueList<KConfigSkeleton::ItemEnum::Choice> valuesListOption;
   {
     KConfigSkeleton::ItemEnum::Choice choice;
-    choice.name = TQString::tqfromLatin1( "One" );
+    choice.name = TQString::fromLatin1( "One" );
     valuesListOption.append( choice );
   }
   {
     KConfigSkeleton::ItemEnum::Choice choice;
-    choice.name = TQString::tqfromLatin1( "Two" );
+    choice.name = TQString::fromLatin1( "Two" );
     valuesListOption.append( choice );
   }
   {
     KConfigSkeleton::ItemEnum::Choice choice;
-    choice.name = TQString::tqfromLatin1( "Three" );
+    choice.name = TQString::fromLatin1( "Three" );
     valuesListOption.append( choice );
   }
   KConfigSkeleton::ItemEnum  *itemListOption;
-  itemListOption = new KConfigSkeleton::ItemEnum( currentGroup(), TQString::tqfromLatin1( "ListOption" ), mListOption, valuesListOption, EnumListOption::One );
-  addItem( itemListOption, TQString::tqfromLatin1( "ListOption" ) );
+  itemListOption = new KConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "ListOption" ), mListOption, valuesListOption, EnumListOption::One );
+  addItem( itemListOption, TQString::fromLatin1( "ListOption" ) );
 
-  setCurrentGroup( TQString::tqfromLatin1( "MyOptions" ) );
+  setCurrentGroup( TQString::fromLatin1( "MyOptions" ) );
 
   KConfigSkeleton::ItemString  *itemMyString;
-  itemMyString = new KConfigSkeleton::ItemString( currentGroup(), TQString::tqfromLatin1( "MyString" ), mMyString, TQString::tqfromLatin1( "Default String" ) );
-  addItem( itemMyString, TQString::tqfromLatin1( "MyString" ) );
+  itemMyString = new KConfigSkeleton::ItemString( currentGroup(), TQString::fromLatin1( "MyString" ), mMyString, TQString::fromLatin1( "Default String" ) );
+  addItem( itemMyString, TQString::fromLatin1( "MyString" ) );
   KConfigSkeleton::ItemPath  *itemMyPath;
-  itemMyPath = new KConfigSkeleton::ItemPath( currentGroup(), TQString::tqfromLatin1( "MyPath" ), mMyPath, TQDir::homeDirPath()+TQString::tqfromLatin1(".hidden_file") );
-  addItem( itemMyPath, TQString::tqfromLatin1( "MyPath" ) );
+  itemMyPath = new KConfigSkeleton::ItemPath( currentGroup(), TQString::fromLatin1( "MyPath" ), mMyPath, TQDir::homeDirPath()+TQString::fromLatin1(".hidden_file") );
+  addItem( itemMyPath, TQString::fromLatin1( "MyPath" ) );
   KConfigSkeleton::ItemInt  *itemAnotherOption2;
-  itemAnotherOption2 = new KConfigSkeleton::ItemInt( currentGroup(), TQString::tqfromLatin1( "Another Option" ), mAnotherOption2, 10 );
-  addItem( itemAnotherOption2, TQString::tqfromLatin1( "AnotherOption2" ) );
+  itemAnotherOption2 = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Another Option" ), mAnotherOption2, 10 );
+  addItem( itemAnotherOption2, TQString::fromLatin1( "AnotherOption2" ) );
   TQStringList defaultMyStringList;
   defaultMyStringList.append( TQString::fromUtf8( "up" ) );
   defaultMyStringList.append( TQString::fromUtf8( "down" ) );
 
   KConfigSkeleton::ItemStringList  *itemMyStringList;
-  itemMyStringList = new KConfigSkeleton::ItemStringList( currentGroup(), TQString::tqfromLatin1( "MyStringList" ), mMyStringList, defaultMyStringList );
-  addItem( itemMyStringList, TQString::tqfromLatin1( "MyStringList" ) );
+  itemMyStringList = new KConfigSkeleton::ItemStringList( currentGroup(), TQString::fromLatin1( "MyStringList" ), mMyStringList, defaultMyStringList );
+  addItem( itemMyStringList, TQString::fromLatin1( "MyStringList" ) );
   TQStringList defaultMyStringListHidden;
   defaultMyStringListHidden.append( TQString::fromUtf8( "up" ) );
   defaultMyStringListHidden.append( TQString::fromUtf8( "down" ) );
 
   KConfigSkeleton::ItemStringList  *itemMyStringListHidden;
-  itemMyStringListHidden = new KConfigSkeleton::ItemStringList( currentGroup(), TQString::tqfromLatin1( "MyStringListHidden" ), mMyStringListHidden, defaultMyStringListHidden );
-  addItem( itemMyStringListHidden, TQString::tqfromLatin1( "MyStringListHidden" ) );
+  itemMyStringListHidden = new KConfigSkeleton::ItemStringList( currentGroup(), TQString::fromLatin1( "MyStringListHidden" ), mMyStringListHidden, defaultMyStringListHidden );
+  addItem( itemMyStringListHidden, TQString::fromLatin1( "MyStringListHidden" ) );
   KConfigSkeleton::ItemInt  *itemMyNumber;
-  itemMyNumber = new KConfigSkeleton::ItemInt( currentGroup(), TQString::tqfromLatin1( "List-%1-%2" ).arg( mParamtransport ).arg( mParamfolder ), mMyNumber, 1 );
-  addItem( itemMyNumber, TQString::tqfromLatin1( "MyNumber" ) );
+  itemMyNumber = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "List-%1-%2" ).arg( mParamtransport ).arg( mParamfolder ), mMyNumber, 1 );
+  addItem( itemMyNumber, TQString::fromLatin1( "MyNumber" ) );
 }
 
 Test1::~Test1()

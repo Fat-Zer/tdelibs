@@ -125,13 +125,13 @@ namespace KDEPrivate
                                        TQObject *parent, const char *name, 
                                        const char *className, const TQStringList &args )
         {
-            TQMetaObject *tqmetaObject = Product::tqstaticMetaObject();
-            while ( tqmetaObject )
+            TQMetaObject *metaObject = Product::staticMetaObject();
+            while ( metaObject )
             {
-                if ( !qstrcmp( className, tqmetaObject->className() ) )
+                if ( !qstrcmp( className, metaObject->className() ) )
                     return create( parentWidget, widgetName,
                                    parent, name, args, Type2Type<BaseType>() );
-                tqmetaObject = tqmetaObject->tqsuperClass();
+                metaObject = metaObject->superClass();
             }
             return 0;
         }

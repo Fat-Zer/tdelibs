@@ -359,7 +359,7 @@ using namespace std;
  *
  * @code SKIP("Test skipped because of lack of foo support."); @endcode
  */
-#define SKIP( x ) skip( __FILE__, __LINE__, TQString::tqfromLatin1(#x))
+#define SKIP( x ) skip( __FILE__, __LINE__, TQString::fromLatin1(#x))
 
 /*!
  * A macro testing that @p expression throws an exception that is catched

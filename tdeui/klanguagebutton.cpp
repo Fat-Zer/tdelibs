@@ -131,12 +131,12 @@ KLanguageButton::~KLanguageButton()
 void KLanguageButton::insertLanguage( const TQString& path, const TQString& name,
                         const TQString&, const TQString &submenu, int index )
 {
-  TQString output = name + TQString::tqfromLatin1( " (" ) + path +
-                   TQString::tqfromLatin1( ")" );
+  TQString output = name + TQString::fromLatin1( " (" ) + path +
+                   TQString::fromLatin1( ")" );
 #if 0
   // Nooooo ! Country != language
   TQPixmap flag( locate( "locale", sub + path +
-                TQString::tqfromLatin1( "/flag.png" ) ) );
+                TQString::fromLatin1( "/flag.png" ) ) );
 #endif
   insertItem( output, path, submenu, index );
 }

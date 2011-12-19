@@ -74,7 +74,7 @@ bool TemplateInterface::expandMacros( TQMap<TQString, TQString> &map, TQWidget *
 {
   KABC::StdAddressBook *addrBook = 0;
   KABC::Addressee userAddress;
-  TQDateTime datetime = TQDateTime::tqcurrentDateTime();
+  TQDateTime datetime = TQDateTime::currentDateTime();
   TQDate date = TQT_TQDATE_OBJECT(datetime.date());
   TQTime time = TQT_TQTIME_OBJECT(datetime.time());
 

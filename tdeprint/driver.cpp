@@ -334,7 +334,7 @@ void DrGroup::flattenGroup(TQMap<TQString, DrBase*>& optmap, int& index)
 		optmap[oit.current()->name()] = oit.current();
 
 	if (name().isEmpty())
-		optmap[TQString::tqfromLatin1("group%1").arg(index++)] = this;
+		optmap[TQString::fromLatin1("group%1").arg(index++)] = this;
 	else
 		optmap[name()] = this;
 

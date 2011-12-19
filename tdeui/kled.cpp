@@ -229,7 +229,7 @@ KLed::paintFlat() // paint a ROUND FLAT led lamp
     brush.setColor( color );
 
     pen.setWidth( scale );
-    color = tqcolorGroup().dark();
+    color = colorGroup().dark();
     pen.setColor( color );			// Set the pen accordingly
 
     paint.setPen( pen );			// Select pen for drawing
@@ -325,7 +325,7 @@ KLed::paintRound() // paint a ROUND RAISED led lamp
     // avoid that the border can be erased by the bright spot of the LED
 
     pen.setWidth( 2 * scale + 1 );
-    color = tqcolorGroup().dark();
+    color = colorGroup().dark();
     pen.setColor( color );			// Set the pen accordingly
     paint.setPen( pen );			// Select pen for drawing
     brush.setStyle( Qt::NoBrush );		// Switch off the brush
@@ -428,7 +428,7 @@ KLed::paintSunken() // paint a ROUND SUNKEN led lamp
     // drawing the shadow border at 45° (45*16 = 720).
 
     int angle = -720;
-    color = tqcolorGroup().light();
+    color = colorGroup().light();
 
     for ( int arc = 120; arc < 2880; arc += 240 ) {
       pen.setColor( color );

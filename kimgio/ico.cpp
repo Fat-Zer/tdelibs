@@ -306,7 +306,7 @@ extern "C" KDE_EXPORT void kimgio_ico_read( TQImageIO* io )
             icon.setText( "X-HotspotY", 0, TQString::number( selected->hotspotY ) );
         }
         io->setImage(icon);
-        io->setqStatus(0);
+        io->seStatus(0);
     }
 }
 

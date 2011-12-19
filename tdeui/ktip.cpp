@@ -59,7 +59,7 @@ KTipDatabase::KTipDatabase(const TQString &_tipFile)
 {
     TQString tipFile = _tipFile;
     if (tipFile.isEmpty())
-	tipFile = TQString::tqfromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips";
+	tipFile = TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips";
 
     loadTips(tipFile);
 
@@ -72,7 +72,7 @@ KTipDatabase::KTipDatabase( const TQStringList& tipsFiles )
 {
    if ( tipsFiles.isEmpty() || ( ( tipsFiles.count() == 1 ) && tipsFiles.first().isEmpty() ) )
    {
-       addTips(TQString::tqfromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips");
+       addTips(TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips");
    }
    else
    {
@@ -347,10 +347,10 @@ void KTipDialog::showMultiTip(TQWidget *parent, const TQStringList &tipFiles, bo
            const int oneDay = 24*60*60;
            TQDateTime lastShown = configGroup.readDateTimeEntry("TipLastShown");
            // Show tip roughly once a week
-           if (lastShown.secsTo(TQDateTime::tqcurrentDateTime()) < (oneDay + (kapp->random() % (10*oneDay))))
+           if (lastShown.secsTo(TQDateTime::currentDateTime()) < (oneDay + (kapp->random() % (10*oneDay))))
                return;
         }
-        configGroup.writeEntry("TipLastShown", TQDateTime::tqcurrentDateTime());
+        configGroup.writeEntry("TipLastShown", TQDateTime::currentDateTime());
         kapp->config()->sync();
         if (!hasLastShown)
            return; // Don't show tip on first start
@@ -384,7 +384,7 @@ static TQString fixTip(TQString tip)
   void KTipDialog::prevTip()
   {
       mDatabase->prevTip();
-      TQString currentTip = TQString::tqfromLatin1(
+      TQString currentTip = TQString::fromLatin1(
      "<qt text=\"%1\" bgcolor=\"%2\">%3</qt>")
      .arg(mTextColor.name())
      .arg(mBaseColor.name())
@@ -399,7 +399,7 @@ static TQString fixTip(TQString tip)
   void KTipDialog::nextTip()
   {
       mDatabase->nextTip();
-      TQString currentTip = TQString::tqfromLatin1(
+      TQString currentTip = TQString::fromLatin1(
         "<qt text=\"%1\" bgcolor=\"%2\">%3</qt>")
         .arg(mTextColor.name())
         .arg(mBaseColor.name())

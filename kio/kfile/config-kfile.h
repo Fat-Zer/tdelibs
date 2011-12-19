@@ -3,7 +3,7 @@
 
 const int kfile_area = 250;
 
-#define DefaultViewStyle TQString::tqfromLatin1("SimpleView")
+#define DefaultViewStyle TQString::fromLatin1("SimpleView")
 #define DefaultPannerPosition 40
 #define DefaultMixDirsAndFiles false
 #define DefaultShowStatusLine false
@@ -14,19 +14,19 @@ const int kfile_area = 250;
 #define DefaultRecentURLsNumber 15
 #define DefaultDirectoryFollowing true
 #define DefaultAutoSelectExtChecked true
-#define ConfigGroup TQString::tqfromLatin1("KFileDialog Settings")
-#define RecentURLs TQString::tqfromLatin1("Recent URLs")
-#define RecentFiles TQString::tqfromLatin1("Recent Files")
-#define RecentURLsNumber TQString::tqfromLatin1("Maximum of recent URLs")
-#define RecentFilesNumber TQString::tqfromLatin1("Maximum of recent files")
-#define DialogWidth TQString::tqfromLatin1("Width (%1)")
-#define DialogHeight TQString::tqfromLatin1("Height (%1)")
-#define ConfigShowStatusLine TQString::tqfromLatin1("ShowStatusLine")
-#define AutoDirectoryFollowing TQString::tqfromLatin1("Automatic directory following")
-#define PathComboCompletionMode TQString::tqfromLatin1("PathCombo Completionmode")
-#define LocationComboCompletionMode TQString::tqfromLatin1("LocationCombo Completionmode")
-#define ShowSpeedbar TQString::tqfromLatin1("Show Speedbar")
-#define ShowBookmarks TQString::tqfromLatin1("Show Bookmarks")
-#define AutoSelectExtChecked TQString::tqfromLatin1("Automatically select filename extension")
+#define ConfigGroup TQString::fromLatin1("KFileDialog Settings")
+#define RecentURLs TQString::fromLatin1("Recent URLs")
+#define RecentFiles TQString::fromLatin1("Recent Files")
+#define RecentURLsNumber TQString::fromLatin1("Maximum of recent URLs")
+#define RecentFilesNumber TQString::fromLatin1("Maximum of recent files")
+#define DialogWidth TQString::fromLatin1("Width (%1)")
+#define DialogHeight TQString::fromLatin1("Height (%1)")
+#define ConfigShowStatusLine TQString::fromLatin1("ShowStatusLine")
+#define AutoDirectoryFollowing TQString::fromLatin1("Automatic directory following")
+#define PathComboCompletionMode TQString::fromLatin1("PathCombo Completionmode")
+#define LocationComboCompletionMode TQString::fromLatin1("LocationCombo Completionmode")
+#define ShowSpeedbar TQString::fromLatin1("Show Speedbar")
+#define ShowBookmarks TQString::fromLatin1("Show Bookmarks")
+#define AutoSelectExtChecked TQString::fromLatin1("Automatically select filename extension")
 
 #endif

@@ -108,25 +108,25 @@ void KColorButton::drawButtonLabel( TQPainter *painter )
   TQRect r = tqstyle().subRect( TQStyle::SR_PushButtonContents, this );
   r.rect(&x, &y, &w, &h);
 
-  int margin = tqstyle().tqpixelMetric( TQStyle::PM_ButtonMargin, this );
+  int margin = tqstyle().pixelMetric( TQStyle::PM_ButtonMargin, this );
   x += margin;
   y += margin;
   w -= 2*margin;
   h -= 2*margin;
 
   if (isOn() || isDown()) {
-    x += tqstyle().tqpixelMetric( TQStyle::PM_ButtonShiftHorizontal, this );
-    y += tqstyle().tqpixelMetric( TQStyle::PM_ButtonShiftVertical, this );
+    x += tqstyle().pixelMetric( TQStyle::PM_ButtonShiftHorizontal, this );
+    y += tqstyle().pixelMetric( TQStyle::PM_ButtonShiftVertical, this );
   }
 
   TQColor fillCol = isEnabled() ? col : backgroundColor();
-  qDrawShadePanel( painter, x, y, w, h, tqcolorGroup(), true, 1, NULL);
+  qDrawShadePanel( painter, x, y, w, h, colorGroup(), true, 1, NULL);
   if ( fillCol.isValid() )
     painter->fillRect( x+1, y+1, w-2, h-2, fillCol );
 
   if ( hasFocus() ) {
     TQRect focusRect = tqstyle().subRect( TQStyle::SR_PushButtonFocusRect, this );
-    tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, painter, focusRect, tqcolorGroup() );
+    tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, painter, focusRect, colorGroup() );
   }
 }
 

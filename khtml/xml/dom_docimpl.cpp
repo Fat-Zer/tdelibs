@@ -1387,7 +1387,7 @@ void DocumentImpl::write( const TQString &text )
         if (m_view)
             m_view->part()->resetFromScript();
         m_tokenizer->setAutoClose();
-        write(TQString::tqfromLatin1("<html>"));
+        write(TQString::fromLatin1("<html>"));
     }
     m_tokenizer->write(text, false);
 }

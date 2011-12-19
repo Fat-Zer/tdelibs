@@ -429,7 +429,7 @@ void KAboutContainerBase::show( void )
 
 TQSize KAboutContainerBase::sizeHint( void ) const
 {
-    return tqminimumSize().expandedTo( TQSize( TQWidget::sizeHint().width(), 0 ) );
+    return minimumSize().expandedTo( TQSize( TQWidget::sizeHint().width(), 0 ) );
 }
 
 void KAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
@@ -828,7 +828,7 @@ TQSize KAboutContainer::sizeHint( void ) const
       ++numChild;
       TQWidget* const w= TQT_TQWIDGET(o);
 
-      TQSize s = w->tqminimumSize();
+      TQSize s = w->minimumSize();
       if( s.isEmpty() )
       {
 	s = w->minimumSizeHint();

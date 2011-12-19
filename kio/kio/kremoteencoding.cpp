@@ -37,13 +37,13 @@ TQString KRemoteEncoding::decode(const TQCString& name) const
 {
 #ifdef CHECK_UTF8
   if (codec->mibEnum() == 106 && !KStringHandler::isUtf8(name))
-    return TQString::tqfromLatin1(name);
+    return TQString::fromLatin1(name);
 #endif
 
   TQString result = codec->toUnicode(name);
   if (codec->fromUnicode(result) != name)
     // fallback in case of decoding failure
-    return TQString::tqfromLatin1(name);
+    return TQString::fromLatin1(name);
 
   return result;
 }

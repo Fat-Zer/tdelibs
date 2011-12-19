@@ -463,7 +463,7 @@ TQString KCompletion::findCompletion( const TQString& string )
                     uint weight = temp_node->weight();
                     const KCompTreeNode* hit = temp_node;
                     for( int i = 1; i < count; i++ ) {
-                        temp_node = node->tqchildAt(i);
+                        temp_node = node->childAt(i);
                         if( temp_node->weight() > weight ) {
                             hit = temp_node;
                             weight = hit->weight();
@@ -628,19 +628,19 @@ void KCompletion::doBeep( BeepMode mode ) const
 
     switch ( mode ) {
         case Rotation:
-            event = TQString::tqfromLatin1("Textcompletion: rotation");
+            event = TQString::fromLatin1("Textcompletion: rotation");
             text = i18n("You reached the end of the list\nof matching items.\n");
             break;
         case PartialMatch:
             if ( myCompletionMode == KGlobalSettings::CompletionShell ||
                  myCompletionMode == KGlobalSettings::CompletionMan ) {
-                event = TQString::tqfromLatin1("Textcompletion: partial match");
+                event = TQString::fromLatin1("Textcompletion: partial match");
                 text = i18n("The completion is ambiguous, more than one\nmatch is available.\n");
             }
             break;
         case NoMatch:
             if ( myCompletionMode == KGlobalSettings::CompletionShell ) {
-                event = TQString::tqfromLatin1("Textcompletion: no match");
+                event = TQString::fromLatin1("Textcompletion: no match");
                 text = i18n("There is no matching item available.\n");
             }
             break;

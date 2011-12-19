@@ -1975,7 +1975,7 @@ void KLegacyStyle::polish(TQWidget *widget) {
     }
 
     GtkObject *gobj = gobj = priv->gtkDict.find(((metaobject) ? metaobject :
-						 widget->tqmetaObject()));
+						 widget->metaObject()));
 
     if (gobj) {
 	if (gobj->font() && (*gobj->font() != TQApplication::font()))
@@ -2181,7 +2181,7 @@ void KLegacyStyle::drawPushButton(TQPushButton *btn, TQPainter *p) {
     key.cachekey = 0;
     key.data.function = KLegacy::Box;
 
-    TQColorGroup g = btn->tqcolorGroup();
+    TQColorGroup g = btn->colorGroup();
     TQBrush fill = g.brush(TQColorGroup::Button);
     int x1, y1, x2, y2;
     btn->rect().coords(&x1, &y1, &x2, &y2);
@@ -2741,7 +2741,7 @@ void KLegacyStyle::drawScrollBarControls(TQPainter *p, const TQScrollBar *scroll
 		  (active & SubLine), x, y,
 		  buttonDim,
 		  buttonDim,
-		  scrollbar->tqcolorGroup(), true);
+		  scrollbar->colorGroup(), true);
 
 	if  (scrollbar->orientation() == Vertical)
 	    y = scrollbar->height() - buttonDim - defaultFrameWidth();
@@ -2753,7 +2753,7 @@ void KLegacyStyle::drawScrollBarControls(TQPainter *p, const TQScrollBar *scroll
 		  (active & AddLine), x, y,
 		  buttonDim,
 		  buttonDim,
-		  scrollbar->tqcolorGroup(), true);
+		  scrollbar->colorGroup(), true);
     }
     p->drawPixmap(0, 0, buf);
 }

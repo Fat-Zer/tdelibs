@@ -187,9 +187,9 @@ void KPasswordEdit::erase()
 void KPasswordEdit::focusInEvent(TQFocusEvent *e)
 {
     const TQString txt = text();
-    tqsetUpdatesEnabled(false);
+    setUpdatesEnabled(false);
     TQLineEdit::focusInEvent(e);
-    tqsetUpdatesEnabled(true);
+    setUpdatesEnabled(true);
     setText(txt);
 }
 

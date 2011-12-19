@@ -134,7 +134,7 @@ KAuthIcon::~KAuthIcon()
 
 TQSize KAuthIcon::sizeHint() const
 {
-  return layout->tqminimumSize();
+  return layout->minimumSize();
 }
 
 

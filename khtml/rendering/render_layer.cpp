@@ -637,7 +637,7 @@ int RenderLayer::verticalScrollbarWidth()
 #ifdef APPLE_CHANGES
     return m_vBar->width();
 #else
-    return m_vBar->tqstyle().tqpixelMetric(TQStyle::PM_ScrollBarExtent);
+    return m_vBar->tqstyle().pixelMetric(TQStyle::PM_ScrollBarExtent);
 #endif
 
 }
@@ -650,7 +650,7 @@ int RenderLayer::horizontalScrollbarHeight()
 #ifdef APPLE_CHANGES
     return m_hBar->height();
 #else
-    return m_hBar->tqstyle().tqpixelMetric(TQStyle::PM_ScrollBarExtent);
+    return m_hBar->tqstyle().pixelMetric(TQStyle::PM_ScrollBarExtent);
 #endif
 
 }
@@ -691,7 +691,7 @@ void RenderLayer::positionScrollbars(const TQRect& absBounds)
     TQScrollBar *b = m_hBar;
     if (!m_hBar)
 	b = m_vBar;
-    int sw = b->tqstyle().tqpixelMetric(TQStyle::PM_ScrollBarExtent);
+    int sw = b->tqstyle().pixelMetric(TQStyle::PM_ScrollBarExtent);
 
     if (m_vBar) {
 	TQRect vBarRect = TQRect(tx + w - sw + 1, ty, sw, h - (m_hBar ? sw : 0) + 1);

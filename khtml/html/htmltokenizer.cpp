@@ -919,7 +919,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
                                     a = khtml::getAttrID(cBuffer, cBufferPos-1);
                             }
                             if (!a)
-                                attrName = TQString::tqfromLatin1(TQCString(cBuffer, cBufferPos+1).data());
+                                attrName = TQString::fromLatin1(TQCString(cBuffer, cBufferPos+1).data());
                         }
 
                         dest = buffer;
@@ -941,7 +941,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
             }
             if ( cBufferPos == CBUFLEN ) {
                 cBuffer[cBufferPos] = '\0';
-                attrName = TQString::tqfromLatin1(TQCString(cBuffer, cBufferPos+1).data());
+                attrName = TQString::fromLatin1(TQCString(cBuffer, cBufferPos+1).data());
                 dest = buffer;
                 *dest++ = 0;
                 tag = SearchEqual;

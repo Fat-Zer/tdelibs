@@ -98,7 +98,7 @@ QFakeFontEngine::QFakeFontEngine( XFontStruct *fs, const char *name, int size )
     : QFontEngineXLFD( fs,  name,  0)
 {
     pixS = size;
-    ahem = TQString::tqfromLatin1(name).contains("ahem");
+    ahem = TQString::fromLatin1(name).contains("ahem");
 }
 
 QFakeFontEngine::~QFakeFontEngine()

@@ -279,8 +279,8 @@ void KApplicationTree::slotSelectionChanged(TQListViewItem* i)
 
 void KApplicationTree::resizeEvent( TQResizeEvent * e)
 {
-    setColumnWidth(0, width()-TQApplication::tqstyle().tqpixelMetric(TQStyle::PM_ScrollBarExtent)
-                         -2*TQApplication::tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth));
+    setColumnWidth(0, width()-TQApplication::tqstyle().pixelMetric(TQStyle::PM_ScrollBarExtent)
+                         -2*TQApplication::tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth));
     KListView::resizeEvent(e);
 }
 
@@ -340,7 +340,7 @@ KOpenWithDlg::KOpenWithDlg( const KURL::List& _urls, const TQString&_text,
 {
   TQString caption = KStringHandler::csqueeze( _urls.first().prettyURL() );
   if (_urls.count() > 1)
-      caption += TQString::tqfromLatin1("...");
+      caption += TQString::fromLatin1("...");
   setCaption(caption);
   setServiceType( _urls );
   init( _text, _value );
@@ -376,7 +376,7 @@ void KOpenWithDlg::setServiceType( const KURL::List& _urls )
   if ( _urls.count() == 1 )
   {
     qServiceType = KMimeType::findByURL( _urls.first())->name();
-    if (qServiceType == TQString::tqfromLatin1("application/octet-stream"))
+    if (qServiceType == TQString::fromLatin1("application/octet-stream"))
       qServiceType = TQString::null;
   }
   else
@@ -413,13 +413,13 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
     KHistoryCombo *combo = new KHistoryCombo();
     combo->setDuplicatesEnabled( false );
     KConfig *kc = KGlobal::config();
-    KConfigGroupSaver ks( kc, TQString::tqfromLatin1("Open-with settings") );
-    int max = kc->readNumEntry( TQString::tqfromLatin1("Maximum history"), 15 );
+    KConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
+    int max = kc->readNumEntry( TQString::fromLatin1("Maximum history"), 15 );
     combo->setMaxCount( max );
-    int mode = kc->readNumEntry(TQString::tqfromLatin1("CompletionMode"),
+    int mode = kc->readNumEntry(TQString::fromLatin1("CompletionMode"),
 				KGlobalSettings::completionMode());
     combo->setCompletionMode((KGlobalSettings::Completion)mode);
-    TQStringList list = kc->readListEntry( TQString::tqfromLatin1("History") );
+    TQStringList list = kc->readListEntry( TQString::fromLatin1("History") );
     combo->setHistoryItems( list, true );
     edit = new KURLRequester( combo, this );
   }
@@ -483,8 +483,8 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
 
   // check to see if we use konsole if not disable the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( KGlobal::config(), TQString::tqfromLatin1("General") );
-  TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::tqfromLatin1("konsole"));
+  KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+  TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
 
   if (bReadOnly || preferredTerminal != "konsole")
      nocloseonexit->hide();
@@ -666,13 +666,13 @@ void KOpenWithDlg::slotOK()
 
   if (terminal->isChecked())
   {
-    KConfigGroup confGroup( KGlobal::config(), TQString::tqfromLatin1("General") );
-    preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::tqfromLatin1("konsole"));
+    KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+    preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
     m_command = preferredTerminal;
     // only add --noclose when we are sure it is konsole we're using
     if (preferredTerminal == "konsole" && nocloseonexit->isChecked())
-      m_command += TQString::tqfromLatin1(" --noclose");
-    m_command += TQString::tqfromLatin1(" -e ");
+      m_command += TQString::fromLatin1(" --noclose");
+    m_command += TQString::fromLatin1(" -e ");
     m_command += edit->url();
     kdDebug(250) << "Setting m_command to " << m_command << endl;
   }
@@ -740,7 +740,7 @@ void KOpenWithDlg::slotOK()
   {
      desktop = new KDesktopFile(newPath);
   }
-  desktop->writeEntry("Type", TQString::tqfromLatin1("Application"));
+  desktop->writeEntry("Type", TQString::fromLatin1("Application"));
   desktop->writeEntry("Name", initialServiceName);
   desktop->writePathEntry("Exec", fullExec);
   if (terminal->isChecked())
@@ -814,9 +814,9 @@ void KOpenWithDlg::accept()
         combo->addToHistory( edit->url() );
 
         KConfig *kc = KGlobal::config();
-        KConfigGroupSaver ks( kc, TQString::tqfromLatin1("Open-with settings") );
-        kc->writeEntry( TQString::tqfromLatin1("History"), combo->historyItems() );
-	kc->writeEntry(TQString::tqfromLatin1("CompletionMode"),
+        KConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
+        kc->writeEntry( TQString::fromLatin1("History"), combo->historyItems() );
+	kc->writeEntry(TQString::fromLatin1("CompletionMode"),
 		       combo->completionMode());
         // don't store the completion-list, as it contains all of KURLCompletion's
         // executables

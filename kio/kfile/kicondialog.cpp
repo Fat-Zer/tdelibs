@@ -122,7 +122,7 @@ void KIconCanvas::slotLoadFiles()
     TQApplication::setOverrideCursor(tqwaitCursor);
 
     // disable updates to not trigger paint events when adding child items
-    tqsetUpdatesEnabled( false );
+    setUpdatesEnabled( false );
 
 #ifdef HAVE_LIBART
     KSVGIconEngine *svgEngine = new KSVGIconEngine();
@@ -191,7 +191,7 @@ void KIconCanvas::slotLoadFiles()
 #endif
 
     // enable updates since we have to draw the whole view now
-    tqsetUpdatesEnabled( true );
+    setUpdatesEnabled( true );
 
     TQApplication::restoreOverrideCursor();
     d->m_bLoading = false;
@@ -259,7 +259,7 @@ void KIconDialog::init()
     mGroupOrSize = KIcon::Desktop;
     mContext = KIcon::Any;
     mType = 0;
-    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::tqfromLatin1("*.png"));
+    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::fromLatin1("*.png"));
 
     TQWidget *main = new TQWidget( this );
     setMainWidget(main);

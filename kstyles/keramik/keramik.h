@@ -70,7 +70,7 @@ public:
 	                    SFlags flags = Style_Default,
 	                    const TQStyleOption& = TQStyleOption::Default ) const;
 
-	void tqdrawControl( TQ_ControlElement element,
+	void drawControl( TQ_ControlElement element,
 	                  TQPainter* p,
 	                  const TQWidget* widget,
 	                  const TQRect& r,
@@ -78,13 +78,13 @@ public:
 	                  SFlags flags = Style_Default,
 	                  const TQStyleOption& opt = TQStyleOption::Default ) const;
 
-	void tqdrawControlMask( TQ_ControlElement element,
+	void drawControlMask( TQ_ControlElement element,
 	                      TQPainter* p,
 	                      const TQWidget* widget,
 	                      const TQRect& r,
 	                      const TQStyleOption& opt = TQStyleOption::Default ) const;
 
-	void tqdrawComplexControl( TQ_ComplexControl control,
+	void drawComplexControl( TQ_ComplexControl control,
 	                         TQPainter* p,
 	                         const TQWidget* widget,
 	                         const TQRect& r,
@@ -94,13 +94,13 @@ public:
 	                         SCFlags active = SC_None,
 	                         const TQStyleOption& = TQStyleOption::Default ) const;
 
-	void tqdrawComplexControlMask( TQ_ComplexControl control,
+	void drawComplexControlMask( TQ_ComplexControl control,
 	                             TQPainter* p,
 	                             const TQWidget* widget,
 	                             const TQRect& r,
 	                             const TQStyleOption& = TQStyleOption::Default ) const;
 
-	int tqpixelMetric( PixelMetric m, const TQWidget* widget = 0 ) const;
+	int pixelMetric( PixelMetric m, const TQWidget* widget = 0 ) const;
 
 	TQSize tqsizeFromContents( ContentsType contents,
 	                        const TQWidget* widget,

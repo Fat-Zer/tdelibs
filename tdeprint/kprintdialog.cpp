@@ -568,7 +568,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 			if (!sep && it.current()->isSpecial())
 			{
 				sep = true;
-				d->m_printers->insertItem(TQPixmap(), TQString::tqfromLatin1("--------"));
+				d->m_printers->insertItem(TQPixmap(), TQString::fromLatin1("--------"));
 			}
 			d->m_printers->insertItem(SmallIcon(it.current()->pixmap(),0,(it.current()->isValid() ? (int)KIcon::DefaultState : (int)KIcon::LockOverlay)),it.current()->name(),false/*sep*/);
 			if (it.current()->isSoftDefault())
@@ -863,7 +863,7 @@ void KPrintDialog::expandDialog(bool on)
 
 	if (on)
 	{
-		sz.setHeight(sz.height()+d->m_dummy->tqminimumSize().height()+d->m_plugin->tqminimumSize().height()+2*layout()->spacing());
+		sz.setHeight(sz.height()+d->m_dummy->minimumSize().height()+d->m_plugin->minimumSize().height()+2*layout()->spacing());
 		if (isVisible() || !d->m_dummy->isVisible() || !d->m_plugin->isVisible())
 		{
 			d->m_dummy->show();

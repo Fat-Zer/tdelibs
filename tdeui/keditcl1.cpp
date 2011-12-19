@@ -164,7 +164,7 @@ KEdit::cleanWhiteSpace()
       if (line.isEmpty())
       {
          if (addSpace)
-            newText += TQString::tqfromLatin1("\n\n");
+            newText += TQString::fromLatin1("\n\n");
          if (firstLine)
          {
             if (firstChar.isSpace())

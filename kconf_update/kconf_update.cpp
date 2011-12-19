@@ -201,7 +201,7 @@ KonfUpdate::log()
       }
    }
    
-   (*m_textStream) << TQDateTime::tqcurrentDateTime().toString( Qt::ISODate ) << " ";
+   (*m_textStream) << TQDateTime::currentDateTime().toString( Qt::ISODate ) << " ";
    
    return *m_textStream;
 }

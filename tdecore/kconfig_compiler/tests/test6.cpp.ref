@@ -4,25 +4,25 @@
 #include "test6.h"
 
 Test6::Test6(  const TQString & Number )
-  : KConfigSkeleton( TQString::tqfromLatin1( "test4rc" ) )
+  : KConfigSkeleton( TQString::fromLatin1( "test4rc" ) )
   , mParamNumber(Number)
 {
-  setCurrentGroup( TQString::tqfromLatin1( "Foo" ) );
+  setCurrentGroup( TQString::fromLatin1( "Foo" ) );
 
   KConfigSkeleton::ItemColor  *itemColor;
-  itemColor = new KConfigSkeleton::ItemColor( currentGroup(), TQString::tqfromLatin1( "color #%1" ).arg( mParamNumber ), mColor, TQColor( "red" ) );
-  addItem( itemColor, TQString::tqfromLatin1( "Color" ) );
+  itemColor = new KConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #%1" ).arg( mParamNumber ), mColor, TQColor( "red" ) );
+  addItem( itemColor, TQString::fromLatin1( "Color" ) );
 
-  setCurrentGroup( TQString::tqfromLatin1( "Bar%1" ).arg( mParamNumber ) );
+  setCurrentGroup( TQString::fromLatin1( "Bar%1" ).arg( mParamNumber ) );
 
   KConfigSkeleton::ItemString  *itemFooBar;
-  itemFooBar = new KConfigSkeleton::ItemString( currentGroup(), TQString::tqfromLatin1( "foo bar" ), mFooBar );
-  addItem( itemFooBar, TQString::tqfromLatin1( "FooBar" ) );
+  itemFooBar = new KConfigSkeleton::ItemString( currentGroup(), TQString::fromLatin1( "foo bar" ), mFooBar );
+  addItem( itemFooBar, TQString::fromLatin1( "FooBar" ) );
   KConfigSkeleton::ItemInt  *itemAge;
-  itemAge = new KConfigSkeleton::ItemInt( currentGroup(), TQString::tqfromLatin1( "Age" ), mAge, 35 );
+  itemAge = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Age" ), mAge, 35 );
   itemAge->setMinValue(8);
   itemAge->setMaxValue(88);
-  addItem( itemAge, TQString::tqfromLatin1( "Age" ) );
+  addItem( itemAge, TQString::fromLatin1( "Age" ) );
 }
 
 Test6::~Test6()

@@ -46,7 +46,7 @@ void DriverItem::updateText()
 	{
 		QString	s(m_item->get("text"));
 		if (m_item->isOption())
-			s.append(TQString::tqfromLatin1(": <%1>").arg(m_item->prettyText()));
+			s.append(TQString::fromLatin1(": <%1>").arg(m_item->prettyText()));
 		if (m_item->type() == DrBase::List)
 		{
 			// remove all children: something has changed (otherwise this
@@ -107,7 +107,7 @@ void DriverItem::paintCell(TQPainter *p, const TQColorGroup& cg, int, int width,
 		p->drawText(w,0,w1,height(),Qt::AlignLeft|Qt::AlignVCenter,s);
 		w += w1;
 		p->setPen(cg.text());
-		s = TQString::tqfromLatin1(">");
+		s = TQString::fromLatin1(">");
 		w1 = p->fontMetrics().width(s);
 		p->drawText(w,0,w1,height(),Qt::AlignLeft|Qt::AlignVCenter,s);
 	}

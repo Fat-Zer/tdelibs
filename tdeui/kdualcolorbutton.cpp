@@ -152,13 +152,13 @@ void KDualColorButton::paintEvent(TQPaintEvent *)
     TQPainter p(this);
 
     metrics(fgRect, bgRect);
-    TQBrush defBrush = tqcolorGroup().brush(TQColorGroup::Button);
+    TQBrush defBrush = colorGroup().brush(TQColorGroup::Button);
 
-    qDrawShadeRect(&p, bgRect, tqcolorGroup(), curColor == Background, 2, 0,
+    qDrawShadeRect(&p, bgRect, colorGroup(), curColor == Background, 2, 0,
                    isEnabled() ? &bg : &defBrush);
-    qDrawShadeRect(&p, fgRect, tqcolorGroup(), curColor == Foreground, 2, 0,
+    qDrawShadeRect(&p, fgRect, colorGroup(), curColor == Foreground, 2, 0,
                    isEnabled() ? &fg : &defBrush);
-    p.setPen(tqcolorGroup().shadow());
+    p.setPen(colorGroup().shadow());
     p.drawPixmap(fgRect.right()+2, 0, *arrowBitmap);
     p.drawPixmap(0, fgRect.bottom()+2, *resetPixmap);
 

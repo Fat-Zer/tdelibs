@@ -447,7 +447,7 @@ void KBookmark::updateAccessMetadata()
 {
     kdDebug(7043) << "KBookmark::updateAccessMetadata " << address() << " " << url().prettyURL() << endl;
 
-    const uint timet = TQDateTime::tqcurrentDateTime().toTime_t();
+    const uint timet = TQDateTime::currentDateTime().toTime_t();
     setMetaDataItem( "time_added", TQString::number( timet ), DontOverwriteMetaData );
     setMetaDataItem( "time_visited", TQString::number( timet ) );
 

@@ -285,12 +285,12 @@ int KTimezone::offset(Qt::TimeSpec basisSpec) const
     char *originalZone = ::getenv("TZ");
 
     // Get the time in the current timezone.
-    TQDateTime basisTime = TQDateTime::tqcurrentDateTime(basisSpec);
+    TQDateTime basisTime = TQDateTime::currentDateTime(basisSpec);
 
     // Set the timezone and find out what time it is there compared to the basis.
     ::setenv("TZ", m_name.utf8(), 1);
     tzset();
-    TQDateTime remoteTime = TQDateTime::tqcurrentDateTime(Qt::LocalTime);
+    TQDateTime remoteTime = TQDateTime::currentDateTime(Qt::LocalTime);
     int offset = remoteTime.secsTo(basisTime);
 
     // Now restore things

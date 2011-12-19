@@ -947,7 +947,7 @@ public:
     bool highlight() const;
     TQSize sizeHint() const;
     TQSize minimumSizeHint() const;
-    TQSize tqminimumSize() const;
+    TQSize minimumSize() const;
 
     void hide();
     void show();

@@ -582,14 +582,14 @@ KACLListView::KACLListView( TQWidget* parent, const char* name )
     struct passwd *user = 0;
     setpwent();
     while ( ( user = getpwent() ) != 0 ) {
-       m_allUsers << TQString::tqfromLatin1( user->pw_name );
+       m_allUsers << TQString::fromLatin1( user->pw_name );
     }
     endpwent();
 
     struct group *gr = 0;
     setgrent();
     while ( ( gr = getgrent() ) != 0 ) {
-       m_allGroups << TQString::tqfromLatin1( gr->gr_name );
+       m_allGroups << TQString::fromLatin1( gr->gr_name );
     }
     endgrent();
     m_allUsers.sort();

@@ -2721,7 +2721,7 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
             TQString url = (*it).url;
             it = data.remove( it );
             // assign the same accesskey also to other elements pointing to the same url
-            if( !url.isEmpty() && !url.tqstartsWith( "javascript:", false )) {
+            if( !url.isEmpty() && !url.startsWith( "javascript:", false )) {
                 for( TQValueList< AccessKeyData >::Iterator it2 = data.begin();
                      it2 != data.end();
                      ) {

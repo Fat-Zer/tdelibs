@@ -64,7 +64,7 @@ protected:
         if ( item ) {
             TQString text = static_cast<KURLBarItem*>( item )->toolTip();
             if ( !text.isEmpty() )
-                tip( m_view->tqitemRect( item ), text );
+                tip( m_view->itemRect( item ), text );
         }
     }
 
@@ -188,11 +188,11 @@ void KURLBarItem::paint( TQPainter *p )
     if ( isCurrent() || isSelected() ) {
         int h = height( box );
 
-        TQBrush brush = box->tqcolorGroup().brush( TQColorGroup::Highlight );
+        TQBrush brush = box->colorGroup().brush( TQColorGroup::Highlight );
         p->fillRect( 0, 0, w, h, brush );
         TQPen pen = p->pen();
         TQPen oldPen = pen;
-        pen.setColor( box->tqcolorGroup().mid() );
+        pen.setColor( box->colorGroup().mid() );
         p->setPen( pen );
 
         p->drawPoint( 0, 0 );
@@ -225,10 +225,10 @@ void KURLBarItem::paint( TQPainter *p )
             int xPos = pm->width() + margin + 2;
 
             if ( isCurrent() || isSelected() ) {
-                p->setPen( box->tqcolorGroup().highlight().dark(115) );
+                p->setPen( box->colorGroup().highlight().dark(115) );
                 p->drawText( xPos + ( TQApplication::reverseLayout() ? -1 : 1),
                              yPos + 1, visibleText );
-                p->setPen( box->tqcolorGroup().highlightedText() );
+                p->setPen( box->colorGroup().highlightedText() );
             }
 
             p->drawText( xPos, yPos, visibleText );
@@ -257,10 +257,10 @@ void KURLBarItem::paint( TQPainter *p )
             x = QMAX( x, margin );
 
             if ( isCurrent() || isSelected() ) {
-                p->setPen( box->tqcolorGroup().highlight().dark(115) );
+                p->setPen( box->colorGroup().highlight().dark(115) );
                 p->drawText( x + ( TQApplication::reverseLayout() ? -1 : 1),
                              y + 1, visibleText );
-                p->setPen( box->tqcolorGroup().highlightedText() );
+                p->setPen( box->colorGroup().highlightedText() );
             }
 
             p->drawText( x, y, visibleText );
@@ -844,7 +844,7 @@ KURLBarListBox::~KURLBarListBox()
 void KURLBarListBox::paintEvent( TQPaintEvent* )
 {
     TQPainter p(this);
-    p.setPen( tqcolorGroup().mid() );
+    p.setPen( colorGroup().mid() );
     p.drawRect( 0, 0, width(), height() );
 }
 
@@ -980,7 +980,7 @@ KURLBarItemDialog::KURLBarItemDialog( bool allowGlobal, const KURL& url,
         if ( KGlobal::instance()->aboutData() )
             appName = KGlobal::instance()->aboutData()->programName();
         if ( appName.isEmpty() )
-            appName = TQString::tqfromLatin1( KGlobal::instance()->instanceName() );
+            appName = TQString::fromLatin1( KGlobal::instance()->instanceName() );
         m_appLocal = new TQCheckBox( i18n("&Only show when using this application (%1)").arg( appName ), box );
         m_appLocal->setChecked( appLocal );
         TQWhatsThis::add( m_appLocal,

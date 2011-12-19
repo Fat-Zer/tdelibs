@@ -537,13 +537,13 @@ void KateRenderer::paintTextLine(TQPainter& paint, const KateLineRange* range, i
             if (isIMSel && !isTab)
             {
               // input method selection
-              fillColor = m_view->tqcolorGroup().color(TQColorGroup::Foreground);
+              fillColor = m_view->colorGroup().color(TQColorGroup::Foreground);
             }
             else if (isIMEdit && !isTab)
             {
               // XIM support
               // input method edit area
-              const TQColorGroup& cg = m_view->tqcolorGroup();
+              const TQColorGroup& cg = m_view->colorGroup();
               int h1, s1, v1, h2, s2, v2;
               TQColor(cg.color( TQColorGroup::Base )).hsv( &h1, &s1, &v1 );
               TQColor(cg.color( TQColorGroup::Background )).hsv( &h2, &s2, &v2 );
@@ -576,7 +576,7 @@ void KateRenderer::paintTextLine(TQPainter& paint, const KateLineRange* range, i
             if (isIMSel && paintBackground && !isTab)
             {
               paint.save();
-              paint.setPen( m_view->tqcolorGroup().color( TQColorGroup::BrightText ) );
+              paint.setPen( m_view->colorGroup().color( TQColorGroup::BrightText ) );
             }
 
             // Draw indentation markers.

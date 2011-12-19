@@ -327,7 +327,7 @@ void CSSStyleSelector::loadDefaultStyle(const KHTMLSettings *s, DocumentImpl *do
 	if ( readbytes >= 0 )
 	    file[readbytes] = '\0';
 
-	TQString style = TQString::tqfromLatin1( file.data() );
+	TQString style = TQString::fromLatin1( file.data() );
 	if(s)
 	    style += s->settingsToCSS();
 	DOMString str(style);
@@ -352,7 +352,7 @@ void CSSStyleSelector::loadDefaultStyle(const KHTMLSettings *s, DocumentImpl *do
 	if ( readbytes >= 0 )
 	    file[readbytes] = '\0';
 
-	TQString style = TQString::tqfromLatin1( file.data() );
+	TQString style = TQString::fromLatin1( file.data() );
 	DOMString str(style);
 
 	s_quirksSheet = new DOM::CSSStyleSheetImpl(doc);
@@ -1196,14 +1196,14 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             //kdDebug( 6080 ) << "checking for beginswith match" << endl;
             TQConstString val_str(value->tqunicode(), value->length());
             TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
-            return val_str.string().tqstartsWith(sel_str.string(), caseSensitive);
+            return val_str.string().startsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::End:
         {
             //kdDebug( 6080 ) << "checking for endswith match" << endl;
             TQConstString val_str(value->tqunicode(), value->length());
             TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
-            return val_str.string().tqendsWith(sel_str.string(), caseSensitive);
+            return val_str.string().endsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Hyphen:
         {

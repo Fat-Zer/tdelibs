@@ -50,8 +50,8 @@ bool ApsHandler::validate(PrintcapEntry *entry)
 
 KMPrinter* ApsHandler::createPrinter(PrintcapEntry *entry)
 {
-	entry->comment = TQString::tqfromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
-	entry->postcomment = TQString::tqfromLatin1("# APS%1_END - don't delete this").arg(m_counter);
+	entry->comment = TQString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
+	entry->postcomment = TQString::fromLatin1("# APS%1_END - don't delete this").arg(m_counter);
 	m_counter++;
 	return LprHandler::createPrinter(entry);
 }
@@ -309,8 +309,8 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 	entry->addField("af", Field::String, sd + "/acct");
 	entry->addField("lf", Field::String, sd + "/log");
 	entry->addField("if", Field::String, sysconfDir() + "/basedir/bin/apsfilter");
-	entry->comment = TQString::tqfromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
-	entry->postcomment = TQString::tqfromLatin1("# APS%1_END").arg(m_counter);
+	entry->comment = TQString::fromLatin1("# APS%1_BEGIN:printer%2").arg(m_counter).arg(m_counter);
+	entry->postcomment = TQString::fromLatin1("# APS%1_END").arg(m_counter);
 	m_counter++;
 	return entry;
 }

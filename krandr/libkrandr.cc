@@ -82,7 +82,7 @@ TQString KRandrSimpleAPI::getIccFileName(TQString profileName, TQString screenNa
 	TQString retval;
 
 	if (profileName != NULL) {
-		t_config = new KSimpleConfig( TQString::tqfromLatin1( "kiccconfigrc" ));
+		t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
 	}
 	else {
 		t_systemconfig = new KSimpleConfig( kde_confdir + TQString("/kicc/kiccconfigrc") );
@@ -268,7 +268,7 @@ TQString KRandrSimpleAPI::applyIccConfiguration(TQString profileName, TQString k
 	int screenNumber = 0;
 	TQString errorstr = "";
 
-	t_config = new KSimpleConfig( TQString::tqfromLatin1( "kiccconfigrc" ));
+	t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
 
 	// Find all screens
 	if (isValid() == true) {
@@ -372,7 +372,7 @@ TQString KRandrSimpleAPI::getCurrentProfile () {
 	TQString profileName;
 	KSimpleConfig *t_config;
 
-	t_config = new KSimpleConfig( TQString::tqfromLatin1( "kiccconfigrc" ));
+	t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
 	profileName = t_config->readEntry("CurrentProfile");
 	delete t_config;
 	return profileName;

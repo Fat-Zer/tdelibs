@@ -61,7 +61,7 @@ void KConfigCompiler_Test::testExpectedOutput()
 	// Known to pass test cases
 	while (testCases[ i ])
 	{
-		performCompare(TQString::tqfromLatin1(testCases[ i ]));
+		performCompare(TQString::fromLatin1(testCases[ i ]));
 		++i;
 	}
 
@@ -69,7 +69,7 @@ void KConfigCompiler_Test::testExpectedOutput()
 	i= 0;
 	while (willFailCases[ i ])
 	{
-		performCompare(TQString::tqfromLatin1(willFailCases[ i ]), true);
+		performCompare(TQString::fromLatin1(willFailCases[ i ]), true);
 		++i;
 	}
 }
@@ -77,7 +77,7 @@ void KConfigCompiler_Test::testExpectedOutput()
 void KConfigCompiler_Test::performCompare(const TQString &fileName, bool fail)
 {
 	TQFile file(fileName);
-	TQFile fileRef(TQString::tqfromLatin1(SRCDIR) + TQString::tqfromLatin1("/") + fileName + TQString::tqfromLatin1(".ref"));
+	TQFile fileRef(TQString::fromLatin1(SRCDIR) + TQString::fromLatin1("/") + fileName + TQString::fromLatin1(".ref"));
 	
 	if ( file.open(IO_ReadOnly) && fileRef.open(IO_ReadOnly) )
 	{

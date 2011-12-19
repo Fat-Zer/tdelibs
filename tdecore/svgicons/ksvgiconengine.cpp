@@ -201,7 +201,7 @@ public:
 		// Combine new and old matrix
 		TQWMatrix matrix = m_engine->painter()->parseTransform(transform);
 
-		TQWMatrix *current = m_engine->painter()->tqworldMatrix();
+		TQWMatrix *current = m_engine->painter()->worldMatrix();
 #ifdef USE_QT4
 printf("[FIXME] *current = matrix * *current locks up under Qt4; bypassing for now\n\r");
 #else // USE_QT4
@@ -628,7 +628,7 @@ bool KSVGIconEngine::load(int width, int height, const TQString &path)
 		d->width = w;
 		d->height = h;
 
-		d->painter->tqworldMatrix()->scale(vratiow, vratioh);
+		d->painter->worldMatrix()->scale(vratiow, vratioh);
 	}
 	else
 	{
@@ -637,10 +637,10 @@ bool KSVGIconEngine::load(int width, int height, const TQString &path)
 		double ratiow = width / d->width;
 		double ratioh = height / d->height;
 
-		d->painter->tqworldMatrix()->scale(ratiow, ratioh);
+		d->painter->worldMatrix()->scale(ratiow, ratioh);
 	}
 
-	TQWMatrix initialMatrix = *d->painter->tqworldMatrix();
+	TQWMatrix initialMatrix = *d->painter->worldMatrix();
 	d->helper->m_initialMatrix = initialMatrix;
 
 	// Apply transform

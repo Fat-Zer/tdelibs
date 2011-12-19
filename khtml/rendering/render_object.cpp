@@ -1164,15 +1164,15 @@ TQString RenderObject::information() const
        << " mB: " << marginBottom() << " qB: " << isBottomMarginQuirk()
        << "}"
         << (isTableCell() ?
-            ( TQString::tqfromLatin1(" [r=") +
+            ( TQString::fromLatin1(" [r=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->row() ) +
-              TQString::tqfromLatin1(" c=") +
+              TQString::fromLatin1(" c=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->col() ) +
-              TQString::tqfromLatin1(" rs=") +
+              TQString::fromLatin1(" rs=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->rowSpan() ) +
-              TQString::tqfromLatin1(" cs=") +
+              TQString::fromLatin1(" cs=") +
               TQString::number( static_cast<const RenderTableCell *>(this)->colSpan() ) +
-              TQString::tqfromLatin1("]") ) : TQString::null );
+              TQString::fromLatin1("]") ) : TQString::null );
     if ( layer() )
         ts << " layer=" << layer();
     if ( continuation() )

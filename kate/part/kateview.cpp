@@ -793,7 +793,7 @@ void KateView::contextMenuEvent( TQContextMenuEvent *ev )
   if ( !m_doc || !m_doc->browserExtension()  )
     return;
   emit m_doc->browserExtension()->popupMenu( /*this, */ev->globalPos(), m_doc->url(),
-                                        TQString::tqfromLatin1( "text/plain" ) );
+                                        TQString::fromLatin1( "text/plain" ) );
   ev->accept();
 }
 

@@ -432,19 +432,19 @@ KRuler::setRulerMetricStyle(KRuler::MetricStyle style)
   }
   switch (style) {
   case Pixel:
-    setEndLabel(TQString::tqfromLatin1("pixel"));
+    setEndLabel(TQString::fromLatin1("pixel"));
     break;
   case Inch:
-    setEndLabel(TQString::tqfromLatin1("inch"));
+    setEndLabel(TQString::fromLatin1("inch"));
     break;
   case Millimetres:
-    setEndLabel(TQString::tqfromLatin1("mm"));
+    setEndLabel(TQString::fromLatin1("mm"));
     break;
   case Centimetres:
-    setEndLabel(TQString::tqfromLatin1("cm"));
+    setEndLabel(TQString::fromLatin1("cm"));
     break;
   case Metres:
-    setEndLabel(TQString::tqfromLatin1("m"));
+    setEndLabel(TQString::fromLatin1("m"));
   default: /* never reached, see above switch */
     /* empty command */;
   }

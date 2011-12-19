@@ -65,7 +65,7 @@ void KPlayObject::halt()
 
 TQString KPlayObject::description()
 {
-	return TQString::tqfromLatin1(object().description().c_str());
+	return TQString::fromLatin1(object().description().c_str());
 }
 
 Arts::poTime KPlayObject::currentTime()
@@ -85,7 +85,7 @@ Arts::poCapabilities KPlayObject::capabilities()
 
 TQString KPlayObject::mediaName()
 {
-	return TQString::tqfromLatin1(object().mediaName().c_str());
+	return TQString::fromLatin1(object().mediaName().c_str());
 }
 
 Arts::poState KPlayObject::state()
@@ -243,7 +243,7 @@ TQString KDE::PlayObject::description()
 {
 	if ( object().isNull() )
 		return TQString();
-	return TQString::tqfromLatin1(object().description().c_str());
+	return TQString::fromLatin1(object().description().c_str());
 }
 
 Arts::poTime KDE::PlayObject::currentTime()
@@ -271,7 +271,7 @@ TQString KDE::PlayObject::mediaName()
 {
 	if ( object().isNull() )
 		return TQString();
-	return TQString::tqfromLatin1(object().mediaName().c_str());
+	return TQString::fromLatin1(object().mediaName().c_str());
 }
 
 Arts::poState KDE::PlayObject::state()

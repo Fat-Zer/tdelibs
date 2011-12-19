@@ -378,7 +378,7 @@ const char *KEditToolbar::s_defaultToolbar = 0L;
 KEditToolbar::KEditToolbar(KActionCollection *collection, const TQString& file,
                            bool global, TQWidget* parent, const char* name)
   : KDialogBase(Swallow, i18n("Configure Toolbars"), Default|Ok|Apply|Cancel, Ok, parent, name),
-    m_widget(new KEditToolbarWidget(TQString::tqfromLatin1(s_defaultToolbar), collection, file, global, this))
+    m_widget(new KEditToolbarWidget(TQString::fromLatin1(s_defaultToolbar), collection, file, global, this))
 {
     init();
     d->m_global = global;
@@ -400,7 +400,7 @@ KEditToolbar::KEditToolbar(const TQString& defaultToolbar, KActionCollection *co
 
 KEditToolbar::KEditToolbar(KXMLGUIFactory* factory, TQWidget* parent, const char* name)
     : KDialogBase(Swallow, i18n("Configure Toolbars"), Default|Ok|Apply|Cancel, Ok, parent, name),
-      m_widget(new KEditToolbarWidget(TQString::tqfromLatin1(s_defaultToolbar), factory, this))
+      m_widget(new KEditToolbarWidget(TQString::fromLatin1(s_defaultToolbar), factory, this))
 {
     init();
     d->m_factory = factory;
@@ -467,7 +467,7 @@ void KEditToolbar::slotDefault()
             if (TQDir::isRelativePath(file))
             {
                 const KInstance *instance = client->instance() ? client->instance() : KGlobal::instance();
-                file = locateLocal("data", TQString::tqfromLatin1( instance->instanceName() + '/' ) + file);
+                file = locateLocal("data", TQString::fromLatin1( instance->instanceName() + '/' ) + file);
             }
             else
             {
@@ -488,7 +488,7 @@ void KEditToolbar::slotDefault()
         int slash = d->m_file.findRev('/')+1;
         if (slash)
             d->m_file = d->m_file.mid(slash);
-        TQString xml_file = locateLocal("data", TQString::tqfromLatin1( KGlobal::instance()->instanceName() + '/' ) + d->m_file);
+        TQString xml_file = locateLocal("data", TQString::fromLatin1( KGlobal::instance()->instanceName() + '/' ) + d->m_file);
 
         if ( TQFile::exists( xml_file ) )
             if ( !TQFile::remove( xml_file ) )
@@ -816,7 +816,7 @@ void KEditToolbarWidget::setupLayout()
 
   // "change icon" button
   d->m_changeIcon = new KPushButton( i18n( "Change &Icon..." ), this );
-  TQString kdialogExe = KStandardDirs::findExe(TQString::tqfromLatin1("kdialog"));
+  TQString kdialogExe = KStandardDirs::findExe(TQString::fromLatin1("kdialog"));
   d->m_hasKDialog = !kdialogExe.isEmpty();
   d->m_changeIcon->setEnabled( d->m_hasKDialog );
 
@@ -975,7 +975,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
     if (it.tagName() == tagSeparator)
     {
       ToolbarItem *act = new ToolbarItem(m_activeList, tagSeparator, sep_name.arg(sep_num++), TQString::null);
-      bool isLineSep = ( it.attribute(attrLineSeparator, "true").lower() == TQString::tqfromLatin1("true") );
+      bool isLineSep = ( it.attribute(attrLineSeparator, "true").lower() == TQString::fromLatin1("true") );
       if(isLineSep)
         act->setText(1, LINESEPARATORSTRING);
       else
@@ -1382,10 +1382,10 @@ void KEditToolbarWidget::slotChangeIcon()
         return;
   
   d->m_kdialogProcess = new KProcIO;
-  TQString kdialogExe = KStandardDirs::findExe(TQString::tqfromLatin1("kdialog"));
+  TQString kdialogExe = KStandardDirs::findExe(TQString::fromLatin1("kdialog"));
   (*d->m_kdialogProcess) << kdialogExe;
   (*d->m_kdialogProcess) << "--embed";
-  (*d->m_kdialogProcess) << TQString::number( (ulong)tqtopLevelWidget()->winId() );
+  (*d->m_kdialogProcess) << TQString::number( (ulong)topLevelWidget()->winId() );
   (*d->m_kdialogProcess) << "--geticon";
   (*d->m_kdialogProcess) << "Toolbar";
   (*d->m_kdialogProcess) << "Actions";

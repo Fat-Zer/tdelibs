@@ -77,19 +77,19 @@ void Test::createFields()
   string+="Used language: ";
   string+=KGlobal::locale()->language()+"\n";
   string+="Locale encoding: ";
-  string+=TQString::tqfromLatin1(KGlobal::locale()->encoding())+"\n";
+  string+=TQString::fromLatin1(KGlobal::locale()->encoding())+"\n";
 
   string+="Localized date and time: ";
-  string+=KGlobal::locale()->formatDateTime(TQDateTime::tqcurrentDateTime());
+  string+=KGlobal::locale()->formatDateTime(TQDateTime::currentDateTime());
   string+="\nLocalized monetary numbers: ";
   string+=KGlobal::locale()->formatMoney(1234567.89) + " / \n" +KGlobal::locale()->formatMoney(-1234567.89);
   // This will not work
   // but you can copy other *.mo file
   string+="\nSome localized strings:\n";
-  string+=TQString::tqfromLatin1("Yes = ")+i18n("Yes")+"\n";
-  string+=TQString::tqfromLatin1("No = ")+i18n("No")+"\n";
-  string+=TQString::tqfromLatin1("Help = ")+i18n("Help")+"\n";
-  string+=TQString::tqfromLatin1("Cancel = ")+i18n("Cancel")+"\n";
+  string+=TQString::fromLatin1("Yes = ")+i18n("Yes")+"\n";
+  string+=TQString::fromLatin1("No = ")+i18n("No")+"\n";
+  string+=TQString::fromLatin1("Help = ")+i18n("Help")+"\n";
+  string+=TQString::fromLatin1("Cancel = ")+i18n("Cancel")+"\n";
 
   label=new TQLabel(string,this,"Label");
   label->setGeometry(10,10,400,400);
@@ -102,9 +102,9 @@ int main( int argc, char ** argv )
   KLocale::setMainCatalogue("tdelibs");
   KApplication a( argc, argv, "klocaletest" );
 
-  KGlobal::locale()->setLanguage(TQString::tqfromLatin1("en_US"));
-  KGlobal::locale()->setCountry(TQString::tqfromLatin1("C"));
-  KGlobal::locale()->setThousandsSeparator(TQString::tqfromLatin1(","));
+  KGlobal::locale()->setLanguage(TQString::fromLatin1("en_US"));
+  KGlobal::locale()->setCountry(TQString::fromLatin1("C"));
+  KGlobal::locale()->setThousandsSeparator(TQString::fromLatin1(","));
 
   TQString formatted;
   formatted = KGlobal::locale()->formatNumber( 70 ); check("formatNumber(70)",formatted,"70.00");
@@ -152,8 +152,8 @@ int main( int argc, char ** argv )
   TQDate date;
   date.setYMD( 2002, 5, 3 );
   checkDate("readDate( 3, 5, 2002 )",date,KGlobal::locale()->readDate( KGlobal::locale()->formatDate( date ) ) );
-  date = TQDate::tqcurrentDate();
-  checkDate("readDate( TQDate::tqcurrentDate() )",date,KGlobal::locale()->readDate( KGlobal::locale()->formatDate( date ) ) );
+  date = TQDate::currentDate();
+  checkDate("readDate( TQDate::currentDate() )",date,KGlobal::locale()->readDate( KGlobal::locale()->formatDate( date ) ) );
 
   TQTime time;
   time = KGlobal::locale()->readTime( "11:22:33", &ok );
@@ -181,11 +181,11 @@ int main( int argc, char ** argv )
   check("formatTime(\"0:22\", as duration)", timeStr, "00:22" );
 
   kdDebug() << "setLanguage C\n";
-  KGlobal::locale()->setLanguage(TQString::tqfromLatin1("C"));
+  KGlobal::locale()->setLanguage(TQString::fromLatin1("C"));
   kdDebug() << "C: " << i18n("yes") << " " << i18n(TQACCEL_OBJECT_NAME_STRING, "Space") << endl;
 
   kdDebug() << "setLanguage de\n";
-  KGlobal::locale()->setLanguage(TQString::tqfromLatin1("de"));
+  KGlobal::locale()->setLanguage(TQString::fromLatin1("de"));
   kdDebug() << "de: " << i18n("yes") << " " << i18n(TQACCEL_OBJECT_NAME_STRING, "Space") << endl;
 
 

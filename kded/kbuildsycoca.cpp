@@ -160,12 +160,12 @@ void KBuildSycoca::processGnomeVfs()
 
       if (line[0] != '\t')
       {
-          app = TQString::tqfromLatin1(line);
+          app = TQString::fromLatin1(line);
           app.truncate(app.length()-1);
       }
       else if (strncmp(line+1, "mime_types=", 11) == 0)
       {
-          TQString mimetypes = TQString::tqfromLatin1(line+12);
+          TQString mimetypes = TQString::fromLatin1(line+12);
           mimetypes.truncate(mimetypes.length()-1);
           mimetypes.replace(TQRegExp("\\*"), "all");
           KService *s = g_bsf->findServiceByName(app);

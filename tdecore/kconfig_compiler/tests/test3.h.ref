@@ -20,7 +20,7 @@ class Test3 : public KConfigSkeleton
     */
     void setAutoSave( bool v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "AutoSave" ) ))
+      if (!isImmutable( TQString::fromLatin1( "AutoSave" ) ))
         mAutoSave = v;
     }
 
@@ -45,7 +45,7 @@ class Test3 : public KConfigSkeleton
     */
     void setBlubb( int v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "Blubb" ) ))
+      if (!isImmutable( TQString::fromLatin1( "Blubb" ) ))
         mBlubb = v;
     }
 
@@ -70,7 +70,7 @@ class Test3 : public KConfigSkeleton
     */
     void setBlahBlah( const TQString & v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "BlahBlah" ) ))
+      if (!isImmutable( TQString::fromLatin1( "BlahBlah" ) ))
         mBlahBlah = v;
     }
 
@@ -95,7 +95,7 @@ class Test3 : public KConfigSkeleton
     */
     void setMyPassword( const TQString & v )
     {
-      if (!isImmutable( TQString::tqfromLatin1( "MyPassword" ) ))
+      if (!isImmutable( TQString::fromLatin1( "MyPassword" ) ))
         mMyPassword = v;
     }
 

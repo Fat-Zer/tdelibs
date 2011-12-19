@@ -810,7 +810,7 @@ void KAction::unplugAccel()
 
 void KAction::plugMainWindowAccel( TQWidget *w )
 {
-  // Note: tqtopLevelWidget() stops too early, we can't use it.
+  // Note: topLevelWidget() stops too early, we can't use it.
   TQWidget * tl = w;
   TQWidget * n;
   while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
@@ -1039,7 +1039,7 @@ TQString KAction::whatsThisWithIcon() const
 {
     TQString text = whatsThis();
     if (!d->iconName().isEmpty())
-      return TQString::tqfromLatin1("<img source=\"small|%1\"> %2").arg(d->iconName() ).arg(text);
+      return TQString::fromLatin1("<img source=\"small|%1\"> %2").arg(d->iconName() ).arg(text);
     return text;
 }
 

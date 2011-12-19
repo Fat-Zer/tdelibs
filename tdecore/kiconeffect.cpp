@@ -153,8 +153,8 @@ TQString KIconEffect::fingerprint(int group, int state) const
         cached += ':';
         cached += tmp.setNum(mValue[group][state]);
         cached += ':';
-        cached += mTrans[group][state] ? TQString::tqfromLatin1("trans")
-            : TQString::tqfromLatin1("notrans");
+        cached += mTrans[group][state] ? TQString::fromLatin1("trans")
+            : TQString::fromLatin1("notrans");
         if (mEffect[group][state] == Colorize || mEffect[group][state] == ToMonochrome)
         {
             cached += ':';

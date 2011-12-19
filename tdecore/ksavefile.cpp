@@ -55,7 +55,7 @@ KSaveFile::KSaveFile(const TQString &filename, int mode)
       return;
    }
 
-   if (mTempFile.create(real_filename, TQString::tqfromLatin1(".new"), mode))
+   if (mTempFile.create(real_filename, TQString::fromLatin1(".new"), mode))
    {
       mFileName = real_filename; // Set filename upon success
 

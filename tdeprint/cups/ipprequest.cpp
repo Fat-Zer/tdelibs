@@ -66,7 +66,7 @@ void dumpRequest(ipp_t *req, bool answer = false, const TQString& s = TQString::
 	ipp_attribute_t *attr = req->attrs;
 	while (attr)
 	{
-		TQString s = TQString::tqfromLatin1("%1 (0x%2) = ").arg(attr->name).arg(attr->value_tag, 0, 16);
+		TQString s = TQString::fromLatin1("%1 (0x%2) = ").arg(attr->name).arg(attr->value_tag, 0, 16);
 		for (int i=0;i<attr->num_values;i++)
 		{
 			switch (attr->value_tag)

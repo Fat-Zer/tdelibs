@@ -27,7 +27,7 @@
 
 
 KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
-  :KAboutDialog( KAboutDialog::AbtKDEStandard, TQString::tqfromLatin1("TDE"),
+  :KAboutDialog( KAboutDialog::AbtKDEStandard, TQString::fromLatin1("TDE"),
 		 KDialogBase::Help|KDialogBase::Close, KDialogBase::Close,
 		 parent, name, modal )
 {
@@ -75,13 +75,13 @@ KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
     "donation, using one of the ways described at "
     "<a href=\"http://www.trinitydesktop.org/donate.php\">http://www.trinitydesktop.org/donate.php</a>."
     "<br><br>Thank you very much in advance for your support!");
-  setHelp( TQString::tqfromLatin1("khelpcenter/main.html"), TQString::null );
+  setHelp( TQString::fromLatin1("khelpcenter/main.html"), TQString::null );
   setTitle(i18n("Trinity Desktop Environment. Release %1").
-	   arg(TQString::tqfromLatin1(TDE_VERSION_STRING)) );
+	   arg(TQString::fromLatin1(TDE_VERSION_STRING)) );
   addTextPage( i18n("About Trinity","&About"), text1, true );
   addTextPage( i18n("&Report Bugs or Wishes"), text2, true );
   addTextPage( i18n("&Join the Trinity Team"), text3, true );
   addTextPage( i18n("&Support Trinity"), text4, true );
-  setImage( locate( "data", TQString::tqfromLatin1("tdeui/pics/aboutkde.png")) );
+  setImage( locate( "data", TQString::fromLatin1("tdeui/pics/aboutkde.png")) );
   setImageBackgroundColor( white );
 }

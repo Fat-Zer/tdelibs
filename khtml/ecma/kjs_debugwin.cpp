@@ -690,7 +690,7 @@ bool KJSDebugWin::eventFilter(TQObject *o, TQEvent *e)
 
 void KJSDebugWin::disableOtherWindows()
 {
-  TQWidgetList *widgets = TQApplication::tqallWidgets();
+  TQWidgetList *widgets = TQApplication::allWidgets();
   TQWidgetListIt it(*widgets);
   for (; it.current(); ++it)
     it.current()->installEventFilter(this);
@@ -698,7 +698,7 @@ void KJSDebugWin::disableOtherWindows()
 
 void KJSDebugWin::enableOtherWindows()
 {
-  TQWidgetList *widgets = TQApplication::tqallWidgets();
+  TQWidgetList *widgets = TQApplication::allWidgets();
   TQWidgetListIt it(*widgets);
   for (; it.current(); ++it)
     it.current()->removeEventFilter(this);
@@ -861,7 +861,7 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
 
   if (dontShowAgain) {
     KConfig *config = kapp->config();
-    KConfigGroupSaver saver(config,TQString::tqfromLatin1("Java/JavaScript Settings"));
+    KConfigGroupSaver saver(config,TQString::fromLatin1("Java/JavaScript Settings"));
     config->writeEntry("ReportJavaScriptErrors",TQVariant(false,0));
     config->sync();
     TQByteArray data;

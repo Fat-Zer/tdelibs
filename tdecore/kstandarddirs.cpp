@@ -159,7 +159,7 @@ TQStringList KStandardDirs::allTypes() const
 {
     TQStringList list;
     for (int i = 0; types[i] != 0; ++i)
-        list.append(TQString::tqfromLatin1(types[i]));
+        list.append(TQString::fromLatin1(types[i]));
     return list;
 }
 
@@ -762,9 +762,9 @@ void KStandardDirs::createSpecialResource(const char *type)
 #else //UNIX
    if (relink)
    {
-      TQString srv = findExe(TQString::tqfromLatin1("lnusertemp"), kfsstnd_defaultbindir());
+      TQString srv = findExe(TQString::fromLatin1("lnusertemp"), kfsstnd_defaultbindir());
       if (srv.isEmpty())
-         srv = findExe(TQString::tqfromLatin1("lnusertemp"));
+         srv = findExe(TQString::fromLatin1("lnusertemp"));
       if (!srv.isEmpty())
       {
          system(TQFile::encodeName(srv)+" "+type);
@@ -1272,11 +1272,11 @@ TQString KStandardDirs::kfsstnd_defaultbindir()
    if (!s->defaultbindir.isEmpty())
       return s->defaultbindir;
 #ifdef Q_WS_WIN
-   s->defaultbindir = kfsstnd_defaultprefix() + TQString::tqfromLatin1("/bin");
+   s->defaultbindir = kfsstnd_defaultprefix() + TQString::fromLatin1("/bin");
 #else //UNIX
    s->defaultbindir = __KDE_BINDIR;
    if (s->defaultbindir.isEmpty())
-      s->defaultbindir = kfsstnd_defaultprefix() + TQString::tqfromLatin1("/bin");
+      s->defaultbindir = kfsstnd_defaultprefix() + TQString::fromLatin1("/bin");
 #endif
    if (s->defaultbindir.isEmpty())
       kdWarning() << "KStandardDirs::kfsstnd_defaultbindir(): default binary KDE dir not found!" << endl;
@@ -1543,7 +1543,7 @@ bool KStandardDirs::addCustomized(KConfig *config)
         addedCustoms = true;
 
         // reading the prefixes in
-        TQString group = TQString::tqfromLatin1("Directories");
+        TQString group = TQString::fromLatin1("Directories");
         config->setGroup(group);
 
         TQString kioskAdmin = config->readEntry("kioskAdmin");
@@ -1623,7 +1623,7 @@ bool KStandardDirs::addCustomized(KConfig *config)
             if (profiles.isEmpty())
                 break;
             profile = profiles.back();
-            group = TQString::tqfromLatin1("Directories-%1").arg(profile);
+            group = TQString::fromLatin1("Directories-%1").arg(profile);
             profiles.pop_back();
             priority = true;
         }

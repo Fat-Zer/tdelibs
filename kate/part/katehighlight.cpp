@@ -958,7 +958,7 @@ int KateHlRegExpr::checkHgl(const TQString& text, int offset, int /*len*/)
 
 TQStringList *KateHlRegExpr::capturedTexts()
 {
-  return new TQStringList(Expr->tqcapturedTexts());
+  return new TQStringList(Expr->capturedTexts());
 }
 
 KateHlItem *KateHlRegExpr::clone(const TQStringList *args)

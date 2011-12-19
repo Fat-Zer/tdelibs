@@ -120,10 +120,10 @@ bool	qt_try_modal( TQWidget *, XEvent * );
 
 bool KAccelEventHandler::x11Event( XEvent* pEvent )
 {
-	if( TQWidget::keyboardGrabber() || !kapp->tqfocusWidget() )
+	if( TQWidget::keyboardGrabber() || !kapp->focusWidget() )
 		return false;
 
-	if ( !qt_try_modal(kapp->tqfocusWidget(), pEvent) )
+	if ( !qt_try_modal(kapp->focusWidget(), pEvent) )
 	        return false;
 
 	if( pEvent->type == XKeyPress ) {
@@ -144,7 +144,7 @@ bool KAccelEventHandler::x11Event( XEvent* pEvent )
 		ke.ignore();
 
 		g_bAccelActivated = false;
-		kapp->sendEvent( kapp->tqfocusWidget(), &ke );
+		kapp->sendEvent( kapp->focusWidget(), &ke );
 
 		// If the Override event was accepted from a non-KAccel widget,
 		//  then kill the next AccelOverride in KApplication::notify.

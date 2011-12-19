@@ -477,7 +477,7 @@ TQStringList KCharsets::availableEncodingNames()
     TQStringList available;
     for ( const char* const* pos = charsets_for_encoding; *pos; ++pos ) {
         //kdDebug(0) << *charsets << " available" << endl;
-        available.append( TQString::tqfromLatin1( *pos ));
+        available.append( TQString::fromLatin1( *pos ));
     }
     return available;
 }
@@ -511,7 +511,7 @@ TQStringList KCharsets::descriptiveEncodingNames()
     // As we are sorting, we can directly read the array language_for_encoding
     TQStringList encodings;
     for ( const LanguageForEncoding* pos = language_for_encoding; pos->index; ++pos ) {
-        const TQString name = TQString::tqfromLatin1( pos->index );
+        const TQString name = TQString::fromLatin1( pos->index );
         const TQString description = i18n( language_names[ pos->data ] );
         encodings.append( i18n("Descriptive Encoding Name", "%1 ( %2 )"). arg ( description ). arg( name ) );
     }
@@ -573,7 +573,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
     TQString dir;
     {
     KConfigGroupSaver cfgsav( KGlobal::config(), "i18n" );
-    dir = KGlobal::config()->readPathEntry("i18ndir", TQString::tqfromLatin1("/usr/share/i18n/charmaps"));
+    dir = KGlobal::config()->readPathEntry("i18ndir", TQString::fromLatin1("/usr/share/i18n/charmaps"));
     }
 
     // these are codecs not included in Qt. They can be build up if the corresponding charmap
@@ -584,7 +584,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
         cname = name;
     cname = cname.upper();
 
-    const TQString basicName = TQString::tqfromLatin1(cname);
+    const TQString basicName = TQString::fromLatin1(cname);
     kdDebug() << k_funcinfo << endl << " Trying to find " << cname << " in " << dir << endl;
     
     TQString charMapFileName;

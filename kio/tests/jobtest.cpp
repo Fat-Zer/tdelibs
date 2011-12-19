@@ -532,7 +532,7 @@ void JobTest::slotEntries( KIO::Job*, const KIO::UDSEntryList& lst )
 
 void JobTest::copyFileToSystem()
 {
-    if ( !KProtocolInfo::isKnownProtocol( TQString::tqfromLatin1( "system" ) ) ) {
+    if ( !KProtocolInfo::isKnownProtocol( TQString::fromLatin1( "system" ) ) ) {
         kdDebug() << k_funcinfo << "no kio_system, skipping test" << endl;
         return;
     }

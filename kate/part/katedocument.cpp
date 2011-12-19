@@ -2316,7 +2316,7 @@ bool KateDocument::openURL( const KURL &url )
       w = m_views.first();
 
     if (w)
-      m_job->setWindow (w->tqtopLevelWidget());
+      m_job->setWindow (w->topLevelWidget());
 
     emit started( m_job );
 
@@ -3195,7 +3195,7 @@ void KateDocument::backspace( KateView *view, const KateTextCursor& c )
       if (!textLine)
         return;
 
-      if (config()->wordWrap() && textLine->endingWith(TQString::tqfromLatin1(" ")))
+      if (config()->wordWrap() && textLine->endingWith(TQString::fromLatin1(" ")))
       {
         // gg: in hard wordwrap mode, backspace must also eat the trailing space
         removeText (line-1, textLine->length()-1, line, 0);

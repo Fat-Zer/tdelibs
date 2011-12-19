@@ -748,7 +748,7 @@ void KateCSmartIndent::processChar(TQChar c)
 
   if (c == 'n')
   {
-    if (firstChar != '#' || textLine->string(curCol-5, 5) != TQString::tqfromLatin1("regio"))
+    if (firstChar != '#' || textLine->string(curCol-5, 5) != TQString::fromLatin1("regio"))
       return;
   }
 
@@ -1917,8 +1917,8 @@ TQString KateCSAndSIndent::calcIndent (const KateDocCursor &begin)
   // if the line starts with # (but isn't a c# region thingy), no indentation at all.
   if( currLineFirst >= 0 && currLine->getChar(currLineFirst) == '#' )
   {
-    if( !currLine->stringAtPos( currLineFirst+1, TQString::tqfromLatin1("region") ) &&
-        !currLine->stringAtPos( currLineFirst+1, TQString::tqfromLatin1("endregion") ) )
+    if( !currLine->stringAtPos( currLineFirst+1, TQString::fromLatin1("region") ) &&
+        !currLine->stringAtPos( currLineFirst+1, TQString::fromLatin1("endregion") ) )
       return TQString::null;
   }
 
@@ -1974,10 +1974,10 @@ TQString KateCSAndSIndent::calcIndent (const KateDocCursor &begin)
       {
         #define ARRLEN( array ) ( sizeof(array)/sizeof(array[0]) )
         for( uint n = 0; n < ARRLEN(scopeKeywords); ++n )
-          if( textLine->stringAtPos(pos, TQString::tqfromLatin1(scopeKeywords[n]) ) )
+          if( textLine->stringAtPos(pos, TQString::fromLatin1(scopeKeywords[n]) ) )
             return calcIndentAfterKeyword( begin, cur, pos, false );
         for( uint n = 0; n < ARRLEN(blockScopeKeywords); ++n )
-          if( textLine->stringAtPos(pos, TQString::tqfromLatin1(blockScopeKeywords[n]) ) )
+          if( textLine->stringAtPos(pos, TQString::fromLatin1(blockScopeKeywords[n]) ) )
             return calcIndentAfterKeyword( begin, cur, pos, true );
         #undef ARRLEN
       }
@@ -2070,7 +2070,7 @@ TQString KateCSAndSIndent::calcIndentInBrace(const KateDocCursor &indentCursor, 
   //        beginning 'namespace'. that's 99% of usage, I'd guess.
   {
     if( braceFirst >= 0 && braceLine->attribute(braceFirst) == keywordAttrib &&
-        braceLine->stringAtPos( braceFirst, TQString::tqfromLatin1( "namespace" ) ) )
+        braceLine->stringAtPos( braceFirst, TQString::fromLatin1( "namespace" ) ) )
       return continuationIndent(indentCursor) + whitespaceToOpenBrace;
 
     if( braceCursor.line() > 0 )
@@ -2078,7 +2078,7 @@ TQString KateCSAndSIndent::calcIndentInBrace(const KateDocCursor &indentCursor, 
       KateTextLine::Ptr prevLine = doc->plainKateTextLine(braceCursor.line() - 1);
       int firstPrev = prevLine->firstChar();
       if( firstPrev >= 0 && prevLine->attribute(firstPrev) == keywordAttrib &&
-          prevLine->stringAtPos( firstPrev, TQString::tqfromLatin1( "namespace" ) ) )
+          prevLine->stringAtPos( firstPrev, TQString::fromLatin1( "namespace" ) ) )
         return continuationIndent(indentCursor) + whitespaceToOpenBrace;
     }
   }

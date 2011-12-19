@@ -106,7 +106,7 @@ void PosterPreview::drawContents( TQPainter *painter )
 	TQPixmap pix( width(), height() );
 	TQPainter *p = new TQPainter( &pix );
 
-	p->fillRect( 0, 0, width(), height(), tqcolorGroup().background() );
+	p->fillRect( 0, 0, width(), height(), colorGroup().background() );
 
 	if ( isEnabled() )
 	{
@@ -120,7 +120,7 @@ void PosterPreview::drawContents( TQPainter *painter )
 			int x = ( width()-richtext.widthUsed() )/2, y = ( height()-richtext.height() )/2;
 			x = QMAX( x, 0 );
 			y = QMAX( y, 0 );
-			richtext.draw( p, x, y, TQRect( x, y, richtext.widthUsed(), richtext.height() ), tqcolorGroup() );
+			richtext.draw( p, x, y, TQRect( x, y, richtext.widthUsed(), richtext.height() ), colorGroup() );
 			m_boundingrect = TQRect();
 		}
 		else

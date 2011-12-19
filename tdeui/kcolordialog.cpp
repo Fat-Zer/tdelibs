@@ -376,7 +376,7 @@ void KColorCells::paintCell( TQPainter *painter, int row, int col )
 	if (shade)
         {
 		qDrawShadePanel( painter, 1, 1, cellWidth()-2,
-		    cellHeight()-2, tqcolorGroup(), true, 1, &brush );
+		    cellHeight()-2, colorGroup(), true, 1, &brush );
 		w = 2;
         }
         TQColor color = colors[ row * numCols() + col ];
@@ -1143,7 +1143,7 @@ KColorDialog::KColorDialog( TQWidget *parent, const char *name, bool modal )
   d->htmlName = new KLineEdit( page );
   d->htmlName->setMaxLength( 13 ); // Qt's TQColor allows 12 hexa-digits
   d->htmlName->setText("#FFFFFF"); // But HTML uses only 6, so do not worry about the size
-  w = d->htmlName->fontMetrics().width(TQString::tqfromLatin1("#DDDDDDD"));
+  w = d->htmlName->fontMetrics().width(TQString::fromLatin1("#DDDDDDD"));
   d->htmlName->setFixedWidth(w);
   l_grid->addWidget(TQT_TQWIDGET(d->htmlName), 1, 2, Qt::AlignLeft);
 

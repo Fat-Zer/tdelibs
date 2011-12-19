@@ -225,7 +225,7 @@ KDE_EXPORT void kimgio_hdr_read( TQImageIO * io )
 	{
 		kdDebug(399) << "Unknown HDR format." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 	
@@ -238,7 +238,7 @@ KDE_EXPORT void kimgio_hdr_read( TQImageIO * io )
 	{
 		kdDebug(399) << "Invalid HDR file." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 	
@@ -249,12 +249,12 @@ KDE_EXPORT void kimgio_hdr_read( TQImageIO * io )
 	{
 		kdDebug(399) << "Error loading HDR file." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 
 	io->setImage( img );
-	io->setqStatus( 0 );
+	io->seStatus( 0 );
 }
 
 

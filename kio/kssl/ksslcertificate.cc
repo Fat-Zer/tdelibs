@@ -871,7 +871,7 @@ TQDateTime KSSLCertificate::getQDTNotBefore() const {
 #ifdef KSSL_HAVE_SSL
 return ASN1_UTCTIME_QDateTime(X509_get_notBefore(d->m_cert), NULL);
 #else
-return TQDateTime::tqcurrentDateTime();
+return TQDateTime::currentDateTime();
 #endif
 }
 
@@ -880,7 +880,7 @@ TQDateTime KSSLCertificate::getQDTNotAfter() const {
 #ifdef KSSL_HAVE_SSL
 return ASN1_UTCTIME_QDateTime(X509_get_notAfter(d->m_cert), NULL);
 #else
-return TQDateTime::tqcurrentDateTime();
+return TQDateTime::currentDateTime();
 #endif
 }
 

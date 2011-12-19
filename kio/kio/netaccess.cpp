@@ -373,7 +373,7 @@ bool NetAccess::mkdirInternal( const KURL & url, int permissions,
 TQString NetAccess::mimetypeInternal( const KURL & url, TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
-  m_mimetype = TQString::tqfromLatin1("unknown");
+  m_mimetype = TQString::fromLatin1("unknown");
   KIO::Job * job = KIO::mimetype( url );
   job->setWindow (window);
   connect( job, TQT_SIGNAL( result (KIO::Job *) ),
@@ -462,7 +462,7 @@ bool NetAccess::synchronousRunInternal( Job* job, TQWidget* window, TQByteArray*
   connect( job, TQT_SIGNAL( result (KIO::Job *) ),
            this, TQT_SLOT( slotResult (KIO::Job *) ) );
 
-  TQMetaObject *meta = job->tqmetaObject();
+  TQMetaObject *meta = job->metaObject();
 
   static const char dataSignal[] = "data(KIO::Job*,const " TQBYTEARRAY_OBJECT_NAME_STRING "&)";
   if ( meta->findSignal( dataSignal ) != -1 ) {

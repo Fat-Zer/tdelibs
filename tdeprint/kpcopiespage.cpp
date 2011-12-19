@@ -336,7 +336,7 @@ void KPCopiesPage::getOptions(TQMap<TQString,TQString>& options, bool incldef)
 	options["kde-collate"] = (m_collate->isChecked() ? "Collate" : "Uncollate");
 	// ranges
 	options["kde-current"] = (m_current->isChecked() ? "1" : "0");
-	options["kde-range"] = (m_range->isChecked() ? m_rangeedit->text() : (incldef ? TQString::tqfromLatin1("1-") : TQString::tqfromLatin1("")));
+	options["kde-range"] = (m_range->isChecked() ? m_rangeedit->text() : (incldef ? TQString::fromLatin1("1-") : TQString::fromLatin1("")));
 	// page set
 	options["kde-pageset"] = TQString::number(m_pageset->currentItem());
 }

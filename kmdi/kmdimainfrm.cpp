@@ -701,7 +701,7 @@ void KMdiMainFrm::detachWindow( KMdiChildView *pWnd, bool bShow )
 #ifdef Q_WS_X11
 		if ( mdiMode() == KMdi::ToplevelMode )
 		{
-			XSetTransientForHint( qt_xdisplay(), pWnd->winId(), tqtopLevelWidget() ->winId() );
+			XSetTransientForHint( qt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
 		}
 #endif
 
@@ -711,7 +711,7 @@ void KMdiMainFrm::detachWindow( KMdiChildView *pWnd, bool bShow )
 #ifdef Q_WS_X11
 	if ( mdiMode() == KMdi::ToplevelMode )
 	{
-		XSetTransientForHint( qt_xdisplay(), pWnd->winId(), tqtopLevelWidget() ->winId() );
+		XSetTransientForHint( qt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
 	}
 #endif
 
@@ -1659,8 +1659,8 @@ void KMdiMainFrm::finishTabPageMode()
 			if ( pView->isToolView() )
 				continue;
 			kdDebug(760) << "KMdiMainFrm::finishTabPageMode: in loop" << endl;
-			TQSize mins = pView->tqminimumSize();
-			TQSize maxs = pView->tqmaximumSize();
+			TQSize mins = pView->minimumSize();
+			TQSize maxs = pView->maximumSize();
 			TQSize sz = pView->size();
 			TQWidget* pParent = pView->parentWidget();
 			TQPoint p( pParent->mapToGlobal( pParent->pos() ) - pParent->pos() + m_undockPositioningOffset );
@@ -2075,8 +2075,8 @@ void KMdiMainFrm::finishIDEAlMode( bool full )
 			KMdiChildView* pView = it.current();
 			if ( pView->isToolView() )
 				continue;
-			TQSize mins = pView->tqminimumSize();
-			TQSize maxs = pView->tqmaximumSize();
+			TQSize mins = pView->minimumSize();
+			TQSize maxs = pView->maximumSize();
 			TQSize sz = pView->size();
 			TQWidget* pParent = pView->parentWidget();
 			TQPoint p( pParent->mapToGlobal( pParent->pos() ) - pParent->pos() + m_undockPositioningOffset );

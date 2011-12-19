@@ -94,7 +94,7 @@ KDE_EXPORT void kimgio_xv_read( TQImageIO *_imageio )
 	}
 
 	_imageio->setImage( image );
-	_imageio->setqStatus( 0 );
+	_imageio->seStatus( 0 );
 
 	free(block);
 	return;
@@ -164,6 +164,6 @@ KDE_EXPORT void kimgio_xv_write( TQImageIO *imageio )
 	}
         delete[] buffer;
 
-	imageio->setqStatus( 0 );
+	imageio->seStatus( 0 );
 }
 

@@ -86,7 +86,7 @@ class HighColorStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawControl( TQ_ControlElement element,
+		void drawControl( TQ_ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -94,13 +94,13 @@ class HighColorStyle : public KStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawControlMask( TQ_ControlElement element,
+		void drawControlMask( TQ_ControlElement element,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 		
-		void tqdrawComplexControl( TQ_ComplexControl control,
+		void drawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -110,7 +110,7 @@ class HighColorStyle : public KStyle
 					SCFlags active = SC_None,
 					const TQStyleOption& = TQStyleOption::Default ) const;
 
-		void tqdrawComplexControlMask( TQ_ComplexControl control,
+		void drawComplexControlMask( TQ_ComplexControl control,
 					TQPainter *p,
 					const TQWidget *widget,
 					const TQRect &r,
@@ -126,7 +126,7 @@ class HighColorStyle : public KStyle
 		                int len = -1,
 		                const TQColor *penColor = 0 ) const;
 
-		int tqpixelMetric( PixelMetric m, 
+		int pixelMetric( PixelMetric m, 
 					const TQWidget *widget = 0 ) const;
 
 		TQSize tqsizeFromContents( ContentsType contents,

@@ -110,8 +110,8 @@ DOMString HTMLDocumentImpl::cookie() const
     long windowId = 0;
     KHTMLView *v = view ();
 
-    if ( v && v->tqtopLevelWidget() )
-      windowId = v->tqtopLevelWidget()->winId();
+    if ( v && v->topLevelWidget() )
+      windowId = v->topLevelWidget()->winId();
 
     TQCString replyType;
     TQByteArray params, reply;
@@ -142,8 +142,8 @@ void HTMLDocumentImpl::setCookie( const DOMString & value )
     long windowId = 0;
     KHTMLView *v = view ();
 
-    if ( v && v->tqtopLevelWidget() )
-      windowId = v->tqtopLevelWidget()->winId();
+    if ( v && v->topLevelWidget() )
+      windowId = v->topLevelWidget()->winId();
 
     TQByteArray params;
     TQDataStream stream(params, IO_WriteOnly);

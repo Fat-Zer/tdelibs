@@ -52,8 +52,8 @@
 TQString generateId(const TQMap<TQString, DrBase*>& map)
 {
 	int	index(-1);
-	while (map.contains(TQString::tqfromLatin1("item%1").arg(++index))) ;
-	return TQString::tqfromLatin1("item%1").arg(index);
+	while (map.contains(TQString::fromLatin1("item%1").arg(++index))) ;
+	return TQString::fromLatin1("item%1").arg(index);
 }
 
 TQListViewItem* findPrev(TQListViewItem *item)

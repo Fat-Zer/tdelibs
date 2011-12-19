@@ -184,7 +184,7 @@ bool KatePrinter::print (KateDocument *doc)
          // This retrieves all tags, ued or not, but
          // none of theese operations should be expensive,
          // and searcing each tag in the format strings is avoided.
-         TQDateTime dt = TQDateTime::tqcurrentDateTime();
+         TQDateTime dt = TQDateTime::currentDateTime();
          TQMap<TQString,TQString> tags;
 
          KUser u (KUser::UseRealUserID);

@@ -115,8 +115,8 @@ void KPluginListViewToolTip::maybeTip( const TQPoint &pos )
         "<tr><td><b>License:</b></td><td>%4</td></tr></table></qt>" ).arg( item->pluginInfo()->comment(),
         item->pluginInfo()->author(), item->pluginInfo()->version(), item->pluginInfo()->license() );
 
-    //kdDebug( 702 ) << k_funcinfo << "Adding tooltip: tqitemRect: " << tqitemRect << ", tooltip:  " << toolTip << endl;
-    tip( m_listView->tqitemRect( item ), toolTip );
+    //kdDebug( 702 ) << k_funcinfo << "Adding tooltip: itemRect: " << itemRect << ", tooltip:  " << toolTip << endl;
+    tip( m_listView->itemRect( item ), toolTip );
 }
 
 struct KPluginSelectionWidget::KPluginSelectionWidgetPrivate

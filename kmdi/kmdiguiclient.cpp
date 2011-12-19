@@ -128,7 +128,7 @@ KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, c
 	if ( domDocument().documentElement().isNull() )
 	{
 
-		TQString completeDescription = TQString::tqfromLatin1( guiDescription )
+		TQString completeDescription = TQString::fromLatin1( guiDescription )
 		                              .arg( actionListName );
 
 		setXML( completeDescription, false /*merge*/ );

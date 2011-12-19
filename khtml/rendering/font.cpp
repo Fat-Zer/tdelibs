@@ -407,7 +407,7 @@ bool Font::isFontScalable(TQFontDatabase& db, const TQFont& font)
             /* Cache size info */
             if (!scalSizesCache)
                 scalSizesCache = new TQMap<ScalKey, TQValueList<int> >;
-            (*scalSizesCache)[key] = db.tqsmoothSizes(font.family(), db.styleString(font));
+            (*scalSizesCache)[key] = db.smoothSizes(font.family(), db.styleString(font));
         }
     }
 

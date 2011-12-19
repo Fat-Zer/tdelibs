@@ -315,7 +315,7 @@ void KHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
     if ( !m_extensionProxy )
         return;
 
-    int slot = m_extensionProxy->tqmetaObject()->findSlot( method );
+    int slot = m_extensionProxy->metaObject()->findSlot( method );
     if ( slot == -1 )
         return;
 
@@ -809,7 +809,7 @@ void KHTMLPopupGUIClient::saveURL( TQWidget *parent, const TQString &caption,
                                    const TQString &filter, long cacheId,
                                    const TQString & suggestedFilename )
 {
-  TQString name = TQString::tqfromLatin1( "index.html" );
+  TQString name = TQString::fromLatin1( "index.html" );
   if ( !suggestedFilename.isEmpty() )
     name = suggestedFilename;
   else if ( !url.fileName().isEmpty() )

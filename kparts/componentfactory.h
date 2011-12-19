@@ -63,7 +63,7 @@ namespace KParts
                                              const TQStringList &args = TQStringList() )
         {
             TQObject *object = factory->create( parent, name,
-                                               T::tqstaticMetaObject()->className(),
+                                               T::staticMetaObject()->className(),
                                                args );
 
             T *result = tqt_dynamic_cast<T *>( object );
@@ -101,7 +101,7 @@ namespace KParts
         {
             KParts::Part *object = factory->createPart( parentWidget, widgetName,
                                                         parent, name,
-                                                        T::tqstaticMetaObject()->className(),
+                                                        T::staticMetaObject()->className(),
                                                         args );
 
             T *result = tqt_dynamic_cast<T *>( object );
@@ -376,7 +376,7 @@ namespace KParts
                                                const TQStringList &args = TQStringList(),
                                                int *error = 0 )
         {
-            KTrader::OfferList offers = KTrader::self()->query( serviceType, TQString::tqfromLatin1("KParts/ReadOnlyPart"), constraint, TQString::null );
+            KTrader::OfferList offers = KTrader::self()->query( serviceType, TQString::fromLatin1("KParts/ReadOnlyPart"), constraint, TQString::null );
             if ( offers.isEmpty() )
             {
                 if ( error )

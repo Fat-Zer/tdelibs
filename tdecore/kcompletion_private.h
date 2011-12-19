@@ -118,7 +118,7 @@ public:
     inline const KCompTreeChildren * children() const {
 	return &myChildren;
     }
-    inline const KCompTreeNode * tqchildAt(int index) const {
+    inline const KCompTreeNode * childAt(int index) const {
 	return myChildren.tqat(index);
     }
     inline const KCompTreeNode * firstChild() const {

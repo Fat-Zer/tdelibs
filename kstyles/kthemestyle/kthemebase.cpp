@@ -1413,7 +1413,7 @@ void KThemeBase::readResourceGroup( int i, TQString *pixnames, TQString *brdname
     // Blend intensity
     tmpStr = prop[ "Blend" ];
     if ( tmpStr.isEmpty() )
-        tmpStr = TQString::tqfromLatin1( "0.0" );
+        tmpStr = TQString::fromLatin1( "0.0" );
     blends[ i ] = tmpStr.toFloat();
 
     // Bevel contrast
@@ -1609,7 +1609,7 @@ TQPalette KThemeBase::overridePalette( const TQPalette& pal )
     {
         if ( isColor( Background ) )
         {
-            background = tqcolorGroup( pal.active(), Background )
+            background = colorGroup( pal.active(), Background )
                          ->background();
         }
         if ( isPixmap( Background ) )
@@ -1622,7 +1622,7 @@ TQPalette KThemeBase::overridePalette( const TQPalette& pal )
                             background.dark( lowlightVal ), background.dark( 120 ),
                             baseText, buttonText /*CHECKME: BrightText*/, base, background );
 
-        buttonText = tqcolorGroup( pre, PushButton ) ->foreground();
+        buttonText = colorGroup( pre, PushButton ) ->foreground();
     }
 
     TQColor disfg = foreground;

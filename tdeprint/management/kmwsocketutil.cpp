@@ -53,7 +53,7 @@ SocketConfig::SocketConfig(KMWSocketUtil *util, TQWidget *parent, const char *na
 	TQLabel	*portlabel = new TQLabel(i18n("&Port:"),dummy);
 	TQLabel	*toutlabel = new TQLabel(i18n("&Timeout (ms):"),dummy);
 	TQLineEdit	*mm = new TQLineEdit(dummy);
-	mm->setText(TQString::tqfromLatin1(".[0-255]"));
+	mm->setText(TQString::fromLatin1(".[0-255]"));
 	mm->setReadOnly(true);
 	mm->setFixedWidth(fontMetrics().width(mm->text())+10);
 

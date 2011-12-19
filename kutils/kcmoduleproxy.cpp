@@ -311,7 +311,7 @@ void KCModuleProxy::runAsRoot()
 
 	TQPalette pal( red );
 	pal.setColor( TQColorGroup::Background, 
-		tqcolorGroup().background() );
+		colorGroup().background() );
 	d->embedFrame->setPalette( pal );
 	d->embedFrame->setLineWidth( 2 );
 	d->embedFrame->setMidLineWidth( 2 );

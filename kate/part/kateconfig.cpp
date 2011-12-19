@@ -422,7 +422,7 @@ TQTextCodec *KateDocumentConfig::codec ()
   if (m_encodingSet || isGlobal())
   {
     if (m_encoding.isEmpty() && isGlobal())
-      return KGlobal::charsets()->codecForName (TQString::tqfromLatin1(KGlobal::locale()->encoding()));
+      return KGlobal::charsets()->codecForName (TQString::fromLatin1(KGlobal::locale()->encoding()));
     else if (m_encoding.isEmpty())
       return s_global->codec ();
     else

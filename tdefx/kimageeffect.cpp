@@ -3697,7 +3697,7 @@ TQImage KImageEffect::charcoal(TQImage &src, double radius, double sigma)
     TQImage img(edge(src, radius));
     img = blur(img, radius, sigma);
     normalize(img);
-    img.tqinvertPixels(false);
+    img.invertPixels(false);
     KImageEffect::toGray(img);
     return(img);
 }

@@ -418,7 +418,7 @@ void ProgressItem::slotToggleDefaultProgress() {
 
 // Called when a rename or skip dialog pops up
 // We want to prevent someone from killing the job in the uiserver then
-void ProgressItem::tqsetVisible( bool visible ) {
+void ProgressItem::setVisible( bool visible ) {
   if ( m_visible != visible )
   {
     m_visible = visible;
@@ -792,7 +792,7 @@ ProgressItem* UIServer::findItem( int id )
 
 void UIServer::setItemVisible( ProgressItem * item, bool visible )
 {
-  item->tqsetVisible( visible );
+  item->setVisible( visible );
   // Check if we were the last one to be visible
   // or the first one -> hide/show the list in that case
   // (Note that the user could have hidden the listview by hand yet, no time)

@@ -1135,7 +1135,7 @@ void KateIndentJScriptManager::parseScriptHeader(const TQString &filePath,
     if (currentState==NOTHING)
     {
       if (keyValue.exactMatch(line)) {
-        TQStringList sl=keyValue.tqcapturedTexts();
+        TQStringList sl=keyValue.capturedTexts();
         kdDebug(13050)<<"key:"<<sl[1]<<endl<<"value:"<<sl[2]<<endl;
         kdDebug(13050)<<"key-length:"<<sl[1].length()<<endl<<"value-length:"<<sl[2].length()<<endl;
         TQString key=sl[1];

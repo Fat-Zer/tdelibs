@@ -163,7 +163,7 @@ kimgio_jp2_read( TQImageIO* io )
 	if( gs.altimage ) jas_image_destroy( gs.altimage );
 
 	io->setImage( image );
-	io->setqStatus( 0 );
+	io->seStatus( 0 );
 } // kimgio_jp2_read
 
 
@@ -309,7 +309,7 @@ kimgio_jp2_write( TQImageIO* io )
 
 
 	// everything went fine
-	io->setqStatus( IO_Ok );
+	io->seStatus( IO_Ok );
 } // kimgio_jp2_write
 
 #endif // HAVE_JASPER

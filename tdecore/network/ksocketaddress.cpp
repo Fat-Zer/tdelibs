@@ -165,7 +165,7 @@ bool KIpAddress::setAddress(const TQString& address)
 
 bool KIpAddress::setAddress(const char* address)
 {
-  return setAddress(TQString::tqfromLatin1(address));
+  return setAddress(TQString::fromLatin1(address));
 }
 
 // set from binary data
@@ -194,13 +194,13 @@ TQString KIpAddress::toString() const
     {
     case 4:
       inet_ntop(AF_INET, m_data, buf, sizeof(buf) - 1);
-      return TQString::tqfromLatin1(buf);
+      return TQString::fromLatin1(buf);
 
     case 6:
 #ifdef AF_INET6
       inet_ntop(AF_INET6, m_data, buf, sizeof(buf) - 1);
 #endif
-      return TQString::tqfromLatin1(buf);
+      return TQString::fromLatin1(buf);
     }
 
   return TQString::null;
@@ -619,7 +619,7 @@ TQString KSocketAddress::toString() const
     fmt = "[%1]:%2";
 #endif
   else if (d->addr.generic->sa_family == AF_UNIX)
-    return TQString::tqfromLatin1("unix:%1").arg(serviceName());
+    return TQString::fromLatin1("unix:%1").arg(serviceName());
   else
     return i18n("1: the unknown socket address family number",
 		"Unknown family %1").arg(d->addr.generic->sa_family);

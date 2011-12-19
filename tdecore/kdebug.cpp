@@ -567,8 +567,8 @@ TQString kdBacktrace(int levels)
 
     for (int i = 0; i < n; ++i)
         s += TQString::number(i) +
-             TQString::tqfromLatin1(": ") +
-             TQString::tqfromLatin1(strings[i]) + TQString::tqfromLatin1("\n");
+             TQString::fromLatin1(": ") +
+             TQString::fromLatin1(strings[i]) + TQString::fromLatin1("\n");
     s += "]\n";
     if (strings)
         free (strings);

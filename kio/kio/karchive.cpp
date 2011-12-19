@@ -375,7 +375,7 @@ KArchiveDirectory * KArchive::rootDir()
         TQString username = pw ? TQFile::decodeName(pw->pw_name) : TQString::number( getuid() );
         TQString groupname = grp ? TQFile::decodeName(grp->gr_name) : TQString::number( getgid() );
 
-        d->rootDir = new KArchiveDirectory( this, TQString::tqfromLatin1("/"), (int)(0777 + S_IFDIR), 0, username, groupname, TQString::null );
+        d->rootDir = new KArchiveDirectory( this, TQString::fromLatin1("/"), (int)(0777 + S_IFDIR), 0, username, groupname, TQString::null );
     }
     return d->rootDir;
 }

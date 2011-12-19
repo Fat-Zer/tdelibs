@@ -964,7 +964,7 @@ KDE_EXPORT void kimgio_dds_read( TQImageIO *io )
 	if( fourcc != FOURCC_DDS ) {
 		kdDebug(399) << "This is not a DDS file." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 
@@ -976,7 +976,7 @@ KDE_EXPORT void kimgio_dds_read( TQImageIO *io )
 	if( s.atEnd() || !IsValid( header ) ) {
 		kdDebug(399) << "This DDS file is not valid." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 
@@ -984,7 +984,7 @@ KDE_EXPORT void kimgio_dds_read( TQImageIO *io )
 	if( !IsSupported( header ) ) {
 		kdDebug(399) << "This DDS file is not supported." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 
@@ -1002,12 +1002,12 @@ KDE_EXPORT void kimgio_dds_read( TQImageIO *io )
 	if( result == false ) {
 		kdDebug(399) << "Error loading DDS file." << endl;
 		io->setImage( TQImage() );
-		io->setqStatus( -1 );
+		io->seStatus( -1 );
 		return;
 	}
 
     io->setImage( img );
-    io->setqStatus( 0 );
+    io->seStatus( 0 );
 }
 
 

@@ -198,7 +198,7 @@ static void calculateLabelSize(TQLabel *label)
    // Calculate a proper size for the text.
    {
        TQSimpleRichText rt(qt_text, label->font());
-       TQRect d = KGlobalSettings::desktopGeometry(label->tqtopLevelWidget());
+       TQRect d = KGlobalSettings::desktopGeometry(label->topLevelWidget());
 
        pref_width = d.width() / 4;
        rt.setWidth(pref_width-10);

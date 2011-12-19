@@ -277,7 +277,7 @@ TQString KProtocolManager::proxyForURL( const KURL &url )
           break;
   }
 
-  return (proxy.isEmpty() ? TQString::tqfromLatin1("DIRECT") : proxy);
+  return (proxy.isEmpty() ? TQString::fromLatin1("DIRECT") : proxy);
 }
 
 void KProtocolManager::badProxy( const TQString &proxy )
@@ -462,7 +462,7 @@ TQString KProtocolManager::defaultUserAgent( const TQString &_modifiers )
     if( modifiers.contains('p') )
     {
       // TODO: determine this value instead of hardcoding it...
-      supp += TQString::tqfromLatin1("; X11");
+      supp += TQString::fromLatin1("; X11");
     }
     if( modifiers.contains('m') )
     {
@@ -471,13 +471,13 @@ TQString KProtocolManager::defaultUserAgent( const TQString &_modifiers )
     if( modifiers.contains('l') )
     {
       TQStringList languageList = KGlobal::locale()->languageList();
-      TQStringList::Iterator it = languageList.find( TQString::tqfromLatin1("C") );
+      TQStringList::Iterator it = languageList.find( TQString::fromLatin1("C") );
       if( it != languageList.end() )
       {
-        if( languageList.contains( TQString::tqfromLatin1("en") ) > 0 )
+        if( languageList.contains( TQString::fromLatin1("en") ) > 0 )
           languageList.remove( it );
         else
-          (*it) = TQString::tqfromLatin1("en");
+          (*it) = TQString::fromLatin1("en");
       }
       if( languageList.count() )
         supp += TQString("; %1").arg(languageList.join(", "));

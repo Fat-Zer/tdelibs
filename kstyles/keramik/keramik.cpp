@@ -147,8 +147,8 @@ namespace
 
 		p->save();
 		/*if ( down )
-			p->translate( tqpixelMetric( PM_ButtonShiftHorizontal ),
-						tqpixelMetric( PM_ButtonShiftVertical ) );
+			p->translate( pixelMetric( PM_ButtonShiftHorizontal ),
+						pixelMetric( PM_ButtonShiftVertical ) );
 		*/
 
 		if ( enabled ) {
@@ -520,14 +520,14 @@ static void renderToolbarWidgetBackground(TQPainter* painter, const TQWidget* wi
 	if (painter)
 	{
 		Keramik::GradientPainter::renderGradient( painter, widget->rect(),
-			 widget->tqcolorGroup().button(), horiz_grad, false,
+			 widget->colorGroup().button(), horiz_grad, false,
 			 x_offset, y_offset, toolWidth, toolHeight);
 	}
 	else
 	{
 		TQPainter p( widget );
 		Keramik::GradientPainter::renderGradient( &p, widget->rect(),
-			 widget->tqcolorGroup().button(), horiz_grad, false,
+			 widget->colorGroup().button(), horiz_grad, false,
 			 x_offset, y_offset, toolWidth, toolHeight);
 	}
 }
@@ -946,7 +946,7 @@ void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 			//p->setPen( cg.shadow() );
 			//p->drawRect( r.x()+1, r.y()+1, r.width()-2, r.height()-2);
-			//p->fillRect( tqvisualRect( TQRect( x + 1, y + 1, 23, h - 2 ), r ), cg.background().dark( 105 ) );
+			//p->fillRect( visualRect( TQRect( x + 1, y + 1, 23, h - 2 ), r ), cg.background().dark( 105 ) );
 			//break;
 
 			// GENERAL PANELS
@@ -978,7 +978,7 @@ void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 		case PE_WindowFrame:
 		{
 			bool sunken  = flags & Style_Sunken;
-			int lw = opt.isDefault() ? tqpixelMetric(PM_DefaultFrameWidth)
+			int lw = opt.isDefault() ? pixelMetric(PM_DefaultFrameWidth)
 				: opt.lineWidth();
 			if (lw == 2)
 			{
@@ -1016,7 +1016,7 @@ void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 			int x2 = r.x()+r.width()-1;
 			int y2 = r.y()+r.height()-1;
-			int lw = opt.isDefault() ? tqpixelMetric(PM_DefaultFrameWidth)
+			int lw = opt.isDefault() ? pixelMetric(PM_DefaultFrameWidth)
 				: opt.lineWidth();
 			if (lw)
 			{
@@ -1036,7 +1036,7 @@ void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 			int y  = r.y();
 			int x2 = r.x() + r.width()  - 1;
 			int y2 = r.y() + r.height() - 1;
-			int lw = opt.isDefault() ? tqpixelMetric(PM_DefaultFrameWidth)
+			int lw = opt.isDefault() ? pixelMetric(PM_DefaultFrameWidth)
 				: opt.lineWidth();
 
 			if (lw)
@@ -1142,8 +1142,8 @@ void KeramikStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 				p->save();
 				if ( flags & Style_Down )
-					p->translate( tqpixelMetric( PM_ButtonShiftHorizontal ),
-							tqpixelMetric( PM_ButtonShiftVertical ) );
+					p->translate( pixelMetric( PM_ButtonShiftHorizontal ),
+							pixelMetric( PM_ButtonShiftVertical ) );
 
 				if ( flags & Style_Enabled )
 				{
@@ -1325,7 +1325,7 @@ bool KeramikStyle::isFormWidget(const TQWidget* widget) const
 	return true;
 }
 
-void KeramikStyle::tqdrawControl( TQ_ControlElement element,
+void KeramikStyle::drawControl( TQ_ControlElement element,
 								  TQPainter *p,
 								  const TQWidget *widget,
 								  const TQRect &r,
@@ -1383,15 +1383,15 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 			// Shift button contents if pushed.
 			if ( active )
 			{
-				x += tqpixelMetric(PM_ButtonShiftHorizontal, widget);
-				y += tqpixelMetric(PM_ButtonShiftVertical, widget);
+				x += pixelMetric(PM_ButtonShiftHorizontal, widget);
+				y += pixelMetric(PM_ButtonShiftVertical, widget);
 				flags |= Style_Sunken;
 			}
 
 			// Does the button have a popup menu?
 			if ( button->isMenuButton() )
 			{
-				int dx = tqpixelMetric( PM_MenuButtonIndicator, widget );
+				int dx = pixelMetric( PM_MenuButtonIndicator, widget );
 				if ( button->iconSet() && !button->iconSet()->isNull()  &&
 					(dx + button->iconSet()->pixmap (TQIconSet::Small, TQIconSet::Normal, TQIconSet::Off ).width()) >= w )
 				{
@@ -1399,7 +1399,7 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 				}
 				else
 				{
-					tqdrawPrimitive( PE_ArrowDown, p, tqvisualRect( TQRect(x + w - dx - 8, y + 2, dx, h - 4), r ),
+					tqdrawPrimitive( PE_ArrowDown, p, visualRect( TQRect(x + w - dx - 8, y + 2, dx, h - 4), r ),
 							   cg, flags, opt );
 					w -= dx;
 				}
@@ -1448,18 +1448,18 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 				}
 
 				if (cornArrow) //Draw over the icon
-					tqdrawPrimitive( PE_ArrowDown, p, tqvisualRect( TQRect(x + w - 6, x + h - 6, 7, 7), r ),
+					tqdrawPrimitive( PE_ArrowDown, p, visualRect( TQRect(x + w - 6, x + h - 6, 7, 7), r ),
 							   cg, flags, opt );
 			}
 
 			// Make the label indicate if the button is a default button or not
-			drawItem( p, TQRect(x, y, w, h), AlignCenter | ShowPrefix, button->tqcolorGroup(),
+			drawItem( p, TQRect(x, y, w, h), AlignCenter | ShowPrefix, button->colorGroup(),
 						button->isEnabled(), button->pixmap(), button->text(), -1,
-						&button->tqcolorGroup().buttonText() );
+						&button->colorGroup().buttonText() );
 
 			if ( flags & Style_HasFocus )
 				tqdrawPrimitive( PE_FocusRect, p,
-				               tqvisualRect( subRect( SR_PushButtonFocusRect, widget ), widget ),
+				               visualRect( subRect( SR_PushButtonFocusRect, widget ), widget ),
 				               cg, flags );
 			break;
 		}
@@ -1488,7 +1488,7 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 				//	nr.setWidth(r.width()-2); //Account for shadow
 			}
 
-			KStyle::tqdrawControl(element, p, widget, nr, cg, flags, opt);
+			KStyle::drawControl(element, p, widget, nr, cg, flags, opt);
 			break;
 		}
 
@@ -1553,7 +1553,7 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 										 tb->orientation() == Qt::Horizontal);
 			}
 			else
-				KStyle::tqdrawControl( (TQ_ControlElement)CE_DockWindowEmptyArea, p, 
+				KStyle::drawControl( (TQ_ControlElement)CE_DockWindowEmptyArea, p, 
 					widget, r, cg, flags, opt );
 			break;
 		}
@@ -1609,7 +1609,7 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 			bool enabled    = mi->isEnabled();
 			bool checkable  = popupmenu->isCheckable();
 			bool active     = flags & Style_Active;
-			bool etchtext   = tqstyleHint( SH_EtchDisabledText );
+			bool etchtext   = styleHint( SH_EtchDisabledText );
 			bool reverse    = TQApplication::reverseLayout();
 			if ( checkable )
 				checkcol = QMAX( checkcol, 20 );
@@ -1643,7 +1643,7 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 				break;
 			}
 
-			TQRect cr = tqvisualRect( TQRect( x + 2, y + 2, checkcol - 1, h - 4 ), r );
+			TQRect cr = visualRect( TQRect( x + 2, y + 2, checkcol - 1, h - 4 ), r );
 			// Do we have an icon?
 			if ( mi->iconSet() )
 			{
@@ -1789,8 +1789,8 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 			// Does the menu item have a submenu?
 			if ( mi->popup() ) {
 				TQ_PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
-				int dim = tqpixelMetric(PM_MenuButtonIndicator) - itemFrame;
-				TQRect vr = tqvisualRect( TQRect( x + w - arrowHMargin - itemFrame - dim,
+				int dim = pixelMetric(PM_MenuButtonIndicator) - itemFrame;
+				TQRect vr = visualRect( TQRect( x + w - arrowHMargin - itemFrame - dim,
 							y + h / 2 - dim / 2, dim, dim), r );
 
 				// Draw an arrow at the far end of the menu item
@@ -1916,11 +1916,11 @@ void KeramikStyle::tqdrawControl( TQ_ControlElement element,
 
 
 		default:
-			KStyle::tqdrawControl(element, p, widget, r, cg, flags, opt);
+			KStyle::drawControl(element, p, widget, r, cg, flags, opt);
 	}
 }
 
-void KeramikStyle::tqdrawControlMask( TQ_ControlElement element,
+void KeramikStyle::drawControlMask( TQ_ControlElement element,
 								    TQPainter *p,
 								    const TQWidget *widget,
 								    const TQRect &r,
@@ -1928,7 +1928,7 @@ void KeramikStyle::tqdrawControlMask( TQ_ControlElement element,
 {
 	p->fillRect(r, color1);
 	maskMode = true;
-	tqdrawControl( element, p, widget, r, TQApplication::tqpalette().active(), TQStyle::Style_Default, opt);
+	drawControl( element, p, widget, r, TQApplication::tqpalette().active(), TQStyle::Style_Default, opt);
 	maskMode = false;
 }
 
@@ -1944,7 +1944,7 @@ bool KeramikStyle::isSizeConstrainedCombo(const TQComboBox* combo) const
 	return false;
 }
 
-void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
+void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
                                          TQPainter *p,
                                          const TQWidget *widget,
                                          const TQRect &r,
@@ -2035,11 +2035,11 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 				if (!compact)
 				{
 					ar.setWidth(ar.width()-13);
-					TQRect rr = tqvisualRect( TQRect( ar.x(), ar.y() + 4,
+					TQRect rr = visualRect( TQRect( ar.x(), ar.y() + 4,
 							loader.size(keramik_ripple ).width(), ar.height() - 8 ),
 							widget );
 
-					ar = tqvisualRect( TQRect( ar.x() + loader.size( keramik_ripple ).width() + 4, ar.y(), 
+					ar = visualRect( TQRect( ar.x() + loader.size( keramik_ripple ).width() + 4, ar.y(), 
 											11, ar.height() ), 
 									widget );
 
@@ -2056,7 +2056,7 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 				else //Size-constrained combo -- loose the ripple.
 				{
 					ar.setWidth(ar.width() - 7);
-					ar = tqvisualRect( TQRect( ar.x(), ar.y(), 11, ar.height() ), widget);
+					ar = visualRect( TQRect( ar.x(), ar.y(), 11, ar.height() ), widget);
 					TQPointArray a;
 	
 					a.setPoints(TQCOORDARRLEN(keramik_combo_arrow), keramik_combo_arrow);
@@ -2071,7 +2071,7 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 			{
 				if ( cb->editable() )
 				{
-					TQRect er = tqvisualRect( querySubControlMetrics( CC_ComboBox, widget, SC_ComboBoxEditField ), widget );
+					TQRect er = visualRect( querySubControlMetrics( CC_ComboBox, widget, SC_ComboBoxEditField ), widget );
 					er.addCoords( -2, -2, 2, 2 );
 					p2->fillRect( er, cg.base() );
 					tqdrawPrimitive( PE_PanelLineEdit, p2, er, cg );
@@ -2080,7 +2080,7 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 				}
 				else if ( cb->hasFocus() )
 				{
-					TQRect re = TQStyle::tqvisualRect(subRect(SR_ComboBoxFocusRect, cb), widget);
+					TQRect re = TQStyle::visualRect(subRect(SR_ComboBoxFocusRect, cb), widget);
 					if ( compact )
 						re.addCoords( 3, 3, 0, -3 );
 					p2->fillRect( re, cg.brush( TQColorGroup::Highlight ) );
@@ -2115,7 +2115,7 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 		case CC_SpinWidget:
 		{
 			const TQSpinWidget* sw = static_cast< const TQSpinWidget* >( widget );
-			TQRect br = tqvisualRect( querySubControlMetrics( (TQ_ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetButtonField ), widget );
+			TQRect br = visualRect( querySubControlMetrics( (TQ_ComplexControl)CC_SpinWidget, widget, SC_SpinWidgetButtonField ), widget );
 			if ( controls & SC_SpinWidgetButtonField )
 			{
 				Keramik::SpinBoxPainter().draw( p, br, cg.button(), cg.background(), !sw->isEnabled() );
@@ -2139,7 +2139,7 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 			const TQScrollBar* sb = static_cast< const TQScrollBar* >( widget );
 			if (highlightScrollBar && sb->parentWidget()) //Don't do the check if not highlighting anyway
 			{
-				if (sb->parentWidget()->tqcolorGroup().button() != sb->tqcolorGroup().button())
+				if (sb->parentWidget()->colorGroup().button() != sb->colorGroup().button())
 					customScrollMode = true;
 			}
 			bool horizontal = sb->orientation() == Qt::Horizontal;
@@ -2313,14 +2313,14 @@ void KeramikStyle::tqdrawComplexControl( TQ_ComplexControl control,
 		case CC_TitleBar:
 			titleBarMode = Regular; //Handle buttons on titlebar different from toolbuttons
 		default:
-			KStyle::tqdrawComplexControl( control, p, widget,
+			KStyle::drawComplexControl( control, p, widget,
 						r, cg, flags, controls, active, opt );
 
 			titleBarMode = None;
 	}
 }
 
-void KeramikStyle::tqdrawComplexControlMask( TQ_ComplexControl control,
+void KeramikStyle::drawComplexControlMask( TQ_ComplexControl control,
                                          TQPainter *p,
                                          const TQWidget *widget,
                                          const TQRect &r,
@@ -2329,7 +2329,7 @@ void KeramikStyle::tqdrawComplexControlMask( TQ_ComplexControl control,
 	if (control == CC_ComboBox)
 	{
 		maskMode = true;
-		tqdrawComplexControl(CC_ComboBox, p, widget, r,
+		drawComplexControl(CC_ComboBox, p, widget, r,
 				TQApplication::tqpalette().active(), Style_Default,
 				SC_ComboBoxFrame,SC_None, opt);
 		maskMode = false;
@@ -2340,7 +2340,7 @@ void KeramikStyle::tqdrawComplexControlMask( TQ_ComplexControl control,
 
 }
 
-int KeramikStyle::tqpixelMetric(PixelMetric m, const TQWidget *widget) const
+int KeramikStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
 {
 	switch(m)
 	{
@@ -2410,7 +2410,7 @@ int KeramikStyle::tqpixelMetric(PixelMetric m, const TQWidget *widget) const
 			return titleBarH;
 
 		default:
-			return KStyle::tqpixelMetric(m, widget);
+			return KStyle::pixelMetric(m, widget);
 	}
 }
 
@@ -2428,8 +2428,8 @@ TQSize KeramikStyle::tqsizeFromContents( ContentsType contents,
 		{
 			const TQPushButton* btn = static_cast< const TQPushButton* >( widget );
 
-			int w = contentSize.width() + 2 * tqpixelMetric( PM_ButtonMargin, widget );
-			int h = contentSize.height() + 2 * tqpixelMetric( PM_ButtonMargin, widget );
+			int w = contentSize.width() + 2 * pixelMetric( PM_ButtonMargin, widget );
+			int h = contentSize.height() + 2 * pixelMetric( PM_ButtonMargin, widget );
 			if ( btn->text().isEmpty() && contentSize.width() < 32 ) return TQSize( w, h );
 
 
@@ -2623,7 +2623,7 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 			{
 				int range = sb->maxValue() - sb->minValue();
 				sliderlen = ( sb->pageStep() * maxlen ) / ( range + sb->pageStep() );
-				slidermin = tqpixelMetric( PM_ScrollBarSliderMin, sb );
+				slidermin = pixelMetric( PM_ScrollBarSliderMin, sb );
 				if ( sliderlen < slidermin ) sliderlen = slidermin;
 				if ( sliderlen > maxlen ) sliderlen = maxlen;
 			}
@@ -2666,9 +2666,9 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 			bool horizontal = sl->orientation() == Qt::Horizontal;
 			TQSlider::TickSetting ticks = sl->tickmarks();
 			int pos = sl->sliderStart();
-			int size = tqpixelMetric( PM_SliderControlThickness, widget );
-			int handleSize = tqpixelMetric( PM_SliderThickness, widget );
-			int len = tqpixelMetric( PM_SliderLength, widget );
+			int size = pixelMetric( PM_SliderControlThickness, widget );
+			int handleSize = pixelMetric( PM_SliderThickness, widget );
+			int len = pixelMetric( PM_SliderLength, widget );
 
 			//Shrink the metrics if the widget is too small
 			//to fit our normal values for them.
@@ -2901,20 +2901,20 @@ bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
 
 		if ( toolbar->orientation() == Qt::Horizontal )
 		{
-			Keramik::GradientPainter::renderGradient( &p, wr, widget->tqcolorGroup().button(),
+			Keramik::GradientPainter::renderGradient( &p, wr, widget->colorGroup().button(),
 													  true /*horizontal*/, false /*not a menu*/,
 													  0, widget->y(), wr.width(), tr.height());
 		}
 		else
 		{
-			Keramik::GradientPainter::renderGradient( &p, wr, widget->tqcolorGroup().button(),
+			Keramik::GradientPainter::renderGradient( &p, wr, widget->colorGroup().button(),
 													  false /*vertical*/, false /*not a menu*/,
 													  widget->x(), 0, tr.width(), wr.height());
 		}
 
 		
 		//Draw terminator line, too
-		p.setPen( toolbar->tqcolorGroup().mid() );
+		p.setPen( toolbar->colorGroup().mid() );
 		if ( toolbar->orientation() == Qt::Horizontal )
 			p.drawLine( wr.width()-1, 0, wr.width()-1, wr.height()-1 );
 		else

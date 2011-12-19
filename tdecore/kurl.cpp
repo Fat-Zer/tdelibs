@@ -471,13 +471,13 @@ KURL::KURL( const TQString &url, int encoding_hint )
 KURL::KURL( const char * url, int encoding_hint )
 {
   reset();
-  parse( TQString::tqfromLatin1(url), encoding_hint );
+  parse( TQString::fromLatin1(url), encoding_hint );
 }
 
 KURL::KURL( const TQCString& url, int encoding_hint )
 {
   reset();
-  parse( TQString::tqfromLatin1(url), encoding_hint );
+  parse( TQString::fromLatin1(url), encoding_hint );
 }
 
 KURL::KURL( const KURL& _u )
@@ -1040,7 +1040,7 @@ KURL& KURL::operator=( const TQString& _url )
 KURL& KURL::operator=( const char * _url )
 {
   reset();
-  parse( TQString::tqfromLatin1(_url) );
+  parse( TQString::fromLatin1(_url) );
 
   return *this;
 }
@@ -2150,7 +2150,7 @@ TQMap< TQString, TQString > KURL::queryItems( int options, int encoding_hint ) c
 	name = name.lower();
       TQString value = (*it).mid( equal_pos + 1 );
       if ( value.isEmpty() )
-	result.insert( name, TQString::tqfromLatin1("") );
+	result.insert( name, TQString::fromLatin1("") );
       else {
 	// ### why is decoding name not necessary?
 	value.replace( '+', ' ' ); // + in queries means space
@@ -2191,7 +2191,7 @@ TQString KURL::queryItem( const TQString& _item, int encoding_hint ) const
         return decode_string( str, encoding_hint );
       }
       else // empty value
-        return TQString::tqfromLatin1("");
+        return TQString::fromLatin1("");
     }
   }
 

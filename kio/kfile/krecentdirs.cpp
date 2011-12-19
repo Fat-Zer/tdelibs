@@ -52,13 +52,13 @@ static KConfig *recentdirs_readList(TQString &key, TQStringList &result, bool re
    if (key[1] == ':') 
    {
       key = key.mid(2);
-      config = new KSimpleConfig(TQString::tqfromLatin1("krecentdirsrc"), readOnly);
+      config = new KSimpleConfig(TQString::fromLatin1("krecentdirsrc"), readOnly);
    }
    else
    {
       key = key.mid(1);
       config = KGlobal::config();
-      config->setGroup(TQString::tqfromLatin1("Recent Dirs"));
+      config->setGroup(TQString::fromLatin1("Recent Dirs"));
    }
 
    result=config->readPathListEntry(key);

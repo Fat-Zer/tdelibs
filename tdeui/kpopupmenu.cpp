@@ -117,7 +117,7 @@ void KPopupTitle::paintEvent(TQPaintEvent *)
 
 TQSize KPopupTitle::sizeHint() const
 {
-    return tqminimumSize();
+    return minimumSize();
 }
 
 class KPopupMenu::KPopupMenuPrivate

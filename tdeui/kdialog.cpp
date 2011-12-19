@@ -405,7 +405,7 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	
 	TQFrame* frame = new TQFrame( this );
 	frame->setFrameStyle( TQFrame::NoFrame );
-	frame->setLineWidth( tqstyle().tqpixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
+	frame->setLineWidth( tqstyle().pixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
 	// we need to set the minimum size for the window
 	frame->setMinimumWidth(400);
 	vbox->addWidget( frame );

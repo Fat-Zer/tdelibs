@@ -150,7 +150,7 @@ bool kio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int star
                     path.truncate( len - 1 );
             }
             else
-                path = TQString::tqfromLatin1("/");
+                path = TQString::fromLatin1("/");
             kdDebug()   << "Found. isoFile=" << isoFile << " path=" << path << endl;
             break;
         }
@@ -259,10 +259,10 @@ void kio_isoProtocol::listDir( const KURL & url )
 
     if ( path.isEmpty() )
     {
-        KURL redir( TQString::tqfromLatin1( "iso:/") );
+        KURL redir( TQString::fromLatin1( "iso:/") );
         kdDebug() << "url.path()==" << url.path() << endl;
         if (url.hasRef()) redir.setRef(url.htmlRef());
-        redir.setPath( url.path() + TQString::tqfromLatin1("/") );
+        redir.setPath( url.path() + TQString::fromLatin1("/") );
         kdDebug() << "kio_isoProtocol::listDir: redirection " << redir.url() << endl;
         redirection( redir );
         finished();
@@ -356,7 +356,7 @@ void kio_isoProtocol::stat( const KURL & url )
     const KArchiveEntry* isoEntry;
     if ( path.isEmpty() )
     {
-        path = TQString::tqfromLatin1( "/" );
+        path = TQString::fromLatin1( "/" );
         isoEntry = root;
     } else {
         isoEntry = root->entry( path );

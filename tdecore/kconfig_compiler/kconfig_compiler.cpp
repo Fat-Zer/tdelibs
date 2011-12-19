@@ -265,7 +265,7 @@ static TQString literalString( const TQString &s )
      if (s[i].tqunicode() > 127) isAscii = false;
 
   if (isAscii)
-     return "TQString::tqfromLatin1( " + quoteString(s) + " )";
+     return "TQString::fromLatin1( " + quoteString(s) + " )";
   else
      return "TQString::fromUtf8( " + quoteString(s) + " )";
 }
@@ -805,9 +805,9 @@ TQString paramString(const TQString &group, const TQValueList<Param> &parameters
      }
   }
   if (arguments.isEmpty())
-    return "TQString::tqfromLatin1( \""+group+"\" )";
+    return "TQString::fromLatin1( \""+group+"\" )";
 
-  return "TQString::tqfromLatin1( \""+paramString+"\" )"+arguments;
+  return "TQString::fromLatin1( \""+paramString+"\" )"+arguments;
 }
 
 /* int i is the value of the parameter */
@@ -883,12 +883,12 @@ TQString memberMutatorBody( CfgEntry *e )
     out << "}" << endl << endl;
   }
 
-  out << "if (!" << This << "isImmutable( TQString::tqfromLatin1( \"";
+  out << "if (!" << This << "isImmutable( TQString::fromLatin1( \"";
   if (!e->param().isEmpty())
   {
     out << e->paramName().replace("$("+e->param()+")", "%1") << "\" ).arg( ";
     if ( e->paramType() == "Enum" ) {
-      out << "TQString::tqfromLatin1( ";
+      out << "TQString::fromLatin1( ";
 
       if (globalEnums)
         out << enumName(e->param()) << "ToString[i]";
@@ -1518,7 +1518,7 @@ int main( int argc, char **argv )
   cpp << " )" << endl;
 
   cpp << "  : " << inherits << "(";
-  if ( !cfgFileName.isEmpty() ) cpp << " TQString::tqfromLatin1( \"" << cfgFileName << "\" ";
+  if ( !cfgFileName.isEmpty() ) cpp << " TQString::fromLatin1( \"" << cfgFileName << "\" ";
   if ( cfgFileNameArg ) cpp << " config ";
   if ( !cfgFileName.isEmpty() ) cpp << ") ";
   cpp << ")" << endl;
@@ -1560,7 +1560,7 @@ int main( int argc, char **argv )
       for( it = choices.begin(); it != choices.end(); ++it ) {
         cpp << "  {" << endl;
         cpp << "    KConfigSkeleton::ItemEnum::Choice choice;" << endl;
-        cpp << "    choice.name = TQString::tqfromLatin1( \"" << (*it).name << "\" );" << endl;
+        cpp << "    choice.name = TQString::fromLatin1( \"" << (*it).name << "\" );" << endl;
         if ( setUserTexts ) {
           if ( !(*it).label.isEmpty() )
             cpp << "    choice.label = i18n(" << quoteString((*it).label) << ");" << endl;
@@ -1592,7 +1592,7 @@ int main( int argc, char **argv )
       cpp << "  addItem( " << itemPath(e);
       TQString quotedName = e->name();
       addQuotes( quotedName );
-      if ( quotedName != key ) cpp << ", TQString::tqfromLatin1( \"" << e->name() << "\" )";
+      if ( quotedName != key ) cpp << ", TQString::fromLatin1( \"" << e->name() << "\" )";
       cpp << " );" << endl;
     }
     else
@@ -1621,7 +1621,7 @@ int main( int argc, char **argv )
         // param name. The check for isImmutable in the set* functions doesn't have the param
         // name available, just the corresponding enum value (int), so we need to store the
         // param names in a separate static list!.
-        cpp << "  addItem( " << itemVarStr << ", TQString::tqfromLatin1( \"";
+        cpp << "  addItem( " << itemVarStr << ", TQString::fromLatin1( \"";
         if ( e->paramType()=="Enum" )
           cpp << e->paramName().replace( "$("+e->param()+")", "%1").arg(e->paramValues()[i] );
         else

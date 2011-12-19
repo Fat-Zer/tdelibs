@@ -75,8 +75,8 @@ public:
 bool tryLookup(const char* node, const char *serv)
 {
   int error;
-  TQString _node = TQString::tqfromLatin1(node);
-  TQString _serv = TQString::tqfromLatin1(serv);
+  TQString _node = TQString::fromLatin1(node);
+  TQString _serv = TQString::fromLatin1(serv);
 
   printf("\tTrying to lookup %s|%s... ", node, serv);
   TQPtrList<KAddressInfo> list = KExtendedSocket::lookup(_node, _serv, 0, &error);
@@ -138,8 +138,8 @@ bool try_pton()
 bool tryLookup6(const char *node, const char *serv)
 {
   int error;
-  TQString _node = TQString::tqfromLatin1(node);
-  TQString _serv = TQString::tqfromLatin1(serv);
+  TQString _node = TQString::fromLatin1(node);
+  TQString _serv = TQString::fromLatin1(serv);
 
   printf("\tTrying to lookup IPv6 of %s|%s... ", node, serv);
   TQPtrList<KAddressInfo> list = KExtendedSocket::lookup(_node, _serv, KExtendedSocket::ipv6Socket, &error);

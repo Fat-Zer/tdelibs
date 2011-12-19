@@ -82,7 +82,7 @@ SFileDialog::SFileDialog( TQString initially, const TQStringList& filter, const 
 :TQDialog(0L,name,true)
 {
   KConfig* config = kapp->config();
-  config->setGroup( TQString::tqfromLatin1("SFileDialogData:") + name );
+  config->setGroup( TQString::fromLatin1("SFileDialogData:") + name );
   if ( initially.isNull() ){
     initially = config->readPathEntry( "InitiallyDir", TQDir::currentDirPath() );
   }
@@ -643,7 +643,7 @@ void Directory::setOpen( bool o )
     return;
   }
 
-  listView()->tqsetUpdatesEnabled( false );
+  listView()->setUpdatesEnabled( false );
   const QFileInfoList * files = thisDir.entryInfoList();
   if ( files ){
     QFileInfoListIterator it( *files );
@@ -654,7 +654,7 @@ void Directory::setOpen( bool o )
         (void)new Directory( this, f->fileName() );
       }
     }
-    listView()->tqsetUpdatesEnabled( true );
+    listView()->setUpdatesEnabled( true );
   }
   TQListViewItem::setOpen( o );
 }
@@ -777,13 +777,13 @@ int main(int argc, char* argv[]) {
 #endif
 
 #if 0
-  qDebug ( SFileDialog::getOpenFileName( TQString::null, TQString::tqfromLatin1("All (*)"),
-                                         TQString::tqfromLatin1("DockWidget Demo"), "dialog1" ) );
+  qDebug ( SFileDialog::getOpenFileName( TQString::null, TQString::fromLatin1("All (*)"),
+                                         TQString::fromLatin1("DockWidget Demo"), "dialog1" ) );
 #endif
 
 #if 1
-  TQStringList s = SFileDialog::getOpenFileNames( TQString::null, TQString::tqfromLatin1("All (*)"),
-                                                TQString::tqfromLatin1("DockWidget Demo"), "dialog1" );
+  TQStringList s = SFileDialog::getOpenFileNames( TQString::null, TQString::fromLatin1("All (*)"),
+                                                TQString::fromLatin1("DockWidget Demo"), "dialog1" );
   TQStringList::Iterator it = s.begin();
   for ( ; it != s.end(); ++it ){
     qDebug( "%s", (*it).local8Bit().data() );

@@ -522,7 +522,7 @@ void KFileTreeView::slotAnimation()
       }
          
       uint & iconNumber = it.data().iconNumber;
-      TQString icon = TQString::tqfromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
+      TQString icon = TQString::fromLatin1( it.data().iconBaseName ).append( TQString::number( iconNumber ) );
       // kdDebug(250) << "Loading icon " << icon << endl;
       item->setPixmap( 0, DesktopIcon( icon,KIcon::SizeSmall,KIcon::ActiveState )); // KFileTreeViewFactory::instance() ) );
 
@@ -666,7 +666,7 @@ void KFileTreeViewToolTip::maybeTip( const TQPoint & )
     if ( item ) {
 	TQString text = static_cast<KFileViewItem*>( item )->toolTipText();
 	if ( !text.isEmpty() )
-	    tip ( m_view->tqitemRect( item ), text );
+	    tip ( m_view->itemRect( item ), text );
     }
 #endif
 }

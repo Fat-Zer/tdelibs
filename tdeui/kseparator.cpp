@@ -83,7 +83,7 @@ void KSeparator::drawFrame(TQPainter *p)
 {
    TQPoint	p1, p2;
    TQRect	r     = frameRect();
-   const TQColorGroup & g = tqcolorGroup();
+   const TQColorGroup & g = colorGroup();
 
    if ( frameStyle() & HLine ) {
       p1 = TQPoint( r.x(), r.height()/2 );

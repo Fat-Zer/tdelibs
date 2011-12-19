@@ -248,7 +248,7 @@ void KDirSelectDialog::slotNextDirToList( KFileTreeViewItem *item )
 {
     // scroll to make item the topmost item
     view()->ensureItemVisible( item );
-    TQRect r = view()->tqitemRect( item );
+    TQRect r = view()->itemRect( item );
     if ( r.isValid() )
     {
         int x, y;
@@ -426,7 +426,7 @@ void KDirSelectDialog::slotMkdir()
     {
         folderurl.addPath( *it );
         exists = KIO::NetAccess::exists( folderurl, false, 0 );
-        writeOk = !exists && KIO::NetAccess::mkdir( folderurl, tqtopLevelWidget() );
+        writeOk = !exists && KIO::NetAccess::mkdir( folderurl, topLevelWidget() );
     }
 
     if ( exists ) // url was already existant

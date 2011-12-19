@@ -92,7 +92,7 @@ scrollBarControlsMetrics
 
   int extent  = horizontal ? sb->height() : sb->width();
 
-  TQColorGroup g = sb->tqcolorGroup();
+  TQColorGroup g = sb->colorGroup();
 
   if (sliderStart > sliderMax)
     sliderStart = sliderMax;
@@ -371,14 +371,14 @@ WebStyle::drawPushButton(TQPushButton * b, TQPainter * p)
   bool sunken(b->isDown() || b->isOn());
   bool hl(_highlightedButton == b);
 
-  TQColor bg(b->tqcolorGroup().button());
+  TQColor bg(b->colorGroup().button());
 
   p->save();
-  p->fillRect(b->rect(), b->tqcolorGroup().brush(TQColorGroup::Background));
+  p->fillRect(b->rect(), b->colorGroup().brush(TQColorGroup::Background));
 
   if (b->isDefault())
   {
-    TQColor c(hl ? b->tqcolorGroup().highlight() : b->tqcolorGroup().mid());
+    TQColor c(hl ? b->colorGroup().highlight() : b->colorGroup().mid());
 
     p->setPen(contrastingForeground(c, bg));
 
@@ -391,26 +391,26 @@ WebStyle::drawPushButton(TQPushButton * b, TQPainter * p)
      4,
      b->width() - 8,
      b->height() - 8,
-     b->tqcolorGroup().brush(TQColorGroup::Button)
+     b->colorGroup().brush(TQColorGroup::Button)
     );
 
   if (b->isEnabled())
   {
     if (sunken)
     {
-      p->setPen(contrastingForeground(b->tqcolorGroup().light(), bg));
+      p->setPen(contrastingForeground(b->colorGroup().light(), bg));
     }
     else
     {
       if (hl)
-        p->setPen(contrastingForeground(b->tqcolorGroup().highlight(), bg));
+        p->setPen(contrastingForeground(b->colorGroup().highlight(), bg));
       else
-        p->setPen(contrastingForeground(b->tqcolorGroup().mid(), bg));
+        p->setPen(contrastingForeground(b->colorGroup().mid(), bg));
     }
   }
   else
   {
-    p->setPen(b->tqcolorGroup().button());
+    p->setPen(b->colorGroup().button());
   }
 
   drawFunkyRect(p, 3, 3, b->width() - 6, b->height() - 6, true);
@@ -459,7 +459,7 @@ WebStyle::drawScrollBarControls
      rSlider
     );
 
-  TQColorGroup g(sb->tqcolorGroup());
+  TQColorGroup g(sb->colorGroup());
 
   if (controls & AddLine && rAdd.isValid())
   {
@@ -1450,7 +1450,7 @@ WebStyle::drawTab
 {
   TQRect r(tab->rect());
 
-  TQColorGroup g(tabBar->tqcolorGroup());
+  TQColorGroup g(tabBar->colorGroup());
 
   p->save();
 

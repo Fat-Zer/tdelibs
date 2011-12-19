@@ -68,11 +68,11 @@ bool KWhatsThisUndefined::clicked (const TQString& href)
         body . append ("Widget text: '" + (m_widget -> property ("text") . toString ()) + "'\n");
         TQString dsc = TQString ("current --> ") + m_widget -> name ();
         dsc . append (TQString (" (") + m_widget -> className () + ")\n");
-        for (w = m_widget; w && w != m_widget -> tqtopLevelWidget (); w = w -> parentWidget ()) {
+        for (w = m_widget; w && w != m_widget -> topLevelWidget (); w = w -> parentWidget ()) {
             dsc . append (w -> name ());
             dsc . append (TQString (" (") + w -> className () + ")\n");
         }
-        w = m_widget -> tqtopLevelWidget ();
+        w = m_widget -> topLevelWidget ();
         if (w) {
             dsc . append ("toplevel --> ");
             dsc . append (w -> name ());

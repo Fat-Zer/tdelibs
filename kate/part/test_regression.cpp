@@ -935,7 +935,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     if ( failures & ResultFailure ) {
         domDiff += "<pre>";
-        FILE *pipe = popen( TQString::tqfromLatin1( "diff -u baseline/%1-result %3/%2-result" )
+        FILE *pipe = popen( TQString::fromLatin1( "diff -u baseline/%1-result %3/%2-result" )
                             .arg ( test, test, relOutputDir ).latin1(), "r" );
         TQTextIStream *is = new TQTextIStream( pipe );
         for ( int line = 0; line < 100 && !is->eof(); ++line ) {

@@ -175,17 +175,17 @@ void KDatePicker::init( const TQDate &dt )
   line->installEventFilter( this );
   if (  TQApplication::reverseLayout() )
   {
-      yearForward->setIconSet(BarIconSet(TQString::tqfromLatin1("2leftarrow")));
-      yearBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("2rightarrow")));
-      monthForward->setIconSet(BarIconSet(TQString::tqfromLatin1("1leftarrow")));
-      monthBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("1rightarrow")));
+      yearForward->setIconSet(BarIconSet(TQString::fromLatin1("2leftarrow")));
+      yearBackward->setIconSet(BarIconSet(TQString::fromLatin1("2rightarrow")));
+      monthForward->setIconSet(BarIconSet(TQString::fromLatin1("1leftarrow")));
+      monthBackward->setIconSet(BarIconSet(TQString::fromLatin1("1rightarrow")));
   }
   else
   {
-      yearForward->setIconSet(BarIconSet(TQString::tqfromLatin1("2rightarrow")));
-      yearBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("2leftarrow")));
-      monthForward->setIconSet(BarIconSet(TQString::tqfromLatin1("1rightarrow")));
-      monthBackward->setIconSet(BarIconSet(TQString::tqfromLatin1("1leftarrow")));
+      yearForward->setIconSet(BarIconSet(TQString::fromLatin1("2rightarrow")));
+      yearBackward->setIconSet(BarIconSet(TQString::fromLatin1("2leftarrow")));
+      monthForward->setIconSet(BarIconSet(TQString::fromLatin1("1rightarrow")));
+      monthBackward->setIconSet(BarIconSet(TQString::fromLatin1("1leftarrow")));
   }
   connect(table, TQT_SIGNAL(dateChanged(TQDate)), TQT_SLOT(dateChangedSlot(TQDate)));
   connect(table, TQT_SIGNAL(tableClicked()), TQT_SLOT(tableClickedSlot()));
@@ -529,7 +529,7 @@ KDatePicker::setCloseButton( bool enable )
         TQToolTip::add(d->closeButton, i18n("Close"));
         d->closeButton->setPixmap( SmallIcon("remove") );
         connect( d->closeButton, TQT_SIGNAL( clicked() ),
-                 tqtopLevelWidget(), TQT_SLOT( close() ) );
+                 topLevelWidget(), TQT_SLOT( close() ) );
     }
     else {
         delete d->closeButton;

@@ -42,7 +42,7 @@ public:
 	                         SFlags = Style_Default,
 	                         const TQStyleOption & = TQStyleOption::Default) const;
 
-	int tqstyleHint(TQ_StyleHint, const TQWidget * = 0,
+	int styleHint(TQ_StyleHint, const TQWidget * = 0,
 			    const TQStyleOption & = TQStyleOption::Default,
 			    TQStyleHintReturn * = 0 ) const;
 
@@ -53,7 +53,7 @@ public:
 	                   SFlags = Style_Default,
 	                   const TQStyleOption & = TQStyleOption::Default) const;
 
-	void tqdrawControl(TQ_ControlElement,
+	void drawControl(TQ_ControlElement,
 	                 TQPainter *,
 	                 const TQWidget *,
 	                 const TQRect &,
@@ -61,13 +61,13 @@ public:
 	                 SFlags = Style_Default,
 	                 const TQStyleOption & = TQStyleOption::Default) const;
 
-	void tqdrawControlMask(TQ_ControlElement,
+	void drawControlMask(TQ_ControlElement,
 	                     TQPainter *,
 	                     const TQWidget *,
 	                     const TQRect &,
 	                     const TQStyleOption &) const;
 
-	void tqdrawComplexControl(TQ_ComplexControl,
+	void drawComplexControl(TQ_ComplexControl,
 	                        TQPainter *,
 	                        const TQWidget *,
 	                        const TQRect &,
@@ -77,13 +77,13 @@ public:
 	                        SCFlags active = SC_None,
 	                        const TQStyleOption & = TQStyleOption::Default) const;
 
-	void tqdrawComplexControlMask(TQ_ComplexControl,
+	void drawComplexControlMask(TQ_ComplexControl,
 	                            TQPainter *,
 	                            const TQWidget *,
 	                            const TQRect &r,
 	                            const TQStyleOption & = TQStyleOption::Default) const;
 
-	int tqpixelMetric(PixelMetric, const TQWidget * = 0) const;
+	int pixelMetric(PixelMetric, const TQWidget * = 0) const;
 
 	int kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) const;
 

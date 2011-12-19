@@ -178,7 +178,7 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
         // We open a dummy database instead.
         //kdDebug(7011) << "No database, opening a dummy one." << endl;
         TQBuffer *buffer = new TQBuffer();
-        buffer->tqsetBufferFromCopy(TQByteArray());
+        buffer->setBuffer(TQByteArray());
         buffer->open(IO_ReadWrite);
         m_str = new TQDataStream( buffer);
         (*m_str) << (TQ_INT32) KSYCOCA_VERSION;

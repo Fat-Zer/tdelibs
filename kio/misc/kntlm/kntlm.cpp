@@ -48,7 +48,7 @@ TQString KNTLM::getString( const TQByteArray &buf, const SecBuf &secbuf, bool tq
   if ( tqunicode ) {
     str = UnicodeLE2TQString( (TQChar*) c, len >> 1 );
   } else {
-    str = TQString::tqfromLatin1( c, len );
+    str = TQString::fromLatin1( c, len );
   }
   return str;
 }
@@ -299,7 +299,7 @@ TQByteArray KNTLM::createBlob( const TQByteArray &targetinfo )
   
   Blob *bl = (Blob *) blob.data();
   bl->signature = KFromToBigEndian( (TQ_UINT32) 0x01010000 );
-  TQ_UINT64 now = TQDateTime::tqcurrentDateTime().toTime_t();
+  TQ_UINT64 now = TQDateTime::currentDateTime().toTime_t();
   now += (TQ_UINT64)3600*(TQ_UINT64)24*(TQ_UINT64)134774;
   now *= (TQ_UINT64)10000000;
   bl->timestamp = KFromToLittleEndian( now );

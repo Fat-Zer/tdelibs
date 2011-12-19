@@ -764,7 +764,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
                                                       DCOPAuthCount,
                                                       const_cast<char **>(DCOPAuthNames),
                                                       DCOPClientAuthProcs, 0L)) < 0) {
-        emit attachFailed(TQString::tqfromLatin1( "Communications could not be established." ));
+        emit attachFailed(TQString::fromLatin1( "Communications could not be established." ));
         return false;
     }
 
@@ -779,7 +779,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
             TQCString fName = dcopServerFile();
             TQFile f(TQFile::decodeName(fName));
             if (!f.open(IO_ReadOnly)) {
-                emit attachFailed(TQString::tqfromLatin1( "Could not read network connection list.\n" )+TQFile::decodeName(fName));
+                emit attachFailed(TQString::fromLatin1( "Could not read network connection list.\n" )+TQFile::decodeName(fName));
                 return false;
             }
             int size = TQMIN( (qint64)1024, f.size() ); // protection against a huge file
@@ -819,7 +819,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
            delete [] d->serverAddr;
            d->serverAddr = 0;
         }
-        emit attachFailed(TQString::tqfromLatin1( errBuf ));
+        emit attachFailed(TQString::fromLatin1( errBuf ));
         return false;
     }
     fcntl(socket(), F_SETFL, FD_CLOEXEC);
@@ -845,7 +845,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
             delete [] d->serverAddr;
             d->serverAddr = 0;
         }
-        emit attachFailed(TQString::tqfromLatin1( errBuf ));
+        emit attachFailed(TQString::fromLatin1( errBuf ));
         return false;
     } else if (setupstat == IceProtocolAlreadyActive) {
         if (bClearServerAddr) {
@@ -853,7 +853,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
             d->serverAddr = 0;
         }
         /* should not happen because 3rd arg to IceOpenConnection was 0. */
-        emit attachFailed(TQString::tqfromLatin1( "internal error in IceOpenConnection" ));
+        emit attachFailed(TQString::fromLatin1( "internal error in IceOpenConnection" ));
         return false;
     }
 
@@ -863,7 +863,7 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
             delete [] d->serverAddr;
             d->serverAddr = 0;
         }
-        emit attachFailed(TQString::tqfromLatin1( "DCOP server did not accept the connection." ));
+        emit attachFailed(TQString::fromLatin1( "DCOP server did not accept the connection." ));
         return false;
     }
 
@@ -1470,10 +1470,10 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             l << "QCStringList properties()";
             l << "bool setProperty(TQCString,TQVariant)";
             l << "TQVariant property(TQCString)";
-            TQStrList lst = o->tqmetaObject()->slotNames( true );
+            TQStrList lst = o->metaObject()->slotNames( true );
             int i = 0;
             for ( TQPtrListIterator<char> it( lst ); it.current(); ++it ) {
-                if ( o->tqmetaObject()->slot( i++, true )->tqt_mo_access != TQMetaData::Public )
+                if ( o->metaObject()->slot( i++, true )->tqt_mo_access != TQMetaData::Public )
                     continue;
                 TQCString slot = it.current();
                 if ( slot.contains( "()" ) ) {
@@ -1487,10 +1487,10 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             replyType = "QCStringList";
             TQDataStream reply( replyData, IO_WriteOnly );
             QCStringList l;
-            TQMetaObject *meta = o->tqmetaObject();
+            TQMetaObject *meta = o->metaObject();
             while ( meta ) {
                 l.prepend( meta->className() );
-                meta = meta->tqsuperClass();
+                meta = meta->superClass();
             }
             reply << l;
             return true;
@@ -1498,9 +1498,9 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             replyType = "QCStringList";
             TQDataStream reply( replyData, IO_WriteOnly );
             QCStringList l;
-            TQStrList lst = o->tqmetaObject()->propertyNames( true );
+            TQStrList lst = o->metaObject()->propertyNames( true );
             for ( TQPtrListIterator<char> it( lst ); it.current(); ++it ) {
-                TQMetaObject *mo = o->tqmetaObject();
+                TQMetaObject *mo = o->metaObject();
                 const TQMetaProperty* p = mo->property( mo->findProperty( it.current(), true ), true );
                 if ( !p )
                     continue;
@@ -1532,7 +1532,7 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             reply << (TQ_INT8) o->setProperty( name, value );
             return true;
         } else {
-            int slot = o->tqmetaObject()->findSlot( fun, true );
+            int slot = o->metaObject()->findSlot( fun, true );
             if ( slot != -1 ) {
                 replyType = "void";
                 TQUObject uo[ 1 ];

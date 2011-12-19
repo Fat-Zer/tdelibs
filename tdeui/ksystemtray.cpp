@@ -69,7 +69,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
     d->actionCollection = new KActionCollection(this);
 
 #ifdef Q_WS_X11
-    KWin::setSystemTrayWindowFor( winId(), parent?parent->tqtopLevelWidget()->winId(): qt_xrootwin() );
+    KWin::setSystemTrayWindowFor( winId(), parent?parent->topLevelWidget()->winId(): qt_xrootwin() );
 #endif
     setBackgroundMode(X11ParentRelative);
     setBackgroundOrigin(WindowOrigin);

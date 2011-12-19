@@ -685,7 +685,7 @@ protected:
    */
   inline bool below (TQListViewItem* i, const TQPoint& p)
   {
-	return below (tqitemRect(i), contentsToViewport(p));
+	return below (itemRect(i), contentsToViewport(p));
   }
 
   /**

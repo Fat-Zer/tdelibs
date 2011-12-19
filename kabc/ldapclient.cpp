@@ -50,7 +50,7 @@ public:
 
 TQString LdapObject::toString() const
 {
-  TQString result = TQString::tqfromLatin1( "\ndn: %1\n" ).arg( dn );
+  TQString result = TQString::fromLatin1( "\ndn: %1\n" ).arg( dn );
   for ( LdapAttrMap::ConstIterator it = attrs.begin(); it != attrs.end(); ++it ) {
     TQString attr = it.key();
     for ( LdapAttrValue::ConstIterator it2 = (*it).begin(); it2 != (*it).end(); ++it2 ) {

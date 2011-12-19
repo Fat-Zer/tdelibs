@@ -521,7 +521,7 @@ TQString Address::countryToISO( const TQString &cname )
     return it.data();
 
   TQString mapfile = KGlobal::dirs()->findResource( "data", 
-          TQString::tqfromLatin1( "kabc/countrytransl.map" ) );
+          TQString::fromLatin1( "kabc/countrytransl.map" ) );
 
   TQFile file( mapfile );
   if ( file.open( IO_ReadOnly ) ) {
@@ -551,7 +551,7 @@ TQString Address::ISOtoCountry( const TQString &ISOname )
     return TQString::null;
 
   TQString mapfile = KGlobal::dirs()->findResource( "data", 
-          TQString::tqfromLatin1( "kabc/countrytransl.map" ) );
+          TQString::fromLatin1( "kabc/countrytransl.map" ) );
 
   TQFile file( mapfile );
   if ( file.open( IO_ReadOnly ) ) {

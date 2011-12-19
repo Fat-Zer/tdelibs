@@ -642,7 +642,7 @@ bool KNotify::notifyByLogfile(const TQString &text, const TQString &file)
 
     // append msg
     TQTextStream strm( &logFile );
-    strm << "- KNotify " << TQDateTime::tqcurrentDateTime().toString() << ": ";
+    strm << "- KNotify " << TQDateTime::currentDateTime().toString() << ": ";
     strm << text << endl;
 
     // close file
@@ -660,7 +660,7 @@ bool KNotify::notifyByStderr(const TQString &text)
     TQTextStream strm( stderr, IO_WriteOnly );
 
     // output msg
-    strm << "KNotify " << TQDateTime::tqcurrentDateTime().toString() << ": ";
+    strm << "KNotify " << TQDateTime::currentDateTime().toString() << ": ";
     strm << text << endl;
 
     return true;

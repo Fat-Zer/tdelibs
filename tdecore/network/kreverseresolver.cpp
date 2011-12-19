@@ -238,8 +238,8 @@ bool ReverseThread::run()
 
   if (err == 0)
     {
-      node = KResolver::domainToUnicode(TQString::tqfromLatin1(h));
-      service = TQString::tqfromLatin1(s);
+      node = KResolver::domainToUnicode(TQString::fromLatin1(h));
+      service = TQString::fromLatin1(s);
       success = true;
     }
   else

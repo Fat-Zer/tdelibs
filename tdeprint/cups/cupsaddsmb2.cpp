@@ -156,7 +156,7 @@ void CupsAddSmb::slotReceived(KProcess*, char *buf, int buflen)
 	while (1)
 	{
 		// read a line
-		line = TQString::tqfromLatin1("");
+		line = TQString::fromLatin1("");
 		partial = true;
 		while (index < buflen)
 		{
@@ -433,7 +433,7 @@ bool CupsAddSmb::doExport()
 	m_actions << "quit";
 
 	m_proc.clearArguments();
-	m_proc << "smbclient" << TQString::tqfromLatin1("//")+m_servered->text()+"/print$";
+	m_proc << "smbclient" << TQString::fromLatin1("//")+m_servered->text()+"/print$";
 	return startProcess();
 }
 

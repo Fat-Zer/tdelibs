@@ -77,7 +77,7 @@ void KRootPixmap::init()
     connect(d->twin, TQT_SIGNAL(currentDesktopChanged(int)), TQT_SLOT(desktopChanged(int)));
 #endif
 
-    d->toplevel = m_pWidget->tqtopLevelWidget();
+    d->toplevel = m_pWidget->topLevelWidget();
     d->toplevel->installEventFilter(this);
     m_pWidget->installEventFilter(this);
 }
@@ -170,7 +170,7 @@ bool KRootPixmap::eventFilter(TQObject *, TQEvent *event)
 
     case TQEvent::Reparent:
         d->toplevel->removeEventFilter(this);
-        d->toplevel = m_pWidget->tqtopLevelWidget();
+        d->toplevel = m_pWidget->topLevelWidget();
         d->toplevel->installEventFilter(this);
         break;
 
@@ -188,7 +188,7 @@ void KRootPixmap::desktopChanged(int desktop)
 	return;
 
 #ifdef Q_WS_X11
-    if (KWin::windowInfo(m_pWidget->tqtopLevelWidget()->winId()).desktop() == NET::OnAllDesktops &&
+    if (KWin::windowInfo(m_pWidget->topLevelWidget()->winId()).desktop() == NET::OnAllDesktops &&
 	pixmapName(m_Desk) != pixmapName(desktop))
 #endif
 	tqrepaint(true);
@@ -198,7 +198,7 @@ void KRootPixmap::desktopChanged( WId window, unsigned int properties )
 {
 #ifdef Q_WS_X11
     if( !(properties & NET::WMDesktop) ||
-	(window != m_pWidget->tqtopLevelWidget()->winId()))
+	(window != m_pWidget->topLevelWidget()->winId()))
 	return;
 #endif
 
@@ -233,7 +233,7 @@ void KRootPixmap::tqrepaint(bool force)
     }
     m_Rect = TQRect(p1, p2);
 #ifdef Q_WS_X11
-    m_Desk = KWin::windowInfo(m_pWidget->tqtopLevelWidget()->winId()).desktop();
+    m_Desk = KWin::windowInfo(m_pWidget->topLevelWidget()->winId()).desktop();
     if (m_Desk == NET::OnAllDesktops)
 	m_Desk = currentDesktop();
 

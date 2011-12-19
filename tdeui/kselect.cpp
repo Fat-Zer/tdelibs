@@ -53,7 +53,7 @@ KXYSelector::~KXYSelector()
 
 void KXYSelector::setRange( int _minX, int _minY, int _maxX, int _maxY )
 {
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	px = w;
 	py = w;
 	minX = _minX;
@@ -74,7 +74,7 @@ void KXYSelector::setYValue( int _yPos )
 
 void KXYSelector::setValues( int _xPos, int _yPos )
 {
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) w = 5;
 
 	xPos = _xPos;
@@ -98,7 +98,7 @@ void KXYSelector::setValues( int _xPos, int _yPos )
 
 TQRect KXYSelector::contentsRect() const
 {
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) {
 		w = 5;
 	}
@@ -113,7 +113,7 @@ void KXYSelector::paintEvent( TQPaintEvent *ev )
 	TQRect paintRect = ev->rect();
 	TQRect borderRect = rect();
 
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) {
 		w = 5 - w;
 	}
@@ -123,7 +123,7 @@ void KXYSelector::paintEvent( TQPaintEvent *ev )
 	painter.begin( this );
 
 	tqstyle().tqdrawPrimitive(TQStyle::PE_Panel, &painter, 
-			      borderRect, tqcolorGroup(), 
+			      borderRect, colorGroup(), 
 			      TQStyle::Style_Sunken);
 
 	drawContents( &painter );
@@ -150,7 +150,7 @@ void KXYSelector::mouseMoveEvent( TQMouseEvent *e )
 {
 	int xVal, yVal;
 
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	valuesFromPosition( e->pos().x() - w, e->pos().y() - w, xVal, yVal );
 	
 	setValues( xVal, yVal );
@@ -170,7 +170,7 @@ void KXYSelector::wheelEvent( TQWheelEvent *e )
 
 void KXYSelector::valuesFromPosition( int x, int y, int &xVal, int &yVal ) const
 {
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) w = 5;
 	xVal = ( (maxX-minX) * (x-w) ) / ( width()-2*w );
 	yVal = maxY - ( ( (maxY-minY) * (y-w) ) / ( height()-2*w ) );
@@ -188,7 +188,7 @@ void KXYSelector::valuesFromPosition( int x, int y, int &xVal, int &yVal ) const
 
 void KXYSelector::setPosition( int xp, int yp )
 {
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	if (w < 5) w = 5;
 	if ( xp < w )
 		xp = w;
@@ -256,7 +256,7 @@ KSelector::~KSelector()
 
 TQRect KSelector::contentsRect() const
 {
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	int iw = (w < 5) ? 5 : w;
 	if ( orientation() == Qt::Vertical )
 		return TQRect( w, iw, width() - w * 2 - 5, height() - 2 * iw );
@@ -267,7 +267,7 @@ TQRect KSelector::contentsRect() const
 void KSelector::paintEvent( TQPaintEvent * )
 {
 	TQPainter painter;
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	int iw = (w < 5) ? 5 : w;
 
 	painter.begin( this );
@@ -282,7 +282,7 @@ void KSelector::paintEvent( TQPaintEvent * )
 		else
 			r.addCoords(iw - w, 0, w - iw, -iw);
 		tqstyle().tqdrawPrimitive(TQStyle::PE_Panel, &painter, 
-			r, tqcolorGroup(), 
+			r, colorGroup(), 
 			TQStyle::Style_Sunken);
 	}
 
@@ -329,7 +329,7 @@ void KSelector::valueChange()
 void KSelector::moveArrow( const TQPoint &pos )
 {
 	int val;
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	int iw = (w < 5) ? 5 : w;
 
 	if ( orientation() == Qt::Vertical )
@@ -346,7 +346,7 @@ TQPoint KSelector::calcArrowPos( int val )
 {
 	TQPoint p;
 
-	int w = tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth);
+	int w = tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	int iw = (w < 5) ? 5 : w;
 	if ( orientation() == Qt::Vertical )
 	{
@@ -374,7 +374,7 @@ void KSelector::drawArrow( TQPainter *painter, bool show, const TQPoint &pos )
     TQPointArray array(3);
 
     painter->setPen( TQPen() );
-    painter->setBrush( TQBrush( tqcolorGroup().buttonText() ) );
+    painter->setBrush( TQBrush( colorGroup().buttonText() ) );
     array.setPoint( 0, pos.x()+0, pos.y()+0 );
     array.setPoint( 1, pos.x()+5, pos.y()+5 );
     if ( orientation() == Qt::Vertical )

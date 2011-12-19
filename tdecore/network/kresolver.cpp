@@ -915,7 +915,7 @@ TQString KResolver::localHostName()
     }
 
   if (name.isEmpty())
-    return TQString::tqfromLatin1("localhost");
+    return TQString::fromLatin1("localhost");
 
   if (name.find('.') == -1)
     {
@@ -924,7 +924,7 @@ TQString KResolver::localHostName()
       KResolverResults results = resolve(name, "0", CanonName);
       if (results.isEmpty())
 	// cannot find a valid hostname!
-	return TQString::tqfromLatin1("localhost");
+	return TQString::fromLatin1("localhost");
       else
 	return results.first().canonicalName();
     }
@@ -943,7 +943,7 @@ static TQStringList *KResolver_initIdnDomains()
   const char *kde_use_idn = getenv("KDE_USE_IDN");
   if (!kde_use_idn)
      kde_use_idn = "ac:at:br:cat:ch:cl:cn:de:dk:fi:gr:hu:info:io:is:jp:kr:li:lt:museum:org:no:se:sh:th:tm:tw:vn";
-  return new TQStringList(TQStringList::split(':', TQString::tqfromLatin1(kde_use_idn).lower()));
+  return new TQStringList(TQStringList::split(':', TQString::fromLatin1(kde_use_idn).lower()));
 }
 
 // implement the ToAscii function, as described by IDN documents
@@ -987,7 +987,7 @@ TQCString KResolver::domainToAscii(const TQString& tqunicodeDomain)
 
 TQString KResolver::domainToUnicode(const TQCString& asciiDomain)
 {
-  return domainToUnicode(TQString::tqfromLatin1(asciiDomain));
+  return domainToUnicode(TQString::fromLatin1(asciiDomain));
 }
 
 // implement the ToUnicode function, as described by IDN documents

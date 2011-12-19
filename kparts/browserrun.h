@@ -98,7 +98,7 @@ namespace KParts {
 	 */
         TQString contentDisposition() const;
 
-        bool serverSuggestsSave() const { return contentDisposition() == TQString::tqfromLatin1("attachment"); }
+        bool serverSuggestsSave() const { return contentDisposition() == TQString::fromLatin1("attachment"); }
 
         enum AskSaveResult { Save, Open, Cancel };
         /**

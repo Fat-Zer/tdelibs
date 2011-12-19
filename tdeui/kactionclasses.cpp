@@ -1626,7 +1626,7 @@ void KFontSizeAction::init()
 
     setEditable( true );
     TQFontDatabase fontDB;
-    TQValueList<int> sizes = fontDB.tqstandardSizes();
+    TQValueList<int> sizes = fontDB.standardSizes();
     TQStringList lst;
     for ( TQValueList<int>::Iterator it = sizes.begin(); it != sizes.end(); ++it )
         lst.append( TQString::number( *it ) );
@@ -2021,7 +2021,7 @@ int KToggleToolBarAction::plug( TQWidget* w, int index )
       return -1;
 
   if ( !m_toolBar ) {
-    // Note: tqtopLevelWidget() stops too early, we can't use it.
+    // Note: topLevelWidget() stops too early, we can't use it.
     TQWidget * tl = w;
     TQWidget * n;
     while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store

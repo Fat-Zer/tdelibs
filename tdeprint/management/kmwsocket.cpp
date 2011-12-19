@@ -88,7 +88,7 @@ KMWSocket::~KMWSocket()
 
 void KMWSocket::updatePrinter(KMPrinter *p)
 {
-	TQString	dev = TQString::tqfromLatin1("socket://%1:%2").arg(m_printer->text()).arg(m_port->text());
+	TQString	dev = TQString::fromLatin1("socket://%1:%2").arg(m_printer->text()).arg(m_port->text());
 	p->setDevice(dev);
 }
 

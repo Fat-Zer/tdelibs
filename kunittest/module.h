@@ -48,7 +48,7 @@ namespace KUnitTest
     * @code KUNITTEST_MODULE(kunittest_samplemodule,"TestSuite") @endcode
     */
     #define KUNITTEST_MODULE(library,suite)                                                 \
-    static const TQString s_kunittest_suite  = TQString::tqfromLatin1(suite);                   \
+    static const TQString s_kunittest_suite  = TQString::fromLatin1(suite);                   \
     class library##Module : public TQObject                                                  \
     {                                                                                       \
     public:                                                                                 \
@@ -93,7 +93,7 @@ namespace KUnitTest
         tester##ModuleAutoregister()                                                            \
         {                                                                                       \
             KUnitTest::Tester *test = new tester();                                             \
-            TQString name = s_kunittest_suite + TQString::tqfromLatin1("::") + TQString::fromLocal8Bit(#tester); \
+            TQString name = s_kunittest_suite + TQString::fromLatin1("::") + TQString::fromLocal8Bit(#tester); \
             test->setName(name.local8Bit());                                                    \
             kunittest_registerModuleTester(name.local8Bit(), test );                            \
         }                                                                                       \

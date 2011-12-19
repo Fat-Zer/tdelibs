@@ -792,7 +792,7 @@ SimpleJob *KIO::special(const KURL& url, const TQByteArray & data, bool showProg
 SimpleJob *KIO::mount( bool ro, const char *fstype, const TQString& dev, const TQString& point, bool showProgressInfo )
 {
     KIO_ARGS << int(1) << TQ_INT8( ro ? 1 : 0 )
-             << TQString::tqfromLatin1(fstype) << dev << point;
+             << TQString::fromLatin1(fstype) << dev << point;
     SimpleJob *job = special( KURL("file:/"), packedArgs, showProgressInfo );
     if ( showProgressInfo )
          Observer::self()->mounting( job, dev, point );
@@ -1480,7 +1480,7 @@ void MimetypeJob::slotFinished( )
         // Due to the "protocol doesn't support listing" code in KRun, we
         // assumed it was a file.
         kdDebug(7007) << "It is in fact a directory!" << endl;
-        m_mimetype = TQString::tqfromLatin1("inode/directory");
+        m_mimetype = TQString::fromLatin1("inode/directory");
         emit TransferJob::mimetype( this, m_mimetype );
         m_error = 0;
     }
@@ -3359,7 +3359,7 @@ void CopyJob::copyNextFile()
                     bool devicesOk=false;
 
                     // if the source is a devices url, handle it a littlebit special
-                    if ((*it).uSource.protocol()==TQString::tqfromLatin1("devices"))
+                    if ((*it).uSource.protocol()==TQString::fromLatin1("devices"))
                     {
                        TQByteArray data;
                        TQByteArray param;
@@ -3395,20 +3395,20 @@ void CopyJob::copyNextFile()
                            config.setDesktopGroup();
                            KURL url = (*it).uSource;
                            url.setPass( "" );
-                           config.writePathEntry( TQString::tqfromLatin1("URL"), url.url() );
-                           config.writeEntry( TQString::tqfromLatin1("Name"), url.url() );
-                           config.writeEntry( TQString::tqfromLatin1("Type"), TQString::tqfromLatin1("Link") );
+                           config.writePathEntry( TQString::fromLatin1("URL"), url.url() );
+                           config.writeEntry( TQString::fromLatin1("Name"), url.url() );
+                           config.writeEntry( TQString::fromLatin1("Type"), TQString::fromLatin1("Link") );
                            TQString protocol = (*it).uSource.protocol();
-                           if ( protocol == TQString::tqfromLatin1("ftp") )
-                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("ftp") );
-                           else if ( protocol == TQString::tqfromLatin1("http") )
-                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("www") );
-                           else if ( protocol == TQString::tqfromLatin1("info") )
-                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("info") );
-                           else if ( protocol == TQString::tqfromLatin1("mailto") )   // sven:
-                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("kmail") ); // added mailto: support
+                           if ( protocol == TQString::fromLatin1("ftp") )
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("ftp") );
+                           else if ( protocol == TQString::fromLatin1("http") )
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("www") );
+                           else if ( protocol == TQString::fromLatin1("info") )
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("info") );
+                           else if ( protocol == TQString::fromLatin1("mailto") )   // sven:
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("kmail") ); // added mailto: support
                            else
-                               config.writeEntry( TQString::tqfromLatin1("Icon"), TQString::tqfromLatin1("unknown") );
+                               config.writeEntry( TQString::fromLatin1("Icon"), TQString::fromLatin1("unknown") );
                            config.sync();
                            files.remove( it );
                            m_processedFiles++;
@@ -4651,7 +4651,7 @@ TQFile *CacheInfo::cachedFile()
       ok = false;
 
    time_t date;
-   time_t tqcurrentDate = time(0);
+   time_t currentDate = time(0);
 
    // URL
    if (ok && (!fgets(buffer, 400, fs)))
@@ -4673,10 +4673,10 @@ TQFile *CacheInfo::cachedFile()
    if (ok)
    {
       date = (time_t) strtoul(buffer, 0, 10);
-      if (m_maxCacheAge && (difftime(tqcurrentDate, date) > m_maxCacheAge))
+      if (m_maxCacheAge && (difftime(currentDate, date) > m_maxCacheAge))
       {
          m_bMustRevalidate = true;
-         m_expireDate = tqcurrentDate;
+         m_expireDate = currentDate;
       }
    }
 
@@ -4690,7 +4690,7 @@ TQFile *CacheInfo::cachedFile()
       {
          date = (time_t) strtoul(buffer, 0, 10);
          // After the expire date we need to revalidate.
-         if (!date || difftime(tqcurrentDate, date) >= 0)
+         if (!date || difftime(currentDate, date) >= 0)
             m_bMustRevalidate = true;
          m_expireDate = date;
       }

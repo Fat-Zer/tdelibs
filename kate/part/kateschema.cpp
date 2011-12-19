@@ -1088,9 +1088,9 @@ void KateStyleListView::showPopupMenu( KateStyleListItem *i, const TQPoint &glob
   TQPixmap scl(16,16);
   scl.fill( i->style()->selectedTextColor() );
   TQPixmap bgcl(16,16);
-  bgcl.fill( i->style()->itemSet(KateAttribute::BGColor) ? i->style()->bgColor() : viewport()->tqcolorGroup().base() );
+  bgcl.fill( i->style()->itemSet(KateAttribute::BGColor) ? i->style()->bgColor() : viewport()->colorGroup().base() );
   TQPixmap sbgcl(16,16);
-  sbgcl.fill( i->style()->itemSet(KateAttribute::SelectedBGColor) ? i->style()->selectedBGColor() : viewport()->tqcolorGroup().base() );
+  sbgcl.fill( i->style()->itemSet(KateAttribute::SelectedBGColor) ? i->style()->selectedBGColor() : viewport()->colorGroup().base() );
 
   if ( showtitle )
     m.insertTitle( i->contextName(), KateStyleListItem::ContextName );
@@ -1156,7 +1156,7 @@ void KateStyleListView::slotMousePressed(int btn, TQListViewItem* i, const TQPoi
   if ( dynamic_cast<KateStyleListItem*>(i) ) {
      if ( btn == Qt::LeftButton && c > 0 ) {
       // map pos to item/column and call KateStyleListItem::activate(col, pos)
-      ((KateStyleListItem*)i)->activate( c, viewport()->mapFromGlobal( pos ) - TQPoint( 0, tqitemRect(i).top() ) );
+      ((KateStyleListItem*)i)->activate( c, viewport()->mapFromGlobal( pos ) - TQPoint( 0, itemRect(i).top() ) );
     }
   }
 }
@@ -1465,7 +1465,7 @@ void KateStyleListItem::paintCell( TQPainter *p, const TQColorGroup& /*cg*/, int
   Q_ASSERT( lv ); //###
 
   // use a private color group and set the text/highlighted text colors
-  TQColorGroup mcg = lv->viewport()->tqcolorGroup();
+  TQColorGroup mcg = lv->viewport()->colorGroup();
 
   if ( col ) // col 0 is drawn by the superclass method
     p->fillRect( 0, 0, width, height(), TQBrush( mcg.base() ) );
@@ -1602,7 +1602,7 @@ void KateStyleListCaption::paintCell( TQPainter *p, const TQColorGroup& /*cg*/, 
   Q_ASSERT( lv ); //###
 
   // use the same colorgroup as the other items in the viewport
-  TQColorGroup mcg = lv->viewport()->tqcolorGroup();
+  TQColorGroup mcg = lv->viewport()->colorGroup();
 
   TQListViewItem::paintCell( p, mcg, col, width, align );
 }

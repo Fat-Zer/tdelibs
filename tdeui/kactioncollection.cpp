@@ -713,8 +713,8 @@ bool KActionShortcutList::save() const
 	if( m_actions.xmlFile().isEmpty() )
 		return writeSettings();
 
-	TQString attrShortcut  = TQString::tqfromLatin1("shortcut");
-	TQString attrAccel     = TQString::tqfromLatin1("accel"); // Depricated attribute
+	TQString attrShortcut  = TQString::fromLatin1("shortcut");
+	TQString attrAccel     = TQString::fromLatin1("accel"); // Depricated attribute
 
 	// Read XML file
 	TQString sXml( KXMLGUIFactory::readConfigFile( xmlFile, false, instance() ) );

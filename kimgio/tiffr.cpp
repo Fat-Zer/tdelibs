@@ -140,7 +140,7 @@ KDE_EXPORT void kimgio_tiff_read( TQImageIO *io )
 	TIFFClose( tiff );
 
 	io->setImage( image );
-	io->setqStatus ( 0 );
+	io->seStatus ( 0 );
 }
 
 KDE_EXPORT void kimgio_tiff_write( TQImageIO * )

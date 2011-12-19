@@ -367,7 +367,7 @@ bool KURLLabel::event (TQEvent *e)
     if (result && hasFocus()) {
         TQPainter p(this);
         TQRect r( activeRect() );
-        tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, &p, r, tqcolorGroup() );
+        tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, &p, r, colorGroup() );
     }
     return result;
   }

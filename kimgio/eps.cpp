@@ -234,7 +234,7 @@ KDE_EXPORT void kimgio_eps_read (TQImageIO *image)
         TQImage myimage;
         if( myimage.load (tmpFile.name()) ) {
                 image->setImage (myimage);
-                image->setqStatus (0);
+                image->seStatus (0);
                 kdDebug(399) << "kimgio EPS: success!" << endl;
         }
         else
@@ -290,5 +290,5 @@ KDE_EXPORT void kimgio_eps_write( TQImageIO *imageio )
 
   inFile.close();
 
-  imageio->setqStatus(0);
+  imageio->seStatus(0);
 }

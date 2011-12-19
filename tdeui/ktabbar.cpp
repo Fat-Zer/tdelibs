@@ -172,8 +172,8 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
             int xoff = 0, yoff = 0;
             // The additional offsets were found by try and error, TODO: find the rational behind them
             if ( t == tab( currentTab() ) ) {
-                xoff = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this ) + 3;
-                yoff = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftVertical, this ) - 4;
+                xoff = tqstyle().pixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this ) + 3;
+                yoff = tqstyle().pixelMetric( TQStyle::PM_TabBarTabShiftVertical, this ) - 4;
             }
             else {
                 xoff = 7;
@@ -303,7 +303,7 @@ const TQColor &KTabBar::tabColor( int id  ) const
     if ( mTabColors.contains( id ) )
         return mTabColors[id];
 
-    return tqcolorGroup().foreground();
+    return colorGroup().foreground();
 }
 
 int KTabBar::insertTab( TQTab *t, int index )
@@ -341,8 +341,8 @@ void KTabBar::paintLabel( TQPainter *p, const TQRect& br,
         r.setLeft( r.left() + pixw + 4 );
         r.setRight( r.right() + 2 );
 
-        int inactiveXShift = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this );
-        int inactiveYShift = tqstyle().tqpixelMetric( TQStyle::PM_TabBarTabShiftVertical, this );
+        int inactiveXShift = tqstyle().pixelMetric( TQStyle::PM_TabBarTabShiftHorizontal, this );
+        int inactiveYShift = tqstyle().pixelMetric( TQStyle::PM_TabBarTabShiftVertical, this );
 
         int right = t->text().isEmpty() ? br.right() - pixw : br.left() + 2;
 
@@ -358,11 +358,11 @@ void KTabBar::paintLabel( TQPainter *p, const TQRect& br,
     if ( has_focus )
         flags |= TQStyle::Style_HasFocus;
 
-    TQColorGroup cg( tqcolorGroup() );
+    TQColorGroup cg( colorGroup() );
     if ( mTabColors.contains( t->identifier() ) )
         cg.setColor( TQColorGroup::Foreground, mTabColors[t->identifier()] );
 
-    tqstyle().tqdrawControl( TQStyle::CE_TabBarLabel, p, this, r,
+    tqstyle().drawControl( TQStyle::CE_TabBarLabel, p, this, r,
                              t->isEnabled() ? cg : tqpalette().disabled(),
                              flags, TQStyleOption(t) );
 }

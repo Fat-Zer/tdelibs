@@ -42,7 +42,7 @@ KDE_EXPORT void kimgio_xcf_read(TQImageIO *io)
 KDE_EXPORT void kimgio_xcf_write(TQImageIO *io)
 {
 	kdDebug(399) << "XCF: write support not implemented" << endl;
-	io->setqStatus(-1);
+	io->seStatus(-1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -190,7 +190,7 @@ kdDebug() << tag << " " << xcf_image.width << " " << xcf_image.height << " " << 
 	}
 
 	io->setImage(xcf_image.image);
-	io->setqStatus(0);
+	io->seStatus(0);
 }
 
 

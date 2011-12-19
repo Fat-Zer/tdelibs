@@ -516,7 +516,7 @@ void KPropertiesDialog::insertPages()
   if ( mimetype.isEmpty() )
     return;
 
-  TQString query = TQString::tqfromLatin1(
+  TQString query = TQString::fromLatin1(
       "('KPropsDlg/Plugin' in ServiceTypes) and "
       "((not exist [X-KDE-Protocol]) or "
       " ([X-KDE-Protocol] == '%1'  )   )"          ).arg(item->url().protocol());
@@ -718,7 +718,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   kdDebug() << "url=" << url << " bDesktopFile=" << bDesktopFile << " isLocal=" << isLocal << " isReallyLocal=" << isReallyLocal << endl;
   mode_t mode = item->mode();
   bool hasDirs = item->isDir() && !item->isLink();
-  bool hasRoot = url.path() == TQString::tqfromLatin1("/");
+  bool hasRoot = url.path() == TQString::fromLatin1("/");
   TQString iconStr = KMimeType::iconForURL(url, mode);
   TQString directory = properties->kurl().directory();
   TQString protocol = properties->kurl().protocol();
@@ -831,7 +831,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
               magicMimeComment = TQString::null;
       }
 
-      if ( url.path() == TQString::tqfromLatin1("/") )
+      if ( url.path() == TQString::fromLatin1("/") )
         hasRoot = true;
       if ( (*it)->isDir() && !(*it)->isLink() )
       {
@@ -859,7 +859,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   if ( !isDevice && !isTrash && (bDesktopFile || S_ISDIR(mode)) && !d->bMultiple /*not implemented for multiple*/ )
   {
     KIconButton *iconButton = new KIconButton( d->m_frame );
-    int bsize = 66 + 2 * iconButton->tqstyle().tqpixelMetric(TQStyle::PM_ButtonMargin);
+    int bsize = 66 + 2 * iconButton->tqstyle().pixelMetric(TQStyle::PM_ButtonMargin);
     iconButton->setFixedSize(bsize, bsize);
     iconButton->setIconSize(48);
     iconButton->setStrictIconSize(false);
@@ -883,7 +883,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
              this, TQT_SLOT( slotIconChanged() ) );
   } else {
     TQLabel *iconLabel = new TQLabel( d->m_frame );
-    int bsize = 66 + 2 * iconLabel->tqstyle().tqpixelMetric(TQStyle::PM_ButtonMargin);
+    int bsize = 66 + 2 * iconLabel->tqstyle().pixelMetric(TQStyle::PM_ButtonMargin);
     iconLabel->setFixedSize(bsize, bsize);
     iconLabel->setPixmap( KGlobal::iconLoader()->loadIcon( iconStr, KIcon::Desktop, 48) );
     iconArea = iconLabel;
@@ -942,7 +942,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     //TODO: wrap for win32 or mac?
     TQPushButton *button = new TQPushButton(box);
 
-    TQIconSet iconSet = SmallIconSet(TQString::tqfromLatin1("configure"));
+    TQIconSet iconSet = SmallIconSet(TQString::fromLatin1("configure"));
     TQPixmap pixMap = iconSet.pixmap( TQIconSet::Small, TQIconSet::Normal );
     button->setIconSet( iconSet );
     button->setFixedSize( pixMap.width()+8, pixMap.height()+8 );
@@ -1136,9 +1136,9 @@ void KFilePropsPlugin::slotEditFileType()
   else
     mime = d->mimeType;
     //TODO: wrap for win32 or mac?
-  TQString keditfiletype = TQString::tqfromLatin1("keditfiletype");
+  TQString keditfiletype = TQString::fromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype
-                    + " --parent " + TQString::number( (ulong)properties->tqtopLevelWidget()->winId())
+                    + " --parent " + TQString::number( (ulong)properties->topLevelWidget()->winId())
                     + " " + KProcess::quote(mime),
                     keditfiletype, keditfiletype /*unused*/);
 #endif
@@ -1234,7 +1234,7 @@ void KFilePropsPlugin::slotDirSizeFinished( KIO::Job * job )
     KIO::filesize_t totalSize = static_cast<KDirSize*>(job)->totalSize();
 	KIO::filesize_t totalFiles = static_cast<KDirSize*>(job)->totalFiles();
 	KIO::filesize_t totalSubdirs = static_cast<KDirSize*>(job)->totalSubdirs();
-    m_sizeLabel->setText( TQString::tqfromLatin1("%1 (%2)\n%3, %4")
+    m_sizeLabel->setText( TQString::fromLatin1("%1 (%2)\n%3, %4")
 			  .arg(KIO::convertSize(totalSize))
 			  .arg(KGlobal::locale()->formatNumber(totalSize, 0))
         .arg(i18n("1 file","%n files",totalFiles))
@@ -1439,7 +1439,7 @@ void KFilePropsPlugin::applyIconChanges()
 
     if (S_ISDIR(properties->item()->mode()))
     {
-      path = url.path(1) + TQString::tqfromLatin1(".directory");
+      path = url.path(1) + TQString::fromLatin1(".directory");
       // don't call updateUrl because the other tabs (i.e. permissions)
       // apply to the directory, not the .directory file.
     }
@@ -1753,7 +1753,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     kcom->setOrder(KCompletion::Sorted);
     setpwent();
     for (i=0; ((user = getpwent()) != 0L) && (i < maxEntries); i++)
-      kcom->addItem(TQString::tqfromLatin1(user->pw_name));
+      kcom->addItem(TQString::fromLatin1(user->pw_name));
     endpwent();
     usrEdit->setCompletionMode((i < maxEntries) ? KGlobalSettings::CompletionAuto :
                                KGlobalSettings::CompletionNone);
@@ -1781,7 +1781,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   for (i=0; ((ge = getgrent()) != 0L) && (i < maxEntries); i++)
   {
     if (IamRoot)
-      groupList += TQString::tqfromLatin1(ge->gr_name);
+      groupList += TQString::fromLatin1(ge->gr_name);
     else
     {
       /* pick the groups to which the user belongs */
@@ -1802,7 +1802,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   /* add the effective Group to the list .. */
   ge = getgrgid (getegid());
   if (ge) {
-    TQString name = TQString::tqfromLatin1(ge->gr_name);
+    TQString name = TQString::fromLatin1(ge->gr_name);
     if (name.isEmpty())
       name.setNum(ge->gr_gid);
     if (groupList.find(name) == groupList.end())
@@ -2639,7 +2639,7 @@ void KURLPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", TQString::tqfromLatin1("Link"));
+  config.writeEntry( "Type", TQString::fromLatin1("Link"));
   config.writePathEntry( "URL", URLEdit->url() );
   // Users can't create a Link .desktop file with a Name field,
   // but distributions can. Update the Name field in that case.
@@ -2796,7 +2796,7 @@ void KBindingPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", TQString::tqfromLatin1("MimeType") );
+  config.writeEntry( "Type", TQString::fromLatin1("MimeType") );
 
   config.writeEntry( "Patterns",  patternEdit->text() );
   config.writeEntry( "Comment", commentEdit->text() );
@@ -2852,8 +2852,8 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
      if ((mountPoint != "-") && (mountPoint != "none") && !mountPoint.isEmpty()
           && device != "none")
      {
-        devices.append( device + TQString::tqfromLatin1(" (")
-                        + mountPoint + TQString::tqfromLatin1(")") );
+        devices.append( device + TQString::fromLatin1(" (")
+                        + mountPoint + TQString::fromLatin1(")") );
         m_devicelist.append(device);
         d->mountpointlist.append(mountPoint);
      }
@@ -2916,7 +2916,7 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
   layout->addMultiCellWidget(sep, 6, 6, 0, 1);
 
   unmounted = new KIconButton( d->m_frame );
-  int bsize = 66 + 2 * unmounted->tqstyle().tqpixelMetric(TQStyle::PM_ButtonMargin);
+  int bsize = 66 + 2 * unmounted->tqstyle().pixelMetric(TQStyle::PM_ButtonMargin);
   unmounted->setFixedSize(bsize, bsize);
   unmounted->setIconType(KIcon::Desktop, KIcon::Device);
   layout->addWidget(unmounted, 7, 0);
@@ -3077,7 +3077,7 @@ void KDevicePropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", TQString::tqfromLatin1("FSDevice") );
+  config.writeEntry( "Type", TQString::fromLatin1("FSDevice") );
 
   config.writeEntry( "Dev", device->currentText() );
   config.writeEntry( "MountPoint", mountpoint->text() );
@@ -3362,7 +3362,7 @@ void KDesktopPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", TQString::tqfromLatin1("Application"));
+  config.writeEntry( "Type", TQString::fromLatin1("Application"));
   config.writeEntry( "Comment", w->commentEdit->text() );
   config.writeEntry( "Comment", w->commentEdit->text(), true, false, true ); // for compat
   config.writeEntry( "GenericName", w->genNameEdit->text() );
@@ -3446,9 +3446,9 @@ void KDesktopPropsPlugin::slotAdvanced()
 
   // check to see if we use konsole if not do not add the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( KGlobal::config(), TQString::tqfromLatin1("General") );
+  KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
   TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
-						  TQString::tqfromLatin1("konsole"));
+						  TQString::fromLatin1("konsole"));
 
   bool terminalCloseBool = false;
 
@@ -3493,7 +3493,7 @@ void KDesktopPropsPlugin::slotAdvanced()
   int i, maxEntries = 1000;
   setpwent();
   for (i=0; ((pw = getpwent()) != 0L) && (i < maxEntries); i++)
-    kcom->addItem(TQString::tqfromLatin1(pw->pw_name));
+    kcom->addItem(TQString::fromLatin1(pw->pw_name));
   endpwent();
   if (i < maxEntries)
   {
@@ -3672,9 +3672,9 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   // check to see if we use konsole if not do not add the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( KGlobal::config(), TQString::tqfromLatin1("General") );
+  KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
   TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
-						  TQString::tqfromLatin1("konsole"));
+						  TQString::fromLatin1("konsole"));
 
   int posOptions = 1;
   d->nocloseonexitCheck = 0L;
@@ -3767,7 +3767,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
   int i, maxEntries = 1000;
   setpwent();
   for (i=0; ((pw = getpwent()) != 0L) && (i < maxEntries); i++)
-    kcom->addItem(TQString::tqfromLatin1(pw->pw_name));
+    kcom->addItem(TQString::fromLatin1(pw->pw_name));
   endpwent();
   if (i < maxEntries)
   {
@@ -3854,7 +3854,7 @@ void KExecPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", TQString::tqfromLatin1("Application"));
+  config.writeEntry( "Type", TQString::fromLatin1("Application"));
   config.writePathEntry( "Exec", execEdit->text() );
   config.writePathEntry( "SwallowExec", swallowExecEdit->text() );
   config.writeEntry( "SwallowTitle", swallowTitleEdit->text() );
@@ -3862,7 +3862,7 @@ void KExecPropsPlugin::applyChanges()
   TQString temp = terminalEdit->text();
   if (d->nocloseonexitCheck )
     if ( d->nocloseonexitCheck->isChecked() )
-      temp += TQString::tqfromLatin1("--noclose ");
+      temp += TQString::fromLatin1("--noclose ");
   temp = temp.stripWhiteSpace();
   config.writeEntry( "TerminalOptions", temp );
   config.writeEntry( "X-KDE-SubstituteUID", suidCheck->isChecked() );
@@ -4097,7 +4097,7 @@ void KApplicationPropsPlugin::applyChanges()
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
-  config.writeEntry( "Type", TQString::tqfromLatin1("Application"));
+  config.writeEntry( "Type", TQString::fromLatin1("Application"));
   config.writeEntry( "Comment", commentEdit->text() );
   config.writeEntry( "Comment", commentEdit->text(), true, false, true ); // for compat
   config.writeEntry( "GenericName", genNameEdit->text() );

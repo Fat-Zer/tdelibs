@@ -138,9 +138,9 @@ KHTMLSettings::KJavaScriptAdvice KHTMLSettings::strToAdvice(const TQString& _str
   if (!_str)
         ret = KJavaScriptDunno;
 
-  if (_str.lower() == TQString::tqfromLatin1("accept"))
+  if (_str.lower() == TQString::fromLatin1("accept"))
         ret = KJavaScriptAccept;
-  else if (_str.lower() == TQString::tqfromLatin1("reject"))
+  else if (_str.lower() == TQString::fromLatin1("reject"))
         ret = KJavaScriptReject;
 
   return ret;
@@ -189,63 +189,63 @@ void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domai
 void KHTMLSettings::readDomainSettings(KConfig *config, bool reset,
 	bool global, KPerDomainSettings &pd_settings) {
   TQString jsPrefix = global ? TQString::null
-  				: TQString::tqfromLatin1("javascript.");
+  				: TQString::fromLatin1("javascript.");
   TQString javaPrefix = global ? TQString::null
-  				: TQString::tqfromLatin1("java.");
+  				: TQString::fromLatin1("java.");
   TQString pluginsPrefix = global ? TQString::null
-  				: TQString::tqfromLatin1("plugins.");
+  				: TQString::fromLatin1("plugins.");
 
   // The setting for Java
-  TQString key = javaPrefix + TQString::tqfromLatin1("EnableJava");
+  TQString key = javaPrefix + TQString::fromLatin1("EnableJava");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_bEnableJava = config->readBoolEntry( key, false );
   else if ( !global )
     pd_settings.m_bEnableJava = d->global.m_bEnableJava;
 
   // The setting for Plugins
-  key = pluginsPrefix + TQString::tqfromLatin1("EnablePlugins");
+  key = pluginsPrefix + TQString::fromLatin1("EnablePlugins");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_bEnablePlugins = config->readBoolEntry( key, true );
   else if ( !global )
     pd_settings.m_bEnablePlugins = d->global.m_bEnablePlugins;
 
   // The setting for JavaScript
-  key = jsPrefix + TQString::tqfromLatin1("EnableJavaScript");
+  key = jsPrefix + TQString::fromLatin1("EnableJavaScript");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_bEnableJavaScript = config->readBoolEntry( key, true );
   else if ( !global )
     pd_settings.m_bEnableJavaScript = d->global.m_bEnableJavaScript;
 
   // window property policies
-  key = jsPrefix + TQString::tqfromLatin1("WindowOpenPolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowOpenPolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowOpenPolicy = (KJSWindowOpenPolicy)
     		config->readUnsignedNumEntry( key, KJSWindowOpenSmart );
   else if ( !global )
     pd_settings.m_windowOpenPolicy = d->global.m_windowOpenPolicy;
 
-  key = jsPrefix + TQString::tqfromLatin1("WindowMovePolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowMovePolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowMovePolicy = (KJSWindowMovePolicy)
     		config->readUnsignedNumEntry( key, KJSWindowMoveAllow );
   else if ( !global )
     pd_settings.m_windowMovePolicy = d->global.m_windowMovePolicy;
 
-  key = jsPrefix + TQString::tqfromLatin1("WindowResizePolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowResizePolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowResizePolicy = (KJSWindowResizePolicy)
     		config->readUnsignedNumEntry( key, KJSWindowResizeAllow );
   else if ( !global )
     pd_settings.m_windowResizePolicy = d->global.m_windowResizePolicy;
 
-  key = jsPrefix + TQString::tqfromLatin1("WindowStatusPolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowStatusPolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowStatusPolicy = (KJSWindowStatusPolicy)
     		config->readUnsignedNumEntry( key, KJSWindowStatusAllow );
   else if ( !global )
     pd_settings.m_windowStatusPolicy = d->global.m_windowStatusPolicy;
 
-  key = jsPrefix + TQString::tqfromLatin1("WindowFocusPolicy");
+  key = jsPrefix + TQString::fromLatin1("WindowFocusPolicy");
   if ( (global && reset) || config->hasKey( key ) )
     pd_settings.m_windowFocusPolicy = (KJSWindowFocusPolicy)
     		config->readUnsignedNumEntry( key, KJSWindowFocusAllow );
@@ -611,7 +611,7 @@ void KHTMLSettings::init( KConfig * config, bool reset )
         {
           TQCString javaPolicy = adviceToStr( it.data() );
           TQCString javaScriptPolicy = adviceToStr( KJavaScriptDunno );
-          domainConfig.append(TQString::tqfromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
+          domainConfig.append(TQString::fromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
         }
         config->writeEntry( "JavaDomainSettings", domainConfig );
       }
@@ -624,7 +624,7 @@ void KHTMLSettings::init( KConfig * config, bool reset )
         {
           TQCString javaPolicy = adviceToStr( KJavaScriptDunno );
           TQCString javaScriptPolicy = adviceToStr( it.data() );
-          domainConfig.append(TQString::tqfromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
+          domainConfig.append(TQString::fromLatin1("%1:%2:%3").arg(it.key()).arg(javaPolicy).arg(javaScriptPolicy));
         }
         config->writeEntry( "ECMADomainSettings", domainConfig );
       }

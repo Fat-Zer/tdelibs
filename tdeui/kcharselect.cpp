@@ -66,7 +66,7 @@ KCharSelectTable::KCharSelectTable( TQWidget *parent, const char *name, const TQ
     : TQGridView( parent, name ), vFont( _font ), vChr( _chr ),
       vTableNum( _tableNum ), vPos( 0, 0 ), focusItem( _chr ), focusPos( 0, 0 ), d(0)
 {
-    setBackgroundColor( tqcolorGroup().base() );
+    setBackgroundColor( colorGroup().base() );
 
     setCellWidth( 20 );
     setCellHeight( 25 );
@@ -156,25 +156,25 @@ void KCharSelectTable::paintCell( class TQPainter* p, int row, int col )
     c += col;
 
     if ( c == vChr.tqunicode() ) {
-	p->setBrush( TQBrush( tqcolorGroup().highlight() ) );
+	p->setBrush( TQBrush( colorGroup().highlight() ) );
 	p->setPen( NoPen );
 	p->drawRect( 0, 0, w, h );
-	p->setPen( tqcolorGroup().highlightedText() );
+	p->setPen( colorGroup().highlightedText() );
 	vPos = TQPoint( col, row );
     } else {
 	TQFontMetrics fm = TQFontMetrics( font );
 	if( fm.inFont( c ) )
-		p->setBrush( TQBrush( tqcolorGroup().base() ) );
+		p->setBrush( TQBrush( colorGroup().base() ) );
 	else
-		p->setBrush( TQBrush( tqcolorGroup().button() ) );
+		p->setBrush( TQBrush( colorGroup().button() ) );
 	p->setPen( NoPen );
 	p->drawRect( 0, 0, w, h );
-	p->setPen( tqcolorGroup().text() );
+	p->setPen( colorGroup().text() );
     }
 
     if ( c == focusItem.tqunicode() && hasFocus() ) {
 	tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, p, TQRect( 2, 2, w - 4, h - 4 ), 
-			       tqcolorGroup() );
+			       colorGroup() );
 	focusPos = TQPoint( col, row );
     }
 
@@ -182,7 +182,7 @@ void KCharSelectTable::paintCell( class TQPainter* p, int row, int col )
 
     p->drawText( 0, 0, x2, y2, AlignHCenter | AlignVCenter, TQString( TQChar( c ) ) );
 
-    p->setPen( tqcolorGroup().text() );
+    p->setPen( colorGroup().text() );
     p->drawLine( x2, 0, x2, y2 );
     p->drawLine( 0, y2, x2, y2 );
 

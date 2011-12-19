@@ -172,7 +172,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		 * This virtual function defines the pixmap used to blend between the popup
 		 * menu and the background to create different menu transparency effects.
 		 * For example, you can fill the pixmap "pix" with a gradient based on the
-		 * popup's tqcolorGroup, a texture, or some other fancy painting routine.
+		 * popup's colorGroup, a texture, or some other fancy painting routine.
 		 * KStyle will then internally blend this pixmap with a snapshot of the
 		 * background behind the popupMenu to create the illusion of transparency.
 		 * 
@@ -244,7 +244,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		 *
 		 * @see KStyle::KStylePrimitive
 		 * @see TQStyle::tqdrawPrimitive
-		 * @see TQStyle::tqdrawComplexControl
+		 * @see TQStyle::drawComplexControl
 		 */
 		virtual void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
@@ -293,7 +293,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 // #endif // USE_QT4
 
-		void tqdrawControl( TQ_ControlElement element,
+		void drawControl( TQ_ControlElement element,
 					TQPainter* p,
 					const TQWidget* widget,
 					const TQRect &r,
@@ -301,7 +301,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 					SFlags flags = Style_Default,
 					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		void tqdrawComplexControl( TQ_ComplexControl control,
+		void drawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
 					const TQWidget* widget,
 					const TQRect &r,
@@ -321,7 +321,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 					SubControl sc,
 					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		int tqpixelMetric( PixelMetric m, 
+		int pixelMetric( PixelMetric m, 
 					const TQWidget* widget = 0 ) const;
 
 		TQRect subRect( SubRect r, 
@@ -331,7 +331,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 					const TQWidget* widget = 0,
 					const TQStyleOption& = TQStyleOption::SO_Default ) const;
 
-		int tqstyleHint( TQ_StyleHint sh, 
+		int styleHint( TQ_StyleHint sh, 
 					const TQWidget* w = 0,
 					const TQStyleOption &opt = TQStyleOption::SO_Default,
 					TQStyleHintReturn* shr = 0 ) const;

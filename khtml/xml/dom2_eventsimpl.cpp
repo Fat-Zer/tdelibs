@@ -48,7 +48,7 @@ EventImpl::EventImpl()
     m_currentTarget = 0;
     m_eventPhase = 0;
     m_target = 0;
-    m_createTime = TQDateTime::tqcurrentDateTime();
+    m_createTime = TQDateTime::currentDateTime();
     m_defaultHandled = false;
 }
 
@@ -67,7 +67,7 @@ EventImpl::EventImpl(EventId _id, bool canBubbleArg, bool cancelableArg)
     m_currentTarget = 0;
     m_eventPhase = 0;
     m_target = 0;
-    m_createTime = TQDateTime::tqcurrentDateTime();
+    m_createTime = TQDateTime::currentDateTime();
     m_defaultHandled = false;
 }
 
@@ -739,7 +739,7 @@ DOMString KeyboardEventImpl::keyIdentifier() const
 {
     if (unsigned special = virtKeyVal())
         if (const char* id = keyIdentifiersToVirtKeys()->toLeft(special))
-            return TQString::tqfromLatin1(id);
+            return TQString::fromLatin1(id);
 
     if (unsigned tqunicode = keyVal())
         return TQString(TQChar(tqunicode));

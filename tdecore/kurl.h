@@ -281,7 +281,7 @@ public:
    *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
-   * @see TQString::tqfromLatin1()
+   * @see TQString::fromLatin1()
    */
   KURL( const char * url, int encoding_hint = 0 );
   /**
@@ -307,7 +307,7 @@ public:
    *        See TQTextCodec::mibEnum()
    *
    * @see fromPathOrURL()
-   * @see TQString::tqfromLatin1()
+   * @see TQString::fromLatin1()
    */
   KURL( const TQCString& url, int encoding_hint = 0 );
 

@@ -85,7 +85,7 @@ void KKeyButton::setShortcut( const KShortcut& cut, bool bQtShortcut )
 	d->bQtShortcut = bQtShortcut;
 	m_cut = cut;
 	TQString keyStr = m_cut.toString();
-	keyStr.replace('&', TQString::tqfromLatin1("&&"));
+	keyStr.replace('&', TQString::fromLatin1("&&"));
 	setText( keyStr.isEmpty() ? i18n("None") : keyStr );
 }
 
@@ -146,11 +146,11 @@ void KKeyButton::drawButton( TQPainter *painter )
   painter->setClipping( false );
   if( width() > 12 && height() > 8 )
     qDrawShadePanel( painter, 6, 4, width() - 12, height() - 8,
-                     tqcolorGroup(), true, 1, 0L );
+                     colorGroup(), true, 1, 0L );
   if ( m_bEditing )
   {
-    painter->setPen( tqcolorGroup().base() );
-    painter->setBrush( tqcolorGroup().base() );
+    painter->setPen( colorGroup().base() );
+    painter->setBrush( colorGroup().base() );
   }
   else
   {
@@ -162,7 +162,7 @@ void KKeyButton::drawButton( TQPainter *painter )
 
   drawButtonLabel( painter );
 
-  painter->setPen( tqcolorGroup().text() );
+  painter->setPen( colorGroup().text() );
   painter->setBrush( NoBrush );
   if( hasFocus() || m_bEditing )
   {

@@ -269,7 +269,7 @@ KDE_EXPORT void kimgio_pcx_read( TQImageIO *io )
 
   if ( s.tqdevice()->size() < 128 )
   {
-    io->setqStatus( -1 );
+    io->seStatus( -1 );
     return;
   }
 
@@ -279,7 +279,7 @@ KDE_EXPORT void kimgio_pcx_read( TQImageIO *io )
 
   if ( header.Manufacturer != 10 || s.atEnd())
   {
-    io->setqStatus( -1 );
+    io->seStatus( -1 );
     return;
   }
 
@@ -323,11 +323,11 @@ KDE_EXPORT void kimgio_pcx_read( TQImageIO *io )
   if ( !img.isNull() )
   {
     io->setImage( img );
-    io->setqStatus( 0 );
+    io->seStatus( 0 );
   }
   else
   {
-    io->setqStatus( -1 );
+    io->seStatus( -1 );
   }
 }
 
@@ -526,7 +526,7 @@ KDE_EXPORT void kimgio_pcx_write( TQImageIO *io )
     writeImage24( img, s, header );
   }
 
-  io->setqStatus( 0 );
+  io->seStatus( 0 );
 }
 
 /* vim: et sw=2 ts=2

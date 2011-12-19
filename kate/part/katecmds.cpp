@@ -408,7 +408,7 @@ int KateCommands::SedReplace::sedMagic( KateDocument *doc, int &line,
     TQString rep=repOld;
 
     // now set the backreferences in the replacement
-    TQStringList backrefs=matcher.tqcapturedTexts();
+    TQStringList backrefs=matcher.capturedTexts();
     int refnum=1;
 
     TQStringList::Iterator i = backrefs.begin();
@@ -593,10 +593,10 @@ bool KateCommands::Date::exec (Kate::View *view, const TQString &cmd, TQString &
   if (cmd.left(4) != "date")
     return false;
 
-  if (TQDateTime::tqcurrentDateTime().toString(cmd.mid(5, cmd.length()-5)).length() > 0)
-    view->insertText(TQDateTime::tqcurrentDateTime().toString(cmd.mid(5, cmd.length()-5)));
+  if (TQDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)).length() > 0)
+    view->insertText(TQDateTime::currentDateTime().toString(cmd.mid(5, cmd.length()-5)));
   else
-    view->insertText(TQDateTime::tqcurrentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    view->insertText(TQDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
 
   return true;
 }

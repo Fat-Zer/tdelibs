@@ -203,7 +203,7 @@ void KDockWidgetHeaderDrag::paintEvent( TQPaintEvent* )
 
   paint.begin( this );
 
-  tqstyle().tqdrawPrimitive (TQStyle::PE_DockWindowHandle, &paint, TQRect(0,0,width(), height()), tqcolorGroup());
+  tqstyle().tqdrawPrimitive (TQStyle::PE_DockWindowHandle, &paint, TQRect(0,0,width(), height()), colorGroup());
 
   paint.end();
 }
@@ -266,7 +266,7 @@ KDockWidgetHeader::KDockWidgetHeader( KDockWidget* parent, const char* name )
   layout->addWidget( closeButton );
   layout->activate();
   d->dummy->hide();
-  drag->setFixedHeight( layout->tqminimumSize().height() );
+  drag->setFixedHeight( layout->minimumSize().height() );
 }
 
 void KDockWidgetHeader::setTopLevel( bool isTopLevel )
@@ -343,7 +343,7 @@ void KDockWidgetHeader::setDragPanel( KDockWidgetHeaderDrag* nd )
   if (dontShowDummy) d->dummy->hide(); else d->dummy->show();
   layout->addWidget( closeButton );
   layout->activate();
-  kdDebug(282)<<"KdockWidgetHeader::setDragPanel:minimum height="<<layout->tqminimumSize().height()<<endl;
+  kdDebug(282)<<"KdockWidgetHeader::setDragPanel:minimum height="<<layout->minimumSize().height()<<endl;
   //FIXME somebody left this here, but we don't know what the hell it's for.
   drag->setFixedHeight( closeButton->height()); // /*layout->minimumS*/sizeHint().height() );
 }
@@ -378,7 +378,7 @@ void KDockWidgetHeader::addButton(KDockButton_Private* btn) {
   	if (dontShowDummy) d->dummy->hide(); else d->dummy->show();
 	layout->addWidget( closeButton );
 	layout->activate();
-	drag->setFixedHeight( layout->tqminimumSize().height() );
+	drag->setFixedHeight( layout->minimumSize().height() );
 }
 
 void KDockWidgetHeader::removeButton(KDockButton_Private* btn) {
@@ -574,7 +574,7 @@ void KDockWidget::paintEvent(TQPaintEvent* pe)
 	TQWidget::paintEvent(pe);
         TQPainter paint;
         paint.begin( this );
-        tqstyle().tqdrawPrimitive (TQStyle::PE_Panel, &paint, TQRect(0,0,width(), height()), tqcolorGroup());
+        tqstyle().tqdrawPrimitive (TQStyle::PE_Panel, &paint, TQRect(0,0,width(), height()), colorGroup());
         paint.end();
 }
 
@@ -601,7 +601,7 @@ void KDockWidget::mousePressEvent(TQMouseEvent* mme)
 		int styleheight;
 		TQPoint mp;
 		mp=mme->pos();
-      		styleheight=2*tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth,this);
+      		styleheight=2*tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth,this);
 		bbottom=mp.y()>=height()-styleheight;
 		btop=mp.y()<=styleheight;
 		bleft=mp.x()<=styleheight;
@@ -689,7 +689,7 @@ void  KDockWidget::mouseMoveEvent(TQMouseEvent* mme)
 	int styleheight;
 	TQPoint mp;
 	mp=mme->pos();
-      	styleheight=2*tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth,this);
+      	styleheight=2*tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth,this);
 	bbottom=mp.y()>=height()-styleheight;
 	btop=mp.y()<=styleheight;
 	bleft=mp.x()<=styleheight;
@@ -791,7 +791,7 @@ void KDockWidget::updateHeader()
     header->setTopLevel( true );
     header->show();
 #ifdef BORDERLESS_WINDOWS
-      layout->setMargin(2*tqstyle().tqpixelMetric(TQStyle::PM_DefaultFrameWidth,this));
+      layout->setMargin(2*tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth,this));
       setMouseTracking(true);
 #endif
   }
@@ -1850,7 +1850,7 @@ KDockWidget* KDockManager::findDockWidgetAt( const TQPoint& pos )
     return 0L;
   }
 #if defined(_OS_WIN32_) || defined(Q_OS_WIN32)
-  p = p->tqtopLevelWidget();
+  p = p->topLevelWidget();
 #endif
   TQWidget* w = 0L;
   findChildDockWidget( w, p, p->mapFromGlobal(pos) );
@@ -2105,7 +2105,7 @@ static TQDomElement createStringEntry(TQDomDocument &doc, const TQString &tagNam
 
 static TQDomElement createBoolEntry(TQDomDocument &doc, const TQString &tagName, bool b)
 {
-    return createStringEntry(doc, tagName, TQString::tqfromLatin1(b? "true" : "false"));
+    return createStringEntry(doc, tagName, TQString::fromLatin1(b? "true" : "false"));
 }
 
 
@@ -2144,7 +2144,7 @@ static TQDomElement createListEntry(TQDomDocument &doc, const TQString &tagName,
     TQStrListIterator it(list);
     for (; it.current(); ++it) {
         TQDomElement subel = doc.createElement(subTagName);
-        subel.appendChild(doc.createTextNode(TQString::tqfromLatin1(it.current())));
+        subel.appendChild(doc.createTextNode(TQString::fromLatin1(it.current())));
         el.appendChild(subel);
     }
 
@@ -2214,7 +2214,7 @@ void KDockManager::writeConfig(TQDomElement &base)
     KDockWidget *obj1;
     while ( (obj1=(KDockWidget*)it.current()) ) {
         if ( TQT_BASE_OBJECT(obj1->parent()) == TQT_BASE_OBJECT(main) )
-            mainWidgetStr = TQString::tqfromLatin1(obj1->name());
+            mainWidgetStr = TQString::fromLatin1(obj1->name());
         nList.append(obj1->name());
         ++it;
     }
@@ -2279,7 +2279,7 @@ void KDockManager::writeConfig(TQDomElement &base)
             }
         }
 
-        groupEl.appendChild(createStringEntry(doc, "name", TQString::tqfromLatin1(obj->name())));
+        groupEl.appendChild(createStringEntry(doc, "name", TQString::fromLatin1(obj->name())));
         groupEl.appendChild(createBoolEntry(doc, "hasParent", obj->parent()));
         if ( !obj->parent() ) {
             groupEl.appendChild(createRectEntry(doc, "geometry", TQRect(main->frameGeometry().topLeft(), main->size())));
@@ -2994,14 +2994,14 @@ void KDockManager::drawDragRectangle()
     KDockMainWindow* pMain = 0L;
     KDockWidget* pTLDockWdg = 0L;
     TQWidget* topWdg;
-    if (pDockWdgAtRect->tqtopLevelWidget() == main) {
+    if (pDockWdgAtRect->topLevelWidget() == main) {
       isOverMainWdg = true;
       topWdg = pMain = (KDockMainWindow*) main;
       unclipped = pMain->testWFlags( WPaintUnclipped );
       pMain->setWFlags( WPaintUnclipped );
     }
     else {
-      topWdg = pTLDockWdg = (KDockWidget*) pDockWdgAtRect->tqtopLevelWidget();
+      topWdg = pTLDockWdg = (KDockWidget*) pDockWdgAtRect->topLevelWidget();
       unclipped = pTLDockWdg->testWFlags( WPaintUnclipped );
       pTLDockWdg->setWFlags( WPaintUnclipped );
     }

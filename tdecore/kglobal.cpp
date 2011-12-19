@@ -127,7 +127,7 @@ void KGlobal::setActiveInstance(KInstance *i)
 const TQString &
 KGlobal::staticQString(const char *str)
 {
-   return staticQString(TQString::tqfromLatin1(str));
+   return staticQString(TQString::fromLatin1(str));
 }
 
 class KStringDict : public TQDict<TQString>

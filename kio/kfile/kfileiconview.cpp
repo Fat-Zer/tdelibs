@@ -70,8 +70,8 @@ public:
 				      parent->actionCollection(),
 				      "large rows" );
 
-	smallColumns->setExclusiveGroup(TQString::tqfromLatin1("IconView mode"));
-	largeRows->setExclusiveGroup(TQString::tqfromLatin1("IconView mode"));
+	smallColumns->setExclusiveGroup(TQString::fromLatin1("IconView mode"));
+	largeRows->setExclusiveGroup(TQString::fromLatin1("IconView mode"));
 
         previews = new KToggleAction( i18n("Thumbnail Previews"), 0,
                                       parent->actionCollection(),
@@ -191,7 +191,7 @@ void KFileIconView::readConfig( KConfig *kc, const TQString& group )
 {
     TQString gr = group.isEmpty() ? TQString("KFileIconView") : group;
     KConfigGroupSaver cs( kc, gr );
-    TQString small = TQString::tqfromLatin1("SmallColumns");
+    TQString small = TQString::fromLatin1("SmallColumns");
     d->previewIconSize = kc->readNumEntry( "Preview Size", DEFAULT_PREVIEW_SIZE );
     d->previews->setChecked( kc->readBoolEntry( "ShowPreviews", DEFAULT_SHOW_PREVIEWS ) );
 
@@ -214,8 +214,8 @@ void KFileIconView::writeConfig( KConfig *kc, const TQString& group )
     KConfigGroupSaver cs( kc, gr );
 
     TQString viewMode =  d->smallColumns->isChecked() ?
-        TQString::tqfromLatin1("SmallColumns") :
-        TQString::tqfromLatin1("LargeRows");
+        TQString::fromLatin1("SmallColumns") :
+        TQString::fromLatin1("LargeRows");
     if(!kc->hasDefault( "ViewMode" ) && viewMode == DEFAULT_VIEW_MODE )
         kc->revertToDefault( "ViewMode" );
     else
@@ -251,7 +251,7 @@ void KFileIconView::showToolTip( TQIconViewItem *item )
     int w = maxItemWidth() - ( itemTextPos() == TQIconView::Bottom ? 0 :
 			       item->pixmapRect().width() ) - 4;
     if ( fontMetrics().width( item->text() ) >= w ) {
-	toolTip = new TQLabel( TQString::tqfromLatin1(" %1 ").arg(item->text()), 0,
+	toolTip = new TQLabel( TQString::fromLatin1(" %1 ").arg(item->text()), 0,
 			      "myToolTip",
 			      (WFlags)(WStyle_StaysOnTop | WStyle_Customize | WStyle_NoBorder | WStyle_Tool | WX11BypassWM) );
 	toolTip->setFrameStyle( TQFrame::Plain | TQFrame::Box );
@@ -268,7 +268,7 @@ void KFileIconView::showToolTip( TQIconViewItem *item )
 		toolTip->move(toolTip->x(), screen.bottom()-toolTip->y()-toolTip->height()+toolTip->y());
 	}
 	toolTip->setFont( TQToolTip::font() );
-	toolTip->tqsetPalette( TQToolTip::palette(), true );
+	toolTip->setPalette( TQToolTip::palette(), true );
 	toolTip->show();
     }
 }
@@ -340,10 +340,10 @@ void KFileIconView::insertItem( KFileItem *i )
     TQIconView* qview = static_cast<TQIconView*>( this );
     // Since creating and initializing an item leads to a tqrepaint,
     // we disable updates on the IconView for a while.
-    qview->tqsetUpdatesEnabled( false );
+    qview->setUpdatesEnabled( false );
     KFileIconViewItem *item = new KFileIconViewItem( qview, i );
     initItem( item, i, true );
-    qview->tqsetUpdatesEnabled( true );
+    qview->setUpdatesEnabled( true );
 
     if ( !i->isMimeTypeKnown() )
         m_resolver->m_lstPendingMimeIconItems.append( item );
