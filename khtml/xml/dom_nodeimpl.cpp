@@ -989,7 +989,7 @@ DOMStringImpl* NodeImpl::textContent() const
       delete kidText;
     }
   }
-  return new DOMStringImpl(out.tqunicode(), out.length());
+  return new DOMStringImpl(out.unicode(), out.length());
 }
 
 //-------------------------------------------------------------------------

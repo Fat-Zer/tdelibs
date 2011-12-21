@@ -1358,7 +1358,7 @@ TQRect KListView::drawItemHighlighter(TQPainter *painter, TQListViewItem *item)
     r = itemRect(item);
     r.setLeft(r.left()+(item->depth()+(rootIsDecorated() ? 1 : 0))*treeStepSize());
     if (painter)
-      tqstyle().tqdrawPrimitive(TQStyle::PE_FocusRect, painter, r, colorGroup(),
+      style().tqdrawPrimitive(TQStyle::PE_FocusRect, painter, r, colorGroup(),
                             TQStyle::Style_FocusAtBorder, colorGroup().highlight());
   }
 
@@ -1940,7 +1940,7 @@ void KListView::viewportPaintEvent(TQPaintEvent *e)
       TQPainter painter(viewport());
 
       // This is where we actually draw the drop-highlighter
-      tqstyle().tqdrawPrimitive(TQStyle::PE_FocusRect, &painter, d->mOldDropHighlighter, colorGroup(),
+      style().tqdrawPrimitive(TQStyle::PE_FocusRect, &painter, d->mOldDropHighlighter, colorGroup(),
                             TQStyle::Style_FocusAtBorder);
     }
   d->painting = false;

@@ -418,8 +418,8 @@ void HTMLMapElementImpl::parseAttribute(AttributeImpl *attr)
     case ATTR_NAME:
     {
         DOMString s = attr->value();
-        if(*s.tqunicode() == '#')
-            name = TQString(s.tqunicode()+1, s.length()-1).lower();
+        if(*s.unicode() == '#')
+            name = TQString(s.unicode()+1, s.length()-1).lower();
         else
             name = s.string().lower();
 	// ### make this work for XML documents, e.g. in case of <html:map...>

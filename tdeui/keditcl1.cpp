@@ -140,7 +140,7 @@ KEdit::insertText(TQTextStream *stream)
 
    //   TQString str = text();
    //   for (int i = 0; i < (int) str.length(); i++)
-   //     printf("KEdit: U+%04X\n", str[i].tqunicode());
+   //     printf("KEdit: U+%04X\n", str[i].unicode());
 
 }
 
@@ -471,7 +471,7 @@ void KEdit::keyPressEvent ( TQKeyEvent *e)
   else if ( isReadOnly() )
     TQMultiLineEdit::keyPressEvent( e );
   // If this is an unmodified printable key, send it directly to TQMultiLineEdit.
-  else if ( !(key.keyCodeQt() & (CTRL | ALT)) && !e->text().isEmpty() && TQString(e->text()).tqunicode()->isPrint() )
+  else if ( !(key.keyCodeQt() & (CTRL | ALT)) && !e->text().isEmpty() && TQString(e->text()).unicode()->isPrint() )
     TQMultiLineEdit::keyPressEvent( e );
   else if ( KStdAccel::paste().contains( key ) ) {
     paste();

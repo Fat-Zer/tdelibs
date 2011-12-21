@@ -110,11 +110,11 @@ void KateTextLine::truncate(uint newLen)
 int KateTextLine::nextNonSpaceChar(uint pos) const
 {
   const uint len = m_text.length();
-  const TQChar *tqunicode = m_text.tqunicode();
+  const TQChar *unicode = m_text.unicode();
 
   for(uint i = pos; i < len; i++)
   {
-    if(!tqunicode[i].isSpace())
+    if(!unicode[i].isSpace())
       return i;
   }
 
@@ -128,11 +128,11 @@ int KateTextLine::previousNonSpaceChar(uint pos) const
   if (pos >= (uint)len)
     pos = len - 1;
 
-  const TQChar *tqunicode = m_text.tqunicode();
+  const TQChar *unicode = m_text.unicode();
 
   for(int i = pos; i >= 0; i--)
   {
-    if(!tqunicode[i].isSpace())
+    if(!unicode[i].isSpace())
       return i;
   }
 
@@ -152,20 +152,20 @@ int KateTextLine::lastChar() const
 const TQChar *KateTextLine::firstNonSpace() const
 {
   int first = firstChar();
-  return (first > -1) ? ((TQChar*)m_text.tqunicode())+first : m_text.tqunicode();
+  return (first > -1) ? ((TQChar*)m_text.unicode())+first : m_text.unicode();
 }
 
 uint KateTextLine::indentDepth (uint tabwidth) const
 {
   uint d = 0;
   const uint len = m_text.length();
-  const TQChar *tqunicode = m_text.tqunicode();
+  const TQChar *unicode = m_text.unicode();
 
   for(uint i = 0; i < len; i++)
   {
-    if(tqunicode[i].isSpace())
+    if(unicode[i].isSpace())
     {
-      if (tqunicode[i] == TQChar('\t'))
+      if (unicode[i] == TQChar('\t'))
         d += tabwidth - (d % tabwidth);
       else
         d++;
@@ -189,11 +189,11 @@ bool KateTextLine::stringAtPos(uint pos, const TQString& match) const
   // overflow again which (pos+matchlen > len) does not catch; see bugs #129263 and #129580
   Q_ASSERT(pos < len);
 
-  const TQChar *tqunicode = m_text.tqunicode();
-  const TQChar *matchUnicode = match.tqunicode();
+  const TQChar *unicode = m_text.unicode();
+  const TQChar *matchUnicode = match.unicode();
 
   for (uint i=0; i < matchlen; i++)
-    if (tqunicode[i+pos] != matchUnicode[i])
+    if (unicode[i+pos] != matchUnicode[i])
       return false;
 
   return true;
@@ -206,11 +206,11 @@ bool KateTextLine::startingWith(const TQString& match) const
   if (matchlen > m_text.length())
     return false;
 
-  const TQChar *tqunicode = m_text.tqunicode();
-  const TQChar *matchUnicode = match.tqunicode();
+  const TQChar *unicode = m_text.unicode();
+  const TQChar *matchUnicode = match.unicode();
 
   for (uint i=0; i < matchlen; i++)
-    if (tqunicode[i] != matchUnicode[i])
+    if (unicode[i] != matchUnicode[i])
       return false;
 
   return true;
@@ -223,12 +223,12 @@ bool KateTextLine::endingWith(const TQString& match) const
   if (matchlen > m_text.length())
     return false;
 
-  const TQChar *tqunicode = m_text.tqunicode();
-  const TQChar *matchUnicode = match.tqunicode();
+  const TQChar *unicode = m_text.unicode();
+  const TQChar *matchUnicode = match.unicode();
 
   uint start = m_text.length() - matchlen;
   for (uint i=0; i < matchlen; i++)
-    if (tqunicode[start+i] != matchUnicode[i])
+    if (unicode[start+i] != matchUnicode[i])
       return false;
 
   return true;
@@ -239,11 +239,11 @@ int KateTextLine::cursorX(uint pos, uint tabChars) const
   uint x = 0;
 
   const uint n = kMin (pos, (uint)m_text.length());
-  const TQChar *tqunicode = m_text.tqunicode();
+  const TQChar *unicode = m_text.unicode();
 
   for ( uint z = 0; z < n; z++)
   {
-    if (tqunicode[z] == TQChar('\t'))
+    if (unicode[z] == TQChar('\t'))
       x += tabChars - (x % tabChars);
     else
       x++;
@@ -257,11 +257,11 @@ uint KateTextLine::lengthWithTabs (uint tabChars) const
 {
   uint x = 0;
   const uint len = m_text.length();
-  const TQChar *tqunicode = m_text.tqunicode();
+  const TQChar *unicode = m_text.unicode();
 
   for ( uint z = 0; z < len; z++)
   {
-    if (tqunicode[z] == TQChar('\t'))
+    if (unicode[z] == TQChar('\t'))
       x += tabChars - (x % tabChars);
     else
       x++;
@@ -346,7 +346,7 @@ char *KateTextLine::dump (char *buf, bool withHighlighting) const
   memcpy(buf, &l, sizeof(uint));
   buf += sizeof(uint);
 
-  memcpy(buf, (char *) m_text.tqunicode(), sizeof(TQChar)*l);
+  memcpy(buf, (char *) m_text.unicode(), sizeof(TQChar)*l);
   buf += sizeof(TQChar) * l;
 
   if (!withHighlighting)

@@ -604,7 +604,7 @@ bool Lexer::isIdentLetter(unsigned short c)
   // Uppercase letter (Lu), Lowercase letter (Ll),
   // Titlecase letter (Lt)", Modifier letter (Lm),
   // Other letter (Lo), or Letter number (Nl).
-  // Also see: http://www.tqunicode.org/Public/UNIDATA/UnicodeData.txt */
+  // Also see: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt */
   return (c >= 'a' && c <= 'z' ||
           c >= 'A' && c <= 'Z' ||
           // A with grave - O with diaeresis

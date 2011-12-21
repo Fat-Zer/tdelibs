@@ -268,11 +268,11 @@ void KIconDialog::init()
     top->setSpacing( spacingHint() );
 
     TQButtonGroup *bgroup = new TQButtonGroup(0, Qt::Vertical, i18n("Icon Source"), main);
-    bgroup->tqlayout()->setSpacing(KDialog::spacingHint());
-    bgroup->tqlayout()->setMargin(KDialog::marginHint());
+    bgroup->layout()->setSpacing(KDialog::spacingHint());
+    bgroup->layout()->setMargin(KDialog::marginHint());
     top->addWidget(bgroup);
     connect(bgroup, TQT_SIGNAL(clicked(int)), TQT_SLOT(slotButtonClicked(int)));
-    TQGridLayout *grid = new TQGridLayout(bgroup->tqlayout(), 3, 2);
+    TQGridLayout *grid = new TQGridLayout(bgroup->layout(), 3, 2);
     mpRb1 = new TQRadioButton(i18n("S&ystem icons:"), bgroup);
     grid->addWidget(mpRb1, 1, 0);
     mpCombo = new TQComboBox(bgroup);

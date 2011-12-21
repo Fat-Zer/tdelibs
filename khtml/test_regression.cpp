@@ -1079,8 +1079,8 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
         pos++;
         int newpos = absBase.find('/', pos);
         if (newpos == -1) newpos = absBase.length();
-        TQConstString cmpPathComp(absPath.tqunicode() + pos, newpos - pos);
-        TQConstString cmpBaseComp(absBase.tqunicode() + pos, newpos - pos);
+        TQConstString cmpPathComp(absPath.unicode() + pos, newpos - pos);
+        TQConstString cmpBaseComp(absBase.unicode() + pos, newpos - pos);
 //         kdDebug() << "cmpPathComp: \"" << cmpPathComp.string() << "\"" << endl;
 //         kdDebug() << "cmpBaseComp: \"" << cmpBaseComp.string() << "\"" << endl;
 //         kdDebug() << "pos: " << pos << " newpos: " << newpos << endl;
@@ -1094,8 +1094,8 @@ static TQString makeRelativePath(const TQString &base, const TQString &path)
 
     TQString rel;
     {
-        TQConstString relBase(absBase.tqunicode() + basepos, absBase.length() - basepos);
-        TQConstString relPath(absPath.tqunicode() + pathpos, absPath.length() - pathpos);
+        TQConstString relBase(absBase.unicode() + basepos, absBase.length() - basepos);
+        TQConstString relPath(absPath.unicode() + pathpos, absPath.length() - pathpos);
         // generate as many .. as there are path elements in relBase
         if (relBase.string().length() > 0) {
             for (int i = relBase.string().contains('/'); i > 0; --i)

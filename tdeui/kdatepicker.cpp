@@ -507,7 +507,7 @@ KDatePicker::setFontSize(int s)
       maxMonthRect.setHeight(QMAX(r.height(),  maxMonthRect.height()));
     }
 
-  TQSize metricBound = tqstyle().tqsizeFromContents(TQStyle::CT_ToolButton,
+  TQSize metricBound = style().tqsizeFromContents(TQStyle::CT_ToolButton,
                                                selectMonth,
                                                maxMonthRect);
   selectMonth->setMinimumSize(metricBound);

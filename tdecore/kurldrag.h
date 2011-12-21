@@ -30,7 +30,7 @@ class KURLDragPrivate;
 /**
  * This class is to be used instead of TQUriDrag when using KURL.
  * The reason is: TQUriDrag (and the XDND/W3C standards) expect URLs to
- * be encoded in UTF-8 (tqunicode), but KURL uses the current locale
+ * be encoded in UTF-8 (unicode), but KURL uses the current locale
  * by default.
  * The other reasons for using this class are:
  * @li it exports text/plain (for dropping/pasting into lineedits, mails etc.)

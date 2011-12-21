@@ -406,7 +406,7 @@ bool Sym::initQt( int keyQt )
 	int symQt = keyQt & 0xffff;
 
 	if( (keyQt & Qt::UNICODE_ACCEL) || symQt < 0x1000 ) {
-		m_sym = TQChar(symQt).lower().tqunicode();
+		m_sym = TQChar(symQt).lower().unicode();
 		return true;
 	}
 
@@ -434,9 +434,9 @@ bool Sym::initQt( int keyQt )
 
 bool Sym::init( const TQString& s )
 {
-	// If it's a single character, get tqunicode value.
+	// If it's a single character, get unicode value.
 	if( s.length() == 1 ) {
-		m_sym = s[0].lower().tqunicode();
+		m_sym = s[0].lower().unicode();
 		return true;
 	}
 
@@ -498,7 +498,7 @@ TQString Sym::toString( bool bUserSpace ) const
 	if( m_sym == 0 )
 		return TQString::null;
 
-	// If it's a tqunicode character,
+	// If it's a unicode character,
 #ifdef Q_WS_WIN
 	else if( m_sym < 0x1000 ) {
 #else
@@ -542,7 +542,7 @@ uint Sym::getModsRequired() const
 
 	if( m_sym < 0x3000 ) {
 		TQChar c(m_sym);
-		if( c.isLetter() && c.lower() != c.upper() && m_sym == c.upper().tqunicode() )
+		if( c.isLetter() && c.lower() != c.upper() && m_sym == c.upper().unicode() )
 			return KKey::SHIFT;
 	}
 
@@ -823,7 +823,7 @@ uint stringUserToMod( const TQString& mod )
 	// Get code of just the primary key
 	keySymQt = keyCombQt & 0xffff;
 
-	// If tqunicode value beneath 0x1000 (special Qt codes begin thereafter),
+	// If unicode value beneath 0x1000 (special Qt codes begin thereafter),
 	if( keySymQt < 0x1000 ) {
 		// For reasons unbeknownst to me, Qt converts 'a-z' to 'A-Z'.
 		// So convert it back to lowercase if SHIFT isn't held down.
@@ -1041,7 +1041,7 @@ void KKey::simplify()
 
 	// If this is a letter, don't remove any modifiers.
 	if( m_sym < 0x3000 && TQChar(m_sym).isLetter() )
-		m_sym = TQChar(m_sym).lower().tqunicode();
+		m_sym = TQChar(m_sym).lower().unicode();
 
 	// Remove modifers from modifier list which are implicit in the symbol.
 	// Ex. Shift+Plus => Plus (en)

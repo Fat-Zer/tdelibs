@@ -119,7 +119,7 @@ class TQPopupMenu;
  * tell the user) where a completion comes from.
  *
  * Note: KCompletion does not work with strings that contain 0x0 characters
- *       (tqunicode nul), as this is used internally as a delimiter.
+ *       (unicode nul), as this is used internally as a delimiter.
  *
  * You may inherit from KCompletion and override makeCompletion() in
  * special cases (like reading directories/urls and then supplying the

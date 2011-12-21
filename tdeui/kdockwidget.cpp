@@ -203,7 +203,7 @@ void KDockWidgetHeaderDrag::paintEvent( TQPaintEvent* )
 
   paint.begin( this );
 
-  tqstyle().tqdrawPrimitive (TQStyle::PE_DockWindowHandle, &paint, TQRect(0,0,width(), height()), colorGroup());
+  style().tqdrawPrimitive (TQStyle::PE_DockWindowHandle, &paint, TQRect(0,0,width(), height()), colorGroup());
 
   paint.end();
 }
@@ -228,7 +228,7 @@ KDockWidgetHeader::KDockWidgetHeader( KDockWidget* parent, const char* name )
 
   closeButton = new KDockButton_Private( this, "DockCloseButton" );
   TQToolTip::add( closeButton, i18n("Close") );
-  closeButton->setPixmap( tqstyle().stylePixmap (TQStyle::SP_TitleBarCloseButton , this));
+  closeButton->setPixmap( style().stylePixmap (TQStyle::SP_TitleBarCloseButton , this));
   closeButton->setFixedSize(closeButton->pixmap()->width(),closeButton->pixmap()->height());
   connect( closeButton, TQT_SIGNAL(clicked()), parent, TQT_SIGNAL(headerCloseButtonClicked()));
   connect( closeButton, TQT_SIGNAL(clicked()), parent, TQT_SLOT(undock()));
@@ -574,7 +574,7 @@ void KDockWidget::paintEvent(TQPaintEvent* pe)
 	TQWidget::paintEvent(pe);
         TQPainter paint;
         paint.begin( this );
-        tqstyle().tqdrawPrimitive (TQStyle::PE_Panel, &paint, TQRect(0,0,width(), height()), colorGroup());
+        style().tqdrawPrimitive (TQStyle::PE_Panel, &paint, TQRect(0,0,width(), height()), colorGroup());
         paint.end();
 }
 
@@ -601,7 +601,7 @@ void KDockWidget::mousePressEvent(TQMouseEvent* mme)
 		int styleheight;
 		TQPoint mp;
 		mp=mme->pos();
-      		styleheight=2*tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth,this);
+      		styleheight=2*style().pixelMetric(TQStyle::PM_DefaultFrameWidth,this);
 		bbottom=mp.y()>=height()-styleheight;
 		btop=mp.y()<=styleheight;
 		bleft=mp.x()<=styleheight;
@@ -689,7 +689,7 @@ void  KDockWidget::mouseMoveEvent(TQMouseEvent* mme)
 	int styleheight;
 	TQPoint mp;
 	mp=mme->pos();
-      	styleheight=2*tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth,this);
+      	styleheight=2*style().pixelMetric(TQStyle::PM_DefaultFrameWidth,this);
 	bbottom=mp.y()>=height()-styleheight;
 	btop=mp.y()<=styleheight;
 	bleft=mp.x()<=styleheight;
@@ -791,7 +791,7 @@ void KDockWidget::updateHeader()
     header->setTopLevel( true );
     header->show();
 #ifdef BORDERLESS_WINDOWS
-      layout->setMargin(2*tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth,this));
+      layout->setMargin(2*style().pixelMetric(TQStyle::PM_DefaultFrameWidth,this));
       setMouseTracking(true);
 #endif
   }

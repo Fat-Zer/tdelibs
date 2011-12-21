@@ -336,7 +336,7 @@ TQCString fromUnicode( const TQString &data )
                 buffer_len += test.length();
             } else {
                 TQString res;
-                res.sprintf( "&#%d;", TQChar(part.at( i )).tqunicode() );
+                res.sprintf( "&#%d;", TQChar(part.at( i )).unicode() );
                 test = locale->fromUnicode( res );
                 if (buffer_len + test.length() + 1 > sizeof(buffer))
                    break;

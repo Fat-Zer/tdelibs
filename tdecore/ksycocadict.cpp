@@ -29,7 +29,7 @@ namespace
 {
 struct string_entry {
   string_entry(TQString _key, KSycocaEntry *_payload) 
-  { keyStr = _key; key = keyStr.tqunicode(); length = keyStr.length(); payload = _payload; hash = 0; }
+  { keyStr = _key; key = keyStr.unicode(); length = keyStr.length(); payload = _payload; hash = 0; }
   uint hash;
   int length;
   const TQChar *key;

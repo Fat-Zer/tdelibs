@@ -1586,7 +1586,7 @@ public:
    *
    * Convenience function.
    *
-   * Convert tqunicoded string to local encoding and use %%-style
+   * Convert unicoded string to local encoding and use %%-style
    * encoding for all common delimiters / non-ascii characters.
    *
    * @param str the string to encode (can be @c TQString::null)
@@ -1605,7 +1605,7 @@ public:
    *
    * Convenience function.
    *
-   * Convert tqunicoded string to local encoding and use %%-style
+   * Convert unicoded string to local encoding and use %%-style
    * encoding for all common delimiters and non-ascii characters
    * as well as the slash @c '/'.
    *
@@ -1623,7 +1623,7 @@ public:
    *
    * Convenience function.
    *
-   * Decode %-style encoding and convert from local encoding to tqunicode.
+   * Decode %-style encoding and convert from local encoding to unicode.
    *
    * Reverse of encode_string()
    *

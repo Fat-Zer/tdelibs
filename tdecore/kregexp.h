@@ -30,7 +30,7 @@ class KRegExpPrivate;
  *
  * This was implemented
  * because TQRegExp did not support back-references. It now does and
- * is recommended over KRegExp because of the tqunicode support and the
+ * is recommended over KRegExp because of the unicode support and the
  * more powerful API.
  *
  * Back-references are parts of a regexp grouped with parentheses. If a
@@ -53,7 +53,7 @@ class KRegExpPrivate;
  *  Weis
  * \endcode
  *
- * Please notice that KRegExp does @em not support tqunicode.
+ * Please notice that KRegExp does @em not support unicode.
  *
  * @author Torben Weis <weis@kde.org>
  */

@@ -107,7 +107,7 @@ void SourceDisplay::setSource(SourceFile *sourceFile)
   }
 
   TQString code = sourceFile->getCode();
-  const TQChar *chars = code.tqunicode();
+  const TQChar *chars = code.unicode();
   uint len = code.length();
   TQChar newLine('\n');
   TQChar cr('\r');
@@ -182,7 +182,7 @@ void SourceDisplay::showEvent(TQShowEvent *)
 void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, int cliph)
 {
   if (!m_sourceFile) {
-    p->fillRect(clipx,clipy,clipw,cliph,tqpalette().active().base());
+    p->fillRect(clipx,clipy,clipw,cliph,palette().active().base());
     return;
   }
 
@@ -207,9 +207,9 @@ void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, 
     TQString linenoStr = TQString().sprintf("%d",lineno+1);
 
 
-    p->fillRect(0,height*lineno,linenoWidth,height,tqpalette().active().mid());
+    p->fillRect(0,height*lineno,linenoWidth,height,palette().active().mid());
 
-    p->setPen(tqpalette().active().text());
+    p->setPen(palette().active().text());
     p->drawText(0,height*lineno,linenoWidth,height,Qt::AlignRight,linenoStr);
 
     TQColor bgColor;
@@ -220,13 +220,13 @@ void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, 
       textColor = tqpalette().active().highlightedText();
     }
     else if (m_debugWin->haveBreakpoint(m_sourceFile,lineno+1,lineno+1)) {
-      bgColor = tqpalette().active().text();
-      textColor = tqpalette().active().base();
+      bgColor = palette().active().text();
+      textColor = palette().active().base();
       p->drawPixmap(2,height*lineno+height/2-m_breakpointIcon.height()/2,m_breakpointIcon);
     }
     else {
-      bgColor = tqpalette().active().base();
-      textColor = tqpalette().active().text();
+      bgColor = palette().active().base();
+      textColor = palette().active().text();
     }
 
     p->fillRect(linenoWidth,height*lineno,right-linenoWidth,height,bgColor);
@@ -236,10 +236,10 @@ void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, 
   }
 
   int remainingTop = height*(lastLine+1);
-  p->fillRect(0,remainingTop,linenoWidth,bottom-remainingTop,tqpalette().active().mid());
+  p->fillRect(0,remainingTop,linenoWidth,bottom-remainingTop,palette().active().mid());
 
   p->fillRect(linenoWidth,remainingTop,
-	      right-linenoWidth,bottom-remainingTop,tqpalette().active().base());
+	      right-linenoWidth,bottom-remainingTop,palette().active().base());
 }
 
 //-------------------------------------------------------------------------

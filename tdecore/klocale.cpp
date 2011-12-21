@@ -1352,14 +1352,14 @@ TQString KLocale::formatDate(const TQDate &pDate, bool shortFormat) const
     {
       if ( !escape )
 	{
-	  if ( (TQChar(rst.at( format_index )).tqunicode()) == '%' )
+	  if ( (TQChar(rst.at( format_index )).unicode()) == '%' )
 	    escape = true;
 	  else
 	    buffer.append(rst.at(format_index));
 	}
       else
 	{
-	  switch ( TQChar(rst.at( format_index )).tqunicode() )
+	  switch ( TQChar(rst.at( format_index )).unicode() )
 	    {
 	    case '%':
 	      buffer.append('%');
@@ -1876,14 +1876,14 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
     {
       if ( !escape )
 	{
-	  if ( (TQChar(rst.at( format_index )).tqunicode()) == '%' )
+	  if ( (TQChar(rst.at( format_index )).unicode()) == '%' )
 	    escape = true;
 	  else
 	    buffer[index++] = rst.at( format_index );
 	}
       else
 	{
-	  switch ( TQChar(rst.at( format_index )).tqunicode() )
+	  switch ( TQChar(rst.at( format_index )).unicode() )
 	    {
 	    case '%':
 	      buffer[index++] = (QChar)'%';
@@ -1915,7 +1915,7 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
 	      number = pTime.hour();
 	    case 'l':
 	      // to share the code
-	      if ( (TQChar(rst.at( format_index )).tqunicode()) == 'l' )
+	      if ( (TQChar(rst.at( format_index )).unicode()) == 'l' )
 		number = isDuration ? pTime.hour() : (pTime.hour() + 11) % 12 + 1;
 	      if ( number / 10 )
 		buffer[index++] = number / 10 + '0';

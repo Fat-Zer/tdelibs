@@ -528,10 +528,10 @@ void KMenuBar::drawContents( TQPainter* p )
 
                 e = mi->isEnabledAndVisible();
                 if ( e )
-                    g = isEnabled() ? ( isActiveWindow() ? tqpalette().active() :
-                                        tqpalette().inactive() ) : tqpalette().disabled();
+                    g = isEnabled() ? ( isActiveWindow() ? palette().active() :
+                                        palette().inactive() ) : palette().disabled();
                 else
-                    g = tqpalette().disabled();
+                    g = palette().disabled();
 
                 bool item_active = ( actItem ==  i );
 
@@ -548,12 +548,12 @@ void KMenuBar::drawContents( TQPainter* p )
                         flags |= TQStyle::Style_Down;
                     flags |= TQStyle::Style_HasFocus;
 
-                    tqstyle().drawControl(TQStyle::CE_MenuBarItem, p, this,
+                    style().drawControl(TQStyle::CE_MenuBarItem, p, this,
                                         r, g, flags, TQStyleOption(mi));
                 }
                 else
                 {
-                    tqstyle().drawItem(p, r, AlignCenter | AlignVCenter | ShowPrefix,
+                    style().drawItem(p, r, AlignCenter | AlignVCenter | ShowPrefix,
                                      g, e, mi->pixmap(), mi->text());
                 }
             }

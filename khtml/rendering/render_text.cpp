@@ -1036,7 +1036,7 @@ void RenderText::calcMinMaxWidth()
     bool firstLine = true;
     for(int i = 0; i < len; i++)
     {
-        unsigned short c = str->s[i].tqunicode();
+        unsigned short c = str->s[i].unicode();
         bool isNewline = false;
 
         // If line-breaks survive to here they are preserved
@@ -1056,7 +1056,7 @@ void RenderText::calcMinMaxWidth()
             continue;
 
         int wordlen = 0;
-        while( i+wordlen < len && (i+wordlen == 0 || str->s[i+wordlen].tqunicode() != SOFT_HYPHEN) &&
+        while( i+wordlen < len && (i+wordlen == 0 || str->s[i+wordlen].unicode() != SOFT_HYPHEN) &&
                !(isBreakable( str->s, i+wordlen, str->l )) )
             wordlen++;
 
@@ -1470,7 +1470,7 @@ static TQString quoteAndEscapeNonPrintables(const TQString &s)
         } else if (c == '"') {
             result += "\\\"";
         } else {
-            ushort u = c.tqunicode();
+            ushort u = c.unicode();
             if (u >= 0x20 && u < 0x7F) {
                 result += c;
             } else {

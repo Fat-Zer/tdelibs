@@ -144,7 +144,7 @@ namespace KJS {
     int bol;     // begin of line
 #endif
 
-    // current and following tqunicode characters (int to allow for -1 for end-of-file marker)
+    // current and following unicode characters (int to allow for -1 for end-of-file marker)
     int current, next1, next2, next3;
 
     UString **strings;

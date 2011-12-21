@@ -795,10 +795,10 @@ int KateIconBorder::lineNumberWidth() const
   int width = m_lineNumbersOn ? ((int)log10((double)(m_view->doc()->numLines())) + 1) * m_maxCharWidth + 4 : 0;
 
   if (m_view->dynWordWrap() && m_dynWrapIndicatorsOn) {
-    width = kMax(tqstyle().scrollBarExtent().width() + 4, width);
+    width = kMax(style().scrollBarExtent().width() + 4, width);
 
     if (m_cachedLNWidth != width || m_oldBackgroundColor != m_view->renderer()->config()->iconBarColor()) {
-      int w = tqstyle().scrollBarExtent().width();
+      int w = style().scrollBarExtent().width();
       int h = m_view->renderer()->config()->fontMetrics()->height();
 
       TQSize newSize(w, h);

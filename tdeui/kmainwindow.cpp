@@ -1197,7 +1197,7 @@ TQSize KMainWindow::sizeForCentralWidgetSize(TQSize size)
             break;
 
           case KToolBar::Flat:
-            size += TQSize(0, 3+kapp->tqstyle().pixelMetric( TQStyle::PM_DockWindowHandleExtent ));
+            size += TQSize(0, 3+kapp->style().pixelMetric( TQStyle::PM_DockWindowHandleExtent ));
             break;
 
           default:
@@ -1207,7 +1207,7 @@ TQSize KMainWindow::sizeForCentralWidgetSize(TQSize size)
     KMenuBar *mb = internalMenuBar();
     if (mb && !mb->isHidden()) {
         size += TQSize(0,mb->heightForWidth(size.width()));
-        if (tqstyle().styleHint(TQStyle::SH_MainWindow_SpaceBelowMenuBar, this))
+        if (style().styleHint(TQStyle::SH_MainWindow_SpaceBelowMenuBar, this))
            size += TQSize( 0, dockWindowsMovable() ? 1 : 2);
     }
     TQStatusBar *sb = internalStatusBar();

@@ -262,7 +262,7 @@ static TQString literalString( const TQString &s )
 {
   bool isAscii = true;
   for(int i = s.length(); i--;)
-     if (s[i].tqunicode() > 127) isAscii = false;
+     if (s[i].unicode() > 127) isAscii = false;
 
   if (isAscii)
      return "TQString::fromLatin1( " + quoteString(s) + " )";

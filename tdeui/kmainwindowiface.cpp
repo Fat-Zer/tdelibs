@@ -135,7 +135,7 @@ int KMainWindowInterface::getWinID()
 }
 void KMainWindowInterface::grabWindowToClipBoard()
 {
-	TQClipboard *clipboard = TQApplication::tqclipboard();
+	TQClipboard *clipboard = TQApplication::clipboard();
 	clipboard->setPixmap(TQPixmap::grabWidget(m_MainWindow));
 }
 void KMainWindowInterface::hide()

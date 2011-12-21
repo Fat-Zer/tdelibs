@@ -662,7 +662,7 @@ void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
 
     //kdDebug( 6000 ) << "drawContents this="<< this <<" x=" << ex << ",y=" << ey << ",w=" << ew << ",h=" << eh << endl;
     if(!m_part || !m_part->xmlDocImpl() || !m_part->xmlDocImpl()->renderer()) {
-        p->fillRect(ex, ey, ew, eh, tqpalette().active().brush(TQColorGroup::Base));
+        p->fillRect(ex, ey, ew, eh, palette().active().brush(TQColorGroup::Base));
         return;
     } else if ( d->complete && static_cast<RenderCanvas*>(m_part->xmlDocImpl()->renderer())->needsLayout() ) {
         // an external update request happens while we have a layout scheduled
@@ -726,7 +726,7 @@ void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
             d->vertPaintBuffer->resize(10, visibleHeight());
         d->tp->begin(d->vertPaintBuffer);
         d->tp->translate(-ex, -ey);
-        d->tp->fillRect(ex, ey, ew, eh, tqpalette().active().brush(TQColorGroup::Base));
+        d->tp->fillRect(ex, ey, ew, eh, palette().active().brush(TQColorGroup::Base));
         m_part->xmlDocImpl()->renderer()->layer()->paint(d->tp, TQRect(ex, ey, ew, eh));
         d->tp->end();
 	p->drawPixmap(ex, ey, *d->vertPaintBuffer, 0, 0, ew, eh);
@@ -740,7 +740,7 @@ void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
             int ph = eh-py < PAINT_BUFFER_HEIGHT ? eh-py : PAINT_BUFFER_HEIGHT;
             d->tp->begin(d->paintBuffer);
             d->tp->translate(-ex, -ey-py);
-            d->tp->fillRect(ex, ey+py, ew, ph, tqpalette().active().brush(TQColorGroup::Base));
+            d->tp->fillRect(ex, ey+py, ew, ph, palette().active().brush(TQColorGroup::Base));
             m_part->xmlDocImpl()->renderer()->layer()->paint(d->tp, TQRect(ex, ey+py, ew, ph));
             d->tp->end();
 
@@ -756,7 +756,7 @@ static int cnt=0;
 	kdDebug() << "[" << ++cnt << "]" << " clip region: " << pr << endl;
 //	p->setClipRegion(TQRect(0,0,ew,eh));
 //        p->translate(-ex, -ey);
-        p->fillRect(ex, ey, ew, eh, tqpalette().active().brush(TQColorGroup::Base));
+        p->fillRect(ex, ey, ew, eh, palette().active().brush(TQColorGroup::Base));
         m_part->xmlDocImpl()->renderer()->layer()->paint(p, pr);
 #endif // DEBUG_NO_PAINT_BUFFER
 
@@ -4430,7 +4430,7 @@ void KHTMLView::placeCaretOnChar(CaretBox *hintBox)
   d->m_caretViewContext->origX = d->m_caretViewContext->x;
   d->scrollBarMoved = false;
 #if DEBUG_CARETMODE > 3
-  //if (caretNode->isTextNode())  kdDebug(6200) << "text[0] = " << (int)*((TextImpl *)caretNode)->data().tqunicode() << " text :\"" << ((TextImpl *)caretNode)->data().string() << "\"" << endl;
+  //if (caretNode->isTextNode())  kdDebug(6200) << "text[0] = " << (int)*((TextImpl *)caretNode)->data().unicode() << " text :\"" << ((TextImpl *)caretNode)->data().string() << "\"" << endl;
 #endif
   ensureNodeHasFocus(m_part->d->caretNode().handle());
   caretOn();

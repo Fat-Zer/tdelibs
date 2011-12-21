@@ -452,7 +452,7 @@ void BrowserExtension::slotCompleted()
 void BrowserExtension::pasteRequest()
 {
     TQCString plain( "plain" );
-    TQString url = TQApplication::tqclipboard()->text(plain, TQClipboard::Selection).stripWhiteSpace();
+    TQString url = TQApplication::clipboard()->text(plain, TQClipboard::Selection).stripWhiteSpace();
     // Remove linefeeds and any whitespace surrounding it.
     url.remove(TQRegExp("[\\ ]*\\n+[\\ ]*"));
 

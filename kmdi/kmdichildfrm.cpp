@@ -534,9 +534,9 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			// restore client min / max size / layout behavior
 			m_pClient->setMinimumSize( m_oldClientMinSize.width(), m_oldClientMinSize.height() );
 			m_pClient->setMaximumSize( m_oldClientMaxSize.width(), m_oldClientMaxSize.height() );
-			if ( m_pClient->tqlayout() != 0L )
+			if ( m_pClient->layout() != 0L )
 			{
-				m_pClient->tqlayout() ->setResizeMode( m_oldLayoutResizeMode );
+				m_pClient->layout() ->setResizeMode( m_oldLayoutResizeMode );
 			}
 			m_pMinimize->setPixmap( *m_pMinButtonPixmap );
 			m_pMaximize->setPixmap( *m_pMaxButtonPixmap );
@@ -558,9 +558,9 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 				// restore client min / max size / layout behavior
 				m_pClient->setMinimumSize( m_oldClientMinSize.width(), m_oldClientMinSize.height() );
 				m_pClient->setMaximumSize( m_oldClientMaxSize.width(), m_oldClientMaxSize.height() );
-				if ( m_pClient->tqlayout() != 0L )
+				if ( m_pClient->layout() != 0L )
 				{
-					m_pClient->tqlayout() ->setResizeMode( m_oldLayoutResizeMode );
+					m_pClient->layout() ->setResizeMode( m_oldLayoutResizeMode );
 				}
 				setMaximumSize( TQWIDGETSIZE_MAX, TQWIDGETSIZE_MAX );
 				// reset to maximize-captionbar
@@ -610,15 +610,15 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			// save client min / max size / layout behavior
 			m_oldClientMinSize = m_pClient->minimumSize();
 			m_oldClientMaxSize = m_pClient->maximumSize();
-			if ( m_pClient->tqlayout() != 0L )
+			if ( m_pClient->layout() != 0L )
 			{
-				m_oldLayoutResizeMode = m_pClient->tqlayout() ->resizeMode();
+				m_oldLayoutResizeMode = m_pClient->layout() ->resizeMode();
 			}
 			m_pClient->setMinimumSize( 0, 0 );
 			m_pClient->setMaximumSize( 0, 0 );
-			if ( m_pClient->tqlayout() != 0L )
+			if ( m_pClient->layout() != 0L )
 			{
-				m_pClient->tqlayout() ->setResizeMode( TQLayout::FreeResize );
+				m_pClient->layout() ->setResizeMode( TQLayout::FreeResize );
 			}
 			switchToMinimizeLayout();
 			m_pManager->childMinimized( this, true );
@@ -629,16 +629,16 @@ void KMdiChildFrm::setState( MdiWindowState state, bool /*bAnimate*/ )
 			// save client min / max size / layout behavior
 			m_oldClientMinSize = m_pClient->minimumSize();
 			m_oldClientMaxSize = m_pClient->maximumSize();
-			if ( m_pClient->tqlayout() != 0L )
+			if ( m_pClient->layout() != 0L )
 			{
-				m_oldLayoutResizeMode = m_pClient->tqlayout() ->resizeMode();
+				m_oldLayoutResizeMode = m_pClient->layout() ->resizeMode();
 			}
 			m_restoredRect = geometry();
 			m_pClient->setMinimumSize( 0, 0 );
 			m_pClient->setMaximumSize( 0, 0 );
-			if ( m_pClient->tqlayout() != 0L )
+			if ( m_pClient->layout() != 0L )
 			{
-				m_pClient->tqlayout() ->setResizeMode( TQLayout::FreeResize );
+				m_pClient->layout() ->setResizeMode( TQLayout::FreeResize );
 			}
 			switchToMinimizeLayout();
 			m_pManager->childMinimized( this, false );

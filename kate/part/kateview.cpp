@@ -1613,7 +1613,7 @@ void KateView::copy() const
   if (!hasSelection())
     return;
 
-  TQApplication::tqclipboard()->setText(selection ());
+  TQApplication::clipboard()->setText(selection ());
 }
 
 void KateView::copyHTML()
@@ -1629,7 +1629,7 @@ void KateView::copyHTML()
   drag->addDragObject( htmltextdrag);
   drag->addDragObject( new TQTextDrag( selection()));
 
-  TQApplication::tqclipboard()->setData(drag);
+  TQApplication::clipboard()->setData(drag);
 }
 
 TQString KateView::selectionAsHtml()

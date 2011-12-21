@@ -329,7 +329,7 @@ void RenderCanvas::paintBoxDecorations(PaintInfo& paintInfo, int /*_tx*/, int /*
     if ((firstChild() && firstChild()->style()->visibility() == VISIBLE) || !view())
         return;
 
-    paintInfo.p->fillRect(paintInfo.r, view()->tqpalette().active().color(TQColorGroup::Base));
+    paintInfo.p->fillRect(paintInfo.r, view()->palette().active().color(TQColorGroup::Base));
 }
 
 void RenderCanvas::repaintRectangle(int x, int y, int w, int h, Priority p, bool f)

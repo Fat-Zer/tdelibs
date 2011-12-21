@@ -108,7 +108,7 @@ void AsteroidStyle::polish(TQWidget *w)
 {
 /*	Screwing with the palette is fun! and required in order to make it feel
 	authentic. -clee */
-	TQPalette wp = w->tqpalette();
+	TQPalette wp = w->palette();
 	//wp.setColor(TQColorGroup::Dark, wp.active().color(TQColorGroup::Button).dark(350));
 	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
 	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
@@ -149,7 +149,7 @@ void AsteroidStyle::unPolish(TQWidget *w)
 void
 AsteroidStyle::polish( TQApplication* app)
 {
-	TQPalette wp = TQApplication::tqpalette();
+	TQPalette wp = TQApplication::palette();
 	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
 	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
 	TQApplication::setPalette( wp, TRUE );
@@ -1425,7 +1425,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			}
 
 			if (!pb->text().isNull()) {
-				p->setPen(POPUPMENUITEM_TEXT_ETCH_CONDITIONS?cg.dark():(enabled ? cg.buttonText() : pb->tqpalette().disabled().buttonText()));
+				p->setPen(POPUPMENUITEM_TEXT_ETCH_CONDITIONS?cg.dark():(enabled ? cg.buttonText() : pb->palette().disabled().buttonText()));
 				if (pb->iconSet() && !pb->iconSet()->isNull()) {
 					TQRect tpr(dx, r.y(), r.width()-dx, r.height());
 					TQRect tr(p->boundingRect(tpr, text_flags, pb->text()));

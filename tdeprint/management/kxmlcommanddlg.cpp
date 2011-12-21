@@ -230,9 +230,9 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	l5->addWidget(m_edit1, 0, 1);
 	l5->addWidget(m_edit2, 1, 1);
 
-	TQGridLayout	*l8 = new TQGridLayout(gb_input->tqlayout(), 2, 2,
+	TQGridLayout	*l8 = new TQGridLayout(gb_input->layout(), 2, 2,
 		KDialog::spacingHint());
-	TQGridLayout	*l9 = new TQGridLayout(gb_output->tqlayout(), 2, 2,
+	TQGridLayout	*l9 = new TQGridLayout(gb_output->layout(), 2, 2,
 		KDialog::spacingHint());
 	l8->addWidget(m_inputfilelab, 0, 0);
 	l8->addWidget(m_inputpipelab, 1, 0);
@@ -243,7 +243,7 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	l9->addWidget(m_outputfile, 0, 1);
 	l9->addWidget(m_outputpipe, 1, 1);
 
-	TQVBoxLayout	*l11 = new TQVBoxLayout(TQT_TQLAYOUT(gb->tqlayout()));
+	TQVBoxLayout	*l11 = new TQVBoxLayout(TQT_TQLAYOUT(gb->layout()));
 	l11->addWidget(m_stack);
 
 	TQVBoxLayout *l12 = new TQVBoxLayout( 0, 0, 0 );
@@ -895,14 +895,14 @@ KXmlCommandDlg::KXmlCommandDlg(TQWidget *parent, const char *name)
 	l6->addWidget(m_mimetypelab, 0);
 	l6->addWidget(m_mimetype, 1);
 	l7->addWidget(m_gb1);
-	TQGridLayout	*l2 = new TQGridLayout(TQT_TQLAYOUT(m_gb1->tqlayout()), 4, 3, 10);
+	TQGridLayout	*l2 = new TQGridLayout(TQT_TQLAYOUT(m_gb1->layout()), 4, 3, 10);
 	l2->addMultiCellWidget(m_availablemime, 0, 3, 2, 2);
 	l2->addMultiCellWidget(m_selectedmime, 0, 3, 0, 0);
 	l2->addWidget(m_addmime, 1, 1);
 	l2->addWidget(m_removemime, 2, 1);
 	l2->setRowStretch(0, 1);
 	l2->setRowStretch(3, 1);
-	TQHBoxLayout	*l4 = new TQHBoxLayout(TQT_TQLAYOUT(m_gb2->tqlayout()), 10);
+	TQHBoxLayout	*l4 = new TQHBoxLayout(TQT_TQLAYOUT(m_gb2->layout()), 10);
 	l4->addWidget(m_requirements);
 	TQVBoxLayout	*l8 = new TQVBoxLayout(0, 0, 0);
 	l4->addLayout(l8);

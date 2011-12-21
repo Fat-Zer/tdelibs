@@ -1928,7 +1928,7 @@ void KeramikStyle::drawControlMask( TQ_ControlElement element,
 {
 	p->fillRect(r, color1);
 	maskMode = true;
-	drawControl( element, p, widget, r, TQApplication::tqpalette().active(), TQStyle::Style_Default, opt);
+	drawControl( element, p, widget, r, TQApplication::palette().active(), TQStyle::Style_Default, opt);
 	maskMode = false;
 }
 
@@ -2330,7 +2330,7 @@ void KeramikStyle::drawComplexControlMask( TQ_ComplexControl control,
 	{
 		maskMode = true;
 		drawComplexControl(CC_ComboBox, p, widget, r,
-				TQApplication::tqpalette().active(), Style_Default,
+				TQApplication::palette().active(), Style_Default,
 				SC_ComboBoxFrame,SC_None, opt);
 		maskMode = false;
 
@@ -2778,7 +2778,7 @@ bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
 		TQWidget* widget = TQT_TQWIDGET( object );
 		TQPainter p( widget );
 		Keramik::RectTilePainter( keramik_frame_shadow, false, false, 2, 2 ).draw( &p, widget->rect(),
-			widget->tqpalette().color( TQPalette::Normal, TQColorGroup::Button ),
+			widget->palette().color( TQPalette::Normal, TQColorGroup::Button ),
 			Qt::black, false, Keramik::TilePainter::PaintFullBlend);
 		recursion = false;
 		return true;
@@ -2825,8 +2825,8 @@ bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
 				{
 					TQPainter p( listbox );
 					Keramik::RectTilePainter( keramik_combobox_list, false, false ).draw( &p, 0, 0, listbox->width(), listbox->height(),
-							listbox->tqpalette().color( TQPalette::Normal, TQColorGroup::Button ),
-							listbox->tqpalette().color( TQPalette::Normal, TQColorGroup::Background ) );
+							listbox->palette().color( TQPalette::Normal, TQColorGroup::Button ),
+							listbox->palette().color( TQPalette::Normal, TQColorGroup::Background ) );
 		
 					TQPaintEvent newpaint( paint->region().intersect( listbox->contentsRect() ), paint->erased() );
 					recursion = true;

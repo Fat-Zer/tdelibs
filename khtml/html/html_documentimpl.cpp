@@ -235,7 +235,7 @@ HTMLMapElementImpl* HTMLDocumentImpl::getMap(const DOMString& _url)
     TQString s;
     int pos = url.find('#');
     //kdDebug(0) << "map pos of #:" << pos << endl;
-    s = TQString(_url.tqunicode() + pos + 1, _url.length() - pos - 1);
+    s = TQString(_url.unicode() + pos + 1, _url.length() - pos - 1);
 
     TQMapConstIterator<TQString,HTMLMapElementImpl*> it = mapMap.find(s);
 

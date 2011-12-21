@@ -117,9 +117,9 @@ void KFindDialog::init(bool forReplace, const TQStringList &findStrings, bool ha
     topLayout->setMargin( 0 );
 
     m_findGrp = new TQGroupBox(0, Qt::Vertical, i18n("Find"), page);
-    m_findGrp->tqlayout()->setSpacing( KDialog::spacingHint() );
-   // m_findGrp->tqlayout()->setMargin( KDialog::marginHint() );
-    m_findLayout = new TQGridLayout(m_findGrp->tqlayout());
+    m_findGrp->layout()->setSpacing( KDialog::spacingHint() );
+   // m_findGrp->layout()->setMargin( KDialog::marginHint() );
+    m_findLayout = new TQGridLayout(m_findGrp->layout());
     m_findLayout->setSpacing( KDialog::spacingHint() );
    // m_findLayout->setMargin( KDialog::marginHint() );
 
@@ -138,9 +138,9 @@ void KFindDialog::init(bool forReplace, const TQStringList &findStrings, bool ha
     topLayout->addWidget(m_findGrp);
 
     m_replaceGrp = new TQGroupBox(0, Qt::Vertical, i18n("Replace With"), page);
-    m_replaceGrp->tqlayout()->setSpacing( KDialog::spacingHint() );
-  //  m_replaceGrp->tqlayout()->setMargin( KDialog::marginHint() );
-    m_replaceLayout = new TQGridLayout(m_replaceGrp->tqlayout());
+    m_replaceGrp->layout()->setSpacing( KDialog::spacingHint() );
+  //  m_replaceGrp->layout()->setMargin( KDialog::marginHint() );
+    m_replaceLayout = new TQGridLayout(m_replaceGrp->layout());
     m_replaceLayout->setSpacing( KDialog::spacingHint() );
 //    m_replaceLayout->setMargin( KDialog::marginHint() );
 
@@ -159,9 +159,9 @@ void KFindDialog::init(bool forReplace, const TQStringList &findStrings, bool ha
     topLayout->addWidget(m_replaceGrp);
 
     m_optionGrp = new TQGroupBox(0, Qt::Vertical, i18n("Options"), page);
-    m_optionGrp->tqlayout()->setSpacing(KDialog::spacingHint());
-  //  m_optionGrp->tqlayout()->setMargin(KDialog::marginHint());
-    optionsLayout = new TQGridLayout(m_optionGrp->tqlayout());
+    m_optionGrp->layout()->setSpacing(KDialog::spacingHint());
+  //  m_optionGrp->layout()->setMargin(KDialog::marginHint());
+    optionsLayout = new TQGridLayout(m_optionGrp->layout());
     optionsLayout->setSpacing( KDialog::spacingHint() );
    // optionsLayout->setMargin( KDialog::marginHint() );
 

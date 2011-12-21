@@ -138,7 +138,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	l0->addWidget(sep);
 	l0->addWidget(m_gb);
 	l0->addWidget(m_outfile_gb);
-	TQGridLayout	*l6 = new TQGridLayout(m_outfile_gb->tqlayout(), 3, 2, 10);
+	TQGridLayout	*l6 = new TQGridLayout(m_outfile_gb->layout(), 3, 2, 10);
 	l6->addMultiCellWidget( m_usefile, 0, 0, 0, 1 );
 	l6->addWidget(m_mimetypelabel, 1, 0);
 	l6->addWidget(m_mimetype, 1, 1);

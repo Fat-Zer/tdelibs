@@ -796,11 +796,11 @@ public:
    * Note that the encoding is illegible and, thus, should not be presented
    * to the user, except if requested.
    *
-   * @param tqunicodeDomain	the domain name to be encoded
+   * @param unicodeDomain	the domain name to be encoded
    * @return the ACE-encoded suitable for DNS queries if successful, a null
    *	     TQCString if failure.
    */
-  static TQCString domainToAscii(const TQString& tqunicodeDomain);
+  static TQCString domainToAscii(const TQString& unicodeDomain);
 
   /**
    * Does the inverse of @ref domainToAscii and return an Unicode domain

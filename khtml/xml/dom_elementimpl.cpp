@@ -855,7 +855,7 @@ DOMString ElementImpl::toString() const
 
 	for (NodeImpl *child = firstChild(); child != NULL; child = child->nextSibling()) {
 	    DOMString kid = child->toString();
-	    result += TQConstString(kid.tqunicode(), kid.length()).string();
+	    result += TQConstString(kid.unicode(), kid.length()).string();
 	}
 
 	result += "</";

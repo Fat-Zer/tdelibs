@@ -684,9 +684,9 @@ static int heb2num(const TQString& str, int & iLength) {
     {
       if (s.length() > pos && s[pos + 1] >= TQChar(0x05D0) &&
           s[pos + 1] <= TQChar(0x05EA))
-        result += (c.tqunicode() - 0x05D0 + 1) * 1000;
+        result += (c.unicode() - 0x05D0 + 1) * 1000;
       else
-        result += c.tqunicode() - 0x05D0 + 1;
+        result += c.unicode() - 0x05D0 + 1;
     }
     else if (c == TQChar(0x05D8))
     {
@@ -702,11 +702,11 @@ static int heb2num(const TQString& str, int & iLength) {
       if (s.length() > pos && s[pos + 1] >= TQChar(0x05D9))
         return -1;
       else
-        result += decadeValues[c.tqunicode() - 0x05D9];
+        result += decadeValues[c.unicode() - 0x05D9];
     }
     else if (c >= TQChar(0x05E7) && c <= TQChar(0x05EA))
     {
-      result += (c.tqunicode() - 0x05E7 + 1) * 100;
+      result += (c.unicode() - 0x05E7 + 1) * 100;
     }
     else
     {

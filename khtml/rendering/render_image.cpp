@@ -266,7 +266,7 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
             if ( !berrorPic ) {
                 //qDebug("qDrawShadePanel %d/%d/%d/%d", _tx + leftBorder, _ty + topBorder, cWidth, cHeight);
                 qDrawShadePanel( paintInfo.p, _tx + leftBorder + leftPad, _ty + topBorder + topPad, cWidth, cHeight,
-                                 KApplication::tqpalette().inactive(), true, 1 );
+                                 KApplication::palette().inactive(), true, 1 );
             }
             TQPixmap const* pix = i ? &i->pixmap() : 0;
             if(berrorPic && pix && (cWidth >= pix->width()+4) && (cHeight >= pix->height()+4) )

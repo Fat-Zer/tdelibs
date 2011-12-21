@@ -1411,7 +1411,7 @@ void KateXmlIndent::getLineInfo (uint line, uint &prevIndent, int &numTags,
   uint pos, len = text.length();
   bool seenOpen = false;
   for(pos = 0; pos < len; ++pos) {
-    int ch = text.at(pos).tqunicode();
+    int ch = text.at(pos).unicode();
     switch(ch) {
       case '<':
         seenOpen = true;
@@ -1467,11 +1467,11 @@ void KateXmlIndent::getLineInfo (uint line, uint &prevIndent, int &numTags,
   if(unclosedTag) {
     // find the start of the next attribute, so we can align with it
     do {
-      lastCh = text.at(++attrCol).tqunicode();
+      lastCh = text.at(++attrCol).unicode();
     }while(lastCh && lastCh != ' ' && lastCh != '\t');
 
     while(lastCh == ' ' || lastCh == '\t') {
-      lastCh = text.at(++attrCol).tqunicode();
+      lastCh = text.at(++attrCol).unicode();
     }
 
     attrCol = prevLine->cursorX(attrCol, tabWidth);

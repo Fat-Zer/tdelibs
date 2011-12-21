@@ -121,7 +121,7 @@ inline TQString extract(const TQString &buf, int &pos, TQChar c1,
 		TQChar c2 = '\0', TQChar c3 = '\0') {
   int oldpos = pos;
   pos = find(buf,oldpos,c1,c2,c3);
-  return TQString(buf.tqunicode() + oldpos, pos - oldpos);
+  return TQString(buf.unicode() + oldpos, pos - oldpos);
 }
 
 /** ignores all whitespaces

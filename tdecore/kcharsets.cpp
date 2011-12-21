@@ -202,7 +202,7 @@ static struct Builtin
     { "ascii", "iso 8859-1" },
     { "x-utf-8", "utf-8" },
     { "x-utf-7", "utf-7" }, // ### FIXME: UTF-7 is not in Qt 
-    { "tqunicode-1-1-utf-7", "utf-7" }, // ### FIXME: UTF-7 is not in Qt
+    { "unicode-1-1-utf-7", "utf-7" }, // ### FIXME: UTF-7 is not in Qt
     { "utf-16", "iso-10646-ucs-2" },
     { "utf16", "iso-10646-ucs-2" },
     { "ucs2", "iso-10646-ucs-2" },
@@ -381,11 +381,11 @@ TQChar KCharsets::fromEntity(const TQString &str)
         if (str[pos] == (QChar)'x' || str[pos] == (QChar)'X') {
             pos++;
             // '&#x0000', hexadeciaml character reference
-            TQString tmp(str.tqunicode()+pos, str.length()-pos);
+            TQString tmp(str.unicode()+pos, str.length()-pos);
             res = tmp.toInt(&ok, 16);
         } else {
             //  '&#0000', decimal character reference
-            TQString tmp(str.tqunicode()+pos, str.length()-pos);
+            TQString tmp(str.unicode()+pos, str.length()-pos);
             res = tmp.toInt(&ok, 10);
         }
         return res;
@@ -422,14 +422,14 @@ TQChar KCharsets::fromEntity(const TQString &str, int &len)
 TQString KCharsets::toEntity(const TQChar &ch)
 {
     TQString ent;
-    ent.sprintf("&#0x%x;", ch.tqunicode());
+    ent.sprintf("&#0x%x;", ch.unicode());
     return ent;
 }
 
 TQString KCharsets::resolveEntities( const TQString &input )
 {
     TQString text = input;
-    const TQChar *p = text.tqunicode();
+    const TQChar *p = text.unicode();
     const TQChar *end = p + text.length();
     const TQChar *ampersand = 0;
     bool scanForSemicolon = false;
@@ -460,12 +460,12 @@ TQString KCharsets::resolveEntities( const TQString &input )
         if ( entityValue.isNull() )
             continue;
 
-        const uint ampersandPos = ampersand - text.tqunicode();
+        const uint ampersandPos = ampersand - text.unicode();
 
         text[ (int)ampersandPos ] = entityValue;
         text.remove( ampersandPos + 1, entityLength + 1 );
-        p = text.tqunicode() + ampersandPos;
-        end = text.tqunicode() + text.length();
+        p = text.unicode() + ampersandPos;
+        end = text.unicode() + text.length();
         ampersand = 0;
     }
 

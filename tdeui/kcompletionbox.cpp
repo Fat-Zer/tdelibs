@@ -361,7 +361,7 @@ TQRect KCompletionBox::calculateGeometry() const
              comboCorner.y() - parentCorner.y();
 
         //Ask the style to refine this a bit
-        TQRect styleAdj = tqstyle().querySubControlMetrics(TQStyle::CC_ComboBox,
+        TQRect styleAdj = style().querySubControlMetrics(TQStyle::CC_ComboBox,
                                     cb, TQStyle::SC_ComboBoxListBoxPopup,
                                     TQStyleOption(x, y, w, h));
         //TQCommonStyle returns TQRect() by default, so this is what we get if the

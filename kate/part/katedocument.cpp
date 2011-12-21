@@ -1187,7 +1187,7 @@ bool KateDocument::editInsertText ( uint line, uint col, const TQString &str )
 
   editAddUndo (KateUndoGroup::editInsertText, line, col, s.length(), s);
 
-  l->insertText (col, s.length(), s.tqunicode());
+  l->insertText (col, s.length(), s.unicode());
 //   removeTrailingSpace(line); // ### nessecary?
 
   m_buffer->changeLine(line);
@@ -1410,7 +1410,7 @@ bool KateDocument::editInsertLine ( uint line, const TQString &s )
   removeTrailingSpace( line ); // old line
 
   KateTextLine::Ptr tl = new KateTextLine();
-  tl->insertText (0, s.length(), s.tqunicode(), 0);
+  tl->insertText (0, s.length(), s.unicode(), 0);
   m_buffer->insertLine(line, tl);
   m_buffer->changeLine(line);
 
@@ -2589,7 +2589,7 @@ bool KateDocument::saveFile()
   //
   if (!m_buffer->canEncode ()
        && (KMessageBox::warningContinueCancel(0,
-           i18n("The selected encoding cannot encode every tqunicode character in this document. Do you really want to save it? There could be some data lost."),i18n("Possible Data Loss"),i18n("Save Nevertheless")) != KMessageBox::Continue))
+           i18n("The selected encoding cannot encode every unicode character in this document. Do you really want to save it? There could be some data lost."),i18n("Possible Data Loss"),i18n("Save Nevertheless")) != KMessageBox::Continue))
   {
     return false;
   }
@@ -3227,7 +3227,7 @@ void KateDocument::del( KateView *view, const KateTextCursor& c )
 
 void KateDocument::paste ( KateView* view )
 {
-  TQString s = TQApplication::tqclipboard()->text();
+  TQString s = TQApplication::clipboard()->text();
 
   if (s.isEmpty())
     return;

@@ -786,7 +786,7 @@ RenderStyle::Diff RenderStyle::diff( const RenderStyle *other ) const
              !(noninherited_flags.f._position == other->noninherited_flags.f._position) ||
              !(noninherited_flags.f._floating == other->noninherited_flags.f._floating) ||
              !(noninherited_flags.f._flowAroundFloats == other->noninherited_flags.f._flowAroundFloats) ||
-             !(noninherited_flags.f._tqunicodeBidi == other->noninherited_flags.f._tqunicodeBidi) )
+             !(noninherited_flags.f._unicodeBidi == other->noninherited_flags.f._unicodeBidi) )
             return CbLayout;
     }
 

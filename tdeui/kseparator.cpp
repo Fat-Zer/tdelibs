@@ -95,7 +95,7 @@ void KSeparator::drawFrame(TQPainter *p)
    }
 
    TQStyleOption opt( lineWidth(), midLineWidth() );
-   tqstyle().tqdrawPrimitive( TQStyle::PE_Separator, p, TQRect( p1, p2 ), g,
+   style().tqdrawPrimitive( TQStyle::PE_Separator, p, TQRect( p1, p2 ), g,
 		          TQStyle::Style_Sunken, opt );
 }
 

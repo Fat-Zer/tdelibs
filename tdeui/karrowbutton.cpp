@@ -63,7 +63,7 @@ void KArrowButton::drawButton(TQPainter *p)
 	const unsigned int margin = 2;
 	
         p->fillRect( rect(), colorGroup().brush( TQColorGroup::Background ) );
-	tqstyle().tqdrawPrimitive( TQStyle::PE_Panel, p, TQRect( 0, 0, width(), height() ),
+	style().tqdrawPrimitive( TQStyle::PE_Panel, p, TQRect( 0, 0, width(), height() ),
 			       colorGroup(), 
 			       isDown() ? TQStyle::Style_Sunken : TQStyle::Style_Default,
 			       TQStyleOption( 2, 0 ) );
@@ -103,7 +103,7 @@ void KArrowButton::drawButton(TQPainter *p)
 	int flags = TQStyle::Style_Enabled;
 	if ( isDown() )
 		flags |= TQStyle::Style_Down;
-	tqstyle().tqdrawPrimitive( e, p, TQRect( TQPoint( x, y ), TQSize( arrowSize, arrowSize ) ),
+	style().tqdrawPrimitive( e, p, TQRect( TQPoint( x, y ), TQSize( arrowSize, arrowSize ) ),
 			       colorGroup(), flags );
 }
 

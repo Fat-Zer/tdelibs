@@ -293,7 +293,7 @@ int Font::width( TQChar *chs, int, int pos, int len, int start, int end, int toA
     const TQString qstr = cstr.string();
     if ( scFont ) {
 	const TQString upper = qstr.upper();
-	const TQChar *uc = qstr.tqunicode();
+	const TQChar *uc = qstr.unicode();
 	const TQFontMetrics sc_fm( *scFont );
 	for ( int i = 0; i < len; ++i ) {
 	    if ( (uc+i)->category() == TQChar::Letter_Lowercase )

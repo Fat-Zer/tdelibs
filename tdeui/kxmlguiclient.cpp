@@ -760,9 +760,9 @@ TQString KXMLGUIClient::findVersionNumber( const TQString &xml )
         unsigned int endpos;
         for (endpos = pos; endpos <  xml.length(); endpos++)
         {
-          if (xml[endpos].tqunicode() >= '0' && xml[endpos].tqunicode() <= '9')
+          if (xml[endpos].unicode() >= '0' && xml[endpos].unicode() <= '9')
             continue; //Number..
-          if (xml[endpos].tqunicode() == '"') //End of parameter
+          if (xml[endpos].unicode() == '"') //End of parameter
             break;
           else //This shouldn't be here..
           {

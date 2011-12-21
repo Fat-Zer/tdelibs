@@ -590,10 +590,10 @@ KeyEventBaseImpl::KeyEventBaseImpl(EventId id, bool canBubbleArg, bool cancelabl
     m_keyVal = key->ascii();
     m_virtKeyVal = virtKeyToQtKey()->toLeft(key->key());
 
-    // m_keyVal should contain the tqunicode value
+    // m_keyVal should contain the unicode value
     // of the pressed key if available.
     if (m_virtKeyVal == DOM_VK_UNDEFINED && !key->text().isEmpty())
-        m_keyVal = TQString(key->text()).tqunicode()[0];
+        m_keyVal = TQString(key->text()).unicode()[0];
 
     // key->state returns enum ButtonState, which is ShiftButton, ControlButton and AltButton or'ed together.
     m_modifier = key->state();
@@ -741,8 +741,8 @@ DOMString KeyboardEventImpl::keyIdentifier() const
         if (const char* id = keyIdentifiersToVirtKeys()->toLeft(special))
             return TQString::fromLatin1(id);
 
-    if (unsigned tqunicode = keyVal())
-        return TQString(TQChar(tqunicode));
+    if (unsigned unicode = keyVal())
+        return TQString(TQChar(unicode));
 
     return "Unidentified";
 }
@@ -773,9 +773,9 @@ void KeyboardEventImpl::initKeyboardEvent(const DOMString &typeArg,
 
     //Figure out the code information from the key identifier.
     if (keyIdentifierArg.length() == 1) {
-        //Likely to be normal tqunicode id, unless it's one of the few
+        //Likely to be normal unicode id, unless it's one of the few
         //special values.
-        unsigned short code = keyIdentifierArg.tqunicode()[0];
+        unsigned short code = keyIdentifierArg.unicode()[0];
         if (code > 0x20 && code != 0x7F)
             keyVal = code;
     }
@@ -819,7 +819,7 @@ int KeyboardEventImpl::keyCode() const
     if (m_virtKeyVal != DOM_VK_UNDEFINED)
         return m_virtKeyVal;
     else
-        return TQChar((unsigned short)m_keyVal).upper().tqunicode();
+        return TQChar((unsigned short)m_keyVal).upper().unicode();
 }
 
 int KeyboardEventImpl::charCode() const
@@ -856,14 +856,14 @@ void TextEventImpl::initTextEvent(const DOMString &typeArg,
     //See whether we can get a key out of this.
     unsigned keyCode = 0;
     if (text.length() == 1)
-        keyCode = text.tqunicode()[0].tqunicode();
+        keyCode = text.unicode()[0].unicode();
     initKeyBaseEvent(typeArg, canBubbleArg, cancelableArg, viewArg,
         keyCode, 0, 0);
 }
 
 int TextEventImpl::keyCode() const
 {
-    //Mozilla returns 0 here unless this is a non-tqunicode key.
+    //Mozilla returns 0 here unless this is a non-unicode key.
     //IE stuffs everything here, and so we try to match it..
     if (m_keyVal)
         return m_keyVal;
@@ -872,8 +872,8 @@ int TextEventImpl::keyCode() const
 
 int TextEventImpl::charCode() const
 {
-    //On text events, in Mozilla charCode is 0 for non-tqunicode keys,
-    //and the tqunicode key otherwise... IE doesn't support this.
+    //On text events, in Mozilla charCode is 0 for non-unicode keys,
+    //and the unicode key otherwise... IE doesn't support this.
     if (m_virtKeyVal)
         return 0;
     return m_keyVal;

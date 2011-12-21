@@ -105,18 +105,18 @@ void KColorButton::setDefaultColor( const TQColor &c )
 void KColorButton::drawButtonLabel( TQPainter *painter )
 {
   int x, y, w, h;
-  TQRect r = tqstyle().subRect( TQStyle::SR_PushButtonContents, this );
+  TQRect r = style().subRect( TQStyle::SR_PushButtonContents, this );
   r.rect(&x, &y, &w, &h);
 
-  int margin = tqstyle().pixelMetric( TQStyle::PM_ButtonMargin, this );
+  int margin = style().pixelMetric( TQStyle::PM_ButtonMargin, this );
   x += margin;
   y += margin;
   w -= 2*margin;
   h -= 2*margin;
 
   if (isOn() || isDown()) {
-    x += tqstyle().pixelMetric( TQStyle::PM_ButtonShiftHorizontal, this );
-    y += tqstyle().pixelMetric( TQStyle::PM_ButtonShiftVertical, this );
+    x += style().pixelMetric( TQStyle::PM_ButtonShiftHorizontal, this );
+    y += style().pixelMetric( TQStyle::PM_ButtonShiftVertical, this );
   }
 
   TQColor fillCol = isEnabled() ? col : backgroundColor();
@@ -125,14 +125,14 @@ void KColorButton::drawButtonLabel( TQPainter *painter )
     painter->fillRect( x+1, y+1, w-2, h-2, fillCol );
 
   if ( hasFocus() ) {
-    TQRect focusRect = tqstyle().subRect( TQStyle::SR_PushButtonFocusRect, this );
-    tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, painter, focusRect, colorGroup() );
+    TQRect focusRect = style().subRect( TQStyle::SR_PushButtonFocusRect, this );
+    style().tqdrawPrimitive( TQStyle::PE_FocusRect, painter, focusRect, colorGroup() );
   }
 }
 
 TQSize KColorButton::sizeHint() const
 {
-  return tqstyle().tqsizeFromContents(TQStyle::CT_PushButton, this, TQSize(40, 15)).
+  return style().tqsizeFromContents(TQStyle::CT_PushButton, this, TQSize(40, 15)).
 	  	expandedTo(TQApplication::globalStrut());
 }
 
@@ -155,11 +155,11 @@ void KColorButton::keyPressEvent( TQKeyEvent *e )
 
   if ( KStdAccel::copy().contains( key ) ) {
     TQMimeSource* mime = new KColorDrag( color() );
-    TQApplication::tqclipboard()->setData( mime, TQClipboard::Clipboard );
+    TQApplication::clipboard()->setData( mime, TQClipboard::Clipboard );
   }
   else if ( KStdAccel::paste().contains( key ) ) {
     TQColor color;
-    KColorDrag::decode( TQApplication::tqclipboard()->data( TQClipboard::Clipboard ), color );
+    KColorDrag::decode( TQApplication::clipboard()->data( TQClipboard::Clipboard ), color );
     setColor( color );
   }
   else

@@ -172,10 +172,10 @@ class KateFileLoader
     // should spaces be ignored at end of line?
     inline bool removeTrailingSpaces () const { return m_removeTrailingSpaces; }
 
-    // internal tqunicode data array
-    inline const TQChar *tqunicode () const { return m_text.tqunicode(); }
+    // internal unicode data array
+    inline const TQChar *unicode () const { return m_text.unicode(); }
 
-    // read a line, return length + offset in tqunicode data
+    // read a line, return length + offset in unicode data
     void readLine (uint &offset, uint &length)
     {
       length = 0;
@@ -543,7 +543,7 @@ bool KateBuffer::canEncode ()
 
   kdDebug(13020) << "ENC NAME: " << codec->name() << endl;
 
-  // hardcode some tqunicode encodings which can encode all chars
+  // hardcode some unicode encodings which can encode all chars
   if ((TQString(codec->name()) == "UTF-8") || (TQString(codec->name()) == "ISO-10646-UCS-2"))
     return true;
 
@@ -1353,14 +1353,14 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
   {
     uint offset = 0, length = 0;
     stream->readLine(offset, length);
-    const TQChar *tqunicodeData = stream->tqunicode () + offset;
+    const TQChar *unicodeData = stream->unicode () + offset;
 
     // strip spaces at end of line
     if ( stream->removeTrailingSpaces() )
     {
       while (length > 0)
       {
-        if (tqunicodeData[length-1].isSpace())
+        if (unicodeData[length-1].isSpace())
           --length;
         else
           break;
@@ -1391,13 +1391,13 @@ void KateBufBlock::fillBlock (KateFileLoader *stream)
       memcpy(buf+pos, (char *) &length, sizeof(uint));
       pos += sizeof(uint);
 
-      memcpy(buf+pos, (char *) tqunicodeData, sizeof(TQChar)*length);
+      memcpy(buf+pos, (char *) unicodeData, sizeof(TQChar)*length);
       pos += sizeof(TQChar)*length;
     }
     else
     {
       KateTextLine::Ptr textLine = new KateTextLine ();
-      textLine->insertText (0, length, tqunicodeData);
+      textLine->insertText (0, length, unicodeData);
       m_stringList.push_back (textLine);
     }
 

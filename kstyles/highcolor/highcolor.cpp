@@ -317,7 +317,7 @@ void HighColorStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 			if ( sunken )
 				kDrawBeButton( p, x, y, w, h, cg, true,
-						&cg.tqbrush(TQColorGroup::Mid) );
+						&cg.brush(TQColorGroup::Mid) );
 
 			else if ( flags & Style_MouseOver && !flat ) {
 				TQBrush brush(cg.button().light(110));
@@ -367,7 +367,7 @@ void HighColorStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 								cg.button(), false);
 			} else
 				kDrawBeButton(p, x, y, w, h, cg, false,
-							  &cg.tqbrush(TQColorGroup::Button));
+							  &cg.brush(TQColorGroup::Button));
 			break;
 		}
 

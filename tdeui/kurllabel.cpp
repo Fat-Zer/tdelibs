@@ -356,7 +356,7 @@ bool KURLLabel::event (TQEvent *e)
     // use parentWidget() unless you are a toplevel widget, then try qAapp
     TQPalette p = parentWidget() ? parentWidget()->palette() : tqApp->palette();
     p.setBrush(TQColorGroup::Base, p.brush(TQPalette::Normal, TQColorGroup::Background));
-    p.setColor(TQColorGroup::Foreground, tqpalette().active().foreground());
+    p.setColor(TQColorGroup::Foreground, palette().active().foreground());
     setPalette(p);
     d->LinkColor = KGlobalSettings::linkColor();
     setLinkColor(d->LinkColor);
@@ -367,7 +367,7 @@ bool KURLLabel::event (TQEvent *e)
     if (result && hasFocus()) {
         TQPainter p(this);
         TQRect r( activeRect() );
-        tqstyle().tqdrawPrimitive( TQStyle::PE_FocusRect, &p, r, colorGroup() );
+        style().tqdrawPrimitive( TQStyle::PE_FocusRect, &p, r, colorGroup() );
     }
     return result;
   }

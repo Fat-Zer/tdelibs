@@ -1034,7 +1034,7 @@ public:
    */
   int chr() const { return _char; }
 
-  /** returns the current character as a tqunicode symbol, substituting
+  /** returns the current character as a unicode symbol, substituting
    * a blank for a non-text node.
    */
   TQChar operator *() const { return TQChar(_char >= 0 ? _char : ' '); }
@@ -1089,7 +1089,7 @@ protected:
     CaretBox *box = *copy;
     InlineBox *b = box->inlineBox();
     if (b && !box->isOutside() && b->isInlineTextBox())
-      _char = static_cast<RenderText *>(b->object())->str->s[b->minOffset()].tqunicode();
+      _char = static_cast<RenderText *>(b->object())->str->s[b->minOffset()].unicode();
     else
       _char = -1;
   }

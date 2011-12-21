@@ -279,8 +279,8 @@ void KApplicationTree::slotSelectionChanged(TQListViewItem* i)
 
 void KApplicationTree::resizeEvent( TQResizeEvent * e)
 {
-    setColumnWidth(0, width()-TQApplication::tqstyle().pixelMetric(TQStyle::PM_ScrollBarExtent)
-                         -2*TQApplication::tqstyle().pixelMetric(TQStyle::PM_DefaultFrameWidth));
+    setColumnWidth(0, width()-TQApplication::style().pixelMetric(TQStyle::PM_ScrollBarExtent)
+                         -2*TQApplication::style().pixelMetric(TQStyle::PM_DefaultFrameWidth));
     KListView::resizeEvent(e);
 }
 

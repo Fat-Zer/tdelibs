@@ -745,7 +745,7 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, int cursorCol)
 
   KateFontStruct *fs = config()->fontStruct();
 
-  const TQChar *tqunicode = textLine->text();
+  const TQChar *unicode = textLine->text();
   const TQString &textString = textLine->string();
 
   int x = 0;
@@ -763,7 +763,7 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, int cursorCol)
 
     x += width;
 
-    if (z < len && tqunicode[z] == TQChar('\t'))
+    if (z < len && unicode[z] == TQChar('\t'))
       x -= x % width;
   }
 
@@ -787,7 +787,7 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, uint startcol, u
   *needWrap = false;
 
   const uint len = textLine->length();
-  const TQChar *tqunicode = textLine->text();
+  const TQChar *unicode = textLine->text();
   const TQString &textString = textLine->string();
 
   uint z = startcol;
@@ -800,10 +800,10 @@ uint KateRenderer::textWidth(const KateTextLine::Ptr &textLine, uint startcol, u
 
     // How should tabs be treated when they word-wrap on a print-out?
     // if startcol != 0, this messes up (then again, word wrapping messes up anyway)
-    if (tqunicode[z] == TQChar('\t'))
+    if (unicode[z] == TQChar('\t'))
       x -= x % width;
 
-    if (tqunicode[z].isSpace())
+    if (unicode[z].isSpace())
     {
       lastWhiteSpace = z+1;
       lastWhiteSpaceX = x;
@@ -887,7 +887,7 @@ uint KateRenderer::textWidth( KateTextCursor &cursor, int xPos, uint startCol)
   if (!textLine) return 0;
 
   const uint len = textLine->length();
-  const TQChar *tqunicode = textLine->text();
+  const TQChar *unicode = textLine->text();
   const TQString &textString = textLine->string();
 
   x = oldX = 0;
@@ -906,7 +906,7 @@ uint KateRenderer::textWidth( KateTextCursor &cursor, int xPos, uint startCol)
 
     x += width;
 
-    if (z < len && tqunicode[z] == TQChar('\t'))
+    if (z < len && unicode[z] == TQChar('\t'))
       x -= x % width;
 
     z++;

@@ -373,7 +373,7 @@ kdbgstream& kdbgstream::operator << (TQChar ch)
 {
   if (!print) return *this;
   if (!ch.isPrint())
-    output += "\\x" + TQString::number( ch.tqunicode(), 16 ).rightJustify(2, '0');
+    output += "\\x" + TQString::number( ch.unicode(), 16 ).rightJustify(2, '0');
   else {
     output += ch;
     if (ch == (QChar)'\n') flush();

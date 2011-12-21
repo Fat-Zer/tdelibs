@@ -65,10 +65,10 @@ static const int KATE_DYNAMIC_CONTEXTS_RESET_DELAY = 30 * 1000;
 
 inline bool kateInsideString (const TQString &str, TQChar ch)
 {
-  const TQChar *tqunicode = str.tqunicode();
+  const TQChar *unicode = str.unicode();
   const uint len = str.length();
   for (uint i=0; i < len; i++)
-    if (tqunicode[i] == ch)
+    if (unicode[i] == ch)
       return true;
 
   return false;
@@ -661,7 +661,7 @@ int KateHlKeyword::checkHgl(const TQString& text, int offset, int len)
 
   if (wordLen < minLen) return 0;
 
-  if ( dict[wordLen] && dict[wordLen]->find(TQConstString(text.tqunicode() + offset, wordLen).string()) )
+  if ( dict[wordLen] && dict[wordLen]->find(TQConstString(text.unicode() + offset, wordLen).string()) )
     return offset2;
 
   return 0;

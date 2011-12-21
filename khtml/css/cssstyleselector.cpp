@@ -871,7 +871,7 @@ static PseudoState checkPseudoState( const CSSStyleSelector::Encodedurl& encoded
     if( attr.isNull() ) {
         return PseudoNone;
     }
-    TQConstString cu(attr.tqunicode(), attr.length());
+    TQConstString cu(attr.unicode(), attr.length());
     TQString u = cu.string();
     if ( !u.contains("://") ) {
         if ( u[0] == '/' )
@@ -1165,8 +1165,8 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
             // else the value is longer and can be a list
             if ( sel->match == CSSSelector::Class && !e->hasClassList() ) return false;
 
-            TQChar* sel_uc = sel->value.tqunicode();
-            TQChar* val_uc = value->tqunicode();
+            TQChar* sel_uc = sel->value.unicode();
+            TQChar* val_uc = value->unicode();
 
             TQConstString sel_str(sel_uc, sel_len);
             TQConstString val_str(val_uc, val_len);
@@ -1187,29 +1187,29 @@ bool CSSStyleSelector::checkSimpleSelector(DOM::CSSSelector *sel, DOM::ElementIm
         case CSSSelector::Contain:
         {
             //kdDebug( 6080 ) << "checking for contains match" << endl;
-            TQConstString val_str(value->tqunicode(), value->length());
-            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
+            TQConstString val_str(value->unicode(), value->length());
+            TQConstString sel_str(sel->value.unicode(), sel->value.length());
             return val_str.string().contains(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Begin:
         {
             //kdDebug( 6080 ) << "checking for beginswith match" << endl;
-            TQConstString val_str(value->tqunicode(), value->length());
-            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
+            TQConstString val_str(value->unicode(), value->length());
+            TQConstString sel_str(sel->value.unicode(), sel->value.length());
             return val_str.string().startsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::End:
         {
             //kdDebug( 6080 ) << "checking for endswith match" << endl;
-            TQConstString val_str(value->tqunicode(), value->length());
-            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
+            TQConstString val_str(value->unicode(), value->length());
+            TQConstString sel_str(sel->value.unicode(), sel->value.length());
             return val_str.string().endsWith(sel_str.string(), caseSensitive);
         }
         case CSSSelector::Hyphen:
         {
             //kdDebug( 6080 ) << "checking for hyphen match" << endl;
-            TQConstString val_str(value->tqunicode(), value->length());
-            TQConstString sel_str(sel->value.tqunicode(), sel->value.length());
+            TQConstString val_str(value->unicode(), value->length());
+            TQConstString sel_str(sel->value.unicode(), sel->value.length());
             const TQString& str = val_str.string();
             const TQString& selStr = sel_str.string();
             if(str.length() < selStr.length()) return false;
@@ -2079,7 +2079,7 @@ static TQColor colorForCSSValue( int css_value )
 	    KConfig bckgrConfig("kdesktoprc", true, false); // No multi-screen support
 	    bckgrConfig.setGroup("Desktop0");
 	    // Desktop background.
-	    return bckgrConfig.readColorEntry("Color1", &tqApp->tqpalette().disabled().background());
+	    return bckgrConfig.readColorEntry("Color1", &tqApp->palette().disabled().background());
 	}
 	return TQColor();
     }
@@ -2597,7 +2597,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
     }
 
     case CSS_PROP_UNICODE_BIDI: {
-        HANDLE_INHERIT_AND_INITIAL(tqunicodeBidi, UnicodeBidi)
+        HANDLE_INHERIT_AND_INITIAL(unicodeBidi, UnicodeBidi)
         if(!primitiveValue) break;
         switch (primitiveValue->getIdent()) {
             case CSS_VAL_NORMAL:

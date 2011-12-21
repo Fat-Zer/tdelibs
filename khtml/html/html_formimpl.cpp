@@ -193,7 +193,7 @@ inline static TQString escapeUnencodeable(const TQTextCodec* codec, const TQStri
             enc_string.append(c);
         else {
             TQString ampersandEscape;
-            ampersandEscape.sprintf("&#%u;", c.tqunicode());
+            ampersandEscape.sprintf("&#%u;", c.unicode());
             enc_string.append(ampersandEscape);
         }
     }
@@ -2762,7 +2762,7 @@ static TQString expandLF(const TQString& s)
     for(unsigned pos = 0; pos < len; pos++)
     {
        TQChar c = s.at(pos);
-       switch(c.tqunicode())
+       switch(c.unicode())
        {
          case '\n':
            r[pos2++] = '\r';

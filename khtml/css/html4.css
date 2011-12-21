@@ -486,27 +486,27 @@ a:visited:active          { color: red; outline: 1px dotted invert; }
 
 bdo[dir="ltr"]  {
 	direction: ltr;
-	tqunicode-bidi: bidi-override;
+	unicode-bidi: bidi-override;
 }
 
 bdo[dir="rtl"]  {
 	direction: rtl;
-	tqunicode-bidi: bidi-override;
+	unicode-bidi: bidi-override;
 }
 
 /* ### this selector seems to be still broken ...
-      *[dir="ltr"]    { direction: ltr; tqunicode-bidi: embed }
-      *[dir="rtl"]    { direction: rtl; tqunicode-bidi: embed }
+      *[dir="ltr"]    { direction: ltr; unicode-bidi: embed }
+      *[dir="rtl"]    { direction: rtl; unicode-bidi: embed }
 */
 
 /* elements that are block-level in html4 */
-/* ### don't support tqunicode-bidi at the moment
+/* ### don't support unicode-bidi at the moment
       address, blockquote, body, dd, div, dl, dt, fieldset,
       form, frame, frameset, h1, h2, h3, h4, h5, h6, iframe,
       noscript, noframes, object, ol, p, ul, applet, center,
       dir, hr, menu, pre, li, table, tr, thead, tbody, tfoot,
       col, colgroup, td, th, caption
-                      { tqunicode-bidi: embed }
+                      { unicode-bidi: embed }
 */
 
 /* end bidi settings */

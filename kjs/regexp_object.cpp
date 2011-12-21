@@ -292,7 +292,7 @@ RegExp* RegExpObjectImp::makeEngine(ExecState *exec, const UString &p, const Val
 
   // Check for validity of flags
   for (int pos = 0; pos < flags.size(); ++pos) {
-    switch (flags[pos].tqunicode()) {
+    switch (flags[pos].unicode()) {
     case 'g':
     case 'i':
     case 'm':

@@ -1749,7 +1749,7 @@ void EditableCharacterIterator::initFirstChar()
   if (_offset == box->maxOffset())
     peekNext();
   else if (b && !box->isOutside() && b->isInlineTextBox())
-    _char = static_cast<RenderText *>(b->object())->str->s[_offset].tqunicode();
+    _char = static_cast<RenderText *>(b->object())->str->s[_offset].unicode();
   else
     _char = -1;
 }
@@ -1849,7 +1849,7 @@ kdDebug(6200) << "_offset " << _offset << endl;
 readchar:
     // get character
     if (b && !box->isOutside() && b->isInlineTextBox() && _offset < b->maxOffset())
-      _char = static_cast<RenderText *>(b->object())->str->s[_offset].tqunicode();
+      _char = static_cast<RenderText *>(b->object())->str->s[_offset].unicode();
     else
       _char = -1;
   }/*end if*/
@@ -1887,7 +1887,7 @@ kdDebug(6200) << "_offset == minofs: " << _offset << " == " << minofs << endl;
 //     _peekNext = b;
     // get character
     if (b && !box->isOutside() && b->isInlineTextBox())
-      _char = static_cast<RenderText *>(b->object())->text()[_offset].tqunicode();
+      _char = static_cast<RenderText *>(b->object())->text()[_offset].unicode();
     else
       _char = -1;
 
@@ -1990,9 +1990,9 @@ kdDebug(6200) << "_offset: " << _offset << " _peekNext: " << _peekNext << endl;
 #endif
     // get character
     if (_peekNext && _offset >= box->maxOffset() && _peekNext->isInlineTextBox())
-      _char = static_cast<RenderText *>(_peekNext->object())->text()[_peekNext->minOffset()].tqunicode();
+      _char = static_cast<RenderText *>(_peekNext->object())->text()[_peekNext->minOffset()].unicode();
     else if (b && _offset < b->maxOffset() && b->isInlineTextBox())
-      _char = static_cast<RenderText *>(b->object())->text()[_offset].tqunicode();
+      _char = static_cast<RenderText *>(b->object())->text()[_offset].unicode();
     else
       _char = -1;
   }/*end if*/

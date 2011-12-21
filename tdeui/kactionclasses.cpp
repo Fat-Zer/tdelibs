@@ -2326,7 +2326,7 @@ void KPasteTextAction::menuAboutToShow()
       if (reply.isValid())
         list = reply;
     }
-    TQString clipboardText = tqApp->tqclipboard()->text(TQClipboard::Clipboard);
+    TQString clipboardText = tqApp->clipboard()->text(TQClipboard::Clipboard);
     if (list.isEmpty())
         list << clipboardText;
     bool found = false;
@@ -2354,7 +2354,7 @@ void KPasteTextAction::menuItemActivated( int id)
       TQString clipboardText = reply;
       reply = klipper.call("setClipboardContents(TQString)", clipboardText);
       if (reply.isValid())
-        kdDebug(129) << "Clipboard: " << TQString(tqApp->tqclipboard()->text(TQClipboard::Clipboard)) << endl;
+        kdDebug(129) << "Clipboard: " << TQString(tqApp->clipboard()->text(TQClipboard::Clipboard)) << endl;
     }
     TQTimer::singleShot(20, this, TQT_SLOT(slotActivated()));
 }
@@ -2363,7 +2363,7 @@ void KPasteTextAction::slotActivated()
 {
   if (!m_mixedMode) {
     TQWidget *w = tqApp->widgetAt(TQCursor::pos(), true);
-    TQMimeSource *data = TQApplication::tqclipboard()->data();
+    TQMimeSource *data = TQApplication::clipboard()->data();
     if (!data->provides("text/plain") && w) {
       m_popup->popup(w->mapToGlobal(TQPoint(0, w->height())));
     } else

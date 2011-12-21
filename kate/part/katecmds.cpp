@@ -578,7 +578,7 @@ bool KateCommands::Character::exec (Kate::View *view, const TQString &_cmd, TQSt
     view->insertText(TQString(buf));
   }
   else
-  { // do the tqunicode thing
+  { // do the unicode thing
     TQChar c(number);
     view->insertText(TQString(&c, 1));
   }

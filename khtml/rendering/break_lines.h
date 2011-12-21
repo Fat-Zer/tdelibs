@@ -6,7 +6,7 @@
 namespace khtml {
 
     /*
-      array of tqunicode codes where breaking shouldn't occur.
+      array of unicode codes where breaking shouldn't occur.
       (in sorted order because of using with binary search)
       these are currently for Japanese, though simply adding
       Korean, Chinese ones should work as well
@@ -122,7 +122,7 @@ namespace khtml {
     inline bool isBreakable( const TQChar *str, const int pos, int len )
     {
 	const TQChar *c = str+pos;
-	unsigned short ch = c->tqunicode();
+	unsigned short ch = c->unicode();
 	if ( ch > 0xff ) {
 	    // not latin1, need to do more sophisticated checks for asian fonts
 	    unsigned char row = c->row();
@@ -147,8 +147,8 @@ namespace khtml {
                     return false;
 
                 // do binary search in dontbreak[]
-                return break_bsearch(dontbreakbefore, c->tqunicode()) &&
-                       break_bsearch(dontbreakafter, (str+(pos-1))->tqunicode());
+                return break_bsearch(dontbreakbefore, c->unicode()) &&
+                       break_bsearch(dontbreakafter, (str+(pos-1))->unicode());
             } else // no asian font
 		return c->isSpace();
 	} else {

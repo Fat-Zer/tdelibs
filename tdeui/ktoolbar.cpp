@@ -169,7 +169,7 @@ void KToolBarSeparator::drawContents( TQPainter* p )
         if ( orientation() == Qt::Horizontal )
             flags = flags | TQStyle::Style_Horizontal;
 
-        tqstyle().tqdrawPrimitive(TQStyle::PE_DockWindowSeparator, p,
+        style().tqdrawPrimitive(TQStyle::PE_DockWindowSeparator, p,
                               contentsRect(), colorGroup(), flags);
     } else {
         TQFrame::drawContents(p);
@@ -183,7 +183,7 @@ void KToolBarSeparator::styleChange( TQStyle& )
 
 TQSize KToolBarSeparator::sizeHint() const
 {
-    int dim = tqstyle().pixelMetric( TQStyle::PM_DockWindowSeparatorExtent, this );
+    int dim = style().pixelMetric( TQStyle::PM_DockWindowSeparatorExtent, this );
     return orientation() == Qt::Vertical ? TQSize( 0, dim ) : TQSize( dim, 0 );
 }
 
@@ -1371,7 +1371,7 @@ TQSize KToolBar::sizeHint() const
              minSize += TQSize(2, 0); // A little bit extra spacing behind it.
        }
 
-       minSize += TQSize(TQApplication::tqstyle().pixelMetric( TQStyle::PM_DockWindowHandleExtent ), 0);
+       minSize += TQSize(TQApplication::style().pixelMetric( TQStyle::PM_DockWindowHandleExtent ), 0);
        minSize += TQSize(margin*2, margin*2);
        break;
 
@@ -1390,7 +1390,7 @@ TQSize KToolBar::sizeHint() const
           minSize = minSize.expandedTo(TQSize(sh.width(), 0));
           minSize += TQSize(0, sh.height()+1);
        }
-       minSize += TQSize(0, TQApplication::tqstyle().pixelMetric( TQStyle::PM_DockWindowHandleExtent ));
+       minSize += TQSize(0, TQApplication::style().pixelMetric( TQStyle::PM_DockWindowHandleExtent ));
        minSize += TQSize(margin*2, margin*2);
        break;
 

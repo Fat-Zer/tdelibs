@@ -859,7 +859,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   if ( !isDevice && !isTrash && (bDesktopFile || S_ISDIR(mode)) && !d->bMultiple /*not implemented for multiple*/ )
   {
     KIconButton *iconButton = new KIconButton( d->m_frame );
-    int bsize = 66 + 2 * iconButton->tqstyle().pixelMetric(TQStyle::PM_ButtonMargin);
+    int bsize = 66 + 2 * iconButton->style().pixelMetric(TQStyle::PM_ButtonMargin);
     iconButton->setFixedSize(bsize, bsize);
     iconButton->setIconSize(48);
     iconButton->setStrictIconSize(false);
@@ -883,7 +883,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
              this, TQT_SLOT( slotIconChanged() ) );
   } else {
     TQLabel *iconLabel = new TQLabel( d->m_frame );
-    int bsize = 66 + 2 * iconLabel->tqstyle().pixelMetric(TQStyle::PM_ButtonMargin);
+    int bsize = 66 + 2 * iconLabel->style().pixelMetric(TQStyle::PM_ButtonMargin);
     iconLabel->setFixedSize(bsize, bsize);
     iconLabel->setPixmap( KGlobal::iconLoader()->loadIcon( iconStr, KIcon::Desktop, 48) );
     iconArea = iconLabel;
@@ -1654,11 +1654,11 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
 
   /* Group: Access Permissions */
   gb = new TQGroupBox ( 0, Qt::Vertical, i18n("Access Permissions"), d->m_frame );
-  gb->tqlayout()->setSpacing(KDialog::spacingHint());
-  gb->tqlayout()->setMargin(KDialog::marginHint());
+  gb->layout()->setSpacing(KDialog::spacingHint());
+  gb->layout()->setMargin(KDialog::marginHint());
   box->addWidget (gb);
 
-  gl = new TQGridLayout (gb->tqlayout(), 7, 2);
+  gl = new TQGridLayout (gb->layout(), 7, 2);
   gl->setColStretch(1, 1);
 
   l = d->explanationLabel = new TQLabel( "", gb );
@@ -1723,11 +1723,11 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
 
   /**** Group: Ownership ****/
   gb = new TQGroupBox ( 0, Qt::Vertical, i18n("Ownership"), d->m_frame );
-  gb->tqlayout()->setSpacing(KDialog::spacingHint());
-  gb->tqlayout()->setMargin(KDialog::marginHint());
+  gb->layout()->setSpacing(KDialog::spacingHint());
+  gb->layout()->setMargin(KDialog::marginHint());
   box->addWidget (gb);
 
-  gl = new TQGridLayout (gb->tqlayout(), 4, 3);
+  gl = new TQGridLayout (gb->layout(), 4, 3);
   gl->addRowSpacing(0, 10);
 
   /*** Set Owner ***/
@@ -1915,10 +1915,10 @@ void KFilePermissionsPropsPlugin::slotShowAdvancedPermissions() {
 
   // Group: Access Permissions
   gb = new TQGroupBox ( 0, Qt::Vertical, i18n("Access Permissions"), mainVBox );
-  gb->tqlayout()->setSpacing(KDialog::spacingHint());
-  gb->tqlayout()->setMargin(KDialog::marginHint());
+  gb->layout()->setSpacing(KDialog::spacingHint());
+  gb->layout()->setMargin(KDialog::marginHint());
 
-  gl = new TQGridLayout (gb->tqlayout(), 6, 6);
+  gl = new TQGridLayout (gb->layout(), 6, 6);
   gl->addRowSpacing(0, 10);
 
   TQValueVector<TQWidget*> theNotSpecials;
@@ -2916,7 +2916,7 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
   layout->addMultiCellWidget(sep, 6, 6, 0, 1);
 
   unmounted = new KIconButton( d->m_frame );
-  int bsize = 66 + 2 * unmounted->tqstyle().pixelMetric(TQStyle::PM_ButtonMargin);
+  int bsize = 66 + 2 * unmounted->style().pixelMetric(TQStyle::PM_ButtonMargin);
   unmounted->setFixedSize(bsize, bsize);
   unmounted->setIconType(KIcon::Desktop, KIcon::Device);
   layout->addWidget(unmounted, 7, 0);
@@ -3635,7 +3635,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   mainlayout->addWidget(tmpQGroupBox);
 
-  TQGridLayout *grid = new TQGridLayout(tmpQGroupBox->tqlayout(), 2, 2);
+  TQGridLayout *grid = new TQGridLayout(tmpQGroupBox->layout(), 2, 2);
   grid->setSpacing( KDialog::spacingHint() );
   grid->setColStretch(1, 1);
 
@@ -3662,7 +3662,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   mainlayout->addWidget(tmpQGroupBox);
 
-  grid = new TQGridLayout(tmpQGroupBox->tqlayout(), 3, 2);
+  grid = new TQGridLayout(tmpQGroupBox->layout(), 3, 2);
   grid->setSpacing( KDialog::spacingHint() );
   grid->setColStretch(1, 1);
 
@@ -3701,7 +3701,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   mainlayout->addWidget(tmpQGroupBox);
 
-  grid = new TQGridLayout(tmpQGroupBox->tqlayout(), 2, 2);
+  grid = new TQGridLayout(tmpQGroupBox->layout(), 2, 2);
   grid->setSpacing(KDialog::spacingHint());
   grid->setColStretch(1, 1);
 

@@ -361,7 +361,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	l2->addStretch(1);
 	l2->addWidget(d->m_ok,0);
 	l2->addWidget(m_cancel,0);
-	TQGridLayout	*l3 = new TQGridLayout(m_pbox->tqlayout(),3,3,7);
+	TQGridLayout	*l3 = new TQGridLayout(m_pbox->layout(),3,3,7);
 	l3->setColStretch(1,1);
 	l3->setRowStretch(0,1);
 	TQGridLayout	*l4 = new TQGridLayout(0, 5, 2, 0, 5);

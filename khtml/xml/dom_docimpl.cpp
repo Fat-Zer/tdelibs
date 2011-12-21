@@ -337,7 +337,7 @@ DocumentImpl::DocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v)
     m_namespaceMap = new IdNameMapping(1);
     TQString xhtml(XHTML_NAMESPACE);
     m_namespaceMap->names.insert(emptyNamespace, new DOMStringImpl(""));
-    m_namespaceMap->names.insert(xhtmlNamespace, new DOMStringImpl(xhtml.tqunicode(), xhtml.length()));
+    m_namespaceMap->names.insert(xhtmlNamespace, new DOMStringImpl(xhtml.unicode(), xhtml.length()));
     m_namespaceMap->names[emptyNamespace]->ref();
     m_namespaceMap->names[xhtmlNamespace]->ref();
     m_namespaceMap->count+=2;

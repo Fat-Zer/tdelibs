@@ -769,7 +769,7 @@ TQSize KJanusWidget::minimumSizeHint() const
 
     if( mFace == TreeList )
     {
-      s1.rwidth() += tqstyle().pixelMetric( TQStyle::PM_SplitterWidth );
+      s1.rwidth() += style().pixelMetric( TQStyle::PM_SplitterWidth );
       s2 = mTreeList->minimumSize();
     }
     else

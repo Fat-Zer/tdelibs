@@ -40,7 +40,7 @@ static bool bLaunchApp = 0;
 
 bool findObject( const char* app, const char* obj, const char* func, QCStringList args )
 {
-    TQString f = func; // Qt is better with tqunicode strings, so use one.
+    TQString f = func; // Qt is better with unicode strings, so use one.
     int left = f.find( '(' );
     int right = f.find( ')' );
 

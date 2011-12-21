@@ -62,7 +62,7 @@ UString::UString(const TQString &d)
 {
   unsigned int len = d.length();
   UChar *dat = new UChar[len];
-  memcpy(dat, d.tqunicode(), len * sizeof(UChar));
+  memcpy(dat, d.unicode(), len * sizeof(UChar));
   rep = UString::Rep::create(dat, len);
 }
 

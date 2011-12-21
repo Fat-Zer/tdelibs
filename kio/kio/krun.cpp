@@ -388,13 +388,13 @@ TQStringList KRun::processDesktopExec(const KService &_service, const KURL::List
   if (!re.search( exec )) {
     exec = TQString(re.cap( 1 )).stripWhiteSpace();
     for (uint pos = 0; pos < exec.length(); ) {
-      TQChar c = exec.tqunicode()[pos];
+      TQChar c = exec.unicode()[pos];
       if (c != '\'' && c != '"')
         goto synerr; // what else can we do? after normal parsing the substs would be insecure
       int pos2 = exec.find( c, pos + 1 ) - 1;
       if (pos2 < 0)
         goto synerr; // quoting error
-      memcpy( (void *)(exec.tqunicode() + pos), exec.tqunicode() + pos + 1, (pos2 - pos) * sizeof(TQChar));
+      memcpy( (void *)(exec.unicode() + pos), exec.unicode() + pos + 1, (pos2 - pos) * sizeof(TQChar));
       pos = pos2;
       exec.remove( pos, 2 );
     }

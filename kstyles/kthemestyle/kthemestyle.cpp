@@ -1087,7 +1087,7 @@ TQPixmap* KThemeStyle::makeMenuBarCache(int w, int h) const
             return menuCache;
     }
 
-    const TQColorGroup *g = colorGroup( TQApplication::tqpalette().active(), MenuBar);
+    const TQColorGroup *g = colorGroup( TQApplication::palette().active(), MenuBar);
 
     menuCache = new TQPixmap ( w, h );
     TQPainter p(menuCache);
@@ -1253,7 +1253,7 @@ void KThemeStyle::drawControl( ControlElement element,
                     if ( !selected )
                     {
                         p->fillRect( x, y, x2 - x + 1, 2,
-                                     tb->tqpalette().active().brush( TQColorGroup::Background ) );
+                                     tb->palette().active().brush( TQColorGroup::Background ) );
                         y += 2;
                     }
                     p->setPen( cg->text() );
@@ -1326,7 +1326,7 @@ void KThemeStyle::drawControl( ControlElement element,
                     if ( !selected )
                     {
                         p->fillRect( x, y2 - 2, x2 - x + 1, 2,
-                                     tb->tqpalette().active().brush( TQColorGroup::Background ) );
+                                     tb->palette().active().brush( TQColorGroup::Background ) );
                         y2 -= 2;
                     }
                     p->setPen( cg->text() );

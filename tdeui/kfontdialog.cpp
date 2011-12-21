@@ -464,7 +464,7 @@ void KFontChooser::toggled_checkbox()
 void KFontChooser::family_chosen_slot(const TQString& family)
 {
     TQFontDatabase dbase;
-    TQStringList styles = TQStringList(dbase.tqstyles(family));
+    TQStringList styles = TQStringList(dbase.styles(family));
     styleListBox->clear();
     currentStyles.clear();
     for ( TQStringList::Iterator it = styles.begin(); it != styles.end(); ++it ) {

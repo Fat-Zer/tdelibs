@@ -212,7 +212,7 @@ public:
   /**
    * Extracts a string field from an NTLM structure.
    */
-  static TQString getString( const TQByteArray &buf, const SecBuf &secbuf, bool tqunicode );
+  static TQString getString( const TQByteArray &buf, const SecBuf &secbuf, bool unicode );
   /**
    * Extracts a byte array from an NTLM structure.
    */
@@ -226,7 +226,7 @@ private:
   static TQString UnicodeLE2TQString( const TQChar* data, uint len );
 
   static void addBuf( TQByteArray &buf, SecBuf &secbuf, TQByteArray &data );
-  static void addString( TQByteArray &buf, SecBuf &secbuf, const TQString &str, bool tqunicode = false );
+  static void addString( TQByteArray &buf, SecBuf &secbuf, const TQString &str, bool unicode = false );
   static void convertKey( unsigned char *key_56, void* ks );
 };
 

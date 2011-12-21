@@ -483,7 +483,7 @@ void KSycocaEntry::read( TQDataStream &s, TQString &str )
   else if ( bytes > 0 ) {              // not empty
       int bt = bytes/2;
       str.setLength( bt );
-      TQChar* ch = (TQChar *) str.tqunicode();
+      TQChar* ch = (TQChar *) str.unicode();
       char t[8192];
       char *b = t;
       s.readRawBytes( b, bytes );

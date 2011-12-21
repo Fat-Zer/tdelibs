@@ -155,8 +155,8 @@ void RenderCheckBox::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQCheckBox *cb = static_cast<TQCheckBox *>( m_widget );
-    TQSize s( cb->tqstyle().pixelMetric( TQStyle::PM_IndicatorWidth ),
-             cb->tqstyle().pixelMetric( TQStyle::PM_IndicatorHeight ) );
+    TQSize s( cb->style().pixelMetric( TQStyle::PM_IndicatorWidth ),
+             cb->style().pixelMetric( TQStyle::PM_IndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -207,8 +207,8 @@ void RenderRadioButton::calcMinMaxWidth()
     KHTMLAssert( !minMaxKnown() );
 
     TQRadioButton *rb = static_cast<TQRadioButton *>( m_widget );
-    TQSize s( rb->tqstyle().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
-             rb->tqstyle().pixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
+    TQSize s( rb->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
+             rb->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorHeight ) );
     setIntrinsicWidth( s.width() );
     setIntrinsicHeight( s.height() );
 
@@ -263,14 +263,14 @@ void RenderSubmitButton::calcMinMaxWidth()
         raw = TQString::fromLatin1("X");
     TQFontMetrics fm = pb->fontMetrics();
     TQSize ts = fm.size( ShowPrefix, raw);
-    TQSize s(pb->tqstyle().tqsizeFromContents( TQStyle::CT_PushButton, pb, ts )
+    TQSize s(pb->style().tqsizeFromContents( TQStyle::CT_PushButton, pb, ts )
             .expandedTo(TQApplication::globalStrut()));
-    int margin = pb->tqstyle().pixelMetric( TQStyle::PM_ButtonMargin, pb) +
-		 pb->tqstyle().pixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
+    int margin = pb->style().pixelMetric( TQStyle::PM_ButtonMargin, pb) +
+		 pb->style().pixelMetric( TQStyle::PM_DefaultFrameWidth, pb ) * 2;
     int w = ts.width() + margin;
     int h = s.height();
     if (pb->isDefault() || pb->autoDefault()) {
-	int dbw = pb->tqstyle().pixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
+	int dbw = pb->style().pixelMetric( TQStyle::PM_ButtonDefaultIndicator, pb ) * 2;
 	w += dbw;
     }
 
@@ -805,7 +805,7 @@ void RenderFileButton::calcMinMaxWidth()
     int h = fm.lineSpacing();
     int w = fm.width( 'x' ) * (size > 0 ? size+1 : 17); // "some"
     KLineEdit* edit = static_cast<KURLRequester*>( m_widget )->lineEdit();
-    TQSize s = edit->tqstyle().tqsizeFromContents(TQStyle::CT_LineEdit,
+    TQSize s = edit->style().tqsizeFromContents(TQStyle::CT_LineEdit,
                                              edit,
           TQSize(w + 2 + 2*edit->frameWidth(), kMax(h, 14) + 2 + 2*edit->frameWidth()))
         .expandedTo(TQApplication::globalStrut());

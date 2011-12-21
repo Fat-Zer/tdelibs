@@ -123,7 +123,7 @@ KClipboardSynchronizer::~KClipboardSynchronizer()
 
 void KClipboardSynchronizer::setupSignals()
 {
-    TQClipboard *clip = TQApplication::tqclipboard();
+    TQClipboard *clip = TQApplication::clipboard();
     disconnect( clip, NULL, this, NULL );
     if( s_sync )
         connect( clip, TQT_SIGNAL( selectionChanged() ),
@@ -135,7 +135,7 @@ void KClipboardSynchronizer::setupSignals()
 
 void KClipboardSynchronizer::slotSelectionChanged()
 {
-    TQClipboard *clip = TQApplication::tqclipboard();
+    TQClipboard *clip = TQApplication::clipboard();
 
 //     qDebug("*** sel changed: %i", s_blocked);
     if ( s_blocked || !clip->ownsSelection() )
@@ -147,7 +147,7 @@ void KClipboardSynchronizer::slotSelectionChanged()
 
 void KClipboardSynchronizer::slotClipboardChanged()
 {
-    TQClipboard *clip = TQApplication::tqclipboard();
+    TQClipboard *clip = TQApplication::clipboard();
 
 //     qDebug("*** clip changed : %i (implicit: %i, ownz: clip: %i, selection: %i)", s_blocked, s_implicitSelection, clip->ownsClipboard(), clip->ownsSelection());
     if ( s_blocked || !clip->ownsClipboard() )
@@ -161,7 +161,7 @@ void KClipboardSynchronizer::setClipboard( TQMimeSource *data, TQClipboard::Mode
 {
 //     qDebug("---> setting clipboard: %p", data);
 
-    TQClipboard *clip = TQApplication::tqclipboard();
+    TQClipboard *clip = TQApplication::clipboard();
 
     s_blocked = true;
 
