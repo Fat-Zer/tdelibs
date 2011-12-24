@@ -2515,7 +2515,7 @@ public:
 
     /**
      * See the <a
-     * href="http://www.w3.org/TR/REC-CSS2/visuren.html#propdef-tqunicode-bidi">
+     * href="http://www.w3.org/TR/REC-CSS2/visuren.html#propdef-unicode-bidi">
      * unicode-bidi property definition </a> in CSS2.
      *
      */

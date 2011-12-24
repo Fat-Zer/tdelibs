@@ -650,8 +650,8 @@ void KMultiTabBarTab::drawButtonStyled(TQPainter *paint) {
 
 	if (isOn()) st|=TQStyle::Style_On;
 
-	tqstyle().drawControl(TQStyle::CE_PushButton,&painter,this, TQRect(0,0,pixmap.width(),pixmap.height()), colorGroup(),st);
-	tqstyle().drawControl(TQStyle::CE_PushButtonLabel,&painter,this, TQRect(0,0,pixmap.width(),pixmap.height()), colorGroup(),st);
+	style().drawControl(TQStyle::CE_PushButton,&painter,this, TQRect(0,0,pixmap.width(),pixmap.height()), colorGroup(),st);
+	style().drawControl(TQStyle::CE_PushButtonLabel,&painter,this, TQRect(0,0,pixmap.width(),pixmap.height()), colorGroup(),st);
 
 	switch (m_position) {
 		case KMultiTabBar::Left:
@@ -667,7 +667,7 @@ void KMultiTabBarTab::drawButtonStyled(TQPainter *paint) {
 			paint->drawPixmap(0,0,pixmap);
 			break;
 	}
-//	tqstyle().drawControl(TQStyle::CE_PushButtonLabel,painter,this, TQRect(0,0,pixmap.width(),pixmap.height()),
+//	style().drawControl(TQStyle::CE_PushButtonLabel,painter,this, TQRect(0,0,pixmap.width(),pixmap.height()),
 //		colorGroup(),TQStyle::Style_Enabled);
 
 

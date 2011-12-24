@@ -216,8 +216,8 @@ void SourceDisplay::drawContents(TQPainter *p, int clipx, int clipy, int clipw, 
     TQColor textColor;
 
     if (lineno == m_currentLine) {
-      bgColor = tqpalette().active().highlight();
-      textColor = tqpalette().active().highlightedText();
+      bgColor = palette().active().highlight();
+      textColor = palette().active().highlightedText();
     }
     else if (m_debugWin->haveBreakpoint(m_sourceFile,lineno+1,lineno+1)) {
       bgColor = palette().active().text();

@@ -1118,7 +1118,7 @@ static TQCString ToASCII(const TQString& label)
 static TQString ToUnicode(const TQString& label)
 {
 #ifdef HAVE_IDNA_H
-  // We have idna.h, so we can use the idna_to_tqunicode
+  // We have idna.h, so we can use the idna_to_unicode
   // function :)
 
   TQ_UINT32 *ucs4_input, *ucs4_output;

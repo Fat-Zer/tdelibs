@@ -847,7 +847,7 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 
 		if ( flags & Style_Selected )
 		{
-                    p->fillRect( br.right() - 3, br.top() + 1, 3, br.height() - 1, cg.tqbrush(TQColorGroup::Highlight));
+                    p->fillRect( br.right() - 3, br.top() + 1, 3, br.height() - 1, cg.brush(TQColorGroup::Highlight));
 		    br.addCoords( 1, 1, -4, 0 );
 		}
 		else
@@ -885,7 +885,7 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 
 		if ( flags & Style_Selected )
 		{
-		    p->fillRect( br.right() - 2, br.top(), 3, br.height(), cg.tqbrush(TQColorGroup::Highlight));
+		    p->fillRect( br.right() - 2, br.top(), 3, br.height(), cg.brush(TQColorGroup::Highlight));
 		    br.addCoords( 1, 0, -3, -1 );
 		}
 		else
