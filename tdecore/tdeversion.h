@@ -30,16 +30,16 @@
     A new bugfix revision resets the security level
     A new ABI version resets both the bugfix revision and the security level
 */
-#define TDE_VERSION_STRING "R14.0 [DEVELOPMENT]"
+#define TDE_VERSION_STRING "R14.0.0 [DEVELOPMENT]"
 #define TDE_VERSION_MAJOR 14
 #define TDE_VERSION_MINOR 0
 #define TDE_VERSION_RELEASE 0
-#define KDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
+#define TDE_MAKE_VERSION( a,b,c ) (((a) << 16) | ((b) << 8) | (c))
 
 #define TDE_VERSION \
-  KDE_MAKE_VERSION(TDE_VERSION_MAJOR,TDE_VERSION_MINOR,TDE_VERSION_RELEASE)
+  TDE_MAKE_VERSION(TDE_VERSION_MAJOR,TDE_VERSION_MINOR,TDE_VERSION_RELEASE)
 
-#define KDE_IS_VERSION(a,b,c) ( TDE_VERSION >= KDE_MAKE_VERSION(a,b,c) )
+#define KDE_IS_VERSION(a,b,c) ( TDE_VERSION >= TDE_MAKE_VERSION(a,b,c) )
 
 /**
  * Namespace for general KDE functions.
