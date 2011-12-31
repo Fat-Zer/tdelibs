@@ -646,7 +646,8 @@ KApplication::KApplication( int& argc, char** argv, const TQCString& rAppName,
 }
 
 KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
-  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
+//  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
+  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(), GUIenabled ),	// We need to be able to run command line apps
   KInstance( KCmdLineArgs::about),
 #ifdef Q_WS_X11
   display(0L),
