@@ -75,6 +75,7 @@ OPTION( WITH_JASPER "Enable jasper (jpeg2k) support" OFF )
 OPTION( WITH_OPENEXR "Enable openexr support" OFF )
 OPTION( WITH_UTEMPTER "Use utempter for utmp management" OFF )
 OPTION( WITH_AVAHI "Enable AVAHI support" OFF )
+OPTION( WITH_ELFICON "Enable ELF embedded icon support" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" OFF )
 OPTION( WITH_HSPELL "Enable hspell support" OFF )
@@ -714,6 +715,26 @@ if( WITH_AVAHI )
     set( AVAHI_API_0_6 1 )
   endif( WITH_QT3 )
 endif( )
+
+
+##### check for libr ###########################
+# WARNING
+# before altering the LIBR_VERSION check,
+# please ensure that nothing changed in the
+# duplicated data definitions present in
+# kio/kio/kfileitem.cpp
+
+if( WITH_ELFICON )
+  pkg_search_module( LIBR libr )
+  if( NOT LIBR_FOUND )
+      message(FATAL_ERROR "\nelficon support was requested, but libr was not found on your system" )
+  endif( NOT LIBR_FOUND )
+  if( LIBR_VERSION != 0.6.0 )
+      message(FATAL_ERROR "\nelficon support was requested, but the libr version on your system may not be compatible with TDE" )
+  endif( LIBR_VERSION != 0.6.0 )
+  set( HAVE_ELFICON 1 )
+endif( )
+
 
 ##### check for aspell ##########################
 # we need ASPELL_DATADIR too

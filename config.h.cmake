@@ -110,6 +110,9 @@
 /* Define if you have OpenEXR */
 #cmakedefine HAVE_EXR 1
 
+/* Defined if you have elficon support. */
+#cmakedefine HAVE_ELFICON 1
+
 /* Define is posix_fadvise is supported */
 #undef HAVE_FADVISE
 

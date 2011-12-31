@@ -30,6 +30,7 @@ include_directories(
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
+  ${LIBR_LIBDIR}
 )
 
 
@@ -60,6 +61,6 @@ tde_add_library( ${target} SHARED
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/dummy.cpp
   VERSION 4.2.0
   EMBED kssl-static kiocore-static ksycoca-static kbookmarks-static kfile-static
-  LINK tdeui-shared tdesu-shared kwalletclient-shared
+  LINK tdeui-shared tdesu-shared kwalletclient-shared ${LIBR_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )
