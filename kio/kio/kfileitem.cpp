@@ -742,10 +742,11 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
       kdWarning() << "Pixmap not found for mimetype " << m_pMimeType->name() << endl;
 
   if ( mime->name() == "application/x-executable" ) {
-	// FIXME
-	// Look for .desktop files for this executable
-	// before resorting to the embedded icon
-	// (look at how the minicli does it)
+	// At first glance it might seem to be a good idea to
+	// look for .desktop files for this executable before resorting to the embedded icon
+	// in the same fashion as the minicli, but on close examination this is NOT A GOOD IDEA.
+	// Specifically it allows one executable to mimic another purely based on filename,
+	// which could at certain times fool any user regardless of experience level.
 #ifdef HAVE_ELFICON
 	// Check for an embedded icon
 	unsigned int icon_size;
