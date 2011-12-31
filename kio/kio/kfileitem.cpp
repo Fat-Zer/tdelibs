@@ -35,6 +35,7 @@
 #include <tqfile.h>
 #include <tqmap.h>
 #include <tqstylesheet.h>
+#include <tqimage.h>
 
 #include <kdebug.h>
 #include <kfilemetainfo.h>
@@ -49,112 +50,7 @@
 #include <krun.h>
 
 #ifdef HAVE_ELFICON
-#include <alloca.h>
-#include <stdint.h>
-#include <cstdlib>
-
-extern "C" {
-  #include <libr-icons.h>
-
-  // BEGIN HACK
-  // libr does not export these structures and defines,
-  // but we need access to them to make the UI behave sanely
-  // Keep them in sync with libr and all should be OK
-
-  // Valid for libr version 0.6.0
-  // See libr detection code in ConfigureChecks.cmake
-
-  typedef uint32_t ID8;
-  typedef uint16_t ID4;
-  typedef struct {uint64_t p:48;} __attribute__((__packed__)) ID12;
-
-  typedef struct {
-    ID8  g1;
-    ID4  g2;
-    ID4  g3;
-    ID4  g4;
-    ID12 g5;
-  } __attribute__((__packed__)) UUID;
-
-  typedef struct {
-    char *name;
-    size_t offset;
-    size_t entry_size;
-    libr_icontype_t type;
-    unsigned int icon_size;
-  } iconentry;
-
-  typedef struct{
-    size_t size;
-    char *buffer;
-    iconentry entry;
-  } iconlist;
-
-  #define ICON_SECTION     ".icon"
-  // END HACK
-
-//   int get_iconlist(libr_file *file_handle, iconlist *icons);
-//   iconentry *get_nexticon(iconlist *icons, iconentry *last_entry);
-}
-
-/*
- * Obtain an existing icon resource list
- */
-int get_iconlist(libr_file *file_handle, iconlist *icons)
-{
-	if(icons == NULL)
-	{
-		/* Need to be able to return SOMETHING */
-		return false;
-	}
-	/* Obtain the icon resource list */
-	icons->buffer = libr_malloc(file_handle, ICON_SECTION, &(icons->size));
-	if(icons->buffer == NULL)
-		return false;
-	return true;
-}
-
-/*
- * Get the next entry in an icon resource list
- */
-iconentry *get_nexticon(iconlist *icons, iconentry *last_entry)
-{
-	size_t i;
-	
-	/* The icon list is needed both for the data buffer and for a call-specific iconentry instance */ 
-	if(icons == NULL)
-		return NULL;
-	/* If this is the first call (last_entry == NULL) then return the first entry */
-	if(last_entry == NULL)
-		icons->entry.offset = sizeof(uint32_t)+sizeof(UUID);
-	else
-		icons->entry.offset += icons->entry.entry_size;
-	/* Check to see if we've run out of entries */
-	if(icons->entry.offset >= icons->size)
-		return NULL;
-	i = icons->entry.offset;
-	memcpy(&(icons->entry.entry_size), &(icons->buffer[i]), sizeof(uint32_t));
-	i += sizeof(uint32_t);
-	icons->entry.type = (libr_icontype_t)icons->buffer[i];
-	i += sizeof(unsigned char);
-	switch(icons->entry.type)
-	{
-		case LIBR_SVG:
-			icons->entry.icon_size = 0;
-			icons->entry.name = &(icons->buffer[i]);
-			break;
-		case LIBR_PNG:
-			memcpy(&(icons->entry.icon_size), &(icons->buffer[i]), sizeof(uint32_t));
-			i += sizeof(uint32_t);
-			icons->entry.name = &(icons->buffer[i]);
-			break;
-		default:
-			/* Invalid entry type */
-			return NULL;
-	}
-	return &(icons->entry);
-}
-
+#include "tdelficon.h"
 #endif // HAVE_ELFICON
 
 class KFileItem::KFileItemPrivate {
@@ -780,7 +676,7 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 	}
 	while((entry = get_nexticon(&icons, entry)) != NULL)
 	{
-		if (KGlobal::iconLoader()->iconPath(entry->name, _size, true) != "") {
+		if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
 			iconresnamefound = 1;
 			p = DesktopIcon( entry->name, _size, _state );
 			break;
@@ -792,6 +688,11 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 		size_t icon_data_length;
 		char* icondata = libr_icon_malloc(icon, &icon_data_length);
 		p.loadFromData(static_cast<uchar*>(static_cast<void*>(icondata)), icon_data_length);	// EVIL CAST
+		if (icon_size != 0) {
+			TQImage ip = p.convertToImage();
+			ip = ip.smoothScale(icon_size, icon_size);
+			p.convertFromImage(ip);
+		}
 		free(icondata);
 		libr_icon_close(icon);
 	}

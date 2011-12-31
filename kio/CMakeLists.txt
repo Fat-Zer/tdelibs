@@ -51,6 +51,11 @@ install( FILES kpasswdserver.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kded )
 install( FILES data.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
+if( HAVE_ELFICON )
+  set( ELFICON_STATIC_LIB tdelficon-static )
+endif( HAVE_ELFICON )
+
+
 ##### libkio ####################################
 
 set( target kio )
@@ -60,7 +65,7 @@ configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy
 tde_add_library( ${target} SHARED
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/dummy.cpp
   VERSION 4.2.0
-  EMBED kssl-static kiocore-static ksycoca-static kbookmarks-static kfile-static
+  EMBED kssl-static kiocore-static ksycoca-static kbookmarks-static kfile-static ${ELFICON_STATIC_LIB}
   LINK tdeui-shared tdesu-shared kwalletclient-shared ${LIBR_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

@@ -28,6 +28,7 @@
 #include <tqptrlist.h>
 #include <tqobject.h>
 #include <tqstringlist.h>
+#include <tqpixmap.h>
 
 #include <kurl.h>
 
@@ -257,6 +258,16 @@ public:
     TQString iconName();
 
     /**
+     * Returns the current custom icon
+     * The results are valid iff iconName() has
+     * returned TQString::null
+     *
+     * @return a pixmap with the current custom icon,
+     *         or a null pixmap if no icon is available
+     */
+    TQPixmap customIconPixmap();
+
+    /**
      * Check whether the provided uri is executable or not.
      *
      * Setting this to false ensures that typing the name of
@@ -332,6 +343,8 @@ private:
     KURL m_pURI;
     URITypes m_iType;
     KURIFilterDataPrivate *d;
+
+    TQPixmap m_customIconPixmap;
 };
 
 

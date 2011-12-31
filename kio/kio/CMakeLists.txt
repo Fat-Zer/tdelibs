@@ -114,3 +114,20 @@ set( ${target}_SRCS
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
 )
+
+
+##### tdelficon ###################################
+
+if( HAVE_ELFICON )
+
+  set( target tdelficon )
+
+  set( ${target}_SRCS
+    tdelficon.cpp
+  )
+
+  tde_add_library( ${target} STATIC_PIC AUTOMOC
+    SOURCES ${${target}_SRCS}
+  )
+
+endif( HAVE_ELFICON )

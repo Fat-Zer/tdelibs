@@ -28,6 +28,11 @@
 #include <kstaticdeleter.h>
 #include <kparts/componentfactory.h>
 
+#ifdef HAVE_ELFICON
+#include <tqimage.h>
+#include "tdelficon.h"
+#endif // HAVE_ELFICON
+
 #include "kurifilter.h"
 
 template class TQPtrList<KURIFilterPlugin>;
@@ -159,6 +164,7 @@ TQString KURIFilterData::iconName()
 {
     if( m_bChanged )
     {
+        m_customIconPixmap = TQPixmap();
         switch ( m_iType )
         {
             case KURIFilterData::LOCAL_FILE:
@@ -175,12 +181,78 @@ TQString KURIFilterData::iconName()
                 KService::Ptr service = KService::serviceByDesktopName( exeName );
                 if (service && service->icon() != TQString::fromLatin1( "unknown" ))
                     m_strIconName = service->icon();
-                // Try to find an icon with the same name as the binary (useful for non-kde apps)
+                // Try to find an icon with the same name as the binary (useful for non-tde apps)
+                // FIXME: We should only do this if the binary is in the system path somewhere,
+                // otherwise TDE could end up showing system icons for user binaries
                 else if ( !KGlobal::iconLoader()->loadIcon( exeName, KIcon::NoGroup, 16, KIcon::DefaultState, 0, true ).isNull() )
                     m_strIconName = exeName;
-                else
+                else {
+                    // not found, try to load from elf file (if supported)
+#ifdef HAVE_ELFICON
+			// Check for an embedded icon
+			unsigned int icon_size;
+			libr_icon *icon = NULL;
+			libr_file *handle = NULL;
+			libr_access_t access = LIBR_READ;
+			char libr_can_continue = 1;
+		
+			if((handle = libr_open(const_cast<char*>(m_pURI.path().ascii()), access)) == NULL)
+			{
+				kdWarning() << "failed to open file" << m_pURI.path() << endl;
+				libr_can_continue = 0;
+			}
+
+			if (libr_can_continue == 1) {
+				icon_size = 32;	// FIXME: Is this a reasonable size request for all possible usages of kurifilter?
+				icon = libr_icon_geticon_bysize(handle, icon_size);
+				if(icon == NULL)
+				{
+					kdWarning() << "failed to obtain ELF icon: " << libr_errmsg() << endl;
+					libr_close(handle);
+					libr_can_continue = 0;
+				}
+
+				if (libr_can_continue == 1) {
+					// See if the embedded icon name matches any icon file names already on the system
+					// If it does, use the system icon instead of the embedded one
+					int iconresnamefound = 0;
+					iconentry *entry = NULL;
+					iconlist icons;
+					if(!get_iconlist(handle, &icons))
+					{
+						// Failed to obtain a list of ELF icons
+					}
+					while((entry = get_nexticon(&icons, entry)) != NULL)
+					{
+						if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
+							iconresnamefound = 1;
+							m_strIconName = entry->name;
+							break;
+						}
+					}
+				
+					if (iconresnamefound == 0) {
+						// Extract the embedded icon
+						size_t icon_data_length;
+						char* icondata = libr_icon_malloc(icon, &icon_data_length);
+						m_customIconPixmap.loadFromData(static_cast<uchar*>(static_cast<void*>(icondata)), icon_data_length);	// EVIL CAST
+						if (icon_size != 0) {
+							TQImage ip = m_customIconPixmap.convertToImage();
+							ip = ip.smoothScale(icon_size, icon_size);
+							m_customIconPixmap.convertFromImage(ip);
+						}
+						free(icondata);
+						libr_icon_close(icon);
+					}
+				
+					libr_close(handle);
+				}
+			}
+#endif // HAVE_ELFICON
+
                     // not found, use default
                     m_strIconName = TQString::fromLatin1("exec");
+                }
                 break;
             }
             case KURIFilterData::HELP:
@@ -206,6 +278,11 @@ TQString KURIFilterData::iconName()
         m_bChanged = false;
     }
     return m_strIconName;
+}
+
+TQPixmap KURIFilterData::customIconPixmap()
+{
+    return m_customIconPixmap;
 }
 
 //********************************************  KURIFilterPlugin **********************************************
