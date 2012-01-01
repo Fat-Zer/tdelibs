@@ -222,12 +222,14 @@ TQString KURIFilterData::iconName()
 					{
 						// Failed to obtain a list of ELF icons
 					}
-					while((entry = get_nexticon(&icons, entry)) != NULL)
-					{
-						if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
-							iconresnamefound = 1;
-							m_strIconName = entry->name;
-							break;
+					else {
+						while((entry = get_nexticon(&icons, entry)) != NULL)
+						{
+							if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
+								iconresnamefound = 1;
+								m_strIconName = entry->name;
+								break;
+							}
 						}
 					}
 				

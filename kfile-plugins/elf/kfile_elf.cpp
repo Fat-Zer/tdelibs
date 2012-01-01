@@ -135,15 +135,17 @@ bool KElfPlugin::readInfo( KFileMetaInfo& info, uint what)
 	{
 		// Failed to obtain a list of ELF icons
 	}
-	while((entry = get_nexticon(&icons, entry)) != NULL)
-	{
-		if (iconListing.isEmpty()) {
-			iconListing = entry->name;
+	else {
+		while((entry = get_nexticon(&icons, entry)) != NULL)
+		{
+			if (iconListing.isEmpty()) {
+				iconListing = entry->name;
+			}
+			else {
+				iconListing = iconListing.append("<p>").append(entry->name);
+			}
+			break;
 		}
-		else {
-			iconListing = iconListing.append("<p>").append(entry->name);
-		}
-		break;
 	}
 	if (iconListing.isEmpty()) {
 		iconListing = TQString("<i>") + i18n("not set") + TQString("</i>");

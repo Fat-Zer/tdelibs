@@ -674,12 +674,14 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 	{
 		// Failed to obtain a list of ELF icons
 	}
-	while((entry = get_nexticon(&icons, entry)) != NULL)
-	{
-		if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
-			iconresnamefound = 1;
-			p = DesktopIcon( entry->name, _size, _state );
-			break;
+	else {
+		while((entry = get_nexticon(&icons, entry)) != NULL)
+		{
+			if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
+				iconresnamefound = 1;
+				p = DesktopIcon( entry->name, _size, _state );
+				break;
+			}
 		}
 	}
 
