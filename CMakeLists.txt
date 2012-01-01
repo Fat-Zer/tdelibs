@@ -848,6 +848,7 @@ add_subdirectory( licenses )
 add_subdirectory( dnssd )
 add_subdirectory( pics )
 add_subdirectory( mimetypes )
+add_subdirectory( kfile-plugins )
 
 
 ##### install import cmake modules ###############
