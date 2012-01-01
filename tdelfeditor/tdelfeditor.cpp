@@ -62,6 +62,17 @@ typedef enum {
 	PARAM_ICON_SIZE     = 3,
 	PARAM_RESOURCE_FILE = 4,
 	PARAM_ICON_FILE     = 4,
+
+	PARAM_EXECUTABLE_NAME       = 3,
+	PARAM_DESCRIPTION           = 4,
+	PARAM_LICENSE               = 5,
+	PARAM_COPYRIGHT             = 6,
+	PARAM_AUTHORS               = 7,
+	PARAM_PRODUCT               = 8,
+	PARAM_ORGANIZATION          = 9,
+	PARAM_VERSION               = 10,
+	PARAM_DATETIME              = 11,
+	PARAM_NOTES                 = 12,
 } eParams;
 
 typedef struct {
@@ -71,13 +82,14 @@ typedef struct {
 } IconOptions;
 
 IconOptions elficon_options = {
-	"acefgrstv",
+	"acefgmrstv",
 	{
 		{"add-icon", 0, 0, 'a'},
 		{"clear-icons", 0, 0, 'c'},
 		{"set-empty-uuid", 0, 0, 'e'},
 		{"find-icon", 0, 0, 'f'},
 		{"get-uuid", 0, 0, 'g'},
+		{"write-metadata", 0, 0, 'm'},
 		{"retrieve-icon", 0, 0, 'r'},
 		{"set-uuid", 0, 0, 's'},
 		{"tde-autoadd-icon", 0, 0, 't'},
@@ -90,6 +102,7 @@ IconOptions elficon_options = {
         N_("set an empty icon UUID for the ELF file"),
         N_("find an ELF icon in the file by closest size"),
         N_("get the icon UUID for the file"),
+        N_("write metadata information to the ELF file"),
         N_("retrieve an icon from the ELF file"),
         N_("set the icon UUID for the ELF file"),
         N_("automatically add the appropriate TDE icon to the ELF file"),
@@ -135,6 +148,7 @@ typedef enum {
 	MODE_SET_EMPTY_UUID,
 	MODE_GET_UUID,
 	MODE_FIND_ICON,
+	MODE_SET_METADATA,
 	MODE_LAUNCH_GUI
 } eMode;
 
@@ -192,6 +206,10 @@ int handle_arguments(int argc, char **argv, eMode *mode)
 				*mode = MODE_GET_UUID;
 				required_params = 3;
 				break;
+			case 'm':
+				*mode = MODE_SET_METADATA;
+				required_params = 13;
+				break;
 			case 'r':
 				*mode = MODE_RETRIEVE_ICON;
 				required_params = 5;
@@ -220,6 +238,8 @@ print_icon_usage:
 	fprintf(stderr, _("usage: %s [-t] elf-file-name icon-name\n"), argv[PARAM_PROGNAME]);
 	fprintf(stderr, _("usage: %s [-c|-e|-g] elf-file-name\n"), argv[PARAM_PROGNAME]);
 	fprintf(stderr, _("usage: %s [-s] elf-file-name uuid\n"), argv[PARAM_PROGNAME]);
+	fprintf(stderr, _("usage: %s [-s] elf-file-name uuid\n"), argv[PARAM_PROGNAME]);
+	fprintf(stderr, _("usage: %s [-m] elf-file-name \"executable name\" \"description\" \"license\" \"copyright\" \"authors\" \"product\" \"organization\" \"version\" \"datetime\" \"notes\"\n"), argv[PARAM_PROGNAME]);
 	fprintf(stderr, _("If -t is set the TDEDIRS environment variable must include your TDE installation prefix\n"));
 	fprintf(stderr, _("for example: TDEDIRS=/opt/trinity ./tdelfeditor -t ./konqueror konqueror\n"));
 	for(i=0;i<ELFICON_OPTIONS;i++)
@@ -282,6 +302,28 @@ done_buffer:
 	free(buffer);
 done_handle:
 	fclose(handle);
+	return ret;
+}
+
+/*
+ * Add a resource string to an ELF file
+ */
+int add_resource_string(libr_file *libr_handle, char *resource_name, char *input_string)
+{
+	off_t size, len;
+	int ret = FALSE;
+	
+	size = strlen(input_string);
+	/* Allocate buffers for the uncompressed and compressed data */
+	/* Compress the data */
+	if(!libr_write(libr_handle, resource_name, input_string, size, LIBR_COMPRESSED, LIBR_OVERWRITE))
+	{
+		errorf(_("failed to write ELF resource: %s"), libr_errmsg());
+		goto done_buffer;
+	}
+	
+	ret = TRUE;
+done_buffer:
 	return ret;
 }
 
@@ -381,7 +423,7 @@ int main_console(int argc, char **argv)
 	if(mode == MODE_CLEAR_ICON || mode == MODE_CLEAR_RESOURCE
 	 || mode == MODE_ADD_ICON || mode == MODE_ADD_RESOURCE
 	 || mode == MODE_SET_UUID || mode == MODE_TDE_AUTOADD_ICON
-	 || mode == MODE_SET_EMPTY_UUID)
+	 || mode == MODE_SET_EMPTY_UUID || mode == MODE_SET_METADATA)
 	{
 		access = LIBR_READ_WRITE;
 	}
@@ -433,6 +475,22 @@ int main_console(int argc, char **argv)
 				goto fail;
 			}
 			break;
+		case MODE_SET_METADATA:
+		{
+			// There are 10 of these
+			// The metadata sequence is:
+			// "executable name" "description" "license" "copyright" "authors" "product" "organization" "version" "datetime" "notes"
+			add_resource_string(handle, ".metadata_name", argv[PARAM_EXECUTABLE_NAME]);
+			add_resource_string(handle, ".metadata_description", argv[PARAM_DESCRIPTION]);
+			add_resource_string(handle, ".metadata_license", argv[PARAM_LICENSE]);
+			add_resource_string(handle, ".metadata_copyright", argv[PARAM_COPYRIGHT]);
+			add_resource_string(handle, ".metadata_authors", argv[PARAM_AUTHORS]);
+			add_resource_string(handle, ".metadata_product", argv[PARAM_PRODUCT]);
+			add_resource_string(handle, ".metadata_organization", argv[PARAM_ORGANIZATION]);
+			add_resource_string(handle, ".metadata_version", argv[PARAM_VERSION]);
+			add_resource_string(handle, ".metadata_datetime", argv[PARAM_DATETIME]);
+			add_resource_string(handle, ".metadata_notes", argv[PARAM_NOTES]);
+		}	break;
 		case MODE_SET_EMPTY_UUID:
 			if(!libr_icon_setuuid(handle, "00000000-0000-0000-0000-000000000000"))
 			{

@@ -30,7 +30,7 @@ extern "C" {
 
 #define ERROR           -1
 #define ERROR_BUF        1024
-#define ELFICON_OPTIONS  9
+#define ELFICON_OPTIONS  10
 #define ICON_SECTION     ".icon"
 #define con_err(...)     fprintf(stderr, __VA_ARGS__); fprintf(stderr, "\n")
 #define errorf(...)      con_err(__VA_ARGS__)
