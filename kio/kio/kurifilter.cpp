@@ -207,6 +207,11 @@ TQString KURIFilterData::iconName()
 				icon = libr_icon_geticon_bysize(handle, icon_size);
 				if(icon == NULL)
 				{
+					// Try loading the first icon as fallback
+					icon = libr_icon_geticon_byid(handle, 0);
+				}
+				if(icon == NULL)
+				{
 					kdWarning() << "failed to obtain ELF icon: " << libr_errmsg() << endl;
 					libr_close(handle);
 					libr_can_continue = 0;
