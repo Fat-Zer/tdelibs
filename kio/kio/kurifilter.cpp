@@ -205,17 +205,6 @@ TQString KURIFilterData::iconName()
 			if (libr_can_continue == 1) {
 				icon_size = 32;	// FIXME: Is this a reasonable size request for all possible usages of kurifilter?
 				icon = libr_icon_geticon_bysize(handle, icon_size);
-				if(icon == NULL)
-				{
-					// Try loading the first icon as fallback
-					icon = libr_icon_geticon_byid(handle, 0);
-				}
-				if(icon == NULL)
-				{
-					kdWarning() << "failed to obtain ELF icon: " << libr_errmsg() << endl;
-					libr_close(handle);
-					libr_can_continue = 0;
-				}
 
 				if (libr_can_continue == 1) {
 					// See if the embedded icon name matches any icon file names already on the system
@@ -226,10 +215,18 @@ TQString KURIFilterData::iconName()
 					if(!get_iconlist(handle, &icons))
 					{
 						// Failed to obtain a list of ELF icons
+						kdWarning() << "failed to obtain ELF icon: " << libr_errmsg() << endl;
+						libr_close(handle);
+						libr_can_continue = 0;
 					}
 					else {
 						while((entry = get_nexticon(&icons, entry)) != NULL)
 						{
+							if(icon == NULL)
+							{
+								// Try loading this icon as fallback
+								icon = libr_icon_geticon_byname(handle, entry->name);
+							}
 							if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
 								iconresnamefound = 1;
 								m_strIconName = entry->name;

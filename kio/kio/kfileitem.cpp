@@ -658,17 +658,6 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 	
 	icon_size = _size;
 	icon = libr_icon_geticon_bysize(handle, icon_size);
-	if(icon == NULL)
-	{
-		// Try loading the first icon as fallback
-		icon = libr_icon_geticon_byid(handle, 0);
-	}
-	if(icon == NULL)
-	{
-		kdWarning() << "failed to obtain ELF icon: " << libr_errmsg() << endl;
-		libr_close(handle);
-		return p;
-	}
 
 	// See if the embedded icon name matches any icon file names already on the system
 	// If it does, use the system icon instead of the embedded one
@@ -678,10 +667,18 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 	if(!get_iconlist(handle, &icons))
 	{
 		// Failed to obtain a list of ELF icons
+		kdWarning() << "failed to obtain ELF icon: " << libr_errmsg() << endl;
+		libr_close(handle);
+		return p;
 	}
 	else {
 		while((entry = get_nexticon(&icons, entry)) != NULL)
 		{
+			if(icon == NULL)
+			{
+				// Try loading this icon as fallback
+				icon = libr_icon_geticon_byname(handle, entry->name);
+			}
 			if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
 				iconresnamefound = 1;
 				p = DesktopIcon( entry->name, _size, _state );
