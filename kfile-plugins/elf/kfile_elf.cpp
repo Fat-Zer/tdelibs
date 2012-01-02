@@ -41,34 +41,6 @@ typedef unsigned long uint32_t;
 typedef unsigned short uint16_t;
 #endif
 
-TQString elf_get_resource(libr_file *handle, char *section_name)
-{
-	size_t buffer_size = 0;
-	char *buffer = NULL;
-	TQString result;
-
-	/* Get the resource from the ELF binary */
-	if(!libr_size(handle, section_name, &buffer_size))
-	{
-		kdWarning() << "failed to obtain ELF resource size: " << libr_errmsg() << endl;
-		return result;
-	}
-	/* Get the resource from the ELF file */
-	buffer = (char *) malloc(buffer_size+1);
-	buffer[buffer_size] = 0;
-	if(!libr_read(handle, section_name, buffer))
-	{
-		kdWarning() << "failed to obtain ELF resource: " << libr_errmsg() << endl;
-		goto fail;
-	}
-	result = buffer;
-
-fail:
-	free(buffer);
-
-	return result;
-}
-
 typedef KGenericFactory<KElfPlugin> ElfFactory;
 
 K_EXPORT_COMPONENT_FACTORY(kfile_elf, ElfFactory( "kfile_elf" ))
@@ -96,7 +68,7 @@ KElfPlugin::KElfPlugin(TQObject *parent, const char *name,
     item = addItemInfo(group, "Product", i18n("Product"), TQVariant::String);
     item = addItemInfo(group, "Organization", i18n("Organization"), TQVariant::String);
     item = addItemInfo(group, "Version", i18n("Version"), TQVariant::String);
-    item = addItemInfo(group, "DateTime", i18n("Creation Date/Time"), TQVariant::String);
+    item = addItemInfo(group, "DateTime", i18n("Compilation Date/Time"), TQVariant::String);
     item = addItemInfo(group, "SystemIcon", i18n("Requested Icon"), TQVariant::String);
     item = addItemInfo(group, "Notes", i18n("Comments"), TQVariant::String);
 

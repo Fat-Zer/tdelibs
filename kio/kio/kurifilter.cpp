@@ -195,7 +195,7 @@ TQString KURIFilterData::iconName()
 			libr_file *handle = NULL;
 			libr_access_t access = LIBR_READ;
 			char libr_can_continue = 1;
-		
+
 			if((handle = libr_open(const_cast<char*>(m_pURI.path().ascii()), access)) == NULL)
 			{
 				kdWarning() << "failed to open file" << m_pURI.path() << endl;
@@ -219,8 +219,10 @@ TQString KURIFilterData::iconName()
 
 						// See if there is a system icon we can use
 						TQString sysIconName = elf_get_resource(handle, ".metadata_sysicon");
-						if (KGlobal::iconLoader()->iconPath(sysIconName.ascii(), 0, true) != "") {
-							m_customIconPixmap = DesktopIcon( sysIconName.ascii(), _size, _state );
+						if (!sysIconName.isEmpty()) {
+							if (KGlobal::iconLoader()->iconPath(sysIconName.ascii(), 0, true) != "") {
+								m_strIconName = sysIconName;
+							}
 						}
 
 						libr_close(handle);
@@ -241,8 +243,8 @@ TQString KURIFilterData::iconName()
 							}
 						}
 					}
-				
-					if (iconresnamefound == 0) {
+
+					if ((iconresnamefound == 0) && (icon)) {
 						// Extract the embedded icon
 						size_t icon_data_length;
 						char* icondata = libr_icon_malloc(icon, &icon_data_length);
@@ -255,7 +257,7 @@ TQString KURIFilterData::iconName()
 						free(icondata);
 						libr_icon_close(icon);
 					}
-				
+
 					libr_close(handle);
 				}
 			}

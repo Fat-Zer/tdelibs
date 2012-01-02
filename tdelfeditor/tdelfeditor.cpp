@@ -496,7 +496,7 @@ int main_console(int argc, char **argv)
 		}	break;
 		case MODE_SET_EMPTY_UUID:
 			section = ICON_SECTION;
-                        clear_resource(handle, section);
+			clear_resource(handle, section);
 
 			if(!libr_icon_setuuid(handle, "00000000-0000-0000-0000-000000000000"))
 			{
@@ -549,6 +549,8 @@ int main_console(int argc, char **argv)
 			if (systemIcon.isNull()) {
 				systemIcon = KGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, false);
 				printf("NOT FOUND, refusing to add unknown icon (this message is harmless)\n\r");
+				section = ICON_SECTION;
+				clear_resource(handle, section);
 				goto fail;
 			}
 			else {

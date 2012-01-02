@@ -69,7 +69,7 @@ TQString elf_get_resource(libr_file *handle, char *section_name)
 	/* Get the resource from the ELF binary */
 	if(!libr_size(handle, section_name, &buffer_size))
 	{
-		kdWarning() << "failed to obtain ELF resource size: " << libr_errmsg() << endl;
+//		kdWarning() << "failed to obtain ELF resource size: " << libr_errmsg() << endl;
 		return result;
 	}
 	/* Get the resource from the ELF file */
@@ -77,7 +77,7 @@ TQString elf_get_resource(libr_file *handle, char *section_name)
 	buffer[buffer_size] = 0;
 	if(!libr_read(handle, section_name, buffer))
 	{
-		kdWarning() << "failed to obtain ELF resource: " << libr_errmsg() << endl;
+//		kdWarning() << "failed to obtain ELF resource: " << libr_errmsg() << endl;
 		goto fail;
 	}
 	result = buffer;

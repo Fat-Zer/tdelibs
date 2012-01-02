@@ -671,8 +671,10 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 
 		// See if there is a system icon we can use
 		TQString sysIconName = elf_get_resource(handle, ".metadata_sysicon");
-		if (KGlobal::iconLoader()->iconPath(sysIconName.ascii(), 0, true) != "") {
-			p = DesktopIcon( sysIconName.ascii(), _size, _state );
+		if (!sysIconName.isEmpty()) {
+			if (KGlobal::iconLoader()->iconPath(sysIconName.ascii(), 0, true) != "") {
+				p = DesktopIcon( sysIconName.ascii(), _size, _state );
+			}
 		}
 
 		libr_close(handle);
@@ -694,7 +696,7 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 		}
 	}
 
-	if (iconresnamefound == 0) {
+	if ((iconresnamefound == 0) && (icon)) {
 		// Extract the embedded icon
 		size_t icon_data_length;
 		char* icondata = libr_icon_malloc(icon, &icon_data_length);
