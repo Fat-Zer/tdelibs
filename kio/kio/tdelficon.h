@@ -1,7 +1,12 @@
-
 #include <alloca.h>
 #include <stdint.h>
 #include <cstdlib>
+
+#include <tqdict.h>
+#include <tqvalidator.h>
+#include <tqcstring.h>
+#include <tqfile.h>
+#include <tqdatetime.h>
 
 extern "C" {
   #include <libr-icons.h>
@@ -46,3 +51,4 @@ extern "C" {
 
 int get_iconlist(libr_file *file_handle, iconlist *icons);
 iconentry *get_nexticon(iconlist *icons, iconentry *last_entry);
+TQString elf_get_resource(libr_file *handle, char *section_name);

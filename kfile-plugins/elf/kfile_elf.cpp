@@ -97,6 +97,7 @@ KElfPlugin::KElfPlugin(TQObject *parent, const char *name,
     item = addItemInfo(group, "Organization", i18n("Organization"), TQVariant::String);
     item = addItemInfo(group, "Version", i18n("Version"), TQVariant::String);
     item = addItemInfo(group, "DateTime", i18n("Creation Date/Time"), TQVariant::String);
+    item = addItemInfo(group, "SystemIcon", i18n("Requested Icon"), TQVariant::String);
     item = addItemInfo(group, "Notes", i18n("Comments"), TQVariant::String);
 
     item = addItemInfo(group2, "EmbeddedIcon", i18n("Icon Name(s)"), TQVariant::String);
@@ -126,6 +127,7 @@ bool KElfPlugin::readInfo( KFileMetaInfo& info, uint what)
 	appendItem(group, "Organization", elf_get_resource(handle, ".metadata_organization"));
 	appendItem(group, "Version", elf_get_resource(handle, ".metadata_version"));
 	appendItem(group, "DateTime", elf_get_resource(handle, ".metadata_datetime"));
+	appendItem(group, "SystemIcon", elf_get_resource(handle, ".metadata_sysicon"));
 	appendItem(group, "Notes", elf_get_resource(handle, ".metadata_notes"));
 
 	TQString iconListing;
@@ -143,7 +145,7 @@ bool KElfPlugin::readInfo( KFileMetaInfo& info, uint what)
 				iconListing = entry->name;
 			}
 			else {
-				iconListing = iconListing.append("<p>").append(entry->name);
+				iconListing = iconListing.append("\n").append(entry->name);
 			}
 			break;
 		}

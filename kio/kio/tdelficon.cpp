@@ -59,3 +59,31 @@ iconentry *get_nexticon(iconlist *icons, iconentry *last_entry)
 	}
 	return &(icons->entry);
 }
+
+TQString elf_get_resource(libr_file *handle, char *section_name)
+{
+	size_t buffer_size = 0;
+	char *buffer = NULL;
+	TQString result;
+
+	/* Get the resource from the ELF binary */
+	if(!libr_size(handle, section_name, &buffer_size))
+	{
+		kdWarning() << "failed to obtain ELF resource size: " << libr_errmsg() << endl;
+		return result;
+	}
+	/* Get the resource from the ELF file */
+	buffer = (char *) malloc(buffer_size+1);
+	buffer[buffer_size] = 0;
+	if(!libr_read(handle, section_name, buffer))
+	{
+		kdWarning() << "failed to obtain ELF resource: " << libr_errmsg() << endl;
+		goto fail;
+	}
+	result = buffer;
+
+fail:
+	free(buffer);
+
+	return result;
+}

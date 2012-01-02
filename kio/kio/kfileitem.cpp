@@ -668,6 +668,13 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 	{
 		// Failed to obtain a list of ELF icons
 		kdWarning() << "failed to obtain ELF icon: " << libr_errmsg() << endl;
+
+		// See if there is a system icon we can use
+		TQString sysIconName = elf_get_resource(handle, ".metadata_sysicon");
+		if (KGlobal::iconLoader()->iconPath(sysIconName.ascii(), 0, true) != "") {
+			p = DesktopIcon( sysIconName.ascii(), _size, _state );
+		}
+
 		libr_close(handle);
 		return p;
 	}

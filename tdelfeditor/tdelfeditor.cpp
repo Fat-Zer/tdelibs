@@ -73,7 +73,8 @@ typedef enum {
 	PARAM_ORGANIZATION          = 9,
 	PARAM_VERSION               = 10,
 	PARAM_DATETIME              = 11,
-	PARAM_NOTES                 = 12,
+	PARAM_SYSICON               = 12,
+	PARAM_NOTES                 = 13,
 } eParams;
 
 typedef struct {
@@ -209,7 +210,7 @@ int handle_arguments(int argc, char **argv, eMode *mode)
 				break;
 			case 'm':
 				*mode = MODE_SET_METADATA;
-				required_params = 13;
+				required_params = 14;
 				break;
 			case 'r':
 				*mode = MODE_RETRIEVE_ICON;
@@ -240,7 +241,7 @@ print_icon_usage:
 	fprintf(stderr, _("usage: %s [-c|-e|-g] elf-file-name\n"), argv[PARAM_PROGNAME]);
 	fprintf(stderr, _("usage: %s [-s] elf-file-name uuid\n"), argv[PARAM_PROGNAME]);
 	fprintf(stderr, _("usage: %s [-s] elf-file-name uuid\n"), argv[PARAM_PROGNAME]);
-	fprintf(stderr, _("usage: %s [-m] elf-file-name \"executable name\" \"description\" \"license\" \"copyright\" \"authors\" \"product\" \"organization\" \"version\" \"datetime\" \"notes\"\n"), argv[PARAM_PROGNAME]);
+	fprintf(stderr, _("usage: %s [-m] elf-file-name \"executable name\" \"description\" \"license\" \"copyright\" \"authors\" \"product\" \"organization\" \"version\" \"datetime\" \"sysicon\" \"notes\"\n"), argv[PARAM_PROGNAME]);
 	fprintf(stderr, _("If -t is set the TDEDIRS environment variable must include your TDE installation prefix\n"));
 	fprintf(stderr, _("for example: TDEDIRS=/opt/trinity ./tdelfeditor -t ./konqueror konqueror\n"));
 	for(i=0;i<ELFICON_OPTIONS;i++)
@@ -490,6 +491,7 @@ int main_console(int argc, char **argv)
 			if (strlen(argv[PARAM_ORGANIZATION]) > 0) add_resource_string(handle, ".metadata_organization", argv[PARAM_ORGANIZATION]);
 			if (strlen(argv[PARAM_VERSION]) > 0) add_resource_string(handle, ".metadata_version", argv[PARAM_VERSION]);
 			if (strlen(argv[PARAM_DATETIME]) > 0) add_resource_string(handle, ".metadata_datetime", argv[PARAM_DATETIME]);
+			if (strlen(argv[PARAM_SYSICON]) > 0) add_resource_string(handle, ".metadata_sysicon", argv[PARAM_SYSICON]);
 			if (strlen(argv[PARAM_NOTES]) > 0) add_resource_string(handle, ".metadata_notes", argv[PARAM_NOTES]);
 		}	break;
 		case MODE_SET_EMPTY_UUID:
@@ -546,7 +548,8 @@ int main_console(int argc, char **argv)
 			TQString systemIcon = KGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, true);
 			if (systemIcon.isNull()) {
 				systemIcon = KGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, false);
-				printf("NOT FOUND, using %s\n\r", systemIcon.ascii());
+				printf("NOT FOUND, refusing to add unknown icon (this message is harmless)\n\r");
+				goto fail;
 			}
 			else {
 				printf("found %s\n\r", systemIcon.ascii());
