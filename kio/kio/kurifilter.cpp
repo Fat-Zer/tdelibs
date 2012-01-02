@@ -188,6 +188,8 @@ TQString KURIFilterData::iconName()
                     m_strIconName = exeName;
                 else {
                     // not found, try to load from elf file (if supported)
+			// otherwise use default
+			m_strIconName = TQString::fromLatin1("exec");
 #ifdef HAVE_ELFICON
 			// Check for an embedded icon
 			unsigned int icon_size;
@@ -244,27 +246,26 @@ TQString KURIFilterData::iconName()
 						}
 					}
 
-					if ((iconresnamefound == 0) && (icon)) {
-						// Extract the embedded icon
-						size_t icon_data_length;
-						char* icondata = libr_icon_malloc(icon, &icon_data_length);
-						m_customIconPixmap.loadFromData(static_cast<uchar*>(static_cast<void*>(icondata)), icon_data_length);	// EVIL CAST
-						if (icon_size != 0) {
-							TQImage ip = m_customIconPixmap.convertToImage();
-							ip = ip.smoothScale(icon_size, icon_size);
-							m_customIconPixmap.convertFromImage(ip);
+					if (libr_can_continue == 1) {
+						if ((iconresnamefound == 0) && (icon)) {
+							// Extract the embedded icon
+							size_t icon_data_length;
+							char* icondata = libr_icon_malloc(icon, &icon_data_length);
+							m_customIconPixmap.loadFromData(static_cast<uchar*>(static_cast<void*>(icondata)), icon_data_length);	// EVIL CAST
+							if (icon_size != 0) {
+								TQImage ip = m_customIconPixmap.convertToImage();
+								ip = ip.smoothScale(icon_size, icon_size);
+								m_customIconPixmap.convertFromImage(ip);
+							}
+							free(icondata);
+							libr_icon_close(icon);
 						}
-						free(icondata);
-						libr_icon_close(icon);
-					}
 
-					libr_close(handle);
+						libr_close(handle);
+					}
 				}
 			}
 #endif // HAVE_ELFICON
-
-                    // not found, use default
-                    m_strIconName = TQString::fromLatin1("exec");
                 }
                 break;
             }
