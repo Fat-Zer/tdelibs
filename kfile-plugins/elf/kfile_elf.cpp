@@ -45,7 +45,7 @@ TQString elf_get_resource(libr_file *handle, char *section_name)
 {
 	size_t buffer_size = 0;
 	char *buffer = NULL;
-	TQString result = TQString("<i>") + i18n("not set") + TQString("</i>");
+	TQString result = i18n("not set");
 	
 	/* Get the resource from the ELF binary */
 	if(!libr_size(handle, section_name, &buffer_size))
@@ -148,7 +148,7 @@ bool KElfPlugin::readInfo( KFileMetaInfo& info, uint what)
 		}
 	}
 	if (iconListing.isEmpty()) {
-		iconListing = TQString("<i>") + i18n("not set") + TQString("</i>");
+		iconListing = i18n("not set");
 	}
 
 	appendItem(group2, "EmbeddedIcon", iconListing);
