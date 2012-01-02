@@ -40,6 +40,7 @@ extern "C" {
 
 #include <tqstring.h>
 #include <tqstringlist.h>
+#include <tqfileinfo.h>
 
 #include <kglobal.h>
 #include <kaboutdata.h>
@@ -460,7 +461,7 @@ int main_console(int argc, char **argv)
 		case MODE_GET_UUID:
 		{
 			char uuid[UUIDSTR_LENGTH];
-			
+
 			if(!libr_icon_getuuid(handle, uuid))
 			{
 				errorf(_("Failed to get UUID: %s\n"), libr_errmsg());
@@ -480,16 +481,16 @@ int main_console(int argc, char **argv)
 			// There are 10 of these
 			// The metadata sequence is:
 			// "executable name" "description" "license" "copyright" "authors" "product" "organization" "version" "datetime" "notes"
-			add_resource_string(handle, ".metadata_name", argv[PARAM_EXECUTABLE_NAME]);
-			add_resource_string(handle, ".metadata_description", argv[PARAM_DESCRIPTION]);
-			add_resource_string(handle, ".metadata_license", argv[PARAM_LICENSE]);
-			add_resource_string(handle, ".metadata_copyright", argv[PARAM_COPYRIGHT]);
-			add_resource_string(handle, ".metadata_authors", argv[PARAM_AUTHORS]);
-			add_resource_string(handle, ".metadata_product", argv[PARAM_PRODUCT]);
-			add_resource_string(handle, ".metadata_organization", argv[PARAM_ORGANIZATION]);
-			add_resource_string(handle, ".metadata_version", argv[PARAM_VERSION]);
-			add_resource_string(handle, ".metadata_datetime", argv[PARAM_DATETIME]);
-			add_resource_string(handle, ".metadata_notes", argv[PARAM_NOTES]);
+			if (strlen(argv[PARAM_EXECUTABLE_NAME]) > 0) add_resource_string(handle, ".metadata_name", argv[PARAM_EXECUTABLE_NAME]);
+			if (strlen(argv[PARAM_DESCRIPTION]) > 0) add_resource_string(handle, ".metadata_description", argv[PARAM_DESCRIPTION]);
+			if (strlen(argv[PARAM_LICENSE]) > 0) add_resource_string(handle, ".metadata_license", argv[PARAM_LICENSE]);
+			if (strlen(argv[PARAM_COPYRIGHT]) > 0) add_resource_string(handle, ".metadata_copyright", argv[PARAM_COPYRIGHT]);
+			if (strlen(argv[PARAM_AUTHORS]) > 0) add_resource_string(handle, ".metadata_authors", argv[PARAM_AUTHORS]);
+			if (strlen(argv[PARAM_PRODUCT]) > 0) add_resource_string(handle, ".metadata_product", argv[PARAM_PRODUCT]);
+			if (strlen(argv[PARAM_ORGANIZATION]) > 0) add_resource_string(handle, ".metadata_organization", argv[PARAM_ORGANIZATION]);
+			if (strlen(argv[PARAM_VERSION]) > 0) add_resource_string(handle, ".metadata_version", argv[PARAM_VERSION]);
+			if (strlen(argv[PARAM_DATETIME]) > 0) add_resource_string(handle, ".metadata_datetime", argv[PARAM_DATETIME]);
+			if (strlen(argv[PARAM_NOTES]) > 0) add_resource_string(handle, ".metadata_notes", argv[PARAM_NOTES]);
 		}	break;
 		case MODE_SET_EMPTY_UUID:
 			if(!libr_icon_setuuid(handle, "00000000-0000-0000-0000-000000000000"))
@@ -512,7 +513,7 @@ int main_console(int argc, char **argv)
 		case MODE_ADD_ICON:
 		{
 			libr_icon *icon = NULL;
-			
+
 			icon = libr_icon_newicon_byfile(LIBR_SVG, 0, argv[PARAM_ICON_FILE]);
 			if(icon == NULL)
 			{
@@ -549,20 +550,22 @@ int main_console(int argc, char **argv)
 			}
 
 			libr_icon *icon = NULL;
-			
-			icon = libr_icon_newicon_byfile(LIBR_SVG, 0, const_cast<char*>(systemIcon.ascii()));
+
+			icon = libr_icon_newicon_byfile(LIBR_PNG, 32, const_cast<char*>(systemIcon.ascii()));
 			if(icon == NULL)
 			{
 				errorf(_("failed to open icon file \"%s\": %s"), systemIcon.ascii(), libr_errmsg());
 				goto fail;
 			}
-			if(!libr_icon_write(handle, icon, const_cast<char*>(systemIcon.ascii()), LIBR_OVERWRITE))
+			TQFileInfo ifi(systemIcon);
+			TQString iconBaseName = ifi.baseName();
+			if(!libr_icon_write(handle, icon, const_cast<char*>(iconBaseName.ascii()), LIBR_OVERWRITE))
 			{
 				libr_icon_close(icon);
 				errorf(_("failed to add icon to ELF file: %s"), libr_errmsg());
 				goto fail;
 			}
-			libr_icon_close(icon);			
+			libr_icon_close(icon);
 		}	break;
 		case MODE_ADD_RESOURCE:
 			if(section == NULL)
@@ -575,7 +578,7 @@ int main_console(int argc, char **argv)
 		case MODE_RETRIEVE_ICON:
 		{
 			libr_icon *icon = NULL;
-			
+
 			icon = libr_icon_geticon_byname(handle, argv[PARAM_ICON_NAME]);
 			if(icon == NULL)
 			{
