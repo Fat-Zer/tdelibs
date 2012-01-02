@@ -493,6 +493,9 @@ int main_console(int argc, char **argv)
 			if (strlen(argv[PARAM_NOTES]) > 0) add_resource_string(handle, ".metadata_notes", argv[PARAM_NOTES]);
 		}	break;
 		case MODE_SET_EMPTY_UUID:
+			section = ICON_SECTION;
+                        clear_resource(handle, section);
+
 			if(!libr_icon_setuuid(handle, "00000000-0000-0000-0000-000000000000"))
 			{
 				errorf(_("Failed to set UUID: %s\n"), libr_errmsg());
@@ -514,7 +517,7 @@ int main_console(int argc, char **argv)
 		{
 			libr_icon *icon = NULL;
 
-			icon = libr_icon_newicon_byfile(LIBR_SVG, 0, argv[PARAM_ICON_FILE]);
+			icon = libr_icon_newicon_byfile(LIBR_PNG, 0, argv[PARAM_ICON_FILE]);
 			if(icon == NULL)
 			{
 				errorf(_("failed to open icon file \"%s\": %s"), argv[PARAM_ICON_FILE], libr_errmsg());
@@ -551,7 +554,7 @@ int main_console(int argc, char **argv)
 
 			libr_icon *icon = NULL;
 
-			icon = libr_icon_newicon_byfile(LIBR_PNG, 32, const_cast<char*>(systemIcon.ascii()));
+			icon = libr_icon_newicon_byfile(LIBR_PNG, 0, const_cast<char*>(systemIcon.ascii()));
 			if(icon == NULL)
 			{
 				errorf(_("failed to open icon file \"%s\": %s"), systemIcon.ascii(), libr_errmsg());
@@ -559,6 +562,7 @@ int main_console(int argc, char **argv)
 			}
 			TQFileInfo ifi(systemIcon);
 			TQString iconBaseName = ifi.baseName();
+			printf("using %s as icon name\n\r", iconBaseName.ascii());
 			if(!libr_icon_write(handle, icon, const_cast<char*>(iconBaseName.ascii()), LIBR_OVERWRITE))
 			{
 				libr_icon_close(icon);

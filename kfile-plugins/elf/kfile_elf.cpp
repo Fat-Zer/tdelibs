@@ -45,8 +45,8 @@ TQString elf_get_resource(libr_file *handle, char *section_name)
 {
 	size_t buffer_size = 0;
 	char *buffer = NULL;
-	TQString result = i18n("not set");
-	
+	TQString result;
+
 	/* Get the resource from the ELF binary */
 	if(!libr_size(handle, section_name, &buffer_size))
 	{
@@ -54,14 +54,15 @@ TQString elf_get_resource(libr_file *handle, char *section_name)
 		return result;
 	}
 	/* Get the resource from the ELF file */
-	buffer = (char *) malloc(buffer_size);
+	buffer = (char *) malloc(buffer_size+1);
+	buffer[buffer_size] = 0;
 	if(!libr_read(handle, section_name, buffer))
 	{
 		kdWarning() << "failed to obtain ELF resource: " << libr_errmsg() << endl;
 		goto fail;
 	}
 	result = buffer;
-	
+
 fail:
 	free(buffer);
 
@@ -146,9 +147,6 @@ bool KElfPlugin::readInfo( KFileMetaInfo& info, uint what)
 			}
 			break;
 		}
-	}
-	if (iconListing.isEmpty()) {
-		iconListing = i18n("not set");
 	}
 
 	appendItem(group2, "EmbeddedIcon", iconListing);
