@@ -95,7 +95,7 @@ KMCupsManager::~KMCupsManager()
 
 TQString KMCupsManager::driverDbCreationProgram()
 {
-	return TQString::fromLatin1("/opt/trinity/bin/make_driver_db_cups");
+	return TQString(__KDE_BINDIR).append(TQString::fromLatin1("/make_driver_db_cups"));
 }
 
 TQString KMCupsManager::driverDirectory()
