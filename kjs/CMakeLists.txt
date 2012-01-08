@@ -15,10 +15,12 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}/tdecore
+  ${LIBPCRE_INCLUDEDIR}
 )
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
+  ${LIBPCRE_LIBDIR}
 )
 
 
@@ -59,6 +61,6 @@ tde_add_lut( keywords.table lexer.lut.h lexer.cpp )
 tde_add_library( ${target} SHARED
   SOURCES ${${target}_SRCS}
   VERSION 1.2.0
-  LINK tdecore-shared
+  LINK tdecore-shared ${LIBPCRE_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

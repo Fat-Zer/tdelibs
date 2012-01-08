@@ -76,6 +76,7 @@ OPTION( WITH_OPENEXR "Enable openexr support" OFF )
 OPTION( WITH_UTEMPTER "Use utempter for utmp management" OFF )
 OPTION( WITH_AVAHI "Enable AVAHI support" OFF )
 OPTION( WITH_ELFICON "Enable ELF embedded icon support" OFF )
+OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
 
 OPTION( WITH_ASPELL "Enable aspell support" OFF )
 OPTION( WITH_HSPELL "Enable hspell support" OFF )
@@ -735,6 +736,16 @@ if( WITH_ELFICON )
   set( HAVE_ELFICON 1 )
 endif( )
 
+
+##### check for pcre ###########################
+
+if( WITH_PCRE )
+  pkg_search_module( LIBPCRE libpcre )
+  if( NOT LIBPCRE_FOUND )
+      message(FATAL_ERROR "\npcre support are requested, but not found on your system" )
+  endif( NOT LIBPCRE_FOUND )
+  set( HAVE_PCREPOSIX 1 )
+endif( )
 
 ##### check for aspell ##########################
 # we need ASPELL_DATADIR too

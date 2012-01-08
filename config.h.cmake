@@ -369,7 +369,7 @@
 #cmakedefine HAVE_PATHS_H 1
 
 /* Define if you have pcreposix libraries and header files. */
-#undef HAVE_PCREPOSIX
+#cmakedefine HAVE_PCREPOSIX 1
 
 /* Define to 1 if you have the `poll' function. */
 #cmakedefine HAVE_POLL 1
