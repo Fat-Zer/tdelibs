@@ -113,6 +113,9 @@
 /* Defined if you have elficon support. */
 #cmakedefine HAVE_ELFICON 1
 
+/* Defined if you have fvisibility and fvisibility-inlines-hidden support. */
+#cmakedefine __KDE_HAVE_GCC_VISIBILITY 1
+
 /* Define is posix_fadvise is supported */
 #undef HAVE_FADVISE
 

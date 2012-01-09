@@ -77,6 +77,7 @@ OPTION( WITH_UTEMPTER "Use utempter for utmp management" OFF )
 OPTION( WITH_AVAHI "Enable AVAHI support" OFF )
 OPTION( WITH_ELFICON "Enable ELF embedded icon support" OFF )
 OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
+OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" OFF )
 OPTION( WITH_HSPELL "Enable hspell support" OFF )
@@ -746,6 +747,21 @@ if( WITH_PCRE )
   endif( NOT LIBPCRE_FOUND )
   set( HAVE_PCREPOSIX 1 )
 endif( )
+
+
+##### check for gcc visibility support #########
+# FIXME
+# This should check for [T]Qt3 visibility support
+
+if( WITH_GCC_VISIBILITY )
+  if( NOT UNIX )
+    message(FATAL_ERROR "\ngcc visibility support was requested, but your system is not *NIX" )
+  endif( NOT UNIX )
+  set( __KDE_HAVE_GCC_VISIBILITY 1 )
+  set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
+  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
+endif( )
+
 
 ##### check for aspell ##########################
 # we need ASPELL_DATADIR too
