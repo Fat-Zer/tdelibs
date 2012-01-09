@@ -60,8 +60,8 @@
 
 #define CONFIGURATION_FILE_SEPARATOR ';'
 
-KRsync::KRsync (TQObject* parent, const char* name)
-                : TQObject (parent, name), m_bSettingsLoaded(false), m_progressDialog(false), m_progressDialogExists(false), m_bInSpecialSync(false)
+KDE_EXPORT KRsync::KRsync (TQObject* parent, const char* name)
+                : TQObject (parent, name), m_progressDialog(false), m_progressDialogExists(false), m_bSettingsLoaded(false), m_bInSpecialSync(false)
 {
     loadSettings();
 
@@ -77,13 +77,10 @@ KRsync::KRsync (TQObject* parent, const char* name)
     redirectPass = ""; // FIXME: just a workaround for konq deficiencies
 }
 
-KRsync::~KRsync()
+KDE_EXPORT KRsync::~KRsync()
 {
 
 }
-
-static char *rsyncPath = NULL;
-static char *suPath = NULL;
 
 static int open_pty_pair(int fd[2])
 {
@@ -153,7 +150,7 @@ close_master:
 /**
 creates the unidirectional sync subprocess
 */
-bool KRsync::syncUnidirectional(TQString synccommand, TQString syncflags, int parameter_order, TQString localfolder, TQString remotepath) {
+KDE_EXPORT bool KRsync::syncUnidirectional(TQString synccommand, TQString syncflags, int parameter_order, TQString localfolder, TQString remotepath) {
     int fd[2];
     int rc, flags;
     thisFn = TQString();
@@ -216,7 +213,9 @@ bool KRsync::syncUnidirectional(TQString synccommand, TQString syncflags, int pa
         if (dev) close(open(dev, O_WRONLY, 0));
         setpgid(0,0);
 
-        system(execstring.ascii());
+        if (system(execstring.ascii()) < 0) {
+		// ERROR
+	}
         #undef common_args
         myDebug( << "could not exec! " << strerror(errno) << endl);
         ::exit(-1);
@@ -290,7 +289,7 @@ bool KRsync::syncUnidirectional(TQString synccommand, TQString syncflags, int pa
 /**
 creates the bidirectional sync subprocess
 */
-bool KRsync::syncBidirectional(TQString synccommand, TQString syncflags, int parameter_order, TQString localfolder, TQString remotepath) {
+KDE_EXPORT bool KRsync::syncBidirectional(TQString synccommand, TQString syncflags, int parameter_order, TQString localfolder, TQString remotepath) {
     int fd[2];
     int rc, flags;
     thisFn = TQString();
@@ -353,7 +352,9 @@ bool KRsync::syncBidirectional(TQString synccommand, TQString syncflags, int par
         if (dev) close(open(dev, O_WRONLY, 0));
         setpgid(0,0);
 
-        system(execstring.ascii());
+        if (system(execstring.ascii()) < 0) {
+		// ERROR
+	}
         #undef common_args
         myDebug( << "could not exec! " << strerror(errno) << endl);
         ::exit(-1);
@@ -427,7 +428,7 @@ bool KRsync::syncBidirectional(TQString synccommand, TQString syncflags, int par
 /**
 writes one chunk of data to stdin of child process
 */
-void KRsync::writeChild(const char *buf, KIO::fileoffset_t len) {
+KDE_EXPORT void KRsync::writeChild(const char *buf, KIO::fileoffset_t len) {
     if (outBufPos >= 0 && outBuf) {
 #if 0
         TQString debug;
@@ -444,7 +445,7 @@ void KRsync::writeChild(const char *buf, KIO::fileoffset_t len) {
 /**
 manages initial communication setup including password queries
 */
-int KRsync::establishConnectionRsync(char *buffer, KIO::fileoffset_t len) {
+KDE_EXPORT int KRsync::establishConnectionRsync(char *buffer, KIO::fileoffset_t len) {
     TQString buf;
     buf.setLatin1(buffer,len);
     int pos;
@@ -559,7 +560,7 @@ int KRsync::establishConnectionRsync(char *buffer, KIO::fileoffset_t len) {
 /**
 manages initial communication setup including password queries
 */
-int KRsync::establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQString localfolder, TQString remotepath) {
+KDE_EXPORT int KRsync::establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQString localfolder, TQString remotepath) {
     TQString buf;
     buf.setLatin1(buffer,len);
     int pos;
@@ -743,7 +744,7 @@ Forced close of the connection
 This function gets called from the application side of the universe,
 it shouldn't send any response.
  */
-void KRsync::closeConnection(){
+KDE_EXPORT void KRsync::closeConnection(){
     myDebug( << "closeConnection()" << endl);
     shutdownConnection(true, false);
 }
@@ -751,7 +752,7 @@ void KRsync::closeConnection(){
 /**
 Closes the connection
  */
-void KRsync::shutdownConnection(bool forced, bool wait){
+KDE_EXPORT void KRsync::shutdownConnection(bool forced, bool wait){
     if (childPid) {
         kill(childPid,SIGTERM); // We may not have permission...
         childPid = 0;
@@ -772,7 +773,7 @@ void KRsync::shutdownConnection(bool forced, bool wait){
 //
 // --------------------------------------------------------------------------------------------
 
-void KRsync::saveSettings()
+KDE_EXPORT void KRsync::saveSettings()
 {
   KConfig cfg ("rsyncrc", false, false);
   cfg.setGroup ("General");
@@ -781,7 +782,7 @@ void KRsync::saveSettings()
   cfg.sync();
 }
 
-void KRsync::loadSettings()
+KDE_EXPORT void KRsync::loadSettings()
 {
   if (m_bSettingsLoaded)
     return;
@@ -795,7 +796,7 @@ void KRsync::loadSettings()
   m_bSettingsLoaded = true;
 }
 
-void KRsync::executeLogoutAutoSync()
+KDE_EXPORT void KRsync::executeLogoutAutoSync()
 {
   for (TQStringList::Iterator i(cfgautosync_onlogout_list.begin()); i != cfgautosync_onlogout_list.end(); ++i) {
 	setCurrentDirectoryURL(*i);
@@ -805,7 +806,7 @@ void KRsync::executeLogoutAutoSync()
   }
 }
 
-TQString KRsync::findLocalFolderByName(TQString folderurl)
+KDE_EXPORT TQString KRsync::findLocalFolderByName(TQString folderurl)
 {
   TQString folderurl_stripped;
   folderurl_stripped = folderurl;
@@ -824,7 +825,7 @@ TQString KRsync::findLocalFolderByName(TQString folderurl)
   return NULL;
 }
 
-TQString KRsync::findSyncMethodByName(TQString folderurl)
+KDE_EXPORT TQString KRsync::findSyncMethodByName(TQString folderurl)
 {
   TQString folderurl_stripped;
   folderurl_stripped = folderurl;
@@ -843,7 +844,7 @@ TQString KRsync::findSyncMethodByName(TQString folderurl)
   return NULL;
 }
 
-TQString KRsync::findLoginSyncEnabledByName(TQString folderurl)
+KDE_EXPORT TQString KRsync::findLoginSyncEnabledByName(TQString folderurl)
 {
   TQString folderurl_stripped;
   folderurl_stripped = folderurl;
@@ -862,7 +863,7 @@ TQString KRsync::findLoginSyncEnabledByName(TQString folderurl)
   return NULL;
 }
 
-TQString KRsync::findLogoutSyncEnabledByName(TQString folderurl)
+KDE_EXPORT TQString KRsync::findLogoutSyncEnabledByName(TQString folderurl)
 {
   TQString folderurl_stripped;
   folderurl_stripped = folderurl;
@@ -881,7 +882,7 @@ TQString KRsync::findLogoutSyncEnabledByName(TQString folderurl)
   return NULL;
 }
 
-TQString KRsync::findTimedSyncEnabledByName(TQString folderurl)
+KDE_EXPORT TQString KRsync::findTimedSyncEnabledByName(TQString folderurl)
 {
   TQString folderurl_stripped;
   folderurl_stripped = folderurl;
@@ -900,7 +901,7 @@ TQString KRsync::findTimedSyncEnabledByName(TQString folderurl)
   return NULL;
 }
 
-int KRsync::deleteLocalFolderByName(TQString folderurl)
+KDE_EXPORT int KRsync::deleteLocalFolderByName(TQString folderurl)
 {
   TQString folderurl_stripped;
   folderurl_stripped = folderurl;
@@ -920,7 +921,7 @@ int KRsync::deleteLocalFolderByName(TQString folderurl)
   return 1;
 }
 
-int KRsync::addLocalFolderByName(TQString folderurl, TQString remoteurl, TQString syncmethod, TQString excludelist, TQString sync_on_login, TQString sync_on_logout, TQString sync_timed_interval)
+KDE_EXPORT int KRsync::addLocalFolderByName(TQString folderurl, TQString remoteurl, TQString syncmethod, TQString excludelist, TQString sync_on_login, TQString sync_on_logout, TQString sync_timed_interval)
 {
   TQString folderurl_stripped;
   folderurl_stripped = folderurl;
@@ -935,12 +936,12 @@ int KRsync::addLocalFolderByName(TQString folderurl, TQString remoteurl, TQStrin
   return 1;
 }
 
-void KRsync::setCurrentDirectoryURL (KURL url)
+KDE_EXPORT void KRsync::setCurrentDirectoryURL (KURL url)
 {
 	m_pURL = url;
 }
 
-void KRsync::slotSetup()
+KDE_EXPORT void KRsync::slotSetup()
 {
 	KURL url = m_pURL;
 
@@ -948,7 +949,7 @@ void KRsync::slotSetup()
 	TQString localfolder = url.directory(true, true) + TQString("/") + url.fileName(true);
 	TQString remotefolder = findLocalFolderByName(url.directory(true, true) + TQString("/") + url.fileName(true));
 	TQString syncmethod = findSyncMethodByName(url.directory(true, true) + TQString("/") + url.fileName(true));
-	int syncint;
+	int syncint = 1;
 	if (syncmethod == NULL) {
 		syncint = 1;
 	}
@@ -978,7 +979,7 @@ void KRsync::slotSetup()
 	connect (m_configDialog, TQT_SIGNAL(cancelClicked()), TQT_SLOT(slotSetupCancelled()));
 }
 
-void KRsync::slotSetupOK()
+KDE_EXPORT void KRsync::slotSetupOK()
 {
 	KURL url = m_pURL;
 
@@ -1016,12 +1017,12 @@ void KRsync::slotSetupOK()
 	emit setupDone();
 }
 
-void KRsync::slotSetupCancelled()
+KDE_EXPORT void KRsync::slotSetupCancelled()
 {
 	emit setupDone();
 }
 
-void KRsync::slotRsyncCancelled()
+KDE_EXPORT void KRsync::slotRsyncCancelled()
 {
         shutdownConnection(true, true);
         if (m_progressDialogExists == true) {
@@ -1031,7 +1032,7 @@ void KRsync::slotRsyncCancelled()
         emit transferDone();
 }
 
-void KRsync::slotUnisonCancelled()
+KDE_EXPORT void KRsync::slotUnisonCancelled()
 {
         shutdownConnection(true, true);
         if (m_progressDialogExists == true) {
@@ -1043,7 +1044,7 @@ void KRsync::slotUnisonCancelled()
         emit transferDone();
 }
 
-void KRsync::slotSync()
+KDE_EXPORT void KRsync::slotSync()
 {
 	KURL url = m_pURL;
 

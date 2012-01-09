@@ -138,6 +138,7 @@ signals:
 
 private:
   KURL m_pURL;
+
   KProgressBoxDialog* m_progressDialog;
   RsyncConfigDialog* m_configDialog;
 

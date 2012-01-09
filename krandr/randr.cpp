@@ -53,7 +53,7 @@ public:
 	XRRScreenConfiguration* config;
 };
 
-RandRScreen::RandRScreen(int screenIndex)
+KDE_EXPORT RandRScreen::RandRScreen(int screenIndex)
 	: d(new RandRScreenPrivate())
 	, m_screen(screenIndex)
 	, m_shownDialog(NULL)
@@ -62,12 +62,12 @@ RandRScreen::RandRScreen(int screenIndex)
 	setOriginal();
 }
 
-RandRScreen::~RandRScreen()
+KDE_EXPORT RandRScreen::~RandRScreen()
 {
 	delete d;
 }
 
-void RandRScreen::loadSettings()
+KDE_EXPORT void RandRScreen::loadSettings()
 {
 	if (d->config)
 		XRRFreeScreenConfigInfo(d->config);
@@ -124,14 +124,14 @@ void RandRScreen::loadSettings()
 	}
 }
 
-void RandRScreen::setOriginal()
+KDE_EXPORT void RandRScreen::setOriginal()
 {
 	m_originalSize = m_currentSize;
 	m_originalRotation = m_currentRotation;
 	m_originalRefreshRate = m_currentRefreshRate;
 }
 
-bool RandRScreen::applyProposed()
+KDE_EXPORT bool RandRScreen::applyProposed()
 {
 	//kdDebug() << k_funcinfo << " size " << (SizeID)proposedSize() << ", rotation " << proposedRotation() << ", refresh " << refreshRateIndexToHz(proposedSize(), proposedRefreshRate()) << endl;
 
@@ -175,7 +175,7 @@ bool RandRScreen::applyProposed()
 	return false;
 }
 
-bool RandRScreen::applyProposedAndConfirm()
+KDE_EXPORT bool RandRScreen::applyProposedAndConfirm()
 {
 	if (proposedChanged()) {
 		setOriginal();
@@ -194,7 +194,7 @@ bool RandRScreen::applyProposedAndConfirm()
 	return true;
 }
 
-bool RandRScreen::confirm()
+KDE_EXPORT bool RandRScreen::confirm()
 {
 	// uncomment the line below and edit out the KTimerDialog stuff to get
 	// a version which works on today's tdelibs (no accept dialog is presented)
@@ -228,19 +228,19 @@ bool RandRScreen::confirm()
         return acceptDialog.exec();
 }
 
-void RandRScreen::shownDialogDestroyed()
+KDE_EXPORT void RandRScreen::shownDialogDestroyed()
 {
     m_shownDialog = NULL;
     disconnect( kapp->desktop(), TQT_SIGNAL( resized(int)), this, TQT_SLOT( desktopResized()));
 }
 
-void RandRScreen::desktopResized()
+KDE_EXPORT void RandRScreen::desktopResized()
 {
 	if( m_shownDialog != NULL )
 		KDialog::centerOnScreen(m_shownDialog, m_screen);
 }
 
-TQString RandRScreen::changedMessage() const
+KDE_EXPORT TQString RandRScreen::changedMessage() const
 {
 	if (currentRefreshRate() == -1)
 		return i18n("New configuration:\nResolution: %1 x %2\nOrientation: %3")
@@ -255,24 +255,24 @@ TQString RandRScreen::changedMessage() const
 			.arg(currentRefreshRateDescription());
 }
 
-bool RandRScreen::changedFromOriginal() const
+KDE_EXPORT bool RandRScreen::changedFromOriginal() const
 {
 	return m_currentSize != m_originalSize || m_currentRotation != m_originalRotation || m_currentRefreshRate != m_originalRefreshRate;
 }
 
-void RandRScreen::proposeOriginal()
+KDE_EXPORT void RandRScreen::proposeOriginal()
 {
 	m_proposedSize = m_originalSize;
 	m_proposedRotation = m_originalRotation;
 	m_proposedRefreshRate = m_originalRefreshRate;
 }
 
-bool RandRScreen::proposedChanged() const
+KDE_EXPORT bool RandRScreen::proposedChanged() const
 {
 	return m_currentSize != m_proposedSize || m_currentRotation != m_proposedRotation || m_currentRefreshRate != m_proposedRefreshRate;
 }
 
-TQString RandRScreen::rotationName(int rotation, bool pastTense, bool capitalised)
+KDE_EXPORT TQString RandRScreen::rotationName(int rotation, bool pastTense, bool capitalised)
 {
 	if (!pastTense)
 		switch (rotation) {
@@ -326,7 +326,7 @@ TQString RandRScreen::rotationName(int rotation, bool pastTense, bool capitalise
 	}
 }
 
-TQPixmap RandRScreen::rotationIcon(int rotation) const
+KDE_EXPORT TQPixmap RandRScreen::rotationIcon(int rotation) const
 {
 	// Adjust icons for current screen orientation
 	if (!(m_currentRotation & RR_Rotate_0) && rotation & (RR_Rotate_0 | RR_Rotate_90 | RR_Rotate_180 | RR_Rotate_270)) {
@@ -365,20 +365,23 @@ TQPixmap RandRScreen::rotationIcon(int rotation) const
 	}
 }
 
-TQString RandRScreen::currentRotationDescription() const
+KDE_EXPORT TQString RandRScreen::currentRotationDescription() const
 {
 	TQString ret = rotationName(m_currentRotation & RotateMask);
 
-	if (m_currentRotation != m_currentRotation & RotateMask)
-		if (m_currentRotation & RR_Rotate_0)
+	if (m_currentRotation != (m_currentRotation & RotateMask)) {
+		if (m_currentRotation & RR_Rotate_0) {
 			ret = rotationName(m_currentRotation & (RR_Reflect_X + RR_Reflect_X), true, true);
-		else
+		}
+		else {
 			ret += ", " + rotationName(m_currentRotation & (RR_Reflect_X + RR_Reflect_X), true, false);
+		}
+	}
 
 	return ret;
 }
 
-int RandRScreen::rotationIndexToDegree(int rotation) const
+KDE_EXPORT int RandRScreen::rotationIndexToDegree(int rotation) const
 {
 	switch (rotation & RotateMask) {
 		case RR_Rotate_90:
@@ -395,7 +398,7 @@ int RandRScreen::rotationIndexToDegree(int rotation) const
 	}
 }
 
-int RandRScreen::rotationDegreeToIndex(int degree) const
+KDE_EXPORT int RandRScreen::rotationDegreeToIndex(int degree) const
 {
 	switch (degree) {
 		case 90:
@@ -412,27 +415,27 @@ int RandRScreen::rotationDegreeToIndex(int degree) const
 	}
 }
 
-int RandRScreen::currentPixelWidth() const
+KDE_EXPORT int RandRScreen::currentPixelWidth() const
 {
 	return m_pixelSizes[m_currentSize].width();
 }
 
-int RandRScreen::currentPixelHeight() const
+KDE_EXPORT int RandRScreen::currentPixelHeight() const
 {
 	return m_pixelSizes[m_currentSize].height();
 }
 
-int RandRScreen::currentMMWidth() const
+KDE_EXPORT int RandRScreen::currentMMWidth() const
 {
 	return m_pixelSizes[m_currentSize].width();
 }
 
-int RandRScreen::currentMMHeight() const
+KDE_EXPORT int RandRScreen::currentMMHeight() const
 {
 	return m_pixelSizes[m_currentSize].height();
 }
 
-TQStringList RandRScreen::refreshRates(int size) const
+KDE_EXPORT TQStringList RandRScreen::refreshRates(int size) const
 {
 	int nrates;
 	TQStringList ret;
@@ -459,22 +462,22 @@ TQStringList RandRScreen::refreshRates(int size) const
 	return ret;
 }
 
-TQString RandRScreen::refreshRateDirectDescription(int rate) const
+KDE_EXPORT TQString RandRScreen::refreshRateDirectDescription(int rate) const
 {
 	return i18n("Refresh rate in Hertz (Hz)", "%1 Hz").arg(rate);
 }
 
-TQString RandRScreen::refreshRateIndirectDescription(int size, int index) const
+KDE_EXPORT TQString RandRScreen::refreshRateIndirectDescription(int size, int index) const
 {
 	return i18n("Refresh rate in Hertz (Hz)", "%1 Hz").arg(refreshRateIndexToHz(size, index));
 }
 
-TQString RandRScreen::refreshRateDescription(int size, int index) const
+KDE_EXPORT TQString RandRScreen::refreshRateDescription(int size, int index) const
 {
 	return refreshRates(size)[index];
 }
 
-bool RandRScreen::proposeRefreshRate(int index)
+KDE_EXPORT bool RandRScreen::proposeRefreshRate(int index)
 {
 	if (index >= 0 && (int)refreshRates(proposedSize()).count() > index) {
 		m_proposedRefreshRate = index;
@@ -484,22 +487,22 @@ bool RandRScreen::proposeRefreshRate(int index)
 	return false;
 }
 
-int RandRScreen::currentRefreshRate() const
+KDE_EXPORT int RandRScreen::currentRefreshRate() const
 {
 	return m_currentRefreshRate;
 }
 
-TQString RandRScreen::currentRefreshRateDescription() const
+KDE_EXPORT TQString RandRScreen::currentRefreshRateDescription() const
 {
 	return refreshRateIndirectDescription(m_currentSize, m_currentRefreshRate);
 }
 
-int RandRScreen::proposedRefreshRate() const
+KDE_EXPORT int RandRScreen::proposedRefreshRate() const
 {
 	return m_proposedRefreshRate;
 }
 
-int RandRScreen::refreshRateHzToIndex(int size, int hz) const
+KDE_EXPORT int RandRScreen::refreshRateHzToIndex(int size, int hz) const
 {
 	int nrates;
 	short* rates = XRRRates(qt_xdisplay(), m_screen, (SizeID)size, &nrates);
@@ -515,7 +518,7 @@ int RandRScreen::refreshRateHzToIndex(int size, int hz) const
 	return -1;
 }
 
-int RandRScreen::refreshRateIndexToHz(int size, int index) const
+KDE_EXPORT int RandRScreen::refreshRateIndexToHz(int size, int index) const
 {
 	int nrates;
 	short* rates = XRRRates(qt_xdisplay(), m_screen, (SizeID)size, &nrates);
@@ -530,22 +533,22 @@ int RandRScreen::refreshRateIndexToHz(int size, int index) const
 	return rates[index];
 }
 
-int RandRScreen::numSizes() const
+KDE_EXPORT int RandRScreen::numSizes() const
 {
 	return m_pixelSizes.count();
 }
 
-const TQSize& RandRScreen::pixelSize(int index) const
+KDE_EXPORT const TQSize& RandRScreen::pixelSize(int index) const
 {
 	return m_pixelSizes[index];
 }
 
-const TQSize& RandRScreen::mmSize(int index) const
+KDE_EXPORT const TQSize& RandRScreen::mmSize(int index) const
 {
 	return m_mmSizes[index];
 }
 
-int RandRScreen::sizeIndex(TQSize pixelSize) const
+KDE_EXPORT int RandRScreen::sizeIndex(TQSize pixelSize) const
 {
 	for (uint i = 0; i < m_pixelSizes.count(); i++)
 		if (m_pixelSizes[i] == pixelSize)
@@ -554,37 +557,37 @@ int RandRScreen::sizeIndex(TQSize pixelSize) const
 	return -1;
 }
 
-int RandRScreen::rotations() const
+KDE_EXPORT int RandRScreen::rotations() const
 {
 	return m_rotations;
 }
 
-int RandRScreen::currentRotation() const
+KDE_EXPORT int RandRScreen::currentRotation() const
 {
 	return m_currentRotation;
 }
 
-int RandRScreen::currentSize() const
+KDE_EXPORT int RandRScreen::currentSize() const
 {
 	return m_currentSize;
 }
 
-int RandRScreen::proposedRotation() const
+KDE_EXPORT int RandRScreen::proposedRotation() const
 {
 	return m_proposedRotation;
 }
 
-void RandRScreen::proposeRotation(int newRotation)
+KDE_EXPORT void RandRScreen::proposeRotation(int newRotation)
 {
 	m_proposedRotation = newRotation & OrientationMask;
 }
 
-int RandRScreen::proposedSize() const
+KDE_EXPORT int RandRScreen::proposedSize() const
 {
 	return m_proposedSize;
 }
 
-bool RandRScreen::proposeSize(int newSize)
+KDE_EXPORT bool RandRScreen::proposeSize(int newSize)
 {
 	if ((int)m_pixelSizes.count() > newSize) {
 		m_proposedSize = newSize;
@@ -594,7 +597,7 @@ bool RandRScreen::proposeSize(int newSize)
 	return false;
 }
 
-void RandRScreen::load(KConfig& config)
+KDE_EXPORT void RandRScreen::load(KConfig& config)
 {
 	config.setGroup(TQString("Screen%1").arg(m_screen));
 
@@ -604,7 +607,7 @@ void RandRScreen::load(KConfig& config)
 	proposeRotation(rotationDegreeToIndex(config.readNumEntry("rotation", 0)) + (config.readBoolEntry("reflectX") ? ReflectX : 0) + (config.readBoolEntry("reflectY") ? ReflectY : 0));
 }
 
-void RandRScreen::save(KConfig& config) const
+KDE_EXPORT void RandRScreen::save(KConfig& config) const
 {
 	config.setGroup(TQString("Screen%1").arg(m_screen));
 	config.writeEntry("width", currentPixelWidth());
@@ -615,7 +618,7 @@ void RandRScreen::save(KConfig& config) const
 	config.writeEntry("reflectY", (bool)(currentRotation() & ReflectMask) == ReflectY);
 }
 
-RandRDisplay::RandRDisplay()
+KDE_EXPORT RandRDisplay::RandRDisplay()
 	: m_valid(true)
 {
 	// Check extension
@@ -658,76 +661,76 @@ RandRDisplay::RandRDisplay()
 	setCurrentScreen(TQApplication::desktop()->primaryScreen());
 }
 
-bool RandRDisplay::isValid() const
+KDE_EXPORT bool RandRDisplay::isValid() const
 {
 	return m_valid;
 }
 
-const TQString& RandRDisplay::errorCode() const
+KDE_EXPORT const TQString& RandRDisplay::errorCode() const
 {
 	return m_errorCode;
 }
 
-int RandRDisplay::eventBase() const
+KDE_EXPORT int RandRDisplay::eventBase() const
 {
 	return m_eventBase;
 }
 
-int RandRDisplay::screenChangeNotifyEvent() const
+KDE_EXPORT int RandRDisplay::screenChangeNotifyEvent() const
 {
 	return m_eventBase + RRScreenChangeNotify;
 }
 
-int RandRDisplay::errorBase() const
+KDE_EXPORT int RandRDisplay::errorBase() const
 {
 	return m_errorBase;
 }
 
-const TQString& RandRDisplay::version() const
+KDE_EXPORT const TQString& RandRDisplay::version() const
 {
 	return m_version;
 }
 
-void RandRDisplay::setCurrentScreen(int index)
+KDE_EXPORT void RandRDisplay::setCurrentScreen(int index)
 {
 	m_currentScreenIndex = index;
 	m_currentScreen = m_screens.at(m_currentScreenIndex);
 	Q_ASSERT(m_currentScreen);
 }
 
-int RandRDisplay::screenIndexOfWidget(TQWidget* widget)
+KDE_EXPORT int RandRDisplay::screenIndexOfWidget(TQWidget* widget)
 {
 	int ret = TQApplication::desktop()->screenNumber(widget);
 	return ret != -1 ? ret : TQApplication::desktop()->primaryScreen();
 }
 
-int RandRDisplay::currentScreenIndex() const
+KDE_EXPORT int RandRDisplay::currentScreenIndex() const
 {
 	return m_currentScreenIndex;
 }
 
-void RandRDisplay::refresh()
+KDE_EXPORT void RandRDisplay::refresh()
 {
 	for (RandRScreen* s = m_screens.first(); s; s = m_screens.next())
 		s->loadSettings();
 }
 
-int RandRDisplay::numScreens() const
+KDE_EXPORT int RandRDisplay::numScreens() const
 {
 	return m_numScreens;
 }
 
-RandRScreen* RandRDisplay::screen(int index)
+KDE_EXPORT RandRScreen* RandRDisplay::screen(int index)
 {
 	return m_screens.at(index);
 }
 
-RandRScreen* RandRDisplay::currentScreen()
+KDE_EXPORT RandRScreen* RandRDisplay::currentScreen()
 {
 	return m_currentScreen;
 }
 
-bool RandRDisplay::loadDisplay(KConfig& config, bool loadScreens)
+KDE_EXPORT bool RandRDisplay::loadDisplay(KConfig& config, bool loadScreens)
 {
 	if (loadScreens)
 		for (RandRScreen* s = m_screens.first(); s; s = m_screens.next())
@@ -736,19 +739,19 @@ bool RandRDisplay::loadDisplay(KConfig& config, bool loadScreens)
 	return applyOnStartup(config);
 }
 
-bool RandRDisplay::applyOnStartup(KConfig& config)
+KDE_EXPORT bool RandRDisplay::applyOnStartup(KConfig& config)
 {
 	config.setGroup("Display");
 	return config.readBoolEntry("ApplyOnStartup", false);
 }
 
-bool RandRDisplay::syncTrayApp(KConfig& config)
+KDE_EXPORT bool RandRDisplay::syncTrayApp(KConfig& config)
 {
 	config.setGroup("Display");
 	return config.readBoolEntry("SyncTrayApp", false);
 }
 
-void RandRDisplay::saveDisplay(KConfig& config, bool applyOnStartup, bool syncTrayApp)
+KDE_EXPORT void RandRDisplay::saveDisplay(KConfig& config, bool applyOnStartup, bool syncTrayApp)
 {
 	Q_ASSERT(!config.isReadOnly());
 
@@ -760,7 +763,7 @@ void RandRDisplay::saveDisplay(KConfig& config, bool applyOnStartup, bool syncTr
 		s->save(config);
 }
 
-void RandRDisplay::applyProposed(bool confirm)
+KDE_EXPORT void RandRDisplay::applyProposed(bool confirm)
 {
 	for (int screenIndex = 0; screenIndex < numScreens(); screenIndex++) {
 		if (screen(screenIndex)->proposedChanged()) {
@@ -772,12 +775,12 @@ void RandRDisplay::applyProposed(bool confirm)
 	}
 }
 
-bool RandRDisplay::showTestConfigurationDialog()
+KDE_EXPORT bool RandRDisplay::showTestConfigurationDialog()
 {
 	return screen(0)->showTestConfigurationDialog();
 }
 
-bool RandRScreen::showTestConfigurationDialog()
+KDE_EXPORT bool RandRScreen::showTestConfigurationDialog()
 {
 	// uncomment the line below and edit out the KTimerDialog stuff to get
 	// a version which works on today's tdelibs (no accept dialog is presented)
@@ -811,7 +814,7 @@ bool RandRScreen::showTestConfigurationDialog()
         return acceptDialog.exec();
 }
 
-int RandRScreen::pixelCount( int index ) const
+KDE_EXPORT int RandRScreen::pixelCount( int index ) const
 {
 	TQSize sz = pixelSize(index);
 	return sz.width() * sz.height();
