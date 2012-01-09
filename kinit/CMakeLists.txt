@@ -39,7 +39,7 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kparts-shared
+  LINK ltdlc-static kparts-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
@@ -100,7 +100,7 @@ set( target kioslave )
 
 tde_add_executable( ${target} AUTOMOC
   SOURCES kioslave.cpp
-  LINK kio-shared
+  LINK ltdlc-static kio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

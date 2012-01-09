@@ -34,7 +34,7 @@
 #define KJS_PACKED
 #endif
 
-#undef __KDE_HAVE_GCC_VISIBILITY
+#cmakedefine __KDE_HAVE_GCC_VISIBILITY 1
 
 #ifdef __KDE_HAVE_GCC_VISIBILITY
 #define KJS_EXPORT __attribute__ ((visibility("default")))

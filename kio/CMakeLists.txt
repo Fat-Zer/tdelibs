@@ -66,6 +66,6 @@ tde_add_library( ${target} SHARED
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/dummy.cpp
   VERSION 4.2.0
   EMBED kssl-static kiocore-static ksycoca-static kbookmarks-static kfile-static ${ELFICON_STATIC_LIB}
-  LINK tdeui-shared tdesu-shared kwalletclient-shared ${LIBR_LIBRARIES}
+  LINK ltdlc-static tdeui-shared tdesu-shared kwalletclient-shared ${LIBR_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

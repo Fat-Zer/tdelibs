@@ -22,7 +22,7 @@
 #include "networkstatuscommon.h"
 #include <kdebug.h>
 
-TQDataStream & operator<< ( TQDataStream & s, const NetworkStatus::Properties p )
+KDE_EXPORT TQDataStream & operator<< ( TQDataStream & s, const NetworkStatus::Properties p )
 {
 	kdDebug() << k_funcinfo << "status is: " << (int)p.status << endl;
 	s << (int)p.status;
@@ -33,7 +33,7 @@ TQDataStream & operator<< ( TQDataStream & s, const NetworkStatus::Properties p 
 	return s;
 }
 
-TQDataStream & operator>> ( TQDataStream & s, NetworkStatus::Properties &p )
+KDE_EXPORT TQDataStream & operator>> ( TQDataStream & s, NetworkStatus::Properties &p )
 {
 	int status, onDemandPolicy, internet;
 	s >> status;

@@ -2358,7 +2358,7 @@ void KStyle::virtual_hook( int, void* )
 
 // HACK for gtk-qt-engine
 
-KDE_EXPORT extern "C"
+extern "C" KDE_EXPORT
 void kde_kstyle_set_scrollbar_type_windows( void* style )
 {
     ((KStyle*)style)->setScrollBarType( KStyle::WindowsStyleScrollBar );
