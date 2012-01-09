@@ -234,7 +234,7 @@
 #cmakedefine HAVE_INITGROUPS_PROTO 1
 
 /* Define if your system has Linux Inode Notification */
-#undef HAVE_INOTIFY
+#cmakedefine HAVE_INOTIFY 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #cmakedefine HAVE_INTTYPES_H 1
@@ -555,7 +555,7 @@
 #cmakedefine HAVE_SYS_FILIO_H 1
 
 /* Define if your system has glibc support for inotify */
-#undef HAVE_SYS_INOTIFY
+#cmakedefine HAVE_SYS_INOTIFY 1
 
 /* Define to 1 if you have the <sys/mman.h> header file. */
 #cmakedefine HAVE_SYS_MMAN_H 1
