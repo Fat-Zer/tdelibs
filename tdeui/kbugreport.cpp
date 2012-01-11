@@ -250,9 +250,17 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutD
     // Point to the web form
 
     lay->addSpacing(10);
-    TQString text = i18n("To submit a bug report, click on the button below.\n"
-                        "This will open a web browser window on http://bugs.pearsoncomputing.net where you will find a form to fill in.\n"
-                        "The information displayed above will be transferred to that server.");
+    TQString text = i18n("Reporting bugs and requesting enhancements are maintained using the Bugzilla reporting system.\n"
+                        "You'll need a login account and password to use the reporting system.\n"
+                        "To control spam and rogue elements the login requires a valid email address.\n"
+                        "Consider using any large email service if you want to avoid using your private email address.\n"
+                        "\n"
+                        "Selecting the button below opens your web browser to http://bugs.trinitydesktop.org,\n"
+                        "where you will find the report form.\n"
+                        "The information displayed above will be transferred to the reporting system.\n"
+                        "Session cookies must be enabled to use the reporting system.\n"
+                        "\n"
+                        "Thank you for helping!");
     TQLabel * label = new TQLabel( text, parent, "label");
     lay->addWidget( label );
     lay->addSpacing(10);

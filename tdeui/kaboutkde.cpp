@@ -79,7 +79,7 @@ KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
   setTitle(i18n("Trinity Desktop Environment. Release %1").
 	   arg(TQString::fromLatin1(TDE_VERSION_STRING)) );
   addTextPage( i18n("About Trinity","&About"), text1, true );
-  addTextPage( i18n("&Report Bugs or Wishes"), text2, true );
+  addTextPage( i18n("&Report Bugs/Request Enhancements"), text2, true );
   addTextPage( i18n("&Join the Trinity Team"), text3, true );
   addTextPage( i18n("&Support Trinity"), text4, true );
   setImage( locate( "data", TQString::fromLatin1("tdeui/pics/aboutkde.png")) );

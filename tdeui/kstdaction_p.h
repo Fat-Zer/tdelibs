@@ -108,7 +108,7 @@ static const KStdActionInfo g_rgActionInfo[] =
 	{ HelpContents,  KStdAccel::Help, "help_contents", I18N_NOOP("%1 &Handbook"), 0, "contents" },
 	{ WhatsThis,     KStdAccel::WhatsThis, "help_whats_this", I18N_NOOP("What's &This?"), 0, "contexthelp" },
 	{ TipofDay,      KStdAccel::AccelNone, "help_show_tip", I18N_NOOP("Tip of the &Day"), 0, "idea" },
-	{ ReportBug,     KStdAccel::AccelNone, "help_report_bug", I18N_NOOP("&Report Bug..."), 0, 0 },
+	{ ReportBug,     KStdAccel::AccelNone, "help_report_bug", I18N_NOOP("&Report Bug/Request Enhancement..."), 0, 0 },
 	{ SwitchApplicationLanguage,     KStdAccel::AccelNone, "switch_application_language", I18N_NOOP("Switch application &language..."), 0, 0 },
 	{ AboutApp,      KStdAccel::AccelNone, "help_about_app", I18N_NOOP("&About %1"), 0, 0 },
 	{ AboutKDE,      KStdAccel::AccelNone, "help_about_kde", I18N_NOOP("About &Trinity"), 0,"about_kde" },

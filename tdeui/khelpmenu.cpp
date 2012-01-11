@@ -148,7 +148,7 @@ KPopupMenu* KHelpMenu::menu()
     {
       if (need_separator)
         mMenu->insertSeparator();
-      mMenu->insertItem( i18n( "&Report Bug..." ), menuReportBug );
+      mMenu->insertItem( i18n( "&Report Bug/Request Enhancement..." ), menuReportBug );
       mMenu->connectItem( menuReportBug, this, TQT_SLOT(reportBug()) );
       need_separator = true;
     }
