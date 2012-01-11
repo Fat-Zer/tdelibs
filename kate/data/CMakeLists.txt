@@ -56,6 +56,13 @@ install( FILES
     noweb.xml objectivecpp.xml opal.xml pgn.xml rapidq.xml
     scala.xml sisu.xml systemc.xml texinfo.xml xorg.xml
     xul.xml yaml.xml zonnon.xml
+    alert_indent.xml ample.xml asm-dsp56k.xml asm-m68k.xml
+    clojure.xml coffee.xml crk.xml dosbat.xml fsharp.xml
+    gdb.xml glosstex.xml go.xml grammar.xml jam.xml m4.xml
+    mel.xml oors.xml pango.xml qmake.xml qml.xml relaxng.xml
+    relaxngcompact.xml rest.xml sed.xml systemverilog.xml
+    tads3.xml tcsh.xml valgrind-suppression.xml vera.xml
+    wml.xml zsh.xml
     ${CMAKE_CURRENT_BINARY_DIR}/html-php.xml
     ${CMAKE_CURRENT_BINARY_DIR}/css-php.xml
     ${CMAKE_CURRENT_BINARY_DIR}/javascript-php.xml
