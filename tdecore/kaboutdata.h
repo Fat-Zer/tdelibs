@@ -243,7 +243,7 @@ class TDECORE_EXPORT KAboutData
 		const char *copyrightStatement = 0,
 		const char *text = 0,
 		const char *homePageAddress = 0,
-		const char *bugsEmailAddress = "submit@bugs.kde.org"
+		const char *bugsEmailAddress = "http://bugs.trinitydesktop.org"
 		);
 
      ~KAboutData();
