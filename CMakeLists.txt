@@ -59,29 +59,31 @@ add_custom_target(install-apidox
 
 ##### user requested options ####################
 
+OPTION( WITH_ALL_OPTIONS "Enable all optional support" OFF )
+
 OPTION( KDE_MALLOC "Use own malloc implementation" OFF )
 OPTION( KDE_MALLOC_DEBUG "Enable debugging in fast malloc" OFF )
 OPTION( KDE_MALLOC_FULL "Make alloc as fast as possible" OFF )
 
 OPTION( WITH_ARTS "Build with aRts" ON )
 OPTION( WITH_ALSA "Enable ALSA support" ON )
-OPTION( WITH_LIBART "Enable libart support (for SVG icons)" OFF )
-OPTION( WITH_LIBIDN "Enable support for libidn" OFF )
+OPTION( WITH_LIBART "Enable libart support (for SVG icons)" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_LIBIDN "Enable support for libidn" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_SSL "Enable support for SSL" ON )
 OPTION( WITH_CUPS "Enable CUPS support" ON )
-OPTION( WITH_LUA "Enable LUA support" OFF )
-OPTION( WITH_TIFF "Enable tiff support" OFF )
-OPTION( WITH_JASPER "Enable jasper (jpeg2k) support" OFF )
-OPTION( WITH_OPENEXR "Enable openexr support" OFF )
-OPTION( WITH_UTEMPTER "Use utempter for utmp management" OFF )
-OPTION( WITH_AVAHI "Enable AVAHI support" OFF )
-OPTION( WITH_ELFICON "Enable ELF embedded icon support" OFF )
+OPTION( WITH_LUA "Enable LUA support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_TIFF "Enable tiff support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_JASPER "Enable jasper (jpeg2k) support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_OPENEXR "Enable openexr support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_UTEMPTER "Use utempter for utmp management" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_AVAHI "Enable AVAHI support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_ELFICON "Enable ELF embedded icon support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
-OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" OFF )
+OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_INOTIFY "Enable inotify support for kio" ON )
 
-OPTION( WITH_ASPELL "Enable aspell support" OFF )
-OPTION( WITH_HSPELL "Enable hspell support" OFF )
+OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_HSPELL "Enable hspell support" ${WITH_ALL_OPTIONS} )
 
 
 ##### set PKG_CONFIG_PATH #######################
