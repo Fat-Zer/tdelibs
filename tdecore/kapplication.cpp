@@ -3352,14 +3352,14 @@ bool KApplication::authorizeControlModule(const TQString &menuId)
    if (menuId.isEmpty() || kde_kiosk_exception)
       return true;
    KConfig *config = KGlobal::config();
-   KConfigGroupSaver saver( config, "KDE Control Module Restrictions" );
+   KConfigGroupSaver saver( config, "TDE Control Module Restrictions" );
    return config->readBoolEntry(menuId, true);
 }
 
 TQStringList KApplication::authorizeControlModules(const TQStringList &menuIds)
 {
    KConfig *config = KGlobal::config();
-   KConfigGroupSaver saver( config, "KDE Control Module Restrictions" );
+   KConfigGroupSaver saver( config, "TDE Control Module Restrictions" );
    TQStringList result;
    for(TQStringList::ConstIterator it = menuIds.begin();
        it != menuIds.end(); ++it)

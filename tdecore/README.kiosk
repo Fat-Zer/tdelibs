@@ -607,7 +607,7 @@ Center by editing the menu structure, such modules will then still
 be available to applications. A better way is to use the control
 module restrictions offered by KIOSK:
 
-[KDE Control Module Restrictions][$i]
+[TDE Control Module Restrictions][$i]
 <menu-id>=false
 
 Some example menu-ids are:

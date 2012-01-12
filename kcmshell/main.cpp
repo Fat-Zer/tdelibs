@@ -198,7 +198,7 @@ static void setIcon(TQWidget *w, const TQString &iconName)
 
 extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
 {
-    KAboutData aboutData( "kcmshell", I18N_NOOP("KDE Control Module"),
+    KAboutData aboutData( "kcmshell", I18N_NOOP("TDE Control Module"),
                           0,
                           I18N_NOOP("A tool to start single KDE control modules"),
                           KAboutData::License_GPL,
