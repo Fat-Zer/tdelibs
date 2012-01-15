@@ -81,6 +81,7 @@ OPTION( WITH_ELFICON "Enable ELF embedded icon support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
 OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_INOTIFY "Enable inotify support for kio" ON )
+OPTION( WITH_GAMIN "Enable FAM/GAMIN support" ${WITH_ALL_OPTIONS} )
 
 OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_HSPELL "Enable hspell support" ${WITH_ALL_OPTIONS} )
@@ -784,6 +785,23 @@ if( WITH_INOTIFY )
       set( HAVE_SYS_INOTIFY 1 )
   endif( INOTIFY_SYS_FOUND )
 endif( )
+
+
+##### check for FAM/GAMIN ##########################
+
+if( WITH_GAMIN )
+  check_include_file( "fam.h" HAVE_FAM_H )
+  if( HAVE_FAM_H )
+    pkg_search_module( GAMIN gamin )
+    if( GAMIN_FOUND )
+      set( HAVE_FAM 1 )
+    else( GAMIN_FOUND )
+      message(FATAL_ERROR "\nfam/gamin support was requested, but gamin was not found on your system" )
+    endif( GAMIN_FOUND )
+  else( HAVE_FAM_H )
+    message(FATAL_ERROR "\nfam/gamin support was requested, but fam was not found on your system" )
+  endif( HAVE_FAM_H )
+endif( WITH_GAMIN )
 
 
 ##### check for aspell ##########################

@@ -25,8 +25,12 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/kio/kssl
   ${CMAKE_SOURCE_DIR}/interfaces
   ${LIBR_INCLUDEDIR}
+  ${GAMIN_INCLUDEDIR}
 )
 
+link_directories(
+  ${GAMIN_LIBDIR}
+)
 
 ##### headers ###################################
 
@@ -113,6 +117,7 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
+  LINK ${GAMIN_LIBRARIES}
 )
 
 

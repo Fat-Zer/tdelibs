@@ -120,7 +120,7 @@
 #undef HAVE_FADVISE
 
 /* Define if your system has libfam */
-#undef HAVE_FAM
+#cmakedefine HAVE_FAM 1
 
 /* Define to 1 if you have the <float.h> header file. */
 #cmakedefine HAVE_FLOAT_H 1
