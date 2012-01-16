@@ -753,9 +753,9 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
 		return pix;
             }
 	}
-#ifdef HAVE_LIBART
 	else
 	{
+#ifdef HAVE_LIBART
 	    // Special stuff for SVG icons
 	    KSVGIconEngine *svgEngine = new KSVGIconEngine();
 
@@ -765,8 +765,10 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
 		img = new TQImage();
 
 	    delete svgEngine;
-	}
+#else
+	    img = new TQImage();
 #endif
+	}
 
         iconType = icon.type;
         iconThreshold = icon.threshold;
