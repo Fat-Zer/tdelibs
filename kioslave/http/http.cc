@@ -45,6 +45,7 @@
 #include <tqregexp.h>
 #include <tqdatetime.h>
 #include <tqstringlist.h>
+#include <tqurl.h>
 
 #include <kurl.h>
 #include <kidna.h>
@@ -750,9 +751,14 @@ void HTTPProtocol::davStatList( const KURL& url, bool stat )
       entry.clear();
 
       TQString urlStr = href.text();
+#if 0
       int encoding = remoteEncoding()->encodingMib();
       if ((encoding == 106) && (!KStringHandler::isUtf8(KURL::decode_string(urlStr, 4).latin1())))
         encoding = 4; // Use latin1 if the file is not actually utf-8
+#else
+      TQUrl::decode(urlStr);
+      int encoding = 106;
+#endif
 
       KURL thisURL ( urlStr, encoding );
 
