@@ -191,7 +191,7 @@
 <!ENTITY tdesu	"<application>KDE su</application>">
 <!ENTITY kdiskfree	"<application>KDiskFree</application>">
 <!ENTITY kdict	"<application>KDict</application>">
-<!ENTITY kdm	"<application>kdm</application>">
+<!ENTITY tdm	"<application>tdm</application>">
 <!ENTITY kdvi	"<application>KDVI</application>">
 <!ENTITY kenolaba 	"<application>Kenolaba</application>">
 <!ENTITY kedit	"<application>KEdit</application>">

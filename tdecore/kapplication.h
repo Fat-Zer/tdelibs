@@ -1378,7 +1378,7 @@ public:
 
   /**
    * @internal
-   * Raw access for use by KDM.
+   * Raw access for use by TDM.
    */
   static TQPalette createApplicationPalette( KConfig *config, int contrast );
 

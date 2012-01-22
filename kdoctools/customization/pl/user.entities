@@ -102,12 +102,12 @@ ktnef
 <!ENTITY kcontrolcenter-narzednik    '<application>Centrum sterowania &kde;</application>'>
 <!ENTITY kcontrolcenter-miejscownik    '<application>Centrum sterowania &kde;</application>'>
 
-<!ENTITY kdm-mianownik    '<application>KDM</application>'>
-<!ENTITY kdm-dopelniacz    '<application>KDM</application>'>
-<!ENTITY kdm-celownik    '<application>KDM</application>'>
-<!ENTITY kdm-biernik    '<application>KDM</application>'>
-<!ENTITY kdm-narzednik    '<application>KDM</application>'>
-<!ENTITY kdm-miejscownik    '<application>KDM</application>'>
+<!ENTITY tdm-mianownik    '<application>TDM</application>'>
+<!ENTITY tdm-dopelniacz    '<application>TDM</application>'>
+<!ENTITY tdm-celownik    '<application>TDM</application>'>
+<!ENTITY tdm-biernik    '<application>TDM</application>'>
+<!ENTITY tdm-narzednik    '<application>TDM</application>'>
+<!ENTITY tdm-miejscownik    '<application>TDM</application>'>
 
 <!ENTITY khelpcenter-mianownik    '<application>Centrum pomocy &kde;</application>'>
 <!ENTITY khelpcenter-dopelniacz    '<application>Centrum pomocy &kde;</application>'>
