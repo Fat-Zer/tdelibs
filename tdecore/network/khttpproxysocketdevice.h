@@ -25,7 +25,7 @@
 #ifndef KHTTPPROXYSOCKETDEVICE_H
 #define KHTTPPROXYSOCKETDEVICE_H
 
-#include "ksocketdevice.h"
+#include "tdesocketdevice.h"
 
 namespace KNetwork {
 

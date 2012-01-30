@@ -261,9 +261,9 @@ int main(int argc, char **argv)
   }
   else if (strcmp(argv[1], "socket") == 0)
   {
-    tmp_prefix = (char *)malloc(strlen(tmp)+strlen("/ksocket-")+1);
+    tmp_prefix = (char *)malloc(strlen(tmp)+strlen("/tdesocket-")+1);
     strcpy(tmp_prefix, tmp );
-    strcat(tmp_prefix, "/ksocket-" );
+    strcat(tmp_prefix, "/tdesocket-" );
 
     kde_prefix = "/socket-"; 
   }

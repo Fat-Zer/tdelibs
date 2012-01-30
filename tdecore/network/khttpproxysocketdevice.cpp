@@ -31,8 +31,8 @@
 #include <tqcstring.h>
 
 #include "kresolver.h"
-#include "ksocketaddress.h"
-#include "ksocketdevice.h"
+#include "tdesocketaddress.h"
+#include "tdesocketdevice.h"
 #include "khttpproxysocketdevice.h"
 
 using namespace KNetwork;

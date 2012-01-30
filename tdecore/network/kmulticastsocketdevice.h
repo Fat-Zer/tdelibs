@@ -25,9 +25,9 @@
 #ifndef KMULTICASTSOCKETDEVICE_H
 #define KMULTICASTSOCKETDEVICE_H
 
-#include "ksocketdevice.h"
+#include "tdesocketdevice.h"
 #include "knetworkinterface.h"
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 
 namespace KNetwork {
 

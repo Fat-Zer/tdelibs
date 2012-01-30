@@ -35,7 +35,7 @@
 #include "kapplication.h"
 
 #include "ksocks.h"
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 #include "kresolver.h"
 #include "ksockssocketdevice.h"
 

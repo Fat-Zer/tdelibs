@@ -27,9 +27,9 @@
 #include <tqmutex.h>
 #include <tqtimer.h>
 
-#include "ksocketdevice.h"
-#include "ksocketaddress.h"
-#include "ksocketbuffer_p.h"
+#include "tdesocketdevice.h"
+#include "tdesocketaddress.h"
+#include "tdesocketbuffer_p.h"
 #include "kbufferedsocket.h"
 
 using namespace KNetwork;

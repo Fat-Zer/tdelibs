@@ -39,7 +39,7 @@ TODO:
 
 * More featureful code completion including syntax highlighted entries
 
-* Custom widgets in between lines interface (eg. so kcachegrind could use
+* Custom widgets in between lines interface (eg. so tdecachegrind could use
   katepart to display its cpu usage information etc)
 
 * KateFoldingTree* to use smart cursors

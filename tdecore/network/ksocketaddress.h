@@ -22,8 +22,8 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef KSOCKETADDRESS_H
-#define KSOCKETADDRESS_H
+#ifndef TDESOCKETADDRESS_H
+#define TDESOCKETADDRESS_H
 
 #include <tqstring.h>
 #include <tqcstring.h>
@@ -42,7 +42,7 @@ class KSocketAddress;
 class KInetSocketAddress;
 class KUnixSocketAddress;
 
-/** @class KIpAddress ksocketaddress.h ksocketaddress.h
+/** @class KIpAddress tdesocketaddress.h tdesocketaddress.h
  *  @brief An IP address.
  *
  * This class represents one IP address, version 4 or 6. This is only
@@ -413,7 +413,7 @@ public:
 
 
 class KSocketAddressData;
-/** @class KSocketAddress ksocketaddress.h ksocketaddress.h
+/** @class KSocketAddress tdesocketaddress.h tdesocketaddress.h
  *  @brief A generic socket address.
  *
  * This class holds one generic socket address.
@@ -639,7 +639,7 @@ public:				// static
 };
 
 
-/** @class KInetSocketAddress ksocketaddress.h ksocketaddress.h
+/** @class KInetSocketAddress tdesocketaddress.h tdesocketaddress.h
  *  @brief an Internet socket address
  *
  * An Inet (IPv4 or IPv6) socket address
@@ -827,7 +827,7 @@ private:
  * External definition
  */
 
-/** @class KUnixSocketAddress ksocketaddress.h ksocketaddress.h
+/** @class KUnixSocketAddress tdesocketaddress.h tdesocketaddress.h
  *  @brief A Unix (local) socket address.
  *
  * This is a Unix socket address.

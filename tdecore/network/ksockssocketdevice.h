@@ -20,7 +20,7 @@
 #ifndef KSOCKSSOCKETDEVICE_H
 #define KSOCKSSOCKETDEVICE_H
 
-#include "ksocketdevice.h"
+#include "tdesocketdevice.h"
 
 namespace KNetwork {
 

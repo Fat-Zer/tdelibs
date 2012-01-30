@@ -21,8 +21,8 @@ include_directories(
 ##### headers ###################################
 
 install( FILES
-    kresolver.h kreverseresolver.h ksocketaddress.h
-    ksocketbase.h ksocketdevice.h kclientsocketbase.h
+    kresolver.h kreverseresolver.h tdesocketaddress.h
+    tdesocketbase.h tdesocketdevice.h kclientsocketbase.h
     kstreamsocket.h kserversocket.h kdatagramsocket.h
     kmulticastsocketdevice.h kmulticastsocket.h
     knetworkinterface.h khttpproxysocketdevice.h
@@ -41,11 +41,11 @@ set( target tdecorenetwork )
 
 set( ${target}_SRCS
   kresolver.cpp kresolvermanager.cpp kresolverworkerbase.cpp
-  ksocketaddress.cpp kresolverstandardworkers.cpp
-  kreverseresolver.cpp ksocketdevice.cpp ksocketbase.cpp
+  tdesocketaddress.cpp kresolverstandardworkers.cpp
+  kreverseresolver.cpp tdesocketdevice.cpp tdesocketbase.cpp
   kclientsocketbase.cpp kstreamsocket.cpp kserversocket.cpp
   kdatagramsocket.cpp khttpproxysocketdevice.cpp
-  ksockssocketdevice.cpp kbufferedsocket.cpp ksocketbuffer.cpp
+  ksockssocketdevice.cpp kbufferedsocket.cpp tdesocketbuffer.cpp
   ksrvresolverworker.cpp
 )
 

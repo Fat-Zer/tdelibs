@@ -27,8 +27,8 @@
 #include <assert.h>
 #include <string.h>
 
-#include "ksocketbase.h"
-#include "ksocketbuffer_p.h"
+#include "tdesocketbase.h"
+#include "tdesocketbuffer_p.h"
 
 using namespace KNetwork;
 using namespace KNetwork::Internal;

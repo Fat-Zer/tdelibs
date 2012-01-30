@@ -45,7 +45,7 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kstandarddirs.h>
-#include <ksocketbase.h>
+#include <tdesocketbase.h>
 #include <klibloader.h>
 #include <kmessagebox.h>
 #include <kaction.h>

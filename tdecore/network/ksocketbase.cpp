@@ -26,8 +26,8 @@
 #include <tqmutex.h>
 #include "klocale.h"
 
-#include "ksocketbase.h"
-#include "ksocketdevice.h"
+#include "tdesocketbase.h"
+#include "tdesocketdevice.h"
 
 using namespace KNetwork;
 

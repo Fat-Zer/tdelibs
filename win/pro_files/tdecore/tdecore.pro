@@ -115,9 +115,9 @@ kqiodevicegzip_p.cpp
 #network/kresolver.cpp \
 #network/kresolvermanager.cpp \
 #network/kreverseresolver.cpp \
-#network/ksocketaddress.cpp \
-#network/ksocketbase.cpp \
-#network/ksocketdevice.cpp \
+#network/tdesocketaddress.cpp \
+#network/tdesocketbase.cpp \
+#network/tdesocketdevice.cpp \
 #network/ksockssocketdevice.cpp
 
 #kstartupinfo.cpp \

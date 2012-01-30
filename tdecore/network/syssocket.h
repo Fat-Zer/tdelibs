@@ -25,8 +25,8 @@
 #ifndef KDE_SYSSOCKET_H
 #define KDE_SYSSOCKET_H
 
-#ifdef KSOCKETBASE_H
-#error syssocket.h must be included before ksocketbase.h!
+#ifdef TDESOCKETBASE_H
+#error syssocket.h must be included before tdesocketbase.h!
 #endif
 
 #include <sys/types.h>

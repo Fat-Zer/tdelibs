@@ -53,13 +53,13 @@
 #undef getsockname
 #endif
 
-#ifndef KSOCKETBASE_H
-#define KSOCKETBASE_H
+#ifndef TDESOCKETBASE_H
+#define TDESOCKETBASE_H
 
 #include <tqiodevice.h>
 #include <tqstring.h>
 
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 #include <tdelibs_export.h>
 
 /*
@@ -83,7 +83,7 @@ class KResolverEntry;
 class KSocketDevice;
 
 class KSocketBasePrivate;
-/** @class KSocketBase ksocketbase.h ksocketbase.h
+/** @class KSocketBase tdesocketbase.h tdesocketbase.h
  *  @brief Basic socket functionality.
  *
  * This class provides the basic socket functionlity for descended classes.
@@ -432,7 +432,7 @@ private:
 };
 
 /**
- * @class KActiveSocketBase ksocketbase.h ksocketbase.h
+ * @class KActiveSocketBase tdesocketbase.h tdesocketbase.h
  * @brief Abstract class for active sockets
  *
  * This class provides the standard interfaces for active sockets, i.e.,
@@ -681,7 +681,7 @@ protected:
 };
 
 /**
- * @class KPassiveSocketBase ksocketbase.h ksocketbase.h
+ * @class KPassiveSocketBase tdesocketbase.h tdesocketbase.h
  * @brief Abstract base class for passive sockets.
  *
  * This socket provides the initial functionality for passive sockets,

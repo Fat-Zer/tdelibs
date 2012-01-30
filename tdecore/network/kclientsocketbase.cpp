@@ -28,10 +28,10 @@
 #include <tqtimer.h>
 #include <tqmutex.h>
 
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 #include "kresolver.h"
-#include "ksocketbase.h"
-#include "ksocketdevice.h"
+#include "tdesocketbase.h"
+#include "tdesocketdevice.h"
 #include "kclientsocketbase.h"
 
 using namespace KNetwork;

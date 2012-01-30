@@ -49,7 +49,7 @@
 #include "kapplication.h"
 
 #include "kresolver.h"
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 #include "kresolverstandardworkers_p.h"
 
 struct hostent;

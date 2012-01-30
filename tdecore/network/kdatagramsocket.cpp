@@ -27,9 +27,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 #include "kresolver.h"
-#include "ksocketdevice.h"
+#include "tdesocketdevice.h"
 #include "kdatagramsocket.h"
 
 using namespace KNetwork;

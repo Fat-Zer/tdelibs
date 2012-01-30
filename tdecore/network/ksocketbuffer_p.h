@@ -22,8 +22,8 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef KSOCKETBUFFER_P_H
-#define KSOCKETBUFFER_P_H
+#ifndef TDESOCKETBUFFER_P_H
+#define TDESOCKETBUFFER_P_H
 
 #include <tqmutex.h>
 #include <tqcstring.h>
@@ -38,7 +38,7 @@ class KActiveSocketBase;
 
 /**
  * @internal
- * @class KSocketBuffer ksocketbuffer_p.h ksocketbuffer_p.h
+ * @class KSocketBuffer tdesocketbuffer_p.h tdesocketbuffer_p.h
  * @brief generic socket buffering code
  *
  * This class implements generic buffering used by @ref KBufferedSocket.

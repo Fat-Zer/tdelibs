@@ -53,9 +53,9 @@
 #include <tqsocketnotifier.h>
 
 #include "kresolver.h"
-#include "ksocketaddress.h"
-#include "ksocketbase.h"
-#include "ksocketdevice.h"
+#include "tdesocketaddress.h"
+#include "tdesocketbase.h"
+#include "tdesocketdevice.h"
 #include "ksockssocketdevice.h"
 
 using namespace KNetwork;

@@ -28,7 +28,7 @@
 #include <tqobject.h>
 #include <tqstring.h>
 
-#include "ksocketbase.h"
+#include "tdesocketbase.h"
 #include "kresolver.h"
 #include <tdelibs_export.h>
 

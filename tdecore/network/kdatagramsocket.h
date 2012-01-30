@@ -27,7 +27,7 @@
 
 #include <tqcstring.h>
 
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 #include "kclientsocketbase.h"
 
 namespace KNetwork {

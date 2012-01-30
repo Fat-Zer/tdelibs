@@ -22,11 +22,11 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef KSOCKETDEVICE_H
-#define KSOCKETDEVICE_H
+#ifndef TDESOCKETDEVICE_H
+#define TDESOCKETDEVICE_H
 
 #include <tqsocketnotifier.h>
-#include "ksocketbase.h"
+#include "tdesocketbase.h"
 
 namespace KNetwork {
 
@@ -34,7 +34,7 @@ class KSocketDevice;
 class KSocketDeviceFactoryBase;
 
 class KSocketDevicePrivate;
-/** @class KSocketDevice ksocketdevice.h ksocketdevice.h
+/** @class KSocketDevice tdesocketdevice.h tdesocketdevice.h
  *  @brief Low-level socket functionality.
  *
  * This class provides low-level socket functionality. 

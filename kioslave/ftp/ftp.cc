@@ -58,7 +58,7 @@
 #include <kmimemagic.h>
 #include <kmimetype.h>
 #include <ksockaddr.h>
-#include <ksocketaddress.h>
+#include <tdesocketaddress.h>
 #include <kio/ioslave_defaults.h>
 #include <kio/slaveconfig.h>
 #include <kremoteencoding.h>

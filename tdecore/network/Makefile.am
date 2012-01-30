@@ -10,15 +10,15 @@ INCLUDES = $(all_includes)
 # the library search path. 
 # convenience lib - no LDFLAGS or LIBADD !
 # Note:
-#  ksocketdevice.cpp must appear before any inclusion of ksocketdevice.h
+#  tdesocketdevice.cpp must appear before any inclusion of tdesocketdevice.h
 libtdecorenetwork_la_SOURCES = kresolver.cpp \
 		kresolvermanager.cpp \
 		kresolverworkerbase.cpp \
-		ksocketaddress.cpp \
+		tdesocketaddress.cpp \
 		kresolverstandardworkers.cpp \
 		kreverseresolver.cpp \
-		ksocketdevice.cpp \
-		ksocketbase.cpp \
+		tdesocketdevice.cpp \
+		tdesocketbase.cpp \
 		kclientsocketbase.cpp \
 		kstreamsocket.cpp \
 		kserversocket.cpp \
@@ -26,14 +26,14 @@ libtdecorenetwork_la_SOURCES = kresolver.cpp \
 		khttpproxysocketdevice.cpp \
 		ksockssocketdevice.cpp \
 		kbufferedsocket.cpp \
-		ksocketbuffer.cpp \
+		tdesocketbuffer.cpp \
 		ksrvresolverworker.cpp
 
 include_HEADERS = kresolver.h \
 	kreverseresolver.h \
-	ksocketaddress.h \
-	ksocketbase.h \
-	ksocketdevice.h \
+	tdesocketaddress.h \
+	tdesocketbase.h \
+	tdesocketdevice.h \
 	kclientsocketbase.h \
 	kstreamsocket.h \
 	kserversocket.h \
@@ -48,7 +48,7 @@ include_HEADERS = kresolver.h \
 noinst_HEADERS = kresolver_p.h \
 	kresolverworkerbase.h \
 	kresolverstandardworkers_p.h \
-	ksocketbuffer_p.h \
+	tdesocketbuffer_p.h \
 	ksrvresolverworker_p.h \
 	syssocket.h
 

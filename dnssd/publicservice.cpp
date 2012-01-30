@@ -27,7 +27,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <tqapplication.h>
-#include <network/ksocketaddress.h>
+#include <network/tdesocketaddress.h>
 #include <kurl.h>
 #include <unistd.h>
 #ifdef HAVE_DNSSD

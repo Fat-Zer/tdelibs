@@ -29,9 +29,9 @@
 #include <tqtimer.h>
 #include <tqguardedptr.h>
 
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 #include "kresolver.h"
-#include "ksocketdevice.h"
+#include "tdesocketdevice.h"
 #include "kstreamsocket.h"
 
 using namespace KNetwork;

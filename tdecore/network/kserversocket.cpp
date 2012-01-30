@@ -27,10 +27,10 @@
 #include <tqsocketnotifier.h>
 #include <tqmutex.h>
 
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 #include "kresolver.h"
-#include "ksocketbase.h"
-#include "ksocketdevice.h"
+#include "tdesocketbase.h"
+#include "tdesocketdevice.h"
 #include "kstreamsocket.h"
 #include "kbufferedsocket.h"
 #include "kserversocket.h"

@@ -59,7 +59,7 @@
 // Us
 #include "kresolver.h"
 #include "kresolver_p.h"
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 
 #ifdef NEED_MUTEX
 #warning "mutex"

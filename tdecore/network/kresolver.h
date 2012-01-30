@@ -29,7 +29,7 @@
 // Needed includes
 #include <tqvaluelist.h>
 #include <tqobject.h>
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 
 
 ////////////////////////

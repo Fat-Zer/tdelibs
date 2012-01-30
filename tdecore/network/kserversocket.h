@@ -26,7 +26,7 @@
 #define KSERVERSOCKET_H
 
 #include <tqobject.h>
-#include "ksocketbase.h"
+#include "tdesocketbase.h"
 
 namespace KNetwork {
 

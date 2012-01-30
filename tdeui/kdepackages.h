@@ -297,7 +297,7 @@ const char * const packages[] = {
 "kbreakout",
 "kbruch",
 "kbugbuster",
-"kcachegrind",
+"tdecachegrind",
 "kcalc",
 "kcanvas",
 "kcharselect",

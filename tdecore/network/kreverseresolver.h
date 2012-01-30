@@ -30,7 +30,7 @@
 #include <tqobject.h>
 #include <tqstring.h>
 
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 
 namespace KNetwork {
 

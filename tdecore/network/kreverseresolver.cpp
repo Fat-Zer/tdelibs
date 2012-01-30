@@ -39,7 +39,7 @@
 #include "kreverseresolver.h"
 #include "kresolver_p.h"
 #include "kresolverworkerbase.h"
-#include "ksocketaddress.h"
+#include "tdesocketaddress.h"
 
 #ifndef HAVE_GETNAMEINFO
 // FIXME KDE4:
