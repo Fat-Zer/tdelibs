@@ -2356,6 +2356,52 @@ void KListViewItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column, 
   TQListViewItem::paintCell(p, _cg, column, width, alignment);
 }
 
+/*!
+    If \a select is TRUE, all the items get selected; otherwise all
+    the items get unselected. This only works in the selection modes \c
+    Multi and \c Extended. In \c Single and \c NoSelection mode the
+    selection of the current item is just set to \a select.
+*/
+
+void KListView::selectAll( bool select )
+{
+    if ( selectionMode() == Multi || selectionMode() == Extended ) {
+	bool b = signalsBlocked();
+	blockSignals( TRUE );
+	bool anything = FALSE;
+	TQListViewItemIterator it( this );
+	while ( it.current() ) {
+	    TQListViewItem *i = it.current();
+	    if ( select == TRUE ) {
+		if ( (bool)i->isVisible() == TRUE ) {
+		    i->setSelected( TRUE );
+		    anything = TRUE;
+		}
+		if ( (bool)i->isVisible() == FALSE ) {
+		    i->setSelected( FALSE );
+		    anything = TRUE;
+		}
+	    }
+	    else {
+		if ( (bool)i->isSelected() != select ) {
+		    i->setSelected( select );
+		    anything = TRUE;
+		}
+	    }
+	    ++it;
+	}
+	blockSignals( b );
+	if ( anything ) {
+	    emit selectionChanged();
+// 	    d->useDoubleBuffer = TRUE;
+	    triggerUpdate();
+	}
+    } else if ( currentItem() ) {
+	TQListViewItem * i = currentItem();
+	setSelected( i, select );
+    }
+}
+
 void KListView::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 

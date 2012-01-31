@@ -660,6 +660,14 @@ public slots:
    */
   bool tabOrderedRenaming() const;
 
+  /**
+   * Override TQListView selectAll() so that filtered
+   * items are not selected
+   *
+   * @since 14.0
+   */
+  virtual void selectAll( bool select );
+
 protected:
   /**
    * Determine whether a drop on position @p p would count as
