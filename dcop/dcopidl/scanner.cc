@@ -947,8 +947,8 @@ extern int idl_line_no;
 int comment_mode;
 int function_mode = 0;
 
-#include <qstring.h>
-#include <qregexp.h>
+#include <tqstring.h>
+#include <tqregexp.h>
 
 static long ascii_to_longlong( long base, const char *s )
 {
