@@ -107,10 +107,9 @@ public slots:
   void clear();
 
   /**
-   * Must be called before updateSearch() whenever an icon is deleted.
+   * Should be called before updateSearch() whenever an icon is deleted.
    */
   void iconDeleted(const TQString &filename);
-
 
 protected:
   /**

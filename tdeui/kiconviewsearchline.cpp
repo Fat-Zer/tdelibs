@@ -42,7 +42,6 @@ public:
     iconView( 0 ),
     caseSensitive( DEFAULT_CASESENSITIVE ),
     activeSearch( false ),
-    hiddenListChanged( 0 ),
     queuedSearches( 0 ) {}
 
   TQIconView *iconView;
@@ -50,8 +49,6 @@ public:
   bool activeSearch;
   TQString search;
   int queuedSearches;
-  int hiddenListChanged;
-  QIconViewItemList hiddenItems;
 };
 
 /******************************************************************************
@@ -116,26 +113,13 @@ void KIconViewSearchLine::updateSearch( const TQString &s )
 			if ( item == currentItem )
 				currentItem = NULL; // It's not in iconView anymore.
 		}
+		else {
+			showItem( item );
+		}
 	}
 
-	// Add Matching items, remove from hidden list
-	original_count = d->hiddenItems.count();
-	original_hiddenListChanged = d->hiddenListChanged;
-	for (QIconViewItemList::iterator it=d->hiddenItems.begin();it!=d->hiddenItems.end();++it) {
-		item = *it;
-		if ((original_count != d->hiddenItems.count()) || (original_hiddenListChanged != d->hiddenListChanged)) {
-			// The list has changed; pointers are now most likely invalid
-			// ABORT, but restart the search at the beginning
-			original_count = d->hiddenItems.count();
-			original_hiddenListChanged = d->hiddenListChanged;
-			it=d->hiddenItems.begin();
-		}
-		else {
-			if ( itemMatches( item, search ) )
-				showItem( item );
-		}
-	}
 	d->iconView->sort();
+	d->iconView->arrangeItemsInGrid(true);
 
 	if ( currentItem != NULL )
 	d->iconView->ensureItemVisible( currentItem );
@@ -143,49 +127,23 @@ void KIconViewSearchLine::updateSearch( const TQString &s )
 
 void KIconViewSearchLine::clear()
 {
-  // Clear hidden list, give items back to TQIconView, if it still exists
-  TQIconViewItem *item = NULL;
-  QIconViewItemList::iterator it = d->hiddenItems.begin();
-  while ( it != d->hiddenItems.end() )
-    {
-      item = *it;
-      ++it;
-      if ( item != NULL )
-	{
-	  if ( d->iconView != NULL )
-	    showItem( item );
-	  else
-	    delete item;
-	}
-    }
-  if ( ! d->hiddenItems.isEmpty() )
-    kdDebug() << __FILE__ << ":" << __LINE__ <<
-      "hiddenItems is not empty as it should be. " <<
-      d->hiddenItems.count() << " items are still there.\n" << endl;
+	// Clear hidden list, give items back to TQIconView, if it still exists
+	TQIconViewItem *item = NULL;
 
-  d->search = "";
-  d->queuedSearches = 0;
-  KLineEdit::clear();
+	TQIconViewItem *i = d->iconView->firstItem();
+	while ( i != NULL ) {
+		item = i;
+		i = i->nextItem(); // Point to next, otherwise will loose it.
+		showItem( item );
+	}
+	
+	d->search = "";
+	d->queuedSearches = 0;
+	KLineEdit::clear();
 }
 
 void KIconViewSearchLine::iconDeleted(const TQString &filename) {
-	// Clear hidden list, give items back to TQIconView, if it still exists
-	TQIconViewItem *item = NULL;
-	QIconViewItemList::iterator it = d->hiddenItems.begin();
-	while ( it != d->hiddenItems.end() )
-	{
-		item = *it;
-		++it;
-		if ( item != NULL )
-		{
-			if (item->text() == filename) {
-				if (d->iconView != NULL)
-					showItem( item );
-				else
-					delete item;
-			}
-		}
-	}
+	// Do nothing...
 }
 
 void KIconViewSearchLine::setCaseSensitive( bool cs )
@@ -252,9 +210,7 @@ void KIconViewSearchLine::hideItem( TQIconViewItem *item )
   if ( ( item == NULL ) || ( d->iconView == NULL ) )
     return;
 
-  d->hiddenListChanged++;
-  d->hiddenItems.append( item );
-  d->iconView->takeItem( item );
+  item->setVisible(false);
 }
 
 void KIconViewSearchLine::showItem( TQIconViewItem *item )
@@ -266,10 +222,8 @@ void KIconViewSearchLine::showItem( TQIconViewItem *item )
 	endl;
       return;
     }
-  d->hiddenListChanged++;
-  d->iconView->insertItem( item );
-  d->hiddenItems.remove( item );
-  item->setText(item->text());
+
+  item->setVisible(true);
 }
 
 /******************************************************************************
