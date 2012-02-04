@@ -245,7 +245,7 @@ int main(int argc, char **argv)
      return 1;
   }
 
-  tmp = getenv("KDETMP");
+  tmp = getenv("TDETMP");
   if (!tmp || !tmp[0])
     tmp = getenv("TMPDIR");
   if (!tmp || !tmp[0]) 
@@ -269,7 +269,7 @@ int main(int argc, char **argv)
   }
   else if (strcmp(argv[1], "cache") == 0)
   {
-    tmp = getenv("KDEVARTMP");
+    tmp = getenv("TDEVARTMP");
     if (!tmp || !tmp[0]) 
       tmp = "/var/tmp";
 
