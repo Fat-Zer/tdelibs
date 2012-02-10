@@ -232,7 +232,7 @@ class TDECORE_EXPORT KAboutData
      *        is correct, "some.domain" is not.
      *
      * @param bugsEmailAddress The bug report email address string.
-     *        This defaults to the kde.org bug system.
+     *        This defaults to the trinitydesktop.org bug system.
      *
      */
     KAboutData( const char *appName,
@@ -243,7 +243,7 @@ class TDECORE_EXPORT KAboutData
 		const char *copyrightStatement = 0,
 		const char *text = 0,
 		const char *homePageAddress = 0,
-		const char *bugsEmailAddress = "http://bugs.trinitydesktop.org"
+		const char *bugsEmailAddress = 0
 		);
 
      ~KAboutData();
@@ -621,6 +621,7 @@ class TDECORE_EXPORT KAboutData
     TQValueList<KAboutPerson> mAuthorList;
     TQValueList<KAboutPerson> mCreditList;
     const char *mLicenseText;
+    static const char *defaultBugTracker;
 
     KAboutDataPrivate *d;
 };

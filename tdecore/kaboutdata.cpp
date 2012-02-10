@@ -96,7 +96,7 @@ public:
     const char *mTranslatedProgramName;
 };
 
-
+static const char *KAboutData::defaultBugTracker = "http://bugs.trinitydesktop.org";
 
 KAboutData::KAboutData( const char *appName,
                         const char *programName,
@@ -115,7 +115,7 @@ KAboutData::KAboutData( const char *appName,
   mCopyrightStatement( copyrightStatement ),
   mOtherText( text ),
   mHomepageAddress( homePageAddress ),
-  mBugEmailAddress( bugsEmailAddress ),
+  mBugEmailAddress( (bugsEmailAddress!=0)?bugsEmailAddress:&defaultBugTracker ),
   mLicenseText (0)
 {
    d = new KAboutDataPrivate;
