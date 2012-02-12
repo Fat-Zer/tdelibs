@@ -121,11 +121,16 @@ int StubProcess::ConverseStub(int check)
 	    TQCString path = getenv("PATH");
             if (!path.isEmpty() && path[0] == ':')
                 path = path.mid(1);
-	    if (m_User == "root") 
-		if (!path.isEmpty())
-		    path = "/sbin:/bin:/usr/sbin:/usr/bin:" + path;
-		else
-		    path = "/sbin:/bin:/usr/sbin:/usr/bin";
+	    if (m_User == "root")
+	       if (!path.isEmpty())
+	          path = "/usr/local/sbin:/usr/sbin:/sbin:" + path;
+	       else
+                  if (strcmp(__KDE_BINDIR, "/usr/bin") == 0) {
+		          path = "/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin";
+		  }
+		  else {
+			  path = "/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:" __KDE_BINDIR ":/usr/bin:/bin";
+		  }
 	    writeLine(path);
 	} else if (line == "user") {
 	    writeLine(m_User);
