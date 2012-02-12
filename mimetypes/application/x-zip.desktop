@@ -88,5 +88,5 @@ Comment[zh_TW]=Zip 壓縮文件
 Comment[zu]=Umqulu we-Zip
 
 [Property::X-KDE-LocalProtocol]
-Type=QString
+Type=TQString
 Value=zip

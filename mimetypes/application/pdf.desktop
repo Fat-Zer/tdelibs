@@ -88,6 +88,6 @@ Comment[zh_TW]=PDF 文件
 Comment[zu]=Uhlu lwamafayela e-PDF
 X-KDE-AutoEmbed=true
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.pdf
 

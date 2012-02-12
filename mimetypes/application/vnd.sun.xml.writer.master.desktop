@@ -74,5 +74,5 @@ Type=MimeType
 Icon=wordprocessing
 Patterns=*.sxg;*.SXG;
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.sxg

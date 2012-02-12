@@ -84,9 +84,9 @@ Patterns=*.rtf;*.RTF;
 Type=bool
 Value=true
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.rtf
 [Property::X-KDE-CompatibleApplication]
-Type=QString
+Type=TQString
 Value=Microsoft Word
 

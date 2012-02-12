@@ -74,5 +74,5 @@ Comment[vi]=Ảnh OpenDocument OASIS
 Comment[zh_CN]=OASIS OpenDocument 图像
 Comment[zh_TW]=OASIS OpenDocument 影像
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.odi

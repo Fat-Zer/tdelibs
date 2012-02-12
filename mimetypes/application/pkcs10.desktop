@@ -84,5 +84,5 @@ Comment[zh_HK]=S/MIME 認證請求
 Comment[zh_TW]=S/MIME 認證請求
 Comment[zu]=Isitifiketi Sesicelo se-S/MIME
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.p10

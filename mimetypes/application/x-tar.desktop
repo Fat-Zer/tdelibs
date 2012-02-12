@@ -88,6 +88,6 @@ Comment[zh_TW]=Tar 壓縮文件
 Comment[zu]=Umqulu we-Tar
 
 [Property::X-KDE-LocalProtocol]
-Type=QString
+Type=TQString
 Value=tar
 

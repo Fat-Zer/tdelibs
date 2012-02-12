@@ -88,5 +88,5 @@ Comment[zu]=Umqulu we-Zip
 X-KDE-IsAlso=application/x-zip
 
 [Property::X-KDE-LocalProtocol]
-Type=QString
+Type=TQString
 Value=zip

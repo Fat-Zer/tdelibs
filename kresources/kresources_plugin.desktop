@@ -73,7 +73,7 @@ Comment[zh_HK]=KResource Framework 外掛程式
 Comment[zh_TW]=KRsource Framework 外掛程式
 
 [PropertyDef::X-KDE-ResourceFamily]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-ResourceType]
-Type=QString
+Type=TQString

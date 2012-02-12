@@ -84,5 +84,5 @@ Comment[zh_HK]=StarOffice Writer 文件
 Comment[zh_TW]=StarOffice Writer 文件
 Comment[zu]=Umbhali Wohlu lwamafayela e-StarOffice
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.sdw

@@ -73,5 +73,5 @@ Comment[zh_CN]=XLIFF 翻译文件
 Comment[zh_HK]=XLIFF 翻譯檔
 Comment[zh_TW]=XLIFF 翻譯檔
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.xlf

@@ -78,5 +78,5 @@ Type=MimeType
 Icon=image
 Patterns=*.sxd;*.SXD;
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.sxd

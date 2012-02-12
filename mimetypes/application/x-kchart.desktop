@@ -88,5 +88,5 @@ Comment[zh_TW]=KChart 文件
 Comment[zu]=Uhlu lwamafayela ye-KChart
 X-KDE-AutoEmbed=false
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.chrt

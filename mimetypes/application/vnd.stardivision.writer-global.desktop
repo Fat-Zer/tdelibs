@@ -75,5 +75,5 @@ Comment[zh_CN]=StarOffice Writer 主文档
 Comment[zh_HK]=StarOffice Writer 主控文件
 Comment[zh_TW]=StarOffice Writer Master 文件
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.sgl

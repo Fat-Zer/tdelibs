@@ -79,5 +79,5 @@ MimeType=application/x-webarchive
 Patterns=*.war;*.WAR
 
 [Property::X-KDE-LocalProtocol]
-Type=QString
+Type=TQString
 Value=tar

@@ -84,6 +84,6 @@ MimeType=audio/x-adpcm
 Icon=sound
 Patterns=;
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.wav
 

@@ -87,5 +87,5 @@ Comment[zh_HK]=KFormula 文件
 Comment[zh_TW]=KFormula 文件
 Comment[zu]=Uhlu lwamafayela ye-KFormula
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.kfo

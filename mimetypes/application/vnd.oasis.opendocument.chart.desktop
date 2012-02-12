@@ -72,5 +72,5 @@ Comment[vi]=Biểu đồ OpenDocument OASIS
 Comment[zh_CN]=OASIS OpenDocument 图表
 Comment[zh_TW]=OASIS OpenDocument 圖表
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.odc

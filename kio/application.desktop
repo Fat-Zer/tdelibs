@@ -90,35 +90,35 @@ Name[zu]=Umyaleli
 Type=bool
 
 [PropertyDef::DocPath]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-SubstituteUID]
 Type=bool
 
 [PropertyDef::X-KDE-Username]
-Type=QString
+Type=TQString
 
 [PropertyDef::StartupWMClass]
-Type=QString
+Type=TQString
 
 [PropertyDef::StartupNotify]
 Type=bool
 
 [PropertyDef::X-KDE-WMClass]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-StartupNotify]
 Type=bool
 
 [PropertyDef::X-DCOP-ServiceName]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-ParentApp]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-HasTempFileOption]
 Type=bool
 
 [PropertyDef::X-KDE-Protocols]
-Type=QStringList
+Type=TQStringList
 

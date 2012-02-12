@@ -76,5 +76,5 @@ Type=MimeType
 Icon=wordprocessing
 Patterns=*.stw;*.STW;
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.stw

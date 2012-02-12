@@ -82,5 +82,5 @@ Comment[zh_CN]=StarOffice Calc 电子表格
 Comment[zh_HK]=StarOffice Calc 電子表格
 Comment[zh_TW]=StarOffice Calc 電子表格
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.sdc

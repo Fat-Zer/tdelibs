@@ -88,5 +88,5 @@ Comment[zh_HK]=Kivio 文件
 Comment[zh_TW]=Kivio 文件
 Comment[zu]=Uhlu lwamafayela lwe-Kivio
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.flw

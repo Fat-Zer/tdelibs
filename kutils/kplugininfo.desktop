@@ -80,28 +80,28 @@ Name[zh_HK]=KDE 外掛資訊
 Name[zh_TW]=KDE 外掛資訊
 
 [PropertyDef::X-KDE-PluginInfo-Author]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-PluginInfo-Email]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-PluginInfo-Name]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-PluginInfo-Version]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-PluginInfo-Website]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-PluginInfo-Category]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-PluginInfo-Depends]
-Type=QStringList
+Type=TQStringList
 
 [PropertyDef::X-KDE-PluginInfo-License]
-Type=QString
+Type=TQString
 
 [PropertyDef::X-KDE-PluginInfo-EnabledByDefault]
 Type=bool

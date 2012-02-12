@@ -76,5 +76,5 @@ Type=MimeType
 Patterns=*.stc;*.STC;
 MimeType=application/vnd.sun.xml.calc.template
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.stc

@@ -85,5 +85,5 @@ Comment[zh_HK]=微軟 Excel 表格
 Comment[zh_TW]=微軟 Excel 表格
 Comment[zu]= Ipheshana lesitayela le-Microsoft Excel
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.xls

@@ -76,5 +76,5 @@ Type=MimeType
 Icon=image
 Patterns=*.std;*.STD;
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.std

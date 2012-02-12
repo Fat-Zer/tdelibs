@@ -81,5 +81,5 @@ Type=MimeType
 Icon=wordprocessing
 Patterns=*.sxw;*.SXW;
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.sxw

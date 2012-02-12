@@ -87,5 +87,5 @@ Comment[zh_HK]=KPresenter 文件
 Comment[zh_TW]=KPresenter 文件
 Comment[zu]=Uhlu lwamafayela lwe-KPresenter
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.kpr

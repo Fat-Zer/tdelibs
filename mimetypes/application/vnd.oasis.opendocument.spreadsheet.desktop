@@ -75,5 +75,5 @@ Comment[zh_CN]=OASIS OpenDocument 电子表格
 Comment[zh_HK]=OASIS OpenDocument 試算表
 Comment[zh_TW]=OASIS OpenDocument 試算表
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.ods

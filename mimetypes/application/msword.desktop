@@ -88,6 +88,6 @@ Comment[zh_HK]=微軟 Word 文件
 Comment[zh_TW]=微軟 Word 文件
 Comment[zu]=Uhlu Lwamafayela lwe-Microsoft Word
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.doc
 

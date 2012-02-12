@@ -86,7 +86,7 @@ Name[zu]=Umbonisi Womgcingi
 
 # Arguments passed to the factory (e.g. view sub-type)
 [PropertyDef::X-KDE-BrowserView-Args]
-Type=QString
+Type=TQString
 
 # If false, this component won't be used when clicking on a file,
 # the user will have to use "Embed in..." to use it (or the application
@@ -121,17 +121,17 @@ Type=bool
 
 # If the view is toggable, this defines its orientation (Horizontal or Vertical)
 [PropertyDef::X-KDE-BrowserView-ToggableView-Orientation]
-Type=QString
+Type=TQString
 
 # The name of the property in the view, which the application should set
 # in order to quickly switch the view mode (only meaningful in views that
 # support multiple modes in the same widget, like the iconview)
 [PropertyDef::X-KDE-BrowserView-ModeProperty]
-Type=QString
+Type=TQString
 
 # The value to set for the above property
 [PropertyDef::X-KDE-BrowserView-ModePropertyValue]
-Type=QString
+Type=TQString
 
 # If true, this view will always "follow the active view" (and vice versa:
 # when the active view goes to another url, this view will follow).
@@ -147,11 +147,11 @@ Type=bool
 # (like Cervisia) to be reactivated (possibly on another directory) next time
 # (famous bug).
 [PropertyDef::X-KDE-BrowserView-Built-Into]
-Type=QString
+Type=TQString
 
 # If the part has a plugin for KHTML Javascript's window.navigator.plugins
 # array, it should create a plugin info file and set this propery to the
 # file path here. The path should be relative to KDE's data dir
 # ($TDEDIR/share/apps)
 [PropertyDef::X-KDE-BrowserView-PluginsInfo]
-Type=QString
+Type=TQString

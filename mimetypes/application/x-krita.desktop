@@ -87,5 +87,5 @@ Comment[zh_HK]=Krita 文件
 Comment[zh_TW]=Krita 文件
 Comment[zu]=Uhlu lwamafayela lwer-Krita
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.kra

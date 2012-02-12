@@ -88,6 +88,6 @@ Icon=tgz
 Type=MimeType
 Patterns=*.tar.Z;
 [Property::X-KDE-LocalProtocol]
-Type=QString
+Type=TQString
 Value=tar
 

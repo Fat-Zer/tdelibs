@@ -74,5 +74,5 @@ Comment[vi]=Văn bản OpenDocument OASIS
 Comment[zh_CN]=OASIS OpenDocument 文本
 Comment[zh_TW]=OASIS OpenDocument 文字
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.odt

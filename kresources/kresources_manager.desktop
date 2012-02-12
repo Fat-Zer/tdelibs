@@ -72,4 +72,4 @@ Comment[zh_HK]=KResource 管理員
 Comment[zh_TW]=KRsource 管理員
 
 [PropertyDef::X-KDE-ResourceFamily]
-Type=QString
+Type=TQString

@@ -75,5 +75,5 @@ Type=MimeType
 Patterns=*.kplato;*.kplatot;
 X-KDE-AutoEmbed=false
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.kplato

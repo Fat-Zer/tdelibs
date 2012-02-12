@@ -85,5 +85,5 @@ Comment[zh_TW]=這是用來測試手稿介面用的一般性測試手稿引擎
 Comment[zu]=Lena yinjini yesikripti sokuvivinya sawonke wonke yokuvivinya isikripti somxhumanisi.
 
 [PropertyDef::X-KDE-Script-Runner]
-Type=QString
+Type=TQString
 

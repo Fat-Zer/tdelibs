@@ -88,5 +88,5 @@ Type=MimeType
 Patterns=*.kon;
 X-KDE-AutoEmbed=false
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.kon

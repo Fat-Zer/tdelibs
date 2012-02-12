@@ -84,4 +84,4 @@ Comment[zh_TW]=屬性對話盒的外掛程式
 Comment[zu]=I-plugin Yengxoxo Yezinkomba zobunini
 
 [PropertyDef::X-KDE-Protocol]
-Type=QString
+Type=TQString

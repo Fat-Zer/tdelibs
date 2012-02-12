@@ -81,6 +81,6 @@ Comment[zh_CN]=Kexi 项目文件
 Comment[zh_HK]=Kexi 計畫檔案
 Comment[zh_TW]=Kexi 專案檔案
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.kexi
 

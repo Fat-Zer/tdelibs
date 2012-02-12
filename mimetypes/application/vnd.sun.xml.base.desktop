@@ -72,5 +72,5 @@ Type=MimeType
 Patterns=*.odb;*.ODB;
 MimeType=application/vnd.sun.xml.base
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.odb

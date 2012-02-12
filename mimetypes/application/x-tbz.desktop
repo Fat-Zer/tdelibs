@@ -70,9 +70,9 @@ Type=MimeType
 Patterns=*.tar.bz;*.tbz;*.tar.bz2;*.tbz2;
 
 [Property::X-KDE-LocalProtocol]
-Type=QString
+Type=TQString
 Value=tar
 
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.tar.bz2

@@ -80,5 +80,5 @@ Type=MimeType
 Icon=presentation
 Patterns=*.sxi;*.SXI;
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.sxi

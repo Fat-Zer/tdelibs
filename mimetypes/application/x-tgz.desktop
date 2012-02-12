@@ -90,6 +90,6 @@ Comment[zh_TW]=Gzip 壓縮的 Tar 壓縮文件
 Comment[zu]=Umqulu we-Gzipped Tar
 
 [Property::X-KDE-LocalProtocol]
-Type=QString
+Type=TQString
 Value=tar
 

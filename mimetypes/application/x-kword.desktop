@@ -88,5 +88,5 @@ Comment[zh_HK]=KWord 文件
 Comment[zh_TW]=KWord 文件
 Comment[zu]=Uhlu lwamafayela lwe-KWord
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.kwd

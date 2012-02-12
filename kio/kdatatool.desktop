@@ -84,13 +84,13 @@ Comment[zh_TW]=KDE 資料工具
 Comment[zu]=Ithuluzi Ledata le-KDE
 
 [PropertyDef::Commands]
-Type=QStringList
+Type=TQStringList
 
 [PropertyDef::DataType]
-Type=QString
+Type=TQString
 
 [PropertyDef::DataMimeTypes]
-Type=QStringList
+Type=TQStringList
 
 [PropertyDef::ExcludeFrom]
-Type=QStringList
+Type=TQStringList

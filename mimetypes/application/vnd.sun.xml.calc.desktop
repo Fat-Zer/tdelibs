@@ -80,5 +80,5 @@ Type=MimeType
 Patterns=*.sxc;*.SXC;
 MimeType=application/vnd.sun.xml.calc
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.sxc

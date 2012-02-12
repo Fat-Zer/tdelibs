@@ -85,5 +85,5 @@ Comment[zh_HK]=Graphite 科學繪圖檔
 Comment[zh_TW]=Graphite - 科學繪圖
 Comment[zu]=Umdwebo Wezesayensi Womdwebo
 [Property::X-KDE-NativeExtension]
-Type=QString
+Type=TQString
 Value=.gra
