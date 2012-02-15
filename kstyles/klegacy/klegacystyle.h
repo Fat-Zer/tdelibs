@@ -137,7 +137,7 @@ protected:
 private:
     KLegacyStylePrivate *priv;
 
-#if defined(Q_DISABLE_COPY)
+#if defined(TQ_DISABLE_COPY)
     KLegacyStyle( const KLegacyStyle & );
     KLegacyStyle& operator=( const KLegacyStyle & );
 #endif

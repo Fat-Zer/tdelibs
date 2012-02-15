@@ -597,7 +597,7 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 		else
 			// General handle, probably a kicker applet handle.
 			drawKStylePrimitive( KPE_GeneralHandle, p, widget, r, cg, flags, opt );
-#if QT_VERSION >= 0x030300
+#if TQT_VERSION >= 0x030300
 #ifdef HAVE_XRENDER
 	} else if ( d->semiTransparentRubberband && pe == TQStyle::PE_RubberBand ) {
 			TQRect rect = r.normalize();

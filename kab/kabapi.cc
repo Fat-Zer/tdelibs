@@ -39,7 +39,7 @@ KabAPI::KabAPI(TQWidget* parent, const char* name)
     listbox(new KListBox(this)),
     selection(-1)
 {
-  Q_CHECK_PTR(listbox);
+  TQ_CHECK_PTR(listbox);
   setMainWidget(listbox);
   showButtonApply(false);
   enableButtonSeparator(true);
@@ -141,7 +141,7 @@ AddressBook::ErrorCode KabAPI::add(const AddressBook::Entry& entry, KabKey& key,
 
 AddressBook::ErrorCode KabAPI::remove(const KabKey& key)
 {
-  Q_CHECK_PTR(book);
+  TQ_CHECK_PTR(book);
   // ############################################################################
   if(book->AddressBook::remove(key)==AddressBook::NoError)
     {

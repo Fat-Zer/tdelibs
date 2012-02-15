@@ -96,7 +96,7 @@ KMFactory::KMFactory()
 	m_implementation = 0;
 	m_factory = 0;
 	m_printconfig = 0;
-#if QT_VERSION >= 230
+#if TQT_VERSION >= 230
 	// Qt's default behavior, to generate EPS in some cases and not in others, sucks.
 	// This is fixed in Qt 3.0, but for Qt 2.x we need to disable it explicitly.
 	// If this is a problem for anyone, we can add a public method to set this flag.
@@ -134,7 +134,7 @@ KMManager* KMFactory::manager()
 {
 	if (!m_manager)
 		createManager();
-	Q_CHECK_PTR(m_manager);
+	TQ_CHECK_PTR(m_manager);
 	return m_manager;
 }
 
@@ -142,7 +142,7 @@ KMJobManager* KMFactory::jobManager()
 {
 	if (!m_jobmanager)
 		createJobManager();
-	Q_CHECK_PTR(m_jobmanager);
+	TQ_CHECK_PTR(m_jobmanager);
 	return m_jobmanager;
 }
 
@@ -150,7 +150,7 @@ KMUiManager* KMFactory::uiManager()
 {
 	if (!m_uimanager)
 		createUiManager();
-	Q_CHECK_PTR(m_uimanager);
+	TQ_CHECK_PTR(m_uimanager);
 	return m_uimanager;
 }
 
@@ -158,7 +158,7 @@ KPrinterImpl* KMFactory::printerImplementation()
 {
 	if (!m_implementation)
 		createPrinterImpl();
-	Q_CHECK_PTR(m_implementation);
+	TQ_CHECK_PTR(m_implementation);
 	return m_implementation;
 }
 
@@ -229,7 +229,7 @@ KConfig* KMFactory::printConfig(const TQString& group)
 	if (!m_printconfig)
 	{
 		m_printconfig = new KConfig("tdeprintrc");
-		Q_CHECK_PTR(m_printconfig);
+		TQ_CHECK_PTR(m_printconfig);
 	}
 	if (!group.isEmpty())
 		m_printconfig->setGroup(group);

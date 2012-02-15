@@ -87,7 +87,7 @@
       <item> Q_ARG </item>
       <item> Q_ASSERT </item>
       <item> Q_ASSERT_X </item>
-      <item> Q_CHECK_PTR </item>
+      <item> TQ_CHECK_PTR </item>
       <item> Q_CLASSINFO </item>
       <item> Q_CLEANUP_RESOURCE </item>
       <item> Q_D </item>
@@ -100,7 +100,7 @@
       <item> Q_DECLARE_PUBLIC </item>
       <item> Q_DECLARE_SHARED </item>
       <item> Q_DECLARE_TYPEINFO </item>
-      <item> Q_DISABLE_COPY </item>
+      <item> TQ_DISABLE_COPY </item>
       <item> Q_ENUMS </item>
       <item> Q_EXPORT </item>
       <item> Q_FLAGS </item>

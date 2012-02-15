@@ -5,7 +5,7 @@ Q*::*
 
 qstrcmp
 qstrcpy
-qstrlen
+tqstrlen
 qAlpha
 qRed
 qGreen
@@ -13,8 +13,8 @@ qBlue
 qGray
 qRgba
 qRgb
-qSwap
-qCopy
+tqSwap
+tqCopy
 qHeapSort
 qHeapSortHelper
 qHeapSortPushDown

@@ -162,7 +162,7 @@ bool AddressBook::Entry::Address::nameOfField(const char* key, TQString& value)
       // as fields is static 
       int counter=0;
       fields=new KeyNameMap;
-      Q_CHECK_PTR(fields);
+      TQ_CHECK_PTR(fields);
       if(!fields->insert
 	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("Headline"))).second
@@ -257,7 +257,7 @@ bool AddressBook::Entry::nameOfField(const char* key, TQString& value)
       // as fields is static 
       int counter=0;
       fields=new KeyNameMap;
-      Q_CHECK_PTR(fields);
+      TQ_CHECK_PTR(fields);
       if(!fields->insert
 	 (map<const char*, TQString, less<const char*> >::value_type
 	  (Fields[counter++], i18n("person","Title"))).second
@@ -2003,7 +2003,7 @@ AddressBook::ErrorCode AddressBook::categories(CategoriesMap& cat)
   StringStringMap::iterator pos;
   // ----- query categories section:
   section=categoriesSection();
-  Q_CHECK_PTR(section);
+  TQ_CHECK_PTR(section);
   // ----- 
   if(!section->find(KAB_CATEGORY_KEY, categories))
     {

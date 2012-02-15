@@ -957,7 +957,7 @@ int KProcess::commSetupDoneP()
   if (communication & Stdin) {
     fcntl(in[1], F_SETFL, O_NONBLOCK | fcntl(in[1], F_GETFL));
     innot =  new TQSocketNotifier(in[1], TQSocketNotifier::Write, this);
-    Q_CHECK_PTR(innot);
+    TQ_CHECK_PTR(innot);
     innot->setEnabled(false); // will be enabled when data has to be sent
     TQObject::connect(innot, TQT_SIGNAL(activated(int)),
                      this, TQT_SLOT(slotSendData(int)));
@@ -965,7 +965,7 @@ int KProcess::commSetupDoneP()
 
   if (communication & Stdout) {
     outnot = new TQSocketNotifier(out[0], TQSocketNotifier::Read, this);
-    Q_CHECK_PTR(outnot);
+    TQ_CHECK_PTR(outnot);
     TQObject::connect(outnot, TQT_SIGNAL(activated(int)),
                      this, TQT_SLOT(slotChildOutput(int)));
     if (communication & NoRead)
@@ -974,7 +974,7 @@ int KProcess::commSetupDoneP()
 
   if (communication & Stderr) {
     errnot = new TQSocketNotifier(err[0], TQSocketNotifier::Read, this );
-    Q_CHECK_PTR(errnot);
+    TQ_CHECK_PTR(errnot);
     TQObject::connect(errnot, TQT_SIGNAL(activated(int)),
                      this, TQT_SLOT(slotChildError(int)));
   }
