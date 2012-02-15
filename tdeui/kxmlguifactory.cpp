@@ -125,7 +125,7 @@ TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_nu
             return TQString::null;
     }
 
-#if QT_VERSION <= 0x030302
+#if TQT_VERSION <= 0x030302
     // Work around bug in TQString::fromUtf8 (which calls strlen).
     TQByteArray buffer(file.size() + 1);
     buffer = file.readAll();

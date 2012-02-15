@@ -816,7 +816,7 @@ int main(int argc, char *argv[])
   check("host",ulong.host(),"swww.gad.de");
   check("path",ulong.path(),"/servlet/CookieAccepted");
 
-#if QT_VERSION < 300
+#if TQT_VERSION < 300
   qt_set_locale_codec( KGlobal::charsets()->codecForName( "iso-8859-1" ) );
 #else
   TQTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "iso-8859-1" ) );
@@ -861,7 +861,7 @@ int main(int argc, char *argv[])
 
   testAdjustPath();
 
-#if QT_VERSION < 300
+#if TQT_VERSION < 300
   qt_set_locale_codec( KGlobal::charsets()->codecForName( "koi8-r" ) );
 #else
   TQTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "koi8-r" ) );

@@ -245,7 +245,7 @@ TQFontDatabase::findFont( TQFont::Script script, const QFontPrivate *fp,
     // fe->setScale( scale );
 
     QFontCache::Key key( request, script, fp->screen
-#if QT_VERSION >= 0x030308
+#if TQT_VERSION >= 0x030308
                          , fp->paintdevice
 #endif
                          );

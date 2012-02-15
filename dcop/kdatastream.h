@@ -19,7 +19,7 @@ inline TQDataStream & operator >> (TQDataStream & str, bool & b)
 }
 #endif // USE_QT3
 
-#if QT_VERSION < 0x030200 && !defined(Q_WS_WIN) && !defined(Q_WS_MAC)
+#if TQT_VERSION < 0x030200 && !defined(Q_WS_WIN) && !defined(Q_WS_MAC)
 inline TQDataStream & operator << (TQDataStream & str, long long int ll)
 {
   TQ_UINT32 l1,l2;

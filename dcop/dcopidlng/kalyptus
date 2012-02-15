@@ -111,7 +111,7 @@ $allowed_k_dcop_accesors_re = join("|", @allowed_k_dcop_accesors);
     QT_NO_REMOTE => 'QT_NO_REMOTE',
     QT_ACCESSIBILITY_SUPPORT => 'QT_ACCESSIBILITY_SUPPORT',
     Q_WS_X11 => 'Q_WS_X11',
-    Q_DISABLE_COPY => 'Q_DISABLE_COPY',
+    TQ_DISABLE_COPY => 'TQ_DISABLE_COPY',
     Q_WS_QWS => 'undef',
     Q_WS_MAC => 'undef',
     Q_OBJECT => <<'CODE',
@@ -713,7 +713,7 @@ sub identifyDecl
 	elsif ( $decl =~ /^\s*((?:template\s*<.*>)?)      # 1 template
 					\s*(class|struct|union|namespace) # 2 struct type
 					\s*([A-Z_]*EXPORT[A-Z_]*)?		  # 3 export
-					(?:\s*Q_PACKED)?
+					(?:\s*TQ_PACKED)?
 					(?:\s*Q_REFCOUNT)?
 					\s+([\w_]+						  # 4 name
 							(?:<[\w_ :,]+?>)?		  # maybe explicit template

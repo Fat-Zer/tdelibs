@@ -47,9 +47,9 @@ KMManager::KMManager(TQObject *parent, const char *name)
 	m_printerfilter = new PrinterFilter(this);
 
 	m_specialmgr = new KMSpecialManager(this);
-	Q_CHECK_PTR(m_specialmgr);
+	TQ_CHECK_PTR(m_specialmgr);
 	m_virtualmgr = new KMVirtualManager(this);
-	Q_CHECK_PTR(m_virtualmgr);
+	TQ_CHECK_PTR(m_virtualmgr);
 
 	// set default to true to not disturb code that
 	// hasn't been adapted yet. Otherwise, should be false

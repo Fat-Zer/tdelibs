@@ -78,7 +78,7 @@ TQCursor KCursor::handCursor()
                         hand_cursor = new TQCursor(PointingHandCursor);
         }
 
-        Q_CHECK_PTR(hand_cursor);
+        TQ_CHECK_PTR(hand_cursor);
         return *hand_cursor;
 }
 
@@ -135,7 +135,7 @@ TQCursor KCursor::workingCursor()
             working_cursor->handle();
         }
 
-        Q_CHECK_PTR(working_cursor);
+        TQ_CHECK_PTR(working_cursor);
         return *working_cursor;
 }
 

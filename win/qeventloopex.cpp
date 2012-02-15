@@ -186,13 +186,13 @@ void QEventLoopEx::registerSocketNotifier( TQSocketNotifier *notifier )
 	if ( ! list ) {
 		// create new list, the QSockNotType destructor will delete it for us
 		list = new TQPtrList<QSockNotEx>;
-		Q_CHECK_PTR( list );
+		TQ_CHECK_PTR( list );
 		list->setAutoDelete( TRUE );
 		d->sn_vec[type].list = list;
 	}
 
 	sn = new QSockNotEx;
-	Q_CHECK_PTR( sn );
+	TQ_CHECK_PTR( sn );
 	sn->obj = notifier;
 	sn->fd = sockfd;
 	sn->queue = &d->sn_vec[type].pending_fds;

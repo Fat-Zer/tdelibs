@@ -234,7 +234,7 @@ static const TransKey g_rgQtToSymX[] =
 	{ '-',                XK_KP_Subtract },
 	{ '+',                XK_KP_Add },
 	{ Qt::Key_Return,     XK_KP_Enter }
-#if QT_VERSION >= 0x030100
+#if TQT_VERSION >= 0x030100
 
 // the next lines are taken from XFree > 4.0 (X11/XF86keysyms.h), defining some special
 // multimedia keys. They are included here as not every system has them.

@@ -9,7 +9,7 @@ qDebug
 qFatal
 qWarning
 qApp
-qAppName
+tqAppName
 qVersion
 qSysInfo
 qObsolete

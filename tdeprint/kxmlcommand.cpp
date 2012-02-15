@@ -555,7 +555,7 @@ KXmlCommandManager* KXmlCommandManager::self()
 	if (!m_self)
 	{
 		m_self = new KXmlCommandManager;
-		Q_CHECK_PTR(m_self);
+		TQ_CHECK_PTR(m_self);
 	}
 	return m_self;
 }
