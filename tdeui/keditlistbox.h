@@ -44,7 +44,7 @@ class KEditListBoxPrivate;
 class TDEUI_EXPORT KEditListBox : public TQGroupBox
 {
    Q_OBJECT
-   TQ_OBJECT
+   
 
    TQ_SETS( Button )
    TQ_PROPERTY( Button buttons READ buttonsProp WRITE setButtonsProp )

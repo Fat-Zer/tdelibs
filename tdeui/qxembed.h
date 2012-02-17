@@ -62,7 +62,7 @@ class QXEmbedData;
 class TDEUI_EXPORT QXEmbed : public TQWidget
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 
 public:
 

@@ -58,7 +58,7 @@ public TQObject,
 public KActiveSocketBase
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 public:
   /**

@@ -42,7 +42,7 @@ class TQPopupMenu;
 class KIO_EXPORT KBookmarkBar : public TQObject
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     friend class RMB;
 public:
     /**

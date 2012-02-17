@@ -122,7 +122,7 @@ private:
  */
 class TDEUI_EXPORT KPopupMenu : public TQPopupMenu {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     /**
      * Constructs a KPopupMenu.

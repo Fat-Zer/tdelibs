@@ -39,7 +39,7 @@ class TQStringList;
 class KElfPlugin: public KFilePlugin
 {
     Q_OBJECT
-  TQ_OBJECT
+  
     
 public:
     KElfPlugin( TQObject *parent, const char *name, const TQStringList& args );

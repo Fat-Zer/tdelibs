@@ -180,7 +180,7 @@ class KDatagramSocketPrivate;
 class TDECORE_EXPORT KDatagramSocket: public KClientSocketBase
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 public:
   /**

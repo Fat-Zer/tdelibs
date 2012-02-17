@@ -50,7 +50,7 @@ class KReverseResolverPrivate;
 class TDECORE_EXPORT KReverseResolver: public TQObject
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 public:
   /**

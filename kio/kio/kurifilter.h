@@ -363,7 +363,7 @@ private:
 class KIO_EXPORT KURIFilterPlugin : public TQObject
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 
 public:
 

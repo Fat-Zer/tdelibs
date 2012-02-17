@@ -49,7 +49,7 @@ class KIntSpinBox;
 class TDEUI_EXPORT KNumInput : public TQWidget
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     Q_PROPERTY( TQString label READ label WRITE setLabel )
 public:
     /**
@@ -188,7 +188,7 @@ private:
 class TDEUI_EXPORT KIntNumInput : public KNumInput
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     Q_PROPERTY( int value READ value WRITE setValue )
     Q_PROPERTY( int minValue READ minValue WRITE setMinValue )
     Q_PROPERTY( int maxValue READ maxValue WRITE setMaxValue )
@@ -434,7 +434,7 @@ class KDoubleLine;
 class TDEUI_EXPORT KDoubleNumInput : public KNumInput
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     Q_PROPERTY( double value READ value WRITE setValue )
     Q_PROPERTY( double minValue READ minValue WRITE setMinValue )
     Q_PROPERTY( double maxValue READ maxValue WRITE setMaxValue )
@@ -707,7 +707,7 @@ private:
 class TDEUI_EXPORT KIntSpinBox : public TQSpinBox
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     Q_PROPERTY( int base READ base WRITE setBase )
 
 public:
@@ -837,7 +837,7 @@ private:
 
 class TDEUI_EXPORT KDoubleSpinBox : public TQSpinBox {
   Q_OBJECT
-  TQ_OBJECT
+  
   Q_PROPERTY( bool acceptLocalizedNumbers READ acceptLocalizedNumbers WRITE setAcceptLocalizedNumbers )
   Q_OVERRIDE( double maxValue READ maxValue WRITE setMaxValue )
   Q_OVERRIDE( double minValue READ minValue WRITE setMinValue )

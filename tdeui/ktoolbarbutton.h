@@ -44,7 +44,7 @@ class TQPainter;
 class TDEUI_EXPORT KToolBarButton : public TQToolButton
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 public:
   /**

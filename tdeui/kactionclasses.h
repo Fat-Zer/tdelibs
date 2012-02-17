@@ -68,7 +68,7 @@ class KMainWindow;
 class TDEUI_EXPORT KToggleAction : public KAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     Q_PROPERTY( bool checked READ isChecked WRITE setChecked )
     Q_PROPERTY( TQString exclusiveGroup READ exclusiveGroup WRITE setExclusiveGroup )
 public:
@@ -231,7 +231,7 @@ private:
 class TDEUI_EXPORT KRadioAction : public KToggleAction
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 public:
     /**
      * Constructs a radio action with text and potential keyboard
@@ -331,7 +331,7 @@ private:
 class TDEUI_EXPORT KSelectAction : public KAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     Q_PROPERTY( int currentItem READ currentItem WRITE setCurrentItem )
     Q_PROPERTY( TQStringList items READ items WRITE setItems )
     Q_PROPERTY( bool editable READ isEditable WRITE setEditable )
@@ -584,7 +584,7 @@ private:
 class TDEUI_EXPORT_DEPRECATED KListAction : public KSelectAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     /**
      * Constructs a list action with text and potential keyboard
@@ -700,7 +700,7 @@ private:
 class TDEUI_EXPORT KRecentFilesAction : public KListAction  // TODO public KSelectAction
 {
   Q_OBJECT
-  TQ_OBJECT
+  
   Q_PROPERTY( uint maxItems READ maxItems WRITE setMaxItems )
 public:
   /**
@@ -910,7 +910,7 @@ private:
 class TDEUI_EXPORT KFontAction : public KSelectAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     Q_PROPERTY( TQString font READ font WRITE setFont )
 public:
     KFontAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
@@ -961,7 +961,7 @@ private:
 class TDEUI_EXPORT KFontSizeAction : public KSelectAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     Q_PROPERTY( int fontSize READ fontSize WRITE setFontSize )
 public:
     KFontSizeAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
@@ -1020,7 +1020,7 @@ private:
 class TDEUI_EXPORT KActionMenu : public KAction
 {
   Q_OBJECT
-  TQ_OBJECT
+  
   Q_PROPERTY( bool delayed READ delayed WRITE setDelayed )
   Q_PROPERTY( bool stickyMenu READ stickyMenu WRITE setStickyMenu )
 
@@ -1094,7 +1094,7 @@ private:
 class TDEUI_EXPORT KToolBarPopupAction : public KAction
 {
   Q_OBJECT
-  TQ_OBJECT
+  
   Q_PROPERTY( bool delayed READ delayed WRITE setDelayed )
   Q_PROPERTY( bool stickyMenu READ stickyMenu WRITE setStickyMenu )
 
@@ -1217,7 +1217,7 @@ private:
 class TDEUI_EXPORT KToggleToolBarAction : public KToggleAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     /**
      * Create a KToggleToolbarAction that manages the toolbar
@@ -1264,7 +1264,7 @@ private:
 class TDEUI_EXPORT KToggleFullScreenAction : public KToggleAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     /**
      * Create a KToggleFullScreenAction
@@ -1309,7 +1309,7 @@ private:
 class TDEUI_EXPORT KWidgetAction : public KAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     /**
      * Create an action that will embed widget into a toolbar
@@ -1354,7 +1354,7 @@ private:
 class TDEUI_EXPORT KActionSeparator : public KAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     KActionSeparator( TQObject* parent = 0, const char* name = 0 );
     virtual ~KActionSeparator();
@@ -1381,7 +1381,7 @@ private:
 class TDEUI_EXPORT KPasteTextAction: public KAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     /**
      * Create a KPasteTextAction, with a text, an icon, an accelerator,

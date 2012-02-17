@@ -68,7 +68,7 @@ class KProcess;
 class KUTILS_EXPORT KCModuleProxy : public TQWidget
 {
 Q_OBJECT
-TQ_OBJECT
+
 
 	friend class KCModuleProxyRootCommunicatorImpl;
 

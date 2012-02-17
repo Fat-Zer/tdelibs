@@ -107,7 +107,7 @@ class KServerSocketPrivate;
 class TDECORE_EXPORT KServerSocket: public TQObject, public KPassiveSocketBase
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 public:
   /**
    * Default constructor.

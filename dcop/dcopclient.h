@@ -68,7 +68,7 @@ typedef TQValueList<TQCString> QCStringList;
 class DCOP_EXPORT DCOPClient : public TQObject
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
  public:
   /**

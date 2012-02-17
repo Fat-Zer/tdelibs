@@ -58,7 +58,7 @@ class TDEUI_EXPORT KSharedPixmap:
     public KPixmap
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 
 public:
 

@@ -58,7 +58,7 @@ class KToolBarPrivate;
 class TDEUI_EXPORT KToolBarSeparator : public TQFrame
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     KToolBarSeparator( Orientation, bool l, TQToolBar *parent, const char* name=0 );
 
@@ -104,7 +104,7 @@ private:
 class TDEUI_EXPORT KToolBar : public TQToolBar
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     Q_ENUMS( IconText BarPosition )
     Q_PROPERTY( IconText iconText READ iconText WRITE setIconText )
     Q_PROPERTY( BarPosition barPos READ barPos WRITE setBarPos )

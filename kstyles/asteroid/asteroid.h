@@ -12,7 +12,7 @@
 class AsteroidStyle : public KStyle
 {
 	Q_OBJECT
-	TQ_OBJECT
+	
 public:
 	AsteroidStyle();
 	virtual ~AsteroidStyle();

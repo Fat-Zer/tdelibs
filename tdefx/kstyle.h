@@ -57,7 +57,7 @@ struct KStylePrivate;
 class TDEFX_EXPORT KStyle: public TQCommonStyle
 {
 	Q_OBJECT
-	TQ_OBJECT
+	
 
 	public:
 

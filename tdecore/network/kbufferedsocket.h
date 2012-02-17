@@ -58,7 +58,7 @@ class KBufferedSocketPrivate;
 class TDECORE_EXPORT KBufferedSocket: public KStreamSocket
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 public:
   /**
    * Default constructor.

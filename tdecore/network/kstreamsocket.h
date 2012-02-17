@@ -97,7 +97,7 @@ class KStreamSocketPrivate;
 class TDECORE_EXPORT KStreamSocket: public KClientSocketBase
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 public:
   /**

@@ -55,7 +55,7 @@ class TDEUI_EXPORT KListView : public TQListView
   friend class KListViewItem;
 
   Q_OBJECT
-  TQ_OBJECT
+  
   Q_ENUMS( SelectionModeExt )
   Q_PROPERTY( bool fullWidth READ fullWidth WRITE setFullWidth )
   Q_PROPERTY( bool itemsMovable READ itemsMovable WRITE setItemsMovable )

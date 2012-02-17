@@ -95,7 +95,7 @@ class KExtendedSocketPrivate;
 class TDECORE_EXPORT KExtendedSocket: public KBufferedIO // public TQObject, public QIODevice
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 public:
   /**

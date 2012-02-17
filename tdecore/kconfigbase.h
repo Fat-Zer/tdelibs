@@ -70,7 +70,7 @@ class KConfigGroup;
 class TDECORE_EXPORT KConfigBase : public TQObject
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
   friend class KConfigBackEnd;
   friend class KConfigINIBackEnd;

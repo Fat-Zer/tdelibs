@@ -68,7 +68,7 @@ class TDECORE_EXPORT KStartupInfo
     : public TQObject
     {
     Q_OBJECT
-    TQ_OBJECT
+    
     public:
         /**
          * By default, the startup notification is ended for the application

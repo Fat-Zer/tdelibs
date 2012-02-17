@@ -195,6 +195,7 @@ static int x11_error(Display *dpy, XErrorEvent *ev) {
 		x11_composite_error_generated = true;
 		return 0;
 	}
+	return 1;
 }
 #endif
 

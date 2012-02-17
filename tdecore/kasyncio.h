@@ -47,7 +47,7 @@ public TQObject,
 public TQIODevice
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 protected:
   KAsyncIO()			// cannot be accessed externally
   { }

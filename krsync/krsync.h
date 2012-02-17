@@ -85,7 +85,7 @@ namespace KParts
 class KRsync : public TQObject
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 public:
 

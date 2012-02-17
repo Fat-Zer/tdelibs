@@ -42,7 +42,7 @@ namespace KNetwork
 			      public KNetwork::KResolverWorkerBase
     {
       Q_OBJECT
-      TQ_OBJECT
+      
 
     public:
       struct Entry

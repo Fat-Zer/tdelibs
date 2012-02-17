@@ -56,7 +56,7 @@ class KBufferedIOPrivate;
 class TDECORE_EXPORT KBufferedIO: public KAsyncIO
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 protected:
   // no default public constructor

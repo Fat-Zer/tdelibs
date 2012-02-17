@@ -295,7 +295,7 @@ class KResolverPrivate;
 class TDECORE_EXPORT KResolver: public TQObject
 {
   Q_OBJECT
-  TQ_OBJECT
+  
 
 public:
 

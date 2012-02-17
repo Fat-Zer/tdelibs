@@ -194,7 +194,7 @@ private:
 class KIO_EXPORT KDataToolAction : public KAction
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     /**
      * Constructs a new KDataToolAction.
@@ -254,7 +254,7 @@ private:
 class KIO_EXPORT KDataTool : public TQObject
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     /**
      * Constructor

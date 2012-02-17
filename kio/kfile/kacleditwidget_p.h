@@ -50,7 +50,7 @@ class TQCheckBox;
 class KACLListView : public KListView
 {
     Q_OBJECT
-    TQ_OBJECT
+    
     friend class KACLListViewItem;
 public:
     enum Types
@@ -134,7 +134,7 @@ private:
 class EditACLEntryDialog : public KDialogBase
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 public:
     EditACLEntryDialog( KACLListView *listView, KACLListViewItem *item,
                         const TQStringList &users,

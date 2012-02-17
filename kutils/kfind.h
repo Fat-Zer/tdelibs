@@ -104,7 +104,7 @@ class KUTILS_EXPORT KFind :
     public TQObject
 {
     Q_OBJECT
-    TQ_OBJECT
+    
 
 public:
 

@@ -50,7 +50,7 @@ namespace KABC {
   class KABC_EXPORT LdapConfigWidget : public TQWidget
   {
     Q_OBJECT
-    TQ_OBJECT
+    
     TQ_PROPERTY( LCW_Flags flags READ flagsProp WRITE setFlagsProp )
     TQ_PROPERTY( TQString user READ user WRITE setUser )
     TQ_PROPERTY( TQString password READ password WRITE setPassword )
