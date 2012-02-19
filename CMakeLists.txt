@@ -43,6 +43,7 @@ include( TDESetupPaths )
 ##### setup and find essential stuff ############
 
 tde_setup_paths( )
+tde_setup_architecture_flags( )
 find_package( TQt )
 
 
