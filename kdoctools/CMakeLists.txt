@@ -47,7 +47,7 @@ install( FILES help.protocol ghelp.protocol DESTINATION ${SERVICES_INSTALL_DIR} 
 #           done ;\
 #       done )
 install( DIRECTORY customization docbook DESTINATION ${DATA_INSTALL_DIR}/ksgmltools2 PATTERN ".svn" EXCLUDE )
-
+install( FILES man-template.docbook template.docbook DESTINATION ${DATA_INSTALL_DIR}/ksgmltools2 )
 
 ##### kbzipfilter_dummy ##############################
 
