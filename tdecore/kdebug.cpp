@@ -352,7 +352,10 @@ kdbgstream &kdbgstream::form(const char *format, ...)
 kdbgstream::~kdbgstream() {
     if (!output.isEmpty()) {
 	fprintf(stderr, "ASSERT: debug output not ended with \\n\n");
-        fprintf(stderr, "%s", kdBacktrace().latin1());
+        TQString backtrace = kdBacktrace();
+        if (backtrace.ascii() != NULL) {
+                fprintf(stderr, "%s", backtrace.latin1());
+        }
 	*this << "\n";
     }
 }
@@ -376,7 +379,7 @@ kdbgstream& kdbgstream::operator << (TQChar ch)
     output += "\\x" + TQString::number( ch.unicode(), 16 ).rightJustify(2, '0');
   else {
     output += ch;
-    if (ch == (QChar)'\n') flush();
+    if (ch == QChar('\n')) flush();
   }
   return *this;
 }
@@ -415,7 +418,7 @@ kdbgstream& kdbgstream::operator << (const TQWidget* widget)
       return *this;
     }
   output += string;
-  if (output.at(output.length() -1 ) == (QChar)'\n')
+  if (output.at(output.length() -1 ) == QChar('\n'))
     {
       flush();
     }
