@@ -8,5 +8,5 @@ priečinku distribúcie &kappname; tieto príkazy:</para>
 
 <para>Pretože &kappname; používa <command>autoconf</command> a
 <command>automake</command> nemali by ste mať s prekladom žiadne problémy. 
-Ak ale na nejaké narazíte, oznámte ich v konferenciách &kde;.</para>
+Ak ale na nejaké narazíte, oznámte ich v konferenciách &tde;.</para>
 

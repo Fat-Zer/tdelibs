@@ -8,5 +8,5 @@ följande i baskatalogen för distributionen av &kappname;:</para>
 
 <para>Eftersom &kappname; använder <command>autoconf</command> och
 <command>automake</command> bör du inte ha några problem med att kompilera det.
-Skulle du stöta på problem, var snäll rapportera dem till &kde;:s e-postlistor.</para>
+Skulle du stöta på problem, var snäll rapportera dem till &tde;:s e-postlistor.</para>
 

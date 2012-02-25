@@ -9,7 +9,7 @@
 <guimenuitem>Cuprins...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Invocă Centrul de ajutor KDE</action>
+<listitem><para><action>Invocă Centrul de ajutor TDE</action>
 ce afişează paginile de ajutor ale acestei aplicaţii. (acest document).</para></listitem>
 </varlistentry>
 
@@ -51,9 +51,9 @@ versiune şi autorul aplicaţiei.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Ajutor</guimenu>
-<guimenuitem>Despre KDE</guimenuitem>
+<guimenuitem>Despre TDE</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Această acţiune afişează informaţii despre
-versiunea KDE şi alte informaţii de bază.</action></para></listitem>
+versiunea TDE şi alte informaţii de bază.</action></para></listitem>
 </varlistentry>
 </variablelist>

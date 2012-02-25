@@ -6,5 +6,5 @@
 </screen>
 
 <para>Kuna &kappname; kasutab <command>autoconf</command>'i ja
-<command>automake</command>'i, ei tohiks kompileerimisel probleeme esineda. Kui neid siiski ette tuleb, anna sellest palun teada &kde; meililistides.</para>
+<command>automake</command>'i, ei tohiks kompileerimisel probleeme esineda. Kui neid siiski ette tuleb, anna sellest palun teada &tde; meililistides.</para>
 

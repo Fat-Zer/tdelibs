@@ -9,7 +9,7 @@
 <guimenuitem>Indice...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Invoca il sistema di aiuto di KDE</action> direttamente alle pagine
+<listitem><para><action>Invoca il sistema di aiuto di TDE</action> direttamente alle pagine
 del manuale di &kappname; (questo documento).</para></listitem>
 </varlistentry>
 
@@ -50,9 +50,9 @@ sull'autore.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Aiuto</guimenu>
-<guimenuitem>Informazioni su KDE</guimenuitem>
+<guimenuitem>Informazioni su TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Mostra la versione di KDE e altre informazioni
+<listitem><para><action>Mostra la versione di TDE e altre informazioni
 di base.</action></para></listitem>
 </varlistentry>
 </variablelist>

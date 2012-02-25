@@ -8,5 +8,5 @@ sequinte no diretório base da distribuição de &kappname;:</para>
 
 <para>Uma vez que o &kappname; usa o <command>autoconf</command> e o 
 <command>automake</command> você não deve ter problemas em compilá-lo. Se você 
-tiver problemas por favor reporte-os às lista de correio do &kde;.</para>
+tiver problemas por favor reporte-os às lista de correio do &tde;.</para>
 

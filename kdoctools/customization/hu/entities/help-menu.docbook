@@ -9,7 +9,7 @@
 <guimenuitem>&kappname; kézikönyv</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Elindítja a KDE Segítség rendszert</action> és
+<listitem><para><action>Elindítja a TDE Segítség rendszert</action> és
 betölti a(z) &kappname; alkalmazás dokumentációját (ezt a dokumentumot).</para></listitem>
 </varlistentry>
 
@@ -50,9 +50,9 @@ szerzők nevét.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Segítség</guimenu>
-<guimenuitem>A KDE névjegye</guimenuitem>
+<guimenuitem>A TDE névjegye</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Megjeleníti a KDE verziószámát és néhány más
+<listitem><para><action>Megjeleníti a TDE verziószámát és néhány más
 fontos jellemzőjét.</action></para></listitem>
 </varlistentry>
 </variablelist>

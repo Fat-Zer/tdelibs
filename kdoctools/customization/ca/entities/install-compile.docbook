@@ -10,5 +10,5 @@ introduiu el següent en el directori arrel de la distribució de
 <para>Donat que &kappname; empra <command>autoconf</command> i 
 <command>automake</command> no hauria de produir-se cap complicació durant 
 la compilació. Si us trobeu amb cap problema, si us plau, informeu-ne a 
-les llistes de correu de &kde;.</para>
+les llistes de correu de &tde;.</para>
 

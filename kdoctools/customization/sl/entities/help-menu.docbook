@@ -9,7 +9,7 @@
 <guimenuitem>Vsebina...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Vpokliče sistem pomoči KDE</action>, tako da odpre strani
+<listitem><para><action>Vpokliče sistem pomoči TDE</action>, tako da odpre strani
 s pomočjo za &kappname; (ta dokument).</para></listitem>
 </varlistentry>
 
@@ -50,9 +50,9 @@ avtorju.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Pomoč</guimenu>
-<guimenuitem>O KDE</guimenuitem>
+<guimenuitem>O TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>To prikaže različico KDE in druge osnovne
+<listitem><para><action>To prikaže različico TDE in druge osnovne
 podatke.</action></para></listitem>
 </varlistentry>
 </variablelist>

@@ -8,5 +8,5 @@ dei følgjande kommandoane i basekatalogen til &kappname;:</para>
 
 <para>Sidan &kappname; brukar <command>autoconf</command> og
 <command>automake</command>, bør kompileringa gå greit. Dersom du får problem, 
-kan du rapportera dei til &kde;-e-postlistene.</para>
+kan du rapportera dei til &tde;-e-postlistene.</para>
 

@@ -14,8 +14,8 @@
 		</tr>
 		<tr id="logo">
 		  <td valign="top">
-		    <img src="{$kde.common}kde_logo.png" alt="KDE -
-		      The K Desktop Environment" width="296" height="79" border="0" />
+		    <img src="{$kde.common}kde_logo.png" alt="TDE -
+		      The Trinity Desktop Environment" width="296" height="79" border="0" />
 		  </td>
 		  <td valign="middle" align="center" id="location">
 		    <h1><!-- Why was this used in fact: could the text not just be copied?-->
@@ -40,7 +40,7 @@
 			</a>
 		      </xsl:if>
 		    </td>
-		    
+
 		    <td align="center" class="navCenter" width="34%">
 		      <xsl:choose>
 			<xsl:when test="count($up) > 0 and $up != $home">

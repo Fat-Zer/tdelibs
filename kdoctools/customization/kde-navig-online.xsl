@@ -45,13 +45,13 @@
   <xsl:if test="$suppress.navigation = '0'">
 	      <table border="0" cellpadding="0" cellspacing="0" width="100%">
 		<tr class="header">
-		  <td>&#160;<a href="/">docs.kde.org</a></td>
+		  <td>&#160;<a href="/">www.trinitydesktop.org</a></td>
 		  <td align="right"><a href="/search_form.html">Search</a>&#160;</td>
 		</tr>
 		<tr id="logo">
 		  <td valign="top">
-		    <a href="http://www.kde.org"><img src="{$kde.common}kde_logo.png" alt="KDE -
-		      The K Desktop Environment" width="296" height="79" border="0" /></a>
+		    <a href="http://www.trinitydesktop.org"><img src="{$kde.common}kde_logo.png" alt="TDE -
+		      The Trinity Desktop Environment" width="296" height="79" border="0" /></a>
 		  </td>
 		  <td valign="middle" align="center" id="location">
 		    <h1><!-- Why was this used in fact: could the text not just be copied?-->
@@ -76,7 +76,7 @@
 			</a>
 		      </xsl:if>
 		    </td>
-		    
+
 		    <td align="center" class="navCenter" width="34%">
 		      <xsl:choose>
 			<xsl:when test="count($up) > 0 and $up != $home">

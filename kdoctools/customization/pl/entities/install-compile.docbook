@@ -8,5 +8,5 @@ uruchom następujące polecenia w katalogu głównym dystrybucji programu:</para
 
 <para>Ponieważ ten program używa <command>autoconf</command> i 
 <command>automake</command>, nie powinno być problemów ze skompilowaniem go. 
-Jeśli napotkasz problemy, proszę je zgłosić na listach e-mailowych &kde;.</para>
+Jeśli napotkasz problemy, proszę je zgłosić na listach e-mailowych &tde;.</para>
 

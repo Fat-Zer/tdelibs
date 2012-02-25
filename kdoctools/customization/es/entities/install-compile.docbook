@@ -10,5 +10,5 @@ raíz de la distribución de &kappname;:</para>
 <para>Como &kappname; utiliza <command>autoconf</command> y
 <command>automake</command> no debería producirse ningún problema en la 
 compilación. Si encuentra alguna dificultad le rogamos que se dirija a los 
-foros de discusión de &kde;.</para>
+foros de discusión de &tde;.</para>
 

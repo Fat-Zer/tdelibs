@@ -8,5 +8,5 @@ following in the base directory of the &kappname; distribution:</para>
 
 <para>Since &kappname; uses <command>autoconf</command> and
 <command>automake</command> you should have no trouble compiling it. Should you
-run into problems please report them to the &kde; mailing lists.</para>
+run into problems please report them to the &tde; mailing lists.</para>
 

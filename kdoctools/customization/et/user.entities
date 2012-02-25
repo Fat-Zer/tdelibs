@@ -36,25 +36,25 @@
 <!ENTITY jne    "<abbrev>jne.</abbrev>">        <!-- English: &etc; -->
 
 <!ENTITY infocenter     "<application>Infokeskus</application>">
-<!ENTITY kcontrolcenter "<application>&kde; juhtimiskeskus</application>">
-<!ENTITY kicon  "<guiicon>
+<!ENTITY kcontrolcenter "<application>&tde; juhtimiskeskus</application>">
+<!ENTITY ticon  "<guiicon>
 <inlinemediaobject>
- <objectinfo><title>&kde; K-ikoon</title></objectinfo>
+ <objectinfo><title>&tde; T-ikoon</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
 </guiicon> icon"><!-- if image is localised, then entityref should be used
                       instead of fileref -->
-<!ENTITY kmenu  "<guimenu>K</guimenu> menüü">
+<!ENTITY kmenu  "<guimenu>TDE</guimenu> menüü">
 
 <!ENTITY dpi    '<acronym>dpi</acronym>'>
 <!ENTITY FAQ    '<acronym>KKK</acronym>'>
 <!ENTITY OS     "operatsioonisüsteem">		<!-- <acronym>OS</acronym>-->
-<!ENTITY kcontrolcenter	    "KDE juhtimiskeskus">
+<!ENTITY kcontrolcenter	    "TDE juhtimiskeskus">
 
 <!-- Custom entities -->
 
-<!ENTITY juhtimiskeskus	    "<application>&kde; juhtimiskeskus</application>">
-<!ENTITY infokeskus	    "<application>&kde; infokeskus</application>">
-<!ENTITY abikeskus	    "<application>&kde; abikeskus</application>">
-<!ENTITY aadressiraamat	    "<application>&kde; aadressiraamat</application>">
+<!ENTITY juhtimiskeskus	    "<application>&tde; juhtimiskeskus</application>">
+<!ENTITY infokeskus	    "<application>&tde; infokeskus</application>">
+<!ENTITY abikeskus	    "<application>&tde; abikeskus</application>">
+<!ENTITY aadressiraamat	    "<application>&tde; aadressiraamat</application>">

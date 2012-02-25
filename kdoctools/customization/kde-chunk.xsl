@@ -84,7 +84,7 @@ set       toc,title
 
 <xsl:template name="user.head.content">
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
-   <meta name="GENERATOR" content="KDE XSL Stylesheet V{$TDE_VERSION} using libxslt"/>
+   <meta name="GENERATOR" content="TDE XSL Stylesheet V{$TDE_VERSION} using libxslt"/>
 </xsl:template>
 
 <!-- try with olinks: it nearly works --><!--

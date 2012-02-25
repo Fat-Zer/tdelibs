@@ -179,7 +179,7 @@
 <!ENTITY  kate-n              "<application>Кејт</application>"  >
 <!ENTITY  kcontrol-l          "<application>К-контроли</application>"  >
 <!ENTITY  kcontrol-n          "<application>К-контрола</application>"  >
-<!ENTITY  kcontrolcenter      "<application>&kde; Control Center</application>"  >
+<!ENTITY  kcontrolcenter      "<application>&tde; Control Center</application>"  >
     <!--NOCHECK:-->
 <!ENTITY  kde-a               "<acronym>КДЕ</acronym>"  >
 <!ENTITY  kde-ajs             "<acronym>КДЕ</acronym>"  >
@@ -243,11 +243,11 @@
 <!ENTITY  kicker-g            "<application>Кикера</application>"  >
 <!ENTITY  kicker-l            "<application>Кикеру</application>"  >
 <!ENTITY  kicker-n            "<application>Кикер</application>"  >
-<!ENTITY  kicon               "<guiicon>
+<!ENTITY  ticon               "<guiicon>
 <inlinemediaobject>
- <objectinfo><title>&kde;'s K-icon</title></objectinfo>
+ <objectinfo><title>&tde;'s T-icon</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
 </guiicon> icon"  >
     <!--NOCHECK:-->
@@ -259,7 +259,7 @@
 <!ENTITY  kmail-a             "<application>К-пошту</application>"  >
 <!ENTITY  kmail-l             "<application>К-пошти</application>"  >
 <!ENTITY  kmail-n             "<application>К-пошта</application>"  >
-<!ENTITY  kmenu               "<guimenu>K</guimenu> menu"  >
+<!ENTITY  kmenu               "<guimenu>TDE</guimenu> menu"  >
     <!--NOCHECK:-->
 <!ENTITY  kmenu-a             "<guibutton>К</guibutton>-мени"  >
 <!ENTITY  kmenu-g             "<guibutton>К</guibutton>-менија"  >

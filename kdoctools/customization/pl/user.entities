@@ -95,12 +95,12 @@ ktnef
 <!ENTITY kcalc-miejscownik    '<application>Kalkulatorze</application>'>
 
 <!ENTITY kcontrolcenter    '&kcontrolcenter-mianownik;'>
-<!ENTITY kcontrolcenter-mianownik    '<application>Centrum sterowania &kde;</application>'>
-<!ENTITY kcontrolcenter-dopelniacz    '<application>Centrum sterowania &kde;</application>'>
-<!ENTITY kcontrolcenter-celownik    '<application>Centrum sterowania &kde;</application>'>
-<!ENTITY kcontrolcenter-biernik    '<application>Centrum sterowania &kde;</application>'>
-<!ENTITY kcontrolcenter-narzednik    '<application>Centrum sterowania &kde;</application>'>
-<!ENTITY kcontrolcenter-miejscownik    '<application>Centrum sterowania &kde;</application>'>
+<!ENTITY kcontrolcenter-mianownik    '<application>Centrum sterowania &tde;</application>'>
+<!ENTITY kcontrolcenter-dopelniacz    '<application>Centrum sterowania &tde;</application>'>
+<!ENTITY kcontrolcenter-celownik    '<application>Centrum sterowania &tde;</application>'>
+<!ENTITY kcontrolcenter-biernik    '<application>Centrum sterowania &tde;</application>'>
+<!ENTITY kcontrolcenter-narzednik    '<application>Centrum sterowania &tde;</application>'>
+<!ENTITY kcontrolcenter-miejscownik    '<application>Centrum sterowania &tde;</application>'>
 
 <!ENTITY tdm-mianownik    '<application>TDM</application>'>
 <!ENTITY tdm-dopelniacz    '<application>TDM</application>'>
@@ -109,12 +109,12 @@ ktnef
 <!ENTITY tdm-narzednik    '<application>TDM</application>'>
 <!ENTITY tdm-miejscownik    '<application>TDM</application>'>
 
-<!ENTITY khelpcenter-mianownik    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-dopelniacz    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-celownik    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-biernik    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-narzednik    '<application>Centrum pomocy &kde;</application>'>
-<!ENTITY khelpcenter-miejscownik    '<application>Centrum pomocy &kde;</application>'>
+<!ENTITY khelpcenter-mianownik    '<application>Centrum pomocy &tde;</application>'>
+<!ENTITY khelpcenter-dopelniacz    '<application>Centrum pomocy &tde;</application>'>
+<!ENTITY khelpcenter-celownik    '<application>Centrum pomocy &tde;</application>'>
+<!ENTITY khelpcenter-biernik    '<application>Centrum pomocy &tde;</application>'>
+<!ENTITY khelpcenter-narzednik    '<application>Centrum pomocy &tde;</application>'>
+<!ENTITY khelpcenter-miejscownik    '<application>Centrum pomocy &tde;</application>'>
 
 <!ENTITY kicker-mianownik    '<application>Kicker</application>'>
 <!ENTITY kicker-dopelniacz    '<application>Kickera</application>'>
@@ -123,12 +123,12 @@ ktnef
 <!ENTITY kicker-narzednik    '<application>Kickerem</application>'>
 <!ENTITY kicker-miejscownik    '<application>Kickerze</application>'>
 
-<!ENTITY kicon                  "
+<!ENTITY ticon                  "
 <guiicon>
 <inlinemediaobject>
- <objectinfo><title>Ikona K &kde;</title></objectinfo>
+ <objectinfo><title>Ikona K &tde;</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
 </guiicon>"><!-- if image is localised, then entityref should be used instead of fileref -->
 
@@ -205,19 +205,19 @@ ktnef
 <!ENTITY ksysguard-narzednik    '<application>Ksysguardem</application>'>
 <!ENTITY ksysguard-miejscownik    '<application>Ksysguardzie</application>'>
 
-<!ENTITY kwallet-mianownik    '<application>Portfel &kde;</application>'>
-<!ENTITY kwallet-dopelniacz    '<application>Portfela &kde;</application>'>
-<!ENTITY kwallet-celownik    '<application>Portfelowi &kde;</application>'>
-<!ENTITY kwallet-biernik    '<application>Portfel &kde;</application>'>
-<!ENTITY kwallet-narzednik    '<application>Portfelem &kde;</application>'>
-<!ENTITY kwallet-miejscownik    '<application>Portfelu &kde;</application>'>
+<!ENTITY kwallet-mianownik    '<application>Portfel &tde;</application>'>
+<!ENTITY kwallet-dopelniacz    '<application>Portfela &tde;</application>'>
+<!ENTITY kwallet-celownik    '<application>Portfelowi &tde;</application>'>
+<!ENTITY kwallet-biernik    '<application>Portfel &tde;</application>'>
+<!ENTITY kwallet-narzednik    '<application>Portfelem &tde;</application>'>
+<!ENTITY kwallet-miejscownik    '<application>Portfelu &tde;</application>'>
 
-<!ENTITY kwalletmanager-mianownik    '<application>Menedżer portfeli &kde;</application>'>
-<!ENTITY kwalletmanager-dopelniacz    '<application>Menedżera portfeli &kde;</application>'>
-<!ENTITY kwalletmanager-celownik    '<application>Menedżerowi portfeli &kde;</application>'>
-<!ENTITY kwalletmanager-biernik    '<application>Menedżera portfeli &kde;</application>'>
-<!ENTITY kwalletmanager-narzednik    '<application>Menedżerem portfeli &kde;</application>'>
-<!ENTITY kwalletmanager-miejscownik    '<application>Menedżerze portfeli &kde;</application>'>
+<!ENTITY kwalletmanager-mianownik    '<application>Menedżer portfeli &tde;</application>'>
+<!ENTITY kwalletmanager-dopelniacz    '<application>Menedżera portfeli &tde;</application>'>
+<!ENTITY kwalletmanager-celownik    '<application>Menedżerowi portfeli &tde;</application>'>
+<!ENTITY kwalletmanager-biernik    '<application>Menedżera portfeli &tde;</application>'>
+<!ENTITY kwalletmanager-narzednik    '<application>Menedżerem portfeli &tde;</application>'>
+<!ENTITY kwalletmanager-miejscownik    '<application>Menedżerze portfeli &tde;</application>'>
 
 <!ENTITY noatun-mianownik    '<application>Noatun</application>'>
 <!ENTITY noatun-dopelniacz    '<application>Noatuna</application>'>

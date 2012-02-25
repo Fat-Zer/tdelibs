@@ -9,7 +9,7 @@
 <guimenuitem>Содержание</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Запускает Центр помощи KDE</action> и открывает
+<listitem><para><action>Запускает Центр помощи TDE</action> и открывает
 справочное руководство по &kappname;. (Этот документ вы и читаете).</para></listitem>
 </varlistentry>
 
@@ -53,9 +53,9 @@
 <varlistentry>
 <term><menuchoice>
 <guimenu>Помощь</guimenu>
-<guimenuitem>О KDE</guimenuitem>
+<guimenuitem>О TDE</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Будут выведены сведения о
-версии KDE.</action></para></listitem>
+версии TDE.</action></para></listitem>
 </varlistentry>
 </variablelist>

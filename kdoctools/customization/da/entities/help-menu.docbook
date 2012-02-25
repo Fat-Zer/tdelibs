@@ -9,7 +9,7 @@
 <guimenuitem>&kappname;-håndbogen</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Starter KDE's Hjælpesystem</action> startende med
+<listitem><para><action>Starter TDE's Hjælpesystem</action> startende med
 hjælpesiderne for &kappname; (dette dokument).</para></listitem>
 </varlistentry>
 
@@ -49,9 +49,9 @@ forfatterinformation.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Hjælp</guimenu>
-<guimenuitem>Om KDE</guimenuitem>
+<guimenuitem>Om TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Dette viser KDE versionen og anden basal
+<listitem><para><action>Dette viser TDE versionen og anden basal
 information.</action></para></listitem>
 </varlistentry>
 </variablelist>

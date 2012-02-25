@@ -18,16 +18,16 @@
 <!ENTITY FAQ	'常见问题解答'>
 <!ENTITY ie     "<abbrev>i.e.</abbrev>">
 <!ENTITY infocenter	"<application>信息中心</application>">
-<!ENTITY kcontrolcenter	"<application>&kde; 控制中心</application>">
-<!ENTITY kicon	"<guiicon>
+<!ENTITY kcontrolcenter	"<application>&tde; 控制中心</application>">
+<!ENTITY ticon	"<guiicon>
 <inlinemediaobject>
- <objectinfo><title>&kde; 的 K 图标</title></objectinfo>
+ <objectinfo><title>&tde; 的 K 图标</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
 </guiicon> icon"><!-- if image is localised, then entityref should be used 
                       instead of fileref -->
-<!ENTITY kmenu  "<guimenu>K</guimenu> 菜单">
+<!ENTITY kmenu  "<guimenu>TDE</guimenu> 菜单">
 <!ENTITY LMB    "鼠标<mousebutton>左</mousebutton>键">
 <!ENTITY MMB    "鼠标<mousebutton>中</mousebutton>键">
 <!ENTITY OS	"操作系统"><!-- <acronym>OS</acronym>-->

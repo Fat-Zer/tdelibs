@@ -8,5 +8,5 @@ kell kiadni az alkalmazás forrásának alapkönyvtárában:</para>
 
 <para>A program fordítási szkriptjei az <command>autoconf</command> és az
 <command>automake</command> segítségével készültek, ezért külön beállítást nem igényelnek. A felmerült
-problémák leírását küldje el a megfelelő &kde; levelezőlistá(k)ra.</para>
+problémák leírását küldje el a megfelelő &tde; levelezőlistá(k)ra.</para>
 

@@ -39,16 +39,16 @@
 <!ENTITY GPL	"General Public License"><!-- Name of the GPL license -->
 <!ENTITY ie     "<abbrev>dvs.</abbrev>">
 <!ENTITY infocenter	"<application>Infosenter</application>">
-<!ENTITY kcontrolcenter	"<application>&kde; Kontrollsenter</application>">
-<!ENTITY kicon	"<guiicon>
+<!ENTITY kcontrolcenter	"<application>&tde; Kontrollsenter</application>">
+<!ENTITY ticon	"<guiicon>
 <inlinemediaobject>
- <objectinfo><title>Ikonet til &kde;</title></objectinfo>
+ <objectinfo><title>Ikonet til &tde;</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
 </guiicon> icon"><!-- if image is localised, then entityref should be used
                       instead of fileref -->
-<!ENTITY kmenu  "<guimenu>K</guimenu> meny">
+<!ENTITY kmenu  "<guimenu>TDE</guimenu> meny">
 <!ENTITY LGPL	"Lesser General Public License"><!-- Name of LGPL license -->
 <!ENTITY LMB    "<mousebutton>venstre</mousebutton> museknapp">
 <!ENTITY MMB    "<mousebutton>midtre</mousebutton> museknapp">

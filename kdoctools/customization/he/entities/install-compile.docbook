@@ -5,5 +5,5 @@
 <prompt>%</prompt> <userinput><command>make</command> install</userinput>
 </screen>
 
-<para>מאחר ש-&kappname; משתמש ב-<command>autoconf</command> וב-<command>automake</command>, לא אמורה להיות בעיה עם ההידור. באם אתה נתקל בבעיות, דווח עליהן לרשימות הדיוור של &kde;.</para>
+<para>מאחר ש-&kappname; משתמש ב-<command>autoconf</command> וב-<command>automake</command>, לא אמורה להיות בעיה עם ההידור. באם אתה נתקל בבעיות, דווח עליהן לרשימות הדיוור של &tde;.</para>
 

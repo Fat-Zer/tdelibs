@@ -10,5 +10,5 @@ Programm-Quellen von &kappname; ein: </para>
 <para>Da &kappname; <command>autoconf</command> und
 <command>automake</command> benutzt, sollte es dabei keine
 Schwierigkeiten geben. Sollten dennoch Probleme auftauchen, wenden Sie
-sich bitte an die &kde;-Mailinglisten.</para>
+sich bitte an die &tde;-Mailinglisten.</para>
 

@@ -5,4 +5,4 @@
 <prompt>%</prompt> <userinput><command>make</command> install</userinput>
 </screen>
 
-<para>&kappname; は <command>autoconf</command> と <command>automake</command> を使っているので容易にコンパイルできるはずです。問題にぶつかった場合は、&kde; のメーリングリストに報告してください。</para>
+<para>&kappname; は <command>autoconf</command> と <command>automake</command> を使っているので容易にコンパイルできるはずです。問題にぶつかった場合は、&tde; のメーリングリストに報告してください。</para>

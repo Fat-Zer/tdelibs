@@ -17,18 +17,18 @@
 <!ENTITY etc    "... 等等。">
 <!ENTITY FAQ	'<acronym>FAQ</acronym>'>
 <!ENTITY ie     "也就是說，">
-<!ENTITY infocenter	"<application>KDE 資訊中心</application>">
-<!ENTITY kcontrolcenter	"<application>KDE 控制中心</application>">
-<!ENTITY khelpcenter "<application>KDE 輔助中心</application>">
-<!ENTITY kicon	"<guiicon>
+<!ENTITY infocenter	"<application>TDE 資訊中心</application>">
+<!ENTITY kcontrolcenter	"<application>TDE 控制中心</application>">
+<!ENTITY khelpcenter "<application>TDE 輔助中心</application>">
+<!ENTITY ticon	"<guiicon>
 <inlinemediaobject>
- <objectinfo><title>KDE 的 K 圖示</title></objectinfo>
+ <objectinfo><title>TDE 的 K 圖示</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
-</guiicon> 圖示"><!-- if image is localised, then entityref should be used 
+</guiicon> 圖示"><!-- if image is localised, then entityref should be used
                       instead of fileref -->
-<!ENTITY kmenu  "<guimenu>K</guimenu> 選單">
+<!ENTITY kmenu  "<guimenu>TDE</guimenu> 選單">
 <!ENTITY LMB    "滑鼠<mousebutton>左鍵</mousebutton>">
 <!ENTITY MMB    "滑鼠<mousebutton>中鍵</mousebutton>">
 <!ENTITY OS	"作業系統"><!-- <acronym>OS</acronym>-->

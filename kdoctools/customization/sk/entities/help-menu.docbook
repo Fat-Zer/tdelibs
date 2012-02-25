@@ -9,7 +9,7 @@
 <guimenuitem>Obsah...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Spustí systém Pomocník KDE</action> a zobrazí manuál pre
+<listitem><para><action>Spustí systém Pomocník TDE</action> a zobrazí manuál pre
 &kappname;. (tento dokument).</para></listitem>
 </varlistentry>
 
@@ -49,8 +49,8 @@ poslať správu o chybe alebo požiadavku na <quote>novú funkciu</quote>.</para
 <varlistentry>
 <term><menuchoice>
 <guimenu>Pomocník</guimenu>
-<guimenuitem>O KDE</guimenuitem>
+<guimenuitem>O TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Toto zobrazí verziu KDE a iné základné informácie.</action></para></listitem>
+<listitem><para><action>Toto zobrazí verziu TDE a iné základné informácie.</action></para></listitem>
 </varlistentry>
 </variablelist>

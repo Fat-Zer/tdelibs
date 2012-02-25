@@ -9,7 +9,7 @@
 <guimenuitem>Innhald ...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Startar hjelpesystemet i KDE</action> med
+<listitem><para><action>Startar hjelpesystemet i TDE</action> med
 hjelpesidene til &kappname; framme (dette dokumentet).</para></listitem>
 </varlistentry>
 
@@ -49,9 +49,9 @@ utviklarar.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Hjelp</guimenu>
-<guimenuitem>Om KDE</guimenuitem>
+<guimenuitem>Om TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Viser KDE-versjonen og anna grunnleggjande
+<listitem><para><action>Viser TDE-versjonen og anna grunnleggjande
 informasjon.</action></para></listitem>
 </varlistentry>
 </variablelist>

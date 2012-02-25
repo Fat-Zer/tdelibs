@@ -1,6 +1,6 @@
 <!-- requires that packagename is defined in the documentation prologue
  -->
-<para>&kappname; is part of the &kde; project &kde-http;.</para>
+<para>&kappname; is part of the &tde; project &tde-http;.</para>
 
 <para>&kappname; can be found in the &package; package on &kde-ftp;, 
-the main &FTP; site of the &kde; project.</para>
+the main &FTP; site of the &tde; project.</para>

@@ -9,7 +9,7 @@
 <guimenuitem>&kappname; 手册</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>调用 KDE 帮助系统</action>并以 &kappname; 帮助页面(此文档)开始。</para></listitem>
+<listitem><para><action>调用 TDE 帮助系统</action>并以 &kappname; 帮助页面(此文档)开始。</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -44,8 +44,8 @@
 <varlistentry>
 <term><menuchoice>
 <guimenu>帮助</guimenu>
-<guimenuitem>关于 KDE</guimenuitem>
+<guimenuitem>关于 TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>这将显示 KDE 版本和其它基本信息。</action></para></listitem>
+<listitem><para><action>这将显示 TDE 版本和其它基本信息。</action></para></listitem>
 </varlistentry>
 </variablelist>

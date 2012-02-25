@@ -9,7 +9,7 @@
 <guimenuitem>Handbuch zu &kappname;</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Startet das Hilfe-System von KDE</action> mit der
+<listitem><para><action>Startet das Hilfe-System von TDE</action> mit der
 &kappname;-Hilfe (diesem Dokument).</para></listitem>
 </varlistentry>
 
@@ -52,9 +52,9 @@ an.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Hilfe</guimenu>
-<guimenuitem>Über KDE</guimenuitem>
+<guimenuitem>Über TDE</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Zeigt Versionsinformation und Grundsätzliches
-zu KDE an.</action></para></listitem>
+zu TDE an.</action></para></listitem>
 </varlistentry>
 </variablelist>

@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!-- Define an entity for your application if it is not part of KDE
+  <!-- Define an entity for your application if it is not part of TDE
        CVS -->
   <!ENTITY kmyapplication "<application>KMyApp</application>">
   <!ENTITY kappname "&kmyapplication;"><!-- replace kmyapplication here
                                             do *not* replace kappname-->
   <!ENTITY package "kde-module"><!-- tdebase, tdeadmin, etc.  Leave
                                      this unchanged if your
-                                     application is not maintained in KDE CVS -->
+                                     application is not maintained in TDE GIT -->
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE"> <!-- ONLY If you are writing non-English
                                      original documentation, change
@@ -30,7 +30,7 @@ with lots of help from: Eric Bischoff ebisch@cybercable.tm.fr
 and Frederik Fouvry fouvry@sfs.nphil.uni-tuebingen.de
 of the KDE DocBook team.
 
-You may freely use this template for writing any sort of KDE documentation.
+You may freely use this template for writing any sort of TDE documentation.
 If you have any changes or improvements, please let us know.
 
 Remember:
@@ -102,11 +102,11 @@ ever want.
 </abstract>
 
 <!-- This is a set of Keywords for indexing by search engines.
-Please at least include KDE, the KDE package it is in, the name
+Please at least include TDE, the TDE package it is in, the name
  of your application, and a few relevant keywords. -->
 
 <keywordset>
-<keyword>KDE</keyword>
+<keyword>TDE</keyword>
 <keyword>tdeutils</keyword>
 <keyword>Kapp</keyword>
 <keyword>nothing</keyword>
@@ -122,7 +122,7 @@ document, and if there is no ID, the name of the generated HTML files will vary
 from time to time making it hard to manage for maintainers and for the CVS
 system. Any chapter labelled (OPTIONAL) may be left out at the author's
 discretion. Other chapters should not be left out in order to maintain a
-consistent documentation style across all KDE apps. -->
+consistent documentation style across all TDE apps. -->
 
 <chapter id="introduction">
 <title>Introduction</title>
@@ -134,7 +134,7 @@ revision history. (see installation appendix comment) -->
 
 <para>
 &kmyapplication; is a program that lets you do absolutely nothing. Please report
-any problems or feature requests to the &kde; mailing lists.
+any problems or feature requests to the &tde; mailing lists.
 </para>
 </chapter>
 
@@ -244,7 +244,7 @@ or menu bars. -->
 <title>The <guimenu>Help</guimenu> Menu</title>
 
 <!-- Assuming you have a standard help menu (help, what's this, about -->
-<!-- &kmyapplication;, about KDE) then the documentation is already written. -->
+<!-- &kmyapplication;, about TDE) then the documentation is already written. -->
 <!-- The following entity is valid anywhere that a variablelist is -->
 <!-- valid.  -->
 
@@ -441,7 +441,7 @@ installed.</para>
 
 <!-- Include credits for the programmers, documentation writers, and
 contributors here. The license for your software should then be included below
-the credits with a reference to the appropriate license file included in the KDE
+the credits with a reference to the appropriate license file included in the TDE
 distribution. -->
 
 <title>Credits and License</title>
@@ -455,9 +455,9 @@ Program copyright 1997 John Q. Hacker <email>jqh@kde.org</email>
 <para>
 Contributors:
 <itemizedlist>
-<listitem><para>Konqui the KDE Dragon <email>konqui@kde.org</email></para>
+<listitem><para>Konqui the TDE Dragon</para>
 </listitem>
-<listitem><para>Tux the Linux Penguin <email>tux@linux.org</email></para>
+<listitem><para>Tux the Linux Penguin</para>
 </listitem>
 </itemizedlist>
 </para>
@@ -490,7 +490,7 @@ Documentation Copyright &copy; 1999 George N. Ugnacious <email>gnu@kde.org</emai
 <title>How to obtain &kmyapplication;</title>
 
 <!-- This first entity contains boiler plate for applications that are
-part of KDE CVS.  You should remove it if you are releasing your
+part of TDE GIT.  You should remove it if you are releasing your
 application -->
 
 &install.intro.documentation;
@@ -512,7 +512,7 @@ information here.
 -->
 
 <para>
-In order to successfully use &kmyapplication;, you need &kde; 1.1. Foobar.lib is
+In order to successfully use &kmyapplication;, you need &tde; R14. Foobar.lib is
 required in order to support the advanced &kmyapplication; features. &kmyapplication; uses
 about 5 megs of memory to run, but this may vary depending on your
 platform and configuration.

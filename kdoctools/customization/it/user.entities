@@ -20,19 +20,19 @@
 <!ENTITY ie	"cio&egrave;">
 <!ENTITY Tab	"<keycap>Tab</keycap>">
 <!-- remove one of these two -->
-<!ENTITY kcontrol       "<application>Centro di controllo di &kde;</application>">
-<!ENTITY kcontrolcenter	"<application>Centro di controllo di &kde;</application>">
-<!ENTITY khelpcenter    "<application>Centro di informazioni di &kde;</application>">
+<!ENTITY kcontrol       "<application>Centro di controllo di &tde;</application>">
+<!ENTITY kcontrolcenter	"<application>Centro di controllo di &tde;</application>">
+<!ENTITY khelpcenter    "<application>Centro di informazioni di &tde;</application>">
 
-<!ENTITY kicon	"<guiicon>
+<!ENTITY ticon	"<guiicon>
 <inlinemediaobject>
- <objectinfo><title>icona K di &kde;</title></objectinfo>
+ <objectinfo><title>icona K di &tde;</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
 </guiicon> icon"><!-- if image is localised, then entityref should be used 
                       instead of fileref -->
-<!ENTITY kmenu  "menu <guimenu>K</guimenu>">
+<!ENTITY kmenu  "menu <guimenu>TDE</guimenu>">
 
 <!ENTITY LMB    "tasto <mousebutton>sinistro</mousebutton> del mouse">
 <!ENTITY MMB    "tasto <mousebutton>centrale</mousebutton> del mouse">
@@ -49,4 +49,4 @@
 
 <!-- Entit&agrave; aggiunte dai traduttori -->
 
-<!ENTITY teamit "il Team di traduzione in italiano di &kde;">
+<!ENTITY teamit "il Team di traduzione in italiano di &tde;">

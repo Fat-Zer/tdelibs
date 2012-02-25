@@ -9,8 +9,8 @@
 <guimenuitem>Contenidos...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Inicia el sistema de ayuda de KDE</action> 
-mostrando las páginas de información de &kappname;. 
+<listitem><para><action>Inicia el sistema de ayuda de TDE</action>
+mostrando las páginas de información de &kappname;.
 (este documento).</para></listitem>
 </varlistentry>
 
@@ -24,9 +24,9 @@ mostrando las páginas de información de &kappname;.
 </menuchoice>
 </term>
 <listitem><para><action>Modifica la forma del puntero transformandola en
-una combinación de flecha e 
-interrogación.</action> Al pulsar sobre elementos dentro de &kappname; 
-se abrirá una ventana de ayuda (si existe para ese caso particular) 
+una combinación de flecha e
+interrogación.</action> Al pulsar sobre elementos dentro de &kappname;
+se abrirá una ventana de ayuda (si existe para ese caso particular)
 describiendo la función de dicho elemento.</para></listitem>
 </varlistentry>
 
@@ -37,7 +37,7 @@ describiendo la función de dicho elemento.</para></listitem>
 <guimenuitem>Informar de fallo...</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Abre un cuadro de diálogo de informe de fallos</action>
-donde puede informar de un fallo o solicitar una 
+donde puede informar de un fallo o solicitar una
 mejora o nueva propiedad <quote>deseable</quote>.</para></listitem>
 </varlistentry>
 
@@ -46,16 +46,16 @@ mejora o nueva propiedad <quote>deseable</quote>.</para></listitem>
 <guimenu>Ayuda</guimenu>
 <guimenuitem>Acerca de &kappname;</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Mostrará información sobre la versión y el 
+<listitem><para><action>Mostrará información sobre la versión y el
 autor.</action></para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term><menuchoice>
 <guimenu>Ayuda</guimenu>
-<guimenuitem>Acerca de KDE</guimenuitem>
+<guimenuitem>Acerca de TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Muestra la versión de KDE y otra información 
+<listitem><para><action>Muestra la versión de TDE y otra información
 básica.</action></para></listitem>
 </varlistentry>
 </variablelist>

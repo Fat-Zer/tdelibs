@@ -9,7 +9,7 @@
 <guimenuitem>Sisukord...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Käivitab KDE abisüsteemi</action> ja avab 
+<listitem><para><action>Käivitab TDE abisüsteemi</action> ja avab 
 &kappname; abimaterjali (käesoleva käsiraamatu).</para></listitem>
 </varlistentry>
 
@@ -50,9 +50,9 @@ kohta.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Abi</guimenu>
-<guimenuitem>KDE info</guimenuitem>
+<guimenuitem>TDE info</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Näitab KDE versiooni ja muud olulisemat
+<listitem><para><action>Näitab TDE versiooni ja muud olulisemat
 põhiinfot.</action></para></listitem>
 </varlistentry>
 </variablelist>

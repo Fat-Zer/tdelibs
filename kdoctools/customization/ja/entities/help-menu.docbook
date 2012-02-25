@@ -16,7 +16,7 @@
 </term>
 <listitem
 ><para
->KDE のヘルプシステムを起動して &kappname; のヘルプページ (このドキュメント) を開きます。</para
+>TDE のヘルプシステムを起動して &kappname; のヘルプページ (このドキュメント) を開きます。</para
 ></listitem>
 </varlistentry>
 
@@ -80,13 +80,13 @@
 ><guimenu
 >ヘルプ</guimenu
 > <guimenuitem
->KDE について</guimenuitem
+>TDE について</guimenuitem
 > </menuchoice
 ></term>
 <listitem
 ><para
 ><action
->KDE のバージョンと基本的な情報を表示します。</action
+>TDE のバージョンと基本的な情報を表示します。</action
 ></para
 ></listitem>
 </varlistentry>

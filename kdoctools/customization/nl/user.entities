@@ -119,15 +119,15 @@
 <!ENTITY Ctrl    "<keycap>Ctrl</keycap>">
 <!ENTITY enz     "<abbrev>enz.</abbrev>">
 <!ENTITY etc     "<abbrev>etc.</abbrev>"> <!-- enz is beter -->
-<!ENTITY kicon	"<guiicon>
+<!ENTITY ticon	"<guiicon>
 <inlinemediaobject>
- <objectinfo><title>&kde;'s K-pictogram</title></objectinfo>
+ <objectinfo><title>&tde;'s K-pictogram</title></objectinfo>
  <imageobject><imagedata fileref='icon-file-to-be-filled-in' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
 </guiicon>"><!-- if image is localised, then entityref should be used instead
                  of fileref -->
-<!ENTITY kmenu  "<guimenu>K</guimenu>-menu">
+<!ENTITY kmenu  "<guimenu>TDE</guimenu>-menu">
 <!ENTITY LMB     "<mousebutton>linkermuisknop</mousebutton>">
 <!ENTITY MMB     "<mousebutton>middelstemuisknop</mousebutton>">
 <!ENTITY RMB     "<mousebutton>rechtermuisknop</mousebutton>">
@@ -143,8 +143,8 @@
 
 <!-- Entities voor applicaties die niet dezelfde naam hebben -->
 <!-- hiervoor gebruik je beter de vertaalde naam -->
-<!ENTITY kcontrolcenter "<application>KDE Configuratiecentrum</application>">
-<!ENTITY kcc     "<application>KDE Configuratiecentrum</application>">
-<!ENTITY khc     "<application>KDE Helpcentrum</application>">
-<!ENTITY kic     "<application>KDE Informatiecentrum</application>">
+<!ENTITY kcontrolcenter "<application>TDE Configuratiecentrum</application>">
+<!ENTITY kcc     "<application>TDE Configuratiecentrum</application>">
+<!ENTITY khc     "<application>TDE Helpcentrum</application>">
+<!ENTITY kic     "<application>TDE Informatiecentrum</application>">
 <!ENTITY palm     "PalmOS(tm)-apparaat">

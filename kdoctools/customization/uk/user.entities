@@ -18,12 +18,12 @@
 <!ENTITY FAQ	'<acronym>FAQ</acronym>'>
 <!ENTITY ie     "<abbrev>тобто</abbrev>">
 <!ENTITY infocenter	"<application>Інфо-центр</application>">
-<!ENTITY kcontrolcenter	"<application>Центр керування &kde;</application>">
-<!ENTITY kicon	"<guiicon>
+<!ENTITY kcontrolcenter	"<application>Центр керування &tde;</application>">
+<!ENTITY ticon	"<guiicon>
 <inlinemediaobject>
- <objectinfo><title>K-пікнограма &kde;</title></objectinfo>
+ <objectinfo><title>K-пікнограма &tde;</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
 </guiicon> icon"><!-- if image is localised, then entityref should be used 
                       instead of fileref -->

@@ -9,7 +9,7 @@
 <guimenuitem>&kappname; Handbook</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Invokes the KDE Help system</action> starting at the
+<listitem><para><action>Invokes the TDE Help system</action> starting at the
 &kappname; help pages. (this document).</para></listitem>
 </varlistentry>
 
@@ -50,9 +50,9 @@ information.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Help</guimenu>
-<guimenuitem>About KDE</guimenuitem>
+<guimenuitem>About TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>This displays the KDE version and other basic
+<listitem><para><action>This displays the TDE version and other basic
 information.</action></para></listitem>
 </varlistentry>
 </variablelist>

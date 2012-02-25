@@ -201,8 +201,8 @@
           <img src="{$kde.common}bottom-left.png" style="margin: 0px;" alt=""/>
         </div>
 <div id="comments" style="position:relative; top: 5px; left: 1em; height:85px; width: 50%; color: #cfe1f6">
-	<p>Would you like to make a comment or contribute an update to this page?<br/>
-        Send feedback to the <a href="mailto:kde-docs@kdemail.net" style="background:transparent; color:#cfe1f6; text-decoration: underline;">KDE Docs Team</a></p>
+	<p>Would you like to comment or contribute an update to this page?<br/>
+        Send feedback to the <a href="mailto:trinity-devel@lists.pearsoncomputing.net" style="background:transparent; color:#cfe1f6; text-decoration: underline;">TDE Development Team</a></p>
 	</div>
 
       </div>

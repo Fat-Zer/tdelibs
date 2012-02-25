@@ -9,7 +9,7 @@
 <guimenuitem>Podręcznik programu ...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Uruchamia System pomocy KDE</action> 
+<listitem><para><action>Uruchamia System pomocy TDE</action> 
 na stronie pomocy programu (czyli na tym dokumencie).</para></listitem>
 </varlistentry>
 
@@ -48,8 +48,8 @@ możesz zgłosić błąd lub prośbę o dodanie nowej funkcji.</para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Pomoc</guimenu>
-<guimenuitem>Informacje o KDE</guimenuitem>
+<guimenuitem>Informacje o TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Wyświetla informację o wersji KDE i inne podstawowe informacje.</action></para></listitem>
+<listitem><para><action>Wyświetla informację o wersji TDE i inne podstawowe informacje.</action></para></listitem>
 </varlistentry>
 </variablelist>

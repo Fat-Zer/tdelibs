@@ -6,8 +6,8 @@
      names (which if they occur will cost you a _lot_ of time)
  -->
 
-<!ENTITY kcontrol "<application>Центр управления &kde;</application>" ><!-- kde help -->
-<!ENTITY khelpcenter "<application>Центр справки &kde;</application>" ><!-- khelpcenter -->
+<!ENTITY kcontrol "<application>Центр управления &tde;</application>" ><!-- kde help -->
+<!ENTITY khelpcenter "<application>Центр справки &tde;</application>" ><!-- khelpcenter -->
 <!ENTITY LMB    "<mousebutton>левая</mousebutton> кнопка мыши">
 <!ENTITY MMB    "<mousebutton>средняя</mousebutton> кнопка мыши">
 <!ENTITY RMB    "<mousebutton>правая</mousebutton> кнопка мыши">
@@ -20,16 +20,16 @@
 
      (you may adapt the entity's name to transliterated Russian as well)
 -->
-<!ENTITY kcontrolcenter	"<application>&kde; Control Center</application>">
-<!ENTITY kicon	"<guiicon>
+<!ENTITY kcontrolcenter	"<application>&tde; Control Center</application>">
+<!ENTITY ticon	"<guiicon>
 <inlinemediaobject>
- <objectinfo><title>&kde;'s K-icon</title></objectinfo>
+ <objectinfo><title>&tde;'s T-icon</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
 </guiicon> icon"><!-- if image is localised, then entityref should be used 
                       instead of fileref -->
-<!ENTITY kmenu  "<guimenu>K</guimenu> menu">
+<!ENTITY kmenu  "<guimenu>TDE</guimenu> menu">
 <!ENTITY Shift  "<keycap>Shift</keycap>">
 <!ENTITY Alt    "<keycap>Alt</keycap>">
 <!ENTITY Tab    "<keycap>Tab</keycap>">

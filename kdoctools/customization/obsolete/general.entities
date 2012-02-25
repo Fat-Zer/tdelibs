@@ -1,24 +1,24 @@
 <!--
-    KDE general entities for DocBook as used in the KDE documentation
-    
+    TDE general entities for DocBook as used in the TDE documentation
+
     Copyright (C) 2002 Frederik Fouvry
-     
+
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
     as published by the Free Software Foundation; either version 2
     of the License, or (at your option) any later version.
-     
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-     
+
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-    
-    Send suggestions, comments, etc. to the KDE docbook list 
-    <kde-docbook@kde.org>.
+
+    Send suggestions, comments, etc. to the TDE development team
+    <trinity-devel@lists.pearsoncomputing.net>.
 
 
     USAGE
@@ -35,7 +35,7 @@
 <!-- ============================================================= -->
 <!--		    Extensions to the DocBook DTD		   -->
 <!-- ============================================================= -->
-<!-- E.g. KDE specific entities (see also dbgenent.mod for this)   -->
+<!-- E.g. TDE specific entities (see also dbgenent.mod for this)   -->
 
 <!-- Legal texts we put in a specific place
      so that we don't need to cut'n'paste them to every doc
@@ -72,7 +72,7 @@
   NDATA linespecific                                                 >
 <!-- FDLNotice is defined in lang.entities (why?) -->
 
-<!-- KDE index generation
+<!-- TDE index generation
      Set addindex to IGNORE to stop index generation
      Indices are generated on the fly, so no intermediate file is needed
  -->
@@ -89,11 +89,11 @@
 <!ENTITY % FDLBCT "IGNORE">
 
 <!-- These are the language-independent entities.  They can be (more
-     or less) freely extended.  Keep this list sorted and sensible.  
+     or less) freely extended.  Keep this list sorted and sensible.
      Make sure you always add full markup to the text.
 
      Naming policy: name the entity like you would see the text
-     (inclusive case).  KDE entities are always lowercased.  Spaces
+     (inclusive case).  TDE entities are always lowercased.  Spaces
      are omitted.  Examples: Qt (for "Qt"), RedHat (for "Red Hat"),
      kfloppy (for "KFloppy") .  (Entity names cannot start with digits,
      in that case, use the written form for the first digit.)
@@ -103,8 +103,8 @@
      not happen.  Place the name you wish to remove in the list of
      obsolete entities (depending on the case, the expansion is
      redefined or kept as it was); the new name goes in the official list.
-     A later version of the DTD (with another version number!) will 
-     effectively remove these entities.  In that way, old documents 
+     A later version of the DTD (with another version number!) will
+     effectively remove these entities.  In that way, old documents
      remain valid, while new ones can only use the new declarations.
  -->
 
@@ -183,12 +183,12 @@
 <!ENTITY kdat	"<application>KDat</application>">
 <!ENTITY kde	"<acronym>KDE</acronym>">
 <!ENTITY kdebugdialog	"<application>KDebugDialog</application>">
-<!ENTITY kde-http	'<ulink url="http://www.kde.org/">http://www.kde.org/</ulink>'>
+<!ENTITY tde-http	'<ulink url="http://www.trinitydesktop.org/">http://www.trinitydesktop.org/</ulink>'>
 <!ENTITY kde-ftp	'<ulink url="ftp://ftp.kde.org/pub/kde/">ftp://ftp.kde.org/pub/kde/</ulink>'>
 <!ENTITY kdepasswd	"<application>kdepasswd</application>">
 <!ENTITY kdesktop	"<application>KDesktop</application>">
 <!ENTITY kdessh	"<application>kdessh</application>">
-<!ENTITY tdesu	"<application>KDE su</application>">
+<!ENTITY tdesu	"<application>TDE su</application>">
 <!ENTITY kdiskfree	"<application>KDiskFree</application>">
 <!ENTITY kdict	"<application>KDict</application>">
 <!ENTITY tdm	"<application>tdm</application>">
@@ -374,7 +374,7 @@
 <!-- Defaults, do NOT add anything to this without checking with the docbook
      team.  -->
 
-<!ENTITY package "This application isn't part of a KDE package">
+<!ENTITY package "This application isn't part of a TDE package">
 
 <!-- Obsolete entities -->
 <!-- Put them here; they will be removed at some stage -->

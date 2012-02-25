@@ -9,7 +9,7 @@
 <guimenuitem>Manual do &kappname;</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Invoca a ajuda do KDE</action>, iniciando a ajuda do &kappname;.</para></listitem>
+<listitem><para><action>Invoca a ajuda do TDE</action>, iniciando a ajuda do &kappname;.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -45,8 +45,8 @@ relatar uma falha ou <quote>sugerir</quote> uma funcionalidade.</para></listitem
 <varlistentry>
 <term><menuchoice>
 <guimenu>Ajuda</guimenu>
-<guimenuitem>Sobre o KDE</guimenuitem>
+<guimenuitem>Sobre o TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Isto mostra a versão do KDE bem como outras informações básicas.</action></para></listitem>
+<listitem><para><action>Isto mostra a versão do TDE bem como outras informações básicas.</action></para></listitem>
 </varlistentry>
 </variablelist>

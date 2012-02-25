@@ -6,7 +6,7 @@
 <guimenuitem>Manuel de &kappname;</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Invoque le système d'aide de KDE</action>
+<listitem><para><action>Invoque le système d'aide de TDE</action>
 en démarrant avec le manuel de &kappname; (ce document).</para></listitem>
 </varlistentry>
 
@@ -47,9 +47,9 @@ l'auteur</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Aide</guimenu>
-<guimenuitem>À propos de KDE</guimenuitem>
+<guimenuitem>À propos de TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Affiche la version de KDE et d'autres informations
+<listitem><para><action>Affiche la version de TDE et d'autres informations
 basiques</action></para></listitem>
 </varlistentry>
 </variablelist>

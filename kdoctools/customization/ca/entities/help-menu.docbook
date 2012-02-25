@@ -9,7 +9,7 @@
 <guimenuitem>Manual de &kappname;</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Inicia el sistema d'ajuda del KDE</action>
+<listitem><para><action>Inicia el sistema d'ajuda del TDE</action>
 mostrant les pàgines d'ajuda per a &kappname;. (Aquest document).</para>
 </listitem>
 </varlistentry>
@@ -52,9 +52,9 @@ autor.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Ajuda</guimenu>
-<guimenuitem>Quant a KDE</guimenuitem>
+<guimenuitem>Quant a TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Us mostrarà informació quant a la versió del KDE i
+<listitem><para><action>Us mostrarà informació quant a la versió del TDE i
 d'altra informació bàsica.</action></para></listitem>
 </varlistentry>
 </variablelist>

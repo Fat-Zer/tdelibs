@@ -1,5 +1,5 @@
 --
-Catalogue for KDE DocBook XML
+Catalogue for TDE DocBook XML
 
 Copyright (C) 2001,2002 Frederik Fouvry
  
@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-Send suggestions, comments, etc. to the KDE DocBook mailing list
-<kde-docbook@kde.org>.
+Send suggestions, comments, etc. to the TDE Developers mailing list
+<trinity-devel@lists.pearsoncomputing.net>.
 --
 
 OVERRIDE YES
@@ -42,7 +42,7 @@ PUBLIC "-//KDE//ENTITIES DocBook XML General Entity Declarations V1.2//EN"
 PUBLIC "-//KDE//ENTITIES DocBook XML General Entity Declarations (Persons) V1.0//EN"
        "entities/contributor.entities"
 
-		      -- General KDE Entities --
+		      -- General TDE Entities --
 
 PUBLIC "-//KDE//ENTITIES DocBook XML Localisation Entity Declarations V1.0//EN"
        "entities/l10n.entities"

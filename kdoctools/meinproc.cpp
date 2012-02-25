@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
 
     KAboutData aboutData( "meinproc", I18N_NOOP("XML-Translator" ),
 	"$Revision$",
-	I18N_NOOP("KDE Translator for XML"));
+	I18N_NOOP("TDE Translator for XML"));
 
     KCmdLineArgs::init(argc, argv, &aboutData);
     KCmdLineArgs::addCmdLineOptions( options );

@@ -45,8 +45,8 @@
 <varlistentry>
 <term><menuchoice>
 <guimenu>עזרה</guimenu>
-<guimenuitem>אודות KDE</guimenuitem>
+<guimenuitem>אודות TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>הצגת הגירסה של KDE ומידע בסיסי נוסף.</action></para></listitem>
+<listitem><para><action>הצגת הגירסה של TDE ומידע בסיסי נוסף.</action></para></listitem>
 </varlistentry>
 </variablelist>

@@ -9,5 +9,5 @@ suivantes dans le dossier de base de la distribution de &kappname;&nbsp;:</para>
 <para>Étant donné que &kappname; utilise <command>autoconf</command>
 et <command>automake</command>, vous ne devriez pas rencontrer
 de problèmes pour le compiler. Si c'est le cas, veuillez les signaler aux listes de
-discussions de &kde;.</para>
+discussions de &tde;.</para>
 

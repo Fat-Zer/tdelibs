@@ -18,8 +18,8 @@
 <!ENTITY Esc	"<keycap>Esc</keycap>">
 <!ENTITY etc    "<abbrev>etc.</abbrev>">
 <!ENTITY FAQ	'<acronym>FAQ</acronym>'>
-<!ENTITY ie 	"isto é"> 
-<!ENTITY kcontrolcenter	"<application>Centro de Controlo &kde;</application>">
+<!ENTITY ie 	"isto é">
+<!ENTITY kcontrolcenter	"<application>Centro de Controlo &tde;</application>">
 <!ENTITY BER 	"botão <mousebutton>esquerdo</mousebutton> do rato">  <!-- English: &LMB; -->
 <!ENTITY LMB 	"botão <mousebutton>esquerdo</mousebutton> do rato">
 <!ENTITY BMR 	"botão <mousebutton>do meio</mousebutton> do rato">   <!-- English: &MMB; -->
@@ -29,15 +29,15 @@
 <!ENTITY OS	"sistema operativo">
 <!ENTITY Shift	"<keycap>Shift</keycap>">
 <!ENTITY Tab	"<keycap>Tab</keycap>">
-<!ENTITY kicon  '<guiicon>
+<!ENTITY ticon  '<guiicon>
 <inlinemediaobject>
- <objectinfo><title>O ícone K do &kde;</title></objectinfo>
+ <objectinfo><title>O ícone K do &tde;</title></objectinfo>
  <imageobject><imagedata fileref="common/kmenu.png" format="PNG"/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
    </guiicon> icon'>
-<!ENTITY kmenu  "menu <guimenu>K</guimenu>">
-<!ENTITY kinfocenter "<application>Centro de Informação do KDE</application>" >
+<!ENTITY kmenu  "menu <guimenu>TDE</guimenu>">
+<!ENTITY kinfocenter "<application>Centro de Informação do TDE</application>" >
 <!ENTITY ksystemlog "<application>KSystemLog</application>" >
 <!ENTITY kleopatra "<application>Kleopatra</application>" >
 <!ENTITY qt "<trademark>Qt</trademark>" >

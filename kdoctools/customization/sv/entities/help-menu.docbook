@@ -9,7 +9,7 @@
 <guimenuitem>Innehåll...</guimenuitem>
 </menuchoice>
 </term>
-<listitem><para><action>Startar KDE:s hjälpsystem</action> med början på
+<listitem><para><action>Startar TDE:s hjälpsystem</action> med början på
 hjälpsidorna för &kappname; (det här dokumentet).</para></listitem>
 </varlistentry>
 
@@ -50,9 +50,9 @@ upphovsmän.</action></para></listitem>
 <varlistentry>
 <term><menuchoice>
 <guimenu>Hjälp</guimenu>
-<guimenuitem>Om KDE</guimenuitem>
+<guimenuitem>Om TDE</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Det här visar KDE:s version och annan grundläggande
+<listitem><para><action>Det här visar TDE:s version och annan grundläggande
 information.</action></para></listitem>
 </varlistentry>
 </variablelist>

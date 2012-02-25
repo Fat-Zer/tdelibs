@@ -11,25 +11,25 @@
 <!ENTITY cdrom	'<hardware>CD-ROM-Laufwerk</hardware>'>
 <!ENTITY Ctrl   "<keycap>Strg</keycap>">
 <!ENTITY dpi	'<acronym>dpi</acronym>'>
-<!ENTITY eg	'<abbrev>z.&nbsp;B.</abbrev>'> 
+<!ENTITY eg	'<abbrev>z.&nbsp;B.</abbrev>'>
 <!ENTITY Enter	"<keycap>Eingabe</keycap>">
 <!ENTITY Esc    "<keycap>Esc</keycap>">
 <!ENTITY etc    "<abbrev>usw.</abbrev>">
 <!ENTITY FAQ	'<acronym>FAQ</acronym>'>
 <!ENTITY ie     "<abbrev>d.&nbsp;h.</abbrev>">
 <!ENTITY infocenter	"<application>Infozentrum</application>">
-<!ENTITY kcc "<application>&kde;-Kontrollzentrum</application>" ><!-- kcc -->
-<!ENTITY kcontrolcenter "<application>&kde;-Kontrollzentrum</application>">
+<!ENTITY kcc "<application>&tde;-Kontrollzentrum</application>" ><!-- kcc -->
+<!ENTITY kcontrolcenter "<application>&tde;-Kontrollzentrum</application>">
 <!ENTITY kde "K-Arbeitsumgebung" ><!-- kde -->
-<!ENTITY khelpcenter-de "<application>&kde;-Hilfezentrum</application>" >
-<!ENTITY kicon	"<guiicon>
+<!ENTITY khelpcenter-de "<application>&tde;-Hilfezentrum</application>" >
+<!ENTITY ticon	"<guiicon>
 <inlinemediaobject>
- <objectinfo><title>K-Symbol von &kde;</title></objectinfo>
+ <objectinfo><title>K-Symbol von &tde;</title></objectinfo>
  <imageobject><imagedata fileref='common/kmenu.png' format='PNG'/></imageobject>
- <textobject><phrase>K</phrase></textobject>
+ <textobject><phrase>T</phrase></textobject>
 </inlinemediaobject>
-</guiicon>-Symbol"><!-- kicon -->
-<!ENTITY kmenu  "<guimenu>K</guimenu>-Men&uuml;"> <!-- kmenu -->
+</guiicon>-Symbol"><!-- ticon -->
+<!ENTITY kmenu  "<guimenu>TDE</guimenu>-Men&uuml;"> <!-- kmenu -->
 <!ENTITY kwm    "<application>kwm</application>">
 <!ENTITY LMB    "<mousebutton>linke</mousebutton> Maustaste">
 <!ENTITY LMBn   "<mousebutton>linken</mousebutton> Maustaste">
@@ -48,8 +48,8 @@
 
 <!-- The following entities are deprecated and will be removed at a future time, Do not use! -->
 <!ENTITY dh     "<abbrev>d.&nbsp;h.</abbrev>">
-<!ENTITY kde-hilfe "<application>KDE-Hilfe</application>" ><!-- kde help -->
-<!ENTITY khilfezentrum "<application>KDE-Hilfezentrum</application>" ><!--
+<!ENTITY kde-hilfe "<application>TDE-Hilfe</application>" ><!-- kde help -->
+<!ENTITY khilfezentrum "<application>TDE-Hilfezentrum</application>" ><!--
  khelpcenter -->
 <!ENTITY kontrollleiste "<application>Kontrollleiste</application>"><!--
  kicker -->
