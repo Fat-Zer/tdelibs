@@ -87,7 +87,7 @@ and use Qt's powerful string API instead.
 A workaround for KDE 3.1.x and older is to install a .sh script in
 $(kde_datadir) that contains a simple exec:
 
-    exec "`kde-config --prefix`/bin/kconf_update_bin/my_update_app"
+    exec "`tde-config --prefix`/bin/kconf_update_bin/my_update_app"
 
 This is equivalent to what KDE 3.2 can do directly, but of course the .upd
 file now points to the .sh script instead of the binary application.

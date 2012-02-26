@@ -167,7 +167,7 @@ AC_TRY_LINK(dnl
 
 AC_CHECK_HEADERS(sys/mount.h)  
 
-dnl AC_OUTPUT(tdecore/kde-config.cpp)
+dnl AC_OUTPUT(tdecore/tde-config.cpp)
 
 AM_CONFIG_HEADER(tdecore/kdemacros.h)
 

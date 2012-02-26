@@ -53,7 +53,7 @@ messages:
 	find $$dirs -maxdepth 1 -name "*.cpp" -print > files ;\
 	find $$dirs -maxdepth 1 -name "*.cc" -print >> files ;\
 	find $$dirs -maxdepth 1 -name "*.h" -print >> files ;\
-	echo ./tdecore/kde-config.cpp.in >> files ;\
+	echo ./tdecore/tde-config.cpp.in >> files ;\
 	$(EXTRACTRC) `find $$dirs -maxdepth 1 \( -name "*.rc" -o -name "*.ui" \) ` ./dnssd/kcm_kdnssd.kcfg > rc.cpp; \
 	: > kde.pot ;\
 	$(XGETTEXT) -ktranslate -x qt-messages.pot rc.cpp `cat files` && cat messages.po qt-messages.pot > $(podir)/tdelibs.pot

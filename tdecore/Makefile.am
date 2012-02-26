@@ -168,9 +168,9 @@ kcharsets.lo: kentities.c
 parser: kentities.gperf
 	cd $(srcdir) && gperf -a -L "ANSI-C" -E -C -c -o -t -k '*' -Nkde_findEntity -D -Hhash_Entity -Wwordlist_Entity -s 2 kentities.gperf > kentities.c
 
-bin_PROGRAMS = kde-config kgrantpty
+bin_PROGRAMS = tde-config kgrantpty
 
-kde_config_SOURCES = kde-config.cpp
+kde_config_SOURCES = tde-config.cpp
 kde_config_LDADD = ./libtdecore.la
 kde_config_LDFLAGS = $(KDE_RPATH) $(KDE_MT_LDFLAGS)
 
@@ -186,7 +186,7 @@ install-exec-hook:
 	@echo "This is needed for konsole, etc. to ensure that they can't be eavesdropped."
 	@echo ""
 
-DISTCLEANFILES = kde-config.cpp
+DISTCLEANFILES = tde-config.cpp
 
 DOXYGEN_REFERENCES = dcop tdeui kparts kio
 DOXYGEN_EXCLUDE = malloc kde_file.h

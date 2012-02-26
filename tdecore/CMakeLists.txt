@@ -177,14 +177,14 @@ tde_add_library( ${target} SHARED
 )
 
 
-##### kde-config ################################
+##### tde-config ################################
 
 # FIXME still need some research and improvements
-configure_file( kde-config.cpp.cmake kde-config.cpp @ONLY )
+configure_file( tde-config.cpp.cmake tde-config.cpp @ONLY )
 
 
-tde_add_executable( kde-config
-  SOURCES ${CMAKE_CURRENT_BINARY_DIR}/kde-config.cpp
+tde_add_executable( tde-config
+  SOURCES ${CMAKE_CURRENT_BINARY_DIR}/tde-config.cpp
   LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

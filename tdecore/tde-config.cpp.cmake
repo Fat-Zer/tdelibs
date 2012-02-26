@@ -39,62 +39,62 @@ TQString expandvars(const char *_input)
     bool changed = false;
     int index = result.find("${prefix}");
     if (index >= 0) {
-        result = result.replace(index, 9, "@prefix@");
+        result = result.replace(index, 9, "@CMAKE_INSTALL_PREFIX@");
         changed = true;
     }
     index = result.find("$(prefix)");
     if (index >= 0) {
-        result = result.replace(index, 9, "@prefix@");
+        result = result.replace(index, 9, "@CMAKE_INSTALL_PREFIX@");
         changed = true;
     }
     index = result.find("${datadir}");
     if (index >= 0) {
-        result = result.replace(index, 10, "@datadir@");
+        result = result.replace(index, 10, "@SHARE_INSTALL_PREFIX@");
         changed = true;
     }
     index = result.find("$(datadir)");
     if (index >= 0) {
-        result = result.replace(index, 10, "@datadir@");
+        result = result.replace(index, 10, "@SHARE_INSTALL_PREFIX@");
         changed = true;
     }
     index = result.find("${exec_prefix}");
     if (index >= 0) {
-        result = result.replace(index, 14, "@exec_prefix@");
+        result = result.replace(index, 14, "@EXEC_INSTALL_PREFIX@");
         changed = true;
     }
     index = result.find("$(exec_prefix)");
     if (index >= 0) {
-        result = result.replace(index, 14, "@exec_prefix@");
+        result = result.replace(index, 14, "@EXEC_INSTALL_PREFIX@");
         changed = true;
     }
     index = result.find("${libdir}");
     if (index >= 0) {
-        result = result.replace(index, 9, "@libdir@");
+        result = result.replace(index, 9, "@LIB_INSTALL_DIR@");
         changed = true;
     }
     index = result.find("$(libdir)");
     if (index >= 0) {
-        result = result.replace(index, 9, "@libdir@");
+        result = result.replace(index, 9, "@LIB_INSTALL_DIR@");
         changed = true;
     }
     index = result.find("${includedir}");
     if (index >= 0) {
-        result = result.replace(index, 20, "@includedir@");
+        result = result.replace(index, 20, "@INCLUDE_INSTALL_DIR@");
         changed = true;
     }
     index = result.find("$(includedir)");
     if (index >= 0) {
-        result = result.replace(index, 20, "@includedir@");
+        result = result.replace(index, 20, "@INCLUDE_INSTALL_DIR@");
         changed = true;
     }
     index = result.find("${sysconfdir}");
     if (index >= 0) {
-        result = result.replace(index, 13, "@sysconfdir@");
+        result = result.replace(index, 13, "@SYSCONF_INSTALL_DIR@");
         changed = true;
     }
     index = result.find("$(sysconfdir)");
     if (index >= 0) {
-        result = result.replace(index, 13, "@sysconfdir@");
+        result = result.replace(index, 13, "@SYSCONF_INSTALL_DIR@");
         changed = true;
     }
     if (changed)
@@ -114,12 +114,12 @@ void printResult(const TQString &s)
 int main(int argc, char **argv)
 {
     KLocale::setMainCatalogue("tdelibs");
-    KAboutData about("kde-config", "kde-config", "1.0", description, KAboutData::License_GPL, "(C) 2000 Stephan Kulow");
+    KAboutData about("tde-config", "tde-config", "1.0", description, KAboutData::License_GPL, "(C) 2000 Stephan Kulow");
     KCmdLineArgs::init( argc, argv, &about);
 
     KCmdLineArgs::addCmdLineOptions( options ); // Add my own options.
 
-    KInstance a("kde-config");
+    KInstance a("tde-config");
     (void)KGlobal::dirs(); // trigger the creation
     (void)KGlobal::config();
 
@@ -130,13 +130,13 @@ int main(int argc, char **argv)
 
     if (args->isSet("prefix"))
     {
-        printResult(expandvars("@prefix@"));
+        printResult(expandvars("@CMAKE_INSTALL_PREFIX@"));
         return 0;
     }
 
     if (args->isSet("exec-prefix"))
     {
-        printResult(expandvars("@exec_prefix@"));
+        printResult(expandvars("@EXEC_INSTALL_PREFIX@"));
         return 0;
     }
 
@@ -187,6 +187,7 @@ int main(int argc, char **argv)
             "xdgdata-apps", I18N_NOOP("XDG Application menu (.desktop files)"),
             "xdgdata-dirs", I18N_NOOP("XDG Menu descriptions (.directory files)"),
             "xdgconf-menu", I18N_NOOP("XDG Menu layout (.menu files)"),
+            "cmake", I18N_NOOP("CMake import modules (.cmake files)"),
             "tmp", I18N_NOOP("Temporary files (specific for both current host and current user)"),
             "socket", I18N_NOOP("UNIX Sockets (specific for both current host and current user)"),
             0, 0
@@ -200,7 +201,7 @@ int main(int argc, char **argv)
             if (helptexts[index]) {
                 printf("%s - %s\n", helptexts[index], i18n(helptexts[index+1]).local8Bit().data());
             } else {
-                printf("%s", TQString(i18n("%1 - unknown type\n").arg(*it)).local8Bit().data());
+                printf("%s", i18n("%1 - unknown type\n").arg(*it).local8Bit().data());
             }
         }
         return 0;
@@ -225,7 +226,7 @@ int main(int argc, char **argv)
         else if ( type == "document" )
             printResult(KGlobalSettings::documentPath());
         else
-            fprintf(stderr, "%s", TQString(i18n("%1 - unknown type of userpath\n").arg(type)).local8Bit().data() );
+            fprintf(stderr, "%s", i18n("%1 - unknown type of userpath\n").arg(type).local8Bit().data() );
         return 0;
     }
 
@@ -233,27 +234,28 @@ int main(int argc, char **argv)
     if (!type.isEmpty())
     {
         const char *installprefixes[] = {
-            "apps",   "@kde_appsdir@",
-            "config", "@kde_confdir@",
-            "kcfg",   "@kde_kcfgdir@",
-            "data",   "@kde_datadir@",
-            "exe",    "@kde_bindir@",
-            "html",   "@kde_htmldir@",
-            "icon",   "@kde_icondir@",
-            "lib",    "@libdir@",
-            "module", "@kde_moduledir@",
-            "qtplugins", "@kde_moduledir@/plugins",
-            "locale", "@kde_locale@",
-            "mime",   "@kde_mimedir@",
-            "services", "@kde_servicesdir@",
-            "servicetypes", "@kde_servicetypesdir@",
-            "sound", "@kde_sounddir@",
-            "templates", "@kde_templatesdir@",
-            "wallpaper", "@kde_wallpaperdir@",
-            "xdgconf-menu", "@xdg_menudir@",
-            "xdgdata-apps", "@xdg_appsdir@",
-            "xdgdata-dirs", "@xdg_directorydir@",
-            "include", "@includedir@",
+            "apps",   "@APPS_INSTALL_DIR@",
+            "config", "@CONFIG_INSTALL_DIR@",
+            "kcfg",   "@KCFG_INSTALL_DIR@",
+            "data",   "@DATA_INSTALL_DIR@",
+            "exe",    "@BIN_INSTALL_DIR@",
+            "html",   "@HTML_INSTALL_DIR@",
+            "icon",   "@ICON_INSTALL_DIR@",
+            "lib",    "@LIB_INSTALL_DIR@",
+            "module", "@PLUGIN_INSTALL_DIR@",
+            "qtplugins", "@PLUGIN_INSTALL_DIR@/plugins",
+            "locale", "@LOCALE_INSTALL_DIR@",
+            "mime",   "@MIME_INSTALL_DIR@",
+            "services", "@SERVICES_INSTALL_DIR@",
+            "servicetypes", "@SERVICETYPES_INSTALL_DIR@",
+            "sound", "@SOUND_INSTALL_DIR@",
+            "templates", "@TEMPLATES_INSTALL_DIR@",
+            "wallpaper", "@WALLPAPER_INSTALL_DIR@",
+            "xdgconf-menu", "@XDG_MENU_INSTALL_DIR@",
+            "xdgdata-apps", "@XDG_APPS_INSTALL_DIR@",
+            "xdgdata-dirs", "@XDG_DIRECTORY_INSTALL_DIR@",
+            "include", "@INCLUDE_INSTALL_DIR@",
+            "cmake", "@CMAKE_INSTALL_DIR@",
             0, 0
         };
         int index = 0;

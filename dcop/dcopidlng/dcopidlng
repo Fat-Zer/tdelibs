@@ -4,7 +4,7 @@ tmpfile=`mktemp -t dcopidlng.XXXXXX` || { echo "$0: Cannot create temporary file
 trap " [ -f \"$tmpfile\" ] && /bin/rm -f -- \"$tmpfile\"" 0 1 2 3 13 15
 
 if test -z "$KDECONFIG"; then
-    KDECONFIG=kde-config
+    KDECONFIG=tde-config
 fi
 LIBDIR="`$KDECONFIG --install data --expandvars`/dcopidlng"
 perl -I"$LIBDIR" "$LIBDIR/kalyptus" --allow_k_dcop_accessors -f dcopidl $1 2> $tmpfile
