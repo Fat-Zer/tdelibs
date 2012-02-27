@@ -469,7 +469,7 @@ void AlsaOut::seqbuf_clean(void)
 void AlsaOut::wait(double ticks)
 {
 //  SEQ_WAIT_TIME(((int)(ticks/convertrate)));
-  time=(long int)ticks;
+  time=static_cast<long int>(ticks);
 
 #ifdef MIDIOUTDEBUG
   printfdebug("Wait  >\t ticks: %g\n",ticks);

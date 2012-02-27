@@ -301,7 +301,10 @@ void KCrash::startDrKonqi( const char* argv[], int argc )
   }
   long pid;
   read_socket(socket, buffer, header.arg_length);
-  pid = *((long *) buffer);
+  pid = 0;
+  for (int k=0;k<sizeof(long);k++) {
+    pid = pid | (buffer[k] << ((sizeof(long)-1-k)*8));
+  }
 
   alarm(0); // Seems we made it....
 

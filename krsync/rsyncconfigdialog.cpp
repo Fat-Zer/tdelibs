@@ -177,6 +177,8 @@ int RsyncConfigDialog::getSyncMode()
         return 2;
     else if (rsync_rb3->isChecked() == true)
         return 3;
+    else
+        return 0;
 }
 
 int RsyncConfigDialog::getAutoSyncFlags()

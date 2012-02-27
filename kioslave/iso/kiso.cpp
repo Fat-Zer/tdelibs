@@ -249,7 +249,7 @@ static int mycallb(struct iso_directory_record *idr,void *udata) {
             if (!special) {
                 if (iso->joliet) {
                     for (i=0;i<(isonum_711(idr->name_len)-1);i+=2) {
-                        TQChar ch( be2me_16(*((ushort*)&(idr->name[i]))) );
+                        TQChar ch( be2me_16( idr->name[i] ) );
                         if (ch==';') break;
                         path+=ch;
                     }
@@ -304,14 +304,14 @@ void KIso::addBoot(struct el_torito_boot_descriptor* bootdesc) {
         i=1;
         be=boot.defentry;
         while (be) {
-            size=BootImageSize( isonum_711(((struct default_entry*) be->data)->media),
-                                isonum_721(((struct default_entry*) be->data)->seccount));
+            size=BootImageSize( isonum_711((reinterpret_cast<struct default_entry*>(be->data))->media),
+                                isonum_721((reinterpret_cast<struct default_entry*>(be->data))->seccount));
             path="Default Image";
             if (i>1) path += " (" + TQString::number(i) + ")";
             entry=new KIsoFile( this, path, dirent->permissions() & ~S_IFDIR,
                 dirent->date(), dirent->adate(), dirent->cdate(),
                 dirent->user(), dirent->group(), TQString::null,
-                isonum_731(((struct default_entry*) be->data)->start)<<11, size<<9 );
+                isonum_731((reinterpret_cast<struct default_entry*>(be->data))->start)<<11, size<<9 );
             dirent->addEntry(entry);
             be=be->next;
             i++;

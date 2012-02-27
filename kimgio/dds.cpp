@@ -490,7 +490,7 @@ namespace {	// Private.
 
 		void GetBits( uchar bit_array[16] )
 		{
-			uint b = (uint &) bits[0];
+			uint b = static_cast<uint>(bits[0]);
 			bit_array[0] = uchar(b & 0x07); b >>= 3;
 			bit_array[1] = uchar(b & 0x07); b >>= 3;
 			bit_array[2] = uchar(b & 0x07); b >>= 3;
@@ -500,7 +500,7 @@ namespace {	// Private.
 			bit_array[6] = uchar(b & 0x07); b >>= 3;
 			bit_array[7] = uchar(b & 0x07); b >>= 3;
 
-			b = (uint &) bits[3];
+			b = static_cast<uint>(bits[3]);
 			bit_array[8] = uchar(b & 0x07); b >>= 3;
 			bit_array[9] = uchar(b & 0x07); b >>= 3;
 			bit_array[10] = uchar(b & 0x07); b >>= 3;

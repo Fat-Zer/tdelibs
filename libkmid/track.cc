@@ -334,7 +334,7 @@ void MidiTrack::readEvent(MidiEvent *ev)
 	    case (ME_END_OF_TRACK) :
 	      i=0;
 	      j=0;
-	      while ((note[i][j]==FALSE)&&(i<16))
+	      while ((i<16)&&(note[i][j]==FALSE))
 	      {
 		j++;
 		if (j==128) { j=0; i++; };
