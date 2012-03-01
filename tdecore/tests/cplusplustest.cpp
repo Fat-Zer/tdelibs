@@ -32,13 +32,13 @@ int main(int , char *[])
   A *pA = &obj;
   B *pB = &obj;
   C *pC = &obj;
-qWarning("pA = %p, pB = %p, pC = %p", pA, pB, pC);
-  if (pA == pC) qWarning("pA == pC");
-  if (pB == pC) qWarning("pB == pC");
+tqWarning("pA = %p, pB = %p, pC = %p", pA, pB, pC);
+  if (pA == pC) tqWarning("pA == pC");
+  if (pB == pC) tqWarning("pB == pC");
 
   dictA.insert("hello", pC);
   dictB.insert("hello", pC);
 
-  if (dictA["hello"] == pC) qWarning("dictA['hello'] == pC");
-  if (dictB["hello"] == pC) qWarning("dictB['hello'] == pC");
+  if (dictA["hello"] == pC) tqWarning("dictA['hello'] == pC");
+  if (dictB["hello"] == pC) tqWarning("dictB['hello'] == pC");
 }

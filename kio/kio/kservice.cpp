@@ -284,11 +284,11 @@ KService::init( KDesktopFile *config )
   // Store all additional entries in the property map.
   // A TQMap<TQString,TQString> would be easier for this but we can't
   // brake BC, so we have to store it in m_mapProps.
-//  qWarning("Path = %s", entryPath().latin1());
+//  tqWarning("Path = %s", entryPath().latin1());
   TQMap<TQString,TQString>::ConstIterator it = entryMap.begin();
   for( ; it != entryMap.end();++it)
   {
-     //qDebug("   Key = %s Data = %s", it.key().latin1(), it.data().latin1());
+     //tqDebug("   Key = %s Data = %s", it.key().latin1(), it.data().latin1());
       TQString key = it.key();
       if (kde4application && key=="OnlyShowIn" && it.data()=="KDE;")
          key = "NotShowIn";
@@ -480,7 +480,7 @@ public:
    KServiceReadProperty(const TQString &_key, const TQCString &_value)
 	: key(_key), value(_value) { }
 
-   bool internalHasGroup(const TQCString &) const { /*qDebug("hasGroup(const TQCString &)");*/ return false; }
+   bool internalHasGroup(const TQCString &) const { /*tqDebug("hasGroup(const TQCString &)");*/ return false; }
 
    TQStringList groupList() const { return TQStringList(); }
 

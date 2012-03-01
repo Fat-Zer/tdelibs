@@ -442,7 +442,7 @@ bool Sym::init( const TQString& s )
 
 	// Look up in special names list
 	for( int i = 0; g_rgSymNames[i].sym != 0; i++ ) {
-		if( qstricmp( s.latin1(), g_rgSymNames[i].psName ) == 0 ) {
+		if( tqstricmp( s.latin1(), g_rgSymNames[i].psName ) == 0 ) {
 			m_sym = g_rgSymNames[i].sym;
 			return true;
 		}
@@ -451,7 +451,7 @@ bool Sym::init( const TQString& s )
 #ifdef Q_WS_WIN
 	// search for name in KKeys array
 	for ( KKeys const *pKey  = kde_KKEYS; pKey->code != 0xffff; pKey++) {
-		if( qstricmp( s.latin1(), pKey->name ) == 0 ) {
+		if( tqstricmp( s.latin1(), pKey->name ) == 0 ) {
 			m_sym = pKey->code;
 			return true;
 		}

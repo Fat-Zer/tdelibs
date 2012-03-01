@@ -1705,7 +1705,7 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
     emit p->browserExtension()->createNewWindow(KURL(), uargs,winargs,newPart);
     if (newPart && ::tqqt_cast<KHTMLPart*>(newPart)) {
       KHTMLPart *khtmlpart = static_cast<KHTMLPart*>(newPart);
-      //qDebug("opener set to %p (this Window's part) in new Window %p  (this Window=%p)",part,win,window);
+      //tqDebug("opener set to %p (this Window's part) in new Window %p  (this Window=%p)",part,win,window);
       khtmlpart->setOpener(p);
       khtmlpart->setOpenedByJS(true);
       if (khtmlpart->document().isNull()) {

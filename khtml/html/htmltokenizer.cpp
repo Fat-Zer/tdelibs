@@ -466,7 +466,7 @@ void HTMLTokenizer::parseComment(TokenizerString &src)
         scriptCode[ scriptCodeSize++ ] = *src;
 
 #if defined(TOKEN_DEBUG) && TOKEN_DEBUG > 1
-        qDebug("comment is now: *%s*", src.toString().left(16).latin1());
+        tqDebug("comment is now: *%s*", src.toString().left(16).latin1());
 #endif
 
         if (strict)
@@ -765,7 +765,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
         uint l = 0;
         while(l < src.length() && (src.toString()[l]).latin1() != '>')
             l++;
-        qDebug("src is now: *%s*, tquote: %d",
+        tqDebug("src is now: *%s*, tquote: %d",
                src.toString().left(l).latin1(), tquote);
 #endif
         switch(tag) {
@@ -774,7 +774,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
         case TagName:
         {
 #if defined(TOKEN_DEBUG) &&  TOKEN_DEBUG > 1
-            qDebug("TagName");
+            tqDebug("TagName");
 #endif
             if (searchCount > 0)
             {
@@ -870,7 +870,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
         case SearchAttribute:
         {
 #if defined(TOKEN_DEBUG) && TOKEN_DEBUG > 1
-                qDebug("SearchAttribute");
+                tqDebug("SearchAttribute");
 #endif
             bool atespace = false;
             ushort curchar;
@@ -899,7 +899,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
         case AttributeName:
         {
 #if defined(TOKEN_DEBUG) && TOKEN_DEBUG > 1
-                qDebug("AttributeName");
+                tqDebug("AttributeName");
 #endif
             ushort curchar;
             int ll = kMin(src.length(), CBUFLEN-cBufferPos);
@@ -951,7 +951,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
         case SearchEqual:
         {
 #if defined(TOKEN_DEBUG) && TOKEN_DEBUG > 1
-                qDebug("SearchEqual");
+                tqDebug("SearchEqual");
 #endif
             ushort curchar;
             bool atespace = false;
@@ -1006,7 +1006,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
         case QuotedValue:
         {
 #if defined(TOKEN_DEBUG) && TOKEN_DEBUG > 1
-                qDebug("QuotedValue");
+                tqDebug("QuotedValue");
 #endif
             ushort curchar;
             while(!src.isEmpty()) {
@@ -1045,7 +1045,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
         case Value:
         {
 #if defined(TOKEN_DEBUG) && TOKEN_DEBUG > 1
-            qDebug("Value");
+            tqDebug("Value");
 #endif
             ushort curchar;
             while(!src.isEmpty()) {
@@ -1079,7 +1079,7 @@ void HTMLTokenizer::parseTag(TokenizerString &src)
         case SearchEnd:
         {
 #if defined(TOKEN_DEBUG) && TOKEN_DEBUG > 1
-                qDebug("SearchEnd");
+                tqDebug("SearchEnd");
 #endif
             while(!src.isEmpty()) {
                 if(*src == '<' || *src == '>')
@@ -1647,7 +1647,7 @@ void HTMLTokenizer::processToken()
     {
 #if 0
         if(currToken.tid) {
-            qDebug( "unexpected token id: %d, str: *%s*", currToken.tid,TQConstString( buffer,dest-buffer ).string().latin1() );
+            tqDebug( "unexpected token id: %d, str: *%s*", currToken.tid,TQConstString( buffer,dest-buffer ).string().latin1() );
             assert(0);
         }
 

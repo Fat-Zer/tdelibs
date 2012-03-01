@@ -129,7 +129,7 @@ KLed::paintEvent(TQPaintEvent *)
 	  paintRect();
 	  break;
 	default  :
-	  qWarning("%s: in class KLed: no KLed::Look set",tqApp->argv()[0]);
+	  tqWarning("%s: in class KLed: no KLed::Look set",tqApp->argv()[0]);
 	}
       break;
     case Circular:
@@ -145,17 +145,17 @@ KLed::paintEvent(TQPaintEvent *)
 	  paintSunken();
 	  break;
 	default:
-	  qWarning("%s: in class KLed: no KLed::Look set",tqApp->argv()[0]);
+	  tqWarning("%s: in class KLed: no KLed::Look set",tqApp->argv()[0]);
 	}
       break;
     default:
-      qWarning("%s: in class KLed: no KLed::Shape set",tqApp->argv()[0]);
+      tqWarning("%s: in class KLed: no KLed::Shape set",tqApp->argv()[0]);
       break;
     }
 #ifdef PAINT_BENCH
   }
   int ready = t.elapsed();
-  qWarning("elapsed: %d msec. for %d rounds", ready, rounds);
+  tqWarning("elapsed: %d msec. for %d rounds", ready, rounds);
 #endif
 }
 

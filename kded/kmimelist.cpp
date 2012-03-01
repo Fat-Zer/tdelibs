@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
    KMimeType::List mtl = KMimeType::allMimeTypes( );
    assert( mtl.count() );
-   qDebug( "Found %d mime types.", mtl.count() );
+   tqDebug( "Found %d mime types.", mtl.count() );
    TQValueListIterator<KMimeType::Ptr> it(mtl.begin());
    KServiceTypeProfile::OfferList ol;
 

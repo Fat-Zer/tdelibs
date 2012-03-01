@@ -491,7 +491,7 @@ void KCharSelect::fillFontCombo()
 {
     if ( !fontDataBase ) {
 	fontDataBase = new TQFontDatabase();
-	qAddPostRoutine( cleanupFontDatabase );
+	tqAddPostRoutine( cleanupFontDatabase );
     }
     fontList=fontDataBase->families();
     fontCombo->insertStringList( fontList );

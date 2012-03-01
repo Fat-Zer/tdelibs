@@ -339,12 +339,12 @@ private:
                         (c1Rgb == other.c1Rgb) &&
                         (horizontal == other.horizontal);
 //             if(!match) {
-//                 qDebug("operator ==: CacheEntries don't match!");
-//                 qDebug("width: %d\t\tother width: %d", width, other.width);
-//                 qDebug("height: %d\t\tother height: %d", height, other.height);
-//                 qDebug("fgRgb: %d\t\tother fgRgb: %d", fgRgb, other.fgRgb);
-//                 qDebug("bgRgb: %d\t\tother bgRgb: %d", bgRgb, other.bgRgb);
-//                 qDebug("surfaceFlags: %d\t\tother surfaceFlags: %d", surfaceFlags, other.surfaceFlags);
+//                 tqDebug("operator ==: CacheEntries don't match!");
+//                 tqDebug("width: %d\t\tother width: %d", width, other.width);
+//                 tqDebug("height: %d\t\tother height: %d", height, other.height);
+//                 tqDebug("fgRgb: %d\t\tother fgRgb: %d", fgRgb, other.fgRgb);
+//                 tqDebug("bgRgb: %d\t\tother bgRgb: %d", bgRgb, other.bgRgb);
+//                 tqDebug("surfaceFlags: %d\t\tother surfaceFlags: %d", surfaceFlags, other.surfaceFlags);
 //             }
             return match;
         }

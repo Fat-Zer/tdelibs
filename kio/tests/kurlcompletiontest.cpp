@@ -183,7 +183,7 @@ int main( int argc, char **argv )
         test.testLocalURL();
         test.teardown();
     }
-    qDebug( "All tests OK." );
+    tqDebug( "All tests OK." );
 
     return 0;
 }

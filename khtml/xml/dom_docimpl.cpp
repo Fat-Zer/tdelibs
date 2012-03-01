@@ -1108,7 +1108,7 @@ void DocumentImpl::setDocumentChanged(bool b)
 
 void DocumentImpl::recalcStyle( StyleChange change )
 {
-//     qDebug("recalcStyle(%p)", this);
+//     tqDebug("recalcStyle(%p)", this);
 //     TQTime qt;
 //     qt.start();
     if (m_inStyleRecalc)
@@ -1749,7 +1749,7 @@ bool DocumentImpl::prepareMouseEvent( bool readonly, int _x, int _y, MouseEvent 
 
         if (renderInfo.URLElement()) {
             assert(renderInfo.URLElement()->isElementNode());
-            //qDebug("urlnode: %s  (%d)", getTagName(renderInfo.URLElement()->id()).string().latin1(), renderInfo.URLElement()->id());
+            //tqDebug("urlnode: %s  (%d)", getTagName(renderInfo.URLElement()->id()).string().latin1(), renderInfo.URLElement()->id());
 
             ElementImpl* e =  static_cast<ElementImpl*>(renderInfo.URLElement());
             DOMString href = khtml::parseURL(e->getAttribute(ATTR_HREF));

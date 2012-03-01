@@ -178,7 +178,7 @@ bool PPDLoader::openUi( const TQString& name, const TQString& desc, const TQStri
 {
 	if ( m_option )
 	{
-		qWarning( "PPD syntax error, UI specification not correctly closed" );
+		tqWarning( "PPD syntax error, UI specification not correctly closed" );
 		endUi( m_option->name() );
 	}
 
@@ -418,7 +418,7 @@ bool PPDLoader::putFooProcessedData( const TQVariant& var )
 				}
 				else
 				{
-					qWarning( "Option %s not found in original PPD file", o->name().latin1() );
+					tqWarning( "Option %s not found in original PPD file", o->name().latin1() );
 					delete o;
 				}
 			}
@@ -507,7 +507,7 @@ void PPDLoader::processPageSizes( DrMain *driver )
 	TQDictIterator<PS_private> it( m_ps );
 	for ( ; it.current(); ++it )
 	{
-		//qDebug( "ADDING PAGESIZE: %16s, Size = ( %.2f, %.2f ),  Area = ( %.2f, %.2f, %.2f, %.2f )", it.current()->name.latin1(),
+		//tqDebug( "ADDING PAGESIZE: %16s, Size = ( %.2f, %.2f ),  Area = ( %.2f, %.2f, %.2f, %.2f )", it.current()->name.latin1(),
 		//		it.current()->size.width, it.current()->size.height,
 		//		it.current()->area.left, it.current()->area.bottom,
 		//		it.current()->area.right, it.current()->area.top );

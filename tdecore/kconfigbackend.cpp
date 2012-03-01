@@ -456,7 +456,7 @@ void KConfigINIBackEnd::parseSingleConfigFile(TQFile &rFile,
 
    //using kdDebug() here leads to an infinite loop
    //remove this for the release, aleXXX
-   //qWarning("Parsing %s, global = %s default = %s",
+   //tqWarning("Parsing %s, global = %s default = %s",
    //           rFile.name().latin1(), bGlobal ? "true" : "false", bDefault ? "true" : "false");
 
    TQCString aCurrentGroup("<default>");
@@ -486,7 +486,7 @@ void KConfigINIBackEnd::parseSingleConfigFile(TQFile &rFile,
 
       if (sigsetjmp (mmap_jmpbuf, 1))
       {
-qWarning("SIGBUS while reading %s", rFile.name().latin1());
+tqWarning("SIGBUS while reading %s", rFile.name().latin1());
          munmap(( char* )map, rFile.size());
          sigaction (SIGBUS, &mmap_old_sigact, 0);
          return;
@@ -696,7 +696,7 @@ qWarning("SIGBUS while reading %s", rFile.name().latin1());
       // insert the key/value line
       TQCString key(startLine, endOfKey - startLine + 2);
       TQCString val = printableToString(st, s - st);
-      //qDebug("found key '%s' with value '%s'", key.data(), val.data());
+      //tqDebug("found key '%s' with value '%s'", key.data(), val.data());
 
       if (TQString(key.data()) == "X-Ubuntu-Gettext-Domain") {
 	gettextDomain = val.data();

@@ -413,14 +413,14 @@ void RenderWidget::paint(PaintInfo& paintInfo, int _tx, int _ty)
         int xNew = xPos;
         int yNew = childy;
 
-        //         qDebug("cy=%d, ch=%d, childy=%d, childh=%d", cy, ch, childy, childh );
+        //         tqDebug("cy=%d, ch=%d, childy=%d, childh=%d", cy, ch, childy, childh );
         if ( childh == 3072 ) {
             if ( cy + ch > childy + childh ) {
                 yNew = cy + ( ch - childh )/2;
             } else if ( cy < childy ) {
                 yNew = cy + ( ch - childh )/2;
             }
-//             qDebug("calculated yNew=%d", yNew);
+//             tqDebug("calculated yNew=%d", yNew);
         }
         yNew = kMin( yNew, yPos + m_height - childh );
         yNew = kMax( yNew, yPos );
@@ -880,7 +880,7 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
 void RenderWidget::deref()
 {
     if (_ref) _ref--;
-//     qDebug( "deref(%p): width get count is %d", this, _ref);
+//     tqDebug( "deref(%p): width get count is %d", this, _ref);
     if (!_ref) {
         khtml::SharedPtr<RenderArena> guard(m_arena); //Since delete on us gets called -first-,
                                                       //before the arena free

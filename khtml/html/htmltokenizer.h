@@ -66,7 +66,7 @@ namespace khtml {
             attrs = 0;
             text = 0;
             flat = false;
-            //qDebug("new token, creating %08lx", attrs);
+            //tqDebug("new token, creating %08lx", attrs);
         }
         ~Token() {
             if(attrs) attrs->deref();

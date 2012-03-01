@@ -10,8 +10,8 @@ KIDLTest::KIDLTest( const TQCString& id )
 
 TQString KIDLTest::hello( const TQString& name )
 {
-    qDebug("Du heter %s", name.latin1() );
-    qDebug("Ha det %s", name.latin1() );
+    tqDebug("Du heter %s", name.latin1() );
+    tqDebug("Ha det %s", name.latin1() );
 	
     return TQString("Jeg heter KIDLTest");
 }
@@ -23,11 +23,11 @@ int main( int argc, char** argv )
     app.dcopClient()->attach();
     app.dcopClient()->registerAs( "kidlservertest" );
 
-    qDebug("Server process started...");
+    tqDebug("Server process started...");
 
     (void) new KIDLTest( "Hello" );
 
-    qDebug("Server listening ...");
+    tqDebug("Server listening ...");
 
     return app.exec();
 }

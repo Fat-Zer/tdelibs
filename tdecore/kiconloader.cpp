@@ -1173,7 +1173,7 @@ TQIconSet KIconLoader::loadIconSet( const TQString& name, KIcon::Group g, int s,
 
     if (g < -1 || g > 6) {
         kdDebug() << "KIconLoader::loadIconSet " << name << " " << (int)g << " " << s << endl;
-        qDebug("%s", kdBacktrace().latin1());
+        tqDebug("%s", kdBacktrace().latin1());
         abort();
     }
 

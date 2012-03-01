@@ -76,7 +76,7 @@ KZoneAllocator::~KZoneAllocator()
 #ifndef NDEBUG // as this is called quite late in the app, we don't care
 	       // to use kdDebug
   if (count > 1)
-    qDebug("zone still contained %d blocks", count);
+    tqDebug("zone still contained %d blocks", count);
 #endif
 }
 
@@ -190,12 +190,12 @@ KZoneAllocator::allocate(size_t _size)
    if ((unsigned long) _size + blockOffset > blockSize)
    {
       if (_size > blockSize) {
-	qDebug("KZoneAllocator: allocating more than %lu bytes", blockSize);
+	tqDebug("KZoneAllocator: allocating more than %lu bytes", blockSize);
 	return 0;
       }
       addBlock(new MemBlock(blockSize));
       blockOffset = 0;
-      //qDebug ("Allocating block #%d (%x)\n", num_blocks, currentBlock->begin);
+      //tqDebug ("Allocating block #%d (%x)\n", num_blocks, currentBlock->begin);
    }
    void *result = (void *)(currentBlock->begin+blockOffset);
    currentBlock->ref++;
@@ -214,7 +214,7 @@ KZoneAllocator::deallocate(void *ptr)
   if (!list) {
     /* Can happen with certain usage pattern of intermixed free_since()
        and deallocate().  */
-    //qDebug("Uhoh");
+    //tqDebug("Uhoh");
     return;
   }
   TQValueList<MemBlock*>::ConstIterator it = list->begin();
@@ -233,7 +233,7 @@ KZoneAllocator::deallocate(void *ptr)
   }
   /* Can happen with certain usage pattern of intermixed free_since()
      and deallocate().  */
-  //qDebug("Uhoh2");
+  //tqDebug("Uhoh2");
 }
 
 void

@@ -560,8 +560,8 @@ TQIODevice *tdeprint_ppdscanner_device = NULL;
 int tdeprint_ppdscanner_lno = 0;
 
 #if 0
-#define QDEBUG0(s) qDebug(s)
-#define QDEBUG1(s,a) qDebug(s,a)
+#define QDEBUG0(s) tqDebug(s)
+#define QDEBUG1(s,a) tqDebug(s,a)
 #else
 #define QDEBUG0(s)
 #define QDEBUG1(s,a)

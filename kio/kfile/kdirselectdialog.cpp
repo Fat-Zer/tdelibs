@@ -216,7 +216,7 @@ void KDirSelectDialog::setCurrentURL( const KURL& url )
             {
                 dirToList.setPath( path.left( pos +1 ) );
                 d->dirsToList.push( dirToList );
-//                 qDebug( "List: %s", dirToList.url().latin1());
+//                 tqDebug( "List: %s", dirToList.url().latin1());
             }
         }
     }
@@ -241,7 +241,7 @@ void KDirSelectDialog::openNextDir( KFileTreeViewItem * /*parent*/ )
             slotNextDirToList( item );
     }
 //     else
-//         qDebug("###### openNextDir: item not found!");
+//         tqDebug("###### openNextDir: item not found!");
 }
 
 void KDirSelectDialog::slotNextDirToList( KFileTreeViewItem *item )

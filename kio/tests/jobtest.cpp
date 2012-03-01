@@ -151,7 +151,7 @@ static void setTimeStamp( const TQString& path )
     utbuf.actime = tp.tv_sec - 30; // 30 seconds ago
     utbuf.modtime = tp.tv_sec - 60; // 60 second ago
     utime( TQFile::encodeName( path ), &utbuf );
-    qDebug( "Time changed for %s", path.latin1() );
+    tqDebug( "Time changed for %s", path.latin1() );
 #endif
 }
 

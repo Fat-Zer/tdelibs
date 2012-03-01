@@ -105,7 +105,7 @@ int KXErrorHandler::handle( Display* dpy, XErrorEvent* e )
         // e->serial >= first_request , compare like X timestamps to handle wrapping
         && NET::timestampCompare( e->serial, first_request ) >= 0 )
         { // it's for us
-        //qDebug( "Handling: %p", static_cast< void* >( this ));
+        //tqDebug( "Handling: %p", static_cast< void* >( this ));
         if( user_handler1 != NULL && user_handler1( e->request_code, e->error_code, e->resourceid ))
             was_error = true;
         if( user_handler2 != NULL && user_handler2( dpy, e ) != 0 )
@@ -114,7 +114,7 @@ int KXErrorHandler::handle( Display* dpy, XErrorEvent* e )
             was_error = true;
         return 0;
         }
-    //qDebug( "Going deeper: %p", static_cast< void* >( this ));
+    //tqDebug( "Going deeper: %p", static_cast< void* >( this ));
     return old_handler( dpy, e );
     }
 

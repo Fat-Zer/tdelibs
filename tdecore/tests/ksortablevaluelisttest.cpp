@@ -14,19 +14,19 @@ int main( int argc, char **argv )
     
     TQValueListIterator<KSortableItem<TQString> > it = list.begin();
 
-    qDebug("Insertion order:");
-    qDebug("================");
+    tqDebug("Insertion order:");
+    tqDebug("================");
     for ( ; it != list.end(); ++it )
-        qDebug( "%i: %s", (*it).index(), (*it).value().latin1() );
+        tqDebug( "%i: %s", (*it).index(), (*it).value().latin1() );
 
     list.sort();
     
-    qDebug("\nSorted:");
-    qDebug("=======");
+    tqDebug("\nSorted:");
+    tqDebug("=======");
     
     it = list.begin();
     for ( ; it != list.end(); ++it )
-        qDebug( "%i: %s", (*it).index(), (*it).value().latin1() );
+        tqDebug( "%i: %s", (*it).index(), (*it).value().latin1() );
     
     return 0;
 }

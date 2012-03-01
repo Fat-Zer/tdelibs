@@ -152,7 +152,7 @@ QDataStream arg(data, IO_WriteOnly);
 arg << 5;
 if (!client->send("someAppId", "fooObject/barObject", "doIt(int)",
 	          data))
-  qDebug("there was some error using DCOP.");
+  tqDebug("there was some error using DCOP.");
 
 OK, now let's say we wanted to get the data back from the remotely
 called function.  You have to execute a call() instead of a send().
@@ -166,7 +166,7 @@ QDataStream arg(data, IO_WriteOnly);
 arg << 5;
 if (!client->call("someAppId", "fooObject/barObject", "doIt(int)",
                   data, replyType, replyData))
-  qDebug("there was some error using DCOP.");
+  tqDebug("there was some error using DCOP.");
 else {
   QDataStream reply(replyData, IO_ReadOnly);
   if (replyType == "QString") {
@@ -174,7 +174,7 @@ else {
     reply >> result;
     print("the result is: %s",result.latin1());
   } else
-    qDebug("doIt returned an unexpected type of reply!");
+    tqDebug("doIt returned an unexpected type of reply!");
 }
 
 N.B.: You cannot call() a method belonging to an application which has
@@ -216,7 +216,7 @@ bool BarObject::process(const QCString &fun, const QByteArray &data,
     replyType = "QString";
     return true;
   } else {
-    qDebug("unknown function call to BarObject::process()");
+    tqDebug("unknown function call to BarObject::process()");
     return false;
   }
 }
@@ -255,7 +255,7 @@ bool BarObject::process(const QCString &fun, const QByteArray &data,
 
     return true;
   } else {
-    qDebug("unknown function call to BarObject::process()");
+    tqDebug("unknown function call to BarObject::process()");
     return false;
   }
 }
@@ -421,7 +421,7 @@ Example:
 
 void MyClass::myAsynchronousMethod(QString someParameter)
 {
-  qDebug("myAsyncMethod called with param `" + someParameter + "'");
+  tqDebug("myAsyncMethod called with param `" + someParameter + "'");
 }
 
 

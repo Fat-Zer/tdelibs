@@ -348,7 +348,7 @@ KSycocaDict::save(TQDataStream &str)
 
       if (maxDiv <= lastDiv)
          break;
-      // qWarning("Max Div = %d at pos %d", maxDiv, maxPos);
+      // tqWarning("Max Div = %d at pos %d", maxDiv, maxPos);
       lastDiv = maxDiv;
       addDiversity(d, maxPos);
       mHashList.append(maxPos);

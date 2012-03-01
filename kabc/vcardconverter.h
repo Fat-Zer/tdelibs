@@ -46,7 +46,7 @@ namespace KABC {
   Addressee::List list = converter.parseVCards( data );
 
   // print formatted name of first contact
-  qDebug( "name=%s", list[ 0 ].formattedName().latin1() );
+  tqDebug( "name=%s", list[ 0 ].formattedName().latin1() );
 
   \endcode
 */

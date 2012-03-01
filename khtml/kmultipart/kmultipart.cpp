@@ -232,7 +232,7 @@ void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
                         m_boundaryLength = m_boundary.length();
                     }
                 }
-                else if ( !qstrnicmp( line.data(), "Content-Encoding:", 17 ) )
+                else if ( !tqstrnicmp( line.data(), "Content-Encoding:", 17 ) )
                 {
                     TQString encoding = TQString::fromLatin1(line.data()+17).stripWhiteSpace().lower();
                     if (encoding == "gzip" || encoding == "x-gzip") {
@@ -242,7 +242,7 @@ void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
                     }
                 }
                 // parse Content-Type
-                else if ( !qstrnicmp( line.data(), "Content-Type:", 13 ) )
+                else if ( !tqstrnicmp( line.data(), "Content-Type:", 13 ) )
                 {
                     Q_ASSERT( m_nextMimeType.isNull() );
                     m_nextMimeType = TQString::fromLatin1( line.data() + 14 ).stripWhiteSpace();

@@ -40,7 +40,7 @@ void generateStub( const TQString& idl, const TQString& filename, TQDomElement d
 {
     TQFile stub( filename );
     if ( !stub.open( IO_WriteOnly ) )
-	qFatal("Could not write to %s", filename.local8Bit().data() );
+	tqFatal("Could not write to %s", filename.local8Bit().data() );
 	
     TQTextStream str( &stub );
 

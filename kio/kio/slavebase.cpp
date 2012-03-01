@@ -82,7 +82,7 @@ public:
    SlaveBaseConfig(SlaveBase *_slave)
 	: slave(_slave) { }
 
-   bool internalHasGroup(const TQCString &) const { qWarning("hasGroup(const TQCString &)");
+   bool internalHasGroup(const TQCString &) const { tqWarning("hasGroup(const TQCString &)");
 return false; }
 
    TQStringList groupList() const { return TQStringList(); }

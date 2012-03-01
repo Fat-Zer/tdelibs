@@ -107,7 +107,7 @@ KLedTest::nextLook() {
   }
   ledlook = static_cast<KLed::Look>(tmp);
   l->setLook(ledlook);
-  //qDebug("painting look %i", ledlook);
+  //tqDebug("painting look %i", ledlook);
   //l->repaint(); 
 }
 

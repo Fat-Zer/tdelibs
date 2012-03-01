@@ -39,7 +39,7 @@ static bool kdither_32_to_8( const TQImage *src, TQImage *dst )
     int	    y;
 	
     if ( !dst->create(src->width(), src->height(), 8, 256) ) {
-	qWarning("KPixmap: destination image not valid\n");
+	tqWarning("KPixmap: destination image not valid\n");
 	return false;
     }
 
@@ -224,7 +224,7 @@ bool KPixmap::convertFromImage( const TQImage &img, int conversion_flags  )
 {
     if ( img.isNull() ) {
 #if defined(CHECK_NULL)
-	qWarning( "KPixmap::convertFromImage: Cannot convert a null image" );
+	tqWarning( "KPixmap::convertFromImage: Cannot convert a null image" );
 #endif
 	return false;
     }

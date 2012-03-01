@@ -142,13 +142,13 @@ Form1::~Form1()
 
 void Form1::slotAdd()
 {
-    qDebug("** adding: %s", LineEdit1->text().latin1() );
+    tqDebug("** adding: %s", LineEdit1->text().latin1() );
     edit->completionObject()->addItem( LineEdit1->text() );
     
     TQStringList matches = edit->completionObject()->allMatches("S");
     TQStringList::ConstIterator it = matches.begin();
     for ( ; it != matches.end(); ++it )
-        qDebug("-- %s", (*it).latin1());
+        tqDebug("-- %s", (*it).latin1());
 }
 
 void Form1::slotRemove()

@@ -99,7 +99,7 @@ static TQCString getDescrFromNum(unsigned int _num)
 
   TQFile file(filename);
   if (!file.open(IO_ReadOnly)) {
-    qWarning("Couldn't open %s", filename.local8Bit().data());
+    tqWarning("Couldn't open %s", filename.local8Bit().data());
     file.close();
     return TQCString();
   }
@@ -121,7 +121,7 @@ static TQCString getDescrFromNum(unsigned int _num)
           continue; // We have an eof, a comment or an empty line
 
       if (ch < '0' && ch > '9') {
-          qWarning("Syntax error: no number (line %u)",lineNumber);
+          tqWarning("Syntax error: no number (line %u)",lineNumber);
           continue;
       }
 

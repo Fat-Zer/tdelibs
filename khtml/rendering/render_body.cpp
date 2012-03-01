@@ -43,7 +43,7 @@ RenderBody::~RenderBody()
 
 void RenderBody::setStyle(RenderStyle* style)
 {
-//     qDebug("RenderBody::setStyle()");
+//     tqDebug("RenderBody::setStyle()");
     // ignore position: fixed on body
     if (style->htmlHacks() && style->position() == FIXED)
         style->setPosition(STATIC);

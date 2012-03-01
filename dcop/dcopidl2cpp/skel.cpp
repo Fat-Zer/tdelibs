@@ -68,7 +68,7 @@ void generateSkel( const TQString& idl, const TQString& filename, TQDomElement d
 {
     TQFile skel( filename );
     if ( !skel.open( IO_WriteOnly ) )
-	qFatal("Could not write to %s", filename.local8Bit().data() );
+	tqFatal("Could not write to %s", filename.local8Bit().data() );
 
     TQTextStream str( &skel );
 
@@ -418,7 +418,7 @@ void generateSkel( const TQString& idl, const TQString& filename, TQDomElement d
 	    funcName += ")";
 	
 	    if ( result != "void" )
-	       qFatal("Error in DCOP signal %s::%s: DCOP signals can not return values.", className.latin1(), funcName.latin1());
+	       tqFatal("Error in DCOP signal %s::%s: DCOP signals can not return values.", className.latin1(), funcName.latin1());
 	
 	    str << "    TQByteArray data;" << endl;
 	    if ( !args.isEmpty() ) {

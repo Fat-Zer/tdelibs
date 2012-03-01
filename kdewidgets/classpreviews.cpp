@@ -24,6 +24,6 @@ KDialogPreview::KDialogPreview(TQWidget * parent , const char * /* name , bool, 
    if (parent)
       reparent(parent, TQPoint(0,0), true);
    else
-      qDebug("Error while reparenting!");
+      tqDebug("Error while reparenting!");
 }
 

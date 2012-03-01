@@ -137,7 +137,7 @@ public:
 
         keys = cfg.readListEntry( "/kthemestyle/themes", &ok);
         if ( !ok )
-            qWarning( "KThemeStyle cache seems corrupt!\n" ); //Too bad one can't i18n this :-(
+            tqWarning( "KThemeStyle cache seems corrupt!\n" ); //Too bad one can't i18n this :-(
 
         return keys;
     }

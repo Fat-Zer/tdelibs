@@ -102,7 +102,7 @@ void queryApplications(const TQCString &filter)
 
     if ( !dcop->isAttached() )
     {
-	qWarning( "server not accessible" );
+	tqWarning( "server not accessible" );
         exit(1);
     }
 }
@@ -135,9 +135,9 @@ void queryObjects( const TQCString &app, const TQCString &filter )
     if ( !ok )
     {
         if (!dcop->isApplicationRegistered(app))
-            qWarning( "No such application: '%s'", app.data());
+            tqWarning( "No such application: '%s'", app.data());
         else
-            qWarning( "Application '%s' not accessible", app.data() );
+            tqWarning( "Application '%s' not accessible", app.data() );
         exit(1);
     }
 }
@@ -151,7 +151,7 @@ void queryFunctions( const char* app, const char* obj )
     }
     if ( !ok )
     {
-	qWarning( "object '%s' in application '%s' not accessible", obj, app );
+	tqWarning( "object '%s' in application '%s' not accessible", obj, app );
 	exit( 1 );
     }
 }
@@ -164,7 +164,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 
     if ( right <  left )
     {
-	qWarning( "parentheses do not match" );
+	tqWarning( "parentheses do not match" );
 	return( 1 );
     }
 
@@ -177,7 +177,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 	    goto doit;
 	if ( !ok )
 	{
-	    qWarning( "object not accessible" );
+	    tqWarning( "object not accessible" );
 	    return( 1 );
 	}
 	for ( QCStringList::Iterator it = funcs.begin(); it != funcs.end(); ++it ) {
@@ -205,7 +205,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 	}
 	if ( realfunc.isEmpty() )
 	{
-	    qWarning("no such function");
+	    tqWarning("no such function");
 	    return( 1 );
 	}
 	f = realfunc;
@@ -257,7 +257,7 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 
 		if ( s < static_cast<int>(partl.count())-1)
 		{
-			qWarning("The argument `%s' seems syntactically wrong.",
+			tqWarning("The argument `%s' seems syntactically wrong.",
 				lt.latin1());
 		}
 		if ( s == static_cast<int>(partl.count())-1)
@@ -294,12 +294,12 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
 
     if ( i != args.count() )
     {
-	qWarning( "arguments do not match" );
+	tqWarning( "arguments do not match" );
 	return( 1 );
     }
 
     if ( !dcop->call( app, obj, f.latin1(),  data, replyType, replyData) ) {
-	qWarning( "call failed");
+	tqWarning( "call failed");
 	return( 1 );
     } else {
 	TQDataStream reply(replyData, IO_ReadOnly);

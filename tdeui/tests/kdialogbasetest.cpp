@@ -68,9 +68,9 @@ int main(int argc, char** argv)
   /* The dialog object is used just as any other TQDialog: */
   if(dialog.exec())
     {
-      qDebug("Accepted.");
+      tqDebug("Accepted.");
     } else {
-      qDebug("Rejected.");
+      tqDebug("Rejected.");
     }
   return 0;
 }

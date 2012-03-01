@@ -1083,7 +1083,7 @@ TQString KStandardDirs::kde_default(const char *type) {
 			return "share/emoticons";
 
 
-    qFatal("unknown resource type %s", type);
+    tqFatal("unknown resource type %s", type);
     return TQString::null;
 }
 
@@ -1118,7 +1118,7 @@ TQString KStandardDirs::saveLocation(const char *type,
        else {
           dirs = absolutes.find(type);
           if (!dirs)
-             qFatal("KStandardDirs: The resource type %s is not registered", type);
+             tqFatal("KStandardDirs: The resource type %s is not registered", type);
           pPath = new TQString(realPath(dirs->last()));
        }
 

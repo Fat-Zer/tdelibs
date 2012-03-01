@@ -126,7 +126,7 @@ void dcopidlInitFlex( const char *_code );
 
 void yyerror( const char *s )
 {
-	qDebug( "In line %i : %s", idl_line_no, s );
+	tqDebug( "In line %i : %s", idl_line_no, s );
         exit(1);
 	//   theParser->parse_error( idl_lexFile, s, idl_line_no );
 }

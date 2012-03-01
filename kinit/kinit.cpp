@@ -1545,7 +1545,7 @@ int tdeinit_xio_errhandler( Display *disp )
     // disp is 0L when KDE shuts down. We don't want those warnings then.
 
     if ( disp )
-    qWarning( "tdeinit: Fatal IO error: client killed" );
+    tqWarning( "tdeinit: Fatal IO error: client killed" );
 
     if (sock_file[0])
     {
@@ -1567,7 +1567,7 @@ int tdeinit_xio_errhandler( Display *disp )
     }
 
     if ( disp )
-    qWarning( "tdeinit: sending SIGHUP to children." );
+    tqWarning( "tdeinit: sending SIGHUP to children." );
 
     /* this should remove all children we started */
     signal(SIGHUP, SIG_IGN);
@@ -1576,14 +1576,14 @@ int tdeinit_xio_errhandler( Display *disp )
     sleep(2);
 
     if ( disp )
-    qWarning( "tdeinit: sending SIGTERM to children." );
+    tqWarning( "tdeinit: sending SIGTERM to children." );
 
     /* and if they don't listen to us, this should work */
     signal(SIGTERM, SIG_IGN);
     kill(0, SIGTERM);
 
     if ( disp )
-    qWarning( "tdeinit: Exit." );
+    tqWarning( "tdeinit: Exit." );
 
     exit( 0 );
     return 0;

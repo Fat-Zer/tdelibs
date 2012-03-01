@@ -45,7 +45,7 @@ TQCString& replyType, TQByteArray &replyData)
 
     struct timeval tv;
     gettimeofday(&tv, 0);
-qWarning("%s: function('%s') %d:%06d", name(), m_remoteName.data(), tv.tv_sec % 100, tv.tv_usec);
+tqWarning("%s: function('%s') %d:%06d", name(), m_remoteName.data(), tv.tv_sec % 100, tv.tv_usec);
 
     replyType = "TQString";
     TQDataStream reply( replyData, IO_WriteOnly );
@@ -60,13 +60,13 @@ void MyDCOPObject::slotTimeout()
 {
     struct timeval tv;
     gettimeofday(&tv, 0);
-qWarning("%s: slotTimeout() %d:%06d", name(), tv.tv_sec % 100, tv.tv_usec);
+tqWarning("%s: slotTimeout() %d:%06d", name(), tv.tv_sec % 100, tv.tv_usec);
 
   m_timer.start(1000, true);
   TQString result;
   DCOPRef(m_remoteName, m_remoteName).call("function", TQCString(name())).get(result);
     gettimeofday(&tv, 0);
-qWarning("%s: Got result '%s' %d:%06d", name(), result.latin1(), tv.tv_sec % 100, tv.tv_usec);
+tqWarning("%s: Got result '%s' %d:%06d", name(), result.latin1(), tv.tv_sec % 100, tv.tv_usec);
 }
 
 int main(int argc, char **argv)
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
   TQCString myName = KApplication::dcopClient()->registerAs("testdcop", false);
   KApplication app(argc, argv, "testdcop");
 
-  qWarning("%d:I am '%s'", getpid(), app.dcopClient()->appId().data());
+  tqWarning("%d:I am '%s'", getpid(), app.dcopClient()->appId().data());
   
   if (myName == "testdcop")
   {

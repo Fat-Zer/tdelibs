@@ -168,7 +168,7 @@ KAboutData::setLicenseText( const char *licenseText )
 void
 KAboutData::setLicenseTextFile( const TQString &file )
 {
-  mLicenseText = qstrdup(TQFile::encodeName(file));
+  mLicenseText = tqstrdup(TQFile::encodeName(file));
   mLicenseKey = License_File;
 }
 
@@ -275,7 +275,7 @@ KAboutData::translateInternalProgramName() const
   delete[] d->mTranslatedProgramName;
   d->mTranslatedProgramName = 0;
   if( KGlobal::locale() )
-      d->mTranslatedProgramName = qstrdup( programName().utf8());
+      d->mTranslatedProgramName = tqstrdup( programName().utf8());
 }
 
 TQImage

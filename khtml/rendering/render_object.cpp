@@ -1273,7 +1273,7 @@ void RenderObject::setStyle(RenderStyle *style)
         return;
 
     RenderStyle::Diff d = m_style ? m_style->diff( style ) : RenderStyle::Layout;
-    //qDebug("m_style: %p new style, diff=%d", m_style,  d);
+    //tqDebug("m_style: %p new style, diff=%d", m_style,  d);
 
     Priority pri = NormalPriority;
     if (m_style) {

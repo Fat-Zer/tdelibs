@@ -63,7 +63,7 @@ int main( int argc, char **argv )
 
   TQFile file( inputFile );
   if ( !file.open( IO_ReadOnly ) ) {
-    qDebug( "Unable to open file '%s' for reading!", file.name().latin1() );
+    tqDebug( "Unable to open file '%s' for reading!", file.name().latin1() );
     return 1;
   }
 

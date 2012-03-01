@@ -8,12 +8,12 @@ DummyMeta::DummyMeta( TQObject *parent, const char *name,
                       const TQStringList &preferredItems )
     : KFilePlugin( parent, name, preferredItems )
 {
-    qDebug("---- DummyMeta::DummyMeta: got %i preferred items.", preferredItems.count());
+    tqDebug("---- DummyMeta::DummyMeta: got %i preferred items.", preferredItems.count());
 }
 
 bool DummyMeta::readInfo( KFileMetaInfo::Internal & info )
 {
-   qDebug("#### DummyMeta:: readInfo: %s", info.path().latin1() );
+   tqDebug("#### DummyMeta:: readInfo: %s", info.path().latin1() );
    return 0L;
 }
 

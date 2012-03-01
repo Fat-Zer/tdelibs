@@ -139,7 +139,7 @@ int main( int argc, char ** argv )
   num = KGlobal::locale()->readNumber( "12,0000000", &ok ); check("readNumber(12,0000000)",ok?"yes":"no","no");
   num = KGlobal::locale()->readNumber( "12,146,131.12", &ok ); check("readNumber(12,146,131.12)",ok?"yes":"no","yes");
   num = KGlobal::locale()->readNumber( "1.12345678912", &ok );
-        qDebug( "%s", TQString::number( num, 'g', 12 ).latin1() ); // warning this is the only way to see all decimals
+        tqDebug( "%s", TQString::number( num, 'g', 12 ).latin1() ); // warning this is the only way to see all decimals
         check("readNumber(1.12345678912)",ok && num==1.12345678912?"yes":"no","yes");
   // bug 95511
   KLocale locale(*KGlobal::locale());

@@ -548,7 +548,7 @@ static void appendRun( BidiState &bidi )
 static void embed( TQChar::Direction d, BidiState &bidi )
 {
 #if BIDI_DEBUG > 1
-    qDebug("*** embed dir=%d emptyrun=%d", d, emptyRun );
+    tqDebug("*** embed dir=%d emptyrun=%d", d, emptyRun );
 #endif
     bool b = adjustEmbedding ;
     adjustEmbedding = false;

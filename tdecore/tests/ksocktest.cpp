@@ -77,7 +77,7 @@ main(int argc, char *argv[])
    list = KExtendedSocket::lookup("www.kde.org", "http", KExtendedSocket::inetSocket);
    for(KAddressInfo *info = list.first(); info; info = list.next())
    {
-      qWarning("Lookup: %s %s %s", info->address()->pretty().latin1(),
+      tqWarning("Lookup: %s %s %s", info->address()->pretty().latin1(),
 		                   info->address()->isEqual(KInetSocketAddress("213.203.58.36", 80)) ?
 				   "is equal to" : "is NOT equal to",
 				   "213.203.58.36 port 80");
@@ -91,7 +91,7 @@ main(int argc, char *argv[])
    TQPtrList<KAddressInfo> cns = KExtendedSocket::lookup("www.kde.org", 0, KExtendedSocket::canonName, &err);
    for (KAddressInfo *x = cns.first(); x; x = cns.next()) {
         const char *canon = x->canonname();
-        qWarning( "Lookup: %s", canon ? canon : "<Null>");
+        tqWarning( "Lookup: %s", canon ? canon : "<Null>");
    }
    check("KExtendedSocket::lookup() canonical", cns.first()->canonname(), "www.kde.org");
 

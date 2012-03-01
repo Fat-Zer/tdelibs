@@ -191,7 +191,7 @@ CSSRuleImpl *CSSParser::parseRule( DOM::CSSStyleSheetImpl *sheet, const DOM::DOM
     for ( unsigned int i = 0; i < strlen(khtml_rule); i++ )
         data[i] = khtml_rule[i];
     memcpy( data + strlen( khtml_rule ), string.unicode(), string.length()*sizeof( unsigned short) );
-    // qDebug("parse string = '%s'", TQConstString( (const TQChar *)data, length ).string().latin1() );
+    // tqDebug("parse string = '%s'", TQConstString( (const TQChar *)data, length ).string().latin1() );
     data[length-4] = '}';
 
     runParser(length);
@@ -220,7 +220,7 @@ bool CSSParser::parseValue( DOM::CSSStyleDeclarationImpl *declaration, int _id, 
         data[i] = khtml_value[i];
     memcpy( data + strlen( khtml_value ), string.unicode(), string.length()*sizeof( unsigned short) );
     data[length-4] = '}';
-    // qDebug("parse string = '%s'", TQConstString( (const TQChar *)data, length ).string().latin1() );
+    // tqDebug("parse string = '%s'", TQConstString( (const TQChar *)data, length ).string().latin1() );
 
     id = _id;
     important = _important;
@@ -838,7 +838,7 @@ bool CSSParser::parseValue( int propId, bool important )
         break;
 
     case CSS_PROP_Z_INDEX:              // auto | <integer> | inherit
-        // qDebug("parsing z-index: id=%d, fValue=%f", id, value->fValue );
+        // tqDebug("parsing z-index: id=%d, fValue=%f", id, value->fValue );
         if ( id == CSS_VAL_AUTO ) {
             valid_primitive = true;
             break;
@@ -1271,7 +1271,7 @@ bool CSSParser::parse4Values(int propId, const int *properties,  bool important 
      */
 
     int num = inShorthand() ? 1 : valueList->size();
-    //qDebug("parse4Values: num=%d %d", num,  valueList->numValues );
+    //tqDebug("parse4Values: num=%d %d", num,  valueList->numValues );
 
     ShorthandScope scope(this, propId);
 
@@ -1710,7 +1710,7 @@ bool CSSParser::parseShape( int propId, bool important )
     Value *value = valueList->current();
     ValueList *args = value->function->args;
     TQString fname = qString( value->function->name ).lower();
-    //qDebug( "parseShape: fname: %d", fname.latin1() );
+    //tqDebug( "parseShape: fname: %d", fname.latin1() );
     if ( fname != "rect(" || !args )
         return false;
 
@@ -2373,7 +2373,7 @@ int DOM::CSSParser::lex( void *_yylval )
     unsigned short *t = text( &length );
 
 #ifdef TOKEN_DEBUG
-    qDebug("CSSTokenizer: got token %d: '%s'", token, token == END ? "" : TQString( (TQChar *)t, length ).latin1() );
+    tqDebug("CSSTokenizer: got token %d: '%s'", token, token == END ? "" : TQString( (TQChar *)t, length ).latin1() );
 #endif
     switch( token ) {
     case '{':
@@ -2443,7 +2443,7 @@ int DOM::CSSParser::lex( void *_yylval )
     case FLOAT:
     case INTEGER:
         yylval->val = TQString( (TQChar *)t, length ).toDouble();
-        //qDebug("value = %s, converted=%.2f", TQString( (TQChar *)t, length ).latin1(), yylval->val );
+        //tqDebug("value = %s, converted=%.2f", TQString( (TQChar *)t, length ).latin1(), yylval->val );
         break;
 
     default:
@@ -2542,12 +2542,12 @@ unsigned short *DOM::CSSParser::text(int *length)
             int uc = 0;
             escape++;
             while ( escape < current ) {
-//                 qDebug("toHex( %c = %x", (char)*escape, toHex( *escape ) );
+//                 tqDebug("toHex( %c = %x", (char)*escape, toHex( *escape ) );
                 uc *= 16;
                 uc += toHex( *escape );
                 escape++;
             }
-//             qDebug(" converting escape: string='%s', value=0x%x", TQString( (TQChar *)e, current-e ).latin1(), uc );
+//             tqDebug(" converting escape: string='%s', value=0x%x", TQString( (TQChar *)e, current-e ).latin1(), uc );
             // can't handle chars outside ucs2
             if ( uc > 0xffff )
                 uc = 0xfffd;
@@ -2571,12 +2571,12 @@ unsigned short *DOM::CSSParser::text(int *length)
         int uc = 0;
         escape++;
         while ( escape < start+l ) {
-            //                 qDebug("toHex( %c = %x", (char)*escape, toHex( *escape ) );
+            //                 tqDebug("toHex( %c = %x", (char)*escape, toHex( *escape ) );
             uc *= 16;
             uc += toHex( *escape );
             escape++;
         }
-        //             qDebug(" converting escape: string='%s', value=0x%x", TQString( (TQChar *)e, current-e ).latin1(), uc );
+        //             tqDebug(" converting escape: string='%s', value=0x%x", TQString( (TQChar *)e, current-e ).latin1(), uc );
         // can't handle chars outside ucs2
         if ( uc > 0xffff )
             uc = 0xfffd;
@@ -2601,13 +2601,13 @@ typedef unsigned int YY_CHAR;
         *yy_cp = 0; \
         yy_c_buf_p = yy_cp;
 #define YY_BREAK break;
-#define ECHO qDebug( "%s", TQString( (TQChar *)yytext, yyleng ).latin1() )
+#define ECHO tqDebug( "%s", TQString( (TQChar *)yytext, yyleng ).latin1() )
 #define YY_RULE_SETUP
 #define INITIAL 0
 #define YY_STATE_EOF(state) (YY_END_OF_BUFFER + state + 1)
 #define YY_START ((yy_start - 1) / 2)
 #define yyterminate() yyTok = END; return yyTok
-#define YY_FATAL_ERROR(a) qFatal(a)
+#define YY_FATAL_ERROR(a) tqFatal(a)
 #define BEGIN yy_start = 1 + 2 *
 #define COMMENT 1
 

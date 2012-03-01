@@ -63,7 +63,7 @@ public:
   MyDCOPObject(const TQCString &name) : DCOPObject(name) {}
   bool process(const TQCString &fun, const TQByteArray &data,
 	       TQCString& replyType, TQByteArray &replyData);
-  void function(const TQString &arg1, int arg2) { qDebug("function got arg: %s and %d", arg1.utf8().data(), arg2); }
+  void function(const TQString &arg1, int arg2) { tqDebug("function got arg: %s and %d", arg1.utf8().data(), arg2); }
 public slots:
   void slotTimeout();
   void slotTimeout2();

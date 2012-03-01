@@ -207,7 +207,7 @@ public:
 	    // other threads are already using the API, so wait till
 	    // it's all clear
 	    // the thread that emits this condition will also call res_init
-	    //qDebug("ResInitUsage: waiting for libresolv to be clear");
+	    //tqDebug("ResInitUsage: waiting for libresolv to be clear");
 	    cond.wait(&mutex);
 	  }
 	else
@@ -264,12 +264,12 @@ void KResolverThread::run()
   // initialisation
   // enter the loop already
 
-  //qDebug("KResolverThread(thread %u/%p): started", pid, (void*)TQThread::currentThread());
+  //tqDebug("KResolverThread(thread %u/%p): started", pid, (void*)TQThread::currentThread());
   KResolverManager::manager()->registerThread(this);
   while (true)
     {
       data = KResolverManager::manager()->requestData(this, ::maxThreadWaitTime);
-      //qDebug("KResolverThread(thread %u/%p) got data %p", KResolverManager::pid, 
+      //tqDebug("KResolverThread(thread %u/%p) got data %p", KResolverManager::pid, 
       //       (void*)TQThread::currentThread(), (void*)data);
       if (data)
 	{
@@ -292,7 +292,7 @@ void KResolverThread::run()
     }
 
   KResolverManager::manager()->unregisterThread(this);
-  //qDebug("KResolverThread(thread %u/%p): exiting", pid, (void*)TQThread::currentThread());
+  //tqDebug("KResolverThread(thread %u/%p): exiting", pid, (void*)TQThread::currentThread());
 }
 
 bool KResolverThread::checkResolver()
@@ -415,7 +415,7 @@ void KResolverManager::releaseData(KResolverThread *, RequestData* data)
   // This function is called in a worker thread!!
   /////
 
-  //qDebug("KResolverManager::releaseData(%u/%p): %p has been released", pid, 
+  //tqDebug("KResolverManager::releaseData(%u/%p): %p has been released", pid, 
 //	 (void*)TQThread::currentThread(), (void*)data);
 
   if (data->obj)
@@ -460,7 +460,7 @@ void KResolverManager::handleFinished()
       curr = currentRequests.prev();
     }
       
-  //qDebug("KResolverManager::handleFinished(%u): %d requests to notify", pid, doneRequests.count());
+  //tqDebug("KResolverManager::handleFinished(%u): %d requests to notify", pid, doneRequests.count());
   while (RequestData *d = doneRequests.dequeue())
     doNotifying(d);
 
@@ -468,7 +468,7 @@ void KResolverManager::handleFinished()
 
   if (redo)
     {
-      //qDebug("KResolverManager::handleFinished(%u): restarting processing to catch requestor",
+      //tqDebug("KResolverManager::handleFinished(%u): restarting processing to catch requestor",
 	//     pid);
       handleFinished();
     }
@@ -490,7 +490,7 @@ bool KResolverManager::handleFinishedItem(RequestData* curr)
       if (curr->requestor)
 	--curr->requestor->nRequests;
 
-      //qDebug("KResolverManager::handleFinishedItem(%u): removing %p since it's done",
+      //tqDebug("KResolverManager::handleFinishedItem(%u): removing %p since it's done",
 	//     pid, (void*)curr);
       return true;
     }
@@ -600,7 +600,7 @@ void KResolverManager::doNotifying(RequestData *p)
 	  // reset address
 	  r.setAddress(p->input->node, p->input->service);
 
-	  //qDebug("KResolverManager::doNotifying(%u/%p): for %p whose status is %d and has %d results", 
+	  //tqDebug("KResolverManager::doNotifying(%u/%p): for %p whose status is %d and has %d results", 
 		 //pid, (void*)TQThread::currentThread(), (void*)p, p->obj->status, r.count());
 
 	  p->obj->errorcode = r.error();

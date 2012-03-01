@@ -462,7 +462,7 @@ void Font::update( TQPaintDeviceMetrics* devMetrics ) const
     // Also, Qt does not support sizing a TQFont to zero.
     size = kMax(1, kMin(255, size));
 
-//       qDebug("setting font to %s, italic=%d, weight=%d, size=%d", fontDef.family.latin1(), fontDef.italic,
+//       tqDebug("setting font to %s, italic=%d, weight=%d, size=%d", fontDef.family.latin1(), fontDef.italic,
 //    	   fontDef.weight, size );
 
 

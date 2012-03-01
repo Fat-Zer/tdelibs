@@ -378,7 +378,7 @@ testWindow::~testWindow ()
   delete tb1;
   delete menuBar;
 
-  qDebug ("twindowtest finished");
+  tqDebug ("twindowtest finished");
 }
 
 void testWindow::beFixed()

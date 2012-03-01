@@ -510,7 +510,7 @@ RenderStyle *CSSStyleSelector::styleForElement(ElementImpl *e)
 	    if ( selectorCache[i].state == Applies ) {
 		++smatch;
 
-// 		qDebug("adding property" );
+// 		tqDebug("adding property" );
 		for ( unsigned int p = 0; p < selectorCache[i].props_size; p += 2 )
 		    for ( unsigned int j = 0; j < (unsigned int )selectorCache[i].props[p+1]; ++j ) {
                         if (numPropsToApply >= propsToApplySize ) {
@@ -540,8 +540,8 @@ RenderStyle *CSSStyleSelector::styleForElement(ElementImpl *e)
     // count as author rules, and come before all other style sheets, see hack in append()
     numPropsToApply = addInlineDeclarations( e, e->m_styleDecls, numPropsToApply );
 
-//     qDebug( "styleForElement( %s )", e->tagName().string().latin1() );
-//     qDebug( "%d selectors, %d checked,  %d match,  %d properties ( of %d )",
+//     tqDebug( "styleForElement( %s )", e->tagName().string().latin1() );
+//     tqDebug( "%d selectors, %d checked,  %d match,  %d properties ( of %d )",
 // 	    selectors_size, schecked, smatch, numPropsToApply, properties_size );
 
     bubbleSort( propsToApply, propsToApply+numPropsToApply-1 );
@@ -582,7 +582,7 @@ RenderStyle *CSSStyleSelector::styleForElement(ElementImpl *e)
 
         if ( numPseudoProps ) {
 	    fontDirty = false;
-            //qDebug("%d applying %d pseudo props", e->cssTagId(), pseudoProps->count() );
+            //tqDebug("%d applying %d pseudo props", e->cssTagId(), pseudoProps->count() );
             for (unsigned int i = 0; i < numPseudoProps; ++i) {
 		if ( fontDirty && pseudoProps[i]->priority >= (1 << 30) ) {
 		    // we are past the font properties, time to update to the
@@ -1090,7 +1090,7 @@ void CSSStyleSelector::checkSelector(int selIndex, DOM::ElementImpl * e)
 	selectors[ selIndex ]->pseudoId = dynamicPseudo;
     } else
 	selectorCache[ selIndex ].state = Applies;
-    //qDebug( "selector %d applies", selIndex );
+    //tqDebug( "selector %d applies", selIndex );
     //selectors[ selIndex ]->print();
     return;
 }
@@ -1867,7 +1867,7 @@ void CSSStyleSelectorList::collect( TQPtrList<CSSSelector> *selectorList, CSSOrd
 	if ( !sel )
 	    selectorList->append( r->selector );
 //	else
-//	    qDebug("merged one selector");
+//	    tqDebug("merged one selector");
 	propList->append(r->rule->declaration(), selectorNum, r->selector->specificity(), regular, important );
 	r = next();
     }

@@ -87,11 +87,11 @@ SourceParam::_parse()
 	par_ = strRep_.left(i);
 	val_ = strRep_.right(strRep_.length() - i - 1);
 	
-	if (qstricmp(par_, "VALUE") == 0 && qstricmp(val_, "uri") == 0)
+	if (tqstricmp(par_, "VALUE") == 0 && tqstricmp(val_, "uri") == 0)
 		type_ = TypeValue;
-	else if (qstricmp(par_, "CONTEXT") == 0 && qstricmp(val_, "word") == 0)
+	else if (tqstricmp(par_, "CONTEXT") == 0 && tqstricmp(val_, "word") == 0)
 		type_ = TypeContext;
-	else if (qstrnicmp(par_, "X-", 2) == 0) {
+	else if (tqstrnicmp(par_, "X-", 2) == 0) {
 		type_ = TypeX;
 	}
 	else type_ = TypeUnknown;

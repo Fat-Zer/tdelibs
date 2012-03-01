@@ -84,13 +84,13 @@ ClassValue::clone()
 	void
 ClassValue::_parse()
 {
-	if (qstricmp(strRep_, "PUBLIC") == 0)
+	if (tqstricmp(strRep_, "PUBLIC") == 0)
 		classType_ = Public;
 		
-	else if (qstricmp(strRep_, "PRIVATE") == 0)
+	else if (tqstricmp(strRep_, "PRIVATE") == 0)
 		classType_ = Private;
 	
-	else if (qstricmp(strRep_, "CONFIDENTIAL") == 0)
+	else if (tqstricmp(strRep_, "CONFIDENTIAL") == 0)
 		classType_ = Confidential;
 	
 	else classType_ = Other;

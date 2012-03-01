@@ -281,7 +281,7 @@ TQ_OBJECT		;
 			  if (function_mode)
 				return yylex(); // call once again
 
-			  qFatal("could not parse %c(%d) at line %d" , yytext[0], yytext[0], idl_line_no);
+			  tqFatal("could not parse %c(%d) at line %d" , yytext[0], yytext[0], idl_line_no);
 			  return T_UNKNOWN;
 			}
 

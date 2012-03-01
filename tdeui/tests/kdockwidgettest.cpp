@@ -101,7 +101,7 @@ DockApplication::DockApplication( const char* name )
   l->setBackgroundColor(white);
   l->setMinimumSize(100,100);
   dock5->setWidget(l);
-  if (::tqqt_cast<KDockContainer*>(l)) qDebug("KDockContainer created for dock 5");
+  if (::tqqt_cast<KDockContainer*>(l)) tqDebug("KDockContainer created for dock 5");
   /*****************************************************/
 
   /*****************************************************/
@@ -112,7 +112,7 @@ DockApplication::DockApplication( const char* name )
   l->setBackgroundColor(white);
   l->setMinimumSize(100,100);
   dock6->setWidget(l);
-  if (::tqqt_cast<KDockContainer*>(l)) qDebug("KDockContainer created for dock 6");
+  if (::tqqt_cast<KDockContainer*>(l)) tqDebug("KDockContainer created for dock 6");
   /*****************************************************/
 
 
@@ -143,7 +143,7 @@ DockApplication::DockApplication( const char* name )
 
   setGeometry(200, 100, 500, 300);
 
-  qDebug("load config");
+  tqDebug("load config");
   readDockConfig();
 
   updateButton();
@@ -151,7 +151,7 @@ DockApplication::DockApplication( const char* name )
 
 DockApplication::~DockApplication()
 {
-  qDebug("Close & store config");
+  tqDebug("Close & store config");
   writeDockConfig();
 }
 

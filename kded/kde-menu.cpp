@@ -60,7 +60,7 @@ static void result(const TQString &txt)
 
 static void error(int exitCode, const TQString &txt)
 {
-   qWarning("kde-menu: %s", txt.local8Bit().data());
+   tqWarning("kde-menu: %s", txt.local8Bit().data());
    exit(exitCode);
 }
 
@@ -150,7 +150,7 @@ int main(int argc, char **argv)
       TQCString _launcher = KApplication::launcher();
       if (!DCOPRef(_launcher, _launcher).call("tdeinit_exec_wait", command, args).isValid())
       {
-         qWarning("Can't talk to klauncher!");
+         tqWarning("Can't talk to klauncher!");
          command = KGlobal::dirs()->findExe(command);
          command += " " + args.join(" ");
          system(command.local8Bit());

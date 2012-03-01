@@ -50,14 +50,14 @@ int main(int argc,char **argv)
   d.setLocality("Lummerstadt");
   d.setCountry ("");
 
-  qDebug( "-------------------------------------\nShould have german address formatting, local country formatting\n" );
-  qDebug( a.formattedAddress("Jim Knopf").latin1() );
-  qDebug( "-------------------------------------\nShould have US address formatting, local country formatting\n" );
-  qDebug( b.formattedAddress("Huck Finn").latin1() );
-  qDebug( "-------------------------------------\nShould have german address formatting, local country formatting\n" );
-  qDebug( c.formattedAddress("Jim Knopf").latin1() );
-  qDebug( "-------------------------------------\nShould have local address formatting, local country formatting\n" );
-  qDebug( d.formattedAddress("Jim Knopf").latin1() );
+  tqDebug( "-------------------------------------\nShould have german address formatting, local country formatting\n" );
+  tqDebug( a.formattedAddress("Jim Knopf").latin1() );
+  tqDebug( "-------------------------------------\nShould have US address formatting, local country formatting\n" );
+  tqDebug( b.formattedAddress("Huck Finn").latin1() );
+  tqDebug( "-------------------------------------\nShould have german address formatting, local country formatting\n" );
+  tqDebug( c.formattedAddress("Jim Knopf").latin1() );
+  tqDebug( "-------------------------------------\nShould have local address formatting, local country formatting\n" );
+  tqDebug( d.formattedAddress("Jim Knopf").latin1() );
 }
 
 

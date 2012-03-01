@@ -44,9 +44,9 @@ void KDualColorWidget::slotBgChanged(const TQColor &c)
 void KDualColorWidget::slotCurrentChanged(KDualColorButton::DualColor current)
 {
     if(current == KDualColorButton::Foreground)
-        qDebug("Foreground Button Selected.");
+        tqDebug("Foreground Button Selected.");
     else
-        qDebug("Background Button Selected.");
+        tqDebug("Background Button Selected.");
 }
 
 int main(int argc, char **argv)

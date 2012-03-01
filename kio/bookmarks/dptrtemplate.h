@@ -32,7 +32,7 @@ public:
         if ( !d_ptr ) {
             cleanup_d_ptr();
             d_ptr = new TQPtrDict<PrivateData>;
-            qAddPostRoutine( cleanup_d_ptr );
+            tqAddPostRoutine( cleanup_d_ptr );
         }
         PrivateData* ret = d_ptr->find( (void*) instance );
         if ( ! ret ) {

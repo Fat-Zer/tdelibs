@@ -46,7 +46,7 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
 
     if ( right <  left )
     {
-	qWarning( "parentheses do not match" );
+	tqWarning( "parentheses do not match" );
         exit(1);
     }
 
@@ -93,7 +93,7 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
 
 		if (s<(int)partl.count()-1)
 		{
-			qWarning("The argument `%s' seems syntactically wrong.",
+			tqWarning("The argument `%s' seems syntactically wrong.",
 				lt.latin1());
 		}
 		if (s==(int)partl.count()-1)
@@ -121,7 +121,7 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
     }
 
     if ( types.count() != args.count() ) {
-	qWarning( "arguments do not match" );
+	tqWarning( "arguments do not match" );
 	exit(1);
     }
 
@@ -133,7 +133,7 @@ bool findObject( const char* app, const char* obj, const char* func, QCStringLis
         marshall(arg, args, i, *it);
     }
     if ( (uint) i != args.count() ) {
-	qWarning( "arguments do not match" );
+	tqWarning( "arguments do not match" );
 	exit(1);
     }
 
@@ -168,14 +168,14 @@ bool launchApp(TQString app)
 
     if ( !dcop->call( "klauncher", "klauncher", "start_service_by_desktop_name(TQString,TQStringList)",
                       data, replyType, replyData) ) {
-	qWarning( "call to klauncher failed.");
+	tqWarning( "call to klauncher failed.");
         return false;
     }
     TQDataStream reply(replyData, IO_ReadOnly);
 
     if ( replyType != "serviceResult" )
     {
-        qWarning( "unexpected result '%s' from klauncher.", replyType.data());
+        tqWarning( "unexpected result '%s' from klauncher.", replyType.data());
         return false;
     }
     int result;
@@ -184,7 +184,7 @@ bool launchApp(TQString app)
     reply >> result >> dcopName >> error;
     if (result != 0)
     {
-        qWarning("Error starting '%s': %s", app.local8Bit().data(), error.local8Bit().data());
+        tqWarning("Error starting '%s': %s", app.local8Bit().data(), error.local8Bit().data());
         return false;
     }
     return true;

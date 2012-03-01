@@ -66,7 +66,7 @@ void generateStubImpl( const TQString& idl, const TQString& header, const TQStri
 {
     TQFile impl( filename );
     if ( !impl.open( IO_WriteOnly ) )
-	qFatal("Could not write to %s", filename.latin1() );
+	tqFatal("Could not write to %s", filename.latin1() );
 
     TQTextStream str( &impl );
 

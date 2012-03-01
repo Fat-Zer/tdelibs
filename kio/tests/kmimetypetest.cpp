@@ -29,9 +29,9 @@ static void checkIcon( const KURL& url, const TQString& expectedIcon )
 {
   TQString icon = KMimeType::iconForURL( url );
   if ( icon == expectedIcon )
-    qDebug( "icon for %s is %s, OK", url.prettyURL().latin1(), icon.latin1() );
+    tqDebug( "icon for %s is %s, OK", url.prettyURL().latin1(), icon.latin1() );
   else {
-    qDebug( "ERROR: icon for %s is %s, expected %s!", url.prettyURL().latin1(), icon.latin1(), expectedIcon.latin1() );
+    tqDebug( "ERROR: icon for %s is %s, expected %s!", url.prettyURL().latin1(), icon.latin1(), expectedIcon.latin1() );
     exit(1);
   }
 }
@@ -65,11 +65,11 @@ int main( int argc, char** argv )
 
   TQString pdf;
   KMimeType::diagnoseFileName("foo.pdf", pdf);
-  qDebug("extension: '%s'", pdf.latin1());
+  tqDebug("extension: '%s'", pdf.latin1());
   assert(pdf == TQString("*.pdf"));
   TQString ps;
   KMimeType::diagnoseFileName("foo.ps", ps);
-  qDebug("extension: '%s'", ps.latin1());
+  tqDebug("extension: '%s'", ps.latin1());
   assert(ps == TQString("*.ps"));
 
   return 0;

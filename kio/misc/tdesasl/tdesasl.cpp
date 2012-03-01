@@ -144,18 +144,18 @@ TQByteArray KDESasl::getDigestMd5Response(const TQByteArray &aChallenge)
       while (d < aChallenge.size() && aChallenge[d] != ',') d++;
     }
     str = TQCString(aChallenge.data() + c, d - c + 1);
-    if (qstrnicmp(aChallenge.data() + a, "realm=", 6) == 0) realm = str;
-    else if (qstrnicmp(aChallenge.data() + a, "nonce=", 6) == 0) nonce = str;
-    else if (qstrnicmp(aChallenge.data() + a, "qop=", 4) == 0) qop = str;
-    else if (qstrnicmp(aChallenge.data() + a, "algorithm=", 10) == 0)
+    if (tqstrnicmp(aChallenge.data() + a, "realm=", 6) == 0) realm = str;
+    else if (tqstrnicmp(aChallenge.data() + a, "nonce=", 6) == 0) nonce = str;
+    else if (tqstrnicmp(aChallenge.data() + a, "qop=", 4) == 0) qop = str;
+    else if (tqstrnicmp(aChallenge.data() + a, "algorithm=", 10) == 0)
       algorithm = str;
-    else if (qstrnicmp(aChallenge.data() + a, "charset=", 8) == 0)
+    else if (tqstrnicmp(aChallenge.data() + a, "charset=", 8) == 0)
       charset = str;
     a = (d < aChallenge.size() && aChallenge[d] == '"') ? d + 2 : d + 1;
   }
   if (qop.isEmpty()) qop = "auth";
   qop = "auth";
-  bool utf8 = qstricmp(charset, "utf-8") == 0;
+  bool utf8 = tqstricmp(charset, "utf-8") == 0;
   TQCString digestUri = TQCString(mProtocol.latin1()) + "/" + realm;
 
   /* Calculate the response */
@@ -248,11 +248,11 @@ TQByteArray KDESasl::getBinaryResponse(const TQByteArray &aChallenge, bool aBase
     KCodecs::base64Encode(getBinaryResponse(ba, false), ba);
     return ba;
   }
-  if (qstricmp(mMethod, "PLAIN") == 0) return getPlainResponse();
-  if (qstricmp(mMethod, "LOGIN") == 0) return getLoginResponse();
-  if (qstricmp(mMethod, "CRAM-MD5") == 0)
+  if (tqstricmp(mMethod, "PLAIN") == 0) return getPlainResponse();
+  if (tqstricmp(mMethod, "LOGIN") == 0) return getLoginResponse();
+  if (tqstricmp(mMethod, "CRAM-MD5") == 0)
     return getCramMd5Response(aChallenge);
-  if (qstricmp(mMethod, "DIGEST-MD5") == 0)
+  if (tqstricmp(mMethod, "DIGEST-MD5") == 0)
     return getDigestMd5Response(aChallenge);
 //    return getDigestMd5Response(TQCString("realm=\"elwood.innosoft.com\",nonce=\"OA6MG9tEQGm2hh\",qop=\"auth\",algorithm=md5-sess,charset=utf-8"));
   return TQByteArray();

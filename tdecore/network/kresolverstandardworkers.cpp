@@ -240,7 +240,7 @@ namespace
     int my_h_errno;
     char *buf = 0L;
 
-    // qDebug("ResolveThread::run(): started threaded gethostbyname for %s (af = %d)", 
+    // tqDebug("ResolveThread::run(): started threaded gethostbyname for %s (af = %d)", 
     //	   m_hostname.data(), m_af);
 
     ResolverLocker resLock( this );
@@ -287,7 +287,7 @@ namespace
 
 	if (resultptr != 0L)
 	  my_h_errno = 0;
-	// qDebug("GetHostByNameThread::run(): gethostbyname for %s (af = %d) returned: %d",
+	// tqDebug("GetHostByNameThread::run(): gethostbyname for %s (af = %d) returned: %d",
 	//       m_hostname.data(), m_af, my_h_errno);
 
 	if (res == ERANGE)
@@ -317,7 +317,7 @@ namespace
   {
     if (herrno)
       {
-	qDebug("KStandardWorker::processResults: got error %d", herrno);
+	tqDebug("KStandardWorker::processResults: got error %d", herrno);
 	switch (herrno)
 	  {
 	  case HOST_NOT_FOUND:
@@ -368,9 +368,9 @@ namespace
       {
 	sa.setHost(KIpAddress(he->h_addr_list[i], he->h_addrtype == AF_INET ? 4 : 6));
 	results.prepend(KResolverEntry(sa, socktype, proto, canon, m_hostname));
-	// qDebug("KStandardWorker::processResults: adding %s", sa.toString().latin1());
+	// tqDebug("KStandardWorker::processResults: adding %s", sa.toString().latin1());
       }
-    //  qDebug("KStandardWorker::processResults: added %d entries", i);
+    //  tqDebug("KStandardWorker::processResults: added %d entries", i);
   }
 
 #else  // HAVE_GETADDRINFO
@@ -559,12 +559,12 @@ bool KStandardWorker::sanityCheck()
 
 	  if (m_encodedName.isNull())
 	    {
-	      qDebug("could not encode hostname '%s' (UTF-8)", node.utf8().data());
+	      tqDebug("could not encode hostname '%s' (UTF-8)", node.utf8().data());
 	      setError(KResolver::NoName);
 	      return false;		// invalid hostname!
 	    }
 
-	  // qDebug("Using encoded hostname '%s' for '%s' (UTF-8)", m_encodedName.data(),
+	  // tqDebug("Using encoded hostname '%s' for '%s' (UTF-8)", m_encodedName.data(),
 	  //	 node.utf8().data());
 	}
     }
@@ -679,7 +679,7 @@ KResolver::ErrorCodes KStandardWorker::addUnix()
     // put it in /tmp
     pathname.prepend("/tmp/");
 
-  //  qDebug("QNoResolveWorker::addUnix(): adding Unix socket for %s", pathname.local8Bit().data());
+  //  tqDebug("QNoResolveWorker::addUnix(): adding Unix socket for %s", pathname.local8Bit().data());
   KUnixSocketAddress sa(pathname);
   int socktype = socketType();
   if (socktype == 0)

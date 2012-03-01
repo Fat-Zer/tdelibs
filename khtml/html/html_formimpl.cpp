@@ -2199,7 +2199,7 @@ void HTMLSelectElementImpl::restoreState(const TQString &_state)
 
     TQString state = _state;
     if(!state.isEmpty() && !state.contains('X') && !m_multiple && m_size <= 1) {
-        qWarning("should not happen in restoreState!");
+        tqWarning("should not happen in restoreState!");
         state[0] = 'X';
     }
 

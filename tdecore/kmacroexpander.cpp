@@ -285,10 +285,10 @@ bool KMacroExpanderBase::expandMacrosShellQuote( TQString &str )
 }
 
 int KMacroExpanderBase::expandPlainMacro( const TQString &, uint, TQStringList & )
-{ qFatal( "KMacroExpanderBase::expandPlainMacro called!" ); return 0; }
+{ tqFatal( "KMacroExpanderBase::expandPlainMacro called!" ); return 0; }
 
 int KMacroExpanderBase::expandEscapedMacro( const TQString &, uint, TQStringList & )
-{ qFatal( "KMacroExpanderBase::expandEscapedMacro called!" ); return 0; }
+{ tqFatal( "KMacroExpanderBase::expandEscapedMacro called!" ); return 0; }
 
 
 //////////////////////////////////////////////////

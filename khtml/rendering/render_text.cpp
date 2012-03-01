@@ -912,7 +912,7 @@ FindSelectionResult RenderText::checkSelectionPoint(int _x, int _y, int _tx, int
 
     // set offset to max
     offset = str->l;
-    //qDebug("setting node to %p", element());
+    //tqDebug("setting node to %p", element());
     node = element();
 //     kdDebug(6040) << "RenderText::checkSelectionPoint: node " << node << " offset " << offset << endl;
     return SelectionPointAfter;

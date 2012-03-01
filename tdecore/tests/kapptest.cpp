@@ -35,6 +35,6 @@ main(int argc, char *argv[])
 
    KSycoca *s = KSycoca::self();
   
-   qWarning("s->language() %s", s->language().latin1());
-   qWarning("Offset of aIconName: %ld", (long) &(static_cast<KApplication *>(0)->aIconName));
+   tqWarning("s->language() %s", s->language().latin1());
+   tqWarning("Offset of aIconName: %ld", (long) &(static_cast<KApplication *>(0)->aIconName));
 }

@@ -97,7 +97,7 @@ class TDECORE_EXPORT KCrash
    * Dr. Konqi, our nice crash display application.
    * @param path the application path.
    */
-  static void setApplicationPath (TQString path) { appPath = qstrdup(path.local8Bit().data()); }
+  static void setApplicationPath (TQString path) { appPath = tqstrdup(path.local8Bit().data()); }
   /* KDE 4: Make it const TQString & */
 
   /**
@@ -105,7 +105,7 @@ class TDECORE_EXPORT KCrash
    * Dr. Konqi, our nice crash display application.
    * @param name the name of the application, as shown in Dr. Konqi
    */
-  static void setApplicationName (TQString name) { appName = qstrdup(name.local8Bit().data()); }
+  static void setApplicationName (TQString name) { appName = tqstrdup(name.local8Bit().data()); }
   /* KDE 4: Make it const TQString & */
 
  protected:

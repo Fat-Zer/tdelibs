@@ -416,7 +416,7 @@ VCard21ParserImpl *VCard21ParserImpl::parseVCard( const TQString& vc, int *err )
     // first token:
     //   verify state, update if necessary
     if ( _state & VC_STATE_BEGIN) {
-      if ( !qstricmp( (*j).latin1(), VCARD_BEGIN ) ) {
+      if ( !tqstricmp( (*j).latin1(), VCARD_BEGIN ) ) {
         _state = VC_STATE_BODY;
         continue;
       } else {
@@ -424,7 +424,7 @@ VCard21ParserImpl *VCard21ParserImpl::parseVCard( const TQString& vc, int *err )
         break;
       }
     } else if ( _state & VC_STATE_BODY ) {
-      if ( !qstricmp( (*j).latin1(), VCARD_END ) ) {
+      if ( !tqstricmp( (*j).latin1(), VCARD_END ) ) {
         _state |= VC_STATE_END;
         break;
       }

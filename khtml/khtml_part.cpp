@@ -1291,7 +1291,7 @@ static int s_DOMTreeIndentLevel = 0;
 void KHTMLPart::slotDebugDOMTree()
 {
   if ( d->m_doc && d->m_doc->firstChild() )
-    qDebug("%s", d->m_doc->firstChild()->toString().string().latin1());
+    tqDebug("%s", d->m_doc->firstChild()->toString().string().latin1());
 
   // Now print the contents of the frames that contain HTML
 
@@ -6398,8 +6398,8 @@ void KHTMLPart::khtmlMouseMoveEvent( khtml::MouseMoveEvent *event )
     TQDragObject *drag = 0;
     KURL u;
 
-    // qDebug("****************** Event URL: %s", url.string().latin1());
-    // qDebug("****************** Event Target: %s", target.string().latin1());
+    // tqDebug("****************** Event URL: %s", url.string().latin1());
+    // tqDebug("****************** Event Target: %s", target.string().latin1());
 
     // Normal image...
     if ( url.length() == 0 && innerNode.handle() && innerNode.handle()->id() == ID_IMG )

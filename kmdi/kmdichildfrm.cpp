@@ -865,7 +865,7 @@ void KMdiChildFrm::unsetClient( TQPoint positionOffset )
 				if ( firstFocusableChildWidget == 0 )
 					firstFocusableChildWidget = widg;  // first widget
 				lastFocusableChildWidget = widg; // last widget
-				//qDebug("*** %s (%s)",widg->name(),widg->className());
+				//tqDebug("*** %s (%s)",widg->name(),widg->className());
 			}
 		}
 	}

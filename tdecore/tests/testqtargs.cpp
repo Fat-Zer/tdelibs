@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 {
   for (int i = 0; i < argc; i++)
   {
-    qDebug("argv[%d] = %s", i, argv[i]);
+    tqDebug("argv[%d] = %s", i, argv[i]);
   }
   KAboutData aboutData( "testqtargs", I18N_NOOP("testqtargs"),
     "1.0", I18N_NOOP("testqtargs"), KAboutData::License_GPL,
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
   KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
   for (int i = 0; i < qtargs->count(); i++)
   {
-    qDebug("qt arg[%d] = %s", i, qtargs->arg(i));
+    tqDebug("qt arg[%d] = %s", i, qtargs->arg(i));
   }
 
   KApplication app;
@@ -81,17 +81,17 @@ int main(int argc, char *argv[])
   // An arg set by Qt
   if(qtargs->isSet("background"))
   {
-    qDebug("arg bg = %s", (const char*)qtargs->getOption("background"));
+    tqDebug("arg bg = %s", (const char*)qtargs->getOption("background"));
   }
   // An arg set by KDE
   if(kdeargs->isSet("caption"))
   {
-    qDebug("arg caption = %s", (const char*)kdeargs->getOption("caption"));
+    tqDebug("arg caption = %s", (const char*)kdeargs->getOption("caption"));
   }
   // An arg set by us.
   if(args->isSet("hello"))
   {
-    qDebug("arg hello = %s", (const char*)args->getOption("hello"));
+    tqDebug("arg hello = %s", (const char*)args->getOption("hello"));
   }
   args->clear();
 

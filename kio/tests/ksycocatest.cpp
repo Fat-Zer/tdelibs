@@ -71,19 +71,19 @@ int main(int argc, char *argv[])
 
    TQCString instname = "kword";
    TQString desktopPath = TQString::fromLatin1( "Office/%1.desktop" ).arg( instname );
-   qDebug( "Looking for %s", desktopPath.latin1() );
+   tqDebug( "Looking for %s", desktopPath.latin1() );
    KService::Ptr service = KService::serviceByDesktopPath( desktopPath );
    if ( service )
-       qDebug( "found: %s", service->desktopEntryPath().latin1() );
+       tqDebug( "found: %s", service->desktopEntryPath().latin1() );
    else
-       qDebug( "not found" );
+       tqDebug( "not found" );
 
-   qDebug( "Looking for desktop name = %s", instname.data() );
+   tqDebug( "Looking for desktop name = %s", instname.data() );
    service = KService::serviceByDesktopName( instname );
    if ( service )
-       qDebug( "found: %s", service->desktopEntryPath().latin1() );
+       tqDebug( "found: %s", service->desktopEntryPath().latin1() );
    else
-       qDebug( "not found" );
+       tqDebug( "not found" );
 
    debug("Trying to look for text/plain");
    KMimeType::Ptr s1 = KMimeType::mimeType("text/plain");

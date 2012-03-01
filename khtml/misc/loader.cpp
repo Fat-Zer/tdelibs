@@ -685,7 +685,7 @@ void CachedImage::do_notify(const TQPixmap& p, const TQRect& r)
 void CachedImage::movieUpdated( const TQRect& r )
 {
 #ifdef LOADER_DEBUG
-    qDebug("movie updated %d/%d/%d/%d, pixmap size %d/%d", r.x(), r.y(), r.right(), r.bottom(),
+    tqDebug("movie updated %d/%d/%d/%d, pixmap size %d/%d", r.x(), r.y(), r.right(), r.bottom(),
            m->framePixmap().size().width(), m->framePixmap().size().height());
 #endif
 
@@ -695,7 +695,7 @@ void CachedImage::movieUpdated( const TQRect& r )
 void CachedImage::movieStatus(int status)
 {
 #ifdef LOADER_DEBUG
-    qDebug("movieStatus(%d)", status);
+    tqDebug("movieStatus(%d)", status);
 #endif
 
     // ### the html image objects are supposed to send the load event after every frame (according to
@@ -766,7 +766,7 @@ void CachedImage::movieStatus(int status)
     {
 #ifdef LOADER_DEBUG
         TQRect r(valid_rect());
-        qDebug("movie Status frame update %d/%d/%d/%d, pixmap size %d/%d", r.x(), r.y(), r.right(), r.bottom(),
+        tqDebug("movie Status frame update %d/%d/%d/%d, pixmap size %d/%d", r.x(), r.y(), r.right(), r.bottom(),
                pixmap().size().width(), pixmap().size().height());
 #endif
         do_notify(pixmap(), valid_rect());

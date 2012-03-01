@@ -186,7 +186,7 @@ KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
    if (domainname.status() != 0)
    {
       // Sever error!
-      qDebug("KLauncher: Fatal error, can't create tempfile!");
+      tqDebug("KLauncher: Fatal error, can't create tempfile!");
       ::exit(1);
    }
    mPoolSocketName = domainname.name();
@@ -210,13 +210,13 @@ KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
    mSlaveDebug = getenv("KDE_SLAVE_DEBUG_WAIT");
    if (!mSlaveDebug.isEmpty())
    {
-      qWarning("Klauncher running in slave-debug mode for slaves of protocol '%s'", mSlaveDebug.data());
+      tqWarning("Klauncher running in slave-debug mode for slaves of protocol '%s'", mSlaveDebug.data());
    }
    mSlaveValgrind = getenv("KDE_SLAVE_VALGRIND");
    if (!mSlaveValgrind.isEmpty())
    {
       mSlaveValgrindSkin = getenv("KDE_SLAVE_VALGRIND_SKIN");
-      qWarning("Klauncher running slaves through valgrind for slaves of protocol '%s'", mSlaveValgrind.data());
+      tqWarning("Klauncher running slaves through valgrind for slaves of protocol '%s'", mSlaveValgrind.data());
    }
    klauncher_header request_header;
    request_header.cmd = LAUNCHER_OK;

@@ -73,7 +73,7 @@ TQRect KPixmapSplitter::coordinates( int pos )
 	m_numCols = m_pixmap.width() / ( m_itemSize.width() + m_hSpacing );
 	m_numRows = m_pixmap.height() / ( m_itemSize.height() + m_vSpacing );
 	m_dirty = false;
-	// qDebug("cols: %i, rows: %i (pixmap: %i, %i)", m_numCols, m_numRows, m_pixmap.width(), m_pixmap.height());
+	// tqDebug("cols: %i, rows: %i (pixmap: %i, %i)", m_numCols, m_numRows, m_pixmap.width(), m_pixmap.height());
     }
 
     if ( m_numCols == 0 || m_numRows == 0 )

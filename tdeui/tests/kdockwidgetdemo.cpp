@@ -154,7 +154,7 @@ SFileDialog::SFileDialog( TQString initially, const TQStringList& filter, const 
   connect( dockManager, TQT_SIGNAL(setDockDefaultPos(KDockWidget*)), this, TQT_SLOT(setDockDefaultPos(KDockWidget*)));
   setCaption("Open File");
   resize(550,450);
-  qDebug("read config");
+  tqDebug("read config");
   dockManager->readConfig( 0L , name );
 }
 
@@ -170,7 +170,7 @@ SFileDialog::~SFileDialog()
   config->setGroup( TQString("SFileDialogData:") + name() );
   config->writeEntry( "Bookmarks", fd->getBookmark() );
 
-  qDebug("write config");
+  tqDebug("write config");
   dockManager->writeConfig( 0L , name() );
 }
 
@@ -773,11 +773,11 @@ int main(int argc, char* argv[]) {
 #if 0
   SFileDialog* openfile = new SFileDialog();
   openfile->exec();
-  qDebug( openfile->fileName() );
+  tqDebug( openfile->fileName() );
 #endif
 
 #if 0
-  qDebug ( SFileDialog::getOpenFileName( TQString::null, TQString::fromLatin1("All (*)"),
+  tqDebug ( SFileDialog::getOpenFileName( TQString::null, TQString::fromLatin1("All (*)"),
                                          TQString::fromLatin1("DockWidget Demo"), "dialog1" ) );
 #endif
 
@@ -786,7 +786,7 @@ int main(int argc, char* argv[]) {
                                                 TQString::fromLatin1("DockWidget Demo"), "dialog1" );
   TQStringList::Iterator it = s.begin();
   for ( ; it != s.end(); ++it ){
-    qDebug( "%s", (*it).local8Bit().data() );
+    tqDebug( "%s", (*it).local8Bit().data() );
   }
 #endif
   return 0;

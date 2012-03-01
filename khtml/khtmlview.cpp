@@ -650,7 +650,7 @@ void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
 #ifdef DEBUG_PIXEL
 
     if ( d->timer.elapsed() > 5000 ) {
-        qDebug( "drawed %d pixels in %d repaints the last %d milliseconds",
+        tqDebug( "drawed %d pixels in %d repaints the last %d milliseconds",
                 d->pixelbooth, d->repaintbooth,  d->timer.elapsed() );
         d->timer.restart();
         d->pixelbooth = 0;
@@ -2000,7 +2000,7 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 		break;
 	    }
 	    if (block) {
- 		//qDebug("eating event");
+ 		//tqDebug("eating event");
 		return true;
 	    }
 	}
@@ -3194,7 +3194,7 @@ bool KHTMLView::dispatchMouseEvent(int eventId, DOM::NodeImpl *targetNode,
             if (oldUnder && oldUnder->isTextNode())
                 oldUnder = oldUnder->parentNode();
 	}
-// 	qDebug("oldunder=%p (%s), target=%p (%s) x/y=%d/%d", oldUnder, oldUnder ? oldUnder->renderer()->renderName() : 0, targetNode,  targetNode ? targetNode->renderer()->renderName() : 0, _mouse->x(), _mouse->y());
+// 	tqDebug("oldunder=%p (%s), target=%p (%s) x/y=%d/%d", oldUnder, oldUnder ? oldUnder->renderer()->renderName() : 0, targetNode,  targetNode ? targetNode->renderer()->renderName() : 0, _mouse->x(), _mouse->y());
 	if (oldUnder != targetNode) {
 	    // send mouseout event to the old node
 	    if (oldUnder){

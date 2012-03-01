@@ -136,7 +136,7 @@ void KCompletion::addItem( const TQString& item, uint weight )
     node = node->insert( 0x0, true );
     if ( weighted )
         node->confirm( weight -1 );
-//     qDebug("*** added: %s (%i)", item.latin1(), node->weight());
+//     tqDebug("*** added: %s (%i)", item.latin1(), node->weight());
 }
 
 void KCompletion::addWeightedItem( const TQString& item )

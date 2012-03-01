@@ -298,7 +298,7 @@ typedef union YYSTYPE {
 static inline int cssyyerror(const char *x )
 {
 #ifdef CSS_DEBUG
-    qDebug( "%s", x );
+    tqDebug( "%s", x );
 #else
     Q_UNUSED( x );
 #endif

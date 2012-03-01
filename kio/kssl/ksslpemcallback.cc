@@ -40,7 +40,7 @@ int KSSLPemCallback(char *buf, int size, int rwflag, void *userdata) {
 	if (passlen > (unsigned int)size-1)
 		pass.truncate((unsigned int)size-1);
 
-	qstrncpy(buf, pass.data(), size-1);
+	tqstrncpy(buf, pass.data(), size-1);
     
 	for (unsigned int i = 0; i < passlen; i++)
 		pass[i] = 0;

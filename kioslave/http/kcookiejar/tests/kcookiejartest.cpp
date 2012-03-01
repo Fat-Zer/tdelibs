@@ -47,7 +47,7 @@ static KCmdLineOptions options[] =
 
 static void FAIL(const TQString &msg)
 {
-   qWarning("%s", msg.local8Bit().data());
+   tqWarning("%s", msg.local8Bit().data());
    exit(1);
 }
 
@@ -197,7 +197,7 @@ static void processLine(TQCString line)
    if (line[0] == '#')
    {
       if (line[1] == '#')
-         qWarning("%s", line.data());   
+         tqWarning("%s", line.data());   
       return;
    }
 
@@ -237,7 +237,7 @@ static void runRegression(const TQString &filename)
       }
       processLine(buf);
    }
-   qWarning("%s OK", filename.local8Bit().data());
+   tqWarning("%s OK", filename.local8Bit().data());
 }
 
 int main(int argc, char *argv[])

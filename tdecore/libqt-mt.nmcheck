@@ -5,14 +5,14 @@ Q*::*
 qt_*
 
 # these should preferably go in some namespace in Qt4
-qDebug
-qFatal
-qWarning
+tqDebug
+tqFatal
+tqWarning
 tqApp
 tqAppName
-qVersion
-qSysInfo
-qObsolete
+tqVersion
+tqSysInfo
+tqObsolete
 bitBlt
 static_QUType_*
 TID_QUType_*

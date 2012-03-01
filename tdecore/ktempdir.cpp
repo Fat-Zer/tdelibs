@@ -80,7 +80,7 @@ KTempDir::create(const TQString &directoryPrefix, int mode)
    {
        // Recreate it for the warning, mkdtemps emptied it
        TQCString nme = TQFile::encodeName(directoryPrefix) + "XXXXXX";
-       qWarning("KTempDir: Error trying to create %s: %s", nme.data(), strerror(errno));
+       tqWarning("KTempDir: Error trying to create %s: %s", nme.data(), strerror(errno));
        mError = errno;
        mTmpName = TQString::null;
        return false;

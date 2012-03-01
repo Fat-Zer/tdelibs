@@ -227,7 +227,7 @@ TQFontDatabase::findFont( TQFont::Script script, const QFontPrivate *fp,
     XFontStruct *xfs;
     xfs = XLoadQueryFont(TQPaintDevice::x11AppDisplay(), xlfd.latin1() );
     if (!xfs) // as long as you don't do screenshots, it's maybe fine
-	qFatal("we need some fonts. So make sure you have %s installed.", xlfd.latin1());
+	tqFatal("we need some fonts. So make sure you have %s installed.", xlfd.latin1());
 
     unsigned long value;
     if ( !XGetFontProperty( xfs, XA_FONT, &value ) )
@@ -240,7 +240,7 @@ TQFontDatabase::findFont( TQFont::Script script, const QFontPrivate *fp,
 
     fe = new QFakeFontEngine( xfs, xlfd.latin1(),request.pixelSize );
 
-    // qDebug("fe %s ascent %d descent %d minLeftBearing %d leading %d maxCharWidth %d minRightBearing %d", xlfd.latin1(), fe->ascent(), fe->descent(), fe->minLeftBearing(), fe->leading(), fe->maxCharWidth(), fe->minRightBearing());
+    // tqDebug("fe %s ascent %d descent %d minLeftBearing %d leading %d maxCharWidth %d minRightBearing %d", xlfd.latin1(), fe->ascent(), fe->descent(), fe->minLeftBearing(), fe->leading(), fe->maxCharWidth(), fe->minRightBearing());
 
     // fe->setScale( scale );
 
@@ -348,7 +348,7 @@ KDE_EXPORT void TQApplication::setPalette( const TQPalette &, bool ,
     XFontStruct *xfs;
     xfs = XLoadQueryFont(TQPaintDevice::x11AppDisplay(), xlfd.latin1() );
     if (!xfs) // as long as you don't do screenshots, it's maybe fine
-	qFatal("We will need some fonts. So make sure you have %s installed.", xlfd.latin1());
+	tqFatal("We will need some fonts. So make sure you have %s installed.", xlfd.latin1());
     XFreeFont(TQPaintDevice::x11AppDisplay(), xfs);
     done = true;
 }
@@ -356,7 +356,7 @@ KDE_EXPORT void TQApplication::setPalette( const TQPalette &, bool ,
 #include <kapplication.h>
 void KApplication::dcopFailure( const TQString & )
 {
-    qDebug( "KApplication::dcopFailure" );
+    tqDebug( "KApplication::dcopFailure" );
 }
 
 #include <kparts/historyprovider.h>

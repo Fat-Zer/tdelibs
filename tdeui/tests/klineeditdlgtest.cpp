@@ -10,9 +10,9 @@ int main(int argc, char** argv)
   KLineEditDlg dialog( "_text", "_value", 0L );
   if(dialog.exec())
     {
-      qDebug("Accepted.");
+      tqDebug("Accepted.");
     } else {
-      qDebug("Rejected.");
+      tqDebug("Rejected.");
     }
   return 0;
 }

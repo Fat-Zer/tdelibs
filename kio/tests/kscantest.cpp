@@ -6,7 +6,7 @@ int main( int argc, char **argv )
     KApplication app( argc, argv, "kscantest" );
     KScanDialog *dlg = KScanDialog::getScanDialog();
     if ( !dlg ) {
-	qDebug("*** EEK, no Scan-service available, aborting!");
+	tqDebug("*** EEK, no Scan-service available, aborting!");
 	return 0;
     }
     

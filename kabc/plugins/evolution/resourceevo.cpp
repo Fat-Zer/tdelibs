@@ -86,7 +86,7 @@ bool ResourceEvolution::load() {
         if ( it.key().startsWith("PAS-DB-VERSION") )
             continue;
 
-        qWarning( "val:%s", it.value().latin1() );
+        tqWarning( "val:%s", it.value().latin1() );
         VCardTool tool;
         TQString str = it.value().stripWhiteSpace();
         Addressee::List list = tool.parseVCards( str );

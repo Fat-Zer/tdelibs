@@ -38,7 +38,7 @@ DCOPClient *client = 0;
 bool MyDCOPObject::process(const TQCString &fun, const TQByteArray &data,
 			   TQCString& replyType, TQByteArray &replyData)
 {
-  qDebug("in MyDCOPObject::process, fun = %s", fun.data());
+  tqDebug("in MyDCOPObject::process, fun = %s", fun.data());
   
   // note "fun" is normlized here (i.e. whitespace clean)
   if (fun == "aFunction(TQString,int)") {
@@ -65,13 +65,13 @@ bool MyDCOPObject::process(const TQCString &fun, const TQByteArray &data,
   }
   if (fun == "isAliveSlot(int)") {
     
-    qDebug("isAliveSlot(int)");
+    tqDebug("isAliveSlot(int)");
     bool connectResult = client->disconnectDCOPSignal("", objId(), "", objId(), "" );
-    qDebug("disconnectDCOPSignal returns %s", connectResult ? "true" : "false");
+    tqDebug("disconnectDCOPSignal returns %s", connectResult ? "true" : "false");
     return true;
   }
   if (fun == "countDown()") {
-qDebug("countDown() countDownAction = %p", countDownAction);
+tqDebug("countDown() countDownAction = %p", countDownAction);
     if (countDownAction2)
     {
        replyType = "TQString";
@@ -100,7 +100,7 @@ qDebug("countDown() countDownAction = %p", countDownAction);
 
 void MyDCOPObject::slotTimeout()
 {
-  qDebug("MyDCOPObject::slotTimeout() %d", countDownCount);
+  tqDebug("MyDCOPObject::slotTimeout() %d", countDownCount);
   countDownCount--;
   if (countDownCount == 0)
   {
@@ -119,7 +119,7 @@ void MyDCOPObject::slotTimeout()
 
 void MyDCOPObject::slotTimeout2()
 {
-  qDebug("MyDCOPObject::slotTimeout2() %d", countDownCount2);
+  tqDebug("MyDCOPObject::slotTimeout2() %d", countDownCount2);
   countDownCount2--;
   if (countDownCount2 == 0)
   {
@@ -153,25 +153,25 @@ void TestObject::slotTimeout()
 {
    TQCString replyType;
    TQByteArray data, reply;
-   qWarning("#3 Calling countDown");
+   tqWarning("#3 Calling countDown");
 
    if (!client->call(m_app, "object1", "countDown()", data, replyType, reply))
-      qDebug("#3 I couldn't call countDown");
+      tqDebug("#3 I couldn't call countDown");
    else
-      qDebug("#3 countDown() return type was '%s'", replyType.data() ); 
+      tqDebug("#3 countDown() return type was '%s'", replyType.data() ); 
    
 }
 
 void TestObject::slotCallBack(int callId, const TQCString &replyType, const TQByteArray &replyData)
 {
-   qWarning("Call Back! callId = %d", callId);
-   qWarning("Type = %s", replyType.data());
+   tqWarning("Call Back! callId = %d", callId);
+   tqWarning("Type = %s", replyType.data());
    
    TQDataStream args(replyData, IO_ReadOnly);
    TQString arg1;
    args >> arg1;
    
-   qWarning("Value = %s", arg1.latin1());
+   tqWarning("Value = %s", arg1.latin1());
 }
 
 #ifdef Q_OS_WIN
@@ -190,12 +190,12 @@ int main(int argc, char **argv)
   {
       TQCString appId = argv[1];
       TestObject obj(appId);
-      qWarning("#1 Calling countDown");
+      tqWarning("#1 Calling countDown");
       int result = client->callAsync(appId, "object1", "countDown()", data, &obj, TQT_SLOT(slotCallBack(int, const TQCString&, const TQByteArray&)));
-      qDebug("#1 countDown() call id = %d", result);
-      qWarning("#2 Calling countDown");
+      tqDebug("#1 countDown() call id = %d", result);
+      tqWarning("#2 Calling countDown");
       result = client->callAsync(appId, "object1", "countDown()", data, &obj, TQT_SLOT(slotCallBack(int, const TQCString&, const TQByteArray&)));
-      qDebug("#2 countDown() call id = %d", result);
+      tqDebug("#2 countDown() call id = %d", result);
       app.exec();
 
       return 0;
@@ -204,10 +204,10 @@ int main(int argc, char **argv)
 //  client->attach(); // attach to the server, now we can use DCOP service
 
   client->registerAs( app.name(), false ); // register at the server, now others can call us.
-  qDebug("I registered as '%s'", client->appId().data() );
+  tqDebug("I registered as '%s'", client->appId().data() );
 
   if ( client->isApplicationRegistered( app.name() ) )
-      qDebug("indeed, we are registered!");
+      tqDebug("indeed, we are registered!");
 
   TQDataStream dataStream( data, IO_WriteOnly );
   dataStream << (int) 43;
@@ -216,23 +216,23 @@ int main(int argc, char **argv)
   MyDCOPObject *obj1 = new MyDCOPObject("object1");
 
   bool connectResult = client->connectDCOPSignal("", "alive(int , TQCString)", "object1", "isAliveSlot(int)", false);
-  qDebug("connectDCOPSignal returns %s", connectResult ? "true" : "false");
+  tqDebug("connectDCOPSignal returns %s", connectResult ? "true" : "false");
 
   TQDataStream ds(data, IO_WriteOnly);
   ds << TQString("fourty-two") << 42;
   if (!client->call(app.name(), "object1", "aFunction(TQString,int)", data, replyType, reply)) {
-    qDebug("I couldn't call myself");
+    tqDebug("I couldn't call myself");
     assert( 0 );
   }
   else {
-    qDebug("return type was '%s'", replyType.data() ); 
+    tqDebug("return type was '%s'", replyType.data() ); 
     assert( replyType == "void" );
   }
 
   client->send(app.name(), "object1", "aFunction(TQString,int)", data );
 
   int n = client->registeredApplications().count();
-  qDebug("number of attached applications = %d", n );
+  tqDebug("number of attached applications = %d", n );
 
   TQObject::connect( client, TQT_SIGNAL( applicationRegistered( const TQCString&)),
                     obj1, TQT_SLOT( registered( const TQCString& )));
@@ -249,46 +249,46 @@ int main(int argc, char **argv)
   // Find a object called "object1" in any application that
   // meets the criteria "canLaunchRockets()"
 //  bool boolResult = client->findObject( "", "object1", "canLaunchRockets()", data, foundApp, foundObj);
-//  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+//  tqDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 //	foundApp.data(), foundObj.data());
 
   // Find an application that matches with "konqueror*"
   bool boolResult = client->findObject( "konqueror*", "", "", data, foundApp, foundObj);
-  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+  tqDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 
   // Find an object called "object1" in any application.
   boolResult = client->findObject( "", "ksycoca", "", data, foundApp, foundObj);
-  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+  tqDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 
   // Find ourselves in any application.
   boolResult = client->findObject( "testdcop", "ksycoca", "", data, foundApp, foundObj);
-  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+  tqDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 
   DCOPClient *client2 = new DCOPClient();
   client2->registerAs(app.name(), false);
-  qDebug("I2 registered as '%s'", client2->appId().data() );
+  tqDebug("I2 registered as '%s'", client2->appId().data() );
 
-qDebug("Sending to object1");
+tqDebug("Sending to object1");
   client2->send(app.name(), "object1", "aFunction(TQString,int)", data );
 
-qDebug("Calling object1");
+tqDebug("Calling object1");
   if (!client2->call(app.name(), "object1", "aFunction(TQString,int)", data, replyType, reply))
-    qDebug("I couldn't call myself");
+    tqDebug("I couldn't call myself");
   else
-      qDebug("return type was '%s'", replyType.data() ); 
+      tqDebug("return type was '%s'", replyType.data() ); 
 
-qDebug("Calling countDown() in object1");
+tqDebug("Calling countDown() in object1");
   if (!client2->call(app.name(), "object1", "countDown()", data, replyType, reply))
-    qDebug("I couldn't call myself");
+    tqDebug("I couldn't call myself");
   else
-      qDebug("return type was '%s'", replyType.data() ); 
+      tqDebug("return type was '%s'", replyType.data() ); 
 
   // Find ourselves in any application.
   boolResult = client2->findObject( "testdcop", "object1", "", data, foundApp, foundObj);
-  qDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
+  tqDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 
   client->detach();

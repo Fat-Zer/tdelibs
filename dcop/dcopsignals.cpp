@@ -264,7 +264,7 @@ DCOPSignals::removeConnections(DCOPConnection *conn, const TQCString &obj)
       }
       else
       {
-         qDebug("Error: Signal Connection was not in signalList!\n");
+         tqDebug("Error: Signal Connection was not in signalList!\n");
       }
       list->removeRef(current);
       delete current;

@@ -67,7 +67,7 @@ static int * ourMaxLength( const KPasswordEdit* const e ) {
 	if ( !d_ptr ) {
 		d_ptr = new TQPtrDict<int>;
 		d_ptr->setAutoDelete(true);
-		qAddPostRoutine( cleanup_d_ptr );
+		tqAddPostRoutine( cleanup_d_ptr );
 	}
 	int* ret = d_ptr->find( (void*) e );
 	if ( ! ret ) {

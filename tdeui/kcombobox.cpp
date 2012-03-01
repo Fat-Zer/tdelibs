@@ -186,7 +186,7 @@ void KComboBox::setTrapReturnKey( bool grab )
     if ( d->klineEdit )
         d->klineEdit->setTrapReturnKey( grab );
     else
-        qWarning("KComboBox::setTrapReturnKey not supported with a non-KLineEdit.");
+        tqWarning("KComboBox::setTrapReturnKey not supported with a non-KLineEdit.");
 }
 
 bool KComboBox::trapReturnKey() const

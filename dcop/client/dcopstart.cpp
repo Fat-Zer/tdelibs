@@ -50,14 +50,14 @@ void startApp(const char *_app, int argc, const char **args)
     arg << app << URLs;
 
     if ( !dcop->call( "klauncher", "klauncher", function,  data, replyType, replyData) ) {
-	qWarning( "call failed");
+	tqWarning( "call failed");
         exit(1);
     } else {
 	TQDataStream reply(replyData, IO_ReadOnly);
 
         if ( replyType != "serviceResult" )
         {
-            qWarning( "unexpected result '%s'", replyType.data());
+            tqWarning( "unexpected result '%s'", replyType.data());
             exit(1);
         }
         int result;
@@ -66,7 +66,7 @@ void startApp(const char *_app, int argc, const char **args)
         reply >> result >> dcopName >> error;
         if (result != 0)
         {
-            qWarning("Error: %s", error.local8Bit().data());
+            tqWarning("Error: %s", error.local8Bit().data());
             exit(1);
         }
         if (!dcopName.isEmpty())

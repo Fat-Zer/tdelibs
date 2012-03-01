@@ -430,13 +430,13 @@ NodeImpl::Id TextImpl::id() const
 
 void TextImpl::recalcStyle( StyleChange change )
 {
-//      qDebug("textImpl::recalcStyle");
+//      tqDebug("textImpl::recalcStyle");
     // Create renderer if now needed
     if ( changed() && !m_render) {
         createRendererIfNeeded();
     }
     if (change != NoChange && parentNode()) {
-// 	qDebug("DomText::recalcStyle");
+// 	tqDebug("DomText::recalcStyle");
 	if(m_render)
 	    m_render->setStyle(parentNode()->renderer()->style());
     }

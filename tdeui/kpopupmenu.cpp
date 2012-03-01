@@ -244,10 +244,10 @@ TQString KPopupMenu::title(int id) const
         if(item->widget())
             return ((KPopupTitle *)item->widget())->title();
         else
-            qWarning("KPopupMenu: title() called with non-title id %d.", id);
+            tqWarning("KPopupMenu: title() called with non-title id %d.", id);
     }
     else
-        qWarning("KPopupMenu: title() called with invalid id %d.", id);
+        tqWarning("KPopupMenu: title() called with invalid id %d.", id);
     return TQString::null;
 }
 
@@ -258,10 +258,10 @@ TQPixmap KPopupMenu::titlePixmap(int id) const
         if(item->widget())
             return ((KPopupTitle *)item->widget())->icon();
         else
-            qWarning("KPopupMenu: titlePixmap() called with non-title id %d.", id);
+            tqWarning("KPopupMenu: titlePixmap() called with non-title id %d.", id);
     }
     else
-        qWarning("KPopupMenu: titlePixmap() called with invalid id %d.", id);
+        tqWarning("KPopupMenu: titlePixmap() called with invalid id %d.", id);
     TQPixmap tmp;
     return tmp;
 }

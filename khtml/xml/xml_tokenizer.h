@@ -168,7 +168,7 @@ public:
     virtual void write( const TokenizerString &str, bool );
     virtual void end();
     virtual void finish();
-    virtual void setAutoClose(bool b=true) { qWarning("XMLTokenizer::setAutoClose: stub."); (void)b; }
+    virtual void setAutoClose(bool b=true) { tqWarning("XMLTokenizer::setAutoClose: stub."); (void)b; }
 
     // from CachedObjectClient
     void notifyFinished(khtml::CachedObject *finishedObj);

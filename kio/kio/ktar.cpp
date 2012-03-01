@@ -494,7 +494,7 @@ bool KTar::openArchive( int mode )
         }
         else
         {
-            //qDebug("Terminating. Read %d bytes, first one is %d", n, buffer[0]);
+            //tqDebug("Terminating. Read %d bytes, first one is %d", n, buffer[0]);
             d->tarEnd = dev->at() - n; // Remember end of archive
             ende = true;
         }

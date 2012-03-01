@@ -400,7 +400,7 @@ void HTMLElementImpl::addHTMLColor( int id, const DOMString &c )
 	int basicLength = (color.length() + 2) / 3;
 	if ( basicLength > 1 ) {
 	    // IE ignores colors with three digits or less
-// 	    qDebug("trying to fix up color '%s'. basicLength=%d, length=%d",
+// 	    tqDebug("trying to fix up color '%s'. basicLength=%d, length=%d",
 // 		   color.latin1(), basicLength, color.length() );
 	    int colors[3] = { 0, 0, 0 };
 	    int component = 0;
@@ -424,18 +424,18 @@ void HTMLElementImpl::addHTMLColor( int id, const DOMString &c )
 		component++;
 	    }
 	    maxDigit = basicLength - maxDigit;
-// 	    qDebug("color is %x %x %x, maxDigit=%d",  colors[0], colors[1], colors[2], maxDigit );
+// 	    tqDebug("color is %x %x %x, maxDigit=%d",  colors[0], colors[1], colors[2], maxDigit );
 
 	    // normalize to 00-ff. The highest filled digit counts, minimum is 2 digits
 	    maxDigit -= 2;
 	    colors[0] >>= 4*maxDigit;
 	    colors[1] >>= 4*maxDigit;
 	    colors[2] >>= 4*maxDigit;
-// 	    qDebug("normalized color is %x %x %x",  colors[0], colors[1], colors[2] );
+// 	    tqDebug("normalized color is %x %x %x",  colors[0], colors[1], colors[2] );
 	    // 	assert( colors[0] < 0x100 && colors[1] < 0x100 && colors[2] < 0x100 );
 
 	    color.sprintf("#%02x%02x%02x", colors[0], colors[1], colors[2] );
-// 	    qDebug( "trying to add fixed color string '%s'", color.latin1() );
+// 	    tqDebug( "trying to add fixed color string '%s'", color.latin1() );
 	    if ( m_styleDecls->setProperty(id, DOMString(color), false, true) )
 		return;
 	}
@@ -622,7 +622,7 @@ void HTMLElementImpl::setInnerText( const DOMString &text, int& exceptioncode )
 
 void HTMLElementImpl::addHTMLAlignment( DOMString alignment )
 {
-    //qDebug("alignment is %s", alignment.string().latin1() );
+    //tqDebug("alignment is %s", alignment.string().latin1() );
     // vertical alignment with respect to the current baseline of the text
     // right or left means floating images
     int propfloat = -1;

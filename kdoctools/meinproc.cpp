@@ -203,8 +203,8 @@ int main(int argc, char **argv) {
 
     TQValueVector<const char *> params;
     if (args->isSet( "output" ) ) {
-        params.append( qstrdup( "outputFile" ) );
-        params.append( qstrdup( TQString(TQFile::decodeName( args->getOption( "output" ) )).latin1() ) );
+        params.append( tqstrdup( "outputFile" ) );
+        params.append( tqstrdup( TQString(TQFile::decodeName( args->getOption( "output" ) )).latin1() ) );
     }
     {
         const QCStringList paramList = args->getOptionList( "param" );
@@ -217,8 +217,8 @@ int main(int argc, char **argv) {
                 kdError() << "Key-Value tuple '" << tuple << "' lacks a '='!" << endl;
                 return( 2 );
             }
-            params.append( qstrdup( tuple.left( ch ) ) );
-            params.append( qstrdup( tuple.mid( ch + 1 ) )  );
+            params.append( tqstrdup( tuple.left( ch ) ) );
+            params.append( tqstrdup( tuple.mid( ch + 1 ) )  );
         }
     }
     params.append( NULL );

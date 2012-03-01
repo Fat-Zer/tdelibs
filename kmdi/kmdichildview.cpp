@@ -628,7 +628,7 @@ bool KMdiChildView::eventFilter( TQObject *obj, TQEvent *e )
 	{
 		if ( e->type() == TQEvent::IconChange )
 		{
-			//            qDebug("KMDiChildView:: TQEvent:IconChange intercepted\n");
+			//            tqDebug("KMDiChildView:: TQEvent:IconChange intercepted\n");
 			if ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(this) )
 				iconUpdated( this, icon() ? ( *icon() ) : TQPixmap() );
 			else if ( TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(m_trackChanges) )

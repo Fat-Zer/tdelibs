@@ -213,7 +213,7 @@ static void delete_ksycoca_self() {
 KSycoca * KSycoca::self()
 {
     if (!_self) {
-        qAddPostRoutine(delete_ksycoca_self);
+        tqAddPostRoutine(delete_ksycoca_self);
         _self = new KSycoca();
     }
   return _self;
@@ -443,7 +443,7 @@ KSycoca * KSycoca::_self = 0L;
 
 void KSycoca::flagError()
 {
-   qWarning("ERROR: KSycoca database corruption!");
+   tqWarning("ERROR: KSycoca database corruption!");
    if (_self)
    {
       if (_self->d->readError)
@@ -451,7 +451,7 @@ void KSycoca::flagError()
       _self->d->readError = true;
       if (_self->d->autoRebuild)
          if(system("kbuildsycoca") < 0) // Rebuild the damned thing.
-	   qWarning("ERROR: Running KSycoca failed.");
+	   tqWarning("ERROR: Running KSycoca failed.");
    }
 }
 

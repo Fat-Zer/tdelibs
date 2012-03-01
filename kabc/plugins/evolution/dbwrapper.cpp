@@ -157,7 +157,7 @@ bool DBWrapper::find( const TQString& _key,  TQString& _val ) {
     int ret  = data->db->get(data->db, NULL, &key,  &val, 0 );
     if (!ret) {
         _val = TQString::fromUtf8( (char*)val.data, val.size );
-        qWarning("key: %s val: %sXXX", (char*)key.data, (char*)val.data );
+        tqWarning("key: %s val: %sXXX", (char*)key.data, (char*)val.data );
         return true;
     }
     return false;

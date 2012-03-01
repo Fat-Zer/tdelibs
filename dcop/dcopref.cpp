@@ -41,7 +41,7 @@ bool DCOPReply::typeCheck( const char* t, bool warn )
 	return true;
     if( warn
 	|| strcmp( t, "<unknown>" )) // type not listed in dcoptypes.h
-	qWarning( "WARNING: DCOPReply<%s>: cast to '%s' error",
+	tqWarning( "WARNING: DCOPReply<%s>: cast to '%s' error",
 	         STR( type ), t );
     return false;
 }
@@ -57,7 +57,7 @@ DCOPReply DCOPRef::callInternal( const TQCString& fun, const TQCString& args, co
 {
     DCOPReply reply;
     if ( isNull() ) {
-	qWarning( "DCOPRef: call '%s' on null reference error",
+	tqWarning( "DCOPRef: call '%s' on null reference error",
 		  STR( fun ) );
 	return reply;
     }
@@ -65,13 +65,13 @@ DCOPReply DCOPRef::callInternal( const TQCString& fun, const TQCString& args, co
     if ( fun.find('(') == -1 ) {
 	sig += args;
 	if( args.find( "<unknown" ) != -1 )
-	    qWarning("DCOPRef: unknown type error "
+	    tqWarning("DCOPRef: unknown type error "
 		     "<\"%s\",\"%s\">::call(\"%s\",%s",
 		     STR(m_app), STR(m_obj), STR(fun), args.data()+1 );
     }
     DCOPClient* dc = dcopClient();
     if ( !dc || !dc->isAttached() ) {
-	qWarning( "DCOPRef::call():  no DCOP client or client not attached error" );
+	tqWarning( "DCOPRef::call():  no DCOP client or client not attached error" );
 	return reply;
     }
     dc->call( m_app, m_obj, sig, data, reply.type, reply.data, useEventLoop == UseEventLoop, timeout );
@@ -81,7 +81,7 @@ DCOPReply DCOPRef::callInternal( const TQCString& fun, const TQCString& args, co
 bool DCOPRef::sendInternal( const TQCString& fun, const TQCString& args, const TQByteArray& data )
 {
     if ( isNull() ) {
-	qWarning( "DCOPRef: send '%s' on null reference error",
+	tqWarning( "DCOPRef: send '%s' on null reference error",
 		  STR( fun ) );
 	return false;
     }
@@ -90,13 +90,13 @@ bool DCOPRef::sendInternal( const TQCString& fun, const TQCString& args, const T
     if ( fun.find('(') == -1 ) {
 	sig += args;
 	if( args.find( "<unknown" ) != -1 )
-	    qWarning("DCOPRef: unknown type error "
+	    tqWarning("DCOPRef: unknown type error "
 		     "<\"%s\",\"%s\">::send(\"%s\",%s",
 		     STR(m_app), STR(m_obj), STR(fun), args.data()+1 );
     }
     DCOPClient* dc = dcopClient();
     if ( !dc || !dc->isAttached() ) {
-	qWarning( "DCOPRef::send(): no DCOP client or client not attached error" );
+	tqWarning( "DCOPRef::send(): no DCOP client or client not attached error" );
 	return false;
     }
     return dc->send( m_app, m_obj, sig, data );

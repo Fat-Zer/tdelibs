@@ -359,7 +359,7 @@ static void DCOPProcessMessage(IceConn iceConn, IcePointer clientObject,
             *replyWaitRet = True;
             return;
         } else {
-            qWarning("Very strange! got a DCOPReplyFailed opcode, but we were not waiting for a reply!");
+            tqWarning("Very strange! got a DCOPReplyFailed opcode, but we were not waiting for a reply!");
             return;
         }
     case DCOPReply:
@@ -376,7 +376,7 @@ static void DCOPProcessMessage(IceConn iceConn, IcePointer clientObject,
             *replyWaitRet = True;
             return;
         } else {
-            qWarning("Very strange! got a DCOPReply opcode, but we were not waiting for a reply!");
+            tqWarning("Very strange! got a DCOPReply opcode, but we were not waiting for a reply!");
             return;
         }
     case DCOPReplyWait:
@@ -391,7 +391,7 @@ static void DCOPProcessMessage(IceConn iceConn, IcePointer clientObject,
             *replyWaitRet = True;
             return;
         } else {
-            qWarning("Very strange! got a DCOPReplyWait opcode, but we were not waiting for a reply!");
+            tqWarning("Very strange! got a DCOPReplyWait opcode, but we were not waiting for a reply!");
             return;
         }
     case DCOPReplyDelayed:
@@ -426,7 +426,7 @@ static void DCOPProcessMessage(IceConn iceConn, IcePointer clientObject,
                 }
             }
         }
-        qWarning("Very strange! got a DCOPReplyDelayed opcode, but we were not waiting for a reply!");
+        tqWarning("Very strange! got a DCOPReplyDelayed opcode, but we were not waiting for a reply!");
         return;
     case DCOPCall:
     case DCOPFind:
@@ -494,7 +494,7 @@ void DCOPProcessInternal( DCOPClientPrivate *d, int opcode, CARD32 key, const TQ
     d->objId = objId;
     d->function = fun;
 
-// qWarning("DCOP: %s got call: %s:%s:%s key = %d currentKey = %d", d->appId.data(), app.data(), objId.data(), fun.data(), key, d->currentKey);
+// tqWarning("DCOP: %s got call: %s:%s:%s key = %d currentKey = %d", d->appId.data(), app.data(), objId.data(), fun.data(), key, d->currentKey);
 
     if ( canPost && d->currentKey && key != d->currentKey ) {
         DCOPClientMessage* msg = new DCOPClientMessage;
@@ -621,20 +621,20 @@ DCOPClient::DCOPClient()
 DCOPClient::~DCOPClient()
 {
 #ifdef DCOPCLIENT_DEBUG
-    qWarning("d->messages.count() = %d", d->messages.count());
+    tqWarning("d->messages.count() = %d", d->messages.count());
     TQPtrListIterator<DCOPClientMessage> it (d->messages );
     DCOPClientMessage* msg ;
     while ( ( msg = it.current() ) ) {
         ++it;
         d->messages.removeRef( msg );
-        qWarning("DROPPING UNHANDLED DCOP MESSAGE:");
-        qWarning("         opcode = %d key = %d", msg->opcode, msg->key);
+        tqWarning("DROPPING UNHANDLED DCOP MESSAGE:");
+        tqWarning("         opcode = %d key = %d", msg->opcode, msg->key);
         TQDataStream ds( msg->data, IO_ReadOnly );
 
         TQCString fromApp, app, objId, fun;
         ds >> fromApp >> app >> objId >> fun;
-        qWarning("         from = %s", fromApp.data()); 
-        qWarning("         to = %s / %s / %s", app.data(), objId.data(), fun.data());
+        tqWarning("         from = %s", fromApp.data()); 
+        tqWarning("         to = %s / %s / %s", app.data(), objId.data(), fun.data());
         delete msg;
     }
 #endif
@@ -659,7 +659,7 @@ void DCOPClient::setServerAddress(const TQCString &addr)
     TQCString env = "DCOPSERVER=" + addr;
     putenv(strdup(env.data()));
     delete [] DCOPClientPrivate::serverAddr;
-    DCOPClientPrivate::serverAddr = qstrdup( addr.data() );
+    DCOPClientPrivate::serverAddr = tqstrdup( addr.data() );
 }
 
 bool DCOPClient::attach()
@@ -786,14 +786,14 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
             TQCString contents( size+1 );
             if ( f.readBlock( contents.data(), size ) != size )
             {
-               qDebug("Error reading from %s, didn't read the expected %d bytes", fName.data(), size);
+               tqDebug("Error reading from %s, didn't read the expected %d bytes", fName.data(), size);
                // Should we abort ?
             }
             contents[size] = '\0';
             int pos = contents.find('\n');
             if ( pos == -1 ) // Shouldn't happen
             {
-                qDebug("Only one line in dcopserver file !: %s", contents.data());
+                tqDebug("Only one line in dcopserver file !: %s", contents.data());
                 dcopSrv = contents;
             }
             else
@@ -802,18 +802,18 @@ bool DCOPClient::attachInternal( bool registerAsAnonymous )
 					pos--;
                 dcopSrv = contents.left( pos );
 //#ifndef NDEBUG
-//                qDebug("dcopserver address: %s", dcopSrv.data());
+//                tqDebug("dcopserver address: %s", dcopSrv.data());
 //#endif
             }
         }
-        d->serverAddr = qstrdup( const_cast<char *>(dcopSrv.data()) );
+        d->serverAddr = tqstrdup( const_cast<char *>(dcopSrv.data()) );
         bClearServerAddr = true;
     }
 
     if ((d->iceConn = IceOpenConnection(const_cast<char*>(d->serverAddr),
                                         static_cast<IcePointer>(this), False, d->majorOpcode,
                                         sizeof(errBuf), errBuf)) == 0L) {
-        qDebug("DCOPClient::attachInternal. Attach failed %s", errBuf);
+        tqDebug("DCOPClient::attachInternal. Attach failed %s", errBuf);
         d->iceConn = 0;
         if (bClearServerAddr) {
            delete [] d->serverAddr;
@@ -1303,7 +1303,7 @@ void DCOPClient::setNotifications(bool enabled)
     TQCString replyType;
     TQByteArray reply;
     if (!call("DCOPServer", "", "setNotifications( bool )", data, replyType, reply))
-        qWarning("I couldn't enable notifications at the dcopserver!");
+        tqWarning("I couldn't enable notifications at the dcopserver!");
 }
 
 void DCOPClient::setDaemonMode( bool daemonMode )
@@ -1315,7 +1315,7 @@ void DCOPClient::setDaemonMode( bool daemonMode )
     TQCString replyType;
     TQByteArray reply;
     if (!call("DCOPServer", "", "setDaemonMode(bool)", data, replyType, reply))
-        qWarning("I couldn't enable daemon mode at the dcopserver!");
+        tqWarning("I couldn't enable daemon mode at the dcopserver!");
 }
 
 
@@ -1687,7 +1687,7 @@ bool DCOPClient::find(const TQCString &app, const TQCString &objId,
 {
     d->transaction = false; // Transactions are not allowed.
     if ( !app.isEmpty() && app != d->appId && app[app.length()-1] != '*') {
-        qWarning("WEIRD! we somehow received a DCOP message w/a different appId");
+        tqWarning("WEIRD! we somehow received a DCOP message w/a different appId");
         return false;
     }
 
@@ -1852,7 +1852,7 @@ bool DCOPClient::callInternal(const TQCString &remApp, const TQCString &remObjId
     int datalen = ba.size() + data.size();
     pMsg->length += datalen;
 
-// qWarning("DCOP: %s made call %s:%s:%s key = %d", d->appId.data(), remApp.data(), remObjId.data(), remFun.data(), pMsg->key);
+// tqWarning("DCOP: %s made call %s:%s:%s key = %d", d->appId.data(), remApp.data(), remObjId.data(), remFun.data(), pMsg->key);
 
     IceSendData(d->iceConn, ba.size(), const_cast<char *>(ba.data()));
     IceSendData(d->iceConn, data.size(), const_cast<char *>(data.data()));
@@ -2010,7 +2010,7 @@ void DCOPClient::processSocketData(int fd)
         if( d->notifier )
             d->notifier->deleteLater();
         d->notifier = 0;
-        qWarning("received an error processing data from the DCOP server!");
+        tqWarning("received an error processing data from the DCOP server!");
         return;
     }
 
@@ -2018,7 +2018,7 @@ void DCOPClient::processSocketData(int fd)
 
     if (s == IceProcessMessagesIOError) {
         detach();
-        qWarning("received an error processing data from the DCOP server!");
+        tqWarning("received an error processing data from the DCOP server!");
         return;
     }
 }
@@ -2089,12 +2089,12 @@ DCOPClient::endTransaction( DCOPClientTransaction *trans, TQCString& replyType,
         return;
 
     if ( !d->transactionList) {
-        qWarning("Transaction unknown: No pending transactions!");
+        tqWarning("Transaction unknown: No pending transactions!");
         return; // No pending transactions!
     }
 
     if ( !d->transactionList->removeRef( trans ) ) {
-        qWarning("Transaction unknown: Not on list of pending transactions!");
+        tqWarning("Transaction unknown: Not on list of pending transactions!");
         return; // Transaction
     }
 

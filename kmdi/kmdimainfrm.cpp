@@ -1694,7 +1694,7 @@ void KMdiMainFrm::setupTabbedDocumentViewSpace()
 		setMaximumHeight( m_oldMainFrmMaxHeight );
 		resize( width(), m_oldMainFrmHeight );
 		m_oldMainFrmHeight = 0;
-		//qDebug("TopLevelMode off");
+		//tqDebug("TopLevelMode off");
 		emit leftTopLevelMode();
 		TQApplication::sendPostedEvents();
 
@@ -2498,7 +2498,7 @@ void KMdiMainFrm::switchOffMaximizeModeForMenu( KMdiChildFrm* oldChild )
 /** reconnects the system buttons form maximize mode (SDI mode) with the new child frame */
 void KMdiMainFrm::updateSysButtonConnections( KMdiChildFrm* oldChild, KMdiChildFrm* newChild )
 {
-	//qDebug("updateSysButtonConnections");
+	//tqDebug("updateSysButtonConnections");
 	// if there is no menubar given, those system buttons aren't possible
 	if ( !m_pMainMenuBar )
 		return ;
@@ -2815,7 +2815,7 @@ void KMdiMainFrm::setFrameDecorOfAttachedViews( int frameDecor )
 		m_frameDecoration = KMdi::KDELaptopLook;
 		break;
 	default:
-		qDebug( "unknown MDI decoration" );
+		tqDebug( "unknown MDI decoration" );
 		break;
 	}
 	setMenuForSDIModeSysButtons( m_pMainMenuBar );

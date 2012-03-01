@@ -566,7 +566,7 @@ void RenderTable::splitColumn( int pos, int firstSpan )
     int oldSize = columns.size();
     columns.resize( oldSize + 1 );
     int oldSpan = columns[pos].span;
-//     qDebug("splitColumn( %d,%d ), oldSize=%d, oldSpan=%d", pos, firstSpan, oldSize, oldSpan );
+//     tqDebug("splitColumn( %d,%d ), oldSize=%d, oldSpan=%d", pos, firstSpan, oldSize, oldSpan );
     KHTMLAssert( oldSpan > firstSpan );
     columns[pos].span = firstSpan;
     memmove( columns.data()+pos+1, columns.data()+pos, (oldSize-pos)*sizeof(ColumnStruct) );
@@ -585,7 +585,7 @@ void RenderTable::splitColumn( int pos, int firstSpan )
 		section->grid[row].row->resize( oldSize+1 );
 		RenderTableSection::Row &r = *section->grid[row].row;
 		memmove( r.data()+pos+1, r.data()+pos, (oldSize-pos)*sizeof( RenderTableCell * ) );
-// 		qDebug("moving from %d to %d, num=%d", pos, pos+1, (oldSize-pos-1) );
+// 		tqDebug("moving from %d to %d, num=%d", pos, pos+1, (oldSize-pos-1) );
 		r[pos+1] = r[pos] ? (RenderTableCell *)-1 : 0;
 		row++;
 	    }
@@ -600,11 +600,11 @@ void RenderTable::appendColumn( int span )
 {
     // easy case.
     int pos = columns.size();
-//     qDebug("appendColumn( %d ), size=%d", span, pos );
+//     tqDebug("appendColumn( %d ), size=%d", span, pos );
     int newSize = pos + 1;
     columns.resize( newSize );
     columns[pos].span = span;
-    //qDebug("appending column at %d, span %d", pos,  span );
+    //tqDebug("appending column at %d, span %d", pos,  span );
 
     // change width of all rows.
     RenderObject *child = firstChild();
@@ -1086,7 +1086,7 @@ void RenderTableSection::addCell( RenderTableCell *cell, RenderTableRow *row )
     while ( cCol < nCols && cellAt( cRow, cCol ) )
 	cCol++;
 
-//       qDebug("adding cell at %d/%d span=(%d/%d)",  cRow, cCol, rSpan, cSpan );
+//       tqDebug("adding cell at %d/%d span=(%d/%d)",  cRow, cCol, rSpan, cSpan );
 
     if ( rSpan == 1 ) {
 	// we ignore height settings on rowspan cells
@@ -1139,7 +1139,7 @@ void RenderTableSection::addCell( RenderTableCell *cell, RenderTableRow *row )
 	int r = 0;
 	while ( r < rSpan ) {
 	    if ( !cellAt( cRow + r, cCol ) ) {
-// 		qDebug("    adding cell at %d, %d",  cRow + r, cCol );
+// 		tqDebug("    adding cell at %d, %d",  cRow + r, cCol );
 		cellAt( cRow + r, cCol ) = set;
 	    }
 	    r++;
@@ -1169,7 +1169,7 @@ void RenderTableSection::setCellWidths()
 	int cols = row.size();
 	for ( int j = 0; j < cols; j++ ) {
 	    RenderTableCell *cell = row[j];
-// 	    qDebug("cell[%d,%d] = %p", i, j, cell );
+// 	    tqDebug("cell[%d,%d] = %p", i, j, cell );
 	    if ( !cell || cell == (RenderTableCell *)-1 )
 		continue;
 	    int endCol = j;
@@ -1213,7 +1213,7 @@ void RenderTableSection::calcRowHeight()
 
 	int baseline=0;
 	int bdesc = 0;
-// 	qDebug("height of row %d is %d/%d", r, grid[r].height.value, grid[r].height.type );
+// 	tqDebug("height of row %d is %d/%d", r, grid[r].height.value, grid[r].height.type );
 	int ch = grid[r].height.minWidth( 0 );
 	int pos = rowPos[r] + ch + (grid[r].rowRenderer ? vspacing : 0);
 
@@ -1290,7 +1290,7 @@ void RenderTableSection::calcRowHeight()
 
 	if ( rowPos[r+1] < rowPos[r] )
 	    rowPos[r+1] = rowPos[r];
-//   	qDebug("rowpos(%d)=%d",  r, rowPos[r] );
+//   	tqDebug("rowpos(%d)=%d",  r, rowPos[r] );
     }
 }
 
@@ -1313,7 +1313,7 @@ int RenderTableSection::layoutRows( int toAdd )
     if (toAdd && totalRows && (rowPos[totalRows] || !nextSibling())) {
 
 	int totalHeight = rowPos[totalRows] + toAdd;
-//	qDebug("layoutRows: totalHeight = %d",  totalHeight );
+//	tqDebug("layoutRows: totalHeight = %d",  totalHeight );
 
         int dh = toAdd;
 	int totalPercent = 0;
@@ -1325,7 +1325,7 @@ int RenderTableSection::layoutRows( int toAdd )
 		totalPercent += grid[r].height.value();
 	}
 	if ( totalPercent ) {
-//	    qDebug("distributing %d over percent rows totalPercent=%d", dh,  totalPercent );
+//	    tqDebug("distributing %d over percent rows totalPercent=%d", dh,  totalPercent );
 	    // try to satisfy percent
 	    int add = 0;
 	    if ( totalPercent > 100 )
@@ -1340,7 +1340,7 @@ int RenderTableSection::layoutRows( int toAdd )
 		    add += toAdd;
 		    dh -= toAdd;
 		    totalPercent -= grid[r].height.value();
-//		    qDebug( "adding %d to row %d", toAdd, r );
+//		    tqDebug( "adding %d to row %d", toAdd, r );
 		}
 		if ( r < totalRows-1 )
 		    rh = rowPos[r+2] - rowPos[r+1];
@@ -1349,7 +1349,7 @@ int RenderTableSection::layoutRows( int toAdd )
 	}
 	if ( numVariable ) {
 	    // distribute over non-empty variable rows
-//	    qDebug("distributing %d over variable rows numVariable=%d", dh,  numVariable );
+//	    tqDebug("distributing %d over variable rows numVariable=%d", dh,  numVariable );
 	    int add = 0;
             int toAdd = dh/numVariable;
             for ( int r = 0; r < totalRows; r++ ) {

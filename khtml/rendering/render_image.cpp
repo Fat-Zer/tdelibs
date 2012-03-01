@@ -143,7 +143,7 @@ void RenderImage::setPixmap( const TQPixmap &p, const TQRect& r, CachedImage *o)
     if( o->pixmap_size().width() != intrinsicWidth() ||
        o->pixmap_size().height() != intrinsicHeight() || iwchanged )
     {
-//           qDebug("image dimensions have been changed, old: %d/%d  new: %d/%d",
+//           tqDebug("image dimensions have been changed, old: %d/%d  new: %d/%d",
 //                  intrinsicWidth(), intrinsicHeight(),
 //               o->pixmap_size().width(), o->pixmap_size().height());
 
@@ -264,7 +264,7 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
         if(cWidth > 2 && cHeight > 2)
         {
             if ( !berrorPic ) {
-                //qDebug("qDrawShadePanel %d/%d/%d/%d", _tx + leftBorder, _ty + topBorder, cWidth, cHeight);
+                //tqDebug("qDrawShadePanel %d/%d/%d/%d", _tx + leftBorder, _ty + topBorder, cWidth, cHeight);
                 qDrawShadePanel( paintInfo.p, _tx + leftBorder + leftPad, _ty + topBorder + topPad, cWidth, cHeight,
                                  KApplication::palette().inactive(), true, 1 );
             }
@@ -299,7 +299,7 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
                 TQRect scaledrect(i->valid_rect());
 //                 kdDebug(6040) << "time elapsed: " << dt->elapsed() << endl;
 //                  kdDebug( 6040 ) << "have to scale: " << endl;
-//                  qDebug("cw=%d ch=%d  pw=%d ph=%d  rcw=%d, rch=%d",
+//                  tqDebug("cw=%d ch=%d  pw=%d ph=%d  rcw=%d, rch=%d",
 //                          cWidth, cHeight, intrinsicWidth(), intrinsicHeight(), resizeCache.width(), resizeCache.height());
                 TQWMatrix matrix;
                 matrix.scale( (float)(cWidth)/intrinsicWidth(),
@@ -307,8 +307,8 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
                 resizeCache = pix.xForm( matrix );
                 scaledrect.setWidth( ( cWidth*scaledrect.width() ) / intrinsicWidth() );
                 scaledrect.setHeight( ( cHeight*scaledrect.height() ) / intrinsicHeight() );
-//                   qDebug("resizeCache size: %d/%d", resizeCache.width(), resizeCache.height());
-//                   qDebug("valid: %d/%d, scaled: %d/%d",
+//                   tqDebug("resizeCache size: %d/%d", resizeCache.width(), resizeCache.height());
+//                   tqDebug("valid: %d/%d, scaled: %d/%d",
 //                          i->valid_rect().width(), i->valid_rect().height(),
 //                          scaledrect.width(), scaledrect.height());
 
@@ -336,12 +336,12 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
                        : TQRect(0, 0, intrinsicWidth(), intrinsicHeight()));
 
             TQPoint offs( _tx + leftBorder + leftPad, _ty + topBorder + topPad);
-//             qDebug("normal paint rect %d/%d/%d/%d", rect.x(), rect.y(), rect.width(), rect.height());
+//             tqDebug("normal paint rect %d/%d/%d/%d", rect.x(), rect.y(), rect.width(), rect.height());
 //             rect = rect & TQRect( 0 , y - offs.y() - 10, w, 10 + y + h  - offs.y());
 
-//             qDebug("normal paint rect after %d/%d/%d/%d", rect.x(), rect.y(), rect.width(), rect.height());
-//             qDebug("normal paint: offs.y(): %d, y: %d, diff: %d", offs.y(), y, y - offs.y());
-//             qDebug("");
+//             tqDebug("normal paint rect after %d/%d/%d/%d", rect.x(), rect.y(), rect.width(), rect.height());
+//             tqDebug("normal paint: offs.y(): %d, y: %d, diff: %d", offs.y(), y, y - offs.y());
+//             tqDebug("");
 
 //           p->setClipRect(TQRect(x,y,w,h));
 

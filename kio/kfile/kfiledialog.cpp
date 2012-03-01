@@ -511,7 +511,7 @@ void KFileDialog::slotOk()
 
         }
         else { // FIXME: remote directory, should we allow that?
-//             qDebug( "**** Selected remote directory: %s", d->url.url().latin1());
+//             tqDebug( "**** Selected remote directory: %s", d->url.url().latin1());
             d->filenames = TQString::null;
             d->urlList.clear();
             d->urlList.append( d->url );

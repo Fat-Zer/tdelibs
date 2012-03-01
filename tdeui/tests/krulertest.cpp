@@ -63,7 +63,7 @@ KRulerTest::KRulerTest( const char *name )
   bigwidget->setFrameStyle(TQFrame::WinPanel | TQFrame::Sunken);
 
   //  TQRect bwrect = bigwidget->frameRect();
-  //  qDebug("big rect: top%i left%i bottom%i right%i",
+  //  tqDebug("big rect: top%i left%i bottom%i right%i",
   //	bwrect.top(), bwrect.left(), bwrect.bottom(), bwrect.right());
   hruler = new KRuler(Horizontal, mainframe);
   //  hruler->setRange( bwrect.left(), bwrect.right() );

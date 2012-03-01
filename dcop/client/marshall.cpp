@@ -273,7 +273,7 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
 {
     if( i >= args.count() )
     {
-	qWarning("Not enough arguments (expected %d, got %d).",  i,  args.count());
+	tqWarning("Not enough arguments (expected %d, got %d).",  i,  args.count());
 	exit(1);
     }
     TQString s = TQString::fromLocal8Bit( args[ i ] );
@@ -368,7 +368,7 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
 	while (true) {
 	    if( j > args.count() )
 	    {
-		qWarning("List end-delimiter '%s' not found.", delim.latin1());
+		tqWarning("List end-delimiter '%s' not found.", delim.latin1());
 		exit(1);
 	    }
 	    if( TQString::fromLocal8Bit( args[ j ] ) == delim )
@@ -381,7 +381,7 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
 	while (true) {
 	    if( i > args.count() )
 	    {
-		qWarning("List end-delimiter '%s' not found.", delim.latin1());
+		tqWarning("List end-delimiter '%s' not found.", delim.latin1());
 		exit(1);
 	    }
 	    if( TQString::fromLocal8Bit( args[ i ] ) == delim )
@@ -389,7 +389,7 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
 	    marshall( arg, args, i, type );
 	}
     } else {
-	qWarning( "cannot handle datatype '%s'", type.latin1() );
+	tqWarning( "cannot handle datatype '%s'", type.latin1() );
 	exit(1);
     }
     i++;

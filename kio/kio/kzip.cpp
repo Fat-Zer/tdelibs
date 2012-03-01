@@ -1091,13 +1091,13 @@ bool KZip::prepareWriting_impl(const TQString &name, const TQString &user,
     //kdDebug(7040) << "prepareWriting reached." << endl;
     if ( !isOpened() )
     {
-        qWarning( "KZip::writeFile: You must open the zip file before writing to it\n");
+        tqWarning( "KZip::writeFile: You must open the zip file before writing to it\n");
         return false;
     }
 
     if ( ! ( mode() & IO_WriteOnly ) ) // accept WriteOnly and ReadWrite
     {
-        qWarning( "KZip::writeFile: You must open the zip file for writing\n");
+        tqWarning( "KZip::writeFile: You must open the zip file for writing\n");
         return false;
     }
 

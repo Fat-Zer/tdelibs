@@ -167,7 +167,7 @@ void LdapClient::slotData( KIO::Job*, const TQByteArray& data )
 
 void LdapClient::slotInfoMessage( KIO::Job*, const TQString & )
 {
-  //qDebug("Job said \"%s\"", info.latin1());
+  //tqDebug("Job said \"%s\"", info.latin1());
 }
 
 void LdapClient::slotDone()
@@ -176,7 +176,7 @@ void LdapClient::slotDone()
   mActive = false;
 #if 0
   for ( TQValueList<LdapObject>::Iterator it = mObjects.begin(); it != mObjects.end(); ++it ) {
-    qDebug( (*it).toString().latin1() );
+    tqDebug( (*it).toString().latin1() );
   }
 #endif
   int err = mJob->error();

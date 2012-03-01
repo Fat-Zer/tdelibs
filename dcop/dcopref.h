@@ -263,7 +263,7 @@ inline TQDataStream & operator << (TQDataStream & str, const DCOPArg& arg )
  *
  * \code
  *	if ( example.send( "pingMe", "message" ) == false )
- *	   qWarning("could not ping example" );
+ *	   tqWarning("could not ping example" );
  * \endcode
  *
  * A DCOP reference operates on DCOPClient::mainClient(), unless you

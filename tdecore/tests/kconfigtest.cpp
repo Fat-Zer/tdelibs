@@ -88,7 +88,7 @@ void KConfigTest::writeConfigFile()
 // ### TODO: call this, and test the state of things afterwards
 void KConfigTest::revertEntries()
 {
-  qWarning("Reverting entries");
+  tqWarning("Reverting entries");
   KConfig sc( "kconfigtest" );
 
   sc.setGroup("Hello");
@@ -115,7 +115,7 @@ void KConfigTest::allTests()
   bool bImmutable = sc3.entryIsImmutable("stringEntry1");
 
   CHECK( bImmutable, false );
-  //qWarning("sc3.entryIsImmutable() 1: %s", bImmutable ? "true" : "false");
+  //tqWarning("sc3.entryIsImmutable() 1: %s", bImmutable ? "true" : "false");
 
   sc2.setGroup("AAA");
   CHECK( sc2.hasKey( "stringEntry1" ), true );

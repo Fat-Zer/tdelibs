@@ -64,17 +64,17 @@ void TestService::newApp(const TQCString &appId)
       result = KService::DCOP_Multi;
       stop();
    }
-   qWarning("Register %s", appId.data());
+   tqWarning("Register %s", appId.data());
 }
 
 void TestService::endApp(const TQCString &appId)
 {
-   qWarning("Unegister %s", appId.data());
+   tqWarning("Unegister %s", appId.data());
 }
 
 void TestService::appExit()
 {
-   qWarning("Exit");
+   tqWarning("Exit");
 }
 
 void TestService::stop()
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 
    KService::List list = KService::allServices();
 
-   qWarning("I found %d services.", list.count());
+   tqWarning("I found %d services.", list.count());
    int i = 0;
    for(KService::List::ConstIterator it = list.begin(); it != list.end(); ++it)
    {
@@ -121,12 +121,12 @@ int main(int argc, char *argv[])
             else if (n == KService::DCOP_Multi)
                result = "Multi";
            
-            qWarning("%s %s", (*it)->desktopEntryPath().latin1(),
+            tqWarning("%s %s", (*it)->desktopEntryPath().latin1(),
                               result.latin1());
          }
       }
    }
-   qWarning("%d left after filtering.", i);
+   tqWarning("%d left after filtering.", i);
 }
 
 #include "kdcopcheck.moc"

@@ -26,16 +26,16 @@ ExampleWidget::ExampleWidget( TQWidget *parent, const char *name )
     TQSize sh;
     setText("<p>Hello.</p>");
     sh = sizeHint();
-    qWarning("SizeHint = %d x %d", sh.width(), sh.height());
+    tqWarning("SizeHint = %d x %d", sh.width(), sh.height());
     setText("Hello.");
     sh = sizeHint();
-    qWarning("SizeHint = %d x %d", sh.width(), sh.height());
+    tqWarning("SizeHint = %d x %d", sh.width(), sh.height());
     setText("<p>Hello<br>World</p>");
     sh = sizeHint();
-    qWarning("SizeHint = %d x %d", sh.width(), sh.height());
+    tqWarning("SizeHint = %d x %d", sh.width(), sh.height());
 //    setText("Hello\nWorld");
     sh = sizeHint();
-    qWarning("SizeHint = %d x %d", sh.width(), sh.height());
+    tqWarning("SizeHint = %d x %d", sh.width(), sh.height());
     setMinimumSize(sizeHint());
 }
 

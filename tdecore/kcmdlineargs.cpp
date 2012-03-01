@@ -593,7 +593,7 @@ KCmdLineArgs::parseAllArgs()
          else if ( (::qstrcmp(option, "version") == 0) ||
                    (::qstrcmp(option, "v") == 0))
          {
-            printQ( TQString("Qt: %1\n").arg(qVersion()));
+            printQ( TQString("Qt: %1\n").arg(tqVersion()));
             printQ( TQString("TDE: %1\n").arg(TDE_VERSION_STRING));
             printQ( TQString("%1: %2\n").
       arg(about->programName()).arg(about->version()));
@@ -728,11 +728,11 @@ KCmdLineArgs::qt_argv()
    }
 
    qt_argv = new char*[ args->count() + 2 ];
-   qt_argv[ 0 ] = qstrdup( appName());
+   qt_argv[ 0 ] = tqstrdup( appName());
    int i = 0;
    for(; i < args->count(); i++)
    {
-      qt_argv[i+1] = qstrdup((char *) args->arg(i));
+      qt_argv[i+1] = tqstrdup((char *) args->arg(i));
    }
    qt_argv[i+1] = 0;
 

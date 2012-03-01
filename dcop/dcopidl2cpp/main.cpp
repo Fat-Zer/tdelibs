@@ -41,7 +41,7 @@ void usage()
 int main( int argc, char** argv )
 {
 
-    if ( *qVersion() == '1' ) {
+    if ( *tqVersion() == '1' ) {
         fprintf( stderr, "dcopidl2cpp appears to be linked to Qt 1 instead of Qt >= 2 ! Aborting.\n" );
         exit(1);
     }
@@ -93,7 +93,7 @@ int main( int argc, char** argv )
 
     TQFile in( TQFile::decodeName(argv[argpos]) );
     if ( !in.open( IO_ReadOnly ) )
-	qFatal("Could not read %s", argv[argpos] );
+	tqFatal("Could not read %s", argv[argpos] );
 
     TQDomDocument doc;
     doc.setContent( &in );

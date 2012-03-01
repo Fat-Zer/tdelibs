@@ -28,8 +28,8 @@ public slots:
     void slotListBoxExec( TQListBoxItem* item );
     void slotToggleSingleColumn( bool b );
 
-    void slotClicked( TQIconViewItem* ) { qDebug("CLICK");}
-    void slotDoubleClicked( TQIconViewItem* ) { qDebug("DOUBLE CLICK");}
+    void slotClicked( TQIconViewItem* ) { tqDebug("CLICK");}
+    void slotDoubleClicked( TQIconViewItem* ) { tqDebug("DOUBLE CLICK");}
 protected:
     KIconView* m_pIconView;
     KListView* m_pListView;

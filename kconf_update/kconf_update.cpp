@@ -127,7 +127,7 @@ KonfUpdate::KonfUpdate()
       TQString file = locate("data", "kconf_update/"+TQFile::decodeName(args->getOption("check")));
       if (file.isEmpty())
       {
-         qWarning("File '%s' not found.", args->getOption("check").data());
+         tqWarning("File '%s' not found.", args->getOption("check").data());
          log() << "File '" << TQFile::decodeName(args->getOption("check")) << "' passed on command line not found" << endl;
          return;
       }
@@ -278,7 +278,7 @@ void KonfUpdate::checkGotFile(const TQString &_file, const TQString &id)
       file = _file.mid(i+1).stripWhiteSpace();
    }
 
-//   qDebug("File %s, id %s", file.latin1(), id.latin1());
+//   tqDebug("File %s, id %s", file.latin1(), id.latin1());
 
    KSimpleConfig cfg(file);
    cfg.setGroup("$Version");
@@ -415,7 +415,7 @@ void KonfUpdate::gotId(const TQString &_id)
    {
        if (ids.contains(_id))
        {
-          //qDebug("Id '%s' was already in done-list", _id.latin1());
+          //tqDebug("Id '%s' was already in done-list", _id.latin1());
           if (!m_bUseConfigInfo)
           {
              skip = true;

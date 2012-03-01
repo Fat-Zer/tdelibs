@@ -614,7 +614,7 @@ void ElementImpl::recalcStyle( StyleChange change )
     case Force: debug = "Force";
         break;
     }
-    qDebug("recalcStyle(%d: %s, changed: %d)[%p: %s]", change, debug, changed(), this, tagName().string().latin1());
+    tqDebug("recalcStyle(%d: %s, changed: %d)[%p: %s]", change, debug, changed(), this, tagName().string().latin1());
 #endif
     if ( hasParentRenderer && (change >= Inherit || changed()) ) {
         RenderStyle *newStyle = getDocument()->styleSelector()->styleForElement(this);
@@ -650,7 +650,7 @@ void ElementImpl::recalcStyle( StyleChange change )
     for (n = _first; n; n = n->nextSibling()) {
         if ( change >= Inherit || n->isTextNode() ||
              n->hasChangedChild() || n->changed() ) {
-	    //qDebug("    (%p) calling recalcStyle on child %p/%s, change=%d", this, n, n->isElementNode() ? ((ElementImpl *)n)->tagName().string().latin1() : n->isTextNode() ? "text" : "unknown", change );
+	    //tqDebug("    (%p) calling recalcStyle on child %p/%s, change=%d", this, n, n->isElementNode() ? ((ElementImpl *)n)->tagName().string().latin1() : n->isTextNode() ? "text" : "unknown", change );
             n->recalcStyle( change );
         }
     }

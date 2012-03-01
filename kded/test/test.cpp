@@ -4,9 +4,9 @@ class TestObject : public KShared
 {
 public:
    TestObject(const TQCString &_app) : app(_app)
-     { qWarning("Creating TestObject belonging to '%s'", app.data()); }
+     { tqWarning("Creating TestObject belonging to '%s'", app.data()); }
    ~TestObject() 
-     { qWarning("Destructing TestObject belonging to '%s'", app.data()); }
+     { tqWarning("Destructing TestObject belonging to '%s'", app.data()); }
 protected:
    TQCString app;
 };
@@ -24,7 +24,7 @@ TQString TestModule::world()
 
 void TestModule::idle()
 {
-   qWarning("TestModule is idle.");
+   tqWarning("TestModule is idle.");
 }
 
 void TestModule::registerMe(const TQCString &app)

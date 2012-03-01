@@ -869,7 +869,7 @@ GtkObject *GtkObject::find(TQRegExp &r) const {
 	// this would be nice if tqmoc could parse this file :/
 	//
 	// if (o->className() != "GtkObject") {
-	//     qDebug("object is not a GtkObject (className = '%s')",
+	//     tqDebug("object is not a GtkObject (className = '%s')",
 	// 	      o->className());
 	//     continue;
 	// }
@@ -1101,19 +1101,19 @@ KLegacyStylePrivate::KLegacyStylePrivate()
 
 	    if (next == "class" || next == "widget" || next == "widget_class") {
 		if (! parseClass())
-		    qWarning("\"class\" parse error");
+		    tqWarning("\"class\" parse error");
 	    } else if (next == "pixmap_path") {
 		if (! parsePixmapPath())
-		    qWarning("\"pixmap_path\" parse error");
+		    tqWarning("\"pixmap_path\" parse error");
 	    } else if (next == "style") {
 		if (! parseStyle())
-		    qWarning("\"style\" parse error");
+		    tqWarning("\"style\" parse error");
 	    }
 	}
 
 	gtkrc.close();
     } else
-	qWarning("%s: failed to open", gtkrcFilename.latin1());
+	tqWarning("%s: failed to open", gtkrcFilename.latin1());
 }
 
 
@@ -1152,14 +1152,14 @@ bool KLegacyStylePrivate::parseClass() {
     GtkObject *obj = gtktree->find(r);
 
     if (! obj) {
-	qWarning("unknown object '%s'", classname.latin1());
+	tqWarning("unknown object '%s'", classname.latin1());
 	return false;
     }
 
     KLegacyStyleData *styledata = styleDict.find(stylename);
 
     if (! styledata) {
-	qWarning("no such style '%s' for class '%s' (%p)", stylename.latin1(),
+	tqWarning("no such style '%s' for class '%s' (%p)", stylename.latin1(),
 		 classname.latin1(), styledata);
 	return false;
     }
@@ -1173,7 +1173,7 @@ bool KLegacyStylePrivate::parseClass() {
 
 bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
     if (filestream.atEnd()) {
-	qWarning("parseImage: premature end of stream");
+	tqWarning("parseImage: premature end of stream");
 	return false;
     }
 
@@ -1187,7 +1187,7 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
     }
 
     if (next.isNull() || next != "{") {
-	qWarning("parseImage: expected '{' after 'image'\n"
+	tqWarning("parseImage: expected '{' after 'image'\n"
 		 "  in style '%s', after processing %d previous images\n",
 		 styledata->name.latin1(), styledata->imageList.count());
 	return false;
@@ -1257,7 +1257,7 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 
 	    if (equals.isNull() || parameter.isNull() || equals != "=" ||
 		parameter[0] != '\"' || parameter[parameter.length() - 1] != '\"') {
-		qWarning("image: file parameter malformed");
+		tqWarning("image: file parameter malformed");
 		continue;
 	    }
 
@@ -1356,7 +1356,7 @@ bool KLegacyStylePrivate::parseImage(KLegacyStyleData *styledata) {
 
 	    if (equals.isNull() || parameter.isNull() || equals != "=" ||
 		parameter[0] != '\"' || parameter[parameter.length() - 1] != '\"') {
-		qWarning("image: overlay_file parameter malformed");
+		tqWarning("image: overlay_file parameter malformed");
 		continue;
 	    }
 
@@ -1459,7 +1459,7 @@ bool KLegacyStylePrivate::parseEngine(KLegacyStyleData *styledata) {
 
 	if (next == "image") {
 	    if (! parseImage(styledata)) {
-		qWarning("image parse error");
+		tqWarning("image parse error");
 	    }
 	} else if (next == "{") {
 	    paren_count++;
@@ -1553,7 +1553,7 @@ bool KLegacyStylePrivate::parseStyle() {
 
 	return true;
     } else if (paren != "{") {
-	qWarning("parseStyle: expected '{' while parsing style %s",
+	tqWarning("parseStyle: expected '{' while parsing style %s",
 		 stylename.latin1());
 	return false;
     }
@@ -1719,7 +1719,7 @@ bool KLegacyStylePrivate::parseStyle() {
 
 	    if (next.isNull() || parameter.isNull() || next != "=" ||
 		parameter[0] != '\"' || parameter[parameter.length() - 1] != '\"') {
-		qWarning("font parameter malformed '%s'", parameter.latin1());
+		tqWarning("font parameter malformed '%s'", parameter.latin1());
 		continue;
 	    }
 
@@ -1969,7 +1969,7 @@ void KLegacyStyle::polish(TQWidget *widget) {
     }
 
     if (widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
-	qDebug("polishing popup '%s'", widget->className());
+	tqDebug("polishing popup '%s'", widget->className());
 	metaobject = TQPopupMenu::staticMetaObject();
 	widget->setBackgroundMode(TQWidget::PaletteBackground);
     }

@@ -67,7 +67,7 @@ extern "C" {
         char buffer[JMSG_LENGTH_MAX];
         (*cinfo->err->format_message)(cinfo, buffer);
 #ifdef JPEG_DEBUG
-        qWarning("%s", buffer);
+        tqWarning("%s", buffer);
 #endif
         longjmp(myerr->setjmp_buffer, 1);
     }
@@ -105,7 +105,7 @@ extern "C" {
     boolean khtml_fill_input_buffer(j_decompress_ptr cinfo)
     {
 #ifdef BUFFER_DEBUG
-        qDebug("khtml_fill_input_buffer called!");
+        tqDebug("khtml_fill_input_buffer called!");
 #endif
 
         khtml_jpeg_source_mgr* src = (khtml_jpeg_source_mgr*)cinfo->src;
@@ -118,7 +118,7 @@ extern "C" {
             src->bytes_in_buffer = 2;
             src->next_input_byte = (JOCTET *) src->buffer;
 #ifdef BUFFER_DEBUG
-            qDebug("...returning true!");
+            tqDebug("...returning true!");
 #endif
             return true;
         }
@@ -133,7 +133,7 @@ extern "C" {
             return; /* required noop */
 
 #ifdef BUFFER_DEBUG
-        qDebug("khtml_skip_input_data (%d) called!", num_bytes);
+        tqDebug("khtml_skip_input_data (%d) called!", num_bytes);
 #endif
 
         khtml_jpeg_source_mgr* src = (khtml_jpeg_source_mgr*)cinfo->src;
@@ -142,10 +142,10 @@ extern "C" {
         unsigned int skipbytes = kMin(src->bytes_in_buffer, src->skip_input_bytes);
 
 #ifdef BUFFER_DEBUG
-        qDebug("skip_input_bytes is now %d", src->skip_input_bytes);
-        qDebug("skipbytes is now %d", skipbytes);
-        qDebug("valid_buffer_len is before %d", src->valid_buffer_len);
-        qDebug("bytes_in_buffer is %d", src->bytes_in_buffer);
+        tqDebug("skip_input_bytes is now %d", src->skip_input_bytes);
+        tqDebug("skipbytes is now %d", skipbytes);
+        tqDebug("valid_buffer_len is before %d", src->valid_buffer_len);
+        tqDebug("bytes_in_buffer is %d", src->bytes_in_buffer);
 #endif
 
         if(skipbytes < src->bytes_in_buffer)
@@ -159,8 +159,8 @@ extern "C" {
         cinfo->src->next_input_byte = (JOCTET *) src->buffer;
         cinfo->src->bytes_in_buffer = (size_t) src->valid_buffer_len;
 #ifdef BUFFER_DEBUG
-        qDebug("valid_buffer_len is afterwards %d", src->valid_buffer_len);
-        qDebug("skip_input_bytes is now %d", src->skip_input_bytes);
+        tqDebug("valid_buffer_len is afterwards %d", src->valid_buffer_len);
+        tqDebug("skip_input_bytes is now %d", src->skip_input_bytes);
 #endif
     }
 }
@@ -244,13 +244,13 @@ KJPEGFormat::~KJPEGFormat()
 int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* buffer, int length)
 {
 #ifdef JPEG_DEBUG
-    qDebug("KJPEGFormat::decode(%08lx, %08lx, %08lx, %d)",
+    tqDebug("KJPEGFormat::decode(%08lx, %08lx, %08lx, %d)",
            &image, consumer, buffer, length);
 #endif
 
     if(jsrc.ateof) {
 #ifdef JPEG_DEBUG
-        qDebug("ateof, eating");
+        tqDebug("ateof, eating");
 #endif
         return length;
     }
@@ -259,7 +259,7 @@ int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* 
     if(setjmp(jerr.setjmp_buffer))
     {
 #ifdef JPEG_DEBUG
-        qDebug("jump into state invalid");
+        tqDebug("jump into state invalid");
 #endif
         if(consumer)
             consumer->end();
@@ -271,7 +271,7 @@ int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* 
     int consumed = kMin(length, max_buf - jsrc.valid_buffer_len);
 
 #ifdef BUFFER_DEBUG
-    qDebug("consuming %d bytes", consumed);
+    tqDebug("consuming %d bytes", consumed);
 #endif
 
     // filling buffer with the new data
@@ -281,9 +281,9 @@ int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* 
     if(jsrc.skip_input_bytes)
     {
 #ifdef BUFFER_DEBUG
-        qDebug("doing skipping");
-        qDebug("valid_buffer_len %d", jsrc.valid_buffer_len);
-        qDebug("skip_input_bytes %d", jsrc.skip_input_bytes);
+        tqDebug("doing skipping");
+        tqDebug("valid_buffer_len %d", jsrc.valid_buffer_len);
+        tqDebug("skip_input_bytes %d", jsrc.skip_input_bytes);
 #endif
         int skipbytes = kMin((size_t) jsrc.valid_buffer_len, jsrc.skip_input_bytes);
 
@@ -295,7 +295,7 @@ int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* 
 
         // still more bytes to skip
         if(jsrc.skip_input_bytes) {
-            if(consumed <= 0) qDebug("ERROR!!!");
+            if(consumed <= 0) tqDebug("ERROR!!!");
             return consumed;
         }
 
@@ -305,7 +305,7 @@ int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* 
     cinfo.src->bytes_in_buffer = (size_t) jsrc.valid_buffer_len;
 
 #ifdef BUFFER_DEBUG
-    qDebug("buffer contains %d bytes", jsrc.valid_buffer_len);
+    tqDebug("buffer contains %d bytes", jsrc.valid_buffer_len);
 #endif
 
     if(state == Init)
@@ -334,7 +334,7 @@ int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* 
         jsrc.do_progressive = jpeg_has_multiple_scans( &cinfo );
 
 #ifdef JPEG_DEBUG
-        qDebug( "**** DOPROGRESSIVE: %d",  jsrc.do_progressive );
+        tqDebug( "**** DOPROGRESSIVE: %d",  jsrc.do_progressive );
 #endif
         if ( jsrc.do_progressive )
             cinfo.buffered_image = true;
@@ -362,11 +362,11 @@ int KJPEGFormat::decode(TQImage& image, TQImageConsumer* consumer, const uchar* 
             }
 
 #ifdef JPEG_DEBUG
-            qDebug("will create a picture %d/%d in size", cinfo.output_width, cinfo.output_height);
+            tqDebug("will create a picture %d/%d in size", cinfo.output_width, cinfo.output_height);
 #endif
 
 #ifdef JPEG_DEBUG
-            qDebug("ok, going to decompressStarted");
+            tqDebug("ok, going to decompressStarted");
 #endif
 
             jsrc.decoder_timestamp.start();
@@ -407,7 +407,7 @@ again:
         if(image.isNull() || jsrc.decoding_done)
         {
 #ifdef JPEG_DEBUG
-            qDebug("complete in doOutputscan, eating..");
+            tqDebug("complete in doOutputscan, eating..");
 #endif
             return consumed;
         }
@@ -420,7 +420,7 @@ again:
 
         int completed_scanlines = cinfo.output_scanline - oldoutput_scanline;
 #ifdef JPEG_DEBUG
-        qDebug("completed now %d scanlines", completed_scanlines);
+        tqDebug("completed now %d scanlines", completed_scanlines);
 #endif
 
         if ( cinfo.output_components == 3 ) {
@@ -440,7 +440,7 @@ again:
         {
             TQRect r(0, oldoutput_scanline, cinfo.output_width, completed_scanlines);
 #ifdef JPEG_DEBUG
-            qDebug("changing %d/%d %d/%d", r.x(), r.y(), r.width(), r.height());
+            tqDebug("changing %d/%d %d/%d", r.x(), r.y(), r.width(), r.height());
 #endif
             jsrc.change_rect |= r;
 
@@ -470,13 +470,13 @@ again:
                 jsrc.decoding_done = true;
 
 #ifdef JPEG_DEBUG
-            qDebug("one pass is completed, final_pass = %d, dec_done: %d, complete: %d",
+            tqDebug("one pass is completed, final_pass = %d, dec_done: %d, complete: %d",
                    jsrc.final_pass, jsrc.decoding_done, jpeg_input_complete(&cinfo));
 #endif
             if(!jsrc.decoding_done)
             {
 #ifdef JPEG_DEBUG
-                qDebug("starting another one, input_scan_number is %d/%d", cinfo.input_scan_number,
+                tqDebug("starting another one, input_scan_number is %d/%d", cinfo.input_scan_number,
                        cinfo.output_scan_number);
 #endif
                 jsrc.decoder_timestamp.restart();
@@ -488,7 +488,7 @@ again:
 
         if(state == doOutputScan && jsrc.decoding_done) {
 #ifdef JPEG_DEBUG
-            qDebug("input is complete, cleaning up, returning..");
+            tqDebug("input is complete, cleaning up, returning..");
 #endif
             if ( consumer && !jsrc.change_rect.isEmpty() )
                 consumer->changed( jsrc.change_rect );
@@ -508,9 +508,9 @@ again:
     }
 
 #ifdef BUFFER_DEBUG
-    qDebug("valid_buffer_len is now %d", jsrc.valid_buffer_len);
-    qDebug("bytes_in_buffer is now %d", jsrc.bytes_in_buffer);
-    qDebug("consumed %d bytes", consumed);
+    tqDebug("valid_buffer_len is now %d", jsrc.valid_buffer_len);
+    tqDebug("bytes_in_buffer is now %d", jsrc.bytes_in_buffer);
+    tqDebug("consumed %d bytes", consumed);
 #endif
     if(jsrc.bytes_in_buffer && jsrc.buffer != jsrc.next_input_byte)
         memmove(jsrc.buffer, jsrc.next_input_byte, jsrc.bytes_in_buffer);

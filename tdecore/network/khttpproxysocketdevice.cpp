@@ -182,12 +182,12 @@ bool KHttpProxySocketDevice::parseServerReply()
       TQ_LONG written = tqwriteBlock(d->request, d->request.length());
       if (written < 0)
 	{
-	  qDebug("KHttpProxySocketDevice: would block writing request!");
+	  tqDebug("KHttpProxySocketDevice: would block writing request!");
 	  if (error() == WouldBlock)
 	    setError(IO_ConnectError, InProgress);
 	  return error() == WouldBlock; // error
 	}
-      qDebug("KHttpProxySocketDevice: request written");
+      tqDebug("KHttpProxySocketDevice: request written");
 
       d->request.remove(0, written);
 
@@ -206,7 +206,7 @@ bool KHttpProxySocketDevice::parseServerReply()
   if (!blocking())
     {
       TQ_LONG avail = bytesAvailable();
-      qDebug("KHttpProxySocketDevice: %ld bytes available", avail);
+      tqDebug("KHttpProxySocketDevice: %ld bytes available", avail);
       setState(0);
       if (avail == 0)
 	{
@@ -264,7 +264,7 @@ bool KHttpProxySocketDevice::parseServerReply()
     }	    
 
   // now really parse the reply
-  qDebug("KHttpProxySocketDevice: get reply: %s\n",
+  tqDebug("KHttpProxySocketDevice: get reply: %s\n",
 	 d->reply.left(d->reply.find('\r')).data());
   if (d->reply.left(7) != "HTTP/1." ||
       (index = d->reply.find(' ')) == -1 ||

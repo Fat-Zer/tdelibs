@@ -45,7 +45,7 @@ Server can publish an icon (test.png) like this:
    QImage i("test.png");
    QPixmap p;
    p.convertFromImage(i);
-   qWarning("Handle = %08x", p.handle());
+   tqWarning("Handle = %08x", p.handle());
 
 Now, if Handle is e.g. 0x06c0000b, the following code (in another process) 
 can copy this pixmap:

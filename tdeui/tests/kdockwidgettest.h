@@ -62,8 +62,8 @@ public:
         CTW(TQWidget *parent):TQTabWidget(parent,"MyDockContainer"),KDockContainer(){insertTab(new TQLabel("BLAH",this),"BLUP");}
         virtual ~CTW(){;}
         KDockWidget *parentDockWidget(){return ((KDockWidget*)parent());}
-        void insertWidget (KDockWidget *w, TQPixmap, const TQString &, int &){qDebug("widget inserted"); insertTab(w,"NO");}
-        void setToolTip (KDockWidget *, TQString &){qDebug("Tooltip set");}
+        void insertWidget (KDockWidget *w, TQPixmap, const TQString &, int &){tqDebug("widget inserted"); insertTab(w,"NO");}
+        void setToolTip (KDockWidget *, TQString &){tqDebug("Tooltip set");}
 };
 
 

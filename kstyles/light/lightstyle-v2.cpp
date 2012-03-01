@@ -51,7 +51,7 @@ public:
 	if ( ! basestyle )
 	    basestyle = TQStyleFactory::create( TQStyleFactory::keys().first() );
 	if ( ! basestyle )
-	    qFatal( "LightStyle: couldn't find a basestyle!" );
+	    tqFatal( "LightStyle: couldn't find a basestyle!" );
     }
 
     ~LightStyleV2Private()

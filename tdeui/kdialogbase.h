@@ -1587,7 +1587,7 @@ class TDEUI_EXPORT KDialogBase : public KDialog
     void setButtonFocus( TQPushButton *p, bool isDefault, bool isFocus );
 
     /**
-     * Prints an error message using qDebug if makeMainWidget ,
+     * Prints an error message using tqDebug if makeMainWidget ,
      * makeVBoxMainWidget , makeHBoxMainWidget or
      * makeGridMainWidget failed.
      */

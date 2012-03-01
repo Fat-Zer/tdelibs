@@ -1295,11 +1295,11 @@ mcheck(union VALUETYPE *p, struct magic *m)
 			return 0;	/* NOTREACHED */
 	}
 #if 0
-	qDebug("Before signextend %08x", v);
+	tqDebug("Before signextend %08x", v);
 #endif
 	v = signextend(m, v) & m->mask;
 #if 0
-	qDebug("After signextend %08x", v);
+	tqDebug("After signextend %08x", v);
 #endif
 
 	switch (m->reln) {

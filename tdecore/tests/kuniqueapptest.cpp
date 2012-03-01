@@ -36,7 +36,7 @@ public:
 int
 TestApp::newInstance( )
 {
-   qWarning("NewInstance");
+   tqWarning("NewInstance");
    return 0;
 }
 

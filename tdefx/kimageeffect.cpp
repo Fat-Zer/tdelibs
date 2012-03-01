@@ -2768,7 +2768,7 @@ TQImage KImageEffect::sample(TQImage &src, int w, int h)
     int *y_offset = (int *)malloc(h*sizeof(int));
     if(!x_offset || !y_offset){
 #ifndef NDEBUG
-        qWarning("KImageEffect::sample(): Unable to allocate pixel buffer");
+        tqWarning("KImageEffect::sample(): Unable to allocate pixel buffer");
 #endif
         free(x_offset);
         free(y_offset);
@@ -3638,13 +3638,13 @@ TQImage KImageEffect::oilPaintConvolve(TQImage &src, double radius)
 
     width = getOptimalKernelWidth(radius, 0.5);
     if(src.width() < width){
-        qWarning("KImageEffect::oilPaintConvolve(): Image is smaller than radius!");
+        tqWarning("KImageEffect::oilPaintConvolve(): Image is smaller than radius!");
         return(dest);
     }
     /*
     histogram = (unsigned long *)malloc(256*sizeof(unsigned long));
     if(!histogram){
-        qWarning("KImageEffect::oilPaintColvolve(): Unable to allocate memory!");
+        tqWarning("KImageEffect::oilPaintColvolve(): Unable to allocate memory!");
         return(dest);
     }
     */
@@ -3667,7 +3667,7 @@ TQImage KImageEffect::oilPaintConvolve(TQImage &src, double radius)
 
                     k = intensityValue(jumpTable[my][mx]);
                     if(k > 255){
-                        qWarning("KImageEffect::oilPaintConvolve(): k is %d",
+                        tqWarning("KImageEffect::oilPaintConvolve(): k is %d",
                                  k);
                         k = 255;
                     }
@@ -3726,7 +3726,7 @@ void KImageEffect::normalize(TQImage &image)
             liberateMemory(&histogram);
         if(normalize_map)
             liberateMemory(&normalize_map);
-        qWarning("KImageEffect::normalize(): Unable to allocate memory!");
+        tqWarning("KImageEffect::normalize(): Unable to allocate memory!");
         return;
     }
 
@@ -3934,7 +3934,7 @@ void KImageEffect::equalize(TQImage &image)
             liberateMemory(&map);
         if(equalize_map)
             liberateMemory(&equalize_map);
-        qWarning("KImageEffect::equalize(): Unable to allocate memory!");
+        tqWarning("KImageEffect::equalize(): Unable to allocate memory!");
         return;
     }
 
@@ -4028,12 +4028,12 @@ TQImage KImageEffect::edge(TQImage &image, double radius)
 
     width = getOptimalKernelWidth(radius, 0.5);
     if(image.width() < width || image.height() < width){
-        qWarning("KImageEffect::edge(): Image is smaller than radius!");
+        tqWarning("KImageEffect::edge(): Image is smaller than radius!");
         return(dest);
     }
     kernel= (double *)malloc(width*width*sizeof(double));
     if(!kernel){
-        qWarning("KImageEffect::edge(): Unable to allocate memory!");
+        tqWarning("KImageEffect::edge(): Unable to allocate memory!");
         return(dest);
     }
     for(i=0; i < (width*width); i++)
@@ -4058,18 +4058,18 @@ TQImage KImageEffect::emboss(TQImage &image, double radius, double sigma)
     TQImage dest;
 
     if(sigma == 0.0){
-        qWarning("KImageEffect::emboss(): Zero sigma is not permitted!");
+        tqWarning("KImageEffect::emboss(): Zero sigma is not permitted!");
         return(dest);
     }
 
     width = getOptimalKernelWidth(radius, sigma);
     if(image.width() < width || image.height() < width){
-        qWarning("KImageEffect::emboss(): Image is smaller than radius!");
+        tqWarning("KImageEffect::emboss(): Image is smaller than radius!");
         return(dest);
     }
     kernel= (double *)malloc(width*width*sizeof(double));
     if(!kernel){
-        qWarning("KImageEffect::emboss(): Unable to allocate memory!");
+        tqWarning("KImageEffect::emboss(): Unable to allocate memory!");
         return(dest);
     }
     if(image.depth() < 32)
@@ -4279,7 +4279,7 @@ TQImage KImageEffect::blur(TQImage &src, double radius, double sigma)
     unsigned int *p, *q;
 
     if(sigma == 0.0){
-        qWarning("KImageEffect::blur(): Zero sigma is not permitted!");
+        tqWarning("KImageEffect::blur(): Zero sigma is not permitted!");
         return(dest);
     }
     if(src.depth() < 32)
@@ -4309,7 +4309,7 @@ TQImage KImageEffect::blur(TQImage &src, double radius, double sigma)
     }
 
     if(width < 3){
-        qWarning("KImageEffect::blur(): Kernel radius is too small!");
+        tqWarning("KImageEffect::blur(): Kernel radius is too small!");
         liberateMemory(&kernel);
         return(dest);
     }
@@ -4360,12 +4360,12 @@ bool KImageEffect::convolveImage(TQImage *image, TQImage *dest,
 
     width = order;
     if((width % 2) == 0){
-        qWarning("KImageEffect: Kernel width must be an odd number!");
+        tqWarning("KImageEffect: Kernel width must be an odd number!");
         return(false);
     }
     normal_kernel = (double *)malloc(width*width*sizeof(double));
     if(!normal_kernel){
-        qWarning("KImageEffect: Unable to allocate memory!");
+        tqWarning("KImageEffect: Unable to allocate memory!");
         return(false);
     }
     dest->reset();
@@ -4457,17 +4457,17 @@ TQImage KImageEffect::sharpen(TQImage &image, double radius, double sigma)
     TQImage dest;
 
     if(sigma == 0.0){
-        qWarning("KImageEffect::sharpen(): Zero sigma is not permitted!");
+        tqWarning("KImageEffect::sharpen(): Zero sigma is not permitted!");
         return(dest);
     }
     width = getOptimalKernelWidth(radius, sigma);
     if(image.width() < width){
-        qWarning("KImageEffect::sharpen(): Image is smaller than radius!");
+        tqWarning("KImageEffect::sharpen(): Image is smaller than radius!");
         return(dest);
     }
     kernel = (double *)malloc(width*width*sizeof(double));
     if(!kernel){
-        qWarning("KImageEffect::sharpen(): Unable to allocate memory!");
+        tqWarning("KImageEffect::sharpen(): Unable to allocate memory!");
         return(dest);
     }
 
@@ -4872,7 +4872,7 @@ TQImage KImageEffect::bumpmap(TQImage &img, TQImage &map, double azimuth, double
     TQImage dst;
 
     if ( img.depth() != 32 || img.depth() != 32 ) {
-        qWarning( "Bump-mapping effect works only with 32 bit images");
+        tqWarning( "Bump-mapping effect works only with 32 bit images");
         return dst;
     }
 
