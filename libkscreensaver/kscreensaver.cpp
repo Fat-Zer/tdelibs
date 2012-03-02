@@ -55,7 +55,7 @@ KScreenSaver::KScreenSaver( WId id ) : TQWidget()
     if ( id )
     {
 #ifdef Q_WS_X11 //FIXME
-        XGetGeometry(qt_xdisplay(), (Drawable)id, &root, &ai, &ai,
+        XGetGeometry(tqt_xdisplay(), (Drawable)id, &root, &ai, &ai,
             &w, &h, &au, &au); 
 #endif
 
@@ -79,7 +79,7 @@ void KScreenSaver::embed( TQWidget *w )
 {
     KApplication::sendPostedEvents();
 #ifdef Q_WS_X11 //FIXME
-    XReparentWindow(qt_xdisplay(), w->winId(), winId(), 0, 0);
+    XReparentWindow(tqt_xdisplay(), w->winId(), winId(), 0, 0);
 #endif
     w->setGeometry( 0, 0, width(), height() );
     KApplication::sendPostedEvents();

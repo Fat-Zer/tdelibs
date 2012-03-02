@@ -399,7 +399,7 @@ void KCModuleProxy::rootExited()
 	kdDebug(711) << k_funcinfo << endl;
 
 	if ( d->embedWidget->embeddedWinId() )
-		XDestroyWindow(qt_xdisplay(), d->embedWidget->embeddedWinId());
+		XDestroyWindow(tqt_xdisplay(), d->embedWidget->embeddedWinId());
 
 	delete d->embedWidget;
 	d->embedWidget = 0;
@@ -436,7 +436,7 @@ KCModuleProxy::~KCModuleProxy()
 void KCModuleProxy::deleteClient()
 {
 	if( d->embedWidget )
-		XKillClient(qt_xdisplay(), d->embedWidget->embeddedWinId());
+		XKillClient(tqt_xdisplay(), d->embedWidget->embeddedWinId());
 
 
 	delete d->kcm;

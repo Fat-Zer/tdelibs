@@ -966,12 +966,12 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 #ifdef Q_WS_X11
      XEvent e;
      e.xclient.type = ClientMessage;
-     e.xclient.message_type = XInternAtom( qt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
-     e.xclient.display = qt_xdisplay();
-     e.xclient.window = qt_xrootwin();
+     e.xclient.message_type = XInternAtom( tqt_xdisplay(), "_KDE_SPLASH_PROGRESS", False );
+     e.xclient.display = tqt_xdisplay();
+     e.xclient.window = tqt_xrootwin();
      e.xclient.format = 8;
      strcpy( e.xclient.data.b, "kded" );
-     XSendEvent( qt_xdisplay(), qt_xrootwin(), False, SubstructureNotifyMask, &e );
+     XSendEvent( tqt_xdisplay(), tqt_xrootwin(), False, SubstructureNotifyMask, &e );
 #endif
      int result = k.exec(); // keep running
 

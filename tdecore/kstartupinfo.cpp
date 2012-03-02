@@ -383,7 +383,7 @@ bool KStartupInfo::sendStartup( const KStartupInfoId& id_P, const KStartupInfoDa
     KXMessages msgs;
     TQString msg = TQString::fromLatin1( "new: %1 %2" )
         .arg( id_P.to_text()).arg( data_P.to_text());
-    msg = check_required_startup_fields( msg, data_P, qt_xscreen());
+    msg = check_required_startup_fields( msg, data_P, tqt_xscreen());
     kdDebug( 172 ) << "sending " << msg << endl;
     msgs.broadcastMessage( NET_STARTUP_MSG, msg, -1, false );
     return true;
@@ -508,7 +508,7 @@ void KStartupInfo::appStarted( const TQCString& startup_id )
         return;
     if( kapp != NULL )
         KStartupInfo::sendFinish( id );
-    else if( getenv( "DISPLAY" ) != NULL ) // don't rely on qt_xdisplay()
+    else if( getenv( "DISPLAY" ) != NULL ) // don't rely on tqt_xdisplay()
         {
 #ifdef Q_WS_X11
         Display* disp = XOpenDisplay( NULL );
@@ -551,7 +551,7 @@ void KStartupInfo::setNewStartupId( TQWidget* window, const TQCString& startup_i
         {
         if( !startup_id.isEmpty() && startup_id != "0" )
             {
-            NETRootInfo i( qt_xdisplay(), NET::Supported );
+            NETRootInfo i( tqt_xdisplay(), NET::Supported );
             if( i.isSupported( NET::WM2StartupId ))
                 {
                 KStartupInfo::setWindowStartupId( window->winId(), startup_id );
@@ -618,7 +618,7 @@ KStartupInfo::startup_t KStartupInfo::check_startup_internal( WId w_P, KStartupI
         return find_id( id, id_O, data_O ) ? Match : NoMatch;
         }
 #ifdef Q_WS_X11
-    NETWinInfo info( qt_xdisplay(),  w_P, qt_xrootwin(),
+    NETWinInfo info( tqt_xdisplay(),  w_P, tqt_xrootwin(),
         NET::WMWindowType | NET::WMPid | NET::WMState );
     pid_t pid = info.pid();
     if( pid > 0 )
@@ -630,7 +630,7 @@ KStartupInfo::startup_t KStartupInfo::check_startup_internal( WId w_P, KStartupI
         // try XClass matching , this PID stuff sucks :(
         }
     XClassHint hint;
-    if( XGetClassHint( qt_xdisplay(), w_P, &hint ) != 0 )
+    if( XGetClassHint( tqt_xdisplay(), w_P, &hint ) != 0 )
         { // We managed to read the class hint
         TQCString res_name = hint.res_name;
         TQCString res_class = hint.res_class;
@@ -652,8 +652,8 @@ KStartupInfo::startup_t KStartupInfo::check_startup_internal( WId w_P, KStartupI
 	return NoMatch;
     // lets see if this is a transient
     Window transient_for;
-    if( XGetTransientForHint( qt_xdisplay(), static_cast< Window >( w_P ), &transient_for )
-        && static_cast< WId >( transient_for ) != qt_xrootwin()
+    if( XGetTransientForHint( tqt_xdisplay(), static_cast< Window >( w_P ), &transient_for )
+        && static_cast< WId >( transient_for ) != tqt_xrootwin()
         && transient_for != None )
 	return NoMatch;
 #endif
@@ -744,7 +744,7 @@ static TQCString read_startup_id_property( WId w_P )
     Atom type_ret;
     int format_ret;
     unsigned long nitems_ret = 0, after_ret = 0;
-    if( XGetWindowProperty( qt_xdisplay(), w_P, net_startup_atom, 0l, 4096,
+    if( XGetWindowProperty( tqt_xdisplay(), w_P, net_startup_atom, 0l, 4096,
             False, utf8_string_atom, &type_ret, &format_ret, &nitems_ret, &after_ret, &name_ret )
 	    == Success )
         {
@@ -762,13 +762,13 @@ TQCString KStartupInfo::windowStartupId( WId w_P )
     {
 #ifdef Q_WS_X11
     if( net_startup_atom == None )
-        net_startup_atom = XInternAtom( qt_xdisplay(), NET_STARTUP_WINDOW, False );
+        net_startup_atom = XInternAtom( tqt_xdisplay(), NET_STARTUP_WINDOW, False );
     if( utf8_string_atom == None )
-        utf8_string_atom = XInternAtom( qt_xdisplay(), "UTF8_STRING", False );
+        utf8_string_atom = XInternAtom( tqt_xdisplay(), "UTF8_STRING", False );
     TQCString ret = read_startup_id_property( w_P );
     if( ret.isEmpty())
         { // retry with window group leader, as the spec says
-        XWMHints* hints = XGetWMHints( qt_xdisplay(), w_P );
+        XWMHints* hints = XGetWMHints( tqt_xdisplay(), w_P );
         if( hints && ( hints->flags & WindowGroupHint ) != 0 )
             ret = read_startup_id_property( hints->window_group );
         if( hints )
@@ -786,10 +786,10 @@ void KStartupInfo::setWindowStartupId( WId w_P, const TQCString& id_P )
     if( id_P.isNull())
         return;
     if( net_startup_atom == None )
-        net_startup_atom = XInternAtom( qt_xdisplay(), NET_STARTUP_WINDOW, False );
+        net_startup_atom = XInternAtom( tqt_xdisplay(), NET_STARTUP_WINDOW, False );
     if( utf8_string_atom == None )
-        utf8_string_atom = XInternAtom( qt_xdisplay(), "UTF8_STRING", False );
-    XChangeProperty( qt_xdisplay(), w_P, net_startup_atom, utf8_string_atom, 8,
+        utf8_string_atom = XInternAtom( tqt_xdisplay(), "UTF8_STRING", False );
+    XChangeProperty( tqt_xdisplay(), w_P, net_startup_atom, utf8_string_atom, 8,
         PropModeReplace, reinterpret_cast< unsigned char* >( const_cast<TQCString&>(id_P).data()), id_P.length());
 #endif
     }
@@ -800,7 +800,7 @@ TQCString KStartupInfo::get_window_hostname( WId w_P )
     XTextProperty tp;
     char** hh;
     int cnt;
-    if( XGetWMClientMachine( qt_xdisplay(), w_P, &tp ) != 0
+    if( XGetWMClientMachine( tqt_xdisplay(), w_P, &tp ) != 0
         && XTextPropertyToStringList( &tp, &hh, &cnt ) != 0 )
         {
         if( cnt == 1 )

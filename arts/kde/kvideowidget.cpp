@@ -65,7 +65,7 @@ bool KFullscreenVideoWidget::x11Event( XEvent *event )
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     if (event->type == ClientMessage &&
 	event->xclient.message_type ==
-		XInternAtom( qt_xdisplay(), "VPO_RESIZE_NOTIFY", False ))
+		XInternAtom( tqt_xdisplay(), "VPO_RESIZE_NOTIFY", False ))
     {
 	videoWidget->resizeNotify( event->xclient.data.l[0], event->xclient.data.l[1] );
     }
@@ -202,13 +202,13 @@ TQImage KVideoWidget::snapshot( Arts::VideoPlayObject vpo )
 	return TQImage();
 
     // Get 32bit RGBA image data (stored in 1bpp pixmap)
-    XGetGeometry( qt_xdisplay(), pixmap, &root, &x, &y, &width, &height, &border, &depth );
+    XGetGeometry( tqt_xdisplay(), pixmap, &root, &x, &y, &width, &height, &border, &depth );
 
-    xImage = XGetImage( qt_xdisplay(), pixmap, 0, 0, width, height, 1, XYPixmap );
+    xImage = XGetImage( tqt_xdisplay(), pixmap, 0, 0, width, height, 1, XYPixmap );
 
     if (xImage == 0)
     {
-	XFreePixmap( qt_xdisplay(), pixmap );
+	XFreePixmap( tqt_xdisplay(), pixmap );
 	return TQImage();
     }
 
@@ -217,7 +217,7 @@ TQImage KVideoWidget::snapshot( Arts::VideoPlayObject vpo )
 
     // Free X11 resources and return Qt image
     XDestroyImage( xImage );
-    XFreePixmap( qt_xdisplay(), pixmap );
+    XFreePixmap( tqt_xdisplay(), pixmap );
 
     return qImage;
 #else
@@ -361,7 +361,7 @@ bool KVideoWidget::x11Event( XEvent *event )
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     if (event->type == ClientMessage &&
 	event->xclient.message_type ==
-		XInternAtom( qt_xdisplay(), "VPO_RESIZE_NOTIFY", False ))
+		XInternAtom( tqt_xdisplay(), "VPO_RESIZE_NOTIFY", False ))
     {
 	resizeNotify( event->xclient.data.l[0], event->xclient.data.l[1] );
     }

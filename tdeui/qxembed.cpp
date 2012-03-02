@@ -97,10 +97,10 @@ const int XKeyRelease = KeyRelease;
 # undef FocusIn
 
 // L0005: Variables defined in qapplication_x11.cpp
-extern Atom qt_wm_protocols;
-extern Atom qt_wm_delete_window;
-extern Atom qt_wm_take_focus;
-extern Atom qt_wm_state;
+extern Atom tqt_wm_protocols;
+extern Atom tqt_wm_delete_window;
+extern Atom tqt_wm_take_focus;
+extern Atom tqt_wm_state;
 
 // L0006: X11 atoms private to QXEmbed
 static Atom xembed = 0;
@@ -184,7 +184,7 @@ public:
 // L0400: This sets a very low level filter for X11 messages.
 //        See qapplication_x11.cpp
 typedef int (*QX11EventFilter) (XEvent*);
-extern QX11EventFilter qt_set_x11_event_filter (QX11EventFilter filter);
+extern QX11EventFilter tqt_set_x11_event_filter (QX11EventFilter filter);
 static QX11EventFilter oldFilter = 0;
 
 
@@ -204,7 +204,7 @@ static void sendXEmbedMessage( WId window, long message, long detail = 0,
     ev.xclient.data.l[2] = detail;
     ev.xclient.data.l[3] = data1;
     ev.xclient.data.l[4] = data2;
-    XSendEvent(qt_xdisplay(), window, false, NoEventMask, &ev);
+    XSendEvent(tqt_xdisplay(), window, false, NoEventMask, &ev);
 }
 
 // L0501: Helper to send ICCCM Client messages. 
@@ -220,7 +220,7 @@ static void sendClientMessage(Window window, Atom a, long x)
   ev.xclient.format = 32;
   ev.xclient.data.l[0] = x;
   ev.xclient.data.l[1] = GET_QT_X_TIME();
-  XSendEvent(qt_xdisplay(), window, false, NoEventMask, &ev);
+  XSendEvent(tqt_xdisplay(), window, false, NoEventMask, &ev);
 }
 
 // L0502: Helper to send fake X11 focus messages.
@@ -234,7 +234,7 @@ static void sendFocusMessage(Window window, int type, int mode, int detail)
   ev.xfocus.window = window;
   ev.xfocus.mode = mode;
   ev.xfocus.detail = detail;
-  XSendEvent(qt_xdisplay(), window, false, FocusChangeMask, &ev);
+  XSendEvent(tqt_xdisplay(), window, false, FocusChangeMask, &ev);
 }
 
 
@@ -462,7 +462,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 //        widget might later be set in L0680.
                 XEvent ev;
                 memset(&ev, 0, sizeof(ev));
-                ev.xfocus.display = qt_xdisplay();
+                ev.xfocus.display = tqt_xdisplay();
                 ev.xfocus.type = XFocusIn;
                 ev.xfocus.window = w->topLevelWidget()->winId();
                 ev.xfocus.mode = NotifyNormal;
@@ -476,7 +476,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 //        receive extra Qt FocusOut events but we do not care.
                 XEvent ev;
                 memset(&ev, 0, sizeof(ev));
-                ev.xfocus.display = qt_xdisplay();
+                ev.xfocus.display = tqt_xdisplay();
                 ev.xfocus.type = XFocusOut;
                 ev.xfocus.window = w->topLevelWidget()->winId();
                 ev.xfocus.mode = NotifyNormal;
@@ -555,7 +555,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 break;
             }
         } else if ( e->xclient.format == 32 && e->xclient.message_type ) {
-            if ( e->xclient.message_type == qt_wm_protocols ) {
+            if ( e->xclient.message_type == tqt_wm_protocols ) {
                 TQWidget* w = TQT_TQWIDGET(TQWidget::find( e->xclient.window ));
                 if ( !w )
                     break;
@@ -567,7 +567,7 @@ static int qxembed_x11_event_filter( XEvent* e)
                 //        changed the X11 focus. We want to make sure it goes
                 //        to the focus proxy window eventually.
                 Atom a = e->xclient.data.l[0];
-                if ( a == qt_wm_take_focus ) {
+                if ( a == tqt_wm_take_focus ) {
                     // L0695: update Qt message time variable
                     if ( (ulong) e->xclient.data.l[1] > GET_QT_X_TIME() )
                         SET_QT_X_TIME(e->xclient.data.l[1]);
@@ -607,9 +607,9 @@ void QXEmbed::initialize()
         return;
 
     // L0710: Atom used by the XEMBED protocol.
-    xembed = XInternAtom( qt_xdisplay(), "_XEMBED", false );
+    xembed = XInternAtom( tqt_xdisplay(), "_XEMBED", false );
     // L0720: Install low level filter for X11 events (L0650)
-    oldFilter = qt_set_x11_event_filter( qxembed_x11_event_filter );
+    oldFilter = tqt_set_x11_event_filter( qxembed_x11_event_filter );
     // L0730: See L0610 for an explanation about focusMap.
     focusMap = new TQPtrDict<TQGuardedPtr<TQWidget> >;
     focusMap->setAutoDelete( true );
@@ -670,7 +670,7 @@ QXEmbed::QXEmbed(TQWidget *parent, const char *name, WFlags f)
     // L0912: We are mostly interested in SubstructureNotify
     //        This is sent when something happens to the children of
     //        the X11 window associated with the QXEmbed widget.
-    XSelectInput(qt_xdisplay(), winId(),
+    XSelectInput(tqt_xdisplay(), winId(),
                  KeyPressMask | KeyReleaseMask |
                  ButtonPressMask | ButtonReleaseMask |
                  KeymapStateMask |
@@ -693,7 +693,7 @@ QXEmbed::QXEmbed(TQWidget *parent, const char *name, WFlags f)
     //        See L1581 to know why we do not use isActiveWindow().
     if ( tqApp->activeWindow() == topLevelWidget() )
         if ( !((QPublicWidget*) topLevelWidget())->topData()->embedded )
-            XSetInputFocus( qt_xdisplay(), d->focusProxy->winId(), 
+            XSetInputFocus( tqt_xdisplay(), d->focusProxy->winId(), 
                             RevertToParent, GET_QT_X_TIME() );
     // L0915: ??? [drag&drop?]
     setAcceptDrops( true );
@@ -704,7 +704,7 @@ QXEmbed::~QXEmbed()
 {
     // L1010: Make sure no pointer grab is left.
     if ( d && d->xgrab)
-        XUngrabButton( qt_xdisplay(), AnyButton, AnyModifier, winId() );
+        XUngrabButton( tqt_xdisplay(), AnyButton, AnyModifier, winId() );
     if ( window && ( autoDelete() || !d->xplain ))
         {
             // L1021: Hide the window and safely reparent it into the root,
@@ -720,17 +720,17 @@ QXEmbed::~QXEmbed()
 // themselves they have been released from systray, but KWin requires them
 // to be visible to allow next Kicker instance to swallow them.
 // See also below the L1022 comment.
-//            XUnmapWindow( qt_xdisplay(), window );
+//            XUnmapWindow( tqt_xdisplay(), window );
 #else
             if( autoDelete())
-                XUnmapWindow( qt_xdisplay(), window );
+                XUnmapWindow( tqt_xdisplay(), window );
 #endif
-            XReparentWindow(qt_xdisplay(), window, qt_xrootwin(), 0, 0);
+            XReparentWindow(tqt_xdisplay(), window, tqt_xrootwin(), 0, 0);
             if( !d->xplain )
-                XRemoveFromSaveSet( qt_xdisplay(), window );
+                XRemoveFromSaveSet( tqt_xdisplay(), window );
             if( d->mapAfterRelease )
-                XMapWindow( qt_xdisplay(), window );
-            XSync(qt_xdisplay(), false);
+                XMapWindow( tqt_xdisplay(), window );
+            XSync(tqt_xdisplay(), false);
             // L1022: Send the WM_DELETE_WINDOW message
             if( autoDelete() /*&& d->xplain*/ ) 
                 // This sendDelete should only apply to XPLAIN.
@@ -744,9 +744,9 @@ QXEmbed::~QXEmbed()
     //         Make sure that the X11 focus is not lost in the process.
     Window focus;
     int revert;
-    XGetInputFocus( qt_xdisplay(), &focus, &revert );
+    XGetInputFocus( tqt_xdisplay(), &focus, &revert );
     if( focus == d->focusProxy->winId())
-        XSetInputFocus( qt_xdisplay(), topLevelWidget()->winId(), RevertToParent, GET_QT_X_TIME() );
+        XSetInputFocus( tqt_xdisplay(), topLevelWidget()->winId(), RevertToParent, GET_QT_X_TIME() );
     // L01045: Delete our private data.
     delete d;
 }
@@ -759,8 +759,8 @@ void QXEmbed::sendDelete( void )
 {
   if (window)
     {
-      sendClientMessage(window, qt_wm_protocols, qt_wm_delete_window);
-      XFlush( qt_xdisplay() );
+      sendClientMessage(window, tqt_wm_protocols, tqt_wm_delete_window);
+      XFlush( tqt_xdisplay() );
     }
 }
 
@@ -793,14 +793,14 @@ QXEmbed::Protocol QXEmbed::protocol()
 void QXEmbed::resizeEvent(TQResizeEvent*)
 {
     if (window)
-        XResizeWindow(qt_xdisplay(), window, width(), height());
+        XResizeWindow(tqt_xdisplay(), window, width(), height());
 }
 
 // L1250: QXEmbed widget is shown: make sure embedded window is visible.
 void QXEmbed::showEvent(TQShowEvent*)
 {
     if (window)
-        XMapRaised(qt_xdisplay(), window);
+        XMapRaised(tqt_xdisplay(), window);
 }
 
 
@@ -815,7 +815,7 @@ bool QXEmbed::eventFilter( TQObject *o, TQEvent * e)
             //        Make sure the X11 focus is on the focus proxy window. See L0686.
             if ( !((QPublicWidget*) topLevelWidget())->topData()->embedded )
                 if (! hasFocus() )
-                    XSetInputFocus( qt_xdisplay(), d->focusProxy->winId(), 
+                    XSetInputFocus( tqt_xdisplay(), d->focusProxy->winId(), 
                                     RevertToParent, GET_QT_X_TIME() );
             if (d->xplain)
                 // L1311: Activation has changed. Grab state might change. See L2800.
@@ -874,7 +874,7 @@ void QXEmbed::keyPressEvent( TQKeyEvent *)
     if (!window)
         return;
     last_key_event.window = window;
-    XSendEvent(qt_xdisplay(), window, false, KeyPressMask, (XEvent*)&last_key_event);
+    XSendEvent(tqt_xdisplay(), window, false, KeyPressMask, (XEvent*)&last_key_event);
 
 }
 
@@ -885,7 +885,7 @@ void QXEmbed::keyReleaseEvent( TQKeyEvent *)
     if (!window)
         return;
     last_key_event.window = window;
-    XSendEvent(qt_xdisplay(), window, false, KeyReleaseMask, (XEvent*)&last_key_event);
+    XSendEvent(tqt_xdisplay(), window, false, KeyReleaseMask, (XEvent*)&last_key_event);
 }
 
 // L1500: Handle Qt focus in event.
@@ -899,7 +899,7 @@ void QXEmbed::focusInEvent( TQFocusEvent * e ){
           // L1511: Alter X focus only when window is active. 
           //        This is dual safety here because FocusIn implies this.
           //        But see L1581 for an example where this really matters.
-          XSetInputFocus( qt_xdisplay(), d->focusProxy->winId(), 
+          XSetInputFocus( tqt_xdisplay(), d->focusProxy->winId(), 
                           RevertToParent, GET_QT_X_TIME() );
     if (d->xplain) {
         // L1520: Qt focus has changed. Grab state might change. See L2800.
@@ -949,7 +949,7 @@ void QXEmbed::focusOutEvent( TQFocusEvent * ){
             //        The test above is not the same as isActiveWindow().
             //        Function isActiveWindow() also returns true when a modal
             //        dialog child of this window is active.
-            XSetInputFocus( qt_xdisplay(), d->focusProxy->winId(), 
+            XSetInputFocus( tqt_xdisplay(), d->focusProxy->winId(), 
                             RevertToParent, GET_QT_X_TIME() );
 }
 
@@ -973,7 +973,7 @@ static bool wstate_withdrawn( WId winid )
     int format;
     unsigned long length, after;
     unsigned char *data;
-    int r = XGetWindowProperty( qt_xdisplay(), winid, qt_wm_state, 0, 2,
+    int r = XGetWindowProperty( tqt_xdisplay(), winid, tqt_wm_state, 0, 2,
                                 false, AnyPropertyType, &type, &format,
                                 &length, &after, &data );
     bool withdrawn = true;
@@ -993,7 +993,7 @@ static int get_parent(WId winid, Window *out_parent)
 {
     Window root, *children=0;
     unsigned int nchildren;
-    int st = XQueryTree(qt_xdisplay(), winid, &root, out_parent, &children, &nchildren);
+    int st = XQueryTree(tqt_xdisplay(), winid, &root, out_parent, &children, &nchildren);
     if (st && children) 
         XFree(children);
     return st;
@@ -1016,14 +1016,14 @@ void QXEmbed::embed(WId w)
         //        This makes sure that the window manager will
         //        no longer try to manage this window.
         if ( !wstate_withdrawn(window) ) {
-            XWithdrawWindow(qt_xdisplay(), window, qt_xscreen());
+            XWithdrawWindow(tqt_xdisplay(), window, tqt_xscreen());
             TQApplication::flushX();
             // L1711: See L1610
             for (int i=0; i < 10000; ++i) {
                 if (wstate_withdrawn(window)) {
                     Window parent = 0;
                     get_parent(w, &parent);
-                    if (parent == qt_xrootwin()) break;
+                    if (parent == tqt_xrootwin()) break;
                 }
                 USLEEP(1000);
             }
@@ -1039,8 +1039,8 @@ void QXEmbed::embed(WId w)
             // this is done once more when finishing embedding, but it's done also here
             // just in case we crash before reaching that place
             if( !d->xplain )
-                XAddToSaveSet( qt_xdisplay(), w );
-            XReparentWindow(qt_xdisplay(), w, winId(), 0, 0);
+                XAddToSaveSet( tqt_xdisplay(), w );
+            XReparentWindow(tqt_xdisplay(), w, winId(), 0, 0);
             if (get_parent(w, &parent) && parent == winId()) {
                kdDebug() << TQString(TQString("> Loop %1: ").arg(i))
                          << TQString(TQString("> reparent of 0x%1").arg(w,0,16))
@@ -1066,9 +1066,9 @@ void QXEmbed::handleEmbed()
     // only XEMBED apps can survive crash,
     // see http://lists.kde.org/?l=kfm-devel&m=106752026501968&w=2
     if( !d->xplain )
-        XAddToSaveSet( qt_xdisplay(), window );
-    XResizeWindow(qt_xdisplay(), window, width(), height());
-    XMapRaised(qt_xdisplay(), window);
+        XAddToSaveSet( tqt_xdisplay(), window );
+    XResizeWindow(tqt_xdisplay(), window, width(), height());
+    XMapRaised(tqt_xdisplay(), window);
     // L2024: see L2900.
     sendSyntheticConfigureNotifyEvent();
     // L2025: ??? [any idea about drag&drop?] 
@@ -1155,7 +1155,7 @@ bool QXEmbed::x11Event( XEvent* e)
             //        ??? [not sure it is good to touch this window since
             //             someone else has taken control of it already.]
             if( !d->xplain )
-                XRemoveFromSaveSet( qt_xdisplay(), window );
+                XRemoveFromSaveSet( tqt_xdisplay(), window );
         } else if ( e->xreparent.parent == winId()){
             if( window == 0 ) // something started embedding from the outside
                 window = e->xreparent.window;
@@ -1176,7 +1176,7 @@ bool QXEmbed::x11Event( XEvent* e)
             TQFocusEvent::resetReason();
 #endif // USE_QT4
             // L2064: Resume X11 event processing.
-            XAllowEvents(qt_xdisplay(), ReplayPointer, CurrentTime);
+            XAllowEvents(tqt_xdisplay(), ReplayPointer, CurrentTime);
             // L2065: Qt should not know about this.
             return true;
         }
@@ -1184,14 +1184,14 @@ bool QXEmbed::x11Event( XEvent* e)
     case ButtonRelease:
         if (d->xplain && d->xgrab) {
             // L2064: Resume X11 event processing after passive grab (see L2060)
-            XAllowEvents(qt_xdisplay(), SyncPointer, CurrentTime);
+            XAllowEvents(tqt_xdisplay(), SyncPointer, CurrentTime);
             return true;
         }
         break;
     case MapRequest:
         // L2070: Behave like a window manager.
         if ( window && e->xmaprequest.window == window )
-            XMapRaised(qt_xdisplay(), window );
+            XMapRaised(tqt_xdisplay(), window );
         break;
     case ClientMessage:
         // L2080: This is where the QXEmbed object receives XEMBED 
@@ -1268,7 +1268,7 @@ void QXEmbed::enterWhatsThisMode()
     TQWhatsThis::leaveWhatsThisMode();
     if ( !context_help )
         context_help = XInternAtom( x11Display(), "_NET_WM_CONTEXT_HELP", false );
-    sendClientMessage(window , qt_wm_protocols, context_help );
+    sendClientMessage(window , tqt_wm_protocols, context_help );
 }
 
 
@@ -1315,7 +1315,7 @@ bool QXEmbed::processClientCmdline( TQWidget* client, int& argc, char ** argv )
 void QXEmbed::embedClientIntoWindow(TQWidget* client, WId window)
 {
     initialize();
-    XReparentWindow(qt_xdisplay(), client->winId(), window, 0, 0);
+    XReparentWindow(tqt_xdisplay(), client->winId(), window, 0, 0);
     // L2451: These two lines are redundant. See L0680.
     ((QXEmbed*)client)->topData()->embedded = true;
 #ifdef USE_QT4
@@ -1353,7 +1353,7 @@ TQSize QXEmbed::minimumSizeHint() const
     if ( window ) {
         XSizeHints size;
         long msize;
-        if (XGetWMNormalHints(qt_xdisplay(), window, &size, &msize)
+        if (XGetWMNormalHints(tqt_xdisplay(), window, &size, &msize)
             && ( size.flags & PMinSize) ) {
             minw = size.min_width;
             minh = size.min_height;
@@ -1391,13 +1391,13 @@ void QXEmbed::checkGrab()
 {
     if (d->xplain && isActiveWindow() && !hasFocus()) {
         if (! d->xgrab)
-            XGrabButton(qt_xdisplay(), AnyButton, AnyModifier, winId(),
+            XGrabButton(tqt_xdisplay(), AnyButton, AnyModifier, winId(),
                         false, ButtonPressMask, GrabModeSync, GrabModeAsync,
                         None, None );
         d->xgrab = true;
     } else {
         if (d->xgrab)
-            XUngrabButton( qt_xdisplay(), AnyButton, AnyModifier, winId() );
+            XUngrabButton( tqt_xdisplay(), AnyButton, AnyModifier, winId() );
         d->xgrab = false;
     }
 }
@@ -1415,7 +1415,7 @@ void QXEmbed::sendSyntheticConfigureNotifyEvent()
         XConfigureEvent c;
         memset(&c, 0, sizeof(c));
         c.type = ConfigureNotify;
-        c.display = qt_xdisplay();
+        c.display = tqt_xdisplay();
         c.send_event = True;
         c.event = window;
         c.window = window;
@@ -1426,11 +1426,11 @@ void QXEmbed::sendSyntheticConfigureNotifyEvent()
         c.border_width = 0;
         c.above = None;
         c.override_redirect = 0;
-        XSendEvent( qt_xdisplay(), c.event, true, StructureNotifyMask, (XEvent*)&c );
+        XSendEvent( tqt_xdisplay(), c.event, true, StructureNotifyMask, (XEvent*)&c );
 #endif
         // Yes, this doesn't make sense at all. See the commit message.
-        XSetWindowBorderWidth( qt_xdisplay(), window, 1 );
-        XSetWindowBorderWidth( qt_xdisplay(), window, 0 );
+        XSetWindowBorderWidth( tqt_xdisplay(), window, 1 );
+        XSetWindowBorderWidth( tqt_xdisplay(), window, 0 );
     }
 }
 

@@ -57,7 +57,7 @@
 # include <X11/Xlib.h>
 # ifdef HAVE_XRENDER
 #  include <X11/extensions/Xrender.h> // schroder
-   extern bool qt_use_xrender;
+   extern bool tqt_use_xrender;
 # endif
 #else
 #undef HAVE_XRENDER
@@ -2130,8 +2130,8 @@ void TransparencyHandler::createShadowWindows(const TQWidget* p)
 	se.w2 = new TQWidget(0, 0, (WFlags)(WStyle_Customize | WType_Popup | WX11BypassWM) );
 	se.w1->setGeometry(shadow1);
 	se.w2->setGeometry(shadow2);
-	XSelectInput(qt_xdisplay(), se.w1->winId(), StructureNotifyMask );
-	XSelectInput(qt_xdisplay(), se.w2->winId(), StructureNotifyMask );
+	XSelectInput(tqt_xdisplay(), se.w1->winId(), StructureNotifyMask );
+	XSelectInput(tqt_xdisplay(), se.w2->winId(), StructureNotifyMask );
 
 	// Insert a new ShadowMap entry
 	shadowMap()[p] = se;
@@ -2144,9 +2144,9 @@ void TransparencyHandler::createShadowWindows(const TQWidget* p)
 		pix_shadow2 = TQPixmap(shadow2.width(), shadow2.height());
 	}
 	else {
-		pix_shadow1 = TQPixmap::grabWindow(qt_xrootwin(),
+		pix_shadow1 = TQPixmap::grabWindow(tqt_xrootwin(),
 				shadow1.x(), shadow1.y(), shadow1.width(), shadow1.height());
-		pix_shadow2 = TQPixmap::grabWindow(qt_xrootwin(),
+		pix_shadow2 = TQPixmap::grabWindow(tqt_xrootwin(),
 				shadow2.x(), shadow2.y(), shadow2.width(), shadow2.height());
 	}
 
@@ -2166,8 +2166,8 @@ void TransparencyHandler::createShadowWindows(const TQWidget* p)
 
 	// Show the 'shadow' just before showing the popup menu window
 	// Don't use TQWidget::show() so we don't confuse QEffects, thus causing broken focus.
-	XMapWindow(qt_xdisplay(), se.w1->winId());
-	XMapWindow(qt_xdisplay(), se.w2->winId());
+	XMapWindow(tqt_xdisplay(), se.w1->winId());
+	XMapWindow(tqt_xdisplay(), se.w2->winId());
 #else
 	Q_UNUSED( p )
 #endif
@@ -2180,9 +2180,9 @@ void TransparencyHandler::removeShadowWindows(const TQWidget* p)
 	if (it != shadowMap().end())
 	{
 		ShadowElements se = it.data();
-		XUnmapWindow(qt_xdisplay(), se.w1->winId());	// hide
-		XUnmapWindow(qt_xdisplay(), se.w2->winId());
-		XFlush(qt_xdisplay());							// try to hide faster
+		XUnmapWindow(tqt_xdisplay(), se.w1->winId());	// hide
+		XUnmapWindow(tqt_xdisplay(), se.w2->winId());
+		XFlush(tqt_xdisplay());							// try to hide faster
 		delete se.w1;
 		delete se.w2;
 		shadowMap().erase(it);
@@ -2207,13 +2207,13 @@ bool TransparencyHandler::eventFilter( TQObject* object, TQEvent* event )
 		// Handle translucency
 		if (te != Disabled)
 		{
-			pix = TQPixmap::grabWindow(qt_xrootwin(),
+			pix = TQPixmap::grabWindow(tqt_xrootwin(),
 					p->x(), p->y(), p->width(), p->height());
 
 			switch (te) {
 #ifdef HAVE_XRENDER
 				case XRender:
-					if (qt_use_xrender) {
+					if (tqt_use_xrender) {
 						XRenderBlendToPixmap(p);
 						break;
 					}
@@ -2320,7 +2320,7 @@ void TransparencyHandler::XRenderBlendToPixmap(const TQWidget* p)
 	else
 		renderPix.fill(p->colorGroup().button());	// Just tint as the default behavior
 
-	Display* dpy = qt_xdisplay();
+	Display* dpy = tqt_xdisplay();
 	Pixmap   alphaPixmap;
 	Picture  alphaPicture;
 	XRenderPictFormat        Rpf;

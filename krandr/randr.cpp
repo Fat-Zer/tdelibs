@@ -72,7 +72,7 @@ KDE_EXPORT void RandRScreen::loadSettings()
 	if (d->config)
 		XRRFreeScreenConfigInfo(d->config);
 
-	d->config = XRRGetScreenInfo(qt_xdisplay(), RootWindow(qt_xdisplay(), m_screen));
+	d->config = XRRGetScreenInfo(tqt_xdisplay(), RootWindow(tqt_xdisplay(), m_screen));
 
 	Rotation rotation;
 	if (d->config) {
@@ -89,17 +89,17 @@ KDE_EXPORT void RandRScreen::loadSettings()
 
 	if (d->config) {
 		int numSizes;
-		XRRScreenSize* sizes = XRRSizes(qt_xdisplay(), m_screen, &numSizes);
+		XRRScreenSize* sizes = XRRSizes(tqt_xdisplay(), m_screen, &numSizes);
 		for (int i = 0; i < numSizes; i++) {
 			m_pixelSizes.append(TQSize(sizes[i].width, sizes[i].height));
 			m_mmSizes.append(TQSize(sizes[i].mwidth, sizes[i].mheight));
 		}
 
-		m_rotations = XRRRotations(qt_xdisplay(), m_screen, &rotation);
+		m_rotations = XRRRotations(tqt_xdisplay(), m_screen, &rotation);
 	}
 	else {
 		// Great, now we have to go after the information manually.  Ughh.
-		ScreenInfo *screeninfo = internal_read_screen_info(qt_xdisplay());
+		ScreenInfo *screeninfo = internal_read_screen_info(tqt_xdisplay());
 		XRROutputInfo *output_info = screeninfo->outputs[m_screen]->info;
 		CrtcInfo *current_crtc = screeninfo->outputs[m_screen]->cur_crtc;
 		int numSizes = screeninfo->res->nmode;
@@ -138,24 +138,24 @@ KDE_EXPORT bool RandRScreen::applyProposed()
 	Status status;
 
 	if (!d->config) {
-		d->config = XRRGetScreenInfo(qt_xdisplay(), RootWindow(qt_xdisplay(), m_screen));
+		d->config = XRRGetScreenInfo(tqt_xdisplay(), RootWindow(tqt_xdisplay(), m_screen));
 		Q_ASSERT(d->config);
 	}
 
 	if (d->config) {
 		if (proposedRefreshRate() < 0)
-			status = XRRSetScreenConfig(qt_xdisplay(), d->config, DefaultRootWindow(qt_xdisplay()), (SizeID)proposedSize(), (Rotation)proposedRotation(), CurrentTime);
+			status = XRRSetScreenConfig(tqt_xdisplay(), d->config, DefaultRootWindow(tqt_xdisplay()), (SizeID)proposedSize(), (Rotation)proposedRotation(), CurrentTime);
 		else {
 			if( refreshRateIndexToHz(proposedSize(), proposedRefreshRate()) <= 0 ) {
 				m_proposedRefreshRate = 0;
 			}
-			status = XRRSetScreenConfigAndRate(qt_xdisplay(), d->config, DefaultRootWindow(qt_xdisplay()), (SizeID)proposedSize(), (Rotation)proposedRotation(), refreshRateIndexToHz(proposedSize(), proposedRefreshRate()), CurrentTime);
+			status = XRRSetScreenConfigAndRate(tqt_xdisplay(), d->config, DefaultRootWindow(tqt_xdisplay()), (SizeID)proposedSize(), (Rotation)proposedRotation(), refreshRateIndexToHz(proposedSize(), proposedRefreshRate()), CurrentTime);
 		}
 	}
 	else {
 		// Great, now we have to set the information manually.  Ughh.
 		// FIXME--this does not work!
-		ScreenInfo *screeninfo = internal_read_screen_info(qt_xdisplay());
+		ScreenInfo *screeninfo = internal_read_screen_info(tqt_xdisplay());
 		screeninfo->cur_width = (*m_pixelSizes.at(proposedSize())).width();
 		screeninfo->cur_height = (*m_pixelSizes.at(proposedSize())).height();
 		internal_main_low_apply(screeninfo);
@@ -441,14 +441,14 @@ KDE_EXPORT TQStringList RandRScreen::refreshRates(int size) const
 	TQStringList ret;
 
 	if (d->config) {
-		short* rates = XRRRates(qt_xdisplay(), m_screen, (SizeID)size, &nrates);
+		short* rates = XRRRates(tqt_xdisplay(), m_screen, (SizeID)size, &nrates);
 
 		for (int i = 0; i < nrates; i++)
 			ret << refreshRateDirectDescription(rates[i]);
 	}
 	else {
 		// Great, now we have to go after the information manually.  Ughh.
-		ScreenInfo *screeninfo = internal_read_screen_info(qt_xdisplay());
+		ScreenInfo *screeninfo = internal_read_screen_info(tqt_xdisplay());
 		int numSizes = screeninfo->res->nmode;
 		for (int i = 0; i < numSizes; i++) {
 			int refresh_rate = ((screeninfo->res->modes[i].dotClock*1.0)/((screeninfo->res->modes[i].hTotal)*(screeninfo->res->modes[i].vTotal)*1.0));
@@ -505,7 +505,7 @@ KDE_EXPORT int RandRScreen::proposedRefreshRate() const
 KDE_EXPORT int RandRScreen::refreshRateHzToIndex(int size, int hz) const
 {
 	int nrates;
-	short* rates = XRRRates(qt_xdisplay(), m_screen, (SizeID)size, &nrates);
+	short* rates = XRRRates(tqt_xdisplay(), m_screen, (SizeID)size, &nrates);
 
 	for (int i = 0; i < nrates; i++)
 		if (hz == rates[i])
@@ -521,7 +521,7 @@ KDE_EXPORT int RandRScreen::refreshRateHzToIndex(int size, int hz) const
 KDE_EXPORT int RandRScreen::refreshRateIndexToHz(int size, int index) const
 {
 	int nrates;
-	short* rates = XRRRates(qt_xdisplay(), m_screen, (SizeID)size, &nrates);
+	short* rates = XRRRates(tqt_xdisplay(), m_screen, (SizeID)size, &nrates);
 
 	if (nrates == 0 || index < 0)
 		return 0;
@@ -622,7 +622,7 @@ KDE_EXPORT RandRDisplay::RandRDisplay()
 	: m_valid(true)
 {
 	// Check extension
-	Status s = XRRQueryExtension(qt_xdisplay(), &m_eventBase, &m_errorBase);
+	Status s = XRRQueryExtension(tqt_xdisplay(), &m_eventBase, &m_errorBase);
 	if (!s) {
 		m_errorCode = TQString("%1, base %1").arg(s).arg(m_errorBase);
 		m_valid = false;
@@ -644,14 +644,14 @@ KDE_EXPORT RandRDisplay::RandRDisplay()
 	}
 
 	int major_version, minor_version;
-	XRRQueryVersion(qt_xdisplay(), &major_version, &minor_version);
+	XRRQueryVersion(tqt_xdisplay(), &major_version, &minor_version);
 
 	m_version = TQString("X Resize and Rotate extension version %1.%1").arg(major_version).arg(minor_version);
 
-	m_numScreens = ScreenCount(qt_xdisplay());
+	m_numScreens = ScreenCount(tqt_xdisplay());
 
 	// This assumption is WRONG with Xinerama
-	// Q_ASSERT(TQApplication::desktop()->numScreens() == ScreenCount(qt_xdisplay()));
+	// Q_ASSERT(TQApplication::desktop()->numScreens() == ScreenCount(tqt_xdisplay()));
 
 	m_screens.setAutoDelete(true);
 	for (int i = 0; i < m_numScreens; i++) {

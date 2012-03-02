@@ -172,7 +172,7 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 	// HACK: make Alt+Print work
 	// only do this for the Xorg default keyboard keycodes,
 	// other mappings (e.g. evdev) don't need or want it
-	if( key.sym() == XK_Sys_Req && XKeycodeToKeysym( qt_xdisplay(), 111, 0 ) == XK_Print ) {
+	if( key.sym() == XK_Sys_Req && XKeycodeToKeysym( tqt_xdisplay(), 111, 0 ) == XK_Print ) {
 	    keyModX |= KKeyServer::modXAlt();
 	    keyCodeX = 111;
 	}
@@ -191,7 +191,7 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 #endif
 	// We'll have to grab 8 key modifier combinations in order to cover all
 	//  combinations of CapsLock, NumLock, ScrollLock.
-	// Does anyone with more X-savvy know how to set a mask on qt_xrootwin so that
+	// Does anyone with more X-savvy know how to set a mask on tqt_xrootwin so that
 	//  the irrelevant bits are always ignored and we can just make one XGrabKey
 	//  call per accelerator? -- ellis
 #ifndef NDEBUG
@@ -204,10 +204,10 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 			sDebug += TQString("0x%3, ").arg(irrelevantBitsMask, 0, 16);
 #endif
 			if( bGrab )
-				XGrabKey( qt_xdisplay(), keyCodeX, keyModX | irrelevantBitsMask,
-					qt_xrootwin(), True, GrabModeAsync, GrabModeSync );
+				XGrabKey( tqt_xdisplay(), keyCodeX, keyModX | irrelevantBitsMask,
+					tqt_xrootwin(), True, GrabModeAsync, GrabModeSync );
 			else
-				XUngrabKey( qt_xdisplay(), keyCodeX, keyModX | irrelevantBitsMask, qt_xrootwin() );
+				XUngrabKey( tqt_xdisplay(), keyCodeX, keyModX | irrelevantBitsMask, tqt_xrootwin() );
 		}
 	}
 #ifndef NDEBUG
@@ -224,7 +224,7 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 			kdDebug(125) << "grab failed!\n";
 			for( uint m = 0; m <= 0xff; m++ ) {
 				if(( m & keyModMaskX ) == 0 )
-					XUngrabKey( qt_xdisplay(), keyCodeX, keyModX | m, qt_xrootwin() );
+					XUngrabKey( tqt_xdisplay(), keyCodeX, keyModX | m, tqt_xrootwin() );
 				}
                 }
 	}
@@ -317,8 +317,8 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 {
 	// do not change this line unless you really really know what you are doing (Matthias)
 	if ( !TQWidget::keyboardGrabber() && !TQApplication::activePopupWidget() ) {
-		XUngrabKeyboard( qt_xdisplay(), pEvent->xkey.time );
-                XFlush( qt_xdisplay()); // avoid X(?) bug
+		XUngrabKeyboard( tqt_xdisplay(), pEvent->xkey.time );
+                XFlush( tqt_xdisplay()); // avoid X(?) bug
         }
 
 	if( !isEnabledInternal() || m_suspended )
@@ -332,7 +332,7 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 	//  e.g., KP_4 => Shift+KP_Left, and Shift+KP_4 => KP_Left.
 	if( pEvent->xkey.state & KKeyServer::modXNumLock() ) {
 		// TODO: what's the xor operator in c++?
-		uint sym = XKeycodeToKeysym( qt_xdisplay(), codemod.code, 0 );
+		uint sym = XKeycodeToKeysym( tqt_xdisplay(), codemod.code, 0 );
 		// If this is a keypad key,
 		if( sym >= XK_KP_Space && sym <= XK_KP_9 ) {
 			switch( sym ) {

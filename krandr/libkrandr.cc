@@ -138,7 +138,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 
 		if (isValid() == true) {
 			screenNumber = -1;
-			randr_display = qt_xdisplay();
+			randr_display = tqt_xdisplay();
 			randr_screen_info = read_screen_info(randr_display);
 			if (randr_screen_info == NULL) {
 				return "";
@@ -203,7 +203,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 
 		if (isValid() == true) {
 			screenNumber = -1;
-			randr_display = qt_xdisplay();
+			randr_display = tqt_xdisplay();
 			randr_screen_info = read_screen_info(randr_display);
 			if (randr_screen_info == NULL) {
 				return "";
@@ -272,7 +272,7 @@ TQString KRandrSimpleAPI::applyIccConfiguration(TQString profileName, TQString k
 
 	// Find all screens
 	if (isValid() == true) {
-		randr_display = qt_xdisplay();
+		randr_display = tqt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		if (randr_screen_info == NULL) {
 			return "";
@@ -597,7 +597,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		TQString command;
 		command = "xrandr";
 
-		randr_display = qt_xdisplay();
+		randr_display = tqt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
@@ -658,7 +658,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 			}
 		}
 #else
-		randr_display = qt_xdisplay();
+		randr_display = tqt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		// Turn off all displays
 		for (i = 0; i < screenInfoArray.count(); i++) {
@@ -899,7 +899,7 @@ void KRandrSimpleAPI::applySystemwideDisplayGamma(TQPtrList<SingleScreenData> sc
 	SingleScreenData *screendata;
 
 	if (isValid() == true) {
-		randr_display = qt_xdisplay();
+		randr_display = tqt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
@@ -951,7 +951,7 @@ void KRandrSimpleAPI::applySystemwideDisplayDPMS(TQPtrList<SingleScreenData> scr
 	SingleScreenData *screendata;
 
 	if (isValid() == true) {
-		randr_display = qt_xdisplay();
+		randr_display = tqt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		for (i = 0; i < screenInfoArray.count(); i++) {
 			screendata = screenInfoArray.at(i);
@@ -1006,7 +1006,7 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 
 	int numberOfScreens = 0;
 	if (isValid() == true) {
-		randr_display = qt_xdisplay();
+		randr_display = tqt_xdisplay();
 		randr_screen_info = read_screen_info(randr_display);
 		for (i = 0; i < randr_screen_info->n_output; i++) {
 			output_info = randr_screen_info->outputs[i]->info;
@@ -1129,7 +1129,7 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				screendata->supports_transformations = (cur_screen->rotations() != RandRScreen::Rotate0);
 
 				// Determine if this display is primary and/or extended
-				RROutput primaryoutput = XRRGetOutputPrimary(qt_xdisplay(), DefaultRootWindow(qt_xdisplay()));
+				RROutput primaryoutput = XRRGetOutputPrimary(tqt_xdisplay(), DefaultRootWindow(tqt_xdisplay()));
 				if (primaryoutput == randr_screen_info->outputs[i]->id)
 					screendata->is_primary = false;
 				else

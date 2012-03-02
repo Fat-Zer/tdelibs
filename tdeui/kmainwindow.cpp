@@ -592,7 +592,7 @@ void KMainWindow::setPlainCaption( const TQString &caption )
 {
     TQMainWindow::setCaption( caption );
 #if defined Q_WS_X11
-    NETWinInfo info( qt_xdisplay(), winId(), qt_xrootwin(), 0 );
+    NETWinInfo info( tqt_xdisplay(), winId(), tqt_xrootwin(), 0 );
     info.setName( caption.utf8().data() );
 #endif
 }

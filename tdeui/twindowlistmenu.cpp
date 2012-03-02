@@ -47,7 +47,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 static TQCString twinName() {
     TQCString appname;
-    int screen_number = DefaultScreen(qt_xdisplay());
+    int screen_number = DefaultScreen(tqt_xdisplay());
     if (screen_number == 0)
         appname = "twin";
     else
@@ -100,7 +100,7 @@ static bool standaloneDialog( const KWin::WindowInfo* info, const NameSortedInfo
     WId group = info->groupLeader();
     if( group == 0 )
     {
-        return info->transientFor() == qt_xrootwin();
+        return info->transientFor() == tqt_xrootwin();
     }
     for( TQPtrListIterator< KWin::WindowInfo > it( list );
          it.current() != NULL;

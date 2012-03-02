@@ -1339,7 +1339,7 @@ TQString KFileDialog::getOpenFileNameWId(const TQString& startDir,
     KFileDialog dlg(startDir, filter, parent, "filedialog", true);
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id != 0 )
-        XSetTransientForHint( qt_xdisplay(), dlg.winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dlg.winId(), parent_id );
 #else
     // TODO
 #endif
@@ -1621,7 +1621,7 @@ TQString KFileDialog::getSaveFileNameWId(const TQString& dir, const TQString& fi
     KFileDialog dlg( specialDir ? dir : TQString::null, filter, parent, "filedialog", true);
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id != 0 )
-        XSetTransientForHint(qt_xdisplay(), dlg.winId(), parent_id);
+        XSetTransientForHint(tqt_xdisplay(), dlg.winId(), parent_id);
 #else
     // TODO
 #endif

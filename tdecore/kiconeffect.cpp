@@ -36,11 +36,11 @@
 #include "kiconeffect.h"
 
 #if defined(Q_WS_WIN) || defined(Q_WS_MACX)
-static bool qt_use_xrender=true;
-static bool qt_has_xft=true;
+static bool tqt_use_xrender=true;
+static bool tqt_has_xft=true;
 #else
-extern bool qt_use_xrender;
-extern bool qt_has_xft;
+extern bool tqt_use_xrender;
+extern bool tqt_has_xft;
 #endif
 class KIconEffectPrivate
 {
@@ -445,7 +445,7 @@ void KIconEffect::semiTransparent(TQImage &img)
 	int width  = img.width();
 	int height = img.height();
 	
-	if (qt_use_xrender && qt_has_xft )
+	if (tqt_use_xrender && tqt_has_xft )
 	  for (y=0; y<height; y++)
 	  {
 #ifdef WORDS_BIGENDIAN
@@ -511,7 +511,7 @@ void KIconEffect::semiTransparent(TQImage &img)
 
 void KIconEffect::semiTransparent(TQPixmap &pix)
 {
-    if ( qt_use_xrender && qt_has_xft )
+    if ( tqt_use_xrender && tqt_has_xft )
     {
 	TQImage img=pix.convertToImage();
 	semiTransparent(img);
@@ -885,7 +885,7 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect, TQPixmap *pixmap)
 
 	// Fade out Icon a bit more
         int x, y;
-        if ((img.depth() == 32) && qt_use_xrender && qt_has_xft)
+        if ((img.depth() == 32) && tqt_use_xrender && tqt_has_xft)
         {
     	    int width  = img.width();
 	    int height = img.height();

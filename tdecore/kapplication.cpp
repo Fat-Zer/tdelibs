@@ -201,7 +201,7 @@ static int x11_error(Display *dpy, XErrorEvent *ev) {
 
 // duplicated from patched Qt, so that there won't be unresolved symbols if Qt gets
 // replaced by unpatched one
-TDECORE_EXPORT bool qt_qclipboard_bailout_hack = false;
+TDECORE_EXPORT bool tqt_qclipboard_bailout_hack = false;
 
 template class TQPtrList<KSessionManaged>;
 
@@ -891,7 +891,7 @@ void KApplication::init(bool GUIenabled)
       atoms[n] = &kde_xdnd_drop;
       names[n++] = (char *) "XdndDrop";
 
-      XInternAtoms( qt_xdisplay(), names, n, false, atoms_return );
+      XInternAtoms( tqt_xdisplay(), names, n, false, atoms_return );
 
       for (int i = 0; i < n; i++ )
 	  *atoms[i] = atoms_return[i];
@@ -932,7 +932,7 @@ void KApplication::init(bool GUIenabled)
   {
 #ifdef Q_WS_X11
     // this is important since we fork() to launch the help (Matthias)
-    fcntl(ConnectionNumber(qt_xdisplay()), F_SETFD, FD_CLOEXEC);
+    fcntl(ConnectionNumber(tqt_xdisplay()), F_SETFD, FD_CLOEXEC);
     // set up the fancy (=robust and error ignoring ) KDE xio error handlers (Matthias)
     d->oldXErrorHandler = XSetErrorHandler( kde_x_errhandler );
     d->oldXIOErrorHandler = XSetIOErrorHandler( kde_xio_errhandler );
@@ -1024,7 +1024,7 @@ void KApplication::init(bool GUIenabled)
   {
     smw = new TQWidget(0,0);
     long data = 1;
-    XChangeProperty(qt_xdisplay(), smw->winId(),
+    XChangeProperty(tqt_xdisplay(), smw->winId(),
 		    atom_DesktopWindow, atom_DesktopWindow,
 		    32, PropModeReplace, (unsigned char *)&data, 1);
   }
@@ -1325,7 +1325,7 @@ void KApplication::commitData( TQSessionManager& sm )
 
 static void checkRestartVersion( TQSessionManager& sm )
 {
-    Display* dpy = qt_xdisplay();
+    Display* dpy = tqt_xdisplay();
     Atom type;
     int format;
     unsigned long nitems, after;
@@ -1659,13 +1659,13 @@ void KApplication::parseCommandLine( )
         int format;
         unsigned long length, after;
         unsigned char *data;
-        while ( XGetWindowProperty( qt_xdisplay(), qt_xrootwin(), atom_NetSupported,
+        while ( XGetWindowProperty( tqt_xdisplay(), tqt_xrootwin(), atom_NetSupported,
 				    0, 1, false, AnyPropertyType, &type, &format,
                                     &length, &after, &data ) != Success || !length ) {
             if ( data )
                 XFree( data );
             XEvent event;
-            XWindowEvent( qt_xdisplay(), qt_xrootwin(), PropertyChangeMask, &event );
+            XWindowEvent( tqt_xdisplay(), tqt_xrootwin(), PropertyChangeMask, &event );
         }
         if ( data )
             XFree( data );
@@ -2045,8 +2045,8 @@ bool KApplication::x11EventFilter( XEvent *_event )
 #endif
         // Workaround for focus stealing prevention not working when dragging e.g. text from KWrite
         // to KDesktop -> the dialog asking for filename doesn't get activated. This is because
-        // Qt-3.2.x doesn't have concept of qt_x_user_time at all, and Qt-3.3.0b1 passes the timestamp
-        // in the XdndDrop message in incorrect field (and doesn't update qt_x_user_time either).
+        // Qt-3.2.x doesn't have concept of tqt_x_user_time at all, and Qt-3.3.0b1 passes the timestamp
+        // in the XdndDrop message in incorrect field (and doesn't update tqt_x_user_time either).
         // Patch already sent, future Qt version should have this fixed.
             if( _event->xclient.message_type == kde_xdnd_drop )
                 { // if the message is XdndDrop
@@ -2058,15 +2058,15 @@ bool KApplication::x11EventFilter( XEvent *_event )
                     if( GET_QT_X_USER_TIME() == 0
                         || NET::timestampCompare( _event->xclient.data.l[ 3 ], GET_QT_X_USER_TIME() ) > 0 )
                         { // and the timestamp looks reasonable
-                          SET_QT_X_USER_TIME(_event->xclient.data.l[ 3 ]); // update our qt_x_user_time from it
+                          SET_QT_X_USER_TIME(_event->xclient.data.l[ 3 ]); // update our tqt_x_user_time from it
                         }
                     }
-                else // normal DND, only needed until Qt updates qt_x_user_time from XdndDrop
+                else // normal DND, only needed until Qt updates tqt_x_user_time from XdndDrop
                     {
                     if( GET_QT_X_USER_TIME() == 0
                         || NET::timestampCompare( _event->xclient.data.l[ 2 ], GET_QT_X_USER_TIME() ) > 0 )
                         { // the timestamp looks reasonable
-                          SET_QT_X_USER_TIME(_event->xclient.data.l[ 2 ]); // update our qt_x_user_time from it
+                          SET_QT_X_USER_TIME(_event->xclient.data.l[ 2 ]); // update our tqt_x_user_time from it
                         }
                     }
                 }
@@ -2175,17 +2175,17 @@ void KApplication::updateUserTimestamp( unsigned long time )
 #if defined Q_WS_X11
     if( time == 0 )
     { // get current X timestamp
-        Window w = XCreateSimpleWindow( qt_xdisplay(), qt_xrootwin(), 0, 0, 1, 1, 0, 0, 0 );
-        XSelectInput( qt_xdisplay(), w, PropertyChangeMask );
+        Window w = XCreateSimpleWindow( tqt_xdisplay(), tqt_xrootwin(), 0, 0, 1, 1, 0, 0, 0 );
+        XSelectInput( tqt_xdisplay(), w, PropertyChangeMask );
         unsigned char data[ 1 ];
-        XChangeProperty( qt_xdisplay(), w, XA_ATOM, XA_ATOM, 8, PropModeAppend, data, 1 );
+        XChangeProperty( tqt_xdisplay(), w, XA_ATOM, XA_ATOM, 8, PropModeAppend, data, 1 );
         XEvent ev;
-        XWindowEvent( qt_xdisplay(), w, PropertyChangeMask, &ev );
+        XWindowEvent( tqt_xdisplay(), w, PropertyChangeMask, &ev );
         time = ev.xproperty.time;
-        XDestroyWindow( qt_xdisplay(), w );
+        XDestroyWindow( tqt_xdisplay(), w );
     }
     if( GET_QT_X_USER_TIME() == 0
-        || NET::timestampCompare( time, GET_QT_X_USER_TIME() ) > 0 ) // check time > qt_x_user_time
+        || NET::timestampCompare( time, GET_QT_X_USER_TIME() ) > 0 ) // check time > tqt_x_user_time
         SET_QT_X_USER_TIME(time);
 #endif
 }
@@ -2995,8 +2995,8 @@ startServiceInternal( const TQCString &function,
    TQCString _launcher = KApplication::launcher();
    TQValueList<TQCString> envs;
 #ifdef Q_WS_X11
-   if (qt_xdisplay()) {
-       TQCString dpystring(XDisplayString(qt_xdisplay()));
+   if (tqt_xdisplay()) {
+       TQCString dpystring(XDisplayString(tqt_xdisplay()));
        envs.append( TQCString("DISPLAY=") + dpystring );
    } else if( getenv( "DISPLAY" )) {
        TQCString dpystring( getenv( "DISPLAY" ));
@@ -3496,7 +3496,7 @@ uint KApplication::keyboardModifiers()
     Window child;
     int root_x, root_y, win_x, win_y;
     uint keybstate;
-    XQueryPointer( qt_xdisplay(), qt_xrootwin(), &root, &child,
+    XQueryPointer( tqt_xdisplay(), tqt_xrootwin(), &root, &child,
                    &root_x, &root_y, &win_x, &win_y, &keybstate );
     return keybstate & 0x00ff;
 #elif defined W_WS_MACX
@@ -3514,7 +3514,7 @@ uint KApplication::mouseState()
     Window root;
     Window child;
     int root_x, root_y, win_x, win_y;
-    XQueryPointer( qt_xdisplay(), qt_xrootwin(), &root, &child,
+    XQueryPointer( tqt_xdisplay(), tqt_xrootwin(), &root, &child,
                    &root_x, &root_y, &win_x, &win_y, &mousestate );
 #elif defined(Q_WS_WIN)
     const bool mousebtn_swapped = GetSystemMetrics(SM_SWAPBUTTON);
@@ -3540,7 +3540,7 @@ TQ_ButtonState KApplication::keyboardMouseState()
     Window child;
     int root_x, root_y, win_x, win_y;
     uint state;
-    XQueryPointer( qt_xdisplay(), qt_xrootwin(), &root, &child,
+    XQueryPointer( tqt_xdisplay(), tqt_xrootwin(), &root, &child,
                    &root_x, &root_y, &win_x, &win_y, &state );
     // transform the same way like Qt's qt_x11_translateButtonState()
     if( state & Button1Mask )

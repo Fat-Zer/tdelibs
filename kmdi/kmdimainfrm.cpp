@@ -701,7 +701,7 @@ void KMdiMainFrm::detachWindow( KMdiChildView *pWnd, bool bShow )
 #ifdef Q_WS_X11
 		if ( mdiMode() == KMdi::ToplevelMode )
 		{
-			XSetTransientForHint( qt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
+			XSetTransientForHint( tqt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
 		}
 #endif
 
@@ -711,7 +711,7 @@ void KMdiMainFrm::detachWindow( KMdiChildView *pWnd, bool bShow )
 #ifdef Q_WS_X11
 	if ( mdiMode() == KMdi::ToplevelMode )
 	{
-		XSetTransientForHint( qt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
+		XSetTransientForHint( tqt_xdisplay(), pWnd->winId(), topLevelWidget() ->winId() );
 	}
 #endif
 
@@ -1422,7 +1422,7 @@ void KMdiMainFrm::switchToToplevelMode()
 	for ( kmdicvit.toFirst(); ( *kmdicvit ); ++kmdicvit )
 	{
 #ifdef Q_WS_X11
-		XSetTransientForHint( qt_xdisplay(), ( *kmdicvit )->winId(), winId() );
+		XSetTransientForHint( tqt_xdisplay(), ( *kmdicvit )->winId(), winId() );
 #endif
 		( *kmdicvit )->show();
 	}

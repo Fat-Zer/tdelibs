@@ -111,13 +111,13 @@ bool KKeyNative::init( const KKey& key )
 	// Only do this for the default Xorg layout, other keycode mappings
 	// (e.g. evdev) don't need or want it.
 	if( m_sym == XK_Print && !(m_mod & Mod1Mask) &&
-                XKeycodeToKeysym( qt_xdisplay(), 111, 0 ) == XK_Print )
+                XKeycodeToKeysym( tqt_xdisplay(), 111, 0 ) == XK_Print )
 		m_code = 111; // code for Print
 	else if( m_sym == XK_Break || (m_sym == XK_Pause && (m_mod & ControlMask)) &&
-                XKeycodeToKeysym( qt_xdisplay(), 114, 0 ) == XK_Pause )
+                XKeycodeToKeysym( tqt_xdisplay(), 114, 0 ) == XK_Pause )
 		m_code = 114;
 	else
-		m_code = XKeysymToKeycode( qt_xdisplay(), m_sym );
+		m_code = XKeysymToKeycode( tqt_xdisplay(), m_sym );
 
 	if( !m_code && m_sym )
 		kdDebug(125) << "Couldn't get code for sym" << endl;

@@ -434,7 +434,7 @@ KMessageBox::questionYesNoListWId(WId parent_id, const TQString &text,
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     bool checkboxResult = false;
@@ -485,7 +485,7 @@ KMessageBox::questionYesNoCancelWId(WId parent_id,
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     bool checkboxResult = false;
@@ -567,7 +567,7 @@ KMessageBox::warningYesNoListWId(WId parent_id, const TQString &text,
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     bool checkboxResult = false;
@@ -639,7 +639,7 @@ KMessageBox::warningContinueCancelListWId(WId parent_id, const TQString &text,
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     bool checkboxResult = false;
@@ -715,7 +715,7 @@ KMessageBox::warningYesNoCancelListWId(WId parent_id, const TQString &text,
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     bool checkboxResult = false;
@@ -766,7 +766,7 @@ KMessageBox::errorListWId(WId parent_id,  const TQString &text, const TQStringLi
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     createKMessageBox(dialog, TQMessageBox::Critical, text, strlist, TQString::null, 0, options);
@@ -796,7 +796,7 @@ KMessageBox::detailedErrorWId(WId parent_id,  const TQString &text,
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     createKMessageBox(dialog, TQMessageBox::Critical, text, TQStringList(), TQString::null, 0, options, details);
@@ -843,7 +843,7 @@ KMessageBox::sorryWId(WId parent_id, const TQString &text,
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     createKMessageBox(dialog, TQMessageBox::Warning, text, TQStringList(), TQString::null, 0, options);
@@ -873,7 +873,7 @@ KMessageBox::detailedSorryWId(WId parent_id, const TQString &text,
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     createKMessageBox(dialog, TQMessageBox::Warning, text, TQStringList(), TQString::null, 0, options, details);
@@ -919,7 +919,7 @@ KMessageBox::informationListWId(WId parent_id,const TQString &text, const TQStri
         dialog->setPlainCaption( caption );
 #ifdef Q_WS_X11
     if( parent == NULL && parent_id )
-        XSetTransientForHint( qt_xdisplay(), dialog->winId(), parent_id );
+        XSetTransientForHint( tqt_xdisplay(), dialog->winId(), parent_id );
 #endif
 
     bool checkboxResult = false;

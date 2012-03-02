@@ -50,7 +50,7 @@
 #define	UNLOAD_OBJECT(x) if (x != 0) { delete x; x = 0; }
 
 #ifdef Q_WS_X11
-extern void qt_generate_epsf( bool b );
+extern void tqt_generate_epsf( bool b );
 #endif
 
 KMFactory* KMFactory::m_self = 0;
@@ -102,7 +102,7 @@ KMFactory::KMFactory()
 	// If this is a problem for anyone, we can add a public method to set this flag.
 	// (David Faure, doing as advised by Lars Knoll)
 #ifdef Q_WS_X11
-	qt_generate_epsf( false );
+	tqt_generate_epsf( false );
 #endif
 #endif
 

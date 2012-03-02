@@ -70,7 +70,7 @@
 
 // defined in qapplication_x11.cpp
 typedef int (*QX11EventFilter) (XEvent*);
-extern QX11EventFilter qt_set_x11_event_filter (QX11EventFilter filter);
+extern QX11EventFilter tqt_set_x11_event_filter (QX11EventFilter filter);
 #endif
 
 struct ColorPaletteNameType
@@ -1179,7 +1179,7 @@ KColorDialog::~KColorDialog()
 {
 #ifdef Q_WS_X11
     if (d->bColorPicking)
-        qt_set_x11_event_filter(d->oldfilter);
+        tqt_set_x11_event_filter(d->oldfilter);
 #endif
     delete d;
 }
@@ -1504,7 +1504,7 @@ KColorDialog::slotColorPicker()
 {
     d->bColorPicking = true;
 #ifdef Q_WS_X11
-    d->oldfilter = qt_set_x11_event_filter(kde_color_dlg_handler);
+    d->oldfilter = tqt_set_x11_event_filter(kde_color_dlg_handler);
 #endif
     kde_color_dlg_widget = this;
     grabMouse( tqcrossCursor );
@@ -1518,7 +1518,7 @@ KColorDialog::mouseReleaseEvent( TQMouseEvent *e )
   {
      d->bColorPicking = false;
 #ifdef Q_WS_X11
-     qt_set_x11_event_filter(d->oldfilter);
+     tqt_set_x11_event_filter(d->oldfilter);
      d->oldfilter = 0;
 #endif
      releaseMouse();
@@ -1547,7 +1547,7 @@ KColorDialog::keyPressEvent( TQKeyEvent *e )
      {
         d->bColorPicking = false;
 #ifdef Q_WS_X11
-        qt_set_x11_event_filter(d->oldfilter);
+        tqt_set_x11_event_filter(d->oldfilter);
         d->oldfilter = 0;
 #endif
         releaseMouse();

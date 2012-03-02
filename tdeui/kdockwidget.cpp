@@ -820,7 +820,7 @@ void KDockWidget::applyToWidget( TQWidget* s, const TQPoint& p )
 #ifndef NO_KDE2
 #ifdef Q_WS_X11
     if (d->transient && d->_parent)
-      XSetTransientForHint( qt_xdisplay(), winId(), d->_parent->winId() );
+      XSetTransientForHint( tqt_xdisplay(), winId(), d->_parent->winId() );
 
 #ifdef BORDERLESS_WINDOWS
     KWin::setType( winId(), NET::Override); //d->windowType );

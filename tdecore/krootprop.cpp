@@ -64,11 +64,11 @@ void KRootProp::sync()
     }
   }
 
-  XChangeProperty( qt_xdisplay(), qt_xrootwin(), atom,
+  XChangeProperty( tqt_xdisplay(), tqt_xrootwin(), atom,
                   XA_STRING, 8, PropModeReplace,
                   (const unsigned char *)propString.utf8().data(),
                   propString.length());
-  XFlush( qt_xdisplay() );
+  XFlush( tqt_xdisplay() );
 }
 
 void KRootProp::setProp( const TQString& rProp )
@@ -89,14 +89,14 @@ void KRootProp::setProp( const TQString& rProp )
   if( rProp.isEmpty() )
     return;
 
-  atom = XInternAtom( qt_xdisplay(), rProp.utf8(), False);
+  atom = XInternAtom( tqt_xdisplay(), rProp.utf8(), False);
 
   TQString s;
   offset = 0; bytes_after = 1;
   while (bytes_after != 0)
   {
     unsigned char *buf = 0; 
-    if (XGetWindowProperty( qt_xdisplay(), qt_xrootwin(), atom, offset, 256,
+    if (XGetWindowProperty( tqt_xdisplay(), tqt_xrootwin(), atom, offset, 256,
                         False, XA_STRING, &type, &format, &nitems, &bytes_after,
                         &buf) == Success && buf) 
     {
@@ -152,7 +152,7 @@ void KRootProp::destroy()
     dirty = false;
     propDict.clear();
     if( atom ) {
-	XDeleteProperty( qt_xdisplay(), qt_xrootwin(), atom );
+	XDeleteProperty( tqt_xdisplay(), tqt_xrootwin(), atom );
 	atom = 0;
     }
 }

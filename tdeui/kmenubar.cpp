@@ -109,11 +109,11 @@ static
 void initAtoms()
 {
     char nm[ 100 ];
-    sprintf( nm, "_KDE_TOPMENU_OWNER_S%d", DefaultScreen( qt_xdisplay()));
+    sprintf( nm, "_KDE_TOPMENU_OWNER_S%d", DefaultScreen( tqt_xdisplay()));
     char nm2[] = "_KDE_TOPMENU_MINSIZE";
     char* names[ 2 ] = { nm, nm2 };
     Atom atoms[ 2 ];
-    XInternAtoms( qt_xdisplay(), names, 2, False, atoms );
+    XInternAtoms( tqt_xdisplay(), names, 2, False, atoms );
     selection_atom = atoms[ 0 ];
     msg_type_atom = atoms[ 1 ];
 }
@@ -178,7 +178,7 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
   {
 #ifdef Q_WS_X11
       d->selection = new KSelectionWatcher( KMenuBarPrivate::makeSelectionAtom(),
-          DefaultScreen( qt_xdisplay()));
+          DefaultScreen( tqt_xdisplay()));
       connect( d->selection, TQT_SIGNAL( newOwner( Window )),
           this, TQT_SLOT( updateFallbackSize()));
       connect( d->selection, TQT_SIGNAL( lostOwner()),
@@ -193,7 +193,7 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
 #ifdef Q_WS_X11
       KWin::setType( winId(), NET::TopMenu );
       if( parentWidget())
-          XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
+          XSetTransientForHint( tqt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
 #endif
       TQMenuBar::setFrameStyle( NoFrame );
       TQMenuBar::setLineWidth( 0 );
@@ -260,7 +260,7 @@ bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
         if( parentWidget() && TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(parentWidget()) && ev->type() == TQEvent::Reparent )
             {
 #ifdef Q_WS_X11
-            XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
+            XSetTransientForHint( tqt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
 #else
             //TODO: WIN32?
 #endif
@@ -271,7 +271,7 @@ bool KMenuBar::eventFilter(TQObject *obj, TQEvent *ev)
             if( ev->type() == TQEvent::Show )
                 {
 #ifdef Q_WS_X11
-                XSetTransientForHint( qt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
+                XSetTransientForHint( tqt_xdisplay(), winId(), parentWidget()->topLevelWidget()->winId());
 #else
                 //TODO: WIN32?
 #endif

@@ -1283,7 +1283,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
             d->cursor_icon_widget = new TQWidget( NULL, NULL, WX11BypassWM );
             XSetWindowAttributes attr;
             attr.save_under = True;
-            XChangeWindowAttributes( qt_xdisplay(), d->cursor_icon_widget->winId(), CWSaveUnder, &attr );
+            XChangeWindowAttributes( tqt_xdisplay(), d->cursor_icon_widget->winId(), CWSaveUnder, &attr );
             d->cursor_icon_widget->resize( icon_pixmap.width(), icon_pixmap.height());
             if( icon_pixmap.mask() )
                 d->cursor_icon_widget->setMask( *icon_pixmap.mask());
@@ -1294,7 +1294,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
         }
         TQPoint c_pos = TQCursor::pos();
         d->cursor_icon_widget->move( c_pos.x() + 15, c_pos.y() + 15 );
-        XRaiseWindow( qt_xdisplay(), d->cursor_icon_widget->winId());
+        XRaiseWindow( tqt_xdisplay(), d->cursor_icon_widget->winId());
         TQApplication::flushX();
         d->cursor_icon_widget->show();
 #endif

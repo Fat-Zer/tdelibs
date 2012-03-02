@@ -2806,7 +2806,7 @@ bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
 					{3, resize->size().height()-3, resize->size().width()-7, 1}
 				};
 		
-				XShapeCombineRectangles(qt_xdisplay(), listbox->handle(), ShapeBounding, 0, 0,
+				XShapeCombineRectangles(tqt_xdisplay(), listbox->handle(), ShapeBounding, 0, 0,
 					rects, 5, ShapeSet, YXSorted);
 			}
 			break;
