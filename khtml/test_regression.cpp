@@ -481,7 +481,7 @@ int main(int argc, char *argv[])
     {
         TQString xvfbPath = KStandardDirs::findExe("Xvfb");
         if ( xvfbPath.isEmpty() ) {
-            fprintf( stderr, "ERROR: We need Xvfb to be installed for reliable results\n" );
+            fprintf( stderr, "[test_regression] ERROR: We need Xvfb to be installed for reliable results\n" );
             exit( 1 );
         }
         

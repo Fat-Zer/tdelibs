@@ -130,7 +130,7 @@ static TQCString readQCString(TQDataStream &ds)
    int bytesLeft = device->size()-device->at();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
-      tqWarning("Corrupt data!\n");
+      tqWarning("[dcopserver] Corrupt data!\n");
       printf("bytesLeft: %d, len: %d\n", bytesLeft, len);
       return result;
    }
@@ -149,7 +149,7 @@ static TQByteArray readQByteArray(TQDataStream &ds)
    int bytesLeft = device->size()-device->at();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
-      tqWarning("Corrupt data!\n");
+      tqWarning("[dcopserver] Corrupt data!\n");
       return result;
    }
    result.resize( (uint)len );
@@ -241,7 +241,7 @@ void DCOPIceWriteChar(register IceConn iceConn, unsigned long nbytes, char *ptr)
 {
     DCOPConnection* conn = the_server->findConn( iceConn );
 #ifdef DCOP_DEBUG
-tqWarning("DCOPServer: DCOPIceWriteChar() Writing %d bytes [%s]", nbytes, conn ? conn->appId.data() : "<unknown>");
+tqWarning("[dcopserver] DCOPIceWriteChar() Writing %d bytes [%s]", nbytes, conn ? conn->appId.data() : "<unknown>");
 #endif
 
     if (conn)
@@ -251,7 +251,7 @@ tqWarning("DCOPServer: DCOPIceWriteChar() Writing %d bytes [%s]", nbytes, conn ?
           TQByteArray _data(nbytes);
           memcpy(_data.data(), ptr, nbytes);
 #ifdef DCOP_DEBUG
-tqWarning("DCOPServer: _IceWrite() outputBlocked. Queuing %d bytes.", _data.size());
+tqWarning("[dcopserver] _IceWrite() outputBlocked. Queuing %d bytes.", _data.size());
 #endif
           conn->outputBuffer.append(_data);
           return;
@@ -273,14 +273,14 @@ static void DCOPIceWrite(IceConn iceConn, const TQByteArray &_data)
 {
     DCOPConnection* conn = the_server->findConn( iceConn );
 #ifdef DCOP_DEBUG
-tqWarning("DCOPServer: DCOPIceWrite() Writing %d bytes [%s]", _data.size(), conn ? conn->appId.data() : "<unknown>");
+tqWarning("[dcopserver] DCOPIceWrite() Writing %d bytes [%s]", _data.size(), conn ? conn->appId.data() : "<unknown>");
 #endif
     if (conn)
     {
        if (conn->outputBlocked)
        {
 #ifdef DCOP_DEBUG
-tqWarning("DCOPServer: DCOPIceWrite() outputBlocked. Queuing %d bytes.", _data.size());
+tqWarning("[dcopserver] DCOPIceWrite() outputBlocked. Queuing %d bytes.", _data.size());
 #endif
           conn->outputBuffer.append(_data);
           return;
@@ -299,7 +299,7 @@ tqWarning("DCOPServer: DCOPIceWrite() outputBlocked. Queuing %d bytes.", _data.s
 void DCOPConnection::waitForOutputReady(const TQByteArray &_data, int start)
 {
 #ifdef DCOP_DEBUG
-tqWarning("DCOPServer: waitForOutputReady fd = %d datasize = %d start = %d", socket(), _data.size(), start);
+tqWarning("[dcopserver] waitForOutputReady fd = %d datasize = %d start = %d", socket(), _data.size(), start);
 #endif
    outputBlocked = true;
    outputBuffer.append(_data);
@@ -317,7 +317,7 @@ tqWarning("DCOPServer: waitForOutputReady fd = %d datasize = %d start = %d", soc
 void DCOPServer::slotOutputReady(int socket)
 {
 #ifdef DCOP_DEBUG
-tqWarning("DCOPServer: slotOutputReady fd = %d", socket);
+tqWarning("[dcopserver] slotOutputReady fd = %d", socket);
 #endif
    // Find out connection.
    DCOPConnection *conn = fd_clients.find(socket);
@@ -351,7 +351,7 @@ void DCOPConnection::slotOutputReady()
    fcntl(fd, F_SETFL, fd_fl);
 
 #ifdef DCOP_DEBUG
-tqWarning("DCOPServer: slotOutputReady() %d bytes written", nwritten);
+tqWarning("[dcopserver] slotOutputReady() %d bytes written", nwritten);
 #endif
 
    if (nwritten < 0)
@@ -370,7 +370,7 @@ tqWarning("DCOPServer: slotOutputReady() %d bytes written", nwritten);
       if (outputBuffer.isEmpty())
       {
 #ifdef DCOP_DEBUG
-tqWarning("DCOPServer: slotOutputRead() all data transmitted.");
+tqWarning("[dcopserver] slotOutputRead() all data transmitted.");
 #endif
          outputBlocked = false;
          outputBufferNotifier->setEnabled(false);
@@ -378,7 +378,7 @@ tqWarning("DCOPServer: slotOutputRead() all data transmitted.");
 #ifdef DCOP_DEBUG
 else
 {
-tqWarning("DCOPServer: slotOutputRead() more data to send.");
+tqWarning("[dcopserver] slotOutputRead() more data to send.");
 }
 #endif
    }
@@ -390,7 +390,7 @@ static void DCOPIceSendData(register IceConn _iceConn,
    if (_iceConn->outbufptr > _iceConn->outbuf)
    {
 #ifdef DCOP_DEBUG
-tqWarning("DCOPServer: Flushing data, fd = %d", IceConnectionNumber(_iceConn));
+tqWarning("[dcopserver] Flushing data, fd = %d", IceConnectionNumber(_iceConn));
 #endif
       IceFlush( _iceConn );
    }
@@ -645,7 +645,7 @@ SetAuthentication (int count, IceListenObj *_listenObjs,
 
     if (command.isEmpty())
     {
-       fprintf( stderr, "dcopserver: 'iceauth' not found in path, aborting.\n" );
+       fprintf( stderr, "[dcopserver] 'iceauth' not found in path, aborting.\n" );
        exit(1);
     }
 
@@ -713,7 +713,7 @@ void DCOPServer::processMessage( IceConn iceConn, int opcode,
 {
     DCOPConnection* conn = clients.find( iceConn );
     if ( !conn ) {
-	tqWarning("DCOPServer::processMessage message from unknown connection. [opcode = %d]", opcode);
+	tqWarning("[dcopserver] DCOPServer::processMessage message from unknown connection. [opcode = %d]", opcode);
 	return;
     }
     switch( opcode ) {
@@ -733,13 +733,13 @@ void DCOPServer::processMessage( IceConn iceConn, int opcode,
 	    int datalen = ba.size();
 	    if ( opcode == DCOPReplyDelayed ) {
 		if ( !target )
-		    tqWarning("DCOPServer::DCOPReplyDelayed for unknown connection.");
+		    tqWarning("[dcopserver] DCOPServer::DCOPReplyDelayed for unknown connection.");
 		else if ( !conn )
-		    tqWarning("DCOPServer::DCOPReplyDelayed from unknown connection.");
+		    tqWarning("[dcopserver] DCOPServer::DCOPReplyDelayed from unknown connection.");
 		else if (!conn->waitingForDelayedReply.removeRef( target->iceConn ))
-		    tqWarning("DCOPServer::DCOPReplyDelayed from/to does not match. (#2)");
+		    tqWarning("[dcopserver] DCOPServer::DCOPReplyDelayed from/to does not match. (#2)");
                 else if (!target->waitingOnReply.removeRef(iceConn))
-                       tqWarning("DCOPServer::DCOPReplyDelayed for client who wasn't waiting on one!");
+                       tqWarning("[dcopserver] DCOPServer::DCOPReplyDelayed for client who wasn't waiting on one!");
 	    }
 	    if ( target ) {
 #ifdef DCOP_DEBUG
@@ -747,7 +747,7 @@ if (opcode == DCOPSend)
 {
    TQCString obj = readQCString(ds);
    TQCString fun = readQCString(ds);
-   tqWarning("Sending %d bytes from %s to %s. DCOPSend %s", length, fromApp.data(), toApp.data(), fun.data());
+   tqWarning("[dcopserver] Sending %d bytes from %s to %s. DCOPSend %s", length, fromApp.data(), toApp.data(), fun.data());
 }
 #endif
 		IceGetHeader( target->iceConn, majorOpcode, opcode,
@@ -765,7 +765,7 @@ if (opcode == DCOPSend)
 		TQCString replyType;
 		TQByteArray replyData;
 		if ( !receive( toApp, obj, fun, data, replyType, replyData, iceConn ) ) {
-		    tqWarning("%s failure: object '%s' has no function '%s'", toApp.data(), obj.data(), fun.data() );
+		    tqWarning("[dcopserver] %s failure: object '%s' has no function '%s'", toApp.data(), obj.data(), fun.data() );
 		}
 	    } else if ( toApp[toApp.length()-1] == '*') {
 #ifdef DCOP_DEBUG
@@ -773,7 +773,7 @@ if (opcode == DCOPSend)
 {
    TQCString obj = readQCString(ds);
    TQCString fun = readQCString(ds);
-   tqWarning("Sending %d bytes from %s to %s. DCOPSend %s", length, fromApp.data(), toApp.data(), fun.data());
+   tqWarning("[dcopserver] Sending %d bytes from %s to %s. DCOPSend %s", length, fromApp.data(), toApp.data(), fun.data());
 }
 #endif
 		// handle a multicast.
@@ -815,7 +815,7 @@ if (opcode == DCOPCall)
 {
    TQCString obj = readQCString(ds);
    TQCString fun = readQCString(ds);
-   tqWarning("Sending %d bytes from %s to %s. DCOPCall %s", length, fromApp.data(), toApp.data(), fun.data());
+   tqWarning("[dcopserver] Sending %d bytes from %s to %s. DCOPCall %s", length, fromApp.data(), toApp.data(), fun.data());
 }
 #endif
 		target->waitingForReply.append( iceConn );
@@ -839,7 +839,7 @@ if (opcode == DCOPCall)
 		    TQByteArray data = readQByteArray(ds);
 		    b = receive( toApp, obj, fun, data, replyType, replyData, iceConn );
 		    if ( !b )
-			tqWarning("%s failure: object '%s' has no function '%s'", toApp.data(), obj.data(), fun.data() );
+			tqWarning("[dcopserver] %s failure: object '%s' has no function '%s'", toApp.data(), obj.data(), fun.data() );
 		}
 
 		if (b) {
@@ -893,7 +893,7 @@ if (opcode == DCOPCall)
 	    int datalen = ba.size();
 
 	    if ( !connreply )
-		tqWarning("DCOPServer::DCOPReply for unknown connection.");
+		tqWarning("[dcopserver] DCOPServer::DCOPReply for unknown connection.");
 	    else {
 		conn->waitingForReply.removeRef( connreply->iceConn );
 		if ( opcode == DCOPReplyWait )
@@ -903,7 +903,7 @@ if (opcode == DCOPCall)
                 else
                 { // DCOPReply or DCOPReplyFailed
                     if (!connreply->waitingOnReply.removeRef(iceConn))
-                       tqWarning("DCOPServer::DCOPReply from %s to %s who wasn't waiting on one!",
+                       tqWarning("[dcopserver] DCOPReply from %s to %s who wasn't waiting on one!",
                                fromApp.data(), toApp.data());
                 }
 		IceGetHeader( connreply->iceConn, majorOpcode, opcode,
@@ -917,7 +917,7 @@ if (opcode == DCOPCall)
 	}
 	break;
     default:
-	tqWarning("DCOPServer::processMessage unknown message");
+	tqWarning("[dcopserver] DCOPServer::processMessage unknown message");
     }
 }
 
@@ -986,7 +986,7 @@ DCOPServer::DCOPServer(bool _suicide)
 				    DCOPAuthCount, const_cast<char **>(DCOPAuthNames),
 				    DCOPClientAuthProcs, 0);
     if (_kde_IceLastMajorOpcode < 1 )
-	tqWarning("DCOPServer Error: incorrect major opcode!");
+	tqWarning("[dcopserver] DCOPServer Error: incorrect major opcode!");
 
     the_server = this;
     if (( majorOpcode = IceRegisterForProtocolReply (const_cast<char *>("DCOP"),
@@ -1004,7 +1004,7 @@ DCOPServer::DCOPServer(bool _suicide)
 						     NULL	/* IceIOErrorProc */
 						     )) < 0)
 	{
-	    tqWarning("Could not register DCOP protocol with ICE");
+	    tqWarning("[dcopserver] Could not register DCOP protocol with ICE");
 	}
 
     char errormsg[256];
@@ -1012,7 +1012,7 @@ DCOPServer::DCOPServer(bool _suicide)
     if (!IceListenForConnections (&numTransports, &listenObjs,
 				  256, errormsg))
 	{
-	    fprintf (stderr, "%s\n", errormsg);
+	    fprintf (stderr, "[dcopserver] %s\n", errormsg);
 	    exit (1);
 	} else {
 	    (void) umask(orig_umask);
@@ -1020,7 +1020,7 @@ DCOPServer::DCOPServer(bool _suicide)
 	    TQCString fName = DCOPClient::dcopServerFile();
 	    FILE *f;
 	    if(!(f = ::fopen(fName.data(), "w+"))) {
-	        fprintf (stderr, "Can not create file %s: %s\n",
+	        fprintf (stderr, "[dcopserver] Can not create file %s: %s\n",
 			 fName.data(), ::strerror(errno));
 		exit(1);
 	    }
@@ -1119,7 +1119,7 @@ DCOPConnection* DCOPServer::findApp( const TQCString& appId )
  */
 void DCOPServer::slotCleanDeadConnections()
 {
-tqWarning("DCOP Cleaning up dead connections.");
+tqWarning("[dcopserver] DCOP Cleaning up dead connections.");
     while(!deadConnections.isEmpty())
     {
        IceConn iceConn = deadConnections.take(0);
@@ -1158,9 +1158,9 @@ void DCOPServer::newClient( int /*socket*/ )
     IceConn iceConn = IceAcceptConnection( static_cast<const  DCOPListener*>(sender())->listenObj, &status);
     if (!iceConn) {
       if (status == IceAcceptBadMalloc)
-	 tqWarning("Failed to alloc connection object!\n");
+	 tqWarning("[dcopserver] Failed to alloc connection object!\n");
       else // IceAcceptFailure
-         tqWarning("Failed to accept ICE connection!\n");
+         tqWarning("[dcopserver] Failed to accept ICE connection!\n");
       return;
     }
 
@@ -1173,9 +1173,9 @@ void DCOPServer::newClient( int /*socket*/ )
 
     if (cstatus != IceConnectAccepted) {
 	if (cstatus == IceConnectIOError)
-	    tqWarning ("IO error opening ICE Connection!\n");
+	    tqWarning ("[dcopserver] IO error opening ICE Connection!\n");
 	else
-	    tqWarning ("ICE Connection rejected!\n");
+	    tqWarning ("[dcopserver] ICE Connection rejected!\n");
         deadConnections.removeRef(iceConn);
 	(void) IceCloseConnection (iceConn);
     }
@@ -1206,7 +1206,7 @@ void DCOPServer::removeConnection( void* data )
 	IceConn iceConn = conn->waitingForReply.take(0);
 	if (iceConn) {
 	    DCOPConnection* target = clients.find( iceConn );
-	    tqWarning("DCOP aborting call from '%s' to '%s'", target ? target->appId.data() : "<unknown>" , conn->appId.data() );
+	    tqWarning("[dcopserver] DCOP aborting call from '%s' to '%s'", target ? target->appId.data() : "<unknown>" , conn->appId.data() );
 	    TQByteArray reply;
 	    DCOPMsg *pMsg;
 	    IceGetHeader( iceConn, majorOpcode, DCOPReplyFailed,
@@ -1217,9 +1217,9 @@ void DCOPServer::removeConnection( void* data )
 	    DCOPIceSendData(iceConn, reply);
             _DCOPIceSendEnd();
             if (!target)
-               tqWarning("DCOP Error: unknown target in waitingForReply");
+               tqWarning("[dcopserver] Unknown target in waitingForReply");
             else if (!target->waitingOnReply.removeRef(conn->iceConn))
-               tqWarning("DCOP Error: client in waitingForReply wasn't waiting on reply");
+               tqWarning("[dcopserver] Client in waitingForReply wasn't waiting on reply");
 	}
     }
 
@@ -1228,7 +1228,7 @@ void DCOPServer::removeConnection( void* data )
 	IceConn iceConn = conn->waitingForDelayedReply.take(0);
 	if (iceConn) {
 	    DCOPConnection* target = clients.find( iceConn );
-	    tqWarning("DCOP aborting (delayed) call from '%s' to '%s'", target ? target->appId.data() : "<unknown>", conn->appId.data() );
+	    tqWarning("[dcopserver] DCOP aborting (delayed) call from '%s' to '%s'", target ? target->appId.data() : "<unknown>", conn->appId.data() );
 	    TQByteArray reply;
 	    DCOPMsg *pMsg;
 	    IceGetHeader( iceConn, majorOpcode, DCOPReplyFailed,
@@ -1239,9 +1239,9 @@ void DCOPServer::removeConnection( void* data )
 	    DCOPIceSendData( iceConn, reply );
             _DCOPIceSendEnd();
             if (!target)
-               tqWarning("DCOP Error: unknown target in waitingForDelayedReply");
+               tqWarning("[dcopserver] Unknown target in waitingForDelayedReply");
             else if (!target->waitingOnReply.removeRef(conn->iceConn))
-               tqWarning("DCOP Error: client in waitingForDelayedReply wasn't waiting on reply");
+               tqWarning("[dcopserver] Client in waitingForDelayedReply wasn't waiting on reply");
 	}
     }
     while (!conn->waitingOnReply.isEmpty())
@@ -1251,13 +1251,13 @@ void DCOPServer::removeConnection( void* data )
            DCOPConnection* target = clients.find( iceConn );
            if (!target)
            {
-               tqWarning("DCOP Error: still waiting for answer from non-existing client.");
+               tqWarning("[dcopserver] Still waiting for answer from non-existing client.");
                continue;
            }
-           tqWarning("DCOP aborting while waiting for answer from '%s'", target->appId.data());
+           tqWarning("[dcopserver] DCOP aborting while waiting for answer from '%s'", target->appId.data());
            if (!target->waitingForReply.removeRef(conn->iceConn) &&
                !target->waitingForDelayedReply.removeRef(conn->iceConn))
-              tqWarning("DCOP Error: called client has forgotten about caller");
+              tqWarning("[dcopserver] Called client has forgotten about caller");
         }
     }
 
@@ -1290,7 +1290,7 @@ void DCOPServer::removeConnection( void* data )
 void DCOPServer::slotTerminate()
 {
 #ifndef NDEBUG
-    fprintf( stderr, "DCOPServer : slotTerminate() -> sending terminateKDE signal.\n" );
+    fprintf( stderr, "[dcopserver] slotTerminate() -> sending terminateKDE signal.\n" );
 #endif
     TQByteArray data;
     dcopSignals->emitSignal(0L /* dcopserver */, "terminateKDE()", data, false);
@@ -1302,7 +1302,7 @@ void DCOPServer::slotTerminate()
 void DCOPServer::slotSuicide()
 {
 #ifndef NDEBUG
-    fprintf( stderr, "DCOPServer : slotSuicide() -> exit.\n" );
+    fprintf( stderr, "[dcopserver] slotSuicide() -> exit.\n" );
 #endif
     exit(0);
 }
@@ -1310,7 +1310,7 @@ void DCOPServer::slotSuicide()
 void DCOPServer::slotShutdown()
 {
 #ifndef NDEBUG
-    fprintf( stderr, "DCOPServer : slotShutdown() -> waiting for clients to disconnect.\n" );
+    fprintf( stderr, "[dcopserver] slotShutdown() -> waiting for clients to disconnect.\n" );
 #endif
     char c;
 #ifndef Q_OS_WIN
@@ -1332,7 +1332,7 @@ void DCOPServer::slotShutdown()
 void DCOPServer::slotExit()
 {
 #ifndef NDEBUG
-	fprintf( stderr, "DCOPServer : slotExit() -> exit.\n" );
+	fprintf( stderr, "[dcopserver] slotExit() -> exit.\n" );
 #endif
 #ifdef Q_OS_WIN
 	SetEvent(m_evTerminate);
@@ -1629,10 +1629,10 @@ static bool isRunning(const TQCString &fName, bool printNetworkId = false)
 	f.close();
 	if (ok && pid && (kill(pid, SIGHUP) == 0)) {
 	    if (printNetworkId)
-	        tqWarning("%s", contents.left(pos).data());
+	        tqWarning("[dcopserver] %s", contents.left(pos).data());
 	    else
 		tqWarning( "---------------------------------\n"
-		      "It looks like dcopserver is already running. If you are sure\n"
+		      "[dcopserver] It looks like dcopserver is already running. If you are sure\n"
 		      "that it is not already running, remove %s\n"
 		      "and start dcopserver again.\n"
 		      "---------------------------------\n",
@@ -1719,8 +1719,8 @@ extern "C" DCOP_EXPORT int kdemain( int argc, char* argv[] )
 
           if (retcode != 0)
           {
-             tqWarning("dcopserver: Could not raise limit on number of open files.");
-             tqWarning("dcopserver: Current limit = %d", cur_limit);
+             tqWarning("[dcopserver] Could not raise limit on number of open files.");
+             tqWarning("[dcopserver] Current limit = %d", cur_limit);
           }
        }
     }
@@ -1743,7 +1743,7 @@ extern "C" DCOP_EXPORT int kdemain( int argc, char* argv[] )
                if (client.attach())
                   return 0;
             }
-            tqWarning("DCOPServer self-test failed.");
+            tqWarning("[dcopserver] DCOPServer self-test failed.");
             system(findDcopserverShutdown()+" --kill");
             return 1;
 	}

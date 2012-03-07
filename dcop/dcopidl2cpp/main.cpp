@@ -35,14 +35,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 void usage()
 {
-    fprintf( stderr, "Usage: dcopidl2cpp [ --no-skel | --no-stub ] [--c++-suffix <suffix>] file\n" );
+    fprintf( stderr, "[dcopidl2cpp] Usage: dcopidl2cpp [ --no-skel | --no-stub ] [--c++-suffix <suffix>] file\n" );
 }
 
 int main( int argc, char** argv )
 {
 
     if ( *tqVersion() == '1' ) {
-        fprintf( stderr, "dcopidl2cpp appears to be linked to Qt 1 instead of Qt >= 2 ! Aborting.\n" );
+        fprintf( stderr, "[dcopidl2cpp] dcopidl2cpp appears to be linked to Qt 1 instead of Qt >= 2 ! Aborting.\n" );
         exit(1);
     }
     if ( argc < 2 ) {

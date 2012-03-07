@@ -32,17 +32,17 @@ int main( int argc, char **argv )
   aConfig.writeEntry( "akey1", "avalue1" );
   aConfig.writeEntry( "akey2", "avalue2" );
 
-  fprintf( stderr, "entries written, sleeping for 10 seconds\n" );
+  fprintf( stderr, "[ksimpleconfigtest] entries written, sleeping for 10 seconds\n" );
   aConfig.sync();
   sleep( 10 );
 
   aConfig.setGroup( "Test group" );
   aConfig.deleteEntry( "key2", false );
-  fprintf( stderr, "Deleted on entry from Test group, sleeping\n" );
+  fprintf( stderr, "[ksimpleconfigtest] Deleted on entry from Test group, sleeping\n" );
   aConfig.sync();
   sleep( 10 );
 
   aConfig.deleteGroup( "Another Test group", true );
-  fprintf( stderr, "Deleted Another Test group\n" );
+  fprintf( stderr, "[ksimpleconfigtest] Deleted Another Test group\n" );
 }
 

@@ -26,7 +26,7 @@ DWORD WINAPI DCOPServer::TerminatorThread(void * pParam)
     DCOPServer * server = (DCOPServer*)pParam;
 
     WaitForSingleObject(server->m_evTerminate,INFINITE);
-	fprintf( stderr, "DCOPServer : terminate event signaled\n" );
+	fprintf( stderr, "[dcopserver_win] Terminate event signaled\n" );
     if(!server->shutdown) {
 		
 		ResetEvent(server->m_evTerminate);
@@ -36,9 +36,9 @@ DWORD WINAPI DCOPServer::TerminatorThread(void * pParam)
 		// Need some further event processing to get the timer signals
 		while(WaitForSingleObject(server->m_evTerminate,100) != WAIT_OBJECT_0)
 			TQApplication::eventLoop()->processEvents(TQEventLoop::ExcludeUserInput|TQEventLoop::ExcludeSocketNotifiers);
-		fprintf( stderr, "DCOPServer : terminated event signaled the last time\n" );
+		fprintf( stderr, "[dcopserver_win] Terminated event signaled the last time\n" );
     }
-	fprintf( stderr, "DCOPServer : terminate thread teminated\n" );
+	fprintf( stderr, "[dcopserver_win] Terminate thread teminated\n" );
     return 0;
 }
 

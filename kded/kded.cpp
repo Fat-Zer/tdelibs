@@ -918,7 +918,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 
      if (!KUniqueApplication::start())
      {
-        fprintf(stderr, "KDE Daemon (kded) already running.\n");
+        fprintf(stderr, "[kded] KDE Daemon (kded) already running.\n");
         exit(0);
      }
 

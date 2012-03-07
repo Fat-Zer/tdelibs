@@ -438,7 +438,7 @@ ArrayPrototypeImp::ArrayPrototypeImp(ExecState */*exec*/,
 
 Value ArrayPrototypeImp::get(ExecState *exec, const Identifier &propertyName) const
 {
-  //fprintf( stderr, "ArrayPrototypeImp::get(%s)\n", propertyName.ascii() );
+  //fprintf( stderr, "[kjs-array_object] ArrayPrototypeImp::get(%s)\n", propertyName.ascii() );
   return lookupGetFunction<ArrayProtoFuncImp, ArrayInstanceImp>( exec, propertyName, &arrayTable, this );
 }
 

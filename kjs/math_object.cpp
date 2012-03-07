@@ -122,7 +122,7 @@ Value MathObjectImp::getValueProperty(ExecState *, int token) const
     d = sqrt(2.0);
     break;
   default:
-    fprintf( stderr, "Internal error in MathObjectImp: unhandled token %d\n", token );
+    fprintf( stderr, "[math_object] Internal error in MathObjectImp: unhandled token %d\n", token );
     break;
   }
 
