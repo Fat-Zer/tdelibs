@@ -248,6 +248,10 @@ int main(int argc, char **argv)
   tmp = getenv("TDETMP");
   if (!tmp || !tmp[0])
     tmp = getenv("TMPDIR");
+  if (!tmp || !tmp[0])
+    tmp = getenv("TEMP");
+  if (!tmp || !tmp[0])
+    tmp = getenv("TMP");
   if (!tmp || !tmp[0]) 
     tmp = "/tmp";
 
