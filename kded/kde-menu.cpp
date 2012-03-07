@@ -108,10 +108,10 @@ static void findMenuEntry(KServiceGroup::Ptr parent, const TQString &name, const
 int main(int argc, char **argv)
 {
    KLocale::setMainCatalogue("tdelibs");
-   const char *description = I18N_NOOP("KDE Menu query tool.\n"
+   const char *description = I18N_NOOP("TDE Menu query tool.\n"
    "This tool can be used to find in which menu a specific application is shown.\n"
    "The --highlight option can be used to visually indicate to the user where\n"
-   "in the KDE menu a specific application is located.");
+   "in the TDE menu a specific application is located.");
    
    KAboutData d(appName, I18N_NOOP("kde-menu"), appVersion,
                 description,
