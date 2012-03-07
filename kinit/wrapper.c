@@ -146,12 +146,12 @@ static int openSocket()
   {
      if (!home_dir || !home_dir[0])
      {
-        fprintf(stderr, "[trinity kinit] Warning: $HOME not set!\n");
+        fprintf(stderr, "[kinit wrapper] Warning: $HOME not set!\n");
         return -1;
      }
      if (strlen(home_dir) > (MAX_SOCK_FILE-100))
      {
-        fprintf(stderr, "[trinity kinit] Warning: Home directory path too long!\n");
+        fprintf(stderr, "[kinit wrapper] Warning: Home directory path too long!\n");
         return -1;
      }
      kde_home++;
@@ -168,7 +168,7 @@ static int openSocket()
       strncat(sock_file, getenv("XAUTHLOCALHOSTNAME"), MAX_SOCK_FILE - strlen(sock_file) - 1);
   else if (gethostname(sock_file+strlen(sock_file), MAX_SOCK_FILE - strlen(sock_file) - 1) != 0)
   {
-     perror("[trinity kinit] Warning: Could not determine hostname: ");
+     perror("[kinit wrapper] Warning: Could not determine hostname: ");
      return -1;
   }
   sock_file[sizeof(sock_file)-1] = '\0';
@@ -177,13 +177,13 @@ static int openSocket()
   display = getDisplay();
   if (display == NULL)
   {
-     fprintf(stderr, "[trinity kinit] Error: Could not determine display.\n");
+     fprintf(stderr, "[kinit wrapper] Error: Could not determine display.\n");
      return -1;
   }
 
   if (strlen(sock_file)+strlen(display)+strlen("/tdeinit_")+2 > MAX_SOCK_FILE)
   {
-     fprintf(stderr, "[trinity kinit] Warning: Socket name will be too long.\n");
+     fprintf(stderr, "[kinit wrapper] Warning: Socket name will be too long.\n");
      free (display);
      return -1;
   }
@@ -193,7 +193,7 @@ static int openSocket()
 
   if (strlen(sock_file) >= sizeof(server.sun_path))
   {
-     fprintf(stderr, "[trinity kinit] Warning: Path of socketfile exceeds UNIX_PATH_MAX.\n");
+     fprintf(stderr, "[kinit wrapper] Warning: Path of socket file exceeds UNIX_PATH_MAX.\n");
      return -1;
   }
 
@@ -203,7 +203,7 @@ static int openSocket()
   s = socket(PF_UNIX, SOCK_STREAM, 0);
   if (s < 0) 
   {
-     perror("[trinity kinit] Warning: socket() failed: ");
+     perror("[kinit wrapper] Warning: socket creation failed: ");
      return -1;
   }
 
@@ -212,7 +212,7 @@ static int openSocket()
   socklen = sizeof(server);
   if(connect(s, (struct sockaddr *)&server, socklen) == -1) 
   {
-     perror("[trinity kinit] Warning: connect() failed: ");
+     perror("[kinit wrapper] Warning: socket connection failed: ");
      close(s);
      return -1;
   }
@@ -340,14 +340,14 @@ int main(int argc, char **argv)
    {
       if( argc > 1)
       {
-         fprintf(stderr, "[trinity kinit] Usage: %s\n\n", start);
-         fprintf(stderr, "[trinity kinit] Shuts down tdeinit master process and terminates all processes spawned from it.\n");
+         fprintf(stderr, "[kinit wrapper] Usage: %s\n\n", start);
+         fprintf(stderr, "[kinit wrapper] Shuts down tdeinit master process and terminates all processes spawned from it.\n");
          exit( 255 );
       }
       sock = openSocket();
       if( sock < 0 )
       {
-          fprintf( stderr, "[trinity kinit] Error: Can't contact tdeinit!\n" );
+          fprintf( stderr, "[kinit wrapper] Error: Can't contact tdeinit!\n" );
           exit( 255 );
       }
       header.cmd = LAUNCHER_TERMINATE_KDE;
@@ -363,7 +363,7 @@ int main(int argc, char **argv)
       argc--;
       if (argc < 1)
       {
-         fprintf(stderr, "[trinity kinit] Usage: %s <application> [<args>]\n", start);
+         fprintf(stderr, "[kinit wrapper] Usage: %s <application> [<args>]\n", start);
          exit(255); /* usage should be documented somewhere ... */
       }
       start = argv[0];
@@ -373,7 +373,7 @@ int main(int argc, char **argv)
    if( sock < 0 ) /* couldn't contact tdeinit, start argv[ 0 ] directly */
    {
       execvp( argv[ 0 ], argv );
-      fprintf( stderr, "[trinity kinit] Error: Can't run %s !\n", argv[ 0 ] );
+      fprintf( stderr, "[kinit wrapper] Error: Can't run %s !\n", argv[ 0 ] );
       exit( 255 );
    }
    
@@ -449,7 +449,7 @@ int main(int argc, char **argv)
    buffer = (char *) malloc(size);
    if (buffer == NULL)
    {
-        fprintf(stderr, "[trinity kinit] Error: malloc() failed.");
+        fprintf(stderr, "[kinit wrapper] Error: malloc() failed.");
         exit(255);
    }
    p = buffer;
@@ -506,7 +506,7 @@ int main(int argc, char **argv)
    if( p - buffer != size ) /* should fail only if you change this source and do */
                                  /* a stupid mistake, it should be assert() actually */
    {
-      fprintf(stderr, "[trinity kinit] Oops. Invalid format.\n");
+      fprintf(stderr, "[kinit wrapper] Oops. Invalid format.\n");
       exit(255);
    }
 
@@ -515,7 +515,7 @@ int main(int argc, char **argv)
 
    if (read_socket(sock, (char *) &header, sizeof(header))==-1)
    {
-      fprintf(stderr, "[trinity kinit] Communication error.\n");
+      fprintf(stderr, "[kinit wrapper] Communication error.\n");
       exit(255);
    }
 
@@ -525,7 +525,7 @@ int main(int argc, char **argv)
       buffer = (char *) malloc(header.arg_length);
       if (buffer == NULL)
       {
-          fprintf(stderr, "[trinity kinit] Error: malloc() failed\n");
+          fprintf(stderr, "[kinit wrapper] Error: malloc() failed\n");
           exit(255);
       }
       read_socket(sock, buffer, header.arg_length);
@@ -535,12 +535,12 @@ int main(int argc, char **argv)
    }
    else if (header.cmd == LAUNCHER_ERROR)
    {
-      fprintf(stderr, "[trinity kinit] Could not launch '%s'.\n", start);
+      fprintf(stderr, "[kinit wrapper] Could not launch '%s'.\n", start);
       exit(255);
    }
    else 
    {
-      fprintf(stderr, "[trinity kinit] Unexpected response (response = %ld).\n", header.cmd);
+      fprintf(stderr, "[kinit wrapper] Unexpected response (response = %ld).\n", header.cmd);
       exit(255);
    }
    exit(0);
