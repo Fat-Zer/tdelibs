@@ -51,20 +51,20 @@ int check_tmp_dir(const char *tmp_dir)
     result = mkdir(tmp_dir, 0700);
     if (result == -1)
     {
-       fprintf(stderr, "Error: Can not create directory \"%s\".\n", tmp_dir);
+       fprintf(stderr, "[lnusertemp] Error: Can not create directory \"%s\".\n", tmp_dir);
        return 1;
     }
     result = stat(tmp_dir, &stat_buf);
   }
   if ((result == -1) || (!S_ISDIR(stat_buf.st_mode)))
   {
-     fprintf(stderr, "Error: \"%s\" is not a directory.\n", tmp_dir);
+     fprintf(stderr, "[lnusertemp] Error: \"%s\" is not a directory.\n", tmp_dir);
      return 1;
   }
 
   if (stat_buf.st_uid != getuid())
   {
-     fprintf(stderr, "Error: \"%s\" is owned by uid %d instead of uid %d.\n", tmp_dir, stat_buf.st_uid, getuid());
+     fprintf(stderr, "[lnusertemp] Error: \"%s\" is owned by uid %d instead of uid %d.\n", tmp_dir, stat_buf.st_uid, getuid());
      return 1;
   }
   return 0;
@@ -81,10 +81,10 @@ int create_link(const char *file, const char *tmp_dir)
   result = symlink(tmp_dir, file);
   if (result == -1)
   {
-     fprintf(stderr, "Error: Can not create link from \"%s\" to \"%s\"\n", file, tmp_dir);
+     fprintf(stderr, "[lnusertemp] Error: Can not create link from \"%s\" to \"%s\"\n", file, tmp_dir);
      return 1;
   }
-  /*printf("Created link from \"%s\" to \"%s\"\n", file, tmp_dir);*/
+  /*printf("[lnusertemp] Created link from \"%s\" to \"%s\"\n", file, tmp_dir);*/
   return 0;
 }
 
@@ -109,7 +109,7 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
   pw_ent = getpwuid(uid);
   if (!pw_ent)
   {
-     fprintf(stderr, "Error: Can not find password entry for uid %d.\n", getuid());
+     fprintf(stderr, "[lnusertemp] Error: Can not find password entry for uid %d.\n", getuid());
      return 1;
   }
 
@@ -130,12 +130,12 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
      }
      if (!home_dir || !home_dir[0])
      {
-        fprintf(stderr, "Aborting. $HOME not set!\n");
+        fprintf(stderr, "[lnusertemp] Aborting. $HOME not set!\n");
         return 1;
      }
      if (strlen(home_dir) > (PATH_MAX-100))
      {
-        fprintf(stderr, "Aborting. Home directory path too long!\n");
+        fprintf(stderr, "[lnusertemp] Aborting. Home directory path too long!\n");
         return 1;
      }
      kde_home++;
@@ -155,7 +155,7 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
   }
   if (result == -1)
   {
-     perror("mkdir failed: ");
+     perror("[lnusertemp] mkdir failed: ");
      return 1;
   }  
 
@@ -172,7 +172,7 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
   {
      if (gethostname(kde_tmp_dir+strlen(kde_tmp_dir), PATH_MAX - strlen(kde_tmp_dir) - 1) != 0)
      {
-        perror("Could not determine hostname: ");
+        perror("[lnusertemp] Could not determine hostname: ");
         return 1;
      }
   }
@@ -182,12 +182,12 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
   if ((result == 0) && (S_ISDIR(stat_buf.st_mode)))
   {
      /* $TDEHOME/tmp is a normal directory. Do nothing. */
-     /*printf("Directory \"%s\" already exists.\n", kde_tmp_dir);*/
+     /*printf("[lnusertemp] Directory \"%s\" already exists.\n", kde_tmp_dir);*/
      return 0;
   }
   if ((result == -1) && (errno == ENOENT))
   {
-     /*printf("Creating link %s.\n", kde_tmp_dir);*/
+     /*printf("[lnusertemp] Creating link %s.\n", kde_tmp_dir);*/
      result = create_link(kde_tmp_dir, user_tmp_dir);
      if (result == 0) return 0; /* Success */
      unlink(kde_tmp_dir);
@@ -197,23 +197,23 @@ int build_link(const char *tmp_prefix, const char *kde_prefix, int kdehostname)
   }
   if ((result == -1) || (!S_ISLNK(stat_buf.st_mode)))
   {
-     fprintf(stderr, "Error: \"%s\" is not a link or a directory.\n", kde_tmp_dir);
+     fprintf(stderr, "[lnusertemp] Error: \"%s\" is not a link or a directory.\n", kde_tmp_dir);
      return 1;
   }
   /* kde_tmp_dir is a link. Check whether it points to a valid directory. */
   result = readlink(kde_tmp_dir, tmp_buf, PATH_MAX);
   if (result == -1)
   {
-     fprintf(stderr, "Error: \"%s\" could not be read.\n", kde_tmp_dir);
+     fprintf(stderr, "[lnusertemp] Error: \"%s\" could not be read.\n", kde_tmp_dir);
      return 1;
   }
   tmp_buf[result] = '\0';  
-  /*printf("Link points to \"%s\"\n", tmp_buf);*/
+  /*printf("[lnusertemp] Link \"%s\" points to \"%s\"\n", kde_tmp_dir, tmp_buf);*/
   if (strncmp(tmp_buf, user_tmp_dir, strlen(user_tmp_dir)) != 0)
   {
-     fprintf(stderr, "Error: \"%s\" points to \"%s\" instead of \"%s\".\n", kde_tmp_dir, tmp_buf, user_tmp_dir);
+     fprintf(stderr, "[lnusertemp] Error: \"%s\" points to \"%s\" instead of \"%s\".\n", kde_tmp_dir, tmp_buf, user_tmp_dir);
      unlink(kde_tmp_dir);
-     /*printf("Creating link %s.\n", kde_tmp_dir);*/
+     /*printf("[lnusertemp] Creating link %s.\n", kde_tmp_dir);*/
      result = create_link(kde_tmp_dir, user_tmp_dir);
      if (result == 0) return 0; /* Success */
      unlink(kde_tmp_dir);
@@ -241,7 +241,7 @@ int main(int argc, char **argv)
        (strcmp(argv[1], "socket")!=0) && 
        (strcmp(argv[1], "cache")!=0)))
   {
-     fprintf(stderr, "Usage: lnusertemp tmp|socket|cache\n");
+     fprintf(stderr, "[lnusertemp] Usage: lnusertemp tmp|socket|cache\n");
      return 1;
   }
 
