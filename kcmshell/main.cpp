@@ -102,7 +102,7 @@ static KService::Ptr locateModule(const TQCString& module)
         return 0;
     }
 
-    // avoid finding random non-kde applications
+    // avoid finding random non-TDE applications
     if ( module.left( 4 ) != "kde-" && service->library().isEmpty() )
         return locateModule( "kde-" + module );
 

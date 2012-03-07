@@ -161,7 +161,7 @@ void KMVirtualManager::setAsDefault(KMPrinter *p, const TQString& name, TQWidget
 					i18n( "<qt>You are about to set a pseudo-printer as your personal default. "
 						  "This setting is specific to KDE and will not be available outside KDE "
 						  "applications. Note that this will only make your personal default printer "
-						  "as undefined for non-KDE applications and should not prevent you from "
+						  "as undefined for non-TDE applications and should not prevent you from "
 						  "printing normally. Do you really want to set <b>%1</b> as your personal default?</qt>" ).arg( instname ),
 					TQString::null, i18n("Set as Default"), "setSpecialAsDefault" ) == KMessageBox::No )
 			return;

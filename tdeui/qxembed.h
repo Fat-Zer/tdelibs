@@ -100,7 +100,7 @@ public:
      * embedded applications that do not support the XEMBED protocol.
      * The default is XEMBED.
      *
-     * Non KDE applications should be embedded with protocol XPLAIN. 
+     * Non TDE applications should be embedded with protocol XPLAIN. 
      * This does not happen automatically yet. 
      * You must call setProtocol() explicitly.
      */

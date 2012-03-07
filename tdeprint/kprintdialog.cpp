@@ -243,7 +243,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 						" <p><b>Note:</b> The preview feature (and therefore this checkbox) "
 						" is only visible for printjobs created from inside KDE applications. "
 						" If you start kprinter from the commandline, or if you use kprinter "
-						" as a print command for non-KDE applications (like Acrobat Reader, "
+						" as a print command for non-TDE applications (like Acrobat Reader, "
                                                 " Firefox or OpenOffice), print preview is not available here. "
 					        " </qt>" );
 

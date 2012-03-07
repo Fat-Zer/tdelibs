@@ -131,7 +131,7 @@ MarginWidget::MarginWidget(TQWidget *parent, const char* name, bool allowMetricU
 			" <b>Note:</b> The margin setting does not work if you load such files directly into "
 			" kprinter, which have their print margins hardcoded internally, like as most "
 			" PDF or PostScript files. It works for all ASCII text files however. It also may not "
-			" work with non-KDE applications which fail to "
+			" work with non-TDE applications which fail to "
 			" fully utilize the KDEPrint framework, such as OpenOffice.org. </p> "
 			" </qt>" );
 
