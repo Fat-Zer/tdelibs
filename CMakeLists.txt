@@ -862,6 +862,12 @@ install( FILES
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
+##### pkg-config #################################
+
+configure_file( tdelibs.pc.cmake tdelibs.pc @ONLY )
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/tdelibs.pc DESTINATION ${PKGCONFIG_INSTALL_DIR} )
+
+
 ##### subdirectories ############################
 
 add_subdirectory( dcop )
