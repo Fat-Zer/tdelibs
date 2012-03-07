@@ -63,7 +63,7 @@ static bool hasIPv6()
 #ifndef AF_INET6
   return false;
 #else
-  if (getenv("KDE_NO_IPV6") != 0L)
+  if (getenv("TDE_NO_IPV6") != 0L)
     return false;
 
   int fd = ::socket(AF_INET6, SOCK_STREAM, 0);

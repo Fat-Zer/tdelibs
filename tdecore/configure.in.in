@@ -7,7 +7,7 @@ if test "$exec_prefix" = "NONE"; then
 else
     bindir_str="\"$exec_prefix/bin\""
 fi
-AC_DEFINE_UNQUOTED(__KDE_BINDIR, $bindir_str, [KDE bindir])
+AC_DEFINE_UNQUOTED(__TDE_BINDIR, $bindir_str, [TDE bindir])
 
 dnl tests for openpty support
 AC_MSG_CHECKING(whether we can use openpty)

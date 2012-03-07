@@ -720,19 +720,19 @@
 #define KDE_DISTRIBUTION_TEXT "@KDE_DISTRIBUTION_TEXT@"
 
 /* Use own malloc implementation */
-#cmakedefine KDE_MALLOC 1
+#cmakedefine TDE_MALLOC 1
 
 /* Enable debugging in fast malloc */
-#cmakedefine KDE_MALLOC_DEBUG 1
+#cmakedefine TDE_MALLOC_DEBUG 1
 
 /* Make alloc as fast as possible */
-#cmakedefine KDE_MALLOC_FULL 1
+#cmakedefine TDE_MALLOC_FULL 1
 
 /* The libc used is glibc */
-#undef KDE_MALLOC_GLIBC
+#undef TDE_MALLOC_GLIBC
 
 /* The platform is x86 */
-#cmakedefine KDE_MALLOC_X86 1
+#cmakedefine TDE_MALLOC_X86 1
 
 /* Define if we shall use KSSL */
 #cmakedefine KSSL_HAVE_SSL 1
@@ -1093,8 +1093,8 @@ int snprintf(char *str, size_t n, char const *fmt, ...);
 #endif
 
 
-/* KDE bindir */
-#define __KDE_BINDIR "@BIN_INSTALL_DIR@"
+/* TDE bindir */
+#define __TDE_BINDIR "@BIN_INSTALL_DIR@"
 
 /* execprefix or NONE if not set, for libloading */
 #undef __KDE_EXECPREFIX

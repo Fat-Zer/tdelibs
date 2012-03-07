@@ -108,7 +108,7 @@ static TQString sycocaPath()
   }
   else
   {
-     TQCString ksycoca_env = getenv("KDESYCOCA");
+     TQCString ksycoca_env = getenv("TDESYCOCA");
      if (ksycoca_env.isEmpty())
         path = KGlobal::dirs()->saveLocation("cache")+"ksycoca";
      else
@@ -120,7 +120,7 @@ static TQString sycocaPath()
 
 static TQString oldSycocaPath()
 {
-  TQCString ksycoca_env = getenv("KDESYCOCA");
+  TQCString ksycoca_env = getenv("TDESYCOCA");
   if (ksycoca_env.isEmpty())
      return KGlobal::dirs()->saveLocation("tmp")+"ksycoca";
 

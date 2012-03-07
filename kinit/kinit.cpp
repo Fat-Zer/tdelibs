@@ -590,7 +590,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
         exitWithErrorMsg(errorMsg);
      }
 
-     if ( getenv("KDE_IS_PRELINKED") && !execpath.isEmpty() && !launcher)
+     if ( getenv("TDE_IS_PRELINKED") && !execpath.isEmpty() && !launcher)
          libpath.truncate(0);
 
      if ( !libpath.isEmpty() )
@@ -838,7 +838,7 @@ static void init_tdeinit_socket()
 
   {
      TQCString path = home_dir;
-     TQCString readOnly = getenv("KDE_HOME_READONLY");
+     TQCString readOnly = getenv("TDE_HOME_READONLY");
      if (access(path.data(), R_OK|W_OK))
      {
        if (errno == ENOENT)
@@ -1227,7 +1227,7 @@ static void handle_launcher_request(int sock = -1)
 
       // support for the old a bit broken way of setting DISPLAY for multihead
       TQCString olddisplay = getenv(DISPLAY);
-      TQCString kdedisplay = getenv("KDE_DISPLAY");
+      TQCString kdedisplay = getenv("TDE_DISPLAY");
       bool reset_display = (! olddisplay.isEmpty() &&
                             ! kdedisplay.isEmpty() &&
                             olddisplay != kdedisplay);
@@ -1240,7 +1240,7 @@ static void handle_launcher_request(int sock = -1)
           tty, avoid_loops, startup_id_str );
 
       if (reset_display) {
-          unsetenv("KDE_DISPLAY");
+          unsetenv("TDE_DISPLAY");
           setenv(DISPLAY, olddisplay, true);
       }
 
@@ -1804,7 +1804,7 @@ int main(int argc, char **argv, char **envp)
       }
    }
 #ifndef __CYGWIN__
-   if (!d.suicide && !getenv("KDE_IS_PRELINKED"))
+   if (!d.suicide && !getenv("TDE_IS_PRELINKED"))
    {
       TQString konq = locate("lib", "libkonq.la", s_instance);
       if (!konq.isEmpty())

@@ -82,8 +82,8 @@ int kde_start
 # ifndef TDEDIR
 #  define TDEDIR TQString(KDEWIN32_DIR)
 # endif
-# ifndef __KDE_BINDIR 
-#  define __KDE_BINDIR TQString(KDEWIN32_DIR "/bin")
+# ifndef __TDE_BINDIR 
+#  define __TDE_BINDIR TQString(KDEWIN32_DIR "/bin")
 # endif
 #endif
 */

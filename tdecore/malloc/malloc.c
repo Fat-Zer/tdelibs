@@ -7,9 +7,9 @@
 */
 int kde_malloc_is_used = 0;
 
-#ifdef KDE_MALLOC
+#ifdef TDE_MALLOC
 
-#ifdef KDE_MALLOC_DEBUG
+#ifdef TDE_MALLOC_DEBUG
 #define DEBUG
 #endif
 
@@ -1559,7 +1559,7 @@ static pthread_mutex_t mALLOC_MUTEx = PTHREAD_MUTEX_INITIALIZER;
 
 #else
 
-#ifdef KDE_MALLOC_X86
+#ifdef TDE_MALLOC_X86
 #include "x86.h"
 #else
 #error Unknown spinlock implementation
@@ -5475,9 +5475,9 @@ History:
 
 #ifdef USE_PUBLIC_MALLOC_WRAPPERS
 
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
 
-#ifdef KDE_MALLOC_GLIBC
+#ifdef TDE_MALLOC_GLIBC
 #include "glibc.h"
 #else
 /* cannot use dlsym(RTLD_NEXT,...) here, it calls malloc()*/
@@ -5491,7 +5491,7 @@ extern char* getenv(const char*);
 static int malloc_type = 0;
 static void init_malloc_type(void)
     {
-    const char* const env = getenv( "KDE_MALLOC" );
+    const char* const env = getenv( "TDE_MALLOC" );
     if( env == NULL )
         malloc_type = 1;
     else if( env[ 0 ] == '0' || env[ 0 ] == 'n' || env[ 0 ] == 'N' )
@@ -5503,7 +5503,7 @@ static void init_malloc_type(void)
 #endif
 
 Void_t* public_mALLOc(size_t bytes) {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5515,7 +5515,7 @@ Void_t* public_mALLOc(size_t bytes) {
   if (MALLOC_POSTACTION != 0) {
   }
   return m;
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
     }
   if( malloc_type == 2 )
       return libc_malloc( bytes );
@@ -5525,7 +5525,7 @@ Void_t* public_mALLOc(size_t bytes) {
 }
 
 void public_fREe(Void_t* m) {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5535,7 +5535,7 @@ void public_fREe(Void_t* m) {
   fREe(m);
   if (MALLOC_POSTACTION != 0) {
   }
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   return;
     }
   if( malloc_type == 2 )
@@ -5549,7 +5549,7 @@ void public_fREe(Void_t* m) {
 }
 
 Void_t* public_rEALLOc(Void_t* m, size_t bytes) {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5560,7 +5560,7 @@ Void_t* public_rEALLOc(Void_t* m, size_t bytes) {
   if (MALLOC_POSTACTION != 0) {
   }
   return m;
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
     }
   if( malloc_type == 2 )
       return libc_realloc( m, bytes );
@@ -5570,7 +5570,7 @@ Void_t* public_rEALLOc(Void_t* m, size_t bytes) {
 }
 
 Void_t* public_mEMALIGn(size_t alignment, size_t bytes) {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5582,7 +5582,7 @@ Void_t* public_mEMALIGn(size_t alignment, size_t bytes) {
   if (MALLOC_POSTACTION != 0) {
   }
   return m;
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
     }
   if( malloc_type == 2 )
       return libc_memalign( alignment, bytes );
@@ -5592,7 +5592,7 @@ Void_t* public_mEMALIGn(size_t alignment, size_t bytes) {
 }
 
 Void_t* public_vALLOc(size_t bytes) {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5604,7 +5604,7 @@ Void_t* public_vALLOc(size_t bytes) {
   if (MALLOC_POSTACTION != 0) {
   }
   return m;
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
     }
   if( malloc_type == 2 )
       return libc_valloc( bytes );
@@ -5614,7 +5614,7 @@ Void_t* public_vALLOc(size_t bytes) {
 }
 
 Void_t* public_pVALLOc(size_t bytes) {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5626,7 +5626,7 @@ Void_t* public_pVALLOc(size_t bytes) {
   if (MALLOC_POSTACTION != 0) {
   }
   return m;
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
     }
   if( malloc_type == 2 )
       return libc_pvalloc( bytes );
@@ -5636,7 +5636,7 @@ Void_t* public_pVALLOc(size_t bytes) {
 }
 
 Void_t* public_cALLOc(size_t n, size_t elem_size) {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5648,7 +5648,7 @@ Void_t* public_cALLOc(size_t n, size_t elem_size) {
   if (MALLOC_POSTACTION != 0) {
   }
   return m;
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
     }
   if( malloc_type == 2 )
       return libc_calloc( n, elem_size );
@@ -5658,7 +5658,7 @@ Void_t* public_cALLOc(size_t n, size_t elem_size) {
 }
 
 void public_cFREe(Void_t* m) {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5668,7 +5668,7 @@ void public_cFREe(Void_t* m) {
   cFREe(m);
   if (MALLOC_POSTACTION != 0) {
   }
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   return;
     }
   if( malloc_type == 2 )
@@ -5682,7 +5682,7 @@ void public_cFREe(Void_t* m) {
 }
 
 struct mallinfo public_mALLINFo() {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5695,7 +5695,7 @@ struct mallinfo public_mALLINFo() {
   if (MALLOC_POSTACTION != 0) {
   }
   return m;
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
     }
   if( malloc_type == 2 )
       return libc_mallinfo();
@@ -5705,7 +5705,7 @@ struct mallinfo public_mALLINFo() {
 }
 
 int public_mALLOPt(int p, int v) {
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
   if( malloc_type == 1 )
     {
 #endif
@@ -5717,7 +5717,7 @@ int public_mALLOPt(int p, int v) {
   if (MALLOC_POSTACTION != 0) {
   }
   return result;
-#ifndef KDE_MALLOC_FULL
+#ifndef TDE_MALLOC_FULL
     }
   if( malloc_type == 2 )
       return libc_mallopt( p, v );

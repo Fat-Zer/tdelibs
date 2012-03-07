@@ -62,9 +62,9 @@ add_custom_target(install-apidox
 
 OPTION( WITH_ALL_OPTIONS "Enable all optional support" OFF )
 
-OPTION( KDE_MALLOC "Use own malloc implementation" OFF )
-OPTION( KDE_MALLOC_DEBUG "Enable debugging in fast malloc" OFF )
-OPTION( KDE_MALLOC_FULL "Make alloc as fast as possible" OFF )
+OPTION( TDE_MALLOC "Use own malloc implementation" OFF )
+OPTION( TDE_MALLOC_DEBUG "Enable debugging in fast malloc" OFF )
+OPTION( TDE_MALLOC_FULL "Make alloc as fast as possible" OFF )
 
 OPTION( WITH_ARTS "Build with aRts" ON )
 OPTION( WITH_ALSA "Enable ALSA support" ON )
@@ -97,12 +97,12 @@ set( ENV{PKG_CONFIG_PATH} "${PKG_CONFIG_PATH}:${PKGCONFIG_INSTALL_DIR}:${LIB_INS
 
 ### FIXME fast malloc is also available on x86_64 architecture?
 if( ${CMAKE_SYSTEM_PROCESSOR} MATCHES "i?86" OR ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64" )
-  set( KDE_MALLOC_X86 1 )
+  set( TDE_MALLOC_X86 1 )
   message( STATUS "Found x86 architecture" )
 else( ${CMAKE_SYSTEM_PROCESSOR} MATCHES "i?86" OR ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64" )
-  if( KDE_MALLOC )
+  if( TDE_MALLOC )
     message( FATAL_ERROR "\nKDE fast malloc is available only on x86 architecture" )
-  endif( KDE_MALLOC )
+  endif( TDE_MALLOC )
 endif( ${CMAKE_SYSTEM_PROCESSOR} MATCHES "i?86" OR ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "x86_64" )
 
 

@@ -125,11 +125,11 @@ int StubProcess::ConverseStub(int check)
 	       if (!path.isEmpty())
 	          path = "/usr/local/sbin:/usr/sbin:/sbin:" + path;
 	       else
-                  if (strcmp(__KDE_BINDIR, "/usr/bin") == 0) {
+                  if (strcmp(__TDE_BINDIR, "/usr/bin") == 0) {
 		          path = "/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin";
 		  }
 		  else {
-			  path = "/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:" __KDE_BINDIR ":/usr/bin:/bin";
+			  path = "/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:" __TDE_BINDIR ":/usr/bin:/bin";
 		  }
 	    writeLine(path);
 	} else if (line == "user") {

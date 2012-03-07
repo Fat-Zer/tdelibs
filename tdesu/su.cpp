@@ -112,7 +112,7 @@ int SuProcess::exec(const char *password, int check)
     if (superUserCommand == "su") {
         args += "-c";
     }
-    args += TQCString(__KDE_BINDIR) + "/tdesu_stub";
+    args += TQCString(__TDE_BINDIR) + "/tdesu_stub";
 #ifndef Q_OS_DARWIN
     args += "-";
 #endif

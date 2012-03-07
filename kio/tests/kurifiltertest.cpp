@@ -156,7 +156,7 @@ int main(int argc, char **argv)
     // Ensure that user configuration doesn't change the results of those tests
     // TDEHOME needs to be writable though, for a ksycoca database
     setenv( "TDEHOME", TQFile::encodeName( TQDir::homeDirPath() + "/.kde-kurifiltertest" ), true );
-    setenv( "KDE_FORK_SLAVES", "yes", true ); // simpler, for the final cleanup
+    setenv( "TDE_FORK_SLAVES", "yes", true ); // simpler, for the final cleanup
 
     KAboutData aboutData(appName, programName, version, description);
     KCmdLineArgs::init(argc, argv, &aboutData);

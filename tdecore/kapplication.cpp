@@ -920,7 +920,7 @@ void KApplication::init(bool GUIenabled)
   // * We use kdialog to warn the user, so we better not generate warnings from
   //   kdialog itself.
   // * Don't warn if we run with a read-only $HOME
-  TQCString readOnly = getenv("KDE_HOME_READONLY");
+  TQCString readOnly = getenv("TDE_HOME_READONLY");
   if (readOnly.isEmpty() && (tqstrcmp(name(), "kdialog") != 0))
   {
     KConfigGroupSaver saver(config, "KDE Action Restrictions");
@@ -1642,7 +1642,7 @@ void KApplication::parseCommandLine( )
        }
     }
 
-    bool nocrashhandler = (getenv("KDE_DEBUG") != NULL);
+    bool nocrashhandler = (getenv("TDE_DEBUG") != NULL);
     if (!nocrashhandler && args->isSet("crashhandler"))
     {
         // set default crash handler / set emergency save function to nothing

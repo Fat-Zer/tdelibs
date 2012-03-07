@@ -104,7 +104,7 @@ Kded::Kded(bool checkUpdates, bool new_startup)
 {
   _self = this;
   TQCString cPath;
-  TQCString ksycoca_env = getenv("KDESYCOCA");
+  TQCString ksycoca_env = getenv("TDESYCOCA");
   if (ksycoca_env.isEmpty())
      cPath = TQFile::encodeName(KGlobal::dirs()->saveLocation("tmp")+"ksycoca");
   else
