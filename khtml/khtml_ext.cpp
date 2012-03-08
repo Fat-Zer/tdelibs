@@ -320,7 +320,7 @@ void KHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
         return;
 
     TQUObject o[ 1 ];
-    m_extensionProxy->qt_invoke( slot, o );
+    m_extensionProxy->tqt_invoke( slot, o );
 }
 
 void KHTMLPartBrowserExtension::updateEditActions()

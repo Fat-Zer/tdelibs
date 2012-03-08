@@ -2220,7 +2220,7 @@ void KApplication::invokeEditSlot( const char *slot )
   if( idx < 0 )
     return;
 
-  object->qt_invoke( idx, 0 );
+  object->tqt_invoke( idx, 0 );
 }
 
 void KApplication::addKipcEventMask(int id)

@@ -116,14 +116,14 @@ KAccelEventHandler::KAccelEventHandler()
 }
 
 #ifdef Q_WS_X11
-bool	qt_try_modal( TQWidget *, XEvent * );
+bool	tqt_try_modal( TQWidget *, XEvent * );
 
 bool KAccelEventHandler::x11Event( XEvent* pEvent )
 {
 	if( TQWidget::keyboardGrabber() || !kapp->focusWidget() )
 		return false;
 
-	if ( !qt_try_modal(kapp->focusWidget(), pEvent) )
+	if ( !tqt_try_modal(kapp->focusWidget(), pEvent) )
 	        return false;
 
 	if( pEvent->type == XKeyPress ) {

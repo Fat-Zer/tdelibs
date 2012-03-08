@@ -1307,8 +1307,8 @@ bool KFilePropsPlugin::supports( KFileItemList /*_items*/ )
 }
 
 // Don't do this at home
-void qt_enter_modal( TQWidget *widget );
-void qt_leave_modal( TQWidget *widget );
+void tqt_enter_modal( TQWidget *widget );
+void tqt_leave_modal( TQWidget *widget );
 
 void KFilePropsPlugin::applyChanges()
 {
@@ -1363,9 +1363,9 @@ void KFilePropsPlugin::applyChanges()
                TQT_SLOT( slotFileRenamed( KIO::Job *, const KURL &, const KURL & ) ) );
       // wait for job
       TQWidget dummy(0,0,(WFlags)(WType_Dialog|WShowModal));
-      qt_enter_modal(&dummy);
+      tqt_enter_modal(&dummy);
       tqApp->enter_loop();
-      qt_leave_modal(&dummy);
+      tqt_leave_modal(&dummy);
       return;
     }
     properties->updateUrl(properties->kurl());
@@ -2519,9 +2519,9 @@ void KFilePermissionsPropsPlugin::applyChanges()
         TQT_SLOT( slotChmodResult( KIO::Job * ) ) );
     // Wait for job
     TQWidget dummy(0,0,(WFlags)(WType_Dialog|WShowModal));
-    qt_enter_modal(&dummy);
+    tqt_enter_modal(&dummy);
     tqApp->enter_loop();
-    qt_leave_modal(&dummy);
+    tqt_leave_modal(&dummy);
   }
   if (dirs.count() > 0) {
     job = KIO::chmod( dirs, orDirPermissions, ~andDirPermissions,
@@ -2535,9 +2535,9 @@ void KFilePermissionsPropsPlugin::applyChanges()
         TQT_SLOT( slotChmodResult( KIO::Job * ) ) );
     // Wait for job
     TQWidget dummy(0,0,(WFlags)(WType_Dialog|WShowModal));
-    qt_enter_modal(&dummy);
+    tqt_enter_modal(&dummy);
     tqApp->enter_loop();
-    qt_leave_modal(&dummy);
+    tqt_leave_modal(&dummy);
   }
 }
 

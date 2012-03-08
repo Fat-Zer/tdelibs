@@ -6663,7 +6663,7 @@ void KHTMLPart::slotPrintFrame()
   int idx = mo->findSlot( "print()", true );
   if ( idx >= 0 ) {
     TQUObject o[ 1 ];
-    ext->qt_invoke( idx, o );
+    ext->tqt_invoke( idx, o );
   }
 }
 

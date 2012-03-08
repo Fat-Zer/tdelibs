@@ -487,16 +487,16 @@ bool NetAccess::synchronousRunInternal( Job* job, TQWidget* window, TQByteArray*
 }
 
 // If a troll sees this, he kills me
-void qt_enter_modal( TQWidget *widget );
-void qt_leave_modal( TQWidget *widget );
+void tqt_enter_modal( TQWidget *widget );
+void tqt_leave_modal( TQWidget *widget );
 
 void NetAccess::enter_loop()
 {
   TQWidget dummy(0,0,(WFlags)(WType_Dialog | WShowModal));
   dummy.setFocusPolicy( TQ_NoFocus );
-  qt_enter_modal(&dummy);
+  tqt_enter_modal(&dummy);
   tqApp->enter_loop();
-  qt_leave_modal(&dummy);
+  tqt_leave_modal(&dummy);
 }
 
 void NetAccess::slotResult( KIO::Job * job )

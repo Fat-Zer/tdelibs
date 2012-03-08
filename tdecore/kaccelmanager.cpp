@@ -321,7 +321,7 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
 
   if (dynamic_cast<TQComboBox*>(w) || dynamic_cast<TQLineEdit*>(w) ||
       dynamic_cast<TQTextEdit*>(w) || dynamic_cast<TQTextView*>(w) ||
-      dynamic_cast<TQSpinBox*>(w) || static_cast<KMultiTabBar*>(w->qt_cast("KMultiTabBar")))
+      dynamic_cast<TQSpinBox*>(w) || static_cast<KMultiTabBar*>(w->tqt_cast("KMultiTabBar")))
       return;
 
   // now treat 'ordinary' widgets
@@ -345,7 +345,7 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
     if (tprop != -1)  {
         const TQMetaProperty* p = w->metaObject()->property( tprop, true );
         if ( p && p->isValid() )
-            w->qt_property( tprop, 1, &variant );
+            w->tqt_property( tprop, 1, &variant );
         else
             tprop = -1;
     }
@@ -355,7 +355,7 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
         if (tprop != -1)  {
             const TQMetaProperty* p = w->metaObject()->property( tprop, true );
             if ( p && p->isValid() )
-                w->qt_property( tprop, 1, &variant );
+                w->tqt_property( tprop, 1, &variant );
         }
     }
 

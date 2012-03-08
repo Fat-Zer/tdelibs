@@ -411,7 +411,7 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
                 if( slot_id >= 0 ) {
                     TQUObject o[2];
                     static_TQUType_int.set(o+1,n);
-                    const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
+                    const_cast< TQObject* >( pAction->objSlotPtr())->tqt_invoke( slot_id, o );
                 }
 	} else if( rexPassInfo.search( pAction->methodSlotPtr() ) ) {
                 int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
@@ -420,12 +420,12 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
                     static_TQUType_TQString.set(o+1,pAction->name());
                     static_TQUType_TQString.set(o+2,pAction->label());
                     static_TQUType_ptr.set(o+3,&seq);
-                    const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, o );
+                    const_cast< TQObject* >( pAction->objSlotPtr())->tqt_invoke( slot_id, o );
                 }
 	} else {
                 int slot_id = pAction->objSlotPtr()->metaObject()->findSlot( normalizeSignalSlot( pAction->methodSlotPtr() ).data() + 1, true );
                 if( slot_id >= 0 )
-                    const_cast< TQObject* >( pAction->objSlotPtr())->qt_invoke( slot_id, 0 );
+                    const_cast< TQObject* >( pAction->objSlotPtr())->tqt_invoke( slot_id, 0 );
 	}
 }
 

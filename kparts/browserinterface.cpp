@@ -52,7 +52,7 @@ void BrowserInterface::callMethod( const char *name, const TQVariant &argument )
         default: return;
     }
   
-    qt_invoke( slot, o );
+    tqt_invoke( slot, o );
 }
 
 #include "browserinterface.moc"

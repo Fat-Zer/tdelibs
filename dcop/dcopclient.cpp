@@ -1536,7 +1536,7 @@ static bool receiveQtObject( const TQCString &objId, const TQCString &fun, const
             if ( slot != -1 ) {
                 replyType = "void";
                 TQUObject uo[ 1 ];
-                o->qt_invoke( slot, uo );
+                o->tqt_invoke( slot, uo );
                 return true;
             }
         }

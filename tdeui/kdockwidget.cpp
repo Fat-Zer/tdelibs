@@ -1860,8 +1860,8 @@ KDockWidget* KDockManager::findDockWidgetAt( const TQPoint& pos )
     }
     w = p;
   }
-  if ( qt_find_obj_child( TQT_TQOBJECT(w), "KDockSplitter", "_dock_split_" ) ) return 0L;
-  if ( qt_find_obj_child( TQT_TQOBJECT(w), "KDockTabGroup", "_dock_tab" ) ) return 0L;
+  if ( tqt_find_obj_child( TQT_TQOBJECT(w), "KDockSplitter", "_dock_split_" ) ) return 0L;
+  if ( tqt_find_obj_child( TQT_TQOBJECT(w), "KDockTabGroup", "_dock_tab" ) ) return 0L;
   if (tqt_dynamic_cast<KDockContainer*>(w)) return 0L;
 
   if (!childDockWidgetList) return 0L;
