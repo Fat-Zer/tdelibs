@@ -69,10 +69,10 @@ $exe = basename $0;
 public:
     virtual QMetaObject *metaObject() const;
     virtual const char *className() const;
-    virtual void* qt_cast( const char* );
-    virtual bool qt_invoke( int, QUObject* );
-    virtual bool qt_emit( int, QUObject* );
-    virtual bool qt_property( int, int, QVariant* );
+    virtual void* tqt_cast( const char* );
+    virtual bool tqt_invoke( int, QUObject* );
+    virtual bool tqt_emit( int, QUObject* );
+    virtual bool tqt_property( int, int, QVariant* );
     static QMetaObject* staticMetaObject();
     QObject* qObject();
     static QString tr( const char *, const char * = 0 );
@@ -119,8 +119,8 @@ $allowed_k_dcop_accesors_re = join("|", @allowed_k_dcop_accesors);
 public:
     virtual QMetaObject *metaObject() const;
     virtual const char *className() const;
-    virtual bool qt_invoke( int, QUObject* );
-    virtual bool qt_emit( int, QUObject* );
+    virtual bool tqt_invoke( int, QUObject* );
+    virtual bool tqt_emit( int, QUObject* );
     static QString tr( const char *, const char * = 0 );
     static QString trUtf8( const char *, const char * = 0 );
 private:
